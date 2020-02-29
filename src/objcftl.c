@@ -1,6 +1,11 @@
 /****************************************************************************
 **
-*W  objcftl.c                      GAP source                   Werner Nickel
+**  This file is part of GAP, a system for computational discrete algebra.
+**
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  Objects Collected From The Left.
 **  This file contains a collector from the left for polycyclic
@@ -74,7 +79,8 @@ extern inline struct CFTLModuleState *CFTLState(void)
   CHANGED_BAG( wst ); CHANGED_BAG( west ); CHANGED_BAG( est ); }
 
                                 
-void AddIn( Obj list, Obj w, Obj e ) {
+static void AddIn(Obj list, Obj w, Obj e)
+{
 
   Int    g,  i;
   Obj    r,  s,  t;
@@ -93,20 +99,17 @@ void AddIn( Obj list, Obj w, Obj e ) {
 
 }
 
-Obj CollectPolycyc (
-    Obj pcp,
-    Obj list,
-    Obj word )
+static Obj CollectPolycyc(Obj pcp, Obj list, Obj word)
 {
-    Int    ngens   = INT_INTOBJ( ADDR_OBJ(pcp)[ PC_NUMBER_OF_GENERATORS ] );
-    Obj    commute = ADDR_OBJ(pcp)[ PC_COMMUTE ];
+    Int    ngens   = INT_INTOBJ( CONST_ADDR_OBJ(pcp)[ PC_NUMBER_OF_GENERATORS ] );
+    Obj    commute = CONST_ADDR_OBJ(pcp)[ PC_COMMUTE ];
 
-    Obj    gens    = ADDR_OBJ(pcp)[ PC_GENERATORS ];
-    Obj    igens   = ADDR_OBJ(pcp)[ PC_INVERSES ];
+    Obj    gens    = CONST_ADDR_OBJ(pcp)[ PC_GENERATORS ];
+    Obj    igens   = CONST_ADDR_OBJ(pcp)[ PC_INVERSES ];
 
-    Obj    pow     = ADDR_OBJ(pcp)[ PC_POWERS ];
-    Obj    ipow    = ADDR_OBJ(pcp)[ PC_INVERSEPOWERS ];
-    Obj    exp     = ADDR_OBJ(pcp)[ PC_EXPONENTS ];
+    Obj    pow     = CONST_ADDR_OBJ(pcp)[ PC_POWERS ];
+    Obj    ipow    = CONST_ADDR_OBJ(pcp)[ PC_INVERSEPOWERS ];
+    Obj    exp     = CONST_ADDR_OBJ(pcp)[ PC_EXPONENTS ];
 
     Obj    wst  = CFTLState()->WORD_STACK;
     Obj    west = CFTLState()->WORD_EXPONENT_STACK;
@@ -127,11 +130,9 @@ Obj CollectPolycyc (
 
     if( LEN_PLIST(list) < ngens ) {
         ErrorQuit( "vector too short", 0L, 0L );
-        return (Obj)0;
     }
     if( LEN_PLIST(word) % 2 != 0 ) {
         ErrorQuit( "Length of word odd", 0L, 0L );
-        return (Obj)0;
     }
 
     st = 0;
@@ -195,16 +196,16 @@ Obj CollectPolycyc (
           if( LtInt( INTOBJ_INT(0), e ) ) {
             C_DIFF_FIA( ee, e, INTOBJ_INT(1) );  e = ee;
             SET_ELM_PLIST( est, st, e ); CHANGED_BAG( est );
-            conj  = ADDR_OBJ(pcp)[PC_CONJUGATES];
-            iconj = ADDR_OBJ(pcp)[PC_INVERSECONJUGATES];
+            conj  = CONST_ADDR_OBJ(pcp)[PC_CONJUGATES];
+            iconj = CONST_ADDR_OBJ(pcp)[PC_INVERSECONJUGATES];
             
             C_SUM_FIA( ge, ELM_PLIST( list, g ), INTOBJ_INT(1) );
           }
           else {
             C_SUM_FIA( ee, e, INTOBJ_INT(1) );  e = ee;
             SET_ELM_PLIST( est, st, e ); CHANGED_BAG( est );
-            conj  = ADDR_OBJ(pcp)[PC_CONJUGATESINVERSE];
-            iconj = ADDR_OBJ(pcp)[PC_INVERSECONJUGATESINVERSE];
+            conj  = CONST_ADDR_OBJ(pcp)[PC_CONJUGATESINVERSE];
+            iconj = CONST_ADDR_OBJ(pcp)[PC_INVERSECONJUGATESINVERSE];
             
             C_DIFF_FIA( ge, ELM_PLIST( list, g ), INTOBJ_INT(1) );
           }
@@ -320,11 +321,7 @@ Obj CollectPolycyc (
     return (Obj)0;
 }
 
-Obj FuncCollectPolycyclic (
-    Obj self,
-    Obj pcp,
-    Obj list,
-    Obj word )
+static Obj FuncCollectPolycyclic(Obj self, Obj pcp, Obj list, Obj word)
 {
   CollectPolycyc( pcp, list, word );
   return (Obj)0;

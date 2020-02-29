@@ -1,12 +1,8 @@
 #############################################################################
 ##
-#W  combinat.tst                GAP tests                    Martin Schönert
-##
-##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-##
 ##  This  file  tests  the functions that  mainly  deal  with  combinatorics.
 ##
+#@local i,iter,list,n,pn,it
 gap> START_TEST("combinat.tst");
 
 #F  Factorial( <n> )  . . . . . . . . . . . . . . . . factorial of an integer
@@ -15,9 +11,11 @@ gap> Print(List( [0..10], Factorial ),"\n");
 gap> Factorial( 50 );
 30414093201713378043612608166064768844377641568960512000000000000
 gap> Factorial(-1);
-Error, Factorial: <n> must be nonnegative
+Error, Factorial: <n> must be a non-negative small integer (not the integer -1\
+)
 gap> Factorial(fail);
-Error, Factorial: <n> must be an integer (not a boolean or fail)
+Error, Factorial: <n> must be a non-negative small integer (not the value 'fai\
+l')
 
 #F  Binomial( <n>, <k> )  . . . . . . . . .  binomial coefficient of integers
 gap> Print(List( [-8..8], k -> Binomial( 0, k ) ),"\n");
@@ -34,9 +32,9 @@ true
 gap> Binomial( 2^100, 2 ) = 2^100 * (2^100 - 1) / 2;
 true
 gap> Binomial(fail, 0);
-Error, Binomial: <n> must be an integer (not a boolean or fail)
+Error, Binomial: <n> must be an integer (not the value 'fail')
 gap> Binomial(0, fail);
-Error, Binomial: <k> must be an integer (not a boolean or fail)
+Error, Binomial: <k> must be an integer (not the value 'fail')
 
 #F  Bell( <n> ) . . . . . . . . . . . . . . . . .  value of the Bell sequence
 gap> Print(List( [0..10], n -> Bell(n) ),"\n");
@@ -500,9 +498,11 @@ gap> Print(List( [0..14], Bernoulli ),"\n");
 gap> Bernoulli( 80 );
 -4603784299479457646935574969019046849794257872751288919656867/230010
 
+# AssociatedPartition
+gap> AssociatedPartition([]);
+[  ]
+gap> AssociatedPartition(Concatenation([7],ListWithIdenticalEntries(99,1)));
+[ 100, 1, 1, 1, 1, 1, 1 ]
+
 # thats it for the combinatorical package  ##################################
 gap> STOP_TEST( "combinat.tst", 1);
-
-#############################################################################
-##
-#E

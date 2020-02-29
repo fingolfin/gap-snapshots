@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  rwspcgrp.gi                 GAP Library                      Frank Celler
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file   contains  the methods  for  groups  defined  by  a polycyclic
 ##  collector.
@@ -139,8 +140,8 @@ function( rws )
       "MultiplicativeElementsWithInversesFamilyByPolycyclicCollector(...)",
       IsMultiplicativeElementWithInverseByPolycyclicCollector
         and IsAssociativeElement,
-      implied and CanEasilySortElements,
-      IsElementsFamilyByRws and CanEasilySortElements );
+      CanEasilySortElements and implied,
+      CanEasilySortElements and IsElementsFamilyByRws );
 
     # create the default type for the elements
     fam!.defaultType := NewType( fam, IsPackedElementDefaultRep );
@@ -382,14 +383,12 @@ function( sc )
     fi;
 
     # create a new family in the category <IsElementsFamilyByRws>
-    fam := NewFamily5( NewType( FamilyOfFamilies,
-                           IsFamily and IsFamilyDefaultRep
-                           and IsElementsFamilyBy8BitsSingleCollector ),
+    fam := NewFamily(
       "MultiplicativeElementsWithInversesFamilyBy8BitsSingleCollector(...)",
       IsMultiplicativeElementWithInverseByPolycyclicCollector
-      and IsAssociativeElement,
-      implied and CanEasilySortElements,
-      CanEasilySortElements);
+        and IsAssociativeElement,
+      CanEasilySortElements and implied,
+      CanEasilySortElements and IsElementsFamilyBy8BitsSingleCollector);
 
     # store the rewriting system
     fam!.rewritingSystem := Immutable(sc);
@@ -421,8 +420,7 @@ function( sc )
 
     # this family has a defining pcgs
     pcs := List( GeneratorsOfRws(sc), x -> ElementByRws(fam,x) );
-    pcs:=PcgsByPcSequenceNC( fam, pcs ) ;
-    SetDefiningPcgs( fam, pcs);
+    SetDefiningPcgs( fam, PcgsByPcSequenceNC( fam, pcs ) );
 
     # that's it
     return fam;
@@ -554,14 +552,12 @@ function( sc )
     fi;
 
     # create a new family in the category <IsElementsFamilyByRws>
-    fam := NewFamily5( NewType( FamilyOfFamilies,
-                           IsFamily and IsFamilyDefaultRep
-                           and IsElementsFamilyBy16BitsSingleCollector ),
+    fam := NewFamily(
       "MultiplicativeElementsWithInversesFamilyBy16BitsSingleCollector(...)",
       IsMultiplicativeElementWithInverseByPolycyclicCollector
       and IsAssociativeElement,
-      implied and CanEasilySortElements,
-      CanEasilySortElements);
+      CanEasilySortElements and implied,
+      CanEasilySortElements and IsElementsFamilyBy16BitsSingleCollector);
 
     # store the rewriting system
     fam!.rewritingSystem := Immutable(sc);
@@ -725,14 +721,12 @@ function( sc )
     fi;
 
     # create a new family in the category <IsElementsFamilyByRws>
-    fam := NewFamily5( NewType( FamilyOfFamilies,
-                           IsFamily and IsFamilyDefaultRep
-                           and IsElementsFamilyBy32BitsSingleCollector ),
+    fam := NewFamily(
       "MultiplicativeElementsWithInversesFamilyBy32BitsSingleCollector(...)",
       IsMultiplicativeElementWithInverseByPolycyclicCollector
       and IsAssociativeElement,
-      implied and CanEasilySortElements,
-      CanEasilySortElements);
+      CanEasilySortElements and implied,
+      CanEasilySortElements and IsElementsFamilyBy32BitsSingleCollector);
 
     # store the rewriting system
     fam!.rewritingSystem := Immutable(sc);
@@ -1230,10 +1224,3 @@ function( fgrp, rels )
         GeneratorsOfGroup(fgrp),
         rels );
 end );
-
-
-#############################################################################
-##
-
-#E
-

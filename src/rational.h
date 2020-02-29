@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  rational.h                  GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares  the  functions  for  the  artithmetic  of  rationals.
 **
@@ -28,25 +28,25 @@
 *F  NUM_RAT(<rat>)  . . . . . . . . . . . . . . . . . numerator of a rational
 *F  DEN_RAT(<rat>)  . . . . . . . . . . . . . . . . denominator of a rational
 */
-static inline Obj NUM_RAT(Obj rat)
+EXPORT_INLINE Obj NUM_RAT(Obj rat)
 {
     GAP_ASSERT(TNUM_OBJ(rat) == T_RAT);
     return CONST_ADDR_OBJ(rat)[0];
 }
 
-static inline Obj DEN_RAT(Obj rat)
+EXPORT_INLINE Obj DEN_RAT(Obj rat)
 {
     GAP_ASSERT(TNUM_OBJ(rat) == T_RAT);
     return CONST_ADDR_OBJ(rat)[1];
 }
 
-static inline void SET_NUM_RAT(Obj rat, Obj val)
+EXPORT_INLINE void SET_NUM_RAT(Obj rat, Obj val)
 {
     GAP_ASSERT(TNUM_OBJ(rat) == T_RAT);
     ADDR_OBJ(rat)[0] = val;
 }
 
-static inline void SET_DEN_RAT(Obj rat, Obj val)
+EXPORT_INLINE void SET_DEN_RAT(Obj rat, Obj val)
 {
     GAP_ASSERT(TNUM_OBJ(rat) == T_RAT);
     ADDR_OBJ(rat)[1] = val;

@@ -1,8 +1,12 @@
 #############################################################################
 ##
-#W  test.gi                 GAP library                          Frank Lübeck
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Lübeck.
 ##
-#Y  Copyright (C) 2011 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains functions for test files.
 ##
@@ -11,26 +15,85 @@
 ##    return First([1..Length(a)],  i-> not IsBound(b[i]) or b[i] <> a[i]);
 ##  end;
 
-InstallGlobalFunction(ParseTestInput, function(str, ignorecomments)
-  local lines, inp, pos, outp, ign, i;
+InstallGlobalFunction(ParseTestInput, function(str, ignorecomments, fnam)
+  local lines, inp, pos, outp, ign, commands, i, skipstate, checkifelseendif, foundcmd, testError;
   lines := SplitString(str, "\n", "");
   inp := [];
   pos := [];
   outp := [];
   ign := [];
+  commands := [];
   i := 1;
+  testError := function(s)
+     if IsStream(fnam) then
+        ErrorNoReturn(s, " in test stream, line ", i);
+    else
+        ErrorNoReturn(s, " at ", fnam, ":", i);
+    fi;
+  end;
+  checkifelseendif := l -> ForAny(["#@if","#@else","#@fi"], x -> StartsWith(l, x));
+  # Set to true if we find a #@if, #@else or #@endif. Used to check these do not
+  # occur in the middle of a single input/output test block.
+  foundcmd := false;
+  # skipstate represents the current status of '#@if/#@else/#@fi'
+  # 0: not in a '#@if'
+  # 1: in a #@if with a true condition
+  #-1: in a #@if with a false condition
+  # 2: in the #@else of a #@if with a false condition
+  #-2: in the #@else of a #@if with a true condition
+  # Code is executed whenever skipstate >= 0
+  skipstate := 0;
   while i <= Length(lines) do
-    if i = 1 and (Length(lines[1]) = 0 or lines[1][1] = '#') then
+    if checkifelseendif(lines[i]) then
+        foundcmd := true;
+        Add(ign, i);
+        if StartsWith(lines[i], "#@if") then
+            if skipstate <> 0 then
+                testError("Invalid test file: Nested #@if");
+            fi;
+            if EvalString(lines[i]{[5..Length(lines[i])]}) then
+                skipstate := 1;
+            else
+                skipstate := -1;
+            fi;
+        elif StartsWith(lines[i], "#@else") then
+            if skipstate = 0 then
+                testError("Invalid test file: #@else without #@if");
+            elif AbsoluteValue(skipstate) = 2 then
+                testError("Invalid test file: two #@else");
+            else
+                # change 1 -> -2, -1 -> 2
+                skipstate := skipstate * -2;
+            fi;
+        else # Must be #@fi
+            if skipstate = 0 then
+                testError("Invalid test file: #@fi without #@if");
+            fi;
+            skipstate := 0;
+        fi;
+
+        i := i + 1;
+        continue;
+    fi;
+
+    if skipstate < 0 then
+        Add(ign, i);
+        i := i + 1;
+        continue;
+    fi;
+
+
+    if Length(outp) = 0 and Length(inp) = 0 and (Length(lines[i]) = 0 or lines[i][1] = '#') then
       if ignorecomments = true then
         # ignore comment lines and empty lines at beginning of file
-        while i <= Length(lines) and (Length(lines[i]) = 0 or lines[i][1] = '#')
-        do
-          Add(ign, i);
-          i := i+1;
-        od;
+        Add(ign, i);
+        if Length(lines[i]) > 3 and lines[i]{[1..2]} = "#@" then
+          Add(commands, lines[i]);
+        fi;
+        i := i+1;
       else
         Add(inp, "\n");
-        i := 2;
+        i := i+1;
         while i <= Length(lines) and (Length(lines[i]) = 0 or lines[i][1] = '#') do
           i := i+1;
         od;
@@ -38,36 +101,50 @@ InstallGlobalFunction(ParseTestInput, function(str, ignorecomments)
         Add(outp[1], '\n');
       fi;
     elif Length(lines[i]) = 0 and ignorecomments = true and i < Length(lines) 
-         and Length(lines[i+1]) > 0 and lines[i+1][1] = '#' then
+         and StartsWith(lines[i+1], "#") then
       # ignore an empty line followed by comment lines
       Add(ign, i);
       i := i+1;
-      while i <= Length(lines) and Length(lines[i]) > 0 and
-            lines[i][1] = '#' do
+      while i <= Length(lines) and StartsWith(lines[i], "#") and
+            not StartsWith(lines[i], "#@") do
         Add(ign, i);
         i := i+1;
       od;
-    elif Length(lines[i]) > 4 and lines[i]{[1..5]} = "gap> " then
+    elif StartsWith(lines[i], "gap> ") then
+      foundcmd := false;
       Add(outp, "");
       Add(inp, lines[i]{[6..Length(lines[i])]});
       Add(inp[Length(inp)], '\n');
       Add(pos, i);
       i := i+1;
-    elif Length(lines[i]) > 1 and lines[i]{[1..2]} = "> " then
+    elif StartsWith(lines[i], "> ") then
+      if foundcmd then
+        testError("Invalid test file: #@ command found in the middle of a single test");
+      fi;
       Append(inp[Length(inp)], lines[i]{[3..Length(lines[i])]});
       Add(inp[Length(inp)], '\n');
       i := i+1;
+    elif StartsWith(lines[i], ">\t") then
+        testError("Invalid test file: Continuation prompt '> ' followed by a tab, expected a regular space");
     elif Length(outp) > 0 then
+      if foundcmd then
+        testError("Invalid test file: #@ command found in the middle of a single test");
+      fi;
       Append(outp[Length(outp)], lines[i]);
       Add(outp[Length(outp)], '\n');
       i := i+1;
     else
-      Error("Invalid data at line ", i, " of test file");
+      testError("Invalid test file");
       i := i+1;
     fi;
   od;
+
+  if skipstate <> 0 then
+    testError("Invalid test file: Unterminated #@if");
+  fi;
+
   Add(pos, ign);
-  return [inp, outp, pos];
+  return rec( inp := inp, outp := outp, pos := pos, commands := commands );
 end);
 
 InstallGlobalFunction(ParseTestFile, function(arg)
@@ -82,15 +159,15 @@ InstallGlobalFunction(ParseTestFile, function(arg)
   if str = fail then
     ErrorNoReturn("Cannot read file ",fnam,"\n");
   fi;
-  return ParseTestInput(str, ignorecomments);
+  return ParseTestInput(str, ignorecomments, fnam);
 end);
 
 InstallGlobalFunction(RunTests, function(arg)
   local tests, opts, breakOnError, inp, outp, pos, cmp, times, ttime, nrlines,
-        s, res, fres, t, f, i;
+        s, res, fres, t, f, i, gaproot, localbag;
   # don't enter break loop in case of error during test
   tests := arg[1];
-  opts := rec( breakOnError := false, showProgress := "some" );
+  opts := rec( breakOnError := false, showProgress := "some", localdef := false );
   if not IS_OUTPUT_TTY() then
     opts.showProgress := false;
   fi;
@@ -100,15 +177,15 @@ InstallGlobalFunction(RunTests, function(arg)
     od;
   fi;
 
-  # we collect outputs and add them as 4th entry to 'tests'
-  # also collect timings and add them as 5th entry to 'tests'
-  inp := tests[1];
-  outp := tests[2];
-  pos := tests[3];
+  # we collect outputs and add them to 'tests.cmp'
+  # also collect timings and add them to 'tests.times'
+  inp := tests.inp;
+  outp := tests.outp;
+  pos := tests.pos;
   cmp := [];
   times := [];
-  tests[4] := cmp;
-  tests[5] := times;
+  tests.cmp := cmp;
+  tests.times := times;
 
   if Length(inp) = 0 then
     return;
@@ -117,6 +194,13 @@ InstallGlobalFunction(RunTests, function(arg)
   breakOnError := BreakOnError;
   BreakOnError := opts.breakOnError;
 
+  localbag := false;
+  if opts.localdef <> false then
+    # Create a local variables bag for the variables listed in
+    # #@local (if it exists). We run the test in this context
+    # so it does not create/overwrite global variables
+    localbag := CREATE_LOCAL_VARIABLES_BAG(opts.localdef);
+  fi;
   ttime := Runtime();
   nrlines := pos[Length(pos) - 1];
   for i in [1..Length(inp)] do
@@ -132,10 +216,20 @@ InstallGlobalFunction(RunTests, function(arg)
     res := "";
     fres := OutputTextString(res, false);
     t := Runtime();
-    READ_STREAM_LOOP(s, fres);
+    if localbag <> false then
+        READ_STREAM_LOOP_WITH_CONTEXT(s, fres, localbag);
+    else
+        READ_STREAM_LOOP(s, fres);
+    fi;
     t := Runtime() - t;
     CloseStream(fres);
     CloseStream(s);
+    # check whether the user aborted by pressing ctrl-C
+    if StartsWith(res, "Error, user interrupt") then
+        BreakOnError := breakOnError;
+        Error("user interrupt");
+        BreakOnError := opts.breakOnError;
+    fi;
     Add(cmp, res);
     Add(times, t);
   od;
@@ -169,6 +263,24 @@ TEST.compareFunctions.uptowhitespace := function(a, b)
   return a=b;
 end;
 
+##
+## CREATE_LOCAL_VARIABLES_BAG(namelist)
+##
+## Given a (possibly empty) comma separated string 'namelist',
+## create a local variable bag which contains the names in 'namelist'.
+##
+InstallGlobalFunction(CREATE_LOCAL_VARIABLES_BAG, function(namelist)
+    local localvars, func;
+    NormalizeWhitespace(namelist);
+    if IsEmpty(namelist) then
+        localvars := "";
+    else
+        localvars := Concatenation("local ", namelist, ";");
+    fi;
+    func := Concatenation("(function() ", localvars,
+                          "return GetCurrentLVars(); end)()");
+    return EvalString(func);
+end);
 
 ##  
 ##  <#GAPDoc Label="Test">
@@ -182,6 +294,8 @@ end;
 ##  lines, compares the actual output with the output stored in 
 ##  <Arg>fname</Arg> and reports differences. With an optional record as
 ##  argument <Arg>optrec</Arg> details of this process can be adjusted.
+##  Note that the <C>rewriteToFile</C> option is especially useful for
+##  generating test files.
 ##  <P/>
 ##  More precisely, the content of <Arg>fname</Arg> must have the following
 ##  format. <Br/>
@@ -195,6 +309,33 @@ end;
 ##  All other lines are considered as &GAP; output from the
 ##  preceding &GAP; input.
 ##  <P/>
+##  Lines which begin "#@" define special configuration options for tests.
+##  The <C>#@local</C> and <C>#@exec</C> options can only be used before
+##  any &GAP; input, and the other commands can only be used between
+##  individual tests (just before a line starting <C>gap></C>, or at end
+##  of the file).
+##  Currently defined options are:
+##  <List>
+##  <Mark>#@local identifierlist</Mark>
+##  <Item>Run all the tests in the input as if it is in a function with local variable list
+##  <C>identifierlist</C>, which is a comma-separated list of
+##  identifers. Multiple #@local lines may be used.
+##  </Item>
+##  <Mark>#@exec gapcode</Mark>
+##  <Item>Execute the code <C>gapcode</C> before any test in the input is run. This allows
+##  defining global variables when using <C>#@local</C>.
+##  </Item>
+##  <Mark>#@if EXPR ...  [#@else] ... #@fi</Mark>
+##  <Item>A <C>#@if</C> allows to conditionally skip parts of the test input depending on
+##  the value of a boolean expression. The exact behavior is done as follows:
+##  <P/>
+##  If the &GAP; expression <C>EXPR</C> evaluates to <C>true</C>, then the lines after the
+##  <C>#@if</C> are used until either a <C>#@else</C> or <C>#@fi</C> is
+##  reached. If a <C>#@else</C> is present then the code after the <C>#@else</C>
+##  is used if and only if <C>EXPR</C> evaluated to <C>false</C>. Finally,
+##  once <C>#endif</C> is reached, evaluation continues normally.
+##  </Item>
+##  </List>
 ##  By default the actual &GAP; output is compared exactly with the
 ##  stored output, and if these are different some information about the 
 ##  differences is printed.
@@ -234,7 +375,11 @@ end;
 ##  and that file is written with the same input and comment lines as
 ##  <Arg>fname</Arg> but the output substituted by the newly generated
 ##  version; if it is bound to <K>true</K>, then this is treated as if
-##  it was bound to <Arg>fname</Arg> (default is <K>false</K>).</Item>
+##  it was bound to <Arg>fname</Arg> (default is <K>false</K>). This is
+##  especially useful for generating test files because it ensures that
+##  the test files are formatted exactly as <Ref Func="Test" /> expects
+##  them to be.
+##  </Item>
 ##  <Mark><C>writeTimings</C></Mark>
 ##  <Item>If this is bound to a string it is considered as a file name,
 ##  that file is written and contains timing information for each input 
@@ -329,7 +474,7 @@ end;
 ##  
 InstallGlobalFunction("Test", function(arg)
   local fnam, nopts, opts, size, full, pf, failures, lines, ign, new, n,
-        cT, ok, oldtimes, thr, delta, len, c, i, j, d;
+        cT, ok, oldtimes, thr, delta, len, c, i, j, d, localdef, line;
   
   # get arguments and set options
   fnam := arg[1];
@@ -379,6 +524,7 @@ InstallGlobalFunction("Test", function(arg)
            end,
            subsWindowsLineBreaks := true,
            returnNumFailures := false,
+           localdef := false,
          );
   if not IS_OUTPUT_TTY() then
     opts.showProgress := false;
@@ -387,7 +533,7 @@ InstallGlobalFunction("Test", function(arg)
   if IsHPCGAP then
     # HPCGAP's window size varies in different threads
     opts.compareFunction := "uptowhitespace";
-    # HPCGAP's output is not compatible with changing lines
+    # HPC-GAP's output is not compatible with changing lines
     opts.showProgress := false;
   fi;
 
@@ -422,31 +568,46 @@ InstallGlobalFunction("Test", function(arg)
   fi;
   
   # split input into GAP input, GAP output and comments
-  pf := ParseTestInput(full, opts.ignoreComments);
+  pf := ParseTestInput(full, opts.ignoreComments, fnam);
 
   # Warn if we have not found any tests in the file
-  if IsEmpty(pf[1]) then
+  if IsEmpty(pf.inp) then
     Info(InfoWarning, 1, "Test: File does not contain any tests!");
   fi;
+  for line in pf.commands do
+    if StartsWith(line, "#@local") then
+      line := line{[8..Length(line)]};
+      if opts.localdef = false then
+        opts.localdef := line;
+      else
+        opts.localdef := Concatenation(opts.localdef, ", ", line);
+      fi;
+    elif StartsWith(line, "#@exec") then
+      Read(InputTextString(Concatenation(line{[7..Length(line)]}, ";\n")));
+    else
+      ErrorNoReturn("Invalid #@ test option: ", line);
+    fi;
+  od;
   
   # run the GAP inputs and collect the outputs and the timings
   RunTests(pf, rec(breakOnError := opts.breakOnError, 
-                   showProgress := opts.showProgress));
+                   showProgress := opts.showProgress,
+                   localdef     := opts.localdef));
 
   # reset screen width
   SizeScreen(size);
 
   # check for and report differences
   failures := 0;
-  for i in [1..Length(pf[1])] do
-    if opts.compareFunction(pf[2][i], pf[4][i]) <> true then
+  for i in [1..Length(pf.inp)] do
+    if opts.compareFunction(pf.outp[i], pf.cmp[i]) <> true then
       if not opts.ignoreSTOP_TEST or 
-         PositionSublist(pf[1][i], "STOP_TEST") <> 1 then
+         PositionSublist(pf.inp[i], "STOP_TEST") <> 1 then
         failures := failures + 1;
-        opts.reportDiff(pf[1][i], pf[2][i], pf[4][i], fnam, pf[3][i], pf[5][i]);
+        opts.reportDiff(pf.inp[i], pf.outp[i], pf.cmp[i], fnam, pf.pos[i], pf.times[i]);
       else
         # print output of STOP_TEST
-        Print(pf[4][i]);
+        Print(pf.cmp[i]);
       fi;
     fi;
   od;
@@ -457,21 +618,21 @@ InstallGlobalFunction("Test", function(arg)
   fi;
   if IsString(opts.rewriteToFile) then
     lines := SplitString(full, "\n", "");
-    ign := pf[3][Length(pf[3])];
+    ign := pf.pos[Length(pf.pos)];
     new := [];
     for i in ign do
       new[i] := lines[i];
       Add(new[i], '\n');
     od;
-    for i in [1..Length(pf[1])] do
-      n := Number(pf[1][i], c-> c = '\n'); 
-      new[pf[3][i]] := "";
-      for j in [1..Number(pf[1][i], c-> c = '\n')] do
-        Append(new[pf[3][i]], lines[pf[3][i]+j-1]);
-        Add(new[pf[3][i]], '\n');
+    for i in [1..Length(pf.inp)] do
+      n := Number(pf.inp[i], c-> c = '\n'); 
+      new[pf.pos[i]] := "";
+      for j in [1..Number(pf.inp[i], c-> c = '\n')] do
+        Append(new[pf.pos[i]], lines[pf.pos[i]+j-1]);
+        Add(new[pf.pos[i]], '\n');
       od; 
-      if PositionSublist(pf[1][i], "STOP_TEST") <> 1 then
-        Append(new[pf[3][i]], pf[4][i]);
+      if PositionSublist(pf.inp[i], "STOP_TEST") <> 1 then
+        Append(new[pf.pos[i]], pf.cmp[i]);
       fi;
     od;
     new := Concatenation(Compacted(new));
@@ -481,7 +642,7 @@ InstallGlobalFunction("Test", function(arg)
   # maybe store the timings into a file
   if IsString(opts.writeTimings) then
     PrintTo(opts.writeTimings, "TEST.Timings.(\"", opts.writeTimings,
-            "\") := \n", pf[5], ";\n");
+            "\") := \n", pf.times, ";\n");
   fi;
 
   # maybe compare timings
@@ -502,29 +663,31 @@ InstallGlobalFunction("Test", function(arg)
       else 
         delta := 10;
       fi;
-      for i in [1..Length(pf[1])] do
+      for i in [1..Length(pf.inp)] do
         if oldtimes[i] >= thr and 
-           AbsInt(oldtimes[i] - pf[5][i])/oldtimes[i] > delta/100 then
-          opts.reportTimeDiff(pf[1][i], fnam, pf[3][i], oldtimes[i], pf[5][i]);
+           AbsInt(oldtimes[i] - pf.times[i])/oldtimes[i] > delta/100 then
+          opts.reportTimeDiff(pf.inp[i], fnam, pf.pos[i], oldtimes[i], pf.times[i]);
         fi;
       od;
       # compare total times
       len := Length(oldtimes);
       if oldtimes[len] >= thr and
-         AbsInt(oldtimes[len] - pf[5][len])/oldtimes[len] > delta/100 then
-         d := String(Int(100*(pf[5][len] - oldtimes[len])/oldtimes[len]));
+         AbsInt(oldtimes[len] - pf.times[len])/oldtimes[len] > delta/100 then
+         d := String(Int(100*(pf.times[len] - oldtimes[len])/oldtimes[len]));
          if d[1] <> '-' then
            d := Concatenation("+", d);
          fi;
          Print("########> Total time for ", fnam, ":\n");
-         Print("# Old time: ", oldtimes[len],"   New time: ", pf[5][len],
+         Print("# Old time: ", oldtimes[len],"   New time: ", pf.times[len],
          "    (", d, "%)\n");
       fi;
     fi;
   fi;
 
-  # store internal test data in TEST
-  TEST.lastTestData := pf;
+  # store internal test data in TEST, in old list format
+  TEST.lastTestData := [pf.inp, pf.outp, pf.pos, pf.cmp, pf.times];
+  # And also new record format
+  TEST.lastTestDataRec := pf;
 
   # if requested, return number of failures
   if opts.returnNumFailures then
@@ -550,6 +713,8 @@ end);
 ##  printed, and <K>true</K> returned if all tests passed.
 ##  <P/>
 ##  If the optional argument <Arg>optrec</Arg> is given it must be a record.
+##  Note that the <C>rewriteToFile</C> option is especially useful for
+##  generating test files.
 ##  The following components of <Arg>optrec</Arg> are recognized and can change
 ##  the default behaviour of <Ref Func="TestDirectory" />:
 ##  <List>
@@ -570,6 +735,9 @@ end);
 ##  <Mark><C>rewriteToFile</C></Mark>
 ##  <Item>If <K>true</K>, then rewrite each test file to disc, with the output substituted
 ##  by the results of running the test (defaults to <K>false</K>).
+##  This is especially useful for generating test files because it ensures that
+##  the test files are formatted exactly as <Ref Func="Test" /> expects
+##  them to be.
 ##  </Item>
 ##  <Mark><C>exclude</C></Mark>
 ##  <Item>A list of file and directory names which will be excluded from
@@ -807,14 +975,14 @@ InstallGlobalFunction( "TestPackage", function(pkgname)
 local testfile, str;
 if not IsBound( GAPInfo.PackagesInfo.(pkgname) ) then
     Print("#I  No package with the name ", pkgname, " is available\n");
-    return;
+    return fail;
 elif LoadPackage( pkgname ) = fail then
     Print( "#I ", pkgname, " package can not be loaded\n" );
-    return;
+    return fail;
 elif not IsBound( GAPInfo.PackagesInfo.(pkgname)[1].TestFile ) then
     Print("#I No standard tests specified in ", pkgname, " package, version ",
           GAPInfo.PackagesInfo.(pkgname)[1].Version,  "\n");
-    return;
+    return fail;
 else
     testfile := Filename( DirectoriesPackageLibrary( pkgname, "" ), 
                           GAPInfo.PackagesInfo.(pkgname)[1].TestFile );
@@ -822,21 +990,31 @@ else
     if not IsString( str ) then
         Print( "#I Test file `", testfile, "' for package `", pkgname, 
         " version ", GAPInfo.PackagesInfo.(pkgname)[1].Version, " is not readable\n" );
-        return;
+        return fail;
     fi;
     if EndsWith(testfile,".tst") then
         if Test( testfile, rec(compareFunction := "uptowhitespace") ) then
             Print( "#I  No errors detected while testing package ", pkgname,
                    " version ", GAPInfo.PackagesInfo.(pkgname)[1].Version, 
                    "\n#I  using the test file `", testfile, "'\n");
+            return true;
         else
             Print( "#I  Errors detected while testing package ", pkgname, 
                    " version ", GAPInfo.PackagesInfo.(pkgname)[1].Version, 
                    "\n#I  using the test file `", testfile, "'\n");
+            return false;
         fi;
     elif not READ( testfile ) then
         Print( "#I Test file `", testfile, "' for package `", pkgname,
         " version ", GAPInfo.PackagesInfo.(pkgname)[1].Version, " is not readable\n" );
+        return fail;
+    else
+        # At this point, the READ succeeded, but we have no idea what the
+        # outcome of that test was. Hopefully, that file printed a message of
+        # its own and then terminated GAP with a suitable error code (e.g. by
+        # using TestDirectory with exitGAP:=true); in that case we never get
+        # here and all is fine.
+        return fail;
     fi;
 fi;
 end);

@@ -1,12 +1,8 @@
 #############################################################################
 ##
-#W  vspcmat.tst                 GAP library                     Thomas Breuer
-##
-##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-##
 ##  (The test file 'vspcrow.tst' should contain the same tests.)
 ##
+#@local b,bv,c,c1,c2,f,lc,mb,n,u,uu,uuu,uuuu,v,w,ww,z
 gap> START_TEST("vspcmat.tst");
 
 #############################################################################
@@ -14,7 +10,7 @@ gap> START_TEST("vspcmat.tst");
 ##  1. Construct Gaussian and non-Gaussian matrix spaces
 ##
 gap> z:= LeftModuleByGenerators( GF(3), [], [ [ 0*Z(9) ] ] );
-<vector space over GF(3), with 0 generators>
+<vector space of dimension 0 over GF(3)>
 gap> IsGaussianMatrixSpace( z );
 true
 gap> IsNonGaussianMatrixSpace( z );
@@ -326,6 +322,7 @@ gap> mb:= MutableBasis( Rationals,
 gap> IsMutableBasisOfGaussianMatrixSpaceRep( mb );
 true
 gap> CloseMutableBasis( mb, [ [ E(4), 0 ], [ 0, 0 ] ] );
+true
 gap> IsMutableBasisOfGaussianMatrixSpaceRep( mb );
 false
 gap> BasisVectors( mb );
@@ -336,8 +333,11 @@ gap> mb:= MutableBasis( Rationals,
 >            [ [ 1, 1 ], [ 1, 1 ] ] ] );
 <mutable basis over Rationals, 2 vectors>
 gap> CloseMutableBasis( mb, [ [ 1, 2 ], [ 3, 4 ] ] );
+true
 gap> CloseMutableBasis( mb, [ [ 1, 2 ], [ 3, 5 ] ] );
+true
 gap> CloseMutableBasis( mb, [ [ 0, 0 ], [ 0, 7 ] ] );
+false
 gap> IsMutableBasisOfGaussianMatrixSpaceRep( mb );
 true
 gap> bv:= BasisVectors( mb );;
@@ -351,8 +351,11 @@ SemiEchelonBasis( <vector space of dimension 4 over Rationals>,
 gap> mb:= MutableBasis( Rationals, [], [ [ 0, 0 ], [ 0, 0 ] ] );
 <mutable basis over Rationals, 0 vectors>
 gap> CloseMutableBasis( mb, [ [ 1, 2 ], [ 3, 4 ] ] );
+true
 gap> CloseMutableBasis( mb, [ [ 1, 2 ], [ 3, 5 ] ] );
+true
 gap> CloseMutableBasis( mb, [ [ 0, 0 ], [ 0, 7 ] ] );
+false
 gap> IsMutableBasisOfGaussianMatrixSpaceRep( mb );
 true
 gap> BasisVectors( mb );
@@ -363,11 +366,22 @@ SemiEchelonBasis( <vector space of dimension 2 over Rationals>,
 gap> mb:= MutableBasis( Rationals, [], [ [ 0, 0 ], [ 0, 0 ] ] );
 <mutable basis over Rationals, 0 vectors>
 gap> CloseMutableBasis( mb, [ [ 1, 0 ], [ 0, 1 ] ] );
+true
 gap> CloseMutableBasis( mb, [ [ 0, 1 ], [ 1, 0 ] ] );   
+true
 gap> IsContainedInSpan( mb, [ [ 1, 1 ], [ 1, 1 ] ] );
 true
-gap> STOP_TEST( "vspcmat.tst", 1);
 
 #############################################################################
 ##
-#E
+##  8. Methods for mutable bases of non-Gaussian matrix spaces
+##
+gap> mb:= MutableBasis( Rationals, [ [ [ E(4) ] ] ] );
+<mutable basis over Rationals, 1 vectors>
+gap> CloseMutableBasis( mb, [ [ E(3) ] ] );
+true
+gap> CloseMutableBasis( mb, [ [ E(3)+E(4) ] ] );
+false
+
+##
+gap> STOP_TEST( "vspcmat.tst", 1);

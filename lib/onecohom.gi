@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  onecohom.gi                     GAP library                  Frank Celler
-##                                                           Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler, Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997, Lehrstuhl D für Mathematik, RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci.,University of St Andrews,Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the methods for operations for the 1-Cohomology
 ##
@@ -158,7 +158,7 @@ local  hom,fg,fpi,fpg,nt,fam;
       fi;
       fpg:=FreeGeneratorsOfFpGroup(Range(fpi));
       ocr.factorpres:=[fpg,RelatorsOfFpGroup(Range(fpi)),
-		      List(MappingGeneratorsImages(fpi)[2],
+		      List(GeneratorsOfGroup(Range(fpi)),
 			    i->PreImagesRepresentative(fpi,i))];
       if not IsBound(ocr.generators) then
 	ocr.generators:=List(ocr.factorpres[3],i->PreImagesRepresentative(hom,i));
@@ -1238,14 +1238,14 @@ local   cobounds,cocycles,    # base of one coboundaries and cocycles
                 Append(RS,OCSmallEquationMatrix(ocr,rels[i],g));
             od;
             RR:=OCSmallEquationVector(ocr,rels[i]);
-	    MultRowVector(RR,-One(ocr.field));
+	    MultVector(RR,-One(ocr.field));
 
         else
             for g in gens do
                 Append(RS,OCEquationMatrix(ocr,rels[i],g));
             od;
             RR:=OCEquationVector(ocr,rels[i]);
-	    MultRowVector(RR,-One(ocr.field));
+	    MultVector(RR,-One(ocr.field));
 
         fi;
 
@@ -1500,10 +1500,3 @@ local oc,l;
     fi;
   fi;
 end);
-
-
-#############################################################################
-##
-#E  onecohom.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##
-

@@ -372,7 +372,15 @@
   [33X[0;0Yreturns the determinant of a square matrix [3Xmat[103X over an arbitrary commutative
   ring with one using the division free method of Mahajan and Vinay [MV97].[133X
   
-  [1X24.4-7 IsMonomialMatrix[101X
+  [1X24.4-7 IsEmptyMatrix[101X
+  
+  [33X[1;0Y[29X[2XIsEmptyMatrix[102X( [3XM[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10YA boolean[133X
+  
+  [33X[0;0YIs  [9Xtrue[109X  if  [3XM[103X either has zero columns or zero rows and [9Xfalse[109X otherwise. In
+  other words, a matrix is empty if it has no entries.[133X
+  
+  [1X24.4-8 IsMonomialMatrix[101X
   
   [33X[1;0Y[29X[2XIsMonomialMatrix[102X( [3Xmat[103X ) [32X property[133X
   
@@ -384,26 +392,56 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X24.4-8 IsDiagonalMat[101X
+  [1X24.4-9 IsDiagonalMatrix[101X
   
-  [33X[1;0Y[29X[2XIsDiagonalMat[102X( [3Xmat[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsDiagonalMatrix[102X( [3Xmat[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsDiagonalMat[102X( [3Xmat[103X ) [32X property[133X
   
-  [33X[0;0Yreturns  true  if  mat  has  only  zero entries off the main diagonal, false
-  otherwise.[133X
+  [33X[0;0Yreturn  [9Xtrue[109X  if the matrix [3Xmat[103X has only zero entries off the main diagonal,
+  and [9Xfalse[109X otherwise.[133X
   
-  [1X24.4-9 IsUpperTriangularMat[101X
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XIsDiagonalMatrix( [ [ 1 ] ] );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsDiagonalMatrix( [ [ 1, 0, 0 ], [ 0, 1, 0 ] ] );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsDiagonalMatrix( [ [ 0, 1 ], [ 1, 0 ] ] );[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
   
-  [33X[1;0Y[29X[2XIsUpperTriangularMat[102X( [3Xmat[103X ) [32X operation[133X
+  [1X24.4-10 IsUpperTriangularMatrix[101X
   
-  [33X[0;0Yreturns  true  if  mat  has only zero entries below the main diagonal, false
-  otherwise.[133X
+  [33X[1;0Y[29X[2XIsUpperTriangularMatrix[102X( [3Xmat[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsUpperTriangularMat[102X( [3Xmat[103X ) [32X property[133X
   
-  [1X24.4-10 IsLowerTriangularMat[101X
+  [33X[0;0Yreturn [9Xtrue[109X if the matrix [3Xmat[103X has only zero entries below the main diagonal,
+  and [9Xfalse[109X otherwise.[133X
   
-  [33X[1;0Y[29X[2XIsLowerTriangularMat[102X( [3Xmat[103X ) [32X operation[133X
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XIsUpperTriangularMatrix( [ [ 1 ] ] );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsUpperTriangularMatrix( [ [ 1, 2, 3 ], [ 0, 5, 6 ] ] );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsUpperTriangularMatrix( [ [ 0, 1 ], [ 1, 0 ] ] );[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
   
-  [33X[0;0Yreturns  true  if  mat  has only zero entries below the main diagonal, false
-  otherwise.[133X
+  [1X24.4-11 IsLowerTriangularMatrix[101X
+  
+  [33X[1;0Y[29X[2XIsLowerTriangularMatrix[102X( [3Xmat[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsLowerTriangularMat[102X( [3Xmat[103X ) [32X property[133X
+  
+  [33X[0;0Yreturn [9Xtrue[109X if the matrix [3Xmat[103X has only zero entries above the main diagonal,
+  and [9Xfalse[109X otherwise.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XIsLowerTriangularMatrix( [ [ 1 ] ] );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsLowerTriangularMatrix( [ [ 1, 0, 0 ], [ 2, 3, 0 ] ] );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsLowerTriangularMatrix( [ [ 0, 1 ], [ 1, 0 ] ] );[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
   
   
   [1X24.5 [33X[0;0YMatrix Constructions[133X[101X
@@ -1071,16 +1109,17 @@
   
   [1X24.12 [33X[0;0YTriangular Matrices[133X[101X
   
-  [1X24.12-1 DiagonalOfMat[101X
+  [1X24.12-1 DiagonalOfMatrix[101X
   
+  [33X[1;0Y[29X[2XDiagonalOfMatrix[102X( [3Xmat[103X ) [32X function[133X
   [33X[1;0Y[29X[2XDiagonalOfMat[102X( [3Xmat[103X ) [32X function[133X
   
-  [33X[0;0Yreturns  the diagonal of the matrix [3Xmat[103X. If [3Xmat[103X is not a square matrix, then
+  [33X[0;0Yreturn  the  diagonal of the matrix [3Xmat[103X. If [3Xmat[103X is not a square matrix, then
   the  result has the same length as the rows of [3Xmat[103X, and is padded with zeros
   if [3Xmat[103X has fewer rows than columns.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XDiagonalOfMat([[1,2,3],[4,5,6]]);[127X[104X
+    [4X[25Xgap>[125X [27XDiagonalOfMatrix( [ [ 1, 2, 3 ], [ 4, 5, 6 ] ] );[127X[104X
     [4X[28X[ 1, 5, 0 ][128X[104X
   [4X[32X[104X
   
@@ -1089,11 +1128,15 @@
   [33X[1;0Y[29X[2XUpperSubdiagonal[102X( [3Xmat[103X, [3Xpos[103X ) [32X operation[133X
   
   [33X[0;0Yreturns a mutable list containing the entries of the [3Xpos[103Xth upper subdiagonal
-  of [3Xmat[103X.[133X
+  of the matrix [3Xmat[103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XUpperSubdiagonal(mat,1);[127X[104X
+    [4X[25Xgap>[125X [27XUpperSubdiagonal( [ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ], 1 );[127X[104X
     [4X[28X[ 2, 6 ][128X[104X
+    [4X[25Xgap>[125X [27XUpperSubdiagonal( [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ], 1 );[127X[104X
+    [4X[28X[ 2 ][128X[104X
+    [4X[25Xgap>[125X [27XUpperSubdiagonal( [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ], 1 );[127X[104X
+    [4X[28X[ 2, 7 ][128X[104X
   [4X[32X[104X
   
   [1X24.12-3 DepthOfUpperTriangularMatrix[101X
@@ -1126,7 +1169,7 @@
   have  entries in [3XE[103X. Then [2XCharacteristicPolynomial[102X returns the characteristic
   polynomial of the [3XF[103X-linear mapping induced by [3Xmat[103X on the underlying [3XE[103X-vector
   space  of [3Xmat[103X. In this case, the characteristic polynomial is computed using
-  [2XBlownUpMat[102X ([14X24.13-3[114X) for the field extension of [22XE/F[122X generated by the default
+  [2XBlownUpMat[102X ([14X24.13-4[114X) for the field extension of [22XE/F[122X generated by the default
   field.  Thus,  if  [22XF  =  E[122X,  the  result is the same as for the one argument
   version.[133X
   
@@ -1159,7 +1202,30 @@
     [4X[28Xx^4+2*x^2+1[128X[104X
   [4X[32X[104X
   
-  [1X24.13-2 JordanDecomposition[101X
+  [1X24.13-2 RationalCanonicalFormTransform[101X
+  
+  [33X[1;0Y[29X[2XRationalCanonicalFormTransform[102X( [3Xmat[103X ) [32X function[133X
+  
+  [33X[0;0YFor  a  matrix  [10XA[110X,  return a matrix [10XP[110X such that [22XA^P[122X is in rational canonical
+  form  (also  called  Frobenius normal form). The algorithm used is the basic
+  textbook version and thus not of optimal complexity.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xaa:=[[0,-8,12,40,-36,4,0,59,15,-9],[-2,-2,-2,6,-11,1,-1,10,1,0],[127X[104X
+    [4X[25X>[125X [27X[1,5,0,-6,12,-2,0,-12,-4,2],[0,0,0,2,0,0,0,7,0,0],[127X[104X
+    [4X[25X>[125X [27X[0,2,-3,-7,8,-1,0,-7,-3,2],[-5,-4,-6,18,-30,2,-2,35,5,-1],[127X[104X
+    [4X[25X>[125X [27X[-1,-6,6,20,-28,3,0,24,10,-6],[0,0,0,-1,0,0,0,-3,0,0],[127X[104X
+    [4X[25X>[125X [27X[0,0,-1,-2,-2,0,-1,-7,0,0],[0,-8,9,21,-36,4,-2,12,12,-8]];;[127X[104X
+    [4X[25Xgap>[125X [27Xt:=RationalCanonicalFormTransform(aa);;[127X[104X
+    [4X[25Xgap>[125X [27Xaa^t;[127X[104X
+    [4X[28X[ [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],[128X[104X
+    [4X[28X  [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ],[128X[104X
+    [4X[28X  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 ],[128X[104X
+    [4X[28X  [ 0, 0, 0, 0, 0, 1, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 ],[128X[104X
+    [4X[28X  [ 0, 0, 0, 0, 0, 0, 0, 1, 0, -1 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 1, -1 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X24.13-3 JordanDecomposition[101X
   
   [33X[1;0Y[29X[2XJordanDecomposition[102X( [3Xmat[103X ) [32X attribute[133X
   
@@ -1173,7 +1239,7 @@
     [4X[28X  [ [ 0, 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0 ] ] ][128X[104X
   [4X[32X[104X
   
-  [1X24.13-3 BlownUpMat[101X
+  [1X24.13-4 BlownUpMat[101X
   
   [33X[1;0Y[29X[2XBlownUpMat[102X( [3XB[103X, [3Xmat[103X ) [32X function[133X
   
@@ -1192,7 +1258,7 @@
   [33X[0;0YNote  that  the linear transformations act on [13Xrow[113X vectors, i.e., each row of
   the matrix is a concatenation of vectors of [3XB[103X-coefficients.[133X
   
-  [1X24.13-4 BlownUpVector[101X
+  [1X24.13-5 BlownUpVector[101X
   
   [33X[1;0Y[29X[2XBlownUpVector[102X( [3XB[103X, [3Xvector[103X ) [32X function[133X
   
@@ -1200,7 +1266,7 @@
   entries  are  all  in  [22XF[122X.  [2XBlownUpVector[102X returns a row vector over [22XK[122X that is
   obtained by replacing each entry of [3Xvector[103X by its coefficients w.r.t. [3XB[103X.[133X
   
-  [33X[0;0YSo  [2XBlownUpVector[102X  and [2XBlownUpMat[102X ([14X24.13-3[114X) are compatible in the sense that
+  [33X[0;0YSo  [2XBlownUpVector[102X  and [2XBlownUpMat[102X ([14X24.13-4[114X) are compatible in the sense that
   for  a  matrix  [3Xmat[103X  over  [22XF[122X,  [10XBlownUpVector(  [3XB[103X[10X, [3Xmat[103X[10X * [3Xvector[103X[10X )[110X is equal to
   [10XBlownUpMat( [3XB[103X[10X, [3Xmat[103X[10X ) * BlownUpVector( [3XB[103X[10X, [3Xvector[103X[10X )[110X.[133X
   
@@ -1218,7 +1284,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X24.13-5 CompanionMat[101X
+  [1X24.13-6 CompanionMat[101X
   
   [33X[1;0Y[29X[2XCompanionMat[102X( [3Xpoly[103X ) [32X function[133X
   
@@ -1394,9 +1460,9 @@
   
   [1X24.15 [33X[0;0YInverse and Nullspace of an Integer Matrix Modulo an Ideal[133X[101X
   
-  [33X[0;0YThe  following  two operations deal with matrices over a ring, but only care
-  about the residues of their entries modulo some ring element. In the case of
-  the integers and a prime number [22Xp[122X, say, this is effectively computation in a
+  [33X[0;0YThe following operations deal with matrices over a ring, but only care about
+  the  residues  of their entries modulo some ring element. In the case of the
+  integers  and  a  prime  number [22Xp[122X, say, this is effectively computation in a
   matrix over the prime field in characteristic [22Xp[122X.[133X
   
   [1X24.15-1 InverseMatMod[101X
@@ -1414,17 +1480,34 @@
     [4X[28X[ [ 11, 5 ], [ 25, 11 ] ][128X[104X
   [4X[32X[104X
   
-  [1X24.15-2 NullspaceModQ[101X
+  [1X24.15-2 BasisNullspaceModN[101X
   
-  [33X[1;0Y[29X[2XNullspaceModQ[102X( [3XE[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XBasisNullspaceModN[102X( [3XM[103X, [3Xn[103X ) [32X function[133X
   
-  [33X[0;0Y[3XE[103X  must  be  a  matrix  of  integers and [3Xq[103X a prime power. Then [2XNullspaceModQ[102X
-  returns  the  set  of  all  vectors  of  integers  modulo [3Xq[103X, which solve the
-  homogeneous equation system given by [3XE[103X modulo [3Xq[103X.[133X
+  [33X[0;0Y[3XM[103X   must   be   a  matrix  of  integers  and  [3Xn[103X  a  positive  integer.  Then
+  [2XBasisNullspaceModN[102X  returns  a  set [3XB[103X of vectors such that every vector [3Xv[103X of
+  integer  modulo [3Xn[103X satisfying [3Xv[103X [3XM[103X = 0 modulo [3Xn[103X can be expressed by a Z-linear
+  combination of elements of [3XB[103X.[133X
+  
+  [1X24.15-3 NullspaceModQ[101X
+  
+  [33X[1;0Y[29X[2XNullspaceModQ[102X( [3XM[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNullspaceModN[102X( [3XM[103X, [3Xn[103X ) [32X function[133X
+  
+  [33X[0;0Y[3XM[103X  must be a matrix of integers and [3Xn[103X a positive integer. Then [2XNullspaceModN[102X
+  returns  the  set  of  all  vectors  of  integers  modulo [3Xn[103X, which solve the
+  homogeneous equation system [3Xv[103X [3XM[103X = 0 modulo [3Xn[103X.[133X
+  
+  [33X[0;0Y[2XNullspaceModQ[102X is a synonym for [2XNullspaceModN[102X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xmat:= [ [ 1, 3 ], [ 1, 2 ], [ 1, 1 ] ];;  NullspaceModQ( mat, 5 );[127X[104X
-    [4X[28X[ [ 0, 0, 0 ], [ 1, 3, 1 ], [ 2, 1, 2 ], [ 4, 2, 4 ], [ 3, 4, 3 ] ][128X[104X
+    [4X[25Xgap>[125X [27XNullspaceModN( [ [ 2 ] ], 8 );[127X[104X
+    [4X[28X[ [ 0 ], [ 4 ] ][128X[104X
+    [4X[25Xgap>[125X [27XNullspaceModN( [ [ 2, 1 ], [ 0, 2 ] ], 6 );[127X[104X
+    [4X[28X[ [ 0, 0 ], [ 0, 3 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xmat:= [ [ 1, 3 ], [ 1, 2 ], [ 1, 1 ] ];;[127X[104X
+    [4X[25Xgap>[125X [27XNullspaceModN( mat, 5 );[127X[104X
+    [4X[28X[ [ 0, 0, 0 ], [ 1, 3, 1 ], [ 2, 1, 2 ], [ 3, 4, 3 ], [ 4, 2, 4 ] ][128X[104X
   [4X[32X[104X
   
   
@@ -1513,4 +1596,21 @@
   [33X[1;0Y[29X[2XMatrixByBlockMatrix[102X( [3Xblockmat[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns a plain ordinary matrix that is equal to the block matrix [3Xblockmat[103X.[133X
+  
+  
+  [1X24.18 [33X[0;0YLinear Programming[133X[101X
+  
+  [1X24.18-1 SimplexMethod[101X
+  
+  [33X[1;0Y[29X[2XSimplexMethod[102X( [3XA[103X, [3Xb[103X, [3Xc[103X ) [32X function[133X
+  
+  [33X[0;0YFind  a  rational  vector  [3Xx[103X  that  maximizes [22X[3Xx[103X⋅[3Xc[103X[122X, subject to the constraint
+  [22X[3XA[103X⋅[3Xx[103Xle[3Xb[103X[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA:=[[3,1,1,4],[1,-3,2,3],[2,1,3,-1]];;[127X[104X
+    [4X[25Xgap>[125X [27Xb:=[12,7,10];;c:=[2,4,3,1];;[127X[104X
+    [4X[25Xgap>[125X [27XSimplexMethod(A,b,c);[127X[104X
+    [4X[28X[ [ 0, 52/5, 0, 2/5 ], 42 ][128X[104X
+  [4X[32X[104X
   

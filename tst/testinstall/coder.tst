@@ -93,6 +93,17 @@ rec(
 true
 rec(  )
 
+# test special case in CodeRecExprBeginElmExpr
+gap> f:=x-> rec( x:= 1, ("y") := 2, 42 := 3, (43) := 4);; Display(f); f(0);
+function ( x )
+    return rec(
+        x := 1,
+         ("y") := 2,
+        42 := 3,
+        43 := 4 );
+end
+rec( 42 := 3, 43 := 4, x := 1, y := 2 )
+
 #
 # component objects (atomic by default in HPC-GAP)
 #
@@ -193,17 +204,17 @@ true
 #
 gap> l := [1,2,3];;
 gap> function() l![fail] := 42; end();
-Error, PosObj Assignment: <position> must be a positive integer (not a boolean\
- or fail)
+Error, PosObj Assignment: <position> must be a positive small integer (not the\
+ value 'fail')
 gap> function() return l![fail]; end();
-Error, PosObj Element: <position> must be a positive integer (not a boolean or\
- fail)
+Error, PosObj Element: <position> must be a positive small integer (not the va\
+lue 'fail')
 gap> function() return IsBound(l![fail]); end();
-Error, PosObj Element: <position> must be a positive integer (not a boolean or\
- fail)
+Error, PosObj Element: <position> must be a positive small integer (not the va\
+lue 'fail')
 gap> function() Unbind(l![fail]); end();
-Error, PosObj Assignment: <position> must be a positive integer (not a boolean\
- or fail)
+Error, PosObj Assignment: <position> must be a positive small integer (not the\
+ value 'fail')
 
 #
 # posobj
@@ -235,17 +246,17 @@ false
 
 #
 gap> function() l![fail] := 42; end();
-Error, PosObj Assignment: <position> must be a positive integer (not a boolean\
- or fail)
+Error, PosObj Assignment: <position> must be a positive small integer (not the\
+ value 'fail')
 gap> function() return l![fail]; end();
-Error, PosObj Element: <position> must be a positive integer (not a boolean or\
- fail)
+Error, PosObj Element: <position> must be a positive small integer (not the va\
+lue 'fail')
 gap> function() return IsBound(l![fail]); end();
-Error, PosObj Element: <position> must be a positive integer (not a boolean or\
- fail)
+Error, PosObj Element: <position> must be a positive small integer (not the va\
+lue 'fail')
 gap> function() Unbind(l![fail]); end();
-Error, PosObj Assignment: <position> must be a positive integer (not a boolean\
- or fail)
+Error, PosObj Assignment: <position> must be a positive small integer (not the\
+ value 'fail')
 
 #
 # atomic posobj (HPC-GAP)
@@ -277,17 +288,17 @@ false
 
 #
 gap> function() l![fail] := 42; end();
-Error, PosObj Assignment: <position> must be a positive integer (not a boolean\
- or fail)
+Error, PosObj Assignment: <position> must be a positive small integer (not the\
+ value 'fail')
 gap> function() return l![fail]; end();
-Error, PosObj Element: <position> must be a positive integer (not a boolean or\
- fail)
+Error, PosObj Element: <position> must be a positive small integer (not the va\
+lue 'fail')
 gap> function() return IsBound(l![fail]); end();
-Error, PosObj Element: <position> must be a positive integer (not a boolean or\
- fail)
+Error, PosObj Element: <position> must be a positive small integer (not the va\
+lue 'fail')
 gap> function() Unbind(l![fail]); end();
-Error, PosObj Assignment: <position> must be a positive integer (not a boolean\
- or fail)
+Error, PosObj Assignment: <position> must be a positive small integer (not the\
+ value 'fail')
 
 #
 gap> STOP_TEST("coder.tst", 1);

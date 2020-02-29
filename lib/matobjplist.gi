@@ -1,14 +1,18 @@
 #############################################################################
-#
-# matobjplist.gi
-#                                                        by Max Neunhöffer
-#
-# Copyright (C) 2006 by Lehrstuhl D für Mathematik, RWTH Aachen
+##
+##  This file is part of GAP, a system for computational discrete algebra.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
+##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+
+############################################################################
 #
 # This file is a sample implementation for new style vectors and matrices.
 # It stores matrices as dense lists of lists with wrapping.
 #
-############################################################################
 
 ############################################################################
 # Constructors:
@@ -242,6 +246,18 @@ InstallMethod( Vector, "for a list and a plist vector",
     return v;
   end );
 
+# compatibility method for older representations as list of elements
+InstallOtherMethod( ZeroVector, "for an integer and a plist vector/mat",
+  [ IsInt, IsPlistRep ],
+  -1, # rank lower than default as only fallback
+function( l, t )
+  if IsList(t[1]) then
+    return ListWithIdenticalEntries(Length(t[1]),Zero(t[1][1]));
+  else
+    return ListWithIdenticalEntries(Length(t),Zero(t[1]));
+  fi;
+end);
+
 ############################################################################
 # A selection of list operations:
 ############################################################################
@@ -415,29 +431,28 @@ InstallMethod( AddRowVector,
     fi;
   end );
 
-InstallMethod( MultRowVector, "for a plist vector, and a scalar",
+InstallMethod( MultVectorLeft,
+  "for a plist vector, and an object",
   [ IsPlistVectorRep and IsMutable, IsObject ],
   function( v, s )
-    MULT_ROW_VECTOR_2(v![ELSPOS],s);
+    MULT_VECTOR_LEFT_2(v![ELSPOS],s);
   end );
 
-InstallMethod( MultRowVector, "for a plist vector, and a scalar",
-  [ IsPlistVectorRep and IsIntVector and IsMutable, IsObject ],
+InstallMethod( MultVectorRight,
+  "for a plist vector, and an object",
+  [ IsPlistVectorRep and IsMutable, IsObject ],
   function( v, s )
-    if IsSmallIntRep(s) then
-        MULT_ROW_VECTOR_2_FAST(v![ELSPOS],s);
-    else
-        MULT_ROW_VECTOR_2(v![ELSPOS],s);
-    fi;
+    MULT_VECTOR_RIGHT_2(v![ELSPOS],s);
   end );
 
-InstallMethod( MultRowVector,
-  "for a plist vector, a list, a plist vector, a list, and a scalar",
-  [ IsPlistVectorRep and IsMutable, IsList,
-    IsPlistVectorRep, IsList, IsObject ],
-  function( a, pa, b, pb, s )
-    a![ELSPOS]{pa} := b![ELSPOS]{pb} * s;
+InstallOtherMethod( MultVectorLeft, "for an integer vector, and a small integer",
+  [ IsPlistVectorRep and IsIntVector and IsMutable, IsSmallIntRep ],
+  function( v, s )
+    MULT_VECTOR_2_FAST(v![ELSPOS],s);
   end );
+
+# The four argument version of MultVectorLeft / ..Right uses the generic
+# implementation in matobj.gi
 
 InstallMethod( \*, "for a plist vector and a scalar",
   [ IsPlistVectorRep, IsScalar ],
@@ -514,14 +529,16 @@ InstallMethod( IsZero, "for a plist vector", [ IsPlistVectorRep ],
     return IsZero( v![ELSPOS] );
   end );
 
-InstallMethod( Randomize, "for a mutable plist vector",
-  [ IsPlistVectorRep and IsMutable ],
-  function( v )
+InstallMethodWithRandomSource( Randomize,
+  "for a random source and a mutable plist vector",
+  [ IsRandomSource, IsPlistVectorRep and IsMutable ],
+  function( rs, v )
     local bd,i;
     bd := v![BDPOS];
     for i in [1..Length(v![ELSPOS])] do
-        v![ELSPOS][i] := Random(bd);
+        v![ELSPOS][i] := Random( rs, bd );
     od;
+    return v;
   end );
 
 InstallMethod( CopySubVector, "for two plist vectors and two lists",
@@ -810,19 +827,6 @@ InstallMethod( SetMatElm, "for a plist matrix, two positions, and an object",
   function( m, row, col, ob )
     m![ROWSPOS][row]![ELSPOS][col] := ob;
   end );
-
-InstallMethod( \[\], "for a plist matrix and two positions",
-  [ IsPlistMatrixRep, IsPosInt, IsPosInt ],
-  function( m, row, col )
-    return m![ROWSPOS][row]![ELSPOS][col];
-  end );
-
-InstallMethod( \[\]\:\=, "for a plist matrix, two positions, and an object",
-  [ IsPlistMatrixRep and IsMutable, IsPosInt, IsPosInt, IsObject ],
-  function( m, row, col, ob )
-    m![ROWSPOS][row]![ELSPOS][col] := ob;
-  end );
-
 
 
 ############################################################################
@@ -1168,75 +1172,15 @@ InstallMethod( RankMat, "for a plist matrix",
   end);
 
 
-InstallMethod( Randomize, "for a mutable plist matrix",
-  [ IsPlistMatrixRep and IsMutable ],
-  function( m )
+InstallMethodWithRandomSource( Randomize,
+  "for a random source and a mutable plist matrix",
+  [ IsRandomSource, IsPlistMatrixRep and IsMutable ],
+  function( rs, m )
     local v;
     for v in m![ROWSPOS] do
-        Randomize(v);
+        Randomize( rs, v );
     od;
-  end );
-
-InstallMethod( IsDiagonalMat, "for a plist matrix",
-  [ IsPlistMatrixRep ],
-  function( m )
-    local i,j,l,n;
-    if m![RLPOS] <> Length(m![ROWSPOS]) then
-        ErrorNoReturn("IsDiagonalMat: Matrix not square");
-    fi;
-    n := m![RLPOS];
-    for i in [1..n] do
-        l := m![ROWSPOS][i]![ELSPOS];
-        for j in [1..i-1] do
-            if not IsZero(l[j]) then
-                return false;
-            fi;
-        od;
-        for j in [i+1..n] do
-            if not IsZero(l[j]) then
-                return false;
-            fi;
-        od;
-    od;
-    return true;
-  end );
-
-InstallMethod( IsLowerTriangularMat, "for a plist matrix",
-  [ IsPlistMatrixRep ],
-  function( m )
-    local i,j,l,n;
-    if m![RLPOS] <> Length(m![ROWSPOS]) then
-        ErrorNoReturn("IsLowerTriangularMat: Matrix not square");
-    fi;
-    n := m![RLPOS];
-    for i in [1..n] do
-        l := m![ROWSPOS][i]![ELSPOS];
-        for j in [i+1..n] do
-            if not IsZero(l[j]) then
-                return false;
-            fi;
-        od;
-    od;
-    return true;
-  end );
-
-InstallMethod( IsUpperTriangularMat, "for a plist matrix",
-  [ IsPlistMatrixRep ],
-  function( m )
-    local i,j,l,n;
-    if m![RLPOS] <> Length(m![ROWSPOS]) then
-        ErrorNoReturn("IsUpperTriangularMat: Matrix not square");
-    fi;
-    n := m![RLPOS];
-    for i in [1..n] do
-        l := m![ROWSPOS][i]![ELSPOS];
-        for j in [1..i-1] do
-            if not IsZero(l[j]) then
-                return false;
-            fi;
-        od;
-    od;
-    return true;
+    return m;
   end );
 
 InstallMethod( TransposedMatMutable, "for a plist matrix",
@@ -1276,35 +1220,6 @@ InstallMethod( \*, "for a plist vector and a plist matrix",
     fi;
     return res;
   end );
-
-InstallMethod( Unfold, "for a plist matrix",
-  [ IsPlistMatrixRep, IsPlistVectorRep ],
-  function( m, w )
-    local v,i,l;
-    if Length(m![ROWSPOS]) = 0 then
-        return ShallowCopy(m![EMPOS]);
-    else
-        l := m![RLPOS];
-        v := ZeroVector(Length(m![ROWSPOS])*l,m![EMPOS]);
-        for i in [1..Length(m![ROWSPOS])] do
-            CopySubVector( m![ROWSPOS][i], v, [1..l], [(i-1)*l+1..i*l] );
-        od;
-        return v;
-    fi;
-  end );
-
-InstallMethod( Fold, "for a plist vector, a positive int, and a plist matrix",
-  [ IsPlistVectorRep, IsPosInt, IsPlistMatrixRep ],
-  function( v, rl, t )
-    local rows,i,tt,m;
-    m := Matrix([],rl,t);
-    tt := ZeroVector(rl,v);
-    for i in [1..Length(v![ELSPOS])/rl] do
-        Add(m![ROWSPOS],v{[(i-1)*rl+1..i*rl]});
-    od;
-    return m;
-  end );
-
 
 #InstallMethod( \^, "for a plist vector and an integer",
 #  [ IsPlistMatrixRep, IsInt ],

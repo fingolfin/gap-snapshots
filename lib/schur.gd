@@ -1,10 +1,12 @@
 #############################################################################
 ##
-#W  schur.gd                 GAP library                        Werner Nickel 
-#W                                                           Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Werner Nickel, Alexander Hulpke.
 ##
-#Y  (C) 2000 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 
 #############################################################################
@@ -32,23 +34,29 @@ DeclareInfoClass( "InfoSchur" );
 ##  returns one (of possibly several) Schur covers of the group <A>G</A>.
 ##  <P/>
 ##  At the moment this cover is represented as a finitely presented group
-##  and <Ref Func="IsomorphismPermGroup"/> would be needed to convert it to a
+##  and <Ref Attr="IsomorphismPermGroup"/> would be needed to convert it to a
 ##  permutation group.
 ##  <P/>
 ##  If also the relation to <A>G</A> is needed,
-##  <Ref Func="EpimorphismSchurCover"/> should be used.
+##  <Ref Attr="EpimorphismSchurCover"/> should be used.
 ##  <Example><![CDATA[
 ##  gap> g:=Group((1,2,3,4),(1,2));;
 ##  gap> epi:=EpimorphismSchurCover(g);
-##  [ f1, f2, f3 ] -> [ (3,4), (2,4,3), (1,3)(2,4) ]
+##  [ F1, F2, F3 ] -> [ (1,2), (2,3), (3,4) ]
 ##  gap> Size(Source(epi));
 ##  48
+##  gap> f:=FreeGroup("a","b");;
+##  gap> g:=f/ParseRelators(f,"a2,b3,(ab)5");;
+##  gap> epi:=EpimorphismSchurCover(g);
+##  [ a, b ] -> [ a, b ]
+##  gap> Size(Kernel(epi));
+##  2
 ##  ]]></Example>
 ##  <P/>
 ##  If the group becomes bigger, Schur Cover calculations might become
 ##  unfeasible.
 ##  <P/>
-##  There is another operation, <Ref Func="AbelianInvariantsMultiplier"/>,
+##  There is another operation, <Ref Attr="AbelianInvariantsMultiplier"/>,
 ##  which only returns the structure of the Schur Multiplier,
 ##  and which should work for larger groups as well.
 ##  </Description>
@@ -68,7 +76,7 @@ DeclareAttribute( "SchurCover", IsGroup );
 ##  <Description>
 ##  returns an epimorphism <M>epi</M> from a group <M>D</M> onto <A>G</A>.
 ##  The group <M>D</M> is one (of possibly several) Schur covers of <A>G</A>.
-##  The group <M>D</M> can be obtained as the <Ref Func="Source"/> value of
+##  The group <M>D</M> can be obtained as the <Ref Attr="Source"/> value of
 ##  <A>epi</A>.
 ##  The kernel of <M>epi</M> is the Schur multiplier of <A>G</A>.
 ##  If <A>pl</A> is given as a list of primes,
@@ -273,9 +281,3 @@ DeclareGlobalFunction("CorestEval");
 ##  </ManSection>
 ##
 DeclareGlobalFunction("RelatorFixedMultiplier");
-
-
-#############################################################################
-##
-#E
-

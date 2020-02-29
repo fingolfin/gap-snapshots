@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  onecohom.gd                     GAP library                  Frank Celler
-##                                                           Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler, Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the declarations of operations for the 1-Cohomology
 ##
@@ -464,7 +464,7 @@ DeclareGlobalFunction("OCOneCocycles");
 ##  <Description>
 ##  computes complement classes to an elementary abelian normal subgroup
 ##  <A>N</A> via 1-Cohomology. Normally, a user program should call
-##  <Ref Func="ComplementClassesRepresentatives"/> instead, which also works
+##  <Ref Oper="ComplementClassesRepresentatives"/> instead, which also works
 ##  for a solvable (not necessarily elementary abelian) <A>N</A>.
 ##  </Description>
 ##  </ManSection>
@@ -482,9 +482,3 @@ DeclareGlobalFunction("ComplementClassesRepresentativesEA");
 ##
 #T DeclareGlobalFunction("OCPPrimeSets");
 #T up to now no function is installed
-
-
-#############################################################################
-##
-#E
-

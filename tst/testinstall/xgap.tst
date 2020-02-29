@@ -1,10 +1,4 @@
-#############################################################################
-##
-#W  xgap.tst                   GAP-4 library                  Max Neunhöffer 
-##
-##
-#Y  Copyright 1999,    Lehrstuhl D für Mathematik,   RWTH Aachen,    Germany
-##
+#@local c2,e,f,g,gg,i,k,l,n,t,a,b
 gap> START_TEST("xgap.tst");
 gap> f := FreeGroup(2); 
 <free group on the generators [ f1, f2 ]>
@@ -52,7 +46,3 @@ true
 gap> Size(t); 
 1
 gap> STOP_TEST( "xgap.tst", 1);
-
-#############################################################################
-##
-#E

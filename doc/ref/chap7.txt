@@ -8,8 +8,8 @@
   Section [14X6.4[114X) which can be entered by putting an [2XError[102X ([14X6.6-1[114X) statement into
   your  code  or  by  hitting  Control-C.  In  the  break loop one can inspect
   variables,  stack  traces  and issue commands as usual in an interactive [5XGAP[105X
-  session.  See  also  the  [2XDownEnv[102X  ([14X6.5-1[114X),  [2XUpEnv[102X ([14X6.5-1[114X) and [2XWhere[102X ([14X6.4-5[114X)
-  functions.[133X
+  session.  See  also  the  [2XDownEnv[102X  ([14X6.5-1[114X), [2XUpEnv[102X ([14X6.5-1[114X), [2XWhere[102X ([14X6.4-5[114X) and
+  [2XWhereWithVars[102X ([14X6.4-5[114X) functions.[133X
   
   [33X[0;0YSections [14X7.2[114X and [14X7.3[114X show how to get information about the methods chosen by
   the method selection mechanism (see chapter [14X78[114X).[133X
@@ -66,8 +66,8 @@
   of  arguments, a flag which indicates whether the operation is being traced,
   a  flag  which  indicates whether the operation is a constructor method, and
   the  number  of  methods  that  refused  to  apply  by calling [2XTryNextMethod[102X
-  ([14X78.4-1[114X).  The last number is called [10XChoice[110X and is printed as an ordinal. So
-  if  exactly [22Xk[122X methods were found but called [2XTryNextMethod[102X ([14X78.4-1[114X) and there
+  ([14X78.5-1[114X).  The last number is called [10XChoice[110X and is printed as an ordinal. So
+  if  exactly [22Xk[122X methods were found but called [2XTryNextMethod[102X ([14X78.5-1[114X) and there
   were no more methods it says [10XChoice: [110X[22Xk[122X[10Xth[110X.[133X
   
   [1X7.1-4 ShowMethods[101X
@@ -81,7 +81,7 @@
   which  lists all applicable methods. With verbosity 1 [2XShowMethods[102X only shows
   the  number of installed methods and the methods matching, which can only be
   those  that were already called but refused to work by calling [2XTryNextMethod[102X
-  ([14X78.4-1[114X).  With  verbosity  3  not  only  all installed methods but also the
+  ([14X78.5-1[114X).  With  verbosity  3  not  only  all installed methods but also the
   reasons why they do not match are displayed.[133X
   
   [1X7.1-5 ShowOtherMethods[101X
@@ -148,7 +148,7 @@
   
   [33X[0;0YWhen  a method returned by [2XApplicableMethod[102X is called then it returns either
   the  desired  result or the string [10X"TRY_NEXT_METHOD"[110X, which corresponds to a
-  call  to  [2XTryNextMethod[102X  ([14X78.4-1[114X)  in  the  method and means that the method
+  call  to  [2XTryNextMethod[102X  ([14X78.5-1[114X)  in  the  method and means that the method
   selection would call the next applicable method.[133X
   
   [33X[0;0Y[13XNote:[113X The [5XGAP[105X kernel provides special treatment for the infix operations [10X\+[110X,
@@ -250,7 +250,7 @@
   
   [1X7.4 [33X[0;0YInfo Functions[133X[101X
   
-  [33X[0;0YThe  [2XInfo[102X  ([14X7.4-5[114X)  mechanism  permits  operations  to  display intermediate
+  [33X[0;0YThe  [2XInfo[102X  ([14X7.4-6[114X)  mechanism  permits  operations  to  display intermediate
   results  or information about the progress of the algorithms. Information is
   always given according to one or more [13Xinfo classes[113X. Each of the info classes
   defined  in the [5XGAP[105X library usually covers a certain range of algorithms, so
@@ -259,7 +259,9 @@
   
   [33X[0;0YNote  that  not  all  info  classes defined in the [5XGAP[105X library are currently
   documented.  Many  [5XGAP[105X  packages  define  additional info classes, which are
-  typically documented in the corresponding package documentation.[133X
+  typically   documented  in  the  corresponding  package  documentation.  The
+  function  [2XShowUsedInfoClasses[102X  ([14X7.4-5[114X)  will show all info classes which [5XGAP[105X
+  considers while executing code.[133X
   
   [33X[0;0YThe  amount  of  information  to  be  displayed  by  each  info class can be
   separately  specified  by the user. This is done by selecting a non-negative
@@ -269,7 +271,7 @@
   classes  have  level  0,  except  for the following info classes, which have
   level 1:[133X
   
-  [30X    [33X[0;6Y[2XInfoWarning[102X ([14X7.4-7[114X),[133X
+  [30X    [33X[0;6Y[2XInfoWarning[102X ([14X7.4-8[114X),[133X
   
   [30X    [33X[0;6Y[2XInfoPackageLoading[102X ([14X76.2-5[114X),[133X
   
@@ -309,7 +311,29 @@
   
   [33X[0;0Yreturns the info level of [3Xinfoclass[103X.[133X
   
-  [1X7.4-5 Info[101X
+  [1X7.4-5 ShowUsedInfoClasses[101X
+  
+  [33X[1;0Y[29X[2XShowUsedInfoClasses[102X( [3Xinfoclass[103X ) [32X function[133X
+  
+  [33X[0;0YCalled  with argument [9Xtrue[109X, this makes [5XGAP[105X print the info class and level of
+  any  executed  [2XInfo[102X ([14X7.4-6[114X) statement. Calling with the argument [9Xfalse[109X stops
+  this  printing.  Each  level  of  each  info class is only printed once. The
+  history of printed info classes and levels is reset whenever [9Xtrue[109X is passed.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XShowUsedInfoClasses(true);[127X[104X
+    [4X[25Xgap>[125X [27XIntersection(Group((1,3,2,4,5,6)), Group((1,2,3,4,5,6)));[127X[104X
+    [4X[28X#I Would print info with SetInfoLevel(InfoOptions,1)[128X[104X
+    [4X[28X#I Would print info with SetInfoLevel(InfoBckt,1)[128X[104X
+    [4X[28X#I Would print info with SetInfoLevel(InfoBckt,3)[128X[104X
+    [4X[28X#I Would print info with SetInfoLevel(InfoBckt,5)[128X[104X
+    [4X[28XGroup(())[128X[104X
+    [4X[25Xgap>[125X [27XIntersection(Group((1,3,2,4,5,6)), Group((1,2,3,4,5,6)));[127X[104X
+    [4X[28XGroup(())[128X[104X
+    [4X[25Xgap>[125X [27XShowUsedInfoClasses(false);[127X[104X
+  [4X[32X[104X
+  
+  [1X7.4-6 Info[101X
   
   [33X[1;0Y[29X[2XInfo[102X( [3Xinfoclass[103X, [3Xlevel[103X, [3Xinfo[103X[, [3Xmoreinfo[103X, [3X...[103X] ) [32X function[133X
   
@@ -324,7 +348,7 @@
   and subsequent arguments are not evaluated. (The latter can save substantial
   time when displaying difficult results.)[133X
   
-  [33X[0;0YThe behaviour can be customized with [2XSetInfoHandler[102X ([14X7.4-6[114X).[133X
+  [33X[0;0YThe behaviour can be customized with [2XSetInfoHandler[102X ([14X7.4-7[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XInfoExample:=NewInfoClass("InfoExample");;[127X[104X
@@ -365,7 +389,7 @@
   [4X[32X[104X
   
   
-  [1X7.4-6 [33X[0;0YCustomizing [2XInfo[102X[101X[1X ([14X7.4-5[114X) statements[133X[101X
+  [1X7.4-7 [33X[0;0YCustomizing [2XInfo[102X[101X[1X ([14X7.4-6[114X) statements[133X[101X
   
   [33X[1;0Y[29X[2XSetInfoHandler[102X( [3Xinfoclass[103X, [3Xhandler[103X ) [32X function[133X
   [33X[1;0Y[29X[2XSetInfoOutput[102X( [3Xinfoclass[103X, [3Xout[103X ) [32X function[133X
@@ -379,33 +403,33 @@
   
   [33X[0;0YIn  the  first  function,  [3Xhandler[103X  must  be a function with three arguments
   [3Xinfoclass[103X,  [3Xlevel[103X, [3Xlist[103X. Here [3Xlist[103X is the list containing the third argument
-  and any subsequent optional arguments of the [2XInfo[102X ([14X7.4-5[114X) call.[133X
+  and any subsequent optional arguments of the [2XInfo[102X ([14X7.4-6[114X) call.[133X
   
   [33X[0;0YThe  default  handler  is  the function [10XDefaultInfoHandler[110X. It prints [10X"#I "[110X,
   then  the  third  and further arguments of the info statement, and finally a
   [10X"\n"[110X.[133X
   
-  [33X[0;0YIf the first argument of an [2XInfo[102X ([14X7.4-5[114X) statement is a sum of Info classes,
+  [33X[0;0YIf the first argument of an [2XInfo[102X ([14X7.4-6[114X) statement is a sum of Info classes,
   the handler of the first summand is used.[133X
   
-  [33X[0;0YThe  file  or  stream  to  which [2XInfo[102X ([14X7.4-5[114X) statements for individual [2XInfo[102X
-  ([14X7.4-5[114X)  classes  print  can be overriden with [2XSetInfoOutput[102X, retrieved with
+  [33X[0;0YThe  file  or  stream  to  which [2XInfo[102X ([14X7.4-6[114X) statements for individual [2XInfo[102X
+  ([14X7.4-6[114X)  classes  print  can be overriden with [2XSetInfoOutput[102X, retrieved with
   [2XInfoOutput[102X  and  reset  to  the  default  with [2XUnbindInfoOutput[102X. The initial
-  default for all [2XInfo[102X ([14X7.4-5[114X) classes is the string [10X"*Print*"[110X which means the
+  default for all [2XInfo[102X ([14X7.4-6[114X) classes is the string [10X"*Print*"[110X which means the
   current  output  file. The default can be changed with [2XSetDefaultInfoOutput[102X.
   The  argument  [3Xout[103X  can  be  a filename or an open stream, the special names
   [10X"*Print*"[110X, [10X"*errout*[110X and [10X"*stdout*[110X are also recognized.[133X
   
-  [33X[0;0YFor  example,  [10XSetDefaultInfoOutput("*errout*");[110X  would  send  [2XInfo[102X  ([14X7.4-5[114X)
+  [33X[0;0YFor  example,  [10XSetDefaultInfoOutput("*errout*");[110X  would  send  [2XInfo[102X  ([14X7.4-6[114X)
   output  to  standard  error,  which  can  be  interesting  if [5XGAP[105Xs output is
   redirected.[133X
   
-  [1X7.4-7 InfoWarning[101X
+  [1X7.4-8 InfoWarning[101X
   
   [33X[1;0Y[29X[2XInfoWarning[102X[32X info class[133X
   
   [33X[0;0Yis an info class to which general warnings are sent at level 1, which is its
-  default level. More specialised warnings are shown via calls of [2XInfo[102X ([14X7.4-5[114X)
+  default level. More specialised warnings are shown via calls of [2XInfo[102X ([14X7.4-6[114X)
   at  [2XInfoWarning[102X  level  2,  e.g. information  about  the  autoloading of [5XGAP[105X
   packages and the initial line matched when displaying an on-line help topic.[133X
   
@@ -526,14 +550,14 @@
   [33X[0;0Y[10XMethod[110X  is  a string describing the method used to obtain timer values. This
   will usually contain the name of the syscall used.[133X
   
-  [33X[0;0Y[10XMonotonic[110X  is  a  boolean.  If  it  is  [10Xtrue[110X,  then  the  values returned by
+  [33X[0;0Y[10XMonotonic[110X  is  a  boolean.  If  it  is  [9Xtrue[109X,  then  the  values returned by
   [2XNanosecondsSinceEpoch[102X are guaranteed to be strictly monotonically increasing
-  between two calls, if it is [10Xfalse[110X then there is no such guarantee.[133X
+  between two calls, if it is [9Xfalse[109X then there is no such guarantee.[133X
   
   [33X[0;0Y[10XResolution[110X  is  an  integer  reflecting  the resolution of the timer used in
   nanoseconds.[133X
   
-  [33X[0;0Y[10XReliable[110X  is  a  boolean.  If it is [10Xtrue[110X then the value [10XResolution[110X is deemed
+  [33X[0;0Y[10XReliable[110X  is  a  boolean.  If it is [9Xtrue[109X then the value [10XResolution[110X is deemed
   reliable in the sense that it was obtained by querying the operating system,
   otherwise [10XResolution[110X should be treated as an estimate.[133X
   
@@ -548,10 +572,10 @@
   [1X7.6-5 Sleep[101X
   
   [33X[1;0Y[29X[2XSleep[102X( [3Xtime[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XNanoSleep[102X( [3Xtime[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XMicroSleep[102X( [3Xtime[103X ) [32X function[133X
   
   [33X[0;0YThese functions make GAP stop execution for a given period of time. The time
-  to stop is given to [2XSleep[102X in seconds and [2XNanoSleep[102X in nanoseconds.[133X
+  to stop is given to [2XSleep[102X in seconds and [2XMicroSleep[102X in microseconds.[133X
   
   
   [1X7.7 [33X[0;0YTracking Memory Usage[133X[101X
@@ -618,7 +642,7 @@
   [33X[1;0Y[29X[2XProfileGlobalFunctions[102X( [[3Xbool[103X] ) [32X function[133X
   
   [33X[0;0YCalled  with  argument  [9Xtrue[109X, [2XProfileGlobalFunctions[102X starts profiling of all
-  functions  that have been declared via [2XDeclareGlobalFunction[102X ([14X79.18-14[114X). Old
+  functions  that  have been declared via [2XDeclareGlobalFunction[102X ([14X79.10-4[114X). Old
   profile information for all these functions is cleared. A function call with
   the  argument  [9Xfalse[109X  stops  profiling  of  all  these  functions.  Recorded
   information  is  still  kept,  so  you can display it even after turning the
@@ -948,6 +972,11 @@
         this  is  most  obvious  when looking at code coverage examples, which
         will appear to miss lines of code in files not in a function.[133X
   
+  [30X    [33X[0;6YIf  the  current  GAP  is forked, using the [10XIO_fork[110X function in the [5XIO[105X
+        package,  a  new profile output file will be created for the new child
+        process,  with  the process ID of the child attached to the end of the
+        filename.[133X
+  
   [33X[0;0YProfiles  are  transformed  into  a  human-readable  form  with  'profiling'
   package, for example with the 'OutputAnnotatedCodeCoverageFiles' function.[133X
   
@@ -1123,7 +1152,8 @@
   content  of  this  file  or  stream should contain [5XGAP[105X input and output. The
   function  [2XTest[102X  runs  the  input  lines, compares the actual output with the
   output  stored  in [3Xfname[103X and reports differences. With an optional record as
-  argument [3Xoptrec[103X details of this process can be adjusted.[133X
+  argument  [3Xoptrec[103X  details  of  this  process  can be adjusted. Note that the
+  [10XrewriteToFile[110X option is especially useful for generating test files.[133X
   
   [33X[0;0YMore precisely, the content of [3Xfname[103X must have the following format.[133X
   [33X[0;0YLines  starting  with  [10X"gap> "[110X  are  considered  as  [5XGAP[105X  input, they can be
@@ -1133,6 +1163,31 @@
   lines  at  the  beginning of [3Xfname[103X that start with [10X"#"[110X or are empty, and one
   empty line together with one or more lines starting with [10X"#"[110X.[133X
   [33X[0;0YAll other lines are considered as [5XGAP[105X output from the preceding [5XGAP[105X input.[133X
+  
+  [33X[0;0YLines  which  begin "#@" define special configuration options for tests. The
+  [10X#@local[110X  and  [10X#@exec[110X  options can only be used before any [5XGAP[105X input, and the
+  other commands can only be used between individual tests (just before a line
+  starting [10Xgap>[110X, or at end of the file). Currently defined options are:[133X
+  
+  [8X#@local identifierlist[108X
+        [33X[0;6YRun  all  the  tests in the input as if it is in a function with local
+        variable  list  [10Xidentifierlist[110X,  which  is  a  comma-separated list of
+        identifers. Multiple #@local lines may be used.[133X
+  
+  [8X#@exec gapcode[108X
+        [33X[0;6YExecute  the  code  [10Xgapcode[110X  before any test in the input is run. This
+        allows defining global variables when using [10X#@local[110X.[133X
+  
+  [8X#@if EXPR ... [#@else] ... #@fi[108X
+        [33X[0;6YA  [10X#@if[110X allows to conditionally skip parts of the test input depending
+        on  the  value  of a boolean expression. The exact behavior is done as
+        follows:[133X
+  
+        [33X[0;6YIf the [5XGAP[105X expression [10XEXPR[110X evaluates to [10Xtrue[110X, then the lines after the
+        [10X#@if[110X are used until either a [10X#@else[110X or [10X#@fi[110X is reached. If a [10X#@else[110X is
+        present  then  the  code  after the [10X#@else[110X is used if and only if [10XEXPR[110X
+        evaluated  to  [10Xfalse[110X.  Finally,  once  [10X#endif[110X  is  reached, evaluation
+        continues normally.[133X
   
   [33X[0;0YBy default the actual [5XGAP[105X output is compared exactly with the stored output,
   and  if  these  are  different  some  information  about  the differences is
@@ -1173,7 +1228,9 @@
         file is written with the same input and comment lines as [3Xfname[103X but the
         output  substituted  by the newly generated version; if it is bound to
         [9Xtrue[109X,  then  this  is  treated as if it was bound to [3Xfname[103X (default is
-        [9Xfalse[109X).[133X
+        [9Xfalse[109X). This is especially useful for generating test files because it
+        ensures that the test files are formatted exactly as [2XTest[102X expects them
+        to be.[133X
   
   [8X[10XwriteTimings[110X[8X[108X
         [33X[0;6YIf  this  is  bound  to a string it is considered as a file name, that
@@ -1274,9 +1331,10 @@
   Each  of  these  files  is  then  run through [2XTest[102X ([14X7.10-2[114X), and the results
   printed, and [9Xtrue[109X returned if all tests passed.[133X
   
-  [33X[0;0YIf  the optional argument [3Xoptrec[103X is given it must be a record. The following
-  components  of [3Xoptrec[103X are recognized and can change the default behaviour of
-  [2XTestDirectory[102X:[133X
+  [33X[0;0YIf  the optional argument [3Xoptrec[103X is given it must be a record. Note that the
+  [10XrewriteToFile[110X  option  is  especially  useful for generating test files. The
+  following  components  of  [3Xoptrec[103X  are recognized and can change the default
+  behaviour of [2XTestDirectory[102X:[133X
   
   [8X[10XtestOptions[110X[8X[108X
         [33X[0;6YA  record  which  will  be  passed  on  as the second argument of [2XTest[102X
@@ -1296,7 +1354,10 @@
   
   [8X[10XrewriteToFile[110X[8X[108X
         [33X[0;6YIf  [9Xtrue[109X,  then  rewrite  each  test  file  to  disc,  with the output
-        substituted by the results of running the test (defaults to [9Xfalse[109X).[133X
+        substituted  by  the  results of running the test (defaults to [9Xfalse[109X).
+        This is especially useful for generating test files because it ensures
+        that  the  test  files  are formatted exactly as [2XTest[102X ([14X7.10-2[114X) expects
+        them to be.[133X
   
   [8X[10Xexclude[110X[8X[108X
         [33X[0;6YA list of file and directory names which will be excluded from testing

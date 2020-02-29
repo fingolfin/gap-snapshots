@@ -1,9 +1,12 @@
 #############################################################################
 ##
-#W  function.gi                GAP library                     Steve Linton
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Steve Linton.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2015 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the implementations of the functions and operations
 ##  relating to functions and function-calling which are not so basic
@@ -60,6 +63,11 @@ function(func)
     return result;
 end);
 
+InstallMethod(Display, "for a function", [IsFunction and IsInternalRep],
+function(fun)
+    Print(fun, "\n");
+end);
+
 InstallMethod(DisplayString, "for a function, using string stream", [IsFunction and IsInternalRep],
 function(fun)
     local  s, stream;
@@ -105,6 +113,24 @@ function(op)
     return VIEW_STRING_OPERATION(op);
 end);
 
-#############################################################################
-##
-#E
+InstallMethod( SetNameFunction, [IsFunction and IsInternalRep, IS_STRING], SET_NAME_FUNC );
+
+BIND_GLOBAL( "BindingsOfClosure",
+function(f)
+    local x, r, i;
+    x := ENVI_FUNC(f);
+    if x = fail then return fail; fi;
+    r := rec();
+    while x <> GetBottomLVars() do
+        x := ContentsLVars(x);
+        if x = false then break; fi;
+        for i in [1..Length(x.names)] do
+            # respect the lookup order
+            if not IsBound(r.(x.names[i])) then
+                r.(x.names[i]) := x.values[i];
+            fi;
+        od;
+        x := ENVI_FUNC(x.func);
+    od;
+    return r;
+end);

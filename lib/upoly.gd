@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  upoly.gd                 GAP Library                     Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains attributes, properties and operations for univariate
 ##  polynomials
@@ -166,7 +167,7 @@ DeclareGlobalFunction( "CyclotomicPolynomial" );
 ##  For a univariate polynomial <A>pol</A> of degree <M>d</M> in the
 ##  indeterminate <M>X</M>,
 ##  with coefficients in a finite field <A>F</A> with <M>q</M> elements, say,
-##  <Ref Func="IsPrimitivePolynomial"/> returns <K>true</K> if
+##  <Ref Oper="IsPrimitivePolynomial"/> returns <K>true</K> if
 ##  <Enum>
 ##  <Item>
 ##      <A>pol</A> divides <M>X^{{q^d-1}} - 1</M>, and
@@ -213,8 +214,3 @@ DeclareGlobalFunction( "CompanionMat" );
 ##  </ManSection>
 ##
 DeclareGlobalFunction( "AllIrreducibleMonicPolynomials" );
-
-#############################################################################
-##
-#E
-

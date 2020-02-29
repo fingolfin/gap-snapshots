@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  domain.gi                   GAP library                  Martin Schönert
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Martin Schönert.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the generic methods for domains.
 ##
@@ -206,6 +207,18 @@ InstallMethod( GeneratorsOfDomain,
 
 #############################################################################
 ##
+##  PrintObj
+##
+InstallMethod( PrintObj,
+    "for a domain with GeneratorsOfDomain",
+    [ HasGeneratorsOfDomain and IsDomain ],
+    function( dom )
+    Print( "Domain(", GeneratorsOfDomain( dom ), ")" );
+    end );
+
+
+#############################################################################
+##
 #M  AsList( <D> ) . . . . . . . . . . . . . . .  list of elements of a domain
 #M  Enumerator( <D> ) . . . . . . . . . . . . .  list of elements of a domain
 ##
@@ -231,12 +244,19 @@ InstallImmediateMethod( Enumerator,
 InstallMethod( AsList,
     "for a domain with stored domain generators",
     [ IsDomain and HasGeneratorsOfDomain ],
-    D -> DuplicateFreeList( GeneratorsOfDomain( D ) ) );
+    function( D )
+        if HasIsDuplicateFreeList( GeneratorsOfDomain( D ) )
+                and IsDuplicateFreeList( GeneratorsOfDomain( D ) ) then
+            return GeneratorsOfDomain( D );
+        else
+            return DuplicateFreeList( GeneratorsOfDomain( D ) );
+        fi;
+    end );
 
 InstallMethod( Enumerator,
     "for a domain with stored domain generators",
     [ IsDomain and HasGeneratorsOfDomain ],
-    D -> DuplicateFreeList( GeneratorsOfDomain( D ) ) );
+    AsList );
 
 
 #############################################################################
@@ -388,9 +408,3 @@ InstallGlobalFunction( InstallAccessToGenerators,
         end );
 
     end );
-
-
-#############################################################################
-##
-#E
-

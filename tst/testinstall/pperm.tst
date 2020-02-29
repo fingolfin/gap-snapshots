@@ -1,9 +1,4 @@
-#############################################################################
-##
-#W  pperm.tst
-#Y  James D. Mitchell
-##
-#############################################################################
+#@local display,e,f,g,h,i,notationpp,notationt,p,x,PPerm4,Perm4,im,coll,p1,p2
 ##
 ## takes around 4 seconds to run
 
@@ -58,15 +53,19 @@ gap> ImageSetOfPartialPerm(f);
 gap> ImageListOfPartialPerm(f);
 [  ]
 gap> IMAGE_SET_PPERM(fail);
-Error, usage: the argument must be a partial perm,
+Error, IMAGE_SET_PPERM: <f> must be a partial permutation (not the value 'fail\
+')
 
 # test input validation
 gap> DegreeOfPartialPerm(fail);
-Error, DegreeOfPartialPerm: <f> must be a partial perm,
+Error, DegreeOfPartialPerm: <f> must be a partial permutation (not the value '\
+fail')
 gap> CoDegreeOfPartialPerm(fail);
-Error, CoDegreeOfPartialPerm: <f> must be a partial perm,
+Error, CoDegreeOfPartialPerm: <f> must be a partial permutation (not the value\
+ 'fail')
 gap> RankOfPartialPerm(fail);
-Error, RankOfPartialPerm: <f> must be a partial perm,
+Error, RankOfPartialPerm: <f> must be a partial permutation (not the value 'fa\
+il')
 gap> 
 
 # SmallestIdempotentPower, IndexPeriodOfPartialPerm, IsIdempotent
@@ -712,7 +711,8 @@ gap> g:=PartialPerm( [ 1, 3 ], [ 3, 1 ] );;
 gap> NaturalLeqPartialPerm(f,g);
 false
 gap> NaturalLeqPartialPerm(fail, f);
-Error, usage: the arguments must be partial perms,
+Error, NaturalLeqPartialPerm: <f> must be a partial permutation (not the value\
+ 'fail')
 gap> NaturalLeqPartialPerm(EmptyPartialPerm(), f);
 true
 
@@ -3327,6 +3327,14 @@ argument must be a duplicate-free list of positive integers of equal length to\
 gap> x := PartialPerm([0, 0, 0]);
 <empty partial perm>
 
+# IsPPermHandler
+gap> IsPartialPerm(x);
+true
+gap> IsPartialPerm(1);
+false
+gap> IsPartialPerm(infinity);
+false
+
 # PreImagePPermInt
 gap> 1 / EmptyPartialPerm();
 fail
@@ -3582,11 +3590,14 @@ false
 gap> ShortLexLeqPartialPerm(PartialPerm([1]), f);
 false
 gap> ShortLexLeqPartialPerm(1, f);
-Error, usage: the arguments must be partial perms,
+Error, ShortLexLeqPartialPerm: <f> must be a partial permutation (not the inte\
+ger 1)
 gap> ShortLexLeqPartialPerm(f, 1);
-Error, usage: the arguments must be partial perms,
+Error, ShortLexLeqPartialPerm: <g> must be a partial permutation (not the inte\
+ger 1)
 gap> ShortLexLeqPartialPerm(2, 1);
-Error, usage: the arguments must be partial perms,
+Error, ShortLexLeqPartialPerm: <f> must be a partial permutation (not the inte\
+ger 2)
 
 # CodegreeOfPartialPerm
 gap> CodegreeOfPartialPerm(ID_PPERM2);
@@ -4032,19 +4043,19 @@ true
 
 # OnSets and OnTuples
 gap> OnSets([2 ^ 60], PartialPerm([1, 2, 3, 4, 5, 7], [6, 4, 5, 3, 8, 2]));
-Error, <set> must be a list of small integers
+Error, <set> must be a list of positive small integers
 gap> OnTuples([2 ^ 60], PartialPerm([1, 2, 3, 4, 5, 7], [6, 4, 5, 3, 8, 2]));
 Error, <tup> must be a list of small integers
 gap> OnSets(["a"], PartialPerm([1, 2, 3, 4, 5, 7], [6, 4, 5, 3, 8, 2]));
-Error, <set> must be a list of small integers
+Error, <set> must be a list of positive small integers
 gap> OnTuples(["a"], PartialPerm([1, 2, 3, 4, 5, 7], [6, 4, 5, 3, 8, 2]));
 Error, <tup> must be a list of small integers
 gap> OnSets([2 ^ 60], PPerm4([1, 2, 3, 4, 5, 7], [6, 4, 5, 3, 8, 2]));
-Error, <set> must be a list of small integers
+Error, <set> must be a list of positive small integers
 gap> OnTuples([2 ^ 60], PPerm4([1, 2, 3, 4, 5, 7], [6, 4, 5, 3, 8, 2]));
 Error, <tup> must be a list of small integers
 gap> OnSets(["a"], PPerm4([1, 2, 3, 4, 5, 7], [6, 4, 5, 3, 8, 2]));
-Error, <set> must be a list of small integers
+Error, <set> must be a list of positive small integers
 gap> OnTuples(["a"], PPerm4([1, 2, 3, 4, 5, 7], [6, 4, 5, 3, 8, 2]));
 Error, <tup> must be a list of small integers
 

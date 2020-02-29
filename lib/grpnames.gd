@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  grpnames.gd                                                 Gábor Horváth
-##                                                                Stefan Kohl
-##                                                             Markus Püschel
-##                                                            Sebastian Egner
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Gábor Horváth, Stefan Kohl, Markus Püschel, Sebastian Egner.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2004 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains declarations of attributes, operations and functions
 ##  related to the determination of structure descriptions for finite groups.
@@ -433,45 +433,62 @@ DeclareSynonym( "DecompositionTypes", DecompositionTypesOfGroup );
 #P  IsDihedralGroup( <G> )
 #A  DihedralGenerators( <G> )
 ##
+##  <#GAPDoc Label="IsDihedralGroup">
 ##  <ManSection>
 ##  <Prop Name="IsDihedralGroup" Arg="G"/>
 ##  <Attr Name="DihedralGenerators" Arg="G"/>
 ##
 ##  <Description>
-##    Indicates whether the group <A>G</A> is a dihedral group.
-##    If it is, methods may set the attribute <C>DihedralGenerators</C> to
+##    <Ref Prop="IsDihedralGroup"/> indicates whether the group <A>G</A> is a
+##   dihedral group. If it is, methods may set the attribute
+##    <Ref Attr="DihedralGenerators" /> to
 ##    [<A>t</A>,<A>s</A>], where <A>t</A> and <A>s</A> are two elements such
-##    that <A>G</A> = <M><A>t, s | t^2 = s^n = 1, s^t = s^-1</A></M>.
+##    that <A>G</A> = <M>\langle t, s | t^2 = s^n = 1, s^t = s^{-1} \rangle</M>.
 ##  </Description>
 ##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareProperty( "IsDihedralGroup", IsGroup );
 DeclareAttribute( "DihedralGenerators", IsGroup );
 
 InstallTrueMethod( IsGroup, IsDihedralGroup );
+InstallTrueMethod( IsDihedralGroup, HasDihedralGenerators );
+
 
 #############################################################################
 ##
 #P  IsQuaternionGroup( <G> )
 #A  QuaternionGenerators( <G> )
 ##
+##  <#GAPDoc Label="IsQuaternionGroup">
 ##  <ManSection>
+##  <Prop Name="IsGeneralisedQuaternionGroup" Arg="G"/>
 ##  <Prop Name="IsQuaternionGroup" Arg="G"/>
+##  <Attr Name="GeneralisedQuaternionGenerators" Arg="G"/>
 ##  <Attr Name="QuaternionGenerators" Arg="G"/>
 ##
 ##  <Description>
-##    Indicates whether the group <A>G</A> is a generalized quaternion group 
-##    of size <M>N = 2^(k+1)</M>, <M>k >= 2</M>. If it is, methods may set
-##    the attribute <C>QuaternionGenerators</C> to [<A>t</A>,<A>s</A>],
-##    where <A>t</A> and <A>s</A> are two elements such that <A>G</A> =
-##    <M><A>t, s | s^(2^k) = 1, t^2 = s^(2^k-1), s^t = s^-1</A></M>.
+##    <Ref Prop="IsGeneralisedQuaternionGroup"/> indicates whether the group
+##    <A>G</A> is a generalized quaternion group of size <M>N = 2^(k+1)</M>,
+##    <M>k >= 2</M>.
+##    If it is, methods may set the attribute <Ref Attr="GeneralisedQuaternionGenerators" />
+##    to [<A>t</A>,<A>s</A>], where <A>t</A> and <A>s</A> are two elements such that <A>G</A> =
+##    <M>\langle t, s | s^{(2^k)} = 1, t^2 = s^{(2^k-1)}, s^t = s^{-1} \rangle</M>.
+##    <Ref Prop="IsQuaternionGroup"/> and <Ref Attr="QuaternionGenerators" /> are
+##    provided for backwards compatibility with existing code.
 ##  </Description>
 ##  </ManSection>
+##  <#/GAPDoc>
 ##
-DeclareProperty( "IsQuaternionGroup", IsGroup );
-DeclareAttribute( "QuaternionGenerators", IsGroup );
+DeclareProperty( "IsGeneralisedQuaternionGroup", IsGroup );
+DeclareAttribute( "GeneralisedQuaternionGenerators", IsGroup );
+# Backwards compatibility
+DeclareSynonymAttr( "IsQuaternionGroup", IsGeneralisedQuaternionGroup );
+DeclareSynonymAttr( "QuaternionGenerators", GeneralisedQuaternionGenerators );
 
 InstallTrueMethod( IsGroup, IsQuaternionGroup );
+InstallTrueMethod( IsGeneralisedQuaternionGroup, HasGeneralisedQuaternionGenerators );
+
 
 #############################################################################
 ##
@@ -678,7 +695,8 @@ DeclareGlobalFunction( "LinearGroupParameters" );
 ##  <Listing><![CDATA[
 ##    StructureDescription(<G>) ::=
 ##        1                                 ; trivial group 
-##      | C<size>                           ; cyclic group
+##      | C<size>                           ; finite cyclic group
+##      | Z                                 ; infinite cyclic group
 ##      | A<degree>                         ; alternating group
 ##      | S<degree>                         ; symmetric group
 ##      | D<size>                           ; dihedral group
@@ -742,7 +760,7 @@ DeclareGlobalFunction( "LinearGroupParameters" );
 ##    If <A>G</A> is abelian, then decompose it into cyclic factors
 ##    in <Q>elementary divisors style</Q>. For example,
 ##    <C>"C2 x C3 x C3"</C> is <C>"C6 x C3"</C>.
-##    For infinite abelian groups, <C>"C0"</C> denotes the group of integers.
+##    For infinite abelian groups, <C>"Z"</C> denotes the group of integers.
 ##  </Item>
 ##  <Mark>3.</Mark>
 ##  <Item>
@@ -866,9 +884,9 @@ DeclareGlobalFunction( "LinearGroupParameters" );
 ##  gap> StructureDescription(SmallGroup(504,7):nice);
 ##  "(C7 : Q8) : C9"
 ##  gap> StructureDescription(AbelianGroup([0,2,3]));
-##  "C0 x C6"
+##  "Z x C6"
 ##  gap> StructureDescription(AbelianGroup([0,0,0,2,3,6]):short);
-##  "0^3x6^2"
+##  "Z^3x6^2"
 ##  gap> StructureDescription(PSL(4,2));
 ##  "A8"
 ##  ]]></Example>
@@ -877,7 +895,3 @@ DeclareGlobalFunction( "LinearGroupParameters" );
 ##  <#/GAPDoc>
 ##
 DeclareAttribute( "StructureDescription", IsGroup );
-
-#############################################################################
-##
-#E

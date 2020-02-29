@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  list.gi                     GAP library                  Martin Schönert
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Martin Schönert.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains methods for lists in general.
 ##
@@ -362,14 +363,21 @@ local   str,ls, i;
     fi;
   od;
 
-  str := "[ ";
+  # The line break hints are consistent with those
+  # that appear in the kernel function 'PrintListDefault'
+  # and in the 'ViewObj' method for finite lists.
+  str:= "\>\>[ \>\>";
   for i in [ 1 .. Length( list ) ]  do
-    Append(str,ls[i]);
-    if i<>Length(list)  then
-      Append(str,",\<\> ");
+    if ls[i] <> "" then
+      if 1 < i then
+        Append( str, "\<,\< \>\>" );
+      fi;
+      Append( str, ls[i] );
+    elif 1 < i then
+      Append( str, "\<,\<\>\>" );
     fi;
   od;
-  Append( str, " ]" );
+  Append( str, " \<\<\<\<]" );
   ConvertToStringRep( str );
   return str;
 end );
@@ -638,6 +646,12 @@ InstallOtherMethod(AsSSortedList,
      [ IsList ],
      l -> AsSSortedListList( AsPlist( l ) ) );
 
+InstallMethod( AsSSortedList,
+    "for a strictly sorted list",
+    [ IsSSortedList ],
+    SUM_FLAGS,
+    Immutable );
+
 
 #############################################################################
 ##
@@ -676,11 +690,11 @@ end);
 ##
 #M  SSortedList( <list> )  . . . . . . . . . . . set of the elements of a list
 ##
-InstallOtherMethod( SSortedList, "for a plist",
+InstallMethod( SSortedList, "for a plist",
     [ IsList and IsPlistRep ],
     SSortedListList );
 
-InstallOtherMethod( SSortedList, "for a list",
+InstallMethod( SSortedList, "for a list",
     [ IsList ],
     l->SSortedListList(AsPlist(l)) );
 
@@ -689,15 +703,15 @@ InstallOtherMethod( SSortedList, "for a list",
 ##
 #M  SSortedList( <list>, <func> )
 ##
-InstallOtherMethod( SSortedList,
+InstallMethod( SSortedList,
     "for a list, and a function",
     [ IsList, IsFunction ],
     function ( list, func )
     local   res, i, squashsize;
     squashsize := 100;
     res := [];
-    for i  in [ 1 .. Length( list ) ] do
-        Add( res, func( list[i] ) );
+    for i in list do
+        Add( res, func( i ) );
         if Length(res) > squashsize then
             res := Set(res);
             squashsize := Maximum(100, Size(res) * 2);
@@ -1060,8 +1074,8 @@ InstallOtherMethod( IsSSortedList,
 #M  IsSSortedList(<list>)
 ##
 InstallMethod( IsSSortedList,
-    "for a small homogeneous list",
-    [ IsHomogeneousList and IsSmallList ],
+    "for a small list",
+    [ IsSmallList ],
     IS_SSORT_LIST_DEFAULT );
 
 InstallMethod( IsSSortedList,
@@ -1346,10 +1360,13 @@ InstallGlobalFunction( Positions,
           break;
         fi;
       od;
-      return res;
     else
-      return PositionsOp(list,obj);
+      res:= PositionsOp(list,obj);
     fi;
+
+    SetIsSSortedList( res, true );
+
+    return res;
   end );
 # generic method for non-plain lists
 InstallMethod(PositionsOp, [IsList, IsObject], function(list, obj)
@@ -1471,6 +1488,42 @@ InstallMethod( PositionSortedOp,
     fi;
     end );
 
+#############################################################################
+##
+#F  PositionSortedBy( <list>, <val>, <func> )
+#F  PositionSortedByOp( <list>, <val>, <func> )
+##
+InstallGlobalFunction( PositionSortedBy, function( list, val, func )
+  if IsPlistRep(list) then
+    return POSITION_SORTED_BY(list, val, func);
+  else
+    return PositionSortedByOp(list, val, func);
+  fi;
+end);
+
+InstallMethod( PositionSortedByOp,
+    "for a dense plain list, an object and a function",
+    [ IsDenseList and IsPlistRep, IsObject, IsFunction ],
+    POSITION_SORTED_BY);
+
+InstallMethod( PositionSortedByOp,
+    "for a dense list, an object and a function",
+    [ IsDenseList, IsObject, IsFunction ],
+function ( list, val, func )
+local l, h, m;
+  # simple binary search. The entry is in the range [l..h]
+  l := 0;
+  h := Length(list) + 1;
+  while l + 1 < h do        # list[l] < val && val <= list[h]
+    m := QuoInt(l + h, 2);  # l < m < h
+    if func(list[m]) < val then
+      l := m;      # it's not in [lo..m], so take the upper part.
+    else
+      h := m;      # So val<=list[m][1], so the new range is [1..m].
+    fi;
+  od;
+  return h;
+end );
 
 #############################################################################
 ##
@@ -1654,6 +1707,8 @@ InstallMethod( PositionsProperty,
       fi;
     od;
 
+    SetIsSSortedList( result, true );
+
     return result;
     end );
 
@@ -1669,6 +1724,8 @@ InstallMethod( PositionsProperty,
         Add( result, i );
       fi;
     od;
+
+    SetIsSSortedList( result, true );
 
     return result;
     end );
@@ -1709,6 +1766,8 @@ InstallGlobalFunction( PositionsBound, function( list )
             Add( bound, i );
         fi;
     od;
+
+    SetIsSSortedList( bound, true );
 
     return bound;
 end );
@@ -2186,7 +2245,7 @@ InstallMethod(Shuffle, [IsDenseList and IsMutable], function(l)
   local len, j, tmp, i;
   len := Length(l);
   for i in [1..len-1] do
-    j := Random([i..len]);
+    j := Random(i, len);
     if i <> j then
       tmp := l[i];
       l[i] := l[j];
@@ -2451,15 +2510,15 @@ InstallMethod( SortingPerm,
 #M  SortParallel( <list>, <list2> ) . . . . . . .  sort two lists in parallel
 ##
 InstallMethod( SortParallel,
-    "for two dense and mutable lists",
-    [ IsDenseList and IsMutable,
-      IsDenseList and IsMutable ],
+    "for two mutable lists",
+    [ IsList and IsMutable,
+      IsList and IsMutable ],
     SORT_PARA_LIST );
 
 InstallMethod( StableSortParallel,
-    "for two dense and mutable lists",
-    [ IsDenseList and IsMutable,
-      IsDenseList and IsMutable ],
+    "for two mutable lists",
+    [ IsList and IsMutable,
+      IsList and IsMutable ],
     STABLE_SORT_PARA_LIST );
     
 #############################################################################
@@ -2485,16 +2544,16 @@ InstallMethod( StableSortParallel,
 #M  SortParallel( <list>, <list2>, <func> )
 ##
 InstallMethod( SortParallel,
-    "for two dense and mutable lists, and function",
-    [ IsDenseList and IsMutable,
-      IsDenseList and IsMutable,
+    "for mutable lists, and function",
+    [ IsList and IsMutable,
+      IsList and IsMutable,
       IsFunction ],
     SORT_PARA_LIST_COMP );
 
 InstallMethod( StableSortParallel,
-    "for two dense and mutable lists, and function",
-    [ IsDenseList and IsMutable,
-      IsDenseList and IsMutable,
+    "for two mutable lists, and function",
+    [ IsList and IsMutable,
+      IsList and IsMutable,
       IsFunction ],
     STABLE_SORT_PARA_LIST_COMP );
 
@@ -2782,18 +2841,28 @@ InstallMethod( Permuted,
 #F  First( <C>, <func> )  . . .  find first element in a list with a property
 ##
 InstallGlobalFunction( First,
-    function ( C, func )
+    function ( C, func... )
     local tnum, elm;
+    if Length( func ) > 1 then
+      Error( "too many arguments" );
+    fi;
     tnum:= TNUM_OBJ( C );
     if FIRST_LIST_TNUM <= tnum and tnum <= LAST_LIST_TNUM then
+      if Length( func ) = 0 then
+        func := ReturnTrue;
+      else
+        func := func[1];
+      fi;
       for elm in C do
           if func( elm ) then
               return elm;
           fi;
       od;
       return fail;
+    elif Length( func ) = 0 then
+      return FirstOp( C );
     else
-      return FirstOp( C, func );
+      return FirstOp( C, func[1] );
     fi;
 end );
 
@@ -2813,6 +2882,73 @@ InstallMethod( FirstOp,
         fi;
     od;
     return fail;
+    end );
+
+InstallMethod( FirstOp,
+    "for a list or collection",
+    [ IsListOrCollection ],
+    function ( C )
+    local elm;
+    for elm in C do
+        return elm;
+    od;
+    return fail;
+    end );
+
+
+#############################################################################
+##
+#F  Last( <C>, <func> )  . . . .  find last element in a list with a property
+##
+InstallGlobalFunction( Last,
+    function ( C, func... )
+    local tnum, i;
+    if Length( func ) > 1 then
+      Error( "too many arguments" );
+    fi;
+    tnum:= TNUM_OBJ( C );
+    if FIRST_LIST_TNUM <= tnum and tnum <= LAST_LIST_TNUM then
+      if Length( func ) = 0 then
+        func := ReturnTrue;
+      else
+        func := func[1];
+      fi;
+      for i in [Length(C),Length(C)-1..1] do
+          if IsBound(C[i]) and func(C[i]) then
+              return C[i];
+          fi;
+      od;
+      return fail;
+    elif Length( func ) = 0 then
+      return LastOp( C );
+    else
+      return LastOp( C, func[1] );
+    fi;
+end );
+
+
+#############################################################################
+##
+#M  LastOp( <C>, <func> )  . . .  find last element in a list with a property
+##
+InstallMethod( LastOp,
+    "for a list and a function",
+    [ IsList and IsFinite, IsFunction ],
+    function ( list, func )
+    local i;
+    for i in [Length(list),Length(list)-1..1] do
+        if IsBound(list[i]) and func(list[i]) then
+            return list[i];
+        fi;
+    od;
+    return fail;
+    end );
+
+InstallMethod( LastOp,
+    "for a list",
+    [ IsList and IsFinite ],
+    function ( list )
+    return LastOp(list, ReturnTrue);
     end );
 
 
@@ -2870,6 +3006,20 @@ InstallMethod( IsBound\[\],
     return index <= Length( list );
     end );
 
+#############################################################################
+##
+#M  IsBound( list[i] ) . . . . . IsBound for small lists with large arguments
+##
+InstallMethod( IsBound\[\],
+    "for a small list and large positive integer",
+    [ IsSmallList, IsPosInt ],
+    function( list, index )
+    if IsSmallIntRep(index) then
+        TryNextMethod();
+    else
+        return false;
+    fi;
+    end );
 
 #############################################################################
 ##
@@ -3701,9 +3851,14 @@ LIST_WITH_IDENTICAL_ENTRIES );
 ##  method is needed eventually looking out for long list or homogeneous list
 ##  or dense list, etc.
 ##
+##  The line break hints are consistent with those
+##  that appear in the kernel function 'PrintListDefault'
+##  and in the 'ViewString' method for finite lists.
+##
 InstallMethod( ViewObj,
     "for finite lists",
     [ IsList and IsFinite ],
+    {} -> RankFilter(IsList) + 1 - RankFilter(IsList and IsFinite),
 function( list )
     local   i;
 
@@ -3747,21 +3902,6 @@ InstallMethod( ViewObj,
     Print( " ]" );
     end );
 
-
-#############################################################################
-##
-#M  SetIsSSortedList( <list>, <val> ) . . . . . . . . method for kernel lists
-##
-InstallMethod( SetIsSSortedList,
-        "method for an internal list and a Boolean",
-        [IsList and IsInternalRep, IsBool],
-        function(l,val)
-    if val then
-        SET_FILTER_LIST(l, IS_SSORT_LIST);
-    else
-        SET_FILTER_LIST(l, IS_NSORT_LIST);
-    fi;
-end);
 
 #############################################################################
 ##
@@ -4069,7 +4209,3 @@ function(l)
     avg := Average(l);
     return Average(List(l, x -> (x-avg)^2));
 end);
-
-#############################################################################
-##
-#E

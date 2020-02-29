@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  grpcompl.gi                  GAP Library                 Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the operations for the computation of complements in
 ##  'white box groups'
@@ -59,7 +60,11 @@ local G,N,K,s, h, q, fpi, factorpres, com, comgens, cen, ocrels, fpcgs, ncom,
   G:=arg[1];
   N:=arg[2];
   # compute a series through N
-  s:=ChiefSeriesUnderAction(G,N);
+  if IsElementaryAbelian(N) then
+    s:=[N,TrivialSubgroup(N)];
+  else
+    s:=ChiefSeriesUnderAction(G,N);
+  fi;
   if Length(arg)=2 then
     K:=fail;
   else
@@ -69,10 +74,9 @@ local G,N,K,s, h, q, fpi, factorpres, com, comgens, cen, ocrels, fpcgs, ncom,
     s:=[h[1]];
     for i in h{[2..Length(h)]} do
       if Size(i)<Size(s[Length(s)]) then
-	Add(s,i);
+        Add(s,i);
       fi;
     od;
-
   fi;
 
   Info(InfoComplement,1,"Series of factors:",
@@ -95,9 +99,8 @@ local G,N,K,s, h, q, fpi, factorpres, com, comgens, cen, ocrels, fpcgs, ncom,
        Length(MappingGeneratorsImages(fpi)[2])," generators");
   factorpres:=[FreeGeneratorsOfFpGroup(Range(fpi)),
                RelatorsOfFpGroup(Range(fpi)),
-	       List(MappingGeneratorsImages(fpi)[2],
+	       List(GeneratorsOfGroup(Range(fpi)),
 	            i->PreImagesRepresentative(fpi,i))];
-
   Assert(1,ForAll(factorpres[3],i->Image(h,PreImagesRepresentative(h,i))=i));
   # initialize
   com:=[G];
@@ -233,8 +236,3 @@ InstallMethod(ComplementClassesRepresentativesSolvableNC,"using cohomology",
   IsIdenticalObj,
   [IsGroup,IsGroup],1,
   ComplementClassesRepresentativesSolvableWBG);
-
-#############################################################################
-##
-#E  grpcompl.gi
-##

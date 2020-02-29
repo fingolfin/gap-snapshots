@@ -1,8 +1,5 @@
 #############################################################################
 ##
-#W  varnames.tst                GAP Tests                 Alexander Konovalov
-##
-##
 ##  Exclude from testinstall.g: too sensitive to the context
 ##
 gap> START_TEST("varnames.tst");
@@ -25,7 +22,3 @@ gap> zzzz -> zzzz + 1;;
 gap> "zzzz" in Filtered(NamesGVars(), x -> not IsBoundGlobal(x));
 false
 gap> STOP_TEST( "varnames.tst", 1);
-
-#############################################################################
-##
-#E  varnames.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

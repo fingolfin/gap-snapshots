@@ -1,7 +1,4 @@
-#############################################################################
-##
-#W  mapphomo.tst                  GAP Tests                    Max Horn
-##
+#@local G,G0,H,H0,a,b,hom,gens,imgs
 gap> START_TEST("mapphomo.tst");
 gap> G:=SymmetricGroup(4);; gens:=[(1,2,3), (2,3,4)];; G0 := Subgroup(G, gens);;
 gap> H:=AbelianGroup(IsPcGroup, [3,3,4]);; imgs:=[H.1, H.2];; H0 := Subgroup(H, imgs);;
@@ -74,7 +71,3 @@ fail
 gap> GroupHomomorphismByImages(G, H, [], []);
 fail
 gap> STOP_TEST( "mapphomo.tst", 1);
-
-#############################################################################
-##
-#E

@@ -86,7 +86,7 @@ WeakPointerObj( [ 1, , [ 2, 3 ], fail, rec( a := 1 ) ] )
 WeakPointerObj( [ 1, , , fail ] )
 </pre></div>
 
-<p>Note that <code class="code">w</code> has failed to keep its list and record subobjects alive during the garbage collections. Certain subobjects, such as small integers and elements of small finite fields, are not stored in the workspace, and so are not subject to garbage collection, while certain other objects, such as the Boolean values, are always reachable from global variables or the kernel and so are never garbage collected.</p>
+<p>Note that <code class="code">w</code> has failed to keep its list and record subobjects alive during the garbage collections. Certain subobjects, such as small integers and elements of small finite fields, are not stored in the workspace, and so are not subject to garbage collection, while certain other objects, such as the boolean values, are always reachable from global variables or the kernel and so are never garbage collected.</p>
 
 <p>Subobjects reachable without going through a weak pointer object do not evaporate, as in:</p>
 

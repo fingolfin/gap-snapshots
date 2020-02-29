@@ -1,9 +1,12 @@
 #############################################################################
 ##
-#W  basicpcg.gi                 GAP Library                      Frank Celler
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the methods for the construction of the basic pc group
 ##  types.
@@ -217,9 +220,9 @@ end );
 
 #############################################################################
 ##
-#M  QuaternionGroupCons( <IsPcGroup and IsFinite>, <n> )
+#M  DicyclicGroupCons( <IsPcGroup and IsFinite>, <n> )
 ##
-InstallMethod( QuaternionGroupCons,
+InstallMethod( DicyclicGroupCons,
     "pc group",
     true,
     [ IsPcGroup and IsFinite,
@@ -397,10 +400,3 @@ function( filter, deg )
     fi;
     return GroupByPcgs(Pcgs(SymmetricGroupCons(IsPermGroup,[1..deg])));
 end );
-
-
-#############################################################################
-##
-
-#E
-

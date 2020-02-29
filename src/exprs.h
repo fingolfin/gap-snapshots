@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  exprs.h                     GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares the functions of the expressions package.
 **
@@ -16,19 +16,27 @@
 #ifndef GAP_EXPRS_H
 #define GAP_EXPRS_H
 
+#include "code.h"
 #include "system.h"
+#include "vars.h"
 
 /****************************************************************************
 **
-*F  OBJ_REFLVAR(<expr>) . . . . . . . . . . . value of a reference to a local
+*F  OBJ_REF_LVAR(<expr>) . . . . . . . . . . .value of a reference to a local
 **
-**  'OBJ_REFLVAR'  returns  the value of  the reference  to a  local variable
+**  'OBJ_REF_LVAR' returns the value of the reference to a local variable
 **  <expr>.
 */
-#define OBJ_REFLVAR(expr)       \
-                        (OBJ_LVAR( LVAR_REFLVAR( expr ) ) != 0 ? \
-                         OBJ_LVAR( LVAR_REFLVAR( expr ) ) : \
-                         ObjLVar( LVAR_REFLVAR( expr ) ) )
+EXPORT_INLINE Obj OBJ_REF_LVAR(Expr expr)
+{
+    Int lvar = LVAR_REF_LVAR(expr);
+    if (OBJ_LVAR(lvar) != 0) {
+        return OBJ_LVAR(lvar);
+    }
+    else {
+        return ObjLVar(lvar);
+    }
+}
 
 /****************************************************************************
 **
@@ -43,7 +51,23 @@
 **  (immediate) integer values having the same representation.
 */
 
-#define OBJ_INTEXPR(expr)   ((Obj)(expr))
+EXPORT_INLINE Obj OBJ_INTEXPR(Expr expr)
+{
+    GAP_ASSERT(IS_INTOBJ((Obj)expr));
+    return (Obj)expr;
+}
+
+
+/****************************************************************************
+**
+*V  EvalExprFuncs[<type>]  . . . . . evaluator for expressions of type <type>
+**
+**  'EvalExprFuncs'  is the dispatch table   that contains for  every type of
+**  expressions a pointer  to the  evaluator  for expressions of this   type,
+**  i.e., the function that should be  called to evaluate expressions of this
+**  type.
+*/
+extern Obj (*EvalExprFuncs[256])(Expr expr);
 
 
 /****************************************************************************
@@ -61,22 +85,31 @@
 **  Note that 'EVAL_EXPR' does not use 'TNUM_EXPR', since it also handles the
 **  two special cases that 'TNUM_EXPR' handles.
 */
-#define EVAL_EXPR(expr) \
-                        (IS_REFLVAR(expr) ? OBJ_REFLVAR(expr) : \
-                         (IS_INTEXPR(expr) ? OBJ_INTEXPR(expr) : \
-                          (*EvalExprFuncs[ TNUM_STAT(expr) ])( expr ) ))
+
+EXPORT_INLINE Obj EVAL_EXPR(Expr expr)
+{
+    if (IS_REF_LVAR(expr)) {
+        return OBJ_REF_LVAR(expr);
+    }
+    else if (IS_INTEXPR(expr)) {
+        return OBJ_INTEXPR(expr);
+    }
+    else {
+        return (*EvalExprFuncs[TNUM_STAT(expr)])(expr);
+    }
+}
 
 
 /****************************************************************************
 **
-*V  EvalExprFuncs[<type>]  . . . . . evaluator for expressions of type <type>
+*V  EvalBoolFuncs[<type>] . . boolean evaluator for expression of type <type>
 **
-**  'EvalExprFuncs'  is the dispatch table   that contains for  every type of
-**  expressions a pointer  to the  evaluator  for expressions of this   type,
-**  i.e., the function that should be  called to evaluate expressions of this
-**  type.
+**  'EvalBoolFuncs'  is  the dispatch table that  contains  for every type of
+**  expression a pointer to a boolean evaluator for expressions of this type,
+**  i.e., a pointer to  a function which  is  guaranteed to return a  boolean
+**  value that should be called to evaluate expressions of this type.
 */
-extern  Obj             (* EvalExprFuncs [256]) ( Expr expr );
+extern Obj (*EvalBoolFuncs[256])(Expr expr);
 
 
 /****************************************************************************
@@ -90,20 +123,10 @@ extern  Obj             (* EvalExprFuncs [256]) ( Expr expr );
 **  'EVAL_BOOL_EXPR' returns the  value of <expr> (which  is either 'true' or
 **  'false').
 */
-#define EVAL_BOOL_EXPR(expr) \
-                        ( (*EvalBoolFuncs[ TNUM_EXPR( expr ) ])( expr ) )
-
-
-/****************************************************************************
-**
-*V  EvalBoolFuncs[<type>] . . boolean evaluator for expression of type <type>
-**
-**  'EvalBoolFuncs'  is  the dispatch table that  contains  for every type of
-**  expression a pointer to a boolean evaluator for expressions of this type,
-**  i.e., a pointer to  a function which  is  guaranteed to return a  boolean
-**  value that should be called to evaluate expressions of this type.
-*/
-extern  Obj             (* EvalBoolFuncs [256]) ( Expr expr );
+EXPORT_INLINE Obj EVAL_BOOL_EXPR(Expr expr)
+{
+    return (*EvalBoolFuncs[TNUM_EXPR(expr)])(expr);
+}
 
 
 /****************************************************************************
@@ -112,12 +135,11 @@ extern  Obj             (* EvalBoolFuncs [256]) ( Expr expr );
 **
 **  'PrintExpr' prints the expression <expr>.
 */
-extern  void            PrintExpr (
-            Expr                expr );
+void PrintExpr(Expr expr);
 
 
-extern void PrintRecExpr1 ( Expr expr ); /* needed for printing
-                                          function calls with options */
+void PrintRecExpr1(Expr expr); /* needed for printing
+                                       function calls with options */
 
 /****************************************************************************
 **

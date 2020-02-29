@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  grpprmcs.gi                 GAP library                       Ákos Seress
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Ákos Seress.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 
 
@@ -1053,9 +1054,9 @@ InstallGlobalFunction( TransStabCSPG, function(G,H)
 
         # first, take random element of G\H
         repeat
-            v := Random([1..Length( chainG.orbit )]);
+            v := Random(1, Length( chainG.orbit ));
             g := CosetRepAsWord( x, chainG.orbit[v], chainG.transversal );
-            u := Random([1..Length( chainstabgroup.orbit )]);
+            u := Random(1, Length( chainstabgroup.orbit ));
             Append(g,CosetRepAsWord( y, chainstabgroup.orbit[u],
                                         chainstabgroup.transversal ));
             notinH := false;
@@ -1334,7 +1335,7 @@ InstallGlobalFunction( RandomElmAsWord, function( chain )
     word:=[];
     stb:= chain;
     while IsBound(stb.stabilizer) do
-       v := Random([1..Length(stb.orbit)]);
+       v := Random(1,Length(stb.orbit));
        coset := CosetRepAsWord(stb.orbit[1],stb.orbit[v],stb.transversal);
        len := Length(word);
        for i in [1..Length(coset)] do
@@ -2863,9 +2864,3 @@ InstallOtherMethod( ChiefSeriesThrough,
     true,
     [ IsGroup, IsGroup, IsList ], 0,
     ChiefSeriesOfGroup );
-
-
-#############################################################################
-##
-#E
-

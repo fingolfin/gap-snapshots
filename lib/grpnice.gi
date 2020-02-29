@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  grpnice.gi                  GAP library                      Frank Celler
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This  file  contains generic     methods   for groups handled    by  nice
 ##  monomorphisms..
@@ -155,7 +156,7 @@ InstallMethod(NiceMonomorphism,
     "for subgroups that get the nice monomorphism by their parent", true,
     [ IsGroup and IsHandledByNiceMonomorphism and HasParent],
     # to rank higher than matrix group methods.
-    RankFilter(IsFinite and IsMatrixGroup),
+    {} -> RankFilter(IsFinite and IsMatrixGroup),
 
 function(G)
     local P;
@@ -1122,8 +1123,3 @@ function( enum, elm )
   elm:=ImageElm(enum!.morphism,elm);
   return PositionCanonical(enum!.niceEnumerator,elm);
 end );
-
-#############################################################################
-##
-#E  grpnice.gi  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##

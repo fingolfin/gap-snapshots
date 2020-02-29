@@ -77,7 +77,6 @@ So <Ref Func="ReturnTrue"/> is often used as family predicate in
 Functions are &GAP; objects and thus have categories and a family.
 
 <#Include Label="IsFunction">
-<#Include Label="IsOperation">
 <#Include Label="FunctionsFamily">
 
 </Section>
@@ -107,7 +106,7 @@ returns the concatenation of the lists given as arguments.
 If the name of a function contains the word <Q><C>Of</C></Q> then the return 
 value is thought of as information deduced from the arguments.
 Usually such functions are attributes (see&nbsp;<Ref Sect="Attributes"/>).
-Examples are <Ref Oper="GeneratorsOfGroup"/>, which returns a list of 
+Examples are <Ref Attr="GeneratorsOfGroup"/>, which returns a list of 
 generators for the group entered as argument, or <Ref Func="DiagonalOfMat"/>.
 <P/>
 
@@ -141,15 +140,15 @@ which may, for example:
 <Item>
 know more about its own structure (and so support more operations) than its 
 input (e.g. if the elements of the collection form a group, 
-then this group can be constructed using <Ref Oper="AsGroup"/>);
+then this group can be constructed using <Ref Attr="AsGroup"/>);
 </Item>
 <Item>
-discard its additional structure (e.g. <Ref Oper="AsList"/> applied to a 
+discard its additional structure (e.g. <Ref Attr="AsList"/> applied to a 
 group will return a list of its elements); 
 </Item>
 <Item>
 contain all elements of the original object without duplicates
-(like e.g. <Ref Oper="AsSet"/> does if its argument is a list of elements
+(like e.g. <Ref Attr="AsSet"/> does if its argument is a list of elements
 from the same family);
 </Item>
 <Item>
@@ -179,9 +178,69 @@ omits the check.
 <P/>
 
 Needless to say, all these rules are not followed slavishly, for example 
-there is one operation <Ref Oper="Zero"/> instead of two operations
+there is one operation <Ref Attr="Zero"/> instead of two operations
 <C>ZeroOfElement</C> and <C>ZeroOfAdditiveGroup</C>.
 
 </Section>
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<Section Label="Pragmas">
+<Heading>Code annotations (pragmas)</Heading>
+<Index>Pragmas</Index>
+<Index>Code annotations</Index>
+<Index>#%</Index>
+
+GAP supports the use of code annotations (pragmas) in functions, i.e.,
+adding comments to functions that are stored in the function object itself,
+unlike regular comments. Pragmas are single-line comments,
+starting with <C>#%</C>:
+<Example><![CDATA[
+gap> function()
+>       #% This is a pragma
+>       #  This is not a pragma
+>       return;
+> end;;
+gap> Display( last );
+function (  )
+    #% This is a pragma
+    return;
+end
+]]></Example>
+<P/>
+Pragmas can be used to mark parts of functions that should
+later be manipulated using <Ref Sect="Syntax Trees"/>.
+<P/>
+Please note that heavy use of pragmas in functions slows
+down the execution of your function in the same way as adding
+empty <C>;</C> statements to your code.
+<Log><![CDATA[
+gap> a := function( )
+>       local i;
+>       for i in [ 1 .. 1000000 ] do
+>               i := i + 1;
+>       od;
+> end;
+function(  ) ... end
+gap> a();
+gap> time;
+14
+gap> b := function( )
+>       local i;
+>       for i in [ 1 .. 1000000 ] do
+>               i := i + 1;
+>               #% pragma
+>               #% pragma
+>               #% pragma
+>               #% pragma
+>               #% pragma
+>       od;
+> end;
+function(  ) ... end
+gap> b();
+gap> time;
+25
+]]></Log>
+</Section>
+
 
 </Chapter>

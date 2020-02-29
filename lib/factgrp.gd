@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  factgrp.gd                      GAP library              Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the declarations of operations for factor group maps
 ##
@@ -373,7 +374,7 @@ DeclareGlobalFunction("CloseNaturalHomomorphismsPool");
 
 #############################################################################
 ##
-#F  PullBackNaturalHomomorphismsPool(<hom>]) . . transfer nathoms of image
+#F  PullBackNaturalHomomorphismsPool(<hom>) . . transfer nathoms of image
 ##
 ##  <ManSection>
 ##  <Func Name="PullBackNaturalHomomorphismsPool" Arg='hom'/>
@@ -385,6 +386,23 @@ DeclareGlobalFunction("CloseNaturalHomomorphismsPool");
 ##  </ManSection>
 ##
 DeclareGlobalFunction("PullBackNaturalHomomorphismsPool");
+
+#############################################################################
+##
+#F  TryQuotientsFromFactorSubgroups(<hom>,<ker>,<bound>) 
+##
+##  <ManSection>
+##  <Func Name="TryQuotientsFromFactorSubgroups" Arg='hom,ker,bound'/>
+##
+##  <Description>
+##  For a homomorphism <A>hom</A>, this command iterates through subgroups
+##  of the image, up to index <A>bound</A>,
+##  trying to find derived subgroups that expose more of the
+##  factor modulo <A>ker</A>.
+##  </Description>
+##  </ManSection>
+##
+DeclareGlobalFunction("TryQuotientsFromFactorSubgroups");
 
 #############################################################################
 ##
@@ -400,9 +418,3 @@ DeclareGlobalFunction("PullBackNaturalHomomorphismsPool");
 ##  </ManSection>
 ##
 DeclareGlobalFunction("EraseNaturalHomomorphismsPool");
-
-
-#############################################################################
-##
-#E
-

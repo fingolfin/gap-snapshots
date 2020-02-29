@@ -1,3 +1,4 @@
+#@local D, Df, U, V, G, N, n, C, Q, F, x, y
 gap> START_TEST("direct_factors.tst");
 gap> D := DihedralGroup(12);; Df := DirectFactorsOfGroup(D);; IsSet(Df); List(Df, IdGroup); 
 true
@@ -41,11 +42,11 @@ true
 gap> G:=SmallGroup(16,7);; C := Center(G);; NormalComplement(G,C);
 fail
 gap> G := DirectProduct(D, D, D);;
-gap> List(DirectFactorsOfGroup(G), IdGroup);
-[ [ 6, 1 ], [ 6, 1 ], [ 6, 1 ], [ 2, 1 ], [ 2, 1 ], [ 2, 1 ] ]
+gap> SortedList(List(DirectFactorsOfGroup(G), IdGroup));
+[ [ 2, 1 ], [ 2, 1 ], [ 2, 1 ], [ 6, 1 ], [ 6, 1 ], [ 6, 1 ] ]
 gap> G := DirectProduct(D, D);; NormalSubgroups(G);;
-gap> List(DirectFactorsOfGroup(G), IdGroup);
-[ [ 6, 1 ], [ 6, 1 ], [ 2, 1 ], [ 2, 1 ] ]
+gap> SortedList(List(DirectFactorsOfGroup(G), IdGroup));
+[ [ 2, 1 ], [ 2, 1 ], [ 6, 1 ], [ 6, 1 ] ]
 gap> D := DihedralGroup(8);; G := DirectProduct(D, D);; NormalSubgroups(G);;
 gap> List(DirectFactorsOfGroup(G), IdGroup);
 [ [ 8, 3 ], [ 8, 3 ] ]
@@ -122,6 +123,5 @@ gap> G := DirectProduct(DihedralGroup(12), SymmetricGroup(4));;
 gap> SortedList(List(DirectFactorsOfGroup(G),IdGroup));
 [ [ 2, 1 ], [ 6, 1 ], [ 24, 12 ] ]
 
-# Unbind variables so we can GC memory
-gap> Unbind(G); Unbind(F); Unbind(Q); Unbind(D); Unbind(Df); Unbind(U); Unbind(V);
+#
 gap> STOP_TEST("direct_factors.tst", 1);

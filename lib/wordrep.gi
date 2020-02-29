@@ -1,13 +1,12 @@
 #############################################################################
 ##
-#W  wordrep.gi                  GAP library                     Thomas Breuer
-#W                                                             & Frank Celler
-#W                                                         & Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer, Frank Celler, Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This  file contains  methods for   associative words in syllable
 ##  representation.
@@ -216,12 +215,13 @@ local a,n,t,
       str;
 
   n:=Length(names);
-  if PRINTWORDPOWERS=true 
-   or (IsInt(PRINTWORDPOWERS) and Length(l)<PRINTWORDPOWERS) then
+  if (PRINTWORDPOWERS=true 
+   or (IsInt(PRINTWORDPOWERS) and Length(l)<PRINTWORDPOWERS)) and
+     ValueOption("printnopowers")<>true then
     if Length(l)>0 and n=infinity then
-      n:=2*(AbsInt(Maximum(l))+1); 
+      n:=2*(Maximum(List(l,AbsInt))+1);
     fi;
-    a:=FindSubstringPowers(l,n);
+    a:=FindSubstringPowers(l,n+Length(tseed)); # tseed numbers are used already
   else
     a:=[l,[]];
   fi;
@@ -1634,9 +1634,3 @@ local l,r,i,j,b,p;
   od;
   return l;
 end);
-
-
-#############################################################################
-##
-#E
-##

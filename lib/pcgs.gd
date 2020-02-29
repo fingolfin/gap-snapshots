@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  pcgs.gd                     GAP Library                      Frank Celler
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the operations for polycylic generating systems.
 ##
@@ -176,7 +177,7 @@ DeclareConstructor( "PcgsByPcSequenceCons",
 ##  ]]></Example>
 ##  <P/>
 ##  If a pcgs is only given by a list of pc elements,
-##  <Ref Func="PcgsByPcSequence"/> can be used:
+##  <Ref Oper="PcgsByPcSequence"/> can be used:
 ##  <Example><![CDATA[
 ##  gap> G:=Group((1,2,3,4),(1,2));;
 ##  gap> p:=PcgsByPcSequence(FamilyObj(One(G)),
@@ -280,7 +281,7 @@ DeclareAttribute( "PcSeries", IsPcgs );
 ##  <Description>
 ##  returns <K>true</K> if the pcgs <A>pcgs</A> refines an elementary abelian
 ##  series.
-##  <Ref Func="IndicesEANormalSteps"/> then gives the indices in the Pcgs,
+##  <Ref Attr="IndicesEANormalSteps"/> then gives the indices in the Pcgs,
 ##  at which the subgroups of this series start. 
 ##  </Description>
 ##  </ManSection>
@@ -301,7 +302,7 @@ DeclareProperty("IsPcgsElementaryAbelianSeries", IsPcgs );
 ##
 ##  <Description>
 ##  computes a pcgs for <A>G</A> that refines an elementary abelian series.
-##  <Ref Func="IndicesEANormalSteps"/> gives the indices in the pcgs,
+##  <Ref Attr="IndicesEANormalSteps"/> gives the indices in the pcgs,
 ##  at which the normal subgroups of this series start.
 ##  The second variant returns a pcgs that runs through the normal subgroups
 ##  in the list <A>list</A>.
@@ -314,16 +315,18 @@ DeclareAttribute( "PcgsElementaryAbelianSeries", IsGroup );
 #############################################################################
 ##
 #A  IndicesEANormalSteps(<pcgs>)
+#A  IndicesEANormalStepsBounded(<pcgs>,<bound>)
 ##
 ##  <#GAPDoc Label="IndicesEANormalSteps">
 ##  <ManSection>
 ##  <Attr Name="IndicesEANormalSteps" Arg='pcgs'/>
+##  <Func Name="IndicesEANormalStepsBounded" Arg='pcgs,bound'/>
 ##
 ##  <Description>
 ##  Let <A>pcgs</A> be a pcgs obtained as corresponding to a series of normal
 ##  subgroups with elementary abelian factors (for example from calling
-##  <Ref Func="PcgsElementaryAbelianSeries" Label="for a group"/>)
-##  Then <Ref Func="IndicesEANormalSteps"/> returns a sorted list of
+##  <Ref Attr="PcgsElementaryAbelianSeries" Label="for a group"/>)
+##  Then <Ref Attr="IndicesEANormalSteps"/> returns a sorted list of
 ##  integers, indicating the tails of <A>pcgs</A> which generate these normal
 ##  subgroup of <A>G</A>.
 ##  If <M>i</M> is an element of this list, <M>(g_i, \ldots, g_n)</M>
@@ -332,21 +335,25 @@ DeclareAttribute( "PcgsElementaryAbelianSeries", IsGroup );
 ##  (These indices form <E>one</E> series with elementary abelian
 ##  subfactors, not necessarily the most refined one.)
 ##  <P/>
-##  The attribute <Ref Func="EANormalSeriesByPcgs"/> returns the actual
+##  The attribute <Ref Attr="EANormalSeriesByPcgs"/> returns the actual
 ##  series of subgroups.
 ##  <P/>
 ##  For arbitrary pcgs not obtained as belonging to a special series such a
 ##  set of indices not necessarily exists,
-##  and <Ref Func="IndicesEANormalSteps"/> is not
+##  and <Ref Attr="IndicesEANormalSteps"/> is not
 ##  guaranteed to work in this situation.
 ##  <P/>
-##  Typically, <Ref Func="IndicesEANormalSteps"/> is set by
-##  <Ref Func="PcgsElementaryAbelianSeries" Label="for a group"/>.
+##  Typically, <Ref Attr="IndicesEANormalSteps"/> is set by
+##  <Ref Attr="PcgsElementaryAbelianSeries" Label="for a group"/>.
+##  <P/>
+##  The variant <Ref Func="IndicesEANormalStepsBounded"/> will aim to ensure
+##  that no factor will be larger than the given bound.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
 DeclareAttribute( "IndicesEANormalSteps", IsPcgs );
+DeclareGlobalFunction( "IndicesEANormalStepsBounded" );
 
 #############################################################################
 ##
@@ -359,14 +366,16 @@ DeclareAttribute( "IndicesEANormalSteps", IsPcgs );
 ##  <Description>
 ##  Let <A>pcgs</A> be a pcgs obtained as corresponding to a series of normal
 ##  subgroups with elementary abelian factors (for example from calling
-##  <Ref Func="PcgsElementaryAbelianSeries" Label="for a group"/>).
+##  <Ref Attr="PcgsElementaryAbelianSeries" Label="for a group"/>).
 ##  This attribute returns the actual series of normal subgroups,
-##  corresponding to <Ref Func="IndicesEANormalSteps"/>.
+##  corresponding to <Ref Attr="IndicesEANormalSteps"/>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
 DeclareAttribute("EANormalSeriesByPcgs",IsPcgs);
+
+DeclareGlobalFunction( "BoundedRefinementEANormalSeries" );
 
 #############################################################################
 ##
@@ -379,7 +388,7 @@ DeclareAttribute("EANormalSeriesByPcgs",IsPcgs);
 ##  <Description>
 ##  returns <K>true</K> if the pcgs <A>pcgs</A> refines an central elementary
 ##  abelian series.
-##  <Ref Func="IndicesCentralNormalSteps"/> then gives the indices in the
+##  <Ref Attr="IndicesCentralNormalSteps"/> then gives the indices in the
 ##  pcgs, at which the subgroups of this series start. 
 ##  </Description>
 ##  </ManSection>
@@ -398,7 +407,7 @@ DeclareProperty("IsPcgsCentralSeries", IsPcgs );
 ##  <Description>
 ##  computes a pcgs for <A>G</A> that refines a central elementary abelian
 ##  series.
-##  <Ref Func="IndicesCentralNormalSteps"/> gives the indices in the pcgs,
+##  <Ref Attr="IndicesCentralNormalSteps"/> gives the indices in the pcgs,
 ##  at which the normal subgroups of this series start.
 ##  </Description>
 ##  </ManSection>
@@ -417,8 +426,8 @@ DeclareAttribute( "PcgsCentralSeries", IsGroup);
 ##  <Description>
 ##  Let <A>pcgs</A> be a pcgs obtained as corresponding to a series of normal
 ##  subgroups with central elementary abelian factors
-##  (for example from calling <Ref Func="PcgsCentralSeries"/>).
-##  Then <Ref Func="IndicesCentralNormalSteps"/> returns a sorted list of
+##  (for example from calling <Ref Attr="PcgsCentralSeries"/>).
+##  Then <Ref Attr="IndicesCentralNormalSteps"/> returns a sorted list of
 ##  integers, indicating the tails of <A>pcgs</A> which generate these normal
 ##  subgroups of <A>G</A>.
 ##  If <M>i</M> is an element of this list, <M>(g_i, \ldots, g_n)</M>
@@ -427,16 +436,16 @@ DeclareAttribute( "PcgsCentralSeries", IsGroup);
 ##  (These indices form <E>one</E> series with central elementary abelian
 ##  subfactors, not necessarily the most refined one.)
 ##  <P/>
-##  The attribute <Ref Func="CentralNormalSeriesByPcgs"/> returns the actual
+##  The attribute <Ref Attr="CentralNormalSeriesByPcgs"/> returns the actual
 ##  series of subgroups.
 ##  <P/>
 ##  For arbitrary pcgs not obtained as belonging to a special series such a
 ##  set of indices not necessarily exists,
-##  and <Ref Func="IndicesCentralNormalSteps"/>
+##  and <Ref Attr="IndicesCentralNormalSteps"/>
 ##  is not guaranteed to work in this situation.
 ##  <P/>
-##  Typically, <Ref Func="IndicesCentralNormalSteps"/> is set by
-##  <Ref Func="PcgsCentralSeries"/>.
+##  Typically, <Ref Attr="IndicesCentralNormalSteps"/> is set by
+##  <Ref Attr="PcgsCentralSeries"/>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -454,9 +463,9 @@ DeclareAttribute( "IndicesCentralNormalSteps", IsPcgs );
 ##  <Description>
 ##  Let <A>pcgs</A> be a pcgs obtained as corresponding to a series of normal
 ##  subgroups with central elementary abelian factors (for example from
-##  calling <Ref Func="PcgsCentralSeries"/>).
+##  calling <Ref Attr="PcgsCentralSeries"/>).
 ##  This attribute returns the actual series of normal subgroups,
-##  corresponding to <Ref Func="IndicesCentralNormalSteps"/>.
+##  corresponding to <Ref Attr="IndicesCentralNormalSteps"/>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -474,7 +483,7 @@ DeclareAttribute("CentralNormalSeriesByPcgs",IsPcgs);
 ##  <Description>
 ##  returns <K>true</K> if the pcgs <A>pcgs</A> refines a <M>p</M>-central
 ##  elementary abelian series for a <M>p</M>-group.
-##  <Ref Func="IndicesPCentralNormalStepsPGroup"/> then gives the indices in
+##  <Ref Attr="IndicesPCentralNormalStepsPGroup"/> then gives the indices in
 ##  the pcgs, at which the subgroups of this series start. 
 ##  </Description>
 ##  </ManSection>
@@ -493,7 +502,7 @@ DeclareProperty("IsPcgsPCentralSeriesPGroup", IsPcgs );
 ##  <Description>
 ##  computes a pcgs for the <M>p</M>-group <A>G</A> that refines a
 ##  <M>p</M>-central elementary abelian series.
-##  <Ref Func="IndicesPCentralNormalStepsPGroup"/> gives the
+##  <Ref Attr="IndicesPCentralNormalStepsPGroup"/> gives the
 ##  indices in the pcgs, at which the normal subgroups of this series start.
 ##  </Description>
 ##  </ManSection>
@@ -512,8 +521,8 @@ DeclareAttribute( "PcgsPCentralSeriesPGroup", IsGroup);
 ##  <Description>
 ##  Let <A>pcgs</A> be a pcgs obtained as corresponding to a series of normal
 ##  subgroups with <M>p</M>-central elementary abelian factors
-##  (for example from calling <Ref Func="PcgsPCentralSeriesPGroup"/>).
-##  Then <Ref Func="IndicesPCentralNormalStepsPGroup"/> returns a sorted list
+##  (for example from calling <Ref Attr="PcgsPCentralSeriesPGroup"/>).
+##  Then <Ref Attr="IndicesPCentralNormalStepsPGroup"/> returns a sorted list
 ##  of integers, indicating the tails of <A>pcgs</A> which generate these
 ##  normal subgroups of <A>G</A>.
 ##  If <M>i</M> is an element of this list, <M>(g_i, \ldots, g_n)</M>
@@ -522,16 +531,16 @@ DeclareAttribute( "PcgsPCentralSeriesPGroup", IsGroup);
 ##  (These indices form <E>one</E> series with central elementary abelian
 ##  subfactors, not necessarily the most refined one.)
 ##  <P/>
-##  The attribute <Ref Func="PCentralNormalSeriesByPcgsPGroup"/> returns the
+##  The attribute <Ref Attr="PCentralNormalSeriesByPcgsPGroup"/> returns the
 ##  actual series of subgroups.
 ##  <P/>
 ##  For arbitrary pcgs not obtained as belonging to a special series such a
 ##  set of indices not necessarily exists, and
-##  <Ref Func="IndicesPCentralNormalStepsPGroup"/>
+##  <Ref Attr="IndicesPCentralNormalStepsPGroup"/>
 ##  is not guaranteed to work in this situation.
 ##  <P/>
-##  Typically, <Ref Func="IndicesPCentralNormalStepsPGroup"/> is set by
-##  <Ref Func="PcgsPCentralSeriesPGroup"/>.
+##  Typically, <Ref Attr="IndicesPCentralNormalStepsPGroup"/> is set by
+##  <Ref Attr="PcgsPCentralSeriesPGroup"/>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -549,9 +558,9 @@ DeclareAttribute( "IndicesPCentralNormalStepsPGroup", IsPcgs );
 ##  <Description>
 ##  Let <A>pcgs</A> be a pcgs obtained as corresponding to a series of normal
 ##  subgroups with <M>p</M>-central elementary abelian factors
-##  (for example from calling <Ref Func="PcgsPCentralSeriesPGroup"/>).
+##  (for example from calling <Ref Attr="PcgsPCentralSeriesPGroup"/>).
 ##  This attribute returns the actual series of normal subgroups,
-##  corresponding to <Ref Func="IndicesPCentralNormalStepsPGroup"/>.
+##  corresponding to <Ref Attr="IndicesPCentralNormalStepsPGroup"/>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -568,7 +577,7 @@ DeclareAttribute("PCentralNormalSeriesByPcgsPGroup",IsPcgs);
 ##
 ##  <Description>
 ##  returns <K>true</K> if the pcgs <A>pcgs</A> refines a chief series.
-##  <Ref Func="IndicesChiefNormalSteps"/> then gives the indices in the pcgs,
+##  <Ref Attr="IndicesChiefNormalSteps"/> then gives the indices in the pcgs,
 ##  at which the subgroups of this series start. 
 ##  </Description>
 ##  </ManSection>
@@ -586,7 +595,7 @@ DeclareProperty("IsPcgsChiefSeries", IsPcgs );
 ##
 ##  <Description>
 ##  computes a pcgs for <A>G</A> that refines a chief series.
-##  <Ref Func="IndicesChiefNormalSteps"/> gives the indices in the pcgs,
+##  <Ref Attr="IndicesChiefNormalSteps"/> gives the indices in the pcgs,
 ##  at which the normal subgroups of this series start.
 ##  </Description>
 ##  </ManSection>
@@ -604,8 +613,8 @@ DeclareAttribute( "PcgsChiefSeries", IsGroup );
 ##
 ##  <Description>
 ##  Let <A>pcgs</A> be a pcgs obtained as corresponding to a chief series
-##  for example from calling <Ref Func="PcgsChiefSeries"/>).
-##  Then <Ref Func="IndicesChiefNormalSteps"/> returns a sorted list of
+##  for example from calling <Ref Attr="PcgsChiefSeries"/>).
+##  Then <Ref Attr="IndicesChiefNormalSteps"/> returns a sorted list of
 ##  integers, indicating the tails of <A>pcgs</A> which generate these normal
 ##  subgroups of <A>G</A>.
 ##  If <M>i</M> is an element of this list, <M>(g_i, \ldots, g_n)</M>
@@ -614,16 +623,16 @@ DeclareAttribute( "PcgsChiefSeries", IsGroup );
 ##  (These indices form <E>one</E> series with elementary abelian
 ##  subfactors, not necessarily the most refined one.)
 ##  <P/>
-##  The attribute <Ref Func="ChiefNormalSeriesByPcgs"/> returns the actual
+##  The attribute <Ref Attr="ChiefNormalSeriesByPcgs"/> returns the actual
 ##  series of subgroups.
 ##  <P/>
 ##  For arbitrary pcgs not obtained as belonging to a special series such a
 ##  set of indices not necessarily exists,
-##  and <Ref Func="IndicesChiefNormalSteps"/> is not
+##  and <Ref Attr="IndicesChiefNormalSteps"/> is not
 ##  guaranteed to work in this situation.
 ##  <P/>
-##  Typically, <Ref Func="IndicesChiefNormalSteps"/> is set by
-##  <Ref Func="PcgsChiefSeries"/>.
+##  Typically, <Ref Attr="IndicesChiefNormalSteps"/> is set by
+##  <Ref Attr="PcgsChiefSeries"/>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -641,9 +650,9 @@ DeclareAttribute( "IndicesChiefNormalSteps", IsPcgs );
 ##  <Description>
 ##  Let <A>pcgs</A> be a pcgs obtained as corresponding to a chief series
 ##  (for example from calling
-##  <Ref Func="PcgsChiefSeries"/>). This attribute returns the actual series
+##  <Ref Attr="PcgsChiefSeries"/>). This attribute returns the actual series
 ##  of normal subgroups,
-##  corresponding to <Ref Func="IndicesChiefNormalSteps"/>.
+##  corresponding to <Ref Attr="IndicesChiefNormalSteps"/>.
 ##
 ##  <Example><![CDATA[
 ##  gap> g:=Group((1,2,3,4),(1,2));;
@@ -720,7 +729,7 @@ DeclareAttribute( "NormalSeriesByPcgs", IsPcgs);
 ##  <Description>
 ##  tests whether the relative orders of <A>pcgs</A> are prime numbers. 
 ##  Many algorithms require a pcgs to have this property.
-##  The operation&nbsp;<Ref Func="IsomorphismRefinedPcGroup"/>
+##  The operation&nbsp;<Ref Attr="IsomorphismRefinedPcGroup"/>
 ##  can be of help here.
 ##  </Description>
 ##  </ManSection>
@@ -755,7 +764,7 @@ InstallTrueMethod( IsGeneralPcgs, IsFiniteOrdersPcgs );
 ##  <Attr Name="RefinedPcGroup" Arg='G'/>
 ##
 ##  <Description>
-##  returns the range of the <Ref Func="IsomorphismRefinedPcGroup"/> value of
+##  returns the range of the <Ref Attr="IsomorphismRefinedPcGroup"/> value of
 ##  <A>G</A>.
 ##  </Description>
 ##  </ManSection>
@@ -1159,7 +1168,7 @@ DeclareOperation( "HeadPcElementByNumber",
 ##  <Q>simple</Q> elements if only representatives in a factor are required,
 ##  see&nbsp;<Ref Sect="Factor Groups of Polycyclic Groups - Modulo Pcgs"/>.
 ##  <P/>
-##  The difference to <Ref Func="HeadPcElementByNumber"/>
+##  The difference to <Ref Oper="HeadPcElementByNumber"/>
 ##  is that this function is guaranteed to zero out trailing
 ##  coefficients while <Ref Oper="CleanedTailPcElement"/> will only do this
 ##  if it can be done cheaply.
@@ -1479,9 +1488,3 @@ DeclareGlobalFunction( "LiftedInducedPcgs" );
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "PcgsByPcgs" );
-
-
-#############################################################################
-##  
-#E
-

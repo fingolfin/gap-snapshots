@@ -103,8 +103,8 @@
   external  representations. The "external representation" of a floating-point
   number     [10Xx[110X     is    a    pair    [10X[m,e][110X    of    integers,    such    that
   [10Xx=m*2^(-1+e-LogInt(AbsInt(m),2))[110X.    Conversion   to   and   from   external
-  representation  is  performed  as  usual  using  [2XExtRepOfObj[102X  ([14X79.16-1[114X)  and
-  [2XObjByExtRep[102X ([14X79.16-1[114X):[133X
+  representation   is  performed  as  usual  using  [2XExtRepOfObj[102X  ([14X79.8-1[114X)  and
+  [2XObjByExtRep[102X ([14X79.8-1[114X):[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XExtRepOfObj(3.14);[127X[104X
@@ -143,7 +143,7 @@
   [1X19.2-1 [33X[0;0YFloat creators[133X[101X
   
   [33X[1;0Y[29X[2XFloat[102X( [3Xobj[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XNewFloat[102X( [3Xfilter[103X, [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNewFloat[102X( [3Xfilter[103X, [3Xobj[103X ) [32X constructor[133X
   [33X[1;0Y[29X[2XMakeFloat[102X( [3Xsample[103X, [3Xobj[103X, [3Xobj[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA new floating-point number, based on [3Xobj[103X[133X
   
@@ -184,7 +184,7 @@
   
   [1X19.2-3 Cyc[101X
   
-  [33X[1;0Y[29X[2XCyc[102X( [3Xf[103X[, [3Xdegree[103X] ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCyc[102X( [3Xf[103X[, [3Xdegree[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA cyclotomic approximation to [3Xf[103X[133X
   
   [33X[0;0YThis  command  constructs  a  cyclotomic approximation to the floating-point
@@ -299,49 +299,49 @@
   
   [1X19.2-10 [33X[0;0YStandard mathematical operations[133X[101X
   
-  [33X[1;0Y[29X[2XCos[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSin[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XTan[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSec[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XCsc[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XCot[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XAsin[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XAcos[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XAtan[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XCosh[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSinh[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XTanh[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSech[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XCsch[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XCoth[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XAsinh[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XAcosh[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XAtanh[102X( [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCos[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSin[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTan[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSec[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCsc[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCot[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XAsin[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XAcos[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XAtan[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCosh[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSinh[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTanh[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSech[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCsch[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCoth[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XAsinh[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XAcosh[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XAtanh[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XLog[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XLog2[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XLog10[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XLog1p[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XExp[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XExp2[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XExp10[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XExpm1[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XCubeRoot[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSquare[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XCeil[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XFloor[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XRound[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XTrunc[102X( [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLog2[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLog10[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLog1p[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XExp[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XExp2[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XExp10[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XExpm1[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCubeRoot[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSquare[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCeil[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XFloor[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRound[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTrunc[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XAtan2[102X( [3Xy[103X, [3Xx[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XFrExp[102X( [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XFrExp[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XLdExp[102X( [3Xf[103X, [3Xexp[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XAbsoluteValue[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XNorm[102X( [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAbsoluteValue[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XNorm[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XHypothenuse[102X( [3Xx[103X, [3Xy[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XFrac[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSinCos[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XErf[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XZeta[102X( [3Xf[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XGamma[102X( [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XFrac[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSinCos[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XErf[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XZeta[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XGamma[102X( [3Xf[103X ) [32X attribute[133X
   
   [33X[0;0YStandard math functions.[133X
   
@@ -375,7 +375,7 @@
   creators [10XNewFloat(filter,IsRat)[110X, [10XNewFloat(IsString)[110X.[133X
   
   [33X[0;0YIt  must  then  install methods for all arithmetic and numerical operations:
-  [10XPLUS[110X, [10XExp[110X, ...[133X
+  [10XSUM[110X, [10XExp[110X, ...[133X
   
   [33X[0;0YThe  user chooses that implementation by calling [2XSetFloats[102X ([14X19.2-4[114X) with the
   record  as  argument,  and  with  an  optional  second argument requesting a
@@ -433,7 +433,7 @@
   [1X19.5-4 AbsoluteDiameter[101X
   
   [33X[1;0Y[29X[2XAbsoluteDiameter[102X( [3Xx[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XDiameter[102X( [3Xx[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XDiameter[102X( [3Xx[103X ) [32X operation[133X
   
   [33X[0;0YReturns  the  absolute  diameter  of  the  interval [3Xx[103X, namely the difference
   [10XSup(x)-Inf(x)[110X.[133X

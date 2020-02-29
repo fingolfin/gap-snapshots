@@ -1,10 +1,12 @@
 #############################################################################
 ##
-#W  randiso2.gi               GAP library                  Hans Ulrich Besche
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Hans Ulrich Besche.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 
 #############################################################################
@@ -290,7 +292,7 @@ IsomorphismSolvableSmallGroups := function( g, h )
    Info( InfoRandIso, 3, "testing ", -i, " generating strategies" );
    while poses = fail or i < 0 do
       i := i + 1;
-      nposes := List( [ 1 .. lmin ], x -> Random( [ 1 .. lcoc ] ) );
+      nposes := List( [ 1 .. lmin ], x -> Random( 1, lcoc ) );
       nqual := Product( coclen{ nposes } );
       if nqual < qual and
           Size( Group( List( coc1{ nposes }, Random ) ) ) = size then

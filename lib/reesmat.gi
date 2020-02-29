@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  reesmat.gi           GAP library                           J. D. Mitchell
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include J. D. Mitchell.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2013 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the implementation of Rees matrix semigroups.
 ##
@@ -122,6 +123,19 @@ InstallMethod(IsSimpleSemigroup,
 "for a subsemigroup of a Rees matrix semigroup with an underlying semigroup", 
 [IsReesMatrixSubsemigroup and HasUnderlyingSemigroup],
 R-> IsSimpleSemigroup(UnderlyingSemigroup(R)));
+
+# This next method for `IsSimpleSemigroup` additionally requires the filter
+# `IsFinite`, but is otherwise identical.  In the Semigroups package, there are
+# some more general methods installed for `IsSimpleSemigroup` which include the
+# filter `IsFinite`. When the rank of `IsFinite` is sufficiently large, these
+# methods can beat the above method. The above method is a more specific method
+# and should always be the one chosen for Rees matrix subsemigroups with known
+# underlying semigroup, whether finite or infinite.
+
+InstallMethod(IsSimpleSemigroup, 
+"for finite subsemigroup of a Rees matrix semigroup with underlying semigroup", 
+[IsReesMatrixSubsemigroup and HasUnderlyingSemigroup and IsFinite],
+R -> IsSimpleSemigroup(UnderlyingSemigroup(R)));
 
 # check that the matrix has no rows or columns consisting entirely of 0s
 # and that the underlying semigroup is simple

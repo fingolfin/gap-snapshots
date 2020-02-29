@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  field.gi                    GAP library                  Martin Schönert
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Martin Schönert.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains generic methods for division rings.
 ##
@@ -235,7 +236,23 @@ InstallMethod( ClosureDivisionRing,
 
 #############################################################################
 ##
-#M  ViewString( <F> )  . . . . . . . . . . . . . . . . . . . . . .  view a field
+#M  ViewObj( <F> )  . . . . . . . . . . . . . . . . . . . . . .  view a field
+##
+InstallMethod( ViewObj,
+    "for a field",
+    [ IsField ],
+    function( F )
+    if HasSize( F ) and IsInt( Size( F ) ) then
+      Print( "<field of size ", String(Size( F )), ">" );
+    else
+      Print( "<field in characteristic ", Characteristic( F ), ">" );
+    fi;
+    end );
+
+
+#############################################################################
+##
+#M  ViewString( <F> ) . . . . . . . . . . . . . . . . . . . . .  view a field
 ##
 InstallMethod( ViewString,
     "for a field",
@@ -1016,6 +1033,9 @@ InstallMethod( Quotient,
     IsCollsElmsElms,
     [ IsDivisionRing, IsRingElement, IsRingElement ],
     function ( F, r, s )
+    if IsZero(s) then
+        return fail;
+    fi;
     return r/s;
     end );
 
@@ -1097,7 +1117,7 @@ InstallMethod( QuotientRemainder,
     if not r in F then
       TryNextMethod(); # FIXME: or error?
     fi;
-    return [ r/s, 0 ];
+    return [ r/s, Zero(F) ];
     end );
 
 #############################################################################
@@ -1332,9 +1352,3 @@ InstallMethod( PreImagesSet,
     UseSubsetRelation( Source( hom ), elms );
     return elms;
     end );
-
-
-#############################################################################
-##
-#E
-

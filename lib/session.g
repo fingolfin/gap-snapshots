@@ -1,9 +1,12 @@
 #############################################################################
 ##
-#W  session.g                    GAP library                 Steve Linton
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Steve Linton.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2007 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains GAP functions which define the structure of a GAP session
 ##  SESSION is called from init.g or from POST_RESTORE depending on whether
@@ -22,11 +25,17 @@ InstallAtExit( function()
 end);
 
 BIND_GLOBAL("PROGRAM_CLEAN_UP", function()
-    local f;
+    local f, funcs;
     if IsBound( GAPInfo.AtExitFuncs ) and IsList( GAPInfo.AtExitFuncs ) then
-        for f in GAPInfo.AtExitFuncs do
+        if IsHPCGAP then
+            funcs := FromAtomicList(GAPInfo.AtExitFuncs);
+        else
+            funcs := GAPInfo.AtExitFuncs;
+        fi;
+        while not IsEmpty(funcs) do
+            f := Remove(funcs);
             if IsFunction(f) then
-                CALL_WITH_CATCH(f,[]);        # really should be CALL_WITH_CATCH here
+                CALL_WITH_CATCH(f,[]);
             fi;
         od;
     fi;

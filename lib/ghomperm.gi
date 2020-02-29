@@ -1,10 +1,12 @@
 #############################################################################
 ##
-#W  ghomperm.gi                 GAP library       Ákos Seress, Heiko Theißen
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Ákos Seress, Heiko Theißen.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 
 #############################################################################
@@ -264,7 +266,7 @@ InstallGlobalFunction( RelatorsPermGroupHom, function ( hom, gensG )
           index, inv0, iso, j, map, ndefs, next, ngens, ngens2, ni, orbit,
           order, P, perm, perms, range, regular, rel, rel2, rels, relsG,
           relsGen, relsH, relsP, S, sizeS, stabG, stabS, table, tail, tail1,
-          tail2, tietze, tzword, undefined,
+          tail2, tietze, tzword, undefined,w,
           wordsH,allnums,fam,NewRelators,newrels,chunk, one;
 
     chunk:=ValueOption("chunk");
@@ -558,7 +560,9 @@ InstallGlobalFunction( RelatorsPermGroupHom, function ( hom, gensG )
     fi;
 
     # reduce the resulting presentation
-    TzGoGo( P );
+    if ValueOption("cheap")<>true then
+      TzGoGo( P );
+    fi;
 
     # reconvert the reduced relators and return them
     relsP := tietze[TZ_RELATORS];
@@ -566,9 +570,12 @@ InstallGlobalFunction( RelatorsPermGroupHom, function ( hom, gensG )
     for tzword in relsP do
       if tzword <> [ ] then
         if allnums then
-          Add( relsG, AssocWordByLetterRep(fam,tzword ));
+          w:=AssocWordByLetterRep(fam,tzword);
         else
-          Add( relsG, AbstractWordTietzeWord( tzword, gensF ) );
+          w:=AbstractWordTietzeWord( tzword, gensF );
+        fi;
+        if not w in relsG and not w^-1 in relsG then
+          Add( relsG, w);
         fi;
       fi;
     od;
@@ -886,7 +893,7 @@ InstallOtherMethod( StabChainMutable, "perm mapping by images",  true,
         # try random elements
         elm := rnd[rni];
         img := rne[rni];
-        i := Random( [ 1 .. Length( mapi[1] ) ] );
+        i := Random( 1, Length( mapi[1] ) );
         rnd[rni] := rnd[rni] * mapi[1][i];
         rne[rni] := rne[rni] * mapi[2][i];
         rni := rni mod two + 1;
@@ -1928,7 +1935,8 @@ end);
 InstallMethod( IsomorphismPermGroup,
     "perm groups",
     true,
-    [ IsPermGroup ], 0,
+    [ IsPermGroup ],
+    SUM_FLAGS,
     IdentityMapping );
 
 
@@ -2160,7 +2168,3 @@ function( hom )
     return false;
   fi;
 end );
-
-#############################################################################
-##
-#E

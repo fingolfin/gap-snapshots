@@ -1,26 +1,27 @@
 #############################################################################
 ##
-#W  semiquo.gd           GAP library          Andrew Solomon and Isabel Araújo
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Andrew Solomon and Isabel Araújo.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the declarations for quotient semigroups.
 ##
 ##  <#GAPDoc Label="[1]{semiquo}">
 ##  For a semigroup <M>S</M>,
 ##  elements of a quotient semigroup are equivalence classes of 
-##  elements of the <Ref Func="QuotientSemigroupPreimage"/> value
+##  elements of the <Ref Attr="QuotientSemigroupPreimage"/> value
 ##  under the congruence given by the value of
-##  <Ref Func="QuotientSemigroupCongruence"/>.
+##  <Ref Attr="QuotientSemigroupCongruence"/>.
 ##  <P/>
 ##  It is probably most useful for calculating the elements of 
 ##  the equivalence classes by using <Ref Func="Elements"/> or by looking at
-##  the images of elements of <Ref Func="QuotientSemigroupPreimage"/> under
-##  the map returned by <Ref Func="QuotientSemigroupHomomorphism"/>,
-##  which maps the <Ref Func="QuotientSemigroupPreimage"/> value to <A>S</A>.
+##  the images of elements of <Ref Attr="QuotientSemigroupPreimage"/> under
+##  the map returned by <Ref Attr="QuotientSemigroupHomomorphism"/>,
+##  which maps the <Ref Attr="QuotientSemigroupPreimage"/> value to <A>S</A>.
 ##  <P/>
 ##  For intensive computations in a quotient semigroup, it is probably
 ##  worthwhile finding another representation as the equality test 
@@ -86,9 +87,3 @@ DeclareGlobalFunction("HomomorphismQuotientSemigroup");
 DeclareAttribute("QuotientSemigroupPreimage", IsQuotientSemigroup);
 DeclareAttribute("QuotientSemigroupCongruence", IsQuotientSemigroup);
 DeclareAttribute("QuotientSemigroupHomomorphism", IsQuotientSemigroup);
-
-
-#############################################################################
-##
-#E
-

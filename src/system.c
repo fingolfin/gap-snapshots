@@ -1,17 +1,11 @@
 /****************************************************************************
 **
-*W  system.c                    GAP source                       Frank Celler
-*W                                                         & Martin Schönert
-*W                                                         & Dave Bayer (MAC)
-*W                                                  & Harald Boegeholz (OS/2)
-*W                                                         & Paul Doyle (VMS)
-*W                                                  & Burkhard Höfling (MAC)
-*W                                                    & Steve Linton (MS/DOS)
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  The  files   "system.c" and  "sysfiles.c"  contains all  operating system
 **  dependent  functions.  This file contains  all system dependent functions
@@ -23,8 +17,9 @@
 
 #include "gaputils.h"
 #ifdef GAP_MEM_CHECK
-#include "gasman.h"
+#include "gasman_intern.h"
 #endif
+#include "profile.h"
 #include "sysfiles.h"
 #include "sysmem.h"
 #include "sysopt.h"
@@ -39,6 +34,8 @@
 
 #include <assert.h>
 #include <fcntl.h>
+#include <stdarg.h>
+#include <time.h>
 #include <unistd.h>
 
 #include <sys/stat.h>
@@ -59,22 +56,14 @@
 #include <mach/mach_time.h>
 #endif
 
-/****************************************************************************
-**  The following function is from profile.c. We put a prototype here
-**  Rather than #include "profile.h" to avoid pulling in large chunks
-**  of the GAP type system
-*/    
-Int enableProfilingAtStartup( Char **argv, void * dummy);
-Int enableMemoryProfilingAtStartup( Char **argv, void * dummy );
-Int enableCodeCoverageAtStartup( Char **argv, void * dummy);
 
 /****************************************************************************
 **
 *V  SyKernelVersion  . . . . . . . . . . . . . . . hard coded kernel version
-** do not edit the following line. Occurrences of `4.10.2' and `today'
+** do not edit the following line. Occurrences of `4.11.0' and `today'
 ** will be replaced by string matching by distribution wrapping scripts.
 */
-const Char * SyKernelVersion = "4.10.2";
+const Char * SyKernelVersion = "4.11.0";
 
 /****************************************************************************
 **
@@ -85,7 +74,7 @@ const Char * SyKernelVersion = "4.10.2";
 **
 *V  SyArchitecture  . . . . . . . . . . . . . . . .  name of the architecture
 */
-const Char * SyArchitecture = SYS_ARCH;
+const Char * SyArchitecture = GAPARCH;
 
 
 /****************************************************************************
@@ -143,16 +132,14 @@ Int SyDebugLoading;
 **
 */
 Char SyGapRootPaths[MAX_GAP_DIRS][GAP_PATH_MAX];
-#ifdef HAVE_DOTGAPRC
 Char DotGapPath[GAP_PATH_MAX];
-#endif
 
 /****************************************************************************
 **
 *V  IgnoreGapRC . . . . . . . . . . . . . . . . . . . -r option for kernel
 **
 */
-Int IgnoreGapRC;
+static Int IgnoreGapRC;
 
 /****************************************************************************
 **
@@ -314,7 +301,7 @@ UInt SyTime ( void )
     struct rusage       buf;
 
     if ( getrusage( RUSAGE_SELF, &buf ) ) {
-        Panic("gap: panic 'SyTime' cannot get time!");
+        Panic("'SyTime' could not get time");
     }
     return buf.ru_utime.tv_sec*1000 + buf.ru_utime.tv_usec/1000;
 }
@@ -323,7 +310,7 @@ UInt SyTimeSys ( void )
     struct rusage       buf;
 
     if ( getrusage( RUSAGE_SELF, &buf ) ) {
-        Panic("gap: panic 'SyTimeSys' cannot get time!");
+        Panic("'SyTimeSys' could not get time");
     }
     return buf.ru_stime.tv_sec*1000 + buf.ru_stime.tv_usec/1000;
 }
@@ -332,7 +319,7 @@ UInt SyTimeChildren ( void )
     struct rusage       buf;
 
     if ( getrusage( RUSAGE_CHILDREN, &buf ) ) {
-        Panic("gap: panic 'SyTimeChildren' cannot get time!");
+        Panic("'SyTimeChildren' could not get time");
     }
     return buf.ru_utime.tv_sec*1000 + buf.ru_utime.tv_usec/1000;
 }
@@ -341,7 +328,7 @@ UInt SyTimeChildrenSys ( void )
     struct rusage       buf;
 
     if ( getrusage( RUSAGE_CHILDREN, &buf ) ) {
-        Panic("gap: panic 'SyTimeChildrenSys' cannot get time!");
+        Panic("'SyTimeChildrenSys' could not get time");
     }
     return buf.ru_stime.tv_sec*1000 + buf.ru_stime.tv_usec/1000;
 }
@@ -432,46 +419,6 @@ size_t strlcat (
 
 #endif /* !HAVE_STRLCAT */
 
-size_t strlncat (
-    char *dst,
-    const char *src,
-    size_t len,
-    size_t n)
-{
-    /* Keep a copy of the original dst. */
-    const char * const orig_dst = dst;
-
-    /* Find the end of the dst string, so that we can append after it. */
-    while (*dst != 0 && len > 0) {
-        dst++;
-        len--;
-    }
-
-    /* We can only append anything if there is free space left in the
-       destination buffer. */
-    if (len > 0) {
-        /* One byte goes away for the terminating zero. */
-        len--;
-
-        /* Do the actual work and append from src to dst, until we either
-           appended everything, or reached the dst buffer's end. */
-        while (*src != 0 && len > 0 && n > 0) {
-            *dst++ = *src++;
-            len--;
-            n--;
-        }
-
-        /* Terminate, terminate, terminate! */
-        *dst = 0;
-    }
-
-    /* Compute the final result. */
-    len = strlen(src);
-    if (n < len)
-        len = n;
-    return (dst - orig_dst) + len;
-}
-
 size_t strxcpy (
     char *dst,
     const char *src,
@@ -488,17 +435,6 @@ size_t strxcat (
     size_t len)
 {
     size_t res = strlcat(dst, src, len);
-    assert(res < len);
-    return res;
-}
-
-size_t strxncat (
-    char *dst,
-    const char *src,
-    size_t len,
-    size_t n)
-{
-    size_t res = strlncat(dst, src, len, n);
     assert(res < len);
     return res;
 }
@@ -561,11 +497,15 @@ void SyExit (
 **
 *F  Panic( <msg> )
 */
-extern void Panic(const char * msg)
+void Panic_(const char * file, int line, const char * fmt, ...)
 {
-    fputs(msg, stderr);
+    fprintf(stderr, "Panic in %s:%d: ", file, line);
+    va_list args;
+    va_start(args, fmt);
+    vfprintf(stderr, fmt, args);
+    va_end (args);
     fputs("\n", stderr);
-    exit(1);
+    SyExit(1);
 }
 
 
@@ -912,7 +852,7 @@ void syLongjmp(syJmp_buf* buf, int val)
 
 typedef struct { Char symbol; UInt value; } sizeMultiplier;
 
-sizeMultiplier memoryUnits[]= {
+static sizeMultiplier memoryUnits[]= {
   {'k', 1024},
   {'K', 1024},
   {'m', 1024*1024},
@@ -929,7 +869,7 @@ sizeMultiplier memoryUnits[]= {
 
 static UInt ParseMemory( Char * s)
 {
-  UInt size  = atol(s);
+  double size = atof(s);
   Char symbol =  s[strlen(s)-1];
   UInt i;
   UInt maxmem;
@@ -943,14 +883,13 @@ static UInt ParseMemory( Char * s)
     if (symbol == memoryUnits[i].symbol) {
       UInt value = memoryUnits[i].value;
       if (size > maxmem/value)
-        size = maxmem;
+        return maxmem;
       else
-        size *= value;
-      return size;
+        return size * value;
     }      
   }
   if (!IsDigit(symbol))
-    FPUTS_TO_STDERR("Unrecognised memory unit ignored");
+    fputs("Unrecognised memory unit ignored", stderr);
   return size;
 }
 
@@ -983,7 +922,7 @@ static Int storePosInteger( Char **argv, void *Where )
     p++;
   }
   if (p == argv[0] || *p || n == 0)
-    FPUTS_TO_STDERR("Argument not a positive integer");
+    fputs("Argument not a positive integer", stderr);
   *where = n;
   return 1;
 }
@@ -996,12 +935,14 @@ static Int storeString( Char **argv, void *Where )
   return 1;
 }
 
+#ifdef USE_GASMAN
 static Int storeMemory( Char **argv, void *Where )
 {
   UInt *where = (UInt *)Where;
   *where = ParseMemory(argv[0]);
   return 1;
 }
+#endif
 
 static Int storeMemory2( Char **argv, void *Where )
 {
@@ -1052,14 +993,12 @@ static Int enableMemCheck(Char ** argv, void * dummy)
 #endif
 
 
-static Int preAllocAmount;
-
 /* These are just the options that need kernel processing. Additional options will be 
    recognised and handled in the library */
 
 /* These options must be kept in sync with those in system.g, so the help output
    is correct */
-struct optInfo options[] = {
+static const struct optInfo options[] = {
   { 'B',  "architecture", storeString, &SyArchitecture, 1}, /* default architecture needs to be passed from kernel 
                                                                   to library. Might be needed for autoload of compiled files */
   { 'C',  "", processCompilerArgs, 0, 4}, /* must handle in kernel */
@@ -1068,25 +1007,29 @@ struct optInfo options[] = {
   { 'L', "", storeString, &SyRestoring, 1}, /* must be handled in kernel  */
   { 'M', "", toggle, &SyUseModule, 0}, /* must be handled in kernel */
   { 'R', "", unsetString, &SyRestoring, 0}, /* kernel */
-  { 'a', "", storeMemory, &preAllocAmount, 1 }, /* kernel -- is this still useful */
   { 'e', "", toggle, &SyCTRD, 0 }, /* kernel */
   { 'f', "", forceLineEditing, (void *)2, 0 }, /* probably library now */
   { 'E', "", toggle, &SyUseReadline, 0 }, /* kernel */
   { 'l', "roots", setGapRootPath, 0, 1}, /* kernel */
   { 'm', "", storeMemory2, &SyStorMin, 1 }, /* kernel */
   { 'r', "", toggle, &IgnoreGapRC, 0 }, /* kernel */
+#ifdef USE_GASMAN
   { 's', "", storeMemory, &SyAllocPool, 1 }, /* kernel */
+#endif
   { 'n', "", forceLineEditing, 0, 0}, /* prob library */
+#ifdef USE_GASMAN
   { 'o', "", storeMemory2, &SyStorMax, 1 }, /* library with new interface */
+#endif
   { 'p', "", toggle, &SyWindow, 0 }, /* ?? */
   { 'q', "", toggle, &SyQuiet, 0 }, /* ?? */
 #ifdef HPCGAP
   { 'S', "", toggle, &ThreadUI, 0 }, /* Thread UI */
-  { 'Z', "", toggle, &DeadlockCheck, 0 }, /* Thread UI */
-  { 'P', "", storePosInteger, &SyNumProcessors, 1 }, /* Thread UI */
-  { 'G', "", storePosInteger, &SyNumGCThreads, 1 }, /* Thread UI */
+  { 'Z', "", toggle, &DeadlockCheck, 0 }, /* Deadlock prevention */
+  { 'P', "", storePosInteger, &SyNumProcessors, 1 }, /* number of CPUs */
+  { 'G', "", storePosInteger, &SyNumGCThreads, 1 }, /* number of GC threads */
+  { 0  , "single-thread", toggle, &SingleThreadStartup, 0 }, /* startup with one thread only */
 #endif
-  /* The following three options must be handled in the kernel so they happen early enough */
+  /* The following options must be handled in the kernel so they are set up before loading the library */
   { 0  , "prof", enableProfilingAtStartup, 0, 1},    /* enable profiling at startup */
   { 0  , "memprof", enableMemoryProfilingAtStartup, 0, 1 }, /* enable memory profiling at startup */
   { 0  , "cover", enableCodeCoverageAtStartup, 0, 1}, /* enable code coverage at startup */
@@ -1105,7 +1048,6 @@ void InitSystem (
     Char *              argv [],
     UInt                handleSignals )
 {
-    Char *              *ptrlist;
     UInt                i;             /* loop variable                   */
     Int res;                       /* return from option processing function */
 
@@ -1126,21 +1068,27 @@ void InitSystem (
     SyNrRowsLocked = 0;
     SyQuiet = 0;
     SyInitializing = 0;
+
+    SyStorMin = 16 * sizeof(Obj) * 1024;    // in kB
+    SyStorMax = 256 * sizeof(Obj) * 1024;   // in kB
 #ifdef SYS_IS_64_BIT
-    SyStorMin = 128 * 1024L;
-    SyStorMax = 2048*1024L;          /* This is in kB! */
+  #if defined(HAVE_SYSCONF) && defined(_SC_PAGESIZE) && defined(_SC_PHYS_PAGES)
+    // Set to 3/4 of memory size (in kB), if this is larger
+    Int SyStorMaxFromMem =
+        (sysconf(_SC_PAGESIZE) * sysconf(_SC_PHYS_PAGES) * 3L) / 4 / 1024;
+    SyStorMax = SyStorMaxFromMem > SyStorMax ? SyStorMaxFromMem : SyStorMax;
+  #endif
+#endif // defined(SYS_IS_64_BIT)
+
+#ifdef USE_GASMAN
+#ifdef SYS_IS_64_BIT
     SyAllocPool = 4096L*1024*1024;   /* Note this is in bytes! */
 #else
-    SyStorMin = 64 * 1024L;
-    SyStorMax = 1024*1024L;          /* This is in kB! */
-#ifdef SYS_IS_CYGWIN32
-    SyAllocPool = 0;                 /* works better on cygwin */
-#else
     SyAllocPool = 1536L*1024*1024;   /* Note this is in bytes! */
-#endif
-#endif
+#endif // defined(SYS_IS_64_BIT)
     SyStorOverrun = 0;
     SyStorKill = 0;
+#endif // defined(USE_GASMAN)
     SyUseModule = 1;
     SyWindow = 0;
 
@@ -1150,8 +1098,6 @@ void InitSystem (
         SyGasmanNumbers[i][j] = 0;
       }
     }
-
-    preAllocAmount = 4*1024*1024;
 
     InitSysFiles();
 
@@ -1182,8 +1128,9 @@ void InitSystem (
         if (argv[1][0] == '-' ) {
 
           if ( strlen(argv[1]) != 2 && argv[1][1] != '-') {
-            FPUTS_TO_STDERR("gap: sorry, options must not be grouped '");
-            FPUTS_TO_STDERR(argv[1]);  FPUTS_TO_STDERR("'.\n");
+            fputs("gap: sorry, options must not be grouped '", stderr);
+            fputs(argv[1], stderr);
+            fputs("'.\n", stderr);
             goto usage;
           }
 
@@ -1199,11 +1146,13 @@ void InitSystem (
           if (argc < 2 + options[i].minargs)
             {
               Char buf[2];
-              FPUTS_TO_STDERR("gap: option "); FPUTS_TO_STDERR(argv[1]);
-              FPUTS_TO_STDERR(" requires at least ");
+              fputs("gap: option ", stderr);
+              fputs(argv[1], stderr);
+              fputs(" requires at least ", stderr);
               buf[0] = options[i].minargs + '0';
               buf[1] = '\0';
-              FPUTS_TO_STDERR(buf); FPUTS_TO_STDERR(" arguments\n");
+              fputs(buf, stderr);
+              fputs(" arguments\n", stderr);
               goto usage;
             }
           if (options[i].handler) {
@@ -1244,15 +1193,13 @@ void InitSystem (
         SyStorMax = SyStorMin;
     }
 
+#ifdef USE_GASMAN
     /* fix pool size if larger than SyStorKill */
     if ( SyStorKill != 0 && SyAllocPool != 0 &&
                             SyAllocPool > 1024 * SyStorKill ) {
         SyAllocPool = SyStorKill * 1024;
     }
-    /* fix pool size if it is given and lower than SyStorMax */
-    if ( SyAllocPool != 0 && SyAllocPool < SyStorMax * 1024) {
-        SyAllocPool = SyStorMax * 1024;
-    }
+#endif
 
     /* when running in package mode set ctrl-d and line editing            */
     if ( SyWindow ) {
@@ -1260,27 +1207,6 @@ void InitSystem (
                  SyCTRD       = 1; */
         SyRedirectStderrToStdOut();
         syWinPut( 0, "@p", "1." );
-    }
-   
-
-    if (SyAllocPool == 0) {
-      /* premalloc stuff                                                     */
-      /* allocate in small chunks, and write something to them
-       * (the GNU clib uses mmap for large chunks and give it back to the
-       * system after free'ing; also it seems that memory is only really 
-       * allocated (pagewise) when it is first used)                     */
-      ptrlist = (Char **)malloc((1+preAllocAmount/1000)*sizeof(Char*));
-      for (i = 1; i*1000 < preAllocAmount; i++) {
-        ptrlist[i-1] = (Char *)malloc( 1000 );
-        if (ptrlist[i-1] != NULL) ptrlist[i-1][900] = 13;
-      }
-      for (i = 1; (i+1)*1000 < preAllocAmount; i++) 
-        if (ptrlist[i-1] != NULL) free(ptrlist[i-1]);
-      free(ptrlist);
-       
-     /* ptr = (Char *)malloc( preAllocAmount );
-      ptr1 = (Char *)malloc(4);
-      if ( ptr != 0 )  free( ptr ); */
     }
 
     /* should GAP load 'init/lib.g' on initialization */
@@ -1294,7 +1220,6 @@ void InitSystem (
     }
     */
 
-#ifdef HAVE_DOTGAPRC
     /* the users home directory                                            */
     if ( getenv("HOME") != 0 ) {
         strxcpy(DotGapPath, getenv("HOME"), sizeof(DotGapPath));
@@ -1305,7 +1230,7 @@ void InitSystem (
         if (!IgnoreGapRC) {
           SySetGapRootPath(DotGapPath);
         }
-		
+
         strxcpy(DotGapPath, getenv("HOME"), sizeof(DotGapPath));
         strxcat(DotGapPath, "/Library/Preferences/GAP;", sizeof(DotGapPath));
 # elif defined(__CYGWIN__)
@@ -1335,7 +1260,6 @@ void InitSystem (
           }
         }
     }
-#endif
 
 
     /* now we start                                                        */
@@ -1343,11 +1267,11 @@ void InitSystem (
 
     /* print a usage message                                               */
 usage:
- FPUTS_TO_STDERR("usage: gap [OPTIONS] [FILES]\n");
- FPUTS_TO_STDERR("       run the Groups, Algorithms and Programming system, Version ");
- FPUTS_TO_STDERR(SyBuildVersion);
- FPUTS_TO_STDERR("\n");
- FPUTS_TO_STDERR("       use '-h' option to get help.\n");
- FPUTS_TO_STDERR("\n");
+ fputs("usage: gap [OPTIONS] [FILES]\n", stderr);
+ fputs("       run the Groups, Algorithms and Programming system, Version ", stderr);
+ fputs(SyBuildVersion, stderr);
+ fputs("\n", stderr);
+ fputs("       use '-h' option to get help.\n", stderr);
+ fputs("\n", stderr);
  SyExit( 1 );
 }

@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  algsc.gi                    GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains methods for elements of algebras given by structure
 ##  constants (s.~c.).
@@ -78,8 +79,13 @@ InstallMethod( IsFullSCAlgebra,
 ##  The external representation is the coefficients vector,
 ##  which is stored at position 1 in the object.
 ##
+if IsHPCGAP then
+DeclareRepresentation( "IsDenseCoeffVectorRep",
+    IsAtomicPositionalObjectRep, [ 1 ] );
+else
 DeclareRepresentation( "IsDenseCoeffVectorRep",
     IsPositionalObjectRep, [ 1 ] );
+fi;
 
 
 #############################################################################
@@ -100,7 +106,7 @@ InstallMethod( ObjByExtRep,
        or not IsBound( Fam!.coefficientsDomain ) then
       TryNextMethod();
     elif Length( coeffs ) <> Length( Fam!.names ) then
-      Error( "<coeffs> must be a list of length ", Fam!.names );
+      Error( "<coeffs> must be a list of length ", Length( Fam!.names ) );
     elif not ForAll( coeffs, c -> c in Fam!.coefficientsDomain ) then
       Error( "all in <coeffs> must lie in `<Fam>!.coefficientsDomain'" );
     fi;
@@ -117,7 +123,7 @@ InstallMethod( ObjByExtRep,
                         ElementsFamily( FamilyObj( coeffs ) ) ) then
       Error( "family of <coeffs> does not fit to <Fam>" );
     elif Length( coeffs ) <> Length( Fam!.names ) then
-      Error( "<coeffs> must be a list of length ", Fam!.names );
+      Error( "<coeffs> must be a list of length ", Length( Fam!.names ) );
     fi;
     return Objectify( Fam!.defaultTypeDenseCoeffVectorRep,
                       [ Immutable( coeffs ) ] );
@@ -618,6 +624,7 @@ BindGlobal( "AlgebraByStructureConstantsArg", function( arglist, filter )
       gens:= Immutable( [] );
       A:= FLMLORByGenerators( R, gens, Zero( Fam ) );
       SetIsTrivial( A, true );
+      SetDimension( A, 0 );
     fi;
     Fam!.basisVectors:= gens;
 #T where is this needed?
@@ -683,6 +690,26 @@ InstallAccessToGenerators( IsSCAlgebraObjCollection and IsFullSCAlgebra,
 #V  QuaternionAlgebraData
 ##
 InstallFlushableValue( QuaternionAlgebraData, [] );
+if IsHPCGAP then
+    ShareSpecialObj( QuaternionAlgebraData );
+
+    BindGlobal("StoreQuaternionAlgebraData", function( a, b, F, A )
+      local stored;
+      atomic readwrite QuaternionAlgebraData do
+        stored:= First( QuaternionAlgebraData,
+                        t -> t[1] = a and t[2] = b and
+                             IsIdenticalObj( t[3], FamilyObj( F ) ) );
+        if stored = fail then
+          # Store the data for the next call.
+          Add( QuaternionAlgebraData, MakeImmutable([ a, b, FamilyObj( F ), A ]) );
+        else
+          A:= AlgebraWithOne( F, GeneratorsOfAlgebra( stored[4] ), "basis" );
+          SetGeneratorsOfAlgebra( A, GeneratorsOfAlgebraWithOne( A ) );
+        fi;
+      od;
+      return A;
+    end);
+fi;
 
 
 #############################################################################
@@ -717,9 +744,11 @@ InstallGlobalFunction( QuaternionAlgebra, function( arg )
     fi;
 
     # Generators in the right family may be already available.
-    stored:= First( QuaternionAlgebraData,
-                    t ->     t[1] = a and t[2] = b
-                         and IsIdenticalObj( t[3], FamilyObj( F ) ) );
+    atomic readonly QuaternionAlgebraData do
+      stored:= First( QuaternionAlgebraData,
+                      t ->     t[1] = a and t[2] = b
+                           and IsIdenticalObj( t[3], FamilyObj( F ) ) );
+    od;
     if stored <> fail then
       A:= AlgebraWithOne( F, GeneratorsOfAlgebra( stored[4] ), "basis" );
       SetGeneratorsOfAlgebra( A, GeneratorsOfAlgebraWithOne( A ) );
@@ -753,7 +782,11 @@ InstallGlobalFunction( QuaternionAlgebra, function( arg )
 #T better introduce AlgebraWithOneByStructureConstants?
 
       # Store the data for the next call.
-      Add( QuaternionAlgebraData, [ a, b, FamilyObj( F ), A ] );
+      if IsHPCGAP then
+        A := StoreQuaternionAlgebraData( a, b, F, A );
+      else
+        Add( QuaternionAlgebraData, [ a, b, FamilyObj( F ), A ] );
+      fi;
 
     fi;
 
@@ -852,11 +885,12 @@ InstallMethod( ImaginaryPart,
     "for a quaternion",
     [ IsQuaternion and IsSCAlgebraObj ],
     function( quat )
-    local v, z;
+    local v, z, a;
 
     v:= ExtRepOfObj( quat );
     z:= Zero( v[1] );
-    return ObjByExtRep( FamilyObj( quat ), [ v[2], z, v[4], -v[3] ] );
+    a:= FamilyObj( quat )!.sctable[2][2][2][1];  # the first parameter
+    return ObjByExtRep( FamilyObj( quat ), [ v[2], z, -v[4], -v[3]/a ] );
     end );
 
 
@@ -1140,8 +1174,3 @@ InstallMethod( Intersection2,
     end );
 
 # analogous for closure?
-
-#############################################################################
-##
-#E
-

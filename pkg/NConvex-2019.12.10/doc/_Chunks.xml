@@ -1,0 +1,518 @@
+<#GAPDoc Label="example1">
+<Example><![CDATA[
+gap> P:= Cone( [ [ 2, 7 ], [ 0, 12 ], [ -2, 5 ] ] );
+<A cone in |R^2>
+gap> d:= DefiningInequalities( P );
+[ [ -7, 2 ], [ 5, 2 ] ]
+gap> Q:= ConeByInequalities( d );
+<A cone in |R^2>
+gap> P=Q;
+true
+gap> IsPointed( P );
+true
+gap> RayGenerators( P );
+[ [ -2, 5 ], [ 2, 7 ] ]
+gap> HilbertBasis( P );
+[ [ -2, 5 ], [ -1, 3 ], [ 0, 1 ], [ 1, 4 ], [ 2, 7 ] ]
+gap> HilbertBasis( Q );
+[ [ -2, 5 ], [ -1, 3 ], [ 0, 1 ], [ 1, 4 ], [ 2, 7 ] ]
+gap> P_dual:= DualCone( P );
+<A cone in |R^2>
+gap> RayGenerators( P_dual );
+[ [ -7, 2 ], [ 5, 2 ] ]
+gap> Dimension( P );
+2
+gap> List( Facets( P ), RayGenerators );
+[ [ [ -2, 5 ] ], [ [ 2, 7 ] ] ]
+gap> faces := FacesOfCone( P );
+[ <A cone in |R^2>, <A cone in |R^2>, <A ray in |R^2>, 
+ <A ray in |R^2> ]
+gap> RelativeInteriorRay( P );
+[ -2, 41 ]
+gap> IsRelativeInteriorRay( [ -2, 41 ], P );
+true
+gap> IsRelativeInteriorRay( [ 2, 7 ], P );
+false
+gap> LinealitySpaceGenerators( P );
+[  ]
+gap> IsRegularCone( P );
+false
+gap> IsRay( P );
+false
+gap> proj_x1:= FourierProjection( P, 2 );
+<A cone in |R^1>
+gap> RayGenerators( proj_x1 );
+[ [ -1 ], [ 1 ] ]
+gap> DefiningInequalities( proj_x1 );
+[ [ 0 ] ]
+gap> R:= Cone( [ [ 4, 5 ], [ -2, 1 ] ] );
+<A cone in |R^2>
+gap> T:= IntersectionOfCones( P, R );
+<A cone in |R^2>
+gap> RayGenerators( T );
+[ [ -2, 5 ], [ 2, 7 ] ]
+gap> W:= Cone( [ [-3,-4 ] ] );
+<A ray in |R^2>
+gap> I:= IntersectionOfCones( P, W );
+<A cone in |R^2>
+gap> RayGenerators( I );
+[  ]
+gap> Contains( P, I );
+true
+gap> Contains( W, I );
+true
+gap> Contains( P, R );
+false
+gap> Contains( R, P );
+true
+gap> cdd_cone:= ExternalCddCone( P );
+< Polyhedron given by its V-representation >
+gap> Display( cdd_cone );
+V-representation 
+begin 
+3 X 3  rational
+               
+   0   2   7 
+   0   0  12 
+   0  -2   5 
+end
+gap> Cdd_Dimension( cdd_cone );
+2
+gap> H:= Cdd_H_Rep( cdd_cone );
+< Polyhedron given by its H-representation >
+gap> Display( H );
+H-representation 
+begin 
+   2 X 3  rational
+               
+   0   5   2 
+   0  -7   2 
+end
+gap> P:= Cone( [ [ 1, 1, -3 ], [ -1, -1, 3 ], [ 1, 2, 1 ], [ 2, 1, 2 ] ] );
+< A cone in |R^3>
+gap> IsPointed( P );
+false
+gap> Dimension( P );
+3
+gap> IsRegularCone( P );
+false
+gap> P;
+< A cone in |R^3 of dimension 3 with 4 ray generators>
+gap> RayGenerators( P );
+[ [ -1, -1, 3 ], [ 1, 1, -3 ], [ 1, 2, 1 ], [ 2, 1, 2 ] ]
+gap> d:= DefiningInequalities( P );
+[ [ -5, 8, 1 ], [ 7, -4, 1 ] ]
+gap> facets:= Facets( P );
+[ <A cone in |R^3>, <A cone in |R^3> ]
+gap> faces := FacesOfCone( P );
+[ <A cone in |R^3>, <A cone in |R^3>, <A cone in |R^3>, 
+ <A cone in |R^3>, <A cone in |R^3> ]
+gap> FVector( P );
+[ 1, 2, 1 ]
+gap> List( faces, Dimension );
+[ 0, 3, 2, 1, 2 ]
+gap> L_using_4ti2 := [ [ [ 0, 0, 0 ] ], [ [ -2, -1, 10 ], 
+> [ 0, 0, 1 ], [ 2, 1, 2 ] ],  [ [ 1, 1, -3 ] ] ];;
+gap> L_using_Normaliz := [ [ [ 0, 0, 0 ] ], [ [ -1, 0, 7 ], 
+> [ 0, 0, 1 ], [ 1, 0, 5 ] ], [ [ 1, 1, -3 ] ] ];;
+gap> L := LatticePointsGenerators( P );;
+gap> L = L_using_4ti2 or L = L_using_Normaliz;
+true
+gap> DualCone( P );
+< A cone in |R^3>
+gap> RayGenerators( DualCone( P ) );
+[ [ -5, 8, 1 ], [ 7, -4, 1 ] ]
+gap> Q_x1x3:= FourierProjection(P, 2 );
+<A cone in |R^2>
+gap> RayGenerators( Q_x1x3 );
+[ [ -1, 3 ], [ 1, -3 ], [ 1, 1 ] ]
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="fan1">
+<P/>
+ Below we define the same fan in two different ways:
+<P/>
+<Example><![CDATA[
+gap> F1 := Fan( [ [ [ 2, 1 ], [ 1, 2 ] ], [ [ 2, 1 ], [ 1, -1 ] ],
+>              [ [ -3, 1 ], [ -1, -3 ] ] ] );
+<A fan in |R^2>             
+gap> F2 := Fan( [ [ 2, 1 ], [ 1, 2 ], [ -3, 1 ], [ -1, -3 ], [ 1, -1 ] ], 
+>         [ [ 1, 2 ], [ 1, 5 ], [ 3, 4 ] ] );
+<A fan in |R^2>
+gap> rays1 := RayGenerators( F1 );
+[ [ -3, 1 ], [ -1, -3 ], [ 1, -1 ], [ 1, 2 ], [ 2, 1 ] ]
+gap> rays2 := RayGenerators( F2 );
+[ [ -3, 1 ], [ -1, -3 ], [ 1, -1 ], [ 1, 2 ], [ 2, 1 ] ]
+gap> RaysInMaximalCones( F1 );
+[ [ 0, 0, 0, 1, 1 ], [ 0, 0, 1, 0, 1 ], [ 1, 1, 0, 0, 0 ] ]
+gap> RaysInMaximalCones( F2 );
+[ [ 0, 0, 0, 1, 1 ], [ 0, 0, 1, 0, 1 ], [ 1, 1, 0, 0, 0 ] ]
+gap> RaysInAllCones( F1 );
+[ [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 1 ], [ 0, 0, 0, 0, 1 ], 
+ [ 0, 0, 0, 1, 0 ], [ 0, 0, 1, 0, 1 ], [ 0, 0, 1, 0, 0 ], 
+ [ 1, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0 ], [ 1, 0, 0, 0, 0 ] ]
+gap> FVector( F1 );
+[ 5, 3 ]
+gap> IsComplete( F1 );
+false
+gap> IsSimplicial( F1 );
+true
+gap> IsNormalFan( F1 );
+false
+gap> IsRegularFan( F1 );
+false
+gap> P1 := Polytope( [ [ 1 ], [ -1 ] ] );
+<A polytope in |R^1>
+gap> P1 := NormalFan( P1 );
+<A complete fan in |R^1>
+gap> RayGenerators( P1 );
+[ [ -1 ], [ 1 ] ]
+gap> P3 := P1 * P1 * P1;
+<A fan in |R^3>
+gap> RayGenerators( P3 );
+[ [ -1, 0, 0 ], [ 0, -1, 0 ], [ 0, 0, -1 ], [ 0, 0, 1 ], [ 0, 1, 0 ], 
+  [ 1, 0, 0 ] ]
+gap> RaysInMaximalCones( P3 );
+[ [ 0, 0, 0, 1, 1, 1 ], [ 0, 0, 1, 0, 1, 1 ], [ 0, 1, 0, 1, 0, 1 ], 
+  [ 0, 1, 1, 0, 0, 1 ], [ 1, 0, 0, 1, 1, 0 ], [ 1, 0, 1, 0, 1, 0 ], 
+  [ 1, 1, 0, 1, 0, 0 ], [ 1, 1, 1, 0, 0, 0 ] ]
+gap> RaysInAllCones( P3 );
+[ [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 1, 1 ], [ 0, 0, 0, 1, 1, 0 ], 
+  [ 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 1, 0, 1 ], 
+  [ 0, 0, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 1, 1 ], [ 0, 0, 1, 0, 1, 1 ], 
+  [ 0, 0, 1, 0, 1, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 1 ], 
+  [ 0, 1, 0, 1, 0, 1 ], [ 0, 1, 0, 1, 0, 0 ], [ 0, 1, 0, 0, 0, 0 ], 
+  [ 0, 1, 0, 0, 0, 1 ], [ 0, 1, 1, 0, 0, 1 ], [ 0, 1, 1, 0, 0, 0 ], 
+  [ 1, 0, 0, 1, 1, 0 ], [ 1, 0, 0, 1, 0, 0 ], [ 1, 0, 0, 0, 0, 0 ], 
+  [ 1, 0, 0, 0, 1, 0 ], [ 1, 0, 1, 0, 1, 0 ], [ 1, 0, 1, 0, 0, 0 ], 
+  [ 1, 1, 0, 1, 0, 0 ], [ 1, 1, 0, 0, 0, 0 ], [ 1, 1, 1, 0, 0, 0 ] ]
+gap> IsNormalFan( P3 );
+true
+gap> Dimension( P3 );
+3
+gap> PrimitiveCollections( P3 );
+[ [ 4, 3 ], [ 5, 2 ], [ 6, 1 ] ]
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="fan2">
+ The following is an example for a fan that is complete but not normal.
+<Example><![CDATA[
+gap> rays := [ [ 1, 0, 0 ], [ -1, 0, 0 ], [ 0, 1, 0 ], [ 0, -1, 0 ], 
+> [ 0, 0, 1 ], [ 0, 0, -1 ], [ 2, 1, 1 ], [ 1, 2, 1 ], [ 1, 1, 2 ], 
+> [ 1, 1, 1 ] ];;
+gap> cones := [ [ 1, 3, 6 ], [ 1, 4, 6 ], [ 1, 4, 5 ], [ 2, 3, 6 ], 
+> [ 2, 4, 6 ], [ 2, 3, 5 ], [ 2, 4, 5 ], [ 1, 5, 9 ], [ 3, 5, 8 ], 
+> [ 1, 3, 7 ], [ 1, 7, 9 ], [ 5, 8, 9 ], [ 3, 7, 8 ], [ 7, 9, 10 ], 
+> [ 8, 9, 10 ], [ 7, 8, 10 ] ];;
+gap> F := Fan( rays, cones );
+<A fan in |R^3>
+gap> IsComplete( F );
+true
+gap> IsNormalFan( F );
+false
+gap> PrimitiveCollections( F );
+[ [ 7, 1 ], [ 7, 2 ], [ 7, 3 ], [ 7, 4 ], [ 7, 5 ], [ 7, 6 ], 
+  [ 9, 1 ], [ 9, 2 ], [ 9, 3 ], [ 9, 6 ], [ 10, 1 ], [ 10, 2 ], 
+  [ 10, 3 ], [ 10, 4 ], [ 8, 1 ], [ 8, 2 ], [ 8, 3 ], [ 8, 5 ], 
+  [ 6, 1 ], [ 5, 2 ], [ 4, 3 ], [ 9, 10, 8 ], [ 5, 6, 4 ] ]
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="fan3">
+ The above methods construct fans from so-called triangulations.
+ For a given list <Math>R</Math> of lists of integers, a triangulation is a fan
+ whose ray generators are contained in the given list <Math>R</Math>.
+<P/>
+ A regular triangulation is such a fan, for which all cones are strictly convex.
+ It is called a fine triangulation, iff all elements of <Math>R</Math> are ray generators of this fan.
+<P/>
+ Above we present two method which make this approach available in NConvex via the package TopcomInterface,
+ which in turn rests on the program Topcom. Consequently, these methods are only available if the
+ package TopcomInterface is available. They compute either all of the fine and regular triangulations
+ or merely just a single such triangulation.
+<P/>
+ As an example inspired from toric geometry, let us use the ray generators of the fan of the resolved
+ conifold (i.e. the total space of the bundle
+ ). This space is known to allow for two different triangulations.
+ The code below reproduces this feature.
+<#Include Label="triangulations_code">
+
+
+<#/GAPDoc>
+<#GAPDoc Label="fan4">
+ A star subdivision is a certain way of extending a fan. In toric geometry, its applications
+ include blowups of varieties. The following examples correspond to blowups of the origin of 
+ the 2-dimensional and 3-dimensional affine space, respectively.
+<Example><![CDATA[
+gap> rays := [ [ 1,0 ], [ 0,1 ] ];;
+gap> max_cones := [ [1,2] ];;
+gap> fan_affine2 := Fan( rays, max_cones );;
+gap> fan_blowup_affine2 := StarSubdivisionOfIthMaximalCone( fan_affine2, 1 );
+<A fan in |R^2>
+gap> Length( RaysInMaximalCones( fan_blowup_affine2 ) );
+2
+gap> rays := [ [ 1,0,0 ], [ 0,1,0 ], [0,0,1] ];;
+gap> max_cones := [ [1,2,3] ];;
+gap> fan_affine3 := Fan( rays, max_cones );;
+gap> fan_blowup_affine3 := StarSubdivisionOfIthMaximalCone( fan_affine3, 1 );
+<A fan in |R^3>
+gap> Length( RaysInMaximalCones( fan_blowup_affine3 ) );
+3
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="example3">
+<Example><![CDATA[
+gap> P := Polyhedron( [ [ 1, 1 ], [ 4, 7 ] ], [ [ 1, -1 ], [ 1, 1 ] ] );
+<A polyhedron in |R^2>
+gap> VerticesOfMainRatPolytope( P );
+[ [ 1, 1 ], [ 4, 7 ] ]
+gap> VerticesOfMainPolytope( P );
+[ [ 1, 1 ], [ 4, 7 ] ]
+gap> P := Polyhedron( [ [ 1/2, 1/2 ] ], [ [ 1, 1 ] ] );
+<A polyhedron in |R^2>
+gap> VerticesOfMainRatPolytope( P );
+[ [ 1/2, 1/2 ] ]
+gap> VerticesOfMainPolytope( P );
+[ [ 1, 1 ] ]
+gap> LatticePointsGenerators( P );
+[ [ [ 1, 1 ] ], [ [ 1, 1 ] ], [  ] ]
+gap> Dimension( P );
+1
+gap> Q := Polyhedron( [ [ 5, 0 ], [ 0, 6 ] ], [ [ 1, 2 ] , [ -1, -2 ] ] );
+<A polyhedron in |R^2>
+gap> VerticesOfMainRatPolytope( Q );
+[ [ 0, 6 ], [ 5, 0 ] ]
+gap> V_using_4ti2 := [ [ -3, -16 ], [ -3, 0 ] ];;
+gap> V_using_normaliz := [ [ 0, 6 ], [ 5, 0 ] ];;
+gap> V := VerticesOfMainPolytope( Q );;
+gap> V = V_using_4ti2 or V = V_using_normaliz;
+true
+gap> L_using_4ti2 := [ [ [ -3, -16 ], [ -3, -15 ], [ -3, -14 ], 
+> [ -3, -13 ], [ -3, -12 ], [ -3, -11 ], [ -3, -10 ], 
+> [ -3, -9 ], [ -3, -8 ], [ -3, -7 ], [ -3, -6 ], 
+> [ -3, -5 ], [ -3, -4 ], [ -3, -3 ], [ -3, -2 ], 
+> [ -3, -1 ], [ -3, 0 ] ], [  ], [ [ 1, 2 ] ] ];;
+gap> L_using_normaliz := [ [ [ 0, -10 ], [ 0, -9 ], [ 0, -8 ],
+> [ 0, -7 ], [ 0, -6 ], [ 0, -5 ], [ 0, -4 ], [ 0, -3 ], 
+> [ 0, -2 ], [ 0, -1 ], [ 0, 0 ], [ 0, 1 ], [ 0, 2 ], 
+> [ 0, 3 ], [ 0, 4 ], [ 0, 5 ], [ 0, 6 ] ], [  ], [ [ -1, -2 ] ] ];;
+gap> L := LatticePointsGenerators( Q );;
+gap> L = L_using_4ti2 or L = L_using_normaliz;
+true
+gap> Dimension( Q );
+2
+gap> RayGeneratorsOfTailCone( Q );
+[ [ -1, -2 ], [ 1, 2 ] ]
+gap> BasisOfLinealitySpace( Q );
+[ [ 1, 2 ] ]
+gap> DefiningInequalities( Q );
+[ [ 6, 2, -1 ], [ 10, -2, 1 ] ]
+gap> Q;
+<A polyhedron in |R^2 of dimension 2>
+]]></Example>
+
+
+<Alt Only="LaTeX"><![CDATA[
+ Let us now find out if the equation $-2+3x+4y-7z=0$ has integer solutions.
+]]></Alt>
+<Example><![CDATA[
+gap> P := PolyhedronByInequalities( [ [ -2, 3, 4, -7 ], -[ -2, 3, 4, -7 ] ] );
+<A polyhedron in |R^3 >
+gap> L_using_normaliz := [ [ [ -4, 0, -2 ] ], [  ], 
+> [ [ 1, 1, 1 ], [ 4, -3, 0 ] ] ];;
+gap> L_using_4ti2 := [ [ [ -2, 2, 0 ] ], [  ],
+> [ [ 1, 1, 1 ], [ 4, -3, 0 ] ] ];;
+gap> L := LatticePointsGenerators( P );;
+gap> L = L_using_4ti2 or L = L_using_normaliz;
+true
+]]></Example>
+
+
+<Alt Only="LaTeX"><![CDATA[
+ So the solutions set is $\{ [ -4, 0, -2 ]+ t_1*[ 1, 1, 1 ] + t_2*[ 0, 7, 4 ]; t_1,t_2\in\mathbb{Z}\}$.
+ \newline
+ We know that $4x + 6y = 3$ does not have any solutions because $gcd(4,6)=2$ does not divide $3$.
+]]></Alt>
+<Example><![CDATA[
+gap> Q := PolyhedronByInequalities( [ [-3, 4, 6 ], [ 3, -4, -6 ] ] );
+<A polyhedron in |R^2 >
+gap> LatticePointsGenerators( Q );
+[ [  ], [  ], [ [ -3, 2 ] ] ]
+]]></Example>
+
+
+<Alt Only="LaTeX"><![CDATA[
+ Let us solve the folowing linear system
+ $$2x + 3y = 1\;\mathrm{mod}\;2$$
+ $$7x + \phantom{3}y = 3\;\mathrm{mod}\;5.$$
+ which is equivalent to the sytem
+ $$-1 + 2x + 3y           + 2u = 0$$
+ $$-3 + 7x + \phantom{3}y + 5v = 0$$
+]]></Alt>
+<Example><![CDATA[
+gap> P := PolyhedronByInequalities( [ [ -1, 2, 3, 2, 0 ], [ -3, 7, 1, 0, 5 ], 
+> [ 1, -2, -3, -2, 0 ], [ 3, -7, -1, 0, -5 ] ] );
+<A polyhedron in |R^4 >
+gap> L_using_4ti2 := [ [ [ 0, 3, -4, 0 ] ], [  ], [ [ 0, -10, 15, 2 ], [ 1, -2, 2, -1 ] ] ];;
+gap> L_using_normaliz := [ [ [ -19, 1, 18, 27 ] ], [  ], [ [ -1, 2, -2, 1 ], [ 5, 0, -5, -7 ] ] ];;
+gap> L := LatticePointsGenerators( P );;
+gap> L = L_using_4ti2 or L = L_using_normaliz;
+true
+]]></Example>
+
+
+<Alt Only="LaTeX"><![CDATA[
+ I.e., the solutions set is 
+ $$\{[-19, 1] + t_1*[1, -2] + t_2*[ 0, 10]; t_1,t_2\in\mathbb{Z}\}$$
+]]></Alt>
+
+<#/GAPDoc>
+<#GAPDoc Label="linear_program">
+ <Math>\newline</Math>
+ To illustrate the using of this operation, let us solve the linear program:
+ <Math>\\P(x,y)= 1-2x+5y</Math>, with <Math>\newline</Math>
+ <Math>100\leq x \leq 200 \newline</Math>
+ <Math>80\leq y\leq 170 \newline</Math>
+ <Math>y \geq -x+200\newline\newline</Math>
+ We bring the inequalities to the form <Math>b+AX\geq 0</Math>, we get:
+ <Math>\newline -100+x\geq 0 \newline</Math>
+ <Math>200-x \geq 0 \newline</Math>
+ <Math>-80+y \geq 0 \newline</Math>
+ <Math>170 -y \geq 0 \newline</Math>
+ <Math>-200 +x+y \geq 0 \newline</Math>
+<Example><![CDATA[
+gap> P := PolyhedronByInequalities( [ [ -100, 1, 0 ], [ 200, -1, 0 ],
+> [ -80, 0, 1 ], [ 170, 0, -1 ], [ -200, 1, 1 ] ] );;
+gap> max := SolveLinearProgram( P, "max", [ 1, -2, 5 ] );
+[ [ 100, 170 ], 651 ]
+gap> min := SolveLinearProgram( P, "min", [ 1, -2, 5 ] );
+[ [ 200, 80 ], 1 ]
+gap> VerticesOfMainRatPolytope( P );
+[ [ 100, 100 ], [ 100, 170 ], [ 120, 80 ], [ 200, 80 ], [ 200, 170 ] ]
+]]></Example>
+
+
+ So the optimal solutions are <Math>(x=100,y=170)</Math> with maximal value <Math>p=1-2(100)+5(170)=651</Math> and
+ <Math>(x=200,y=80)</Math> with minimal value <Math>p=1-2(200)+5(80)=1</Math>.
+
+<#/GAPDoc>
+<#GAPDoc Label="example2">
+<Example><![CDATA[
+gap> P:= Polytope( [ [ 0, 0, 0 ], [ 1, 0, 0 ], [ 0, 1, 0 ], [ 1, 1, 2 ] ] );
+<A polytope in |R^3>
+gap> IsNormalPolytope( P );
+false
+gap> IsVeryAmple( P );
+false
+gap> Q:= Polytope( [ [ 0, 0, 0 ], [ 1, 0, 0 ], [ 0, 1, 0 ], [ 1, 1, 1 ] ] );
+<A polytope in |R^3>
+gap> IsNormalPolytope( Q );
+true
+gap> IsVeryAmple( Q );
+true
+gap> Q;
+<A normal very ample polytope in |R^3 with 4 vertices>
+gap> T:= Polytope( [ [ 0, 0, 0 ], [ 1, 0, 0 ], [ 0, 1, 0 ], [ 1, 1, 4 ] ] ); 
+<A polytope in |R^3>
+gap> I:= Polytope( [ [ 0, 0, 0 ], [ 0, 0, 1 ] ] );
+<A polytope in |R^3>
+gap> J:= T + I; 
+<A polytope in |R^3>
+gap> IsVeryAmple( J );
+true
+gap> IsNormalPolytope( J );
+false
+gap> J;
+<A very ample polytope in |R^3 with 8 vertices>
+gap> # Example 2.2.20 Cox, Toric Varieties
+> A:= [ [1,1,1,0,0,0], [1,1,0,1,0,0], [1,0,1,0,1,0], [ 1,0,0,1,0,1], 
+> [ 1,0,0,0,1,1], [ 0,1,1,0,0,1], [0,1,0,1,1,0], [0,1,0,0,1,1], 
+> [0,0,1,1,1,0], [0,0,1,1,0,1] ];
+[ [ 1, 1, 1, 0, 0, 0 ], [ 1, 1, 0, 1, 0, 0 ], [ 1, 0, 1, 0, 1, 0 ],
+[ 1, 0, 0, 1, 0, 1 ], [ 1, 0, 0, 0, 1, 1 ], [ 0, 1, 1, 0, 0, 1 ], 
+ [ 0, 1, 0, 1, 1, 0 ], [ 0, 1, 0, 0, 1, 1 ], [ 0, 0, 1, 1, 1, 0 ], 
+[ 0, 0, 1, 1, 0, 1 ] ]
+gap> H:= Polytope( A );
+<A polytope in |R^6>
+gap> IsVeryAmple( H );   
+true
+gap> IsNormalPolytope( H );
+false
+gap> H;
+<A very ample polytope in |R^6 with 10 vertices>
+gap> l:= [ [ 0, 0, 1 ], [ 0, 0, 0 ], [ 1, 0, 0 ], [ 1, 0, 1 ], [ 0, 1, 0 ], 
+> [ 0, 1, 1 ], [ 1, 1, 4 ], [ 1, 1, 5 ] ];;
+gap> P:= Polytope( l );
+<A polytope in |R^3>
+gap> IsNormalPolytope( P );
+false
+gap> lattic_points:= LatticePoints( P );
+[ [ 0, 0, 0 ], [ 0, 0, 1 ], [ 0, 1, 0 ], [ 0, 1, 1 ], [ 1, 0, 0 ], [ 1, 0, 1 ], 
+[ 1, 1, 4 ], [ 1, 1, 5 ] ]
+gap> u:= Cartesian( lattic_points, lattic_points );;
+gap> k:= Set( List( u, u-> u[1]+u[2] ) );
+[ [ 0, 0, 0 ], [ 0, 0, 1 ], [ 0, 0, 2 ], [ 0, 1, 0 ], [ 0, 1, 1 ], [ 0, 1, 2 ],
+[ 0, 2, 0 ], [ 0, 2, 1 ], [ 0, 2, 2 ], [ 1, 0, 0 ], [ 1, 0, 1 ], [ 1, 0, 2 ], 
+[ 1, 1, 0 ], [ 1, 1, 1 ], [ 1, 1, 2 ], [ 1, 1, 4 ], [ 1, 1, 5 ], [ 1, 1, 6 ], 
+[ 1, 2, 4 ], [ 1, 2, 5 ], [ 1, 2, 6 ], [ 2, 0, 0 ], [ 2, 0, 1 ], [ 2, 0, 2 ], 
+[ 2, 1, 4 ], [ 2, 1, 5 ], [ 2, 1, 6 ], [ 2, 2, 8 ], [ 2, 2, 9 ], [ 2, 2, 10 ] ]
+gap> Q:= 2*P;
+<A polytope in |R^3 with 8 vertices>
+gap> LatticePoints( Q );
+[ [ 0, 0, 0 ], [ 0, 0, 1 ], [ 0, 0, 2 ], [ 0, 1, 0 ], [ 0, 1, 1 ], [ 0, 1, 2 ],
+[ 0, 2, 0 ], [ 0, 2, 1 ], [ 0, 2, 2 ], [ 1, 0, 0 ], 
+  [ 1, 0, 1 ], [ 1, 0, 2 ], [ 1, 1, 0 ], [ 1, 1, 1 ], [ 1, 1, 2 ], [ 1, 1, 3 ], 
+[ 1, 1, 4 ], [ 1, 1, 5 ], [ 1, 1, 6 ], [ 1, 2, 4 ], [ 1, 2, 5 ], [ 1, 2, 6 ], 
+[ 2, 0, 0 ], [ 2, 0, 1 ], [ 2, 0, 2 ], [ 2, 1, 4 ], 
+  [ 2, 1, 5 ], [ 2, 1, 6 ], [ 2, 2, 8 ], [ 2, 2, 9 ], [ 2, 2, 10 ] ]
+gap> P:= Polytope( [ [ 1, 1 ], [ 1, -1 ], [ -1, 1 ], [ -1, -1 ] ] );
+<A polytope in |R^2>
+gap> Q:= PolarPolytope( P );
+<A polytope in |R^2>
+gap> Vertices( Q );
+[ [ -1, 0 ], [ 0, -1 ], [ 0, 1 ], [ 1, 0 ] ]
+gap> T := PolarPolytope( Q );
+<A polytope in |R^2>
+gap> Vertices( T );
+[ [ -1, -1 ], [ -1, 1 ], [ 1, -1 ], [ 1, 1 ] ]
+gap> P:= Polytope( [ [ 0, 0 ], [ 1, -1], [ -1, 1 ], [ -1, -1 ] ] );
+<A polytope in |R^2>
+gap> # PolarPolytope( P );;
+]]></Example>
+
+
+<Alt Only="LaTeX"><![CDATA[
+ Let us now find out if the vertices of the polytope defined by the following inequalities:
+ $$x_2\geq 0,1-x_1-x_2\geq 0,1+x_1-x_2\geq 0.$$
+]]></Alt>
+<Example><![CDATA[
+gap> P := PolytopeByInequalities( [ [ 0, 0, 1 ], [ 1, -1, -1 ], [ 1, 1, -1 ] ] );
+<A polytope in |R^2>
+gap> Vertices( P );
+[ [ -1, 0 ], [ 0, 1 ], [ 1, 0 ] ]
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="triangulations_code">
+<Listing Type="Code"><![CDATA[
+gap> rays := [ [ 1, 0, 1 ], [ 1, 1, 0 ], [ 0, 0, -1 ], [ 0, -1, 0 ] ];;
+gap> all_triangulations := FansFromTriangulation( rays );
+[ <A fan in |R^3>, <A fan in |R^3> ]
+gap> one_triangulation := FanFromTriangulation( rays );
+<A fan in |R^3>
+]]></Listing>
+
+<#/GAPDoc>

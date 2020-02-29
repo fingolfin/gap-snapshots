@@ -1,10 +1,4 @@
-#############################################################################
-##
-#W  fpmon.tst
-#Y  James D. Mitchell
-##
-#############################################################################
-##
+#@local F,M,S,inv,iso,map,rels,x,y
 gap> START_TEST("fpmon.tst");
 
 # Test that the inverse of an isomorphism from an fp monoid to an fp semigroup

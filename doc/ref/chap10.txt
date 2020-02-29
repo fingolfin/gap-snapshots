@@ -474,6 +474,11 @@
   [3Xfilename[103X. If [3Xfilename[103X ends in [10X.gz[110X and the file is a valid gzipped file, then
   the file will be transparently uncompressed.[133X
   
+  [33X[0;0Y[10XInputTextFile[110X  is designed for use with text files and automatically handles
+  windows-style  line  endings.  This  means  it should [13Xnot[113X be used for binary
+  data.  The [2XIO_File[102X ([14XIO: IO_File mode[114X) function from the [5XIO[105X package should be
+  used to access binary data.[133X
+  
   [1X10.5-2 OutputTextFile[101X
   
   [33X[1;0Y[29X[2XOutputTextFile[102X( [3Xfilename[103X, [3Xappend[103X ) [32X operation[133X

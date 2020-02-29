@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  basismut.gi                 GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains methods for mutable bases, in the representations of
 ##  - mutable bases that store immutable bases
@@ -205,6 +206,10 @@ InstallMethod( CloseMutableBasis,
       V:= LeftModuleByGenerators( LeftActingDomain( V ), vectors );
       UseBasis( V, vectors );
       MB!.immutableBasis := Basis( V );
+      return true;
+    else
+      # The basis was not extended.
+      return false;
     fi;
     end );
 
@@ -405,7 +410,7 @@ InstallMethod( CloseMutableBasis,
     function( MB, v )
     local R, M;
     if IsBound( MB!.niceMutableBasis ) then
-      CloseMutableBasis( MB!.niceMutableBasis,
+      return CloseMutableBasis( MB!.niceMutableBasis,
                          NiceVector( MB!.leftModule, v ) );
     elif v <> MB!.zero then
 
@@ -418,6 +423,7 @@ InstallMethod( CloseMutableBasis,
       MB!.leftModule:= M;
       MB!.niceMutableBasis:= MutableBasis( R,
                                        [ NiceVector( M, v ) ] );
+      return true;
 
     fi;
     end );
@@ -478,9 +484,3 @@ InstallMethod( ImmutableBasis,
     fi;
     return B;
     end );
-
-
-#############################################################################
-##
-#E
-

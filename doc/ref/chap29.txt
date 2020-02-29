@@ -375,8 +375,9 @@
   
   [33X[0;0YTo save memory, records do not store a list of all component names, but only
   numbers  identifying  the  components.  There  numbers are called [13XRNams[113X. [5XGAP[105X
-  keeps  a  global  list  of all RNams that are used and provides functions to
-  translate RNams to strings that give the component names and vice versa.[133X
+  keeps  a  global  list of all RNams that are used and provides the functions
+  [2XNameRNam[102X  ([14X29.7-1[114X)  and  [2XRNamObj[102X ([14X29.7-2[114X) to translate RNams to strings that
+  give the component names and vice versa.[133X
   
   [1X29.7-1 NameRNam[101X
   
@@ -425,4 +426,28 @@
   the RNam [3Xrnam[103X.[133X
   
   [33X[0;0YThe component identifier [3Xrnam[103X is always required to be in [2XIsPosInt[102X ([14X14.2-2[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xr:= rec( a:= 1 );;[127X[104X
+    [4X[25Xgap>[125X [27XIsBound\.( r, RNamObj( "a" ) );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27X\.( r, RNamObj( "a" ) );[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XIsBound\.( r, RNamObj( "b" ) );[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27X\.\:\=( r, RNamObj( "b" ), 2 );[127X[104X
+    [4X[25Xgap>[125X [27Xr;[127X[104X
+    [4X[28Xrec( a := 1, b := 2 )[128X[104X
+    [4X[25Xgap>[125X [27XUnbind\.( r, RNamObj( "b" ) );[127X[104X
+    [4X[25Xgap>[125X [27Xr;[127X[104X
+    [4X[28Xrec( a := 1 )[128X[104X
+    [4X[25Xgap>[125X [27XG:= SymmetricGroup( 4 );;[127X[104X
+    [4X[25Xgap>[125X [27XG.1;[127X[104X
+    [4X[28X(1,2,3,4)[128X[104X
+    [4X[25Xgap>[125X [27X\.( G, RNamObj( 1 ) );[127X[104X
+    [4X[28X(1,2,3,4)[128X[104X
+    [4X[25Xgap>[125X [27Xmeth:= ApplicableMethod( \., [ G, 4711 ] );;[127X[104X
+    [4X[25Xgap>[125X [27Xmeth( G, RNamObj( 1 ) );[127X[104X
+    [4X[28X(1,2,3,4)[128X[104X
+  [4X[32X[104X
   

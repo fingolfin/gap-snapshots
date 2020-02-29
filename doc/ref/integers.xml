@@ -27,6 +27,19 @@ gap> -1234;
 gap> 123456789012345678901234567890123456789012345678901234567890;
 123456789012345678901234567890123456789012345678901234567890
 ]]></Example>
+
+Note that in a few places, only certain small integer values can be used. A
+<E>small integer</E> (also referred to as <E>immediate integer</E>) is an
+integer <M>n</M> satisfying <C>INTOBJ_MIN</C> <M> \leq n \leq </M>
+<C>INTOBJ_MAX</C>, where <C>INTOBJ_MIN</C> and <C>INTOBJ_MAX</C> equal either
+<M>-2^{28}</M> and <M>2^{28}-1</M> (on 32-bit systems) or <M>-2^{60}</M> and
+<M>2^{60}-1</M> (on 64-bit systems).
+<Index>small integer</Index>
+<Index>immediate integer</Index>
+<Index>INTOBJ_MIN</Index>
+<Index>INTOBJ_MAX</Index>
+For example, the elements of a range are restricted to small integers
+(see&nbsp;<Ref Sect="Ranges"/>).
 <P/>
 
 Many more functions that are mainly related to the prime residue group of
@@ -70,7 +83,7 @@ pseudo random integers between <M>-10</M> and
 <M>10</M> distributed according to a binomial distribution.
 To generate uniformly distributed integers from a range,
 use the construction <C>Random( [ <A>low</A> .. <A>high</A> ] )</C>
-&nbsp;(see&nbsp;<Ref Meth="Random" Label="for lower and upper bound"/>).
+&nbsp;(see&nbsp;<Ref Oper="Random" Label="for lower and upper bound"/>).
 </Description>
 </ManSection>
 
@@ -162,7 +175,7 @@ modulo 32.
 <Section Label="Random Sources">
 <Heading>Random Sources</Heading>
 
-&GAP; provides <Ref Func="Random" Label="for a list or collection"/> methods
+&GAP; provides <Ref Oper="Random" Label="for a list or collection"/> methods
 for many collections of objects. 
 On a lower level these methods use <E>random sources</E> which provide 
 random integers and random choices from lists. 

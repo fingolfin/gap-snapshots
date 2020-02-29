@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  sctable.c                   GAP source                     Marcel Roelofs
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,        CWI,        Amsterdam,        The Netherlands
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains a fast access function  for structure constants tables
 **  and the multiplication of two elements using a structure constants table.
@@ -53,14 +53,7 @@
 **  'SCTableEntry' returns the coefficient $c_{i,j}^{k}$ from the structure
 **  constants table <table>.
 */
-Obj SCTableEntryFunc;
-
-Obj FuncSC_TABLE_ENTRY (
-    Obj                 self,
-    Obj                 table,
-    Obj                 i,
-    Obj                 j,
-    Obj                 k )
+static Obj FuncSC_TABLE_ENTRY(Obj self, Obj table, Obj i, Obj j, Obj k)
 {
     Obj                 tmp;            /* temporary                       */
     Obj                 basis;          /* basis  list                     */
@@ -70,98 +63,74 @@ Obj FuncSC_TABLE_ENTRY (
     Int                 l;              /* loop variable                   */
 
     /* check the table                                                     */
-    if ( ! IS_SMALL_LIST(table) ) {
-        table = ErrorReturnObj(
-            "SCTableEntry: <table> must be a small list (not a %s)",
-            (Int)TNAM_OBJ(table), 0L,
-            "you can replace <table> via 'return <table>;'" );
-        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
-    }
+    RequireSmallList("SCTableEntry", table);
     dim = LEN_LIST(table) - 2;
     if ( dim <= 0 ) {
-        table = ErrorReturnObj(
+        ErrorMayQuit(
             "SCTableEntry: <table> must be a list with at least 3 elements",
-            0L, 0L,
-            "you can replace <table> via 'return <table>;'" );
-        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
+            0, 0);
     }
 
     /* check <i>                                                           */
-    if ( ! IS_INTOBJ(i) || INT_INTOBJ(i) <= 0 || dim < INT_INTOBJ(i) ) {
-        i = ErrorReturnObj(
-            "SCTableEntry: <i> must be an integer between 0 and %d",
-            dim, 0L,
-            "you can replace <i> via 'return <i>;'" );
-        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
+    RequirePositiveSmallInt("SCTableEntry", i, NICE_ARGNAME(i));
+    if (dim < INT_INTOBJ(i)) {
+        ErrorMayQuit(
+            "SCTableEntry: <i> must be an integer between 1 and %d but is %d",
+            dim, INT_INTOBJ(i));
     }
 
     /* get and check the relevant row                                      */
     tmp = ELM_LIST( table, INT_INTOBJ(i) );
     if ( ! IS_SMALL_LIST(tmp) || LEN_LIST(tmp) != dim ) {
-        table = ErrorReturnObj(
+        ErrorMayQuit(
             "SCTableEntry: <table>[%d] must be a list with %d elements",
-            INT_INTOBJ(i), dim,
-            "you can replace <table> via 'return <table>;'" );
-        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
-
+            INT_INTOBJ(i), dim);
     }
 
     /* check <j>                                                           */
-    if ( ! IS_INTOBJ(j) || INT_INTOBJ(j) <= 0 || dim < INT_INTOBJ(j) ) {
-        j = ErrorReturnObj(
-            "SCTableEntry: <j> must be an integer between 0 and %d",
-            dim, 0L,
-            "you can replace <j> via 'return <j>;'" );
-        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
+    RequirePositiveSmallInt("SCTableEntry", j, NICE_ARGNAME(j));
+    if (dim < INT_INTOBJ(j)) {
+        ErrorMayQuit(
+            "SCTableEntry: <j> must be an integer between 1 and %d but is %d",
+            dim, INT_INTOBJ(j));
     }
 
     /* get and check the basis and coefficients list                       */
     tmp = ELM_LIST( tmp, INT_INTOBJ(j) );
     if ( ! IS_SMALL_LIST(tmp) || LEN_LIST(tmp) != 2 ) {
-        table = ErrorReturnObj(
+        ErrorMayQuit(
             "SCTableEntry: <table>[%d][%d] must be a basis/coeffs list",
-            0L, 0L,
-            "you can replace <table> via 'return <table>;'" );
-        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
+            INT_INTOBJ(i), INT_INTOBJ(j));
     }
 
     /* get and check the basis list                                        */
     basis = ELM_LIST( tmp, 1 );
     if ( ! IS_SMALL_LIST(basis) ) {
-        table = ErrorReturnObj(
-            "SCTableEntry: <table>[%d][%d][1] must be a basis list",
-            0L, 0L,
-            "you can replace <table> via 'return <table>;'" );
-        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
+        ErrorMayQuit("SCTableEntry: <table>[%d][%d][1] must be a basis list",
+                     INT_INTOBJ(i), INT_INTOBJ(j));
     }
 
     /* get and check the coeffs list                                       */
     coeffs = ELM_LIST( tmp, 2 );
     if ( ! IS_SMALL_LIST(coeffs) ) {
-        table = ErrorReturnObj(
-            "SCTableEntry: <table>[%d][%d][2] must be a coeffs list",
-            0L, 0L,
-            "you can replace <table> via 'return <table>;'" );
-        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
+        ErrorMayQuit("SCTableEntry: <table>[%d][%d][2] must be a coeffs list",
+                     INT_INTOBJ(i), INT_INTOBJ(j));
     }
 
     /* check that they have the same length                                */
     len = LEN_LIST(basis);
     if ( LEN_LIST(coeffs) != len ) {
-        table = ErrorReturnObj(
+        ErrorMayQuit(
             "SCTableEntry: <table>[%d][%d][1], ~[2] must have equal length",
-            0L, 0L,
-            "you can replace <table> via 'return <table>;'" );
-        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
+            INT_INTOBJ(i), INT_INTOBJ(j));
     }
 
     /* check <k>                                                           */
-    if ( ! IS_INTOBJ(k) || INT_INTOBJ(k) <= 0 || dim < INT_INTOBJ(k) ) {
-        k = ErrorReturnObj(
-            "SCTableEntry: <k> must be an integer between 0 and %d",
-            dim, 0L,
-            "you can replace <k> via 'return <k>;'" );
-        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
+    RequirePositiveSmallInt("SCTableEntry", k, NICE_ARGNAME(k));
+    if (dim < INT_INTOBJ(k)) {
+        ErrorMayQuit(
+            "SCTableEntry: <k> must be an integer between 1 and %d but is %d",
+            dim, INT_INTOBJ(k));
     }
 
     /* look for the (i,j,k) entry                                          */
@@ -187,11 +156,7 @@ Obj FuncSC_TABLE_ENTRY (
 **  'SCTableProduct'  returns the product   of  the two elements <list1>  and
 **  <list2> with respect to the structure constants table <table>.
 */
-void SCTableProdAdd (
-    Obj                 res,
-    Obj                 coeff,
-    Obj                 basis_coeffs,
-    Int                 dim )
+static void SCTableProdAdd(Obj res, Obj coeff, Obj basis_coeffs, Int dim)
 {
     Obj                 basis;
     Obj                 coeffs;
@@ -220,13 +185,7 @@ void SCTableProdAdd (
     }
 }
 
-Obj SCTableProductFunc;
-
-Obj FuncSC_TABLE_PRODUCT (
-    Obj                 self,
-    Obj                 table,
-    Obj                 list1,
-    Obj                 list2 )
+static Obj FuncSC_TABLE_PRODUCT(Obj self, Obj table, Obj list1, Obj list2)
 {
     Obj                 res;            /* result list                     */
     Obj                 row;            /* one row of sc table             */
@@ -239,34 +198,25 @@ Obj FuncSC_TABLE_PRODUCT (
 
     /* check the arguments a bit                                           */
     if ( ! IS_SMALL_LIST(table) ) {
-        table = ErrorReturnObj(
-            "SCTableProduct: <table> must be a list (not a %s)",
-            (Int)TNAM_OBJ(table), 0L,
-            "you can replace <table> via 'return <table>;'" );
-        return FuncSC_TABLE_PRODUCT( self, table, list1, list2 );
+        ErrorMayQuit("SCTableProduct: <table> must be a list (not a %s)",
+                     (Int)TNAM_OBJ(table), 0);
     }
     dim = LEN_LIST(table) - 2;
     if ( dim <= 0 ) {
-        table = ErrorReturnObj(
+        ErrorMayQuit(
             "SCTableProduct: <table> must be a list with at least 3 elements",
-            0L, 0L,
-            "you can replace <table> via 'return <table>;'" );
-        return FuncSC_TABLE_PRODUCT( self, table, list1, list2 );
+            0, 0);
     }
     zero = ELM_LIST( table, dim+2 );
     if ( ! IS_SMALL_LIST(list1) || LEN_LIST(list1) != dim ) {
-        list1 = ErrorReturnObj(
-            "SCTableProduct: <list1> must be a list with %d elements",
-            dim, 0L,
-            "you can replace <list1> via 'return <list1>;'" );
-        return FuncSC_TABLE_PRODUCT( self, table, list1, list2 );
+        ErrorMayQuit(
+            "SCTableProduct: <list1> must be a list with %d elements", dim,
+            0);
     }
     if ( ! IS_SMALL_LIST(list2) || LEN_LIST(list2) != dim ) {
-        list2 = ErrorReturnObj(
-            "SCTableProduct: <list2> must be a list with %d elements",
-            dim, 0L,
-            "you can replace <list2> via 'return <list2>;'" );
-        return FuncSC_TABLE_PRODUCT( self, table, list1, list2 );
+        ErrorMayQuit(
+            "SCTableProduct: <list2> must be a list with %d elements", dim,
+            0);
     }
 
     /* make the result list                                                */

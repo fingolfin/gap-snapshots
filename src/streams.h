@@ -1,12 +1,11 @@
 /****************************************************************************
 **
-*W  streams.h                   GAP source                       Frank Celler
-*W                                                  & Burkhard Höfling (MAC)
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the  various read-eval-print loops and streams related
 **  stuff.  The system depend part is in "sysfiles.c".
@@ -29,7 +28,7 @@
 **
 **  Read the current input as function and close the input stream.
 */
-extern Obj READ_AS_FUNC ( void );
+Obj READ_AS_FUNC(void);
 
 
 /****************************************************************************
@@ -40,7 +39,7 @@ extern Obj READ_AS_FUNC ( void );
 **  search all   directories given   in 'SyGapRootPaths',  check  dynamically
 **  loadable modules and statically linked modules.
 */
-extern Int READ_GAP_ROOT ( const Char * filename );
+Int READ_GAP_ROOT(const Char * filename);
 
 // READ_ALL_COMMANDS reads a string of GAP statements and executes them
 // allowing to capture and process outputs

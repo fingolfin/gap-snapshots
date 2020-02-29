@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  ctblmono.gd                 GAP library                     Thomas Breuer
-#W                                                         & Erzsébet Horváth
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer, Erzsébet Horváth.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the declarations of the functions dealing with
 ##  monomiality questions for finite (solvable) groups.
@@ -149,7 +149,7 @@ DeclareAttribute( "Alpha", IsGroup );
 ##  For a group <A>G</A>, <Ref Attr="Delta"/> returns the list
 ##  <M>[ 1, alp[2] - alp[1], \ldots, alp[<A>n</A>] - alp[<A>n</A>-1] ]</M>,
 ##  where <M>alp = </M><C>Alpha( <A>G</A> )</C>
-##  (see&nbsp;<Ref Func="Alpha"/>).
+##  (see&nbsp;<Ref Attr="Alpha"/>).
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -897,9 +897,3 @@ DeclareProperty( "IsMinimalNonmonomial", IsGroup );
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "MinimalNonmonomialGroup" );
-
-
-#############################################################################
-##
-#E
-

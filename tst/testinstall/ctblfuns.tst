@@ -1,10 +1,4 @@
-#############################################################################
-##
-#W  ctblfuns.tst               GAP Library                      Thomas Breuer
-##
-##
-#Y  Copyright (C)  1998,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-##
+#@local S4,V4,irr,l
 gap> START_TEST("ctblfuns.tst");
 gap> S4:= SymmetricGroup( 4 );
 Sym( [ 1 .. 4 ] )
@@ -12,9 +6,9 @@ gap> V4:= Group( (1,2)(3,4), (1,3)(2,4) );
 Group([ (1,2)(3,4), (1,3)(2,4) ])
 gap> irr:= Irr( V4 );
 [ Character( CharacterTable( Group([ (1,2)(3,4), (1,3)(2,4) ]) ),
-  [ 1, 1, 1, 1 ] ), Character( CharacterTable( Group([ (1,2)(3,4), (1,3)
-  (2,4) ]) ), [ 1, -1, -1, 1 ] ), Character( CharacterTable( Group([ (1,2)
-  (3,4), (1,3)(2,4) ]) ), [ 1, -1, 1, -1 ] ), 
+  [ 1, 1, 1, 1 ] ), Character( CharacterTable( Group([ (1,2)(3,4), (1,3)(2,4) 
+     ]) ), [ 1, -1, -1, 1 ] ), Character( CharacterTable( Group(
+    [ (1,2)(3,4), (1,3)(2,4) ]) ), [ 1, -1, 1, -1 ] ), 
   Character( CharacterTable( Group([ (1,2)(3,4), (1,3)(2,4) ]) ),
   [ 1, 1, -1, -1 ] ) ]
 gap> List( irr, x -> InertiaSubgroup( S4, x ) );
@@ -34,7 +28,3 @@ true
 gap> ForAll(AllSmallGroups(12),g -> IsInternallyConsistent(TableOfMarks(g)));
 true
 gap> STOP_TEST( "ctblfuns.tst", 1);
-
-#############################################################################
-##
-#E

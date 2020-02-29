@@ -1,0 +1,55 @@
+<Chapter Label="regprop">
+<Heading>Regular graphs</Heading>
+
+In this chapter we give functions used to identify graphs with various 
+regularity properties and determine their parameters.
+
+<Section Label="Regular graphs">
+<Heading>Regular graphs</Heading>
+
+A graph <M>\Gamma</M> is <E>regular</E> with <E>parameters</E> <M>(v,k)</M>
+if <M>\Gamma</M> is simple and undirected, it has order <M>v</M>, 
+and every vertex of <M>\Gamma</M> has degree <M>k</M>.
+
+<#Include Label="RGParameters">
+
+<#Include Label="IsRG">
+
+<#Include Label="IsFeasibleRGParameters">
+
+</Section>
+
+<Section Label="Edge-regular graphs">
+<Heading>Edge-regular graphs</Heading>
+
+A graph <M>\Gamma</M> is <E>edge-regular</E> with <E>parameters</E> 
+<M>(v,k,a)</M> if it is regular with parameters <M>(v,k)</M>, it has at 
+least one edge, and every pair of adjacent vertices have exactly <M>a</M> 
+common neighbours.
+
+<#Include Label="ERGParameters">
+
+<#Include Label="IsERG">
+
+<#Include Label="IsFeasibleERGParameters">
+
+</Section>
+
+<Section Label="Strongly regular graphs">
+<Heading>Strongly regular graphs</Heading>
+
+A graph <M>\Gamma</M> is <E>strongly regular</E> with <E>parameters</E> 
+<M>(v,k,a,b)</M> if it is edge-regular with parameters <M>(v,k,a)</M>, 
+it has at least one pair of distinct non-adjacent vertices, and every 
+pair of distinct  non-adjacent vertices have exactly <M>b</M> 
+common neighbours.
+
+<#Include Label="SRGParameters">
+
+<#Include Label="IsSRG">
+
+<#Include Label="IsFeasibleSRGParameters">
+
+</Section>
+
+</Chapter>

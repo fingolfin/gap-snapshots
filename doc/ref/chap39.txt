@@ -544,7 +544,8 @@
   [4X[32X[104X
     [4X  StructureDescription(<G>) ::=[104X
     [4X      1                                 ; trivial group [104X
-    [4X    | C<size>                           ; cyclic group[104X
+    [4X    | C<size>                           ; finite cyclic group[104X
+    [4X    | Z                                 ; infinite cyclic group[104X
     [4X    | A<degree>                         ; alternating group[104X
     [4X    | S<degree>                         ; symmetric group[104X
     [4X    | D<size>                           ; dihedral group[104X
@@ -601,7 +602,7 @@
   [8X2.[108X
         [33X[0;6YIf  [3XG[103X  is abelian, then decompose it into cyclic factors in [21Xelementary
         divisors style[121X. For example, [10X"C2 x C3 x C3"[110X is [10X"C6 x C3"[110X. For infinite
-        abelian groups, [10X"C0"[110X denotes the group of integers.[133X
+        abelian groups, [10X"Z"[110X denotes the group of integers.[133X
   
   [8X3.[108X
         [33X[0;6YRecognize  alternating  groups,  symmetric  groups,  dihedral  groups,
@@ -695,9 +696,9 @@
     [4X[25Xgap>[125X [27XStructureDescription(SmallGroup(504,7):nice);[127X[104X
     [4X[28X"(C7 : Q8) : C9"[128X[104X
     [4X[25Xgap>[125X [27XStructureDescription(AbelianGroup([0,2,3]));[127X[104X
-    [4X[28X"C0 x C6"[128X[104X
+    [4X[28X"Z x C6"[128X[104X
     [4X[25Xgap>[125X [27XStructureDescription(AbelianGroup([0,0,0,2,3,6]):short);[127X[104X
-    [4X[28X"0^3x6^2"[128X[104X
+    [4X[28X"Z^3x6^2"[128X[104X
     [4X[25Xgap>[125X [27XStructureDescription(PSL(4,2));[127X[104X
     [4X[28X"A8"[128X[104X
   [4X[32X[104X
@@ -1182,7 +1183,7 @@
   Sylow [3Xp[103X-subgroup of [3XG[103X, see [2XCore[102X ([14X39.11-2[114X).[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xg:=QuaternionGroup(12);;[127X[104X
+    [4X[25Xgap>[125X [27Xg:=DicyclicGroup(12);;[127X[104X
     [4X[25Xgap>[125X [27XPCore(g,2);[127X[104X
     [4X[28XGroup([ y3 ])[128X[104X
     [4X[25Xgap>[125X [27XPCore(g,2) = Core(g,SylowSubgroup(g,2));[127X[104X
@@ -1366,7 +1367,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XPerfectResiduum(Group((1,2,3,4,5),(1,2)));[127X[104X
-    [4X[28XGroup([ (1,3,2), (1,4,3), (3,5,4) ])[128X[104X
+    [4X[28XGroup([ (1,3,2), (1,4,3), (2,5,4) ])[128X[104X
   [4X[32X[104X
   
   [1X39.12-9 RadicalGroup[101X
@@ -1415,7 +1416,7 @@
   the second term of the [3Xp[103X-central series of [3XG[103X, see [2XPCentralSeries[102X ([14X39.17-13[114X).[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xg:=QuaternionGroup(12);;[127X[104X
+    [4X[25Xgap>[125X [27Xg:=DicyclicGroup(12);;[127X[104X
     [4X[25Xgap>[125X [27XPRump(g,2) = PCentralSeries(g,2)[2];[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xg:=SymmetricGroup(4);;[127X[104X
@@ -1676,9 +1677,10 @@
   [1X39.15-10 IsSimpleGroup[101X
   
   [33X[1;0Y[29X[2XIsSimpleGroup[102X( [3XG[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsNonabelianSimpleGroup[102X( [3XG[103X ) [32X property[133X
   
   [33X[0;0YA  group  is  [13Xsimple[113X  if  it  is  nontrivial  and  has  no nontrivial normal
-  subgroups.[133X
+  subgroups. A [13Xnonabelian simple[113X group is simple and not abelian.[133X
   
   [1X39.15-11 IsAlmostSimpleGroup[101X
   
@@ -1823,12 +1825,12 @@
   
   [33X[1;0Y[29X[2XSimpleGroup[102X( [3Xid[103X[, [3Xparam[103X] ) [32X function[133X
   
-  [33X[0;0YThis  function  will  construct  [12Xan[112X  instance of the specified simple group.
-  Groups are specified via their name in ATLAS style notation, with parameters
-  added if necessary. The intelligence applied to parsing the name is limited,
-  and at the moment no proper extensions can be constructed. For groups who do
-  not  have  a permutation representation of small degree the ATLASREP package
-  might need to be installed to construct theses groups.[133X
+  [33X[0;0YThis  function will construct [12Xan[112X instance of the specified nonabelian simple
+  group.  Groups  are  specified  via their name in ATLAS style notation, with
+  parameters  added if necessary. The intelligence applied to parsing the name
+  is  limited,  and at the moment no proper extensions can be constructed. For
+  groups  who  do  not  have  a permutation representation of small degree the
+  ATLASREP package might need to be installed to construct theses groups.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg:=SimpleGroup("M(23)");[127X[104X
@@ -1847,10 +1849,10 @@
   
   [33X[1;0Y[29X[2XSimpleGroupsIterator[102X( [[3Xstart[103X[, [3Xend[103X]] ) [32X function[133X
   
-  [33X[0;0YThis  function  returns  an  iterator  that will run over all simple groups,
-  starting  at order [3Xstart[103X if specified, up to order [22X10^18[122X (or -- if specified
-  --  order  [3Xend[103X).  If the option [3XNOPSL2[103X is given, groups of type [22XPSL_2(q)[122X are
-  omitted.[133X
+  [33X[0;0YThis  function  returns an iterator that will run over all nonabelian simple
+  groups,  starting  at  order [3Xstart[103X if specified, up to order [22X10^18[122X (or -- if
+  specified  --  order  [3Xend[103X).  If  the  option [3XNOPSL2[103X is given, groups of type
+  [22XPSL_2(q)[122X are omitted.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xit:=SimpleGroupsIterator(20000);[127X[104X
@@ -2264,7 +2266,7 @@
   U_{i-1}^[3Xp[103X[122X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xg:=QuaternionGroup(12);;[127X[104X
+    [4X[25Xgap>[125X [27Xg:=DicyclicGroup(12);;[127X[104X
     [4X[25Xgap>[125X [27XPCentralSeries(g,2);[127X[104X
     [4X[28X[ <pc group of size 12 with 3 generators>, Group([ y3, y*y3 ]), Group([ y*y3 ]) ][128X[104X
     [4X[25Xgap>[125X [27Xg:=SymmetricGroup(4);;[127X[104X
@@ -2568,9 +2570,12 @@
   [33X[0;0Yreturns a list of all normal subgroups of [3XG[103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xg:=SymmetricGroup(4);;NormalSubgroups(g);[127X[104X
-    [4X[28X[ Sym( [ 1 .. 4 ] ), Alt( [ 1 .. 4 ] ), Group([ (1,4)(2,3), (1,2)[128X[104X
-    [4X[28X  (3,4) ]), Group(()) ][128X[104X
+    [4X[25Xgap>[125X [27Xg:=SymmetricGroup(4);; NormalSubgroups(g);[127X[104X
+    [4X[28X[ Sym( [ 1 .. 4 ] ), Alt( [ 1 .. 4 ] ),[128X[104X
+    [4X[28X  Group([ (1,4)(2,3), (1,3)(2,4) ]), Group(()) ][128X[104X
+    [4X[25Xgap>[125X [27Xg:=AbelianGroup([2,2]);; NormalSubgroups(g);[127X[104X
+    [4X[28X[ <pc group of size 4 with 2 generators>, Group([ f2 ]),[128X[104X
+    [4X[28X  Group([ f1*f2 ]), Group([ f1 ]), Group([  ]) ][128X[104X
   [4X[32X[104X
   
   [33X[0;0YThe  algorithm  for  the  computation  of  normal  subgroups is described in
@@ -2590,8 +2595,8 @@
   computing the maximal normal subgroups.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XMaximalNormalSubgroups( g );[127X[104X
-    [4X[28X[ Group([ (1,2,3), (2,3,4) ]) ][128X[104X
+    [4X[25Xgap>[125X [27Xg:=SymmetricGroup(4);; MaximalNormalSubgroups( g );[127X[104X
+    [4X[28X[ Alt( [ 1 .. 4 ] ) ][128X[104X
     [4X[25Xgap>[125X [27Xf := FreeGroup("x", "y");; x := f.1;; y := f.2;;[127X[104X
     [4X[25Xgap>[125X [27XList(MaximalNormalSubgroups(f/[x^2, y^2]), GeneratorsOfGroup);[127X[104X
     [4X[28X[ [ x, y*x*y^-1 ], [ y, x*y*x^-1 ], [ y*x^-1 ] ][128X[104X
@@ -2605,8 +2610,23 @@
   are minimal among the nontrivial normal subgroups.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XMinimalNormalSubgroups( g );[127X[104X
+    [4X[25Xgap>[125X [27Xg:=SymmetricGroup(4);; MinimalNormalSubgroups( g );[127X[104X
     [4X[28X[ Group([ (1,4)(2,3), (1,3)(2,4) ]) ][128X[104X
+  [4X[32X[104X
+  
+  [1X39.19-12 CharacteristicSubgroups[101X
+  
+  [33X[1;0Y[29X[2XCharacteristicSubgroups[102X( [3XG[103X ) [32X attribute[133X
+  
+  [33X[0;0Yreturns  a list of all characteristic subgroups of [3XG[103X, that is subgroups that
+  are invariant under all automorphisms.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:=SymmetricGroup(4);; CharacteristicSubgroups(g);[127X[104X
+    [4X[28X[ Sym( [ 1 .. 4 ] ), Group([ (2,4,3), (1,4)(2,3), (1,3)(2,4) ]), [128X[104X
+    [4X[28X  Group([ (1,4)(2,3), (1,3)(2,4) ]), Group(()) ][128X[104X
+    [4X[25Xgap>[125X [27Xg:=AbelianGroup([2,2]);; CharacteristicSubgroups(g);[127X[104X
+    [4X[28X[ <pc group of size 4 with 2 generators>, Group([  ]) ][128X[104X
   [4X[32X[104X
   
   
@@ -2654,7 +2674,7 @@
   [33X[0;0YThis  function produces a graphical representation of the subgroup lattice [3XL[103X
   in  file  [3Xfile[103X.  The  output is in [10X.dot[110X (also known as [10XGraphViz[110X format). For
   details  on  the  format,  and information about how to display or edit this
-  format   see   [7Xhttp://www.graphviz.org[107X.   (On  the  Macintosh,  the  program
+  format   see   [7Xhttps://www.graphviz.org[107X.  (On  the  Macintosh,  the  program
   [10XOmniGraffle[110X is also able to read this format.)[133X
   
   [33X[0;0YSubgroups are labelled in the form [10X[3Xi[103X[10X-[3Xj[103X[10X[110X where [3Xi[103X is the number of the class of
@@ -2754,7 +2774,7 @@
   
   [1X39.20-7 ContainedConjugates[101X
   
-  [33X[1;0Y[29X[2XContainedConjugates[102X( [3XG[103X, [3XA[103X, [3XB[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XContainedConjugates[102X( [3XG[103X, [3XA[103X, [3XB[103X ) [32X operation[133X
   
   [33X[0;0YFor  [22XA,B  ≤  G[122X  this  operation  returns  representatives of the [3XA[103X conjugacy
   classes of subgroups that are conjugate to [3XB[103X under [3XG[103X. The function returns a
@@ -2769,7 +2789,7 @@
   
   [1X39.20-8 ContainingConjugates[101X
   
-  [33X[1;0Y[29X[2XContainingConjugates[102X( [3XG[103X, [3XA[103X, [3XB[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XContainingConjugates[102X( [3XG[103X, [3XA[103X, [3XB[103X ) [32X operation[133X
   
   [33X[0;0YFor [22XA,B ≤ G[122X this operation returns all [3XG[103X conjugates of [3XA[103X that contain [3XB[103X. The
   function returns a list of pairs of subgroup and conjugating element.[133X
@@ -2783,7 +2803,7 @@
   
   [1X39.20-9 MinimalFaithfulPermutationDegree[101X
   
-  [33X[1;0Y[29X[2XMinimalFaithfulPermutationDegree[102X( [3XG[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XMinimalFaithfulPermutationDegree[102X( [3XG[103X ) [32X operation[133X
   
   [33X[0;0YFor  a  finite  group [3XG[103X this operation calculates the least positive integer
   [22Xn=μ(G)[122X  such  that  [3XG[103X  is isomorphic to a subgroup of the symmetric group of
@@ -3342,9 +3362,15 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg:=Group((1,2,3,4),(1,2));;[127X[104X
     [4X[25Xgap>[125X [27Xepi:=EpimorphismSchurCover(g);[127X[104X
-    [4X[28X[ f1, f2, f3 ] -> [ (3,4), (2,4,3), (1,3)(2,4) ][128X[104X
+    [4X[28X[ F1, F2, F3 ] -> [ (1,2), (2,3), (3,4) ][128X[104X
     [4X[25Xgap>[125X [27XSize(Source(epi));[127X[104X
     [4X[28X48[128X[104X
+    [4X[25Xgap>[125X [27Xf:=FreeGroup("a","b");;[127X[104X
+    [4X[25Xgap>[125X [27Xg:=f/ParseRelators(f,"a2,b3,(ab)5");;[127X[104X
+    [4X[25Xgap>[125X [27Xepi:=EpimorphismSchurCover(g);[127X[104X
+    [4X[28X[ a, b ] -> [ a, b ][128X[104X
+    [4X[25Xgap>[125X [27XSize(Kernel(epi));[127X[104X
+    [4X[28X2[128X[104X
   [4X[32X[104X
   
   [33X[0;0YIf   the  group  becomes  bigger,  Schur  Cover  calculations  might  become
@@ -3502,7 +3528,107 @@
   default is 3.[133X
   
   
-  [1X39.25 [33X[0;0YTests for the Availability of Methods[133X[101X
+  [1X39.25 [33X[0;0Y2-Cohomology[133X[101X
+  
+  [1X39.25-1 TwoCohomologyGeneric[101X
+  
+  [33X[1;0Y[29X[2XTwoCohomologyGeneric[102X( [3XG[103X, [3XM[103X ) [32X operation[133X
+  
+  [33X[0;0YThis  function  computes the second cohomology group for an arbitrary finite
+  group [3XG[103X. The generators of the module [3XM[103X must correspond to the generators of
+  [3XG[103X. It returns a record with components [10Xcoboundaries[110X, [10Xcocycles[110X and [10Xcohomology[110X
+  which  are  lists  of  vectors  that  form  a basis of the respective group.
+  [10Xcohomology[110X  is  chosen  as  a vector space complement to [10Xcoboundaries[110X in the
+  [10Xcocycles[110X.  These  vectors  are  representing  tails in [3XM[103X with respect to the
+  [10Xrelators[110X of the presentation [10Xpresentation[110X of [3XG[103X. (Note that this presentation
+  is  on  a  generating  set  chosen  by  the  routine, this generating system
+  corresponds  to  the components [10Xgroup[110X and [10Xmodule[110X of the record returned. The
+  extension  corresponding  to a cocyle [10Xc[110X can be constructed as [10XExtension(r,c)[110X
+  where  [10Xr[110X  is  the  cohomology  record.  This is currently done as a finitely
+  presented group.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:=Group((1,2,3,4,5),(1,2,3));;[127X[104X
+    [4X[25Xgap>[125X [27Xmats:=[[[2,0,0,1],[1,2,1,0],[2,1,1,1],[2,1,1,0]],[127X[104X
+    [4X[25X>[125X [27X[[0,2,0,0],[1,2,1,0],[0,0,1,0],[0,0,0,1]]]*Z(3)^0;;[127X[104X
+    [4X[25Xgap>[125X [27Xmo:=GModuleByMats(mats,GF(3));;[127X[104X
+    [4X[25Xgap>[125X [27Xcoh:=TwoCohomologyGeneric(g,mo);;[127X[104X
+    [4X[25Xgap>[125X [27Xcoh.cocycles;[127X[104X
+    [4X[28X[ < immutable compressed vector length 44 over GF(3) >,[128X[104X
+    [4X[28X  < immutable compressed vector length 44 over GF(3) >,[128X[104X
+    [4X[28X  < immutable compressed vector length 44 over GF(3) >,[128X[104X
+    [4X[28X  < immutable compressed vector length 44 over GF(3) >,[128X[104X
+    [4X[28X  < immutable compressed vector length 44 over GF(3) >,[128X[104X
+    [4X[28X  < immutable compressed vector length 44 over GF(3) >,[128X[104X
+    [4X[28X  < immutable compressed vector length 44 over GF(3) >,[128X[104X
+    [4X[28X  < immutable compressed vector length 44 over GF(3) > ][128X[104X
+    [4X[25Xgap>[125X [27Xcoh.coboundaries;[127X[104X
+    [4X[28X[ < immutable compressed vector length 44 over GF(3) >,[128X[104X
+    [4X[28X  < immutable compressed vector length 44 over GF(3) >,[128X[104X
+    [4X[28X  < immutable compressed vector length 44 over GF(3) >,[128X[104X
+    [4X[28X  < immutable compressed vector length 44 over GF(3) >,[128X[104X
+    [4X[28X  < immutable compressed vector length 44 over GF(3) >,[128X[104X
+    [4X[28X  < immutable compressed vector length 44 over GF(3) >,[128X[104X
+    [4X[28X  < immutable compressed vector length 44 over GF(3) > ][128X[104X
+    [4X[25Xgap>[125X [27Xcoh.cohomology;[127X[104X
+    [4X[28X[ < immutable compressed vector length 44 over GF(3) > ][128X[104X
+    [4X[25Xgap>[125X [27Xg1:=FpGroupCocycle(coh,coh.zero,true);[127X[104X
+    [4X[28X<fp group of size 4860 on the generators [ F1, F2, F3, m1, m2, m3, m4 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xg2:=FpGroupCocycle(coh,coh.cohomology[1],true);[127X[104X
+    [4X[28X<fp group of size 4860 on the generators [ F1, F2, F3, m1, m2, m3, m4 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xg1:=Image(IsomorphismPermGroup(g1));[127X[104X
+    [4X[28X<permutation group with 7 generators>[128X[104X
+    [4X[25Xgap>[125X [27XLength(ComplementClassesRepresentatives(g1,RadicalGroup(g1)));[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27Xg2:=Image(IsomorphismPermGroup(g2));[127X[104X
+    [4X[28X<permutation group with 7 generators>[128X[104X
+    [4X[25Xgap>[125X [27XLength(ComplementClassesRepresentatives(g2,RadicalGroup(g2)));[127X[104X
+    [4X[28X0[128X[104X
+  [4X[32X[104X
+  
+  [1X39.25-2 FpGroupCocycle[101X
+  
+  [33X[1;0Y[29X[2XFpGroupCocycle[102X( [3Xr[103X, [3Xc[103X[, [3Xdoperm[103X] ) [32X function[133X
+  
+  [33X[0;0YFor  a record [3Xr[103X as returned by [2XTwoCohomologyGeneric[102X ([14X39.25-1[114X) and a vector [3Xc[103X
+  in  the  space  of two-cocycles, this operation returns a finitely presented
+  group that is an extension corresponding to the cocycle [3Xc[103X. If the underlying
+  module  has dimension [22Xd[122X, the last [22Xd[122X generators generate the normal subgroup.
+  If  the  optional  parameter [3Xdoperm[103X is given as [3Xtrue[103X, a faithful permutation
+  representation  is computed and stored in the attribute [2XIsomorphismPermGroup[102X
+  ([14X43.3-1[114X) of the computed group.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:=Group((2,15,8,16)(3,17,14,21)(4,23,20,6)(5,9,22,11)(7,13,19,25),[127X[104X
+    [4X[25X>[125X [27X(2,12,7,17)(3,18,13,23)(4,24,19,9)(5,10,25,15)(6,11,16,21));;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(g);[127X[104X
+    [4X[28X"GL(2,5)"[128X[104X
+    [4X[25Xgap>[125X [27Xmats:=[[[1,1,0,2],[2,0,0,0],[0,2,2,0],[0,1,0,0]],[127X[104X
+    [4X[25X>[125X [27X[[0,0,0,1],[1,1,2,0],[1,0,2,1],[1,0,1,0]]]*Z(3)^0;;[127X[104X
+    [4X[25Xgap>[125X [27Xmo:=GModuleByMats(mats,GF(3));;[127X[104X
+    [4X[25Xgap>[125X [27Xcoh:=TwoCohomologyGeneric(g,mo);;[127X[104X
+    [4X[25Xgap>[125X [27Xcoh.cohomology;[127X[104X
+    [4X[28X[ < immutable compressed vector length 116 over GF(3) > ][128X[104X
+    [4X[25Xgap>[125X [27Xp:=FpGroupCocycle(coh,coh.zero,true);[127X[104X
+    [4X[28X<fp group of size 38880 on the generators[128X[104X
+    [4X[28X[ F1, F2, F3, F4, F5, F6, m1, m2, m3, m4 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xg1:=Image(IsomorphismPermGroup(p));[127X[104X
+    [4X[28X<permutation group with 10 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xp:=FpGroupCocycle(coh,coh.cohomology[1],true);[127X[104X
+    [4X[28X<fp group of size 38880 on the generators[128X[104X
+    [4X[28X[ F1, F2, F3, F4, F5, F6, m1, m2, m3, m4 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xg2:=Image(IsomorphismPermGroup(p));[127X[104X
+    [4X[28X<permutation group with 10 generators>[128X[104X
+    [4X[25Xgap>[125X [27XCollected(List(MaximalSubgroupClassReps(g1),Size));[127X[104X
+    [4X[28X[ [ 480, 3 ], [ 3888, 1 ], [ 6480, 1 ], [ 7776, 1 ], [ 19440, 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XCollected(List(MaximalSubgroupClassReps(g2),Size));[127X[104X
+    [4X[28X[ [ 3888, 1 ], [ 6480, 1 ], [ 7776, 1 ], [ 19440, 1 ] ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAlso see Section [14X46.8[114X for operations and methods specific for Pc groups.[133X
+  
+  
+  [1X39.26 [33X[0;0YTests for the Availability of Methods[133X[101X
   
   [33X[0;0YThe  following filters and operations indicate capabilities of [5XGAP[105X. They can
   be  used  in  the  method  selection  or  algorithms  to check whether it is
@@ -3520,7 +3646,7 @@
   filters  used  are  not  implemented  as  properties  but  as  [21Xother filters[121X
   (see [14X13.7[114X and [14X13.8[114X).[133X
   
-  [1X39.25-1 CanEasilyTestMembership[101X
+  [1X39.26-1 CanEasilyTestMembership[101X
   
   [33X[1;0Y[29X[2XCanEasilyTestMembership[102X( [3XG[103X ) [32X filter[133X
   
@@ -3529,7 +3655,7 @@
   the  method  selection  to  decide  whether  an  algorithm  that  relies  on
   membership tests may be used.[133X
   
-  [1X39.25-2 CanEasilyComputeWithIndependentGensAbelianGroup[101X
+  [1X39.26-2 CanEasilyComputeWithIndependentGensAbelianGroup[101X
   
   [33X[1;0Y[29X[2XCanEasilyComputeWithIndependentGensAbelianGroup[102X( [3XG[103X ) [32X filter[133X
   
@@ -3540,7 +3666,7 @@
   by  the method selection to decide whether an algorithm that relies on these
   two operations may be used.[133X
   
-  [1X39.25-3 CanComputeSize[101X
+  [1X39.26-3 CanComputeSize[101X
   
   [33X[1;0Y[29X[2XCanComputeSize[102X( [3Xdom[103X ) [32X filter[133X
   
@@ -3549,7 +3675,7 @@
   imply as quick a computation as [10XHasSize[110X would but its absence does not imply
   that the size cannot be computed.[133X
   
-  [1X39.25-4 CanComputeSizeAnySubgroup[101X
+  [1X39.26-4 CanComputeSizeAnySubgroup[101X
   
   [33X[1;0Y[29X[2XCanComputeSizeAnySubgroup[102X( [3XG[103X ) [32X filter[133X
   
@@ -3558,22 +3684,22 @@
   that  a  stabilizer  index equals the length of the orbit computed so far to
   stop early.)[133X
   
-  [1X39.25-5 CanComputeIndex[101X
+  [1X39.26-5 CanComputeIndex[101X
   
   [33X[1;0Y[29X[2XCanComputeIndex[102X( [3XG[103X, [3XH[103X ) [32X operation[133X
   
   [33X[0;0YThis  function  indicates  whether  the index [22X[[3XG[103X:[3XH[103X][122X (which might be [2Xinfinity[102X
   ([14X18.2-1[114X))  can  be  computed.  It assumes that [22X[3XH[103X ≤ [3XG[103X[122X (see [2XCanComputeIsSubset[102X
-  ([14X39.25-6[114X)).[133X
+  ([14X39.26-6[114X)).[133X
   
-  [1X39.25-6 CanComputeIsSubset[101X
+  [1X39.26-6 CanComputeIsSubset[101X
   
   [33X[1;0Y[29X[2XCanComputeIsSubset[102X( [3XA[103X, [3XB[103X ) [32X operation[133X
   
   [33X[0;0YThis filter indicates that [5XGAP[105X can test (via [2XIsSubset[102X ([14X30.5-1[114X)) whether [3XB[103X is
   a subset of [3XA[103X.[133X
   
-  [1X39.25-7 KnowsHowToDecompose[101X
+  [1X39.26-7 KnowsHowToDecompose[101X
   
   [33X[1;0Y[29X[2XKnowsHowToDecompose[102X( [3XG[103X[, [3Xgens[103X] ) [32X property[133X
   
@@ -3586,9 +3712,9 @@
   from this group.[133X
   
   
-  [1X39.26 [33X[0;0YSpecific functions for Normalizer calculation[133X[101X
+  [1X39.27 [33X[0;0YSpecific functions for Normalizer calculation[133X[101X
   
-  [1X39.26-1 NormalizerViaRadical[101X
+  [1X39.27-1 NormalizerViaRadical[101X
   
   [33X[1;0Y[29X[2XNormalizerViaRadical[102X( [3XG[103X, [3XS[103X ) [32X function[133X
   

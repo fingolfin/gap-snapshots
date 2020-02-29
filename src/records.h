@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  records.h                   GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares the functions of the generic record package.
 **
@@ -24,7 +24,7 @@
 **
 **  'NAME_RNAM' returns the name (as an Obj) for the record name <rnam>.
 */
-extern Obj NAME_RNAM(UInt rnam);
+Obj NAME_RNAM(UInt rnam);
 
 
 /****************************************************************************
@@ -34,8 +34,9 @@ extern Obj NAME_RNAM(UInt rnam);
 **  'RNamName' returns  the record name with the  name  <name> (which is  a C
 **  string).
 */
-extern  UInt            RNamName (
-            const Char *        name );
+UInt RNamName(const Char * name);
+
+UInt RNamNameWithLen(const Char * name, UInt len);
 
 
 /****************************************************************************
@@ -44,8 +45,7 @@ extern  UInt            RNamName (
 **
 **  'RNamIntg' returns the record name corresponding to the integer <intg>.
 */
-extern  UInt            RNamIntg (
-            Int                 intg );
+UInt RNamIntg(Int intg);
 
 
 /****************************************************************************
@@ -55,8 +55,7 @@ extern  UInt            RNamIntg (
 **  'RNamObj' returns the record name  corresponding  to  the  object  <obj>,
 **  which currently must be a string or an integer.
 */
-extern  UInt            RNamObj (
-            Obj                 obj );
+UInt RNamObj(Obj obj);
 
 
 /****************************************************************************
@@ -66,7 +65,7 @@ extern  UInt            RNamObj (
 */
 extern Int (*IsRecFuncs[LAST_REAL_TNUM + 1])(Obj obj);
 
-static inline Int IS_REC(Obj obj)
+EXPORT_INLINE Int IS_REC(Obj obj)
 {
     return (*IsRecFuncs[TNUM_OBJ(obj)])(obj);
 }
@@ -82,7 +81,7 @@ static inline Int IS_REC(Obj obj)
 */
 extern Obj (*ElmRecFuncs[LAST_REAL_TNUM + 1])(Obj rec, UInt rnam);
 
-static inline Obj ELM_REC(Obj rec, UInt rnam)
+EXPORT_INLINE Obj ELM_REC(Obj rec, UInt rnam)
 {
     return (*ElmRecFuncs[TNUM_OBJ(rec)])(rec, rnam);
 }
@@ -98,7 +97,7 @@ static inline Obj ELM_REC(Obj rec, UInt rnam)
 */
 extern Int (*IsbRecFuncs[LAST_REAL_TNUM + 1])(Obj rec, UInt rnam);
 
-static inline Int ISB_REC(Obj rec, UInt rnam)
+EXPORT_INLINE Int ISB_REC(Obj rec, UInt rnam)
 {
     return (*IsbRecFuncs[TNUM_OBJ(rec)])(rec, rnam);
 }
@@ -113,9 +112,9 @@ static inline Int ISB_REC(Obj rec, UInt rnam)
 */
 extern void (*AssRecFuncs[LAST_REAL_TNUM + 1])(Obj rec, UInt rnam, Obj obj);
 
-static inline void ASS_REC(Obj rec, UInt rnam, Obj obj)
+EXPORT_INLINE void ASS_REC(Obj rec, UInt rnam, Obj obj)
 {
-    return (*AssRecFuncs[TNUM_OBJ(rec)])(rec, rnam, obj);
+    (*AssRecFuncs[TNUM_OBJ(rec)])(rec, rnam, obj);
 }
 
 /****************************************************************************
@@ -127,9 +126,9 @@ static inline void ASS_REC(Obj rec, UInt rnam, Obj obj)
 */
 extern void (*UnbRecFuncs[LAST_REAL_TNUM + 1])(Obj rec, UInt rnam);
 
-static inline void UNB_REC(Obj rec, UInt rnam)
+EXPORT_INLINE void UNB_REC(Obj rec, UInt rnam)
 {
-    return (*UnbRecFuncs[TNUM_OBJ(rec)])(rec, rnam);
+    (*UnbRecFuncs[TNUM_OBJ(rec)])(rec, rnam);
 }
 
 
@@ -137,18 +136,14 @@ static inline void UNB_REC(Obj rec, UInt rnam)
 **
 *F  iscomplete_rnam( <name>, <len> )  . . . . . . . . . . . . .  check <name>
 */
-extern UInt iscomplete_rnam (
-            Char *              name,
-            UInt                len );
+UInt iscomplete_rnam(Char * name, UInt len);
 
 
 /****************************************************************************
 **
 *F  completion_rnam( <name>, <len> )  . . . . . . . . . . . . find completion
 */
-extern UInt completion_rnam (
-            Char *              name,
-            UInt                len );
+UInt completion_rnam(Char * name, UInt len);
 
 
 /****************************************************************************

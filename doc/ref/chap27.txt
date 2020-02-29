@@ -280,8 +280,8 @@
   [33X[0;0YIf   [3Xobj[103X   is  a  dense  internally  represented  list  of  characters  then
   [2XConvertToStringRep[102X  changes the representation to [2XIsStringRep[102X ([14X27.4-1[114X). This
   is  useful  in particular for converting the empty list [10X[][110X, which usually is
-  in  [10XIsPlistRep[110X,  to  [2XIsStringRep[102X  ([14X27.4-1[114X).  If  [3Xobj[103X  is  not  a string then
-  [2XConvertToStringRep[102X signals an error.[133X
+  in  [2XIsPlistRep[102X  ([14X21.24-1[114X),  to  [2XIsStringRep[102X ([14X27.4-1[114X). If [3Xobj[103X is not a string
+  then [2XConvertToStringRep[102X signals an error.[133X
   
   [1X27.4-3 CopyToStringRep[101X
   

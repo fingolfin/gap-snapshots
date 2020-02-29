@@ -1,10 +1,12 @@
 #############################################################################
 ##
-#W  process.gd                  GAP Library                      Frank Celler
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the operations for process.
 ##
@@ -87,11 +89,11 @@
 ##  <P/>
 ##  <A>prg</A> is the filename of the program to launch,
 ##  for portability it should be the result of
-##  <Ref Func="Filename" Label="for a directory and a string"/>
+##  <Ref Oper="Filename" Label="for a directory and a string"/>
 ##  and should pass <Ref Func="IsExecutableFile"/>.
-##  Note that <Ref Func="Process"/> does <E>no</E> searching through a list
+##  Note that <Ref Oper="Process"/> does <E>no</E> searching through a list
 ##  of directories, this is done by
-##  <Ref Func="Filename" Label="for a directory and a string"/>.
+##  <Ref Oper="Filename" Label="for a directory and a string"/>.
 ##  <P/>
 ##  <A>stream-in</A> is the input stream that delivers the characters to the
 ##  process.
@@ -101,7 +103,7 @@
 ##  from which no characters have been read, or the result of a call to
 ##  <Ref Oper="InputTextString"/>.
 ##  <P/>
-##  <Ref Func="Process"/> is free to consume <E>all</E> the input even if the program itself
+##  <Ref Oper="Process"/> is free to consume <E>all</E> the input even if the program itself
 ##  does not require any input at all.
 ##  <P/>
 ##  <A>stream-out</A> is the output stream which receives the characters from the
@@ -162,7 +164,7 @@ DeclareGlobalFunction("TmpNameAllArchs");
 ##
 #F ShortFileNameWindows(<name>)
 ##
-##  returns a short file name (http://en.wikipedia.org/wiki/8.3_filename)
+##  returns a short file name (https://en.wikipedia.org/wiki/8.3_filename)
 ##  for use under Windows. Paths can contain either / or \ separators,
 ##  either will be permitted.
 DeclareGlobalFunction("ShortFileNameWindows");
@@ -202,8 +204,3 @@ DeclareGlobalFunction("ShortFileNameWindows");
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "Exec" );
-
-#############################################################################
-##
-#E
-

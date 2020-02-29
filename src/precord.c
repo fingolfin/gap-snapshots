@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  precord.c                   GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the functions for plain records.
 **
@@ -60,12 +60,12 @@
 **
 **  'TypePRec' is the function in 'TypeObjFuncs' for plain records.
 */
-Obj TYPE_PREC_MUTABLE;
-Obj TYPE_PREC_IMMUTABLE;
+static Obj TYPE_PREC_MUTABLE;
+static Obj TYPE_PREC_IMMUTABLE;
 
-Obj TypePRec(Obj prec)
+static Obj TypePRec(Obj prec)
 {
-    return IS_MUTABLE_PLAIN_OBJ(prec) ? TYPE_PREC_MUTABLE : TYPE_PREC_IMMUTABLE;
+    return IS_MUTABLE_OBJ(prec) ? TYPE_PREC_MUTABLE : TYPE_PREC_IMMUTABLE;
 }
 
 /****************************************************************************
@@ -73,7 +73,7 @@ Obj TypePRec(Obj prec)
 *F  SetTypePRecToComObj( <rec>, <kind> )  convert record to component object
 **
 */
-void SetTypePRecToComObj( Obj rec, Obj kind )
+static void SetTypePRecToComObj(Obj rec, Obj kind)
 {
     RetypeBag(rec, T_COMOBJ);
     SET_TYPE_COMOBJ(rec, kind);
@@ -100,9 +100,7 @@ Obj NEW_PREC(UInt len)
 **
 **  Returns 0 if nothing changed and 1 if enlarged.
 */
-Int             GrowPRec (
-    Obj                 rec,
-    UInt                need )
+static Int GrowPRec(Obj rec, UInt need)
 {
     UInt                newsize, want, good;
 
@@ -125,20 +123,23 @@ Int             GrowPRec (
 
 
 #ifdef USE_THREADSAFE_COPYING
-void TraversePRecord(Obj obj)
+#ifndef WARD_ENABLED
+
+void TraversePRecord(TraversalState * traversal, Obj obj)
 {
     UInt i, len = LEN_PREC(obj);
     for (i = 1; i <= len; i++)
-        QueueForTraversal((Obj)GET_ELM_PREC(obj, i));
+        QueueForTraversal(traversal, (Obj)GET_ELM_PREC(obj, i));
 }
 
-void CopyPRecord(Obj copy, Obj original)
+void CopyPRecord(TraversalState * traversal, Obj copy, Obj original)
 {
     UInt i, len = LEN_PREC(original);
     for (i = 1; i <= len; i++)
-        SET_ELM_PREC(copy, i, ReplaceByCopy(GET_ELM_PREC(original, i)));
+        SET_ELM_PREC(copy, i, ReplaceByCopy(traversal, GET_ELM_PREC(original, i)));
 }
 
+#endif // WARD_ENABLED
 #else
 
 /****************************************************************************
@@ -154,77 +155,48 @@ void CopyPRecord(Obj copy, Obj original)
 **  record name usually resides,  and copies all the  entries.  If the record
 **  has alread been copied, it returns the value of the forwarding pointer.
 **
-**  'CopyPRec' is the function in 'TabCopyObj' for records.
+**  'CopyPRec' is the function in 'CopyObjFuncs' for records.
 **
 **  'CleanPRec' removes the  mark and the forwarding  pointer from the record
 **  <rec>.
 **
-**  'CleanPRec' is the function in 'TabCleanObj' for records.
+**  'CleanPRec' is the function in 'CleanObjFuncs' for records.
 */
-Obj CopyPRec (
-    Obj                 rec,
-    Int                 mut )
+static Obj CopyPRec(Obj rec, Int mut)
 {
     Obj                 copy;           /* copy, result                    */
     Obj                 tmp;            /* temporary variable              */
-    UInt                i;              /* loop variable                   */
 
-    /* don't change immutable objects                                      */
-    if ( ! IS_MUTABLE_OBJ(rec) ) {
-        return rec;
-    }
+    // immutable input is handled by COPY_OBJ
+    GAP_ASSERT(IS_MUTABLE_OBJ(rec));
 
     /* make a copy                                                     */
-    if ( mut ) {
-        copy = NewBag( TNUM_OBJ(rec), SIZE_OBJ(rec) );
-    }
-    else {
-        copy = NewBag( IMMUTABLE_TNUM(TNUM_OBJ(rec)), SIZE_OBJ(rec) );
-    }
-    ADDR_OBJ(copy)[0] = CONST_ADDR_OBJ(rec)[0];
+    copy = NewBag(T_PREC, SIZE_OBJ(rec));
+    if (!mut)
+        MakeImmutableNoRecurse(copy);
+    memcpy(ADDR_OBJ(copy), CONST_ADDR_OBJ(rec), SIZE_OBJ(rec));
 
     // leave a forwarding pointer
-    ADDR_OBJ(rec)[0] = copy;
-    CHANGED_BAG( rec );
+    PrepareCopy(rec, copy);
 
-    // now it is copied
-    RetypeBag( rec, TNUM_OBJ(rec) + COPYING );
-
-    // copy the subvalues
-    SET_LEN_PREC( copy, LEN_PREC(rec) );
-    for ( i = 1; i <= LEN_PREC(copy); i++ ) {
-        SET_RNAM_PREC( copy, i, GET_RNAM_PREC( rec, i ) );
-        tmp = COPY_OBJ( GET_ELM_PREC( rec, i ), mut );
-        SET_ELM_PREC( copy, i, tmp );
-        CHANGED_BAG( copy );
+    // copy the subvalues; since we used memcpy above, we don't need to worry
+    // about copying the length or RNAMs; and by working solely inside the
+    // copy, we avoid triggering tnum assertions in GET_ELM_PREC and
+    // SET_ELM_PREC
+    const UInt len = LEN_PREC(copy);
+    for (UInt i = 1; i <= len; i++) {
+        tmp = COPY_OBJ(GET_ELM_PREC(copy, i), mut);
+        SET_ELM_PREC(copy, i, tmp);
+        CHANGED_BAG(copy);
     }
 
     /* return the copy                                                     */
     return copy;
 }
 
-Obj CopyPRecCopy (
-    Obj                 rec,
-    Int                 mut )
-{
-    return CONST_ADDR_OBJ(rec)[0];
-}
-
-void CleanPRec (
-    Obj                 rec )
-{
-}
-
-void CleanPRecCopy (
-    Obj                 rec )
+static void CleanPRec(Obj rec)
 {
     UInt                i;              /* loop variable                   */
-
-    /* remove the forwarding pointer                                       */
-    ADDR_OBJ(rec)[0] = CONST_ADDR_OBJ( CONST_ADDR_OBJ(rec)[0] )[0];
-
-    /* now it is cleaned                                               */
-    RetypeBag( rec, TNUM_OBJ(rec) - COPYING );
 
     /* clean the subvalues                                             */
     for ( i = 1; i <= LEN_PREC(rec); i++ ) {
@@ -240,11 +212,11 @@ void CleanPRecCopy (
 *F  MakeImmutablePRec( <rec> )
 */
 
-void MakeImmutablePRec(Obj rec)
+static void MakeImmutablePRec(Obj rec)
 {
     // change the tnum first, to avoid infinite recursion for objects that
     // contain themselves
-    RetypeBag(rec, IMMUTABLE_TNUM(TNUM_OBJ(rec)));
+    MakeImmutableNoRecurse(rec);
 
     // FIXME HPC-GAP: there is a potential race here: <rec> becomes public
     // the moment we change its type, but it's not ready for public access
@@ -257,7 +229,7 @@ void MakeImmutablePRec(Obj rec)
     // Sort the record at this point. This can never hurt, unless the record
     // will never be accessed again anyway. But for HPC-GAP it is essential so
     // that immutable records are actually binary unchanging.
-    SortPRecRNam(rec, 1);
+    SortPRecRNam(rec, 0);
 }
 
 
@@ -270,34 +242,25 @@ void MakeImmutablePRec(Obj rec)
  * If cleanup is nonzero, a dirty record is automatically cleaned up.
  * If cleanup is 0, this does not happen.
  */
-
-UInt FindPRec( Obj rec, UInt rnam, UInt *pos, int cleanup )
+UInt PositionPRec(Obj rec, UInt rnam, int cleanup)
 {
     /* This only assumes that the rnam values in the record are sorted! */
-    UInt i;
-    Int rnam2;
     UInt low = 1;
-    UInt high;
-
-    high = LEN_PREC(rec);
-    if (high > 0 && (Int) (GET_RNAM_PREC(rec,high)) > 0) {
+    UInt high = LEN_PREC(rec);
+    if (high > 0 && GET_RNAM_PREC(rec, high) > 0) {
         /* DIRTY! Not everything sorted! */
         if (cleanup) {
             SortPRecRNam(rec,0);
-            /* Note that this does not change the length and it cannot
-             * trigger a garbage collection if cleanup is 1!
-             * We do not want record accesses to trigger garbage
-             * collections! */
         } else {
             /* We are not allowed to cleanup, so we live with it, we
              * first try to find rnam in the mess at the end, then
              * fall back to binary search: */
-            i = high;
+            UInt i = high;
             while (i >= 1) {
-                rnam2 = (Int) (GET_RNAM_PREC(rec,i));
+                Int rnam2 = GET_RNAM_PREC(rec, i);
                 if (rnam == rnam2) {
-                    *pos = i;
-                    return 1;
+                    GAP_ASSERT(i != 0);
+                    return i;
                 }
                 if (rnam2 < 0) { /* reached the sorted area! */
                     high = i;  /* will be incremented by 1 */
@@ -310,19 +273,23 @@ UInt FindPRec( Obj rec, UInt rnam, UInt *pos, int cleanup )
         }
     }
     high++;
+    Int rnam2 = 0;
+    // Negate rnam, as the sorted part of the record is stored negated
+    rnam = -rnam;
     while (low < high) {
-        i = (low + high) >> 1;   /* we always have low <= i < high */
-        rnam2 = -(Int)(GET_RNAM_PREC( rec, i ));
-        if (rnam2 < rnam) low = i+1;
-        else if (rnam2 > rnam) high = i;
+        UInt i = (low + high) / 2; /* we always have low <= i < high */
+        rnam2 = GET_RNAM_PREC(rec, i);
+        if (rnam2 > rnam) {
+            low = i + 1;
+        }
+        else if (rnam2 < rnam) {
+            high = i;
+        }
         else {
-            /* found! */
-            *pos = i;
-            return 1;
+            return i;
         }
     }
-    /* Now low == high and we did not find it. */
-    *pos = low;
+
     return 0;
 }
 
@@ -337,9 +304,7 @@ Int IsbPRec (
     Obj                 rec,
     UInt                rnam )
 {
-    UInt                i;              /* loop variable                   */
-
-    return FindPRec(rec,rnam,&i,1);
+    return PositionPRec(rec, rnam, 1) != 0;
 }
 
 
@@ -355,17 +320,12 @@ Obj ElmPRec (
     Obj                 rec,
     UInt                rnam )
 {
-    UInt                i;              /* loop variable                   */
-
-    if (FindPRec(rec,rnam,&i,1))
+    UInt i = PositionPRec(rec, rnam, 1);
+    if (i)
         return GET_ELM_PREC( rec, i );
-    else {
-        ErrorReturnVoid(
-            "Record Element: '<rec>.%g' must have an assigned value",
-            (Int)NAME_RNAM(rnam), 0L,
-            "you can 'return;' after assigning a value" );
-        return ELM_REC( rec, rnam );
-    }
+
+    ErrorMayQuit("Record Element: '<rec>.%g' must have an assigned value",
+                 (Int)NAME_RNAM(rnam), 0);
 }
 
 
@@ -381,17 +341,15 @@ void UnbPRec (
     UInt                rnam )
 {
     UInt                len;            /* length of <rec>                 */
-    UInt                i;              /* loop variable                   */
 
     // Accept T_PREC and T_COMOBJ, reject T_PREC+IMMUTABLE
     if (TNUM_OBJ(rec) == T_PREC+IMMUTABLE) {
-        ErrorReturnVoid(
-            "Record Unbind: <rec> must be a mutable record",
-            0L, 0L,
-            "you can 'return;' and ignore the unbind" );
+        ErrorMayQuit("Record Unbind: <rec> must be a mutable record", 0, 0);
     }
 
-    if (FindPRec( rec, rnam, &i, 1 )) {
+    UInt i = PositionPRec(rec, rnam, 1);
+
+    if (i) {
         /* otherwise move everything forward                               */
         len = LEN_PREC( rec );
         for ( ; i < len; i++ ) {
@@ -404,8 +362,8 @@ void UnbPRec (
 
         /* resize the record                                               */
         SET_LEN_PREC(rec,LEN_PREC(rec)-1);
-
-    } else
+    }
+    else
         /* do nothing if no such component exists                          */
         return;
 }
@@ -424,14 +382,11 @@ void AssPRec (
     Obj                 val )
 {
     UInt                len;            /* length of <rec>                 */
-    UInt                i;              /* loop variable                   */
 
     // Accept T_PREC and T_COMOBJ, reject T_PREC+IMMUTABLE
     if (TNUM_OBJ(rec) == T_PREC+IMMUTABLE) {
-        ErrorReturnVoid(
-            "Record Assignment: <rec> must be a mutable record",
-            0L, 0L,
-            "you can 'return;' and ignore the assignment" );
+        ErrorMayQuit("Record Assignment: <rec> must be a mutable record", 0,
+                     0);
     }
 
     /* get the length of the record                                        */
@@ -441,7 +396,9 @@ void AssPRec (
         SortPRecRNam(rec,0);
     }
 
-    if (!FindPRec( rec, rnam, &i, 0 )) {
+    UInt i = PositionPRec(rec, rnam, 0);
+
+    if (!i) {
         /* No cleanup allowed here to allow for multiple assignments! */
         /* extend the record if no such component exists                   */
         len++;
@@ -461,14 +418,10 @@ void AssPRec (
 **
 **  'PrintRec' prints the plain record <rec>.
 */
-extern Obj PrintObjOper;
-
-void PrintPRec (
-    Obj                 rec )
+static void PrintPRec(Obj rec)
 {
     DoOperation1Args( PrintObjOper, rec );
 }
-
 
 
 /****************************************************************************
@@ -479,9 +432,8 @@ void PrintPRec (
 **  in not necessarily sorted order in the kernel. It is automatically
 **  called on the first read access if necessary. See the top of "precord.c"
 **  for a comment on lazy sorting.
-**  If inplace is 1 then a slightly slower algorithm is used of
-**  which we know that it does not produce garbage collections.
-**  If inplace is 0 a garbage collection may be triggered.
+**  The second argument remains for backwards compatability with packages
+**  and should always be 0.
 **
 */
 static int PrecComparer(const void *a, const void *b)
@@ -496,17 +448,19 @@ static int PrecComparer(const void *a, const void *b)
 void SortPRecRNam (
     Obj                 rec, int inplace )
 {
+    GAP_ASSERT(inplace == 0);
+
     UInt len = LEN_PREC(rec);
     UInt i,j,k,save;
     int issorted = 1;
     Obj space;
-    Obj tmp;
 
     /* Nothing has to be done if it is already sorted: */
-    if ( len == 0 || (Int) (GET_RNAM_PREC(rec,len)) < 0) return;
+    if (len == 0 || GET_RNAM_PREC(rec, len) < 0)
+        return;
 
     /* First find the "unsorted part" and check whether it is sorted! */
-    for (i = len-1;i >= 1 && (Int)(GET_RNAM_PREC(rec,i)) > 0;i--) {
+    for (i = len - 1; i >= 1 && GET_RNAM_PREC(rec, i) > 0; i--) {
         if (issorted && GET_RNAM_PREC(rec,i) > GET_RNAM_PREC(rec,i+1)) {
             issorted = 0;
         }
@@ -521,73 +475,46 @@ void SortPRecRNam (
      * sorted. */
     save = i;
     if (save == 1 ||
-        -(Int)(GET_RNAM_PREC(rec,save-1)) < GET_RNAM_PREC(rec,save)) {
+        -GET_RNAM_PREC(rec, save - 1) < GET_RNAM_PREC(rec, save)) {
         /* Otherwise, nothing has to be done since it is already
          * sorted, we only have to negate the RNams! */
         for (j = save;j <= len;j++)
-            SET_RNAM_PREC(rec,j,-(Int)(GET_RNAM_PREC(rec,j)));
+            SET_RNAM_PREC(rec, j, -GET_RNAM_PREC(rec, j));
         return;
     }
     /* Next we perform a merge sort on the two presorted areas. */
     /* For optimal performance, we need some space to mess around: */
-    if (!inplace) {
-        space = NEW_PREC(len);
-        j = 1;
-        k = 1;
-        while (j < save && i <= len) {
-            if (-(Int)(GET_RNAM_PREC(rec,j)) < GET_RNAM_PREC(rec,i)) {
-                SET_RNAM_PREC(space,k,GET_RNAM_PREC(rec,j));
-                SET_ELM_PREC(space,k,GET_ELM_PREC(rec,j));
-                j++; k++;
-            } else {
-                SET_RNAM_PREC(space,k,-(Int)(GET_RNAM_PREC(rec,i)));
-                SET_ELM_PREC(space,k,GET_ELM_PREC(rec,i));
-                i++; k++;
-            }
-        }
-        /* Copy the rest of the part still missing: */
-        while (j < save) {
+    space = NEW_PREC(len);
+    j = 1;
+    k = 1;
+    while (j < save && i <= len) {
+        if (-GET_RNAM_PREC(rec, j) < GET_RNAM_PREC(rec, i)) {
             SET_RNAM_PREC(space,k,GET_RNAM_PREC(rec,j));
             SET_ELM_PREC(space,k,GET_ELM_PREC(rec,j));
             j++; k++;
         }
-        while (i <= len) {
-            SET_RNAM_PREC(space,k,-(Int)(GET_RNAM_PREC(rec,i)));
+        else {
+            SET_RNAM_PREC(space, k, -GET_RNAM_PREC(rec, i));
             SET_ELM_PREC(space,k,GET_ELM_PREC(rec,i));
             i++; k++;
         }
-        /* Finally, copy everything back to where it came from: */
-        memcpy(ADDR_OBJ(rec)+2,CONST_ADDR_OBJ(space)+2,sizeof(Obj)*2*len);
-    } else {   /* We have to work in place to avoid a garbage collection. */
-        /* i == save is the cut point */
-        j = 1;
-        for (j = 1; j < save; j++) {
-            if (-(Int)(GET_RNAM_PREC(rec,j)) > GET_RNAM_PREC(rec,i)) {
-                /* we have to move something to position j! */
-                tmp = (Obj) (-(Int)(GET_RNAM_PREC(rec,j)));
-                SET_RNAM_PREC(rec,j,-(Int)(GET_RNAM_PREC(rec,i)));
-                SET_RNAM_PREC(rec,i,(UInt) tmp);
-                tmp = GET_ELM_PREC(rec,j);
-                SET_ELM_PREC(rec,j,GET_ELM_PREC(rec,i));
-                SET_ELM_PREC(rec,i,tmp);
-                /* Now we have to "bubble pos i up" until it is in the
-                 * right position: */
-                for (k = i;k < len;k++) {
-                    if (GET_RNAM_PREC(rec,k) > GET_RNAM_PREC(rec,k+1)) {
-                        tmp = (Obj) GET_RNAM_PREC(rec,k);
-                        SET_RNAM_PREC(rec,k,GET_RNAM_PREC(rec,k+1));
-                        SET_RNAM_PREC(rec,k+1,(UInt) tmp);
-                        tmp = GET_ELM_PREC(rec,k);
-                        SET_ELM_PREC(rec,k,GET_ELM_PREC(rec,k+1));
-                        SET_ELM_PREC(rec,k+1,tmp);
-                    } else break;
-                }
-            }
-        }
-        /* Finally, we have to negate everything in the end: */
-        for (j = save;j <= len;j++)
-            SET_RNAM_PREC(rec,j,-(Int)(GET_RNAM_PREC(rec,j)));
     }
+    /* Copy the rest of the part still missing: */
+    while (j < save) {
+        SET_RNAM_PREC(space, k, GET_RNAM_PREC(rec, j));
+        SET_ELM_PREC(space, k, GET_ELM_PREC(rec, j));
+        j++;
+        k++;
+    }
+    while (i <= len) {
+        SET_RNAM_PREC(space, k, -GET_RNAM_PREC(rec, i));
+        SET_ELM_PREC(space, k, GET_ELM_PREC(rec, i));
+        i++;
+        k++;
+    }
+    /* Finally, copy everything back to where it came from: */
+    memcpy(ADDR_OBJ(rec) + 2, CONST_ADDR_OBJ(space) + 2,
+           sizeof(Obj) * 2 * len);
 }
 
 /****************************************************************************
@@ -596,11 +523,9 @@ void SortPRecRNam (
 */
 
 
-void PrintPathPRec (
-    Obj                 rec,
-    Int                 indx )
+static void PrintPathPRec(Obj rec, Int indx)
 {
-    Pr( ".%H", (Int)NAME_RNAM( labs((Int)(GET_RNAM_PREC(rec,indx))) ), 0L );
+    Pr(".%H", (Int)NAME_RNAM(labs(GET_RNAM_PREC(rec, indx))), 0L);
 }
 
 /****************************************************************************
@@ -614,7 +539,7 @@ void PrintPathPRec (
 **  'RecNames'  returns a list containing the  names of the components of the
 **  record <rec> as strings.
 */
-Obj InnerRecNames( Obj rec )
+static Obj InnerRecNames(Obj rec)
 {
     Obj                 list;           /* list of record names, result    */
     UInt                rnam;           /* one name of record              */
@@ -629,7 +554,7 @@ Obj InnerRecNames( Obj rec )
 
     /* loop over the components                                            */
     for ( i = 1; i <= LEN_PREC(rec); i++ ) {
-        rnam = -(Int)(GET_RNAM_PREC( rec, i ));
+        rnam = -GET_RNAM_PREC(rec, i);
         /* could have been moved by garbage collection */
         name = NAME_RNAM( rnam );
         string = CopyToStringRep( name );
@@ -641,20 +566,17 @@ Obj InnerRecNames( Obj rec )
     return list;
 }
 
-Obj FuncREC_NAMES (
-    Obj                 self,
-    Obj                 rec )
+static Obj FuncREC_NAMES(Obj self, Obj rec)
 {
     /* check the argument                                                  */
-    switch (TNUM_OBJ(rec)) {
-      case T_PREC:
-      case T_PREC+IMMUTABLE:
+    if (IS_PREC(rec)) {
         return InnerRecNames(rec);
-#ifdef HPCGAP
-      case T_AREC:
-        return InnerRecNames(FromAtomicRecord(rec));
-#endif
     }
+#ifdef HPCGAP
+    if (TNUM_OBJ(rec) == T_AREC) {
+        return InnerRecNames(FromAtomicRecord(rec));
+    }
+#endif
     ErrorMayQuit("RecNames: <rec> must be a record (not a %s)",
                  (Int)TNAM_OBJ(rec), 0L);
     return Fail;
@@ -666,9 +588,7 @@ Obj FuncREC_NAMES (
 *F  FuncREC_NAMES_COMOBJ( <self>, <rec> ) . . . record names of a record object
 */
 /* same as FuncREC_NAMES except for different argument check  */
-Obj FuncREC_NAMES_COMOBJ (
-    Obj                 self,
-    Obj                 rec )
+static Obj FuncREC_NAMES_COMOBJ(Obj self, Obj rec)
 {
     /* check the argument                                                  */
     switch (TNUM_OBJ(rec)) {
@@ -692,7 +612,7 @@ Obj FuncREC_NAMES_COMOBJ (
 **  'EqPRec' returns '1L'  if the two  operands <left> and <right> are equal
 **  and '0L' otherwise.  At least one operand must be a plain record.
 */
-Int EqPRec(Obj left, Obj right)
+static Int EqPRec(Obj left, Obj right)
 {
     UInt                i;              /* loop variable                   */
 
@@ -740,7 +660,7 @@ Int EqPRec(Obj left, Obj right)
 **  <right>, and '0L'  otherwise.  At least  one operand  must be a  plain
 **  record.
 */
-Int LtPRec(Obj left, Obj right)
+static Int LtPRec(Obj left, Obj right)
 {
     UInt                i;              /* loop variable                   */
     Int                 res;            /* result of comparison            */
@@ -771,8 +691,8 @@ Int LtPRec(Obj left, Obj right)
         /* The sense of this comparison is determined by the rule that
            unbound entries compare less than bound ones                    */
         if ( GET_RNAM_PREC(left,i) != GET_RNAM_PREC(right,i) ) {
-            res = !LT( NAME_RNAM( labs((Int)(GET_RNAM_PREC(left,i))) ),
-                   NAME_RNAM( labs((Int)(GET_RNAM_PREC(right,i))) ) );
+            res = !LT(NAME_RNAM(labs(GET_RNAM_PREC(left, i))),
+                      NAME_RNAM(labs(GET_RNAM_PREC(right, i))));
             break;
         }
 
@@ -796,7 +716,7 @@ Int LtPRec(Obj left, Obj right)
 **
 */
 
-void SavePRec( Obj prec )
+static void SavePRec(Obj prec)
 {
   UInt len,i;
   len = LEN_PREC(prec);
@@ -814,7 +734,7 @@ void SavePRec( Obj prec )
 **
 */
 
-void LoadPRec( Obj prec )
+static void LoadPRec(Obj prec)
 {
   UInt len,i;
   len = LoadUInt();
@@ -861,10 +781,6 @@ void MarkPRecSubBags(Obj bag)
 static StructBagNames BagNames[] = {
   { T_PREC,                     "record (plain)"            },
   { T_PREC +IMMUTABLE,          "record (plain,imm)"        },
-#if !defined(USE_THREADSAFE_COPYING)
-  { T_PREC            +COPYING, "record (plain,copied)"     },
-  { T_PREC +IMMUTABLE +COPYING, "record (plain,imm,copied)" },
-#endif
   { -1,                         ""                          }
 };
 
@@ -894,10 +810,6 @@ static Int InitKernel (
 
     InitMarkFuncBags( T_PREC                     , MarkPRecSubBags );
     InitMarkFuncBags( T_PREC +IMMUTABLE          , MarkPRecSubBags );
-#if !defined(USE_THREADSAFE_COPYING)
-    InitMarkFuncBags( T_PREC            +COPYING , MarkPRecSubBags );
-    InitMarkFuncBags( T_PREC +IMMUTABLE +COPYING , MarkPRecSubBags );
-#endif
 
 #ifdef HPCGAP
     /* Immutable records are public                                        */
@@ -928,18 +840,14 @@ static Int InitKernel (
     IsCopyableObjFuncs[ T_PREC +IMMUTABLE ] = AlwaysYes;
 
 #ifdef USE_THREADSAFE_COPYING
-    SetTraversalMethod(T_PREC,            TRAVERSE_BY_FUNCTION, TraversePRecord, CopyPRecord);
+    SetTraversalMethod(T_PREC           , TRAVERSE_BY_FUNCTION, TraversePRecord, CopyPRecord);
     SetTraversalMethod(T_PREC +IMMUTABLE, TRAVERSE_BY_FUNCTION, TraversePRecord, CopyPRecord);
 #else
     /* install into copy function tables                                  */
     CopyObjFuncs [ T_PREC                     ] = CopyPRec;
     CopyObjFuncs [ T_PREC +IMMUTABLE          ] = CopyPRec;
-    CopyObjFuncs [ T_PREC            +COPYING ] = CopyPRecCopy;
-    CopyObjFuncs [ T_PREC +IMMUTABLE +COPYING ] = CopyPRecCopy;
     CleanObjFuncs[ T_PREC                     ] = CleanPRec;
     CleanObjFuncs[ T_PREC +IMMUTABLE          ] = CleanPRec;
-    CleanObjFuncs[ T_PREC            +COPYING ] = CleanPRecCopy;
-    CleanObjFuncs[ T_PREC +IMMUTABLE +COPYING ] = CleanPRecCopy;
 #endif
 
     /* install printer                                                     */

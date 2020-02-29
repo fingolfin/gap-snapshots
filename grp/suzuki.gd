@@ -1,9 +1,12 @@
 #############################################################################
 ##
-#W  suzuki.gd                   GAP library                       Stefan Kohl
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Stefan Kohl.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 
 
@@ -35,7 +38,7 @@ DeclareConstructor( "SuzukiGroupCons", [ IsGroup, IsInt ] );
 ##  over the field with <A>q</A> elements, where <A>q</A> is a non-square
 ##  power of <M>2</M>.
 ##  <P/>
-##  If <A>filt</A> is not given it defaults to <Ref Func="IsMatrixGroup"/>,
+##  If <A>filt</A> is not given it defaults to <Ref Filt="IsMatrixGroup"/>,
 ##  and the returned group is the Suzuki group itself.
 ##  For more information on possible values of <A>filt</A> see section
 ##  (<Ref Sect="Basic Groups"/>).
@@ -61,8 +64,3 @@ BindGlobal( "SuzukiGroup", function ( arg )
 end );
 
 DeclareSynonym( "Sz", SuzukiGroup );
-
-
-#############################################################################
-##
-#E

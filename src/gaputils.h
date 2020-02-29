@@ -1,7 +1,11 @@
 /****************************************************************************
 **
-**  Copyright (C) 2017 The GAP Group
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #ifndef GAP_UTILS_H
@@ -26,7 +30,7 @@
 #define ARRAY_SIZE(arr)     ( sizeof(arr) / sizeof((arr)[0]) )
 
 
-static inline Int AlwaysYes(Obj obj) { return 1; }
-static inline Int AlwaysNo(Obj obj) { return 0; }
+EXPORT_INLINE Int AlwaysYes(Obj obj) { return 1; }
+EXPORT_INLINE Int AlwaysNo(Obj obj) { return 0; }
 
 #endif // GAP_UTILS_H

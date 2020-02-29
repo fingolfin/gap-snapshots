@@ -22,10 +22,11 @@
 <p id="mathjaxlink" class="pcenter"><a href="chap32_mj.html">[MathJax on]</a></p>
 <p><a id="X7C9734B880042C73" name="X7C9734B880042C73"></a></p>
 <div class="ChapSects"><a href="chap32.html#X7C9734B880042C73">32 <span class="Heading">Mappings</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap32.html#X783BAB2683EEA0CC">32.1 <span class="Heading">IsDirectProductElement (Filter)</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap32.html#X859A13548515A5D7">32.1 <span class="Heading">Direct Products and their Elements</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32.html#X87FD9FE787023FF0">32.1-1 IsDirectProductElement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32.html#X78F8A1168280E06D">32.1-2 DirectProductFamily</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap32.html#X7CF6FEFB8290D5CB">32.2 <span class="Heading">Creating Mappings</span></a>
 </span>
@@ -176,9 +177,9 @@
 
 <p>Some technical details of general mappings are described in section <a href="chap32.html#X7E4A55567BED0F88"><span class="RefLink">32.13</span></a>.</p>
 
-<p><a id="X783BAB2683EEA0CC" name="X783BAB2683EEA0CC"></a></p>
+<p><a id="X859A13548515A5D7" name="X859A13548515A5D7"></a></p>
 
-<h4>32.1 <span class="Heading">IsDirectProductElement (Filter)</span></h4>
+<h4>32.1 <span class="Heading">Direct Products and their Elements</span></h4>
 
 <p><a id="X87FD9FE787023FF0" name="X87FD9FE787023FF0"></a></p>
 
@@ -189,7 +190,42 @@
 
 <p>Note that each of these operations will cause an error message if its result for at least one component cannot be formed.</p>
 
-<p>For an object in the filter <code class="func">IsDirectProductElement</code>, <code class="func">ShallowCopy</code> (<a href="chap12.html#X846BC7107C352031"><span class="RefLink">12.7-1</span></a>) returns a mutable plain list with the same entries. The sum and the product of a direct product element and a list in <code class="func">IsListDefault</code> (<a href="chap21.html#X7BAD12E67BFC90DE"><span class="RefLink">21.12-3</span></a>) is the list of sums and products, respectively. The sum and the product of a direct product element and a non-list is the direct product element of componentwise sums and products, respectively.</p>
+<p>For an object in the filter <code class="func">IsDirectProductElement</code>, <code class="func">ShallowCopy</code> (<a href="chap12.html#X846BC7107C352031"><span class="RefLink">12.7-1</span></a>) returns a mutable plain list with the same entries. The sum and the product of a direct product element and a list in <code class="func">IsListDefault</code> (<a href="chap21.html#X7BAD12E67BFC90DE"><span class="RefLink">21.12-3</span></a>) is the list of sums and products, respectively. The sum and the product of a direct product element and an object that is neither a list nor a collection is the direct product element of componentwise sums and products, respectively.</p>
+
+<p><a id="X78F8A1168280E06D" name="X78F8A1168280E06D"></a></p>
+
+<h5>32.1-2 DirectProductFamily</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectProductFamily</code>( <var class="Arg">args</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><var class="Arg">args</var> must be a dense list of <code class="func">CollectionsFamily</code> (<a href="chap30.html#X84E5A67E87D8DD66"><span class="RefLink">30.2-1</span></a>) families, otherwise the function raises an error.</p>
+
+<p><code class="func">DirectProductFamily</code> returns <code class="code">fam</code>, a collections family of <code class="func">IsDirectProductElement</code> (<a href="chap32.html#X87FD9FE787023FF0"><span class="RefLink">32.1-1</span></a>) objects.</p>
+
+<p><code class="code">fam</code> is the <code class="func">CollectionsFamily</code> (<a href="chap30.html#X84E5A67E87D8DD66"><span class="RefLink">30.2-1</span></a>) of <code class="func">IsDirectProductElement</code> (<a href="chap32.html#X87FD9FE787023FF0"><span class="RefLink">32.1-1</span></a>) objects whose <code class="code">i</code>-th component is in <code class="code">ElementsFamily(args[i])</code>.</p>
+
+<p>Note that a collection in <code class="code">fam</code> may not itself be a direct product; it just is a subcollection of a direct product.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D8 := DihedralGroup(IsPermGroup, 8);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FamilyObj(D8) = CollectionsFamily(PermutationsFamily);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fam := DirectProductFamily([FamilyObj(D8), FamilyObj(D8)]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ComponentsOfDirectProductElementsFamily(ElementsFamily(fam));</span>
+[ &lt;Family: "PermutationsFamily"&gt;, &lt;Family: "PermutationsFamily"&gt; ]
+</pre></div>
+
+<p>Also note that not all direct products in <strong class="pkg">GAP</strong> are created via these families. For example if the arguments to <code class="func">DirectProduct</code> (<a href="chap49.html#X861BA02C7902A4F4"><span class="RefLink">49.1-1</span></a>) are permutation groups, then it returns a permutation group as well, whose elements are not <code class="func">IsDirectProductElement</code> (<a href="chap32.html#X87FD9FE787023FF0"><span class="RefLink">32.1-1</span></a>) objects.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fam = FamilyObj(DirectProduct(D8, D8));</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D4 := DihedralGroup(IsPcGroup, 4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fam2 := DirectProductFamily([FamilyObj(D8), FamilyObj(D4)]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fam2 = FamilyObj(DirectProduct(D8, D4));</span>
+true
+</pre></div>
 
 <p><a id="X7CF6FEFB8290D5CB" name="X7CF6FEFB8290D5CB"></a></p>
 
@@ -239,11 +275,25 @@
 <h5>32.2-5 CompositionMapping</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompositionMapping</code>( <var class="Arg">map1</var>, <var class="Arg">map2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p><code class="func">CompositionMapping</code> allows one to compose arbitrarily many general mappings, and delegates each step to <code class="func">CompositionMapping2</code> (<a href="chap32.html#X86486B687B7077AC"><span class="RefLink">32.2-6</span></a>).</p>
+<p><code class="func">CompositionMapping</code> allows one to compose arbitrarily many general mappings, and delegates each step to <code class="func">CompositionMapping2</code> (<a href="chap32.html#X86486B687B7077AC"><span class="RefLink">32.2-6</span></a>). The result is a map that maps an element first under the last argument, then under the penultimate argument and so forth.</p>
 
-<p>Additionally, the properties <code class="func">IsInjective</code> (<a href="chap32.html#X7F065FD7822C0A12"><span class="RefLink">32.3-4</span></a>) and <code class="func">IsSingleValued</code> (<a href="chap32.html#X86D44C8A78BF1981"><span class="RefLink">32.3-2</span></a>) are maintained; if the source of the <span class="SimpleMath">i+1</span>-th general mapping is identical to the range of the <span class="SimpleMath">i</span>-th general mapping, also <code class="func">IsTotal</code> (<a href="chap32.html#X83C7494E828CC9C8"><span class="RefLink">32.3-1</span></a>) and <code class="func">IsSurjective</code> (<a href="chap32.html#X784ECE847E005B8F"><span class="RefLink">32.3-5</span></a>) are maintained. (So one should not call <code class="func">CompositionMapping2</code> (<a href="chap32.html#X86486B687B7077AC"><span class="RefLink">32.2-6</span></a>) directly if one wants to maintain these properties.)</p>
+<p>Additionally, the properties <code class="func">IsInjective</code> (<a href="chap32.html#X7F065FD7822C0A12"><span class="RefLink">32.3-4</span></a>) and <code class="func">IsSingleValued</code> (<a href="chap32.html#X86D44C8A78BF1981"><span class="RefLink">32.3-2</span></a>) are maintained. If the range of the <span class="SimpleMath">i+1</span>-th argument is identical to the range of the <span class="SimpleMath">i</span>-th argument, also <code class="func">IsTotal</code> (<a href="chap32.html#X83C7494E828CC9C8"><span class="RefLink">32.3-1</span></a>) and <code class="func">IsSurjective</code> (<a href="chap32.html#X784ECE847E005B8F"><span class="RefLink">32.3-5</span></a>) are maintained. (So one should not call <code class="func">CompositionMapping2</code> (<a href="chap32.html#X86486B687B7077AC"><span class="RefLink">32.2-6</span></a>) directly if one wants to maintain these properties.)</p>
 
 <p>Depending on the types of <var class="Arg">map1</var> and <var class="Arg">map2</var>, the returned mapping might be constructed completely new (for example by giving domain generators and their images, this is for example the case if both mappings preserve the same algebraic structures and <strong class="pkg">GAP</strong> can decompose elements of the source of <var class="Arg">map2</var> into generators) or as an (iterated) composition (see <code class="func">IsCompositionMappingRep</code> (<a href="chap32.html#X7A926D167C3155F6"><span class="RefLink">32.2-7</span></a>)).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := GroupHomomorphismByImages(CyclicGroup(IsPermGroup, 2),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                  CyclicGroup(IsPermGroup, 1));</span>
+[ (1,2) ] -&gt; [ () ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := GroupHomomorphismByImages(CyclicGroup(IsPermGroup, 6),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                  CyclicGroup(IsPermGroup, 2));</span>
+[ (1,2,3,4,5,6) ] -&gt; [ (1,2) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CompositionMapping(f, g);</span>
+[ (1,2,3,4,5,6) ] -&gt; [ () ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CompositionMapping(g, f);</span>
+[ (1,2) ] -&gt; [ () ]
+</pre></div>
 
 <p><a id="X86486B687B7077AC" name="X86486B687B7077AC"></a></p>
 

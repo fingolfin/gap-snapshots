@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  liefam.gd                   GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the definition of the family of Lie elements of a
 ##  family of ring elements.
@@ -15,7 +16,7 @@
 ##
 ##  <#GAPDoc Label="[1]{liefam}">
 ##  Let <C>x</C> be a ring element, then <C>LieObject(x)</C> 
-##  (see&nbsp;<Ref Func="LieObject"/>) wraps <C>x</C> up into an
+##  (see&nbsp;<Ref Attr="LieObject"/>) wraps <C>x</C> up into an
 ##  object that contains the same data (namely <C>x</C>). The multiplication
 ##  <C>*</C> for Lie objects is formed by taking the commutator. More exactly,
 ##  if <C>l1</C> and <C>l2</C> are the Lie objects corresponding to
@@ -180,7 +181,7 @@ DeclareAttribute( "UnderlyingFamily", IsObject );
 ##  Let <A>obj</A> be a ring element. Then <C>LieObject( <A>obj</A> )</C> is the
 ##  corresponding Lie object. If <A>obj</A> lies in the family <C>F</C>,
 ##  then <C>LieObject( <A>obj</A> )</C> lies in the family <C>LieFamily( F )</C>
-##  (see&nbsp;<Ref Func="LieFamily"/>).
+##  (see&nbsp;<Ref Attr="LieFamily"/>).
 ##  <Example><![CDATA[
 ##  gap> m:= [ [ 1, 0 ], [ 0, 1 ] ];;
 ##  gap> lo:= LieObject( m );
@@ -212,7 +213,7 @@ DeclareAttribute( "LieObject", IsRingElement );
 ##  the ring element <C>r</C> used to construct <A>obj</A>.
 ##  If <C>r</C> lies in the family <C>F</C>, then <A>obj</A>
 ##  lies in the family <C>LieFamily( F )</C>
-##  (see&nbsp;<Ref Func="LieFamily"/>).
+##  (see&nbsp;<Ref Attr="LieFamily"/>).
 ##  <Example><![CDATA[
 ##  gap> lo:= LieObject( [ [ 1, 0 ], [ 0, 1 ] ] );
 ##  LieObject( [ [ 1, 0 ], [ 0, 1 ] ] )
@@ -252,9 +253,3 @@ DeclareAttribute( "UnderlyingRingElement", IsLieObject );
 ##
 DeclareHandlingByNiceBasis( "IsLieObjectsModule",
     "for free left modules of Lie objects" );
-
-
-#############################################################################
-##
-#E
-

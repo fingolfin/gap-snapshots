@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  combinat.gi                 GAP library                  Martin Schönert
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Martin Schönert.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains method for combinatorics.
 ##
@@ -1303,8 +1304,8 @@ InstallMethod(Permanent,
 function ( mat )
     local m, n;
 
-    m := Length(mat);
-    n := Length(mat[1]);
+    m := NrRows(mat);
+    n := NrCols(mat);
     while n<m do
         Error("Matrix may not have fewer columns than rows");
     od;
@@ -2465,6 +2466,7 @@ InstallGlobalFunction(AssociatedPartition,function(lambda)
   local res, k, j;
   res := [];
   k := Length(lambda);
+  if k=0 then return res;fi; # empty partition
   for j in [1..lambda[1]] do
     if j <= lambda[k] then
       res[j] := k;
@@ -2703,9 +2705,3 @@ InstallGlobalFunction(Bernoulli,
         end
     )
 ));
-
-
-#############################################################################
-##
-#E  combinat.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##

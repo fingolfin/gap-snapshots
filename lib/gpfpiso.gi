@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  gpfpiso.gi                  GAP library                      Bettina Eick
-#W                                                           Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Bettina Eick, Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2004 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the methods for computing presentations for
 ##  (permutation) groups.
@@ -51,7 +51,13 @@ end );
 InstallOtherMethod(IsomorphismFpGroup,"for perm groups",true,
   [IsPermGroup,IsString],0,
 function( G,nam )
-    return IsomorphismFpGroupByChiefSeries( G, nam );
+  # test frequent, special cases
+  if (not HasIsSymmetricGroup(G) and IsSymmetricGroup(G)) or
+     (not HasIsAlternatingGroup(G) and IsAlternatingGroup(G)) then
+    return IsomorphismFpGroup(G,nam);
+  fi;
+
+  return IsomorphismFpGroupByChiefSeries( G, nam );
 end );
 
 InstallOtherMethod( IsomorphismFpGroup,"for simple solvable permutation groups",
@@ -61,8 +67,8 @@ function(G,str)
   return IsomorphismFpGroupByPcgs( Pcgs(G), str );
 end);
 
-InstallOtherMethod( IsomorphismFpGroup,"for simple permutation groups",true,
-  [IsPermGroup and IsSimpleGroup,IsString],0,
+InstallOtherMethod( IsomorphismFpGroup,"for nonabelian simple permutation groups",
+  true, [IsPermGroup and IsNonabelianSimpleGroup,IsString],0,
 function(G,str)
 local l,iso,fp,stbc,gens;
   # use the perfect groups library
@@ -125,7 +131,7 @@ function( G, str )
     #     gensH := Filtered( gensH, x -> x <> One(H) );
     # fi;
 
-    IsSimpleGroup(H); #ensure H knows to be simple, thus the call to
+    IsNonabelianSimpleGroup(H); #ensure H knows to be simple, thus the call to
     # `IsomorphismFpGroup' will not yield an infinite recursion.
     IsNaturalAlternatingGroup(H); # We have quite often a factor A_n for
     # which GAP knows better presentations. Thus this test is worth doing.
@@ -156,7 +162,7 @@ function( G, str )
         # fi;
 
 	# compute presentation of H
-	IsSimpleGroup(H);
+	IsNonabelianSimpleGroup(H);
 	IsNaturalAlternatingGroup(H);
 	new:=IsomorphismFpGroup(H,"@");
 	gensH:=List(GeneratorsOfGroup(Image(new)),
@@ -272,13 +278,18 @@ function(g,str,N)
       IsOne(hom);
       f:=Image(hom);
       # knowing simplicity makes it easy to test whether a map is faithful
-      if IsSimpleGroup(f) then
-	if IsPermGroup(f) and
+      if IsNonabelianSimpleGroup(f) then
+        if DataAboutSimpleGroup(f).idSimple.series="A" and
+          not IsNaturalAlternatingGroup(f) then
+          # force natural alternating 
+          hom:=hom*IsomorphismGroups(f,
+            AlternatingGroup(DataAboutSimpleGroup(f).idSimple.parameter));
+	elif IsPermGroup(f) and
 	  NrMovedPoints(f)>SufficientlySmallDegreeSimpleGroupOrder(Size(f)) then
-	  hom:=hom*SmallerDegreePermutationRepresentation(f);
+	  hom:=hom*SmallerDegreePermutationRepresentation(f:cheap);
 	fi;
       elif IsPermGroup(f) then
-	hom:=hom*SmallerDegreePermutationRepresentation(f);
+	hom:=hom*SmallerDegreePermutationRepresentation(f:cheap);
       fi;
 
       # the range is elementary. Use this for the fp group isomorphism
@@ -309,36 +320,48 @@ function(g,str,N)
       od;
 
       # we know sf is simple
-      SetIsSimpleGroup(sf,true);
+      SetIsNonabelianSimpleGroup(sf,true);
       IsNaturalAlternatingGroup(sf);
-      a:=IsomorphismFpGroup(sf:noassert);
+      if ValueOption("rewrite")=true then
+        a:=IsomorphismFpGroupForRewriting(sf:noassert);
+      else
+        a:=IsomorphismFpGroup(sf:noassert);
+      fi;
       ad:=List(GeneratorsOfGroup(Range(a)),i->PreImagesRepresentative(a,i));
       lad:=Length(ad);
 
       n:=Length(orb);
-      fg:=FreeGroup(Length(ad)*n,"@");
-      free:=GeneratorsOfGroup(fg);
-      rels:=[];
-      fgens:=[];
-      for j in [1..n] do
-	Append(fgens,List(ad,x->Image(tra[j],x)));
-	# translate relators
-	for k in RelatorsOfFpGroup(Range(a)) do
-	  Add(rels,MappedWord(k,FreeGeneratorsOfFpGroup(Range(a)),
-	                        free{[(j-1)*lad+1..j*lad]}));
-	od;
-	# commutators with older gens
-	for k in [j+1..n] do
-	  for l in [1..Length(ad)] do
-	    for m in [1..Length(ad)] do
-	      Add(rels,Comm(free[(k-1)*lad+l],free[(j-1)*lad+m]));
-	    od;
-	  od;
-	od;
-      od;
+      if n=1 and ValueOption("rewrite")=true then
+        fgens:=ad;
+      else
+        if ValueOption("rewrite")=true then
+          Info(InfoPerformance,1,
+          "Rewriting system preservation for direct product not yet written");
+        fi;
+        fg:=FreeGroup(Length(ad)*n,"@");
+        free:=GeneratorsOfGroup(fg);
+        rels:=[];
+        fgens:=[];
+        for j in [1..n] do
+          Append(fgens,List(ad,x->Image(tra[j],x)));
+          # translate relators
+          for k in RelatorsOfFpGroup(Range(a)) do
+            Add(rels,MappedWord(k,FreeGeneratorsOfFpGroup(Range(a)),
+                                  free{[(j-1)*lad+1..j*lad]}));
+          od;
+          # commutators with older gens
+          for k in [j+1..n] do
+            for l in [1..Length(ad)] do
+              for m in [1..Length(ad)] do
+                Add(rels,Comm(free[(k-1)*lad+l],free[(j-1)*lad+m]));
+              od;
+            od;
+          od;
+        od;
 
-      fp:=fg/rels;
-      a:=GroupHomomorphismByImagesNC(f,fp,fgens,GeneratorsOfGroup(fp):noassert);
+        fp:=fg/rels;
+        a:=GroupHomomorphismByImagesNC(f,fp,fgens,GeneratorsOfGroup(fp):noassert);
+      fi;
       Append(gens,List(fgens,i->PreImagesRepresentative(hom,i)));
 
       # here we really want a composed homomorphism, to avoid extra work for 
@@ -430,7 +453,7 @@ function(g,str,N)
   Assert(1,ForAll(rels,i->MappedWord(i,GeneratorsOfGroup(f),gens) in N));
 
   fp:=f/rels;
-  di:=rec(gens:=gens,fp:=fp,idx:=idx,dec:=dec,source:=g);
+  di:=rec(gens:=gens,fp:=fp,idx:=idx,dec:=dec,source:=g,homs:=homs);
   if IsTrivial(N) then
     hom:=GroupHomomorphismByImagesNC(g,fp,gens,GeneratorsOfGroup(fp):noassert);
     SetIsBijective(hom,true);
@@ -865,7 +888,5 @@ function( G, series )
     return IsomorphismFpGroupBySubnormalSeries( G, series, "F" );
 end);
 
-#############################################################################
-##
-#E
-
+InstallOtherMethod(IsomorphismFpGroupForRewriting,"generic fallback",true,
+  [IsGroup],0,IsomorphismFpGroup);

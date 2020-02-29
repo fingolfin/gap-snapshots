@@ -65,8 +65,8 @@
   function installation is likely to occur in the corresponding [10X.gi[110X file.[133X
   
   [33X[0;0YTo  find a method from the known operation name and the installation string,
-  search  for the string [21X[10XMethod([110X[121X (this catches both [2XInstallMethod[102X ([14X78.2-1[114X) and
-  [2XInstallOtherMethod[102X  ([14X78.2-2[114X))  and  the installation string or the operation
+  search  for the string [21X[10XMethod([110X[121X (this catches both [2XInstallMethod[102X ([14X78.3-1[114X) and
+  [2XInstallOtherMethod[102X  ([14X78.3-2[114X))  and  the installation string or the operation
   name.[133X
   
   [33X[0;0YThe  following  tools  from the [5XGAP[105X package [5XBrowse[105X can be used for accessing

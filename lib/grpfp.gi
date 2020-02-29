@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  grpfp.gi                    GAP library                    Volkmar Felsch
-#W                                                           Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Volkmar Felsch, Alexander Hulpke.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the methods for finitely presented groups (fp groups).
 ##  Methods for subgroups of fp groups can also be found in `sgpres.gi'.
@@ -190,6 +191,9 @@ local hom,gp,f;
   if HasIsFinite(gp) and not IsFinite(gp) then
     return fail;
   fi;
+  if HasIsomorphismPermGroup(gp) then return IsomorphismPermGroup(gp); fi;
+  if HasIsomorphismPcGroup(gp) then return IsomorphismPcGroup(gp); fi;
+
   if HasSize(gp) then
     f:=Factors(Size(gp));
     if Length(Set(f))=1 then
@@ -244,7 +248,7 @@ end);
 MakeFpGroupCompMethod:=function(CMP)
   return function(fam)
     local hom,f,com;
-    # if a normal form method is known, and its not known to be crummy
+    # if a normal form method is known, and it is not known to be crummy
     if HasFpElementNFFunction(fam) and not IsBound(fam!.hascrudeFPENFF) then
       f:=FpElementNFFunction(fam);
       com:=x->f(UnderlyingElement(x));
@@ -394,7 +398,7 @@ local gens, lim, n, r, l, w, a,la,f,up;
     n:=n+1;
     for r in [1..l] do
       repeat
-	a:=Random([1..n]);
+	a:=Random(1,n);
       until a<>la;
       if a>Length(gens) then
 	la:=a-Length(gens);
@@ -1059,8 +1063,9 @@ function ( fgens, grels, fsgens )
   if Length(fgens)=0 then
     return [];
   fi;
-  # call the TC plugin
-  return TCENUM.CosetTableFromGensAndRels(fgens,grels,fsgens);
+  # call the TC plugin. Option ensures no factorization takes place in printing
+  # (which can confuse the ACE interface).
+  return TCENUM.CosetTableFromGensAndRels(fgens,grels,fsgens:printnopowers:=true);
 end);
 
 # this function implements the library version of the Todd-Coxeter routine.
@@ -2009,7 +2014,7 @@ local d,A,B,e1,e2,Ag,Bg,s,sg,u,v;
   # reduce
   if HasSize(s) and IsPermGroup(s) and (Size(s)=Size(A) or Size(s)=Size(B)
     or NrMovedPoints(s)>1000) then
-    d:=SmallerDegreePermutationRepresentation(s);
+    d:=SmallerDegreePermutationRepresentation(s:cheap);
     A:=SubgroupNC(Range(d),List(GeneratorsOfGroup(s),x->ImagesRepresentative(d,x)));
     if NrMovedPoints(A)<NrMovedPoints(s) then
       Info(InfoFpGroup,3,"reduced degree from ",NrMovedPoints(s)," to ",
@@ -3142,7 +3147,7 @@ InstallMethod(LowIndexSubgroups, "FpFroups, using LowIndexSubgroupsFpGroup",
   true,
   [IsSubgroupFpGroup,IsPosInt],
   # rank higher than method for finit groups using maximal subgroups
-  RankFilter(IsGroup and IsFinite),
+  {} -> RankFilter(IsGroup and IsFinite),
   LowIndexSubgroupsFpGroup );
 
 InstallOtherMethod(LowIndexSubgroupsFpGroup,
@@ -3956,7 +3961,7 @@ local mappow, G, max, p, gens, rels, comb, i, l, m, H, t, gen, silent, sz,
   comb:=Concatenation(
     # a few combs: all gen but one
     List(
-      Set(List([1..3],i->Random([1..Length(gens)]))),
+      Set([1..3],i->Random(1,Length(gens))),
       i->gens{Difference([1..Length(gens)],[i])}),
     # first combination is full list and thus uninteresting
     comb{[2..Length(comb)]});
@@ -4111,7 +4116,7 @@ local mappow, G, max, p, gens, rels, comb, i, l, m, H, t, gen, silent, sz,
 
   fi;
 
-  p:=SmallerDegreePermutationRepresentation(H);
+  p:=SmallerDegreePermutationRepresentation(H:cheap);
   # tell the family that we can now compare elements
   SetCanEasilyCompareElements(FamilyObj(One(G)),true);
   SetCanEasilySortElements(FamilyObj(One(G)),true);
@@ -4133,7 +4138,7 @@ InstallMethod(IsomorphismPermGroup,"for full finitely presented groups",
     true, [ IsGroup and IsSubgroupFpGroup and IsGroupOfFamily ],
     # as this method may be called to compare elements we must get higher
     # than a method for finite groups (via right multiplication).
-    RankFilter(IsFinite and IsGroup),
+    {} -> RankFilter(IsFinite and IsGroup),
 function(G)
   return IsomorphismPermGroupOrFailFpGroup(G,10^30);
 end);
@@ -4141,7 +4146,7 @@ end);
 InstallMethod(IsomorphismPermGroup,"for subgroups of finitely presented groups",
     true, [ IsGroup and IsSubgroupFpGroup ],
     # even if we don't demand to know to be finite, we have to assume it.
-    RankFilter(IsFinite and IsGroup),
+    {} -> RankFilter(IsFinite and IsGroup),
 function(G)
 local P,imgs,hom;
   Size(G);
@@ -5135,7 +5140,7 @@ InstallMethod(StoredExcludedOrders,"fp group",true,
 
 InstallGlobalFunction(ExcludedOrders,
 function(arg)
-local f,a,i,j,gens,tstord,excl,p,s;
+local f,a,b,i,j,gens,tstord,excl,p,s;
   f:=arg[1];
   s:=StoredExcludedOrders(f);
   gens:=FreeGeneratorsOfFpGroup(f);
@@ -5171,24 +5176,32 @@ local f,a,i,j,gens,tstord,excl,p,s;
       else
 	p:=PresentationFpGroup(f,0);
 	AddRelator(p,p!.generators[i]^j);
+        TzInitGeneratorImages(p);
 	TzGoGo(p);
 	if Length(p!.generators)=0 then
 	  AddSet(excl[i],j);
 	  AddSet(s[i][1],j);
 	else
 	  if i=1 then
-	    a:=[gens[2]];
+	    b:=[gens[2]];
 	  else
-	    a:=[gens[1]];
+	    b:=[gens[1]];
 	  fi;
 	  a:=CosetTableFromGensAndRels(gens,
-	       Concatenation(RelatorsOfFpGroup(f),[gens[i]^j]),a:
+	       Concatenation(RelatorsOfFpGroup(f),[gens[i]^j]),b:
 	       max:=15999,silent);
-	  if IsList(a) and Length(a[1])=1 and
-	     # now we can try the size
-	     Size(FpGroupPresentation(p))=1 then
-	    AddSet(excl[i],j);
-	    AddSet(s[i][1],j);
+          if IsList(a) and Length(a[1])=1 then
+            a:=FpGroupPresentation(p);
+            b:=List(b,x->MappedWord(x,FreeGeneratorsOfFpGroup(f),TzImagesOldGens(p)));
+            b:=List(b,x->MappedWord(x,p!.generators,GeneratorsOfGroup(a)));
+            # now we can try the size. Ensure we use the generator we know
+            a:=NEWTC_CosetEnumerator(FreeGeneratorsOfFpGroup(a),RelatorsOfFpGroup(a),
+              List(b,UnderlyingElement), true, false : cyclic := true,
+              limit := 50000 );
+            if NEWTC_CyclicSubgroupOrder(a)=1 then
+              AddSet(excl[i],j);
+              AddSet(s[i][1],j);
+            fi;
 	  fi;
 	fi;
       fi;
@@ -5648,13 +5661,8 @@ IndependentGeneratorsOfMaximalAbelianQuotientOfFpGroup := function( G )
 end;
 
 InstallMethod( IndependentGeneratorsOfAbelianGroup,
-  "For abelian fpgroup, use Smith normal form",
+  "for abelian fpgroup, use Smith normal form",
   [ IsFpGroup and IsAbelian ],
   IndependentGeneratorsOfMaximalAbelianQuotientOfFpGroup );
 
 InstallValue(TRIVIAL_FP_GROUP,FreeGroup(0,"TrivGp")/[]);
-
-#############################################################################
-##
-#E
-

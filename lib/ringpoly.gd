@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  ringpoly.gd                 GAP Library                      Frank Celler
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains  the categories, attributes, properties and operations
 ##  for polynomial rings and function fields.
@@ -42,7 +43,7 @@ DeclareCategory( "IsPolynomialRing", IsRing );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareCategory("IsFunctionField",IsRing);
+DeclareCategory("IsFunctionField",IsField);
 
 #############################################################################
 ##
@@ -402,7 +403,7 @@ DeclareSynonymAttr("IndeterminatesOfFunctionField",
 ##  polynomial ring in indeterminates labelled by <A>names</A>.
 ##  These indeterminates have <Q>new</Q> internal index numbers as if they
 ##  had been created by calls to
-##  <Ref Func="Indeterminate" Label="for a ring (and a number)"/>.
+##  <Ref Oper="Indeterminate" Label="for a ring (and a number)"/>.
 ##  (If the argument <A>avoid</A> is given it contains indeterminates that
 ##  should be avoided, in this case internal index numbers are incremented
 ##  to skip these variables.)
@@ -412,9 +413,9 @@ DeclareSynonymAttr("IndeterminatesOfFunctionField",
 ##  numbers.
 ##  <P/>
 ##  To get the indeterminates of a polynomial ring use
-##  <Ref Func="IndeterminatesOfPolynomialRing"/>.
+##  <Ref Attr="IndeterminatesOfPolynomialRing"/>.
 ##  (Indeterminates created independently with
-##  <Ref Func="Indeterminate" Label="for a ring (and a number)"/>
+##  <Ref Oper="Indeterminate" Label="for a ring (and a number)"/>
 ##  will usually differ, though they might be given the same name and display
 ##  identically, see Section&nbsp;<Ref Sect="Indeterminates"/>.)
 ##  </Description>
@@ -480,7 +481,7 @@ DeclareOperation( "MinimalPolynomial",
 ##  function field in indeterminates labelled by <A>names</A>.
 ##  These indeterminates have <Q>new</Q> internal index numbers as if they
 ##  had been created by calls to
-##  <Ref Func="Indeterminate" Label="for a ring (and a number)"/>.
+##  <Ref Oper="Indeterminate" Label="for a ring (and a number)"/>.
 ##  (If the argument <A>avoid</A> is given it contains indeterminates that
 ##  should be avoided, in this case internal index numbers are incremented
 ##  to skip these variables.)
@@ -490,9 +491,9 @@ DeclareOperation( "MinimalPolynomial",
 ##  number.
 ##  <P/>
 ##  To get the indeterminates of a function field use
-##  <Ref Func="IndeterminatesOfFunctionField"/>.
+##  <Ref Attr="IndeterminatesOfFunctionField"/>.
 ##  (Indeterminates created independently with
-##  <Ref Func="Indeterminate" Label="for a ring (and a number)"/>
+##  <Ref Oper="Indeterminate" Label="for a ring (and a number)"/>
 ##  will usually differ, though they might be given the same name and display
 ##  identically, see Section&nbsp;<Ref Sect="Indeterminates"/>.)
 ##  </Description>
@@ -500,9 +501,3 @@ DeclareOperation( "MinimalPolynomial",
 ##  <#/GAPDoc>
 ##
 DeclareOperation("FunctionField",[IsRing,IsObject]);
-
-
-#############################################################################
-##
-#E
-

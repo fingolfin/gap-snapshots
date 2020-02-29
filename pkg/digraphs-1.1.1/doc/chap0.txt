@@ -1,0 +1,386 @@
+  
+  
+                                    [1X[5XDigraphs[105X[101X
+  
+  
+                                 Version 1.1.1
+  
+  
+                                  Jan De Beule
+  
+                                 Julius Jonušas
+  
+                               James D. Mitchell
+  
+                                 Michael Torpey
+  
+                                 Wilf A. Wilson
+  
+                                 Stuart Burrell
+  
+                                 Reinis Cirpons
+  
+                                  Luke Elliott
+  
+                                    Max Horn
+  
+                             Christopher Jefferson
+  
+                                Markus Pfeiffer
+  
+                                 Chris Russell
+  
+                                   Finn Smith
+  
+                                  Murray White
+  
+  
+  
+  Jan De Beule
+      Email:    [7Xmailto:jdebeule@cage.ugent.be[107X
+      Homepage: [7Xhttp://homepages.vub.ac.be/~jdbeule[107X
+  Julius Jonušas
+      Email:    [7Xmailto:julius.jonusas@tuwien.ac.at[107X
+      Homepage: [7Xhttp://julius.jonusas.work[107X
+  James D. Mitchell
+      Email:    [7Xmailto:jdm3@st-and.ac.uk[107X
+      Homepage: [7Xhttp://www-groups.mcs.st-andrews.ac.uk/~jamesm[107X
+  Michael Torpey
+      Email:    [7Xmailto:mct25@st-andrews.ac.uk[107X
+      Homepage: [7Xhttps://mtorpey.github.io[107X
+  Wilf A. Wilson
+      Email:    [7Xmailto:gap@wilf-wilson.net[107X
+      Homepage: [7Xhttp://wilf.me[107X
+  
+  -------------------------------------------------------
+  [1XAbstract[101X
+  [33X[0;0YThe  [5XDigraphs[105X  package  is  a  [5XGAP[105X  package  containing  methods for graphs,
+  digraphs, and multidigraphs.[133X
+  
+  
+  -------------------------------------------------------
+  [1XCopyright[101X
+  [33X[0;0Y©  2014-20  by  Jan  De  Beule,  Julius  Jonušas, James D. Mitchell, Michael
+  Torpey, Wilf A. Wilson et al.[133X
+  
+  [33X[0;0Y[5XDigraphs[105X  is  free  software; you can redistribute it and/or modify it under
+  the      terms      of      the      GNU      General     Public     License
+  ([7Xhttp://www.fsf.org/licenses/gpl.html[107X)  as  published  by  the Free Software
+  Foundation;  either  version 3 of the License, or (at your option) any later
+  version.[133X
+  
+  
+  -------------------------------------------------------
+  [1XAcknowledgements[101X
+  [33X[0;0YWe would like to thank Christopher Jefferson for his help in including [5Xbliss[105X
+  in  [5XDigraphs[105X. This package's methods for computing digraph homomorphisms are
+  based on work by Max Neunhöffer, and independently Artur Schäfer.[133X
+  
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (digraphs)[101X
+  
+  1 [33X[0;0YThe [5XDigraphs[105X package[133X
+    1.1 [33X[0;0YIntroduction[133X
+      1.1-1 [33X[0;0YDefinitions[133X
+  2 [33X[0;0YInstalling [5XDigraphs[105X[133X
+    2.1 [33X[0;0YFor those in a hurry[133X
+    2.2 [33X[0;0YOptional package dependencies[133X
+      2.2-1 [33X[0;0YThe Grape package[133X
+    2.3 [33X[0;0YCompiling the kernel module[133X
+    2.4 [33X[0;0YRebuilding the documentation[133X
+      2.4-1 DigraphsMakeDoc
+    2.5 [33X[0;0YTesting your installation[133X
+      2.5-1 DigraphsTestInstall
+      2.5-2 DigraphsTestStandard
+      2.5-3 DigraphsTestExtreme
+  3 [33X[0;0YCreating digraphs[133X
+    3.1 [33X[0;0YCreating digraphs[133X
+      3.1-1 IsDigraph
+      3.1-2 IsMutableDigraph
+      3.1-3 IsImmutableDigraph
+      3.1-4 IsCayleyDigraph
+      3.1-5 IsDigraphWithAdjacencyFunction
+      3.1-6 DigraphByOutNeighboursType
+      3.1-7 Digraph
+      3.1-8 DigraphByAdjacencyMatrix
+      3.1-9 DigraphByEdges
+      3.1-10 EdgeOrbitsDigraph
+      3.1-11 DigraphByInNeighbours
+      3.1-12 CayleyDigraph
+    3.2 [33X[0;0YChanging representations[133X
+      3.2-1 AsBinaryRelation
+      3.2-2 AsDigraph
+      3.2-3 Graph
+      3.2-4 AsGraph
+      3.2-5 AsTransformation
+    3.3 [33X[0;0YNew digraphs from old[133X
+      3.3-1 DigraphImmutableCopy
+      3.3-2 DigraphImmutableCopyIfImmutable
+      3.3-3 InducedSubdigraph
+      3.3-4 ReducedDigraph
+      3.3-5 MaximalSymmetricSubdigraph
+      3.3-6 MaximalAntiSymmetricSubdigraph
+      3.3-7 UndirectedSpanningForest
+      3.3-8 QuotientDigraph
+      3.3-9 DigraphReverse
+      3.3-10 DigraphDual
+      3.3-11 DigraphSymmetricClosure
+      3.3-12 DigraphTransitiveClosure
+      3.3-13 DigraphTransitiveReduction
+      3.3-14 DigraphAddVertex
+      3.3-15 DigraphAddVertices
+      3.3-16 DigraphAddEdge
+      3.3-17 DigraphAddEdgeOrbit
+      3.3-18 DigraphAddEdges
+      3.3-19 DigraphRemoveVertex
+      3.3-20 DigraphRemoveVertices
+      3.3-21 DigraphRemoveEdge
+      3.3-22 DigraphRemoveEdgeOrbit
+      3.3-23 DigraphRemoveEdges
+      3.3-24 DigraphRemoveLoops
+      3.3-25 DigraphRemoveAllMultipleEdges
+      3.3-26 DigraphReverseEdges
+      3.3-27 DigraphDisjointUnion
+      3.3-28 DigraphEdgeUnion
+      3.3-29 DigraphJoin
+      3.3-30 DigraphCartesianProduct
+      3.3-31 DigraphDirectProduct
+      3.3-32 DigraphCartesianProductProjections
+      3.3-33 DigraphDirectProductProjections
+      3.3-34 LineDigraph
+      3.3-35 LineUndirectedDigraph
+      3.3-36 DoubleDigraph
+      3.3-37 BipartiteDoubleDigraph
+      3.3-38 DigraphAddAllLoops
+      3.3-39 DistanceDigraph
+      3.3-40 DigraphClosure
+      3.3-41 DigraphMycielskian
+    3.4 [33X[0;0YRandom digraphs[133X
+      3.4-1 RandomDigraph
+      3.4-2 RandomMultiDigraph
+      3.4-3 RandomTournament
+      3.4-4 RandomLattice
+    3.5 [33X[0;0YStandard examples[133X
+      3.5-1 ChainDigraph
+      3.5-2 CompleteDigraph
+      3.5-3 CompleteBipartiteDigraph
+      3.5-4 CompleteMultipartiteDigraph
+      3.5-5 CycleDigraph
+      3.5-6 EmptyDigraph
+      3.5-7 JohnsonDigraph
+      3.5-8 PetersenGraph
+      3.5-9 GeneralisedPetersenGraph
+  4 [33X[0;0YOperators[133X
+    4.1 [33X[0;0YOperators for digraphs[133X
+      4.1-1 IsSubdigraph
+      4.1-2 IsUndirectedSpanningTree
+  5 [33X[0;0YAttributes and operations[133X
+    5.1 [33X[0;0YVertices and edges[133X
+      5.1-1 DigraphVertices
+      5.1-2 DigraphNrVertices
+      5.1-3 DigraphEdges
+      5.1-4 DigraphNrEdges
+      5.1-5 DigraphSinks
+      5.1-6 DigraphSources
+      5.1-7 DigraphTopologicalSort
+      5.1-8 DigraphVertexLabel
+      5.1-9 DigraphVertexLabels
+      5.1-10 DigraphEdgeLabel
+      5.1-11 DigraphEdgeLabels
+      5.1-12 DigraphInEdges
+      5.1-13 DigraphOutEdges
+      5.1-14 IsDigraphEdge
+      5.1-15 IsMatching
+    5.2 [33X[0;0YNeighbours and degree[133X
+      5.2-1 AdjacencyMatrix
+      5.2-2 CharacteristicPolynomial
+      5.2-3 BooleanAdjacencyMatrix
+      5.2-4 DigraphAdjacencyFunction
+      5.2-5 DigraphRange
+      5.2-6 OutNeighbours
+      5.2-7 InNeighbours
+      5.2-8 OutDegrees
+      5.2-9 InDegrees
+      5.2-10 OutDegreeOfVertex
+      5.2-11 OutNeighboursOfVertex
+      5.2-12 InDegreeOfVertex
+      5.2-13 InNeighboursOfVertex
+      5.2-14 DigraphLoops
+      5.2-15 PartialOrderDigraphMeetOfVertices
+      5.2-16 DegreeMatrix
+      5.2-17 LaplacianMatrix
+    5.3 [33X[0;0YReachability and connectivity[133X
+      5.3-1 DigraphDiameter
+      5.3-2 DigraphShortestDistance
+      5.3-3 DigraphShortestDistances
+      5.3-4 DigraphLongestDistanceFromVertex
+      5.3-5 DigraphDistanceSet
+      5.3-6 DigraphGirth
+      5.3-7 DigraphOddGirth
+      5.3-8 DigraphUndirectedGirth
+      5.3-9 DigraphConnectedComponents
+      5.3-10 DigraphConnectedComponent
+      5.3-11 DigraphStronglyConnectedComponents
+      5.3-12 DigraphStronglyConnectedComponent
+      5.3-13 DigraphBicomponents
+      5.3-14 ArticulationPoints
+      5.3-15 DigraphPeriod
+      5.3-16 DigraphFloydWarshall
+      5.3-17 IsReachable
+      5.3-18 DigraphPath
+      5.3-19 DigraphShortestPath
+      5.3-20 IteratorOfPaths
+      5.3-21 DigraphAllSimpleCircuits
+      5.3-22 DigraphLongestSimpleCircuit
+      5.3-23 DigraphLayers
+      5.3-24 DigraphDegeneracy
+      5.3-25 DigraphDegeneracyOrdering
+      5.3-26 HamiltonianPath
+      5.3-27 NrSpanningTrees
+    5.4 [33X[0;0YCayley graphs of groups[133X
+      5.4-1 GroupOfCayleyDigraph
+      5.4-2 GeneratorsOfCayleyDigraph
+    5.5 [33X[0;0YAssociated semigroups[133X
+      5.5-1 AsSemigroup
+      5.5-2 AsSemigroup
+    5.6 [33X[0;0YPlanarity[133X
+      5.6-1 KuratowskiPlanarSubdigraph
+      5.6-2 KuratowskiOuterPlanarSubdigraph
+      5.6-3 PlanarEmbedding
+      5.6-4 OuterPlanarEmbedding
+      5.6-5 SubdigraphHomeomorphicToK23
+  6 [33X[0;0YProperties of digraphs[133X
+    6.1 [33X[0;0YEdge properties[133X
+      6.1-1 DigraphHasLoops
+      6.1-2 IsAntiSymmetricDigraph
+      6.1-3 IsBipartiteDigraph
+      6.1-4 IsCompleteBipartiteDigraph
+      6.1-5 IsCompleteDigraph
+      6.1-6 IsCompleteMultipartiteDigraph
+      6.1-7 IsEmptyDigraph
+      6.1-8 IsEquivalenceDigraph
+      6.1-9 IsFunctionalDigraph
+      6.1-10 IsMultiDigraph
+      6.1-11 IsReflexiveDigraph
+      6.1-12 IsSymmetricDigraph
+      6.1-13 IsTournament
+      6.1-14 IsTransitiveDigraph
+      6.1-15 IsPreorderDigraph
+      6.1-16 IsPartialOrderDigraph
+      6.1-17 IsMeetSemilatticeDigraph
+    6.2 [33X[0;0YRegularity[133X
+      6.2-1 IsInRegularDigraph
+      6.2-2 IsOutRegularDigraph
+      6.2-3 IsRegularDigraph
+      6.2-4 IsDistanceRegularDigraph
+    6.3 [33X[0;0YConnectivity and cycles[133X
+      6.3-1 IsAcyclicDigraph
+      6.3-2 IsChainDigraph
+      6.3-3 IsConnectedDigraph
+      6.3-4 IsBiconnectedDigraph
+      6.3-5 IsStronglyConnectedDigraph
+      6.3-6 IsAperiodicDigraph
+      6.3-7 IsDirectedTree
+      6.3-8 IsUndirectedTree
+      6.3-9 IsEulerianDigraph
+      6.3-10 IsHamiltonianDigraph
+      6.3-11 IsCycleDigraph
+    6.4 [33X[0;0YPlanarity[133X
+      6.4-1 IsPlanarDigraph
+      6.4-2 IsOuterPlanarDigraph
+    6.5 [33X[0;0YHomomorphisms and transformations[133X
+      6.5-1 IsDigraphCore
+      6.5-2 IsEdgeTransitive
+      6.5-3 IsVertexTransitive
+  7 [33X[0;0YHomomorphisms[133X
+    7.1 [33X[0;0YActing on digraphs[133X
+      7.1-1 OnDigraphs
+      7.1-2 OnMultiDigraphs
+    7.2 [33X[0;0YIsomorphisms and canonical labellings[133X
+      7.2-1 DigraphsUseNauty
+      7.2-2 AutomorphismGroup
+      7.2-3 BlissAutomorphismGroup
+      7.2-4 NautyAutomorphismGroup
+      7.2-5 AutomorphismGroup
+      7.2-6 AutomorphismGroup
+      7.2-7 BlissCanonicalLabelling
+      7.2-8 BlissCanonicalLabelling
+      7.2-9 BlissCanonicalDigraph
+      7.2-10 DigraphGroup
+      7.2-11 DigraphOrbits
+      7.2-12 DigraphOrbitReps
+      7.2-13 DigraphSchreierVector
+      7.2-14 DigraphStabilizer
+      7.2-15 IsIsomorphicDigraph
+      7.2-16 IsIsomorphicDigraph
+      7.2-17 IsomorphismDigraphs
+      7.2-18 IsomorphismDigraphs
+      7.2-19 RepresentativeOutNeighbours
+      7.2-20 IsDigraphIsomorphism
+      7.2-21 IsDigraphColouring
+    7.3 [33X[0;0YHomomorphisms of digraphs[133X
+      7.3-1 HomomorphismDigraphsFinder
+      7.3-2 DigraphHomomorphism
+      7.3-3 HomomorphismsDigraphs
+      7.3-4 DigraphMonomorphism
+      7.3-5 MonomorphismsDigraphs
+      7.3-6 DigraphEpimorphism
+      7.3-7 EpimorphismsDigraphs
+      7.3-8 DigraphEmbedding
+      7.3-9 EmbeddingsDigraphs
+      7.3-10 IsDigraphHomomorphism
+      7.3-11 IsDigraphEmbedding
+      7.3-12 DigraphsRespectsColouring
+      7.3-13 GeneratorsOfEndomorphismMonoid
+      7.3-14 DigraphColouring
+      7.3-15 DigraphGreedyColouring
+      7.3-16 DigraphWelshPowellOrder
+      7.3-17 ChromaticNumber
+      7.3-18 DigraphCore
+  8 [33X[0;0YFinding cliques and independent sets[133X
+    8.1 [33X[0;0YFinding cliques[133X
+      8.1-1 IsClique
+      8.1-2 CliquesFinder
+      8.1-3 DigraphClique
+      8.1-4 DigraphMaximalCliques
+      8.1-5 CliqueNumber
+    8.2 [33X[0;0YFinding independent sets[133X
+      8.2-1 IsIndependentSet
+      8.2-2 DigraphIndependentSet
+      8.2-3 DigraphMaximalIndependentSets
+  9 [33X[0;0YVisualising and IO[133X
+    9.1 [33X[0;0YVisualising a digraph[133X
+      9.1-1 Splash
+      9.1-2 DotDigraph
+      9.1-3 DotSymmetricDigraph
+      9.1-4 DotPartialOrderDigraph
+      9.1-5 DotPreorderDigraph
+      9.1-6 DotHighlightedDigraph
+    9.2 [33X[0;0YReading and writing digraphs to a file[133X
+      9.2-1 DigraphFromGraph6String
+      9.2-2 Graph6String
+      9.2-3 DigraphFile
+      9.2-4 ReadDigraphs
+      9.2-5 WriteDigraphs
+      9.2-6 IteratorFromDigraphFile
+      9.2-7 DigraphPlainTextLineEncoder
+      9.2-8 TournamentLineDecoder
+      9.2-9 AdjacencyMatrixUpperTriangleLineDecoder
+      9.2-10 TCodeDecoder
+      9.2-11 PlainTextString
+      9.2-12 WritePlainTextDigraph
+      9.2-13 WriteDIMACSDigraph
+  A [33X[0;0YGrape to Digraphs Command Map[133X
+    A.1 [33X[0;0YFunctions to construct and modify graphs[133X
+    A.2 [33X[0;0YFunctions to inspect graphs, vertices and edges[133X
+    A.3 [33X[0;0YFunctions to determine regularity properties of graphs[133X
+    A.4 [33X[0;0YSome special vertex subsets of a graph[133X
+    A.5 [33X[0;0YFunctions to construct new graphs from old[133X
+    A.6 [33X[0;0YVertex-Colouring and Complete Subgraphs[133X
+    A.7 [33X[0;0YAutomorphism groups and isomorphism testing for graphs[133X
+  
+  
+  [32X

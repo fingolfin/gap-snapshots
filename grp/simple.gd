@@ -1,11 +1,14 @@
 #############################################################################
 ##
-#W  simple.gd                 GAP Library                    Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2011 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
-##  This file contains basic constructions for simple groups of bounded size,
+##  This file contains basic constructions for nonabelian simple groups of bounded size,
 ##  if necessary by calling the `atlasrep' package.
 ##
 
@@ -19,7 +22,7 @@
 ##  <Func Name="SimpleGroup" Arg='id [,param]'/>
 ##
 ##  <Description>
-##  This function will construct <B>an</B> instance of the specified simple group.
+##  This function will construct <B>an</B> instance of the specified nonabelian simple group.
 ##  Groups are specified via their name in ATLAS style notation, with parameters added
 ##  if necessary. The intelligence applied to parsing the name is limited, and at the
 ##  moment no proper extensions can be constructed.
@@ -52,7 +55,7 @@ DeclareGlobalFunction("SimpleGroup");
 ##  <Func Name="EpimorphismFromClassical" Arg='G'/>
 ##
 ##  <Description>
-##  For an (almost) simple group this homomorphsim will try to construct an
+##  For a nonabelian (almost) simple group this homomorphsim will try to construct an
 ##  epimorphism from a classical group onto it (or return fail if it does
 ##  not work or is not yet implemented).
 ##  </Description>
@@ -71,7 +74,7 @@ DeclareGlobalFunction("EpimorphismFromClassical");
 ##  <Func Name="SimpleGroupsIterator" Arg='[start[,end]]'/>
 ##
 ##  <Description>
-##  This function returns an iterator that will run over all simple groups, starting
+##  This function returns an iterator that will run over all nonabelian simple groups, starting
 ##  at order <A>start</A> if specified, up to order <M>10^{18}</M> (or -- if specified
 ##  -- order <A>end</A>). If the option <A>NOPSL2</A> is given, groups of type
 ##  <M>PSL_2(q)</M> are omitted.

@@ -1,10 +1,12 @@
 #############################################################################
 ##
-#W  imf.gi                      GAP group library              Volkmar Felsch
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Volkmar Felsch.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1995,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This  file  contains  the  library  functions  for  the  GAP  library  of
 ##  irreducible maximal finite integral matrix groups.
@@ -300,9 +302,7 @@ InstallGlobalFunction( "IMFLoad", function ( dim )
     if not IsBound( IMFList ) then
         name := "imf.grp";
         Info( InfoImf, 2, "loading secondary file ", name );
-        if not ReadGrp( name, "imf" )  then
-            Error( "cannot load secondary file ", name );
-        fi;
+        ReadGrp( name );
     fi;
 
     # check whether we actually need to load a matrix file
@@ -315,9 +315,7 @@ InstallGlobalFunction( "IMFLoad", function ( dim )
             name := Concatenation( "imf", String( dim ), ".grp" );
         fi;
         Info( InfoImf, 2, "loading secondary file ", name );
-        if not ReadGrp( name, "imf" )  then
-            Error( "cannot load secondary file ", name );
-        fi;
+        ReadGrp( name );
     fi;
 
     return;
@@ -655,9 +653,3 @@ InstallGlobalFunction( "OrbitShortVectors", function ( gens, rep )
     # up the function PositionSorted in IsomorphismPermGroupImfGroup.  
     return Immutable( Set( orbit ) );
 end );
-
-
-#############################################################################
-##
-#E
-

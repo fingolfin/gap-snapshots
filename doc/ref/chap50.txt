@@ -176,26 +176,51 @@
     [4X[28X<fp group of size infinity on the generators [ r, s ]>[128X[104X
   [4X[32X[104X
   
-  [1X50.1-7 QuaternionGroup[101X
+  [1X50.1-7 IsDihedralGroup[101X
   
-  [33X[1;0Y[29X[2XQuaternionGroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XDicyclicGroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XIsDihedralGroup[102X( [3XG[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XDihedralGenerators[102X( [3XG[103X ) [32X attribute[133X
   
-  [33X[0;0Yconstructs the generalized quaternion group (or dicyclic group) of size [3Xn[103X in
-  the  category  given by the filter [3Xfilt[103X. Here, [3Xn[103X is a multiple of 4. If [3Xfilt[103X
-  is  not  given  it  defaults  to [2XIsPcGroup[102X ([14X46.3-1[114X). For more information on
-  possible  values  of [3Xfilt[103X see section ([14X50.1[114X). Methods are also available for
-  permutation  and  matrix  groups (of minimal degree and minimal dimension in
-  coprime characteristic).[133X
+  [33X[0;0Y[2XIsDihedralGroup[102X indicates whether the group [3XG[103X is a dihedral group. If it is,
+  methods may set the attribute [2XDihedralGenerators[102X to [[3Xt[103X,[3Xs[103X], where [3Xt[103X and [3Xs[103X are
+  two elements such that [3XG[103X = [22X⟨ t, s | t^2 = s^n = 1, s^t = s^-1 ⟩[122X.[133X
+  
+  [1X50.1-8 DicyclicGroup[101X
+  
+  [33X[1;0Y[29X[2XDicyclicGroup[102X( [[3Xfilt[103X[, [3Xfield[103X, ]][3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XQuaternionGroup[102X( [[3Xfilt[103X[, [3Xfield[103X, ]][3Xn[103X ) [32X function[133X
+  
+  [33X[0;0Y[2XDicyclicGroup[102X  constructs the dicyclic group of size [3Xn[103X in the category given
+  by  the  filter  [3Xfilt[103X.  Here,  [3Xn[103X  must  be  a  multiple  of  4.  The synonym
+  [2XQuaternionGroup[102X  for  [2XDicyclicGroup[102X  is provided for backward compatibility,
+  but  will  print a warning if [3Xn[103X is not a power of [22X2[122X. If [3Xfilt[103X is not given it
+  defaults  to  [2XIsPcGroup[102X ([14X46.3-1[114X). For more information on possible values of
+  [3Xfilt[103X  see  section  ([14X50.1[114X).  Methods  are also available for permutation and
+  matrix   groups   (of  minimal  degree  and  minimal  dimension  in  coprime
+  characteristic).[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XQuaternionGroup(32);[127X[104X
-    [4X[28X<pc group of size 32 with 5 generators>[128X[104X
+    [4X[25Xgap>[125X [27XDicyclicGroup(24);[127X[104X
+    [4X[28X<pc group of size 24 with 4 generators>[128X[104X
     [4X[25Xgap>[125X [27Xg:=QuaternionGroup(IsMatrixGroup,CF(16),32);[127X[104X
     [4X[28XGroup([ [ [ 0, 1 ], [ -1, 0 ] ], [ [ E(16), 0 ], [ 0, -E(16)^7 ] ] ])[128X[104X
   [4X[32X[104X
   
-  [1X50.1-8 ExtraspecialGroup[101X
+  [1X50.1-9 IsGeneralisedQuaternionGroup[101X
+  
+  [33X[1;0Y[29X[2XIsGeneralisedQuaternionGroup[102X( [3XG[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsQuaternionGroup[102X( [3XG[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XGeneralisedQuaternionGenerators[102X( [3XG[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XQuaternionGenerators[102X( [3XG[103X ) [32X attribute[133X
+  
+  [33X[0;0Y[2XIsGeneralisedQuaternionGroup[102X  indicates whether the group [3XG[103X is a generalized
+  quaternion  group of size [22XN = 2^(k+1)[122X, [22Xk >= 2[122X. If it is, methods may set the
+  attribute  [2XGeneralisedQuaternionGenerators[102X  to  [[3Xt[103X,[3Xs[103X], where [3Xt[103X and [3Xs[103X are two
+  elements  such that [3XG[103X = [22X⟨ t, s | s^(2^k) = 1, t^2 = s^(2^k-1), s^t = s^-1 ⟩[122X.
+  [2XIsQuaternionGroup[102X   and  [2XQuaternionGenerators[102X  are  provided  for  backwards
+  compatibility with existing code.[133X
+  
+  [1X50.1-10 ExtraspecialGroup[101X
   
   [33X[1;0Y[29X[2XExtraspecialGroup[102X( [[3Xfilt[103X, ][3Xorder[103X, [3Xexp[103X ) [32X function[133X
   
@@ -220,7 +245,7 @@
   [4X[32X[104X
   
   
-  [1X50.1-9 [33X[0;0YAlternatingGroup[133X[101X
+  [1X50.1-11 [33X[0;0YAlternatingGroup[133X[101X
   
   [33X[1;0Y[29X[2XAlternatingGroup[102X( [[3Xfilt[103X, ][3Xdeg[103X ) [32X function[133X
   [33X[1;0Y[29X[2XAlternatingGroup[102X( [[3Xfilt[103X, ][3Xdom[103X ) [32X function[133X
@@ -237,7 +262,7 @@
   [4X[32X[104X
   
   
-  [1X50.1-10 [33X[0;0YSymmetricGroup[133X[101X
+  [1X50.1-12 [33X[0;0YSymmetricGroup[133X[101X
   
   [33X[1;0Y[29X[2XSymmetricGroup[102X( [[3Xfilt[103X, ][3Xdeg[103X ) [32X function[133X
   [33X[1;0Y[29X[2XSymmetricGroup[102X( [[3Xfilt[103X, ][3Xdom[103X ) [32X function[133X
@@ -256,7 +281,7 @@
   [33X[0;0YNote  that  permutation  groups  provide  special treatment of symmetric and
   alternating groups, see [14X43.4[114X.[133X
   
-  [1X50.1-11 MathieuGroup[101X
+  [1X50.1-13 MathieuGroup[101X
   
   [33X[1;0Y[29X[2XMathieuGroup[102X( [[3Xfilt[103X, ][3Xdegree[103X ) [32X function[133X
   
@@ -270,7 +295,7 @@
     [4X[28XGroup([ (1,2,3,4,5,6,7,8,9,10,11), (3,7,11,8)(4,10,5,6) ])[128X[104X
   [4X[32X[104X
   
-  [1X50.1-12 SuzukiGroup[101X
+  [1X50.1-14 SuzukiGroup[101X
   
   [33X[1;0Y[29X[2XSuzukiGroup[102X( [[3Xfilt[103X, ][3Xq[103X ) [32X function[133X
   [33X[1;0Y[29X[2XSz[102X( [[3Xfilt[103X, ][3Xq[103X ) [32X function[133X
@@ -287,7 +312,7 @@
     [4X[28XSz(32)[128X[104X
   [4X[32X[104X
   
-  [1X50.1-13 ReeGroup[101X
+  [1X50.1-15 ReeGroup[101X
   
   [33X[1;0Y[29X[2XReeGroup[102X( [[3Xfilt[103X, ][3Xq[103X ) [32X function[133X
   [33X[1;0Y[29X[2XRee[102X( [[3Xfilt[103X, ][3Xq[103X ) [32X function[133X
@@ -740,7 +765,7 @@
   [33X[0;0YThe  first  argument  [3Xcat[103X  for  each  method of this constructor must be the
   category  for  which  the  method  is  installed. For example the method for
   constructing   a   cyclic   permutation   group   is  installed  as  follows
-  (see [2XInstallMethod[102X ([14X78.2-1[114X) for the meaning of the arguments.[133X
+  (see [2XInstallMethod[102X ([14X78.3-1[114X) for the meaning of the arguments.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28XInstallMethod( CyclicGroupCons,[128X[104X
@@ -946,9 +971,10 @@
   that  contain  the  specified  factors  [3Xfactor1[103X,  [3Xfactor2[103X,  ...  among their
   composition factors.[133X
   
-  [33X[0;0YEach  argument must either be the name of a simple group or an integer which
-  stands for the product of the sizes of one or more cyclic factors. (In fact,
-  the function replaces all integers among the arguments by their product.)[133X
+  [33X[0;0YEach  argument  must  either  be the name of a nonabelian simple group or an
+  integer  which  stands  for  the  product of the sizes of one or more cyclic
+  factors. (In fact, the function replaces all integers among the arguments by
+  their product.)[133X
   
   [33X[0;0YThe following text strings are accepted as simple group names.[133X
   

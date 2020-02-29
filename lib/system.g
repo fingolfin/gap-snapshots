@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  system.g                   GAP Library                   Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains functions that are architecture dependent,
 ##  and the record `GAPInfo', which collects global variables that are needed
@@ -20,11 +21,11 @@
 
 BIND_GLOBAL( "GAPInfo", rec(
 
-# do not edit the following three lines. Occurences of `4.10.2' and `19-Jun-2019'
+# do not edit the following three lines. Occurences of `4.11.0' and `29-Feb-2020'
 # will be replaced by string matching by distribution wrapping scripts.
-    Version := MakeImmutable("4.10.2"),
-    Date := MakeImmutable("19-Jun-2019"),
-    NeedKernelVersion := MakeImmutable("4.10.2"),
+    Version := MakeImmutable("4.11.0"),
+    Date := MakeImmutable("29-Feb-2020"),
+    NeedKernelVersion := MakeImmutable("4.11.0"),
 
 # Without the needed packages, GAP does not start.
     Dependencies := MakeImmutable(rec(
@@ -74,7 +75,7 @@ BIND_GLOBAL( "GAPInfo", rec(
       rec( short:= "m", long := "minworkspace", default := "128m", arg := "<mem>",
            help := ["set the initial workspace size"] ),
       rec( short:= "o", long := "maxworkspace", default := "2g", arg := "<mem>",
-           help := [ "set hint for maximal workspace size (GAP may", "allocate more)"] ),
+           help := [ "set workspace size where GAP will warn about", "excessive memory usage (GAP may allocate more)"] ),
       rec( short:= "K", long := "limitworkspace", default := "0", arg := "<mem>",
            help := [ "set maximal workspace size (GAP never", "allocates more)"] ),
       rec( short:= "s", default := "4g", arg := "<mem>", help := [ "set the initially mapped virtual memory" ] ),
@@ -115,7 +116,11 @@ BIND_GLOBAL( "GAPInfo", rec(
       rec( long := "norepl", default := false,
            help := [ "Disable the GAP read-evaluate-print loop (REPL)" ] ),
       rec( long := "nointeract", default := false,
-           help := [ "Start GAP in non-interactive mode (disable read-evaluate-print loop (REPL) and break loop)" ] )
+           help := [ "Start GAP in non-interactive mode (disable read-evaluate-print loop (REPL) and break loop)" ] ),
+      rec( long := "bare", default := false,
+           help := [ "Attempt to start GAP without even needed packages (developer tool)" ] ),
+      ,
+      rec( short:= "c", default := "", arg := "<expr>", help := [ "execute the given expression"] ),
     ],
     ) );
 
@@ -187,6 +192,8 @@ if IsHPCGAP then
         rec( short:= "P", default := "0", arg := "<num>", help := ["set number of logical processors"] ),
         rec( short:= "G", default := "0", arg := "<num>", help := ["set number of GC threads"] ),
         rec( short:= "Z", default := false, help := ["enforce ordering of region locks"] ),
+        rec( long := "single-thread", default := false,
+             help := [ "enable/disable single-threaded startup" ]),
       ]);
 
     MakeImmutable(GAPInfo.CommandLineOptionData);
@@ -361,7 +368,10 @@ CallAndInstallPostRestore( function()
           elif IS_INT( value ) then
             CommandLineOptions.( opt ):= CommandLineOptions.( opt ) + 1;
           elif i <= LENGTH( line ) then
-            if IS_STRING_REP( value ) then
+            if opt = "c" then
+              ADD_LIST_DEFAULT( InitFiles, rec( command := line[i] ) );
+              i := i+1;
+            elif IS_STRING_REP( value ) then
               # string
               CommandLineOptions.( opt ):= line[i];
               i := i+1;
@@ -388,26 +398,16 @@ CallAndInstallPostRestore( function()
       CommandLineOptions.norepl := true;
     fi;
 
+    if CommandLineOptions.bare then
+      CommandLineOptions.A := true;
+      GAPInfo.Dependencies := MakeImmutable(rec( NeededOtherPackages := [] ));
+    fi;
+
     MakeImmutable( CommandLineOptions );
     MakeImmutable( InitFiles );
 
-    if CommandLineOptions.L = "" or CommandLineOptions.R then
-      # start without a workspace
-      GAPInfo.CommandLineOptionsPrev:= [];
-      GAPInfo.InitFilesPrev:= [];
-    else
-      # start with a workspace
-      ADD_LIST_DEFAULT( GAPInfo.CommandLineOptionsPrev,
-                        GAPInfo.CommandLineOptions );
-      ADD_LIST_DEFAULT( GAPInfo.InitFilesPrev, GAPInfo.InitFiles );
-    fi;
     GAPInfo.CommandLineOptions:= CommandLineOptions;
     GAPInfo.InitFiles:= InitFiles;
-
-    # Switch on debugging (`-D' option) when GAP is started with a workspace.
-    if GAPInfo.CommandLineOptions.D then
-      InfoRead1:= Print;
-    fi;
 
     padspace := function(strlen, len)
       local i;
@@ -433,9 +433,9 @@ CallAndInstallPostRestore( function()
             PRINT_TO("*errout*", " -", opt.short);
             if(IsBound(opt.long)) then
               PRINT_TO("*errout*", ", --", opt.long);
-              padspace(4+LENGTH(opt.long), 16);
+              padspace(4+LENGTH(opt.long), 18);
             else
-              padspace(0, 16);
+              padspace(0, 18);
             fi;
             if(IsBound(opt.arg)) then
               PRINT_TO("*errout*", " ", opt.arg);
@@ -448,7 +448,7 @@ CallAndInstallPostRestore( function()
             # opt.short unbound, opt.long bound
 
             PRINT_TO("*errout*", "  --", opt.long);
-            padspace(4+LENGTH(opt.long), 16);
+            padspace(4+LENGTH(opt.long), 18);
             if(IsBound(opt.arg)) then
               PRINT_TO("*errout*", " ", opt.arg);
               padspace(LENGTH(opt.arg)+1, 8);
@@ -456,16 +456,16 @@ CallAndInstallPostRestore( function()
               padspace(0, 8);
             fi;
           fi;
-          if IsBound(opt.long) and LENGTH(opt.long) > 12 then
+          if IsBound(opt.long) and LENGTH(opt.long) > 14 then
             PRINT_TO("*errout*", "\n");
-            padspace(0, 3+16+8+3);
+            padspace(0, 3+18+8+3);
           else
             PRINT_TO("*errout*", "   ");
           fi;
 
           PRINT_TO("*errout*", opt.help[1], "\n");
           for j in [2..LENGTH(opt.help)] do
-            padspace(0, 3+16+8+3);
+            padspace(0, 3+18+8+3);
             PRINT_TO("*errout*", opt.help[j],"\n");
           od;
         else
@@ -477,8 +477,8 @@ CallAndInstallPostRestore( function()
 
       PRINT_TO("*errout*",
        "\n",
-       "  Boolean options (b,q,e,r,A,D,E,M,N,T,X,Y) toggle the current value\n",
-       "  each time they are called. Default actions are indicated first.\n",
+       "  Boolean options toggle the current value each time they are called.\n",
+       "  Default actions are indicated first.\n",
        "\n" );
       QUIT_GAP();
     fi;
@@ -575,8 +575,3 @@ end);
 ##  </ManSection>
 ##
 #T really ???
-
-
-#############################################################################
-##
-#E

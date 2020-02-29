@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  relation.gd                  GAP library                   Andrew Solomon
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Andrew Solomon.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the declarations for binary relations on sets.
 ##
@@ -31,13 +32,13 @@
 ##  <P/>
 ##  In &GAP;, a relation is conceptually represented as a general mapping
 ##  from <M>X</M> to itself.
-##  The category <Ref Func="IsBinaryRelation"/> is a synonym for
-##  <Ref Func="IsEndoGeneralMapping"/>.
+##  The category <Ref Prop="IsBinaryRelation"/> is a synonym for
+##  <Ref Prop="IsEndoGeneralMapping"/>.
 ##  Attributes and properties of relations in &GAP; are supported for
 ##  relations, via considering relations as a subset of <M>X \times X</M>,
 ##  or as a directed graph;
 ##  examples include finding the strongly connected components of a relation,
-##  via <Ref Func="StronglyConnectedComponents"/>,
+##  via <Ref Oper="StronglyConnectedComponents"/>,
 ##  or enumerating the tuples of the relation.
 ##  <#/GAPDoc>
 ##
@@ -70,7 +71,7 @@
 ##
 ##  <Description>
 ##  is   exactly   the   same   category   as   (i.e.    a    synonym    for)
-##  <Ref Func="IsEndoGeneralMapping"/>.
+##  <Ref Prop="IsEndoGeneralMapping"/>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -143,7 +144,7 @@ DeclareGlobalFunction("RandomBinaryRelationOnPoints");
 ##  <A>domain</A>.
 ##  <Example><![CDATA[
 ##  gap> IdentityBinaryRelation(5);
-##  <equivalence relation on <object> >
+##  <equivalence relation on Domain([ 1 .. 5 ]) >
 ##  gap> s4:=SymmetricGroup(4);
 ##  Sym( [ 1 .. 4 ] )
 ##  gap> IdentityBinaryRelation(s4);
@@ -170,7 +171,7 @@ DeclareGlobalFunction("IdentityBinaryRelation");
 ##  where the source and range are the same set.
 ##  <Example><![CDATA[
 ##  gap> r:=BinaryRelationByElements(Domain([1..3]),[Tuple([1,2]),Tuple([1,3])]);
-##  <general mapping: <object> -> <object> >
+##  <general mapping: Domain([ 1 .. 3 ]) -> Domain([ 1 .. 3 ]) >
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -262,13 +263,13 @@ DeclareGlobalFunction("AsBinaryRelationOnPoints");
 ##  If the underlying domain of the relation is not <M>\{ 1, \ldots, n \}</M>,
 ##  for some positive integer <M>n</M>, then an error is signalled.
 ##  <P/>
-##  The returned value of <Ref Func="Successors"/> is a list of lists where
+##  The returned value of <Ref Attr="Successors"/> is a list of lists where
 ##  the lists are ordered as the elements according to the sorted order of
 ##  the underlying set of <A>R</A>.
 ##  Each list consists of the images of the element whose index is the same
 ##  as the list with the underlying set in sorted order.
 ##  <P/>
-##  The <Ref Func="Successors"/> of a relation is the adjacency list
+##  The <Ref Attr="Successors"/> of a relation is the adjacency list
 ##  representation of the relation.
 ##  <Example><![CDATA[
 ##  gap> r1:=BinaryRelationOnPoints([[2],[3],[1]]);;
@@ -343,7 +344,7 @@ DeclareSynonym("UnderlyingDomainOfBinaryRelation",Source);
 ##  <M>x</M> is an element of the image set <M>R(x)</M>.
 ##  <P/>
 ##  A reflexive binary relation is necessarily a total endomorphic
-##  mapping (tested via <Ref Func="IsTotal"/>).
+##  mapping (tested via <Ref Prop="IsTotal"/>).
 ##  <Example><![CDATA[
 ##  gap> IsReflexiveBinaryRelation(BinaryRelationOnPoints([[1,3],[2],[3]]));
 ##  true
@@ -606,7 +607,7 @@ DeclareOperation("SymmetricClosureBinaryRelation", [IsBinaryRelation]);
 ##  <A>R</A>.
 ##  E.g., if <A>R</A> is symmetric then its transitive closure is also.
 ##  <P/>
-##  <Ref Func="TransitiveClosureBinaryRelation"/> is a modified version of
+##  <Ref Oper="TransitiveClosureBinaryRelation"/> is a modified version of
 ##  the Floyd-Warshall method of solving the all-pairs shortest-paths problem
 ##  on a directed graph.
 ##  Its asymptotic runtime is <M>O(n^3)</M> where <M>n</M> is the size of the
@@ -648,7 +649,7 @@ DeclareOperation("HasseDiagramBinaryRelation", [IsBinaryRelation]);
 ##  <Description>
 ##  returns <K>true</K> if the binary relation <A>rel</A> is a Hasse Diagram
 ##  of a partial order, i.e., was computed via
-##  <Ref Func="HasseDiagramBinaryRelation"/>.
+##  <Ref Oper="HasseDiagramBinaryRelation"/>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -779,7 +780,7 @@ DeclareAttribute("GeneratorsOfEquivalenceRelationPartition",
 ##  <P/>
 ##  The list of lists do not need to be in any order nor do the
 ##  elements in the blocks
-##  (see <Ref Func="EquivalenceRelationPartition"/>).
+##  (see <Ref Attr="EquivalenceRelationPartition"/>).
 ##  a list of elements of <A>domain</A>
 ##  The partition <A>list</A> is a
 ##  list of lists, each of these is a list of elements of <A>domain</A>
@@ -793,7 +794,7 @@ DeclareAttribute("GeneratorsOfEquivalenceRelationPartition",
 ##  they contain only elements of the domain.
 ##  <Example><![CDATA[
 ##  gap> er:=EquivalenceRelationByPartition(Domain([1..10]),[[1,3,5,7,9],[2,4,6,8,10]]);
-##  <equivalence relation on <object> >
+##  <equivalence relation on Domain([ 1 .. 10 ]) >
 ##  gap> IsEquivalenceRelation(er);
 ##  true
 ##  ]]></Example>
@@ -858,11 +859,11 @@ DeclareGlobalFunction("EquivalenceRelationByRelation");
 ##  <Oper Name="MeetEquivalenceRelations" Arg='equiv1, equiv2'/>
 ##
 ##  <Description>
-##  <Ref Func="JoinEquivalenceRelations"/> returns the smallest
+##  <Ref Oper="JoinEquivalenceRelations"/> returns the smallest
 ##  equivalence relation containing both the equivalence relations
 ##  <A>equiv1</A> and <A>equiv2</A>.
 ##  <P/>
-##  <Ref Func="MeetEquivalenceRelations"/> returns the
+##  <Ref Oper="MeetEquivalenceRelations"/> returns the
 ##  intersection of the two equivalence relations
 ##  <A>equiv1</A> and <A>equiv2</A>.
 ##  </Description>
@@ -931,7 +932,7 @@ DeclareAttribute("EquivalenceClassRelation", IsEquivalenceClass);
 ##  </M><C>EquivalenceClasses</C><M>( c2 )</M>.
 ##  <Example><![CDATA[
 ##  gap> er:=EquivalenceRelationByPartition(Domain([1..10]),[[1,3,5,7,9],[2,4,6,8,10]]);
-##  <equivalence relation on <object> >
+##  <equivalence relation on Domain([ 1 .. 10 ]) >
 ##  gap> classes := EquivalenceClasses(er);
 ##  [ {1}, {2} ]
 ##  ]]></Example>
@@ -996,7 +997,3 @@ DeclareGlobalFunction("EquivalenceRelationByPairs");
 DeclareGlobalFunction("EquivalenceRelationByPairsNC");
 
 #############################################################################
-#############################################################################
-##
-#E
-

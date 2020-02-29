@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  ctblsymm.gi                 GAP library                    Götz Pfeiffer
-#W                                                               Felix Noeske
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Götz Pfeiffer, Felix Noeske.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains  the  functions   needed  for a  direct computation of
 ##  the  character values of  wreath  products  of a  group  $G$  with $S_n$,
@@ -1054,12 +1054,14 @@ CharTableWeylD.matrix := function(n)
 end;
 MakeImmutable(CharTableWeylD);
 
+
 #############################################################################
 ##
-#F  CharValueWreathSymmetric( <sub>, <n>, <beta>, <pi> ) . .
-#F                                        . . . . character value in G wr Sn.
+#F  CharacterValueWreathSymmetric( <tbl>, <n>, <beta>, <pi> ) . .
+#F                                        . . . .  character value in G wr Sn
 ##
-InstallGlobalFunction( CharValueWreathSymmetric, function(sub, n, beta, pi)
+InstallGlobalFunction( CharacterValueWreathSymmetric,
+    function( sub, n, beta, pi )
     local i, j, k, lb, o, s, t, r, gamma, rho, sign, val, subirreds;
 
     #  termination condition.
@@ -1112,11 +1114,13 @@ InstallGlobalFunction( CharValueWreathSymmetric, function(sub, n, beta, pi)
 
              #  construct new beta set.
              gamma:= ShallowCopy(beta);
-             SubtractSet(gamma[s], [i]);
+             gamma[s]:= ShallowCopy( gamma[s] );
+             RemoveSet( gamma[s], i );
              AddSet(gamma[s], i-k);
 
              #  enter recursion.
-             val:= val + sign*CharValueWreathSymmetric(sub, n-k, gamma, rho);
+             val:= val +
+                sign * CharacterValueWreathSymmetric( sub, n-k, gamma, rho );
           fi;
        od;
     od;
@@ -2172,9 +2176,3 @@ InstallValue( CharTableDoubleCoverAlternating, MakeImmutable( rec(
                             [ 1 .. Length( tbl.Irr ) ] }{ fus1 }, chars ) ) );
         end,
     domain:= IsPosInt ) ) );
-
-
-#############################################################################
-##
-#E
-

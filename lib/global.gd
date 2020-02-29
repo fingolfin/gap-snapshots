@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  global.gd                   GAP library                      Steve Linton
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Steve Linton.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##
 ##  This file contains the second stage of the "public" interface to
@@ -72,13 +73,30 @@ DeclareGlobalFunction("ValueGlobal");
 ##  <Func Name="IsBoundGlobal" Arg='name'/>
 ##
 ##  <Description>
-##  IsBoundGlobal ( <A>name</A> ) returns true if a value currently bound
+##  IsBoundGlobal ( <A>name</A> ) returns true if a value is currently bound
 ##  to the global variable named by the string <A>name</A> and false otherwise
 ##  </Description>
 ##  </ManSection>
 ##
 DeclareGlobalFunction("IsBoundGlobal");
 
+#############################################################################
+##
+#F  IsAutoGlobal( <name> )  . . . . . check if a global is automatic
+##
+##  <ManSection>
+##  <Func Name="IsAutoGlobal" Arg='name'/>
+##
+##  <Description>
+##  IsAutoGlobal ( <A>name</A> ) returns true if there is a global variable
+##  named <A>name</A>, declared using 
+##  <Ref Func="DeclareAutoreadableVariables"/>, which has not yet been
+##  accessed. This means reading this variable's value will cause code
+##  to be executed.
+##  </Description>
+##  </ManSection>
+##
+DeclareGlobalFunction("IsAutoGlobal");
 
 #############################################################################
 ##
@@ -239,65 +257,3 @@ DeclareGlobalFunction("MakeConstantGlobal");
 ##
 DeclareGlobalFunction("BindGlobal");
 DeclareGlobalFunction("BindConstant");
-
-#############################################################################
-##
-#F  TemporaryGlobalVarName( [<prefix>] )   name of an unbound global variable
-##
-##  <ManSection>
-##  <Func Name="TemporaryGlobalVarName" Arg='[prefix]'/>
-##
-##  <Description>
-##  TemporaryGlobalVarName ( [<A>prefix</A>] ) returns a string that can be used
-##  as the name of a global variable that is not bound at the time when
-##  TemporaryGlobalVarName() is called.  The optional argument prefix can
-##  specify a string with which the name of the global variable starts.
-##  </Description>
-##  </ManSection>
-##
-DeclareGlobalFunction("TemporaryGlobalVarName");
-
-
-#############################################################################
-##
-#F  HideGlobalVariables(<str1>[,<str2>,...]))
-##
-##  <ManSection>
-##  <Func Name="HideGlobalVariables" Arg='str1[,str2,...]'/>
-##
-##  <Description>
-##  temporarily makes global variables <Q>undefined</Q>. The arguments to
-##  <C>HideGlobalVariables</C> are strings. If there is a global variable defined
-##  whose identifier is equal to one of the strings it will be <Q>hidden</Q>.
-##  This means that identifier and value will be safely stored on a stack
-##  and the variable will be undefined afterwards. A call to
-##  <C>UnhideGlobalVariables</C> will restore the old values.
-##  The main purpose of hiding variables will be for the temporary creation
-##  of global variables for reading in data created by other programs.
-##  </Description>
-##  </ManSection>
-##
-DeclareGlobalFunction("HideGlobalVariables");
-
-
-#############################################################################
-##
-#F  UnhideGlobalVariables(<str1>[,<str2>,...])
-#F  UnhideGlobalVariables()
-##
-##  <ManSection>
-##  <Func Name="UnhideGlobalVariables" Arg='str1[,str2,...]'/>
-##  <Func Name="UnhideGlobalVariables" Arg=''/>
-##
-##  <Description>
-##  The second version unhides all variables that are still hidden.
-##  </Description>
-##  </ManSection>
-##
-DeclareGlobalFunction("UnhideGlobalVariables");
-
-
-#############################################################################
-##
-#E
-

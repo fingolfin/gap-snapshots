@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  info.gi                     GAP library                      Steve Linton
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Steve Linton.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This package sets up a GAP level prototype of the new Info messages
 ##  system, parts of which will eventually have to be moved into
@@ -209,28 +210,28 @@ end);
 
 InstallOtherMethod(\+,
     "for two info classes",
-    IsIdenticalObj, [IsInfoClass, IsInfoClass], 0,
+    IsIdenticalObj, [IsInfoClass, IsInfoClass], SUM_FLAGS,
         function(ic1,ic2)
     return Set([ic1,ic2]);
 end);
 
 InstallOtherMethod(\+,
     "for info class and info selector",
-    true, [IsInfoClass, IsInfoSelector], 20,
+    true, [IsInfoClass, IsInfoSelector], SUM_FLAGS,
         function(ic,is)
     return Union(is,[ic]);
 end);
 
 InstallOtherMethod(\+,
     "for info selector and info class",
-    true, [IsInfoSelector, IsInfoClass], 20,
+    true, [IsInfoSelector, IsInfoClass], SUM_FLAGS,
         function(is,ic)
     return Union(is,[ic]);
 end);
 
 InstallOtherMethod(\+,
     "for two info selectors",
-    IsIdenticalObj, [IsInfoSelector, IsInfoSelector], 20,
+    IsIdenticalObj, [IsInfoSelector, IsInfoSelector], SUM_FLAGS,
         function(is1,is2)
     return Union(is1,is2);
 end);
@@ -313,6 +314,43 @@ BIND_GLOBAL( "InfoDecision", function(selectors, level)
     return ret;
 end );
 
+
+#############################################################################
+##
+##  The following functions are used by ShowUsedInfoClasses
+##
+##  SHOWN_USED_INFO_CLASSES contains the InfoClasses which have been printed
+##  out by ShowUsedInfoClasses.
+##  RESET_SHOW_USED_INFO_CLASSES and SHOW_USED_INFO_CLASSES are called from
+##  the kernel.
+
+SHOWN_USED_INFO_CLASSES := [];
+
+if IsHPCGAP then
+    ShareInternalObj(INFO_CLASSES);
+fi;
+
+
+BIND_GLOBAL("RESET_SHOW_USED_INFO_CLASSES", function()
+    atomic readwrite SHOWN_USED_INFO_CLASSES do
+        SHOWN_USED_INFO_CLASSES := [];
+    od;
+end);
+
+BIND_GLOBAL("SHOW_USED_INFO_CLASSES", function(selectors, level)
+    local selector;
+    # Handle selectors possibly being a list
+    selectors := Flat([selectors]);
+    atomic readwrite SHOWN_USED_INFO_CLASSES do
+        for selector in selectors do
+            if not [selector, level] in SHOWN_USED_INFO_CLASSES then
+                Add(SHOWN_USED_INFO_CLASSES, [selector, level]);
+                Print("#I Would print info with SetInfoLevel(",
+                    selector, ",", level, ")\n");
+            fi;
+        od;
+    od;
+end);
 
 #############################################################################
 ##
@@ -429,8 +467,9 @@ end);
 ##
 #V  InfoObsolete
 ##
-##  This info class has a default level of 0.
-##  Warnings can be switched on by setting its level to one.
+##  This info class has a default level of 1.
+##  Warnings can be disabled entirely by setting its level to 0, and further
+##  warnings can be switched on by setting its level to 2.
 ##
 DeclareInfoClass( "InfoObsolete" );
-SetInfoLevel(InfoObsolete,0);
+SetInfoLevel(InfoObsolete,1);

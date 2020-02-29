@@ -1,12 +1,11 @@
 /****************************************************************************
 **
-*W  ariths.c                    GAP source                       Frank Celler
-*W                                                         & Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the functions of the  arithmetic  operations  package.
 */
@@ -17,6 +16,14 @@
 #include "error.h"
 #include "modules.h"
 #include "opers.h"
+
+
+#define RequireValue(funcname, val)                                          \
+    do {                                                                     \
+        if (!val)                                                            \
+            ErrorMayQuit(funcname ": method should have returned a value",   \
+                         0, 0);                                              \
+    } while (0);
 
 
 /****************************************************************************
@@ -37,15 +44,12 @@ ArithMethod1 ZeroFuncs [LAST_REAL_TNUM+1];
 */
 static Obj ZEROOp;
 
-Obj ZeroObject (
-    Obj                 obj )
+static Obj ZeroObject(Obj obj)
 
 {
   Obj val;
   val = DoOperation1Args( ZEROOp, obj );
-  while (val == 0)
-    val = ErrorReturnObj("ZEROOp: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("ZEROOp", val);
   return val;
 }
 
@@ -54,15 +58,12 @@ Obj ZeroObject (
 **
 *F  VerboseZeroObject( <obj> )  . . . . . . . . . . . .  call verbose methsel
 */
-Obj VerboseZeroObject (
-    Obj                 obj )
+static Obj VerboseZeroObject(Obj obj)
 
 {
   Obj val;
   val = DoVerboseOperation1Args( ZEROOp, obj );
-  while (val == 0)
-    val = ErrorReturnObj("ZEROOp: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("ZEROOp", val);
   return val;
 }
 
@@ -87,9 +88,7 @@ static void InstallZeroObject ( Int verb )
 **
 *F  FuncZERO( <self>, <obj> ) . . . . . . . . . . . . . . . . . . call 'ZERO'
 */
-Obj FuncZERO (
-    Obj                 self,
-    Obj                 obj )
+static Obj FuncZERO(Obj self, Obj obj)
 {
     return ZERO(obj);
 }
@@ -107,15 +106,12 @@ ArithMethod1 ZeroMutFuncs [LAST_REAL_TNUM+1];
 */
 static Obj ZeroOp;
 
-Obj ZeroMutObject (
-    Obj                 obj )
+static Obj ZeroMutObject(Obj obj)
 
 {
   Obj val;
   val = DoOperation1Args( ZeroOp, obj );
-  while (val == 0)
-    val = ErrorReturnObj("ZeroOp: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("ZeroOp", val);
   return val;
 }
 
@@ -124,15 +120,12 @@ Obj ZeroMutObject (
 **
 *F  VerboseZeroMutObject( <obj> )  . . . . . . . . . . . .  call verbose methsel
 */
-Obj VerboseZeroMutObject (
-    Obj                 obj )
+static Obj VerboseZeroMutObject(Obj obj)
 
 {
   Obj val;
   val = DoVerboseOperation1Args( ZeroOp, obj );
-  while (val == 0)
-    val = ErrorReturnObj("ZeroOp: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("ZeroOp", val);
   return val;
 }
 
@@ -157,9 +150,7 @@ static void InstallZeroMutObject ( Int verb )
 **
 *F  FuncZERO_MUT( <self>, <obj> ) . . . . . . . . . . . . . . call 'ZERO_MUT'
 */
-Obj FuncZERO_MUT (
-    Obj                 self,
-    Obj                 obj )
+static Obj FuncZERO_MUT(Obj self, Obj obj)
 {
     return ZERO_MUT(obj);
 }
@@ -181,14 +172,11 @@ ArithMethod1 AInvMutFuncs[ LAST_REAL_TNUM + 1];
 */
 static Obj AInvOp;
 
-Obj AInvObject (
-    Obj                 obj )
+static Obj AInvObject(Obj obj)
 {
   Obj val;
   val = DoOperation1Args( AInvOp, obj );
-  while (val == 0)
-    val = ErrorReturnObj("AInvOp: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("AInvOp", val);
   return val;
 }
 
@@ -197,23 +185,20 @@ Obj AInvObject (
 **
 *F  VerboseAInvObject( <obj> )  . . . . . . . . . . . .  call verbose methsel
 */
-Obj VerboseAInvObject (
-    Obj                 obj )
+static Obj VerboseAInvObject(Obj obj)
 {
   Obj val;
   val = DoVerboseOperation1Args( AInvOp, obj );
-  while (val == 0)
-    val = ErrorReturnObj("AInvOp: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("AInvOp", val);
   return val;
 }
 
 
 /****************************************************************************
 **
-*F  InstallAinvObject( <verb> ) . . . . . .  install additive inverse methods
+*F  InstallAInvObject( <verb> ) . . . . . .  install additive inverse methods
 */
-static void InstallAinvObject ( Int verb )
+static void InstallAInvObject(Int verb)
 {
     UInt                t1;             /* type of left  operand           */
     ArithMethod1        func;           /* ainv function                   */
@@ -229,9 +214,7 @@ static void InstallAinvObject ( Int verb )
 **
 *F  FuncAINV( <self>, <obj> ) . . . . . . . . . . . . . . . . . . call 'AINV'
 */
-Obj FuncAINV (
-    Obj                 self,
-    Obj                 obj )
+static Obj FuncAINV(Obj self, Obj obj)
 {
     return AINV(obj);
 }
@@ -242,14 +225,11 @@ Obj FuncAINV (
 */
 static Obj AdditiveInverseOp;
 
-Obj AInvMutObject (
-    Obj                 obj )
+static Obj AInvMutObject(Obj obj)
 {
   Obj val;
   val = DoOperation1Args( AdditiveInverseOp, obj );
-  while (val == 0)
-    val = ErrorReturnObj("AdditiveInverseOp: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("AdditiveInverseOp", val);
   return val;
 }
 
@@ -258,23 +238,20 @@ Obj AInvMutObject (
 **
 *F  VerboseAInvMutObject( <obj> )  . . . . . . . . . . . .  call verbose methsel
 */
-Obj VerboseAInvMutObject (
-    Obj                 obj )
+static Obj VerboseAInvMutObject(Obj obj)
 {
   Obj val;
   val = DoVerboseOperation1Args( AdditiveInverseOp, obj );
-  while (val == 0)
-    val = ErrorReturnObj("AdditiveInverseOp: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("AdditiveInverseOp", val);
   return val;
 }
 
 
 /****************************************************************************
 **
-*F  InstallAinvMutObject( <verb> ) . . . . . .  install additive inverse methods
+*F  InstallAInvMutObject( <verb> ) . . . . . install additive inverse methods
 */
-static void InstallAinvMutObject ( Int verb )
+static void InstallAInvMutObject(Int verb)
 {
     UInt                t1;             /* type of left  operand           */
     ArithMethod1        func;           /* ainv function                   */
@@ -290,9 +267,7 @@ static void InstallAinvMutObject ( Int verb )
 **
 *F  FuncAINV_MUT( <self>, <obj> ) . . . . . . . . . . . . . . . . . . call 'AINV'
 */
-Obj FuncAINV_MUT (
-    Obj                 self,
-    Obj                 obj )
+static Obj FuncAINV_MUT(Obj self, Obj obj)
 {
     return AINV_MUT(obj);
 }
@@ -311,14 +286,11 @@ ArithMethod1 OneFuncs [LAST_REAL_TNUM+1];
 */
 static Obj OneOp;
 
-Obj OneObject (
-    Obj                 obj )
+static Obj OneObject(Obj obj)
 {
   Obj val;
   val = DoOperation1Args( OneOp, obj );
-  while (val == 0)
-    val = ErrorReturnObj("OneOp: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("OneOp", val);
   return val;
 }
 
@@ -327,14 +299,11 @@ Obj OneObject (
 **
 *F  VerboseOneObject( <obj> ) . . . . . . . . . . . . . . . . .  call methsel
 */
-Obj VerboseOneObject (
-    Obj                 obj )
+static Obj VerboseOneObject(Obj obj)
 {
   Obj val;
   val = DoVerboseOperation1Args( OneOp, obj );
-  while (val == 0)
-    val = ErrorReturnObj("OneOp: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("OneOp", val);
   return val;
 }
 
@@ -359,9 +328,7 @@ static void InstallOneObject ( Int verb )
 **
 *F  FuncONE( <self>, <obj> ) . . . . . . . . . . . . . . . . .  call 'ONE'
 */
-Obj FuncONE (
-    Obj                 self,
-    Obj                 obj )
+static Obj FuncONE(Obj self, Obj obj)
 {
     return ONE(obj);
 }
@@ -379,14 +346,11 @@ ArithMethod1 OneMutFuncs [LAST_REAL_TNUM+1];
 */
 static Obj OneMutOp;
 
-Obj OneMutObject (
-    Obj                 obj )
+static Obj OneMutObject(Obj obj)
 {
   Obj val;
   val = DoOperation1Args( OneMutOp, obj );
-  while (val == 0)
-    val = ErrorReturnObj("ONEOp: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("ONEOp", val);
   return val;
 }
 
@@ -395,14 +359,11 @@ Obj OneMutObject (
 **
 *F  VerboseOneMutObject( <obj> ) . . .  . . . . . . . . . . . .  call methsel
 */
-Obj VerboseOneMutObject (
-    Obj                 obj )
+static Obj VerboseOneMutObject(Obj obj)
 {
   Obj val;
   val = DoVerboseOperation1Args( OneMutOp, obj );
-  while (val == 0)
-    val = ErrorReturnObj("ONEOp: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("ONEOp", val);
   return val;
 }
 
@@ -427,9 +388,7 @@ static void InstallOneMutObject ( Int verb )
 **
 *F  FuncONE_MUT( <self>, <obj> ) . . . . . . . . . . . . . . . .call 'ONE_MUT'
 */
-Obj FuncONE_MUT (
-    Obj                 self,
-    Obj                 obj )
+static Obj FuncONE_MUT(Obj self, Obj obj)
 {
     return ONE_MUT(obj);
 }
@@ -448,14 +407,11 @@ ArithMethod1 InvFuncs [LAST_REAL_TNUM+1];
 */
 static Obj InvOp;
 
-Obj InvObject (
-    Obj                 obj )
+static Obj InvObject(Obj obj)
 {
   Obj val;
   val = DoOperation1Args( InvOp, obj );
-  while (val == 0)
-    val = ErrorReturnObj("InvOp: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("InvOp", val);
   return val;
 }
 
@@ -464,14 +420,11 @@ Obj InvObject (
 **
 *F  VerboseInvObject( <obj> ) . . . . . . . . . . . . . . . . .  call methsel
 */
-Obj VerboseInvObject (
-    Obj                 obj )
+static Obj VerboseInvObject(Obj obj)
 {
   Obj val;
   val = DoVerboseOperation1Args( InvOp, obj );
-  while (val == 0)
-    val = ErrorReturnObj("InvOp: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("InvOp", val);
   return val;
 }
 
@@ -496,9 +449,7 @@ static void InstallInvObject ( Int verb )
 **
 *F  FuncINV( <self>, <obj> )  . . . . . . . . . . . . . . . . . .  call 'INV'
 */
-Obj FuncINV (
-    Obj                 self,
-    Obj                 obj )
+static Obj FuncINV(Obj self, Obj obj)
 {
     return INV( obj );
 }
@@ -517,14 +468,11 @@ ArithMethod1 InvMutFuncs [LAST_REAL_TNUM+1];
 */
 static Obj InvMutOp;
 
-Obj InvMutObject (
-    Obj                 obj )
+static Obj InvMutObject(Obj obj)
 {
   Obj val;
   val = DoOperation1Args( InvMutOp, obj );
-  while (val == 0)
-    val = ErrorReturnObj("INVOp: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("INVOp", val);
   return val;
 }
 
@@ -533,14 +481,11 @@ Obj InvMutObject (
 **
 *F  VerboseInvMutObject( <obj> ) . . .  . . . . . . . . . . . .  call methsel
 */
-Obj VerboseInvMutObject (
-    Obj                 obj )
+static Obj VerboseInvMutObject(Obj obj)
 {
   Obj val;
   val = DoVerboseOperation1Args( InvMutOp, obj );
-  while (val == 0)
-    val = ErrorReturnObj("INVOp: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("INVOp", val);
   return val;
 }
 
@@ -565,9 +510,7 @@ static void InstallInvMutObject ( Int verb )
 **
 *F  FuncINV_MUT( <self>, <obj> )  . . .  . . . . . . . . . .  call 'INV_MUT'
 */
-Obj FuncINV_MUT (
-    Obj                 self,
-    Obj                 obj )
+static Obj FuncINV_MUT(Obj self, Obj obj)
 {
     return INV_MUT( obj );
 }
@@ -589,9 +532,7 @@ CompaMethod EqFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 **
 *F  EqNot( <opL>, <opR> ) . . . . . . . . . . . . . . . . . . . . . not equal
 */
-Int EqNot (
-    Obj                 opL,
-    Obj                 opR )
+static Int EqNot(Obj opL, Obj opR)
 {
     return 0L;
 }
@@ -615,9 +556,7 @@ Int EqObject (
 **
 *F  VerboseEqObject( <opL>, <opR> ) . . . . . . . . . . . . . .  call methsel
 */
-Int VerboseEqObject (
-    Obj                 opL,
-    Obj                 opR )
+static Int VerboseEqObject(Obj opL, Obj opR)
 {
     return (DoVerboseOperation2Args( EqOper, opL, opR ) == True);
 }
@@ -647,10 +586,7 @@ static void InstallEqObject ( Int verb )
 **
 *F  FuncEQ( <self>, <opL>, <opR> )  . . . . . . . . . . . . . . . . call 'EQ'
 */
-Obj FuncEQ (
-    Obj                 self,
-    Obj                 opL,
-    Obj                 opR )
+static Obj FuncEQ(Obj self, Obj opL, Obj opR)
 {
   /* if both operands are T_MACFLOAT, we use the comparison method in all cases,
      even if the objects are identical. In this manner, we can have 0./0. != 0./0. as
@@ -676,9 +612,7 @@ CompaMethod LtFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 */
 Obj LtOper;
 
-Int LtObject (
-    Obj                 opL,
-    Obj                 opR )
+static Int LtObject(Obj opL, Obj opR)
 {
     return (DoOperation2Args( LtOper, opL, opR ) == True);
 }
@@ -688,9 +622,7 @@ Int LtObject (
 **
 *F  VerboseLtObject( <opL>, <opR> ) . . . . . . . . . . . . . .  call methsel
 */
-Int VerboseLtObject (
-    Obj                 opL,
-    Obj                 opR )
+static Int VerboseLtObject(Obj opL, Obj opR)
 {
     return (DoVerboseOperation2Args( LtOper, opL, opR ) == True);
 }
@@ -720,10 +652,7 @@ static void InstallLtObject ( Int verb )
 **
 *F  FuncLT( <self>, <opL>, <opR> )  . . . . . . . . . . . . . . . . call 'LT'
 */
-Obj FuncLT (
-    Obj                 self,
-    Obj                 opL,
-    Obj                 opR )
+static Obj FuncLT(Obj self, Obj opL, Obj opR)
 {
     return (LT( opL, opR ) ? True : False);
 }
@@ -740,15 +669,10 @@ CompaMethod InFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 **
 *F  InUndefined( <self>, <opL>, <opR> ) . . . . . . . . . . . . . cannot 'in'
 */
-Int InUndefined (
-    Obj                 opL,
-    Obj                 opR )
+static Int InUndefined(Obj opL, Obj opR)
 {
-    return (ErrorReturnObj(
-        "operations: IN of %s and %s is not defined",
-        (Int)TNAM_OBJ(opL),
-        (Int)TNAM_OBJ(opR),
-        "you can 'return <boolean>;' to give a value for the result" ) == True);
+    ErrorMayQuit("operations: IN of %s and %s is not defined",
+                 (Int)TNAM_OBJ(opL), (Int)TNAM_OBJ(opR));
 }
 
 
@@ -758,9 +682,7 @@ Int InUndefined (
 */
 static Obj InOper;
 
-Int InObject (
-    Obj                 opL,
-    Obj                 opR )
+static Int InObject(Obj opL, Obj opR)
 {
     return (DoOperation2Args( InOper, opL, opR ) == True);
 }
@@ -770,9 +692,7 @@ Int InObject (
 **
 *F  VerboseInObject( <opL>, <opR> ) . . . . . . . . . . . . . .  call methsel
 */
-Int VerboseInObject (
-    Obj                 opL,
-    Obj                 opR )
+static Int VerboseInObject(Obj opL, Obj opR)
 {
     return (DoVerboseOperation2Args( InOper, opL, opR ) == True);
 }
@@ -802,10 +722,7 @@ static void InstallInObject ( Int verb )
 **
 *F  FuncIN( <self>, <opL>, <opR> )  . . . . . . . . . . . . . . . . call 'IN'
 */
-Obj FuncIN (
-    Obj                 self,
-    Obj                 opL,
-    Obj                 opR )
+static Obj FuncIN(Obj self, Obj opL, Obj opR)
 {
     return (IN( opL, opR ) ? True : False);
 }
@@ -829,15 +746,11 @@ ArithMethod2    SumFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 */
 Obj SumOper;
 
-Obj SumObject (
-    Obj                 opL,
-    Obj                 opR )
+static Obj SumObject(Obj opL, Obj opR)
 {
   Obj val;
   val = DoOperation2Args( SumOper, opL, opR );
-  while (val == 0)
-    val = ErrorReturnObj("SUM: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("SUM", val);
   return val;
 }
 
@@ -846,15 +759,11 @@ Obj SumObject (
 **
 *F  VerboseSumObject( <opL>, <opR> )  . . . . . . . . . . . . .  call methsel
 */
-Obj VerboseSumObject (
-    Obj                 opL,
-    Obj                 opR )
+static Obj VerboseSumObject(Obj opL, Obj opR)
 {
   Obj val;
   val = DoVerboseOperation2Args( SumOper, opL, opR );
-  while (val == 0)
-    val = ErrorReturnObj("SUM: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("SUM", val);
   return val;
 }
 
@@ -883,10 +792,7 @@ static void InstallSumObject ( Int verb )
 **
 *F  FuncSUM( <self>, <opL>, <opR> ) . . . . . . . . . . . . . . .  call 'SUM'
 */
-Obj FuncSUM (
-    Obj                 self,
-    Obj                 opL,
-    Obj                 opR )
+static Obj FuncSUM(Obj self, Obj opL, Obj opR)
 {
     return SUM( opL, opR );
 }
@@ -903,9 +809,7 @@ ArithMethod2 DiffFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 **
 *F  DiffDefault( <opL>, <opR> ) . . . . . . . . . . . . call 'SUM' and 'AINV'
 */
-Obj DiffDefault (
-    Obj                 opL,
-    Obj                 opR )
+static Obj DiffDefault(Obj opL, Obj opR)
 {
     Obj                 tmp;
 
@@ -920,15 +824,11 @@ Obj DiffDefault (
 */
 static Obj DiffOper;
 
-Obj DiffObject (
-    Obj                 opL,
-    Obj                 opR )
+static Obj DiffObject(Obj opL, Obj opR)
 {
   Obj val;
   val = DoOperation2Args( DiffOper, opL, opR );
-  while (val == 0)
-    val = ErrorReturnObj("DIFF: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("DIFF", val);
   return val;
 }
 
@@ -937,15 +837,11 @@ Obj DiffObject (
 **
 *F  VerboseDiffObject( <opL>, <opR> ) . . . . . . . . . . . . .  call methsel
 */
-Obj VerboseDiffObject (
-    Obj                 opL,
-    Obj                 opR )
+static Obj VerboseDiffObject(Obj opL, Obj opR)
 {
   Obj val;
   val = DoVerboseOperation2Args( DiffOper, opL, opR );
-  while (val == 0)
-    val = ErrorReturnObj("DIFF: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("DIFF", val);
   return val;
 }
 
@@ -974,10 +870,7 @@ static void InstallDiffObject ( Int verb )
 **
 *F  FuncDIFF_DEFAULT( <self>, <opL>, <opR> )  . . . . . .  call 'DiffDefault'
 */
-Obj FuncDIFF_DEFAULT (
-    Obj                 self,
-    Obj                 opL,
-    Obj                 opR )
+static Obj FuncDIFF_DEFAULT(Obj self, Obj opL, Obj opR)
 {
     return DiffDefault( opL, opR );
 }
@@ -987,10 +880,7 @@ Obj FuncDIFF_DEFAULT (
 **
 *F  FuncDIFF( <self>, <opL>, <opR> )  . . . . . . . . . . . . . . call 'DIFF'
 */
-Obj FuncDIFF (
-    Obj                 self,
-    Obj                 opL,
-    Obj                 opR )
+static Obj FuncDIFF(Obj self, Obj opL, Obj opR)
 {
     return DIFF( opL, opR );
 }
@@ -1009,15 +899,11 @@ ArithMethod2    ProdFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 */
 static Obj ProdOper;
 
-Obj ProdObject (
-    Obj                 opL,
-    Obj                 opR )
+static Obj ProdObject(Obj opL, Obj opR)
 {
   Obj val;
   val = DoOperation2Args( ProdOper, opL, opR );
-  while (val == 0)
-    val = ErrorReturnObj("PROD: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("PROD", val);
   return val;
 }
 
@@ -1026,15 +912,11 @@ Obj ProdObject (
 **
 *F  VerboseProdObject( <opL>, <opR> ) . . . . . . . . . . . . .  call methsel
 */
-Obj VerboseProdObject (
-    Obj                 opL,
-    Obj                 opR )
+static Obj VerboseProdObject(Obj opL, Obj opR)
 {
   Obj val;
   val = DoVerboseOperation2Args( ProdOper, opL, opR );
-  while (val == 0)
-    val = ErrorReturnObj("PROD: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("PROD", val);
   return val;
 }
 
@@ -1063,10 +945,7 @@ static void InstallProdObject ( Int verb )
 **
 *F  FuncPROD( <self>, <opL>, <opR> )  . . . . . . . . . . . . . . call 'PROD'
 */
-Obj FuncPROD (
-    Obj                 self,
-    Obj                 opL,
-    Obj                 opR )
+static Obj FuncPROD(Obj self, Obj opL, Obj opR)
 {
     return PROD( opL, opR );
 }
@@ -1083,9 +962,7 @@ ArithMethod2 QuoFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 **
 *F  QuoDefault( <opL>, <opR> )  . . . . . . . . . . . . call 'INV' and 'PROD'
 */
-Obj QuoDefault (
-    Obj                 opL,
-    Obj                 opR )
+static Obj QuoDefault(Obj opL, Obj opR)
 {
     Obj                 tmp;
     tmp = INV_MUT( opR );
@@ -1099,15 +976,11 @@ Obj QuoDefault (
 */
 static Obj QuoOper;
 
-Obj QuoObject (
-    Obj                 opL,
-    Obj                 opR )
+static Obj QuoObject(Obj opL, Obj opR)
 {
   Obj val;
   val = DoOperation2Args( QuoOper, opL, opR );
-  while (val == 0)
-    val = ErrorReturnObj("QUO: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("QUO", val);
   return val;
 }
 
@@ -1116,15 +989,11 @@ Obj QuoObject (
 **
 *F  VerboseQuoObject( <opL>, <opR> )  . . . . . . . . . . . . .  call methsel
 */
-Obj VerboseQuoObject (
-    Obj                 opL,
-    Obj                 opR )
+static Obj VerboseQuoObject(Obj opL, Obj opR)
 {
   Obj val;
   val = DoVerboseOperation2Args( QuoOper, opL, opR );
-  while (val == 0)
-    val = ErrorReturnObj("QUO: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("QUO", val);
   return val;
 }
 
@@ -1153,10 +1022,7 @@ static void InstallQuoObject ( Int verb )
 **
 *F  FuncQUO_DEFAULT( <self>, <opL>, <opR> ) . . . . . . . . call 'QuoDefault'
 */
-Obj FuncQUO_DEFAULT (
-    Obj                 self,
-    Obj                 opL,
-    Obj                 opR )
+static Obj FuncQUO_DEFAULT(Obj self, Obj opL, Obj opR)
 {
     return QuoDefault( opL, opR );
 }
@@ -1166,10 +1032,7 @@ Obj FuncQUO_DEFAULT (
 **
 *F  FuncQUO( <self>, <opL>, <opR> ) . . . . . . . . . . . . . . .  call 'QUO'
 */
-Obj FuncQUO (
-    Obj                 self,
-    Obj                 opL,
-    Obj                 opR )
+static Obj FuncQUO(Obj self, Obj opL, Obj opR)
 {
     return QUO( opL, opR );
 }
@@ -1186,9 +1049,7 @@ ArithMethod2 LQuoFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 **
 *F  LQuoDefault( <opL>, <opR> ) . . . . . . . . . . . . call 'INV' and 'PROD'
 */
-Obj LQuoDefault (
-    Obj                 opL,
-    Obj                 opR )
+static Obj LQuoDefault(Obj opL, Obj opR)
 {
     Obj                 tmp;
     tmp = INV_MUT( opL );
@@ -1202,15 +1063,11 @@ Obj LQuoDefault (
 */
 static Obj LQuoOper;
 
-Obj LQuoObject (
-    Obj                 opL,
-    Obj                 opR )
+static Obj LQuoObject(Obj opL, Obj opR)
 {
   Obj val;
   val = DoOperation2Args( LQuoOper, opL, opR );
-  while (val == 0)
-    val = ErrorReturnObj("LeftQuotient: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("LeftQuotient", val);
   return val;
 }
 
@@ -1219,15 +1076,11 @@ Obj LQuoObject (
 **
 *F  VerboseLQuoObject( <opL>, <opR> ) . . . . . . . . . . . . .  call methsel
 */
-Obj VerboseLQuoObject (
-    Obj                 opL,
-    Obj                 opR )
+static Obj VerboseLQuoObject(Obj opL, Obj opR)
 {
   Obj val;
   val = DoOperation2Args( LQuoOper, opL, opR );
-  while (val == 0)
-    val = ErrorReturnObj("LeftQuotient: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("LeftQuotient", val);
   return val;
 }
 
@@ -1256,10 +1109,7 @@ static void InstallLQuoObject ( Int verb )
 **
 *F  FuncLQUO_DEFAULT( <self>, <opL>, <opR> )  . . . . . .  call 'LQuoDefault'
 */
-Obj FuncLQUO_DEFAULT (
-    Obj                 self,
-    Obj                 opL,
-    Obj                 opR )
+static Obj FuncLQUO_DEFAULT(Obj self, Obj opL, Obj opR)
 {
     return LQuoDefault( opL, opR );
 }
@@ -1269,10 +1119,7 @@ Obj FuncLQUO_DEFAULT (
 **
 *F  FuncLQUO( <self>, <opL>, <opR> )  . . . . . . . . . . . . . . call 'LQUO'
 */
-Obj FuncLQUO (
-    Obj                 self,
-    Obj                 opL,
-    Obj                 opR )
+static Obj FuncLQUO(Obj self, Obj opL, Obj opR)
 {
     return LQUO( opL, opR );
 }
@@ -1289,9 +1136,7 @@ ArithMethod2 PowFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 **
 *F  PowDefault( <opL>, <opR> )  . . . . . . . . . . .  call 'LQUO' and 'PROD'
 */
-Obj PowDefault (
-    Obj                 opL,
-    Obj                 opR )
+static Obj PowDefault(Obj opL, Obj opR)
 {
     Obj                 tmp;
     tmp = LQUO( opR, opL );
@@ -1305,15 +1150,11 @@ Obj PowDefault (
 */
 static Obj PowOper;
 
-Obj PowObject (
-    Obj                 opL,
-    Obj                 opR )
+static Obj PowObject(Obj opL, Obj opR)
 {
   Obj val;
   val = DoOperation2Args( PowOper, opL, opR );
-  while (val == 0)
-    val = ErrorReturnObj("POW: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("POW", val);
   return val;
 }
 
@@ -1322,16 +1163,12 @@ Obj PowObject (
 **
 *F  VerbosePowObject( <opL>, <opR> )  . . . . . . . . . . . . .  call methsel
 */
-Obj VerbosePowObject (
-    Obj                 opL,
-    Obj                 opR )
+static Obj VerbosePowObject(Obj opL, Obj opR)
 {
    
   Obj val;
   val = DoVerboseOperation2Args( PowOper, opL, opR );
-  while (val == 0)
-    val = ErrorReturnObj("POW: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("POW", val);
   return val;
 }
 
@@ -1360,10 +1197,7 @@ static void InstallPowObject ( Int verb )
 **
 *F  FuncPOW_DEFAULT( <self>, <opL>, <opR> ) . . . . . . . . call 'PowDefault'
 */
-Obj FuncPOW_DEFAULT (
-    Obj                 self,
-    Obj                 opL,
-    Obj                 opR )
+static Obj FuncPOW_DEFAULT(Obj self, Obj opL, Obj opR)
 {
     return PowDefault( opL, opR );
 }
@@ -1373,10 +1207,7 @@ Obj FuncPOW_DEFAULT (
 **
 *F  FuncPOW( <self>, <opL>, <opR> ) . . . . . . . . . . . . . . .  call 'POW'
 */
-Obj FuncPOW (
-    Obj                 self,
-    Obj                 opL,
-    Obj                 opR )
+static Obj FuncPOW(Obj self, Obj opL, Obj opR)
 {
     return POW( opL, opR );
 }
@@ -1393,9 +1224,7 @@ ArithMethod2 CommFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 **
 *F  CommDefault( <opL>, <opR> ) . . . . . . . . . . .  call 'LQUO' and 'PROD'
 */
-Obj CommDefault (
-    Obj                 opL,
-    Obj                 opR )
+static Obj CommDefault(Obj opL, Obj opR)
 {
     Obj                 tmp1;
     Obj                 tmp2;
@@ -1411,15 +1240,11 @@ Obj CommDefault (
 */
 static Obj CommOper;
 
-Obj CommObject (
-    Obj                 opL,
-    Obj                 opR )
+static Obj CommObject(Obj opL, Obj opR)
 {
   Obj val;
   val = DoOperation2Args( CommOper, opL, opR );
-  while (val == 0)
-    val = ErrorReturnObj("Comm: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("Comm", val);
   return val;
 }
 
@@ -1428,15 +1253,11 @@ Obj CommObject (
 **
 *F  VerboseCommObject( <opL>, <opR> ) . . . . . . . . . . . . .  call methsel
 */
-Obj VerboseCommObject (
-    Obj                 opL,
-    Obj                 opR )
+static Obj VerboseCommObject(Obj opL, Obj opR)
 {
   Obj val;
   val = DoVerboseOperation2Args( CommOper, opL, opR );
-  while (val == 0)
-    val = ErrorReturnObj("Comm: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("Comm", val);
   return val;
 }
 
@@ -1465,10 +1286,7 @@ static void InstallCommObject ( Int verb )
 **
 *F  FuncCOMM_DEFAULT( <self>, <opL>, <opR> )  . . . . . .  call 'CommDefault'
 */
-Obj FuncCOMM_DEFAULT (
-    Obj                 self,
-    Obj                 opL,
-    Obj                 opR )
+static Obj FuncCOMM_DEFAULT(Obj self, Obj opL, Obj opR)
 {
     return CommDefault( opL, opR );
 }
@@ -1478,10 +1296,7 @@ Obj FuncCOMM_DEFAULT (
 **
 *F  FuncCOMM( <self>, <opL>, <opR> )  . . . . . . . . . . . . . . call 'COMM'
 */
-Obj FuncCOMM (
-    Obj                 self,
-    Obj                 opL,
-    Obj                 opR )
+static Obj FuncCOMM(Obj self, Obj opL, Obj opR)
 {
     return COMM( opL, opR );
 }
@@ -1501,15 +1316,11 @@ ArithMethod2 ModFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 */
 static Obj ModOper;
 
-Obj ModObject (
-    Obj                 opL,
-    Obj                 opR )
+static Obj ModObject(Obj opL, Obj opR)
 {
   Obj val;
   val = DoOperation2Args( ModOper, opL, opR );
-  while (val == 0)
-    val = ErrorReturnObj("mod: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("mod", val);
   return val;
 }
 
@@ -1518,15 +1329,11 @@ Obj ModObject (
 **
 *F  VerboseModObject( <opL>, <opR> )  . . . . . . . . . . . . .  call methsel
 */
-Obj VerboseModObject (
-    Obj                 opL,
-    Obj                 opR )
+static Obj VerboseModObject(Obj opL, Obj opR)
 {
   Obj val;
   val = DoVerboseOperation2Args( ModOper, opL, opR );
-  while (val == 0)
-    val = ErrorReturnObj("mod: method should have returned a value", 0L, 0L,
-                         "you can supply one by 'return <value>;'");
+  RequireValue("mod", val);
   return val;
 }
 
@@ -1555,10 +1362,7 @@ static void InstallModObject ( Int verb )
 **
 *F  FuncMOD( <self>, <opL>, <opR> ) . . . . . . . . . . . . . . .  call 'MOD'
 */
-Obj FuncMOD (
-    Obj                 self,
-    Obj                 opL,
-    Obj                 opR )
+static Obj FuncMOD(Obj self, Obj opL, Obj opR)
 {
     return MOD( opL, opR );
 }
@@ -1585,12 +1389,12 @@ void ChangeArithDoOperations(Obj oper, Int verb)
 
     if ( oper == InvOp  )  { InstallInvObject(verb);  }
     if ( oper == OneOp  )  { InstallOneObject(verb);  }
-    if ( oper == AInvOp )  { InstallAinvObject(verb); }
+    if ( oper == AInvOp )  { InstallAInvObject(verb); }
     if ( oper == ZEROOp )  { InstallZeroObject(verb); }
 
     if ( oper == InvMutOp  )  { InstallInvMutObject(verb);  }
     if ( oper == OneMutOp  )  { InstallOneMutObject(verb);  }
-    if ( oper == AdditiveInverseOp )  { InstallAinvMutObject(verb); }
+    if ( oper == AdditiveInverseOp )  { InstallAInvMutObject(verb); }
     if ( oper == ZeroOp )  { InstallZeroMutObject(verb); }
 }
 
@@ -1679,14 +1483,14 @@ static Int InitKernel (
         assert(AInvFuncs[t1] == 0);
         AInvFuncs[t1] = AInvObject;
     }
-    InstallAinvObject(0);
+    InstallAInvObject(0);
 
     /* make and install the 'AINV_MUT' arithmetic operation                */
     for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {
         assert(AInvMutFuncs[t1] == 0);
         AInvMutFuncs[t1] = AInvMutObject;
     }
-    InstallAinvMutObject(0);
+    InstallAInvMutObject(0);
 
     /* make and install the 'ONE' arithmetic operation                     */
     for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {

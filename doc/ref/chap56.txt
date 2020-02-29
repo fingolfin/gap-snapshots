@@ -165,9 +165,12 @@
   
   [33X[1;0Y[29X[2XQuotient[102X( [[3XR[103X, ][3Xr[103X, [3Xs[103X ) [32X operation[133X
   
-  [33X[0;0Y[2XQuotient[102X  returns  the quotient of the two ring elements [3Xr[103X and [3Xs[103X in the ring
-  [3XR[103X, if given, and otherwise in their default ring (see [2XDefaultRing[102X ([14X56.1-3[114X)).
-  It returns [9Xfail[109X if the quotient does not exist in the respective ring.[133X
+  [33X[0;0Y[2XQuotient[102X  returns a (right) quotient of the two ring elements [3Xr[103X and [3Xs[103X in the
+  ring  [3XR[103X,  if  given,  and  otherwise  in their default ring (see [2XDefaultRing[102X
+  ([14X56.1-3[114X)).  More specifically, it returns a ring element [22Xq[122X such that [22Xr = q *
+  s[122X holds, or [9Xfail[109X if no such elements exists in the respective ring.[133X
+  
+  [33X[0;0YThe result may not be unique if the ring contains zero divisors.[133X
   
   [33X[0;0Y(To  perform  the division in the quotient field of a ring, use the quotient
   operator [10X/[110X.)[133X

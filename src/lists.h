@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  lists.h                     GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares the functions of the generic list package.
 **
@@ -19,6 +19,7 @@
 #define GAP_LISTS_H
 
 #include "error.h"
+#include "io.h"
 #include "objects.h"
 
 /****************************************************************************
@@ -36,7 +37,7 @@
 */
 extern  Int             (*IsListFuncs [LAST_REAL_TNUM+1]) ( Obj obj );
 
-static inline Int IS_LIST(Obj obj)
+EXPORT_INLINE Int IS_LIST(Obj obj)
 {
     return (*IsListFuncs[TNUM_OBJ(obj)])(obj);
 }
@@ -58,7 +59,7 @@ static inline Int IS_LIST(Obj obj)
 */
 extern Int (*IsSmallListFuncs[LAST_REAL_TNUM + 1])(Obj obj);
 
-static inline Int IS_SMALL_LIST(Obj obj)
+EXPORT_INLINE Int IS_SMALL_LIST(Obj obj)
 {
     return (*IsSmallListFuncs[TNUM_OBJ(obj)])(obj);
 }
@@ -79,9 +80,7 @@ static inline Int IS_SMALL_LIST(Obj obj)
 
 extern Int (*IsDenseListFuncs[LAST_REAL_TNUM + 1])(Obj list);
 
-extern Int IsDenseListDefault(Obj list);
-
-static inline Int IS_DENSE_LIST(Obj list)
+EXPORT_INLINE Int IS_DENSE_LIST(Obj list)
 {
     return (*IsDenseListFuncs[TNUM_OBJ(list)])(list);
 }
@@ -104,9 +103,7 @@ static inline Int IS_DENSE_LIST(Obj list)
 
 extern Int (*IsHomogListFuncs[LAST_REAL_TNUM + 1])(Obj list);
 
-extern Int IsHomogListDefault(Obj list);
-
-static inline Int IS_HOMOG_LIST(Obj list)
+EXPORT_INLINE Int IS_HOMOG_LIST(Obj list)
 {
     return (*IsHomogListFuncs[TNUM_OBJ(list)])(list);
 }
@@ -130,9 +127,7 @@ static inline Int IS_HOMOG_LIST(Obj list)
 
 extern Int (*IsPossListFuncs[LAST_REAL_TNUM + 1])(Obj list);
 
-extern Int IsPossListDefault(Obj list);
-
-static inline Int IS_POSS_LIST(Obj list)
+EXPORT_INLINE Int IS_POSS_LIST(Obj list)
 {
     return (*IsPossListFuncs[TNUM_OBJ(list)])(list);
 }
@@ -147,7 +142,7 @@ static inline Int IS_POSS_LIST(Obj list)
 */
 extern  Int             (*LenListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
-static inline Int LEN_LIST(Obj list)
+EXPORT_INLINE Int LEN_LIST(Obj list)
 {
     return (*LenListFuncs[TNUM_OBJ(list)])(list);
 }
@@ -166,7 +161,7 @@ static inline Int LEN_LIST(Obj list)
 */
 extern  Obj             (*LengthFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
-static inline Obj LENGTH(Obj list)
+EXPORT_INLINE Obj LENGTH(Obj list)
 {
     return (*LengthFuncs[TNUM_OBJ(list)])(list);
 }
@@ -189,14 +184,14 @@ static inline Obj LENGTH(Obj list)
 
 extern  Int             (*IsbListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 
-static inline Int ISB_LIST(Obj list, Int pos)
+EXPORT_INLINE Int ISB_LIST(Obj list, Int pos)
 {
     return (*IsbListFuncs[TNUM_OBJ(list)])(list, pos);
 }
 
-extern Int ISBB_LIST( Obj list, Obj pos );
+Int ISBB_LIST(Obj list, Obj pos);
 
-extern Int ISB2_LIST(Obj list, Obj pos1, Obj pos2);
+Int ISB_MAT(Obj list, Obj row, Obj col);
 
 
 /****************************************************************************
@@ -224,7 +219,7 @@ extern Obj (*Elm0ListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 **  signalled if <list>  is  not a list.  It   is the responsibility   of the
 **  caller to ensure that <pos> is a positive integer.
 */
-static inline Obj ELM0_LIST(Obj list, Int pos)
+EXPORT_INLINE Obj ELM0_LIST(Obj list, Int pos)
 {
     return (*Elm0ListFuncs[TNUM_OBJ(list)])(list, pos);
 }
@@ -249,7 +244,7 @@ extern Obj (*ElmDefListFuncs[LAST_REAL_TNUM + 1])(Obj list, Int pos, Obj def);
 **  An error is signalled if <list> is not a list. It is the responsibility
 **  of the caller to ensure that <pos> is a positive integer.
 */
-static inline Obj ELM_DEFAULT_LIST(Obj list, Int pos, Obj def)
+EXPORT_INLINE Obj ELM_DEFAULT_LIST(Obj list, Int pos, Obj def)
 {
     return (*ElmDefListFuncs[TNUM_OBJ(list)])(list, pos, def);
 }
@@ -275,7 +270,7 @@ extern  Obj (*Elm0vListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 **  that <list> is a list and that <pos> is less than  or equal to the length
 **  of <list>.
 */
-static inline Obj ELMV0_LIST(Obj list, Int pos)
+EXPORT_INLINE Obj ELMV0_LIST(Obj list, Int pos)
 {
     GAP_ASSERT(pos > 0);
     GAP_ASSERT(pos <= LEN_LIST(list));
@@ -311,9 +306,9 @@ extern Obj (*ElmListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 **  It is intended as an interface for access to elements of large external
 **  lists, on the rare occasions when the kernel needs to do this.
 */
-extern Obj ELMB_LIST( Obj list, Obj pos );
+Obj ELMB_LIST(Obj list, Obj pos);
 
-static inline Obj ELM_LIST(Obj list, Int pos)
+EXPORT_INLINE Obj ELM_LIST(Obj list, Int pos)
 {
     Obj ret = (*ElmListFuncs[TNUM_OBJ(list)])(list, pos);
     GAP_ASSERT(ret != 0);
@@ -323,14 +318,14 @@ static inline Obj ELM_LIST(Obj list, Int pos)
 
 /****************************************************************************
 **
-*F  ELM2_LIST( <list>, <pos1>, <pos2> ) . . . . select an element from a list
+*F  ELM_MAT( <list>, <row>, <col> ) . . . . select an element from a list
 **
-**  'ELM2_LIST' implements 'list[pos1,pos2]', which for lists of lists is
-**  defined as 'list[pos1][pos2]', and for other kind of objects is handled
-**  by method dispatch through the GAP attribute 'ELM_LIST' with three
+**  'ELM_MAT' implements 'list[row,col]', which for lists of lists is
+**  defined as 'list[row][col]', and for other kind of objects is handled
+**  by method dispatch through the GAP operation 'ELM_LIST' with three
 **  arguments.
 */
-extern Obj ELM2_LIST(Obj list, Obj pos1, Obj pos2);
+Obj ELM_MAT(Obj list, Obj row, Obj col);
 
 
 /****************************************************************************
@@ -354,7 +349,7 @@ extern Obj (*ElmvListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 **  that <list> is a list and that <pos> is less  than or equal to the length
 **  of <list>.
 */
-static inline Obj ELMV_LIST(Obj list, Int pos)
+EXPORT_INLINE Obj ELMV_LIST(Obj list, Int pos)
 {
     GAP_ASSERT(pos > 0);
     GAP_ASSERT(pos <= LEN_LIST(list));
@@ -381,7 +376,7 @@ extern Obj (*ElmwListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 **  'ELMW_LIST' does the same as 'ELMV_LIST', but  the caller also guarantees
 **  that <list> has an assigned object at the position <pos>.
 */
-static inline Obj ELMW_LIST(Obj list, Int pos)
+EXPORT_INLINE Obj ELMW_LIST(Obj list, Int pos)
 {
     GAP_ASSERT(pos > 0);
     GAP_ASSERT(pos <= LEN_LIST(list));
@@ -420,7 +415,7 @@ extern Obj (*ElmsListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Obj poss );
 **  It is the responsibility of the  caller to ensure  that <poss> is a dense
 **  list of positive integers.
 */
-static inline Obj ELMS_LIST(Obj list, Obj poss)
+EXPORT_INLINE Obj ELMS_LIST(Obj list, Obj poss)
 {
     GAP_ASSERT(IS_POSS_LIST(poss));
     return (*ElmsListFuncs[TNUM_OBJ(list)])(list, poss);
@@ -431,28 +426,21 @@ static inline Obj ELMS_LIST(Obj list, Obj poss)
 **
 *F  ElmsListDefault( <list>, <poss> ) . . .  default function for 'ELMS_LIST'
 */
-extern Obj ElmsListDefault (
-            Obj                 list,
-            Obj                 poss );
+Obj ElmsListDefault(Obj list, Obj poss);
 
 
 /****************************************************************************
 **
 *F  ElmsListCheck( <list>, <poss> ) . . . . . . . . .  'ELMS_LIST' with check
 */
-extern Obj ElmsListCheck (
-    Obj                 list,
-    Obj                 poss );
+Obj ElmsListCheck(Obj list, Obj poss);
 
 
 /****************************************************************************
 **
 *F  ElmsListLevelCheck( <lists>, <poss>, <level> ) 'ElmsListLevel' with check
 */
-extern void ElmsListLevelCheck (
-    Obj                 lists,
-    Obj                 poss,
-    Int                 level );
+void ElmsListLevelCheck(Obj lists, Obj poss, Int level);
 
 
 /****************************************************************************
@@ -472,17 +460,20 @@ extern void ElmsListLevelCheck (
 
 extern void             (*UnbListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 
-extern void UNBB_LIST( Obj list, Obj pos );
+void UNBB_LIST(Obj list, Obj pos);
 
-extern void UnbListDefault( Obj list, Int  pos );
-
-static inline void UNB_LIST(Obj list, Int pos)
+EXPORT_INLINE void UNB_LIST(Obj list, Int pos)
 {
     GAP_ASSERT(pos > 0);
+    UInt tnum = TNUM_OBJ(list);
+    if (FIRST_LIST_TNUM <= tnum && tnum <= LAST_LIST_TNUM &&
+        (tnum & IMMUTABLE)) {
+        ErrorMayQuit("List Unbind: <list> must be a mutable list", 0, 0);
+    }
     (*UnbListFuncs[TNUM_OBJ(list)])(list, pos);
 }
 
-extern void UNB2_LIST(Obj list, Obj pos1, Obj pos2);
+void UNB_MAT(Obj list, Obj row, Obj col);
 
 
 /****************************************************************************
@@ -505,17 +496,16 @@ extern void UNB2_LIST(Obj list, Obj pos1, Obj pos2);
 
 extern  void            (*AssListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos, Obj obj );
 
-extern void ASSB_LIST( Obj list, Obj pos, Obj obj );
+void ASSB_LIST(Obj list, Obj pos, Obj obj);
 
-static inline void ASS_LIST(Obj list, Int pos, Obj obj)
+EXPORT_INLINE void ASS_LIST(Obj list, Int pos, Obj obj)
 {
     GAP_ASSERT(pos > 0);
     GAP_ASSERT(obj != 0);
     UInt tnum = TNUM_OBJ(list);
     if (FIRST_LIST_TNUM <= tnum && tnum <= LAST_LIST_TNUM &&
         (tnum & IMMUTABLE)) {
-        ErrorReturnVoid("List Assignment: <list> must be a mutable list", 0,
-                        0, "you can 'return;' and ignore the assignment");
+        ErrorMayQuit("List Assignment: <list> must be a mutable list", 0, 0);
     }
     (*AssListFuncs[TNUM_OBJ(list)])(list, pos, obj);
 }
@@ -523,14 +513,14 @@ static inline void ASS_LIST(Obj list, Int pos, Obj obj)
 
 /****************************************************************************
 **
-*F  ASS2_LIST( <list>, <pos1>, <pos2>, <obj> )
+*F  ASS_MAT( <mat>, <row>, <col>, <obj> )
 **
-**  'ASS2_LIST' implements 'list[pos1,pos2]:=obj', which for lists of lists
-**  is defined as 'list[pos1][pos2]:=obj', and for other kind of objects is
-**  handled by method dispatch through the GAP attribute 'ASS_LIST' with
+**  'ASS_MAT' implements 'mat[row,col]:=obj', which for lists of lists
+**  is defined as 'mat[row][col]:=obj', and for other kind of objects is
+**  handled by method dispatch through the GAP operation 'ASS_LIST' with
 **  three arguments.
 */
-extern void ASS2_LIST(Obj list, Obj pos1, Obj pos2, Obj obj);
+void ASS_MAT(Obj list, Obj row, Obj col, Obj obj);
 
 
 /****************************************************************************
@@ -553,12 +543,9 @@ extern void ASS2_LIST(Obj list, Obj pos1, Obj pos2, Obj obj);
 */
 extern  void            (*AsssListFuncs[LAST_REAL_TNUM+1]) (Obj list, Obj poss, Obj objs);
 
-extern  void            AsssListDefault (
-            Obj                 list,
-            Obj                 poss,
-            Obj                 objs );
+void AsssListDefault(Obj list, Obj poss, Obj objs);
 
-static inline void ASSS_LIST(Obj list, Obj poss, Obj objs)
+EXPORT_INLINE void ASSS_LIST(Obj list, Obj poss, Obj objs)
 {
     GAP_ASSERT(IS_POSS_LIST(poss));
     GAP_ASSERT(IS_DENSE_LIST(objs));
@@ -566,8 +553,7 @@ static inline void ASSS_LIST(Obj list, Obj poss, Obj objs)
     UInt tnum = TNUM_OBJ(list);
     if (FIRST_LIST_TNUM <= tnum && tnum <= LAST_LIST_TNUM &&
         (tnum & IMMUTABLE)) {
-        ErrorReturnVoid("List Assignments: <list> must be a mutable list", 0,
-                        0, "you can 'return;' and ignore the assignment");
+        ErrorMayQuit("List Assignments: <list> must be a mutable list", 0, 0);
     }
     (*AsssListFuncs[TNUM_OBJ(list)])(list, poss, objs);
 }
@@ -576,10 +562,7 @@ static inline void ASSS_LIST(Obj list, Obj poss, Obj objs)
 **
 *F  AssListObject( <list>, <pos>, <obj> ) . . . . . . . assign to list object
 */
-extern void AssListObject (
-    Obj                 list,
-    Int                 pos,
-    Obj                 obj );
+void AssListObject(Obj list, Int pos, Obj obj);
 
 
 /****************************************************************************
@@ -599,10 +582,7 @@ extern void AssListObject (
 
 extern  Int             (*IsTableListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
-extern  Int             IsTableListDefault (
-            Obj                 list );
-
-static inline Int IS_TABLE_LIST(Obj list)
+EXPORT_INLINE Int IS_TABLE_LIST(Obj list)
 {
     return (*IsTableListFuncs[TNUM_OBJ(list)])(list);
 }
@@ -624,26 +604,11 @@ static inline Int IS_TABLE_LIST(Obj list)
 
 extern  Int             (*IsSSortListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
-extern  Int             IsSSortListDefault (
-            Obj                 list );
-
-static inline Int IS_SSORT_LIST(Obj list)
+EXPORT_INLINE Int IS_SSORT_LIST(Obj list)
 {
     return (*IsSSortListFuncs[TNUM_OBJ(list)])(list);
 }
 
-/****************************************************************************
-**
-*F  IsSSortListProp
-*/
-extern Obj IsSSortListProp;
-
-
-/****************************************************************************
-**
-*F  IsNSortListProp
-*/
-extern Obj IsNSortListProp;
 
 /****************************************************************************
 **
@@ -661,12 +626,7 @@ extern Obj IsNSortListProp;
 
 extern  Obj             (*PosListFuncs[LAST_REAL_TNUM+1]) (Obj list, Obj obj, Obj start);
 
-extern  Obj             PosListDefault (
-            Obj                 list,
-            Obj                 obj,
-            Obj                 start );
-
-static inline Obj POS_LIST(Obj list, Obj obj, Obj start)
+EXPORT_INLINE Obj POS_LIST(Obj list, Obj obj, Obj start)
 {
     return (*PosListFuncs[TNUM_OBJ(list)])(list, obj, start);
 }
@@ -691,10 +651,7 @@ static inline Obj POS_LIST(Obj list, Obj obj, Obj start)
 **  require 'ELMS_LIST' (resp.  the   functions implementing 'ELMS_LIST')  to
 **  satisfy this requirements.
 */
-extern  void            ElmListLevel (
-            Obj                 lists,
-            Obj                 pos,
-            Int                 level );
+void ElmListLevel(Obj lists, Obj pos, Int level);
 
 
 /****************************************************************************
@@ -718,10 +675,7 @@ extern  void            ElmListLevel (
 **  require 'ELMS_LIST' (resp.  the   functions implementing 'ELMS_LIST')  to
 **  satisfy this requirements.
 */
-extern  void            ElmsListLevel (
-            Obj                 lists,
-            Obj                 poss,
-            Int                 level );
+void ElmsListLevel(Obj lists, Obj poss, Int level);
 
 
 /****************************************************************************
@@ -745,11 +699,7 @@ extern  void            ElmsListLevel (
 **  require  'ELMS_LIST'  (resp.  the functions implementing  'ELMS_LIST') to
 **  satisfy this requirements.
 */
-extern  void            AssListLevel (
-            Obj                 lists,
-            Obj                 pos,
-            Obj                 objs,
-            Int                 level );
+void AssListLevel(Obj lists, Obj pos, Obj objs, Int level);
 
 
 /****************************************************************************
@@ -774,11 +724,7 @@ extern  void            AssListLevel (
 **  require 'ELMS_LIST' (resp.   the functions  implementing 'ELMS_LIST')  to
 **  satisfy this requirements.
 */
-extern  void            AsssListLevel (
-            Obj                 lists,
-            Obj                 poss,
-            Obj                 objs,
-            Int                 lev );
+void AsssListLevel(Obj lists, Obj poss, Obj objs, Int lev);
 
 
 /****************************************************************************
@@ -795,7 +741,7 @@ extern  void            AsssListLevel (
 
 extern  void            (*PlainListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
-static inline void PLAIN_LIST(Obj list)
+EXPORT_INLINE void PLAIN_LIST(Obj list)
 {
     ((*PlainListFuncs[TNUM_OBJ(list)])(list));
 }
@@ -805,8 +751,7 @@ static inline void PLAIN_LIST(Obj list)
 **
 *F  TYPES_LIST_FAM(<fam>) . . . . . . .  list of types of lists over a family
 */
-extern  Obj             TYPES_LIST_FAM (
-            Obj                 fam );
+Obj TYPES_LIST_FAM(Obj fam);
 
 
 /****************************************************************************
@@ -814,7 +759,7 @@ extern  Obj             TYPES_LIST_FAM (
 *F * * * * * * * * * * * * * important filters  * * * * * * * * * * * * * * *
 */
 
-enum {
+typedef enum {
     /** filter number for 'IsSSortedList' */
     FN_IS_SSORT,
 
@@ -840,7 +785,7 @@ enum {
     FN_IS_RECT,
 
     LAST_FN = FN_IS_RECT
-};
+} FilterNumber;
 
 
 /****************************************************************************
@@ -852,8 +797,13 @@ enum {
 **
 **  'SetFiltListTNums[<tnum>][<fnum>]'
 **
-**  The macro  'SET_FILT_LIST' is  used  to  set  the filter  for a  list  by
-**  changing its type number.
+**  'SET_FILT_LIST' is used to set the filter for a list by changing its
+**  type number.
+**
+**  Two values are treated specially:
+**    0 : The default. This tnum should not change.
+**   (UInt)-1 : It is an error to apply this filter (for example,
+**              marking an empty list as not sorted)
 */
 extern UInt SetFiltListTNums [ LAST_REAL_TNUM ] [ LAST_FN + 1 ];
 
@@ -862,23 +812,24 @@ extern UInt SetFiltListTNums [ LAST_REAL_TNUM ] [ LAST_FN + 1 ];
 **
 *F  SET_FILT_LIST( <list>, <fnum> ) . . . . . . . . . . . . . .  set a filter
 */
-#define SET_FILT_LIST(list,fn) \
-  do { \
-    UInt     new; \
-    new = SetFiltListTNums[TNUM_OBJ(list)][fn]; \
-    if ( new != (UInt)-1 ) \
-      RetypeBagIfWritable( list, new ); \
-     else { \
-      Pr( "#E  SET_FILT_LIST[%s][%d] in ", (Int)TNAM_OBJ(list), fn ); \
-      Pr( "%s:%d\n", (Int)__FILE__, (Int)__LINE__); \
-      }  \
-  } while (0)
+EXPORT_INLINE void SET_FILT_LIST(Obj list, FilterNumber fn)
+{
+    UInt n = SetFiltListTNums[TNUM_OBJ(list)][fn];
+    if (n == 0) {
+        return;
+    }
+    if (n != (UInt)-1)
+        RetypeBagIfWritable(list, n);
+    else {
+        Pr("#E  SET_FILT_LIST[%s][%d]\n", (Int)TNAM_OBJ(list), fn);
+    }
+}
 
 /****************************************************************************
 **
-*F  FuncSET_FILTER_LIST( <self>, <list>, <filter> ) . . . . . . .  set filter
+*F  SET_FILTER_LIST( <list>, <filter> ) . . . . . . . . . . . . .  set filter
 */
-extern Obj FuncSET_FILTER_LIST ( Obj self, Obj list, Obj filter );
+Obj SET_FILTER_LIST(Obj list, Obj filter);
 
 /****************************************************************************
 **
@@ -889,8 +840,10 @@ extern Obj FuncSET_FILTER_LIST ( Obj self, Obj list, Obj filter );
 **
 **  'ResetFiltListTNums[<tnum>][<fnum>]'
 **
-**  The macro 'RESET_FILT_LIST' is used  to  set  the filter  for a  list  by
-**  changing its type number.
+**  'RESET_FILT_LIST' is used to set the filter for a list by changing its
+**  type number.
+**
+**  The same special values are used as SetFiltListTNums.
 */
 extern UInt ResetFiltListTNums [ LAST_REAL_TNUM ] [ LAST_FN + 1 ];
 
@@ -899,18 +852,18 @@ extern UInt ResetFiltListTNums [ LAST_REAL_TNUM ] [ LAST_FN + 1 ];
 **
 *F  RESET_FILT_LIST( <list>, <fnum> ) . . . . . . . . . . . .  reset a filter
 */
-#define RESET_FILT_LIST(list,fn) \
-  do { \
-    UInt     new; \
-    new = ResetFiltListTNums[TNUM_OBJ(list)][fn]; \
-    if ( new != (UInt) -1 ) \
-      RetypeBag( list, new ); \
-    else  { \
-      Pr( "#E  RESET_FILT_LIST[%s][%d] in ", (Int)TNAM_OBJ(list), fn ); \
-      Pr( "%s:%d\n", (Int)__FILE__, (Int)__LINE__); \
-      }  \
-  } while (0)
-
+EXPORT_INLINE void RESET_FILT_LIST(Obj list, FilterNumber fn)
+{
+    UInt n = ResetFiltListTNums[TNUM_OBJ(list)][fn];
+    if (n == 0) {
+        return;
+    }
+    if (n != (UInt)-1)
+        RetypeBag(list, n);
+    else {
+        Pr("#E  RESET_FILT_LIST[%s][%d]\n", (Int)TNAM_OBJ(list), fn);
+    }
+}
 
 /****************************************************************************
 **
@@ -935,7 +888,7 @@ extern Int HasFiltListTNums [ LAST_REAL_TNUM ] [ LAST_FN + 1 ];
 **
 **  'ClearPropsTNums[<tnum>]'
 **
-**  The macro 'CLEAR_PROPS_LIST' is used to clear all properties of a list.
+**  'CLEAR_PROPS_LIST' is used to clear all properties of a list.
 */
 extern UInt ClearFiltsTNums [ LAST_REAL_TNUM ];
 
@@ -944,17 +897,13 @@ extern UInt ClearFiltsTNums [ LAST_REAL_TNUM ];
 **
 *F  CLEAR_FILTS_LIST( <list> )  . . . . . . . . . . . . . .  clear properties
 */
-#define CLEAR_FILTS_LIST(list) \
-  do { \
-    UInt     new; \
-    new = ClearFiltsTNums[TNUM_OBJ(list)]; \
-    if ( new > 0 ) \
-      RetypeBag( list, new ); \
-/*    else if ( new < 0 ) { \
-      Pr( "#E  CLEAR_FILTS_LIST[%s] in ", (Int)TNAM_OBJ(list), 0 ); \
-      Pr( "%s:%d\n", (Int)__FILE__, (Int)__LINE__); \
-      } */ \
-  } while (0)
+EXPORT_INLINE void CLEAR_FILTS_LIST(Obj list)
+{
+    UInt n = ClearFiltsTNums[TNUM_OBJ(list)];
+    if (n > 0) {
+        RetypeBag(list, n);
+    }
+}
 
 
 /****************************************************************************
@@ -967,21 +916,14 @@ extern UInt ClearFiltsTNums [ LAST_REAL_TNUM ];
 **
 *F  AsssListCheck( <list>, <poss>, <rhss> ) . . . . . . . . . . . . ASSS_LIST
 */
-extern void AsssListCheck (
-    Obj                 list,
-    Obj                 poss,
-    Obj                 rhss );
+void AsssListCheck(Obj list, Obj poss, Obj rhss);
 
 
 /****************************************************************************
 **
 *F  AsssListLevelCheck( <lists>, <poss>, <rhss>, <level> )  . . AsssListLevel
 */
-extern void AsssListLevelCheck (
-    Obj                 lists,
-    Obj                 poss,
-    Obj                 rhss,
-    Int                 level );
+void AsssListLevelCheck(Obj lists, Obj poss, Obj rhss, Int level);
 
 
 /****************************************************************************

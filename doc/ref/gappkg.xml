@@ -142,7 +142,7 @@ modules, call it with the <C>-d</C> option, for example:
 $ gap4/bin/i386-ibm-linux-gcc2/gac -d test.c
 ]]></Log>
 <P/>
-This will produce a file <File>test.so</File>, which then can be loaded into &GAP;
+This will produce a file <F>test.so</F>, which then can be loaded into &GAP;
 with <Ref Func="LoadDynamicModule"/>.
 
 </Subsection>
@@ -303,7 +303,7 @@ We now describe the above files and directories in more details:
 <Mark>
 <F>README</F></Mark>
 <Item>
-<Index Key="README" Subkey="for a GAP package"><C>README</C></Index>
+<Index Key="README" Subkey="for a GAP package"><F>README</F></Index>
 
 The filename may optionally have an extension, e.g. <F>.txt</F> or <F>.md</F>.
 <P/>
@@ -315,7 +315,7 @@ instructions should be repeated or referenced from the package's
 documentation, which  should be in the <F>doc</F> directory
 (see <Ref Sect="Writing Documentation and Tools Needed"/>).
 Authors' names and addresses should be repeated both in the package's 
-documentation and in the <File>PackageInfo.g</File> (see below).
+documentation and in the <F>PackageInfo.g</F> (see below).
 </Item>
 
 <Mark>
@@ -396,7 +396,7 @@ It may also be created using the <Package>PackageMaker</Package> mentioned above
 A &GAP; package <E>must</E> have a file <F>init.g</F>. 
 Typical <F>init.g</F> and <F>read.g</F> files should normally consist 
 entirely of <Ref Func="ReadPackage"/> commands (and possibly 
-also <Ref Func="Read"/> commands) for reading further files
+also <Ref Oper="Read"/> commands) for reading further files
 of the package. If the <Q>declaration</Q> and <Q>implementation</Q> parts of 
 the package are separated (and this is recommended), there should be a 
 <F>read.g</F> file. 
@@ -474,7 +474,7 @@ It is highly recommended that a package should have test files, which then
 should go in the <F>tst</F> directory. For a deposited package, a test file 
 with a basic test of the package (for example, to check that it works as 
 expected and/or that the manual examples are correct) may be specified in the 
-<File>PackageInfo.g</File> to be included in the &GAP; standard test suite
+<F>PackageInfo.g</F> to be included in the &GAP; standard test suite
 and run as a part of the &GAP; release preparation.
 More specific and time consuming tests are not supposed to be a part of the 
 &GAP; standard test suite but may be placed in the <F>tst</F> directory
@@ -487,7 +487,7 @@ to the test files formats and further recommendations.
 
 All other files can be organised as you like. But we suggest that you
 have a look at existing packages and use a similar scheme, for
-example, put examples in the <File>examples</File> subdirectory, data 
+example, put examples in the <F>examples</F> subdirectory, data 
 libraries in extra subdirectories, and so on.
 <P/>
 Sometimes there may be a need to include an empty directory in the
@@ -538,7 +538,7 @@ but if you use the &GAPDoc; package you should have no trouble in producing one.
 <P/>
 Moreover, using the 
 &GAPDoc; package, it is also possible to produce HTML version of the
-documentation supporting MathJax (<URL>http://www.mathjax.org/</URL>) 
+documentation supporting MathJax (<URL>https://www.mathjax.org/</URL>)
 for the high quality rendering of mathematical symbols while viewing 
 it online. For example, if you are viewing the HTML version of the manual, 
 compare how this formula will look with MathJax turned on/off:
@@ -954,7 +954,7 @@ of the packages in question are read.
 <P/>
 
 All package dependencies must be documented explicitly in the 
-<File>PackageInfo.g</File> file. It is important to properly
+<F>PackageInfo.g</F> file. It is important to properly
 identify package dependencies and make the right decision
 whether the other package should be <Q>needed</Q> or <Q>suggested</Q>.
 For example, declaring package as <Q>needed</Q> when <Q>suggested</Q> 
@@ -1248,7 +1248,7 @@ if this is not the case).
 This is especially important if the package is loaded automatically.
 <P/>
 The easiest way to accomplish this is to use
-<Ref Func="Filename" Label="for a directory and a string"/>
+<Ref Oper="Filename" Label="for a directory and a string"/>
 for checking for the actual binaries in the path given by
 <Ref Func="DirectoriesPackagePrograms"/>
 for the respective package.
@@ -1451,7 +1451,7 @@ the changes between versions "4.4.12", "4.5.1" and "4.5.2" than between
 versions "2008.12.17", "2011.04.15" and "2011.09.14". The concept of
 using version numbers to convey the meaning of the status of the code
 and the way it has been modified is known as <Q>Semantic Versioning</Q>,
-see <URL>http://semver.org/</URL> for further recommendations on its use.
+see <URL>https://semver.org/</URL> for further recommendations on its use.
 <P/>
 Since version information is duplicated in several places throughout the 
 package documentation, for &GAPDoc;-based manuals you may define the 
@@ -1513,7 +1513,7 @@ in the <F>PackageInfo.g</F> to be included in the &GAP; standard test suite.
 This file can either consist of calls of <Ref Func="TestDirectory"/> or
 <Ref Func="Test"/> (in this case, it is common to call it <F>testall.g</F>)
 or be itself a test file having an extension <F>.tst</F> and supposed to be 
-read via <Ref Oper="Test"/>. It is assumed that the
+read via <Ref Func="Test"/>. It is assumed that the
 latter case occurs if and only if the file contains the substring<P/>
 &nbsp;<C>"gap> START_TEST("</C>
 <P/>
@@ -1688,15 +1688,20 @@ the tests, for example:
 <Log><![CDATA[
 You should start GAP4 using `gap -A -x 80 -r -m 100m -o 1g -K 2g'.
 
-Architecture: x86_64-apple-darwin15.6.0-gcc-6-default64
+Architecture: SOMETHING-SOMETHING-gcc-default64
 
-testing: /Users/alexk/GITREPS/gap/tst/testinstall/alghom.tst
-     140 msec for alghom.tst        
-testing: /Users/alexk/GITREPS/gap/tst/testinstall/algmat.tst
-    1309 msec for algmat.tst        
-testing: /Users/alexk/GITREPS/gap/tst/testinstall/algsc.tst
-     500 msec for algsc.tst         
-... further lines deleted ...
+testing: ..../gap-4.X.Y/tst/testinstall/alghom.tst
+      84 ms (55 ms GC) and 2.90MB allocated for alghom.tst
+testing: ..../gap-4.X.Y/tst/testinstall/algmat.tst
+     839 ms (114 ms GC) and 219MB allocated for algmat.tst
+[ further lines deleted ]
+testing: ..../gap-4.X.Y/tst/testinstall/zmodnze.tst
+     127 ms (119 ms GC) and 1.29MB allocated for zmodnze.tst
+-----------------------------------
+total     62829 ms (24136 ms GC) and 8.61GB allocated
+              0 failures in 252 files
+
+#I  No errors detected while testing
 ]]></Log>
 <P/>
 
@@ -1775,7 +1780,7 @@ you to consider the GPL license for your packages, but you might wish to be more
 restrictive (for instance forbidding redistribution for profit) or less 
 restrictive (allowing your software to be incorporated into commercial 
 software). See <Q>Choosing a License for the Distribution of Your Package</Q>
-from <URL>http://www.gap-system.org/Packages/Authors/authors.html</URL> and also
+from <URL>https://www.gap-system.org/Packages/Authors/authors.html</URL> and also
 <URL>https://choosealicense.com/</URL> for further details. 
 <P/>
 
@@ -1787,7 +1792,7 @@ more explicit by making the exact reference to the GPL license, for example:
 <E>
 <Package>packagename</Package> is free software; you can redistribute it 
 and/or modify it under the terms of the 
-<URL Text="GNU General Public License">http://www.fsf.org/licenses/gpl.html</URL> 
+<URL Text="GNU General Public License">https://www.fsf.org/licenses/gpl.html</URL>
 as published by the Free Software Foundation; either version 2 of the License, 
 or (at your option) any later version.
 </E>
@@ -1865,9 +1870,9 @@ in the package).
 
 To use the conversion and repackaging service, you can provide any of 
 the four archive formats or even more than one, however you should 
-adhere to the following rule: text files in <File>.tar.gz</File> 
-and <File>.tar.bz2</File> archives must have UNIX style line breaks, 
-while text files in <File>-win.zip</File> archives must have 
+adhere to the following rule: text files in <F>.tar.gz</F> 
+and <F>.tar.bz2</F> archives must have UNIX style line breaks, 
+while text files in <F>-win.zip</F> archives must have 
 DOS/Windows line breaks. 
 <P/>
 
@@ -1892,7 +1897,7 @@ before &GAP; defaults will be applied;
 </List>     
 <P/>
 
-Utility functions from the <File>lib/lbutil.g</File> file in &GAP;, namely
+Utility functions from the <F>lib/lbutil.g</F> file in &GAP;, namely
 <C>DosUnixLinebreaks</C>, <C>UnixDosLinebreaks</C>, <C>MacUnixLinebreaks</C>
 may be helpful. They are described in the comments to their source code.
 <P/>
@@ -1937,7 +1942,7 @@ version of your archive and we produce also a <C>.tar.bz2</C>, <C>.zip</C>
 and a <C>-win.zip</C> version from it). 
 <P/>
 Please also consider submitting your package to the &GAP; package refereeing 
-process (see <URL>http://www.gap-system.org/Contacts/submit.html</URL> for
+process (see <URL>https://www.gap-system.org/Contacts/submit.html</URL> for
 further information).
 <P/>
 For packages hosted on GitHub publishing package release and establishing its
@@ -1973,14 +1978,14 @@ now <Q>needs</Q> certain packages (for instance &GAPDoc;) and <Q>suggests</Q> ot
 (typically the packages that were autoloaded). The decisions 
 which packages &GAP; should need or suggest are made by developers based on 
 technical criteria. They can be easily overridden by a user 
-using the new <File>gap.ini</File> 
+using the new <F>gap.ini</F> 
 (see <Ref Sect="sect:gap.ini"/>). 
 The default file ensures that all formerly autoloaded packages are 
 still loaded if present.
 </Item>
 
 <Item>
-Optional <File>~/.gap</File> directory for user's customisations which may
+Optional <F>~/.gap</F> directory for user's customisations which may
 contain e.g. locally installed packages (see <Ref Sect="GAP Root Directories"/>). 
 If package installation instructions explain how to install the package in a 
 non-standard location, they should mention this.
@@ -2020,7 +2025,7 @@ well as to everyone involved in the depositing and refereeing of &GAP; packages.
     Test that the package:
     <List>
     <Item>
-    does not break <File>testinstall.g</File> and <File>teststandard.g</File>, 
+    does not break <F>testinstall.g</F> and <F>teststandard.g</F>, 
     and does not slow them down noticeably
     (see <Ref Label="Testing a GAP package with the GAP standard test suite"/>);
     </Item>    
@@ -2036,7 +2041,7 @@ well as to everyone involved in the depositing and refereeing of &GAP; packages.
 </Item>	
 
 <Item>
-    <File>PackageInfo.g</File> file:
+    <F>PackageInfo.g</F> file:
     <List>
     <Item>
         correctly specifies package version, release date, and package authors;
@@ -2067,7 +2072,7 @@ well as to everyone involved in the depositing and refereeing of &GAP; packages.
     </Item>
     <Item>
         has the same version, release date and package authors 
-        details as stated in the <File>PackageInfo.g</File> file;
+        details as stated in the <F>PackageInfo.g</F> file;
     </Item>
     <Item>
         is searchable using the &GAP; help system in all formats
@@ -2096,8 +2101,8 @@ well as to everyone involved in the depositing and refereeing of &GAP; packages.
     </Item>
     <Item>
         contain no hidden system files and directories that are not supposed 
-        to be included in the package, e.g. <File>.gitignore</File>, 
-        <File>.git</File> etc.;
+        to be included in the package, e.g. <F>.gitignore</F>, 
+        <F>.git</F> etc.;
     </Item>
     </List>
 </Item>	
@@ -2107,7 +2112,7 @@ well as to everyone involved in the depositing and refereeing of &GAP; packages.
     <List>
     <Item>
         not only the package archive(s), but also the 
-        <File>PackageInfo.g</File> and <File>README</File> files
+        <F>PackageInfo.g</F> and <F>README</F> files
         are available online;
     </Item>
     </List>

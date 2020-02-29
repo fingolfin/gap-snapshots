@@ -379,9 +379,9 @@
   21701, 23209, 44497, 86243, 110503, 132049, 216091, 756839, 859433, 1257787,
   1398269,   2976221,  3021377,  6972593,  13466917,  20996011,  24036583  and
   25964951.  Please  find more up to date information about Mersenne primes at
-  [7Xhttp://www.mersenne.org[107X. It is not known whether odd perfect integers exist,
-  however [BC89]  show  that  any  such integer must have at least 300 decimal
-  digits.[133X
+  [7Xhttps://www.mersenne.org[107X.  It  is  not  known  whether  odd perfect integers
+  exist,  however [BC89]  show  that  any  such integer must have at least 300
+  decimal digits.[133X
   
   [33X[0;0Y[2XSigma[102X usually spends most of its time factoring [3Xn[103X (see [2XFactorsInt[102X ([14X14.4-7[114X)).[133X
   

@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  algfld.gd                   GAP Library                  Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1999 School Math and Comp. Sci., University of St  Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the categories,  attributes, properties and operations
 ##  for algebraic extensions of fields and their elements
@@ -114,7 +115,7 @@ DeclareOperation( "AlgebraicElementsFamily",
 ##  <A>K</A>.
 ##  The  polynomial <A>f</A> is the <Ref Attr="DefiningPolynomial"/> value
 ##  of <A>L</A> and the attribute
-##  <Ref Func="RootOfDefiningPolynomial"/>
+##  <Ref Attr="RootOfDefiningPolynomial"/>
 ##  of <A>L</A> holds a root of <A>f</A> in <A>L</A>.
 ##  By default this root is printed as <C>a</C>, this string can be
 ##  overwritten with the optional argument <A>nam</A>. <P/>

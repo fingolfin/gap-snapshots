@@ -122,6 +122,8 @@
 123456789012345678901234567890123456789012345678901234567890
 </pre></div>
 
+<p>Note that in a few places, only certain small integer values can be used. A <em>small integer</em> (also referred to as <em>immediate integer</em>) is an integer <span class="SimpleMath">\(n\)</span> satisfying <code class="code">INTOBJ_MIN</code> <span class="SimpleMath">\( \leq n \leq \)</span> <code class="code">INTOBJ_MAX</code>, where <code class="code">INTOBJ_MIN</code> and <code class="code">INTOBJ_MAX</code> equal either <span class="SimpleMath">\(-2^{28}\)</span> and <span class="SimpleMath">\(2^{28}-1\)</span> (on 32-bit systems) or <span class="SimpleMath">\(-2^{60}\)</span> and <span class="SimpleMath">\(2^{60}-1\)</span> (on 64-bit systems). For example, the elements of a range are restricted to small integers (see <a href="chap21_mj.html#X79596BDE7CAF8491"><span class="RefLink">21.22</span></a>).</p>
+
 <p>Many more functions that are mainly related to the prime residue group of integers modulo an integer are described in chapter <a href="chap15_mj.html#X7FB995737B7ED8A2"><span class="RefLink">15</span></a>, and functions dealing with combinatorics can be found in chapter <a href="chap16_mj.html#X7BDA99EE7CEADA7C"><span class="RefLink">16</span></a>.</p>
 
 <p><a id="X838230CE810107A3" name="X838230CE810107A3"></a></p>
@@ -725,7 +727,7 @@ false
 
 </li>
 </ul>
-<p>Increasing the value of the argument <var class="Arg">effort</var> by one usually results in an increase of the runtime requirements by a factor of (very roughly!) 3 to 10. (Also see <code class="func">CheapFactorsInt</code> (<a href="../../pkg/EDIM-1.3.3/doc/chap1_mj.html#X7BAB977C7EB05067"><span class="RefLink">EDIM: CheapFactorsInt</span></a>)).</p>
+<p>Increasing the value of the argument <var class="Arg">effort</var> by one usually results in an increase of the runtime requirements by a factor of (very roughly!) 3 to 10. (Also see <code class="func">CheapFactorsInt</code> (<a href="../../pkg/EDIM-1.3.5/doc/chap1_mj.html#X7BAB977C7EB05067"><span class="RefLink">EDIM: CheapFactorsInt</span></a>)).</p>
 
 
 <div class="example"><pre>
@@ -954,8 +956,9 @@ Check Digit is 2
 <h5>14.7-2 Random</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Random</code>( <var class="Arg">rs</var>, <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Random</code>( <var class="Arg">rs</var>, <var class="Arg">coll</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Random</code>( <var class="Arg">rs</var>, <var class="Arg">low</var>, <var class="Arg">high</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>This operation returns a random element from list <var class="Arg">list</var>, or an integer in the range from the given (possibly large) integers <var class="Arg">low</var> to <var class="Arg">high</var>, respectively.</p>
+<p>This operation returns a random element from the list <var class="Arg">list</var> or the collection <var class="Arg">coll</var>, or an integer in the range from the given (possibly large) integers <var class="Arg">low</var> to <var class="Arg">high</var>, respectively.</p>
 
 <p>The choice should only depend on the random source <var class="Arg">rs</var> and have no effect on other random sources.</p>
 

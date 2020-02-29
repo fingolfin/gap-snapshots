@@ -253,7 +253,7 @@ Transformation( [ 2, 4, 2, 6, 6, 7, 8, 2, 10, 10, 11, 8 ] )
 
 <p><code class="func">TransformationOp</code> returns the transformation that corresponds to the action of the object <var class="Arg">obj</var> on the domain or list <var class="Arg">list</var> via the function <var class="Arg">func</var>. If the optional third argument <var class="Arg">func</var> is not specified, then the action <code class="func">OnPoints</code> (<a href="chap41.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>) is used by default. Note that the returned transformation refers to the positions in <var class="Arg">list</var> even if <var class="Arg">list</var> itself consists of integers.</p>
 
-<p>This function is the analogue in the context of transformations of <code class="func">Permutation</code> (<span class="RefLink">Reference: Permutation for a group, an action domain, etc.</span>).</p>
+<p>This function is the analogue in the context of transformations of <code class="func">Permutation</code> (<a href="chap41.html#X7807A33381DCAB26"><span class="RefLink">41.9-1</span></a>).</p>
 
 <p>If <var class="Arg">obj</var> does not map elements of <var class="Arg">list</var> into <var class="Arg">list</var>, then <code class="keyw">fail</code> is returned.</p>
 
@@ -469,7 +469,7 @@ fail
 
 </dd>
 <dt><strong class="Mark"><code class="code"><var class="Arg">f</var> ^ <var class="Arg">g</var></code></strong></dt>
-<dd><p>returns <code class="code"><var class="Arg">g</var> ^ -1 * <var class="Arg">f</var> * <var class="Arg">g</var></code> when <var class="Arg">f</var> is a transformation and <var class="Arg">g</var> is a permutation <code class="func">\^</code> (<span class="RefLink">Reference: ^</span>). This operation requires essentially the same number of steps as multiplying a transformation by a permutation, which is approximately one third of the number required to first invert <var class="Arg">g</var>, take the product with <var class="Arg">f</var>, and then the product with <var class="Arg">g</var>.</p>
+<dd><p>returns <code class="code"><var class="Arg">g</var> ^ -1 * <var class="Arg">f</var> * <var class="Arg">g</var></code> when <var class="Arg">f</var> is a transformation and <var class="Arg">g</var> is a permutation <code class="func">\^</code> (<a href="chap31.html#X8481C9B97B214C23"><span class="RefLink">31.12-1</span></a>). This operation requires essentially the same number of steps as multiplying a transformation by a permutation, which is approximately one third of the number required to first invert <var class="Arg">g</var>, take the product with <var class="Arg">f</var>, and then the product with <var class="Arg">g</var>.</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code"><var class="Arg">f</var> * <var class="Arg">g</var></code></strong></dt>

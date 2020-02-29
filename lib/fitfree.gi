@@ -1,9 +1,12 @@
 #############################################################################
 ##
-#W  fitfree.gi                  GAP library                  Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2012 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains functions using the trivial-fitting paradigm.
 ##  They are representation independent and will work for permutation and
@@ -11,7 +14,7 @@
 ##
 
 InstallGlobalFunction(FittingFreeSubgroupSetup,function(G,U)
-local cache,ffs,pcisom,rest,it,kpc,k,x,ker,r;
+local cache,ffs,pcisom,rest,it,kpc,k,x,ker,r,pool,i,xx,inv,pregens;
   ffs:=FittingFreeLiftSetup(G);
 
   # result cached?
@@ -28,7 +31,21 @@ local cache,ffs,pcisom,rest,it,kpc,k,x,ker,r;
 
   pcisom:=ffs.pcisom;
 
-  rest:=RestrictedMapping(ffs.factorhom,U);
+  #rest:=RestrictedMapping(ffs.factorhom,U);
+  if IsPermGroup(U) and AssertionLevel()>1 then
+    rest:=GroupHomomorphismByImages(U,Range(ffs.factorhom),GeneratorsOfGroup(U),
+      List(GeneratorsOfGroup(U),x->ImagesRepresentative(ffs.factorhom,x)));
+  else
+    RUN_IN_GGMBI:=true; # hack to skip Nice treatment
+    rest:=GroupHomomorphismByImagesNC(U,Range(ffs.factorhom),GeneratorsOfGroup(U),
+      List(GeneratorsOfGroup(U),x->ImagesRepresentative(ffs.factorhom,x)));
+    RUN_IN_GGMBI:=false;
+  fi;
+  Assert(1,rest<>fail);
+
+  if HasRecogDecompinfoHomomorphism(ffs.factorhom) then
+    SetRecogDecompinfoHomomorphism(rest,RecogDecompinfoHomomorphism(ffs.factorhom));
+  fi;
 
   # in radical?
   if ForAll(MappingGeneratorsImages(rest)[2],IsOne) then
@@ -40,13 +57,24 @@ local cache,ffs,pcisom,rest,it,kpc,k,x,ker,r;
     k:=ffs.pcgs;
   else
 
-    it:=CoKernelGensIterator(RestrictedInverseGeneralMapping(rest));
+    inv:=RestrictedInverseGeneralMapping(rest);
+    pregens:=List(SmallGeneratingSet(Image(rest)),
+      x->ImagesRepresentative(inv,x));
+    it:=CoKernelGensIterator(inv);
     kpc:=TrivialSubgroup(Image(pcisom));
     while not IsDoneIterator(it) do
-      x:=ImagesRepresentative(pcisom,NextIterator(it));
-      if not x in kpc then
-	kpc:=ClosureGroup(kpc,x);
-      fi;
+      x:=NextIterator(it);
+      pool:=[x];
+      for x in pool do
+        xx:=ImagesRepresentative(pcisom,x);
+        if not xx in kpc then
+          kpc:=ClosureGroup(kpc,xx);
+          for i in pregens do
+            Add(pool,x^i);
+          od;
+        fi;
+      od;
+      #Print("|pool|=",Length(pool),"\n");
     od;
     SetSize(U,Size(Image(rest))*Size(kpc));
     k:=InducedPcgs(FamilyPcgs(Image(pcisom)),kpc);
@@ -71,13 +99,17 @@ local cache,ffs,pcisom,rest,it,kpc,k,x,ker,r;
 	    serdepths:=List(ffs.depths,y->First([1..Length(r)],x->r[x]>=y))
 	    );
   Add(cache,[ffs,r]); # keep
-  SetSize(U,Product(RelativeOrders(k))*Size(Image(rest)));
+  if Length(k)=0 then
+    SetSize(U,Size(Image(rest)));
+  else
+    SetSize(U,Product(RelativeOrders(k))*Size(Image(rest)));
+  fi;
   return r;
 
 end);
 
 InstallGlobalFunction(SubgroupByFittingFreeData,function(G,gens,imgs,ipcgs)
-local ffs,hom,U,rest,ker,r,p,l,i,depths;
+local ffs,hom,U,rest,ker,r,p,l,i,depths,pcisom;
 
   ffs:=FittingFreeLiftSetup(G);
   # get back to initial group -- dont induce of induce
@@ -108,7 +140,11 @@ local ffs,hom,U,rest,ker,r,p,l,i,depths;
   # transfer the IndicesEANormalSteps
   if ffs.pcgs<>ipcgs and HasIndicesEANormalSteps(ffs.pcgs) then
     U:=IndicesEANormalSteps(ffs.pcgs);
-    r:=ipcgs!.depthsInParent;
+    if IsBound(ipcgs!.depthsInParent) then
+      r:=ipcgs!.depthsInParent;
+    else
+      r:=List(ipcgs,x->DepthOfPcElement(ffs.pcgs,x));
+    fi;
     l:=[];
     for i in U{[1..Length(U)-1]} do # last one is length+1
       p:=PositionProperty(r,x->x>=i);
@@ -132,7 +168,7 @@ local ffs,hom,U,rest,ker,r,p,l,i,depths;
     rest:=GroupHomomorphismByImagesNC(U,Range(hom),gens,imgs);
     RUN_IN_GGMBI:=false;
   fi;
-  if rest=fail then Error("can't build homomorphism"); fi;
+  Assert(1,rest<>fail);
 
   if HasRecogDecompinfoHomomorphism(hom) then
     SetRecogDecompinfoHomomorphism(rest,RecogDecompinfoHomomorphism(hom));
@@ -168,10 +204,20 @@ local ffs,hom,U,rest,ker,r,p,l,i,depths;
 
   # FittingFreeLiftSetup for U, if correct
   if Size(RadicalGroup(Image(rest,U)))=1 then
+    if ipcgs=MappingGeneratorsImages(ffs.pcisom)[1] then
+      pcisom:=ffs.pcisom;
+    else
+      pcisom:=List(ipcgs,x->ImagesRepresentative(ffs.pcisom,x));
+      RUN_IN_GGMBI:=true;
+      pcisom:=GroupHomomorphismByImagesNC(Group(ipcgs,OneOfPcgs(ipcgs)),
+        SubgroupNC(Range(ffs.pcisom),pcisom),
+        ipcgs,pcisom);
+      RUN_IN_GGMBI:=false;
+    fi;
     r:=rec(inducedfrom:=ffs,
           pcgs:=ipcgs,
           depths:=depths,
-          pcisom:=ffs.pcisom,
+          pcisom:=pcisom,
           radical:=ker,
           factorhom:=rest
           );
@@ -531,17 +577,12 @@ local stabilizergen,st,stabrsub,stabrsubsz,ratio,subsz,sz,vp,stabrad,
 	Add(stabrad,rep);
 #Print("increased ",stabrsubsz," by ",relo,"\n");
 	stabrsubsz:=stabrsubsz*relo;
-	#rep:=ImageElm(pcisom,rep);
-	#stabrsub:=ClosureGroup(stabrsub,rep);
-#if Size(stabrsub)<>stabrzubsz then Error("HUH10");fi;
 	subsz:=stabrsubsz;
 	ratio:=gpsz/subsz/Length(orb);
       fi;
 
     od;
     stabrad:=Reversed(stabrad);
-
-#if Length(orb)<>Length(Orbit(Group(pcgsimgs),orb[1],actfun)) then Error("HUH9");fi;
 
     subsz:=stabrsubsz;
     if  solvsz>subsz*Length(orb) then
@@ -863,7 +904,7 @@ local s,o,a,n,d,f,fn,j,b,i;
 
   d:=[];
   for i in f do
-    if IsSimpleGroup(i) then
+    if IsNonabelianSimpleGroup(i) then
       Add(d,i);
     else
       n:=Filtered(NormalSubgroups(i),x->Size(x)>1);
@@ -872,7 +913,7 @@ local s,o,a,n,d,f,fn,j,b,i;
       if ForAny(n,x->IsPrimePowerInt(Size(x))) then
 	return fail;
       fi;
-      n:=Filtered(n,IsSimpleGroup);
+      n:=Filtered(n,IsNonabelianSimpleGroup);
       Append(d,n);
     fi;
   od;

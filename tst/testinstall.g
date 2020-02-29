@@ -1,9 +1,11 @@
 #############################################################################
 ##
-#W  testinstall.g               GAP library                      Frank Celler
+##  This file is part of GAP, a system for computational discrete algebra.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file runs all tests from the directory 'tst/testinstall' of the
 ##  GAP distribution. It is recommented to read it after GAP installation.
@@ -24,20 +26,11 @@
 
 Print( "You should start GAP4 using `gap -A -x 80 -r -m 100m -o 1g -K 2g'.\n\n" );
 
-bits := String(8*GAPInfo.BytesPerVariable);
 dirs := [
   DirectoriesLibrary( "tst/testinstall" ),
-  DirectoriesLibrary( Concatenation("tst/test", bits, "bit") ),
 ];
-if ARCH_IS_UNIX() then
-  Add(dirs, DirectoriesLibrary( "tst/testunix" ));
-fi;
 TestDirectory( dirs, rec(exitGAP := true) );
 
   
 # Should never get here
 FORCE_QUIT_GAP(1);
-
-#############################################################################
-##
-#E

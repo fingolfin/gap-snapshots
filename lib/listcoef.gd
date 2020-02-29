@@ -1,10 +1,12 @@
 #############################################################################
 ##
-#W  listcoef.gd                 GAP Library                      Frank Celler
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 
 
@@ -15,10 +17,10 @@
 ##  given as homogeneous lists of the same length, containing
 ##  elements of a commutative ring.
 ##  <P/>
-##  There are two reasons for using <Ref Func="AddRowVector"/>
+##  There are two reasons for using <Ref Oper="AddRowVector"/>
 ##  in preference to arithmetic operators.
 ##  Firstly, the three argument form has no single-step equivalent.
-##  Secondly <Ref Func="AddRowVector"/> changes its first argument in-place,
+##  Secondly <Ref Oper="AddRowVector"/> changes its first argument in-place,
 ##  rather than allocating a new vector to hold the result,
 ##  and may thus produce less garbage.
 ##  <#/GAPDoc>
@@ -64,7 +66,7 @@ DeclareOperation(
 ##  <Oper Name="AddCoeffs" Arg='list1[, poss1], list2[, poss2[, mul]]'/>
 ##
 ##  <Description>
-##  <Ref Func="AddCoeffs"/> adds the entries of
+##  <Ref Oper="AddCoeffs"/> adds the entries of
 ##  <A>list2</A><C>{</C><A>poss2</A><C>}</C>, multiplied by the scalar
 ##  <A>mul</A>, to <A>list1</A><C>{</C><A>poss1</A><C>}</C>.
 ##  Unbound entries in <A>list1</A> are assumed to be zero.
@@ -97,30 +99,29 @@ DeclareOperation(
 
 #############################################################################
 ##
-#O  MultRowVector( <list1>, <poss1>, <list2>, <poss2>, <mul> )
-#O  MultRowVector( <list>, <mul> )
+#O  MultVectorLeft( <list>, <mul> )
 ##
-##  <#GAPDoc Label="MultRowVector">
+##  <#GAPDoc Label="MultVector">
 ##  <ManSection>
-##  <Oper Name="MultRowVector" Arg='list1, [poss1, list2, poss2, ]mul'/>
+##  <Oper Name="MultVector" Arg='list1, mul'/>
+##  <Oper Name="MultVectorLeft" Arg='list1, mul'/>
+##  <Returns>nothing</Returns>
 ##
 ##  <Description>
-##  The five argument version of this operation replaces
-##  <A>list1</A><C>[</C><A>poss1</A><C>[</C><M>i</M><C>]]</C> by
-##  <C><A>mul</A>*<A>list2</A>[<A>poss2</A>[</C><M>i</M><C>]]</C> for <M>i</M>
-##  between <M>1</M> and <C>Length( <A>poss1</A> )</C>.
+##  This operation calculates <A>mul</A>*<A>list1</A> in-place.
 ##  <P/>
-##  The two-argument version simply multiplies each element of <A>list1</A>, 
-##  in-place, by <A>mul</A>.
+##  Note that <C>MultVector</C> is just a synonym for
+##  <C>MultVectorLeft</C>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
 DeclareOperation(
-    "MultRowVector",
-        [ IsMutable and IsList, 
-          IsList, IsList, IsList, IsMultiplicativeElement ] );
-
+    "MultVectorLeft",
+        [ IsMutable and IsList,
+          IsObject ] );
+# For VectorObj objects there also exists a MultVectorRight operation
+DeclareSynonym( "MultVector", MultVectorLeft );
 
 #############################################################################
 ##
@@ -207,7 +208,7 @@ DeclareOperation(
 ##  If <A>len1</A> and <A>len2</A> are omitted, they default to the lengths
 ##  of <A>list1</A> and <A>list2</A>.
 ##  Let <A>exp</A> be a positive integer.
-##  <Ref Func="PowerModCoeffs"/> returns the coefficient list of the
+##  <Ref Oper="PowerModCoeffs"/> returns the coefficient list of the
 ##  remainder when dividing the <A>exp</A>-th power of <M>p1</M> by
 ##  <M>p2</M>.
 ##  The coefficients are reduced already while powers are computed,
@@ -268,7 +269,7 @@ DeclareOperation(
 ##  (<A>list2</A>).
 ##  If <A>len1</A> and <A>len2</A> are omitted,
 ##  they default to the lengths of <A>list1</A> and <A>list2</A>.
-##  <Ref Func="ReduceCoeffs"/> changes <A>list1</A> to the coefficient list
+##  <Ref Oper="ReduceCoeffs"/> changes <A>list1</A> to the coefficient list
 ##  of the remainder when dividing <A>p1</A> by <A>p2</A>.
 ##  This operation changes <A>list1</A> which therefore must be a mutable
 ##  list.
@@ -304,7 +305,7 @@ DeclareOperation(
 ##  (<A>list2</A>).
 ##  If <A>len1</A> and <A>len2</A> are omitted,
 ##  they default to the lengths of <A>list1</A> and <A>list2</A>.
-##  <Ref Func="ReduceCoeffsMod"/> changes <A>list1</A> to the
+##  <Ref Oper="ReduceCoeffsMod"/> changes <A>list1</A> to the
 ##  coefficient list of the remainder when dividing
 ##  <A>p1</A> by <A>p2</A> modulo <A>modulus</A>,
 ##  which must be a positive integer.
@@ -636,13 +637,13 @@ DeclareOperation("DistancesDistributionMatFFEVecFFE",
 ##  length of <A>vec</A> must be equal, and all elements must lie in the
 ##  field <A>f</A>.
 ##  The rows of <A>mat</A> must be linearly independent.
-##  <Ref Func="AClosestVectorCombinationsMatFFEVecFFE"/> returns a vector
+##  <Ref Oper="AClosestVectorCombinationsMatFFEVecFFE"/> returns a vector
 ##  from these that is closest to the vector <A>vec</A>.
 ##  If it finds a vector of distance at most <A>stop</A>,
 ##  which must be a nonnegative integer, then it stops immediately
 ##  and returns this vector.
 ##  <P/>
-##  <Ref Func="AClosestVectorCombinationsMatFFEVecFFECoords"/> returns a
+##  <Ref Oper="AClosestVectorCombinationsMatFFEVecFFECoords"/> returns a
 ##  length 2 list containing the same closest vector and also a vector
 ##  <A>v</A> with exactly <A>l</A> non-zero entries,
 ##  such that <A>v</A> times <A>mat</A> is the closest vector.
@@ -700,9 +701,3 @@ DeclareOperation("AddToListEntries", [ IsList and
 # data types for low index memory blocks. Created here to avoid having to
 # read the fp group stuff early
 DeclareGlobalVariable("TYPE_LOWINDEX_DATA");
-
-
-#############################################################################
-##
-#E
-

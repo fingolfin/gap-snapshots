@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  grppclat.gi                GAP library                   Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997  
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This  file contains declarations for the subgroup lattice functions for
 ##  pc groups.
@@ -250,15 +251,15 @@ end);
 ##  compute the permutation action of <P> on the subspaces of the
 ##  elementary abelian subgroup <G> of <P>. Returns
 ##  a list [<subspaces>,<action>], where <subspaces> is a list of all the
-##  subspaces and <action> a homomorphism from <P> in a permutation group,
-##  which is equal to the action homomrophism for the action of <P> on
-##  <subspaces>. If <dims> is given, only subspaces of dimension <dims> are
-##  considered.
-##  Instead of <G> also a (modulo) pcgs may be given.
+##  subspaces (as groups) and <action> a homomorphism from <P> in a 
+##  permutation group, which is equal to the action homomrophism for the
+##  action of <P> on <subspaces>. If <dims> is given, only subspaces of
+##  dimension <dims> are considered.  Instead of <G> also a (modulo) pcgs
+##  may be given, in this case <subspaces> are pre-images of the subspaces.
 ##
 InstallGlobalFunction(ActionSubspacesElementaryAbelianGroup,function(arg)
 local P,g,op,act,a,pcgs,ma,mat,d,f,i,j,new,newmat,id,p,dodim,compldim,compl,
-      dims,Pgens,Pcgens,Pu,Pc,perms,one,par,ker,kersz;
+      dims,Pgens,Pcgens,Pu,Pc,perms,one,par,ker,kersz,pcelm,pccache,asz;
 
   P:=arg[1];
   if IsModuloPcgs(arg[2]) then
@@ -431,15 +432,32 @@ local P,g,op,act,a,pcgs,ma,mat,d,f,i,j,new,newmat,id,p,dodim,compldim,compl,
   ma:=new;
 
   # convert to grps
+  pccache:=[]; # avoid recerating different copies of same element 
+  pcelm:=function(vec)
+  local e,p;
+    e:=Immutable([vec]);
+    p:=PositionSorted(pccache,e);
+    if IsBound(pccache[p]) and pccache[p][1]=vec then
+      return pccache[p][2];
+    else
+      e:=Immutable([vec,PcElementByExponentsNC(pcgs,vec)]);
+      AddSet(pccache,e);
+      return e[2];
+    fi;
+  end;
+
   new:=[];
   for i in ma do
     #a:=SubgroupNC(Parent(g),List(i,j->Product([1..d],k->pcgs[k]^j[k])));
+    asz:=kersz*p^Length(i);
     if kersz=1 then
-      a:=SubgroupNC(par,List(i,j->PcElementByExponentsNC(pcgs,j)));
+      a:=SubgroupNC(par,List(i,j->pcelm(j)));
     else
-      a:=ClosureGroup(ker,List(i,j->PcElementByExponentsNC(pcgs,j)));
+      #a:=ClosureSubgroup(ker,List(i,j->pcelm(j)):knownClosureSize:=asz);
+      a:=SubgroupNC(par,Concatenation(GeneratorsOfGroup(ker),
+        List(i,j->pcelm(j))));
     fi;
-    SetSize(a,kersz*p^Length(i));
+    SetSize(a,asz);
     Add(new,a);
   od;
 
@@ -1308,8 +1326,3 @@ function(c,a,n,b,m)
     ForAll(GeneratorsOfGroup(a),x->ForAll(GeneratorsOfGroup(b),y->Comm(x,y)
     in m));
 end);
-
-#############################################################################
-##
-#E  grppclat.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##

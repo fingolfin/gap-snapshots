@@ -1,17 +1,20 @@
+#############################################################################
+##
+##  This file is part of GAP, a system for computational discrete algebra.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
+##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+
 ############################################################################
-# 
-# matobj2.gd
-#                                                        by Max Neunhöffer
-#
-##  Copyright (C) 2007  Max Neunhöffer, Lehrstuhl D f. Math., RWTH Aachen
-##  This file is free software, see license information at the end.
 #
 # This file together with matobj1.gd formally define the interface to the 
 # new style vectors and matrices in GAP.
 # In this file all the operations, attributes and constructors are
 # defined. It is read later in the GAP library reading process.
 #
-############################################################################
 
 # TODO: make sure to document what exactly a new matrix obj implementation has to
 # provide, and that we provide default implementations for everything else.
@@ -309,7 +312,7 @@ DeclareGlobalFunction( "ConcatenationOfVectors" );
 
 ##  <#GAPDoc Label="MatObj_ExtractSubVector">
 ##  <ManSection>
-##    <Func Arg="V,l" Name="ExtractSubVector" Label="for IsVectorObj,IsList"/>
+##    <Oper Arg="V,l" Name="ExtractSubVector" Label="for IsVectorObj,IsList"/>
 ##    <Returns>a vector object</Returns>
 ##    <Description>
 ##      Returns a new vector containing the entries of <A>V</A>
@@ -382,25 +385,48 @@ DeclareOperation( "AddRowVector",
 
 
 
-# TODO: rename MultRowVector to MultVector; but keep in mind that
-# historically there already was MultRowVector, so be careful to not break that
-DeclareOperation( "MultRowVector",
+#############################################################################
+##
+#O  MultVector( <vec>, <mul>[, <from>, <to>] )
+#O  MultVectorLeft( <vec>, <mul>[, <from>, <to>] )
+#O  MultVectorRight( <vec>, <mul>[, <from>, <to>] )
+##
+##  <#GAPDoc Label="MatObj_MultVectorLeft">
+##  <ManSection>
+##  <Oper Name="MultVector" Arg='vec, mul[, from, to]'/>
+##  <Oper Name="MultVectorLeft" Arg='vec, mul[, from, to]'/>
+##  <Oper Name="MultVectorRight" Arg='vec, mul[, from, to]'/>
+##  <Returns>nothing</Returns>
+##
+##  <Description>
+##  These operations multiply <A>mul</A> with <A>vec</A> in-place
+##  where <C>MultVectorLeft</C> multiplies with <A>mul</A> from the left
+##  and <C>MultVectorRight</C> does so from the right.
+##  </P>
+##  Note that <C>MultVector</C> is just a synonym for
+##  <C>MultVectorLeft</C>.
+##  </P>
+##  If the optional parameters <A>from</A> and <A>to</A> are given only the
+##  index range <C>[<A>from</A>..<A>to</A>]</C> is guaranteed to be 
+##  affected. Other indices <E>may</E> be affected, if it is more convenient
+##  to do so.
+##  This can be helpful if entries of <A>vec</A> are known to be zero.
+##  </P>
+##  If <A>from</A> is bigger than <A>to</A>, the operation does nothing.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareOperation( "MultVectorLeft",
   [ IsVectorObj and IsMutable, IsObject ] );
-
-#
-# Also, make it explicit from which side we multiply
-# DeclareOperation( "MultRowVectorFromLeft",
-#   [ IsVectorObj and IsMutable, IsObject ] );
-# DeclareOperation( "MultRowVectorFromRight",
-#   [ IsVectorObj and IsMutable, IsObject ] );
-#DeclareSynonym( "MultRowVector", MultRowVectorFromRight );
-
-# do we really need the following? for what? is any code using this right now?
-# ( a, pa, b, pb, s ) ->  a{pa} := b{pb} * s;
-DeclareOperation( "MultRowVector",
-  [ IsVectorObj and IsMutable, IsList, IsVectorObj, IsList, IsObject ] );
-
-# maybe have this:   vec := vec{[from..to]} * scal ?? cvec has it
+DeclareOperation( "MultVectorRight",
+  [ IsVectorObj and IsMutable, IsObject ] );
+DeclareOperation( "MultVectorLeft",
+  [ IsVectorObj and IsMutable, IsObject, IsInt, IsInt ] );
+DeclareOperation( "MultVectorRight",
+  [ IsVectorObj and IsMutable, IsObject, IsInt, IsInt ] );
+#  Note that MultVector is declared a synonym for MultVectorLeft in
+#  listcoef.gd
 
 
 # The following operations for scalars and vectors are possible for scalars in the BaseDomain
@@ -511,6 +537,7 @@ DeclareOperation( "ChangedBaseDomain", [IsVectorObj,IsSemiring] );
 # Changes the base domain. A copy of the row vector in the first argument is
 # created, which comes in a "similar" representation but over the new
 # base domain that is given in the second argument.
+# The result is mutable if and only if the given vector is mutable.
 # example: given a vector over GF(2),  create a new vector over GF(4) with "identical" content
 #  so it's kind of a type conversion / coercion
 # TODO: better name, e.g. VectorWithChangedBasedDomain
@@ -535,28 +562,38 @@ DeclareGlobalFunction( "MakeVector" );
 # Some things that fit nowhere else:
 ############################################################################
 
+############################################################################
+##
 ##  <#GAPDoc Label="MatObj_Randomize_Vectors">
 ##  <ManSection>
-##    <Oper Arg="V" Name="Randomize" Label="for IsVectorObj"/>
-##    <Oper Arg="V,Rs" Name="Randomize" Label="for IsVectorObj,IsRandomSources"/>
+##    <Heading>Randomize</Heading>
+##    <Oper Arg="[Rs,]v" Name="Randomize" Label="for a vector object"/>
+##    <Oper Arg="[Rs,]m" Name="Randomize" Label="for a matrix object"/>
 ##    <Description>
-##      Replaces every entry in <A>V</A> with a random one from the base
-##      domain. If given, the random source <A>Rs</A> is used to compute the
-##      random elements. Note that in this case, the random function for the
-##      base domain must support the random source argument.
+##      Replaces every entry in the mutable vector object <A>v</A>
+##      or matrix object <A>m</A>, respectively, with
+##      a random one from the base domain of <A>v</A> or <A>m</A>,
+##      respectively, and returns the argument.
+##      <P/>
+##      If given, the random source <A>Rs</A> is used to compute the
+##      random elements.
+##      Note that in this case,
+##      a <Ref Oper="Random" Label="for random source and collection"/>
+##      method must be available that takes a random source as its first
+##      argument and the base domain as its second argument.
 ##    </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
-DeclareOperation( "Randomize", [IsVectorObj and IsMutable] );
-DeclareOperation( "Randomize", [IsVectorObj and IsMutable,IsRandomSource] );
-# Changes the mutable argument in place, every entry is replaced
-# by a random element from BaseDomain.
-# The second argument is used to provide "randomness".
-# The vector argument is also returned by the function.
+DeclareOperation( "Randomize", [ IsVectorObj and IsMutable ] );
+DeclareOperation( "Randomize", [ IsRandomSource, IsVectorObj and IsMutable ] );
 
-# TODO: change this to use InstallMethodWithRandomSource; for this, we'll have
-# to change the argument order (a method for the old order, to ensure backwards
-# compatibility, could remain).
+DeclareOperation( "Randomize", [ IsMatrixObj and IsMutable ] );
+DeclareOperation( "Randomize", [ IsRandomSource, IsMatrixObj and IsMutable ] );
+
+# for backwards compatibility with the cvec package
+DeclareOperation( "Randomize", [ IsVectorObj and IsMutable, IsRandomSource ] );
+DeclareOperation( "Randomize", [ IsMatrixObj and IsMutable, IsRandomSource ] );
+
 
 #############################################################################
 ##
@@ -578,7 +615,7 @@ DeclareOperation( "Randomize", [IsVectorObj and IsMutable,IsRandomSource] );
 ##
 ## TODO: link to ExtractSubVector
 ## 
-## TODO: In AddRowVector and MultRowVector, the destination is always the first argument;
+## TODO: In AddRowVector and MultVector, the destination is always the first argument;
 ##   it would be better if we were consistent...
 ##
 ## TODO: Maybe also have a version of this as follows:
@@ -786,14 +823,36 @@ DeclareOperation( "CopySubMatrix", [IsMatrixObj,IsMatrixObj,
 # New element access for matrices
 ############################################################################
 
-DeclareOperation( "MatElm", [IsMatrixObj,IsPosInt,IsPosInt] );
+#############################################################################
+##
+#o  <mat>[<row>,<col>] . . . . . . . . . . .  select an element from a matrix
+##
+DeclareOperationKernel( "[,]",
+    [ IsMatrixObj, IS_INT, IS_INT ],
+    ELM_MAT );
+DeclareSynonym( "MatElm", ELM_MAT );
+
+# TODO: the following is deprecated, and to be removed once packages needing
+# it are updated (specifically, cvec )
 DeclareOperation( "[]", [IsMatrixObj,IsPosInt,IsPosInt] );
-# second and third arguments are row and column index
 
-DeclareOperation( "SetMatElm", [IsMatrixObj,IsPosInt,IsPosInt,IsObject] );
+#############################################################################
+##
+#o  <mat>[<row>,<col>] := <obj>
+##
+##  TODO: the first argument filter should be 'IsMatrixObj and IsMutable',
+##  but there is legacy code in packages which does not specify this filter
+##  for its 'SetMatElm' methods and would thus run into an error with this
+##  more restrictive filter. We therefore omit it for now, at least until
+##  all deposited packages providing such methods are fixed.
+DeclareOperationKernel( "[,]:=",
+    [ IsMatrixObj, IS_INT, IS_INT, IsObject ],
+    ASS_MAT );
+DeclareSynonym( "SetMatElm", ASS_MAT );
+
+# TODO: the following is deprecated, and to be removed once packages needing
+# it are updated (specifically, cvec)
 DeclareOperation( "[]:=", [IsMatrixObj,IsPosInt,IsPosInt,IsObject] );
-# second and third arguments are row and column index
-
 
 ############################################################################
 # Standard operations for all objects:
@@ -1058,15 +1117,6 @@ DeclareOperation( "ChangedBaseDomain", [IsMatrixObj,IsSemiring] );
 # Some things that fit nowhere else:
 ############################################################################
 
-DeclareOperation( "Randomize", [IsMatrixObj and IsMutable] );
-DeclareOperation( "Randomize", [IsMatrixObj and IsMutable,IsRandomSource] );
-# Changes the mutable argument in place, every entry is replaced
-# by a random element from BaseDomain.
-# The second version will come when we have random sources.
-
-# TODO: only keep the first operation and suggest using InstallMethodWithRandomSource
-
-
 DeclareAttribute( "TransposedMatImmutable", IsMatrixObj );
 DeclareOperation( "TransposedMatMutable", [IsMatrixObj] );
 # TODO: one problem with DeclareAttribute: it only really makes sense if the
@@ -1075,14 +1125,6 @@ DeclareOperation( "TransposedMatMutable", [IsMatrixObj] );
 #  its transpose "by accident", and then gets modified later on
 #
 
-
-DeclareOperation( "IsDiagonalMat", [IsMatrixObj] );
-DeclareOperation( "IsUpperTriangularMat", [IsMatrixObj] );
-DeclareOperation( "IsLowerTriangularMat", [IsMatrixObj] );
-# TODO: if we allow attributes, we might just as well do the above to be
-# declared as properties, so that this information is stored; but once
-# again, we would only want to allow this for immutable matrix objects.
-# ...
 
 # TODO: what about the following (and also note the names...):
 #   - IsScalarMat, IsSquareMat, ... ?
@@ -1109,24 +1151,31 @@ DeclareOperation( "IsLowerTriangularMat", [IsMatrixObj] );
 DeclareOperation( "KroneckerProduct", [IsMatrixObj,IsMatrixObj] );
 # The result is fully mutable.
 
-# FIXME: what is the purpose of Unfold and Fold?
-# Maybe remove them, and wait if somebody asks for / needs this
-
-DeclareOperation( "Unfold", [IsMatrixObj, IsVectorObj] );
-# Concatenates all rows of a matrix to one single vector in the same
-# representation as the given template vector. Usually this must
-# be compatible with the representation of the matrix given.
-DeclareOperation( "Fold", [IsVectorObj, IsPosInt, IsMatrixObj] );
-# Cuts the row vector into pieces of length the second argument
-# and forms a matrix out of the pieces in the same representation 
-# as the third argument. The length of the vector must be a multiple
-# of the second argument.
-
 # The following unwraps a matrix to a list of lists:
 DeclareOperation( "Unpack", [IsRowListMatrix] );
 # It guarantees to copy, that is changing the returned object does
 # not change the original object.
 # TODO: this is already used by the fining package
+
+
+############################################################################
+##
+#A  RowsOfMatrix( <matrixobj> )
+##
+##  Called with an object in <Ref Cat="IsMatrixObj"/>, this function
+##  returns a plain list of objects in <Ref Cat="IsVectorObj"/>,
+##  where the <M>i</M>-th entry describes the <M>i</M>-th row of the input.
+##
+##  This function is used for creating an isomorphic permutation group
+##  of a matrix group that consists of matrix objects.
+##  <!-- If 'NicomorphismOfGeneralMatrixGroup' would be documented then
+##  one could insert a reference to it. -->
+##
+##  We assume that the matrix knows how to create suitable vector objects;
+##  entering a template vector as the second argument is not an option
+##  in this situation.
+##
+DeclareAttribute( "RowsOfMatrix", IsMatrixObj );
 
 
 ############################################################################
@@ -1203,11 +1252,27 @@ DeclareOperation( "ListOp", [IsRowListMatrix, IsFunction] );
 # DeclareOperation( "*", [IsVectorObj, IsMatrixObj] );
 # DeclareOperation( "*", [IsMatrixObj, IsVectorObj] );
 
-# TODO: the following does the same as "*", but is useful 
-# as convenience for Orbit-ish operations.
-# We otherwise discourage its use in "naked" code -- use * instead
-# DeclareOperation( "^", [IsVectorObj, IsMatrixObj] );
 
+############################################################################
+##
+#O  \^( <vecobj>, <matobj> )
+##
+##  One of &GAP;'s strategies to study (small) matrix groups is
+##  to compute a faithful permutation representations of the action on
+##  orbits of row vectors, via right multiplication,
+##  see <Ref Sect="Nice Monomorphisms"/>.
+##  The code in question uses <Ref Func="OnPoints"/> as the default action,
+##  which means that the operation <C>\\\^</C> gets called.
+##  Therefore, we declare this operation for the case that the two arguments
+##  are in <Ref Cat="IsVectorObj"/> and <Ref Cat="IsMatrixObj"/>,
+##  and install the multiplication as a method for this situation;
+##  thus one need not install individual <C>\\\^</C> methods
+##  in special cases.
+##  <P/>
+##  For other code dealing with the multiplication of vectors and matrices,
+##  it is recommended to use the multiplication <C>\\\*</C> directly.
+##
+DeclareOperation( "^", [ IsVectorObj, IsMatrixObj ] );
 
 
 ############################################################################
@@ -1217,6 +1282,24 @@ DeclareOperation( "ListOp", [IsRowListMatrix, IsFunction] );
 # AsList
 # AddCoeffs
 
+
+#############################################################################
+##
+##  IsEmptyMatrix( <matobj> )
+##
+##  <#GAPDoc Label="MatObj_IsEmptyMatrix">
+##  <ManSection>
+##    <Prop Name="IsEmptyMatrix" Arg='M' Label="for matrices"/>
+##    <Returns>A boolean</Returns>
+##    <Description>
+##      Is <K>true</K> if <A>M</A> either has zero columns or zero rows and 
+##      <K>false</K> otherwise.
+##      In other words, a matrix is empty if it has no entries.
+##    </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareProperty( "IsEmptyMatrix", IsMatrixObj );
 
 
 # while we are at it also make the naming of following more uniform ???

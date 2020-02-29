@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  combinat.gd                 GAP library                  Martin Schönert
-#W                                                           Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Martin Schönert, Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains declaration for combinatorics functions.
 ##
@@ -340,7 +340,7 @@ DeclareGlobalFunction("Combinations");
 ##  then only the combinations with <A>k</A> entries are produced, otherwise
 ##  all combinations. 
 ##  <P/>
-##  <Ref Func="EnumeratorOfCombinations"/> returns an <Ref Oper="Enumerator" />
+##  <Ref Func="EnumeratorOfCombinations"/> returns an <Ref Attr="Enumerator" />
 ##  of the given multiset <A>mset</A>. Currently only a variant without second 
 ##  argument <A>k</A> is implemented.
 ##  <P/>
@@ -1165,7 +1165,7 @@ DeclareGlobalFunction( "IteratorOfPartitions" );
 ##  <P/>
 ##  This function actually describes  a homomorphism from  the  symmetric
 ##  group <M>S_n</M> into  the  cyclic group of order  2,  whose  kernel  is
-##  exactly the alternating  group <M>A_n</M>  (see <Ref Func="SignPerm"/>).  Partitions  of
+##  exactly the alternating  group <M>A_n</M>  (see <Ref Attr="SignPerm"/>).  Partitions  of
 ##  sign  1  are called <E>even</E> partitions while partitions of sign <M>-1</M> are
 ##  called <E>odd</E>.
 ##  <Example><![CDATA[
@@ -1250,7 +1250,9 @@ DeclareGlobalFunction("PowerPartition");
 ##  <P/>
 ##  <A>r</A>-tuples of partitions describe the classes and the characters
 ##  of wreath products of groups with <A>r</A> conjugacy classes with the
-##  symmetric group <M>S_n</M>.
+##  symmetric group on <A>n</A> points,
+##  see <Ref Func="CharacterTableWreathSymmetric"/>
+##  and <Ref Func="CharacterValueWreathSymmetric"/>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1463,7 +1465,7 @@ DeclareGlobalFunction("Bernoulli");
 ##  <M>\sum_{{p \in Sym(n)}} \prod_{{i = 1}}^n mat[i][i^p]</M>.
 ##  <P/>
 ##  Note the similarity of the definition of the permanent to the
-##  definition of the determinant (see&nbsp;<Ref Func="DeterminantMat"/>).
+##  definition of the determinant (see&nbsp;<Ref Attr="DeterminantMat"/>).
 ##  In fact the only difference is the missing sign of the permutation.
 ##  However the permanent is quite unlike the determinant,
 ##  for example it is not multilinear or alternating.
@@ -1490,9 +1492,3 @@ DeclareGlobalFunction("Bernoulli");
 ##  <#/GAPDoc>
 ##
 DeclareAttribute("Permanent", IsMatrix);
-
-
-#############################################################################
-##
-#E
-

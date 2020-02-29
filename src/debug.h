@@ -1,9 +1,11 @@
 /****************************************************************************
 **
-*W  debug.h                     GAP source               Chris Jefferson
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  2017, University of St Andrews, Scotland
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares kernel debugging functionality.
 **
@@ -29,9 +31,8 @@
 #endif
 
 // Portable compile time assertion.
-#if defined(static_assert) && !defined(WARD_ENABLED)
+#if defined(static_assert)
 // If available, use _Static_assert resp. static_assert from C11.
-// However, ward currently cannot deal with it.
 #define GAP_STATIC_ASSERT(cond, msg)    static_assert(cond, msg)
 #else
 // If the compiler does not support _Static_assert resp. static_assert,
@@ -43,8 +44,6 @@
 #endif
 
 
-#if defined(HAVE_BACKTRACE) && defined(PRINT_BACKTRACE)
-extern void InstallBacktraceHandlers(void);
-#endif
+void InstallBacktraceHandlers(void);
 
 #endif

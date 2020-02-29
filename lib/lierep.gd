@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  lierep.gd                   GAP library               Willem de Graaf
-#W                                                    and Craig A. Struble
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Willem de Graaf, and Craig A. Struble.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the declaration of attributes, properties, and
 ##  operations for modules over Lie algebras.
@@ -61,7 +61,7 @@
 ##  So <M>0</M>-cochains have a different representation: they are just
 ##  represented by the list <C>[ v_c ]</C>.
 ##  <P/>
-##  Cochains are constructed using the function <Ref Func="Cochain"/>,
+##  Cochains are constructed using the function <Ref Oper="Cochain"/>,
 ##  if <A>c</A> is a cochain, then its corresponding list is returned by
 ##  <C>ExtRepOfObj( <A>c</A> )</C>.
 ##  <#/GAPDoc>
@@ -1016,9 +1016,3 @@ DeclareCategory( "IsVectorSearchTable", IsSearchTable );
 ##  </ManSection>
 ##
 DeclareGlobalFunction( "VectorSearchTable" );
-
-
-#############################################################################
-##
-#E
-

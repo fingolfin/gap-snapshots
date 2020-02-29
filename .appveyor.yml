@@ -12,11 +12,13 @@ environment:
   matrix:
     - CYG_ARCH: x86
       CYG_ROOT: C:\cygwin
+      PACKAGES: "-P python27,python27-pip"
       ABI: 32
     - CYG_ARCH: x86_64
       CYG_ROOT: C:\cygwin64
-      PACKAGES: "-P libgmp-devel,zlib-devel"
+      PACKAGES: "-P libgmp-devel,zlib-devel,python27,python27-pip"
       CFLAGS: "--coverage"
+      CXXFLAGS: "--coverage"
       LDFLAGS: "--coverage"
 # FIXME: HPC-GAP build on AppVeyor disabled for now, as it crashes
 #    - CYG_ARCH: x86_64
@@ -39,12 +41,14 @@ build_script:
         Where-Object pullRequestId -eq $env:APPVEYOR_PULL_REQUEST_NUMBER)[0].buildNumber) { `
         throw "There are newer queued builds for this pull request, failing early." }
   - SET "PATH=%CYG_ROOT%\bin;%PATH%"
+  - python -m pip install gcovr==4.1 # for coverage reporting later on
+  - bash -lc "gcc --version"
   - bash -lc "cd $APPVEYOR_BUILD_FOLDER && ./etc/ci-prepare.sh"
 
 test_script:
   - bash -lc "cd $APPVEYOR_BUILD_FOLDER && ./etc/ci.sh"
 
 on_success:
-  - bash -lc "cd $APPVEYOR_BUILD_FOLDER && ./etc/ci-gather-coverage.sh"
-  - curl -s https://codecov.io/bash > codecov.sh
-  - bash -lc "cd $APPVEYOR_BUILD_FOLDER && ./codecov.sh"
+  # make sure to use AppVeyor's Python (not Cygwin's) in the next step
+  - bash -lc "export PATH="/cygdrive/c/Python27:/cygdrive/c/Python27/Scripts:$PATH" ; cd $APPVEYOR_BUILD_FOLDER && ./etc/ci-gather-coverage.sh"
+  - bash -lc "cd $APPVEYOR_BUILD_FOLDER && ./etc/ci-run-codecov.sh"

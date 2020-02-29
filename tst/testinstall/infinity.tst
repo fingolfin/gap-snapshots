@@ -1,18 +1,17 @@
-#############################################################################
-##
-#W  infinity.tst                GAP Library                  Markus Pfeiffer
-##
-##
-#Y  Copyright (C) 2014,  University of St Andrews, Scotland
-##
-##
+#@local cycls,i,j,op
 gap> START_TEST("infinity.tst");
 
-# unary minus
+# printing and unary minus
 gap> infinity;
 infinity
 gap> -infinity;
 -infinity
+
+# string conversion
+gap> String(infinity);
+"infinity"
+gap> String(-infinity);
+"-infinity"
 
 # addition and subtraction
 gap> infinity + infinity;
@@ -101,7 +100,3 @@ infinity<infinity gives correct result? true
 
 #
 gap> STOP_TEST( "infinity.tst", 1);
-
-#############################################################################
-##
-#E

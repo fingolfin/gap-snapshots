@@ -192,6 +192,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71_mj.html#X85BE46F784B83938">71.20-4 CharacterTableIsoclinic</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71_mj.html#X806E55A58397B11B">71.20-5 CharacterTableOfNormalSubgroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71_mj.html#X79B75C8582426BC5">71.20-6 CharacterTableWreathSymmetric</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71_mj.html#X83E71B1F7FA70134">71.20-7 CharacterValueWreathSymmetric</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap71_mj.html#X816FCD5A805F9FE8">71.21 <span class="Heading">Sorted Character Tables</span></a>
 </span>
@@ -377,8 +378,25 @@ Sum( [ 1 .. n ], i -&gt; SizesConjugacyClasses( t )[i] * chi[i]
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrauerTable</code>( <var class="Arg">G</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrauerTableOp</code>( <var class="Arg">ordtbl</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComputedBrauerTables</code>( <var class="Arg">ordtbl</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Called with an ordinary character table <var class="Arg">ordtbl</var> or a group <var class="Arg">G</var>, <code class="func">BrauerTable</code> returns its <var class="Arg">p</var>-modular character table if <strong class="pkg">GAP</strong> can compute this table, and <code class="keyw">fail</code> otherwise. The <var class="Arg">p</var>-modular table can be computed for <var class="Arg">p</var>-solvable groups (using the Fong-Swan Theorem) and in the case that <var class="Arg">ordtbl</var> is a table from the <strong class="pkg">GAP</strong> character table library for which also the <var class="Arg">p</var>-modular table is contained in the table library.</p>
+<p>Called with an ordinary character table <var class="Arg">ordtbl</var> or a group <var class="Arg">G</var>, <code class="func">BrauerTable</code> returns its <var class="Arg">p</var>-modular character table if <strong class="pkg">GAP</strong> can compute this table, and <code class="keyw">fail</code> otherwise.</p>
 
+<p>The <var class="Arg">p</var>-modular table can be computed in the following cases.</p>
+
+
+<ul>
+<li><p>The group is <var class="Arg">p</var>-solvable (see <code class="func">IsPSolvable</code> (<a href="chap39_mj.html#X81130F9A7CFCF6BF"><span class="RefLink">39.15-24</span></a>), apply the Fong-Swan Theorem);</p>
+
+</li>
+<li><p>the Sylow <var class="Arg">p</var>-subgroup of <var class="Arg">G</var> is cyclic, and all <var class="Arg">p</var>-modular Brauer characters of <var class="Arg">G</var> lift to ordinary characters (note that this situation can be detected from the ordinary character table of <var class="Arg">G</var>);</p>
+
+</li>
+<li><p>the table <var class="Arg">ordtbl</var> stores information how it was constructed from other tables (as a direct product or as an isoclinic variant, for example), and the Brauer tables of the source tables can be computed;</p>
+
+</li>
+<li><p><var class="Arg">ordtbl</var> is a table from the <strong class="pkg">GAP</strong> character table library for which also the <var class="Arg">p</var>-modular table is contained in the table library.</p>
+
+</li>
+</ul>
 <p>The default method for a group and a prime delegates to <code class="func">BrauerTable</code> for the ordinary character table of this group. The default method for <var class="Arg">ordtbl</var> uses the attribute <code class="func">ComputedBrauerTables</code> for storing the computed Brauer table at position <var class="Arg">p</var>, and calls the operation <code class="func">BrauerTableOp</code> for computing values that are not yet known.</p>
 
 <p>So if one wants to install a new method for computing Brauer tables then it is sufficient to install it for <code class="func">BrauerTableOp</code>.</p>
@@ -429,7 +447,7 @@ CharacterTable( "Sym(4)" )
 
 <p>When (ordinary or Brauer) character table objects are created from records, using <code class="func">ConvertToCharacterTable</code> (<a href="chap71_mj.html#X8195BC057B1DFAD5"><span class="RefLink">71.3-5</span></a>), <code class="func">SupportedCharacterTableInfo</code> specifies those record components that shall be used as attribute values; other record components are <em>not</em> be regarded as attribute values in the conversion process.</p>
 
-<p>New attributes and properties can be notified to <code class="func">SupportedCharacterTableInfo</code> by creating them with <code class="code">DeclareAttributeSuppCT</code> and <code class="code">DeclarePropertySuppCT</code> instead of <code class="func">DeclareAttribute</code> (<a href="chap79_mj.html#X7A00FC8A7A677A56"><span class="RefLink">79.18-9</span></a>) and <code class="func">DeclareProperty</code> (<a href="chap79_mj.html#X7F4602F082682A04"><span class="RefLink">79.18-10</span></a>).</p>
+<p>New attributes and properties can be notified to <code class="func">SupportedCharacterTableInfo</code> by creating them with <code class="code">DeclareAttributeSuppCT</code> and <code class="code">DeclarePropertySuppCT</code> instead of <code class="func">DeclareAttribute</code> (<a href="chap13_mj.html#X7A00FC8A7A677A56"><span class="RefLink">13.5-4</span></a>) and <code class="func">DeclareProperty</code> (<a href="chap13_mj.html#X7F4602F082682A04"><span class="RefLink">13.7-5</span></a>).</p>
 
 <p><a id="X8195BC057B1DFAD5" name="X8195BC057B1DFAD5"></a></p>
 
@@ -437,7 +455,7 @@ CharacterTable( "Sym(4)" )
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToCharacterTable</code>( <var class="Arg">record</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToCharacterTableNC</code>( <var class="Arg">record</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Let <var class="Arg">record</var> be a record. <code class="func">ConvertToCharacterTable</code> converts <var class="Arg">record</var> into a component object (see <a href="chap79_mj.html#X866E223484649E5A"><span class="RefLink">79.10</span></a>) representing a character table. The values of those components of <var class="Arg">record</var> whose names occur in <code class="func">SupportedCharacterTableInfo</code> (<a href="chap71_mj.html#X7DBEF4BF87F10CD6"><span class="RefLink">71.3-4</span></a>) correspond to attribute values of the returned character table. All other components of the record simply become components of the character table object.</p>
+<p>Let <var class="Arg">record</var> be a record. <code class="func">ConvertToCharacterTable</code> converts <var class="Arg">record</var> into a component object (see <a href="chap79_mj.html#X866E223484649E5A"><span class="RefLink">79.2</span></a>) representing a character table. The values of those components of <var class="Arg">record</var> whose names occur in <code class="func">SupportedCharacterTableInfo</code> (<a href="chap71_mj.html#X7DBEF4BF87F10CD6"><span class="RefLink">71.3-4</span></a>) correspond to attribute values of the returned character table. All other components of the record simply become components of the character table object.</p>
 
 <p>If inconsistencies in <var class="Arg">record</var> are detected, <code class="keyw">fail</code> is returned. <var class="Arg">record</var> must have the component <code class="code">UnderlyingCharacteristic</code> bound (cf. <code class="func">UnderlyingCharacteristic</code> (<a href="chap71_mj.html#X7F58A82F7D88000A"><span class="RefLink">71.9-5</span></a>)), since this decides about whether the returned character table lies in <code class="func">IsOrdinaryTable</code> (<a href="chap71_mj.html#X82FF82C87CF82ADF"><span class="RefLink">71.4-1</span></a>) or in <code class="func">IsBrauerTable</code> (<a href="chap71_mj.html#X82FF82C87CF82ADF"><span class="RefLink">71.4-1</span></a>).</p>
 
@@ -1577,7 +1595,7 @@ BrauerTable( "L3(2)", 2 )
 
 </li>
 </ul>
-<p>If no inconsistency occurs, <code class="keyw">true</code> is returned, otherwise each inconsistency is printed to the screen if the level of <code class="func">InfoWarning</code> (<a href="chap7_mj.html#X7A28F77C82D6A3E0"><span class="RefLink">7.4-7</span></a>) is at least <span class="SimpleMath">\(1\)</span> (see <a href="chap7_mj.html#X7A9C902479CB6F7C"><span class="RefLink">7.4</span></a>), and <code class="keyw">false</code> is returned at the end.</p>
+<p>If no inconsistency occurs, <code class="keyw">true</code> is returned, otherwise each inconsistency is printed to the screen if the level of <code class="func">InfoWarning</code> (<a href="chap7_mj.html#X7A28F77C82D6A3E0"><span class="RefLink">7.4-8</span></a>) is at least <span class="SimpleMath">\(1\)</span> (see <a href="chap7_mj.html#X7A9C902479CB6F7C"><span class="RefLink">7.4</span></a>), and <code class="keyw">false</code> is returned at the end.</p>
 
 <p><a id="X7A0CBD1884276882" name="X7A0CBD1884276882"></a></p>
 
@@ -1749,7 +1767,7 @@ n(C_1, C_2, \ldots, C_n) =
 
 <p>The default <code class="func">Display</code> (<a href="chap6_mj.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) method prepares the data in <var class="Arg">tbl</var> for a columnwise output. The number of columns printed at one time depends on the actual line length, which can be accessed and changed by the function <code class="func">SizeScreen</code> (<a href="chap6_mj.html#X8723E0A1837894F3"><span class="RefLink">6.12-1</span></a>).</p>
 
-<p>An interesting variant of <code class="func">Display</code> (<a href="chap6_mj.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) is the function <code class="func">PageDisplay</code> (<a href="../../pkg/GAPDoc-1.6.2/doc/chap6_mj.html#X7BB6731F7E3AAA98"><span class="RefLink">GAPDoc: PageDisplay</span></a>). Convenient ways to print the <code class="func">Display</code> (<a href="chap6_mj.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) format to a file are given by the function <code class="func">PrintTo1</code> (<a href="../../pkg/GAPDoc-1.6.2/doc/chap6_mj.html#X8603B90C7C3F0AB1"><span class="RefLink">GAPDoc: PrintTo1</span></a>) or by using <code class="func">PageDisplay</code> (<a href="../../pkg/GAPDoc-1.6.2/doc/chap6_mj.html#X7BB6731F7E3AAA98"><span class="RefLink">GAPDoc: PageDisplay</span></a>) and the facilities of the pager used, cf. <code class="func">Pager</code> (<a href="chap2_mj.html#X7ED03E41792C3840"><span class="RefLink">2.4-1</span></a>).</p>
+<p>An interesting variant of <code class="func">Display</code> (<a href="chap6_mj.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) is the function <code class="func">PageDisplay</code> (<a href="../../pkg/GAPDoc-1.6.3/doc/chap6_mj.html#X7BB6731F7E3AAA98"><span class="RefLink">GAPDoc: PageDisplay</span></a>). Convenient ways to print the <code class="func">Display</code> (<a href="chap6_mj.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) format to a file are given by the function <code class="func">PrintTo1</code> (<a href="../../pkg/GAPDoc-1.6.3/doc/chap6_mj.html#X8603B90C7C3F0AB1"><span class="RefLink">GAPDoc: PrintTo1</span></a>) or by using <code class="func">PageDisplay</code> (<a href="../../pkg/GAPDoc-1.6.3/doc/chap6_mj.html#X7BB6731F7E3AAA98"><span class="RefLink">GAPDoc: PageDisplay</span></a>) and the facilities of the pager used, cf. <code class="func">Pager</code> (<a href="chap2_mj.html#X7ED03E41792C3840"><span class="RefLink">2.4-1</span></a>).</p>
 
 <p>An interactive variant of <code class="func">Display</code> (<a href="chap6_mj.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) is the <code class="func">Browse</code> (<a href="../../pkg/Browse/doc/chap6_mj.html#X7FDD696B7DD54A6E"><span class="RefLink">Browse: Browse</span></a>) method for character tables that is provided by the <strong class="pkg">GAP</strong> package <strong class="pkg">Browse</strong>, see <code class="func">Browse</code> (<a href="../../pkg/Browse/doc/chap6_mj.html#X870C744182073CF6"><span class="RefLink">Browse: Browse for character tables</span></a>).</p>
 
@@ -1796,11 +1814,19 @@ n(C_1, C_2, \ldots, C_n) =
 
 </dd>
 <dt><strong class="Mark"><code class="code">chars</code></strong></dt>
-<dd><p>an integer or a list of integers to select a sublist of the irreducible characters of <var class="Arg">tbl</var>, or a list of characters of <var class="Arg">tbl</var> (in this case the letter <code class="code">"X"</code> is replaced by <code class="code">"Y"</code>),</p>
+<dd><p>an integer or a list of integers to select a sublist of the irreducible characters of <var class="Arg">tbl</var>, or a list of characters of <var class="Arg">tbl</var> (in the latter case, the default letter <code class="code">"X"</code> in the character names is replaced by <code class="code">"Y"</code>),</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">charnames</code></strong></dt>
+<dd><p>a list of strings of length equal to the number of characters that shall be shown; they are used as labels for the characters,</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">classes</code></strong></dt>
 <dd><p>an integer or a list of integers to select a sublist of the classes of <var class="Arg">tbl</var>,</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">classnames</code></strong></dt>
+<dd><p>a list of strings of length equal to the number of classes that shall be shown; they are used as labels for the classes,</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">indicator</code></strong></dt>
@@ -1812,7 +1838,7 @@ n(C_1, C_2, \ldots, C_n) =
 
 </dd>
 <dt><strong class="Mark"><code class="code">powermap</code></strong></dt>
-<dd><p>an integer or a list of integers to select a subset of the available power maps, <code class="keyw">false</code> to suppress the printing of power maps, or the string <code class="code">"ATLAS"</code> to force a printing of class names and power maps in a style similar to that used in the <strong class="pkg">Atlas</strong> of Finite Groups <a href="chapBib_mj.html#biBCCN85">[CCN+85]</a>,</p>
+<dd><p>an integer or a list of integers to select a subset of the available power maps, <code class="keyw">false</code> to suppress the printing of power maps, or the string <code class="code">"ATLAS"</code> to force a printing of class names and power maps in a style similar to that used in the <strong class="pkg">Atlas</strong> of Finite Groups <a href="chapBib_mj.html#biBCCN85">[CCN+85]</a> (the <code class="code">"ATLAS"</code> variant works only if the function <code class="func">CambridgeMaps</code> (<a href="../../pkg/ctbllib/doc/chap6.html#X78A84889878D98BB"><span class="RefLink">CTblLib: CambridgeMaps</span></a>) is available, which belongs to the <strong class="pkg">CTblLib</strong> package),</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">Display</code></strong></dt>
@@ -2450,15 +2476,30 @@ X.3     1  1  1
 
 <h5>71.20-4 CharacterTableIsoclinic</h5>
 
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CharacterTableIsoclinic</code>( <var class="Arg">tbl</var>[, <var class="Arg">arec</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CharacterTableIsoclinic</code>( <var class="Arg">tbl</var>[, <var class="Arg">classes</var>][, <var class="Arg">centre</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CharacterTableIsoclinic</code>( <var class="Arg">modtbl</var>, <var class="Arg">ordiso</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SourceOfIsoclinicTable</code>( <var class="Arg">tbl</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>If <var class="Arg">tbl</var> is the (ordinary or modular) character table of a group with the structure <span class="SimpleMath">\(2.G.2\)</span> with a central subgroup <span class="SimpleMath">\(Z\)</span> of order <span class="SimpleMath">\(2\)</span> or <span class="SimpleMath">\(4\)</span> and a normal subgroup <span class="SimpleMath">\(N\)</span> of index <span class="SimpleMath">\(2\)</span> that contains <span class="SimpleMath">\(Z\)</span> then <code class="func">CharacterTableIsoclinic</code> returns the table of the isoclinic group in the sense of the <strong class="pkg">Atlas</strong> of Finite Groups <a href="chapBib_mj.html#biBCCN85">[CCN+85, Chapter 6, Section 7]</a>. If <span class="SimpleMath">\(N\)</span> is not uniquely determined then the positions of the classes forming <span class="SimpleMath">\(N\)</span> must be entered as list <var class="Arg">classes</var>. If <span class="SimpleMath">\(Z\)</span> is not unique inside <span class="SimpleMath">\(N\)</span> then the positions of the classes in <span class="SimpleMath">\(Z\)</span> must be entered as list <var class="Arg">centre</var>; If <span class="SimpleMath">\(Z\)</span> has order <span class="SimpleMath">\(2\)</span> then <var class="Arg">centre</var> can be also the position of the involution in <span class="SimpleMath">\(Z\)</span>.</p>
+<p>Let <var class="Arg">tbl</var> be the (ordinary or modular) character table of a group <span class="SimpleMath">\(H\)</span>, say, with the structure <span class="SimpleMath">\(p.G.p\)</span> for some prime <span class="SimpleMath">\(p\)</span>, that is, <span class="SimpleMath">\(H/Z\)</span> has a normal subgroup <span class="SimpleMath">\(N\)</span> of index <span class="SimpleMath">\(p\)</span> and a central subgroup <span class="SimpleMath">\(Z\)</span> of order <span class="SimpleMath">\(p\)</span> contained in <span class="SimpleMath">\(N\)</span>.</p>
 
-<p>Note that also if <var class="Arg">tbl</var> is a Brauer table then <var class="Arg">classes</var> and <var class="Arg">centre</var> denote class numbers w.r.t. the <em>ordinary</em> character table.</p>
+<p>Then <code class="func">CharacterTableIsoclinic</code> returns the table of an isoclinic group in the sense of the <strong class="pkg">Atlas</strong> of Finite Groups <a href="chapBib_mj.html#biBCCN85">[CCN+85, Chapter 6, Section 7]</a>.</p>
 
-<p>For an ordinary character table that has been constructed via <code class="func">CharacterTableIsoclinic</code>, the value of <code class="func">SourceOfIsoclinicTable</code> is the list of three arguments in the <code class="func">CharacterTableIsoclinic</code> call.</p>
+<p>If <span class="SimpleMath">\(p = 2\)</span> then also the case <span class="SimpleMath">\(H = 4.G.2\)</span> is supported, that is, <span class="SimpleMath">\(Z\)</span> has order four and <span class="SimpleMath">\(N\)</span> has index two in <span class="SimpleMath">\(H\)</span>.</p>
 
-<p>Note that there is no default method for <em>computing</em> the value of <code class="func">SourceOfIsoclinicTable</code>.</p>
+<p>The optional arguments are needed if <var class="Arg">tbl</var> does not determine the class positions of <span class="SimpleMath">\(N\)</span> or <span class="SimpleMath">\(Z\)</span> uniquely, and in the case <span class="SimpleMath">\(p &gt; 2\)</span> if one wants to specify a "variant number" for the result.</p>
+
+
+<ul>
+<li><p>In general, the values can be specified via a record <var class="Arg">arec</var>. If <span class="SimpleMath">\(N\)</span> is not uniquely determined then the positions of the classes forming <span class="SimpleMath">\(N\)</span> must be entered as the value of the component <code class="code">normalSubgroup</code>. If <span class="SimpleMath">\(Z\)</span> is not unique inside <span class="SimpleMath">\(N\)</span> then the class position of a generator of <span class="SimpleMath">\(Z\)</span> must be entered as the value of the component <code class="code">centralElement</code>.</p>
+
+</li>
+<li><p>If <span class="SimpleMath">\(p = 2\)</span> then one may specify the positions of the classes forming <span class="SimpleMath">\(N\)</span> via a list <var class="Arg">classes</var>, and the positions of the classes in <span class="SimpleMath">\(Z\)</span> as a list <var class="Arg">centre</var>; if <span class="SimpleMath">\(Z\)</span> has order <span class="SimpleMath">\(2\)</span> then <var class="Arg">centre</var> can be also the position of the involution in <span class="SimpleMath">\(Z\)</span>.</p>
+
+</li>
+</ul>
+<p>Note that also if <var class="Arg">tbl</var> is a Brauer table then <code class="code">normalSubgroup</code> and <code class="code">centralElement</code>, resp.  <var class="Arg">classes</var> and <var class="Arg">centre</var>, denote class numbers w.r.t. the <em>ordinary</em> character table.</p>
+
+<p>If <span class="SimpleMath">\(p\)</span> is odd then the <strong class="pkg">Atlas</strong> construction describes <span class="SimpleMath">\(p\)</span> isoclinic variants that arise from <span class="SimpleMath">\(p.G.p\)</span>. (These groups need not be pairwise nonisomorphic.) Entering an integer <span class="SimpleMath">\(k \in \{ 1, 2, \ldots, k-1 \}\)</span> as the value of the component <code class="code">k</code> of <var class="Arg">arec</var> yields the <span class="SimpleMath">\(k\)</span>-th of the corresponding character tables; the default for <code class="code">k</code> is <span class="SimpleMath">\(1\)</span>.</p>
 
 
 <div class="example"><pre>
@@ -2467,8 +2508,8 @@ CharacterTable( "Dihedral(8)" )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">nsg:= ClassPositionsOfNormalSubgroups( d8 );</span>
 [ [ 1 ], [ 1, 3 ], [ 1 .. 3 ], [ 1, 3, 4 ], [ 1, 3 .. 5 ], [ 1 .. 5 ] 
  ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso:= CharacterTableIsoclinic( d8, nsg[3] );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( iso );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">isod8:= CharacterTableIsoclinic( d8, nsg[3] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( isod8 );</span>
 Isoclinic(Dihedral(8))
 
      2  3  2  3  2  2
@@ -2481,9 +2522,75 @@ X.2     1  1  1 -1 -1
 X.3     1 -1  1  1 -1
 X.4     1 -1  1 -1  1
 X.5     2  . -2  .  .
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SourceOfIsoclinicTable( iso );</span>
-[ CharacterTable( "Dihedral(8)" ), [ 1, 2, 3 ], [ 3 ], 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t1:= CharacterTable( SmallGroup( 27, 3 ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t2:= CharacterTable( SmallGroup( 27, 4 ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">nsg:= ClassPositionsOfNormalSubgroups( t1 );</span>
+[ [ 1 ], [ 1, 4, 8 ], [ 1, 2, 4, 5, 8 ], [ 1, 3, 4, 7, 8 ], 
+  [ 1, 4, 6, 8, 11 ], [ 1, 4, 8, 9, 10 ], [ 1 .. 11 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso1:= CharacterTableIsoclinic( t1, rec( k:= 1,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              normalSubgroup:= nsg[3] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso2:= CharacterTableIsoclinic( t1, rec( k:= 2,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              normalSubgroup:= nsg[3] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TransformingPermutationsCharacterTables( iso1, t1 ) &lt;&gt; fail;</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TransformingPermutationsCharacterTables( iso1, t2 ) &lt;&gt; fail;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TransformingPermutationsCharacterTables( iso2, t2 ) &lt;&gt; fail;</span>
+true
 </pre></div>
+
+<p>For an ordinary character table that has been constructed via <code class="func">CharacterTableIsoclinic</code>, the value of <code class="func">SourceOfIsoclinicTable</code> encodes this construction, and is defined as follows. If <span class="SimpleMath">\(p = 2\)</span> then the value is the list with entries <var class="Arg">tbl</var>, <var class="Arg">classes</var>, the list of class positions of the nonidentity elements in <span class="SimpleMath">\(Z\)</span>, and the class position of a generator of <span class="SimpleMath">\(Z\)</span>. If <span class="SimpleMath">\(p\)</span> is an odd prime then the value is a record with the following components.</p>
+
+
+<dl>
+<dt><strong class="Mark"><code class="code">table</code></strong></dt>
+<dd><p>the character table <var class="Arg">tbl</var>,</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">p</code></strong></dt>
+<dd><p>the prime <span class="SimpleMath">\(p\)</span>,</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">k</code></strong></dt>
+<dd><p>the variant number <span class="SimpleMath">\(k\)</span>,</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">outerClasses</code></strong></dt>
+<dd><p>the list of length <span class="SimpleMath">\(p-1\)</span> that contains at position <span class="SimpleMath">\(i\)</span> the sorted list of class positions of the <span class="SimpleMath">\(i\)</span>-th coset of the normal subgroup <span class="SimpleMath">\(N\)</span></p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">centralElement</code></strong></dt>
+<dd><p>the class position of a generator of the central subgroup <span class="SimpleMath">\(Z\)</span>.</p>
+
+</dd>
+</dl>
+<p>There is no default method for <em>computing</em> the value of <code class="func">SourceOfIsoclinicTable</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SourceOfIsoclinicTable( isod8 );</span>
+[ CharacterTable( "Dihedral(8)" ), [ 1 .. 3 ], [ 3 ], 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SourceOfIsoclinicTable( iso1 );</span>
+rec( centralElement := 4, k := 1, 
+  outerClasses := [ [ 3, 6, 9 ], [ 7, 10, 11 ] ], p := 3, 
+  table := CharacterTable( &lt;pc group of size 27 with 3 generators&gt; ) )
+</pre></div>
+
+<p>If the arguments of <code class="func">CharacterTableIsoclinic</code> are a Brauer table <var class="Arg">modtbl</var> and an ordinary table <var class="Arg">ordiso</var> then the <code class="func">SourceOfIsoclinicTable</code> value of <var class="Arg">ordiso</var> is assumed to be identical with the <code class="func">OrdinaryCharacterTable</code> (<a href="chap71_mj.html#X8011EEB684848039"><span class="RefLink">71.8-4</span></a>) value of <var class="Arg">modtbl</var>, and the specified isoclinic table of <var class="Arg">modtbl</var> is returned. This variant is useful if one has already constructed <var class="Arg">ordiso</var> in advance.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:= GL(2,3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t:= CharacterTable( g );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso:= CharacterTableIsoclinic( t );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t3:= t mod 3;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso3:= CharacterTableIsoclinic( t3, iso );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TransformingPermutationsCharacterTables( iso3,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       CharacterTableIsoclinic( t3 ) ) &lt;&gt; fail;</span>
+true
+</pre></div>
+
+<p><em>Theoretical background:</em> Consider the central product <span class="SimpleMath">\(K\)</span> of <span class="SimpleMath">\(H\)</span> with a cyclic group <span class="SimpleMath">\(C\)</span> of order <span class="SimpleMath">\(p^2\)</span>. That is, <span class="SimpleMath">\(K = H C\)</span>, <span class="SimpleMath">\(C \leq Z(K)\)</span>, and the central subgroup <span class="SimpleMath">\(Z\)</span> of order <span class="SimpleMath">\(p\)</span> in <span class="SimpleMath">\(H\)</span> lies in <span class="SimpleMath">\(C\)</span>. There are <span class="SimpleMath">\(p+1\)</span> subgroups of <span class="SimpleMath">\(K\)</span> that contain the normal subgroup <span class="SimpleMath">\(N\)</span> of index <span class="SimpleMath">\(p\)</span> in <span class="SimpleMath">\(H\)</span>. One of them is the central product of <span class="SimpleMath">\(C\)</span> with <span class="SimpleMath">\(N\)</span>, the others are <span class="SimpleMath">\(H_0 = H\)</span> and its isoclinic variants <span class="SimpleMath">\(H_1, H_2, \ldots, H_{{p-1}}\)</span>. We fix <span class="SimpleMath">\(g \in H \setminus N\)</span> and a generator <span class="SimpleMath">\(z\)</span> of <span class="SimpleMath">\(C\)</span>, and get <span class="SimpleMath">\(H = N \cup N g \cup N g^2 \cup \cdots \cup N g^{{p-1}}\)</span>. Then <span class="SimpleMath">\(H_k\)</span>, <span class="SimpleMath">\(0 \leq k \leq p-1\)</span>, is given by <span class="SimpleMath">\(N \cup N gz^k \cup N (gz^k)^2 \cup \cdots \cup N (gz^k)^{{p-1}}\)</span>. The conjugacy classes of all <span class="SimpleMath">\(H_k\)</span> are in bijection via multiplying the elements with suitable powers of <span class="SimpleMath">\(z\)</span>, and the irreducible characters of all <span class="SimpleMath">\(H_k\)</span> extend to <span class="SimpleMath">\(K\)</span> and are in bijection via multiplying the character values with suitable <span class="SimpleMath">\(p^2\)</span>-th roots of unity.</p>
 
 <p><a id="X806E55A58397B11B" name="X806E55A58397B11B"></a></p>
 
@@ -2575,6 +2682,35 @@ B = 2*E(3)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CharacterParameters( wr )[1];</span>
 [ [ 1, 1 ], [  ], [  ] ]
 </pre></div>
+
+<p><a id="X83E71B1F7FA70134" name="X83E71B1F7FA70134"></a></p>
+
+<h5>71.20-7 CharacterValueWreathSymmetric</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CharacterValueWreathSymmetric</code>( <var class="Arg">tbl</var>, <var class="Arg">n</var>, <var class="Arg">beta</var>, <var class="Arg">pi</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Let <var class="Arg">tbl</var> be the ordinary character table of a group <span class="SimpleMath">\(G\)</span>, say. The aim of this function is to compute a single character value from the character table of the wreath product of <span class="SimpleMath">\(G\)</span> with the full symmetric group on <var class="Arg">n</var> points.</p>
+
+<p>The conjugacy classes and the irreducible characters of this wreath product are parametrized by <span class="SimpleMath">\(r\)</span>-tuples of partitions which together form a partition of <var class="Arg">n</var> (see <code class="func">PartitionTuples</code> (<a href="chap16_mj.html#X877D997B7F66A119"><span class="RefLink">16.2-30</span></a>)), where <span class="SimpleMath">\(r\)</span> is the number of conjugacy classes of <span class="SimpleMath">\(G\)</span>.</p>
+
+<p>We describe the conjugacy class for which we want to compute the value by the <span class="SimpleMath">\(r\)</span>-tuple <var class="Arg">pi</var> of partitions in question, and describe the character for which we want to compute the value by the <span class="SimpleMath">\(r\)</span>-tuple <var class="Arg">beta</var> of <code class="func">BetaSet</code> (<a href="chap16_mj.html#X8796C1D783ED9CB4"><span class="RefLink">16.2-32</span></a>) values of the <span class="SimpleMath">\(r\)</span>-tuple of partitions in question.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:= 4;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">classpara:= [ [], [ 2, 1, 1 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">charpara:= [ [ 2, 1 ], [ 1 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">betas:= List( charpara, BetaSet );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c2:= CharacterTable( "Cyclic", 2 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CharacterValueWreathSymmetric( c2, n, betas, classpara );</span>
+0
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">wr:= CharacterTableWreathSymmetric( c2, n );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">classpos:= Position( ClassParameters( wr ), classpara );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">charpos:= Position( CharacterParameters( wr ), charpara );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Irr( wr )[ charpos, classpos ];</span>
+0
+</pre></div>
+
+<p>This function can be useful if one is interested in only a few character values. If many character values are needed then it is probably faster to compute the whole character table of the wreath product using <code class="func">CharacterTableWreathSymmetric</code> (<a href="chap71_mj.html#X79B75C8582426BC5"><span class="RefLink">71.20-6</span></a>), which uses intermediate results of recursive computations and therefore can avoid repetitions.</p>
 
 <p><a id="X816FCD5A805F9FE8" name="X816FCD5A805F9FE8"></a></p>
 

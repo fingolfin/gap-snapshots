@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Convex_objects">
+<Heading>Convex objects</Heading>
+
+<Section Label="Chapter_Convex_objects_Section_Attributes">
+<Heading>Attributes</Heading>
+
+<ManSection>
+  <Attr Arg="obj" Name="AmbientSpaceDimension" Label="for IsConvexObject"/>
+ <Returns>integer
+</Returns>
+ <Description>
+ Returns the dimension of the ambient space, i.e., the space that contains the convex object.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="obj" Name="Dimension" Label="for IsConvexObject"/>
+ <Returns>integer
+</Returns>
+ <Description>
+ Returns the dimension of the covex object.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="obj" Name="IsFullDimensional" Label="for IsConvexObject"/>
+ <Returns>boolian
+</Returns>
+ <Description>
+ Returns whether the convex object is full dimensional or not.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="obj" Name="InteriorPoint" Label="for IsConvexObject"/>
+ <Returns>a point in the object
+</Returns>
+ <Description>
+ Returns an interior point of the covex object.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+</Chapter>
+

@@ -1,13 +1,12 @@
 #############################################################################
 ##
-#W  ieee754.g                         GAP library                Steve Linton
-##                                                                Stefan Kohl
-##                                                          Laurent Bartholdi
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Steve Linton, Stefan Kohl, Laurent Bartholdi.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file deals with macfloats 
 ##
@@ -43,25 +42,11 @@ INSTALLFLOATCREATOR("for IsIEEE754FloatRep and string",
     return MACFLOAT_STRING(s);
 end);
 
-#############################################################################
-##
-#M  String( x ) . . . . . . . . . . . . . . . . . . . . . . . .  for macfloats
-##
-BindGlobal("MACFLOAT_STRING_DOTTIFY", function(s)
-    local p;
-    if '.' in s or Intersection(s,"0123456789")=[] then return s; fi;
-    for p in [1..Length(s)] do
-        if not s[p] in "+-0123456789" then p := p-1; break; fi;
-    od;
-    Add(s,'.',p+1);
-    return s;
-end);    
-
 InstallMethod( String, "for macfloats", [ IsIEEE754FloatRep ],
-        f->MACFLOAT_STRING_DOTTIFY(STRING_DIGITS_MACFLOAT(FLOAT.DECIMAL_DIG,f)));
+        f->STRING_DIGITS_MACFLOAT(FLOAT.DECIMAL_DIG,f));
 
 InstallMethod( ViewString, "for macfloats", [ IsIEEE754FloatRep ],
-        f->MACFLOAT_STRING_DOTTIFY(STRING_DIGITS_MACFLOAT(FLOAT.VIEW_DIG,f)));
+        f->STRING_DIGITS_MACFLOAT(FLOAT.VIEW_DIG,f));
 
 #############################################################################
 ##
@@ -164,14 +149,10 @@ IEEE754FLOAT.constants.EPSILON := LDEXP_MACFLOAT(MACFLOAT_INT(1),1-IEEE754FLOAT.
 IEEE754FLOAT.constants.MAX := LDEXP_MACFLOAT(NewFloat(IsIEEE754FloatRep,2^IEEE754FLOAT.constants.MANT_DIG-1),IEEE754FLOAT.constants.MAX_EXP-IEEE754FLOAT.constants.MANT_DIG);
 IEEE754FLOAT.constants.MIN := LDEXP_MACFLOAT(MACFLOAT_INT(1),IEEE754FLOAT.constants.MIN_EXP-1);
 
+# finally install the default floateans
+INSTALLFLOATCONSTRUCTORS(IEEE754FLOAT);
 if IsHPCGAP then
     MakeReadOnlyObj( IEEE754FLOAT );
 fi;
 
-# finally install the default floateans
-INSTALLFLOATCONSTRUCTORS(IEEE754FLOAT);
 SetFloats(IEEE754FLOAT);
-
-#############################################################################
-##
-#E

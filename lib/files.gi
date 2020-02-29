@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  files.gi                    GAP Library                      Frank Celler
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the methods for files and directories.
 ##
@@ -180,12 +181,7 @@ InstallGlobalFunction(DirectoryContents, function(dirname)
     # to make ~/mydir work
     dirname := UserHomeExpand(dirname);
   fi;
-  str := STRING_LIST_DIR(dirname);
-  if str = fail then
-    Error("Could not open ", dirname, " as directory,\nsee LastSystemError();");
-  fi;
-  # Why is this file read before string.gd ???
-  return SplitStringInternal(str, "", "\000");
+  return LIST_DIR(dirname);
 end);
 
 
@@ -202,20 +198,23 @@ InstallMethod( Read,
     "string",
     [ IsString ],
 function ( name )
-    local   readIndent,  found;
+    local readIndent;
 
-    name := UserHomeExpand(name);
-
-    readIndent := SHALLOW_COPY_OBJ( READ_INDENT );
-    APPEND_LIST_INTR( READ_INDENT, "  " );
-    InfoRead1( "#I", READ_INDENT, "Read( \"", name, "\" )\n" );
-    found := (IsReadableFile(name)=true) and READ(name);
-    READ_INDENT := readIndent;
-    if found and READ_INDENT = ""  then
-        InfoRead1( "#I  Read( \"", name, "\" ) done\n" );
+    if GAPInfo.CommandLineOptions.D then
+        readIndent := SHALLOW_COPY_OBJ( READ_INDENT );
+        APPEND_LIST_INTR( READ_INDENT, "  " );
+        Print( "#I", READ_INDENT, "Read( \"", name, "\" )\n" );
     fi;
-    if not found  then
+
+    if not READ(UserHomeExpand(name)) then
         Error( "file \"", name, "\" must exist and be readable" );
+    fi;
+
+    if GAPInfo.CommandLineOptions.D then
+        READ_INDENT := readIndent;
+        if READ_INDENT = "" then
+            Print( "#I  Read( \"", name, "\" ) done\n" );
+        fi;
     fi;
 end );
 
@@ -403,8 +402,3 @@ InstallGlobalFunction(RemoveDirectoryRecursively,
     end;
     return Dowork(dirname);
   end );
-
-
-#############################################################################
-##
-#E

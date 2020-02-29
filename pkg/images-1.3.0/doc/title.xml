@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    images
+  </Title>
+  <Subtitle>
+    Minimal and Canonical images
+  </Subtitle>
+  <Version>
+    1.3.0
+  </Version>
+  <Author>
+    Christopher Jefferson<Alt Only="LaTeX"><Br/></Alt>
+<Email>caj21@st-andrews.ac.uk</Email>
+<Homepage>http://caj.host.cs.st-andrews.ac.uk/</Homepage>
+
+  </Author>
+  <Author>
+    Markus Pfeiffer<Alt Only="LaTeX"><Br/></Alt>
+<Email>markus.pfeiffer@morphism.de</Email>
+<Homepage>http://www.morphism.de/~markusp/</Homepage>
+
+  </Author>
+  <Author>
+    Rebecca Waldecker<Alt Only="LaTeX"><Br/></Alt>
+<Email>rebecca.waldecker@mathematik.uni-halle.de</Email>
+<Homepage>http://conway1.mathematik.uni-halle.de/~waldecker/</Homepage>
+
+  </Author>
+  <Author>
+    Eliza Jonauskyte<Alt Only="LaTeX"><Br/></Alt>
+<Email>ej31@st-andrews.ac.uk</Email>
+
+  </Author>
+  <Date>
+    21 March 2019
+  </Date>
+  <Copyright>
+    
+&copyright; 2013-2019
+
+  </Copyright>
+  </TitlePage>

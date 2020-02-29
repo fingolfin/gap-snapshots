@@ -3,6 +3,8 @@
   \item \texttt  {AchieveMilestone}, \hyperpage{11}
   \item \texttt  {AdoptObj}, \hyperpage{23}
   \item \texttt  {AdoptSingleObj}, \hyperpage{23}
+  \item \texttt{atomic}
+    \subitem no value, \hyperpage{26}
   \item \texttt  {AtomicIncorporateObj}, \hyperpage{22}
   \item \texttt  {AtomicList}, \hyperpage{36}
     \subitem for a count and an object, \hyperpage{36}

@@ -1,10 +1,4 @@
-#############################################################################
-##
-#W  read.tst                  GAP library                 Chris Jefferson
-##
-##
-#Y  Copyright (C)  2014,  GAP Group
-##
+#@local dir,name,p,x
 gap> START_TEST("read.tst");
 gap> name := Filename( DirectoriesLibrary("tst"), "example.txt" );;
 gap> x := InputTextFile(name);;
@@ -17,6 +11,8 @@ gap> ReadLine(x);
 gap> ReadLine(x);
 fail
 gap> ReadLine(x);
+fail
+gap> SeekPositionStream(x, -1);
 fail
 gap> SeekPositionStream(x, 0);
 true
@@ -83,6 +79,9 @@ gap> FileString( Filename(dir, "test.g.gz"), "\037\213\b\b0,\362W\000\ctest.g\00
 32
 gap> StringFile( Filename(dir, "test.g") ) = "1+1;\n" or ARCH_IS_WINDOWS(); # works only when Cygwin installed with gzip
 true
+gap> StringFile( "/" );
+Error, in StringFile: Is a directory (21)
+
 gap> READ_ALL_COMMANDS(InputTextString(""), false, false, false);
 [  ]
 gap> READ_ALL_COMMANDS(InputTextString("a := (3,7,1); y := a^(-1);"), false, false, false);

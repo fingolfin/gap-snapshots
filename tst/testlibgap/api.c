@@ -9,7 +9,10 @@
  * TODO: Test error handling
  *
  */
+
 #include "common.h"
+
+#include <intobj.h>
 
 
 void records(void)
@@ -20,9 +23,9 @@ void records(void)
     nam = GAP_MakeString("key");
     val = GAP_MakeString("value");
 
-    assert(GAP_IsRecord(r) != 0);
-    assert(GAP_IsRecord(0) == 0);
-    assert(GAP_IsRecord(val) == 0);
+    assert(GAP_IsRecord(r));
+    assert(!GAP_IsRecord(0));
+    assert(!GAP_IsRecord(val));
 
     GAP_AssRecord(r, nam, val);
     ret = GAP_ElmRecord(r, nam);
@@ -40,9 +43,9 @@ void lists(void)
     val = GAP_MakeString("value");
     val2 = GAP_NewPrecord(5);
 
-    assert(GAP_IsList(r) != 0);
-    assert(GAP_IsList(0) == 0);
-    assert(GAP_IsList(val2) == 0);
+    assert(GAP_IsList(r));
+    assert(!GAP_IsList(0));
+    assert(!GAP_IsList(val2));
 
     GAP_AssList(r, 1, val);
     ret = GAP_ElmList(r, 1);
@@ -56,21 +59,44 @@ void lists(void)
     assert(ret == 0);
 }
 
+void matrices(void)
+{
+    Obj mat, val, row, ret;
+
+    mat = GAP_NewPlist(1);
+    val = INTOBJ_INT(42);
+
+    assert(!GAP_IsMatrixObj(mat));   // empty list, not yet a matrix
+    assert(!GAP_IsMatrixObj(0));
+    assert(!GAP_IsMatrixObj(val));
+
+    row = GAP_NewPlist(2);
+    GAP_AssList(row, 1, INTOBJ_INT(1));
+    GAP_AssList(row, 2, INTOBJ_INT(2));
+    GAP_AssList(mat, 1, row);
+    assert(!GAP_IsMatrixObj(row));
+    assert(GAP_IsMatrixObj(mat));
+
+    GAP_AssMat(mat, 1, 1, val);
+    ret = GAP_ElmMat(mat, 1, 1);
+    assert(ret == val);
+}
+
 void strings(void)
 {
     const char *ts = "Hello, world!";
     Obj r, r2;
 
-    assert(GAP_IsString(0) == 0);
+    assert(!GAP_IsString(0));
 
     r = GAP_MakeString(ts);
     assert(GAP_LenString(r) == strlen(ts));
-    assert(GAP_IsString(r) != 0);
+    assert(GAP_IsString(r));
     assert(strcmp(GAP_CSTR_STRING(r),ts) == 0);
 
     r2 = GAP_MakeImmString(ts);
     assert(GAP_LenString(r2) == strlen(ts));
-    assert(GAP_IsString(r2) != 0);
+    assert(GAP_IsString(r2));
     assert(strcmp(GAP_CSTR_STRING(r2),ts) == 0);
 }
 
@@ -79,21 +105,21 @@ void integers(void)
     Obj i1,i2,o;
 
     o = GAP_MakeString("test");
-    assert(GAP_IsInt(o) == 0);
-    assert(GAP_IsSmallInt(o) == 0);
-    assert(GAP_IsLargeInt(o) == 0);
+    assert(!GAP_IsInt(o));
+    assert(!GAP_IsSmallInt(o));
+    assert(!GAP_IsLargeInt(o));
 
     const UInt limbs[1] = { 0 };
     i1 = GAP_MakeObjInt(limbs, 1);
-    assert(GAP_IsInt(i1) != 0);
-    assert(GAP_IsSmallInt(i1) != 0);
-    assert(GAP_IsLargeInt(i1) == 0);
+    assert(GAP_IsInt(i1));
+    assert(GAP_IsSmallInt(i1));
+    assert(!GAP_IsLargeInt(i1));
 
     const UInt limbs2[8] = { 1, 1, 1, 1, 1, 1, 1, 1 };
     i2 = GAP_MakeObjInt(limbs2, -8);
-    assert(GAP_IsInt(i2) != 0);
-    assert(GAP_IsSmallInt(i2) == 0);
-    assert(GAP_IsLargeInt(i2) != 0);
+    assert(GAP_IsInt(i2));
+    assert(!GAP_IsSmallInt(i2));
+    assert(GAP_IsLargeInt(i2));
     assert(GAP_SizeInt(i2) == -8);
 
     assert(memcmp(GAP_AddrInt(i2), limbs2, sizeof(UInt) * 8) == 0);
@@ -112,15 +138,15 @@ void operations(void)
     b = GAP_MakeObjInt(limbs2, -8);
     l = GAP_NewPlist(2);
 
-    assert(GAP_EQ(a, a) != 0);
-    assert(GAP_EQ(a, b) == 0);
+    assert(GAP_EQ(a, a));
+    assert(!GAP_EQ(a, b));
 
-    assert(GAP_LT(a, b) == 0);
-    assert(GAP_LT(b, a) != 0);
+    assert(!GAP_LT(a, b));
+    assert(GAP_LT(b, a));
 
-    assert(GAP_IN(a, l) == 0);
+    assert(!GAP_IN(a, l));
 
-    assert(GAP_EQ(GAP_SUM(a, b), GAP_SUM(b,a)) != 0);
+    assert(GAP_EQ(GAP_SUM(a, b), GAP_SUM(b,a)));
 
     // TODO: More sensible test than just executing?
     // TODO: More objects?
@@ -145,7 +171,7 @@ void globalvars(void)
 
     // Hopefully this always exists.
     a = GAP_ValueGlobalVariable("GAPInfo");
-    assert(GAP_IsRecord(a) != 0);
+    assert(GAP_IsRecord(a));
 
     x = GAP_CanAssignGlobalVariable("GAPInfo");
     assert(x == 0);
@@ -173,6 +199,10 @@ int main(int argc, char ** argv)
 
     printf("# Testing lists... ");
     lists();
+    printf("success\n");
+
+    printf("# Testing matrices... ");
+    matrices();
     printf("success\n");
 
     printf("# Testing integers... ");

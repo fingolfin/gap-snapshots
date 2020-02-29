@@ -6,14 +6,14 @@ gap> START_TEST("kernel/stats.tst");
 # test checks in ExecForRangeHelper
 gap> f := function(a) local x; for x in [a..1] do od; end;;
 gap> f('x');
-Error, Range: <first> must be an integer (not a character)
+Error, Range: <first> must be a small integer (not a character)
 gap> f := function(a) local x; for x in [1..a] do od; end;;
 gap> f('x');
-Error, Range: <last> must be an integer (not a character)
+Error, Range: <last> must be a small integer (not a character)
 
 # test Assert with two arguments
 gap> function() Assert(0, 0); end();
-Error, Assertion condition must evaluate to 'true' or 'false', not a integer
+Error, Assert: <cond> must be 'true' or 'false' (not the integer 0)
 gap> function() Assert(0, true); end();
 gap> function() Assert(0, false); end();
 Error, Assertion failure
@@ -23,7 +23,7 @@ gap> function() Assert(100, false); end();
 
 # test Assert with three arguments
 gap> function() Assert(0, 0, "message\n"); end();
-Error, Assertion condition must evaluate to 'true' or 'false', not a integer
+Error, Assert: <cond> must be 'true' or 'false' (not the integer 0)
 gap> function() Assert(0, true, "message\n"); end();
 gap> function() Assert(0, false, "message\n"); end();
 message

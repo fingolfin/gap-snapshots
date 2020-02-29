@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++   -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/bench_epu8.dir/bench_epu8.cpp.o  -o bench_epu8 -lbenchmark -lpthread 

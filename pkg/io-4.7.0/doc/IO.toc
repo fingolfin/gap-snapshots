@@ -1,0 +1,190 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Preface}}{5}{chapter.1}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Installation of the \textsf {IO}-package}}{6}{chapter.2}
+\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }Recompiling the documentation}}{7}{section.2.1}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Functions directly available from the C library}}{8}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Differences in arguments - an overview}}{8}{section.3.1}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }The low-level functions in detail}}{9}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }IO{\textunderscore }accept}}{9}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }IO{\textunderscore }bind}}{9}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}\leavevmode {\color {Chapter }IO{\textunderscore }chdir}}{10}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}\leavevmode {\color {Chapter }IO{\textunderscore }chmod}}{10}{subsection.3.2.4}
+\contentsline {subsection}{\numberline {3.2.5}\leavevmode {\color {Chapter }IO{\textunderscore }chown}}{10}{subsection.3.2.5}
+\contentsline {subsection}{\numberline {3.2.6}\leavevmode {\color {Chapter }IO{\textunderscore }close}}{10}{subsection.3.2.6}
+\contentsline {subsection}{\numberline {3.2.7}\leavevmode {\color {Chapter }IO{\textunderscore }closedir}}{10}{subsection.3.2.7}
+\contentsline {subsection}{\numberline {3.2.8}\leavevmode {\color {Chapter }IO{\textunderscore }connect}}{10}{subsection.3.2.8}
+\contentsline {subsection}{\numberline {3.2.9}\leavevmode {\color {Chapter }IO{\textunderscore }creat}}{10}{subsection.3.2.9}
+\contentsline {subsection}{\numberline {3.2.10}\leavevmode {\color {Chapter }IO{\textunderscore }dup}}{11}{subsection.3.2.10}
+\contentsline {subsection}{\numberline {3.2.11}\leavevmode {\color {Chapter }IO{\textunderscore }dup2}}{11}{subsection.3.2.11}
+\contentsline {subsection}{\numberline {3.2.12}\leavevmode {\color {Chapter }IO{\textunderscore }execv}}{11}{subsection.3.2.12}
+\contentsline {subsection}{\numberline {3.2.13}\leavevmode {\color {Chapter }IO{\textunderscore }execve}}{11}{subsection.3.2.13}
+\contentsline {subsection}{\numberline {3.2.14}\leavevmode {\color {Chapter }IO{\textunderscore }execvp}}{11}{subsection.3.2.14}
+\contentsline {subsection}{\numberline {3.2.15}\leavevmode {\color {Chapter }IO{\textunderscore }exit}}{11}{subsection.3.2.15}
+\contentsline {subsection}{\numberline {3.2.16}\leavevmode {\color {Chapter }IO{\textunderscore }fchmod}}{11}{subsection.3.2.16}
+\contentsline {subsection}{\numberline {3.2.17}\leavevmode {\color {Chapter }IO{\textunderscore }fchown}}{12}{subsection.3.2.17}
+\contentsline {subsection}{\numberline {3.2.18}\leavevmode {\color {Chapter }IO{\textunderscore }fcntl}}{12}{subsection.3.2.18}
+\contentsline {subsection}{\numberline {3.2.19}\leavevmode {\color {Chapter }IO{\textunderscore }fork}}{12}{subsection.3.2.19}
+\contentsline {subsection}{\numberline {3.2.20}\leavevmode {\color {Chapter }IO{\textunderscore }fstat}}{12}{subsection.3.2.20}
+\contentsline {subsection}{\numberline {3.2.21}\leavevmode {\color {Chapter }IO{\textunderscore }getcwd}}{12}{subsection.3.2.21}
+\contentsline {subsection}{\numberline {3.2.22}\leavevmode {\color {Chapter }IO{\textunderscore }gethostbyname}}{12}{subsection.3.2.22}
+\contentsline {subsection}{\numberline {3.2.23}\leavevmode {\color {Chapter }IO{\textunderscore }gethostname}}{12}{subsection.3.2.23}
+\contentsline {subsection}{\numberline {3.2.24}\leavevmode {\color {Chapter }IO{\textunderscore }getpid}}{13}{subsection.3.2.24}
+\contentsline {subsection}{\numberline {3.2.25}\leavevmode {\color {Chapter }IO{\textunderscore }getppid}}{13}{subsection.3.2.25}
+\contentsline {subsection}{\numberline {3.2.26}\leavevmode {\color {Chapter }IO{\textunderscore }getsockname}}{13}{subsection.3.2.26}
+\contentsline {subsection}{\numberline {3.2.27}\leavevmode {\color {Chapter }IO{\textunderscore }getsockopt}}{13}{subsection.3.2.27}
+\contentsline {subsection}{\numberline {3.2.28}\leavevmode {\color {Chapter }IO{\textunderscore }gettimeofday}}{13}{subsection.3.2.28}
+\contentsline {subsection}{\numberline {3.2.29}\leavevmode {\color {Chapter }IO{\textunderscore }gmtime}}{13}{subsection.3.2.29}
+\contentsline {subsection}{\numberline {3.2.30}\leavevmode {\color {Chapter }IO{\textunderscore }kill}}{13}{subsection.3.2.30}
+\contentsline {subsection}{\numberline {3.2.31}\leavevmode {\color {Chapter }IO{\textunderscore }lchown}}{14}{subsection.3.2.31}
+\contentsline {subsection}{\numberline {3.2.32}\leavevmode {\color {Chapter }IO{\textunderscore }link}}{14}{subsection.3.2.32}
+\contentsline {subsection}{\numberline {3.2.33}\leavevmode {\color {Chapter }IO{\textunderscore }listen}}{14}{subsection.3.2.33}
+\contentsline {subsection}{\numberline {3.2.34}\leavevmode {\color {Chapter }IO{\textunderscore }localtime}}{14}{subsection.3.2.34}
+\contentsline {subsection}{\numberline {3.2.35}\leavevmode {\color {Chapter }IO{\textunderscore }lseek}}{14}{subsection.3.2.35}
+\contentsline {subsection}{\numberline {3.2.36}\leavevmode {\color {Chapter }IO{\textunderscore }lstat}}{14}{subsection.3.2.36}
+\contentsline {subsection}{\numberline {3.2.37}\leavevmode {\color {Chapter }IO{\textunderscore }mkdir}}{14}{subsection.3.2.37}
+\contentsline {subsection}{\numberline {3.2.38}\leavevmode {\color {Chapter }IO{\textunderscore }mkfifo}}{15}{subsection.3.2.38}
+\contentsline {subsection}{\numberline {3.2.39}\leavevmode {\color {Chapter }IO{\textunderscore }mknod}}{15}{subsection.3.2.39}
+\contentsline {subsection}{\numberline {3.2.40}\leavevmode {\color {Chapter }IO{\textunderscore }mkstemp}}{15}{subsection.3.2.40}
+\contentsline {subsection}{\numberline {3.2.41}\leavevmode {\color {Chapter }IO{\textunderscore }mkdtemp}}{15}{subsection.3.2.41}
+\contentsline {subsection}{\numberline {3.2.42}\leavevmode {\color {Chapter }IO{\textunderscore }open}}{15}{subsection.3.2.42}
+\contentsline {subsection}{\numberline {3.2.43}\leavevmode {\color {Chapter }IO{\textunderscore }opendir}}{15}{subsection.3.2.43}
+\contentsline {subsection}{\numberline {3.2.44}\leavevmode {\color {Chapter }IO{\textunderscore }pipe}}{15}{subsection.3.2.44}
+\contentsline {subsection}{\numberline {3.2.45}\leavevmode {\color {Chapter }IO{\textunderscore }read}}{16}{subsection.3.2.45}
+\contentsline {subsection}{\numberline {3.2.46}\leavevmode {\color {Chapter }IO{\textunderscore }readdir}}{16}{subsection.3.2.46}
+\contentsline {subsection}{\numberline {3.2.47}\leavevmode {\color {Chapter }IO{\textunderscore }readlink}}{16}{subsection.3.2.47}
+\contentsline {subsection}{\numberline {3.2.48}\leavevmode {\color {Chapter }IO{\textunderscore }recv}}{16}{subsection.3.2.48}
+\contentsline {subsection}{\numberline {3.2.49}\leavevmode {\color {Chapter }IO{\textunderscore }recvfrom}}{16}{subsection.3.2.49}
+\contentsline {subsection}{\numberline {3.2.50}\leavevmode {\color {Chapter }IO{\textunderscore }rename}}{16}{subsection.3.2.50}
+\contentsline {subsection}{\numberline {3.2.51}\leavevmode {\color {Chapter }IO{\textunderscore }rewinddir}}{17}{subsection.3.2.51}
+\contentsline {subsection}{\numberline {3.2.52}\leavevmode {\color {Chapter }IO{\textunderscore }rmdir}}{17}{subsection.3.2.52}
+\contentsline {subsection}{\numberline {3.2.53}\leavevmode {\color {Chapter }IO{\textunderscore }seekdir}}{17}{subsection.3.2.53}
+\contentsline {subsection}{\numberline {3.2.54}\leavevmode {\color {Chapter }IO{\textunderscore }select}}{17}{subsection.3.2.54}
+\contentsline {subsection}{\numberline {3.2.55}\leavevmode {\color {Chapter }IO{\textunderscore }send}}{17}{subsection.3.2.55}
+\contentsline {subsection}{\numberline {3.2.56}\leavevmode {\color {Chapter }IO{\textunderscore }sendto}}{17}{subsection.3.2.56}
+\contentsline {subsection}{\numberline {3.2.57}\leavevmode {\color {Chapter }IO{\textunderscore }setsockopt}}{18}{subsection.3.2.57}
+\contentsline {subsection}{\numberline {3.2.58}\leavevmode {\color {Chapter }IO{\textunderscore }socket}}{18}{subsection.3.2.58}
+\contentsline {subsection}{\numberline {3.2.59}\leavevmode {\color {Chapter }IO{\textunderscore }stat}}{18}{subsection.3.2.59}
+\contentsline {subsection}{\numberline {3.2.60}\leavevmode {\color {Chapter }IO{\textunderscore }symlink}}{18}{subsection.3.2.60}
+\contentsline {subsection}{\numberline {3.2.61}\leavevmode {\color {Chapter }IO{\textunderscore }telldir}}{18}{subsection.3.2.61}
+\contentsline {subsection}{\numberline {3.2.62}\leavevmode {\color {Chapter }IO{\textunderscore }unlink}}{18}{subsection.3.2.62}
+\contentsline {subsection}{\numberline {3.2.63}\leavevmode {\color {Chapter }IO{\textunderscore }WaitPid}}{18}{subsection.3.2.63}
+\contentsline {subsection}{\numberline {3.2.64}\leavevmode {\color {Chapter }IO{\textunderscore }IgnorePid}}{19}{subsection.3.2.64}
+\contentsline {subsection}{\numberline {3.2.65}\leavevmode {\color {Chapter }IO{\textunderscore }write}}{19}{subsection.3.2.65}
+\contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }Further C level functions}}{19}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}\leavevmode {\color {Chapter }IO{\textunderscore }make{\textunderscore }sockaddr{\textunderscore }in}}{19}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}\leavevmode {\color {Chapter }IO{\textunderscore }environ}}{19}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}\leavevmode {\color {Chapter }IO{\textunderscore }InstallSIGCHLDHandler}}{20}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}\leavevmode {\color {Chapter }IO{\textunderscore }RestoreSIGCHLDHandler}}{20}{subsection.3.3.4}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }High level functions for buffered I/O}}{21}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Types and the creation of \texttt {File} objects}}{21}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\leavevmode {\color {Chapter }IsFile}}{21}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\leavevmode {\color {Chapter }IO{\textunderscore }WrapFD}}{21}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}\leavevmode {\color {Chapter }IO{\textunderscore }File (mode)}}{22}{subsection.4.1.3}
+\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }Reading and writing}}{22}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\leavevmode {\color {Chapter }IO{\textunderscore }ReadUntilEOF}}{22}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}\leavevmode {\color {Chapter }IO{\textunderscore }ReadBlock}}{22}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}\leavevmode {\color {Chapter }IO{\textunderscore }ReadLine}}{23}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}\leavevmode {\color {Chapter }IO{\textunderscore }ReadLines}}{23}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}\leavevmode {\color {Chapter }IO{\textunderscore }HasData}}{23}{subsection.4.2.5}
+\contentsline {subsection}{\numberline {4.2.6}\leavevmode {\color {Chapter }IO{\textunderscore }Read}}{23}{subsection.4.2.6}
+\contentsline {subsection}{\numberline {4.2.7}\leavevmode {\color {Chapter }IO{\textunderscore }Write}}{24}{subsection.4.2.7}
+\contentsline {subsection}{\numberline {4.2.8}\leavevmode {\color {Chapter }IO{\textunderscore }WriteLine}}{24}{subsection.4.2.8}
+\contentsline {subsection}{\numberline {4.2.9}\leavevmode {\color {Chapter }IO{\textunderscore }WriteLines}}{24}{subsection.4.2.9}
+\contentsline {subsection}{\numberline {4.2.10}\leavevmode {\color {Chapter }IO{\textunderscore }Flush}}{24}{subsection.4.2.10}
+\contentsline {subsection}{\numberline {4.2.11}\leavevmode {\color {Chapter }IO{\textunderscore }WriteFlush}}{25}{subsection.4.2.11}
+\contentsline {subsection}{\numberline {4.2.12}\leavevmode {\color {Chapter }IO{\textunderscore }ReadyForWrite}}{25}{subsection.4.2.12}
+\contentsline {subsection}{\numberline {4.2.13}\leavevmode {\color {Chapter }IO{\textunderscore }WriteNonBlocking}}{25}{subsection.4.2.13}
+\contentsline {subsection}{\numberline {4.2.14}\leavevmode {\color {Chapter }IO{\textunderscore }ReadyForFlush}}{25}{subsection.4.2.14}
+\contentsline {subsection}{\numberline {4.2.15}\leavevmode {\color {Chapter }IO{\textunderscore }FlushNonBlocking}}{26}{subsection.4.2.15}
+\contentsline {subsection}{\numberline {4.2.16}\leavevmode {\color {Chapter }IO{\textunderscore }Close}}{26}{subsection.4.2.16}
+\contentsline {section}{\numberline {4.3}\leavevmode {\color {Chapter }Other functions}}{26}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}\leavevmode {\color {Chapter }IO{\textunderscore }GetFD}}{26}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}\leavevmode {\color {Chapter }IO{\textunderscore }GetWBuf}}{26}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}\leavevmode {\color {Chapter }IO{\textunderscore }Select}}{26}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}\leavevmode {\color {Chapter }IO{\textunderscore }ListDir}}{27}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.5}\leavevmode {\color {Chapter }ChangeDirectoryCurrent}}{27}{subsection.4.3.5}
+\contentsline {subsection}{\numberline {4.3.6}\leavevmode {\color {Chapter }IO{\textunderscore }MakeIPAddressPort}}{27}{subsection.4.3.6}
+\contentsline {subsection}{\numberline {4.3.7}\leavevmode {\color {Chapter }IO{\textunderscore }Environment}}{27}{subsection.4.3.7}
+\contentsline {subsection}{\numberline {4.3.8}\leavevmode {\color {Chapter }IO{\textunderscore }MakeEnvList}}{27}{subsection.4.3.8}
+\contentsline {section}{\numberline {4.4}\leavevmode {\color {Chapter }Inter process communication}}{28}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}\leavevmode {\color {Chapter }IO{\textunderscore }FindExecutable}}{28}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}\leavevmode {\color {Chapter }IO{\textunderscore }CloseAllFDs}}{28}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}\leavevmode {\color {Chapter }IO{\textunderscore }Popen}}{28}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.4}\leavevmode {\color {Chapter }IO{\textunderscore }Popen2}}{29}{subsection.4.4.4}
+\contentsline {subsection}{\numberline {4.4.5}\leavevmode {\color {Chapter }IO{\textunderscore }Popen3}}{29}{subsection.4.4.5}
+\contentsline {subsection}{\numberline {4.4.6}\leavevmode {\color {Chapter }IO{\textunderscore }StartPipeline}}{29}{subsection.4.4.6}
+\contentsline {subsection}{\numberline {4.4.7}\leavevmode {\color {Chapter }IO{\textunderscore }StringFilterFile}}{30}{subsection.4.4.7}
+\contentsline {subsection}{\numberline {4.4.8}\leavevmode {\color {Chapter }IO{\textunderscore }FileFilterString (append)}}{30}{subsection.4.4.8}
+\contentsline {subsection}{\numberline {4.4.9}\leavevmode {\color {Chapter }IO{\textunderscore }FilteredFile}}{30}{subsection.4.4.9}
+\contentsline {subsection}{\numberline {4.4.10}\leavevmode {\color {Chapter }IO{\textunderscore }CompressedFile}}{31}{subsection.4.4.10}
+\contentsline {subsection}{\numberline {4.4.11}\leavevmode {\color {Chapter }IO{\textunderscore }SendStringBackground}}{31}{subsection.4.4.11}
+\contentsline {subsection}{\numberline {4.4.12}\leavevmode {\color {Chapter }IO{\textunderscore }PipeThrough}}{31}{subsection.4.4.12}
+\contentsline {subsection}{\numberline {4.4.13}\leavevmode {\color {Chapter }IO{\textunderscore }PipeThroughWithError}}{32}{subsection.4.4.13}
+\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Object serialisation (Pickling)}}{33}{chapter.5}
+\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }Result objects}}{33}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}\leavevmode {\color {Chapter }IO{\textunderscore }Error}}{33}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}\leavevmode {\color {Chapter }IO{\textunderscore }Nothing}}{33}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}\leavevmode {\color {Chapter }IO{\textunderscore }OK}}{33}{subsection.5.1.3}
+\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }Pickling and unpickling}}{34}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}\leavevmode {\color {Chapter }IO{\textunderscore }Pickle}}{34}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}\leavevmode {\color {Chapter }IO{\textunderscore }Unpickle}}{34}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}\leavevmode {\color {Chapter }IO{\textunderscore }ClearPickleCache}}{34}{subsection.5.2.3}
+\contentsline {section}{\numberline {5.3}\leavevmode {\color {Chapter }Extending the pickling framework}}{34}{section.5.3}
+\contentsline {chapter}{\numberline {6}\leavevmode {\color {Chapter }Really random sources}}{36}{chapter.6}
+\contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }The functions}}{36}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}\leavevmode {\color {Chapter }RandomSource}}{36}{subsection.6.1.1}
+\contentsline {chapter}{\numberline {7}\leavevmode {\color {Chapter }A client side implementation of the HTTP protocol}}{37}{chapter.7}
+\contentsline {section}{\numberline {7.1}\leavevmode {\color {Chapter }Functions for client side HTTP}}{37}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}\leavevmode {\color {Chapter }OpenHTTPConnection}}{37}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.2}\leavevmode {\color {Chapter }HTTPRequest}}{37}{subsection.7.1.2}
+\contentsline {subsection}{\numberline {7.1.3}\leavevmode {\color {Chapter }HTTPTimeoutForSelect}}{38}{subsection.7.1.3}
+\contentsline {subsection}{\numberline {7.1.4}\leavevmode {\color {Chapter }CloseHTTPConnection}}{38}{subsection.7.1.4}
+\contentsline {subsection}{\numberline {7.1.5}\leavevmode {\color {Chapter }SingleHTTPRequest}}{39}{subsection.7.1.5}
+\contentsline {subsection}{\numberline {7.1.6}\leavevmode {\color {Chapter }CheckForUpdates}}{39}{subsection.7.1.6}
+\contentsline {subsection}{\numberline {7.1.7}\leavevmode {\color {Chapter }ReadWeb}}{39}{subsection.7.1.7}
+\contentsline {chapter}{\numberline {8}\leavevmode {\color {Chapter }Background jobs using fork}}{40}{chapter.8}
+\contentsline {section}{\numberline {8.1}\leavevmode {\color {Chapter }Background jobs}}{40}{section.8.1}
+\contentsline {subsection}{\numberline {8.1.1}\leavevmode {\color {Chapter }BackgroundJobByFork}}{40}{subsection.8.1.1}
+\contentsline {subsection}{\numberline {8.1.2}\leavevmode {\color {Chapter }IsIdle (bgjob)}}{41}{subsection.8.1.2}
+\contentsline {subsection}{\numberline {8.1.3}\leavevmode {\color {Chapter }HasTerminated}}{41}{subsection.8.1.3}
+\contentsline {subsection}{\numberline {8.1.4}\leavevmode {\color {Chapter }WaitUntilIdle}}{41}{subsection.8.1.4}
+\contentsline {subsection}{\numberline {8.1.5}\leavevmode {\color {Chapter }Pickup (bgjob)}}{41}{subsection.8.1.5}
+\contentsline {subsection}{\numberline {8.1.6}\leavevmode {\color {Chapter }Submit (bgjob)}}{42}{subsection.8.1.6}
+\contentsline {subsection}{\numberline {8.1.7}\leavevmode {\color {Chapter }Kill (bgjob)}}{42}{subsection.8.1.7}
+\contentsline {section}{\numberline {8.2}\leavevmode {\color {Chapter }Parallel programming skeletons}}{42}{section.8.2}
+\contentsline {subsection}{\numberline {8.2.1}\leavevmode {\color {Chapter }ParTakeFirstResultByFork}}{42}{subsection.8.2.1}
+\contentsline {subsection}{\numberline {8.2.2}\leavevmode {\color {Chapter }ParDoByFork}}{43}{subsection.8.2.2}
+\contentsline {subsection}{\numberline {8.2.3}\leavevmode {\color {Chapter }ParListByFork}}{43}{subsection.8.2.3}
+\contentsline {subsection}{\numberline {8.2.4}\leavevmode {\color {Chapter }ParMapReduceByFork}}{43}{subsection.8.2.4}
+\contentsline {subsection}{\numberline {8.2.5}\leavevmode {\color {Chapter }IO{\textunderscore }CallWithTimeout}}{43}{subsection.8.2.5}
+\contentsline {section}{\numberline {8.3}\leavevmode {\color {Chapter }Worker farms}}{44}{section.8.3}
+\contentsline {subsection}{\numberline {8.3.1}\leavevmode {\color {Chapter }ParWorkerFarmByFork}}{44}{subsection.8.3.1}
+\contentsline {subsection}{\numberline {8.3.2}\leavevmode {\color {Chapter }DoQueues}}{45}{subsection.8.3.2}
+\contentsline {subsection}{\numberline {8.3.3}\leavevmode {\color {Chapter }Kill (wfarm)}}{45}{subsection.8.3.3}
+\contentsline {subsection}{\numberline {8.3.4}\leavevmode {\color {Chapter }IsIdle (wfarm)}}{45}{subsection.8.3.4}
+\contentsline {subsection}{\numberline {8.3.5}\leavevmode {\color {Chapter }Submit (wfarm)}}{45}{subsection.8.3.5}
+\contentsline {subsection}{\numberline {8.3.6}\leavevmode {\color {Chapter }Pickup (wfarm)}}{45}{subsection.8.3.6}
+\contentsline {chapter}{\numberline {9}\leavevmode {\color {Chapter }I/O multiplexing}}{47}{chapter.9}
+\contentsline {section}{\numberline {9.1}\leavevmode {\color {Chapter }Introduction}}{47}{section.9.1}
+\contentsline {section}{\numberline {9.2}\leavevmode {\color {Chapter }The operations for \texttt {IOHub} objects}}{47}{section.9.2}
+\contentsline {subsection}{\numberline {9.2.1}\leavevmode {\color {Chapter }IOHub}}{47}{subsection.9.2.1}
+\contentsline {subsection}{\numberline {9.2.2}\leavevmode {\color {Chapter }NewConnection}}{47}{subsection.9.2.2}
+\contentsline {subsection}{\numberline {9.2.3}\leavevmode {\color {Chapter }CloseConnection}}{48}{subsection.9.2.3}
+\contentsline {subsection}{\numberline {9.2.4}\leavevmode {\color {Chapter }AttachServingSocket}}{48}{subsection.9.2.4}
+\contentsline {subsection}{\numberline {9.2.5}\leavevmode {\color {Chapter }ShutdownServingSocket}}{48}{subsection.9.2.5}
+\contentsline {subsection}{\numberline {9.2.6}\leavevmode {\color {Chapter }Shutdown}}{48}{subsection.9.2.6}
+\contentsline {subsection}{\numberline {9.2.7}\leavevmode {\color {Chapter }AcceptNewConnection}}{48}{subsection.9.2.7}
+\contentsline {subsection}{\numberline {9.2.8}\leavevmode {\color {Chapter }SubmitOutput}}{49}{subsection.9.2.8}
+\contentsline {subsection}{\numberline {9.2.9}\leavevmode {\color {Chapter }GetInput}}{49}{subsection.9.2.9}
+\contentsline {subsection}{\numberline {9.2.10}\leavevmode {\color {Chapter }NewTCPConnection}}{49}{subsection.9.2.10}
+\contentsline {subsection}{\numberline {9.2.11}\leavevmode {\color {Chapter }OutputQueue}}{49}{subsection.9.2.11}
+\contentsline {subsection}{\numberline {9.2.12}\leavevmode {\color {Chapter }InputQueue}}{50}{subsection.9.2.12}
+\contentsline {subsection}{\numberline {9.2.13}\leavevmode {\color {Chapter }DoIO}}{50}{subsection.9.2.13}
+\contentsline {section}{\numberline {9.3}\leavevmode {\color {Chapter } Examples }}{50}{section.9.3}
+\contentsline {chapter}{\numberline {10}\leavevmode {\color {Chapter }Examples of usage}}{51}{chapter.10}
+\contentsline {section}{\numberline {10.1}\leavevmode {\color {Chapter }Writing and reading a file}}{51}{section.10.1}
+\contentsline {section}{\numberline {10.2}\leavevmode {\color {Chapter }Using filtering programs to read and write files}}{52}{section.10.2}
+\contentsline {section}{\numberline {10.3}\leavevmode {\color {Chapter }Using filters when reading or writing files sequentially}}{52}{section.10.3}
+\contentsline {section}{\numberline {10.4}\leavevmode {\color {Chapter }Accessing a web page}}{53}{section.10.4}
+\contentsline {section}{\numberline {10.5}\leavevmode {\color {Chapter }(Un-)Pickling}}{53}{section.10.5}
+\contentsline {chapter}{\numberline {11}\leavevmode {\color {Chapter }License}}{55}{chapter.11}
+\contentsline {chapter}{Index}{56}{section*.3}

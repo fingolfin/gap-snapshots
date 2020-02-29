@@ -1,10 +1,4 @@
-#############################################################################
-##
-#W  modfree.tst                 GAP library                     Thomas Breuer
-##
-##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-##
+#@local c,enum,f,i,iter,l,len,u,v,v1,v2,w
 gap> START_TEST("modfree.tst");
 gap> u:= LeftModuleByGenerators( GF(3), [ [ Z(3), 0*Z(3) ] ] );
 <vector space over GF(3), with 1 generators>
@@ -187,7 +181,3 @@ gap> Coefficients( c, [ 1, 2, 3, 4 ] );
 gap> Basis( Integers^2 );
 CanonicalBasis( ( Integers^2 ) )
 gap> STOP_TEST( "modfree.tst", 1);
-
-#############################################################################
-##
-#E

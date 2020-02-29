@@ -1,0 +1,64 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Introduction}}{4}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Purpose and goals of this package}}{4}{section.1.1}
+\contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }Overview over this manual}}{4}{section.1.2}
+\contentsline {section}{\numberline {1.3}\leavevmode {\color {Chapter }Installation}}{4}{section.1.3}
+\contentsline {section}{\numberline {1.4}\leavevmode {\color {Chapter }Feedback}}{4}{section.1.4}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }ZeroMQ Bindings}}{5}{chapter.2}
+\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }Addresses, transports, and URIs}}{5}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}\leavevmode {\color {Chapter }The TCP transport}}{5}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}\leavevmode {\color {Chapter }The IPC transport}}{5}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}\leavevmode {\color {Chapter }The in-process transport}}{5}{subsection.2.1.3}
+\contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter }Creating and closing sockets}}{6}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}\leavevmode {\color {Chapter }ZmqPushSocket}}{6}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}\leavevmode {\color {Chapter }ZmqPullSocket}}{6}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}\leavevmode {\color {Chapter }ZmqReplySocket}}{6}{subsection.2.2.3}
+\contentsline {subsection}{\numberline {2.2.4}\leavevmode {\color {Chapter }ZmqRequestSocket}}{6}{subsection.2.2.4}
+\contentsline {subsection}{\numberline {2.2.5}\leavevmode {\color {Chapter }ZmqPublisherSocket}}{6}{subsection.2.2.5}
+\contentsline {subsection}{\numberline {2.2.6}\leavevmode {\color {Chapter }ZmqSubscriberSocket}}{7}{subsection.2.2.6}
+\contentsline {subsection}{\numberline {2.2.7}\leavevmode {\color {Chapter }ZmqDealerSocket}}{7}{subsection.2.2.7}
+\contentsline {subsection}{\numberline {2.2.8}\leavevmode {\color {Chapter }ZmqRouterSocket}}{7}{subsection.2.2.8}
+\contentsline {subsection}{\numberline {2.2.9}\leavevmode {\color {Chapter }ZmqSocket}}{7}{subsection.2.2.9}
+\contentsline {subsection}{\numberline {2.2.10}\leavevmode {\color {Chapter }ZmqClose}}{7}{subsection.2.2.10}
+\contentsline {subsection}{\numberline {2.2.11}\leavevmode {\color {Chapter }ZmqIsOpen}}{7}{subsection.2.2.11}
+\contentsline {subsection}{\numberline {2.2.12}\leavevmode {\color {Chapter }ZmqSocketType}}{8}{subsection.2.2.12}
+\contentsline {section}{\numberline {2.3}\leavevmode {\color {Chapter }Binding and connecting sockets to addresses}}{8}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}\leavevmode {\color {Chapter }ZmqBind}}{8}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}\leavevmode {\color {Chapter }ZmqConnect}}{8}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}\leavevmode {\color {Chapter }ZmqAttach}}{8}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.4}\leavevmode {\color {Chapter }ZmqSocketURI}}{8}{subsection.2.3.4}
+\contentsline {subsection}{\numberline {2.3.5}\leavevmode {\color {Chapter }ZmqIsBound}}{8}{subsection.2.3.5}
+\contentsline {subsection}{\numberline {2.3.6}\leavevmode {\color {Chapter }ZmqIsConnected}}{9}{subsection.2.3.6}
+\contentsline {section}{\numberline {2.4}\leavevmode {\color {Chapter }Sending and receiving messages}}{9}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}\leavevmode {\color {Chapter }ZmqSend}}{9}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}\leavevmode {\color {Chapter }ZmqReceive}}{9}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.3}\leavevmode {\color {Chapter }ZmqReceiveList}}{9}{subsection.2.4.3}
+\contentsline {subsection}{\numberline {2.4.4}\leavevmode {\color {Chapter }ZmqReceiveListAsString}}{10}{subsection.2.4.4}
+\contentsline {subsection}{\numberline {2.4.5}\leavevmode {\color {Chapter }ZmqHasMore}}{10}{subsection.2.4.5}
+\contentsline {subsection}{\numberline {2.4.6}\leavevmode {\color {Chapter }ZmqPoll}}{11}{subsection.2.4.6}
+\contentsline {section}{\numberline {2.5}\leavevmode {\color {Chapter }Setting and querying socket properties}}{11}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}\leavevmode {\color {Chapter }ZmqSetIdentity}}{11}{subsection.2.5.1}
+\contentsline {subsection}{\numberline {2.5.2}\leavevmode {\color {Chapter }ZmqGetIdentity}}{12}{subsection.2.5.2}
+\contentsline {subsection}{\numberline {2.5.3}\leavevmode {\color {Chapter }ZmqSetSendCapacity}}{12}{subsection.2.5.3}
+\contentsline {subsection}{\numberline {2.5.4}\leavevmode {\color {Chapter }ZmqSetReceiveCapacity}}{12}{subsection.2.5.4}
+\contentsline {subsection}{\numberline {2.5.5}\leavevmode {\color {Chapter }ZmqGetSendCapacity}}{12}{subsection.2.5.5}
+\contentsline {subsection}{\numberline {2.5.6}\leavevmode {\color {Chapter }ZmqGetReceiveCapacity}}{12}{subsection.2.5.6}
+\contentsline {subsection}{\numberline {2.5.7}\leavevmode {\color {Chapter }ZmqSetSendBufferSize}}{12}{subsection.2.5.7}
+\contentsline {subsection}{\numberline {2.5.8}\leavevmode {\color {Chapter }ZmqGetSendBufferSize}}{13}{subsection.2.5.8}
+\contentsline {subsection}{\numberline {2.5.9}\leavevmode {\color {Chapter }ZmqSetReceiveBufferSize}}{13}{subsection.2.5.9}
+\contentsline {subsection}{\numberline {2.5.10}\leavevmode {\color {Chapter }ZmqGetReceiveBufferSize}}{13}{subsection.2.5.10}
+\contentsline {subsection}{\numberline {2.5.11}\leavevmode {\color {Chapter }ZmqSubscribe}}{13}{subsection.2.5.11}
+\contentsline {subsection}{\numberline {2.5.12}\leavevmode {\color {Chapter }ZmqUnsubscribe}}{13}{subsection.2.5.12}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Using ZeroMQ with the zgap script}}{14}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Running zgap}}{14}{section.3.1}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }Zgap API}}{15}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }ZExec}}{15}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }ZBind}}{15}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}\leavevmode {\color {Chapter }ZUnbind}}{15}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}\leavevmode {\color {Chapter }ZCall}}{15}{subsection.3.2.4}
+\contentsline {subsection}{\numberline {3.2.5}\leavevmode {\color {Chapter }ZQuery}}{16}{subsection.3.2.5}
+\contentsline {subsection}{\numberline {3.2.6}\leavevmode {\color {Chapter }ZResponse}}{16}{subsection.3.2.6}
+\contentsline {subsection}{\numberline {3.2.7}\leavevmode {\color {Chapter }ZTask}}{16}{subsection.3.2.7}
+\contentsline {subsection}{\numberline {3.2.8}\leavevmode {\color {Chapter }ZAsync}}{16}{subsection.3.2.8}
+\contentsline {subsection}{\numberline {3.2.9}\leavevmode {\color {Chapter }ZRead}}{16}{subsection.3.2.9}
+\contentsline {subsection}{\numberline {3.2.10}\leavevmode {\color {Chapter }ZReadGapRoot}}{17}{subsection.3.2.10}
+\contentsline {chapter}{Index}{18}{section*.4}

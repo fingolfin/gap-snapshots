@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    Polycyclic
+  </Title>
+  <Subtitle>
+    Computation with polycyclic groups
+  </Subtitle>
+  <Version>
+    2.15.1
+  </Version>
+  <Author>
+    Bettina Eick<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+AG Algebra und Diskrete Mathematik<Br/>
+Institut Computational Mathematics<Br/>
+TU Braunschweig<Br/>
+Pockelsstr. 14<Br/>
+D-38106 Braunschweig<Br/>
+Germany<Br/>
+</Address>
+<Email>beick@tu-bs.de</Email>
+<Homepage>http://www.icm.tu-bs.de/~beick</Homepage>
+
+  </Author>
+  <Author>
+    Werner Nickel<Alt Only="LaTeX"><Br/></Alt>
+<Homepage>http://www.mathematik.tu-darmstadt.de/~nickel/</Homepage>
+
+  </Author>
+  <Author>
+    Max Horn<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Department Mathematik<Br/>
+Universität Siegen<Br/>
+Walter-Flex-Straße 3<Br/>
+57072 Siegen<Br/>
+Germany<Br/>
+</Address>
+<Email>max.horn@uni-siegen.de</Email>
+<Homepage>https://www.quendi.de/math</Homepage>
+
+  </Author>
+  <Date>
+    3 October 2019
+  </Date>
+  <Copyright>
+    <Index>License</Index>&copyright; 2003-2018 by Bettina Eick, Max Horn and Werner Nickel<P/>The &Polycyclic; package is free software;you can redistribute it and/or modify it under the terms of the<URL Text="GNU General Public License">http://www.fsf.org/licenses/gpl.html</URL>as published by the Free Software Foundation; either version 2 of the License,or (at your option) any later version.
+  </Copyright>
+  <Acknowledgements>
+    We appreciate very much all past and future comments, suggestions andcontributions to this package and its documentation provided by &GAP;users and developers.
+  </Acknowledgements>
+  </TitlePage>

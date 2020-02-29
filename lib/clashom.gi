@@ -1,10 +1,12 @@
 #############################################################################
 ##
-#W  clashom.gi                  GAP library                  Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002,2013 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains functions that compute the conjugacy classes of a
 ##  finite group by homomorphic images.
@@ -20,7 +22,7 @@ local H,hom,d,cl;
     IsNaturalSymmetricGroup(G)) then
     return ConjugacyClasses(G); # there is a method for this
   fi;
-  if not IsSimpleGroup(PerfectResiduum(G)) then
+  if not IsNonabelianSimpleGroup(PerfectResiduum(G)) then
     return fail;
   fi;
   d:=DataAboutSimpleGroup(PerfectResiduum(G));
@@ -736,6 +738,11 @@ local clT,	# classes T
 			  dsz:=DivisorsInt(scj);
 			fi;
 			while not minlen in dsz do
+                          # workaround rare problem -- try again
+                          if First(dsz,i->i>=minlen)=fail then
+                            return ConjugacyClassesSubwreath(
+                              F,M,n,autT,T,Lloc,components,embeddings,projections);
+                          fi;
 			  # minimum gcd multiple to get at least the
 			  # smallest divisor
 			  minlen:=minlen+
@@ -1047,7 +1054,7 @@ local clT,	# classes T
     Info(InfoHomClass,1,"fused to ",Length(newreps)," classes");
   od;
   
-  Assert(2,Sum(clout,i->Index(F,i[2]))=Size(F)-Size(M));
+  if Sum(clout,i->Index(F,i[2]))<>Size(F)-Size(M) then return fail;fi;
 
   Info(InfoHomClass,2,Length(clin)," inner classes, total size =",
         Sum(clin,i->Index(F,i[2])));
@@ -1259,7 +1266,7 @@ local cs,	# chief series of G
 	T1:=Image(Thom,T[1]);
 	if IsPermGroup(T1) and
 	  NrMovedPoints(T1)>SufficientlySmallDegreeSimpleGroupOrder(Size(T1)) then
-	  Thom:=Thom*SmallerDegreePermutationRepresentation(T1);
+	  Thom:=Thom*SmallerDegreePermutationRepresentation(T1:cheap);
 	  Info(InfoHomClass,1,"reduced simple degree ",NrMovedPoints(T1),
 	    " ",NrMovedPoints(Image(Thom)));
 	  T1:=Image(Thom,T[1]);
@@ -2054,7 +2061,7 @@ BindGlobal("LiftClassesEATrivRep",
       # split space as direct sum under normal sub -- clifford Theory
       o:=MTX.BasesMinimalSubmodules(mo);
       if Length(o)>50 then
-	o:=o{Set(List([1..50],x->Random([1..Length(o)])))};
+        o:=o{Set([1..50],x->Random(1,Length(o)))};
       fi;
 
       for i in Filtered([1..Length(o)],
@@ -2403,7 +2410,7 @@ local r,	#radical
       fants:=Filtered(NormalSubgroups(f),x->Size(x)>1 and Size(x)<Size(f));
     else
       if IsPermGroup(G) then
-	hom:=SmallerDegreePermutationRepresentation(G);
+	hom:=SmallerDegreePermutationRepresentation(G:cheap);
 	ntrihom:=not IsOne(hom);;
       else
         hom:=IdentityMapping(G);
@@ -2467,7 +2474,7 @@ local r,	#radical
 	Info(InfoHomClass,3,"central step");
 	new:=LiftClassesEANonsolvCentral(G,mpcgs,i,hom,pcisom,solvtriv,fran);
       elif Length(fants)>0 and Order(i[1])=1 then
-	# special case for trivial representetive
+	# special case for trivial representative
 	new:=LiftClassesEATrivRep(G,mpcgs,i,fants,hom,pcisom,solvtriv);
 	if new=fail then
 	  new:=LiftClassesEANonsolvGeneral(G,mpcgs,i,hom,pcisom,solvtriv,fran);
@@ -2843,7 +2850,7 @@ local r,	#radical
       #fants:=Filtered(NormalSubgroups(f),x->Size(x)>1 and Size(x)<Size(f));
     else
       if IsPermGroup(G) then
-	hom:=SmallerDegreePermutationRepresentation(G);
+	hom:=SmallerDegreePermutationRepresentation(G:cheap);
 	ntrihom:=not IsOne(hom);;
       else
         hom:=IdentityMapping(G);
@@ -3068,7 +3075,9 @@ local cl;
   cl:=ConjugacyClassesForSmallGroup(G);
   if cl<>fail then
     return cl;
-  elif IsSimpleGroup( G ) then
+  elif IsSolvableGroup( G ) and CanEasilyComputePcgs(G) then
+    return ConjugacyClassesForSolvableGroup(G);
+  elif IsNonabelianSimpleGroup( G ) then
     cl:=ClassesFromClassical(G);
     if cl=fail then
       cl:=ConjugacyClassesByRandomSearch( G );
@@ -3089,8 +3098,3 @@ function(G)
   if IsPermGroup(G) or IsPcGroup(G) then TryNextMethod();fi;
   return ConjugacyClassesViaRadical(G);
 end);
-
-
-#############################################################################
-##
-#E

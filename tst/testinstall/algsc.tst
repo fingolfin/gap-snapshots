@@ -1,10 +1,6 @@
-#############################################################################
-##
-#W  algsc.tst                   GAP library                     Thomas Breuer
-##
-##
-#Y  Copyright 1997,    Lehrstuhl D für Mathematik,   RWTH Aachen,    Germany
-##
+#@local T0,T1,T2,T3,a,b,c,coeff,der,e,fam,g,gens,i,id,j,k,l1,l2,l3,lcs,orb
+#@local TestMonomialUseLattice_Orig,permgrp,ps,q,s,s1,s2,s3,sc,t,theta
+#@local U,ucs,v,vecs,vectors,w,z,A,V,W
 gap> START_TEST("algsc.tst");
 
 #############################################################################
@@ -30,20 +26,58 @@ gap> a:= AlgebraByStructureConstants( Rationals, T0 );
 <algebra of dimension 4 over Rationals>
 gap> Dimension( a );
 4
-gap> v:= ObjByExtRep( ElementsFamily( FamilyObj( a ) ), [ 0, 1, 0, 1 ] );
+gap> IsFullSCAlgebra( a );
+true
+gap> IsWholeFamily( a );
+false
+gap> IsWholeFamily( AlgebraByStructureConstants( Cyclotomics, T0 ) );
+true
+
+#
+gap> fam:= ElementsFamily( FamilyObj( a ) );
+<Family: "SCAlgebraObjFamily">
+gap> ObjByExtRep( fam, [ 0, 1, 0, 1 ] * Z(2) );
+Error, family of <coeffs> does not fit to <Fam>
+gap> ObjByExtRep( fam, [ 0, 1, 0 ] );
+Error, <coeffs> must be a list of length 4
+gap> v:= ObjByExtRep( fam, [ 0, 1, 0, 1 ] );
 v.2+v.4
-gap> One( v ); v^0;
+gap> t:= AlgebraByStructureConstants( Rationals, [ 0, 0 ] );
+<algebra of dimension 0 over Rationals>
+gap> String(v);
+"v.2+v.4"
+gap> One( fam ); One( v ); v^0; String(v^0);
 v.1
 v.1
-gap> Zero( v ); 0*v;
+v.1
+"v.1"
+gap> Zero( fam ); Zero( v ); 0*v; String(0*v);
 0*v.1
 0*v.1
-gap> Inverse( v ); v^-1;
+0*v.1
+"0*v.1"
+gap> 0*v = v*0;
+true
+gap> 1*v = v;
+true
+gap> v*1 = v;
+true
+gap> (1/2 * v) * 2 = v;
+true
+gap> 2 * (v * 1/2) = v;
+true
+
+#
+gap> Inverse( v ); v^-1; String( v^-1 );
 (-1/2)*v.2+(-1/2)*v.4
 (-1/2)*v.2+(-1/2)*v.4
-gap> AdditiveInverse( v ); -v;
+"(-1/2)*v.2+(-1/2)*v.4"
+gap> Inverse( Zero( v) );
+fail
+gap> AdditiveInverse( v ); -v; String( -v );
 (-1)*v.2+(-1)*v.4
 (-1)*v.2+(-1)*v.4
+"(-1)*v.2+(-1)*v.4"
 gap> b:= Basis( a );
 CanonicalBasis( <algebra of dimension 4 over Rationals> )
 gap> Coefficients( b, v );
@@ -68,6 +102,22 @@ gap> v:= Subspace( a, [ v, 0*v, v^0, w ] );
 <vector space over Rationals, with 4 generators>
 gap> Dimension( v );
 3
+
+#
+gap> a:= QuaternionAlgebra( Rationals, -2, -3 );;
+gap> gens:= GeneratorsOfAlgebra( a );
+[ e, i, j, k ]
+gap> List( gens, RealPart );
+[ e, 0*e, 0*e, 0*e ]
+gap> List( gens, ImaginaryPart ) * gens[2];
+[ 0*e, i, j, k ]
+gap> vecs := Concatenation( gens, [ Sum( gens ) ] );
+[ e, i, j, k, e+i+j+k ]
+gap> ForAll( vecs, v -> (v + ComplexConjugate( v )) / 2 = RealPart( v ) );
+true
+gap> ForAll( vecs, v -> (v - ComplexConjugate( v )) / (2*gens[2])
+>                       = ImaginaryPart( v ) );
+true
 
 #############################################################################
 ##
@@ -133,7 +183,7 @@ false
 gap> Dimension( l1 );
 10
 gap> ucs:= LieUpperCentralSeries( l1 );
-[ <Lie algebra over Rationals, with 0 generators> ]
+[ <Lie algebra of dimension 0 over Rationals> ]
 gap> lcs:= LieLowerCentralSeries( l1 );
 [ <Lie algebra of dimension 10 over Rationals> ]
 gap> IsLieSolvable( l1 );
@@ -418,7 +468,7 @@ gap> Dimension( l2 );
 15
 gap> ucs:= LieUpperCentralSeries( l2 );
 [ <two-sided ideal in <Lie algebra of dimension 15 over Rationals>, 
-      (dimension 1)>, <Lie algebra over Rationals, with 0 generators> ]
+      (dimension 1)>, <Lie algebra of dimension 0 over Rationals> ]
 gap> lcs:= LieLowerCentralSeries( l2 );
 [ <Lie algebra of dimension 15 over Rationals>, 
   <Lie algebra of dimension 14 over Rationals> ]
@@ -565,7 +615,7 @@ false
 gap> Dimension( l3 );
 14
 gap> ucs:= LieUpperCentralSeries( l3 );
-[ <Lie algebra over Rationals, with 0 generators> ]
+[ <Lie algebra of dimension 0 over Rationals> ]
 gap> lcs:= LieLowerCentralSeries( l3 );
 [ <Lie algebra of dimension 14 over Rationals>, 
   <Lie algebra of dimension 10 over Rationals> ]
@@ -657,9 +707,11 @@ v.11
 ##  Expl. 5: Trivial s.c. algebra
 ##
 gap> t:= AlgebraByStructureConstants( Rationals, [ 0, 0 ] );
-<algebra over Rationals, with 0 generators>
+<algebra of dimension 0 over Rationals>
 gap> z:= Zero( t );
 <zero of trivial s.c. algebra>
+gap> String(z);
+"<zero of trivial s.c. algebra>"
 gap> Random( t );
 <zero of trivial s.c. algebra>
 gap> b:=Basis( t );
@@ -685,8 +737,77 @@ gap> Dimension( RadicalOfAlgebra( sc ) );
 1
 
 #############################################################################
-gap> STOP_TEST( "algsc.tst", 1);
+##
+##  Test various functions
+##
+
+#
+gap> QuaternionAlgebra();
+Error, usage: QuaternionAlgebra( <F>[, <a>, <b>] ) for a ring <F>
+gap> A:= QuaternionAlgebra( GF(5) );
+<algebra-with-one of dimension 4 over GF(5)>
+gap> A = QuaternionAlgebra( [Z(5)] );
+true
+
+#
+gap> A:= QuaternionAlgebra( Rationals, 2, 3 );
+<algebra-with-one of dimension 4 over Rationals>
+gap> A= QuaternionAlgebra( [1], 2, 3 );
+true
+gap> A= QuaternionAlgebra( [1], 2, 5 );
+false
+gap> gens:= GeneratorsOfAlgebra( A );
+[ e, i, j, k ]
+gap> List(gens, x -> x^2);
+[ e, (2)*e, (3)*e, (-6)*e ]
+
+#
+gap> A:= QuaternionAlgebra( Rationals );
+<algebra-with-one of dimension 4 over Rationals>
+gap> gens:= GeneratorsOfAlgebra( A );
+[ e, i, j, k ]
+gap> v:= Sum( gens );
+e+i+j+k
+gap> i:= gens[2];
+i
+gap> ComplexConjugate(v);
+e+(-1)*i+(-1)*j+(-1)*k
+gap> RealPart(v);
+e
+gap> (v - ComplexConjugate( v )) / (2*i);
+e+(-1)*j+k
+
+#
+gap> ComplexificationQuat( gens{[1]} );
+[ 1, 0 ]
+gap> ComplexificationQuat( gens{[2]} );
+[ E(4), 0 ]
+gap> ComplexificationQuat( gens{[3]} );
+[ 0, 1 ]
+gap> ComplexificationQuat( gens{[4]} );
+[ 0, E(4) ]
+
+#
+gap> U:=Subspace(A, gens{[1,2]});
+<vector space over Rationals, with 2 generators>
+gap> V:=Subspace(A, gens{[2,3]});
+<vector space over Rationals, with 2 generators>
+gap> W:=Subspace(A, []);
+<vector space of dimension 0 over Rationals>
+gap> Intersection2(U,V);
+<vector space of dimension 1 over Rationals>
+gap> Intersection2(U,W);
+<vector space of dimension 0 over Rationals>
+gap> Intersection2(V,W);
+<vector space of dimension 0 over Rationals>
+
+#
+gap> A:= OctaveAlgebra(Rationals);
+<algebra of dimension 8 over Rationals>
+gap> v:= Sum( GeneratorsOfAlgebra( A ) );
+s1+t1+s2+t2+s3+t3+s4+t4
+gap> List( GeneratorsOfAlgebra( A ), x -> x^2 );
+[ s1, t1, 0*s1, 0*s1, 0*s1, 0*s1, 0*s1, 0*s1 ]
 
 #############################################################################
-##
-#E
+gap> STOP_TEST( "algsc.tst", 1);

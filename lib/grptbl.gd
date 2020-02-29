@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  grptbl.gd                   GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the implementation of magmas, monoids, and groups from
 ##  a multiplication table.
@@ -227,7 +228,7 @@ DeclareGlobalFunction( "GroupByMultiplicationTable" );
 ##
 ##  <Description>
 ##  For a list <A>elms</A> of elements that form a magma <M>M</M>,
-##  <Ref Func="MultiplicationTable" Label="for a list of elements"/> returns
+##  <Ref Attr="MultiplicationTable" Label="for a list of elements"/> returns
 ##  a square matrix <M>A</M> of positive integers such that
 ##  <M>A[i][j] = k</M> holds if and only if
 ##  <A>elms</A><M>[i] *</M> <A>elms</A><M>[j] =</M> <A>elms</A><M>[k]</M>.
@@ -235,7 +236,7 @@ DeclareGlobalFunction( "GroupByMultiplicationTable" );
 ##  using <Ref Func="MagmaByMultiplicationTable"/>.
 ##  <P/>
 ##  For a magma <A>M</A>,
-##  <Ref Func="MultiplicationTable" Label="for a magma"/> returns
+##  <Ref Attr="MultiplicationTable" Label="for a magma"/> returns
 ##  the multiplication table w.r.t.&nbsp;the sorted list of elements of
 ##  <A>M</A>.
 ##  <P/>
@@ -269,9 +270,3 @@ DeclareGlobalFunction( "GroupByMultiplicationTable" );
 ##
 DeclareAttribute( "MultiplicationTable", IsHomogeneousList );
 DeclareAttribute( "MultiplicationTable", IsMagma );
-
-
-#############################################################################
-##
-#E
-

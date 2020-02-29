@@ -1,11 +1,3 @@
-#############################################################################
-##
-#W  info.tst
-##
-##
-#Y  Copyright (C)  2015
-##
-##
 gap> START_TEST("info.tst");
 gap> InfoTest1 := NewInfoClass("InfoTest1");;
 gap> InfoTest2 := NewInfoClass("InfoTest2");;
@@ -61,6 +53,32 @@ gap> Info(InfoTest1 + InfoTest2, 0);
 Error, level 0 Info messages are not allowed
 gap> Info(InfoTest1 + InfoTest2, "apple");
 Error, usage : Info(<selectors>, <level>, ...)
+gap> ShowUsedInfoClasses(true);
+gap> Info(InfoTest2, 2, "apple");
+#I Would print info with SetInfoLevel(InfoTest2,2)
+#I Would print info with SetInfoLevel(InfoGlobal,3)
+#I  apple
+gap> Info(InfoTest1 + InfoTest2, 2, "apple");
+#I Would print info with SetInfoLevel(InfoTest1,2)
+#I  apple
+gap> Info(InfoTest1 + InfoTest2, 2, "apple");
+#I  apple
+gap> Info(InfoTest1 + InfoTest2, 3, "apple");
+#I Would print info with SetInfoLevel(InfoTest1,3)
+#I Would print info with SetInfoLevel(InfoTest2,3)
+gap> Info(InfoTest1 + InfoTest2, 3, "apple");
+gap> ShowUsedInfoClasses(true);
+gap> Info(InfoTest1 + InfoTest2, 3, "apple");
+#I Would print info with SetInfoLevel(InfoTest1,3)
+#I Would print info with SetInfoLevel(InfoTest2,3)
+gap> Info(InfoTest1 + InfoTest2, 3, "apple");
+gap> ShowUsedInfoClasses(false);
+gap> ShowUsedInfoClasses(fail);
+Error, ShowUsedInfoClasses: <choice> must be 'true' or 'false' (not the value \
+'fail')
+gap> ShowUsedInfoClasses("abc");
+Error, ShowUsedInfoClasses: <choice> must be 'true' or 'false' (not a list (st\
+ring))
 gap> str := "";;
 gap> str2 := "";;
 gap> SetDefaultInfoOutput(OutputTextString(str, false));
@@ -84,7 +102,3 @@ gap> SetDefaultInfoOutput(MakeImmutable("*Print*"));
 gap> Info(InfoTest2, 1, "NormalOut");
 #I  NormalOut
 gap> STOP_TEST("info.tst", 1);
-
-#############################################################################
-##
-#E

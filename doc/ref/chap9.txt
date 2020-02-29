@@ -151,7 +151,7 @@
   [33X[0;0YThis function returns a list of filenames/directory names that reside in the
   directory  [3Xdir[103X.  The argument [3Xdir[103X can either be given as a string indicating
   the  name  of  the  directory  or  as  a  directory  object (see [2XIsDirectory[102X
-  ([14X9.3-1[114X)). It is an error, if such a directory does not exist.[133X
+  ([14X9.3-1[114X)). If the specified directory does not exist, [9Xfail[109X is returned.[133X
   
   [33X[0;0YThe ordering of the list entries can depend on the operating system.[133X
   
@@ -519,10 +519,10 @@
   variable [2XREREADING[102X to [9Xtrue[109X, reads the file named by [3Xfilename[103X and then resets
   [2XREREADING[102X. Various system functions behave differently when [2XREREADING[102X is set
   to  [9Xtrue[109X.  In  particular,  assignment  to  read-only  global  variables  is
-  permitted, calls to [2XNewRepresentation[102X ([14X79.2-1[114X) and [2XNewInfoClass[102X ([14X7.4-1[114X) with
+  permitted, calls to [2XNewRepresentation[102X ([14X13.4-4[114X) and [2XNewInfoClass[102X ([14X7.4-1[114X) with
   parameters  identical  to  those of an existing representation or info class
   will  return  the  existing object, and methods installed with [2XInstallMethod[102X
-  ([14X78.2-1[114X) may sometimes displace existing methods.[133X
+  ([14X78.3-1[114X) may sometimes displace existing methods.[133X
   
   [33X[0;0YThis  function  may not entirely produce the intended results, especially if
   what  has  changed  is  the  super-representation of a representation or the

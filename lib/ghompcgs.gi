@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  ghompcgs.gi                 GAP library                      Bettina Eick
-#W                                                           Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Bettina Eick, Alexander Hulpke.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 
 # compute the powers of the source pcgs. We cache these to speed up frequent
@@ -352,25 +353,38 @@ InversePcgs := function( hom )
       
         # add it
         hom!.rangePcgs := InducedPcgsByPcSequenceNC( pcgs, gensInv ); 
-        hom!.rangePcgsPreimages := imgsInv;
-#T better MakeImmutable
+        hom!.rangePcgsPreimages := Immutable(imgsInv);
         
-        # we have the kernel also
-        SetKernelOfMultiplicativeGeneralMapping( hom, SubgroupNC(Source(hom),
-                                                          gensKer ) );
-  
+        # we have the kernel also, if needed (or we check).
+        if not HasKernelOfMultiplicativeGeneralMapping(hom)
+          or InfoLevel(InfoAttributes)>1 then
+          #Check whether the Pcgs is for the whole group.
+          # Otherwise there is a kernel that will not be visible in
+          # the modulo pcgs that the homomorphism uses
+          tmp:=DenominatorOfModuloPcgs(hom!.sourcePcgs);
+          if tmp=fail then
+            gensKer:=AsSubgroup(Source(hom),
+              ClosureGroup(hom!.sourcePcgs!.denominator,gensKer));
+          elif Length(tmp)>0 then
+            gensKer:=SubgroupNC(Source(hom),Concatenation(tmp,gensKer));
+          else
+            gensKer:=SubgroupNC(Source(hom),gensKer);
+          fi;
+          SetKernelOfMultiplicativeGeneralMapping( hom, gensKer );
+        fi;
+
         # and return
         return;
-    fi;
-    
-    # otherwise we have to do some work
-    pcgs := Pcgs( Image( hom ) );
-    new:=MappingGeneratorsImages(hom);
-    new  := CanonicalPcgsByGeneratorsWithImages( pcgs, new[2],
-                                                       new[1] );
-    hom!.rangePcgs := new[1];
-    hom!.rangePcgsPreimages := new[2];
-end;
+      fi;
+      
+      # otherwise we have to do some work
+      pcgs := Pcgs( Image( hom ) );
+      new:=MappingGeneratorsImages(hom);
+      new  := CanonicalPcgsByGeneratorsWithImages( pcgs, new[2],
+                                                        new[1] );
+      hom!.rangePcgs := new[1];
+      hom!.rangePcgsPreimages := new[2];
+  end;
 
 #############################################################################
 ##
@@ -680,12 +694,5 @@ end );
 #M  IsomorphismPcGroup( <G> ) . . . .  for pc group (return identity mapping)
 ##
 InstallMethod( IsomorphismPcGroup,
-    true,
-    [ IsPcGroup ], 0,
+    [ IsPcGroup ], SUM_FLAGS,
     IdentityMapping );
-
-
-#############################################################################
-##
-#E
-

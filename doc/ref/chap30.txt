@@ -38,7 +38,7 @@
   over [3XFam[103X, that is, of all dense lists and domains that consist of objects in
   [3XFam[103X.[133X
   
-  [33X[0;0YThe  [2XNewFamily[102X  ([14X79.7-1[114X) call in the standard method of [2XCollectionsFamily[102X is
+  [33X[0;0YThe  [2XNewFamily[102X  ([14X13.1-2[114X) call in the standard method of [2XCollectionsFamily[102X is
   executed  with  second argument [2XIsCollection[102X ([14X30.1-1[114X), since every object in
   the  collections  family  must  be a collection, and with third argument the
   collections  categories  of the involved categories in the implied filter of
@@ -97,6 +97,17 @@
   Note  that this works only if the collections category is created [13Xbefore[113X the
   collections  family. So it is necessary to construct interesting collections
   categories immediately after the underlying category has been created.[133X
+  
+  [1X30.2-5 DeclareCategoryCollections[101X
+  
+  [33X[1;0Y[29X[2XDeclareCategoryCollections[102X( [3Xfilter[103X ) [32X function[133X
+  
+  [33X[0;0YCalls  [2XCategoryCollections[102X  ([14X30.2-4[114X)  on  the  category that is bound to the
+  global variable with name [3Xname[103X to obtain its collections category, and binds
+  the  latter  to the global variable with name [10Xnname[110X. This name is defined as
+  follows:  If  [3Xname[103X  is  of the form [10X[3XSomething[103X[10XCollection[110X then [10Xnname[110X is set to
+  [10X[3XSomething[103X[10XCollColl[110X, if [3Xname[103X is of the form [10X[3XSomething[103X[10XColl[110X then [10Xnname[110X is set to
+  [10X[3XSomething[103X[10XCollColl[110X, otherwise we set [10Xnname[110X to [10X[3Xname[103X[10XCollection[110X.[133X
   
   
   [1X30.3 [33X[0;0YLists and Collections[133X[101X
@@ -240,7 +251,7 @@
   
   [33X[0;0YNote  that  it  is  [13Xnot[113X  checked that [2XEnumeratorByFunctions[102X really returns a
   dense and duplicate-free list. [2XEnumeratorByFunctions[102X does [13Xnot[113X make a shallow
-  copy of [3Xrecord[103X, this record is changed in place, see [14X79.9[114X.[133X
+  copy of [3Xrecord[103X, this record is changed in place, see [14X79.1[114X.[133X
   
   [33X[0;0YIt  would  be easy to implement a slightly generalized setup for enumerators
   that  need  not  be  duplicate-free  (where  the  three  argument version of
@@ -272,14 +283,15 @@
   
   [1X30.3-6 SortedList[101X
   
-  [33X[1;0Y[29X[2XSortedList[102X( [3Xlistorcoll[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSortedList[102X( [3Xlistorcoll[103X[, [3Xfunc[103X] ) [32X operation[133X
   
   [33X[0;0Y[2XSortedList[102X  returns a new mutable and dense list [3Xnew[103X. The argument must be a
   collection or list [3Xlistorcoll[103X which may contain holes but whose elements lie
   in  the  same  family (see [14X13.1[114X). [10XLength( [3Xnew[103X[10X )[110X is the number of elements of
-  [3Xlistorcoll[103X,  and  [3Xnew[103X  contains  the  elements  in  sorted order, w.r.t. [10X<=[110X.
-  [10X[3Xnew[103X[10X[[3Xpos[103X[10X][110X  executes in constant time (see [2XIsConstantTimeAccessList[102X ([14X21.1-6[114X)),
-  and the size of [3Xnew[103X in memory is proportional to its length.[133X
+  [3Xlistorcoll[103X,  and [3Xnew[103X contains the elements in sorted order, w.r.t. [10X<[110X or [3Xfunc[103X
+  if  it  is  specified. For details, please refer to [2XSort[102X ([14X21.18-1[114X). [10X[3Xnew[103X[10X[[3Xpos[103X[10X][110X
+  executes  in  constant time (see [2XIsConstantTimeAccessList[102X ([14X21.1-6[114X)), and the
+  size of [3Xnew[103X in memory is proportional to its length.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xl:= SortedList( Group( (1,2,3) ) );[127X[104X
@@ -294,16 +306,27 @@
   
   [1X30.3-7 SSortedList[101X
   
-  [33X[1;0Y[29X[2XSSortedList[102X( [3Xlistorcoll[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XSet[102X( [3XC[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSSortedList[102X( [3Xlistorcoll[103X[, [3Xfun[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XSet[102X( [3XC[103X[, [3Xfun[103X] ) [32X operation[133X
   
   [33X[0;0Y[2XSSortedList[102X  ([21Xstrictly  sorted  list[121X)  returns  a  new  dense,  mutable, and
   duplicate  free  list  [3Xnew[103X.  The  argument  must  be  a  collection  or list
-  [3Xlistorcoll[103X which may contain holes but whose elements lie in the same family
-  (see [14X13.1[114X). [10XLength( [3Xnew[103X[10X )[110X is the number of different elements of [3Xlistorcoll[103X,
-  and  [3Xnew[103X contains the different elements in strictly sorted order, w.r.t. [2X\<[102X
-  ([14X31.11-1[114X).  [10X[3Xnew[103X[10X[[3Xpos[103X[10X][110X executes in constant time (see [2XIsConstantTimeAccessList[102X
-  ([14X21.1-6[114X)), and the size of [3Xnew[103X in memory is proportional to its length.[133X
+  [3Xlistorcoll[103X which may contain holes.[133X
+  
+  [33X[0;0YIf  the  optional argument [3Xfun[103X is not given then [10XLength( [3Xnew[103X[10X )[110X is the number
+  of different elements of [3Xlistorcoll[103X, and [3Xnew[103X contains the different elements
+  in  strictly sorted order, w.r.t. [2X\<[102X ([14X31.11-1[114X). For that, any two entries of
+  [3Xlistorcoll[103X  must be comparable via [2X\<[102X ([14X31.11-1[114X). (Typically, the entries lie
+  in the same family, see [14X13.1[114X.)[133X
+  
+  [33X[0;0YIf  [3Xfun[103X  is  given  then  it  must be a unary function. In this case, [3Xfun[103X is
+  applied  to  all  elements  of [3Xlistorcoll[103X, [3Xnew[103X contains the different return
+  values  in  strictly  sorted  order,  and  [10XLength(  [3Xnew[103X[10X  )[110X  is the number of
+  different  such  values.  For that, any two return values must be comparable
+  via [2X\<[102X ([14X31.11-1[114X).[133X
+  
+  [33X[0;0Y[10X[3Xnew[103X[10X[[3Xpos[103X[10X][110X  executes in constant time (see [2XIsConstantTimeAccessList[102X ([14X21.1-6[114X)),
+  and the size of [3Xnew[103X in memory is proportional to its length.[133X
   
   [33X[0;0Y[2XSet[102X is simply a synonym for [2XSSortedList[102X.[133X
   
@@ -314,8 +337,12 @@
     [4X[28Xtrue[128X[104X
     [4X[28Xtrue[128X[104X
     [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XSSortedList( Group( (1,2,3) ), Order );[127X[104X
+    [4X[28X[ 1, 3 ][128X[104X
     [4X[25Xgap>[125X [27XSSortedList( [ 1, 2, 1,, 3, 2 ] );[127X[104X
     [4X[28X[ 1, 2, 3 ][128X[104X
+    [4X[25Xgap>[125X [27XSSortedList( [ 1, 2, 1,, 3, 2 ], x -> x^2 );[127X[104X
+    [4X[28X[ 1, 4, 9 ][128X[104X
   [4X[32X[104X
   
   [1X30.3-8 AsList[101X
@@ -977,7 +1004,7 @@
   these function.[133X
   
   [33X[0;0Y[2XIteratorByFunctions[102X  does  [13Xnot[113X make a shallow copy of [3Xrecord[103X, this record is
-  changed in place (see Section  [14X79.9[114X).[133X
+  changed in place (see Section  [14X79.1[114X).[133X
   
   [33X[0;0YIterators   constructed   with   [2XIteratorByFunctions[102X   are   in  the  filter
   [2XIsStandardIterator[102X ([14X30.8-1[114X).[133X

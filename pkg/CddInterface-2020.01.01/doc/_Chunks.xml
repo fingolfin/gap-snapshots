@@ -1,0 +1,488 @@
+<#GAPDoc Label="intersection">
+<Example><![CDATA[
+gap> A := Cdd_PolyhedronByInequalities( [ [ 3, 4, 5 ] ], [ 1 ] );;
+gap> B := Cdd_PolyhedronByInequalities( [ [ 9, 7, 2 ] ], [ 1 ] );;
+gap> C := Cdd_Intersection( A, B );;
+gap> Display( Cdd_V_Rep( A ) );
+V-representation
+linearity 1, [ 2 ]
+begin
+   2 X 3  rational
+
+   1  -3/4     0
+   0    -5     4
+end
+gap> Display( Cdd_V_Rep( B ) );
+V-representation
+linearity 1, [ 2 ]
+begin
+   2 X 3  rational
+
+   1  -9/7     0
+   0    -2     7
+end
+gap> Display( Cdd_V_Rep( C ) );
+V-representation
+begin
+   1 X 3  rational
+
+   1  -13/9    5/9
+end
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Increment">
+<Listing Type="Code"><![CDATA[
+H-representation
+linearity t, [i_1, i_2, ...,i_t]
+begin
+  m x (d+1) numbertype
+  b  A
+end
+]]></Listing>
+
+<#/GAPDoc>
+<#GAPDoc Label="Increment2">
+<Listing Type="Code"><![CDATA[
+H-representation
+linearity 2, [1, 3]
+begin
+3 x 5 rational
+  4 -3  6  0 -5
+  1  2 -2 -7  0
+  0  0 -3  0  5
+end
+]]></Listing>
+
+<#/GAPDoc>
+<#GAPDoc Label="Increment3">
+<Listing Type="Code"><![CDATA[
+V-representation
+linearity t, [i_1, i_2,...,i_t]
+begin
+(n+s) x (d+1) numbertype
+  1  v_1
+  :   :
+  1  v_n
+  0  r_{n+1}
+  :   :
+  0  r_{n+s}
+end
+]]></Listing>
+
+<#/GAPDoc>
+<#GAPDoc Label="Increment4">
+<Listing Type="Code"><![CDATA[
+V-representation
+linearity 2, [ 1, 3 ]
+begin
+ 4 x 3 rational
+ 1   2   3
+ 1  -1   2
+ 0   1   2
+ 0   1   1
+end
+]]></Listing>
+
+<#/GAPDoc>
+<#GAPDoc Label="Example1">
+<Example><![CDATA[
+gap> A:= Cdd_PolyhedronByInequalities( [ [ 0, 1, 0 ], [ 0, 1, -1 ] ] );
+<Polyhedron given by its H-representation>
+gap> Display( A );
+H-representation
+begin
+   2 X 3  rational
+
+   0   1   0
+   0   1  -1
+end
+gap> B:= Cdd_PolyhedronByInequalities( [ [ 0, 1, 0 ], [ 0, 1, -1 ] ], [ 2 ] );
+<Polyhedron given by its H-representation>
+gap> Display( B );
+H-representation
+linearity 1, [ 2 ]
+begin
+   2 X 3  rational
+
+   0   1   0
+   0   1  -1
+end
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example2">
+<Example><![CDATA[
+gap> A:= Cdd_PolyhedronByGenerators( [ [ 0, 1, 3 ], [ 1, 4, 5 ] ] );
+<Polyhedron given by its V-representation>
+gap> Display( A );
+V-representation
+begin
+   2 X 3  rational
+
+   0  1  3
+   1  4  5
+end
+gap> B:= Cdd_PolyhedronByGenerators( [ [ 0, 1, 3 ] ], [ 1 ] );
+<Polyhedron given by its V-representation>
+gap> Display( B );
+V-representation
+linearity 1, [ 1 ]
+begin
+   1 X 3  rational
+
+   0  1  3
+end
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Fourier">
+ To illustrate this projection, Let  <Math>P= \mathrm{conv}( (1,2), (4,5) )</Math> in <Math>\mathbb{Q}^2</Math>.
+ <Math>\newline</Math>
+ To find its projection on the subspace <Math>(O, x_1)</Math>, we apply the Fourier elemination to get rid of <Math>x_2</Math>
+<Example><![CDATA[
+gap> P := Cdd_PolyhedronByGenerators( [ [ 1, 1, 2 ], [ 1, 4, 5 ] ] );
+<Polyhedron given by its V-representation>
+gap> H := Cdd_H_Rep( P );
+<Polyhedron given by its H-representation>
+gap> Display( H );
+H-representation
+linearity 1, [ 3 ]
+begin
+   3 X 3  rational
+
+    4  -1   0 
+   -1   1   0 
+   -1  -1   1 
+end
+gap> P_x1 := Cdd_FourierProjection( H, 2);
+<Polyhedron given by its H-representation>
+gap> Display( P_x1 );
+H-representation
+linearity 1, [ 3 ]
+begin
+   3 X 3  rational
+
+    4  -1   0
+   -1   1   0
+    0   0   1
+end
+gap> Display( Cdd_V_Rep( P_x1 ) );
+V-representation
+begin
+   2 X 3  rational
+
+   1  1  0
+   1  4  0
+end
+]]></Example>
+
+
+ Let again <Math>Q= Conv( (2,3,4), (2,4,5) )+ nonneg( (1,1,1) )</Math>, and let us compute its projection on <Math>(O,x_2,x_3)</Math>
+<Example><![CDATA[
+gap> Q := Cdd_PolyhedronByGenerators( [ [ 1, 2, 3, 4 ],[ 1, 2, 4, 5 ], [ 0, 1, 1, 1 ] ] );
+<Polyhedron given by its V-representation>
+gap> R := Cdd_H_Rep( Q );
+<Polyhedron given by its H-representation>
+gap> Display( R );
+H-representation
+linearity 1, [ 4 ]
+begin
+   4 X 4  rational
+
+    2   1  -1   0 
+   -2   1   0   0 
+   -1  -1   1   0 
+   -1   0  -1   1 
+end
+gap> P_x2_x3 := Cdd_FourierProjection( R, 1);
+<Polyhedron given by its H-representation>
+gap> Display( P_x2_x3 );
+H-representation
+linearity 2, [ 1, 3 ]
+begin
+   3 X 4  rational
+
+   -1   0  -1   1 
+   -3   0   1   0 
+    0   1   0   0 
+end
+gap> Display( Cdd_V_Rep( last ) ) ;
+V-representation 
+begin
+   2 X 4  rational
+               
+   0  0  1  1 
+   1  0  3  4 
+end
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="comparing_polyhedrons">
+<Example><![CDATA[
+gap> A := Cdd_PolyhedronByInequalities( [ [ 10, -1, 1, 0 ],
+> [ -24, 9, 2, 0 ], [ 1, 1, -1, 0 ], [ -23, -12, 1, 11 ] ], [ 4 ] );
+<Polyhedron given by its H-representation>
+gap> B := Cdd_PolyhedronByInequalities( [ [ 1, 0, 0, 0 ],
+> [ -4, 1, 0, 0 ], [ 10, -1, 1, 0 ], [ -3, -1, 0, 1 ] ], [ 3, 4 ] );
+<Polyhedron given by its H-representation>
+gap> Cdd_IsContained( B, A );
+true
+gap> Display( Cdd_V_Rep( A ) );
+V-representation
+begin
+   3 X 4  rational
+
+   1   2   3   4
+   1   4  -6   7
+   0   1   1   1
+end
+gap> Display( Cdd_V_Rep( B ) );
+V-representation
+begin
+   2 X 4  rational
+
+   1   4  -6   7
+   0   1   1   1
+end
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="minkuwski">
+<Example><![CDATA[
+gap> P := Cdd_PolyhedronByGenerators( [ [ 1, 2, 5 ], [ 0, 1, 2 ] ] );
+< Polyhedron given by its V-representation >
+gap> Q := Cdd_PolyhedronByGenerators( [ [ 1, 4, 6 ], [ 1, 3, 7 ], [ 0, 3, 1 ] ] );
+< Polyhedron given by its V-representation >
+gap> S := P+Q;
+< Polyhedron given by its H-representation >
+gap> V := Cdd_V_Rep( S );
+< Polyhedron given by its V-representation >
+gap> Display( V );
+V-representation 
+begin
+   4 X 3  rational
+
+   0   3   1 
+   1   6  11 
+   1   5  12 
+   0   1   2 
+end
+gap> Cdd_GeneratingVertices( P ); 
+[ [ 2, 5 ] ]
+gap> Cdd_GeneratingVertices( Q );
+[ [ 3, 7 ], [ 4, 6 ] ]
+gap> Cdd_GeneratingVertices( S );
+[ [ 5, 12 ], [ 6, 11 ] ]
+gap> Cdd_GeneratingRays( P );
+[ [ 1, 2 ] ]
+gap> Cdd_GeneratingRays( Q );
+[ [ 3, 1 ] ]
+gap> Cdd_GeneratingRays( S );
+[ [ 1, 2 ], [ 3, 1 ] ]
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example5">
+ To illustrate the using of these functions, let us solve the linear program given by:
+ <Display>\textbf{Maximize}\;\;P(x,y)= 1-2x+5y,\;\mathrm{with}</Display>
+ <Display>100\leq x \leq 200,80\leq y\leq 170,y \geq -x+200.</Display>
+ We bring the inequalities to the form <Math>b+AX\geq 0</Math> and get:
+ <Display>-100+x\geq 0, 200-x \geq 0, -80+y \geq 0, 170 -y \geq 0,-200 +x+y \geq 0.</Display>
+<Example><![CDATA[
+gap> A:= Cdd_PolyhedronByInequalities( [ [ -100, 1, 0 ], [ 200, -1, 0 ],
+> [ -80, 0, 1 ], [ 170, 0, -1 ], [ -200, 1, 1 ] ] );
+<Polyhedron given by its H-representation>
+gap> lp1:= Cdd_LinearProgram( A, "max", [1, -2, 5 ] );
+<Linear program>
+gap> Display( lp1 );
+Linear program given by:
+H-representation
+begin
+   5 X 3  rational
+
+   -100     1     0
+    200    -1     0
+    -80     0     1
+    170     0    -1
+   -200     1     1
+end
+max  [ 1, -2, 5 ]
+gap> Cdd_SolveLinearProgram( lp1 );
+[ [ 100, 170 ], 651 ]
+gap> lp2:= Cdd_LinearProgram( A, "min", [ 1, -2, 5 ] );
+<Linear program>
+gap> Display( lp2 );
+Linear program given by:
+H-representation
+begin
+   5 X 3  rational
+
+   -100     1     0
+    200    -1     0
+    -80     0     1
+    170     0    -1
+   -200     1     1
+end
+min  [ 1, -2, 5 ]
+gap> Cdd_SolveLinearProgram( lp2 );
+[ [ 200, 80 ], 1 ]
+gap> B:= Cdd_V_Rep( A );
+<Polyhedron given by its V-representation>
+gap> Display( B );
+V-representation
+begin
+   5 X 3  rational
+
+   1  100  170
+   1  100  100
+   1  120   80
+   1  200   80
+   1  200  170
+end
+]]></Example>
+
+
+ So the optimal solution for <Math>\texttt{lp1}</Math> is <Math>(x=100,y=170)</Math> with optimal value <Math>p=1-2(100)+5(170)=651</Math> and for <Math>\texttt{lp2}</Math> is
+ <Math>(x=200,y=80)</Math> with optimal value <Math>p=1-2(200)+5(80)=1</Math>.
+
+<#/GAPDoc>
+<#GAPDoc Label="Example3">
+<Example><![CDATA[
+gap> A:= Cdd_PolyhedronByInequalities( [ [ 0, 2, 6 ], [ 0, 1, 3 ], [1, 4, 10 ] ] );
+<Polyhedron given by its H-representation>
+gap> B:= Cdd_Canonicalize( A );
+<Polyhedron given by its H-representation>
+gap> Display( B );
+H-representation
+begin
+   2 X 3  rational
+
+   0   1   3
+   1   4  10
+end
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example4">
+<Example><![CDATA[
+gap> A:= Cdd_PolyhedronByInequalities( [ [ 0, 1, 1 ], [ 0, 5, 5 ] ] );
+<Polyhedron given by its H-representation>
+gap> B:= Cdd_V_Rep( A );
+<Polyhedron given by its V-representation>
+gap> Display( B );
+V-representation
+linearity 1, [ 2 ]
+begin
+   2 X 3  rational
+
+   0   1   0
+   0  -1   1
+end
+gap> C:= Cdd_H_Rep( B );
+<Polyhedron given by its H-representation>
+gap> Display( C );
+H-representation
+begin
+   1 X 3  rational
+
+   0  1  1
+end
+gap> D:= Cdd_PolyhedronByInequalities( [ [ 0, 1, 1, 34, 22, 43 ],
+> [ 11, 2, 2, 54, 53, 221 ], [33, 23, 45, 2, 40, 11 ] ] );
+<Polyhedron given by its H-representation>
+gap> Cdd_V_Rep( D );
+<Polyhedron given by its V-representation>
+gap> Display( last );
+V-representation
+linearity 2, [ 5, 6 ]
+begin
+   6 X 6  rational
+
+   1  -743/14   369/14    11/14        0        0
+   0    -1213      619       22        0        0
+   0       -1        1        0        0        0
+   0      764     -390      -11        0        0
+   0   -13526     6772       99      154        0
+   0  -116608    59496     1485        0      154
+end
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="demo">
+<Example><![CDATA[
+gap> poly:= Cdd_PolyhedronByInequalities( [ [ 1, 3, 4, 5, 7 ], [ 1, 3, 5, 12, 34 ],
+> [ 9, 3, 0, 2, 13 ]  ], [ 1 ] );
+<Polyhedron given by its H-representation>
+gap> Cdd_InteriorPoint( poly );
+[ -194/75, 46/25, -3/25, 0 ]
+gap> Cdd_FacesWithInteriorPoints( poly );
+[ [ 3, [ 1 ], [ -194/75, 46/25, -3/25, 0 ] ], [ 2, [ 1, 2 ],
+[ -62/25, 49/25, -7/25, 0 ] ], [ 1, [ 1, 2, 3 ],
+[ -209/75, 56/25, -8/25, 0 ] ], [ 2, [ 1, 3 ], [ -217/75, 53/25, -4/25, 0 ] ] ]
+gap> Cdd_Dimension( poly );
+3
+gap> Cdd_IsPointed( poly );
+false
+gap> Cdd_IsEmpty( poly );
+false
+gap> Cdd_Faces( poly );
+[ [ 3, [ 1 ] ], [ 2, [ 1, 2 ] ], [ 1, [ 1, 2, 3 ] ], [ 2, [ 1, 3  ] ] ]
+gap> poly1 := Cdd_ExtendLinearity( poly, [ 1, 2, 3 ] );
+<Polyhedron given by its H-representation>
+gap> Display( poly1 );
+H-representation 
+linearity 3, [ 1, 2, 3 ]
+begin
+   3 X 5  rational
+
+   1   3   4   5   7 
+   1   3   5  12  34 
+   9   3   0   2  13 
+end
+gap> Cdd_Dimension( poly1 );
+1
+gap> Cdd_Facets( poly );
+[ [ 1, 2 ], [ 1, 3 ] ]
+gap> Cdd_GeneratingVertices( poly );
+[ [ -209/75, 56/25, -8/25, 0 ] ]
+gap> Cdd_GeneratingRays( poly );
+[ [ -97, 369, -342, 75 ], [ -8, -9, 12, 0 ],
+[ 23, -21, 3, 0 ], [ 97, -369, 342, -75 ] ]
+gap> Cdd_Inequalities( poly );
+[ [ 1, 3, 5, 12, 34 ], [ 9, 3, 0, 2, 13 ] ]
+gap> Cdd_Equalities( poly );
+[ [ 1, 3, 4, 5, 7 ] ]
+gap> P := Cdd_FourierProjection( poly, 2);
+<Polyhedron given by its H-representation>
+gap> Display( P );
+H-representation 
+linearity 1, [ 3 ]
+begin 
+   3 X 5  rational
+
+    9    3    0    2   13 
+   -1   -3    0   23  101 
+    0    0    1    0    0 
+end
+]]></Example>
+
+
+
+<#/GAPDoc>

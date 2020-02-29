@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  records.c                   GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the functions of the generic record package.
 **
@@ -33,7 +33,18 @@ static Obj HashRNam;
 
 static Obj NamesRNam;
 
-inline extern Obj NAME_RNAM(UInt rnam)
+/****************************************************************************
+**
+*F  IS_VALID_RNAM(<rnam>) . . . . . . . . . . . . .  check if <rnam> is valid
+**
+**  'IS_VALID_RNAM' returns if <rnam> is a valid record name.
+*/
+static Int IS_VALID_RNAM(UInt rnam)
+{
+    return rnam != 0 && rnam <= LEN_PLIST(NamesRNam);
+}
+
+extern inline Obj NAME_RNAM(UInt rnam)
 {
     return ELM_PLIST(NamesRNam, rnam);
 }
@@ -68,13 +79,20 @@ static void HPC_UnlockNames(void)
 #endif
 
 
-static inline UInt HashString( const Char * name )
+static inline UInt HashString( const Char * name, UInt len )
 {
     UInt hash = 0;
-    while ( *name ) {
+    while ( len-- > 0 ) {
         hash = 65599 * hash + *name++;
     }
     return hash;
+}
+
+static inline int EqString(Obj str, const Char * name, UInt len)
+{
+    if (GET_LEN_STRING(str) != len)
+        return 0;
+    return memcmp(CONST_CSTR_STRING(str), name, len) == 0;
 }
 
 /****************************************************************************
@@ -87,6 +105,11 @@ static inline UInt HashString( const Char * name )
 UInt            RNamName (
     const Char *        name )
 {
+    return RNamNameWithLen(name, strlen(name));
+}
+
+UInt RNamNameWithLen(const Char * name, UInt len)
+{
     Obj                 rnam;           /* record name (as imm intobj)     */
     UInt                pos;            /* hash position                   */
     Char                namx [1024];    /* temporary copy of <name>        */
@@ -96,14 +119,13 @@ UInt            RNamName (
     UInt                i;              /* loop variable                   */
     UInt                sizeRNam;
 
-    if (strlen(name) > 1023) {
+    if (len > 1023) {
         // Note: We can't pass 'name' here, as it might get moved by garbage collection
         ErrorQuit("Record names must consist of at most 1023 characters", 0, 0);
-        return 0;
     }
 
     /* start looking in the table at the following hash position           */
-    const UInt hash = HashString( name );
+    const UInt hash = HashString( name, len );
 
 #ifdef HPCGAP
     HPC_LockNames(0); /* try a read lock first */
@@ -113,7 +135,7 @@ UInt            RNamName (
     sizeRNam = LEN_PLIST(HashRNam);
     pos = (hash % sizeRNam) + 1;
     while ( (rnam = ELM_PLIST( HashRNam, pos )) != 0
-         && strncmp( CSTR_STRING( NAME_RNAM( INT_INTOBJ(rnam) ) ), name, 1023 ) ) {
+         && !EqString( NAME_RNAM( INT_INTOBJ(rnam) ), name, len ) ) {
         pos = (pos % sizeRNam) + 1;
     }
     if (rnam != 0) {
@@ -130,7 +152,7 @@ UInt            RNamName (
       sizeRNam = LEN_PLIST(HashRNam);
       pos = (hash % sizeRNam) + 1;
       while ( (rnam = ELM_PLIST( HashRNam, pos )) != 0
-           && strncmp( CSTR_STRING( NAME_RNAM( INT_INTOBJ(rnam) ) ), name, 1023 ) ) {
+           && !EqString( NAME_RNAM( INT_INTOBJ(rnam) ), name, len ) ) {
           pos = (pos % sizeRNam) + 1;
       }
     }
@@ -142,7 +164,8 @@ UInt            RNamName (
 
     /* if we did not find the global variable, make a new one and enter it */
     /* (copy the name first, to avoid a stale pointer in case of a GC)     */
-    strlcpy( namx, name, sizeof(namx) );
+    memcpy( namx, name, len );
+    namx[len] = 0;
     string = MakeImmString(namx);
 
     const UInt countRNam = PushPlist(NamesRNam, string);
@@ -164,7 +187,8 @@ UInt            RNamName (
         for ( i = 1; i <= (sizeRNam-1)/2; i++ ) {
             rnam2 = ELM_PLIST( table, i );
             if ( rnam2 == 0 )  continue;
-            pos = HashString( CSTR_STRING( NAME_RNAM( INT_INTOBJ(rnam2) ) ) );
+            string = NAME_RNAM( INT_INTOBJ(rnam2) );
+            pos = HashString( CONST_CSTR_STRING( string ), GET_LEN_STRING( string) );
             pos = (pos % sizeRNam) + 1;
             while ( ELM_PLIST( HashRNam, pos ) != 0 ) {
                 pos = (pos % sizeRNam) + 1;
@@ -230,17 +254,14 @@ UInt            RNamObj (
 
     /* convert string object (empty string may have type T_PLIST)          */
     else if ( IsStringConv(obj) && IS_STRING_REP(obj) ) {
-        return RNamName( CSTR_STRING(obj) );
+        return RNamName( CONST_CSTR_STRING(obj) );
     }
 
     /* otherwise fail                                                      */
     else {
-        Obj err;
-        err = ErrorReturnObj(
-            "Record: '<rec>.(<obj>)' <obj> must be a string or an integer",
-            0L, 0L,
-            "you can replace <obj> via 'return <obj>;'" );
-        return RNamObj( err );
+        ErrorMayQuit("Record: '<rec>.(<obj>)' <obj> must be a string or a "
+                     "small integer (not a %s)",
+                     (Int)TNAM_OBJ(obj), 0);
     }
 }
 
@@ -256,9 +277,7 @@ UInt            RNamObj (
 **  'RNamObj' returns the record name  corresponding  to  the  object  <obj>,
 **  which currently must be a string or an integer.
 */
-Obj             FuncRNamObj (
-    Obj                 self,
-    Obj                 obj )
+static Obj FuncRNamObj(Obj self, Obj obj)
 {
     return INTOBJ_INT( RNamObj( obj ) );
 }
@@ -266,32 +285,32 @@ Obj             FuncRNamObj (
 
 /****************************************************************************
 **
+*F  GetValidRNam( <funcname>, <rnam> ) . check if <rnam> is a valid prec rnam
+*/
+UInt GetValidRNam(const char * funcname, Obj rnam)
+{
+    UInt val = GetPositiveSmallInt(funcname, rnam);
+    RequireArgumentCondition(funcname, rnam, IS_VALID_RNAM(val),
+                             "must be a valid rnam");
+    return val;
+}
+
+
+/****************************************************************************
+**
 *F  FuncNameRNam(<self>,<rnam>)  . . . . convert a record name to a string
 **
-**  'FuncNameRNam' implements the internal function 'NameRName'.
+**  'FuncNameRNam' implements the internal function 'NameRNam'.
 **
-**  'NameRName( <rnam> )'
+**  'NameRNam( <rnam> )'
 **
-**  'NameRName' returns the string corresponding to the record name <rnam>.
+**  'NameRNam' returns the string corresponding to the record name <rnam>.
 */
-Obj             FuncNameRNam (
-    Obj                 self,
-    Obj                 rnam )
+static Obj FuncNameRNam(Obj self, Obj rnam)
 {
-    Obj                 name;
-    Obj                 oname;
-    const UInt          countRNam = LEN_PLIST(NamesRNam);
-    while ( ! IS_INTOBJ(rnam)
-         || INT_INTOBJ(rnam) <= 0
-        || countRNam < INT_INTOBJ(rnam) ) {
-        rnam = ErrorReturnObj(
-            "NameRName: <rnam> must be a record name (not a %s)",
-            (Int)TNAM_OBJ(rnam), 0L,
-            "you can replace <rnam> via 'return <rnam>;'" );
-    }
-    oname = NAME_RNAM( INT_INTOBJ(rnam) );
-    name = CopyToStringRep(oname);
-    return name;
+    Int inam = GetValidRNam("NameRNam", rnam);
+    Obj oname = NAME_RNAM(inam);
+    return CopyToStringRep(oname);
 }
 
 
@@ -302,27 +321,17 @@ Obj             FuncNameRNam (
 **
 **  'IS_REC' returns a nonzero value if the object <obj> is a  record  and  0
 **  otherwise.
-**
-**  Note that 'IS_REC' is a macro, so do not call  it  with  arguments  that
-**  have side effects.
-**
-**  'IS_REC' is defined in the declaration part of this package as follows
-**
-#define IS_REC(obj)     ((*IsRecFuncs[ TNUM_OBJ(obj) ])( obj ))
 */
 Int             (*IsRecFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 
-Obj             IsRecFilt;
+static Obj IsRecFilt;
 
-Obj             IsRecHandler (
-    Obj                 self,
-    Obj                 obj )
+static Obj FiltIS_REC(Obj self, Obj obj)
 {
     return (IS_REC(obj) ? True : False);
 }
 
-Int             IsRecObject (
-    Obj                 obj )
+static Int IsRecObject(Obj obj)
 {
     return (DoFilter( IsRecFilt, obj ) == True);
 }
@@ -335,47 +344,28 @@ Int             IsRecObject (
 **  'ELM_REC' returns the element, i.e., the value of the component, with the
 **  record name <rnam> in  the record <rec>.   An error is signalled if <rec>
 **  is not a record or if <rec> has no component with the record name <rnam>.
-**
-**  Note that 'ELM_REC' is  a macro, so do   not call it with arguments  that
-**  have side effects.
-**
-**  'ELM_REC' is defined in the declaration part of this package as follows
-**
-#define ELM_REC(rec,rnam) \
-                        ((*ElmRecFuncs[ TNUM_OBJ(rec) ])( rec, rnam ))
 */
 Obj             (*ElmRecFuncs[LAST_REAL_TNUM+1]) ( Obj rec, UInt rnam );
 
-Obj             ElmRecOper;
+static Obj ElmRecOper;
 
-Obj             ElmRecHandler (
-    Obj                 self,
-    Obj                 rec,
-    Obj                 rnam )
+static Obj ElmRecHandler(Obj self, Obj rec, Obj rnam)
 {
-    return ELM_REC( rec, INT_INTOBJ(rnam) );
+    return ELM_REC(rec, GetValidRNam("Record Element", rnam));
 }
 
-Obj             ElmRecError (
-    Obj                 rec,
-    UInt                rnam )
+static Obj ElmRecError(Obj rec, UInt rnam)
 {
-    rec = ErrorReturnObj(
-        "Record Element: <rec> must be a record (not a %s)",
-        (Int)TNAM_OBJ(rec), 0L,
-        "you can replace <rec> via 'return <rec>;'" );
-    return ELM_REC( rec, rnam );
+    ErrorMayQuit("Record Element: <rec> must be a record (not a %s)",
+                 (Int)TNAM_OBJ(rec), 0);
 }
 
-Obj             ElmRecObject (
-    Obj                 obj,
-    UInt                rnam )
+static Obj ElmRecObject(Obj obj, UInt rnam)
 {
   Obj elm;
   elm = DoOperation2Args( ElmRecOper, obj, INTOBJ_INT(rnam) );
-  while (elm == 0)
-    elm =  ErrorReturnObj("Record access method must return a value",0L,0L,
-                          "you can supply a value <val> via 'return <val>;'");
+  if (elm == 0)
+      ErrorMayQuit("Record access method must return a value", 0, 0);
   return elm;
 
 }
@@ -388,41 +378,24 @@ Obj             ElmRecObject (
 **  'ISB_REC' returns 1 if the record <rec> has a component with  the  record
 **  name <rnam> and 0 otherwise.  An error is signalled if  <rec>  is  not  a
 **  record.
-**
-**  Note  that 'ISB_REC'  is a macro,  so do not call  it with arguments that
-**  have side effects.
-**
-**  'ISB_REC' is defined in the declaration part of this package as follows
-**
-#define ISB_REC(rec,rnam) \
-                        ((*IsbRecFuncs[ TNUM_OBJ(rec) ])( rec, rnam ))
 */
 Int             (*IsbRecFuncs[LAST_REAL_TNUM+1]) ( Obj rec, UInt rnam );
 
-Obj             IsbRecOper;
+static Obj IsbRecOper;
 
-Obj             IsbRecHandler (
-    Obj                 self,
-    Obj                 rec,
-    Obj                 rnam )
+static Obj IsbRecHandler(Obj self, Obj rec, Obj rnam)
 {
-    return (ISB_REC( rec, INT_INTOBJ(rnam) ) ? True : False);
+    return (ISB_REC(rec, GetValidRNam("Record IsBound", rnam)) ? True
+                                                               : False);
 }
 
-Int             IsbRecError (
-    Obj                 rec,
-    UInt                rnam )
+static Int IsbRecError(Obj rec, UInt rnam)
 {
-    rec = ErrorReturnObj(
-        "Record IsBound: <rec> must be a record (not a %s)",
-        (Int)TNAM_OBJ(rec), 0L,
-        "you can replace <rec> via 'return <rec>;'" );
-    return ISB_REC( rec, rnam );
+    ErrorMayQuit("Record IsBound: <rec> must be a record (not a %s)",
+                 (Int)TNAM_OBJ(rec), 0);
 }
 
-Int             IsbRecObject (
-    Obj                 obj,
-    UInt                rnam )
+static Int IsbRecObject(Obj obj, UInt rnam)
 {
     return (DoOperation2Args( IsbRecOper, obj, INTOBJ_INT(rnam) ) == True);
 }
@@ -435,42 +408,24 @@ Int             IsbRecObject (
 **  'ASS_REC' assigns the object <obj>  to  the  record  component  with  the
 **  record name <rnam> in the record <rec>.  An error is signalled  if  <rec>
 **  is not a record.
-**
-**  'ASS_REC' is defined in the declaration part of this package as follows
-**
-#define ASS_REC(rec,rnam,obj) \
-                        ((*AssRecFuncs[ TNUM_OBJ(rec) ])( rec, rnam, obj ))
 */
 void            (*AssRecFuncs[LAST_REAL_TNUM+1]) ( Obj rec, UInt rnam, Obj obj );
 
-Obj             AssRecOper;
+static Obj AssRecOper;
 
-Obj             AssRecHandler (
-    Obj                 self,
-    Obj                 rec,
-    Obj                 rnam,
-    Obj                 obj )
+static Obj AssRecHandler(Obj self, Obj rec, Obj rnam, Obj obj)
 {
-    ASS_REC( rec, INT_INTOBJ(rnam), obj );
+    ASS_REC(rec, GetValidRNam("Record Assignment", rnam), obj);
     return 0;
 }
 
-void            AssRecError (
-    Obj                 rec,
-    UInt                rnam,
-    Obj                 obj )
+static void AssRecError(Obj rec, UInt rnam, Obj obj)
 {
-    rec = ErrorReturnObj(
-        "Record Assignment: <rec> must be a record (not a %s)",
-        (Int)TNAM_OBJ(rec), 0L,
-        "you can replace <rec> via 'return <rec>;'" );
-    ASS_REC( rec, rnam, obj );
+    ErrorMayQuit("Record Assignment: <rec> must be a record (not a %s)",
+                 (Int)TNAM_OBJ(rec), 0);
 }
 
-void            AssRecObject (
-    Obj                 obj,
-    UInt                rnam,
-    Obj                 val )
+static void AssRecObject(Obj obj, UInt rnam, Obj val)
 {
     DoOperation3Args( AssRecOper, obj, INTOBJ_INT(rnam), val );
 }
@@ -482,42 +437,24 @@ void            AssRecObject (
 **
 **  'UNB_REC' removes the record component  with the record name <rnam>  from
 **  the record <rec>.
-**
-**  Note that 'UNB_REC' is  a macro, so  do  not call it with  arguments that
-**  have side effects.
-**
-**  'UNB_REC' is defined in the declaration part of this package as follows
-**
-#define UNB_REC(rec,rnam) \
-                        ((*UnbRecFuncs[ TNUM_OBJ(rec) ])( rec, rnam ))
 */
 void            (*UnbRecFuncs[LAST_REAL_TNUM+1]) ( Obj rec, UInt rnam );
 
-Obj             UnbRecOper;
+static Obj UnbRecOper;
 
-Obj             UnbRecHandler (
-    Obj                 self,
-    Obj                 rec,
-    Obj                 rnam )
+static Obj UnbRecHandler(Obj self, Obj rec, Obj rnam)
 {
-    UNB_REC( rec, INT_INTOBJ(rnam) );
+    UNB_REC(rec, GetValidRNam("Record Unbind", rnam));
     return 0;
 }
 
-void            UnbRecError (
-    Obj                 rec,
-    UInt                rnam )
+static void UnbRecError(Obj rec, UInt rnam)
 {
-    rec = ErrorReturnObj(
-        "Record Unbind: <rec> must be a record (not a %s)",
-        (Int)TNAM_OBJ(rec), 0L,
-        "you can replace <rec> via 'return <rec>;'" );
-    UNB_REC( rec, rnam );
+    ErrorMayQuit("Record Unbind: <rec> must be a record (not a %s)",
+                 (Int)TNAM_OBJ(rec), 0);
 }
-        
-void            UnbRecObject (
-    Obj                 obj,
-    UInt                rnam )
+
+static void UnbRecObject(Obj obj, UInt rnam)
 {
     DoOperation2Args( UnbRecOper, obj, INTOBJ_INT(rnam) );
 }
@@ -537,7 +474,7 @@ UInt            iscomplete_rnam (
     const UInt          countRNam = LEN_PLIST(NamesRNam);
 
     for ( i = 1; i <= countRNam; i++ ) {
-        curr = CSTR_STRING( NAME_RNAM( i ) );
+        curr = CONST_CSTR_STRING( NAME_RNAM( i ) );
         for ( k = 0; name[k] != 0 && curr[k] == name[k]; k++ ) ;
         if ( k == len && curr[k] == '\0' )  return 1;
     }
@@ -555,7 +492,7 @@ UInt            completion_rnam (
 
     next = 0;
     for ( i = 1; i <= countRNam; i++ ) {
-        curr = CSTR_STRING( NAME_RNAM( i ) );
+        curr = CONST_CSTR_STRING( NAME_RNAM( i ) );
         for ( k = 0; name[k] != 0 && curr[k] == name[k]; k++ ) ;
         if ( k < len || curr[k] <= name[k] )  continue;
         if ( next != 0 ) {
@@ -574,8 +511,7 @@ UInt            completion_rnam (
     return next != 0;
 }
 
-Obj FuncALL_RNAMES (
-    Obj                 self )
+static Obj FuncALL_RNAMES(Obj self)
 {
     Obj                 copy, s;
     UInt                i;
@@ -603,9 +539,7 @@ Obj FuncALL_RNAMES (
 */
 static StructGVarFilt GVarFilts [] = {
 
-    { "IS_REC", "obj", &IsRecFilt,
-      IsRecHandler, "src/records.c:IS_REC" },
-
+    GVAR_FILT(IS_REC, "obj", &IsRecFilt),
     { 0, 0, 0, 0, 0 }
 
 };

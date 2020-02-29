@@ -1,9 +1,9 @@
   
   [1X3 [33X[0;0YRunning GAP[133X[101X
   
-  [33X[0;0YThis  chapter  informs  about  command  line options for [5XGAP[105X (see [14X3.1[114X), some
-  files in user specific [5XGAP[105X root directory (see [14X3.2[114X) and saving and loading a
-  [5XGAP[105X workspace (see [14X3.3[114X).[133X
+  [33X[0;0YThis  chapter  contains  information  about the command line options for [5XGAP[105X
+  (see [14X3.1[114X),  about  some  files in user specific [5XGAP[105X root directory (see [14X3.2[114X)
+  and about saving and loading a [5XGAP[105X workspace (see [14X3.3[114X).[133X
   
   
   [1X3.1 [33X[0;0YCommand Line Options[133X[101X
@@ -14,7 +14,7 @@
   Options  must  not  be  grouped,  e.g.,  [10Xgap  -gq[110X  is invalid, use [10Xgap -g -q[110X
   instead.  Some  options require an argument, this must follow the option and
   must be separated by whitespace, e.g., [10Xgap -m 256m[110X, it is not correct to say
-  [10Xgap -m256m[110X instead. Certain Boolean options ([10X-b[110X, [10X-q[110X, [10X-e[110X, [10X-r[110X, [10X-A[110X, [10X-D[110X, [10X-M[110X, [10X-T[110X,
+  [10Xgap -m256m[110X instead. Certain boolean options ([10X-b[110X, [10X-q[110X, [10X-e[110X, [10X-r[110X, [10X-A[110X, [10X-D[110X, [10X-M[110X, [10X-T[110X,
   [10X-X[110X,  [10X-Y[110X) toggle the current value so that [10Xgap -b -b[110X is equivalent to [10Xgap[110X and
   to [10Xgap -b -q -b -q[110X etc.[133X
   
@@ -38,23 +38,6 @@
         disables  (actually  toggles) the loading of suggested packages, which
         can be useful for debugging or testing. The needed packages (and their
         needed packages, and so on) are loaded in any case.[133X
-  
-  [8X [10X-a [110X[8X[3Xmemory[103X[8X[108X
-        [33X[0;6YGASMAN,  the  storage manager of [5XGAP[105X uses [10Xsbrk[110X to get blocks of memory
-        from  (certain)  operating  systems and it is required that subsequent
-        calls  to  [10Xsbrk[110X produce adjacent blocks of memory in this case because
-        [5XGAP[105X  only  wants  to  deal  with  one  large block of memory. If the C
-        function  [10Xmalloc[110X is called for whatever reason, it is likely that [10Xsbrk[110X
-        will  no  longer  produce  adjacent blocks, therefore [5XGAP[105X does not use
-        [10Xmalloc[110X itself.[133X
-  
-        [33X[0;6YHowever  some  operating  systems insist on calling [10Xmalloc[110X to create a
-        buffer  when  a  file is opened, or for some other reason. In order to
-        catch these cases [5XGAP[105X preallocates a block of memory with [10Xmalloc[110X which
-        is  immediately  freed. The amount preallocated can be controlled with
-        the [10X-a[110X option. (Most users do not need this option.)[133X
-  
-        [33X[0;6YThe option argument [3Xmemory[103X is specified as with the [10X-m[110X option.[133X
   
   [8X [10X-B [110X[8X[3Xarchitecture[103X[8X[108X
         [33X[0;6YExecutable  binary files that form part of [5XGAP[105X or of a [5XGAP[105X package are

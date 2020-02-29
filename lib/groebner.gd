@@ -1,9 +1,12 @@
 #############################################################################
 ##
-#W  groebner.gd                   GAP Library               Alexander Hulpke   
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the declarations for monomial orderings and Groebner
 ##  bases.
@@ -51,8 +54,8 @@ DeclareInfoClass("InfoGroebner");
 ##
 ##  <Description>
 ##  A monomial ordering is an object representing a monomial ordering.
-##  Its  attributes <Ref Func="MonomialComparisonFunction"/> and
-##  <Ref Func="MonomialExtrepComparisonFun"/> are actual comparison functions.
+##  Its  attributes <Ref Attr="MonomialComparisonFunction"/> and
+##  <Ref Attr="MonomialExtrepComparisonFun"/> are actual comparison functions.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -185,7 +188,7 @@ DeclareOperation("LeadingMonomialOfPolynomial",
 ##
 ##  <Description>
 ##  returns the leading coefficient (that is the coefficient of the leading
-##  monomial, see&nbsp;<Ref Func="LeadingMonomialOfPolynomial"/>) of the polynomial <A>pol</A>.
+##  monomial, see&nbsp;<Ref Oper="LeadingMonomialOfPolynomial"/>) of the polynomial <A>pol</A>.
 ##  <Example><![CDATA[
 ##  gap> LeadingTermOfPolynomial(f,lexord);
 ##  5*x^2
@@ -456,7 +459,7 @@ DeclareGlobalFunction("PolynomialReducedRemainder");
 ##  This operation returns a Groebner basis of <A>I</A> with respect to the
 ##  ordering <A>O</A>.
 ##  <P/>
-##  <Ref Oper="GroebnerBasisNC"/> works like
+##  <Ref Func="GroebnerBasisNC"/> works like
 ##  <Ref Oper="GroebnerBasis" Label="for a list and a monomial ordering"/>
 ##  with the only distinction that the first argument has to be a list of
 ##  polynomials and that no test is performed to check whether the ordering
@@ -502,7 +505,7 @@ DeclareSynonym("GrobnerBasis",GroebnerBasis);
 ##
 ##  <Description>
 ##  a Groebner basis <M>B</M>
-##  (see&nbsp;<Ref Func="GroebnerBasis" Label="for a list and a monomial ordering"/>)
+##  (see&nbsp;<Ref Oper="GroebnerBasis" Label="for a list and a monomial ordering"/>)
 ##  is <E>reduced</E> if no monomial in a polynomial in <A>B</A> is divisible
 ##  by the leading monomial of another polynomial in <M>B</M>.
 ##  This operation computes a Groebner basis with respect
@@ -555,9 +558,3 @@ DeclareSynonym("ReducedGrobnerBasis",ReducedGroebnerBasis);
 ##  <#/GAPDoc>
 ##
 DeclareAttribute("StoredGroebnerBasis",IsPolynomialRingIdeal);
-
-
-#############################################################################
-##
-#E
-

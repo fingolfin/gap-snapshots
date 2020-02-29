@@ -45,9 +45,9 @@ gap> RecNames(NanosecondsSinceEpochInfo());
 gap> List(SizeScreen(), IsPosInt);
 [ true, true ]
 gap> SizeScreen(100, 100);
-Error, Function: number of arguments must be 0 or 1 (not 2)
+Error, SizeScreen: number of arguments must be 0 or 1 (not 2)
 gap> SizeScreen(100);
-Error, SizeScreen: <size> must be a list of length 2
+Error, SizeScreen: <size> must be a list of length at most 2
 gap> SizeScreen([fail,fail]);
 Error, SizeScreen: <x> must be an integer
 gap> SizeScreen([100,fail]);
@@ -55,15 +55,16 @@ Error, SizeScreen: <y> must be an integer
 
 #
 gap> WindowCmd(fail);
-Error, argument list must be a list (not a boolean or fail)
+Error, WindowCmd: <args> must be a small list (not the value 'fail')
 gap> WindowCmd([]);
 Error, List Element: <list>[1] must have an assigned value
 gap> WindowCmd([fail]);
-Error, <cmd> must be a string (not a boolean or fail)
+Error, WindowCmd: <cmd> must be a string (not a boolean or fail)
 gap> WindowCmd([""]);
-Error, <cmd> must be a string of length 3
+Error, WindowCmd: <cmd> must be a string of length 3
 gap> WindowCmd(["abc",fail]);
-Error, 2. argument must be a string or integer (not a boolean or fail)
+Error, WindowCmd: 2. argument must be a string or integer (not a boolean or fa\
+il)
 gap> WindowCmd(["abc"]);
 Error, window system: No Window Handler Present
 gap> WindowCmd(["abc",1,"foo"]);
@@ -98,9 +99,9 @@ PRINT_CURRENT_STATEMENT( "*errout*", GetCurrentLVars(  ) ); at stream:1
 
 #
 gap> CALL_WITH_CATCH(fail,fail);
-Error, CALL_WITH_CATCH(<func>, <args>): <func> must be a function
+Error, CALL_WITH_CATCH: <func> must be a function (not the value 'fail')
 gap> CALL_WITH_CATCH(x->x,fail);
-Error, CALL_WITH_CATCH(<func>, <args>): <args> must be a list
+Error, CALL_WITH_CATCH: <args> must be a list (not the value 'fail')
 gap> CALL_WITH_CATCH(x->x,[1..3]);
 Error, Function: number of arguments must be 1 (not 3)
 [ false, 0 ]
@@ -109,21 +110,23 @@ gap> CALL_WITH_CATCH({x,y,z}->x,[1..3]);
 
 #
 gap> GAP_CRC(fail);
-Error, <filename> must be a string (not a boolean or fail)
+Error, GAP_CRC: <filename> must be a string (not the value 'fail')
 gap> GAP_CRC("foobar");
 0
 
 #
 gap> LOAD_DYN(fail, fail);
-Error, <filename> must be a string (not a boolean or fail)
+Error, LOAD_DYN: <filename> must be a string (not the value 'fail')
 gap> LOAD_DYN("foobar", fail);
-Error, <crc> must be a small integer or 'false' (not a boolean or fail)
+Error, LOAD_DYN: <crc> must be a small integer or 'false' (not a boolean or fa\
+il)
 
 #
 gap> LOAD_STAT(fail, fail);
-Error, <filename> must be a string (not a boolean or fail)
+Error, LOAD_STAT: <filename> must be a string (not the value 'fail')
 gap> LOAD_STAT("foobar", fail);
-Error, <crc> must be a small integer or 'false' (not a boolean or fail)
+Error, LOAD_STAT: <crc> must be a small integer or 'false' (not a boolean or f\
+ail)
 gap> LOAD_STAT("foobar", false);
 false
 
@@ -135,7 +138,7 @@ gap> GASMAN();
 Error, usage: GASMAN( "display"|"displayshort"|"clear"|"collect"|"message"|"pa\
 rtial" )
 gap> GASMAN(fail);
-Error, GASMAN: <cmd> must be a string (not a boolean or fail)
+Error, GASMAN: <cmd> must be a string (not the value 'fail')
 
 #
 gap> SIZE_OBJ(0);
@@ -144,6 +147,12 @@ gap> SIZE_OBJ(Z(2));
 0
 
 #
+gap> OBJ_HANDLE(-1);
+Error, OBJ_HANDLE: <handle> must be a non-negative integer (not the integer -1\
+)
+gap> OBJ_HANDLE(false);
+Error, OBJ_HANDLE: <handle> must be a non-negative integer (not the value 'fal\
+se')
 gap> OBJ_HANDLE(0);
 gap> OBJ_HANDLE(HANDLE_OBJ("test"));
 "test"
@@ -156,17 +165,19 @@ gap> MASTER_POINTER_NUMBER(Z(2));
 
 #
 gap> FUNC_BODY_SIZE(fail);
-fail
+Error, FUNC_BODY_SIZE: <func> must be a function (not the value 'fail')
+gap> FUNC_BODY_SIZE(SHELL) / GAPInfo.BytesPerVariable;
+4
 
 #
 gap> Sleep(fail);
-Error, <secs> must be a small integer
+Error, Sleep: <secs> must be a small integer (not the value 'fail')
 gap> Sleep(0);
 gap> Sleep(1);
 
 #
 gap>    MicroSleep(fail);
-Error, <usecs> must be a small integer
+Error, MicroSleep: <msecs> must be a small integer (not the value 'fail')
 gap> MicroSleep(0);
 gap> MicroSleep(1);
 

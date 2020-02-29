@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  listoper.c                  GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains  the functions of the  package with the operations for
 **  generic lists.
@@ -77,10 +77,7 @@ Int             EqListList (
     return 1L;
 }
 
-Obj FuncEQ_LIST_LIST_DEFAULT (
-    Obj                 self,
-    Obj                 listL,
-    Obj                 listR )
+static Obj FuncEQ_LIST_LIST_DEFAULT(Obj self, Obj listL, Obj listR)
 {
     return (EqListList( listL, listR ) ? True : False);
 }
@@ -127,10 +124,7 @@ Int             LtListList (
     return (lenL < lenR);
 }
 
-Obj FuncLT_LIST_LIST_DEFAULT (
-    Obj                 self,
-    Obj                 listL,
-    Obj                 listR )
+static Obj FuncLT_LIST_LIST_DEFAULT(Obj self, Obj listL, Obj listR)
 {
     return (LtListList( listL, listR ) ? True : False);
 }
@@ -143,17 +137,12 @@ Obj FuncLT_LIST_LIST_DEFAULT (
 **  'InList' returns a   nonzero value if  <objL>  is a  member of  the  list
 **  <listR>, and zero otherwise.
 */
-Int             InList (
-    Obj                 objL,
-    Obj                 listR )
+static Int InList(Obj objL, Obj listR)
 {
   return Fail != POS_LIST( listR, objL, INTOBJ_INT(0L) );
 }
 
-Obj FuncIN_LIST_DEFAULT (
-    Obj                 self,
-    Obj                 obj,
-    Obj                 list )
+static Obj FuncIN_LIST_DEFAULT(Obj self, Obj obj, Obj list)
 {
     return (InList( obj, list ) ? True : False);
 }
@@ -290,26 +279,17 @@ Obj             SumListList (
     return listS;
 }
 
-Obj FuncSUM_SCL_LIST_DEFAULT (
-    Obj                 self,
-    Obj                 listL,
-    Obj                 listR )
+static Obj FuncSUM_SCL_LIST_DEFAULT(Obj self, Obj listL, Obj listR)
 {
     return SumSclList( listL, listR );
 }
 
-Obj FuncSUM_LIST_SCL_DEFAULT (
-    Obj                 self,
-    Obj                 listL,
-    Obj                 listR )
+static Obj FuncSUM_LIST_SCL_DEFAULT(Obj self, Obj listL, Obj listR)
 {
     return SumListScl( listL, listR );
 }
 
-Obj FuncSUM_LIST_LIST_DEFAULT (
-    Obj                 self,
-    Obj                 listL,
-    Obj                 listR )
+static Obj FuncSUM_LIST_LIST_DEFAULT(Obj self, Obj listL, Obj listR)
 {
     return SumListList( listL, listR );
 }
@@ -328,8 +308,7 @@ Obj FuncSUM_LIST_LIST_DEFAULT (
 **
 **  'ZeroListDefault' is a generic function for the zero.
 */
-Obj             ZeroListDefault (
-    Obj                 list )
+static Obj ZeroListDefault(Obj list)
 {
     Obj                 res;
 /*  Obj                 elm; */
@@ -364,7 +343,7 @@ Obj             ZeroListDefault (
           RetypeBag(res, TNUM_OBJ(list));
         else if (TNUM_OBJ(list) >= T_PLIST_CYC &&
                  TNUM_OBJ(list) < T_PLIST_FFE)
-          RetypeBag(res, IS_MUTABLE_OBJ(list) ? T_PLIST_CYC : T_PLIST_CYC+IMMUTABLE);
+          RetypeBagSM(res, T_PLIST_CYC);
         else if (HAS_FILT_LIST(list, FN_IS_DENSE))
           {
             SET_FILT_LIST( res, FN_IS_DENSE );
@@ -387,16 +366,13 @@ Obj             ZeroListDefault (
     return res;
 }
 
-Obj FuncZERO_LIST_DEFAULT (
-    Obj                 self,
-    Obj                 list )
+static Obj FuncZERO_LIST_DEFAULT(Obj self, Obj list)
 {
     return ZeroListDefault( list );
 }
 
 
-Obj             ZeroListMutDefault (
-    Obj                 list )
+static Obj ZeroListMutDefault(Obj list)
 {
     Obj                 res;
 /*  Obj                 elm; */
@@ -406,7 +382,7 @@ Obj             ZeroListMutDefault (
     /* make the result list -- always mutable */
     len = LEN_LIST( list );
     if (len == 0) {
-        return NEW_PLIST(T_PLIST_EMPTY, 0);
+        return NewEmptyPlist();
     }
     res = NEW_PLIST(  T_PLIST ,len );
     SET_LEN_PLIST( res, len );
@@ -449,9 +425,7 @@ Obj             ZeroListMutDefault (
     return res;
 }
 
-Obj FuncZERO_MUT_LIST_DEFAULT (
-    Obj                 self,
-    Obj                 list )
+static Obj FuncZERO_MUT_LIST_DEFAULT(Obj self, Obj list)
 {
     return ZeroListMutDefault( list );
 }
@@ -464,7 +438,7 @@ Obj FuncZERO_MUT_LIST_DEFAULT (
    we want an immutable result, we can (a) reuse a single row of zeros
    (b) record that the result is a rectangular table */
 
-Obj FuncZERO_ATTR_MAT( Obj self, Obj mat )
+static Obj FuncZERO_ATTR_MAT(Obj self, Obj mat)
 {
   Obj zrow;
   UInt len;
@@ -472,7 +446,7 @@ Obj FuncZERO_ATTR_MAT( Obj self, Obj mat )
   Obj res;
   len = LEN_LIST(mat);
   if (len == 0)
-    return NEW_PLIST_IMM(T_PLIST_EMPTY, 0);
+    return NewImmutableEmptyPlist();
   zrow = ZERO(ELM_LIST(mat,1));
   CheckedMakeImmutable(zrow);
   res = NEW_PLIST_IMM(T_PLIST_TAB_RECT, len);
@@ -496,8 +470,7 @@ Obj FuncZERO_ATTR_MAT( Obj self, Obj mat )
 **  'AInvListDefault' is a generic function for the additive inverse.
 */
 
-Obj AInvMutListDefault (
-    Obj                 list )
+static Obj AInvMutListDefault(Obj list)
 {
     Obj                 res;
     Obj                 elm;
@@ -508,7 +481,7 @@ Obj AInvMutListDefault (
        AdditiveInverseOp */
     len = LEN_LIST( list );
     if (len == 0) {
-        return NEW_PLIST(T_PLIST_EMPTY, 0);
+        return NewEmptyPlist();
     }
     res = NEW_PLIST( T_PLIST , len );
     SET_LEN_PLIST( res, len );
@@ -549,15 +522,12 @@ Obj AInvMutListDefault (
     return res;
 }
 
-Obj FuncAINV_MUT_LIST_DEFAULT (
-    Obj                 self,
-    Obj                 list )
+static Obj FuncAINV_MUT_LIST_DEFAULT(Obj self, Obj list)
 {
     return AInvMutListDefault( list );
 }
 
-Obj AInvListDefault (
-    Obj                 list )
+static Obj AInvListDefault(Obj list)
 {
     Obj                 res;
     Obj                 elm;
@@ -590,7 +560,7 @@ Obj AInvListDefault (
           RetypeBag(res, TNUM_OBJ(list));
         else if (TNUM_OBJ(list) >= T_PLIST_CYC &&
                  TNUM_OBJ(list) < T_PLIST_FFE)
-          RetypeBag(res, IS_MUTABLE_OBJ(list) ? T_PLIST_CYC : T_PLIST_CYC+IMMUTABLE );
+          RetypeBagSM(res, T_PLIST_CYC);
         else if (HAS_FILT_LIST(list, FN_IS_DENSE))
           {
             SET_FILT_LIST( res, FN_IS_DENSE );
@@ -613,9 +583,7 @@ Obj AInvListDefault (
     return res;
 }
 
-Obj FuncAINV_LIST_DEFAULT (
-    Obj                 self,
-    Obj                 list )
+static Obj FuncAINV_LIST_DEFAULT(Obj self, Obj list)
 {
     return AInvListDefault( list );
 }
@@ -809,26 +777,17 @@ Obj             DiffListList (
     return listD;
 }
 
-Obj FuncDIFF_SCL_LIST_DEFAULT (
-    Obj                 self,
-    Obj                 listL,
-    Obj                 listR )
+static Obj FuncDIFF_SCL_LIST_DEFAULT(Obj self, Obj listL, Obj listR)
 {
     return DiffSclList( listL, listR );
 }
 
-Obj FuncDIFF_LIST_SCL_DEFAULT (
-    Obj                 self,
-    Obj                 listL,
-    Obj                 listR )
+static Obj FuncDIFF_LIST_SCL_DEFAULT(Obj self, Obj listL, Obj listR)
 {
     return DiffListScl( listL, listR );
 }
 
-Obj FuncDIFF_LIST_LIST_DEFAULT (
-    Obj                 self,
-    Obj                 listL,
-    Obj                 listR )
+static Obj FuncDIFF_LIST_LIST_DEFAULT(Obj self, Obj listL, Obj listR)
 {
     return DiffListList( listL, listR );
 }
@@ -987,27 +946,18 @@ Obj             ProdListList (
     return listP;
 }
 
-Obj FuncPROD_SCL_LIST_DEFAULT (
-    Obj                 self,
-    Obj                 listL,
-    Obj                 listR )
+static Obj FuncPROD_SCL_LIST_DEFAULT(Obj self, Obj listL, Obj listR)
 {
     return ProdSclList( listL, listR );
 }
 
-Obj FuncPROD_LIST_SCL_DEFAULT (
-    Obj                 self,
-    Obj                 listL,
-    Obj                 listR )
+static Obj FuncPROD_LIST_SCL_DEFAULT(Obj self, Obj listL, Obj listR)
 {
     return ProdListScl( listL, listR );
 }
 
-Obj FuncPROD_LIST_LIST_DEFAULT (
-    Obj                 self,
-    Obj                 listL,
-    Obj                 listR,
-    Obj                 depthdiff)
+static Obj
+FuncPROD_LIST_LIST_DEFAULT(Obj self, Obj listL, Obj listR, Obj depthdiff)
 {
   Obj prod;
   prod = ProdListList( listL, listR );
@@ -1026,8 +976,9 @@ Obj FuncPROD_LIST_LIST_DEFAULT (
     case 0:
       break;
     default:
-      ErrorReturnVoid("PROD_LIST_LIST_DEFAULT: depth difference should be -1, 0 or 1, not %i",
-                      INT_INTOBJ(depthdiff),0L,"you can return to carry on anyway");
+        ErrorMayQuit("PROD_LIST_LIST_DEFAULT: depth difference should be -1, "
+                     "0 or 1, not %i",
+                     INT_INTOBJ(depthdiff), 0);
     }
   return prod;
         
@@ -1044,9 +995,7 @@ Obj FuncPROD_LIST_LIST_DEFAULT (
 **  and 2 for a fully mutable result.
 */
 
-Obj             OneMatrix (
-    Obj                 mat,
-    UInt                mut)
+static Obj OneMatrix(Obj mat, UInt mut)
 {
     Obj                 res = 0;        /* one, result                     */
     Obj                 row;            /* one row of the result           */
@@ -1060,10 +1009,8 @@ Obj             OneMatrix (
     /* check that the operand is a *square* matrix                         */
     len = LEN_LIST( mat );
     if ( len != LEN_LIST( ELM_LIST( mat, 1 ) ) ) {
-        return ErrorReturnObj(
-            "Matrix ONE: <mat> must be square (not %d by %d)",
-            (Int)len, (Int)LEN_LIST( ELM_LIST( mat, 1 ) ),
-            "you can replace ONE matrix <mat> via 'return <mat>;'" );
+        ErrorMayQuit("Matrix ONE: <mat> must be square (not %d by %d)",
+                     (Int)len, (Int)LEN_LIST(ELM_LIST(mat, 1)));
     }
 
     /* get the zero and the one                                            */
@@ -1114,23 +1061,17 @@ Obj             OneMatrix (
     return res;
 }
 
-Obj FuncONE_MATRIX_IMMUTABLE (
-    Obj                 self,
-    Obj                 list )
+static Obj FuncONE_MATRIX_IMMUTABLE(Obj self, Obj list)
 {
     return OneMatrix( list,0 );
 }
 
-Obj FuncONE_MATRIX_SAME_MUTABILITY (
-    Obj                 self,
-    Obj                 list )
+static Obj FuncONE_MATRIX_SAME_MUTABILITY(Obj self, Obj list)
 {
     return OneMatrix( list,1 );
 }
 
-Obj FuncONE_MATRIX_MUTABLE (
-    Obj                 self,
-    Obj                 list )
+static Obj FuncONE_MATRIX_MUTABLE(Obj self, Obj list)
 {
     return OneMatrix( list,2 );
 }
@@ -1154,9 +1095,7 @@ Obj FuncONE_MATRIX_MUTABLE (
 **  calls to AddRowVector, etc.
 */
 
-Obj             InvMatrix (
-    Obj                 mat,
-    UInt                mut)
+static Obj InvMatrix(Obj mat, UInt mut)
 {
     Obj                 res = 0;        /* power, result                   */
     Obj                 row;            /* one row of the matrix           */
@@ -1172,10 +1111,8 @@ Obj             InvMatrix (
     /* check that the operand is a *square* matrix                         */
     len = LEN_LIST( mat );
     if ( len != LEN_LIST( ELM_LIST( mat, 1 ) ) ) {
-        return ErrorReturnObj(
-            "Matrix INV: <mat> must be square (not %d by %d)",
-            (Int)len, (Int)LEN_LIST( ELM_LIST( mat, 1 ) ),
-            "you can replace <mat> via 'return <mat>;'" );
+        ErrorMayQuit("Matrix INV: <mat> must be square (not %d by %d)",
+                     (Int)len, (Int)LEN_LIST(ELM_LIST(mat, 1)));
     }
 
     /* get the zero and the one                                            */
@@ -1288,17 +1225,17 @@ Obj             InvMatrix (
     return res;
 }
 
-Obj FuncINV_MATRIX_MUTABLE( Obj self, Obj mat)
+static Obj FuncINV_MATRIX_MUTABLE(Obj self, Obj mat)
 {
   return InvMatrix(mat, 2);
 }
 
-Obj FuncINV_MATRIX_SAME_MUTABILITY( Obj self, Obj mat)
+static Obj FuncINV_MATRIX_SAME_MUTABILITY(Obj self, Obj mat)
 {
   return InvMatrix(mat, 1);
 }
 
-Obj FuncINV_MATRIX_IMMUTABLE( Obj self, Obj mat)
+static Obj FuncINV_MATRIX_IMMUTABLE(Obj self, Obj mat)
 {
   return InvMatrix(mat, 0);
 }
@@ -1314,77 +1251,61 @@ Obj FuncINV_MATRIX_IMMUTABLE( Obj self, Obj mat)
 
 /* We need these to redispatch when the user has supplied a replacement value. */
 
-static Obj AddRowVectorOp;   /* BH changed to static */
-static Obj MultRowVectorOp;  /* BH changed to static */
+static Obj AddRowVectorOp;
+static Obj MultVectorLeftOp;
 
-Obj FuncADD_ROW_VECTOR_5( Obj self,
-                          Obj list1,
-                          Obj list2,
-                          Obj mult,
-                          Obj from,
-                          Obj to )
+static Obj FuncADD_ROW_VECTOR_5(
+    Obj self, Obj list1, Obj list2, Obj mult, Obj from, Obj to)
 {
-  UInt i;
-  Obj el1,el2;
-  while (!IS_INTOBJ(to) ||
-         INT_INTOBJ(to) > LEN_LIST(list1) ||
-         INT_INTOBJ(to) > LEN_LIST(list2))
-    to = ErrorReturnObj("AddRowVector: Upper limit too large", 0L, 0L, 
-                        "you can replace limit by <lim> via 'return <lim>;'");
-  for (i = INT_INTOBJ(from); i <= INT_INTOBJ(to); i++)
-    {
-      el1 = ELM_LIST(list1,i);
-      el2 = ELM_LIST(list2,i);
-      el2 = PROD(mult, el2);
-      el1 = SUM(el1,el2);
-      ASS_LIST(list1,i,el1);
-      CHANGED_BAG(list1);
+    Int ifrom = GetSmallInt("AddRowVector", from);
+    Int ito = GetSmallInt("AddRowVector", to);
+    if (ito > LEN_LIST(list1) || ito > LEN_LIST(list2))
+        ErrorMayQuit("AddRowVector: Upper limit too large", 0, 0);
+    for (Int i = ifrom; i <= ito; i++) {
+        Obj el1 = ELM_LIST(list1, i);
+        Obj el2 = ELM_LIST(list2, i);
+        el2 = PROD(mult, el2);
+        el1 = SUM(el1, el2);
+        ASS_LIST(list1, i, el1);
+        CHANGED_BAG(list1);
     }
-  return 0;
+    return 0;
 }
 
 /****************************************************************************
 **
-*F  FuncADD_ROW_VECTOR_5_FAST( <self>, <list1>, <list2>, <mult>, <from>, <to> )
+*F  FuncADD_ROW_VECTOR_5_FAST(<self>,<list1>,<list2>,<mult>,<from>,<to>)
 **
 **  This function adds <mult>*<list2>[i] destructively to <list1>[i] for
 **  each i in the range <from>..<to>. It does very little checking
 **
 **  This version is specialised to the "fast" case where list1 and list2 are
-**  plain lists of cyclotomics and mult is a small integers
+**  plain lists of cyclotomics and mult is a small integer.
 */
-Obj FuncADD_ROW_VECTOR_5_FAST ( Obj self,
-                                Obj list1,
-                                Obj list2,
-                                Obj mult,
-                                Obj from,
-                                Obj to )
+static Obj FuncADD_ROW_VECTOR_5_FAST(
+    Obj self, Obj list1, Obj list2, Obj mult, Obj from, Obj to)
 {
-  UInt i;
-  Obj e1,e2, prd, sum;
-  while (!IS_INTOBJ(to) ||
-         INT_INTOBJ(to) > LEN_LIST(list1) ||
-         INT_INTOBJ(to) > LEN_LIST(list2))
-    to = ErrorReturnObj("AddRowVector: Upper limit too large", 0L, 0L, 
-                        "you can replace limit by <lim> via 'return <lim>;'");
-  for (i = INT_INTOBJ(from); i <= INT_INTOBJ(to); i++)
-    {
-      e1 = ELM_PLIST(list1,i);
-      e2 = ELM_PLIST(list2,i);
-      if ( !ARE_INTOBJS( e2, mult ) || !PROD_INTOBJS( prd, e2, mult ))
-        {
-          prd = PROD(e2,mult);
+    Int ifrom = GetSmallInt("AddRowVector", from);
+    Int ito = GetSmallInt("AddRowVector", to);
+    if (ito > LEN_LIST(list1) || ito > LEN_LIST(list2))
+        ErrorMayQuit("AddRowVector: Upper limit too large", 0, 0);
+
+    Obj prd, sum;
+    for (Int i = ifrom; i <= ito; i++) {
+        Obj e1 = ELM_PLIST(list1, i);
+        Obj e2 = ELM_PLIST(list2, i);
+        if (!ARE_INTOBJS(e2, mult) || !PROD_INTOBJS(prd, e2, mult)) {
+            prd = PROD(e2, mult);
         }
-      if ( !ARE_INTOBJS(e1, prd) || !SUM_INTOBJS( sum, e1, prd) )
-        {
-          sum = SUM(e1,prd);
-          SET_ELM_PLIST(list1,i,sum);
-          CHANGED_BAG(list1);
+        if (!ARE_INTOBJS(e1, prd) || !SUM_INTOBJS(sum, e1, prd)) {
+            sum = SUM(e1, prd);
+            SET_ELM_PLIST(list1, i, sum);
+            CHANGED_BAG(list1);
         }
-      else
-          SET_ELM_PLIST(list1,i,sum);
+        else
+            SET_ELM_PLIST(list1, i, sum);
     }
-  return 0;
+    return 0;
 }
 
 /****************************************************************************
@@ -1397,21 +1318,12 @@ Obj FuncADD_ROW_VECTOR_5_FAST ( Obj self,
 *T  This could be speeded up still further by using special code for various
 **  types of list -- this version just uses generic list ops
 */
-Obj FuncADD_ROW_VECTOR_3( Obj self,
-                          Obj list1,
-                          Obj list2,
-                          Obj mult)
+static Obj FuncADD_ROW_VECTOR_3(Obj self, Obj list1, Obj list2, Obj mult)
 {
   UInt i;
   UInt len = LEN_LIST(list1);
   Obj el1, el2;
-  if (LEN_LIST(list2) != len)
-    {
-      list2 = ErrorReturnObj("AddRowVector: lists must be the same length",
-                             0L, 0L, 
-                             "you can replace second list <list2> via 'return <list2>;'");
-      return CALL_3ARGS(AddRowVectorOp, list1, list2,mult);
-    }
+  RequireSameLength("AddRowVector", list1, list2);
   for (i = 1; i <= len; i++)
     {
       el1 = ELMW_LIST(list1,i);
@@ -1434,22 +1346,12 @@ Obj FuncADD_ROW_VECTOR_3( Obj self,
 **  This version is specialised to the "fast" case where list1 and list2 are
 **  plain lists of cyclotomics and mult is a small integers
 */
-Obj FuncADD_ROW_VECTOR_3_FAST ( Obj self,
-                                Obj list1,
-                                Obj list2,
-                                Obj mult )
+static Obj FuncADD_ROW_VECTOR_3_FAST(Obj self, Obj list1, Obj list2, Obj mult)
 {
   UInt i;
   Obj e1,e2, prd, sum;
   UInt len = LEN_PLIST(list1);
-  if (LEN_PLIST(list2) != len)
-    {
-      list2 = ErrorReturnObj("AddRowVector: lists must be the same length",
-                             0L, 0L, 
-                             "you can replace second list <list2> via 'return <list2>;'");
-      return CALL_3ARGS(AddRowVectorOp, list1, list2, mult);
-    }
-      
+  RequireSameLength("AddRowVector", list1, list2);
   for (i = 1; i <= len; i++)
     {
       e1 = ELM_PLIST(list1,i);
@@ -1480,20 +1382,12 @@ Obj FuncADD_ROW_VECTOR_3_FAST ( Obj self,
 *T  This could be speeded up still further by using special code for various
 **  types of list -- this version just uses generic list ops
 */
-Obj FuncADD_ROW_VECTOR_2( Obj self,
-                          Obj list1,
-                          Obj list2)
+static Obj FuncADD_ROW_VECTOR_2(Obj self, Obj list1, Obj list2)
 {
   UInt i;
   Obj el1,el2;
   UInt len = LEN_LIST(list1);
-  if (LEN_LIST(list2) != len)
-    {
-      list2 = ErrorReturnObj("AddRowVector: lists must be the same length",
-                             0L, 0L, 
-                             "you can replace second list <list2> via 'return <list2>;'");
-      return CALL_2ARGS(AddRowVectorOp, list1, list2);
-    }
+  RequireSameLength("AddRowVector", list1, list2);
   for (i = 1; i <= len; i++)
     {
       el1 = ELMW_LIST(list1,i);
@@ -1515,20 +1409,12 @@ Obj FuncADD_ROW_VECTOR_2( Obj self,
 **  This version is specialised to the "fast" case where list1 and list2 are
 **  plain lists of cyclotomics 
 */
-Obj FuncADD_ROW_VECTOR_2_FAST ( Obj self,
-                                Obj list1,
-                                Obj list2 )
+static Obj FuncADD_ROW_VECTOR_2_FAST(Obj self, Obj list1, Obj list2)
 {
   UInt i;
   Obj e1,e2, sum;
   UInt len = LEN_PLIST(list1);
-  if (LEN_PLIST(list2) != len)
-    {
-      list2 = ErrorReturnObj("AddRowVector: lists must be the same length",
-                             0L, 0L, 
-                             "you can replace second list <list2> via 'return <list2>;'");
-      return CALL_2ARGS(AddRowVectorOp, list1, list2);
-    }
+  RequireSameLength("AddRowVector", list1, list2);
   for (i = 1; i <= len; i++)
     {
       e1 = ELM_PLIST(list1,i);
@@ -1547,33 +1433,49 @@ Obj FuncADD_ROW_VECTOR_2_FAST ( Obj self,
 
 /****************************************************************************
 **
-*F  FuncMULT_ROW_VECTOR_2( <self>, <list>, <mult> )
+*F  MULT_VECTOR_LEFT_RIGHT_2( <list>, <mult>, <left> )
 **
-**  This function destructively multiplies the entries of <list> by <mult>
-**  It does very little checking
+**  This function destructively multiplies the entries of <list> by <mult>.
+**  It multiplies with <mult> from the left if <left> is not 0 and from the
+**  right otherwise.
+**  It does very little checking.
 **
 */
-
-Obj FuncMULT_ROW_VECTOR_2( Obj self,
-                           Obj list,
-                           Obj mult )
+static inline Obj MULT_VECTOR_LEFT_RIGHT_2(Obj list, Obj mult, UInt left)
 {
   UInt i;
   Obj prd;
   UInt len = LEN_LIST(list);
-  for (i = 1; i <= len; i++)
-    {
-      prd = ELMW_LIST(list,i);
-      prd = PROD(prd,mult);
-      ASS_LIST(list,i,prd);
-      CHANGED_BAG(list);
-    }
+  if (left != 0)
+      for (i = 1; i <= len; i++) {
+          prd = ELMW_LIST(list, i);
+          prd = PROD(mult, prd);
+          ASS_LIST(list, i, prd);
+          CHANGED_BAG(list);
+      }
+  else
+      for (i = 1; i <= len; i++) {
+          prd = ELMW_LIST(list, i);
+          prd = PROD(prd, mult);
+          ASS_LIST(list, i, prd);
+          CHANGED_BAG(list);
+      }
   return 0;
+}
+
+static Obj FuncMULT_VECTOR_LEFT_2(Obj self, Obj list, Obj mult)
+{
+    return MULT_VECTOR_LEFT_RIGHT_2(list, mult, 1);
+}
+
+static Obj FuncMULT_VECTOR_RIGHT_2(Obj self, Obj list, Obj mult)
+{
+    return MULT_VECTOR_LEFT_RIGHT_2(list, mult, 0);
 }
 
 /****************************************************************************
 **
-*F  FuncMULT_ROW_VECTOR_2_FAST( <self>, <list>, <mult> )
+*F  FuncMULT_VECTOR_2_FAST( <self>, <list>, <mult> )
 **
 **  This function destructively multiplies the entries of <list> by <mult>
 **  It does very little checking
@@ -1582,9 +1484,7 @@ Obj FuncMULT_ROW_VECTOR_2( Obj self,
 **  multiplier
 */
 
-Obj FuncMULT_ROW_VECTOR_2_FAST( Obj self,
-                                Obj list,
-                                Obj mult )
+static Obj FuncMULT_VECTOR_2_FAST(Obj self, Obj list, Obj mult)
 {
   UInt i;
   Obj el,prd;
@@ -1613,24 +1513,16 @@ Obj FuncMULT_ROW_VECTOR_2_FAST( Obj self,
 */
 
 
-Obj FuncPROD_VEC_MAT_DEFAULT( Obj self,
-                              Obj vec,
-                              Obj mat )
+static Obj FuncPROD_VEC_MAT_DEFAULT(Obj self, Obj vec, Obj mat)
 {
   Obj res;
   Obj elt;
   Obj vecr;
   UInt i,len;
   Obj z;
-/*Obj o;  */
   res = (Obj) 0;
   len = LEN_LIST(vec);
-  if (len != LEN_LIST(mat))
-    {
-      mat = ErrorReturnObj("<vec> * <mat>: vector and matrix must have same length", 0L, 0L,
-                           "you can replace <mat> via 'return <mat>;'");
-      return PROD(vec,mat);
-    }
+  RequireSameLength("<vec> * <mat>", vec, mat);
   elt = ELMW_LIST(vec,1);
   z = ZERO(elt);
   for (i = 1; i <= len; i++)
@@ -1642,7 +1534,7 @@ Obj FuncPROD_VEC_MAT_DEFAULT( Obj self,
           if (res == (Obj)0)
             {
               res = SHALLOW_COPY_OBJ(vecr);
-              CALL_2ARGS(MultRowVectorOp,res,elt);
+              CALL_2ARGS(MultVectorLeftOp, res, elt);
             }
           else
             CALL_3ARGS(AddRowVectorOp, res, vecr, elt);
@@ -1660,13 +1552,13 @@ Obj FuncPROD_VEC_MAT_DEFAULT( Obj self,
 *F  FuncINV_MAT_DEFAULT
 **
 **  A faster version of InvMat for those matrices for whose rows AddRowVector
-** and MultRowVector make sense (and might have fast kernel methods)
+** and MultVectorLeft make sense (and might have fast kernel methods)
 **
 */
 
-Obj ConvertToMatrixRep;
+static Obj ConvertToMatrixRep;
 
-Obj InvMatWithRowVecs( Obj mat, UInt mut)
+static Obj InvMatWithRowVecs(Obj mat, UInt mut)
 {
   Obj                 res;            /* result                          */
   Obj                 matcopy;        /* copy of mat                     */
@@ -1686,23 +1578,8 @@ Obj InvMatWithRowVecs( Obj mat, UInt mut)
   /* check that the operand is a *square* matrix                         */
   len = LEN_LIST( mat );
   if ( len != LEN_LIST( ELM_LIST( mat, 1 ) ) ) {
-    mat = ErrorReturnObj(
-                         "Matrix INV: <mat> must be square (not %d by %d)",
-                         (Int)len, (Int)LEN_LIST( ELM_LIST( mat, 1 ) ),
-                         "you can replace <mat> via 'return <mat>;'" );
-    switch( mut) {
-    case 0:
-      res = INV(mat);
-      CheckedMakeImmutable(res);
-      return res;
-      break;
-    case 1:
-      return INV_MUT(mat);
-      break;
-    case 2:
-      return INV(mat);
-      break;
-    }
+      ErrorMayQuit("Matrix INV: <mat> must be square (not %d by %d)",
+                   (Int)len, (Int)LEN_LIST(ELM_LIST(mat, 1)));
   }
 
   /* get the zero and the one                                            */
@@ -1761,8 +1638,8 @@ Obj InvMatWithRowVecs( Obj mat, UInt mut)
       if (!EQ(x, one))
         {
           xi = INV(x);
-          CALL_2ARGS(MultRowVectorOp, row, xi);
-          CALL_2ARGS(MultRowVectorOp, row2, xi);
+          CALL_2ARGS(MultVectorLeftOp, row, xi);
+          CALL_2ARGS(MultVectorLeftOp, row2, xi);
         }
 
       /* Clear the entries. We know that we can ignore the entries in rows i..j */
@@ -1817,17 +1694,17 @@ Obj InvMatWithRowVecs( Obj mat, UInt mut)
 }
 
 
-Obj FuncINV_MAT_DEFAULT_MUTABLE ( Obj self, Obj mat)
+static Obj FuncINV_MAT_DEFAULT_MUTABLE(Obj self, Obj mat)
 {
   return InvMatWithRowVecs(mat, 2);
 }
 
-Obj FuncINV_MAT_DEFAULT_SAME_MUTABILITY ( Obj self, Obj mat)
+static Obj FuncINV_MAT_DEFAULT_SAME_MUTABILITY(Obj self, Obj mat)
 {
   return InvMatWithRowVecs(mat, 1);
 }
 
-Obj FuncINV_MAT_DEFAULT_IMMUTABLE ( Obj self, Obj mat)
+static Obj FuncINV_MAT_DEFAULT_IMMUTABLE(Obj self, Obj mat)
 {
   return InvMatWithRowVecs(mat, 0);
 }
@@ -1845,11 +1722,8 @@ Obj FuncINV_MAT_DEFAULT_IMMUTABLE ( Obj self, Obj mat)
 ** entries are small integers, as are their sums
 */
 
-Obj FuncADD_TO_LIST_ENTRIES_PLIST_RANGE ( 
-                              Obj self,
-                              Obj list,
-                              Obj range,
-                              Obj x)
+static Obj
+FuncADD_TO_LIST_ENTRIES_PLIST_RANGE(Obj self, Obj list, Obj range, Obj x)
 {
   UInt low, high, incr;
   Obj y,z;
@@ -1895,18 +1769,12 @@ static Obj  FuncMONOM_TOT_DEG_LEX ( Obj self, Obj u, Obj  v ) {
 
   Obj  total;
   Obj  lexico;
- 
-  while ( !(T_PLIST<=TNUM_OBJ(u) && TNUM_OBJ(u)<=LAST_PLIST_TNUM)
-          || !IS_DENSE_LIST(u)) {
-      u = ErrorReturnObj(
-      "MONOM_TOT_DEG_LEX: first <list> must be a dense plain list (not a %s)", 
-      (Int)TNAM_OBJ(u), 0L, "you can replace <list> via 'return <list>;'" );
+
+  if (!IS_PLIST(u) || !IS_DENSE_LIST(u)) {
+      RequireArgument("MONOM_TOT_DEG_LEX", u, "must be a dense plain list");
   }
-  while ( !(T_PLIST<=TNUM_OBJ(v) && TNUM_OBJ(v)<=LAST_PLIST_TNUM) ||
-          !IS_DENSE_LIST(v)) {
-      v = ErrorReturnObj(
-      "MONOM_TOT_DEG_LEX: first <list> must be a dense plain list (not a %s)", 
-      (Int)TNAM_OBJ(v), 0L, "you can replace <list> via 'return <list>;'" );
+  if (!IS_PLIST(v) || !IS_DENSE_LIST(v)) {
+      RequireArgument("MONOM_TOT_DEG_LEX", v, "must be a dense plain list");
   }
     
   lu = LEN_PLIST( u );
@@ -1977,18 +1845,12 @@ static Obj  FuncMONOM_GRLEX( Obj self, Obj u, Obj  v ) {
   Int4 i, lu, lv;
 
   Obj  total,ai,bi;
- 
-  while ( !(T_PLIST<=TNUM_OBJ(u) && TNUM_OBJ(u)<=LAST_PLIST_TNUM)
-          || !IS_DENSE_LIST(u)) {
-      u = ErrorReturnObj(
-      "MONOM_TOT_DEG_LEX: first <list> must be a dense plain list (not a %s)", 
-      (Int)TNAM_OBJ(u), 0L, "you can replace <list> via 'return <list>;'" );
+
+  if (!IS_PLIST(u) || !IS_DENSE_LIST(u)) {
+      RequireArgument("MONOM_GRLEX", u, "must be a dense plain list");
   }
-  while ( !(T_PLIST<=TNUM_OBJ(v) && TNUM_OBJ(v)<=LAST_PLIST_TNUM) ||
-          !IS_DENSE_LIST(v)) {
-      v = ErrorReturnObj(
-      "MONOM_TOT_DEG_LEX: first <list> must be a dense plain list (not a %s)", 
-      (Int)TNAM_OBJ(v), 0L, "you can replace <list> via 'return <list>;'" );
+  if (!IS_PLIST(v) || !IS_DENSE_LIST(v)) {
+      RequireArgument("MONOM_GRLEX", v, "must be a dense plain list");
   }
     
   lu = LEN_PLIST( u );
@@ -2187,7 +2049,7 @@ static Obj  FuncMONOM_PROD( Obj self, Obj m1, Obj m2 ) {
 **
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
-static StructGVarFunc GVarFuncs [] = {
+static StructGVarFunc GVarFuncs[] = {
 
     GVAR_FUNC(EQ_LIST_LIST_DEFAULT, 2, "listL, listR"),
     GVAR_FUNC(LT_LIST_LIST_DEFAULT, 2, "listL, listR"),
@@ -2218,15 +2080,16 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC(ADD_ROW_VECTOR_3_FAST, 3, "list1, list2, mult"),
     GVAR_FUNC(ADD_ROW_VECTOR_2, 2, "list1, list2"),
     GVAR_FUNC(ADD_ROW_VECTOR_2_FAST, 2, "list1, list2"),
-    GVAR_FUNC(MULT_ROW_VECTOR_2, 2, "list, mult"),
-    GVAR_FUNC(MULT_ROW_VECTOR_2_FAST, 2, "list, mult"),
+    GVAR_FUNC(MULT_VECTOR_LEFT_2, 2, "list, mult"),
+    GVAR_FUNC(MULT_VECTOR_RIGHT_2, 2, "list, mult"),
+    GVAR_FUNC(MULT_VECTOR_2_FAST, 2, "list, mult"),
     GVAR_FUNC(PROD_VEC_MAT_DEFAULT, 2, "vec, mat"),
     GVAR_FUNC(INV_MAT_DEFAULT_MUTABLE, 1, "mat"),
     GVAR_FUNC(INV_MAT_DEFAULT_SAME_MUTABILITY, 1, "mat"),
     GVAR_FUNC(INV_MAT_DEFAULT_IMMUTABLE, 1, "mat"),
     GVAR_FUNC(ADD_TO_LIST_ENTRIES_PLIST_RANGE, 3, "list, range, x"),
-    GVAR_FUNC(MONOM_TOT_DEG_LEX, 2, "monomial, monomial"),
-    GVAR_FUNC(MONOM_GRLEX, 2, "monomial, monomial"),
+    GVAR_FUNC(MONOM_TOT_DEG_LEX, 2, "u, v"),
+    GVAR_FUNC(MONOM_GRLEX, 2, "u, v"),
     GVAR_FUNC(ZIPPED_SUM_LISTS, 4, "list,list,zero,funclist"),
     GVAR_FUNC(MONOM_PROD, 2, "monomial, monomial"),
     { 0, 0, 0, 0, 0 }
@@ -2250,7 +2113,7 @@ static Int InitKernel (
     InitHdlrFuncsFromTable( GVarFuncs );
 
     InitFopyGVar( "AddRowVector", &AddRowVectorOp );
-    InitFopyGVar( "MultRowVector", &MultRowVectorOp );
+    InitFopyGVar("MultVectorLeft", &MultVectorLeftOp);
     InitFopyGVar( "ConvertToMatrixRep", &ConvertToMatrixRep );
 
 

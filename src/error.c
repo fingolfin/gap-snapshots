@@ -1,8 +1,11 @@
 /****************************************************************************
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002-2018 The GAP Group
+**  This file is part of GAP, a system for computational discrete algebra.
+**
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file implements functions for raising user errors and interacting
 **  with the break loop.
@@ -55,7 +58,7 @@ UInt OpenErrorOutput( void )
 
     if (ERROR_OUTPUT != NULL) {
         if (IsStringConv(ERROR_OUTPUT)) {
-            ret = OpenOutput(CSTR_STRING(ERROR_OUTPUT));
+            ret = OpenOutput(CONST_CSTR_STRING(ERROR_OUTPUT));
         }
         else {
             if (CALL_1ARGS(IsOutputStream, ERROR_OUTPUT) == True) {
@@ -86,7 +89,7 @@ UInt OpenErrorOutput( void )
 *F  FuncDownEnv( <self>, <level> )  . . . . . . . . .  change the environment
 */
 
-void DownEnvInner(Int depth)
+static void DownEnvInner(Int depth)
 {
     /* if we are asked to go up ... */
     if (depth < 0) {
@@ -112,7 +115,7 @@ void DownEnvInner(Int depth)
     }
 }
 
-Obj FuncDownEnv(Obj self, Obj args)
+static Obj FuncDownEnv(Obj self, Obj args)
 {
     Int depth;
 
@@ -134,7 +137,7 @@ Obj FuncDownEnv(Obj self, Obj args)
     return (Obj)0;
 }
 
-Obj FuncUpEnv(Obj self, Obj args)
+static Obj FuncUpEnv(Obj self, Obj args)
 {
     Int depth;
     if (LEN_PLIST(args) == 0) {
@@ -155,7 +158,7 @@ Obj FuncUpEnv(Obj self, Obj args)
     return (Obj)0;
 }
 
-Obj FuncCURRENT_STATEMENT_LOCATION(Obj self, Obj context)
+static Obj FuncCURRENT_STATEMENT_LOCATION(Obj self, Obj context)
 {
     if (context == STATE(BottomLVars))
         return Fail;
@@ -182,66 +185,62 @@ Obj FuncCURRENT_STATEMENT_LOCATION(Obj self, Obj context)
         (FIRST_EXPR_TNUM <= type && type <= LAST_EXPR_TNUM)) {
         Int line = LINE_STAT(call);
         Obj filename = GET_FILENAME_BODY(body);
-        retlist = NEW_PLIST(T_PLIST, 2);
-        SET_LEN_PLIST(retlist, 2);
-        SET_ELM_PLIST(retlist, 1, filename);
-        SET_ELM_PLIST(retlist, 2, INTOBJ_INT(line));
-        CHANGED_BAG(retlist);
+        retlist = NewPlistFromArgs(filename, INTOBJ_INT(line));
     }
     SWITCH_TO_OLD_LVARS(currLVars);
     return retlist;
 }
 
-Obj FuncPRINT_CURRENT_STATEMENT(Obj self, Obj stream, Obj context)
+static Obj FuncPRINT_CURRENT_STATEMENT(Obj self, Obj stream, Obj context)
 {
     if (context == STATE(BottomLVars))
         return 0;
 
     /* HACK: we want to redirect output */
     /* Try to print the output to stream. Use *errout* as a fallback. */
-    if ((IsStringConv(stream) && !OpenOutput(CSTR_STRING(stream))) ||
+    if ((IsStringConv(stream) && !OpenOutput(CONST_CSTR_STRING(stream))) ||
         (!IS_STRING(stream) && !OpenOutputStream(stream))) {
         if (OpenOutput("*errout*")) {
             Pr("PRINT_CURRENT_STATEMENT: failed to open error stream\n", 0, 0);
         }
         else {
-            Panic("gap: failed to open *errout*!\n");
+            Panic("failed to open *errout*");
         }
     }
 
     Obj func = FUNC_LVARS(context);
     GAP_ASSERT(func);
     Stat call = STAT_LVARS(context);
+    Obj  body = BODY_FUNC(func);
     if (IsKernelFunction(func)) {
-        Pr("<compiled statement> ", 0L, 0L);
-        /* HACK: close the output again */
-        CloseOutput();
-        return 0;
+        PrintKernelFunction(func);
+        Obj funcname = NAME_FUNC(func);
+        if (funcname) {
+            Pr(" in function %g", (Int)funcname, 0);
+        }
     }
-    Obj body = BODY_FUNC(func);
-    if (call < OFFSET_FIRST_STAT ||
-        call > SIZE_BAG(body) - sizeof(StatHeader)) {
+    else if (call < OFFSET_FIRST_STAT ||
+             call > SIZE_BAG(body) - sizeof(StatHeader)) {
         Pr("<corrupted statement> ", 0L, 0L);
-        /* HACK: close the output again */
-        CloseOutput();
-        return 0;
+    }
+    else {
+        Obj currLVars = STATE(CurrLVars);
+        SWITCH_TO_OLD_LVARS(context);
+        GAP_ASSERT(call == BRK_CALL_TO());
+
+        Int type = TNUM_STAT(call);
+        Obj filename = GET_FILENAME_BODY(body);
+        if (FIRST_STAT_TNUM <= type && type <= LAST_STAT_TNUM) {
+            PrintStat(call);
+            Pr(" at %g:%d", (Int)filename, LINE_STAT(call));
+        }
+        else if (FIRST_EXPR_TNUM <= type && type <= LAST_EXPR_TNUM) {
+            PrintExpr(call);
+            Pr(" at %g:%d", (Int)filename, LINE_STAT(call));
+        }
+        SWITCH_TO_OLD_LVARS(currLVars);
     }
 
-    Obj currLVars = STATE(CurrLVars);
-    SWITCH_TO_OLD_LVARS(context);
-    GAP_ASSERT(call == BRK_CALL_TO());
-
-    Int type = TNUM_STAT(call);
-    Obj filename = GET_FILENAME_BODY(body);
-    if (FIRST_STAT_TNUM <= type && type <= LAST_STAT_TNUM) {
-        PrintStat(call);
-        Pr(" at %g:%d", (Int)filename, LINE_STAT(call));
-    }
-    else if (FIRST_EXPR_TNUM <= type && type <= LAST_EXPR_TNUM) {
-        PrintExpr(call);
-        Pr(" at %g:%d", (Int)filename, LINE_STAT(call));
-    }
-    SWITCH_TO_OLD_LVARS(currLVars);
     /* HACK: close the output again */
     CloseOutput();
     return 0;
@@ -252,22 +251,22 @@ Obj FuncPRINT_CURRENT_STATEMENT(Obj self, Obj stream, Obj context)
 *F  FuncCALL_WITH_CATCH( <self>, <func> )
 **
 */
-Obj FuncCALL_WITH_CATCH(Obj self, Obj func, volatile Obj args)
+static Obj FuncCALL_WITH_CATCH(Obj self, Obj func, Obj args)
+{
+    return CALL_WITH_CATCH(func, args);
+}
+
+Obj CALL_WITH_CATCH(Obj func, volatile Obj args)
 {
     volatile syJmp_buf readJmpError;
     volatile Obj       res;
     volatile Obj       currLVars;
     volatile Obj       tilde;
     volatile Int       recursionDepth;
-    volatile Stat      currStat;
 
-    if (!IS_FUNC(func))
-        ErrorMayQuit(
-            "CALL_WITH_CATCH(<func>, <args>): <func> must be a function", 0,
-            0);
+    RequireFunction("CALL_WITH_CATCH", func);
     if (!IS_LIST(args))
-        ErrorMayQuit("CALL_WITH_CATCH(<func>, <args>): <args> must be a list",
-                     0, 0);
+        RequireArgument("CALL_WITH_CATCH", args, "must be a list");
 #ifdef HPCGAP
     if (!IS_PLIST(args)) {
         args = SHALLOW_COPY_OBJ(args);
@@ -278,7 +277,9 @@ Obj FuncCALL_WITH_CATCH(Obj self, Obj func, volatile Obj args)
     memcpy((void *)&readJmpError, (void *)&STATE(ReadJmpError),
            sizeof(syJmp_buf));
     currLVars = STATE(CurrLVars);
-    currStat = STATE(CurrStat);
+#ifdef GAP_KERNEL_DEBUG
+    volatile Stat currStat = BRK_CALL_TO();
+#endif
     recursionDepth = GetRecursionDepth();
     tilde = STATE(Tilde);
     res = NEW_PLIST_IMM(T_PLIST_DENSE, 2);
@@ -293,7 +294,7 @@ Obj FuncCALL_WITH_CATCH(Obj self, Obj func, volatile Obj args)
         CHANGED_BAG(res);
         STATE(ThrownObject) = 0;
         SWITCH_TO_OLD_LVARS(currLVars);
-        STATE(CurrStat) = currStat;
+        GAP_ASSERT(currStat == BRK_CALL_TO());
         SetRecursionDepth(recursionDepth);
         STATE(Tilde) = tilde;
 #ifdef HPCGAP
@@ -328,7 +329,7 @@ Obj FuncCALL_WITH_CATCH(Obj self, Obj func, volatile Obj args)
     return res;
 }
 
-Obj FuncJUMP_TO_CATCH(Obj self, Obj payload)
+static Obj FuncJUMP_TO_CATCH(Obj self, Obj payload)
 {
     STATE(ThrownObject) = payload;
     if (STATE(JumpToCatchCallback) != 0) {
@@ -338,7 +339,7 @@ Obj FuncJUMP_TO_CATCH(Obj self, Obj payload)
     return 0;
 }
 
-Obj FuncSetUserHasQuit(Obj Self, Obj value)
+static Obj FuncSetUserHasQuit(Obj Self, Obj value)
 {
     STATE(UserHasQuit) = INT_INTOBJ(value);
     if (STATE(UserHasQuit))
@@ -389,14 +390,14 @@ static Obj ErrorMessageToGAPString(const Char * msg, Int arg1, Int arg2)
 }
 
 
-Obj CallErrorInner(const Char * msg,
-                   Int          arg1,
-                   Int          arg2,
-                   UInt         justQuit,
-                   UInt         mayReturnVoid,
-                   UInt         mayReturnObj,
-                   Obj          lateMessage,
-                   UInt         printThisStatement)
+static Obj CallErrorInner(const Char * msg,
+                          Int          arg1,
+                          Int          arg2,
+                          UInt         justQuit,
+                          UInt         mayReturnVoid,
+                          UInt         mayReturnObj,
+                          Obj          lateMessage,
+                          UInt         printThisStatement)
 {
     // Must do this before creating any other GAP objects,
     // as one of the args could be a pointer into a Bag.
@@ -420,7 +421,7 @@ Obj CallErrorInner(const Char * msg,
     l = NEW_PLIST_IMM(T_PLIST_HOM, 1);
     SET_ELM_PLIST(l, 1, EarlyMsg);
     SET_LEN_PLIST(l, 1);
-    SET_BRK_CALL_TO(STATE(CurrStat));
+
     // Signal functions about entering and leaving break loop
     for (i = 0; i < ARRAY_SIZE(signalBreakFuncList) && signalBreakFuncList[i];
          ++i)
@@ -438,102 +439,29 @@ Obj CallErrorInner(const Char * msg,
 void ErrorQuit(const Char * msg, Int arg1, Int arg2)
 {
     CallErrorInner(msg, arg1, arg2, 1, 0, 0, False, 1);
-    Panic("panic: ErrorQuit must not return");
+    Panic("ErrorQuit must not return");
 }
 
 
 /****************************************************************************
 **
-*F  ErrorQuitBound( <name> )  . . . . . . . . . . . . . . .  unbound variable
+*F  ErrorMayQuitNrArgs( <narg>, <actual> ) . . . .  wrong number of arguments
 */
-void ErrorQuitBound(const Char * name)
+void ErrorMayQuitNrArgs(Int narg, Int actual)
 {
-    ErrorQuit("variable '%s' must have an assigned value", (Int)name, 0L);
-}
-
-
-/****************************************************************************
-**
-*F  ErrorQuitFuncResult() . . . . . . . . . . . . . . . . must return a value
-*/
-void ErrorQuitFuncResult(void)
-{
-    ErrorQuit("function must return a value", 0L, 0L);
-}
-
-
-/****************************************************************************
-**
-*F  ErrorQuitIntSmall( <obj> )  . . . . . . . . . . . . . not a small integer
-*/
-void ErrorQuitIntSmall(Obj obj)
-{
-    ErrorQuit("<obj> must be a small integer (not a %s)", (Int)TNAM_OBJ(obj),
-              0L);
-}
-
-
-/****************************************************************************
-**
-*F  ErrorQuitIntSmallPos( <obj> ) . . . . . . .  not a positive small integer
-*/
-void ErrorQuitIntSmallPos(Obj obj)
-{
-    ErrorQuit("<obj> must be a positive small integer (not a %s)",
-              (Int)TNAM_OBJ(obj), 0L);
+    ErrorMayQuit("Function: number of arguments must be %d (not %d)",
+                 narg, actual);
 }
 
 /****************************************************************************
 **
-*F  ErrorQuitIntPos( <obj> ) . . . . . . .  not a positive small integer
+*F  ErrorMayQuitNrAtLeastArgs( <narg>, <actual> ) . . .  not enough arguments
 */
-void ErrorQuitIntPos(Obj obj)
+void ErrorMayQuitNrAtLeastArgs(Int narg, Int actual)
 {
-    ErrorQuit("<obj> must be a positive integer (not a %s)",
-              (Int)TNAM_OBJ(obj), 0L);
-}
-
-
-/****************************************************************************
-**
-*F  ErrorQuitBool( <obj> )  . . . . . . . . . . . . . . . . . . not a boolean
-*/
-void ErrorQuitBool(Obj obj)
-{
-    ErrorQuit("<obj> must be 'true' or 'false' (not a %s)",
-              (Int)TNAM_OBJ(obj), 0L);
-}
-
-
-/****************************************************************************
-**
-*F  ErrorQuitFunc( <obj> )  . . . . . . . . . . . . . . . . .  not a function
-*/
-void ErrorQuitFunc(Obj obj)
-{
-    ErrorQuit("<obj> must be a function (not a %s)", (Int)TNAM_OBJ(obj), 0L);
-}
-
-
-/****************************************************************************
-**
-*F  ErrorQuitNrArgs( <narg>, <args> ) . . . . . . . wrong number of arguments
-*/
-void ErrorQuitNrArgs(Int narg, Obj args)
-{
-    ErrorQuit("Function Calls: number of arguments must be %d (not %d)", narg,
-              LEN_PLIST(args));
-}
-
-/****************************************************************************
-**
-*F  ErrorQuitNrAtLeastArgs( <narg>, <args> ) . . . . . . not enough arguments
-*/
-void ErrorQuitNrAtLeastArgs(Int narg, Obj args)
-{
-    ErrorQuit(
-        "Function Calls: number of arguments must be at least %d (not %d)",
-        narg, LEN_PLIST(args));
+    ErrorMayQuit(
+        "Function: number of arguments must be at least %d (not %d)",
+        narg, actual);
 }
 
 /****************************************************************************
@@ -581,7 +509,7 @@ void ErrorMayQuit(const Char * msg, Int arg1, Int arg2)
 {
     Obj LateMsg = MakeString("type 'quit;' to quit to outer loop");
     CallErrorInner(msg, arg1, arg2, 0, 0, 0, LateMsg, 1);
-    Panic("panic: ErrorMayQuit must not return");
+    Panic("ErrorMayQuit must not return");
 }
 
 /****************************************************************************
@@ -591,7 +519,7 @@ void ErrorMayQuit(const Char * msg, Int arg1, Int arg2)
 void CheckIsPossList(const Char * desc, Obj poss)
 {
     if ( ! IS_POSS_LIST( poss ) ) {
-        ErrorMayQuit("%s: <positions> must be a dense list of positive integers",
+        ErrorMayQuit("%s: <poss> must be a dense list of positive integers",
             (Int)desc, 0 );
     }
 }
@@ -611,17 +539,69 @@ void CheckIsDenseList(const Char * desc, const Char * listName, Obj list)
 **
 *F  CheckSameLength
 */
-void CheckSameLength(const Char * desc, const Char *leftName, const Char *rightName, Obj left, Obj right)
+void CheckSameLength(const Char * desc,
+                     const Char * name1,
+                     const Char * name2,
+                     Obj          op1,
+                     Obj          op2)
 {
-    UInt ll = LEN_LIST(left);
-    UInt lr = LEN_LIST(right);
-    if ( ll != lr ) {
+    UInt len1 = LEN_LIST(op1);
+    UInt len2 = LEN_LIST(op2);
+    if (len1 != len2) {
         Char message[1024];
-        snprintf(message, sizeof(message), "%s: <%s> must have the same length as <%s> (not %d and %d)",
-            desc, leftName, rightName, (int)ll, (int)lr);
-        ErrorQuit(message, 0, 0);
+        snprintf(message, sizeof(message),
+                 "%s: <%s> must have the same length as <%s> "
+                 "(lengths are %d and %d)",
+                 desc, name1, name2, (int)len1, (int)len2);
+        ErrorMayQuit(message, 0, 0);
     }
 }
+
+/****************************************************************************
+**
+*F  RequireArgumentEx
+*/
+Obj RequireArgumentEx(const char * funcname,
+                      Obj          op,
+                      const char * argname,
+                      const char * msg)
+{
+    char msgbuf[1024] = { 0 };
+    Int  arg1 = 0;
+    Int  arg2 = 0;
+
+    if (funcname) {
+        strlcat(msgbuf, funcname, sizeof(msgbuf));
+        strlcat(msgbuf, ": ", sizeof(msgbuf));
+    }
+    if (argname) {
+        strlcat(msgbuf, argname, sizeof(msgbuf));
+        strlcat(msgbuf, " ", sizeof(msgbuf));
+    }
+    strlcat(msgbuf, msg, sizeof(msgbuf));
+    if (IS_INTOBJ(op)) {
+        strlcat(msgbuf, " (not the integer %d)", sizeof(msgbuf));
+        arg1 = INT_INTOBJ(op);
+    }
+    else if (op == True)
+        strlcat(msgbuf, " (not the value 'true')", sizeof(msgbuf));
+    else if (op == False)
+        strlcat(msgbuf, " (not the value 'false')", sizeof(msgbuf));
+    else if (op == Fail)
+        strlcat(msgbuf, " (not the value 'fail')", sizeof(msgbuf));
+    else {
+        strlcat(msgbuf, " (not a %s)", sizeof(msgbuf));
+        arg1 = (Int)TNAM_OBJ(op);
+    }
+
+    ErrorMayQuit(msgbuf, arg1, arg2);
+}
+
+void AssertionFailure(void)
+{
+    ErrorReturnVoid("Assertion failure", 0, 0, "you may 'return;'");
+}
+
 
 /****************************************************************************
 **

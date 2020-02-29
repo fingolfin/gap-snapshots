@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  macfloat.h                      GAP source                  Steve Linton
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares the functions for the macfloat package
 */
@@ -29,24 +29,24 @@ typedef double Double;
 #define MATH(name) name
 #endif
 
-static inline Double VAL_MACFLOAT(Obj obj)
+EXPORT_INLINE Double VAL_MACFLOAT(Obj obj)
 {
     Double val;
     memcpy(&val, CONST_ADDR_OBJ(obj), sizeof(Double));
     return val;
 }
 
-static inline void SET_VAL_MACFLOAT(Obj obj, Double val)
+EXPORT_INLINE void SET_VAL_MACFLOAT(Obj obj, Double val)
 {
     memcpy(ADDR_OBJ(obj), &val, sizeof(Double));
 }
 
-static inline  Int IS_MACFLOAT(Obj obj)
+EXPORT_INLINE  Int IS_MACFLOAT(Obj obj)
 {
     return TNUM_OBJ(obj) == T_MACFLOAT;
 }
 
-extern Obj NEW_MACFLOAT(Double val);
+Obj NEW_MACFLOAT(Double val);
 
 
 /****************************************************************************

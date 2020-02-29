@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Cones">
+<Heading>Cones</Heading>
+
+<Section Label="Chapter_Cones_Section_Creating_cones">
+<Heading>Creating cones</Heading>
+
+<ManSection>
+  <Oper Arg="L" Name="ConeByInequalities" Label="for IsList"/>
+ <Returns>a <C>Cone</C> Object
+</Returns>
+ <Description>
+ The function takes a list of lists <Math>[L_1, L_2, ...]</Math> where each <Math>L_j</Math> represents 
+ an inequality and returns the cone defined by them. 
+ For example the <Math>j</Math>'th entry <Math>L_j = [a_{j1},a_{j2},...,a_{jn}]</Math> corresponds to the inequality
+ <Math>\sum_{i=1}^n a_{ji}x_i \geq 0</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="Eq, Ineq" Name="ConeByEqualitiesAndInequalities" Label="for IsList, IsList"/>
+ <Returns>a <C>Cone</C> Object
+</Returns>
+ <Description>
+ The function takes two lists. The first list is the equalities and the second is 
+ the inequalities and returns the cone defined by them.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="L" Name="Cone" Label="for IsList"/>
+ <Returns>a <C>Cone</C> Object
+</Returns>
+ <Description>
+ The function takes a list in which every entry represents a ray in the ambient vector space 
+ and returns the cone defined by them.              
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="cdd_cone" Name="Cone" Label="for IsCddPolyhedron"/>
+ <Returns>a <C>Cone</C> Object
+</Returns>
+ <Description>
+ This function takes a cone defined in <Emph>CddInterface</Emph> and converts it to a cone in <Emph>NConvex</Emph>
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Cones_Section_Attributes_of_Cones">
+<Heading>Attributes of Cones</Heading>
+
+<ManSection>
+  <Attr Arg="C" Name="DefiningInequalities" Label="for IsCone"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ Returns the list of the defining inequalities of the cone <C>C</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="EqualitiesOfCone" Label="for IsCone"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ Returns the list of the equalities in the defining inequalities of the cone <C>C</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="DualCone" Label="for IsCone"/>
+ <Returns>a cone
+</Returns>
+ <Description>
+ Returns the dual cone of the cone <C>C</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="FacesOfCone" Label="for IsCone"/>
+ <Returns>a list of cones
+</Returns>
+ <Description>
+ Returns the list of all faces of the cone <C>C</C>.                  
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="Facets" Label="for IsCone"/>
+ <Returns>a list of cones
+</Returns>
+ <Description>
+ Returns the list of all facets of the cone <C>C</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="FVector" Label="for IsCone"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ Returns a list whose <Math>i</Math>'th entry is the number of faces of dimension <Math>i</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="RelativeInteriorRay" Label="for IsCone"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ Returns a relative interior point (or ray) in the cone <C>C</C>.                  
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="HilbertBasis" Label="for IsCone"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ Returns the Hilbert basis of the cone <C>C</C>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="HilbertBasisOfDualCone" Label="for IsCone"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ Returns the Hilbert basis of the dual cone of the cone <C>C</C>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="LinealitySpaceGenerators" Label="for IsCone"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ Returns a basis of the lineality space of the cone <C>C</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="ExternalCddCone" Label="for IsCone"/>
+ <Returns>a cdd object
+</Returns>
+ <Description>
+ Converts the cone to a cdd object. The operations of CddInterface can then be applied
+ on this convex object.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="ExternalNmzCone" Label="for IsCone"/>
+ <Returns>an normaliz object
+</Returns>
+ <Description>
+ Converts the cone to a normaliz object. The operations of NormalizInterface can then be applied
+ on this convex object.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="AmbientSpaceDimension" Label="for IsCone"/>
+ <Returns>an integer
+</Returns>
+ <Description>
+ The dimension of the ambient space of the cone, i.e., the space that contains the cone.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="LatticePointsGenerators" Label="for IsCone"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ See <C>LatticePointsGenerators</C> for polyhedrons. Please note that any cone is a polyhedron.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="GridGeneratedByCone" Label="for IsCone"/>
+ <Returns>a homalg module
+</Returns>
+ <Description>
+ Returns the homalg <Math>\mathbb{Z}</Math>-module that is generated by the ray generators of the cone.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="FactorGrid" Label="for IsCone"/>
+ <Returns>a homalg module
+</Returns>
+ <Description>
+ Returns the homalg <Math>\mathbb{Z}</Math>-module that is presented by the matrix whose raws are the ray generators of the cone.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="FactorGridMorphism" Label="for IsCone"/>
+ <Returns>a homalg morphism
+</Returns>
+ <Description>
+ Returns an epimorphism from a free <Math>\mathbb{Z}</Math>-module to <C>FactorGrid(C)</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="C" Name="GridGeneratedByOrthogonalCone" Label="for IsCone"/>
+ <Returns>a homalg module
+</Returns>
+ <Description>
+ Returns the homalg <Math>\mathbb{Z}</Math>-module that is by generated the ray generators of the orthogonal cone on <C>C</C>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Cones_Section_Properties_of_Cones">
+<Heading>Properties of Cones</Heading>
+
+<ManSection>
+  <Prop Arg="C" Name="IsRegularCone" Label="for IsCone"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+ Returns if the cone <C>C</C> is regular or not.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="C" Name="IsRay" Label="for IsCone"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+ Returns if the cone <C>C</C> is ray or not.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="C" Name="IsZero" Label="for IsCone"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+ Returns whether the cone is the zero cone or not.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Cones_Section_Operations_on_cones">
+<Heading>Operations on cones</Heading>
+
+<ManSection>
+  <Oper Arg="C, m" Name="FourierProjection" Label="for IsCone, IsInt"/>
+ <Returns>a cone
+</Returns>
+ <Description>
+ Returns the projection of the cone on the space (O, <Math>x_1,...,x_{m-1}, x_{m+1},...,x_n</Math> ).
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C1, C2" Name="IntersectionOfCones" Label="for IsCone, IsCone"/>
+ <Returns>a cone
+</Returns>
+ <Description>
+ Returns the intersection.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="L" Name="IntersectionOfCones" Label="for IsList"/>
+ <Returns>a cone
+</Returns>
+ <Description>
+ The input is a list of cones and the output is their intersection.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C1, C2" Name="Contains" Label="for IsCone, IsCone"/>
+ <Returns>a true or false
+</Returns>
+ <Description>
+ Returns if the cone <C>C1</C> contains the cone <C>C2</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="L, C" Name="IsRelativeInteriorRay" Label="for IsList, IsCone"/>
+ <Returns>a true or false
+</Returns>
+ <Description>
+ Checks whether the input point (or ray) <C>L</C> is in the relative interior of the cone <C>C</C>.
+ </Description>
+</ManSection>
+
+
+<#Include Label="example1">
+
+<ManSection>
+  <Oper Arg="C" Name="NonReducedInequalities" Label="for IsCone"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ It returns a list of inequalities that define the cone.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+</Chapter>
+

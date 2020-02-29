@@ -1,10 +1,12 @@
 #############################################################################
 ##
-#W  clashom.gd                  GAP library                  Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains functions that compute the conjugacy classes of a
 ##  finite group by homomorphic images.
@@ -49,7 +51,3 @@ DeclareGlobalFunction("ConjugacyClassesFittingFreeGroup");
 ##  computes the classes of a group <G> by lifting the classes of G/Rad(G)
 ##  using affine actions. It returns a list of conjugacy classes.
 DeclareGlobalFunction("ConjugacyClassesViaRadical");
-
-#############################################################################
-##
-#E  clashom.gd . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

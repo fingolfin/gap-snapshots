@@ -1,0 +1,208 @@
+<Chapter Label = "Installing Semigroups">
+  <Heading>Installing &Semigroups;</Heading>
+
+  <Section Label = "For those in a hurry">
+    <Heading>For those in a hurry</Heading>
+    In this section we give a brief description of how to start using
+    &Semigroups;.<P/>
+
+    It is assumed that you have a working copy of &GAP; with version number
+    &GAPVERS; or higher. The most up-to-date version of &GAP; and instructions
+    on how to install it can be obtained from the main &GAP; webpage
+    <URL>http://www.gap-system.org</URL>.<P/>
+
+    The following is a summary of the steps that should lead to a
+    successful installation of &Semigroups;:
+
+    <List>
+
+      <Item>
+        ensure that the &IO; package version &IOVERS; or higher is available.
+        &IO; must be compiled before &Semigroups; can be loaded.
+      </Item>
+
+      <Item>
+        ensure that the &Orb; package version &ORBVERS; or higher is available.
+        &Orb; and &Semigroups; both perform better if &Orb; is compiled.
+      </Item>
+
+      <Item>
+        ensure that the &Digraphs; package version &DIGRAPHSVERS; or higher is
+        available.  &Digraphs; must be compiled before &Semigroups; can be
+        loaded.
+      </Item>
+
+      <Item>
+        ensure that the &genss; package version &GENSSVERS; or higher is
+        available.
+      </Item>
+
+      <Item>
+        download the package archive <F>&ARCHIVENAME;.tar.gz</F> from
+        <URL Text = "the Semigroups package webpage">https://gap-packages.github.io/Semigroups</URL>.
+      </Item>
+
+      <Item>
+        unzip and untar the file, this should create a directory called
+        <F>&ARCHIVENAME;</F>.
+      </Item>
+
+      <Item>
+        locate the <F>pkg</F> directory of your &GAP; directory, which contains
+        the directories <F>lib</F>, <F>doc</F> and so on. Move the directory
+        <F>&ARCHIVENAME;</F> into the <F>pkg</F> directory.
+      </Item>
+
+      <Item>
+        from version 3.0.0, it is necessary to compile the &Semigroups; package.
+        &Semigroups; uses the 
+        <URL Text =
+          "libsemigroups">https://libsemigroups.github.io/libsemigroups/</URL>
+        C++ library, which requires a compiler
+        implementing the C++11 standard. 
+        Inside the <F>pkg/&ARCHIVENAME;</F> directory, type
+        <Listing>
+<![CDATA[./configure
+make]]></Listing>
+        Further information about this step can be found in Section
+        <Ref Sect = "Compiling the kernel module"/>.
+      </Item>
+
+      <Item>
+        start &GAP; in the usual way (i.e. type <C>gap</C> at the command line).
+      </Item>
+
+      <Item>
+        type <C>LoadPackage("semigroups");</C>
+      </Item>
+    </List>
+
+    <E><B>Please note that</B> from version 3.0.0: &Semigroups; can only be
+      loaded if it has been compiled.</E><P/>
+
+    If you want to check that the package is working correctly, you
+    should run some of the tests described in Section
+    <Ref Sect = "Testing your installation"/>.
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label = "Package dependencies">
+    <Heading>Package dependencies</Heading>
+
+    <!--********************************************************************-->
+
+    The &Semigroups; package is written in &GAP; and C++ and requires the
+    &Orb;, &IO;, &Digraphs; and &genss; packages. The &Orb; package is used to
+    efficiently compute components of actions, which underpin many of the
+    features of &Semigroups;.  The &IO; package is used to read and write
+    elements of a semigroup to a file.  The
+    &genss; package is used in a non-deterministic version of the operation <Ref
+      Oper = "Normalizer" Label = "for a perm group, semigroup, record"/> and in
+    calculating the stabiliser of a Rees 0-matrix semigroup's matrix. 
+    The &Digraphs; package is used in a variety of ways in the &Semigroups;
+    package, in particular, to apply standard graph theoretic algorithms to
+    certain data structures. 
+    <P/>
+    <!-- TODO Update the sentednce about Digraphs, when it is used more widely
+         in Semigroups-->
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label = "Compiling the kernel module">
+    <Heading>Compiling the kernel module</Heading>
+    As of version 3.0.0, the &Semigroups; package has a &GAP; kernel module
+    written in C/C++ and this must be compiled.  The kernel module contains
+    low-level functions relating to the enumeration of certain types of
+    semigroups, and it is not possible to use the &Semigroups; package without
+    compiling it.
+    <P/>
+
+    To compile the kernel component inside the <F>pkg/&ARCHIVENAME;</F>
+    directory, type
+<Listing>
+<![CDATA[
+./configure
+make]]></Listing>
+    <P/>
+
+    If you are using GCC to compile &Semigroups;, then version 5.0 or higher is
+    required. Trying to compile &Semigroups; with an earlier version of GCC
+    will result in an error at compile time. &Semigroups; supports GCC version
+    5.0 or higher, and clang version 5.0 or higher.<P/>
+
+    If you installed the package in another <F>pkg</F> directory other than the
+    standard <F>pkg</F> directory in your &GAP; installation, then you have to
+    do two things. Firstly during compilation you have to use the option
+    <C>--with-gaproot=PATH</C> of the <C>configure</C> script where <C>PATH</C>
+    is a path to the main &GAP; root directory (if not given the default
+    <C>../..</C> is assumed).<P/>
+
+    If you installed &GAP; on several architectures, you must execute the
+    configure/make step for each of the architectures. You can either do this
+    immediately after configuring and compiling &GAP; itself on this
+    architecture, or alternatively set the environment variable
+    <C>CONFIGNAME</C> to the name of the configuration you used when compiling
+    &GAP; before running <C>./configure</C>.  Note however that your compiler
+    choice and flags (environment variables <C>CC</C> and <C>CFLAGS</C>) need
+    to be chosen to match the setup of the original &GAP; compilation. For
+    example you have to specify 32-bit or 64-bit mode correctly!
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label = "Rebuilding the documentation">
+    <Heading>Rebuilding the documentation</Heading>
+
+    The &Semigroups; package comes complete with pdf, html, and text versions
+    of the documentation. However, you might find it necessary, at some point,
+    to rebuild the documentation. To rebuild the documentation use the <Ref
+      Func = "SemigroupsMakeDoc"/>.
+
+    <#Include Label = "SemigroupsMakeDoc">
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label = "Testing your installation">
+    <Heading>Testing your installation</Heading>
+
+    In this section we describe how to test that &Semigroups; is working as
+    intended.  To quickly test that &Semigroups; is installed correctly use
+    <Ref Func = "SemigroupsTestInstall"/> - this will take a few seconds.
+    For more extensive tests use <Ref Func = "SemigroupsTestStandard"/> - this
+    may take several minutes.  Finally, for lengthy benchmarking tests use
+    <Ref Func = "SemigroupsTestExtreme"/> - this may take more than half an
+    hour. <P/>
+
+    If something goes wrong, then please review the instructions in Section
+    <Ref Sect = "For those in a hurry"/> and ensure that &Semigroups; has been
+    properly installed.  If you continue having problems, please use the 
+    <URL Text = 
+      "issue tracker">https://github.com/gap-packages/Semigroups/issues</URL> 
+    to report the issues you are having.
+
+    <#Include Label = "SemigroupsTestInstall">
+    <#Include Label = "SemigroupsTestStandard">
+    <#Include Label = "SemigroupsTestExtreme">
+    <#Include Label = "SemigroupsTestAll">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+    <Heading>More information during a computation</Heading>
+    <#Include Label = "InfoSemigroups">
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+</Chapter>

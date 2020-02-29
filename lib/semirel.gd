@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  semirel.gd                  GAP library                   James D Mitchell
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include James D Mitchell.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the declarations for equivalence relations on
 ##  semigroups. Of particular interest are Green's relations,
@@ -200,24 +201,34 @@ DeclareSynonymAttr("AssociatedSemigroup", ParentAttr);
 
 #############################################################################
 ##
-#A  GreensRClasses(<semigroup>)
-#A  GreensLClasses(<semigroup>)
-#A  GreensJClasses(<semigroup>)
-#A  GreensDClasses(<semigroup>)
-#A  GreensHClasses(<semigroup>)
+#A  GreensRClasses(<S>)
+#A  GreensLClasses(<S>)
+#A  GreensHClasses(<S>)
+#A  GreensJClasses(<S>)
+#A  GreensDClasses(<S>)
 ##
 ##  <#GAPDoc Label="GreensRClasses">
 ##  <ManSection>
-##  <Attr Name="GreensRClasses" Arg='semigroup'/>
-##  <Attr Name="GreensLClasses" Arg='semigroup'/>
-##  <Attr Name="GreensJClasses" Arg='semigroup'/>
-##  <Attr Name="GreensDClasses" Arg='semigroup'/>
-##  <Attr Name="GreensHClasses" Arg='semigroup'/>
+##  <Attr Name="GreensRClasses" Arg="S"/>
+##  <Attr Name="GreensLClasses" Arg="S"/>
+##  <Attr Name="GreensHClasses" Arg="S"/>
+##  <Attr Name="GreensJClasses" Arg="S"/>
+##  <Attr Name="GreensDClasses" Arg="S"/>
 ##
 ##  <Description>
-##  return the <M>R</M>, <M>L</M>, <M>J</M>, <M>H</M>, or <M>D</M>
-##  Green's classes, respectively for semigroup <A>semigroup</A>.
-##  <Ref Func="EquivalenceClasses" Label="attribute"/> for a Green's relation
+##  If <A>S</A> is a semigroup, then these attributes return the Green's
+#   <M>R</M>-, <M>L</M>-, <M>H</M>-, <M>J</M>-, or
+##  <M>D</M>-classes, respectively for the semigroup <A>S</A>.
+##  <P/>
+##  Additionally, if <A>S</A> is a Green's <M>D</M>-class of a semigroup, then
+##  <C>GreensRClasses</C> and <C>GreensLClasses</C> return the Green's <M>R</M>-
+##  or <M>L-</M>classes of the semigroup, respectively, contained in the
+##  <M>D</M>-class <A>S</A>;
+##  if <A>S</A> is a Green's <M>D</M>-, <M>R</M>-, or <M>L</M>-class of a
+##  semigroup, then <C>GreensHClasses</C> returns the Green's <M>H</M>-classes
+##  of the semigroup contained in the Green's class <A>S</A>.
+##  <P/>
+##  <Ref Attr="EquivalenceClasses" Label="attribute"/> for a Green's relation
 ##  lead to one of these functions.
 ##  </Description>
 ##  </ManSection>
@@ -266,7 +277,7 @@ DeclareOperation("IsGreensLessThanOrEqual", [IsGreensClass, IsGreensClass]);
 ##
 ##  <Description>
 ##  are attributes reflecting the natural ordering over the various Green's
-##  classes. <Ref Func="RClassOfHClass"/> and <Ref Func="LClassOfHClass"/>
+##  classes. <Ref Attr="RClassOfHClass"/> and <Ref Attr="LClassOfHClass"/>
 ##  return the <M>R</M> and <M>L</M> classes, respectively,
 ##  in which an <M>H</M> class is contained.
 ##  </Description>

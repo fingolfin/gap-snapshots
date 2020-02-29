@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/power.hpp
+
+/Users/jdm/libsemigroups/extern/HPCombi/examples/stringmonoid.cpp
+power.hpp
+/Users/jdm/libsemigroups/extern/HPCombi/examples/power.hpp
+cassert
+-
+string
+-
+

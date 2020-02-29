@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  rwsdt.gi                   GAP Library                  Wolfgang Merkwitz
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Wolfgang Merkwitz.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file implements a deep thought collector as representation of a 
 ##  polycyclic collector with power/conjugate presentation.
@@ -224,9 +225,9 @@ function( dtrws, orders )
     dtrws![PC_EXPONENTS] := orders;
     if  Length(orders) < dtrws![PC_NUMBER_OF_GENERATORS]  or  
         not IsHomogeneousList( orders )                        then
-	SetFeatureObj( dtrws, IsFinite, false );
+	SetIsFinite( dtrws, false );
     else
-	SetFeatureObj( dtrws, IsFinite, true );
+	SetIsFinite( dtrws, true );
     fi;
 end   );
 
@@ -258,14 +259,14 @@ function( dtrws, i, ord )
     if  ord = infinity  or  ord = 0  then
 	if  IsBound( dtrws![PC_EXPONENTS][i] )  then
 	    Unbind( dtrws![PC_EXPONENTS][i] );
-	    SetFeatureObj( dtrws, IsFinite, false );
+	    SetIsFinite( dtrws, false );
 	fi;
     else
 	dtrws![PC_EXPONENTS][i] := ord;
 	if  0 in RelativeOrders( dtrws )  then
-	    SetFeatureObj( dtrws, IsFinite, false );
+	    SetIsFinite( dtrws, false );
 	else
-	    SetFeatureObj( dtrws, IsFinite, true );
+	    SetIsFinite( dtrws, true );
 	fi;
     fi;
 end   );
@@ -584,7 +585,7 @@ function( dtrws )
     # reduce the coefficients of the deep thought polynomials
     ReduceCoefficientsOfRws(dtrws);
 
-    SetFeatureObj( dtrws, IsUpToDatePolycyclicCollector, true );
+    SetFilterObj( dtrws, IsUpToDatePolycyclicCollector );
 
 end );
 
@@ -832,8 +833,3 @@ function(dtrws, l)
     od;
     return InfBits_AssocWord( dtrws![PC_DEFAULT_TYPE], res );
 end  );
-
-#############################################################################
-##
-#E  rwsdt.gi  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##

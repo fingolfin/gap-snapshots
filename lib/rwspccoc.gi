@@ -1,12 +1,14 @@
 #############################################################################
 ##
-#W  rwspccoc.gi                 GAP Library                     Werner Nickel
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Werner Nickel.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
-##  This files implements a combinatorial collector as an extension of the
+##  This file implements a combinatorial collector as an extension of the
 ##  representation of a single collector as defined in rwspcsng.gi.
 ##
 
@@ -166,7 +168,7 @@ function( cc )
     CombiCollector_MakeAvector2(cc);
 
     # 'MakeInverses' is very careful
-    SetFeatureObj( cc, IsUpToDatePolycyclicCollector, true );
+    SetFilterObj( cc, IsUpToDatePolycyclicCollector );
 
     # construct the inverses
     SingleCollector_MakeInverses(cc);
@@ -313,7 +315,7 @@ function( efam, gens, orders )
     cc![SCP_WEIGHTS] := [1..cc![SCP_NUMBER_RWS_GENERATORS]] * 0;
     cc![SCP_CLASS]   := 666666;
 
-    SetFeatureObj( cc, IsCombinatorialCollectorRep, true );
+    SetFilterObj( cc, IsCombinatorialCollectorRep );
 
     # and return
     return cc;
@@ -345,7 +347,7 @@ function( comcol )
     fi;
 
     # it's a combinatorial collector now
-    SetFeatureObj( copy, IsCombinatorialCollectorRep, true );
+    SetFilterObj( copy, IsCombinatorialCollectorRep );
 
     return copy;
 

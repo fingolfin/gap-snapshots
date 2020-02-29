@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  cyclotom.gi                 GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file is being maintained by Thomas Breuer.
 ##  Please do not make any changes without consulting him.
@@ -157,7 +158,7 @@ InstallMethod( ImaginaryPart,
 ##  
 ##  <Description>
 ##  The external representation of a cyclotomic <A>cyc</A> with conductor
-##  <M>n</M> (see <Ref Func="Conductor" Label="for a cyclotomic"/> is
+##  <M>n</M> (see <Ref Attr="Conductor" Label="for a cyclotomic"/> is
 ##  the list returned by <Ref Func="CoeffsCyc"/>,
 ##  called with <A>cyc</A> and <M>n</M>.
 ##  <P/>
@@ -1940,7 +1941,7 @@ InstallMethod( Factors,
     fi;
 
     # Store the factorization.
-    Assert( 2, Product( factors ) = pol );
+    Assert( 2, Product( factors ) = lc * pol * IndeterminateOfUnivariateRationalFunction( pol )^val );
     StoreFactorsPol( coeffring, pol, factors );
 
     # Return the factorization.
@@ -2071,9 +2072,3 @@ function (A,B)
   if i = fail then TryNextMethod(); fi;
   return CompareCyclotomicCollectionHelper_Semirings[i];
 end );
-
-
-#############################################################################
-##
-#E
-

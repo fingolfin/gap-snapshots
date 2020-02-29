@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  numtheor.gd                 GAP library                  Martin Schönert
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Martin Schönert.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file declares operations for integer primes.
 
@@ -13,8 +14,8 @@
 ##  &GAP; provides a couple of elementary number theoretic functions.
 ##  Most of these deal with the group of integers coprime to <M>m</M>,
 ##  called the <E>prime residue group</E>.
-##  The order of this group is <M>\phi(m)</M> (see&nbsp;<Ref Func="Phi"/>),
-##  and <M>\lambda(m)</M> (see&nbsp;<Ref Func="Lambda"/>) is its exponent.
+##  The order of this group is <M>\phi(m)</M> (see&nbsp;<Ref Oper="Phi"/>),
+##  and <M>\lambda(m)</M> (see&nbsp;<Ref Oper="Lambda"/>) is its exponent.
 ##  This group is cyclic if and only if <M>m</M> is 2, 4, 
 ##  an odd prime power <M>p^n</M>, or twice an odd prime power <M>2 p^n</M>.
 ##  In this case the generators  of the group, i.e., elements of order
@@ -130,7 +131,7 @@ DeclareOperation( "Phi", [ IsObject ] );
 ##  <M>a</M> relatively prime to <A>m</A> we have <M>a^l \equiv 1 \pmod{<A>m</A>}</M>.
 ##  Fermat's theorem asserts
 ##  <M>a^{{\phi(<A>m</A>)}} \equiv 1 \pmod{<A>m</A>}</M>;
-##  thus <M>\lambda(<A>m</A>)</M> divides <M>\phi(<A>m</A>)</M> (see&nbsp;<Ref Func="Phi"/>).
+##  thus <M>\lambda(<A>m</A>)</M> divides <M>\phi(<A>m</A>)</M> (see&nbsp;<Ref Oper="Phi"/>).
 ##  <P/>
 ##  Carmichael's theorem states that <M>\lambda</M> can be computed as follows:
 ##  <M>\lambda(2) = 1</M>, <M>\lambda(4) = 2</M> and
@@ -593,10 +594,10 @@ DeclareGlobalFunction( "DoLogModRho" );
 ##  <Oper Name="Sigma" Arg='n'/>
 ##
 ##  <Description>
-##  <Ref Func="Sigma"/> returns the sum of the positive divisors of the
+##  <Ref Oper="Sigma"/> returns the sum of the positive divisors of the
 ##  nonzero integer <A>n</A>.
 ##  <P/>
-##  <Ref Func="Sigma"/> is a multiplicative arithmetic function, i.e.,
+##  <Ref Oper="Sigma"/> is a multiplicative arithmetic function, i.e.,
 ##  if <M>n</M> and <M>m</M> are relatively prime we have that
 ##  <M>\sigma(n \cdot m) = \sigma(n) \sigma(m)</M>.
 ##  <P/>
@@ -615,12 +616,12 @@ DeclareGlobalFunction( "DoLogModRho" );
 ##  9941, 11213, 19937, 21701, 23209, 44497, 86243, 110503, 132049, 216091,
 ##  756839, 859433, 1257787, 1398269, 2976221, 3021377, 6972593, 13466917,
 ##  20996011, 24036583 and 25964951. Please find more up to date information
-##  about Mersenne primes at <URL>http://www.mersenne.org</URL>.
+##  about Mersenne primes at <URL>https://www.mersenne.org</URL>.
 ##  It is not known whether odd perfect integers exist,
 ##  however&nbsp;<Cite Key="BC89"/> show that any such integer must have
 ##  at least 300 decimal digits.
 ##  <P/>
-##  <Ref Func="Sigma"/> usually spends most of its time factoring <A>n</A>
+##  <Ref Oper="Sigma"/> usually spends most of its time factoring <A>n</A>
 ##  (see&nbsp;<Ref Func="FactorsInt"/>).
 ##  <P/>
 ##  <Example><![CDATA[
@@ -647,16 +648,16 @@ DeclareOperation( "Sigma", [ IsObject ] );
 ##  <Oper Name="Tau" Arg='n'/>
 ##
 ##  <Description>
-##  <Ref Func="Tau"/> returns the number of the positive divisors of the
+##  <Ref Oper="Tau"/> returns the number of the positive divisors of the
 ##  nonzero integer <A>n</A>.
 ##  <P/>
-##  <Ref Func="Tau"/> is a multiplicative arithmetic function, i.e.,
+##  <Ref Oper="Tau"/> is a multiplicative arithmetic function, i.e.,
 ##  if <M>n</M> and  <M>m</M> are relative prime we have
 ##  <M>\tau(n \cdot m) = \tau(n) \tau(m)</M>.
 ##  Together with the formula <M>\tau(p^k) = k+1</M> this allows us
 ##  to compute <M>\tau(<A>n</A>)</M>.
 ##  <P/>
-##  <Ref Func="Tau"/> usually spends most of its time factoring <A>n</A>
+##  <Ref Oper="Tau"/> usually spends most of its time factoring <A>n</A>
 ##  (see&nbsp;<Ref Func="FactorsInt"/>).
 ##  <Example><![CDATA[
 ##  gap> Tau( 1 );
@@ -700,7 +701,7 @@ DeclareOperation( "Tau", [ IsObject ] );
 ##  As a special case we have
 ##  <M>\phi(n) = \sum_{{d \mid n}} \mu(d) n/d</M>
 ##  since <M>n = \sum_{{d \mid n}} \phi(d)</M>
-##  (see&nbsp;<Ref Func="Phi"/>).
+##  (see&nbsp;<Ref Oper="Phi"/>).
 ##  <P/>
 ##  <Ref Func="MoebiusMu"/> usually spends all of its time factoring <A>n</A>
 ##  (see <Ref Func="FactorsInt"/>).
@@ -810,9 +811,3 @@ DeclareGlobalFunction( "TwoSquares" );
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "PValuation" );
-
-
-#############################################################################
-##
-#E
-

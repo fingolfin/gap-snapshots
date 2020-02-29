@@ -39,8 +39,6 @@
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap87_mj.html#X86CCA2B384A74856">87.2-4 <span class="Heading">Functions for meeting ordered partitions</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap87_mj.html#X7E8A4C947C33D5F6">87.2-5 <span class="Heading">Avoiding multiplication of permutations</span></a>
-</span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap87_mj.html#X7CA84E967B053C2C">87.3 <span class="Heading">Stabilizer Chains for Automorphisms Acting on Enumerators</span></a>
 </span>
@@ -401,42 +399,6 @@ end;
 
 <p>Note that <span class="SimpleMath">\(P.(1,3,6) = Q\)</span>.</p>
 
-<p><a id="X7E8A4C947C33D5F6" name="X7E8A4C947C33D5F6"></a></p>
-
-<h5>87.2-5 <span class="Heading">Avoiding multiplication of permutations</span></h5>
-
-<p>In the description of the last subsections, the backtrack algorithm constructs an element <span class="SimpleMath">\(c \in G\)</span> mapping the base points to the prescribed images and finally tests the property in question for that element. During the construction, <span class="SimpleMath">\(c\)</span> is obtained as a product of transversal elements from the stabilizer chain for <span class="SimpleMath">\(G\)</span>, and so multiplications of permutations are required for every <span class="SimpleMath">\(c\)</span> submitted to the test, even if the test fails (i.e., in our centralizer example, if <span class="SimpleMath">\(g\)</span><code class="code">^</code><span class="SimpleMath">\(c\)</span><code class="code">&lt;&gt;</code><span class="SimpleMath">\(g\)</span>). Even if the construction of <span class="SimpleMath">\(c\)</span> stops before images for all base points have been chosen, because a refinement was unsuccessful, several multiplications will already have been performed by (explicit or implicit) calls of <code class="code">ProcessFixpoint</code>, and, actually, the general backtrack procedure implemented in <strong class="pkg">GAP</strong> avoids this.</p>
-
-<p>For this purpose, <strong class="pkg">GAP</strong> does not actually multiply the permutations but rather stores all the factors of the product in a list. Specifically, instead of carrying out the multiplication in <span class="SimpleMath">\(c \mapsto c'.c\)</span> mentioned in the comment to line 5 of the above program — where <span class="SimpleMath">\(c' \in G_{{a_1 \ldots a_{{i+1}}}}\)</span> is a product of factorized inverse transversal elements, see <a href="chap43_mj.html#X81D7FCE47AC7F942"><span class="RefLink">43.9</span></a> — <strong class="pkg">GAP</strong> appends the list of these factorized inverse transversal elements (giving <span class="SimpleMath">\(c'\)</span>) to the list of factors already collected for <span class="SimpleMath">\(c\)</span>. Here <span class="SimpleMath">\(c'\)</span> is multiplied from the left and is itself a product of <em>inverses</em> of strong generators of <span class="SimpleMath">\(G\)</span>, but <strong class="pkg">GAP</strong> simply spares itself all the work of inverting permutations and stores only a "list of inverses", whose product is then <span class="SimpleMath">\((c'.c)^{{-1}}\)</span> (which is the new value of <span class="SimpleMath">\(c^{{-1}}\)</span>). The "list of inverses" is extended this way whenever <code class="code">ProcessFixpoint</code> is called to improve <span class="SimpleMath">\(c\)</span>.</p>
-
-<p>The product has to be multiplied out only when the property is finally tested for the element <span class="SimpleMath">\(c\)</span>. But it is often possible to delay the multiplication even further, namely until after the test, so that no multiplication is required in the case of an unsuccessful test. Then the test itself must be carried out with the factorized version of the element <span class="SimpleMath">\(c\)</span>. For this purpose, <code class="code">PartitionBacktrack</code> can be passed its second argument (the property in question) in a different way, not as a single <strong class="pkg">GAP</strong> function, but as a list like in lines 2–4 of the following alternative excerpt from the code for <code class="func">Centralizer</code> (<a href="chap35_mj.html#X7DE33AFC823C7873"><span class="RefLink">35.4-4</span></a>).</p>
-
-
-<div class="example"><pre>
-return PartitionBacktrack( G,
-  [ g, g,
-  OnPoints,
-  c -&gt; c!.lftObj = c!.rgtObj ],
-  false, R, [ Pi_0, g ], L, R );
-</pre></div>
-
-<p>The test for <span class="SimpleMath">\(c\)</span> to have the property in question is of the form <span class="SimpleMath">\(opr( left, c ) = right\)</span> where <span class="SimpleMath">\(opr\)</span> is an operation function as explained in <a href="chap41_mj.html#X7FD3D2D2788709B7"><span class="RefLink">41.12</span></a>. In other words, <span class="SimpleMath">\(c\)</span> passes the test if and only if it maps a "left object" to a "right object" under a certain operation. In the centralizer example, we have <span class="SimpleMath">\(opr\)</span><code class="code"> = OnPoints</code> and <span class="SimpleMath">\(left = right = g\)</span>, but in a conjugacy test, we would have <span class="SimpleMath">\(right = h\)</span>.</p>
-
-
-<dl>
-<dt><strong class="Mark">2.</strong></dt>
-<dd><p>Two first two entries (here <span class="SimpleMath">\(g\)</span> and <span class="SimpleMath">\(g\)</span>) are the values of <span class="SimpleMath">\(left\)</span> and <span class="SimpleMath">\(right\)</span>.</p>
-
-</dd>
-<dt><strong class="Mark">3.</strong></dt>
-<dd><p>The third entry (here <code class="func">OnPoints</code> (<a href="chap41_mj.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>)) is the operation <span class="SimpleMath">\(opr\)</span>.</p>
-
-</dd>
-<dt><strong class="Mark">4.</strong></dt>
-<dd><p>The fourth entry is the test to be performed upon the mapped left object <span class="SimpleMath">\(left\)</span> and preimage of the right object <span class="SimpleMath">\(opr( right, c\)</span><code class="code">^-1</code><span class="SimpleMath">\( )\)</span>. Here <strong class="pkg">GAP</strong> operates with the inverse of <span class="SimpleMath">\(c\)</span> because this is the product of the permutations stored in the "list of inverses". The preimage of <span class="SimpleMath">\(right\)</span> under <span class="SimpleMath">\(c\)</span> is then calculated by mapping <span class="SimpleMath">\(right\)</span> with the factors of <span class="SimpleMath">\(c^{{-1}}\)</span> one by one, without the need to multiply these factors. This mapping of <span class="SimpleMath">\(right\)</span> is automatically done by the <code class="code">ProcessFixpoint</code> function whenever <span class="SimpleMath">\(c\)</span> is extended, the current value of <span class="SimpleMath">\(right\)</span> is always stored in <span class="SimpleMath">\(c\)</span><code class="code">!.rgtObj</code>. When the test given by the fourth entry is finally performed, the element <span class="SimpleMath">\(c\)</span> has two components <span class="SimpleMath">\(c\)</span><code class="code">!.lftObj</code><span class="SimpleMath">\( = left\)</span> and <span class="SimpleMath">\(c\)</span><code class="code">!.rgtObj</code><span class="SimpleMath">\( = opr( right, c\)</span><code class="code">^-1</code><span class="SimpleMath">\( )\)</span>, which must be used to express the desired relation as a function of <span class="SimpleMath">\(c\)</span>. In our centralizer example, we simply have to test whether they are equal.</p>
-
-</dd>
-</dl>
 <p><a id="X7CA84E967B053C2C" name="X7CA84E967B053C2C"></a></p>
 
 <h4>87.3 <span class="Heading">Stabilizer Chains for Automorphisms Acting on Enumerators</span></h4>

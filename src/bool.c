@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  bool.c                      GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the functions for the boolean package.
 **
@@ -71,10 +71,9 @@ Obj Undefined;
 **
 **  'TypeBool' is the function in 'TypeObjFuncs' for boolean values.
 */
-Obj TYPE_BOOL;
+static Obj TYPE_BOOL;
 
-Obj TypeBool (
-    Obj                 val )
+static Obj TypeBool(Obj val)
 {
     return TYPE_BOOL;
 }
@@ -86,8 +85,7 @@ Obj TypeBool (
 **
 **  'PrintBool' prints the boolean value <bool>.
 */
-void PrintBool (
-    Obj                 bool )
+static void PrintBool(Obj bool)
 {
     if ( bool == True ) {
         Pr( "true", 0L, 0L );
@@ -111,9 +109,7 @@ void PrintBool (
 **  'EqBool' returns '1' if the two boolean values <boolL> and <boolR> are
 **  equal, and '0' otherwise.
 */
-Int EqBool (
-    Obj                 boolL,
-    Obj                 boolR )
+static Int EqBool(Obj boolL, Obj boolR)
 {
     return boolL == boolR;
 }
@@ -125,9 +121,7 @@ Int EqBool (
 **
 **  The ordering of Booleans is true < false < fail.
 */
-Int LtBool (
-    Obj                 boolL,
-    Obj                 boolR )
+static Int LtBool(Obj boolL, Obj boolR)
 {
     if (boolL == True)
         return boolR != True;
@@ -148,11 +142,9 @@ Int LtBool (
 **  'IsBool'  returns  'true'  if  <obj>  is   a boolean  value  and  'false'
 **  otherwise.
 */
-Obj IsBoolFilt;
+static Obj IsBoolFilt;
 
-Obj IsBoolHandler (
-    Obj                 self,
-    Obj                 obj )
+static Obj FiltIS_BOOL(Obj self, Obj obj)
 {
     /* return 'true' if <obj> is a boolean and 'false' otherwise           */
     if ( TNUM_OBJ(obj) == T_BOOL ) {
@@ -177,9 +169,7 @@ Obj IsBoolHandler (
 **  Those  functions are  useful for  dispatcher  tables if the types already
 **  determine the outcome.
 */
-Obj ReturnTrue1 (
-    Obj                 self,
-    Obj                 val1 )
+static Obj ReturnTrue1(Obj self, Obj val1)
 {
     return True;
 }
@@ -189,10 +179,7 @@ Obj ReturnTrue1 (
 **
 *F  ReturnTrue2( <val1>, <val2> ) . . . . . . . . . . . . . .  return  'True'
 */
-Obj ReturnTrue2 (
-    Obj                 self,
-    Obj                 val1,
-    Obj                 val2 )
+static Obj ReturnTrue2(Obj self, Obj val1, Obj val2)
 {
     return True;
 }
@@ -202,11 +189,7 @@ Obj ReturnTrue2 (
 **
 *F  ReturnTrue3( <val1>, <val2>, <val3> ) . . . . . . . . . .  return  'True'
 */
-Obj ReturnTrue3 (
-    Obj                 self,
-    Obj                 val1,
-    Obj                 val2,
-    Obj                 val3 )
+static Obj ReturnTrue3(Obj self, Obj val1, Obj val2, Obj val3)
 {
     return True;
 }
@@ -218,9 +201,7 @@ Obj ReturnTrue3 (
 **
 **  'ReturnFalse?' likewise return 'False'.
 */
-Obj ReturnFalse1 (
-    Obj                 self,
-    Obj                 val1 )
+static Obj ReturnFalse1(Obj self, Obj val1)
 {
     return False;
 }
@@ -230,10 +211,7 @@ Obj ReturnFalse1 (
 **
 *F  ReturnFalse2( <val1>, <val2> )  . . . . . . . . . . . . .  return 'False'
 */
-Obj ReturnFalse2 (
-    Obj                 self,
-    Obj                 val1,
-    Obj                 val2 )
+static Obj ReturnFalse2(Obj self, Obj val1, Obj val2)
 {
     return False;
 }
@@ -243,11 +221,7 @@ Obj ReturnFalse2 (
 **
 *F  ReturnFalse3( <val1>, <val2>, <val3> )  . . . . . . . . .  return 'False'
 */
-Obj ReturnFalse3 (
-    Obj                 self,
-    Obj                 val1,
-    Obj                 val2,
-    Obj                 val3 )
+static Obj ReturnFalse3(Obj self, Obj val1, Obj val2, Obj val3)
 {
     return False;
 }
@@ -259,9 +233,7 @@ Obj ReturnFalse3 (
 **
 **  'ReturnFail?' likewise return 'Fail'.
 */
-Obj ReturnFail1 (
-    Obj                 self,
-    Obj                 val1 )
+static Obj ReturnFail1(Obj self, Obj val1)
 {
     return Fail;
 }
@@ -271,10 +243,7 @@ Obj ReturnFail1 (
 **
 *F  ReturnFail2( <val1>, <val2> ) . . . . . . . . . . . . . .  return  'Fail'
 */
-Obj ReturnFail2 (
-    Obj                 self,
-    Obj                 val1,
-    Obj                 val2 )
+static Obj ReturnFail2(Obj self, Obj val1, Obj val2)
 {
     return Fail;
 }
@@ -284,11 +253,7 @@ Obj ReturnFail2 (
 **
 *F  ReturnFail3( <val1>, <val2>, <val3> ) . . . . . . . . . .  return  'Fail'
 */
-Obj ReturnFail3 (
-    Obj                 self,
-    Obj                 val1,
-    Obj                 val2,
-    Obj                 val3 )
+static Obj ReturnFail3(Obj self, Obj val1, Obj val2, Obj val3)
 {
     return Fail;
 }
@@ -301,7 +266,7 @@ Obj ReturnFail3 (
 **  Actually, there is nothing to do
 */
 
-void SaveBool( Obj obj )
+static void SaveBool(Obj obj)
 {
 }
 
@@ -312,7 +277,7 @@ void SaveBool( Obj obj )
 **  Actually, there is nothing to do
 */
 
-void LoadBool( Obj obj )
+static void LoadBool(Obj obj)
 {
 }
 
@@ -337,9 +302,7 @@ static StructBagNames BagNames[] = {
 */
 static StructGVarFilt GVarFilts [] = {
 
-    { "IS_BOOL", "obj", &IsBoolFilt,
-      IsBoolHandler, "src/bool.c:IS_BOOL" },
-
+    GVAR_FILT(IS_BOOL, "obj", &IsBoolFilt),
     { 0, 0, 0, 0, 0 }
 
 };

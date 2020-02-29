@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  lists.c                     GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the functions of the generic list package.
 **
@@ -53,17 +53,14 @@
 */
 Int             (*IsListFuncs [LAST_REAL_TNUM+1]) ( Obj obj );
 
-Obj             IsListFilt;
+static Obj IsListFilt;
 
-Obj             FuncIS_LIST (
-    Obj                 self,
-    Obj                 obj )
+static Obj FiltIS_LIST(Obj self, Obj obj)
 {
     return (IS_LIST( obj ) ? True : False);
 }
 
-Int             IsListObject (
-    Obj                 obj )
+static Int IsListObject(Obj obj)
 {
     return (DoFilter( IsListFilt, obj ) == True);
 }
@@ -82,13 +79,12 @@ Int             IsListObject (
 */
 Int             (*IsSmallListFuncs [LAST_REAL_TNUM+1]) ( Obj obj );
 
-Obj             IsSmallListFilt;
-Obj             HasIsSmallListFilt;
-Obj             LengthAttr;
-Obj             SetIsSmallList;
+static Obj IsSmallListFilt;
+static Obj HasIsSmallListFilt;
+static Obj LengthAttr;
+static Obj SetIsSmallList;
 
-Int             IsSmallListObject (
-    Obj                 obj )
+static Int IsSmallListObject(Obj obj)
 {
   Obj len;
   if (DoFilter(IsListFilt, obj) != True)
@@ -116,7 +112,7 @@ Int             IsSmallListObject (
 
 /****************************************************************************
 **
-*F  FuncLENGTH( <self>, <list> ) . . . . . . . . . . .  'Length' interface
+*F  AttrLENGTH( <self>, <list> ) . . . . . . . . . . .  'Length' interface
 **
 **  There are  the ``relatively''  easy  changes to  'LEN_LIST' to  allow  it
 **  return GAP  objects instead of small C  integers, but then the kernel has
@@ -145,9 +141,7 @@ Int             IsSmallListObject (
 **    internal types (NOT YET IMPLEMENTED)
 */
 
-Obj FuncLENGTH (
-    Obj             self,
-    Obj             list )
+static Obj AttrLENGTH(Obj self, Obj list)
 {
     /* internal list types                                                 */
 #ifdef HPCGAP
@@ -183,13 +177,11 @@ Obj FuncLENGTH (
 **
 **  At the  moment  this also handles external    types but this   is a hack,
 **  because external  lists can have large  length or even  be infinite.  See
-**  'FuncLENGTH'.
+**  'AttrLENGTH'.
 */
 Int (*LenListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
-Obj FuncLEN_LIST (
-    Obj                 self,
-    Obj                 list )
+static Obj FuncLEN_LIST(Obj self, Obj list)
 {
     /* special case for plain lists (avoid conversion back and forth)      */
     if ( IS_PLIST(list) ) {
@@ -198,33 +190,25 @@ Obj FuncLEN_LIST (
 
     /* generic case (will signal an error if <list> is not a list)         */
     else {
-        return FuncLENGTH( LengthAttr, list );
+        return AttrLENGTH( LengthAttr, list );
     }
 }
 
 
-Int LenListError (
-    Obj                 list )
+static Int LenListError(Obj list)
 {
-    list = ErrorReturnObj(
-        "Length: <list> must be a list (not a %s)",
-        (Int)TNAM_OBJ(list), 0L,
-        "you can replace <list> via 'return <list>;'" );
-    return LEN_LIST( list );
+    RequireArgument("Length", list, "must be a list");
 }
 
 
-Int LenListObject (
-    Obj                 obj )
+static Int LenListObject(Obj obj)
 {
     Obj                 len;
 
-    len = FuncLENGTH( LengthAttr, obj );
-    while (!IS_NONNEG_INTOBJ(len)) {
-        len = ErrorReturnObj(
-            "Length: method must return a nonnegative value (not a %s)",
-            (Int)TNAM_OBJ(len), 0L,
-            "you can replace value <length> via 'return <length>;'" );
+    len = AttrLENGTH( LengthAttr, obj );
+    if (!IS_NONNEG_INTOBJ(len)) {
+        RequireArgumentEx("Length", len, 0,
+                          "method must return a non-negative value");
     }
     return INT_INTOBJ( len );
 }
@@ -243,25 +227,18 @@ Int LenListObject (
 
 Obj             (*LengthFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
-Obj LengthError (
-    Obj                 list )
+static Obj LengthError(Obj list)
 {
-    list = ErrorReturnObj(
-        "Length: <list> must be a list (not a %s)",
-        (Int)TNAM_OBJ(list), 0L,
-        "you can replace <list> via 'return <list>;'" );
-    return LENGTH( list );
+    RequireArgument("Length", list, "must be a list");
 }
 
 
-Obj LengthObject (
-    Obj                 obj )
+static Obj LengthObject(Obj obj)
 {
-    return FuncLENGTH( LengthAttr, obj );
+    return AttrLENGTH( LengthAttr, obj );
 }
 
-Obj LengthInternal (
-    Obj                 obj )
+static Obj LengthInternal(Obj obj)
 {
     return INTOBJ_INT(LEN_LIST(obj));
 }
@@ -283,10 +260,7 @@ Int             (*IsbListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 
 static Obj             IsbListOper;
 
-Obj             FuncISB_LIST (
-    Obj                 self,
-    Obj                 list,
-    Obj                 pos )
+static Obj FuncISB_LIST(Obj self, Obj list, Obj pos)
 {
     if (IS_POS_INTOBJ(pos))
         return ISB_LIST( list, INT_INTOBJ(pos) ) ? True : False;
@@ -294,20 +268,12 @@ Obj             FuncISB_LIST (
         return ISBB_LIST( list, pos ) ? True : False;
 }
 
-Int             IsbListError (
-    Obj                 list,
-    Int                 pos )
+static Int IsbListError(Obj list, Int pos)
 {
-    list = ErrorReturnObj(
-        "IsBound: <list> must be a list (not a %s)",
-        (Int)TNAM_OBJ(list), 0L,
-        "you can replace <list> via 'return <list>;'" );
-    return ISB_LIST( list, pos );
+    RequireArgument("IsBound", list, "must be a list");
 }
 
-Int             IsbListObject (
-    Obj                 list,
-    Int                 pos )
+static Int IsbListObject(Obj list, Int pos)
 {
     return DoOperation2Args( IsbListOper, list, INTOBJ_INT(pos) ) == True;
 }
@@ -319,9 +285,9 @@ Int             ISBB_LIST (
     return DoOperation2Args( IsbListOper, list, pos ) == True;
 }
 
-Int ISB2_LIST(Obj list, Obj pos1, Obj pos2)
+Int ISB_MAT(Obj mat, Obj row, Obj col)
 {
-    return DoOperation3Args( IsbListOper, list, pos1, pos2 ) == True;
+    return DoOperation3Args(IsbListOper, mat, row, col) == True;
 }
 
 
@@ -354,7 +320,7 @@ Obj (*Elm0ListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 Obj (*ElmDefListFuncs[LAST_REAL_TNUM + 1])(Obj list, Int pos, Obj def);
 
 // Default implementation of ELM_DEFAULT_LIST
-Obj ElmDefListDefault(Obj list, Int pos, Obj def)
+static Obj ElmDefListDefault(Obj list, Int pos, Obj def)
 {
     Obj val = ELM0_LIST(list, pos);
     if (val) {
@@ -374,24 +340,14 @@ Obj ElmDefListDefault(Obj list, Int pos, Obj def)
 */
 static Obj ElmDefListOper;
 
-Obj ElmDefListObject(Obj list, Int pos, Obj def)
+static Obj ElmDefListObject(Obj list, Int pos, Obj def)
 {
     return DoOperation3Args(ElmDefListOper, list, INTOBJ_INT(pos), def);
 }
 
-Obj FuncELM_DEFAULT_LIST(Obj self, Obj list, Obj pos, Obj def)
+static Obj FuncELM_DEFAULT_LIST(Obj self, Obj list, Obj pos, Obj def)
 {
-    // Dispath ensures 'list' is a list, and 'pos' is an int.
-    // just need to check 'pos' is a small int which is > 0.
-    if (!IS_INTOBJ(pos)) {
-        ErrorMayQuit("GetWithDefault: <pos> must be an integer (not a %s)",
-                     (Int)TNAM_OBJ(pos), 0);
-    }
-
-    Int ipos = INT_INTOBJ(pos);
-    if (ipos < 1) {
-        ErrorMayQuit("GetWithDefault: <pos> must be >= 0", 0, 0);
-    }
+    Int ipos = GetPositiveSmallInt("GetWithDefault", pos);
     return ELM_DEFAULT_LIST(list, ipos, def);
 }
 
@@ -410,15 +366,9 @@ Obj (*Elm0vListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 **
 *F  Elm0ListError( <list>, <pos> )  . . . . . . . . . . . . . . error message
 */
-Obj Elm0ListError (
-    Obj                 list,
-    Int                 pos )
+static Obj Elm0ListError(Obj list, Int pos)
 {
-    list = ErrorReturnObj(
-        "List Element: <list> must be a list (not a %s)",
-        (Int)TNAM_OBJ(list), 0L,
-        "you can replace <list> via 'return <list>;'" );
-    return ELM0_LIST( list, pos );
+    RequireArgument("List Element", list, "must be a list");
 }
 
 
@@ -439,9 +389,7 @@ Obj Elm0ListError (
 */
 static Obj Elm0ListOper;
 
-Obj Elm0ListObject (
-    Obj                 list,
-    Int                 pos )
+static Obj Elm0ListObject(Obj list, Int pos)
 {
     Obj                 elm;
 
@@ -462,10 +410,7 @@ Obj Elm0ListObject (
 **
 *F  FuncELM0_LIST( <self>, <list>, <pos> )  . . . . . . operation `ELM0_LIST'
 */
-Obj FuncELM0_LIST (
-    Obj                 self,
-    Obj                 list,
-    Obj                 pos )
+static Obj FuncELM0_LIST(Obj self, Obj list, Obj pos)
 {
     Obj                 elm;
     elm = ELM0_LIST( list, INT_INTOBJ(pos) );
@@ -520,15 +465,9 @@ Obj (*ElmwListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 **
 *F  ElmListError( <list>, <pos> ) . . . . . . . . . . . . . . . error message
 */
-Obj ElmListError (
-    Obj                 list,
-    Int                 pos )
+static Obj ElmListError(Obj list, Int pos)
 {
-    list = ErrorReturnObj(
-        "List Element: <list> must be a list (not a %s)",
-        (Int)TNAM_OBJ(list), 0L,
-        "you can replace <list> via 'return <list>;'" );
-    return ELM_LIST( list, pos );
+    RequireArgument("List Element", list, "must be a list");
 }
 
 
@@ -544,7 +483,7 @@ Obj ElmListError (
 */
 static Obj ElmListOper;
 
-Obj ElmListObject( Obj list, Int pos)
+static Obj ElmListObject(Obj list, Int pos)
 {
     return ELMB_LIST( list, INTOBJ_INT(pos) );
 }
@@ -555,37 +494,45 @@ Obj ELMB_LIST(Obj list, Obj pos)
     Obj                 elm;
 
     elm = DoOperation2Args( ElmListOper, list, pos );
-    while ( elm == 0 ) {
-        elm = ErrorReturnObj(
-            "List access method must return a value", 0L, 0L,
-            "you can supply a value <val> via 'return <val>;'" );
+    if (elm == 0) {
+        ErrorMayQuit("List access method must return a value", 0, 0);
     }
     return elm;
 }
 
-Obj ELM2_LIST(Obj list, Obj pos1, Obj pos2)
-{
-    if (IS_POS_INTOBJ(pos1) && IS_POS_INTOBJ(pos2) && IS_PLIST(list)) {
-        Int p1 = INT_INTOBJ(pos1);
-        if ( p1 <= LEN_PLIST(list) ) {
-            Obj row = ELM_PLIST( list, p1 );
-            Int p2 = INT_INTOBJ(pos2);
 
-            if ( IS_PLIST(row) && p2 <= LEN_PLIST(row) ) {
-                return ELM_PLIST( row, p2 );
+/****************************************************************************
+**
+*F  FuncELM_MAT( <self>, <mat>, <row>, <col> ) . . . . .  operation `ELM_MAT'
+*/
+static Obj FuncELM_MAT(Obj self, Obj mat, Obj row, Obj col)
+{
+    return ELM_MAT(mat, row, col);
+}
+
+static Obj ElmMatOper;
+
+Obj ELM_MAT(Obj mat, Obj row, Obj col)
+{
+    if (IS_POS_INTOBJ(row) && IS_POS_INTOBJ(col) && IS_PLIST(mat)) {
+        Int r = INT_INTOBJ(row);
+        if (r <= LEN_PLIST(mat)) {
+            Obj rowlist = ELM_PLIST(mat, r);
+            Int c = INT_INTOBJ(col);
+
+            if (IS_PLIST(rowlist) && c <= LEN_PLIST(rowlist)) {
+                return ELM_PLIST(rowlist, c);
             }
 
             // fallback to generic list access code (also triggers error if
             // row isn't a list)
-            return ELM_LIST( row, p2 );
+            return ELM_LIST(rowlist, c);
         }
     }
 
-    Obj elm = DoOperation3Args( ElmListOper, list, pos1, pos2 );
-    while ( elm == 0 ) {
-        elm = ErrorReturnObj(
-            "List access method must return a value", 0L, 0L,
-            "you can supply a value <val> via 'return <val>;'" );
+    Obj elm = DoOperation3Args(ElmMatOper, mat, row, col);
+    if (elm == 0) {
+        ErrorMayQuit("Matrix access method must return a value", 0, 0);
     }
     return elm;
 }
@@ -595,7 +542,7 @@ Obj ELM2_LIST(Obj list, Obj pos1, Obj pos2)
 **
 *F  FuncELM_LIST( <self>, <list>, <pos> ) . . . . . . .  operation `ELM_LIST'
 */
-Obj FuncELM_LIST(Obj self, Obj list, Obj pos)
+static Obj FuncELM_LIST(Obj self, Obj list, Obj pos)
 {
     if (IS_POS_INTOBJ(pos))
         return ELM_LIST(list, INT_INTOBJ(pos));
@@ -626,15 +573,9 @@ Obj (*ElmsListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Obj poss );
 **
 *F  ElmsListError(<list>,<poss>)  . . . . . . . . .  error selection function
 */
-Obj ElmsListError (
-    Obj                 list,
-    Obj                 poss )
+static Obj ElmsListError(Obj list, Obj poss)
 {
-    list = ErrorReturnObj(
-        "List Elements: <list> must be a list (not a %s)",
-        (Int)TNAM_OBJ(list), 0L,
-        "you can replace <list> via 'return <list>;'" );
-    return ELMS_LIST( list, poss );
+    RequireArgument("List Elements", list, "must be a list");
 }
 
 
@@ -646,17 +587,13 @@ Obj ElmsListError (
 */
 static Obj ElmsListOper;
 
-Obj ElmsListObject (
-    Obj                 list,
-    Obj                 poss )
+static Obj ElmsListObject(Obj list, Obj poss)
 {
     Obj                 elm;
 
     elm = DoOperation2Args( ElmsListOper, list, poss );
-    while ( elm == 0 ) {
-        elm = ErrorReturnObj(
-            "List multi-access method must return a value", 0L, 0L,
-            "you can supply a value <val> via 'return <val>;'");
+    if (elm == 0) {
+        ErrorMayQuit("List multi-access method must return a value", 0, 0);
     }
     return elm;
 }
@@ -666,10 +603,7 @@ Obj ElmsListObject (
 **
 *F  FuncELMS_LIST( <self>, <list>, <poss> ) . . . . . . `ELMS_LIST' operation
 */
-Obj FuncELMS_LIST (
-    Obj                 self,
-    Obj                 list,
-    Obj                 poss )
+static Obj FuncELMS_LIST(Obj self, Obj list, Obj poss)
 {
     return ElmsListCheck( list, poss );
 }
@@ -712,23 +646,19 @@ Obj ElmsListDefault (
 
             /* get <position>                                              */
             Obj p = ELMW_LIST(poss, i);
-            while (!IS_INTOBJ(p)) {
-                p = ErrorReturnObj("List Elements: position is too large for "
-                                   "this type of list",
-                                   0L, 0L,
-                                   "you can supply a new position <pos> via "
-                                   "'return <pos>;'");
+            if (!IS_INTOBJ(p)) {
+                ErrorMayQuit("List Elements: position is too large for "
+                             "this type of list",
+                             0, 0);
             }
             pos = INT_INTOBJ(p);
 
             /* select the element                                          */
             elm = ELM0_LIST( list, pos );
             if ( elm == 0 ) {
-                ErrorReturnVoid(
+                ErrorMayQuit(
                     "List Elements: <list>[%d] must have an assigned value",
-                    (Int)pos, 0L,
-                    "you can 'return;' after assigning a value" );
-                return ELMS_LIST( list, poss );
+                    (Int)pos, 0);
             }
 
             /* assign the element into <elms>                              */
@@ -754,18 +684,14 @@ Obj ElmsListDefault (
 
         /* check that no <position> is larger than 'LEN_LIST(<list>)'      */
         if ( lenList < pos ) {
-            ErrorReturnVoid(
+            ErrorMayQuit(
                 "List Elements: <list>[%d] must have an assigned value",
-                (Int)pos, 0L,
-                "you can 'return;' after assigning a value" );
-            return ELMS_LIST( list, poss );
+                (Int)pos, 0);
         }
         if ( lenList < pos + (lenPoss-1) * inc ) {
-            ErrorReturnVoid(
+            ErrorMayQuit(
                 "List Elements: <list>[%d] must have an assigned value",
-                (Int)pos + (lenPoss-1) * inc, 0L,
-                "you can 'return;' after assigning a value" );
-            return ELMS_LIST( list, poss );
+                (Int)pos + (lenPoss - 1) * inc, 0);
         }
 
         /* make the result list                                            */
@@ -778,11 +704,9 @@ Obj ElmsListDefault (
             /* select the element                                          */
             elm = ELMV0_LIST( list, pos );
             if ( elm == 0 ) {
-                ErrorReturnVoid(
+                ErrorMayQuit(
                     "List Elements: <list>[%d] must have an assigned value",
-                    (Int)pos, 0L,
-                    "you can 'return;' after assigning a value" );
-                return ELMS_LIST( list, poss );
+                    (Int)pos, 0);
             }
 
             /* assign the element to <elms>                                */
@@ -804,10 +728,7 @@ Obj ElmsListDefault (
 **
 *F  FuncELMS_LIST_DEFAULT( <self>, <list>, <poss> ) . . . . `ElmsListDefault'
 */
-Obj FuncELMS_LIST_DEFAULT (
-    Obj                 self,
-    Obj                 list,
-    Obj                 poss )
+static Obj FuncELMS_LIST_DEFAULT(Obj self, Obj list, Obj poss)
 {
     return ElmsListDefault( list, poss );
 }
@@ -852,17 +773,12 @@ void ElmsListLevelCheck (
 *V  UnbListFuncs[<type>]  . . . . . . . . . . . . . table of unbind functions
 *F  UnbListError(<list>,<pos>)  . . . . . . . . . . . . error unbind function
 **
-#define UNB_LIST(list,pos) \
-                        ((*UnbListFuncs[TNUM_OBJ(list)])(list,pos))
 */
 void             (*UnbListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 
 static Obj             UnbListOper;
 
-Obj             FuncUNB_LIST (
-    Obj                 self,
-    Obj                 list,
-    Obj                 pos )
+static Obj FuncUNB_LIST(Obj self, Obj list, Obj pos)
 {
     if (IS_POS_INTOBJ(pos))
         UNB_LIST( list, INT_INTOBJ(pos) );
@@ -871,28 +787,12 @@ Obj             FuncUNB_LIST (
     return 0;
 }
 
-void            UnbListError (
-    Obj                 list,
-    Int                 pos )
+static void UnbListError(Obj list, Int pos)
 {
-    list = ErrorReturnObj(
-        "Unbind: <list> must be a list (not a %s)",
-        (Int)TNAM_OBJ(list), 0L,
-        "you can replace <list> via 'return <list>;'" );
-    UNB_LIST( list, pos );
+    RequireArgument("Unbind", list, "must be a list");
 }
 
-void            UnbListDefault (
-    Obj                 list,
-    Int                 pos )
-{
-    PLAIN_LIST( list );
-    UNB_LIST( list, pos );
-}
-
-void            UnbListObject (
-    Obj                 list,
-    Int                 pos )
+static void UnbListObject(Obj list, Int pos)
 {
     DoOperation2Args( UnbListOper, list, INTOBJ_INT(pos) );
 }
@@ -904,10 +804,11 @@ void            UNBB_LIST (
     DoOperation2Args( UnbListOper, list, pos );
 }
 
-void UNB2_LIST(Obj list, Obj pos1, Obj pos2)
+void UNB_MAT(Obj mat, Obj row, Obj col)
 {
-    DoOperation3Args( UnbListOper, list, pos1, pos2 );
+    DoOperation3Args(UnbListOper, mat, row, col);
 }
+
 
 /****************************************************************************
 **
@@ -925,7 +826,7 @@ void            (*AssListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos, Obj obj )
 
 static Obj AssListOper;
 
-Obj FuncASS_LIST(Obj self, Obj list, Obj pos, Obj obj)
+static Obj FuncASS_LIST(Obj self, Obj list, Obj pos, Obj obj)
 {
     if (IS_POS_INTOBJ(pos))
         ASS_LIST(list, INT_INTOBJ(pos), obj);
@@ -934,25 +835,9 @@ Obj FuncASS_LIST(Obj self, Obj list, Obj pos, Obj obj)
     return 0;
 }
 
-void            AssListError (
-    Obj                 list,
-    Int                 pos,
-    Obj                 obj )
+static void AssListError(Obj list, Int pos, Obj obj)
 {
-    list = ErrorReturnObj(
-        "List Assignment: <list> must be a list (not a %s)",
-        (Int)TNAM_OBJ(list), 0L,
-        "you can replace <list> via 'return <list>;'" );
-    ASS_LIST( list, pos, obj );
-}
-
-void            AssListDefault (
-    Obj                 list,
-    Int                 pos,
-    Obj                 obj )
-{
-    PLAIN_LIST( list );
-    ASS_LIST( list, pos, obj );
+    RequireArgument("List Assignments", list, "must be a list");
 }
 
 
@@ -977,28 +862,30 @@ void ASSB_LIST (
     DoOperation3Args( AssListOper, list, pos, obj );
 }
 
-void ASS2_LIST(Obj list, Obj pos1, Obj pos2, Obj obj)
-{
-    if (!IS_MUTABLE_OBJ(list)) {
-        ErrorReturnVoid(
-            "Matrix Assignment: <mat> must be a mutable matrix",
-            0L, 0L,
-            "you can 'return;' and ignore the assignment" );
-    }
-    if (IS_POS_INTOBJ(pos1) && IS_POS_INTOBJ(pos2) && IS_PLIST(list)) {
-        Int p1 = INT_INTOBJ(pos1);
-        if ( p1 <= LEN_PLIST(list) ) {
-            Obj row = ELM_PLIST( list, p1 );
-            Int p2 = INT_INTOBJ(pos2);
+static Obj AssMatOper;
 
-            ASS_LIST( row, p2, obj );
+static Obj FuncASS_MAT(Obj self, Obj mat, Obj row, Obj col, Obj obj)
+{
+    ASS_MAT(mat, row, col, obj);
+    return 0;
+}
+
+void ASS_MAT(Obj mat, Obj row, Obj col, Obj obj)
+{
+    RequireMutable("Matrix Assignment", mat, "matrix");
+    if (IS_POS_INTOBJ(row) && IS_POS_INTOBJ(col) && IS_PLIST(mat)) {
+        Int r = INT_INTOBJ(row);
+        if (r <= LEN_PLIST(mat)) {
+            Obj rowlist = ELM_PLIST(mat, r);
+            Int c = INT_INTOBJ(col);
+
+            ASS_LIST(rowlist, c, obj);
             return;
         }
     }
 
-    DoOperation4Args( AssListOper, list, pos1, pos2, obj );
+    DoOperation4Args(AssMatOper, mat, row, col, obj);
 }
-
 
 
 /****************************************************************************
@@ -1016,26 +903,15 @@ void            (*AsssListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Obj poss, Obj obj
 
 static Obj             AsssListOper;
 
-Obj             FuncASSS_LIST (
-    Obj                 self,
-    Obj                 list,
-    Obj                 poss,
-    Obj                 objs )
+static Obj FuncASSS_LIST(Obj self, Obj list, Obj poss, Obj objs)
 {
     AsssListCheck( list, poss, objs );
     return 0;
 }
 
-void            AsssListError (
-    Obj                 list,
-    Obj                 poss,
-    Obj                 objs )
+static void AsssListError(Obj list, Obj poss, Obj objs)
 {
-    list = ErrorReturnObj(
-        "List Assignments: <list> must be a list (not a %s)",
-        (Int)TNAM_OBJ(list), 0L,
-        "you can replace <list> via 'return <list>;'" );
-    ASSS_LIST( list, poss, objs );
+    RequireArgument("List Assignments", list, "must be a list");
 }
 
 void            AsssListDefault (
@@ -1050,9 +926,9 @@ void            AsssListDefault (
     Obj                 obj;            /* one element from <objs>         */
     Int                 i;              /* loop variable                   */
 
-    CheckIsPossList("List Assignment", poss);
-    CheckIsDenseList("List Assignment", "rhss", objs);
-    CheckSameLength("List Assignment", "rhss", "positions", objs, poss);
+    CheckIsPossList("List Assignments", poss);
+    CheckIsDenseList("List Assignments", "rhss", objs);
+    CheckSameLength("List Assignments", "rhss", "poss", objs, poss);
 
     /* general code                                                        */
     if ( ! IS_RANGE(poss) ) {
@@ -1103,19 +979,12 @@ void            AsssListDefault (
 
 }
 
-void            AsssListObject (
-    Obj                 list,
-    Obj                 poss,
-    Obj                 objs )
+static void AsssListObject(Obj list, Obj poss, Obj objs)
 {
     DoOperation3Args( AsssListOper, list, poss, objs );
 }
 
-Obj FuncASSS_LIST_DEFAULT (
-    Obj                 self,
-    Obj                 list,
-    Obj                 poss,
-    Obj                 objs )
+static Obj FuncASSS_LIST_DEFAULT(Obj self, Obj list, Obj poss, Obj objs)
 {
     AsssListDefault( list, poss, objs );
     return 0;
@@ -1134,42 +1003,14 @@ Obj FuncASSS_LIST_DEFAULT (
 */
 Int             (*IsDenseListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
-Obj             IsDenseListFilt;
+static Obj IsDenseListFilt;
 
-Obj             FuncIS_DENSE_LIST (
-    Obj                 self,
-    Obj                 obj )
+static Obj FiltIS_DENSE_LIST(Obj self, Obj obj)
 {
     return (IS_DENSE_LIST( obj ) ? True : False);
 }
 
-Int             IsDenseListDefault (
-    Obj                 list )
-{
-    Int                 lenList;        /* length of <list>                */
-    Int                 i;              /* loop variable                   */
-
-    /* get the length of the list                                          */
-    lenList = LEN_LIST( list );
-
-    /* special case for the empty list                                     */
-    if ( lenList == 0 ) {
-        return 1L;
-    }
-
-    /* loop over the entries of the list                                   */
-    for ( i = 1; i <= lenList; i++ ) {
-        if ( ! ISB_LIST( list, i ) ) {
-            return 0L;
-        }
-    }
-
-    /* the list is dense                                                   */
-    return 1L;
-}
-
-Int             IsDenseListObject (
-    Obj                 obj )
+static Int IsDenseListObject(Obj obj)
 {
     return (DoFilter( IsDenseListFilt, obj ) == True);
 }
@@ -1188,52 +1029,14 @@ Int             IsDenseListObject (
 */
 Int             (*IsHomogListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
-Obj             IsHomogListFilt;
+static Obj IsHomogListFilt;
 
-Obj             FuncIS_HOMOG_LIST (
-    Obj                 self,
-    Obj                 obj )
+static Obj FiltIS_HOMOG_LIST(Obj self, Obj obj)
 {
     return (IS_HOMOG_LIST( obj ) ? True : False);
 }
 
-Int             IsHomogListDefault (
-    Obj                 list )
-{
-    Int                 lenList;        /* length of <list>                */
-    Obj                 elm;            /* one element of <list>           */
-    Obj                 fam;            /* family of elements of <list>    */
-    Int                 i;              /* loop variable                   */
-
-    /* get the length of the list                                          */
-    lenList = LEN_LIST( list );
-
-    /* special case for the empty list                                     */
-    if ( lenList == 0 ) {
-        return 0L;
-    }
-
-    /* get the family                                                      */
-    elm = ELMV0_LIST( list, 1 );
-    if ( elm == 0 ) {
-        return 0L;
-    }
-    fam = FAMILY_OBJ( elm );
-
-    /* loop over the entries of the list                                   */
-    for ( i = 2; i <= lenList; i++ ) {
-        elm = ELMV0_LIST( list, i );
-        if ( elm == 0 || fam != FAMILY_OBJ( elm ) ) {
-            return 0L;
-        }
-    }
-
-    /* the list is homogeneous                                             */
-    return 1L;
-}
-
-Int             IsHomogListObject (
-    Obj                 obj )
+static Int IsHomogListObject(Obj obj)
 {
     return (DoFilter( IsHomogListFilt, obj ) == True);
 }
@@ -1251,60 +1054,14 @@ Int             IsHomogListObject (
 */
 Int             (*IsTableListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
-Obj             IsTableListFilt;
+static Obj IsTableListFilt;
 
-Obj             FuncIS_TABLE_LIST (
-    Obj                 self,
-    Obj                 obj )
+static Obj FiltIS_TABLE_LIST(Obj self, Obj obj)
 {
     return (IS_TABLE_LIST( obj ) ? True : False);
 }
 
-Int             IsTableListDefault (
-    Obj                 list )
-{
-    Int                 lenList;        /* length of <list>                */
-    Obj                 elm;            /* one element of <list>           */
-    Obj                 fam;            /* family of elements of <list>    */
-/*  Int                 len;            / length of elements              */
-    Int                 i;              /* loop variable                   */
-
-    /* get the length of the list                                          */
-    lenList = LEN_LIST( list );
-
-    /* special case for the empty list                                     */
-    if ( lenList == 0 ) {
-        return 0L;
-    }
-
-    /* get the family                                                      */
-    elm = ELMV0_LIST( list, 1 );
-    if ( elm == 0 ) {
-        return 0L;
-    }
-    if ( ! IS_HOMOG_LIST( elm ) ) {
-        return 0L;
-    }
-    fam = FAMILY_OBJ( elm );
-    /*     len = LEN_LIST( elm ); */
-
-    /* loop over the entries of the list                                   */
-    for ( i = 2; i <= lenList; i++ ) {
-        elm = ELMV0_LIST( list, i );
-        if ( elm == 0 || fam != FAMILY_OBJ( elm ) ) {
-            return 0L;
-        }
-        /*        if ( ! IS_LIST( elm ) || LEN_LIST( elm ) != len ) {
-            return 0L;
-            } */
-    }
-
-    /* the list is equal length                                            */
-    return 1L;
-}
-
-Int             IsTableListObject (
-    Obj                 obj )
+static Int IsTableListObject(Obj obj)
 {
     return (DoFilter( IsTableListFilt, obj ) == True);
 }
@@ -1323,16 +1080,14 @@ Int             IsTableListObject (
 */
 Int (*IsSSortListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
-Obj IsSSortListProp;
+static Obj IsSSortListProp;
 
-Obj FuncIS_SSORT_LIST (
-    Obj                 self,
-    Obj                 obj )
+static Obj PropIS_SSORT_LIST(Obj self, Obj obj)
 {
     return (IS_SSORT_LIST( obj ) ? True : False);
 }
 
-Int IsSSortListDefault (
+static Int IsSSortListDefault (
     Obj                 list )
 {
     Int                 lenList;
@@ -1348,17 +1103,19 @@ Int IsSSortListDefault (
         return 2L;
     }
 
-    /* a list must be homogeneous to be strictly sorted                    */
-    if ( ! IS_HOMOG_LIST(list) ) {
+    /* get the first element                                               */
+    elm1 = ELM0_LIST(list, 1);
+
+    if (!elm1) {
         return 0L;
     }
 
-    /* get the first element                                               */
-    elm1 = ELMW_LIST( list, 1 );
-
     /* compare each element with its precursor                             */
     for ( i = 2; i <= lenList; i++ ) {
-        elm2 = ELMW_LIST( list, i );
+        elm2 = ELM0_LIST(list, i);
+        if (!elm2) {
+            return 0L;
+        }
         if ( ! LT( elm1, elm2 ) ) {
             return 0L;
         }
@@ -1369,33 +1126,14 @@ Int IsSSortListDefault (
     return 2L;
 }
 
-Int             IsSSortListObject (
-    Obj                 obj )
+static Int IsSSortListObject(Obj obj)
 {
     return (DoProperty( IsSSortListProp, obj ) == True);
 }
 
-Obj FuncIS_SSORT_LIST_DEFAULT (
-    Obj                 self,
-    Obj                 obj )
+static Obj FuncIS_SSORT_LIST_DEFAULT(Obj self, Obj obj)
 {
     return (IsSSortListDefault( obj ) ? True : False);
-}
-
-
-/****************************************************************************
-**
-*F  IsNSortListProp( <list> ) . . . . . . . . . . . . list which are unsorted
-**
-*/
-Obj IsNSortListProp;
-
-Obj FuncIS_NSORT_LIST (
-    Obj                 self,
-    Obj                 obj )
-{
-    ErrorQuit( "not ready yet", 0L, 0L );
-    return (Obj)0L;
 }
 
 
@@ -1411,17 +1149,14 @@ Obj FuncIS_NSORT_LIST (
 */
 Int             (*IsPossListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
-Obj             IsPossListProp;
+static Obj IsPossListProp;
 
-Obj             FuncIS_POSS_LIST (
-    Obj                 self,
-    Obj                 obj )
+static Obj PropIS_POSS_LIST(Obj self, Obj obj)
 {
     return (IS_POSS_LIST(obj) ? True : False);
 }
 
-Int             IsPossListDefault (
-    Obj                 list )
+static Int IsPossListDefault(Obj list)
 {
     Int                 lenList;        /* length of <list>                */
     Obj                 elm;            /* one element of <list>           */
@@ -1434,7 +1169,7 @@ Int             IsPossListDefault (
     for ( i = 1; i <= lenList; i++ ) {
         elm = ELMV0_LIST( list, i );
 
-        /* if it's a hole then its not a poss list */
+        /* if it has a hole then it isn't a poss list */
         if ( elm == 0)
           return 0L;
 
@@ -1454,15 +1189,12 @@ Int             IsPossListDefault (
     return 1L;
 }
 
-Int             IsPossListObject (
-    Obj                 obj )
+static Int IsPossListObject(Obj obj)
 {
     return (DoProperty( IsPossListProp, obj ) == True);
 }
 
-Obj FuncIS_POSS_LIST_DEFAULT (
-    Obj                 self,
-    Obj                 obj )
+static Obj FuncIS_POSS_LIST_DEFAULT(Obj self, Obj obj)
 {
     return (IsPossListDefault( obj ) ? True : False);
 }
@@ -1483,43 +1215,25 @@ Obj             (*PosListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Obj obj, Obj start
 
 static Obj             PosListOper;
 
-Obj             PosListHandler2 (
-    Obj                 self,
-    Obj                 list,
-    Obj                 obj )
+static Obj PosListHandler2(Obj self, Obj list, Obj obj)
 {
     return POS_LIST( list, obj, INTOBJ_INT(0) );
 }
 
-Obj             PosListHandler3 (
-    Obj                 self,
-    Obj                 list,
-    Obj                 obj,
-    Obj                 start )
+static Obj PosListHandler3(Obj self, Obj list, Obj obj, Obj start)
 {
-    while ( TNUM_OBJ(start) != T_INTPOS &&
-            (! IS_NONNEG_INTOBJ(start) ) ) {
-        start = ErrorReturnObj(
-            "Position: <start> must be a nonnegative integer (not a %s)",
-            (Int)TNAM_OBJ(start), 0L,
-            "you can replace <start> via 'return <start>;'" );
+    if (TNUM_OBJ(start) != T_INTPOS && !IS_NONNEG_INTOBJ(start)) {
+        RequireArgument("Position", start, "must be a non-negative integer");
     }
     return POS_LIST( list, obj, start );
 }
 
-Obj             PosListError (
-    Obj                 list,
-    Obj                 obj,
-    Obj                 start )
+static Obj PosListError(Obj list, Obj obj, Obj start)
 {
-    list = ErrorReturnObj(
-        "Position: <list> must be a list (not a %s)",
-        (Int)TNAM_OBJ(list), 0L,
-        "you can replace <list> via 'return <list>;'" );
-    return POS_LIST( list, obj, start );
+    RequireArgument("Position", list, "must be a list");
 }
 
-Obj             PosListDefault (
+static Obj PosListDefault (
     Obj                 list,
     Obj                 obj,
     Obj                 start )
@@ -1553,19 +1267,12 @@ Obj             PosListDefault (
     }
 }
 
-Obj             PosListObject (
-    Obj                 list,
-    Obj                 obj,
-    Obj                 start )
+static Obj PosListObject(Obj list, Obj obj, Obj start)
 {
     return DoOperation3Args( PosListOper, list, obj, start );
 }
 
-Obj FuncPOS_LIST_DEFAULT (
-    Obj                 self,
-    Obj                 list,
-    Obj                 obj,
-    Obj                 start )
+static Obj FuncPOS_LIST_DEFAULT(Obj self, Obj list, Obj obj, Obj start)
 {
     return PosListDefault( list, obj, start ) ;
 }
@@ -1588,10 +1295,10 @@ void            ElmListLevel (
     Obj                 list;           /* one list from <lists>           */
     Obj                 elm;            /* selected element from <list>    */
     Int                 i;              /* loop variable                   */
-    Obj pos;
-    Obj pos1;
-    Obj pos2;
-      
+    Obj                 pos;
+    Obj                 row;
+    Obj                 col;
+
 
     /* if <level> is one, perform the replacements                         */
     if ( level == 1 ) {
@@ -1614,10 +1321,10 @@ void            ElmListLevel (
               break;
           
             case 2:
-              pos1 = ELM_PLIST(ixs,1);
-              pos2 = ELM_PLIST(ixs,2);
-              elm = ELM2_LIST(list, pos1, pos2);
-              break;
+                row = ELM_PLIST(ixs, 1);
+                col = ELM_PLIST(ixs, 2);
+                elm = ELM_MAT(list, row, col);
+                break;
 
             default:
               elm = ELMB_LIST(list, ixs);
@@ -1681,9 +1388,7 @@ void            ElmsListLevel (
        Resolving this properly requires some more discussion. But until
        then, this change at least prevents hard crashes. */
     if (!IS_PLIST(lists)) {
-        ErrorMayQuit(
-            "List Elements: <lists> must be a list (not a %s)",
-            (Int)TNAM_OBJ(lists), 0L );
+        RequireArgument("List Elements", lists, "must be a list");
     }
 
     /* if <level> is one, perform the replacements                         */
@@ -1753,11 +1458,13 @@ void            AssListLevel (
     Obj                 list;           /* one list of <lists>             */
     Obj                 obj;            /* one value from <objs>           */
     Int                 i;              /* loop variable                   */
-    Obj pos,pos1,pos2;
+    Obj                 pos;
+    Obj                 row;
+    Obj                 col;
 
     /* check <objs>                                                        */
-    CheckIsDenseList("List Assignment", "objs", objs);
-    CheckSameLength("List Assignment", "objs", "lists", objs, lists);
+    RequireDenseList("List Assignments", objs);
+    RequireSameLength("List Assignments", objs, lists);
 
     /* if <level> is one, perform the assignments                          */
     if ( level == 1 ) {
@@ -1783,10 +1490,10 @@ void            AssListLevel (
               break;
           
             case 2:
-              pos1 = ELM_PLIST(ixs,1);
-              pos2 = ELM_PLIST(ixs,2);
-              ASS2_LIST(list, pos1, pos2, obj);
-              break;
+                row = ELM_PLIST(ixs, 1);
+                col = ELM_PLIST(ixs, 2);
+                ASS_MAT(list, row, col, obj);
+                break;
 
             default:
               ASSB_LIST(list, ixs, obj);
@@ -1839,8 +1546,8 @@ void            AsssListLevel (
     Int                 i;              /* loop variable                   */
 
     /* check <objs>                                                        */
-    CheckIsDenseList("List Assignment", "objs", objs);
-    CheckSameLength("List Assignment", "objs", "lists", objs, lists);
+    RequireDenseList("List Assignments", objs);
+    RequireSameLength("List Assignments", objs, lists);
 
     /* if <lev> is one, loop over all the lists and assign the value       */
     if ( lev == 1 ) {
@@ -1855,7 +1562,7 @@ void            AsssListLevel (
             /* select the elements to assign                               */
             obj = ELMW_LIST( objs, i );
             CheckIsDenseList("List Assignments", "objs", obj);
-            CheckSameLength("List Assignments", "objs", "positions", obj, poss);
+            CheckSameLength("List Assignments", "objs", "poss", obj, poss);
 
             /* assign the elements                                         */
             ASSS_LIST( list, poss, obj );
@@ -1900,8 +1607,7 @@ void            AsssListLevel (
 */
 void            (*PlainListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
-void            PlainListError (
-    Obj                 list )
+static void PlainListError(Obj list)
 {
     ErrorQuit(
         "Panic: cannot convert <list> (is a %s) to a plain list",
@@ -1913,7 +1619,7 @@ void            PlainListError (
 **
 *F  TYPES_LIST_FAM(<fam>) . . . . . . .  list of types of lists over a family
 */
-UInt            TYPES_LIST_FAM_RNam;
+static UInt TYPES_LIST_FAM_RNam;
 
 Obj             TYPES_LIST_FAM (
     Obj                 fam )
@@ -1940,10 +1646,11 @@ Obj             TYPES_LIST_FAM (
 *F  PrintListDefault(<list>)  . . . . . . . . . . . . . . . . .  print a list
 *F  PrintPathList(<list>,<indx>)  . . . . . . . . . . . . . print a list path
 **
-**  'PrintList' simply prints the list.
+**  'PrintListDefault' simply prints the elements in the given list.
+**  The line break hints are consistent with those
+**  that appear in the 'ViewObj' and 'ViewString' methods for finite lists.
 */
-void            PrintListDefault (
-    Obj                 list )
+static void PrintListDefault(Obj list)
 {
     Obj                 elm;
 
@@ -1958,7 +1665,7 @@ void            PrintListDefault (
         if ( elm != 0 ) {
             if (1 < i)
                 Pr("%<,%< %2>", 0L, 0L);
-            STATE(PrintObjIndex) = i;
+            SetPrintObjIndex(i);
             PrintObj( elm );
         }
         else {
@@ -1969,9 +1676,7 @@ void            PrintListDefault (
     Pr(" %4<]",0L,0L);
 }
 
-void            PrintPathList (
-    Obj                 list,
-    Int                 indx )
+static void PrintPathList(Obj list, Int indx)
 {
     Pr( "[%d]", indx, 0L );
 }
@@ -2030,78 +1735,25 @@ UInt ClearFiltsTNums [ LAST_REAL_TNUM ];
 
 /****************************************************************************
 **
-*F  FuncSET_FILTER_LIST( <self>, <list>, <filter> ) . . . . . . .  set filter
+*F  SET_FILTER_LIST( <list>, <filter> ) . . . . . . . . . . . . .  set filter
 */
-Obj FuncSET_FILTER_LIST (
-    Obj             self,
-    Obj             list,
-    Obj             filter )
+Obj SET_FILTER_LIST(Obj list, Obj filter)
 {
     Int             new;
     Obj             flags;
 
-    if ( ! IS_OPERATION(filter) ) {
-        ErrorQuit("<oper> must be an operation",0L,0L);
-        return 0;
-    }
-    /* this could be done by a table lookup                                */
     flags = FLAGS_FILT(filter);
     if (FuncIS_SUBSET_FLAGS(0,flags,FLAGS_FILT(IsSSortListProp))==True) {
         new = SetFiltListTNums[TNUM_OBJ(list)][FN_IS_DENSE];
         if ( new < 0 )  goto error;
-        new = SetFiltListTNums[TNUM_OBJ(list)][FN_IS_HOMOG];
-        if ( new < 0 )  goto error;
         new = SetFiltListTNums[TNUM_OBJ(list)][FN_IS_SSORT];
-        if ( new > 0 )  RetypeBag( list, new );  else goto error;
-    }
-    if (FuncIS_SUBSET_FLAGS(0,flags,FLAGS_FILT(IsNSortListProp))==True) {
-        new = SetFiltListTNums[TNUM_OBJ(list)][FN_IS_NSORT];
         if ( new > 0 )  RetypeBag( list, new );  else goto error;
     }
     return 0;
 
     /* setting of filter failed                                            */
 error:
-    ErrorReturnVoid( "filter not possible for %s",
-                     (Int)TNAM_OBJ(list), 0,
-                     "you can 'return;'" );
-    return 0;
-}
-
-
-/****************************************************************************
-**
-*F  FuncRESET_FILTER_LIST( <self>, <list>, <filter> ) . . . . .  reset filter
-*/
-Obj FuncRESET_FILTER_LIST (
-    Obj             self,
-    Obj             list,
-    Obj             filter )
-{
-    Int             fn;
-    Int             new;
-
-    /* this could be done by a table lookup                                */
-    if ( filter == IsSSortListProp ) {
-        fn = FN_IS_SSORT;
-    }
-    else if ( filter == IsNSortListProp ) {
-        fn = FN_IS_NSORT;
-    }
-    else {
-        return 0;
-    }
-
-    /* try to set the filter                                               */
-    new = ResetFiltListTNums[TNUM_OBJ(list)][fn];
-    if ( new > 0 ) {
-        RetypeBag( list, new );
-    }
-    else if ( new < 0 ) {
-        ErrorReturnVoid( "filter not possible for %s",
-                         (Int)TNAM_OBJ(list), 0,
-                         "you can 'return;'" );
-    }
+    ErrorMayQuit("filter not possible for %s", (Int)TNAM_OBJ(list), 0);
     return 0;
 }
 
@@ -2121,9 +1773,9 @@ void AsssListCheck (
     Obj                 poss,
     Obj                 rhss )
 {
-    CheckIsPossList("List Assignment", poss);
-    CheckIsDenseList("List Assignment", "rhss", rhss);
-    CheckSameLength("List Assignment", "rhss", "positions", rhss, poss);
+    CheckIsPossList("List Assignments", poss);
+    RequireDenseList("List Assignments", rhss);
+    RequireSameLength("List Assignments", rhss, poss);
     ASSS_LIST( list, poss, rhss );
 }
 
@@ -2138,7 +1790,7 @@ void AsssListLevelCheck (
     Obj                 rhss,
     Int                 level )
 {
-    CheckIsPossList("List Assignment", poss);
+    CheckIsPossList("List Assignments", poss);
     AsssListLevel( lists, poss, rhss, level );
 }
 
@@ -2155,10 +1807,10 @@ void AsssListLevelCheck (
 */
 static StructGVarFilt GVarFilts [] = {
 
-    GVAR_FILTER(IS_LIST, "obj", &IsListFilt),
-    GVAR_FILTER(IS_DENSE_LIST, "obj", &IsDenseListFilt),
-    GVAR_FILTER(IS_HOMOG_LIST, "obj", &IsHomogListFilt),
-    GVAR_FILTER(IS_TABLE_LIST, "obj", &IsTableListFilt),
+    GVAR_FILT(IS_LIST, "obj", &IsListFilt),
+    GVAR_FILT(IS_DENSE_LIST, "obj", &IsDenseListFilt),
+    GVAR_FILT(IS_HOMOG_LIST, "obj", &IsHomogListFilt),
+    GVAR_FILT(IS_TABLE_LIST, "obj", &IsTableListFilt),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -2170,7 +1822,7 @@ static StructGVarFilt GVarFilts [] = {
 */
 static StructGVarAttr GVarAttrs [] = {
 
-    GVAR_FILTER(LENGTH, "list", &LengthAttr),
+    GVAR_ATTR(LENGTH, "list", &LengthAttr),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -2182,9 +1834,8 @@ static StructGVarAttr GVarAttrs [] = {
 */
 static StructGVarProp GVarProps [] = {
 
-    GVAR_FILTER(IS_SSORT_LIST, "obj", &IsSSortListProp),
-    GVAR_FILTER(IS_NSORT_LIST, "obj", &IsNSortListProp),
-    GVAR_FILTER(IS_POSS_LIST, "obj", &IsPossListProp),
+    GVAR_PROP(IS_SSORT_LIST, "obj", &IsSSortListProp),
+    GVAR_PROP(IS_POSS_LIST, "obj", &IsPossListProp),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -2209,6 +1860,10 @@ static StructGVarOper GVarOpers[] = {
     GVAR_OPER(UNB_LIST, 2, "list, pos", &UnbListOper),
     GVAR_OPER(ASS_LIST, 3, "list, pos, obj", &AssListOper),
     GVAR_OPER(ASSS_LIST, 3, "list, poss, objs", &AsssListOper),
+
+    GVAR_OPER(ASS_MAT, 4, "mat, row, col, obj", &AssMatOper),
+    GVAR_OPER(ELM_MAT, 3, "mat, row, col", &ElmMatOper),
+
     { 0, 0, 0, 0, 0, 0 }
 
 };
@@ -2226,8 +1881,6 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC(IS_SSORT_LIST_DEFAULT, 1, "list"),
     GVAR_FUNC(IS_POSS_LIST_DEFAULT, 1, "list"),
     GVAR_FUNC(POS_LIST_DEFAULT, 3, "list, obj, start"),
-    GVAR_FUNC(SET_FILTER_LIST, 2, "list, filter"),
-    GVAR_FUNC(RESET_FILTER_LIST, 2, "list, filter"),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -2375,7 +2028,7 @@ static Int InitKernel (
         UnbListFuncs[ type ] = UnbListError;
     }
     for ( type = FIRST_LIST_TNUM; type <= LAST_LIST_TNUM; type++ ) {
-        UnbListFuncs[ type ] = UnbListDefault;
+        UnbListFuncs[ type ] = 0;
     }
     for ( type = FIRST_EXTERNAL_TNUM; type <= LAST_EXTERNAL_TNUM; type++ ) {
         UnbListFuncs[ type ] = UnbListObject;
@@ -2388,7 +2041,7 @@ static Int InitKernel (
         AssListFuncs[ type ] = AssListError;
     }
     for ( type = FIRST_LIST_TNUM; type <= LAST_LIST_TNUM; type++ ) {
-        AssListFuncs[ type ] = AssListDefault;
+        AssListFuncs[ type ] = 0;
     }
     for ( type = FIRST_EXTERNAL_TNUM; type <= LAST_EXTERNAL_TNUM; type++ ) {
         AssListFuncs[ type ] = AssListObject;
@@ -2414,7 +2067,7 @@ static Int InitKernel (
         IsDenseListFuncs[ type ] = AlwaysNo;
     }
     for ( type = FIRST_LIST_TNUM; type <= LAST_LIST_TNUM; type++ ) {
-        IsDenseListFuncs[ type ] = IsDenseListDefault;
+        IsDenseListFuncs[ type ] = 0;
     }
     for ( type = FIRST_EXTERNAL_TNUM; type <= LAST_EXTERNAL_TNUM; type++ ) {
         IsDenseListFuncs[ type ] = IsDenseListObject;
@@ -2427,7 +2080,7 @@ static Int InitKernel (
         IsHomogListFuncs[ type ] = AlwaysNo;
     }
     for ( type = FIRST_LIST_TNUM; type <= LAST_LIST_TNUM; type++ ) {
-        IsHomogListFuncs[ type ] = IsHomogListDefault;
+        IsHomogListFuncs[ type ] = 0;
     }
     for ( type = FIRST_EXTERNAL_TNUM; type <= LAST_EXTERNAL_TNUM; type++ ) {
         IsHomogListFuncs[ type ] = IsHomogListObject;
@@ -2440,7 +2093,7 @@ static Int InitKernel (
         IsTableListFuncs[ type ] = AlwaysNo;
     }
     for ( type = FIRST_LIST_TNUM; type <= LAST_LIST_TNUM; type++ ) {
-        IsTableListFuncs[ type ] = IsTableListDefault;
+        IsTableListFuncs[ type ] = 0;
     }
     for ( type = FIRST_EXTERNAL_TNUM; type <= LAST_EXTERNAL_TNUM; type++ ) {
         IsTableListFuncs[ type ] = IsTableListObject;
@@ -2453,7 +2106,7 @@ static Int InitKernel (
         IsSSortListFuncs[ type ] = AlwaysNo;
     }
     for ( type = FIRST_LIST_TNUM; type <= LAST_LIST_TNUM; type++ ) {
-        IsSSortListFuncs[ type ] = IsSSortListDefault;
+        IsSSortListFuncs[ type ] = 0;
     }
     for ( type = FIRST_EXTERNAL_TNUM; type <= LAST_EXTERNAL_TNUM; type++ ) {
         IsSSortListFuncs[ type ] = IsSSortListObject;
@@ -2466,7 +2119,7 @@ static Int InitKernel (
         IsPossListFuncs[ type ] = AlwaysNo;
     }
     for ( type = FIRST_LIST_TNUM; type <= LAST_LIST_TNUM; type++ ) {
-        IsPossListFuncs[ type ] = IsPossListDefault;
+        IsPossListFuncs[ type ] = 0;
     }
     for ( type = FIRST_EXTERNAL_TNUM; type <= LAST_EXTERNAL_TNUM; type++ ) {
         IsPossListFuncs[ type ] = IsPossListObject;
@@ -2479,7 +2132,7 @@ static Int InitKernel (
         PosListFuncs[ type ] = PosListError;
     }
     for ( type = FIRST_LIST_TNUM; type <= LAST_LIST_TNUM; type++ ) {
-        PosListFuncs[ type ] = PosListDefault;
+        PosListFuncs[ type ] = 0;
     }
     for ( type = FIRST_EXTERNAL_TNUM; type <= LAST_EXTERNAL_TNUM; type++ ) {
         PosListFuncs[ type ] = PosListObject;
@@ -2588,6 +2241,21 @@ static Int CheckInit (
     for ( i = FIRST_LIST_TNUM;  i <= LAST_LIST_TNUM;  i +=2 ) {
         GAP_ASSERT( TNAM_TNUM(i) );
         GAP_ASSERT( TNAM_TNUM(i + IMMUTABLE) );
+    }
+
+    for (i = FIRST_LIST_TNUM; i <= LAST_LIST_TNUM; i += 2) {
+        GAP_ASSERT(UnbListFuncs[i]);
+        GAP_ASSERT(AssListFuncs[i]);
+    }
+    for (i = FIRST_LIST_TNUM; i <= LAST_LIST_TNUM; i++) {
+        GAP_ASSERT(IsDenseListFuncs[i]);
+        GAP_ASSERT(IsHomogListFuncs[i]);
+        GAP_ASSERT(IsTableListFuncs[i]);
+        GAP_ASSERT(IsSSortListFuncs[i]);
+        GAP_ASSERT(IsPossListFuncs[i]);
+        GAP_ASSERT(PosListFuncs[i]);
+        GAP_ASSERT(IsSSortListFuncs[i]);
+        GAP_ASSERT(IsSSortListFuncs[i]);
     }
 
     /* check that all relevant `ClearFiltListTNums' are installed          */

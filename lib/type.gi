@@ -1,9 +1,11 @@
 #############################################################################
 ##
-#W  type.gi                     GAP library
+##  This file is part of GAP, a system for computational discrete algebra.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2016 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file implements some additional functions relating to types and
 ##  families.
@@ -165,8 +167,10 @@ function(oper)
         if flags <> false then
             flags := TRUES_FLAGS(flags);
             types := [];
-            for t in flags do
-                AddSet(types, INFO_FILTERS[t]);
+            atomic readonly FILTER_REGION do
+                for t in flags do
+                    AddSet(types, INFO_FILTERS[t]);
+                od;
             od;
             catok := true;
             repok := true;
@@ -231,11 +235,13 @@ InstallGlobalFunction( CategoryByName,
 function(name)
     local fid;
 
+    atomic readonly CATS_AND_REPS, FILTER_REGION do
     for fid in CATS_AND_REPS do
         if (INFO_FILTERS[fid] in FNUM_CATS) and
            (NAME_FUNC(FILTERS[fid]) = name) then
             return FILTERS[fid];
         fi;
+    od;
     od;
     return fail;
 end);

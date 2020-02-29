@@ -1,7 +1,11 @@
 /****************************************************************************
 **
-*W  io.c
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains functions responsible for input and output processing.
 **
@@ -54,14 +58,21 @@
 **  terminated by the character '\0'.  Because 'line' holds  only part of the
 **  line for very long lines the last character need not be a <newline>.
 **
+**  'stream' is non-zero if the input points to a stream.
+**
+**  'sline' contains the next line from the stream as GAP string.
+**
+**  The following variables are used to store the state of the interpreter
+**  and stream when another input file is opened:
+**
 **  'ptr' points to the current character within that line.  This is not used
 **  for the current input file, where 'In' points to the  current  character.
 **
 **  'number' is the number of the current line, is used in error messages.
 **
-**  'stream' is none zero if the input points to a stream.
+**  'interpreterStartLine' is the number of the line where the fragment of
+**  code currently being interpreted started. This is used for profiling
 **
-**  'sline' contains the next line from the stream as GAP string.
 **
 */
 typedef struct {
@@ -72,6 +83,7 @@ typedef struct {
     Char   line[32768];
     Char * ptr;
     UInt   symbol;
+    Int    interpreterStartLine;
     Int    number;
     Obj    stream;
     UInt   isstringstream;
@@ -124,7 +136,7 @@ static Obj PrintFormattingStatus;
 **
 **  'FilenameCache' is a list of previously opened filenames.
 */
-Obj FilenameCache;
+static Obj FilenameCache;
 
 /* TODO: Eliminate race condition in HPC-GAP */
 static Char promptBuf[81];
@@ -246,7 +258,7 @@ Char GET_NEXT_CHAR(void)
 // GET_NEXT_CHAR_NO_LC is like GET_NEXT_CHAR, but does not handle
 // line continuations. This is used when skipping to the end of the
 // current line, when handling comment lines.
-static Char GET_NEXT_CHAR_NO_LC(void)
+Char GET_NEXT_CHAR_NO_LC(void)
 {
     if (STATE(In) == &IO()->Pushback) {
         STATE(In) = IO()->RealIn;
@@ -391,10 +403,10 @@ static TypOutputFile * PushNewOutput(void)
 }
 
 #ifdef HPCGAP
-GVarDescriptor DEFAULT_INPUT_STREAM;
-GVarDescriptor DEFAULT_OUTPUT_STREAM;
+static GVarDescriptor DEFAULT_INPUT_STREAM;
+static GVarDescriptor DEFAULT_OUTPUT_STREAM;
 
-UInt OpenDefaultInput( void )
+static UInt OpenDefaultInput(void)
 {
   Obj func, stream;
   stream = TLS(DefaultInput);
@@ -407,12 +419,12 @@ UInt OpenDefaultInput( void )
   if (!stream)
     ErrorQuit("DEFAULT_INPUT_STREAM() did not return a stream", 0L, 0L);
   if (IsStringConv(stream))
-    return OpenInput(CSTR_STRING(stream));
+    return OpenInput(CONST_CSTR_STRING(stream));
   TLS(DefaultInput) = stream;
   return OpenInputStream(stream, 0);
 }
 
-UInt OpenDefaultOutput( void )
+static UInt OpenDefaultOutput(void)
 {
   Obj func, stream;
   stream = TLS(DefaultOutput);
@@ -425,7 +437,7 @@ UInt OpenDefaultOutput( void )
   if (!stream)
     ErrorQuit("DEFAULT_OUTPUT_STREAM() did not return a stream", 0L, 0L);
   if (IsStringConv(stream))
-    return OpenOutput(CSTR_STRING(stream));
+    return OpenOutput(CONST_CSTR_STRING(stream));
   TLS(DefaultOutput) = stream;
   return OpenOutputStream(stream);
 }
@@ -491,7 +503,8 @@ UInt OpenInput (
     if (IO()->InputStackPointer > 0) {
         GAP_ASSERT(IS_CHAR_PUSHBACK_EMPTY());
         IO()->Input->ptr = STATE(In);
-        IO()->Input->symbol = STATE(Symbol);
+        IO()->Input->symbol = STATE(Scanner).Symbol;
+        IO()->Input->interpreterStartLine = STATE(InterpreterStartLine);
     }
 
     /* enter the file identifier and the file name                         */
@@ -512,7 +525,8 @@ UInt OpenInput (
     /* start with an empty line and no symbol                              */
     STATE(In) = IO()->Input->line;
     STATE(In)[0] = STATE(In)[1] = '\0';
-    STATE(Symbol) = S_ILLEGAL;
+    STATE(Scanner).Symbol = S_ILLEGAL;
+    STATE(InterpreterStartLine) = 0;
     IO()->Input->number = 1;
 
     /* indicate success                                                    */
@@ -536,7 +550,8 @@ UInt OpenInputStream(Obj stream, UInt echo)
     if (IO()->InputStackPointer > 0) {
         GAP_ASSERT(IS_CHAR_PUSHBACK_EMPTY());
         IO()->Input->ptr = STATE(In);
-        IO()->Input->symbol = STATE(Symbol);
+        IO()->Input->symbol = STATE(Scanner).Symbol;
+        IO()->Input->interpreterStartLine = STATE(InterpreterStartLine);
     }
 
     /* enter the file identifier and the file name                         */
@@ -560,7 +575,8 @@ UInt OpenInputStream(Obj stream, UInt echo)
     /* start with an empty line and no symbol                              */
     STATE(In) = IO()->Input->line;
     STATE(In)[0] = STATE(In)[1] = '\0';
-    STATE(Symbol) = S_ILLEGAL;
+    STATE(Scanner).Symbol = S_ILLEGAL;
+    STATE(InterpreterStartLine) = 0;
     IO()->Input->number = 1;
 
     /* indicate success                                                    */
@@ -586,8 +602,16 @@ UInt OpenInputStream(Obj stream, UInt echo)
 UInt CloseInput ( void )
 {
     /* refuse to close the initial input file                              */
+#ifdef HPCGAP
+    // In HPC-GAP, only for the main thread.
+    if (TLS(threadID) != 0) {
+        if (IO()->InputStackPointer <= 0)
+            return 0;
+    } else
+#else
     if (IO()->InputStackPointer <= 1)
         return 0;
+#endif
 
     /* close the input file                                                */
     if (!IO()->Input->isstream) {
@@ -599,9 +623,16 @@ UInt CloseInput ( void )
 
     /* revert to last file                                                 */
     const int sp = --IO()->InputStackPointer;
+#ifdef HPCGAP
+    if (sp == 0) {
+        IO()->Input = NULL;
+        return 1;
+    }
+#endif
     IO()->Input = IO()->InputStack[sp - 1];
     STATE(In) = IO()->Input->ptr;
-    STATE(Symbol) = IO()->Input->symbol;
+    STATE(Scanner).Symbol = IO()->Input->symbol;
+    STATE(InterpreterStartLine) = IO()->Input->interpreterStartLine;
 
     /* indicate success                                                    */
     return 1;
@@ -616,7 +647,7 @@ void FlushRestOfInputLine( void )
 {
   STATE(In)[0] = STATE(In)[1] = '\0';
   /* IO()->Input->number = 1; */
-  STATE(Symbol) = S_ILLEGAL;
+  STATE(Scanner).Symbol = S_ILLEGAL;
 }
 
 /****************************************************************************
@@ -1153,8 +1184,8 @@ static Int GetLine2 (
             bptr++;
 
         /* copy piece of input->sline into buffer and adjust counters */
-        Char *ptr = CSTR_STRING(input->sline) + input->spos;
-        const Char * const end = CSTR_STRING(input->sline) + GET_LEN_STRING(input->sline);
+        const Char *ptr = CONST_CSTR_STRING(input->sline) + input->spos;
+        const Char * const end = CONST_CSTR_STRING(input->sline) + GET_LEN_STRING(input->sline);
         const Char * const bend = buffer + length - 2;
         while (bptr < bend && ptr < end) {
             Char c = *ptr++;
@@ -1171,7 +1202,7 @@ static Int GetLine2 (
                 break;
         }
         *bptr = '\0';
-        input->spos = ptr - (Char *)CHARS_STRING(input->sline);
+        input->spos = ptr - CONST_CSTR_STRING(input->sline);
 
         /* if input->stream is a string stream, we have to adjust the
            position counter in the stream object as well */
@@ -1202,7 +1233,7 @@ static Int GetLine2 (
 **  If there is an  input logfile in use  and the input  file is '*stdin*' or
 **  '*errin*' 'GetLine' echoes the new line to the logfile.
 */
-Char GetLine ( void )
+static Char GetLine(void)
 {
     /* if file is '*stdin*' or '*errin*' print the prompt and flush it     */
     /* if the GAP function `PrintPromptHook' is defined then it is called  */
@@ -1270,10 +1301,7 @@ Char GetLine ( void )
 **  with the inefficient C- strlen.  (FL)
 */
 
-void PutLine2(
-        TypOutputFile *         output,
-        const Char *            line,
-        UInt                    len )
+static void PutLine2(TypOutputFile * output, const Char * line, UInt len)
 {
   Obj                     str;
   UInt                    lstr;
@@ -1291,7 +1319,7 @@ void PutLine2(
     }
 
     /* Space for the null is allowed for in GAP strings */
-    C_NEW_STRING( str, len, line );
+    str = MakeImmStringWithLen(line, len);
 
     /* now delegate to library level */
     CALL_2ARGS( WriteAllFunc, output->stream, str );
@@ -1314,7 +1342,7 @@ void PutLine2(
 **  'OutputLog' is not 0 and the output file is '*stdout*' or '*errout*'.
 **
 */
-void PutLineTo(TypOutputFile * stream, UInt len)
+static void PutLineTo(TypOutputFile * stream, UInt len)
 {
   PutLine2( stream, stream->line, len );
 
@@ -1343,10 +1371,8 @@ void PutLineTo(TypOutputFile * stream, UInt len)
 
 /* helper function to add a hint about a possible line break;
    a triple (pos, value, indent), such that the minimal (value-pos) wins */
-void addLineBreakHint(TypOutputFile * stream,
-                      Int             pos,
-                      Int             val,
-                      Int             indentdiff)
+static void
+addLineBreakHint(TypOutputFile * stream, Int pos, Int val, Int indentdiff)
 {
   Int nr, i;
   /* find next free slot */
@@ -1373,7 +1399,7 @@ void addLineBreakHint(TypOutputFile * stream,
 }
 /* helper function to find line break position,
    returns position nr in stream[hints] or -1 if none found */
-Int nrLineBreak(TypOutputFile * stream)
+static Int nrLineBreak(TypOutputFile * stream)
 {
   Int nr=-1, min, i;
   for (i = 0, min = INT_MAX; stream->hints[3*i] != -1; i++)
@@ -1392,7 +1418,7 @@ Int nrLineBreak(TypOutputFile * stream)
 }
 
 
-void PutChrTo(TypOutputFile * stream, Char ch)
+static void PutChrTo(TypOutputFile * stream, Char ch)
 {
   Int                 i, hint, spos;
   Char                str [MAXLENOUTPUTLINE];
@@ -1554,7 +1580,7 @@ void PutChrTo(TypOutputFile * stream, Char ch)
 **
 */
 
-Obj FuncToggleEcho( Obj self)
+static Obj FuncToggleEcho(Obj self)
 {
     IO()->Input->echo = 1 - IO()->Input->echo;
     return (Obj)0;
@@ -1566,7 +1592,7 @@ Obj FuncToggleEcho( Obj self)
 **
 **  returns the current `Prompt' as GAP string.
 */
-Obj FuncCPROMPT( Obj self)
+static Obj FuncCPROMPT(Obj self)
 {
   Obj p;
   p = MakeString(STATE(Prompt));
@@ -1582,12 +1608,12 @@ Obj FuncCPROMPT( Obj self)
 **  (important is the flush character without resetting the cursor column)
 */
 
-Obj FuncPRINT_CPROMPT( Obj self, Obj prompt )
+static Obj FuncPRINT_CPROMPT(Obj self, Obj prompt)
 {
   if (IS_STRING_REP(prompt)) {
     /* by assigning to Prompt we also tell readline (if used) what the
        current prompt is  */
-    strlcpy(promptBuf, CSTR_STRING(prompt), sizeof(promptBuf));
+    strlcpy(promptBuf, CONST_CSTR_STRING(prompt), sizeof(promptBuf));
     STATE(Prompt) = promptBuf;
   }
   Pr("%s%c", (Int)STATE(Prompt), (Int)'\03' );
@@ -1623,8 +1649,8 @@ void ResetOutputIndent(void)
 **          to a string in STRING_REP format which is printed in '%s' format
 **  '%G'    the corresponding argument is the address of an Obj which points
 **          to a string in STRING_REP format which is printed in '%S' format
-**  '%C'    the corresponding argument is the address of  a  null  terminated
-**          character string which is printed with C escapes.
+**  '%C'    the corresponding argument is the address of an Obj which points
+**          to a string in STRING_REP format which is printed with C escapes
 **  '%d'    the corresponding argument is a signed integer, which is printed.
 **          Between the '%' and the 'd' an integer might be used  to  specify
 **          the width of a field in which the integer is right justified.  If
@@ -1715,14 +1741,14 @@ static inline void FormatOutput(
       // which occurs in put_a_char
       if (*p == 'g') {
         arg1obj = (Obj)arg1;
-        arg1 = (Int)CSTR_STRING(arg1obj);
+        arg1 = (Int)CONST_CSTR_STRING(arg1obj);
       }
       else {
         arg1obj = 0;
       }
 
       /* compute how many characters this identifier requires    */
-      for ( Char * q = (Char *)arg1; *q != '\0' && prec > 0; q++ ) {
+      for ( const Char * q = (const Char *)arg1; *q != '\0' && prec > 0; q++ ) {
         prec--;
       }
 
@@ -1730,14 +1756,14 @@ static inline void FormatOutput(
       while ( prec-- > 0 )  put_a_char(state, ' ');
 
       if (arg1obj) {
-          arg1 = (Int)CSTR_STRING(arg1obj);
+          arg1 = (Int)CONST_CSTR_STRING(arg1obj);
       }
 
       /* print the string                                        */
       /* must be careful that line breaks don't go inside
          escaped sequences \n or \123 or similar */
-      for ( Int i = 0; ((Char *)arg1)[i] != '\0'; i++ ) {
-          Char* q = ((Char *)arg1) + i;
+      for ( Int i = 0; ((const Char *)arg1)[i] != '\0'; i++ ) {
+          const Char* q = ((const Char *)arg1) + i;
           if (*q == '\\' && IO()->NoSplitLine == 0) {
               if (*(q + 1) < '8' && *(q + 1) >= '0')
                   IO()->NoSplitLine = 3;
@@ -1749,7 +1775,7 @@ static inline void FormatOutput(
         put_a_char(state, *q);
 
         if (arg1obj) {
-          arg1 = (Int)CSTR_STRING(arg1obj);
+          arg1 = (Int)CONST_CSTR_STRING(arg1obj);
         }
       }
 
@@ -1765,7 +1791,7 @@ static inline void FormatOutput(
       // which occurs in put_a_char
       if (*p == 'G') {
         arg1obj = (Obj)arg1;
-        arg1 = (Int)CSTR_STRING(arg1obj);
+        arg1 = (Int)CONST_CSTR_STRING(arg1obj);
       }
       else {
         arg1obj = 0;
@@ -1773,7 +1799,7 @@ static inline void FormatOutput(
 
 
       /* compute how many characters this identifier requires    */
-      for ( Char * q = (Char *)arg1; *q != '\0' && prec > 0; q++ ) {
+      for ( const Char * q = (const Char *)arg1; *q != '\0' && prec > 0; q++ ) {
         if      ( *q == '\n'  ) { prec -= 2; }
         else if ( *q == '\t'  ) { prec -= 2; }
         else if ( *q == '\r'  ) { prec -= 2; }
@@ -1790,12 +1816,12 @@ static inline void FormatOutput(
       while ( prec-- > 0 )  put_a_char(state, ' ');
 
       if (arg1obj) {
-          arg1 = (Int)CSTR_STRING(arg1obj);
+          arg1 = (Int)CONST_CSTR_STRING(arg1obj);
       }
 
       /* print the string                                        */
-      for ( Int i = 0; ((Char *)arg1)[i] != '\0'; i++ ) {
-        Char* q = ((Char *)arg1) + i;
+      for ( Int i = 0; ((const Char *)arg1)[i] != '\0'; i++ ) {
+        const Char* q = ((const Char *)arg1) + i;
         if      ( *q == '\n'  ) { put_a_char(state, '\\'); put_a_char(state, 'n');  }
         else if ( *q == '\t'  ) { put_a_char(state, '\\'); put_a_char(state, 't');  }
         else if ( *q == '\r'  ) { put_a_char(state, '\\'); put_a_char(state, 'r');  }
@@ -1808,7 +1834,7 @@ static inline void FormatOutput(
         else                    { put_a_char(state, *q);               }
 
         if (arg1obj) {
-          arg1 = (Int)CSTR_STRING(arg1obj);
+          arg1 = (Int)CONST_CSTR_STRING(arg1obj);
         }
       }
 
@@ -1819,8 +1845,11 @@ static inline void FormatOutput(
     /* '%C' print a string with the necessary C escapes            */
     else if ( *p == 'C' ) {
 
+      arg1obj = (Obj)arg1;
+      arg1 = (Int)CONST_CSTR_STRING(arg1obj);
+
       /* compute how many characters this identifier requires    */
-      for ( Char * q = (Char *)arg1; *q != '\0' && prec > 0; q++ ) {
+      for ( const Char * q = (const Char *)arg1; *q != '\0' && prec > 0; q++ ) {
         if      ( *q == '\n'  ) { prec -= 2; }
         else if ( *q == '\t'  ) { prec -= 2; }
         else if ( *q == '\r'  ) { prec -= 2; }
@@ -1837,7 +1866,12 @@ static inline void FormatOutput(
       while ( prec-- > 0 )  put_a_char(state, ' ');
 
       /* print the string                                        */
-      for ( Char * q = (Char *)arg1; *q != '\0'; q++ ) {
+      Int i = 0;
+      while (1) {
+        const Char* q = CONST_CSTR_STRING(arg1obj) + i++;
+        if (*q == 0)
+            break;
+
         if      ( *q == '\n'  ) { put_a_char(state, '\\'); put_a_char(state, 'n');  }
         else if ( *q == '\t'  ) { put_a_char(state, '\\'); put_a_char(state, 't');  }
         else if ( *q == '\r'  ) { put_a_char(state, '\\'); put_a_char(state, 'r');  }
@@ -1866,20 +1900,20 @@ static inline void FormatOutput(
       // which occurs in put_a_char
       if (*p == 'H') {
         arg1obj = (Obj)arg1;
-        arg1 = (Int)CSTR_STRING(arg1obj);
+        arg1 = (Int)CONST_CSTR_STRING(arg1obj);
       }
       else {
         arg1obj = 0;
       }
 
       /* check if q matches a keyword    */
-      found_keyword = IsKeyword((Char *)arg1);
+      found_keyword = IsKeyword((const Char *)arg1);
 
       /* compute how many characters this identifier requires    */
       if (found_keyword) {
         prec--;
       }
-      for ( Char * q = (Char *)arg1; *q != '\0'; q++ ) {
+      for ( const Char * q = (const Char *)arg1; *q != '\0'; q++ ) {
         if ( !IsIdent(*q) && !IsDigit(*q) ) {
           prec--;
         }
@@ -1894,15 +1928,15 @@ static inline void FormatOutput(
         put_a_char(state, '\\');
       }
 
-      for ( Int i = 0; ((Char *)arg1)[i] != '\0'; i++ ) {
-        Char c = ((Char *)arg1)[i];
+      for ( Int i = 0; ((const Char *)arg1)[i] != '\0'; i++ ) {
+        Char c = ((const Char *)arg1)[i];
 
         if ( !IsIdent(c) && !IsDigit(c) ) {
           put_a_char(state, '\\');
         }
         put_a_char(state, c);
         if (arg1obj) {
-          arg1 = (Int)CSTR_STRING(arg1obj);
+          arg1 = (Int)CONST_CSTR_STRING(arg1obj);
         }
       }
 
@@ -1990,7 +2024,7 @@ void SPrTo(Char *buffer, UInt maxlen, const Char *format, Int arg1, Int arg2)
 }
 
 
-Obj FuncINPUT_FILENAME( Obj self)
+static Obj FuncINPUT_FILENAME(Obj self)
 {
     if (IO()->Input == 0)
         return MakeImmString("*defin*");
@@ -1999,18 +2033,18 @@ Obj FuncINPUT_FILENAME( Obj self)
     return GetCachedFilename(gapnameid);
 }
 
-Obj FuncINPUT_LINENUMBER( Obj self)
+static Obj FuncINPUT_LINENUMBER(Obj self)
 {
     return INTOBJ_INT(IO()->Input ? IO()->Input->number : 0);
 }
 
-Obj FuncSET_PRINT_FORMATTING_STDOUT(Obj self, Obj val)
+static Obj FuncSET_PRINT_FORMATTING_STDOUT(Obj self, Obj val)
 {
     IO()->OutputStack[1]->format = (val != False);
     return val;
 }
 
-Obj FuncIS_INPUT_TTY(Obj self)
+static Obj FuncIS_INPUT_TTY(Obj self)
 {
     GAP_ASSERT(IO()->Input);
     if (IO()->Input->isstream)
@@ -2018,7 +2052,7 @@ Obj FuncIS_INPUT_TTY(Obj self)
     return SyBufIsTTY(IO()->Input->file) ? True : False;
 }
 
-Obj FuncIS_OUTPUT_TTY(Obj self)
+static Obj FuncIS_OUTPUT_TTY(Obj self)
 {
     GAP_ASSERT(IO()->Output);
     if (IO()->Output->isstream)
@@ -2026,7 +2060,7 @@ Obj FuncIS_OUTPUT_TTY(Obj self)
     return SyBufIsTTY(IO()->Output->file) ? True : False;
 }
 
-Obj FuncGET_FILENAME_CACHE(Obj self)
+static Obj FuncGET_FILENAME_CACHE(Obj self)
 {
   return CopyObj(FilenameCache, 1);
 }

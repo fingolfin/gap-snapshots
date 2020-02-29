@@ -65,7 +65,6 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X876A6EB68745A510">4.9-9 NamesGVars</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7E604AF579A7BC92">4.9-10 NamesSystemGVars</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X870169447AF490D8">4.9-11 NamesUserGVars</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X798433307E62DCBA">4.9-12 TemporaryGlobalVarName</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7DF8774F7D542298">4.10 <span class="Heading">Namespaces for <strong class="pkg">GAP</strong> packages</span></a>
 </span>
@@ -117,11 +116,16 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X812C6ABC7A182E9E">4.24 <span class="Heading">Return (With or without Value)</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X8732D9257FFCEA1B">4.25 <span class="Heading">Syntax Trees</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X81558D66810BEA67">4.25-1 SyntaxTree</a></span>
+</div></div>
 </div>
 
 <h3>4 <span class="Heading">The Programming Language</span></h3>
 
-<p>This chapter describes the <strong class="pkg">GAP</strong> programming language. It should allow you in principle to predict the result of each and every input. In order to know what we are talking about, we first have to look more closely at the process of interpretation and the various representations of data involved.</p>
+<p>This chapter describes the <strong class="pkg">GAP</strong> programming language. It should allow you, in principle, to predict the result of each and every input. In order to know what we are talking about, we first have to look more closely at the process of interpretation and the various representations of data involved.</p>
 
 <p><a id="X7B5FF6827DFBDF20" name="X7B5FF6827DFBDF20"></a></p>
 
@@ -176,7 +180,7 @@
 [    \    ]    ^    _    {    }    ! 
 </pre></div>
 
-<p>It is possible to use other characters in identifiers by escaping them with backslashes, but we do not recommend to use this feature. Inside strings (see section <a href="chap4.html#X7E90E6607F4E4943"><span class="RefLink">4.3</span></a> and chapter <a href="chap27.html#X7D28329B7EDB8F47"><span class="RefLink">27</span></a>) and comments (see <a href="chap4.html#X7C53CEFC8641B919"><span class="RefLink">4.4</span></a>) the full character set supported by the computer is allowed.</p>
+<p>It is possible to use other characters in identifiers by escaping them with backslashes, but we do not recommend the use of this feature. Inside strings (see section <a href="chap4.html#X7E90E6607F4E4943"><span class="RefLink">4.3</span></a> and chapter <a href="chap27.html#X7D28329B7EDB8F47"><span class="RefLink">27</span></a>) and comments (see <a href="chap4.html#X7C53CEFC8641B919"><span class="RefLink">4.4</span></a>) the full character set supported by the computer is allowed.</p>
 
 <p><a id="X7E90E6607F4E4943" name="X7E90E6607F4E4943"></a></p>
 
@@ -259,7 +263,7 @@ ifi&lt;0thena:=-i;elsea:=i;fi;
 
 <p>Note that (almost) all keywords are written in lowercase and that they are case sensitive. For example <code class="keyw">else</code> is a keyword; <code class="code">Else</code>, <code class="code">eLsE</code>, <code class="code">ELSE</code> and so forth are ordinary identifiers. Keywords must not contain whitespace, for example <code class="code">el if</code> is not the same as <code class="keyw">elif</code>.</p>
 
-<p><em>Note</em>: Several tokens from the list of keywords above may appear to be normal identifiers representing functions or literals of various kinds but are actually implemented as keywords for technical reasons. The only consequence of this is that those identifiers cannot be re-assigned, and do not actually have function objects bound to them, which could be assigned to other variables or passed to functions. These keywords are <code class="keyw">true</code>, <code class="keyw">false</code>, <code class="func">Assert</code> (<a href="chap7.html#X830E443284780FB9"><span class="RefLink">7.5-3</span></a>), <code class="func">IsBound</code> (<a href="chap4.html#X842B89D4860FD5DB"><span class="RefLink">4.8-1</span></a>), <code class="func">Unbind</code> (<a href="chap4.html#X7BABB3E77F52626C"><span class="RefLink">4.8-2</span></a>), <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) and <code class="func">TryNextMethod</code> (<a href="chap78.html#X7EED949B83046A7F"><span class="RefLink">78.4-1</span></a>).</p>
+<p><em>Note</em>: Several tokens from the list of keywords above may appear to be normal identifiers representing functions or literals of various kinds but are actually implemented as keywords for technical reasons. The only consequence of this is that those identifiers cannot be re-assigned, and do not actually have function objects bound to them, which could be assigned to other variables or passed to functions. These keywords are <code class="keyw">true</code>, <code class="keyw">false</code>, <code class="func">Assert</code> (<a href="chap7.html#X830E443284780FB9"><span class="RefLink">7.5-3</span></a>), <code class="func">IsBound</code> (<a href="chap4.html#X842B89D4860FD5DB"><span class="RefLink">4.8-1</span></a>), <code class="func">Unbind</code> (<a href="chap4.html#X7BABB3E77F52626C"><span class="RefLink">4.8-2</span></a>), <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-6</span></a>) and <code class="func">TryNextMethod</code> (<a href="chap78.html#X7EED949B83046A7F"><span class="RefLink">78.5-1</span></a>).</p>
 
 <p>Keywords <code class="code">atomic</code>, <code class="code">readonly</code>, <code class="code">readwrite</code> are not used at the moment. They are reserved for the future version of GAP to prevent their accidental use as identifiers.</p>
 
@@ -415,7 +419,7 @@ end
 
 <p>Second, a group of functions are supplied for accessing and altering the values assigned to global variables. Use of these functions differs from the use of assignment, <code class="func">Unbind</code> (<a href="chap4.html#X7BABB3E77F52626C"><span class="RefLink">4.8-2</span></a>) and <code class="func">IsBound</code> (<a href="chap4.html#X842B89D4860FD5DB"><span class="RefLink">4.8-1</span></a>) statements, in two ways. First, these functions always affect global variables, even if local variables of the same names exist. Second, the variable names are passed as strings, rather than being written directly into the statements.</p>
 
-<p>Note that the functions <code class="func">NamesGVars</code> (<a href="chap4.html#X876A6EB68745A510"><span class="RefLink">4.9-9</span></a>), <code class="func">NamesSystemGVars</code> (<a href="chap4.html#X7E604AF579A7BC92"><span class="RefLink">4.9-10</span></a>), <code class="func">NamesUserGVars</code> (<a href="chap4.html#X870169447AF490D8"><span class="RefLink">4.9-11</span></a>), and <code class="func">TemporaryGlobalVarName</code> (<a href="chap4.html#X798433307E62DCBA"><span class="RefLink">4.9-12</span></a>) deal with the <em>global namespace</em>.</p>
+<p>Note that the functions <code class="func">NamesGVars</code> (<a href="chap4.html#X876A6EB68745A510"><span class="RefLink">4.9-9</span></a>), <code class="func">NamesSystemGVars</code> (<a href="chap4.html#X7E604AF579A7BC92"><span class="RefLink">4.9-10</span></a>), and <code class="func">NamesUserGVars</code> (<a href="chap4.html#X870169447AF490D8"><span class="RefLink">4.9-11</span></a>), deal with the <em>global namespace</em>.</p>
 
 <p><a id="X7CD3523B84744EB2" name="X7CD3523B84744EB2"></a></p>
 
@@ -552,13 +556,6 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NamesUserGVars</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function returns an immutable sorted list of the global variable names created since the library was read, to which a value is currently bound.</p>
 
-<p><a id="X798433307E62DCBA" name="X798433307E62DCBA"></a></p>
-
-<h5>4.9-12 TemporaryGlobalVarName</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TemporaryGlobalVarName</code>( [<var class="Arg">prefix</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>returns a string that can be used as the name of a global variable that is not bound at the time when <code class="func">TemporaryGlobalVarName</code> is called. The optional argument <var class="Arg">prefix</var> can specify a string with which the name of the global variable starts.</p>
-
 <p><a id="X7DF8774F7D542298" name="X7DF8774F7D542298"></a></p>
 
 <h4>4.10 <span class="Heading">Namespaces for <strong class="pkg">GAP</strong> packages</span></h4>
@@ -575,7 +572,7 @@ true
 
 </pre></div>
 
-<p>Then actually the global variable <code class="code">a@xYz</code> is assigned. Further accesses to <code class="code">a@</code> within the package code will all be redirected to <code class="code">a@xYz</code>. This includes all the functions described in Section <a href="chap4.html#X816FBEEA85782EC2"><span class="RefLink">4.9</span></a> and indeed all the functions described Section <a href="chap79.html#X87E29BA57C8208A4"><span class="RefLink">79.18</span></a> like for example <code class="func">DeclareCategory</code> (<a href="chap79.html#X879DE2A17A6C6E92"><span class="RefLink">79.18-1</span></a>). Note that from code in the same package it is still possible to access the same global variable via <code class="code">a@xYz</code> explicitly.</p>
+<p>Then actually the global variable <code class="code">a@xYz</code> is assigned. Further accesses to <code class="code">a@</code> within the package code will all be redirected to <code class="code">a@xYz</code>. This includes all the functions described in Section <a href="chap4.html#X816FBEEA85782EC2"><span class="RefLink">4.9</span></a> and indeed all the functions described Section <a href="chap79.html#X87E29BA57C8208A4"><span class="RefLink">79.10</span></a> like for example <code class="func">DeclareCategory</code> (<a href="chap13.html#X879DE2A17A6C6E92"><span class="RefLink">13.3-5</span></a>). Note that from code in the same package it is still possible to access the same global variable via <code class="code">a@xYz</code> explicitly.</p>
 
 <p>All other code outside the package as well as interactive user input that wants to refer to that variable <code class="code">a@xYz</code> must do so explicitly by using <code class="code">a@xYz</code>.</p>
 
@@ -1322,6 +1319,19 @@ end
 <p>Both statements can also be used in break loops (see <a href="chap6.html#X8593B49F8705B486"><span class="RefLink">6.4</span></a>). <code class="code">return;</code> has the effect that the computation continues where it was interrupted by an error or the user hitting <strong class="button">Ctrl-C</strong>. <code class="code">return <var class="Arg">expr</var>;</code> can be used to continue execution after an error. What happens with the value <var class="Arg">expr</var> depends on the particular error.</p>
 
 <p>For examples of <code class="keyw">return</code> statements, see the functions <code class="code">fib</code> and <code class="code">Stack</code> in Section <a href="chap4.html#X815F71EA7BC0EB6F"><span class="RefLink">4.23</span></a>.</p>
+
+<p><a id="X8732D9257FFCEA1B" name="X8732D9257FFCEA1B"></a></p>
+
+<h4>4.25 <span class="Heading">Syntax Trees</span></h4>
+
+<p>This section describes the tools available to handle <strong class="pkg">GAP</strong> syntax trees.</p>
+
+<p><a id="X81558D66810BEA67" name="X81558D66810BEA67"></a></p>
+
+<h5>4.25-1 SyntaxTree</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SyntaxTree</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Takes a GAP function <var class="Arg">f</var> and returns its syntax tree.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5.html">[Next Chapter]</a>&nbsp;  </div>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Fans">
+<Heading>Fans</Heading>
+
+<Section Label="Chapter_Fans_Section_Constructors">
+<Heading>Constructors</Heading>
+
+<P/>
+<ManSection>
+  <Oper Arg="F" Name="Fan" Label="for IsFan"/>
+ <Returns>a fan object
+</Returns>
+ <Description>
+ If the input <A>F</A> is fan then return <A>F</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C" Name="Fan" Label="for IsList"/>
+ <Returns>a fan object
+</Returns>
+ <Description>
+ The input is a list of list <Math>C</Math>. the output is the fan defined by the cones 
+ <Math>\{\mathrm{Cone}_i(C_i )\}_{C_i\in C}</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="R, C" Name="Fan" Label="for IsList, IsList"/>
+ <Returns>a fan object
+</Returns>
+ <Description>
+ The input is two lists, <Math>R</Math> that indicates the rays and <Math>C</Math>
+ that indicates the cones. The output is the fan defined by the cones
+ <Math>\{\mathrm{Cone}_i(\{ R_j, j\in C_i\} )\}_{C_i\in C}</Math>.
+ </Description>
+</ManSection>
+
+
+<#Include Label="fan1">
+
+<#Include Label="fan2">
+
+<ManSection>
+  <Oper Arg="R" Name="FansFromTriangulation" Label="for IsList"/>
+ <Returns>a list of fans
+</Returns>
+ <Description>
+ The input is a list of ray generators <Math>R</Math>. Provided that the package
+ TopcomInterface is available, this function computes the list of all
+ fine and regular triangulations of these ray generators. It then returns
+ the list of the associated fans of these triangulations.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="R" Name="FanFromTriangulation" Label="for IsList"/>
+ <Returns>a fan
+</Returns>
+ <Description>
+ The input is a list of ray generators <Math>R</Math>. Provided that the package
+ TopcomInterface is available, this function computes a
+ fine and regular triangulation of these ray generators and returns
+ the associated fan.
+ </Description>
+</ManSection>
+
+
+<#Include Label="fan3">
+
+</Section>
+
+
+<Section Label="Chapter_Fans_Section_Attributes">
+<Heading>Attributes</Heading>
+
+<P/>
+<ManSection>
+  <Attr Arg="F" Name="RayGenerators" Label="for IsFan"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ The input is a fan <A>F</A>. The output is the set of all ray generators of the maximal cones in the fan.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="F" Name="GivenRayGenerators" Label="for IsFan"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ The input is a fan <A>F</A>. The output is the given or defining set of ray generators of the maximal cones in the fan.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="F" Name="RaysInMaximalCones" Label="for IsFan"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ The input is a fan <A>F</A>. The output is a list of lists.
+ which represent an incidence matrix for the correspondence of the rays and the maximal cones of the fan <A>F</A>.
+ The i'th list in the result represents the i'th maximal cone of <A>F</A>.
+ In such a list, the j'th entry is <Math>1</Math> if the j'th ray is in the cone, 0 otherwise.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="F" Name="MaximalCones" Label="for IsFan"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ The input is a fan <A>F</A>. The output is a list of the maximal cones of <A>F</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="F" Name="FVector" Label="for IsFan"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ Description
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Fans_Section_Properties">
+<Heading>Properties</Heading>
+
+<P/>
+<ManSection>
+  <Prop Arg="F" Name="IsWellDefinedFan" Label="for IsFan"/>
+ <Returns>a true or false
+</Returns>
+ <Description>
+ It checks whether the constructed fan is well defined or not.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="F" Name="IsComplete" Label="for IsFan"/>
+ <Returns>a true or false
+</Returns>
+ <Description>
+ Checks whether the fan is complete, i.e. if its support is the whole space.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="F" Name="IsPointed" Label="for IsFan"/>
+ <Returns>a true or false
+</Returns>
+ <Description>
+ Checks whether the fan is pointed, i.e., that every cone it contains is pointed.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="F" Name="IsSmooth" Label="for IsFan"/>
+ <Returns>a true or false
+</Returns>
+ <Description>
+ Checks if the fan is smooth, i.e. if every cone in the fan is smooth.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="F" Name="IsSimplicial" Label="for IsFan"/>
+ <Returns>a true or false
+</Returns>
+ <Description>
+ Checks if the fan is simplicial, i.e. if every cone in the fan is simplicial.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="F" Name="IsNormalFan" Label="for IsFan"/>
+ <Returns>a true or false
+</Returns>
+ <Description>
+ Checks if the fan is normal as described in (Theorem 4.7, Combinatorial convexity and algebraic geometry, Ewald, Guenter).
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="F" Name="IsRegularFan" Label="for IsFan"/>
+ <Returns>a true or false
+</Returns>
+ <Description>
+ Synonyme to <C>IsNormalFan</C>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="F" Name="IsFanoFan" Label="for IsFan"/>
+ <Returns>a true or false
+</Returns>
+ <Description>
+ Checks whether the fan is a fano fan.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Fans_Section_Operations_on_fans">
+<Heading>Operations on fans</Heading>
+
+<P/>
+<#Include Label="fan4">
+
+</Section>
+
+
+</Chapter>
+

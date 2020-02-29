@@ -1,13 +1,11 @@
 /****************************************************************************
 **
-*W  sysfiles.c                  GAP source                       Frank Celler
-*W                                                         & Martin Schönert
-*W                                                  & Burkhard Höfling (MAC)
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  The  files  "system.c" and  "sysfiles.c"   contain  all operating  system
 **  dependent functions.  File and  stream operations are implemented in this
@@ -72,14 +70,6 @@ typedef void sig_handler_t ( int );
 
 #ifdef SYS_IS_CYGWIN32
 #include <process.h>
-#endif
-
-#ifdef HAVE_RLD_LOAD
-#include <mach-o/rld.h>
-#endif
-
-#ifdef HAVE_DLOPEN
-#include <dlfcn.h>
 #endif
 
 #ifdef SYS_IS_DARWIN
@@ -152,13 +142,14 @@ typedef struct {
     UInt buflen;
 } SYS_SY_BUFFER;
 
-SYS_SY_BUF syBuf[256];
+static SYS_SY_BUF syBuf[256];
 
-SYS_SY_BUFFER syBuffers[32];
+static SYS_SY_BUFFER syBuffers[32];
 
 
 /* utility to check return value of 'write'  */
-ssize_t echoandcheck(int fid, const char *buf, size_t count) {
+static ssize_t echoandcheck(int fid, const char *buf, size_t count)
+{
   int ret;
   if (syBuf[fid].type == gzip_socket) {
       ret = gzwrite(syBuf[fid].gzfp, buf, count);
@@ -361,24 +352,20 @@ gap> CrcString("GAP example string");
 */
 
 /* And here we include a variant working on a GAP string */
-Obj FuncCrcString( Obj self, Obj str ) {
+static Obj FuncCrcString(Obj self, Obj str)
+{
     UInt4       crc;
     UInt4       old;
     UInt4       new;
     UInt4       i, len;
-    Char        *ptr;
+    const Char  *ptr;
     Int4        ch;
     Int         seen_nl;
 
-    /* check the argument                                                  */
-    while ( ! IsStringConv( str ) ) {
-        str = ErrorReturnObj(
-            "<str> must be a string (not a %s)",
-            (Int)TNAM_OBJ(str), 0L,
-            "you can replace <filename> via 'return <str>;'" );
-    }
+    // check the argument
+    RequireStringRep("CrcString", str);
 
-    ptr = CSTR_STRING(str);
+    ptr = CONST_CSTR_STRING(str);
     len = GET_LEN_STRING(str);
     crc = 0x12345678L;
     seen_nl = 0;
@@ -407,98 +394,16 @@ Obj FuncCrcString( Obj self, Obj str ) {
 
 /****************************************************************************
 **
-*F  SyLoadModule( <name>, <func> )  . . . . . . . . .  load a compiled module
-*/
-
-#define SYS_INIT_DYNAMIC       "Init__Dynamic"
-
-
-/****************************************************************************
-**
-*f  SyLoadModule( <name> )  . . . . . . . . . . . . . . . . . . . . .  dlopen
-*/
-#ifdef HAVE_DLOPEN
-
-#ifndef RTLD_LAZY
-#define RTLD_LAZY               1
-#endif
-
-Int SyLoadModule( const Char * name, InitInfoFunc * func )
-{
-    void *          init;
-    void *          handle;
-
-    *func = 0;
-
-    handle = dlopen( name, RTLD_LAZY | RTLD_GLOBAL);
-    if ( handle == 0 ) {
-      Pr("#W dlopen() error: %s\n", (long) dlerror(), 0L);
-      return 1;
-    }
-
-    init = dlsym( handle, SYS_INIT_DYNAMIC );
-    if ( init == 0 )
-      return 3;
-
-    *func = (InitInfoFunc) init;
-    return 0;
-}
-
-
-/****************************************************************************
-**
-*f  SyLoadModule( <name> )  . . . . . . . . . . . . . . . . . . . .  rld_load
-*/
-#elif defined(HAVE_RLD_LOAD)
-
-InitInfoFunc SyLoadModule( const Char * name, InitInfoFunc * func )
-{
-    const Char *    names[2];
-    unsigned long   init;
-
-    *func = 0;
-
-    names[0] = name;
-    names[1] = 0;
-    if ( rld_load( 0, 0,  names, 0 ) == 0 ) {
-        return 1;
-    }
-    if ( rld_lookup( 0, SYS_INIT_DYNAMIC, &init ) == 0 ) {
-        return 3;
-    }
-    if ( rld_forget_symbol( 0, SYS_INIT_DYNAMIC ) == 0 ) {
-        return 5;
-    }
-    *func = (InitInfoFunc) init;
-    return 0;
-}
-
-
-/****************************************************************************
-**
-*f  SyLoadModule( <name> )  . . . . . . . . . . . . . . . . . . .  no support
-*/
-#else
-
-Int SyLoadModule( const Char * name, InitInfoFunc * func )
-{
-    *func = 0;
-    return 7;
-}
-
-#endif
-
-/****************************************************************************
-**
 *F * * * * * * * * * * finding location of executable * * * * * * * * * * * *
 */
 
 /****************************************************************************
 ** The function 'find_yourself' is based on code (C) 2015 Mark Whitis, under
-** the MIT License : http://stackoverflow.com/a/34271901/928031
+** the MIT License : https://stackoverflow.com/a/34271901/928031
 */
 
-void find_yourself(const char * argv0, char * result, size_t resultsize)
+static void
+find_yourself(const char * argv0, char * result, size_t resultsize)
 {
     GAP_ASSERT(resultsize >= GAP_PATH_MAX);
 
@@ -686,7 +591,7 @@ void syWinPut (
 **  '@J'.  Then  'SyWinCmd' waits for  the window handlers answer and returns
 **  that string.
 */
-Char WinCmdBuffer [8000];
+static Char WinCmdBuffer[8000];
 
 const Char * SyWinCmd (
     const Char *        str,
@@ -820,7 +725,7 @@ void SyRedirectStderrToStdOut(void)
 **  Given a 'syBuf' buffer id, return the associated file descriptor, if any.
 **  For gzipped files, -1 is returned.
 */
-extern int SyBufFileno(Int fid)
+int SyBufFileno(Int fid)
 {
     if (fid == -1)
         return -1;
@@ -933,11 +838,9 @@ Int SyFopen (
       flags = O_WRONLY | O_CREAT | O_TRUNC;
     else if (strncmp( mode, "a",1) == 0)
       flags = O_WRONLY | O_APPEND | O_CREAT;
-    else
-      {
-        Pr("Panic: Unknown mode %s\n",(Int) mode, 0);
-        SyExit(2);
-      }
+    else {
+        Panic("Unknown mode %s", mode);
+    }
 
 #ifdef SYS_IS_CYGWIN32
     if(strlen(mode) >= 2 && mode[1] == 'b')
@@ -1105,20 +1008,20 @@ Int SyIsEndOfFile (
 **  continue signals if this particular version  of UNIX supports them, so we
 **  can turn the terminal line back to cooked mode before stopping GAP.
 */
-struct termios   syOld, syNew;           /* old and new terminal state      */
+static struct termios   syOld, syNew;           /* old and new terminal state      */
 
 #ifdef SIGTSTP
 
-Int syFid;
+static Int syFid;
 
-void syAnswerCont ( int signr )
+static void syAnswerCont(int signr)
 {
     syStartraw( syFid );
     signal( SIGCONT, SIG_DFL );
     kill( getpid(), SIGCONT );
 }
 
-void syAnswerTstp ( int signr )
+static void syAnswerTstp(int signr)
 {
     syStopraw( syFid );
     signal( SIGCONT, syAnswerCont );
@@ -1215,14 +1118,14 @@ void syStopraw (
 #ifdef HAVE_SIGNAL
 
 
-UInt            syLastIntr;             /* time of the last interrupt      */
+static UInt syLastIntr; /* time of the last interrupt      */
 
 
 #ifdef HAVE_LIBREADLINE
-Int doingReadline;
+static Int doingReadline;
 #endif
 
-void syAnswerIntr ( int signr )
+static void syAnswerIntr(int signr)
 {
     UInt                nowIntr;
 
@@ -1375,9 +1278,7 @@ void getwindowsize( void )
 **
 *f  syEchoch( <ch>, <fid> )
 */
-void syEchoch (
-    Int                 ch,
-    Int                 fid )
+static void syEchoch(Int ch, Int fid)
 {
     Char                ch2;
 
@@ -1420,9 +1321,7 @@ Int SyEchoch (
 **
 *f  syEchos( <ch>, <fid> )
 */
-void syEchos (
-    const Char *        str,
-    Int                 fid )
+static void syEchos(const Char * str, Int fid)
 {
     /* if running under a window handler, send the line to it              */
     if ( SyWindow && fid < 4 )
@@ -1440,9 +1339,8 @@ void syEchos (
 **
 **  'SyFputs' is called to put the  <line>  to the file identified  by <fid>.
 */
-UInt   syNrchar;                        /* nr of chars already on the line */
-Char   syPrompt [MAXLENOUTPUTLINE];     /* characters already on the line  */
-
+static UInt syNrchar;                   /* nr of chars already on the line */
+static Char syPrompt[MAXLENOUTPUTLINE]; /* characters already on the line  */
 
 
 /****************************************************************************
@@ -1507,6 +1405,7 @@ Int SyFtell (
     case gzip_socket:
         ret = (Int)gzseek(syBuf[fid].gzfp, 0, SEEK_CUR);
         break;
+    case unused_socket:
     default:
         return -1;
     }
@@ -1544,6 +1443,7 @@ Int SyFseek (
         return (Int)lseek(syBuf[fid].fp, pos, SEEK_SET);
     case gzip_socket:
         return (Int)gzseek(syBuf[fid].gzfp, pos, SEEK_SET);
+    case unused_socket:
     default:
         return -1;
     }
@@ -1666,8 +1566,7 @@ static ssize_t SyWriteandcheck(Int fid, const void * buf, size_t count)
     return ret;
 }
 
-Int syGetchTerm (
-    Int                 fid )
+static Int syGetchTerm(Int fid)
 {
     UChar                ch;
     Char                str[2];
@@ -1719,16 +1618,17 @@ Int syGetchTerm (
         syBuf[fid].crlast = 1;
         return (Int)'\n';
     }
+    // We saw a '\r' without a '\n'
+    syBuf[fid].crlast = 0;
 #endif  /* line end hack */
 
     /* return the character                                                */
     return (Int)ch;
 }
 
-Int syGetchNonTerm (
-    Int                 fid )
+static Int syGetchNonTerm(Int fid)
 {
-    UChar                ch;
+    UChar               ch = 0;
     UInt                bufno;
     int                 ret;
 
@@ -1780,6 +1680,8 @@ Int syGetchNonTerm (
         syBuf[fid].crlast = 1;
         return (Int)'\n';
     }
+    // We saw a '\r' without a '\n'
+    syBuf[fid].crlast = 0;
 #endif  /* line end hack */
 
     /* return the character                                                */
@@ -1793,8 +1695,7 @@ Int syGetchNonTerm (
 *f  syGetch( <fid> )
 */
 
-Int syGetch (
-    Int                 fid )
+static Int syGetch(Int fid)
 {
     if (syBuf[fid].isTTY)
       return syGetchTerm(fid);
@@ -1890,31 +1791,31 @@ Int SyGetch (
 **      <esc>-T exchange two words.
 */
 
-UInt   syCTRO;                          /* number of '<ctr>-O' pending     */
-UInt   syESCN;                          /* number of '<Esc>-N' pending     */
+static UInt syCTRO; /* number of '<ctr>-O' pending     */
+static UInt syESCN; /* number of '<Esc>-N' pending     */
 
-UInt FreezeStdin;    // When true, ignore if any new input from stdin
-                     // This is used to stop HPC-GAP from reading stdin while
-                     // forked subprocesses are running.
+static UInt FreezeStdin;    // When true, ignore if any new input from stdin
+                            // This is used to stop HPC-GAP from reading stdin
+                            // while forked subprocesses are running.
 
 
 #ifdef HAVE_SELECT
 
-Obj OnCharReadHookActive = 0;  /* if bound the hook is active */
-Obj OnCharReadHookInFds = 0;   /* a list of UNIX file descriptors for reading */
-Obj OnCharReadHookInFuncs = 0; /* a list of GAP functions with 0 args */
-Obj OnCharReadHookOutFds = 0;  /* a list of UNIX file descriptors for writing */
-Obj OnCharReadHookOutFuncs = 0;/* a list of GAP functions with 0 args */
-Obj OnCharReadHookExcFds = 0;  /* a list of UNIX file descriptors */
-Obj OnCharReadHookExcFuncs = 0;/* a list of GAP functions with 0 args */
+static Obj OnCharReadHookActive = 0;  /* if bound the hook is active */
+static Obj OnCharReadHookInFds = 0;   /* a list of UNIX file descriptors for reading */
+static Obj OnCharReadHookInFuncs = 0; /* a list of GAP functions with 0 args */
+static Obj OnCharReadHookOutFds = 0;  /* a list of UNIX file descriptors for writing */
+static Obj OnCharReadHookOutFuncs = 0;/* a list of GAP functions with 0 args */
+static Obj OnCharReadHookExcFds = 0;  /* a list of UNIX file descriptors */
+static Obj OnCharReadHookExcFuncs = 0;/* a list of GAP functions with 0 args */
 
-Int OnCharReadHookActiveCheck(void)
+static Int OnCharReadHookActiveCheck(void)
 {
     return OnCharReadHookActive != 0 || FreezeStdin != 0;
 }
 
 
-void HandleCharReadHook(int stdinfd)
+static void HandleCharReadHook(int stdinfd)
 /* This is called directly before a character is read from stdin in the case
  * of an interactive session with command line editing. We have to return
  * as soon as stdin is ready to read! We just use `select' and care for
@@ -2086,13 +1987,7 @@ Int HasAvailableBytes( UInt fid )
 }
 
 
-
-
-Char * syFgetsNoEdit (
-    Char *              line,
-    UInt                length,
-    Int                 fid,
-    UInt                block)
+static Char * syFgetsNoEdit(Char * line, UInt length, Int fid, UInt block)
 {
   UInt x = 0;
   int ret = 0;
@@ -2144,25 +2039,25 @@ Char * syFgetsNoEdit (
 /* will be imported from library, first is generic function which does some
    checks before returning result to kernel, the second is the list of handler
    functions which do the actual work. */
-Obj LineEditKeyHandler;
-Obj LineEditKeyHandlers;
-Obj GAPInfo;
+static Obj LineEditKeyHandler;
+static Obj LineEditKeyHandlers;
+static Obj GAPInfo;
 
 #ifdef HAVE_LIBREADLINE
 
 /* we import GAP level functions from GAPInfo components */
-Obj CLEFuncs;
-Obj KeyHandler;
+static Obj CLEFuncs;
+static Obj KeyHandler;
 
 static int GAPMacroNumber = 0;
 
-int GAP_set_macro(int count, int key)
+static int GAP_set_macro(int count, int key)
 {
  GAPMacroNumber = count;
  return 0;
 }
 /* a generic rl_command_func_t that delegates to GAP level */
-int GAP_rl_func(int count, int key)
+static int GAP_rl_func(int count, int key)
 {
    Obj   rldata, linestr, okey, res, obj, data, beginchange, endchange, m;
    Int   len, n, hook, dlen, max, i;
@@ -2191,7 +2086,7 @@ int GAP_rl_func(int count, int key)
    obj = ELM_LIST(res, 1);
    if (IsStringConv(obj)) {
       /* insert txt */
-      rl_insert_text(CSTR_STRING(obj));
+      rl_insert_text(CONST_CSTR_STRING(obj));
       n = 1;
    } else if ((obj == True || obj == False) && len > 2) {
       /* kill or delete text */
@@ -2214,7 +2109,7 @@ int GAP_rl_func(int count, int key)
       rl_begin_undo_group();
       rl_delete_text(INT_INTOBJ(beginchange)-1, INT_INTOBJ(endchange)-1);
       rl_point = INT_INTOBJ(beginchange)-1;
-      rl_insert_text(CSTR_STRING(obj));
+      rl_insert_text(CONST_CSTR_STRING(obj));
       rl_end_undo_group();
       n = 3;
    } else if (IS_INTOBJ(obj) && len == 2) {
@@ -2276,7 +2171,7 @@ int GAP_rl_func(int count, int key)
    return 0;
 }
 
-Obj FuncBINDKEYSTOGAPHANDLER (Obj self, Obj keys)
+static Obj FuncBINDKEYSTOGAPHANDLER(Obj self, Obj keys)
 {
   Char*  seq;
 
@@ -2287,7 +2182,7 @@ Obj FuncBINDKEYSTOGAPHANDLER (Obj self, Obj keys)
   return True;
 }
 
-Obj FuncBINDKEYSTOMACRO (Obj self, Obj keys, Obj macro)
+static Obj FuncBINDKEYSTOMACRO(Obj self, Obj keys, Obj macro)
 {
   Char   *seq, *macr;
 
@@ -2299,7 +2194,7 @@ Obj FuncBINDKEYSTOMACRO (Obj self, Obj keys, Obj macro)
   return True;
 }
 
-Obj FuncREADLINEINITLINE (Obj self, Obj line)
+static Obj FuncREADLINEINITLINE(Obj self, Obj line)
 {
   Char   *cline;
 
@@ -2310,10 +2205,10 @@ Obj FuncREADLINEINITLINE (Obj self, Obj line)
 }
 
 /* init is needed once */
-Int ISINITREADLINE = 0;
+static Int ISINITREADLINE = 0;
 /* a hook function called regularly while waiting on input */
-Int current_rl_fid;
-int charreadhook_rl ( void )
+static Int current_rl_fid;
+static int charreadhook_rl(void)
 {
 #ifdef HAVE_SELECT
     if (OnCharReadHookActiveCheck())
@@ -2322,7 +2217,7 @@ int charreadhook_rl ( void )
   return 0;
 }
 
-void initreadline ( void )
+static void initreadline(void)
 {
 
   /* allows users to configure GAP specific settings in their ~/.inputrc like:
@@ -2347,14 +2242,9 @@ void initreadline ( void )
   ISINITREADLINE = 1;
 }
 
-Char * readlineFgets (
-    Char *              line,
-    UInt                length,
-    Int                 fid,
-    UInt                block)
+static Char * readlineFgets(Char * line, UInt length, Int fid, UInt block)
 {
   char *                 rlres = (char*)NULL;
-  UInt                   len;
 
   current_rl_fid = fid;
   if (!ISINITREADLINE) initreadline();
@@ -2383,11 +2273,11 @@ Char * readlineFgets (
   }
   /* maybe add to history, we use key 0 for this function */
   GAP_rl_func(0, 0);
-  len = strlen(rlres);
-  strncpy(line, rlres, len);
+  strlcpy(line, rlres, length);
+  // FIXME: handle the case where rlres contains more than length
+  // characters better?
   free(rlres);
-  line[len] = '\n';
-  line[len+1] = '\0';
+  strlcat(line, "\n", length);
 
   /* send the whole line (unclipped) to the window handler               */
   syWinPut( fid, (*line != '\0' ? "@r" : "@x"), line );
@@ -2430,11 +2320,7 @@ static Int syEndEdit(Int fid)
 
 #endif
 
-Char * syFgets (
-    Char *              line,
-    UInt                length,
-    Int                 fid,
-    UInt                block)
+static Char * syFgets(Char * line, UInt length, Int fid, UInt block)
 {
     Int                 ch,  ch2,  ch3, last;
     Char                * p,  * q,  * r,  * s,  * t;
@@ -2549,8 +2435,19 @@ Char * syFgets (
         /* now perform the requested action <rep> times in the input line  */
         while ( rep-- > 0 ) {
           /* check for key handler on GAP level */
-          if (ch >= 0 && ch < LEN_PLIST(LineEditKeyHandlers) &&
-                         ELM_PLIST(LineEditKeyHandlers, ch+1) != 0) {
+          Int runLineEditKeyHandler = 0;
+          if (ch >= 0) {
+#ifdef HPCGAP
+            RegionReadLock(REGION(LineEditKeyHandlers));
+#endif
+            runLineEditKeyHandler =
+                  ch < LEN_PLIST(LineEditKeyHandlers) &&
+                  ELM_PLIST(LineEditKeyHandlers, ch + 1) != 0;
+#ifdef HPCGAP
+            RegionUnlock(REGION(LineEditKeyHandlers));
+#endif
+          }
+          if (runLineEditKeyHandler) {
             /* prepare data for GAP handler:
                    [linestr, ch, ppos, length, yankstr]
                GAP handler must return new
@@ -2576,12 +2473,12 @@ Char * syFgets (
             if (IS_BAG_REF(res) && IS_LIST(res) && LEN_LIST(res) == 3) {
               linestr = ELM_LIST(res,1);
               len = GET_LEN_STRING(linestr);
-              memcpy(line,CHARS_STRING(linestr),len);
+              memcpy(line,CONST_CHARS_STRING(linestr),len);
               line[len] = '\0';
               p = line + (INT_INTOBJ(ELM_LIST(res,2)) - 1);
               yankstr = ELM_LIST(res,3);
               len = GET_LEN_STRING(yankstr);
-              memcpy(yank,CHARS_STRING(yankstr),len);
+              memcpy(yank,CONST_CHARS_STRING(yankstr),len);
               yank[len] = '\0';
             }
           }
@@ -3086,8 +2983,6 @@ void SySetErrorNo ( void )
 # define WIFEXITED(stat_val) (((stat_val) & 255) == 0)
 #endif
 
-void NullSignalHandler(int scratch) {}
-
 #ifdef SYS_IS_CYGWIN32
 
 UInt SyExecuteProcess (
@@ -3176,6 +3071,10 @@ UInt SyExecuteProcess (
 }
 
 #else
+
+static void NullSignalHandler(int scratch)
+{
+}
 
 UInt SyExecuteProcess (
     Char *                  dir,
@@ -3458,8 +3357,6 @@ Int SyRmdir ( const Char * name )
 **  for a real directory, 'C' for a character device, 'B' for a block
 **  device 'P' for a FIFO (named pipe) and 'S' for a socket.
 */
-#ifdef HAVE_LSTAT
-
 Obj SyIsDir ( const Char * name )
 {
   Int res;
@@ -3488,15 +3385,6 @@ Obj SyIsDir ( const Char * name )
   else return ObjsChar['?'];
 }
 
-#else
-
-Obj SyIsDir ( const Char * name )
-{
-  return ObjsChar['?'];
-}
-
-#endif
-
 /****************************************************************************
 **
 *F  SyFindGapRootFile( <filename>,<buffer> ) . .  find file in system area
@@ -3510,7 +3398,7 @@ Char * SyFindGapRootFile ( const Char * filename, Char * buffer, size_t bufferSi
             if (strlcpy( buffer, SyGapRootPaths[k], bufferSize ) >= bufferSize)
                 continue;
             if (strlcat( buffer, filename, bufferSize ) >= bufferSize)
-            	continue;
+                continue;
             if ( SyIsReadableFile(buffer) == 0 ) {
                 return buffer;
             }
@@ -3535,8 +3423,6 @@ Char * SyFindGapRootFile ( const Char * filename, Char * buffer, size_t bufferSi
 **  to 'SyTmpname'  should  produce different  file names  *even* if no files
 **  were created.
 */
-
-#ifdef HAVE_MKSTEMP
 Char *SyTmpname ( void )
 {
   static char name[1024];
@@ -3544,41 +3430,6 @@ Char *SyTmpname ( void )
   close(mkstemp(name));
   return name;
 }
-
-#else
-Char * SyTmpname ( void )
-{
-    static Char   * base = 0;
-    static Char     name[1024];
-    static UInt     count = 0;
-    Char          * s;
-    UInt            c;
-
-    SyClearErrorNo();
-    count++;
-    if ( base == 0 ) {
-        base = tmpnam( (char*)0 );
-    }
-    if ( base == 0 ) {
-        SySetErrorNo();
-        return 0;
-    }
-    if (count == 0) { /* one time in 2^32 */
-        strcat( base, "x" ); /* FIXME: BUG, we must not modify the pointer returned by tmpnam */
-        count++;
-    }
-    strxcpy( name, base, sizeof(name) );
-    strxcat( name, ".", sizeof(name) );
-    s = name + strlen(name);
-    c = count;
-    while (c != 0) {
-        *s++ = '0' + c % 10;
-        c /= 10;
-    }
-    *s = (Char)0;
-    return name;
-}
-#endif
 
 
 /****************************************************************************
@@ -3593,28 +3444,17 @@ Char * SyTmpname ( void )
 **  would   usually   represent   '/usr/tmp/<hint>_<proc_id>_<cnt>/',   e.g.,
 **  '/usr/tmp/guava_17188_1/'.
 */
-
-
-/****************************************************************************
-**
-*f  SyTmpdir( <hint> )  . . . . . . . . . . . . . . . . . . . . using `mkdir'
-*/
-
+Char * SyTmpdir( const Char * hint )
+{
 #ifdef SYS_IS_CYGWIN32
 #define TMPDIR_BASE "/cygdrive/c/WINDOWS/Temp/"
 #else
 #define TMPDIR_BASE "/tmp/"
 #endif
-
-
-#ifdef HAVE_MKDTEMP
-
-Char * SyTmpdir( const Char * hint )
-{
   static char name[1024];
   static const char *base = TMPDIR_BASE;
-  char * env_tmpdir;
-  if ((env_tmpdir = getenv("TMPDIR")) != NULL) {
+  char * env_tmpdir = getenv("TMPDIR");
+  if (env_tmpdir != NULL) {
     strxcpy(name, env_tmpdir, sizeof(name));
     strxcat(name, "/", sizeof(name));
   }
@@ -3628,31 +3468,11 @@ Char * SyTmpdir( const Char * hint )
   return mkdtemp(name);
 }
 
-#else
-
-Char * SyTmpdir ( const Char * hint )
-{
-    Char *      tmp;
-    int         res;                    /* result of `mkdir'               */
-
-    /* for the moment ignore <hint>                                        */
-    tmp = SyTmpname();
-    if ( tmp == 0 )
-        return 0;
-
-    /* create a new directory                                              */
-    unlink( tmp );
-    res = mkdir( tmp, 0777 );
-    if ( res == -1 ) {
-        SySetErrorNo();
-        return 0;
-    }
-
-    return tmp;
-}
-
-#endif
-
+/****************************************************************************
+**
+*F  SyReadStringFile( <fid> ) . . . . . . . . read file content into a string
+**
+*/
 Obj SyReadStringFile(Int fid)
 {
     Char            buf[32769];
@@ -3689,7 +3509,7 @@ Obj SyReadStringFile(Int fid)
 /* fstat seems completely broken under CYGWIN */
 /* first try to get the whole file as one chunk, this avoids garbage
    collections because of the GROW_STRING calls below    */
-Obj SyReadStringFileStat(Int fid)
+static Obj SyReadStringFileStat(Int fid)
 {
     Int             ret, len;
     Obj             str;
@@ -3912,6 +3732,17 @@ static Int InitKernel(
   DeclareGVar(&GVarBeginEdit, "TERMINAL_BEGIN_EDIT");
   DeclareGVar(&GVarEndEdit, "TERMINAL_END_EDIT");
 #endif
+
+#ifdef HAVE_SELECT
+    InitCopyGVar("OnCharReadHookActive",&OnCharReadHookActive);
+    InitCopyGVar("OnCharReadHookInFds",&OnCharReadHookInFds);
+    InitCopyGVar("OnCharReadHookInFuncs",&OnCharReadHookInFuncs);
+    InitCopyGVar("OnCharReadHookOutFds",&OnCharReadHookOutFds);
+    InitCopyGVar("OnCharReadHookOutFuncs",&OnCharReadHookOutFuncs);
+    InitCopyGVar("OnCharReadHookExcFds",&OnCharReadHookExcFds);
+    InitCopyGVar("OnCharReadHookExcFuncs",&OnCharReadHookExcFuncs);
+#endif
+
 
   /* return success                                                      */
   return 0;

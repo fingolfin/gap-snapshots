@@ -1,3 +1,13 @@
+/****************************************************************************
+**
+**  This file is part of GAP, a system for computational discrete algebra.
+**
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
 #ifndef GAP_TLS_H
 #define GAP_TLS_H
 
@@ -9,6 +19,8 @@
 
 #include "hpc/tlsconfig.h"
 
+typedef struct Region Region;
+
 typedef struct ThreadLocalStorage
 {
   int threadID;
@@ -16,9 +28,8 @@ typedef struct ThreadLocalStorage
   void *threadSignal;
   void *acquiredMonitor;
   unsigned multiplexRandomSeed;
-  void *currentRegion;
-  void *threadRegion;
-  void *traversalState;
+  Region * currentRegion;
+  Region * threadRegion;
   Obj threadObject;
   Obj tlRecords;
   Obj lockStack;
@@ -35,8 +46,8 @@ typedef struct ThreadLocalStorage
   syJmp_buf threadExit;
 
   /* From scanner.c */
-  Obj		  DefaultOutput;
-  Obj		  DefaultInput;
+  Obj DefaultOutput;
+  Obj DefaultInput;
 
   /* Profiling */
   UInt CountActive;

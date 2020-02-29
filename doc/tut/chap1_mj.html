@@ -39,9 +39,9 @@
 
 <p><strong class="pkg">GAP</strong> stands for <em>Groups, Algorithms and Programming</em>. The name was chosen to reflect the aim of the system, which is introduced in this tutorial manual. Since that choice, the system has become somewhat broader, and you will also find information about algorithms and programming for other algebraic structures, such as semigroups and algebras.</p>
 
-<p>In addition to this manual, there is the <em><strong class="pkg">GAP</strong> Reference Manual</em> (see <span class="RefLink">Reference: Preface</span>) containing detailed documentation of the mathematical functionality of <strong class="pkg">GAP</strong>, and the manual called <em>"<strong class="pkg">GAP</strong> - Changes from Earlier Versions"</em> (see <a href="../../doc/changes/chap1_mj.html#X874E1D45845007FE"><span class="RefLink">Changes: Preface</span></a>) which describes most essential changes from previous <strong class="pkg">GAP</strong> releases.</p>
+<p>In addition to this manual, there are <em><strong class="pkg">GAP</strong> Reference Manual</em> (see <span class="RefLink">Reference: Preface</span>) containing detailed documentation of the mathematical functionality of <strong class="pkg">GAP</strong>, and <em>HPC-GAP Reference Manual</em> documenting a multi-threaded version of GAP.</p>
 
-<p>A lot of the functionality of the system and a number of contributed extensions are provided as "<strong class="pkg">GAP</strong> packages" and each of these has its own manual.</p>
+<p>There is also a document <code class="file">CHANGES.md</code> in the root directory on the most essential changes from previous <strong class="pkg">GAP</strong> releases. A lot of the functionality of the system and a number of contributed extensions are provided as "<strong class="pkg">GAP</strong> packages" and each of these has its own manual.</p>
 
 <p>Subsequent sections of this preface explain the structure of the system and list sources of further information about <strong class="pkg">GAP</strong>.</p>
 
@@ -51,13 +51,13 @@
 
 <p><strong class="pkg">GAP</strong> is a <em>free</em>, <em>open</em> and <em>extensible</em> software package for computation in discrete abstract algebra. The terms "free" and "open" describe the conditions under which the system is distributed -- in brief, it is <em>free of charge</em> (except possibly for the immediate costs of delivering it to you), you are <em>free to pass it on</em> within certain limits, and all of the workings of the system are <em>open for you to examine and change</em>. Details of these conditions can be found in Section <span class="RefLink">Reference: Copyright and License</span>.</p>
 
-<p>The system is "extensible" in that you can write your own programs in the <strong class="pkg">GAP</strong> language, and use them in just the same way as the programs which form part of the system (the "library"). Indeed, we actively support the contribution, refereeing and distribution of extensions to the system, in the form of "<strong class="pkg">GAP</strong> packages". Further details of this can be found in chapter <span class="RefLink">Reference: Using and Developing GAP Packages</span>, and on our website.</p>
+<p>The system is "extensible" in that you can write your own programs in the <strong class="pkg">GAP</strong> language, and use them in just the same way as the programs which form part of the system (the "library"). Indeed, we actively support the contribution, refereeing and distribution of extensions to the system, in the form of "<strong class="pkg">GAP</strong> packages". Further details of this can be found in Chapter <span class="RefLink">Reference: Using and Developing GAP Packages</span>, and on our website.</p>
 
 <p>Development of <strong class="pkg">GAP</strong> began at Lehrstuhl D für Mathematik, RWTH-Aachen, under the leadership of Joachim Neubüser in 1985. Version 2.4 was released in 1988 and version 3.1 in 1992. In 1997 coordination of <strong class="pkg">GAP</strong> development, now very much an international effort, was transferred to St Andrews. A complete internal redesign and almost complete rewrite of the system was completed over the following years and version 4.1 was released in July 1999. A sign of the further internationalization of the project was the <strong class="pkg">GAP</strong> 4.4 release in 2004, which has been coordinated from Colorado State University, Fort Collins.</p>
 
-<p>More information on the motivation and development of <strong class="pkg">GAP</strong> to date, can be found on our Web pages in a section entitled "Release history and Prefaces".</p>
+<p>More information on the motivation and development of <strong class="pkg">GAP</strong> to date, can be found on our website in a section entitled "Some History of <strong class="pkg">GAP</strong>": <span class="URL"><a href="https://www.gap-system.org/Doc/History/history.html">https://www.gap-system.org/Doc/History/history.html</a></span>.</p>
 
-<p>For those readers who have used an earlier version of <strong class="pkg">GAP</strong>, an overview of the changes from <strong class="pkg">GAP</strong> 4.4 and a brief summary of changes from earlier versions is given in a separate manual <a href="../../doc/changes/chap7_mj.html#X84D336197CBC3777"><span class="RefLink">Changes: Changes between GAP 4.4 and GAP 4.5</span></a>.</p>
+<p>For those readers who have used an earlier version of <strong class="pkg">GAP</strong>, an overview of the changes from <strong class="pkg">GAP</strong> 4.4 and a brief summary of changes from earlier versions is given in <code class="file">CHANGES.md</code> file in the main directory.</p>
 
 <p>The system that you are getting now consists of a "core system" and a number of packages. The core system consists of four main parts.</p>
 
@@ -66,7 +66,7 @@
 
 
 <ul>
-<li><p>automatic dynamic storage management, which the user needn't bother about in his programming;</p>
+<li><p>automatic dynamic storage management, which the user needn't bother about when programming;</p>
 
 </li>
 <li><p>a set of time-critical basic functions, e.g. "arithmetic", operations for integers, finite fields, permutations and words, as well as natural operations for lists and records;</p>
@@ -86,7 +86,7 @@
 </li>
 </ul>
 </li>
-<li><p>A much larger <em>library of <strong class="pkg">GAP</strong> functions</em> that implement algebraic and other algorithms. Since this is written entirely in the <strong class="pkg">GAP</strong> language, the <strong class="pkg">GAP</strong> language is both the main implementation language and the user language of the system. Therefore the user can as easily as the original programmers investigate and vary algorithms of the library and add new ones to it, first for own use and eventually for the benefit of all <strong class="pkg">GAP</strong> users.</p>
+<li><p>A much larger <em>library of <strong class="pkg">GAP</strong> functions</em> that implement algebraic and other algorithms. Since this is written entirely in the <strong class="pkg">GAP</strong> language, the <strong class="pkg">GAP</strong> language is both the main implementation language and the user language of the system. Therefore a user can, as easily as the original programmers, investigate and vary algorithms of the library and add new ones to it, first for their own use and eventually for the benefit of all <strong class="pkg">GAP</strong> users.</p>
 
 </li>
 <li><p>A <em>library of group theoretical data</em> which contains various libraries of groups, including the library of small groups (containing all groups of order at most 2000, except those of order 1024) and others. Large libraries of ordinary and Brauer character tables and Tables of Marks are included as packages.</p>
@@ -108,11 +108,7 @@
 
 <h4>1.2 <span class="Heading">Further Information about <strong class="pkg">GAP</strong></span></h4>
 
-<p>Information about <strong class="pkg">GAP</strong> is best obtained from the <strong class="pkg">GAP</strong> website</p>
-
-<p><span class="URL"><a href="https://www.gap-system.org">https://www.gap-system.org</a></span></p>
-
-<p>There you will find, amongst other things</p>
+<p>Information about <strong class="pkg">GAP</strong> is best obtained from the <strong class="pkg">GAP</strong> website <span class="URL"><a href="https://www.gap-system.org">https://www.gap-system.org</a></span>. There you will find, amongst other things:</p>
 
 
 <ul>
@@ -147,7 +143,7 @@
 
 <p>The GAP Group,</p>
 
-<p>19-Jun-2019</p>
+<p>29-Feb-2020</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Next Chapter]</a>&nbsp;  </div>

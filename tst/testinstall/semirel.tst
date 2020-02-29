@@ -1,10 +1,5 @@
-#############################################################################
-##
-#W  semirel.tst                 GAP library                Robert F. Morse
-##
-##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-##
+#@local H,L,R,S,a,b,f,gjp,gjp1,glp,glp1,grp,grp1,rels,s1,s2,s3,sc,t1,t2,t20
+#@local t3,t4,t5,D
 gap> START_TEST("semirel.tst");
 
 ##
@@ -135,8 +130,37 @@ gap> LClassOfHClass(H);
 <Green's L-class: Transformation( [ 2, 4, 3, 4 ] )>
 gap> RClassOfHClass(H);
 <Green's R-class: Transformation( [ 2, 4, 3, 4 ] )>
-gap> STOP_TEST( "semirel.tst", 1);
 
-#############################################################################
-##
-#E
+# GreensXClasses for a GreensClass
+gap> S := Semigroup([Transformation([1, 1, 1, 1]),
+>                    Transformation([1, 1, 1, 2]),
+>                    Transformation([1, 1, 1, 3])]);;
+gap> D := GreensDClasses(S); 
+[ <Green's D-class: Transformation( [ 1, 1, 1, 1 ] )>, 
+  <Green's D-class: Transformation( [ 1, 1, 1, 2 ] )>, 
+  <Green's D-class: Transformation( [ 1, 1, 1, 3 ] )> ]
+gap> L := GreensLClasses(S);
+[ <Green's L-class: Transformation( [ 1, 1, 1, 1 ] )>, 
+  <Green's L-class: Transformation( [ 1, 1, 1, 2 ] )>, 
+  <Green's L-class: Transformation( [ 1, 1, 1, 3 ] )> ]
+gap> R := GreensRClasses(S);
+[ <Green's R-class: Transformation( [ 1, 1, 1, 1 ] )>, 
+  <Green's R-class: Transformation( [ 1, 1, 1, 2 ] )>, 
+  <Green's R-class: Transformation( [ 1, 1, 1, 3 ] )> ]
+gap> H := GreensHClasses(S);
+[ <Green's H-class: Transformation( [ 1, 1, 1, 1 ] )>, 
+  <Green's H-class: Transformation( [ 1, 1, 1, 2 ] )>, 
+  <Green's H-class: Transformation( [ 1, 1, 1, 3 ] )> ]
+gap> Concatenation(List(D, GreensLClasses)) = L;
+true
+gap> Concatenation(List(D, GreensRClasses)) = R;
+true
+gap> Concatenation(List(D, GreensHClasses)) = H;
+true
+gap> Concatenation(List(L, GreensHClasses)) = H;
+true
+gap> Concatenation(List(R, GreensHClasses)) = H;
+true
+
+#
+gap> STOP_TEST( "semirel.tst", 1);

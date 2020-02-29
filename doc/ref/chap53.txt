@@ -237,7 +237,7 @@
   the positions in [3Xlist[103X even if [3Xlist[103X itself consists of integers.[133X
   
   [33X[0;0YThis  function  is  the  analogue  in  the  context  of  transformations  of
-  [2XPermutation[102X ([14XReference: Permutation for a group, an action domain, etc.[114X).[133X
+  [2XPermutation[102X ([14X41.9-1[114X).[133X
   
   [33X[0;0YIf [3Xobj[103X does not map elements of [3Xlist[103X into [3Xlist[103X, then [9Xfail[109X is returned.[133X
   
@@ -462,8 +462,8 @@
   
   [8X[10X[3Xf[103X[8X[10X ^ [3Xg[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns  [10X[3Xg[103X[10X  ^  -1  *  [3Xf[103X[10X  *  [3Xg[103X[10X[110X  when  [3Xf[103X  is a transformation and [3Xg[103X is a
-        permutation [2X\^[102X ([14XReference: ^[114X). This operation requires essentially the
-        same number of steps as multiplying a transformation by a permutation,
+        permutation [2X\^[102X ([14X31.12-1[114X). This operation requires essentially the same
+        number  of  steps  as  multiplying  a transformation by a permutation,
         which  is  approximately  one  third  of  the number required to first
         invert [3Xg[103X, take the product with [3Xf[103X, and then the product with [3Xg[103X.[133X
   

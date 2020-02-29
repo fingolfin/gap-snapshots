@@ -1,10 +1,13 @@
 /****************************************************************************
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002-2018 The GAP Group
+**  This file is part of GAP, a system for computational discrete algebra.
 **
-**  This files declares APIs for GAP modules, including builtin modules,
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
+**
+**  This file declares APIs for GAP modules, including builtin modules,
 **  or static and dynamic modules used by packages and end users to provide
 **  kernel extensions.
 */
@@ -57,17 +60,17 @@ enum {
     MODULE_DYNAMIC = GAP_KERNEL_API_VERSION * 10 + 2,
 };
 
-static inline Int IS_MODULE_BUILTIN(UInt type)
+EXPORT_INLINE Int IS_MODULE_BUILTIN(UInt type)
 {
     return type % 10 == 0;
 }
 
-static inline Int IS_MODULE_STATIC(UInt type)
+EXPORT_INLINE Int IS_MODULE_STATIC(UInt type)
 {
     return type % 10 == 1;
 }
 
-static inline Int IS_MODULE_DYNAMIC(UInt type)
+EXPORT_INLINE Int IS_MODULE_DYNAMIC(UInt type)
 {
     return type % 10 == 2;
 }
@@ -153,11 +156,11 @@ typedef struct {
     const Char * cookie;
 } StructGVarFilt;
 
-// GVAR_FILTER a helper macro for quickly creating table entries in
-// StructGVarFilt, StructGVarAttr and StructGVarProp arrays
-#define GVAR_FILTER(name, argument, filter)                                  \
+// GVAR_FILT a helper macro for quickly creating table entries in
+// StructGVarFilt arrays
+#define GVAR_FILT(name, argument, filter)                                    \
     {                                                                        \
-        #name, argument, filter, Func##name, __FILE__ ":" #name              \
+        #name, argument, filter, Filt##name, __FILE__ ":" #name              \
     }
 
 
@@ -173,6 +176,13 @@ typedef struct {
     const Char * cookie;
 } StructGVarAttr;
 
+// GVAR_ATTR a helper macro for quickly creating table entries in
+// StructGVarAttr arrays
+#define GVAR_ATTR(name, argument, filter)                                    \
+    {                                                                        \
+        #name, argument, filter, Attr##name, __FILE__ ":" #name              \
+    }
+
 
 /****************************************************************************
 **
@@ -186,6 +196,12 @@ typedef struct {
     const Char * cookie;
 } StructGVarProp;
 
+// GVAR_PROP a helper macro for quickly creating table entries in
+// StructGVarProp arrays
+#define GVAR_PROP(name, argument, filter)                                    \
+    {                                                                        \
+        #name, argument, filter, Prop##name, __FILE__ ":" #name              \
+    }
 
 /****************************************************************************
 **
@@ -196,7 +212,7 @@ typedef struct {
     Int          nargs;
     const Char * args;
     Obj *        operation;
-    Obj (*handler)(/*arguments*/);
+    ObjFunc      handler;
     const Char * cookie;
 } StructGVarOper;
 
@@ -216,7 +232,7 @@ typedef struct {
     const Char * name;
     Int          nargs;
     const Char * args;
-    Obj (*handler)(/*arguments*/);
+    ObjFunc      handler;
     const Char * cookie;
 } StructGVarFunc;
 
@@ -224,7 +240,7 @@ typedef struct {
 // StructGVarFunc arrays
 #define GVAR_FUNC(name, nargs, args)                                         \
     {                                                                        \
-        #name, nargs, args, Func##name, __FILE__ ":" #name                   \
+        #name, nargs, args, (ObjFunc)Func##name, __FILE__ ":" #name   \
     }
 
 
@@ -232,126 +248,126 @@ typedef struct {
 **
 *F  InitBagNamesFromTable( <table> )  . . . . . . . . .  initialise bag names
 */
-extern void InitBagNamesFromTable(const StructBagNames * tab);
+void InitBagNamesFromTable(const StructBagNames * tab);
 
 
 /****************************************************************************
 **
 *F  InitClearFiltsTNumsFromTable( <tab> ) . . .  initialise clear filts tnums
 */
-extern void InitClearFiltsTNumsFromTable(const Int * tab);
+void InitClearFiltsTNumsFromTable(const Int * tab);
 
 
 /****************************************************************************
 **
 *F  InitHasFiltListTNumsFromTable( <tab> )  . . initialise tester filts tnums
 */
-extern void InitHasFiltListTNumsFromTable(const Int * tab);
+void InitHasFiltListTNumsFromTable(const Int * tab);
 
 
 /****************************************************************************
 **
 *F  InitSetFiltListTNumsFromTable( <tab> )  . . initialise setter filts tnums
 */
-extern void InitSetFiltListTNumsFromTable(const Int * tab);
+void InitSetFiltListTNumsFromTable(const Int * tab);
 
 
 /****************************************************************************
 **
 *F  InitResetFiltListTNumsFromTable( <tab> )  initialise unsetter filts tnums
 */
-extern void InitResetFiltListTNumsFromTable(const Int * tab);
+void InitResetFiltListTNumsFromTable(const Int * tab);
 
 
 /****************************************************************************
 **
 *F  InitGVarFiltsFromTable( <tab> ) . . . . . . . . . . . . . . . new filters
 */
-extern void InitGVarFiltsFromTable(const StructGVarFilt * tab);
+void InitGVarFiltsFromTable(const StructGVarFilt * tab);
 
 
 /****************************************************************************
 **
 *F  InitGVarAttrsFromTable( <tab> ) . . . . . . . . . . . . .  new attributes
 */
-extern void InitGVarAttrsFromTable(const StructGVarAttr * tab);
+void InitGVarAttrsFromTable(const StructGVarAttr * tab);
 
 
 /****************************************************************************
 **
 *F  InitGVarPropsFromTable( <tab> ) . . . . . . . . . . . . .  new properties
 */
-extern void InitGVarPropsFromTable(const StructGVarProp * tab);
+void InitGVarPropsFromTable(const StructGVarProp * tab);
 
 
 /****************************************************************************
 **
 *F  InitGVarOpersFromTable( <tab> ) . . . . . . . . . . . . .  new operations
 */
-extern void InitGVarOpersFromTable(const StructGVarOper * tab);
+void InitGVarOpersFromTable(const StructGVarOper * tab);
 
 
 /****************************************************************************
 **
 *F  InitGVarFuncsFromTable( <tab> ) . . . . . . . . . . . . . .  new function
 */
-extern void InitGVarFuncsFromTable(const StructGVarFunc * tab);
+void InitGVarFuncsFromTable(const StructGVarFunc * tab);
 
 
 /****************************************************************************
 **
 *F  InitHdlrFiltsFromTable( <tab> ) . . . . . . . . . . . . . . . new filters
 */
-extern void InitHdlrFiltsFromTable(const StructGVarFilt * tab);
+void InitHdlrFiltsFromTable(const StructGVarFilt * tab);
 
 
 /****************************************************************************
 **
 *F  InitHdlrAttrsFromTable( <tab> ) . . . . . . . . . . . . .  new attributes
 */
-extern void InitHdlrAttrsFromTable(const StructGVarAttr * tab);
+void InitHdlrAttrsFromTable(const StructGVarAttr * tab);
 
 
 /****************************************************************************
 **
 *F  InitHdlrPropsFromTable( <tab> ) . . . . . . . . . . . . .  new properties
 */
-extern void InitHdlrPropsFromTable(const StructGVarProp * tab);
+void InitHdlrPropsFromTable(const StructGVarProp * tab);
 
 
 /****************************************************************************
 **
 *F  InitHdlrOpersFromTable( <tab> ) . . . . . . . . . . . . .  new operations
 */
-extern void InitHdlrOpersFromTable(const StructGVarOper * tab);
+void InitHdlrOpersFromTable(const StructGVarOper * tab);
 
 
 /****************************************************************************
 **
 *F  InitHdlrFuncsFromTable( <tab> ) . . . . . . . . . . . . . . new functions
 */
-extern void InitHdlrFuncsFromTable(const StructGVarFunc * tab);
+void InitHdlrFuncsFromTable(const StructGVarFunc * tab);
 
 
 /****************************************************************************
 **
 *F  ImportGVarFromLibrary( <name>, <address> )  . . .  import global variable
 */
-extern void ImportGVarFromLibrary(const Char * name, Obj * address);
+void ImportGVarFromLibrary(const Char * name, Obj * address);
 
 
 /****************************************************************************
 **
 *F  ImportFuncFromLibrary( <name>, <address> )  . . .  import global function
 */
-extern void ImportFuncFromLibrary(const Char * name, Obj * address);
+void ImportFuncFromLibrary(const Char * name, Obj * address);
 
 
 /****************************************************************************
 **
 *F  ModulesSetup() . . . . . . . . . . . . . . . . .  instantiate all modules
 */
-extern void ModulesSetup(void);
+void ModulesSetup(void);
 
 /****************************************************************************
 **
@@ -362,25 +378,25 @@ extern void ModulesSetup(void);
 *F  ModulesPostSave() . . . . . . . . . . . . call 'postSave' for all modules
 *F  ModulesPostRestore() . . . . . . . . . call 'postRestore' for all modules
 */
-extern void ModulesInitKernel(void);
-extern void ModulesInitLibrary(void);
-extern void ModulesCheckInit(void);
-extern Int  ModulesPreSave(void);
-extern void ModulesPostSave(void);
-extern void ModulesPostRestore(void);
+void ModulesInitKernel(void);
+void ModulesInitLibrary(void);
+void ModulesCheckInit(void);
+Int  ModulesPreSave(void);
+void ModulesPostSave(void);
+void ModulesPostRestore(void);
 
-extern void ModulesInitModuleState(void);
-extern void ModulesDestroyModuleState(void);
+void ModulesInitModuleState(void);
+void ModulesDestroyModuleState(void);
 
-extern void SaveModules(void);
-extern void LoadModules(void);
+void SaveModules(void);
+void LoadModules(void);
 
 
 /****************************************************************************
 **
 *F  ActivateModule( <info> )
 */
-extern void ActivateModule(StructInitInfo * info);
+void ActivateModule(StructInitInfo * info);
 
 
 /****************************************************************************
@@ -393,9 +409,9 @@ extern void ActivateModule(StructInitInfo * info);
 **  This function triggers no garbage collection, so it OK to pass a pointer
 **  to the content of a GAP string object as filename.
 */
-extern void RecordLoadedModule(StructInitInfo * module,
-                               Int              isGapRootRelative,
-                               const Char *     filename);
+void RecordLoadedModule(StructInitInfo * module,
+                        Int              isGapRootRelative,
+                        const Char *     filename);
 
 
 /****************************************************************************

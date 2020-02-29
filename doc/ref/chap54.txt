@@ -244,8 +244,7 @@
   refers to the positions in [3Xlist[103X even if [3Xlist[103X itself consists of integers.[133X
   
   [33X[0;0YThis  function  is  the  analogue  in the context of partial permutations of
-  [2XPermutation[102X  ([14XReference: Permutation for a group, an action domain, etc.[114X) or
-  [2XTransformationOp[102X ([14X53.2-5[114X).[133X
+  [2XPermutation[102X ([14X41.9-1[114X) or [2XTransformationOp[102X ([14X53.2-5[114X).[133X
   
   [33X[0;0YIf [3Xobj[103X does not map the elements of [3Xlist[103X injectively, then [9Xfail[109X is returned.[133X
   
@@ -852,10 +851,10 @@
   [33X[1;0Y[29X[2XOne[102X( [3Xf[103X ) [32X method[133X
   [6XReturns:[106X  [33X[0;10YA partial permutation.[133X
   
-  [33X[0;0YAs  described  in  [2XOneImmutable[102X  ([14XReference:  OneImmutable[114X), [10XOne[110X returns the
-  multiplicative  neutral  element  of the partial permutation [3Xf[103X, which is the
-  identity  partial  permutation  on  the  union of the domain and image of [3Xf[103X.
-  Equivalently, the one of [3Xf[103X is the join of the right one and left one of [3Xf[103X.[133X
+  [33X[0;0YAs  described  in  [2XOneImmutable[102X  ([14X31.10-2[114X),  [10XOne[110X  returns the multiplicative
+  neutral  element of the partial permutation [3Xf[103X, which is the identity partial
+  permutation on the union of the domain and image of [3Xf[103X. Equivalently, the one
+  of [3Xf[103X is the join of the right one and left one of [3Xf[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xf:=PartialPerm([ 1, 2, 3, 4, 5, 7, 10 ], [ 3, 7, 9, 6, 1, 10, 2 ]);;[127X[104X
@@ -868,9 +867,9 @@
   [33X[1;0Y[29X[2XMultiplicativeZero[102X( [3Xf[103X ) [32X method[133X
   [6XReturns:[106X  [33X[0;10YThe empty partial permutation.[133X
   
-  [33X[0;0YAs  described  in  [2XMultiplicativeZero[102X  ([14XReference: MultiplicativeZero[114X), [10XZero[110X
-  returns  the multiplicative zero element of the partial permutation [3Xf[103X, which
-  is the empty partial permutation.[133X
+  [33X[0;0YAs   described   in   [2XMultiplicativeZero[102X   ([14X35.4-11[114X),   [10XZero[110X   returns   the
+  multiplicative zero element of the partial permutation [3Xf[103X, which is the empty
+  partial permutation.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xf := PartialPerm([ 1, 2, 3, 4, 5, 7, 10 ], [ 3, 7, 9, 6, 1, 10, 2 ]);;[127X[104X
@@ -1479,9 +1478,9 @@
   
   [8XPartial permutation semigroups[108X
         [33X[0;6YIf [3XS[103X is a partial permutation semigroup that does not satisfy [2XIsMonoid[102X
-        ([14XReference: IsMonoid[114X) but where [10XMultiplicativeNeutralElement([3XS[103X[10X)<>fail[110X,
-        then  [10XIsomorphismPartialPermMonoid([3XS[103X[10X)[110X returns an isomorphism from [3XS[103X to
-        an inverse monoid of partial permutations.[133X
+        ([14X51.2-1[114X)   but   where   [10XMultiplicativeNeutralElement([3XS[103X[10X)<>fail[110X,   then
+        [10XIsomorphismPartialPermMonoid([3XS[103X[10X)[110X  returns  an  isomorphism from [3XS[103X to an
+        inverse monoid of partial permutations.[133X
   
   [8XPermutation groups[108X
         [33X[0;6YIf [3XS[103X is a permutation group, then [10XIsomorphismPartialPermMonoid[110X returns

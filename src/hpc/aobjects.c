@@ -1,10 +1,11 @@
 /****************************************************************************
 **
-*W  threadapi.c                 GAP source                    Reimer Behrends
+**  This file is part of GAP, a system for computational discrete algebra.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the GAP interface for thread primitives.
 */
@@ -20,8 +21,8 @@
 #include "calls.h"
 #include "error.h"
 #include "fibhash.h"
-#include "gaputils.h"
 #include "gapstate.h"
+#include "gaputils.h"
 #include "gvars.h"
 #include "io.h"
 #include "lists.h"
@@ -33,9 +34,9 @@
 #include "stringobj.h"
 
 
-Obj TYPE_ALIST;
-Obj TYPE_AREC;
-Obj TYPE_TLREC;
+static Obj TYPE_ALIST;
+static Obj TYPE_AREC;
+static Obj TYPE_TLREC;
 
 #define ALIST_LEN(x) ((x) >> 2)
 #define ALIST_POL(x) ((x) & 3)
@@ -61,35 +62,35 @@ typedef union AtomicObj
 } AtomicObj;
 
 #define ADDR_ATOM(bag) ((AtomicObj *)(ADDR_OBJ(bag)))
+#define CONST_ADDR_ATOM(bag) ((const AtomicObj *)(CONST_ADDR_OBJ(bag)))
 
 #ifndef WARD_ENABLED
 
 static UInt UsageCap[sizeof(UInt)*8];
 
-Obj TypeAList(Obj obj)
+static Obj TypeAList(Obj obj)
 {
   Obj result;
-  Obj *addr;
-  addr = ADDR_OBJ(obj);
+  const Obj *addr = CONST_ADDR_OBJ(obj);
   MEMBAR_READ();
   result = addr[1];
   return result != NULL ? result : TYPE_ALIST;
 }
 
-Obj TypeARecord(Obj obj)
+static Obj TypeARecord(Obj obj)
 {
   Obj result;
   MEMBAR_READ();
-  result = ADDR_OBJ(obj)[0];
+  result = CONST_ADDR_OBJ(obj)[0];
   return result != NULL ? result : TYPE_AREC;
 }
 
-Obj TypeTLRecord(Obj obj)
+static Obj TypeTLRecord(Obj obj)
 {
   return TYPE_TLREC;
 }
 
-void SetTypeAList(Obj obj, Obj kind)
+static void SetTypeAList(Obj obj, Obj kind)
 {
   switch (TNUM_OBJ(obj)) {
     case T_ALIST:
@@ -110,7 +111,7 @@ void SetTypeAList(Obj obj, Obj kind)
   MEMBAR_WRITE();
 }
 
-void SetTypeARecord(Obj obj, Obj kind)
+static void SetTypeARecord(Obj obj, Obj kind)
 {
   ADDR_OBJ(obj)[0] = kind;
   CHANGED_BAG(obj);
@@ -230,15 +231,15 @@ static Obj FuncMakeFixedAtomicList(Obj self, Obj list) {
     case T_FIXALIST:
       HashLock(list);
       switch (TNUM_OBJ(list)) {
-	case T_ALIST:
-	case T_FIXALIST:
-	  RetypeBag(list, T_FIXALIST);
-	  HashUnlock(list);
-	  return list;
+        case T_ALIST:
+        case T_FIXALIST:
+          RetypeBag(list, T_FIXALIST);
+          HashUnlock(list);
+          return list;
         default:
-	  HashUnlock(list);
+          HashUnlock(list);
           ArgumentError("MakeFixedAtomicList: Argument must be atomic list");
-	  return (Obj) 0; /* flow control hint */
+          return (Obj) 0; /* flow control hint */
       }
       HashUnlock(list);
       break;
@@ -250,17 +251,17 @@ static Obj FuncMakeFixedAtomicList(Obj self, Obj list) {
 
 static Obj FuncIS_ATOMIC_RECORD (Obj self, Obj obj) 
 {
-	return (TNUM_OBJ(obj) == T_AREC) ? True : False;
+        return (TNUM_OBJ(obj) == T_AREC) ? True : False;
 }
 
 static Obj FuncIS_ATOMIC_LIST (Obj self, Obj obj) 
 {
-	return (TNUM_OBJ(obj) == T_ALIST) ? True : False;
+        return (TNUM_OBJ(obj) == T_ALIST) ? True : False;
 }
 
 static Obj FuncIS_FIXED_ATOMIC_LIST (Obj self, Obj obj) 
 {
-	return (TNUM_OBJ(obj) == T_FIXALIST) ? True : False;
+        return (TNUM_OBJ(obj) == T_FIXALIST) ? True : False;
 }
 
 
@@ -268,10 +269,10 @@ static Obj FuncGET_ATOMIC_LIST(Obj self, Obj list, Obj index)
 {
   UInt n;
   UInt len;
-  AtomicObj *addr;
+  const AtomicObj *addr;
   if (TNUM_OBJ(list) != T_ALIST && TNUM_OBJ(list) != T_FIXALIST)
     ArgumentError("GET_ATOMIC_LIST: First argument must be an atomic list");
-  addr = ADDR_ATOM(list);
+  addr = CONST_ADDR_ATOM(list);
   len = ALIST_LEN((UInt) addr[0].atom);
   if (!IS_INTOBJ(index))
     ArgumentError("GET_ATOMIC_LIST: Second argument must be an integer");
@@ -289,12 +290,12 @@ static Obj FuncGET_ATOMIC_LIST(Obj self, Obj list, Obj index)
 static Obj ElmDefAList(Obj list, Int n, Obj value)
 {
     UInt        len;
-    AtomicObj * addr;
+    const AtomicObj * addr;
     Obj         val;
 
     GAP_ASSERT(TNUM_OBJ(list) == T_ALIST || TNUM_OBJ(list) == T_FIXALIST);
     GAP_ASSERT(n > 0);
-    addr = ADDR_ATOM(list);
+    addr = CONST_ADDR_ATOM(list);
     len = ALIST_LEN((UInt)addr[0].atom);
 
     if (n <= 0 || n > len) {
@@ -427,9 +428,9 @@ static Obj FuncAddAtomicList(Obj self, Obj list, Obj obj)
 Obj FromAtomicList(Obj list)
 {
   Obj result;
-  AtomicObj *data;
+  const AtomicObj *data;
   UInt i, len;
-  data = ADDR_ATOM(list);
+  data = CONST_ADDR_ATOM(list);
   len = ALIST_LEN((UInt) (data++->atom));
   result = NEW_PLIST(T_PLIST, len);
   SET_LEN_PLIST(result, len);
@@ -450,8 +451,8 @@ static Obj FuncFromAtomicList(Obj self, Obj list)
 static void MarkAtomicList(Bag bag)
 {
   UInt len;
-  AtomicObj *ptr, *ptrend;
-  ptr = ADDR_ATOM(bag);
+  const AtomicObj *ptr, *ptrend;
+  ptr = CONST_ADDR_ATOM(bag);
   len = ALIST_LEN((UInt)(ptr++->atom));
   ptrend = ptr + len + 1;
   while (ptr < ptrend)
@@ -488,7 +489,7 @@ enum {
 
 static Obj GetTLInner(Obj obj)
 {
-  Obj contents = ADDR_ATOM(obj)->obj;
+  Obj contents = CONST_ADDR_ATOM(obj)->obj;
   MEMBAR_READ(); /* read barrier */
   return contents;
 }
@@ -506,7 +507,7 @@ static void MarkAtomicRecord(Bag bag)
 
 static void MarkAtomicRecord2(Bag bag)
 {
-  AtomicObj *p = ADDR_ATOM(bag);
+  const AtomicObj *p = CONST_ADDR_ATOM(bag);
   UInt cap = p->atom;
   p += 5;
   while (cap) {
@@ -519,15 +520,14 @@ static void MarkAtomicRecord2(Bag bag)
 static void ExpandTLRecord(Obj obj)
 {
   AtomicObj contents, newcontents;
-  Obj *table, *newtable;
   do {
-    contents = *ADDR_ATOM(obj);
-    table = ADDR_OBJ(contents.obj);
+    contents = *CONST_ADDR_ATOM(obj);
+    const Obj *table = CONST_ADDR_OBJ(contents.obj);
     UInt thread = TLS(threadID);
     if (thread < (UInt)*table)
       return;
     newcontents.obj = NewBag(T_TLREC_INNER, sizeof(Obj) * (thread+TLR_DATA+1));
-    newtable = ADDR_OBJ(newcontents.obj);
+    Obj *newtable = ADDR_OBJ(newcontents.obj);
     newtable[TLR_SIZE] = (Obj)(thread+1);
     newtable[TLR_DEFAULTS] = table[TLR_DEFAULTS];
     newtable[TLR_CONSTRUCTORS] = table[TLR_CONSTRUCTORS];
@@ -544,14 +544,14 @@ static void PrintAtomicList(Obj obj)
 
   if (TNUM_OBJ(obj) == T_FIXALIST)
     Pr("<fixed atomic list of size %d>",
-      ALIST_LEN((UInt)(ADDR_OBJ(obj)[0])), 0L);
+      ALIST_LEN((UInt)(CONST_ADDR_OBJ(obj)[0])), 0L);
   else
-    Pr("<atomic list of size %d>", ALIST_LEN((UInt)(ADDR_OBJ(obj)[0])), 0L);
+    Pr("<atomic list of size %d>", ALIST_LEN((UInt)(CONST_ADDR_OBJ(obj)[0])), 0L);
 }
 
 static inline Obj ARecordObj(Obj record)
 {
-  return ADDR_OBJ(record)[1];
+  return CONST_ADDR_OBJ(record)[1];
 }
 
 static inline AtomicObj* ARecordTable(Obj record)
@@ -573,7 +573,7 @@ static void PrintAtomicRecord(Obj record)
 static void PrintTLRecord(Obj obj)
 {
   Obj contents = GetTLInner(obj);
-  Obj *table = ADDR_OBJ(contents);
+  const Obj *table = CONST_ADDR_OBJ(contents);
   Obj record = 0;
   Obj defrec = table[TLR_DEFAULTS];
   int comma = 0;
@@ -586,10 +586,10 @@ static void PrintTLRecord(Obj obj)
   if (record) {
     for (i = 1; i <= LEN_PREC(record); i++) {
       Obj val = GET_ELM_PREC(record, i);
-      Pr("%H", (Int)NAME_RNAM(labs((Int)GET_RNAM_PREC(record, i))), 0L);
+      Pr("%H", (Int)NAME_RNAM(labs(GET_RNAM_PREC(record, i))), 0L);
       Pr ("%< := %>", 0L, 0L);
       if (val)
-	PrintObj(val);
+        PrintObj(val);
       else
         Pr("<undefined>", 0L, 0L);
       if (i < LEN_PREC(record))
@@ -603,10 +603,9 @@ static void PrintTLRecord(Obj obj)
   for (i = 0; i < deftable[AR_CAP].atom; i++) {
     UInt key = deftable[AR_DATA+2*i].atom;
     Obj value = deftable[AR_DATA+2*i+1].obj;
-    UInt dummy;
-    if (key && (!record || !FindPRec(record, key, &dummy, 0))) {
+    if (key && (!record || !PositionPRec(record, key, 0))) {
       if (comma)
-	Pr("%2<, %2>", 0L, 0L);
+        Pr("%2<, %2>", 0L, 0L);
       Pr("%H", (Int)(NAME_RNAM(key)), 0L);
       Pr ("%< := %>", 0L, 0L);
       PrintObj(CopyTraversed(value));
@@ -702,26 +701,26 @@ Obj SetARecordField(Obj record, UInt field, Obj obj)
       MEMBAR_FULL(); /* memory barrier */
       if (policy == AREC_WX) {
         HashUnlockShared(record);
-	return 0;
+        return 0;
       }
       else if (policy == AREC_RW) {
         AtomicObj old;
-	AtomicObj new;
-	new.obj = obj;
-	do {
-	  old = data[hash*2+1];
-	} while (!COMPARE_AND_SWAP(&data[hash*2+1].atom,
-	          old.atom, new.atom));
-	CHANGED_BAG(inner);
-	HashUnlockShared(record);
-	return obj;
+        AtomicObj new;
+        new.obj = obj;
+        do {
+          old = data[hash*2+1];
+        } while (!COMPARE_AND_SWAP(&data[hash*2+1].atom,
+                  old.atom, new.atom));
+        CHANGED_BAG(inner);
+        HashUnlockShared(record);
+        return obj;
       } else { // AREC_W1
-	do {
-	  result = data[hash*2+1].obj;
-	} while (!result);
-	CHANGED_BAG(inner);
-	HashUnlockShared(record);
-	return result;
+        do {
+          result = data[hash*2+1].obj;
+        } while (!result);
+        CHANGED_BAG(inner);
+        HashUnlockShared(record);
+        return result;
       }
     }
     hash++;
@@ -740,7 +739,7 @@ Obj SetARecordField(Obj record, UInt field, Obj obj)
     if (old.atom == field) {
       /* we don't actually need a new entry, so revert the size update */
       do {
-	size = table[AR_SIZE].atom;
+        size = table[AR_SIZE].atom;
       } while (!COMPARE_AND_SWAP(&table[AR_SIZE].atom, size, size-1));
       /* continue below */
     } else if (!old.atom) {
@@ -760,29 +759,29 @@ Obj SetARecordField(Obj record, UInt field, Obj obj)
       old = data[hash*2+1];
       if (old.obj) {
         if (policy == AREC_WX) {
-	  result = 0;
-	  break;
-	}
-	else if (policy == AREC_RW) {
-	  AtomicObj new;
-	  new.obj = obj;
-	  if (COMPARE_AND_SWAP(&data[hash*2+1].atom,
-	      old.atom, new.atom)) {
-	    result = obj;
-	    break;
-	  }
-	} else {
-	  result = old.obj;
-	  break;
-	}
+          result = 0;
+          break;
+        }
+        else if (policy == AREC_RW) {
+          AtomicObj new;
+          new.obj = obj;
+          if (COMPARE_AND_SWAP(&data[hash*2+1].atom,
+              old.atom, new.atom)) {
+            result = obj;
+            break;
+          }
+        } else {
+          result = old.obj;
+          break;
+        }
       } else {
         AtomicObj new;
-	new.obj = obj;
-	if (COMPARE_AND_SWAP(&data[hash*2+1].atom,
-	    old.atom, new.atom)) {
-	  result = obj;
-	  break;
-	}
+        new.obj = obj;
+        if (COMPARE_AND_SWAP(&data[hash*2+1].atom,
+            old.atom, new.atom)) {
+          result = obj;
+          break;
+        }
       }
     } /* end CAS loop */
     CHANGED_BAG(inner);
@@ -921,25 +920,21 @@ static AtomicRecordPolicy GetARecordUpdatePolicy(Obj record)
 
 Obj ElmARecord(Obj record, UInt rnam)
 {
-  Obj result;
-  for (;;) {
-    result = GetARecordField(record, rnam);
-    if (result)
-      return result;
-    ErrorReturnVoid("Record: '<atomic record>.%g' must have an assigned value",
-      (UInt)NAME_RNAM(rnam), 0L,
-      "you can 'return;' after assigning a value" );
-  }
+    Obj result = GetARecordField(record, rnam);
+    if (!result)
+        ErrorMayQuit(
+            "Record: '<atomic record>.%g' must have an assigned value",
+            (UInt)NAME_RNAM(rnam), 0);
+    return result;
 }
 
 void AssARecord(Obj record, UInt rnam, Obj value)
 {
-   Obj result = SetARecordField(record, rnam, value);
-   if (!result)
-     ErrorReturnVoid("Record: '<atomic record>.%g' already has an assigned value",
-       (UInt)NAME_RNAM(rnam), 0L,
-       "you can 'return';");
-
+    Obj result = SetARecordField(record, rnam, value);
+    if (!result)
+        ErrorMayQuit(
+            "Record: '<atomic record>.%g' already has an assigned value",
+            (UInt)NAME_RNAM(rnam), 0);
 }
 
 void UnbARecord(Obj record, UInt rnam) {
@@ -951,15 +946,15 @@ Int IsbARecord(Obj record, UInt rnam)
   return GetARecordField(record, rnam) != (Obj) 0;
 }
 
-Obj ShallowCopyARecord(Obj obj)
+static Obj ShallowCopyARecord(Obj obj)
 {
   Obj copy, inner, innerCopy;
   HashLock(obj);
   copy = NewBag(TNUM_BAG(obj), SIZE_BAG(obj));
-  memcpy(ADDR_OBJ(copy), ADDR_OBJ(obj), SIZE_BAG(obj));
-  inner = ADDR_OBJ(obj)[1];
+  memcpy(ADDR_OBJ(copy), CONST_ADDR_OBJ(obj), SIZE_BAG(obj));
+  inner = CONST_ADDR_OBJ(obj)[1];
   innerCopy = NewBag(TNUM_BAG(inner), SIZE_BAG(inner));
-  memcpy(ADDR_OBJ(innerCopy), ADDR_OBJ(inner), SIZE_BAG(inner));
+  memcpy(ADDR_OBJ(innerCopy), CONST_ADDR_OBJ(inner), SIZE_BAG(inner));
   ADDR_OBJ(copy)[1] = innerCopy;
   HashUnlock(obj);
   CHANGED_BAG(innerCopy);
@@ -998,15 +993,15 @@ Obj GetTLRecordField(Obj record, UInt rnam)
   contents = GetTLInner(record);
   table = ADDR_OBJ(contents);
   tlrecord = table[TLR_DATA+TLS(threadID)];
-  if (!tlrecord || !FindPRec(tlrecord, rnam, &pos, 1)) {
+  if (!tlrecord || !(pos = PositionPRec(tlrecord, rnam, 1))) {
     Obj result;
     Obj defrec = table[TLR_DEFAULTS];
     result = GetARecordField(defrec, rnam);
     if (result) {
       result = CopyTraversed(result);
       if (!tlrecord) {
-	tlrecord = NEW_PREC(0);
-	UpdateThreadRecord(record, tlrecord);
+        tlrecord = NEW_PREC(0);
+        UpdateThreadRecord(record, tlrecord);
       }
       AssPRec(tlrecord, rnam, result);
       TLS(currentRegion) = savedRegion;
@@ -1016,22 +1011,23 @@ Obj GetTLRecordField(Obj record, UInt rnam)
       Obj constructors = table[TLR_CONSTRUCTORS];
       func = GetARecordField(constructors, rnam);
       if (!tlrecord) {
-	tlrecord = NEW_PREC(0);
-	UpdateThreadRecord(record, tlrecord);
+        tlrecord = NEW_PREC(0);
+        UpdateThreadRecord(record, tlrecord);
       }
       if (func) {
         if (NARG_FUNC(func) == 0)
-	  result = CALL_0ARGS(func);
-	else
-	  result = CALL_1ARGS(func, record);
-	TLS(currentRegion) = savedRegion;
-	if (!result) {
-	  if (!FindPRec(tlrecord, rnam, &pos, 1))
-	    return 0;
-	  return GET_ELM_PREC(tlrecord, pos);
-	}
-	AssPRec(tlrecord, rnam, result);
-	return result;
+          result = CALL_0ARGS(func);
+        else
+          result = CALL_1ARGS(func, record);
+        TLS(currentRegion) = savedRegion;
+        if (!result) {
+          pos = PositionPRec(tlrecord, rnam, 1);
+          if (!pos)
+            return 0;
+          return GET_ELM_PREC(tlrecord, pos);
+        }
+        AssPRec(tlrecord, rnam, result);
+        return result;
       }
       TLS(currentRegion) = savedRegion;
       return 0;
@@ -1041,17 +1037,14 @@ Obj GetTLRecordField(Obj record, UInt rnam)
   return GET_ELM_PREC(tlrecord, pos);
 }
 
-Obj ElmTLRecord(Obj record, UInt rnam)
+static Obj ElmTLRecord(Obj record, UInt rnam)
 {
-  Obj result;
-  for (;;) {
-    result = GetTLRecordField(record, rnam);
-    if (result)
-      return result;
-    ErrorReturnVoid("Record: '<thread-local record>.%g' must have an assigned value",
-      (UInt)NAME_RNAM(rnam), 0L,
-      "you can 'return;' after assigning a value" );
-  }
+    Obj result = GetTLRecordField(record, rnam);
+    if (!result)
+        ErrorMayQuit(
+            "Record: '<thread-local record>.%g' must have an assigned value",
+            (UInt)NAME_RNAM(rnam), 0);
+    return result;
 }
 
 void AssTLRecord(Obj record, UInt rnam, Obj value)
@@ -1069,7 +1062,7 @@ void AssTLRecord(Obj record, UInt rnam, Obj value)
   AssPRec(tlrecord, rnam, value);
 }
 
-void UnbTLRecord(Obj record, UInt rnam)
+static void UnbTLRecord(Obj record, UInt rnam)
 {
   Obj contents, *table;
   Obj tlrecord;
@@ -1085,7 +1078,7 @@ void UnbTLRecord(Obj record, UInt rnam)
 }
 
 
-Int IsbTLRecord(Obj record, UInt rnam)
+static Int IsbTLRecord(Obj record, UInt rnam)
 {
   return GetTLRecordField(record, rnam) != (Obj) 0;
 }
@@ -1098,17 +1091,13 @@ static Obj FuncAtomicRecord(Obj self, Obj args)
       return NewAtomicRecord(8);
     case 1:
       arg = ELM_PLIST(args, 1);
-      if (IS_INTOBJ(arg)) {
-	if (INT_INTOBJ(arg) <= 0)
-          ArgumentError("AtomicRecord: capacity must be a positive integer");
+      if (IS_POS_INTOBJ(arg)) {
         return NewAtomicRecord(INT_INTOBJ(arg));
       }
-      switch (TNUM_OBJ(arg)) {
-        case T_PREC:
-	case T_PREC+IMMUTABLE:
-	  return NewAtomicRecordFrom(arg);
+      if (IS_PREC(arg)) {
+          return NewAtomicRecordFrom(arg);
       }
-      ArgumentError("AtomicRecord: argument must be an integer or record");
+      ArgumentError("AtomicRecord: argument must be a positive small integer or a record");
     default:
       ArgumentError("AtomicRecord: takes one optional argument");
       return (Obj) 0;
@@ -1121,9 +1110,8 @@ static Obj FuncGET_ATOMIC_RECORD(Obj self, Obj record, Obj field, Obj def)
   Obj result;
   if (TNUM_OBJ(record) != T_AREC)
     ArgumentError("GET_ATOMIC_RECORD: First argument must be an atomic record");
-  if (!IsStringConv(field))
-    ArgumentError("GET_ATOMIC_RECORD: Second argument must be a string");
-  fieldname = RNamName(CSTR_STRING(field));
+  RequireStringRep("GET_ATOMIC_RECORD", field);
+  fieldname = RNamName(CONST_CSTR_STRING(field));
   result = GetARecordField(record, fieldname);
   return result ? result : def;
 }
@@ -1134,13 +1122,12 @@ static Obj FuncSET_ATOMIC_RECORD(Obj self, Obj record, Obj field, Obj value)
   Obj result;
   if (TNUM_OBJ(record) != T_AREC)
     ArgumentError("SET_ATOMIC_RECORD: First argument must be an atomic record");
-  if (!IsStringConv(field))
-    ArgumentError("SET_ATOMIC_RECORD: Second argument must be a string");
-  fieldname = RNamName(CSTR_STRING(field));
+  RequireStringRep("SET_ATOMIC_RECORD", field);
+  fieldname = RNamName(CONST_CSTR_STRING(field));
   result = SetARecordField(record, fieldname, value);
   if (!result)
     ErrorQuit("SET_ATOMIC_RECORD: Field '%s' already exists",
-      (UInt) CSTR_STRING(field), 0L);
+      (UInt) CONST_CSTR_STRING(field), 0L);
   return result;
 }
 
@@ -1150,12 +1137,11 @@ static Obj FuncUNBIND_ATOMIC_RECORD(Obj self, Obj record, Obj field)
   Obj exists;
   if (TNUM_OBJ(record) != T_AREC)
     ArgumentError("UNBIND_ATOMIC_RECORD: First argument must be an atomic record");
-  if (!IsStringConv(field))
-    ArgumentError("UNBIND_ATOMIC_RECORD: Second argument must be a string");
-  fieldname = RNamName(CSTR_STRING(field));
+  RequireStringRep("UNBIND_ATOMIC_RECORD", field);
+  fieldname = RNamName(CONST_CSTR_STRING(field));
   if (GetARecordUpdatePolicy(record) != AREC_RW)
     ErrorQuit("UNBIND_ATOMIC_RECORD: Record elements cannot be changed",
-      (UInt) CSTR_STRING(field), 0L);
+      (UInt) CONST_CSTR_STRING(field), 0L);
   exists = GetARecordField(record, fieldname);
   if (exists)
     SetARecordField(record, fieldname, (Obj) 0);
@@ -1168,7 +1154,7 @@ static Obj CreateTLDefaults(Obj defrec) {
   UInt i;
   TLS(currentRegion) = LimboRegion;
   result = NewBag(T_PREC, SIZE_BAG(defrec));
-  memcpy(ADDR_OBJ(result), ADDR_OBJ(defrec), SIZE_BAG(defrec));
+  memcpy(ADDR_OBJ(result), CONST_ADDR_OBJ(defrec), SIZE_BAG(defrec));
   for (i = 1; i <= LEN_PREC(defrec); i++) {
     SET_ELM_PREC(result, i,
       CopyReachableObjectsFrom(GET_ELM_PREC(result, i), 0, 1, 0));
@@ -1184,7 +1170,7 @@ static Obj NewTLRecord(Obj defaults, Obj constructors) {
   ADDR_OBJ(inner)[TLR_SIZE] = 0;
   ADDR_OBJ(inner)[TLR_DEFAULTS] = CreateTLDefaults(defaults);
   WriteGuard(constructors);
-  REGION(constructors) = LimboRegion;
+  SET_REGION(constructors, LimboRegion);
   MEMBAR_WRITE();
   ADDR_OBJ(inner)[TLR_CONSTRUCTORS] = NewAtomicRecordFrom(constructors);
   ((AtomicObj *)(ADDR_OBJ(result)))->obj = inner;
@@ -1254,8 +1240,7 @@ static Obj FuncSetTLConstructor(Obj self, Obj record, Obj name, Obj function)
     ArgumentError("SetTLConstructor: First argument must be a thread-local record");
   if (!IS_STRING(name) && !IS_INTOBJ(name))
     ArgumentError("SetTLConstructor: Second argument must be a string or integer");
-  if (TNUM_OBJ(function) != T_FUNCTION)
-    ArgumentError("SetTLConstructor: Third argument must be a function");
+  RequireFunction("SetTLConstructor", function);
   SetTLConstructor(record, RNamObj(name), function);
   return (Obj) 0;
 }
@@ -1263,18 +1248,18 @@ static Obj FuncSetTLConstructor(Obj self, Obj record, Obj name, Obj function)
 static Int LenListAList(Obj list)
 {
   MEMBAR_READ();
-  return (Int)(ALIST_LEN((UInt)ADDR_ATOM(list)[0].atom));
+  return (Int)(ALIST_LEN((UInt)CONST_ADDR_ATOM(list)[0].atom));
 }
 
 Obj LengthAList(Obj list)
 {
   MEMBAR_READ();
-  return INTOBJ_INT(ALIST_LEN((UInt)ADDR_ATOM(list)[0].atom));
+  return INTOBJ_INT(ALIST_LEN((UInt)CONST_ADDR_ATOM(list)[0].atom));
 }
 
 Obj Elm0AList(Obj list, Int pos)
 {
-  AtomicObj *addr = ADDR_ATOM(list);
+  const AtomicObj *addr = CONST_ADDR_ATOM(list);
   UInt len;
   MEMBAR_READ();
   len = ALIST_LEN((UInt) addr[0].atom);
@@ -1286,55 +1271,43 @@ Obj Elm0AList(Obj list, Int pos)
 
 Obj ElmAList(Obj list, Int pos)
 {
-  AtomicObj *addr = ADDR_ATOM(list);
+  const AtomicObj *addr = CONST_ADDR_ATOM(list);
   UInt len;
   MEMBAR_READ();
   len = ALIST_LEN((UInt)addr[0].atom);
   Obj result;
-  while (pos < 1 || pos > len) {
-    Obj posobj;
-    do {
-      posobj = ErrorReturnObj(
-	"Atomic List Element: <pos>=%d is an invalid index for <list>",
-	(Int) pos, 0L,
-	"you can replace value <pos> via 'return <pos>;'" );
-    } while (!IS_INTOBJ(posobj));
-    pos = INT_INTOBJ(posobj);
+  if (pos < 1 || pos > len) {
+      ErrorMayQuit(
+          "Atomic List Element: <pos>=%d is an invalid index for <list>",
+          (Int)pos, 0);
   }
-  for (;;) {
-    result = addr[1+pos].obj;
-    if (result) {
-      MEMBAR_READ();
-      return result;
-    }
-    ErrorReturnVoid(
-	"Atomic List Element: <list>[%d] must have an assigned value",
-	(Int)pos, 0L,
-	"you can 'return;' after assigning a value" );
-  }
+
+  result = addr[1 + pos].obj;
+  if (!result)
+      ErrorMayQuit(
+          "Atomic List Element: <list>[%d] must have an assigned value",
+          (Int)pos, 0);
+
+  MEMBAR_READ();
+  return result;
 }
 
-Int IsbAList(Obj list, Int pos) {
-  AtomicObj *addr = ADDR_ATOM(list);
+static Int IsbAList(Obj list, Int pos) {
+  const AtomicObj *addr = CONST_ADDR_ATOM(list);
   UInt len;
   MEMBAR_READ();
   len = ALIST_LEN((UInt) addr[0].atom);
   return pos >= 1 && pos <= len && addr[1+pos].obj;
 }
 
-void AssFixAList(Obj list, Int pos, Obj obj)
+static void AssFixAList(Obj list, Int pos, Obj obj)
 {
-  UInt pol = (UInt)ADDR_ATOM(list)[0].atom;
+  UInt pol = (UInt)CONST_ADDR_ATOM(list)[0].atom;
   UInt len = ALIST_LEN(pol);
-  while (pos < 1 || pos > len) {
-    Obj posobj;
-    do {
-      posobj = ErrorReturnObj(
-	"Atomic List Element: <pos>=%d is an invalid index for <list>",
-	(Int) pos, 0L,
-	"you can replace value <pos> via 'return <pos>;'" );
-    } while (!IS_INTOBJ(posobj));
-    pos = INT_INTOBJ(posobj);
+  if (pos < 1 || pos > len) {
+      ErrorMayQuit(
+          "Atomic List Element: <pos>=%d is an invalid index for <list>",
+          (Int)pos, 0);
   }
   switch (ALIST_POL(pol)) {
     case ALIST_RW:
@@ -1347,7 +1320,7 @@ void AssFixAList(Obj list, Int pos, Obj obj)
     case ALIST_WX:
       if (!COMPARE_AND_SWAP(&ADDR_ATOM(list)[1+pos].atom,
         (AtomicUInt) 0, (AtomicUInt) obj)) {
-	ErrorQuit("Atomic List Assignment: <list>[%d] already has an assigned value", pos, (Int) 0);
+        ErrorQuit("Atomic List Assignment: <list>[%d] already has an assigned value", pos, (Int) 0);
       }
       break;
   }
@@ -1360,7 +1333,7 @@ void AssFixAList(Obj list, Int pos, Obj obj)
 // than the existing length.
 // If this function returns, then the code has a (possibly shared)
 // HashLock on the list, which must be released by the caller.
-void EnlargeAList(Obj list, Int pos)
+static void EnlargeAList(Obj list, Int pos)
 {
     HashLockShared(list);
     AtomicObj * addr = ADDR_ATOM(list);
@@ -1409,8 +1382,8 @@ void AssAList(Obj list, Int pos, Obj obj)
 {
   if (pos < 1) {
     ErrorQuit(
-	"Atomic List Element: <pos>=%d is an invalid index for <list>",
-	(Int) pos, 0L);
+        "Atomic List Element: <pos>=%d is an invalid index for <list>",
+        (Int) pos, 0L);
     return; /* flow control hint */
   }
 
@@ -1430,8 +1403,8 @@ void AssAList(Obj list, Int pos, Obj obj)
     case ALIST_WX:
       if (!COMPARE_AND_SWAP(&ADDR_ATOM(list)[1+pos].atom,
         (AtomicUInt) 0, (AtomicUInt) obj)) {
-	HashUnlock(list);
-	ErrorQuit("Atomic List Assignment: <list>[%d] already has an assigned value", pos, (Int) 0);
+        HashUnlock(list);
+        ErrorQuit("Atomic List Assignment: <list>[%d] already has an assigned value", pos, (Int) 0);
       }
       break;
   }
@@ -1440,7 +1413,7 @@ void AssAList(Obj list, Int pos, Obj obj)
   HashUnlock(list);
 }
 
-Obj AtomicCompareSwapAList(Obj list, Int pos, Obj old, Obj new)
+static Obj AtomicCompareSwapAList(Obj list, Int pos, Obj old, Obj new)
 {
     if (pos < 1) {
         ErrorQuit(
@@ -1505,8 +1478,8 @@ UInt AddAList(Obj list, Obj obj)
     case ALIST_WX:
       if (!COMPARE_AND_SWAP(&ADDR_ATOM(list)[2+len].atom,
         (AtomicUInt) 0, (AtomicUInt) obj)) {
-	HashUnlock(list);
-	ErrorQuit("Atomic List Assignment: <list>[%d] already has an assigned value", len+1, (Int) 0);
+        HashUnlock(list);
+        ErrorQuit("Atomic List Assignment: <list>[%d] already has an assigned value", len+1, (Int) 0);
       }
       break;
   }
@@ -1516,7 +1489,7 @@ UInt AddAList(Obj list, Obj obj)
   return len+1;
 }
 
-void UnbAList(Obj list, Int pos)
+static void UnbAList(Obj list, Int pos)
 {
   AtomicObj *addr;
   UInt len, pol;
@@ -1535,13 +1508,13 @@ void UnbAList(Obj list, Int pos)
   HashUnlockShared(list);
 }
 
-Int InitAObjectsState(void)
+static Int InitAObjectsState(void)
 {
     TLS(tlRecords) = (Obj)0;
     return 0;
 }
 
-Int DestroyAObjectsState(void)
+static Int DestroyAObjectsState(void)
 {
     Obj  records;
     UInt i, len;
@@ -1556,7 +1529,7 @@ Int DestroyAObjectsState(void)
 
 #endif /* WARD_ENABLED */
 
-Obj MakeAtomic(Obj obj) {
+static Obj MakeAtomic(Obj obj) {
   if (IS_LIST(obj))
       return NewAtomicListFrom(T_ALIST, obj);
   else if (TNUM_OBJ(obj) == T_PREC)
@@ -1565,14 +1538,14 @@ Obj MakeAtomic(Obj obj) {
     return (Obj) 0;
 }
 
-Obj FuncMakeWriteOnceAtomic(Obj self, Obj obj) {
+static Obj FuncMakeWriteOnceAtomic(Obj self, Obj obj) {
   switch (TNUM_OBJ(obj)) {
     case T_ALIST:
     case T_FIXALIST:
     case T_APOSOBJ:
       HashLock(obj);
       ADDR_ATOM(obj)[0].atom =
-        CHANGE_ALIST_POL(ADDR_ATOM(obj)[0].atom, ALIST_W1);
+        CHANGE_ALIST_POL(CONST_ADDR_ATOM(obj)[0].atom, ALIST_W1);
       HashUnlock(obj);
       break;
     case T_AREC:
@@ -1588,14 +1561,14 @@ Obj FuncMakeWriteOnceAtomic(Obj self, Obj obj) {
   return obj;
 }
 
-Obj FuncMakeReadWriteAtomic(Obj self, Obj obj) {
+static Obj FuncMakeReadWriteAtomic(Obj self, Obj obj) {
   switch (TNUM_OBJ(obj)) {
     case T_ALIST:
     case T_FIXALIST:
     case T_APOSOBJ:
       HashLock(obj);
       ADDR_ATOM(obj)[0].atom =
-        CHANGE_ALIST_POL(ADDR_ATOM(obj)[0].atom, ALIST_RW);
+        CHANGE_ALIST_POL(CONST_ADDR_ATOM(obj)[0].atom, ALIST_RW);
       HashUnlock(obj);
       break;
     case T_AREC:
@@ -1611,14 +1584,14 @@ Obj FuncMakeReadWriteAtomic(Obj self, Obj obj) {
   return obj;
 }
 
-Obj FuncMakeStrictWriteOnceAtomic(Obj self, Obj obj) {
+static Obj FuncMakeStrictWriteOnceAtomic(Obj self, Obj obj) {
   switch (TNUM_OBJ(obj)) {
     case T_ALIST:
     case T_FIXALIST:
     case T_APOSOBJ:
       HashLock(obj);
       ADDR_ATOM(obj)[0].atom =
-        CHANGE_ALIST_POL(ADDR_ATOM(obj)[0].atom, ALIST_WX);
+        CHANGE_ALIST_POL(CONST_ADDR_ATOM(obj)[0].atom, ALIST_WX);
       HashUnlock(obj);
       break;
     case T_AREC:
@@ -1637,14 +1610,11 @@ Obj FuncMakeStrictWriteOnceAtomic(Obj self, Obj obj) {
 
 #define FuncError(message)  ErrorQuit("%s: %s", (Int)currFuncName, (Int)message)
 
-Obj BindOncePosObj(Obj obj, Obj index, Obj *new, int eval, const char *currFuncName) {
+static Obj BindOncePosObj(Obj obj, Obj index, Obj *new, int eval, const char *currFuncName) {
   Int n;
   Bag *contents;
   Bag result;
-  if (!IS_INTOBJ(index) || ((n = INT_INTOBJ(index)) <= 0)) {
-    FuncError("index for positional object must be a positive integer");
-    return (Obj) 0; /* flow control hint */
-  }
+  n = GetPositiveSmallInt(currFuncName, index);
   ReadGuard(obj);
 #ifndef WARD_ENABLED
   contents = PTR_BAG(obj);
@@ -1690,7 +1660,7 @@ Obj BindOncePosObj(Obj obj, Obj index, Obj *new, int eval, const char *currFuncN
 #endif
 }
 
-Obj BindOnceAPosObj(Obj obj, Obj index, Obj *new, int eval, const char *currFuncName) {
+static Obj BindOnceAPosObj(Obj obj, Obj index, Obj *new, int eval, const char *currFuncName) {
   UInt n;
   UInt len;
   AtomicObj anew;
@@ -1700,9 +1670,7 @@ Obj BindOnceAPosObj(Obj obj, Obj index, Obj *new, int eval, const char *currFunc
   addr = ADDR_ATOM(obj);
   MEMBAR_READ();
   len = ALIST_LEN(addr[0].atom);
-  if (!IS_INTOBJ(index))
-    FuncError("Second argument must be an integer");
-  n = INT_INTOBJ(index);
+  n = GetSmallInt(currFuncName, index);
   if (n <= 0 || n > len)
     FuncError("Index out of range");
   result = addr[n+1].obj;
@@ -1724,19 +1692,19 @@ Obj BindOnceAPosObj(Obj obj, Obj index, Obj *new, int eval, const char *currFunc
 }
 
 
-Obj BindOnceComObj(Obj obj, Obj index, Obj *new, int eval, const char *currFuncName) {
+static Obj BindOnceComObj(Obj obj, Obj index, Obj *new, int eval, const char *currFuncName) {
   FuncError("not yet implemented");
   return (Obj) 0;
 }
 
 
-Obj BindOnceAComObj(Obj obj, Obj index, Obj *new, int eval, const char *currFuncName) {
+static Obj BindOnceAComObj(Obj obj, Obj index, Obj *new, int eval, const char *currFuncName) {
   FuncError("not yet implemented");
   return (Obj) 0;
 }
 
 
-Obj BindOnce(Obj obj, Obj index, Obj *new, int eval, const char *currFuncName) {
+static Obj BindOnce(Obj obj, Obj index, Obj *new, int eval, const char *currFuncName) {
   switch (TNUM_OBJ(obj)) {
     case T_POSOBJ:
       return BindOncePosObj(obj, index, new, eval, currFuncName);
@@ -1752,13 +1720,13 @@ Obj BindOnce(Obj obj, Obj index, Obj *new, int eval, const char *currFuncName) {
   }
 }
 
-Obj FuncBindOnce(Obj self, Obj obj, Obj index, Obj new) {
+static Obj FuncBindOnce(Obj self, Obj obj, Obj index, Obj new) {
   Obj result;
   result = BindOnce(obj, index, &new, 0, "BindOnce");
   return result ? result : new;
 }
 
-Obj FuncStrictBindOnce(Obj self, Obj obj, Obj index, Obj new) {
+static Obj FuncStrictBindOnce(Obj self, Obj obj, Obj index, Obj new) {
   Obj result;
   result = BindOnce(obj, index, &new, 0, "StrictBindOnce");
   if (result)
@@ -1766,19 +1734,19 @@ Obj FuncStrictBindOnce(Obj self, Obj obj, Obj index, Obj new) {
   return result;
 }
 
-Obj FuncTestBindOnce(Obj self, Obj obj, Obj index, Obj new) {
+static Obj FuncTestBindOnce(Obj self, Obj obj, Obj index, Obj new) {
   Obj result;
   result = BindOnce(obj, index, &new, 0, "TestBindOnce");
   return result ? False : True;
 }
 
-Obj FuncBindOnceExpr(Obj self, Obj obj, Obj index, Obj new) {
+static Obj FuncBindOnceExpr(Obj self, Obj obj, Obj index, Obj new) {
   Obj result;
   result = BindOnce(obj, index, &new, 1, "BindOnceExpr");
   return result ? result : new;
 }
 
-Obj FuncTestBindOnceExpr(Obj self, Obj obj, Obj index, Obj new) {
+static Obj FuncTestBindOnceExpr(Obj self, Obj obj, Obj index, Obj new) {
   Obj result;
   result = BindOnce(obj, index, &new, 1, "TestBindOnceExpr");
   return result ? False : True;
@@ -1851,33 +1819,35 @@ static StructGVarFunc GVarFuncs[] = {
 
 // Forbid comparision and copying of atomic objects, because they
 // cannot be done in a thread-safe manner
-Int AtomicRecordErrorNoCompare(Obj arg1, Obj arg2)
+static Int AtomicRecordErrorNoCompare(Obj arg1, Obj arg2)
 {
     ErrorQuit("atomic records cannot be compared with other records", 0, 0);
     // Make compiler happy
     return 0;
 }
 
-Int AtomicListErrorNoCompare(Obj arg1, Obj arg2)
+static Int AtomicListErrorNoCompare(Obj arg1, Obj arg2)
 {
     ErrorQuit("atomic lists cannot be compared with other lists", 0, 0);
     // Make compiler happy
     return 0;
 }
 
-Obj AtomicErrorNoShallowCopy(Obj arg1)
+static Obj AtomicErrorNoShallowCopy(Obj arg1)
 {
     ErrorQuit("atomic objects cannot be copied", 0, 0);
     // Make compiler happy
     return 0;
 }
 
-Obj AtomicErrorNoCopy(Obj arg1, Int arg2)
+#if !defined(USE_THREADSAFE_COPYING)
+static Obj AtomicErrorNoCopy(Obj arg1, Int arg2)
 {
     ErrorQuit("atomic objects cannot be copied", 0, 0);
     // Make compiler happy
     return 0;
 }
+#endif
 
 /****************************************************************************
 **

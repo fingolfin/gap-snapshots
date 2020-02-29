@@ -48,7 +48,7 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap23_mj.html#X78E6897186F482F6">23.4-1 AddRowVector</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap23_mj.html#X7854B2B67E3FE2CA">23.4-2 AddCoeffs</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap23_mj.html#X78CFE0A879773B45">23.4-3 MultRowVector</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap23_mj.html#X7BEF28C981C42E16">23.4-3 MultVector</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap23_mj.html#X8264B3EE7D56EEDD">23.4-4 CoeffsMod</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap23_mj.html#X7D287281781E16A2">23.5 <span class="Heading">Shifting and Trimming Coefficient Lists</span></a>
@@ -322,14 +322,17 @@ true
 [ 6, 8, 10, 4 ]
 </pre></div>
 
-<p><a id="X78CFE0A879773B45" name="X78CFE0A879773B45"></a></p>
+<p><a id="X7BEF28C981C42E16" name="X7BEF28C981C42E16"></a></p>
 
-<h5>23.4-3 MultRowVector</h5>
+<h5>23.4-3 MultVector</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MultRowVector</code>( <var class="Arg">list1</var>[, <var class="Arg">poss1</var>, <var class="Arg">list2</var>, <var class="Arg">poss2</var>], <var class="Arg">mul</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>The five argument version of this operation replaces <var class="Arg">list1</var><code class="code">[</code><var class="Arg">poss1</var><code class="code">[</code><span class="SimpleMath">\(i\)</span><code class="code">]]</code> by <code class="code"><var class="Arg">mul</var>*<var class="Arg">list2</var>[<var class="Arg">poss2</var>[</code><span class="SimpleMath">\(i\)</span><code class="code">]]</code> for <span class="SimpleMath">\(i\)</span> between <span class="SimpleMath">\(1\)</span> and <code class="code">Length( <var class="Arg">poss1</var> )</code>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MultVector</code>( <var class="Arg">list1</var>, <var class="Arg">mul</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MultVectorLeft</code>( <var class="Arg">list1</var>, <var class="Arg">mul</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
 
-<p>The two-argument version simply multiplies each element of <var class="Arg">list1</var>, in-place, by <var class="Arg">mul</var>.</p>
+<p>This operation calculates <var class="Arg">mul</var>*<var class="Arg">list1</var> in-place.</p>
+
+<p>Note that <code class="code">MultVector</code> is just a synonym for <code class="code">MultVectorLeft</code>.</p>
 
 <p><a id="X8264B3EE7D56EEDD" name="X8264B3EE7D56EEDD"></a></p>
 

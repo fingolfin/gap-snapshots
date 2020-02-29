@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  vars.c                      GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the functions of variables package.
 **
@@ -92,11 +92,10 @@ Obj             ObjLVar (
     UInt                lvar )
 {
     Obj                 val;            /* value result                    */
-    while ( (val = OBJ_LVAR(lvar)) == 0 ) {
-        ErrorReturnVoid(
-            "Variable: '%g' must have an assigned value",
-            (Int)NAME_LVAR( lvar ), 0L,
-            "you can 'return;' after assigning a value" );
+    val = OBJ_LVAR(lvar);
+    if (val == 0) {
+        ErrorMayQuit("Variable: '%g' must have an assigned value",
+                     (Int)NAME_LVAR(lvar), 0);
     }
     return val;
 }
@@ -137,7 +136,7 @@ Bag NewLVarsBag(UInt slots)
 */
 void FreeLVarsBag(Bag bag)
 {
-    GAP_ASSERT(TNUM_OBJ(STATE(CurrLVars)) == T_LVARS);
+    GAP_ASSERT(TNUM_OBJ(bag) == T_LVARS);
     UInt slots = (SIZE_BAG(bag) - sizeof(LVarsHeader)) / sizeof(Obj);
     if (slots < ARRAY_SIZE(STATE(LVarsPool))) {
         // clean the bag
@@ -157,13 +156,11 @@ void FreeLVarsBag(Bag bag)
 **  'ExecAssLVar' executes the local  variable assignment statement <stat> to
 **  the local variable that is referenced in <stat>.
 */
-UInt            ExecAssLVar (
-    Stat                stat )
+static UInt ExecAssLVar(Stat stat)
 {
     Obj                 rhs;            /* value of right hand side        */
 
     /* assign the right hand side to the local variable                    */
-    SET_BRK_CURR_STAT( stat );
     rhs = EVAL_EXPR(READ_STAT(stat, 1));
     ASS_LVAR(READ_STAT(stat, 0), rhs);
 
@@ -171,8 +168,7 @@ UInt            ExecAssLVar (
     return 0;
 }
 
-UInt            ExecUnbLVar (
-    Stat                stat )
+static UInt ExecUnbLVar(Stat stat)
 {
     /* unbind the local variable                                           */
     ASS_LVAR(READ_STAT(stat, 0), (Obj)0);
@@ -182,9 +178,7 @@ UInt            ExecUnbLVar (
 }
 
 
-
-Obj             EvalIsbLVar (
-    Expr                expr )
+static Obj EvalIsbLVar(Expr expr)
 {
     Obj                 val;            /* value, result                   */
 
@@ -202,8 +196,7 @@ Obj             EvalIsbLVar (
 **
 **  'PrintAssLVar' prints the local variable assignment statement <stat>.
 */
-void            PrintAssLVar (
-    Stat                stat )
+static void PrintAssLVar(Stat stat)
 {
     Pr( "%2>", 0L, 0L );
     Pr("%H", (Int)NAME_LVAR(READ_STAT(stat, 0)), 0L);
@@ -212,8 +205,7 @@ void            PrintAssLVar (
     Pr( "%2<;", 0L, 0L );
 }
 
-void            PrintUnbLVar (
-    Stat                stat )
+static void PrintUnbLVar(Stat stat)
 {
     Pr( "Unbind( ", 0L, 0L );
     Pr("%H", (Int)NAME_LVAR(READ_STAT(stat, 0)), 0L);
@@ -227,14 +219,12 @@ void            PrintUnbLVar (
 **
 **  'PrintRefLVar' prints the local variable reference expression <expr>.
 */
-void            PrintRefLVar (
-    Expr                expr )
+static void PrintRefLVar(Expr expr)
 {
-    Pr( "%H", (Int)NAME_LVAR( LVAR_REFLVAR(expr) ), 0L );
+    Pr( "%H", (Int)NAME_LVAR( LVAR_REF_LVAR(expr) ), 0L );
 }
 
-void            PrintIsbLVar (
-    Expr                expr )
+static void PrintIsbLVar(Expr expr)
 {
     Pr( "IsBound( ", 0L, 0L );
     Pr("%H", (Int)NAME_LVAR(READ_EXPR(expr, 0)), 0L);
@@ -314,13 +304,11 @@ Obj NAME_HVAR_WITH_CONTEXT(Obj context, UInt hvar)
 **  'ExecAssHVar' executes the higher variable assignment statement <stat> to
 **  the higher variable that is referenced in <stat>.
 */
-UInt            ExecAssHVar (
-    Stat                stat )
+static UInt ExecAssHVar(Stat stat)
 {
     Obj                 rhs;            /* value of right hand side        */
 
     /* assign the right hand side to the higher variable                   */
-    SET_BRK_CURR_STAT( stat );
     rhs = EVAL_EXPR(READ_STAT(stat, 1));
     ASS_HVAR(READ_STAT(stat, 0), rhs);
 
@@ -328,8 +316,7 @@ UInt            ExecAssHVar (
     return 0;
 }
 
-UInt            ExecUnbHVar (
-    Stat                stat )
+static UInt ExecUnbHVar(Stat stat)
 {
     /* unbind the higher variable                                          */
     ASS_HVAR(READ_STAT(stat, 0), 0);
@@ -346,26 +333,23 @@ UInt            ExecUnbHVar (
 **  'EvalRefLVarXX' evaluates the higher variable reference expression <expr>
 **  to the higher variable that is referenced in <expr>.
 */
-Obj             EvalRefHVar (
-    Expr                expr )
+static Obj EvalRefHVar(Expr expr)
 {
     Obj                 val;            /* value, result                   */
     UInt                hvar = READ_EXPR(expr, 0);
 
     /* get and check the value of the higher variable                      */
-    while ( (val = OBJ_HVAR(hvar)) == 0 ) {
-        ErrorReturnVoid(
-            "Variable: '%g' must have an assigned value",
-            (Int)NAME_HVAR(hvar), 0L,
-            "you can 'return;' after assigning a value" );
+    val = OBJ_HVAR(hvar);
+    if (val == 0) {
+        ErrorMayQuit("Variable: '%g' must have an assigned value",
+                     (Int)NAME_HVAR(hvar), 0);
     }
 
     /* return the value                                                    */
     return val;
 }
 
-Obj             EvalIsbHVar (
-    Expr                expr )
+static Obj EvalIsbHVar(Expr expr)
 {
     Obj                 val;            /* value, result                   */
 
@@ -383,8 +367,7 @@ Obj             EvalIsbHVar (
 **
 **  'PrintAssHVar' prints the higher variable assignment statement <stat>.
 */
-void            PrintAssHVar (
-    Stat                stat )
+static void PrintAssHVar(Stat stat)
 {
     Pr( "%2>", 0L, 0L );
     Pr("%H", (Int)NAME_HVAR(READ_STAT(stat, 0)), 0L);
@@ -393,8 +376,7 @@ void            PrintAssHVar (
     Pr( "%2<;", 0L, 0L );
 }
 
-void            PrintUnbHVar (
-    Stat                stat )
+static void PrintUnbHVar(Stat stat)
 {
     Pr( "Unbind( ", 0L, 0L );
     Pr("%H", (Int)NAME_HVAR(READ_STAT(stat, 0)), 0L);
@@ -408,14 +390,12 @@ void            PrintUnbHVar (
 **
 **  'PrintRefHVar' prints the higher variable reference expression <expr>.
 */
-void            PrintRefHVar (
-    Expr                expr )
+static void PrintRefHVar(Expr expr)
 {
     Pr("%H", (Int)NAME_HVAR(READ_EXPR(expr, 0)), 0L);
 }
 
-void            PrintIsbHVar (
-    Expr                expr )
+static void PrintIsbHVar(Expr expr)
 {
     Pr( "IsBound( ", 0L, 0L );
     Pr("%H", (Int)NAME_HVAR(READ_EXPR(expr, 0)), 0L);
@@ -430,13 +410,11 @@ void            PrintIsbHVar (
 **  'ExecAssGVar' executes the global variable assignment statement <stat> to
 **  the global variable that is referenced in <stat>.
 */
-UInt            ExecAssGVar (
-    Stat                stat )
+static UInt ExecAssGVar(Stat stat)
 {
     Obj                 rhs;            /* value of right hand side        */
 
     /* assign the right hand side to the global variable                   */
-    SET_BRK_CURR_STAT( stat );
     rhs = EVAL_EXPR(READ_STAT(stat, 1));
     AssGVar(READ_STAT(stat, 0), rhs);
 
@@ -444,8 +422,7 @@ UInt            ExecAssGVar (
     return 0;
 }
 
-UInt            ExecUnbGVar (
-    Stat                stat )
+static UInt ExecUnbGVar(Stat stat)
 {
     /* unbind the global variable                                          */
     AssGVar(READ_STAT(stat, 0), (Obj)0);
@@ -462,25 +439,22 @@ UInt            ExecUnbGVar (
 **  'EvalRefGVar' evaluates the  global variable reference expression  <expr>
 **  to the global variable that is referenced in <expr>.
 */
-Obj             EvalRefGVar (
-    Expr                expr )
+static Obj EvalRefGVar(Expr expr)
 {
     Obj                 val;            /* value, result                   */
 
     /* get and check the value of the global variable                      */
-    while ( (val = ValAutoGVar( READ_EXPR(expr, 0) )) == 0 ) {
-        ErrorReturnVoid(
-            "Variable: '%g' must have an assigned value",
-            (Int)NameGVar( READ_EXPR(expr, 0) ), 0L,
-            "you can 'return;' after assigning a value" );
+    val = ValAutoGVar(READ_EXPR(expr, 0));
+    if (val == 0) {
+        ErrorMayQuit("Variable: '%g' must have an assigned value",
+                     (Int)NameGVar(READ_EXPR(expr, 0)), 0);
     }
 
     /* return the value                                                    */
     return val;
 }
 
-Obj             EvalIsbGVar (
-    Expr                expr )
+static Obj EvalIsbGVar(Expr expr)
 {
     Obj                 val;            /* value, result                   */
 
@@ -498,8 +472,7 @@ Obj             EvalIsbGVar (
 **
 **  'PrVarAss' prints the global variable assignment statement <stat>.
 */
-void            PrintAssGVar (
-    Stat                stat )
+static void PrintAssGVar(Stat stat)
 {
     Pr( "%2>", 0L, 0L );
     Pr("%H", (Int)NameGVar(READ_STAT(stat, 0)), 0L);
@@ -508,8 +481,7 @@ void            PrintAssGVar (
     Pr( "%2<;", 0L, 0L );
 }
 
-void            PrintUnbGVar (
-    Stat                stat )
+static void PrintUnbGVar(Stat stat)
 {
     Pr( "Unbind( ", 0L, 0L );
     Pr("%H", (Int)NameGVar(READ_STAT(stat, 0)), 0L);
@@ -523,14 +495,12 @@ void            PrintUnbGVar (
 **
 **  'PrintRefGVar' prints the global variable reference expression <expr>.
 */
-void            PrintRefGVar (
-    Expr                expr )
+static void PrintRefGVar(Expr expr)
 {
     Pr("%H", (Int)NameGVar(READ_STAT(expr, 0)), 0L);
 }
 
-void            PrintIsbGVar (
-    Expr                expr )
+static void PrintIsbGVar(Expr expr)
 {
     Pr( "IsBound( ", 0L, 0L );
     Pr("%H", (Int)NameGVar(READ_EXPR(expr, 0)), 0L);
@@ -545,8 +515,7 @@ void            PrintIsbGVar (
 **  'ExecAssList'  executes the list  assignment statement <stat> of the form
 **  '<list>[<position>] := <rhs>;'.
 */
-UInt            ExecAssList (
-    Expr                stat )
+static UInt ExecAssList(Expr stat)
 {
     Obj                 list;           /* list, left operand              */
     Obj                 pos;            /* position, left operand          */
@@ -554,7 +523,6 @@ UInt            ExecAssList (
     Obj                 rhs;            /* right hand side, right operand  */
 
     /* evaluate the list (checking is done by 'ASS_LIST')                  */
-    SET_BRK_CURR_STAT( stat );
     list = EVAL_EXPR(READ_STAT(stat, 0));
 
     /* evaluate the position                                               */
@@ -589,33 +557,26 @@ UInt            ExecAssList (
 }
 /****************************************************************************
 **
-*F  ExecAss2List(<ass>)  . . . . . . . . . . .  assign to an element of a list
+*F  ExecAssMat(<ass>) . . . . . . . . . . .  assign to an element of a matrix
 **
-**  'ExecAss2List'  executes the list  assignment statement <stat> of the form
-**  '<list>[<position>,<position>] := <rhs>;'.
+**  'ExecAssMat' executes the matrix assignment statement <stat> of the form
+**  '<mat>[<row>,<col>] := <rhs>;'.
 */
-UInt            ExecAss2List (
-    Expr                stat )
+static UInt ExecAssMat(Expr stat)
 {
-    Obj                 list;           /* list, left operand              */
-    Obj                 pos1;           /* position, left operand          */
-    Obj                 pos2;           /* position, left operand          */
-    Obj                 rhs;            /* right hand side, right operand  */
+    // evaluate the matrix (checking is done by 'ASS_MAT')
+    Obj mat = EVAL_EXPR(READ_STAT(stat, 0));
 
-    /* evaluate the list (checking is done by 'ASS_LIST')                  */
-    SET_BRK_CURR_STAT( stat );
-    list = EVAL_EXPR(READ_STAT(stat, 0));
+    // evaluate and check the row and column
+    Obj row = EVAL_EXPR(READ_STAT(stat, 1));
+    Obj col = EVAL_EXPR(READ_STAT(stat, 2));
 
-    /* evaluate the position                                               */
-    pos1 = EVAL_EXPR(READ_STAT(stat, 1));
-    pos2 = EVAL_EXPR(READ_STAT(stat, 2));
+    // evaluate the right hand side
+    Obj rhs = EVAL_EXPR(READ_STAT(stat, 3));
 
-    /* evaluate the right hand side                                        */
-    rhs = EVAL_EXPR(READ_STAT(stat, 3));
+    ASS_MAT(mat, row, col, rhs);
 
-    ASS2_LIST( list, pos1, pos2, rhs );
-
-    /* return 0 (to indicate that no leave-statement was executed)         */
+    // return 0 (to indicate that no leave-statement was executed)
     return 0;
 }
 
@@ -627,25 +588,23 @@ UInt            ExecAss2List (
 **  'ExecAsssList' executes the list assignment statement  <stat> of the form
 **  '<list>{<positions>} := <rhss>;'.
 */
-UInt            ExecAsssList (
-    Expr                stat )
+static UInt ExecAsssList(Expr stat)
 {
     Obj                 list;           /* list, left operand              */
     Obj                 poss;           /* positions, left operand         */
     Obj                 rhss;           /* right hand sides, right operand */
 
     /* evaluate the list (checking is done by 'ASSS_LIST')                 */
-    SET_BRK_CURR_STAT( stat );
     list = EVAL_EXPR(READ_STAT(stat, 0));
 
     /* evaluate and check the positions                                    */
     poss = EVAL_EXPR(READ_STAT(stat, 1));
-    CheckIsPossList("List Assignment", poss);
+    CheckIsPossList("List Assignments", poss);
 
     /* evaluate and check right hand sides                                 */
     rhss = EVAL_EXPR(READ_STAT(stat, 2));
-    CheckIsDenseList("List Assignment", "rhss", rhss);
-    CheckSameLength("List Assignment", "rhss", "positions", rhss, poss);
+    RequireDenseList("List Assignments", rhss);
+    RequireSameLength("List Assignments", rhss, poss);
 
     /* assign the right hand sides to several elements of the list         */
     ASSS_LIST( list, poss, rhss );
@@ -669,8 +628,7 @@ UInt            ExecAsssList (
 **  a  list, and 'ExecAssListLevel' assigns the  element '<rhss>[<i>]' to the
 **  list '<list>[<i>]' at <position>.
 */
-UInt            ExecAssListLevel (
-    Expr                stat )
+static UInt ExecAssListLevel(Expr stat)
 {
     Obj                 lists;          /* lists, left operand             */
     Obj                 pos;            /* position, left operand          */
@@ -681,7 +639,6 @@ UInt            ExecAssListLevel (
 
     /* evaluate lists (if this works, then <lists> is nested <level> deep, */
     /* checking it is nested <level>+1 deep is done by 'AssListLevel')     */
-    SET_BRK_CURR_STAT( stat );
     lists = EVAL_EXPR(READ_STAT(stat, 0));
     narg = SIZE_STAT(stat)/sizeof(Stat) -3;
     ixs = NEW_PLIST(T_PLIST, narg);
@@ -720,8 +677,7 @@ UInt            ExecAssListLevel (
 **  a list, and 'ExecAsssListLevel' assigns the elements '<rhss>[<i>]' to the
 **  list '<list>[<i>]' at the positions <positions>.
 */
-UInt            ExecAsssListLevel (
-    Expr                stat )
+static UInt ExecAsssListLevel(Expr stat)
 {
     Obj                 lists;          /* lists, left operand             */
     Obj                 poss;           /* position, left operand          */
@@ -730,12 +686,11 @@ UInt            ExecAsssListLevel (
 
     /* evaluate lists (if this works, then <lists> is nested <level> deep, */
     /* checking it is nested <level>+1 deep is done by 'AsssListLevel')    */
-    SET_BRK_CURR_STAT( stat );
     lists = EVAL_EXPR(READ_STAT(stat, 0));
 
     /* evaluate and check the positions                                    */
     poss = EVAL_EXPR(READ_EXPR(stat, 1));
-    CheckIsPossList("List Assignment", poss);
+    CheckIsPossList("List Assignments", poss);
 
     /* evaluate right hand sides (checking is done by 'AsssListLevel')     */
     rhss = EVAL_EXPR(READ_STAT(stat, 2));
@@ -758,8 +713,7 @@ UInt            ExecAsssListLevel (
 **  'ExecUnbList'  executes the list   unbind  statement <stat> of the   form
 **  'Unbind( <list>[<position>] );'.
 */
-UInt            ExecUnbList (
-    Expr                stat )
+static UInt ExecUnbList(Expr stat)
 {
     Obj                 list;           /* list, left operand              */
     Obj                 pos;            /* position, left operand          */
@@ -768,7 +722,6 @@ UInt            ExecUnbList (
     Int i;
 
     /* evaluate the list (checking is done by 'LEN_LIST')                  */
-    SET_BRK_CURR_STAT( stat );
     list = EVAL_EXPR(READ_STAT(stat, 0));
     narg = SIZE_STAT(stat)/sizeof(Stat) - 1;
     if (narg == 1) {
@@ -782,10 +735,10 @@ UInt            ExecUnbList (
     } else {
       ixs = NEW_PLIST(T_PLIST, narg);
       for (i = 1; i <= narg; i++) {
-	/* evaluate the position                                               */
+        /* evaluate the position                                               */
         pos = EVAL_EXPR(READ_STAT(stat, i));
         SET_ELM_PLIST(ixs,i,pos);
-	CHANGED_BAG(ixs);
+        CHANGED_BAG(ixs);
       }
       SET_LEN_PLIST(ixs, narg);
       UNBB_LIST(list, ixs);
@@ -804,8 +757,7 @@ UInt            ExecUnbList (
 **  'EvalElmList' evaluates the list  element expression  <expr> of the  form
 **  '<list>[<position>]'.
 */
-Obj             EvalElmList (
-    Expr                expr )
+static Obj EvalElmList(Expr expr)
 {
     Obj                 elm;            /* element, result                 */
     Obj                 list;           /* list, left operand              */
@@ -817,8 +769,6 @@ Obj             EvalElmList (
 
     /* evaluate and check the position                                     */
     pos = EVAL_EXPR(READ_EXPR(expr, 1));
-
-    SET_BRK_CALL_TO(expr);     /* Note possible call for FuncWhere */
 
     if (IS_POS_INTOBJ(pos)) {
         p = INT_INTOBJ( pos );
@@ -847,30 +797,22 @@ Obj             EvalElmList (
 
 /****************************************************************************
 **
-*F  EvalElm2List(<expr>) . . . . . . . . . . . . select an element of a list
+*F  EvalElmMat(<expr>) . . . . . . . . . . . .  select an element of a matrix
 **
-**  'EvalElm2List' evaluates the list  element expression  <expr> of the  form
-**  '<list>[<pos1>,<pos2>]'.
+**  'EvalElmMat' evaluates the matrix element expression <expr> of the form
+**  '<mat>[<row>,<col>]'.
 */
-Obj             EvalElm2List (
-    Expr                expr )
+static Obj EvalElmMat(Expr expr)
 {
-    Obj                 elm;            /* element, result                 */
-    Obj                 list;           /* list, left operand              */
-    Obj                 pos1;           /* position, right operand         */
-    Obj                 pos2;           /* position, right operand         */
+    // evaluate the matrix (checking is done by 'ELM_MAT')
+    Obj mat = EVAL_EXPR(READ_EXPR(expr, 0));
 
-    /* evaluate the list (checking is done by 'ELM2_LIST')                 */
-    list = EVAL_EXPR(READ_EXPR(expr, 0));
+    // evaluate and check the row and column
+    Obj row = EVAL_EXPR(READ_EXPR(expr, 1));
+    Obj col = EVAL_EXPR(READ_EXPR(expr, 2));
 
-    /* evaluate and check the positions                                    */
-    pos1 = EVAL_EXPR(READ_EXPR(expr, 1));
-    pos2 = EVAL_EXPR(READ_EXPR(expr, 2));
-
-    elm = ELM2_LIST(list, pos1, pos2);
-
-    /* return the element                                                  */
-    return elm;
+    // return the element
+    return ELM_MAT(mat, row, col);
 }
 
 
@@ -881,8 +823,7 @@ Obj             EvalElm2List (
 **  'EvalElmsList' evaluates the  list element expression  <expr> of the form
 **  '<list>{<positions>}'.
 */
-Obj             EvalElmsList (
-    Expr                expr )
+static Obj EvalElmsList(Expr expr)
 {
     Obj                 elms;           /* elements, result                */
     Obj                 list;           /* list, left operand              */
@@ -916,8 +857,7 @@ Obj             EvalElmsList (
 **  must be a  list of lists  and 'EvalElmListLevel'  selects the element  at
 **  <position> from each of the lists and returns the list of those values.
 */
-Obj             EvalElmListLevel (
-    Expr                expr )
+static Obj EvalElmListLevel(Expr expr)
 {
     Obj                 lists;          /* lists, left operand             */
     Obj                 pos;            /* position, right operand         */
@@ -962,8 +902,7 @@ Obj             EvalElmListLevel (
 **  <positions>  from each   of the lists  and  returns   the  list  of those
 **  sublists.
 */
-Obj             EvalElmsListLevel (
-    Expr                expr )
+static Obj EvalElmsListLevel(Expr expr)
 {
     Obj                 lists;          /* lists, left operand             */
     Obj                 poss;           /* positions, right operand        */
@@ -995,8 +934,7 @@ Obj             EvalElmsListLevel (
 **  'EvalIsbList'  evaluates the list  isbound expression  <expr> of the form
 **  'IsBound( <list>[<position>] )'.
 */
-Obj             EvalIsbList (
-    Expr                expr )
+static Obj EvalIsbList(Expr expr)
 {
     Obj                 list;           /* list, left operand              */
     Obj                 pos;            /* position, right operand         */
@@ -1017,14 +955,14 @@ Obj             EvalIsbList (
     } else {
       ixs = NEW_PLIST(T_PLIST, narg);
       for (i = 1; i <= narg; i++) {
-	pos = EVAL_EXPR( READ_EXPR(expr, i) );
-	SET_ELM_PLIST(ixs,i,pos);
-	CHANGED_BAG(ixs);
+        pos = EVAL_EXPR( READ_EXPR(expr, i) );
+        SET_ELM_PLIST(ixs,i,pos);
+        CHANGED_BAG(ixs);
       }
       SET_LEN_PLIST(ixs, narg);
       return ISBB_LIST(list, ixs) ? True : False;
     }
-	
+        
 }
 
 
@@ -1037,8 +975,7 @@ Obj             EvalIsbList (
 **
 **  Linebreaks are preferred before the ':='.
 */
-void            PrintAssList (
-    Stat                stat )
+static void PrintAssList(Stat stat)
 {
     Pr("%4>",0L,0L);
     PrintExpr(READ_EXPR(stat, 0));
@@ -1050,8 +987,7 @@ void            PrintAssList (
     Pr("%2<;",0L,0L);
 }
 
-void            PrintAss2List (
-    Stat                stat )
+static void PrintAssMat(Stat stat)
 {
     Pr("%4>",0L,0L);
     PrintExpr(READ_EXPR(stat, 0));
@@ -1065,8 +1001,7 @@ void            PrintAss2List (
     Pr("%2<;",0L,0L);
 }
 
-void            PrintUnbList (
-    Stat                stat )
+static void PrintUnbList(Stat stat)
 {
   Int narg = SIZE_STAT(stat)/sizeof(Stat) -1;
   Int i;
@@ -1093,8 +1028,7 @@ void            PrintUnbList (
 **
 **  Linebreaks are preferred before the ':='.
 */
-void            PrintAsssList (
-    Stat                stat )
+static void PrintAsssList(Stat stat)
 {
     Pr("%4>",0L,0L);
     PrintExpr(READ_EXPR(stat, 0));
@@ -1116,8 +1050,7 @@ void            PrintAsssList (
 **
 **  Linebreaks are preferred after the '['.
 */
-void            PrintElmList (
-    Expr                expr )
+static void PrintElmList(Expr expr)
 {
     Pr("%2>",0L,0L);
     PrintExpr(READ_EXPR(expr, 0));
@@ -1126,8 +1059,7 @@ void            PrintElmList (
     Pr("%<]",0L,0L);
 }
 
-void PrintElm2List (
-		     Expr expr )
+static void PrintElmMat(Expr expr)
 {
     Pr("%2>",0L,0L);
     PrintExpr(READ_EXPR(expr, 0));
@@ -1138,8 +1070,7 @@ void PrintElm2List (
     Pr("%<]",0L,0L);
 }
 
-void PrintElmListLevel (
-		     Expr expr )
+static void PrintElmListLevel(Expr expr)
 {
   Int i;
   Int narg = SIZE_EXPR(expr)/sizeof(Expr) -2 ;
@@ -1155,8 +1086,7 @@ void PrintElmListLevel (
 }
 
 
-void            PrintIsbList (
-    Expr                expr )
+static void PrintIsbList(Expr expr)
 {
   Int narg = SIZE_EXPR(expr)/sizeof(Expr) - 1;
   Int i;
@@ -1183,8 +1113,7 @@ void            PrintIsbList (
 **
 **  Linebreaks are preferred after the '{'.
 */
-void            PrintElmsList (
-    Expr                expr )
+static void PrintElmsList(Expr expr)
 {
     Pr("%2>",0L,0L);
     PrintExpr(READ_EXPR(expr, 0));
@@ -1201,15 +1130,13 @@ void            PrintElmsList (
 **  'ExecAssRecName' executes the record  assignment statement <stat>  of the
 **  form '<record>.<name> := <rhs>;'.
 */
-UInt            ExecAssRecName (
-    Stat                stat )
+static UInt ExecAssRecName(Stat stat)
 {
     Obj                 record;         /* record, left operand            */
     UInt                rnam;           /* name, left operand              */
     Obj                 rhs;            /* rhs, right operand              */
 
     /* evaluate the record (checking is done by 'ASS_REC')                 */
-    SET_BRK_CURR_STAT( stat );
     record = EVAL_EXPR(READ_STAT(stat, 0));
 
     /* get the name (stored immediately in the statement)                  */
@@ -1233,15 +1160,13 @@ UInt            ExecAssRecName (
 **  'ExecAssRecExpr'  executes the record assignment  statement <stat> of the
 **  form '<record>.(<name>) := <rhs>;'.
 */
-UInt            ExecAssRecExpr (
-    Stat                stat )
+static UInt ExecAssRecExpr(Stat stat)
 {
     Obj                 record;         /* record, left operand            */
     UInt                rnam;           /* name, left operand              */
     Obj                 rhs;            /* rhs, right operand              */
 
     /* evaluate the record (checking is done by 'ASS_REC')                 */
-    SET_BRK_CURR_STAT( stat );
     record = EVAL_EXPR(READ_STAT(stat, 0));
 
     /* evaluate the name and convert it to a record name                   */
@@ -1265,14 +1190,12 @@ UInt            ExecAssRecExpr (
 **  'ExecUnbRecName' executes the record  unbind statement <stat> of the form
 **  'Unbind( <record>.<name> );'.
 */
-UInt            ExecUnbRecName (
-    Stat                stat )
+static UInt ExecUnbRecName(Stat stat)
 {
     Obj                 record;         /* record, left operand            */
     UInt                rnam;           /* name, left operand              */
 
     /* evaluate the record (checking is done by 'UNB_REC')                 */
-    SET_BRK_CURR_STAT( stat );
     record = EVAL_EXPR(READ_STAT(stat, 0));
 
     /* get the name (stored immediately in the statement)                  */
@@ -1293,14 +1216,12 @@ UInt            ExecUnbRecName (
 **  'ExecUnbRecExpr' executes the record  unbind statement <stat> of the form
 **  'Unbind( <record>.(<name>) );'.
 */
-UInt            ExecUnbRecExpr (
-    Stat                stat )
+static UInt ExecUnbRecExpr(Stat stat)
 {
     Obj                 record;         /* record, left operand            */
     UInt                rnam;           /* name, left operand              */
 
     /* evaluate the record (checking is done by 'UNB_REC')                 */
-    SET_BRK_CURR_STAT( stat );
     record = EVAL_EXPR(READ_STAT(stat, 0));
 
     /* evaluate the name and convert it to a record name                   */
@@ -1321,8 +1242,7 @@ UInt            ExecUnbRecExpr (
 **  'EvalElmRecName' evaluates the   record element expression  <expr> of the
 **  form '<record>.<name>'.
 */
-Obj             EvalElmRecName (
-    Expr                expr )
+static Obj EvalElmRecName(Expr expr)
 {
     Obj                 elm;            /* element, result                 */
     Obj                 record;         /* the record, left operand        */
@@ -1349,8 +1269,7 @@ Obj             EvalElmRecName (
 **  'EvalElmRecExpr'  evaluates the record   element expression <expr> of the
 **  form '<record>.(<name>)'.
 */
-Obj             EvalElmRecExpr (
-    Expr                expr )
+static Obj EvalElmRecExpr(Expr expr)
 {
     Obj                 elm;            /* element, result                 */
     Obj                 record;         /* the record, left operand        */
@@ -1377,8 +1296,7 @@ Obj             EvalElmRecExpr (
 **  'EvalElmRecName' evaluates the   record isbound expression  <expr> of the
 **  form 'IsBound( <record>.<name> )'.
 */
-Obj             EvalIsbRecName (
-    Expr                expr )
+static Obj EvalIsbRecName(Expr expr)
 {
     Obj                 record;         /* the record, left operand        */
     UInt                rnam;           /* the name, right operand         */
@@ -1401,8 +1319,7 @@ Obj             EvalIsbRecName (
 **  'EvalIsbRecExpr' evaluates  the record isbound  expression  <expr> of the
 **  form 'IsBound( <record>.(<name>) )'.
 */
-Obj             EvalIsbRecExpr (
-    Expr                expr )
+static Obj EvalIsbRecExpr(Expr expr)
 {
     Obj                 record;         /* the record, left operand        */
     UInt                rnam;           /* the name, right operand         */
@@ -1425,8 +1342,7 @@ Obj             EvalIsbRecExpr (
 **  'PrintAssRecName' prints the  record  assignment statement <stat>  of the
 **  form '<record>.<name> := <rhs>;'.
 */
-void            PrintAssRecName (
-    Stat                stat )
+static void PrintAssRecName(Stat stat)
 {
     Pr("%4>",0L,0L);
     PrintExpr(READ_EXPR(stat, 0));
@@ -1438,8 +1354,7 @@ void            PrintAssRecName (
     Pr("%2<;",0L,0L);
 }
 
-void            PrintUnbRecName (
-    Stat                stat )
+static void PrintUnbRecName(Stat stat)
 {
     Pr( "Unbind( ", 0L, 0L );
     Pr("%2>",0L,0L);
@@ -1458,8 +1373,7 @@ void            PrintUnbRecName (
 **  'PrintAssRecExpr' prints the  record  assignment statement <stat>  of the
 **  form '<record>.(<name>) := <rhs>;'.
 */
-void            PrintAssRecExpr (
-    Stat                stat )
+static void PrintAssRecExpr(Stat stat)
 {
     Pr("%4>",0L,0L);
     PrintExpr(READ_EXPR(stat, 0));
@@ -1471,8 +1385,7 @@ void            PrintAssRecExpr (
     Pr("%2<;",0L,0L);
 }
 
-void            PrintUnbRecExpr (
-    Stat                stat )
+static void PrintUnbRecExpr(Stat stat)
 {
     Pr( "Unbind( ", 0L, 0L );
     Pr("%2>",0L,0L);
@@ -1491,8 +1404,7 @@ void            PrintUnbRecExpr (
 **  'PrintElmRecName' prints the record element expression <expr> of the form
 **  '<record>.<name>'.
 */
-void            PrintElmRecName (
-    Expr                expr )
+static void PrintElmRecName(Expr expr)
 {
     Pr("%2>",0L,0L);
     PrintExpr(READ_EXPR(expr, 0));
@@ -1501,8 +1413,7 @@ void            PrintElmRecName (
     Pr("%<",0L,0L);
 }
 
-void            PrintIsbRecName (
-    Expr                expr )
+static void PrintIsbRecName(Expr expr)
 {
     Pr( "IsBound( ", 0L, 0L );
     Pr("%2>",0L,0L);
@@ -1521,8 +1432,7 @@ void            PrintIsbRecName (
 **  'PrintElmRecExpr' prints the record element expression <expr> of the form
 **  '<record>.(<name>)'.
 */
-void            PrintElmRecExpr (
-    Expr                expr )
+static void PrintElmRecExpr(Expr expr)
 {
     Pr("%2>",0L,0L);
     PrintExpr(READ_EXPR(expr, 0));
@@ -1531,8 +1441,7 @@ void            PrintElmRecExpr (
     Pr(")%<",0L,0L);
 }
 
-void            PrintIsbRecExpr (
-    Expr                expr )
+static void PrintIsbRecExpr(Expr expr)
 {
     Pr( "IsBound( ", 0L, 0L );
     Pr("%2>",0L,0L);
@@ -1551,8 +1460,7 @@ void            PrintIsbRecExpr (
 **  'ExecAssPosObj'  executes the list  assignment statement <stat> of the form
 **  '<list>[<position>] := <rhs>;'.
 */
-UInt            ExecAssPosObj (
-    Expr                stat )
+static UInt ExecAssPosObj(Expr stat)
 {
     Obj                 list;           /* list, left operand              */
     Obj                 pos;            /* position, left operand          */
@@ -1560,39 +1468,17 @@ UInt            ExecAssPosObj (
     Obj                 rhs;            /* right hand side, right operand  */
 
     /* evaluate the list (checking is done by 'ASS_LIST')                  */
-    SET_BRK_CURR_STAT( stat );
     list = EVAL_EXPR(READ_STAT(stat, 0));
 
     /* evaluate and check the position                                     */
     pos = EVAL_EXPR(READ_STAT(stat, 1));
-    while ( ! IS_POS_INTOBJ(pos) ) {
-        pos = ErrorReturnObj(
-         "PosObj Assignment: <position> must be a positive integer (not a %s)",
-            (Int)TNAM_OBJ(pos), 0L,
-            "you can replace <position> via 'return <position>;'" );
-    }
-    p = INT_INTOBJ(pos);
+    p = GetPositiveSmallIntEx("PosObj Assignment", pos, "<position>");
 
     /* evaluate the right hand side                                        */
     rhs = EVAL_EXPR(READ_STAT(stat, 2));
 
     /* special case for plain list                                         */
-    if ( TNUM_OBJ(list) == T_POSOBJ ) {
-#ifdef HPCGAP
-        WriteGuard(list);
-#endif
-        if ( SIZE_OBJ(list)/sizeof(Obj)-1 < p ) {
-            ResizeBag( list, (p+1) * sizeof(Obj) );
-        }
-        SET_ELM_PLIST( list, p, rhs );
-        CHANGED_BAG( list );
-#ifdef HPCGAP
-    } else if ( TNUM_OBJ(list) == T_APOSOBJ ) {
-        AssListFuncs[T_FIXALIST](list, p, rhs);
-#endif
-    } else {
-        ASS_LIST( list, p, rhs );
-    }
+    AssPosObj(list, p, rhs);
 
     /* return 0 (to indicate that no leave-statement was executed)         */
     return 0;
@@ -1606,42 +1492,21 @@ UInt            ExecAssPosObj (
 **  'ExecUnbPosObj'  executes the list   unbind  statement <stat> of the   form
 **  'Unbind( <list>[<position>] );'.
 */
-UInt            ExecUnbPosObj (
-    Expr                stat )
+static UInt ExecUnbPosObj(Expr stat)
 {
     Obj                 list;           /* list, left operand              */
     Obj                 pos;            /* position, left operand          */
     Int                 p;              /* position, as a C integer        */
 
     /* evaluate the list (checking is done by 'LEN_LIST')                  */
-    SET_BRK_CURR_STAT( stat );
     list = EVAL_EXPR(READ_STAT(stat, 0));
 
     /* evaluate and check the position                                     */
     pos = EVAL_EXPR(READ_STAT(stat, 1));
-    while ( ! IS_POS_INTOBJ(pos) ) {
-        pos = ErrorReturnObj(
-         "PosObj Assignment: <position> must be a positive integer (not a %s)",
-            (Int)TNAM_OBJ(pos), 0L,
-            "you can replace <position> via 'return <position>;'" );
-    }
-    p = INT_INTOBJ(pos);
+    p = GetPositiveSmallIntEx("PosObj Assignment", pos, "<position>");
 
     /* unbind the element                                                  */
-    if ( TNUM_OBJ(list) == T_POSOBJ ) {
-#ifdef HPCGAP
-        WriteGuard(list);
-#endif
-        if ( p <= SIZE_OBJ(list)/sizeof(Obj)-1 ) {
-            SET_ELM_PLIST( list, p, 0 );
-        }
-#ifdef HPCGAP
-    } else if (TNUM_OBJ(list) == T_APOSOBJ ) {
-        UnbListFuncs[T_FIXALIST](list, p);
-#endif
-    } else {
-        UNB_LIST( list, p );
-    }
+    UnbPosObj(list, p);
 
     /* return 0 (to indicate that no leave-statement was executed)         */
     return 0;
@@ -1655,8 +1520,7 @@ UInt            ExecUnbPosObj (
 **  'EvalElmPosObj' evaluates the list  element expression  <expr> of the  form
 **  '<list>[<position>]'.
 */
-Obj             EvalElmPosObj (
-    Expr                expr )
+static Obj EvalElmPosObj(Expr expr)
 {
     Obj                 elm;            /* element, result                 */
     Obj                 list;           /* list, left operand              */
@@ -1668,47 +1532,10 @@ Obj             EvalElmPosObj (
 
     /* evaluate and check the position                                     */
     pos = EVAL_EXPR(READ_EXPR(expr, 1));
-    while ( ! IS_POS_INTOBJ(pos) ) {
-        pos = ErrorReturnObj(
-            "PosObj Element: <position> must be a positive integer (not a %s)",
-            (Int)TNAM_OBJ(pos), 0L,
-            "you can replace <position> via 'return <position>;'" );
-    }
-    p = INT_INTOBJ( pos );
+    p = GetPositiveSmallIntEx("PosObj Element", pos, "<position>");
 
     /* special case for plain lists (use generic code to signal errors)    */
-    if ( TNUM_OBJ(list) == T_POSOBJ ) {
-#ifdef HPCGAP
-        const Bag *contents = CONST_PTR_BAG(list);
-        while ( SIZE_BAG_CONTENTS(contents)/sizeof(Obj)-1 < p ) {
-            ErrorReturnVoid(
-                "PosObj Element: <PosObj>![%d] must have an assigned value",
-                (Int)p, 0L,
-                "you can 'return;' after assigning a value" );
-        }
-        elm = contents[p];
-#else
-        while ( SIZE_OBJ(list)/sizeof(Obj)-1 < p ) {
-            ErrorReturnVoid(
-                "PosObj Element: <PosObj>![%d] must have an assigned value",
-                (Int)p, 0L,
-                "you can 'return;' after assigning a value" );
-        }
-        elm = ELM_PLIST( list, p );
-#endif
-        while ( elm == 0 ) {
-            ErrorReturnVoid(
-                "PosObj Element: <PosObj>![%d] must have an assigned value",
-                (Int)p, 0L,
-                "you can 'return;' after assigning a value" );
-        }
-#ifdef HPCGAP
-    } else if ( TNUM_OBJ(list) == T_APOSOBJ ) {
-        elm = ElmListFuncs[T_FIXALIST](list, p);
-#endif
-    } else {
-        elm = ELM_LIST( list, p );
-    }
+    elm = ElmPosObj(list, p);
 
     /* return the element                                                  */
     return elm;
@@ -1722,8 +1549,7 @@ Obj             EvalElmPosObj (
 **  'EvalElmPosObj'  evaluates the list  isbound expression  <expr> of the form
 **  'IsBound( <list>[<position>] )'.
 */
-Obj             EvalIsbPosObj (
-    Expr                expr )
+static Obj EvalIsbPosObj(Expr expr)
 {
     Obj                 isb;            /* isbound, result                 */
     Obj                 list;           /* list, left operand              */
@@ -1735,35 +1561,10 @@ Obj             EvalIsbPosObj (
 
     /* evaluate and check the position                                     */
     pos = EVAL_EXPR(READ_EXPR(expr, 1));
-    while ( ! IS_POS_INTOBJ(pos) ) {
-        pos = ErrorReturnObj(
-            "PosObj Element: <position> must be a positive integer (not a %s)",
-            (Int)TNAM_OBJ(pos), 0L,
-            "you can replace <position> via 'return <position>;'" );
-    }
-    p = INT_INTOBJ( pos );
+    p = GetPositiveSmallIntEx("PosObj Element", pos, "<position>");
 
     /* get the result                                                      */
-    if ( TNUM_OBJ(list) == T_POSOBJ ) {
-#ifdef HPCGAP
-        const Bag *contents = CONST_PTR_BAG(list);
-        if (p > SIZE_BAG_CONTENTS(contents)/sizeof(Obj)-1)
-          isb = False;
-        else
-          isb = contents[p] != 0 ? True : False;
-#else
-        isb = (p <= SIZE_OBJ(list)/sizeof(Obj)-1 && ELM_PLIST(list,p) != 0 ?
-               True : False);
-#endif
-    }
-#ifdef HPCGAP
-    else if ( TNUM_OBJ(list) == T_APOSOBJ ) {
-        isb = IsbListFuncs[T_FIXALIST](list, p) ? True : False;
-    }
-#endif
-    else {
-        isb = (ISB_LIST( list, p ) ? True : False);
-    }
+    isb = IsbPosObj(list, p) ? True : False;
 
     /* return the result                                                   */
     return isb;
@@ -1779,8 +1580,7 @@ Obj             EvalIsbPosObj (
 **
 **  Linebreaks are preferred before the ':='.
 */
-void            PrintAssPosObj (
-    Stat                stat )
+static void PrintAssPosObj(Stat stat)
 {
     Pr("%4>",0L,0L);
     PrintExpr(READ_EXPR(stat, 0));
@@ -1792,8 +1592,7 @@ void            PrintAssPosObj (
     Pr("%2<;",0L,0L);
 }
 
-void            PrintUnbPosObj (
-    Stat                stat )
+static void PrintUnbPosObj(Stat stat)
 {
     Pr( "Unbind( ", 0L, 0L );
     Pr("%2>",0L,0L);
@@ -1814,8 +1613,7 @@ void            PrintUnbPosObj (
 **
 **  Linebreaks are preferred after the '['.
 */
-void            PrintElmPosObj (
-    Expr                expr )
+static void PrintElmPosObj(Expr expr)
 {
     Pr("%2>",0L,0L);
     PrintExpr(READ_EXPR(expr, 0));
@@ -1824,8 +1622,7 @@ void            PrintElmPosObj (
     Pr("%<]",0L,0L);
 }
 
-void            PrintIsbPosObj (
-    Expr                expr )
+static void PrintIsbPosObj(Expr expr)
 {
     Pr( "IsBound( ", 0L, 0L );
     Pr("%2>",0L,0L);
@@ -1844,15 +1641,13 @@ void            PrintIsbPosObj (
 **  'ExecAssComObjName' executes the  record assignment statement <stat> of the
 **  form '<record>.<name> := <rhs>;'.
 */
-UInt            ExecAssComObjName (
-    Stat                stat )
+static UInt ExecAssComObjName(Stat stat)
 {
     Obj                 record;         /* record, left operand            */
     UInt                rnam;           /* name, left operand              */
     Obj                 rhs;            /* rhs, right operand              */
 
     /* evaluate the record (checking is done by 'ASS_REC')                 */
-    SET_BRK_CURR_STAT( stat );
     record = EVAL_EXPR(READ_STAT(stat, 0));
 
     /* get the name (stored immediately in the statement)                  */
@@ -1862,31 +1657,7 @@ UInt            ExecAssComObjName (
     rhs = EVAL_EXPR(READ_STAT(stat, 2));
 
     /* assign the right hand side to the element of the record             */
-    switch (TNUM_OBJ(record)) {
-      case T_COMOBJ:
-        AssPRec( record, rnam, rhs );
-        break;
-#ifdef HPCGAP
-      case T_ACOMOBJ:
-#ifdef CHECK_TL_ASSIGNS
-        if (GetRegionOf(rhs) == STATE(threadRegion)) {
-            Obj name = NAME_RNAM(rnam);
-            if (strcmp(CSTR_STRING(name)), "buffer") != 0
-             && strcmp(CSTR_STRING(name)), "state") != 0) {
-                ErrorReturnObj("Warning: thread local assignment of '%g'",
-                               (Int)name, 0L,
-                               "type 'return <value>; to continue'");
-            }
-
-        }
-#endif
-        SetARecordField( record, rnam, rhs);
-        break;
-#endif
-      default:
-        ASS_REC( record, rnam, rhs );
-        break;
-    }
+    AssComObj( record, rnam, rhs );
 
     /* return 0 (to indicate that no leave-statement was executed)         */
     return 0;
@@ -1900,15 +1671,13 @@ UInt            ExecAssComObjName (
 **  'ExecAssComObjExpr' executes the record assignment  statement <stat> of the
 **  form '<record>.(<name>) := <rhs>;'.
 */
-UInt            ExecAssComObjExpr (
-    Stat                stat )
+static UInt ExecAssComObjExpr(Stat stat)
 {
     Obj                 record;         /* record, left operand            */
     UInt                rnam;           /* name, left operand              */
     Obj                 rhs;            /* rhs, right operand              */
 
     /* evaluate the record (checking is done by 'ASS_REC')                 */
-    SET_BRK_CURR_STAT( stat );
     record = EVAL_EXPR(READ_STAT(stat, 0));
 
     /* evaluate the name and convert it to a record name                   */
@@ -1918,19 +1687,7 @@ UInt            ExecAssComObjExpr (
     rhs = EVAL_EXPR(READ_STAT(stat, 2));
 
     /* assign the right hand side to the element of the record             */
-    switch (TNUM_OBJ(record)) {
-      case T_COMOBJ:
-        AssPRec( record, rnam, rhs );
-        break;
-#ifdef HPCGAP
-      case T_ACOMOBJ:
-        SetARecordField( record, rnam, rhs );
-        break;
-#endif
-      default:
-        ASS_REC( record, rnam, rhs );
-        break;
-    }
+    AssComObj( record, rnam, rhs );
 
     /* return 0 (to indicate that no leave-statement was executed)         */
     return 0;
@@ -1944,33 +1701,19 @@ UInt            ExecAssComObjExpr (
 **  'ExecUnbComObjName' executes the record unbind statement <stat> of the form
 **  'Unbind( <record>.<name> );'.
 */
-UInt            ExecUnbComObjName (
-    Stat                stat )
+static UInt ExecUnbComObjName(Stat stat)
 {
     Obj                 record;         /* record, left operand            */
     UInt                rnam;           /* name, left operand              */
 
     /* evaluate the record (checking is done by 'UNB_REC')                 */
-    SET_BRK_CURR_STAT( stat );
     record = EVAL_EXPR(READ_STAT(stat, 0));
 
     /* get the name (stored immediately in the statement)                  */
     rnam = READ_STAT(stat, 1);
 
     /* unbind the element of the record                                    */
-    switch (TNUM_OBJ(record)) {
-      case T_COMOBJ:
-        UnbPRec( record, rnam );
-        break;
-#ifdef HPCGAP
-      case T_ACOMOBJ:
-        UnbARecord( record, rnam);
-        break;
-#endif
-      default:
-        UNB_REC( record, rnam );
-        break;
-    }
+    UnbComObj( record, rnam );
 
     /* return 0 (to indicate that no leave-statement was executed)         */
     return 0;
@@ -1984,33 +1727,19 @@ UInt            ExecUnbComObjName (
 **  'ExecUnbComObjExpr' executes the record unbind statement <stat> of the form
 **  'Unbind( <record>.(<name>) );'.
 */
-UInt            ExecUnbComObjExpr (
-    Stat                stat )
+static UInt ExecUnbComObjExpr(Stat stat)
 {
     Obj                 record;         /* record, left operand            */
     UInt                rnam;           /* name, left operand              */
 
     /* evaluate the record (checking is done by 'UNB_REC')                 */
-    SET_BRK_CURR_STAT( stat );
     record = EVAL_EXPR(READ_STAT(stat, 0));
 
     /* evaluate the name and convert it to a record name                   */
     rnam = RNamObj(EVAL_EXPR(READ_STAT(stat, 1)));
 
     /* unbind the element of the record                                    */
-    switch (TNUM_OBJ(record)) {
-      case T_COMOBJ:
-        UnbPRec( record, rnam );
-        break;
-#ifdef HPCGAP
-      case T_ACOMOBJ:
-        UnbARecord( record, rnam);
-        break;
-#endif
-      default:
-        UNB_REC( record, rnam );
-        break;
-    }
+    UnbComObj( record, rnam );
 
     /* return 0 (to indicate that no leave-statement was executed)         */
     return 0;
@@ -2024,8 +1753,7 @@ UInt            ExecUnbComObjExpr (
 **  'EvalElmComObjName' evaluates the  record element expression  <expr> of the
 **  form '<record>.<name>'.
 */
-Obj             EvalElmComObjName (
-    Expr                expr )
+static Obj EvalElmComObjName(Expr expr)
 {
     Obj                 elm;            /* element, result                 */
     Obj                 record;         /* the record, left operand        */
@@ -2038,19 +1766,7 @@ Obj             EvalElmComObjName (
     rnam = READ_EXPR(expr, 1);
 
     /* select the element of the record                                    */
-    switch (TNUM_OBJ(record)) {
-      case T_COMOBJ:
-        elm = ElmPRec( record, rnam );
-        break;
-#ifdef HPCGAP
-      case T_ACOMOBJ:
-        elm = ElmARecord( record, rnam );
-        break;
-#endif
-      default:
-        elm = ELM_REC( record, rnam );
-        break;
-    }
+    elm = ElmComObj( record, rnam );
 
     /* return the element                                                  */
     return elm;
@@ -2064,8 +1780,7 @@ Obj             EvalElmComObjName (
 **  'EvalElmComObjExpr' evaluates the  record element expression  <expr> of the
 **  form '<record>.(<name>)'.
 */
-Obj             EvalElmComObjExpr (
-    Expr                expr )
+static Obj EvalElmComObjExpr(Expr expr)
 {
     Obj                 elm;            /* element, result                 */
     Obj                 record;         /* the record, left operand        */
@@ -2078,19 +1793,7 @@ Obj             EvalElmComObjExpr (
     rnam = RNamObj(EVAL_EXPR(READ_EXPR(expr, 1)));
 
     /* select the element of the record                                    */
-    switch (TNUM_OBJ(record)) {
-      case T_COMOBJ:
-        elm = ElmPRec( record, rnam );
-        break;
-#ifdef HPCGAP
-      case T_ACOMOBJ:
-        elm = ElmARecord( record, rnam );
-        break;
-#endif
-      default:
-        elm = ELM_REC( record, rnam );
-        break;
-    }
+    elm = ElmComObj( record, rnam );
 
     /* return the element                                                  */
     return elm;
@@ -2104,8 +1807,7 @@ Obj             EvalElmComObjExpr (
 **  'EvalIsbComObjName' evaluates  the record isbound  expression <expr> of the
 **  form 'IsBound( <record>.<name> )'.
 */
-Obj             EvalIsbComObjName (
-    Expr                expr )
+static Obj EvalIsbComObjName(Expr expr)
 {
     Obj                 isb;            /* element, result                 */
     Obj                 record;         /* the record, left operand        */
@@ -2118,19 +1820,7 @@ Obj             EvalIsbComObjName (
     rnam = READ_EXPR(expr, 1);
 
     /* select the element of the record                                    */
-    switch (TNUM_OBJ(record)) {
-      case T_COMOBJ:
-        isb = (IsbPRec( record, rnam ) ? True : False);
-        break;
-#ifdef HPCGAP
-      case T_ACOMOBJ:
-        isb = (GetARecordField( record, rnam ) != (Obj) 0 ? True : False);
-        break;
-#endif
-      default:
-        isb = (ISB_REC( record, rnam ) ? True : False);
-        break;
-    }
+    isb = IsbComObj( record, rnam ) ? True : False;
 
     /* return the result                                                   */
     return isb;
@@ -2144,8 +1834,7 @@ Obj             EvalIsbComObjName (
 **  'EvalIsbComObjExpr'  evaluates the record isbound  expression <expr> of the
 **  form 'IsBound( <record>.(<name>) )'.
 */
-Obj             EvalIsbComObjExpr (
-    Expr                expr )
+static Obj EvalIsbComObjExpr(Expr expr)
 {
     Obj                 isb;            /* element, result                 */
     Obj                 record;         /* the record, left operand        */
@@ -2158,19 +1847,7 @@ Obj             EvalIsbComObjExpr (
     rnam = RNamObj(EVAL_EXPR(READ_EXPR(expr, 1)));
 
     /* select the element of the record                                    */
-    switch (TNUM_OBJ(record)) {
-      case T_COMOBJ:
-        isb = (IsbPRec( record, rnam ) ? True : False);
-        break;
-#ifdef HPCGAP
-      case T_ACOMOBJ:
-        isb = (GetARecordField( record, rnam ) != (Obj) 0 ? True : False);
-        break;
-#endif
-      default:
-        isb = (ISB_REC( record, rnam ) ? True : False);
-        break;
-    }
+    isb = IsbComObj( record, rnam ) ? True : False;
 
     /* return the result                                                   */
     return isb;
@@ -2184,8 +1861,7 @@ Obj             EvalIsbComObjExpr (
 **  'PrintAssComObjName' prints the  record assignment statement <stat>  of the
 **  form '<record>.<name> := <rhs>;'.
 */
-void            PrintAssComObjName (
-    Stat                stat )
+static void PrintAssComObjName(Stat stat)
 {
     Pr("%4>",0L,0L);
     PrintExpr(READ_EXPR(stat, 0));
@@ -2197,8 +1873,7 @@ void            PrintAssComObjName (
     Pr("%2<;",0L,0L);
 }
 
-void            PrintUnbComObjName (
-    Stat                stat )
+static void PrintUnbComObjName(Stat stat)
 {
     Pr( "Unbind( ", 0L, 0L );
     Pr("%2>",0L,0L);
@@ -2217,8 +1892,7 @@ void            PrintUnbComObjName (
 **  'PrintAssComObjExpr' prints the  record assignment statement <stat>  of the
 **  form '<record>.(<name>) := <rhs>;'.
 */
-void            PrintAssComObjExpr (
-    Stat                stat )
+static void PrintAssComObjExpr(Stat stat)
 {
     Pr("%4>",0L,0L);
     PrintExpr(READ_EXPR(stat, 0));
@@ -2230,8 +1904,7 @@ void            PrintAssComObjExpr (
     Pr("%2<;",0L,0L);
 }
 
-void            PrintUnbComObjExpr (
-    Stat                stat )
+static void PrintUnbComObjExpr(Stat stat)
 {
     Pr( "Unbind( ", 0L, 0L );
     Pr("%2>",0L,0L);
@@ -2250,8 +1923,7 @@ void            PrintUnbComObjExpr (
 **  'PrintElmComObjName' prints the  record  element expression <expr> of   the
 **  form '<record>.<name>'.
 */
-void            PrintElmComObjName (
-    Expr                expr )
+static void PrintElmComObjName(Expr expr)
 {
     Pr("%2>",0L,0L);
     PrintExpr(READ_EXPR(expr, 0));
@@ -2260,8 +1932,7 @@ void            PrintElmComObjName (
     Pr("%<",0L,0L);
 }
 
-void            PrintIsbComObjName (
-    Expr                expr )
+static void PrintIsbComObjName(Expr expr)
 {
     Pr( "IsBound( ", 0L, 0L );
     Pr("%2>",0L,0L);
@@ -2280,8 +1951,7 @@ void            PrintIsbComObjName (
 **  'PrintElmComObjExpr' prints the record   element expression <expr>  of  the
 **  form '<record>.(<name>)'.
 */
-void            PrintElmComObjExpr (
-    Expr                expr )
+static void PrintElmComObjExpr(Expr expr)
 {
     Pr("%2>",0L,0L);
     PrintExpr(READ_EXPR(expr, 0));
@@ -2290,8 +1960,7 @@ void            PrintElmComObjExpr (
     Pr(")%<",0L,0L);
 }
 
-void            PrintIsbComObjExpr (
-    Expr                expr )
+static void PrintIsbComObjExpr(Expr expr)
 {
     Pr( "IsBound( ", 0L, 0L );
     Pr("%2>",0L,0L);
@@ -2316,36 +1985,39 @@ void            PrintIsbComObjExpr (
 */
 
 
-Obj FuncGetCurrentLVars( Obj self )
+static Obj FuncGetCurrentLVars(Obj self)
 {
+  // Need to promote to High Vars, else bag will be freed when function exits
+  MakeHighVars(STATE(CurrLVars));
   return STATE(CurrLVars);
 }
 
-Obj FuncGetBottomLVars( Obj self )
+static Obj FuncGetBottomLVars(Obj self)
 {
   return STATE(BottomLVars);
 }
 
-Obj FuncParentLVars( Obj self, Obj lvars )
+static Obj FuncParentLVars(Obj self, Obj lvars)
 {
   if (!IS_LVARS_OR_HVARS(lvars)) {
-    ErrorQuit( "<lvars> must be an lvars (not a %s)",
-               (Int)TNAM_OBJ(lvars), 0L );
-    return 0;
+      RequireArgument("ParentLVars", lvars, "must be an lvars");
   }
   Obj parent = PARENT_LVARS(lvars);
   return parent ? parent : Fail;
 }
 
-Obj FuncContentsLVars (Obj self, Obj lvars )
+static Obj FuncContentsLVars(Obj self, Obj lvars)
 {
+  if (!IS_LVARS_OR_HVARS(lvars)) {
+      RequireArgument("ContentsLVars", lvars, "must be an lvars");
+  }
   Obj contents = NEW_PREC(0);
   Obj func = FUNC_LVARS(lvars);
   Obj nams = NAMS_FUNC(func);
   UInt len = (SIZE_BAG(lvars) - 2*sizeof(Obj) - sizeof(UInt))/sizeof(Obj);
   Obj values = NEW_PLIST_IMM(T_PLIST, len);
   if (lvars == STATE(BottomLVars))
-    return False;
+    return Fail;
   AssPRec(contents, RNamName("func"), func);
   AssPRec(contents, RNamName("names"), nams);
   memcpy(1+ADDR_OBJ(values), 3+CONST_ADDR_OBJ(lvars), len*sizeof(Obj));
@@ -2358,6 +2030,13 @@ Obj FuncContentsLVars (Obj self, Obj lvars )
   return contents;
 }
 
+static Obj FuncENVI_FUNC(Obj self, Obj func)
+{
+    RequireFunction("ENVI_FUNC", func);
+    Obj envi = ENVI_FUNC(func);
+    return (envi && IS_LVARS_OR_HVARS(envi)) ? envi : Fail;
+}
+
 /****************************************************************************
 **
 *F  VarsBeforeCollectBags() . . . . . . . . actions before garbage collection
@@ -2365,20 +2044,21 @@ Obj FuncContentsLVars (Obj self, Obj lvars )
 */
 #ifdef USE_GASMAN
 
-void VarsBeforeCollectBags ( void )
+static void VarsBeforeCollectBags(void)
 {
+  // As an optimization, we never call CHANGED_BAG on CurrLVars directly,
+  // instead thus function is run just before any GC to take care of that.
   if (STATE(CurrLVars))
     CHANGED_BAG( STATE(CurrLVars) );
 }
 
-void VarsAfterCollectBags ( void )
+static void VarsAfterCollectBags(void)
 {
   if (STATE(CurrLVars))
     {
       STATE(PtrLVars) = PTR_BAG( STATE(CurrLVars) );
-      STATE(PtrBody)  = (Stat*)PTR_BAG( BODY_FUNC( CURR_FUNC() ) );
+      STATE(PtrBody)  = PTR_BAG( BODY_FUNC( CURR_FUNC() ) );
     }
-  GVarsAfterCollectBags();
 }
 
 #endif
@@ -2389,13 +2069,14 @@ void VarsAfterCollectBags ( void )
 **
 */
 
-void SaveLVars( Obj lvars )
+static void SaveLVars(Obj lvars)
 {
   UInt len,i;
   const Obj *ptr;
-  SaveSubObj(FUNC_LVARS(lvars));
-  SaveUInt(STAT_LVARS(lvars));
-  SaveSubObj(PARENT_LVARS(lvars));
+  const LVarsHeader * hdr = (const LVarsHeader *)CONST_ADDR_OBJ(lvars);
+  SaveSubObj(hdr->func);
+  SaveUInt(hdr->stat);
+  SaveSubObj(hdr->parent);
   len = (SIZE_OBJ(lvars) - (2*sizeof(Obj)+sizeof(UInt)))/sizeof(Obj);
   ptr = CONST_ADDR_OBJ(lvars)+3;
   for (i = 0; i < len; i++)
@@ -2408,7 +2089,7 @@ void SaveLVars( Obj lvars )
 **
 */
 
-void LoadLVars( Obj lvars )
+static void LoadLVars(Obj lvars)
 {
   UInt len,i;
   Obj *ptr;
@@ -2422,14 +2103,14 @@ void LoadLVars( Obj lvars )
     *ptr++ = LoadSubObj();
 }
 
-Obj TYPE_LVARS;
+static Obj TYPE_LVARS;
 
-Obj TypeLVars( Obj lvars )
+static Obj TypeLVars(Obj lvars)
 {
   return TYPE_LVARS;
 }
 
-void PrintLVars( Obj lvars )
+static void PrintLVars(Obj lvars)
 {
   Pr("<lvars bag>", 0,0);
 }
@@ -2459,6 +2140,7 @@ static StructGVarFunc GVarFuncs [] = {
   GVAR_FUNC(GetBottomLVars, 0, ""),
   GVAR_FUNC(ParentLVars, 1, "lvars"),
   GVAR_FUNC(ContentsLVars, 1, "lvars"),
+  GVAR_FUNC(ENVI_FUNC, 1, "func"),
   { 0, 0, 0, 0, 0 }
 };
 
@@ -2509,114 +2191,115 @@ static Int InitKernel (
     PrintObjFuncs[ T_HVARS ] = PrintLVars;
 
     /* install executors, evaluators, and printers for local variables     */
-    InstallExecStatFunc( T_ASS_LVAR       , ExecAssLVar);
-    InstallExecStatFunc( T_UNB_LVAR       , ExecUnbLVar);
-    // no EvalExprFunc for T_REFLVAR, it is handled immediately by EVAL_EXPR
-    InstallEvalExprFunc( T_ISB_LVAR       , EvalIsbLVar);
+    InstallExecStatFunc( STAT_ASS_LVAR       , ExecAssLVar);
+    InstallExecStatFunc( STAT_UNB_LVAR       , ExecUnbLVar);
+    // no EvalExprFunc for EXPR_REF_LVAR, it is handled immediately by EVAL_EXPR
+    InstallEvalExprFunc( EXPR_ISB_LVAR       , EvalIsbLVar);
 
-    InstallPrintStatFunc( T_ASS_LVAR       , PrintAssLVar);
-    InstallPrintStatFunc( T_UNB_LVAR       , PrintUnbLVar);
-    InstallPrintExprFunc( T_REFLVAR        , PrintRefLVar);
-    InstallPrintExprFunc( T_ISB_LVAR       , PrintIsbLVar);
+    InstallPrintStatFunc( STAT_ASS_LVAR       , PrintAssLVar);
+    InstallPrintStatFunc( STAT_UNB_LVAR       , PrintUnbLVar);
+    InstallPrintExprFunc( EXPR_REF_LVAR        , PrintRefLVar);
+    InstallPrintExprFunc( EXPR_ISB_LVAR       , PrintIsbLVar);
 
     /* install executors, evaluators, and printers for higher variables    */
-    InstallExecStatFunc( T_ASS_HVAR       , ExecAssHVar);
-    InstallExecStatFunc( T_UNB_HVAR       , ExecUnbHVar);
-    InstallEvalExprFunc( T_REF_HVAR       , EvalRefHVar);
-    InstallEvalExprFunc( T_ISB_HVAR       , EvalIsbHVar);
-    InstallPrintStatFunc( T_ASS_HVAR       , PrintAssHVar);
-    InstallPrintStatFunc( T_UNB_HVAR       , PrintUnbHVar);
-    InstallPrintExprFunc( T_REF_HVAR       , PrintRefHVar);
-    InstallPrintExprFunc( T_ISB_HVAR       , PrintIsbHVar);
+    InstallExecStatFunc( STAT_ASS_HVAR       , ExecAssHVar);
+    InstallExecStatFunc( STAT_UNB_HVAR       , ExecUnbHVar);
+    InstallEvalExprFunc( EXPR_REF_HVAR       , EvalRefHVar);
+    InstallEvalExprFunc( EXPR_ISB_HVAR       , EvalIsbHVar);
+    InstallPrintStatFunc( STAT_ASS_HVAR       , PrintAssHVar);
+    InstallPrintStatFunc( STAT_UNB_HVAR       , PrintUnbHVar);
+    InstallPrintExprFunc( EXPR_REF_HVAR       , PrintRefHVar);
+    InstallPrintExprFunc( EXPR_ISB_HVAR       , PrintIsbHVar);
 
     /* install executors, evaluators, and printers for global variables    */
-    InstallExecStatFunc( T_ASS_GVAR       , ExecAssGVar);
-    InstallExecStatFunc( T_UNB_GVAR       , ExecUnbGVar);
-    InstallEvalExprFunc( T_REF_GVAR       , EvalRefGVar);
-    InstallEvalExprFunc( T_ISB_GVAR       , EvalIsbGVar);
-    InstallPrintStatFunc( T_ASS_GVAR       , PrintAssGVar);
-    InstallPrintStatFunc( T_UNB_GVAR       , PrintUnbGVar);
-    InstallPrintExprFunc( T_REF_GVAR       , PrintRefGVar);
-    InstallPrintExprFunc( T_ISB_GVAR       , PrintIsbGVar);
+    InstallExecStatFunc( STAT_ASS_GVAR       , ExecAssGVar);
+    InstallExecStatFunc( STAT_UNB_GVAR       , ExecUnbGVar);
+    InstallEvalExprFunc( EXPR_REF_GVAR       , EvalRefGVar);
+    InstallEvalExprFunc( EXPR_ISB_GVAR       , EvalIsbGVar);
+    InstallPrintStatFunc( STAT_ASS_GVAR       , PrintAssGVar);
+    InstallPrintStatFunc( STAT_UNB_GVAR       , PrintUnbGVar);
+    InstallPrintExprFunc( EXPR_REF_GVAR       , PrintRefGVar);
+    InstallPrintExprFunc( EXPR_ISB_GVAR       , PrintIsbGVar);
 
-    /* install executors, evaluators, and printers for list elements       */
-    InstallExecStatFunc( T_ASS_LIST       , ExecAssList);
-    InstallExecStatFunc( T_ASSS_LIST      , ExecAsssList);
-    InstallExecStatFunc( T_ASS_LIST_LEV   , ExecAssListLevel);
-    InstallExecStatFunc( T_ASSS_LIST_LEV  , ExecAsssListLevel);
-    InstallExecStatFunc( T_ASS2_LIST  , ExecAss2List);
-    InstallPrintStatFunc( T_ASS2_LIST  , PrintAss2List);
-    
-    InstallExecStatFunc( T_UNB_LIST       , ExecUnbList);
-    InstallEvalExprFunc( T_ELM_LIST       , EvalElmList);
-    InstallEvalExprFunc( T_ELMS_LIST      , EvalElmsList);
-    InstallEvalExprFunc( T_ELM_LIST_LEV   , EvalElmListLevel);
-    InstallEvalExprFunc( T_ELMS_LIST_LEV  , EvalElmsListLevel);
-    InstallEvalExprFunc( T_ISB_LIST       , EvalIsbList);
-    InstallEvalExprFunc( T_ELM2_LIST      , EvalElm2List);
-    InstallPrintExprFunc( T_ELM2_LIST     , PrintElm2List);
-    
-    InstallPrintStatFunc( T_ASS_LIST       , PrintAssList);
-    InstallPrintStatFunc( T_ASSS_LIST      , PrintAsssList);
-    InstallPrintStatFunc( T_ASS_LIST_LEV   , PrintAssList);
-    InstallPrintStatFunc( T_ASSS_LIST_LEV  , PrintAsssList);
-    InstallPrintStatFunc( T_UNB_LIST       , PrintUnbList);
-    InstallPrintExprFunc( T_ELM_LIST       , PrintElmList);
-    InstallPrintExprFunc( T_ELMS_LIST      , PrintElmsList);
-    InstallPrintExprFunc( T_ELM_LIST_LEV   , PrintElmListLevel);
-    InstallPrintExprFunc( T_ELMS_LIST_LEV  , PrintElmsList);
-    InstallPrintExprFunc( T_ISB_LIST       , PrintIsbList);
+    // install executors, evaluators, and printers for list elements
+    InstallExecStatFunc( STAT_ASS_LIST       , ExecAssList);
+    InstallExecStatFunc( STAT_ASSS_LIST      , ExecAsssList);
+    InstallExecStatFunc( STAT_ASS_LIST_LEV   , ExecAssListLevel);
+    InstallExecStatFunc( STAT_ASSS_LIST_LEV  , ExecAsssListLevel);
+    InstallExecStatFunc( STAT_UNB_LIST       , ExecUnbList);
+    InstallEvalExprFunc( EXPR_ELM_LIST       , EvalElmList);
+    InstallEvalExprFunc( EXPR_ELMS_LIST      , EvalElmsList);
+    InstallEvalExprFunc( EXPR_ELM_LIST_LEV   , EvalElmListLevel);
+    InstallEvalExprFunc( EXPR_ELMS_LIST_LEV  , EvalElmsListLevel);
+    InstallEvalExprFunc( EXPR_ISB_LIST       , EvalIsbList);
 
+    InstallPrintStatFunc( STAT_ASS_LIST       , PrintAssList);
+    InstallPrintStatFunc( STAT_ASSS_LIST      , PrintAsssList);
+    InstallPrintStatFunc( STAT_ASS_LIST_LEV   , PrintAssList);
+    InstallPrintStatFunc( STAT_ASSS_LIST_LEV  , PrintAsssList);
+    InstallPrintStatFunc( STAT_UNB_LIST       , PrintUnbList);
+    InstallPrintExprFunc( EXPR_ELM_LIST       , PrintElmList);
+    InstallPrintExprFunc( EXPR_ELMS_LIST      , PrintElmsList);
+    InstallPrintExprFunc( EXPR_ELM_LIST_LEV   , PrintElmListLevel);
+    InstallPrintExprFunc( EXPR_ELMS_LIST_LEV  , PrintElmsList);
+    InstallPrintExprFunc( EXPR_ISB_LIST       , PrintIsbList);
 
-    /* install executors, evaluators, and printers for record elements     */
-    InstallExecStatFunc( T_ASS_REC_NAME   , ExecAssRecName);
-    InstallExecStatFunc( T_ASS_REC_EXPR   , ExecAssRecExpr);
-    InstallExecStatFunc( T_UNB_REC_NAME   , ExecUnbRecName);
-    InstallExecStatFunc( T_UNB_REC_EXPR   , ExecUnbRecExpr);
-    InstallEvalExprFunc( T_ELM_REC_NAME   , EvalElmRecName);
-    InstallEvalExprFunc( T_ELM_REC_EXPR   , EvalElmRecExpr);
-    InstallEvalExprFunc( T_ISB_REC_NAME   , EvalIsbRecName);
-    InstallEvalExprFunc( T_ISB_REC_EXPR   , EvalIsbRecExpr);
-    InstallPrintStatFunc( T_ASS_REC_NAME   , PrintAssRecName);
-    InstallPrintStatFunc( T_ASS_REC_EXPR   , PrintAssRecExpr);
-    InstallPrintStatFunc( T_UNB_REC_NAME   , PrintUnbRecName);
-    InstallPrintStatFunc( T_UNB_REC_EXPR   , PrintUnbRecExpr);
-    InstallPrintExprFunc( T_ELM_REC_NAME   , PrintElmRecName);
-    InstallPrintExprFunc( T_ELM_REC_EXPR   , PrintElmRecExpr);
-    InstallPrintExprFunc( T_ISB_REC_NAME   , PrintIsbRecName);
-    InstallPrintExprFunc( T_ISB_REC_EXPR   , PrintIsbRecExpr);
+    // install executors, evaluators, and printers for matrix elements
+    InstallExecStatFunc(STAT_ASS_MAT, ExecAssMat);
+    InstallEvalExprFunc(EXPR_ELM_MAT, EvalElmMat);
+    InstallPrintStatFunc(STAT_ASS_MAT, PrintAssMat);
+    InstallPrintExprFunc(EXPR_ELM_MAT, PrintElmMat);
 
-    /* install executors, evaluators, and printers for list elements       */
-    InstallExecStatFunc( T_ASS_POSOBJ       , ExecAssPosObj);
-    InstallExecStatFunc( T_UNB_POSOBJ       , ExecUnbPosObj);
-    InstallEvalExprFunc( T_ELM_POSOBJ       , EvalElmPosObj);
-    InstallEvalExprFunc( T_ISB_POSOBJ       , EvalIsbPosObj);
-    InstallPrintStatFunc( T_ASS_POSOBJ       , PrintAssPosObj);
-    InstallPrintStatFunc( T_UNB_POSOBJ       , PrintUnbPosObj);
-    InstallPrintExprFunc( T_ELM_POSOBJ       , PrintElmPosObj);
-    InstallPrintExprFunc( T_ISB_POSOBJ       , PrintIsbPosObj);
+    // install executors, evaluators, and printers for record elements
+    InstallExecStatFunc( STAT_ASS_REC_NAME   , ExecAssRecName);
+    InstallExecStatFunc( STAT_ASS_REC_EXPR   , ExecAssRecExpr);
+    InstallExecStatFunc( STAT_UNB_REC_NAME   , ExecUnbRecName);
+    InstallExecStatFunc( STAT_UNB_REC_EXPR   , ExecUnbRecExpr);
+    InstallEvalExprFunc( EXPR_ELM_REC_NAME   , EvalElmRecName);
+    InstallEvalExprFunc( EXPR_ELM_REC_EXPR   , EvalElmRecExpr);
+    InstallEvalExprFunc( EXPR_ISB_REC_NAME   , EvalIsbRecName);
+    InstallEvalExprFunc( EXPR_ISB_REC_EXPR   , EvalIsbRecExpr);
+    InstallPrintStatFunc( STAT_ASS_REC_NAME   , PrintAssRecName);
+    InstallPrintStatFunc( STAT_ASS_REC_EXPR   , PrintAssRecExpr);
+    InstallPrintStatFunc( STAT_UNB_REC_NAME   , PrintUnbRecName);
+    InstallPrintStatFunc( STAT_UNB_REC_EXPR   , PrintUnbRecExpr);
+    InstallPrintExprFunc( EXPR_ELM_REC_NAME   , PrintElmRecName);
+    InstallPrintExprFunc( EXPR_ELM_REC_EXPR   , PrintElmRecExpr);
+    InstallPrintExprFunc( EXPR_ISB_REC_NAME   , PrintIsbRecName);
+    InstallPrintExprFunc( EXPR_ISB_REC_EXPR   , PrintIsbRecExpr);
 
-    /* install executors, evaluators, and printers for record elements     */
-    InstallExecStatFunc( T_ASS_COMOBJ_NAME  , ExecAssComObjName);
-    InstallExecStatFunc( T_ASS_COMOBJ_EXPR  , ExecAssComObjExpr);
-    InstallExecStatFunc( T_UNB_COMOBJ_NAME  , ExecUnbComObjName);
-    InstallExecStatFunc( T_UNB_COMOBJ_EXPR  , ExecUnbComObjExpr);
-    InstallEvalExprFunc( T_ELM_COMOBJ_NAME  , EvalElmComObjName);
-    InstallEvalExprFunc( T_ELM_COMOBJ_EXPR  , EvalElmComObjExpr);
-    InstallEvalExprFunc( T_ISB_COMOBJ_NAME  , EvalIsbComObjName);
-    InstallEvalExprFunc( T_ISB_COMOBJ_EXPR  , EvalIsbComObjExpr);
-    InstallPrintStatFunc( T_ASS_COMOBJ_NAME  , PrintAssComObjName);
-    InstallPrintStatFunc( T_ASS_COMOBJ_EXPR  , PrintAssComObjExpr);
-    InstallPrintStatFunc( T_UNB_COMOBJ_NAME  , PrintUnbComObjName);
-    InstallPrintStatFunc( T_UNB_COMOBJ_EXPR  , PrintUnbComObjExpr);
-    InstallPrintExprFunc( T_ELM_COMOBJ_NAME  , PrintElmComObjName);
-    InstallPrintExprFunc( T_ELM_COMOBJ_EXPR  , PrintElmComObjExpr);
-    InstallPrintExprFunc( T_ISB_COMOBJ_NAME  , PrintIsbComObjName);
-    InstallPrintExprFunc( T_ISB_COMOBJ_EXPR  , PrintIsbComObjExpr);
+    // install executors, evaluators, and printers for positional objects
+    InstallExecStatFunc( STAT_ASS_POSOBJ       , ExecAssPosObj);
+    InstallExecStatFunc( STAT_UNB_POSOBJ       , ExecUnbPosObj);
+    InstallEvalExprFunc( EXPR_ELM_POSOBJ       , EvalElmPosObj);
+    InstallEvalExprFunc( EXPR_ISB_POSOBJ       , EvalIsbPosObj);
+    InstallPrintStatFunc( STAT_ASS_POSOBJ       , PrintAssPosObj);
+    InstallPrintStatFunc( STAT_UNB_POSOBJ       , PrintUnbPosObj);
+    InstallPrintExprFunc( EXPR_ELM_POSOBJ       , PrintElmPosObj);
+    InstallPrintExprFunc( EXPR_ISB_POSOBJ       , PrintIsbPosObj);
+
+    // install executors, evaluators, and printers for component objects
+    InstallExecStatFunc( STAT_ASS_COMOBJ_NAME  , ExecAssComObjName);
+    InstallExecStatFunc( STAT_ASS_COMOBJ_EXPR  , ExecAssComObjExpr);
+    InstallExecStatFunc( STAT_UNB_COMOBJ_NAME  , ExecUnbComObjName);
+    InstallExecStatFunc( STAT_UNB_COMOBJ_EXPR  , ExecUnbComObjExpr);
+    InstallEvalExprFunc( EXPR_ELM_COMOBJ_NAME  , EvalElmComObjName);
+    InstallEvalExprFunc( EXPR_ELM_COMOBJ_EXPR  , EvalElmComObjExpr);
+    InstallEvalExprFunc( EXPR_ISB_COMOBJ_NAME  , EvalIsbComObjName);
+    InstallEvalExprFunc( EXPR_ISB_COMOBJ_EXPR  , EvalIsbComObjExpr);
+    InstallPrintStatFunc( STAT_ASS_COMOBJ_NAME  , PrintAssComObjName);
+    InstallPrintStatFunc( STAT_ASS_COMOBJ_EXPR  , PrintAssComObjExpr);
+    InstallPrintStatFunc( STAT_UNB_COMOBJ_NAME  , PrintUnbComObjName);
+    InstallPrintStatFunc( STAT_UNB_COMOBJ_EXPR  , PrintUnbComObjExpr);
+    InstallPrintExprFunc( EXPR_ELM_COMOBJ_NAME  , PrintElmComObjName);
+    InstallPrintExprFunc( EXPR_ELM_COMOBJ_EXPR  , PrintElmComObjExpr);
+    InstallPrintExprFunc( EXPR_ISB_COMOBJ_NAME  , PrintIsbComObjName);
+    InstallPrintExprFunc( EXPR_ISB_COMOBJ_EXPR  , PrintIsbComObjExpr);
 
 #ifdef USE_GASMAN
     /* install before and after actions for garbage collections            */
-    InitCollectFuncBags( VarsBeforeCollectBags, VarsAfterCollectBags );
+    RegisterBeforeCollectFuncBags(VarsBeforeCollectBags);
+    RegisterAfterCollectFuncBags(VarsAfterCollectBags);
 #endif
 
     /* init filters and functions                                          */
@@ -2669,7 +2352,7 @@ static Int InitModuleState(void)
     LVarsHeader * hdr = (LVarsHeader *)ADDR_OBJ(STATE(BottomLVars));
     hdr->func = tmpFunc;
     hdr->parent = Fail;
-    tmpBody = NewBag( T_BODY, sizeof(BodyHeader) );
+    tmpBody = NewFunctionBody();
     SET_BODY_FUNC( tmpFunc, tmpBody );
 
     STATE(CurrLVars) = STATE(BottomLVars);

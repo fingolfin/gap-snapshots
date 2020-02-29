@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Toric_divisors">
+<Heading>Toric divisors</Heading>
+
+<P/>
+<Section Label="Chapter_Toric_divisors_Section_Toric_divisors_Examples">
+<Heading>Toric divisors: Examples</Heading>
+
+<P/>
+<Subsection Label="Chapter_Toric_divisors_Section_Toric_divisors_Examples_Subsection_Divisors_on_a_toric_variety">
+<Heading>Divisors on a toric variety</Heading>
+
+<#Include Label="Divisors">
+
+<P/>
+</Subsection>
+
+
+<Subsection Label="Chapter_Toric_divisors_Section_Toric_divisors_Examples_Subsection_Polytope_of_toric_divisors">
+<Heading>Polytope of toric divisors</Heading>
+
+<#Include Label="PolytopeOfToricDivisor">
+
+</Subsection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Toric_divisors_Section_The_GAP_category">
+<Heading>The GAP category</Heading>
+
+<ManSection>
+  <Filt Arg="M" Name="IsToricDivisor" Label="for IsObject"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+  The <A>GAP</A> category of torus invariant Weil divisors.
+ </Description>
+</ManSection>
+
+
+<P/>
+<ManSection>
+  <Attr Arg="arg" Name="twitter" Label="for IsToricDivisor"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Toric_divisors_Section_Properties">
+<Heading>Properties</Heading>
+
+<ManSection>
+  <Prop Arg="divi" Name="IsCartier" Label="for IsToricDivisor"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+  Checks if the torus invariant Weil divisor <A>divi</A> is Cartier i.e. if it is locally principal.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="divi" Name="IsPrincipal" Label="for IsToricDivisor"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+  Checks if the torus invariant Weil divisor <A>divi</A> is principal 
+  which in the toric invariant case means that it is the divisor of a character.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="divi" Name="IsPrimedivisor" Label="for IsToricDivisor"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+  Checks if the Weil divisor <A>divi</A> represents a prime divisor,
+  i.e. if it is a standard generator of the divisor group.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="divi" Name="IsBasepointFree" Label="for IsToricDivisor"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+  Checks if the divisor <A>divi</A> is basepoint free.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="divi" Name="IsAmple" Label="for IsToricDivisor"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+  Checks if the divisor <A>divi</A> is ample, i.e. if it is colored red, yellow and green.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="divi" Name="IsVeryAmple" Label="for IsToricDivisor"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+  Checks if the divisor <A>divi</A> is very ample.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="divi" Name="IsNumericallyEffective" Label="for IsToricDivisor"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+  Checks if the divisor <A>divi</A> is nef.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Toric_divisors_Section_Attributes">
+<Heading>Attributes</Heading>
+
+<ManSection>
+  <Attr Arg="divi" Name="CartierData" Label="for IsToricDivisor"/>
+ <Returns>a list
+</Returns>
+ <Description>
+  Returns the Cartier data of the divisor <A>divi</A>, if it is Cartier, and fails otherwise.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="divi" Name="CharacterOfPrincipalDivisor" Label="for IsToricDivisor"/>
+ <Returns>a homalg module element
+</Returns>
+ <Description>
+  Returns the character corresponding to the principal divisor <A>divi</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="divi" Name="ClassOfDivisor" Label="for IsToricDivisor"/>
+ <Returns>a homalg module element
+</Returns>
+ <Description>
+  Returns the class group element corresponding to the divisor <A>divi</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="divi" Name="PolytopeOfDivisor" Label="for IsToricDivisor"/>
+ <Returns>a polytope
+</Returns>
+ <Description>
+  Returns the polytope corresponding to the divisor <A>divi</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="divi" Name="BasisOfGlobalSections" Label="for IsToricDivisor"/>
+ <Returns>a list
+</Returns>
+ <Description>
+  Returns a basis of the global section module of the quasi-coherent sheaf of the divisor <A>divi</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="divi" Name="IntegerForWhichIsSureVeryAmple" Label="for IsToricDivisor"/>
+ <Returns>an integer
+</Returns>
+ <Description>
+  Returns an integer <A>n</A> such that <Math>n \cdot </Math>divi is very ample.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="divi" Name="AmbientToricVariety" Label="for IsToricDivisor"/>
+ <Returns>a variety
+</Returns>
+ <Description>
+  Returns the toric variety which contains the prime divisors of the divisor <A>divi</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="divi" Name="UnderlyingGroupElement" Label="for IsToricDivisor"/>
+ <Returns>a homalg module element
+</Returns>
+ <Description>
+  Returns an element which represents the divisor <A>divi</A> in the Weil group.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="divi" Name="UnderlyingToricVariety" Label="for IsToricDivisor"/>
+ <Returns>a variety
+</Returns>
+ <Description>
+  Returns the closure of the torus orbit corresponding to the prime divisor <A>divi</A>. 
+  Not implemented for other divisors. Maybe we should add the support here. 
+  Is this even a toric variety? Exercise left to the reader.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="divi" Name="DegreeOfDivisor" Label="for IsToricDivisor"/>
+ <Returns>an integer
+</Returns>
+ <Description>
+  Returns the degree of the divisor <A>divi</A>. This is not to be confused with the (divisor) class of <A>divi</A>!
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="divi" Name="VarietyOfDivisorpolytope" Label="for IsToricDivisor"/>
+ <Returns>a variety
+</Returns>
+ <Description>
+  Returns the variety corresponding to the polytope of the divisor <A>divi</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="divi" Name="MonomsOfCoxRingOfDegree" Label="for IsToricDivisor"/>
+ <Returns>a list
+</Returns>
+ <Description>
+  Returns the monoms in the Cox ring of degree equal to the (divisor) class of the divisor <A>divi</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="divi" Name="CoxRingOfTargetOfDivisorMorphism" Label="for IsToricDivisor"/>
+ <Returns>a ring
+</Returns>
+ <Description>
+  A basepoint free divisor <A>divi</A> defines a map from its ambient variety in a projective space.
+  This method returns the Cox ring of such a projective space.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="divi" Name="RingMorphismOfDivisor" Label="for IsToricDivisor"/>
+ <Returns>a ring map
+</Returns>
+ <Description>
+  A basepoint free divisor <A>divi</A> defines a map from its ambient variety in a projective space.
+  This method returns the morphism between the cox ring of this projective space to the cox ring of the
+  ambient variety of <A>divi</A>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Toric_divisors_Section_Methods">
+<Heading>Methods</Heading>
+
+<ManSection>
+  <Oper Arg="divi" Name="VeryAmpleMultiple" Label="for IsToricDivisor"/>
+ <Returns>a divisor
+</Returns>
+ <Description>
+  Returns a very ample multiple of the ample divisor <A>divi</A>. The method will fail if divisor is not ample.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="divi" Name="CharactersForClosedEmbedding" Label="for IsToricDivisor"/>
+ <Returns>a list
+</Returns>
+ <Description>
+  Returns characters for closed embedding defined via the ample divisor <A>divi</A>.
+  The method fails if the divisor <A>divi</A> is not ample.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="divi1,divi2" Name="\+" Label="for IsToricDivisor, IsToricDivisor"/>
+ <Returns>a divisor
+</Returns>
+ <Description>
+  Returns the sum of the divisors <A>divi1</A> and <A>divi2</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="divi1,divi2" Name="\-" Label="for IsToricDivisor, IsToricDivisor"/>
+ <Returns>a divisor
+</Returns>
+ <Description>
+  Returns the divisor <A>divi1</A> minus <A>divi2</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="k,divi" Name="\*" Label="for IsInt, IsToricDivisor"/>
+ <Returns>a divisor
+</Returns>
+ <Description>
+  Returns <A>k</A> times the divisor <A>divi</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="vari, elem" Name="MonomsOfCoxRingOfDegree" Label="for IsToricVariety, IsHomalgElement"/>
+ <Returns>a list
+</Returns>
+ <Description>
+  Returns the monoms of the Cox ring of the variety <A>vari</A> with degree equal to the class
+  group element <A>elem</A>. The variable <A>elem</A> can also be a list.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="vari, elem" Name="DivisorOfGivenClass" Label="for IsToricVariety, IsHomalgElement"/>
+ <Returns>a divisor
+</Returns>
+ <Description>
+  Computes a divisor of the variety <A>divi</A> which is member of the divisor class presented by <A>elem</A>.
+  The variable <A>elem</A> can be a homalg element or a list presenting an element.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="divi" Name="AddDivisorToItsAmbientVariety" Label="for IsToricDivisor"/>
+ <Description>
+  Adds the divisor <A>divi</A> to the Weil divisor list of its ambient variety.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="divi" Name="Polytope" Label="for IsToricDivisor"/>
+ <Returns>a polytope
+</Returns>
+ <Description>
+  Returns the polytope of the divisor <A>divi</A>. Another name for <Emph>PolytopeOfDivisor</Emph>
+  for compatibility and shortness.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="divi, string" Name="CoxRingOfTargetOfDivisorMorphism" Label="for IsToricDivisor, IsString"/>
+ <Returns>a ring
+</Returns>
+ <Description>
+  Given a toric divisor <A>divi</A>, it induces a toric morphism. The target of this morphism is a toric variety.
+  This method returns the Cox ring of this target. The variables are named according to <A>string</A>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Toric_divisors_Section_Constructors">
+<Heading>Constructors</Heading>
+
+<ManSection>
+  <Oper Arg="elem, vari" Name="DivisorOfCharacter" Label="for IsHomalgElement, IsToricVariety"/>
+ <Returns>a divisor
+</Returns>
+ <Description>
+  Returns the divisor of the toric variety <A>vari</A> which corresponds to the character <A>elem</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="lis, vari" Name="DivisorOfCharacter" Label="for IsList, IsToricVariety"/>
+ <Returns>a divisor
+</Returns>
+ <Description>
+  Returns the divisor of the toric variety <A>vari</A> which corresponds to the character which is created 
+  by the list <A>lis</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="elem, vari" Name="CreateDivisor" Label="for IsHomalgElement, IsToricVariety"/>
+ <Returns>a divisor
+</Returns>
+ <Description>
+  Returns the divisor of the toric variety <A>vari</A> which corresponds to the Weil group element <A>elem</A>.
+  by the list <A>lis</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="lis, vari" Name="CreateDivisor" Label="for IsList, IsToricVariety"/>
+ <Returns>a divisor
+</Returns>
+ <Description>
+  Returns the divisor of the toric variety <A>vari</A> which corresponds to the Weil group element 
+  which is created by the list <A>lis</A>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+</Chapter>
+

@@ -449,7 +449,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := f / [ f.1^2, f.2^3, (f.1*f.2)^5 ];</span>
 &lt;fp group on the generators [ a, b ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h := IsomorphismPermGroup( g );</span>
-[ a, b ] -&gt; [ (1,2)(4,5), (2,3,4) ]
+[ a, b ] -&gt; [ (1,2)(3,5), (2,3,4) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u:=Subgroup(g,[g.1*g.2]);;rt:=RightTransversal(g,u);</span>
 RightTransversal(&lt;fp group of size 60 on the generators 
 [ a, b ]&gt;,Group([ a*b ]))
@@ -848,12 +848,12 @@ true
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := Group( (2,3,4,5), (1,2,5) );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismFpGroup( g );</span>
-[ (4,5), (1,2,3,4,5), (1,3,2,4,5) ] -&gt; [ F1, F2, F3 ]
+[ (1,2), (2,3), (3,4), (4,5) ] -&gt; [ F1, F2, F3, F4 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fp := Image( iso );</span>
-&lt;fp group on the generators [ F1, F2, F3 ]&gt;
+&lt;fp group of size 120 on the generators [ F1, F2, F3, F4 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelatorsOfFpGroup( fp );</span>
-[ F1^2, F1^-1*F2*F1*F2^-1*F3*F2^-2, F1^-1*F3*F1*F2*F3^-1*F2*F3*F2^-1, 
-  F2^5*F3^-5, F2^5*(F3^-1*F2^-1)^2, (F2^-2*F3^2)^2 ]
+[ F1^2, F2^2, F3^2, F4^2, (F1*F2)^3, (F1*F3)^2, (F1*F4)^2, (F2*F3)^3,
+  (F2*F4)^2, (F3*F4)^3 ]
 </pre></div>
 
 <p><a id="X81B2B3B6812FD62D" name="X81B2B3B6812FD62D"></a></p>
@@ -870,14 +870,13 @@ true
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetInfoLevel( InfoFpGroup, 1 );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismFpGroupByGenerators( g, [ (1,2), (1,2,3,4,5) ] );</span>
-#I  the image group has 2 gens and 4 rels of total length 50
+#I  the image group has 2 gens and 5 rels of total length 39
 [ (1,2), (1,2,3,4,5) ] -&gt; [ F1, F2 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fp := Image( iso );</span>
 &lt;fp group of size 120 on the generators [ F1, F2 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelatorsOfFpGroup( fp );</span>
-[ F1^2, (F2*F1*F2^-2*F1)^3, 
-  F2*F1*F2^-1*(F1*F2)^2*F2^2*(F1*F2^-1)^2*F2^-1*F1, 
-  (F2*F1*F2^-1*F1)^2*F2^-1*F1*F2^2*F1*F2^-2*F1*F2*F1 ]
+[ F1^2, F2^5, (F2^-1*F1)^4, (F1*F2*F1*F2^-1)^3, (F2*F1*F2^-2*F1*F2)^2
+ ]
 </pre></div>
 
 <p>The main task of the function <code class="func">IsomorphismFpGroupByGenerators</code> is to find a presentation of <var class="Arg">G</var> in the provided generators <var class="Arg">gens</var>. In the case of a permutation group <var class="Arg">G</var> it does this by first constructing a stabilizer chain of <var class="Arg">G</var> and then it works through that chain from the bottom to the top, recursively computing a presentation for each of the involved stabilizers. The method used is essentially an implementation of John Cannon's multi-stage relations-finding algorithm as described in <a href="chapBib.html#biBNeu82">[Neu82]</a> (see also <a href="chapBib.html#biBCan73">[Can73]</a> for a more graph theoretical description). Moreover, it makes heavy use of Tietze transformations in each stage to avoid an explosion of the total length of the relators.</p>
@@ -891,9 +890,9 @@ Group([ (1,2,3,4,5,6,7,8,9,10,11), (3,7,11,8)(4,10,5,6),
   (1,12)(2,11)(3,6)(4,8)(5,9)(7,10) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens := GeneratorsOfGroup( M12 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismFpGroupByGenerators( M12, gens );;</span>
-#I  the image group has 3 gens and 20 rels of total length 554
+#I  the image group has 3 gens and 20 rels of total length 418
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismFpGroupByGenerators( M12, gens );;</span>
-#I  the image group has 3 gens and 19 rels of total length 427
+#I  the image group has 3 gens and 20 rels of total length 526
 </pre></div>
 
 <p>Also in the case of a permutation group <var class="Arg">G</var>, the function <code class="func">IsomorphismFpGroupByGenerators</code> supports the option <code class="code">method</code> that can be used to modify the strategy. The option <code class="code">method</code> may take the following values.</p>
@@ -924,7 +923,7 @@ Group([ (1,2,3,4,5,6,7,8,9,10,11), (3,7,11,8)(4,10,5,6),
 #I  the image group has 3 gens and 11 rels of total length 92
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismFpGroupByGenerators( M12, gens : </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                          method := "fast" );;</span>
-#I  the image group has 3 gens and 136 rels of total length 3215
+#I  the image group has 3 gens and 135 rels of total length 2938
 </pre></div>
 
 <p>Though the option <code class="code">method := "regular"</code> is only checked in the case of a permutation group it also affects the performance and the results of the function <code class="func">IsomorphismFpGroupByGenerators</code> for other groups, e. g. for matrix groups. This happens because, for these groups, the function first calls the function <code class="func">NiceMonomorphism</code> (<a href="chap40.html#X7965086E82ABCF41"><span class="RefLink">40.5-2</span></a>) to get a bijective action homomorphism from <var class="Arg">G</var> to a suitable permutation group, <span class="SimpleMath">P</span> say, and then, recursively, calls itself for the group <span class="SimpleMath">P</span> so that now the option becomes relevant.</p>
@@ -939,7 +938,7 @@ ImfMatrixGroup(5,1,3)
   [ [ 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ], 
       [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1 ] ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismFpGroupByGenerators( G, gens );;</span>
-#I  the image group has 2 gens and 10 rels of total length 126
+#I  the image group has 2 gens and 10 rels of total length 118
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismFpGroupByGenerators( G, gens : </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                          method := "regular");;</span>
 #I  the image group has 2 gens and 6 rels of total length 56
@@ -1336,7 +1335,7 @@ Group(&lt;fp, no generators known&gt;)
 
 <h5>47.16-1 IsInfiniteAbelianizationGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInfiniteAbelianizationGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInfiniteAbelianizationGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns true if the commutator factor group <span class="SimpleMath"><var class="Arg">G</var>/<var class="Arg">G</var>'</span> is infinite. This might be done without computing the full structure of the commutator factor group.</p>
 
 <p><a id="X85C9FD548394C1E2" name="X85C9FD548394C1E2"></a></p>

@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  algebra.gi                  GAP library                     Thomas Breuer
-#W                                                        and Willem de Graaf
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer, and Willem de Graaf.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains generic methods for algebras and algebras-with-one.
 ##
@@ -65,7 +65,7 @@ InstallOtherMethod( FLMLORByGenerators,
     SetZero( A, zero );
 
     if IsEmpty( gens ) then
-      SetIsTrivial( A, true );
+      SetDimension( A, 0 );
       SetGeneratorsOfLeftModule( A, gens );
     fi;
 
@@ -201,6 +201,7 @@ InstallGlobalFunction( SubFLMLORNC, function( arg )
                               and IsTwoSidedIdealInParent
                               and IsAttributeStoringRep ),
                      rec() );
+      SetDimension(S, 0);
       SetLeftActingDomain( S, LeftActingDomain( arg[1] ) );
       SetGeneratorsOfLeftModule( S, AsList( arg[2] ) );
     else
@@ -3969,9 +3970,3 @@ InstallMethod( DirectSumDecomposition,
     fi;
     return List( CentralIdempotentsOfAlgebra( A ), x -> Ideal( A, [ x ] ) );
 end );
-
-
-#############################################################################
-##
-#E
-

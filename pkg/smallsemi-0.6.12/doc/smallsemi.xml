@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<!DOCTYPE Book SYSTEM "gapdoc.dtd"
+[
+<!ENTITY see '<Alt Only="LaTeX">$	o$</Alt><Alt Not="LaTeX">--&gt;</Alt>'>
+<!ENTITY VERSION '0.6.12'>
+<!ENTITY ARCHIVENAME 'smallsemi-0.6.12'>
+<!ENTITY Smallsemi '<Package>Smallsemi</Package>'>
+]
+>
+<Book Name="Smallsemi">
+<#Include SYSTEM "title.xml">
+<TableOfContents/>
+<Body>
+<#Include SYSTEM "intro.xml">
+<#Include SYSTEM "data.xml">
+<#Include SYSTEM "examples.xml">
+<#Include SYSTEM "functionality.xml">
+</Body>
+<Bibliography Databases="Smallsemi.bib"/>
+<TheIndex/>
+</Book>

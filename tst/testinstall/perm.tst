@@ -1,3 +1,4 @@
+#@local checklens,n,permAll,permBig,permSml,x,y
 gap> START_TEST("perm.tst");
 
 # Permutations come in two flavors in GAP, with two TNUMs: T_PERM2 for
@@ -19,7 +20,8 @@ true
 
 # test error handling parsing of permutations
 gap> (1,2,0);
-Error, Permutation: <expr> must be a positive integer (not a integer)
+Error, Permutation: <expr> must be a positive small integer (not the integer 0\
+)
 gap> (1,2)(1,2);
 Error, Permutation: cycles must be disjoint and duplicate-free
 gap> (1,2,3,2);
@@ -65,20 +67,17 @@ gap> Print(permSml * (5,12345), "\n");
 
 #
 gap> Print(permBig, "\n");
-[ (), (    2,    3), (    1,    2), (    1,    2,    3), (    1,    3,    2), 
-  (    1,    3) ]
+[ (), (2,3), (1,2), (1,2,3), (1,3,2), (1,3) ]
 gap> Print(permBig * (5,99), "\n");
-[ (    5,   99), (    2,    3)(    5,   99), (    1,    2)(    5,   99), 
-  (    1,    2,    3)(    5,   99), (    1,    3,    2)(    5,   99), 
-  (    1,    3)(    5,   99) ]
+[ ( 5,99), ( 2, 3)( 5,99), ( 1, 2)( 5,99), ( 1, 2, 3)( 5,99), 
+  ( 1, 3, 2)( 5,99), ( 1, 3)( 5,99) ]
 gap> Print(permBig * (5,999), "\n");
-[ (    5,  999), (    2,    3)(    5,  999), (    1,    2)(    5,  999), 
-  (    1,    2,    3)(    5,  999), (    1,    3,    2)(    5,  999), 
-  (    1,    3)(    5,  999) ]
+[ (  5,999), (  2,  3)(  5,999), (  1,  2)(  5,999), (  1,  2,  3)(  5,999), 
+  (  1,  3,  2)(  5,999), (  1,  3)(  5,999) ]
 gap> Print(permBig * (5,9999), "\n");
-[ (    5, 9999), (    2,    3)(    5, 9999), (    1,    2)(    5, 9999), 
-  (    1,    2,    3)(    5, 9999), (    1,    3,    2)(    5, 9999), 
-  (    1,    3)(    5, 9999) ]
+[ (   5,9999), (   2,   3)(   5,9999), (   1,   2)(   5,9999), 
+  (   1,   2,   3)(   5,9999), (   1,   3,   2)(   5,9999), 
+  (   1,   3)(   5,9999) ]
 gap> Print(permBig * (5,99999), "\n");
 [ (    5,99999), (    2,    3)(    5,99999), (    1,    2)(    5,99999), 
   (    1,    2,    3)(    5,99999), (    1,    3,    2)(    5,99999), 
@@ -175,6 +174,8 @@ gap> ForAll(permAll, x -> IsOne(x^(30^13)));
 true
 gap> ForAll(permAll, x -> IsOne(x^(-30^13)));
 true
+gap> ForAll([-5..5], i -> IsOne(()^i));
+true
 
 #
 gap> ForAll(permAll, x -> x^-1 * x = ());
@@ -205,8 +206,13 @@ gap> List(permAll, x -> x^-3);
 #
 # PowIntPerm
 #
+gap> (-1)^(1,2);
+Error, PowIntPerm: <point> must be a positive integer (not the integer -1)
+gap> (-2^100)^(1,2);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `^' on 2 arguments
 gap> 0^(1,2);
-Error, Perm. Operations: <point> must be a positive integer (not 0)
+Error, PowIntPerm: <point> must be a positive integer (not the integer 0)
 gap> n:=10^30;;
 gap> ForAll(permAll, g -> n^g = n);
 true
@@ -220,11 +226,18 @@ gap> List([1,2,3,4,1000],n->List(permBig, g->n^g));
 #
 # QuoIntPerm
 #
+gap> (-1)/(1,2);
+Error, QuoIntPerm: <point> must be a positive integer (not the integer -1)
+gap> (-2^100)/(1,2);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `*' on 2 arguments
 gap> 0/(1,2);
-Error, Perm. Operations: <point> must be a positive integer (not 0)
+Error, QuoIntPerm: <point> must be a positive integer (not the integer 0)
 gap> n:=10^30;;
 gap> ForAll(permAll, g -> n/g = n);
 true
+gap> 30000/(1,20000);  # test a perm with degree > PERM_INVERSE_THRESHOLD
+30000
 gap> List([1,2,3,4,1000],n->List(permSml, g->n/g));
 [ [ 1, 1, 2, 3, 2, 3 ], [ 2, 3, 1, 1, 3, 2 ], [ 3, 2, 3, 2, 1, 1 ], 
   [ 4, 4, 4, 4, 4, 4 ], [ 1000, 1000, 1000, 1000, 1000, 1000 ] ]
@@ -278,7 +291,7 @@ true
 
 # PermList error handling
 gap> PermList(1);
-Error, PermList: <list> must be a list (not a integer)
+Error, PermList: <list> must be a small list (not the integer 1)
 
 # PermList error handling for T_PERM2
 gap> PermList([1,,3]);
@@ -308,8 +321,8 @@ gap> LARGEST_MOVED_POINT_PERM((2,3));
 gap> LARGEST_MOVED_POINT_PERM((2,70000));
 70000
 gap> LARGEST_MOVED_POINT_PERM(fail);
-Error, LargestMovedPointPerm: <perm> must be a permutation (not a boolean or f\
-ail)
+Error, LargestMovedPointPerm: <perm> must be a permutation (not the value 'fai\
+l')
 
 #
 # CycleLengthPermInt, CyclePermInt
@@ -347,7 +360,7 @@ gap> Order( (1,2,3,4)(70,71,72) );
 gap> Order( (1,2,3,4)(70000,71000,72000) );
 12
 gap> ORDER_PERM(fail);
-Error, OrderPerm: <perm> must be a permutation (not a boolean or fail)
+Error, OrderPerm: <perm> must be a permutation (not the value 'fail')
 
 #
 # SignPerm
@@ -357,7 +370,21 @@ gap> List(permSml, SignPerm);
 gap> List(permBig, SignPerm);
 [ 1, -1, -1, 1, 1, -1 ]
 gap> SIGN_PERM(fail);
-Error, SignPerm: <perm> must be a permutation (not a boolean or fail)
+Error, SignPerm: <perm> must be a permutation (not the value 'fail')
+
+#
+# SmallestGeneratorPerm
+#
+gap> SMALLEST_GENERATOR_PERM( 1 );
+Error, SmallestGeneratorPerm: <perm> must be a permutation (not the integer 1)
+gap> SmallestGeneratorPerm( (1,3,2) );
+(1,2,3)
+gap> SmallestGeneratorPerm( (1,2,3) );
+(1,2,3)
+gap> SmallestGeneratorPerm( (1,65537,2) );
+(1,2,65537)
+gap> SmallestGeneratorPerm( (1,2,65537) );
+(1,2,65537)
 
 #
 # DistancePerms
@@ -453,23 +480,24 @@ fail
 gap> MappingPermListList([1,2], [1000,1000]);
 fail
 gap> MappingPermListList((), []);
-Error, first argument must be a list (not a permutation (small))
+Error, AddRowVector: <src> must be a dense list (not a permutation (small))
 gap> MappingPermListList([], ());
-Error, second argument must be a list (not a permutation (small))
+Error, AddRowVector: <dst> must be a dense list (not a permutation (small))
 gap> MappingPermListList("cheese", "cake");
-Error, arguments must be lists of equal length
+Error, AddRowVector: <src> must have the same length as <dst> (lengths are 6 a\
+nd 4)
 gap> MappingPermListList("cheese", "cakeba");
-Error, first argument must be a list of positive integers
+Error, <src> must be a dense list of positive small integers
 gap> MappingPermListList([1,2], [3,[]]);
-Error, second argument must be a list of positive integers
+Error, <dst> must be a dense list of positive small integers
 gap> MappingPermListList([1,[]], [3,4]);
-Error, first argument must be a list of positive integers
+Error, <src> must be a dense list of positive small integers
 gap> MappingPermListList([1,2], [3,0]);
-Error, second argument must be a list of positive integers
+Error, <dst> must be a dense list of positive small integers
 gap> MappingPermListList([1,0], [3,4]);
-Error, first argument must be a list of positive integers
+Error, <src> must be a dense list of positive small integers
 gap> MappingPermListList([1,-1], [3,4]);
-Error, first argument must be a list of positive integers
+Error, <src> must be a dense list of positive small integers
 gap> MappingPermListList([1,2], [3,4]);
 (1,3)(2,4)
 gap> (1,128000) = ();

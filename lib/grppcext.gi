@@ -1,10 +1,12 @@
-############################################################################
+#############################################################################
 ##
-#W  grppcext.gi                 GAP library                      Bettina Eick
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Bettina Eick.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 
 #############################################################################
@@ -51,11 +53,11 @@ InstallGlobalFunction(MappedPcElement,function( elm, pcgs, list )
     new := false;
     for i in [1..Length(vec)] do
       if vec[i]>0 then
-	if new=false then
-	  new := list[i]^vec[i];
+        if new=false then
+          new := list[i]^vec[i];
         else
-	  new := new * list[i]^vec[i];
-	fi;
+          new := new * list[i]^vec[i];
+        fi;
       fi;
     od;
     if new=false then
@@ -76,7 +78,7 @@ local vec, i,j;
   for i in [1..Length(vec)] do
     if vec[i]>0 then
       for j in [1..vec[i]] do
-	pt:=pt^list[i];
+        pt:=pt^list[i];
       od;
     fi;
   od;
@@ -224,40 +226,40 @@ BindGlobal( "FastExtSQ", function( G, M, c,check )
 
     for i in [1..n] do
       for j in [1..i] do
-	if i=j then
-	  exp:=ExponentsOfRelativePower(pcgs,i);
-	else
-	  exp:=ExponentsOfConjugate(pcgs,i,j);
-	fi;
-	w:=[];
-	# start at j -- there cannot be earlier entries.
-	for k in [j..n] do
-	  if exp[k]<>0 then
-	    Add(w,k);
-	    Add(w,exp[k]);
-	  fi;
-	od;
+        if i=j then
+          exp:=ExponentsOfRelativePower(pcgs,i);
+        else
+          exp:=ExponentsOfConjugate(pcgs,i,j);
+        fi;
+        w:=[];
+        # start at j -- there cannot be earlier entries.
+        for k in [j..n] do
+          if exp[k]<>0 then
+            Add(w,k);
+            Add(w,exp[k]);
+          fi;
+        od;
 
-	if not IsInt(c) then # add cocycle info
-	  p := (i^2-i)/2 + j - 1;
-	  for k  in [ 1 .. d ]  do
-	    l := c[p*d+k];
-	    if l <> z then
-	      Add( w, n+k );
-	      Add( w, IntFFE(l) );
-	    fi;
-	  od;
-	fi;
+        if not IsInt(c) then # add cocycle info
+          p := (i^2-i)/2 + j - 1;
+          for k  in [ 1 .. d ]  do
+            l := c[p*d+k];
+            if l <> z then
+              Add( w, n+k );
+              Add( w, IntFFE(l) );
+            fi;
+          od;
+        fi;
 
-	if Length(w)>0 then # other relators are considered trivial
-	  if i=j then
-	    w:=ObjByExtRep(fam,w);
-	    SetPower(col,i,w);
-	  elif w<>[i,1] then
-	    w:=ObjByExtRep(fam,w);
-	    SetConjugate(col,i,j,w);
-	  fi;
-	fi;
+        if Length(w)>0 then # other relators are considered trivial
+          if i=j then
+            w:=ObjByExtRep(fam,w);
+            SetPower(col,i,w);
+          elif w<>[i,1] then
+            w:=ObjByExtRep(fam,w);
+            SetConjugate(col,i,j,w);
+          fi;
+        fi;
       od;
     od;
 
@@ -267,18 +269,18 @@ BindGlobal( "FastExtSQ", function( G, M, c,check )
     # add operation of <G> on module
     for i  in [ 1 .. n ]  do
       for j  in [ 1 .. d ]  do
-	v := Mgens[i][j];
-	w := [];
-	for k  in [ 1 .. d ]  do
-	  l := v[k];
-	  if l <> z then
-	    Add( w, n+k );
-	    Add( w, IntFFE(l) );
-	  fi;
-	od;
-	if Length(w)>0 and w<>[n+j,1] then
-	  w:=ObjByExtRep(fam,w);
-	  SetConjugate(col,n+j,i,w);
+        v := Mgens[i][j];
+        w := [];
+        for k  in [ 1 .. d ]  do
+          l := v[k];
+          if l <> z then
+            Add( w, n+k );
+            Add( w, IntFFE(l) );
+          fi;
+        od;
+        if Length(w)>0 and w<>[n+j,1] then
+          w:=ObjByExtRep(fam,w);
+          SetConjugate(col,n+j,i,w);
         fi;
       od;
     od;
@@ -375,66 +377,66 @@ local ag, p1iso, agp, p2iso, DP, p1, p2, gens, genimgs, triso,s,i,u,opt,
       gens:=Pcgs(DP);
 
       genimgs:=List(gens,
-	  i->ImagesRepresentative(Embedding(D,1),
-	  PreImagesRepresentative(p1iso,
-	    PreImagesRepresentative(pc1,ImagesRepresentative(p1,i))))
-	    *ImagesRepresentative(Embedding(D,2),
-		PreImagesRepresentative(p2iso,
-		PreImagesRepresentative(pc2,ImagesRepresentative(p2,i)))) );
+          i->ImagesRepresentative(Embedding(D,1),
+          PreImagesRepresentative(p1iso,
+            PreImagesRepresentative(pc1,ImagesRepresentative(p1,i))))
+            *ImagesRepresentative(Embedding(D,2),
+                PreImagesRepresentative(p2iso,
+                PreImagesRepresentative(pc2,ImagesRepresentative(p2,i)))) );
 
     else
       opt:=rec(limit:=s,random:=1);
       if HasBaseOfGroup(agp) then
-	opt.knownBase:=BaseOfGroup(agp);
+        opt.knownBase:=BaseOfGroup(agp);
       fi;
-      #p1iso:=p1iso*SmallerDegreePermutationRepresentation(agp);
+      #p1iso:=p1iso*SmallerDegreePermutationRepresentation(agp:cheap);
       EraseNaturalHomomorphismsPool(agp);
       if s>1 then
-	repeat
-	  u:=Group(());
-	  gens:=[];
-	  for i in GeneratorsOfGroup(agp) do
-	    if Size(u)<s and not i in u then
-	      Add(gens,i);
-	      u:=DoClosurePrmGp(u,[i],opt);
-	    fi;
-	  od;
-	  if HasBaseOfGroup(agp) then
-	    SetBaseOfGroup(u,BaseOfGroup(agp));
-	  fi;
-	  #Print("rep ",Size(u)," ",s,"\n");
-	until Size(u)=s;
-	agp:=u;
+        repeat
+          u:=Group(());
+          gens:=[];
+          for i in GeneratorsOfGroup(agp) do
+            if Size(u)<s and not i in u then
+              Add(gens,i);
+              u:=DoClosurePrmGp(u,[i],opt);
+            fi;
+          od;
+          if HasBaseOfGroup(agp) then
+            SetBaseOfGroup(u,BaseOfGroup(agp));
+          fi;
+          #Print("rep ",Size(u)," ",s,"\n");
+        until Size(u)=s;
+        agp:=u;
       else
-	gens:=GeneratorsOfGroup(agp);
+        gens:=GeneratorsOfGroup(agp);
       fi;
       Info( InfoMatOrb, 1, "found ",Length(gens)," generators");
 
       DP:=DirectProduct(agp,gp2);
 #      SetIsSolvableGroup(DP,IsSolvableGroup(agp)
-#	and IsSolvableGroup(ImagesSource(p2iso)));
+#       and IsSolvableGroup(ImagesSource(p2iso)));
       p1:=Projection(DP,1);
       p2:=Projection(DP,2);
 #      if IsSolvableGroup(DP) then
-#	gens:=Pcgs(DP);
+#       gens:=Pcgs(DP);
 #      else
-	gens:=GeneratorsOfGroup(DP);
+        gens:=GeneratorsOfGroup(DP);
 #      fi;
       Unbind(ag);Unbind(agp);
 
       genimgs:=List(gens,
-	  i->ImagesRepresentative(Embedding(D,1),
-		PreImagesRepresentative(p1iso,ImagesRepresentative(p1,i)))
-	    *ImagesRepresentative(Embedding(D,2),
-		PreImagesRepresentative(p2iso,ImagesRepresentative(p2,i))) );
+          i->ImagesRepresentative(Embedding(D,1),
+                PreImagesRepresentative(p1iso,ImagesRepresentative(p1,i)))
+            *ImagesRepresentative(Embedding(D,2),
+                PreImagesRepresentative(p2iso,ImagesRepresentative(p2,i))) );
 
     fi;
     triso:=GroupHomomorphismByImagesNC(DP,D,gens,genimgs);
     SetIsBijective(triso,true);
     return rec(pairgens:=genimgs,
-	       permgens:=gens,
+               permgens:=gens,
                isomorphism:=triso,
-	       permgroup:=DP);
+               permgroup:=DP);
   else
     return false;
   fi;
@@ -457,7 +459,7 @@ local hom, sel, u, gens, i;
       r.permgroup:=Image(hom,r.permgroup);
       r.permgens:=List(r.permgens,i->Image(hom,i));
       if IsBound(r.isomorphism) then
-	r.isomorphism:=RestrictedInverseGeneralMapping(hom)*r.isomorphism;
+        r.isomorphism:=RestrictedInverseGeneralMapping(hom)*r.isomorphism;
       fi;
     fi;
 
@@ -467,13 +469,13 @@ local hom, sel, u, gens, i;
     gens:=r.permgens;
     for i in Reversed([1..Length(gens)]) do
       if not gens[i] in u then
-	u:=ClosureSubgroupNC(u,gens[i]);
-	Add(sel,i);
+        u:=ClosureSubgroupNC(u,gens[i]);
+        Add(sel,i);
       fi;
     od;
     for i in Reversed(sel) do
       if Size(r.permgroup)=Size(Difference(sel,[i])) then
-	RemoveSet(sel,i);
+        RemoveSet(sel,i);
       fi;
     od;
     if Length(sel)<Length(gens) then
@@ -495,13 +497,58 @@ end);
 InstallGlobalFunction( CompatiblePairs, function( arg )
 local G, M, Mgrp, oper, A, B, D, translate, gens, genimgs, triso, K, K1,
   K2, f, tmp, Ggens, pcgs, l, idx, u, tup,Dos,elmlist,preimlist,pows,
-  baspt,newimgs,i,j,basicact,neu;
+  baspt,newimgs,i,j,basicact,neu,K1nontriv,epi,hf,pool,modulehom,test;
 
     # catch arguments
     G := arg[1];
     M := arg[2];
     Mgrp := GroupByGenerators( M.generators );
-    oper := GroupHomomorphismByImagesNC( G, Mgrp, Pcgs(G), M.generators );
+    Ggens:=Pcgs(G);
+    oper:=fail;
+    if IsPcgs(Ggens) and Length(Ggens)=Length(M.generators) then
+      oper := GroupHomomorphismByImagesNC( G, Mgrp, Ggens, M.generators );
+    elif Length(arg)=2 then
+      # search through automorphism group for projection image and reps,
+      # then add module automorphisms
+      gens:=GeneratorsOfGroup(G);
+      A:=AutomorphismGroup(G);
+      triso:=IsomorphismPermGroup(A);
+      pool:=[];
+      modulehom:=GroupHomomorphismByImages(G,Group(M.generators),
+        gens,M.generators);
+      test:=function(perm)
+      local aut,imgs,mat;
+        aut:=PreImagesRepresentative(triso,perm);
+        imgs:=List(gens,x->ImagesRepresentative(aut,x));
+        imgs:=List(imgs,x->ImagesRepresentative(modulehom,x));
+        mat:=MTX.IsomorphismModules(M,GModuleByMats(imgs,M.field));
+        if mat<>fail then
+          Add(pool,DirectProductElement([aut,mat]));
+          return true;
+        fi;
+        return false;
+      end;
+      K:=SubgroupProperty(Image(triso),test);
+      B:=MTX.ModuleAutomorphisms(M);
+      if Size(B)>1 then
+        for i in Set(GeneratorsOfGroup(B)) do
+          Add(pool,DirectProductElement([One(A),i]));
+        od;
+      fi;
+      if Length(pool)=0 then
+        A:=GroupWithGenerators([DirectProductElement([One(A),One(B)])]);
+        SetSize(A,1);
+      else
+        A:=GroupWithGenerators(pool);
+        SetSize(A,Size(K)*Size(B));
+      fi;
+      return A;
+    fi;
+
+    if oper=fail then
+      Ggens:=GeneratorsOfGroup(G);
+      oper := GroupHomomorphismByImagesNC( G, Mgrp, Ggens, M.generators );
+    fi;
 
     # automorphism groups of G and M
     if Length( arg ) = 2 then
@@ -511,7 +558,7 @@ local G, M, Mgrp, oper, A, B, D, translate, gens, genimgs, triso, K, K1,
         D := DirectProduct( A, B );
     else
         D := arg[3];
-	A := DirectProductInfo(D).groups[1];
+        A := DirectProductInfo(D).groups[1];
     fi;
 
     # the trivial case
@@ -543,84 +590,85 @@ local G, M, Mgrp, oper, A, B, D, translate, gens, genimgs, triso, K, K1,
       if Size(K)>1 then
 
         # get its stabilizer
-	if IsPcGroup(K) then
-	  K1:=CanonicalPcgsWrtFamilyPcgs(Centre(K));
-	  K2:=CanonicalPcgsWrtFamilyPcgs(K);
-	  f := function( pt, a ) 
-		 return CanonicalPcgsWrtFamilyPcgs(Group(List(pt,i->Image( a[1], i )))); 
-	       end;
-	else
-	  K1:=Centre(K);
-	  K2:=K;
-	  f := function( pt, a ) return Image( a[1], pt ); end;
-	fi;
+        if IsPcGroup(K) then
+          K1:=CanonicalPcgsWrtFamilyPcgs(Centre(K));
+          K1nontriv:=Length(K1)>0;
+          K2:=CanonicalPcgsWrtFamilyPcgs(K);
+          f := function( pt, a ) 
+                 return CanonicalPcgsWrtFamilyPcgs(Group(List(pt,i->Image( a[1], i )))); 
+               end;
+        else
+          K1:=Centre(K);
+          K1nontriv:=Size(K1)>1;
+          K2:=K;
+          f := function( pt, a ) return Image( a[1], pt ); end;
+        fi;
 
-	if Length(K1)>0 and K1<>K2 then
-	  tmp := Stabilizer( D, K1,gens,genimgs, f );
+        if K1nontriv and K1<>K2 then
+          tmp := Stabilizer( D, K1,gens,genimgs, f );
 
-	  if Size(tmp)<Size(D) then
-	    Info( InfoMatOrb, 1, "    CompP: found orbit of centre of length ",
-		  Size(D)/Size( tmp ));
-	    D := tmp;
-	    if translate<>false then
-	      if HasIsSolvableGroup(D) and IsSolvableGroup(D) then
-		gens:=Pcgs(D);
-	      else
-		gens:=GeneratorsOfGroup(D);
-	      fi;
-	      genimgs:=List(gens,i->ImageElm(triso,i));
-	      translate:=rec(pairgens:=genimgs,
-		             permgens:=gens,
-			     isomorphism:=triso,
-		             permgroup:=D);
-	      EXReducePermutationActionPairs(translate);
-	      gens:=translate.permgens;
-	      genimgs:=translate.pairgens;
-	      triso:=translate.isomorphism;
-	      D:=translate.permgroup;
-	    else
-	      gens:=GeneratorsOfGroup(D);
-	      genimgs:=gens;
-	    fi;
-	  fi;
-	  tmp:=false; # clear memory
+          if Size(tmp)<Size(D) then
+            Info( InfoMatOrb, 1, "    CompP: found orbit of centre of length ",
+                  Size(D)/Size( tmp ));
+            D := tmp;
+            if translate<>false then
+              if HasIsSolvableGroup(D) and IsSolvableGroup(D) then
+                gens:=Pcgs(D);
+              else
+                gens:=GeneratorsOfGroup(D);
+              fi;
+              genimgs:=List(gens,i->ImageElm(triso,i));
+              translate:=rec(pairgens:=genimgs,
+                             permgens:=gens,
+                             isomorphism:=triso,
+                             permgroup:=D);
+              EXReducePermutationActionPairs(translate);
+              gens:=translate.permgens;
+              genimgs:=translate.pairgens;
+              triso:=translate.isomorphism;
+              D:=translate.permgroup;
+            else
+              gens:=GeneratorsOfGroup(D);
+              genimgs:=gens;
+            fi;
+          fi;
+          tmp:=false; # clear memory
 
-	fi;
+        fi;
 
         tmp := Stabilizer( D, K2,gens,genimgs, f );
 
-	if Size(tmp)<Size(D) then
-	  Info( InfoMatOrb, 1, "    CompP: found orbit of length ",
-		Size(D)/Size(tmp));
-	  D := tmp;
-	  if translate<>false then
-	    if HasIsSolvableGroup(D) and IsSolvableGroup(D) then
-	      gens:=Pcgs(D);
-	    else
-	      gens:=GeneratorsOfGroup(D);
-	    fi;
-	    genimgs:=List(gens,i->ImageElm(triso,i));
-	    translate:=rec(pairgens:=genimgs,
-			    permgens:=gens,
-			    isomorphism:=triso,
-			    permgroup:=D);
-	    EXReducePermutationActionPairs(translate);
-	    gens:=translate.permgens;
-	    genimgs:=translate.pairgens;
-	    triso:=translate.isomorphism;
-	    D:=translate.permgroup;
-	  else
-	    gens:=GeneratorsOfGroup(D);
-	    genimgs:=gens;
-	  fi;
-	fi;
-	tmp:=false; # clear memory
+        if Size(tmp)<Size(D) then
+          Info( InfoMatOrb, 1, "    CompP: found orbit of length ",
+                Size(D)/Size(tmp));
+          D := tmp;
+          if translate<>false then
+            if HasIsSolvableGroup(D) and IsSolvableGroup(D) then
+              gens:=Pcgs(D);
+            else
+              gens:=GeneratorsOfGroup(D);
+            fi;
+            genimgs:=List(gens,i->ImageElm(triso,i));
+            translate:=rec(pairgens:=genimgs,
+                            permgens:=gens,
+                            isomorphism:=triso,
+                            permgroup:=D);
+            EXReducePermutationActionPairs(translate);
+            gens:=translate.permgens;
+            genimgs:=translate.pairgens;
+            triso:=translate.isomorphism;
+            D:=translate.permgroup;
+          else
+            gens:=GeneratorsOfGroup(D);
+            genimgs:=gens;
+          fi;
+        fi;
+        tmp:=false; # clear memory
 
       fi;
     fi;
 
     # compute stabilizer of M.generators in D
-    Ggens:=Pcgs(G);
 
     basicact:=function( tup, elm )
     local gens;
@@ -633,11 +681,27 @@ local G, M, Mgrp, oper, A, B, D, translate, gens, genimgs, triso, K, K1,
       #return Tuple( [tup[1], gens] );
     end;
 
-    if Size(G)>20000 then
-      # if G is too large we cannot write out elements
-      elmlist:=fail; 
-      f:=basicact;
-    else
+    if not IsPcgs(Ggens) then
+      elmlist:=fail;
+      epi:=EpimorphismFromFreeGroup(G);
+      Assert(1,MappingGeneratorsImages(epi)[2]=Ggens);
+      f:=function( tup, elm )
+          local gens;
+            #gens := List( tup[1], x -> PreImagesRepresentative( elm[1], x ) );
+            #gens := List( gens, x -> MappedPcElement( x, tup[1], tup[2] ) );
+            gens := List( Ggens, x -> PreImagesRepresentative( elm[1], x ) );
+            gens := List( gens, x -> MappedWord( PreImagesRepresentative(epi,x),
+              GeneratorsOfGroup(Source(epi)), tup ) );
+            gens := List( gens, x -> x ^ elm[2] );
+            return gens;
+            #return Tuple( [tup[1], gens] );
+          end;
+
+      elif Size(G)>20000 then
+        # if G is too large we cannot write out elements
+        elmlist:=fail; 
+        f:=basicact;
+      else
 
       elmlist:=[];
 
@@ -646,151 +710,157 @@ local G, M, Mgrp, oper, A, B, D, translate, gens, genimgs, triso, K, K1,
 
       f:=function( tup, elm )
       local gens,i,p;
-	p:=PositionProperty(preimlist,x->IsIdenticalObj(x[1],elm[1]));
-	if p=fail then
-	  gens := List( Ggens, x -> PreImagesRepresentative( elm[1], x ) );
-	else
-	  gens:=preimlist[p][2];
-	fi;
-	gens:=List(gens,x->TracedPointPcElement(x,Ggens,elmlist{tup},baspt));
-	gens:=List(gens,x->x^elm[2]);
+        p:=PositionProperty(preimlist,x->IsIdenticalObj(x[1],elm[1]));
+        if p=fail then
+          gens := List( Ggens, x -> PreImagesRepresentative( elm[1], x ) );
+        else
+          gens:=preimlist[p][2];
+        fi;
+        gens:=List(gens,x->TracedPointPcElement(x,Ggens,elmlist{tup},baspt));
+        gens:=List(gens,x->x^elm[2]);
 
-	return gens;
+        return gens;
 
-	# tup:=ShallowCopy(tup); # get memory
-	# avoid duplicate matrices
-	# for i in [1..Length(gens)] do
-	#   p:=PositionSorted(elmlist,gens[i]);
-	#   if p<>fail and p<=Length(elmlist) and elmlist[p]=gens[i] then
-	#     tup[i]:=p;
-	#   else
-	#     AddSet(elmlist,gens[i]);
-	#     p:=PositionSorted(elmlist,gens[i]);
-	#     tup[i]:=p;
-	#   fi;
-	# od;
-	# return tup;
+        # tup:=ShallowCopy(tup); # get memory
+        # avoid duplicate matrices
+        # for i in [1..Length(gens)] do
+        #   p:=PositionSorted(elmlist,gens[i]);
+        #   if p<>fail and p<=Length(elmlist) and elmlist[p]=gens[i] then
+        #     tup[i]:=p;
+        #   else
+        #     AddSet(elmlist,gens[i]);
+        #     p:=PositionSorted(elmlist,gens[i]);
+        #     tup[i]:=p;
+        #   fi;
+        # od;
+        # return tup;
 
       end;
 
     fi;
 
-    # build tails of the pcgs that are closed under automorphisms
-    pcgs:=Pcgs(G);
-    l:=Length(Pcgs(G))+1;
-    repeat
-      Unbind(tmp);
+    if IsPcgs(Ggens) then
+      # build tails of the pcgs that are closed under automorphisms
+      pcgs:=Pcgs(G);
+      l:=Length(Pcgs(G))+1;
       repeat
-	l:=l-1;
-	idx:=[l..Length(pcgs)];
-	u:=SubgroupNC(G,pcgs{idx});
-      until ForAll(GeneratorsOfGroup(u),
-	i->ForAll(GeneratorsOfGroup(A),j->Image(j,i) in u));
+        Unbind(tmp);
+        repeat
+          l:=l-1;
+          idx:=[l..Length(pcgs)];
+          u:=SubgroupNC(G,pcgs{idx});
+        until ForAll(GeneratorsOfGroup(u),
+          i->ForAll(GeneratorsOfGroup(A),j->Image(j,i) in u));
 
-      Ggens:=InducedPcgsByPcSequence(pcgs,pcgs{idx});
-      tup:=M.generators{idx};
+        Ggens:=InducedPcgsByPcSequence(pcgs,pcgs{idx});
+        tup:=M.generators{idx};
 
-      if elmlist<>fail then
-	tmp:=List(genimgs,x->x[1]);
-	preimlist:=List(tmp,x->[x,List(Ggens,y->PreImagesRepresentative(x,y))]);
+        if elmlist<>fail then
+          tmp:=List(genimgs,x->x[1]);
+          preimlist:=List(tmp,x->[x,List(Ggens,y->PreImagesRepresentative(x,y))]);
 
-	# ensure we also account for action
-	u:=Group(tup);
-	elmlist:=AsSSortedList(u);
-	tmp:=SmallGeneratingSet(u);
-	i:=1;
-	while elmlist<>fail and i<=Length(tmp) do
-	  j:=1;
-	  while j<=Length(genimgs) do
-	    neu:=tmp[i]^genimgs[j][2];
-	    if elmlist<>fail and not neu in elmlist then
-	      u:=ClosureGroup(u,neu);
-	      if Size(u)>50000 then
-		# catch cases of too many elements.
-	        elmlist:=fail;
-		f:=basicact;
-		j:=Length(genimgs)+1;
-	      else
-		elmlist:=AsSSortedList(u);
-		if Length(SmallGeneratingSet(u))<Length(tmp) then
-		  tmp:=SmallGeneratingSet(u);
-		  i:=0;
-		  j:=Length(genimgs)+1; # force loop reset
-		else
-		  tmp:=Concatenation(tmp,[neu]);
-		fi;
-	      fi;
-	    fi;
-	    j:=j+1;
-	  od;
-	  i:=i+1;
-	od;
+          # ensure we also account for action
+          u:=Group(tup);
+          elmlist:=AsSSortedList(u);
+          tmp:=SmallGeneratingSet(u);
+          i:=1;
+          while elmlist<>fail and i<=Length(tmp) do
+            j:=1;
+            while j<=Length(genimgs) do
+              neu:=tmp[i]^genimgs[j][2];
+              if elmlist<>fail and not neu in elmlist then
+                u:=ClosureGroup(u,neu);
+                if Size(u)>50000 then
+                  # catch cases of too many elements.
+                  elmlist:=fail;
+                  f:=basicact;
+                  j:=Length(genimgs)+1;
+                else
+                  elmlist:=AsSSortedList(u);
+                  if Length(SmallGeneratingSet(u))<Length(tmp) then
+                    tmp:=SmallGeneratingSet(u);
+                    i:=0;
+                    j:=Length(genimgs)+1; # force loop reset
+                  else
+                    tmp:=Concatenation(tmp,[neu]);
+                  fi;
+                fi;
+              fi;
+              j:=j+1;
+            od;
+            i:=i+1;
+          od;
 
-	if elmlist<>fail then
-	  baspt:=Position(elmlist,One(u));
-	  # describe how second part acts on matrices by conjugation
-	  newimgs:=List(genimgs,
-	    x->DirectProductElement([x[1],Permutation(x[2],elmlist,OnPoints)]));
-	  Assert(1,ForAll(newimgs,x->x[2]<>fail));
+          if elmlist<>fail then
+            baspt:=Position(elmlist,One(u));
+            # describe how second part acts on matrices by conjugation
+            newimgs:=List(genimgs,
+              x->DirectProductElement([x[1],Permutation(x[2],elmlist,OnPoints)]));
+            Assert(1,ForAll(newimgs,x->x[2]<>fail));
 
-	  tup:=List(tup,x->Position(elmlist,x));
-	  elmlist:=List(elmlist,x->Permutation(x,elmlist,OnRight));
+            tup:=List(tup,x->Position(elmlist,x));
+            elmlist:=List(elmlist,x->Permutation(x,elmlist,OnRight));
 
-	  pows:=NextPrimeInt(Length(elmlist)-20); # we are likely sparse, so
-	  # not being perfect is not likely to do a hash conflict
-	  pows:=List([0..Length(tup)],x->pows^x);
+            pows:=NextPrimeInt(Length(elmlist)-20); # we are likely sparse, so
+            # not being perfect is not likely to do a hash conflict
+            pows:=List([0..Length(tup)],x->pows^x);
 
-	  tmp:=[D, rec(hashfun:= lst->lst*pows),tup, gens,newimgs, f ];
-	  #  use `op' to get in the fake domain with the hashfun
-	  tmp := StabilizerOp( D, rec(hashfun:= lst->lst*pows),tup,
-	    gens,newimgs, f );
-	else
-	  tmp := Stabilizer( D, tup,gens,genimgs, f );
+            tmp:=[D, rec(hashfun:= lst->lst*pows),tup, gens,newimgs, f ];
+            #  use `op' to get in the fake domain with the hashfun
+            tmp := StabilizerOp( D, rec(hashfun:= lst->lst*pows),tup,
+              gens,newimgs, f );
+          else
+            tmp := Stabilizer( D, tup,gens,genimgs, f );
+          fi;
+        else
+          tmp := Stabilizer( D, tup,gens,genimgs, f );
         fi;
-      else
-	tmp := Stabilizer( D, tup,gens,genimgs, f );
-      fi;
 
-      Info( InfoMatOrb, 1, "    CompP: ",l,"-tail found orbit of length ",
-	    Size(D)/Size(tmp));
-      if Size(tmp)<Size(D) then
-	D:=tmp;
-	if IsPcgs(gens) then
-	  gens:=InducedPcgs(gens,tmp);
-	else
-	  gens:=SmallGeneratingSet(tmp);
-	fi;
-	genimgs:=List(gens,i->ImageElm(triso,i));
-	if translate<>false then
-	  translate:=rec(pairgens:=genimgs,
-			  permgens:=gens,
-			  isomorphism:=triso,
-			  permgroup:=D);
-	  EXReducePermutationActionPairs(translate);
-	  gens:=translate.permgens;
-	  genimgs:=translate.pairgens;
-	  triso:=translate.isomorphism;
-	  D:=translate.permgroup;
-	fi;
-      fi;
-    until l=1;
+        Info( InfoMatOrb, 1, "    CompP: ",l,"-tail found orbit of length ",
+              Size(D)/Size(tmp));
+        if Size(tmp)<Size(D) then
+          D:=tmp;
+          if IsPcgs(gens) then
+            gens:=InducedPcgs(gens,tmp);
+          else
+            gens:=SmallGeneratingSet(tmp);
+          fi;
+          genimgs:=List(gens,i->ImageElm(triso,i));
+          if translate<>false then
+            translate:=rec(pairgens:=genimgs,
+                            permgens:=gens,
+                            isomorphism:=triso,
+                            permgroup:=D);
+            EXReducePermutationActionPairs(translate);
+            gens:=translate.permgens;
+            genimgs:=translate.pairgens;
+            triso:=translate.isomorphism;
+            D:=translate.permgroup;
+          fi;
+        fi;
+      until l=1;
+    else
+      #D:=Stabilizer(D,M.generators,gens,genimgs,f);
+      hf:=SparseIntKeyVecListAndMatrix(false,Concatenation(M.generators));
+      D:=StabilizerOp(D,rec(hashfun:=tup->hf(Concatenation(tup))),M.generators,gens,genimgs,f);
+    fi;
 
     if translate<>false then
       l:=Size(D);
       if Length(gens)>3 then
-	# reduce generator number
-	
-	u:=SmallGeneratingSet(D);
-	if IsSubset(gens,u) then
-	  Info( InfoMatOrb, 3, "Reduce generators subset");
-	  idx:=List(u,x->Position(gens,x));
-	  gens:=gens{idx};
-	  genimgs:=genimgs{idx};
-	else
-	  Info( InfoMatOrb, 3, "Reduce generators new words");
-	  gens:=u;
-	  genimgs:=List(gens,i->ImageElm(triso,i));
-	fi;
+        # reduce generator number
+        
+        u:=SmallGeneratingSet(D);
+        if IsSubset(gens,u) then
+          Info( InfoMatOrb, 3, "Reduce generators subset");
+          idx:=List(u,x->Position(gens,x));
+          gens:=gens{idx};
+          genimgs:=genimgs{idx};
+        else
+          Info( InfoMatOrb, 3, "Reduce generators new words");
+          gens:=u;
+          genimgs:=List(gens,i->ImageElm(triso,i));
+        fi;
       fi;
       tmp:=SubgroupNC(Range(triso),genimgs);
       SetIsGroupOfAutomorphismsFiniteGroup(tmp,true);
@@ -799,7 +869,7 @@ local G, M, Mgrp, oper, A, B, D, translate, gens, genimgs, triso, K, K1,
       # later
       tmp!.permrep:=rec(pairgens:=genimgs,
                       permgens:=gens,
-		      permgroup:=D);
+                      permgroup:=D);
       D:=tmp;
     fi;
     Info( InfoMatOrb, 1, "Total index: ",Dos/Size(D));

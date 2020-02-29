@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  vector.c                    GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the functions  that mainly  operate  on vectors  whose
 **  elements are integers, rationals, or elements from cyclotomic fields.  As
@@ -23,7 +23,6 @@
 #include "modules.h"
 #include "plist.h"
 
-#define IS_IMM_PLIST(list)  ((TNUM_OBJ(list) - T_PLIST) % 2)
 
 /****************************************************************************
 **
@@ -36,9 +35,7 @@
 **  'SumIntVector' is an improved version  of  'SumSclList', which  does  not
 **  call 'SUM' if the operands are immediate integers.
 */
-Obj             SumIntVector (
-    Obj                 elmL,
-    Obj                 vecR )
+static Obj SumIntVector(Obj elmL, Obj vecR)
 {
     Obj                 vecS;           /* handle of the sum               */
     Obj *               ptrS;           /* pointer into the sum            */
@@ -59,16 +56,17 @@ Obj             SumIntVector (
     for (i = 1; i <= len; i++) {
         elmR = ptrR[i];
         if (! ARE_INTOBJS(elmL, elmR) || ! SUM_INTOBJS(elmS, elmL, elmR)) {
-            CHANGED_BAG(vecS);
             elmS = SUM(elmL, elmR);
             ptrR = CONST_ADDR_OBJ(vecR);
             ptrS = ADDR_OBJ(vecS);
+            ptrS[i] = elmS;
+            CHANGED_BAG(vecS);
         }
-        ptrS[i] = elmS;
+        else
+            ptrS[i] = elmS;
     }
 
     /* return the result                                                   */
-    CHANGED_BAG(vecS);
     return vecS;
 }
 
@@ -84,9 +82,7 @@ Obj             SumIntVector (
 **  'SumVectorInt' is an improved version  of  'SumListScl', which  does  not
 **  call 'SUM' if the operands are immediate integers.
 */
-Obj             SumVectorInt (
-    Obj                 vecL,
-    Obj                 elmR )
+static Obj SumVectorInt(Obj vecL, Obj elmR)
 {
     Obj                 vecS;           /* handle of the sum               */
     Obj *               ptrS;           /* pointer into the sum            */
@@ -107,16 +103,17 @@ Obj             SumVectorInt (
     for (i = 1; i <= len; i++) {
         elmL = ptrL[i];
         if (! ARE_INTOBJS(elmL, elmR) || ! SUM_INTOBJS(elmS, elmL, elmR)) {
-            CHANGED_BAG(vecS);
             elmS = SUM(elmL, elmR);
             ptrL = CONST_ADDR_OBJ(vecL);
             ptrS = ADDR_OBJ(vecS);
+            ptrS[i] = elmS;
+            CHANGED_BAG(vecS);
         }
-        ptrS[i] = elmS;
+        else
+            ptrS[i] = elmS;
     }
 
     /* return the result                                                   */
-    CHANGED_BAG(vecS);
     return vecS;
 }
 
@@ -132,9 +129,7 @@ Obj             SumVectorInt (
 **  'SumVectorVector' is an improved version of 'SumListList', which does not
 **  call 'SUM' if the operands are immediate integers.
 */
-Obj             SumVectorVector (
-    Obj                 vecL,
-    Obj                 vecR )
+static Obj SumVectorVector(Obj vecL, Obj vecR)
 {
     Obj                 vecS;           /* handle of the sum               */
     Obj *               ptrS;           /* pointer into the sum            */
@@ -156,8 +151,8 @@ Obj             SumVectorVector (
         lenmin = lenR;
         len = lenL;
     }
-    vecS = NEW_PLIST((IS_IMM_PLIST(vecL) && IS_IMM_PLIST(vecR)) ?
-                      T_PLIST_CYC + IMMUTABLE : T_PLIST_CYC, len);
+    vecS = NEW_PLIST_WITH_MUTABILITY(
+        IS_MUTABLE_OBJ(vecL) || IS_MUTABLE_OBJ(vecR), T_PLIST_CYC, len);
     SET_LEN_PLIST(vecS, len);
 
     /* loop over the elements and add                                      */
@@ -168,13 +163,15 @@ Obj             SumVectorVector (
         elmL = ptrL[i];
         elmR = ptrR[i];
         if (! ARE_INTOBJS(elmL, elmR) || ! SUM_INTOBJS(elmS, elmL, elmR)) {
-            CHANGED_BAG(vecS);
             elmS = SUM(elmL, elmR);
             ptrL = CONST_ADDR_OBJ(vecL);
             ptrR = CONST_ADDR_OBJ(vecR);
             ptrS = ADDR_OBJ(vecS);
+            ptrS[i] = elmS;
+            CHANGED_BAG(vecS);
         }
-        ptrS[i] = elmS;
+        else
+            ptrS[i] = elmS;
     }
     if (lenL < lenR)
         for (; i <= lenR; i++) {
@@ -184,8 +181,8 @@ Obj             SumVectorVector (
         for (; i <= lenL; i++) {
             ptrS[i] = ptrL[i];
         }
+
     /* return the result                                                   */
-    CHANGED_BAG(vecS);
     return vecS;
 }
 
@@ -201,9 +198,7 @@ Obj             SumVectorVector (
 **  'DiffIntVector'  is an improved  version of 'DiffSclList', which does not
 **  call 'DIFF' if the operands are immediate integers.
 */
-Obj             DiffIntVector (
-    Obj                 elmL,
-    Obj                 vecR )
+static Obj DiffIntVector(Obj elmL, Obj vecR)
 {
     Obj                 vecD;           /* handle of the difference        */
     Obj *               ptrD;           /* pointer into the difference     */
@@ -224,16 +219,17 @@ Obj             DiffIntVector (
     for (i = 1; i <= len; i++) {
         elmR = ptrR[i];
         if (! ARE_INTOBJS(elmL, elmR) || ! DIFF_INTOBJS(elmD, elmL, elmR)) {
-            CHANGED_BAG(vecD);
             elmD = DIFF(elmL, elmR);
             ptrR = CONST_ADDR_OBJ(vecR);
             ptrD = ADDR_OBJ(vecD);
+            ptrD[i] = elmD;
+            CHANGED_BAG(vecD);
         }
-        ptrD[i] = elmD;
+        else
+            ptrD[i] = elmD;
     }
 
     /* return the result                                                   */
-    CHANGED_BAG(vecD);
     return vecD;
 }
 
@@ -249,9 +245,7 @@ Obj             DiffIntVector (
 **  'DiffVectorInt' is an improved  version of 'DiffListScl', which  does not
 **  call 'DIFF' if the operands are immediate integers.
 */
-Obj             DiffVectorInt (
-    Obj                 vecL,
-    Obj                 elmR )
+static Obj DiffVectorInt(Obj vecL, Obj elmR)
 {
     Obj                 vecD;           /* handle of the difference        */
     Obj *               ptrD;           /* pointer into the difference     */
@@ -272,16 +266,17 @@ Obj             DiffVectorInt (
     for (i = 1; i <= len; i++) {
         elmL = ptrL[i];
         if (! ARE_INTOBJS(elmL, elmR) || ! DIFF_INTOBJS(elmD, elmL, elmR)) {
-            CHANGED_BAG(vecD);
             elmD = DIFF(elmL, elmR);
             ptrL = CONST_ADDR_OBJ(vecL);
             ptrD = ADDR_OBJ(vecD);
+            ptrD[i] = elmD;
+            CHANGED_BAG(vecD);
         }
-        ptrD[i] = elmD;
+        else
+            ptrD[i] = elmD;
     }
 
     /* return the result                                                   */
-    CHANGED_BAG(vecD);
     return vecD;
 }
 
@@ -297,9 +292,7 @@ Obj             DiffVectorInt (
 **  'DiffVectorVector' is an improved  version of  'DiffListList', which does
 **  not call 'DIFF' if the operands are immediate integers.
 */
-Obj             DiffVectorVector (
-    Obj                 vecL,
-    Obj                 vecR )
+static Obj DiffVectorVector(Obj vecL, Obj vecR)
 {
     Obj                 vecD;           /* handle of the sum               */
     Obj *               ptrD;           /* pointer into the sum            */
@@ -321,8 +314,8 @@ Obj             DiffVectorVector (
         lenmin = lenR;
         len = lenL;
     }
-    vecD = NEW_PLIST((IS_IMM_PLIST(vecL) && IS_IMM_PLIST(vecR)) ?
-    T_PLIST_CYC + IMMUTABLE : T_PLIST_CYC, len);
+    vecD = NEW_PLIST_WITH_MUTABILITY(
+        IS_MUTABLE_OBJ(vecL) || IS_MUTABLE_OBJ(vecR), T_PLIST_CYC, len);
     SET_LEN_PLIST(vecD, len);
 
     /* loop over the elements and subtract                                   */
@@ -333,31 +326,35 @@ Obj             DiffVectorVector (
         elmL = ptrL[i];
         elmR = ptrR[i];
         if (! ARE_INTOBJS(elmL, elmR) || ! DIFF_INTOBJS(elmD, elmL, elmR)) {
-            CHANGED_BAG(vecD);
             elmD = DIFF(elmL, elmR);
             ptrL = CONST_ADDR_OBJ(vecL);
             ptrR = CONST_ADDR_OBJ(vecR);
             ptrD = ADDR_OBJ(vecD);
+            ptrD[i] = elmD;
+            CHANGED_BAG(vecD);
         }
-        ptrD[i] = elmD;
+        else
+            ptrD[i] = elmD;
     }
     if (lenL < lenR)
         for (; i <= lenR; i++) {
             elmR = ptrR[i];
             if (! IS_INTOBJ(elmR) || ! DIFF_INTOBJS(elmD, INTOBJ_INT(0), elmR)) {
-                CHANGED_BAG(vecD);
                 elmD = AINV(elmR);
                 ptrR = CONST_ADDR_OBJ(vecR);
                 ptrD = ADDR_OBJ(vecD);
+                ptrD[i] = elmD;
+                CHANGED_BAG(vecD);
             }
-            ptrD[i] = elmD;
+            else
+                ptrD[i] = elmD;
         }
     else
         for (; i <= lenL; i++) {
             ptrD[i] = ptrL[i];
         }
+
     /* return the result                                                   */
-    CHANGED_BAG(vecD);
     return vecD;
 }
 
@@ -373,9 +370,7 @@ Obj             DiffVectorVector (
 **  'ProdIntVector'  is an  improved version of 'ProdSclList', which does not
 **  call 'PROD' if the operands are immediate integers.
 */
-Obj             ProdIntVector (
-    Obj                 elmL,
-    Obj                 vecR )
+static Obj ProdIntVector(Obj elmL, Obj vecR)
 {
     Obj                 vecP;           /* handle of the product           */
     Obj *               ptrP;           /* pointer into the product        */
@@ -396,16 +391,17 @@ Obj             ProdIntVector (
     for (i = 1; i <= len; i++) {
         elmR = ptrR[i];
         if (! ARE_INTOBJS(elmL, elmR) || ! PROD_INTOBJS(elmP, elmL, elmR)) {
-            CHANGED_BAG(vecP);
             elmP = PROD(elmL, elmR);
             ptrR = CONST_ADDR_OBJ(vecR);
             ptrP = ADDR_OBJ(vecP);
+            ptrP[i] = elmP;
+            CHANGED_BAG(vecP);
         }
-        ptrP[i] = elmP;
+        else
+            ptrP[i] = elmP;
     }
 
     /* return the result                                                   */
-    CHANGED_BAG(vecP);
     return vecP;
 }
 
@@ -421,9 +417,7 @@ Obj             ProdIntVector (
 **  'ProdVectorInt'  is an  improved version of 'ProdSclList', which does not
 **  call 'PROD' if the operands are immediate integers.
 */
-Obj             ProdVectorInt (
-    Obj                 vecL,
-    Obj                 elmR )
+static Obj ProdVectorInt(Obj vecL, Obj elmR)
 {
     Obj                 vecP;           /* handle of the product           */
     Obj *               ptrP;           /* pointer into the product        */
@@ -444,16 +438,17 @@ Obj             ProdVectorInt (
     for (i = 1; i <= len; i++) {
         elmL = ptrL[i];
         if (! ARE_INTOBJS(elmL, elmR) || ! PROD_INTOBJS(elmP, elmL, elmR)) {
-            CHANGED_BAG(vecP);
             elmP = PROD(elmL, elmR);
             ptrL = CONST_ADDR_OBJ(vecL);
             ptrP = ADDR_OBJ(vecP);
+            ptrP[i] = elmP;
+            CHANGED_BAG(vecP);
         }
-        ptrP[i] = elmP;
+        else
+            ptrP[i] = elmP;
     }
 
     /* return the result                                                   */
-    CHANGED_BAG(vecP);
     return vecP;
 }
 
@@ -469,9 +464,7 @@ Obj             ProdVectorInt (
 **  'ProdVectorVector' is an improved version  of 'ProdListList',  which does
 **  not call 'PROD' if the operands are immediate integers.
 */
-Obj             ProdVectorVector (
-    Obj                 vecL,
-    Obj                 vecR )
+static Obj ProdVectorVector(Obj vecL, Obj vecR)
 {
     Obj                 elmP;           /* product, result                 */
     Obj                 elmS;           /* partial sum of result           */
@@ -535,9 +528,7 @@ Obj             ProdVectorVector (
 **  We now need to supply a handler for this and install it as a library method,
 **  
 */
-Obj             ProdVectorMatrix (
-    Obj                 vecL,
-    Obj                 matR )
+static Obj ProdVectorMatrix(Obj vecL, Obj matR)
 {
     Obj                 vecP;           /* handle of the product           */
     Obj *               ptrP;           /* pointer into the product        */
@@ -579,12 +570,14 @@ Obj             ProdVectorMatrix (
                 elmP = ptrP[k];
                 if (! ARE_INTOBJS(elmP, elmT)
                 || ! SUM_INTOBJS(elmS, elmP, elmT)) {
-                    CHANGED_BAG(vecP);
                     elmS = SUM(elmP, elmT);
                     ptrR = CONST_ADDR_OBJ(vecR);
                     ptrP = ADDR_OBJ(vecP);
+                    ptrP[k] = elmS;
+                    CHANGED_BAG(vecP);
                 }
-                ptrP[k] = elmS;
+                else
+                    ptrP[k] = elmS;
             }
         } else if (elmL == INTOBJ_INT(-1L)) {
             for (k = 1; k <= col; k++) {
@@ -592,12 +585,14 @@ Obj             ProdVectorMatrix (
                 elmP = ptrP[k];
                 if (! ARE_INTOBJS(elmP, elmT)
                         || ! DIFF_INTOBJS(elmS, elmP, elmT)) {
-                    CHANGED_BAG(vecP);
                     elmS = DIFF(elmP, elmT);
                     ptrR = CONST_ADDR_OBJ(vecR);
                     ptrP = ADDR_OBJ(vecP);
+                    ptrP[k] = elmS;
+                    CHANGED_BAG(vecP);
                 }
-                ptrP[k] = elmS;
+                else
+                    ptrP[k] = elmS;
 
             }
         } else if (elmL != INTOBJ_INT(0L)) {
@@ -606,51 +601,54 @@ Obj             ProdVectorMatrix (
                 if (elmR != INTOBJ_INT(0L)) {
                     if (! ARE_INTOBJS(elmL, elmR)
                             || ! PROD_INTOBJS(elmT, elmL, elmR)) {
-                        CHANGED_BAG(vecP);
                         elmT = PROD(elmL, elmR);
                         ptrR = CONST_ADDR_OBJ(vecR);
                         ptrP = ADDR_OBJ(vecP);
+                        elmP = ptrP[k];
+                        CHANGED_BAG(vecP);
                     }
-                    elmP = ptrP[k];
+                    else
+                        elmP = ptrP[k];
                     if (! ARE_INTOBJS(elmP, elmT)
                             || ! SUM_INTOBJS(elmS, elmP, elmT)) {
-                        CHANGED_BAG(vecP);
                         elmS = SUM(elmP, elmT);
                         ptrR = CONST_ADDR_OBJ(vecR);
                         ptrP = ADDR_OBJ(vecP);
+                        ptrP[k] = elmS;
+                        CHANGED_BAG(vecP);
                     }
-                    ptrP[k] = elmS;
+                    else
+                        ptrP[k] = elmS;
                 }
             }
         }
     }
 
     /* return the result                                                   */
-    CHANGED_BAG(vecP);
     return vecP;
 }
 
-Obj FuncPROD_VECTOR_MATRIX(Obj self, Obj vec, Obj mat)
+static Obj FuncPROD_VECTOR_MATRIX(Obj self, Obj vec, Obj mat)
 {
     return ProdVectorMatrix(vec, mat);
 }
 
 /****************************************************************************
 **
-*F  ZeroVector(<vec>) . . . .  zero of a cyclotomicVector
+*F  ZeroVector(<vec>) . . . . . . . . . . . . . . zero of a cyclotomic vector
 **
 **  'ZeroVector' returns the zero of the vector <vec>.
 **
 **  It is a better version of ZeroListDefault for the case of cyclotomic
-**  vectors, becuase it knows what the cyclotomic zero is.
+**  vectors, because it knows what the cyclotomic zero is.
 */
 
-Obj ZeroVector( Obj vec )
+static Obj ZeroVector(Obj vec)
 {
     UInt i, len;
     Obj res;
-    assert(TNUM_OBJ(vec) >= T_PLIST_CYC && \
-    TNUM_OBJ(vec) <= T_PLIST_CYC_SSORT + IMMUTABLE);
+    GAP_ASSERT(TNUM_OBJ(vec) >= T_PLIST_CYC &&
+               TNUM_OBJ(vec) <= T_PLIST_CYC_SSORT + IMMUTABLE);
     len = LEN_PLIST(vec);
     res = NEW_PLIST_WITH_MUTABILITY(IS_MUTABLE_OBJ(vec), T_PLIST_CYC, len);
     SET_LEN_PLIST(res, len);
@@ -659,12 +657,12 @@ Obj ZeroVector( Obj vec )
     return res;
 }
 
-Obj ZeroMutVector( Obj vec )
+static Obj ZeroMutVector(Obj vec)
 {
     UInt i, len;
     Obj res;
-    assert(TNUM_OBJ(vec) >= T_PLIST_CYC && \
-    TNUM_OBJ(vec) <= T_PLIST_CYC_SSORT + IMMUTABLE);
+    GAP_ASSERT(TNUM_OBJ(vec) >= T_PLIST_CYC &&
+               TNUM_OBJ(vec) <= T_PLIST_CYC_SSORT + IMMUTABLE);
     len = LEN_PLIST(vec);
     res = NEW_PLIST(T_PLIST_CYC, len);
     SET_LEN_PLIST(res, len);

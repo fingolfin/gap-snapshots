@@ -1,9 +1,11 @@
 /****************************************************************************
 **
-*W  hookintrprtr.c                    GAP source              Chris Jefferson
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C) 2017 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains functions related to hooking the interpreter.
 **
@@ -100,27 +102,27 @@ void InstallPrintExprFunc(Int pos, void (*expr)(Expr))
     HashUnlock(&activeHooks);
 }
 
-UInt ProfileExecStatPassthrough(Stat stat)
+static UInt ProfileExecStatPassthrough(Stat stat)
 {
     GAP_HOOK_LOOP(visitStat, stat);
     return OriginalExecStatFuncsForHook[TNUM_STAT(stat)](stat);
 }
 
-Obj ProfileEvalExprPassthrough(Expr stat)
+static Obj ProfileEvalExprPassthrough(Expr stat)
 {
     GAP_HOOK_LOOP(visitStat, stat);
     return OriginalEvalExprFuncsForHook[TNUM_STAT(stat)](stat);
 }
 
-Obj ProfileEvalBoolPassthrough(Expr stat)
+static Obj ProfileEvalBoolPassthrough(Expr stat)
 {
     /* There are two cases we must pass through without touching */
     /* From TNUM_EXPR */
-    if (IS_REFLVAR(stat)) {
-        return OriginalEvalBoolFuncsForHook[T_REFLVAR](stat);
+    if (IS_REF_LVAR(stat)) {
+        return OriginalEvalBoolFuncsForHook[EXPR_REF_LVAR](stat);
     }
     if (IS_INTEXPR(stat)) {
-        return OriginalEvalBoolFuncsForHook[T_INTEXPR](stat);
+        return OriginalEvalBoolFuncsForHook[EXPR_INT](stat);
     }
     GAP_HOOK_LOOP(visitStat, stat);
     return OriginalEvalBoolFuncsForHook[TNUM_STAT(stat)](stat);

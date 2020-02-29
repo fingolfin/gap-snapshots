@@ -1,10 +1,4 @@
-#############################################################################
-##
-#W  oprt.tst                GAP-4 library                    ALexander Hulpke
-##
-##
-#Y  Copyright 1997,    Lehrstuhl D für Mathematik,   RWTH Aachen,    Germany
-##
+#@local G,c5,d,eo,es,ess
 gap> START_TEST("oprt.tst");
 gap> c5:=CyclicGroup(IsPermGroup,5);;
 gap> d:=Combinations([1..5],2);;
@@ -45,7 +39,3 @@ true
 gap> Blocks(eo);
 [ [ 1, 5, 9 ], [ 2, 6, 10 ], [ 3, 7, 11 ], [ 4, 8, 12 ] ]
 gap> STOP_TEST( "oprt.tst", 1);
-
-#############################################################################
-##
-#E

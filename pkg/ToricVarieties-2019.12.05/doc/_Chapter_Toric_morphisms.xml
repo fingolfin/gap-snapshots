@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Toric_morphisms">
+<Heading>Toric morphisms</Heading>
+
+<P/>
+<Section Label="Chapter_Toric_morphisms_Section_Toric_morphisms_Examples">
+<Heading>Toric morphisms: Examples</Heading>
+
+<P/>
+<Subsection Label="Chapter_Toric_morphisms_Section_Toric_morphisms_Examples_Subsection_Morphism_between_toric_varieties_and_their_class_groups">
+<Heading>Morphism between toric varieties and their class groups</Heading>
+
+<#Include Label="Morphism">
+
+<P/>
+</Subsection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Toric_morphisms_Section_The_GAP_category">
+<Heading>The GAP category</Heading>
+
+<ManSection>
+  <Filt Arg="M" Name="IsToricMorphism" Label="for IsObject"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+  The <A>GAP</A> category of toric morphisms. A toric morphism is defined by a grid
+  homomorphism, which is compatible with the fan structure of the two varieties.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Toric_morphisms_Section_Properties">
+<Heading>Properties</Heading>
+
+<ManSection>
+  <Prop Arg="morph" Name="IsMorphism" Label="for IsToricMorphism"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+  Checks if the grid morphism <A>morph</A> respects the fan structure.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="morph" Name="IsProper" Label="for IsToricMorphism"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+  Checks if the defined morphism <A>morph</A> is proper.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Toric_morphisms_Section_Attributes">
+<Heading>Attributes</Heading>
+
+<ManSection>
+  <Attr Arg="morph" Name="SourceObject" Label="for IsToricMorphism"/>
+ <Returns>a variety
+</Returns>
+ <Description>
+  Returns the source object of the morphism <A>morph</A>. This attribute is a must have.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="morph" Name="UnderlyingGridMorphism" Label="for IsToricMorphism"/>
+ <Returns>a map
+</Returns>
+ <Description>
+  Returns the grid map which defines <A>morph</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="morph" Name="ToricImageObject" Label="for IsToricMorphism"/>
+ <Returns>a variety
+</Returns>
+ <Description>
+  Returns the variety which is created by the fan which is the image of the fan of the source of <A>morph</A>.
+  This is not an image in the usual sense, but a toric image.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="morph" Name="RangeObject" Label="for IsToricMorphism"/>
+ <Returns>a variety
+</Returns>
+ <Description>
+  Returns the range of the morphism <A>morph</A>. If no range is given
+  (yes, this is possible), the method returns the image.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="morph" Name="MorphismOnWeilDivisorGroup" Label="for IsToricMorphism"/>
+ <Returns>a morphism
+</Returns>
+ <Description>
+  Returns the associated morphism between the divisor group of the range of <A>morph</A>
+  and the divisor group of the source.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="morph" Name="ClassGroup" Label="for IsToricMorphism"/>
+ <Returns>a morphism
+</Returns>
+ <Description>
+  Returns the associated morphism between the class groups of source and range of the morphism <A>morph</A>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="morph" Name="MorphismOnCartierDivisorGroup" Label="for IsToricMorphism"/>
+ <Returns>a morphism
+</Returns>
+ <Description>
+  Returns the associated morphism between the Cartier divisor groups
+  of source and range of the morphism <A>morph</A>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="morph" Name="PicardGroup" Label="for IsToricMorphism"/>
+ <Returns>a morphism
+</Returns>
+ <Description>
+  Returns the associated morphism between the Picard groups
+  of source and range of the morphism <A>morph</A>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="morph" Name="Source" Label="for IsToricMorphism"/>
+ <Returns>a variety
+</Returns>
+ <Description>
+  Return the source of the toric morphism <A>morph</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="morph" Name="Range" Label="for IsToricMorphism"/>
+ <Returns>a variety
+</Returns>
+ <Description>
+  Returns the range of the toric morphism <A>morph</A> if specified.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="morph" Name="MorphismOnIthFactor" Label="for IsToricMorphism"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Toric_morphisms_Section_Methods">
+<Heading>Methods</Heading>
+
+<ManSection>
+  <Oper Arg="morph" Name="UnderlyingListList" Label="for IsToricMorphism"/>
+ <Returns>a list
+</Returns>
+ <Description>
+  Returns a list of list which represents the grid homomorphism.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Toric_morphisms_Section_Constructors">
+<Heading>Constructors</Heading>
+
+<ManSection>
+  <Oper Arg="vari, lis" Name="ToricMorphism" Label="for IsToricVariety, IsList"/>
+ <Returns>a morphism
+</Returns>
+ <Description>
+  Returns the toric morphism with source <A>vari</A> which is represented by the matrix <A>lis</A>.
+  The range is set to the image.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="vari, lis, vari2" Name="ToricMorphism" Label="for IsToricVariety, IsList, IsToricVariety"/>
+ <Returns>a morphism
+</Returns>
+ <Description>
+  Returns the toric morphism with source <A>vari</A> and range <A>vari2</A> which is represented by the 
+  matrix <A>lis</A>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+</Chapter>
+

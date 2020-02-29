@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  ffe.gi                      GAP library                     Werner Nickel
-#W                                                         & Martin Schönert
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Werner Nickel, Martin Schönert.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains methods for `FFE's.
 ##  Note that we must distinguish finite fields and fields that consist of
@@ -27,10 +27,15 @@
 ##
 #V  GALOIS_FIELDS
 ##
-##  global list of finite fields `GF( <p>^<d> )',
-##  the field of size $p^d$ is stored in `GALOIS_FIELDS[<p>][<d>]'.
+##  global cache of finite fields `GF( <p>^<d> )', consisting of a pair of
+##  lists of equal size, the first list being a set of field sizes;
+##  the field of size $p^d$ is stored in `GALOIS_FIELDS[2][<pos>]' if and
+##  and only if `GALOIS_FIELDS[1][<pos>]' is equal to $p^d$
 ##
-InstallFlushableValue( GALOIS_FIELDS, [] );
+InstallFlushableValue( GALOIS_FIELDS, [ [], [] ] );
+if IsHPCGAP then
+  ShareSpecialObj( GALOIS_FIELDS );
+fi;
 
 
 #############################################################################
@@ -183,11 +188,7 @@ InstallGlobalFunction( FFEFamily, function( p )
     if MAXSIZE_GF_INTERNAL < p then
 
       # large characteristic
-      if p in FAMS_FFE_LARGE[1] then
-
-        F:= FAMS_FFE_LARGE[2][ PositionSorted( FAMS_FFE_LARGE[1], p ) ];
-
-      else
+      F:= GET_FROM_SORTED_CACHE( FAMS_FFE_LARGE, p, function()
 
         F:= NewFamily( "FFEFamily", IsFFE, 
                        CanEasilySortElements,
@@ -205,11 +206,9 @@ InstallGlobalFunction( FFEFamily, function( p )
         # The whole family is a unique factorisation domain.
         SetIsUFDFamily( F, true );
 
-        Add( FAMS_FFE_LARGE[1], p );
-        Add( FAMS_FFE_LARGE[2], F );
-        SortParallel( FAMS_FFE_LARGE[1], FAMS_FFE_LARGE[2] );
+        return F;
 
-      fi;
+      end );
 
     else
 
@@ -225,6 +224,8 @@ InstallGlobalFunction( FFEFamily, function( p )
       fi;
 
     fi;
+
+    MakeWriteOnceAtomic(F); # needed for HPC-GAP, does nothing in plain GAP
     return F;
 end );
 
@@ -317,6 +318,7 @@ end );
 # in Finite field calculations we often ask again and again for the same GF.
 # Therefore cache the last entry.
 GFCACHE:=[0,0];
+MakeThreadLocal("GFCACHE");
 
 InstallGlobalFunction( GaloisField, function ( arg )
     local F,         # the field, result
@@ -325,6 +327,7 @@ InstallGlobalFunction( GaloisField, function ( arg )
           d1,        # degree of subfield over prime field
           q,         # size of field to be constructed
           subfield,  # left acting domain of the field under construction
+          new,
           B;         # basis of the extension
 
     # if necessary split the arguments
@@ -473,25 +476,23 @@ InstallGlobalFunction( GaloisField, function ( arg )
     if IsInt( subfield ) then
 
       # The standard field is required.  Look whether it is already stored.
-      if not IsBound( GALOIS_FIELDS[p] ) then
-        GALOIS_FIELDS[p]:= [];
-      elif IsBound( GALOIS_FIELDS[p][d] ) then
-        if Length(arg)=1 then
-          GFCACHE:=[arg[1],GALOIS_FIELDS[p][d]];
+
+      new := false;
+      F := GET_FROM_SORTED_CACHE(GALOIS_FIELDS, p^d, function()
+        new := true;
+        # Construct the finite field object.
+        if d = 1 then
+          F:= FieldOverItselfByGenerators( [ Z(p) ] );
+        else
+          F:= FieldByGenerators( FieldOverItselfByGenerators( [ Z(p) ] ),
+                                 [ Z(p^d) ] );
         fi;
-        return GALOIS_FIELDS[p][d];
-      fi;
+        return F;
+      end );
 
-      # Construct the finite field object.
-      if d = 1 then
-        F:= FieldOverItselfByGenerators( [ Z(p) ] );
-      else
-        F:= FieldByGenerators( FieldOverItselfByGenerators( [ Z(p) ] ),
-                               [ Z(p^d) ] );
+      if Length(arg)=1 and not new then
+        GFCACHE:=[arg[1],F];
       fi;
-
-      # Store the standard field.
-      GALOIS_FIELDS[p][d]:= F;
 
     else
 
@@ -1176,8 +1177,3 @@ InstallOtherMethod(RootFFE,"without field",true,
 function(z,k)
   return RootFFE(Characteristic(z)^DegreeFFE(z),z,k);
 end);
-
-
-#############################################################################
-##
-#E

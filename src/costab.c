@@ -1,14 +1,11 @@
 /****************************************************************************
 **
-*W  costab.c                    GAP source                       Frank Celler
-*W                                                           & Volkmar Felsch
-*W                                                         & Martin Schönert
-*W                                                         & Alexander Hulpke
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the functions of for coset tables.
 */
@@ -92,10 +89,9 @@ static void CleanOut( void )
 **
 **  ... more about ApplyRel ...
 */
-Obj FuncApplyRel (
-    Obj                 self,
-    Obj                 app,            /* handle of the application list  */
-    Obj                 rel )           /* handle of the relator           */
+static Obj FuncApplyRel(Obj self,
+                        Obj app, /* handle of the application list  */
+                        Obj rel) /* handle of the relator           */
 {
     
     Int                 lp;             /* left pointer into relator       */
@@ -106,15 +102,10 @@ Obj FuncApplyRel (
 
     /* check the application list                                          */
     /*T 1996/12/03 fceller this should be replaced by 'PlistConv'          */
-    if ( ! IS_PLIST(app) ) {
-        ErrorQuit( "<app> must be a plain list (not a %s)",
-                   (Int)TNAM_OBJ(app), 0L );
-        return 0;
-    }
+    RequirePlainList(0, app);
     if ( LEN_PLIST(app) != 4 ) {
         ErrorQuit( "<app> must be a list of length 4 not %d",
                    (Int) LEN_PLIST(app), 0L );
-        return 0;
     }
 
     /* get the four entries                                                */
@@ -125,11 +116,7 @@ Obj FuncApplyRel (
 
     /* get and check the relator (well, only a little bit)                 */
     /*T 1996/12/03 fceller this should be replaced by 'PlistConv'          */
-    if ( ! IS_PLIST(rel) ) {
-        ErrorQuit( "<rel> must be a plain list (not a %s)",
-                   (Int)TNAM_OBJ(rel), 0L );
-        return 0;
-    }
+    RequirePlainList(0, rel);
 
     /* fix right pointer if requested                                      */
     if ( rp == -1 )
@@ -185,7 +172,6 @@ static void CompressDeductionList ( void )
     /* check if the situation is as assumed                                */
     if ( dedlst != dedSize ) {
         ErrorQuit( "invalid call of CompressDeductionList", 0L, 0L );
-        return;
     }
 
     /* run through the lists and compress them                             */
@@ -381,9 +367,7 @@ static void HandleCoinc (
 **
 *F  FuncMakeConsequences( <self>, <list> )  find consqs of a coset definition
 */
-Obj FuncMakeConsequences (
-    Obj                 self,
-    Obj                 list )
+static Obj FuncMakeConsequences(Obj self, Obj list)
 {
     Obj                 hdSubs;         /*                                 */
     Obj                 objRels;        /*                                 */
@@ -398,11 +382,7 @@ Obj FuncMakeConsequences (
     Obj                 hdTmp;          /* temporary variable              */
 
     /*T 1996/12/03 fceller this should be replaced by 'PlistConv'          */
-    if ( ! IS_PLIST(list) ) {
-        ErrorQuit( "<list> must be a plain list (not a %s)",
-                   (Int)TNAM_OBJ(list), 0L );
-        return 0;
-    }
+    RequirePlainList(0, list);
 
     objTable  = ELM_PLIST( list, 1 );
     objNext   = ELM_PLIST( list, 2 );
@@ -567,9 +547,7 @@ Obj FuncMakeConsequences (
 **  This  is a  special version  of  `FuncMakeConsequences'  for the subgroup
 **  presentation routines.
 */
-Obj FuncMakeConsequencesPres (
-    Obj                 self,
-    Obj                 list )
+static Obj FuncMakeConsequencesPres(Obj self, Obj list)
 {
     Obj                 objDefs1;       /* handle of defs list part 1      */
     Obj                 objDefs2;       /* handle of defs list part 2      */
@@ -590,11 +568,7 @@ Obj FuncMakeConsequencesPres (
     Int                 i;              /* loop variable                   */
 
     /*T 1996/12/03 fceller this should be replaced by 'PlistConv'          */
-    if ( ! IS_PLIST(list) ) {
-        ErrorQuit( "<list> must be a plain list (not a %s)",
-                   (Int)TNAM_OBJ(list), 0L );
-        return 0;
-    }
+    RequirePlainList(0, list);
 
     objTable  = ELM_PLIST( list, 1 );
     objDefs1  = ELM_PLIST( list, 2 );
@@ -607,7 +581,6 @@ Obj FuncMakeConsequencesPres (
     if ( ! ( IS_PLIST(objDefs1) && IS_PLIST(objDefs2) &&
         LEN_PLIST(objDefs1) == LEN_PLIST(objDefs2) ) ) {
         ErrorQuit( "inconsistent definitions lists", 0L, 0L );
-        return 0;
     }
     ndefsMax = LEN_PLIST(objDefs1);
     apply = 1;
@@ -651,7 +624,6 @@ Obj FuncMakeConsequencesPres (
                 ndefs++;
                 if ( ndefs > ndefsMax ) {
                     ErrorQuit( "inconsistent definitions lists", 0L, 0L );
-                    return 0;
                 }
                 SET_ELM_PLIST( objDefs1, ndefs, INTOBJ_INT( lc ) );
                 SET_ELM_PLIST( objDefs2, ndefs, ptNums[lp] );
@@ -684,10 +656,7 @@ Obj FuncMakeConsequencesPres (
 **  If  not  <stan> = 1  the table  is standardized  using the  (new)  lenlex
 **  standard (this is the default).
 */
-Obj FuncStandardizeTableC (
-    Obj                 self,
-    Obj                 list,
-    Obj                 stan )
+static Obj FuncStandardizeTableC(Obj self, Obj table, Obj stan)
 {
     Obj *               ptTable;        /* pointer to table                */
     UInt                nrgen;          /* number of rows of the table / 2 */
@@ -701,13 +670,10 @@ Obj FuncStandardizeTableC (
     Obj                 tmp;            /* temporary for swap              */
     UInt                j, k, nloop;    /* loop variables                  */
 
+    RequirePlainList(0, table);
+
     /* get the arguments                                                   */
-    objTable = list;
-    if ( ! IS_PLIST(objTable) ) {
-        ErrorQuit( "<table> must be a plain list (not a %s)",
-                   (Int)TNAM_OBJ(objTable), 0L );
-        return 0;
-    }
+    objTable = table;
     ptTable = BASE_PTR_PLIST(objTable) - 1;
     nrgen    = LEN_PLIST(objTable) / 2;
     for ( j = 1;  j <= nrgen*2;  j++ ) {
@@ -716,7 +682,6 @@ Obj FuncStandardizeTableC (
                 "<table>[%d] must be a plain list (not a %s)",
                 (Int)j,
                 (Int)TNAM_OBJ(ptTable[j]) );
-            return 0;
         }
     }
     if ( IS_INTOBJ(stan) && INT_INTOBJ(stan) == 1 ) {
@@ -1043,8 +1008,10 @@ static Int TreeEntryC ( void )
 **  variables, and 'treeType' is assumed to be either 0 or 2,
 **
 **  Warning: 'factor' is not checked for being zero.
+**
+**  it returns 0 if everything worked, and 1 if a problem arose.
 */
-static void AddCosetFactor2 (
+static Int AddCosetFactor2 (
     Int                factor )
 {
     Obj *               ptFac;          /* pointer to the factor           */
@@ -1063,10 +1030,11 @@ static void AddCosetFactor2 (
             leng  = LEN_PLIST(tmp);
             for ( i = 1;  i <= leng;  i++ ) {
                 if ( ! SUM_INTOBJS( sum, ptWord[i], ptFac[i] ) ) {
+                    return 1;
+                    /* used to be unrecoverable error message: 
                     ErrorQuit(
                         "exponent too large, Modified Todd-Coxeter aborted",
-                        0L, 0L );
-                    return;
+                        0L, 0L ); */
                 }
                 ptWord[i] = sum;
             }
@@ -1078,10 +1046,11 @@ static void AddCosetFactor2 (
             leng  = LEN_PLIST(tmp);
             for ( i = 1;  i <= leng;  i++ ) {
                 if ( ! DIFF_INTOBJS( sum, ptWord[i], ptFac[i] ) ) {
+                    return 1;
+                    /* used to be unrecoverable error message: 
                     ErrorQuit(
                         "exponent too large, Modified Todd-Coxeter aborted",
-                        0L, 0L );
-                    return;
+                        0L, 0L ); */
                 }
                 ptWord[i] = sum;
             }
@@ -1100,8 +1069,11 @@ static void AddCosetFactor2 (
     }
     else {
         wordList[0] = ( wordList[1] = TreeEntryC( ) == 0 ) ? 0 : 1;
-        AddCosetFactor2(factor);
+        if (AddCosetFactor2(factor)==1) {
+          return 1;
+        }
     }
+    return 0;
 }
 
 
@@ -1117,12 +1089,11 @@ static void AddCosetFactor2 (
 **  returns the corresponding factors in "word"
 **
 **  ...more about ApplyRel2...
+**
+**  function returns `true` if everything worked, and `false` if there was a
+**  problem (e.g. exponents).
 */
-Obj FuncApplyRel2 (
-    Obj                 self,
-    Obj                 app,
-    Obj                 rel,
-    Obj                 nums )
+static Obj FuncApplyRel2(Obj self, Obj app, Obj rel, Obj nums)
 {
     Obj *               ptApp;          /* pointer to that list            */
     Obj                 word;           /* handle of resulting word        */
@@ -1146,15 +1117,10 @@ Obj FuncApplyRel2 (
     Int                 tmp;
 
     /* get and check the application list                                  */
-    if ( ! IS_PLIST(app) ) {
-        ErrorQuit( "<app> must be a plain list (not a %s)",
-                   (Int)TNAM_OBJ(app), 0L );
-        return 0;
-    }
+    RequirePlainList(0, app);
     if ( LEN_PLIST(app) != 9 ) {
         ErrorQuit( "<app> must be a list of length 9 not %d",
                    (Int) LEN_PLIST(app), 0L );
-        return 0;
     }
     ptApp = BASE_PTR_PLIST(app) - 1;
 
@@ -1166,11 +1132,7 @@ Obj FuncApplyRel2 (
 
     /* get and check the relator (well, only a little bit)                 */
     objRel = rel;
-    if ( ! IS_PLIST(rel) ) {
-        ErrorQuit( "<rel> must be a plain list (not a %s)", 
-                   (Int)TNAM_OBJ(rel), 0L );
-        return 0;
-    }
+    RequirePlainList(0, rel);
 
     /* fix right pointer if requested                                      */
     if ( rp == -1 )
@@ -1178,19 +1140,11 @@ Obj FuncApplyRel2 (
 
     /* get and check the numbers list parallel to the relator              */
     objNums = nums;
-    if ( ! IS_PLIST(objNums) ) {
-        ErrorQuit( "<nums> must be a plain list (not a %s)", 
-                   (Int)TNAM_OBJ(objNums), 0L );
-        return 0;
-    }
+    RequirePlainList(0, nums);
 
     /* get and check the corresponding factors list                        */
     objTable2 = ptApp[6];
-    if ( ! IS_PLIST(objTable2) ) {
-        ErrorQuit( "<nums> must be a plain list (not a %s)", 
-                   (Int)TNAM_OBJ(objTable2), 0L );
-        return 0;
-    }
+    RequirePlainList(0, objTable2);
 
     /* get the tree type                                                   */
     treeType = INT_INTOBJ( ptApp[5] );
@@ -1236,11 +1190,7 @@ Obj FuncApplyRel2 (
 
         /* get and check the corresponding word                            */
         word = ptApp[7];
-        if ( ! IS_PLIST(word) ) {
-            ErrorQuit( "<word> must be a plain list (not a %s)", 
-                       (Int)TNAM_OBJ(word), 0L );
-            return 0;
-        }
+        RequirePlainList(0, word);
 
         /* handle the abelianized case                                     */
         if ( treeType == 0 ) {
@@ -1251,7 +1201,6 @@ Obj FuncApplyRel2 (
             treeWordLength = INT_INTOBJ( ptTree[4] );
             if ( LEN_PLIST(objTree2) != treeWordLength ) {
                 ErrorQuit( "ApplyRel2: illegal word length", 0L, 0L );
-                return 0;
             }
 
             /* initialize the coset representative word                    */
@@ -1266,7 +1215,9 @@ Obj FuncApplyRel2 (
                 objRep = ELM_PLIST(objRep,lc);
                 rep    = INT_INTOBJ(objRep);
                 if ( rep != 0 ) {
-                    AddCosetFactor2(-rep);
+                    if (AddCosetFactor2(-rep)==1) {;
+                        return False;
+                    }
                 }
                 lc = tc;
                 lp = lp + 2;
@@ -1281,7 +1232,9 @@ Obj FuncApplyRel2 (
                 objRep = ELM_PLIST(objRep,rc);
                 rep    = INT_INTOBJ(objRep);
                 if ( rep != 0 ) {
-                    AddCosetFactor2(rep);
+                    if (AddCosetFactor2(rep)==1) {
+                        return False;
+                    }
                 }
                 rc = tc;
                 rp = rp - 2;
@@ -1295,7 +1248,6 @@ Obj FuncApplyRel2 (
             if ( ptWord != ptTree2 ) {
                 if ( LEN_PLIST(word) != treeWordLength ) {
                     ErrorQuit( "illegal word length", 0L, 0L );
-                    return 0;
                 }
                 for ( i = 1;  i <= treeWordLength;  i++ ) {
                     ptWord[i] = ptTree2[i];
@@ -1381,8 +1333,8 @@ Obj FuncApplyRel2 (
     SET_ELM_PLIST( app, 3, INTOBJ_INT( rp ) );
     SET_ELM_PLIST( app, 4, INTOBJ_INT( rc ) );
 
-    /* return nothing                                                      */
-    return 0;
+    /* return true                                                      */
+    return True;
 }
 
 
@@ -1393,9 +1345,7 @@ Obj FuncApplyRel2 (
 **  'FuncCopyRel' returns a copy  of the given RRS  relator such that the bag
 **  of the copy does not exceed the minimal required size.
 */
-Obj FuncCopyRel ( 
-    Obj                 self,
-    Obj                 rel )           /* the given relator               */
+static Obj FuncCopyRel(Obj self, Obj rel) /* the given relator */
 {
     Obj *               ptRel;          /* pointer to the given relator    */
     Obj                 copy;           /* the copy                        */
@@ -1403,11 +1353,7 @@ Obj FuncCopyRel (
     Int                 leng;           /* length of the given word        */
 
     /* Get and check argument                                              */
-    if ( ! IS_PLIST(rel) ) {
-        ErrorQuit( "<rel> must be a plain list (not a %s)",
-                   (Int)TNAM_OBJ(rel), 0L );
-        return 0;
-    }
+    RequirePlainList(0, rel);
     leng = LEN_PLIST(rel);
 
     /*  Allocate a bag for the copy                                        */
@@ -1435,9 +1381,7 @@ Obj FuncCopyRel (
 **  routines.  It replaces the given relator by its canonical representative.
 **  It does not return anything.
 */
-Obj FuncMakeCanonical (
-    Obj                 self,
-    Obj                 rel )           /* the given relator               */
+static Obj FuncMakeCanonical(Obj self, Obj rel) /* the given relator */
 {
     Obj *               ptRel;          /* pointer to the relator          */
     Obj                 obj1,  obj2;    /* handles 0f relator entries      */
@@ -1447,11 +1391,7 @@ Obj FuncMakeCanonical (
     Int                 ii, jj, kk;     /* integer variables               */
 
     /* Get and check the argument                                          */
-    if ( ! IS_PLIST(rel) ) {
-        ErrorQuit( "<rel> must be a plain list (not a %s)",
-                   (Int)TNAM_OBJ(rel), 0L );
-        return 0;
-    }
+    RequirePlainList(0, rel);
     leng  = LEN_PLIST(rel);
     if (leng == 0) {
         return 0;
@@ -1595,10 +1535,7 @@ Obj FuncMakeCanonical (
 **  in the  current generators, if  it finds any, or it  defines a new proper
 **  tree entry, and then returns it.
 */
-Obj FuncTreeEntry(
-    Obj                 self,
-    Obj                 tree,
-    Obj                 word )
+static Obj FuncTreeEntry(Obj self, Obj tree, Obj word)
 {
     Obj *               ptTree1;        /* pointer to that component       */
     Obj *               ptTree2;        /* pointer to that component       */
@@ -1621,19 +1558,16 @@ Obj FuncTreeEntry(
     objTree = tree;
     if ( ! IS_PLIST(tree) || LEN_PLIST(tree) < 5 ) {
         ErrorQuit( "invalid <tree>", 0L, 0L );
-        return 0;
     }
 
     /*  Get and check the tree components                                  */
     objTree1 = ELM_PLIST(objTree,1);
     if ( ! IS_PLIST(objTree1) ) {
         ErrorQuit( "invalid <tree>[1]", 0L, 0L );
-        return 0;
     }
     objTree2 = ELM_PLIST(objTree,2);
     if ( ! IS_PLIST(objTree2) ) {
         ErrorQuit( "invalid <tree>[2]", 0L, 0L );
-        return 0;
     }
     ptTree1 = BASE_PTR_PLIST(objTree1) - 1;
     ptTree2 = BASE_PTR_PLIST(objTree2) - 1;
@@ -1645,7 +1579,6 @@ Obj FuncTreeEntry(
     /*  Get the second argument (word)                                     */
     if ( ! IS_PLIST(word) ) {
         ErrorQuit( "invalid <word>", 0L, 0L );
-        return 0;
     }
 
     /* handle the abelianized case                                         */
@@ -1653,7 +1586,6 @@ Obj FuncTreeEntry(
     if ( treeType == 0 ) {
         if ( LEN_PLIST(word) != treeWordLength ) {
             ErrorQuit( "inconsistent <word> length", 0L, 0L );
-            return 0;
         }
         ptWord = BASE_PTR_PLIST(objTree2) - 1;
         for ( leng = treeWordLength;  leng >= 1;  leng-- ) {
@@ -1723,7 +1655,6 @@ Obj FuncTreeEntry(
     /* handle the general case                                             */
     if ( LEN_PLIST(objTree1) != LEN_PLIST(objTree2) ) {
         ErrorQuit( "inconsistent <tree> components", 0L, 0L );
-        return 0;
     }
 
     for ( i = 1;  i <= numgens;  i++ ) {
@@ -1731,7 +1662,6 @@ Obj FuncTreeEntry(
           || INT_INTOBJ(ptTree2[i]) <= -i || INT_INTOBJ(ptTree2[i]) >= i )
         {
             ErrorQuit( "invalid <tree> components", 0L, 0L );
-            return 0;
         }
     }
 
@@ -1744,7 +1674,6 @@ Obj FuncTreeEntry(
         }
         if ( gen > numgens || gen < -numgens ) {
             ErrorQuit( "invalid <word> entry [%d]", i, 0L );
-            return 0;
         }
         if ( j > 0 && gen == - INT_INTOBJ(ptWord[j]) ) {
             j--;
@@ -1865,11 +1794,7 @@ Obj FuncTreeEntry(
 **  If  not  <stan> = 1  the table  is standardized  using the  (new)  lenlex
 **  standard (this is the default).
 */
-Obj FuncStandardizeTable2C (
-    Obj                 self,
-    Obj                 list,
-    Obj                 list2,
-    Obj                 stan )
+static Obj FuncStandardizeTable2C(Obj self, Obj table, Obj table2, Obj stan)
 {
     Obj *               ptTable;        /* pointer to table                */
     Obj *               ptTabl2;        /* pointer to coset factor table   */
@@ -1886,13 +1811,11 @@ Obj FuncStandardizeTable2C (
     Obj                 tmp;            /* temporary for swap              */
     UInt                j, k, nloop;    /* loop variables                  */
 
+    RequirePlainList(0, table);
+    RequirePlainList(0, table2);
+
     /* get the arguments                                                   */
-    objTable = list;
-    if ( ! IS_PLIST(objTable) ) {
-        ErrorQuit( "<table> must be a plain list (not a %s)",
-                   (Int)TNAM_OBJ(objTable), 0L );
-        return 0;
-    }
+    objTable = table;
     ptTable = BASE_PTR_PLIST(objTable) - 1;
     nrgen   = LEN_PLIST(objTable) / 2;
     for ( j = 1;  j <= nrgen*2;  j++ ) {
@@ -1901,15 +1824,9 @@ Obj FuncStandardizeTable2C (
                 "<table>[%d] must be a plain list (not a %s)",
                 (Int)j,
                 (Int)TNAM_OBJ(ptTable[j]) );
-            return 0;
         }
     }
-    objTable2 = list2;
-    if ( ! IS_PLIST(objTable2) ) {
-        ErrorQuit( "<table2> must be a plain list (not a %s)",
-                   (Int)TNAM_OBJ(objTable), 0L );
-        return 0;
-    }
+    objTable2 = table2;
     ptTabl2 = BASE_PTR_PLIST(objTable2) - 1;
     if ( IS_INTOBJ(stan) && INT_INTOBJ(stan) == 1 ) {
        /* use semilenlex standard                                          */
@@ -1996,10 +1913,9 @@ Obj FuncStandardizeTable2C (
 **
 **  'FuncAddAbelianRelator' implements 'AddAbelianRelator(<rels>,<number>)'
 */
-Obj FuncAddAbelianRelator (
-    Obj                 self,
-    Obj                 rels,           /* relators list                   */
-    Obj                 number )
+static Obj FuncAddAbelianRelator(Obj self,
+                                 Obj rels, /* relators list */
+                                 Obj number)
 {
     Obj *               ptRels;         /* pointer to relators list        */
     Obj *               pt1;            /* pointer to a relator            */
@@ -2010,28 +1926,21 @@ Obj FuncAddAbelianRelator (
     Int                 i, j;           /* loop variables                  */
 
     /* check the arguments                                                 */
-    if ( ! IS_PLIST(rels) ) {
-        ErrorQuit( "<rels> must be a plain list (not a %s)",
-            (Int)TNAM_OBJ(rels), 0L );
-        return 0;
-    }
+    RequirePlainList(0, rels);
     ptRels = BASE_PTR_PLIST(rels) - 1;
     if ( !IS_INTOBJ(number) ) {
         ErrorQuit( "<number> must be a small integer (not a %s)",
             (Int)TNAM_OBJ(number), 0L );
-        return 0;
     }
 
     /* get the length of the given relators list                           */
     numrows = INT_INTOBJ(number);
     if ( numrows < 1 || LEN_PLIST(rels) < numrows ) {
         ErrorQuit( "inconsistent relator number", 0L, 0L );
-        return 0;
     }
     tmp = ELM_PLIST( rels, numrows );
     if ( tmp == 0 ) {
         ErrorQuit( "inconsistent relator number", 0L, 0L );
-        return 0;
     }
     pt2 = BASE_PTR_PLIST(tmp) - 1;
 
@@ -2079,17 +1988,14 @@ Obj FuncAddAbelianRelator (
 
 /* new type functions that use different data structures */
 
-UInt ret1,ret2;
+static UInt ret1, ret2;
 
-UInt RelatorScan (
-  Obj t,
-  UInt di,
-  Obj r )
+static UInt RelatorScan(Obj t, UInt di, Obj r)
 {
     UInt  m,i,p,a,j;
     UInt  pa=0,pb=0;
-    UInt * rp;
-    rp=(UInt*)ADDR_OBJ(r);
+    const UInt * rp;
+    rp=(const UInt*)CONST_ADDR_OBJ(r);
     m=rp[1]; /* length is in position 1 */
     i=2;
     p=di;
@@ -2154,19 +2060,18 @@ UInt RelatorScan (
 }
 
 /* data object type for the mangled relators */
-Obj TYPE_LOWINDEX_DATA;
+static Obj TYPE_LOWINDEX_DATA;
 
 /****************************************************************************
 **
 *F  FuncLOWINDEX_COSET_SCAN( <t>,<r>,<s1>,<s2>)
 **
 */
-Obj FuncLOWINDEX_COSET_SCAN (
-    Obj                 self,
-    Obj                 t,              /* table */
-    Obj                 r,              /* relators */
-    Obj                 s1,             /* stack */
-    Obj                 s2 )            /* stack */
+static Obj FuncLOWINDEX_COSET_SCAN(Obj self,
+                                   Obj t,  /* table */
+                                   Obj r,  /* relators */
+                                   Obj s1, /* stack */
+                                   Obj s2) /* stack */
 {
   UInt ok,i,j,d,e,x,y,l,sd;
   Obj  rx;
@@ -2248,12 +2153,11 @@ Obj FuncLOWINDEX_COSET_SCAN (
 *F  FuncLOWINDEX_IS_FIRST( <t>,<n>,<mu>,<nu>)
 **
 */
-Obj FuncLOWINDEX_IS_FIRST (
-    Obj                 self,
-    Obj                 t,              /* table */
-    Obj                 nobj,              /* relators */
-    Obj                 muo,             /* stack */
-    Obj                 nuo )            /* stack */
+static Obj FuncLOWINDEX_IS_FIRST(Obj self,
+                                 Obj t,    /* table */
+                                 Obj nobj, /* relators */
+                                 Obj muo,  /* stack */
+                                 Obj nuo)  /* stack */
 {
   UInt l,ok,b,g,ga,de,a,n,mm;
   UInt * mu;
@@ -2306,9 +2210,7 @@ Obj FuncLOWINDEX_IS_FIRST (
 *F  FuncLOWINDEX_PREPARE_RELS( <rels> )
 **
 */
-Obj FuncLOWINDEX_PREPARE_RELS (
-    Obj                 self,
-    Obj                 r )             /* rels */
+static Obj FuncLOWINDEX_PREPARE_RELS(Obj self, Obj r) /* rels */
 {
    UInt i,j,k,l;
    Obj ri, rel;
@@ -2335,13 +2237,12 @@ Obj FuncLOWINDEX_PREPARE_RELS (
 *F  FuncTC_QUICK_SCAN( <c>,<o>,<alpha>,<w>)
 **
 */
-Obj FuncTC_QUICK_SCAN (
-    Obj                 self,
-    Obj                 c,              /* table */
-    Obj                 o,              /* offset */
-    Obj                 a,              /* alpha */
-    Obj                 w,              /* word */
-    Obj                 result )        /* result list */
+static Obj FuncTC_QUICK_SCAN(Obj self,
+                             Obj c,      /* table */
+                             Obj o,      /* offset */
+                             Obj a,      /* alpha */
+                             Obj w,      /* word */
+                             Obj result) /* result list */
 {
   Int f,b,ff,bb,r,i,j,alpha,offset;
 

@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  funcs.c                     GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the functions of the function interpreter package.
 **
@@ -51,9 +51,10 @@ extern inline struct FuncsModuleState *FuncsState(void)
     return (struct FuncsModuleState *)StateSlotsAtOffset(FuncsStateOffset);
 }
 
-void IncRecursionDepth(void)
+Int IncRecursionDepth(void)
 {
-    FuncsState()->RecursionDepth++;
+    int depth = ++(FuncsState()->RecursionDepth);
+    return depth;
 }
 
 void DecRecursionDepth(void)
@@ -93,7 +94,6 @@ static UInt ExecProccallOpts(Stat call)
 {
   Obj opts;
   
-  SET_BRK_CURR_STAT( call );
   opts = EVAL_EXPR(READ_STAT(call, 0));
   CALL_1ARGS(PushOptions, opts);
 
@@ -131,8 +131,6 @@ static ALWAYS_INLINE Obj EvalOrExecCall(Int ignoreResult, UInt nr, Stat call)
     Obj result;
 
     // evaluate the function
-    if (ignoreResult)
-        SET_BRK_CURR_STAT( call );
     func = EVAL_EXPR( FUNC_CALL( call ) );
  
     // evaluate the arguments
@@ -194,10 +192,8 @@ static ALWAYS_INLINE Obj EvalOrExecCall(Int ignoreResult, UInt nr, Stat call)
         return 0;
     }
 
-    while (result == 0) {
-        result =
-            ErrorReturnObj("Function Calls: <func> must return a value", 0, 0,
-                           "you can supply one by 'return <value>;'");
+    if (result == 0) {
+        ErrorMayQuit("Function Calls: <func> must return a value", 0, 0);
     }
     return result;
 }
@@ -426,46 +422,29 @@ void RecursionDepthTrap( void )
 
 #endif
 
-static void ExecFuncHelper(void)
-{
-    OLD_BRK_CURR_STAT   // old executing statement
-
-    // execute the statement sequence
-    REM_BRK_CURR_STAT();
-    EXEC_STAT( OFFSET_FIRST_STAT );
-    RES_BRK_CURR_STAT();
-}
-
-static Obj PopReturnObjStat(void)
-{
-    Obj returnObjStat = STATE(ReturnObjStat);
-    STATE(ReturnObjStat) = (Obj)0;
-    return returnObjStat;
-}
-
 #ifdef HPCGAP
 
 static void LockFuncArgs(Obj func, Int narg, const Obj * args)
 {
     Int i;
     int count = 0;
-    int *mode = alloca(narg * sizeof(int));
+    LockMode * mode = alloca(narg * sizeof(int));
     UChar *locks = CHARS_STRING(LCKS_FUNC(func));
     Obj *objects = alloca(narg * sizeof(Obj));
     for (i=0; i<narg; i++) {
       Obj obj = args[i];
       switch (locks[i]) {
-        case 1:
+      case LOCK_QUAL_READONLY:
           if (CheckReadAccess(obj))
             break;
-          mode[count] = 0;
+          mode[count] = LOCK_MODE_READONLY;
           objects[count] = obj;
           count++;
           break;
-        case 2:
+      case LOCK_QUAL_READWRITE:
           if (CheckWriteAccess(obj))
             break;
-          mode[count] = 1;
+          mode[count] = LOCK_MODE_READWRITE;
           objects[count] = obj;
           count++;
           break;
@@ -483,7 +462,8 @@ static void LockFuncArgs(Obj func, Int narg, const Obj * args)
 
 static ALWAYS_INLINE Obj DoExecFunc(Obj func, Int narg, const Obj *arg)
 {
-    Bag                 oldLvars;       /* old values bag                  */
+    Bag oldLvars; /* old values bag */
+    Obj result;
     CHECK_RECURSION_BEFORE
 
 #ifdef HPCGAP
@@ -500,7 +480,7 @@ static ALWAYS_INLINE Obj DoExecFunc(Obj func, Int narg, const Obj *arg)
         ASS_LVAR( i+1, arg[i] );
 
     /* execute the statement sequence                                      */
-    ExecFuncHelper();
+    result = EXEC_CURR_FUNC();
 #ifdef HPCGAP
     CLEAR_LOCK_STACK();
 #endif
@@ -511,7 +491,7 @@ static ALWAYS_INLINE Obj DoExecFunc(Obj func, Int narg, const Obj *arg)
     CHECK_RECURSION_AFTER
 
     /* return the result                                                   */
-    return PopReturnObjStat();
+    return result;
 }
 
 static Obj DoExecFunc0args(Obj func)
@@ -557,20 +537,17 @@ static Obj DoExecFunc6args(Obj func, Obj a1, Obj a2, Obj a3, Obj a4, Obj a5, Obj
 
 static Obj DoExecFuncXargs(Obj func, Obj args)
 {
-    Bag                 oldLvars;       /* old values bag                  */
-    UInt                len;            /* number of arguments             */
-    UInt                i;              /* loop variable                   */
+    Bag  oldLvars; /* old values bag */
+    UInt len;      /* number of arguments */
+    UInt i;        /* loop variable */
+    Obj  result;
 
     CHECK_RECURSION_BEFORE
 
     /* check the number of arguments                                       */
     len = NARG_FUNC( func );
-    while ( len != LEN_PLIST( args ) ) {
-        args = ErrorReturnObj(
-            "Function Calls: number of arguments must be %d (not %d)",
-            len, LEN_PLIST( args ),
-            "you can replace the <list> of arguments via 'return <list>;'" );
-        PLAIN_LIST( args );
+    if (len != LEN_PLIST(args)) {
+        ErrorMayQuitNrArgs(len, LEN_PLIST(args));
     }
 
 #ifdef HPCGAP
@@ -588,7 +565,7 @@ static Obj DoExecFuncXargs(Obj func, Obj args)
     }
 
     /* execute the statement sequence                                      */
-    ExecFuncHelper();
+    result = EXEC_CURR_FUNC();
 #ifdef HPCGAP
     CLEAR_LOCK_STACK();
 #endif
@@ -599,17 +576,17 @@ static Obj DoExecFuncXargs(Obj func, Obj args)
     CHECK_RECURSION_AFTER
 
     /* return the result                                                   */
-    return PopReturnObjStat();
+    return result;
 }
 
 
 static Obj DoPartialUnWrapFunc(Obj func, Obj args)
 {
-    Bag                 oldLvars;       /* old values bag                  */
-    UInt                named;          /* number of arguments             */
-    UInt                i;              /* loop variable                   */
+    Bag  oldLvars; /* old values bag */
+    UInt named;    /* number of arguments */
+    UInt i;        /* loop variable */
     UInt len;
-    Obj argx;
+    Obj  result;
 
     CHECK_RECURSION_BEFORE
 
@@ -617,8 +594,7 @@ static Obj DoPartialUnWrapFunc(Obj func, Obj args)
     len = LEN_PLIST(args);
 
     if (named > len) { /* Can happen for > 6 arguments */
-      argx = NargError(func, len);
-      return DoOperation2Args(CallFuncListOper, func, argx);
+        ErrorMayQuitNrAtLeastArgs(named, len);
     }
 
 #ifdef HPCGAP
@@ -641,7 +617,7 @@ static Obj DoPartialUnWrapFunc(Obj func, Obj args)
     ASS_LVAR(named+1, args);
 
     /* execute the statement sequence                                      */
-    ExecFuncHelper();
+    result = EXEC_CURR_FUNC();
 #ifdef HPCGAP
     CLEAR_LOCK_STACK();
 #endif
@@ -652,7 +628,7 @@ static Obj DoPartialUnWrapFunc(Obj func, Obj args)
     CHECK_RECURSION_AFTER
 
     /* return the result                                                   */
-    return PopReturnObjStat();
+    return result;
 }
 
 /****************************************************************************
@@ -687,13 +663,10 @@ Obj             MakeFunction (
     SET_NLOC_FUNC( func, NLOC_FUNC( fexp ) );
     SET_BODY_FUNC( func, BODY_FUNC( fexp ) );
     SET_ENVI_FUNC( func, STATE(CurrLVars) );
-    /* the 'CHANGED_BAG(STATE(CurrLVars))' is needed because it is delayed        */
-    CHANGED_BAG( STATE(CurrLVars) );
     MakeHighVars(STATE(CurrLVars));
 #ifdef HPCGAP
     SET_LCKS_FUNC( func, LCKS_FUNC( fexp ) );
 #endif
-    SET_FEXS_FUNC( func, FEXS_FUNC( fexp ) );
 
     /* return the function                                                 */
     return func;
@@ -706,15 +679,10 @@ Obj             MakeFunction (
 **
 **  'EvalFuncExpr' evaluates the function expression <expr> to a function.
 */
-Obj             EvalFuncExpr (
-    Expr                expr )
+static Obj EvalFuncExpr(Expr expr)
 {
-    Obj                 fexs;           /* func. expr. list of curr. func. */
-    Obj                 fexp;           /* function expression bag         */
-
     /* get the function expression bag                                     */
-    fexs = FEXS_FUNC( CURR_FUNC() );
-    fexp = ELM_PLIST(fexs, READ_EXPR(expr, 0));
+    Obj fexp = GET_VALUE_FROM_CURRENT_BODY(READ_EXPR(expr, 0));
 
     /* and make the function                                               */
     return MakeFunction( fexp );
@@ -727,17 +695,11 @@ Obj             EvalFuncExpr (
 **
 **  'PrintFuncExpr' prints a function expression.
 */
-void            PrintFuncExpr (
-    Expr                expr )
+static void PrintFuncExpr(Expr expr)
 {
-    Obj                 fexs;           /* func. expr. list of curr. func. */
-    Obj                 fexp;           /* function expression bag         */
-
     /* get the function expression bag                                     */
-    fexs = FEXS_FUNC( CURR_FUNC() );
-    fexp = ELM_PLIST(fexs, READ_EXPR(expr, 0));
+    Obj fexp = GET_VALUE_FROM_CURRENT_BODY(READ_EXPR(expr, 0));
     PrintFunction( fexp );
-    /* Pr("function ... end",0L,0L); */
 }
 
 
@@ -747,21 +709,17 @@ void            PrintFuncExpr (
 **
 **  'PrintProccall' prints a procedure call.
 */
-extern  void            PrintFunccall (
-            Expr                call );
+static void PrintFunccall(Expr call);
 
-extern  void            PrintFunccallOpts (
-            Expr                call );
+static void PrintFunccallOpts(Expr call);
 
-void            PrintProccall (
-    Stat                call )
+static void PrintProccall(Stat call)
 {
     PrintFunccall( call );
     Pr( ";", 0L, 0L );
 }
 
-void            PrintProccallOpts (
-    Stat                call )
+static void PrintProccallOpts(Stat call)
 {
     PrintFunccallOpts( call );
     Pr( ";", 0L, 0L );
@@ -795,8 +753,7 @@ static void            PrintFunccall1 (
     }
 }
 
-void            PrintFunccall (
-    Expr                call )
+static void PrintFunccall(Expr call)
 {
   PrintFunccall1( call );
   
@@ -805,8 +762,7 @@ void            PrintFunccall (
 }
 
 
-void             PrintFunccallOpts (
-    Expr                call )
+static void PrintFunccallOpts(Expr call)
 {
     PrintFunccall1(READ_STAT(call, 1));
     Pr(" :%2> ", 0L, 0L);
@@ -821,42 +777,20 @@ void             PrintFunccallOpts (
 *F  ExecBegin() . . . . . . . . . . . . . . . . . . . . .  begin an execution
 *F  ExecEnd(<error>)  . . . . . . . . . . . . . . . . . . .  end an execution
 */
-/* TL: Obj             ExecState; */
 
-void            ExecBegin ( Obj frame )
+void ExecBegin(Obj frame)
 {
-    Obj                 execState;      /* old execution state             */
+    // remember the old execution state
+    PushPlist(FuncsState()->ExecState, STATE(CurrLVars));
 
-    /* remember the old execution state                                    */
-    execState = NEW_PLIST(T_PLIST, 3);
-    SET_LEN_PLIST(execState, 3);
-    SET_ELM_PLIST(execState, 1, FuncsState()->ExecState);
-    SET_ELM_PLIST(execState, 2, STATE(CurrLVars));
-    /* the 'CHANGED_BAG(STATE(CurrLVars))' is needed because it is delayed        */
-    CHANGED_BAG( STATE(CurrLVars) );
-    SET_ELM_PLIST(execState, 3, INTOBJ_INT((Int)STATE(CurrStat)));
-    FuncsState()->ExecState = execState;
-
-    /* set up new state                                                    */
+    // set up new state
     SWITCH_TO_OLD_LVARS( frame );
-    SET_BRK_CURR_STAT( 0 );
 }
 
-void            ExecEnd (
-    UInt                error )
+void ExecEnd(UInt error)
 {
-    /* if everything went fine                                             */
-    if ( ! error ) {
-
-        /* the state must be primal again                                  */
-        assert( STATE(CurrStat)  == 0 );
-
-    }
-
-    /* switch back to the old state                                    */
-    SET_BRK_CURR_STAT((Stat)INT_INTOBJ(ELM_PLIST(FuncsState()->ExecState, 3)));
-    SWITCH_TO_OLD_LVARS( ELM_PLIST(FuncsState()->ExecState, 2) );
-    FuncsState()->ExecState = ELM_PLIST(FuncsState()->ExecState, 1);
+    // switch back to the old state
+    SWITCH_TO_OLD_LVARS(PopPlist(FuncsState()->ExecState));
 }
 
 /****************************************************************************
@@ -865,7 +799,7 @@ void            ExecEnd (
 **
 */
 
-Obj FuncSetRecursionTrapInterval( Obj self,  Obj interval )
+static Obj FuncSetRecursionTrapInterval(Obj self, Obj interval)
 {
     while (!IS_INTOBJ(interval) || INT_INTOBJ(interval) <= 5)
         interval = ErrorReturnObj(
@@ -876,7 +810,7 @@ Obj FuncSetRecursionTrapInterval( Obj self,  Obj interval )
     return 0;
 }
 
-Obj FuncGetRecursionDepth( Obj self )
+static Obj FuncGetRecursionDepth(Obj self)
 {
     return INTOBJ_INT(GetRecursionDepth());
 }
@@ -948,47 +882,47 @@ static Int InitKernel (
     InitHandlerFunc( DoPartialUnWrapFunc, "pUW");
 
     /* install the evaluators and executors                                */
-    InstallExecStatFunc( T_PROCCALL_0ARGS , ExecProccall0args);
-    InstallExecStatFunc( T_PROCCALL_1ARGS , ExecProccall1args);
-    InstallExecStatFunc( T_PROCCALL_2ARGS , ExecProccall2args);
-    InstallExecStatFunc( T_PROCCALL_3ARGS , ExecProccall3args);
-    InstallExecStatFunc( T_PROCCALL_4ARGS , ExecProccall4args);
-    InstallExecStatFunc( T_PROCCALL_5ARGS , ExecProccall5args);
-    InstallExecStatFunc( T_PROCCALL_6ARGS , ExecProccall6args);
-    InstallExecStatFunc( T_PROCCALL_XARGS , ExecProccallXargs);
-    InstallExecStatFunc( T_PROCCALL_OPTS  , ExecProccallOpts);
+    InstallExecStatFunc( STAT_PROCCALL_0ARGS , ExecProccall0args);
+    InstallExecStatFunc( STAT_PROCCALL_1ARGS , ExecProccall1args);
+    InstallExecStatFunc( STAT_PROCCALL_2ARGS , ExecProccall2args);
+    InstallExecStatFunc( STAT_PROCCALL_3ARGS , ExecProccall3args);
+    InstallExecStatFunc( STAT_PROCCALL_4ARGS , ExecProccall4args);
+    InstallExecStatFunc( STAT_PROCCALL_5ARGS , ExecProccall5args);
+    InstallExecStatFunc( STAT_PROCCALL_6ARGS , ExecProccall6args);
+    InstallExecStatFunc( STAT_PROCCALL_XARGS , ExecProccallXargs);
+    InstallExecStatFunc( STAT_PROCCALL_OPTS  , ExecProccallOpts);
 
-    InstallEvalExprFunc( T_FUNCCALL_0ARGS , EvalFunccall0args);
-    InstallEvalExprFunc( T_FUNCCALL_1ARGS , EvalFunccall1args);
-    InstallEvalExprFunc( T_FUNCCALL_2ARGS , EvalFunccall2args);
-    InstallEvalExprFunc( T_FUNCCALL_3ARGS , EvalFunccall3args);
-    InstallEvalExprFunc( T_FUNCCALL_4ARGS , EvalFunccall4args);
-    InstallEvalExprFunc( T_FUNCCALL_5ARGS , EvalFunccall5args);
-    InstallEvalExprFunc( T_FUNCCALL_6ARGS , EvalFunccall6args);
-    InstallEvalExprFunc( T_FUNCCALL_XARGS , EvalFunccallXargs);
-    InstallEvalExprFunc( T_FUNCCALL_OPTS  , EvalFunccallOpts);
-    InstallEvalExprFunc( T_FUNC_EXPR      , EvalFuncExpr);
+    InstallEvalExprFunc( EXPR_FUNCCALL_0ARGS , EvalFunccall0args);
+    InstallEvalExprFunc( EXPR_FUNCCALL_1ARGS , EvalFunccall1args);
+    InstallEvalExprFunc( EXPR_FUNCCALL_2ARGS , EvalFunccall2args);
+    InstallEvalExprFunc( EXPR_FUNCCALL_3ARGS , EvalFunccall3args);
+    InstallEvalExprFunc( EXPR_FUNCCALL_4ARGS , EvalFunccall4args);
+    InstallEvalExprFunc( EXPR_FUNCCALL_5ARGS , EvalFunccall5args);
+    InstallEvalExprFunc( EXPR_FUNCCALL_6ARGS , EvalFunccall6args);
+    InstallEvalExprFunc( EXPR_FUNCCALL_XARGS , EvalFunccallXargs);
+    InstallEvalExprFunc( EXPR_FUNCCALL_OPTS  , EvalFunccallOpts);
+    InstallEvalExprFunc( EXPR_FUNC      , EvalFuncExpr);
 
     /* install the printers                                                */
-    InstallPrintStatFunc( T_PROCCALL_0ARGS , PrintProccall);
-    InstallPrintStatFunc( T_PROCCALL_1ARGS , PrintProccall);
-    InstallPrintStatFunc( T_PROCCALL_2ARGS , PrintProccall);
-    InstallPrintStatFunc( T_PROCCALL_3ARGS , PrintProccall);
-    InstallPrintStatFunc( T_PROCCALL_4ARGS , PrintProccall);
-    InstallPrintStatFunc( T_PROCCALL_5ARGS , PrintProccall);
-    InstallPrintStatFunc( T_PROCCALL_6ARGS , PrintProccall);
-    InstallPrintStatFunc( T_PROCCALL_XARGS , PrintProccall);
-    InstallPrintStatFunc( T_PROCCALL_OPTS  , PrintProccallOpts);
-    InstallPrintExprFunc( T_FUNCCALL_0ARGS , PrintFunccall);
-    InstallPrintExprFunc( T_FUNCCALL_1ARGS , PrintFunccall);
-    InstallPrintExprFunc( T_FUNCCALL_2ARGS , PrintFunccall);
-    InstallPrintExprFunc( T_FUNCCALL_3ARGS , PrintFunccall);
-    InstallPrintExprFunc( T_FUNCCALL_4ARGS , PrintFunccall);
-    InstallPrintExprFunc( T_FUNCCALL_5ARGS , PrintFunccall);
-    InstallPrintExprFunc( T_FUNCCALL_6ARGS , PrintFunccall);
-    InstallPrintExprFunc( T_FUNCCALL_XARGS , PrintFunccall);
-    InstallPrintExprFunc( T_FUNCCALL_OPTS  , PrintFunccallOpts);
-    InstallPrintExprFunc( T_FUNC_EXPR      , PrintFuncExpr);
+    InstallPrintStatFunc( STAT_PROCCALL_0ARGS , PrintProccall);
+    InstallPrintStatFunc( STAT_PROCCALL_1ARGS , PrintProccall);
+    InstallPrintStatFunc( STAT_PROCCALL_2ARGS , PrintProccall);
+    InstallPrintStatFunc( STAT_PROCCALL_3ARGS , PrintProccall);
+    InstallPrintStatFunc( STAT_PROCCALL_4ARGS , PrintProccall);
+    InstallPrintStatFunc( STAT_PROCCALL_5ARGS , PrintProccall);
+    InstallPrintStatFunc( STAT_PROCCALL_6ARGS , PrintProccall);
+    InstallPrintStatFunc( STAT_PROCCALL_XARGS , PrintProccall);
+    InstallPrintStatFunc( STAT_PROCCALL_OPTS  , PrintProccallOpts);
+    InstallPrintExprFunc( EXPR_FUNCCALL_0ARGS , PrintFunccall);
+    InstallPrintExprFunc( EXPR_FUNCCALL_1ARGS , PrintFunccall);
+    InstallPrintExprFunc( EXPR_FUNCCALL_2ARGS , PrintFunccall);
+    InstallPrintExprFunc( EXPR_FUNCCALL_3ARGS , PrintFunccall);
+    InstallPrintExprFunc( EXPR_FUNCCALL_4ARGS , PrintFunccall);
+    InstallPrintExprFunc( EXPR_FUNCCALL_5ARGS , PrintFunccall);
+    InstallPrintExprFunc( EXPR_FUNCCALL_6ARGS , PrintFunccall);
+    InstallPrintExprFunc( EXPR_FUNCCALL_XARGS , PrintFunccall);
+    InstallPrintExprFunc( EXPR_FUNCCALL_OPTS  , PrintFunccallOpts);
+    InstallPrintExprFunc( EXPR_FUNC      , PrintFuncExpr);
 
     /* return success                                                      */
     return 0;
@@ -996,7 +930,7 @@ static Int InitKernel (
 
 static Int InitModuleState(void)
 {
-    FuncsState()->ExecState = 0;
+    FuncsState()->ExecState = NEW_PLIST(T_PLIST_EMPTY, 16);
     FuncsState()->RecursionDepth = 0;
 
     // return success

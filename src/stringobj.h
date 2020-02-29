@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  stringobj.h                 GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares the functions which mainly deal with strings.
 **
@@ -16,8 +16,7 @@
 **
 **  Strings in compact representation  can be accessed and handled through
 **  the functions 'NEW_STRING', 'CHARS_STRING' (and 'CSTR_STRING'),
-**  'GET_LEN_STRING',   'SET_LEN_STRING', 'GROW_STRING',  'GET_ELM_STRING'
-**  and 'SET_ELM_STRING'.
+**  'GET_LEN_STRING', 'SET_LEN_STRING', 'GROW_STRING' and more.
 */
 
 #ifndef GAP_STRINGOBJ_H
@@ -46,7 +45,7 @@ extern Obj ObjsChar[256];
 **
 *F  CHAR_VALUE( <charObj> )
 */
-static inline UChar CHAR_VALUE(Obj charObj)
+EXPORT_INLINE UChar CHAR_VALUE(Obj charObj)
 {
     GAP_ASSERT(TNUM_OBJ(charObj) == T_CHAR);
     return *(const UChar *)CONST_ADDR_OBJ(charObj);
@@ -57,10 +56,34 @@ static inline UChar CHAR_VALUE(Obj charObj)
 **
 *F  SET_CHAR_VALUE( <charObj>, <c> )
 */
-static inline void SET_CHAR_VALUE(Obj charObj, UChar c)
+EXPORT_INLINE void SET_CHAR_VALUE(Obj charObj, UChar c)
 {
     GAP_ASSERT(TNUM_OBJ(charObj) == T_CHAR);
-    *(UChar *)CONST_ADDR_OBJ(charObj) = c;
+    *(UChar *)ADDR_OBJ(charObj) = c;
+}
+
+
+/****************************************************************************
+**
+*F  SINT_CHAR(a)
+**
+**  'SINT_CHAR' converts the character a (a UInt1) into a signed (C) integer.
+*/
+EXPORT_INLINE Int SINT_CHAR(UInt1 a)
+{
+    return a < 128 ? (Int)a : (Int)a-256;
+}
+
+
+/****************************************************************************
+**
+*F  CHAR_SINT(n)
+**
+**  'CHAR_SINT' converts the signed (C) integer n into an (UInt1) character.
+*/
+EXPORT_INLINE UInt1 CHAR_SINT(Int n)
+{
+    return (UInt1)(n >= 0 ? n : n+256);
 }
 
 
@@ -73,7 +96,7 @@ static inline void SET_CHAR_VALUE(Obj charObj, UChar c)
 **
 *F  IS_STRING_REP( <list> ) . . . . . . . .  check if <list> is in string rep
 */
-static inline Int IS_STRING_REP(Obj list)
+EXPORT_INLINE Int IS_STRING_REP(Obj list)
 {
     return (T_STRING <= TNUM_OBJ(list) &&
             TNUM_OBJ(list) <= T_STRING_SSORT + IMMUTABLE);
@@ -85,7 +108,7 @@ static inline Int IS_STRING_REP(Obj list)
 *F  SIZEBAG_STRINGLEN( <len> ) . . . . size of Bag for string of length <len>
 **
 */
-static inline UInt SIZEBAG_STRINGLEN(UInt len)
+EXPORT_INLINE UInt SIZEBAG_STRINGLEN(UInt len)
 {
     return len + 1 + sizeof(UInt);
 }
@@ -104,16 +127,28 @@ static inline UInt SIZEBAG_STRINGLEN(UInt len)
 **  GET_LEN_STRING.
 */
 
-static inline Char * CSTR_STRING(Obj list)
+EXPORT_INLINE Char * CSTR_STRING(Obj list)
 {
     GAP_ASSERT(IS_STRING_REP(list));
     return (Char *)ADDR_OBJ(list) + sizeof(UInt);
 }
 
-static inline UChar * CHARS_STRING(Obj list)
+EXPORT_INLINE const Char * CONST_CSTR_STRING(Obj list)
+{
+    GAP_ASSERT(IS_STRING_REP(list));
+    return (const Char *)CONST_ADDR_OBJ(list) + sizeof(UInt);
+}
+
+EXPORT_INLINE UChar * CHARS_STRING(Obj list)
 {
     GAP_ASSERT(IS_STRING_REP(list));
     return (UChar *)ADDR_OBJ(list) + sizeof(UInt);
+}
+
+EXPORT_INLINE const UChar * CONST_CHARS_STRING(Obj list)
+{
+    GAP_ASSERT(IS_STRING_REP(list));
+    return (const UChar *)CONST_ADDR_OBJ(list) + sizeof(UInt);
 }
 
 /****************************************************************************
@@ -123,10 +158,10 @@ static inline UChar * CHARS_STRING(Obj list)
 **  'GET_LEN_STRING' returns the length of the string <list>, as a C integer.
 */
 
-static inline UInt GET_LEN_STRING(Obj list)
+EXPORT_INLINE UInt GET_LEN_STRING(Obj list)
 {
     GAP_ASSERT(IS_STRING_REP(list));
-    return *((const UInt *)CONST_ADDR_OBJ(list));
+    return INT_INTOBJ(CONST_ADDR_OBJ(list)[0]);
 }
 
 /****************************************************************************
@@ -136,12 +171,12 @@ static inline UInt GET_LEN_STRING(Obj list)
 **  'SET_LEN_STRING' sets length of the string <list> to C integer <len>.
 */
 
-static inline void SET_LEN_STRING(Obj list, Int len)
+EXPORT_INLINE void SET_LEN_STRING(Obj list, Int len)
 {
     GAP_ASSERT(IS_STRING_REP(list));
     GAP_ASSERT(len >= 0);
     GAP_ASSERT(SIZEBAG_STRINGLEN(len) <= SIZE_OBJ(list));
-    (*((UInt *)ADDR_OBJ(list)) = (UInt)(len));
+    ADDR_OBJ(list)[0] = INTOBJ_INT(len);
 }
 
 /****************************************************************************
@@ -152,7 +187,7 @@ static inline void SET_LEN_STRING(Obj list, Int len)
 **  sets its length to len. 
 **
 */
-extern Obj NEW_STRING(Int len);
+Obj NEW_STRING(Int len);
 
 /****************************************************************************
 **
@@ -163,11 +198,9 @@ extern Obj NEW_STRING(Int len);
 **
 */
 
-extern  Int             GrowString (
-            Obj                 list,
-            UInt                need );
+Int GrowString(Obj list, UInt need);
 
-static inline void GROW_STRING(Obj list, Int len)
+EXPORT_INLINE void GROW_STRING(Obj list, Int len)
 {
     GAP_ASSERT(IS_STRING_REP(list));
     GAP_ASSERT(len >= 0);
@@ -182,44 +215,10 @@ static inline void GROW_STRING(Obj list, Int len)
 **
 **  'SHRINK_STRING' gives back not needed memory allocated by string.
 */
-static inline void SHRINK_STRING(Obj list)
+EXPORT_INLINE void SHRINK_STRING(Obj list)
 {
     GAP_ASSERT(IS_STRING_REP(list));
     ResizeBag(list, SIZEBAG_STRINGLEN(GET_LEN_STRING((list))));
-}
-
-/****************************************************************************
-**
-*F  GET_ELM_STRING( <list>, <pos> ) . . . . . . select an element of a string
-**
-**  'GET_ELM_STRING'  returns the  <pos>-th  element  of  the string  <list>.
-**  <pos> must be  a positive integer  less than  or  equal to  the length of
-**  <list>.
-*/
-static inline Obj GET_ELM_STRING(Obj list, Int pos)
-{
-    GAP_ASSERT(IS_STRING_REP(list));
-    GAP_ASSERT(pos > 0);
-    GAP_ASSERT((UInt) pos <= GET_LEN_STRING(list));
-    UChar c = CHARS_STRING(list)[pos - 1];
-    return ObjsChar[c];
-}
-
-/****************************************************************************
-**
-*F  SET_ELM_STRING( <list>, <pos>, <val> ) . . . . set a character of a string
-**
-**  'SET_ELM_STRING'  sets the  <pos>-th  character  of  the string  <list>.
-**  <val> must be a character and <list> stay a string after the assignment.
-*/
-static inline void SET_ELM_STRING(Obj list, Int pos, Obj val)
-{
-    GAP_ASSERT(IS_STRING_REP(list));
-    GAP_ASSERT(pos > 0);
-    GAP_ASSERT((UInt) pos <= GET_LEN_STRING(list));
-    GAP_ASSERT(TNUM_OBJ(val) == T_CHAR);
-    UChar * ptr = CHARS_STRING(list) + (pos - 1);
-    *ptr = CHAR_VALUE(val);
 }
 
 /****************************************************************************
@@ -230,7 +229,7 @@ static inline void SET_ELM_STRING(Obj list, Int pos, Obj val)
 **  It assumes that the data area in <str> is large enough. It does not add
 **  a terminating null character and not change the length of the string.
 */
-static inline void COPY_CHARS(Obj str, UChar * pnt, Int n)
+EXPORT_INLINE void COPY_CHARS(Obj str, const UChar * pnt, Int n)
 {
     GAP_ASSERT(IS_STRING_REP(str));
     GAP_ASSERT(n >= 0);
@@ -247,8 +246,7 @@ static inline void COPY_CHARS(Obj str, UChar * pnt, Int n)
 **  No  linebreaks are allowed,  if one must be  inserted  anyhow, it must be
 **  escaped by a backslash '\', which is done in 'Pr'.
 */
-extern void PrintString (
-    Obj                 list );
+void PrintString(Obj list);
 
 
 /****************************************************************************
@@ -258,8 +256,7 @@ extern void PrintString (
 **  'PrintString1' prints the string  constant  in  the  format  used  by  the
 **  'Print' and 'PrintTo' function.
 */
-extern void PrintString1 (
-            Obj                 list );
+void PrintString1(Obj list);
 
 
 /****************************************************************************
@@ -271,7 +268,7 @@ extern void PrintString1 (
 */
 extern  Int             (*IsStringFuncs [LAST_REAL_TNUM+1]) ( Obj obj );
 
-static inline Int IS_STRING(Obj obj)
+EXPORT_INLINE Int IS_STRING(Obj obj)
 {
     return (*IsStringFuncs[TNUM_OBJ(obj)])(obj);
 }
@@ -284,19 +281,28 @@ static inline Int IS_STRING(Obj obj)
 **  'IsString' returns 1 if the object <obj> is a string and 0 otherwise.  It
 **  does not change the representation of <obj>.
 */
-extern Int IsString (
-            Obj                 obj );
+Int IsString(Obj obj);
 
 
 /****************************************************************************
 **
 *F  CopyToStringRep( <string> ) . . .  copy a string to string representation
 **
-**  'CopyToStringRep' copies the string <string> to a new string in string
-**  representation.
+**  'CopyToStringRep' copies the string <string> to a new mutable string in
+**  string representation.
 */
-extern Obj CopyToStringRep(
-            Obj                 string );
+Obj CopyToStringRep(Obj string);
+
+
+/****************************************************************************
+**
+*F  ImmutableString( <string> ) . . . copy to immutable string in string rep.
+**
+**  'ImmutableString' returns an immutable string in string representation
+**  equal to <string>. This may return <string> if it already satisfies these
+**  criteria.
+*/
+Obj ImmutableString(Obj string);
 
 
 /****************************************************************************
@@ -305,8 +311,7 @@ extern Obj CopyToStringRep(
 **
 **  'ConvString' converts the string <string> to string representation.
 */
-extern void ConvString (
-            Obj                 string );
+void ConvString(Obj string);
 
 
 /****************************************************************************
@@ -317,84 +322,51 @@ extern void ConvString (
 **  otherwise.   If <obj> is a  string it  changes  its representation to the
 **  string representation.
 */
-extern Int IsStringConv (
-            Obj                 obj );
-
-
-/****************************************************************************
-**
-*F  C_NEW_STRING( <string>, <len>, <cstring> )  . . . . . . create GAP string
-*/
-#define C_NEW_STRING(string,len,cstr) \
-  do { \
-    size_t tmp_len = (len); \
-    string = NEW_STRING( tmp_len ); \
-    memcpy( CHARS_STRING(string), (cstr), tmp_len ); \
-  } while ( 0 );
-
-/****************************************************************************
-**
-*F  MakeImmutableString(  <str> ) make a string immutable in place
-**
-*/
-
-void MakeImmutableString(Obj str);
+Int IsStringConv(Obj obj);
 
 
 // Functions to create mutable and immutable GAP strings from C strings.
 // MakeString and MakeImmString are inlineable so 'strlen' can be optimised
 // away for constant strings.
 
-static inline Obj MakeString(const Char * cstr)
+EXPORT_INLINE Obj MakeStringWithLen(const char * buf, size_t len)
 {
-    Obj result;
-    C_NEW_STRING(result, strlen(cstr), cstr);
+    Obj result = NEW_STRING(len);
+    memcpy(CHARS_STRING(result), buf, len);
     return result;
 }
 
-static inline Obj MakeImmString(const Char * cstr)
+EXPORT_INLINE Obj MakeString(const char * cstr)
+{
+    return MakeStringWithLen(cstr, strlen(cstr));
+}
+
+EXPORT_INLINE Obj MakeImmString(const char * cstr)
 {
     Obj result = MakeString(cstr);
-    RetypeBag(result, IMMUTABLE_TNUM(T_STRING));
+    MakeImmutableNoRecurse(result);
+    return result;
+}
+
+EXPORT_INLINE Obj MakeImmStringWithLen(const char * buf, size_t len)
+{
+    Obj result = MakeStringWithLen(buf, len);
+    MakeImmutableNoRecurse(result);
     return result;
 }
 
 
-Obj MakeString2(const Char *cstr1, const Char *cstr2);
-
-Obj MakeImmString2(const Char *cstr1, const Char *cstr2);
-Obj ConvImmString(Obj str);
-
-
 /****************************************************************************
 **
-*F  C_NEW_STRING_DYN( <string>, <cstring> ) . . . . . . . . create GAP string
+*F  C_NEW_STRING( <string>, <len>, <cstring> )  . . . . . . create GAP string
 **
-**  The cstring is assumed to be allocated on the heap, hence its length
-**  is dynamic and must be computed during runtime using strlen.
-**
-**  This macro is provided for backwards compatibility of packages.
-**  'MakeString' and 'MakeImmString' are as efficient and should be used
-**  instead.
+**  This macro is deprecated and only provided for backwards compatibility
+**  with some package kernel extensions. Use 'MakeStringWithLen' and
+**  'MakeImmStringWithLen' instead.
 */
-#define C_NEW_STRING_DYN(string,cstr) \
-  C_NEW_STRING(string, strlen(cstr), cstr)
+#define C_NEW_STRING(string,len,cstr) \
+    string = MakeStringWithLen( (cstr), (len) )
 
-/****************************************************************************
-**
-*F  SINT_CHAR(a)
-**
-**  'SINT_CHAR' converts the character a (a UInt1) into a signed (C) integer.
-*/
-#define SINT_CHAR(a)    (((UInt1)a)<128 ? (Int)a : (Int)a-256)
-
-/****************************************************************************
-**
-*F  CHAR_SINT(n)
-**
-**  'CHAR_SINT' converts the signed (C) integer n into an (UInt1) character.
-*/
-#define CHAR_SINT(n)    (UInt1)(n>=0 ? n : n+256)
 
 /****************************************************************************
 **

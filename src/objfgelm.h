@@ -1,22 +1,17 @@
 /****************************************************************************
 **
-*W  objfgelm.h                  GAP source                       Frank Celler
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #ifndef GAP_OBJFGELM_H
 #define GAP_OBJFGELM_H
 
 #include "objects.h"
-#include "plist.h"
-
-#ifdef HPCGAP
-#include "hpc/guards.h"
-#endif
 
 /****************************************************************************
 **
@@ -79,7 +74,9 @@
 **  'DATA_WORD' returns a pointer to the data area of <word>.
 */
 #define DATA_WORD( word ) \
-    ( (Char*)ADDR_OBJ( (word) ) + 2*sizeof(Obj) )
+    ((UIntN *)( ADDR_OBJ( word ) + 2 ))
+#define CONST_DATA_WORD( word ) \
+    ((const UIntN *)( CONST_ADDR_OBJ( word ) + 2 ))
 
 
 /****************************************************************************
@@ -119,30 +116,12 @@
 
 /****************************************************************************
 **
-*F  NEW_WORD( <word>, <type>, <npairs> )
+*F  NewWord( <type>, <npairs> )
 **
-**  'NEW_WORD' creates  a new object which has  the given <type> and room for
-**  <npairs> pairs of generator number/exponent.  The new  word is return  in
-**  <word>.
+**  'NewWord' returns a new object which has the given <type> and room for
+**  <npairs> pairs of generator number/exponent.
 */
-static inline Obj NewWord(Obj type, UInt npairs) {
-  Obj word;
-#ifdef HPCGAP
-  ReadGuard(type);
-#endif
-  word = NewBag(T_DATOBJ,2*sizeof(Obj)+npairs*BITS_WORDTYPE(type)/8L);
-  ADDR_OBJ(word)[1] = INTOBJ_INT(npairs);
-  SetTypeDatObj(word, type);
-#ifdef HPCGAP
-  MakeBagReadOnly( word );
-#endif
-  return word;
-}
-
-#define NEW_WORD(word, type, npairs) \
-  do { \
-    (word) = NewWord((type), (npairs)); \
-  } while(0)
+Obj NewWord(Obj type, UInt npairs);
 
 
 /****************************************************************************

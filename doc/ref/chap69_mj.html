@@ -85,7 +85,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap69_mj.html#X79EA05D4822C2668">69.8-1 MTX.NormedBasisAndBaseChange</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap69_mj.html#X7812D644850D7AED">69.8-2 MTX.InducedActionSubmodule</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap69_mj.html#X7EAC61B381385A99">69.8-3 MTX.InducedActionFactorModule</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap69_mj.html#X843E80AD853CB1EE">69.8-4 MTX.InducedActionMatrix</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap69_mj.html#X8753A03A7C7CBFF1">69.8-4 MTX.InducedActionSubMatrix</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap69_mj.html#X7B137BE5877A7FA1">69.8-5 MTX.InducedAction</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap69_mj.html#X8040270F791514C8">69.9 <span class="Heading">Module Homomorphisms</span></a>
@@ -192,7 +192,7 @@
 <h5>69.2-1 PermutationGModule</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermutationGModule</code>( <var class="Arg">G</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Called with a permutation group <var class="Arg">G</var> and a finite field <var class="Arg">F</var>, <code class="func">PermutationGModule</code> returns the natural permutation module <span class="SimpleMath">\(M\)</span> over <var class="Arg">F</var> for the group of permutation matrices that acts on the canonical basis of <span class="SimpleMath">\(M\)</span> in the same way as <var class="Arg">G</var> acts on the points up to its largest moved point (see <code class="func">LargestMovedPoint</code> (<a href="chap42_mj.html#X84AA603987C94AC0"><span class="RefLink">42.3-2</span></a>)).</p>
+<p>Called with a permutation group <var class="Arg">G</var> and a field <var class="Arg">F</var> (<var class="Arg">F</var> may be infinite), <code class="func">PermutationGModule</code> returns the natural permutation module <span class="SimpleMath">\(M\)</span> over <var class="Arg">F</var> for the group of permutation matrices that acts on the canonical basis of <span class="SimpleMath">\(M\)</span> in the same way as <var class="Arg">G</var> acts on the points up to its largest moved point (see <code class="func">LargestMovedPoint</code> (<a href="chap42_mj.html#X84AA603987C94AC0"><span class="RefLink">42.3-2</span></a>)).</p>
 
 <p><a id="X80A50F717B206C98" name="X80A50F717B206C98"></a></p>
 
@@ -412,23 +412,23 @@
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MTX.InducedActionSubmodule</code>( <var class="Arg">module</var>, <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MTX.InducedActionSubmoduleNB</code>( <var class="Arg">module</var>, <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>creates a new module corresponding to the action of <var class="Arg">module</var> on <var class="Arg">sub</var>. In the <code class="code">NB</code> version the basis <var class="Arg">sub</var> must be normed. (That is it must be in echelon form with pivots normed to 1, see <code class="func">MTX.NormedBasisAndBaseChange</code> (<a href="chap69_mj.html#X79EA05D4822C2668"><span class="RefLink">69.8-1</span></a>).)</p>
+<p>creates a new module corresponding to the action of <var class="Arg">module</var> on the non-trivial submodule <var class="Arg">sub</var>. In the <code class="code">NB</code> version the basis <var class="Arg">sub</var> must be normed. (That is it must be in echelon form with pivots normed to 1, see <code class="func">MTX.NormedBasisAndBaseChange</code> (<a href="chap69_mj.html#X79EA05D4822C2668"><span class="RefLink">69.8-1</span></a>).)</p>
 
 <p><a id="X7EAC61B381385A99" name="X7EAC61B381385A99"></a></p>
 
 <h5>69.8-3 MTX.InducedActionFactorModule</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MTX.InducedActionFactorModule</code>( <var class="Arg">module</var>, <var class="Arg">sub</var>[, <var class="Arg">compl</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>creates a new module corresponding to the action of <var class="Arg">module</var> on the factor of <var class="Arg">sub</var>. If <var class="Arg">compl</var> is given, it has to be a basis of a (vector space-)complement of <var class="Arg">sub</var>. The action then will correspond to <var class="Arg">compl</var>.</p>
+<p>creates a new module corresponding to the action of <var class="Arg">module</var> on the factor of the proper submodule <var class="Arg">sub</var>. If <var class="Arg">compl</var> is given, it has to be a basis of a (vector space-)complement of <var class="Arg">sub</var>. The action then will correspond to <var class="Arg">compl</var>.</p>
 
 <p>The basis <var class="Arg">sub</var> has to be given in normed form. (That is it must be in echelon form with pivots normed to 1, see <code class="func">MTX.NormedBasisAndBaseChange</code> (<a href="chap69_mj.html#X79EA05D4822C2668"><span class="RefLink">69.8-1</span></a>))</p>
 
-<p><a id="X843E80AD853CB1EE" name="X843E80AD853CB1EE"></a></p>
+<p><a id="X8753A03A7C7CBFF1" name="X8753A03A7C7CBFF1"></a></p>
 
-<h5>69.8-4 MTX.InducedActionMatrix</h5>
+<h5>69.8-4 MTX.InducedActionSubMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MTX.InducedActionMatrix</code>( <var class="Arg">mat</var>, <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MTX.InducedActionMatrixNB</code>( <var class="Arg">mat</var>, <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MTX.InducedActionSubMatrix</code>( <var class="Arg">mat</var>, <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MTX.InducedActionSubMatrixNB</code>( <var class="Arg">mat</var>, <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MTX.InducedActionFactorMatrix</code>( <var class="Arg">mat</var>, <var class="Arg">sub</var>[, <var class="Arg">compl</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>work the same way as the above functions for modules, but take as input only a single matrix.</p>
 

@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  object.gd                   GAP library                  Martin Schönert
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Martin Schönert.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file declares the operations for all objects.
 ##
@@ -28,7 +29,7 @@
 ##  <Filt Name="IsObject" Arg='obj' Type='Category'/>
 ##
 ##  <Description>
-##  <Ref Func="IsObject"/> returns <K>true</K> if the object <A>obj</A> is an
+##  <Ref Filt="IsObject"/> returns <K>true</K> if the object <A>obj</A> is an
 ##  object.  Obviously it can never return <K>false</K>.
 ##  <P/>
 ##  It can be used as a filter in <Ref Func="InstallMethod"/>
@@ -168,13 +169,13 @@ DeclareOperationKernel( "in", [ IsObject, IsObject ], IN );
 ##  If a mutable form of an object <A>obj</A> can be made in &GAP;,
 ##  the object is called <E>copyable</E>. Examples of copyable objects are of
 ##  course lists and records. A new mutable version of the object can
-##  always be obtained by the operation <Ref Func="ShallowCopy"/>.
+##  always be obtained by the operation <Ref Oper="ShallowCopy"/>.
 ##  <P/>
 ##  Objects for which only an immutable form exists in &GAP; are called
 ##  <E>constants</E>.
 ##  Examples of constants are integers, permutations, and domains.
 ##  Called with a constant as argument,
-##  <Ref Func="Immutable"/> and <Ref Func="ShallowCopy"/> return this
+##  <Ref Func="Immutable"/> and <Ref Oper="ShallowCopy"/> return this
 ##  argument.
 ##  </Description>
 ##  </ManSection>
@@ -195,13 +196,13 @@ DeclareCategoryKernel( "IsCopyable", IsObject, IS_COPYABLE_OBJ );
 ##  tests whether <A>obj</A> is mutable.
 ##  <P/>
 ##  If an object is mutable then it is also copyable
-##  (see&nbsp;<Ref Func="IsCopyable"/>),
-##  and a <Ref Func="ShallowCopy"/> method should be supplied for it.
-##  Note that <Ref Func="IsMutable"/> must not be implied by another filter,
+##  (see&nbsp;<Ref Filt="IsCopyable"/>),
+##  and a <Ref Oper="ShallowCopy"/> method should be supplied for it.
+##  Note that <Ref Filt="IsMutable"/> must not be implied by another filter,
 ##  since otherwise <Ref Func="Immutable"/> would be able to create
-##  paradoxical objects in the sense that <Ref Func="IsMutable"/> for such an
+##  paradoxical objects in the sense that <Ref Filt="IsMutable"/> for such an
 ##  object is <K>false</K> but the filter that implies
-##  <Ref Func="IsMutable"/> is <K>true</K>.
+##  <Ref Filt="IsMutable"/> is <K>true</K>.
 ##  <P/>
 ##  In many situations, however, one wants to ensure that objects are
 ##  <E>immutable</E>. For example, take the identity of a matrix group.
@@ -280,21 +281,21 @@ BIND_GLOBAL( "Immutable", IMMUTABLE_COPY_OBJ );
 ##  <Oper Name="ShallowCopy" Arg='obj'/>
 ##
 ##  <Description>
-##  <Ref Func="ShallowCopy"/> returns a <E>new mutable</E> object <E>equal</E> 
+##  <Ref Oper="ShallowCopy"/> returns a <E>new mutable</E> object <E>equal</E> 
 ##  to its argument, if this is possible.
 ##  The subobjects of <C>ShallowCopy( <A>obj</A> )</C> are <E>identical</E>
 ##  to the subobjects of <A>obj</A>.
 ##  <P/>
 ##  If &GAP; does not support a mutable form of the immutable object <A>obj</A>
 ##  (see&nbsp;<Ref Sect="Mutability and Copyability"/>) then 
-##  <Ref Func="ShallowCopy"/> returns <A>obj</A> itself.
+##  <Ref Oper="ShallowCopy"/> returns <A>obj</A> itself.
 ##  <P/>
-##  Since <Ref Func="ShallowCopy"/> is an operation, the concrete meaning of
+##  Since <Ref Oper="ShallowCopy"/> is an operation, the concrete meaning of
 ##  <Q>subobject</Q> depends on the type of <A>obj</A>.
 ##  But for any copyable object <A>obj</A>, the definition should reflect the
 ##  idea of <Q>first level copying</Q>.
 ##  <P/>
-##  The definition of <Ref Func="ShallowCopy"/> for lists (in particular for
+##  The definition of <Ref Oper="ShallowCopy"/> for lists (in particular for
 ##  matrices) can be found in&nbsp;<Ref Sect="Duplication of Lists"/>.
 ##  </Description>
 ##  </ManSection>
@@ -337,7 +338,7 @@ DeclareOperationKernel( "ShallowCopy", [ IsObject ], SHALLOW_COPY_OBJ );
 ##  true
 ##  ]]></Example>
 ##  <P/>
-##  That both <Ref Func="ShallowCopy"/> and <Ref Func="StructuralCopy"/>
+##  That both <Ref Oper="ShallowCopy"/> and <Ref Func="StructuralCopy"/>
 ##  return the argument <A>obj</A> itself if it is not copyable
 ##  is consistent with this definition,
 ##  since there is no way to change <A>obj</A> by modifying the result of any
@@ -360,13 +361,13 @@ BIND_GLOBAL( "StructuralCopy", DEEP_COPY_OBJ );
 ##
 ##  <Description>
 ##  returns the name, a string, previously assigned to <A>obj</A> via a call
-##  to <Ref Func="SetName"/>.
+##  to <Ref Oper="SetName"/>.
 ##  The name of an object is used <E>only</E> for viewing the object via this
 ##  name.
 ##  <P/>
 ##  There are no methods installed for computing names of objects,
 ##  but the name may be set for suitable objects,
-##  using <Ref Func="SetName"/>.
+##  using <Ref Oper="SetName"/>.
 ##  <Example><![CDATA[
 ##  gap> R := PolynomialRing(Integers,2);
 ##  Integers[x_1,x_2]
@@ -429,7 +430,7 @@ DeclareAttribute( "InfoText", IsObject, "mutable" );
 ##  "123"
 ##  "[ 1, 2, 3 ]"
 ##  ]]></Example>
-##  <Ref Oper="String"/> must not put in additional control 
+##  <Ref Attr="String"/> must not put in additional control 
 ##  characters <C>\&lt;</C> (ASCII 1) and <C>\&gt;</C> (ASCII 2) 
 ##  that allow proper line breaks.
 ##  </Description>
@@ -555,9 +556,9 @@ DeclareGlobalFunction( "StripLineBreakCharacters" );
 ##  <P/>
 ##  One can assign a string to an object that <Ref Func="Print"/> will use
 ##  instead of the default used by <Ref Func="Print"/>,
-##  via <Ref Func="SetName"/>.
+##  via <Ref Oper="SetName"/>.
 ##  Also, <Ref Attr="Name"/> returns the string previously assigned to
-##  the object for printing, via <Ref Func="SetName"/>.
+##  the object for printing, via <Ref Oper="SetName"/>.
 ##  The following is an example in the context of domains.
 ##  <P/>
 ##  <Example><![CDATA[
@@ -611,13 +612,13 @@ DeclareOperation( "DisplayString", [ IsObject ] );
 ##  For debugging purposes, it may be useful to check the consistency of
 ##  an object <A>obj</A> that is composed from other (composed) objects.
 ##  <P/>
-##  There is a default method of <Ref Func="IsInternallyConsistent"/>,
+##  There is a default method of <Ref Oper="IsInternallyConsistent"/>,
 ##  with rank zero, that returns <K>true</K>.
 ##  So it is possible (and recommended) to check the consistency of
 ##  subobjects of <A>obj</A> recursively by
-##  <Ref Func="IsInternallyConsistent"/>.
+##  <Ref Oper="IsInternallyConsistent"/>.
 ##  <P/>
-##  (Note that <Ref Func="IsInternallyConsistent"/> is not an attribute.)
+##  (Note that <Ref Oper="IsInternallyConsistent"/> is not an attribute.)
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -638,7 +639,7 @@ DeclareOperation( "IsInternallyConsistent", [ IsObject ] );
 ##  For example, if a matrix is in the two fiters <C>IsOrdinaryMatrix</C> and
 ##  <C>IsLieMatrix</C> then apparently something went wrong.
 ##  Since we can install these immediate methods only for attributes
-##  (and not for the operation <C>IsInternallyConsistent</C>),
+##  (and not for the operation <Ref Oper="IsInternallyConsistent"/>),
 ##  we need such an attribute.
 ##  </Description>
 ##  </ManSection>
@@ -870,8 +871,3 @@ DeclareRepresentation( "IsPackedElementDefaultRep", IsAtomicPositionalObjectRep,
 ##  </ManSection>
 ##
 DeclareOperation( "PostMakeImmutable", [IsObject]);
-
-
-#############################################################################
-##
-#E

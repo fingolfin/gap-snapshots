@@ -144,6 +144,7 @@
 \makelabel{hpc:RegionName}{3.9.40}{X7959FC997CC9177C}
 \makelabel{hpc:ViewShared}{3.9.41}{X80D0DFAB7F7241E8}
 \makelabel{hpc:UNSAFEVIEW}{3.9.42}{X7FD39BCC8526AC53}
+\makelabel{hpc:atomic no value}{3.9.43}{X7FD1B1B785E24734}
 \makelabel{hpc:BindOnce}{3.11.1}{X83AD36A68503CF70}
 \makelabel{hpc:TestBindOnce}{3.11.2}{X8673539F7DA79110}
 \makelabel{hpc:BindOnceExpr}{3.11.3}{X7BAEC41C87E1DC43}

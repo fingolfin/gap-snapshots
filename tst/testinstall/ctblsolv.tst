@@ -1,10 +1,4 @@
-#############################################################################
-##
-#W  ctblsolv.tst               GAP Library                      Thomas Breuer
-##
-##
-#Y  Copyright (C)  1998,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-##
+#@local G,pair
 gap> START_TEST("ctblsolv.tst");
 gap> CharacterDegrees( SmallGroup( 256, 529 ) );
 [ [ 1, 8 ], [ 2, 30 ], [ 4, 8 ] ]
@@ -16,7 +10,3 @@ gap> for pair in [ [ 18, 3 ], [ 27, 3 ], [ 36, 7 ], [ 50, 3 ], [ 54, 4 ] ] do
 >      fi;
 >    od;
 gap> STOP_TEST( "ctblsolv.tst", 1);
-
-#############################################################################
-##
-#E

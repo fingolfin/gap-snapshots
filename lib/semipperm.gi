@@ -1,11 +1,12 @@
-############################################################################
+#############################################################################
 ##
-#W  semipperm.gi           GAP library                         J. D. Mitchell
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include J. D. Mitchell.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  2013,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the implementation of some basics for partial perm
 ##  semigroups.
@@ -94,17 +95,17 @@ InstallMethod(CodegreeOfPartialPermSemigroup,
 s-> DegreeOfPartialPermSemigroup(s));
 
 InstallMethod(RankOfPartialPermSemigroup,
-"for a partial perm semigroup",
+"for a partial perm semigroup with generators of semigroup",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
 S -> RankOfPartialPermCollection(GeneratorsOfSemigroup(S)));
 
 InstallMethod(RankOfPartialPermSemigroup,
-"for a partial perm semigroup",
-[IsPartialPermSemigroup and HasGeneratorsOfGroup],
-S -> RankOfPartialPermCollection(GeneratorsOfGroup(S)));
+"for a partial perm monoid",
+[IsPartialPermMonoid],
+S -> RankOfPartialPerm(One(S)));
 
 InstallMethod(RankOfPartialPermCollection,
-"for a partial perm semigroup",
+"for a partial perm semigroup with generators of semigroup",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
 s-> RankOfPartialPermCollection(GeneratorsOfSemigroup(s)));
 

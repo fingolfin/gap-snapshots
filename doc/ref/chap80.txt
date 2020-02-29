@@ -56,7 +56,7 @@
     [4X[28Xend);[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YWe have left out the optional rank argument of [2XInstallMethod[102X ([14X78.2-1[114X), which
+  [33X[0;0YWe have left out the optional rank argument of [2XInstallMethod[102X ([14X78.3-1[114X), which
   normally  is a wise choice –[5XGAP[105X automatically uses an internal ranking based
   on  the  filters  that  is only offset by the given rank. So our method will
   certainly  be  regarded  as [21Xbetter[121X than a method that has been installed for
@@ -110,7 +110,7 @@
   [4X[32X[104X
   
   [33X[0;0YThis  time  we decide to enter a non-default family predicate in the call to
-  [2XInstallMethod[102X  ([14X78.2-1[114X). We could just leave it out as in the previous call;
+  [2XInstallMethod[102X  ([14X78.3-1[114X). We could just leave it out as in the previous call;
   this  would  yield  the  default  value,  the function [2XReturnTrue[102X ([14X5.4-1[114X) of
   arbitrary many arguments which always returns [9Xtrue[109X. However, then the method
   might  be  called  in  some  cases of inconsistent input (for example matrix
@@ -139,15 +139,15 @@
   [33X[0;0YIt  might  be  that  the operation has been defined so far only for a set of
   objects  that  is  too restrictive for our purposes (or we want to install a
   method  that  takes  another  number of arguments). If this is the case, the
-  call to [2XInstallMethod[102X ([14X78.2-1[114X) causes an error message. We can avoid this by
-  using [2XInstallOtherMethod[102X ([14X78.2-2[114X) instead. It is also possible to re-declare
+  call to [2XInstallMethod[102X ([14X78.3-1[114X) causes an error message. We can avoid this by
+  using [2XInstallOtherMethod[102X ([14X78.3-2[114X) instead. It is also possible to re-declare
   an  operation  with another number of arguments and/or different filters for
   its arguments.[133X
   
   
   [1X80.3 [33X[0;0YEnforcing Property Tests[133X[101X
   
-  [33X[0;0YAs  mentioned in Section [14X78.3[114X, [5XGAP[105X does not check unknown properties to test
+  [33X[0;0YAs  mentioned in Section [14X78.4[114X, [5XGAP[105X does not check unknown properties to test
   whether  a  method  might  be applicable. In some cases one wants to enforce
   this, however, because the gain from knowing the property outweighs the cost
   of its determination.[133X
@@ -156,7 +156,7 @@
   property  (so  it can be tried even if the property is not yet known) and at
   high  rank  (so it will be used before other methods). The first thing to do
   in  the  actual  function  then is to test the property and to bail out with
-  [2XTryNextMethod[102X ([14X78.4-1[114X) if it turns out to be [9Xfalse[109X.[133X
+  [2XTryNextMethod[102X ([14X78.5-1[114X) if it turns out to be [9Xfalse[109X.[133X
   
   [33X[0;0YThe above [2XExponent[102X ([14X39.16-2[114X) example thus would become:[133X
   
@@ -195,7 +195,7 @@
   [33X[0;0YHowever  we  should  not enforce a finiteness test early (someone else later
   might  install  good  methods  for infinite groups while the finiteness test
   would  be  too  expensive)  but just before [5XGAP[105X would give a [21Xno method found[121X
-  error.  This is done by redispatching, see [14X78.5[114X. For example to enforce such
+  error.  This is done by redispatching, see [14X78.6[114X. For example to enforce such
   a final finiteness test for normalizer calculations could be done by:[133X
   
   [4X[32X  Example  [32X[104X
@@ -218,9 +218,9 @@
     [4X[28XSylowNormalizer:=NewOperation("SylowNormalizer",[IsGroup,IsPosInt]);[128X[104X
   [4X[32X[104X
   
-  [33X[0;0Y(Note  that  we  are using [2XNewOperation[102X ([14X79.5-1[114X) instead of [2XDeclareOperation[102X
-  ([14X79.18-12[114X)  as  used  in  the  library.  The only difference other than that
-  [2XDeclareOperation[102X  ([14X79.18-12[114X) saves some typing, is that it also protects the
+  [33X[0;0Y(Note  that  we  are using [2XNewOperation[102X ([14X78.1-4[114X) instead of [2XDeclareOperation[102X
+  ([14X78.1-5[114X)  as  used  in  the  library.  The  only  difference other than that
+  [2XDeclareOperation[102X  ([14X78.1-5[114X)  saves  some typing, is that it also protects the
   variables against overwriting. When testing code (when one probably wants to
   change  things)  this might be restricting. If this does not bother you, you
   can use[133X
@@ -232,8 +232,8 @@
   [33X[0;0Yas well.)[133X
   
   [33X[0;0YThe  filters  [2XIsGroup[102X  ([14X39.2-7[114X) and [2XIsPosInt[102X ([14X14.2-2[114X) given are [13Xonly[113X used to
-  test  that  [2XInstallMethod[102X  ([14X78.2-1[114X) installs methods with suitable arguments
-  and  will  be  completely  ignored  when  using [2XInstallOtherMethod[102X ([14X78.2-2[114X).
+  test  that  [2XInstallMethod[102X  ([14X78.3-1[114X) installs methods with suitable arguments
+  and  will  be  completely  ignored  when  using [2XInstallOtherMethod[102X ([14X78.3-2[114X).
   Technically  one  could  therefore  simply  use  [2XIsObject[102X  ([14X12.1-1[114X)  for all
   arguments  in the declaration. The main point of using more specific filters
   here  is to help documenting with which arguments the function is to be used
@@ -258,7 +258,7 @@
     [4X[28XPrimesDividingSize:=NewAttribute("PrimesDividingSize",IsGroup);[128X[104X
   [4X[32X[104X
   
-  [33X[0;0Y(See [2XNewAttribute[102X  ([14X79.3-1[114X)).  This implicitly declares attribute tester and
+  [33X[0;0Y(See [2XNewAttribute[102X  ([14X13.5-3[114X)).  This implicitly declares attribute tester and
   setter, it is convenient however to assign these to variables as well:[133X
   
   [4X[32X  Example  [32X[104X
@@ -266,9 +266,9 @@
     [4X[28XSetPrimesDividingSize:=Setter(PrimesDividingSize);[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YAlternatively,  there  is  a  declaration command [2XDeclareAttribute[102X ([14X79.18-9[114X)
-  that   executes  all  three  assignments  simultaneously  and  protects  the
-  variables against overwriting:[133X
+  [33X[0;0YAlternatively, there is a declaration command [2XDeclareAttribute[102X ([14X13.5-4[114X) that
+  executes  all  three  assignments  simultaneously and protects the variables
+  against overwriting:[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28XDeclareAttribute("PrimesDividingSize",IsGroup);[128X[104X
@@ -290,13 +290,14 @@
   [4X[32X[104X
   
   [33X[0;0YThe  function  installed  [13Xmust[113X  always return a value (or call [2XTryNextMethod[102X
-  ([14X78.4-1[114X)). If the object is in the representation [10XIsAttributeStoringRep[110X this
-  return value once computed will be automatically stored and retrieved if the
-  attribute  is  called  a second time. We don't have to call setter or tester
-  ourselves.  (This  storage  happens  by [5XGAP[105X internally calling the attribute
-  setter with the return value of the function. Retrieval is by a high-ranking
-  method  which  is  installed under the condition [10XHasPrimesDividingSize[110X. This
-  method was installed automatically when the attribute was declared.)[133X
+  ([14X78.5-1[114X)).  If  the  object  is  in the representation [2XIsAttributeStoringRep[102X
+  ([14X13.5-5[114X)  this  return  value once computed will be automatically stored and
+  retrieved  if  the  attribute is called a second time. We don't have to call
+  setter  or tester ourselves. (This storage happens by [5XGAP[105X internally calling
+  the  attribute setter with the return value of the function. Retrieval is by
+  a   high-ranking   method   which   is   installed   under   the   condition
+  [10XHasPrimesDividingSize[110X.  This  method  was  installed  automatically when the
+  attribute was declared.)[133X
   
   
   [1X80.6 [33X[0;0YAdding a new Representation[133X[101X
@@ -311,9 +312,9 @@
   [33X[0;0YNext,  we have to decide a few basics about the representation. All existing
   permutation groups in the library are attribute storing and we probably want
   to  keep  this  for  our  new  objects.  Thus  the  representation must be a
-  subrepresentation   of   [10XIsComponentObjectRep   and   IsAttributeStoringRep[110X.
-  Furthermore  we  want each object to be a permutation group and we can imply
-  this directly in the representation.[133X
+  subrepresentation of [2XIsComponentObjectRep[102X ([14X13.4-1[114X) and [2XIsAttributeStoringRep[102X
+  ([14X13.5-5[114X).  Furthermore  we want each object to be a permutation group and we
+  can imply this directly in the representation.[133X
   
   [33X[0;0YWe  also  decide  that  we store the degree (the largest point that might be
   moved)  in  a  component  [10Xdegree[110X  and  the defining relations in a component
@@ -502,7 +503,7 @@
   [33X[0;0YThe  filter  [2XIsSolvableGroup[102X  ([14X39.15-6[114X)  in this declaration [13Xonly[113X means that
   methods  for  [10XIsMGroup[110X  by default can only be installed for groups that are
   (and  know  to be) solvable (though they could be installed for more general
-  situations  using  [2XInstallOtherMethod[102X  ([14X78.2-2[114X)). It does not yet imply that
+  situations  using  [2XInstallOtherMethod[102X  ([14X78.3-2[114X)). It does not yet imply that
   M-groups  are  solvable. We must do this deliberately via an implication and
   we  use  the  same  technique  to imply that every supersolvable group is an
   M-group.[133X

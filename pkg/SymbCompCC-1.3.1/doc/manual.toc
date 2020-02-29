@@ -1,0 +1,23 @@
+\chapcontents {1}{Installing and Loading the SymbCompCC Package}{3}
+\seccontents {1.1}{Installing the SymbCompCC Package} {3}
+\seccontents {1.2}{Loading the SymbCompCC Package} {3}
+\chapcontents {2}{Introduction}{4}
+\seccontents {2.1}{Overview} {4}
+\seccontents {2.2}{Background on (polycyclic) parametrised presentations} {4}
+\seccontents {2.3}{Computation of Schur multiplicators} {5}
+\seccontents {2.4}{Computation of low-dimensional cohomology} {5}
+\seccontents {2.5}{Example} {5}
+\chapcontents {3}{p-power-poly-pcp-groups}{6}
+\seccontents {3.1}{Example} {6}
+\seccontents {3.2}{Obtaining p-power-poly-pcp-groups} {7}
+\seccontents {3.3}{Operations and functions for p-power-poly-pcp-group elements} {8}
+\seccontents {3.4}{Operations and functions for p-power-poly-pcp-groups} {8}
+\seccontents {3.5}{Info classes for the p-power-poly-pcp-groups} {9}
+\seccontents {3.6}{Global variables for the p-power-poly-pcp-groups} {10}
+\chapcontents {4}{Parametrised Presentations}{11}
+\seccontents {4.1}{Provided pp-presentations} {11}
+\chapcontents {5}{Schur extensions for p-power-poly-pcp-groups}{12}
+\seccontents {5.1}{Computing Schur extensions} {13}
+\seccontents {5.2}{Computing other invariants from Schur extensions} {13}
+\seccontents {5.3}{Info classes for the computation of the Schur extension} {14}
+\chapcontents {}{Bibliography}{15}

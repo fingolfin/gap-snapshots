@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  stbcbckt.gi                 GAP library                    Heiko Theißen
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Heiko Theißen.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the basic   routines for permutation group   backtrack
 ##  algorithms that are based  on partitions. These  routines are used in the
@@ -1327,6 +1328,9 @@ InstallGlobalFunction( PartitionBacktrack,
                     image.level := rbase.lev[ d ];
                     if IsSlicedPerm( image.perm )  then
                         image.perm!.length := oldprm;
+                         # Here and below the code that refers to `rgtObj` was used to avoid multiplication
+                         # of permutations. It has been commented out for a long time, but accidentally remained
+                         # documented in `doc/ref/stbchain.xml` until its withdrawal in 2018.
 #                        image.perm!.rgtObj := oldrgt;
                     else
                         image.perm := oldprm;
@@ -1542,7 +1546,7 @@ end );
 ##
 #V  Refinements . . . . . . . . . . . . . . .  record of refinement processes
 ##
-InstallValue( Refinements, rec() );
+InstallValue( Refinements, AtomicRecord() );
 
 #############################################################################
 ##
@@ -1855,12 +1859,6 @@ function( rbase, image, G, f, Q, strat )
     return MeetPartitionStrat( rbase, image, Q, t, strat );
 end);
 Refinements.(STBBCKT_STRING_TWOCLOSURE):=Refinements_TwoClosure;
-
-#############################################################################
-##
-## After construction, make Refinements immutable for thread-safety
-##
-MakeImmutable(Refinements);
 
 
 #############################################################################
@@ -2748,7 +2746,7 @@ Eh, Lh, Nh,G0;
     else
       Nh:=G; # we know that G normalizes
     fi;
-    Assert(1,Nh=DoNormalizerPermGroup(G,E,L,
+    Assert(3,Nh=DoNormalizerPermGroup(G,E,L,
                   [1..Maximum(Maximum(mpG),Maximum(mpE))]));
     return Nh;
 
@@ -3190,8 +3188,3 @@ end;
 
 InstallMethod(TwoClosure,"permutation group",true,[IsPermGroup],0,
   TwoClosurePermGroup);
-
-
-#############################################################################
-##
-#E

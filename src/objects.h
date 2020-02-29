@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  objects.h                   GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file defines the functions of the objects package.
 **
@@ -44,7 +44,7 @@
 **  'IS_FFE'  returns 1  if the  object <o>  is  an  (immediate) finite field
 **  element and 0 otherwise.
 */
-static inline Int IS_FFE(Obj o)
+EXPORT_INLINE Int IS_FFE(Obj o)
 {
     return (Int)o & 0x02;
 }
@@ -61,7 +61,7 @@ static inline Int IS_FFE(Obj o)
 **  If allocation fails (e.g. because no more TNUMs are available),
 **  a negative value is returned.
 */
-Int RegisterPackageTNUM( const char *name, Obj (*typeObjFunc)(Obj obj) );
+Int RegisterPackageTNUM(const char * name, Obj (*typeObjFunc)(Obj obj));
 
 
 /****************************************************************************
@@ -236,21 +236,20 @@ enum TNUM {
 
         // package TNUMs, for use by kernel extensions
         //
-        // The largest TNUM (which, depending on USE_THREADSAFE_COPYING, is
-        // either LAST_REAL_TNUM or LAST_COPYING_TNUM) must not exceed 253.
+        // The value of LAST_REAL_TNUM must not exceed 254.
         // This restricts the value for LAST_PACKAGE_TNUM indirectly. It is
-        // difficult to describe the largest possible value with a formula, as
-        // LAST_COPYING_TNUM itself changes depending LAST_PACKAGE_TNUM, and
+        // difficult to describe the largest possible value with a formula,
+        // as LAST_REAL_TNUM itself changes depending LAST_PACKAGE_TNUM, and
         // the fact that some TNUMs are forced to be even causes additional
-        // jumps; so increasing LAST_PACKAGE_TNUM by 1 can lead to
-        // LAST_COPYING_TNUM growing by 2, 3 or even 4. So we simply hand-pick
+        // jumps; increasing LAST_PACKAGE_TNUM by 1 can lead to
+        // LAST_REAL_TNUM growing by 2. So we simply hand-pick
         // LAST_PACKAGE_TNUM as the largest value that does not trigger the
         // GAP_STATIC_ASSERT following this enum.
         FIRST_PACKAGE_TNUM,
 #ifdef HPCGAP
         LAST_PACKAGE_TNUM   = FIRST_PACKAGE_TNUM + 153,
 #else
-        LAST_PACKAGE_TNUM   = FIRST_PACKAGE_TNUM + 50,
+        LAST_PACKAGE_TNUM   = FIRST_PACKAGE_TNUM + 167,
 #endif
 
     END_ENUM_RANGE(LAST_EXTERNAL_TNUM),
@@ -285,19 +284,14 @@ enum TNUM {
     END_ENUM_RANGE(LAST_REAL_TNUM),
 
 #if !defined(USE_THREADSAFE_COPYING)
-    // virtual TNUMs for copying objects
-    START_ENUM_RANGE_EVEN(FIRST_COPYING_TNUM),
-        COPYING             = FIRST_COPYING_TNUM - FIRST_IMM_MUT_TNUM,
-        // we use LAST_EXTERNAL_TNUM+1 instead of LAST_REAL_TNUM to
-        // skip over the shared TNUMs in HPC-GAP
-    LAST_COPYING_TNUM       = LAST_EXTERNAL_TNUM + COPYING,
+    T_COPYING,
 #endif
 };
 
-#if defined(USE_THREADSAFE_COPYING)
-GAP_STATIC_ASSERT(LAST_REAL_TNUM <= 254, "LAST_REAL_TNUM is too large");
+#if !defined(USE_THREADSAFE_COPYING)
+GAP_STATIC_ASSERT(T_COPYING <= 254, "T_COPYING is too large");
 #else
-GAP_STATIC_ASSERT(LAST_COPYING_TNUM <= 254, "LAST_COPYING_TNUM is too large");
+GAP_STATIC_ASSERT(LAST_REAL_TNUM <= 254, "LAST_REAL_TNUM is too large");
 #endif
 
 
@@ -307,13 +301,13 @@ GAP_STATIC_ASSERT(LAST_COPYING_TNUM <= 254, "LAST_COPYING_TNUM is too large");
 *F  SET_OBJ_FLAG(<obj>, <flag>) . . . . . . . . . . . . . . . set object flag
 *F  CLEAR_OBJ_FLAG(<obj>, <flag>) . . . . . . . . . . . . . clear object flag
 **
-**  These three macros test, set, and clear object flags, respectively.
+**  These three functions test, set, and clear object flags, respectively.
 **  For non-immediate objects, these are simply the bag flags, see
 **  TEST_BAG_FLAG, SET_BAG_FLAG, CLEAR_BAG_FLAG.
 **
 **  For immediate objects, objects flags are always 0.
 */
-static inline uint8_t TEST_OBJ_FLAG(Obj obj, uint8_t flag)
+EXPORT_INLINE uint8_t TEST_OBJ_FLAG(Obj obj, uint8_t flag)
 {
     if (IS_BAG_REF(obj))
         return TEST_BAG_FLAG(obj, flag);
@@ -321,13 +315,13 @@ static inline uint8_t TEST_OBJ_FLAG(Obj obj, uint8_t flag)
         return 0;
 }
 
-static inline void SET_OBJ_FLAG(Obj obj, uint8_t flag)
+EXPORT_INLINE void SET_OBJ_FLAG(Obj obj, uint8_t flag)
 {
     if (IS_BAG_REF(obj))
         SET_BAG_FLAG(obj, flag);
 }
 
-static inline void CLEAR_OBJ_FLAG(Obj obj, uint8_t flag)
+EXPORT_INLINE void CLEAR_OBJ_FLAG(Obj obj, uint8_t flag)
 {
     if (IS_BAG_REF(obj))
         CLEAR_BAG_FLAG(obj, flag);
@@ -353,7 +347,7 @@ enum {
 **
 **  'TNUM_OBJ' returns the type of the object <obj>.
 */
-static inline UInt TNUM_OBJ(Obj obj)
+EXPORT_INLINE UInt TNUM_OBJ(Obj obj)
 {
     if (IS_INTOBJ(obj))
         return T_INT;
@@ -372,9 +366,16 @@ const Char * TNAM_TNUM(UInt tnum);
 
 /****************************************************************************
 **
+*F  SET_TNAM_TNUM( <obj> ) . . . . . . . . . . . . . . set the name of a type
+*/
+void SET_TNAM_TNUM(UInt tnum, const Char * name);
+
+
+/****************************************************************************
+**
 *F  TNAM_OBJ( <obj> ) . . . . . . . . . . . . . name of the type of an object
 */
-static inline const Char * TNAM_OBJ(Obj obj)
+EXPORT_INLINE const Char * TNAM_OBJ(Obj obj)
 {
     return TNAM_TNUM(TNUM_OBJ(obj));
 }
@@ -386,7 +387,7 @@ static inline const Char * TNAM_OBJ(Obj obj)
 **
 **  'SIZE_OBJ' returns the size of the object <obj>.
 */
-static inline UInt SIZE_OBJ(Obj obj)
+EXPORT_INLINE UInt SIZE_OBJ(Obj obj)
 {
     return SIZE_BAG(obj);
 }
@@ -399,12 +400,12 @@ static inline UInt SIZE_OBJ(Obj obj)
 **  'ADDR_OBJ' returns the absolute address of the memory block of the object
 **  <obj>.
 */
-static inline Obj *ADDR_OBJ(Obj obj)
+EXPORT_INLINE Obj *ADDR_OBJ(Obj obj)
 {
     return PTR_BAG(obj);
 }
 
-static inline const Obj *CONST_ADDR_OBJ(Obj obj)
+EXPORT_INLINE const Obj *CONST_ADDR_OBJ(Obj obj)
 {
     return CONST_PTR_BAG(obj);
 }
@@ -481,7 +482,7 @@ enum {
 **  'TYPE_OBJ' returns the type of the object <obj>.
 */
 extern Obj (*TypeObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
-static inline Obj TYPE_OBJ(Obj obj)
+EXPORT_INLINE Obj TYPE_OBJ(Obj obj)
 {
     UInt tnum = TNUM_OBJ(obj);
     return (*TypeObjFuncs[tnum])(obj);
@@ -495,7 +496,7 @@ static inline Obj TYPE_OBJ(Obj obj)
 **  'SET_TYPE_OBJ' sets the kind <kind>of the object <obj>.
 */
 extern void (*SetTypeObjFuncs[ LAST_REAL_TNUM+1 ]) ( Obj obj, Obj kind );
-static inline void SET_TYPE_OBJ(Obj obj, Obj type)
+EXPORT_INLINE void SET_TYPE_OBJ(Obj obj, Obj type)
 {
     UInt tnum = TNUM_OBJ(obj);
     (*SetTypeObjFuncs[tnum])(obj, type);
@@ -525,7 +526,25 @@ static inline void SET_TYPE_OBJ(Obj obj, Obj type)
 **
 *F  MakeImmutable( <obj> ) . . . . . . . . . . . . . make an object immutable
 */
-extern void MakeImmutable( Obj obj );
+void MakeImmutable(Obj obj);
+
+
+/****************************************************************************
+**
+*F  MakeImmutableNoRecurse( <obj> ) . . set immutable flag on internal object
+**
+**  This is an unsafe helper function, for use in functions installed as
+**  handlers in 'MakeImmutableObjFuncs' for internal objects tracking their
+**  mutability, i.e., in the range FIRST_IMM_MUT_TNUM to LAST_IMM_MUT_TNUM.
+**  It only modifies the TNUM, and does not make subobjects immutable.
+*/
+EXPORT_INLINE void MakeImmutableNoRecurse(Obj obj)
+{
+    UInt type = TNUM_OBJ(obj);
+    GAP_ASSERT((FIRST_IMM_MUT_TNUM <= type) && (type <= LAST_IMM_MUT_TNUM));
+    RetypeBag(obj, type | IMMUTABLE);
+}
+
 
 /****************************************************************************
 **
@@ -536,7 +555,7 @@ extern void MakeImmutable( Obj obj );
 */
 
 #ifdef HPCGAP
-extern void CheckedMakeImmutable( Obj obj );
+void CheckedMakeImmutable(Obj obj);
 #endif
 
 /****************************************************************************
@@ -547,7 +566,7 @@ extern void CheckedMakeImmutable( Obj obj );
 **  change due to assignments), and 0 otherwise.
 */
 extern Int (*IsMutableObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
-static inline Int IS_MUTABLE_OBJ(Obj obj)
+EXPORT_INLINE Int IS_MUTABLE_OBJ(Obj obj)
 {
     UInt tnum = TNUM_OBJ(obj);
     if (/*FIRST_CONSTANT_TNUM <= tnum &&*/ tnum <= LAST_CONSTANT_TNUM)
@@ -555,22 +574,6 @@ static inline Int IS_MUTABLE_OBJ(Obj obj)
     if (FIRST_IMM_MUT_TNUM <= tnum && tnum <= LAST_IMM_MUT_TNUM)
         return !(tnum & IMMUTABLE);
     return ((*IsMutableObjFuncs[tnum])(obj));
-}
-
-
-/****************************************************************************
-**
-*F  IS_MUTABLE_PLAIN_OBJ( <obj> ) . . . . . .  is an object plain and mutable
-**
-**  'IS_MUTABLE_PLAIN_OBJ' returns 1 if the object <obj> is a plain object
-**  (i.e., built into GAP), and mutable (i.e., can change due to assignments),
-**  and 0 otherwise.
-*/
-static inline Int IS_MUTABLE_PLAIN_OBJ(Obj obj)
-{
-    UInt type = TNUM_OBJ(obj);
-    return (FIRST_IMM_MUT_TNUM <= type) && (type <= LAST_IMM_MUT_TNUM)
-            && !(type & IMMUTABLE);
 }
 
 
@@ -585,7 +588,7 @@ static inline Int IS_MUTABLE_PLAIN_OBJ(Obj obj)
 */
 
 #ifdef HPCGAP
-extern Int IsInternallyMutableObj(Obj obj);
+Int IsInternallyMutableObj(Obj obj);
 #endif
 
 /****************************************************************************
@@ -605,7 +608,7 @@ extern Int IsInternallyMutableObj(Obj obj);
 
 extern void (*SaveObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 
-extern void SaveObjError( Obj obj );
+void SaveObjError(Obj obj);
 
 
 /****************************************************************************
@@ -625,7 +628,7 @@ extern void SaveObjError( Obj obj );
 
 extern void (*LoadObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 
-extern void LoadObjError( Obj obj );
+void LoadObjError(Obj obj);
 
 /****************************************************************************
 **
@@ -635,7 +638,7 @@ extern void LoadObjError( Obj obj );
 **  copied into a mutable object), and 0 otherwise.
 */
 extern Int (*IsCopyableObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
-static inline Int IS_COPYABLE_OBJ(Obj obj)
+EXPORT_INLINE Int IS_COPYABLE_OBJ(Obj obj)
 {
     UInt tnum = TNUM_OBJ(obj);
     return (IsCopyableObjFuncs[tnum])(obj);
@@ -650,7 +653,7 @@ static inline Int IS_COPYABLE_OBJ(Obj obj)
 **  'SHALLOW_COPY_OBJ' makes a shallow copy of the object <obj>.
 */
 extern Obj (*ShallowCopyObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
-static inline Obj SHALLOW_COPY_OBJ(Obj obj)
+EXPORT_INLINE Obj SHALLOW_COPY_OBJ(Obj obj)
 {
     UInt tnum = TNUM_OBJ(obj);
     return (ShallowCopyObjFuncs[tnum])(obj);
@@ -664,9 +667,7 @@ static inline Obj SHALLOW_COPY_OBJ(Obj obj)
 **  'CopyObj' returns a  structural (deep) copy  of the object <obj>, i.e., a
 **  recursive copy that preserves the structure.
 */
-extern Obj CopyObj (
-    Obj                 obj,
-    Int                 mut );
+Obj CopyObj(Obj obj, Int mut);
 
 
 /****************************************************************************
@@ -676,12 +677,20 @@ extern Obj CopyObj (
 **  'COPY_OBJ'  implements  the first pass  of  'CopyObj', i.e., it makes the
 **  structural copy of <obj> and marks <obj> as already copied.
 **
-**  Note that 'COPY_OBJ' and 'CLEAN_OBJ' are macros, so do not call them with
-**  arguments that have side effects.
+**  'COPY_OBJ' must only be used from within CopyObjFuncs functions. To copy
+**  an object from regular code, call 'CopyObj'.
 */
 #if !defined(USE_THREADSAFE_COPYING)
-#define COPY_OBJ(obj,mut) \
-                        ((*CopyObjFuncs[ TNUM_OBJ(obj) ])( obj, mut ))
+Obj COPY_OBJ(Obj obj, Int mut);
+#endif
+
+/****************************************************************************
+**
+*F  PrepareCopy(<obj>,<copy>) . . .  helper for use in CopyObjFuncs functions
+**
+*/
+#if !defined(USE_THREADSAFE_COPYING)
+void PrepareCopy(Obj obj, Obj copy);
 #endif
 
 
@@ -690,14 +699,10 @@ extern Obj CopyObj (
 *F  CLEAN_OBJ(<obj>)  . . . . . . . . . . . . . clean up object after copying
 **
 **  'CLEAN_OBJ' implements the second pass of 'CopyObj', i.e., it removes the
-**  mark <obj>.
-**
-**  Note that 'COPY_OBJ' and 'CLEAN_OBJ' are macros, so do not call them with
-**  arguments that have side effects.
+**  mark from <obj>.
 */
 #if !defined(USE_THREADSAFE_COPYING)
-#define CLEAN_OBJ(obj) \
-                        ((*CleanObjFuncs[ TNUM_OBJ(obj) ])( obj ))
+void CLEAN_OBJ(Obj obj);
 #endif
 
 
@@ -722,7 +727,7 @@ extern Obj CopyObj (
 **  already unmarked object, it should simply return.
 */
 #if !defined(USE_THREADSAFE_COPYING)
-extern Obj (*CopyObjFuncs[LAST_COPYING_TNUM+1]) ( Obj obj, Int mut );
+extern Obj (*CopyObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj, Int mut );
 #endif
 
 
@@ -731,11 +736,16 @@ extern Obj (*CopyObjFuncs[LAST_COPYING_TNUM+1]) ( Obj obj, Int mut );
 *V  CleanObjFuncs[<type>] . . . . . . . . . . . . table of cleaning functions
 */
 #if !defined(USE_THREADSAFE_COPYING)
-extern void (*CleanObjFuncs[LAST_COPYING_TNUM+1]) ( Obj obj );
+extern void (*CleanObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 #endif
 
 
+/****************************************************************************
+**
+*V  MakeImmutableObjFuncs[<type>] . . . . . . . . . . . .  table of functions
+*/
 extern void (*MakeImmutableObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
+
 
 /****************************************************************************
 **
@@ -743,8 +753,16 @@ extern void (*MakeImmutableObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 **
 **  'PrintObj' prints the object <obj>.
 */
-extern void PrintObj (
-            Obj                 obj );
+void PrintObj(Obj obj);
+
+extern Obj PrintObjOper;
+
+/****************************************************************************
+**
+**
+*/
+UInt SetPrintObjState(UInt state); // returns the old state
+void SetPrintObjIndex(Int index);
 
 
 /****************************************************************************
@@ -765,8 +783,7 @@ extern void (* PrintObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 **
 **  'ViewObj' views the object <obj>.
 */
-extern void ViewObj (
-            Obj                 obj );
+void ViewObj(Obj obj);
 
 
 /****************************************************************************
@@ -790,7 +807,7 @@ extern void (* PrintPathFuncs[LAST_REAL_TNUM+1]) (
 **
 *F  IS_COMOBJ( <obj> )  . . . . . . . . . . . is an object a component object
 */
-static inline Int IS_COMOBJ(Obj obj)
+EXPORT_INLINE Int IS_COMOBJ(Obj obj)
 {
     return TNUM_OBJ(obj) == T_COMOBJ;
 }
@@ -800,7 +817,7 @@ static inline Int IS_COMOBJ(Obj obj)
 **
 *F  TYPE_COMOBJ( <obj> )  . . . . . . . . . . . .  type of a component object
 */
-static inline Obj TYPE_COMOBJ(Obj obj)
+EXPORT_INLINE Obj TYPE_COMOBJ(Obj obj)
 {
     return CONST_ADDR_OBJ(obj)[0];
 }
@@ -810,7 +827,7 @@ static inline Obj TYPE_COMOBJ(Obj obj)
 **
 *F  SET_TYPE_COMOBJ( <obj>, <val> ) . . .  set the type of a component object
 */
-static inline void SET_TYPE_COMOBJ(Obj obj, Obj val)
+EXPORT_INLINE void SET_TYPE_COMOBJ(Obj obj, Obj val)
 {
     ADDR_OBJ(obj)[0] = val;
 }
@@ -818,9 +835,22 @@ static inline void SET_TYPE_COMOBJ(Obj obj, Obj val)
 
 /****************************************************************************
 **
+*F  AssComObj( <obj>, <rnam>, <val> )
+*F  UnbComObj( <obj>, <rnam> )
+*F  ElmComObj( <obj>, <rnam> )
+*F  IsbComObj( <obj>, <rnam> )
+*/
+void AssComObj(Obj obj, UInt rnam, Obj val);
+void UnbComObj(Obj obj, UInt rnam);
+Obj  ElmComObj(Obj obj, UInt rnam);
+Int  IsbComObj(Obj obj, UInt rnam);
+
+
+/****************************************************************************
+**
 *F  IS_POSOBJ( <obj> )  . . . . . . . . . .  is an object a positional object
 */
-static inline Int IS_POSOBJ(Obj obj)
+EXPORT_INLINE Int IS_POSOBJ(Obj obj)
 {
     return TNUM_OBJ(obj) == T_POSOBJ;
 }
@@ -830,7 +860,7 @@ static inline Int IS_POSOBJ(Obj obj)
 **
 *F  TYPE_POSOBJ( <obj> )  . . . . . . . . . . . . type of a positional object
 */
-static inline Obj TYPE_POSOBJ(Obj obj)
+EXPORT_INLINE Obj TYPE_POSOBJ(Obj obj)
 {
     return CONST_ADDR_OBJ(obj)[0];
 }
@@ -840,7 +870,7 @@ static inline Obj TYPE_POSOBJ(Obj obj)
 **
 *F  SET_TYPE_POSOBJ( <obj>, <val> ) . . . set the type of a positional object
 */
-static inline void SET_TYPE_POSOBJ(Obj obj, Obj val)
+EXPORT_INLINE void SET_TYPE_POSOBJ(Obj obj, Obj val)
 {
     ADDR_OBJ(obj)[0] = val;
 }
@@ -848,9 +878,22 @@ static inline void SET_TYPE_POSOBJ(Obj obj, Obj val)
 
 /****************************************************************************
 **
+*F  AssPosbj( <obj>, <rnam>, <val> )
+*F  UnbPosbj( <obj>, <rnam> )
+*F  ElmPosbj( <obj>, <rnam> )
+*F  IsbPosbj( <obj>, <rnam> )
+*/
+void AssPosObj(Obj obj, Int idx, Obj val);
+void UnbPosObj(Obj obj, Int idx);
+Obj  ElmPosObj(Obj obj, Int idx);
+Int  IsbPosObj(Obj obj, Int idx);
+
+
+/****************************************************************************
+**
 *F  IS_DATOBJ( <obj> )  . . . . . . . . . . . . .  is an object a data object
 */
-static inline Int IS_DATOBJ(Obj obj)
+EXPORT_INLINE Int IS_DATOBJ(Obj obj)
 {
     return TNUM_OBJ(obj) == T_DATOBJ;
 }
@@ -860,7 +903,7 @@ static inline Int IS_DATOBJ(Obj obj)
 **
 *F  TYPE_DATOBJ( <obj> )  . . . . . . . . . . . . . . . type of a data object
 */
-static inline Obj TYPE_DATOBJ(Obj obj)
+EXPORT_INLINE Obj TYPE_DATOBJ(Obj obj)
 {
     return CONST_ADDR_OBJ(obj)[0];
 }
@@ -872,12 +915,25 @@ static inline Obj TYPE_DATOBJ(Obj obj)
 **
 **  'SetTypeDatobj' sets the kind <kind> of the data object <obj>.
 */
-static inline void SET_TYPE_DATOBJ(Obj obj, Obj val)
+EXPORT_INLINE void SET_TYPE_DATOBJ(Obj obj, Obj val)
 {
     ADDR_OBJ(obj)[0] = val;
 }
 
-extern void SetTypeDatObj(Obj obj, Obj type);
+void SetTypeDatObj(Obj obj, Obj type);
+
+
+/****************************************************************************
+**
+*F  NewKernelBuffer( <size> )  . . . . . . . . . . return a new kernel buffer
+**
+**  Return a new T_DATOBJ of the specified <size>, with its type set to the
+**  special value TYPE_KERNEL_OBJECT.
+**
+**  Note that <size> must include storage for the the first slot of the bag,
+**  which points to the type object.
+*/
+Obj NewKernelBuffer(UInt size);
 
 
 /****************************************************************************

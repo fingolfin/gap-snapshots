@@ -1,9 +1,14 @@
 #############################################################################
 ##
-#W  demo.g                      GAP library                     Werner Nickel
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Werner Nickel.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-##  This files contains functions that support running demonstrations with
+##  SPDX-License-Identifier: GPL-2.0-or-later
+##
+##  This file contains functions that support running demonstrations with
 ##  Gap.
 ##
 
@@ -13,16 +18,16 @@
 #F  Demonstration( <file> ) . . . . . . . . . . run a demonstration from file
 ##
 if not IsBound(last) then
-    last := fail;
+    UPDATE_STAT("last", fail);
 fi;
 if not IsBound(last2) then
-    last2 := fail;
+    UPDATE_STAT("last2", fail);
 fi;
 if not IsBound(last3) then
-    last3 := fail;
+    UPDATE_STAT("last3", fail);
 fi;
 if not IsBound(time) then
-    time := fail;
+    UPDATE_STAT("time", fail);
 fi;
 
 
@@ -42,11 +47,11 @@ BindGlobal( "Demonstration", function( file )
     while CHAR_INT( ReadByte( keyboard ) ) <> 'q' do
         storedtime := Runtime();
         result:=READ_COMMAND_REAL( input, true ); # Executing the command.
-        time := Runtime()-storedtime;
+        UPDATE_STAT("time", Runtime()-storedtime);
         if Length(result) = 2 then
-            last3 := last2;
-            last2 := last;
-            last := result[2];
+            UPDATE_STAT("last3", last2);
+            UPDATE_STAT("last2", last);
+            UPDATE_STAT("last", result[2]);
             View( result[2] );
             Print("\n" );
         fi;
@@ -87,12 +92,12 @@ local   input,command,exec,result,blank,semic,hash,process,l,view,estream;
         estream:=InputTextString( exec );
         storedtime := Runtime();
         result:=READ_COMMAND_REAL( estream, true ); # Executing the command.
-        time := Runtime()-storedtime;
+        UPDATE_STAT("time", Runtime()-storedtime);
         CloseStream(estream);
         if Length(result) = 2 then
-            last3 := last2;
-            last2 := last;
-            last := result[2];
+            UPDATE_STAT("last3", last2);
+            UPDATE_STAT("last2", last);
+            UPDATE_STAT("last", result[2]);
             if view then
                View(result[2]);
                Print("\n");
@@ -133,9 +138,3 @@ local   input,command,exec,result,blank,semic,hash,process,l,view,estream;
       process();
     fi;
 end );
-
-
-#############################################################################
-##
-#E
-

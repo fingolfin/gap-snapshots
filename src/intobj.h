@@ -1,8 +1,11 @@
 /****************************************************************************
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  This file is part of GAP, a system for computational discrete algebra.
+**
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file implements helper for dealing with GAP immediate integers.
 **
@@ -23,10 +26,9 @@
 **  To aid overflow check the most significant two bits must always be equal,
 **  that is to say that the sign bit of immediate integers has a guard bit.
 **
-**  The macros 'INTOBJ_INT' and 'INT_INTOBJ' should be used to convert between
-a
-**  small integer value and its representation as immediate integer handle.
-
+**  The functions 'INTOBJ_INT' and 'INT_INTOBJ' should be used to convert
+**  between a small integer value and its representation as immediate integer
+**  handle.
 */
 
 #ifndef GAP_INTOBJ_H
@@ -34,19 +36,17 @@ a
 
 #include "system.h"
 
-#ifdef SYS_IS_64_BIT
-#define NR_SMALL_INT_BITS  (64 - 4)
-#else
-#define NR_SMALL_INT_BITS  (32 - 4)
-#endif
+enum {
+    NR_SMALL_INT_BITS = sizeof(UInt) * 8 - 4,
 
-// the minimal / maximal possible values of an immediate integer object:
-#define INT_INTOBJ_MIN  (-(1L << NR_SMALL_INT_BITS))
-#define INT_INTOBJ_MAX  ((1L << NR_SMALL_INT_BITS) - 1)
+    // the minimal / maximal possible values of an immediate integer object:
+    INT_INTOBJ_MIN = -(1L << NR_SMALL_INT_BITS),
+    INT_INTOBJ_MAX =  (1L << NR_SMALL_INT_BITS) - 1,
+};
 
 // the minimal / maximal possible immediate integer objects:
-#define INTOBJ_MIN  INTOBJ_INT(INT_INTOBJ_MIN)
-#define INTOBJ_MAX  INTOBJ_INT(INT_INTOBJ_MAX)
+#define INTOBJ_MIN  (Obj)(((UInt)INT_INTOBJ_MIN << 2) + 0x01)
+#define INTOBJ_MAX  (Obj)(((UInt)INT_INTOBJ_MAX << 2) + 0x01)
 
 
 /****************************************************************************
@@ -56,7 +56,7 @@ a
 **  'IS_INTOBJ' returns 1 if the object <o> is an (immediate) integer object,
 **  and 0 otherwise.
 */
-static inline Int IS_INTOBJ(Obj o)
+EXPORT_INLINE Int IS_INTOBJ(Obj o)
 {
     return (Int)o & 0x01;
 }
@@ -69,7 +69,7 @@ static inline Int IS_INTOBJ(Obj o)
 **  'IS_POS_INTOBJ' returns 1 if the object <o> is an (immediate) integer
 **  object encoding a positive integer, and 0 otherwise.
 */
-static inline Int IS_POS_INTOBJ(Obj o)
+EXPORT_INLINE Int IS_POS_INTOBJ(Obj o)
 {
     return ((Int)o & 0x01) && ((Int)o > 0x01);
 }
@@ -81,7 +81,7 @@ static inline Int IS_POS_INTOBJ(Obj o)
 **  'IS_NONNEG_INTOBJ' returns 1 if the object <o> is an (immediate) integer
 **  object encoding a non-negative integer, and 0 otherwise.
 */
-static inline Int IS_NONNEG_INTOBJ(Obj o)
+EXPORT_INLINE Int IS_NONNEG_INTOBJ(Obj o)
 {
     return ((Int)o & 0x01) && ((Int)o > 0);
 }
@@ -94,7 +94,7 @@ static inline Int IS_NONNEG_INTOBJ(Obj o)
 **  'ARE_INTOBJS' returns 1 if the objects <o1> and <o2> are both (immediate)
 **  integer objects.
 */
-static inline Int ARE_INTOBJS(Obj o1, Obj o2)
+EXPORT_INLINE Int ARE_INTOBJS(Obj o1, Obj o2)
 {
     return (Int)o1 & (Int)o2 & 0x01;
 }
@@ -109,14 +109,13 @@ static inline Int ARE_INTOBJS(Obj o1, Obj o2)
 /* Note that the C standard does not define what >> does here if the
  * value is negative. So we have to be careful if the C compiler
  * chooses to do a logical right shift. */
-static inline Int INT_INTOBJ(Obj o)
+GAP_STATIC_ASSERT((-1) >> 1 == -1, "right shifts are not arithmetic");
+GAP_STATIC_ASSERT((-2) >> 1 == -1, "right shifts are not arithmetic");
+
+EXPORT_INLINE Int INT_INTOBJ(Obj o)
 {
     GAP_ASSERT(IS_INTOBJ(o));
-#ifdef HAVE_ARITHRIGHTSHIFT
     return (Int)o >> 2;
-#else
-    return ((Int)o - 1) / 4;
-#endif
 }
 
 
@@ -126,7 +125,7 @@ static inline Int INT_INTOBJ(Obj o)
 **
 **  'INTOBJ_INT' converts the C integer <i> to an (immediate) integer object.
 */
-static inline Obj INTOBJ_INT(Int i)
+EXPORT_INLINE Obj INTOBJ_INT(Int i)
 {
     Obj o;
     GAP_ASSERT(INT_INTOBJ_MIN <= i && i <= INT_INTOBJ_MAX);
@@ -160,7 +159,7 @@ static inline Obj INTOBJ_INT(Int i)
 //
 // Check whether the sign and guard bit of the given word match.
 //
-static inline int DETECT_INTOBJ_OVERFLOW(UInt o)
+EXPORT_INLINE int DETECT_INTOBJ_OVERFLOW(UInt o)
 {
     const UInt BITS_IN_UINT = sizeof(UInt) * 8;
     // extract sign bit + guard bit
@@ -181,7 +180,7 @@ static inline int DETECT_INTOBJ_OVERFLOW(UInt o)
 **  <l> and <r> can be stored as (immediate) integer object  and 0 otherwise.
 **  The sum itself is stored in <o>.
 */
-static inline int sum_intobjs(Obj * o, Obj l, Obj r)
+EXPORT_INLINE int sum_intobjs(Obj * o, Obj l, Obj r)
 {
     const Int tmp = (Int)l + (Int)r - 1;
     if (DETECT_INTOBJ_OVERFLOW(tmp))
@@ -200,7 +199,7 @@ static inline int sum_intobjs(Obj * o, Obj l, Obj r)
 **  <l> and <r> can be stored as (immediate) integer object  and 0 otherwise.
 **  The difference itself is stored in <o>.
 */
-static inline int diff_intobjs(Obj * o, Obj l, Obj r)
+EXPORT_INLINE int diff_intobjs(Obj * o, Obj l, Obj r)
 {
     const Int tmp = (Int)l - (Int)r + 1;
     if (DETECT_INTOBJ_OVERFLOW(tmp))
@@ -220,31 +219,29 @@ static inline int diff_intobjs(Obj * o, Obj l, Obj r)
 **  The product itself is stored in <o>.
 */
 
+// check for __builtin_mul_overflow support
+#if defined(__has_builtin)
+  // clang >= 3.8 supports it, but better to check with __has_builtin
+  #if __has_builtin(__builtin_mul_overflow)
+  #define HAVE___BUILTIN_MUL_OVERFLOW 1
+  #endif
+#elif defined(__INTEL_COMPILER)
+  // icc >= 19.0 supports it; but already version 18.0 claims to be GCC 5
+  // compatible, so we must perform this check before that for __GNUC__
+  #if __INTEL_COMPILER >= 1900
+  #define HAVE___BUILTIN_MUL_OVERFLOW 1
+  #endif
+#elif defined(__GNUC__) && (__GNUC__ >= 5)
+  // GCC >= 5 supports it
+  #define HAVE___BUILTIN_MUL_OVERFLOW 1
+#endif
 
-#if SIZEOF_VOID_P == SIZEOF_INT && defined(HAVE_ARITHRIGHTSHIFT) &&          \
-    defined(HAVE___BUILTIN_SMUL_OVERFLOW)
-static inline Obj prod_intobjs(int l, int r)
+
+#ifdef HAVE___BUILTIN_MUL_OVERFLOW
+EXPORT_INLINE Obj prod_intobjs(Int l, Int r)
 {
-    int prod;
-    if (__builtin_smul_overflow(l >> 1, r ^ 1, &prod))
-        return (Obj)0;
-    return (Obj)((prod >> 1) ^ 1);
-}
-#elif SIZEOF_VOID_P == SIZEOF_LONG && defined(HAVE_ARITHRIGHTSHIFT) &&       \
-    defined(HAVE___BUILTIN_SMULL_OVERFLOW)
-static inline Obj prod_intobjs(long l, long r)
-{
-    long prod;
-    if (__builtin_smull_overflow(l >> 1, r ^ 1, &prod))
-        return (Obj)0;
-    return (Obj)((prod >> 1) ^ 1);
-}
-#elif SIZEOF_VOID_P == SIZEOF_LONG_LONG && defined(HAVE_ARITHRIGHTSHIFT) &&  \
-    defined(HAVE___BUILTIN_SMULLL_OVERFLOW)
-static inline Obj prod_intobjs(long long l, long long r)
-{
-    long long prod;
-    if (__builtin_smulll_overflow(l >> 1, r ^ 1, &prod))
+    Int prod;
+    if (__builtin_mul_overflow(l >> 1, r ^ 1, &prod))
         return (Obj)0;
     return (Obj)((prod >> 1) ^ 1);
 }
@@ -256,7 +253,7 @@ typedef Int4 HalfInt;
 typedef Int2 HalfInt;
 #endif
 
-static inline Obj prod_intobjs(Int l, Int r)
+EXPORT_INLINE Obj prod_intobjs(Int l, Int r)
 {
     if (l == (Int)INTOBJ_INT(0) || r == (Int)INTOBJ_INT(0))
         return INTOBJ_INT(0);
@@ -274,14 +271,9 @@ static inline Obj prod_intobjs(Int l, Int r)
     if ((HalfInt)l == (Int)l && (HalfInt)r == (Int)r)
         return (Obj)prod;
 
-// last resort: perform trial division
-#ifdef HAVE_ARITHRIGHTSHIFT
+    // last resort: perform trial division using arithmetic right shift
     if ((prod - 1) / (l >> 2) == r - 1)
         return (Obj)prod;
-#else
-    if ((prod - 1) / ((l - 1) / 4) == r - 1)
-        return (Obj)prod;
-#endif
 
     return (Obj)0;
 }

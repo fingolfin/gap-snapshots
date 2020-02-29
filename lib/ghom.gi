@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  ghom.gi                  GAP library                        Thomas Breuer
-#W                                                           Alexander Hulpke
-#W                                                             Heiko Theißen
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer, Alexander Hulpke, Heiko Theißen.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  1. Functions for creating group general mappings by images
 ##  2. Functions for creating natural homomorphisms
@@ -276,16 +276,14 @@ function( hom, elm )
   fi;
 end );
 
-InstallAttributeMethodByGroupGeneralMappingByImages
-  ( CoKernelOfMultiplicativeGeneralMapping, IsGroup );
-InstallAttributeMethodByGroupGeneralMappingByImages
-  ( KernelOfMultiplicativeGeneralMapping, IsGroup );
-InstallAttributeMethodByGroupGeneralMappingByImages( PreImagesRange, IsGroup );
-InstallAttributeMethodByGroupGeneralMappingByImages( ImagesSource, IsGroup );
-InstallAttributeMethodByGroupGeneralMappingByImages( IsSingleValued, IsBool );
-InstallAttributeMethodByGroupGeneralMappingByImages( IsInjective, IsBool );
-InstallAttributeMethodByGroupGeneralMappingByImages( IsTotal, IsBool );
-InstallAttributeMethodByGroupGeneralMappingByImages( IsSurjective, IsBool );
+InstallAttributeMethodByGroupGeneralMappingByImages( CoKernelOfMultiplicativeGeneralMapping );
+InstallAttributeMethodByGroupGeneralMappingByImages( KernelOfMultiplicativeGeneralMapping );
+InstallAttributeMethodByGroupGeneralMappingByImages( PreImagesRange );
+InstallAttributeMethodByGroupGeneralMappingByImages( ImagesSource );
+InstallAttributeMethodByGroupGeneralMappingByImages( IsSingleValued );
+InstallAttributeMethodByGroupGeneralMappingByImages( IsInjective );
+InstallAttributeMethodByGroupGeneralMappingByImages( IsTotal );
+InstallAttributeMethodByGroupGeneralMappingByImages( IsSurjective );
 
 
 #############################################################################
@@ -611,8 +609,8 @@ InstallMethod( ImagesSource, "for group homomorphism", true,
     [ IsGroupHomomorphism ], 
     # rank higher than the method for IsGroupGeneralMappingByImages,
     # as we can exploit more structure here
-    RankFilter(IsGroupHomomorphism and IsGroupGeneralMappingByImages)
-    - RankFilter(IsGroupHomomorphism),
+    {} -> RankFilter(IsGroupHomomorphism and IsGroupGeneralMappingByImages)
+        - RankFilter(IsGroupHomomorphism),
 function(hom)
 local gens, G;
   gens := GeneratorsOfGroup(Source(hom));
@@ -1627,9 +1625,3 @@ end);
 # methods to assume that they are invoked with a finite group, we
 # redispatch upon that condition.
 RedispatchOnCondition(RegularActionHomomorphism,true,[IsGroup],[IsFinite],0);
-
-
-#############################################################################
-##
-#E
-

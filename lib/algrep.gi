@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  algrep.gi                  GAP library               Willem de Graaf
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Willem de Graaf.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the methods for general modules over algebras.
 ##
@@ -567,8 +568,7 @@ InstallMethod( CloseMutableBasis,
     [ IsMutableBasis and IsMutable and
       IsMutableBasisViaUnderlyingMutableBasisRep, IsVector ], 0,
     function( MB, v )
-
-       CloseMutableBasis( MB!.underlyingMutableBasis, ExtRepOfObj( v ) );
+    return CloseMutableBasis( MB!.underlyingMutableBasis, ExtRepOfObj( v ) );
 
 end );
 
@@ -3658,10 +3658,3 @@ InstallMethod( TranslatorSubalgebra,
     fi;
 
 end );
-
-
-
-#############################################################################
-##
-#E
-

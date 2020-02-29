@@ -1,15 +1,19 @@
 #############################################################################
 ##
-#W  oprtpcgs.gi                 GAP library                    Heiko Theißen
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Heiko Theißen.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 
-InstallGlobalFunction(Pcs_OrbitStabilizer,function(pcgs,D,pnt,acts,act)
-local   orb,             # orbit
+#function(pcgs,D,pnt,acts,act[,dict]) -- allow to reuse dictionary
+# in case of many short orbits
+InstallGlobalFunction(Pcs_OrbitStabilizer,function(arg)
+local   pcgs,D,pnt,acts,act,
+        orb,             # orbit
 	len,             # lengths of orbit before each extension
 	d,		 # dictionary
 	S, rel,   # stabilizer and induced pcgs
@@ -18,8 +22,14 @@ local   orb,             # orbit
 	depths,          # depths of stabilizer generators
 	i, ii, j, k;     # loop variables
 
+  pcgs:=arg[1];D:=arg[2];pnt:=arg[3];acts:=arg[4];act:=arg[5];
+
   pnt:=Immutable(pnt);
-  d:=NewDictionary(pnt,true,D);
+  if Length(arg)>5 then
+    d:=arg[6];
+  else
+    d:=NewDictionary(pnt,true,D);
+  fi;
   orb := [ pnt ];
   AddDictionary(d,pnt,1);
   len := ListWithIdenticalEntries( Length( pcgs ) + 1, 0 );

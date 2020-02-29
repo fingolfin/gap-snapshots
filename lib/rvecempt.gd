@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  rvecempt.gd                 GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the implementation of immutable empty row vectors.
 ##  An empty row vector is an immutable empty list whose family is
@@ -26,9 +27,3 @@
 ##  is an empty row vector whose family is the collections family of <F>.
 ##
 DeclareAttribute( "EmptyRowVector", IsFamily );
-
-
-#############################################################################
-##
-#E
-

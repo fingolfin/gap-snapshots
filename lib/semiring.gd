@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  semiring.gd                 GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1999,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file declares the operations for semirings.
 ##
@@ -80,7 +81,7 @@ InstallFactorMaintenance( IsRDistributive,
 ##  <Description>
 ##  is <K>true</K> if the collection <A>C</A> is both left and right
 ##  distributive
-##  (see <Ref Func="IsLDistributive"/>, <Ref Func="IsRDistributive"/>),
+##  (see <Ref Prop="IsLDistributive"/>, <Ref Prop="IsRDistributive"/>),
 ##  and <K>false</K> otherwise.
 ##  <Example><![CDATA[
 ##  gap> IsDistributive( Integers );
@@ -553,9 +554,3 @@ DeclareGlobalFunction( "SubsemiringWithOneAndZeroNC" );
 ##  </ManSection>
 ##
 DeclareAttribute( "CentralIdempotentsOfSemiring", IsSemiring );
-
-
-#############################################################################
-##
-#E
-

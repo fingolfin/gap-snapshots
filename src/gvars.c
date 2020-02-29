@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  gvars.c                     GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the functions of the global variables package.
 **
@@ -87,7 +87,7 @@ static Obj * PtrGVars[GVAR_BUCKETS];
 **  access global variables.
 **
 **  Since a   garbage  collection may move   this  bag around,    the pointer
-**  'PtrGVars' must be  revalculated afterwards.   This is done in function
+**  'PtrGVars' must be  recalculated afterwards.   This is done in function
 **  'GVarsAfterCollectBags' which is called by 'VarsAfterCollectBags'.
 */
 static Obj   ValGVars;
@@ -164,12 +164,12 @@ static void UnlockGVars(void) {
 // it by ValGVar everywhere? The difference is of course the memory barrier,
 // which might cause a performance penalty (OTOH, not using it right now might
 // or might not be a bug?!?)
-#define VAL_GVAR_INTERN(gvar)          (PtrGVars[GVAR_BUCKET(gvar)] \
-				[GVAR_INDEX(gvar)-1])
+#define VAL_GVAR_INTERN(gvar)   (PtrGVars[GVAR_BUCKET(gvar)] \
+                                    [GVAR_INDEX(gvar)-1])
 
 #else
 
-#define VAL_GVAR_INTERN(gvar)          PtrGVars[ (gvar) ]
+#define VAL_GVAR_INTERN(gvar)   PtrGVars[ (gvar) ]
 
 #endif
 
@@ -186,14 +186,14 @@ inline Obj ValGVar(UInt gvar) {
 /****************************************************************************
 **
 *V  NameGVars . . . . . . . . . . . . . . . . . . . names of global variables
-*V  WriteGVars  . . . . . . . . . . . . .  writable flags of global variables
+*V  FlagsGVars  . . . . . . . . . . . . flags of global variables (see below)
 *V  ExprGVars . . . . . . . . . .  expressions for automatic global variables
 *V  CopiesGVars . . . . . . . . . . . . . internal copies of global variables
 *V  FopiesGVars . . . . . . . .  internal function copies of global variables
 */
 #ifdef USE_GVAR_BUCKETS
 static Obj             NameGVars[GVAR_BUCKETS];
-static Obj             WriteGVars[GVAR_BUCKETS];
+static Obj             FlagsGVars[GVAR_BUCKETS];
 static Obj             ExprGVars[GVAR_BUCKETS];
 static Obj             CopiesGVars[GVAR_BUCKETS];
 static Obj             FopiesGVars[GVAR_BUCKETS];
@@ -210,7 +210,7 @@ static Obj             FopiesGVars[GVAR_BUCKETS];
 #else   // USE_GVAR_BUCKETS
 
 static Obj             NameGVars;
-static Obj             WriteGVars;
+static Obj             FlagsGVars;
 static Obj             ExprGVars;
 static Obj             CopiesGVars;
 static Obj             FopiesGVars;
@@ -225,6 +225,75 @@ static Obj             FopiesGVars;
     CHANGED_BAG( list );
 
 #endif
+
+// FlagsGVars contains information about global variables.
+// Once cast to a GVarFlagInfo struct, this information is:
+//
+// gvarWriteFlag: A value of type GVarWriteFlag which denotes if the variable
+// is Assignable, ReadOnly, or Constant.
+// hasExprCopiesFopies: If the variable has ever had a non-default value
+// assigned to ExprGVars, CopiesGVars or FopiesGVars. Note that this value is
+// never cleared at present, so it can be set to 1 while these three arrays
+// all have their default value, but if it is 0 these arrays definitely have
+// their default values.
+
+typedef enum {
+    GVarAssignable = 0,
+    GVarReadOnly = 1,
+    GVarConstant = 2,
+} GVarWriteFlag;
+
+typedef struct {
+    unsigned char gvarWriteFlag : 2;
+    unsigned char hasExprCopiesFopies : 1;
+} GVarFlagInfo;
+
+// If this size increases, the type used in GetGVarFlags and
+// SetGVarFlags below must be changed
+GAP_STATIC_ASSERT(sizeof(GVarFlagInfo) == sizeof(unsigned char),
+                  "GVarFlagInfo size mismatch");
+
+static GVarFlagInfo GetGVarFlagInfo(Int gvar)
+{
+    unsigned char val = INT_INTOBJ(ELM_GVAR_LIST(FlagsGVars, gvar));
+    GVarFlagInfo  info;
+    // This is technically the safest way of converting a struct to an integer
+    // and is optimised away by the compiler
+    memcpy(&info, &val, sizeof(GVarFlagInfo));
+    return info;
+}
+
+static void SetGVarFlagInfo(Int gvar, GVarFlagInfo info)
+{
+    unsigned char val;
+    // This is technically the safest way of converting an integer into a
+    // struct and is optimised away by the compiler
+    memcpy(&val, &info, sizeof(GVarFlagInfo));
+    SET_ELM_GVAR_LIST(FlagsGVars, gvar, INTOBJ_INT(val));
+}
+
+static void InitGVarFlagInfo(Int gvar)
+{
+    // This is equal to setting all members of GVarFlagInfo to 0
+    SET_ELM_GVAR_LIST(FlagsGVars, gvar, INTOBJ_INT(0));
+}
+
+
+// Helper functions to more easily set members of GVarFlagInfo
+static void SetGVarWriteState(Int gvar, GVarWriteFlag w)
+{
+    GVarFlagInfo info = GetGVarFlagInfo(gvar);
+    info.gvarWriteFlag = w;
+    SetGVarFlagInfo(gvar, info);
+}
+
+static void SetHasExprCopiesFopies(Int gvar, Int set)
+{
+    GVarFlagInfo info = GetGVarFlagInfo(gvar);
+    info.hasExprCopiesFopies = set;
+    SetGVarFlagInfo(gvar, info);
+}
+
 
 /****************************************************************************
 **
@@ -252,9 +321,7 @@ static Obj             TableGVars;
 */
 Obj             ErrorMustEvalToFuncFunc;
 
-Obj             ErrorMustEvalToFuncHandler (
-    Obj                 self,
-    Obj                 args )
+static Obj ErrorMustEvalToFuncHandler(Obj self, Obj args)
 {
     ErrorQuit(
         "Function Calls: <func> must be a function",
@@ -276,9 +343,7 @@ Obj             ErrorMustEvalToFuncHandler (
 */
 Obj             ErrorMustHaveAssObjFunc;
 
-Obj             ErrorMustHaveAssObjHandler (
-    Obj                 self,
-    Obj                 args )
+static Obj ErrorMustHaveAssObjHandler(Obj self, Obj args)
 {
     ErrorQuit(
         "Variable: <<unknown>> must have an assigned value",
@@ -304,32 +369,12 @@ static Obj * ELM_COPS_PLIST(Obj cops, UInt i)
     return (Obj *)val;
 }
 
-void            AssGVar (
-    UInt                gvar,
-    Obj                 val )
+static void AssGVarInternal(UInt gvar, Obj val, Int hasExprCopiesFopies)
 {
     Obj                 cops;           /* list of internal copies         */
     Obj *               copy;           /* one copy                        */
     UInt                i;              /* loop variable                   */
     Obj                 onam;           /* object of <name>                */
-
-    Obj writeval;
-
-    writeval = ELM_GVAR_LIST(WriteGVars, gvar);
-
-    // Make certain variable is not constant
-    if (writeval == INTOBJ_INT(-1)) {
-        ErrorMayQuit("Variable: '%g' is constant", (Int)NameGVar(gvar), 0L);
-    }
-
-    /* make certain that the variable is not read only                     */
-    while ( (REREADING != True) &&
-            (ELM_GVAR_LIST( WriteGVars, gvar ) == INTOBJ_INT(0)) ) {
-        ErrorReturnVoid(
-            "Variable: '%g' is read only",
-            (Int)NameGVar(gvar), 0L,
-            "you can 'return;' after making it writable" );
-    }
 
     /* assign the value to the global variable                             */
 #ifdef HPCGAP
@@ -344,6 +389,26 @@ void            AssGVar (
 #endif
     VAL_GVAR_INTERN(gvar) = val;
     CHANGED_GVAR_LIST( ValGVars, gvar );
+
+    /* assign name to a function                                           */
+#ifdef HPCGAP
+    if (IS_BAG_REF(val) && REGION(val) == 0) { /* public region? */
+#endif
+        if (val != 0 && TNUM_OBJ(val) == T_FUNCTION && NAME_FUNC(val) == 0) {
+            onam = CopyToStringRep(NameGVar(gvar));
+            MakeImmutable(onam);
+            SET_NAME_FUNC(val, onam);
+            CHANGED_BAG(val);
+        }
+#ifdef HPCGAP
+    }
+#endif
+
+
+    if (!hasExprCopiesFopies) {
+        // No need to perform any of the remaining checks
+        return;
+    }
 
     /* if the global variable was automatic, convert it to normal          */
     SET_ELM_GVAR_LIST( ExprGVars, gvar, 0 );
@@ -387,20 +452,42 @@ void            AssGVar (
             *copy = ErrorMustHaveAssObjFunc;
         }
     }
+}
 
-    /* assign name to a function                                           */
-#ifdef HPCGAP
-    if (IS_BAG_REF(val) && REGION(val) == 0) { /* public region? */
-#endif
-    if ( val != 0 && TNUM_OBJ(val) == T_FUNCTION && NAME_FUNC(val) == 0 ) {
-        onam = CopyToStringRep(NameGVar(gvar));
-        MakeImmutableString(onam);
-        SET_NAME_FUNC(val, onam);
-        CHANGED_BAG(val);
+void AssGVar(UInt gvar, Obj val)
+{
+    GVarFlagInfo info = GetGVarFlagInfo(gvar);
+
+    if (info.gvarWriteFlag != GVarAssignable) {
+        /* make certain that the variable is not read only */
+        if ((REREADING != True) && info.gvarWriteFlag == GVarReadOnly) {
+            ErrorMayQuit("Variable: '%g' is read only", (Int)NameGVar(gvar),
+                         0);
+        }
+
+        // Make certain variable is not constant
+        if (info.gvarWriteFlag == GVarConstant) {
+            ErrorMayQuit("Variable: '%g' is constant", (Int)NameGVar(gvar),
+                         0L);
+        }
     }
-#ifdef HPCGAP
+
+    AssGVarInternal(gvar, val, info.hasExprCopiesFopies);
+}
+
+// This is a kernel-only variant of AssGVar which will change read-only
+// variables, which is used for constants like:
+// Time, MemoryAllocated, last, last2, last3
+void AssGVarWithoutReadOnlyCheck(UInt gvar, Obj val)
+{
+    GVarFlagInfo info = GetGVarFlagInfo(gvar);
+
+    // Make certain variable is not constant
+    if (info.gvarWriteFlag == GVarConstant) {
+        ErrorMayQuit("Variable: '%g' is constant", (Int)NameGVar(gvar), 0L);
     }
-#endif
+
+    AssGVarInternal(gvar, val, info.hasExprCopiesFopies);
 }
 
 
@@ -437,11 +524,11 @@ Obj             ValAutoGVar (
         CALL_1ARGS( func, arg );
 
         /* if this is still an automatic variable, this is an error        */
-        while ( (val = ValGVar(gvar)) == 0 ) {
-            ErrorReturnVoid(
-       "Variable: automatic variable '%g' must get a value by function call",
-                (Int)NameGVar(gvar), 0L,
-                "you can 'return;' after assigning a value" );
+        val = ValGVar(gvar);
+        if (val == 0) {
+            ErrorMayQuit("Variable: automatic variable '%g' must get a value "
+                         "by function call",
+                         (Int)NameGVar(gvar), 0);
         }
 
     }
@@ -478,12 +565,13 @@ Obj             ValGVarTL (
     return val;
 }
 
-Obj FuncIsThreadLocalGVar( Obj self, Obj name) {
+static Obj FuncIsThreadLocalGVar(Obj self, Obj name)
+{
   if (!IsStringConv(name))
     ErrorMayQuit("IsThreadLocalGVar: argument must be a string (not a %s)",
                  (Int)TNAM_OBJ(name), 0L);
 
-  UInt gvar = GVarName(CSTR_STRING(name));
+  UInt gvar = GVarName(CONST_CSTR_STRING(name));
   return (VAL_GVAR_INTERN(gvar) == 0 && IS_INTOBJ(ExprGVar(gvar))) ?
     True: False;
 }
@@ -491,7 +579,8 @@ Obj FuncIsThreadLocalGVar( Obj self, Obj name) {
 
 
 #ifdef USE_GVAR_BUCKETS
-Obj NewGVarBucket(void) {
+static Obj NewGVarBucket(void)
+{
     Obj result = NEW_PLIST(T_PLIST, GVAR_BUCKET_SIZE);
     SET_LEN_PLIST(result, GVAR_BUCKET_SIZE);
 #ifdef HPCGAP
@@ -515,13 +604,13 @@ Obj ExprGVar ( UInt gvar )
 
 /* TL: Obj CurrNamespace = 0; */
 
-Obj FuncSET_NAMESPACE(Obj self, Obj str)
+static Obj FuncSET_NAMESPACE(Obj self, Obj str)
 {
     STATE(CurrNamespace) = str;
     return 0;
 }
 
-Obj FuncGET_NAMESPACE(Obj self)
+static Obj FuncGET_NAMESPACE(Obj self)
 {
     return STATE(CurrNamespace);
 }
@@ -557,7 +646,7 @@ UInt GVarName (
     UInt                sizeGVars;      // size of <TableGVars>
 
     /* First see whether it could be namespace-local: */
-    cns = STATE(CurrNamespace) ? CSTR_STRING(STATE(CurrNamespace)) : "";
+    cns = STATE(CurrNamespace) ? CONST_CSTR_STRING(STATE(CurrNamespace)) : "";
     if (*cns) {   /* only if a namespace is set */
         len = strlen(name);
         if (name[len-1] == NSCHAR) {
@@ -577,7 +666,7 @@ UInt GVarName (
     sizeGVars = LEN_PLIST(TableGVars);
     pos = (hash % sizeGVars) + 1;
     while ( (gvar = ELM_PLIST( TableGVars, pos )) != 0
-         && strncmp( CSTR_STRING( NameGVar( INT_INTOBJ(gvar) ) ), name, 1023 ) ) {
+         && strncmp( CONST_CSTR_STRING( NameGVar( INT_INTOBJ(gvar) ) ), name, 1023 ) ) {
         pos = (pos % sizeGVars) + 1;
     }
 
@@ -591,7 +680,7 @@ UInt GVarName (
         sizeGVars = LEN_PLIST(TableGVars);
         pos = (hash % sizeGVars) + 1;
         while ( (gvar = ELM_PLIST( TableGVars, pos )) != 0
-             && strncmp( CSTR_STRING( NameGVar( INT_INTOBJ(gvar) ) ), name, 1023 ) ) {
+             && strncmp( CONST_CSTR_STRING( NameGVar( INT_INTOBJ(gvar) ) ), name, 1023 ) ) {
             pos = (pos % sizeGVars) + 1;
         }
     }
@@ -614,7 +703,7 @@ UInt GVarName (
            ValGVars[gvar_bucket] = NewGVarBucket();
            PtrGVars[gvar_bucket] = ADDR_OBJ(ValGVars[gvar_bucket])+1;
            NameGVars[gvar_bucket] = NewGVarBucket();
-           WriteGVars[gvar_bucket] = NewGVarBucket();
+           FlagsGVars[gvar_bucket] = NewGVarBucket();
            ExprGVars[gvar_bucket] = NewGVarBucket();
            CopiesGVars[gvar_bucket] = NewGVarBucket();
            FopiesGVars[gvar_bucket] = NewGVarBucket();
@@ -624,8 +713,8 @@ UInt GVarName (
         SET_LEN_PLIST( ValGVars,    numGVars );
         GROW_PLIST(    NameGVars,   numGVars );
         SET_LEN_PLIST( NameGVars,   numGVars );
-        GROW_PLIST(    WriteGVars,  numGVars );
-        SET_LEN_PLIST( WriteGVars,  numGVars );
+        GROW_PLIST(FlagsGVars, numGVars);
+        SET_LEN_PLIST(FlagsGVars, numGVars);
         GROW_PLIST(    ExprGVars,   numGVars );
         SET_LEN_PLIST( ExprGVars,   numGVars );
         GROW_PLIST(    CopiesGVars, numGVars );
@@ -637,7 +726,7 @@ UInt GVarName (
         SET_ELM_GVAR_LIST( ValGVars,    numGVars, 0 );
         SET_ELM_GVAR_LIST( NameGVars,   numGVars, string );
         CHANGED_GVAR_LIST( NameGVars,   numGVars );
-        SET_ELM_GVAR_LIST( WriteGVars,  numGVars, INTOBJ_INT(1) );
+        InitGVarFlagInfo( numGVars );
         SET_ELM_GVAR_LIST( ExprGVars,   numGVars, 0 );
         SET_ELM_GVAR_LIST( CopiesGVars, numGVars, 0 );
         SET_ELM_GVAR_LIST( FopiesGVars, numGVars, 0 );
@@ -654,7 +743,7 @@ UInt GVarName (
             for ( i = 1; i <= (sizeGVars-1)/2; i++ ) {
                 gvar2 = ELM_PLIST( table, i );
                 if ( gvar2 == 0 )  continue;
-                pos = HashString( CSTR_STRING( NameGVar( INT_INTOBJ(gvar2) ) ) );
+                pos = HashString( CONST_CSTR_STRING( NameGVar( INT_INTOBJ(gvar2) ) ) );
                 pos = (pos % sizeGVars) + 1;
                 while ( ELM_PLIST( TableGVars, pos ) != 0 ) {
                     pos = (pos % sizeGVars) + 1;
@@ -680,11 +769,10 @@ UInt GVarName (
 void MakeReadOnlyGVar (
     UInt                gvar )
 {
-    if (ELM_GVAR_LIST(WriteGVars, gvar) == INTOBJ_INT(-1)) {
+    if (IsConstantGVar(gvar)) {
         ErrorMayQuit("Variable: '%g' is constant", (Int)NameGVar(gvar), 0L);
     }
-    SET_ELM_GVAR_LIST( WriteGVars, gvar, INTOBJ_INT(0) );
-    CHANGED_GVAR_LIST( WriteGVars, gvar );
+    SetGVarWriteState(gvar, GVarReadOnly);
 }
 
 /****************************************************************************
@@ -699,8 +787,7 @@ void MakeConstantGVar(UInt gvar)
             "Variable: '%g' must be assigned a small integer, true or false",
             (Int)NameGVar(gvar), 0L);
     }
-    SET_ELM_GVAR_LIST(WriteGVars, gvar, INTOBJ_INT(-1));
-    CHANGED_GVAR_LIST(WriteGVars, gvar);
+    SetGVarWriteState(gvar, GVarConstant);
 }
 
 
@@ -718,6 +805,7 @@ void MakeThreadLocalVar (
     if (IS_INTOBJ(ExprGVar(gvar)))
        value = (Obj) 0;
     SET_ELM_GVAR_LIST( ExprGVars, gvar, INTOBJ_INT(rnam) );
+    SetHasExprCopiesFopies(gvar, 1);
     CHANGED_GVAR_LIST( ExprGVars, gvar );
     if (value && TLVars)
         SetTLDefault(TLVars, rnam, value);
@@ -736,20 +824,13 @@ void MakeThreadLocalVar (
 **  'MakeReadOnlyGVar' make the global  variable with the name <name>  (which
 **  must be a GAP string) read only.
 */
-Obj FuncMakeReadOnlyGVar (
-    Obj                 self,
-    Obj                 name )
+static Obj FuncMakeReadOnlyGVar(Obj self, Obj name)
 {       
-    /* check the argument                                                  */
-    while ( ! IsStringConv( name ) ) {
-        name = ErrorReturnObj(
-            "MakeReadOnlyGVar: <name> must be a string (not a %s)",
-            (Int)TNAM_OBJ(name), 0L,
-            "you can return a string for <name>" );
-    }
+    // check the argument
+    RequireStringRep("MakeReadOnlyGVar", name);
 
     /* get the variable and make it read only                              */
-    MakeReadOnlyGVar(GVarName(CSTR_STRING(name)));
+    MakeReadOnlyGVar(GVarName(CONST_CSTR_STRING(name)));
 
     /* return void                                                         */
     return 0;
@@ -766,17 +847,13 @@ Obj FuncMakeReadOnlyGVar (
 **  'MakeConstantGVar' make the global  variable with the name <name>  (which
 **  must be a GAP string) constant.
 */
-Obj FuncMakeConstantGVar(Obj self, Obj name)
+static Obj FuncMakeConstantGVar(Obj self, Obj name)
 {
-    /* check the argument                                                  */
-    while (!IsStringConv(name)) {
-        name = ErrorReturnObj(
-            "MakeConstantGVar: <name> must be a string (not a %s)",
-            (Int)TNAM_OBJ(name), 0L, "you can return a string for <name>");
-    }
+    // check the argument
+    RequireStringRep("MakeConstantGVar", name);
 
     /* get the variable and make it read only                              */
-    MakeConstantGVar(GVarName(CSTR_STRING(name)));
+    MakeConstantGVar(GVarName(CONST_CSTR_STRING(name)));
 
     /* return void                                                         */
     return 0;
@@ -789,11 +866,10 @@ Obj FuncMakeConstantGVar(Obj self, Obj name)
 void MakeReadWriteGVar (
     UInt                gvar )
 {
-    if (ELM_GVAR_LIST(WriteGVars, gvar) == INTOBJ_INT(-1)) {
+    if (IsConstantGVar(gvar)) {
         ErrorMayQuit("Variable: '%g' is constant", (Int)NameGVar(gvar), 0L);
     }
-    SET_ELM_GVAR_LIST( WriteGVars, gvar, INTOBJ_INT(1) );
-    CHANGED_GVAR_LIST( WriteGVars, gvar );
+    SetGVarWriteState(gvar, GVarAssignable);
 }
 
 
@@ -808,20 +884,13 @@ void MakeReadWriteGVar (
 **  'MakeReadWriteGVar' make the global  variable with the name <name>  (which
 **  must be a GAP string) read and writable.
 */
-Obj FuncMakeReadWriteGVar (
-    Obj                 self,
-    Obj                 name )
+static Obj FuncMakeReadWriteGVar(Obj self, Obj name)
 {
-    /* check the argument                                                  */
-    while ( ! IsStringConv( name ) ) {
-        name = ErrorReturnObj(
-            "MakeReadWriteGVar: <name> must be a string (not a %s)",
-            (Int)TNAM_OBJ(name), 0L,
-            "you can return a string for <name>" );
-    }
+    // check the argument
+    RequireStringRep("MakeReadWriteGVar", name);
 
     /* get the variable and make it read write                             */
-    MakeReadWriteGVar(GVarName(CSTR_STRING(name)));
+    MakeReadWriteGVar(GVarName(CONST_CSTR_STRING(name)));
 
     /* return void                                                         */
     return 0;
@@ -834,7 +903,7 @@ Obj FuncMakeReadWriteGVar (
 Int IsReadOnlyGVar (
     UInt                gvar )
 {
-    return ELM_GVAR_LIST(WriteGVars, gvar) == INTOBJ_INT(0);
+    return GetGVarFlagInfo(gvar).gvarWriteFlag == GVarReadOnly;
 }
 
 /****************************************************************************
@@ -847,16 +916,11 @@ static Obj FuncIsReadOnlyGVar (
     Obj                 self,
     Obj                 name )
 {
-    /* check the argument                                                  */
-    while ( ! IsStringConv( name ) ) {
-        name = ErrorReturnObj(
-            "IsReadOnlyGVar: <name> must be a string (not a %s)",
-            (Int)TNAM_OBJ(name), 0L,
-            "you can return a string for <name>" );
-    }
+    // check the argument
+    RequireStringRep("IsReadOnlyGVar", name);
 
     /* get the answer                             */
-    return IsReadOnlyGVar(GVarName(CSTR_STRING(name))) ? True : False;
+    return IsReadOnlyGVar(GVarName(CONST_CSTR_STRING(name))) ? True : False;
 }
 
 /****************************************************************************
@@ -865,7 +929,7 @@ static Obj FuncIsReadOnlyGVar (
 */
 Int IsConstantGVar(UInt gvar)
 {
-    return INT_INTOBJ(ELM_GVAR_LIST(WriteGVars, gvar)) == -1;
+    return GetGVarFlagInfo(gvar).gvarWriteFlag == GVarConstant;
 }
 
 /****************************************************************************
@@ -877,14 +941,10 @@ Int IsConstantGVar(UInt gvar)
 static Obj FuncIsConstantGVar(Obj self, Obj name)
 {
     // check the argument
-    while (!IsStringConv(name)) {
-        name = ErrorReturnObj(
-            "IsConstantGVar: <name> must be a string (not a %s)",
-            (Int)TNAM_OBJ(name), 0L, "you can return a string for <name>");
-    }
+    RequireStringRep("IsConstantGVar", name);
 
     /* get the answer                             */
-    return IsConstantGVar(GVarName(CSTR_STRING(name))) ? True : False;
+    return IsConstantGVar(GVarName(CONST_CSTR_STRING(name))) ? True : False;
 }
 
 
@@ -903,9 +963,7 @@ static Obj FuncIsConstantGVar(Obj self, Obj name)
 **  cause the execution  of an assignment to  that global variable, otherwise
 **  an error is signalled.
 */
-Obj             FuncAUTO (
-    Obj                 self,
-    Obj                 args )
+static Obj FuncAUTO(Obj self, Obj args)
 {
     Obj                 func;           /* the function to call            */
     Obj                 arg;            /* the argument to pass            */
@@ -914,44 +972,24 @@ Obj             FuncAUTO (
     UInt                gvar;           /* one global variable             */
     UInt                i;              /* loop variable                   */
 
-    /* check that there are enough arguments                               */
-    if ( LEN_LIST(args) < 2 ) {
-        ErrorQuit(
-            "usage: AUTO( <func>, <arg>, <name1>... )",
-            0L, 0L );
-        return 0;
-    }
-
     /* get and check the function                                          */
     func = ELM_LIST( args, 1 );
-    while ( TNUM_OBJ(func) != T_FUNCTION ) {
-        func = ErrorReturnObj(
-            "AUTO: <func> must be a function (not a %s)",
-            (Int)TNAM_OBJ(func), 0L,
-            "you can return a function for <func>" );
-    }
+    RequireFunction("AUTO", func);
 
     /* get the argument                                                    */
     arg = ELM_LIST( args, 2 );
 
     /* make the list of function and argument                              */
-    list = NEW_PLIST( T_PLIST, 2 );
-    SET_LEN_PLIST( list, 2 );
-    SET_ELM_PLIST( list, 1, func );
-    SET_ELM_PLIST( list, 2, arg );
+    list = NewPlistFromArgs(func, arg);
 
     /* make the global variables automatic                                 */
     for ( i = 3; i <= LEN_LIST(args); i++ ) {
         name = ELM_LIST( args, i );
-        while ( ! IsStringConv(name) ) {
-            name = ErrorReturnObj(
-                "AUTO: <name> must be a string (not a %s)",
-                (Int)TNAM_OBJ(name), 0L,
-                "you can return a string for <name>" );
-        }
-        gvar = GVarName( CSTR_STRING(name) );
+        RequireStringRep("AUTO", name);
+        gvar = GVarName( CONST_CSTR_STRING(name) );
         SET_ELM_GVAR_LIST( ValGVars, gvar, 0 );
         SET_ELM_GVAR_LIST( ExprGVars, gvar, list );
+        SetHasExprCopiesFopies(gvar, 1);
         CHANGED_GVAR_LIST( ExprGVars, gvar );
     }
 
@@ -969,13 +1007,13 @@ UInt            iscomplete_gvar (
     Char *              name,
     UInt                len )
 {
-    Char *              curr;
+    const Char *        curr;
     UInt                i, k;
     UInt                numGVars;
 
     numGVars = INT_INTOBJ(CountGVars);
     for ( i = 1; i <= numGVars; i++ ) {
-        curr = CSTR_STRING( NameGVar( i ) );
+        curr = CONST_CSTR_STRING( NameGVar( i ) );
         for ( k = 0; name[k] != 0 && curr[k] == name[k]; k++ ) ;
         if ( k == len && curr[k] == '\0' )  return 1;
     }
@@ -986,8 +1024,8 @@ UInt            completion_gvar (
     Char *              name,
     UInt                len )
 {
-    Char *              curr;
-    Char *              next;
+    const Char *        curr;
+    const Char *        next;
     UInt                i, k;
     UInt                numGVars;
 
@@ -996,7 +1034,7 @@ UInt            completion_gvar (
     for ( i = 1; i <= numGVars; i++ ) {
         /* consider only variables which are currently bound for completion */
         if ( VAL_GVAR_INTERN( i ) || ELM_GVAR_LIST( ExprGVars, i )) {
-            curr = CSTR_STRING( NameGVar( i ) );
+            curr = CONST_CSTR_STRING( NameGVar( i ) );
             for ( k = 0; name[k] != 0 && curr[k] == name[k]; k++ ) ;
             if ( k < len || curr[k] <= name[k] )  continue;
             if ( next != 0 ) {
@@ -1021,8 +1059,7 @@ UInt            completion_gvar (
 **
 *F  FuncIDENTS_GVAR( <self> ) . . . . . . . . . .  idents of global variables
 */
-Obj FuncIDENTS_GVAR (
-    Obj                 self )
+static Obj FuncIDENTS_GVAR(Obj self)
 {
     Obj                 copy;
     UInt                i;
@@ -1049,8 +1086,7 @@ Obj FuncIDENTS_GVAR (
     return copy;
 }
 
-Obj FuncIDENTS_BOUND_GVARS (
-    Obj                 self )
+static Obj FuncIDENTS_BOUND_GVARS(Obj self)
 {
     Obj                 copy;
     UInt                i, j;
@@ -1085,20 +1121,12 @@ Obj FuncIDENTS_BOUND_GVARS (
 **
 *F  FuncASS_GVAR( <self>, <gvar>, <val> ) . . . . assign to a global variable
 */
-Obj FuncASS_GVAR (
-    Obj                 self,
-    Obj                 gvar,
-    Obj                 val )
+static Obj FuncASS_GVAR(Obj self, Obj gvar, Obj val)
 {
-    /* check the argument                                                  */
-    while ( ! IsStringConv( gvar ) ) {
-        gvar = ErrorReturnObj(
-            "READ: <gvar> must be a string (not a %s)",
-            (Int)TNAM_OBJ(gvar), 0L,
-            "you can return a string for <gvar>" );
-    }
+    // check the argument
+    RequireStringRep("ASS_GVAR", gvar);
 
-    AssGVar( GVarName( CSTR_STRING(gvar) ), val );
+    AssGVar( GVarName( CONST_CSTR_STRING(gvar) ), val );
     return 0L;
 }
 
@@ -1107,19 +1135,12 @@ Obj FuncASS_GVAR (
 **
 *F  FuncISB_GVAR( <self>, <gvar> )  . . check assignment of a global variable
 */
-Obj FuncISB_GVAR (
-    Obj                 self,
-    Obj                 gvar )
+static Obj FuncISB_GVAR(Obj self, Obj gvar)
 {
-    /* check the argument                                                  */
-    while ( ! IsStringConv( gvar ) ) {
-        gvar = ErrorReturnObj(
-            "ISB_GVAR: <gvar> must be a string (not a %s)",
-            (Int)TNAM_OBJ(gvar), 0L,
-            "you can return a string for <gvar>" );
-    }
+    // check the argument
+    RequireStringRep("ISB_GVAR", gvar);
 
-    UInt gv = GVarName( CSTR_STRING(gvar) );
+    UInt gv = GVarName( CONST_CSTR_STRING(gvar) );
     if (VAL_GVAR_INTERN(gv))
       return True;
     Obj expr = ExprGVar(gv);
@@ -1134,32 +1155,37 @@ Obj FuncISB_GVAR (
 #endif
 }
 
+/****************************************************************************
+**
+*F  FuncIS_AUTO_GVAR( <self>, <gvar> ) . . check if a global variable is auto
+*/
+
+static Obj FuncIS_AUTO_GVAR(Obj self, Obj gvar)
+{
+    // check the argument
+    RequireStringRep("IS_AUTO_GVAR", gvar);
+    Obj expr = ExprGVar(GVarName( CONST_CSTR_STRING(gvar) ) );
+    return (expr && !IS_INTOBJ(expr)) ? True : False;
+}
+
 
 /****************************************************************************
 **
 *F  FuncVAL_GVAR( <self>, <gvar> )  . . contents of a global variable
 */
 
-Obj FuncVAL_GVAR (
-    Obj                 self,
-   Obj                 gvar )
+static Obj FuncVAL_GVAR(Obj self, Obj gvar)
 {
-  Obj val;
-    /* check the argument                                                  */
-    while ( ! IsStringConv( gvar ) ) {
-        gvar = ErrorReturnObj(
-            "VAL_GVAR: <gvar> must be a string (not a %s)",
-            (Int)TNAM_OBJ(gvar), 0L,
-            "you can return a string for <gvar>" );
-    }
+    Obj val;
+
+    // check the argument
+    RequireStringRep("VAL_GVAR", gvar);
 
     /* get the value */
-    val = ValAutoGVar( GVarName( CSTR_STRING(gvar) ) );
+    val = ValAutoGVar( GVarName( CONST_CSTR_STRING(gvar) ) );
 
-    while (val == (Obj) 0)
-      val = ErrorReturnObj("VAL_GVAR: No value bound to %g",
-                           (Int)gvar, (Int) 0,
-                           "you can return a value" );
+    if (val == 0)
+        ErrorMayQuit("VAL_GVAR: No value bound to %g", (Int)gvar, 0);
     return val;
 }
 
@@ -1168,20 +1194,13 @@ Obj FuncVAL_GVAR (
 *F  FuncUNB_GVAR( <self>, <gvar> )  . . unbind a global variable
 */
 
-Obj FuncUNB_GVAR (
-    Obj                 self,
-    Obj                 gvar )
+static Obj FuncUNB_GVAR(Obj self, Obj gvar)
 {
-    /* check the argument                                                  */
-    while ( ! IsStringConv( gvar ) ) {
-        gvar = ErrorReturnObj(
-            "UNB_GVAR: <gvar> must be a string (not a %s)",
-            (Int)TNAM_OBJ(gvar), 0L,
-            "you can return a string for <gvar>" );
-    }
+    // check the argument
+    RequireStringRep("UNB_GVAR", gvar);
 
     /*  */
-    AssGVar( GVarName( CSTR_STRING(gvar) ), (Obj)0 );
+    AssGVar( GVarName( CONST_CSTR_STRING(gvar) ), (Obj)0 );
     return (Obj) 0;
 }
 
@@ -1241,7 +1260,7 @@ void InitCopyGVar (
 #ifdef HPCGAP
         UnlockGVars();
 #endif
-        Panic("Panic, no room to record CopyGVar");
+        Panic("no room to record CopyGVar");
     }
     CopyAndFopyGVars[NCopyAndFopyGVars].copy = copy;
     CopyAndFopyGVars[NCopyAndFopyGVars].isFopy = 0;
@@ -1278,7 +1297,7 @@ void InitFopyGVar (
 #ifdef HPCGAP
         UnlockGVars();
 #endif
-        Panic("Panic, no room to record FopyGVar");
+        Panic("no room to record FopyGVar");
     }
     CopyAndFopyGVars[NCopyAndFopyGVars].copy = copy;
     CopyAndFopyGVars[NCopyAndFopyGVars].isFopy = 1;
@@ -1325,6 +1344,7 @@ void UpdateCopyFopyInfo ( void )
                 MakeBagPublic(cops);
 #endif
                 SET_ELM_GVAR_LIST( FopiesGVars, gvar, cops );
+                SetHasExprCopiesFopies(gvar, 1);
                 CHANGED_GVAR_LIST( FopiesGVars, gvar );
             }
         }
@@ -1336,6 +1356,7 @@ void UpdateCopyFopyInfo ( void )
                 MakeBagPublic(cops);
 #endif
                 SET_ELM_GVAR_LIST( CopiesGVars, gvar, cops );
+                SetHasExprCopiesFopies(gvar, 1);
                 CHANGED_GVAR_LIST( CopiesGVars, gvar );
             }
         }
@@ -1422,7 +1443,7 @@ static void RemoveCopyFopyInfo( void )
 /****************************************************************************
 **
 */
-void GVarsAfterCollectBags(void)
+static void GVarsAfterCollectBags(void)
 {
 #ifdef USE_GVAR_BUCKETS
   for (int i = 0; i < GVAR_BUCKETS; i++) {
@@ -1440,8 +1461,8 @@ void GVarsAfterCollectBags(void)
 
 #ifdef HPCGAP
 
-GVarDescriptor *FirstDeclaredGVar;
-GVarDescriptor *LastDeclaredGVar;
+static GVarDescriptor * FirstDeclaredGVar;
+static GVarDescriptor * LastDeclaredGVar;
 
 /****************************************************************************
 **
@@ -1547,12 +1568,13 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_FUNC(MakeConstantGVar, 1, "name"),
     GVAR_FUNC(IsReadOnlyGVar, 1, "name"),
     GVAR_FUNC(IsConstantGVar, 1, "name"),
-    GVAR_FUNC(AUTO, -1, "args"),
+    GVAR_FUNC(AUTO, -3, "func, arg, names..."),
 
 
     GVAR_FUNC(IDENTS_GVAR, 0, ""),
     GVAR_FUNC(IDENTS_BOUND_GVARS, 0, ""),
     GVAR_FUNC(ISB_GVAR, 1, "gvar"),
+    GVAR_FUNC(IS_AUTO_GVAR, 1, "gvar"),
     GVAR_FUNC(ASS_GVAR, 2, "gvar, value"),
     GVAR_FUNC(VAL_GVAR, 1, "gvar"),
     GVAR_FUNC(UNB_GVAR, 1, "gvar"),
@@ -1592,7 +1614,7 @@ static Int InitKernel (
       sprintf((cookies[5][i]), "Fgv%d", i);
       InitGlobalBag( ValGVars+i, (cookies[0][i]) );
       InitGlobalBag( NameGVars+i, (cookies[1][i]) );
-      InitGlobalBag( WriteGVars+i, (cookies[2][i]) );
+      InitGlobalBag(FlagsGVars + i, (cookies[2][i]));
       InitGlobalBag( ExprGVars+i, (cookies[3][i]) );
       InitGlobalBag( CopiesGVars+i, (cookies[4][i]) );
       InitGlobalBag( FopiesGVars+i, (cookies[5][i])  );
@@ -1602,8 +1624,7 @@ static Int InitKernel (
                    "src/gvars.c:ValGVars" );
     InitGlobalBag( &NameGVars,
                    "src/gvars.c:NameGVars" );
-    InitGlobalBag( &WriteGVars,
-                   "src/gvars.c:WriteGVars" );
+    InitGlobalBag(&FlagsGVars, "src/gvars.c:FlagsGVars");
     InitGlobalBag( &ExprGVars,
                    "src/gvars.c:ExprGVars" );
     InitGlobalBag( &CopiesGVars,
@@ -1628,6 +1649,11 @@ static Int InitKernel (
                      "src/gvars.c:ErrorMustEvalToFuncHandler" );
     InitHandlerFunc( ErrorMustHaveAssObjHandler,
                      "src/gvars.c:ErrorMustHaveAssObjHandler" );
+
+#ifdef USE_GASMAN
+    // install post-GC callback
+    RegisterAfterCollectFuncBags(GVarsAfterCollectBags);
+#endif
 
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable( GVarFuncs );
@@ -1710,7 +1736,7 @@ static Int InitLibrary (
     /* make the lists for global variables                                 */
     ValGVars = NEW_PLIST( T_PLIST, 0 );
     NameGVars = NEW_PLIST( T_PLIST, 0 );
-    WriteGVars = NEW_PLIST( T_PLIST, 0 );
+    FlagsGVars = NEW_PLIST(T_PLIST, 0);
     ExprGVars = NEW_PLIST( T_PLIST, 0 );
     CopiesGVars = NEW_PLIST( T_PLIST, 0 );
     FopiesGVars = NEW_PLIST( T_PLIST, 0 );

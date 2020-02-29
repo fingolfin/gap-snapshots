@@ -1,14 +1,26 @@
+/****************************************************************************
+**
+**  This file is part of GAP, a system for computational discrete algebra.
+**
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
 #ifndef GAP_TRAVERSE_H
 #define GAP_TRAVERSE_H
 
 #include "system.h"
 
+typedef struct TraversalState TraversalState;
+
 /*
  * Functionality to traverse nested object structures.
  */
 
-typedef void (*TraversalFunction)(Obj);
-typedef void (*TraversalCopyFunction)(Obj copy, Obj original);
+typedef void (*TraversalFunction)(TraversalState *, Obj);
+typedef void (*TraversalCopyFunction)(TraversalState *, Obj copy, Obj original);
 
 typedef enum {
     TRAVERSE_NONE,
@@ -19,17 +31,17 @@ typedef enum {
 
 // set the traversal method (and optionally, helper functions)
 // for all objects with the specified tnum.
-extern void SetTraversalMethod(UInt tnum,
-                               TraversalMethodEnum meth,
-                               TraversalFunction tf,
-                               TraversalCopyFunction cf);
+void SetTraversalMethod(UInt                  tnum,
+                        TraversalMethodEnum   meth,
+                        TraversalFunction     tf,
+                        TraversalCopyFunction cf);
 
 
 // helper to be called from traverse functions
-extern void QueueForTraversal(Obj obj);
+void QueueForTraversal(TraversalState *, Obj obj);
 
 // helper to be called from copy functions
-extern Obj ReplaceByCopy(Obj obj);
+Obj ReplaceByCopy(TraversalState *, Obj obj);
 
 
 Obj ReachableObjectsFrom(Obj obj);

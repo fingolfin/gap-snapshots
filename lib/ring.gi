@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  ring.gi                     GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright 1997,    Lehrstuhl D für Mathematik,   RWTH Aachen,    Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains generic methods for rings.
 ##
@@ -535,7 +536,7 @@ end );
 #M  IsAssociated( <R>, <r>, <s> ) .  test if two ring elements are associated
 ##
 InstallMethod( IsAssociated,
-    "for ring and two ring elements",
+    "for a ring and two ring elements",
     IsCollsElmsElms,
     [ IsRing, IsRingElement, IsRingElement ], 0,
     function( R, r, s )
@@ -551,8 +552,8 @@ InstallMethod( IsAssociated,
     # or check if the quotient is a unit
     else
       q:= Quotient( R, r, s );
-#T allowed?
-      return q <> fail and IsUnit( R, q );
+      if q <> fail then return IsUnit( R, q ); fi;
+      TryNextMethod();
     fi;
     end );
 
@@ -808,7 +809,7 @@ InstallMethod( ClosureRing,
 #M  ClosureRing( <R>, <C> ) . . . . . . . . . . . . . . . . . closure of ring
 ##
 InstallMethod( ClosureRing,
-    "for ring and collection of elements",
+    "for a ring and a collection of elements",
     IsIdenticalObj,
     [ IsRing, IsCollection ], 0,
     function( R, list )
@@ -839,11 +840,12 @@ InstallMethod( Quotient,
     function( R, r, s )
     local quo;
     quo:= Inverse( s );
-    if quo <> fail then
-      quo:= r * quo;
-      if not quo in R then
-        quo:= fail;
-      fi;
+    if quo = fail then
+      TryNextMethod();
+    fi;
+    quo:= r * quo;
+    if not quo in R then
+      quo:= fail;
     fi;
     return quo;
     end );
@@ -1487,8 +1489,3 @@ InstallMethod( \=,
 ##
 InstallRingAgnosticGcdMethod("integers", true,true,
     [ IsIntegers, IsInt, IsInt ], 0,GcdInt);
-
-#############################################################################
-##
-#E
-

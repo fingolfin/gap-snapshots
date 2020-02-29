@@ -1,12 +1,8 @@
 #############################################################################
 ##
-#W  morpheus.tst                GAP tests                    Alexander Hulpke
-##
-##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-##
 ##  This  file  tests the automorphism routines
 ##
+#@local a,autd8,d8,g,inn,iso1,iso2,iso3,iso4,p,r,s4
 gap> START_TEST("morpheus.tst");
 gap> g:=Group((1,2,3,4),(1,3));;
 gap> a:=AutomorphismGroup(g);;
@@ -62,7 +58,3 @@ S (1 gens, size 3)
 
 # that's all, folks
 gap> STOP_TEST( "morpheus.tst", 1);
-
-#############################################################################
-##
-#E

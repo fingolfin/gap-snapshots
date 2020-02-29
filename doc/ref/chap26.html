@@ -42,7 +42,8 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26.html#X7B9B66B37DD46D81">26.4-6 ExtractSubVector</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26.html#X7F45D5C57C8EDDF3">26.4-7 ZeroVector</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26.html#X8253FF0C7E5329C6">26.4-8 ConstructingFilter</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26.html#X828688CC860F1E9C">26.4-9 Randomize</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26.html#X83DD8B39864A2C94">26.4-9 <span class="Heading">Randomize</span></a>
+</span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26.html#X7E0158697A7C6D17">26.4-10 WeightOfVector</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26.html#X837216A77EBEA0B3">26.4-11 DistanceOfVectors</a></span>
 </div></div>
@@ -157,7 +158,7 @@
 
 <h5>26.4-6 ExtractSubVector</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtractSubVector</code>( <var class="Arg">V</var>, <var class="Arg">l</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtractSubVector</code>( <var class="Arg">V</var>, <var class="Arg">l</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a vector object</p>
 
 <p>Returns a new vector containing the entries of <var class="Arg">V</var> at the positions in <var class="Arg">l</var>.</p>
@@ -180,13 +181,15 @@
 
 <p>Returns a filter <code class="code">f</code> such that if <code class="code">NewVector</code> is called with <code class="code">f</code> a vector in the same representation as <var class="Arg">V</var> is produced.</p>
 
-<p><a id="X828688CC860F1E9C" name="X828688CC860F1E9C"></a></p>
+<p><a id="X83DD8B39864A2C94" name="X83DD8B39864A2C94"></a></p>
 
-<h5>26.4-9 Randomize</h5>
+<h5>26.4-9 <span class="Heading">Randomize</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Randomize</code>( <var class="Arg">V</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Randomize</code>( <var class="Arg">V</var>, <var class="Arg">Rs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Replaces every entry in <var class="Arg">V</var> with a random one from the base domain. If given, the random source <var class="Arg">Rs</var> is used to compute the random elements. Note that in this case, the random function for the base domain must support the random source argument.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Randomize</code>( [<var class="Arg">Rs</var>, ]<var class="Arg">v</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Randomize</code>( [<var class="Arg">Rs</var>, ]<var class="Arg">m</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Replaces every entry in the mutable vector object <var class="Arg">v</var> or matrix object <var class="Arg">m</var>, respectively, with a random one from the base domain of <var class="Arg">v</var> or <var class="Arg">m</var>, respectively, and returns the argument.</p>
+
+<p>If given, the random source <var class="Arg">Rs</var> is used to compute the random elements. Note that in this case, a <code class="func">Random</code> (<a href="chap14.html#X821004F286282D49"><span class="RefLink">14.7-2</span></a>) method must be available that takes a random source as its first argument and the base domain as its second argument.</p>
 
 <p><a id="X7E0158697A7C6D17" name="X7E0158697A7C6D17"></a></p>
 

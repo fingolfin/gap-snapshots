@@ -841,8 +841,12 @@
   
   [33X[1;0Y[29X[2XConstituentsOfCharacter[102X( [[3Xtbl[103X, ][3Xchi[103X ) [32X attribute[133X
   
-  [33X[0;0Yis  the set of irreducible characters that occur in the decomposition of the
-  (virtual) character [3Xchi[103X with nonzero coefficient.[133X
+  [33X[0;0YLet  [3Xchi[103X  be  an  ordinary or modular (virtual) character. If an ordinary or
+  modular  character  table  [3Xtbl[103X  is  given  then  [3Xchi[103X  may  also be a list of
+  character values.[133X
+  
+  [33X[0;0Y[2XConstituentsOfCharacter[102X returns the set of those irreducible characters that
+  occur in the decomposition of [3Xchi[103X with nonzero coefficient.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xnat:= NaturalCharacter( S4 );[127X[104X

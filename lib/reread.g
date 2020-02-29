@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  reread.g                   GAP Library                       Steve Linton
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Steve Linton.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the Reread function and its relatives
 ##  RereadLib, etc.
@@ -40,7 +41,7 @@
 ##  is set to <K>true</K>.
 ##  In particular, assignment to read-only global variables is permitted,
 ##  calls to <Ref Func="NewRepresentation"/>
-##  and <Ref Func="NewInfoClass"/> with parameters identical to those
+##  and <Ref Oper="NewInfoClass"/> with parameters identical to those
 ##  of an existing representation or info class will return the existing
 ##  object, and methods installed with
 ##  <Ref Func="InstallMethod"/> may sometimes displace
@@ -66,45 +67,29 @@
 ##  <#/GAPDoc>
 ##
 BindGlobal("Reread",
-        function(arg)
-    local res;
+        function(input)
     MakeReadWriteGlobal("REREADING");
     REREADING := true;
     MakeReadOnlyGlobal("REREADING");
-    if LEN_LIST(arg) > 1 then
-        res := CallFuncList( Read, arg );
-    else
-        CallFuncList( Read, arg );
-    fi;
+    Read( input );
     MakeReadWriteGlobal("REREADING");
     REREADING := false;
     MakeReadOnlyGlobal("REREADING");
-    if LEN_LIST(arg) > 1 then
-        return res;
-    fi;
 end);
 
 
 BindGlobal("RereadAndCheckFunc", 
-        function( arg )
+        function( path )
     local func;
-    func := CallFuncList(ReadAndCheckFunc, arg);
-    return function( arg )
-        local res;
+    func := ReadAndCheckFunc(path);
+    return function( name )
         MakeReadWriteGlobal("REREADING");
         REREADING := true;
         MakeReadOnlyGlobal("REREADING");
-        if LEN_LIST(arg) > 1 then
-            res := CallFuncList(func,arg);
-        else
-            CallFuncList(func,arg);
-        fi;
+        func( name );
         MakeReadWriteGlobal("REREADING");
         REREADING := false;
         MakeReadOnlyGlobal("REREADING");
-        if LEN_LIST(arg) > 1 then
-            return res;
-        fi;
     end;
 end);
 
@@ -120,9 +105,3 @@ BIND_GLOBAL("RereadLib",RereadAndCheckFunc("lib"));
 #F  RereadGrp( <name> ) . . . . . . . . . . . . . . . . . . group library files
 ##
 BIND_GLOBAL("RereadGrp",RereadAndCheckFunc("grp"));
-    
-
-#############################################################################
-##
-#E
-

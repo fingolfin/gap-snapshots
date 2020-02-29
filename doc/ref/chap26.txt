@@ -129,7 +129,7 @@
   
   [1X26.4-6 ExtractSubVector[101X
   
-  [33X[1;0Y[29X[2XExtractSubVector[102X( [3XV[103X, [3Xl[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XExtractSubVector[102X( [3XV[103X, [3Xl[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya vector object[133X
   
   [33X[0;0YReturns a new vector containing the entries of [3XV[103X at the positions in [3Xl[103X.[133X
@@ -150,15 +150,20 @@
   [33X[0;0YReturns  a  filter [10Xf[110X such that if [10XNewVector[110X is called with [10Xf[110X a vector in the
   same representation as [3XV[103X is produced.[133X
   
-  [1X26.4-9 Randomize[101X
   
-  [33X[1;0Y[29X[2XRandomize[102X( [3XV[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XRandomize[102X( [3XV[103X, [3XRs[103X ) [32X operation[133X
+  [1X26.4-9 [33X[0;0YRandomize[133X[101X
   
-  [33X[0;0YReplaces  every entry in [3XV[103X with a random one from the base domain. If given,
-  the  random  source  [3XRs[103X is used to compute the random elements. Note that in
-  this  case,  the random function for the base domain must support the random
-  source argument.[133X
+  [33X[1;0Y[29X[2XRandomize[102X( [[3XRs[103X, ][3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRandomize[102X( [[3XRs[103X, ][3Xm[103X ) [32X operation[133X
+  
+  [33X[0;0YReplaces  every  entry  in  the  mutable vector object [3Xv[103X or matrix object [3Xm[103X,
+  respectively,   with  a  random  one  from  the  base  domain  of  [3Xv[103X  or  [3Xm[103X,
+  respectively, and returns the argument.[133X
+  
+  [33X[0;0YIf  given, the random source [3XRs[103X is used to compute the random elements. Note
+  that  in  this case, a [2XRandom[102X ([14X14.7-2[114X) method must be available that takes a
+  random  source  as  its  first  argument  and  the base domain as its second
+  argument.[133X
   
   [1X26.4-10 WeightOfVector[101X
   

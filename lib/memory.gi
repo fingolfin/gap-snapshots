@@ -1,9 +1,12 @@
 #############################################################################
 ##
-##  memory.gi          recog package                      Max Neunhöffer
-##                                                            Ákos Seress
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Max Neunhöffer, Ákos Seress.
 ##
-##  Copyright 2005 Lehrstuhl D für Mathematik, RWTH Aachen
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  Group objects remembering how they were created from the generators.
 ##
@@ -27,6 +30,9 @@ InstallGlobalFunction( GeneratorsWithMemory,
       Objectify(TypeOfObjWithMemory(FamilyObj(o)),r);
       if IsMatrix(o) then
           SetFilterObj(r,IsMatrix);
+      fi;
+      if IsMatrixObj(o) then
+          SetFilterObj(r,IsMatrixObj);
       fi;
       Add(ll,r);
     od;
@@ -191,6 +197,9 @@ InstallMethod( \*, "objects with memory", true,
     if IsMatrix(a) then
         SetFilterObj(r,IsMatrix);
     fi;
+    if IsMatrixObj(a) then
+        SetFilterObj(r,IsMatrixObj);
+    fi;
     return r;
   end);
 
@@ -203,6 +212,9 @@ InstallMethod( One, "objects with memory", true,
     if IsMatrix(a) then
         SetFilterObj(r,IsMatrix);
     fi;
+    if IsMatrixObj(a) then
+        SetFilterObj(r,IsMatrixObj);
+    fi;
     return r;
   end);
 
@@ -214,6 +226,9 @@ InstallMethod( OneOp, "objects with memory", true,
     Objectify(TypeOfObjWithMemory(FamilyObj(a)),r);
     if IsMatrix(a) then
         SetFilterObj(r,IsMatrix);
+    fi;
+    if IsMatrixObj(a) then
+        SetFilterObj(r,IsMatrixObj);
     fi;
     return r;
   end);
@@ -234,6 +249,9 @@ InstallMethod( InverseOp, "objects with memory", true,
     if IsMatrix(a) then
         SetFilterObj(r,IsMatrix);
     fi;
+    if IsMatrixObj(a) then
+        SetFilterObj(r,IsMatrixObj);
+    fi;
     return r;
   end);
 
@@ -251,6 +269,9 @@ InstallMethod( \^, "objects with memory", true,
     Objectify(TypeOfObjWithMemory(FamilyObj(a)),r);
     if IsMatrix(a) then
         SetFilterObj(r,IsMatrix);
+    fi;
+    if IsMatrixObj(a) then
+        SetFilterObj(r,IsMatrixObj);
     fi;
     return r;
   end);
@@ -362,13 +383,25 @@ InstallOtherMethod(CycleStructurePerm,
   [ IsPerm and IsObjWithMemory ], 0,
   p->CycleStructurePerm(p!.el));
 
-# Matrix methods:
+# MatrixObj methods:
 
-InstallOtherMethod( DimensionsMat, "for a matrix with memory",
-  [ IsMatrix and IsObjWithMemory ],
-  function(M)
-    return DimensionsMat(M!.el);
-  end);
+InstallOtherMethod( BaseDomain, "for a matrix with memory",
+  [ IsMatrixObj and IsObjWithMemory ],
+  M -> BaseDomain(M!.el) );
+
+InstallOtherMethod( NumberRows, "for a matrix with memory",
+  [ IsMatrixObj and IsObjWithMemory ],
+  M -> NumberRows(M!.el) );
+
+InstallOtherMethod( NumberColumns, "for a matrix with memory",
+  [ IsMatrixObj and IsObjWithMemory ],
+  M -> NumberColumns(M!.el) );
+
+InstallOtherMethod( MatElm, "for a matrix with memory",
+  [ IsMatrixObj and IsObjWithMemory, IsPosInt, IsPosInt ],
+  { M, i, j } -> M!.el[i,j] );
+
+# legacy matrix methods
 
 InstallOtherMethod( Length, "for a matrix with memory",
   [ IsMatrix and IsObjWithMemory ], M -> Length(M!.el) ) ;
@@ -379,25 +412,21 @@ InstallOtherMethod( ELM_LIST, "for a matrix with memory",
     return M!.el[i];
   end);
 
-InstallOtherMethod( \*, "for a row vector and a matrix with memory",true,
+InstallOtherMethod( \*, "for a row vector and a matrix with memory",
   [ IsListDefault and IsSmallList, IsMatrix and IsObjWithMemory ], 0,
   function(v,M)
     return v * M!.el;
   end);
 
-InstallOtherMethod( \*, "for a scalar and a matrix with memory",true,
-  [ IsScalar, IsMatrix and IsObjWithMemory ], 0,
-  function(s,M)
-    return s * M!.el;
-  end);
+InstallOtherMethod( \*, "for a scalar and a matrix with memory",
+  [ IsScalar, IsMatrixObj and IsObjWithMemory ], 0,
+  { s, M } ->  s * M!.el );
 
-InstallOtherMethod( \*, "for a matrix with memory and a scalar",true,
-  [ IsMatrix and IsObjWithMemory, IsScalar ], 0,
-  function(M,s)
-    return M!.el * s;
-  end);
+InstallOtherMethod( \*, "for a matrix with memory and a scalar",
+  [ IsMatrixObj and IsObjWithMemory, IsScalar ], 0,
+  { M , s} ->  M!.el * s );
 
-InstallOtherMethod(ProjectiveOrder,"object with memory",true, 
+InstallOtherMethod(ProjectiveOrder,"object with memory", 
   [IsObjWithMemory],0,
   function(a)
     return ProjectiveOrder(a!.el);

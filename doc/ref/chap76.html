@@ -148,7 +148,7 @@
 
 <h3>76 <span class="Heading">Using and Developing GAP Packages</span></h3>
 
-<p>The functionality of <strong class="pkg">GAP</strong> can be extended by loading <strong class="pkg">GAP</strong> packages. The <strong class="pkg">GAP</strong> distribution already contains all currently redistributed <strong class="pkg">GAP</strong> packages in the <code class="file">gap-4.10.2/pkg</code> directory.</p>
+<p>The functionality of <strong class="pkg">GAP</strong> can be extended by loading <strong class="pkg">GAP</strong> packages. The <strong class="pkg">GAP</strong> distribution already contains all currently redistributed <strong class="pkg">GAP</strong> packages in the <code class="file">gap-4.11.0/pkg</code> directory.</p>
 
 <p><strong class="pkg">GAP</strong> packages are written by (groups of) <strong class="pkg">GAP</strong> users who may not necessarily be members of the <strong class="pkg">GAP</strong> developer team. The responsibility and copyright of a <strong class="pkg">GAP</strong> package remains with the original author(s).</p>
 
@@ -546,7 +546,7 @@ you can 'return;' to continue
 <h5>76.3-16 BibEntry</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BibEntry</code>( <var class="Arg">pkgname</var>[, <var class="Arg">key</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Returns: a string in BibXMLext format (see <a href="../../pkg/GAPDoc-1.6.2/doc/chap7.html#X7FB8F6BD80D859D1"><span class="RefLink">GAPDoc: The BibXMLext Format</span></a>) that can be used for referencing the <strong class="pkg">GAP</strong> system or a <strong class="pkg">GAP</strong> package.</p>
+<p>Returns: a string in BibXMLext format (see <a href="../../pkg/GAPDoc-1.6.3/doc/chap7.html#X7FB8F6BD80D859D1"><span class="RefLink">GAPDoc: The BibXMLext Format</span></a>) that can be used for referencing the <strong class="pkg">GAP</strong> system or a <strong class="pkg">GAP</strong> package.</p>
 
 <p>If the argument <var class="Arg">pkgname</var> is the string <code class="code">"GAP"</code>, the function returns an entry for the current version of <strong class="pkg">GAP</strong>.</p>
 
@@ -556,9 +556,9 @@ you can 'return;' to continue
 
 <p>In each of the above cases, an optional argument <var class="Arg">key</var> can be given, a string which is then used as the key of the BibTeX entry instead of the default key that is generated from the system/package name and the version number.</p>
 
-<p><code class="func">BibEntry</code> requires the functions <code class="func">FormatParagraph</code> (<a href="../../pkg/GAPDoc-1.6.2/doc/chap6.html#X812058CE7C8E9022"><span class="RefLink">GAPDoc: FormatParagraph</span></a>) and <code class="func">NormalizedNameAndKey</code> (<a href="../../pkg/GAPDoc-1.6.2/doc/chap7.html#X7C9F0C337A0A0FF0"><span class="RefLink">GAPDoc: NormalizedNameAndKey</span></a>) from the <strong class="pkg">GAP</strong> package <strong class="pkg">GAPDoc</strong>.</p>
+<p><code class="func">BibEntry</code> requires the functions <code class="func">FormatParagraph</code> (<a href="../../pkg/GAPDoc-1.6.3/doc/chap6.html#X812058CE7C8E9022"><span class="RefLink">GAPDoc: FormatParagraph</span></a>) and <code class="func">NormalizedNameAndKey</code> (<a href="../../pkg/GAPDoc-1.6.3/doc/chap7.html#X7C9F0C337A0A0FF0"><span class="RefLink">GAPDoc: NormalizedNameAndKey</span></a>) from the <strong class="pkg">GAP</strong> package <strong class="pkg">GAPDoc</strong>.</p>
 
-<p>The functions <code class="func">ParseBibXMLextString</code> (<a href="../../pkg/GAPDoc-1.6.2/doc/chap7.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextString</span></a>) and <code class="func">StringBibXMLEntry</code> (<a href="../../pkg/GAPDoc-1.6.2/doc/chap7.html#X790A295680F7CD24"><span class="RefLink">GAPDoc: StringBibXMLEntry</span></a>) can be used to create for example a BibTeX entry from the return value, as follows.</p>
+<p>The functions <code class="func">ParseBibXMLextString</code> (<a href="../../pkg/GAPDoc-1.6.3/doc/chap7.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextString</span></a>) and <code class="func">StringBibXMLEntry</code> (<a href="../../pkg/GAPDoc-1.6.3/doc/chap7.html#X790A295680F7CD24"><span class="RefLink">GAPDoc: StringBibXMLEntry</span></a>) can be used to create for example a BibTeX entry from the return value, as follows.</p>
 
 
 <div class="example"><pre>
@@ -684,9 +684,9 @@ packagedir/
 
 </dd>
 <dt><strong class="Mark"><code class="file">doc</code></strong></dt>
-<dd><p>This directory should contain the package's documentation, written in an XML-based documentation format supported by the <strong class="pkg">GAP</strong> package <strong class="pkg">GAPDoc</strong> (see <a href="../../pkg/GAPDoc-1.6.2/doc/chap1.html#X7D4EE663818DA109"><span class="RefLink">GAPDoc: Introduction and Example</span></a>) which is used for the <strong class="pkg">GAP</strong> documentation itself.</p>
+<dd><p>This directory should contain the package's documentation, written in an XML-based documentation format supported by the <strong class="pkg">GAP</strong> package <strong class="pkg">GAPDoc</strong> (see <a href="../../pkg/GAPDoc-1.6.3/doc/chap1.html#X7D4EE663818DA109"><span class="RefLink">GAPDoc: Introduction and Example</span></a>) which is used for the <strong class="pkg">GAP</strong> documentation itself.</p>
 
-<p>The <strong class="pkg">Example</strong> package's documentation (see its <code class="file">doc</code> directory) may be used as a prototype. It consists of the master file <code class="file">main.xml</code>, further <code class="file">.xml</code> files for manual chapters (included in the manual via <code class="code">Include</code> directives in the master file) and the <strong class="pkg">GAP</strong> input file <code class="file">../makedocrel.g</code> which generates the manuals. Generally, one should also provide a <code class="file">manual.bib</code> BibTeX database file or an <code class="file">xml</code> file in the BibXMLext format (see <a href="../../pkg/GAPDoc-1.6.2/doc/chap7.html#X7FB8F6BD80D859D1"><span class="RefLink">GAPDoc: The BibXMLext Format</span></a>).</p>
+<p>The <strong class="pkg">Example</strong> package's documentation (see its <code class="file">doc</code> directory) may be used as a prototype. It consists of the master file <code class="file">main.xml</code>, further <code class="file">.xml</code> files for manual chapters (included in the manual via <code class="code">Include</code> directives in the master file) and the <strong class="pkg">GAP</strong> input file <code class="file">../makedocrel.g</code> which generates the manuals. Generally, one should also provide a <code class="file">manual.bib</code> BibTeX database file or an <code class="file">xml</code> file in the BibXMLext format (see <a href="../../pkg/GAPDoc-1.6.3/doc/chap7.html#X7FB8F6BD80D859D1"><span class="RefLink">GAPDoc: The BibXMLext Format</span></a>).</p>
 
 <p>One could also use the <strong class="pkg">AutoDoc</strong> which simplifies writing documentation by generating most of the <strong class="pkg">GAPDoc</strong> code automatically.</p>
 
@@ -718,11 +718,11 @@ packagedir/
 
 <p>Concerning the installation you should produce a <code class="file">README</code> file which gives a short description of the purpose of the package and contains proper instructions how to install your package. Again, check out some existing packages to get an idea how this could look like.</p>
 
-<p>Documentation for <strong class="pkg">GAP</strong> package should be prepared in an XML-based documentation format that is defined in and can be used with the <strong class="pkg">GAPDoc</strong> package (see <a href="../../pkg/GAPDoc-1.6.2/doc/chap1.html#X7D4EE663818DA109"><span class="RefLink">GAPDoc: Introduction and Example</span></a>).</p>
+<p>Documentation for <strong class="pkg">GAP</strong> package should be prepared in an XML-based documentation format that is defined in and can be used with the <strong class="pkg">GAPDoc</strong> package (see <a href="../../pkg/GAPDoc-1.6.3/doc/chap1.html#X7D4EE663818DA109"><span class="RefLink">GAPDoc: Introduction and Example</span></a>).</p>
 
 <p>There should be at least a text version of your documentation provided for use in the terminal running <strong class="pkg">GAP</strong> and some nicely printable version in <code class="code">.pdf</code> format. Many <strong class="pkg">GAP</strong> users like to browse the documentation in HTML format via their Web browser. As a package author, you are not obliged to provide an HTML version of your package manual, but if you use the <strong class="pkg">GAPDoc</strong> package you should have no trouble in producing one.</p>
 
-<p>Moreover, using the <strong class="pkg">GAPDoc</strong> package, it is also possible to produce HTML version of the documentation supporting MathJax (<span class="URL"><a href="http://www.mathjax.org/">http://www.mathjax.org/</a></span>) for the high quality rendering of mathematical symbols while viewing it online. For example, if you are viewing the HTML version of the manual, compare how this formula will look with MathJax turned on/off:</p>
+<p>Moreover, using the <strong class="pkg">GAPDoc</strong> package, it is also possible to produce HTML version of the documentation supporting MathJax (<span class="URL"><a href="https://www.mathjax.org/">https://www.mathjax.org/</a></span>) for the high quality rendering of mathematical symbols while viewing it online. For example, if you are viewing the HTML version of the manual, compare how this formula will look with MathJax turned on/off:</p>
 
 <p class="pcenter">[ χ, ψ ] = ( ∑_{g ∈ G} χ(g) ψ(g^{-1}) ) / |G|.</p>
 
@@ -772,7 +772,7 @@ true
 
 <p>Package files may follow the style used for the <strong class="pkg">GAP</strong> library. Every file in the <strong class="pkg">GAP</strong> library starts with a header that lists the filename, copyright, a short description of the file contents and the original authors of this file, and ends with a comment line <code class="code">#E</code>. Indentation in functions and the use of decorative spaces in the code are left to the decision of the authors of each file. Global (i.e. re-used elsewhere) comments usually are indented by two hash marks and two blanks, in particular, every declaration or method or function installation which is not only of local scope is separated by a header.</p>
 
-<p>Facilities to distribute a document over several files to allow the documentation for parts of some code to be stored in the same file as the code itself are provided by the <strong class="pkg">GAPDoc</strong> package (see <a href="../../pkg/GAPDoc-1.6.2/doc/chap4.html#X7A3355C07F57C280"><span class="RefLink">GAPDoc: Distributing a Document into Several Files</span></a>). The same approach is demonstrated by the <strong class="pkg">Example</strong> package. E.g. <code class="file">example/doc/example.xml</code> has the statement <code class="code">&lt;#Include Label="ListDirectory"&gt;</code> and <code class="file">example/lib/files.gd</code> contains</p>
+<p>Facilities to distribute a document over several files to allow the documentation for parts of some code to be stored in the same file as the code itself are provided by the <strong class="pkg">GAPDoc</strong> package (see <a href="../../pkg/GAPDoc-1.6.3/doc/chap4.html#X7A3355C07F57C280"><span class="RefLink">GAPDoc: Distributing a Document into Several Files</span></a>). The same approach is demonstrated by the <strong class="pkg">Example</strong> package. E.g. <code class="file">example/doc/example.xml</code> has the statement <code class="code">&lt;#Include Label="ListDirectory"&gt;</code> and <code class="file">example/lib/files.gd</code> contains</p>
 
 
 <div class="example"><pre>
@@ -789,7 +789,7 @@ true
 DeclareGlobalFunction( "ListDirectory" );
 </pre></div>
 
-<p>This is all put together in the file <code class="file">example/makedocrel.g</code> which builds the package documentation, calling <code class="func">MakeGAPDocDoc</code> (<a href="../../pkg/GAPDoc-1.6.2/doc/chap5.html#X826F530686F4D052"><span class="RefLink">GAPDoc: MakeGAPDocDoc</span></a>) with locations of library files containing parts of the documentation.</p>
+<p>This is all put together in the file <code class="file">example/makedocrel.g</code> which builds the package documentation, calling <code class="func">MakeGAPDocDoc</code> (<a href="../../pkg/GAPDoc-1.6.3/doc/chap5.html#X826F530686F4D052"><span class="RefLink">GAPDoc: MakeGAPDocDoc</span></a>) with locations of library files containing parts of the documentation.</p>
 
 <p>Alternatively, one could use the <strong class="pkg">AutoDoc</strong>, which simplifies writing documentation by generating most of the <strong class="pkg">GAPDoc</strong> code automatically. The equivalent of the fragment of the code above for <strong class="pkg">AutoDoc</strong> would look like</p>
 
@@ -856,15 +856,15 @@ Pager(StringFile(Filename(DirectoriesLibrary(),
 
 <p>The reason for this is that such functions and variables are <em>easily overwritten</em> and what's more you are not warned about it when it happens.</p>
 
-<p>To protect a function or variable against overwriting there is the function <code class="func">BindGlobal</code> (<a href="chap4.html#X7D39D3E17CF49F5B"><span class="RefLink">4.9-8</span></a>), or alternatively (and equivalently) you may define a global function via a <code class="func">DeclareGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.18-14</span></a>) and <code class="func">InstallGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.18-14</span></a>) pair or a global variable via a <code class="func">DeclareGlobalVariable</code> (<a href="chap79.html#X8324B5DE8300E0F2"><span class="RefLink">79.18-15</span></a>) and <code class="func">InstallValue</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.18-16</span></a>) pair. There are also operations and their methods, and related objects like attributes and filters which also have <code class="code">Declare...</code> and <code class="code">Install...</code> pairs.</p>
+<p>To protect a function or variable against overwriting there is the function <code class="func">BindGlobal</code> (<a href="chap4.html#X7D39D3E17CF49F5B"><span class="RefLink">4.9-8</span></a>), or alternatively (and equivalently) you may define a global function via a <code class="func">DeclareGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.10-4</span></a>) and <code class="func">InstallGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.10-4</span></a>) pair or a global variable via a <code class="func">DeclareGlobalVariable</code> (<a href="chap79.html#X8324B5DE8300E0F2"><span class="RefLink">79.10-1</span></a>) and <code class="func">InstallValue</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.10-2</span></a>) pair. There are also operations and their methods, and related objects like attributes and filters which also have <code class="code">Declare...</code> and <code class="code">Install...</code> pairs.</p>
 
 <p><em>Secondly</em>, it's a good idea to reduce the chance of accidental overwriting by choosing names for your functions and variables that begin with a string that identifies it with the package, e.g. some of the undocumented functions in the <strong class="pkg">Example</strong> package begin with <code class="code">Eg</code>. This is especially important in cases where you actually want the user to be able to change the value of a function or variable defined by your package, for which you have used direct assignments (for which the user will receive no warning if she accidentally overwrites them). It's also important for functions and variables defined via <code class="code">BindGlobal</code>, <code class="code">DeclareGlobalFunction</code>/<code class="code">InstallGlobalFunction</code> and <code class="code">DeclareGlobalVariable</code>/<code class="code">InstallValue</code>, in order to avoid name clashes that may occur with (extensions of) the <strong class="pkg">GAP</strong> library and other packages.</p>
 
 <p>Additionally, since <strong class="pkg">GAP</strong> 4.5 a package may place global variables into a local namespace as explained in <a href="chap4.html#X7DF8774F7D542298"><span class="RefLink">4.10</span></a> in order to avoid name clashes and preserve compatibility. This new feature allows you to define in your package global variables with the identifier ending with the <code class="code">@</code> symbol, e.g. <code class="code">xYz@</code>. Such variables may be used in your package code safely, as they may be accessed from outside the package only by their full name, i.e. <code class="code">xYz@YourPackageName</code>. This helps to prevent clashes between different packages or between a package and the <strong class="pkg">GAP</strong> library because of the same variable names.</p>
 
-<p>On the other hand, operations and their methods (defined via <code class="func">DeclareOperation</code> (<a href="chap79.html#X843F48137B899BC3"><span class="RefLink">79.18-12</span></a>), <code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>) etc. pairs) and their relatives do not need this consideration, as they avoid name clashes by allowing for more than one "method" for the same-named object.</p>
+<p>On the other hand, operations and their methods (defined via <code class="func">DeclareOperation</code> (<a href="chap78.html#X843F48137B899BC3"><span class="RefLink">78.1-5</span></a>), <code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.3-1</span></a>) etc. pairs) and their relatives do not need this consideration, as they avoid name clashes by allowing for more than one "method" for the same-named object.</p>
 
-<p>To demonstrate the definition of a function via a <code class="code">DeclareOperation</code>/<code class="code">InstallMethod</code> pair, the method <code class="func">Recipe</code> (<a href="../../pkg/Example-4.1.1/doc/chap1.html#X85B83BDB83B1C910"><span class="RefLink">Example: Recipe</span></a>) was included in the <strong class="pkg">Example</strong> package; <code class="code">Recipe( FruitCake );</code> gives a "method" for making a fruit cake (forgive the pun).</p>
+<p>To demonstrate the definition of a function via a <code class="code">DeclareOperation</code>/<code class="code">InstallMethod</code> pair, the method <code class="func">Recipe</code> (<a href="../../pkg/Example-4.2.1/doc/chap1.html#X85B83BDB83B1C910"><span class="RefLink">Example: Recipe</span></a>) was included in the <strong class="pkg">Example</strong> package; <code class="code">Recipe( FruitCake );</code> gives a "method" for making a fruit cake (forgive the pun).</p>
 
 <p><em>Thirdly</em>, functions or variables with <code class="code">Set<var class="Arg">XXX</var></code> or <code class="code">Has<var class="Arg">XXX</var></code> names (even if they are defined as operations) should be avoided as these may clash with objects associated with attributes or properties (attributes and properties <var class="Arg">XXX</var> declared via the <code class="code">DeclareAttribute</code> and <code class="code">DeclareProperty</code> commands have associated with them testers of form <code class="code">Has<var class="Arg">XXX</var></code> and setters of form <code class="code">Set<var class="Arg">XXX</var></code>).</p>
 
@@ -1100,7 +1100,7 @@ For help, type: ?Example package
 
 <p>It is very important that there should not ever be, for a given <strong class="pkg">GAP</strong> package, two different archives with the same package version number. If you make changes to your package and place a new archive of the package onto the public server, please ensure that a new archive has a new version number. This should be done even for very minor changes.</p>
 
-<p>For most of the packages it will be inappropriate to re-use the date of the release as a version number. It's much more obvious how big are the changes between versions "4.4.12", "4.5.1" and "4.5.2" than between versions "2008.12.17", "2011.04.15" and "2011.09.14". The concept of using version numbers to convey the meaning of the status of the code and the way it has been modified is known as "Semantic Versioning", see <span class="URL"><a href="http://semver.org/">http://semver.org/</a></span> for further recommendations on its use.</p>
+<p>For most of the packages it will be inappropriate to re-use the date of the release as a version number. It's much more obvious how big are the changes between versions "4.4.12", "4.5.1" and "4.5.2" than between versions "2008.12.17", "2011.04.15" and "2011.09.14". The concept of using version numbers to convey the meaning of the status of the code and the way it has been modified is known as "Semantic Versioning", see <span class="URL"><a href="https://semver.org/">https://semver.org/</a></span> for further recommendations on its use.</p>
 
 <p>Since version information is duplicated in several places throughout the package documentation, for <strong class="pkg">GAPDoc</strong>-based manuals you may define the version and the release manual in the comments in <code class="file">PackageInfo.g</code> file close to the place where you specified its <code class="code">Version</code> and <code class="code">Date</code> components, for example</p>
 
@@ -1113,7 +1113,7 @@ For help, type: ?Example package
 ##  &lt;#/GAPDoc&gt;
 </pre></div>
 
-<p>notify <code class="func">MakeGAPDocDoc</code> (<a href="../../pkg/GAPDoc-1.6.2/doc/chap5.html#X826F530686F4D052"><span class="RefLink">GAPDoc: MakeGAPDocDoc</span></a>) that a part of the document is stored in <code class="file">PackageInfo.g</code> (see <code class="file">example/makedocrel.g</code>), read this data into the header of the main document via <code class="code">&lt;#Include Label="PKGVERSIONDATA"&gt;</code> directive and then use them via &amp;VERSION; and &amp;RELEASEDATE; entities almost everywhere where you need to refer to them (most commonly, in the title page and installation instructions).</p>
+<p>notify <code class="func">MakeGAPDocDoc</code> (<a href="../../pkg/GAPDoc-1.6.3/doc/chap5.html#X826F530686F4D052"><span class="RefLink">GAPDoc: MakeGAPDocDoc</span></a>) that a part of the document is stored in <code class="file">PackageInfo.g</code> (see <code class="file">example/makedocrel.g</code>), read this data into the header of the main document via <code class="code">&lt;#Include Label="PKGVERSIONDATA"&gt;</code> directive and then use them via &amp;VERSION; and &amp;RELEASEDATE; entities almost everywhere where you need to refer to them (most commonly, in the title page and installation instructions).</p>
 
 <p><a id="X8559D1FF7C9B7D14" name="X8559D1FF7C9B7D14"></a></p>
 
@@ -1248,15 +1248,20 @@ fi;
 <div class="example"><pre>
 You should start GAP4 using `gap -A -x 80 -r -m 100m -o 1g -K 2g'.
 
-Architecture: x86_64-apple-darwin15.6.0-gcc-6-default64
+Architecture: SOMETHING-SOMETHING-gcc-default64
 
-testing: /Users/alexk/GITREPS/gap/tst/testinstall/alghom.tst
-     140 msec for alghom.tst        
-testing: /Users/alexk/GITREPS/gap/tst/testinstall/algmat.tst
-    1309 msec for algmat.tst        
-testing: /Users/alexk/GITREPS/gap/tst/testinstall/algsc.tst
-     500 msec for algsc.tst         
-... further lines deleted ...
+testing: ..../gap-4.X.Y/tst/testinstall/alghom.tst
+      84 ms (55 ms GC) and 2.90MB allocated for alghom.tst
+testing: ..../gap-4.X.Y/tst/testinstall/algmat.tst
+     839 ms (114 ms GC) and 219MB allocated for algmat.tst
+[ further lines deleted ]
+testing: ..../gap-4.X.Y/tst/testinstall/zmodnze.tst
+     127 ms (119 ms GC) and 1.29MB allocated for zmodnze.tst
+-----------------------------------
+total     62829 ms (24136 ms GC) and 8.61GB allocated
+              0 failures in 252 files
+
+#I  No errors detected while testing
 </pre></div>
 
 <p>(optionally, you may start <strong class="pkg">GAP</strong> with the command line options which you will see in the test output, to run it in a more conservative settings).</p>
@@ -1292,11 +1297,11 @@ testing: /Users/alexk/GITREPS/gap/tst/testinstall/algsc.tst
 
 <h4>76.21 <span class="Heading">Selecting a license for a <strong class="pkg">GAP</strong> Package</span></h4>
 
-<p>As it was mentioned in the description of the <code class="file">LICENSE</code> file in Section <a href="chap76.html#X8383876782480702"><span class="RefLink">76.5</span></a>, it is advised to make clear in the documentation of the package the basis on which it is being distributed to users. <strong class="pkg">GAP</strong> itself is distributed under the GNU Public License version 2 (version 2 or later). We would encourage you to consider the GPL license for your packages, but you might wish to be more restrictive (for instance forbidding redistribution for profit) or less restrictive (allowing your software to be incorporated into commercial software). See "Choosing a License for the Distribution of Your Package" from <span class="URL"><a href="http://www.gap-system.org/Packages/Authors/authors.html">http://www.gap-system.org/Packages/Authors/authors.html</a></span> and also <span class="URL"><a href="https://choosealicense.com/">https://choosealicense.com/</a></span> for further details.</p>
+<p>As it was mentioned in the description of the <code class="file">LICENSE</code> file in Section <a href="chap76.html#X8383876782480702"><span class="RefLink">76.5</span></a>, it is advised to make clear in the documentation of the package the basis on which it is being distributed to users. <strong class="pkg">GAP</strong> itself is distributed under the GNU Public License version 2 (version 2 or later). We would encourage you to consider the GPL license for your packages, but you might wish to be more restrictive (for instance forbidding redistribution for profit) or less restrictive (allowing your software to be incorporated into commercial software). See "Choosing a License for the Distribution of Your Package" from <span class="URL"><a href="https://www.gap-system.org/Packages/Authors/authors.html">https://www.gap-system.org/Packages/Authors/authors.html</a></span> and also <span class="URL"><a href="https://choosealicense.com/">https://choosealicense.com/</a></span> for further details.</p>
 
 <p>In the past many <strong class="pkg">GAP</strong> packages used the text "We adopt the copyright regulations of <strong class="pkg">GAP</strong> as detailed in the copyright notice in the <strong class="pkg">GAP</strong> manual" or a similar statement. We now advise to be more explicit by making the exact reference to the GPL license, for example:</p>
 
-<p><em> <strong class="pkg">packagename</strong> is free software; you can redistribute it and/or modify it under the terms of the <span class="URL"><a href="http://www.fsf.org/licenses/gpl.html">GNU General Public License</a></span> as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. </em> and also including a copy of the full text of the license.</p>
+<p><em> <strong class="pkg">packagename</strong> is free software; you can redistribute it and/or modify it under the terms of the <span class="URL"><a href="https://www.fsf.org/licenses/gpl.html">GNU General Public License</a></span> as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. </em> and also including a copy of the full text of the license.</p>
 
 <p><a id="X8074AAAE79911BE5" name="X8074AAAE79911BE5"></a></p>
 
@@ -1376,7 +1381,7 @@ testing: /Users/alexk/GITREPS/gap/tst/testinstall/algsc.tst
 </ul>
 <p>In the latter case we can also provide some services for producing several archive formats from the archive you provide (e.g., you produce a <code class="code">.tar.gz</code> version of your archive and we produce also a <code class="code">.tar.bz2</code>, <code class="code">.zip</code> and a <code class="code">-win.zip</code> version from it).</p>
 
-<p>Please also consider submitting your package to the <strong class="pkg">GAP</strong> package refereeing process (see <span class="URL"><a href="http://www.gap-system.org/Contacts/submit.html">http://www.gap-system.org/Contacts/submit.html</a></span> for further information).</p>
+<p>Please also consider submitting your package to the <strong class="pkg">GAP</strong> package refereeing process (see <span class="URL"><a href="https://www.gap-system.org/Contacts/submit.html">https://www.gap-system.org/Contacts/submit.html</a></span> for further information).</p>
 
 <p>For packages hosted on GitHub publishing package release and establishing its website can be very efficiently automated using two tools: GitHubPagesForGAP (<span class="URL"><a href="https://github.com/gap-system/GitHubPagesForGAP">https://github.com/gap-system/GitHubPagesForGAP</a></span>) and ReleaseTools (<span class="URL"><a href="https://github.com/gap-system/ReleaseTools">https://github.com/gap-system/ReleaseTools</a></span>).</p>
 

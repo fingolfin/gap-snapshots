@@ -1,13 +1,12 @@
 #############################################################################
 ##
-#W  ratfunul.gi                 GAP Library                      Frank Celler
-#W                                                             Andrew Solomon
-#W                                                           Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler, Andrew Solomon, Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the methods for rational functions that know that they
 ##  are univariate.
@@ -1032,7 +1031,7 @@ InstallMethod(StandardAssociateUnit,"laurent",
   IsCollsElms,[IsPolynomialRing, IsLaurentPolynomial],0,
 function(R,f)
   # get standard associate of leading term
-  return StandardAssociateUnit(CoefficientsRing(R), LeadingCoefficient(f));
+  return StandardAssociateUnit(CoefficientsRing(R), LeadingCoefficient(f)) * One(R);
 end);
 
 #############################################################################
@@ -1614,8 +1613,3 @@ InstallMethod( \+, "univariate + rat", true,
     [ IsPolynomialFunction and IsUnivariateRationalFunction, IsRat ],
     -RankFilter(IsRat),#fallback method is low ranked
   function(l,c) return SumCoeffUnivfunc(c*FamilyObj(l)!.oneCoefficient,l); end);
-
-#############################################################################
-##
-#E
-##

@@ -277,6 +277,6 @@
   [4X[32X[104X
   
   [33X[0;0YIn  particular,  since  we don't use the filter [10XIsAttributeStoringRep[110X in the
-  [2XObjectify[102X ([14X79.9-1[114X), whenever [2XIsConfluent[102X ([14X38.1-5[114X) is called, the appropriate
+  [2XObjectify[102X ([14X79.1-1[114X), whenever [2XIsConfluent[102X ([14X38.1-5[114X) is called, the appropriate
   method to determine confluence is called.[133X
   

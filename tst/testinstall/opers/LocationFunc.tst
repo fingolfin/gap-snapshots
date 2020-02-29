@@ -5,9 +5,13 @@ gap> f:=x->x;;
 gap> LocationFunc(f);
 "stream:1"
 
+# Library function
+gap> PositionSublist(LocationFunc(Where),"/lib/error.g:") <> fail;
+true
+
 # GAP function which was compiled to C code by gac
 gap> LocationFunc(INSTALL_METHOD_FLAGS);
-"GAPROOT/lib/oper1.g:146"
+"GAPROOT/lib/oper1.g:147"
 
 # proper kernel function
 gap> LocationFunc(APPEND_LIST_INTR);

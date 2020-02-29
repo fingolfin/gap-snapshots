@@ -51,7 +51,7 @@ Here are some examples of such name changes.
 </Row>
 <Row>
   <Item><C>FunctionOperation</C></Item>
-  <Item><Ref Func="FunctionAction"/></Item>
+  <Item><Ref Attr="FunctionAction"/></Item>
 </Row>
 </Table>
 
@@ -164,7 +164,7 @@ Here are some further name changes.
 </Row>
 <Row>
   <Item><C>NormedVectors</C></Item>
-  <Item><Ref Func="NormedRowVectors"/></Item>
+  <Item><Ref Attr="NormedRowVectors"/></Item>
 </Row>
 <Row>
   <Item><C>MutableIdentityMat</C></Item>
@@ -174,29 +174,48 @@ Here are some further name changes.
   <Item><C>MutableNullMat</C></Item>
   <Item><Ref Func="NullMat"/></Item>
 </Row>
+<Row>
+  <Item><C>MultRowVector</C></Item>
+  <Item><Ref Oper="MultVectorLeft"/></Item>
+</Row>
 </Table>
 
 
 <Index Key="PositionFirstComponent"><C>PositionFirstComponent</C></Index>
 The operation <C>PositionFirstComponent</C> has been deprecated in GAP
-4.8 and later due to issues with its documentation and implementation.
+4.8 due to issues with its documentation and implementation, and was
+removed in GAP 4.10.
 Instead of <C>PositionFirstComponent(list,obj)</C>, you may use
 <C>PositionSorted(list,[obj])</C> or
 <C>PositionProperty(list,x->x[1]=obj)</C> as a replacement, depending on
 your specific use case.
+
+<Index Key="MultRowVector"><C>MultRowVector</C></Index>
+The five argument version of the operation <C>MultRowVector</C> has been
+deprecated in GAP 4.10 since it was unused and only available for coefficient
+lists.
+Note that <C>MultRowVector</C> was also renamed to <C>MultVectorLeft</C>.
+
+<Index Key="TemporaryGlobalVarName"><C>TemporaryGlobalVarName</C></Index>
+The function <C>TemporaryGlobalVarName</C> has been deprecated in GAP 4.11.
+Code using it typically can be restructured to not need it, e.g. by
+using <Ref Func="EvalString"/>.
 
 
 <ManSection>
 <InfoClass Name="InfoObsolete"/>
 <Description>
 is an info class to display warnings when an obsolete variable is used.
-By default, these warnings are switched off since the info level for 
-this class is 0. Setting it to 1 will trigger warnings if &GAP; will 
-detect that an obsolete variable is used at runtime.
+By default, the info level for this class is set to 1, which will only
+show variables which will be removed in the next major version of GAP.
+Setting it to 2 will trigger further warnings, for variables which have
+alternative names, or may be removed in future.
+
+This class can be set to 0 to disable all obsolete warnings.
 <P/>
-To check that the &GAP; code does not use obsolete variables at the 
-parsing time, and not at a runtime, use <C>-O</C> command line option,
-see <Ref Sect="Command Line Options"/>. 
+To check that the &GAP; code does not use any obsolete variables at
+parsing time, and not at a runtime, use the <C>-O</C> command line option,
+see <Ref Sect="Command Line Options"/>.
 </Description>
 </ManSection>
 
@@ -254,11 +273,11 @@ systems) in the directory <C>GAPInfo.UserGapRoot</C>.
   simply a property of semigroups, there is no category <C>IsSemilattice</C>. 
   <P/>
 
-  From Version 4.8 onwards, <C>IsSemilatticeAsSemigroup</C> is renamed
-  <C>IsSemilattice</C>, and <C>IsMonoidAsSemigroup</C> returns <C>true</C> for
-  semigroups in the category <Ref Filt = "IsMonoid"/>.
-  
-  <#Include Label="IsSemilatticeAsSemigroup">
+  From Version 4.8 onwards, <C>IsMonoidAsSemigroup</C> returns
+  <K>true</K> for semigroups in the category <Ref Filt = "IsMonoid"/>,
+  and <C>IsSemilatticeAsSemigroup</C> has been moved to the
+  <Package>Semigroups</Package> under the new name
+  <Ref Prop="IsSemilattice" BookName = "Semigroups"/>.
 </Section>
 
 </Chapter>

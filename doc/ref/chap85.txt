@@ -39,7 +39,7 @@
   [10XComputedSylowSubgroups[110X,  and  to  store  the  groups  in this list. The name
   implies  that  the value of this attribute may change in the course of a [5XGAP[105X
   session,  whenever  a  newly-computed  Sylow  subgroup is put into the list.
-  Therefore,  this is a [13Xmutable attribute[113X (see [14X79.3[114X). The list contains primes
+  Therefore,  this is a [13Xmutable attribute[113X (see [14X13.5[114X). The list contains primes
   in  each  bound  odd  position  and  a  corresponding  Sylow subgroup in the
   following even position. More precisely, if [10X[3Xp[103X[10X = ComputedSylowSubgroups( [3XG[103X[10X )[
   [3Xeven[103X[10X  -  1  ][110X  then  [10XComputedSylowSubgroups(  [3XG[103X[10X )[ [3Xeven[103X[10X ][110X holds the value of
@@ -59,7 +59,7 @@
   tester  and  setter  operations  [10XHas[110X[3Xname[103X  and  [10XSet[110X[3Xname[103X,  respectively. Note,
   however,  that  the  tester is not a filter. [3Xdom-req[103X and [3Xkey-req[103X specify the
   required  filters for the first and second argument of the operation [3Xname[103X[10XOp[110X,
-  which  are needed to create this operation with [2XDeclareOperation[102X ([14X79.18-12[114X).
+  which  are  needed  to create this operation with [2XDeclareOperation[102X ([14X78.1-5[114X).
   [3Xdom-req[103X  is  also  the  required  filter  for  the  corresponding  attribute
   [10XComputed[110X[3Xname[103X[10Xs[110X.  The  fourth  argument  [3Xkey-test[103X  is in general a function to
   which  the  second  argument  [3Xinfo[103X  of  [10X[3Xname[103X[10X( [3XD[103X[10X, [3Xinfo[103X[10X )[110X will be passed. This
@@ -102,10 +102,10 @@
   [33X[0;0YThus  the  prime  test need not be repeated in the methods for the operation
   [10XSylowSubgroupOp[110X  (which  are  installed  to  do the real work). Note that no
   methods    need    be    installed    for    [2XSylowSubgroup[102X   ([14X39.13-1[114X)   and
-  [10XComputedSylowSubgroups[110X. If a method is installed with [2XInstallMethod[102X ([14X78.2-1[114X)
+  [10XComputedSylowSubgroups[110X. If a method is installed with [2XInstallMethod[102X ([14X78.3-1[114X)
   for  a  wrapper  operation such as [2XSylowSubgroup[102X ([14X39.13-1[114X) then a warning is
-  signalled  provided  the  [2XInfoWarning[102X  ([14X7.4-7[114X)  level  is  at  least [10X1[110X. (Use
-  [2XInstallMethod[102X ([14X78.2-1[114X) in order to suppress the warning.)[133X
+  signalled  provided  the  [2XInfoWarning[102X  ([14X7.4-8[114X)  level  is  at  least [10X1[110X. (Use
+  [2XInstallMethod[102X ([14X78.3-1[114X) in order to suppress the warning.)[133X
   
   
   [1X85.2 [33X[0;0YIn Parent Attributes[133X[101X
@@ -136,19 +136,19 @@
   
   [33X[0;0Y(Note  that  it  is in principle possible to install even [2XIndex[102X ([14X39.3-2[114X) and
   [10XIndexOp[110X  methods  for  a  number  of  arguments  different  from  two,  with
-  [2XInstallOtherMethod[102X ([14X78.2-2[114X), see [14X79.3[114X).[133X
+  [2XInstallOtherMethod[102X ([14X78.3-2[114X), see [14X13.5[114X).[133X
   
   [33X[0;0YThe  call  of  [2XInParentFOA[102X  declares  the  operations  and  the attribute as
   described  above,  with  names [3Xname[103X, [3Xname[103X[10XOp[110X, and [3Xname[103X[10XInParent[110X. [3Xsuper-req[103X and
   [3Xsub-req[103X  specify  the  required filters for the first and second argument of
   the  operation  [3Xname[103X[10XOp[110X,  which  are  needed  to  create  this operation with
-  [2XDeclareOperation[102X  ([14X79.18-12[114X).  [3Xsub-req[103X  is  also the required filter for the
+  [2XDeclareOperation[102X  ([14X78.1-5[114X).  [3Xsub-req[103X  is  also  the  required filter for the
   corresponding  attribute  [3Xname[103X[10XInParent[110X;  note that [2XHasParent[102X ([14X31.7-1[114X) is [13Xnot[113X
   required  for  the argument [3XU[103X of [3Xname[103X[10XInParent[110X, because even without a parent
   stored,  [10XParent(  [3XU[103X[10X  )[110X  is  legal,  meaning  [3XU[103X itself (see [14X31.7[114X). The fourth
-  argument  must  be  [2XDeclareProperty[102X  ([14X79.18-10[114X)  if  [3Xname[103X[10XInParent[110X takes only
-  boolean   values   (for   example   in   the   case  [10XIsNormalInParent[110X),  and
-  [2XDeclareAttribute[102X ([14X79.18-9[114X) otherwise.[133X
+  argument must be [2XDeclareProperty[102X ([14X13.7-5[114X) if [3Xname[103X[10XInParent[110X takes only boolean
+  values  (for  example  in  the  case [10XIsNormalInParent[110X), and [2XDeclareAttribute[102X
+  ([14X13.5-4[114X) otherwise.[133X
   
   [33X[0;0YFor  example,  to  set  up  the  three  objects [2XIndex[102X ([14X39.3-2[114X), [10XIndexOp[110X, and
   [10XIndexInParent[110X  together,  the  declaration  file  [11Xlib/domain.gd[111X contains the
@@ -219,16 +219,16 @@
   call of [10Xop[110X with second argument [10Xxset[110X rather than with [10XD[110X. This allows certain
   methods  for  [10Xop[110X  to make use of the type of [10Xxset[110X, in which the types of the
   external  subsets  of  [10Xxset[110X  and  of the external orbits in [10Xxset[110X are stored.
-  (This  is used to avoid repeated calls of [2XNewType[102X ([14X79.8-1[114X) in functions like
+  (This  is used to avoid repeated calls of [2XNewType[102X ([14X13.9-3[114X) in functions like
   [10XExternalOrbits(  xset  )[110X,  which call [10XExternalOrbit( xset, pnt )[110X for several
   values of [10Xpnt[110X.)[133X
   
   [33X[0;0YFor  property  testing  functions such as [2XIsTransitive[102X ([14X41.10-1[114X), the fourth
-  argument   [3XAorP[103X   must   be  [2XNewProperty[102X  ([14X79.3-2[114X),  otherwise  it  must  be
-  [2XNewAttribute[102X  ([14X79.3-1[114X);  in  the former case, a property is returned, in the
+  argument   [3XAorP[103X   must   be  [2XNewProperty[102X  ([14X13.7-4[114X),  otherwise  it  must  be
+  [2XNewAttribute[102X  ([14X13.5-3[114X);  in  the former case, a property is returned, in the
   latter case an attribute that is not a property.[133X
   
-  [33X[0;0YFor  example,  to  set  up the operation [2XOrbits[102X ([14X41.4[114X), the declaration file
+  [33X[0;0YFor  example,  to set up the operation [2XOrbits[102X ([14X41.4-2[114X), the declaration file
   [11Xlib/oprt.gd[111X contains the following line of code:[133X
   
   [4X[32X  Example  [32X[104X
@@ -246,9 +246,9 @@
   
   [33X[0;0Ywhich are usually entered in calls to [2XOrbitsishOperation[102X.[133X
   
-  [33X[0;0YThe new operation, e.g., [2XOrbits[102X ([14X41.4[114X), can be called either as [10XOrbits( [3Xxset[103X[10X
-  )[110X  for  an  external  set [3Xxset[103X, or as [10XOrbits( [3XG[103X[10X )[110X for a permutation group [3XG[103X,
-  meaning the orbits on the moved points of [3XG[103X via [2XOnPoints[102X ([14X41.2-1[114X), or as[133X
+  [33X[0;0YThe  new  operation,  e.g., [2XOrbits[102X ([14X41.4-2[114X), can be called either as [10XOrbits(
+  [3Xxset[103X[10X  )[110X  for an external set [3Xxset[103X, or as [10XOrbits( [3XG[103X[10X )[110X for a permutation group
+  [3XG[103X, meaning the orbits on the moved points of [3XG[103X via [2XOnPoints[102X ([14X41.2-1[114X), or as[133X
   
   [33X[0;0Y[10XOrbits( [3XG[103X[10X, [3XOmega[103X[10X[, [3Xgens[103X[10X, [3Xacts[103X[10X][, [3Xact[103X[10X] )[110X,[133X
   
@@ -340,7 +340,7 @@
   the result can be stored as the value of the attribute [3Xattr[103X that was entered
   as fourth argument of [2XOrbitishFO[102X ([14X85.3-2[114X). This attribute is considered by a
   call  [10XBlocks(  [3XG[103X[10X,  [3XD[103X[10X,  [3Xopr[103X[10X  )[110X (i.e., without [3Xseed[103X) in the same way as [2XOrbits[102X
-  ([14X41.4[114X) considers [10XOrbitsAttr[110X.[133X
+  ([14X41.4-2[114X) considers [10XOrbitsAttr[110X.[133X
   
   [33X[0;0YTo  set  this  up,  the  declaration file [11Xlib/oprt.gd[111X contains the following
   lines:[133X

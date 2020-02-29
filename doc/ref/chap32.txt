@@ -44,7 +44,7 @@
   [33X[0;0YSome technical details of general mappings are described in section [14X32.13[114X.[133X
   
   
-  [1X32.1 [33X[0;0YIsDirectProductElement (Filter)[133X[101X
+  [1X32.1 [33X[0;0YDirect Products and their Elements[133X[101X
   
   [1X32.1-1 IsDirectProductElement[101X
   
@@ -63,8 +63,47 @@
   returns  a mutable plain list with the same entries. The sum and the product
   of  a  direct  product  element and a list in [2XIsListDefault[102X ([14X21.12-3[114X) is the
   list of sums and products, respectively. The sum and the product of a direct
-  product   element   and   a  non-list  is  the  direct  product  element  of
-  componentwise sums and products, respectively.[133X
+  product element and an object that is neither a list nor a collection is the
+  direct product element of componentwise sums and products, respectively.[133X
+  
+  [1X32.1-2 DirectProductFamily[101X
+  
+  [33X[1;0Y[29X[2XDirectProductFamily[102X( [3Xargs[103X ) [32X function[133X
+  
+  [33X[0;0Y[3Xargs[103X  must be a dense list of [2XCollectionsFamily[102X ([14X30.2-1[114X) families, otherwise
+  the function raises an error.[133X
+  
+  [33X[0;0Y[2XDirectProductFamily[102X     returns     [10Xfam[110X,    a    collections    family    of
+  [2XIsDirectProductElement[102X ([14X32.1-1[114X) objects.[133X
+  
+  [33X[0;0Y[10Xfam[110X  is  the  [2XCollectionsFamily[102X  ([14X30.2-1[114X) of [2XIsDirectProductElement[102X ([14X32.1-1[114X)
+  objects whose [10Xi[110X-th component is in [10XElementsFamily(args[i])[110X.[133X
+  
+  [33X[0;0YNote that a collection in [10Xfam[110X may not itself be a direct product; it just is
+  a subcollection of a direct product.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XD8 := DihedralGroup(IsPermGroup, 8);;[127X[104X
+    [4X[25Xgap>[125X [27XFamilyObj(D8) = CollectionsFamily(PermutationsFamily);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xfam := DirectProductFamily([FamilyObj(D8), FamilyObj(D8)]);;[127X[104X
+    [4X[25Xgap>[125X [27XComponentsOfDirectProductElementsFamily(ElementsFamily(fam));[127X[104X
+    [4X[28X[ <Family: "PermutationsFamily">, <Family: "PermutationsFamily"> ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAlso  note  that  not  all  direct  products  in  [5XGAP[105X  are created via these
+  families.  For  example  if  the  arguments  to  [2XDirectProduct[102X  ([14X49.1-1[114X) are
+  permutation  groups,  then  it  returns  a  permutation group as well, whose
+  elements are not [2XIsDirectProductElement[102X ([14X32.1-1[114X) objects.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xfam = FamilyObj(DirectProduct(D8, D8));[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XD4 := DihedralGroup(IsPcGroup, 4);;[127X[104X
+    [4X[25Xgap>[125X [27Xfam2 := DirectProductFamily([FamilyObj(D8), FamilyObj(D4)]);;[127X[104X
+    [4X[25Xgap>[125X [27Xfam2 = FamilyObj(DirectProduct(D8, D4));[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
   
   
   [1X32.2 [33X[0;0YCreating Mappings[133X[101X
@@ -127,14 +166,15 @@
   [33X[1;0Y[29X[2XCompositionMapping[102X( [3Xmap1[103X, [3Xmap2[103X, [3X...[103X ) [32X function[133X
   
   [33X[0;0Y[2XCompositionMapping[102X  allows one to compose arbitrarily many general mappings,
-  and delegates each step to [2XCompositionMapping2[102X ([14X32.2-6[114X).[133X
+  and delegates each step to [2XCompositionMapping2[102X ([14X32.2-6[114X). The result is a map
+  that  maps  an  element  first  under  the  last  argument,  then  under the
+  penultimate argument and so forth.[133X
   
   [33X[0;0YAdditionally,   the   properties  [2XIsInjective[102X  ([14X32.3-4[114X)  and  [2XIsSingleValued[102X
-  ([14X32.3-2[114X)  are  maintained;  if  the  source of the [22Xi+1[122X-th general mapping is
-  identical  to  the  range of the [22Xi[122X-th general mapping, also [2XIsTotal[102X ([14X32.3-1[114X)
-  and   [2XIsSurjective[102X   ([14X32.3-5[114X)  are  maintained.  (So  one  should  not  call
-  [2XCompositionMapping2[102X  ([14X32.2-6[114X)  directly  if  one  wants  to  maintain  these
-  properties.)[133X
+  ([14X32.3-2[114X) are maintained. If the range of the [22Xi+1[122X-th argument is identical to
+  the  range  of  the  [22Xi[122X-th  argument,  also [2XIsTotal[102X ([14X32.3-1[114X) and [2XIsSurjective[102X
+  ([14X32.3-5[114X)  are  maintained.  (So  one  should  not  call  [2XCompositionMapping2[102X
+  ([14X32.2-6[114X) directly if one wants to maintain these properties.)[133X
   
   [33X[0;0YDepending  on  the  types  of  [3Xmap1[103X  and [3Xmap2[103X, the returned mapping might be
   constructed  completely  new  (for  example  by giving domain generators and
@@ -142,6 +182,19 @@
   same  algebraic  structures  and [5XGAP[105X can decompose elements of the source of
   [3Xmap2[103X     into     generators)    or    as    an    (iterated)    composition
   (see [2XIsCompositionMappingRep[102X ([14X32.2-7[114X)).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf := GroupHomomorphismByImages(CyclicGroup(IsPermGroup, 2),[127X[104X
+    [4X[25X>[125X [27X                                  CyclicGroup(IsPermGroup, 1));[127X[104X
+    [4X[28X[ (1,2) ] -> [ () ][128X[104X
+    [4X[25Xgap>[125X [27Xg := GroupHomomorphismByImages(CyclicGroup(IsPermGroup, 6),[127X[104X
+    [4X[25X>[125X [27X                                  CyclicGroup(IsPermGroup, 2));[127X[104X
+    [4X[28X[ (1,2,3,4,5,6) ] -> [ (1,2) ][128X[104X
+    [4X[25Xgap>[125X [27XCompositionMapping(f, g);[127X[104X
+    [4X[28X[ (1,2,3,4,5,6) ] -> [ () ][128X[104X
+    [4X[25Xgap>[125X [27XCompositionMapping(g, f);[127X[104X
+    [4X[28X[ (1,2) ] -> [ () ][128X[104X
+  [4X[32X[104X
   
   [1X32.2-6 CompositionMapping2[101X
   

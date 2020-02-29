@@ -1,8 +1,6 @@
-#############################################################################
-##
-#W  intarith.tst                  GAP library
-##
-##
+#@local POWERMODINT_GAP,b,bigPos,bigNeg,checkPValuationInt,data,dataHex
+#@local dataInv,dataNonZero,e,f,g,i,k,m,mysource,pow,r,smlNeg,smlPos,x,y
+#@local naivQM,ps,checkROOT_INT,P,a,n,p,x1,x2
 gap> START_TEST("intarith.tst");
 gap> 1 + 1;
 2
@@ -325,9 +323,9 @@ Error, Integer operations: <divisor> must be nonzero
 gap> QuoInt(bigPos, 0);
 Error, Integer operations: <divisor> must be nonzero
 gap> QuoInt(fail,1);
-Error, QuoInt: <left> must be an integer (not a boolean or fail)
+Error, QuoInt: <a> must be an integer (not the value 'fail')
 gap> QuoInt(1,fail);
-Error, QuoInt: <right> must be an integer (not a boolean or fail)
+Error, QuoInt: <b> must be an integer (not the value 'fail')
 
 # corner cases
 gap> QuoInt(-2^28, -1);
@@ -375,9 +373,9 @@ Error, Integer operations: <divisor> must be nonzero
 gap> RemInt(bigPos, 0);
 Error, Integer operations: <divisor> must be nonzero
 gap> RemInt(fail,1);
-Error, RemInt: <left> must be an integer (not a boolean or fail)
+Error, RemInt: <a> must be an integer (not the value 'fail')
 gap> RemInt(1,fail);
-Error, RemInt: <right> must be an integer (not a boolean or fail)
+Error, RemInt: <b> must be an integer (not the value 'fail')
 
 # corner cases
 gap> RemInt(-2^28, 2^28);
@@ -448,9 +446,9 @@ true
 
 #
 gap> GcdInt(fail,1);
-Error, GcdInt: <left> must be an integer (not a boolean or fail)
+Error, GcdInt: <a> must be an integer (not the value 'fail')
 gap> GcdInt(1,fail);
-Error, GcdInt: <right> must be an integer (not a boolean or fail)
+Error, GcdInt: <b> must be an integer (not the value 'fail')
 
 # corner cases
 gap> GcdInt(0, 0);
@@ -495,9 +493,9 @@ true
 
 #
 gap> LcmInt(fail,1);
-Error, LcmInt: <left> must be an integer (not a boolean or fail)
+Error, LcmInt: <a> must be an integer (not the value 'fail')
 gap> LcmInt(1,fail);
-Error, LcmInt: <right> must be an integer (not a boolean or fail)
+Error, LcmInt: <b> must be an integer (not the value 'fail')
 
 # corner cases
 gap> LcmInt(0, 0);
@@ -527,9 +525,9 @@ true
 gap> AbsInt(-2^60) = 2^60;  # corner case on 64bit systems
 true
 gap> AbsInt(fail);
-Error, AbsRat: argument must be a rational or integer (not a boolean or fail)
+Error, AbsRat: <op> must be a rational (not the value 'fail')
 gap> ABS_INT(fail);
-Error, AbsInt: argument must be an integer (not a boolean or fail)
+Error, AbsInt: <n> must be an integer (not the value 'fail')
 
 #
 # SignInt
@@ -537,9 +535,9 @@ Error, AbsInt: argument must be an integer (not a boolean or fail)
 gap> List(data, SignInt);
 [ -1, -1, -1, -1, 0, 1, 1, 1, 1 ]
 gap> SignInt(fail);
-Error, SignRat: argument must be a rational or integer (not a boolean or fail)
+Error, SignRat: <op> must be a rational (not the value 'fail')
 gap> SIGN_INT(fail);
-Error, SignInt: argument must be an integer (not a boolean or fail)
+Error, SignInt: <n> must be an integer (not the value 'fail')
 
 #
 # QuotientMod
@@ -580,7 +578,7 @@ gap> dataHex := List(data, HexStringInt);
 [ "-56BC75E2D63100001", "-56BC75E2D63100000", "-2710", "-1", "0", "1", 
   "2710", "56BC75E2D63100000", "56BC75E2D63100001" ]
 gap> HexStringInt("abc");
-Error, HexStringInt: <op> must be an integer (not a list (string))
+Error, HexStringInt: <n> must be an integer (not a list (string))
 gap> List(dataHex, IntHexString) = data;
 true
 gap> dataHex;  # HexStringInt used to destroy its argument
@@ -599,7 +597,7 @@ Error, IntHexString: invalid character in hex-string
 gap> IntHexString("56BC75E2D63100000@");
 Error, IntHexString: invalid character in hex-string
 gap> IntHexString(0);
-Error, IntHexString: argument must be string (not a integer)
+Error, IntHexString: <str> must be a string (not the integer 0)
 gap> IntHexString("-1000000000000000");
 -1152921504606846976
 
@@ -609,7 +607,7 @@ gap> IntHexString("-1000000000000000");
 gap> List(data, Log2Int);
 [ 66, 66, 13, 0, -1, 0, 13, 66, 66 ]
 gap> Log2Int("abc");
-Error, Log2Int: argument must be an integer (not a list (string))
+Error, Log2Int: <n> must be an integer (not a list (string))
 gap> List([-5..5], Log2Int);
 [ 2, 2, 1, 1, 0, -1, 0, 1, 1, 2, 2 ]
 gap> ForAll([2..100], x -> Log2Int(2^x) = x and
@@ -687,6 +685,10 @@ fail
 gap> List(data, String);
 [ "-100000000000000000001", "-100000000000000000000", "-10000", "-1", "0", 
   "1", "10000", "100000000000000000000", "100000000000000000001" ]
+gap> String(10^2345) = Concatenation("1",ListWithIdenticalEntries(2345, '0'));
+true
+gap> String(-10^2345) = Concatenation("-1",ListWithIdenticalEntries(2345, '0'));
+true
 gap> STRING_INT(2^(64*1050));
 "16432688376902041373303717503675082083474967712070846532573328644712404983810\
 518956640718243568117461136366690374068651518401382303506793524181563620173242\
@@ -960,11 +962,12 @@ gap> Random(mysource, 1, 2^40);
 gap> Random(mysource, 1, 2^80);
 1071135285340982180054653
 gap> RandomIntegerMT(fail, 1);
-Error, <mtstr> must be a string (not a boolean or fail)
+Error, RandomIntegerMT: <mtstr> must be a string (not the value 'fail')
 gap> RandomIntegerMT("abc", 1);
-Error, <mtstr> must be a string with at least 2500 characters
+Error, RandomIntegerMT: <mtstr> must be a string with at least 2500 characters
 gap> RandomIntegerMT(mysource!.state, fail);
-Error, <nrbits> must be a small non-negative integer (not a boolean or fail)
+Error, RandomIntegerMT: <nrbits> must be a non-negative small integer (not the\
+ value 'fail')
 
 #
 # PrintInt
@@ -1384,9 +1387,9 @@ Error, PValuation: <p> must be nonzero
 gap> PVALUATION_INT(0,0);
 Error, PValuation: <p> must be nonzero
 gap> PVALUATION_INT(fail,1);
-Error, PValuation: <n> must be an integer (not a boolean or fail)
+Error, PValuation: <n> must be an integer (not the value 'fail')
 gap> PVALUATION_INT(1,fail);
-Error, PValuation: <p> must be an integer (not a boolean or fail)
+Error, PValuation: <p> must be an integer (not the value 'fail')
 
 #
 # test ROOT_INT
@@ -1425,9 +1428,9 @@ Error, Root: <n> is negative but <k> is even
 gap> RootInt(0, 0);
 Error, Root: <k> must be a positive integer
 gap> RootInt(fail, 1);
-Error, Root: <n> must be an integer (not a boolean or fail)
+Error, Root: <n> must be an integer (not the value 'fail')
 gap> RootInt(1, fail);
-Error, Root: <k> must be an integer (not a boolean or fail)
+Error, Root: <k> must be an integer (not the value 'fail')
 
 #
 # test IS_PROBAB_PRIME_INT
@@ -1439,13 +1442,16 @@ gap> Filtered([-100..100], n -> false <> IS_PROBAB_PRIME_INT(2^255+n, 5));
 gap> Filtered([-100..100], n -> false <> IsProbablyPrimeInt(2^255+n));
 [ -31, -19, 95 ]
 gap> IS_PROBAB_PRIME_INT(fail, 1);
-Error, IsProbablyPrimeInt: <n> must be an integer (not a boolean or fail)
+Error, IsProbablyPrimeInt: <n> must be an integer (not the value 'fail')
 gap> IS_PROBAB_PRIME_INT(1, fail);
-Error, IsProbablyPrimeInt: <reps> must be an integer (not a boolean or fail)
+Error, IsProbablyPrimeInt: <reps> must be a positive small integer (not the va\
+lue 'fail')
 gap> IS_PROBAB_PRIME_INT(1, 2^100);
-Error, IsProbablyPrimeInt: <reps> must be a small positive integer
+Error, IsProbablyPrimeInt: <reps> must be a positive small integer (not a larg\
+e positive integer)
 gap> IS_PROBAB_PRIME_INT(1, 0);
-Error, IsProbablyPrimeInt: <reps> must be a small positive integer
+Error, IsProbablyPrimeInt: <reps> must be a positive small integer (not the in\
+teger 0)
 
 #
 # test SmallestRootInt
@@ -1488,7 +1494,3 @@ true
 
 #
 gap> STOP_TEST( "intarith.tst", 1);
-
-#############################################################################
-##
-#E

@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  polyrat.gi                 GAP Library                   Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains functions for polynomials over the rationals
 ##
@@ -128,7 +129,9 @@ end);
 ##   numerically with a denominator of 'digits' digits.
 ##
 APPROXROOTS:=[];
-ShareSpecialObj(APPROXROOTS);
+if IsHPCGAP then
+  ShareSpecialObj(APPROXROOTS);
+fi;
 
 BindGlobal("ApproximateRoot",function(arg)
 local r,e,f,x,nf,lf,c,store,letzt;
@@ -563,7 +566,7 @@ local fam,gcd, u, v, w, val, r, s;
   od;
   #gcd := u * (a/u[Length(u)]);
   gcd:=u;
-  MultRowVector(gcd,a/u[Length(u)]);
+  MultVector(gcd,a/u[Length(u)]);
   ReduceCoeffsMod(gcd,p);
 
   # and return the polynomial
@@ -947,19 +950,19 @@ BindGlobal("RPGcdRepresentationModPrime",function(f,g,p)
   # convert <s> and <x> back into polynomials
   if 0 = Length(g)  then
     #sx := q * sx;
-    MultRowVector(sx,q);
+    MultVector(sx,q);
     ReduceCoeffsMod(sx,p);
     return [ LaurentPolynomialByCoefficients(brci[1],sx,0,brci[2]),
          Zero(brci[1]) ];
   else
     #hx := q * sx;
     hx:=ShallowCopy(sx);
-    MultRowVector(hx,q);
+    MultVector(hx,q);
     ReduceCoeffsMod(hx,p);
     hx := LaurentPolynomialByCoefficients(brci[1],hx,0,brci[2]);
     AddCoeffs(s,ProductCoeffs(sx,f),-1);
     #s := q * s;
-    MultRowVector(s,q);
+    MultVector(s,q);
     ReduceCoeffsMod(s,p);
     s := LaurentPolynomialByCoefficients(brci[1],s,0,brci[2]);
     g := LaurentPolynomialByCoefficients(brci[1],g,0,brci[2]);
@@ -2185,8 +2188,3 @@ local f, cof;
    return UnivariatePolynomial(f,cof*One(f),
              IndeterminateNumberOfUnivariateRationalFunction(pol));
 end);
-
-#############################################################################
-##
-#E  polyrat.gi  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##

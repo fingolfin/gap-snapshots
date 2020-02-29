@@ -374,7 +374,7 @@
   exponent vector.[133X
   
   
-  [1X45.7 [33X[0;0YSubgroups of Polycyclic Groups - Induced Pcgs[133X[101X
+  [1X45.7 [33X[0;0YSubgroups of Polycyclic Groups – Induced Pcgs[133X[101X
   
   [33X[0;0YLet  [3XU[103X  be  a  subgroup  of  [3XG[103X and let [3XP[103X be a pcgs of [3XG[103X as above such that [3XP[103X
   determines  the  subnormal  series [22XG = C_1 > ... > C_{n+1} = { 1 }[122X. Then the
@@ -732,6 +732,7 @@
   [1X45.11-3 IndicesEANormalSteps[101X
   
   [33X[1;0Y[29X[2XIndicesEANormalSteps[102X( [3Xpcgs[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIndicesEANormalStepsBounded[102X( [3Xpcgs[103X, [3Xbound[103X ) [32X function[133X
   
   [33X[0;0YLet [3Xpcgs[103X be a pcgs obtained as corresponding to a series of normal subgroups
   with    elementary    abelian    factors    (for    example   from   calling
@@ -751,6 +752,9 @@
   
   [33X[0;0YTypically,   [2XIndicesEANormalSteps[102X   is  set  by  [2XPcgsElementaryAbelianSeries[102X
   ([14X45.11-2[114X).[133X
+  
+  [33X[0;0YThe  variant  [2XIndicesEANormalStepsBounded[102X  will aim to ensure that no factor
+  will be larger than the given bound.[133X
   
   [1X45.11-4 EANormalSeriesByPcgs[101X
   

@@ -1,0 +1,301 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter } The \textsf {Digraphs} package }}{5}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Introduction}}{5}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}\leavevmode {\color {Chapter }Definitions}}{6}{subsection.1.1.1}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Installing \textsf {Digraphs}}}{7}{chapter.2}
+\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }For those in a hurry}}{7}{section.2.1}
+\contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter }Optional package dependencies}}{8}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}\leavevmode {\color {Chapter }The Grape package}}{8}{subsection.2.2.1}
+\contentsline {section}{\numberline {2.3}\leavevmode {\color {Chapter }Compiling the kernel module}}{8}{section.2.3}
+\contentsline {section}{\numberline {2.4}\leavevmode {\color {Chapter }Rebuilding the documentation}}{9}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}\leavevmode {\color {Chapter }DigraphsMakeDoc}}{9}{subsection.2.4.1}
+\contentsline {section}{\numberline {2.5}\leavevmode {\color {Chapter }Testing your installation}}{9}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}\leavevmode {\color {Chapter }DigraphsTestInstall}}{9}{subsection.2.5.1}
+\contentsline {subsection}{\numberline {2.5.2}\leavevmode {\color {Chapter }DigraphsTestStandard}}{9}{subsection.2.5.2}
+\contentsline {subsection}{\numberline {2.5.3}\leavevmode {\color {Chapter }DigraphsTestExtreme}}{9}{subsection.2.5.3}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Creating digraphs}}{11}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Creating digraphs}}{11}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }IsDigraph}}{11}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}\leavevmode {\color {Chapter }IsMutableDigraph}}{11}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}\leavevmode {\color {Chapter }IsImmutableDigraph}}{11}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {3.1.4}\leavevmode {\color {Chapter }IsCayleyDigraph}}{12}{subsection.3.1.4}
+\contentsline {subsection}{\numberline {3.1.5}\leavevmode {\color {Chapter }IsDigraphWithAdjacencyFunction}}{12}{subsection.3.1.5}
+\contentsline {subsection}{\numberline {3.1.6}\leavevmode {\color {Chapter }DigraphByOutNeighboursType}}{12}{subsection.3.1.6}
+\contentsline {subsection}{\numberline {3.1.7}\leavevmode {\color {Chapter }Digraph}}{12}{subsection.3.1.7}
+\contentsline {subsection}{\numberline {3.1.8}\leavevmode {\color {Chapter }DigraphByAdjacencyMatrix}}{14}{subsection.3.1.8}
+\contentsline {subsection}{\numberline {3.1.9}\leavevmode {\color {Chapter }DigraphByEdges}}{15}{subsection.3.1.9}
+\contentsline {subsection}{\numberline {3.1.10}\leavevmode {\color {Chapter }EdgeOrbitsDigraph}}{15}{subsection.3.1.10}
+\contentsline {subsection}{\numberline {3.1.11}\leavevmode {\color {Chapter }DigraphByInNeighbours}}{16}{subsection.3.1.11}
+\contentsline {subsection}{\numberline {3.1.12}\leavevmode {\color {Chapter }CayleyDigraph}}{16}{subsection.3.1.12}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }Changing representations}}{17}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }AsBinaryRelation}}{17}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }AsDigraph}}{17}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}\leavevmode {\color {Chapter }Graph}}{18}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}\leavevmode {\color {Chapter }AsGraph}}{19}{subsection.3.2.4}
+\contentsline {subsection}{\numberline {3.2.5}\leavevmode {\color {Chapter }AsTransformation}}{19}{subsection.3.2.5}
+\contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }New digraphs from old}}{20}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}\leavevmode {\color {Chapter }DigraphImmutableCopy}}{20}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}\leavevmode {\color {Chapter }DigraphImmutableCopyIfImmutable}}{20}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}\leavevmode {\color {Chapter }InducedSubdigraph}}{21}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}\leavevmode {\color {Chapter }ReducedDigraph}}{22}{subsection.3.3.4}
+\contentsline {subsection}{\numberline {3.3.5}\leavevmode {\color {Chapter }MaximalSymmetricSubdigraph}}{22}{subsection.3.3.5}
+\contentsline {subsection}{\numberline {3.3.6}\leavevmode {\color {Chapter }MaximalAntiSymmetricSubdigraph}}{23}{subsection.3.3.6}
+\contentsline {subsection}{\numberline {3.3.7}\leavevmode {\color {Chapter }UndirectedSpanningForest}}{24}{subsection.3.3.7}
+\contentsline {subsection}{\numberline {3.3.8}\leavevmode {\color {Chapter }QuotientDigraph}}{25}{subsection.3.3.8}
+\contentsline {subsection}{\numberline {3.3.9}\leavevmode {\color {Chapter }DigraphReverse}}{26}{subsection.3.3.9}
+\contentsline {subsection}{\numberline {3.3.10}\leavevmode {\color {Chapter }DigraphDual}}{26}{subsection.3.3.10}
+\contentsline {subsection}{\numberline {3.3.11}\leavevmode {\color {Chapter }DigraphSymmetricClosure}}{27}{subsection.3.3.11}
+\contentsline {subsection}{\numberline {3.3.12}\leavevmode {\color {Chapter }DigraphTransitiveClosure}}{27}{subsection.3.3.12}
+\contentsline {subsection}{\numberline {3.3.13}\leavevmode {\color {Chapter }DigraphTransitiveReduction}}{28}{subsection.3.3.13}
+\contentsline {subsection}{\numberline {3.3.14}\leavevmode {\color {Chapter }DigraphAddVertex}}{29}{subsection.3.3.14}
+\contentsline {subsection}{\numberline {3.3.15}\leavevmode {\color {Chapter }DigraphAddVertices (for a digraph and an integer)}}{30}{subsection.3.3.15}
+\contentsline {subsection}{\numberline {3.3.16}\leavevmode {\color {Chapter }DigraphAddEdge (for a digraph and an edge)}}{30}{subsection.3.3.16}
+\contentsline {subsection}{\numberline {3.3.17}\leavevmode {\color {Chapter }DigraphAddEdgeOrbit}}{31}{subsection.3.3.17}
+\contentsline {subsection}{\numberline {3.3.18}\leavevmode {\color {Chapter }DigraphAddEdges}}{32}{subsection.3.3.18}
+\contentsline {subsection}{\numberline {3.3.19}\leavevmode {\color {Chapter }DigraphRemoveVertex}}{32}{subsection.3.3.19}
+\contentsline {subsection}{\numberline {3.3.20}\leavevmode {\color {Chapter }DigraphRemoveVertices}}{33}{subsection.3.3.20}
+\contentsline {subsection}{\numberline {3.3.21}\leavevmode {\color {Chapter }DigraphRemoveEdge (for a digraph and an edge)}}{34}{subsection.3.3.21}
+\contentsline {subsection}{\numberline {3.3.22}\leavevmode {\color {Chapter }DigraphRemoveEdgeOrbit}}{34}{subsection.3.3.22}
+\contentsline {subsection}{\numberline {3.3.23}\leavevmode {\color {Chapter }DigraphRemoveEdges}}{35}{subsection.3.3.23}
+\contentsline {subsection}{\numberline {3.3.24}\leavevmode {\color {Chapter }DigraphRemoveLoops}}{35}{subsection.3.3.24}
+\contentsline {subsection}{\numberline {3.3.25}\leavevmode {\color {Chapter }DigraphRemoveAllMultipleEdges}}{36}{subsection.3.3.25}
+\contentsline {subsection}{\numberline {3.3.26}\leavevmode {\color {Chapter }DigraphReverseEdges (for a digraph and a list of edges)}}{36}{subsection.3.3.26}
+\contentsline {subsection}{\numberline {3.3.27}\leavevmode {\color {Chapter }DigraphDisjointUnion (for an arbitrary number of digraphs)}}{37}{subsection.3.3.27}
+\contentsline {subsection}{\numberline {3.3.28}\leavevmode {\color {Chapter }DigraphEdgeUnion (for a positive number of digraphs)}}{38}{subsection.3.3.28}
+\contentsline {subsection}{\numberline {3.3.29}\leavevmode {\color {Chapter }DigraphJoin (for a positive number of digraphs)}}{38}{subsection.3.3.29}
+\contentsline {subsection}{\numberline {3.3.30}\leavevmode {\color {Chapter }DigraphCartesianProduct (for a positive number of digraphs)}}{39}{subsection.3.3.30}
+\contentsline {subsection}{\numberline {3.3.31}\leavevmode {\color {Chapter }DigraphDirectProduct (for a positive number of digraphs)}}{40}{subsection.3.3.31}
+\contentsline {subsection}{\numberline {3.3.32}\leavevmode {\color {Chapter }DigraphCartesianProductProjections}}{40}{subsection.3.3.32}
+\contentsline {subsection}{\numberline {3.3.33}\leavevmode {\color {Chapter }DigraphDirectProductProjections}}{41}{subsection.3.3.33}
+\contentsline {subsection}{\numberline {3.3.34}\leavevmode {\color {Chapter }LineDigraph}}{42}{subsection.3.3.34}
+\contentsline {subsection}{\numberline {3.3.35}\leavevmode {\color {Chapter }LineUndirectedDigraph}}{42}{subsection.3.3.35}
+\contentsline {subsection}{\numberline {3.3.36}\leavevmode {\color {Chapter }DoubleDigraph}}{42}{subsection.3.3.36}
+\contentsline {subsection}{\numberline {3.3.37}\leavevmode {\color {Chapter }BipartiteDoubleDigraph}}{43}{subsection.3.3.37}
+\contentsline {subsection}{\numberline {3.3.38}\leavevmode {\color {Chapter }DigraphAddAllLoops}}{43}{subsection.3.3.38}
+\contentsline {subsection}{\numberline {3.3.39}\leavevmode {\color {Chapter }DistanceDigraph (for digraph and int)}}{43}{subsection.3.3.39}
+\contentsline {subsection}{\numberline {3.3.40}\leavevmode {\color {Chapter }DigraphClosure}}{44}{subsection.3.3.40}
+\contentsline {subsection}{\numberline {3.3.41}\leavevmode {\color {Chapter }DigraphMycielskian}}{44}{subsection.3.3.41}
+\contentsline {section}{\numberline {3.4}\leavevmode {\color {Chapter }Random digraphs}}{45}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}\leavevmode {\color {Chapter }RandomDigraph}}{45}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}\leavevmode {\color {Chapter }RandomMultiDigraph}}{45}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}\leavevmode {\color {Chapter }RandomTournament}}{46}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}\leavevmode {\color {Chapter }RandomLattice}}{46}{subsection.3.4.4}
+\contentsline {section}{\numberline {3.5}\leavevmode {\color {Chapter }Standard examples}}{47}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}\leavevmode {\color {Chapter }ChainDigraph}}{47}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}\leavevmode {\color {Chapter }CompleteDigraph}}{47}{subsection.3.5.2}
+\contentsline {subsection}{\numberline {3.5.3}\leavevmode {\color {Chapter }CompleteBipartiteDigraph}}{47}{subsection.3.5.3}
+\contentsline {subsection}{\numberline {3.5.4}\leavevmode {\color {Chapter }CompleteMultipartiteDigraph}}{48}{subsection.3.5.4}
+\contentsline {subsection}{\numberline {3.5.5}\leavevmode {\color {Chapter }CycleDigraph}}{48}{subsection.3.5.5}
+\contentsline {subsection}{\numberline {3.5.6}\leavevmode {\color {Chapter }EmptyDigraph}}{49}{subsection.3.5.6}
+\contentsline {subsection}{\numberline {3.5.7}\leavevmode {\color {Chapter }JohnsonDigraph}}{49}{subsection.3.5.7}
+\contentsline {subsection}{\numberline {3.5.8}\leavevmode {\color {Chapter }PetersenGraph}}{50}{subsection.3.5.8}
+\contentsline {subsection}{\numberline {3.5.9}\leavevmode {\color {Chapter }GeneralisedPetersenGraph}}{50}{subsection.3.5.9}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Operators}}{51}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Operators for digraphs}}{51}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\leavevmode {\color {Chapter }IsSubdigraph}}{51}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\leavevmode {\color {Chapter }IsUndirectedSpanningTree}}{52}{subsection.4.1.2}
+\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Attributes and operations}}{54}{chapter.5}
+\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }Vertices and edges}}{54}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}\leavevmode {\color {Chapter }DigraphVertices}}{54}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}\leavevmode {\color {Chapter }DigraphNrVertices}}{54}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}\leavevmode {\color {Chapter }DigraphEdges}}{55}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.4}\leavevmode {\color {Chapter }DigraphNrEdges}}{55}{subsection.5.1.4}
+\contentsline {subsection}{\numberline {5.1.5}\leavevmode {\color {Chapter }DigraphSinks}}{56}{subsection.5.1.5}
+\contentsline {subsection}{\numberline {5.1.6}\leavevmode {\color {Chapter }DigraphSources}}{56}{subsection.5.1.6}
+\contentsline {subsection}{\numberline {5.1.7}\leavevmode {\color {Chapter }DigraphTopologicalSort}}{56}{subsection.5.1.7}
+\contentsline {subsection}{\numberline {5.1.8}\leavevmode {\color {Chapter }DigraphVertexLabel}}{57}{subsection.5.1.8}
+\contentsline {subsection}{\numberline {5.1.9}\leavevmode {\color {Chapter }DigraphVertexLabels}}{58}{subsection.5.1.9}
+\contentsline {subsection}{\numberline {5.1.10}\leavevmode {\color {Chapter }DigraphEdgeLabel}}{59}{subsection.5.1.10}
+\contentsline {subsection}{\numberline {5.1.11}\leavevmode {\color {Chapter }DigraphEdgeLabels}}{59}{subsection.5.1.11}
+\contentsline {subsection}{\numberline {5.1.12}\leavevmode {\color {Chapter }DigraphInEdges}}{60}{subsection.5.1.12}
+\contentsline {subsection}{\numberline {5.1.13}\leavevmode {\color {Chapter }DigraphOutEdges}}{60}{subsection.5.1.13}
+\contentsline {subsection}{\numberline {5.1.14}\leavevmode {\color {Chapter }IsDigraphEdge (for digraph and list)}}{61}{subsection.5.1.14}
+\contentsline {subsection}{\numberline {5.1.15}\leavevmode {\color {Chapter }IsMatching}}{61}{subsection.5.1.15}
+\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }Neighbours and degree}}{62}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}\leavevmode {\color {Chapter }AdjacencyMatrix}}{62}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}\leavevmode {\color {Chapter }CharacteristicPolynomial}}{63}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}\leavevmode {\color {Chapter }BooleanAdjacencyMatrix}}{63}{subsection.5.2.3}
+\contentsline {subsection}{\numberline {5.2.4}\leavevmode {\color {Chapter }DigraphAdjacencyFunction}}{64}{subsection.5.2.4}
+\contentsline {subsection}{\numberline {5.2.5}\leavevmode {\color {Chapter }DigraphRange}}{65}{subsection.5.2.5}
+\contentsline {subsection}{\numberline {5.2.6}\leavevmode {\color {Chapter }OutNeighbours}}{65}{subsection.5.2.6}
+\contentsline {subsection}{\numberline {5.2.7}\leavevmode {\color {Chapter }InNeighbours}}{66}{subsection.5.2.7}
+\contentsline {subsection}{\numberline {5.2.8}\leavevmode {\color {Chapter }OutDegrees}}{67}{subsection.5.2.8}
+\contentsline {subsection}{\numberline {5.2.9}\leavevmode {\color {Chapter }InDegrees}}{67}{subsection.5.2.9}
+\contentsline {subsection}{\numberline {5.2.10}\leavevmode {\color {Chapter }OutDegreeOfVertex}}{68}{subsection.5.2.10}
+\contentsline {subsection}{\numberline {5.2.11}\leavevmode {\color {Chapter }OutNeighboursOfVertex}}{68}{subsection.5.2.11}
+\contentsline {subsection}{\numberline {5.2.12}\leavevmode {\color {Chapter }InDegreeOfVertex}}{68}{subsection.5.2.12}
+\contentsline {subsection}{\numberline {5.2.13}\leavevmode {\color {Chapter }InNeighboursOfVertex}}{69}{subsection.5.2.13}
+\contentsline {subsection}{\numberline {5.2.14}\leavevmode {\color {Chapter }DigraphLoops}}{69}{subsection.5.2.14}
+\contentsline {subsection}{\numberline {5.2.15}\leavevmode {\color {Chapter }PartialOrderDigraphMeetOfVertices}}{70}{subsection.5.2.15}
+\contentsline {subsection}{\numberline {5.2.16}\leavevmode {\color {Chapter }DegreeMatrix}}{70}{subsection.5.2.16}
+\contentsline {subsection}{\numberline {5.2.17}\leavevmode {\color {Chapter }LaplacianMatrix}}{71}{subsection.5.2.17}
+\contentsline {section}{\numberline {5.3}\leavevmode {\color {Chapter }Reachability and connectivity}}{71}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}\leavevmode {\color {Chapter }DigraphDiameter}}{71}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}\leavevmode {\color {Chapter }DigraphShortestDistance (for a digraph and two vertices)}}{72}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.3}\leavevmode {\color {Chapter }DigraphShortestDistances}}{73}{subsection.5.3.3}
+\contentsline {subsection}{\numberline {5.3.4}\leavevmode {\color {Chapter }DigraphLongestDistanceFromVertex}}{73}{subsection.5.3.4}
+\contentsline {subsection}{\numberline {5.3.5}\leavevmode {\color {Chapter }DigraphDistanceSet (for a digraph, a pos int, and an int)}}{74}{subsection.5.3.5}
+\contentsline {subsection}{\numberline {5.3.6}\leavevmode {\color {Chapter }DigraphGirth}}{74}{subsection.5.3.6}
+\contentsline {subsection}{\numberline {5.3.7}\leavevmode {\color {Chapter }DigraphOddGirth}}{75}{subsection.5.3.7}
+\contentsline {subsection}{\numberline {5.3.8}\leavevmode {\color {Chapter }DigraphUndirectedGirth}}{75}{subsection.5.3.8}
+\contentsline {subsection}{\numberline {5.3.9}\leavevmode {\color {Chapter }DigraphConnectedComponents}}{76}{subsection.5.3.9}
+\contentsline {subsection}{\numberline {5.3.10}\leavevmode {\color {Chapter }DigraphConnectedComponent}}{77}{subsection.5.3.10}
+\contentsline {subsection}{\numberline {5.3.11}\leavevmode {\color {Chapter }DigraphStronglyConnectedComponents}}{77}{subsection.5.3.11}
+\contentsline {subsection}{\numberline {5.3.12}\leavevmode {\color {Chapter }DigraphStronglyConnectedComponent}}{78}{subsection.5.3.12}
+\contentsline {subsection}{\numberline {5.3.13}\leavevmode {\color {Chapter }DigraphBicomponents}}{78}{subsection.5.3.13}
+\contentsline {subsection}{\numberline {5.3.14}\leavevmode {\color {Chapter }ArticulationPoints}}{79}{subsection.5.3.14}
+\contentsline {subsection}{\numberline {5.3.15}\leavevmode {\color {Chapter }DigraphPeriod}}{80}{subsection.5.3.15}
+\contentsline {subsection}{\numberline {5.3.16}\leavevmode {\color {Chapter }DigraphFloydWarshall}}{80}{subsection.5.3.16}
+\contentsline {subsection}{\numberline {5.3.17}\leavevmode {\color {Chapter }IsReachable}}{81}{subsection.5.3.17}
+\contentsline {subsection}{\numberline {5.3.18}\leavevmode {\color {Chapter }DigraphPath}}{81}{subsection.5.3.18}
+\contentsline {subsection}{\numberline {5.3.19}\leavevmode {\color {Chapter }DigraphShortestPath}}{82}{subsection.5.3.19}
+\contentsline {subsection}{\numberline {5.3.20}\leavevmode {\color {Chapter }IteratorOfPaths}}{83}{subsection.5.3.20}
+\contentsline {subsection}{\numberline {5.3.21}\leavevmode {\color {Chapter }DigraphAllSimpleCircuits}}{83}{subsection.5.3.21}
+\contentsline {subsection}{\numberline {5.3.22}\leavevmode {\color {Chapter }DigraphLongestSimpleCircuit}}{84}{subsection.5.3.22}
+\contentsline {subsection}{\numberline {5.3.23}\leavevmode {\color {Chapter }DigraphLayers}}{84}{subsection.5.3.23}
+\contentsline {subsection}{\numberline {5.3.24}\leavevmode {\color {Chapter }DigraphDegeneracy}}{85}{subsection.5.3.24}
+\contentsline {subsection}{\numberline {5.3.25}\leavevmode {\color {Chapter }DigraphDegeneracyOrdering}}{85}{subsection.5.3.25}
+\contentsline {subsection}{\numberline {5.3.26}\leavevmode {\color {Chapter }HamiltonianPath}}{86}{subsection.5.3.26}
+\contentsline {subsection}{\numberline {5.3.27}\leavevmode {\color {Chapter }NrSpanningTrees}}{86}{subsection.5.3.27}
+\contentsline {section}{\numberline {5.4}\leavevmode {\color {Chapter }Cayley graphs of groups}}{87}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}\leavevmode {\color {Chapter }GroupOfCayleyDigraph}}{87}{subsection.5.4.1}
+\contentsline {subsection}{\numberline {5.4.2}\leavevmode {\color {Chapter }GeneratorsOfCayleyDigraph}}{87}{subsection.5.4.2}
+\contentsline {section}{\numberline {5.5}\leavevmode {\color {Chapter }Associated semigroups}}{88}{section.5.5}
+\contentsline {subsection}{\numberline {5.5.1}\leavevmode {\color {Chapter }AsSemigroup (for a filter and a digraph)}}{88}{subsection.5.5.1}
+\contentsline {subsection}{\numberline {5.5.2}\leavevmode {\color {Chapter }AsSemigroup (for a filter, semilattice digraph, and two lists)}}{89}{subsection.5.5.2}
+\contentsline {section}{\numberline {5.6}\leavevmode {\color {Chapter }Planarity}}{89}{section.5.6}
+\contentsline {subsection}{\numberline {5.6.1}\leavevmode {\color {Chapter }KuratowskiPlanarSubdigraph}}{89}{subsection.5.6.1}
+\contentsline {subsection}{\numberline {5.6.2}\leavevmode {\color {Chapter }KuratowskiOuterPlanarSubdigraph}}{90}{subsection.5.6.2}
+\contentsline {subsection}{\numberline {5.6.3}\leavevmode {\color {Chapter }PlanarEmbedding}}{91}{subsection.5.6.3}
+\contentsline {subsection}{\numberline {5.6.4}\leavevmode {\color {Chapter }OuterPlanarEmbedding}}{92}{subsection.5.6.4}
+\contentsline {subsection}{\numberline {5.6.5}\leavevmode {\color {Chapter }SubdigraphHomeomorphicToK23}}{93}{subsection.5.6.5}
+\contentsline {chapter}{\numberline {6}\leavevmode {\color {Chapter }Properties of digraphs}}{95}{chapter.6}
+\contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }Edge properties}}{95}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}\leavevmode {\color {Chapter }DigraphHasLoops}}{95}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}\leavevmode {\color {Chapter }IsAntiSymmetricDigraph}}{95}{subsection.6.1.2}
+\contentsline {subsection}{\numberline {6.1.3}\leavevmode {\color {Chapter }IsBipartiteDigraph}}{96}{subsection.6.1.3}
+\contentsline {subsection}{\numberline {6.1.4}\leavevmode {\color {Chapter }IsCompleteBipartiteDigraph}}{96}{subsection.6.1.4}
+\contentsline {subsection}{\numberline {6.1.5}\leavevmode {\color {Chapter }IsCompleteDigraph}}{97}{subsection.6.1.5}
+\contentsline {subsection}{\numberline {6.1.6}\leavevmode {\color {Chapter }IsCompleteMultipartiteDigraph}}{97}{subsection.6.1.6}
+\contentsline {subsection}{\numberline {6.1.7}\leavevmode {\color {Chapter }IsEmptyDigraph}}{98}{subsection.6.1.7}
+\contentsline {subsection}{\numberline {6.1.8}\leavevmode {\color {Chapter }IsEquivalenceDigraph}}{98}{subsection.6.1.8}
+\contentsline {subsection}{\numberline {6.1.9}\leavevmode {\color {Chapter }IsFunctionalDigraph}}{99}{subsection.6.1.9}
+\contentsline {subsection}{\numberline {6.1.10}\leavevmode {\color {Chapter }IsMultiDigraph}}{99}{subsection.6.1.10}
+\contentsline {subsection}{\numberline {6.1.11}\leavevmode {\color {Chapter }IsReflexiveDigraph}}{100}{subsection.6.1.11}
+\contentsline {subsection}{\numberline {6.1.12}\leavevmode {\color {Chapter }IsSymmetricDigraph}}{100}{subsection.6.1.12}
+\contentsline {subsection}{\numberline {6.1.13}\leavevmode {\color {Chapter }IsTournament}}{101}{subsection.6.1.13}
+\contentsline {subsection}{\numberline {6.1.14}\leavevmode {\color {Chapter }IsTransitiveDigraph}}{101}{subsection.6.1.14}
+\contentsline {subsection}{\numberline {6.1.15}\leavevmode {\color {Chapter }IsPreorderDigraph}}{102}{subsection.6.1.15}
+\contentsline {subsection}{\numberline {6.1.16}\leavevmode {\color {Chapter }IsPartialOrderDigraph}}{103}{subsection.6.1.16}
+\contentsline {subsection}{\numberline {6.1.17}\leavevmode {\color {Chapter }IsMeetSemilatticeDigraph}}{103}{subsection.6.1.17}
+\contentsline {section}{\numberline {6.2}\leavevmode {\color {Chapter }Regularity}}{104}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}\leavevmode {\color {Chapter }IsInRegularDigraph}}{104}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}\leavevmode {\color {Chapter }IsOutRegularDigraph}}{104}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.3}\leavevmode {\color {Chapter }IsRegularDigraph}}{105}{subsection.6.2.3}
+\contentsline {subsection}{\numberline {6.2.4}\leavevmode {\color {Chapter }IsDistanceRegularDigraph}}{105}{subsection.6.2.4}
+\contentsline {section}{\numberline {6.3}\leavevmode {\color {Chapter }Connectivity and cycles}}{106}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}\leavevmode {\color {Chapter }IsAcyclicDigraph}}{106}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}\leavevmode {\color {Chapter }IsChainDigraph}}{106}{subsection.6.3.2}
+\contentsline {subsection}{\numberline {6.3.3}\leavevmode {\color {Chapter }IsConnectedDigraph}}{107}{subsection.6.3.3}
+\contentsline {subsection}{\numberline {6.3.4}\leavevmode {\color {Chapter }IsBiconnectedDigraph}}{107}{subsection.6.3.4}
+\contentsline {subsection}{\numberline {6.3.5}\leavevmode {\color {Chapter }IsStronglyConnectedDigraph}}{108}{subsection.6.3.5}
+\contentsline {subsection}{\numberline {6.3.6}\leavevmode {\color {Chapter }IsAperiodicDigraph}}{109}{subsection.6.3.6}
+\contentsline {subsection}{\numberline {6.3.7}\leavevmode {\color {Chapter }IsDirectedTree}}{109}{subsection.6.3.7}
+\contentsline {subsection}{\numberline {6.3.8}\leavevmode {\color {Chapter }IsUndirectedTree}}{110}{subsection.6.3.8}
+\contentsline {subsection}{\numberline {6.3.9}\leavevmode {\color {Chapter }IsEulerianDigraph}}{110}{subsection.6.3.9}
+\contentsline {subsection}{\numberline {6.3.10}\leavevmode {\color {Chapter }IsHamiltonianDigraph}}{111}{subsection.6.3.10}
+\contentsline {subsection}{\numberline {6.3.11}\leavevmode {\color {Chapter }IsCycleDigraph}}{112}{subsection.6.3.11}
+\contentsline {section}{\numberline {6.4}\leavevmode {\color {Chapter }Planarity}}{112}{section.6.4}
+\contentsline {subsection}{\numberline {6.4.1}\leavevmode {\color {Chapter }IsPlanarDigraph}}{112}{subsection.6.4.1}
+\contentsline {subsection}{\numberline {6.4.2}\leavevmode {\color {Chapter }IsOuterPlanarDigraph}}{113}{subsection.6.4.2}
+\contentsline {section}{\numberline {6.5}\leavevmode {\color {Chapter }Homomorphisms and transformations}}{114}{section.6.5}
+\contentsline {subsection}{\numberline {6.5.1}\leavevmode {\color {Chapter }IsDigraphCore}}{114}{subsection.6.5.1}
+\contentsline {subsection}{\numberline {6.5.2}\leavevmode {\color {Chapter }IsEdgeTransitive}}{114}{subsection.6.5.2}
+\contentsline {subsection}{\numberline {6.5.3}\leavevmode {\color {Chapter }IsVertexTransitive}}{114}{subsection.6.5.3}
+\contentsline {chapter}{\numberline {7}\leavevmode {\color {Chapter }Homomorphisms}}{116}{chapter.7}
+\contentsline {section}{\numberline {7.1}\leavevmode {\color {Chapter }Acting on digraphs}}{116}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}\leavevmode {\color {Chapter }OnDigraphs (for a digraph and a perm)}}{116}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.2}\leavevmode {\color {Chapter }OnMultiDigraphs}}{117}{subsection.7.1.2}
+\contentsline {section}{\numberline {7.2}\leavevmode {\color {Chapter }Isomorphisms and canonical labellings}}{117}{section.7.2}
+\contentsline {subsection}{\numberline {7.2.1}\leavevmode {\color {Chapter }DigraphsUseNauty}}{117}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {7.2.2}\leavevmode {\color {Chapter }AutomorphismGroup (for a digraph)}}{118}{subsection.7.2.2}
+\contentsline {subsection}{\numberline {7.2.3}\leavevmode {\color {Chapter }BlissAutomorphismGroup (for a digraph)}}{118}{subsection.7.2.3}
+\contentsline {subsection}{\numberline {7.2.4}\leavevmode {\color {Chapter }NautyAutomorphismGroup}}{119}{subsection.7.2.4}
+\contentsline {subsection}{\numberline {7.2.5}\leavevmode {\color {Chapter }AutomorphismGroup (for a digraph and a homogeneous list)}}{119}{subsection.7.2.5}
+\contentsline {subsection}{\numberline {7.2.6}\leavevmode {\color {Chapter }AutomorphismGroup (for a digraph, homogeneous list, and list)}}{120}{subsection.7.2.6}
+\contentsline {subsection}{\numberline {7.2.7}\leavevmode {\color {Chapter }BlissCanonicalLabelling (for a digraph)}}{121}{subsection.7.2.7}
+\contentsline {subsection}{\numberline {7.2.8}\leavevmode {\color {Chapter }BlissCanonicalLabelling (for a digraph and a list)}}{122}{subsection.7.2.8}
+\contentsline {subsection}{\numberline {7.2.9}\leavevmode {\color {Chapter }BlissCanonicalDigraph}}{123}{subsection.7.2.9}
+\contentsline {subsection}{\numberline {7.2.10}\leavevmode {\color {Chapter }DigraphGroup}}{124}{subsection.7.2.10}
+\contentsline {subsection}{\numberline {7.2.11}\leavevmode {\color {Chapter }DigraphOrbits}}{125}{subsection.7.2.11}
+\contentsline {subsection}{\numberline {7.2.12}\leavevmode {\color {Chapter }DigraphOrbitReps}}{125}{subsection.7.2.12}
+\contentsline {subsection}{\numberline {7.2.13}\leavevmode {\color {Chapter }DigraphSchreierVector}}{126}{subsection.7.2.13}
+\contentsline {subsection}{\numberline {7.2.14}\leavevmode {\color {Chapter }DigraphStabilizer}}{127}{subsection.7.2.14}
+\contentsline {subsection}{\numberline {7.2.15}\leavevmode {\color {Chapter }IsIsomorphicDigraph (for digraphs)}}{127}{subsection.7.2.15}
+\contentsline {subsection}{\numberline {7.2.16}\leavevmode {\color {Chapter }IsIsomorphicDigraph (for digraphs and homogeneous lists)}}{128}{subsection.7.2.16}
+\contentsline {subsection}{\numberline {7.2.17}\leavevmode {\color {Chapter }IsomorphismDigraphs (for digraphs)}}{128}{subsection.7.2.17}
+\contentsline {subsection}{\numberline {7.2.18}\leavevmode {\color {Chapter }IsomorphismDigraphs (for digraphs and homogeneous lists)}}{129}{subsection.7.2.18}
+\contentsline {subsection}{\numberline {7.2.19}\leavevmode {\color {Chapter }RepresentativeOutNeighbours}}{130}{subsection.7.2.19}
+\contentsline {subsection}{\numberline {7.2.20}\leavevmode {\color {Chapter }IsDigraphIsomorphism (for digraphs and transformation or permutation)}}{131}{subsection.7.2.20}
+\contentsline {subsection}{\numberline {7.2.21}\leavevmode {\color {Chapter }IsDigraphColouring}}{132}{subsection.7.2.21}
+\contentsline {section}{\numberline {7.3}\leavevmode {\color {Chapter }Homomorphisms of digraphs}}{133}{section.7.3}
+\contentsline {subsection}{\numberline {7.3.1}\leavevmode {\color {Chapter }HomomorphismDigraphsFinder}}{133}{subsection.7.3.1}
+\contentsline {subsection}{\numberline {7.3.2}\leavevmode {\color {Chapter }DigraphHomomorphism}}{135}{subsection.7.3.2}
+\contentsline {subsection}{\numberline {7.3.3}\leavevmode {\color {Chapter }HomomorphismsDigraphs}}{135}{subsection.7.3.3}
+\contentsline {subsection}{\numberline {7.3.4}\leavevmode {\color {Chapter }DigraphMonomorphism}}{136}{subsection.7.3.4}
+\contentsline {subsection}{\numberline {7.3.5}\leavevmode {\color {Chapter }MonomorphismsDigraphs}}{136}{subsection.7.3.5}
+\contentsline {subsection}{\numberline {7.3.6}\leavevmode {\color {Chapter }DigraphEpimorphism}}{137}{subsection.7.3.6}
+\contentsline {subsection}{\numberline {7.3.7}\leavevmode {\color {Chapter }EpimorphismsDigraphs}}{137}{subsection.7.3.7}
+\contentsline {subsection}{\numberline {7.3.8}\leavevmode {\color {Chapter }DigraphEmbedding}}{137}{subsection.7.3.8}
+\contentsline {subsection}{\numberline {7.3.9}\leavevmode {\color {Chapter }EmbeddingsDigraphs}}{138}{subsection.7.3.9}
+\contentsline {subsection}{\numberline {7.3.10}\leavevmode {\color {Chapter }IsDigraphHomomorphism (for digraphs and a permutation or transformation)}}{138}{subsection.7.3.10}
+\contentsline {subsection}{\numberline {7.3.11}\leavevmode {\color {Chapter }IsDigraphEmbedding (for digraphs and a permutation or transformation)}}{140}{subsection.7.3.11}
+\contentsline {subsection}{\numberline {7.3.12}\leavevmode {\color {Chapter }DigraphsRespectsColouring}}{140}{subsection.7.3.12}
+\contentsline {subsection}{\numberline {7.3.13}\leavevmode {\color {Chapter }GeneratorsOfEndomorphismMonoid}}{141}{subsection.7.3.13}
+\contentsline {subsection}{\numberline {7.3.14}\leavevmode {\color {Chapter }DigraphColouring (for a digraph and a number of colours)}}{142}{subsection.7.3.14}
+\contentsline {subsection}{\numberline {7.3.15}\leavevmode {\color {Chapter }DigraphGreedyColouring (for a digraph and vertex order)}}{142}{subsection.7.3.15}
+\contentsline {subsection}{\numberline {7.3.16}\leavevmode {\color {Chapter }DigraphWelshPowellOrder}}{143}{subsection.7.3.16}
+\contentsline {subsection}{\numberline {7.3.17}\leavevmode {\color {Chapter }ChromaticNumber}}{143}{subsection.7.3.17}
+\contentsline {subsection}{\numberline {7.3.18}\leavevmode {\color {Chapter }DigraphCore}}{143}{subsection.7.3.18}
+\contentsline {chapter}{\numberline {8}\leavevmode {\color {Chapter }Finding cliques and independent sets}}{145}{chapter.8}
+\contentsline {section}{\numberline {8.1}\leavevmode {\color {Chapter }Finding cliques}}{146}{section.8.1}
+\contentsline {subsection}{\numberline {8.1.1}\leavevmode {\color {Chapter }IsClique}}{146}{subsection.8.1.1}
+\contentsline {subsection}{\numberline {8.1.2}\leavevmode {\color {Chapter }CliquesFinder}}{147}{subsection.8.1.2}
+\contentsline {subsection}{\numberline {8.1.3}\leavevmode {\color {Chapter }DigraphClique}}{149}{subsection.8.1.3}
+\contentsline {subsection}{\numberline {8.1.4}\leavevmode {\color {Chapter }DigraphMaximalCliques}}{150}{subsection.8.1.4}
+\contentsline {subsection}{\numberline {8.1.5}\leavevmode {\color {Chapter }CliqueNumber}}{151}{subsection.8.1.5}
+\contentsline {section}{\numberline {8.2}\leavevmode {\color {Chapter }Finding independent sets}}{152}{section.8.2}
+\contentsline {subsection}{\numberline {8.2.1}\leavevmode {\color {Chapter }IsIndependentSet}}{152}{subsection.8.2.1}
+\contentsline {subsection}{\numberline {8.2.2}\leavevmode {\color {Chapter }DigraphIndependentSet}}{152}{subsection.8.2.2}
+\contentsline {subsection}{\numberline {8.2.3}\leavevmode {\color {Chapter }DigraphMaximalIndependentSets}}{154}{subsection.8.2.3}
+\contentsline {chapter}{\numberline {9}\leavevmode {\color {Chapter }Visualising and IO}}{156}{chapter.9}
+\contentsline {section}{\numberline {9.1}\leavevmode {\color {Chapter }Visualising a digraph}}{156}{section.9.1}
+\contentsline {subsection}{\numberline {9.1.1}\leavevmode {\color {Chapter }Splash}}{156}{subsection.9.1.1}
+\contentsline {subsection}{\numberline {9.1.2}\leavevmode {\color {Chapter }DotDigraph}}{157}{subsection.9.1.2}
+\contentsline {subsection}{\numberline {9.1.3}\leavevmode {\color {Chapter }DotSymmetricDigraph}}{157}{subsection.9.1.3}
+\contentsline {subsection}{\numberline {9.1.4}\leavevmode {\color {Chapter }DotPartialOrderDigraph}}{158}{subsection.9.1.4}
+\contentsline {subsection}{\numberline {9.1.5}\leavevmode {\color {Chapter }DotPreorderDigraph}}{158}{subsection.9.1.5}
+\contentsline {subsection}{\numberline {9.1.6}\leavevmode {\color {Chapter }DotHighlightedDigraph}}{159}{subsection.9.1.6}
+\contentsline {section}{\numberline {9.2}\leavevmode {\color {Chapter }Reading and writing digraphs to a file}}{159}{section.9.2}
+\contentsline {subsection}{\numberline {9.2.1}\leavevmode {\color {Chapter }DigraphFromGraph6String}}{160}{subsection.9.2.1}
+\contentsline {subsection}{\numberline {9.2.2}\leavevmode {\color {Chapter }Graph6String}}{161}{subsection.9.2.2}
+\contentsline {subsection}{\numberline {9.2.3}\leavevmode {\color {Chapter }DigraphFile}}{161}{subsection.9.2.3}
+\contentsline {subsection}{\numberline {9.2.4}\leavevmode {\color {Chapter }ReadDigraphs}}{162}{subsection.9.2.4}
+\contentsline {subsection}{\numberline {9.2.5}\leavevmode {\color {Chapter }WriteDigraphs}}{164}{subsection.9.2.5}
+\contentsline {subsection}{\numberline {9.2.6}\leavevmode {\color {Chapter }IteratorFromDigraphFile}}{165}{subsection.9.2.6}
+\contentsline {subsection}{\numberline {9.2.7}\leavevmode {\color {Chapter }DigraphPlainTextLineEncoder}}{166}{subsection.9.2.7}
+\contentsline {subsection}{\numberline {9.2.8}\leavevmode {\color {Chapter }TournamentLineDecoder}}{166}{subsection.9.2.8}
+\contentsline {subsection}{\numberline {9.2.9}\leavevmode {\color {Chapter }AdjacencyMatrixUpperTriangleLineDecoder}}{167}{subsection.9.2.9}
+\contentsline {subsection}{\numberline {9.2.10}\leavevmode {\color {Chapter }TCodeDecoder}}{167}{subsection.9.2.10}
+\contentsline {subsection}{\numberline {9.2.11}\leavevmode {\color {Chapter }PlainTextString}}{168}{subsection.9.2.11}
+\contentsline {subsection}{\numberline {9.2.12}\leavevmode {\color {Chapter }WritePlainTextDigraph}}{168}{subsection.9.2.12}
+\contentsline {subsection}{\numberline {9.2.13}\leavevmode {\color {Chapter }WriteDIMACSDigraph}}{169}{subsection.9.2.13}
+\contentsline {chapter}{\numberline {A}\leavevmode {\color {Chapter } Grape to Digraphs Command Map }}{170}{appendix.A}
+\contentsline {section}{\numberline {A.1}\leavevmode {\color {Chapter } Functions to construct and modify graphs }}{170}{section.A.1}
+\contentsline {section}{\numberline {A.2}\leavevmode {\color {Chapter } Functions to inspect graphs, vertices and edges }}{170}{section.A.2}
+\contentsline {section}{\numberline {A.3}\leavevmode {\color {Chapter } Functions to determine regularity properties of graphs }}{171}{section.A.3}
+\contentsline {section}{\numberline {A.4}\leavevmode {\color {Chapter } Some special vertex subsets of a graph }}{171}{section.A.4}
+\contentsline {section}{\numberline {A.5}\leavevmode {\color {Chapter } Functions to construct new graphs from old }}{172}{section.A.5}
+\contentsline {section}{\numberline {A.6}\leavevmode {\color {Chapter } Vertex-Colouring and Complete Subgraphs }}{172}{section.A.6}
+\contentsline {section}{\numberline {A.7}\leavevmode {\color {Chapter } Automorphism groups and isomorphism testing for graphs }}{172}{section.A.7}
+\contentsline {chapter}{References}{173}{appendix*.5}
+\contentsline {chapter}{Index}{174}{section*.6}

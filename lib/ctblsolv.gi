@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  ctblsolv.gi                 GAP library                Hans Ulrich Besche
-#W                                                              Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Hans Ulrich Besche, Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains character table methods for solvable groups.
 ##
@@ -19,7 +19,7 @@
 InstallMethod( CharacterDegrees,
     "for an abelian group, and an integer p (just strip off the p-part)",
     [ IsGroup and IsAbelian, IsInt ],
-    RankFilter(IsZeroCyc), # There is a method for groups for
+    {} -> RankFilter(IsZeroCyc), # There is a method for groups for
                            # the integer zero which is worse
     function( G, p )
     G:= Size( G );
@@ -482,7 +482,7 @@ BindGlobal( "CharacterDegreesConlon", function( G, q )
 InstallMethod( CharacterDegrees,
     "for a solvable group and an integer (Conlon's algorithm)",
     [ IsGroup and IsSolvableGroup, IsInt ],
-    RankFilter(IsZeroCyc), # There is a method for groups for
+    {} -> RankFilter(IsZeroCyc), # There is a method for groups for
                            # the integer zero which is worse
     function( G, q )
     if HasIrr( G ) then
@@ -630,7 +630,8 @@ InstallGlobalFunction( CoveringTriplesCharacters, function( G, z )
       k:= KernelUnderDualAction( O, Opcgs,
               CanonicalRepresentativeOfExternalSet( orb ) );
       if not zn in k then
-        t:= SubgroupNC( G, StabilizerOfExternalSet( orb ) );
+        t:= StabilizerOfExternalSet( orb );
+        Assert( 1, IsIdenticalObj( Parent( t ), G ) );
         h:= NaturalHomomorphismByNormalSubgroupNC( t, k );
         img:= ImagesSource( h );
         Append( r,
@@ -2241,9 +2242,3 @@ InstallOtherMethod( \^,
       TryNextMethod();
     fi;
     end );
-
-
-#############################################################################
-##
-#E
-

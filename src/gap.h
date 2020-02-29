@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  gap.h                       GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares the various read-eval-print loops and  related  stuff.
 */
@@ -40,6 +40,16 @@ extern UInt Last2;
 */
 extern UInt Last3;
 
+/****************************************************************************
+**
+*F  UpdateLast(<newLast>, <lastDepth>)
+**
+**  Updates Last, Last2 and Last3 by the new result 'newLast'.
+**  <lastDepth> determines how many of these variables should be updated, starting
+**  always with 'Last'.
+*/
+void UpdateLast(Obj newLast, Int lastDepth);
+
 
 /****************************************************************************
 **
@@ -57,7 +67,7 @@ extern UInt Time;
 */
 extern UInt ViewObjGVar;
 
-extern void ViewObjHandler ( Obj obj );
+void ViewObjHandler(Obj obj);
 
 
 /****************************************************************************
@@ -128,6 +138,19 @@ int IsUsingLibGap(void);
 *F  InitializeGap( <argc>, <argv>, <handleSignals> )  . . . . . . .  init GAP
 */
 void InitializeGap(int * pargc, char * argv[], UInt handleSignals);
+
+
+/****************************************************************************
+**
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
+*/
+
+
+/****************************************************************************
+**
+*F  InitInfoGap() . . . . . . . . . . . . . . . . . . table of init functions
+*/
+StructInitInfo * InitInfoGap(void);
 
 
 #endif // GAP_GAP_H

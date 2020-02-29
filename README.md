@@ -1,4 +1,7 @@
-[![Build Status](https://travis-ci.org/gap-system/gap.svg?branch=master)](https://travis-ci.org/gap-system/gap) [![Code Coverage](https://codecov.io/github/gap-system/gap/coverage.svg?branch=master&token=)](https://codecov.io/gh/gap-system/gap)
+[![Travis build Status](https://travis-ci.org/gap-system/gap.svg?branch=master)](https://travis-ci.org/gap-system/gap)
+[![AppVeyor build Status](https://ci.appveyor.com/api/projects/status/github/gap-system/gap?branch=master&svg=true)](https://ci.appveyor.com/project/gap-system/gap)
+[![Code Coverage](https://codecov.io/github/gap-system/gap/coverage.svg?branch=master&token=)](https://codecov.io/gh/gap-system/gap)
+[![Coverage Status](https://coveralls.io/repos/github/gap-system/gap/badge.svg)](https://coveralls.io/github/gap-system/gap)
 
 # What is GAP?
 
@@ -43,21 +46,26 @@ GAP source repository using git:
 ## Installing required dependencies
 
 In this case, you need to have some more software dependencies installed than
-with a stable release in order to compiler GAP. In particular, you need at
+with a stable release in order to compile GAP. In particular, you need at
 least these:
 
 * a C compiler, e.g. GCC or Clang
+* a C++ compiler
 * GNU Make
-* GNU Autoconf (we recommend 2.69 or later)
+* GNU Autoconf
 * GNU Libtool
+
+In addition, we recommend that you install at least the following optional
+dependencies:
 * Development headers for GMP, the GNU Multiple Precision Arithmetic Library
-* optional: Development headers for GNU Readline
+* Development headers for zlib
+* Development headers for GNU Readline
 
 On Ubuntu or Debian, you can install these with the following command:
 
-    sudo apt install build-essential autoconf libtool libgmp-dev libreadline-dev
+    sudo apt-get install build-essential autoconf libtool libgmp-dev libreadline-dev zlib1g-dev
 
-On OS X, you can install the dependencies in several ways:
+On macOS, you can install the dependencies in several ways:
 
  * using Homebrew: `brew install autoconf libtool gmp readline`
  * using Fink: `fink install autoconf2.6 libtool2 gmp5 readline7`
@@ -74,13 +82,13 @@ Then to build GAP, first run this command to generate the `configure` script:
     ./autogen.sh
 
 Afterwards you can proceed similar to what is described in `INSTALL.md`, in
-particular enter the following commands to compile GAP itself (for OS X users,
+particular enter the following commands to compile GAP itself (for macOS users,
 see below for a few additional hints):
 
     ./configure
     make
 
-For OS X users you may ned to tell GAP where it can find these dependencies.
+For macOS users you may ned to tell GAP where it can find these dependencies.
 
 For Homebrew, use these commands:
 
@@ -123,7 +131,7 @@ If everything goes well, you should be able to start GAP by executing
     sh bin/gap.sh
 
 You can also find development versions of some of the GAP packages on
-<https://github.com/gap-packages> resp. on <http://gap-packages.github.io>.
+<https://github.com/gap-packages> resp. on <https://gap-packages.github.io>.
 
 
 # We welcome contributions
@@ -155,4 +163,4 @@ of the GNU General Public License as published by the Free Software
 Foundation; either version 2 of the License, or (at your option) any later
 version. For details, please refer to the GAP reference manual, as well as the
 file `LICENSE` in the root directory of the GAP distribution or see
-<http://www.gnu.org/licenses/gpl.html>.
+<https://www.gnu.org/licenses/gpl.html>.

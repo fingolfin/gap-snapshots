@@ -103,7 +103,7 @@ function( r )
         if not IsStandardAffineCrystGroup( r.spaceGroup ) then
             v := v * T;
         fi;
-        v := VectorModL( r.translation, T );
+        v := VectorModL( v, T );
     else
         v := VectorModL( r.translation, T );
     fi;
@@ -321,10 +321,10 @@ SolveInhomEquationsModZ := function( M, b, onRight )
         Q := IdentityMat( Length(M[1]) );
     fi;
 
-    while not IsDiagonalMat(M) do
+    while Length(M) > 0 and not IsDiagonalMat(M) do
         M := TransposedMat(M);
         M := RowEchelonFormT(M,Q);
-        if not IsDiagonalMat(M) then
+        if Length(M) > 0 and not IsDiagonalMat(M) then
             M := TransposedMat(M);
             M := RowEchelonFormVector(M,b);
         fi;

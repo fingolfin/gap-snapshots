@@ -1,13 +1,10 @@
 #############################################################################
 ##
-#W  vspcrow.tst                 GAP library                     Thomas Breuer
-##
-##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-##
 ##  (The test file `vspcmat.tst' should contain the same tests,
 ##  applied to matrix spaces.)
 ##
+#@local A,F,b,c,c1,c2,dims,erg,f,i,im,iter,l,lc,m,mb,n,nv,p,subsp
+#@local u,uu,uuu,uuuu,v,w,ww,z
 gap> START_TEST("vspcrow.tst");
 
 #############################################################################
@@ -15,7 +12,7 @@ gap> START_TEST("vspcrow.tst");
 ##  1. Construct Gaussian and non-Gaussian row spaces
 ##
 gap> z:= LeftModuleByGenerators( GF(3), [], [ 0*Z(9) ] );
-<vector space over GF(3), with 0 generators>
+<vector space of dimension 0 over GF(3)>
 gap> IsGaussianRowSpace( z );
 true
 gap> IsNonGaussianRowSpace( z );
@@ -231,7 +228,7 @@ VectorSpace( GF(3^2),
 [ [ Z(3)^0, Z(3)^0, Z(3)^0 ], [ 0*Z(3), Z(3)^0, 0*Z(3) ], 
   [ 0*Z(3), 0*Z(3), Z(3)^0 ] ] )
 gap> Intersection( v, c );
-<vector space over GF(3^2), with 0 generators>
+<vector space of dimension 0 over GF(3^2)>
 gap> Intersection( v, f ) = v;
 true
 gap> nv:= NormedRowVectors( v );;
@@ -293,6 +290,7 @@ gap> mb:= MutableBasis( Rationals,
 gap> IsMutableBasisOfGaussianRowSpaceRep( mb );
 true
 gap> CloseMutableBasis( mb, [ E(4), 0, 0, 0 ] );
+true
 gap> IsMutableBasisOfGaussianRowSpaceRep( mb );
 false
 gap> BasisVectors( mb );
@@ -301,8 +299,11 @@ gap> mb:= MutableBasis( Rationals,
 >          [ [ 1, 1, 1, 1 ], [ 0, 1, 1, 1 ], [ 1, 1, 1, 1 ] ] );
 <mutable basis over Rationals, 2 vectors>
 gap> CloseMutableBasis( mb, [ 1, 2, 3, 4 ] );
+true
 gap> CloseMutableBasis( mb, [ 1, 2, 3, 5 ] );
+true
 gap> CloseMutableBasis( mb, [ 0, 0, 0, 7 ] );
+false
 gap> IsMutableBasisOfGaussianRowSpaceRep( mb );
 true
 gap> BasisVectors( mb );
@@ -313,8 +314,11 @@ SemiEchelonBasis( <vector space of dimension 4 over Rationals>,
 gap> mb:= MutableBasis( Rationals, [], [ 0, 0, 0, 0 ] );
 <mutable basis over Rationals, 0 vectors>
 gap> CloseMutableBasis( mb, [ 1, 2, 3, 4 ] );
+true
 gap> CloseMutableBasis( mb, [ 1, 2, 3, 5 ] );
+true
 gap> CloseMutableBasis( mb, [ 0, 0, 0, 7 ] );
+false
 gap> IsMutableBasisOfGaussianRowSpaceRep( mb );
 true
 gap> BasisVectors( mb );
@@ -323,9 +327,20 @@ gap> ImmutableBasis( mb );
 SemiEchelonBasis( <vector space of dimension 2 over Rationals>, 
 [ [ 1, 2, 3, 4 ], [ 0, 0, 0, 1 ] ] )
 
+############################################################################
+##
+##  8. Methods for mutable bases of non-Gaussian row spaces
+##
+gap> mb:= MutableBasis( Rationals, [ [ E(4) ] ] );
+<mutable basis over Rationals, 1 vectors>
+gap> CloseMutableBasis( mb, [ E(3) ] );
+true
+gap> CloseMutableBasis( mb, [ E(3)+E(4) ] );
+false
+
 #############################################################################
 ##
-##  8. Enumerations
+##  9. Enumerations
 ##
 gap> erg:= [];;  i:= 0;;
 gap> dims:= [ 1,4,27,28,29,31,32,33,63,64,65,92,127,128,129,384 ];;
@@ -341,7 +356,7 @@ gap> erg;
 
 #############################################################################
 ##
-##  9. Arithmetic
+##  10. Arithmetic
 ##
 gap> A := [ [ Z(2^2)^2, 0*Z(2), Z(2^2), 0*Z(2), 0*Z(2), 0*Z(2) ], 
 >   [ Z(2^2)^2, 0*Z(2), Z(2^2)^2, Z(2)^0, Z(2^2)^2, Z(2)^0 ], 
@@ -355,7 +370,3 @@ x_1^6+Z(2^2)*x_1^5+x_1^4+Z(2^2)^2*x_1^3+x_1^2+Z(2^2)*x_1+Z(2)^0
 gap> MinimalPolynomial(F, A);
 x_1^6+Z(2^2)*x_1^5+x_1^4+Z(2^2)^2*x_1^3+x_1^2+Z(2^2)*x_1+Z(2)^0
 gap> STOP_TEST( "vspcrow.tst", 1);
-
-#############################################################################
-##
-#E

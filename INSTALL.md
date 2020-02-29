@@ -13,18 +13,17 @@ GAP INSTALLATION INSTRUCTIONS
 10. If Things Go Wrong
 11. Known Problems of the Configure Process
 12. Optimisation and Compiler Options
-13. GAP for OS X
+13. GAP for macOS
 14. Expert Windows Installation
 
 These are the installation instructions for the GAP source distribution
-on Unix (which covers Linux and OS X), and for the GAP binary distribution
+on Unix (which covers Linux and macOS), and for the GAP binary distribution
 for Windows.
 
 Alternative installation methods which aim to simplify the installation
 mostly by offering precompiled binaries are:
 
-* GAP installer for Homebrew (package manager for OS X)
-* BOB - a tool to download and build GAP and its packages from source
+* GAP installer for Homebrew (package manager for macOS)
 * Docker image for GAP and most of the packages
 * the rsync-based binary distribution for Linux
 
@@ -43,14 +42,15 @@ result, it may differ from what you would expect under your particular
 operating system. In particular, it does not include an automatic installer
 program.
 
-Installing the GAP distribution with all the packages and full data
-libraries takes about 1.6 GB of disk space and (except on Windows) will
-require a C compiler (gcc is recommended) to be installed on your system.
+Installing the GAP distribution with all the packages and full data libraries
+will require (except on Windows) both a C and a C++ compiler (gcc or clang
+is recommended) to be installed on your system. Please also consult
+section "Installing required dependencies" in the file `README.md`.
+
 To get maximum benefit from GAP and from various packages, we recommend
-that in addition a C++ compiler is available, and it may be useful
 to install a number of other free software libraries (and their associated
-development tools) although they are not required for basic operation. See
-<https://www.gap-system.org/Download/tools.html> for more details.
+development tools) although they are not required for basic operation.
+See <https://www.gap-system.org/Download/tools.html> for more details.
 
 The installation consists of five easy steps:
 
@@ -77,7 +77,7 @@ common problems with the installation.
 =====================
 
 You can get archives for the GAP distribution from the GAP website at
-<https://www.gap-system.org/Releases/>. If you use Unix (including OS X),
+<https://www.gap-system.org/Releases/>. If you use Unix (including macOS),
 you need to download the GAP source distribution, that is, a file named
 
     gap-4.X.Y.tar.bz2
@@ -95,10 +95,10 @@ for GAP and some packages and provides the standard installation procedure.
 The exact method of unpacking will vary dependently on the operating system
 and the type of archive used.
 
-Unix (including OS X)
----------------------
+Unix (including macOS)
+----------------------
 
-Under Unix style operating systems (such as Linux and OS X), unpack the
+Under Unix style operating systems (such as Linux and macOS), unpack the
 archive `gap-4.X.Y.tar.bz2` in whatever place you want GAP to reside.
 It will expand into a directory named `gap-4.X.Y`.
 
@@ -125,7 +125,7 @@ it in a directory named like `C:\Users\alice\My Documents\gap-4.X.Y` or
 
 For the Windows version the unpacking process will already have put
 binaries in place. Under Unix you will have to compile such a binary
-yourself. (OS X users: please see section "GAP for OS X" below for
+yourself. (macOS users: please see section "GAP for macOS" below for
 additional information about compilation)
 
 Change to the directory `gap-4.X.Y` (which you just created by unpacking).
@@ -141,7 +141,7 @@ Both will produce a lot of text output. You should end up with a shell
 script `bin/gap.sh` which you can use to start GAP. If you want, you can
 copy this script later to a directory that is listed in your search path.
 
-OS X users please note that this script must be started from within the
+macOS users please note that this script must be started from within the
 Terminal Application. It is not possible to start GAP by clicking this
 script.
 
@@ -163,7 +163,7 @@ description of each is also available via
 GMP
 ---
 
-GAP 4 uses the external library GMP (see <http://www.gmplib.org>) for large
+GAP 4 uses the external library GMP (see <https://www.gmplib.org>) for large
 integer arithmetic, replacing the built-in code used in previous versions
 and achieving a significant speed-up in related computations. There is a
 version of GMP included with the GAP archive you downloaded and this will
@@ -188,7 +188,7 @@ Readline
 --------
 
 GAP optionally also uses the external library GNU Readline (see
-<http://www.gnu.org/software/readline>) for better command line
+<https://www.gnu.org/software/readline>) for better command line
 editing. GAP will use this library by default if it is available on
 your system. You can configure Readline use as follows:
 
@@ -202,7 +202,7 @@ will not be used.
 Note that `--with-readline` is equivalent to `--with-readline=yes` and
 `--without-readline` is equivalent to `--with-readline=no`.
 
-There was an annoying bug in the readline library on OS X which made
+There was an annoying bug in the readline library on macOS which made
 pasting text very slow. If you have that version of the readline library,
 this delay be avoided by pressing a key (e.g. space) during the paste, or
 you may prefer to build GAP without readline to avoid this issue entirely.
@@ -235,7 +235,7 @@ modes using "out of tree builds". For details, please refer to the file
 ==========================
 
 You are now at a point where you can start GAP for the first time. Unix
-users (including those on OS X) should type
+users (including those on macOS) should type
 
     ./bin/gap.sh
 
@@ -286,9 +286,10 @@ should give the following lines:
 
 If you want to run a quick test of your GAP installation (though this is
 not required), you can read in a test script that exercises some GAP's
-capabilities. The test requires about 1 GB of memory and should run in
-under a minute on an up-to-date desktop computer. You will get a large
-number of lines with output about the progress of the tests, for example:
+capabilities. To run this test, we recommend to use a computer with at
+least 1 GB of memory; on an up-to-date desktop computer, it should
+complete in about a minute. You will get a large number of lines with
+output about the progress of the tests, for example:
 
     gap> Read( Filename( DirectoriesLibrary( "tst" ), "testinstall.g" ) );
     You should start GAP4 using `gap -A -x 80 -r -m 100m -o 1g -K 2g'.
@@ -296,14 +297,15 @@ number of lines with output about the progress of the tests, for example:
     Architecture: SOMETHING-SOMETHING-gcc-default64
 
     testing: ..../gap-4.X.Y/tst/testinstall/alghom.tst
-         105 msec for alghom.tst
+          84 ms (55 ms GC) and 2.90MB allocated for alghom.tst
     testing: ..../gap-4.X.Y/tst/testinstall/algmat.tst
-        1216 msec for algmat.tst
+         839 ms (114 ms GC) and 219MB allocated for algmat.tst
     [ further lines deleted ]
     testing: ..../gap-4.X.Y/tst/testinstall/zmodnze.tst
-          90 msec for zmodnze.tst
+         127 ms (119 ms GC) and 1.29MB allocated for zmodnze.tst
     -----------------------------------
-    total     52070 msec
+    total     62829 ms (24136 ms GC) and 8.61GB allocated
+                  0 failures in 252 files
 
     #I  No errors detected while testing
 
@@ -315,14 +317,14 @@ performing all tests from the `tst` directory.
 
     gap> Read( Filename( DirectoriesLibrary( "tst" ), "teststandard.g" ) );
 
-The test requires about 1 GB of memory and runs about one hour on an
-Intel Core 2 Duo / 2.53 GHz machine, and produces an output similar to the
-`testinstall.g` test.
+Again we recommend a computer with at least 1 GB of memory to run this
+test. It takes significantly longer to complete than `testinstall.g`,
+but otherwise produces output similar to the `testinstall.g` test.
 
 Windows users should note that the Command Prompt user interface provided
 by Microsoft might not offer history scrolling or cut and paste with the
-mouse. To get a better environment, use scripts `gap.bat` or `gaprxvt.bat`
-to start GAP instead of `gapcmd.bat`.
+mouse. To get a better environment, use the script `gap.bat` to start GAP
+instead of `gapcmd.bat`.
 
 
 7 Packages
@@ -348,7 +350,7 @@ and their `README` files should tell exactly which commands to use.
 
 To help with this tedious process, we ship a shell script called
 `bin/BuildPackages.sh` that will compile most of the packages that require
-compilation on Unix systems (including Linux and OS X) with sufficiently
+compilation on Unix systems (including Linux and macOS) with sufficiently
 many libraries, headers and tools available. To use it, change to the
 `gap-4.X.Y/pkg` directory and execute the script like this:
 
@@ -399,13 +401,13 @@ GAP Reference manual.
 
 The manual is also available in pdf format. In the full distribution these
 files are included in the directory `gap-4.X.Y/doc` in the subdirectories
-`tut` (a beginner's tutorial), `ref` (the reference manual) and `changes`
-(changes from earlier versions).
+`tut` (a beginner's tutorial), `ref` (the reference manual), and `hpc` (HPC-GAP
+reference manual).
 
 If you want to use these manual files with the help system from your GAP
 session you may check (or make sure) that your system provides some
-additional software like [xpdf](http://www.foolabs.com/xpdf/) or
-[acroread](http://www.adobe.com/products/acrobat/readstep.html).
+additional software like [xpdf](https://www.foolabs.com/xpdf/) or
+[acroread](https://www.adobe.com/products/acrobat/readstep.html).
 
 To complete beginners, we suggest you read (parts of) the tutorial first
 for an introduction to GAP 4. Then start to use the system with extensive
@@ -458,8 +460,8 @@ to do something which required more memory than you have (as listing all
 elements of S_15 for example). You can use the command line option `-g` (see
 Section "Command Line Options" of the GAP Reference manual) to display how
 much memory GAP uses. If this is below what your machine has available
-extending the workspace is impossible. Start GAP with more memory or use
-the `-a` option to pre-allocate initially a large piece of workspace.
+extending the workspace is impossible. Start GAP with more memory using the
+`-o` option.
 
 ### GAP is not able to allocate memory above a certain limit
 
@@ -492,26 +494,28 @@ finite) which are required for the available algorithms. See section
 "ApplicableMethod" and "KnownPropertiesOfObject" of the GAP Reference
 manual.
 
-Problems specific to Windows
-
 ### The ^-key or "-key cannot be entered.
 
 This is a problem if you are running a keyboard driver for some non-english
-languages. These drivers catch the ^ character to produce the French
-circumflex accent and do not pass it properly to GAP. No fix is known. (One
-can type POW(a,b) for a^b.)
+languages. These drivers catch the ^ character to produce the French circumflex
+accent and do not pass it properly to GAP. For macOS users, as a workaround
+please refer to the section "GAP for macOS" below for information on
+how to install readline and section 5 on how to recompile GAP, for windows no
+fix is known. (One can type POW(a,b) for a^b.)
+
+## Problems specific to Windows
 
 ### Cut and Paste does not work
 
-You might want to try different shells, starting each of the three .bat
-files in the `bin` directory: `gap.bat`. `gaprxvt.bat` and `gapcmd.bat`.
-Also, <https://www.gap-system.org/Faq/faq.html#4> might give a remedy.
+You might want to try different shells, using both of the two `.bat`
+files in the `bin` directory: `gap.bat` and `gapcmd.bat`. Also,
+<https://www.gap-system.org/Faq/faq.html#4> might give a remedy.
 
 ### GAP does not work in the remote desktop
 
 GAP can not be started in the Windows Command Prompt shell (via `gapcmd.bat`)
-in the remote desktop. To start GAP in the remote desktop, use scripts
-`gap.bat` or `gaprxvt.bat` which should work in such setting.
+in the remote desktop. To start GAP in the remote desktop, use the script
+`gap.bat` which should work in such setting.
 
 ### You get an error message about the `cygwin1.dll`
 
@@ -543,8 +547,9 @@ The configure script respects compiler settings given in environment
 variables. However such settings may conflict with the automatic
 configuration process. If configure produces strange error messages about
 not being able to run the compiler, check whether environment variables
-that might affect the compilation (in particular `CC`, `LD`, `CFLAGS`,
-`LDFLAGS` and `CPPFLAGS`) are set and reset them using `unsetenv`.
+that might affect the compilation (in particular `CC`, `CXX`, `CPP`, `LD`,
+`CFLAGS`, `CXXFLAGS`, `CPPFLAGS` and `LDFLAGS`) are set and reset them using
+`unsetenv`.
 
 
 12 Optimization and Compiler Options
@@ -556,7 +561,8 @@ possible optimisation level, but you might need to tell make about it.
 
 If you want to compile GAP with further compiler options (for example
 specific processor optimisations) you will have to assign them to the
-variables CFLAGS, CPPFLAGS and LDFLAGS, then re-run configure and make.
+variables `CFLAGS`, `CXXFLAGS`, `CPPFLAGS` and `LDFLAGS`, then re-run
+`configure` and `make`.
 
 If there are several compiler options or if they contain spaces you might
 have to enclose them by quotes depending on the shell you are
@@ -565,31 +571,27 @@ using.
 The configure process also introduces some default compiler options. You can
 eliminate these by assigning the replacement options to the variable `CFLAGS`.
 
-The recommended C compiler for GAP is the GNU C compiler gcc version 4.8
+The recommended C/C++ compiler for GAP is the GNU C compiler gcc version 4.8
 or later. The Clang compiler version 3.0 and later also should work fine.
 If you use another compiler, please let us know your experience with using
 it to compile GAP.
 
 If you do wish to use GAP with a specific compiler, you can set the environment
-variable `CC` to the name of your preferred compiler and then rerun configure
-and make.
-
-We also recommend that you install a C++ compiler before compiling GAP;
-while GAP itself does not need it, there are GAP packages which do
-require a C++ compiler.
+variables `CC` resp. `CXX` to the name of your preferred C resp. C++ compiler
+and then rerun `configure` and `make`.
 
 As an example, here is how one can configure GAP to compile with Clang 5
-(assuming it is installed on your system), with custom CFLAGS and debug mode
-enabled:
+(assuming it is installed on your system), with custom compiler flags and
+debug mode enabled:
 
-    ./configure CC=clang-5.0 CFLAGS="-g -Og" --enable-debug
+    ./configure CC=clang-5.0 CXX=clang++-5.0 CFLAGS="-g -Og" CXXFLAGS="-g -Og" --enable-debug
 
 
-13 GAP for OS X
-===============
+13 GAP for macOS
+================
 
-Currently we provide no precompiled binary distribution for OS X. However,
-since OS X is an operating system in the Unix family, you can follow the
+Currently we provide no precompiled binary distribution for macOS. However,
+since macOS is an operating system in the Unix family, you can follow the
 Unix installation guidelines to compile GAP; then you will be able to use
 all features of GAP as well as all packages. However for installation you
 might need a basic knowledge of Unix.
@@ -606,11 +608,37 @@ can be found in the Utilities folder in the Applications folder.
 
 Next, you will need a compiler and build tools like `make`. These tools are
 included in the "Xcode" application which is not installed by default on a
-new Mac. On all recent versions of OS X, you can install it for free via
+new Mac. On all recent versions of macOS, you can install it for free via
 the App Store. Afterwards, you also need to run the following command from
 a terminal in order to make all required tools available via the command line:
 
      xcode-select --install
+
+You might want to consider using GNU readline by installing it via:
+
+ * using Homebrew: `brew install readline`
+ * using Fink: `fink install readline7`
+ * using MacPorts: `port install readline`
+ 
+After that you have to compile GAP and tell it where to find your installation of GNU readline
+using the following commands.
+
+For Homebrew, use these commands:
+
+    ./configure --with-readline=$(brew --prefix)/opt/readline
+    make
+
+For Fink, use these commands:
+
+    ./configure CPPFLAGS=-I/sw/include LDFLAGS=-L/sw/lib
+    make
+
+For MacPorts, use these commands:
+
+    ./configure CPPFLAGS=-I/opt/local/include LDFLAGS=-L/opt/local/lib
+    make
+
+For further information on how to use GNU readline, refer to section 5 above.
 
 Now simply follow the Unix installation instructions to compile and start
 GAP and then it will run in this Terminal window.
@@ -637,7 +665,6 @@ in a wrong place or in a separate directory.
 After extraction you can start GAP with one of the following files:
 
     C:\gap-4.X.Y\bin\gap.bat       (recommended)
-    C:\gap-4.X.Y\bin\gaprxvt.bat
     C:\gap-4.X.Y\bin\gapcmd.bat
 
 The `gap.bat` file will start GAP in the `mintty` shell. It allows for

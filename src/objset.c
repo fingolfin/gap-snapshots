@@ -1,10 +1,11 @@
 /****************************************************************************
 **
-*W  objset.c                   GAP source                    Reimer Behrends
+**  This file is part of GAP, a system for computational discrete algebra.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the GAP interface for thread primitives.
 */
@@ -26,15 +27,17 @@
 #include "hpc/traverse.h"
 #endif
 
-Obj TYPE_OBJSET;
-Obj TYPE_OBJMAP;
+static Obj TYPE_OBJSET;
+static Obj TYPE_OBJMAP;
 
-static Obj TypeObjSet(Obj obj) {
-  return TYPE_OBJSET;
+static Obj TypeObjSet(Obj obj)
+{
+    return TYPE_OBJSET;
 }
 
-static Obj TypeObjMap(Obj obj) {
-  return TYPE_OBJMAP;
+static Obj TypeObjMap(Obj obj)
+{
+    return TYPE_OBJMAP;
 }
 
 /** Object sets and maps --------------------
@@ -73,18 +76,20 @@ static Obj TypeObjMap(Obj obj) {
 #define OBJSET_DIRTY 3
 
 #define ADDR_WORD(obj) ((UInt *)(ADDR_OBJ(obj)))
+#define CONST_ADDR_WORD(obj) ((const UInt *)(CONST_ADDR_OBJ(obj)))
 
 /**
  *  Functions to print object maps and sets
  *  ---------------------------------------
  */
 
-static void PrintObjSet(Obj set) {
-  UInt i, size = ADDR_WORD(set)[OBJSET_SIZE];
+static void PrintObjSet(Obj set)
+{
+  UInt i, size = CONST_ADDR_WORD(set)[OBJSET_SIZE];
   Int comma = 0;
   Pr("OBJ_SET([ ", 0L, 0L);
   for (i=0; i < size; i++) {
-    Obj obj = ADDR_OBJ(set)[OBJSET_HDRSIZE + i ];
+    Obj obj = CONST_ADDR_OBJ(set)[OBJSET_HDRSIZE + i ];
     if (obj && obj != Undefined) {
       if (comma) {
         Pr(", ", 0L, 0L);
@@ -97,12 +102,13 @@ static void PrintObjSet(Obj set) {
   Pr(" ])", 0L, 0L);
 }
 
-static void PrintObjMap(Obj map) {
-  UInt i, size = ADDR_WORD(map)[OBJSET_SIZE];
+static void PrintObjMap(Obj map)
+{
+  UInt i, size = CONST_ADDR_WORD(map)[OBJSET_SIZE];
   Int comma = 0;
   Pr("OBJ_MAP([ ", 0L, 0L);
   for (i=0; i < size; i++) {
-    Obj obj = ADDR_OBJ(map)[OBJSET_HDRSIZE + i * 2 ];
+    Obj obj = CONST_ADDR_OBJ(map)[OBJSET_HDRSIZE + i * 2 ];
     if (obj && obj != Undefined) {
       if (comma) {
         Pr(", ", 0L, 0L);
@@ -111,7 +117,7 @@ static void PrintObjMap(Obj map) {
       }
       PrintObj(obj);
       Pr(", ", 0L, 0L);
-      PrintObj(ADDR_OBJ(map)[OBJSET_HDRSIZE + i * 2 + 1]);
+      PrintObj(CONST_ADDR_OBJ(map)[OBJSET_HDRSIZE + i * 2 + 1]);
     }
   }
   Pr(" ])", 0L, 0L);
@@ -124,13 +130,15 @@ static void PrintObjMap(Obj map) {
  *  These functions are not yet implemented.
  */
 
-static void MarkObjSet(Obj obj) {
-  UInt size = ADDR_WORD(obj)[OBJSET_SIZE];
+static void MarkObjSet(Obj obj)
+{
+  UInt size = CONST_ADDR_WORD(obj)[OBJSET_SIZE];
   MarkArrayOfBags( ADDR_OBJ(obj) + OBJSET_HDRSIZE, size );
 }
 
-static void MarkObjMap(Obj obj) {
-  UInt size = ADDR_WORD(obj)[OBJSET_SIZE];
+static void MarkObjMap(Obj obj)
+{
+  UInt size = CONST_ADDR_WORD(obj)[OBJSET_SIZE];
   MarkArrayOfBags( ADDR_OBJ(obj) + OBJSET_HDRSIZE, 2 * size );
 }
 
@@ -143,8 +151,9 @@ static void MarkObjMap(Obj obj) {
  */
 
 
-static inline UInt ObjHash(Obj set, Obj obj) {
-  return FibHash((UInt) obj, ADDR_WORD(set)[OBJSET_BITS]);
+static inline UInt ObjHash(Obj set, Obj obj)
+{
+  return FibHash((UInt) obj, CONST_ADDR_WORD(set)[OBJSET_BITS]);
 }
 
 
@@ -177,11 +186,12 @@ Obj NewObjSet(void) {
 
 static void ResizeObjSet(Obj set, UInt bits);
 
-static void CheckObjSetForCleanUp(Obj set, UInt expand) {
-  UInt size = ADDR_WORD(set)[OBJSET_SIZE];
-  UInt bits = ADDR_WORD(set)[OBJSET_BITS];
-  UInt used = ADDR_WORD(set)[OBJSET_USED] + expand;
-  UInt dirty = ADDR_WORD(set)[OBJSET_DIRTY];
+static void CheckObjSetForCleanUp(Obj set, UInt expand)
+{
+  UInt size = CONST_ADDR_WORD(set)[OBJSET_SIZE];
+  UInt bits = CONST_ADDR_WORD(set)[OBJSET_BITS];
+  UInt used = CONST_ADDR_WORD(set)[OBJSET_USED] + expand;
+  UInt dirty = CONST_ADDR_WORD(set)[OBJSET_DIRTY];
   if (used * 3 >= size * 2)
     ResizeObjSet(set, bits+1);
   else if (dirty && dirty >= used)
@@ -198,12 +208,12 @@ static void CheckObjSetForCleanUp(Obj set, UInt expand) {
  */
 
 Int FindObjSet(Obj set, Obj obj) {
-  UInt size = ADDR_WORD(set)[OBJSET_SIZE];
+  UInt size = CONST_ADDR_WORD(set)[OBJSET_SIZE];
   UInt hash = ObjHash(set, obj);
   GAP_ASSERT(hash < size);
   for (;;) {
     Obj current;
-    current = ADDR_OBJ(set)[OBJSET_HDRSIZE+hash];
+    current = CONST_ADDR_OBJ(set)[OBJSET_HDRSIZE+hash];
     if (!current)
       return -1;
     if (current == obj)
@@ -223,14 +233,15 @@ Int FindObjSet(Obj set, Obj obj) {
  *  Precondition: `set` must not already contain `obj`.
  */
 
-static void AddObjSetNew(Obj set, Obj obj) {
-  UInt size = ADDR_WORD(set)[OBJSET_SIZE];
+static void AddObjSetNew(Obj set, Obj obj)
+{
+  UInt size = CONST_ADDR_WORD(set)[OBJSET_SIZE];
   UInt hash = ObjHash(set, obj);
   GAP_ASSERT(TNUM_OBJ(set) == T_OBJSET);
   GAP_ASSERT(hash < size);
   for (;;) {
     Obj current;
-    current = ADDR_OBJ(set)[OBJSET_HDRSIZE+hash];
+    current = CONST_ADDR_OBJ(set)[OBJSET_HDRSIZE+hash];
     if (!current) {
       ADDR_OBJ(set)[OBJSET_HDRSIZE+hash] = obj;
       ADDR_WORD(set)[OBJSET_USED]++;
@@ -304,13 +315,13 @@ void ClearObjSet(Obj set) {
  */
 
 Obj ObjSetValues(Obj set) {
-  UInt len = ADDR_WORD(set)[OBJSET_USED];
-  UInt size = ADDR_WORD(set)[OBJSET_SIZE];
+  UInt len = CONST_ADDR_WORD(set)[OBJSET_USED];
+  UInt size = CONST_ADDR_WORD(set)[OBJSET_SIZE];
   UInt p, i;
   Obj result = NEW_PLIST(T_PLIST, len);
   SET_LEN_PLIST(result, len);
   for (i=0, p=1; i < size; i++) {
-    Obj el = ADDR_OBJ(set)[OBJSET_HDRSIZE + i];
+    Obj el = CONST_ADDR_OBJ(set)[OBJSET_HDRSIZE + i];
     if (el && el != Undefined) {
       SET_ELM_PLIST(result, p, el);
       p++;
@@ -331,7 +342,8 @@ Obj ObjSetValues(Obj set) {
  *  `2^bits`. There must be at least one free entry remaining.
  */
 
-static void ResizeObjSet(Obj set, UInt bits) {
+static void ResizeObjSet(Obj set, UInt bits)
+{
   UInt i, new_size = (1 << bits);
   Int size = ADDR_WORD(set)[OBJSET_SIZE];
   Obj new = NewBag(T_OBJSET, (OBJSET_HDRSIZE+new_size)*sizeof(Bag)*4);
@@ -351,7 +363,7 @@ static void ResizeObjSet(Obj set, UInt bits) {
   CHANGED_BAG(set);
 }
 
-void SaveObjSet(Obj set)
+static void SaveObjSet(Obj set)
 {
     UInt size = ADDR_WORD(set)[OBJSET_SIZE];
     UInt bits = ADDR_WORD(set)[OBJSET_BITS];
@@ -367,7 +379,7 @@ void SaveObjSet(Obj set)
     }
 }
 
-void LoadObjSet(Obj set)
+static void LoadObjSet(Obj set)
 {
     UInt size = LoadUInt();
     UInt bits = LoadUInt();
@@ -385,24 +397,26 @@ void LoadObjSet(Obj set)
 }
 
 #ifdef USE_THREADSAFE_COPYING
-void TraverseObjSet(Obj obj)
+#ifndef WARD_ENABLED
+static void TraverseObjSet(TraversalState * traversal, Obj obj)
 {
     UInt i, len = *(UInt *)(CONST_ADDR_OBJ(obj) + OBJSET_SIZE);
     for (i = 0; i < len; i++) {
         Obj item = CONST_ADDR_OBJ(obj)[OBJSET_HDRSIZE + i];
         if (item && item != Undefined)
-            QueueForTraversal(item);
+            QueueForTraversal(traversal, item);
     }
 }
 
-void CopyObjSet(Obj copy, Obj original)
+static void CopyObjSet(TraversalState * traversal, Obj copy, Obj original)
 {
     UInt i, len = *(UInt *)(CONST_ADDR_OBJ(original) + OBJSET_SIZE);
     for (i = 0; i < len; i++) {
         Obj item = CONST_ADDR_OBJ(original)[OBJSET_HDRSIZE + i];
-        ADDR_OBJ(copy)[OBJSET_HDRSIZE + i] = ReplaceByCopy(item);
+        ADDR_OBJ(copy)[OBJSET_HDRSIZE + i] = ReplaceByCopy(traversal, item);
     }
 }
+#endif // WARD_ENABLED
 #endif
 
 
@@ -434,7 +448,8 @@ Obj NewObjMap(void) {
 
 static void ResizeObjMap(Obj map, UInt bits);
 
-static void CheckObjMapForCleanUp(Obj map, UInt expand) {
+static void CheckObjMapForCleanUp(Obj map, UInt expand)
+{
   UInt size = ADDR_WORD(map)[OBJSET_SIZE];
   UInt bits = ADDR_WORD(map)[OBJSET_BITS];
   UInt used = ADDR_WORD(map)[OBJSET_USED] + expand;
@@ -455,11 +470,11 @@ static void CheckObjMapForCleanUp(Obj map, UInt expand) {
  */
 
 Int FindObjMap(Obj map, Obj obj) {
-  UInt size = ADDR_WORD(map)[OBJSET_SIZE];
+  UInt size = CONST_ADDR_WORD(map)[OBJSET_SIZE];
   UInt hash = ObjHash(map, obj);
   for (;;) {
     Obj current;
-    current = ADDR_OBJ(map)[OBJSET_HDRSIZE+hash*2];
+    current = CONST_ADDR_OBJ(map)[OBJSET_HDRSIZE+hash*2];
     if (!current)
       return -1;
     if (current == obj)
@@ -482,7 +497,7 @@ Obj LookupObjMap(Obj map, Obj obj) {
   Int index = FindObjMap(map, obj);
   if (index < 0)
     return (Obj) 0;
-  return ADDR_OBJ(map)[OBJSET_HDRSIZE+index*2+1];
+  return CONST_ADDR_OBJ(map)[OBJSET_HDRSIZE+index*2+1];
 }
 
 /**
@@ -494,7 +509,8 @@ Obj LookupObjMap(Obj map, Obj obj) {
  *  Precondition: No other entry with key `key` exists within `map`.
  */
 
-static void AddObjMapNew(Obj map, Obj key, Obj value) {
+static void AddObjMapNew(Obj map, Obj key, Obj value)
+{
   UInt size = ADDR_WORD(map)[OBJSET_SIZE];
   UInt hash = ObjHash(map, key);
   for (;;) {
@@ -580,13 +596,13 @@ void ClearObjMap(Obj map) {
  */
 
 Obj ObjMapValues(Obj set) {
-  UInt len = ADDR_WORD(set)[OBJSET_USED];
-  UInt size = ADDR_WORD(set)[OBJSET_SIZE];
+  UInt len = CONST_ADDR_WORD(set)[OBJSET_USED];
+  UInt size = CONST_ADDR_WORD(set)[OBJSET_SIZE];
   UInt p, i;
   Obj result = NEW_PLIST(T_PLIST, len);
   SET_LEN_PLIST(result, len);
   for (i=0, p=1; i < size; i++) {
-    Obj el = ADDR_OBJ(set)[OBJSET_HDRSIZE + 2*i+1];
+    Obj el = CONST_ADDR_OBJ(set)[OBJSET_HDRSIZE + 2*i+1];
     if (el && el != Undefined) {
       SET_ELM_PLIST(result, p, el);
       p++;
@@ -605,13 +621,13 @@ Obj ObjMapValues(Obj set) {
  */
 
 Obj ObjMapKeys(Obj set) {
-  UInt len = ADDR_WORD(set)[OBJSET_USED];
-  UInt size = ADDR_WORD(set)[OBJSET_SIZE];
+  UInt len = CONST_ADDR_WORD(set)[OBJSET_USED];
+  UInt size = CONST_ADDR_WORD(set)[OBJSET_SIZE];
   UInt p, i;
   Obj result = NEW_PLIST(T_PLIST, len);
   SET_LEN_PLIST(result, len);
   for (i=0, p=1; i < size; i++) {
-    Obj el = ADDR_OBJ(set)[OBJSET_HDRSIZE + 2*i];
+    Obj el = CONST_ADDR_OBJ(set)[OBJSET_HDRSIZE + 2*i];
     if (el && el != Undefined) {
       SET_ELM_PLIST(result, p, el);
       p++;
@@ -633,7 +649,8 @@ Obj ObjMapKeys(Obj set) {
  *  Precondition: The number of entries in `map` must be less than `2^bits`.
  */
 
-static void ResizeObjMap(Obj map, UInt bits) {
+static void ResizeObjMap(Obj map, UInt bits)
+{
   UInt i, new_size = (1 << bits);
   UInt size = ADDR_WORD(map)[OBJSET_SIZE];
   GAP_ASSERT(new_size >= size);
@@ -655,7 +672,7 @@ static void ResizeObjMap(Obj map, UInt bits) {
   CHANGED_BAG(new);
 }
 
-void SaveObjMap(Obj map)
+static void SaveObjMap(Obj map)
 {
     UInt size = ADDR_WORD(map)[OBJSET_SIZE];
     UInt bits = ADDR_WORD(map)[OBJSET_BITS];
@@ -673,7 +690,7 @@ void SaveObjMap(Obj map)
     }
 }
 
-void LoadObjMap(Obj map)
+static void LoadObjMap(Obj map)
 {
     UInt size = LoadUInt();
     UInt bits = LoadUInt();
@@ -692,29 +709,31 @@ void LoadObjMap(Obj map)
 }
 
 #ifdef USE_THREADSAFE_COPYING
-void TraverseObjMap(Obj obj)
+#ifndef WARD_ENABLED
+static void TraverseObjMap(TraversalState * traversal, Obj obj)
 {
     UInt i, len = *(UInt *)(CONST_ADDR_OBJ(obj) + OBJSET_SIZE);
     for (i = 0; i < len; i++) {
         Obj key = CONST_ADDR_OBJ(obj)[OBJSET_HDRSIZE + 2 * i];
         Obj val = CONST_ADDR_OBJ(obj)[OBJSET_HDRSIZE + 2 * i + 1];
         if (key && key != Undefined) {
-            QueueForTraversal(key);
-            QueueForTraversal(val);
+            QueueForTraversal(traversal, key);
+            QueueForTraversal(traversal, val);
         }
     }
 }
 
-void CopyObjMap(Obj copy, Obj original)
+static void CopyObjMap(TraversalState * traversal, Obj copy, Obj original)
 {
     UInt i, len = *(UInt *)(CONST_ADDR_OBJ(original) + OBJSET_SIZE);
     for (i = 0; i < len; i++) {
         Obj key = CONST_ADDR_OBJ(original)[OBJSET_HDRSIZE + 2 * i];
         Obj val = CONST_ADDR_OBJ(original)[OBJSET_HDRSIZE + 2 * i + 1];
-        ADDR_OBJ(copy)[OBJSET_HDRSIZE + 2 * i] = ReplaceByCopy(key);
-        ADDR_OBJ(copy)[OBJSET_HDRSIZE + 2 * i + 1] = ReplaceByCopy(val);
+        ADDR_OBJ(copy)[OBJSET_HDRSIZE + 2 * i] = ReplaceByCopy(traversal, key);
+        ADDR_OBJ(copy)[OBJSET_HDRSIZE + 2 * i + 1] = ReplaceByCopy(traversal, val);
     }
 }
+#endif
 #endif
 
 /**
@@ -727,7 +746,8 @@ void CopyObjMap(Obj copy, Obj original)
  *  of the new set. If no argument is provided, an empty set is created.
  */
 
-static Obj FuncOBJ_SET(Obj self, Obj arg) {
+static Obj FuncOBJ_SET(Obj self, Obj arg)
+{
   Obj result;
   Obj list;
   UInt i, len;
@@ -754,41 +774,19 @@ static Obj FuncOBJ_SET(Obj self, Obj arg) {
 }
 
 /**
- *  `CheckArgument()`
- *  -----------------
- *
- *  Utility function to check that an argument is an object set
- *  or map. The parameters `t1` and `t2` are allowed TNUMs, usually
- *  the mutable and immutable version. The parameter `t2` can also
- *  be negative if only one `tnum` is allowed. In this case, `t1`
- *  must be the mutable version.
- */
-
-static void CheckArgument(const char *func, Obj obj, Int t1, Int t2) {
-  Int tnum = TNUM_OBJ(obj);
-  if (t2 < 0 && tnum == t1+IMMUTABLE) {
-    ErrorQuit("%s: First argument must be a mutable %s",
-      (Int)func,
-      (Int)TNAM_TNUM(t1));
-  }
-  if (tnum != t1 && tnum != t2) {
-    ErrorQuit("%s: First argument must be an %s",
-      (Int)func,
-      (Int)TNAM_TNUM(t1));
-  }
-}
-
-/**
  *  `FuncADD_OBJ_SET()`
  *  -------------------
  *
  *  GAP function to add `obj` to `set`.
  */
 
-static Obj FuncADD_OBJ_SET(Obj self, Obj set, Obj obj) {
-  CheckArgument("ADD_OBJ_SET", set, T_OBJSET, -1);
-  AddObjSet(set, obj);
-  return (Obj) 0;
+static Obj FuncADD_OBJ_SET(Obj self, Obj set, Obj obj)
+{
+    RequireArgumentCondition("ADD_OBJ_SET", set, TNUM_OBJ(set) == T_OBJSET,
+                             "must be a mutable object set");
+
+    AddObjSet(set, obj);
+    return 0;
 }
 
 /**
@@ -798,10 +796,13 @@ static Obj FuncADD_OBJ_SET(Obj self, Obj set, Obj obj) {
  *  GAP function to remove `obj` from `set`.
  */
 
-static Obj FuncREMOVE_OBJ_SET(Obj self, Obj set, Obj obj) {
-  CheckArgument("REMOVE_OBJ_SET", set, T_OBJSET, -1);
-  RemoveObjSet(set, obj);
-  return (Obj) 0;
+static Obj FuncREMOVE_OBJ_SET(Obj self, Obj set, Obj obj)
+{
+    RequireArgumentCondition("REMOVE_OBJ_SET", set, TNUM_OBJ(set) == T_OBJSET,
+                             "must be a mutable object set");
+
+    RemoveObjSet(set, obj);
+    return 0;
 }
 
 /**
@@ -812,11 +813,15 @@ static Obj FuncREMOVE_OBJ_SET(Obj self, Obj set, Obj obj) {
  *  `false`.
  */
 
-static Obj FuncFIND_OBJ_SET(Obj self, Obj set, Obj obj) {
-  Int pos;
-  CheckArgument("FIND_OBJ_SET", set, T_OBJSET, T_OBJSET+IMMUTABLE);
-  pos = FindObjSet(set, obj);
-  return pos >= 0 ? True : False;
+static Obj FuncFIND_OBJ_SET(Obj self, Obj set, Obj obj)
+{
+    RequireArgumentCondition("FIND_OBJ_SET", set,
+                             TNUM_OBJ(set) == T_OBJSET ||
+                                 TNUM_OBJ(set) == T_OBJSET + IMMUTABLE,
+                             "must be an object set");
+
+    Int pos = FindObjSet(set, obj);
+    return pos >= 0 ? True : False;
 }
 
 /**
@@ -826,10 +831,13 @@ static Obj FuncFIND_OBJ_SET(Obj self, Obj set, Obj obj) {
  *  GAP function to remove all objects from `set`.
  */
 
-static Obj FuncCLEAR_OBJ_SET(Obj self, Obj set) {
-  CheckArgument("CLEAR_OBJ_SET", set, T_OBJSET, -1);
-  ClearObjSet(set);
-  return (Obj) 0;
+static Obj FuncCLEAR_OBJ_SET(Obj self, Obj set)
+{
+    RequireArgumentCondition("CLEAR_OBJ_SET", set, TNUM_OBJ(set) == T_OBJSET,
+                             "must be a mutable object set");
+
+    ClearObjSet(set);
+    return 0;
 }
 
 /**
@@ -839,9 +847,14 @@ static Obj FuncCLEAR_OBJ_SET(Obj self, Obj set) {
  *  GAP function to return values in set as a list.
  */
 
-static Obj FuncOBJ_SET_VALUES(Obj self, Obj set) {
-  CheckArgument("OBJ_SET_VALUES", set, T_OBJSET, -1);
-  return ObjSetValues(set);
+static Obj FuncOBJ_SET_VALUES(Obj self, Obj set)
+{
+    RequireArgumentCondition("OBJ_SET_VALUES", set,
+                             TNUM_OBJ(set) == T_OBJSET ||
+                                 TNUM_OBJ(set) == T_OBJSET + IMMUTABLE,
+                             "must be an object set");
+
+    return ObjSetValues(set);
 }
 
 /**
@@ -856,7 +869,8 @@ static Obj FuncOBJ_SET_VALUES(Obj self, Obj set) {
  *  provided, an empty map is created.
  */
 
-static Obj FuncOBJ_MAP(Obj self, Obj arg) {
+static Obj FuncOBJ_MAP(Obj self, Obj arg)
+{
   Obj result;
   Obj list;
   UInt i, len;
@@ -889,10 +903,13 @@ static Obj FuncOBJ_MAP(Obj self, Obj arg) {
  *  GAP function to add a (key, value) pair to an object map.
  */
 
-static Obj FuncADD_OBJ_MAP(Obj self, Obj map, Obj key, Obj value) {
-  CheckArgument("ADD_OBJ_MAP", map, T_OBJMAP, -1);
-  AddObjMap(map, key, value);
-  return (Obj) 0;
+static Obj FuncADD_OBJ_MAP(Obj self, Obj map, Obj key, Obj value)
+{
+    RequireArgumentCondition("ADD_OBJ_MAP", map, TNUM_OBJ(map) == T_OBJMAP,
+                             "must be a mutable object map");
+
+    AddObjMap(map, key, value);
+    return 0;
 }
 
 /**
@@ -904,13 +921,17 @@ static Obj FuncADD_OBJ_MAP(Obj self, Obj map, Obj key, Obj value) {
  *  otherwise.
  */
 
-static Obj FuncFIND_OBJ_MAP(Obj self, Obj map, Obj key, Obj defvalue) {
-  Int pos;
-  CheckArgument("FIND_OBJ_MAP", map, T_OBJMAP, T_OBJMAP+IMMUTABLE);
-  pos = FindObjMap(map, key);
-  if (pos < 0)
-    return defvalue;
-  return ADDR_OBJ(map)[OBJSET_HDRSIZE + 2 * pos + 1];
+static Obj FuncFIND_OBJ_MAP(Obj self, Obj map, Obj key, Obj defvalue)
+{
+    RequireArgumentCondition("FIND_OBJ_MAP", map,
+                             TNUM_OBJ(map) == T_OBJMAP ||
+                                 TNUM_OBJ(map) == T_OBJMAP + IMMUTABLE,
+                             "must be an object map");
+
+    Int pos = FindObjMap(map, key);
+    if (pos < 0)
+        return defvalue;
+    return ADDR_OBJ(map)[OBJSET_HDRSIZE + 2 * pos + 1];
 }
 
 /**
@@ -921,11 +942,15 @@ static Obj FuncFIND_OBJ_MAP(Obj self, Obj map, Obj key, Obj defvalue) {
  *  function returns true if such an entry exists, false otherwise.
  */
 
-static Obj FuncCONTAINS_OBJ_MAP(Obj self, Obj map, Obj key, Obj defvalue) {
-  Int pos;
-  CheckArgument("FIND_OBJ_MAP", map, T_OBJMAP, T_OBJMAP+IMMUTABLE);
-  pos = FindObjMap(map, key);
-  return pos >= 0 ? True : False;
+static Obj FuncCONTAINS_OBJ_MAP(Obj self, Obj map, Obj key)
+{
+    RequireArgumentCondition("CONTAINS_OBJ_MAP", map,
+                             TNUM_OBJ(map) == T_OBJMAP ||
+                                 TNUM_OBJ(map) == T_OBJMAP + IMMUTABLE,
+                             "must be an object map");
+
+    Int pos = FindObjMap(map, key);
+    return pos >= 0 ? True : False;
 }
 
 /**
@@ -936,10 +961,13 @@ static Obj FuncCONTAINS_OBJ_MAP(Obj self, Obj map, Obj key, Obj defvalue) {
  *  exists.
  */
 
-static Obj FuncREMOVE_OBJ_MAP(Obj self, Obj map, Obj key) {
-  CheckArgument("REMOVE_OBJ_MAP", map, T_OBJMAP, -1);
-  RemoveObjMap(map, key);
-  return (Obj) 0;
+static Obj FuncREMOVE_OBJ_MAP(Obj self, Obj map, Obj key)
+{
+    RequireArgumentCondition("REMOVE_OBJ_MAP", map, TNUM_OBJ(map) == T_OBJMAP,
+                             "must be a mutable object map");
+
+    RemoveObjMap(map, key);
+    return 0;
 }
 
 /**
@@ -949,10 +977,13 @@ static Obj FuncREMOVE_OBJ_MAP(Obj self, Obj map, Obj key) {
  *  GAP function to remove all objects from `map`.
  */
 
-static Obj FuncCLEAR_OBJ_MAP(Obj self, Obj map) {
-  CheckArgument("CLEAR_OBJ_MAP", map, T_OBJMAP, -1);
-  ClearObjMap(map);
-  return (Obj) 0;
+static Obj FuncCLEAR_OBJ_MAP(Obj self, Obj map)
+{
+    RequireArgumentCondition("CLEAR_OBJ_MAP", map, TNUM_OBJ(map) == T_OBJMAP,
+                             "must be a mutable object map");
+
+    ClearObjMap(map);
+    return 0;
 }
 
 /**
@@ -962,9 +993,14 @@ static Obj FuncCLEAR_OBJ_MAP(Obj self, Obj map) {
  *  GAP function to return values in set as a list.
  */
 
-static Obj FuncOBJ_MAP_VALUES(Obj self, Obj map) {
-  CheckArgument("OBJ_MAP_VALUES", map, T_OBJMAP, -1);
-  return ObjMapValues(map);
+static Obj FuncOBJ_MAP_VALUES(Obj self, Obj map)
+{
+    RequireArgumentCondition("OBJ_MAP_VALUES", map,
+                             TNUM_OBJ(map) == T_OBJMAP ||
+                                 TNUM_OBJ(map) == T_OBJMAP + IMMUTABLE,
+                             "must be an object map");
+
+    return ObjMapValues(map);
 }
 
 
@@ -975,9 +1011,14 @@ static Obj FuncOBJ_MAP_VALUES(Obj self, Obj map) {
  *  GAP function to return keys in set as a list.
  */
 
-static Obj FuncOBJ_MAP_KEYS(Obj self, Obj map) {
-  CheckArgument("OBJ_MAP_KEYS", map, T_OBJMAP, -1);
-  return ObjMapKeys(map);
+static Obj FuncOBJ_MAP_KEYS(Obj self, Obj map)
+{
+    RequireArgumentCondition("OBJ_MAP_KEYS", map,
+                             TNUM_OBJ(map) == T_OBJMAP ||
+                                 TNUM_OBJ(map) == T_OBJMAP + IMMUTABLE,
+                             "must be an object map");
+
+    return ObjMapKeys(map);
 }
 
 
@@ -992,9 +1033,9 @@ static Obj FuncOBJ_MAP_KEYS(Obj self, Obj map) {
 *V  BagNames  . . . . . . . . . . . . . . . . . . . . . . . list of bag names
 */
 static StructBagNames BagNames[] = {
-  { T_OBJSET,           "object set" },
+  { T_OBJSET          , "object set" },
   { T_OBJSET+IMMUTABLE, "immutable object set" },
-  { T_OBJMAP,           "object map" },
+  { T_OBJMAP          , "object map" },
   { T_OBJMAP+IMMUTABLE, "immutable object map" },
   { -1, "" }
 };
@@ -1004,22 +1045,22 @@ static StructBagNames BagNames[] = {
 **
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
-static StructGVarFunc GVarFuncs [] = {
+static StructGVarFunc GVarFuncs[] = {
 
     GVAR_FUNC(OBJ_SET, -1, "[list]"),
-    GVAR_FUNC(ADD_OBJ_SET, 2, "objset, obj"),
-    GVAR_FUNC(REMOVE_OBJ_SET, 2, "objset, obj"),
-    GVAR_FUNC(FIND_OBJ_SET, 2, "objset, obj"),
-    GVAR_FUNC(CLEAR_OBJ_SET, 1, "objset"),
-    GVAR_FUNC(OBJ_SET_VALUES, 1, "objset"),
+    GVAR_FUNC(ADD_OBJ_SET, 2, "set, obj"),
+    GVAR_FUNC(REMOVE_OBJ_SET, 2, "set, obj"),
+    GVAR_FUNC(FIND_OBJ_SET, 2, "set, obj"),
+    GVAR_FUNC(CLEAR_OBJ_SET, 1, "set"),
+    GVAR_FUNC(OBJ_SET_VALUES, 1, "set"),
     GVAR_FUNC(OBJ_MAP, -1, "[list]"),
-    GVAR_FUNC(ADD_OBJ_MAP, 3, "objmap, key, value"),
-    GVAR_FUNC(REMOVE_OBJ_MAP, 2, "objmap, obj"),
-    GVAR_FUNC(FIND_OBJ_MAP, 3, "objmap, obj, default"),
-    GVAR_FUNC(CONTAINS_OBJ_MAP, 2, "objmap, obj"),
-    GVAR_FUNC(CLEAR_OBJ_MAP, 1, "objmap"),
-    GVAR_FUNC(OBJ_MAP_VALUES, 1, "objmap"),
-    GVAR_FUNC(OBJ_MAP_KEYS, 1, "objmap"),
+    GVAR_FUNC(ADD_OBJ_MAP, 3, "map, key, value"),
+    GVAR_FUNC(REMOVE_OBJ_MAP, 2, "map, obj"),
+    GVAR_FUNC(FIND_OBJ_MAP, 3, "map, obj, default"),
+    GVAR_FUNC(CONTAINS_OBJ_MAP, 2, "map, obj"),
+    GVAR_FUNC(CLEAR_OBJ_MAP, 1, "map"),
+    GVAR_FUNC(OBJ_MAP_VALUES, 1, "map"),
+    GVAR_FUNC(OBJ_MAP_KEYS, 1, "map"),
     { 0, 0, 0, 0, 0 }
 
 };

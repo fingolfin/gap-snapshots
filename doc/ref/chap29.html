@@ -378,7 +378,7 @@ rec( b := 2 )
 
 <p>Internally, record accesses are done using the operations listed in this section. For the records implemented in the kernel, kernel methods are provided for all these operations but otherwise it is possible to install methods for these operations for any object. This permits objects to simulate record behavior.</p>
 
-<p>To save memory, records do not store a list of all component names, but only numbers identifying the components. There numbers are called <em>RNams</em>. <strong class="pkg">GAP</strong> keeps a global list of all RNams that are used and provides functions to translate RNams to strings that give the component names and vice versa.</p>
+<p>To save memory, records do not store a list of all component names, but only numbers identifying the components. There numbers are called <em>RNams</em>. <strong class="pkg">GAP</strong> keeps a global list of all RNams that are used and provides the functions <code class="func">NameRNam</code> (<a href="chap29.html#X87BF90FA7F7A3B1B"><span class="RefLink">29.7-1</span></a>) and <code class="func">RNamObj</code> (<a href="chap29.html#X78199B6B84A017B9"><span class="RefLink">29.7-2</span></a>) to translate RNams to strings that give the component names and vice versa.</p>
 
 <p><a id="X87BF90FA7F7A3B1B" name="X87BF90FA7F7A3B1B"></a></p>
 
@@ -420,6 +420,31 @@ rec( b := 2 )
 <p>For records, the operations implement component access, test for element boundness, component assignment and removal of the component represented by the RNam <var class="Arg">rnam</var>.</p>
 
 <p>The component identifier <var class="Arg">rnam</var> is always required to be in <code class="func">IsPosInt</code> (<a href="chap14.html#X82A854757DFA9C76"><span class="RefLink">14.2-2</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r:= rec( a:= 1 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBound\.( r, RNamObj( "a" ) );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">\.( r, RNamObj( "a" ) );</span>
+1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBound\.( r, RNamObj( "b" ) );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">\.\:\=( r, RNamObj( "b" ), 2 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r;</span>
+rec( a := 1, b := 2 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Unbind\.( r, RNamObj( "b" ) );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r;</span>
+rec( a := 1 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:= SymmetricGroup( 4 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G.1;</span>
+(1,2,3,4)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">\.( G, RNamObj( 1 ) );</span>
+(1,2,3,4)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">meth:= ApplicableMethod( \., [ G, 4711 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">meth( G, RNamObj( 1 ) );</span>
+(1,2,3,4)
+</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap28.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap30.html">[Next Chapter]</a>&nbsp;  </div>

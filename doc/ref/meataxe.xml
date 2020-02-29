@@ -52,7 +52,7 @@ MeatAxe, a module is a record with components
 <Mark><C>dimension</C></Mark>
 <Item>
    The dimension of the vector space (this is the common length of
-   the row vectors (see&nbsp;<Ref Func="DimensionOfVectors"/>)).
+   the row vectors (see&nbsp;<Ref Attr="DimensionOfVectors"/>)).
 </Item>
 <Mark><C>field</C></Mark>
 <Item>
@@ -82,12 +82,12 @@ bases used are needed as well.
 <Func Name="PermutationGModule" Arg='G, F'/>
 
 <Description>
-Called with a permutation group <A>G</A> and a finite field <A>F</A>,
+Called with a permutation group <A>G</A> and a field <A>F</A> (<A>F</A> may be infinite),
 <Ref Func="PermutationGModule"/> returns the natural permutation module
 <M>M</M> over <A>F</A>
 for the group of permutation matrices that acts on the canonical basis of
 <M>M</M> in the same way as <A>G</A> acts on the points up to its largest
-moved point (see&nbsp;<Ref Func="LargestMovedPoint" Label="for a list or collection of permutations"/>).
+moved point (see&nbsp;<Ref Attr="LargestMovedPoint" Label="for a list or collection of permutations"/>).
 </Description>
 </ManSection>
 
@@ -393,6 +393,7 @@ and <A>change</A> is the base change from <A>bas</A> to <A>sub</A>
 
 <Description>
 creates a new module corresponding to the action of <A>module</A> on
+the non-trivial submodule
 <A>sub</A>.
 In the <C>NB</C> version the basis <A>sub</A> must be normed.
 (That is it must be in echelon form with pivots normed to 1,
@@ -405,7 +406,7 @@ see&nbsp;<Ref Func="MTX.NormedBasisAndBaseChange"/>.)
 
 <Description>
 creates a new module corresponding to the action of <A>module</A> on the
-factor of <A>sub</A>. If <A>compl</A> is given, it has to be a basis of a
+factor of the proper submodule <A>sub</A>. If <A>compl</A> is given, it has to be a basis of a
 (vector space-)complement of <A>sub</A>. The action then will correspond to
 <A>compl</A>.
 <P/>
@@ -416,8 +417,8 @@ see&nbsp;<Ref Func="MTX.NormedBasisAndBaseChange"/>)
 </ManSection>
 
 <ManSection>
-<Func Name="MTX.InducedActionMatrix" Arg='mat, sub'/>
-<Func Name="MTX.InducedActionMatrixNB" Arg='mat, sub'/>
+<Func Name="MTX.InducedActionSubMatrix" Arg='mat, sub'/>
+<Func Name="MTX.InducedActionSubMatrixNB" Arg='mat, sub'/>
 <Func Name="MTX.InducedActionFactorMatrix" Arg='mat, sub[, compl]'/>
 
 <Description>

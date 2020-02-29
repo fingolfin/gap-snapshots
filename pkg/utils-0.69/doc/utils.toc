@@ -1,0 +1,62 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Introduction}}{5}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Information for package authors}}{6}{section.1.1}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Printing Lists and Iterators}}{7}{chapter.2}
+\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }Printing selected items}}{7}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}\leavevmode {\color {Chapter }PrintSelection}}{7}{subsection.2.1.1}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Lists, Sets and Strings}}{9}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Functions for lists}}{9}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }DifferencesList}}{9}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}\leavevmode {\color {Chapter }QuotientsList}}{9}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}\leavevmode {\color {Chapter }SearchCycle}}{10}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {3.1.4}\leavevmode {\color {Chapter }RandomCombination}}{11}{subsection.3.1.4}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }Distinct and Common Representatives}}{11}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }DistinctRepresentatives}}{11}{subsection.3.2.1}
+\contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }Functions for strings}}{12}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}\leavevmode {\color {Chapter }BlankFreeString}}{12}{subsection.3.3.1}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Number-theoretic functions}}{13}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Functions for integers}}{13}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\leavevmode {\color {Chapter }AllSmoothIntegers}}{13}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\leavevmode {\color {Chapter }AllProducts}}{13}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}\leavevmode {\color {Chapter }RestrictedPartitionsWithoutRepetitions}}{14}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}\leavevmode {\color {Chapter }NextProbablyPrimeInt}}{14}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.5}\leavevmode {\color {Chapter }PrimeNumbersIterator}}{15}{subsection.4.1.5}
+\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Groups and homomorphisms}}{16}{chapter.5}
+\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }Functions for groups}}{16}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}\leavevmode {\color {Chapter }Comm}}{16}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}\leavevmode {\color {Chapter }IsCommuting}}{16}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}\leavevmode {\color {Chapter }ListOfPowers}}{17}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.4}\leavevmode {\color {Chapter }GeneratorsAndInverses}}{17}{subsection.5.1.4}
+\contentsline {subsection}{\numberline {5.1.5}\leavevmode {\color {Chapter }UpperFittingSeries}}{17}{subsection.5.1.5}
+\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }Functions for group homomorphisms}}{18}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}\leavevmode {\color {Chapter }EpimorphismByGenerators}}{18}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}\leavevmode {\color {Chapter }Pullback}}{19}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}\leavevmode {\color {Chapter }IdempotentEndomorphisms}}{19}{subsection.5.2.3}
+\contentsline {subsection}{\numberline {5.2.4}\leavevmode {\color {Chapter }DirectProductOfFunctions}}{20}{subsection.5.2.4}
+\contentsline {subsection}{\numberline {5.2.5}\leavevmode {\color {Chapter }DirectProductOfAutomorphismGroups}}{21}{subsection.5.2.5}
+\contentsline {chapter}{\numberline {6}\leavevmode {\color {Chapter }Iterators}}{22}{chapter.6}
+\contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }Some iterators for groups and their isomorphisms}}{22}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}\leavevmode {\color {Chapter }AllIsomorphismsIterator}}{22}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}\leavevmode {\color {Chapter }AllSubgroupsIterator}}{23}{subsection.6.1.2}
+\contentsline {section}{\numberline {6.2}\leavevmode {\color {Chapter }Operations on iterators}}{23}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}\leavevmode {\color {Chapter }CartesianIterator}}{23}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}\leavevmode {\color {Chapter }UnorderedPairsIterator}}{24}{subsection.6.2.2}
+\contentsline {chapter}{\numberline {7}\leavevmode {\color {Chapter }Records}}{25}{chapter.7}
+\contentsline {section}{\numberline {7.1}\leavevmode {\color {Chapter }Functions for records}}{25}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}\leavevmode {\color {Chapter }AssignGlobals}}{25}{subsection.7.1.1}
+\contentsline {chapter}{\numberline {8}\leavevmode {\color {Chapter }Various other functions}}{26}{chapter.8}
+\contentsline {section}{\numberline {8.1}\leavevmode {\color {Chapter }File operations}}{26}{section.8.1}
+\contentsline {subsection}{\numberline {8.1.1}\leavevmode {\color {Chapter }Log2HTML}}{26}{subsection.8.1.1}
+\contentsline {section}{\numberline {8.2}\leavevmode {\color {Chapter }{\LaTeX } strings}}{26}{section.8.2}
+\contentsline {subsection}{\numberline {8.2.1}\leavevmode {\color {Chapter }IntOrOnfinityToLaTeX}}{26}{subsection.8.2.1}
+\contentsline {subsection}{\numberline {8.2.2}\leavevmode {\color {Chapter }LaTeXStringFactorsInt}}{27}{subsection.8.2.2}
+\contentsline {section}{\numberline {8.3}\leavevmode {\color {Chapter }Conversion to ${\sf Magma}$ string}}{27}{section.8.3}
+\contentsline {subsection}{\numberline {8.3.1}\leavevmode {\color {Chapter }ConvertToMagmaInputString}}{27}{subsection.8.3.1}
+\contentsline {chapter}{\numberline {9}\leavevmode {\color {Chapter }Obsolete functions}}{29}{chapter.9}
+\contentsline {section}{\numberline {9.1}\leavevmode {\color {Chapter }Operations from AutoDoc}}{29}{section.9.1}
+\contentsline {section}{\numberline {9.2}\leavevmode {\color {Chapter }Functions for printing}}{29}{section.9.2}
+\contentsline {section}{\numberline {9.3}\leavevmode {\color {Chapter }Other obsolete functions}}{30}{section.9.3}
+\contentsline {subsection}{\numberline {9.3.1}\leavevmode {\color {Chapter }Applicable Methods}}{30}{subsection.9.3.1}
+\contentsline {subsection}{\numberline {9.3.2}\leavevmode {\color {Chapter }ExponentOfPrime}}{30}{subsection.9.3.2}
+\contentsline {chapter}{\numberline {10}\leavevmode {\color {Chapter }The transfer procedure}}{31}{chapter.10}
+\contentsline {chapter}{References}{33}{chapter*.5}
+\contentsline {chapter}{Index}{34}{section*.6}

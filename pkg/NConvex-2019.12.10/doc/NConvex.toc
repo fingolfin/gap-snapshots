@@ -1,0 +1,133 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Introduction}}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Installation}}{3}{section.1.1}
+\contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }Requirements}}{3}{section.1.2}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Convex objects}}{5}{chapter.2}
+\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }Attributes}}{5}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}\leavevmode {\color {Chapter }AmbientSpaceDimension (for IsConvexObject)}}{5}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}\leavevmode {\color {Chapter }Dimension (for IsConvexObject)}}{5}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}\leavevmode {\color {Chapter }IsFullDimensional (for IsConvexObject)}}{5}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}\leavevmode {\color {Chapter }InteriorPoint (for IsConvexObject)}}{5}{subsection.2.1.4}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Cones}}{6}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Creating cones}}{6}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }ConeByInequalities (for IsList)}}{6}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}\leavevmode {\color {Chapter }ConeByEqualitiesAndInequalities (for IsList, IsList)}}{6}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}\leavevmode {\color {Chapter }Cone (for IsList)}}{6}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {3.1.4}\leavevmode {\color {Chapter }Cone (for IsCddPolyhedron)}}{6}{subsection.3.1.4}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }Attributes of Cones}}{7}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }DefiningInequalities (for IsCone)}}{7}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }EqualitiesOfCone (for IsCone)}}{7}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}\leavevmode {\color {Chapter }DualCone (for IsCone)}}{7}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}\leavevmode {\color {Chapter }FacesOfCone (for IsCone)}}{7}{subsection.3.2.4}
+\contentsline {subsection}{\numberline {3.2.5}\leavevmode {\color {Chapter }Facets (for IsCone)}}{7}{subsection.3.2.5}
+\contentsline {subsection}{\numberline {3.2.6}\leavevmode {\color {Chapter }FVector (for IsCone)}}{7}{subsection.3.2.6}
+\contentsline {subsection}{\numberline {3.2.7}\leavevmode {\color {Chapter }RelativeInteriorRay (for IsCone)}}{7}{subsection.3.2.7}
+\contentsline {subsection}{\numberline {3.2.8}\leavevmode {\color {Chapter }HilbertBasis (for IsCone)}}{7}{subsection.3.2.8}
+\contentsline {subsection}{\numberline {3.2.9}\leavevmode {\color {Chapter }HilbertBasisOfDualCone (for IsCone)}}{8}{subsection.3.2.9}
+\contentsline {subsection}{\numberline {3.2.10}\leavevmode {\color {Chapter }LinealitySpaceGenerators (for IsCone)}}{8}{subsection.3.2.10}
+\contentsline {subsection}{\numberline {3.2.11}\leavevmode {\color {Chapter }ExternalCddCone (for IsCone)}}{8}{subsection.3.2.11}
+\contentsline {subsection}{\numberline {3.2.12}\leavevmode {\color {Chapter }ExternalNmzCone (for IsCone)}}{8}{subsection.3.2.12}
+\contentsline {subsection}{\numberline {3.2.13}\leavevmode {\color {Chapter }AmbientSpaceDimension (for IsCone)}}{8}{subsection.3.2.13}
+\contentsline {subsection}{\numberline {3.2.14}\leavevmode {\color {Chapter }LatticePointsGenerators (for IsCone)}}{8}{subsection.3.2.14}
+\contentsline {subsection}{\numberline {3.2.15}\leavevmode {\color {Chapter }GridGeneratedByCone (for IsCone)}}{8}{subsection.3.2.15}
+\contentsline {subsection}{\numberline {3.2.16}\leavevmode {\color {Chapter }FactorGrid (for IsCone)}}{9}{subsection.3.2.16}
+\contentsline {subsection}{\numberline {3.2.17}\leavevmode {\color {Chapter }FactorGridMorphism (for IsCone)}}{9}{subsection.3.2.17}
+\contentsline {subsection}{\numberline {3.2.18}\leavevmode {\color {Chapter }GridGeneratedByOrthogonalCone (for IsCone)}}{9}{subsection.3.2.18}
+\contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }Properties of Cones}}{9}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}\leavevmode {\color {Chapter }IsRegularCone (for IsCone)}}{9}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}\leavevmode {\color {Chapter }IsRay (for IsCone)}}{9}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}\leavevmode {\color {Chapter }IsZero (for IsCone)}}{9}{subsection.3.3.3}
+\contentsline {section}{\numberline {3.4}\leavevmode {\color {Chapter }Operations on cones}}{9}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}\leavevmode {\color {Chapter }FourierProjection (for IsCone, IsInt)}}{9}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}\leavevmode {\color {Chapter }IntersectionOfCones (for IsCone, IsCone)}}{10}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}\leavevmode {\color {Chapter }IntersectionOfCones (for IsList)}}{10}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}\leavevmode {\color {Chapter }Contains (for IsCone, IsCone)}}{10}{subsection.3.4.4}
+\contentsline {subsection}{\numberline {3.4.5}\leavevmode {\color {Chapter }IsRelativeInteriorRay (for IsList, IsCone)}}{10}{subsection.3.4.5}
+\contentsline {subsection}{\numberline {3.4.6}\leavevmode {\color {Chapter }NonReducedInequalities (for IsCone)}}{12}{subsection.3.4.6}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Fans}}{14}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Constructors}}{14}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\leavevmode {\color {Chapter }Fan (for IsFan)}}{14}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\leavevmode {\color {Chapter }Fan (for IsList)}}{14}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}\leavevmode {\color {Chapter }Fan (for IsList, IsList)}}{14}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}\leavevmode {\color {Chapter }FansFromTriangulation (for IsList)}}{16}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.5}\leavevmode {\color {Chapter }FanFromTriangulation (for IsList)}}{16}{subsection.4.1.5}
+\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }Attributes}}{17}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\leavevmode {\color {Chapter }RayGenerators (for IsFan)}}{17}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}\leavevmode {\color {Chapter }GivenRayGenerators (for IsFan)}}{17}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}\leavevmode {\color {Chapter }RaysInMaximalCones (for IsFan)}}{17}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}\leavevmode {\color {Chapter }MaximalCones (for IsFan)}}{17}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}\leavevmode {\color {Chapter }FVector (for IsFan)}}{17}{subsection.4.2.5}
+\contentsline {section}{\numberline {4.3}\leavevmode {\color {Chapter }Properties}}{17}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}\leavevmode {\color {Chapter }IsWellDefinedFan (for IsFan)}}{17}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}\leavevmode {\color {Chapter }IsComplete (for IsFan)}}{17}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}\leavevmode {\color {Chapter }IsPointed (for IsFan)}}{18}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}\leavevmode {\color {Chapter }IsSmooth (for IsFan)}}{18}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.5}\leavevmode {\color {Chapter }IsSimplicial (for IsFan)}}{18}{subsection.4.3.5}
+\contentsline {subsection}{\numberline {4.3.6}\leavevmode {\color {Chapter }IsNormalFan (for IsFan)}}{18}{subsection.4.3.6}
+\contentsline {subsection}{\numberline {4.3.7}\leavevmode {\color {Chapter }IsRegularFan (for IsFan)}}{18}{subsection.4.3.7}
+\contentsline {subsection}{\numberline {4.3.8}\leavevmode {\color {Chapter }IsFanoFan (for IsFan)}}{18}{subsection.4.3.8}
+\contentsline {section}{\numberline {4.4}\leavevmode {\color {Chapter }Operations on fans}}{18}{section.4.4}
+\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Polyhedrons}}{20}{chapter.5}
+\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }Creating polyhedron}}{20}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}\leavevmode {\color {Chapter }PolyhedronByInequalities (for IsList)}}{20}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}\leavevmode {\color {Chapter }Polyhedron (for IsPolytope, IsCone)}}{20}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}\leavevmode {\color {Chapter }Polyhedron (for IsList, IsCone)}}{20}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.4}\leavevmode {\color {Chapter }Polyhedron (for IsPolytope, IsList)}}{20}{subsection.5.1.4}
+\contentsline {subsection}{\numberline {5.1.5}\leavevmode {\color {Chapter }Polyhedron (for IsList, IsList)}}{20}{subsection.5.1.5}
+\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }Attributes}}{21}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}\leavevmode {\color {Chapter }ExternalCddPolyhedron (for IsPolyhedron)}}{21}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}\leavevmode {\color {Chapter }ExternalNmzPolyhedron (for IsPolyhedron)}}{21}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}\leavevmode {\color {Chapter }DefiningInequalities (for IsPolyhedron)}}{21}{subsection.5.2.3}
+\contentsline {subsection}{\numberline {5.2.4}\leavevmode {\color {Chapter }MainRatPolytope (for IsPolyhedron)}}{21}{subsection.5.2.4}
+\contentsline {subsection}{\numberline {5.2.5}\leavevmode {\color {Chapter }MainPolytope (for IsPolyhedron)}}{21}{subsection.5.2.5}
+\contentsline {subsection}{\numberline {5.2.6}\leavevmode {\color {Chapter }VerticesOfMainRatPolytope (for IsPolyhedron)}}{21}{subsection.5.2.6}
+\contentsline {subsection}{\numberline {5.2.7}\leavevmode {\color {Chapter }VerticesOfMainPolytope (for IsPolyhedron)}}{21}{subsection.5.2.7}
+\contentsline {subsection}{\numberline {5.2.8}\leavevmode {\color {Chapter }TailCone (for IsPolyhedron)}}{22}{subsection.5.2.8}
+\contentsline {subsection}{\numberline {5.2.9}\leavevmode {\color {Chapter }RayGeneratorsOfTailCone (for IsPolyhedron)}}{22}{subsection.5.2.9}
+\contentsline {subsection}{\numberline {5.2.10}\leavevmode {\color {Chapter }LatticePointsGenerators (for IsPolyhedron)}}{22}{subsection.5.2.10}
+\contentsline {subsection}{\numberline {5.2.11}\leavevmode {\color {Chapter }BasisOfLinealitySpace (for IsPolyhedron)}}{22}{subsection.5.2.11}
+\contentsline {subsection}{\numberline {5.2.12}\leavevmode {\color {Chapter }FVector (for IsPolyhedron)}}{22}{subsection.5.2.12}
+\contentsline {section}{\numberline {5.3}\leavevmode {\color {Chapter }Properties}}{22}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}\leavevmode {\color {Chapter }IsBounded (for IsPolyhedron)}}{22}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}\leavevmode {\color {Chapter }IsPointed (for IsPolyhedron)}}{22}{subsection.5.3.2}
+\contentsline {section}{\numberline {5.4}\leavevmode {\color {Chapter }Solving Linear programs}}{24}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}\leavevmode {\color {Chapter }SolveLinearProgram (for IsPolyhedron, IsString, IsList)}}{24}{subsection.5.4.1}
+\contentsline {subsection}{\numberline {5.4.2}\leavevmode {\color {Chapter }SolveLinearProgram (for IsPolytope, IsString, IsList)}}{25}{subsection.5.4.2}
+\contentsline {chapter}{\numberline {6}\leavevmode {\color {Chapter }Polytopes}}{26}{chapter.6}
+\contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }Creating polytopes}}{26}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}\leavevmode {\color {Chapter }PolytopeByInequalities (for IsList)}}{26}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}\leavevmode {\color {Chapter }Polytope (for IsList)}}{26}{subsection.6.1.2}
+\contentsline {section}{\numberline {6.2}\leavevmode {\color {Chapter }Attributes}}{26}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}\leavevmode {\color {Chapter }ExternalCddPolytope (for IsPolytope)}}{26}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}\leavevmode {\color {Chapter }LatticePoints (for IsPolytope)}}{26}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.3}\leavevmode {\color {Chapter }RelativeInteriorLatticePoints (for IsPolytope)}}{26}{subsection.6.2.3}
+\contentsline {subsection}{\numberline {6.2.4}\leavevmode {\color {Chapter }VerticesOfPolytope (for IsPolytope)}}{27}{subsection.6.2.4}
+\contentsline {subsection}{\numberline {6.2.5}\leavevmode {\color {Chapter }Vertices (for IsPolytope)}}{27}{subsection.6.2.5}
+\contentsline {subsection}{\numberline {6.2.6}\leavevmode {\color {Chapter }DefiningInequalities (for IsPolytope)}}{27}{subsection.6.2.6}
+\contentsline {subsection}{\numberline {6.2.7}\leavevmode {\color {Chapter }EqualitiesOfPolytope (for IsPolytope)}}{27}{subsection.6.2.7}
+\contentsline {subsection}{\numberline {6.2.8}\leavevmode {\color {Chapter }FacetInequalities (for IsPolytope)}}{27}{subsection.6.2.8}
+\contentsline {subsection}{\numberline {6.2.9}\leavevmode {\color {Chapter }VerticesInFacets (for IsPolytope)}}{27}{subsection.6.2.9}
+\contentsline {subsection}{\numberline {6.2.10}\leavevmode {\color {Chapter }NormalFan (for IsPolytope)}}{27}{subsection.6.2.10}
+\contentsline {subsection}{\numberline {6.2.11}\leavevmode {\color {Chapter }FaceFan (for IsPolytope)}}{28}{subsection.6.2.11}
+\contentsline {subsection}{\numberline {6.2.12}\leavevmode {\color {Chapter }AffineCone (for IsPolytope)}}{28}{subsection.6.2.12}
+\contentsline {subsection}{\numberline {6.2.13}\leavevmode {\color {Chapter }PolarPolytope (for IsPolytope)}}{28}{subsection.6.2.13}
+\contentsline {subsection}{\numberline {6.2.14}\leavevmode {\color {Chapter }DualPolytope (for IsPolytope)}}{28}{subsection.6.2.14}
+\contentsline {section}{\numberline {6.3}\leavevmode {\color {Chapter }Properties}}{28}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}\leavevmode {\color {Chapter }IsEmpty (for IsPolytope)}}{28}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}\leavevmode {\color {Chapter }IsLatticePolytope (for IsPolytope)}}{28}{subsection.6.3.2}
+\contentsline {subsection}{\numberline {6.3.3}\leavevmode {\color {Chapter }IsVeryAmple (for IsPolytope)}}{28}{subsection.6.3.3}
+\contentsline {subsection}{\numberline {6.3.4}\leavevmode {\color {Chapter }IsNormalPolytope (for IsPolytope)}}{29}{subsection.6.3.4}
+\contentsline {subsection}{\numberline {6.3.5}\leavevmode {\color {Chapter }IsSimplicial (for IsPolytope)}}{29}{subsection.6.3.5}
+\contentsline {subsection}{\numberline {6.3.6}\leavevmode {\color {Chapter }IsSimplexPolytope (for IsPolytope)}}{29}{subsection.6.3.6}
+\contentsline {subsection}{\numberline {6.3.7}\leavevmode {\color {Chapter }IsSimplePolytope (for IsPolytope)}}{29}{subsection.6.3.7}
+\contentsline {subsection}{\numberline {6.3.8}\leavevmode {\color {Chapter }IsReflexive (for IsPolytope)}}{29}{subsection.6.3.8}
+\contentsline {subsection}{\numberline {6.3.9}\leavevmode {\color {Chapter }IsFanoPolytope (for IsPolytope)}}{29}{subsection.6.3.9}
+\contentsline {subsection}{\numberline {6.3.10}\leavevmode {\color {Chapter }IsCanonicalFanoPolytope (for IsPolytope)}}{29}{subsection.6.3.10}
+\contentsline {subsection}{\numberline {6.3.11}\leavevmode {\color {Chapter }IsTerminalFanoPolytope (for IsPolytope)}}{30}{subsection.6.3.11}
+\contentsline {subsection}{\numberline {6.3.12}\leavevmode {\color {Chapter }IsSmoothFanoPolytope (for IsPolytope)}}{30}{subsection.6.3.12}
+\contentsline {section}{\numberline {6.4}\leavevmode {\color {Chapter }Operations on polytopes}}{30}{section.6.4}
+\contentsline {subsection}{\numberline {6.4.1}\leavevmode {\color {Chapter }\texttt {\char 92\relax }+ (for IsPolytope, IsPolytope)}}{30}{subsection.6.4.1}
+\contentsline {subsection}{\numberline {6.4.2}\leavevmode {\color {Chapter }\texttt {\char 92\relax }* (for IsInt, IsPolytope)}}{30}{subsection.6.4.2}
+\contentsline {subsection}{\numberline {6.4.3}\leavevmode {\color {Chapter }IntersectionOfPolytopes (for IsPolytope, IsPolytope)}}{30}{subsection.6.4.3}
+\contentsline {subsection}{\numberline {6.4.4}\leavevmode {\color {Chapter }RandomInteriorPoint (for IsPolytope)}}{30}{subsection.6.4.4}
+\contentsline {subsection}{\numberline {6.4.5}\leavevmode {\color {Chapter }IsInteriorPoint (for IsList,IsPolytope)}}{30}{subsection.6.4.5}
+\contentsline {chapter}{Index}{33}{section*.2}

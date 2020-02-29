@@ -1,3 +1,4 @@
+#@local JACOBI_INT_GAP,c,d,jac,m,n,oldLevel,t
 gap> START_TEST("numtheor.tst");
 
 # RootMod, RootsMod
@@ -74,9 +75,9 @@ gap> JACOBI_INT_GAP := function ( n, m )
 gap> ForAll([-100 .. 100], a-> ForAll([1 .. 100], b -> JACOBI_INT_GAP(a,b)=JACOBI_INT(a,b)));
 true
 gap> JACOBI_INT(fail, 1);
-Error, Jacobi: <n> must be an integer (not a boolean or fail)
+Error, Jacobi: <n> must be an integer (not the value 'fail')
 gap> JACOBI_INT(1, fail);
-Error, Jacobi: <m> must be an integer (not a boolean or fail)
+Error, Jacobi: <m> must be an integer (not the value 'fail')
 
 #
 gap> STOP_TEST( "numtheor.tst", 1);

@@ -1,12 +1,11 @@
 /****************************************************************************
 **
-*W  streams.c                   GAP source                       Frank Celler
-*W                                                  & Burkhard Höfling (MAC)
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the  various read-eval-print loops and streams related
 **  stuff.  The system depend part is in "sysfiles.c".
@@ -21,9 +20,10 @@
 #include "gap.h"
 #include "gapstate.h"
 #include "gvars.h"
+#include "integer.h"
+#include "io.h"
 #include "lists.h"
 #include "modules.h"
-#include "io.h"
 #include "opers.h"
 #include "plist.h"
 #include "precord.h"
@@ -45,6 +45,19 @@
 #include <sys/time.h>
 #endif
 
+
+static Obj IsInputStream;
+static Obj IsOutputStream;
+
+#define RequireInputStream(funcname, op)                                     \
+    RequireArgumentCondition(funcname, op,                                   \
+                             CALL_1ARGS(IsInputStream, op) == True,          \
+                             "must be an input stream")
+
+#define RequireOutputStream(funcname, op)                                    \
+    RequireArgumentCondition(funcname, op,                                   \
+                             CALL_1ARGS(IsOutputStream, op) == True,         \
+                             "must be an output stream")
 
 
 /****************************************************************************
@@ -135,6 +148,8 @@ Obj READ_ALL_COMMANDS(Obj instream, Obj echo, Obj capture, Obj resultCallback)
     Obj        outstream = 0;
     Obj        outstreamString = 0;
 
+    RequireInputStream("READ_ALL_COMMANDS", instream);
+
     /* try to open the streams */
     if (!OpenInputStream(instream, echo == True)) {
         return Fail;
@@ -201,7 +216,7 @@ Obj READ_ALL_COMMANDS(Obj instream, Obj echo, Obj capture, Obj resultCallback)
     return resultList;
 }
 
-Obj FuncREAD_ALL_COMMANDS(
+static Obj FuncREAD_ALL_COMMANDS(
     Obj self, Obj instream, Obj echo, Obj capture, Obj resultCallback)
 {
     return READ_ALL_COMMANDS(instream, echo, capture, resultCallback);
@@ -215,11 +230,13 @@ Obj FuncREAD_ALL_COMMANDS(
  The second entry, if present, is the return value of
  the command. If it not present, the command returned nothing.
 */
-Obj FuncREAD_COMMAND_REAL ( Obj self, Obj stream, Obj echo )
+static Obj FuncREAD_COMMAND_REAL(Obj self, Obj stream, Obj echo)
 {
     Int status;
     Obj result;
     Obj evalResult;
+
+    RequireInputStream("READ_COMMAND_REAL", stream);
 
     result = NEW_PLIST( T_PLIST, 2 );
     SET_LEN_PLIST(result, 1);
@@ -368,7 +385,7 @@ Obj READ_AS_FUNC ( void )
 }
 
 
-static void READ_TEST_OR_LOOP(void)
+static void READ_TEST_OR_LOOP(Obj context)
 {
     UInt                type;
     UInt                oldtime;
@@ -383,18 +400,16 @@ static void READ_TEST_OR_LOOP(void)
         /* read and evaluate the command                                   */
         ClearError();
         Obj evalResult;
-        type = ReadEvalCommand(STATE(BottomLVars), &evalResult, &dualSemicolon);
+        type = ReadEvalCommand(context, &evalResult, &dualSemicolon);
 
         /* stop the stopwatch                                              */
-        AssGVar( Time, INTOBJ_INT( SyTime() - oldtime ) );
+        AssGVarWithoutReadOnlyCheck(Time, ObjInt_Int(SyTime() - oldtime));
 
         /* handle ordinary command                                         */
         if ( type == 0 && evalResult != 0 ) {
 
             /* remember the value in 'last' and the time in 'time'         */
-            AssGVar( Last3, ValGVarTL( Last2 ) );
-            AssGVar( Last2, ValGVarTL( Last  ) );
-            AssGVar( Last, evalResult );
+            UpdateLast(evalResult, 3);
 
             /* print the result                                            */
             if ( ! dualSemicolon ) {
@@ -496,15 +511,11 @@ Int READ_GAP_ROOT ( const Char * filename )
             ClearError();
             return 1;
         }
-        else {
-            return 0;
-        }
     }
 
     /* don't know                                                          */
     else {
         ErrorQuit( "unknown result code %d from 'SyFindGapRoot'", res, 0L );
-        return 0;
     }
     return 0;
 }
@@ -522,12 +533,10 @@ Int READ_GAP_ROOT ( const Char * filename )
 **  input   from  '*stdin*'  and  '*errin*'  and  output  to  '*stdout*'  and
 **  '*errout*' will no longer be echoed to a file.
 */
-Obj FuncCLOSE_LOG_TO (
-    Obj                 self )
+static Obj FuncCLOSE_LOG_TO(Obj self)
 {
     if ( ! CloseLog() ) {
         ErrorQuit("LogTo: can not close the logfile",0L,0L);
-        return False;
     }
     return True;
 }
@@ -546,17 +555,10 @@ Obj FuncCLOSE_LOG_TO (
 **  '*stdout*'  and  '*errout*',  to  the  file  with  the  name  <filename>.
 **  The file is created if it does not  exist,  otherwise  it  is  truncated.
 */
-Obj FuncLOG_TO (
-    Obj                 self,
-    Obj                 filename )
+static Obj FuncLOG_TO(Obj self, Obj filename)
 {
-    while ( ! IsStringConv(filename) ) {
-        filename = ErrorReturnObj(
-            "LogTo: <filename> must be a string (not a %s)",
-            (Int)TNAM_OBJ(filename), 0L,
-            "you can replace <filename> via 'return <filename>;'" );
-    }
-    if ( ! OpenLog( CSTR_STRING(filename) ) ) {
+    RequireStringRep("LogTo", filename);
+    if ( ! OpenLog( CONST_CSTR_STRING(filename) ) ) {
         ErrorReturnVoid( "LogTo: cannot log to %g",
                          (Int)filename, 0L,
                          "you can 'return;'" );
@@ -570,10 +572,9 @@ Obj FuncLOG_TO (
 **
 *F  FuncLOG_TO_STREAM( <stream> ) . . . . . . . . . start logging to a stream
 */
-Obj FuncLOG_TO_STREAM (
-    Obj                 self,
-    Obj                 stream )
+static Obj FuncLOG_TO_STREAM(Obj self, Obj stream)
 {
+    RequireOutputStream("LogTo", stream);
     if ( ! OpenLogStream(stream) ) {
         ErrorReturnVoid( "LogTo: cannot log to stream", 0L, 0L,
                          "you can 'return;'" );
@@ -595,12 +596,10 @@ Obj FuncLOG_TO_STREAM (
 **  that input from  '*stdin*' and '*errin*' will   no longer be  echoed to a
 **  file.
 */
-Obj FuncCLOSE_INPUT_LOG_TO (
-    Obj                 self )
+static Obj FuncCLOSE_INPUT_LOG_TO(Obj self)
 {
     if ( ! CloseInputLog() ) {
         ErrorQuit("InputLogTo: can not close the logfile",0L,0L);
-        return False;
     }
     return True;
 }
@@ -618,17 +617,10 @@ Obj FuncCLOSE_INPUT_LOG_TO (
 **  files, '*stdin*' and '*errin*' to the file with the name <filename>.  The
 **  file is created if it does not exist, otherwise it is truncated.
 */
-Obj FuncINPUT_LOG_TO (
-    Obj                 self,
-    Obj                 filename )
+static Obj FuncINPUT_LOG_TO(Obj self, Obj filename)
 {
-    while ( ! IsStringConv(filename) ) {
-        filename = ErrorReturnObj(
-            "InputLogTo: <filename> must be a string (not a %s)",
-            (Int)TNAM_OBJ(filename), 0L,
-            "you can replace <filename> via 'return <filename>;'" );
-    }
-    if ( ! OpenInputLog( CSTR_STRING(filename) ) ) {
+    RequireStringRep("InputLogTo", filename);
+    if ( ! OpenInputLog( CONST_CSTR_STRING(filename) ) ) {
         ErrorReturnVoid( "InputLogTo: cannot log to %g",
                          (Int)filename, 0L,
                          "you can 'return;'" );
@@ -642,10 +634,9 @@ Obj FuncINPUT_LOG_TO (
 **
 *F  FuncINPUT_LOG_TO_STREAM( <stream> ) . . . . . . start logging to a stream
 */
-Obj FuncINPUT_LOG_TO_STREAM (
-    Obj                 self,
-    Obj                 stream )
+static Obj FuncINPUT_LOG_TO_STREAM(Obj self, Obj stream)
 {
+    RequireOutputStream("InputLogTo", stream);
     if ( ! OpenInputLogStream(stream) ) {
         ErrorReturnVoid( "InputLogTo: cannot log to stream", 0L, 0L,
                          "you can 'return;'" );
@@ -667,12 +658,10 @@ Obj FuncINPUT_LOG_TO_STREAM (
 **  so that output from '*stdin*' and '*errin*' will no longer be echoed to a
 **  file.
 */
-Obj FuncCLOSE_OUTPUT_LOG_TO (
-    Obj                 self )
+static Obj FuncCLOSE_OUTPUT_LOG_TO(Obj self)
 {
     if ( ! CloseOutputLog() ) {
         ErrorQuit("OutputLogTo: can not close the logfile",0L,0L);
-        return False;
     }
     return True;
 }
@@ -690,17 +679,10 @@ Obj FuncCLOSE_OUTPUT_LOG_TO (
 **  files, '*stdin*' and '*errin*' to the file with the name <filename>.  The
 **  file is created if it does not exist, otherwise it is truncated.
 */
-Obj FuncOUTPUT_LOG_TO (
-    Obj                 self,
-    Obj                 filename )
+static Obj FuncOUTPUT_LOG_TO(Obj self, Obj filename)
 {
-    while ( ! IsStringConv(filename) ) {
-        filename = ErrorReturnObj(
-            "OutputLogTo: <filename> must be a string (not a %s)",
-            (Int)TNAM_OBJ(filename), 0L,
-            "you can replace <filename> via 'return <filename>;'" );
-    }
-    if ( ! OpenOutputLog( CSTR_STRING(filename) ) ) {
+    RequireStringRep("OutputLogTo", filename);
+    if ( ! OpenOutputLog( CONST_CSTR_STRING(filename) ) ) {
         ErrorReturnVoid( "OutputLogTo: cannot log to %g",
                          (Int)filename, 0L,
                          "you can 'return;'" );
@@ -714,10 +696,9 @@ Obj FuncOUTPUT_LOG_TO (
 **
 *F  FuncOUTPUT_LOG_TO_STREAM( <stream> ) . . . . .  start logging to a stream
 */
-Obj FuncOUTPUT_LOG_TO_STREAM (
-    Obj                 self,
-    Obj                 stream )
+static Obj FuncOUTPUT_LOG_TO_STREAM(Obj self, Obj stream)
 {
+    RequireOutputStream("OutputLogTo", stream);
     if ( ! OpenOutputLogStream(stream) ) {
         ErrorReturnVoid( "OutputLogTo: cannot log to stream", 0L, 0L,
                          "you can 'return;'" );
@@ -731,9 +712,7 @@ Obj FuncOUTPUT_LOG_TO_STREAM (
 **
 *F  FuncPrint( <self>, <args> ) . . . . . . . . . . . . . . . .  print <args>
 */
-Obj FuncPrint (
-    Obj                 self,
-    Obj                 args )
+static Obj FuncPrint(Obj self, Obj args)
 {
     volatile Obj        arg;
     volatile UInt       i;
@@ -769,97 +748,39 @@ Obj FuncPrint (
     return 0;
 }
 
-static Obj PRINT_OR_APPEND_TO(Obj args, int append)
+static Obj PRINT_OR_APPEND_TO_FILE_OR_STREAM(Obj args, int append, int file)
 {
     const char * volatile funcname = append ? "AppendTo" : "PrintTo";
     volatile Obj        arg;
-    volatile Obj        filename;
+    volatile Obj        destination;
     volatile UInt       i;
     syJmp_buf           readJmpError;
 
-    /* first entry is the filename                                         */
-    filename = ELM_LIST(args,1);
-    while ( ! IsStringConv(filename) ) {
-        filename = ErrorReturnObj(
-            "%s: <filename> must be a string (not a %s)",
-            (Int)funcname, (Int)TNAM_OBJ(filename),
-            "you can replace <filename> via 'return <filename>;'" );
-    }
+    /* first entry is the file or stream                                   */
+    destination = ELM_LIST(args, 1);
 
-    /* try to open the file for output                                     */
-    i = append ? OpenAppend( CSTR_STRING(filename) )
-               : OpenOutput( CSTR_STRING(filename) );
-    if ( ! i ) {
-        if (strcmp(CSTR_STRING(filename), "*errout*") == 0) {
-            // When trying to print an error opening *errout* failed,
-            // We exit GAP after trying to print an error.
-            // First try printing an error to stderr
-            int ret = fputs("gap: panic, could not open *errout*!\n", stderr);
-            // If that failed, try printing to stdout
-            if(ret == EOF) {
-                fputs("gap: panic, could not open *errout*!\n", stdout);
+    /* try to open the output and handle failures                          */
+    if (file) {
+        RequireStringRep(funcname, destination);
+        i = append ? OpenAppend(CONST_CSTR_STRING(destination))
+                   : OpenOutput(CONST_CSTR_STRING(destination));
+        if (!i) {
+            if (strcmp(CSTR_STRING(destination), "*errout*") == 0) {
+                Panic("Failed to open *errout*!");
             }
-            SyExit(1);
-        }
-        ErrorQuit( "%s: cannot open '%g' for output",
-                   (Int)funcname, (Int)filename );
-        return 0;
-    }
-
-    /* print all the arguments, take care of strings and functions         */
-    for ( i = 2;  i <= LEN_PLIST(args);  i++ ) {
-        arg = ELM_LIST(args,i);
-        if ( IS_PLIST(arg) && 0 < LEN_PLIST(arg) && IsStringConv(arg) ) {
-            PrintString1(arg);
-        }
-        else if ( IS_STRING_REP(arg) ) {
-            PrintString1(arg);
-        }
-        else if ( TNUM_OBJ(arg) == T_FUNCTION ) {
-            PrintFunction( arg );
-        }
-        else {
-            memcpy( readJmpError, STATE(ReadJmpError), sizeof(syJmp_buf) );
-
-            /* if an error occurs stop printing                            */
-            TRY_IF_NO_ERROR {
-                PrintObj( arg );
-            }
-            CATCH_ERROR {
-                CloseOutput();
-                memcpy( STATE(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
-                ReadEvalError();
-            }
-            memcpy( STATE(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
+            ErrorQuit("%s: cannot open '%g' for output", (Int)funcname,
+                      (Int)destination);
         }
     }
-
-    /* close the output file again, and return nothing                     */
-    if ( ! CloseOutput() ) {
-        ErrorQuit( "%s: cannot close output", (Int)funcname, 0L );
-        return 0;
-    }
-
-    return 0;
-}
-
-
-static Obj PRINT_OR_APPEND_TO_STREAM(Obj args, int append)
-{
-    const char * volatile funcname = append ? "AppendTo" : "PrintTo";
-    volatile Obj        arg;
-    volatile Obj        stream;
-    volatile UInt       i;
-    syJmp_buf           readJmpError;
-
-    /* first entry is the stream                                           */
-    stream = ELM_LIST(args,1);
-
-    /* try to open the file for output                                     */
-    i = OpenOutputStream(stream);
-    if ( ! i ) {
-        ErrorQuit( "%s: cannot open stream for output", (Int)funcname, 0L );
-        return 0;
+    else {
+        if (CALL_1ARGS(IsOutputStream, destination) != True) {
+            ErrorQuit("%s: <outstream> must be an output stream",
+                      (Int)funcname, 0L);
+        }
+        i = OpenOutputStream(destination);
+        if (!i) {
+            ErrorQuit("%s: cannot open stream for output", (Int)funcname, 0L);
+        }
     }
 
     /* print all the arguments, take care of strings and functions         */
@@ -867,45 +788,54 @@ static Obj PRINT_OR_APPEND_TO_STREAM(Obj args, int append)
         arg = ELM_LIST(args,i);
 
         /* if an error occurs stop printing                                */
-        memcpy( readJmpError, STATE(ReadJmpError), sizeof(syJmp_buf) );
-        TRY_IF_NO_ERROR {
-            if ( IS_PLIST(arg) && 0 < LEN_PLIST(arg) && IsStringConv(arg) ) {
+        memcpy(readJmpError, STATE(ReadJmpError), sizeof(syJmp_buf));
+        TRY_IF_NO_ERROR
+        {
+            if (IS_PLIST(arg) && 0 < LEN_PLIST(arg) && IsStringConv(arg)) {
                 PrintString1(arg);
             }
-            else if ( IS_STRING_REP(arg) ) {
+            else if (IS_STRING_REP(arg)) {
                 PrintString1(arg);
             }
-            else if ( TNUM_OBJ( arg ) == T_FUNCTION ) {
-                PrintFunction( arg );
+            else if (IS_FUNC(arg)) {
+                PrintFunction(arg);
             }
             else {
-                PrintObj( arg );
+                PrintObj(arg);
             }
         }
-        CATCH_ERROR {
+        CATCH_ERROR
+        {
             CloseOutput();
             memcpy( STATE(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
             ReadEvalError();
         }
-        memcpy( STATE(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
+        memcpy(STATE(ReadJmpError), readJmpError, sizeof(syJmp_buf));
     }
 
     /* close the output file again, and return nothing                     */
     if ( ! CloseOutput() ) {
         ErrorQuit( "%s: cannot close output", (Int)funcname, 0L );
-        return 0;
     }
 
     return 0;
+}
+static Obj PRINT_OR_APPEND_TO(Obj args, int append)
+{
+    return PRINT_OR_APPEND_TO_FILE_OR_STREAM(args, append, 1);
+}
+
+
+static Obj PRINT_OR_APPEND_TO_STREAM(Obj args, int append)
+{
+    return PRINT_OR_APPEND_TO_FILE_OR_STREAM(args, append, 0);
 }
 
 /****************************************************************************
 **
 *F  FuncPRINT_TO( <self>, <args> )  . . . . . . . . . . . . . .  print <args>
 */
-Obj FuncPRINT_TO (
-    Obj                 self,
-    Obj                 args )
+static Obj FuncPRINT_TO(Obj self, Obj args)
 {
     return PRINT_OR_APPEND_TO(args, 0);
 }
@@ -915,9 +845,7 @@ Obj FuncPRINT_TO (
 **
 *F  FuncPRINT_TO_STREAM( <self>, <args> ) . . . . . . . . . . .  print <args>
 */
-Obj FuncPRINT_TO_STREAM (
-    Obj                 self,
-    Obj                 args )
+static Obj FuncPRINT_TO_STREAM(Obj self, Obj args)
 {
     /* Note that FuncPRINT_TO_STREAM and FuncAPPEND_TO_STREAM do exactly the
        same, they only differ in the function name they print as part
@@ -930,9 +858,7 @@ Obj FuncPRINT_TO_STREAM (
 **
 *F  FuncAPPEND_TO( <self>, <args> ) . . . . . . . . . . . . . . append <args>
 */
-Obj FuncAPPEND_TO (
-    Obj                 self,
-    Obj                 args )
+static Obj FuncAPPEND_TO(Obj self, Obj args)
 {
     return PRINT_OR_APPEND_TO(args, 1);
 }
@@ -942,9 +868,7 @@ Obj FuncAPPEND_TO (
 **
 *F  FuncAPPEND_TO_STREAM( <self>, <args> )  . . . . . . . . . . append <args>
 */
-Obj FuncAPPEND_TO_STREAM (
-    Obj                 self,
-    Obj                 args )
+static Obj FuncAPPEND_TO_STREAM(Obj self, Obj args)
 {
     /* Note that FuncPRINT_TO_STREAM and FuncAPPEND_TO_STREAM do exactly the
        same, they only differ in the function name they print as part
@@ -959,20 +883,13 @@ Obj FuncAPPEND_TO_STREAM (
 **
 **  Read the current input and close the input stream.
 */
-Obj FuncREAD (
-    Obj                 self,
-    Obj                 filename )
+static Obj FuncREAD(Obj self, Obj filename)
 {
    /* check the argument                                                  */
-    while ( ! IsStringConv( filename ) ) {
-        filename = ErrorReturnObj(
-            "READ: <filename> must be a string (not a %s)",
-            (Int)TNAM_OBJ(filename), 0L,
-            "you can replace <filename> via 'return <filename>;'" );
-    }
+    RequireStringRep("READ", filename);
 
     /* try to open the file                                                */
-    if ( ! OpenInput( CSTR_STRING(filename) ) ) {
+    if ( ! OpenInput( CONST_CSTR_STRING(filename) ) ) {
         return False;
     }
 
@@ -984,26 +901,25 @@ Obj FuncREAD (
 **
 *F  FuncREAD_NORECOVERY( <self>, <filename> )  . . .  . . . . . . read a file
 **
-** Read the current input and close the input stream. Disable the normal 
-** mechanism which ensures that quitting from a break loop gets you back to a 
-** live prompt. This is initially designed for the files read from the command 
-** line
+**  Read the current input and close the input stream. Disable the normal 
+**  mechanism which ensures that quitting from a break loop gets you back to
+**  a live prompt. This is initially designed for the files read from the
+**  command line.
 */
-Obj FuncREAD_NORECOVERY (
-    Obj                 self,
-    Obj                 filename )
+static Obj FuncREAD_NORECOVERY(Obj self, Obj input)
 {
-    /* check the argument                                                  */
-    while ( ! IsStringConv( filename ) ) {
-        filename = ErrorReturnObj(
-            "READ: <filename> must be a string (not a %s)",
-            (Int)TNAM_OBJ(filename), 0L,
-            "you can replace <filename> via 'return <filename>;'" );
+    if ( IsStringConv( input ) ) {
+        if ( ! OpenInput( CONST_CSTR_STRING(input) ) ) {
+            return False;
+        }
     }
-
-    /* try to open the file                                                */
-    if ( ! OpenInput( CSTR_STRING(filename) ) ) {
-        return False;
+    else if (CALL_1ARGS(IsInputStream, input) == True) {
+        if (!OpenInputStream(input, 0)) {
+            return False;
+        }
+    }
+    else {
+        return Fail;
     }
 
     /* read the file */
@@ -1020,10 +936,10 @@ Obj FuncREAD_NORECOVERY (
 **
 *F  FuncREAD_STREAM( <self>, <stream> )   . . . . . . . . . . . read a stream
 */
-Obj FuncREAD_STREAM (
-    Obj                 self,
-    Obj                 stream )
+static Obj FuncREAD_STREAM(Obj self, Obj stream)
 {
+    RequireInputStream("READ_STREAM", stream);
+
     /* try to open the file                                                */
     if (!OpenInputStream(stream, 0)) {
         return False;
@@ -1040,12 +956,15 @@ Obj FuncREAD_STREAM (
 **  Read data from <instream> in a read-eval-view loop and write all output
 **  to <outstream>.
 */
-Obj FuncREAD_STREAM_LOOP (
-    Obj                 self,
-    Obj                 instream,
-    Obj                 outstream )
+static Obj FuncREAD_STREAM_LOOP_WITH_CONTEXT(Obj self,
+                                             Obj instream,
+                                             Obj outstream,
+                                             Obj context)
 {
     Int res;
+
+    RequireInputStream("READ_STREAM_LOOP", instream);
+    RequireOutputStream("READ_STREAM_LOOP", outstream);
 
     if (!OpenInputStream(instream, 0)) {
         return False;
@@ -1058,7 +977,7 @@ Obj FuncREAD_STREAM_LOOP (
     }
 
     LockCurrentOutput(1);
-    READ_TEST_OR_LOOP();
+    READ_TEST_OR_LOOP(context);
     LockCurrentOutput(0);
 
     res = CloseInput();
@@ -1070,25 +989,22 @@ Obj FuncREAD_STREAM_LOOP (
     return res ? True : False;
 }
 
-
+static Obj FuncREAD_STREAM_LOOP(Obj self, Obj stream, Obj catcherrstdout)
+{
+    return FuncREAD_STREAM_LOOP_WITH_CONTEXT(self, stream, catcherrstdout,
+                                             STATE(BottomLVars));
+}
 /****************************************************************************
 **
 *F  FuncREAD_AS_FUNC( <self>, <filename> )  . . . . . . . . . . . read a file
 */
-Obj FuncREAD_AS_FUNC (
-    Obj                 self,
-    Obj                 filename )
+static Obj FuncREAD_AS_FUNC(Obj self, Obj filename)
 {
-    /* check the argument                                                  */
-    while ( ! IsStringConv( filename ) ) {
-        filename = ErrorReturnObj(
-            "READ_AS_FUNC: <filename> must be a string (not a %s)",
-            (Int)TNAM_OBJ(filename), 0L,
-            "you can replace <filename> via 'return <filename>;'" );
-    }
+    // check the argument
+    RequireStringRep("READ_AS_FUNC", filename);
 
     /* try to open the file                                                */
-    if ( ! OpenInput( CSTR_STRING(filename) ) ) {
+    if ( ! OpenInput( CONST_CSTR_STRING(filename) ) ) {
         return Fail;
     }
 
@@ -1099,12 +1015,12 @@ Obj FuncREAD_AS_FUNC (
 
 /****************************************************************************
 **
-*F  FuncREAD_AS_FUNC_STREAM( <self>, <filename> ) . . . . . . . . read a file
+*F  FuncREAD_AS_FUNC_STREAM( <self>, <stream> ) . . . . . . . . read a file
 */
-Obj FuncREAD_AS_FUNC_STREAM (
-    Obj                 self,
-    Obj                 stream )
+static Obj FuncREAD_AS_FUNC_STREAM(Obj self, Obj stream)
 {
+    RequireInputStream("READ_AS_FUNC_STREAM", stream);
+
     /* try to open the file                                                */
     if (!OpenInputStream(stream, 0)) {
         return Fail;
@@ -1119,22 +1035,15 @@ Obj FuncREAD_AS_FUNC_STREAM (
 **
 *F  FuncREAD_GAP_ROOT( <self>, <filename> ) . . . . . . . . . . . read a file
 */
-Obj FuncREAD_GAP_ROOT (
-    Obj                 self,
-    Obj                 filename )
+static Obj FuncREAD_GAP_ROOT(Obj self, Obj filename)
 {
     Char filenamecpy[GAP_PATH_MAX];
 
-    /* check the argument                                                  */
-    while ( ! IsStringConv( filename ) ) {
-        filename = ErrorReturnObj(
-            "READ: <filename> must be a string (not a %s)",
-            (Int)TNAM_OBJ(filename), 0L,
-            "you can replace <filename> via 'return <filename>;'" );
-    }
+    // check the argument
+    RequireStringRep("READ", filename);
 
     /* Copy to avoid garbage collection moving string                      */
-    strlcpy(filenamecpy, CSTR_STRING(filename), GAP_PATH_MAX);
+    strlcpy(filenamecpy, CONST_CSTR_STRING(filename), GAP_PATH_MAX);
     /* try to open the file                                                */
     return READ_GAP_ROOT(filenamecpy) ? True : False;
 }
@@ -1144,8 +1053,7 @@ Obj FuncREAD_GAP_ROOT (
 **
 *F  FuncTmpName( <self> ) . . . . . . . . . . . . . . return a temporary name
 */
-Obj FuncTmpName (
-    Obj                 self )
+static Obj FuncTmpName(Obj self)
 {
     Char *              tmp;
     Obj                 name;
@@ -1162,8 +1070,7 @@ Obj FuncTmpName (
 **
 *F  FuncTmpDirectory( <self> )  . . . . . . . .  return a temporary directory
 */
-Obj FuncTmpDirectory (
-    Obj                 self )
+static Obj FuncTmpDirectory(Obj self)
 {
     Char *              tmp;
     Obj                 name;
@@ -1180,79 +1087,51 @@ Obj FuncTmpDirectory (
 **
 *F  FuncRemoveFile( <self>, <name> )  . . . . . . . . . .  remove file <name>
 */
-Obj FuncRemoveFile (
-    Obj             self,
-    Obj             filename )
+static Obj FuncRemoveFile(Obj self, Obj filename)
 {
-    /* check the argument                                                  */
-    while ( ! IsStringConv( filename ) ) {
-        filename = ErrorReturnObj(
-            "<filename> must be a string (not a %s)",
-            (Int)TNAM_OBJ(filename), 0L,
-            "you can replace <filename> via 'return <filename>;'" );
-    }
+    // check the argument
+    RequireStringRep("RemoveFile", filename);
     
     /* call the system dependent function                                  */
-    return SyRemoveFile( CSTR_STRING(filename) ) == -1 ? Fail : True;
+    return SyRemoveFile( CONST_CSTR_STRING(filename) ) == -1 ? Fail : True;
 }
 
 /****************************************************************************
 **
 *F  FuncCreateDir( <self>, <name> )  . . . . . . . . . . . . create directory
 */
-Obj FuncCreateDir (
-    Obj             self,
-    Obj             filename )
+static Obj FuncCreateDir(Obj self, Obj filename)
 {
-    /* check the argument                                                  */
-    while ( ! IsStringConv( filename ) ) {
-        filename = ErrorReturnObj(
-            "<filename> must be a string (not a %s)",
-            (Int)TNAM_OBJ(filename), 0L,
-            "you can replace <filename> via 'return <filename>;'" );
-    }
+    // check the argument
+    RequireStringRep("CreateDir", filename);
     
     /* call the system dependent function                                  */
-    return SyMkdir( CSTR_STRING(filename) ) == -1 ? Fail : True;
+    return SyMkdir( CONST_CSTR_STRING(filename) ) == -1 ? Fail : True;
 }
 
 /****************************************************************************
 **
 *F  FuncRemoveDir( <self>, <name> )  . . . . . . . . . . . . remove directory
 */
-Obj FuncRemoveDir (
-    Obj             self,
-    Obj             filename )
+static Obj FuncRemoveDir(Obj self, Obj filename)
 {
-    /* check the argument                                                  */
-    while ( ! IsStringConv( filename ) ) {
-        filename = ErrorReturnObj(
-            "<filename> must be a string (not a %s)",
-            (Int)TNAM_OBJ(filename), 0L,
-            "you can replace <filename> via 'return <filename>;'" );
-    }
+    // check the argument
+    RequireStringRep("RemoveDir", filename);
     
     /* call the system dependent function                                  */
-    return SyRmdir( CSTR_STRING(filename) ) == -1 ? Fail : True;
+    return SyRmdir( CONST_CSTR_STRING(filename) ) == -1 ? Fail : True;
 }
 
 /****************************************************************************
 **
 *F  FuncIsDir( <self>, <name> )  . . . . . check whether something is a dir
 */
-Obj FuncIsDir (
-    Obj             self,
-    Obj             filename )
+static Obj FuncIsDir(Obj self, Obj filename)
 {
-    while ( ! IsStringConv( filename ) ) {
-        filename = ErrorReturnObj(
-            "<filename> must be a string (not a %s)",
-            (Int)TNAM_OBJ(filename), 0L,
-            "you can replace <filename> via 'return <filename>;'" );
-    }
+    RequireStringRep("IsDir", filename);
 
     /* call the system dependent function                                  */
-    return SyIsDir( CSTR_STRING(filename) );
+    return SyIsDir( CONST_CSTR_STRING(filename) );
 }
 
 
@@ -1268,11 +1147,10 @@ Obj FuncIsDir (
 **
 *F  FuncLastSystemError( <self> ) .  . . . . . .  return the last system error
 */
-UInt ErrorMessageRNam;
-UInt ErrorNumberRNam;
+static UInt ErrorMessageRNam;
+static UInt ErrorNumberRNam;
 
-Obj FuncLastSystemError (
-    Obj             self )
+static Obj FuncLastSystemError(Obj self)
 {
     Obj             err;
     Obj             msg;
@@ -1303,22 +1181,15 @@ Obj FuncLastSystemError (
 **
 *F  FuncIsExistingFile( <self>, <name> )  . . . . . . does file <name> exists
 */
-Obj FuncIsExistingFile (
-    Obj             self,
-    Obj             filename )
+static Obj FuncIsExistingFile(Obj self, Obj filename)
 {
     Int             res;
 
-    /* check the argument                                                  */
-    while ( ! IsStringConv( filename ) ) {
-        filename = ErrorReturnObj(
-            "<filename> must be a string (not a %s)",
-            (Int)TNAM_OBJ(filename), 0L,
-            "you can replace <filename> via 'return <filename>;'" );
-    }
+    // check the argument
+    RequireStringRep("IsExistingFile", filename);
     
     /* call the system dependent function                                  */
-    res = SyIsExistingFile( CSTR_STRING(filename) );
+    res = SyIsExistingFile( CONST_CSTR_STRING(filename) );
     return res == -1 ? False : True;
 }
 
@@ -1327,22 +1198,15 @@ Obj FuncIsExistingFile (
 **
 *F  FuncIsReadableFile( <self>, <name> )  . . . . . . is file <name> readable
 */
-Obj FuncIsReadableFile (
-    Obj             self,
-    Obj             filename )
+static Obj FuncIsReadableFile(Obj self, Obj filename)
 {
     Int             res;
 
-    /* check the argument                                                  */
-    while ( ! IsStringConv( filename ) ) {
-        filename = ErrorReturnObj(
-            "<filename> must be a string (not a %s)",
-            (Int)TNAM_OBJ(filename), 0L,
-            "you can replace <filename> via 'return <filename>;'" );
-    }
+    // check the argument
+    RequireStringRep("IsReadableFile", filename);
     
     /* call the system dependent function                                  */
-    res = SyIsReadableFile( CSTR_STRING(filename) );
+    res = SyIsReadableFile( CONST_CSTR_STRING(filename) );
     return res == -1 ? False : True;
 }
 
@@ -1351,22 +1215,15 @@ Obj FuncIsReadableFile (
 **
 *F  FuncIsWritableFile( <self>, <name> )  . . . . . . is file <name> writable
 */
-Obj FuncIsWritableFile (
-    Obj             self,
-    Obj             filename )
+static Obj FuncIsWritableFile(Obj self, Obj filename)
 {
     Int             res;
 
-    /* check the argument                                                  */
-    while ( ! IsStringConv( filename ) ) {
-        filename = ErrorReturnObj(
-            "<filename> must be a string (not a %s)",
-            (Int)TNAM_OBJ(filename), 0L,
-            "you can replace <filename> via 'return <filename>;'" );
-    }
+    // check the argument
+    RequireStringRep("IsWritableFile", filename);
     
     /* call the system dependent function                                  */
-    res = SyIsWritableFile( CSTR_STRING(filename) );
+    res = SyIsWritableFile( CONST_CSTR_STRING(filename) );
     return res == -1 ? False : True;
 }
 
@@ -1375,22 +1232,15 @@ Obj FuncIsWritableFile (
 **
 *F  FuncIsExecutableFile( <self>, <name> )  . . . . is file <name> executable
 */
-Obj FuncIsExecutableFile (
-    Obj             self,
-    Obj             filename )
+static Obj FuncIsExecutableFile(Obj self, Obj filename)
 {
     Int             res;
 
-    /* check the argument                                                  */
-    while ( ! IsStringConv( filename ) ) {
-        filename = ErrorReturnObj(
-            "<filename> must be a string (not a %s)",
-            (Int)TNAM_OBJ(filename), 0L,
-            "you can replace <filename> via 'return <filename>;'" );
-    }
+    // check the argument
+    RequireStringRep("IsExecutableFile", filename);
     
     /* call the system dependent function                                  */
-    res = SyIsExecutableFile( CSTR_STRING(filename) );
+    res = SyIsExecutableFile( CONST_CSTR_STRING(filename) );
     return res == -1 ? False : True;
 }
 
@@ -1399,75 +1249,50 @@ Obj FuncIsExecutableFile (
 **
 *F  FuncIsDirectoryPath( <self>, <name> ) . . . .  is file <name> a directory
 */
-Obj FuncIsDirectoryPathString (
-    Obj             self,
-    Obj             filename )
+static Obj FuncIsDirectoryPathString(Obj self, Obj filename)
 {
     Int             res;
 
-    /* check the argument                                                  */
-    while ( ! IsStringConv( filename ) ) {
-        filename = ErrorReturnObj(
-            "<filename> must be a string (not a %s)",
-            (Int)TNAM_OBJ(filename), 0L,
-            "you can replace <filename> via 'return <filename>;'" );
-    }
+    // check the argument
+    RequireStringRep("IsDirectoryPathString", filename);
     
     /* call the system dependent function                                  */
-    res = SyIsDirectoryPath( CSTR_STRING(filename) );
+    res = SyIsDirectoryPath( CONST_CSTR_STRING(filename) );
     return res == -1 ? False : True;
 }
 
 
 /****************************************************************************
 **
-*F  FuncSTRING_LIST_DIR( <self>, <dirname> ) . . . read names of files in dir
+*F  FuncLIST_DIR( <self>, <dirname> ) . . . read names of files in dir
 **
-**  This function returns a GAP string which contains the names of all files
-**  contained in a directory <dirname>. The file names are separated by zero 
-**  characters (which are not allowed in file names). 
+**  This function returns a GAP list which contains the names of all files
+**  contained in a directory <dirname>.
 **
 **  If <dirname> could not be opened as a directory 'fail' is returned. The
 **  reason for the error can be found with 'LastSystemError();' in GAP.
 **
 */
-Obj FuncSTRING_LIST_DIR (
-    Obj         self,
-    Obj         dirname  )
+static Obj FuncLIST_DIR(Obj self, Obj dirname)
 {
     DIR *dir;
     struct dirent *entry;
     Obj res;
-    Int len, sl;
 
-    /* check the argument                                                  */
-    while ( ! IsStringConv( dirname ) ) {
-        dirname = ErrorReturnObj(
-            "<dirname> must be a string (not a %s)",
-            (Int)TNAM_OBJ(dirname), 0L,
-            "you can replace <dirname> via 'return <dirname>;'" );
-    }
+    // check the argument
+    RequireStringRep("LIST_DIR", dirname);
     
     SyClearErrorNo();
-    dir = opendir(CSTR_STRING(dirname));
+    dir = opendir(CONST_CSTR_STRING(dirname));
     if (dir == NULL) {
-      SySetErrorNo();
-      return Fail;
+        SySetErrorNo();
+        return Fail;
     }
-    res = NEW_STRING(256);
-    len = 0;
-    entry = readdir(dir);
-    while (entry != NULL) {
-      sl = strlen(entry->d_name);
-      GROW_STRING(res, len + sl + 1);
-      memcpy(CHARS_STRING(res) + len, entry->d_name, sl + 1);
-      len = len + sl + 1;
-      entry = readdir(dir);
+    res = NEW_PLIST(T_PLIST, 16);
+    while ((entry = readdir(dir))) {
+        PushPlist(res, MakeImmString(entry->d_name));
     }
     closedir(dir);
-    /* tell the result string its length and terminate by 0 char */
-    SET_LEN_STRING(res, len);
-    *(CHARS_STRING(res) + len) = 0;
     return res;
 }
 
@@ -1480,22 +1305,13 @@ Obj FuncSTRING_LIST_DIR (
 **
 *F  FuncCLOSE_FILE( <self>, <fid> ) . . . . . . . . . . . . .  close a stream
 */
-Obj FuncCLOSE_FILE (
-    Obj             self,
-    Obj             fid )
+static Obj FuncCLOSE_FILE(Obj self, Obj fid)
 {
-    Int             ret;
-
-    /* check the argument                                                  */
-    while ( ! IS_INTOBJ(fid) ) {
-        fid = ErrorReturnObj(
-            "<fid> must be an integer (not a %s)",
-            (Int)TNAM_OBJ(fid), 0L,
-            "you can replace <fid> via 'return <fid>;'" );
-    }
+    // check the argument
+    Int ifid = GetSmallInt("CLOSE_FILE", fid);
     
     /* call the system dependent function                                  */
-    ret = SyFclose( INT_INTOBJ(fid) );
+    Int ret = SyFclose( ifid );
     return ret == -1 ? Fail : True;
 }
 
@@ -1504,23 +1320,16 @@ Obj FuncCLOSE_FILE (
 **
 *F  FuncINPUT_TEXT_FILE( <self>, <name> ) . . . . . . . . . . . open a stream
 */
-Obj FuncINPUT_TEXT_FILE (
-    Obj             self,
-    Obj             filename )
+static Obj FuncINPUT_TEXT_FILE(Obj self, Obj filename)
 {
     Int             fid;
 
-    /* check the argument                                                  */
-    while ( ! IsStringConv( filename ) ) {
-        filename = ErrorReturnObj(
-            "<filename> must be a string (not a %s)",
-            (Int)TNAM_OBJ(filename), 0L,
-            "you can replace <filename> via 'return <filename>;'" );
-    }
+    // check the argument
+    RequireStringRep("INPUT_TEXT_FILE", filename);
     
     /* call the system dependent function                                  */
     SyClearErrorNo();
-    fid = SyFopen( CSTR_STRING(filename), "r" );
+    fid = SyFopen( CONST_CSTR_STRING(filename), "r" );
     if ( fid == - 1)
         SySetErrorNo();
     return fid == -1 ? Fail : INTOBJ_INT(fid);
@@ -1531,21 +1340,12 @@ Obj FuncINPUT_TEXT_FILE (
 **
 *F  FuncIS_END_OF_FILE( <self>, <fid> ) . . . . . . . . . . .  is end of file
 */
-Obj FuncIS_END_OF_FILE (
-    Obj             self,
-    Obj             fid )
+static Obj FuncIS_END_OF_FILE(Obj self, Obj fid)
 {
-    Int             ret;
-
-    /* check the argument                                                  */
-    while ( ! IS_INTOBJ(fid) ) {
-        fid = ErrorReturnObj(
-            "<fid> must be an integer (not a %s)",
-            (Int)TNAM_OBJ(fid), 0L,
-            "you can replace <fid> via 'return <fid>;'" );
-    }
+    // check the argument
+    Int ifid = GetSmallInt("IS_END_OF_FILE", fid);
     
-    ret = SyIsEndOfFile( INT_INTOBJ(fid) );
+    Int ret = SyIsEndOfFile( ifid );
     return ret == -1 ? Fail : ( ret == 0 ? False : True );
 }
 
@@ -1554,34 +1354,21 @@ Obj FuncIS_END_OF_FILE (
 **
 *F  FuncOUTPUT_TEXT_FILE( <self>, <name>, <append> )  . . . . . open a stream
 */
-Obj FuncOUTPUT_TEXT_FILE (
-    Obj             self,
-    Obj             filename,
-    Obj             append )
+static Obj FuncOUTPUT_TEXT_FILE(Obj self, Obj filename, Obj append)
 {
     Int             fid;
 
-    /* check the argument                                                  */
-    while ( ! IsStringConv( filename ) ) {
-        filename = ErrorReturnObj(
-            "<filename> must be a string (not a %s)",
-            (Int)TNAM_OBJ(filename), 0L,
-            "you can replace <filename> via 'return <filename>;'" );
-    }
-    while ( append != True && append != False ) {
-        filename = ErrorReturnObj(
-            "<append> must be a boolean (not a %s)",
-            (Int)TNAM_OBJ(append), 0L,
-            "you can replace <append> via 'return <append>;'" );
-    }
+    // check the argument
+    RequireStringRep("OUTPUT_TEXT_FILE", filename);
+    RequireTrueOrFalse("OUTPUT_TEXT_FILE", append);
     
     /* call the system dependent function                                  */
     SyClearErrorNo();
     if ( append == True ) {
-        fid = SyFopen( CSTR_STRING(filename), "a" );
+        fid = SyFopen( CONST_CSTR_STRING(filename), "a" );
     }
     else {
-        fid = SyFopen( CSTR_STRING(filename), "w" );
+        fid = SyFopen( CONST_CSTR_STRING(filename), "w" );
     }
     if ( fid == - 1)
         SySetErrorNo();
@@ -1593,19 +1380,11 @@ Obj FuncOUTPUT_TEXT_FILE (
 **
 *F  FuncPOSITION_FILE( <self>, <fid> )  . . . . . . . . .  position of stream
 */
-Obj FuncPOSITION_FILE (
-    Obj             self,
-    Obj             fid )
+static Obj FuncPOSITION_FILE(Obj self, Obj fid)
 {
-    /* check the argument                                                  */
-    while ( ! IS_INTOBJ(fid) ) {
-        fid = ErrorReturnObj(
-            "<fid> must be an integer (not a %s)",
-            (Int)TNAM_OBJ(fid), 0L,
-            "you can replace <fid> via 'return <fid>;'" );
-    }
+    // check the argument
+    Int ifid = GetSmallInt("POSITION_FILE", fid);
 
-    Int ifid = INT_INTOBJ(fid);
     Int ret = SyFtell(ifid);
 
     // Return if failed
@@ -1622,22 +1401,13 @@ Obj FuncPOSITION_FILE (
 **
 *F  FuncREAD_BYTE_FILE( <self>, <fid> ) . . . . . . . . . . . . . read a byte
 */
-Obj FuncREAD_BYTE_FILE (
-    Obj             self,
-    Obj             fid )
+static Obj FuncREAD_BYTE_FILE(Obj self, Obj fid)
 {
-    Int             ret;
-
-    /* check the argument                                                  */
-    while ( ! IS_INTOBJ(fid) ) {
-        fid = ErrorReturnObj(
-            "<fid> must be an integer (not a %s)",
-            (Int)TNAM_OBJ(fid), 0L,
-            "you can replace <fid> via 'return <fid>;'" );
-    }
+    // check the argument
+    Int ifid = GetSmallInt("READ_BYTE_FILE", fid);
     
     /* call the system dependent function                                  */
-    ret = SyGetch( INT_INTOBJ(fid) );
+    Int ret = SyGetch( ifid );
 
     return ret == EOF ? Fail : INTOBJ_INT(ret);
 }
@@ -1649,24 +1419,16 @@ Obj FuncREAD_BYTE_FILE (
 **  
 **  This uses fgets and works only if there are no zero characters in <fid>.
 */
-Obj FuncREAD_LINE_FILE (
-    Obj             self,
-    Obj             fid )
+static Obj FuncREAD_LINE_FILE(Obj self, Obj fid)
 {
     Char            buf[256];
     Char *          cstr;
-    Int             ifid, len, buflen;
+    Int             len, buflen;
     UInt            lstr;
     Obj             str;
 
-    /* check the argument                                                  */
-    while ( ! IS_INTOBJ(fid) ) {
-        fid = ErrorReturnObj(
-            "<fid> must be an integer (not a %s)",
-            (Int)TNAM_OBJ(fid), 0L,
-            "you can replace <fid> via 'return <fid>;'" );
-    }
-    ifid = INT_INTOBJ(fid);
+    // check the argument
+    Int ifid = GetSmallInt("READ_LINE_FILE", fid);
 
     /* read <fid> until we see a newline or eof or we've read at least
        one byte and more are not immediately available */
@@ -1706,33 +1468,19 @@ Obj FuncREAD_LINE_FILE (
 **   (c) we have read <limit> bytes (-1 indicates no limit)
 */
 
-Obj FuncREAD_ALL_FILE (
-    Obj             self,
-    Obj             fid,
-    Obj             limit)
+static Obj FuncREAD_ALL_FILE(Obj self, Obj fid, Obj limit)
 {
     Char            buf[20000];
-    Int             ifid, len;
+    Int             len;
+    // Length of string read this loop (or negative for error)
     UInt            lstr;
     Obj             str;
-    Int             ilim;
     UInt            csize;
 
-    /* check the argument                                                  */
-    while ( ! IS_INTOBJ(fid) ) {
-        fid = ErrorReturnObj(
-            "<fid> must be an integer (not a %s)",
-            (Int)TNAM_OBJ(fid), 0L,
-            "you can replace <fid> via 'return <fid>;'" );
-    }
-    ifid = INT_INTOBJ(fid);
+    // check the argument
+    Int ifid = GetSmallInt("READ_ALL_FILE", fid);
 
-    while ( ! IS_INTOBJ(limit) ) {
-        limit = ErrorReturnObj("<limit> must be a small integer (not a %s)",
-                               (Int)TNAM_OBJ(limit), 0L,
-                               "you can replace limit via 'return <limit>;'");
-    }
-    ilim = INT_INTOBJ(limit);
+    Int ilim = GetSmallInt("READ_ALL_FILE", limit);
 
     /* read <fid> until we see  eof or we've read at least
        one byte and more are not immediately available */
@@ -1744,6 +1492,7 @@ Obj FuncREAD_ALL_FILE (
  getmore:
 #endif
     while (ilim == -1 || len < ilim ) {
+      lstr = 0;
       if ( len > 0 && !HasAvailableBytes(ifid))
           break;
       if (SyBufIsTTY(ifid)) {
@@ -1796,7 +1545,8 @@ Obj FuncREAD_ALL_FILE (
     }
     len = j;
     SET_LEN_STRING(str, len);
-    if (ilim != -1 && len < ilim)
+    // If we have not yet read enough, and have read at least one character this loop, then read more
+    if (ilim != -1 && len < ilim && lstr > 0)
         goto getmore;
 #endif
     ResizeBag( str, SIZEBAG_STRINGLEN(len) );
@@ -1809,28 +1559,15 @@ Obj FuncREAD_ALL_FILE (
 **
 *F  FuncSEEK_POSITION_FILE( <self>, <fid>, <pos> )  . seek position of stream
 */
-Obj FuncSEEK_POSITION_FILE (
-    Obj             self,
-    Obj             fid,
-    Obj             pos )
+static Obj FuncSEEK_POSITION_FILE(Obj self, Obj fid, Obj pos)
 {
     Int             ret;
 
-    /* check the argument                                                  */
-    while ( ! IS_INTOBJ(fid) ) {
-        fid = ErrorReturnObj(
-            "<fid> must be an integer (not a %s)",
-            (Int)TNAM_OBJ(fid), 0L,
-            "you can replace <fid> via 'return <fid>;'" );
-    }
-    while ( ! IS_INTOBJ(pos) ) {
-        pos = ErrorReturnObj(
-            "<pos> must be an integer (not a %s)",
-            (Int)TNAM_OBJ(pos), 0L,
-            "you can replace <pos> via 'return <pos>;'" );
-    }
+    // check the argument
+    Int ifid = GetSmallInt("SEEK_POSITION_FILE", fid);
+    Int ipos = GetSmallInt("SEEK_POSITION_FILE", pos);
     
-    ret = SyFseek( INT_INTOBJ(fid), INT_INTOBJ(pos) );
+    ret = SyFseek( ifid, ipos );
     return ret == -1 ? Fail : True;
 }
 
@@ -1839,29 +1576,14 @@ Obj FuncSEEK_POSITION_FILE (
 **
 *F  FuncWRITE_BYTE_FILE( <self>, <fid>, <byte> )  . . . . . . .  write a byte
 */
-Obj FuncWRITE_BYTE_FILE (
-    Obj             self,
-    Obj             fid,
-    Obj             ch )
+static Obj FuncWRITE_BYTE_FILE(Obj self, Obj fid, Obj ch)
 {
-    Int             ret;
-
-    /* check the argument                                                  */
-    while ( ! IS_INTOBJ(fid) ) {
-        fid = ErrorReturnObj(
-            "<fid> must be an integer (not a %s)",
-            (Int)TNAM_OBJ(fid), 0L,
-            "you can replace <fid> via 'return <fid>;'" );
-    }
-    while ( ! IS_INTOBJ(ch) ) {
-        ch = ErrorReturnObj(
-            "<ch> must be an integer (not a %s)",
-            (Int)TNAM_OBJ(ch), 0L,
-            "you can replace <ch> via 'return <ch>;'" );
-    }
+    // check the argument
+    Int ifid = GetSmallInt("WRITE_BYTE_FILE", fid);
+    Int ich = GetSmallInt("WRITE_BYTE_FILE", ch);
     
     /* call the system dependent function                                  */
-    ret = SyEchoch( INT_INTOBJ(ch), INT_INTOBJ(fid) );
+    Int ret = SyEchoch( ich, ifid );
     return ret == -1 ? Fail : True;
 }
 
@@ -1869,18 +1591,15 @@ Obj FuncWRITE_BYTE_FILE (
 **
 *F  FuncWRITE_STRING_FILE_NC( <self>, <fid>, <string> ) .write a whole string
 */
-Obj FuncWRITE_STRING_FILE_NC (
-    Obj             self,
-    Obj             fid,
-    Obj             str )
+static Obj FuncWRITE_STRING_FILE_NC(Obj self, Obj fid, Obj str)
 {
     Int             len = 0, l, ret;
-    char            *ptr;
+    const char      *ptr;
 
     /* don't check the argument                                            */
     
     len = GET_LEN_STRING(str);
-    ptr = CSTR_STRING(str);
+    ptr = CONST_CSTR_STRING(str);
     while (len > 0) {
       l = (len > 1048576) ? 1048576 : len;
       ret = SyWrite(INT_INTOBJ(fid), ptr, l);
@@ -1894,48 +1613,28 @@ Obj FuncWRITE_STRING_FILE_NC (
     return True;
 }
 
-Obj FuncREAD_STRING_FILE (
-    Obj             self,
-    Obj             fid )
+static Obj FuncREAD_STRING_FILE(Obj self, Obj fid)
 {
-    /* check the argument                                                  */
-    while ( ! IS_INTOBJ(fid) ) {
-        fid = ErrorReturnObj(
-            "<fid> must be an integer (not a %s)",
-            (Int)TNAM_OBJ(fid), 0L,
-            "you can replace <fid> via 'return <fid>;'" );
-    }
-    return SyReadStringFid(INT_INTOBJ(fid));
+    // check the argument
+    Int ifid = GetSmallInt("READ_STRING_FILE", fid);
+    return SyReadStringFid(ifid);
 }
 
 /****************************************************************************
 **
 *F  FuncFD_OF_FILE( <fid> )
 */
-Obj FuncFD_OF_FILE(Obj self,Obj fid)
+static Obj FuncFD_OF_FILE(Obj self, Obj fid)
 {
-  while (fid == (Obj) 0 || !(IS_INTOBJ(fid))) {
-    fid = ErrorReturnObj(
-           "<fid> must be a small integer (not a %s)",
-           (Int)TNAM_OBJ(fid),0L,
-           "you can replace <fid> via 'return <fid>;'" );
-  }
-
-  Int fd = INT_INTOBJ(fid);
-  Int fdi = SyBufFileno(fd);
-  return INTOBJ_INT(fdi);
+    Int fd = GetSmallInt("FD_OF_FILE", fid);
+    Int fdi = SyBufFileno(fd);
+    return INTOBJ_INT(fdi);
 }
 
 #ifdef HPCGAP
-Obj FuncRAW_MODE_FILE(Obj self, Obj fid, Obj onoff)
+static Obj FuncRAW_MODE_FILE(Obj self, Obj fid, Obj onoff)
 {
-    while (!IS_INTOBJ(fid)) {
-        fid = ErrorReturnObj("<fid> must be a small integer (not a %s)",
-                             (Int)TNAM_OBJ(fid), 0L,
-                             "you can replace <fid> via 'return <fid>;'");
-    }
-
-    Int fd = INT_INTOBJ(fid);
+    Int fd = GetSmallInt("RAW_MODE_FILE", fid);
     if (onoff == False || onoff == Fail) {
         syStopraw(fd);
         return False;
@@ -1946,8 +1645,12 @@ Obj FuncRAW_MODE_FILE(Obj self, Obj fid, Obj onoff)
 #endif
 
 #ifdef HAVE_SELECT
-Obj FuncUNIXSelect(Obj self, Obj inlist, Obj outlist, Obj exclist, 
-                   Obj timeoutsec, Obj timeoutusec)
+static Obj FuncUNIXSelect(Obj self,
+                          Obj inlist,
+                          Obj outlist,
+                          Obj exclist,
+                          Obj timeoutsec,
+                          Obj timeoutusec)
 {
   fd_set infds,outfds,excfds;
   struct timeval tv;
@@ -1955,21 +1658,9 @@ Obj FuncUNIXSelect(Obj self, Obj inlist, Obj outlist, Obj exclist,
   Int i,j;
   Obj o;
 
-  while (inlist == (Obj) 0 || !(IS_PLIST(inlist)))
-    inlist = ErrorReturnObj(
-           "<inlist> must be a list of small integers (not a %s)",
-           (Int)TNAM_OBJ(inlist),0L,
-           "you can replace <inlist> via 'return <inlist>;'" );
-  while (outlist == (Obj) 0 || !(IS_PLIST(outlist)))
-    outlist = ErrorReturnObj(
-           "<outlist> must be a list of small integers (not a %s)",
-           (Int)TNAM_OBJ(outlist),0L,
-           "you can replace <outlist> via 'return <outlist>;'" );
-  while (exclist == (Obj) 0 || !(IS_PLIST(exclist)))
-    exclist = ErrorReturnObj(
-           "<exclist> must be a list of small integers (not a %s)",
-           (Int)TNAM_OBJ(exclist),0L,
-           "you can replace <exclist> via 'return <exclist>;'" );
+  RequirePlainList("UNIXSelect", inlist);
+  RequirePlainList("UNIXSelect", outlist);
+  RequirePlainList("UNIXSelect", exclist);
 
   FD_ZERO(&infds);
   FD_ZERO(&outfds);
@@ -2062,64 +1753,29 @@ Obj FuncUNIXSelect(Obj self, Obj inlist, Obj outlist, Obj exclist,
 **
 *F  FuncExecuteProcess( <self>, <dir>, <prg>, <in>, <out>, <args> )   process
 */
-static Obj    ExecArgs  [ 1024 ];
-static Char * ExecCArgs [ 1024 ];
-
-Obj FuncExecuteProcess (
-    Obj                 self,
-    Obj                 dir,
-    Obj                 prg,
-    Obj                 in,
-    Obj                 out,
-    Obj                 args )
+static Obj
+FuncExecuteProcess(Obj self, Obj dir, Obj prg, Obj in, Obj out, Obj args)
 {
+    Obj    ExecArgs[1024];
+    Char * ExecCArgs[1024];
+
     Obj                 tmp;
     Int                 res;
     Int                 i;
 
-    /* check the argument                                                  */
-    while ( ! IsStringConv(dir) ) {
-        dir = ErrorReturnObj(
-            "<dir> must be a string (not a %s)",
-            (Int)TNAM_OBJ(dir), 0L,
-            "you can replace <dir> via 'return <dir>;'" );
-    }
-    while ( ! IsStringConv(prg) ) {
-        prg = ErrorReturnObj(
-            "<prg> must be a string (not a %s)",
-            (Int)TNAM_OBJ(prg), 0L,
-            "you can replace <prg> via 'return <prg>;'" );
-    }
-    while ( ! IS_INTOBJ(in) ) {
-        in = ErrorReturnObj(
-            "<in> must be an integer (not a %s)",
-            (Int)TNAM_OBJ(in), 0L,
-            "you can replace <in> via 'return <in>;'" );
-    }
-    while ( ! IS_INTOBJ(out) ) {
-        out = ErrorReturnObj(
-            "<out> must be an integer (not a %s)",
-            (Int)TNAM_OBJ(out), 0L,
-            "you can replace <out> via 'return <out>;'" );
-    }
-    while ( ! IS_SMALL_LIST(args) ) {
-        args = ErrorReturnObj(
-            "<args> must be a small list (not a %s)",
-            (Int)TNAM_OBJ(args), 0L,
-            "you can replace <args> via 'return <args>;'" );
-    }
+    // check the argument
+    RequireStringRep("ExecuteProcess", dir);
+    RequireStringRep("ExecuteProcess", prg);
+    Int iin = GetSmallInt("ExecuteProcess", in);
+    Int iout = GetSmallInt("ExecuteProcess", out);
+    RequireSmallList("ExecuteProcess", args);
 
     /* create an argument array                                            */
     for ( i = 1;  i <= LEN_LIST(args);  i++ ) {
         if ( i == 1023 )
             break;
         tmp = ELM_LIST( args, i );
-        while ( ! IsStringConv(tmp) ) {
-            tmp = ErrorReturnObj(
-                "<tmp> must be a string (not a %s)",
-                (Int)TNAM_OBJ(tmp), 0L,
-                "you can replace <tmp> via 'return <tmp>;'" );
-        }
+        RequireStringRep("ExecuteProcess", tmp);
         ExecArgs[i] = tmp;
     }
     ExecCArgs[0]   = CSTR_STRING(prg);
@@ -2133,8 +1789,8 @@ Obj FuncExecuteProcess (
     /* execute the process                                                 */
     res = SyExecuteProcess( CSTR_STRING(dir),
                             CSTR_STRING(prg),
-                            INT_INTOBJ(in),
-                            INT_INTOBJ(out),
+                            iin,
+                            iout,
                             ExecCArgs );
 
     if (SyWindow && out == INTOBJ_INT(1)) /* standard output */
@@ -2160,6 +1816,7 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_FUNC(READ_COMMAND_REAL, 2, "stream, echo"),
     GVAR_FUNC(READ_STREAM, 1, "stream"),
     GVAR_FUNC(READ_STREAM_LOOP, 2, "stream, catchstderrout"),
+    GVAR_FUNC(READ_STREAM_LOOP_WITH_CONTEXT, 3, "stream, catchstderrout, context"),
     GVAR_FUNC(READ_AS_FUNC, 1, "filename"),
     GVAR_FUNC(READ_AS_FUNC_STREAM, 1, "stream"),
     GVAR_FUNC(READ_GAP_ROOT, 1, "filename"),
@@ -2189,7 +1846,7 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_FUNC(IsWritableFile, 1, "filename"),
     GVAR_FUNC(IsExecutableFile, 1, "filename"),
     GVAR_FUNC(IsDirectoryPathString, 1, "filename"),
-    GVAR_FUNC(STRING_LIST_DIR, 1, "dirname"),
+    GVAR_FUNC(LIST_DIR, 1, "dirname"),
     GVAR_FUNC(CLOSE_FILE, 1, "fid"),
     GVAR_FUNC(INPUT_TEXT_FILE, 1, "filename"),
     GVAR_FUNC(OUTPUT_TEXT_FILE, 2, "filename, append"),
@@ -2225,6 +1882,9 @@ static Int InitKernel (
 {
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable( GVarFuncs );
+
+    ImportFuncFromLibrary( "IsInputStream", &IsInputStream );
+    ImportFuncFromLibrary( "IsOutputStream", &IsOutputStream );
 
     /* return success                                                      */
     return 0;

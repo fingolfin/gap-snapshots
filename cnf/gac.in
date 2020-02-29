@@ -1,10 +1,15 @@
 #!/bin/sh
 #############################################################################
 ##
-#W  gac.sh                      GAP compiler                 Martin Schoenert
+##  This file is part of GAP, a system for computational discrete algebra.
+##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
+#W  gac, the GAP compiler
 ##
 ##  gac [-d] [-c|-C] [-o <output>] {-f<option>} <input>...
 ##
@@ -286,7 +291,7 @@ while [ $# -gt 0 ]; do
 
     -L|--addlibs)         shift; c_addlibs="${c_addlibs} $1";;
 
-    *.g|*.gap|*.gd|*.gi|*.c|*.cc|*.cpp|*.o|*.lo)
+    *.g|*.gap|*.gd|*.gi|*.c|*.cc|*.cpp|*.cxx|*.s|*.o|*.lo)
                           inputs="${inputs} $1";;
 
     *)                    echo "$0: cannot handle this argument '$1'"
@@ -388,6 +393,10 @@ for input in ${inputs}; do
             name=$(basename ${input} .cpp)
             process_c_file $name $input "-x c++";;
 
+        *.s) # compile '.s' source files (assembler)
+            name=$(basename ${input} .s)
+            process_c_file $name $input;; # HACK: just use the C compiler
+
         *.o) # look over '.o' source files
             name=$(basename ${input} .o)
             process_o_file $name $input;;
@@ -428,8 +437,8 @@ if [ $comp_howfar = "link" ]; then
     fi
 fi
 
-#Remove temporary directory.
-#We may assume it is empty at this stage.
+# Remove temporary directory.
+# We may assume it is empty at this stage.
 if [ "$savetemps" = "false" ]; then
     rm -rf "${gactmp}/.libs"
     rmdir "${gactmp}"

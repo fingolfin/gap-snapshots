@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  vspcmat.gi                  GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains methods for matrix spaces.
 ##  A matrix space is a vector space whose elements are matrices.
@@ -1044,6 +1045,7 @@ InstallMethod( CloseMutableBasis,
       ResetFilterObj( MB, IsMutableBasisOfGaussianMatrixSpaceRep );
 
       MB!.immutableBasis:= Basis( V );
+      return true;
 
     else
 
@@ -1072,14 +1074,16 @@ InstallMethod( CloseMutableBasis,
         if j <= n then
           scalar:= Inverse( v[i][j] );
           for k in [ 1 .. m ] do
-            MultRowVector( v[k], scalar );
+            MultVector( v[k], scalar );
           od;
           Add( basisvectors, v );
           heads[i][j]:= Length( basisvectors );
-          break;
+          return true;
         fi;
       od;
 
+      # The basis was not extended.
+      return false;
     fi;
     end );
 
@@ -1177,9 +1181,3 @@ InstallMethod( ImmutableBasis,
 #T mutable bases for Gaussian row and matrix spaces are always semi-ech.
 #T (note that we construct a mutable basis only if we want to do successive
 #T closures)
-
-
-#############################################################################
-##
-#E
-

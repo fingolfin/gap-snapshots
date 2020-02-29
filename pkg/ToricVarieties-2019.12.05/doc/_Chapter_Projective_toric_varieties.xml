@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Projective_toric_varieties">
+<Heading>Projective toric varieties</Heading>
+
+<P/>
+<Section Label="Chapter_Projective_toric_varieties_Section_Projective_toric_varieties_Examples">
+<Heading>Projective toric varieties: Examples</Heading>
+
+<P/>
+<Subsection Label="Chapter_Projective_toric_varieties_Section_Projective_toric_varieties_Examples_Subsection_P1xP1_created_by_a_polytope">
+<Heading>P1xP1 created by a polytope</Heading>
+
+<#Include Label="P1P1_polytope">
+
+<P/>
+</Subsection>
+
+
+<Subsection Label="Chapter_Projective_toric_varieties_Section_Projective_toric_varieties_Examples_Subsection_P1xP1_from_product_of_P1s">
+<Heading>P1xP1 from product of P1s</Heading>
+
+<#Include Label="P1P1_product">
+
+<P/>
+</Subsection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Projective_toric_varieties_Section_The_GAP_category">
+<Heading>The GAP category</Heading>
+
+<ManSection>
+  <Filt Arg="M" Name="IsProjectiveToricVariety" Label="for IsToricVariety"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+  The <A>GAP</A> category of a projective toric variety.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Projective_toric_varieties_Section_Attribute">
+<Heading>Attribute</Heading>
+
+<ManSection>
+  <Attr Arg="vari" Name="PolytopeOfVariety" Label="for IsToricVariety"/>
+ <Returns>a polytope
+</Returns>
+ <Description>
+  Returns the polytope corresponding to the projective toric variety <A>vari</A>, if it exists.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="vari" Name="AffineCone" Label="for IsToricVariety"/>
+ <Returns>a cone
+</Returns>
+ <Description>
+  Returns the affine cone of the projective toric variety <A>vari</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="vari" Name="ProjectiveEmbedding" Label="for IsToricVariety"/>
+ <Returns>a list
+</Returns>
+ <Description>
+  Returns characters for a closed embedding in an projective space for the projective toric variety <A>vari</A>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Projective_toric_varieties_Section_Properties">
+<Heading>Properties</Heading>
+
+<ManSection>
+  <Prop Arg="vari" Name="IsIsomorphicToProjectiveSpace" Label="for IsToricVariety"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+  Checks if the given toric variety <A>vari</A> is a projective space.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="vari" Name="IsDirectProductOfPNs" Label="for IsToricVariety"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+  Checks if the given toric variety <A>vari</A> is a direct product of projective spaces.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Projective_toric_varieties_Section_Methods">
+<Heading>Methods</Heading>
+
+<ManSection>
+  <Oper Arg="vari" Name="Polytope" Label="for IsToricVariety"/>
+ <Returns>a polytope
+</Returns>
+ <Description>
+  Returns the polytope of the variety <A>vari</A>. Another name for PolytopeOfVariety for compatibility and shortness.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="vari" Name="AmpleDivisor" Label="for IsToricVariety and HasPolytopeOfVariety"/>
+ <Returns>an ample divisor
+</Returns>
+ <Description>
+  Given a projective toric variety <A>vari</A> constructed from a polytope, this method computes the toric divisor 
+  associated to this polytope. By general theory (see Cox-Schenk-Little) this divisor is known to be ample. 
+  Thus this method computes an ample divisor on the given toric variety.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Projective_toric_varieties_Section_Constructors">
+<Heading>Constructors</Heading>
+
+ The constructors are the same as for toric varieties. Calling them with a polytope will result in a projective variety.
+</Section>
+
+
+</Chapter>
+

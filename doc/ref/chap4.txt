@@ -1,8 +1,8 @@
   
   [1X4 [33X[0;0YThe Programming Language[133X[101X
   
-  [33X[0;0YThis  chapter describes the [5XGAP[105X programming language. It should allow you in
-  principle  to  predict  the result of each and every input. In order to know
+  [33X[0;0YThis chapter describes the [5XGAP[105X programming language. It should allow you, in
+  principle,  to  predict the result of each and every input. In order to know
   what we are talking about, we first have to look more closely at the process
   of interpretation and the various representations of data involved.[133X
   
@@ -103,7 +103,7 @@
   [4X[32X[104X
   
   [33X[0;0YIt  is possible to use other characters in identifiers by escaping them with
-  backslashes,  but  we  do  not recommend to use this feature. Inside strings
+  backslashes, but we do not recommend the use of this feature. Inside strings
   (see  section [14X4.3[114X  and chapter [14X27[114X) and comments (see [14X4.4[114X) the full character
   set supported by the computer is allowed.[133X
   
@@ -218,8 +218,8 @@
   of this is that those identifiers cannot be re-assigned, and do not actually
   have  function  objects  bound  to  them,  which  could be assigned to other
   variables  or  passed  to  functions. These keywords are [9Xtrue[109X, [9Xfalse[109X, [2XAssert[102X
-  ([14X7.5-3[114X),  [2XIsBound[102X  ([14X4.8-1[114X),  [2XUnbind[102X  ([14X4.8-2[114X), [2XInfo[102X ([14X7.4-5[114X) and [2XTryNextMethod[102X
-  ([14X78.4-1[114X).[133X
+  ([14X7.5-3[114X),  [2XIsBound[102X  ([14X4.8-1[114X),  [2XUnbind[102X  ([14X4.8-2[114X), [2XInfo[102X ([14X7.4-6[114X) and [2XTryNextMethod[102X
+  ([14X78.5-1[114X).[133X
   
   [33X[0;0YKeywords  [10Xatomic[110X,  [10Xreadonly[110X,  [10Xreadwrite[110X are not used at the moment. They are
   reserved  for  the  future version of GAP to prevent their accidental use as
@@ -458,9 +458,8 @@
   variables  of the same names exist. Second, the variable names are passed as
   strings, rather than being written directly into the statements.[133X
   
-  [33X[0;0YNote  that  the  functions  [2XNamesGVars[102X  ([14X4.9-9[114X),  [2XNamesSystemGVars[102X ([14X4.9-10[114X),
-  [2XNamesUserGVars[102X  ([14X4.9-11[114X),  and [2XTemporaryGlobalVarName[102X ([14X4.9-12[114X) deal with the
-  [13Xglobal namespace[113X.[133X
+  [33X[0;0YNote  that  the functions [2XNamesGVars[102X ([14X4.9-9[114X), [2XNamesSystemGVars[102X ([14X4.9-10[114X), and
+  [2XNamesUserGVars[102X ([14X4.9-11[114X), deal with the [13Xglobal namespace[113X.[133X
   
   [1X4.9-1 IsReadOnlyGlobal[101X
   
@@ -605,15 +604,6 @@
   [33X[0;0YThis  function returns an immutable sorted list of the global variable names
   created since the library was read, to which a value is currently bound.[133X
   
-  [1X4.9-12 TemporaryGlobalVarName[101X
-  
-  [33X[1;0Y[29X[2XTemporaryGlobalVarName[102X( [[3Xprefix[103X] ) [32X function[133X
-  
-  [33X[0;0Yreturns  a  string that can be used as the name of a global variable that is
-  not  bound  at  the time when [2XTemporaryGlobalVarName[102X is called. The optional
-  argument  [3Xprefix[103X  can  specify  a  string  with which the name of the global
-  variable starts.[133X
-  
   
   [1X4.10 [33X[0;0YNamespaces for [5XGAP[105X[101X[1X packages[133X[101X
   
@@ -642,9 +632,9 @@
   [33X[0;0YThen  actually the global variable [10Xa@xYz[110X is assigned. Further accesses to [10Xa@[110X
   within  the  package code will all be redirected to [10Xa@xYz[110X. This includes all
   the  functions  described  in  Section  [14X4.9[114X  and  indeed  all  the functions
-  described  Section  [14X79.18[114X  like  for example [2XDeclareCategory[102X ([14X79.18-1[114X). Note
-  that  from  code in the same package it is still possible to access the same
-  global variable via [10Xa@xYz[110X explicitly.[133X
+  described Section [14X79.10[114X like for example [2XDeclareCategory[102X ([14X13.3-5[114X). Note that
+  from code in the same package it is still possible to access the same global
+  variable via [10Xa@xYz[110X explicitly.[133X
   
   [33X[0;0YAll  other  code  outside the package as well as interactive user input that
   wants to refer to that variable [10Xa@xYz[110X must do so explicitly by using [10Xa@xYz[110X.[133X
@@ -1636,4 +1626,15 @@
   
   [33X[0;0YFor  examples  of  [9Xreturn[109X  statements,  see  the  functions [10Xfib[110X and [10XStack[110X in
   Section [14X4.23[114X.[133X
+  
+  
+  [1X4.25 [33X[0;0YSyntax Trees[133X[101X
+  
+  [33X[0;0YThis section describes the tools available to handle [5XGAP[105X syntax trees.[133X
+  
+  [1X4.25-1 SyntaxTree[101X
+  
+  [33X[1;0Y[29X[2XSyntaxTree[102X( [3Xf[103X ) [32X function[133X
+  
+  [33X[0;0YTakes a GAP function [3Xf[103X and returns its syntax tree.[133X
   

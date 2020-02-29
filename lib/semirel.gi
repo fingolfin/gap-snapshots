@@ -1,10 +1,12 @@
 #############################################################################
-#W  semirel.gi                  GAP library                James D. Mitchell
 ##
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include James D. Mitchell.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the declarations for equivalence relations on
 ##  semigroups. Of particular interest are Green's relations,
@@ -719,14 +721,14 @@ function(semi)
   return GreensHClasses(semi);
 end);
 
-InstallOtherMethod(GreensHClasses, "for a Green's Class", true, [IsGreensDClass], 0,
-x-> GreensHClasses(CanonicalGreensClass(x)));
+InstallMethod(GreensHClasses, "for a Green's D-class", [IsGreensDClass],
+x -> Filtered(GreensHClasses(ParentAttr(x)), y -> Representative(y) in x));
 
-InstallOtherMethod(GreensHClasses, "for a Green's Class", true, [IsGreensRClass], 0,
-x-> GreensHClasses(CanonicalGreensClass(x)));
+InstallMethod(GreensHClasses, "for a Green's R-class", [IsGreensRClass],
+x -> Filtered(GreensHClasses(ParentAttr(x)), y -> Representative(y) in x));
 
-InstallOtherMethod(GreensHClasses, "for a Green's Class", true, [IsGreensLClass], 0,
-x-> GreensHClasses(CanonicalGreensClass(x)));
+InstallMethod(GreensHClasses, "for a Green's L-class", [IsGreensLClass],
+x -> Filtered(GreensHClasses(ParentAttr(x)), y -> Representative(y) in x));
 
 #############################################################################
 ##

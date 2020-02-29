@@ -1,9 +1,11 @@
 #############################################################################
 ##
-#W  error.g                    GAP library                 Steve Linton
+##  This file is part of GAP, a system for computational discrete algebra.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2007 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  Error handling, break loop, etc. Now in GAP
 ##
@@ -25,16 +27,23 @@ ERROR_OUTPUT := "*errout*";
 
 #############################################################################
 ##
-#F  OnQuit( )                                   currently removes all options
+#F  OnQuit( )
 ##
-Unbind(OnQuit);         # OnQuit is called from the kernel so we take great
-BIND_GLOBAL( "OnQuit",  # care to ensure it always has a definition. - GG
-        function()
+Unbind(OnQuit);
+BIND_GLOBAL( "OnQuit", function()
     if not IsEmpty(OptionsStack) then
       repeat
         PopOptions();
       until IsEmpty(OptionsStack);
       Info(InfoWarning,1,"Options stack has been reset");
+    fi;
+    if IsBound(ResetMethodReordering) and IsFunction(ResetMethodReordering) then
+        ResetMethodReordering();
+    fi;
+    if REREADING = true then
+        MakeReadWriteGlobal("REREADING");
+        REREADING := false;
+        MakeReadOnlyGlobal("REREADING");
     fi;
 end);
 
@@ -49,21 +58,67 @@ end);
 
 ErrorLVars := fail;
 
-BIND_GLOBAL("WHERE", function( context, depth, outercontext)
-    local   bottom,  lastcontext,  f;
+# In this method the line hint changes in every PrintTo are balanced, because at the moment
+# PrintTo(ERROR_OUTPUT,...) resets the indentation level every time it is called.
+# If/when this is fixed, the indendation in this function could be simplified
+BIND_GLOBAL("PRETTY_PRINT_VARS", function(context)
+    local vars, i, argcount, val;
+    vars := ContentsLVars(context);
+    if not IsRecord(vars) then
+        return;
+    fi;
+
+    argcount := ABS_RAT(NumberArgumentsFunction(vars.func));
+    PrintTo(ERROR_OUTPUT, "\>\>\n\<\<arguments:");
+    if argcount = 0 then
+        PrintTo(ERROR_OUTPUT, " <none>");
+    else
+        for i in [1..argcount] do
+            if IsBound(vars.values[i]) then
+                val := vars.values[i];
+            else
+                val := "<unassigned>";
+            fi;
+            PrintTo(ERROR_OUTPUT, "\>\>\>\>\n", vars.names[i], " :=\>\> ", val, "\<\<\<\<\<\<");
+        od;
+    fi;
+
+    PrintTo(ERROR_OUTPUT, "\>\>\n\<\<local variables:");
+    if argcount = Length(vars.names) then
+        PrintTo(ERROR_OUTPUT, " <none>");
+    else
+        for i in [argcount+1..Length(vars.names)] do
+            if IsBound(vars.values[i]) then
+                val := vars.values[i];
+            else
+                val := "<unassigned>";
+            fi;
+            PrintTo(ERROR_OUTPUT, "\>\>\>\>\n", vars.names[i], " :=\>\> ", val, "\<\<\<\<\<\<");
+        od;
+    fi;
+    PrintTo(ERROR_OUTPUT,"\n");
+end);
+
+BIND_GLOBAL("WHERE", function(depth, context, showlocals)
+    local bottom, lastcontext, f, args;
     if depth <= 0 then
         return;
     fi;
     bottom := GetBottomLVars();
-    lastcontext := outercontext;
+    lastcontext := context;
+    context := ParentLVars(context);
     while depth > 0  and context <> bottom do
         PRINT_CURRENT_STATEMENT(ERROR_OUTPUT, context);
+        if showlocals then
+            PRETTY_PRINT_VARS(context);
+        fi;
+
         PrintTo(ERROR_OUTPUT, " called from\n");
         lastcontext := context;
         context := ParentLVars(context);
         depth := depth-1;
     od;
-    if depth = 0 then 
+    if depth = 0 then
         PrintTo(ERROR_OUTPUT, "...  ");
     else
         f := ContentsLVars(lastcontext).func;
@@ -73,6 +128,26 @@ BIND_GLOBAL("WHERE", function( context, depth, outercontext)
 end);
 
 
+BIND_GLOBAL("WHERE_INTERNAL", function(depth, showlocals)
+    if ErrorLVars = fail or ErrorLVars = GetBottomLVars() then
+        PrintTo(ERROR_OUTPUT, "not in any function ");
+    else
+        WHERE(depth, ErrorLVars, showlocals);
+    fi;
+    PrintTo(ERROR_OUTPUT, "at ", INPUT_FILENAME(), ":", INPUT_LINENUMBER(), "\n");
+end);
+
+BIND_GLOBAL("WhereWithVars", function(arg)
+    local   depth;
+    if LEN_LIST(arg) = 0 then
+        depth := 5;
+    else
+        depth := arg[1];
+    fi;
+
+    WHERE_INTERNAL(depth, true);
+end);
+
 BIND_GLOBAL("Where", function(arg)
     local   depth;
     if LEN_LIST(arg) = 0 then
@@ -80,27 +155,12 @@ BIND_GLOBAL("Where", function(arg)
     else
         depth := arg[1];
     fi;
-    
-    if ErrorLVars = fail or ErrorLVars = GetBottomLVars() then
-        PrintTo(ERROR_OUTPUT, "not in any function ");
-    else
-        WHERE(ParentLVars(ErrorLVars),depth, ErrorLVars);
-    fi;
-    PrintTo(ERROR_OUTPUT, "at ",INPUT_FILENAME(),":",INPUT_LINENUMBER(),"\n");
+
+    WHERE_INTERNAL(depth, false);
 end);
 
-OnBreak := Where;
 
-#OnBreak := function() 
-#    if IsLVarsBag(ErrorLVars) then
-#        if ErrorLVars <> BottomLVars then
-#            WHERE(ParentLVars(ErrorLVars),5); 
-#        else
-#            Print("<function><argume
-#    else
-#        WHERE(ParentLVars(GetCurrentLVars()),5);
-#   fi;
-#end;
+OnBreak := Where;
 
 BIND_GLOBAL("ErrorCount", function()
     return ERROR_COUNT;
@@ -108,28 +168,24 @@ end);
 
 
 #
-# ErrorInner(context, justQuit, mayReturnVoid, mayReturnObj, lateMessage, .....)
-# 
 #
-
+#
 Unbind(ErrorInner);
-
-BIND_GLOBAL("ErrorInner",
-        function( arg )
-    local   context, mayReturnVoid,  mayReturnObj,  lateMessage,  earlyMessage,  
+BIND_GLOBAL("ErrorInner", function(options, earlyMessage)
+    local   context, mayReturnVoid,  mayReturnObj,  lateMessage,
             x,  prompt,  res, errorLVars, justQuit, printThisStatement,
             printEarlyMessage, printEarlyTraceback, lastErrorStream,
             shellOut, shellIn;
 
-    context := arg[1].context;
+    context := options.context;
     if not IsLVarsBag(context) then
         PrintTo(ERROR_OUTPUT, "ErrorInner:   option context must be a local variables bag\n");
         LEAVE_ALL_NAMESPACES();
         JUMP_TO_CATCH(1);
-    fi; 
+    fi;
         
-    if IsBound(arg[1].justQuit) then
-        justQuit := arg[1].justQuit;
+    if IsBound(options.justQuit) then
+        justQuit := options.justQuit;
         if not justQuit in [false, true] then
             PrintTo(ERROR_OUTPUT, "ErrorInner: option justQuit must be true or false\n");
             LEAVE_ALL_NAMESPACES();
@@ -139,8 +195,8 @@ BIND_GLOBAL("ErrorInner",
         justQuit := false;
     fi;
         
-    if IsBound(arg[1].mayReturnVoid) then
-        mayReturnVoid := arg[1].mayReturnVoid;
+    if IsBound(options.mayReturnVoid) then
+        mayReturnVoid := options.mayReturnVoid;
         if not mayReturnVoid in [false, true] then
             PrintTo(ERROR_OUTPUT, "ErrorInner: option mayReturnVoid must be true or false\n");
             LEAVE_ALL_NAMESPACES();
@@ -150,8 +206,8 @@ BIND_GLOBAL("ErrorInner",
         mayReturnVoid := false;
     fi;
         
-    if IsBound(arg[1].mayReturnObj) then
-        mayReturnObj := arg[1].mayReturnObj;
+    if IsBound(options.mayReturnObj) then
+        mayReturnObj := options.mayReturnObj;
         if not mayReturnObj in [false, true] then
             PrintTo(ERROR_OUTPUT, "ErrorInner: option mayReturnObj must be true or false\n");
             LEAVE_ALL_NAMESPACES();
@@ -161,8 +217,8 @@ BIND_GLOBAL("ErrorInner",
         mayReturnObj := false;
     fi;
      
-    if IsBound(arg[1].printThisStatement) then
-        printThisStatement := arg[1].printThisStatement;
+    if IsBound(options.printThisStatement) then
+        printThisStatement := options.printThisStatement;
         if not printThisStatement in [false, true] then
             PrintTo(ERROR_OUTPUT, "ErrorInner: option printThisStatement must be true or false\n");
             LEAVE_ALL_NAMESPACES();
@@ -172,8 +228,8 @@ BIND_GLOBAL("ErrorInner",
         printThisStatement := true;
     fi;
         
-    if IsBound(arg[1].lateMessage) then
-        lateMessage := arg[1].lateMessage;
+    if IsBound(options.lateMessage) then
+        lateMessage := options.lateMessage;
         if not lateMessage in [false, true] and not IsString(lateMessage) then
             PrintTo(ERROR_OUTPUT, "ErrorInner: option lateMessage must be a string or false\n");
             LEAVE_ALL_NAMESPACES();
@@ -183,13 +239,6 @@ BIND_GLOBAL("ErrorInner",
         lateMessage := "";
     fi;
         
-    earlyMessage := arg[2];
-    if Length(arg) <> 2 then
-        PrintTo(ERROR_OUTPUT, "ErrorInner: new format takes exactly two arguments\n");
-        LEAVE_ALL_NAMESPACES();
-        JUMP_TO_CATCH(1);
-    fi;
-
     # Local functions that print the user feedback.
     printEarlyMessage := function(stream)
         PrintTo(stream, "Error, ");
@@ -335,22 +384,27 @@ end);
 
 Unbind(Error);
 
-BIND_GLOBAL("Error",
-        function(arg)
-    ErrorInner(rec( context := ParentLVars(GetCurrentLVars()),
-                               mayReturnVoid := true,
-                               lateMessage := true,
-                               printThisStatement := false),
-                               arg);
+BIND_GLOBAL("Error", function(arg)
+    ErrorInner(
+        rec(
+            context := ParentLVars(GetCurrentLVars()),
+            mayReturnVoid := true,
+            lateMessage := true,
+            printThisStatement := false,
+        ),
+        arg);
 end);
 
 Unbind(ErrorNoReturn);
 
-BIND_GLOBAL("ErrorNoReturn",
-       function ( arg )
-    ErrorInner( rec(
-         context := ParentLVars( GetCurrentLVars(  ) ),
-         mayReturnVoid := false, mayReturnObj := false,
-         lateMessage := "type 'quit;' to quit to outer loop",
-         printThisStatement := false), arg);
+BIND_GLOBAL("ErrorNoReturn", function(arg)
+    ErrorInner(
+        rec(
+            context := ParentLVars(GetCurrentLVars()),
+            mayReturnVoid := false,
+            mayReturnObj := false,
+            lateMessage := "type 'quit;' to quit to outer loop",
+            printThisStatement := false,
+        ),
+        arg);
 end);

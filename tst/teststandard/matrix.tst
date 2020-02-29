@@ -1,10 +1,4 @@
 #############################################################################
-##
-#W  matrix.tst                  GAP Tests                     Robert F. Morse
-##  
-##
-##
-#Y  (C) 1998 School Math. and Comp. Sci., University of St Andrews, Scotland
 ##  
 ##  Exclude from testinstall.g: why? (takes a few seconds to run)
 ##
@@ -124,7 +118,7 @@ gap> m1lst{[1,3]}=mlst{[1,3]};
 true
 gap> ##  
 gap> r := Integers;;
-gap> n := Random([5..10]);;
+gap> n := Random(5, 10);;
 gap> rm := RandomInvertibleMat(n,r);; rmi := rm^-1;;
 gap> e*rmi = e/rm;
 true
@@ -539,7 +533,3 @@ gap> ##
 gap> ##
 gap> ########################################################################
 gap> STOP_TEST( "matrix.tst", 1);
-
-#############################################################################
-##
-#E

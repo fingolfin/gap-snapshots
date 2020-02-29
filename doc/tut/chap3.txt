@@ -873,10 +873,11 @@
   described  in  Chapters [14X'Reference:  Rational  Numbers'[114X, [14X'Reference: Abelian
   Number Fields'[114X, and [14X'Reference: Finite Fields'[114X. Row vectors and matrices are
   described    in   more   detail   in   Chapters [14X'Reference:   Row   Vectors'[114X
-  and [14X'Reference:     Matrices'[114X.    Vector    spaces    are    described    in
-  Chapter [14X'Reference:  Vector  Spaces'[114X,  further matrix related structures are
-  described  in  Chapters [14X'Reference:  Matrix  Groups'[114X, [14X'Reference: Algebras'[114X,
-  and [14X'Reference: Lie Algebras'[114X.[133X
+  and [14X'Reference:  Matrices'[114X;  note  that [5XGAP[105X supports also linear algebra for
+  objects  which  are  [13Xnot[113X  lists,  see  Chapter [14X'Reference: Vector and Matrix
+  Objects'[114X. Vector spaces are described in Chapter [14X'Reference: Vector Spaces'[114X,
+  further  matrix  related  structures  are  described in Chapters [14X'Reference:
+  Matrix Groups'[114X, [14X'Reference: Algebras'[114X, and [14X'Reference: Lie Algebras'[114X.[133X
   
   [33X[0;0YYou will find more list operations in Chapter [14X'Reference: Lists'[114X.[133X
   

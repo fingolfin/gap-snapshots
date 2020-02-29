@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  tuples.gi                   GAP library                      Steve Linton
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Steve Linton.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file declares the operations for direct product elements.
 ##
@@ -470,7 +471,7 @@ InstallOtherMethod( \+,
     "for a direct product element, and a non-list",
     [ IsDirectProductElement, IsObject ],
     function( dpelm, nonlist )
-    if IsList( nonlist ) then
+    if IsListOrCollection( nonlist ) then
       TryNextMethod();
     fi;
     return DirectProductElement( List( dpelm, entry -> entry + nonlist ) );
@@ -480,7 +481,7 @@ InstallOtherMethod( \+,
     "for a non-list, and a direct product element",
     [ IsObject, IsDirectProductElement ],
     function( nonlist, dpelm )
-    if IsList( nonlist ) then
+    if IsListOrCollection( nonlist ) then
       TryNextMethod();
     fi;
     return DirectProductElement( List( dpelm, entry -> nonlist + entry ) );
@@ -490,7 +491,7 @@ InstallOtherMethod( \*,
     "for a direct product element, and a non-list",
     [ IsDirectProductElement, IsObject ],
     function( dpelm, nonlist )
-    if IsList( nonlist ) then
+    if IsListOrCollection( nonlist ) then
       TryNextMethod();
     fi;
     return DirectProductElement( List( dpelm, entry -> entry * nonlist ) );
@@ -500,7 +501,7 @@ InstallOtherMethod( \*,
     "for a non-list, and a direct product element",
     [ IsObject, IsDirectProductElement ],
     function( nonlist, dpelm )
-    if IsList( nonlist ) then
+    if IsListOrCollection( nonlist ) then
       TryNextMethod();
     fi;
     return DirectProductElement( List( dpelm, entry -> nonlist * entry ) );
@@ -509,5 +510,13 @@ InstallOtherMethod( \*,
 
 #############################################################################
 ##
-#E
-
+##
+InstallGlobalFunction( DirectProductFamily,
+    function( args )
+    if not IsDenseList(args) or not ForAll(args, IsCollectionFamily) then
+        ErrorNoReturn("<args> must be a dense list of collection families");
+    fi;
+    return CollectionsFamily(
+        DirectProductElementsFamily( List( args, ElementsFamily ) )
+    );
+    end );

@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  sgpres.gi                  GAP library                     Volkmar Felsch
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Volkmar Felsch.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file  contains  the methods for  subgroup presentations  in finitely
 ##  presented groups (fp groups).
@@ -28,6 +29,7 @@ local M;
   if Length(M)=0 then
     return [];
   else
+    M:=ReducedRelationMat(M);
     DiagonalizeMat( Integers, M );
     return AbelianInvariantsOfList(DiagonalOfMat(M));
   fi;
@@ -49,6 +51,7 @@ local M;
   if Length(M)=0 then
     return [];
   else
+    M:=ReducedRelationMat(M);
     DiagonalizeMat( Integers, M );
     return AbelianInvariantsOfList(DiagonalOfMat(M));
   fi;
@@ -71,9 +74,17 @@ InstallGlobalFunction( AbelianInvariantsSubgroupFpGroupRrs,
 function ( G, H )
 local M;
   M:=RelatorMatrixAbelianizedSubgroupRrs( G, H );
-  if Length(M)=0 then
+  if M=fail then 
+    if ValueOption("cheap")=true then return fail;fi;
+    Info(InfoWarning,1,
+      "exponent too large, abelianized coset enumeration aborted");
+    Info(InfoWarning,1,"calculation will be slow");
+    M:=MaximalAbelianQuotient(H); # this is in the library, so no overflow
+    return AbelianInvariants(Range(M));
+  elif Length(M)=0 then
     return [];
   else
+    M:=ReducedRelationMat(M);
     DiagonalizeMat( Integers, M );
     return AbelianInvariantsOfList(DiagonalOfMat(M));
   fi;
@@ -291,7 +302,9 @@ InstallGlobalFunction( AugmentedCosetTableRrs,
     app2[2] := deductions[ded][2];
     app2[3] := -1;
     app2[4] := app2[2];
-    ApplyRel2( app2, triple[2], triple[1] );
+    if not ApplyRel2( app2, triple[2], triple[1] ) then
+      return fail; # rewriting failed b/c too large exponent
+    fi;
     factors := app2[7];
 #if Length(factors)>0 then Print(Length(factors)," ",Maximum(factors)," ",Minimum(factors),"\n");fi;
 
@@ -1080,6 +1093,9 @@ InstallGlobalFunction( PresentationAugmentedCosetTable,
     # group generators.
     SetPrimaryGeneratorWords(T,aug.primaryGeneratorWords);
 
+    # Since T is mutable, we must set this attribite "manually"
+    SetTzOptions(T, TzOptions(T));
+    
     # handle relators of length 1 or 2, but do not eliminate any primary
     # generators.
     TzOptions(T).protected := tree[TR_PRIMARY];
@@ -1395,7 +1411,7 @@ RelatorMatrixAbelianizedNormalClosure :=
 ##
 InstallGlobalFunction( RelatorMatrixAbelianizedSubgroupRrs, function ( G, H )
 
-    local aug, table;
+    local aug, table,i,j,vec,pres;
 
     # check G to be a finitely presented group.
     if not ( IsSubgroupFpGroup( G ) and IsGroupOfFamily( G ) ) then
@@ -1430,6 +1446,12 @@ InstallGlobalFunction( RelatorMatrixAbelianizedSubgroupRrs, function ( G, H )
     # determine a set of abelianized subgroup relators.
     aug.subgroupRelators := RewriteAbelianizedSubgroupRelators( aug,
                              aug.groupRelators);
+    if aug.subgroupRelators=fail then
+      # the abelianized rewriting in the kernel failed because the
+      # coefficients were to large.
+      return fail;
+
+    fi;
 
     return aug.subgroupRelators;
 
@@ -1627,7 +1649,9 @@ InstallGlobalFunction( RewriteAbelianizedSubgroupRelators,
             app2[2] := i;
             app2[3] := 2 * length - 1;
             app2[4] := i;
-            ApplyRel2( app2, cols, nums );
+            if not ApplyRel2( app2, cols, nums ) then
+              return fail;
+            fi;
 
             # add the resulting subgroup relator to rels.
             numrels := AddAbelianRelator( rels, numrels );
@@ -1699,7 +1723,9 @@ InstallGlobalFunction( RewriteAbelianizedSubgroupRelators,
         app2[2] := 1;
         app2[3] := 2 * length - 1;
         app2[4] := 1;
-        ApplyRel2( app2, cols, nums );
+        if not ApplyRel2( app2, cols, nums ) then
+          return fail;
+        fi;
 
       else
         # trivial generator
@@ -3627,8 +3653,3 @@ end);
 #####################################
 # The following code is not used any longer and is relics of the old Mtc
 # implementation.
-
-#############################################################################
-##
-#E  sgpres.gi  . . . . . . . . . . . . . . . . . . . . . . . . . .. ends here
-

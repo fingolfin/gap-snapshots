@@ -1,13 +1,12 @@
 #############################################################################
 ##
-#W  oper.g                      GAP library                     Thomas Breuer
-#W                                                             & Frank Celler
-#W                                                          & Martin Schönert
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer, Frank Celler, Martin Schönert.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file defines operations and such. Some functions have moved
 ##  to oper1.g so as to be compiled in the default kernel
@@ -292,6 +291,8 @@ BIND_GLOBAL( "INSTALL_IMMEDIATE_METHOD",
         Error( "no immediate methods for mutable objects!" );
     fi;
     relev := [];
+    atomic FILTER_REGION do
+
     for i  in flags  do
         if not INFO_FILTERS[i] in FNUM_CATS_AND_REPS  then
             ADD_LIST( relev, i );
@@ -304,8 +305,6 @@ BIND_GLOBAL( "INSTALL_IMMEDIATE_METHOD",
         relev:= [ flags[1] ];
     fi;
     flags:= relev;
-
-    atomic FILTER_REGION do
 
     # Remove requirements that are implied by the remaining ones.
     # (Note that it is possible to have implications from a filter
@@ -473,14 +472,14 @@ end );
 ##  For example, the size of a permutation group can be computed very cheaply
 ##  if a stabilizer chain of the group is known.
 ##  So it is reasonable to install an immediate method for
-##  <Ref Func="Size"/> with requirement
+##  <Ref Attr="Size"/> with requirement
 ##  <C>IsGroup and Tester( <A>stab</A> )</C>,
 ##  where <A>stab</A> is the attribute corresponding to the stabilizer chain.
 ##  <P/>
 ##  Another example would be the implementation of the conclusion that
 ##  every finite group of prime power order is nilpotent.
 ##  This could be done by installing an immediate method for the attribute
-##  <Ref Func="IsNilpotentGroup"/> with requirement
+##  <Ref Prop="IsNilpotentGroup"/> with requirement
 ##  <C>IsGroup and Tester( Size )</C>.
 ##  This method would then check whether the size is a finite prime power,
 ##  return <K>true</K> in this case and otherwise call
@@ -581,14 +580,14 @@ end );
 ##  ]]></Log>
 ##  <P/>
 ##  This example gives an explanation for the two calls of the
-##  <Q>system getter</Q> for <Ref Func="Size"/>.
+##  <Q>system getter</Q> for <Ref Attr="Size"/>.
 ##  Namely, there are immediate methods that access the known size
 ##  of the group.
 ##  Note that the group <C>g</C> was known to be finitely generated already
 ##  before the size was computed,
 ##  the calls of the immediate method for
-##  <Ref Func="IsFinitelyGeneratedGroup"/> after the call of
-##  <Ref Func="Size"/> have other arguments than <C>g</C>.
+##  <Ref Prop="IsFinitelyGeneratedGroup"/> after the call of
+##  <Ref Attr="Size"/> have other arguments than <C>g</C>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1109,11 +1108,7 @@ BIND_GLOBAL( "DeclareAttributeKernel", function ( name, filter, getter )
     STORE_OPER_FLAGS(tester, [ FLAGS_FILTER(filter) ]);
 
     # store the information about the filter
-    atomic FILTER_REGION do
-    FILTERS[ FLAG2_FILTER( tester ) ] := tester;
-    IMM_FLAGS:= AND_FLAGS( IMM_FLAGS, FLAGS_FILTER( tester ) );
-    INFO_FILTERS[ FLAG2_FILTER( tester ) ] := 5;
-    od;
+    REGISTER_FILTER( tester, FLAG2_FILTER( tester ), 1, FNUM_ATTR_KERN );
 
     # clear the cache because <filter> is something old
     if not GAPInfo.CommandLineOptions.N then
@@ -1124,10 +1119,6 @@ BIND_GLOBAL( "DeclareAttributeKernel", function ( name, filter, getter )
     # run the attribute functions
     RUN_ATTR_FUNCS( filter, getter, setter, tester, false );
 
-    # store the ranks
-    atomic FILTER_REGION do
-    RANK_FILTERS[ FLAG2_FILTER( tester ) ] := 1;
-    od;
 
     # and make the remaining assignments
     BIND_SETTER_TESTER( name, setter, tester );
@@ -1153,9 +1144,9 @@ end );
 ##  This is exactly because of the possibility to install methods
 ##  that do not require <A>filter</A>.
 ##  <P/>
-##  For example, the attribute <Ref Func="Size"/> was created
+##  For example, the attribute <Ref Attr="Size"/> was created
 ##  with second argument a list or a collection,
-##  but there is also a method for <Ref Func="Size"/> that is
+##  but there is also a method for <Ref Attr="Size"/> that is
 ##  applicable to a character table,
 ##  which is neither a list nor a collection.
 ##  <P/>
@@ -1181,7 +1172,7 @@ end );
 ##  For example, there is an attribute <C>ComputedSylowSubgroups</C>
 ##  for the list holding those Sylow subgroups of a group that have been
 ##  computed already by the function
-##  <Ref Func="SylowSubgroup"/>,
+##  <Ref Oper="SylowSubgroup"/>,
 ##  and this list is mutable because one may want to enter groups into it
 ##  as they are computed.
 ##  <!-- in the current implementation, one can overwrite values of mutable-->
@@ -1200,9 +1191,6 @@ end );
 BIND_GLOBAL( "OPER_SetupAttribute", function(getter, flags, mutflag, filter, rank, name)
     local   setter,  tester,   nname;
 
-    # store the information about the filter
-    INFO_FILTERS[ FLAG2_FILTER(getter) ] := 6;
-
     # add  setter and tester to the list of operations
     setter := SETTER_FILTER( getter );
     tester := TESTER_FILTER( getter );
@@ -1210,9 +1198,8 @@ BIND_GLOBAL( "OPER_SetupAttribute", function(getter, flags, mutflag, filter, ran
     STORE_OPER_FLAGS(setter, [ flags, FLAGS_FILTER( IS_OBJECT ) ]);
     STORE_OPER_FLAGS(tester, [ flags ]);
 
-    # install the default functions
-    FILTERS[ FLAG2_FILTER( tester ) ] := tester;
-    IMM_FLAGS:= AND_FLAGS( IMM_FLAGS, FLAGS_FILTER( tester ) );
+    # store information about the filter
+    REGISTER_FILTER( tester, FLAG2_FILTER( tester ), rank, FNUM_ATTR );
 
     # the <tester> is newly made, therefore  the cache cannot contain a  flag
     # list involving <tester>
@@ -1224,8 +1211,6 @@ BIND_GLOBAL( "OPER_SetupAttribute", function(getter, flags, mutflag, filter, ran
     # run the attribute functions
     RUN_ATTR_FUNCS( filter, getter, setter, tester, mutflag );
 
-    # store the rank
-    RANK_FILTERS[ FLAG2_FILTER( tester ) ] := rank;
 end);
 
 # construct getter, setter and tester
@@ -1267,9 +1252,7 @@ BIND_GLOBAL( "NewAttribute", function ( name, filter, args... )
     fi;
     STORE_OPER_FLAGS(getter, [ flags ]);
 
-    atomic FILTER_REGION do
     OPER_SetupAttribute(getter, flags, mutflag, filter, rank, name);
-    od;
 
     # And return the getter
     return getter;
@@ -1313,7 +1296,7 @@ function(name, op, filter, rank, mutable)
     od;
 
     flags := FLAGS_FILTER(filter);
-    STORE_OPER_FLAGS( op, [ FLAGS_FILTER( filter ) ] );
+    STORE_OPER_FLAGS( op, [ flags ] );
 
     # kernel magic for the conversion
     if mutable then
@@ -1358,7 +1341,6 @@ BIND_GLOBAL( "DeclareAttribute", function ( name, filter, args... )
     fi;
 
     if ISB_GVAR( name ) then
-      atomic FILTER_REGION do
         # The variable exists already.
         gvar := VALUE_GLOBAL( name );
 
@@ -1367,19 +1349,22 @@ BIND_GLOBAL( "DeclareAttribute", function ( name, filter, args... )
             Error( "variable `", name, "' is not bound to an operation" );
         fi;
 
-        # The attribute has already been declared.
-        # If it was not created as an attribute
-        # then we may be able to convert it
-        if FLAG2_FILTER( gvar ) = 0 or IS_ELEMENTARY_FILTER(gvar) then
-            ConvertToAttribute(name, gvar, filter, rank, mutflag);
-        else
+        # Check whether the variable is in fact bound to an attribute, i.e.,
+        # it has an associated tester (whose id is in FLAG2_FILTER) but is not
+        # a filter itself (to exclude properties, and also and-filters for which
+        # FLAG2_FILTER also is non-zero).
+        if FLAG2_FILTER( gvar ) <> 0 and not IsFilter(gvar) then
+            # gvar is already an attribute, extend it by the new filter
             STORE_OPER_FLAGS( gvar, [ FLAGS_FILTER( filter ) ] );
 
             # also set the extended range for the setter
             req := GET_OPER_FLAGS( Setter(gvar) );
             STORE_OPER_FLAGS( Setter(gvar), [ FLAGS_FILTER( filter), req[1][2] ] );
+        else
+            # gvar is a an existing non-attribute operation, try to convert it
+            # into an attribute
+            ConvertToAttribute(name, gvar, filter, rank, mutflag);
         fi;
-      od;
     else
         # The attribute is new.
         attr := NewAttribute(name, filter, mutflag, rank);
@@ -1438,12 +1423,9 @@ BIND_GLOBAL( "DeclarePropertyKernel", function ( name, filter, getter )
     STORE_OPER_FLAGS(setter, [ FLAGS_FILTER(filter), FLAGS_FILTER(IS_BOOL) ]);
     STORE_OPER_FLAGS(tester, [ FLAGS_FILTER(filter) ]);
 
-    # install the default functions
-    FILTERS[ FLAG1_FILTER( getter ) ]:= getter;
-    IMM_FLAGS:= AND_FLAGS( IMM_FLAGS, FLAGS_FILTER( getter ) );
-    FILTERS[ FLAG2_FILTER( getter ) ]:= tester;
-    INFO_FILTERS[ FLAG1_FILTER( getter ) ]:= 7;
-    INFO_FILTERS[ FLAG2_FILTER( getter ) ]:= 8;
+    # store information about the filters
+    REGISTER_FILTER( getter, FLAG1_FILTER( getter ), 1, FNUM_PROP_KERN );
+    REGISTER_FILTER( tester, FLAG2_FILTER( tester ), 1, FNUM_TPR_KERN );
 
     # clear the cache because <filter> is something old
     if not GAPInfo.CommandLineOptions.N then
@@ -1456,9 +1438,6 @@ BIND_GLOBAL( "DeclarePropertyKernel", function ( name, filter, getter )
     # run the attribute functions
     RUN_ATTR_FUNCS( filter, getter, setter, tester, false );
 
-    # store the ranks
-    RANK_FILTERS[ FLAG1_FILTER( getter ) ] := 1;
-    RANK_FILTERS[ FLAG2_FILTER( getter ) ] := 1;
 
     # and make the remaining assignments
     BIND_SETTER_TESTER( name, setter, tester );
@@ -1489,10 +1468,15 @@ end );
 ##  <#/GAPDoc>
 ##
 BIND_GLOBAL( "NewProperty", function ( arg )
-    local   name, filter, flags, getter, setter, tester;
+    local name, filter, rank, flags, getter, setter, tester;
 
     name   := arg[1];
     filter := arg[2];
+    if LEN_LIST( arg ) = 3 and IS_INT( arg[3] ) then
+        rank := arg[3];
+    else
+        rank := 1;
+    fi;
 
     if not IS_OPERATION( filter ) then
       Error( "<filter> must be an operation" );
@@ -1509,14 +1493,9 @@ BIND_GLOBAL( "NewProperty", function ( arg )
     STORE_OPER_FLAGS(setter, [ flags, FLAGS_FILTER(IS_BOOL) ]);
     STORE_OPER_FLAGS(tester, [ flags ]);
 
-    # install the default functions
-    atomic FILTER_REGION do
-    FILTERS[ FLAG1_FILTER( getter ) ] := getter;
-    IMM_FLAGS:= AND_FLAGS( IMM_FLAGS, FLAGS_FILTER( getter ) );
-    FILTERS[ FLAG2_FILTER( getter ) ] := tester;
-    INFO_FILTERS[ FLAG1_FILTER( getter ) ] := 9;
-    INFO_FILTERS[ FLAG2_FILTER( getter ) ] := 10;
-    od;
+    # store information about the filters
+    REGISTER_FILTER( getter, FLAG1_FILTER( getter ), rank, FNUM_PROP );
+    REGISTER_FILTER( tester, FLAG2_FILTER( tester ), 1, FNUM_TPR );
 
     # the <tester> and  <getter> are newly  made, therefore the cache cannot
     # contain a flag list involving <tester> or <getter>
@@ -1529,15 +1508,6 @@ BIND_GLOBAL( "NewProperty", function ( arg )
     # run the attribute functions
     RUN_ATTR_FUNCS( filter, getter, setter, tester, false );
 
-    # store the rank
-    atomic FILTER_REGION do
-    if LEN_LIST( arg ) = 3 and IS_INT( arg[3] ) then
-        RANK_FILTERS[ FLAG1_FILTER( getter ) ]:= arg[3];
-    else
-        RANK_FILTERS[ FLAG1_FILTER( getter ) ]:= 1;
-    fi;
-    RANK_FILTERS[ FLAG2_FILTER( tester ) ]:= 1;
-    od;
 
     # and return the getter
     return getter;
@@ -1824,12 +1794,12 @@ end );
 
 #############################################################################
 ##
-#F  DeclareGlobalFunction( <name>, <info> ) . .  create a new global function
+#F  DeclareGlobalFunction( <name> ) . . . . . .  create a new global function
 #F  InstallGlobalFunction( <oper>, <func> )
 ##
 ##  <#GAPDoc Label="DeclareGlobalFunction">
 ##  <ManSection>
-##  <Func Name="DeclareGlobalFunction" Arg='name, info'/>
+##  <Func Name="DeclareGlobalFunction" Arg='name'/>
 ##  <Func Name="InstallGlobalFunction" Arg='oper, func'/>
 ##
 ##  <Description>
@@ -1931,7 +1901,7 @@ end);
 
 fi;
 
-if BASE_SIZE_METHODS_OPER_ENTRY <> 5 then
+if BASE_SIZE_METHODS_OPER_ENTRY <> 6 then
     Error("MethodsOperation must be updated for new BASE_SIZE_METHODS_OPER_ENTRY");
 fi;
 
@@ -1952,6 +1922,7 @@ BIND_GLOBAL("MethodsOperation", function(oper, nargs)
             func    := meths[i + nargs + 2],
             rank    := meths[i + nargs + 3],
             info    := meths[i + nargs + 4],
+            rankbase := meths[i + nargs + 6],
             );
         ADD_LIST(result, m);
         if IsBound(meths[i + nargs + 5]) then
@@ -1961,6 +1932,131 @@ BIND_GLOBAL("MethodsOperation", function(oper, nargs)
     return result;
 end );
 
+
 #############################################################################
 ##
-#E
+#F  CHECK_ALL_METHOD_RANKS
+##
+##  Debugging helper which checks that all methods are sorted correctly
+##
+BIND_GLOBAL( "CHECK_ALL_METHOD_RANKS", function()
+    local  oper, n, meths, i, result;
+
+    result := true;
+    for oper in OPERATIONS do
+        for n in [0..6] do
+            meths := MethodsOperation(oper, n);
+            for i in [2..LENGTH(meths)] do
+                if meths[i-1].rank < meths[i].rank then
+                    Print("Error, wrong method ordering for '", oper, "' on ", n, " arguments:\n");
+                    Print(" ", i-1, ": ", meths[i-1].rank, " ", meths[i-1].info, "\n");
+                    Print(" ", i  , ": ", meths[i].rank, " ", meths[i].info, "\n");
+                    result := false;
+                fi;
+            od;
+        od;
+    od;
+    return result;
+end );
+
+#############################################################################
+##
+#F RECALCULATE_ALL_METHOD_RANKS() . . reorder methods after new implications
+##
+## Installing new implications (including hidden implications) can change the
+## rank of existing filters, and so of existing methods for operations.
+##
+## This function recalculates all such ranks and adjusts the method ordering
+## where needed. If the ordering changes, the relevant caches are flushed.
+##
+## If PRINT_REORDERED_METHODS is true, it prints some diagnostics (this is a
+## bit too low-level for Info).
+##
+##
+
+
+#
+# We had to install a placeholder for this in filter.g
+#
+Unbind(RECALCULATE_ALL_METHOD_RANKS);
+
+PRINT_REORDERED_METHODS := false;
+
+BIND_GLOBAL( "RECALCULATE_ALL_METHOD_RANKS", function()
+    local  oper, n, changed, meths, nmethods, i, base, rank, j, req,
+           req2, k, l, entrysize;
+
+    for oper in OPERATIONS do
+        for n in [0..6] do
+            changed := false;
+            meths := METHODS_OPERATION(oper, n);
+            entrysize := BASE_SIZE_METHODS_OPER_ENTRY+n;
+            nmethods := LENGTH(meths)/entrysize;
+            for i in [1..nmethods] do
+                base := (i-1)*entrysize;
+                # data for this method is meths{[base+1..base+entrysize]}
+                rank := meths[base+6+n];
+                if IS_FUNCTION(rank) then
+                    rank := rank();
+                fi;
+
+                # adjust the base rank by the rank of the argument filters
+                if IS_CONSTRUCTOR(oper) then
+                    Assert(2, n > 0);
+                    rank := rank - RankFilter(meths[base+1+1]);
+                else
+                    for j in [1..n] do
+                        req := meths[base+1+j];
+                        rank := rank + RankFilter(req);
+                    od;
+                fi;
+
+                # check if new rank differs from old rank
+                if rank <> meths[base+n+3] then
+                    if IsHPCGAP and not changed then
+                        meths := SHALLOW_COPY_OBJ(meths);
+                    fi;
+                    changed := true;
+                    meths[base+n+3] := rank;
+                fi;
+
+                # determine how far back we need to adjust the rank
+                k := i;
+                while k > 1 and meths[(k-2)*entrysize+n+3] < rank do
+                    k := k-1;
+                od;
+
+                # do nothing if the preceding methods don't have lower rank
+                if i = k then
+                    continue;
+                fi;
+
+                if PRINT_REORDERED_METHODS then
+                    Print(NAME_FUNC(oper), " ", n," args. Moving method ",i,
+                          " with rank ", rank,
+                          " to position ",k,
+                          " (",meths[base+n+4],
+                          " from ",meths[base+n+5][1],":", meths[base+n+5][2],
+                          ")\n");
+                fi;
+                # extract the current method
+                l := meths{[base+1..base+entrysize]};
+                # move all preceding methods of lower rank
+                COPY_LIST_ENTRIES(meths, 1 + (k-1)*entrysize, 1,
+                                  meths, 1 + k*entrysize, 1,
+                                  (i-k)*entrysize);
+                # insert the current method at its new position
+                meths{[1 + (k-1)*entrysize..k*entrysize]} := l;
+            od;
+            if changed then
+                if IsHPCGAP then
+                    SET_METHODS_OPERATION(oper,n,MakeReadOnlySingleObj(meths));
+                else
+                    CHANGED_METHODS_OPERATION(oper,n);
+                fi;
+            fi;
+        od;
+    od;
+
+    Assert(2, CHECK_ALL_METHOD_RANKS());
+end );

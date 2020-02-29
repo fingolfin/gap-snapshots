@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  stats.c                     GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the functions of the statements package.
 **
@@ -23,6 +23,7 @@
 #include "exprs.h"
 #include "gvars.h"
 #include "hookintrprtr.h"
+#include "info.h"
 #include "intrprtr.h"
 #include "io.h"
 #include "lists.h"
@@ -32,7 +33,9 @@
 #include "records.h"
 #include "stringobj.h"
 #include "sysfiles.h"
+#ifdef USE_GASMAN
 #include "sysmem.h"
+#endif
 #include "vars.h"
 
 #ifdef HPCGAP
@@ -45,18 +48,27 @@
 inline UInt EXEC_STAT(Stat stat)
 {
     UInt tnum = TNUM_STAT(stat);
+    SET_BRK_CALL_TO(stat);
     return (*STATE(CurrExecStatFuncs)[ tnum ]) ( stat );
 }
 
+extern inline Obj EXEC_CURR_FUNC(void)
+{
+    Obj result;
+    EXEC_STAT(OFFSET_FIRST_STAT);
+    result = STATE(ReturnObjStat);
+    STATE(ReturnObjStat) = 0L;
+    return result;
+}
 
-#define EXEC_STAT_IN_LOOP(stat) \
-    { \
-        UInt status = EXEC_STAT(stat); \
-        if (status != 0) { \
-            if (status == STATUS_CONTINUE) \
-                continue; \
-            return (status & (STATUS_RETURN_VAL | STATUS_RETURN_VOID)); \
-        } \
+#define EXEC_STAT_IN_LOOP(stat)                                              \
+    {                                                                        \
+        UInt status = EXEC_STAT(stat);                                       \
+        if (status != 0) {                                                   \
+            if (status == STATUS_CONTINUE)                                   \
+                continue;                                                    \
+            return (status & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));      \
+        }                                                                    \
     }
 
 /****************************************************************************
@@ -69,17 +81,6 @@ inline UInt EXEC_STAT(Stat stat)
 **  executed.
 */
 UInt            (* ExecStatFuncs[256]) ( Stat stat );
-
-
-/****************************************************************************
-**
-*V  CurrStat  . . . . . . . . . . . . . . . . .  currently executed statement
-**
-**  'CurrStat'  is the statement that  is currently being executed.  The sole
-**  purpose of 'CurrStat' is to make it possible to  point to the location in
-**  case an error is signalled.
-*/
-/* TL: Stat            CurrStat; */
 
 
 /****************************************************************************
@@ -102,8 +103,7 @@ UInt            (* ExecStatFuncs[256]) ( Stat stat );
 **  this  is  ever  called, then   GAP is   in  serious  trouble, such as  an
 **  overwritten type field of a statement.
 */
-UInt            ExecUnknownStat (
-    Stat                stat )
+static UInt ExecUnknownStat(Stat stat)
 {
     Pr(
         "Panic: tried to execute a statement of unknown type '%d'\n",
@@ -113,16 +113,14 @@ UInt            ExecUnknownStat (
 
 /****************************************************************************
 **
-*F  UInt HaveInterrupt() . . . . . . . . check for user interrupts
+*F  HaveInterrupt . . . . . . . . . . . . . . . . . check for user interrupts
 **
 */
-
 #ifdef HPCGAP
-UInt HaveInterrupt( void ) {
-  return STATE(CurrExecStatFuncs) == IntrExecStatFuncs;
+UInt HaveInterrupt(void)
+{
+    return STATE(CurrExecStatFuncs) == IntrExecStatFuncs;
 }
-#else
-#define HaveInterrupt()   SyIsIntr()
 #endif
 
 /****************************************************************************
@@ -139,7 +137,7 @@ UInt HaveInterrupt( void ) {
 **  then 0 is returned.
 **
 **  A statement sequence with <n> statements is represented by  a bag of type
-**  'T_SEQ_STAT' with  <n> subbags.  The first  is  the  first statement, the
+**  'STAT_SEQ_STAT' with  <n> subbags.  The first  is  the  first statement, the
 **  second is the second statement, and so on.
 */
 static ALWAYS_INLINE UInt ExecSeqStatHelper(Stat stat, UInt nr)
@@ -157,39 +155,39 @@ static ALWAYS_INLINE UInt ExecSeqStatHelper(Stat stat, UInt nr)
     return 0;
 }
 
-UInt ExecSeqStat(Stat stat)
+static UInt ExecSeqStat(Stat stat)
 {
     // get the number of statements
     UInt nr = SIZE_STAT( stat ) / sizeof(Stat);
     return ExecSeqStatHelper(stat, nr);
 }
 
-UInt ExecSeqStat2(Stat stat)
+static UInt ExecSeqStat2(Stat stat)
 {
     return ExecSeqStatHelper(stat, 2);
 }
 
-UInt ExecSeqStat3(Stat stat)
+static UInt ExecSeqStat3(Stat stat)
 {
     return ExecSeqStatHelper(stat, 3);
 }
 
-UInt ExecSeqStat4(Stat stat)
+static UInt ExecSeqStat4(Stat stat)
 {
     return ExecSeqStatHelper(stat, 4);
 }
 
-UInt ExecSeqStat5(Stat stat)
+static UInt ExecSeqStat5(Stat stat)
 {
     return ExecSeqStatHelper(stat, 5);
 }
 
-UInt ExecSeqStat6(Stat stat)
+static UInt ExecSeqStat6(Stat stat)
 {
     return ExecSeqStatHelper(stat, 6);
 }
 
-UInt ExecSeqStat7(Stat stat)
+static UInt ExecSeqStat7(Stat stat)
 {
     return ExecSeqStatHelper(stat, 7);
 }
@@ -208,20 +206,18 @@ UInt ExecSeqStat7(Stat stat)
 **  tell the  calling executor that a  leave-statement was executed).   If no
 **  leave-statement is executed, then 0 is returned.
 **
-**  An if-statement with <n> branches is represented by  a bag of type 'T_IF'
+**  An if-statement with <n> branches is represented by  a bag of type 'STAT_IF'
 **  with 2*<n> subbags.  The first subbag is  the first condition, the second
 **  subbag is the  first body, the third subbag  is the second condition, the
 **  fourth subbag is the second body, and so  on.  If the if-statement has an
 **  else-branch, this is represented by a branch without a condition.
 */
-UInt            ExecIf (
-    Stat                stat )
+static UInt ExecIf(Stat stat)
 {
     Expr                cond;           /* condition                       */
     Stat                body;           /* body                            */
 
     /* if the condition evaluates to 'true', execute the if-branch body    */
-    SET_BRK_CURR_STAT( stat );
     cond = READ_STAT(stat, 0);
     if ( EVAL_BOOL_EXPR( cond ) != False ) {
 
@@ -235,14 +231,12 @@ UInt            ExecIf (
     return 0;
 }
 
-UInt            ExecIfElse (
-    Stat                stat )
+static UInt ExecIfElse(Stat stat)
 {
     Expr                cond;           /* condition                       */
     Stat                body;           /* body                            */
 
     /* if the condition evaluates to 'true', execute the if-branch body    */
-    SET_BRK_CURR_STAT( stat );
     cond = READ_STAT(stat, 0);
     if ( EVAL_BOOL_EXPR( cond ) != False ) {
 
@@ -252,13 +246,14 @@ UInt            ExecIfElse (
 
     }
 
+    SET_BRK_CALL_TO(stat);
+
     /* otherwise execute the else-branch body and leave                    */
     body = READ_STAT(stat, 3);
     return EXEC_STAT( body );
 }
 
-UInt            ExecIfElif (
-    Stat                stat )
+static UInt ExecIfElif(Stat stat)
 {
     Expr                cond;           /* condition                       */
     Stat                body;           /* body                            */
@@ -272,7 +267,6 @@ UInt            ExecIfElif (
     for ( i = 1; i <= nr; i++ ) {
 
         /* if the condition evaluates to 'true', execute the branch body   */
-        SET_BRK_CURR_STAT( stat );
         cond = READ_STAT(stat, 2 * (i - 1));
         if ( EVAL_BOOL_EXPR( cond ) != False ) {
 
@@ -282,14 +276,14 @@ UInt            ExecIfElif (
 
         }
 
+        SET_BRK_CALL_TO(stat);
     }
 
     /* return 0 (to indicate that no leave-statement was executed)         */
     return 0;
 }
 
-UInt            ExecIfElifElse (
-    Stat                stat )
+static UInt ExecIfElifElse(Stat stat)
 {
     Expr                cond;           /* condition                       */
     Stat                body;           /* body                            */
@@ -303,7 +297,6 @@ UInt            ExecIfElifElse (
     for ( i = 1; i <= nr; i++ ) {
 
         /* if the condition evaluates to 'true', execute the branch body   */
-        SET_BRK_CURR_STAT( stat );
         cond = READ_STAT(stat, 2 * (i - 1));
         if ( EVAL_BOOL_EXPR( cond ) != False ) {
 
@@ -313,6 +306,7 @@ UInt            ExecIfElifElse (
 
         }
 
+        SET_BRK_CALL_TO(stat);
     }
 
     /* otherwise execute the else-branch body and leave                    */
@@ -338,17 +332,14 @@ UInt            ExecIfElifElse (
 **  then 0 is returned.
 **
 **  A for-loop with <n> statements  in its body   is represented by a bag  of
-**  type 'T_FOR' with <n>+2  subbags.  The first  subbag is an assignment bag
+**  type 'STAT_FOR' with <n>+2  subbags.  The first  subbag is an assignment bag
 **  for the loop variable, the second subbag  is the list-expression, and the
 **  remaining subbags are the statements.
 */
-Obj             ITERATOR;
-
-Obj             IS_DONE_ITER;
-
-Obj             NEXT_ITER;
-
-Obj             STD_ITER;
+Obj ITERATOR;
+Obj IS_DONE_ITER;
+Obj NEXT_ITER;
+static Obj STD_ITER;
 
 static ALWAYS_INLINE UInt ExecForHelper(Stat stat, UInt nr)
 {
@@ -367,21 +358,20 @@ static ALWAYS_INLINE UInt ExecForHelper(Stat stat, UInt nr)
 
     /* get the variable (initialize them first to please 'lint')           */
     const Stat varstat = READ_STAT(stat, 0);
-    if (IS_REFLVAR(varstat)) {
-        var = LVAR_REFLVAR(varstat);
+    if (IS_REF_LVAR(varstat)) {
+        var = LVAR_REF_LVAR(varstat);
         vart = 'l';
     }
-    else if (TNUM_EXPR(varstat) == T_REF_HVAR) {
+    else if (TNUM_EXPR(varstat) == EXPR_REF_HVAR) {
         var = READ_EXPR(varstat, 0);
         vart = 'h';
     }
-    else /* if ( TNUM_EXPR( varstat ) == T_REF_GVAR ) */ {
+    else /* if ( TNUM_EXPR( varstat ) == EXPR_REF_GVAR ) */ {
         var = READ_EXPR(varstat, 0);
         vart = 'g';
     }
 
     /* evaluate the list                                                   */
-    SET_BRK_CURR_STAT( stat );
     list = EVAL_EXPR(READ_STAT(stat, 1));
 
     /* get the body                                                        */
@@ -466,18 +456,18 @@ static ALWAYS_INLINE UInt ExecForHelper(Stat stat, UInt nr)
     return 0;
 }
 
-UInt ExecFor(Stat stat)
+static UInt ExecFor(Stat stat)
 {
     return ExecForHelper(stat, 1);
 }
 
 
-UInt ExecFor2(Stat stat)
+static UInt ExecFor2(Stat stat)
 {
     return ExecForHelper(stat, 2);
 }
 
-UInt ExecFor3(Stat stat)
+static UInt ExecFor3(Stat stat)
 {
     return ExecForHelper(stat, 3);
 }
@@ -502,7 +492,7 @@ UInt ExecFor3(Stat stat)
 **  then 0 is returned.
 **
 **  A short for-loop with <n> statements in its body is  represented by a bag
-**  of   type 'T_FOR_RANGE'  with <n>+2 subbags.     The  first subbag is  an
+**  of   type 'STAT_FOR_RANGE'  with <n>+2 subbags.     The  first subbag is  an
 **  assignment   bag  for  the  loop  variable,   the second    subbag is the
 **  list-expression, and the remaining subbags are the statements.
 */
@@ -520,27 +510,14 @@ static ALWAYS_INLINE UInt ExecForRangeHelper(Stat stat, UInt nr)
     GAP_ASSERT(1 <= nr && nr <= 3);
 
     /* get the variable (initialize them first to please 'lint')           */
-    lvar = LVAR_REFLVAR(READ_STAT(stat, 0));
+    lvar = LVAR_REF_LVAR(READ_STAT(stat, 0));
 
     /* evaluate the range                                                  */
-    SET_BRK_CURR_STAT( stat );
     VisitStatIfHooked(READ_STAT(stat, 1));
     elm = EVAL_EXPR(READ_EXPR(READ_STAT(stat, 1), 0));
-    while ( ! IS_INTOBJ(elm) ) {
-        elm = ErrorReturnObj(
-            "Range: <first> must be an integer (not a %s)",
-            (Int)TNAM_OBJ(elm), 0L,
-            "you can replace <first> via 'return <first>;'" );
-    }
-    first = INT_INTOBJ(elm);
+    first = GetSmallIntEx("Range", elm, "<first>");
     elm = EVAL_EXPR(READ_EXPR(READ_STAT(stat, 1), 1));
-    while ( ! IS_INTOBJ(elm) ) {
-        elm = ErrorReturnObj(
-            "Range: <last> must be an integer (not a %s)",
-            (Int)TNAM_OBJ(elm), 0L,
-            "you can replace <last> via 'return <last>;'" );
-    }
-    last  = INT_INTOBJ(elm);
+    last = GetSmallIntEx("Range", elm, "<last>");
 
     /* get the body                                                        */
     body1 = READ_STAT(stat, 2);
@@ -573,17 +550,17 @@ static ALWAYS_INLINE UInt ExecForRangeHelper(Stat stat, UInt nr)
     return 0;
 }
 
-UInt ExecForRange(Stat stat)
+static UInt ExecForRange(Stat stat)
 {
     return ExecForRangeHelper(stat, 1);
 }
 
-UInt ExecForRange2(Stat stat)
+static UInt ExecForRange2(Stat stat)
 {
     return ExecForRangeHelper(stat, 2);
 }
 
-UInt ExecForRange3(Stat stat)
+static UInt ExecForRange3(Stat stat)
 {
     return ExecForRangeHelper(stat, 3);
 }
@@ -594,25 +571,29 @@ UInt ExecForRange3(Stat stat)
 */
 
 #ifdef HPCGAP
-UInt ExecAtomic(Stat stat)
+static UInt ExecAtomic(Stat stat)
 {
   Obj tolock[MAX_ATOMIC_OBJS];
-  int locktypes[MAX_ATOMIC_OBJS];
-  int lockstatus[MAX_ATOMIC_OBJS];
+  LockMode lockmode[MAX_ATOMIC_OBJS];
+  LockStatus lockstatus[MAX_ATOMIC_OBJS];
   int lockSP;
-  UInt mode, nrexprs,i,j,status;
+  UInt nrexprs,i,j,status;
   Obj o;
   
-  SET_BRK_CURR_STAT( stat );
   nrexprs = ((SIZE_STAT(stat)/sizeof(Stat))-1)/2;
   
   j = 0;
   for (i = 1; i <= nrexprs; i++) {
     o = EVAL_EXPR(READ_STAT(stat, 2*i));
-    if (!((Int)o & 0x3)) {
+    if (IS_BAG_REF(o)) {
       tolock[j] =  o;
-      mode = INT_INTEXPR(READ_STAT(stat, 2*i-1));
-      locktypes[j] = (mode == 2) ? 1 : (mode == 1) ? 0 : DEFAULT_LOCK_TYPE;
+      LockQual qual = INT_INTEXPR(READ_STAT(stat, 2*i-1));
+      if (qual == LOCK_QUAL_READWRITE)
+        lockmode[j] = LOCK_MODE_READWRITE;
+      else if (qual == LOCK_QUAL_READONLY)
+        lockmode[j] = LOCK_MODE_READONLY;
+      else /* if (qual == LOCK_QUAL_NONE) */
+        lockmode[j] = LOCK_MODE_DEFAULT;
       j++;
     }
   }
@@ -624,22 +605,20 @@ UInt ExecAtomic(Stat stat)
   j = 0;
   for (i = 0; i < nrexprs; i++) { 
     switch (lockstatus[i]) {
-    case 0:
+    case LOCK_STATUS_UNLOCKED:
       tolock[j] = tolock[i];
-      locktypes[j] = locktypes[i];
+      lockmode[j] = lockmode[i];
       j++;
       break;
-    case 2:
-      if (locktypes[i] == 1)
+    case LOCK_STATUS_READONLY_LOCKED:
+      if (lockmode[i] == LOCK_MODE_READWRITE)
         ErrorMayQuit("Attempt to change from read to write lock", 0L, 0L);
       break;
-    case 1:
+    case LOCK_STATUS_READWRITE_LOCKED:
       break;
-    default:
-      assert(0);
     }
   }
-  lockSP = LockObjects(j, tolock, locktypes);
+  lockSP = LockObjects(j, tolock, lockmode);
   if (lockSP >= 0) {
     status = EXEC_STAT(READ_STAT(stat, 0));
     PopRegionLocks(lockSP);
@@ -667,7 +646,7 @@ UInt ExecAtomic(Stat stat)
 **  leave-statement was executed, then 0 is returned.
 **
 **  A while-loop with <n> statements  in its body  is represented by a bag of
-**  type  'T_WHILE' with <n>+1 subbags.   The first  subbag is the condition,
+**  type  'STAT_WHILE' with <n>+1 subbags.   The first  subbag is the condition,
 **  the second subbag is the first statement,  the third subbag is the second
 **  statement, and so on.
 */
@@ -687,7 +666,6 @@ static ALWAYS_INLINE UInt ExecWhileHelper(Stat stat, UInt nr)
     body3 = (nr >= 3) ? READ_STAT(stat, 3) : 0;
 
     /* while the condition evaluates to 'true', execute the body           */
-    SET_BRK_CURR_STAT( stat );
     while ( EVAL_BOOL_EXPR( cond ) != False ) {
 
 #if !defined(HAVE_SIGNAL)
@@ -704,25 +682,24 @@ static ALWAYS_INLINE UInt ExecWhileHelper(Stat stat, UInt nr)
         if (nr >= 3)
             EXEC_STAT_IN_LOOP(body3);
 
-        SET_BRK_CURR_STAT( stat );
-
+        SET_BRK_CALL_TO(stat);
     }
 
     /* return 0 (to indicate that no leave-statement was executed)         */
     return 0;
 }
 
-UInt ExecWhile(Stat stat)
+static UInt ExecWhile(Stat stat)
 {
     return ExecWhileHelper(stat, 1);
 }
 
-UInt ExecWhile2(Stat stat)
+static UInt ExecWhile2(Stat stat)
 {
     return ExecWhileHelper(stat, 2);
 }
 
-UInt ExecWhile3(Stat stat)
+static UInt ExecWhile3(Stat stat)
 {
     return ExecWhileHelper(stat, 3);
 }
@@ -743,7 +720,7 @@ UInt ExecWhile3(Stat stat)
 **  leave-statement was executed, then 0 is returned.
 **
 **  A repeat-loop with <n> statements in its body is  represented by a bag of
-**  type 'T_REPEAT'  with <n>+1 subbags.  The  first subbag is the condition,
+**  type 'STAT_REPEAT'  with <n>+1 subbags.  The  first subbag is the condition,
 **  the second subbag is the first statement, the  third subbag is the second
 **  statement, and so on.
 */
@@ -761,7 +738,6 @@ static ALWAYS_INLINE UInt ExecRepeatHelper(Stat stat, UInt nr)
     body3 = (nr >= 3) ? READ_STAT(stat, 3) : 0;
 
     /* execute the body until the condition evaluates to 'true'            */
-    SET_BRK_CURR_STAT( stat );
     do {
 
 #if !defined(HAVE_SIGNAL)
@@ -778,7 +754,7 @@ static ALWAYS_INLINE UInt ExecRepeatHelper(Stat stat, UInt nr)
         if (nr >= 3)
             EXEC_STAT_IN_LOOP(body3);
 
-        SET_BRK_CURR_STAT( stat );
+        SET_BRK_CALL_TO(stat);
 
     } while ( EVAL_BOOL_EXPR( cond ) == False );
 
@@ -786,17 +762,17 @@ static ALWAYS_INLINE UInt ExecRepeatHelper(Stat stat, UInt nr)
     return 0;
 }
 
-UInt ExecRepeat(Stat stat)
+static UInt ExecRepeat(Stat stat)
 {
     return ExecRepeatHelper(stat, 1);
 }
 
-UInt ExecRepeat2(Stat stat)
+static UInt ExecRepeat2(Stat stat)
 {
     return ExecRepeatHelper(stat, 2);
 }
 
-UInt ExecRepeat3(Stat stat)
+static UInt ExecRepeat3(Stat stat)
 {
     return ExecRepeatHelper(stat, 3);
 }
@@ -811,11 +787,10 @@ UInt ExecRepeat3(Stat stat)
 **  This is done by returning STATUS_BREAK (to tell the calling executor that
 **  a break-statement was executed).
 **
-**  A break-statement is  represented  by a bag of   type 'T_BREAK' with   no
+**  A break-statement is  represented  by a bag of   type 'STAT_BREAK' with   no
 **  subbags.
 */
-UInt            ExecBreak (
-    Stat                stat )
+static UInt ExecBreak(Stat stat)
 {
     /* return to the next loop                                             */
     return STATUS_BREAK;
@@ -830,11 +805,10 @@ UInt            ExecBreak (
 **  This is done by returning STATUS_CONTINUE (to tell the calling executor
 **  that a continue-statement was executed).
 **
-**  A continue-statement is  represented  by a bag of   type 'T_CONTINUE' with   no
+**  A continue-statement is  represented  by a bag of   type 'STAT_CONTINUE' with   no
 **  subbags.
 */
-UInt            ExecContinue (
-    Stat                stat )
+static UInt ExecContinue(Stat stat)
 {
     /* return to the next loop                                             */
     return STATUS_CONTINUE;
@@ -846,7 +820,7 @@ UInt            ExecContinue (
 **
 **  Does nothing
 */
-UInt ExecEmpty( Stat stat )
+static UInt ExecEmpty(Stat stat)
 {
   return 0;
 }
@@ -862,11 +836,10 @@ UInt ExecEmpty( Stat stat )
 **  function InfoDecision to decide whether the message has to be printed. If
 **  it has, the other arguments are evaluated and passed to InfoDoPrint
 **
-**  An  info-statement is represented by a  bag of type 'T_INFO' with subbags
+**  An  info-statement is represented by a  bag of type 'STAT_INFO' with subbags
 **  for the arguments
 */
-UInt ExecInfo (
-    Stat            stat )
+static UInt ExecInfo(Stat stat)
 {
     Obj             selectors;
     Obj             level;
@@ -878,9 +851,6 @@ UInt ExecInfo (
 
     selectors = EVAL_EXPR( ARGI_INFO( stat, 1 ) );
     level = EVAL_EXPR( ARGI_INFO( stat, 2) );
-
-    SET_BRK_CALL_TO( stat );
-    SET_BRK_CURR_STAT( stat );
 
     selected = InfoCheckLevel(selectors, level);
     if (selected == True) {
@@ -918,29 +888,19 @@ UInt ExecInfo (
 **  'ExecAssert2Args' executes the 2 argument assert-statement <stat>.
 **
 **  A 2 argument assert-statement is  represented  by a bag of   type
-**  'T_ASSERT_2ARGS' with subbags for the 2 arguments
+**  'STAT_ASSERT_2ARGS' with subbags for the 2 arguments
 */
-UInt ExecAssert2Args (
-    Stat            stat )
+static UInt ExecAssert2Args(Stat stat)
 {
     Obj             level;
-    Obj             decision;
-
-    SET_BRK_CURR_STAT( stat );
-    SET_BRK_CALL_TO( stat );
+    Obj             cond;
 
     level = EVAL_EXPR(READ_STAT(stat, 0));
     if ( ! LT(CurrentAssertionLevel, level) )  {
-        decision = EVAL_EXPR(READ_STAT(stat, 1));
-        while ( decision != True && decision != False ) {
-         decision = ErrorReturnObj(
-          "Assertion condition must evaluate to 'true' or 'false', not a %s",
-          (Int)TNAM_OBJ(decision), 0L,
-          "you may 'return true;' or 'return false;'");
-        }
-        if ( decision == False ) {
-            SET_BRK_CURR_STAT( stat );
-            ErrorReturnVoid( "Assertion failure", 0L, 0L, "you may 'return;'");
+        cond = EVAL_EXPR(READ_STAT(stat, 1));
+        RequireTrueOrFalse("Assert", cond);
+        if (cond == False) {
+            AssertionFailure();
         }
     }
   return 0;
@@ -953,30 +913,22 @@ UInt ExecAssert2Args (
 **  'ExecAssert3Args' executes the 3 argument assert-statement <stat>.
 **
 **  A 3 argument assert-statement is  represented  by a bag of   type
-**  'T_ASSERT_3ARGS' with subbags for the 3 arguments
+**  'STAT_ASSERT_3ARGS' with subbags for the 3 arguments
 */
-UInt ExecAssert3Args (
-    Stat            stat )
+static UInt ExecAssert3Args(Stat stat)
 {
     Obj             level;
-    Obj             decision;
+    Obj             cond;
     Obj             message;
-
-    SET_BRK_CURR_STAT( stat );
-    SET_BRK_CALL_TO( stat );
 
     level = EVAL_EXPR(READ_STAT(stat, 0));
     if ( ! LT(CurrentAssertionLevel, level) ) {
-        decision = EVAL_EXPR(READ_STAT(stat, 1));
-        while ( decision != True && decision != False ) {
-            decision = ErrorReturnObj(
-            "Assertion condition must evaluate to 'true' or 'false', not a %s",
-            (Int)TNAM_OBJ(decision), 0L,
-            "you may 'return true;' or 'return false;'");
-        }
-        if ( decision == False ) {
+        cond = EVAL_EXPR(READ_STAT(stat, 1));
+        RequireTrueOrFalse("Assert", cond);
+        if (cond == False) {
             message = EVAL_EXPR(READ_STAT(stat, 2));
             if ( message != (Obj) 0 ) {
+                SET_BRK_CALL_TO( stat );
                 if (IS_STRING_REP( message ))
                     PrintString1( message );
                 else
@@ -998,12 +950,11 @@ UInt ExecAssert3Args (
 **  return-value-statement, and returning   1 (to tell   the calling executor
 **  that a return-value-statement was executed).
 **
-**  A return-value-statement  is represented by a  bag of type 'T_RETURN_OBJ'
+**  A return-value-statement  is represented by a  bag of type 'STAT_RETURN_OBJ'
 **  with      one  subbag.    This  subbag     is   the    expression  of the
 **  return-value-statement.
 */
-UInt            ExecReturnObj (
-    Stat                stat )
+static UInt ExecReturnObj(Stat stat)
 {
 #if !defined(HAVE_SIGNAL)
     /* test for an interrupt                                               */
@@ -1013,7 +964,6 @@ UInt            ExecReturnObj (
 #endif
 
     /* evaluate the expression                                             */
-    SET_BRK_CURR_STAT( stat );
     STATE(ReturnObjStat) = EVAL_EXPR(READ_STAT(stat, 0));
 
     /* return up to function interpreter                                   */
@@ -1031,11 +981,10 @@ UInt            ExecReturnObj (
 **  This  is done by   returning 2  (to tell    the calling executor  that  a
 **  return-void-statement was executed).
 **
-**  A return-void-statement  is represented by  a bag of type 'T_RETURN_VOID'
+**  A return-void-statement  is represented by  a bag of type 'STAT_RETURN_VOID'
 **  with no subbags.
 */
-UInt            ExecReturnVoid (
-    Stat                stat )
+static UInt ExecReturnVoid(Stat stat)
 {
 #if !defined(HAVE_SIGNAL)
     /* test for an interrupt                                               */
@@ -1081,10 +1030,9 @@ static void UnInterruptExecStat(void)
 **  allowing GAP execution in the usual way
 **
 **  This will do nothing (pretty quickly) if Ctrl-C has not been pressed and 
-**  return 0. Otherwise it
-**   will respond appropriately.  This may result in a longjmp
-**  or in returning to the caller after arbitrary execution of GAP code
-** including possible garbage collection. In this case 1 is returned.
+**  return 0. Otherwise it will respond appropriately. This may result in a
+**  longjmp or in returning to the caller after arbitrary execution of GAP
+**  code including possible garbage collection. In this case 1 is returned.
 */
 
 UInt TakeInterrupt( void )
@@ -1108,8 +1056,7 @@ UInt TakeInterrupt( void )
 **  redispatches after a return from the break-loop.
 */
 
-UInt ExecIntrStat (
-    Stat                stat )
+static UInt ExecIntrStat(Stat stat)
 {
 
     /* change the entries in 'ExecStatFuncs' back to the original          */
@@ -1125,16 +1072,16 @@ UInt ExecIntrStat (
     HaveInterrupt();
 
     /* and now for something completely different                          */
-    SET_BRK_CURR_STAT( stat );
+#ifdef USE_GASMAN
     if ( SyStorOverrun != 0 ) {
       SyStorOverrun = 0; /* reset */
       ErrorReturnVoid(
   "reached the pre-set memory limit\n(change it with the -o command line option)",
         0L, 0L, "you can 'return;'" );
     }
-    else {
+    else
+#endif
       ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
-    }
 #endif
 
     /* continue at the interrupted statement                               */
@@ -1179,12 +1126,14 @@ void ClearError ( void )
           Pr("Noticed user interrupt, but you are back in main loop anyway.\n",
               0L, 0L);
         }
+#ifdef USE_GASMAN
         /* and check if maximal memory was overrun */
         if ( SyStorOverrun != 0 ) {
           SyStorOverrun = 0; /* reset */
           Pr("GAP has exceeded the permitted memory (-o option),\n", 0L, 0L);
           Pr("the maximum is now enlarged to %d kB.\n", (Int)SyStorMax, 0L);
         }
+#endif
     }
 
     /* reset <STATE(NrError)>                                                */
@@ -1227,8 +1176,7 @@ void            (* PrintStatFuncs[256] ) ( Stat stat );
 **  this  is  ever called,   then GAP  is in  serious   trouble, such  as  an
 **  overwritten type field of a statement.
 */
-void            PrintUnknownStat (
-    Stat                stat )
+static void PrintUnknownStat(Stat stat)
 {
     ErrorQuit(
         "Panic: cannot print statement of type '%d'",
@@ -1242,8 +1190,7 @@ void            PrintUnknownStat (
 **
 **  'PrintSeqStat' prints the statement sequence <stat>.
 */
-void            PrintSeqStat (
-    Stat                stat )
+static void PrintSeqStat(Stat stat)
 {
     UInt                nr;             /* number of statements            */
     UInt                i;              /* loop variable                   */
@@ -1274,8 +1221,7 @@ void            PrintSeqStat (
 **  Linebreaks are printed after the 'then' and the statements in the bodies.
 **  If necessary one is preferred immediately before the 'then'.
 */
-void            PrintIf (
-    Stat                stat )
+static void PrintIf(Stat stat)
 {
     UInt                i;              /* loop variable                   */
     UInt                len;            /* length of loop                  */
@@ -1291,7 +1237,7 @@ void            PrintIf (
     /* print the 'elif' branch                                             */
     for (i = 2; i <= len; i++) {
         if (i == len &&
-            TNUM_EXPR(READ_STAT(stat, 2 * (i - 1))) == T_TRUE_EXPR) {
+            TNUM_EXPR(READ_STAT(stat, 2 * (i - 1))) == EXPR_TRUE) {
             Pr( "else%4>\n", 0L, 0L );
         }
         else {
@@ -1317,8 +1263,7 @@ void            PrintIf (
 **  Linebreaks are printed after the 'do' and the statements in the body.  If
 **  necesarry it is preferred immediately before the 'in'.
 */
-void            PrintFor (
-    Stat                stat )
+static void PrintFor(Stat stat)
 {
     UInt                i;              /* loop variable                   */
 
@@ -1344,8 +1289,7 @@ void            PrintFor (
 **  Linebreaks are printed after the 'do' and the statments  in the body.  If
 **  necessary one is preferred immediately before the 'do'.
 */
-void            PrintWhile (
-    Stat                stat )
+static void PrintWhile(Stat stat)
 {
     UInt                i;              /* loop variable                   */
 
@@ -1369,8 +1313,7 @@ void            PrintWhile (
 **  necessary one is preferred immediately before the 'do'.
 */
 #ifdef HPCGAP
-void            PrintAtomic (
-    Stat                stat )
+static void PrintAtomic(Stat stat)
 {
   UInt nrexprs;
     UInt                i;              /* loop variable                   */
@@ -1379,13 +1322,16 @@ void            PrintAtomic (
     nrexprs = ((SIZE_STAT(stat)/sizeof(Stat))-1)/2;
     for (i = 1; i <=  nrexprs; i++) {
       if (i != 1)
-	Pr(", ",0L,0L);
+        Pr(", ",0L,0L);
       switch (INT_INTEXPR(READ_STAT(stat, 2 * i - 1))) {
-      case 0: break;
-      case 1: Pr("readonly ",0L,0L);
-	break;
-      case 2: Pr("readwrite ",0L,0L);
-	break;
+      case LOCK_QUAL_NONE:
+        break;
+      case LOCK_QUAL_READONLY:
+        Pr("readonly ",0L,0L);
+        break;
+      case LOCK_QUAL_READWRITE:
+        Pr("readwrite ",0L,0L);
+        break;
       }
       PrintExpr(READ_EXPR(stat, 2 * i));
     }
@@ -1405,8 +1351,7 @@ void            PrintAtomic (
 **  Linebreaks are printed after the 'repeat' and the statements in the body.
 **  If necessary one is preferred after the 'until'.
 */
-void            PrintRepeat (
-    Stat                stat )
+static void PrintRepeat(Stat stat)
 {
     UInt                i;              /* loop variable                   */
 
@@ -1427,11 +1372,11 @@ void            PrintRepeat (
 **
 **  'PrintBreak' prints the break-statement <stat>.
 */
-void            PrintBreak (
-    Stat                stat )
+static void PrintBreak(Stat stat)
 {
     Pr( "break;", 0L, 0L );
 }
+
 
 /****************************************************************************
 **
@@ -1439,21 +1384,22 @@ void            PrintBreak (
 **
 **  'PrintContinue' prints the continue-statement <stat>.
 */
-void            PrintContinue (
-    Stat                stat )
+static void PrintContinue(Stat stat)
 {
     Pr( "continue;", 0L, 0L );
 }
+
 
 /****************************************************************************
 **
 *F  PrintEmpty(<stat>)
 **
 */
-void             PrintEmpty( Stat stat )
+static void PrintEmpty(Stat stat)
 {
   Pr( ";", 0L, 0L);
 }
+
 
 /****************************************************************************
 **
@@ -1461,9 +1407,7 @@ void             PrintEmpty( Stat stat )
 **
 **  'PrintInfo' prints the info-statement <stat>.
 */
-
-void            PrintInfo (
-    Stat               stat )
+static void PrintInfo(Stat stat)
 {
     UInt                i;              /* loop variable                   */
 
@@ -1485,17 +1429,15 @@ void            PrintInfo (
     Pr(" %2<);",0L,0L);
 }
 
+
 /****************************************************************************
 **
 *F  PrintAssert2Args(<stat>)  . . . . . . . . . . . . print an info-statement
 **
 **  'PrintAssert2Args' prints the 2 argument assert-statement <stat>.
 */
-
-void            PrintAssert2Args (
-    Stat               stat )
+static void PrintAssert2Args(Stat stat)
 {
-
     /* print the keyword                                                   */
     Pr("%2>Assert",0L,0L);
 
@@ -1510,18 +1452,16 @@ void            PrintAssert2Args (
     /* print the closing parenthesis                                       */
     Pr(" %2<);",0L,0L);
 }
-  
+
+
 /****************************************************************************
 **
 *F  PrintAssert3Args(<stat>)  . . . . . . . . . . . . print an info-statement
 **
 **  'PrintAssert3Args' prints the 3 argument assert-statement <stat>.
 */
-
-void            PrintAssert3Args (
-    Stat               stat )
+static void PrintAssert3Args(Stat stat)
 {
-
     /* print the keyword                                                   */
     Pr("%2>Assert",0L,0L);
 
@@ -1538,7 +1478,6 @@ void            PrintAssert3Args (
     /* print the closing parenthesis                                       */
     Pr(" %2<);",0L,0L);
 }
-  
 
 
 /****************************************************************************
@@ -1547,11 +1486,10 @@ void            PrintAssert3Args (
 **
 **  'PrintReturnObj' prints the return-value-statement <stat>.
 */
-void            PrintReturnObj (
-    Stat                stat )
+static void PrintReturnObj(Stat stat)
 {
     Expr expr = READ_STAT(stat, 0);
-    if (TNUM_EXPR(expr) == T_REF_GVAR &&
+    if (TNUM_EXPR(expr) == EXPR_REF_GVAR &&
         READ_STAT(expr, 0) == GVarName("TRY_NEXT_METHOD")) {
         Pr( "TryNextMethod();", 0L, 0L );
     }
@@ -1569,10 +1507,22 @@ void            PrintReturnObj (
 **
 **  'PrintReturnVoid' prints the return-void-statement <stat>.
 */
-void            PrintReturnVoid (
-    Stat                stat )
+static void PrintReturnVoid(Stat stat)
 {
     Pr( "return;", 0L, 0L );
+}
+
+
+/****************************************************************************
+**
+*F  PrintPragma(<stat>) . . . . . . . . . . . . . .  print a pragma-statement
+*/
+static void PrintPragma(Stat stat)
+{
+    UInt ix = READ_STAT(stat, 0);
+    Obj string = GET_VALUE_FROM_CURRENT_BODY(ix);
+
+    Pr("#%g", (Int)string, 0);
 }
 
 
@@ -1606,39 +1556,40 @@ static Int InitKernel (
     }
 
     /* install executors for compound statements                           */
-    InstallExecStatFunc( T_SEQ_STAT       , ExecSeqStat);
-    InstallExecStatFunc( T_SEQ_STAT2      , ExecSeqStat2);
-    InstallExecStatFunc( T_SEQ_STAT3      , ExecSeqStat3);
-    InstallExecStatFunc( T_SEQ_STAT4      , ExecSeqStat4);
-    InstallExecStatFunc( T_SEQ_STAT5      , ExecSeqStat5);
-    InstallExecStatFunc( T_SEQ_STAT6      , ExecSeqStat6);
-    InstallExecStatFunc( T_SEQ_STAT7      , ExecSeqStat7);
-    InstallExecStatFunc( T_IF             , ExecIf);
-    InstallExecStatFunc( T_IF_ELSE        , ExecIfElse);
-    InstallExecStatFunc( T_IF_ELIF        , ExecIfElif);
-    InstallExecStatFunc( T_IF_ELIF_ELSE   , ExecIfElifElse);
-    InstallExecStatFunc( T_FOR            , ExecFor);
-    InstallExecStatFunc( T_FOR2           , ExecFor2);
-    InstallExecStatFunc( T_FOR3           , ExecFor3);
-    InstallExecStatFunc( T_FOR_RANGE      , ExecForRange);
-    InstallExecStatFunc( T_FOR_RANGE2     , ExecForRange2);
-    InstallExecStatFunc( T_FOR_RANGE3     , ExecForRange3);
-    InstallExecStatFunc( T_WHILE          , ExecWhile);
-    InstallExecStatFunc( T_WHILE2         , ExecWhile2);
-    InstallExecStatFunc( T_WHILE3         , ExecWhile3);
-    InstallExecStatFunc( T_REPEAT         , ExecRepeat);
-    InstallExecStatFunc( T_REPEAT2        , ExecRepeat2);
-    InstallExecStatFunc( T_REPEAT3        , ExecRepeat3);
-    InstallExecStatFunc( T_BREAK          , ExecBreak);
-    InstallExecStatFunc( T_CONTINUE       , ExecContinue);
-    InstallExecStatFunc( T_INFO           , ExecInfo);
-    InstallExecStatFunc( T_ASSERT_2ARGS   , ExecAssert2Args);
-    InstallExecStatFunc( T_ASSERT_3ARGS   , ExecAssert3Args);
-    InstallExecStatFunc( T_RETURN_OBJ     , ExecReturnObj);
-    InstallExecStatFunc( T_RETURN_VOID    , ExecReturnVoid);
-    InstallExecStatFunc( T_EMPTY          , ExecEmpty);
+    InstallExecStatFunc( STAT_SEQ_STAT       , ExecSeqStat);
+    InstallExecStatFunc( STAT_SEQ_STAT2      , ExecSeqStat2);
+    InstallExecStatFunc( STAT_SEQ_STAT3      , ExecSeqStat3);
+    InstallExecStatFunc( STAT_SEQ_STAT4      , ExecSeqStat4);
+    InstallExecStatFunc( STAT_SEQ_STAT5      , ExecSeqStat5);
+    InstallExecStatFunc( STAT_SEQ_STAT6      , ExecSeqStat6);
+    InstallExecStatFunc( STAT_SEQ_STAT7      , ExecSeqStat7);
+    InstallExecStatFunc( STAT_IF             , ExecIf);
+    InstallExecStatFunc( STAT_IF_ELSE        , ExecIfElse);
+    InstallExecStatFunc( STAT_IF_ELIF        , ExecIfElif);
+    InstallExecStatFunc( STAT_IF_ELIF_ELSE   , ExecIfElifElse);
+    InstallExecStatFunc( STAT_FOR            , ExecFor);
+    InstallExecStatFunc( STAT_FOR2           , ExecFor2);
+    InstallExecStatFunc( STAT_FOR3           , ExecFor3);
+    InstallExecStatFunc( STAT_FOR_RANGE      , ExecForRange);
+    InstallExecStatFunc( STAT_FOR_RANGE2     , ExecForRange2);
+    InstallExecStatFunc( STAT_FOR_RANGE3     , ExecForRange3);
+    InstallExecStatFunc( STAT_WHILE          , ExecWhile);
+    InstallExecStatFunc( STAT_WHILE2         , ExecWhile2);
+    InstallExecStatFunc( STAT_WHILE3         , ExecWhile3);
+    InstallExecStatFunc( STAT_REPEAT         , ExecRepeat);
+    InstallExecStatFunc( STAT_REPEAT2        , ExecRepeat2);
+    InstallExecStatFunc( STAT_REPEAT3        , ExecRepeat3);
+    InstallExecStatFunc( STAT_BREAK          , ExecBreak);
+    InstallExecStatFunc( STAT_CONTINUE       , ExecContinue);
+    InstallExecStatFunc( STAT_INFO           , ExecInfo);
+    InstallExecStatFunc( STAT_ASSERT_2ARGS   , ExecAssert2Args);
+    InstallExecStatFunc( STAT_ASSERT_3ARGS   , ExecAssert3Args);
+    InstallExecStatFunc( STAT_RETURN_OBJ     , ExecReturnObj);
+    InstallExecStatFunc( STAT_RETURN_VOID    , ExecReturnVoid);
+    InstallExecStatFunc( STAT_EMPTY          , ExecEmpty);
+    InstallExecStatFunc( STAT_PRAGMA         , ExecEmpty);
 #ifdef HPCGAP
-    InstallExecStatFunc( T_ATOMIC         , ExecAtomic);
+    InstallExecStatFunc( STAT_ATOMIC         , ExecAtomic);
 #endif
 
     /* install printers for non-statements                                */
@@ -1646,39 +1597,40 @@ static Int InitKernel (
         InstallPrintStatFunc(i, PrintUnknownStat);
     }
     /* install printing functions for compound statements                  */
-    InstallPrintStatFunc( T_SEQ_STAT       , PrintSeqStat);
-    InstallPrintStatFunc( T_SEQ_STAT2      , PrintSeqStat);
-    InstallPrintStatFunc( T_SEQ_STAT3      , PrintSeqStat);
-    InstallPrintStatFunc( T_SEQ_STAT4      , PrintSeqStat);
-    InstallPrintStatFunc( T_SEQ_STAT5      , PrintSeqStat);
-    InstallPrintStatFunc( T_SEQ_STAT6      , PrintSeqStat);
-    InstallPrintStatFunc( T_SEQ_STAT7      , PrintSeqStat);
-    InstallPrintStatFunc( T_IF             , PrintIf);
-    InstallPrintStatFunc( T_IF_ELSE        , PrintIf);
-    InstallPrintStatFunc( T_IF_ELIF        , PrintIf);
-    InstallPrintStatFunc( T_IF_ELIF_ELSE   , PrintIf);
-    InstallPrintStatFunc( T_FOR            , PrintFor);
-    InstallPrintStatFunc( T_FOR2           , PrintFor);
-    InstallPrintStatFunc( T_FOR3           , PrintFor);
-    InstallPrintStatFunc( T_FOR_RANGE      , PrintFor);
-    InstallPrintStatFunc( T_FOR_RANGE2     , PrintFor);
-    InstallPrintStatFunc( T_FOR_RANGE3     , PrintFor);
-    InstallPrintStatFunc( T_WHILE          , PrintWhile);
-    InstallPrintStatFunc( T_WHILE2         , PrintWhile);
-    InstallPrintStatFunc( T_WHILE3         , PrintWhile);
-    InstallPrintStatFunc( T_REPEAT         , PrintRepeat);
-    InstallPrintStatFunc( T_REPEAT2        , PrintRepeat);
-    InstallPrintStatFunc( T_REPEAT3        , PrintRepeat);
-    InstallPrintStatFunc( T_BREAK          , PrintBreak);
-    InstallPrintStatFunc( T_CONTINUE       , PrintContinue);
-    InstallPrintStatFunc( T_INFO           , PrintInfo);
-    InstallPrintStatFunc( T_ASSERT_2ARGS   , PrintAssert2Args);
-    InstallPrintStatFunc( T_ASSERT_3ARGS   , PrintAssert3Args);
-    InstallPrintStatFunc( T_RETURN_OBJ     , PrintReturnObj);
-    InstallPrintStatFunc( T_RETURN_VOID    , PrintReturnVoid);
-    InstallPrintStatFunc( T_EMPTY          , PrintEmpty);
+    InstallPrintStatFunc( STAT_SEQ_STAT       , PrintSeqStat);
+    InstallPrintStatFunc( STAT_SEQ_STAT2      , PrintSeqStat);
+    InstallPrintStatFunc( STAT_SEQ_STAT3      , PrintSeqStat);
+    InstallPrintStatFunc( STAT_SEQ_STAT4      , PrintSeqStat);
+    InstallPrintStatFunc( STAT_SEQ_STAT5      , PrintSeqStat);
+    InstallPrintStatFunc( STAT_SEQ_STAT6      , PrintSeqStat);
+    InstallPrintStatFunc( STAT_SEQ_STAT7      , PrintSeqStat);
+    InstallPrintStatFunc( STAT_IF             , PrintIf);
+    InstallPrintStatFunc( STAT_IF_ELSE        , PrintIf);
+    InstallPrintStatFunc( STAT_IF_ELIF        , PrintIf);
+    InstallPrintStatFunc( STAT_IF_ELIF_ELSE   , PrintIf);
+    InstallPrintStatFunc( STAT_FOR            , PrintFor);
+    InstallPrintStatFunc( STAT_FOR2           , PrintFor);
+    InstallPrintStatFunc( STAT_FOR3           , PrintFor);
+    InstallPrintStatFunc( STAT_FOR_RANGE      , PrintFor);
+    InstallPrintStatFunc( STAT_FOR_RANGE2     , PrintFor);
+    InstallPrintStatFunc( STAT_FOR_RANGE3     , PrintFor);
+    InstallPrintStatFunc( STAT_WHILE          , PrintWhile);
+    InstallPrintStatFunc( STAT_WHILE2         , PrintWhile);
+    InstallPrintStatFunc( STAT_WHILE3         , PrintWhile);
+    InstallPrintStatFunc( STAT_REPEAT         , PrintRepeat);
+    InstallPrintStatFunc( STAT_REPEAT2        , PrintRepeat);
+    InstallPrintStatFunc( STAT_REPEAT3        , PrintRepeat);
+    InstallPrintStatFunc( STAT_BREAK          , PrintBreak);
+    InstallPrintStatFunc( STAT_CONTINUE       , PrintContinue);
+    InstallPrintStatFunc( STAT_INFO           , PrintInfo);
+    InstallPrintStatFunc( STAT_ASSERT_2ARGS   , PrintAssert2Args);
+    InstallPrintStatFunc( STAT_ASSERT_3ARGS   , PrintAssert3Args);
+    InstallPrintStatFunc( STAT_RETURN_OBJ     , PrintReturnObj);
+    InstallPrintStatFunc( STAT_RETURN_VOID    , PrintReturnVoid);
+    InstallPrintStatFunc( STAT_EMPTY          , PrintEmpty);
+    InstallPrintStatFunc( STAT_PRAGMA         , PrintPragma);
 #ifdef HPCGAP
-    InstallPrintStatFunc( T_ATOMIC         , PrintAtomic);
+    InstallPrintStatFunc( STAT_ATOMIC         , PrintAtomic);
 #endif
 
     for ( i = 0; i < ARRAY_SIZE(ExecStatFuncs); i++ )

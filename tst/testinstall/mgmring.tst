@@ -1,10 +1,4 @@
-#############################################################################
-##
-#W  mgmring.tst                 GAP library                     Thomas Breuer
-##
-##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-##
+#@local centre,img,m,membrm,r,rembrm,rm
 gap> START_TEST("mgmring.tst");
 gap> r:= GF(3);;
 gap> m:= Group( (1,2,3), (1,2) );;
@@ -18,8 +12,8 @@ gap> IsGroupRing( rm );
 true
 gap> centre:= Centre( rm );
 <algebra-with-one of dimension 3 over GF(3)>
-gap> GeneratorsOfAlgebra( centre );
-[ (Z(3)^0)*(), (Z(3)^0)*(), (Z(3)^0)*(2,3)+(Z(3)^0)*(1,2)+(Z(3)^0)*(1,3), 
+gap> AsSet( GeneratorsOfAlgebra( centre ) );
+[ (Z(3)^0)*(), (Z(3)^0)*(2,3)+(Z(3)^0)*(1,2)+(Z(3)^0)*(1,3), 
   (Z(3)^0)*(1,2,3)+(Z(3)^0)*(1,3,2) ]
 gap> membrm:= Embedding( m, rm );;
 gap> img:= Image( membrm, (1,2) );
@@ -32,7 +26,3 @@ gap> img:= Image( rembrm, Z(3) );
 gap> PreImagesRepresentative( rembrm, img );
 Z(3)
 gap> STOP_TEST( "mgmring.tst", 1);
-
-#############################################################################
-##
-#E

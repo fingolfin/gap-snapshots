@@ -1,16 +1,21 @@
+#
+# This file has been modified to better fit with the needs of GAP,
+# and as such deviates from the original version described below.
+#
 # =============================================================================
 #  https://www.gnu.org/software/autoconf-archive/ax_compiler_flags_cflags.html
 # =============================================================================
 #
 # SYNOPSIS
 #
-#   AX_COMPILER_FLAGS_CFLAGS([VARIABLE], [IS-RELEASE], [EXTRA-BASE-FLAGS], [EXTRA-YES-FLAGS])
+#   AX_COMPILER_WARNING_FLAGS
 #
 # DESCRIPTION
 #
-#   Add warning flags for the C compiler to VARIABLE, which defaults to
-#   WARN_CFLAGS.  VARIABLE is AC_SUBST-ed by this macro, but must be
-#   manually added to the CFLAGS variable for each target in the code base.
+#   Add warning flags for the C compiler to WARN_CFLAGS, and for the C++
+#   compiler in WARN_CXXFLAGS. Both variables are AC_SUBST-ed by this macro,
+#   but must be manually added to the CFLAGS respectively CXXFLAGS variables
+#   for each target in the code base.
 #
 #   This macro depends on the environment set up by AX_COMPILER_FLAGS.
 #   Specifically, it uses the value of $ax_enable_compile_warnings to decide
@@ -28,15 +33,15 @@
 
 #serial 16
 
-AC_DEFUN([AX_COMPILER_FLAGS_CFLAGS],[
+AC_DEFUN([AX_COMPILER_WARNING_FLAGS],[
     AC_REQUIRE([AC_PROG_SED])
     AX_REQUIRE_DEFINED([AX_APPEND_COMPILE_FLAGS])
     AX_REQUIRE_DEFINED([AX_APPEND_FLAG])
     AX_REQUIRE_DEFINED([AX_CHECK_COMPILE_FLAG])
 
     # Variable names
-    m4_define([ax_warn_cflags_variable],
-              [m4_normalize(ifelse([$1],,[WARN_CFLAGS],[$1]))])
+    m4_define([ax_warn_cflags_variable],[WARN_CFLAGS])
+    m4_define([ax_warn_cxxflags_variable],[WARN_CXXFLAGS])
 
     AC_LANG_PUSH([C])
 
@@ -68,7 +73,6 @@ AC_DEFUN([AX_COMPILER_FLAGS_CFLAGS],[
     # Base flags
     AX_APPEND_COMPILE_FLAGS([ dnl
         -fno-strict-aliasing dnl
-        $3 dnl
     ],ax_warn_cflags_variable,[$ax_compiler_flags_test])
 
     AS_IF([test "$ax_enable_compile_warnings" != "no"],[
@@ -76,59 +80,71 @@ AC_DEFUN([AX_COMPILER_FLAGS_CFLAGS],[
         AX_APPEND_COMPILE_FLAGS([ dnl
             -Wall dnl
             -Wextra dnl
-            -Wundef dnl
-            -Wwrite-strings dnl
-            -Wpointer-arith dnl
-            dnl -Wmissing-declarations dnl
-            -Wredundant-decls dnl
-            -Wno-unused-parameter dnl
-            -Wmissing-field-initializers dnl
-            -Wformat=2 dnl
-            -Wold-style-definition dnl
+            -Warray-bounds dnl
             dnl -Wcast-align dnl
+            -Wno-cast-function-type dnl # GCC otherwise warns about ObjFunc casts in GVAR_FUNC
+            -Wdouble-promotion dnl
+            -Wduplicated-branches dnl
+            -Wduplicated-cond dnl
             -Wformat-nonliteral dnl
             -Wformat-security dnl
-            -Wno-sign-compare dnl
-            -Wstrict-aliasing dnl
-            -Wshadow dnl
-            -Winline dnl
-            -Wpacked dnl
-            -Wmissing-format-attribute dnl
-            dnl -Wmissing-noreturn dnl
+            -Wformat=2 dnl
             -Winit-self dnl
-            -Wredundant-decls dnl
-            -Wmissing-include-dirs dnl
-            -Wunused-but-set-variable dnl
-            -Warray-bounds dnl
-            -Wreturn-type dnl
-            dnl -Wswitch-enum dnl
-            dnl -Wswitch-default dnl
-            -Wno-implicit-fallthrough dnl
-            -Wno-inline dnl
-            -Wduplicated-cond dnl
-            -Wduplicated-branches dnl
+            -Wno-inline dnl # lots of warnings with GCC on Linux
             -Wlogical-op dnl
-            -Wrestrict dnl
+            dnl -Wmissing-declarations dnl
+            -Wmissing-field-initializers dnl
+            -Wmissing-format-attribute dnl
+            -Wmissing-include-dirs dnl
+            dnl -Wmissing-noreturn dnl
+            -Wmissing-variable-declarations dnl
+            -Wno-pragmas dnl # for GCC and the ObjFunc typedef
             dnl -Wnull-dereference dnl
-            -Wdouble-promotion dnl
-            -Wno-cast-function-type dnl
-            $4 dnl
-            $5 dnl
-            $6 dnl
-            $7 dnl
+            -Wpacked dnl
+            -Wpointer-arith dnl
+            -Wredundant-decls dnl
+            -Wredundant-decls dnl
+            -Wrestrict dnl
+            -Wreturn-type dnl
+            -Wshadow dnl
+            -Wno-sign-compare dnl # disabled: too many places trigger this
+            -Wstrict-aliasing dnl
+            dnl -Wstrict-prototypes dnl # disabled because GCC does not support it for C code (clang does)
+            dnl -Wswitch-default dnl
+            dnl -Wswitch-enum dnl
+            -Wundef dnl
+            -Wunused-but-set-variable dnl
+            -Wno-unused-parameter dnl # disabled: too many places trigger this
+            -Wwrite-strings dnl
         ],ax_warn_cflags_variable,[$ax_compiler_flags_test])
+
+        # HACK: use the warning flags determined so far also for the C++ compiler.
+        # This assumes that the C and C++ compiler are "related" and thus will
+        # accept similar warnings flags.
+        AS_VAR_SET(ax_warn_cxxflags_variable,[$ax_warn_cflags_variable])
+
+        # Test for warnings that only work in C++, not in C
         if test "$ax_compiler_cxx" = "no" ; then
-            # C-only flags. Warn in C++
             AX_APPEND_COMPILE_FLAGS([ dnl
-            -Wnested-externs dnl
-            dnl -Wmissing-prototypes dnl
-            dnl -Wstrict-prototypes dnl
             dnl -Wdeclaration-after-statement dnl
+            -Wno-implicit-fallthrough dnl
             -Wimplicit-function-declaration dnl
-            -Wold-style-definition dnl
             -Wjump-misses-init dnl
+            dnl -Wmissing-prototypes dnl
+            -Wnested-externs dnl
+            -Wold-style-definition dnl
+            -Wstrict-prototypes dnl
             ],ax_warn_cflags_variable,[$ax_compiler_flags_test])
         fi
+
+        # Test for warnings that only work in C++, not in C
+        AC_LANG_PUSH([C++])
+            AX_APPEND_COMPILE_FLAGS([ dnl
+            -Wextra-semi dnl
+            ],ax_warn_cxxflags_variable,[$ax_compiler_flags_test])
+        AC_LANG_POP([C++])
+
+
     ])
     AS_IF([test "$ax_enable_compile_warnings" = "error"],[
         # "error" flags; -Werror has to be appended unconditionally because
@@ -137,6 +153,7 @@ AC_DEFUN([AX_COMPILER_FLAGS_CFLAGS],[
         # suggest-attribute=format is disabled because it gives too many false
         # positives
         AX_APPEND_FLAG([-Werror],ax_warn_cflags_variable)
+        AX_APPEND_FLAG([-Werror],ax_warn_cxxflags_variable)
 
         AX_APPEND_COMPILE_FLAGS([ dnl
             [$ax_compiler_no_suggest_attribute_flags] dnl
@@ -161,4 +178,5 @@ AC_DEFUN([AX_COMPILER_FLAGS_CFLAGS],[
 
     # Substitute the variables
     AC_SUBST(ax_warn_cflags_variable)
+    AC_SUBST(ax_warn_cxxflags_variable)
 ])dnl AX_COMPILER_FLAGS

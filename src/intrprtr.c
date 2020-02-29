@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  intrprtr.c                  GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the functions of the immediate interpreter package.
 **
@@ -26,6 +26,8 @@
 #include "funcs.h"
 #include "gapstate.h"
 #include "gvars.h"
+#include "hookintrprtr.h"
+#include "info.h"
 #include "integer.h"
 #include "io.h"
 #include "lists.h"
@@ -82,8 +84,36 @@
 */
 /* TL: UInt IntrCoding; */
 
+// INTERPRETER_PROFILE_HOOK deals with profiling of immediately executed
+// code.
+// If STATE(IntrCoding) is true, profiling is handled by the AST
+// generation and execution. Otherwise, we always mark the line as
+// read, and mark as executed if STATE(IntrReturning) and STATE(IntrIgnoring)
+// are both false.
+//
+// IgnoreLevel gives the highest value of IntrIgnoring which means this
+// statement is NOT ignored (this is usually, but not always, 0)
+#define INTERPRETER_PROFILE_HOOK(ignoreLevel)                                \
+    if (!STATE(IntrCoding)) {                                                \
+        InterpreterHook(GetInputFilenameID(), STATE(InterpreterStartLine),   \
+                        STATE(IntrReturning) ||                              \
+                            (STATE(IntrIgnoring) > ignoreLevel));            \
+    }                                                                        \
+    STATE(InterpreterStartLine) = 0;
 
-#define SKIP_IF_RETURNING() if ( STATE(IntrReturning) > 0 ) { return; }
+
+// Put the profiling hook into SKIP_IF_RETURNING, as this is run in
+// (nearly) every part of the interpreter, avoid lots of extra code.
+#define SKIP_IF_RETURNING()                                                  \
+    INTERPRETER_PROFILE_HOOK(0);                                             \
+    SKIP_IF_RETURNING_NO_PROFILE_HOOK();
+
+// Need to
+#define SKIP_IF_RETURNING_NO_PROFILE_HOOK()                                  \
+    if (STATE(IntrReturning) > 0) {                                          \
+        return;                                                              \
+    }
+
 #define SKIP_IF_IGNORING()  if ( STATE(IntrIgnoring)  > 0 ) { return; }
 
 
@@ -171,57 +201,6 @@ static Obj PopVoidObj(void)
     return val;
 }
 
-static inline void StartFakeFuncExpr(Int startLine)
-{
-    assert(STATE(IntrCoding) == 0);
-
-    // switch to coding mode now
-    CodeBegin();
-
-    // code a function expression (with no arguments and locals)
-    Obj nams = NEW_PLIST(T_PLIST, 0);
-
-    // If we are in the break loop, then a local variable context may well
-    // exist, and we have to create an empty local variable names list to
-    // match the function expression that we are creating.
-    //
-    // Without this, access to variables defined in the existing local
-    // variable context will be coded as LVAR accesses; but when we then
-    // execute this code, they will not actually be available in the current
-    // context, but rather one level up, i.e., they really should have been
-    // coded as HVARs.
-    //
-    // If we are not in a break loop, then this would be a waste of time and
-    // effort
-    if (LEN_PLIST(STATE(StackNams)) > 0) {
-        PushPlist(STATE(StackNams), nams);
-    }
-
-    CodeFuncExprBegin(0, 0, nams, startLine);
-}
-
-static inline void FinishAndCallFakeFuncExpr(void)
-{
-    assert(STATE(IntrCoding) == 0);
-
-    // code a function expression (with one statement in the body)
-    CodeFuncExprEnd(1);
-
-    // switch back to immediate mode and get the function
-    Obj func = CodeEnd(0);
-
-    // If we are in a break loop, then we will have created a "dummy" local
-    // variable names list to get the counts right. Remove it.
-    const UInt len = LEN_PLIST(STATE(StackNams));
-    if (len > 0)
-        PopPlist(STATE(StackNams));
-
-    // call the function
-    CALL_0ARGS(func);
-
-    // push void
-    PushVoidObj();
-}
 
 /****************************************************************************
 **
@@ -377,7 +356,7 @@ void            IntrFuncCallEnd (
     UInt                i;              /* loop variable                   */
 
     /* ignore or code                                                      */
-    SKIP_IF_RETURNING();
+    SKIP_IF_RETURNING_NO_PROFILE_HOOK();
     SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) {
       CodeFuncCallEnd( funccall, options, nr );
@@ -424,7 +403,7 @@ void            IntrFuncCallEnd (
       }
       val = DoOperation2Args(CallFuncListOper, func, args);
     } else {
-      /* call the function                                                   */
+      /* call the function                                                 */
       if      ( 0 == nr ) { val = CALL_0ARGS( func ); }
       else if ( 1 == nr ) { val = CALL_1ARGS( func, a1 ); }
       else if ( 2 == nr ) { val = CALL_2ARGS( func, a1, a2 ); }
@@ -496,7 +475,7 @@ void IntrFuncExprEnd(UInt nr)
     assert(STATE(IntrCoding) > 0);
 
     STATE(IntrCoding)--;
-    CodeFuncExprEnd(nr);
+    CodeFuncExprEnd(nr, 1);
 
     if (STATE(IntrCoding) == 0) {
         // switch back to immediate mode and get the function
@@ -547,10 +526,10 @@ void            IntrIfBegin ( void )
 
     // if IntrIgnoring is positive, increment it, as IntrIgnoring == 1 has a
     // special meaning when parsing if-statements -- it is used to skip
-    // interpreting or coding branches of the if-statement which never will be
-    // executed, either because a previous branch is always executed (i.e., it
-    // has a 'true' condition), or else because the current branch has a
-    // 'false' condition
+    // interpreting or coding branches of the if-statement which never will
+    // be executed, either because a previous branch is always executed
+    // (i.e., it has a 'true' condition), or else because the current branch
+    // has a 'false' condition
     if ( STATE(IntrIgnoring)  > 0 ) { STATE(IntrIgnoring)++; return; }
     if ( STATE(IntrCoding)    > 0 ) { CodeIfBegin(); return; }
 
@@ -593,9 +572,7 @@ void            IntrIfBeginBody ( void )
     /* get and check the condition                                         */
     cond = PopObj();
     if ( cond != True && cond != False ) {
-        ErrorQuit(
-            "<expr> must be 'true' or 'false' (not a %s)",
-            (Int)TNAM_OBJ(cond), 0L );
+        RequireArgumentEx(0, cond, "<expr>", "must be 'true' or 'false'");
     }
 
     /* if the condition is 'false', ignore the body                        */
@@ -608,6 +585,9 @@ Int            IntrIfEndBody (
     UInt                nr )
 {
     UInt                i;              /* loop variable                   */
+
+    /* explicitly check interpreter hooks, as not using SKIP_IF_RETURNING  */
+    INTERPRETER_PROFILE_HOOK(0);
 
     /* ignore or code                                                      */
     if ( STATE(IntrReturning) > 0 ) { return 0; }
@@ -631,8 +611,10 @@ Int            IntrIfEndBody (
 void            IntrIfEnd (
     UInt                nr )
 {
-    /* ignore or code                                                      */
-    SKIP_IF_RETURNING();
+    // ignore or code
+    INTERPRETER_PROFILE_HOOK(1);
+    SKIP_IF_RETURNING_NO_PROFILE_HOOK();
+
     if ( STATE(IntrIgnoring)  > 1 ) { STATE(IntrIgnoring)--; return; }
 
     // if one branch was executed (ignoring the others), reset IntrIgnoring
@@ -826,7 +808,7 @@ void            IntrWhileEnd ( void )
 
 /****************************************************************************
 **
-*F  IntrQualifiedExprBegin( UInt qual ) . . . . . . interpret expression guarded
+*F  IntrQualifiedExprBegin( UInt qual ) . . . .  interpret expression guarded
 **                                       by readwrite or readonly
 *F  IntrQualifiedExprEnd( ) 
 **                                       by readwrite or readonly
@@ -856,30 +838,30 @@ void IntrQualifiedExprEnd( void )
 
 /****************************************************************************
 **
-*F  IntrAtomicBegin()  . . . . . interpret atomic-statement, begin of statement
-*F  IntrAtomicBeginBody(<nrexprs>)  . . . . .  interpret atomic-statement, begin of body
-*F  IntrAtomicEndBody(<nrstats>)  . . . . .  interpret atomic-statement, end of body
-*F  IntrAtomicEnd()  . . . . . . . interpret atomic-statement, end of statement
+*F  IntrAtomicBegin() . . . .  interpret atomic-statement, begin of statement
+*F  IntrAtomicBeginBody(<nrexprs>)  interpret atomic-statement, begin of body
+*F  IntrAtomicEndBody(<nrstats>) . .  interpret atomic-statement, end of body
+*F  IntrAtomicEnd() . . . . . .  interpret atomic-statement, end of statement
 **
-**  'IntrAtomicBegin' is   an action to  interpret   a atomic-statement.  It is
-**  called when the    reader encounters the    'atomic', i.e., *before*   the
+**  'IntrAtomicBegin' is an action to interpret an atomic-statement. It is
+**  called when the reader encounters the 'atomic', i.e., *before* the
 **  expressions to be locked are read.
 **
-**  'IntrAtomicBeginBody' is an action  to interpret a atomic-statement.  It is
-**  called when the reader encounters  the  beginning of the statement  body,
-**  i.e., *after* the expressions to be locked are read. <nrexprs> is the number
-** of expressions to be locked
+**  'IntrAtomicBeginBody' is an action to interpret an atomic-statement. It
+**  is called when the reader encounters the beginning of the statement body,
+**  i.e., *after* the expressions to be locked are read. <nrexprs> is the
+**  number of expressions to be locked
 **
-**  'IntrAtomicEndBody' is  an action to interpret   a atomic-statement.  It is
-**  called when the reader encounters the end of the statement body.  <nrstats> is
-**  the number of statements in the body.
+**  'IntrAtomicEndBody' is an action to interpret an atomic-statement. It is
+**  called when the reader encounters the end of the statement body.
+**  <nrstats> is the number of statements in the body.
 **
-**  'IntrAtomicEnd' is an action to interpret a atomic-statement.  It is called
-**  when  the reader encounters  the  end of  the  statement, i.e., immediate
-**  after 'IntrAtomicEndBody'.
+**  'IntrAtomicEnd' is an action to interpret an atomic-statement. It is
+**  called when the reader encounters the end of the statement, i.e.,
+**  immediately after 'IntrAtomicEndBody'.
 **
-**  These functions only do something meaningful inside HPC-GAP; in plain GAP,
-**  they are simply placeholders.
+**  These functions only do something meaningful inside HPC-GAP; in plain
+**  GAP, they are simply placeholders.
 */
 void            IntrAtomicBegin ( void )
 {
@@ -1040,13 +1022,13 @@ void            IntrBreak ( void )
 
 /****************************************************************************
 **
-*F  IntrContinue() . . . . . . . . . . . . . . . . . . interpret continue-statement
+*F  IntrContinue() . . . . . . . . . . . . . . . interpret continue-statement
 **
-**  'IntrContinue'  is the action to interpret  a continue-statement.  It is called
-**  when the reader encounters a 'continue;'.
+**  'IntrContinue' is the action to interpret a continue-statement. It is
+**  called when the reader encounters a 'continue;'.
 **
-**  Continue-statements are  always coded (if  they are not ignored), since they
-**  can only appear in loops.
+**  Continue-statements are always coded (if they are not ignored), since
+**  they can only appear in loops.
 */
 void            IntrContinue ( void )
 {
@@ -1181,14 +1163,16 @@ void IntrHelp(Obj topic)
 
     /* FIXME: Hard coded function name */
     hgvar = GVarName("HELP");
-    if (hgvar == 0) {
-        ErrorQuit( "Global function \"HELP\" is not declared. Cannot access help.",
-                   0L, 0L );
-    }
     help = ValGVar(hgvar);
     if (!help) {
-        ErrorQuit( "Global function \"HELP\" is not defined. Cannot access help.",
-                   0L, 0L );
+        ErrorQuit(
+            "Global variable \"HELP\" is not defined. Cannot access help", 0,
+            0);
+    }
+    if (!IS_FUNC(help)) {
+        ErrorQuit(
+            "Global variable \"HELP\" is not a function. Cannot access help",
+            0, 0);
     }
 
     res = CALL_1ARGS(help, topic);
@@ -1206,7 +1190,7 @@ void IntrHelp(Obj topic)
 **
 **  'IntrOrL' is an action to interpret an or-expression.   It is called when
 **  the reader encounters the 'or' keyword, i.e., *after* the left operand is
-**  read by *before* the right operand is read.
+**  read but *before* the right operand is read.
 **
 **  'IntrOr' is an action to  interpret an or-expression.   It is called when
 **  the reader encountered  the  end of  the  expression, i.e., *after*  both
@@ -1260,15 +1244,13 @@ void            IntrOr ( void )
             PushObj( opR );
         }
         else {
-            ErrorQuit( "<expr> must be 'true' or 'false' (not a %s)",
-                       (Int)TNAM_OBJ(opR), 0L );
+            RequireArgumentEx(0, opR, "<expr>", "must be 'true' or 'false'");
         }
     }
 
     /* signal an error                                                     */
     else {
-        ErrorQuit( "<expr> must be 'true' or 'false' (not a %s)",
-                   (Int)TNAM_OBJ(opL), 0L );
+        RequireArgumentEx(0, opL, "<expr>", "must be 'true' or 'false'");
     }
 }
 
@@ -1280,7 +1262,7 @@ void            IntrOr ( void )
 **
 **  'IntrAndL' is  an action  to interpret an   and-expression.  It is called
 **  when the reader  encounters the  'and'  keyword, i.e., *after*  the  left
-**  operand is read by *before* the right operand is read.
+**  operand is read but *before* the right operand is read.
 **
 **  'IntrAnd' is an action to interpret an and-expression.  It is called when
 **  the reader encountered   the end of   the expression, i.e., *after*  both
@@ -1334,29 +1316,19 @@ void            IntrAnd ( void )
             PushObj( opR );
         }
         else {
-            ErrorQuit(
-                "<expr> must be 'true' or 'false' (not a %s)",
-                (Int)TNAM_OBJ(opR), 0L );
+            RequireArgumentEx(0, opR, "<expr>", "must be 'true' or 'false'");
         }
     }
 
     /* handle the 'and' of two filters                                    */
-    else if ( IS_OPERATION(opL) ) {
-        if ( IS_OPERATION(opR) ) {
-            PushObj( NewAndFilter( opL, opR ) );
-        }
-        else {
-            ErrorQuit(
-                "<expr> must be 'true' or 'false' (not a %s)",
-                (Int)TNAM_OBJ(opL), 0L );
-        }
+    else if (IS_FILTER(opL)) {
+        PushObj(NewAndFilter(opL, opR));
     }
 
     /* signal an error                                                     */
     else {
-        ErrorQuit(
-            "<expr> must be 'true' or 'false' (not a %s)",
-            (Int)TNAM_OBJ(opL), 0L );
+        RequireArgumentEx(0, opL, "<expr>",
+                          "must be 'true' or 'false' or a filter");
     }
 }
 
@@ -1382,9 +1354,7 @@ void            IntrNot ( void )
     /* get and check the operand                                           */
     op = PopObj();
     if ( op != True && op != False ) {
-        ErrorQuit(
-            "<expr> must be 'true' or 'false' (not a %s)",
-            (Int)TNAM_OBJ(op), 0L );
+        RequireArgumentEx(0, op, "<expr>", "must be 'true' or 'false'");
     }
 
     /* negate the operand                                                  */
@@ -1408,7 +1378,7 @@ void            IntrNot ( void )
 **  actions to interpret the respective operator expression.  They are called
 **  by the reader *after* *both* operands are read.
 */
-void            IntrXX ( void )
+static void StackSwap(void)
 {
     Obj                 opL;            /* left operand                    */
     Obj                 opR;            /* right operand                   */
@@ -1503,7 +1473,7 @@ void            IntrGt ( void )
 
 
     /* '<left> > <right>' is '<right> < <left>'                            */
-    IntrXX();
+    StackSwap();
     IntrLt();
 }
 
@@ -1516,7 +1486,7 @@ void            IntrLe ( void )
 
 
     /* '<left> <= <right>' is 'not <right> < <left>'                       */
-    IntrXX();
+    StackSwap();
     IntrLt();
     IntrNot();
 }
@@ -1788,16 +1758,13 @@ void IntrFloatExpr(Obj string, Char * str)
     /* ignore or code                                                      */
     SKIP_IF_RETURNING();
     SKIP_IF_IGNORING();
+    if (string == 0)
+        string = MakeString(str);
     if ( STATE(IntrCoding)    > 0 ) {
-        if (string)
-            CodeLongFloatExpr(string);
-        else
-            CodeFloatExpr( str );
+        CodeFloatExpr(string);
         return;
     }
 
-    if (string == 0)
-        string = MakeString(str);
     PushObj(ConvertFloatLiteralEager(string));
 }
 
@@ -1914,16 +1881,17 @@ void            IntrCharExpr (
 *F  IntrPermCycle(<nr>) . . . . . .  interpret literal permutation expression
 *F  IntrPerm(<nr>)  . . . . . . . .  interpret literal permutation expression
 */
+static Obj GetFromStack(Obj cycle, Int j)
+{
+    return PopObj();
+}
+
 void            IntrPermCycle (
     UInt                nrx,
     UInt                nrc )
 {
     Obj                 perm;           /* permutation                     */
-    UInt4 *             ptr4;           /* pointer into perm               */
-    Obj                 val;            /* one entry as value              */
-    UInt                c, p, l;        /* entries in permutation          */
     UInt                m;              /* maximal entry in permutation    */
-    UInt                j, k;           /* loop variable                   */
 
     /* ignore or code                                                      */
     SKIP_IF_RETURNING();
@@ -1935,63 +1903,14 @@ void            IntrPermCycle (
     if ( nrc == 1 ) {
         m = 0;
         perm = NEW_PERM4( 0 );
-        ptr4 = ADDR_PERM4( perm );
     }
     else {
         const UInt countObj = LEN_PLIST(STATE(StackObj));
         m = INT_INTOBJ( ELM_LIST( STATE(StackObj), countObj - nrx ) );
         perm = ELM_LIST( STATE(StackObj), countObj - nrx - 1 );
-        ptr4 = ADDR_PERM4( perm );
     }
 
-    /* multiply the permutation with the cycle                             */
-    c = p = l = 0;
-    for ( j = nrx; 1 <= j; j-- ) {
-
-        /* get and check current entry for the cycle                       */
-        val = PopObj();
-        if ( ! IS_INTOBJ(val) || INT_INTOBJ(val) <= 0 ) {
-            ErrorQuit(
-                "Permutation: <expr> must be a positive integer (not a %s)",
-                (Int)TNAM_OBJ(val), 0L );
-        }
-        c = INT_INTOBJ(val);
-        if (c > MAX_DEG_PERM4)
-          ErrorQuit( "Permutation literal exceeds maximum permutation degree -- %i vs %i",
-                     c, MAX_DEG_PERM4);
-
-        /* if necessary resize the permutation                             */
-        if (DEG_PERM4(perm) < c) {
-            ResizeBag(perm, SIZEBAG_PERM4((c + 1023) / 1024 * 1024));
-            ptr4 = ADDR_PERM4( perm );
-            for (k = m + 1; k <= DEG_PERM4(perm); k++) {
-                ptr4[k-1] = k-1;
-            }
-        }
-        if ( m < c ) {
-            m = c;
-        }
-
-        /* check that the cycles are disjoint                              */
-        if ( (p != 0 && p == c) || (ptr4[c-1] != c-1) ) {
-            ErrorQuit(
-                "Permutation: cycles must be disjoint and duplicate-free",
-                0L, 0L );
-        }
-
-        /* enter the previous entry at current location                    */
-        if ( p != 0 ) { ptr4[c-1] = p-1; }
-        else          { l = c;          }
-
-        /* remember current entry for next round                           */
-        p = c;
-    }
-
-    /* enter first (last popped) entry at last (first popped) location     */
-    if (ptr4[l-1] != l-1) {
-        ErrorQuit("Permutation: cycles must be disjoint and duplicate-free", 0L, 0L );
-    }
-    ptr4[l-1] = p-1;
+    m = ScanPermCycle(perm, m, 0, nrx, GetFromStack);
 
     /* push the permutation (if necessary, drop permutation first)         */
     if ( nrc != 1 ) { PopObj(); PopObj(); }
@@ -2003,10 +1922,7 @@ void            IntrPerm (
     UInt                nrc )
 {
     Obj                 perm;           /* permutation, result             */
-    UInt4 *             ptr4;           /* pointer into permutation        */
-    UInt2 *             ptr2;           /* pointer into permutation        */
     UInt                m;              /* maximal entry in permutation    */
-    UInt                k;              /* loop variable                   */
 
     /* ignore or code                                                      */
     SKIP_IF_RETURNING();
@@ -2027,21 +1943,7 @@ void            IntrPerm (
         perm = PopObj();
 
         /* if possible represent the permutation with short entries        */
-        if ( m <= 65536UL ) {
-            ptr2 = ADDR_PERM2( perm );
-            ptr4 = ADDR_PERM4( perm );
-            for ( k = 1; k <= m; k++ ) {
-                ptr2[k-1] = ptr4[k-1];
-            };
-            RetypeBag( perm, T_PERM2 );
-            ResizeBag(perm, SIZEBAG_PERM2(m));
-        }
-
-        /* otherwise just shorten the permutation                          */
-        else {
-            ResizeBag(perm, SIZEBAG_PERM4(m));
-        }
-
+        TrimPerm(perm, m);
     }
 
     /* push the result                                                     */
@@ -2069,7 +1971,7 @@ void            IntrListExprBegin (
 
 
     /* allocate the new list                                               */
-    list = NEW_PLIST( T_PLIST_EMPTY, 0 );
+    list = NewEmptyPlist();
 
     /* if this is an outmost list, save it for reference in '~'            */
     /* (and save the old value of '~' on the values stack)                 */
@@ -2161,27 +2063,18 @@ void            IntrListExprEnd (
 
         /* get the low value                                               */
         val = ELM_LIST( list, 1 );
-        if ( ! IS_INTOBJ(val) ) {
-            ErrorQuit(
-                "Range: <first> must be an integer less than 2^%d (not a %s)",
-                NR_SMALL_INT_BITS, (Int)TNAM_OBJ(val) );
-        }
-        low = INT_INTOBJ( val );
+        low = GetSmallIntEx("Range", val, "<first>");
 
         /* get the increment                                               */
         if ( nr == 3 ) {
             val = ELM_LIST( list, 2 );
-            if ( ! IS_INTOBJ(val) ) {
-                ErrorQuit(
-                    "Range: <second> must be an integer less than 2^%d (not a %s)",
-                    NR_SMALL_INT_BITS, (Int)TNAM_OBJ(val) );
-            }
-            if ( INT_INTOBJ(val) == low ) {
+            Int v = GetSmallIntEx("Range", val, "<second>");
+            if ( v == low ) {
                 ErrorQuit(
                       "Range: <second> must not be equal to <first> (%d)",
                       (Int)low, 0L );
             }
-            inc = INT_INTOBJ(val) - low;
+            inc = v - low;
         }
         else {
             inc = 1;
@@ -2189,21 +2082,17 @@ void            IntrListExprEnd (
 
         /* get and check the high value                                    */
         val = ELM_LIST( list, LEN_LIST(list) );
-        if ( ! IS_INTOBJ(val) ) {
-            ErrorQuit(
-                "Range: <last> must be an integer less than 2^%d (not a %s)",
-                NR_SMALL_INT_BITS, (Int)TNAM_OBJ(val) );
-        }
-        if ( (INT_INTOBJ(val) - low) % inc != 0 ) {
+        Int v = GetSmallIntEx("Range", val, "<last>");
+        if ( (v - low) % inc != 0 ) {
             ErrorQuit(
                 "Range: <last>-<first> (%d) must be divisible by <inc> (%d)",
-                (Int)(INT_INTOBJ(val)-low), (Int)inc );
+                (Int)(v-low), (Int)inc );
         }
-        high = INT_INTOBJ(val);
+        high = v;
 
         /* if <low> is larger than <high> the range is empty               */
         if ( (0 < inc && high < low) || (inc < 0 && low < high) ) {
-            list = NEW_PLIST( T_PLIST_EMPTY, 0 );
+            list = NewEmptyPlist();
         }
 
         /* if <low> is equal to <high> the range is a singleton list       */
@@ -2217,8 +2106,8 @@ void            IntrListExprEnd (
         else {
             /* length must be a small integer as well */
             if ((high-low) / inc >= INT_INTOBJ_MAX) {
-                ErrorQuit("Range: the length of a range must be less than 2^%d",
-                           NR_SMALL_INT_BITS, 0L);
+                ErrorQuit("Range: the length of a range must be a small integer",
+                           0, 0);
             }
 
             if ( 0 < inc )
@@ -2260,6 +2149,19 @@ void           IntrStringExpr (
 
     /* push the string, already newly created                              */
     PushObj( string );
+}
+
+void           IntrPragma (
+    Obj               pragma )
+{
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
+    if ( STATE(IntrCoding)    > 0 ) {
+        CodePragma( pragma );
+    } else {
+        // Push a void when interpreting
+        PushVoidObj();
+    }
 }
 
 /****************************************************************************
@@ -2566,12 +2468,10 @@ void            IntrRefLVar (
     /* or in the break loop */
 
     else {
-        while ((val = OBJ_LVAR(lvar))==0) {
-            ErrorReturnVoid(
-                            "Variable: '%g' must have an assigned value",
-                            (Int)NAME_LVAR( (UInt)( lvar )), 0L,
-                            "you can 'return;' after assigning a value" );
-
+        val = OBJ_LVAR(lvar);
+        if (val == 0) {
+            ErrorMayQuit("Variable: '%g' must have an assigned value",
+                         (Int)NAME_LVAR(lvar), 0);
         }
         PushObj(val);
     }
@@ -2653,12 +2553,10 @@ void            IntrRefHVar (
       CodeRefHVar( hvar );
     /* or debugging */
     else {
-        while ((val = OBJ_HVAR(hvar))==0) {
-            ErrorReturnVoid(
-                            "Variable: '%g' must have an assigned value",
-                            (Int)NAME_HVAR( (UInt)( hvar )), 0L,
-                            "you can 'return;' after assigning a value" );
-
+        val = OBJ_HVAR(hvar);
+        while (val == 0) {
+            ErrorMayQuit("Variable: '%g' must have an assigned value",
+                         (Int)NAME_HVAR((UInt)(hvar)), 0);
         }
         PushObj(val);
     }
@@ -2684,7 +2582,6 @@ void            IntrIsbHVar (
 **
 *F  IntrAssDVar(<dvar>) . . . . . . . . . . . . interpret assignment to debug
 */
-/* TL: extern  Obj             ErrorLVars; */
 
 void            IntrAssDVar (
     UInt                dvar,
@@ -2914,13 +2811,13 @@ void            IntrAssList ( Int narg )
     rhs = PopObj();
     
     if (narg == 1) {
-      /* get the position                                                    */
+      /* get the position                                                  */
       pos = PopObj();
 
-      /* get the list (checking is done by 'ASS_LIST' or 'ASSB_LIST')        */
+      /* get the list (checking is done by 'ASS_LIST' or 'ASSB_LIST')      */
       list = PopObj();
 
-      /* assign to the element of the list                                   */
+      /* assign to the element of the list                                 */
       if (IS_POS_INTOBJ(pos)) {
         ASS_LIST( list, INT_INTOBJ(pos), rhs );
       }
@@ -2929,11 +2826,11 @@ void            IntrAssList ( Int narg )
       }
     }
     else if (narg == 2) {
-      Obj pos2 = PopObj();
-      Obj pos1 = PopObj();
+      Obj col = PopObj();
+      Obj row = PopObj();
       list = PopObj();
 
-      ASS2_LIST(list, pos1, pos2, rhs);
+      ASS_MAT(list, row, col, rhs);
     }
 
     /* push the right hand side again                                      */
@@ -2955,12 +2852,12 @@ void            IntrAsssList ( void )
 
     /* get the right hand sides                                            */
     rhss = PopObj();
-    CheckIsDenseList("List Assignment", "rhss", rhss);
+    RequireDenseList("List Assignments", rhss);
 
     /* get and check the positions                                         */
     poss = PopObj();
-    CheckIsPossList("List Assignment", poss);
-    CheckSameLength("List Assignment", "rhss", "positions", rhss, poss);
+    CheckIsPossList("List Assignments", poss);
+    RequireSameLength("List Assignments", rhss, poss);
 
     /* get the list (checking is done by 'ASSS_LIST')                      */
     list = PopObj();
@@ -2992,7 +2889,7 @@ void            IntrAssListLevel (
 
     ixs = NEW_PLIST(T_PLIST, narg);
     for (i = narg; i > 0; i--) {
-      /* get and check the position                                          */
+      /* get and check the position                                        */
       pos = PopObj();
       SET_ELM_PLIST(ixs, i, pos);
       CHANGED_BAG(ixs);
@@ -3028,7 +2925,7 @@ void            IntrAsssListLevel (
 
     /* get and check the positions                                         */
     poss = PopObj();
-    CheckIsPossList("List Assignment", poss);
+    CheckIsPossList("List Assignments", poss);
 
     /* get lists (if this works, then <lists> is nested <level> deep,      */
     /* checking it is nested <level>+1 deep is done by 'AsssListLevel')    */
@@ -3054,13 +2951,13 @@ void            IntrUnbList ( Int narg )
     if ( STATE(IntrCoding)    > 0 ) { CodeUnbList( narg); return; }
 
     if (narg == 1) {
-      /* get and check the position                                          */
+      /* get and check the position                                        */
       pos = PopObj();
       
-      /* get the list (checking is done by 'UNB_LIST' or 'UNBB_LIST')        */
+      /* get the list (checking is done by 'UNB_LIST' or 'UNBB_LIST')      */
       list = PopObj();
 
-      /* unbind the element                                                  */
+      /* unbind the element                                                */
       if (IS_POS_INTOBJ(pos)) {
         UNB_LIST( list, INT_INTOBJ(pos) );
       }
@@ -3069,11 +2966,11 @@ void            IntrUnbList ( Int narg )
       }
     }
     else if (narg == 2) {
-      Obj pos2 = PopObj();
-      Obj pos1 = PopObj();
+      Obj col = PopObj();
+      Obj row = PopObj();
       list = PopObj();
 
-      UNB2_LIST(list, pos1, pos2);
+      UNB_MAT(list, row, col);
     }
 
     /* push void                                                           */
@@ -3102,13 +2999,13 @@ void            IntrElmList ( Int narg )
     if ( STATE(IntrCoding)    > 0 ) { CodeElmList( narg ); return; }
 
     if (narg == 1) {
-      /* get the position                                                    */
+      /* get the position                                                  */
       pos = PopObj();
 
-      /* get the list (checking is done by 'ELM_LIST')                       */
+      /* get the list (checking is done by 'ELM_LIST')                     */
       list = PopObj();
 
-      /* get the element of the list                                         */
+      /* get the element of the list                                       */
       if (IS_POS_INTOBJ(pos)) {
         elm = ELM_LIST( list, INT_INTOBJ( pos ) );
       }
@@ -3117,11 +3014,11 @@ void            IntrElmList ( Int narg )
       }
     }
     else /*if (narg == 2)*/ {
-      Obj pos2 = PopObj();
-      Obj pos1 = PopObj();
+      Obj col = PopObj();
+      Obj row = PopObj();
       list = PopObj();
 
-      elm = ELM2_LIST(list, pos1, pos2);
+      elm = ELM_MAT(list, row, col);
     }
 
     /* push the element                                                    */
@@ -3175,14 +3072,6 @@ void            IntrElmListLevel ( Int narg,
       CHANGED_BAG(ixs);
     }
     SET_LEN_PLIST(ixs, narg);
-      
-    /* /\* get and check the position                                          *\/ */
-    /* pos = PopObj(); */
-    /* if ( TNUM_OBJ(pos) != T_INTPOS && (! IS_POS_INTOBJ(pos) )) { */
-    /*     ErrorQuit( */
-    /*         "List Element: <position> must be a positive integer (not a %s)", */
-    /*         (Int)TNAM_OBJ(pos), 0L ); */
-    /* } */
 
     /* get lists (if this works, then <lists> is nested <level> deep,      */
     /* checking it is nested <level>+1 deep is done by 'ElmListLevel')     */
@@ -3236,13 +3125,13 @@ void            IntrIsbList ( Int narg )
     if ( STATE(IntrCoding)    > 0 ) { CodeIsbList(narg); return; }
 
     if (narg == 1) {
-      /* get and check the position                                          */
+      /* get and check the position                                        */
       pos = PopObj();
       
-      /* get the list (checking is done by 'ISB_LIST' or 'ISBB_LIST')        */
+      /* get the list (checking is done by 'ISB_LIST' or 'ISBB_LIST')      */
       list = PopObj();
       
-      /* get the result                                                      */
+      /* get the result                                                    */
       if (IS_POS_INTOBJ(pos)) {
         isb = ISB_LIST( list, INT_INTOBJ(pos) ) ? True : False;
       }
@@ -3251,11 +3140,11 @@ void            IntrIsbList ( Int narg )
       }
     }
     else /*if (narg == 2)*/ {
-      Obj pos2 = PopObj();
-      Obj pos1 = PopObj();
+      Obj col = PopObj();
+      Obj row = PopObj();
       list = PopObj();
 
-      isb = ISB2_LIST(list, pos1, pos2) ? True : False;
+      isb = ISB_MAT(list, row, col) ? True : False;
     }
 
     /* push the result                                                     */
@@ -3489,39 +3378,13 @@ void            IntrAssPosObj ( void )
 
     /* get and check the position                                          */
     pos = PopObj();
-    if ( ! IS_POS_INTOBJ(pos) ) {
-        ErrorQuit(
-         "PosObj Assignment: <position> must be a positive integer (not a %s)",
-            (Int)TNAM_OBJ(pos), 0L );
-    }
-    p = INT_INTOBJ(pos);
+    p = GetPositiveSmallIntEx("PosObj Assignment", pos, "<position>");
 
     /* get the list (checking is done by 'ASS_LIST')                       */
     list = PopObj();
 
     /* assign to the element of the list                                   */
-    if ( TNUM_OBJ(list) == T_POSOBJ ) {
-#ifdef HPCGAP
-        /* Because BindOnce() functions can reallocate the list even if they
-         * only have read-only access, we have to be careful when accessing
-         * positional objects. Hence the explicit WriteGuard().
-         */
-        WriteGuard(list);
-#endif
-        if ( SIZE_OBJ(list)/sizeof(Obj) - 1 < p ) {
-            ResizeBag( list, (p+1) * sizeof(Obj) );
-        }
-        SET_ELM_PLIST( list, p, rhs );
-        CHANGED_BAG( list );
-    }
-#ifdef HPCGAP
-    else if ( TNUM_OBJ(list) == T_APOSOBJ ) {
-        AssListFuncs[T_FIXALIST]( list, p, rhs );
-    }
-#endif
-    else {
-        ASS_LIST( list, p, rhs );
-    }
+    AssPosObj( list, p, rhs );
 
     /* push the right hand side again                                      */
     PushObj( rhs );
@@ -3541,37 +3404,13 @@ void            IntrUnbPosObj ( void )
 
     /* get and check the position                                          */
     pos = PopObj();
-    if ( ! IS_POS_INTOBJ(pos) ) {
-        ErrorQuit(
-         "PosObj Assignment: <position> must be a positive integer (not a %s)",
-            (Int)TNAM_OBJ(pos), 0L );
-    }
-    p = INT_INTOBJ(pos);
+    p = GetPositiveSmallIntEx("PosObj Assignment", pos, "<position>");
 
     /* get the list (checking is done by 'UNB_LIST')                       */
     list = PopObj();
 
     /* unbind the element                                                  */
-    if ( TNUM_OBJ(list) == T_POSOBJ ) {
-#ifdef HPCGAP
-        /* Because BindOnce() functions can reallocate the list even if they
-         * only have read-only access, we have to be careful when accessing
-         * positional objects. Hence the explicit WriteGuard().
-         */
-        WriteGuard(list);
-#endif
-        if ( p <= SIZE_OBJ(list)/sizeof(Obj)-1 ) {
-            SET_ELM_PLIST( list, p, 0 );
-        }
-    }
-#ifdef HPCGAP
-    else if ( TNUM_OBJ(list) == T_APOSOBJ ) {
-        UnbListFuncs[T_FIXALIST]( list, p );
-    }
-#endif
-    else {
-        UNB_LIST( list, p );
-    }
+    UnbPosObj( list, p );
 
     /* push void                                                           */
     PushVoidObj();
@@ -3597,53 +3436,13 @@ void            IntrElmPosObj ( void )
 
     /* get and check the position                                          */
     pos = PopObj();
-    if ( ! IS_POS_INTOBJ(pos) ) {
-        ErrorQuit(
-            "PosObj Element: <position> must be a positive integer (not a %s)",
-            (Int)TNAM_OBJ(pos), 0L );
-    }
-    p = INT_INTOBJ( pos );
+    p = GetPositiveSmallIntEx("PosObj Element", pos, "<position>");
 
     /* get the list (checking is done by 'ELM_LIST')                       */
     list = PopObj();
 
     /* get the element of the list                                         */
-    if ( TNUM_OBJ(list) == T_POSOBJ ) {
-#ifdef HPCGAP
-        /* Because BindOnce() functions can reallocate the list even if they
-         * only have read-only access, we have to be careful when accessing
-         * positional objects.
-         */
-        const Bag *contents = CONST_PTR_BAG(list);
-        MEMBAR_READ(); /* essential memory barrier */
-        if ( SIZE_BAG_CONTENTS(contents)/sizeof(Obj)-1 < p ) {
-            ErrorQuit(
-                "PosObj Element: <posobj>![%d] must have an assigned value",
-                (Int)p, 0L );
-        }
-        elm = contents[p];
-#else
-        if ( SIZE_OBJ(list)/sizeof(Obj)-1 < p ) {
-            ErrorQuit(
-                "PosObj Element: <posobj>![%d] must have an assigned value",
-                (Int)p, 0L );
-        }
-        elm = ELM_PLIST( list, p );
-#endif
-        if ( elm == 0 ) {
-            ErrorQuit(
-                "PosObj Element: <posobj>![%d] must have an assigned value",
-                (Int)p, 0L );
-        }
-    }
-#ifdef HPCGAP
-    else if ( TNUM_OBJ(list) == T_APOSOBJ ) {
-        elm = ElmListFuncs[T_FIXALIST]( list, p );
-    }
-#endif
-    else {
-        elm = ELM_LIST( list, p );
-    }
+    elm = ElmPosObj( list, p );
 
     /* push the element                                                    */
     PushObj( elm );
@@ -3664,41 +3463,13 @@ void            IntrIsbPosObj ( void )
 
     /* get and check the position                                          */
     pos = PopObj();
-    if ( ! IS_POS_INTOBJ(pos) ) {
-        ErrorQuit(
-            "PosObj Element: <position> must be a positive integer (not a %s)",
-            (Int)TNAM_OBJ(pos), 0L );
-    }
-    p = INT_INTOBJ( pos );
+    p = GetPositiveSmallIntEx("PosObj Element", pos, "<position>");
 
     /* get the list (checking is done by 'ISB_LIST')                       */
     list = PopObj();
 
     /* get the result                                                      */
-    if ( TNUM_OBJ(list) == T_POSOBJ ) {
-#ifdef HPCGAP
-        /* Because BindOnce() functions can reallocate the list even if they
-         * only have read-only access, we have to be careful when accessing
-         * positional objects.
-         */
-        const Bag *contents = CONST_PTR_BAG(list);
-        if (p > SIZE_BAG_CONTENTS(contents)/sizeof(Obj)-1)
-          isb = False;
-        else
-          isb = contents[p] != 0 ? True : False;
-#else
-        isb = (p <= SIZE_OBJ(list)/sizeof(Obj)-1 && ELM_PLIST(list,p) != 0 ?
-               True : False);
-#endif
-    }
-#ifdef HPCGAP
-    else if ( TNUM_OBJ(list) == T_APOSOBJ ) {
-        isb = (IsbListFuncs[T_FIXALIST]( list, p ) ? True : False);
-    }
-#endif
-    else {
-        isb = (ISB_LIST( list, p ) ? True : False);
-    }
+    isb = IsbPosObj( list, p ) ? True : False;
 
     /* push the result                                                     */
     PushObj( isb );
@@ -3729,19 +3500,7 @@ void            IntrAssComObjName (
     record = PopObj();
 
     /* assign the right hand side to the element of the record             */
-    switch (TNUM_OBJ(record)) {
-      case T_COMOBJ:
-        AssPRec( record, rnam, rhs );
-        break;
-#ifdef HPCGAP
-      case T_ACOMOBJ:
-        SetARecordField( record, rnam, rhs );
-        break;
-#endif
-      default:
-        ASS_REC( record, rnam, rhs );
-        break;
-    }
+    AssComObj( record, rnam, rhs );
 
     /* push the assigned value                                             */
     PushObj( rhs );
@@ -3769,19 +3528,7 @@ void            IntrAssComObjExpr ( void )
     record = PopObj();
 
     /* assign the right hand side to the element of the record             */
-    switch (TNUM_OBJ(record)) {
-      case T_COMOBJ:
-        AssPRec( record, rnam, rhs );
-        break;
-#ifdef HPCGAP
-      case T_ACOMOBJ:
-        SetARecordField( record, rnam, rhs );
-        break;
-#endif
-      default:
-        ASS_REC( record, rnam, rhs );
-        break;
-    }
+    AssComObj( record, rnam, rhs );
 
     /* push the assigned value                                             */
     PushObj( rhs );
@@ -3802,19 +3549,7 @@ void            IntrUnbComObjName (
     record = PopObj();
 
     /* unbind the element of the record                                    */
-    switch (TNUM_OBJ(record)) {
-      case T_COMOBJ:
-        UnbPRec( record, rnam );
-        break;
-#ifdef HPCGAP
-      case T_ACOMOBJ:
-        UnbARecord( record, rnam);
-        break;
-#endif
-      default:
-        UNB_REC( record, rnam );
-        break;
-    }
+    UnbComObj( record, rnam );
 
     /* push void                                                           */
     PushVoidObj();
@@ -3838,19 +3573,7 @@ void            IntrUnbComObjExpr ( void )
     record = PopObj();
 
     /* unbind the element of the record                                    */
-    switch (TNUM_OBJ(record)) {
-      case T_COMOBJ:
-        UnbPRec( record, rnam );
-        break;
-#ifdef HPCGAP
-      case T_ACOMOBJ:
-        UnbARecord( record, rnam);
-        break;
-#endif
-      default:
-        UNB_REC( record, rnam );
-        break;
-    }
+    UnbComObj( record, rnam );
 
     /* push void                                                           */
     PushVoidObj();
@@ -3878,20 +3601,7 @@ void            IntrElmComObjName (
     record = PopObj();
 
     /* select the element of the record                                    */
-
-    switch (TNUM_OBJ(record)) {
-      case T_COMOBJ:
-        elm = ElmPRec( record, rnam );
-        break;
-#ifdef HPCGAP
-      case T_ACOMOBJ:
-        elm = ElmARecord ( record, rnam );
-        break;
-#endif
-      default:
-        elm = ELM_REC( record, rnam );
-        break;
-    }
+    elm = ElmComObj( record, rnam );
 
     /* push the element                                                    */
     PushObj( elm );
@@ -3916,19 +3626,7 @@ void            IntrElmComObjExpr ( void )
     record = PopObj();
 
     /* select the element of the record                                    */
-    switch (TNUM_OBJ(record)) {
-      case T_COMOBJ:
-        elm = ElmPRec( record, rnam );
-        break;
-#ifdef HPCGAP
-      case T_ACOMOBJ:
-        elm = ElmARecord ( record, rnam );
-        break;
-#endif
-      default:
-        elm = ELM_REC( record, rnam );
-        break;
-    }
+    elm = ElmComObj( record, rnam );
 
     /* push the element                                                    */
     PushObj( elm );
@@ -3950,19 +3648,7 @@ void            IntrIsbComObjName (
     record = PopObj();
 
     /* get the result                                                      */
-    switch (TNUM_OBJ(record)) {
-      case T_COMOBJ:
-        isb = IsbPRec( record, rnam ) ? True : False;
-        break;
-#ifdef HPCGAP
-      case T_ACOMOBJ:
-        isb = GetARecordField( record, rnam ) ? True : False;
-        break;
-#endif
-      default:
-        isb = ISB_REC( record, rnam ) ? True : False;
-        break;
-    }
+    isb = IsbComObj( record, rnam ) ? True : False;
 
     /* push the result                                                     */
     PushObj( isb );
@@ -3987,19 +3673,7 @@ void            IntrIsbComObjExpr ( void )
     record = PopObj();
 
     /* get the result                                                      */
-    switch (TNUM_OBJ(record)) {
-      case T_COMOBJ:
-        isb = IsbPRec( record, rnam ) ? True : False;
-        break;
-#ifdef HPCGAP
-      case T_ACOMOBJ:
-        isb = GetARecordField( record, rnam ) ? True : False;
-        break;
-#endif
-      default:
-        isb = ISB_REC( record, rnam ) ? True : False;
-        break;
-    }
+    isb = IsbComObj( record, rnam ) ? True : False;
 
     /* push the result                                                     */
     PushObj( isb );
@@ -4054,55 +3728,6 @@ void            IntrInfoBegin( void )
 
 }
 
-enum {
-    INFODATA_NUM = 1,
-    INFODATA_CURRENTLEVEL,
-    INFODATA_CLASSNAME,
-    INFODATA_HANDLER,
-    INFODATA_OUTPUT,
-};
-
-Obj InfoDecision;
-static Obj IsInfoClassListRep;
-static Obj DefaultInfoHandler;
-
-void InfoDoPrint(Obj cls, Obj lvl, Obj args)
-{
-    if (IS_PLIST(cls))
-        cls = ELM_PLIST(cls, 1);
-#if defined(HPCGAP)
-    Obj fun = Elm0AList(cls, INFODATA_HANDLER);
-#else
-    Obj fun = ELM_PLIST(cls, INFODATA_HANDLER);
-#endif
-    if (!fun)
-        fun = DefaultInfoHandler;
-
-    CALL_3ARGS(fun, cls, lvl, args);
-}
-
-
-Obj InfoCheckLevel(Obj selectors, Obj level)
-{
-    // Fast-path the most common failing case.
-    // The fast-path only deals with the case where all arguments are of the
-    // correct type, and were False is returned.
-    if (CALL_1ARGS(IsInfoClassListRep, selectors) == True) {
-#if defined(HPCGAP)
-        Obj index = ElmAList(selectors, INFODATA_CURRENTLEVEL);
-#else
-        Obj index = ELM_PLIST(selectors, INFODATA_CURRENTLEVEL);
-#endif
-        if (IS_INTOBJ(index) && IS_INTOBJ(level)) {
-            // < on INTOBJs compares the represented integers.
-            if (index < level) {
-                return False;
-            }
-        }
-    }
-    return CALL_2ARGS(InfoDecision, selectors, level);
-}
-
 
 void            IntrInfoMiddle( void )
 {
@@ -4137,8 +3762,13 @@ void            IntrInfoEnd( UInt narg )
      Obj args;    /* gathers up the arguments to be printed */
 
     /* ignore or code                                                      */
-    SKIP_IF_RETURNING();
-    if ( STATE(IntrIgnoring)  > 1 ) { STATE(IntrIgnoring)--; return; }
+    INTERPRETER_PROFILE_HOOK(1);
+    SKIP_IF_RETURNING_NO_PROFILE_HOOK();
+
+    if (STATE(IntrIgnoring) > 1) {
+        STATE(IntrIgnoring)--;
+        return;
+    }
     if ( STATE(IntrCoding)    > 0 ) { CodeInfoEnd( narg ); return; }
 
 
@@ -4174,8 +3804,9 @@ void            IntrInfoEnd( UInt narg )
 **
 *F  IntrAssertAfterCondition() called after the second argument has been read
 **
-**  At this point we know whether there is an assertion failure. We still need
-**  to read the third argument if any, to decide what to do about it One of:
+**  At this point we know whether there is an assertion failure. We still
+**  need to read the third argument if any, to decide what to do about it;
+**  one of:
 **
 *F  IntrAssertEnd2Args() . . . . called after reading the closing parenthesis
 *F  IntrAssertEnd3Args() . . . . called after reading the closing parenthesis
@@ -4183,9 +3814,9 @@ void            IntrInfoEnd( UInt narg )
 *V  CurrentAssertionLevel  . .  . . . . . . . . . . . .  copy of GAP variable
 **
 **
-**  STATE(IntrIgnoring) is increased by (a total of) 2 if an assertion either is not
-**  tested (because we were Ignoring when we got to it, or due to level)
-**  or is tested and passes
+**  STATE(IntrIgnoring) is increased by (a total of) 2 if an assertion either
+**  is not tested (because we were Ignoring when we got to it, or due to
+**  level) or is tested and passes
 */
 
 Obj              CurrentAssertionLevel;
@@ -4231,21 +3862,24 @@ void             IntrAssertAfterCondition ( void )
     if (condition == True)
       STATE(IntrIgnoring)= 2;
     else if (condition != False)
-        ErrorQuit(
-            "<condition> in Assert must yield 'true' or 'false' (not a %s)",
-            (Int)TNAM_OBJ(condition), 0L );
+        RequireArgumentEx("Assert", condition, "<cond>",
+                          "must be 'true' or 'false'");
 }
 
 void             IntrAssertEnd2Args ( void )
 {
-      /* ignore or code                                                      */
-    SKIP_IF_RETURNING();
-    if ( STATE(IntrIgnoring)  > 2 ) { STATE(IntrIgnoring) -= 2; return; }
+    /* ignore or code                                                      */
+    INTERPRETER_PROFILE_HOOK(2);
+    SKIP_IF_RETURNING_NO_PROFILE_HOOK();
+    if (STATE(IntrIgnoring) > 2) {
+        STATE(IntrIgnoring) -= 2;
+        return;
+    }
     if ( STATE(IntrCoding)    > 0 ) { CodeAssertEnd2Args(); return; }
 
 
     if ( STATE(IntrIgnoring)  == 0 )
-      ErrorQuit("Assertion failure", 0, 0);
+      AssertionFailure();
     else
       STATE(IntrIgnoring) -= 2;
 
@@ -4258,7 +3892,8 @@ void             IntrAssertEnd3Args ( void )
 {
   Obj message;
   /* ignore or code                                                      */
-  SKIP_IF_RETURNING();
+  INTERPRETER_PROFILE_HOOK(2);
+  SKIP_IF_RETURNING_NO_PROFILE_HOOK();
   if ( STATE(IntrIgnoring)  > 2 ) { STATE(IntrIgnoring) -= 2; return; }
   if ( STATE(IntrCoding)    > 0 ) { CodeAssertEnd3Args(); return; }
 
@@ -4305,11 +3940,6 @@ static Int InitKernel (
     InitCopyGVar( "CurrentAssertionLevel", &CurrentAssertionLevel );
     InitFopyGVar( "CONVERT_FLOAT_LITERAL_EAGER", &CONVERT_FLOAT_LITERAL_EAGER);
 
-    /* The work of handling Info messages is delegated to the GAP level */
-    ImportFuncFromLibrary("InfoDecision", &InfoDecision);
-    ImportFuncFromLibrary("DefaultInfoHandler", &DefaultInfoHandler);
-    ImportFuncFromLibrary("IsInfoClassListRep", &IsInfoClassListRep);
-
     /* The work of handling Options is also delegated*/
     ImportFuncFromLibrary( "PushOptions", &PushOptions );
     ImportFuncFromLibrary( "PopOptions",  &PopOptions  );
@@ -4331,12 +3961,6 @@ static Int InitLibrary (
     /* The Assertion level is also controlled at GAP level                 */
     lev = GVarName("CurrentAssertionLevel");
     AssGVar( lev, INTOBJ_INT(0) );
-
-    ExportAsConstantGVar(INFODATA_CURRENTLEVEL);
-    ExportAsConstantGVar(INFODATA_CLASSNAME);
-    ExportAsConstantGVar(INFODATA_HANDLER);
-    ExportAsConstantGVar(INFODATA_OUTPUT);
-    ExportAsConstantGVar(INFODATA_NUM);
 
     /* return success                                                      */
     return 0;

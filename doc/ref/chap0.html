@@ -25,7 +25,7 @@
 
 <h1>GAP - Reference Manual</h1>
 
-<p>Release 4.10.2, 19-Jun-2019</p>
+<p>Release 4.11.0, 29-Feb-2020</p>
 
 </div>
 <p><b>The GAP Group
@@ -38,13 +38,13 @@
 
 <p><a id="X81488B807F2A1CF1" name="X81488B807F2A1CF1"></a></p>
 <h3>Copyright</h3>
-<p>Copyright © (1987-2019) for the core part of the <strong class="pkg">GAP</strong> system by the <strong class="pkg">GAP</strong> Group.</p>
+<p>Copyright © (1987-2020) for the core part of the <strong class="pkg">GAP</strong> system by the <strong class="pkg">GAP</strong> Group.</p>
 
-<p>Most parts of this distribution, including the core part of the <strong class="pkg">GAP</strong> system are distributed under the terms of the GNU General Public License, see <span class="URL"><a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html</a></span> or the file <code class="file">GPL</code> in the <code class="file">etc</code> directory of the <strong class="pkg">GAP</strong> installation.</p>
+<p>Most parts of this distribution, including the core part of the <strong class="pkg">GAP</strong> system are distributed under the terms of the GNU General Public License Version 2, see <span class="URL"><a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html">https://www.gnu.org/licenses/old-licenses/gpl-2.0.html</a></span> or the <code class="file">LICENSE</code> file in the root directory of the <strong class="pkg">GAP</strong> installation.</p>
 
 <p>More detailed information about copyright and licenses of parts of this distribution can be found in Section <a href="chap1.html#X7950EFA183E3F666"><span class="RefLink">1.4</span></a> of this manual.</p>
 
-<p><strong class="pkg">GAP</strong> is developed over a long time and has many authors and contributors. More detailed information can be found in Section <a href="chap1.html#X877A62A1781C2147"><span class="RefLink">1.2</span></a> of this manual.</p>
+<p><strong class="pkg">GAP</strong> has been developed over a long time and has many authors and contributors. More detailed information can be found in Section <a href="chap1.html#X877A62A1781C2147"><span class="RefLink">1.2</span></a> of this manual.</p>
 
 <p><a id="X8537FEB07AF2BEC8" name="X8537FEB07AF2BEC8"></a></p>
 
@@ -168,7 +168,6 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X876A6EB68745A510">4.9-9 NamesGVars</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7E604AF579A7BC92">4.9-10 NamesSystemGVars</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X870169447AF490D8">4.9-11 NamesUserGVars</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X798433307E62DCBA">4.9-12 TemporaryGlobalVarName</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7DF8774F7D542298">4.10 <span class="Heading">Namespaces for <strong class="pkg">GAP</strong> packages</span></a>
 </span>
@@ -220,6 +219,11 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X812C6ABC7A182E9E">4.24 <span class="Heading">Return (With or without Value)</span></a>
 </span>
 </div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X8732D9257FFCEA1B">4.25 <span class="Heading">Syntax Trees</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X81558D66810BEA67">4.25-1 SyntaxTree</a></span>
+</div></div>
 </div>
 <div class="ContChap"><a href="chap5.html#X86FA580F8055B274">5 <span class="Heading">Functions</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X870553EF8605792F">5.1 <span class="Heading">Information about a function</span></a>
@@ -258,10 +262,12 @@ several arguments</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X85E40340806C2B8C">5.5-1 IsFunction</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X874C7C6D8650D648">5.5-2 IsOperation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X87838FE885A9AAF9">5.5-3 FunctionsFamily</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X87838FE885A9AAF9">5.5-2 FunctionsFamily</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X81F732457F7BC851">5.6 <span class="Heading">Naming Conventions</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7A1721CD79F08E71">5.7 <span class="Heading">Code annotations (pragmas)</span></a>
 </span>
 </div>
 </div>
@@ -383,10 +389,11 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7B3709C584B3DA1E">7.4-2 DeclareInfoClass</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7A43B9E68765EE9E">7.4-3 SetInfoLevel</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7B2ADC37783104B9">7.4-4 InfoLevel</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X864E4B6886E2697D">7.4-5 Info</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X877BD99A82CB2643">7.4-6 <span class="Heading">Customizing <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) statements</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7BA636EF80A1435A">7.4-5 ShowUsedInfoClasses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X864E4B6886E2697D">7.4-6 Info</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X800234B5815CAC97">7.4-7 <span class="Heading">Customizing <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-6</span></a>) statements</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7A28F77C82D6A3E0">7.4-7 InfoWarning</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7A28F77C82D6A3E0">7.4-8 InfoWarning</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X86425F067FC63A4C">7.5 <span class="Heading">Assertions</span></a>
 </span>
@@ -692,29 +699,45 @@ several arguments</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7CF70EAC84284919">13.1-1 FamilyObj</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7FB4123E7E22137D">13.1-2 NewFamily</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13.html#X84EFA4C07D4277BB">13.2 <span class="Heading">Filters</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X82E62B997C05E05E">13.2-1 RankFilter</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7A78ECC67E2C9D78">13.2-2 NamesFilter</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7F9568A67F3840DE">13.2-3 ShowImpliedFilters</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X836FAA18861BE387">13.2-4 FiltersType</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7F6645D87DD26CF0">13.2-3 FilterByName</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7F9568A67F3840DE">13.2-4 ShowImpliedFilters</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X836FAA18861BE387">13.2-5 FiltersType</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13.html#X7CC6903E78F24167">13.3 <span class="Heading">Categories</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X85C6EB707A406A5A">13.3-1 CategoriesOfObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X792A23BF82BDF66B">13.3-1 IsCategory</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X85C6EB707A406A5A">13.3-2 CategoriesOfObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X85D07C3E7F4D4043">13.3-3 CategoryByName</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X87F68F887B44DBBD">13.3-4 NewCategory</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X879DE2A17A6C6E92">13.3-5 DeclareCategory</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X787BACEE7937EF01">13.3-6 CategoryFamily</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13.html#X8698205F8648EB33">13.4 <span class="Heading">Representation</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7BBE93BE7977750F">13.4-1 RepresentationsOfObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X805F1C3B7C730062">13.4-1 <span class="Heading">Basic Representations of Objects</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X86D42C7783ACA5F4">13.4-2 IsRepresentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7BBE93BE7977750F">13.4-3 RepresentationsOfObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7CC8106F809E15CF">13.4-4 NewRepresentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7C81FB2682AE54CD">13.4-5 DeclareRepresentation</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13.html#X7C701DBF7BAE649A">13.5 <span class="Heading">Attributes</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7F7960338163AA88">13.5-1 KnownAttributesOfObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7973C8F4782D15A1">13.5-1 IsAttribute</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7F7960338163AA88">13.5-2 KnownAttributesOfObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7B9654807858A3B0">13.5-3 NewAttribute</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7A00FC8A7A677A56">13.5-4 DeclareAttribute</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7A951C33839AF2C1">13.5-5 IsAttributeStoringRep</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13.html#X79DE5208877AE42A">13.6 <span class="Heading">Setter and Tester for Attributes</span></a>
 </span>
@@ -729,17 +752,26 @@ several arguments</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13.html#X871597447BB998A1">13.7 <span class="Heading">Properties</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7E51C08286E03E7F">13.7-1 KnownPropertiesOfObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X86711BC77B62EB02">13.7-2 KnownTruePropertiesOfObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X81F1C3EE83003FA0">13.7-1 IsProperty</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7E51C08286E03E7F">13.7-2 KnownPropertiesOfObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X86711BC77B62EB02">13.7-3 KnownTruePropertiesOfObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7F2D6FD979FE23DD">13.7-4 NewProperty</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7F4602F082682A04">13.7-5 DeclareProperty</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13.html#X7997705185C7E720">13.8 <span class="Heading">Other Filters</span></a>
 </span>
-</div>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X821635DA7821ED74">13.8-1 NewFilter</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X846EA18A7D36626C">13.8-2 DeclareFilter</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7C92D53E7920CE02">13.8-3 SetFilterObj</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X8117FD03870FB02E">13.8-4 ResetFilterObj</a></span>
+</div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13.html#X7E340B8C833BC440">13.9 <span class="Heading">Types</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7D3E6B6482BE5B16">13.9-1 TypeObj</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X85A60A7F8083C1C4">13.9-2 DataType</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7CE39E9478AEC826">13.9-3 NewType</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chap14.html#X853DF11B80068ED5">14 <span class="Heading">Integers</span></a>
@@ -922,6 +954,7 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X7A95D8A6820363A8">16.2-29 PowerPartition</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X877D997B7F66A119">16.2-30 PartitionTuples</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X7F44AD098561DE32">16.2-31 NrPartitionTuples</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16.html#X8796C1D783ED9CB4">16.2-32 BetaSet</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16.html#X83DC50B67D74E674">16.3 <span class="Heading">Fibonacci and Lucas Sequences</span></a>
 </span>
@@ -1195,15 +1228,16 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7B4B10AE81602D4E">21.16-3 PositionCanonical</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7D2B25B484591506">21.16-4 PositionNthOccurrence</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7A122E848464E534">21.16-5 PositionSorted</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X78BFE9D78347C0DA">21.16-6 PositionSet</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7FD9C1D37F300206">21.16-7 PositionMaximum</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7E6C763A82C6153B">21.16-8 PositionProperty</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7DA94D278304EC3D">21.16-9 PositionsProperty</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X86C9E5C3863B3C03">21.16-10 PositionBound</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X819F71047AABEA2F">21.16-11 PositionsBound</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X865EF45D87ED1384">21.16-12 PositionNot</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7F42E5AD87EC9D5A">21.16-13 PositionNonZero</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X87A8C62A867D6DA4">21.16-14 PositionSublist</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X820BA44D85930EBF">21.16-6 PositionSortedBy</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X78BFE9D78347C0DA">21.16-7 PositionSet</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7FD9C1D37F300206">21.16-8 PositionMaximum</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7E6C763A82C6153B">21.16-9 PositionProperty</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7DA94D278304EC3D">21.16-10 PositionsProperty</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X86C9E5C3863B3C03">21.16-11 PositionBound</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X819F71047AABEA2F">21.16-12 PositionsBound</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X865EF45D87ED1384">21.16-13 PositionNot</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7F42E5AD87EC9D5A">21.16-14 PositionNonZero</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X87A8C62A867D6DA4">21.16-15 PositionSublist</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap21.html#X7865747A7CCF5812">21.17 <span class="Heading">Properties and Attributes for Lists</span></a>
 </span>
@@ -1284,12 +1318,18 @@ several arguments</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X86DDC2FF7A50FBEE">21.22-1 IsRange</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7D22B2298167A58F">21.22-2 ConvertToRangeRep</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X83896BC481536B07">21.22-2 IsRangeRep</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7D22B2298167A58F">21.22-3 ConvertToRangeRep</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap21.html#X7EA3ACE27E43D174">21.23 <span class="Heading">Enumerators</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7BB462C17962647F">21.23-1 IsQuickPositionList</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap21.html#X81ECC2077D88E112">21.24 <span class="Heading">Plain Lists</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X87BA4EBF80F16B72">21.24-1 IsPlistRep</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chap22.html#X7AC531DD79B6938E">22 <span class="Heading">Boolean Lists</span></a>
@@ -1322,6 +1362,9 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap22.html#X7C86C8D3853BE5EB">22.4-2 UniteBlistList</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap22.html#X84EB70D37EB275DF">22.4-3 IntersectBlist</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap22.html#X7AA138407D5A3BAC">22.4-4 SubtractBlist</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap22.html#X7F14FF35786DAEF3">22.4-5 FlipBlist</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap22.html#X7E9F6C197A79098F">22.4-6 SetAllBlist</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap22.html#X87ED45A88688AE8E">22.4-7 ClearAllBlist</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap22.html#X7C71B225841DFC0F">22.5 <span class="Heading">More about Boolean Lists</span></a>
 </span>
@@ -1353,7 +1396,7 @@ several arguments</span></a>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap23.html#X78E6897186F482F6">23.4-1 AddRowVector</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap23.html#X7854B2B67E3FE2CA">23.4-2 AddCoeffs</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap23.html#X78CFE0A879773B45">23.4-3 MultRowVector</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap23.html#X7BEF28C981C42E16">23.4-3 MultVector</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap23.html#X8264B3EE7D56EEDD">23.4-4 CoeffsMod</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap23.html#X7D287281781E16A2">23.5 <span class="Heading">Shifting and Trimming Coefficient Lists</span></a>
@@ -1410,10 +1453,11 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X83045F6F82C180E1">24.4-4 DeterminantMat</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X84277D21848B7B7F">24.4-5 DeterminantMatDestructive</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X7EEA7E7A7F6BE6F3">24.4-6 DeterminantMatDivFree</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X848B80437CE65FF3">24.4-7 IsMonomialMatrix</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X7FF01BF686AD0623">24.4-8 IsDiagonalMat</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X7ECFBD9F8664982B">24.4-9 IsUpperTriangularMat</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X81671CFD7CFE4819">24.4-10 IsLowerTriangularMat</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X8740D4D47D7ECD4A">24.4-7 IsEmptyMatrix</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X848B80437CE65FF3">24.4-8 IsMonomialMatrix</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X7EEC8E768178696E">24.4-9 IsDiagonalMatrix</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X8740E71C799C0BCC">24.4-10 IsUpperTriangularMatrix</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X853A5B988306DBFE">24.4-11 IsLowerTriangularMatrix</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap24.html#X823FB2398697B957">24.5 <span class="Heading">Matrix Constructions</span></a>
 </span>
@@ -1485,7 +1529,7 @@ several arguments</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap24.html#X79D5E53685F0FBEE">24.12 <span class="Heading">Triangular Matrices</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X82B6B0298179D895">24.12-1 DiagonalOfMat</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X7A9139D686ACB7D8">24.12-1 DiagonalOfMatrix</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X84A78C057F9DAE5E">24.12-2 UpperSubdiagonal</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X84D74DEA798A9094">24.12-3 DepthOfUpperTriangularMatrix</a></span>
 </div></div>
@@ -1493,10 +1537,11 @@ several arguments</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X87FA0A727CDB060B">24.13-1 CharacteristicPolynomial</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X83F55D4E79BA5D1B">24.13-2 JordanDecomposition</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X85923C107A4569D0">24.13-3 BlownUpMat</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X82AC277D84EC5749">24.13-4 BlownUpVector</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X85A1026D7CB6ABAC">24.13-5 CompanionMat</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X7B52560C792C1A0F">24.13-2 RationalCanonicalFormTransform</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X83F55D4E79BA5D1B">24.13-3 JordanDecomposition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X85923C107A4569D0">24.13-4 BlownUpMat</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X82AC277D84EC5749">24.13-5 BlownUpVector</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X85A1026D7CB6ABAC">24.13-6 CompanionMat</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap24.html#X873822B6830CE367">24.14 <span class="Heading">Matrices over Finite Fields</span></a>
 </span>
@@ -1510,7 +1555,8 @@ several arguments</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X7D8D1E0E83C7F872">24.15-1 InverseMatMod</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X86AE919983B242E2">24.15-2 NullspaceModQ</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X7D7DF873826A7C20">24.15-2 BasisNullspaceModN</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X86AE919983B242E2">24.15-3 NullspaceModQ</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap24.html#X787DF5F07DC7D86E">24.16 <span class="Heading">Special Multiplication Algorithms for Matrices over GF(2)</span></a>
 </span>
@@ -1524,6 +1570,11 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X7D675B3C79CF8871">24.17-1 AsBlockMatrix</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X8633538685551E7A">24.17-2 BlockMatrix</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X83FAF4158180041F">24.17-3 MatrixByBlockMatrix</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap24.html#X782F2EBF80C431D0">24.18 <span class="Heading">Linear Programming</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X845D5F8D7D905CB8">24.18-1 SimplexMethod</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chap25.html#X8414F20D8412DDA4">25 <span class="Heading">Integral matrices and lattices</span></a>
@@ -1599,7 +1650,8 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26.html#X7B9B66B37DD46D81">26.4-6 ExtractSubVector</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26.html#X7F45D5C57C8EDDF3">26.4-7 ZeroVector</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26.html#X8253FF0C7E5329C6">26.4-8 ConstructingFilter</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26.html#X828688CC860F1E9C">26.4-9 Randomize</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26.html#X83DD8B39864A2C94">26.4-9 <span class="Heading">Randomize</span></a>
+</span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26.html#X7E0158697A7C6D17">26.4-10 WeightOfVector</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26.html#X837216A77EBEA0B3">26.4-11 DistanceOfVectors</a></span>
 </div></div>
@@ -1804,6 +1856,7 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap30.html#X856AC2DF7F7CBAAF">30.2-2 IsCollectionFamily</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap30.html#X864BB3748546F63F">30.2-3 ElementsFamily</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap30.html#X78C38017804B2EA7">30.2-4 CategoryCollections</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap30.html#X85ABC1B4829778C7">30.2-5 DeclareCategoryCollections</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap30.html#X7C3722DF8736FFDB">30.3 <span class="Heading">Lists and Collections</span></a>
 </span>
@@ -1978,10 +2031,11 @@ several arguments</span></a>
 </div></div>
 </div>
 <div class="ContChap"><a href="chap32.html#X7C9734B880042C73">32 <span class="Heading">Mappings</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap32.html#X783BAB2683EEA0CC">32.1 <span class="Heading">IsDirectProductElement (Filter)</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap32.html#X859A13548515A5D7">32.1 <span class="Heading">Direct Products and their Elements</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32.html#X87FD9FE787023FF0">32.1-1 IsDirectProductElement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32.html#X78F8A1168280E06D">32.1-2 DirectProductFamily</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap32.html#X7CF6FEFB8290D5CB">32.2 <span class="Heading">Creating Mappings</span></a>
 </span>
@@ -2652,6 +2706,7 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X80237A847E24E6CF">39.19-9 NormalSubgroups</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X82ECAA427C987318">39.19-10 MaximalNormalSubgroups</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X86FDD9BA819F5644">39.19-11 MinimalNormalSubgroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X7A823C5A810910C3">39.19-12 CharacteristicSubgroups</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap39.html#X7FA267497CFC0550">39.20 <span class="Heading">Subgroup Lattice</span></a>
 </span>
@@ -2716,21 +2771,27 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X844CFFDE80F6AD15">39.24-10 SchurCoverOfSymmetricGroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X7E0F4896795E34FC">39.24-11 DoubleCoverOfAlternatingGroup</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap39.html#X865722987E0E19B6">39.25 <span class="Heading">Tests for the Availability of Methods</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap39.html#X7BD95B8D879B73A3">39.25 <span class="Heading">2-Cohomology</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X798F13EA810FB215">39.25-1 CanEasilyTestMembership</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X7C2A89607BDFD920">39.25-2 CanEasilyComputeWithIndependentGensAbelianGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X83245C82835D496C">39.25-3 CanComputeSize</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X8268965487364912">39.25-4 CanComputeSizeAnySubgroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X82DDE00D82A32083">39.25-5 CanComputeIndex</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X7BE7C36B84C23511">39.25-6 CanComputeIsSubset</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X87D62C2C7C375E2D">39.25-7 KnowsHowToDecompose</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X7A1EBC3A7AB0D614">39.25-1 TwoCohomologyGeneric</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X7A65366879BB3977">39.25-2 FpGroupCocycle</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap39.html#X83A9997586694DC0">39.26 <span class="Heading">Specific functions for Normalizer calculation</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap39.html#X865722987E0E19B6">39.26 <span class="Heading">Tests for the Availability of Methods</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X84ABCA997D294B36">39.26-1 NormalizerViaRadical</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X798F13EA810FB215">39.26-1 CanEasilyTestMembership</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X7C2A89607BDFD920">39.26-2 CanEasilyComputeWithIndependentGensAbelianGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X83245C82835D496C">39.26-3 CanComputeSize</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X8268965487364912">39.26-4 CanComputeSizeAnySubgroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X82DDE00D82A32083">39.26-5 CanComputeIndex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X7BE7C36B84C23511">39.26-6 CanComputeIsSubset</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X87D62C2C7C375E2D">39.26-7 KnowsHowToDecompose</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap39.html#X83A9997586694DC0">39.27 <span class="Heading">Specific functions for Normalizer calculation</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap39.html#X84ABCA997D294B36">39.27-1 NormalizerViaRadical</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chap40.html#X83702FC27B3C3098">40 <span class="Heading">Group Homomorphisms</span></a>
@@ -3206,7 +3267,7 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap45.html#X78CAF32F864EF656">45.6-3 ExponentsOfConjugate</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap45.html#X875689897DD0CAFC">45.6-4 ExponentsOfCommutator</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap45.html#X80AC58657E04FE9B">45.7 <span class="Heading">Subgroups of Polycyclic Groups - Induced Pcgs</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap45.html#X8676397383093D1E">45.7 <span class="Heading">Subgroups of Polycyclic Groups – Induced Pcgs</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap45.html#X81FA878C854D63F8">45.7-1 IsInducedPcgs</a></span>
@@ -3310,7 +3371,7 @@ several arguments</span></a>
 </div></div>
 </div>
 <div class="ContChap"><a href="chap46.html#X7EAD57C97EBF7E67">46 <span class="Heading">Pc Groups</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap46.html#X78E9E4D778A57A96">46.1 <span class="Heading">The family pcgs</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap46.html#X78E9E4D778A57A96">46.1 <span class="Heading">The Family Pcgs</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap46.html#X79EDB35E82C99304">46.1-1 FamilyPcgs</a></span>
@@ -3318,7 +3379,7 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap46.html#X85C1596A867BE93D">46.1-3 InducedPcgsWrtFamilyPcgs</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap46.html#X8333ACCB7F530406">46.1-4 IsParentPcgsFamilyPcgs</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap46.html#X842526BE7FEFE8BD">46.2 <span class="Heading">Elements of pc groups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap46.html#X842526BE7FEFE8BD">46.2 <span class="Heading">Elements of Pc Groups</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap46.html#X869DCE7D86E32337">46.2-1 <span class="Heading">Comparison of elements of pc groups</span></a>
@@ -3326,7 +3387,7 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap46.html#X7D1B700882FC6C78">46.2-2 <span class="Heading">Arithmetic operations for elements of pc groups</span></a>
 </span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap46.html#X87B866C386B386E4">46.3 <span class="Heading">Pc groups versus fp groups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap46.html#X87B866C386B386E4">46.3 <span class="Heading">Pc Groups versus Fp Groups</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap46.html#X7D1F506D7830B1D9">46.3-1 IsPcGroup</a></span>
@@ -3650,15 +3711,17 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X8778256286E50743">50.1-4 ElementaryAbelianGroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X7F43050D8587E767">50.1-5 FreeAbelianGroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X838DE1AB7B3D70FF">50.1-6 DihedralGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X87865686856910E4">50.1-7 QuaternionGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X86E76B3A796BEFA8">50.1-8 ExtraspecialGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X7E54D3E778E6A53E">50.1-9 <span class="Heading">AlternatingGroup</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X8233A853818CAF33">50.1-7 IsDihedralGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X7E9844EF7C47EEB0">50.1-8 DicyclicGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X7FE58CB9799F54D5">50.1-9 IsGeneralisedQuaternionGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X86E76B3A796BEFA8">50.1-10 ExtraspecialGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X7E54D3E778E6A53E">50.1-11 <span class="Heading">AlternatingGroup</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X858666F97BD85ABB">50.1-10 <span class="Heading">SymmetricGroup</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X858666F97BD85ABB">50.1-12 <span class="Heading">SymmetricGroup</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X788FA7DE84E0FE6A">50.1-11 MathieuGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X8469DBBF82F8E5C3">50.1-12 SuzukiGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X87E5B0F679CA7FE4">50.1-13 ReeGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X788FA7DE84E0FE6A">50.1-13 MathieuGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X8469DBBF82F8E5C3">50.1-14 SuzukiGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap50.html#X87E5B0F679CA7FE4">50.1-15 ReeGroup</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap50.html#X8674AAA578FE4AEE">50.2 <span class="Heading">Classical Groups</span></a>
 </span>
@@ -3782,7 +3845,7 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7F01FFB18125DED5">51.5-2 ReesCongruenceOfSemigroupIdeal</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X7A3FF85984345540">51.5-3 IsLeftSemigroupIdeal</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51.html#X7C0782D57C01E327">51.6 <span class="Heading">Congruences for semigroups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51.html#X7914691E7DFFE27A">51.6 <span class="Heading">Congruences on semigroups</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51.html#X78E34B737F0E009F">51.6-1 IsSemigroupCongruence</a></span>
@@ -5076,7 +5139,7 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap69.html#X79EA05D4822C2668">69.8-1 MTX.NormedBasisAndBaseChange</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap69.html#X7812D644850D7AED">69.8-2 MTX.InducedActionSubmodule</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap69.html#X7EAC61B381385A99">69.8-3 MTX.InducedActionFactorModule</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap69.html#X843E80AD853CB1EE">69.8-4 MTX.InducedActionMatrix</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap69.html#X8753A03A7C7CBFF1">69.8-4 MTX.InducedActionSubMatrix</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap69.html#X7B137BE5877A7FA1">69.8-5 MTX.InducedAction</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap69.html#X8040270F791514C8">69.9 <span class="Heading">Module Homomorphisms</span></a>
@@ -5401,6 +5464,7 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X85BE46F784B83938">71.20-4 CharacterTableIsoclinic</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X806E55A58397B11B">71.20-5 CharacterTableOfNormalSubgroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X79B75C8582426BC5">71.20-6 CharacterTableWreathSymmetric</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X83E71B1F7FA70134">71.20-7 CharacterValueWreathSymmetric</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap71.html#X816FCD5A805F9FE8">71.21 <span class="Heading">Sorted Character Tables</span></a>
 </span>
@@ -5841,151 +5905,104 @@ several arguments</span></a>
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap77.html#X7C89E03285799F40">77.6 <span class="Heading">Semigroup properties</span></a>
 </span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap77.html#X7BF9F1BE87F0636D">77.6-1 IsSemilatticeAsSemigroup</a></span>
-</div></div>
+</div>
 </div>
 <div class="ContChap"><a href="chap78.html#X8058CC8187162644">78 <span class="Heading">Method Selection</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap78.html#X7AEED9AB824CD4DA">78.1 <span class="Heading">Operations and Methods</span></a>
 </span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X874C7C6D8650D648">78.1-1 IsOperation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X813BE52887A3E0FA">78.1-2 TypeOfOperation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X838E29D485D2BAB9">78.1-3 ShowDeclarationsOfOperation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X85A9E019795B79D6">78.1-4 NewOperation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X843F48137B899BC3">78.1-5 DeclareOperation</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap78.html#X86EC0F0A78ECBC10">78.2 <span class="Heading">Constructors</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X783FA45E7858A8CF">78.2-1 NewConstructor</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X7EB6830886F62CC0">78.2-2 DeclareConstructor</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap78.html#X795EE8257848B438">78.3 <span class="Heading">Method Installation</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X837EFDAB7BEF290B">78.3-1 InstallMethod</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X7D2C12DB841CE539">78.3-2 InstallOtherMethod</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X78CA646678B0539F">78.3-3 InstallMethodWithRandomSource</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap78.html#X851FC6387CA2B241">78.4 <span class="Heading">Applicable Methods and Method Selection</span></a>
+</span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap78.html#X795EE8257848B438">78.2 <span class="Heading">Method Installation</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap78.html#X846865A681D4A623">78.5 <span class="Heading">Partial Methods</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X837EFDAB7BEF290B">78.2-1 InstallMethod</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X7D2C12DB841CE539">78.2-2 InstallOtherMethod</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X78CA646678B0539F">78.2-3 InstallMethodWithRandomSource</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X7EED949B83046A7F">78.5-1 TryNextMethod</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap78.html#X851FC6387CA2B241">78.3 <span class="Heading">Applicable Methods and Method Selection</span></a>
-</span>
-</div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap78.html#X846865A681D4A623">78.4 <span class="Heading">Partial Methods</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap78.html#X7B85DD797A907106">78.6 <span class="Heading">Redispatching</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X7EED949B83046A7F">78.4-1 TryNextMethod</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X7D4A46CE7BCFCCF5">78.6-1 RedispatchOnCondition</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap78.html#X7B85DD797A907106">78.5 <span class="Heading">Redispatching</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap78.html#X87D38D2584D0A8AF">78.7 <span class="Heading">Immediate Methods</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X7D4A46CE7BCFCCF5">78.5-1 RedispatchOnCondition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X87B47AC0849611F8">78.7-1 InstallImmediateMethod</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap78.html#X87D38D2584D0A8AF">78.6 <span class="Heading">Immediate Methods</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap78.html#X7FB5016E83DB4349">78.8 <span class="Heading">Logical Implications</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X87B47AC0849611F8">78.6-1 InstallImmediateMethod</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X860B8B707995CFE3">78.8-1 InstallTrueMethod</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X7B26BDF68754DF7A">78.8-2 SuspendMethodReordering</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap78.html#X7FB5016E83DB4349">78.7 <span class="Heading">Logical Implications</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78.html#X860B8B707995CFE3">78.7-1 InstallTrueMethod</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap78.html#X855FE25783FB0D4E">78.8 <span class="Heading">Operations and Mathematical Terms</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap78.html#X855FE25783FB0D4E">78.9 <span class="Heading">Operations and Mathematical Terms</span></a>
 </span>
 </div>
 </div>
 <div class="ContChap"><a href="chap79.html#X83548994805AD1C9">79 <span class="Heading">Creating New Objects</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X78DD5C237960B40B">79.1 <span class="Heading">Creating Categories</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X82E86CF37B123FD4">79.1 <span class="Heading">Creating Objects</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X87F68F887B44DBBD">79.1-1 NewCategory</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X787BACEE7937EF01">79.1-2 CategoryFamily</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X7CB5C12E813F512B">79.1-1 Objectify</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X85377AC07E775066">79.1-2 ObjectifyWithAttributes</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X7858E2848048F99D">79.2 <span class="Heading">Creating Representations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X866E223484649E5A">79.2 <span class="Heading">Component Objects</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X7CC8106F809E15CF">79.2-1 NewRepresentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X823965BF7DFDACC9">79.2-1 NamesOfComponents</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X7A38E7E87CCCEDD1">79.3 <span class="Heading">Creating Attributes and Properties</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X7B9654807858A3B0">79.3-1 NewAttribute</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X7F2D6FD979FE23DD">79.3-2 NewProperty</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X80B191247B4287FC">79.4 <span class="Heading">Creating Other Filters</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X821635DA7821ED74">79.4-1 NewFilter</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X7C92D53E7920CE02">79.4-2 SetFilterObj</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X8117FD03870FB02E">79.4-3 ResetFilterObj</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X79F32D71839CD196">79.5 <span class="Heading">Creating Operations</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X85A9E019795B79D6">79.5-1 NewOperation</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X7D2593D6854C4F93">79.6 <span class="Heading">Creating Constructors</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X783FA45E7858A8CF">79.6-1 NewConstructor</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X8401A9367E8CAA37">79.7 <span class="Heading">Creating Families</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X7FB4123E7E22137D">79.7-1 NewFamily</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X786FFAD97EE72B40">79.8 <span class="Heading">Creating Types</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X7CE39E9478AEC826">79.8-1 NewType</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X82E86CF37B123FD4">79.9 <span class="Heading">Creating Objects</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X7CB5C12E813F512B">79.9-1 Objectify</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X85377AC07E775066">79.9-2 ObjectifyWithAttributes</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X866E223484649E5A">79.10 <span class="Heading">Component Objects</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X823965BF7DFDACC9">79.10-1 NamesOfComponents</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X834893D07FAA6FD2">79.11 <span class="Heading">Positional Objects</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X834893D07FAA6FD2">79.3 <span class="Heading">Positional Objects</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X82309B3F81DD2237">79.12 <span class="Heading">Implementing New List Objects</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X82309B3F81DD2237">79.4 <span class="Heading">Implementing New List Objects</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X849D8BC278649EA5">79.13 <span class="Heading">Example – Constructing Enumerators</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X849D8BC278649EA5">79.5 <span class="Heading">Example – Constructing Enumerators</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X7F6BF6CE7AD04EFC">79.14 <span class="Heading">Example – Constructing Iterators</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X7F6BF6CE7AD04EFC">79.6 <span class="Heading">Example – Constructing Iterators</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X829629E87E30090C">79.15 <span class="Heading">Arithmetic Issues in the Implementation of New Kinds of Lists</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X829629E87E30090C">79.7 <span class="Heading">Arithmetic Issues in the Implementation of New Kinds of Lists</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X7EBB961E7FE1B0EB">79.16 <span class="Heading">External Representation</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X7EBB961E7FE1B0EB">79.8 <span class="Heading">External Representation</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X8542B32A8206118C">79.16-1 ExtRepOfObj</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X8542B32A8206118C">79.8-1 ExtRepOfObj</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X8090219A7C76AF55">79.17 <span class="Heading">Mutability and Copying</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X8090219A7C76AF55">79.9 <span class="Heading">Mutability and Copying</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X87E29BA57C8208A4">79.18 <span class="Heading">Global Variables in the Library</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X87E29BA57C8208A4">79.10 <span class="Heading">Global Variables in the Library</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X879DE2A17A6C6E92">79.18-1 DeclareCategory</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X813BE52887A3E0FA">79.18-2 TypeOfOperation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X792A23BF82BDF66B">79.18-3 IsCategory</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X86D42C7783ACA5F4">79.18-4 IsRepresentation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X81F1C3EE83003FA0">79.18-5 IsProperty</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X7973C8F4782D15A1">79.18-6 IsAttribute</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X85D07C3E7F4D4043">79.18-7 CategoryByName</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X7C81FB2682AE54CD">79.18-8 DeclareRepresentation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X7A00FC8A7A677A56">79.18-9 DeclareAttribute</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X7F4602F082682A04">79.18-10 DeclareProperty</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X846EA18A7D36626C">79.18-11 DeclareFilter</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X843F48137B899BC3">79.18-12 DeclareOperation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X7EB6830886F62CC0">79.18-13 DeclareConstructor</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X834A8CC587A609BE">79.18-14 DeclareGlobalFunction</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X8324B5DE8300E0F2">79.18-15 DeclareGlobalVariable</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X7A23F09886E936D2">79.18-16 InstallValue</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X851654DA87616207">79.18-17 DeclareSynonym</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X87A4316C818B3DE3">79.18-18 FlushCaches</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X7F6645D87DD26CF0">79.18-19 FilterByName</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X8324B5DE8300E0F2">79.10-1 DeclareGlobalVariable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X7A23F09886E936D2">79.10-2 InstallValue</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X87A4316C818B3DE3">79.10-3 FlushCaches</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X834A8CC587A609BE">79.10-4 DeclareGlobalFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X851654DA87616207">79.10-5 DeclareSynonym</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X7837CA9A83D93B38">79.19 <span class="Heading">Declaration and Implementation Part</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X7837CA9A83D93B38">79.11 <span class="Heading">Declaration and Implementation Part</span></a>
 </span>
 </div>
 </div>
@@ -6139,8 +6156,6 @@ several arguments</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap87.html#X82427DA47D458224">87.2-3 <span class="Heading">Refinement functions for the backtrack search</span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap87.html#X86CCA2B384A74856">87.2-4 <span class="Heading">Functions for meeting ordered partitions</span></a>
-</span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap87.html#X7E8A4C947C33D5F6">87.2-5 <span class="Heading">Avoiding multiplication of permutations</span></a>
 </span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap87.html#X7CA84E967B053C2C">87.3 <span class="Heading">Stabilizer Chains for Automorphisms Acting on Enumerators</span></a>

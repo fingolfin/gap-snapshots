@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  meatauto.gi                  GAP Library                    Michael Smith
-#W                                                           Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Michael Smith, Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright 1996 -- School of Mathematical Sciences, ANU   
-#Y  Copyright (C)  2004,  The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains meataxe type routines to compute module homomorphisms
 ##  for modules that are not necessarily irreducible. They are mainly a
@@ -427,10 +428,10 @@ local V, nv, W, nw, U, echu, F, matsV, matsW, k, g1, g2, max_stack_len, _t,
     # do preprocessing to make random matrices list in parallel
 
     for i in [1..10] do
-      g1:=Random([1..k]);
+      g1:=Random(1, k);
       g2:=g1;
       while g2 = g1 and Length(r.mats)>1 do
-	g2:=Random([1..k]);
+	g2:=Random(1, k);
       od;
       Add(r.mats,[r.mats[g1][1]*r.mats[g2][1], 
 		  r.mats[g1][2]*r.mats[g2][2]]);
@@ -500,9 +501,9 @@ local V, nv, W, nw, U, echu, F, matsV, matsW, k, g1, g2, max_stack_len, _t,
 
       # first take two elements of the list and multiply them
       # together
-      g1:=Random([1..k]);
+      g1:=Random(1, k);
       repeat
-	g2:=Random([1..k]);
+	g2:=Random(1, k);
       until g2 <> g1 or Length(r.mats)=1;
       Add(r.mats,[r.mats[g1][1]*r.mats[g2][1], 
 		  r.mats[g1][2]*r.mats[g2][2]]);
@@ -1175,9 +1176,10 @@ local proveIndecomposability, addnilpotent, n, F, zero, basis, enddim,
       if proveIndecomposability() then
 	return fail;
       fi;
-    until (cnt >= 2000);
+    until (cnt >= 20000);
     Error("Unable to ascertain module decomposition within time limits.\n",
 	  "Call `return;' to try again.");
+    cnt:=0;
   until false;
 end);
 
@@ -1686,3 +1688,7 @@ SMTX.BasisEndomorphismsRadical:=SMTX.Getter("basisEndoRad");
 
 SMTX.SetEndAlgResidue:=SMTX.Setter("endAlgResidue");
 SMTX.EndAlgResidue:=SMTX.Getter("endAlgResidue");
+
+if IsHPCGAP then
+    MakeReadOnlyObj(SMTX);
+fi;

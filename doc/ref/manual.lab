@@ -50,6 +50,7 @@
 \makelabel{ref:Continue}{4.22}{X7CCBA2247AA366BD}
 \makelabel{ref:Function}{4.23}{X815F71EA7BC0EB6F}
 \makelabel{ref:Return (With or without Value)}{4.24}{X812C6ABC7A182E9E}
+\makelabel{ref:Syntax Trees}{4.25}{X8732D9257FFCEA1B}
 \makelabel{ref:Functions}{5}{X86FA580F8055B274}
 \makelabel{ref:Information about a function}{5.1}{X870553EF8605792F}
 \makelabel{ref:Calling  a  function  with  a  list  argument  that  is interpreted as several
@@ -58,6 +59,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Functions that do nothing}{5.4}{X7EB0A85F7D128BE0}
 \makelabel{ref:Function Types}{5.5}{X80FE39D27CE3DE1B}
 \makelabel{ref:Naming Conventions}{5.6}{X81F732457F7BC851}
+\makelabel{ref:Code annotations (pragmas)}{5.7}{X7A1721CD79F08E71}
 \makelabel{ref:Main Loop and Break Loop}{6}{X7DB71A2A841CADA5}
 \makelabel{ref:Main Loop}{6.1}{X81667F568237B232}
 \makelabel{ref:Special Rules for Input Lines}{6.2}{X866092F281910B74}
@@ -85,7 +87,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Inspecting Applicable Methods}{7.2}{X7FDA1D4B87BD25A8}
 \makelabel{ref:Tracing Methods}{7.3}{X7D43A2D885B37739}
 \makelabel{ref:Info Functions}{7.4}{X7A9C902479CB6F7C}
-\makelabel{ref:Customizing Info (7.4-5) statements}{7.4.6}{X877BD99A82CB2643}
+\makelabel{ref:Customizing Info (7.4-6) statements}{7.4.7}{X800234B5815CAC97}
 \makelabel{ref:Assertions}{7.5}{X86425F067FC63A4C}
 \makelabel{ref:Timing}{7.6}{X792BA9A67E64CDED}
 \makelabel{ref:Tracking Memory Usage}{7.7}{X844CB04081A771FB}
@@ -146,6 +148,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Filters}{13.2}{X84EFA4C07D4277BB}
 \makelabel{ref:Categories}{13.3}{X7CC6903E78F24167}
 \makelabel{ref:Representation}{13.4}{X8698205F8648EB33}
+\makelabel{ref:Basic Representations of Objects}{13.4.1}{X805F1C3B7C730062}
 \makelabel{ref:Attributes}{13.5}{X7C701DBF7BAE649A}
 \makelabel{ref:Setter and Tester for Attributes}{13.6}{X79DE5208877AE42A}
 \makelabel{ref:Properties}{13.7}{X871597447BB998A1}
@@ -246,6 +249,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Advanced List Manipulations}{21.21}{X805CA0B68029B47A}
 \makelabel{ref:Ranges}{21.22}{X79596BDE7CAF8491}
 \makelabel{ref:Enumerators}{21.23}{X7EA3ACE27E43D174}
+\makelabel{ref:Plain Lists}{21.24}{X81ECC2077D88E112}
 \makelabel{ref:Boolean Lists}{22}{X7AC531DD79B6938E}
 \makelabel{ref:IsBlist (Filter)}{22.1}{X7E7832B0804221AE}
 \makelabel{ref:Boolean Lists Representing Subsets}{22.2}{X7CC745317FE54C14}
@@ -281,6 +285,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Inverse and Nullspace of an Integer Matrix Modulo an Ideal}{24.15}{X8593A5337D3B2C70}
 \makelabel{ref:Special Multiplication Algorithms for Matrices over GF(2)}{24.16}{X787DF5F07DC7D86E}
 \makelabel{ref:Block Matrices}{24.17}{X7F8A71F38201A250}
+\makelabel{ref:Linear Programming}{24.18}{X782F2EBF80C431D0}
 \makelabel{ref:Integral matrices and lattices}{25}{X8414F20D8412DDA4}
 \makelabel{ref:Linear equations over the integers and Integral Matrices}{25.1}{X786A64B983339767}
 \makelabel{ref:Normal Forms over the Integers}{25.2}{X8143C1448069D846}
@@ -293,6 +298,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Categories of Vectors and Matrices}{26.2}{X7CF9CC0082C7AFF8}
 \makelabel{ref:Constructing Vector and Matrix Objects}{26.3}{X7BD7D2837BFDE649}
 \makelabel{ref:Operations for Vector Objects}{26.4}{X7BE9D278852C13BC}
+\makelabel{ref:Randomize}{26.4.9}{X83DD8B39864A2C94}
 \makelabel{ref:Operations for Row List Matrix Objects}{26.5}{X7D40EE2084A6C976}
 \makelabel{ref:Operations for Flat Matrix Objects}{26.6}{X7C03C92985B58F58}
 \makelabel{ref:Strings and Characters}{27}{X7D28329B7EDB8F47}
@@ -353,7 +359,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Useful Categories of Elements}{31.14}{X7B97A0307EA161E5}
 \makelabel{ref:Useful Categories for all Elements of a Family}{31.15}{X7ABEF00C870789D2}
 \makelabel{ref:Mappings}{32}{X7C9734B880042C73}
-\makelabel{ref:IsDirectProductElement (Filter)}{32.1}{X783BAB2683EEA0CC}
+\makelabel{ref:Direct Products and their Elements}{32.1}{X859A13548515A5D7}
 \makelabel{ref:Creating Mappings}{32.2}{X7CF6FEFB8290D5CB}
 \makelabel{ref:MappingByFunction}{32.2.2}{X7D55E1977ED70E01}
 \makelabel{ref:Embedding}{32.2.11}{X86452F8587CBAEA0}
@@ -454,8 +460,9 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:OneCocycles}{39.23.1}{X847BEC137A49BAF4}
 \makelabel{ref:Schur Covers and Multipliers}{39.24}{X80A4B0F282977074}
 \makelabel{ref:Covering groups of symmetric groups}{39.24.8}{X7F4240CD782B6032}
-\makelabel{ref:Tests for the Availability of Methods}{39.25}{X865722987E0E19B6}
-\makelabel{ref:Specific functions for Normalizer calculation}{39.26}{X83A9997586694DC0}
+\makelabel{ref:2-Cohomology}{39.25}{X7BD95B8D879B73A3}
+\makelabel{ref:Tests for the Availability of Methods}{39.26}{X865722987E0E19B6}
+\makelabel{ref:Specific functions for Normalizer calculation}{39.27}{X83A9997586694DC0}
 \makelabel{ref:Group Homomorphisms}{40}{X83702FC27B3C3098}
 \makelabel{ref:Creating Group Homomorphisms}{40.1}{X81A7BB0F7D81B247}
 \makelabel{ref:GroupHomomorphismByFunction}{40.1.4}{X7BC6C20E7CEDBFC5}
@@ -538,7 +545,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Elementary Operations for a Pcgs}{45.4}{X816C5E8E7F71C9D8}
 \makelabel{ref:Elementary Operations for a Pcgs and an Element}{45.5}{X84243AA07DA5A827}
 \makelabel{ref:Exponents of Special Products}{45.6}{X7EF61EA4822870E7}
-\makelabel{ref:Subgroups of Polycyclic Groups - Induced Pcgs}{45.7}{X80AC58657E04FE9B}
+\makelabel{ref:Subgroups of Polycyclic Groups – Induced Pcgs}{45.7}{X8676397383093D1E}
 \makelabel{ref:Subgroups of Polycyclic Groups – Canonical Pcgs}{45.8}{X84068D2478C134C1}
 \makelabel{ref:Factor Groups of Polycyclic Groups – Modulo Pcgs}{45.9}{X8294F5EF81B7ABA0}
 \makelabel{ref:Factor Groups of Polycyclic Groups in their Own Representation}{45.10}{X8254C0F485F945BD}
@@ -551,11 +558,11 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Operations which have Special Methods for Groups with Pcgs}{45.16}{X7A19DF1E7E841074}
 \makelabel{ref:Conjugacy Classes in Solvable Groups}{45.17}{X79DCCF6D80351859}
 \makelabel{ref:Pc Groups}{46}{X7EAD57C97EBF7E67}
-\makelabel{ref:The family pcgs}{46.1}{X78E9E4D778A57A96}
-\makelabel{ref:Elements of pc groups}{46.2}{X842526BE7FEFE8BD}
+\makelabel{ref:The Family Pcgs}{46.1}{X78E9E4D778A57A96}
+\makelabel{ref:Elements of Pc Groups}{46.2}{X842526BE7FEFE8BD}
 \makelabel{ref:Comparison of elements of pc groups}{46.2.1}{X869DCE7D86E32337}
 \makelabel{ref:Arithmetic operations for elements of pc groups}{46.2.2}{X7D1B700882FC6C78}
-\makelabel{ref:Pc groups versus fp groups}{46.3}{X87B866C386B386E4}
+\makelabel{ref:Pc Groups versus Fp Groups}{46.3}{X87B866C386B386E4}
 \makelabel{ref:Constructing Pc Groups}{46.4}{X8581887880556E0C}
 \makelabel{ref:Computing Pc Groups}{46.5}{X83F69FE27B024E24}
 \makelabel{ref:Saving a Pc Group}{46.6}{X85696AB9791DF047}
@@ -607,8 +614,8 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Embeddings and Projections for Group Products}{49.6}{X798FDA1386A0EAC6}
 \makelabel{ref:Group Libraries}{50}{X81B00B667D2BD022}
 \makelabel{ref:Basic Groups}{50.1}{X839981CC7D9B671B}
-\makelabel{ref:AlternatingGroup}{50.1.9}{X7E54D3E778E6A53E}
-\makelabel{ref:SymmetricGroup}{50.1.10}{X858666F97BD85ABB}
+\makelabel{ref:AlternatingGroup}{50.1.11}{X7E54D3E778E6A53E}
+\makelabel{ref:SymmetricGroup}{50.1.12}{X858666F97BD85ABB}
 \makelabel{ref:Classical Groups}{50.2}{X8674AAA578FE4AEE}
 \makelabel{ref:GeneralLinearGroup}{50.2.1}{X85D607DD82AF3E27}
 \makelabel{ref:SpecialLinearGroup}{50.2.2}{X7CA3F7BF83992C6B}
@@ -631,7 +638,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Inverse semigroups and monoids}{51.3}{X840847B6810BD0E1}
 \makelabel{ref:Properties of Semigroups}{51.4}{X78274024827F306D}
 \makelabel{ref:Ideals of semigroups}{51.5}{X7BB32D508183C0F1}
-\makelabel{ref:Congruences for semigroups}{51.6}{X7C0782D57C01E327}
+\makelabel{ref:Congruences on semigroups}{51.6}{X7914691E7DFFE27A}
 \makelabel{ref:Quotients}{51.7}{X87CE9EAB7EE3A128}
 \makelabel{ref:Green's Relations}{51.8}{X80C6C718801855E9}
 \makelabel{ref:Rees Matrix Semigroups}{51.9}{X8225A9EC87A255E6}
@@ -949,33 +956,26 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Semigroup properties}{77.6}{X7C89E03285799F40}
 \makelabel{ref:Method Selection}{78}{X8058CC8187162644}
 \makelabel{ref:Operations and Methods}{78.1}{X7AEED9AB824CD4DA}
-\makelabel{ref:Method Installation}{78.2}{X795EE8257848B438}
-\makelabel{ref:Applicable Methods and Method Selection}{78.3}{X851FC6387CA2B241}
-\makelabel{ref:Partial Methods}{78.4}{X846865A681D4A623}
-\makelabel{ref:Redispatching}{78.5}{X7B85DD797A907106}
-\makelabel{ref:Immediate Methods}{78.6}{X87D38D2584D0A8AF}
-\makelabel{ref:Logical Implications}{78.7}{X7FB5016E83DB4349}
-\makelabel{ref:Operations and Mathematical Terms}{78.8}{X855FE25783FB0D4E}
+\makelabel{ref:Constructors}{78.2}{X86EC0F0A78ECBC10}
+\makelabel{ref:Method Installation}{78.3}{X795EE8257848B438}
+\makelabel{ref:Applicable Methods and Method Selection}{78.4}{X851FC6387CA2B241}
+\makelabel{ref:Partial Methods}{78.5}{X846865A681D4A623}
+\makelabel{ref:Redispatching}{78.6}{X7B85DD797A907106}
+\makelabel{ref:Immediate Methods}{78.7}{X87D38D2584D0A8AF}
+\makelabel{ref:Logical Implications}{78.8}{X7FB5016E83DB4349}
+\makelabel{ref:Operations and Mathematical Terms}{78.9}{X855FE25783FB0D4E}
 \makelabel{ref:Creating New Objects}{79}{X83548994805AD1C9}
-\makelabel{ref:Creating Categories}{79.1}{X78DD5C237960B40B}
-\makelabel{ref:Creating Representations}{79.2}{X7858E2848048F99D}
-\makelabel{ref:Creating Attributes and Properties}{79.3}{X7A38E7E87CCCEDD1}
-\makelabel{ref:Creating Other Filters}{79.4}{X80B191247B4287FC}
-\makelabel{ref:Creating Operations}{79.5}{X79F32D71839CD196}
-\makelabel{ref:Creating Constructors}{79.6}{X7D2593D6854C4F93}
-\makelabel{ref:Creating Families}{79.7}{X8401A9367E8CAA37}
-\makelabel{ref:Creating Types}{79.8}{X786FFAD97EE72B40}
-\makelabel{ref:Creating Objects}{79.9}{X82E86CF37B123FD4}
-\makelabel{ref:Component Objects}{79.10}{X866E223484649E5A}
-\makelabel{ref:Positional Objects}{79.11}{X834893D07FAA6FD2}
-\makelabel{ref:Implementing New List Objects}{79.12}{X82309B3F81DD2237}
-\makelabel{ref:Example – Constructing Enumerators}{79.13}{X849D8BC278649EA5}
-\makelabel{ref:Example – Constructing Iterators}{79.14}{X7F6BF6CE7AD04EFC}
-\makelabel{ref:Arithmetic Issues in the Implementation of New Kinds of Lists}{79.15}{X829629E87E30090C}
-\makelabel{ref:External Representation}{79.16}{X7EBB961E7FE1B0EB}
-\makelabel{ref:Mutability and Copying}{79.17}{X8090219A7C76AF55}
-\makelabel{ref:Global Variables in the Library}{79.18}{X87E29BA57C8208A4}
-\makelabel{ref:Declaration and Implementation Part}{79.19}{X7837CA9A83D93B38}
+\makelabel{ref:Creating Objects}{79.1}{X82E86CF37B123FD4}
+\makelabel{ref:Component Objects}{79.2}{X866E223484649E5A}
+\makelabel{ref:Positional Objects}{79.3}{X834893D07FAA6FD2}
+\makelabel{ref:Implementing New List Objects}{79.4}{X82309B3F81DD2237}
+\makelabel{ref:Example – Constructing Enumerators}{79.5}{X849D8BC278649EA5}
+\makelabel{ref:Example – Constructing Iterators}{79.6}{X7F6BF6CE7AD04EFC}
+\makelabel{ref:Arithmetic Issues in the Implementation of New Kinds of Lists}{79.7}{X829629E87E30090C}
+\makelabel{ref:External Representation}{79.8}{X7EBB961E7FE1B0EB}
+\makelabel{ref:Mutability and Copying}{79.9}{X8090219A7C76AF55}
+\makelabel{ref:Global Variables in the Library}{79.10}{X87E29BA57C8208A4}
+\makelabel{ref:Declaration and Implementation Part}{79.11}{X7837CA9A83D93B38}
 \makelabel{ref:Examples of Extending the System}{80}{X8186831682A00097}
 \makelabel{ref:Addition of a Method}{80.1}{X7B42DF6E7CCF507D}
 \makelabel{ref:Extending the Range of Definition of an Existing Operation}{80.2}{X837CF3267EF0CFB3}
@@ -1026,7 +1026,6 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Functions for setting up an R-base}{87.2.2}{X785508067969766B}
 \makelabel{ref:Refinement functions for the backtrack search}{87.2.3}{X82427DA47D458224}
 \makelabel{ref:Functions for meeting ordered partitions}{87.2.4}{X86CCA2B384A74856}
-\makelabel{ref:Avoiding multiplication of permutations}{87.2.5}{X7E8A4C947C33D5F6}
 \makelabel{ref:Stabilizer Chains for Automorphisms Acting on Enumerators}{87.3}{X7CA84E967B053C2C}
 \makelabel{ref:An operation domain for automorphisms}{87.3.1}{X864007907EA923FB}
 \makelabel{ref:Enumerators for cosets of characteristic factors}{87.3.2}{X84A94914876C03F0}
@@ -1060,7 +1059,6 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:UNIX options}{3.1}{X782751D5858A6EAF}
 \makelabel{ref:GAPInfo.CommandLineOptions}{3.1}{X782751D5858A6EAF}
 \makelabel{ref:-A}{3.1}{X782751D5858A6EAF}
-\makelabel{ref:-a}{3.1}{X782751D5858A6EAF}
 \makelabel{ref:-B}{3.1}{X782751D5858A6EAF}
 \makelabel{ref:-b}{3.1}{X782751D5858A6EAF}
 \makelabel{ref:-D}{3.1}{X782751D5858A6EAF}
@@ -1109,6 +1107,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:tabulator}{4.4}{X7C53CEFC8641B919}
 \makelabel{ref:newline}{4.4}{X7C53CEFC8641B919}
 \makelabel{ref:comments}{4.4}{X7C53CEFC8641B919}
+\makelabel{ref:}{4.4}{X7C53CEFC8641B919}
 \makelabel{ref:GAPInfo.Keywords}{4.5}{X87506BDC7D5F789E}
 \makelabel{ref:IsValidIdentifier}{4.6.1}{X85CF993B7D19F2C4}
 \makelabel{ref:namespace}{4.6.1}{X85CF993B7D19F2C4}
@@ -1131,7 +1130,6 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:NamesGVars}{4.9.9}{X876A6EB68745A510}
 \makelabel{ref:NamesSystemGVars}{4.9.10}{X7E604AF579A7BC92}
 \makelabel{ref:NamesUserGVars}{4.9.11}{X870169447AF490D8}
-\makelabel{ref:TemporaryGlobalVarName}{4.9.12}{X798433307E62DCBA}
 \makelabel{ref:functions with a variable number of arguments, calling}{4.11.1}{X80B93A9C7E0A57F4}
 \makelabel{ref:arg special function argument, calling with}{4.11.1}{X80B93A9C7E0A57F4}
 \makelabel{ref:equality test}{4.12}{X7A274A1F8553B7E6}
@@ -1202,6 +1200,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:arrow notation for functions}{4.23}{X815F71EA7BC0EB6F}
 \makelabel{ref:return no value}{4.24}{X812C6ABC7A182E9E}
 \makelabel{ref:return with value}{4.24}{X812C6ABC7A182E9E}
+\makelabel{ref:SyntaxTree}{4.25.1}{X81558D66810BEA67}
 \makelabel{ref:functions as in programming language}{5}{X86FA580F8055B274}
 \makelabel{ref:NameFunction}{5.1.1}{X79C3BDC4781FA0FD}
 \makelabel{ref:NumberArgumentsFunction}{5.1.2}{X877F03F77FD74C98}
@@ -1221,8 +1220,10 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:ReturnFirst}{5.4.5}{X8788D7D780FCE169}
 \makelabel{ref:IdFunc}{5.4.6}{X810325697BDEF899}
 \makelabel{ref:IsFunction}{5.5.1}{X85E40340806C2B8C}
-\makelabel{ref:IsOperation}{5.5.2}{X874C7C6D8650D648}
-\makelabel{ref:FunctionsFamily}{5.5.3}{X87838FE885A9AAF9}
+\makelabel{ref:FunctionsFamily}{5.5.2}{X87838FE885A9AAF9}
+\makelabel{ref:Pragmas}{5.7}{X7A1721CD79F08E71}
+\makelabel{ref:Code annotations}{5.7}{X7A1721CD79F08E71}
+\makelabel{ref:}{5.7}{X7A1721CD79F08E71}
 \makelabel{ref:read eval print loop}{6.1}{X81667F568237B232}
 \makelabel{ref:loop read eval print}{6.1}{X81667F568237B232}
 \makelabel{ref:prompt}{6.1}{X81667F568237B232}
@@ -1249,6 +1250,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:OnBreakMessage}{6.4.4}{X80711C807C99C220}
 \makelabel{ref:Break loop message}{6.4.4}{X80711C807C99C220}
 \makelabel{ref:Where}{6.4.5}{X7A7FFA2B7C1EF5A3}
+\makelabel{ref:WhereWithVars}{6.4.5}{X7A7FFA2B7C1EF5A3}
 \makelabel{ref:Backtrace GAP3 name for Where}{6.4.5}{X7A7FFA2B7C1EF5A3}
 \makelabel{ref:Stack trace}{6.4.5}{X7A7FFA2B7C1EF5A3}
 \makelabel{ref:DownEnv}{6.5.1}{X79E66DA2875303B0}
@@ -1300,14 +1302,15 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:DeclareInfoClass}{7.4.2}{X7B3709C584B3DA1E}
 \makelabel{ref:SetInfoLevel}{7.4.3}{X7A43B9E68765EE9E}
 \makelabel{ref:InfoLevel}{7.4.4}{X7B2ADC37783104B9}
-\makelabel{ref:Info}{7.4.5}{X864E4B6886E2697D}
-\makelabel{ref:SetInfoHandler}{7.4.6}{X877BD99A82CB2643}
-\makelabel{ref:SetInfoOutput}{7.4.6}{X877BD99A82CB2643}
-\makelabel{ref:UnbindInfoOutput}{7.4.6}{X877BD99A82CB2643}
-\makelabel{ref:InfoOutput}{7.4.6}{X877BD99A82CB2643}
-\makelabel{ref:SetDefaultInfoOutput}{7.4.6}{X877BD99A82CB2643}
-\makelabel{ref:DefaultInfoHandler}{7.4.6}{X877BD99A82CB2643}
-\makelabel{ref:InfoWarning}{7.4.7}{X7A28F77C82D6A3E0}
+\makelabel{ref:ShowUsedInfoClasses}{7.4.5}{X7BA636EF80A1435A}
+\makelabel{ref:Info}{7.4.6}{X864E4B6886E2697D}
+\makelabel{ref:SetInfoHandler}{7.4.7}{X800234B5815CAC97}
+\makelabel{ref:SetInfoOutput}{7.4.7}{X800234B5815CAC97}
+\makelabel{ref:UnbindInfoOutput}{7.4.7}{X800234B5815CAC97}
+\makelabel{ref:InfoOutput}{7.4.7}{X800234B5815CAC97}
+\makelabel{ref:SetDefaultInfoOutput}{7.4.7}{X800234B5815CAC97}
+\makelabel{ref:DefaultInfoHandler}{7.4.7}{X800234B5815CAC97}
+\makelabel{ref:InfoWarning}{7.4.8}{X7A28F77C82D6A3E0}
 \makelabel{ref:SetAssertionLevel}{7.5.1}{X7C7596418423660B}
 \makelabel{ref:AssertionLevel}{7.5.2}{X876C83707F13A0FD}
 \makelabel{ref:Assert}{7.5.3}{X830E443284780FB9}
@@ -1317,7 +1320,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:NanosecondsSinceEpochInfo}{7.6.3}{X844E1CFE80F41760}
 \makelabel{ref:time}{7.6.4}{X7C0F91F982189624}
 \makelabel{ref:Sleep}{7.6.5}{X7B543F357C7202CF}
-\makelabel{ref:NanoSleep}{7.6.5}{X7B543F357C7202CF}
+\makelabel{ref:MicroSleep}{7.6.5}{X7B543F357C7202CF}
 \makelabel{ref:TotalMemoryAllocated}{7.7.1}{X8077B50B844C4EFC}
 \makelabel{ref:memoryallocated}{7.7.2}{X8156D7208591460F}
 \makelabel{ref:ProfileGlobalFunctions}{7.8.2}{X79D6CB927BBEB940}
@@ -1461,17 +1464,35 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:IsInternallyConsistent}{12.8.4}{X7F6C5C3287E8B816}
 \makelabel{ref:MemoryUsage}{12.8.5}{X7F4D216B7DF7BE9D}
 \makelabel{ref:FamilyObj}{13.1.1}{X7CF70EAC84284919}
+\makelabel{ref:NewFamily}{13.1.2}{X7FB4123E7E22137D}
 \makelabel{ref:and for filters}{13.2}{X84EFA4C07D4277BB}
 \makelabel{ref:RankFilter}{13.2.1}{X82E62B997C05E05E}
 \makelabel{ref:NamesFilter}{13.2.2}{X7A78ECC67E2C9D78}
-\makelabel{ref:ShowImpliedFilters}{13.2.3}{X7F9568A67F3840DE}
-\makelabel{ref:FiltersType}{13.2.4}{X836FAA18861BE387}
-\makelabel{ref:FiltersObj}{13.2.4}{X836FAA18861BE387}
-\makelabel{ref:CategoriesOfObject}{13.3.1}{X85C6EB707A406A5A}
-\makelabel{ref:RepresentationsOfObject}{13.4.1}{X7BBE93BE7977750F}
-\makelabel{ref:system getter}{13.5}{X7C701DBF7BAE649A}
-\makelabel{ref:system setter}{13.5}{X7C701DBF7BAE649A}
-\makelabel{ref:KnownAttributesOfObject}{13.5.1}{X7F7960338163AA88}
+\makelabel{ref:FilterByName}{13.2.3}{X7F6645D87DD26CF0}
+\makelabel{ref:ShowImpliedFilters}{13.2.4}{X7F9568A67F3840DE}
+\makelabel{ref:FiltersType}{13.2.5}{X836FAA18861BE387}
+\makelabel{ref:FiltersObj}{13.2.5}{X836FAA18861BE387}
+\makelabel{ref:IsCategory}{13.3.1}{X792A23BF82BDF66B}
+\makelabel{ref:CategoriesOfObject}{13.3.2}{X85C6EB707A406A5A}
+\makelabel{ref:CategoryByName}{13.3.3}{X85D07C3E7F4D4043}
+\makelabel{ref:NewCategory}{13.3.4}{X87F68F887B44DBBD}
+\makelabel{ref:DeclareCategory}{13.3.5}{X879DE2A17A6C6E92}
+\makelabel{ref:CategoryFamily}{13.3.6}{X787BACEE7937EF01}
+\makelabel{ref:IsInternalRep}{13.4.1}{X805F1C3B7C730062}
+\makelabel{ref:IsDataObjectRep}{13.4.1}{X805F1C3B7C730062}
+\makelabel{ref:IsPositionalObjectRep}{13.4.1}{X805F1C3B7C730062}
+\makelabel{ref:IsComponentObjectRep}{13.4.1}{X805F1C3B7C730062}
+\makelabel{ref:IsRepresentation}{13.4.2}{X86D42C7783ACA5F4}
+\makelabel{ref:RepresentationsOfObject}{13.4.3}{X7BBE93BE7977750F}
+\makelabel{ref:NewRepresentation}{13.4.4}{X7CC8106F809E15CF}
+\makelabel{ref:DeclareRepresentation}{13.4.5}{X7C81FB2682AE54CD}
+\makelabel{ref:IsAttribute}{13.5.1}{X7973C8F4782D15A1}
+\makelabel{ref:KnownAttributesOfObject}{13.5.2}{X7F7960338163AA88}
+\makelabel{ref:NewAttribute}{13.5.3}{X7B9654807858A3B0}
+\makelabel{ref:DeclareAttribute}{13.5.4}{X7A00FC8A7A677A56}
+\makelabel{ref:IsAttributeStoringRep}{13.5.5}{X7A951C33839AF2C1}
+\makelabel{ref:system getter}{13.5.5}{X7A951C33839AF2C1}
+\makelabel{ref:system setter}{13.5.5}{X7A951C33839AF2C1}
 \makelabel{ref:setter}{13.6}{X79DE5208877AE42A}
 \makelabel{ref:tester}{13.6}{X79DE5208877AE42A}
 \makelabel{ref:Tester}{13.6.1}{X87D5B5AC7DAF932D}
@@ -1480,10 +1501,22 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:InfoAttributes}{13.6.4}{X79120CE37BB69D11}
 \makelabel{ref:DisableAttributeValueStoring}{13.6.5}{X7851E2DB79656DB0}
 \makelabel{ref:EnableAttributeValueStoring}{13.6.6}{X7E5DACBE7A9A9AD1}
-\makelabel{ref:KnownPropertiesOfObject}{13.7.1}{X7E51C08286E03E7F}
-\makelabel{ref:KnownTruePropertiesOfObject}{13.7.2}{X86711BC77B62EB02}
+\makelabel{ref:IsProperty}{13.7.1}{X81F1C3EE83003FA0}
+\makelabel{ref:KnownPropertiesOfObject}{13.7.2}{X7E51C08286E03E7F}
+\makelabel{ref:KnownTruePropertiesOfObject}{13.7.3}{X86711BC77B62EB02}
+\makelabel{ref:NewProperty}{13.7.4}{X7F2D6FD979FE23DD}
+\makelabel{ref:DeclareProperty}{13.7.5}{X7F4602F082682A04}
+\makelabel{ref:NewFilter}{13.8.1}{X821635DA7821ED74}
+\makelabel{ref:DeclareFilter}{13.8.2}{X846EA18A7D36626C}
+\makelabel{ref:SetFilterObj}{13.8.3}{X7C92D53E7920CE02}
+\makelabel{ref:ResetFilterObj}{13.8.4}{X8117FD03870FB02E}
 \makelabel{ref:TypeObj}{13.9.1}{X7D3E6B6482BE5B16}
 \makelabel{ref:DataType}{13.9.2}{X85A60A7F8083C1C4}
+\makelabel{ref:NewType}{13.9.3}{X7CE39E9478AEC826}
+\makelabel{ref:small integer}{14}{X853DF11B80068ED5}
+\makelabel{ref:immediate integer}{14}{X853DF11B80068ED5}
+\makelabel{ref:INTOBJMIN}{14}{X853DF11B80068ED5}
+\makelabel{ref:INTOBJMAX}{14}{X853DF11B80068ED5}
 \makelabel{ref:Integers global variable}{14.1.1}{X7E20D82B79DE5129}
 \makelabel{ref:PositiveIntegers}{14.1.1}{X7E20D82B79DE5129}
 \makelabel{ref:NonnegativeIntegers}{14.1.1}{X7E20D82B79DE5129}
@@ -1555,6 +1588,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:CheckDigitTestFunction}{14.6.2}{X85F1A6A5870485B9}
 \makelabel{ref:IsRandomSource}{14.7.1}{X82E31A697E389F1D}
 \makelabel{ref:Random for random source and list}{14.7.2}{X821004F286282D49}
+\makelabel{ref:Random for random source and collection}{14.7.2}{X821004F286282D49}
 \makelabel{ref:Random for random source and two integers}{14.7.2}{X821004F286282D49}
 \makelabel{ref:State}{14.7.3}{X819E3E3080297347}
 \makelabel{ref:Reset}{14.7.3}{X819E3E3080297347}
@@ -1667,6 +1701,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:symmetric group power map}{16.2.29}{X7A95D8A6820363A8}
 \makelabel{ref:PartitionTuples}{16.2.30}{X877D997B7F66A119}
 \makelabel{ref:NrPartitionTuples}{16.2.31}{X7F44AD098561DE32}
+\makelabel{ref:BetaSet}{16.2.32}{X8796C1D783ED9CB4}
 \makelabel{ref:Fibonacci}{16.3.1}{X85AE1D70803A886C}
 \makelabel{ref:sequence Fibonacci}{16.3.1}{X85AE1D70803A886C}
 \makelabel{ref:Lucas}{16.3.2}{X7830A03181D67192}
@@ -1913,16 +1948,18 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:PositionNthOccurrence}{21.16.4}{X7D2B25B484591506}
 \makelabel{ref:PositionSorted}{21.16.5}{X7A122E848464E534}
 \makelabel{ref:PositionSortedOp}{21.16.5}{X7A122E848464E534}
-\makelabel{ref:PositionSet}{21.16.6}{X78BFE9D78347C0DA}
-\makelabel{ref:PositionMaximum}{21.16.7}{X7FD9C1D37F300206}
-\makelabel{ref:PositionMinimum}{21.16.7}{X7FD9C1D37F300206}
-\makelabel{ref:PositionProperty}{21.16.8}{X7E6C763A82C6153B}
-\makelabel{ref:PositionsProperty}{21.16.9}{X7DA94D278304EC3D}
-\makelabel{ref:PositionBound}{21.16.10}{X86C9E5C3863B3C03}
-\makelabel{ref:PositionsBound}{21.16.11}{X819F71047AABEA2F}
-\makelabel{ref:PositionNot}{21.16.12}{X865EF45D87ED1384}
-\makelabel{ref:PositionNonZero}{21.16.13}{X7F42E5AD87EC9D5A}
-\makelabel{ref:PositionSublist}{21.16.14}{X87A8C62A867D6DA4}
+\makelabel{ref:PositionSortedBy}{21.16.6}{X820BA44D85930EBF}
+\makelabel{ref:PositionSortedByOp}{21.16.6}{X820BA44D85930EBF}
+\makelabel{ref:PositionSet}{21.16.7}{X78BFE9D78347C0DA}
+\makelabel{ref:PositionMaximum}{21.16.8}{X7FD9C1D37F300206}
+\makelabel{ref:PositionMinimum}{21.16.8}{X7FD9C1D37F300206}
+\makelabel{ref:PositionProperty}{21.16.9}{X7E6C763A82C6153B}
+\makelabel{ref:PositionsProperty}{21.16.10}{X7DA94D278304EC3D}
+\makelabel{ref:PositionBound}{21.16.11}{X86C9E5C3863B3C03}
+\makelabel{ref:PositionsBound}{21.16.12}{X819F71047AABEA2F}
+\makelabel{ref:PositionNot}{21.16.13}{X865EF45D87ED1384}
+\makelabel{ref:PositionNonZero}{21.16.14}{X7F42E5AD87EC9D5A}
+\makelabel{ref:PositionSublist}{21.16.15}{X87A8C62A867D6DA4}
 \makelabel{ref:IsMatchingSublist}{21.17.1}{X83F8EC7C7BF27EFC}
 \makelabel{ref:IsDuplicateFree}{21.17.2}{X7FA892828252BB3B}
 \makelabel{ref:IsDuplicateFreeList}{21.17.2}{X7FA892828252BB3B}
@@ -1999,8 +2036,10 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:ProductX}{21.21.4}{X7FB318B47D8783DA}
 \makelabel{ref:range}{21.22}{X79596BDE7CAF8491}
 \makelabel{ref:IsRange}{21.22.1}{X86DDC2FF7A50FBEE}
-\makelabel{ref:ConvertToRangeRep}{21.22.2}{X7D22B2298167A58F}
+\makelabel{ref:IsRangeRep}{21.22.2}{X83896BC481536B07}
+\makelabel{ref:ConvertToRangeRep}{21.22.3}{X7D22B2298167A58F}
 \makelabel{ref:IsQuickPositionList}{21.23.1}{X7BB462C17962647F}
+\makelabel{ref:IsPlistRep}{21.24.1}{X87BA4EBF80F16B72}
 \makelabel{ref:IsBlist}{22.1.1}{X7BE078187A08DCEA}
 \makelabel{ref:BlistList}{22.2.1}{X7C597B2D87CA2E6E}
 \makelabel{ref:ListBlist}{22.2.2}{X874BEF63785AB439}
@@ -2015,6 +2054,9 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:UniteBlistList}{22.4.2}{X7C86C8D3853BE5EB}
 \makelabel{ref:IntersectBlist}{22.4.3}{X84EB70D37EB275DF}
 \makelabel{ref:SubtractBlist}{22.4.4}{X7AA138407D5A3BAC}
+\makelabel{ref:FlipBlist}{22.4.5}{X7F14FF35786DAEF3}
+\makelabel{ref:SetAllBlist}{22.4.6}{X7E9F6C197A79098F}
+\makelabel{ref:ClearAllBlist}{22.4.7}{X87ED45A88688AE8E}
 \makelabel{ref:IsBlistRep}{22.5.1}{X8453ADDA810B4C03}
 \makelabel{ref:ConvertToBlistRep}{22.5.1}{X8453ADDA810B4C03}
 \makelabel{ref:IsRowVector}{23.1.1}{X7DFB22A07836A7A9}
@@ -2035,7 +2077,8 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:NumberFFVector}{23.3.3}{X872E17FF829DB50F}
 \makelabel{ref:AddRowVector}{23.4.1}{X78E6897186F482F6}
 \makelabel{ref:AddCoeffs}{23.4.2}{X7854B2B67E3FE2CA}
-\makelabel{ref:MultRowVector}{23.4.3}{X78CFE0A879773B45}
+\makelabel{ref:MultVector}{23.4.3}{X7BEF28C981C42E16}
+\makelabel{ref:MultVectorLeft}{23.4.3}{X7BEF28C981C42E16}
 \makelabel{ref:CoeffsMod}{23.4.4}{X8264B3EE7D56EEDD}
 \makelabel{ref:LeftShiftRowVector}{23.5.1}{X80465E9B7A38C176}
 \makelabel{ref:RightShiftRowVector}{23.5.2}{X822CCA4781D5C5EC}
@@ -2097,10 +2140,14 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Determinant}{24.4.4}{X83045F6F82C180E1}
 \makelabel{ref:DeterminantMatDestructive}{24.4.5}{X84277D21848B7B7F}
 \makelabel{ref:DeterminantMatDivFree}{24.4.6}{X7EEA7E7A7F6BE6F3}
-\makelabel{ref:IsMonomialMatrix}{24.4.7}{X848B80437CE65FF3}
-\makelabel{ref:IsDiagonalMat}{24.4.8}{X7FF01BF686AD0623}
-\makelabel{ref:IsUpperTriangularMat}{24.4.9}{X7ECFBD9F8664982B}
-\makelabel{ref:IsLowerTriangularMat}{24.4.10}{X81671CFD7CFE4819}
+\makelabel{ref:IsEmptyMatrix for matrices}{24.4.7}{X8740D4D47D7ECD4A}
+\makelabel{ref:IsMonomialMatrix}{24.4.8}{X848B80437CE65FF3}
+\makelabel{ref:IsDiagonalMatrix}{24.4.9}{X7EEC8E768178696E}
+\makelabel{ref:IsDiagonalMat}{24.4.9}{X7EEC8E768178696E}
+\makelabel{ref:IsUpperTriangularMatrix}{24.4.10}{X8740E71C799C0BCC}
+\makelabel{ref:IsUpperTriangularMat}{24.4.10}{X8740E71C799C0BCC}
+\makelabel{ref:IsLowerTriangularMatrix}{24.4.11}{X853A5B988306DBFE}
+\makelabel{ref:IsLowerTriangularMat}{24.4.11}{X853A5B988306DBFE}
 \makelabel{ref:IdentityMat}{24.5.1}{X7DB902CE848D1524}
 \makelabel{ref:NullMat}{24.5.2}{X86D343A77D9B3D4D}
 \makelabel{ref:EmptyMatrix}{24.5.3}{X8508A7EA812BA0CC}
@@ -2153,14 +2200,17 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:BaseOrthogonalSpaceMat}{24.11.3}{X78B94EFF87A455BE}
 \makelabel{ref:SumIntersectionMat}{24.11.4}{X7AFF8BCF80C88B45}
 \makelabel{ref:BaseSteinitzVectors}{24.11.5}{X8245D54F7AC532EB}
-\makelabel{ref:DiagonalOfMat}{24.12.1}{X82B6B0298179D895}
+\makelabel{ref:DiagonalOfMatrix}{24.12.1}{X7A9139D686ACB7D8}
+\makelabel{ref:DiagonalOfMat}{24.12.1}{X7A9139D686ACB7D8}
 \makelabel{ref:UpperSubdiagonal}{24.12.2}{X84A78C057F9DAE5E}
 \makelabel{ref:DepthOfUpperTriangularMatrix}{24.12.3}{X84D74DEA798A9094}
 \makelabel{ref:CharacteristicPolynomial}{24.13.1}{X87FA0A727CDB060B}
-\makelabel{ref:JordanDecomposition}{24.13.2}{X83F55D4E79BA5D1B}
-\makelabel{ref:BlownUpMat}{24.13.3}{X85923C107A4569D0}
-\makelabel{ref:BlownUpVector}{24.13.4}{X82AC277D84EC5749}
-\makelabel{ref:CompanionMat}{24.13.5}{X85A1026D7CB6ABAC}
+\makelabel{ref:RationalCanonicalFormTransform}{24.13.2}{X7B52560C792C1A0F}
+\makelabel{ref:Frobenius Normal Form}{24.13.2}{X7B52560C792C1A0F}
+\makelabel{ref:JordanDecomposition}{24.13.3}{X83F55D4E79BA5D1B}
+\makelabel{ref:BlownUpMat}{24.13.4}{X85923C107A4569D0}
+\makelabel{ref:BlownUpVector}{24.13.5}{X82AC277D84EC5749}
+\makelabel{ref:CompanionMat}{24.13.6}{X85A1026D7CB6ABAC}
 \makelabel{ref:ImmutableMatrix}{24.14.1}{X7DED2522828B6C30}
 \makelabel{ref:ConvertToMatrixRep for a list (and a field)}{24.14.2}{X8587A62F818AA0D6}
 \makelabel{ref:ConvertToMatrixRep for a list (and a prime power)}{24.14.2}{X8587A62F818AA0D6}
@@ -2169,13 +2219,16 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:ProjectiveOrder}{24.14.3}{X84A76F7A7B4166BC}
 \makelabel{ref:SimultaneousEigenvalues}{24.14.4}{X847ADC6779E33A1C}
 \makelabel{ref:InverseMatMod}{24.15.1}{X7D8D1E0E83C7F872}
-\makelabel{ref:NullspaceModQ}{24.15.2}{X86AE919983B242E2}
+\makelabel{ref:BasisNullspaceModN}{24.15.2}{X7D7DF873826A7C20}
+\makelabel{ref:NullspaceModQ}{24.15.3}{X86AE919983B242E2}
+\makelabel{ref:NullspaceModN}{24.15.3}{X86AE919983B242E2}
 \makelabel{ref:PRODGF2MATGF2MATSIMPLE}{24.16.1}{X7C0C26027FAE0C83}
 \makelabel{ref:PRODGF2MATGF2MATADVANCED}{24.16.2}{X81965B7D7F45E088}
 \makelabel{ref:IsBlockMatrixRep}{24.17}{X7F8A71F38201A250}
 \makelabel{ref:AsBlockMatrix}{24.17.1}{X7D675B3C79CF8871}
 \makelabel{ref:BlockMatrix}{24.17.2}{X8633538685551E7A}
 \makelabel{ref:MatrixByBlockMatrix}{24.17.3}{X83FAF4158180041F}
+\makelabel{ref:SimplexMethod}{24.18.1}{X845D5F8D7D905CB8}
 \makelabel{ref:NullspaceIntMat}{25.1.1}{X792315717F5B0294}
 \makelabel{ref:SolutionIntMat}{25.1.2}{X7D749F317DBD1E69}
 \makelabel{ref:SolutionNullspaceIntMat}{25.1.3}{X82CECB6E7D515CD2}
@@ -2219,8 +2272,8 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:ExtractSubVector for isvectorobj,islist}{26.4.6}{X7B9B66B37DD46D81}
 \makelabel{ref:ZeroVector for isint,isvectorobj}{26.4.7}{X7F45D5C57C8EDDF3}
 \makelabel{ref:ConstructingFilter for isvectorobj}{26.4.8}{X8253FF0C7E5329C6}
-\makelabel{ref:Randomize for isvectorobj}{26.4.9}{X828688CC860F1E9C}
-\makelabel{ref:Randomize for isvectorobj,israndomsources}{26.4.9}{X828688CC860F1E9C}
+\makelabel{ref:Randomize for a vector object}{26.4.9}{X83DD8B39864A2C94}
+\makelabel{ref:Randomize for a matrix object}{26.4.9}{X83DD8B39864A2C94}
 \makelabel{ref:WeightOfVector for isvectorobj}{26.4.10}{X7E0158697A7C6D17}
 \makelabel{ref:DistanceOfVectors for isvectorobj,isvectorobj}{26.4.11}{X837216A77EBEA0B3}
 \makelabel{ref:type strings}{27.1}{X7A90690B78260194}
@@ -2354,6 +2407,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:IsCollectionFamily}{30.2.2}{X856AC2DF7F7CBAAF}
 \makelabel{ref:ElementsFamily}{30.2.3}{X864BB3748546F63F}
 \makelabel{ref:CategoryCollections}{30.2.4}{X78C38017804B2EA7}
+\makelabel{ref:DeclareCategoryCollections}{30.2.5}{X85ABC1B4829778C7}
 \makelabel{ref:Sorted Lists as Collections}{30.3}{X7C3722DF8736FFDB}
 \makelabel{ref:IsListOrCollection}{30.3.1}{X877128A77826DD69}
 \makelabel{ref:Enumerator}{30.3.2}{X7EF8910F82B45EC7}
@@ -2534,6 +2588,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:functions as in mathematics}{32}{X7C9734B880042C73}
 \makelabel{ref:relations}{32}{X7C9734B880042C73}
 \makelabel{ref:IsDirectProductElement}{32.1.1}{X87FD9FE787023FF0}
+\makelabel{ref:DirectProductFamily}{32.1.2}{X78F8A1168280E06D}
 \makelabel{ref:GeneralMappingByElements}{32.2.1}{X79D0D2F07A14D039}
 \makelabel{ref:MappingByFunction by function (and inverse function) between two domains}{32.2.2}{X7D55E1977ED70E01}
 \makelabel{ref:MappingByFunction by function and function that computes one preimage}{32.2.2}{X7D55E1977ED70E01}
@@ -2986,6 +3041,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:IsSupersolvableGroup}{39.15.8}{X7AADF2E88501B9FF}
 \makelabel{ref:IsMonomialGroup}{39.15.9}{X83977EB97A8E2290}
 \makelabel{ref:IsSimpleGroup}{39.15.10}{X7A6685D7819AEC32}
+\makelabel{ref:IsNonabelianSimpleGroup}{39.15.10}{X7A6685D7819AEC32}
 \makelabel{ref:IsAlmostSimpleGroup}{39.15.11}{X78CC9764803601E7}
 \makelabel{ref:IsomorphismTypeInfoFiniteSimpleGroup for a group}{39.15.12}{X7C6AA6897C4409AC}
 \makelabel{ref:IsomorphismTypeInfoFiniteSimpleGroup for a group order}{39.15.12}{X7C6AA6897C4409AC}
@@ -3049,6 +3105,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:NormalSubgroups}{39.19.9}{X80237A847E24E6CF}
 \makelabel{ref:MaximalNormalSubgroups}{39.19.10}{X82ECAA427C987318}
 \makelabel{ref:MinimalNormalSubgroups}{39.19.11}{X86FDD9BA819F5644}
+\makelabel{ref:CharacteristicSubgroups}{39.19.12}{X7A823C5A810910C3}
 \makelabel{ref:LatticeSubgroups}{39.20.1}{X7B104E2C86166188}
 \makelabel{ref:ClassElementLattice}{39.20.2}{X78928A3582882BFD}
 \makelabel{ref:DotFileLatticeSubgroups}{39.20.3}{X7E5DF287825EE7BA}
@@ -3103,14 +3160,16 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:BasicSpinRepresentationOfSymmetricGroup}{39.24.9}{X7DDA6BC1824F78FD}
 \makelabel{ref:SchurCoverOfSymmetricGroup}{39.24.10}{X844CFFDE80F6AD15}
 \makelabel{ref:DoubleCoverOfAlternatingGroup}{39.24.11}{X7E0F4896795E34FC}
-\makelabel{ref:CanEasilyTestMembership}{39.25.1}{X798F13EA810FB215}
-\makelabel{ref:CanEasilyComputeWithIndependentGensAbelianGroup}{39.25.2}{X7C2A89607BDFD920}
-\makelabel{ref:CanComputeSize}{39.25.3}{X83245C82835D496C}
-\makelabel{ref:CanComputeSizeAnySubgroup}{39.25.4}{X8268965487364912}
-\makelabel{ref:CanComputeIndex}{39.25.5}{X82DDE00D82A32083}
-\makelabel{ref:CanComputeIsSubset}{39.25.6}{X7BE7C36B84C23511}
-\makelabel{ref:KnowsHowToDecompose}{39.25.7}{X87D62C2C7C375E2D}
-\makelabel{ref:NormalizerViaRadical}{39.26.1}{X84ABCA997D294B36}
+\makelabel{ref:TwoCohomologyGeneric}{39.25.1}{X7A1EBC3A7AB0D614}
+\makelabel{ref:FpGroupCocycle}{39.25.2}{X7A65366879BB3977}
+\makelabel{ref:CanEasilyTestMembership}{39.26.1}{X798F13EA810FB215}
+\makelabel{ref:CanEasilyComputeWithIndependentGensAbelianGroup}{39.26.2}{X7C2A89607BDFD920}
+\makelabel{ref:CanComputeSize}{39.26.3}{X83245C82835D496C}
+\makelabel{ref:CanComputeSizeAnySubgroup}{39.26.4}{X8268965487364912}
+\makelabel{ref:CanComputeIndex}{39.26.5}{X82DDE00D82A32083}
+\makelabel{ref:CanComputeIsSubset}{39.26.6}{X7BE7C36B84C23511}
+\makelabel{ref:KnowsHowToDecompose}{39.26.7}{X87D62C2C7C375E2D}
+\makelabel{ref:NormalizerViaRadical}{39.27.1}{X84ABCA997D294B36}
 \makelabel{ref:GroupHomomorphismByImages}{40.1.1}{X7F348F497C813BE0}
 \makelabel{ref:GroupHomomorphismByImagesNC}{40.1.2}{X7AB15AF5830F2A6B}
 \makelabel{ref:GroupGeneralMappingByImages}{40.1.3}{X7A59F2C47BD41DC8}
@@ -3204,13 +3263,17 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:OnSubspacesByCanonicalBasisConcatenations}{41.2.15}{X85124D197F0F9C4D}
 \makelabel{ref:Orbit}{41.4.1}{X80E0234E7BD79409}
 \makelabel{ref:Orbits operation}{41.4.2}{X86BCAE17869BBEAA}
+\makelabel{ref:Orbits for a permutation group}{41.4.2}{X86BCAE17869BBEAA}
 \makelabel{ref:Orbits attribute}{41.4.2}{X86BCAE17869BBEAA}
 \makelabel{ref:OrbitsDomain for a group and an action domain}{41.4.3}{X86BC8B958123F953}
+\makelabel{ref:OrbitsDomain for a permutation group}{41.4.3}{X86BC8B958123F953}
 \makelabel{ref:OrbitsDomain of an external set}{41.4.3}{X86BC8B958123F953}
 \makelabel{ref:OrbitLength}{41.4.4}{X799910CF832EDC45}
 \makelabel{ref:OrbitLengths for a group, a set of seeds, etc.}{41.4.5}{X8032F73078DF2DDB}
+\makelabel{ref:OrbitLengths for a permutation group}{41.4.5}{X8032F73078DF2DDB}
 \makelabel{ref:OrbitLengths for an external set}{41.4.5}{X8032F73078DF2DDB}
 \makelabel{ref:OrbitLengthsDomain for a group and a set of seeds}{41.4.6}{X8520E2487F7E98AF}
+\makelabel{ref:OrbitLengthsDomain for a permutation group}{41.4.6}{X8520E2487F7E98AF}
 \makelabel{ref:OrbitLengthsDomain of an external set}{41.4.6}{X8520E2487F7E98AF}
 \makelabel{ref:point stabilizer}{41.5}{X797BD60E7ACEF1B1}
 \makelabel{ref:set stabilizer}{41.5}{X797BD60E7ACEF1B1}
@@ -3245,18 +3308,22 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:IsTransitive for an external set}{41.10.1}{X79B15750851828CB}
 \makelabel{ref:transitive}{41.10.1}{X79B15750851828CB}
 \makelabel{ref:Transitivity for a group and an action domain}{41.10.2}{X8295D733796B7A37}
+\makelabel{ref:Transitivity for a permutation group}{41.10.2}{X8295D733796B7A37}
 \makelabel{ref:Transitivity for an external set}{41.10.2}{X8295D733796B7A37}
 \makelabel{ref:RankAction for a group, an action domain, etc.}{41.10.3}{X8166A6A17C8D6E73}
 \makelabel{ref:RankAction for an external set}{41.10.3}{X8166A6A17C8D6E73}
 \makelabel{ref:IsSemiRegular for a group, an action domain, etc.}{41.10.4}{X7B77040F8543CD6E}
+\makelabel{ref:IsSemiRegular for a permutation group}{41.10.4}{X7B77040F8543CD6E}
 \makelabel{ref:IsSemiRegular for an external set}{41.10.4}{X7B77040F8543CD6E}
 \makelabel{ref:semiregular}{41.10.4}{X7B77040F8543CD6E}
 \makelabel{ref:IsRegular for a group, an action domain, etc.}{41.10.5}{X7CF02C4785F0EAB5}
+\makelabel{ref:IsRegular for a permutation group}{41.10.5}{X7CF02C4785F0EAB5}
 \makelabel{ref:IsRegular for an external set}{41.10.5}{X7CF02C4785F0EAB5}
 \makelabel{ref:regular}{41.10.5}{X7CF02C4785F0EAB5}
 \makelabel{ref:Earns for a group, an action domain, etc.}{41.10.6}{X7CB1D74280F92AFC}
 \makelabel{ref:Earns for an external set}{41.10.6}{X7CB1D74280F92AFC}
 \makelabel{ref:IsPrimitive for a group, an action domain, etc.}{41.10.7}{X84C19AD68247B760}
+\makelabel{ref:IsPrimitive for a permutation group}{41.10.7}{X84C19AD68247B760}
 \makelabel{ref:IsPrimitive for an external set}{41.10.7}{X84C19AD68247B760}
 \makelabel{ref:primitive}{41.10.7}{X84C19AD68247B760}
 \makelabel{ref:Blocks for a group, an action domain, etc.}{41.11.1}{X84FE699F85371643}
@@ -3458,6 +3525,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:PcgsElementaryAbelianSeries for a group}{45.11.2}{X863A20B57EA37BAC}
 \makelabel{ref:PcgsElementaryAbelianSeries for a list of normal subgroups}{45.11.2}{X863A20B57EA37BAC}
 \makelabel{ref:IndicesEANormalSteps}{45.11.3}{X7BCC1E2A80544CC7}
+\makelabel{ref:IndicesEANormalStepsBounded}{45.11.3}{X7BCC1E2A80544CC7}
 \makelabel{ref:EANormalSeriesByPcgs}{45.11.4}{X7FCE308887F621FC}
 \makelabel{ref:IsPcgsCentralSeries}{45.11.5}{X79675266796D7254}
 \makelabel{ref:PcgsCentralSeries}{45.11.6}{X8187FCF483659E69}
@@ -3697,18 +3765,24 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:ElementaryAbelianGroup}{50.1.4}{X8778256286E50743}
 \makelabel{ref:FreeAbelianGroup}{50.1.5}{X7F43050D8587E767}
 \makelabel{ref:DihedralGroup}{50.1.6}{X838DE1AB7B3D70FF}
-\makelabel{ref:QuaternionGroup}{50.1.7}{X87865686856910E4}
-\makelabel{ref:DicyclicGroup}{50.1.7}{X87865686856910E4}
-\makelabel{ref:ExtraspecialGroup}{50.1.8}{X86E76B3A796BEFA8}
-\makelabel{ref:AlternatingGroup for a degree}{50.1.9}{X7E54D3E778E6A53E}
-\makelabel{ref:AlternatingGroup for a domain}{50.1.9}{X7E54D3E778E6A53E}
-\makelabel{ref:SymmetricGroup for a degree}{50.1.10}{X858666F97BD85ABB}
-\makelabel{ref:SymmetricGroup for a domain}{50.1.10}{X858666F97BD85ABB}
-\makelabel{ref:MathieuGroup}{50.1.11}{X788FA7DE84E0FE6A}
-\makelabel{ref:SuzukiGroup}{50.1.12}{X8469DBBF82F8E5C3}
-\makelabel{ref:Sz}{50.1.12}{X8469DBBF82F8E5C3}
-\makelabel{ref:ReeGroup}{50.1.13}{X87E5B0F679CA7FE4}
-\makelabel{ref:Ree}{50.1.13}{X87E5B0F679CA7FE4}
+\makelabel{ref:IsDihedralGroup}{50.1.7}{X8233A853818CAF33}
+\makelabel{ref:DihedralGenerators}{50.1.7}{X8233A853818CAF33}
+\makelabel{ref:DicyclicGroup}{50.1.8}{X7E9844EF7C47EEB0}
+\makelabel{ref:QuaternionGroup}{50.1.8}{X7E9844EF7C47EEB0}
+\makelabel{ref:IsGeneralisedQuaternionGroup}{50.1.9}{X7FE58CB9799F54D5}
+\makelabel{ref:IsQuaternionGroup}{50.1.9}{X7FE58CB9799F54D5}
+\makelabel{ref:GeneralisedQuaternionGenerators}{50.1.9}{X7FE58CB9799F54D5}
+\makelabel{ref:QuaternionGenerators}{50.1.9}{X7FE58CB9799F54D5}
+\makelabel{ref:ExtraspecialGroup}{50.1.10}{X86E76B3A796BEFA8}
+\makelabel{ref:AlternatingGroup for a degree}{50.1.11}{X7E54D3E778E6A53E}
+\makelabel{ref:AlternatingGroup for a domain}{50.1.11}{X7E54D3E778E6A53E}
+\makelabel{ref:SymmetricGroup for a degree}{50.1.12}{X858666F97BD85ABB}
+\makelabel{ref:SymmetricGroup for a domain}{50.1.12}{X858666F97BD85ABB}
+\makelabel{ref:MathieuGroup}{50.1.13}{X788FA7DE84E0FE6A}
+\makelabel{ref:SuzukiGroup}{50.1.14}{X8469DBBF82F8E5C3}
+\makelabel{ref:Sz}{50.1.14}{X8469DBBF82F8E5C3}
+\makelabel{ref:ReeGroup}{50.1.15}{X87E5B0F679CA7FE4}
+\makelabel{ref:Ree}{50.1.15}{X87E5B0F679CA7FE4}
 \makelabel{ref:GeneralLinearGroup for dimension and a ring}{50.2.1}{X85D607DD82AF3E27}
 \makelabel{ref:GL for dimension and a ring}{50.2.1}{X85D607DD82AF3E27}
 \makelabel{ref:GeneralLinearGroup for dimension and field size}{50.2.1}{X85D607DD82AF3E27}
@@ -3872,9 +3946,9 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:GreensHClassOfElement}{51.8.8}{X87C75A9D86122D93}
 \makelabel{ref:GreensRClasses}{51.8.9}{X844D20467A644811}
 \makelabel{ref:GreensLClasses}{51.8.9}{X844D20467A644811}
+\makelabel{ref:GreensHClasses}{51.8.9}{X844D20467A644811}
 \makelabel{ref:GreensJClasses}{51.8.9}{X844D20467A644811}
 \makelabel{ref:GreensDClasses}{51.8.9}{X844D20467A644811}
-\makelabel{ref:GreensHClasses}{51.8.9}{X844D20467A644811}
 \makelabel{ref:GroupHClassOfGreensDClass}{51.8.10}{X7CB4A18685B850E2}
 \makelabel{ref:IsGroupHClass}{51.8.11}{X79D740EF7F0E53BD}
 \makelabel{ref:IsRegularDClass}{51.8.12}{X7F5860927CAD920F}
@@ -4834,9 +4908,9 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:MTX.InducedActionSubmodule}{69.8.2}{X7812D644850D7AED}
 \makelabel{ref:MTX.InducedActionSubmoduleNB}{69.8.2}{X7812D644850D7AED}
 \makelabel{ref:MTX.InducedActionFactorModule}{69.8.3}{X7EAC61B381385A99}
-\makelabel{ref:MTX.InducedActionMatrix}{69.8.4}{X843E80AD853CB1EE}
-\makelabel{ref:MTX.InducedActionMatrixNB}{69.8.4}{X843E80AD853CB1EE}
-\makelabel{ref:MTX.InducedActionFactorMatrix}{69.8.4}{X843E80AD853CB1EE}
+\makelabel{ref:MTX.InducedActionSubMatrix}{69.8.4}{X8753A03A7C7CBFF1}
+\makelabel{ref:MTX.InducedActionSubMatrixNB}{69.8.4}{X8753A03A7C7CBFF1}
+\makelabel{ref:MTX.InducedActionFactorMatrix}{69.8.4}{X8753A03A7C7CBFF1}
 \makelabel{ref:MTX.InducedAction}{69.8.5}{X7B137BE5877A7FA1}
 \makelabel{ref:MTX.BasisModuleHomomorphisms}{69.9.1}{X8292535D8533671C}
 \makelabel{ref:MTX.BasisModuleEndomorphisms}{69.9.2}{X78EE1274825D9E03}
@@ -5090,9 +5164,12 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:FactorsOfDirectProduct}{71.20.2}{X7C97CF727FBDFCAB}
 \makelabel{ref:CharacterTableFactorGroup}{71.20.3}{X7C3A4E5283B240BE}
 \makelabel{ref:CharacterTableIsoclinic}{71.20.4}{X85BE46F784B83938}
+\makelabel{ref:CharacterTableIsoclinic for a character table and one or two lists}{71.20.4}{X85BE46F784B83938}
+\makelabel{ref:CharacterTableIsoclinic for a brauer table and an ordinary table}{71.20.4}{X85BE46F784B83938}
 \makelabel{ref:SourceOfIsoclinicTable}{71.20.4}{X85BE46F784B83938}
 \makelabel{ref:CharacterTableOfNormalSubgroup}{71.20.5}{X806E55A58397B11B}
 \makelabel{ref:CharacterTableWreathSymmetric}{71.20.6}{X79B75C8582426BC5}
+\makelabel{ref:CharacterValueWreathSymmetric}{71.20.7}{X83E71B1F7FA70134}
 \makelabel{ref:CharacterTableWithSortedCharacters}{71.21.1}{X7D9C4A7F8086F671}
 \makelabel{ref:SortedCharacters}{71.21.2}{X87E3CF317D8E4EC7}
 \makelabel{ref:CharacterTableWithSortedClasses}{71.21.3}{X7E3DE0A47E62BE6B}
@@ -5413,67 +5490,49 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:MutableIdentityMat}{77.4}{X7F6A6CBC7C9E91E5}
 \makelabel{ref:MutableNullMat}{77.4}{X7F6A6CBC7C9E91E5}
 \makelabel{ref:PositionFirstComponent}{77.4}{X7F6A6CBC7C9E91E5}
+\makelabel{ref:MultRowVector}{77.4}{X7F6A6CBC7C9E91E5}
+\makelabel{ref:TemporaryGlobalVarName}{77.4}{X7F6A6CBC7C9E91E5}
 \makelabel{ref:InfoObsolete}{77.4.1}{X87348614848EAD64}
-\makelabel{ref:IsSemilatticeAsSemigroup}{77.6.1}{X7BF9F1BE87F0636D}
 \makelabel{ref:operation}{78}{X8058CC8187162644}
 \makelabel{ref:method}{78}{X8058CC8187162644}
-\makelabel{ref:InstallMethod}{78.2.1}{X837EFDAB7BEF290B}
-\makelabel{ref:InstallOtherMethod}{78.2.2}{X7D2C12DB841CE539}
-\makelabel{ref:InstallMethodWithRandomSource}{78.2.3}{X78CA646678B0539F}
-\makelabel{ref:InstallOtherMethodWithRandomSource}{78.2.3}{X78CA646678B0539F}
-\makelabel{ref:TryNextMethod}{78.4.1}{X7EED949B83046A7F}
-\makelabel{ref:RedispatchOnCondition}{78.5.1}{X7D4A46CE7BCFCCF5}
-\makelabel{ref:InstallImmediateMethod}{78.6.1}{X87B47AC0849611F8}
-\makelabel{ref:InstallTrueMethod}{78.7.1}{X860B8B707995CFE3}
-\makelabel{ref:overload}{78.8}{X855FE25783FB0D4E}
-\makelabel{ref:NewCategory}{79.1.1}{X87F68F887B44DBBD}
-\makelabel{ref:CategoryFamily}{79.1.2}{X787BACEE7937EF01}
-\makelabel{ref:NewRepresentation}{79.2.1}{X7CC8106F809E15CF}
-\makelabel{ref:NewAttribute}{79.3.1}{X7B9654807858A3B0}
-\makelabel{ref:NewProperty}{79.3.2}{X7F2D6FD979FE23DD}
-\makelabel{ref:NewFilter}{79.4.1}{X821635DA7821ED74}
-\makelabel{ref:SetFilterObj}{79.4.2}{X7C92D53E7920CE02}
-\makelabel{ref:ResetFilterObj}{79.4.3}{X8117FD03870FB02E}
-\makelabel{ref:NewOperation}{79.5.1}{X85A9E019795B79D6}
-\makelabel{ref:NewConstructor}{79.6.1}{X783FA45E7858A8CF}
-\makelabel{ref:NewFamily}{79.7.1}{X7FB4123E7E22137D}
-\makelabel{ref:NewType}{79.8.1}{X7CE39E9478AEC826}
-\makelabel{ref:Objectify}{79.9.1}{X7CB5C12E813F512B}
-\makelabel{ref:ObjectifyWithAttributes}{79.9.2}{X85377AC07E775066}
-\makelabel{ref:NamesOfComponents}{79.10.1}{X823965BF7DFDACC9}
-\makelabel{ref:ExtRepOfObj}{79.16.1}{X8542B32A8206118C}
-\makelabel{ref:ObjByExtRep}{79.16.1}{X8542B32A8206118C}
-\makelabel{ref:DeclareCategory}{79.18.1}{X879DE2A17A6C6E92}
-\makelabel{ref:TypeOfOperation}{79.18.2}{X813BE52887A3E0FA}
-\makelabel{ref:IsCategory}{79.18.3}{X792A23BF82BDF66B}
-\makelabel{ref:IsRepresentation}{79.18.4}{X86D42C7783ACA5F4}
-\makelabel{ref:IsProperty}{79.18.5}{X81F1C3EE83003FA0}
-\makelabel{ref:IsAttribute}{79.18.6}{X7973C8F4782D15A1}
-\makelabel{ref:CategoryByName}{79.18.7}{X85D07C3E7F4D4043}
-\makelabel{ref:DeclareRepresentation}{79.18.8}{X7C81FB2682AE54CD}
-\makelabel{ref:DeclareAttribute}{79.18.9}{X7A00FC8A7A677A56}
-\makelabel{ref:DeclareProperty}{79.18.10}{X7F4602F082682A04}
-\makelabel{ref:DeclareFilter}{79.18.11}{X846EA18A7D36626C}
-\makelabel{ref:DeclareOperation}{79.18.12}{X843F48137B899BC3}
-\makelabel{ref:DeclareConstructor}{79.18.13}{X7EB6830886F62CC0}
-\makelabel{ref:DeclareGlobalFunction}{79.18.14}{X834A8CC587A609BE}
-\makelabel{ref:InstallGlobalFunction}{79.18.14}{X834A8CC587A609BE}
-\makelabel{ref:DeclareGlobalVariable}{79.18.15}{X8324B5DE8300E0F2}
-\makelabel{ref:InstallValue}{79.18.16}{X7A23F09886E936D2}
-\makelabel{ref:InstallFlushableValue}{79.18.16}{X7A23F09886E936D2}
-\makelabel{ref:InstallFlushableValueFromFunction}{79.18.16}{X7A23F09886E936D2}
-\makelabel{ref:DeclareSynonym}{79.18.17}{X851654DA87616207}
-\makelabel{ref:DeclareSynonymAttr}{79.18.17}{X851654DA87616207}
-\makelabel{ref:FlushCaches}{79.18.18}{X87A4316C818B3DE3}
-\makelabel{ref:FilterByName}{79.18.19}{X7F6645D87DD26CF0}
-\makelabel{ref:DeclareRepresentation belongs to implementation part}{79.19}{X7837CA9A83D93B38}
+\makelabel{ref:IsOperation}{78.1.1}{X874C7C6D8650D648}
+\makelabel{ref:TypeOfOperation}{78.1.2}{X813BE52887A3E0FA}
+\makelabel{ref:ShowDeclarationsOfOperation}{78.1.3}{X838E29D485D2BAB9}
+\makelabel{ref:NewOperation}{78.1.4}{X85A9E019795B79D6}
+\makelabel{ref:DeclareOperation}{78.1.5}{X843F48137B899BC3}
+\makelabel{ref:NewConstructor}{78.2.1}{X783FA45E7858A8CF}
+\makelabel{ref:DeclareConstructor}{78.2.2}{X7EB6830886F62CC0}
+\makelabel{ref:InstallMethod}{78.3.1}{X837EFDAB7BEF290B}
+\makelabel{ref:InstallOtherMethod}{78.3.2}{X7D2C12DB841CE539}
+\makelabel{ref:InstallMethodWithRandomSource}{78.3.3}{X78CA646678B0539F}
+\makelabel{ref:InstallOtherMethodWithRandomSource}{78.3.3}{X78CA646678B0539F}
+\makelabel{ref:TryNextMethod}{78.5.1}{X7EED949B83046A7F}
+\makelabel{ref:RedispatchOnCondition}{78.6.1}{X7D4A46CE7BCFCCF5}
+\makelabel{ref:InstallImmediateMethod}{78.7.1}{X87B47AC0849611F8}
+\makelabel{ref:InstallTrueMethod}{78.8.1}{X860B8B707995CFE3}
+\makelabel{ref:SuspendMethodReordering}{78.8.2}{X7B26BDF68754DF7A}
+\makelabel{ref:ResumeMethodReordering}{78.8.2}{X7B26BDF68754DF7A}
+\makelabel{ref:ResetMethodReordering}{78.8.2}{X7B26BDF68754DF7A}
+\makelabel{ref:overload}{78.9}{X855FE25783FB0D4E}
+\makelabel{ref:Objectify}{79.1.1}{X7CB5C12E813F512B}
+\makelabel{ref:ObjectifyWithAttributes}{79.1.2}{X85377AC07E775066}
+\makelabel{ref:NamesOfComponents}{79.2.1}{X823965BF7DFDACC9}
+\makelabel{ref:ExtRepOfObj}{79.8.1}{X8542B32A8206118C}
+\makelabel{ref:ObjByExtRep}{79.8.1}{X8542B32A8206118C}
+\makelabel{ref:DeclareGlobalVariable}{79.10.1}{X8324B5DE8300E0F2}
+\makelabel{ref:InstallValue}{79.10.2}{X7A23F09886E936D2}
+\makelabel{ref:InstallFlushableValue}{79.10.2}{X7A23F09886E936D2}
+\makelabel{ref:InstallFlushableValueFromFunction}{79.10.2}{X7A23F09886E936D2}
+\makelabel{ref:FlushCaches}{79.10.3}{X87A4316C818B3DE3}
+\makelabel{ref:DeclareGlobalFunction}{79.10.4}{X834A8CC587A609BE}
+\makelabel{ref:InstallGlobalFunction}{79.10.4}{X834A8CC587A609BE}
+\makelabel{ref:DeclareSynonym}{79.10.5}{X851654DA87616207}
+\makelabel{ref:DeclareSynonymAttr}{79.10.5}{X851654DA87616207}
+\makelabel{ref:DeclareRepresentation belongs to implementation part}{79.11}{X7837CA9A83D93B38}
 \makelabel{ref:NewAttribute example}{80.5}{X874AF11D864AEC1B}
 \makelabel{ref:DeclareAttribute example}{80.5}{X874AF11D864AEC1B}
-\makelabel{ref:IsAttributeStoringRep}{80.5}{X874AF11D864AEC1B}
 \makelabel{ref:NewRepresentation example}{80.6}{X8111D831783C9ED6}
 \makelabel{ref:DeclareRepresentation example}{80.6}{X8111D831783C9ED6}
-\makelabel{ref:IsComponentObjectRep}{80.6}{X8111D831783C9ED6}
-\makelabel{ref:IsAttributeStoringRep}{80.6}{X8111D831783C9ED6}
 \makelabel{ref:DeclareAttribute!example}{80.8.3}{X782AC35979925C71}
 \makelabel{ref:ArithmeticElementCreator}{80.9.1}{X87A88E3D7F6E2A7C}
 \makelabel{ref:HELPADDBOOK}{84.1.1}{X7CD0B8507A3D231D}

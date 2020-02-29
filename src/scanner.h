@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  scanner.h                   GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares the functions of the scanner, which provides a very
 **  abstractions, namely the concept that an input file is a stream of
@@ -63,6 +63,8 @@ enum SCANNER_SYMBOLS {
     S_STRING            = (1UL<<11)+3,
     S_TILDE             = (1UL<<11)+4,
     S_HELP              = (1UL<<11)+5,
+    S_PRAGMA            = (1UL<<11)+6,
+
 
     S_REC               = (1UL<<12)+0,
 
@@ -190,22 +192,43 @@ typedef UInt            TypSymbolSet;
 
 /****************************************************************************
 **
-*V  Value . . . . . . . . . . . . , value of the identifier, float or integer
+*T  ScannerState
+**
+**  The struct 'ScannerState' encapsulates the state of the scanner.
+**
+**  In the future, it is planned to allow use of multiple instances of the
+**  scanner simultaneously within a single thread. However, this is not yet
+**  ready, and currently only once instance of 'ScannerState' is used, which
+**  is stored inside the global instance of struct 'GAPState'.
+*/
+typedef struct {
+
+/****************************************************************************
+**
+*V  Value . . . . . . . . . . . . . value of the identifier, float or integer
 *V  ValueObj . . . . . . . . . . . . . . . . . . . . . .  value of the string
 **
-**  If 'STATE(Symbol)' is 'S_IDENT', 'S_INT' or 'S_FLOAT' then normally the
-**  variable 'STATE(Value)' holds the name of the identifier, the digits of
+**  If 'Symbol' is 'S_IDENT', 'S_INT' or 'S_FLOAT' then normally the
+**  variable 'Value' holds the name of the identifier, the digits of
 **  the integer or float literal as a C string. For large integer or float
-**  literals that do not fit into 'STATE(Value)', instead 'STATE(ValueObj)'
+**  literals that do not fit into 'Value', instead 'ValueObj'
 **  holds the the literal as a GAP string object. If the symbol is 'S_STRING'
 **  or 'S_HELP', the string literal or help text is always stored in
-**  'STATE(ValueObj)' as a GAP string object.
+**  'ValueObj' as a GAP string object.
 **
 **  Note that the size of identifiers in GAP is limited to 1023 characters,
-**  hence identifiers are always stored in 'STATE(Value)'. For this reason,
+**  hence identifiers are always stored in 'Value'. For this reason,
 **  'GetIdent' truncates an identifier after that many characters.
 */
+    Obj    ValueObj;
+    Char   Value[1024];
 
+    enum SCANNER_SYMBOLS Symbol;
+
+    // Track the last three symbols, for 'Unbound global' warnings
+    UInt   SymbolStartPos[3];
+    UInt   SymbolStartLine[3];
+} ScannerState;
 
 /****************************************************************************
 **
@@ -233,12 +256,12 @@ typedef UInt            TypSymbolSet;
 /* TL: extern  UInt            NrErrLine; */
 
 
-static inline int IsIdent(char c)
+EXPORT_INLINE int IsIdent(char c)
 {
     return IsAlpha(c) || c == '_' || c == '@';
 }
 
-extern int IsKeyword(const char * str);
+int IsKeyword(const char * str);
 
 
 /****************************************************************************
@@ -278,12 +301,28 @@ extern int IsKeyword(const char * str);
 **  Both functions should only be called from the scanner or reader, but not
 **  from e.g. the interpreter or coder, let alone any other parts of GAP.
 **
+**  The 'WithOffset' variants allow marking a previously parsed token as
+**  the syntax error. This is used by 'Unbound global variable', as GAP
+**  does not know if a variable is unbound until another 2 tokens are read.
+**
 */
-extern  void            SyntaxError (
-            const Char *        msg );
+void SyntaxErrorWithOffset(ScannerState * s,
+                           const Char *   msg,
+                           Int            tokenoffset);
 
-extern  void            SyntaxWarning (
-            const Char *        msg );
+void SyntaxWarningWithOffset(ScannerState * s,
+                             const Char *   msg,
+                             Int            tokenoffset);
+
+EXPORT_INLINE void SyntaxError(ScannerState * s, const Char * msg)
+{
+    SyntaxErrorWithOffset(s, msg, 0);
+}
+
+EXPORT_INLINE void SyntaxWarning(ScannerState * s, const Char * msg)
+{
+    SyntaxWarningWithOffset(s, msg, 0);
+}
 
 
 /****************************************************************************
@@ -329,10 +368,10 @@ extern  void            SyntaxWarning (
 **  If 'Match' needs to  read a  new line from  '*stdin*' or '*errin*' to get
 **  the next symbol it prints the string pointed to by 'Prompt'.
 */
-extern void Match (
-            UInt                symbol,
-            const Char *        msg,
-            TypSymbolSet        skipto );
+void Match(ScannerState * s,
+           UInt           symbol,
+           const Char *   msg,
+           TypSymbolSet   skipto);
 
 
 /****************************************************************************
@@ -345,7 +384,8 @@ extern void Match (
 **  cannot detect this without being context aware, we must provide this
 **  function to allow the reader to signal to the scanner about this.
 */
-extern void ScanForFloatAfterDotHACK(void);
+void ScanForFloatAfterDotHACK(ScannerState * s);
+
 
 /****************************************************************************
 **

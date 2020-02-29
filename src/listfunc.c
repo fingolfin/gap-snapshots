@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  listfunc.c                  GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the functions for generic lists.
 */
@@ -42,10 +42,7 @@
 **  The  list is  automatically extended to   make room for  the new element.
 **  'AddList' returns nothing, it is called only for its side effect.
 */
-void            AddList3 (
-    Obj                 list,
-    Obj                 obj,
-    Int                 pos)
+static void AddList3(Obj list, Obj obj, Int pos)
 {
     Int                 len;
     Int                 i;
@@ -64,32 +61,13 @@ void            AddList (
   AddList3(list, obj, -1);
 }
 
-extern Obj FuncADD_LIST(
-    Obj                 self,
-    Obj                 list,
-    Obj                 obj );
 
-extern Obj FuncADD_LIST3(
-    Obj                 self,
-    Obj                 list,
-    Obj                 obj,
-    Obj                 pos );
-
-
-void            AddPlist3 (
-    Obj                 list,
-    Obj                 obj,
-    Int                 pos )
+static void AddPlist3(Obj list, Obj obj, Int pos)
 {
   UInt len;
 
     if ( ! IS_PLIST_MUTABLE(list) ) {
-        list = ErrorReturnObj(
-                "List Assignment: <list> must be a mutable list",
-                0L, 0L,
-                "you may replace <list> via 'return <list>;'" );
-        FuncADD_LIST( 0, list, obj );
-        return;
+        ErrorMayQuit("List Assignment: <list> must be a mutable list", 0, 0);
     }
     /* in order to be optimistic when building list call assignment        */
     len = LEN_PLIST( list );
@@ -102,12 +80,12 @@ void            AddPlist3 (
     if (pos <= len) {
       GROW_PLIST(list, len+1);
       SET_LEN_PLIST(list, len+1);
-      SyMemmove(ADDR_OBJ(list) + pos+1,
-              CONST_ADDR_OBJ(list) + pos,
-              (size_t)(sizeof(Obj)*(len - pos + 1)));
+      Obj * ptr = ADDR_OBJ(list) + pos;
+      SyMemmove(ptr + 1, ptr, sizeof(Obj) * (len - pos + 1));
     }
-    ASS_LIST( list, pos, obj);
+    ASS_LIST(list, pos, obj);
 }
+
 void            AddPlist (
     Obj                 list,
     Obj                 obj)
@@ -116,13 +94,9 @@ void            AddPlist (
   AddPlist3(list, obj, -1);
 }
 
-Obj AddListOper;
+static Obj AddListOper;
 
-Obj FuncADD_LIST3 (
-    Obj                 self,
-    Obj                 list,
-    Obj                 obj,
-    Obj                 pos)
+static Obj FuncADD_LIST3(Obj self, Obj list, Obj obj, Obj pos)
 {
     /* dispatch                */
   Int ipos;
@@ -155,10 +129,7 @@ Obj FuncADD_LIST3 (
 }
 
 
-Obj FuncADD_LIST (
-                  Obj self,
-                  Obj list,
-                  Obj obj)
+static Obj FuncADD_LIST(Obj self, Obj list, Obj obj)
 {
   FuncADD_LIST3(self, list, obj, (Obj)0);
   return (Obj) 0;
@@ -172,48 +143,30 @@ Obj FuncADD_LIST (
 **  'RemList' removes the last object <obj> from the end of the list <list>,
 **  and returns it.
 */
-Obj            RemList (
-    Obj                 list)
+static Obj RemList(Obj list)
 {
     Int                 pos; 
     Obj result;
     pos = LEN_LIST( list ) ;
     if ( pos == 0L ) {
-        list = ErrorReturnObj(
-                "Remove: <list> must not be empty",
-                0L, 0L,
-                "you may replace <list> via 'return <list>;'" );
-        return RemList(list);
+        ErrorMayQuit("Remove: <list> must not be empty", 0, 0);
     }
     result = ELM_LIST(list, pos);
     UNB_LIST(list, pos);
     return result;
 }
 
-extern Obj FuncREM_LIST(
-    Obj                 self,
-    Obj                 list);
-
-Obj            RemPlist (
-                          Obj                 list)
+static Obj RemPlist(Obj list)
 {
     Int                 pos;           
     Obj removed; 
 
     if ( ! IS_PLIST_MUTABLE(list) ) {
-        list = ErrorReturnObj(
-                "Remove: <list> must be a mutable list",
-                0L, 0L,
-                "you may replace <list> via 'return <list>;'" );
-        return FuncREM_LIST( 0, list);
+        ErrorMayQuit("Remove: <list> must be a mutable list", 0, 0);
     }
     pos = LEN_PLIST( list );
     if ( pos == 0L ) {
-        list = ErrorReturnObj(
-                "Remove: <list> must not be empty",
-                0L, 0L,
-                "you may replace <list> via 'return <list>;'" );
-        return FuncREM_LIST( 0, list);
+        ErrorMayQuit("Remove: <list> must not be empty", 0, 0);
     }
     removed = ELM_PLIST(list, pos);
     SET_ELM_PLIST(list, pos, (Obj)0L);
@@ -228,11 +181,9 @@ Obj            RemPlist (
     return removed;
 }
 
-Obj RemListOper;
+static Obj RemListOper;
 
-Obj FuncREM_LIST (
-    Obj                 self,
-    Obj                 list)
+static Obj FuncREM_LIST(Obj self, Obj list)
 
 {
     /* dispatch                                                            */
@@ -262,10 +213,7 @@ Obj FuncREM_LIST (
 **  in which case the corresponding positions  will be left empty in <list1>.
 **  'AppendList' returns nothing, it is called only for its side effect.
 */
-Obj             FuncAPPEND_LIST_INTR (
-    Obj                 self,
-    Obj                 list1,
-    Obj                 list2 )
+static Obj FuncAPPEND_LIST_INTR(Obj self, Obj list1, Obj list2)
 {
     UInt                len1;           /* length of the first list        */
     UInt                len2;           /* length of the second list       */
@@ -273,12 +221,8 @@ Obj             FuncAPPEND_LIST_INTR (
     Int                 i;              /* loop variable                   */
 
     /* check the mutability of the first argument */
-    while ( !IS_MUTABLE_OBJ( list1) )
-      list1 = ErrorReturnObj (
-                "Append: <list1> must be a mutable list",
-                0L, 0L,
-                "you can replace <list1> via 'return <list1>;'");
-    
+    RequireMutable("Append", list1, "list");
+
 
     /* handle the case of strings now */
     if (IS_STRING_REP(list1) && IS_STRING_REP(list2)) {
@@ -289,18 +233,13 @@ Obj             FuncAPPEND_LIST_INTR (
         CLEAR_FILTS_LIST(list1);
         // copy data, including terminating zero byte
         // Can't use memcpy, in case list1 == list2
-        SyMemmove(CHARS_STRING(list1) + len1, CHARS_STRING(list2), len2 + 1);
+        SyMemmove(CHARS_STRING(list1) + len1, CONST_CHARS_STRING(list2), len2 + 1);
         return (Obj) 0;
     }
 
     /* check the type of the first argument                                */
     if ( TNUM_OBJ( list1 ) != T_PLIST ) {
-        while ( ! IS_SMALL_LIST( list1 ) ) {
-            list1 = ErrorReturnObj(
-                "AppendList: <list1> must be a small list (not a %s)",
-                (Int)TNAM_OBJ(list1), 0L,
-                "you can replace <list1> via 'return <list1>;'" );
-        }
+        RequireSmallList("AppendList", list1);
         if ( ! IS_PLIST( list1 ) ) {
             PLAIN_LIST( list1 );
         }
@@ -310,12 +249,7 @@ Obj             FuncAPPEND_LIST_INTR (
 
     /* check the type of the second argument                               */
     if ( ! IS_PLIST( list2 ) ) {
-        while ( ! IS_SMALL_LIST( list2 ) ) {
-            list2 = ErrorReturnObj(
-                "AppendList: <list2> must be a small list (not a %s)",
-                (Int)TNAM_OBJ(list2), 0L,
-                "you can replace <list2> via 'return <list2>;'"  );
-        }
+        RequireSmallList("AppendList", list2);
         len2 = LEN_LIST( list2 );
     }
     else {
@@ -348,12 +282,9 @@ Obj             FuncAPPEND_LIST_INTR (
     return (Obj)0;
 }
 
-Obj             AppendListOper;
+static Obj AppendListOper;
 
-Obj             FuncAPPEND_LIST (
-    Obj                 self,
-    Obj                 list,
-    Obj                 obj )
+static Obj FuncAPPEND_LIST(Obj self, Obj list, Obj obj)
 {
     /* dispatch                                                            */
     if ( TNUM_OBJ( list ) < FIRST_EXTERNAL_TNUM ) {
@@ -383,9 +314,7 @@ Obj             FuncAPPEND_LIST (
 **  of <list>, the index where <obj> must be inserted to keep the list sorted
 **  is returned.
 */
-UInt            POSITION_SORTED_LIST (
-    Obj                 list,
-    Obj                 obj )
+static UInt POSITION_SORTED_LIST(Obj list, Obj obj)
 {
     UInt                l;              /* low                             */
     UInt                h;              /* high                            */
@@ -427,21 +356,12 @@ UInt            PositionSortedDensePlist (
     return h;
 }
 
-Obj             FuncPOSITION_SORTED_LIST (
-    Obj                 self,
-    Obj                 list,
-    Obj                 obj )
+static Obj FuncPOSITION_SORTED_LIST(Obj self, Obj list, Obj obj)
 {
     UInt                h;              /* position, result                */
 
     /* check the first argument                                            */
-    while ( ! IS_SMALL_LIST(list) ) {
-        list = ErrorReturnObj(
-            "POSITION_SORTED_LIST: <list> must be a small list (not a %s)",
-            (Int)TNAM_OBJ(list), 0L,
-            "you can replace <list> via 'return <list>;'" );
-    }
-
+    RequireSmallList("POSITION_SORTED_LIST", list);
     /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) ) {
         h = PositionSortedDensePlist( list, obj );
@@ -471,10 +391,7 @@ Obj             FuncPOSITION_SORTED_LIST (
 **  of <list>, the index where <obj> must be inserted to keep the list sorted
 **  is returned.
 */
-UInt            POSITION_SORTED_LISTComp (
-    Obj                 list,
-    Obj                 obj,
-    Obj                 func )
+static UInt POSITION_SORTED_LISTComp(Obj list, Obj obj, Obj func)
 {
     UInt                l;              /* low                             */
     UInt                h;              /* high                            */
@@ -494,10 +411,7 @@ UInt            POSITION_SORTED_LISTComp (
     return h;
 }
 
-UInt            PositionSortedDensePlistComp (
-    Obj                 list,
-    Obj                 obj,
-    Obj                 func )
+static UInt PositionSortedDensePlistComp(Obj list, Obj obj, Obj func)
 {
     UInt                l;              /* low                             */
     UInt                h;              /* high                            */
@@ -517,29 +431,16 @@ UInt            PositionSortedDensePlistComp (
     return h;
 }
 
-Obj             FuncPOSITION_SORTED_LIST_COMP (
-    Obj                 self,
-    Obj                 list,
-    Obj                 obj,
-    Obj                 func )
+static Obj
+FuncPOSITION_SORTED_LIST_COMP(Obj self, Obj list, Obj obj, Obj func)
 {
     UInt                h;              /* position, result                */
 
     /* check the first argument                                            */
-    while ( ! IS_SMALL_LIST(list) ) {
-        list = ErrorReturnObj(
-            "POSITION_SORTED_LIST_COMP: <list> must be a small list (not a %s)",
-            (Int)TNAM_OBJ(list), 0L,
-            "you can replace <list> via 'return <list>;'" );
-    }
+    RequireSmallList("POSITION_SORTED_LIST_COMP", list);
 
     /* check the third argument                                            */
-    while ( TNUM_OBJ( func ) != T_FUNCTION ) {
-        func = ErrorReturnObj(
-            "POSITION_SORTED_LIST_COMP: <func> must be a function (not a %s)",
-            (Int)TNAM_OBJ(func), 0L,
-            "you can replace <func> via 'return <func>;'" );
-    }
+    RequireFunction("POSITION_SORTED_LIST_COMP", func);
 
     /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) ) {
@@ -554,34 +455,32 @@ Obj             FuncPOSITION_SORTED_LIST_COMP (
 }
 
 
-Obj             FuncPOSITION_FIRST_COMPONENT_SORTED (
-    Obj                 self,
-    Obj                 list,
-    Obj                 obj)
+/****************************************************************************
+**
+**  Low-level implementations of PositionSortedBy for dense Plists and lists.
+*/
+static Obj FuncPOSITION_SORTED_BY(Obj self, Obj list, Obj val, Obj func)
 {
-  UInt top, bottom,middle;
-  Obj x;
-  Obj l;
-  bottom = 1;
-  top = LEN_PLIST(list);
-  while (bottom <= top) {
-    middle = (top + bottom)/2;
-    l = ELM_PLIST(list,middle);
-    if (!IS_PLIST(l))
-      return TRY_NEXT_METHOD;
-    x = ELM_PLIST(l,1);
-    if (LT(x,obj)) {
-      bottom = middle+1;
-    } else if (LT(obj,x)) {
-      top = middle -1;
-    } else {
-      return INTOBJ_INT(middle);
-    }
-  }
-  return INTOBJ_INT(bottom);
-}
-      
+    RequirePlainList("POSITION_SORTED_BY", list);
+    RequireFunction("POSITION_SORTED_BY", func);
 
+    // perform the binary search to find the position
+    UInt l = 0;
+    UInt h = LEN_PLIST(list) + 1;
+    while (l + 1 < h) {       // list[l] < val && val <= list[h]
+        UInt m = (l + h) / 2; // l < m < h
+        Obj  v = CALL_1ARGS(func, ELM_PLIST(list, m));
+        if (LT(v, val)) {
+            l = m;
+        }
+        else {
+            h = m;
+        }
+    }
+
+    // return the result
+    return INTOBJ_INT(h);
+}
 
 
 /****************************************************************************
@@ -890,35 +789,12 @@ UInt            RemoveDupsDensePlist (
 
 /****************************************************************************
 **
-**  Some common checks.
-*/
-
-static void CheckIsSmallList( Obj list, const Char * caller)
-{
-  if ( ! IS_SMALL_LIST(list) ) {
-    ErrorMayQuit("%s: <list> must be a small list (not a %s)",
-                 (Int)caller, (Int)TNAM_OBJ(list));
-  }
-}
-
-static void CheckIsFunction(Obj func, const Char * caller)
-{
-  if ( TNUM_OBJ( func ) != T_FUNCTION ) {
-    ErrorMayQuit("%s: <func> must be a function (not a %s)",
-          (Int)caller, (Int)TNAM_OBJ(func));
-  }
-}
-
-/****************************************************************************
-**
 *F  FuncSORT_LIST( <self>, <list> ) . . . . . . . . . . . . . . . sort a list
 */
-Obj FuncSORT_LIST (
-    Obj                 self,
-    Obj                 list )
+static Obj FuncSORT_LIST(Obj self, Obj list)
 {
     /* check the first argument                                            */
-    CheckIsSmallList(list, "SORT_LIST");
+    RequireSmallList("SORT_LIST", list);
 
     /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) ) {
@@ -933,12 +809,10 @@ Obj FuncSORT_LIST (
     return (Obj)0;
 }
 
-Obj FuncSTABLE_SORT_LIST (
-    Obj                 self,
-    Obj                 list )
+static Obj FuncSTABLE_SORT_LIST(Obj self, Obj list)
 {
     /* check the first argument                                            */
-    CheckIsSmallList(list, "STABLE_SORT_LIST");
+    RequireSmallList("STABLE_SORT_LIST", list);
 
     /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) ) {
@@ -959,16 +833,13 @@ Obj FuncSTABLE_SORT_LIST (
 **
 *F  FuncSORT_LIST_COMP( <self>, <list>, <func> )  . . . . . . . . sort a list
 */
-Obj FuncSORT_LIST_COMP (
-    Obj                 self,
-    Obj                 list,
-    Obj                 func )
+static Obj FuncSORT_LIST_COMP(Obj self, Obj list, Obj func)
 {
     /* check the first argument                                            */
-    CheckIsSmallList(list, "SORT_LIST_COMP");
+    RequireSmallList("SORT_LIST_COMP", list);
 
     /* check the third argument                                            */
-    CheckIsFunction(func, "SORT_LIST_COMP");
+    RequireFunction("SORT_LIST_COMP", func);
 
     /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) ) {
@@ -982,16 +853,13 @@ Obj FuncSORT_LIST_COMP (
     return (Obj)0;
 }
 
-Obj FuncSTABLE_SORT_LIST_COMP (
-    Obj                 self,
-    Obj                 list,
-    Obj                 func )
+static Obj FuncSTABLE_SORT_LIST_COMP(Obj self, Obj list, Obj func)
 {
     /* check the first argument                                            */
-    CheckIsSmallList(list, "STABLE_SORT_LIST_COMP");
+    RequireSmallList("STABLE_SORT_LIST_COMP", list);
 
     /* check the third argument                                            */
-    CheckIsFunction(func, "STABLE_SORT_LIST_COMP");
+    RequireFunction("STABLE_SORT_LIST_COMP", func);
 
     /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) ) {
@@ -1010,15 +878,12 @@ Obj FuncSTABLE_SORT_LIST_COMP (
 **
 *F  FuncSORT_PARA_LIST( <self>, <list> )  . . . . . . sort a list with shadow
 */
-Obj FuncSORT_PARA_LIST (
-    Obj                 self,
-    Obj                 list,
-    Obj               shadow )
+static Obj FuncSORT_PARA_LIST(Obj self, Obj list, Obj shadow)
 {
     /* check the first two arguments                                       */
-    CheckIsSmallList(list, "SORT_PARA_LIST");
-    CheckIsSmallList(shadow, "SORT_PARA_LIST");
-    CheckSameLength("SORT_PARA_LIST", "list", "shadow", list, shadow);
+    RequireSmallList("SORT_PARA_LIST", list);
+    RequireSmallList("SORT_PARA_LIST", shadow);
+    RequireSameLength("SORT_PARA_LIST", list, shadow);
 
     /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) && IS_DENSE_PLIST(shadow) ) {
@@ -1033,15 +898,12 @@ Obj FuncSORT_PARA_LIST (
     return (Obj)0;
 }
 
-Obj FuncSTABLE_SORT_PARA_LIST (
-    Obj                 self,
-    Obj                 list,
-    Obj               shadow )
+static Obj FuncSTABLE_SORT_PARA_LIST(Obj self, Obj list, Obj shadow)
 {
     /* check the first two arguments                                       */
-    CheckIsSmallList(list, "STABLE_SORT_PARA_LIST");
-    CheckIsSmallList(shadow, "STABLE_SORT_PARA_LIST");
-    CheckSameLength("STABLE_SORT_PARA_LIST", "list", "shadow", list, shadow);
+    RequireSmallList("STABLE_SORT_PARA_LIST", list);
+    RequireSmallList("STABLE_SORT_PARA_LIST", shadow);
+    RequireSameLength("STABLE_SORT_PARA_LIST", list, shadow);
 
     /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) && IS_DENSE_PLIST(shadow) ) {
@@ -1061,19 +923,15 @@ Obj FuncSTABLE_SORT_PARA_LIST (
 **
 *F  FuncSORT_LIST_COMP( <self>, <list>, <func> )  . . . . . . . . sort a list
 */
-Obj FuncSORT_PARA_LIST_COMP (
-    Obj                 self,
-    Obj                 list,
-    Obj               shadow,
-    Obj                 func )
+static Obj FuncSORT_PARA_LIST_COMP(Obj self, Obj list, Obj shadow, Obj func)
 {
     /* check the first two arguments                                       */
-    CheckIsSmallList(list, "SORT_PARA_LIST_COMP");
-    CheckIsSmallList(shadow, "SORT_PARA_LIST_COMP");
-    CheckSameLength("SORT_PARA_LIST_COMP", "list", "shadow", list, shadow);
+    RequireSmallList("SORT_PARA_LIST_COMP", list);
+    RequireSmallList("SORT_PARA_LIST_COMP", shadow);
+    RequireSameLength("SORT_PARA_LIST_COMP", list, shadow);
 
     /* check the third argument                                            */
-    CheckIsFunction(func, "SORT_PARA_LIST_COMP");
+    RequireFunction("SORT_PARA_LIST_COMP", func);
     
     /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) && IS_DENSE_PLIST(shadow) ) {
@@ -1087,19 +945,16 @@ Obj FuncSORT_PARA_LIST_COMP (
     return (Obj)0;
 }
 
-Obj FuncSTABLE_SORT_PARA_LIST_COMP (
-    Obj                 self,
-    Obj                 list,
-    Obj               shadow,
-    Obj                 func )
+static Obj
+FuncSTABLE_SORT_PARA_LIST_COMP(Obj self, Obj list, Obj shadow, Obj func)
 {
     /* check the first two arguments                                       */
-    CheckIsSmallList(list, "SORT_PARA_LIST_COMP");
-    CheckIsSmallList(shadow, "SORT_PARA_LIST_COMP");
-    CheckSameLength("SORT_PARA_LIST_COMP", "list", "shadow", list, shadow);
+    RequireSmallList("SORT_PARA_LIST_COMP", list);
+    RequireSmallList("SORT_PARA_LIST_COMP", shadow);
+    RequireSameLength("SORT_PARA_LIST_COMP", list, shadow);
 
     /* check the third argument                                            */
-    CheckIsFunction(func, "SORT_PARA_LIST_COMP");
+    RequireFunction("SORT_PARA_LIST_COMP", func);
     
     /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) && IS_DENSE_PLIST(shadow) ) {
@@ -1126,10 +981,7 @@ Obj FuncSTABLE_SORT_PARA_LIST_COMP (
 **  equivalent  to  specifying no operation.   This function  exists  because
 **  there are places where the operation in not an option.
 */
-Obj             FuncOnPoints (
-    Obj                 self,
-    Obj                 point,
-    Obj                 elm )
+static Obj FuncOnPoints(Obj self, Obj point, Obj elm)
 {
     return POW( point, elm );
 }
@@ -1146,20 +998,15 @@ Obj             FuncOnPoints (
 **  specifies  the componentwise operation    of group elements on  pairs  of
 **  points, which are represented by lists of length 2.
 */
-Obj             FuncOnPairs (
-    Obj                 self,
-    Obj                 pair,
-    Obj                 elm )
+static Obj FuncOnPairs(Obj self, Obj pair, Obj elm)
 {
     Obj                 img;            /* image, result                   */
     Obj                 tmp;            /* temporary                       */
 
     /* check the type of the first argument                                */
-    while ( ! IS_SMALL_LIST( pair ) || LEN_LIST( pair ) != 2 ) {
-        pair = ErrorReturnObj(
-            "OnPairs: <pair> must be a list of length 2 (not a %s)",
-            (Int)TNAM_OBJ(pair), 0L,
-            "you can replace <pair> via 'return <pair>;'" );
+    if (!IS_SMALL_LIST(pair) || LEN_LIST(pair) != 2) {
+        ErrorMayQuit("OnPairs: <pair> must be a list of length 2 (not a %s)",
+                     (Int)TNAM_OBJ(pair), 0);
     }
 
     /* create a new bag for the result                                     */
@@ -1191,46 +1038,38 @@ Obj             FuncOnPairs (
 **  points, which are represented by lists.  'OnPairs' is the special case of
 **  'OnTuples' for tuples with two elements.
 */
-Obj             FuncOnTuples (
-    Obj                 self,
-    Obj                 tuple,
-    Obj                 elm )
+static Obj FuncOnTuples(Obj self, Obj tuple, Obj elm)
 {
     Obj                 img;            /* image, result                   */
     Obj                 tmp;            /* temporary                       */
     UInt                i;              /* loop variable                   */
 
     /* check the type of the first argument                                */
-    while ( ! IS_SMALL_LIST( tuple ) ) {
-        tuple = ErrorReturnObj(
-            "OnTuples: <tuple> must be a small list (not a %s)",
-            (Int)TNAM_OBJ(tuple), 0L,
-            "you can replace <tuple> via 'return <tuple>;'" );
-    }
+    RequireSmallList("OnTuples", tuple);
 
     /* special case for the empty list */
     if (LEN_LIST(tuple) == 0) {
       if (IS_MUTABLE_OBJ(tuple)) {
-        img = NEW_PLIST(T_PLIST_EMPTY, 0);
+        img = NewEmptyPlist();
         return img;
       } else {
         return tuple;
       }
     }
     /* special case for permutations                                       */
-    if ( TNUM_OBJ(elm) == T_PERM2 || TNUM_OBJ(elm) == T_PERM4 ) {
+    if (IS_PERM(elm)) {
         PLAIN_LIST( tuple );
         return OnTuplesPerm( tuple, elm );
     }
 
     /* special case for transformations                                       */
-    if ( TNUM_OBJ(elm) == T_TRANS2 || TNUM_OBJ(elm) == T_TRANS4 ) {
+    if (IS_TRANS(elm)) {
         PLAIN_LIST( tuple );
         return OnTuplesTrans( tuple, elm );
     }
 
     /* special case for partial perms */
-    if ( TNUM_OBJ(elm) == T_PPERM2 || TNUM_OBJ(elm) == T_PPERM4 ) {
+    if (IS_PPERM(elm)) {
         PLAIN_LIST( tuple );
         return OnTuplesPPerm( tuple, elm );
     }
@@ -1263,26 +1102,20 @@ Obj             FuncOnTuples (
 **  represented by sorted lists of points without duplicates (see "Sets").
 */
 
-Obj             FuncOnSets (
-    Obj                 self,
-    Obj                 set,
-    Obj                 elm )
+static Obj FuncOnSets(Obj self, Obj set, Obj elm)
 {
     Obj                 img;            /* handle of the image, result     */
     UInt                status;        /* the elements are mutable        */
 
     /* check the type of the first argument                                */
-    while ( !HAS_FILT_LIST(set, FN_IS_SSORT) && ! IsSet( set ) ) {
-        set = ErrorReturnObj(
-            "OnSets: <set> must be a set (not a %s)",
-            (Int)TNAM_OBJ(set), 0L,
-            "you can replace <set> via 'return <set>;'" );
+    if (!HAS_FILT_LIST(set, FN_IS_SSORT) && !IsSet(set)) {
+        RequireArgument("OnSets", set, "must be a set");
     }
 
     /* special case for the empty list */
     if (LEN_LIST(set) == 0) {
       if (IS_MUTABLE_OBJ(set)) {
-        img = NEW_PLIST(T_PLIST_EMPTY, 0);
+        img = NewEmptyPlist();
         return img;
       } else {
         return set;
@@ -1290,19 +1123,19 @@ Obj             FuncOnSets (
     }
         
     /* special case for permutations                                       */
-    if ( TNUM_OBJ(elm) == T_PERM2 || TNUM_OBJ(elm) == T_PERM4 ) {
+    if (IS_PERM(elm)) {
         PLAIN_LIST( set );
         return OnSetsPerm( set, elm );
     }
 
     /* special case for transformations */
-    if ( TNUM_OBJ(elm)== T_TRANS2 || TNUM_OBJ(elm) == T_TRANS4 ){
+    if (IS_TRANS(elm)){
       PLAIN_LIST(set);
       return OnSetsTrans( set, elm);
     }
     
     /* special case for partial perms */
-    if ( TNUM_OBJ(elm)== T_PPERM2 || TNUM_OBJ(elm) == T_PPERM4 ){
+    if (IS_PPERM(elm)){
       PLAIN_LIST(set);
       return OnSetsPPerm( set, elm);
     }
@@ -1323,10 +1156,10 @@ Obj             FuncOnSets (
         break;
         
       case 1:
-        RetypeBag( img, T_PLIST_DENSE_NHOM_SSORT );
+        RetypeBagSM( img, T_PLIST_DENSE_NHOM_SSORT );
 
       case 2:
-        RetypeBag( img, T_PLIST_HOM_SSORT );
+        RetypeBagSM( img, T_PLIST_HOM_SSORT );
 
       }
 
@@ -1346,32 +1179,9 @@ Obj             FuncOnSets (
 **
 **  specifies that group elements operate by multiplication from the right.
 */
-Obj             FuncOnRight (
-    Obj                 self,
-    Obj                 point,
-    Obj                 elm )
+static Obj FuncOnRight(Obj self, Obj point, Obj elm)
 {
     return PROD( point, elm );
-}
-
-
-/****************************************************************************
-**
-*F  FuncOnLeftAntiOperation( <self>, <point>, <elm> ) op. by mult. from the left
-**
-**  'FuncOnLeftAntiOperation' implements the internal function
-**  'OnLeftAntiOperation'.
-**
-**  'OnLeftAntiOperation( <point>, <elm> )'
-**
-**  specifies that group elements operate by multiplication from the left.
-*/
-Obj             FuncOnLeftAntiOperation (
-    Obj                 self,
-    Obj                 point,
-    Obj                 elm )
-{
-    return PROD( elm, point );
 }
 
 
@@ -1386,13 +1196,9 @@ Obj             FuncOnLeftAntiOperation (
 **  specifies that group elements operate by multiplication from the left
 **  with the inverse.
 */
-Obj             FuncOnLeftInverse (
-    Obj                 self,
-    Obj                 point,
-    Obj                 elm )
+static Obj FuncOnLeftInverse(Obj self, Obj point, Obj elm)
 {
-    elm = INV(elm);
-    return PROD( elm, point );
+    return LQUO(elm, point);
 }
 
 /****************************************************************************
@@ -1429,7 +1235,7 @@ static Obj FuncSTRONGLY_CONNECTED_COMPONENTS_DIGRAPH(Obj self, Obj digraph)
   n = LEN_LIST(digraph);
   if (n == 0)
     {
-      return NEW_PLIST(T_PLIST_EMPTY,0);
+      return NewEmptyPlist();
     }
   val = NewBag(T_DATOBJ, (n+1)*sizeof(UInt));
   stack = NEW_PLIST(T_PLIST_CYC, n);
@@ -1521,20 +1327,10 @@ static Obj FuncSTRONGLY_CONNECTED_COMPONENTS_DIGRAPH(Obj self, Obj digraph)
 **
 *F  FuncCOPY_LIST_ENTRIES( <self>, <args> ) . . mass move of list entries
 **
+**  Argument names in the manual: fromlst, fromind, fromstep, tolst, toind, tostep, n
 */
 
-static inline Int GetIntObj( Obj list, UInt pos)
-{
-  Obj entry = ELM_PLIST(list, pos);
-  GAP_ASSERT(entry);
-  if (!IS_INTOBJ(entry)) {
-      ErrorMayQuit("COPY_LIST_ENTRIES: argument %d  must be a small integer, not a %s",
-                   (Int)pos, (Int)TNAM_OBJ(entry));
-  }
-  return INT_INTOBJ(entry);
-}
-
-Obj FuncCOPY_LIST_ENTRIES( Obj self, Obj args )
+static Obj FuncCOPY_LIST_ENTRIES(Obj self, Obj args)
 {  
   Obj srclist;
   Int srcstart;
@@ -1550,39 +1346,34 @@ Obj FuncCOPY_LIST_ENTRIES( Obj self, Obj args )
   UInt ct;
 
   GAP_ASSERT(IS_PLIST(args));
-  if (LEN_PLIST(args) != 7)
-    {
-      ErrorMayQuit("COPY_LIST_ENTRIES: number of arguments must be 7, not %d",
-                   (Int)LEN_PLIST(args), 0L);
-    }
-  srclist = ELM_PLIST(args,1);
+  if (LEN_PLIST(args) != 7) {
+      ErrorMayQuitNrArgs(7, LEN_PLIST(args));
+  }
+  srclist = ELM_PLIST(args, 1);
   GAP_ASSERT(srclist != 0);
   if (!IS_PLIST(srclist))
-    {
-      ErrorMayQuit("COPY_LIST_ENTRIES: source must be a plain list not a %s",
-                   (Int)TNAM_OBJ(srclist), 0L);
-    }
+      RequireArgumentEx("CopyListEntries", srclist, "<fromlst>",
+                        "must be a plain list");
 
-  srcstart = GetIntObj(args,2);
-  srcinc = GetIntObj(args,3);
+  srcstart = GetSmallIntEx("CopyListEntries", ELM_PLIST(args, 2), "<fromind>");
+  srcinc = GetSmallIntEx("CopyListEntries", ELM_PLIST(args, 3), "<fromstep>");
   dstlist = ELM_PLIST(args,4);
   GAP_ASSERT(dstlist != 0);
-  while (!IS_PLIST(dstlist) || !IS_MUTABLE_OBJ(dstlist))
-    {
-      ErrorMayQuit("COPY_LIST_ENTRIES: destination must be a mutable plain list not a %s",
-                   (Int)TNAM_OBJ(dstlist), 0L);
-    }
-  dststart = GetIntObj(args,5);
-  dstinc = GetIntObj(args,6);
-  number = GetIntObj(args,7);
-  
+  if (!IS_PLIST(dstlist) || !IS_MUTABLE_OBJ(dstlist))
+      RequireArgumentEx("CopyListEntries", dstlist, "<tolst>",
+                        "must be a mutable plain list");
+  dststart = GetSmallIntEx("CopyListEntries", ELM_PLIST(args, 5), "<toind>");
+  dstinc = GetSmallIntEx("CopyListEntries", ELM_PLIST(args, 6), "<tostep>");
+  number = GetSmallIntEx("CopyListEntries", ELM_PLIST(args, 7), "<n>");
+
   if (number == 0)
     return (Obj) 0;
   
   if ( srcstart <= 0 || dststart <= 0 ||
        srcstart + (number-1)*srcinc <= 0 || dststart + (number-1)*dstinc <= 0)
     {
-      ErrorMayQuit("COPY_LIST_ENTRIES: list indices must be positive integers",0L,0L);
+      ErrorMayQuit("CopyListEntries: list indices must be positive integers",
+                   0, 0);
     }
 
   srcmax = (srcinc > 0) ? srcstart + (number-1)*srcinc : srcstart;
@@ -1680,12 +1471,9 @@ Obj FuncCOPY_LIST_ENTRIES( Obj self, Obj args )
 }
 
 
-Obj FuncLIST_WITH_IDENTICAL_ENTRIES(Obj self, Obj n, Obj obj)
+static Obj FuncLIST_WITH_IDENTICAL_ENTRIES(Obj self, Obj n, Obj obj)
 {
-    if (!IS_NONNEG_INTOBJ(n)) {
-        ErrorQuit("<n> must be a non-negative integer (not a %s)",
-                  (Int)TNAM_OBJ(n), 0L);
-    }
+    RequireNonnegativeSmallInt("LIST_WITH_IDENTICAL_ENTRIES", n);
 
     Obj  list = 0;
     Int  len = INT_INTOBJ(n);
@@ -1707,7 +1495,7 @@ Obj FuncLIST_WITH_IDENTICAL_ENTRIES(Obj self, Obj n, Obj obj)
         }
     }
     else if (len == 0) {
-        list = NEW_PLIST(T_PLIST_EMPTY, 0);
+        list = NewEmptyPlist();
     }
     else {
         switch (tnum) {
@@ -1769,7 +1557,7 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC(APPEND_LIST_INTR, 2, "list1, list2"),
     GVAR_FUNC(POSITION_SORTED_LIST, 2, "list, obj"),
     GVAR_FUNC(POSITION_SORTED_LIST_COMP, 3, "list, obj, func"),
-    GVAR_FUNC(POSITION_FIRST_COMPONENT_SORTED, 2, "list, obj"),
+    GVAR_FUNC(POSITION_SORTED_BY, 3, "list, val, func"),
     GVAR_FUNC(SORT_LIST, 1, "list"),
     GVAR_FUNC(STABLE_SORT_LIST, 1, "list"),
     GVAR_FUNC(SORT_LIST_COMP, 2, "list, func"),
@@ -1783,7 +1571,6 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC(OnTuples, 2, "tuple, elm"),
     GVAR_FUNC(OnSets, 2, "set, elm"),
     GVAR_FUNC(OnRight, 2, "pnt, elm"),
-    GVAR_FUNC(OnLeftAntiOperation, 2, "pnt, elm"),
     GVAR_FUNC(OnLeftInverse, 2, "pnt, elm"),
     GVAR_FUNC(COPY_LIST_ENTRIES, -1, "srclist,srcstart,srcinc,dstlist,dststart,dstinc,number"),
     GVAR_FUNC(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH, 1, "digraph"),

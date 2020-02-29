@@ -1,32 +1,37 @@
+#############################################################################
+##
+##  This file is part of GAP, a system for computational discrete algebra.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
+##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+
 ############################################################################
-#
-# matobj.gi
-#                                                        by Max Neunhöffer
-#
-##  Copyright (C) 2007  Max Neunhöffer, University of St Andrews
-##  This file is free software, see license information at the end.
 #
 # This file contains some generic methods for the vector/matrix interface
 # defined in matobj1.gd and matobj2.gd.
 #
-############################################################################
 
 
-# Install fallback methods for m[i,j] which delegate MatElm resp. SetMatElm,
-# for old MatrixObj implementation which don't provide them. We lower the rank
-# so that these are only used as a last resort.
-InstallMethod( \[\], "for a matrix object and two positions",
+# Install fallback methods for m[i,j] which delegate to ASS_LIST / ELM_LIST
+# for code using an intermediate version of the (unfinished) MatrixObj
+# specification (any package installing methods for MatElm resp. SetMatElm
+# should be fine without these). We lower the rank so that these are only
+# used as a last resort.
+InstallMethod( \[\,\], "for a matrix object and two positions",
   [ IsMatrixObj, IsPosInt, IsPosInt ],
-  -RankFilter(IsMatrixObj),
+  {} -> -RankFilter(IsMatrixObj),
   function( m, row, col )
-    return MatElm( m, row, col );
+    return ELM_LIST( m, row, col );
   end );
 
-InstallMethod( \[\]\:\=, "for a matrix object, two positions, and an object",
+InstallMethod( \[\,\]\:\=, "for a matrix object, two positions, and an object",
   [ IsMatrixObj and IsMutable, IsPosInt, IsPosInt, IsObject ],
-  -RankFilter(IsMatrixObj),
+  {} -> -RankFilter(IsMatrixObj),
   function( m, row, col, obj )
-    SetMatElm( m, row, col, obj );
+    ASS_LIST( m, row, col, obj );
   end );
 
 
@@ -308,37 +313,6 @@ InstallMethod( IdentityMatrix,
     return NewMatrix( rep, basedomain, dim, IdentityMat( dim, basedomain ) );
   end );
 
-
-
-InstallMethod( Unfold, "for a matrix object, and a vector object",
-  [ IsMatrixObj, IsVectorObj ],
-  function( m, w )
-    local v,i,l;
-    if Length(m) = 0 then
-        return ZeroVector(0,w);
-    else
-        l := NumberColumns(m);
-        v := ZeroVector(Length(m)*l,w);
-        for i in [1..Length(m)] do
-            CopySubVector( m[i], v, [1..l], [(i-1)*l+1..i*l] );
-        od;
-        return v;
-    fi;
-  end );
-
-InstallMethod( Fold, "for a vector, a positive int, and a matrix",
-  [ IsVectorObj, IsPosInt, IsMatrixObj ],
-  function( v, rl, t )
-    local rows,i,tt,m;
-    m := Matrix([],rl,t);
-    tt := ZeroVector(rl,v);
-    for i in [1..Length(v)/rl] do
-        CopySubVector(v,tt,[(i-1)*rl+1..i*rl],[1..rl]);
-        Add(m,ShallowCopy(tt));
-    od;
-    return m;
-  end );
-
 InstallMethod( CompanionMatrix, "for a polynomial and a matrix",
   [ IsUnivariatePolynomial, IsMatrixObj ],
   function( po, m )
@@ -355,7 +329,7 @@ InstallMethod( CompanionMatrix, "for a polynomial and a matrix",
     ll[n] := l;
     for i in [1..n-1] do
         ll[i] := ZeroMutable(l);
-        ll[i][i+1] := one;
+        ll[i,i+1] := one;
     od;
     return Matrix(ll,n,m);
   end );
@@ -381,7 +355,7 @@ InstallMethod( KroneckerProduct, "for two matrices",
 
     for i in [1..rowsA] do
       for j in [1..colsA] do
-        CopySubMatrix( A[i][j] * B, AxB,
+        CopySubMatrix( A[i,j] * B, AxB,
                 [ 1 .. rowsB ], [ rowsB * (i-1) + 1 .. rowsB * i ],
                 [ 1 .. colsB ], [ (j-1) * colsB + 1 .. j * colsB ] );
       od;
@@ -564,38 +538,134 @@ InstallMethod( CopySubVector,
     CopySubVector(dst,dcols,src,scols);
 end );
 
-InstallMethod( Randomize,
-  "generic method for a vector",
-  [ IsVectorObj and IsMutable ],
-  function(vec)
-    local basedomain, i;
-    basedomain := BaseDomain( vec );
-    for i in [ 1 .. Length( vec ) ] do
-        vec[ i ] := Random( basedomain );
-    od;
-end );
-
-InstallMethod( Randomize,
-  "generic method for a vector and a random source",
-  [ IsVectorObj and IsMutable, IsRandomSource ],
-  function(vec, rs)
+InstallMethodWithRandomSource( Randomize,
+  "for a random source and a vector object",
+  [ IsRandomSource, IsVectorObj and IsMutable ],
+  function( rs, vec )
     local basedomain, i;
     basedomain := BaseDomain( vec );
     for i in [ 1 .. Length( vec ) ] do
         vec[ i ] := Random( rs, basedomain );
     od;
+    return vec;
 end );
+
+InstallMethodWithRandomSource( Randomize,
+  "for a random source and a matrix object",
+  [ IsRandomSource, IsMatrixObj and IsMutable ],
+  function( rs, mat )
+    local basedomain, i, j;
+    basedomain := BaseDomain( mat );
+    for i in [ 1 .. NrRows( mat ) ] do
+      for j in [ 1 .. NrCols( mat ) ] do
+        mat[i,j]:= Random( rs, basedomain );
+      od;
+    od;
+    return mat;
+end );
+
+############################################################################
+# Arithmetical operations:
+############################################################################
+InstallMethod( MultVectorLeft,
+  "generic method for a mutable vector, and an object",
+  [ IsVectorObj and IsMutable, IsObject ],
+  function( v, s )
+    local i;
+    for i in [1 .. Length(v)] do
+      v[i] := s * v[i];
+    od;
+  end );
+
+InstallMethod( MultVectorRight,
+  "generic method for a mutable vector, and an object",
+  [ IsVectorObj and IsMutable, IsObject ],
+  function( v, s )
+    local i;
+    for i in [1 .. Length(v)] do
+      v[i] := v[i] * s;
+    od;
+  end );
+
+InstallMethod( MultVectorLeft,
+  "generic method for a mutable vector, an object, an int, \
+and an int",
+  [ IsVectorObj and IsMutable, IsObject, IsInt, IsInt ],
+  function( v, s, from, to )
+    local i;
+    for i in [from .. to] do
+      v[i] := s * v[i];
+    od;
+  end );
+
+InstallMethod( MultVectorRight,
+  "generic method for a mutable vector, an object, an int, \
+and an int",
+  [ IsVectorObj and IsMutable, IsObject, IsInt, IsInt ],
+  function( v, s, from, to )
+    local i;
+    for i in [from .. to] do
+      v[i] := v[i] * s;
+    od;
+  end );
+
+
+############################################################################
+##
+#M  \^( <vecobj>, <matobj> )
+##
+InstallMethod( \^,
+    [ IsVectorObj, IsMatrixObj ],
+    \* );
+
 
 #
 # Compatibility code: Install MatrixObj methods for IsMatrix.
 #
-InstallOtherMethod( NumberRows, "for a plist matrix",
+
+
+############################################################################
+##
+#M  RowsOfMatrix( <matobj> )
+##
+InstallMethod( RowsOfMatrix,
+    [ IsMatrix ],
+    Immutable );
+
+
+InstallOtherMethod( NumberRows, "for a matrix",
   [ IsMatrix ], Length);
-InstallOtherMethod( NumberColumns, "for a plist matrix",
-  [ IsMatrix ], m -> Length(m[1]) );
+InstallOtherMethod( NumberColumns, "for a matrix",
+  [ IsMatrix ],
+  function(m)
+    if Length(m) = 0 then
+      return 0;
+    fi;
+    return Length(m[1]);
+  end );
 
 #
 # Compatibility code: Generic methods for IsMatrixObj
 #
 InstallOtherMethod( DimensionsMat, "for a matrix in IsMatrixObj",
   [ IsMatrixObj ], m -> [ NumberRows( m ), NumberColumns( m ) ] );
+
+############################################################################
+##
+#M  IsEmptyMatrix( <matobj> )
+##
+InstallMethod( IsEmptyMatrix,
+  [ IsMatrixObj ],
+  mat -> NrRows(mat) = 0 or NrCols(mat) = 0
+);
+
+
+#
+# Compatibility code: old variants of arguments (to become obsolete)
+#
+
+InstallOtherMethod( Randomize,
+    "backwards compatibility: swap arguments",
+    [ IsObject and IsMutable, IsRandomSource ],
+    { obj, rs } -> Randomize( rs, obj ) );
+

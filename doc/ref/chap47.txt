@@ -369,7 +369,7 @@
     [4X[25Xgap>[125X [27Xg := f / [ f.1^2, f.2^3, (f.1*f.2)^5 ];[127X[104X
     [4X[28X<fp group on the generators [ a, b ]>[128X[104X
     [4X[25Xgap>[125X [27Xh := IsomorphismPermGroup( g );[127X[104X
-    [4X[28X[ a, b ] -> [ (1,2)(4,5), (2,3,4) ][128X[104X
+    [4X[28X[ a, b ] -> [ (1,2)(3,5), (2,3,4) ][128X[104X
     [4X[25Xgap>[125X [27Xu:=Subgroup(g,[g.1*g.2]);;rt:=RightTransversal(g,u);[127X[104X
     [4X[28XRightTransversal(<fp group of size 60 on the generators [128X[104X
     [4X[28X[ a, b ]>,Group([ a*b ]))[128X[104X
@@ -882,12 +882,12 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg := Group( (2,3,4,5), (1,2,5) );;[127X[104X
     [4X[25Xgap>[125X [27Xiso := IsomorphismFpGroup( g );[127X[104X
-    [4X[28X[ (4,5), (1,2,3,4,5), (1,3,2,4,5) ] -> [ F1, F2, F3 ][128X[104X
+    [4X[28X[ (1,2), (2,3), (3,4), (4,5) ] -> [ F1, F2, F3, F4 ][128X[104X
     [4X[25Xgap>[125X [27Xfp := Image( iso );[127X[104X
-    [4X[28X<fp group on the generators [ F1, F2, F3 ]>[128X[104X
+    [4X[28X<fp group of size 120 on the generators [ F1, F2, F3, F4 ]>[128X[104X
     [4X[25Xgap>[125X [27XRelatorsOfFpGroup( fp );[127X[104X
-    [4X[28X[ F1^2, F1^-1*F2*F1*F2^-1*F3*F2^-2, F1^-1*F3*F1*F2*F3^-1*F2*F3*F2^-1, [128X[104X
-    [4X[28X  F2^5*F3^-5, F2^5*(F3^-1*F2^-1)^2, (F2^-2*F3^2)^2 ][128X[104X
+    [4X[28X[ F1^2, F2^2, F3^2, F4^2, (F1*F2)^3, (F1*F3)^2, (F1*F4)^2, (F2*F3)^3,[128X[104X
+    [4X[28X  (F2*F4)^2, (F3*F4)^3 ][128X[104X
   [4X[32X[104X
   
   [1X47.11-2 IsomorphismFpGroupByGenerators[101X
@@ -905,14 +905,13 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XSetInfoLevel( InfoFpGroup, 1 );[127X[104X
     [4X[25Xgap>[125X [27Xiso := IsomorphismFpGroupByGenerators( g, [ (1,2), (1,2,3,4,5) ] );[127X[104X
-    [4X[28X#I  the image group has 2 gens and 4 rels of total length 50[128X[104X
+    [4X[28X#I  the image group has 2 gens and 5 rels of total length 39[128X[104X
     [4X[28X[ (1,2), (1,2,3,4,5) ] -> [ F1, F2 ][128X[104X
     [4X[25Xgap>[125X [27Xfp := Image( iso );[127X[104X
     [4X[28X<fp group of size 120 on the generators [ F1, F2 ]>[128X[104X
     [4X[25Xgap>[125X [27XRelatorsOfFpGroup( fp );[127X[104X
-    [4X[28X[ F1^2, (F2*F1*F2^-2*F1)^3, [128X[104X
-    [4X[28X  F2*F1*F2^-1*(F1*F2)^2*F2^2*(F1*F2^-1)^2*F2^-1*F1, [128X[104X
-    [4X[28X  (F2*F1*F2^-1*F1)^2*F2^-1*F1*F2^2*F1*F2^-2*F1*F2*F1 ][128X[104X
+    [4X[28X[ F1^2, F2^5, (F2^-1*F1)^4, (F1*F2*F1*F2^-1)^3, (F2*F1*F2^-2*F1*F2)^2[128X[104X
+    [4X[28X ][128X[104X
   [4X[32X[104X
   
   [33X[0;0YThe  main  task  of the function [2XIsomorphismFpGroupByGenerators[102X is to find a
@@ -936,9 +935,9 @@
     [4X[28X  (1,12)(2,11)(3,6)(4,8)(5,9)(7,10) ])[128X[104X
     [4X[25Xgap>[125X [27Xgens := GeneratorsOfGroup( M12 );;[127X[104X
     [4X[25Xgap>[125X [27Xiso := IsomorphismFpGroupByGenerators( M12, gens );;[127X[104X
-    [4X[28X#I  the image group has 3 gens and 20 rels of total length 554[128X[104X
+    [4X[28X#I  the image group has 3 gens and 20 rels of total length 418[128X[104X
     [4X[25Xgap>[125X [27Xiso := IsomorphismFpGroupByGenerators( M12, gens );;[127X[104X
-    [4X[28X#I  the image group has 3 gens and 19 rels of total length 427[128X[104X
+    [4X[28X#I  the image group has 3 gens and 20 rels of total length 526[128X[104X
   [4X[32X[104X
   
   [33X[0;0YAlso    in   the   case   of   a   permutation   group   [3XG[103X,   the   function
@@ -978,7 +977,7 @@
     [4X[28X#I  the image group has 3 gens and 11 rels of total length 92[128X[104X
     [4X[25Xgap>[125X [27Xiso := IsomorphismFpGroupByGenerators( M12, gens : [127X[104X
     [4X[25X>[125X [27X                                          method := "fast" );;[127X[104X
-    [4X[28X#I  the image group has 3 gens and 136 rels of total length 3215[128X[104X
+    [4X[28X#I  the image group has 3 gens and 135 rels of total length 2938[128X[104X
   [4X[32X[104X
   
   [33X[0;0YThough  the  option  [10Xmethod  :=  "regular"[110X  is only checked in the case of a
@@ -998,7 +997,7 @@
     [4X[28X  [ [ 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ], [128X[104X
     [4X[28X      [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1 ] ] ][128X[104X
     [4X[25Xgap>[125X [27Xiso := IsomorphismFpGroupByGenerators( G, gens );;[127X[104X
-    [4X[28X#I  the image group has 2 gens and 10 rels of total length 126[128X[104X
+    [4X[28X#I  the image group has 2 gens and 10 rels of total length 118[128X[104X
     [4X[25Xgap>[125X [27Xiso := IsomorphismFpGroupByGenerators( G, gens : [127X[104X
     [4X[25X>[125X [27X                                          method := "regular");;[127X[104X
     [4X[28X#I  the image group has 2 gens and 6 rels of total length 56[128X[104X
@@ -1482,7 +1481,7 @@
   
   [1X47.16-1 IsInfiniteAbelianizationGroup[101X
   
-  [33X[1;0Y[29X[2XIsInfiniteAbelianizationGroup[102X( [3XG[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsInfiniteAbelianizationGroup[102X( [3XG[103X ) [32X property[133X
   
   [33X[0;0Yreturns  true if the commutator factor group [22X[3XG[103X/[3XG[103X'[122X is infinite. This might be
   done without computing the full structure of the commutator factor group.[133X

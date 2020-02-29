@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  gasman.c                    GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains  the functions of  Gasman,  the  GAP  storage manager.
 **
@@ -119,6 +119,8 @@
 #include "sysfiles.h"
 #include "sysmem.h"
 
+#include "bags.inc"
+
 #ifdef GAP_MEM_CHECK
 #include <sys/mman.h>
 #endif
@@ -222,7 +224,7 @@ static inline UInt WORDS_BAG(UInt size)
 
 static inline Bag *DATA(BagHeader *bag)
 {
-    return (Bag *)(((char *)bag) + sizeof(BagHeader));
+    return (Bag *)(bag + 1);
 }
 
 
@@ -279,11 +281,11 @@ static inline Bag *DATA(BagHeader *bag)
 */
 Bag *                   MptrBags;
 Bag *                   MptrEndBags;
-Bag *                   OldBags;
+static Bag *            OldBags;
 Bag *                   YoungBags;
 Bag *                   AllocBags;
-UInt                    AllocSizeBags;
-Bag *                   EndBags;
+static UInt             AllocSizeBags;
+static Bag *            EndBags;
 
 /* These macros, are (a) for more readable code, but more importantly
    (b) to ensure that unsigned subtracts and divides are used (since
@@ -300,8 +302,8 @@ static inline UInt SpaceBetweenPointers(const Bag * a, const Bag * b)
 }
 
 #define SizeMptrsArea SpaceBetweenPointers(MptrEndBags, MptrBags)
-#define SizeOldBagsArea SpaceBetweenPointers(YoungBags, OldBags)
-#define SizeYoungBagsArea SpaceBetweenPointers(AllocBags, YoungBags)
+// #define SizeOldBagsArea SpaceBetweenPointers(YoungBags, OldBags)
+// #define SizeYoungBagsArea SpaceBetweenPointers(AllocBags, YoungBags)
 #define SizeAllocationArea SpaceBetweenPointers(EndBags, AllocBags)
 
 #define SizeAllBagsArea SpaceBetweenPointers(AllocBags, OldBags)
@@ -421,7 +423,6 @@ static Bag MarkedBags;
 /****************************************************************************
 **
 *V  NrAllBags . . . . . . . . . . . . . . . . .  number of all bags allocated
-*V  SizeAllBags . . . . . . . . . . . . . .  total size of all bags allocated
 *V  NrLiveBags  . . . . . . . . . .  number of bags that survived the last gc
 *V  SizeLiveBags  . . . . . . .  total size of bags that survived the last gc
 *V  NrDeadBags  . . . . . . . number of bags that died since the last full gc
@@ -430,19 +431,12 @@ static Bag MarkedBags;
 **                            but may still be weakly pointed to
 */
 UInt                    NrAllBags;
-UInt8                   SizeAllBags;
 UInt                    NrLiveBags;
 UInt                    SizeLiveBags;
 UInt                    NrDeadBags;
 UInt8                   SizeDeadBags;
 UInt                    NrHalfDeadBags;
 
-
-/****************************************************************************
-**
-*V  InfoBags[<type>]  . . . . . . . . . . . . . . . . .  information for bags
-*/
-TNumInfoBags            InfoBags [ NUM_TYPES ];
 
 /****************************************************************************
 **
@@ -464,7 +458,7 @@ static inline UInt IS_BAG_BODY(void * ptr)
             ((UInt)ptr & (sizeof(Bag) - 1)) == 0);
 }
 
-#if defined(MEMORY_CANARY)
+#if defined(GAP_MEMORY_CANARY)
 
 #include <valgrind/valgrind.h>
 #include <valgrind/memcheck.h>
@@ -535,21 +529,6 @@ void CHANGED_BAG(Bag bag)
 #define CANARY_FORBID_ACCESS_ALL_BAGS()
 #endif
 
-/****************************************************************************
-**
-*F  InitMsgsFuncBags(<msgs-func>) . . . . . . . . .  install message function
-**
-**  'InitMsgsFuncBags'  simply  stores  the  printing  function  in a  global
-**  variable.
-*/
-static TNumMsgsFuncBags MsgsFuncBags;
-
-void            InitMsgsFuncBags (
-    TNumMsgsFuncBags    msgs_func )
-{
-    MsgsFuncBags = msgs_func;
-}
-
 
 /****************************************************************************
 **
@@ -619,12 +598,12 @@ static inline Bag MARKED_DEAD(Bag x)
 
 static inline Bag MARKED_ALIVE(Bag x)
 {
-    return (Bag)(((Char *)x) + 1);
+    return (Bag)((UInt)x | ALIVE);
 }
 
 static inline Bag MARKED_HALFDEAD(Bag x)
 {
-    return (Bag)(((Char *)x) + 2);
+    return (Bag)((UInt)x | HALFDEAD);
 }
 
 static inline Int IS_MARKED_DEAD(Bag x)
@@ -653,61 +632,15 @@ static inline Bag UNMARKED_DEAD(Bag x)
 static inline Bag UNMARKED_ALIVE(Bag x)
 {
     GAP_ASSERT(GET_MARK_BITS(x) == ALIVE);
-    return (Bag)(((Char *)x) - ALIVE);
+    return (Bag)(((UInt)x) & ~ALIVE);
 }
 
 static inline Bag UNMARKED_HALFDEAD(Bag x)
 {
     GAP_ASSERT(GET_MARK_BITS(x) == HALFDEAD);
-    return (Bag)(((Char *)x) - HALFDEAD);
+    return (Bag)(((UInt)x) & ~HALFDEAD);
 }
 
-
-inline void MarkArrayOfBags(const Bag array[], UInt count)
-{
-    for (UInt i = 0; i < count; i++) {
-        MarkBag(array[i]);
-    }
-}
-
-void MarkNoSubBags(Bag bag)
-{
-}
-
-void MarkOneSubBags(Bag bag)
-{
-    MarkArrayOfBags(CONST_PTR_BAG(bag), 1);
-}
-
-void MarkTwoSubBags(Bag bag)
-{
-    MarkArrayOfBags(CONST_PTR_BAG(bag), 2);
-}
-
-void MarkThreeSubBags(Bag bag)
-{
-    MarkArrayOfBags(CONST_PTR_BAG(bag), 3);
-}
-
-void MarkFourSubBags(Bag bag)
-{
-    MarkArrayOfBags(CONST_PTR_BAG(bag), 4);
-}
-
-void MarkAllSubBags(Bag bag)
-{
-    MarkArrayOfBags(CONST_PTR_BAG(bag), SIZE_BAG(bag) / sizeof(Bag));
-}
-
-void MarkAllButFirstSubBags(Bag bag)
-{
-    MarkArrayOfBags(CONST_PTR_BAG(bag) + 1, SIZE_BAG(bag) / sizeof(Bag) - 1);
-}
-
-void MarkAllSubBagsDefault(Bag bag)
-{
-    MarkArrayOfBags(CONST_PTR_BAG(bag), SIZE_BAG(bag) / sizeof(Bag));
-}
 
 #ifdef DEBUG_GASMAN_MARKING
 static UInt BadMarksCounter = 0;
@@ -774,7 +707,10 @@ Int IsWeakDeadBag(Bag bag)
 void CallbackForAllBags(void (*func)(Bag))
 {
     for (Bag bag = (Bag)MptrBags; bag < (Bag)MptrEndBags; bag++) {
-        if (IS_BAG_BODY(*bag)) {
+        CANARY_DISABLE_VALGRIND();
+        Int is_bag = IS_BAG_BODY(*bag);
+        CANARY_ENABLE_VALGRIND();
+        if (is_bag) {
             (*func)(bag);
         }
     }
@@ -798,7 +734,7 @@ TNumGlobalBags GlobalBags;
 */
 static UInt GlobalSortingStatus;
 
-void ClearGlobalBags ( void )
+static void ClearGlobalBags(void)
 {
   UInt i;
   for (i = 0; i < GlobalBags.nr; i++)
@@ -816,7 +752,7 @@ void InitGlobalBag (
 {
 
     if ( GlobalBags.nr == NR_GLOBAL_BAGS ) {
-        Panic("Panic: Gasman cannot handle so many global variables");
+        Panic("Gasman cannot handle so many global variables");
     }
 
     if (cookie != 0) {
@@ -900,11 +836,8 @@ Bag * GlobalByCookie(
 {
   UInt i,top,bottom,middle;
   Int res;
-  if (cookie == 0L)
-    {
-      Pr("Panic -- 0L cookie passed to GlobalByCookie\n",0L,0L);
-      SyExit(2);
-    }
+  if (cookie == 0)
+      Panic("zero cookie passed to GlobalByCookie");
   if (GlobalSortingStatus != 2)
     {
       for (i = 0; i < GlobalBags.nr; i++)
@@ -975,9 +908,6 @@ Bag NextBagRestoring( UInt type, UInt flags, UInt size )
   header->flags = flags;
   header->size = size;
   header->link = NextMptrRestoring;
-#if SIZEOF_VOID_P == 4
-  header->reserved = 0;
-#endif
 
   NextMptrRestoring++;
 
@@ -1037,21 +967,31 @@ void            InitFreeFuncBag (
 
 /****************************************************************************
 **
-*F  InitCollectFuncBags(<bfr-func>,<aft-func>) . install collection functions
-**
-**  'InitCollectFuncBags' is really too simple for an explanation.
 */
-static TNumCollectFuncBags BeforeCollectFuncBags;
+static struct {
+    UInt nrBefore;
+    UInt nrAfter;
 
-static TNumCollectFuncBags AfterCollectFuncBags;
+    TNumCollectFuncBags before[16];
+    TNumCollectFuncBags after[16];
+} CollectFuncBags = { 0, 0, { 0 }, { 0 } };
 
-void            InitCollectFuncBags (
-    TNumCollectFuncBags before_func,
-    TNumCollectFuncBags after_func )
+int RegisterBeforeCollectFuncBags(TNumCollectFuncBags func)
 {
-    BeforeCollectFuncBags = before_func;
-    AfterCollectFuncBags  = after_func;
+    if (CollectFuncBags.nrBefore >= ARRAY_SIZE(CollectFuncBags.before))
+        return 1;
+    CollectFuncBags.before[CollectFuncBags.nrBefore++] = func;
+    return 0;
 }
+
+int RegisterAfterCollectFuncBags(TNumCollectFuncBags func)
+{
+    if (CollectFuncBags.nrAfter >= ARRAY_SIZE(CollectFuncBags.after))
+        return 1;
+    CollectFuncBags.after[CollectFuncBags.nrAfter++] = func;
+    return 0;
+}
+
 
 /***************************************************************
  * GAP_MEM_CHECK
@@ -1137,9 +1077,10 @@ static void MaybeMoveBags(void)
     if (newBase >= GetMembufCount())
         newBase = 1;
 
-    // call the before function (if any)
-    if (BeforeCollectFuncBags != 0)
-        (*BeforeCollectFuncBags)();
+    // call the before functions (if any)
+    UInt i;
+    for (i = 0; i < CollectFuncBags.nrBefore; ++i)
+        CollectFuncBags.before[i]();
 
     MoveBagMemory(GetMembuf(oldBase), GetMembuf(newBase));
 
@@ -1151,10 +1092,9 @@ static void MaybeMoveBags(void)
         mprotect(GetMembuf(oldBase), GetMembufSize(), PROT_NONE);
     }
 
-    // call the after function (if any)
-    if (AfterCollectFuncBags != 0)
-        (*AfterCollectFuncBags)();
-
+    // call the after functions (if any)
+    for (i = 0; i < CollectFuncBags.nrAfter; ++i)
+        CollectFuncBags.after[i]();
 
     oldBase = newBase;
 }
@@ -1192,6 +1132,7 @@ void SetExtraMarkFuncBags(TNumExtraMarkFuncBags func)
     ExtraMarkFuncBags = func;
 }
 
+GAP_STATIC_ASSERT((sizeof(BagHeader) % sizeof(Bag)) == 0, "BagHeader size must be multiple of word size");
 
 
 void SetStackBottomBags(void * StackBottom)
@@ -1217,14 +1158,10 @@ void            InitBags (
     StackBottomBags = stack_bottom;
     StackAlignBags  = stack_align;
 
-    if ( sizeof(BagHeader) % sizeof(Bag) != 0 )
-        Panic("BagHeader size is not a multiple of word size.");
-
     /* first get some storage from the operating system                    */
     initial_size    = (initial_size + 511) & ~(511);
     MptrBags = SyAllocBags( initial_size, 1 );
-    if ( MptrBags == 0 )
-        Panic("cannot get storage for the initial workspace.");
+    GAP_ASSERT(MptrBags);
     EndBags = MptrBags + 1024*(initial_size / sizeof(Bag*));
 
     // In GAP_MEM_CHECK we want as few master pointers as possible, as we
@@ -1348,9 +1285,6 @@ Bag NewBag (
     header->type = type;
     header->flags = 0;
     header->size = size;
-#if SIZEOF_VOID_P == 4
-    header->reserved = 0;
-#endif
 
     /* enter link word                                                     */
     header->link = bag;
@@ -1503,9 +1437,6 @@ UInt ResizeBag (
     UInt type     = header->type;
     UInt flags    = header->flags;
     UInt old_size = header->size;
-#if SIZEOF_VOID_P == 4
-    GAP_ASSERT(header->reserved == 0);
-#endif
 
 #ifdef COUNT_BAGS
     /* update the statistics                                               */
@@ -1541,9 +1472,6 @@ UInt ResizeBag (
         }
 
         header->size = new_size;
-#if SIZEOF_VOID_P == 4
-        GAP_ASSERT(header->reserved == 0);
-#endif
     }
 
     // if the last bag is enlarged ...
@@ -1569,9 +1497,6 @@ UInt ResizeBag (
         SizeAllBags             += new_size - old_size;
 
         header->size = new_size;
-#if SIZEOF_VOID_P == 4
-        GAP_ASSERT(header->reserved == 0);
-#endif
     }
 
     // if the bag is enlarged ...
@@ -1591,9 +1516,6 @@ UInt ResizeBag (
         header->flags = 0;
         header->size =
             sizeof(BagHeader) + (TIGHT_WORDS_BAG(old_size) - 1) * sizeof(Bag);
-#if SIZEOF_VOID_P == 4
-        GAP_ASSERT(header->reserved == 0);
-#endif
 
         /* allocate the storage for the bag                                */
         BagHeader * newHeader = (BagHeader *)AllocBags;
@@ -1602,9 +1524,6 @@ UInt ResizeBag (
         newHeader->type = type;
         newHeader->flags = flags;
         newHeader->size = new_size;
-#if SIZEOF_VOID_P == 4
-        GAP_ASSERT(newHeader->reserved == 0);
-#endif
 
 
 #ifdef COUNT_BAGS
@@ -1850,10 +1769,10 @@ UInt ResizeBag (
 **  identifiers can exist, and so 'CollectBags' frees these masterpointers.
 */
 
-syJmp_buf RegsBags;
+static syJmp_buf RegsBags;
 
 #if defined(SPARC)
-void SparcStackFuncBags( void )
+static void SparcStackFuncBags(void)
 {
   asm (" ta 0x3 ");
   asm (" mov %sp,%o0" );
@@ -1861,7 +1780,7 @@ void SparcStackFuncBags( void )
 #endif
 
 
-void GenStackFuncBags ( void )
+static void GenStackFuncBags(void)
 {
     Bag *               top;            /* top of stack                    */
     Bag *               p;              /* loop variable                   */
@@ -1874,14 +1793,26 @@ void GenStackFuncBags ( void )
     top = (Bag*)((void*)&top);
     if ( StackBottomBags < top ) {
         for ( i = 0; i < sizeof(Bag*); i += StackAlignBags ) {
-            for ( p = (Bag*)((char*)StackBottomBags + i); p < top; p++ )
-                MarkBag( *p );
+            for (p = (Bag *)((char *)StackBottomBags + i); p < top; p++) {
+                Bag * pcpy = p;
+#if defined(GAP_MEMORY_CANARY)
+                // Need to mark this pointer as readable for valgrind
+                VALGRIND_MAKE_MEM_DEFINED(&pcpy, sizeof(pcpy));
+#endif
+                MarkBag(*pcpy);
+            }
         }
     }
     else {
         for ( i = 0; i < sizeof(Bag*); i += StackAlignBags ) {
-            for ( p = (Bag*)((char*)StackBottomBags - i); top < p; p-- )
-                MarkBag( *p );
+            for (p = (Bag *)((char *)StackBottomBags - i); top < p; p--) {
+                Bag * pcpy = p;
+#if defined(GAP_MEMORY_CANARY)
+                // Need to mark this pointer as readable for valgrind
+                VALGRIND_MAKE_MEM_DEFINED(&pcpy, sizeof(pcpy));
+#endif
+                MarkBag(*pcpy);
+            }
         }
     }
 
@@ -1896,7 +1827,7 @@ void GenStackFuncBags ( void )
 #endif
 }
 
-UInt FullBags;
+static UInt FullBags;
 
 /*  These are used to overwrite masterpointers which may still be
 linked from weak pointer objects but whose bag bodies have been
@@ -1906,8 +1837,8 @@ not look like valid pointers, and should be congruent to 1 mod sizeof(Bag),
 to ensure that IsWeakDeadBag works correctly.
 */
 
-Bag * NewWeakDeadBagMarker = (Bag *)(1000*sizeof(Bag) + 1L);
-Bag * OldWeakDeadBagMarker = (Bag *)(1001*sizeof(Bag) + 1L);
+static Bag * NewWeakDeadBagMarker = (Bag *)(1000*sizeof(Bag) + 1L);
+static Bag * OldWeakDeadBagMarker = (Bag *)(1001*sizeof(Bag) + 1L);
 
 
 
@@ -1936,9 +1867,9 @@ UInt CollectBags (
 #endif
 
 
-    /* call the before function (if any)                                   */
-    if ( BeforeCollectFuncBags != 0 )
-        (*BeforeCollectFuncBags)();
+    // call the before functions (if any)
+    for (i = 0; i < CollectFuncBags.nrBefore; ++i)
+        CollectFuncBags.before[i]();
 
     /* copy 'full' into a global variable, to avoid warning from GNU C     */
     FullBags = full;
@@ -1966,8 +1897,7 @@ again:
     }
 
     /* information at the beginning of garbage collections                 */
-    if ( MsgsFuncBags )
-        (*MsgsFuncBags)( FullBags, 0, 0 );
+    SyMsgsBags(FullBags, 0, 0);
 
     /* * * * * * * * * * * * * * *  mark phase * * * * * * * * * * * * * * */
 
@@ -2058,11 +1988,9 @@ again:
 
     /* information after the mark phase                                    */
     NrLiveBags += nrLiveBags;
-    if ( MsgsFuncBags )
-        (*MsgsFuncBags)( FullBags, 1, nrLiveBags );
+    SyMsgsBags(FullBags, 1, nrLiveBags);
     SizeLiveBags += sizeLiveBags;
-    if ( MsgsFuncBags )
-        (*MsgsFuncBags)( FullBags, 2, sizeLiveBags/1024 );
+    SyMsgsBags(FullBags, 2, sizeLiveBags / 1024);
 
     /* * * * * * * * * * * * * * * sweep phase * * * * * * * * * * * * * * */
 
@@ -2165,9 +2093,6 @@ again:
             dstHeader->type = header->type;
             dstHeader->flags = header->flags;
             dstHeader->size = header->size;
-#if SIZEOF_VOID_P == 4
-            dstHeader->reserved = 0;
-#endif
 
             dstHeader->link = (Bag)UNMARKED_ALIVE(header->link);
             dst = DATA(dstHeader);
@@ -2192,7 +2117,7 @@ again:
 
         /* oops                                                            */
         else {
-            Panic("Panic: Gasman found a bogus header");
+            Panic("Gasman found a bogus header");
         }
 
     }
@@ -2206,15 +2131,11 @@ again:
     /* information after the sweep phase                                   */
     NrDeadBags += nrDeadBags;
     NrHalfDeadBags += nrHalfDeadBags;
-    if ( MsgsFuncBags )
-        (*MsgsFuncBags)( FullBags, 3,
-                         (FullBags ? NrDeadBags:nrDeadBags) );
+    SyMsgsBags(FullBags, 3, (FullBags ? NrDeadBags : nrDeadBags));
     if ( FullBags )
         NrDeadBags = 0;
     SizeDeadBags += sizeDeadBags;
-    if ( MsgsFuncBags )
-        (*MsgsFuncBags)( FullBags, 4,
-                         (FullBags ? SizeDeadBags:sizeDeadBags)/1024 );
+    SyMsgsBags(FullBags, 4, (FullBags ? SizeDeadBags : sizeDeadBags) / 1024);
     if ( FullBags )
         SizeDeadBags = 0;
 
@@ -2357,12 +2278,8 @@ again:
     }
 
     /* information after the check phase                                   */
-    if ( MsgsFuncBags )
-      (*MsgsFuncBags)( FullBags, 5,
-                       (EndBags - stopBags)/(1024/sizeof(Bag)));
-    if ( MsgsFuncBags )
-        (*MsgsFuncBags)( FullBags, 6,
-                         SizeWorkspace/(1024/sizeof(Bag)));
+    SyMsgsBags(FullBags, 5, (EndBags - stopBags) / (1024 / sizeof(Bag)));
+    SyMsgsBags(FullBags, 6, SizeWorkspace / (1024 / sizeof(Bag)));
 
     // if we are not done, then try again
     if ( ! done ) {
@@ -2370,9 +2287,9 @@ again:
         goto again;
     }
 
-    /* call the after function (if any)                                    */
-    if ( AfterCollectFuncBags != 0 )
-        (*AfterCollectFuncBags)();
+    // call the after functions (if any)
+    for (i = 0; i < CollectFuncBags.nrAfter; ++i)
+        CollectFuncBags.after[i]();
 
 
 #ifdef DEBUG_MASTERPOINTERS
@@ -2431,13 +2348,6 @@ void CheckMasterPointers( void )
             Panic("Master pointer with bad link word detected");
         }
 
-#if SIZEOF_VOID_P == 4
-        // sanity check: reserved bits must be unused
-        if (BAG_HEADER(bag)->reserved != 0) {
-            Panic("Master pointer with non-zero reserved bits "
-                  "detected");
-        }
-#endif
     }
 
     // check the chain of free master pointers
@@ -2517,30 +2427,4 @@ void SwapMasterPoint(Bag bag1, Bag bag2)
     swapbag = LINK_BAG(bag1);
     LINK_BAG(bag1) = LINK_BAG(bag2);
     LINK_BAG(bag2) = swapbag;
-}
-
-
-/****************************************************************************
-**
-*F  BAG(<bid>)  . . . . . . . . . . . . . . . . . . bag (from bag identifier)
-*F  ELM_BAG(<bag>,<i>)  . . . . . . . . . . . . . . . <i>-th element of a bag
-*F  SET_ELM_BAG(<bag>,<i>,<elm>)  . . . . . . . . set <i>-th element of a bag
-**
-**  'BAG', 'ELM_BAG', and 'SET_ELM_BAG' are functions to support  debugging.
-**  They are not intended to be used in an application using {\Gasman}.
-*/
-Bag BAG(UInt bid)
-{
-    return IS_BAG_ID((Bag)bid) ? (Bag)bid : 0;
-}
-
-UInt ELM_BAG(Bag bag, UInt i)
-{
-    return (UInt) ((*(Bag**)(bag))[i]);
-}
-
-UInt SET_ELM_BAG(Bag bag, UInt i, UInt elm)
-{
-    (*(Bag **)(bag))[i] = (Bag)elm;
-    return elm;
 }

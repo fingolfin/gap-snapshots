@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  oprtglat.gi                GAP library                   Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This  file  contains methods for orbits on subgroups
 ##
@@ -179,7 +180,7 @@ function(G,dom,all)
     t:=Length(GeneratorsOfGroup(gp));
     if HasSize(gp) and not HasStabChainMutable(gp) and t>4 then
       sel:=GeneratorsOfGroup(gp);
-      t:=Group(sel{Set(List([1,2],i->Random([1..t])))},One(gp));
+      t:=Group(sel{Set([1,2],i->Random(1,t))},One(gp));
       while Size(t)<Size(gp) do
 	t:=ClosureGroup(t,Random(sel));
       od;
@@ -756,8 +757,3 @@ local pats,spats,lpats,result,pa,lp,dom,lens,h,orbs,p,rep,cln,allorbs,
   return result;
 
 end);
-
-#############################################################################
-##
-#E  oprtglat.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##

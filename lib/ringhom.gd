@@ -1,9 +1,12 @@
 #############################################################################
 ##
-#W  ringhom.gd                   GAP library                  Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2008 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains declarations of operations for ring general mappings
 ##  and homomorphisms. It is based on alghom.gd
@@ -61,7 +64,7 @@ DeclareOperation( "RingGeneralMappingByImages",
 ##  One can avoid the checks by calling
 ##  <Ref Oper="RingHomomorphismByImagesNC"/>,
 ##  and one can construct multi-valued mappings with
-##  <Ref Func="RingGeneralMappingByImages"/>.
+##  <Ref Oper="RingGeneralMappingByImages"/>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -87,7 +90,7 @@ DeclareGlobalFunction( "RingHomomorphismByImages" );
 ##  <P/>
 ##  For creating a possibly multi-valued mapping from <A>R</A> to <A>S</A>
 ##  that respects addition and multiplication,
-##  <Ref Func="RingGeneralMappingByImages"/> can be used.
+##  <Ref Oper="RingGeneralMappingByImages"/> can be used.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -115,9 +118,3 @@ DeclareOperation( "RingHomomorphismByImagesNC",
 ##
 DeclareOperation( "NaturalHomomorphismByIdeal",
     [ IsRing, IsRing ] );
-
-
-#############################################################################
-##
-#E
-

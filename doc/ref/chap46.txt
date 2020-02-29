@@ -55,7 +55,7 @@
   chapter [14X45[114X.[133X
   
   
-  [1X46.1 [33X[0;0YThe family pcgs[133X[101X
+  [1X46.1 [33X[0;0YThe Family Pcgs[133X[101X
   
   [33X[0;0YClearly,  the  generators  of a power-conjugate presentation of a pc group [22XG[122X
   form a pcgs of the pc group. This pcgs is called the [13Xfamily pcgs[113X.[133X
@@ -106,7 +106,7 @@
   isomorphism obtained by [2XIsomorphismSpecialPcGroup[102X ([14X46.5-3[114X).[133X
   
   
-  [1X46.2 [33X[0;0YElements of pc groups[133X[101X
+  [1X46.2 [33X[0;0YElements of Pc Groups[133X[101X
   
   
   [1X46.2-1 [33X[0;0YComparison of elements of pc groups[133X[101X
@@ -145,7 +145,7 @@
   [4X[32X[104X
   
   
-  [1X46.3 [33X[0;0YPc groups versus fp groups[133X[101X
+  [1X46.3 [33X[0;0YPc Groups versus Fp Groups[133X[101X
   
   [33X[0;0YIn  theory  pc  groups  are  finitely  presented  groups.  In  practice  the
   arithmetic  in pc groups is different from the arithmetic in fp groups. Thus
@@ -442,7 +442,8 @@
   Nearly  all  methods  for  pc  groups  are  methods  for groups with pcgs as
   described  in Chapter [14X45[114X. The only method with is special for pc groups is a
   method  to compute intersections of subgroups, since here a pcgs of a parent
-  group is needed and this can only by guaranteed within pc groups.[133X
+  group  is  needed  and this can only by guaranteed within pc groups. Section
+  [14X39.25[114X describes operations and methods for arbitrary finite groups.[133X
   
   
   [1X46.8 [33X[0;0Y[22X2[122X[101X[1X-Cohomology and Extensions[133X[101X
@@ -500,9 +501,10 @@
   
   [33X[1;0Y[29X[2XTwoCohomology[102X( [3XG[103X, [3XM[103X ) [32X operation[133X
   
-  [33X[0;0Yreturns a record defining the second cohomology group as factor space of the
-  space of cocycles by the space of coboundaries. [3XG[103X must be a pc group and the
-  generators of [3XM[103X must correspond to the pcgs of [3XG[103X.[133X
+  [33X[0;0YThis  operation computes the second cohomology group for the special case of
+  a  Pc  Group.  It  returns  a record defining the second cohomology group as
+  factor  space  of the space of cocycles by the space of coboundaries. [3XG[103X must
+  be a pc group and the generators of [3XM[103X must correspond to the pcgs of [3XG[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XG := SmallGroup( 4, 2 );[127X[104X

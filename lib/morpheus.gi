@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  morpheus.gi                GAP library                   Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This  file  contains declarations for Morpheus
 ##
@@ -26,6 +27,9 @@ InstallMethod(Order,"for automorphisms",true,[IsGroupHomomorphism],0,
 function(hom)
 local map,phi,o,lo,i,j,start,img,d,nat,ser,jord,first;
   d:=Source(hom);
+  if not (HasIsFinite(d) and IsFinite(d)) then
+    TryNextMethod();
+  fi;
   if Size(d)<=10000 then
     ser:=[d,TrivialSubgroup(d)]; # no need to be clever if small
   else
@@ -174,7 +178,8 @@ InstallMethod( IsGroupOfAutomorphismsFiniteGroup,"default",true,
 # Try to embed automorphisms into wreath product.
 BindGlobal("AutomorphismWreathEmbedding",function(au,g)
 local gens, inn,out, nonperm, syno, orb, orbi, perms, free, rep, i, maxl, gen,
-      img, j, conj, sm, cen, n, w, emb, ge, no,reps,synom,ginn,oemb;
+      img, j, conj, sm, cen, n, w, emb, ge, no,reps,synom,ginn,oemb,act,
+      imgs,ogens,genimgs,oo,op;
 
   gens:=GeneratorsOfGroup(g);
   if Size(Centre(g))>1 then
@@ -240,6 +245,9 @@ local gens, inn,out, nonperm, syno, orb, orbi, perms, free, rep, i, maxl, gen,
     #   Error("WR5");
     # fi;
   fi;
+  if Length(GeneratorsOfGroup(syno))>5 then
+    syno:=Group(SmallGeneratingSet(syno));
+  fi;
 
   cen:=Centralizer(syno,g);
   Info(InfoMorph,2,"|syno|=",Size(syno)," |cen|=",Size(cen));
@@ -264,15 +272,55 @@ local gens, inn,out, nonperm, syno, orb, orbi, perms, free, rep, i, maxl, gen,
     Info(InfoMorph,2,List(rep,i->MappedWord(i,GeneratorsOfGroup(free),perms)));
     n:=Length(orb);
     w:=WreathProduct(syno,SymmetricGroup(n));
-    emb:=List(GeneratorsOfGroup(g),
+    no:=KernelOfMultiplicativeGeneralMapping(Projection(w));
+    gens:=SmallGeneratingSet(g);
+    emb:=List(gens,
 	  i->Product(List([1..n],j->Image(Embedding(w,j),Image(synom,Image(orbi[j],i))))));
-    ge:=Subgroup(w,emb);
-    emb:=GroupHomomorphismByImagesNC(g,ge,GeneratorsOfGroup(g),emb);
-    reps:=List(out,i->RepresentativeAction(w,GeneratorsOfGroup(ge),
-      List(GeneratorsOfGroup(g),j->Image(emb,Image(i,j))),OnTuples));
-    if not ForAll(reps,IsPerm) then
-      return fail;
-    fi;
+    ge:=SubgroupNC(w,emb);
+    emb:=GroupHomomorphismByImagesNC(g,ge,gens,emb);
+    reps:=[];
+    oo:=List(Orbits(no,MovedPoints(no)),Set);
+    ForAll(oo,IsRange);
+    act:=[];
+    for i in out do
+
+      # how does it permute the components?
+      conj:=List(orb,x->x*i);
+      conj:=List(conj,x->PositionProperty(orb,
+        y->IsConjugatorAutomorphism(x/y)));
+      conj:=PermList(conj);
+      if conj=fail then return fail;fi;
+      conj:=ImagesRepresentative(Embedding(w,n+1),conj);
+
+      #gen:=RepresentativeAction(no,GeneratorsOfGroup(ge),
+      #  List(gens,j->Image(emb,ImagesRepresentative(i,j))^(conj^-1)),OnTuples);
+      ogens:=GeneratorsOfGroup(ge);
+      genimgs:=List(gens,j->Image(emb,ImagesRepresentative(i,j))^(conj^-1));
+      gen:=One(no);
+      for op in [1..Length(oo)] do
+        if not IsBound(act[op]) then
+          Info(InfoMorph,2,"oo=",op,oo[op]);
+          act[op]:=Group(List(GeneratorsOfGroup(no),x->RestrictedPerm(x,oo[op])));
+          SetSize(act,Size(syno));
+        fi;
+      
+        sm:=RepresentativeAction(act[op],
+          List(ogens,x->RestrictedPerm(x,oo[op])),
+          List(genimgs,x->RestrictedPerm(x,oo[op])),OnTuples);
+        if not IsPerm(sm) then return fail;fi;
+        #ogens:=List(ogens,x->x^sm);
+        gen:=gen*sm;
+      od;
+
+      if not OnTuples(ogens,gen)=genimgs then
+        Error("conjugation error!");
+      fi;
+
+      #if not IsPerm(gen) then return fail;fi;
+      gen:=gen*conj;
+      Add(reps,gen);
+    od;
+
     #no:=Normalizer(w,ge);
     #no:=ClosureGroup(ge,reps);
     ginn:=List(inn,ConjugatorOfConjugatorIsomorphism);
@@ -299,7 +347,7 @@ local gens, inn,out, nonperm, syno, orb, orbi, perms, free, rep, i, maxl, gen,
     #if Size(no)/Size(syno)<>Length(orb) then
     #  Error("wreath embedding failed");
     #fi;
-    sm:=SmallerDegreePermutationRepresentation(ClosureGroup(ge,no));
+    sm:=SmallerDegreePermutationRepresentation(ClosureGroup(ge,no):cheap);
     no:=Image(sm,no);
     if IsIdenticalObj(emb,oemb) then
       emb:=emb*sm;
@@ -320,7 +368,7 @@ end);
 # try to find a small faithful action for an automorphism group
 InstallGlobalFunction(AssignNiceMonomorphismAutomorphismGroup,function(au,g)
 local hom, allinner, gens, c, ran, r, cen, img, dom, u, subs, orbs, cnt, br, bv,
-v, val, o, i, comb, best,actbase;
+v, val, o, i, comb, best,actbase,action;
 
   hom:=fail;
   allinner:=HasIsAutomorphismGroup(au) and IsAutomorphismGroup(au);
@@ -393,9 +441,34 @@ v, val, o, i, comb, best,actbase;
 	SetIsBijective(hom,true);
       fi;
     else
-      # permrep does not extend. Try larger permrep.
-      img:=AutomorphismWreathEmbedding(au,g);
-      if img<>fail then
+      # permrep does not extend. Try whether one can blow up
+      orbs:=List(Orbits(g,MovedPoints(g)),Set);
+      SortBy(orbs,Length);
+      best:=true;
+      action:=function(sub,hom) return Image(hom,sub);end;
+      for o in orbs do
+        r:=Stabilizer(g,o,OnTuples);
+        if hom=fail and #have not yet found any
+          not ForAll(GeneratorsOfGroup(au),x->Image(x,r)=r or
+          Difference(MovedPoints(g),MovedPoints(Image(x,r))) in orbs) then
+          best:=false; # automs do not play nicely with permrep
+          r:=Orbit(au,r,action);
+          u:=Stabilizer(g,o[1]);
+          if Size(Intersection(r))=1 and
+            # this orbit and automorphism images representa ll of g, so can
+            # be used to represent automorphisms
+            u=Normalizer(g,u) then
+            # point stabilizer is self-normalizing, so action on
+            # cosets=action by conjugation
+            u:=Orbit(au,u,action);
+            hom:=ActionHomomorphism(au,u,action,"surjective");
+          fi;
+        fi;
+      od;
+
+      # action is orbit-nice, try to embed in wreath
+      if best then img:=AutomorphismWreathEmbedding(au,g); fi;
+      if best and img<>fail then
 	Info(InfoMorph,1,"AWE succeeds");
 	# make a hom from auts to perm group
 	ran:=img[4];
@@ -417,8 +490,9 @@ v, val, o, i, comb, best,actbase;
 	    return GroupHomomorphismByImagesNC(g,g,GeneratorsOfGroup(g),
 	             List(r,i->PreImagesRepresentative(img[3],i^perm)));
 	  end);
+      fi;
 
-      elif not IsAbelian(Socle(g)) and IsSimpleGroup(Socle(g)) then
+      if hom=fail and IsNonabelianSimpleGroup(Socle(g)) then
 	Info(InfoMorph,1,"Try ARG");
 	img:=AutomorphismRepresentingGroup(g,GeneratorsOfGroup(au));
 	# make a hom from auts to perm group
@@ -1332,7 +1406,7 @@ local len,combi,Gr,Gcl,Ggc,Hr,Hcl,bg,bpri,x,dat,
       for i in [1..7*Length(gens)-12] do
 	repeat
 	  for c in [1..Length(gens)] do
-	    if Random([1,2,3])<2 then
+	    if Random(1,3)<2 then
 	      gens[c]:=Random(G);
 	    else
 	      x:=bcl[Random(Filtered([1,1,1,1,2,2,2,3,3,4],k->k<=Length(bcl)))];
@@ -1453,7 +1527,7 @@ local len,combi,Gr,Gcl,Ggc,Hr,Hcl,bg,bpri,x,dat,
 
     # catch case of simple groups to get outer automorphism orders
     # automorphism suffices.
-    if IsSimpleGroup(H) then
+    if IsNonabelianSimpleGroup(H) then
       dat:=DataAboutSimpleGroup(H);
       if IsBound(dat.fullAutGroup) then
 	if dat.fullAutGroup[1]=1 then
@@ -1635,7 +1709,7 @@ end);
 
 BindGlobal("OuterAutomorphismGeneratorsSimple",function(G)
 local d,id,H,iso,aut,auts,i,all,hom,field,dim,P,diag,mats,gens,gal;
-  if not IsSimpleGroup(G) then
+  if not IsNonabelianSimpleGroup(G) then
     return fail;
   fi;
   gens:=GeneratorsOfGroup(G);
@@ -1757,7 +1831,7 @@ end);
 
 BindGlobal("AutomorphismGroupMorpheus",function(G)
 local a,b,c,p;
-  if IsSimpleGroup(G) then
+  if IsNonabelianSimpleGroup(G) then
     c:=DataAboutSimpleGroup(G);
     b:=List(GeneratorsOfGroup(G),x->InnerAutomorphism(G,x));
     a:=OuterAutomorphismGeneratorsSimple(G);
@@ -1828,7 +1902,7 @@ InstallGlobalFunction(AutomorphismGroupFittingFree,function(g)
   #write g in a nice form
   count:=ValueOption("count");if count=fail then count:=0;fi;
   s:=Socle(g);
-  if IsSimpleGroup(s) then
+  if IsNonabelianSimpleGroup(s) then
     return AutomorphismGroupMorpheus(g);
   fi;
   c:=ChiefSeriesThrough(g,[s]);
@@ -1934,8 +2008,20 @@ InstallGlobalFunction(AutomorphismGroupFittingFree,function(g)
 
   aup:=Normalizer(d,Image(emb,g));
 
-  #reduce degree
-  s:=SmallerDegreePermutationRepresentation(aup);
+  #reduce degree -- avoid redundant fixed points
+  if count>1 then
+    p:=aup;
+    s:=IdentityMapping(p);
+    repeat
+      i:=SmallerDegreePermutationRepresentation(p);
+      if NrMovedPoints(Range(i))<NrMovedPoints(p) then
+        p:=Image(i,p);
+        s:=s*i;
+      fi;
+    until NrMovedPoints(Source(i))=NrMovedPoints(Range(i));
+  else
+    s:=SmallerDegreePermutationRepresentation(aup:cheap);
+  fi;
   emb:=emb*s;
   aup:=Image(s,aup);
   ge:=Image(emb,g);
@@ -1955,7 +2041,7 @@ InstallGlobalFunction(AutomorphismGroupFittingFree,function(g)
   Unbind(acts);Unbind(act);Unbind(ttypes);Unbind(w);Unbind(wl);
   Unbind(wemb);Unbind(lemb);Unbind(ahom);Unbind(thom);Unbind(d);
 
-  # produce data to map fro au to aup:
+  # produce data to map from au to aup:
   lemb:=MovedPoints(aup);
   stbs:=[];
   orb:=Orbits(aup,MovedPoints(aup));
@@ -2056,7 +2142,7 @@ end);
 #M  AutomorphismGroup(<G>) . . abelian case
 ##
 InstallMethod(AutomorphismGroup,"test abelian",true,[IsGroup and IsFinite],
-  RankFilter(IsSolvableGroup and IsFinite),
+  {} -> RankFilter(IsSolvableGroup and IsFinite),
 function(G)
 local A;
   if not IsAbelian(G) then
@@ -2075,7 +2161,7 @@ end);
 #M  AutomorphismGroup(<G>) . . abelian case
 ##
 InstallMethod(AutomorphismGroup,"test abelian",true,[IsGroup and IsFinite],
-  RankFilter(IsSolvableGroup and IsFinite),
+  {} -> RankFilter(IsSolvableGroup and IsFinite),
 function(G)
 local A;
   if not IsAbelian(G) then
@@ -2147,8 +2233,11 @@ local m;
     IsFinite(G);
     IsFinite(H);
   fi;
-  if not IsFinite(G) and IsFinite(H) then
+  if not IsFinite(G) and not IsFinite(H) then
     Error("cannot test isomorphism of infinite groups");
+  fi;
+  if IsFinite(G) <> IsFinite(H) then
+    return fail;
   fi;
 
   #AH: Spezielle Methoden ?
@@ -2187,7 +2276,8 @@ local m;
     return fail;
   fi;
 
-  if (AbelianRank(G)>2 or Length(SmallGeneratingSet(G))>2) and Size(RadicalGroup(G))>1 then
+  if (AbelianRank(G)>2 or Length(SmallGeneratingSet(G))>2 
+    or ValueOption("forcetest")=true) and Size(RadicalGroup(G))>1 then
     # In place until a proper implementation of Cannon/Holt isomorphism is
     # made available.
     return PatheticIsomorphism(G,H);
@@ -2425,7 +2515,7 @@ local cl,cnt,bg,bw,bo,bi,k,gens,go,imgs,params,emb,clg,sg,vsu,c,i;
     else
       # then something random
       repeat
-	if Length(gens)>2 and Random([1,2])=1 then
+	if Length(gens)>2 and Random(1,2)=1 then
 	  # try to get down to 2 gens
 	  gens:=List([1,2],i->Random(H));
 	else
@@ -2435,7 +2525,7 @@ local cl,cnt,bg,bw,bo,bi,k,gens,go,imgs,params,emb,clg,sg,vsu,c,i;
 	for k in [1..Length(gens)] do
 	  go:=Order(gens[k]);
 	  # try a p-element
-	  if Random([1..3*Length(gens)])=1 then
+	  if Random(1,3*Length(gens))=1 then
 	    gens[k]:=gens[k]^(go/(Random(Factors(go))));
 	  fi;
 	od;
@@ -2516,9 +2606,3 @@ local cl,cnt,bg,bw,bo,bi,k,gens,go,imgs,params,emb,clg,sg,vsu,c,i;
   Info(InfoMorph,1,Length(emb)," found -> ",Length(cl)," homs");
   return cl;
 end);
-
-
-#############################################################################
-##
-#E
-

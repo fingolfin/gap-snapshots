@@ -1,12 +1,14 @@
 #############################################################################
 ##
-#W  rwspcsng.gi                 GAP Library                      Frank Celler
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-##  This files implement a single collector as representation of a polycyclic
+##  SPDX-License-Identifier: GPL-2.0-or-later
+##
+##  This file implement a single collector as representation of a polycyclic
 ##  collector with power/conjugate presentation.
 ##
 ##  As the  collector  needs access to  the  information as fast as  possible
@@ -355,7 +357,7 @@ function( sc )
 
     # return if there is nothing to reduce
     if n = 0  then
-        SetFeatureObj( sc, IsDefaultRhsTypeSingleCollector, true );
+        SetFilterObj( sc, IsDefaultRhsTypeSingleCollector );
         OutdatePolycyclicCollector(sc);
         UpdatePolycyclicCollector(sc);
         return;
@@ -404,7 +406,7 @@ function( sc )
     od;
 
     # now all right hand sides have the default type
-    SetFeatureObj( sc, IsDefaultRhsTypeSingleCollector, true );
+    SetFilterObj( sc, IsDefaultRhsTypeSingleCollector );
 
     # but we have to outdate the collector to force recomputation of avec
     OutdatePolycyclicCollector(sc);
@@ -439,7 +441,7 @@ function( sc, i, j, rhs )
         sc![SCP_CONJUGATES][i][j] := rhs;
         if not sc![SCP_IS_DEFAULT_TYPE](rhs)  then
             Print( "#W  Warning: mixed types in collector\n" );
-            SetFeatureObj( sc, IsDefaultRhsTypeSingleCollector, false );
+            ResetFilterObj( sc, IsDefaultRhsTypeSingleCollector );
         fi;
     fi;
 
@@ -455,7 +457,7 @@ SingleCollector_SetConjugateNC := function( sc, i, j, rhs )
     else
         sc![SCP_CONJUGATES][i][j] := rhs;
         if not sc![SCP_IS_DEFAULT_TYPE](rhs)  then
-            SetFeatureObj( sc, IsDefaultRhsTypeSingleCollector, false );
+            ResetFilterObj( sc, IsDefaultRhsTypeSingleCollector );
         fi;
     fi;
 
@@ -545,7 +547,7 @@ function( sc, i, rhs )
         sc![SCP_POWERS][i] := rhs;
         if not sc![SCP_IS_DEFAULT_TYPE](rhs)  then
             Print( "#  Warning: mixed types in collector\n" );
-            SetFeatureObj( sc, IsDefaultRhsTypeSingleCollector, false );
+            ResetFilterObj( sc, IsDefaultRhsTypeSingleCollector );
         fi;
     fi;
 
@@ -559,7 +561,7 @@ SingleCollector_SetPowerNC := function( sc, i, rhs )
     else
         sc![SCP_POWERS][i] := rhs;
         if not sc![SCP_IS_DEFAULT_TYPE](rhs)  then
-            SetFeatureObj( sc, IsDefaultRhsTypeSingleCollector, false );
+            ResetFilterObj( sc, IsDefaultRhsTypeSingleCollector );
         fi;
     fi;
 
@@ -816,7 +818,7 @@ function( sc )
     SingleCollector_MakeAvector(sc);
 
     # 'MakeInverses' is very careful
-    SetFeatureObj( sc, IsUpToDatePolycyclicCollector, true );
+    SetFilterObj( sc, IsUpToDatePolycyclicCollector );
 
     # construct the inverses
     SingleCollector_MakeInverses(sc);
@@ -1026,13 +1028,13 @@ function( efam, gens, orders )
     type := NewType( fam, IsSingleCollectorRep and bits and IsFinite
                           and IsMutable );
     Objectify( type, sc );
-    SetFeatureObj( sc, HasUnderlyingFamily,      true );
-    SetFeatureObj( sc, HasRelativeOrders,        true );
-    SetFeatureObj( sc, HasGeneratorsOfRws,       true );
-    SetFeatureObj( sc, HasNumberGeneratorsOfRws, true );
+    SetFilterObj( sc, HasUnderlyingFamily      );
+    SetFilterObj( sc, HasRelativeOrders        );
+    SetFilterObj( sc, HasGeneratorsOfRws       );
+    SetFilterObj( sc, HasNumberGeneratorsOfRws );
 
     # there are no right hand sides
-    SetFeatureObj( sc, IsDefaultRhsTypeSingleCollector, true );
+    SetFilterObj( sc, IsDefaultRhsTypeSingleCollector );
 
     # we haven't computed the avector and the inverses
     OutdatePolycyclicCollector(sc);
@@ -1738,10 +1740,3 @@ InstallMethod( ReducedQuotient,
       Is32BitsAssocWord ],
     0,
     FinPowConjCol_ReducedQuotient );
-
-
-#############################################################################
-##
-
-#F  rwspcsng.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##

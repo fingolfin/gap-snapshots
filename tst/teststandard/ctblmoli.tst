@@ -1,10 +1,3 @@
-#############################################################################
-##
-#W  ctblmoli.tst               GAP Library                      Thomas Breuer
-##
-##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-##
 gap> START_TEST("ctblmoli.tst");
 
 #
@@ -26,7 +19,3 @@ gap> List( [ 0,3 .. 48 ], i -> ValueMolienSeries( m, i ) );
 
 #
 gap> STOP_TEST( "ctblmoli.tst", 1);
-
-#############################################################################
-##
-#E

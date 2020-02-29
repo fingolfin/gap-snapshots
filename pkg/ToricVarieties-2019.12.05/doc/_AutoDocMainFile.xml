@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<#Include SYSTEM "_Chapter_Introduction.xml">
+<#Include SYSTEM "_Chapter_Installation_of_the_ToricVarieties_Package.xml">
+<#Include SYSTEM "_Chapter_Toric_Varieties.xml">
+<#Include SYSTEM "_Chapter_Toric_subvarieties.xml">
+<#Include SYSTEM "_Chapter_Affine_toric_varieties.xml">
+<#Include SYSTEM "_Chapter_Projective_toric_varieties.xml">
+<#Include SYSTEM "_Chapter_Toric_morphisms.xml">
+<#Include SYSTEM "_Chapter_Toric_divisors.xml">
+<#Include SYSTEM "_Chapter_Blowups_of_toric_varieties.xml">

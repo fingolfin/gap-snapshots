@@ -1,11 +1,12 @@
-##############################################################################
+#############################################################################
 ##
-#W  unknown.gd                 GAP Library                   Martin Schönert
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Martin Schönert.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file declares the operations for unknowns.
 ##
@@ -21,7 +22,7 @@
 ##  <P/>
 ##  This is not appropriate for some applications in character theory.
 ##  For example, if one wants to induce a character of a group to a
-##  supergroup (see&nbsp;<Ref Func="InducedClassFunction"
+##  supergroup (see&nbsp;<Ref Oper="InducedClassFunction"
 ##  Label="for the character table of a supergroup"/>)
 ##  but the class fusion is only a parametrized map
 ##  (see Chapter&nbsp;<Ref Chap="Maps Concerning Character Tables"/>),
@@ -107,7 +108,7 @@
 ##  cyclotomics are row vectors and
 ##  they can be added and multiplied in the usual way.
 ##  Consequently, lists of such row vectors of equal length are (ordinary)
-##  matrices (see&nbsp;<Ref Func="IsOrdinaryMatrix"/>).
+##  matrices (see&nbsp;<Ref Filt="IsOrdinaryMatrix"/>).
 ##  </Subsection>
 ##  <#/GAPDoc>
 ##
@@ -185,9 +186,3 @@ LargestUnknown := 0;
 ##
 DeclareOperation( "Unknown", [] );
 DeclareOperation( "Unknown", [ IsPosInt ] );
-
-
-#############################################################################
-##
-#E
-

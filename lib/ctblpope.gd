@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  ctblpope.gd                 GAP library                     Thomas Breuer
-#W                                                           & Götz Pfeiffer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer, Götz Pfeiffer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the declaration of those functions that are needed to
 ##  compute and test possible permutation characters.
@@ -466,7 +466,7 @@ DeclareGlobalFunction( "TestPerm5" );
 ##  it depends on a preprocessing step, where the inequalities
 ##  arising from the condition <M>\pi(g) \geq 0</M> are transformed into
 ##  a system of inequalities that guides the search
-##  (see&nbsp;<Ref Func="Inequalities"/>).
+##  (see&nbsp;<Ref Oper="Inequalities"/>).
 ##  So the following commands compute the list of 39 possible permutation
 ##  characters of the Mathieu group <M>M_{11}</M>.
 ##  <P/>
@@ -491,7 +491,7 @@ DeclareGlobalFunction( "TestPerm5" );
 ##  (which might also be a range containing all divisors of the group order)
 ##  you want to look for;
 ##  additionally, the record component <C>ineq</C> can take the inequalities
-##  computed by <Ref Func="Inequalities"/> if they are needed more than once.
+##  computed by <Ref Oper="Inequalities"/> if they are needed more than once.
 ##  <P/>
 ##  If a positive integer is given as the second argument <A>cond</A>,
 ##  <Ref Func="PermChars"/> returns the list of all
@@ -835,9 +835,3 @@ DeclareGlobalFunction( "PermCandidates" );
 ##  </ManSection>
 ##
 DeclareGlobalFunction( "PermCandidatesFaithful" );
-
-
-#############################################################################
-##
-#E
-

@@ -14,8 +14,9 @@
   chapters [14X23[114X and [14X24[114X.[133X
   
   [33X[0;0YLists  are  used  to implement ranges (see [14X21.22[114X), sets (see [14X21.19[114X), strings
-  (see [14X27[114X),  row  vectors  (see [14X23[114X),  and  matrices  (see [14X24[114X);  Boolean  lists
-  (see [14X22[114X) are a further special kind of lists.[133X
+  (see [14X27[114X),  row  vectors  and  matrices  (see [14X23[114X  and  [14X24[114X,  but note that [5XGAP[105X
+  supports  also  linear  algebra  for  objects  which are [13Xnot[113X lists, see [14X26[114X);
+  boolean lists (see [14X22[114X) are a further special kind of lists.[133X
   
   [33X[0;0YSeveral  operations  for  lists,  such  as  [2XIntersection[102X ([14X30.5-2[114X) and [2XRandom[102X
   ([14X30.7-1[114X), will be described in Chapter [14X30[114X, in particular see [14X30.3[114X.[133X
@@ -1461,7 +1462,7 @@
   [33X[1;0Y[29X[2XPositions[102X( [3Xlist[103X, [3Xobj[103X ) [32X function[133X
   [33X[1;0Y[29X[2XPositionsOp[102X( [3Xlist[103X, [3Xobj[103X ) [32X operation[133X
   
-  [33X[0;0Yreturns the positions of [13Xall[113X occurrences of [3Xobj[103X in [3Xlist[103X.[133X
+  [33X[0;0Yreturns the set of positions of [13Xall[113X occurrences of [3Xobj[103X in [3Xlist[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XPositions([1,2,1,2,3,2,2],2);[127X[104X
@@ -1524,7 +1525,7 @@
   [3Xfunc[103X  must  be  a  function  of two arguments that returns [9Xtrue[109X if the first
   argument is less than the second argument, and [9Xfalse[109X otherwise.[133X
   
-  [33X[0;0Y[2XPositionSorted[102X  returns [3Xpos[103X such that [22X[3Xlist[103X[[3Xpos[103X-1] < [3Xelm[103X[122X and [22X[3Xelm[103X ≤ [3Xlist[103X[[3Xpos[103X][122X.
+  [33X[0;0Y[2XPositionSorted[102X  returns  [3Xpos[103X  such that [22X[3Xlist[103X[[3Xpos[103X-1] < [3Xelm[103X ≤ [3Xlist[103X[[3Xpos[103X][122X holds.
   That  means,  if  [3Xelm[103X appears once in [3Xlist[103X, its position is returned. If [3Xelm[103X
   appears  several  times  in  [3Xlist[103X,  the  position of the first occurrence is
   returned.  If  [3Xelm[103X  is  not  an element of [3Xlist[103X, the index where [3Xelm[103X must be
@@ -1551,7 +1552,46 @@
     [4X[28X7[128X[104X
   [4X[32X[104X
   
-  [1X21.16-6 PositionSet[101X
+  [1X21.16-6 PositionSortedBy[101X
+  
+  [33X[1;0Y[29X[2XPositionSortedBy[102X( [3Xlist[103X, [3Xval[103X, [3Xfunc[103X ) [32X function[133X
+  
+  [33X[0;0YThis   function   returns   the   same  value  that  would  be  returned  by
+  [10XPositionSorted(List(list,  func),  val)[110X, but computes it in a more efficient
+  way.[133X
+  
+  [33X[0;0YTo  be  more  precise, [3Xfunc[103X must be a function on one argument which returns
+  values  that  can  be  compared  to  [3Xval[103X,  and [3Xlist[103X must be a list for which
+  [10Xfunc(list[i])  <= func(list[i+1])[110X holds for all relevant [3Xi[103X. This property is
+  not verified, and if the input violates it, then the result is undefined.[133X
+  
+  [33X[0;0Y[2XPositionSortedBy[102X   returns   [3Xpos[103X   such   that  [22X[3Xfunc[103X([3Xlist[103X[[3Xpos[103X-1])  <  [3Xval[103X  ≤
+  [3Xfunc[103X([3Xlist[103X[[3Xpos[103X])[122X  holds.  That  means,  if there are elements [10Xelm[110X in [3Xlist[103X for
+  which  [22X[3Xfunc[103X(elm) = [3Xval[103X[122X holds, then the position of the first such element is
+  returned.  If  no  element of [3Xlist[103X satisfies this condition, then the lowest
+  index  where  an  element [3Xelm[103X satisfying [22X[3Xfunc[103X(elm) = [3Xval[103X[122X must be inserted to
+  preserve the property [10Xfunc(list[i]) <= func(list[i+1])[110X is returned.[133X
+  
+  [33X[0;0Y[2XPositionSortedBy[102X  uses binary search. Each [10Xfunc(list[i])[110X is computed at most
+  once.[133X
+  
+  [33X[0;0YSpecialized  functions  for  certain  kinds  of  lists  must be installed as
+  methods for the operation [10XPositionSortedByOp[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XPositionSortedBy( [ "", "ab", ], -1, Length );[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XPositionSortedBy( [ "", "ab", ], 0, Length );[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XPositionSortedBy( [ "", "ab", ], 1, Length );[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27XPositionSortedBy( [ "", "ab", ], 2, Length );[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27XPositionSortedBy( [ "", "ab", ], 3, Length );[127X[104X
+    [4X[28X3[128X[104X
+  [4X[32X[104X
+  
+  [1X21.16-7 PositionSet[101X
   
   [33X[1;0Y[29X[2XPositionSet[102X( [3Xlist[103X, [3Xobj[103X[, [3Xfunc[103X] ) [32X function[133X
   
@@ -1572,7 +1612,7 @@
     [4X[28Xfail[128X[104X
   [4X[32X[104X
   
-  [1X21.16-7 PositionMaximum[101X
+  [1X21.16-8 PositionMaximum[101X
   
   [33X[1;0Y[29X[2XPositionMaximum[102X( [3Xlist[103X[, [3Xfunc[103X] ) [32X function[133X
   [33X[1;0Y[29X[2XPositionMinimum[102X( [3Xlist[103X[, [3Xfunc[103X] ) [32X function[133X
@@ -1597,7 +1637,7 @@
   [33X[0;0Y[2XMaximum[102X  ([14X21.20-13[114X)  and [2XMinimum[102X ([14X21.20-14[114X) allow you to find the maximum or
   minimum element of a list directly.[133X
   
-  [1X21.16-8 PositionProperty[101X
+  [1X21.16-9 PositionProperty[101X
   
   [33X[1;0Y[29X[2XPositionProperty[102X( [3Xlist[103X, [3Xfunc[103X[, [3Xfrom[103X] ) [32X operation[133X
   
@@ -1617,11 +1657,11 @@
   [33X[0;0Y[2XFirst[102X  ([14X21.20-22[114X)  allows  you  to  extract the first element of a list that
   satisfies a certain property.[133X
   
-  [1X21.16-9 PositionsProperty[101X
+  [1X21.16-10 PositionsProperty[101X
   
   [33X[1;0Y[29X[2XPositionsProperty[102X( [3Xlist[103X, [3Xfunc[103X ) [32X operation[133X
   
-  [33X[0;0Yreturns the list of all those positions in the list [3Xlist[103X which are bound and
+  [33X[0;0Yreturns  the set of all those positions in the list [3Xlist[103X which are bound and
   for which the property tester function [3Xfunc[103X returns [9Xtrue[109X.[133X
   
   [4X[32X  Example  [32X[104X
@@ -1632,10 +1672,10 @@
     [4X[28X[ 1, 3, 4, 8, 9, 11 ][128X[104X
   [4X[32X[104X
   
-  [33X[0;0Y[2XPositionProperty[102X  ([14X21.16-8[114X)  allows you to extract the position of the first
+  [33X[0;0Y[2XPositionProperty[102X  ([14X21.16-9[114X)  allows you to extract the position of the first
   element in a list that satisfies a certain property.[133X
   
-  [1X21.16-10 PositionBound[101X
+  [1X21.16-11 PositionBound[101X
   
   [33X[1;0Y[29X[2XPositionBound[102X( [3Xlist[103X ) [32X operation[133X
   
@@ -1649,9 +1689,9 @@
     [4X[28X2[128X[104X
   [4X[32X[104X
   
-  [1X21.16-11 PositionsBound[101X
+  [1X21.16-12 PositionsBound[101X
   
-  [33X[1;0Y[29X[2XPositionsBound[102X( [3Xlist[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPositionsBound[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0Yreturns the set of all bound positions in the list [3Xlist[103X.[133X
   
@@ -1664,7 +1704,7 @@
     [4X[28X[][128X[104X
   [4X[32X[104X
   
-  [1X21.16-12 PositionNot[101X
+  [1X21.16-13 PositionNot[101X
   
   [33X[1;0Y[29X[2XPositionNot[102X( [3Xlist[103X, [3Xval[103X[, [3Xfrom[103X] ) [32X operation[133X
   
@@ -1681,7 +1721,7 @@
     [4X[28X6[128X[104X
   [4X[32X[104X
   
-  [1X21.16-13 PositionNonZero[101X
+  [1X21.16-14 PositionNonZero[101X
   
   [33X[1;0Y[29X[2XPositionNonZero[102X( [3Xvec[103X[, [3Xfrom[103X] ) [32X operation[133X
   
@@ -1691,7 +1731,7 @@
   [33X[0;0YIf  a  starting  index  [3Xfrom[103X  is given, it returns the position of the first
   occurrence starting the search [13Xafter[113X position [3Xfrom[103X.[133X
   
-  [33X[0;0Y[2XPositionNonZero[102X implements a special case of [2XPositionNot[102X ([14X21.16-12[114X). Namely,
+  [33X[0;0Y[2XPositionNonZero[102X implements a special case of [2XPositionNot[102X ([14X21.16-13[114X). Namely,
   the  element  to  be  avoided  is the zero element, and the list must be (at
   least)  homogeneous  because  otherwise the zero element cannot be specified
   implicitly.[133X
@@ -1703,7 +1743,7 @@
     [4X[28X2[128X[104X
   [4X[32X[104X
   
-  [1X21.16-14 PositionSublist[101X
+  [1X21.16-15 PositionSublist[101X
   
   [33X[1;0Y[29X[2XPositionSublist[102X( [3Xlist[103X, [3Xsub[103X[, [3Xfrom[103X] ) [32X operation[133X
   
@@ -1751,7 +1791,7 @@
   [33X[0;0YIf   you   actually   want  to  know  whether  there  is  an  [3Xat[103X  for  which
   [10XIsMatchingSublist(  [3Xlist[103X[10X,  [3Xsub[103X[10X,  [3Xat[103X[10X  )[110X  is  true,  use  a  construction like
   [10XPositionSublist(   [3Xlist[103X[10X,   [3Xsub[103X[10X   )  <>  fail[110X  instead  (see  [2XPositionSublist[102X
-  ([14X21.16-14[114X)); it's more efficient.[133X
+  ([14X21.16-15[114X)); it's more efficient.[133X
   
   [1X21.17-2 IsDuplicateFree[101X
   
@@ -2378,7 +2418,7 @@
     [4X[28X[ 2, -11 ][128X[104X
   [4X[32X[104X
   
-  [33X[0;0YTo get the index of the maximum element use [2XPositionMaximum[102X ([14X21.16-7[114X)[133X
+  [33X[0;0YTo get the index of the maximum element use [2XPositionMaximum[102X ([14X21.16-8[114X)[133X
   
   
   [1X21.20-14 [33X[0;0YMinimum[133X[101X
@@ -2405,7 +2445,7 @@
     [4X[28X[ 0, 15 ][128X[104X
   [4X[32X[104X
   
-  [33X[0;0YTo get the index of the minimum element use [2XPositionMinimum[102X ([14X21.16-7[114X)[133X
+  [33X[0;0YTo get the index of the minimum element use [2XPositionMinimum[102X ([14X21.16-8[114X)[133X
   
   
   [1X21.20-15 [33X[0;0YMaximumList and MinimumList[133X[101X
@@ -2595,14 +2635,15 @@
   
   [1X21.20-22 First[101X
   
-  [33X[1;0Y[29X[2XFirst[102X( [3Xlist[103X, [3Xfunc[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFirst[102X( [3Xlist[103X[, [3Xfunc[103X] ) [32X function[133X
   
   [33X[0;0Y[2XFirst[102X  returns  the  first  element  of  the  list  [3Xlist[103X for which the unary
-  function  [3Xfunc[103X returns [9Xtrue[109X. [3Xlist[103X may contain holes. [3Xfunc[103X must return either
-  [9Xtrue[109X  or [9Xfalse[109X for each element of [3Xlist[103X, otherwise an error is signalled. If
-  [3Xfunc[103X returns [9Xfalse[109X for all elements of [3Xlist[103X then [2XFirst[102X returns [9Xfail[109X.[133X
+  function  [3Xfunc[103X  returns  [9Xtrue[109X;  if  [3Xfunc[103X  is not given, the first element is
+  returned.  [3Xlist[103X may contain holes. [3Xfunc[103X must return either [9Xtrue[109X or [9Xfalse[109X for
+  each element of [3Xlist[103X, otherwise an error is signalled. If [3Xfunc[103X returns [9Xfalse[109X
+  for all elements of [3Xlist[103X then [2XFirst[102X returns [9Xfail[109X.[133X
   
-  [33X[0;0Y[2XPositionProperty[102X  ([14X21.16-8[114X)  allows  you  to  find the position of the first
+  [33X[0;0Y[2XPositionProperty[102X  ([14X21.16-9[114X)  allows  you  to  find the position of the first
   element in a list that satisfies a certain property.[133X
   
   [4X[32X  Example  [32X[104X
@@ -2867,14 +2908,14 @@
   error is signalled.[133X
   
   [33X[0;0YCurrently,  the  integers  [3Xfirst[103X,  [3Xsecond[103X and [3Xlast[103X and the length of a range
-  must  be  small integers, that is at least [22X-2^d[122X and at most [22X2^d - 1[122X with [22Xd =
-  28[122X on 32-bit architectures and [22Xd = 60[122X on 64-bit architectures.[133X
+  must be [13Xsmall integers[113X as defined in chapter [14X14[114X.[133X
   
   [33X[0;0YNote also that a range is just a special case of a list. Thus you can access
   elements in a range (see [14X21.3[114X), test for membership etc. You can even assign
   to  such  a  range if it is mutable (see [14X21.4[114X). Of course, unless you assign
   [10X[3Xlast[103X[10X  +  [3Xsecond[103X[10X  -  [3Xfirst[103X[10X[110X  to  the  entry  [10X[3Xrange[103X[10X[ Length( [3Xrange[103X[10X ) + 1 ][110X, the
-  resulting list will no longer be a range.[133X
+  resulting list will no longer be a range. Note that assigning to an entry of
+  [3Xrange[103X will convert it back into a plain list.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xr := [10..20];[127X[104X
@@ -2885,8 +2926,15 @@
     [4X[28X12[128X[104X
     [4X[25Xgap>[125X [27X17 in r;[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xr[12] := 25;; r;  # r is no longer a range[127X[104X
-    [4X[28X[ 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25 ][128X[104X
+    [4X[25Xgap>[125X [27X# r still is a range but is now represented as a plain list[127X[104X
+    [4X[25Xgap>[125X [27Xr[1] := 10;; r;[127X[104X
+    [4X[28X[ 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ][128X[104X
+    [4X[25Xgap>[125X [27XIsRange(r);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27X# r is no longer a range[127X[104X
+    [4X[25Xgap>[125X [27Xr[12] := 25;;[127X[104X
+    [4X[25Xgap>[125X [27XIsRange(r);[127X[104X
+    [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27Xr := [1,3..17];[127X[104X
     [4X[28X[ 1, 3 .. 17 ][128X[104X
     [4X[25Xgap>[125X [27XLength( r );[127X[104X
@@ -2933,6 +2981,8 @@
     [4X[25Xgap>[125X [27XIsRange( [1,2,3] );  IsRange( [7,5,3,1] );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsRange( [1 .. 3] );[127X[104X
+    [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XIsRange( [1,2,4,5] );  IsRange( [1,,3,,5,,7] );[127X[104X
     [4X[28Xfalse[128X[104X
     [4X[28Xfalse[128X[104X
@@ -2941,44 +2991,47 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X21.22-2 ConvertToRangeRep[101X
+  [1X21.22-2 IsRangeRep[101X
+  
+  [33X[1;0Y[29X[2XIsRangeRep[102X( [3Xobj[103X ) [32X Representation[133X
+  
+  [33X[0;0YTests  whether  [3Xobj[103X is represented as a range, that is by internally storing
+  only the first value, the in- or decrement, and the last value of the range.[133X
+  
+  [33X[0;0YTo  test  whether  a  list  is a range in the mathematical sense see [2XIsRange[102X
+  ([14X21.22-1[114X).[133X
+  
+  [33X[0;0YLists  created  by  the  syntactic  construct [10X[ [3Xfirst[103X[10X, [3Xsecond[103X[10X .. [3Xlast[103X[10X ][110X, see
+  [14X21.22[114X, are in [2XIsRangeRep[102X.[133X
+  
+  [33X[0;0YNote  that  if  you  modify  an [2XIsRangeRep[102X object by assigning to one of its
+  entries,  or by using [2XAdd[102X ([14X21.4-2[114X) or [2XAppend[102X ([14X21.4-5[114X), then the range may be
+  converted  into  a plain list, even though the resulting list may still be a
+  range, mathematically.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XIsRangeRep( [1 .. 3] );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsRangeRep( [1, 2, 3] );[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xl := [1..3];;[127X[104X
+    [4X[25Xgap>[125X [27Xl[1] := 1;;[127X[104X
+    [4X[25Xgap>[125X [27Xl;[127X[104X
+    [4X[28X[ 1, 2, 3 ][128X[104X
+  [4X[32X[104X
+  
+  [1X21.22-3 ConvertToRangeRep[101X
   
   [33X[1;0Y[29X[2XConvertToRangeRep[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0YFor  some  lists  the  [5XGAP[105X  kernel knows that they are in fact ranges. Those
-  lists  are  represented  internally in a compact way instead of the ordinary
-  way.[133X
+  lists  are  represented  internally  in  a compact way, namely in [2XIsRangeRep[102X
+  ([14X21.22-2[114X),  instead of as plain lists. A list that is represented as a plain
+  list might still be a range but [5XGAP[105X may not know this.[133X
   
   [33X[0;0YIf [3Xlist[103X is a range then [2XConvertToRangeRep[102X changes the representation of [3Xlist[103X
-  to this compact representation.[133X
-  
-  [33X[0;0YThis  is  important  since  this  representation needs only 12 bytes for the
-  entire range while the ordinary representation needs [22X4 length[122X bytes.[133X
-  
-  [33X[0;0YNote  that  a  list that is represented in the ordinary way might still be a
-  range.  It is just that [5XGAP[105X does not know this. The following rules tell you
-  under  which circumstances a range is represented in the compact way, so you
-  can  write your program in such a way that you make best use of this compact
-  representation for ranges.[133X
-  
-  [33X[0;0YLists  created  by  the syntactic construct [10X[ [3Xfirst[103X[10X, [3Xsecond[103X[10X .. [3Xlast[103X[10X ][110X are of
-  course known to be ranges and are represented in the compact way.[133X
-  
-  [33X[0;0YIf  you  call [2XConvertToRangeRep[102X for a list represented the ordinary way that
-  is  indeed  a  range, the representation is changed from the ordinary to the
-  compact representation. A call of [2XConvertToRangeRep[102X for a list that is not a
-  range is ignored.[133X
-  
-  [33X[0;0YIf  you  change  a  mutable range that is represented in the compact way, by
-  assignment,  [2XAdd[102X ([14X21.4-2[114X) or [2XAppend[102X ([14X21.4-5[114X), the range will be converted to
-  the  ordinary  representation, even if the change is such that the resulting
-  list is still a proper range.[133X
-  
-  [33X[0;0YSuppose  you  have built a proper range in such a way that it is represented
-  in  the  ordinary  way  and  that  you now want to convert it to the compact
-  representation  to  save  space. Then you should call [2XConvertToRangeRep[102X with
-  that  list as an argument. You can think of the call to [2XConvertToRangeRep[102X as
-  a hint to [5XGAP[105X that this list is a proper range.[133X
+  to  [2XIsRangeRep[102X ([14X21.22-2[114X). A call of [2XConvertToRangeRep[102X for a list that is not
+  a range is ignored.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xr:= [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];[127X[104X
@@ -3022,7 +3075,7 @@
   free module.[133X
   
   [33X[0;0YAlso    enumerators    for    non-domains    can    be    implemented    via
-  [2XEnumeratorByFunctions[102X ([14X30.3-4[114X); for a discussion, see [14X79.13[114X.[133X
+  [2XEnumeratorByFunctions[102X ([14X30.3-4[114X); for a discussion, see [14X79.5[114X.[133X
   
   [1X21.23-1 IsQuickPositionList[101X
   
@@ -3032,4 +3085,42 @@
   or  6  element  comparisons  for  [21Xsmaller[121X.  If  this  is  the case it can be
   beneficial  to  use  [2XPosition[102X  ([14X21.16-1[114X) in [3Xlist[103X and a bit list than ordered
   lists to represent subsets of [3Xlist[103X.[133X
+  
+  
+  [1X21.24 [33X[0;0YPlain Lists[133X[101X
+  
+  [33X[0;0YPlain  lists  are  the  default  kind of lists in [5XGAP[105X, in the sense that [5XGAP[105X
+  stores  the  list  entries and does not know how to do better (as opposed to
+  ranges  or strings, which are also lists). Often it is not necessary to know
+  how a given list is represented internally, the operations defined for lists
+  apply to all lists.[133X
+  
+  [33X[0;0YTypical  situations  where  the representation matters are when one wants to
+  make  sure  that the given list is [13Xnot[113X a plain list and thus will be handled
+  more  efficiently,  for  example when one installs a method for a particular
+  operation,  where  an  argument  is  required  to  be a list in a particular
+  representation.[133X
+  
+  [1X21.24-1 IsPlistRep[101X
+  
+  [33X[1;0Y[29X[2XIsPlistRep[102X( [3Xobj[103X ) [32X representation[133X
+  
+  [33X[0;0Y[5XGAP[105X  lists created by entering comma separated values in square brackets are
+  usually   represented   internally   as   so-called   [13Xplain   lists[113X.   Other
+  representations  of  lists  are  [2XIsBlistRep[102X  ([14X22.5-1[114X), [2XIsRangeRep[102X ([14X21.22-2[114X),
+  [2XIsStringRep[102X   ([14X27.4-1[114X),  or  the  ones  that  are  chosen  for  implementing
+  enumerators, see Section [14X21.23[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XIsPlistRep( [ 1, 2, 3 ] );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsPlistRep( "abc" );[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsPlistRep( [ 1 .. 5 ] );[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsPlistRep( BlistList( [ 1 .. 5 ], [ 1 ] ) );[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsPlistRep( 0 );[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
   

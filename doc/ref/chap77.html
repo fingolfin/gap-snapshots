@@ -41,9 +41,7 @@
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap77.html#X7C89E03285799F40">77.6 <span class="Heading">Semigroup properties</span></a>
 </span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap77.html#X7BF9F1BE87F0636D">77.6-1 IsSemilatticeAsSemigroup</a></span>
-</div></div>
+</div>
 </div>
 
 <h3>77 <span class="Heading">Replaced and Removed Command Names</span></h3>
@@ -51,6 +49,10 @@
 <p>In general we try to keep <strong class="pkg">GAP</strong> 4 compatible with former releases as much as possible. Nevertheless, from time to time it seems appropriate to remove some commands or to change the names of some commands or variables. There are various reasons for that: Some functionality was improved and got another (hopefully better) interface, names turned out to be too special or too general for the underlying functionality, or names are found to be unintuitive or inconsistent with other names.</p>
 
 <p>In this chapter we collect such old names while pointing to the sections which explain how to substitute them. Usually, old names will be available for several releases; they may be removed when they don't seem to be used any more.</p>
+
+<p>Information about obsolete names is printed by <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-6</span></a>) using the InfoObsolete Info class. By default InfoObsolete is set to 1. Newly obsoleted identifiers should at first be outputted at info level 2. Once they have been removed from all packages, they should then be moved to info level 1, so they are visible to normal users, for at least one major release before being removed.</p>
+
+<p>The functions DeclareObsoleteSynonym and DeclareObsoleteSynonymAttr take an optional final paremeter, specifying the info level at which the given obsolete symbol should be reported. It defaults to 1.</p>
 
 <p>The obsolete <strong class="pkg">GAP</strong> code is collected in two library files, <code class="file">lib/obsolete.gd</code> and <code class="file">lib/obsolete.gi</code>. By default, these files are read when <strong class="pkg">GAP</strong> is started. It may be useful to omit reading these files, for example in order to make sure that one's own <strong class="pkg">GAP</strong> code does not rely on the obsolete variables. For that, one can use the <code class="code">-O</code> command line option (see <a href="chap3.html#X782751D5858A6EAF"><span class="RefLink">3.1</span></a>) or set the component <code class="code">ReadObsolete</code> in the file <code class="file">gap.ini</code> to <code class="keyw">false</code> (see <a href="chap3.html#X7FD66F977A3B02DF"><span class="RefLink">3.2</span></a>). Note that <code class="code">-O</code> command line option overrides <code class="code">ReadObsolete</code>.</p>
 
@@ -60,7 +62,7 @@
 
 <h4>77.1 <span class="Heading">Group Actions – Name Changes</span></h4>
 
-<p>The concept of a group action is sometimes referred to as a "group operation". In <strong class="pkg">GAP</strong> 3 as well as in older versions of <strong class="pkg">GAP</strong> 4 the term <code class="code">Operation</code> was used instead of <code class="code">Action</code>. We decided to change the names to avoid confusion with the term "operation" as in <code class="func">DeclareOperation</code> (<a href="chap79.html#X843F48137B899BC3"><span class="RefLink">79.18-12</span></a>) and "operations for Xyz".</p>
+<p>The concept of a group action is sometimes referred to as a "group operation". In <strong class="pkg">GAP</strong> 3 as well as in older versions of <strong class="pkg">GAP</strong> 4 the term <code class="code">Operation</code> was used instead of <code class="code">Action</code>. We decided to change the names to avoid confusion with the term "operation" as in <code class="func">DeclareOperation</code> (<a href="chap78.html#X843F48137B899BC3"><span class="RefLink">78.1-5</span></a>) and "operations for Xyz".</p>
 
 <p>Here are some examples of such name changes.</p>
 
@@ -155,19 +157,23 @@
 <td class="tdleft"><code class="code">MutableNullMat</code></td>
 <td class="tdleft"><code class="func">NullMat</code> (<a href="chap24.html#X86D343A77D9B3D4D"><span class="RefLink">24.5-2</span></a>)</td>
 </tr>
+<tr>
+<td class="tdleft"><code class="code">MultRowVector</code></td>
+<td class="tdleft"><code class="func">MultVectorLeft</code> (<a href="chap23.html#X7BEF28C981C42E16"><span class="RefLink">23.4-3</span></a>)</td>
+</tr>
 </table><br /><p>&nbsp;</p><br />
 </div>
 
-<p>The operation <code class="code">PositionFirstComponent</code> has been deprecated in GAP 4.8 and later due to issues with its documentation and implementation. Instead of <code class="code">PositionFirstComponent(list,obj)</code>, you may use <code class="code">PositionSorted(list,[obj])</code> or <code class="code">PositionProperty(list,x-&gt;x[1]=obj)</code> as a replacement, depending on your specific use case.</p>
+<p>The operation <code class="code">PositionFirstComponent</code> has been deprecated in GAP 4.8 due to issues with its documentation and implementation, and was removed in GAP 4.10. Instead of <code class="code">PositionFirstComponent(list,obj)</code>, you may use <code class="code">PositionSorted(list,[obj])</code> or <code class="code">PositionProperty(list,x-&gt;x[1]=obj)</code> as a replacement, depending on your specific use case. The five argument version of the operation <code class="code">MultRowVector</code> has been deprecated in GAP 4.10 since it was unused and only available for coefficient lists. Note that <code class="code">MultRowVector</code> was also renamed to <code class="code">MultVectorLeft</code>. The function <code class="code">TemporaryGlobalVarName</code> has been deprecated in GAP 4.11. Code using it typically can be restructured to not need it, e.g. by using <code class="func">EvalString</code> (<a href="chap27.html#X7DE4CCD285440659"><span class="RefLink">27.9-5</span></a>).</p>
 
 <p><a id="X87348614848EAD64" name="X87348614848EAD64"></a></p>
 
 <h5>77.4-1 InfoObsolete</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoObsolete</code></td><td class="tdright">(&nbsp;info class&nbsp;)</td></tr></table></div>
-<p>is an info class to display warnings when an obsolete variable is used. By default, these warnings are switched off since the info level for this class is 0. Setting it to 1 will trigger warnings if <strong class="pkg">GAP</strong> will detect that an obsolete variable is used at runtime.</p>
+<p>is an info class to display warnings when an obsolete variable is used. By default, the info level for this class is set to 1, which will only show variables which will be removed in the next major version of GAP. Setting it to 2 will trigger further warnings, for variables which have alternative names, or may be removed in future. This class can be set to 0 to disable all obsolete warnings.</p>
 
-<p>To check that the <strong class="pkg">GAP</strong> code does not use obsolete variables at the parsing time, and not at a runtime, use <code class="code">-O</code> command line option, see <a href="chap3.html#X782751D5858A6EAF"><span class="RefLink">3.1</span></a>.</p>
+<p>To check that the <strong class="pkg">GAP</strong> code does not use any obsolete variables at parsing time, and not at a runtime, use the <code class="code">-O</code> command line option, see <a href="chap3.html#X782751D5858A6EAF"><span class="RefLink">3.1</span></a>.</p>
 
 <p><a id="X7F2FF72A7AD60E0C" name="X7F2FF72A7AD60E0C"></a></p>
 
@@ -189,16 +195,7 @@
 
 <p>Until Version 4.8 of <strong class="pkg">GAP</strong> there was inconsistent use of the following properties of semigroups: <code class="code">IsGroupAsSemigroup</code>, <code class="code">IsMonoidAsSemigroup</code>, and <code class="code">IsSemilatticeAsSemigroup</code>. <code class="code">IsGroupAsSemigroup</code> was true for semigroups that mathematically defined a group, and for semigroups in the category <code class="func">IsGroup</code> (<a href="chap39.html#X7939B3177BBD61E4"><span class="RefLink">39.2-7</span></a>); <code class="code">IsMonoidAsSemigroup</code> was true for semigroups that mathematically defined monoids, but did not belong to the category <code class="func">IsMonoid</code> (<a href="chap51.html#X861C523483C6248C"><span class="RefLink">51.2-1</span></a>); and <code class="code">IsSemilatticeAsSemigroup</code> was simply a property of semigroups, there is no category <code class="code">IsSemilattice</code>.</p>
 
-<p>From Version 4.8 onwards, <code class="code">IsSemilatticeAsSemigroup</code> is renamed <code class="code">IsSemilattice</code>, and <code class="code">IsMonoidAsSemigroup</code> returns <code class="code">true</code> for semigroups in the category <code class="func">IsMonoid</code> (<a href="chap51.html#X861C523483C6248C"><span class="RefLink">51.2-1</span></a>).</p>
-
-<p><a id="X7BF9F1BE87F0636D" name="X7BF9F1BE87F0636D"></a></p>
-
-<h5>77.6-1 IsSemilatticeAsSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemilatticeAsSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p><code class="code">IsSemilatticeAsSemigroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is a semilattice and <code class="keyw">false</code> if it is not.</p>
-
-<p>A semigroup is a <em>semilattice</em> if it is commutative and every element is an idempotent. The idempotents of an inverse semigroup form a semilattice. This is identical to <code class="func">IsSemilattice</code> (<a href="../../pkg/semigroups-3.1.3/doc/chap15.html#X833D24AE7C900B85"><span class="RefLink">Semigroups: IsSemilattice</span></a>) # and is present in <strong class="pkg">GAP</strong> 4.8 # only for the sake of compatibility with beta-releases. # It should <em>not</em> be used in new code.</p>
+<p>From Version 4.8 onwards, <code class="code">IsMonoidAsSemigroup</code> returns <code class="keyw">true</code> for semigroups in the category <code class="func">IsMonoid</code> (<a href="chap51.html#X861C523483C6248C"><span class="RefLink">51.2-1</span></a>), and <code class="code">IsSemilatticeAsSemigroup</code> has been moved to the <strong class="pkg">Semigroups</strong> under the new name <code class="func">IsSemilattice</code> (<a href="../../pkg/semigroups-3.2.3/doc/chap15.html#X833D24AE7C900B85"><span class="RefLink">Semigroups: IsSemilattice</span></a>).</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap76.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap78.html">[Next Chapter]</a>&nbsp;  </div>

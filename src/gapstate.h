@@ -1,7 +1,11 @@
 /****************************************************************************
 **
-*W  gapstate.h      GAP source                 Markus Pfeiffer
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares a struct that contains variables that are global
 **  state in GAP, but in HPC-GAP an instance of it exists for every thread.
@@ -12,6 +16,8 @@
 #define GAP_GAPSTATE_H
 
 #include "system.h"
+
+#include "scanner.h"
 
 #if defined(HPCGAP)
 #include "hpc/tls.h"
@@ -49,28 +55,30 @@ typedef struct GAPState {
 
     /* From read.c */
     syJmp_buf ReadJmpError;
-    Obj       StackNams;
 
     /* From scanner.c */
-    Obj    ValueObj;
-    Char   Value[MAX_VALUE_LEN];
+    // TODO: eventually, ScannerState should be removed from GAPState
+    // (and then also #include "scanner.h" at the top), and instead code
+    // using a caller should dynamically allocate a ScannerState on the stack.
+    // But for now, we can't really do that.
+    ScannerState Scanner;
     UInt   NrError;
     UInt   NrErrLine;
-    UInt   Symbol;
-    UInt   SymbolStartPos;
-    UInt   SymbolStartLine;
+
+    // Used for recording the first line of the fragment of code currently
+    // begin interpreted, so the current line is outputted when profiling
+    UInt InterpreterStartLine;
 
     const Char * Prompt;
 
     Char * In;
 
     /* From stats.c */
-    Stat CurrStat;
     Obj  ReturnObjStat;
     UInt (**CurrExecStatFuncs)(Stat);
 
     /* From code.c */
-    Stat * PtrBody;
+    void * PtrBody;
 
     /* From opers.c */
 #if defined(HPCGAP)
@@ -87,18 +95,17 @@ typedef struct GAPState {
     Obj  BaseShellContext;
     Obj  ErrorLVars;        // ErrorLVars as modified by DownEnv / UpEnv
     Int  ErrorLLevel;       // record where on the stack ErrorLVars is relative to the top, i.e. BaseShellContext
-    void (*JumpToCatchCallback)(); // This callback is called in FuncJUMP_TO_CATCH,
+    void (*JumpToCatchCallback)(void); // This callback is called in FuncJUMP_TO_CATCH,
                                    // this is not used by GAP itself but by programs
                                    // that use GAP as a library to handle errors
 
-    /* From objects.c */
-    Int PrintObjIndex;
-    Int PrintObjDepth;
+    /* From info.c */
+    Int ShowUsedInfoClassesActive;
 
     UInt1 StateSlots[STATE_SLOTS_SIZE];
 
 /* Allocation */
-#if !defined(USE_GASMAN)
+#if defined(USE_BOEHM_GC)
 #define MAX_GC_PREFIX_DESC 4
     void ** FreeList[MAX_GC_PREFIX_DESC + 2];
 #endif
@@ -106,7 +113,7 @@ typedef struct GAPState {
 
 #if defined(HPCGAP)
 
-static inline GAPState * ActiveGAPState(void)
+EXPORT_INLINE GAPState * ActiveGAPState(void)
 {
     return (GAPState *)GetTLS();
 }
@@ -115,7 +122,7 @@ static inline GAPState * ActiveGAPState(void)
 
 extern GAPState MainGAPState;
 
-static inline GAPState * ActiveGAPState(void)
+EXPORT_INLINE GAPState * ActiveGAPState(void)
 {
     return &MainGAPState;
 }
@@ -128,7 +135,7 @@ static inline GAPState * ActiveGAPState(void)
 // Offset into StateSlots
 typedef Int ModuleStateOffset;
 
-static inline void * StateSlotsAtOffset(ModuleStateOffset offset)
+EXPORT_INLINE void * StateSlotsAtOffset(ModuleStateOffset offset)
 {
     GAP_ASSERT(0 <= offset && offset < STATE_SLOTS_SIZE);
     return &STATE(StateSlots)[offset];

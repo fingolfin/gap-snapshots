@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  string.gi                   GAP library                      Frank Celler
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains functions for strings.
 ##
@@ -942,9 +943,17 @@ local nohead,file,sep,f, line, fields, l, r, i,s,t,add,dir;
 end);
 
 InstallGlobalFunction(PrintCSV,function(arg)
-  local file,l,printEntry, rf, r, i, j,sz;
+  local stream,l,printEntry, rf, r, i, j, oldStreamFormattingStatus, close;
 
-  file:=arg[1];
+  if IsString(arg[1]) then
+    stream:=OutputTextFile(arg[1],false);
+    close:=true;
+  elif IsOutputStream(arg[1]) then
+    stream:=arg[1];
+    close:=false;
+  else
+    Error("PrintCSV: filename must be a string or an output stream");
+  fi;
   l:=arg[2];
   printEntry:=function(s)
   local p,q;
@@ -983,11 +992,11 @@ InstallGlobalFunction(PrintCSV,function(arg)
       # integers as string
       s:=Concatenation("\"_",s,"\"");
     fi;
-    AppendTo(file,s,"\c");
+    AppendTo(stream,s,"\c");
   end;
 
-  sz:=SizeScreen();
-  SizeScreen([4096,sz[2]]);
+  oldStreamFormattingStatus:=PrintFormattingStatus(stream);
+  SetPrintFormattingStatus(stream,false);
   if Length(arg)>2 then
     rf:=arg[3];
   else
@@ -1015,29 +1024,32 @@ InstallGlobalFunction(PrintCSV,function(arg)
     end);
   fi;
 
-  PrintTo(file);
+  PrintTo(stream);
 
   if ValueOption("noheader")<>true then
     printEntry(rf[1]);
     for j in [2..Length(rf)] do
-      AppendTo(file,",");
+      AppendTo(stream,",");
       printEntry(ReplacedString(rf[j],"_"," "));
     od;
-    AppendTo(file,"\n");
+    AppendTo(stream,"\n");
   fi;
 
   for  i in l do
     for j in [1..Length(rf)] do
       if j>1 then
-	AppendTo(file,",");
+        AppendTo(stream,",");
       fi;
       if IsBound(i.(rf[j])) then
         printEntry(i.(rf[j]));
       fi;
     od;
-    AppendTo(file,"\n");
+    AppendTo(stream,"\n");
   od;
-  SizeScreen(sz);
+  SetPrintFormattingStatus(stream,oldStreamFormattingStatus);
+  if close then
+    CloseStream(stream);
+  fi;
 end);
 
 
@@ -1249,9 +1261,9 @@ InstallGlobalFunction(StringOfMemoryAmount, function(m)
     s := ShallowCopy(String(whole));
     if whole < 100 then
         Append(s,".");
-        Append(s,String(Int(frac/102.4)));
+        Append(s,String(Int(frac*10/1024)));
         if whole < 10 then
-            Append(s, String(Int(frac/10.24) mod 10));
+            Append(s, String(Int(frac*100/1024) mod 10));
         fi;
     fi;
     units := ["B","KB","MB","GB","TB","PB","EB","YB","ZB"];    
@@ -1352,7 +1364,7 @@ InstallGlobalFunction(PrintToFormatted, function(stream, s, data...)
                 ErrorNoReturn("first data argument must be a record when using {",toprint.id,"}");
             fi;
             if not IsBound(data[1].(toprint.id)) then
-                ErrorNoReturn("no record member '",toprint[1].id,"'");
+                ErrorNoReturn("no record member '",toprint.id,"'");
             fi;
             var := data[1].(toprint.id);
         fi;
@@ -1392,7 +1404,3 @@ InstallGlobalFunction(PrintFormatted, function(args...)
     # directed
     Print(CallFuncList(StringFormatted, args));
 end);
-
-#############################################################################
-##
-#E

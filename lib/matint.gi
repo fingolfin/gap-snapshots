@@ -1,13 +1,12 @@
 #############################################################################
 ##
-#W  matint.gi                GAP library                        A. Storjohann
-#W                                                              R. Wainwright
-#W                                                                 F. Gähler
-#W                                                                    D. Holt
-#W                                                                  A. Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include A. Storjohann, R. Wainwright, F. Gähler, D. Holt, A. Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2003 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains functions that compute Hermite and Smith normal forms
 ##  of integer matrices, with or without the HNF/SNF  expressed as the linear
@@ -154,8 +153,8 @@ InstallGlobalFunction(SNFofREF , function(R,destroy)
 local k,g,b,ii,m1,m2,t,tt,si,n,m,i,j,r,jj,piv,d,gt,tmp,A,T,TT,kk;
 
   Info(InfoMatInt,1,"SNFofREF - initializing work matrix");
-  n := Length(R);
-  m := Length(R[1]);
+  n := NrRows(R);
+  m := NrCols(R);
 
   piv := List(R,x->PositionProperty(x,y->y<>0));
   r := PositionProperty(piv,x->x=fail);
@@ -290,34 +289,33 @@ BindGlobal("BITLISTS_NFIM", MakeImmutable(
 # * - possible non-zero entry in upper right corner...
 #
 #
-BindGlobal("DoNFIM", function(arg)
+BindGlobal("DoNFIM", function(mat, options)
 local opt, sig, n, m, A, C, Q, B, P, r, c2, rp, c1, j, k, N, L, b, a, g, c,
       t, tmp, i, q, R, rank, signdet;
 
-  if not Length(arg)=2
-     or not (IsMatrix(arg[1])
-         or (IsList(arg[1]) and Length(arg[1])=1
-             and IsList(arg[1][1]) and Length(arg[1][1])=0))
-     or not IsInt(arg[2]) then
-    Error("syntax is DoNFIM(<matrix>,<options>)");
+  if not (IsMatrix(mat)
+         or (IsList(mat) and Length(mat)=1
+             and IsList(mat[1]) and Length(mat[1])=0))
+     or not IsInt(options) then
+    Error("syntax is DoNFIM(<mat>,<options>)");
   fi;
 
   #Parse options
-  opt := BITLISTS_NFIM[arg[2]+1];
-  #List(CoefficientsQadic(arg[2],2),x->x=1);
+  opt := BITLISTS_NFIM[options+1];
+  #List(CoefficientsQadic(options,2),x->x=1);
   #if Length(opt)<4 then
   #  opt{[Length(opt)+1..4]} := List([Length(opt)+1..4],x->false);
   #fi;
 
   sig:=1;
 
-  #Embed arg[1] in 2 larger "id" matrix
-  n := Length(arg[1])+2;
-  m := Length(arg[1,1])+2;
+  #Embed matrix in 2 larger "id" matrix
+  n := NrRows(mat)+2;
+  m := NrCols(mat)+2;
   k:=ListWithIdenticalEntries(m,0);
   if opt[5] then
     # change the matrix
-    A:=arg[1];
+    A:=mat;
     for i in [n-1,n-2..2] do
       A[i]:=ShallowCopy(k);
       A[i]{[2..m-1]}:=A[i-1];
@@ -326,10 +324,10 @@ local opt, sig, n, m, A, C, Q, B, P, r, c2, rp, c1, j, k, N, L, b, a, g, c,
     A := [];
     for i in [2..n-1] do
       #A[i] := [0];
-      #Append(A[i],arg[1,i-1]);
+      #Append(A[i],mat[i-1]);
       #A[i,m] := 0;
       A[i]:=ShallowCopy(k);
-      A[i]{[2..m-1]}:=arg[1,i-1];
+      A[i]{[2..m-1]}:=mat[i-1];
     od;
   fi;
   A[1]:=ShallowCopy(k);
@@ -590,7 +588,7 @@ end);
 
 InstallOtherMethod(TriangulizedIntegerMat,"empty matrix",true,[IsList],0,
 function(mat)
-  if Length(mat)<>1 or (not IsList(mat[1])) or Length(mat[1])<>0 then
+  if NrRows(mat)<>1 or (not IsList(mat[1])) or NrCols(mat)<>0 then
     TryNextMethod();
   fi;
   return DoNFIM(mat,0).normal;
@@ -608,7 +606,7 @@ end);
 
 InstallOtherMethod(TriangulizedIntegerMatTransform,"empty matrix",true,[IsList],0,
 function(mat)
-  if Length(mat)<>1 or (not IsList(mat[1])) or Length(mat[1])<>0 then
+  if NrRows(mat)<>1 or (not IsList(mat[1])) or NrCols(mat)<>0 then
     TryNextMethod();
   fi;
   return NormalFormIntMat(mat,4);
@@ -640,7 +638,7 @@ end);
 
 InstallOtherMethod(HermiteNormalFormIntegerMat,"empty matrix",true,[IsList],0,
 function(mat)
-  if Length(mat)<>1 or (not IsList(mat[1])) or Length(mat[1])<>0 then
+  if NrRows(mat)<>1 or (not IsList(mat[1])) or NrCols(mat)<>0 then
     TryNextMethod();
   fi;
   return DoNFIM(mat,2).normal;
@@ -660,7 +658,7 @@ end);
 InstallOtherMethod(HermiteNormalFormIntegerMatTransform,"empty matrix",
   true,[IsList],0,
 function(mat)
-  if Length(mat)<>1 or (not IsList(mat[1])) or Length(mat[1])<>0 then
+  if NrRows(mat)<>1 or (not IsList(mat[1])) or NrCols(mat)<>0 then
     TryNextMethod();
   fi;
   return NormalFormIntMat(mat,6);
@@ -682,7 +680,7 @@ end);
 
 InstallOtherMethod(SmithNormalFormIntegerMat,"empty matrix",true,[IsList],0,
 function(mat)
-  if Length(mat)<>1 or (not IsList(mat[1])) or Length(mat[1])<>0 then
+  if NrRows(mat)<>1 or (not IsList(mat[1])) or NrCols(mat)<>0 then
     TryNextMethod();
   fi;
   return DoNFIM(mat,1).normal;
@@ -702,7 +700,7 @@ end);
 InstallOtherMethod(SmithNormalFormIntegerMatTransforms,"empty matrix",
   true,[IsList],0,
 function(mat)
-  if Length(mat)<>1 or (not IsList(mat[1])) or Length(mat[1])<>0 then
+  if NrRows(mat)<>1 or (not IsList(mat[1])) or NrCols(mat)<>0 then
     TryNextMethod();
   fi;
   return NormalFormIntMat(mat,13);
@@ -841,7 +839,7 @@ function( mat,v )
 local norm, rs, t, M, r;
   if IsZero(mat) then
     if IsZero(v) then
-      return ListWithIdenticalEntries( Length(mat), 0 );
+      return ListWithIdenticalEntries( NrRows(mat), 0 );
     else
       return fail;
     fi;
@@ -908,7 +906,7 @@ local sig, n, m, A, r, c2, c1, j, k, c, i, g, q;
   n := Length(mat)+2;
   # Crossover point roughly 20x20 matrices, so farm the work if smaller..
   if n<22 then return DeterminantMat(mat);fi;
-  m := Length(mat[1])+2;
+  m := NrCols(mat)+2;
 
   if not n=m then
     Error( "DeterminantIntMat: <mat> must be a square matrix" );
@@ -1002,3 +1000,138 @@ InstallOtherMethod( AbelianInvariantsOfList,
     [ IsList and IsEmpty ],
     list -> [] );
 
+
+# Reduce a list of abelianized relations: Heuristic reduction without
+# making big vectors, iterate three times. Does not aim to do full HNF
+InstallGlobalFunction(ReducedRelationMat,function(mat)
+local n,zero,nv,new,pip,piv,i,v,p,w,g,nov,pin,now,rat,extra,clean,assign,try;
+
+  nv:=v->v*SignInt(v[PositionNonZero(v)]);
+  assign:=function(p,v)
+  local a,i,w,wn;
+    a:=v[p];
+    for i in [1..Length(pip)] do
+      if i<>p and IsInt(pip[i]) and mat[pip[i]][p]<>0 then
+        w:=mat[pip[i]]-QuoInt(mat[pip[i]][p],a)*v;
+        wn:=w*w;
+        if wn<=rat*pin[i] then
+          mat[pip[i]]:=nv(w);
+          pin[i]:=wn;
+        fi;
+      fi;
+    od;
+    mat[pip[p]]:=v;
+    # also try to reduce extra vectors
+    for i in [1..Length(extra)] do
+      w:=extra[i];
+      if not IsZero(extra[i]) then
+        wn:=w*w;
+        w:=w-QuoInt(w[p],a)*v;
+        if w*w<=rat*wn then
+          extra[i]:=w;
+        fi;
+      fi;
+    od;
+  end;
+
+  n:=NrCols(mat);
+  rat:=2; # growth ratio
+  zero:=ListWithIdenticalEntries(n,0);
+  mat:=Filtered(mat,x->not IsZero(x));
+  new:=Set(mat,nv); # kill duplicates
+  Info(InfoMatInt,1,"Reduce ",Length(mat)," to ",Length(new));
+  pip:=ListWithIdenticalEntries(n,fail);
+  piv:=[];
+  pin:=[];
+  mat:=[];
+  extra:=[];
+
+  # we once reduce and then go over the remainders again in case they were
+  # nice and short
+  for try in [1..3] do
+    SortBy(new, x -> - x*x); # reversed norm sort
+    i:=Length(new);
+    while i>0 do
+      v:=ShallowCopy(new[i]);
+      Info(InfoMatInt,3,"Process ",i);#" Norm:",v*v,"\n");
+      Unbind(new[i]); # take off stack
+      i:=i-1;
+      clean:=true;
+      p:=PositionNonZero(v);
+      while p<=n and pip[p]<>fail do
+        if v[p] mod piv[p]=0 then
+          # divides, reduce
+          #v:=v-QuoInt(v[p],piv[p])*mat[pip[p]];
+          AddRowVector(v,mat[pip[p]],-QuoInt(v[p],piv[p]));
+          p:=PositionNonZero(v,p);
+        elif clean and piv[p] mod v[p]=0 then
+          # swap and clean out
+          v:=nv(v);
+          Info(InfoMatInt,2,"Replace pivot ",piv[p],"@",p," to ",v[p]);
+          w:=mat[pip[p]];
+          #mat[pip[p]]:=v;
+          assign(p,v);
+          pin[p]:=v*v;
+          piv[p]:=v[p];
+          v:=w;
+          #v:=v-QuoInt(v[p],piv[p])*mat[pip[p]];
+          AddRowVector(v,mat[pip[p]],-QuoInt(v[p],piv[p]));
+          p:=PositionNonZero(v,p);
+        else
+          g:=Gcdex(v[p],piv[p]);
+          # form new pivot with gcd 
+          #w:=g.coeff2*mat[pip[p]]+g.coeff1*v; # automatically normed by Gcdex
+          w:=g.coeff2*mat[pip[p]];
+          AddRowVector(w,v,g.coeff1); # automatically normed by Gcdex
+          now:=w*w;
+          if (not clean) or now>rat*pin[p] then 
+            # only reduce a bit, not full gcd
+            #v:=v-QuoInt(v[p],piv[p])*mat[pip[p]];
+            AddRowVector(v,mat[pip[p]],-QuoInt(v[p],piv[p]));
+            p:=PositionNonZero(v,p);
+            clean:=false;
+          else
+            # replace with cgd pivot
+            Info(InfoMatInt,2,"Reduce pivot ",piv[p],"@",p," to ",g.gcd);
+            new[i+1]:=v; # keep old vectors to process
+            new[i+2]:=mat[pip[p]];
+            i:=i+2;
+            #mat[pip[p]]:=w;
+            assign(p,w);
+            piv[p]:=w[p];
+            pin[p]:=now;
+            p:=fail; # to bail out while loop
+          fi;
+
+        fi;
+      od;
+      if not clean then
+        # only reduced, did not do gcd
+        Add(extra,v);
+      elif p<=n then
+        # new pivot position
+        v:=nv(v); # norm (so we can compare with <)
+        pip[p]:=Length(mat)+1;
+        #Add(mat,v);
+        assign(p,v);
+        Info(InfoMatInt,1,"Added @",Length(mat));
+        piv[p]:=v[p];
+        pin[p]:=v*v;
+      fi;
+    od;
+    # now we've processed all. Clean out extra
+    new:=List(Filtered(Set(extra),x->not IsZero(x)),nv);
+    Info(InfoMatInt,1,"After ",try,": ",Length(extra)," to ",Length(new),
+      " new ones");
+    extra:=[];
+
+  od;
+
+  mat:=Filtered(Concatenation(mat,new),x->not IsZero(x));
+
+  # need to keep one line.
+  if Length(mat)=0 then mat:=[zero];fi;
+
+  return mat;
+
+end);

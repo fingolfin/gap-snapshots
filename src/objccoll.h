@@ -1,10 +1,11 @@
 /****************************************************************************
 **
-*W  objccoll.h                  GAP source                      Werner Nickel
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #ifndef GAP_OBJCCOLL_H
@@ -45,9 +46,9 @@
 **  collector module.   Therefore,  the  single  collector  module needs   to
 **  include this file.
 */
-Int C8Bits_CombiCollectWord ( Obj, Obj, Obj );
-Int C16Bits_CombiCollectWord ( Obj, Obj, Obj );
-Int C32Bits_CombiCollectWord ( Obj, Obj, Obj );
+Int C8Bits_CombiCollectWord(Obj, Obj, Obj);
+Int C16Bits_CombiCollectWord(Obj, Obj, Obj);
+Int C32Bits_CombiCollectWord(Obj, Obj, Obj);
 
 
 /****************************************************************************

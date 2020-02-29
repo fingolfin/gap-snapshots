@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  matint.gd                GAP library                        A. Storjohann
-#W                                                              R. Wainwright
-#W                                                                  A. Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include A. Storjohann, R. Wainwright, A. Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2003 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains declarations for the operations of normal forms for
 ##  integral matrices.
@@ -52,7 +53,7 @@ DeclareOperation("TriangulizedIntegerMat",[IsMatrix]);
 ##
 ##  <Description>
 ##  Changes <A>mat</A> to be in upper triangular form.
-##  (The result is the same as that of <Ref Func="TriangulizedIntegerMat"/>,
+##  (The result is the same as that of <Ref Oper="TriangulizedIntegerMat"/>,
 ##  but <A>mat</A> will be modified, thus using less memory.)
 ##  If <A>mat</A> is immutable an error will be triggered.
 ##  <Example><![CDATA[
@@ -200,7 +201,7 @@ DeclareOperation("SmithNormalFormIntegerMatTransforms",[IsMatrix]);
 ##  <Description>
 ##  This function changes <A>mat</A> to its SNF.
 ##  (The result is the same as
-##  that of <Ref Func="SmithNormalFormIntegerMat"/>,
+##  that of <Ref Oper="SmithNormalFormIntegerMat"/>,
 ##  but <A>mat</A> will be modified, thus using less memory.)
 ##  If <A>mat</A> is immutable an error will be triggered.
 ##  <Example><![CDATA[
@@ -475,8 +476,8 @@ DeclareOperation( "SolutionIntMat",
 ##
 ##  <Description>
 ##  This function returns a list of length two, its first entry being the
-##  result of a call to <Ref Func="SolutionIntMat"/> with same arguments,
-##  the second the result of <Ref Func="NullspaceIntMat"/> applied to the
+##  result of a call to <Ref Oper="SolutionIntMat"/> with same arguments,
+##  the second the result of <Ref Attr="NullspaceIntMat"/> applied to the
 ##  matrix <A>mat</A>.
 ##  The calculation is performed faster than if two separate calls would be
 ##  used.
@@ -531,7 +532,7 @@ DeclareAttribute( "AbelianInvariantsOfList", IsCyclotomicCollection );
 ##  This method is 
 ##  faster in general for matrices greater than <M>20 \times 20</M> but 
 ##  quite a lot slower for smaller matrices.  It therefore passes 
-##  the work to the more general <Ref Func="DeterminantMat"/>
+##  the work to the more general <Ref Attr="DeterminantMat"/>
 ##  for these smaller matrices.
 ##  </Description>
 ##  </ManSection>
@@ -559,8 +560,23 @@ DeclareGlobalFunction("DeterminantIntMat");
 ##
 DeclareGlobalFunction("SNFofREF");
 
-
 #############################################################################
 ##
-#E
-
+#O  ReducedRelationMat(<mat>)
+##
+##  <#GAPDoc Label="ReducedRelationMat">
+##  <ManSection>
+##  <Func Name="ReducedRelationMat" Arg='mat'/>
+##
+##  <Description>
+##  Let <A>mat</A> be a matrix that has been obtained as abelianized
+##  relations. Such matrices tend to have a particular form with some short
+##  vectors. This function runs a (quick) heuristic row reduction, 
+##  resulting in a matrix with the same Z-row space but fewer/shorter vectors,
+##  thus speeding up a subsequent SNF. It does not do a full HNF but should be
+##  much quicker.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction("ReducedRelationMat");

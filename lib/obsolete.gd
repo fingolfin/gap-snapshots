@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  obsolete.gd                  GAP library                     Steve Linton
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Steve Linton.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains a number of functions, or extensions of
 ##  functions to certain numbers or combinations of arguments, which
@@ -55,6 +56,17 @@
 ##  Usually, old names will be available for several releases;
 ##  they may be removed when they don't seem to be used any more.
 ##  <P/>
+##  Information about obsolete names is printed by <Ref Func="Info"/> using the
+##  InfoObsolete Info class. By default InfoObsolete is set to 1. Newly
+##  obsoleted identifiers should at first be outputted at info level 2. Once they
+##  have been removed from all packages, they should then be moved to info level
+##  1, so they are visible to normal users, for at least one major release before
+##  being removed.
+##  <P/>
+##  The functions DeclareObsoleteSynonym and DeclareObsoleteSynonymAttr take
+##  an optional final paremeter, specifying the info level at which the given
+##  obsolete symbol should be reported. It defaults to 1.
+##  <P/>
 ##  The obsolete &GAP; code is collected in two library files,
 ##  <F>lib/obsolete.gd</F> and <F>lib/obsolete.gi</F>.
 ##  By default, these files are read when &GAP; is started.
@@ -76,19 +88,29 @@
 ##  <#/GAPDoc>
 ##
 
-BIND_GLOBAL( "DeclareObsoleteSynonym", function( name_obsolete, name_current )
-    local value, orig_value;
+BIND_GLOBAL( "DeclareObsoleteSynonym", function( name_obsolete, name_current, level_arg... )
+    local value, orig_value, printed_warning, level;
     if not ForAll( [ name_obsolete, name_current ], IsString ) then
         Error("Each argument of DeclareObsoleteSynonym must be a string\n");
     fi;
+    if Length(level_arg) = 0 then
+        level := 2;
+    else
+        level := level_arg[1];
+    fi;
+
     value := EvalString( name_current );
     if IsFunction( value ) then
         orig_value := value;
+        printed_warning := false;
         value := function (arg)
             local res;
-            Info( InfoObsolete, 1, "'", name_obsolete, "' is obsolete.",
-                "\n#I  It may be removed in a future release of GAP.",
-                "\n#I  Use ", name_current, " instead.");
+            if not printed_warning and InfoLevel(InfoObsolete) >= level then
+                Info( InfoObsolete, level, "'", name_obsolete, "' is obsolete.",
+                    "\n#I  It may be removed in a future release of GAP.",
+                    "\n#I  Use ", name_current, " instead.");
+                printed_warning := true;
+            fi;
             # TODO: This will error out if orig_value is a function which returns nothing.
             #return CallFuncList(orig_value, arg);
             res := CallFuncListWrap(orig_value, arg);
@@ -100,11 +122,16 @@ BIND_GLOBAL( "DeclareObsoleteSynonym", function( name_obsolete, name_current )
     BIND_GLOBAL( name_obsolete, value );
 end );
 
-BIND_GLOBAL( "DeclareObsoleteSynonymAttr", function( name_obsolete, name_current )
+BIND_GLOBAL( "DeclareObsoleteSynonymAttr", function( name_obsolete, name_current, level_arg... )
+    local level;
     Assert(0, IsFunction( ValueGlobal( name_current ) ) );
-    DeclareObsoleteSynonym( name_obsolete, name_current );
-    DeclareObsoleteSynonym( Concatenation("Set", name_obsolete), Concatenation("Set", name_current) );
-    DeclareObsoleteSynonym( Concatenation("Has", name_obsolete), Concatenation("Has", name_current) );
+    level := 1;
+    if Length(level_arg) > 0 then
+        level := level_arg[1];
+    fi;
+    DeclareObsoleteSynonym( name_obsolete, name_current, level );
+    DeclareObsoleteSynonym( Concatenation("Set", name_obsolete), Concatenation("Set", name_current), level );
+    DeclareObsoleteSynonym( Concatenation("Has", name_obsolete), Concatenation("Has", name_current), level );
 end );
 
 
@@ -136,7 +163,7 @@ end );
 ##
 ##  Moved to obsoletes in May 2003.
 ##
-##  not used in any redistributed package (01/2016)
+##  Not used in any redistributed package (01/2016)
 #DeclareGlobalFunction( "DiagonalizeIntMatNormDriven" );
 
 
@@ -159,61 +186,60 @@ end );
 ##
 
 #BindGlobal( "DeclarePackage", Ignore );
-# 09/2018: not used in any redistributed package
+# 09/2018: Not used in any redistributed package
 
 #BindGlobal( "DeclareAutoPackage", Ignore );
-# 06/2018: not used in any redistributed package
+# 06/2018: Not used in any redistributed package
 
 #BindGlobal( "DeclarePackageAutoDocumentation", Ignore );
-# 09/2018: not used in any redistributed package
+# 09/2018: Not used in any redistributed package
 
 #BindGlobal( "DeclarePackageDocumentation", Ignore );
-# 03/2018: not used in any redistributed package
+# 03/2018: Not used in any redistributed package
 
 DeclareObsoleteSynonym( "ReadPkg", "ReadPackage" );
-# 06/2018: still used in automgrp, Hap (HapCocyclic), modisom
-# safely used in GAP3 compatibility code: ctbllib, quagroup, singular (09/2018)
+# 11/2018: still used in Hap (HapCocyclic)
+# safely used in GAP3 compatibility code: ctbllib, quagroup (09/2018)
 
-DeclareObsoleteSynonym( "RequirePackage", "LoadPackage" );
+#DeclareObsoleteSynonym( "RequirePackage", "LoadPackage" );
 # 09/2018: not used in "general" code in any redistributed package
-# used in documentation or for generating it: edim, hecke, repsn, singular (09/2018)
-# safely used in GAP3 compatibility code: ctbllib, singular (09/2018)
+# used in documentation or for generating it: edim, repsn (11/2018)
+# safely used in GAP3 compatibility code: ctbllib (09/2018)
 
 
 #############################################################################
 ##
-#V  KERNEL_VERSION   - not used in any redistributed package (11/2017)
-#V  VERSION          - still used by HAP, singular (06/2018)
-#V  GAP_ARCHITECTURE - still used by gbnp, singular (03/2018)
-#V  GAP_ROOT_PATHS   - not used in any redistributed package (03/2018)
-#V  DEBUG_LOADING    - still used by the GAP kernel itself (11/2017)
-#V  BANNER           - still used by loops, quagroup (09/2018)
-#V  QUIET            - still used by loops, quagroup (09/2018)
-#V  LOADED_PACKAGES  - not used in any redistributed package (11/2017)
+#V  KERNEL_VERSION   - Not used in any redistributed package (11/2017)
+#V  VERSION          - Not used in any redistributed package (11/2018)
+#V  GAP_ARCHITECTURE - still used in gbnp (04/2019)
+#V  GAP_ROOT_PATHS   - Not used in any redistributed package (03/2018)
+#V  DEBUG_LOADING    - Not used in any redistributed package (04/2019)
+#V  BANNER           - Not used in any redistributed package (04/2019)
+#V  QUIET            - Not used in any redistributed package (04/2019)
+#V  LOADED_PACKAGES  - Not used in any redistributed package (11/2017)
 ##
 ##  Up to GAP 4.3,
 ##  these global variables were used instead of the record `GAPInfo'.
 ##
 #BindGlobal( "KERNEL_VERSION", GAPInfo.KernelVersion );
-BindGlobal( "VERSION", GAPInfo.Version );
+#BindGlobal( "VERSION", GAPInfo.Version );
 BindGlobal( "GAP_ARCHITECTURE", GAPInfo.Architecture );
 #BindGlobal( "GAP_ROOT_PATHS", GAPInfo.RootPaths );
-BindGlobal( "DEBUG_LOADING", GAPInfo.CommandLineOptions.D );
-BindGlobal( "BANNER", not GAPInfo.CommandLineOptions.b );
-BindGlobal( "QUIET", GAPInfo.CommandLineOptions.q );
+#BindGlobal( "DEBUG_LOADING", GAPInfo.CommandLineOptions.D );
+#BindGlobal( "BANNER", not GAPInfo.CommandLineOptions.b );
+#BindGlobal( "QUIET", GAPInfo.CommandLineOptions.q );
 #BindGlobal( "LOADED_PACKAGES", GAPInfo.PackagesLoaded );
 
 #############################################################################
 ##
-#V  PACKAGES_VERSIONS - not used in any redistributed package (11/2017)
-#V  Revision          - still used by HAPcryst, pargap, polymaking, rds,
-#V                      singular, tomlib (03/2018)
+#V  PACKAGES_VERSIONS - Not used in any redistributed package (11/2017)
+#V  Revision          - still used in HAPcryst (04/2019)
 #BindGlobal( "PACKAGES_VERSIONS", rec() );
 BindGlobal( "Revision", rec() );
 
 #############################################################################
 ##
-#V  TRANSDEGREES - not used in any redistributed package (09/2018)
+#V  TRANSDEGREES
 ##
 ##  This variable was used by the GAP Transitive Groups Library before it
 ##  became a separate TransGrp package. It denoted the maximal degree of
@@ -228,6 +254,7 @@ BindGlobal( "Revision", rec() );
 ##  representatives for all transitive permutation groups of degree at
 ##  most 47, with degree 32 needing to be downloaded separately.
 ##
+##  Still used in ctbllib (11/2018)
 BindGlobal( "TRANSDEGREES", 30 );
 
 #############################################################################
@@ -235,7 +262,8 @@ BindGlobal( "TRANSDEGREES", 30 );
 #A  NormedVectors( <V> )
 ##
 ##  Moved to obsoletes in May 2003. 
-##  Still used in ctbllib, matgrp (06/2018)
+##  Still used in matgrp (11/2018)
+##  used in documentation or for generating it: ctbllib (11/2018)
 ##
 DeclareObsoleteSynonymAttr( "NormedVectors", "NormedRowVectors" );
 
@@ -265,6 +293,20 @@ DeclareObsoleteSynonymAttr( "NormedVectors", "NormedRowVectors" );
 
 #############################################################################
 ##
+#F  CharValueWreathSymmetric( <tbl>, <n>, <beta>, <pi> )  . .
+#F                                        . . . .  character value in G wr Sn
+##
+##  This function was never documented but had been available for decades.
+##  Its functionality became documented under the more suitable name
+##  'CharacterValueWreathSymmetric' in GAP 4.10.
+##
+##  Not used in any redistributed package (11/2018)
+#DeclareObsoleteSynonym( "CharValueWreathSymmetric",
+#    "CharacterValueWreathSymmetric" );
+
+
+#############################################################################
+##
 #O  FormattedString( <obj>, <nr> )  . . formatted string repres. of an object
 ##
 ##  This variable name was never documented and is obsolete.
@@ -272,8 +314,7 @@ DeclareObsoleteSynonymAttr( "NormedVectors", "NormedRowVectors" );
 ##  for attributes.)
 ## 
 ##  Moved to obsolete in Dec 2007.
-##  Still used in ctbllib, gbnp. (03/2018)
-##
+##  Still used in ctbllib, gbnp (11/2018)
 DeclareObsoleteSynonym( "FormattedString", "String" );
 
 
@@ -283,16 +324,13 @@ DeclareObsoleteSynonym( "FormattedString", "String" );
 ##  The following names should be still available and regarded as obsolescent
 ##  in GAP 4.5, and should be removed in GAP 4.6.
 ##
-#F  IsTuple( ... ) - not used in any redistributed package (11/2017)
-#F  Tuple( ... ) - still used by groupoids, modisom, numericalsgps (09/2018)
+#F  IsTuple( ... ) - Not used in any redistributed package (11/2017)
+#F  Tuple( ... ) - still used in numericalsgps (11/2018)
 ##
 #DeclareObsoleteSynonym( "IsTuple", "IsDirectProductElement" );
 DeclareObsoleteSynonym( "Tuple", "DirectProductElement" );
 
-##  from GAPs "classical" random number generator:
 
-# Outdated, but kept since they were documented for a long time.
-# Moved to obsoletes in May 2010.
 #############################################################################
 ##
 #F  StateRandom()
@@ -353,11 +391,12 @@ DeclareObsoleteSynonym( "Tuple", "DirectProductElement" );
 
 # synonym formerly declared in factgrp.gd.
 # Moved to obsoletes in October 2011
-# not used in any redistributed package (11/2017)
+# Not used in any redistributed package (11/2017)
 #DeclareObsoleteSynonym( "FactorCosetOperation", "FactorCosetAction" );
 
 # synonym retained for backwards compatibility with GAP 4.4.
-# Moved to obsoletes in April 2012. Still used by hap (03/2018)
+# Moved to obsoletes in April 2012.
+# Still used in hap (11/2018)
 DeclareObsoleteSynonym( "Complementclasses", "ComplementClassesRepresentatives" );
 
 
@@ -382,7 +421,7 @@ DeclareObsoleteSynonym( "Complementclasses", "ComplementClassesRepresentatives" 
 ##  </Description>
 ##  </ManSection>
 ##
-##  not used in any redistributed package (11/2017)
+##  Not used in any redistributed package (11/2017)
 #DeclareOperation( "ShrinkCoeffs", [ IsMutable and IsList ] );
 
 
@@ -392,7 +431,7 @@ DeclareObsoleteSynonym( "Complementclasses", "ComplementClassesRepresentatives" 
 ##
 ##  was supported until GAP 4.4, obsolescent in GAP 4.5.
 ##
-##  not used in any redistributed package (01/2016)
+##  Not used in any redistributed package (01/2016)
 # BindGlobal( "ExcludeFromAutoload", function( arg )
 #     Info( InfoWarning, 1,
 #           "the function `ExcludeFromAutoload' is not supported anymore,\n",
@@ -403,11 +442,12 @@ DeclareObsoleteSynonym( "Complementclasses", "ComplementClassesRepresentatives" 
 
 #############################################################################
 ##
-#V  POST_RESTORE_FUNCS - still used by grape (09/2018)
+#V  POST_RESTORE_FUNCS
 ##
 ##  were supported until GAP 4.4, obsolescent in GAP 4.5.
 ##
-POST_RESTORE_FUNCS:= GAPInfo.PostRestoreFuncs;
+##  Not used in any redistributed package (11/2018)
+#POST_RESTORE_FUNCS:= GAPInfo.PostRestoreFuncs;
 
 
 #############################################################################
@@ -421,6 +461,8 @@ POST_RESTORE_FUNCS:= GAPInfo.PostRestoreFuncs;
 ##  </Description>
 ##  </ManSection>
 ##
+##  Not used in any redistributed package (11/2018)
+##  Still used in the GAP library (11/2018)
 DeclareOperation( "TeXObj", [ IS_OBJECT ] );
 
 
@@ -440,6 +482,8 @@ DeclareOperation( "TeXObj", [ IS_OBJECT ] );
 ##  </Description>
 ##  </ManSection>
 ##
+##  Not used in any redistributed package (11/2018)
+##  Still used in the GAP library (11/2018)
 DeclareOperation( "LaTeXObj", [ IS_OBJECT ] );
 
 
@@ -465,7 +509,7 @@ DeclareOperation( "LaTeXObj", [ IS_OBJECT ] );
 ##  In GAP 4.5, one can use the function `CharacterTableWithStoredGroup'
 ##  instead of `ConnectGroupAndCharacterTable'.
 ##
-##  not used in any redistributed package (01/2016)
+##  Not used in any redistributed package (01/2016)
 #DeclareGlobalFunction( "ConnectGroupAndCharacterTable" );
 
 
@@ -487,8 +531,8 @@ DeclareOperation( "LaTeXObj", [ IS_OBJECT ] );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-## still used by modisom (09/2018)
-DeclareObsoleteSynonym( "MutableIdentityMat", "IdentityMat" );
+##  Not used in any redistributed package (11/2018)
+#DeclareObsoleteSynonym( "MutableIdentityMat", "IdentityMat" );
 
 
 #############################################################################
@@ -509,14 +553,14 @@ DeclareObsoleteSynonym( "MutableIdentityMat", "IdentityMat" );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-## still used by modisom, qpa, singular (09/2018)
-DeclareObsoleteSynonym( "MutableNullMat", "NullMat" );
+##  Not used in any redistributed package (11/2018)
+#DeclareObsoleteSynonym( "MutableNullMat", "NullMat" );
+
 
 #############################################################################
 ##
 #F  IsSemilatticeAsSemigroup( <S> ) is the semigroup <S> a semilattice
 ##
-##  <#GAPDoc Label="IsSemilatticeAsSemigroup">
 ##  <ManSection>
 ##  <Prop Name="IsSemilatticeAsSemigroup" Arg='S'/>
 ##
@@ -533,9 +577,8 @@ DeclareObsoleteSynonym( "MutableNullMat", "NullMat" );
 ##    beta-releases.  #  It should <E>not</E> be used in new code.
 ##  </Description>
 ##  </ManSection>
-##  <#/GAPDoc>
 ##
-##  not used in any redistributed packages (11/2017)
+##  Not used in any redistributed packages (11/2017)
 #DeclareSynonymAttr( "IsSemilatticeAsSemigroup", IsSemilattice );
 
 #############################################################################
@@ -551,14 +594,31 @@ DeclareObsoleteSynonym( "MutableNullMat", "NullMat" );
 
 #############################################################################
 ##
-#O  PositionFirstComponent( <list>, <obj> )
+#O  MultRowVector( <list1>, <poss1>, <list2>, <poss2>, <mul> )
 ##
-## Removed due to being incompletely documented and its available methods
-## behaving inconsistently. Use PositionSorted or Position instead.
+##  <#GAPDoc Label="MultRowVector_Obsolete">
+##  <ManSection>
+##  <Oper Name="MultRowVector" Arg='list1, [poss1, list2, poss2, ]mul'/>
+##  <Returns>nothing</Returns>
 ##
-## Deprecated in GAP >= 4.8
-## Not used in any redistributed packages (11/2017)
-#DeclareOperation( "PositionFirstComponent", [IsList,IsObject] );
+##  <Description>
+##  The two argument version of this operation is an obsolete synonym for
+##  <C>MultVectorLeft</C>, which calculates <A>mul</A>*<A>list1</A> in-place.
+##  New code should use <C>MultVectorLeft</C> or its synonym
+##  <C>MultVector</C> instead.
+##  <P/>
+##  <E>The five argument version of this operation is kept for compatibility
+##  with older versions of &GAP; and will be removed eventually.</E>
+##  It replaces
+##  <A>list1</A><C>[</C><A>poss1</A><C>[</C><M>i</M><C>]]</C> by
+##  <C><A>mul</A>*<A>list2</A>[<A>poss2</A>[</C><M>i</M><C>]]</C> for <M>i</M>
+##  between <M>1</M> and <C>Length( <A>poss1</A> )</C>.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+##  Still used in fining, orb, polycyclic, recog (11/2018)
+DeclareObsoleteSynonym( "MultRowVector", "MultVector" );
 
 #############################################################################
 ##
@@ -568,9 +628,8 @@ DeclareObsoleteSynonym( "MutableNullMat", "NullMat" );
 ##  former is still used in some packages, for backwards compatibility we
 ##  replace it by the call of `Test' with comparison up to whitespaces.
 ##
-##  Still used in ctbllib, cubefree, gbnp, guarana, hapcryst, polymaking,
-##  radiroot, singular (09/2018)
-##  safely used in compatibility code: gapdoc (09/2018)
+##  Still used in ctbllib, cubefree, gbnp, hapcryst (04/2019)
+##  Safely used in compatibility code: gapdoc (09/2018)
 BindGlobal( "ReadTest", function( fn )
   Print("#I  ReadTest is no longer supported. Please use more robust and flexible\n",
         "#I  Test. For backwards compatibility, ReadTest(<filename>) is replaced\n",
@@ -584,8 +643,8 @@ end);
 ##
 ##  This got a nicer name before is became documented.
 ##
-## still used by Browse, profiling, resclasses (09/2018)
-## safely used in compatibility code: digraphs, profiling, semigroups (09/2018)
+##  Still used in ctbllib, Browse (04/2019)
+##  Safely used in compatibility code: digraphs, profiling, semigroups (09/2018)
 DeclareObsoleteSynonym( "USER_HOME_EXPAND", "UserHomeExpand" );
 
 #############################################################################
@@ -594,8 +653,8 @@ DeclareObsoleteSynonym( "USER_HOME_EXPAND", "UserHomeExpand" );
 ##
 ##  This name stems from GAP 3 days.
 ##
-## still used by Browse, ctbllib (09/2018)
-## safely used in GAP3 compatibility code: ctbllib (09/2018)
+##  Still used in Browse (11/2018)
+##  Safely used in GAP3 compatibility code: ctbllib (11/2018)
 DeclareObsoleteSynonym( "RecFields", "RecNames" );
 
 #############################################################################
@@ -608,9 +667,96 @@ DeclareObsoleteSynonym( "RecFields", "RecNames" );
 ##  UNDOCUMENTED kernel functions may wish to keep using SHALLOW_SIZE until
 ##  they can adjust their minimal GAP version requirements.
 ##
-## still used by orb, recog (09/2018)
-DeclareObsoleteSynonym( "SHALLOW_SIZE", "SIZE_OBJ" );
+##  Not used in any redistributed package (11/2018)
+#DeclareObsoleteSynonym( "SHALLOW_SIZE", "SIZE_OBJ" );
+
 
 #############################################################################
 ##
-#E
+#V  InfoRead? 
+##
+##  InfoRead used to be used to print when a file is read using `Read()`
+##
+##  Still used in gbnp (04/2019)
+if GAPInfo.CommandLineOptions.D then InfoRead1 := Print; fi;
+if not IsBound(InfoRead1) then InfoRead1 := Ignore; fi;
+if not IsBound(InfoRead2) then InfoRead2 := Ignore; fi;
+
+#############################################################################
+##
+#F  TemporaryGlobalVarName( [<prefix>] )   name of an unbound global variable
+##
+##  <ManSection>
+##  <Func Name="TemporaryGlobalVarName" Arg='[prefix]'/>
+##
+##  <Description>
+##  TemporaryGlobalVarName ( [<A>prefix</A>] ) returns a string that can be used
+##  as the name of a global variable that is not bound at the time when
+##  TemporaryGlobalVarName() is called.  The optional argument prefix can
+##  specify a string with which the name of the global variable starts.
+##  </Description>
+##  </ManSection>
+##
+##  Still used in anupq, SCSCP (04/2019)
+DeclareGlobalFunction("TemporaryGlobalVarName");
+
+
+#############################################################################
+##
+#F  HideGlobalVariables(<str1>[,<str2>,...]))
+##
+##  <ManSection>
+##  <Func Name="HideGlobalVariables" Arg='str1[,str2,...]'/>
+##
+##  <Description>
+##  temporarily makes global variables <Q>undefined</Q>. The arguments to
+##  <C>HideGlobalVariables</C> are strings. If there is a global variable defined
+##  whose identifier is equal to one of the strings it will be <Q>hidden</Q>.
+##  This means that identifier and value will be safely stored on a stack
+##  and the variable will be undefined afterwards. A call to
+##  <C>UnhideGlobalVariables</C> will restore the old values.
+##  The main purpose of hiding variables will be for the temporary creation
+##  of global variables for reading in data created by other programs.
+##  </Description>
+##  </ManSection>
+##
+##  This function was never documented.
+##
+##  Still used in anupq (04/2019)
+DeclareGlobalFunction("HideGlobalVariables");
+
+
+#############################################################################
+##
+#F  UnhideGlobalVariables(<str1>[,<str2>,...])
+#F  UnhideGlobalVariables()
+##
+##  <ManSection>
+##  <Func Name="UnhideGlobalVariables" Arg='str1[,str2,...]'/>
+##  <Func Name="UnhideGlobalVariables" Arg=''/>
+##
+##  <Description>
+##  The second version unhides all variables that are still hidden.
+##  </Description>
+##  </ManSection>
+##
+##  This function was never documented.
+##
+##  Still used in anupq (04/2019)
+DeclareGlobalFunction("UnhideGlobalVariables");
+
+
+#############################################################################
+##
+##
+##  Still used in Browse (06/2019)
+BindGlobal("STRING_LIST_DIR", function(dirname)
+    local list;
+
+    list:= LIST_DIR( dirname );
+    if list = fail then
+      return fail;
+    else
+      return JoinStringsWithSeparator( list, "\000" );
+    fi;
+end);

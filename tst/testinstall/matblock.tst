@@ -1,10 +1,4 @@
-#############################################################################
-##
-#W  matblock.tst                GAP Library                     Thomas Breuer
-##
-##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-##
+#@local dim,m1,m2,m3,mm,o1,o2,p1,p2,p3,p4,tmp,z
 gap> START_TEST("matblock.tst");
 gap> m1 := BlockMatrix( [ [ 1, 1, [[1,1],[0,1]] ],
 >                         [ 1, 3, [[1,0],[0,1]] ],
@@ -19,16 +13,20 @@ gap> m3 := AsBlockMatrix( m2, 2, 2 );
 <block matrix of dimensions (2*3)x(2*3)>
 gap> z  := BlockMatrix( [], 3, 3, 2, 2, 0 );
 <block matrix of dimensions (3*2)x(3*2)>
-gap> Length( m1 ); DimensionsMat( m1 );
+gap> NrRows( m1 ); NrCols( m1 ); DimensionsMat( m1 );
 6
+8
 [ 6, 8 ]
-gap> Length( m2 ); DimensionsMat( m2 );
+gap> NrRows( m2 ); NrCols( m2 ); DimensionsMat( m2 );
+6
 6
 [ 6, 6 ]
-gap> Length( m3 ); DimensionsMat( m3 );
+gap> NrRows( m3 ); NrCols( m3 ); DimensionsMat( m3 );
+6
 6
 [ 6, 6 ]
-gap> Length( z );  DimensionsMat( z );
+gap> NrRows( z ); NrCols( z );  DimensionsMat( z );
+6
 6
 [ 6, 6 ]
 gap> m1[3];
@@ -116,12 +114,15 @@ gap> tmp = MatrixByBlockMatrix(m2);
 true
 
 # block matrices are immutable
+#@if IsHPCGAP
 gap> m1[1,2] := 5;
-Error, Matrix Assignment: <mat> must be a mutable matrix
+Error, Matrix Assignment: <mat> must be a mutable matrix (not a atomic compone\
+nt object)
+#@else
+gap> m1[1,2] := 5;
+Error, Matrix Assignment: <mat> must be a mutable matrix (not a component obje\
+ct)
+#@fi
 
 #
 gap> STOP_TEST( "matblock.tst", 1);
-
-#############################################################################
-##
-#E

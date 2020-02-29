@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  vars.h                      GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares the functions of variables package.
 **
@@ -69,7 +69,7 @@
 *F  IS_LVARS_OR_HVARS()
 **
 */
-static inline int IS_LVARS_OR_HVARS(Obj obj)
+EXPORT_INLINE int IS_LVARS_OR_HVARS(Obj obj)
 {
     UInt tnum = TNUM_OBJ(obj);
     return tnum == T_LVARS || tnum == T_HVARS;
@@ -87,14 +87,14 @@ typedef struct {
 *F  FUNC_LVARS . . . . . . . . . . . function to which the given lvars belong
 **
 */
-static inline Obj FUNC_LVARS_PTR(void * lvars_ptr)
+EXPORT_INLINE Obj FUNC_LVARS_PTR(const void * lvars_ptr)
 {
-    return ((LVarsHeader *)lvars_ptr)->func;
+    return ((const LVarsHeader *)lvars_ptr)->func;
 }
 
-static inline Obj FUNC_LVARS(Obj lvars_obj)
+EXPORT_INLINE Obj FUNC_LVARS(Obj lvars_obj)
 {
-    return FUNC_LVARS_PTR(ADDR_OBJ(lvars_obj));
+    return FUNC_LVARS_PTR(CONST_ADDR_OBJ(lvars_obj));
 }
 
 
@@ -103,14 +103,14 @@ static inline Obj FUNC_LVARS(Obj lvars_obj)
 *F  STAT_LVARS . . . . . . . current statement in function of the given lvars
 **
 */
-static inline Expr STAT_LVARS_PTR(void * lvars_ptr)
+EXPORT_INLINE Expr STAT_LVARS_PTR(const void * lvars_ptr)
 {
-    return ((LVarsHeader *)lvars_ptr)->stat;
+    return ((const LVarsHeader *)lvars_ptr)->stat;
 }
 
-static inline Expr STAT_LVARS(Obj lvars_obj)
+EXPORT_INLINE Expr STAT_LVARS(Obj lvars_obj)
 {
-    return STAT_LVARS_PTR(ADDR_OBJ(lvars_obj));
+    return STAT_LVARS_PTR(CONST_ADDR_OBJ(lvars_obj));
 }
 
 
@@ -119,14 +119,14 @@ static inline Expr STAT_LVARS(Obj lvars_obj)
 *F  PARENT_LVARS . . . . . . . . . . . . . .  parent lvars of the given lvars
 **
 */
-static inline Obj PARENT_LVARS_PTR(void * lvars_ptr)
+EXPORT_INLINE Obj PARENT_LVARS_PTR(const void * lvars_ptr)
 {
-    return ((LVarsHeader *)lvars_ptr)->parent;
+    return ((const LVarsHeader *)lvars_ptr)->parent;
 }
 
-static inline Obj PARENT_LVARS(Obj lvars_obj)
+EXPORT_INLINE Obj PARENT_LVARS(Obj lvars_obj)
 {
-    return PARENT_LVARS_PTR(ADDR_OBJ(lvars_obj));
+    return PARENT_LVARS_PTR(CONST_ADDR_OBJ(lvars_obj));
 }
 
 
@@ -139,7 +139,7 @@ static inline Obj PARENT_LVARS(Obj lvars_obj)
 **  This  is  in this package,  because  it is stored   along  with the local
 **  variables in the local variables bag.
 */
-static inline Obj CURR_FUNC(void)
+EXPORT_INLINE Obj CURR_FUNC(void)
 {
     GAP_ASSERT(IS_LVARS_OR_HVARS(STATE(CurrLVars)));
     GAP_ASSERT(STATE(PtrLVars) == PTR_BAG(STATE(CurrLVars)));
@@ -152,12 +152,12 @@ static inline Obj CURR_FUNC(void)
 *F  BRK_CALL_TO() . . . . . . . . . expr. which was called from current frame
 *F  SET_BRK_CALL_TO(expr) . . . set expr. which was called from current frame
 */
-static inline Expr BRK_CALL_TO(void)
+EXPORT_INLINE Expr BRK_CALL_TO(void)
 {
     return STAT_LVARS_PTR(STATE(PtrLVars));
 }
 
-static inline void SET_BRK_CALL_TO(Expr expr)
+EXPORT_INLINE void SET_BRK_CALL_TO(Expr expr)
 {
     ((LVarsHeader *)STATE(PtrLVars))->stat = expr;
 }
@@ -169,7 +169,7 @@ static inline void SET_BRK_CALL_TO(Expr expr)
 *F  FreeLVarsBag( <bag> )  . . . . . . . . . . . . . . . . . . free lvars bag
 */
 
-Bag NewLVarsBag(UInt slots);
+Bag  NewLVarsBag(UInt slots);
 void FreeLVarsBag(Bag bag);
 
 /****************************************************************************
@@ -177,7 +177,7 @@ void FreeLVarsBag(Bag bag);
 *F  MakeHighVars( <bag> ) . . turn all frames on the stack into high vars
 */
 
-static inline void MakeHighVars( Bag bag ) {
+EXPORT_INLINE void MakeHighVars( Bag bag ) {
   while (bag && TNUM_OBJ(bag) == T_LVARS) {
     RetypeBag(bag, T_HVARS);
     bag = PARENT_LVARS(bag);
@@ -194,22 +194,26 @@ static inline void MakeHighVars( Bag bag ) {
 **  variables.  The old local variables bag is saved in <old>.
 */
 
-static inline Obj SwitchToNewLvars(Obj func, UInt narg, UInt nloc)
+EXPORT_INLINE Obj SwitchToNewLvars(Obj func, UInt narg, UInt nloc)
 {
-  // make sure old lvars are not garbage collected
+  // As an optimization, we never call CHANGED_BAG on CurrLVars directly,
+  // instead a callback that is run just before any GC takes care of that.
+  // However, that means that when changing the value of CurrLVars, we must
+  // call CHANGED_BAG on the old value.
   Obj old = STATE(CurrLVars);
   CHANGED_BAG( old );
 
   // create new lvars (may cause garbage collection)
   Obj new_lvars = NewLVarsBag( narg+nloc );
   LVarsHeader * hdr = (LVarsHeader *)ADDR_OBJ(new_lvars);
+  hdr->stat = 0;
   hdr->func = func;
   hdr->parent = old;
 
   // switch to new lvars
   STATE(CurrLVars) = new_lvars;
   STATE(PtrLVars) = (Obj *)hdr;
-  STATE(PtrBody) = (Stat *)ADDR_OBJ(BODY_FUNC(func));
+  STATE(PtrBody) = ADDR_OBJ(BODY_FUNC(func));
 
   return old;
 }
@@ -223,18 +227,22 @@ static inline Obj SwitchToNewLvars(Obj func, UInt narg, UInt nloc)
 **
 **  'SWITCH_TO_OLD_LVARS' switches back to the old local variables bag <old>.
 */
-static inline void SWITCH_TO_OLD_LVARS(Obj old)
+EXPORT_INLINE void SWITCH_TO_OLD_LVARS(Obj old)
 {
+    // As an optimization, we never call CHANGED_BAG on CurrLVars directly,
+    // instead a callback that is run just before any GC takes care of that.
+    // However, that means that when changing the value of CurrLVars, we must
+    // call CHANGED_BAG on the old value.
     CHANGED_BAG(STATE(CurrLVars));
 
     GAP_ASSERT(IS_LVARS_OR_HVARS(old));
     LVarsHeader * hdr = (LVarsHeader *)ADDR_OBJ(old);
     STATE(CurrLVars) = old;
     STATE(PtrLVars) = (Obj *)hdr;
-    STATE(PtrBody) = (Stat *)ADDR_OBJ(BODY_FUNC(hdr->func));
+    STATE(PtrBody) = ADDR_OBJ(BODY_FUNC(hdr->func));
 }
 
-static inline void SWITCH_TO_OLD_LVARS_AND_FREE(Obj old)
+EXPORT_INLINE void SWITCH_TO_OLD_LVARS_AND_FREE(Obj old)
 {
   // remove the link to the calling function, in case this values bag stays
   // alive due to higher variable reference
@@ -253,12 +261,12 @@ static inline void SWITCH_TO_OLD_LVARS_AND_FREE(Obj old)
 **
 **  'ASS_LVAR' assigns the value <val> to the local variable <lvar>.
 */
-static inline void ASS_LVAR(UInt lvar, Obj val)
+EXPORT_INLINE void ASS_LVAR(UInt lvar, Obj val)
 {
     STATE(PtrLVars)[lvar + 2] = val;
 }
 
-static inline void ASS_LVAR_WITH_CONTEXT(Obj context, UInt lvar, Obj val)
+EXPORT_INLINE void ASS_LVAR_WITH_CONTEXT(Obj context, UInt lvar, Obj val)
 {
     ADDR_OBJ(context)[lvar + 2] = val;
 }
@@ -270,12 +278,12 @@ static inline void ASS_LVAR_WITH_CONTEXT(Obj context, UInt lvar, Obj val)
 **
 **  'OBJ_LVAR' returns the value of the local variable <lvar>.
 */
-static inline Obj OBJ_LVAR(UInt lvar)
+EXPORT_INLINE Obj OBJ_LVAR(UInt lvar)
 {
     return STATE(PtrLVars)[lvar + 2];
 }
 
-static inline Obj OBJ_LVAR_WITH_CONTEXT(Obj context, UInt lvar)
+EXPORT_INLINE Obj OBJ_LVAR_WITH_CONTEXT(Obj context, UInt lvar)
 {
     return CONST_ADDR_OBJ(context)[lvar + 2];
 }
@@ -287,12 +295,12 @@ static inline Obj OBJ_LVAR_WITH_CONTEXT(Obj context, UInt lvar)
 **
 **  'NAME_LVAR' returns the name of the local variable <lvar>.
 */
-static inline Obj NAME_LVAR(UInt lvar)
+EXPORT_INLINE Obj NAME_LVAR(UInt lvar)
 {
     return NAMI_FUNC(CURR_FUNC(), lvar);
 }
 
-static inline Obj NAME_LVAR_WITH_CONTEXT(Obj context, UInt lvar)
+EXPORT_INLINE Obj NAME_LVAR_WITH_CONTEXT(Obj context, UInt lvar)
 {
     return NAMI_FUNC(FUNC_LVARS(context), lvar);
 }
@@ -304,8 +312,7 @@ static inline Obj NAME_LVAR_WITH_CONTEXT(Obj context, UInt lvar)
 **
 **  'ObjLVar' returns the value of the local variable <lvar>.
 */
-extern  Obj             ObjLVar (
-            UInt                lvar );
+Obj ObjLVar(UInt lvar);
 
 
 /****************************************************************************
@@ -320,13 +327,13 @@ extern  Obj             ObjLVar (
 **
 **  'NAME_HVAR' returns the name of the higher variable <hvar>.
 */
-extern void ASS_HVAR(UInt hvar, Obj val);
-extern Obj  OBJ_HVAR(UInt hvar);
-extern Obj  NAME_HVAR(UInt hvar);
+void ASS_HVAR(UInt hvar, Obj val);
+Obj  OBJ_HVAR(UInt hvar);
+Obj  NAME_HVAR(UInt hvar);
 
-extern void ASS_HVAR_WITH_CONTEXT(Obj context, UInt hvar, Obj val);
-extern Obj  OBJ_HVAR_WITH_CONTEXT(Obj context, UInt hvar);
-extern Obj  NAME_HVAR_WITH_CONTEXT(Obj context, UInt hvar);
+void ASS_HVAR_WITH_CONTEXT(Obj context, UInt hvar, Obj val);
+Obj  OBJ_HVAR_WITH_CONTEXT(Obj context, UInt hvar);
+Obj  NAME_HVAR_WITH_CONTEXT(Obj context, UInt hvar);
 
 
 /****************************************************************************

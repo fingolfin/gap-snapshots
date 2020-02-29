@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  coll.gi                     GAP library                  Martin Schönert
-#W                                                            & Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Martin Schönert, Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains methods for collections in general.
 ##
@@ -527,7 +527,7 @@ InstallMethod( AsList,
 
 InstallMethod( ViewObj,
     "for an enumerator that perhaps has its own `ViewObj' function",
-    [ IsEnumeratorByFunctions ], 20,
+    [ IsEnumeratorByFunctions ], SUM_FLAGS,
     # override, e.g., the method for finite lists
     # in the case of an enumerator of GF(q)^n
     function( enum )
@@ -762,6 +762,19 @@ local l;
   return l;
 end);
 
+InstallMethod(SortedList, "for a list or collection and a function",
+[ IsListOrCollection, IsFunction ],
+function(C, func)
+local l;
+  if IsList(C) then
+    l := Compacted(C);
+  else
+    l := List(C);
+  fi;
+  Sort(l, func);
+  return l;
+end);
+
 InstallMethod( AsSortedList, "for a list or collection",
         true, [ IsListOrCollection ], 0, 
         function(l) 
@@ -836,15 +849,32 @@ InstallOtherMethod( Iterator,
 ##  
 ##  Does not change the iterator.
 ##  
-InstallOtherMethod(ListOp, [IsIterator], function(it)
-  local l, a;
-  l := [];
-  it := ShallowCopy(it);
-  for a in it do 
-    Add(l,a);
-  od;
-  return l;
-end);
+InstallOtherMethod( ListOp,
+    "for an iterator",
+    [ IsIterator ],
+    function ( iter )
+    local   res, elm;
+    res := [];
+    iter := ShallowCopy( iter );
+    for elm in iter do
+      Add( res, elm );
+    od;
+    return res;
+    end );
+
+InstallOtherMethod( ListOp,
+    "for an iterator, and a function",
+    [ IsIterator, IsFunction ],
+    function ( iter, func )
+    local   res, elm;
+    res := [];
+    iter := ShallowCopy( iter );
+    for elm in iter do
+      Add( res, func( elm ) );
+    od;
+    return res;
+    end );
+
 
 #############################################################################
 ##
@@ -1342,10 +1372,15 @@ InstallGlobalFunction( Filtered,
           res[i]:= elm;
         fi;
       od;
-      return res;
     else
-      return FilteredOp( C, func );
+      res:= FilteredOp( C, func );
     fi;
+
+    if HasIsSSortedList( C ) and IsSSortedList( C ) then
+      SetIsSSortedList( res, true );
+    fi;
+
+    return res;
 end );
 
 
@@ -3088,7 +3123,3 @@ local filt;
   obj!.Size:=sz;
   SetFilterObj(obj,filt);
 end);
-
-#############################################################################
-##
-#E

@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  pcgsspec.gd                 GAP library                      Bettina Eick
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Bettina Eick.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 
 #############################################################################
@@ -187,10 +188,10 @@ DeclareAttribute( "LGFirst", IsPcgs );
 ##  second head of the group.
 ##  Its lower <M>2</M>-central series has length <M>2</M>.
 ##  <P/>
-##  In this example the <Ref Func="FamilyPcgs"/> value of the groups used
+##  In this example the <Ref Attr="FamilyPcgs"/> value of the groups used
 ##  was a special pcgs, but this is not necessarily the case.
 ##  For performance reasons it can be worth to enforce this,
-##  see&nbsp;<Ref Func="IsomorphismSpecialPcGroup"/>.
+##  see&nbsp;<Ref Attr="IsomorphismSpecialPcGroup"/>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -209,10 +210,10 @@ DeclareAttribute( "LGLength", IsGroup );
 ##  computes an induced pcgs with respect to the special pcgs of the
 ##  parent of <A>G</A>.
 ##  <P/>
-##  <Ref Func="InducedPcgsWrtSpecialPcgs"/> will return a pcgs induced by
+##  <Ref Attr="InducedPcgsWrtSpecialPcgs"/> will return a pcgs induced by
 ##  <E>a</E> special pcgs (which might differ from the one you had in mind).
 ##  If you need an induced pcgs compatible with a <E>given</E> special pcgs
-##  use <Ref Func="InducedPcgs"/> for this special pcgs.
+##  use <Ref Oper="InducedPcgs"/> for this special pcgs.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -265,9 +266,3 @@ InstallTrueMethod( IsPcgs, IsInducedPcgsWrtSpecialPcgs );
 ##
 DeclareProperty( "IsCanonicalPcgsWrtSpecialPcgs", IsPcgs );
 InstallTrueMethod( IsPcgs, IsCanonicalPcgsWrtSpecialPcgs );
-
-
-#############################################################################
-##  
-#E
-

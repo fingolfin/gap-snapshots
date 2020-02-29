@@ -1,13 +1,12 @@
 #############################################################################
 ##
-#W  meataxe.gi                   GAP Library                       Derek Holt
-#W                                                                 Sarah Rees
-#W                                                           Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Derek Holt, Sarah Rees, Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright 1994 -- School of Mathematical Sciences, ANU
-#Y  (C) 1998-2001 School Math. Sci., University of St Andrews, Scotland
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the 'Smash'-MeatAxe modified for GAP4 and using the
 ##  standard MeatAxe interface.  It defines the MeatAxe SMTX.
@@ -421,7 +420,7 @@ SMTX_SpinnedBasis:=function( arg  )
             subdim:=subdim + 1;
             leadpos[subdim]:=j;
             #w:=(w[j]^-1) * w;
-            MultRowVector(w,w[j]^-1);
+            MultVector(w,w[j]^-1);
             Add( ans, w );
             if subdim = dim then
                ans:=ImmutableMatrix(F,ans);
@@ -889,10 +888,10 @@ end;
 
 SMTX_SMCoRaEl:=function(matrices,ngens,newgenlist,dim,F)
 local g1,g2,coefflist,M,pol;
-  g1:=Random([1..ngens]);
+  g1:=Random(1, ngens);
   g2:=g1;
   while g2=g1 and ngens>1 do
-     g2:=Random([1..ngens]);
+     g2:=Random(1, ngens);
   od;
   ngens:=ngens + 1;
   matrices[ngens]:=matrices[g1] * matrices[g2];
@@ -979,11 +978,11 @@ SMTX_IrreducibilityTest:=function( module )
    rt0:=Runtime();
    Info(InfoMeatAxe,1,"Calling MeatAxe. All times will be in milliseconds");
    if not SMTX.IsMTXModule(module) then
-      return Error("Argument of IsIrreducible is not a module.");
+      Error("Argument of IsIrreducible is not a module.");
    fi;
 
    if not module.IsOverFiniteField then
-      return Error("Argument of IsIrreducible is not over a finite field.");
+      Error("Argument of IsIrreducible is not over a finite field.");
    fi;
    matrices:=ShallowCopy(module.generators);
    dim:=SMTX.Dimension(module);
@@ -1005,10 +1004,10 @@ SMTX_IrreducibilityTest:=function( module )
    newgenlist:=[];
    # Do a small amount of preprocessing to increase the generator set.
    for i in [1..1] do
-      g1:=Random([1..ngens]);
+      g1:=Random(1, ngens);
       g2:=g1;
       while g2=g1 and Length(matrices) > 1 do
-         g2:=Random([1..ngens]);
+         g2:=Random(1, ngens);
       od;
       ngens:=ngens + 1;
       matrices[ngens]:=matrices[g1] * matrices[g2];
@@ -2116,9 +2115,9 @@ SMTX_Distinguish:=function( cf, i )
       wno:=wno + 1;
       # Add a new generator if there are less than 8 or if wno mod 10=0.
       if  ngens<8 or wno mod 10 = 0 then
-         x:=Random([1..ngens]);
+         x:=Random(1, ngens);
          y:=x;
-         while y = x and ngens > 1 do y:=Random([1..ngens]); od;
+         while y = x and ngens > 1 do y:=Random(1, ngens); od;
          Add(el[1], [x, y]);
          ngens:=ngens + 1;
          matsi[ngens]:=matsi[x] * matsi[y];
@@ -2445,6 +2444,17 @@ SMTX_Homomorphisms:= function(m1, m2)
    zero:=Zero(F);
 
    dim1:=SMTX.Dimension(m1); dim2:=SMTX.Dimension(m2);
+
+   if dim1=1 then
+     # m1 is 1-dimensional -- eigenspace intersection
+     el:=List([1..Length(m1.generators)],x->NullspaceMat(m2.generators[x]-m1.generators[x][1][1]*m2.generators[x]^0));
+
+     imvecs:=el[1];
+     for j in [2..Length(el)] do
+       imvecs:=SumIntersectionMat(imvecs,el[j])[2];
+     od;
+     return List(imvecs,x->ImmutableMatrix(m1.field,[x]));
+   fi;
 
    m1bas:=[];
    m1bas[1]:= SMTX.AlgElNullspaceVec(m1);
@@ -3118,17 +3128,6 @@ local a,u,i,nb;
 end;
 SMTX.BasesMinimalSupermodules:=SMTX_BasesMinimalSupermodules;
 
-SMTX_BasisRadical:=function(module)
-local m,i,r;
-  m:=SMTX.BasesMaximalSubmodules(module);
-  r:=m[1];
-  for i in [2..Length(m)] do
-    r:=SumIntersectionMat(r,m[i])[2];
-  od;
-  return r;
-end;
-SMTX.BasisRadical:=SMTX_BasisRadical;
-
 #############################################################################
 ##
 #F SMTX.SpanOfMinimalSubGModules(m1, m2) . .
@@ -3172,7 +3171,7 @@ local cf, mat, i;
    cf:=SMTX.CollectedFactors(module);
    mat:=Concatenation(List(cf,i->SMTX_SpanOfMinimalSubGModules(i[1],module)));
    if Length(cf) = 1 then
-     return mat;
+     return ImmutableMatrix(module.field,mat);
    fi;
    TriangulizeMat(mat);
    mat:=ImmutableMatrix(module.field,mat);
@@ -3580,7 +3579,3 @@ SMTX_OrthogonalSign:=function(gm)
 end;
 
 SMTX.OrthogonalSign:=SMTX_OrthogonalSign;
-
-if IsHPCGAP then
-    MakeReadOnlyObj(SMTX);
-fi;

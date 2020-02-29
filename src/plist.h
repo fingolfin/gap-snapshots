@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  plist.h                     GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares the functions that deal with plain lists.
 **
@@ -14,7 +14,7 @@
 **  current  logical length.  The  last position to  which  an element can be
 **  assigned without resizing the plain list is called the physical length.
 **
-**  This representation  is encoded by  the macros 'NEW_PLIST', 'GROW_PLIST',
+**  This representation is encoded by the functions 'NEW_PLIST', 'GROW_PLIST',
 **  'SHRINK_PLIST', 'SET_LEN_PLIST',    'LEN_PLIST',     'SET_ELM_PLIST', and
 **  'ELM_PLIST', which are used by the functions in this package and the rest
 **  of the {\GAP} kernel to access plain lists.
@@ -36,20 +36,22 @@
 **  at least <plen> elements.
 **
 */
-static inline Obj NEW_PLIST(UInt type, Int plen)
+EXPORT_INLINE Obj NEW_PLIST(UInt type, Int plen)
 {
     GAP_ASSERT(plen >= 0);
     GAP_ASSERT(plen <= INT_INTOBJ_MAX);
     GAP_ASSERT(FIRST_PLIST_TNUM <= type && type <= LAST_PLIST_TNUM);
-    return NewBag(type, (plen + 1) * sizeof(Obj));
+    Obj bag = NewBag(type, (plen + 1) * sizeof(Obj));
+    ADDR_OBJ(bag)[0] = INTOBJ_INT(0);
+    return bag;
 }
 
-static inline Obj NEW_PLIST_IMM(UInt type, Int plen)
+EXPORT_INLINE Obj NEW_PLIST_IMM(UInt type, Int plen)
 {
     return NEW_PLIST(type | IMMUTABLE, plen);
 }
 
-static inline Obj NEW_PLIST_WITH_MUTABILITY(Int mut, UInt type, Int plen)
+EXPORT_INLINE Obj NEW_PLIST_WITH_MUTABILITY(Int mut, UInt type, Int plen)
 {
     if (!mut)
         type |= IMMUTABLE;
@@ -60,7 +62,7 @@ static inline Obj NEW_PLIST_WITH_MUTABILITY(Int mut, UInt type, Int plen)
 **
 *F  IS_PLIST( <list> )  . . . . . . . . . . . check if <list> is a plain list
 */
-static inline Int IS_PLIST(Obj list)
+EXPORT_INLINE Int IS_PLIST(Obj list)
 {
     return FIRST_PLIST_TNUM <= TNUM_OBJ(list) &&
            TNUM_OBJ(list) <= LAST_PLIST_TNUM;
@@ -78,7 +80,7 @@ static inline Int IS_PLIST(Obj list)
 **  (which have the same memory layout as plists), as the plist APIs using it
 **  for assertion checks are in practice invoked on such objects, too.
 */
-static inline Int IS_PLIST_OR_POSOBJ(Obj list)
+EXPORT_INLINE Int IS_PLIST_OR_POSOBJ(Obj list)
 {
     UInt tnum = TNUM_OBJ(list);
     return (FIRST_PLIST_TNUM <= tnum && tnum <= LAST_PLIST_TNUM) ||
@@ -93,14 +95,12 @@ static inline Int IS_PLIST_OR_POSOBJ(Obj list)
 **  'CAPACITY_PLIST' returns the maximum capacity of a PLIST.
 **
 */
-static inline Int CAPACITY_PLIST(Obj list)
+EXPORT_INLINE Int CAPACITY_PLIST(Obj list)
 {
     return SIZE_OBJ(list) / sizeof(Obj) - 1;
 }
 
-extern  void             GrowPlist (
-            Obj                 list,
-            UInt                need );
+void GrowPlist(Obj list, UInt need);
 
 /****************************************************************************
 **
@@ -110,7 +110,7 @@ extern  void             GrowPlist (
 **  has room for at least <plen> elements.
 **
 */
-static inline void GROW_PLIST(Obj list, Int plen)
+EXPORT_INLINE void GROW_PLIST(Obj list, Int plen)
 {
     GAP_ASSERT(IS_PLIST_OR_POSOBJ(list));
     GAP_ASSERT(plen >= 0);
@@ -128,7 +128,7 @@ static inline void GROW_PLIST(Obj list, Int plen)
 **  still room for at least <plen> elements.
 **
 */
-static inline void SHRINK_PLIST(Obj list, Int plen)
+EXPORT_INLINE void SHRINK_PLIST(Obj list, Int plen)
 {
     GAP_ASSERT(IS_PLIST_OR_POSOBJ(list));
     GAP_ASSERT(plen >= 0);
@@ -144,12 +144,12 @@ static inline void SHRINK_PLIST(Obj list, Int plen)
 **  'SET_LEN_PLIST' sets the length of  the plain list  <list> to <len>.
 **
 */
-static inline void SET_LEN_PLIST(Obj list, Int len)
+EXPORT_INLINE void SET_LEN_PLIST(Obj list, Int len)
 {
     GAP_ASSERT(IS_PLIST_OR_POSOBJ(list));
     GAP_ASSERT(len >= 0);
     GAP_ASSERT(len <= CAPACITY_PLIST(list));
-    ADDR_OBJ(list)[0] = (Obj)len;
+    ADDR_OBJ(list)[0] = INTOBJ_INT(len);
 }
 
 
@@ -160,10 +160,10 @@ static inline void SET_LEN_PLIST(Obj list, Int len)
 **  'LEN_PLIST' returns the logical length of the list <list> as a C integer.
 **
 */
-static inline Int LEN_PLIST(Obj list)
+EXPORT_INLINE Int LEN_PLIST(Obj list)
 {
     GAP_ASSERT(IS_PLIST_OR_POSOBJ(list));
-    return ((Int)(CONST_ADDR_OBJ(list)[0]));
+    return INT_INTOBJ(CONST_ADDR_OBJ(list)[0]);
 }
 
 
@@ -176,7 +176,7 @@ static inline Int LEN_PLIST(Obj list)
 **  the length of <list>.
 **
 */
-static inline void SET_ELM_PLIST(Obj list, Int pos, Obj val)
+EXPORT_INLINE void SET_ELM_PLIST(Obj list, Int pos, Obj val)
 {
     GAP_ASSERT(IS_PLIST_OR_POSOBJ(list));
     GAP_ASSERT(pos >= 1);
@@ -193,7 +193,7 @@ static inline void SET_ELM_PLIST(Obj list, Int pos, Obj val)
 **  <list>.  If <list> has no assigned element at position <pos>, 'ELM_PLIST'
 **  returns 0.
 */
-static inline Obj ELM_PLIST(Obj list, Int pos)
+EXPORT_INLINE Obj ELM_PLIST(Obj list, Int pos)
 {
     GAP_ASSERT(IS_PLIST_OR_POSOBJ(list));
     GAP_ASSERT(pos >= 1);
@@ -209,7 +209,7 @@ static inline Obj ELM_PLIST(Obj list, Int pos)
 **
 **  This point will be invalidated whenever a garbage collection occurs.
 */
-static inline Obj * BASE_PTR_PLIST(Obj list)
+EXPORT_INLINE Obj * BASE_PTR_PLIST(Obj list)
 {
     GAP_ASSERT(IS_PLIST_OR_POSOBJ(list));
     return ADDR_OBJ(list) + 1;
@@ -224,7 +224,7 @@ static inline Obj * BASE_PTR_PLIST(Obj list)
 **  whether they are dense or not (i.e. of type 'T_PLIST'),
 **  use 'IS_DENSE_LIST' instead.
 */
-static inline Int IS_DENSE_PLIST(Obj list)
+EXPORT_INLINE Int IS_DENSE_PLIST(Obj list)
 {
     return T_PLIST_DENSE <= TNUM_OBJ(list) &&
            TNUM_OBJ(list) <= LAST_PLIST_TNUM;
@@ -234,7 +234,7 @@ static inline Int IS_DENSE_PLIST(Obj list)
 **
 *F  IS_PLIST_MUTABLE( <list> )  . . . . . . . . . . . is a plain list mutable
 */
-static inline Int IS_PLIST_MUTABLE(Obj list)
+EXPORT_INLINE Int IS_PLIST_MUTABLE(Obj list)
 {
     GAP_ASSERT(IS_PLIST(list));
     return !((TNUM_OBJ(list) - T_PLIST) % 2);
@@ -244,10 +244,7 @@ static inline Int IS_PLIST_MUTABLE(Obj list)
 **
 *F  AssPlist( <list>, <pos>, <val>) . . . . . . . . .  assign to a plain list
 */
-extern void            AssPlist (
-    Obj                 list,
-    Int                 pos,
-    Obj                 val );
+void AssPlist(Obj list, Int pos, Obj val);
 
 /****************************************************************************
 **
@@ -259,7 +256,7 @@ extern void            AssPlist (
 **  instead.
 **
 */
-static inline UInt PushPlist(Obj list, Obj val)
+EXPORT_INLINE UInt PushPlist(Obj list, Obj val)
 {
     const UInt pos = LEN_PLIST(list) + 1;
     GROW_PLIST(list, pos);
@@ -282,7 +279,7 @@ static inline UInt PushPlist(Obj list, Obj val)
 **  preventing the garbage collector from collecting the pop'ed object.
 **
 */
-static inline Obj PopPlist(Obj list)
+EXPORT_INLINE Obj PopPlist(Obj list)
 {
     const UInt pos = LEN_PLIST(list);
     Obj val = ELM_PLIST(list, pos);
@@ -291,28 +288,74 @@ static inline Obj PopPlist(Obj list)
     return val;
 }
 
+
+/****************************************************************************
+**
+*F  NewEmptyPlist() . . . . . . . . . .  create a new mutable empty plain list
+*/
+EXPORT_INLINE Obj NewEmptyPlist(void)
+{
+    return NEW_PLIST(T_PLIST_EMPTY, 0);
+}
+
+
+/****************************************************************************
+**
+*F  NewImmutableEmptyPlist() . . . . . create a new immutable empty plain list
+*/
+EXPORT_INLINE Obj NewImmutableEmptyPlist(void)
+{
+    return NEW_PLIST_IMM(T_PLIST_EMPTY, 0);
+}
+
+
+/****************************************************************************
+**
+*F  NewPlistFromArray(<list>,<length>) . . create a plain list from a C array
+*/
+EXPORT_INLINE Obj NewPlistFromArray(const Obj * list, Int length)
+{
+    if (length == 0) {
+        return NewEmptyPlist();
+    }
+
+    Obj o = NEW_PLIST(T_PLIST, length);
+    SET_LEN_PLIST(o, length);
+    memcpy(BASE_PTR_PLIST(o), list, length * sizeof(Obj));
+    CHANGED_BAG(o);
+    return o;
+}
+
+/****************************************************************************
+**
+*F  NewPlistFromArgs(<args...>) .  create a plain list from list of arguments
+**
+**  This macro turns a variable-length list of macro arguments into an array,
+**  which is then passed to NewPlistFromArray.
+**
+**  __VA_ARGS__ contains the list of arguments given to this macro.
+**  (Obj[]){ __VA_ARGS__ } creates an array of Obj containing the elements
+**  of __VA_ARGS__.
+*/
+#define NewPlistFromArgs(...)                                                \
+    NewPlistFromArray((Obj[]){ __VA_ARGS__ },                                \
+                      ARRAY_SIZE(((Obj[]){ __VA_ARGS__ })))
+
+
+/****************************************************************************
+**
+*F  ShallowCopyPlist( <list>> )
+*/
+Obj ShallowCopyPlist(Obj list);
+
+
 /****************************************************************************
 **
 *F  AssPlistEmpty( <list>, <pos>, <val> ) . . . . .  assignment to empty list
-*F  UnbPlistImm( <list>, <pos> ) . . . .  unbind an element from a plain list
 */
-extern void AssPlistEmpty (
-    Obj                 list,
-    Int                 pos,
-    Obj                 val );
+void AssPlistEmpty(Obj list, Int pos, Obj val);
 
-extern void AssPlistFfe   (
-    Obj                 list,
-    Int                 pos,
-    Obj                 val );
-
-extern Int KTNumPlist (
-    Obj                 list,
-    Obj                 *famfirst);
-
-void            UnbPlistImm (
-    Obj                 list,
-    Int                 pos );
+void AssPlistFfe(Obj list, Int pos, Obj val);
 
 /****************************************************************************
 **

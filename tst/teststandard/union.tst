@@ -1,11 +1,3 @@
-#############################################################################
-##
-#W  union.tst                GAP library                     Chris Jefferson
-##
-##
-#Y  Copyright (C)  2014,  University of St Andrews
-##
-##
 gap> START_TEST("union.tst");
 gap> for i in [-4..4] do
 >      for j in [-3,-2,-1,1,2,3] do
@@ -70,7 +62,3 @@ true
 gap> Union(Group((1,2)), Group((1,2)), Group((1,2))) = Group((1,2));
 true
 gap> STOP_TEST( "union.tst", 1);
-
-#############################################################################
-##
-#E

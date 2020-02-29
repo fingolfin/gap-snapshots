@@ -57,7 +57,9 @@ In function names we call boolean lists <E>blists</E> for brevity.
 <#Include Label="UniteBlistList">
 <#Include Label="IntersectBlist">
 <#Include Label="SubtractBlist">
-
+<#Include Label="FlipBlist">
+<#Include Label="SetAllBlist">
+<#Include Label="ClearAllBlist">
 </Section>
 
 
@@ -110,7 +112,7 @@ representation of the list  is changed to  the compact representation.
 <P/>
 If you change a  boolean list that is  represented in  the compact
 representation by assignment (see <Ref Sect="List Assignment"/>) or
-<Ref Func="Add"/>
+<Ref Oper="Add"/>
 in such a way that the list remains a boolean list  it will remain
 represented in the compact representation.  Note that changing a list
 that is not represented in the compact representation, whether it is a

@@ -1,11 +1,12 @@
-############################################################################
+#############################################################################
 ##
-#W  grpperm.gi                  GAP library                   Heiko Theißen
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Heiko Theißen.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 
 
@@ -735,6 +736,8 @@ BindGlobal("DoClosurePrmGp",function( G, gens, options )
             fi;
         od;
     else
+        o:=ValueOption("knownClosureSize");
+        if IsInt(o) then options.limit:=o;fi;
         chain := ClosureRandomPermGroup( chain, gens, options );
     fi;
 
@@ -1232,9 +1235,73 @@ end );
 ##
 #M  IsSolvableGroup( <G> )  . . . . . . . . . . . . . . . .  solvability test
 ##
+
+# fast test for finding iteratively nontrivial commutators in a permutation group.
+# if this goes on too long the group may not be solvable. This can be much faster
+# for large degree groups than to use the full pcgs machinery (which uses the same
+# idea but builds a pcgs on the way).
+BindGlobal("QuickUnsolvabilityTestPerm",function(G)
+local som,elvth,fct,gens,new,l,i,j,a,b,bound;
+  # a few moved points
+  som:=MovedPoints(G);
+  if Length(som) = 0 then SetIsTrivial(G,true); return true; fi;
+  bound:=Int(LogInt(Length(som)^5,3)/2); #Dixon Bound
+  if Length(som)>100 then
+    som:=som{List([1..100],x->Random(1, Length(som)))};
+  fi;
+
+  elvth:=One(G);
+  fct:=function(G) 
+    elvth:=elvth*Product([1..Random(1,5)],x->Random(GeneratorsOfGroup(G))^Random(-3,3));
+    return elvth;
+  end;
+
+  gens:=GeneratorsOfGroup(G);
+  # find one nontrivial commutator
+  new:=fail;
+  i:=1;
+  while i<=Length(gens) and new=fail do
+    j:=i+1;
+    while j<=Length(gens) and new=fail do
+      if ForAny(som,x->(x^gens[i])^gens[j]<>(x^gens[j])^gens[i]) then
+        new:=Comm(gens[i],gens[j]);
+      fi;
+      j:=j+1;
+    od;
+    i:=i+1;
+  od;
+  if new=fail then return fail;fi;
+
+  # now take commutators with conjugates to get down
+  i:=1;
+  repeat
+    gens:=new;
+    j:=1;
+    new:=fail;
+    l:=[gens];
+    while j<=10 and new=fail do
+      a:=Random(l)^fct(G);
+      b:=First(l,b->ForAny(som,x->(x^a)^b<>(x^b)^a));
+      if b<>fail then
+        new:=Comm(a,b);
+      else
+        Add(l,a);
+      fi;
+      j:=j+1;
+    od;
+    if new=fail then
+      return fail;
+    fi;
+    i:=i+1;
+  until i>bound;
+  return true;
+end);
+  
 InstallMethod( IsSolvableGroup,"for permgrp", true, [ IsPermGroup ], 0,
 function(G)
 local pcgs;
+  if QuickUnsolvabilityTestPerm(G)=true then return false;fi;
+
   pcgs:=TryPcgsPermGroup( G, false, false, true );
   if IsPcgs(pcgs) then
     SetIndicesEANormalSteps(pcgs,pcgs!.permpcgsNormalSteps);
@@ -1678,7 +1745,7 @@ InstallGlobalFunction( ApproximateSuborbitsStabilizerPermGroup,
 
     processStabGen:=function()
     local punkt,img,a,b,gen;
-      if Random([1,2])=1 then
+      if Random(1,2)=1 then
 	# next one
 	currGen:=currGen+1;
 	if currGen>Length(Ggens) then
@@ -1691,8 +1758,8 @@ InstallGlobalFunction( ApproximateSuborbitsStabilizerPermGroup,
 	a:=currPt;
 	b:=currGen;
       else
-	a:=Random([1..Length(orbit)]);
-	b:=Random([1..Length(Ggens)]);
+        a:=Random(1, Length(orbit));
+        b:=Random(1, Length(Ggens));
       fi;
       # map a with b
       img:=orbit[a]^Ggens[b];
@@ -1943,6 +2010,7 @@ local  i, j, U, gens,o,v,a,sel,min,orb,orp,ok;
   if Length(gens)>2 then
   # minimal: AbelianInvariants
     min:=Maximum(List(Collected(Factors(Size(G)/Size(DerivedSubgroup(G)))),x->x[2]));
+    min:=Maximum(min,2);
     if min=Length(GeneratorsOfGroup(G)) then return GeneratorsOfGroup(G);fi;
     i:=Maximum(2,min);
     while i<=min+1 and i<Length(gens) do
@@ -1985,15 +2053,12 @@ local  i, j, U, gens,o,v,a,sel,min,orb,orp,ok;
     fi;
 
     StabChainOptions(U).random:=100; # randomized size
-#Print("B:",i," ",Size(G)/Size(U),"\n");
     if Size(U)<Size(G) then
       i:=i+1;
     else
       gens:=Set(GeneratorsOfGroup(U));
     fi;
   od;
-#U:=Group(gens);
-#Assert(1,ForAll(GeneratorsOfGroup(G),x->x in U));
   return gens;
 end);
 
@@ -2158,7 +2223,7 @@ local dom,s,cs,t,ts,o,m,stb;
   s:=Socle(G);
   if IsAbelian(s) then
     return "1";
-  elif IsSimpleGroup(s) then
+  elif IsNonabelianSimpleGroup(s) then
     return "2";
   elif Length(dom)=Size(s) then
     return "5";
@@ -2284,8 +2349,3 @@ InstallGlobalFunction(ReducedPermdegree,function(g)
   SetSize(Image(hom),Size(g));
   return hom;
 end);
-
-#############################################################################
-##
-#E
-

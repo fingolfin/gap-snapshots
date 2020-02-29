@@ -1,15 +1,11 @@
 #############################################################################
 ##
-#W  vspcmali.tst                GAP library                     Thomas Breuer
-##
-##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-##
 ##  This file ontains tests for vector spaces of Lie matrices.
 ##
 ##  (The test files 'vspcrow.tst' and 'vspcmat.tst' should contain the same
 ##  tests.)
 ##
+#@local b,bv,c,c1,c2,f,lc,mb,n,u,uu,uuu,uuuu,v,w,ww,z
 gap> START_TEST("vspcmali.tst");
 
 #############################################################################
@@ -17,7 +13,7 @@ gap> START_TEST("vspcmali.tst");
 ##  1. Construct Gaussian and non-Gaussian Lie matrix spaces
 ##
 gap> z:= LeftModuleByGenerators( GF(3), [], LieObject( [ [ 0*Z(9) ] ] ) );
-<vector space over GF(3), with 0 generators>
+<vector space of dimension 0 over GF(3)>
 gap> IsGaussianMatrixSpace( z );
 true
 gap> IsNonGaussianMatrixSpace( z );
@@ -369,6 +365,7 @@ gap> mb:= MutableBasis( Rationals,
 gap> IsMutableBasisOfGaussianMatrixSpaceRep( mb );
 true
 gap> CloseMutableBasis( mb, LieObject( [ [ E(4), 0 ], [ 0, 0 ] ] ) );
+true
 gap> IsMutableBasisOfGaussianMatrixSpaceRep( mb );
 false
 gap> Print( BasisVectors( mb ), "\n" );
@@ -380,8 +377,11 @@ gap> mb:= MutableBasis( Rationals,
 >            LieObject( [ [ 1, 1 ], [ 1, 1 ] ] ) ] );
 <mutable basis over Rationals, 2 vectors>
 gap> CloseMutableBasis( mb, LieObject( [ [ 1, 2 ], [ 3, 4 ] ] ) );
+true
 gap> CloseMutableBasis( mb, LieObject( [ [ 1, 2 ], [ 3, 5 ] ] ) );
+true
 gap> CloseMutableBasis( mb, LieObject( [ [ 0, 0 ], [ 0, 7 ] ] ) );
+false
 gap> IsMutableBasisOfGaussianMatrixSpaceRep( mb );
 true
 gap> bv:= BasisVectors( mb );;
@@ -396,8 +396,11 @@ gap> mb:= MutableBasis( Rationals, [],
 >             LieObject( [ [ 0, 0 ], [ 0, 0 ] ] ) );
 <mutable basis over Rationals, 0 vectors>
 gap> CloseMutableBasis( mb, LieObject( [ [ 1, 2 ], [ 3, 4 ] ] ) );
+true
 gap> CloseMutableBasis( mb, LieObject( [ [ 1, 2 ], [ 3, 5 ] ] ) );
+true
 gap> CloseMutableBasis( mb, LieObject( [ [ 0, 0 ], [ 0, 7 ] ] ) );
+false
 gap> IsMutableBasisOfGaussianMatrixSpaceRep( mb );
 true
 gap> BasisVectors( mb );
@@ -406,7 +409,3 @@ gap> ImmutableBasis( mb );
 SemiEchelonBasis( <vector space of dimension 2 over Rationals>, 
 [ LieObject( [ [ 1, 2 ], [ 3, 4 ] ] ), LieObject( [ [ 0, 0 ], [ 0, 1 ] ] ) ] )
 gap> STOP_TEST( "vspcmali.tst", 1);
-
-#############################################################################
-##
-#E

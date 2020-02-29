@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  gprd.gi                     GAP library                      Bettina Eick
-##                                                             Heiko Theißen
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Bettina Eick, Heiko Theißen.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 
 
@@ -28,9 +28,13 @@ local d, prop;
 
   # test/set a few properties and attributes from factors
 
-  for prop in [IsFinite, IsNilpotentGroup, IsAbelian, IsSolvableGroup] do
-    if ForAll(arg, Tester(prop)) then
-      Setter(prop)(d, ForAll(arg, prop));
+  for prop in [IsFinite, IsNilpotentGroup, IsAbelian, IsSolvableGroup, IsBand,
+               IsInverseSemigroup, IsRegularSemigroup, IsIdempotentGenerated,
+               IsLeftZeroSemigroup, IsRightZeroSemigroup, IsZeroSemigroup] do
+    if ForAny(arg, x -> Tester(prop)(x) and not prop(x)) then
+      Setter(prop)(d, false);
+    elif ForAll(arg, x -> Tester(prop)(x) and prop(x)) then
+      Setter(prop)(d, true);
     fi;
   od;
     
@@ -388,7 +392,7 @@ InstallGlobalFunction (PcgsDirectProduct,
 
 InstallMethod( Pcgs, "for direct products", true, 
                [IsGroup and HasDirectProductInfo], 
-	       Maximum(
+	       {} -> Maximum(
 		RankFilter(IsPcGroup),
 		RankFilter(IsPermGroup and IsSolvableGroup)
 	        ),# this is better than these two common alternatives
@@ -396,7 +400,7 @@ InstallMethod( Pcgs, "for direct products", true,
 
 InstallMethod( PcgsElementaryAbelianSeries, "for direct products", true, 
                [IsGroup and HasDirectProductInfo], 
-	       Maximum(
+	       {} -> Maximum(
 		RankFilter(IsPcGroup),
 		RankFilter(IsPermGroup and IsSolvableGroup)
 	        ),# this is better than these two common alternatives
@@ -408,7 +412,7 @@ InstallMethod( PcgsElementaryAbelianSeries, "for direct products", true,
 
 InstallMethod( PcgsCentralSeries, "for direct products", true, 
                [IsGroup and HasDirectProductInfo], 
-	       Maximum(
+	       {} -> Maximum(
 		RankFilter(IsPcGroup),
 		RankFilter(IsPermGroup and IsSolvableGroup)
 	        ),# this is better than these two common alternatives
@@ -420,7 +424,7 @@ InstallMethod( PcgsCentralSeries, "for direct products", true,
 
 InstallMethod( PcgsChiefSeries, "for direct products", true, 
                [IsGroup and HasDirectProductInfo], 
-	       Maximum(
+	       {} -> Maximum(
 		RankFilter(IsPcGroup),
 		RankFilter(IsPermGroup and IsSolvableGroup)
 	        ),# this is better than these two common alternatives
@@ -429,7 +433,7 @@ InstallMethod( PcgsChiefSeries, "for direct products", true,
 
 InstallMethod( PcgsPCentralSeriesPGroup, "for direct products", true, 
                [IsGroup and HasDirectProductInfo], 
-	       Maximum(
+	       {} -> Maximum(
 		RankFilter(IsPcGroup),
 		RankFilter(IsPermGroup and IsSolvableGroup)
 	        ),# this is better than these two common alternatives
@@ -518,6 +522,12 @@ end);
 ##
 #M  SubdirectProduct( <G1>, <G2>, <phi1>, <phi2> )
 ##
+
+RedispatchOnCondition(SubdirectProductOp, "check mappings", true, 
+        [IsGroup, IsGroup, IsGeneralMapping, IsGeneralMapping],
+        [IsObject, IsObject, IsGroupHomomorphism, IsGroupHomomorphism],
+        10);
+   
 InstallMethod( SubdirectProductOp,"groups", true,
   [ IsGroup, IsGroup, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( G, H, gh, hh )
@@ -1085,7 +1095,7 @@ end);
 InstallMethod( SemidirectProduct,"different representations",true, 
     [ IsGroup and IsFinite, IsGroupHomomorphism, IsGroup and IsFinite], 
     # don't be higher than specific perm/pc methods
-    -20,
+    {} -> 2*(RankFilter(IsGroup) - RankFilter(IsGroup and IsFinite)),
 function( G, aut, N )
 local giso,niso,P,gens,a,Go,No,i;
   Go:=G;
@@ -1336,7 +1346,7 @@ function( S, i )
 
     info := SemidirectProductInfo( S );
     if not IsBound(info.vectorspace) then
-      # its not a vectorspace product
+      # it's not a vectorspace product
       TryNextMethod();
     fi;
 
@@ -1441,7 +1451,8 @@ InstallMethod( FreeProductOp,
           hom,          # holds a monomorphism
           F,            # free group of free product
           FP,           # free product
-          rels          # free product relators
+          rels, # free product relators
+          nam   # names
     ;
         
     ## Check the arguments.
@@ -1472,7 +1483,13 @@ InstallMethod( FreeProductOp,
 
     ## Create the free group of the free product
     ##
-    F := FreeGroup(gennum);
+    nam:=List(Concatenation(List(fpisolist,x->GeneratorsOfGroup(Range(x)))),
+           String);
+    if Length(Set(nam))=gennum then
+      F:=FreeGroup(nam);
+    else
+      F := FreeGroup(gennum);
+    fi;
 
     ## Create the relations for the for free product
     ##
@@ -1550,9 +1567,3 @@ InstallMethod( Embedding, "free products",
         fi;
     end
 );
-   
-
-#############################################################################
-##
-#E
-

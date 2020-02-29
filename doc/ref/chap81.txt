@@ -148,7 +148,7 @@
   
   [33X[0;0YNote  that  we  do  not  need  to tell [5XGAP[105X anything about the above decision
   concerning  the families of the objects that we are going to implement, that
-  is,  the  [13Xdeclaration  part[113X  (see [14X79.19[114X)  of  the  little [5XGAP[105X package we are
+  is,  the  [13Xdeclaration  part[113X  (see [14X79.11[114X)  of  the  little [5XGAP[105X package we are
   writing  contains  nothing  about  the  distribution of the new objects into
   families.  (The  actual  construction  of  a  family happens in the function
   [10XMyZmodnZ[110X shown below.)[133X
@@ -182,11 +182,11 @@
   which  will  be  needed  later;  it  is important to create these categories
   before collections of the objects in [10XIsMyZmodnZObj[110X actually arise.[133X
   
-  [33X[0;0YNote   that  the  only  difference  between  [2XDeclareCategory[102X  ([14X79.18-1[114X)  and
-  [2XNewCategory[102X  ([14X79.1-1[114X)  is  that  in  a  call to [2XDeclareCategory[102X ([14X79.18-1[114X), a
+  [33X[0;0YNote   that   the  only  difference  between  [2XDeclareCategory[102X  ([14X13.3-5[114X)  and
+  [2XNewCategory[102X  ([14X13.3-4[114X)  is  that  in  a  call  to [2XDeclareCategory[102X ([14X13.3-5[114X), a
   variable corresponding to the first argument is set to the new category, and
-  this    variable    is   read-only   (see [14X79.18[114X).   The   same   holds   for
-  [2XDeclareRepresentation[102X ([14X79.18-8[114X) and [2XNewRepresentation[102X ([14X79.2-1[114X) etc.[133X
+  this  variable  is  read-only.  The  same  holds  for  [2XDeclareRepresentation[102X
+  ([14X13.4-5[114X) and [2XNewRepresentation[102X ([14X13.4-4[114X) etc.[133X
   
   [33X[0;0YThere  is  no  analogue of categories in the implementation in Section [14X81.1[114X,
   since  there  it was not necessary to distinguish residue classes from other
@@ -203,7 +203,7 @@
   residue  class in its family, and to encode the element [22Xk + nℤ[122X by the unique
   residue  in  the range [22X[ 0 .. n-1 ][122X that is congruent to [22Xk[122X modulo [22Xn[122X, and the
   object  itself  is chosen to be a positional object with this residue at the
-  first and only position (see [14X79.11[114X).[133X
+  first and only position (see [14X79.3[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XDeclareRepresentation("IsMyModulusRep", IsPositionalObjectRep, [1]);[127X[104X
@@ -214,7 +214,7 @@
   special attributes for residue classes.[133X
   
   [33X[0;0YHaving defined what the new objects shall look like, we now declare a global
-  function  (see [14X79.19[114X),  to  create  an  element  when family and residue are
+  function  (see [14X79.11[114X),  to  create  an  element  when family and residue are
   given.[133X
   
   [4X[32X  Example  [32X[104X
@@ -223,7 +223,7 @@
   
   [33X[0;0YNow we have declared what we need, and we can start to implement the missing
   methods   resp.   functions;   so  the  following  command  belongs  to  the
-  [13Ximplementation part[113X of our package (see [14X79.19[114X).[133X
+  [13Ximplementation part[113X of our package (see [14X79.11[114X).[133X
   
   [33X[0;0YThe  probably  most  interesting  function is the one to construct a residue
   class.[133X
@@ -256,7 +256,7 @@
   constructing  this  ring is a natural place where the creation of the family
   can  be  hidden,  and  implement  the  function.  (Note that the declaration
   belongs  to  the  declaration  part,  and  the  installation  belongs to the
-  implementation part, see [14X79.19[114X).[133X
+  implementation part, see [14X79.11[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XDeclareGlobalFunction( "MyZmodnZ" );[127X[104X
@@ -289,7 +289,7 @@
   is  assumed  by  [10XMyZmodnZ[110X.  Thus it is not necessary to store the modulus in
   each  element. When storing [10Xn[110X with the [10X!.[110X operator as value of the component
   [10Xmodulus[110X,  we  used  that  all  families are in fact represented as component
-  objects (see [14X79.10[114X).[133X
+  objects (see [14X79.2[114X).[133X
   
   [33X[0;0YWe  see that we can use [2XRingWithOneByGenerators[102X ([14X56.3-3[114X) to construct a ring
   with  one  if  we  have  the  appropriate  generators.  The construction via
@@ -365,7 +365,7 @@
   argument tells [5XGAP[105X that the method is applicable for objects that lie in the
   category  [10XIsMyZmodnZObj[110X  and  in  the representation [10XIsMyModulusRep[110X. and the
   fourth  argument  is  the  method  itself.  More details about [2XInstallMethod[102X
-  ([14X78.2-1[114X) can be found in [14X78.2[114X.[133X
+  ([14X78.3-1[114X) can be found in [14X78.3[114X.[133X
   
   [33X[0;0YNote  that  the  requirement  [10XIsMyModulusRep[110X for the argument [10Xx[110X allows us to
   access the residue as [10Xx![1][110X. Since the family of [10Xx[110X has the component [10Xmodulus[110X
@@ -555,7 +555,7 @@
   into  trouble  by  installing  a  concurrent  multiplication  that  computes
   something  different  from the multiplication that is already defined, since
   [5XGAP[105X  does  not  guarantee which of the applicable methods is actually chosen
-  (see [14X78.3[114X).[133X
+  (see [14X78.4[114X).[133X
   
   [33X[0;0YNow  we  have  implemented  methods  for  the  arithmetic operations for our
   elements, and the following calculations work.[133X
@@ -767,7 +767,7 @@
     [4X[25X>[125X [27X   "for full collection Z/nZ",[127X[104X
     [4X[25X>[125X [27X   [ CategoryCollections( IsMyZmodnZObj ) and IsWholeFamily ],[127X[104X
     [4X[25X>[125X [27X   R -> MyZmodnZObj( ElementsFamily( FamilyObj(R) ),[127X[104X
-    [4X[25X>[125X [27X                   Random( [ 0 .. Size( R ) - 1 ] ) ) );[127X[104X
+    [4X[25X>[125X [27X                   Random( 0, Size( R ) - 1 ) ) );[127X[104X
     [4X[25Xgap>[125X [27X[127X[104X
     [4X[25Xgap>[125X [27XInstallMethod( Size,[127X[104X
     [4X[25X>[125X [27X   "for full ring Z/nZ",[127X[104X
@@ -833,10 +833,10 @@
   identify them with elements in [22Xℤ / pℤ[122X.[133X
   
   [33X[0;0YTo  be  more  precise,  elements of finite fields in [5XGAP[105X lie in the category
-  [2XIsFFE[102X  ([14X59.1-1[114X),  and  there  is already a representation, [10XIsInternalRep[110X, of
-  these  elements  via discrete logarithms. The aim of this section is to make
-  [10XIsMyModulusRep[110X  an  alternative  representation  of elements in finite prime
-  fields.[133X
+  [2XIsFFE[102X  ([14X59.1-1[114X),  and  there  is  already  a  representation,  [2XIsInternalRep[102X
+  ([14X13.4-1[114X), of these elements via discrete logarithms. The aim of this section
+  is  to  make  [10XIsMyModulusRep[110X  an  alternative  representation of elements in
+  finite prime fields.[133X
   
   [33X[0;0YNote  that  this is only one step towards the desired compatibility. Namely,
   after  having a second representation of elements in finite prime fields, we
@@ -1052,7 +1052,7 @@
   [33X[0;0YWe have to be careful, however, with the methods for [2XInverseOp[102X ([14X31.10-8[114X), [2X\/[102X
   ([14X31.12-1[114X),  and  [2X\^[102X  ([14X31.12-1[114X).  These  methods  and the missing methods for
   arithmetic  operations  with one argument in [10XIsMyModulusRep[110X and the other in
-  [10XIsInternalRep[110X are given below.[133X
+  [2XIsInternalRep[102X ([14X13.4-1[114X) are given below.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XInstallMethod( \+,[127X[104X
@@ -1135,7 +1135,7 @@
     [4X[25X>[125X [27X   "for full ring Z/nZ",[127X[104X
     [4X[25X>[125X [27X   [ CategoryCollections( IsMyZmodnZObjNonprime ) and IsWholeFamily ],[127X[104X
     [4X[25X>[125X [27X   R -> MyZmodnZObj( ElementsFamily( FamilyObj( R ) ),[127X[104X
-    [4X[25X>[125X [27X                   Random( [ 0 .. Size( R ) - 1 ] ) ) );[127X[104X
+    [4X[25X>[125X [27X                   Random( 0, Size( R ) - 1 ) ) );[127X[104X
     [4X[25Xgap>[125X [27X[127X[104X
     [4X[25Xgap>[125X [27XInstallMethod( Size,[127X[104X
     [4X[25X>[125X [27X   "for full ring Z/nZ",[127X[104X
@@ -1202,12 +1202,12 @@
     [4X[28XInstallMethod( \^, "Z/pZ-obj. (ModulusRep), and integer", ... );[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe  call  to  [2XNewType[102X ([14X79.8-1[114X) in [10XMyZmodnZObj[110X can be avoided by storing the
+  [33X[0;0YThe  call  to  [2XNewType[102X ([14X13.9-3[114X) in [10XMyZmodnZObj[110X can be avoided by storing the
   required  type,  e.g.,  in the family. But note that it is [13Xnot[113X admissible to
-  take the type of an existing object as first argument of [2XObjectify[102X ([14X79.9-1[114X).
+  take the type of an existing object as first argument of [2XObjectify[102X ([14X79.1-1[114X).
   For  example,  suppose  two objects in [10XIsMyZmodnZObj[110X shall be added. Then we
   must  not  use  the  type  of  one  of  the arguments in a call of [2XObjectify[102X
-  ([14X79.9-1[114X),  because  the  argument may have knowledge that is not correct for
+  ([14X79.1-1[114X),  because  the  argument may have knowledge that is not correct for
   the  result  of  the addition. One may think of the property [2XIsOne[102X ([14X31.10-5[114X)
   that may hold for both arguments but certainly not for their sum.[133X
   

@@ -1,10 +1,4 @@
-#############################################################################
-##
-#W  reesmat.tst                GAP library                Wilf A. Wilson
-##
-##
-#Y  Copyright (C)  2017, The GAP Group
-##
+#@local D,F,R,S,T,U,enum,inv,iso,x,z
 gap> START_TEST("reesmat.tst");
 
 # IsFinite: ImmediateMethod, for IsReesZeroMatrixSubsemigroup, 1
@@ -243,6 +237,14 @@ true
 gap> T := Semigroup(RMSElement(R, 2, S.1, 1));
 <subsemigroup of 2x1 Rees matrix semigroup with 1 generator>
 gap> IsSimpleSemigroup(T);
+true
+gap> S := FreeSemigroup(1);
+<free semigroup on the generators [ s1 ]>
+gap> S := S / [[S.1, S.1 ^ 4]];
+<fp semigroup on the generators [ s1 ]>
+gap> R := ReesMatrixSemigroup(S, [[S.1, S.1 ^ 2], [S.1, S.1 ^ 3]]);
+<Rees matrix semigroup 2x2 over <fp semigroup on the generators [ s1 ]>>
+gap> IsSimpleSemigroup(R);
 true
 
 # IsZeroSimpleSemigroup: for a Rees 0-matrix semigroup

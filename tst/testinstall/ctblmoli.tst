@@ -1,10 +1,4 @@
-#############################################################################
-##
-#W  ctblmoli.tst               GAP Library                      Thomas Breuer
-##
-##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-##
+#@local G,molser,psi,x,y,tbl,irr,lin,deg3,ser,ser2
 gap> START_TEST("ctblmoli.tst");
 
 #
@@ -61,7 +55,3 @@ true
 
 #
 gap> STOP_TEST( "ctblmoli.tst", 1);
-
-#############################################################################
-##
-#E

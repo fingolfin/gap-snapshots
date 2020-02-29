@@ -231,6 +231,11 @@
   [Harcourt  Brace  Jovanovich  Publishers],  New  York (1976), xii+303 pages,
   ((Pure and Applied Mathematics, No. 69)).
   
+  [[20XJK81[120X]  [16XJames, G. and Kerber, A.[116X, [17XThe representation theory of the symmetric
+  group[117X,  Addison-Wesley  Publishing  Co.,  Reading,  Mass.,  Encyclopedia  of
+  Mathematics  and  its  Applications,  [19X16[119X  (1981), xxviii+510 pages, ((With a
+  foreword by P. M. Cohn, With an introduction by Gilbert de B. Robinson)).
+  
   [[20XJLPW95[120X]  [16XJansen, C., Lux, K., Parker, R. and Wilson, R.[116X, [17XAn atlas of Brauer
   characters[117X, The Clarendon Press Oxford University Press, London Mathematical
   Society  Monographs.  New  Series,  [19X11[119X,  New  York  (1995), xviii+327 pages,
@@ -324,7 +329,7 @@
   (1990), 209–211.
   
   [[20XNP95b[120X]  [16XNebe,  G.  and Plesken, W.[116X, [17XFinite rational matrix groups of degree
-  16[117X, [18XMem. Amer. Math. Soc.[118X, AMS, 556 (1995), 74–144, ((vol. 116)).
+  16[117X, [18XMem. Amer. Math. Soc.[118X, AMS, [19X116[119X, 556 (1995), 74–144.
   
   [[20XNPP84[120X]  [16XNeubüser,  J., Pahlings, H. and Plesken, W.[116X ([1m[31mAtkinson, M. D.[15X, Ed.),
   [17XCAS;  design  and  use  of a system for the handling of characters of finite
@@ -352,7 +357,7 @@
   Appl.[118X, [19X226/228[119X (1995), 331--344.
   
   [[20XPN95[120X]  [16XPlesken,  W. and Nebe, G.[116X, [17XFinite rational matrix groups[117X, [18XMem. Amer.
-  Math. Soc.[118X, AMS, 556 (1995), 1–73, ((vol. 116)).
+  Math. Soc.[118X, AMS, [19X116[119X, 556 (1995), 1–73.
   
   [[20XPoh87[120X]  [16XPohst,  M.[116X,  [17XA  modification  of  the  LLL  reduction algorithm[117X, [18XJ.
   Symbolic Comput.[118X, [19X4[119X, 1 (1987), 123–127.

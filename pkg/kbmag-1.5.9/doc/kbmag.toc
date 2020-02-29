@@ -1,0 +1,110 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Introduction}}{4}{chapter.1}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }The Knuth-Bendix program on semigroups, monoids and groups}}{6}{chapter.2}
+\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }Creating a rewriting system}}{6}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}\leavevmode {\color {Chapter }KBMAGRewritingSystem}}{6}{subsection.2.1.1}
+\contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter }Elementary functions on rewriting systems}}{6}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}\leavevmode {\color {Chapter }IsKBMAGRewritingSystemRep}}{6}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}\leavevmode {\color {Chapter }IsConfluent}}{7}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}\leavevmode {\color {Chapter }SemigroupOfRewritingSytem}}{7}{subsection.2.2.3}
+\contentsline {subsection}{\numberline {2.2.4}\leavevmode {\color {Chapter }ExternalWordToInternalWordOfRewritingSystem}}{7}{subsection.2.2.4}
+\contentsline {subsection}{\numberline {2.2.5}\leavevmode {\color {Chapter }Alphabet}}{7}{subsection.2.2.5}
+\contentsline {subsection}{\numberline {2.2.6}\leavevmode {\color {Chapter }Rules}}{7}{subsection.2.2.6}
+\contentsline {subsection}{\numberline {2.2.7}\leavevmode {\color {Chapter }ResetRewritingSystem}}{7}{subsection.2.2.7}
+\contentsline {section}{\numberline {2.3}\leavevmode {\color {Chapter }Setting the ordering}}{8}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}\leavevmode {\color {Chapter }SetOrderingOfKBMAGRewritingSystem}}{8}{subsection.2.3.1}
+\contentsline {section}{\numberline {2.4}\leavevmode {\color {Chapter }Control parameters}}{9}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}\leavevmode {\color {Chapter }InfoRWS}}{9}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}\leavevmode {\color {Chapter }OptionsRecordOfKBMAGRewritingSystem}}{9}{subsection.2.4.2}
+\contentsline {section}{\numberline {2.5}\leavevmode {\color {Chapter }The Knuth-Bendix program}}{10}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}\leavevmode {\color {Chapter }KnuthBendix}}{10}{subsection.2.5.1}
+\contentsline {subsection}{\numberline {2.5.2}\leavevmode {\color {Chapter }ReductionAutomaton}}{11}{subsection.2.5.2}
+\contentsline {section}{\numberline {2.6}\leavevmode {\color {Chapter }The automatic groups program}}{11}{section.2.6}
+\contentsline {subsection}{\numberline {2.6.1}\leavevmode {\color {Chapter }AutomaticStructure}}{11}{subsection.2.6.1}
+\contentsline {subsection}{\numberline {2.6.2}\leavevmode {\color {Chapter }WordAcceptor}}{11}{subsection.2.6.2}
+\contentsline {section}{\numberline {2.7}\leavevmode {\color {Chapter }Word reduction}}{12}{section.2.7}
+\contentsline {subsection}{\numberline {2.7.1}\leavevmode {\color {Chapter }IsReducedWord}}{12}{subsection.2.7.1}
+\contentsline {subsection}{\numberline {2.7.2}\leavevmode {\color {Chapter }ReducedWord}}{12}{subsection.2.7.2}
+\contentsline {section}{\numberline {2.8}\leavevmode {\color {Chapter }Counting and enumerating irreducible words}}{12}{section.2.8}
+\contentsline {subsection}{\numberline {2.8.1}\leavevmode {\color {Chapter }Size}}{12}{subsection.2.8.1}
+\contentsline {subsection}{\numberline {2.8.2}\leavevmode {\color {Chapter }Order}}{13}{subsection.2.8.2}
+\contentsline {subsection}{\numberline {2.8.3}\leavevmode {\color {Chapter }EnumerateReducedWords}}{13}{subsection.2.8.3}
+\contentsline {subsection}{\numberline {2.8.4}\leavevmode {\color {Chapter }GrowthFunction}}{13}{subsection.2.8.4}
+\contentsline {section}{\numberline {2.9}\leavevmode {\color {Chapter }Rewriting System Examples}}{13}{section.2.9}
+\contentsline {subsection}{\numberline {2.9.1}\leavevmode {\color {Chapter }Example 1}}{14}{subsection.2.9.1}
+\contentsline {subsection}{\numberline {2.9.2}\leavevmode {\color {Chapter }Example 2}}{15}{subsection.2.9.2}
+\contentsline {subsection}{\numberline {2.9.3}\leavevmode {\color {Chapter }Example 3}}{16}{subsection.2.9.3}
+\contentsline {subsection}{\numberline {2.9.4}\leavevmode {\color {Chapter }Example 4}}{17}{subsection.2.9.4}
+\contentsline {subsection}{\numberline {2.9.5}\leavevmode {\color {Chapter }Example 5}}{20}{subsection.2.9.5}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }The Knuth-Bendix program on cosets}}{22}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Subgroups, cosets and subgroup presentations}}{22}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }SubgroupOfKBMAGRewritingSystem}}{22}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}\leavevmode {\color {Chapter }ResetRewritingSystemOnCosets}}{22}{subsection.3.1.2}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }The Knuth-Bendix program on cosets}}{23}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }KnuthBendixOnCosets}}{23}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }RewritingSystemOfSubgroupOfKBMAGRewritingSystem}}{23}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}\leavevmode {\color {Chapter }IsConfluentOnCosets}}{23}{subsection.3.2.3}
+\contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }The automatic cosets program}}{23}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}\leavevmode {\color {Chapter }AutomaticStructureOnCosets}}{23}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}\leavevmode {\color {Chapter }PresentationOfSubgroupOfKBMAGRewritingSystem}}{24}{subsection.3.3.2}
+\contentsline {section}{\numberline {3.4}\leavevmode {\color {Chapter }Word reduction on cosets}}{24}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}\leavevmode {\color {Chapter }IsReducedCosetRepresentative}}{24}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}\leavevmode {\color {Chapter }ReducedCosetRepresentative}}{24}{subsection.3.4.2}
+\contentsline {section}{\numberline {3.5}\leavevmode {\color {Chapter }Counting and enumerating irreducible words for cosets}}{24}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}\leavevmode {\color {Chapter }Index}}{24}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}\leavevmode {\color {Chapter }EnumerateReducedCosetRepresentatives}}{25}{subsection.3.5.2}
+\contentsline {subsection}{\numberline {3.5.3}\leavevmode {\color {Chapter }GrowthFunctionOfCosetRepresentatives}}{25}{subsection.3.5.3}
+\contentsline {section}{\numberline {3.6}\leavevmode {\color {Chapter }Examples of the use of Rewriting System on Cosets}}{25}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}\leavevmode {\color {Chapter }Example 1}}{25}{subsection.3.6.1}
+\contentsline {subsection}{\numberline {3.6.2}\leavevmode {\color {Chapter }Example 2}}{26}{subsection.3.6.2}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }The stand-alone package}}{28}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Functions for manipulating finite state automata}}{28}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\leavevmode {\color {Chapter }IsInitializedFSA}}{29}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\leavevmode {\color {Chapter }InitializeFSA}}{29}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}\leavevmode {\color {Chapter }FSA}}{29}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}\leavevmode {\color {Chapter }WriteFSA}}{29}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.5}\leavevmode {\color {Chapter }IsDeterministicFSA}}{29}{subsection.4.1.5}
+\contentsline {subsection}{\numberline {4.1.6}\leavevmode {\color {Chapter }AlphabetFSA}}{29}{subsection.4.1.6}
+\contentsline {subsection}{\numberline {4.1.7}\leavevmode {\color {Chapter }NumberOfStatesFSA}}{30}{subsection.4.1.7}
+\contentsline {subsection}{\numberline {4.1.8}\leavevmode {\color {Chapter }NumberOfLettersFSA}}{30}{subsection.4.1.8}
+\contentsline {subsection}{\numberline {4.1.9}\leavevmode {\color {Chapter }AcceptingStatesFSA}}{30}{subsection.4.1.9}
+\contentsline {subsection}{\numberline {4.1.10}\leavevmode {\color {Chapter }InitialStatesFSA}}{30}{subsection.4.1.10}
+\contentsline {subsection}{\numberline {4.1.11}\leavevmode {\color {Chapter }DenseDTableFSA}}{30}{subsection.4.1.11}
+\contentsline {subsection}{\numberline {4.1.12}\leavevmode {\color {Chapter }SparseTableFSA}}{30}{subsection.4.1.12}
+\contentsline {subsection}{\numberline {4.1.13}\leavevmode {\color {Chapter }TargetDFA}}{30}{subsection.4.1.13}
+\contentsline {subsection}{\numberline {4.1.14}\leavevmode {\color {Chapter }TargetsFSA}}{31}{subsection.4.1.14}
+\contentsline {subsection}{\numberline {4.1.15}\leavevmode {\color {Chapter }SourcesFSA}}{31}{subsection.4.1.15}
+\contentsline {subsection}{\numberline {4.1.16}\leavevmode {\color {Chapter }WordTargetDFA}}{31}{subsection.4.1.16}
+\contentsline {subsection}{\numberline {4.1.17}\leavevmode {\color {Chapter }IsAcceptedWordDFA}}{31}{subsection.4.1.17}
+\contentsline {subsection}{\numberline {4.1.18}\leavevmode {\color {Chapter }AddStateFSA}}{31}{subsection.4.1.18}
+\contentsline {subsection}{\numberline {4.1.19}\leavevmode {\color {Chapter }DeleteStateFSA}}{31}{subsection.4.1.19}
+\contentsline {subsection}{\numberline {4.1.20}\leavevmode {\color {Chapter }PermuteStatesFSA}}{31}{subsection.4.1.20}
+\contentsline {subsection}{\numberline {4.1.21}\leavevmode {\color {Chapter }AddLetterFSA}}{32}{subsection.4.1.21}
+\contentsline {subsection}{\numberline {4.1.22}\leavevmode {\color {Chapter }DeleteLetterFSA}}{32}{subsection.4.1.22}
+\contentsline {subsection}{\numberline {4.1.23}\leavevmode {\color {Chapter }PermuteLettersFSA}}{32}{subsection.4.1.23}
+\contentsline {subsection}{\numberline {4.1.24}\leavevmode {\color {Chapter }AddEdgeFSA}}{32}{subsection.4.1.24}
+\contentsline {subsection}{\numberline {4.1.25}\leavevmode {\color {Chapter }DeleteEdgeFSA}}{32}{subsection.4.1.25}
+\contentsline {subsection}{\numberline {4.1.26}\leavevmode {\color {Chapter }SetAcceptingFSA}}{32}{subsection.4.1.26}
+\contentsline {subsection}{\numberline {4.1.27}\leavevmode {\color {Chapter }SetInitialFSA}}{32}{subsection.4.1.27}
+\contentsline {subsection}{\numberline {4.1.28}\leavevmode {\color {Chapter }IsAccessibleFSA}}{33}{subsection.4.1.28}
+\contentsline {subsection}{\numberline {4.1.29}\leavevmode {\color {Chapter }AccessibleFSA}}{33}{subsection.4.1.29}
+\contentsline {subsection}{\numberline {4.1.30}\leavevmode {\color {Chapter }IsTrimFSA}}{33}{subsection.4.1.30}
+\contentsline {subsection}{\numberline {4.1.31}\leavevmode {\color {Chapter }TrimFSA}}{33}{subsection.4.1.31}
+\contentsline {subsection}{\numberline {4.1.32}\leavevmode {\color {Chapter }IsBFSFSA}}{33}{subsection.4.1.32}
+\contentsline {subsection}{\numberline {4.1.33}\leavevmode {\color {Chapter }BFSFSA}}{33}{subsection.4.1.33}
+\contentsline {subsection}{\numberline {4.1.34}\leavevmode {\color {Chapter }LSizeDFA}}{33}{subsection.4.1.34}
+\contentsline {subsection}{\numberline {4.1.35}\leavevmode {\color {Chapter }LEnumerateDFA}}{34}{subsection.4.1.35}
+\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }Functions calling external programs}}{34}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\leavevmode {\color {Chapter }DeterminizeFSA}}{34}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}\leavevmode {\color {Chapter }MinimizeFSA}}{34}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}\leavevmode {\color {Chapter }NotFSA}}{34}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}\leavevmode {\color {Chapter }StarFSA}}{34}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}\leavevmode {\color {Chapter }ReverseFSA}}{34}{subsection.4.2.5}
+\contentsline {subsection}{\numberline {4.2.6}\leavevmode {\color {Chapter }ExistsFSA}}{35}{subsection.4.2.6}
+\contentsline {subsection}{\numberline {4.2.7}\leavevmode {\color {Chapter }SwapCoordsFSA}}{35}{subsection.4.2.7}
+\contentsline {subsection}{\numberline {4.2.8}\leavevmode {\color {Chapter }AndFSA}}{35}{subsection.4.2.8}
+\contentsline {subsection}{\numberline {4.2.9}\leavevmode {\color {Chapter }OrFSA}}{35}{subsection.4.2.9}
+\contentsline {subsection}{\numberline {4.2.10}\leavevmode {\color {Chapter }ConcatFSA}}{35}{subsection.4.2.10}
+\contentsline {subsection}{\numberline {4.2.11}\leavevmode {\color {Chapter }LanguagesEqualFSA}}{35}{subsection.4.2.11}
+\contentsline {subsection}{\numberline {4.2.12}\leavevmode {\color {Chapter }GrowthFSA}}{35}{subsection.4.2.12}
+\contentsline {chapter}{References}{37}{chapter*.5}
+\contentsline {chapter}{Index}{38}{section*.6}

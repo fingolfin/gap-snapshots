@@ -102,7 +102,7 @@ function(G)
 end);
 </pre></div>
 
-<p>We have left out the optional rank argument of <code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>), which normally is a wise choice –<strong class="pkg">GAP</strong> automatically uses an internal ranking based on the filters that is only offset by the given rank. So our method will certainly be regarded as "better" than a method that has been installed for mere groups or for solvable groups but will be ranked lower than the library method for abelian groups.</p>
+<p>We have left out the optional rank argument of <code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.3-1</span></a>), which normally is a wise choice –<strong class="pkg">GAP</strong> automatically uses an internal ranking based on the filters that is only offset by the given rank. So our method will certainly be regarded as "better" than a method that has been installed for mere groups or for solvable groups but will be ranked lower than the library method for abelian groups.</p>
 
 <p>That's all. Using <a href="chap7.html#X80848FF486BD6F9F"><span class="RefLink">7.2-1</span></a> we can check for a nilpotent group that indeed our new method will be used.</p>
 
@@ -138,7 +138,7 @@ InParentFOA( "Normalizer", IsGroup, IsObject, NewAttribute );
 DeclareOperation( "NormalizerOp", [IsGroup, IsObject] );
 </pre></div>
 
-<p>This time we decide to enter a non-default family predicate in the call to <code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>). We could just leave it out as in the previous call; this would yield the default value, the function <code class="func">ReturnTrue</code> (<a href="chap5.html#X7DB422A2876CCC4D"><span class="RefLink">5.4-1</span></a>) of arbitrary many arguments which always returns <code class="keyw">true</code>. However, then the method might be called in some cases of inconsistent input (for example matrix groups in different characteristics) that ought to fall through the method selection to raise an error.</p>
+<p>This time we decide to enter a non-default family predicate in the call to <code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.3-1</span></a>). We could just leave it out as in the previous call; this would yield the default value, the function <code class="func">ReturnTrue</code> (<a href="chap5.html#X7DB422A2876CCC4D"><span class="RefLink">5.4-1</span></a>) of arbitrary many arguments which always returns <code class="keyw">true</code>. However, then the method might be called in some cases of inconsistent input (for example matrix groups in different characteristics) that ought to fall through the method selection to raise an error.</p>
 
 <p>In our situation, we want the second group to be a subgroup of the first, so necessarily both must have the same family and we can use <code class="func">IsIdenticalObj</code> (<a href="chap12.html#X7961183378DFB902"><span class="RefLink">12.5-1</span></a>) as family predicate.</p>
 
@@ -158,15 +158,15 @@ end);
 
 <h4>80.2 <span class="Heading">Extending the Range of Definition of an Existing Operation</span></h4>
 
-<p>It might be that the operation has been defined so far only for a set of objects that is too restrictive for our purposes (or we want to install a method that takes another number of arguments). If this is the case, the call to <code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>) causes an error message. We can avoid this by using <code class="func">InstallOtherMethod</code> (<a href="chap78.html#X7D2C12DB841CE539"><span class="RefLink">78.2-2</span></a>) instead. It is also possible to re-declare an operation with another number of arguments and/or different filters for its arguments.</p>
+<p>It might be that the operation has been defined so far only for a set of objects that is too restrictive for our purposes (or we want to install a method that takes another number of arguments). If this is the case, the call to <code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.3-1</span></a>) causes an error message. We can avoid this by using <code class="func">InstallOtherMethod</code> (<a href="chap78.html#X7D2C12DB841CE539"><span class="RefLink">78.3-2</span></a>) instead. It is also possible to re-declare an operation with another number of arguments and/or different filters for its arguments.</p>
 
 <p><a id="X7D880DB779EBA8D5" name="X7D880DB779EBA8D5"></a></p>
 
 <h4>80.3 <span class="Heading">Enforcing Property Tests</span></h4>
 
-<p>As mentioned in Section <a href="chap78.html#X851FC6387CA2B241"><span class="RefLink">78.3</span></a>, <strong class="pkg">GAP</strong> does not check unknown properties to test whether a method might be applicable. In some cases one wants to enforce this, however, because the gain from knowing the property outweighs the cost of its determination.</p>
+<p>As mentioned in Section <a href="chap78.html#X851FC6387CA2B241"><span class="RefLink">78.4</span></a>, <strong class="pkg">GAP</strong> does not check unknown properties to test whether a method might be applicable. In some cases one wants to enforce this, however, because the gain from knowing the property outweighs the cost of its determination.</p>
 
-<p>In this situation one has to install a method <em>without</em> the additional property (so it can be tried even if the property is not yet known) and at high rank (so it will be used before other methods). The first thing to do in the actual function then is to test the property and to bail out with <code class="func">TryNextMethod</code> (<a href="chap78.html#X7EED949B83046A7F"><span class="RefLink">78.4-1</span></a>) if it turns out to be <code class="keyw">false</code>.</p>
+<p>In this situation one has to install a method <em>without</em> the additional property (so it can be tried even if the property is not yet known) and at high rank (so it will be used before other methods). The first thing to do in the actual function then is to test the property and to bail out with <code class="func">TryNextMethod</code> (<a href="chap78.html#X7EED949B83046A7F"><span class="RefLink">78.5-1</span></a>) if it turns out to be <code class="keyw">false</code>.</p>
 
 <p>The above <code class="func">Exponent</code> (<a href="chap39.html#X7D44470C7DA59C1C"><span class="RefLink">39.16-2</span></a>) example thus would become:</p>
 
@@ -198,7 +198,7 @@ function(G)
 
 <p>A somehow similar situation occurs with matrix groups. Most methods for matrix groups are only applicable if the group is known to be finite.</p>
 
-<p>However we should not enforce a finiteness test early (someone else later might install good methods for infinite groups while the finiteness test would be too expensive) but just before <strong class="pkg">GAP</strong> would give a "no method found" error. This is done by redispatching, see <a href="chap78.html#X7B85DD797A907106"><span class="RefLink">78.5</span></a>. For example to enforce such a final finiteness test for normalizer calculations could be done by:</p>
+<p>However we should not enforce a finiteness test early (someone else later might install good methods for infinite groups while the finiteness test would be too expensive) but just before <strong class="pkg">GAP</strong> would give a "no method found" error. This is done by redispatching, see <a href="chap78.html#X7B85DD797A907106"><span class="RefLink">78.6</span></a>. For example to enforce such a final finiteness test for normalizer calculations could be done by:</p>
 
 
 <div class="example"><pre>
@@ -219,7 +219,7 @@ RedispatchOnCondition(NormalizerOp,IsIdenticalObj,
 SylowNormalizer:=NewOperation("SylowNormalizer",[IsGroup,IsPosInt]);
 </pre></div>
 
-<p>(Note that we are using <code class="func">NewOperation</code> (<a href="chap79.html#X85A9E019795B79D6"><span class="RefLink">79.5-1</span></a>) instead of <code class="func">DeclareOperation</code> (<a href="chap79.html#X843F48137B899BC3"><span class="RefLink">79.18-12</span></a>) as used in the library. The only difference other than that <code class="func">DeclareOperation</code> (<a href="chap79.html#X843F48137B899BC3"><span class="RefLink">79.18-12</span></a>) saves some typing, is that it also protects the variables against overwriting. When testing code (when one probably wants to change things) this might be restricting. If this does not bother you, you can use</p>
+<p>(Note that we are using <code class="func">NewOperation</code> (<a href="chap78.html#X85A9E019795B79D6"><span class="RefLink">78.1-4</span></a>) instead of <code class="func">DeclareOperation</code> (<a href="chap78.html#X843F48137B899BC3"><span class="RefLink">78.1-5</span></a>) as used in the library. The only difference other than that <code class="func">DeclareOperation</code> (<a href="chap78.html#X843F48137B899BC3"><span class="RefLink">78.1-5</span></a>) saves some typing, is that it also protects the variables against overwriting. When testing code (when one probably wants to change things) this might be restricting. If this does not bother you, you can use</p>
 
 
 <div class="example"><pre>
@@ -228,7 +228,7 @@ DeclareOperation("SylowNormalizer",[IsGroup,IsPosInt]);
 
 <p>as well.)</p>
 
-<p>The filters <code class="func">IsGroup</code> (<a href="chap39.html#X7939B3177BBD61E4"><span class="RefLink">39.2-7</span></a>) and <code class="func">IsPosInt</code> (<a href="chap14.html#X82A854757DFA9C76"><span class="RefLink">14.2-2</span></a>) given are <em>only</em> used to test that <code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>) installs methods with suitable arguments and will be completely ignored when using <code class="func">InstallOtherMethod</code> (<a href="chap78.html#X7D2C12DB841CE539"><span class="RefLink">78.2-2</span></a>). Technically one could therefore simply use <code class="func">IsObject</code> (<a href="chap12.html#X7B130AC98415CAFB"><span class="RefLink">12.1-1</span></a>) for all arguments in the declaration. The main point of using more specific filters here is to help documenting with which arguments the function is to be used (so for example a call <code class="code">SylowNormalizer(5,G)</code> would be invalid).</p>
+<p>The filters <code class="func">IsGroup</code> (<a href="chap39.html#X7939B3177BBD61E4"><span class="RefLink">39.2-7</span></a>) and <code class="func">IsPosInt</code> (<a href="chap14.html#X82A854757DFA9C76"><span class="RefLink">14.2-2</span></a>) given are <em>only</em> used to test that <code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.3-1</span></a>) installs methods with suitable arguments and will be completely ignored when using <code class="func">InstallOtherMethod</code> (<a href="chap78.html#X7D2C12DB841CE539"><span class="RefLink">78.3-2</span></a>). Technically one could therefore simply use <code class="func">IsObject</code> (<a href="chap12.html#X7B130AC98415CAFB"><span class="RefLink">12.1-1</span></a>) for all arguments in the declaration. The main point of using more specific filters here is to help documenting with which arguments the function is to be used (so for example a call <code class="code">SylowNormalizer(5,G)</code> would be invalid).</p>
 
 <p>Of course initially there are no useful methods for newly declared operations; you will have to write and install them yourself.</p>
 
@@ -247,7 +247,7 @@ DeclareOperation("SylowNormalizer",[IsGroup,IsPosInt]);
 PrimesDividingSize:=NewAttribute("PrimesDividingSize",IsGroup);
 </pre></div>
 
-<p>(See <code class="func">NewAttribute</code> (<a href="chap79.html#X7B9654807858A3B0"><span class="RefLink">79.3-1</span></a>)). This implicitly declares attribute tester and setter, it is convenient however to assign these to variables as well:</p>
+<p>(See <code class="func">NewAttribute</code> (<a href="chap13.html#X7B9654807858A3B0"><span class="RefLink">13.5-3</span></a>)). This implicitly declares attribute tester and setter, it is convenient however to assign these to variables as well:</p>
 
 
 <div class="example"><pre>
@@ -255,7 +255,7 @@ HasPrimesDividingSize:=Tester(PrimesDividingSize);
 SetPrimesDividingSize:=Setter(PrimesDividingSize);
 </pre></div>
 
-<p>Alternatively, there is a declaration command <code class="func">DeclareAttribute</code> (<a href="chap79.html#X7A00FC8A7A677A56"><span class="RefLink">79.18-9</span></a>) that executes all three assignments simultaneously and protects the variables against overwriting:</p>
+<p>Alternatively, there is a declaration command <code class="func">DeclareAttribute</code> (<a href="chap13.html#X7A00FC8A7A677A56"><span class="RefLink">13.5-4</span></a>) that executes all three assignments simultaneously and protects the variables against overwriting:</p>
 
 
 <div class="example"><pre>
@@ -273,7 +273,7 @@ function(G)
 end);
 </pre></div>
 
-<p>The function installed <em>must</em> always return a value (or call <code class="func">TryNextMethod</code> (<a href="chap78.html#X7EED949B83046A7F"><span class="RefLink">78.4-1</span></a>)). If the object is in the representation <code class="code">IsAttributeStoringRep</code> this return value once computed will be automatically stored and retrieved if the attribute is called a second time. We don't have to call setter or tester ourselves. (This storage happens by <strong class="pkg">GAP</strong> internally calling the attribute setter with the return value of the function. Retrieval is by a high-ranking method which is installed under the condition <code class="code">HasPrimesDividingSize</code>. This method was installed automatically when the attribute was declared.)</p>
+<p>The function installed <em>must</em> always return a value (or call <code class="func">TryNextMethod</code> (<a href="chap78.html#X7EED949B83046A7F"><span class="RefLink">78.5-1</span></a>)). If the object is in the representation <code class="func">IsAttributeStoringRep</code> (<a href="chap13.html#X7A951C33839AF2C1"><span class="RefLink">13.5-5</span></a>) this return value once computed will be automatically stored and retrieved if the attribute is called a second time. We don't have to call setter or tester ourselves. (This storage happens by <strong class="pkg">GAP</strong> internally calling the attribute setter with the return value of the function. Retrieval is by a high-ranking method which is installed under the condition <code class="code">HasPrimesDividingSize</code>. This method was installed automatically when the attribute was declared.)</p>
 
 <p><a id="X8111D831783C9ED6" name="X8111D831783C9ED6"></a></p>
 
@@ -283,7 +283,7 @@ end);
 
 <p>For example, assume we wanted (following <a href="chapBib.html#biBwielandt69">[Wie69]</a>) to implement permutation groups defined by relations.</p>
 
-<p>Next, we have to decide a few basics about the representation. All existing permutation groups in the library are attribute storing and we probably want to keep this for our new objects. Thus the representation must be a subrepresentation of <code class="code">IsComponentObjectRep and IsAttributeStoringRep</code>. Furthermore we want each object to be a permutation group and we can imply this directly in the representation.</p>
+<p>Next, we have to decide a few basics about the representation. All existing permutation groups in the library are attribute storing and we probably want to keep this for our new objects. Thus the representation must be a subrepresentation of <code class="func">IsComponentObjectRep</code> (<a href="chap13.html#X805F1C3B7C730062"><span class="RefLink">13.4-1</span></a>) and <code class="func">IsAttributeStoringRep</code> (<a href="chap13.html#X7A951C33839AF2C1"><span class="RefLink">13.5-5</span></a>). Furthermore we want each object to be a permutation group and we can imply this directly in the representation.</p>
 
 <p>We also decide that we store the degree (the largest point that might be moved) in a component <code class="code">degree</code> and the defining relations in a component <code class="code">relations</code> (we do not specify the format of relations here. In an actual implementation one would have to design this as well, but it does not affect the declarations this chapter is about).</p>
 
@@ -401,7 +401,7 @@ InstallMethod(IsXYZ,"return false if not known",[IsABC],ReturnFalse);
 IsMGroup:=NewProperty("IsMGroup",IsSolvableGroup);
 </pre></div>
 
-<p>The filter <code class="func">IsSolvableGroup</code> (<a href="chap39.html#X809C78D5877D31DF"><span class="RefLink">39.15-6</span></a>) in this declaration <em>only</em> means that methods for <code class="code">IsMGroup</code> by default can only be installed for groups that are (and know to be) solvable (though they could be installed for more general situations using <code class="func">InstallOtherMethod</code> (<a href="chap78.html#X7D2C12DB841CE539"><span class="RefLink">78.2-2</span></a>)). It does not yet imply that M-groups are solvable. We must do this deliberately via an implication and we use the same technique to imply that every supersolvable group is an M-group.</p>
+<p>The filter <code class="func">IsSolvableGroup</code> (<a href="chap39.html#X809C78D5877D31DF"><span class="RefLink">39.15-6</span></a>) in this declaration <em>only</em> means that methods for <code class="code">IsMGroup</code> by default can only be installed for groups that are (and know to be) solvable (though they could be installed for more general situations using <code class="func">InstallOtherMethod</code> (<a href="chap78.html#X7D2C12DB841CE539"><span class="RefLink">78.3-2</span></a>)). It does not yet imply that M-groups are solvable. We must do this deliberately via an implication and we use the same technique to imply that every supersolvable group is an M-group.</p>
 
 
 <div class="example"><pre>

@@ -429,7 +429,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XA:= NullAlgebra( Rationals );[127X[104X
-    [4X[28X<algebra over Rationals>[128X[104X
+    [4X[28X<algebra of dimension 0 over Rationals>[128X[104X
     [4X[25Xgap>[125X [27XDimension( A );[127X[104X
     [4X[28X0[128X[104X
   [4X[32X[104X
@@ -519,7 +519,7 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XA:= QuaternionAlgebra( Rationals );;[127X[104X
     [4X[25Xgap>[125X [27XB:= TrivialSubalgebra( A );[127X[104X
-    [4X[28X<algebra over Rationals>[128X[104X
+    [4X[28X<algebra of dimension 0 over Rationals>[128X[104X
     [4X[25Xgap>[125X [27XDimension( B );[127X[104X
     [4X[28X0[128X[104X
   [4X[32X[104X
@@ -1166,7 +1166,7 @@
     [4X[25Xgap>[125X [27Xg.hom_components( 3 );[127X[104X
     [4X[28X<vector space over GF(3), with 1 generators>[128X[104X
     [4X[25Xgap>[125X [27Xg.hom_components( 14 );[127X[104X
-    [4X[28X<vector space over GF(3), with 0 generators>[128X[104X
+    [4X[28X<vector space of dimension 0 over GF(3)>[128X[104X
   [4X[32X[104X
   
   

@@ -5,6 +5,7 @@
   [2XAchieveMilestone[102X 1.6-3 
   [2XAdoptObj[102X 3.9-26 
   [2XAdoptSingleObj[102X 3.9-27 
+  [9Xatomic[109X, no value 3.9-43 
   [2XATOMIC_ADDITION[102X 5.1-5 
   [2XAtomicIncorporateObj[102X 3.9-25 
   [2XAtomicList[102X 5.1-1 

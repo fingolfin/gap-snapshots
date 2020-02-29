@@ -1,10 +1,12 @@
 #############################################################################
 ##
-#W   random.gd                     GAP library                    Frank Lübeck
-#W                                                              Max Neunhöffer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Lübeck, Max Neunhöffer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2006 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file declares variables for random sources.
 ##
@@ -27,7 +29,7 @@
 ##  random  integer between  <A>low</A>  and  <A>high</A> (inclusive),  <Ref
 ##  Oper="Init"/>, <Ref Oper="State"/> and <Ref Oper="Reset"/>.
 ##  <P/>
-##  Use <Ref Func="RandomSource"/> to construct new random sources.
+##  Use <Ref Oper="RandomSource"/> to construct new random sources.
 ##  <P/>
 ##  One idea behind providing several independent (pseudo) random sources is
 ##  to make algorithms which use some sort of random choices deterministic.
@@ -50,13 +52,16 @@ DeclareCategory( "IsRandomSource", IsComponentObjectRep );
 ##  <#GAPDoc Label="Random">
 ##  <ManSection>
 ##  <Oper Name="Random" Arg='rs, list' Label="for random source and list"/>
+##  <Oper Name="Random" Arg='rs, coll'
+##   Label="for random source and collection"/>
 ##  <Oper Name="Random" Arg='rs, low, high' 
 ##                      Label="for random source and two integers"/>
 ##
 ##  <Description>
-##  This operation returns a random element from list <A>list</A>, or an integer 
-##  in the range from the given (possibly large) integers <A>low</A> to <A>high</A>,
-##  respectively. 
+##  This operation returns a random element from the list <A>list</A>
+##  or the collection <A>coll</A>,
+##  or an integer in the range from the given (possibly large) integers
+##  <A>low</A> to <A>high</A>, respectively.
 ##  <P/>
 ##  The choice should only depend on the random source <A>rs</A> and have no 
 ##  effect on other random sources.
@@ -88,7 +93,7 @@ DeclareOperation( "Random", [IsRandomSource, IsInt, IsInt] );
 ##
 ##  <Description>
 ##  These are the basic operations for which random sources (see
-##  <Ref Func="IsRandomSource"/>) must have methods. 
+##  <Ref Filt="IsRandomSource"/>) must have methods. 
 ##  <P/>
 ##  <Ref Oper="State"/> should return a data structure which allows to recover the state
 ##  of the random source such that a sequence of random calls using this 
@@ -153,7 +158,7 @@ DeclareOperation( "Init", [IsRandomSource, IsObject] );
 ##  Currently, the &GAP; library provides three types of random sources,
 ##  distinguished by the three listed categories.
 ##  <P/>
-##  <Ref  Var="IsMersenneTwister"/>  are random  sources  which  use a  fast
+##  <Ref  Filt="IsMersenneTwister"/>  are random  sources  which  use a  fast
 ##  random generator  of 32  bit numbers, called  the Mersenne  twister. The
 ##  pseudo  random  sequence has  a  period  of <M>2^{19937}-1</M>  and  the
 ##  numbers have a <M>623</M>-dimensional equidistribution. For more details
@@ -243,9 +248,10 @@ DeclareOperation( "RandomSource", [IsOperation, IsObject] );
 ##
 ##  <Description>
 ##  These functions are designed to simplify adding new methods for
-##  <Ref Oper="Random" Label="for a list or collection"/> and
-##  <Ref Oper="PseudoRandom"/> to GAP which can
-##  be called both with, and without, a random source.
+##  <Ref Oper="Random" Label="for a list or collection"/>,
+##  <Ref Oper="PseudoRandom"/>,
+##  and <Ref Oper="Randomize" Label="for a vector object"/> to &GAP;
+##  which can be called both with, and without, a random source.
 ##  <P/>
 ##  They accept the same arguments as <Ref Func="InstallMethod"/> and
 ##  <Ref Func="InstallOtherMethod"/>, with
@@ -267,7 +273,3 @@ DeclareOperation( "RandomSource", [IsOperation, IsObject] );
 ##
 DeclareGlobalFunction("InstallMethodWithRandomSource");
 DeclareGlobalFunction("InstallOtherMethodWithRandomSource");
-
-#############################################################################
-##
-#E

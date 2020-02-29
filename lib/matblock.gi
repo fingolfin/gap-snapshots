@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  matblock.gi                 GAP Library                  Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the implementation of methods for block matrices.
 ##
@@ -140,6 +141,26 @@ InstallOtherMethod( Length,
 
 #############################################################################
 ##
+#M  NrRows( <blockmat> )  . . . . . . . . . . . . . . . .  for a block matrix
+##
+InstallMethod( NrRows,
+    "for an ordinary block matrix",
+    [ IsOrdinaryMatrix and IsBlockMatrixRep ],
+    blockmat -> blockmat!.nrb * blockmat!.rpb );
+
+
+#############################################################################
+##
+#M  NrCols( <blockmat> )  . . . . . . . . . . . . . . . .  for a block matrix
+##
+InstallMethod( NrCols,
+    "for an ordinary block matrix",
+    [ IsOrdinaryMatrix and IsBlockMatrixRep ],
+    blockmat -> blockmat!.ncb * blockmat!.cpb );
+
+
+#############################################################################
+##
 #M  \[\]( <blockmat>, <n> ) . . . . . . . . . . . . . . .  for a block matrix
 ##
 InstallOtherMethod( \[\],
@@ -169,9 +190,9 @@ InstallOtherMethod( \[\],
 
 #############################################################################
 ##
-#M  \[\]( <blockmat>, <row>, <col> ) . . . . . . . . . . . for a block matrix
+#M  \[\,\]( <blockmat>, <row>, <col> ) . . . . . . . . . . for a block matrix
 ##
-InstallOtherMethod( \[\],
+InstallMethod( \[\,\],
     "for an ordinary block matrix and two positive integers",
     [ IsOrdinaryMatrix and IsBlockMatrixRep, IsPosInt, IsPosInt ],
     function( blockmat, row, col )
@@ -662,19 +683,3 @@ InstallMethod( PrintObj,
     Print( "BlockMatrix( ", m!.blocks, ",", m!.nrb, ",", m!.ncb,
            ",", m!.rpb, ",", m!.cpb, ",", m!.zero, " )" );
     end );
-
-
-#############################################################################
-##
-#M  DimensionsMat( <blockmat> ) . . . . . . . . . . . . .  for a block matrix
-##
-InstallOtherMethod( DimensionsMat,
-    "for an ordinary block matrix",
-    [ IsOrdinaryMatrix and IsBlockMatrixRep ],
-    m -> [ m!.nrb * m!.rpb, m!.ncb * m!.cpb ] );
-
-
-#############################################################################
-##
-#E
-

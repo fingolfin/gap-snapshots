@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  dt.c                        GAP source                  Wolfgang Merkwitz
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file implements the part of the deep thought package which deals
 **  with computing the deep thought polynomials.
@@ -61,6 +61,38 @@
 #include "modules.h"
 #include "plist.h"
 
+static void UnmarkTree(Obj z);
+static UInt Mark(Obj tree, Obj reftree, Int indexx);
+static Int  AlmostEqual(Obj tree1, Int index1, Obj tree2, Int index2);
+static Int  Equal(Obj tree1, Int index1, Obj tree2, Int index2);
+static Obj  Mark2(Obj tree, Int index1, Obj reftree, Int index2);
+static UInt FindTree(Obj tree, Int indexx);
+static Obj  MakeFormulaVector(Obj tree, Obj pr);
+static Int  Leftof(Obj tree1, Int index1, Obj tree2, Int index2);
+static Int  Leftof2(Obj tree1, Int index1, Obj tree2, Int index2);
+static Int  Earlier(Obj tree1, Int index1, Obj tree2, Int index2);
+static void FindNewReps(Obj tree, Obj reps, Obj pr, Obj max);
+static void FindSubs(Obj tree,
+                     Int x,
+                     Obj list1,
+                     Obj list2,
+                     Obj a,
+                     Obj b,
+                     Int al,
+                     Int ar,
+                     Int bl,
+                     Int br,
+                     Obj reps,
+                     Obj pr,
+                     Obj max);
+static void SetSubs(Obj list, Obj a, Obj tree);
+static void UnmarkAEClass(Obj tree, Obj list);
+
+#ifdef TEST_TREE
+static void TestTree(Obj tree);
+static Obj  Part(Obj list, Int pos1, Int pos2);
+#endif
+
 
 /****************************************************************************
 **
@@ -96,18 +128,6 @@
 */
 #define  DT_GEN(tree, index) \
               (ELM_PLIST(tree, (index-1)*5 + 2) )
-
-
-/**************************************************************************
-**
-*F  SET_DT_GEN(tree, index, obj) . . . assign the generator of(<tree>, index)
-**
-**  'SET_DT_GEN sets num(<a>) to the object <obj>, where <a> is the subtree
-**  of <tree>,  rooted at (<tree>, index).  <index> has to be a positive
-**  integer less or equal to the number of nodes of <tree>
-*/
-#define  SET_DT_GEN(tree, index, obj) \
-              (SET_ELM_PLIST(tree, (index-1)*5 + 2, obj) )
 
 
 /**************************************************************************
@@ -228,8 +248,7 @@
 **  Dt_add is used to store the library function dt_add.
 */
 
-Obj                    Dt_add;
-extern Obj             ShallowCopyPlist( Obj  list );
+static Obj Dt_add;
 
 /****************************************************************************
 **
@@ -237,8 +256,7 @@ extern Obj             ShallowCopyPlist( Obj  list );
 **
 **  'UnmarkTree' removes all marks of all nodes of the tree <tree>.
 */
-void  UnmarkTree(
-                  Obj   tree )
+static void UnmarkTree(Obj tree)
 {
     UInt     i, len; /*  loop variable                     */
 
@@ -258,9 +276,7 @@ void  UnmarkTree(
 **
 **  'UnmarkTree' removes all marks of all nodes of the tree <tree>.
 */
-Obj  FuncUnmarkTree(
-                     Obj  self,
-                     Obj  tree   )
+static Obj FuncUnmarkTree(Obj self, Obj tree)
 {
     UnmarkTree(tree);
     return  0;
@@ -280,10 +296,7 @@ Obj  FuncUnmarkTree(
 **  is equal to {1,...,n} for a positive integer n,  'Mark' actually returns
 **  the Maximum of {pos(a) | a almost equal to (<reftree>, index)}.
 */
-UInt   Mark(
-            Obj   tree,
-            Obj   reftree,
-            Int   indexx  )
+static UInt Mark(Obj tree, Obj reftree, Int indexx)
 {
     UInt  i, /*  loop variable                    */
           m, /*  integer to return                */
@@ -337,11 +350,7 @@ UInt   Mark(
 **  and <index2> has to be a positive integer less or equal to the number of
 **  nodes of <tree2>.
 */
-Int     AlmostEqual(
-                     Obj    tree1,
-                     Int    index1,
-                     Obj    tree2,
-                     Int    index2    )
+static Int AlmostEqual(Obj tree1, Int index1, Obj tree2, Int index2)
 {
     UInt   k, schranke; /*   loop variable                                             */
     /*  First the two top nodes of tree(<tree1>, index1) and
@@ -387,11 +396,7 @@ Int     AlmostEqual(
 **  and <index2> has to be a positive integer less or equal to the number of
 **  nodes of <tree2>.
 */
-Int     Equal(
-               Obj     tree1,
-               Int     index1,
-               Obj     tree2,
-               Int     index2   )
+static Int Equal(Obj tree1, Int index1, Obj tree2, Int index2)
 {
     UInt   k, schranke; /*  loop variable                                   */
 
@@ -436,11 +441,7 @@ Int     Equal(
 **  of <tree>,  and <index2> has to be a positive integer less or equal to
 **  the number of nodes of <reftree>.
 */
-Obj    Mark2(
-              Obj        tree,
-              Int        index1,
-              Obj        reftree,
-              Int        index2   )
+static Obj Mark2(Obj tree, Int index1, Obj reftree, Int index2)
 {
     UInt    i, /*  loop variable                                          */
             len;
@@ -474,9 +475,7 @@ Obj    Mark2(
             **  pos(tree(<tree>, i)),  and add i to <new>                  */
             if ( ELM_PLIST(list, INT_INTOBJ( DT_POS(tree, i) )  )  ==  0)
             {
-                new = NEW_PLIST( T_PLIST, 1);
-                SET_LEN_PLIST(new, 1);
-                SET_ELM_PLIST(new, 1, INTOBJ_INT(i) );
+                new = NewPlistFromArgs(INTOBJ_INT(i));
                 SET_ELM_PLIST(list, INT_INTOBJ( DT_POS(tree, i) ),  new);
                 /*  tell gasman that list has changed                      */
                 CHANGED_BAG(list);
@@ -523,9 +522,7 @@ Obj    Mark2(
 **  does not exist 'Findtree' returns 0 (as C integer).  Note that this holds
 **  if and only if tree(<tree>, index) is marked.
 */
-UInt    FindTree(
-                 Obj     tree,
-                 Int     indexx )
+static UInt FindTree(Obj tree, Int indexx)
 {
     UInt   i; /*     loop variable                                    */
 
@@ -579,9 +576,7 @@ UInt    FindTree(
 **  'MakeFormulaVector' only returns correct results if all nodes of <tree>
 **  are unmarked.
 */
-Obj    MakeFormulaVector(
-                          Obj    tree,
-                          Obj    pr   )
+static Obj MakeFormulaVector(Obj tree, Obj pr)
 {
     UInt  i, /*    denominator of a binomial coefficient              */
           j, /*    loop variable                                      */
@@ -592,12 +587,9 @@ Obj    MakeFormulaVector(
           gen;
 
     /*  initialize <vec> and set the first four elements              */
-    vec = NEW_PLIST(T_PLIST, 4);
-    SET_LEN_PLIST(vec, 4);
-    SET_ELM_PLIST(vec, 1, INTOBJ_INT(0) );
-    SET_ELM_PLIST(vec, 2, INTOBJ_INT(1) );
-    SET_ELM_PLIST(vec, 3, DT_GEN(tree, DT_LEFT(tree, 1) )  );
-    SET_ELM_PLIST(vec, 4, DT_GEN(tree, DT_RIGHT(tree, 1) )  );
+    vec = NewPlistFromArgs(INTOBJ_INT(0), INTOBJ_INT(1),
+                           DT_GEN(tree, DT_LEFT(tree, 1)),
+                           DT_GEN(tree, DT_RIGHT(tree, 1)));
     /*  loop over all almost equal classes of subtrees of <tree> except for
     **  <tree> itself.                                                    */
     u = FindTree(tree, 1);
@@ -668,14 +660,10 @@ Obj    MakeFormulaVector(
 **  'MakeFormulaVector' returns the formula vector for the tree <tree> and
 **  the pc-presentation <pr>.
 */
-Obj    FuncMakeFormulaVector(
-                              Obj      self,
-                              Obj      tree,
-                              Obj      pr            )
+static Obj FuncMakeFormulaVector(Obj self, Obj tree, Obj pr)
 {
     if  (LEN_PLIST(tree) == 5)
-        ErrorReturnVoid("<tree> has to be a non-atom", 0L, 0L,
-                        "you can 'return;'");
+        ErrorMayQuit("<tree> has to be a non-atom", 0, 0);
     return  MakeFormulaVector(tree, pr);
 }
 
@@ -690,11 +678,7 @@ Obj    FuncMakeFormulaVector(
 **  tree(<tree1>, index1) and tree(<tree2>, index2) both occur. It is assumed
 **  that tree(<tree1>, index1) is not equal to tree(<tree2>, index2). 
 */
-Int     Leftof(
-                Obj     tree1,
-                Int     index1,
-                Obj     tree2,
-                Int     index2    )
+static Int Leftof(Obj tree1, Int index1, Obj tree2, Int index2)
 {
     if  ( DT_LENGTH(tree1, index1) ==  1  &&  DT_LENGTH(tree2, index2) == 1 ) {
         if (DT_SIDE(tree1, index1) == LEFT && DT_SIDE(tree2, index2) == RIGHT)
@@ -740,11 +724,7 @@ Int     Leftof(
 **  tree(<tree1>, index1) and tree(<tree2>, index2) are non-atoms,  then their
 **  right trees and their left trees are not equal. 
 */
-Int    Leftof2(
-                Obj    tree1,
-                Int    index1,
-                Obj    tree2,
-                Int    index2     )
+static Int Leftof2(Obj tree1, Int index1, Obj tree2, Int index2)
 {
     if  ( DT_GEN(tree2, index2) < DT_GEN(tree1, DT_RIGHT(tree1, index1) )  )
         return  0;
@@ -771,11 +751,7 @@ Int    Leftof2(
 **  right(tree(<tree2>, index2) ) or left(tree(<tree1>, index1) ) does not
 **  equal left(tree(<tree2>, index2) ). 
 */
-Int    Earlier(
-                Obj    tree1,
-                Int    index1,
-                Obj    tree2,
-                Int    index2         )
+static Int Earlier(Obj tree1, Int index1, Obj tree2, Int index2)
 {
     if  ( DT_LENGTH(tree1, index1) == 1 )
         return  1;
@@ -804,13 +780,10 @@ Int    Earlier(
 */
 
 /* See below: */
-void GetReps( Obj list, Obj reps );
-void FindNewReps2( Obj tree, Obj reps, Obj pr);
+static void GetReps(Obj list, Obj reps);
+static void FindNewReps2(Obj tree, Obj reps, Obj pr);
 
-void    GetPols( 
-                Obj    list,
-                Obj    pr,
-                Obj    pols     )
+static void GetPols(Obj list, Obj pr, Obj pols)
 {
     Obj    lreps,
            rreps,
@@ -864,15 +837,11 @@ void    GetPols(
 **  FuncGetPols implements the internal function GetPols.
 */
 
-Obj      FuncGetPols(
-                     Obj      self,
-                     Obj      list,
-                     Obj      pr,
-                     Obj      pols      )
+static Obj FuncGetPols(Obj self, Obj list, Obj pr, Obj pols)
 {
     if  (LEN_PLIST(list) != 4)
-        ErrorReturnVoid("<list> must be a generalised representative not a tree"
-                        ,0L, 0L, "you can 'return;'");
+        ErrorMayQuit("<list> must be a generalised representative not a tree",
+                     0, 0);
     GetPols(list, pr, pols);
     return (Obj) 0;
 }
@@ -888,11 +857,9 @@ Obj      FuncGetPols(
 */
 
 /* See below: */
-void FindNewReps1( Obj tree, Obj reps);
+static void FindNewReps1(Obj tree, Obj reps);
 
-void    GetReps( 
-                Obj    list,
-                Obj    reps     )
+static void GetReps(Obj list, Obj reps)
 {
     Obj    lreps,
            rreps,
@@ -973,13 +940,19 @@ void    GetReps(
 */
 
 /* See below: */
-void  FindSubs1( Obj tree, Int x, Obj list1, Obj list2, Obj a, Obj b, 
-                 Int al, Int ar, Int bl, Int br, Obj reps );
+static void FindSubs1(Obj tree,
+                      Int x,
+                      Obj list1,
+                      Obj list2,
+                      Obj a,
+                      Obj b,
+                      Int al,
+                      Int ar,
+                      Int bl,
+                      Int br,
+                      Obj reps);
 
-void   FindNewReps1(
-                    Obj     tree,
-                    Obj     reps
-                                      )
+static void FindNewReps1(Obj tree, Obj reps)
 {
     Obj   y,           /*  stores a copy of <tree>                       */
           lsubs,       /*  stores pos(<subtree>) for all subtrees of
@@ -1063,15 +1036,23 @@ void   FindNewReps1(
 }
 
 /* See below: */
-void  FindSubs2( Obj tree, Int x, Obj list1, Obj list2, Obj a, Obj b, 
-                 Int al, Int ar, Int bl, Int br, Obj reps, Obj pr );
+static void FindSubs2(Obj tree,
+                      Int x,
+                      Obj list1,
+                      Obj list2,
+                      Obj a,
+                      Obj b,
+                      Int al,
+                      Int ar,
+                      Int bl,
+                      Int br,
+                      Obj reps,
+                      Obj pr);
 
-void   FindNewReps2(
-                    Obj     tree,
-                    Obj     reps,
-                    Obj     pr  /*  pc-presentation for a 
-                                 **  nilpotent group <G>                 */
-                                      )
+static void
+FindNewReps2(Obj tree, Obj reps, Obj pr /*  pc-presentation for a
+                                         **  nilpotent group <G> */
+)
 {
     Obj   lsubs,       /*  stores pos(<subtree>) for all subtrees of
                        **  left(<tree>) in a given almost equal class    */
@@ -1158,15 +1139,14 @@ void   FindNewReps2(
 }
 
 
-void   FindNewReps(
-                    Obj     tree,
-                    Obj     reps,
-                    Obj     pr,  /*  pc-presentation for a 
-                                 **  nilpotent group <G>                 */
+static void FindNewReps(Obj tree,
+                        Obj reps,
+                        Obj pr, /*  pc-presentation for a
+                                **  nilpotent group <G>                 */
 
-                    Obj     max  /*  every generator <g_i> of <G> with
-                                 **  i > max lies in the center of <G>   */
-                                      )
+                        Obj max /*  every generator <g_i> of <G> with
+                                **  i > max lies in the center of <G>   */
+)
 {
     Obj   y,           /*  stores a copy of <tree>                       */
           lsubs,       /*  stores pos(<subtree>) for all subtrees of
@@ -1288,19 +1268,15 @@ void   FindNewReps(
 **  'FuncFindNewReps' implements the internal function 'FindNewReps'.
 */
 
-Obj    FuncFindNewReps(
-                        Obj     self,
-                        Obj     tree,
-                        Obj     reps,
-                        Obj     pr,
-                        Obj     max       )
+static Obj FuncFindNewReps(Obj self, Obj tree, Obj reps, Obj pr, Obj max)
 {
 
+#ifdef TEST_TREE
     /*  test if <tree> is really a tree                                    */
-    /* TestTree(tree);                                                     */
-    if  ( LEN_PLIST(tree) < 15 )  
-        ErrorReturnVoid("<tree> must be a tree not a plain list", 0L, 0L,
-                        "you can 'return;'");
+    TestTree(tree);
+#endif
+    if (LEN_PLIST(tree) < 15)
+        ErrorMayQuit("<tree> must be a tree not a plain list", 0, 0);
     FindNewReps(tree, reps, pr, max);   
     return  0;
 }
@@ -1313,41 +1289,38 @@ Obj    FuncFindNewReps(
 **  'TestTree' tests if <tree> is a tree. If <tree> is not a tree 'TestTree'
 **  signals an error.
 */
-void  TestTree(
+#ifdef TEST_TREE
+static void  TestTree(
                Obj     tree)
 {
-
     if ( TNUM_OBJ(tree) != T_PLIST || LEN_PLIST(tree) % 7 != 0)
-        ErrorReturnVoid("<tree> must be a plain list,  whose length is a multiple of 7", 0L, 0L, "you can 'return;'");
+        ErrorMayQuit(
+            "<tree> must be a plain list,  whose length is a multiple of 7",
+            0, 0);
     if ( DT_LENGTH(tree, 1) != LEN_PLIST(tree)/7 )
-        ErrorReturnVoid("<tree> must be a tree, not a plain list.", 0L, 0L,
-                        "you can 'return;'");
+        ErrorMayQuit("<tree> must be a tree, not a plain list", 0, 0);
     if ( DT_SIDE(tree, 1) >= DT_LENGTH(tree, 1) )
-        ErrorReturnVoid("<tree> must be a tree, not a plain list.", 0L, 0L,
-                        "you can 'return;'");        
+        ErrorMayQuit("<tree> must be a tree, not a plain list", 0, 0);
     if ( DT_LENGTH(tree, 1) == 1)
     {
         if ( DT_SIDE(tree, 1) != LEFT && DT_SIDE(tree, 1) != RIGHT )
-            ErrorReturnVoid("<tree> must be a tree, not a plain list.", 0L, 0L,
-                            "you can 'return;'");
+            ErrorMayQuit("<tree> must be a tree, not a plain list", 0, 0);
         return;
     }
     if ( DT_SIDE(tree, 1) <= 1 )
-        ErrorReturnVoid("<tree> must be a tree, not a plain list.", 0L, 0L,
-                        "you can 'return;'");
+        ErrorMayQuit("<tree> must be a tree, not a plain list", 0, 0);
     if (DT_LENGTH(tree, 1) !=
           DT_LENGTH(tree, DT_LEFT(tree, 1)) + 
           DT_LENGTH(tree, DT_RIGHT(tree, 1)) +  
           1                                           )
-        ErrorReturnVoid("<tree> must be a tree, not a plain list.", 0L, 0L,
-                        "you can 'return;'");
+        ErrorMayQuit("<tree> must be a tree, not a plain list", 0, 0);
     if ( DT_SIDE(tree, 1) != DT_LENGTH(tree, DT_LEFT(tree, 1) ) + 1 )
-        ErrorReturnVoid("<tree> must be a tree, not a plain list.", 0L, 0L,
-                        "you can 'return;'");
+        ErrorMayQuit("<tree> must be a tree, not a plain list", 0, 0);
     TestTree( Part(tree, (DT_LEFT(tree, 1) - 1)*7, 
                          (DT_RIGHT(tree, 1) - 1)*7                    )    );
     TestTree( Part(tree, (DT_RIGHT(tree, 1) - 1)*7,  LEN_PLIST(tree) ) );
 }
+#endif
 
 
 /****************************************************************************
@@ -1356,7 +1329,8 @@ void  TestTree(
 **
 **  'Part' returns <list>{ [<pos1>+1 .. <pos2>] }.
 */
-Obj    Part(
+#ifdef TEST_TREE
+static Obj    Part(
              Obj      list,
              Int      pos1,
              Int      pos2  )
@@ -1373,6 +1347,7 @@ Obj    Part(
     }
     return part;
 }
+#endif
 
 
 /***************************************************************************
@@ -1400,28 +1375,27 @@ v**  argument.
 **  FindNewReps2.  FindSubs is called from FindNewReps and calls FindNewReps.
 */
 
-void  FindSubs1(
-                Obj        tree,
-                Int        x,     /*  subtree of <tree>                     */
-                Obj        list1, /*  list containing all subtrees of
-                                  **  left(<tree>) almost equal to
-                                  **  tree(<tree>, x)                       */
-                                  
-                Obj        list2, /*  list containing all subtrees of
-                                  **  right(<tree>) almost equal to
-                                  **  tree(<tree>, x)                       */
+static void FindSubs1(Obj tree,
+                      Int x,     /*  subtree of <tree>                     */
+                      Obj list1, /*  list containing all subtrees of
+                                 **  left(<tree>) almost equal to
+                                 **  tree(<tree>, x)                       */
 
-                Obj        a,     /*  list to change,  containing the
-                                  **  pos-arguments of the trees in list1   */
+                      Obj list2, /*  list containing all subtrees of
+                                 **  right(<tree>) almost equal to
+                                 **  tree(<tree>, x)                       */
 
-                Obj        b,     /*  list to change,  containing tthe
-                                  **  pos-arguments of the trees in list2   */
-                Int        al,
-                Int        ar,
-                Int        bl,
-                Int        br,
-                Obj        reps  /*  list of representatives for all trees */
-                                        )
+                      Obj a, /*  list to change,  containing the
+                             **  pos-arguments of the trees in list1   */
+
+                      Obj b, /*  list to change,  containing tthe
+                             **  pos-arguments of the trees in list2   */
+                      Int al,
+                      Int ar,
+                      Int bl,
+                      Int br,
+                      Obj reps /*  list of representatives for all trees */
+)
 {
    Int    i;  /*  loop variable                                             */
 
@@ -1477,29 +1451,28 @@ void  FindSubs1(
 }
 
 
-void  FindSubs2(
-                Obj        tree,
-                Int        x,     /*  subtree of <tree>                     */
-                Obj        list1, /*  list containing all subtrees of
-                                  **  left(<tree>) almost equal to
-                                  **  tree(<tree>, x)                       */
-                                  
-                Obj        list2, /*  list containing all subtrees of
-                                  **  right(<tree>) almost equal to
-                                  **  tree(<tree>, x)                       */
+static void FindSubs2(Obj tree,
+                      Int x,     /*  subtree of <tree>                     */
+                      Obj list1, /*  list containing all subtrees of
+                                 **  left(<tree>) almost equal to
+                                 **  tree(<tree>, x)                       */
 
-                Obj        a,     /*  list to change,  containing the
-                                  **  pos-arguments of the trees in list1   */
+                      Obj list2, /*  list containing all subtrees of
+                                 **  right(<tree>) almost equal to
+                                 **  tree(<tree>, x)                       */
 
-                Obj        b,     /*  list to change,  containing the
-                                  **  pos-arguments of the trees in list2   */
-                Int        al,
-                Int        ar,
-                Int        bl,
-                Int        br,
-                Obj        reps,  /*  list of representatives for all trees */
-                Obj        pr    /*  pc-presentation                       */
-                                        )
+                      Obj a, /*  list to change,  containing the
+                             **  pos-arguments of the trees in list1   */
+
+                      Obj b, /*  list to change,  containing the
+                             **  pos-arguments of the trees in list2   */
+                      Int al,
+                      Int ar,
+                      Int bl,
+                      Int br,
+                      Obj reps, /*  list of representatives for all trees */
+                      Obj pr    /*  pc-presentation                       */
+)
 {
    Int    i;  /*  loop variable                                             */
 
@@ -1555,30 +1528,29 @@ void  FindSubs2(
 }
 
 
-void  FindSubs(
-                Obj        tree,
-                Int        x,     /*  subtree of <tree>                     */
-                Obj        list1, /*  list containing all subtrees of
-                                  **  left(<tree>) almost equal to
-                                  **  tree(<tree>, x)                       */
-                                  
-                Obj        list2, /*  list containing all subtrees of
-                                  **  right(<tree>) almost equal to
-                                  **  tree(<tree>, x)                       */
+static void FindSubs(Obj tree,
+                     Int x,     /*  subtree of <tree>                     */
+                     Obj list1, /*  list containing all subtrees of
+                                **  left(<tree>) almost equal to
+                                **  tree(<tree>, x)                       */
 
-                Obj        a,     /*  list to change,  containing the
-                                  **  pos-arguments of the trees in list1   */
+                     Obj list2, /*  list containing all subtrees of
+                                **  right(<tree>) almost equal to
+                                **  tree(<tree>, x)                       */
 
-                Obj        b,     /*  list to change,  containing the
-                                  **  pos-arguments of the trees in list2   */
-                Int        al,
-                Int        ar,
-                Int        bl,
-                Int        br,
-                Obj        reps,  /*  list of representatives for all trees */
-                Obj        pr,    /*  pc-presentation                       */
-                Obj        max    /*  needed to call 'FindNewReps'          */
-                                        )
+                     Obj a, /*  list to change,  containing the
+                            **  pos-arguments of the trees in list1   */
+
+                     Obj b, /*  list to change,  containing the
+                            **  pos-arguments of the trees in list2   */
+                     Int al,
+                     Int ar,
+                     Int bl,
+                     Int br,
+                     Obj reps, /*  list of representatives for all trees */
+                     Obj pr,   /*  pc-presentation                       */
+                     Obj max   /*  needed to call 'FindNewReps'          */
+)
 {
    Int    i;  /*  loop variable                                             */
 
@@ -1641,10 +1613,7 @@ void  FindSubs(
 **  'SetSubs' sets the pos-arguments of the subtrees of <tree>,  contained
 **  in <list> according to the entries in the list <a>.
 */
-void    SetSubs(
-                 Obj       list,
-                 Obj       a,
-                 Obj       tree    )
+static void SetSubs(Obj list, Obj a, Obj tree)
 {
     UInt   i,j;  /*  loop variables                                         */
     UInt   len, len2;
@@ -1668,9 +1637,7 @@ void    SetSubs(
 **  top node of each of those trees.
 */
 
-void    UnmarkAEClass(
-                       Obj      tree,
-                       Obj      list  )
+static void UnmarkAEClass(Obj tree, Obj list)
 {
     UInt  i,j, len, len2;
 
@@ -1699,8 +1666,7 @@ void    UnmarkAEClass(
 **  monomials.  DT_evaluation is called from the library function dt_add.
 */
 
-Obj    FuncDT_evaluation(Obj      self,
-                    Obj      vector)
+static Obj FuncDT_evaluation(Obj self, Obj vector)
 {
     UInt   res,i;
 

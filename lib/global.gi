@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  global.gi                   GAP library                      Steve Linton
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Steve Linton.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##
 ##  This file contains the second stage of the "public" interface to
@@ -97,6 +98,21 @@ InstallGlobalFunction( IsBoundGlobal,
 end);
 
 
+#############################################################################
+##
+#M  IsAutoGlobal ( <name> )  . . . .  check if a global is automatic
+## 
+
+
+InstallGlobalFunction( IsAutoGlobal, 
+        function (name)
+    local isauto;
+    CheckGlobalName( name );
+    isauto := IS_AUTO_GVAR(name);
+    Info( InfoGlobal, 3, 
+          "IsAutoGlobal: called for ", name, " returned ", isauto);
+    return isauto;
+end);
 
 #############################################################################
 ##
@@ -259,126 +275,3 @@ InstallGlobalFunction( BindConstant,
     Info( InfoGlobal, 2, "BindConstant: called to set ", name, " to ", value);
     BIND_CONSTANT( name, value );
 end);
-
-#############################################################################
-##
-#F  TemporaryGlobalVarName( [<prefix>] )   name of an unbound global variable
-##
-##  TemporaryGlobalVarName ( [<prefix>]  ) returns a string  that can be used
-##  as the  name  of a global  variable  that is not bound   at the time when
-##  TemporaryGlobalVarName()  is called.    The optional  argument prefix can
-##  specify a string with which the name of the global variable starts.
-##
-
-InstallGlobalFunction( TemporaryGlobalVarName,
-        function( arg )
-    local   prefix,  nr,  gvar;
-
-    if Length(arg) = 0 then
-        prefix := "TEMP";
-    elif Length(arg) = 1 and IsString( arg[1] ) then
-        prefix := arg[1];
-        CheckGlobalName( prefix );
-    else
-        return Error( "usage: TemporaryGlobalVarName( [<prefix>] )" );
-    fi;
-
-    nr := 0;
-    gvar:= prefix;
-    while ISBOUND_GLOBAL( gvar ) do
-        nr := nr + 1;
-        gvar := Concatenation( prefix, String(nr) );
-    od;
-
-    return gvar;
-end );
-
-
-if IsHPCGAP then
-    BindThreadLocal("HIDDEN_GVARS",[]);
-else
-    HIDDEN_GVARS:=[];
-fi;
-
-InstallGlobalFunction(HideGlobalVariables,function(arg)
-local p,i;
-  p:=Length(HIDDEN_GVARS);
-  for i in arg do
-    if IsString(i) then
-      p:=p+1;
-      HIDDEN_GVARS[p]:=i;
-      p:=p+2;
-      if ISBOUND_GLOBAL(i) then
-        # variable is assigned
-	HIDDEN_GVARS[p-1]:=VALUE_GLOBAL(i);
-	if IS_READ_ONLY_GLOBAL(i) then
-	  HIDDEN_GVARS[p]:=true;
-	  MAKE_READ_WRITE_GLOBAL(i);
-	else
-	  HIDDEN_GVARS[p]:=false;
-        fi;
-      else
-        HIDDEN_GVARS[p-1]:=fail; # needs to be assigned
-        HIDDEN_GVARS[p]:=fail;
-      fi;
-      # temporarily remove the variable
-      UNBIND_GLOBAL(i);
-    else
-      Error("HideGlobalVariables requires the names as strings");
-    fi;
-  od;
-end);
-
-InstallGlobalFunction(UnhideGlobalVariables,function(arg)
-local p,str,all,l,which;
-  all:=Length(arg)=0; # doe we want to unhide all?
-  which:=arg;
-  l:=Length(HIDDEN_GVARS);
-  p:=l-2;
-  while p>0 do
-    str:=HIDDEN_GVARS[p];
-    # do we want to unhide the variable?
-    if all or str in which then
-      # remove the value
-      if ISBOUND_GLOBAL(str) then
-	if IS_READ_ONLY_GLOBAL(str) then
-	  MAKE_READ_WRITE_GLOBAL(str);
-	fi;
-	UNBIND_GLOBAL(str);
-      fi;
-
-      if HIDDEN_GVARS[p+2]<>fail then
-	#reassign a value
-	ASS_GVAR(str,HIDDEN_GVARS[p+1]);
-	if HIDDEN_GVARS[p+2]=true then
-	  MAKE_READ_ONLY_GLOBAL(str);
-	fi;
-      fi;
-
-      # remove the corresponding "HIDDEN_GVARS" entry
-      if not all then
-        if p+2<l then
-	  # move
-	  HIDDEN_GVARS{[p..l-3]}:=HIDDEN_GVARS{[p+3..l]};
-	fi;
-	# remove
-	Unbind(HIDDEN_GVARS[l-2]);
-	Unbind(HIDDEN_GVARS[l-1]);
-	Unbind(HIDDEN_GVARS[l]);
-	l:=l-3;
-	which:=Filtered(which,i->i<>str);
-      fi;
-    fi;
-    p:=p-3;
-  od;
-  if all then 
-    HIDDEN_GVARS:=[];
-  fi;
-end);
-
-
-
-#############################################################################
-##
-#E  global.gi . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-

@@ -1,3 +1,13 @@
+/****************************************************************************
+**
+**  This file is part of GAP, a system for computational discrete algebra.
+**
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
 #include "hpc/thread.h"
 
 #include "code.h"
@@ -9,6 +19,7 @@
 #include "plist.h"
 #include "stats.h"
 #include "stringobj.h"
+#include "vars.h"
 
 #include "hpc/guards.h"
 #include "hpc/misc.h"
@@ -49,7 +60,6 @@ typedef struct ThreadData {
 } ThreadData;
 
 Region *LimboRegion, *ReadOnlyRegion;
-Obj     PublicRegion;
 Obj     PublicRegionName;
 
 static int        GlobalPauseInProgress;
@@ -136,7 +146,7 @@ void AddGCRoots(void)
     GC_add_roots(p, (char *)p + sizeof(GAPState));
 }
 
-void RemoveGCRoots(void)
+static void RemoveGCRoots(void)
 {
     void * p = ActiveGAPState();
 #if defined(__CYGWIN__) || defined(__CYGWIN32__)
@@ -270,9 +280,9 @@ void CreateMainRegion(void)
     int i;
     TLS(currentRegion) = NewRegion();
     TLS(threadRegion) = TLS(currentRegion);
-    ((Region *)TLS(currentRegion))->fixed_owner = 1;
+    TLS(currentRegion)->fixed_owner = 1;
     RegionWriteLock(TLS(currentRegion));
-    ((Region *)TLS(currentRegion))->name = MakeImmString("thread region #0");
+    TLS(currentRegion)->name = MakeImmString("thread region #0");
     PublicRegionName = MakeImmString("public region");
     LimboRegion = NewRegion();
     LimboRegion->fixed_owner = 1;
@@ -285,7 +295,18 @@ void CreateMainRegion(void)
     }
 }
 
-void * DispatchThread(void * arg)
+static Obj MakeImmString2(const Char * cstr1, const Char * cstr2)
+{
+    Obj    result;
+    size_t len1 = strlen(cstr1), len2 = strlen(cstr2);
+    result = NEW_STRING(len1 + len2);
+    memcpy(CSTR_STRING(result), cstr1, len1);
+    memcpy(CSTR_STRING(result) + len1, cstr2, len2);
+    MakeImmutableNoRecurse(result);
+    return result;
+}
+
+static void * DispatchThread(void * arg)
 {
     ThreadData * this_thread = arg;
     Region *     region;
@@ -296,8 +317,9 @@ void * DispatchThread(void * arg)
 #endif
     ModulesInitModuleState();
     TLS(CountActive) = 1;
-    TLS(currentRegion) = region = NewRegion();
-    TLS(threadRegion) = TLS(currentRegion);
+    region = NewRegion();
+    TLS(currentRegion) = region;
+    TLS(threadRegion) = region;
     TLS(threadLock) = this_thread->lock;
     TLS(threadSignal) = this_thread->cond;
     region->fixed_owner = 1;
@@ -365,7 +387,7 @@ Obj RunThread(void (*start)(void *), void * arg)
     if (GlobalPauseInProgress) {
         /* New threads will be automatically paused */
         result->state = TSTATE_PAUSED;
-        HandleInterrupts(0, T_NO_STAT);
+        HandleInterrupts(0, 0);
     }
     else {
         result->state = TSTATE_RUNNING;
@@ -609,15 +631,15 @@ void RegionUnlock(Region * region)
     pthread_rwlock_unlock(region->lock);
 }
 
-int IsLocked(Region * region)
+LockStatus IsLocked(Region * region)
 {
     if (!region)
-        return 0; /* public region */
+        return LOCK_STATUS_UNLOCKED; /* public region */
     if (region->owner == GetTLS())
-        return 1;
+        return LOCK_STATUS_READWRITE_LOCKED;
     if (region->readers[TLS(threadID)])
-        return 2;
-    return 0;
+        return LOCK_STATUS_READONLY_LOCKED;
+    return LOCK_STATUS_UNLOCKED;
 }
 
 Region * GetRegionOf(Obj obj)
@@ -652,7 +674,7 @@ Obj GetRegionName(Region * region)
     return result;
 }
 
-void GetLockStatus(int count, Obj * objects, int * status)
+void GetLockStatus(int count, Obj * objects, LockStatus * status)
 {
     int i;
     for (i = 0; i < count; i++)
@@ -692,7 +714,7 @@ void ResetRegionLockCounters(Region * region)
 typedef struct {
     Obj      obj;
     Region * region;
-    int      mode;
+    LockMode mode;
 } LockRequest;
 
 static int LessThanLockRequest(const void * a, const void * b)
@@ -824,29 +846,27 @@ static void PauseCurrentThread(int locked)
             TerminateCurrentThread(1);
         if ((state & TSTATE_MASK) != TSTATE_PAUSED)
             break;
-        ((Region *)(TLS(currentRegion)))->alt_owner =
+        TLS(currentRegion)->alt_owner =
             thread_data[state >> TSTATE_SHIFT].tls;
         pthread_cond_wait(thread->cond, thread->lock);
         // TODO: This really should go in ResumeThread()
-        ((Region *)(TLS(currentRegion)))->alt_owner = NULL;
+        TLS(currentRegion)->alt_owner = NULL;
     }
     if (!locked)
         pthread_mutex_unlock(thread->lock);
 }
 
-extern Obj FuncCALL_WITH_CATCH(Obj self, Obj func, Obj args);
-
 static void InterruptCurrentThread(int locked, Stat stat)
 {
+    if (stat == 0)
+        return;
     ThreadData * thread = thread_data + TLS(threadID);
     int          state;
     Obj handler = (Obj)0;
-    if (stat == T_NO_STAT)
-        return;
     if (!locked)
         pthread_mutex_lock(thread->lock);
     STATE(CurrExecStatFuncs) = ExecStatFuncs;
-    SET_BRK_CURR_STAT(stat);
+    SET_BRK_CALL_TO(stat);
     state = GetThreadState(TLS(threadID));
     if ((state & TSTATE_MASK) == TSTATE_INTERRUPTED)
         UpdateThreadState(TLS(threadID), state, TSTATE_RUNNING);
@@ -858,7 +878,7 @@ static void InterruptCurrentThread(int locked, Stat stat)
         }
     }
     if (handler)
-        FuncCALL_WITH_CATCH((Obj)0, handler, NEW_PLIST(T_PLIST, 0));
+        CALL_WITH_CATCH(handler, NEW_PLIST(T_PLIST, 0));
     else
         ErrorReturnVoid("system interrupt", 0L, 0L, "you can 'return;'");
     if (!locked)
@@ -1039,23 +1059,23 @@ static Int CurrentRegionPrecedence(void)
     return -1;
 }
 
-int LockObject(Obj obj, int mode)
+int LockObject(Obj obj, LockMode mode)
 {
     Region * region = GetRegionOf(obj);
-    int      locked;
     int      result = TLS(lockStackPointer);
     if (!region)
         return result;
-    locked = IsLocked(region);
-    if (locked == 2 && mode)
+
+    LockStatus locked = IsLocked(region);
+    if (locked == LOCK_STATUS_READONLY_LOCKED && mode == LOCK_MODE_READWRITE)
         return -1;
-    if (!locked) {
+    if (locked == LOCK_STATUS_UNLOCKED) {
         Int prec = CurrentRegionPrecedence();
         if (prec >= 0 && region->prec >= prec && region->prec >= 0)
             return -1;
         if (region->fixed_owner)
             return -1;
-        if (mode)
+        if (mode == LOCK_MODE_READWRITE)
             RegionWriteLock(region);
         else
             RegionReadLock(region);
@@ -1064,11 +1084,10 @@ int LockObject(Obj obj, int mode)
     return result;
 }
 
-int LockObjects(int count, Obj * objects, const int * mode)
+int LockObjects(int count, Obj * objects, const LockMode * mode)
 {
     int           result;
     int           i, p;
-    int           locked;
     Int           curr_prec;
     LockRequest * order;
     if (count == 1) /* fast path */
@@ -1100,8 +1119,10 @@ int LockObjects(int count, Obj * objects, const int * mode)
             continue; /* skip duplicates */
         if (!region)
             continue;
-        locked = IsLocked(region);
-        if (locked == 2 && order[i].mode) {
+
+        LockStatus locked = IsLocked(region);
+        if (locked == LOCK_STATUS_READONLY_LOCKED &&
+            order[i].mode == LOCK_MODE_READWRITE) {
             /* trying to upgrade read lock to write lock */
             PopRegionLocks(result);
             return -1;
@@ -1116,7 +1137,7 @@ int LockObjects(int count, Obj * objects, const int * mode)
                 PopRegionLocks(result);
                 return -1;
             }
-            if (order[i].mode)
+            if (order[i].mode == LOCK_MODE_READWRITE)
                 RegionWriteLock(region);
             else
                 RegionReadLock(region);
@@ -1131,11 +1152,10 @@ int LockObjects(int count, Obj * objects, const int * mode)
     return result;
 }
 
-int TryLockObjects(int count, Obj * objects, const int * mode)
+int TryLockObjects(int count, Obj * objects, const LockMode * mode)
 {
     int           result;
     int           i;
-    int           locked;
     LockRequest * order;
     if (count > MAX_LOCKS)
         return -1;
@@ -1160,14 +1180,15 @@ int TryLockObjects(int count, Obj * objects, const int * mode)
             PopRegionLocks(result);
             return -1;
         }
-        locked = IsLocked(region);
-        if (locked == 2 && order[i].mode) {
+        LockStatus locked = IsLocked(region);
+        if (locked == LOCK_STATUS_READONLY_LOCKED &&
+            order[i].mode == LOCK_MODE_READWRITE) {
             /* trying to upgrade read lock to write lock */
             PopRegionLocks(result);
             return -1;
         }
-        if (!locked) {
-            if (order[i].mode) {
+        if (locked == LOCK_STATUS_UNLOCKED) {
+            if (order[i].mode == LOCK_MODE_READWRITE) {
                 if (!RegionTryWriteLock(region)) {
                     PopRegionLocks(result);
                     return -1;
@@ -1194,8 +1215,6 @@ Region * CurrentRegion(void)
 {
     return TLS(currentRegion);
 }
-
-extern GVarDescriptor LastInaccessibleGVar;
 
 #ifdef VERBOSE_GUARDS
 

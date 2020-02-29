@@ -19,7 +19,6 @@ ABI_CFLAGS = @ABI_CFLAGS@
 
 # HPC-GAP specific
 HPCGAP = @HPCGAP@
-ADDGUARDS2 = @ADDGUARDS2@
 
 # garbage collector source files
 GC_SOURCES = @GC_SOURCES@
@@ -49,12 +48,14 @@ host_vendor = @host_vendor@
 
 # compile and linker flags
 CFLAGS = @CFLAGS@
+CXXFLAGS = @CXXFLAGS@
 CPPFLAGS = @CPPFLAGS@
 DEFS = @DEFS@
 LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
 
-WARNING_CPPFLAGS = @WARNING_CPPFLAGS@
+WARN_CFLAGS = @WARN_CFLAGS@
+WARN_CXXFLAGS = @WARN_CXXFLAGS@
 
 BUILD_GMP = @BUILD_GMP@
 GMP_CPPFLAGS = @GMP_CPPFLAGS@
@@ -94,6 +95,7 @@ AS = @AS@
 AWK = @AWK@
 CC = @CC@
 CPP = @CPP@
+CXX = @CXX@
 INSTALL = @INSTALL@
 LD = @LD@
 LIPO = @LIPO@
@@ -178,6 +180,7 @@ sysconfdir = @sysconfdir@
 #
 vpath %.h $(srcdir)
 vpath %.c $(srcdir)
+vpath %.cc $(srcdir)
 vpath %.s $(srcdir)
 
 

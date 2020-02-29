@@ -1,10 +1,11 @@
+#@local cat,cat2,f,fam,l,o,o2,result,swallow,type,type2
 gap> START_TEST("callfunc.tst");
 
 #
 gap> CallFuncList(1,2);
-Error, CallFuncList: <list> must be a small list
+Error, CallFuncList: <list> must be a small list (not the integer 2)
 gap> CallFuncListWrap(1,2);
-Error, CallFuncListWrap: <list> must be a small list
+Error, CallFuncListWrap: <list> must be a small list (not the integer 2)
 
 #
 gap> ForAll([0,2..100], x -> [1..x] = CallFuncList(Union, List([1..x], y -> [y]) ) );
@@ -31,19 +32,23 @@ true
 # test overloading CallFuncList
 gap> fam := NewFamily("CustomFunctionFamily");;
 gap> cat := NewCategory("IsCustomFunction", IsFunction);;
-gap> type := NewType(fam, cat and IsPositionalObjectRep);;
+gap> type := NewType(fam, cat and IsAttributeStoringRep);;
 gap> result := fail;;
 gap> InstallMethod(CallFuncList,[cat,IsList],function(func,args) result:=args; return args; end);
-gap> InstallMethod(NameFunction, [cat], f -> f![1]);
+gap> InstallMethod(NameFunction, [cat], f -> "myName");
 gap> InstallMethod(NamesLocalVariablesFunction, [cat], f -> ["arg"]);
 gap> InstallMethod(NumberArgumentsFunction, [cat], f -> -1);
 
 #
-gap> o := Objectify(type,["myName"]);;
+gap> o := Objectify(type, rec());;
 gap> Display(o);
 <object>
+gap> HasNameFunction(o);
+false
 gap> NameFunction(o);
 "myName"
+gap> HasNameFunction(o);
+true
 gap> NamesLocalVariablesFunction(o);
 [ "arg" ]
 gap> NumberArgumentsFunction(o);

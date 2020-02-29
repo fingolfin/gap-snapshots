@@ -1,10 +1,11 @@
 /****************************************************************************
 **
-*W  iostream.c                  GAP source                       Steve Linton
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **
 **  This file will contains the functions for communicating with other
@@ -25,10 +26,12 @@
 
 #include "bool.h"
 #include "error.h"
+#include "integer.h"
 #include "io.h"
 #include "lists.h"
 #include "modules.h"
 #include "stringobj.h"
+#include "sysenv.h"
 
 #include "hpc/thread.h"
 
@@ -37,6 +40,10 @@
 #include <signal.h>
 #include <termios.h>
 #include <unistd.h>
+
+#ifdef HAVE_SPAWN_H
+#include <spawn.h>
+#endif
 
 #ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
@@ -58,16 +65,16 @@
 // the IOStream related variables, including FreeptyIOStreams
 
 typedef struct {
-  int childPID;   /* Also used as a link to make a linked free list */
+  pid_t childPID;   /* Also used as a link to make a linked free list */
   int ptyFD;      /* GAP reading from external prog */
-  UInt inuse;     /* we need to scan all the "live" structures when we have
+  int inuse;      /* we need to scan all the "live" structures when we have
                      had SIGCHLD so, for now, we just walk the array for
                      the ones marked in use */
-  UInt changed;   /* set non-zero by the signal handler if our child has
+  int changed;    /* set non-zero by the signal handler if our child has
                      done something -- stopped or exited */
   int status;     /* status from wait3 -- meaningful only if changed is 1 */
-  UInt blocked;   /* we have already reported a problem, which is still there */
-  UInt alive;     /* gets set after waiting for a child actually fails
+  int blocked;    /* we have already reported a problem, which is still there */
+  int alive;      /* gets set after waiting for a child actually fails
                      implying that the child has vanished under our noses */
 } PtyIOStream;
 
@@ -129,7 +136,13 @@ static void KillChild(UInt stream)
 
 /****************************************************************************
 **
-*F  GetMasterPty( <fid> ) . . . . . . . . .  open a master pty (from "xterm")
+*/
+#define PErr(msg)                                                            \
+    Pr(msg ": %s (errnor %d)\n", (Int)strerror(errno), (Int)errno);
+
+/****************************************************************************
+**
+*F  OpenPty( <master>, <slave> ) . . . . . . . . open a pty master/slave pair
 */
 
 #ifdef HAVE_OPENPTY
@@ -139,7 +152,7 @@ static UInt OpenPty(int * master, int * slave)
     /* openpty is available on OpenBSD, NetBSD and FreeBSD, Mac OS X,
        Cygwin, Interix, OSF/1 4 and 5, and glibc (since 1998), and hence
        on most modern Linux systems. See also:
-       http://www.gnu.org/software/gnulib/manual/html_node/openpty.html */
+       https://www.gnu.org/software/gnulib/manual/html_node/openpty.html */
     return (openpty(master, slave, NULL, NULL, NULL) < 0);
 }
 
@@ -172,23 +185,23 @@ static UInt OpenPty(int * master, int * slave)
        */
     *master = posix_openpt(O_RDWR | O_NOCTTY);
     if (*master < 0) {
-        Pr("OpenPty: posix_openpt failed\n", 0L, 0L);
+        PErr("OpenPty: posix_openpt failed");
         return 1;
     }
 
     if (grantpt(*master)) {
-        Pr("OpenPty: grantpt failed\n", 0L, 0L);
+        PErr("OpenPty: grantpt failed");
         goto error;
     }
     if (unlockpt(*master)) {
         close(*master);
-        Pr("OpenPty: unlockpt failed\n", 0L, 0L);
+        PErr("OpenPty: unlockpt failed");
         goto error;
     }
 
     *slave = open(ptsname(*master), O_RDWR, 0);
     if (*slave < 0) {
-        Pr("OpenPty: opening slave tty failed\n", 0L, 0L);
+        PErr("OpenPty: opening slave tty failed");
         goto error;
     }
     return 0;
@@ -274,17 +287,27 @@ static void ChildStatusChanged(int whichsig)
 }
 
 #ifdef HPCGAP
-Obj FuncDEFAULT_SIGCHLD_HANDLER(Obj self)
+static Obj FuncDEFAULT_SIGCHLD_HANDLER(Obj self)
 {
     ChildStatusChanged(SIGCHLD);
     return (Obj)0;
 }
+
+
+// HACK: since we can't use posix_spawn in a thread-safe manner, disable
+// it for HPC-GAP
+#undef HAVE_POSIX_SPAWN
+
 #endif
 
-static Int StartChildProcess(Char * dir, Char * prg, Char * args[])
+static Int
+StartChildProcess(const Char * dir, const Char * prg, Char * args[])
 {
     int slave; /* pipe to child                   */
     Int stream;
+#ifdef HAVE_POSIX_SPAWN
+    int oldwd = -1;
+#endif
 
     struct termios tst; /* old and new terminal state      */
 
@@ -299,7 +322,7 @@ static Int StartChildProcess(Char * dir, Char * prg, Char * args[])
 
     /* open pseudo terminal for communication with gap */
     if (OpenPty(&PtyIOStreams[stream].ptyFD, &slave)) {
-        Pr("open pseudo tty failed (errno %d)\n", errno, 0);
+        PErr("StartChildProcess: open pseudo tty failed");
         FreeStream(stream);
         HashUnlock(PtyIOStreams);
         return -1;
@@ -307,7 +330,7 @@ static Int StartChildProcess(Char * dir, Char * prg, Char * args[])
 
     /* Now fiddle with the terminal sessions on the pty */
     if (tcgetattr(slave, &tst) == -1) {
-        Pr("tcgetattr on slave pty failed (errno %d)\n", errno, 0);
+        PErr("StartChildProcess: tcgetattr on slave pty failed");
         goto cleanup;
     }
     tst.c_cc[VINTR] = 0377;
@@ -318,7 +341,7 @@ static Int StartChildProcess(Char * dir, Char * prg, Char * args[])
     tst.c_lflag    &= ~(ECHO|ICANON);
     tst.c_oflag    &= ~(ONLCR);
     if (tcsetattr(slave, TCSANOW, &tst) == -1) {
-        Pr("tcsetattr on slave pty failed (errno %d)\n", errno, 0);
+        PErr("StartChildProcess: tcsetattr on slave pty failed");
         goto cleanup;
     }
 
@@ -330,6 +353,81 @@ static Int StartChildProcess(Char * dir, Char * prg, Char * args[])
     PtyIOStreams[stream].blocked = 0;
     PtyIOStreams[stream].changed = 0;
     /* fork */
+#ifdef HAVE_POSIX_SPAWN
+    posix_spawn_file_actions_t file_actions;
+
+    // setup file actions
+    if (posix_spawn_file_actions_init(&file_actions)) {
+        PErr("StartChildProcess: posix_spawn_file_actions_init failed");
+        goto cleanup;
+    }
+
+    if (posix_spawn_file_actions_addclose(&file_actions,
+                                          PtyIOStreams[stream].ptyFD)) {
+        PErr("StartChildProcess: posix_spawn_file_actions_addclose failed");
+        posix_spawn_file_actions_destroy(&file_actions);
+        goto cleanup;
+    }
+
+    if (posix_spawn_file_actions_adddup2(&file_actions, slave, 0)) {
+        PErr("StartChildProcess: "
+             "posix_spawn_file_actions_adddup2(slave, 0) failed");
+        posix_spawn_file_actions_destroy(&file_actions);
+        goto cleanup;
+    }
+
+    if (posix_spawn_file_actions_adddup2(&file_actions, slave, 1)) {
+        PErr("StartChildProcess: "
+             "posix_spawn_file_actions_adddup2(slave, 1) failed");
+        posix_spawn_file_actions_destroy(&file_actions);
+        goto cleanup;
+    }
+
+    // temporarily change the working directory
+    //
+    // WARNING: This is not thread safe! Unfortunately, there is no portable
+    // way to do this race free, without using an external shim executable
+    // which sets the wd and then calls the actually target executable. But at
+    // least this well-known deficiency has finally been realized as a problem
+    // by POSIX in 2018, just about 14 years after posix_spawn was first put
+    // into the standard), and so we might see a proper fix for this soon,
+    // i.e., possibly even within the next decade!
+    // See also <http://austingroupbugs.net/view.php?id=1208>
+    oldwd = open(".", O_RDONLY | O_DIRECTORY | O_CLOEXEC);
+    if (oldwd == -1) {
+        PErr("StartChildProcess: cannot open current working "
+             "directory");
+        posix_spawn_file_actions_destroy(&file_actions);
+        goto cleanup;
+    }
+    if (chdir(dir) == -1) {
+        PErr("StartChildProcess: cannot change working "
+             "directory for subprocess");
+        posix_spawn_file_actions_destroy(&file_actions);
+        goto cleanup;
+    }
+
+    // spawn subprocess
+    if (posix_spawn(&PtyIOStreams[stream].childPID, prg, &file_actions, 0,
+                    args, environ)) {
+        PErr("StartChildProcess: posix_spawn failed");
+        goto cleanup;
+    }
+
+    // restore working directory
+    if (fchdir(oldwd)) {
+        PErr("StartChildProcess: failed to restore working dir after "
+             "spawning");
+    }
+    close(oldwd);    // ignore error
+    oldwd = -1;
+
+    // cleanup
+    if (posix_spawn_file_actions_destroy(&file_actions)) {
+        PErr("StartChildProcess: posix_spawn_file_actions_destroy failed");
+        goto cleanup;
+    }
+#else
     PtyIOStreams[stream].childPID = fork();
     if (PtyIOStreams[stream].childPID == 0) {
         /* Set up the child */
@@ -356,11 +454,12 @@ static Int StartChildProcess(Char * dir, Char * prg, Char * args[])
         close(slave);
         _exit(1);
     }
+#endif
 
     /* Now we're back in the master */
     /* check if the fork was successful */
     if (PtyIOStreams[stream].childPID == -1) {
-        Pr("Panic: cannot fork to subprocess (errno %d).\n", errno, 0);
+        PErr("StartChildProcess: cannot fork to subprocess");
         goto cleanup;
     }
     close(slave);
@@ -370,6 +469,16 @@ static Int StartChildProcess(Char * dir, Char * prg, Char * args[])
     return stream;
 
 cleanup:
+#ifdef HAVE_POSIX_SPAWN
+    if (oldwd >= 0) {
+        // restore working directory
+        if (fchdir(oldwd)) {
+            PErr("StartChildProcess: failed to restore working dir during "
+                 "cleanup");
+        }
+        close(oldwd);
+    }
+#endif
     close(slave);
     close(PtyIOStreams[stream].ptyFD);
     PtyIOStreams[stream].inuse = 0;
@@ -406,7 +515,7 @@ static void HandleChildStatusChanges(UInt pty)
     }
 }
 
-Obj FuncCREATE_PTY_IOSTREAM(Obj self, Obj dir, Obj prog, Obj args)
+static Obj FuncCREATE_PTY_IOSTREAM(Obj self, Obj dir, Obj prog, Obj args)
 {
     Obj    allargs[MAX_ARGS + 1];
     Char * argv[MAX_ARGS + 2];
@@ -427,11 +536,12 @@ Obj FuncCREATE_PTY_IOSTREAM(Obj self, Obj dir, Obj prog, Obj args)
         argv[i] = CSTR_STRING(allargs[i]);
     }
     argv[i] = (Char *)0;
-    pty = StartChildProcess(CSTR_STRING(dir), CSTR_STRING(prog), argv);
+    pty = StartChildProcess(CONST_CSTR_STRING(dir), CONST_CSTR_STRING(prog),
+                            argv);
     if (pty < 0)
         return Fail;
     else
-        return INTOBJ_INT(pty);
+        return ObjInt_Int(pty);
 }
 
 
@@ -517,12 +627,11 @@ static UInt HashLockStreamIfAvailable(Obj stream)
     if (!PtyIOStreams[pty].inuse) {
         HashUnlock(PtyIOStreams);
         ErrorMayQuit("IOSTREAM %d is not in use", pty, 0L);
-        return -1;
     }
     return pty;
 }
 
-Obj FuncWRITE_IOSTREAM(Obj self, Obj stream, Obj string, Obj len)
+static Obj FuncWRITE_IOSTREAM(Obj self, Obj stream, Obj string, Obj len)
 {
     UInt pty = HashLockStreamIfAvailable(stream);
 
@@ -530,10 +639,10 @@ Obj FuncWRITE_IOSTREAM(Obj self, Obj stream, Obj string, Obj len)
     ConvString(string);
     UInt result = WriteToPty(pty, CSTR_STRING(string), INT_INTOBJ(len));
     HashUnlock(PtyIOStreams);
-    return INTOBJ_INT(result);
+    return ObjInt_Int(result);
 }
 
-Obj FuncREAD_IOSTREAM(Obj self, Obj stream, Obj len)
+static Obj FuncREAD_IOSTREAM(Obj self, Obj stream, Obj len)
 {
     UInt pty = HashLockStreamIfAvailable(stream);
 
@@ -549,7 +658,7 @@ Obj FuncREAD_IOSTREAM(Obj self, Obj stream, Obj len)
     return string;
 }
 
-Obj FuncREAD_IOSTREAM_NOWAIT(Obj self, Obj stream, Obj len)
+static Obj FuncREAD_IOSTREAM_NOWAIT(Obj self, Obj stream, Obj len)
 {
     UInt pty = HashLockStreamIfAvailable(stream);
 
@@ -565,7 +674,7 @@ Obj FuncREAD_IOSTREAM_NOWAIT(Obj self, Obj stream, Obj len)
     return string;
 }
 
-Obj FuncKILL_CHILD_IOSTREAM(Obj self, Obj stream)
+static Obj FuncKILL_CHILD_IOSTREAM(Obj self, Obj stream)
 {
     UInt pty = HashLockStreamIfAvailable(stream);
 
@@ -576,7 +685,7 @@ Obj FuncKILL_CHILD_IOSTREAM(Obj self, Obj stream)
     return 0;
 }
 
-Obj FuncSIGNAL_CHILD_IOSTREAM(Obj self, Obj stream, Obj sig)
+static Obj FuncSIGNAL_CHILD_IOSTREAM(Obj self, Obj stream, Obj sig)
 {
     UInt pty = HashLockStreamIfAvailable(stream);
 
@@ -587,7 +696,7 @@ Obj FuncSIGNAL_CHILD_IOSTREAM(Obj self, Obj stream, Obj sig)
     return 0;
 }
 
-Obj FuncCLOSE_PTY_IOSTREAM(Obj self, Obj stream)
+static Obj FuncCLOSE_PTY_IOSTREAM(Obj self, Obj stream)
 {
     UInt pty = HashLockStreamIfAvailable(stream);
 
@@ -618,7 +727,7 @@ Obj FuncCLOSE_PTY_IOSTREAM(Obj self, Obj stream)
     return 0;
 }
 
-Obj FuncIS_BLOCKED_IOSTREAM(Obj self, Obj stream)
+static Obj FuncIS_BLOCKED_IOSTREAM(Obj self, Obj stream)
 {
     UInt pty = HashLockStreamIfAvailable(stream);
 
@@ -628,11 +737,11 @@ Obj FuncIS_BLOCKED_IOSTREAM(Obj self, Obj stream)
     return isBlocked ? True : False;
 }
 
-Obj FuncFD_OF_IOSTREAM(Obj self, Obj stream)
+static Obj FuncFD_OF_IOSTREAM(Obj self, Obj stream)
 {
     UInt pty = HashLockStreamIfAvailable(stream);
 
-    Obj result = INTOBJ_INT(PtyIOStreams[pty].ptyFD);
+    Obj result = ObjInt_Int(PtyIOStreams[pty].ptyFD);
     HashUnlock(PtyIOStreams);
     return result;
 }

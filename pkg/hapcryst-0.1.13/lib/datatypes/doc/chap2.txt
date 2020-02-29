@@ -1,0 +1,368 @@
+  
+  [1X2 [33X[0;0YAccessing and Manipulating Resolutions[133X[101X
+  
+  
+  [1X2.1 [33X[0;0YRepresentation-Independent Access Methods[133X[101X
+  
+  [33X[0;0YAll  methods listed below take a [10XHapResolution[110X in any representation. If the
+  other  arguments  are  compatible with the representation of the resolution,
+  the  returned  value  will be in the form defined by this representation. If
+  the other arguments are in a different representation, [5XGAP[105Xs method selection
+  is  used  via  [10XTryNextMethod()[110X  to  find  an  applicable  method (a suitable
+  representation).[133X
+  
+  [33X[0;0YThe  idea behind this is that the results of computations have the same form
+  as  the  input.  And  as  all representations are sub-representations of the
+  [10XHapResolutionRep[110X   representation,   input  which  is  compatible  with  the
+  [10XHapResolutionRep[110X representation is always valid.[133X
+  
+  [33X[0;0YEvery new representation must support the functions of this section.[133X
+  
+  [1X2.1-1 StrongestValidRepresentationForLetter[101X
+  
+  [33X[1;0Y[29X[2XStrongestValidRepresentationForLetter[102X( [3Xresolution[103X, [3Xterm[103X, [3Xletter[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yfilter[133X
+  
+  [33X[0;0YFinds the sub-representation of [10XHapResolutionRep[110X for which [3Xletter[103X is a valid
+  letter   of   the   [3Xterm[103Xth   module  of  [3Xresolution[103X.  Note  that  [3Xresolution[103X
+  automatically  is  in  some  sub-representation  of [10XHapResolutionRep[110X.This is
+  mainly meant for debugging.[133X
+  
+  [1X2.1-2 StrongestValidRepresentationForWord[101X
+  
+  [33X[1;0Y[29X[2XStrongestValidRepresentationForWord[102X( [3Xresolution[103X, [3Xterm[103X, [3Xword[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yfilter[133X
+  
+  [33X[0;0YFinds  the  sub-representation of [10XHapResolutionRep[110X for which [3Xword[103X is a valid
+  word  of the [3Xterm[103Xth module of [3Xresolution[103X. Note that [3Xresolution[103X automatically
+  is  in some sub-representation of [10XHapResolutionRep[110X. This is mainly meant for
+  debugging.[133X
+  
+  [1X2.1-3 PositionInGroupOfResolution[101X
+  
+  [33X[1;0Y[29X[2XPositionInGroupOfResolution[102X( [3Xresolution[103X, [3Xg[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XPositionInGroupOfResolutionNC[102X( [3Xresolution[103X, [3Xg[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Ypositive integer[133X
+  
+  [33X[0;0YThis  returns  the position of the group element [3Xg[103X in the enumeration of the
+  group of [3Xresolution[103X. The NC version does not check if [3Xg[103X really is an element
+  of the group of [3Xresolution[103X.[133X
+  
+  [1X2.1-4 IsValidGroupInt[101X
+  
+  [33X[1;0Y[29X[2XIsValidGroupInt[102X( [3Xresolution[103X, [3Xn[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yboolean[133X
+  
+  [33X[0;0YReturns true if the [3Xn[103Xth element of the group of [3Xresolution[103X is known.[133X
+  
+  [1X2.1-5 GroupElementFromPosition[101X
+  
+  [33X[1;0Y[29X[2XGroupElementFromPosition[102X( [3Xresolution[103X, [3Xn[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Ygroup element or [9Xfail[109X[133X
+  
+  [33X[0;0YReturns  [3Xn[103Xth  element  of the group of [3Xresolution[103X. If the [3Xn[103Xth element is not
+  known, [9Xfail[109X is returned.[133X
+  
+  [1X2.1-6 MultiplyGroupElts[101X
+  
+  [33X[1;0Y[29X[2XMultiplyGroupElts[102X( [3Xresolution[103X, [3Xx[103X, [3Xy[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Ypositive  integer or group element, depending on the type of [3Xx[103X and
+            [3Xy[103X[133X
+  
+  [33X[0;0YIf  [10Xx[110X  and  [10Xy[110X  are given in standard representation (i.e. as integers), this
+  returns the position of the product of the group elements represented by the
+  positive integers [3Xx[103X and [3Xx[103X.[133X
+  
+  [33X[0;0YIf [10Xx[110X and [10Xy[110X are given in any other representation, the returned group element
+  will also be represented in this way.[133X
+  
+  [1X2.1-7 MultiplyFreeZGLetterWithGroupElt[101X
+  
+  [33X[1;0Y[29X[2XMultiplyFreeZGLetterWithGroupElt[102X( [3Xresolution[103X, [3Xletter[103X, [3Xg[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10YA letter[133X
+  
+  [33X[0;0YMultiplies  the  letter  [3Xletter[103X  with  the  group  element [3Xg[103X and returns the
+  result.  If [3Xresolution[103X is in standard representation, [3Xg[103X has to be an integer
+  and  [3Xletter[103X  has  to  be  a  pair  of integer. If [3Xresolution[103X is in any other
+  representation,  [3Xletter[103X  and  [3Xg[103X  can  be  in  a  form  compatible  with that
+  representation  or  in  the  standard form (in the latter case, the returned
+  value will also have standard form).[133X
+  
+  [1X2.1-8 MultiplyFreeZGWordWithGroupElt[101X
+  
+  [33X[1;0Y[29X[2XMultiplyFreeZGWordWithGroupElt[102X( [3Xresolution[103X, [3Xword[103X, [3Xg[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10YA word[133X
+  
+  [33X[0;0YMultiplies the word [3Xword[103X with the group element [3Xg[103X and returns the result. If
+  [3Xresolution[103X  is  in  standard representation, [3Xg[103X has to be an integer and [3Xword[103X
+  has  to  be  a  list  of  pairs  of  integers. If [3Xresolution[103X is in any other
+  representation,   [3Xword[103X  and  [3Xg[103X  can  be  in  a  form  compatible  with  that
+  representation  or  in  the  standard form (in the latter case, the returned
+  value will also have standard form).[133X
+  
+  [1X2.1-9 BoundaryOfFreeZGLetter[101X
+  
+  [33X[1;0Y[29X[2XBoundaryOfFreeZGLetter[102X( [3Xresolution[103X, [3Xterm[103X, [3Xletter[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yfree ZG word (in the same representation as [3Xletter[103X)[133X
+  
+  [33X[0;0YCalculates  the  boundary  of  the  letter  (word of length 1) [3Xletter[103X of the
+  [3Xterm[103Xth module of [3Xresolution[103X.[133X
+  
+  [33X[0;0YThe  returned  value  is a word of the [3Xterm[103X-1st module and comes in the same
+  representation as [3Xletter[103X.[133X
+  
+  [1X2.1-10 BoundaryOfFreeZGWord[101X
+  
+  [33X[1;0Y[29X[2XBoundaryOfFreeZGWord[102X( [3Xresolution[103X, [3Xterm[103X, [3Xword[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yfree ZG word (in the same representation as [3Xletter[103X)[133X
+  
+  [33X[0;0YCalculates the boundary of the word [3Xword[103X of the [3Xterm[103Xth module of [3Xresolution[103X.[133X
+  
+  [33X[0;0YThe  returned  value  is a word of the [3Xterm[103X-1st module and comes in the same
+  representation as [3Xword[103X.[133X
+  
+  
+  [1X2.2 [33X[0;0YConverting Between Representations[133X[101X
+  
+  [33X[0;0YFour  methods  are  provided  to  convert  letters  and  words from standard
+  representation to any other representation and back again.[133X
+  
+  [1X2.2-1 ConvertStandardLetter[101X
+  
+  [33X[1;0Y[29X[2XConvertStandardLetter[102X( [3Xresolution[103X, [3Xterm[103X, [3Xletter[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XConvertStandardLetterNC[102X( [3Xresolution[103X, [3Xterm[103X, [3Xletter[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yletter in the representation of [3Xresolution[103X[133X
+  
+  [33X[0;0YConverts  the letter [3Xletter[103X in standard representation to the representation
+  of  [3Xresolution[103X.  The  NC  version  does not check whether [3Xletter[103X really is a
+  letter in standard representation.[133X
+  
+  [1X2.2-2 ConvertStandardWord[101X
+  
+  [33X[1;0Y[29X[2XConvertStandardWord[102X( [3Xresolution[103X, [3Xterm[103X, [3Xword[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XConvertStandardWordNC[102X( [3Xresolution[103X, [3Xterm[103X, [3Xword[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yword in the representation of [3Xresolution[103X[133X
+  
+  [33X[0;0YConverts  the  word [3Xword[103X in standard representation to the representation of
+  [3Xresolution[103X.  The  NC  version does not check whether [3Xword[103X is a valid word in
+  standard representation.[133X
+  
+  [1X2.2-3 ConvertLetterToStandardRep[101X
+  
+  [33X[1;0Y[29X[2XConvertLetterToStandardRep[102X( [3Xresolution[103X, [3Xterm[103X, [3Xletter[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XConvertLetterToStandardRepNC[102X( [3Xresolution[103X, [3Xterm[103X, [3Xletter[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yletter in standard representation[133X
+  
+  [33X[0;0YConverts  the  letter  [3Xletter[103X  in  the  representation  of [3Xresolution[103X to the
+  standard  representation.  The NC version does not check whether [3Xletter[103X is a
+  valid letter of [3Xresolution[103X.[133X
+  
+  [1X2.2-4 ConvertWordToStandardRep[101X
+  
+  [33X[1;0Y[29X[2XConvertWordToStandardRep[102X( [3Xresolution[103X, [3Xterm[103X, [3Xword[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XConvertWordToStandardRepNC[102X( [3Xresolution[103X, [3Xterm[103X, [3Xword[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yword in standard representation[133X
+  
+  [33X[0;0YConverts  the  word [3Xword[103X in the representation of [3Xresolution[103X to the standard
+  representation.  The  NC version does not check whether [3Xword[103X is a valid word
+  of [3Xresolution[103X.[133X
+  
+  
+  [1X2.3 [33X[0;0YSpecial Methods for [9XHapResolutionRep[109X[101X[1X[133X[101X
+  
+  [33X[0;0YSome   methods   explicitely  require  the  input  to  be  in  the  standard
+  representation  ([3XHapResolutionRep[103X).  Two  of  these test if a word/letter is
+  really  in standard representation, the other ones are non-check versions of
+  the universal methods.[133X
+  
+  [1X2.3-1 IsFreeZGLetter[101X
+  
+  [33X[1;0Y[29X[2XIsFreeZGLetter[102X( [3Xresolution[103X, [3Xterm[103X, [3Xletter[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yboolean[133X
+  
+  [33X[0;0YChecks  if  [3Xletter[103X  is  an  valid  letter  (word  of  length  1) in standard
+  representation of the [3Xterm[103Xth module of [3Xresolution[103X.[133X
+  
+  [1X2.3-2 IsFreeZGWord[101X
+  
+  [33X[1;0Y[29X[2XIsFreeZGWord[102X( [3Xresolution[103X, [3Xterm[103X, [3Xword[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yboolean[133X
+  
+  [33X[0;0YCheck if [3Xword[103X is a valid word in large standard representation of the [3Xterm[103Xth
+  module in [3Xresolution[103X.[133X
+  
+  [1X2.3-3 MultiplyGroupEltsNC[101X
+  
+  [33X[1;0Y[29X[2XMultiplyGroupEltsNC[102X( [3Xresolution[103X, [3Xx[103X, [3Xy[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Ypositive integer[133X
+  
+  [33X[0;0YGiven positive integers [10Xx[110X and [10Xy[110X, this returns the position of the product of
+  the  group  elements  represented  by  the  positive  integers [3Xx[103X and [3Xx[103X. This
+  assumes  that all input is in standard representation and does not check the
+  input.[133X
+  
+  [1X2.3-4 MultiplyFreeZGLetterWithGroupEltNC[101X
+  
+  [33X[1;0Y[29X[2XMultiplyFreeZGLetterWithGroupEltNC[102X( [3Xresolution[103X, [3Xletter[103X, [3Xg[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10YA letter in standard representation[133X
+  
+  [33X[0;0YMultiplies  the  letter  [3Xletter[103X  with  the  group element represented by the
+  positive  integer  [3Xg[103X  and  returns the result. The input is assumed to be in
+  [3XHapResolutionRep[103X and is not checked.[133X
+  
+  [1X2.3-5 MultiplyFreeZGWordWithGroupEltNC[101X
+  
+  [33X[1;0Y[29X[2XMultiplyFreeZGWordWithGroupEltNC[102X( [3Xresolution[103X, [3Xword[103X, [3Xg[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10YA letter in standard representation[133X
+  
+  [33X[0;0YMultiplies  the word [3Xword[103X with the group element represented by the positive
+  integer   [3Xg[103X  and  returns  the  result.  The  input  is  assumed  to  be  in
+  [3XHapResolutionRep[103X and is not checked.[133X
+  
+  [1X2.3-6 BoundaryOfFreeZGLetterNC[101X
+  
+  [33X[1;0Y[29X[2XBoundaryOfFreeZGLetterNC[102X( [3Xresolution[103X, [3Xterm[103X, [3Xletter[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yfree ZG word in standard representation[133X
+  
+  [33X[0;0YCalculates  the  boundary  of  the  letter  (word of length 1) [3Xletter[103X of the
+  [3Xterm[103Xth  module  of  [3Xresolution[103X.  The  input  is  assumed  to  be in standard
+  representation and not checked.[133X
+  
+  [1X2.3-7 BoundaryOfFreeZGWordNC[101X
+  
+  [33X[1;0Y[29X[2XBoundaryOfFreeZGWordNC[102X( [3Xresolution[103X, [3Xterm[103X, [3Xword[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yfree ZG word in standard representation[133X
+  
+  [33X[0;0YCalculates the boundary of the word [3Xword[103X of the [3Xterm[103Xth module of [3Xresolution[103X.
+  The input is assumed to be in standard representation and not checked.[133X
+  
+  
+  [1X2.4 [33X[0;0YThe [9XHapLargeGroupResolutionRep[109X[101X[1X Representation[133X[101X
+  
+  [33X[0;0YThe   large   group  representation  has  one  additional  component  called
+  [10Xgroupring[110X.  Elements of the modules in a resolution are represented by lists
+  of  group ring elements. The length of the list corresponds to the dimension
+  of the free module.[133X
+  
+  [33X[0;0YAll  methods for the generic representation do also work for the large group
+  representation.  Some of them are wrappers for special methods which do only
+  work  for  this representation. The following list only contains the methods
+  which are not already present in the generic representation.[133X
+  
+  [33X[0;0YNote  that  the  input or the output of these functions does not comply with
+  the standard representation.[133X
+  
+  [1X2.4-1 GroupRingOfResolution[101X
+  
+  [33X[1;0Y[29X[2XGroupRingOfResolution[102X( [3Xresolution[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Ygroup ring[133X
+  
+  [33X[0;0YThis  returns  the group ring of [3Xresolution[103X. Note that by the way that group
+  rings     are     handled     in    [5XGAP[105X,    this    is    not    equal    to
+  [10XGroupRing(R,GroupOfResolution([3Xresolution[103X[10X))[110X  where  [10XR[110X  is  the  ring  of  the
+  resolution.[133X
+  
+  [1X2.4-2 MultiplyGroupElts_LargeGroupRep[101X
+  
+  [33X[1;0Y[29X[2XMultiplyGroupElts_LargeGroupRep[102X( [3Xresolution[103X, [3Xx[103X, [3Xy[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XMultiplyGroupEltsNC_LargeGroupRep[102X( [3Xresolution[103X, [3Xx[103X, [3Xy[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Ygroup element[133X
+  
+  [33X[0;0YReturns  the product of [3Xx[103X and [3Xy[103X. The NC version does not check whether [3Xx[103X and
+  [3Xy[103X are actually elements of the group of [3Xresolution[103X.[133X
+  
+  [1X2.4-3 IsFreeZGLetterNoTermCheck_LargeGroupRep[101X
+  
+  [33X[1;0Y[29X[2XIsFreeZGLetterNoTermCheck_LargeGroupRep[102X( [3Xresolution[103X, [3Xletter[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yboolean[133X
+  
+  [33X[0;0YReturns  [9Xtrue[109X  if  [3Xletter[103X  has  the  form of a letter (a module element with
+  exactly  one  non-zero  entry  which has exactly one non-zero coefficient) a
+  module  of  [3Xresolution[103X  in  the [9XHapLargeGroupResolution[109X representation. Note
+  that  it  is  not  tested  if  [3Xletter[103X  actually  is  a letter in any term of
+  [3Xresolution[103X[133X
+  
+  [1X2.4-4 IsFreeZGWordNoTermCheck_LargeGroupRep[101X
+  
+  [33X[1;0Y[29X[2XIsFreeZGWordNoTermCheck_LargeGroupRep[102X( [3Xresolution[103X, [3Xword[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yboolean[133X
+  
+  [33X[0;0YReturns [9Xtrue[109X if [3Xword[103X has the form of a word of a module of [3Xresolution[103X in the
+  [9XHapLargeGroupResolution[109X  representation.  Note that it is not tested if [3Xword[103X
+  actually is a word in any term of [3Xresolution[103X.[133X
+  
+  [1X2.4-5 IsFreeZGLetter_LargeGroupRep[101X
+  
+  [33X[1;0Y[29X[2XIsFreeZGLetter_LargeGroupRep[102X( [3Xresolution[103X, [3Xterm[103X, [3Xletter[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yboolean[133X
+  
+  [33X[0;0YReturns  [9Xtrue[109X  if and only if [3Xletter[103X is a letter (a word of length 1) of the
+  [3Xterm[103Xth  module  of [3Xresolution[103X in the [9XhapLargeGroupResolution[109X representation.
+  I.e.  it tests if [3Xletter[103X is a module element with exactly one non-zero entry
+  which has exactly one non-zero coefficient.[133X
+  
+  [1X2.4-6 IsFreeZGWord_LargeGroupRep[101X
+  
+  [33X[1;0Y[29X[2XIsFreeZGWord_LargeGroupRep[102X( [3Xresolution[103X, [3Xterm[103X, [3Xword[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yboolean[133X
+  
+  [33X[0;0YTests if [3Xword[103X is an element of the [3Xterm[103Xth module of [3Xresoultion[103X.[133X
+  
+  [1X2.4-7 MultiplyFreeZGLetterWithGroupElt_LargeGroupRep[101X
+  
+  [33X[1;0Y[29X[2XMultiplyFreeZGLetterWithGroupElt_LargeGroupRep[102X( [3Xresolution[103X, [3Xletter[103X, [3Xg[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XMultiplyFreeZGLetterWithGroupEltNC_LargeGroupRep[102X( [3Xresolution[103X, [3Xletter[103X, [3Xg[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yfree ZG letter in large group representation[133X
+  
+  [33X[0;0YMultiplies  the  letter  [3Xletter[103X  with  the  group  element [3Xg[103X and returns the
+  result.  The  NC version does not check whether [3Xg[103X is an element of the group
+  of [3Xresolution[103X and [3Xletter[103X can be a letter.[133X
+  
+  [1X2.4-8 MultiplyFreeZGWordWithGroupElt_LargeGroupRep[101X
+  
+  [33X[1;0Y[29X[2XMultiplyFreeZGWordWithGroupElt_LargeGroupRep[102X( [3Xresolution[103X, [3Xword[103X, [3Xg[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XMultiplyFreeZGWordWithGroupEltNC_LargeGroupRep[102X( [3Xresolution[103X, [3Xword[103X, [3Xg[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yfree ZG word in large group representation[133X
+  
+  [33X[0;0YMultiplies  the  word  [3Xword[103X with the group element [3Xg[103X and returns the result.
+  The  NC  version  does  not  check  whether  [3Xg[103X is an element of the group of
+  [3Xresolution[103X and [3Xword[103X can be a word.[133X
+  
+  [1X2.4-9 GeneratorsOfModuleOfResolution_LargeGroupRep[101X
+  
+  [33X[1;0Y[29X[2XGeneratorsOfModuleOfResolution_LargeGroupRep[102X( [3Xresolution[103X, [3Xterm[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Ylist of letters/words in large group representation[133X
+  
+  [33X[0;0YReturns  a  set  of  generators  for  the  [3Xterm[103Xth  module of [3Xresolution[103X. The
+  returned value is a list of vectors of group ring elements.[133X
+  
+  [1X2.4-10 BoundaryOfGenerator_LargeGroupRep[101X
+  
+  [33X[1;0Y[29X[2XBoundaryOfGenerator_LargeGroupRep[102X( [3Xresolution[103X, [3Xterm[103X, [3Xn[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XBoundaryOfGeneratorNC_LargeGroupRep[102X( [3Xresolution[103X, [3Xterm[103X, [3Xn[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yfree ZG word in the large group representation[133X
+  
+  [33X[0;0YReturns the boundary of the [3Xn[103Xth generator of the [3Xterm[103Xth module of [3Xresolution[103X
+  as  a  word  in  the  [3Xn-1[103Xst  module  (in large group representation). The NC
+  version  does  not  check  whether there is a [3Xterm[103Xth module and if it has at
+  least [3Xn[103X generators.[133X
+  
+  [1X2.4-11 BoundaryOfFreeZGLetterNC_LargeGroupRep[101X
+  
+  [33X[1;0Y[29X[2XBoundaryOfFreeZGLetterNC_LargeGroupRep[102X( [3Xresolution[103X, [3Xterm[103X, [3Xletter[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XBoundaryOfFreeZGLetter_LargeGroupRep[102X( [3Xresolution[103X, [3Xterm[103X, [3Xletter[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yfree ZG word in large group representation[133X
+  
+  [33X[0;0YCalculates  the  boundary  of  the  letter  [3Xletter[103X  of  the [3Xterm[103Xth module of
+  [3Xresolution[103X  in  large  group  representation.  The NC version does not check
+  whether [3Xletter[103X actually is a letter in the [3Xterm[103Xth module.[133X
+  
+  [1X2.4-12 BoundaryOfFreeZGWord_LargeGroupRep[101X
+  
+  [33X[1;0Y[29X[2XBoundaryOfFreeZGWord_LargeGroupRep[102X( [3Xresolution[103X, [3Xterm[103X, [3Xword[103X ) [32X method[133X
+  [6XReturns:[106X  [33X[0;10Yfree ZG word in large group representation[133X
+  
+  [33X[0;0YCalculates  the  boundary  of  the  element  [3Xword[103X  of  the  [3Xterm[103Xth module of
+  [3Xresolution[103X  in  large  group  representation.  The NC version does not check
+  whether [3Xword[103X actually is a word in the [3Xterm[103Xth module.[133X
+  

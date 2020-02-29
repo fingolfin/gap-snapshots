@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  stats.h                     GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares the functions of the statements package.
 **
@@ -46,8 +46,12 @@ extern  UInt            (* ExecStatFuncs[256]) ( Stat stat );
 **  executor, i.e., to the  function that executes statements  of the type of
 **  <stat>.
 */
-extern UInt EXEC_STAT(Stat stat);
+UInt EXEC_STAT(Stat stat);
 
+// Executes the current function and returns its return value
+// if the last statement was STAT_RETURN_OBJ, or null if the last
+// statement was STAT_RETURN_VOID
+Obj EXEC_CURR_FUNC(void);
 
 /****************************************************************************
 **
@@ -59,39 +63,7 @@ extern UInt EXEC_STAT(Stat stat);
 **  event.
 */
 
-extern  UInt 		(* IntrExecStatFuncs[256]) ( Stat stat );
-
-
-/****************************************************************************
-**
-*V  CurrStat  . . . . . . . . . . . . . . . . .  currently executed statement
-**
-**  'CurrStat'  is the statement that  is currently being executed.  The sole
-**  purpose of 'CurrStat' is to make it possible to  point to the location in
-**  case an error is signalled.
-*/
-/* TL: extern  Stat            CurrStat; */
-
-
-/****************************************************************************
-**
-*F  SET_BRK_CURR_STAT(<stat>) . . . . . . . set currently executing statement
-*F  OLD_BRK_CURR_STAT . . . . . . . . .  define variable to remember CurrStat
-*F  REM_BRK_CURR_STAT() . . . . . . .  remember currently executing statement
-*F  RES_BRK_CURR_STAT() . . . . . . . . restore currently executing statement
-*/
-#ifndef NO_BRK_CURR_STAT
-#define SET_BRK_CURR_STAT(stat) (STATE(CurrStat) = (stat))
-#define OLD_BRK_CURR_STAT       Stat oldStat;
-#define REM_BRK_CURR_STAT()     (oldStat = STATE(CurrStat))
-#define RES_BRK_CURR_STAT()     (STATE(CurrStat) = oldStat)
-#endif
-#ifdef  NO_BRK_CURR_STAT
-#define SET_BRK_CURR_STAT(stat) /* do nothing */
-#define OLD_BRK_CURR_STAT       /* do nothing */
-#define REM_BRK_CURR_STAT()     /* do nothing */
-#define RES_BRK_CURR_STAT()     /* do nothing */
-#endif
+extern UInt (* IntrExecStatFuncs[256]) ( Stat stat );
 
 
 /****************************************************************************
@@ -105,7 +77,23 @@ extern  UInt 		(* IntrExecStatFuncs[256]) ( Stat stat );
 /* TL: extern  Obj             ReturnObjStat; */
 
 
-extern UInt TakeInterrupt();
+/****************************************************************************
+**
+*F  HaveInterrupt . . . . . . . . . . . . . . . . . check for user interrupts
+**
+*/
+#ifdef HPCGAP
+UInt HaveInterrupt(void);
+#else
+#define HaveInterrupt() SyIsIntr()
+#endif
+
+
+/****************************************************************************
+**
+*/
+UInt TakeInterrupt(void);
+
 
 /****************************************************************************
 **
@@ -116,7 +104,7 @@ extern UInt TakeInterrupt();
 **  received.  It is never called on systems that do not support signals.  On
 **  those systems the executors test 'SyIsIntr' at regular intervals.
 */
-extern  void            InterruptExecStat ( );
+void InterruptExecStat(void);
 
 
 /****************************************************************************
@@ -128,8 +116,7 @@ extern  void            InterruptExecStat ( );
 **  'PrintStat' simply dispatches  through the table  'PrintStatFuncs' to the
 **  appropriate printer.
 */
-extern  void            PrintStat (
-            Stat                stat );
+void PrintStat(Stat stat);
 
 
 /****************************************************************************
@@ -152,7 +139,15 @@ extern  void            (* PrintStatFuncs[256] ) ( Stat stat );
  * 
  */
 
-extern void ClearError ( void );
+void ClearError(void);
+
+
+/****************************************************************************
+**
+*/
+extern Obj ITERATOR;
+extern Obj IS_DONE_ITER;
+extern Obj NEXT_ITER;
 
 
 /****************************************************************************

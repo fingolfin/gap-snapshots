@@ -1,9 +1,12 @@
 #############################################################################
 ##
-#W  permdeco.gi                  GAP library                  Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2004 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains functions that deal with action on chief factors or
 ##  composition factors and the representation of such groups in a nice way
@@ -24,7 +27,7 @@ local   pcgs,r,hom,A,iso,p,i,depths,ords,b,mo,pc,limit,good,new,start,np;
   A:=Image(hom);
   if IsPermGroup(A) and NrMovedPoints(A)/Size(A)*Size(Socle(A))
       >SufficientlySmallDegreeSimpleGroupOrder(Size(A)) then
-    A:=SmallerDegreePermutationRepresentation(A);
+    A:=SmallerDegreePermutationRepresentation(A:cheap);
     Info(InfoGroup,3,"Radical factor degree reduced ",NrMovedPoints(Image(hom)),
          " -> ",NrMovedPoints(Image(A)));
     hom:=hom*A;
@@ -198,7 +201,7 @@ local G0,a0,tryrep,sel,selin,a,s,dom,iso,stabs,outs,map,i,j,p,found,seln,
   # first try given rep
   if NrMovedPoints(G)^3>Size(G) then
     # likely too high degree. Try to reduce first
-    a:=SmallerDegreePermutationRepresentation(G);
+    a:=SmallerDegreePermutationRepresentation(G:cheap);
     a:=tryrep(a,4*NrMovedPoints(Image(a)));
   elif not IsSubset(MovedPoints(G),[1..LargestMovedPoint(G)]) then
     a:=tryrep(ActionHomomorphism(G,MovedPoints(G),"surjective"),
@@ -206,7 +209,7 @@ local G0,a0,tryrep,sel,selin,a,s,dom,iso,stabs,outs,map,i,j,p,found,seln,
   else
     a:=tryrep(IdentityMapping(G),4*NrMovedPoints(G));
     if a=fail and ForAll(autos,x->IsConjugatorAutomorphism(x:cheap)) then
-      a:=tryrep(SmallerDegreePermutationRepresentation(G),4*NrMovedPoints(G));
+      a:=tryrep(SmallerDegreePermutationRepresentation(G:cheap),4*NrMovedPoints(G));
     fi;
   fi;
   if a<>fail then return a;fi;
@@ -488,7 +491,7 @@ local limit, r, pcgs, ser, ind, m, p, l, l2, good, i, j,nser,hom;
   # try to improve the representation of G/r
   hom:=NaturalHomomorphismByNormalSubgroup(G,r);
   if IsPermGroup(Range(hom)) then
-    hom:=hom*SmallerDegreePermutationRepresentation(Range(hom));
+    hom:=hom*SmallerDegreePermutationRepresentation(Range(hom):cheap);
   fi;
   AddNaturalHomomorphismsPool(G,r,hom);
 
@@ -630,7 +633,3 @@ local au, agens, agau, a2, w2, ogens, ngens, oe, ne, emb, i, j;
   emb:=GroupHomomorphismByImagesNC(w,w2,ogens,ngens);
   return [emb,w2,a2[1],Image(a2[2])];
 end);
-
-#############################################################################
-##
-#E  permdeco.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

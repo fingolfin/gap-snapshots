@@ -1,4 +1,9 @@
 gap> START_TEST("AutomorphismGroup.tst");
+
+# Assertions at level 2 kill runtime of automorphism group computations
+gap> SetAssertionLevel(0);
+
+#
 gap> SimpleAutTest:=function(from,to)
 > local it,g,a,p;
 >   it:=SimpleGroupsIterator(from);
@@ -30,6 +35,12 @@ gap> G:=GL(IsPermGroup,3,3);;
 gap> H:=AutomorphismGroupMorpheus(G);;
 gap> StructureDescription(H);
 "PSL(3,3) : C2"
+
+#
+gap> g:=PerfectGroup(IsPermGroup,30720,1);;
+gap> h:=g^(1,153);;
+gap> IsomorphismGroups(g,h:forcetest)<>fail;
+true
 
 #
 gap> STOP_TEST("AutomorphismGroup.tst",1);

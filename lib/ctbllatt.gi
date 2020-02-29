@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  ctbllatt.gi                 GAP library                     Thomas Breuer
-#W                                                                Ansgar Kaup
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer, Ansgar Kaup.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains functions that mainly deal with lattices in the
 ##  context of character tables.
@@ -1712,11 +1712,3 @@ InstallGlobalFunction( DnLatticeIterative, function( tbl, red )
     until dnlat.irreducibles=[] and red1.irreducibles=[];
     return rec( irreducibles:=irred, remainders:=reduc , norms := norms );
 end );
-
-
-#############################################################################
-##
-#E  ctbllatt.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-
-
-

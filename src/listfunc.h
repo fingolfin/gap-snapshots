@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  listfunc.h                  GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares the functions for generic lists.
 */
@@ -24,13 +24,9 @@
 **  The  list is  automatically extended to   make room for  the new element.
 **  'AddList' returns nothing, it is called only for its side effect.
 */
-extern  void            AddList (
-            Obj                 list,
-            Obj                 obj );
+void AddList(Obj list, Obj obj);
 
-extern  void            AddPlist (
-            Obj                 list,
-            Obj                 obj );
+void AddPlist(Obj list, Obj obj);
 
 
 /****************************************************************************
@@ -48,13 +44,9 @@ extern  void            AddPlist (
 **  of <list>, the index where <obj> must be inserted to keep the list sorted
 **  is returned.
 */
-extern  UInt            PositionSortedList (
-            Obj                 list,
-            Obj                 obj );
+UInt PositionSortedList(Obj list, Obj obj);
 
-extern  UInt            PositionSortedDensePlist (
-            Obj                 list,
-            Obj                 obj );
+UInt PositionSortedDensePlist(Obj list, Obj obj);
 
 
 /****************************************************************************
@@ -72,40 +64,23 @@ extern  UInt            PositionSortedDensePlist (
 *F  SortPlistByRawObj(<list>) . . . . . . . .  sort a list by raw obj pointer
 **  'SortList' sorts the list <list> in increasing  order.
 */
-extern  void SORT_LIST (
-        Obj  list );
+void SORT_LIST(Obj list);
 
-extern  void SortDensePlist (
-        Obj  list );
+void SortDensePlist(Obj list);
 
-extern  void SORT_LISTComp (
-        Obj  list,
-        Obj  func );
+void SORT_LISTComp(Obj list, Obj func);
 
-extern  void SortDensePlistComp (
-        Obj  list,
-        Obj  func );
+void SortDensePlistComp(Obj list, Obj func);
 
-extern  void SORT_PARA_LIST (
-        Obj  list,
-        Obj  shadow );
+void SORT_PARA_LIST(Obj list, Obj shadow);
 
-extern  void SortParaDensePlist (
-        Obj  list,
-        Obj  shadow );
+void SortParaDensePlist(Obj list, Obj shadow);
 
-extern  void SORT_PARA_LISTComp (
-        Obj  list,
-        Obj  shadow,
-        Obj  func );
+void SORT_PARA_LISTComp(Obj list, Obj shadow, Obj func);
 
-extern  void SortParaDensePlistComp (
-        Obj  list,
-        Obj  shadow,
-        Obj  func );
+void SortParaDensePlistComp(Obj list, Obj shadow, Obj func);
 
-extern void SortPlistByRawObj (
-        Obj list );
+void SortPlistByRawObj(Obj list);
 
 /****************************************************************************
 **
@@ -114,10 +89,9 @@ extern void SortPlistByRawObj (
 **  'RemoveDupsDensePlist' removes duplicate elements from the dense
 **  plain list <list>.  <list> must be sorted.  'RemoveDupsDensePlist'
 **  returns 0 if <list> contains mutable elements, 1 if immutable but
-**  not homogenout, 2 otherwise
+**  not homogeneous, 2 otherwise
 */
-extern  UInt            RemoveDupsDensePlist (
-            Obj                 list );
+UInt RemoveDupsDensePlist(Obj list);
 
 
 /****************************************************************************

@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  mgmring.gd                  GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file declares operations for magma rings.
 ##
@@ -31,7 +32,7 @@
 ##      indeterminates,
 ##  </Item>
 ##  <Item>
-##      group rings (see&nbsp;<Ref Func="IsGroupRing"/>),
+##      group rings (see&nbsp;<Ref Prop="IsGroupRing"/>),
 ##      where the magma is a group,
 ##  </Item>
 ##  <Item>
@@ -91,7 +92,7 @@
 ##  magma ring into pieces</Q>.
 ##  <P/>
 ##  Conversely, for constructing magma ring elements from coefficients
-##  and magma elements, <Ref Func="ElementOfMagmaRing"/> can be used.
+##  and magma elements, <Ref Oper="ElementOfMagmaRing"/> can be used.
 ##  (Of course one can also embed each magma element into the magma ring,
 ##  see&nbsp;<Ref Sect="Natural Embeddings related to Magma Rings"/>,
 ##  and then form the linear combination,
@@ -103,7 +104,7 @@
 ##  Neither the coefficient ring <M>R</M> nor the magma <M>M</M>
 ##  are regarded as subsets of the magma ring <M>RM</M>,
 ##  so one has to use <E>embeddings</E>
-##  (see&nbsp;<Ref Func="Embedding" Label="for two domains"/>)
+##  (see&nbsp;<Ref Oper="Embedding" Label="for two domains"/>)
 ##  explicitly whenever one needs for example the magma ring element
 ##  corresponding to a given magma element.
 ##  <P/>
@@ -288,7 +289,7 @@ DeclareCategoryFamily( "IsElementOfMagmaRingModuloRelations" );
 ##
 ##  <Description>
 ##  The category of elements of a free magma ring
-##  (See <Ref Func="IsFreeMagmaRing"/>).
+##  (See <Ref Filt="IsFreeMagmaRing"/>).
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -367,16 +368,16 @@ DeclareAttribute( "ZeroCoefficient", IsElementOfMagmaRingModuloRelations );
 ##  Let <A>F</A> be a family of magma ring elements modulo relations,
 ##  and <A>descr</A> the description of an element in a magma ring modulo
 ##  relations.
-##  <Ref Func="NormalizedElementOfMagmaRingModuloRelations"/> returns
+##  <Ref Oper="NormalizedElementOfMagmaRingModuloRelations"/> returns
 ##  a description of the same element,
 ##  but normalized w.r.t.&nbsp;the relations.
 ##  So two elements are equal if and only if the result of
-##  <Ref Func="NormalizedElementOfMagmaRingModuloRelations"/> is equal for
+##  <Ref Oper="NormalizedElementOfMagmaRingModuloRelations"/> is equal for
 ##  their internal data, that is,
-##  <Ref Func="CoefficientsAndMagmaElements"/> will return the same
+##  <Ref Attr="CoefficientsAndMagmaElements"/> will return the same
 ##  for the corresponding two elements.
 ##  <P/>
-##  <Ref Func="NormalizedElementOfMagmaRingModuloRelations"/> is allowed
+##  <Ref Oper="NormalizedElementOfMagmaRingModuloRelations"/> is allowed
 ##  to return <A>descr</A> itself, it need not make a copy.
 ##  This is the case for example in the case of free magma rings.
 ##  </Description>
@@ -397,10 +398,10 @@ DeclareOperation( "NormalizedElementOfMagmaRingModuloRelations",
 ##
 ##  <Description>
 ##  A &GAP; object lies in the category
-##  <Ref Func="IsMagmaRingModuloRelations"/>
+##  <Ref Filt="IsMagmaRingModuloRelations"/>
 ##  if it has been constructed as a magma ring modulo relations.
 ##  Each element of such a ring has a unique normal form,
-##  so <Ref Func="CoefficientsAndMagmaElements"/> is well-defined for it.
+##  so <Ref Attr="CoefficientsAndMagmaElements"/> is well-defined for it.
 ##  <P/>
 ##  This category is not inherited to factor structures,
 ##  which are in general best described as finitely presented algebras,
@@ -421,11 +422,11 @@ DeclareCategory( "IsMagmaRingModuloRelations", IsFLMLOR );
 ##  <Filt Name="IsFreeMagmaRing" Arg='D' Type='Category'/>
 ##
 ##  <Description>
-##  A domain lies in the category <Ref Func="IsFreeMagmaRing"/>
+##  A domain lies in the category <Ref Filt="IsFreeMagmaRing"/>
 ##  if it has been constructed as a free magma ring.
 ##  In particular, if <A>D</A> lies in this category then the operations
-##  <Ref Func="LeftActingDomain"/> and
-##  <Ref Func="UnderlyingMagma"/> are applicable to <A>D</A>,
+##  <Ref Attr="LeftActingDomain"/> and
+##  <Ref Attr="UnderlyingMagma"/> are applicable to <A>D</A>,
 ##  and yield the ring <M>R</M> and the magma <M>M</M>
 ##  such that <A>D</A> is the magma ring <M>RM</M>.
 ##  <P/>
@@ -530,7 +531,7 @@ DeclareAttribute( "UnderlyingMagma", IsFreeMagmaRing );
 ##  <Oper Name="ElementOfMagmaRing" Arg='Fam, zerocoeff, coeffs, mgmelms'/>
 ##
 ##  <Description>
-##  <Ref Func="ElementOfMagmaRing"/> returns the element
+##  <Ref Oper="ElementOfMagmaRing"/> returns the element
 ##  <M>\sum_{{i = 1}}^n c_i m_i'</M>,
 ##  where <M><A>coeffs</A> = [ c_1, c_2, \ldots, c_n ]</M> is a list of
 ##  coefficients, <M><A>mgmelms</A> = [ m_1, m_2, \ldots, m_n ]</M> is a list
@@ -615,7 +616,7 @@ DeclareAttribute( "AugmentationIdeal", IsFreeMagmaRing );
 ##  The element <A>z</A> could be called a <Q>zero element</Q> of <A>M</A>,
 ##  but note that in general <A>z</A> cannot be obtained as
 ##  <C>Zero( </C><M>m</M><C> )</C> for each <M>m \in M</M>,
-##  so this situation does not match the definition of <Ref Func="Zero"/>.
+##  so this situation does not match the definition of <Ref Attr="Zero"/>.
 ##  <P/>
 ##  <Ref Func="MagmaRingModuloSpanOfZero"/> returns the magma ring
 ##  <M><A>R</A><A>M</A></M> modulo the relation given by the identification
@@ -720,9 +721,3 @@ DeclareCategory( "IsElementOfMagmaRingModuloSpanOfZeroFamily",
 ##
 DeclareHandlingByNiceBasis( "IsSpaceOfElementsOfMagmaRing",
     "for free left modules of magma rings modulo relations" );
-
-
-#############################################################################
-##
-#E
-

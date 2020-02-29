@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  zmodnz.gd                   GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the design of the rings $Z / n Z$ and their elements.
 ##
@@ -37,7 +38,7 @@
 ##  The elements in the rings <M>Z / n Z</M> are in the category
 ##  <Ref Filt="IsZmodnZObj"/>.
 ##  If <M>n</M> is a prime then the elements are of course also in the
-##  category <Ref Func="IsFFE"/>,
+##  category <Ref Filt="IsFFE"/>,
 ##  otherwise they are in <Ref Filt="IsZmodnZObjNonprime"/>.
 ##  <Ref Filt="IsZmodpZObj"/> is an abbreviation of
 ##  <C>IsZmodnZObj and IsFFE</C>.
@@ -125,6 +126,13 @@ DeclareCategoryCollections( "IsZmodnZObjNonprimeCollColl" );
 InstallTrueMethod( IsFinite,
     IsZmodnZObjNonprimeCollection and IsDuplicateFree );
 
+
+#############################################################################
+##
+#M  IsEuclideanRing( <R> ) . . . . . . . . . . . .  method for full ring Z/nZ
+##
+InstallTrueMethod(IsEuclideanRing, IsZmodnZObjNonprimeCollection and
+    IsWholeFamily and IsRing);
 
 #############################################################################
 ##
@@ -240,7 +248,7 @@ DeclareSynonym( "ZmodpZObj", ZmodnZObj );
 ##
 ##  <Description>
 ##  For an element <A>obj</A> in a residue class ring of integers modulo
-##  <M>n</M> (see&nbsp;<Ref Func="IsZmodnZObj"/>),
+##  <M>n</M> (see&nbsp;<Ref Filt="IsZmodnZObj"/>),
 ##  <Ref Attr="ModulusOfZmodnZObj"/> returns the positive integer <M>n</M>.
 ##
 ##  Deprecated, use <Ref Attr="Characteristic"/> instead.
@@ -275,9 +283,3 @@ InstallTrueMethod( IsFinite,
     IsZmodnZObjNonprimeCollCollColl and IsRingElementCollCollColl
                                     and IsGroup
                                     and IsFinitelyGeneratedGroup );
-
-
-#############################################################################
-##
-#E
-

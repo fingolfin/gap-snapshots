@@ -1,13 +1,11 @@
 #############################################################################
 ##
-#W  init.g                      GAP library                     Thomas Breuer
-#W                                                             & Frank Celler
-#W                                                          & Martin Schönert
+##  This file is part of GAP, a system for computational discrete algebra.
 ##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
 ##  This file initializes GAP.
 ##
@@ -97,7 +95,6 @@ Ignore := function ( arg )  end;
 ##
 SetFilterObj := "2b defined";
 infinity := "2b defined";
-last:="2b defined";
 
 
 #############################################################################
@@ -138,15 +135,6 @@ ReplacedString := function ( arg )
     od;
     return s;
 end;
-
-
-#############################################################################
-##
-#V  InfoRead? . . . . . . . . . . . . . . . . . . . . print what file is read
-##
-if DEBUG_LOADING           then InfoRead1 := Print;   fi;
-if not IsBound(InfoRead1)  then InfoRead1 := Ignore;  fi;
-if not IsBound(InfoRead2)  then InfoRead2 := Ignore;  fi;
 
 
 #############################################################################
@@ -234,20 +222,11 @@ fi;
 
 #############################################################################
 ##
-##  - Unbind `DEBUG_LOADING', since later the `-D' option can be checked.
 ##  - Set or disable break loop according to the `-T' option.
 ##  - Set whether traceback may be suppressed (e.g. by `-T') according to the
 ##    `--alwaystrace' option.
 ##
 CallAndInstallPostRestore( function()
-    if DEBUG_LOADING then
-      InfoRead1:= Print;
-    else
-      InfoRead1:= Ignore;
-    fi;
-    MAKE_READ_WRITE_GLOBAL( "DEBUG_LOADING" );
-    UNBIND_GLOBAL( "DEBUG_LOADING" );
-
     if IsHPCGAP then
       # In HPC-GAP we want to decide how to handle errors on a per thread
       # basis. E.g. the break loop can be disabled in a worker thread that
@@ -269,7 +248,9 @@ CallAndInstallPostRestore( function()
 end);
 
 ReadOrComplete := function(name)
-    InfoRead1( "#I  reading ", name, "\n" );
+    if GAPInfo.CommandLineOptions.D then
+        Print( "#I  reading ", name, "\n" );
+    fi;
     if not READ_GAP_ROOT( name ) then
         Error( "cannot read file ", name );
     fi;
@@ -329,30 +310,18 @@ end );
 
 #############################################################################
 ##
-#F  ReadAndCheckFunc( <path>[,<libname>] )
+#F  ReadAndCheckFunc( <path> )
 ##
-##  `ReadAndCheckFunc' creates a function that reads in a file named
-##  `<name>.<ext>'.
-##  If a second argument <libname> is given, GAP return `true' or `false'
-##  according to the read status, otherwise an error is signalled if the file
-##  cannot be read.
+##  `ReadAndCheckFunc' creates a function that take an argument <name>, and
+##  then reads in a file named <name> from <path>.
 ##  This can be used for partial reading of the library.
 ##
-BIND_GLOBAL("ReadAndCheckFunc",function( arg )
-  local  path,  prefix;
+BIND_GLOBAL("ReadAndCheckFunc",function( path )
 
-    path := IMMUTABLE_COPY_OBJ(arg[1]);
+    path := IMMUTABLE_COPY_OBJ(path);
 
-    if LEN_LIST(arg) = 1  then
-        prefix := IMMUTABLE_COPY_OBJ("");
-    else
-        prefix := IMMUTABLE_COPY_OBJ(arg[2]);
-    fi;
-
-    return function( arg )
-        local  name,  ext,  libname, error;
-
-        name := arg[1];
+    return function( name )
+        local  libname, error;
 
         # create a filename from <path> and <name>
         libname := SHALLOW_COPY_OBJ(path);
@@ -362,20 +331,8 @@ BIND_GLOBAL("ReadAndCheckFunc",function( arg )
         error := not READ_GAP_ROOT(libname);
 
         if error then
-          if LEN_LIST( arg )=1 then
-            Error( "the library file '", libname, "' must exist and ",
-                   "be readable");
-          else
-            return false;
-          fi;
-        elif path<>"pkg" then
-          # check the revision entry
-          ext := SHALLOW_COPY_OBJ(prefix);
-          APPEND_LIST_INTR(ext,ReplacedString( name, ".", "_" ));
-        fi;
-
-        if LEN_LIST(arg)>1 then
-          return true;
+          Error( "the library file '", libname, "' must exist and ",
+                 "be readable");
         fi;
 
     end;
@@ -564,6 +521,9 @@ BindGlobal( "ShowKernelInformation", function()
     fi;
     Add( config, str );
   fi;
+  if IsBound( GAPInfo.KernelInfo.GC ) then
+    Add( config, GAPInfo.KernelInfo.GC );
+  fi;
   if IsBound( GAPInfo.KernelInfo.JULIA_VERSION ) then
     str := "Julia ";
     Append(str, GAPInfo.KernelInfo.JULIA_VERSION);
@@ -709,6 +669,14 @@ function()
     fi;
 end);
 
+
+############################################################################
+##
+#X  Name Synonyms for different spellings
+##
+ReadLib("transatl.g");
+
+
 CallAndInstallPostRestore( function()
     READ_GAP_ROOT( "gap.ini" );
 end );
@@ -802,13 +770,6 @@ CallAndInstallPostRestore( function()
     # user preference `UseColorPrompt'
     ColorPrompt( UserPreference( "UseColorPrompt" ) );
 end );
-
-
-############################################################################
-##
-#X  Name Synonyms for different spellings
-##
-ReadLib("transatl.g");
 
 
 #############################################################################
@@ -999,7 +960,6 @@ end);
 ##
 HELP_ADD_BOOK("Tutorial", "GAP 4 Tutorial", "doc/tut");
 HELP_ADD_BOOK("Reference", "GAP 4 Reference Manual", "doc/ref");
-HELP_ADD_BOOK("Changes", "Changes from Earlier Versions", "doc/changes");
 if IsHPCGAP then
   HELP_ADD_BOOK("HPC-GAP", "HPC-GAP Reference Manual", "doc/hpc");
 fi;
@@ -1013,21 +973,37 @@ fi;
 ##
 ##  Read init files, run a shell, and do exit-time processing.
 ##
+
+ResumeMethodReordering();
+
 InstallAndCallPostRestore( function()
-    local i, status;
+    local i, f, status;
     for i in [1..Length(GAPInfo.InitFiles)] do
-        status := READ_NORECOVERY(GAPInfo.InitFiles[i]);
+        f := GAPInfo.InitFiles[i];
+        if IsRecord(f) then
+            status := READ_NORECOVERY(InputTextString(f.command));
+        else
+            status := READ_NORECOVERY(f);
+        fi;
         if status = fail then
-            PRINT_TO( "*errout*", "Reading file \"", GAPInfo.InitFiles[i],
-                "\" has been aborted.\n");
+            if IsRecord(f) then
+                PRINT_TO( "*errout*", "Executing command \"", f.command,
+                    "\" has been aborted.\n");
+            else
+                PRINT_TO( "*errout*", "Reading file \"", f,
+                    "\" has been aborted.\n");
+            fi;
             if i < Length (GAPInfo.InitFiles) then
                 PRINT_TO( "*errout*",
-                    "The remaining files on the command line will not be read.\n" );
+                    "The remaining files or commands on the command line will not be read.\n" );
             fi;
             break;
         elif status = false then
-            PRINT_TO( "*errout*", 
-                "Could not read file \"", GAPInfo.InitFiles[i],"\".\n" );
+            if IsRecord(f) then
+                PRINT_TO( "*errout*", "Could not execute command \"", f.command, "\".\n" );
+            else
+                PRINT_TO( "*errout*", "Could not read file \"", f, "\".\n" );
+            fi;
         fi;
     od;
 end );
@@ -1038,13 +1014,9 @@ if GAPInfo.CommandLineOptions.norepl then
 elif IsHPCGAP and THREAD_UI() then
   ReadLib("hpc/consoleui.g");
   MULTI_SESSION();
+  PROGRAM_CLEAN_UP();
 else
   SESSION();
+  PROGRAM_CLEAN_UP();
 fi;
 
-PROGRAM_CLEAN_UP();
-
-
-#############################################################################
-##
-#E

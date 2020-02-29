@@ -18,11 +18,11 @@
 <Heading>Running GAP</Heading>
 
 <Index>options</Index>
-This chapter informs about command line options for &GAP; 
+This chapter contains information about the command line options for &GAP; 
 (see&nbsp;<Ref Sect="Command Line Options"/>),
-some files in user specific &GAP; root  directory
+about some files in user specific &GAP; root  directory
 (see&nbsp;<Ref Sect="sect:gap.ini"/>) 
-and saving and loading a &GAP; workspace
+and about saving and loading a &GAP; workspace
 (see&nbsp;<Ref Sect="Saving and Loading a Workspace"/>).
 
 
@@ -46,7 +46,7 @@ use <C>gap -g -q</C> instead.
 Some options require an argument, this must follow the option
 and  must be separated by whitespace, e.g.,  <C>gap -m 256m</C>,
 it is not correct to say <C>gap -m256m</C> instead.
-Certain Boolean options (<C>-b</C>, <C>-q</C>, <C>-e</C>, <C>-r</C>,
+Certain boolean options (<C>-b</C>, <C>-q</C>, <C>-e</C>, <C>-r</C>,
 <C>-A</C>, <C>-D</C>, <C>-M</C>, <C>-T</C>, <C>-X</C>, <C>-Y</C>)
 toggle the current value so that <C>gap -b -b</C> is equivalent to <C>gap</C>
 and to <C>gap -b -q -b -q</C> etc.
@@ -79,26 +79,6 @@ This option disables (actually toggles) the loading of suggested packages,
 which can be useful for debugging or testing.
 The needed packages (and their needed packages, and so on)
 are loaded in any case.
-</Item>
-<Mark><Index Key="-a"><C>-a</C></Index>
-<C>-a </C><A>memory</A></Mark>
-<Item>
-GASMAN, the storage manager of &GAP; uses <C>sbrk</C> to get blocks of memory
-from (certain) operating systems and it is required that subsequent calls
-to <C>sbrk</C> produce adjacent blocks of memory in this case  because  &GAP;
-only wants to deal with one large block of  memory.  If  the  C  function
-<C>malloc</C> is called for whatever reason, it is likely that 
-<C>sbrk</C> will  no
-longer produce adjacent blocks, therefore &GAP; does  not  use  <C>malloc</C>
-itself.
-<P/>
-However some operating systems insist on calling  <C>malloc</C>  to  create  a
-buffer when a file is opened, or for some other reason. In order to catch
-these cases &GAP; preallocates a block of memory with <C>malloc</C> which  is
-immediately freed. The amount preallocated can  be  controlled  with  the
-<C>-a</C> option. (Most users do not need this option.)
-<P/>
-The option argument <A>memory</A> is specified as with the <C>-m</C> option.
 </Item>
 <Mark><Index Key="-B"><C>-B</C></Index>
 <C>-B </C><A>architecture</A></Mark>

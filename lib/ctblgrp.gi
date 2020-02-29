@@ -1,10 +1,12 @@
 #############################################################################
 ##
-#W  ctblgrp.gi                   GAP library                 Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
-#Y  Copyright (C) 1993, 1997
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the implementation of the Dixon-Schneider algorithm
 ##
@@ -2364,7 +2366,7 @@ local tblG, cg, d, tblH, res, pos, theta, hl, sp, ch, alpha, AF, bw, cnt,
         Error("could not find suitable elements?");
       fi;
       repeat
-	rti:=Random([1..Length(rt)]);
+	rti:=Random(1, Length(rt));
       until rtl[rti]=false;
       rtl[rti]:=true;
       r:=rt[rti];
@@ -2462,6 +2464,13 @@ local G,chi,reps,r,i,gensp;
     chi:=arg[2];
   else
     Error("second argument must be ordinary character or character list");
+  fi;
+
+  # Special case of trivial group
+  if Size(G)=1 then
+    r:=Group([[1]]);
+    r:=GroupHomomorphismByImagesNC(G,r,[One(G)],[One(r)]);
+    return List(chi,x->r);
   fi;
 
   gensp:=fail;
@@ -2563,8 +2572,3 @@ local c,cl,k,p,cand,x,rep,conj,i,rc,roots,cen;
   od;
   return roots;
 end);
-
-#############################################################################
-##
-#E
-

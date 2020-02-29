@@ -1,10 +1,4 @@
-#############################################################################
-##
-#W  semicong.tst                 GAP library                Robert F. Morse
-##
-##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-##
+#@local a,b,c,ec,f,gns,n,rel,s,s1,sgns,sng,sng1,x
 gap> START_TEST("semicong.tst");
 gap> #######################################################################
 gap> ##
@@ -103,7 +97,3 @@ gap> Size(ec);
 gap> Size(ec[1]);
 9
 gap> STOP_TEST( "semicong.tst", 1);
-
-#############################################################################
-##
-#E

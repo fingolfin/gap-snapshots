@@ -1,10 +1,4 @@
-#############################################################################
-##
-#A  listgen.tst               GAP 4.0 library                   Thomas Breuer
-##
-##
-#Y  Copyright 1996,    Lehrstuhl D für Mathematik,   RWTH Aachen,    Germany
-##
+#@local g,h,l,l2,p2,perm,t,filt,lcpy,permsp
 gap> START_TEST("listgen.tst");
 gap> List( [ 1 .. 10 ], x -> x^2 );
 [ 1, 4, 9, 16, 25, 36, 49, 64, 81, 100 ]
@@ -24,8 +18,14 @@ gap> Reversed( [ 1, 2, 1, 2 ] );
 [ 2, 1, 2, 1 ]
 gap> Print(Reversed( [ 1 .. 10 ] ),"\n");
 [ 10, 9 .. 1 ]
-gap> Filtered( [ 1 .. 10 ], x -> x < 5 );
+gap> filt:= Filtered( [ 1 .. 10 ], x -> x < 5 );
 [ 1, 2, 3, 4 ]
+gap> HasIsSSortedList( filt );
+true
+gap> filt:= Filtered( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], x -> x < 5 );
+[ 1, 2, 3, 4 ]
+gap> HasIsSSortedList( filt );
+false
 gap> Number( [ 1 .. 10 ], x -> x < 5 );
 4
 gap> Number( [ 1 .. 10 ] );
@@ -169,7 +169,3 @@ fail
 
 # that's all, folks
 gap> STOP_TEST( "listgen.tst", 1);
-
-#############################################################################
-##
-#E

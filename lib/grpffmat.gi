@@ -1,13 +1,12 @@
 #############################################################################
 ##
-#W  grpffmat.gi                 GAP Library                      Frank Celler
-#W                                                               Frank Lübeck
-#W                                                                Stefan Kohl
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler, Frank Lübeck, Stefan Kohl.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the operations for matrix groups over finite field.
 ##
@@ -529,7 +528,7 @@ function(rs, G)
     local m;
     m:= RandomInvertibleMat( rs, DimensionOfMatrixGroup( G ),
                 FieldOfMatrixGroup( G ) );
-    MultRowVector(m[1], DeterminantMat(m)^-1);
+    MultVector(m[1], DeterminantMat(m)^-1);
     return ImmutableMatrix(FieldOfMatrixGroup(G), m, true);
 end);
 
@@ -847,8 +846,3 @@ local G,PG,cl,c,i,r,s,sel,p,z,a,x,prop,fus,f,reps,repi,repo,zel,fcl,
   SetConjugacyClasses(PG,c);
   return [act,PG,c];
 end);
-
-#############################################################################
-##
-#E
-

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Linear_Programs">
+<Heading>Linear Programs</Heading>
+
+<Section Label="Chapter_Linear_Programs_Section_Creating_and_solving_linear_programs">
+<Heading>Creating and solving linear programs</Heading>
+
+<ManSection>
+  <Oper Arg="P, str, obj" Name="Cdd_LinearProgram" Label="for IsCddPolyhedron, IsString, IsList"/>
+ <Returns>a <Emph>CddLinearProgram</Emph> Object
+</Returns>
+ <Description>
+ The function takes three variables. The first is a polyhedron <Emph>poly</Emph>, the second <Emph>str</Emph> should 
+ be "max" or "min" and the third <Emph>obj</Emph> is the objective function. 
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="lp" Name="Cdd_SolveLinearProgram" Label="for IsCddLinearProgram"/>
+ <Returns>a list if the program is optimal, otherwise returns the value 0
+</Returns>
+ <Description>
+ The function takes a linear program. If the program is optimal, the function returns a list of two
+ entries, the solution vector and the optimal value of the objective, otherwise it returns <A>fail</A>.
+ </Description>
+</ManSection>
+
+
+<#Include Label="Example5">
+
+</Section>
+
+
+</Chapter>
+

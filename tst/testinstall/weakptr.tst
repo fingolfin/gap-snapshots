@@ -1,11 +1,3 @@
-#############################################################################
-##
-#W  weakptr.tst                GAP Library                       Steve Linton
-##
-##
-#Y  Copyright (C)  1997, 
-##
-##
 gap> START_TEST("weakptr.tst");
 
 #
@@ -21,6 +13,8 @@ gap> IsWeakPointerObject([1, 2, 3]);
 false
 gap> LengthWPObj(w);
 7
+gap> w[8];
+Error, <wpobj>[<pos>] must have a value
 gap> val := "cheese";;
 gap> GetWithDefault(w, 1, "cheese");
 1

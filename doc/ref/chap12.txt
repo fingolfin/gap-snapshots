@@ -31,7 +31,7 @@
   [33X[0;0Y[2XIsObject[102X returns [9Xtrue[109X if the object [3Xobj[103X is an object. Obviously it can never
   return [9Xfalse[109X.[133X
   
-  [33X[0;0YIt  can  be  used  as  a  filter  in  [2XInstallMethod[102X ([14X78.2-1[114X) when one of the
+  [33X[0;0YIt  can  be  used  as  a  filter  in  [2XInstallMethod[102X ([14X78.3-1[114X) when one of the
   arguments can be anything.[133X
   
   

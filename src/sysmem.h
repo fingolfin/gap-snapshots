@@ -1,8 +1,11 @@
 /****************************************************************************
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002-2018 The GAP Group
+**  This file is part of GAP, a system for computational discrete algebra.
+**
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares functions and variables related to memory management,
 **  for use by GASMAN.
@@ -63,6 +66,20 @@ extern Int SyStorMin;
 /****************************************************************************
 **
 *V  SyAllocPool
+**
+**  'SyAllocPool' is the size of the OS memory block which Gasman is using
+**  to store its workspace.
+**
+**  Gasman's workspace must be a single continuous block, and can only be
+**  extended. Extending this memory block after GAP has been running for a
+**  while requires the OS does not allocate any memory immediately after the
+**  current location of the workspace. On 64-bit systems using mmap this is
+**  usually possible as GAP's workspace starts at memory location 16TB. On
+**  32-bit systems it may not be possible to extend so this acts as the
+**  maximum workspace size. The main reason extending the workspace on 32-bit
+**  fails is if code calls malloc (or new in C++), which many packages do.
+**
+**  This option can be changed with -s.
 */
 extern UInt SyAllocPool;
 
@@ -71,11 +88,10 @@ extern UInt SyAllocPool;
 **
 *F * * * * * * * * * * * * * * gasman interface * * * * * * * * * * * * * * *
 */
-
-#ifdef GAP_MEM_CHECK
+#if defined(USE_GASMAN) && defined(GAP_MEM_CHECK)
 UInt   GetMembufCount(void);
 void * GetMembuf(UInt i);
-UInt GetMembufSize(void);
+UInt   GetMembufSize(void);
 #endif
 
 /****************************************************************************
@@ -84,11 +100,58 @@ UInt GetMembufSize(void);
 **
 **  'SyMsgsBags' is the function that is used by Gasman to  display  messages
 **  during garbage collections.
+**
+**  If <full> is 1, the current garbage collection is a full one.  If <phase>
+**  is 0, the garbage collection has just started and  <nr> should be ignored
+**  in this case.  If <phase> is 1 respectively 2, the garbage collection has
+**  completed the mark phase  and <nr> is  the total number  respectively the
+**  total  size of live bags.   If <phase> is  3  respectively 4, the garbage
+**  collection  has completed  the  sweep  phase,   and <nr>  is   the number
+**  respectively the total size of bags that died since the last full garbage
+**  collection.  If <phase> is  5 respectively 6,  the garbage collection has
+**  completed the check phase   and <nr> is    the size of the free   storage
+**  respectively the size of the workspace.  All sizes are measured in KByte.
+**
+**  If  <full> is 0,  the current garbage  collection  is a  partial one.  If
+**  <phase> is 0, the garbage collection has just  started and <nr> should be
+**  ignored  in  this  case.  If  <phase>  is 1  respectively 2,  the garbage
+**  collection  has   completed the  mark   phase  and  <nr>   is the  number
+**  respectively the  total size  of bags allocated  since  the last  garbage
+**  collection that  are still  live.   If <phase> is  3 respectively  4, the
+**  garbage collection has completed  the sweep phase and  <nr> is the number
+**  respectively the   total size of   bags allocated since  the last garbage
+**  collection that are already dead (thus the sum of the values from phase 1
+**  and 3  is the  total number of   bags  allocated since the  last  garbage
+**  collection).  If <phase> is 5 respectively 6,  the garbage collection has
+**  completed the  check phase  and <nr>  is   the size of  the  free storage
+**  respectively the size of the workspace.  All sizes are measured in KByte.
+**
+**  The message  function  should display   the information  for each   phase
+**  immediatly, i.e.,  by calling 'flush' if the  output device is a file, so
+**  that the user has some indication how much time each phase used.
+**
+**  For example {\GAP} displays messages for  full garbage collections in the
+**  following form{\:}
+**
+**    #G  FULL  47601/ 2341KB live  70111/ 5361KB dead   1376/ 4096KB free
+**
+**  where 47601 is the total number of bags surviving the garbage collection,
+**  using 2341 KByte, 70111 is  the total number  of bags that died since the
+**  last full garbage  collection, using 5361  KByte, 1376 KByte are free and
+**  the total size of the workspace is 4096 KByte.
+**
+**  And partial garbage collections are displayed in  {\GAP} in the following
+**  form{\:}
+**
+**    #G  PART     34/   41KB+live   3016/  978KB+dead   1281/ 4096KB free
+**
+**  where  34 is the  number of young bags that  were live after this garbage
+**  collection, all the old bags survived it  anyhow, using 41 KByte, 3016 is
+**  the number of young bags that died since  the last garbage collection, so
+**  34+3016 is the  number  of bags allocated  between  the last two  garbage
+**  collections, using 978 KByte and the other two numbers are as above.
 */
-extern void SyMsgsBags (
-            UInt                full,
-            UInt                phase,
-            Int                 nr );
+void SyMsgsBags(UInt full, UInt phase, Int nr);
 
 
 /****************************************************************************
@@ -102,7 +165,9 @@ extern void SyMsgsBags (
 **  This function is called by GASMAN after each successfully completed
 **  garbage collection.
 */
-extern void SyMAdviseFree ( void );
+#if defined(USE_GASMAN)
+void SyMAdviseFree(void);
+#endif
 
 /****************************************************************************
 **
@@ -131,9 +196,9 @@ extern void SyMAdviseFree ( void );
 **  If the operating system does not support dynamic memory management, simply
 **  give 'SyAllocBags' a static buffer, from where it returns the blocks.
 */
-extern UInt * * * SyAllocBags (
-            Int                 size,
-            UInt                need );
+#if defined(USE_GASMAN)
+UInt *** SyAllocBags(Int size, UInt need);
+#endif
 
 
 #endif // GAP_SYSMEM_H

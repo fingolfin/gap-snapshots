@@ -1,9 +1,12 @@
 #############################################################################
 ##
-#W  perf.gd               GAP Groups Library                 Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the declarations for the Holt/Plesken library of
 ##  perfect groups
@@ -297,7 +300,7 @@ DeclareGlobalFunction("DisplayInformationPerfectGroups");
 ##  <A>factor1</A>, <A>factor2</A>, ...
 ##  among their composition factors.
 ##  <P/>
-##  Each argument must either be the name of a simple group or an integer
+##  Each argument must either be the name of a nonabelian simple group or an integer
 ##  which stands for the product of the sizes of one or more cyclic factors.
 ##  (In fact, the function replaces all integers among the arguments
 ##  by their product.)
@@ -372,9 +375,3 @@ DeclareGlobalFunction("DisplayInformationPerfectGroups");
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction("SizeNumbersPerfectGroups");
-
-
-#############################################################################
-##
-#E
-

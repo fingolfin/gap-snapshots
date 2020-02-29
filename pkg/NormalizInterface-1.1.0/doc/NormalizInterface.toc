@@ -1,0 +1,82 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Introduction}}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }What is the purpose of the this package?}}{3}{section.1.1}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Functions}}{4}{chapter.2}
+\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }Create a NmzCone}}{4}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}\leavevmode {\color {Chapter }NmzCone}}{4}{subsection.2.1.1}
+\contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter }Use a NmzCone}}{5}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}\leavevmode {\color {Chapter }NmzHasConeProperty}}{5}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}\leavevmode {\color {Chapter }NmzKnownConeProperties}}{5}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}\leavevmode {\color {Chapter }NmzSetVerboseDefault}}{6}{subsection.2.2.3}
+\contentsline {subsection}{\numberline {2.2.4}\leavevmode {\color {Chapter }NmzSetVerbose}}{6}{subsection.2.2.4}
+\contentsline {subsection}{\numberline {2.2.5}\leavevmode {\color {Chapter }NmzCompute}}{6}{subsection.2.2.5}
+\contentsline {subsection}{\numberline {2.2.6}\leavevmode {\color {Chapter }NmzConeProperty}}{6}{subsection.2.2.6}
+\contentsline {subsection}{\numberline {2.2.7}\leavevmode {\color {Chapter }NmzPrintConeProperties}}{8}{subsection.2.2.7}
+\contentsline {section}{\numberline {2.3}\leavevmode {\color {Chapter }Cone properties}}{8}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}\leavevmode {\color {Chapter }NmzAffineDim}}{8}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}\leavevmode {\color {Chapter }NmzClassGroup}}{8}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}\leavevmode {\color {Chapter }NmzCongruences}}{9}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.4}\leavevmode {\color {Chapter }NmzDeg1Elements}}{9}{subsection.2.3.4}
+\contentsline {subsection}{\numberline {2.3.5}\leavevmode {\color {Chapter }NmzDehomogenization}}{9}{subsection.2.3.5}
+\contentsline {subsection}{\numberline {2.3.6}\leavevmode {\color {Chapter }NmzEmbeddingDimension}}{9}{subsection.2.3.6}
+\contentsline {subsection}{\numberline {2.3.7}\leavevmode {\color {Chapter }NmzEquations}}{9}{subsection.2.3.7}
+\contentsline {subsection}{\numberline {2.3.8}\leavevmode {\color {Chapter }NmzExcludedFaces}}{10}{subsection.2.3.8}
+\contentsline {subsection}{\numberline {2.3.9}\leavevmode {\color {Chapter }NmzExtremeRays}}{10}{subsection.2.3.9}
+\contentsline {subsection}{\numberline {2.3.10}\leavevmode {\color {Chapter }NmzGenerators}}{10}{subsection.2.3.10}
+\contentsline {subsection}{\numberline {2.3.11}\leavevmode {\color {Chapter }NmzGeneratorOfInterior}}{10}{subsection.2.3.11}
+\contentsline {subsection}{\numberline {2.3.12}\leavevmode {\color {Chapter }NmzGrading}}{10}{subsection.2.3.12}
+\contentsline {subsection}{\numberline {2.3.13}\leavevmode {\color {Chapter }NmzHilbertBasis}}{10}{subsection.2.3.13}
+\contentsline {subsection}{\numberline {2.3.14}\leavevmode {\color {Chapter }NmzHilbertQuasiPolynomial}}{10}{subsection.2.3.14}
+\contentsline {subsection}{\numberline {2.3.15}\leavevmode {\color {Chapter }NmzHilbertSeries}}{11}{subsection.2.3.15}
+\contentsline {subsection}{\numberline {2.3.16}\leavevmode {\color {Chapter }NmzInclusionExclusionData}}{11}{subsection.2.3.16}
+\contentsline {subsection}{\numberline {2.3.17}\leavevmode {\color {Chapter }NmzIsDeg1ExtremeRays}}{11}{subsection.2.3.17}
+\contentsline {subsection}{\numberline {2.3.18}\leavevmode {\color {Chapter }NmzIsDeg1HilbertBasis}}{11}{subsection.2.3.18}
+\contentsline {subsection}{\numberline {2.3.19}\leavevmode {\color {Chapter }NmzIsGorenstein}}{11}{subsection.2.3.19}
+\contentsline {subsection}{\numberline {2.3.20}\leavevmode {\color {Chapter }NmzIsInhomogeneous}}{11}{subsection.2.3.20}
+\contentsline {subsection}{\numberline {2.3.21}\leavevmode {\color {Chapter }NmzIsIntegrallyClosed}}{12}{subsection.2.3.21}
+\contentsline {subsection}{\numberline {2.3.22}\leavevmode {\color {Chapter }NmzIsPointed}}{12}{subsection.2.3.22}
+\contentsline {subsection}{\numberline {2.3.23}\leavevmode {\color {Chapter }NmzIsReesPrimary}}{12}{subsection.2.3.23}
+\contentsline {subsection}{\numberline {2.3.24}\leavevmode {\color {Chapter }NmzMaximalSubspace}}{12}{subsection.2.3.24}
+\contentsline {subsection}{\numberline {2.3.25}\leavevmode {\color {Chapter }NmzModuleGenerators}}{12}{subsection.2.3.25}
+\contentsline {subsection}{\numberline {2.3.26}\leavevmode {\color {Chapter }NmzModuleGeneratorsOverOriginalMonoid}}{12}{subsection.2.3.26}
+\contentsline {subsection}{\numberline {2.3.27}\leavevmode {\color {Chapter }NmzModuleRank}}{13}{subsection.2.3.27}
+\contentsline {subsection}{\numberline {2.3.28}\leavevmode {\color {Chapter }NmzMultiplicity}}{13}{subsection.2.3.28}
+\contentsline {subsection}{\numberline {2.3.29}\leavevmode {\color {Chapter }NmzOriginalMonoidGenerators}}{13}{subsection.2.3.29}
+\contentsline {subsection}{\numberline {2.3.30}\leavevmode {\color {Chapter }NmzRank}}{13}{subsection.2.3.30}
+\contentsline {subsection}{\numberline {2.3.31}\leavevmode {\color {Chapter }NmzRecessionRank}}{13}{subsection.2.3.31}
+\contentsline {subsection}{\numberline {2.3.32}\leavevmode {\color {Chapter }NmzReesPrimaryMultiplicity}}{13}{subsection.2.3.32}
+\contentsline {subsection}{\numberline {2.3.33}\leavevmode {\color {Chapter }NmzSupportHyperplanes}}{14}{subsection.2.3.33}
+\contentsline {subsection}{\numberline {2.3.34}\leavevmode {\color {Chapter }NmzTriangulation}}{14}{subsection.2.3.34}
+\contentsline {subsection}{\numberline {2.3.35}\leavevmode {\color {Chapter }NmzTriangulationDetSum}}{14}{subsection.2.3.35}
+\contentsline {subsection}{\numberline {2.3.36}\leavevmode {\color {Chapter }NmzTriangulationSize}}{14}{subsection.2.3.36}
+\contentsline {subsection}{\numberline {2.3.37}\leavevmode {\color {Chapter }NmzVerticesFloat}}{14}{subsection.2.3.37}
+\contentsline {subsection}{\numberline {2.3.38}\leavevmode {\color {Chapter }NmzVerticesOfPolyhedron}}{15}{subsection.2.3.38}
+\contentsline {subsection}{\numberline {2.3.39}\leavevmode {\color {Chapter }NmzConeDecomposition}}{15}{subsection.2.3.39}
+\contentsline {subsection}{\numberline {2.3.40}\leavevmode {\color {Chapter }NmzEmbeddingDim}}{15}{subsection.2.3.40}
+\contentsline {subsection}{\numberline {2.3.41}\leavevmode {\color {Chapter }NmzExternalIndex}}{15}{subsection.2.3.41}
+\contentsline {subsection}{\numberline {2.3.42}\leavevmode {\color {Chapter }NmzGradingDenom}}{15}{subsection.2.3.42}
+\contentsline {subsection}{\numberline {2.3.43}\leavevmode {\color {Chapter }NmzIntegerHull}}{15}{subsection.2.3.43}
+\contentsline {subsection}{\numberline {2.3.44}\leavevmode {\color {Chapter }NmzInternalIndex}}{15}{subsection.2.3.44}
+\contentsline {subsection}{\numberline {2.3.45}\leavevmode {\color {Chapter }NmzStanleyDec}}{16}{subsection.2.3.45}
+\contentsline {subsection}{\numberline {2.3.46}\leavevmode {\color {Chapter }NmzSublattice}}{16}{subsection.2.3.46}
+\contentsline {subsection}{\numberline {2.3.47}\leavevmode {\color {Chapter }NmzUnitGroupIndex}}{16}{subsection.2.3.47}
+\contentsline {subsection}{\numberline {2.3.48}\leavevmode {\color {Chapter }NmzWeightedEhrhartQuasiPolynomial}}{16}{subsection.2.3.48}
+\contentsline {subsection}{\numberline {2.3.49}\leavevmode {\color {Chapter }NmzWeightedEhrhartSeries}}{16}{subsection.2.3.49}
+\contentsline {subsection}{\numberline {2.3.50}\leavevmode {\color {Chapter }NmzWitnessNotIntegrallyClosed}}{16}{subsection.2.3.50}
+\contentsline {subsection}{\numberline {2.3.51}\leavevmode {\color {Chapter }NmzEhrhartSeries}}{16}{subsection.2.3.51}
+\contentsline {subsection}{\numberline {2.3.52}\leavevmode {\color {Chapter }NmzEuclideanVolume}}{17}{subsection.2.3.52}
+\contentsline {subsection}{\numberline {2.3.53}\leavevmode {\color {Chapter }NmzProjectCone}}{17}{subsection.2.3.53}
+\contentsline {subsection}{\numberline {2.3.54}\leavevmode {\color {Chapter }NmzSuppHypsFloat}}{17}{subsection.2.3.54}
+\contentsline {subsection}{\numberline {2.3.55}\leavevmode {\color {Chapter }NmzVolume}}{17}{subsection.2.3.55}
+\contentsline {subsection}{\numberline {2.3.56}\leavevmode {\color {Chapter }NmzFVector}}{17}{subsection.2.3.56}
+\contentsline {subsection}{\numberline {2.3.57}\leavevmode {\color {Chapter }NmzFaceLattice}}{17}{subsection.2.3.57}
+\contentsline {subsection}{\numberline {2.3.58}\leavevmode {\color {Chapter }NmzBasisChange}}{18}{subsection.2.3.58}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Examples}}{19}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Generators}}{19}{section.3.1}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }System of equations}}{19}{section.3.2}
+\contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }System of inhomogeneous equations}}{20}{section.3.3}
+\contentsline {section}{\numberline {3.4}\leavevmode {\color {Chapter }Combined input}}{20}{section.3.4}
+\contentsline {section}{\numberline {3.5}\leavevmode {\color {Chapter }Using the dual mode}}{21}{section.3.5}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Installing NormalizInterface}}{22}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Compiling}}{22}{section.4.1}
+\contentsline {chapter}{References}{23}{chapter*.2}
+\contentsline {chapter}{Index}{24}{section*.3}

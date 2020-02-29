@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  pcgsperm.gi                 GAP library                    Heiko Theißen
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Heiko Theißen.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file  contains    functions which deal with   polycyclic  generating
 ##  systems of solvable permutation groups.
@@ -1298,34 +1299,24 @@ function( G, d, e, opr )
     fi;
 end );
 
-CYCLICACHE:=[];
+BIND_GLOBAL( "CYCLICACHE", [ [], [] ]);
+if IsHPCGAP then
+  ShareSpecialObj(CYCLICACHE);
+fi;
+
 InstallGlobalFunction(CreateIsomorphicPcGroup,function(pcgs,needindices,flag)
 local r,i,p,A,f,a;
   r:=RelativeOrders(pcgs);
   if Length(r)<=1 then
     p:=Product(r);
-    i:=1;
-    while i<=Length(CYCLICACHE) and Size(CYCLICACHE[i])<p do
-      i:=i+1;
-    od;
-    # do we have it?
-    if i<=Length(CYCLICACHE) and Size(CYCLICACHE[i])=p then
-      return CYCLICACHE[i];
-    fi;
-
-    # make space
-    p:=i;
-    for i in [Length(CYCLICACHE),Length(CYCLICACHE)-1..p] do
-      CYCLICACHE[i+1]:=CYCLICACHE[i];
-    od;
-    A := PermpcgsPcGroupPcgs( pcgs, IndicesEANormalSteps(pcgs), flag );
-    CYCLICACHE[p]:=A;
-    return A;
+    return GET_FROM_SORTED_CACHE(CYCLICACHE, p,
+        {} -> PermpcgsPcGroupPcgs( pcgs, IndicesEANormalSteps(pcgs), flag ));
   fi;
 
   # is the group in the mappings families cache?
   f:=FamiliesOfGeneralMappingsAndRanges(FamilyObj(OneOfPcgs(pcgs)));
   i:=1;
+  atomic readonly GENERAL_MAPPING_REGION do # for HPC-GAP; does nothing in plain GAP
   while i<=Length(f) do
     a:=ElmWPObj(f,i);
     if a<>fail and IsBound(a!.DefiningPcgs) 
@@ -1351,6 +1342,7 @@ local r,i,p,A,f,a;
     fi;
     i:=i+2;
   od;
+  od; # end of atomic
   A := PermpcgsPcGroupPcgs( pcgs, IndicesEANormalSteps(pcgs), flag );
   return A;
 end);
@@ -1440,7 +1432,3 @@ local hom,m;
   List(m,Size); # force
   return List(m,i->PreImage(hom,i));
 end);
-
-#############################################################################
-##
-#E  pcgsperm.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

@@ -1,7 +1,5 @@
 #############################################################################
 ##
-#W  coll.tst
-##
 ##  Test operations defined in coll.gd
 ##
 gap> START_TEST("coll.tst");
@@ -156,6 +154,13 @@ gap> SetEnumeratorSorted(M0, []);
 gap> RepresentativeSmallest(M0);
 Error, <C> must be nonempty to have a representative
 
+# SortedList
+gap> l := Immutable([2, 1, 3]);;
+gap> SortedList(l);
+[ 1, 2, 3 ]
+gap> SortedList(l, {x, y} -> y < x);
+[ 3, 2, 1 ]
+
 #############################################################################
 #
 # Random
@@ -250,12 +255,16 @@ gap> iter:=Iterator(M1);
 <iterator>
 gap> List(iter);
 [ 1 ]
+gap> List(iter, x -> x+1);
+[ 2 ]
 
 #
 gap> iter:=Iterator([2,1]);
 <iterator>
 gap> List(iter);
 [ 2, 1 ]
+gap> List(iter, x -> x+1);
+[ 3, 2 ]
 
 #############################################################################
 #
@@ -265,12 +274,16 @@ gap> iter:=IteratorSorted(M1);
 <iterator>
 gap> List(iter);
 [ 1 ]
+gap> List(iter, x -> x+1);
+[ 2 ]
 
 #
 gap> iter:=IteratorSorted([2,1]);
 <iterator>
 gap> List(iter);
 [ 1, 2 ]
+gap> List(iter, x -> x+1);
+[ 2, 3 ]
 
 #############################################################################
 #
@@ -288,6 +301,8 @@ gap> iter:=ConcatenationIterators([Iterator(M1), Iterator(M0), Iterator([2,3])])
 <iterator>
 gap> List(iter);
 [ 1, 2, 3 ]
+gap> List(iter, x -> x+1);
+[ 2, 3, 4 ]
 
 #############################################################################
 #
@@ -297,6 +312,8 @@ gap> iter:=TrivialIterator(42);
 <iterator>
 gap> List(iter);
 [ 42 ]
+gap> List(iter, x -> x+1);
+[ 43 ]
 
 #############################################################################
 #
@@ -321,6 +338,8 @@ gap> res:=List([AsList,AsSortedList,AsSet], f -> f(Magma(1)));
 [ [ 1 ], [ 1 ], [ 1 ] ]
 gap> List(res,IsMutable);
 [ false, false, false ]
+gap> AsSet([1..5]);
+[ 1 .. 5 ]
 
 #############################################################################
 #

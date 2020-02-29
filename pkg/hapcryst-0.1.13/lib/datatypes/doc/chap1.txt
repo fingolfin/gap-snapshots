@@ -1,0 +1,89 @@
+  
+  [1X1 [33X[0;0YResolutions in Hap[133X[101X
+  
+  [33X[0;0YThis  document  is  only concerned with the representation of resolutions in
+  Hap.  Note that it is not a part of Hap. The framework provided here is just
+  an extension of Hap data types used in HAPcryst and HAPprime.[133X
+  
+  [33X[0;0YFrom  now on, let [22XG[122X be a group and [22Xdots -> M_n-> M_n-1->dots-> M_1-> M_0-> Z[122X
+  be a resolution with free [22XZG[122X modules [22XM_i[122X.[133X
+  
+  [33X[0;0YThe  elements  of the modules [22XM_i[122X can be represented in different ways. This
+  is what makes different representations for resolutions desirable. First, we
+  will look at the standard representation ([10XHapResolutionRep[110X) as it is defined
+  in  Hap.  After  that,  we  will present another representation for infinite
+  groups.    Note    that    all    non-standard   representations   must   be
+  sub-representations  of  the standard representation to ensure compatibility
+  with Hap.[133X
+  
+  
+  [1X1.1 [33X[0;0YThe Standard Representation [9XHapResolutionRep[109X[101X[1X[133X[101X
+  
+  [33X[0;0YFor  every  [22XM_i[122X  we  fix a basis and number its elements. Furthermore, it is
+  assumed  that  we have a (partial) enumeration of the group of a resolution.
+  In practice this is done by generating a lookup table on the fly.[133X
+  
+  [33X[0;0YIn  standard representation, the elements of the modules [22XM_k[122X are represented
+  by  lists  -"words"-  of  pairs  of  integers. A letter [10X[i,g][110X of such a word
+  consists  of  the number of a basis element [10Xi[110X or [10X-i[110X for its additive inverse
+  and a number [22Xg[122X representing a group element.[133X
+  
+  [33X[0;0YA  [10XHapResolution[110X  in  [10XHapResolutionRep[110X  representation is a component object
+  with the components[133X
+  
+  [30X    [33X[0;6Y[10Xgroup[110X, a group of arbitrary type.[133X
+  
+  [30X    [33X[0;6Y[10Xelts[110X,  a  (partial)  list  of (possibly duplicate) elements in G. This
+        list  provides  the  "enumeration"  of  the group. Note that there are
+        functions  in Hap which assume that [10Xelts[1][110X is the identity element of
+        G.[133X
+  
+  [30X    [33X[0;6Y[10XappendToElts(g)[110X  a function that appends the group element [10Xg[110X to [10X.elts[110X.
+        This  is  not  documented  in  Hap  1.8.6 but seems to be required for
+        infinite  groups.  This requirement might vanish in some later version
+        of Hap [G. Ellis, private communication].[133X
+  
+  [30X    [33X[0;6Y[10Xdimension(k)[110X, a function which returns the ZG-rank of the Module [22XM_k[122X[133X
+  
+  [30X    [33X[0;6Y[10Xboundary(k,j)[110X,  a function which returns the image in [22XM_k-1[122X of the [22Xj[122Xth
+        free  generator  of  [22XM_k[122X.  Note  that negative [22Xj[122X are valid as input as
+        well.  In  this  case  the additive inverse of the boundary of the [22Xj[122Xth
+        generator is returned[133X
+  
+  [30X    [33X[0;6Y[10Xhomotopy(k,[i,g])[110X a function which returns the image in [22XM_k+1[122X, under a
+        contracting  homotopy [22XM_k -> M_k+1[122X, of the element [10X[[i,g]][110X in [22XM_k[122X. The
+        value  of  this might be [9Xfail[109X. However, currently (version 1.8.4) some
+        Hap functions assume that [10Xhomotopy[110X is a function without testing.[133X
+  
+  [30X    [33X[0;6Y[10Xproperties[110X,  a  list  of pairs [10X["name","value"][110X "name" is a string and
+        value  is  anything  (boolean, number, string...). Every [10XHapResolution[110X
+        (regardless  of  representation)  has  to  have [10X["type","resolution"][110X,
+        [10X["length",length][110X  where  [10Xlength[110X  is  the length of the resolution and
+        [10X["characteristic",char][110X.  Currently  (Hap  1.8.6),  [10Xlength[110X must not be
+        [9Xinfinity[109X.  The  values of these properties can be tested using the Hap
+        function [10XEvaluateProperty(resolution,propertyname)[110X.[133X
+  
+  [33X[0;0YNote  that  making  [10XHapResolution[110Xs  immutable  will make the [10X.elts[110X component
+  immutable.  As this lookup table might change during calculations, we do not
+  recommend using immutable resolutions (in any representation).[133X
+  
+  
+  [1X1.2 [33X[0;0YThe [9XHapLargeGroupResolutionRep[109X[101X[1X Representation[133X[101X
+  
+  [33X[0;0YIn  this  sub-representation  of  the  standard  representation,  the module
+  elements  in  this resolution are lists of groupring elements. So the lookup
+  table  [10X.elts[110X is not used as long as no conversion to standard representation
+  takes  place. In addition to the components of a [9XHapResolution[109X, a resolution
+  in large group representation has the following components:[133X
+  
+  [30X    [33X[0;6Y[10Xboundary2(resolution,term,gen)[110X,  a  function that returns the boundary
+        of the [3Xgen[103Xth generator of the [3Xterm[103Xth module.[133X
+  
+  [30X    [33X[0;6Y[10Xgroupring[110X the group ring of the resolution [3Xresolution[103X.[133X
+  
+  [30X    [33X[0;6Y[10Xdimension2(resolution,term)[110X  a  function that returns the dimension of
+        the [3Xterm[103Xth module of the resolution [3Xresolution[103X.[133X
+  
+  [33X[0;0YThe  effort of having two versions of [10Xboundary[110X and [10Xdimension[110X is necessary to
+  keep the structure compatible with the usual Hap resolution.[133X
+  

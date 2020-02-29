@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  tietze.gd                  GAP library                     Volkmar Felsch
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Volkmar Felsch.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the declarations for finitely presented groups
 ##  (fp groups).
@@ -77,7 +78,7 @@ DeclareAttribute( "TietzeOrigin", IsSubgroupFpGroup );
 ##  i. e., a list of positive or negative generator numbers.
 ##  It converts <A>word</A> to an abstract word.
 ##  <P/>
-##  This function simply calls <Ref Func="AssocWordByLetterRep"/>.
+##  This function simply calls <Ref Oper="AssocWordByLetterRep"/>.
 ##  <Example><![CDATA[
 ##  gap> F := FreeGroup( "a", "b", "c" ,"d");
 ##  <free group on the generators [ a, b, c, d ]>
@@ -498,7 +499,7 @@ DeclareGlobalFunction("PresentationRegularPermutationGroupNC");
 ##  If only a group <A>G</A> has been specified, the single stage algorithm
 ##  is applied.
 ##  <P/>
-##  The operation <Ref Func="IsomorphismFpGroup"/> in contrast uses a
+##  The operation <Ref Attr="IsomorphismFpGroup"/> in contrast uses a
 ##  multiple-stage algorithm using a chief series and stabilizer chains.
 ##  It usually should be used rather than
 ##  <Ref Func="PresentationViaCosetTable"/>.
@@ -578,7 +579,7 @@ DeclareGlobalFunction("PresentationRegularPermutationGroupNC");
 ##  If you apply the function <Ref Func="FpGroupPresentation"/> to the
 ##  resulting presentation you will get a finitely presented group isomorphic
 ##  to <A>G</A>.
-##  Note, however, that the function <Ref Func="IsomorphismFpGroup"/>
+##  Note, however, that the function <Ref Attr="IsomorphismFpGroup"/>
 ##  is recommended for this purpose.
 ##  </Description>
 ##  </ManSection>
@@ -649,7 +650,7 @@ DeclareGlobalFunction("RemoveRelator");
 ##  via Tietze transformations.
 ##  <P/>
 ##  If the connection to the original group is important, then the operation
-##  <Ref Func="IsomorphismSimplifiedFpGroup"/> should be used instead.
+##  <Ref Attr="IsomorphismSimplifiedFpGroup"/> should be used instead.
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> F6 := FreeGroup( 6, "G" );;
@@ -1122,7 +1123,7 @@ DeclareGlobalFunction("TzHandleLength1Or2Relators");
 ##
 ##  <Description>
 ##  returns a list of free generators that is a shallow copy
-##  (see <Ref Func="ShallowCopy"/>) of the current
+##  (see <Ref Oper="ShallowCopy"/>) of the current
 ##  generators of the presentation <A>P</A>.
 ##  </Description>
 ##  </ManSection>
@@ -2224,8 +2225,3 @@ DeclareGlobalFunction("TzSubstituteWord");
 DeclareGlobalFunction("TzUpdateGeneratorImages");
 
 DeclareGlobalFunction("TzRelatorOldImages");
-
-
-#############################################################################
-##
-#E

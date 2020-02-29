@@ -1,0 +1,195 @@
+<#GAPDoc Label="Example_LinearRepresentationIsomorphism">
+<Example><![CDATA[
+gap> G := SymmetricGroup(4);;
+gap> irreps := IrreducibleRepresentations(G);;
+gap> # rho and tau are isomorphic - they just have a different block order
+> rho := DirectSumOfRepresentations([irreps[1], irreps[3], irreps[3]]);;
+gap> tau := DirectSumOfRepresentations([irreps[3], irreps[1], irreps[3]]);;
+gap> # tau2 is just tau with a basis change - still isomorphic
+> B := RandomInvertibleMat(5);;
+gap> tau2 := ComposeHomFunction(tau, x -> B^-1 * x * B);;
+gap> # using the default implementation
+> M := LinearRepresentationIsomorphism(rho, tau);;
+gap> IsLinearRepresentationIsomorphism(M, rho, tau);
+true
+gap> M := LinearRepresentationIsomorphism(tau, tau2);;
+gap> IsLinearRepresentationIsomorphism(M, tau, tau2);
+true
+gap> # using the kronecker sum implementation
+> M := LinearRepresentationIsomorphism(tau, tau2 : use_kronecker);;
+gap> IsLinearRepresentationIsomorphism(M, tau, tau2);
+true
+gap> # using the orbit sum implementation
+> M := LinearRepresentationIsomorphism(tau, tau2 : use_orbit_sum);;
+gap> IsLinearRepresentationIsomorphism(M, tau, tau2);
+true
+gap> # two distinct irreps are not isomorphic
+> M := LinearRepresentationIsomorphism(irreps[1], irreps[2]);
+fail
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_LinearRepresentationIsomorphismSlow">
+<Example><![CDATA[
+gap> # Following on from the previous example
+> M := LinearRepresentationIsomorphismSlow(rho, tau);;
+gap> IsLinearRepresentationIsomorphism(M, rho, tau);
+true
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_AreRepsIsomorphic">
+<Example><![CDATA[
+gap> # Following on from the previous examples
+> # Some isomorphic representations
+> AreRepsIsomorphic(rho, tau);
+true
+gap> AreRepsIsomorphic(rho, tau2);
+true
+gap> # rho isn't iso to irreps[1] since rho is irreps[1] plus some other stuff
+> AreRepsIsomorphic(rho, irreps[1]);
+false
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_IsLinearRepresentationIsomorphism">
+<Example><![CDATA[
+gap> # We have already seen this function used heavily in previous examples.
+> # If two representations are isomorphic, the following is always true:
+> IsLinearRepresentationIsomorphism(LinearRepresentationIsomorphism(rho, tau), rho, tau);
+true
+gap> # Note: this test is sensitive to ordering:
+> IsLinearRepresentationIsomorphism(LinearRepresentationIsomorphism(rho, tau), tau, rho);
+false
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_CanonicalDecomposition">
+<Example><![CDATA[
+gap> # This is the trivial group
+> G := Group(());;
+gap> # The trivial group has only one representation per degree, so a
+> # degree d representation decomposes into a single canonical summand
+> # containing the whole space
+> rho := FuncToHom@RepnDecomp(G, g -> IdentityMat(3));;
+gap> canonical_summands_G := CanonicalDecomposition(rho);
+[ ( Cyclotomics^3 ) ]
+gap> # More interesting example, S_3
+> H := SymmetricGroup(3);;
+gap> # The standard representation: a permutation to the corresponding
+> # permutation matrix.
+> tau := FuncToHom@RepnDecomp(H, h -> PermutationMat(h, 3));;
+gap> # Two canonical summands corresponding to the degree 2 and
+> # trivial irreps (in that order)
+> canonical_summands_H := CanonicalDecomposition(tau);
+[ <vector space over Cyclotomics, with 2 generators>,
+  <vector space over Cyclotomics, with 1 generators> ]
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_IrreducibleDecomposition">
+<Example><![CDATA[
+gap> # The trivial group has 1 irrep of degree 1, so rho decomposes into 3
+> # lines.
+> irred_decomp_G := IrreducibleDecomposition(rho);
+[ rec( basis := [ [ 1, 0, 0 ] ] ), rec( basis := [ [ 0, 1, 0 ] ] ),
+  rec( basis := [ [ 0, 0, 1 ] ] ) ]
+gap> # The spaces are returned in this format - explicitly keeping the
+> # basis - since this basis block diagonalises rho into the irreps,
+> # which are the smallest possible blocks. This is more obvious with
+> # H.
+> irred_decomp_H := IrreducibleDecomposition(tau);
+[ rec( basis := [ [ 1, 1, 1 ] ] ),
+  rec( basis := [ [ 1, E(3), E(3)^2 ], [ 1, E(3)^2, E(3) ] ] ) ]
+gap> # Using the basis vectors given there block diagonalises tau into
+> # the two blocks corresponding to the two irreps:
+> nice_basis := [ [ 1, 1, 1 ], [ 1, E(3), E(3)^2 ], [ 1, E(3)^2, E(3) ] ];;
+gap> tau_diag := ComposeHomFunction(tau, X -> nice_basis^-1 * X * nice_basis);
+[ (1,2,3), (1,2) ] -> [ [ [ 1, 0, 0 ], [ 0, E(3), 0 ], [ 0, 0, E(3)^2 ] ],
+  [ [ 1, 0, 0 ], [ 0, 0, E(3)^2 ], [ 0, E(3), 0 ] ] ]
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_REPN_ComputeUsingSerre">
+<Example><![CDATA[
+gap> # Does the same thing we have done in the examples above, but all in
+> # one step, with as many subcomputations reused as possible
+> REPN_ComputeUsingSerre(tau);
+rec( basis := [ [ 1, 1, 1 ], [ 1, E(3), E(3)^2 ], [ 1, E(3)^2, E(3) ] ],
+  centralizer_basis := [ [ [ [ 1 ] ], [ [ 0, 0 ], [ 0, 0 ] ] ],
+      [ [ [ 0 ] ], [ [ 1, 0 ], [ 0, 1 ] ] ] ],
+  decomposition := [ [ rec( basis := [ [ 1, 1, 1 ] ] ) ], [  ],
+      [ rec( basis := [ [ 1, E(3), E(3)^2 ], [ 1, E(3)^2, E(3) ] ] ) ] ],
+  diagonal_rep := [ (1,2,3), (1,2) ] ->
+    [ [ [ 1, 0, 0 ], [ 0, E(3), 0 ], [ 0, 0, E(3)^2 ] ],
+      [ [ 1, 0, 0 ], [ 0, 0, E(3)^2 ], [ 0, E(3), 0 ] ] ] )
+gap> # You can also do the computation in parallel:
+> REPN_ComputeUsingSerre(tau : parallel);;
+gap> # Or specify the irreps if you have already computed them:
+> irreps_H := IrreducibleRepresentations(H);;
+gap> REPN_ComputeUsingSerre(tau : irreps := irreps_H);;
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_UnitaryRepresentation">
+<Example><![CDATA[
+gap> G := SymmetricGroup(3);;
+gap> irreps := IrreducibleRepresentations(G);;
+gap> # It happens that we are given unitary irreps, so
+> # rho is also unitary (its blocks are unitary)
+> rho := DirectSumOfRepresentations([irreps[1], irreps[2]]);;
+gap> IsUnitaryRepresentation(rho);
+true
+gap> # Arbitrary change of basis
+> A := [ [ -1, 1 ], [ -2, -1 ] ];;
+gap> tau := ComposeHomFunction(rho, x -> A^-1 * x * A);;
+gap> # Not unitary, but still isomorphic to rho
+> IsUnitaryRepresentation(tau);
+false
+gap> AreRepsIsomorphic(rho, tau);
+true
+gap> # Now we unitarise tau
+> tau_u := UnitaryRepresentation(tau);;
+gap> # We get a record with the unitarised rep:
+> AreRepsIsomorphic(tau, tau_u.unitary_rep);
+true
+gap> AreRepsIsomorphic(rho, tau_u.unitary_rep);
+true
+gap> # The basis change is also in the record:
+> ForAll(G, g -> tau_u.basis_change * Image(tau_u.unitary_rep, g) = Image(tau, g) * tau_u.basis_change);
+true
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_IsUnitaryRepresentation">
+<Example><![CDATA[
+gap> # TODO: this example
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_LDLDecomposition">
+<Example><![CDATA[
+gap> # TODO: this example
+]]></Example>
+
+
+
+<#/GAPDoc>

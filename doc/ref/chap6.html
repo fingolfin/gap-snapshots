@@ -165,7 +165,7 @@ Syntax error: Expression expected
 7
 </pre></div>
 
-<p>Also in each statement the time spent by the last statement, whether it produced a value or not, is available in the variable <code class="func">time</code> (<a href="chap7.html#X7C0F91F982189624"><span class="RefLink">7.6-4</span></a>). This is an integer that holds the number of milliseconds. Similarly the amount of memory allocated during that statement (in bytes) is stored in the variable <code class="func">memory_allocated</code> (<a href="chap7.html#X8156D7208591460F"><span class="RefLink">7.7-2</span></a>).</p>
+<p>Also in each statement the time spent by the last statement, whether it produced a value or not, is available in the variable <code class="func">time</code> (<a href="chap7.html#X7C0F91F982189624"><span class="RefLink">7.6-4</span></a>). This is an integer that holds the number of milliseconds. Similarly the amount of memory allocated during that statement (in bytes) is stored in the variable <code class="func">memory_allocated</code> (<a href="chap7.html#X8156D7208591460F"><span class="RefLink">7.7-2</span></a>). The variables <code class="code">last</code>, <code class="code">last2</code>, <code class="code">last3</code>, <code class="func">time</code> (<a href="chap7.html#X7C0F91F982189624"><span class="RefLink">7.6-4</span></a>) and <code class="func">memory_allocated</code> (<a href="chap7.html#X8156D7208591460F"><span class="RefLink">7.7-2</span></a>) are all write-protected.</p>
 
 <p><a id="X866092F281910B74" name="X866092F281910B74"></a></p>
 
@@ -460,7 +460,7 @@ you can 'return;' to continue
 <span class="GAPbrkprompt">brk&gt;</span> <span class="GAPinput">quit;</span>
 </pre></div>
 
-<p>In cases where a break loop is entered during a function that was called with options (see Chapter <a href="chap8.html#X7FD84061873F72A2"><span class="RefLink">8</span></a>), a <code class="code">quit;</code> will also cause the options stack to be reset and an <code class="code">Info</code>-ed warning stating this is emitted at <code class="func">InfoWarning</code> (<a href="chap7.html#X7A28F77C82D6A3E0"><span class="RefLink">7.4-7</span></a>) level 1 (see Chapter <a href="chap7.html#X7A9C902479CB6F7C"><span class="RefLink">7.4</span></a>).</p>
+<p>In cases where a break loop is entered during a function that was called with options (see Chapter <a href="chap8.html#X7FD84061873F72A2"><span class="RefLink">8</span></a>), a <code class="code">quit;</code> will also cause the options stack to be reset and an <code class="code">Info</code>-ed warning stating this is emitted at <code class="func">InfoWarning</code> (<a href="chap7.html#X7A28F77C82D6A3E0"><span class="RefLink">7.4-8</span></a>) level 1 (see Chapter <a href="chap7.html#X7A9C902479CB6F7C"><span class="RefLink">7.4</span></a>).</p>
 
 <p>Note that for break loops entered by a call to <code class="func">Error</code> (<a href="chap6.html#X7E7AD8D87EBA1A08"><span class="RefLink">6.6-1</span></a>), the lines after "<code class="code">Entering break read-eval-print loop ...</code>" and before the <code class="code">brk&gt;</code> prompt can also be customised, namely by redefining <code class="func">OnBreakMessage</code> (<a href="chap6.html#X80711C807C99C220"><span class="RefLink">6.4-4</span></a>).</p>
 
@@ -562,7 +562,8 @@ Entering break read-eval-print loop ...
 <h5>6.4-5 Where</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Where</code>( <var class="Arg">nr</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>shows the last <var class="Arg">nr</var> commands on the execution stack during whose execution the error occurred. If not given, <var class="Arg">nr</var> defaults to 5. (Assume, for the following example, that after the last example <code class="func">OnBreak</code> (<a href="chap6.html#X82EBF01181C3C859"><span class="RefLink">6.4-3</span></a>) has been set back to its default value.)</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WhereWithVars</code>( <var class="Arg">nr</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>shows the last <var class="Arg">nr</var> commands on the execution stack during whose execution the error occurred. If not given, <var class="Arg">nr</var> defaults to 5. (Assume, for the following example, that after the last example <code class="func">OnBreak</code> (<a href="chap6.html#X82EBF01181C3C859"><span class="RefLink">6.4-3</span></a>) has been set back to its default value.). <code class="func">WhereWithVars</code> acts the same as <code class="func">Where</code> while also showing the arguments and local variables of each function.</p>
 
 
 <div class="example"><pre>
@@ -591,7 +592,7 @@ StabChainStrong( S.stabilizer, [ sch ], options ); called from
 
 <p>At the moment this backtrace does not work from within compiled code (this includes the method selection which by default is compiled into the kernel). If this creates problems for debugging, call <strong class="pkg">GAP</strong> with the <code class="code">-M</code> option (see <a href="chap3.html#X782751D5858A6EAF"><span class="RefLink">3.1</span></a>) to avoid loading compiled code.</p>
 
-<p>(Function calls to <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) and methods installed for binary operations are handled in a special way. In rare circumstances it is possible therefore that they do not show up in a <code class="func">Where</code> log but the log refers to the <em>last</em> proper function call that happened before.)</p>
+<p>(Function calls to <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-6</span></a>) and methods installed for binary operations are handled in a special way. In rare circumstances it is possible therefore that they do not show up in a <code class="func">Where</code> log but the log refers to the <em>last</em> proper function call that happened before.)</p>
 
 <p>The command line option <code class="code">-T</code> to <strong class="pkg">GAP</strong> disables the break loop. This is mainly intended for testing purposes and for special applications. If this option is given then errors simply cause <strong class="pkg">GAP</strong> to return to the main loop.</p>
 
@@ -926,7 +927,7 @@ bye
 
 <p>The descriptions in this section are valid only if your <strong class="pkg">GAP</strong> installation uses the <code class="code">readline</code> library for command line editing. You can check by <code class="code">IsBound(GAPInfo.UseReadline);</code> if this is the case.</p>
 
-<p>You can use all the features of <code class="code">readline</code>, as for example explained in <span class="URL"><a href="http://tiswww.case.edu/php/chet/readline/rluserman.html">http://tiswww.case.edu/php/chet/readline/rluserman.html</a></span>. Therefore the command line editing in <strong class="pkg">GAP</strong> is similar to the <code class="code">bash</code> shell and many other programs. On a Unix/Linux system you may also have a manpage, try <code class="code">man readline</code>.</p>
+<p>You can use all the features of <code class="code">readline</code>, as for example explained in <span class="URL"><a href="https://tiswww.case.edu/php/chet/readline/rluserman.html">https://tiswww.case.edu/php/chet/readline/rluserman.html</a></span>. Therefore the command line editing in <strong class="pkg">GAP</strong> is similar to the <code class="code">bash</code> shell and many other programs. On a Unix/Linux system you may also have a manpage, try <code class="code">man readline</code>.</p>
 
 <p>Compared to the command line editing which was used in <strong class="pkg">GAP</strong> up to version 4.4 (or compared to not using the <code class="code">readline</code> library) using <code class="code">readline</code> has several advantages:</p>
 
@@ -958,7 +959,7 @@ bye
 
 <h5>6.9-1 <span class="Heading">Readline customization</span></h5>
 
-<p>You can use your readline init file (by default <code class="file">~/.inputrc</code> on Unix/Linux) to customize key bindings. If you want settings be used only within <strong class="pkg">GAP</strong> you can write them between lines containing <code class="code">$if GAP</code> and <code class="code">$endif</code>. For a detailed documentation of the available settings and functions see <span class="URL"><a href="http://tiswww.case.edu/php/chet/readline/rluserman.html">here</a></span>.</p>
+<p>You can use your readline init file (by default <code class="file">~/.inputrc</code> on Unix/Linux) to customize key bindings. If you want settings be used only within <strong class="pkg">GAP</strong> you can write them between lines containing <code class="code">$if GAP</code> and <code class="code">$endif</code>. For a detailed documentation of the available settings and functions see <span class="URL"><a href=" https://tiswww.case.edu/php/chet/readline/rluserman.html">here</a></span>.</p>
 
 
 <div class="example"><pre>
@@ -992,12 +993,12 @@ $endif
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SaveCommandLineHistory</code>( [<var class="Arg">fname</var>, ][<var class="Arg">app</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">fail</code> or number of saved lines</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadCommandLineHistory</code>( [<var class="Arg">fname</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadCommandLineHistory</code>( [<var class="Arg">fname</var>, ][<var class="Arg">app</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">fail</code> or number of added lines</p>
 
 <p>The first command saves the lines in the command line history to the file given by the string <var class="Arg">fname</var>. The default for <var class="Arg">fname</var> is <code class="file">history</code> in the user's <strong class="pkg">GAP</strong> root path <code class="code">GAPInfo.UserGapRoot</code> or <code class="file">"~/.gap_hist"</code> if this directory does not exist. If the optional argument <var class="Arg">app</var> is <code class="keyw">true</code> then the lines are appended to that file otherwise the file is overwritten.</p>
 
-<p>The second command is the converse, it reads the lines from file <var class="Arg">fname</var> and <em>prepends</em> them to the current command line history.</p>
+<p>The second command is the converse, it reads the lines from file <var class="Arg">fname</var>. If the optional argument <var class="Arg">app</var> is true the lines are appended to the history, else it <em>prepends</em> them.</p>
 
 <p>By default, the command line history stores up to 1000 input lines. command line history. This number may be restricted or enlarged via via <code class="code">SetUserPreference("HistoryMaxLines", num);</code> which may be set to a non negative number <code class="code">num</code> to store up to <code class="code">num</code> input lines or to <code class="keyw">infinity</code> to store arbitrarily many lines. An automatic storing and restoring of the command line history can be configured via <code class="code">SetUserPreference("SaveAndRestoreHistory", true);</code>.</p>
 
@@ -1097,7 +1098,7 @@ $endif
 
 <p>In the <code class="file">etc</code> subdirectory of the <strong class="pkg">GAP</strong> installation we provide some setup files for the editors <code class="code">vim</code> and <code class="code">emacs</code>/<code class="code">xemacs</code>.</p>
 
-<p><code class="code">vim</code> is a powerful editor that understands the basic <code class="code">vi</code> commands but provides much more functionality. You can find more information about it (and download it) from <span class="URL"><a href="http://www.vim.org">http://www.vim.org</a></span>.</p>
+<p><code class="code">vim</code> is a powerful editor that understands the basic <code class="code">vi</code> commands but provides much more functionality. You can find more information about it (and download it) from <span class="URL"><a href="https://www.vim.org">https://www.vim.org</a></span>.</p>
 
 <p>To get support for <strong class="pkg">GAP</strong> syntax in vim, create in your home directory a directory <code class="file">.vim</code> with subdirectories <code class="file">.vim/syntax</code> and <code class="file">.vim/indent</code> (If you are not using Unix, refer to the <code class="code">vim</code> documentation on where to place syntax files). Then copy the file <code class="file">etc/vim/gap.vim</code> to <code class="file">.vim/syntax/gap.vim</code> and the file <code class="file">etc/vim/gap_indent.vim</code> to <code class="file">.vim/indent/gap.vim</code>.</p>
 

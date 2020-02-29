@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  grpnames.gi                                                 Gábor Horváth
-##                                                                Stefan Kohl
-##                                                             Markus Püschel
-##                                                            Sebastian Egner
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Gábor Horváth, Stefan Kohl, Markus Püschel, Sebastian Egner.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2004 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains a method for determining structure descriptions for
 ##  given finite groups and implementations of related functionality.
@@ -490,7 +490,7 @@ local Ns,MinNs,sel,a,sz,j,gs,g,N;
     Add(MinNs,Ns[a]);
     for j in ShallowCopy(sel) do
       if Size(Ns[j])>sz and Size(Ns[j]) mod sz=0 and IsSubset(Ns[j],Ns[a]) then
-	RemoveSet(sel,j);
+        RemoveSet(sel,j);
       fi;
     od;
   od;
@@ -949,16 +949,11 @@ InstallMethod( DecompositionTypesOfGroup,
 ##
 #M  IsDihedralGroup( <G> ) . . . . . . . . . . . . . . . . . . generic method
 ##
-InstallMethod( IsDihedralGroup,
-               "generic method", true, [ IsGroup ], 0,
 
-  function ( G )
-
+DoComputeDihedralGenerators := function(G)
     local  Zn, G1, T, n, t, s, i;
 
-    if not IsFinite(G) then TryNextMethod(); fi;
-
-    if Size(G) mod 2 <> 0 then return false; fi;
+    if Size(G) mod 2 <> 0 then return fail; fi;
     n := Size(G)/2;
 
     # find a normal subgroup of G of type Zn
@@ -966,12 +961,12 @@ InstallMethod( IsDihedralGroup,
       # G = < s, t | s^n = t^2 = 1, s^t = s^-1 >
       # ==> Comm(s, t) = s^-1 t s t = s^-2 ==> G' = < s^2 > = < s >
       Zn := DerivedSubgroup(G);
-      if not ( IsCyclic(Zn) and Size(Zn) = n ) then return false; fi;
+      if not ( IsCyclic(Zn) and Size(Zn) = n ) then return fail; fi;
     else # n mod 2 = 0
       # G = < s, t | s^n = t^2 = 1, s^t = s^-1 >
       # ==> Comm(s, t) = s^-1 t s t = s^-2 ==> G' = < s^2 >
       G1 := DerivedSubgroup(G);
-      if not ( IsCyclic(G1) and Size(G1) = n/2 ) then return false; fi;
+      if not ( IsCyclic(G1) and Size(G1) = n/2 ) then return fail; fi;
       # G/G1 = {1*G1, t*G1, s*G1, t*s*G1}
       T := RightTransversal(G,G1);
       i := 1;
@@ -979,29 +974,54 @@ InstallMethod( IsDihedralGroup,
         Zn := ClosureGroup(G1,T[i]);
         i  := i + 1;
       until i > 4 or ( IsCyclic(Zn) and Size(Zn) = n );
-      if not ( IsCyclic(Zn) and Size(Zn) = n ) then return false; fi;
+      if not ( IsCyclic(Zn) and Size(Zn) = n ) then return fail; fi;
     fi; # now Zn is normal in G and Zn = < s | s^n = 1 >
 
     # choose t in G\Zn and check dihedral structure
     repeat t := Random(G); until not t in Zn;
     if not (Order(t) = 2 and ForAll(GeneratorsOfGroup(Zn),s->t*s*t*s=s^0))
-    then return false; fi;
+    then return fail; fi;
 
     # choose generator s of Zn
     repeat s := Random(Zn); until Order(s) = n;
-    SetDihedralGenerators(G,[t,s]);
+    return [t,s];
+end;
+
+InstallMethod( IsDihedralGroup,
+               "for a group",
+               true,
+               [ IsGroup and IsFinite ], 0,
+function(G)
+    local gens;
+
+    gens := DoComputeDihedralGenerators(G);
+    if gens = fail then
+        return false;
+    else
+        SetDihedralGenerators(G, gens);
+    fi;
     return true;
-  end );
+end);
+
+InstallMethod( DihedralGenerators,
+               "for a group",
+               [ IsGroup and IsFinite ],
+function(G)
+    local gens;
+
+    gens := DoComputeDihedralGenerators(G);
+    SetIsDihedralGroup(G, gens <> fail);
+    if gens = fail then
+        ErrorNoReturn("G is not a dihedral group");
+    fi;
+    return gens;
+end);
 
 #############################################################################
 ##
 #M  IsQuaternionGroup( <G> ) . . . . . . . . . . . . . . . . . generic method
 ##
-InstallMethod( IsQuaternionGroup,
-               "generic method", true, [ IsGroup ], 0,
-
-  function ( G )
-
+DoComputeGeneralisedQuaternionGenerators := function(G)
     local  N,    # size of G
            k,    # ld(N)
            n,    # N/2
@@ -1011,17 +1031,15 @@ InstallMethod( IsQuaternionGroup,
            t, s, # canonical generators of the quaternion group
            i;    # counter
 
-    if not IsFinite(G) then TryNextMethod(); fi;
-
     N := Size(G);
     k := LogInt(N,2);
-    if not( 2^k = N and k >= 3 ) then return false; fi;
+    if not( 2^k = N and k >= 3 ) then return fail; fi;
     n := N/2;
 
     # G = <t, s | s^(2^k) = 1, t^2 = s^(2^k-1), s^t = s^-1>
     # ==> Comm(s, t) = s^-1 t s t = s^-2 ==> G' = < s^2 >
     G1 := DerivedSubgroup(G);
-    if not ( IsCyclic(G1) and Size(G1) = n/2 ) then return false; fi;
+    if not ( IsCyclic(G1) and Size(G1) = n/2 ) then return fail; fi;
 
     # find a normal subgroup of G of type Zn
     # G/G1 = {1*G1, t*G1, s*G1, t*s*G1}
@@ -1031,20 +1049,49 @@ InstallMethod( IsQuaternionGroup,
       Zn := ClosureGroup(G1,T[i]);
       i  := i + 1;
     until i > 4 or ( IsCyclic(Zn) and Size(Zn) = n );
-    if not ( IsCyclic(Zn) and Size(Zn) = n ) then return false; fi;
+    if not ( IsCyclic(Zn) and Size(Zn) = n ) then return fail; fi;
 
     # now Zn is normal in G and Zn = < s | s^n = 1 >
     # choose t in G\Zn and check quaternion structure
     repeat t := Random(G); until not t in Zn;
     if not (Order(t) = 4 and ForAll(GeneratorsOfGroup(Zn), s->s^t*s = s^0))
-    then return false; fi;
+    then return fail; fi;
 
     # choose generator s of Zn
     repeat s := Random(Zn); until Order(s) = n;
-    SetQuaternionGenerators(G,[t,s]);
-    return true;
-  end );
+    return [t,s];
+end;
 
+InstallMethod( IsGeneralisedQuaternionGroup,
+               "for a group",
+               true,
+               [ IsGroup and IsFinite ],
+               0,
+function(G)
+    local gens;
+
+    gens := DoComputeGeneralisedQuaternionGenerators(G);
+    if gens = fail then
+        return false;
+    else
+        SetGeneralisedQuaternionGenerators(G, gens);
+    fi;
+    return true;
+end);
+
+InstallMethod( GeneralisedQuaternionGenerators,
+               "for a group",
+               [ IsGroup and IsFinite ],
+function(G)
+    local gens;
+
+    gens := DoComputeGeneralisedQuaternionGenerators(G);
+    SetIsGeneralisedQuaternionGroup(G, gens <> fail);
+    if gens = fail then
+        ErrorNoReturn("G is not a generalised quaternion group");
+    fi;
+    return gens;
+end);
 #############################################################################
 ##
 #M  IsQuasiDihedralGroup( <G> ) . . . . . . . . . . . . . . .  generic method
@@ -1625,23 +1672,35 @@ BindGlobal( "SD_insertsep", # function to join parts of name
       return s;
     end);
 
+BindGlobal( "SD_cyclic",
+    function ( n )
+      if n = 0 or n = infinity then
+        return "Z";
+      fi;
+      return Concatenation("C",String(n));
+    end);
+
 BindGlobal( "SD_cycsaspowers", # function to write C2 x C2 x C2 as 2^3, etc.
     function ( name, cycsizes )
 
-      local  short, d, k, j, n;
+      local  short, g, d, k, j, n;
 
       short := ValueOption("short") = true;
       if not short then return name; fi;
       RemoveCharacters(name," ");
         cycsizes := Collected(cycsizes);
-        for n in cycsizes
-        do
+        for n in cycsizes do
           d := n[1]; k := n[2];
+          g := SD_cyclic(d);
+          if d = 0 then
+            d := "Z";
+          else
+            d := String(d);
+          fi;
           if k > 1 then
             for j in Reversed([2..k]) do
-              name := ReplacedString(name,SD_insertsep(List([1..j],
-                        i->Concatenation("C",String(d))),"x",""),
-                        Concatenation(String(d),"^",String(j)));
+              name := ReplacedString(name,SD_insertsep(List([1..j],i->g),"x",""),
+                        Concatenation(d,"^",String(j)));
             od;
           fi;
         od;
@@ -1662,8 +1721,7 @@ BindGlobal( "StructureDescriptionForAbelianGroups", # for abelian groups
     cycsizes := AbelianInvariants(G);
     cycsizes := Reversed(ElementaryDivisorsMat(DiagonalMat(cycsizes)));
     cycsizes := Filtered(cycsizes,n->n<>1);
-    return SD_cycsaspowers(SD_insertsep(List(cycsizes,
-                                             n->Concatenation("C",String(n))),
+    return SD_cycsaspowers(SD_insertsep(List(cycsizes, SD_cyclic),
                                         " x ",""), cycsizes);
   end );
 
@@ -1839,8 +1897,7 @@ BindGlobal( "StructureDescriptionForFiniteGroups", # for finite groups
       if cyclics <> [] then
         cycsizes := ElementaryDivisorsMat(DiagonalMat(List(cyclics,Size)));
         cycsizes := Filtered(cycsizes,n->n<>1);
-        cycname  := SD_cycsaspowers(SD_insertsep(List(cycsizes,
-                                    n->Concatenation("C",String(n))),
+        cycname  := SD_cycsaspowers(SD_insertsep(List(cycsizes, SD_cyclic),
                                     " x ",":."), cycsizes);
       else cycname := ""; fi;
       noncyclics := Difference(Gs,cyclics);
@@ -1977,7 +2034,3 @@ InstallMethod( ViewObj,
     if HasName(G) then TryNextMethod(); fi;
     Print(StructureDescription(G));
   end );
-
-#############################################################################
-##
-#E  grpnames.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

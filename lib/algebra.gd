@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  algebra.gd                  GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file declares the operations for `FLMLOR's and algebras.
 ##
@@ -484,7 +485,7 @@ DeclareAttribute( "DirectSumDecomposition", IsAlgebra );
 ##  <Example><![CDATA[
 ##  gap> A:= QuaternionAlgebra( Rationals );;
 ##  gap> B:= TrivialSubalgebra( A );
-##  <algebra over Rationals>
+##  <algebra of dimension 0 over Rationals>
 ##  gap> Dimension( B );
 ##  0
 ##  ]]></Example>
@@ -509,7 +510,7 @@ DeclareSynonymAttr( "TrivialSubalgebra", TrivialSubFLMLOR );
 ##  <!-- or store this in the family ?-->
 ##  <Example><![CDATA[
 ##  gap> A:= NullAlgebra( Rationals );
-##  <algebra over Rationals>
+##  <algebra of dimension 0 over Rationals>
 ##  gap> Dimension( A );
 ##  0
 ##  ]]></Example>
@@ -2140,13 +2141,13 @@ DeclareSynonym( "IsLieNilpotentElement", IsNilpotentElement);
 ##  </List>
 ##  We note that there are no methods to compute a grading of an 
 ##  arbitrary algebra; however some algebras get a natural grading when
-##  they are constructed (see <Ref Func="JenningsLieAlgebra"/>, 
+##  they are constructed (see <Ref Attr="JenningsLieAlgebra"/>, 
 ##  <Ref Func="NilpotentQuotientOfFpLieAlgebra"/>).
 ##  <P/>
 ##  We note also that these components may be not enough to handle 
 ##  the grading efficiently, and another record component may be needed.
 ##  For instance in a Lie algebra <M>L</M> constructed by 
-##  <Ref Func="JenningsLieAlgebra"/>, the length of the of the range
+##  <Ref Attr="JenningsLieAlgebra"/>, the length of the of the range
 ##  <C>[ Grading(L)!.min_degree .. Grading(L)!.max_degree ]</C> may be 
 ##  non-polynomial in the dimension of <M>L</M>.
 ##  To handle efficiently this situation, an optional component can be 
@@ -2169,16 +2170,10 @@ DeclareSynonym( "IsLieNilpotentElement", IsNilpotentElement);
 ##  gap> g.hom_components( 3 );
 ##  <vector space over GF(3), with 1 generators>
 ##  gap> g.hom_components( 14 );
-##  <vector space over GF(3), with 0 generators>
+##  <vector space of dimension 0 over GF(3)>
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
 DeclareAttribute( "Grading", IsAlgebra );
-
-
-#############################################################################
-##
-#E
-

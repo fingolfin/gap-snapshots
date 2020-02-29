@@ -1,10 +1,12 @@
 #############################################################################
 ##
-#W  ringpoly.gi                 GAP Library                      Frank Celler
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the methods  for attributes, properties and operations
 ##  for polynomial rings and function fields.
@@ -332,7 +334,7 @@ InstallMethod( ViewString,
 InstallMethod( ViewObj,
               "for a polynomial ring", true, [ IsPolynomialRing ],
               # override the higher ranking FLMLOR method
-              RankFilter(IsFLMLOR),
+              {} -> RankFilter(IsFLMLOR),
 
   function( R )
     Print(ViewString(R));
@@ -344,7 +346,7 @@ InstallMethod( ViewObj,
 ##
 InstallMethod( String,
                "for a polynomial ring", true, [ IsPolynomialRing ],
-               RankFilter(IsFLMLOR),
+               {} -> RankFilter(IsFLMLOR),
                R -> Concatenation("PolynomialRing( ",
                                    String(LeftActingDomain(R)),", ",
                                    String(IndeterminatesOfPolynomialRing(R)),
@@ -359,7 +361,7 @@ InstallMethod( PrintObj,
     true,
     [ IsPolynomialRing ],
     # override the higher ranking FLMLOR method
-    RankFilter(IsFLMLOR),
+    {} -> RankFilter(IsFLMLOR),
 
 function( obj )
 local i,f;
@@ -597,7 +599,7 @@ function(R)
   else
     n:=1000; 
   fi;
-  nrterms:=20+Random([-19..100+n]);
+  nrterms:=20+Random(-19,100+n);
   degbound:=RootInt(nrterms,n)+3;
   ran:=Concatenation([0,0],[0..degbound]);
   p:=Zero(R);
@@ -633,7 +635,7 @@ InstallMethod(StandardAssociateUnit,
 function(R,f)
   local c;
   c:=LeadingCoefficient(f);
-  return StandardAssociateUnit(CoefficientsRing(R),c);
+  return StandardAssociateUnit(CoefficientsRing(R),c) * One(R);
 end);
 
 InstallMethod(FunctionField,"indetlist",true,[IsRing,IsList],
@@ -668,11 +670,6 @@ function(r,n)
   # construct a polynomial ring
   type := IsFunctionField and IsAttributeStoringRep and IsLeftModule 
           and IsAlgebraWithOne;
-
-  # If the coefficients form an integral ring, then the function field is also a field
-  if HasIsIntegralRing(r) and IsIntegralRing(r) then
-    type:= type and IsField;
-  fi;
 
   fcfl := Objectify(NewType(CollectionsFamily(rfun),type),rec());;
 
@@ -757,7 +754,7 @@ end);
 ##
 InstallMethod(ViewObj,"for function field",true,[IsFunctionField],
     # override the higher ranking FLMLOR method
-    RankFilter(IsFLMLOR),
+    {} -> RankFilter(IsFLMLOR),
 function(obj)
     Print("FunctionField(...,",
         IndeterminatesOfFunctionField(obj),")");
@@ -770,7 +767,7 @@ end);
 ##
 InstallMethod(PrintObj,"for a function field",true,[IsFunctionField],
     # override the higher ranking FLMLOR method
-    RankFilter(IsFLMLOR),
+    {} -> RankFilter(IsFLMLOR),
 function(obj)
 local i,f;
     Print("FunctionField(",LeftActingDomain(obj),",[");
@@ -873,8 +870,3 @@ InstallMethod( ImagesSet,
 
       TryNextMethod();
     end );
-
-#############################################################################
-##
-#E
-

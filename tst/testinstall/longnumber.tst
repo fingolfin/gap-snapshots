@@ -1,10 +1,5 @@
 #############################################################################
 ##
-#A  longnumber.tst               GAP 4.0 library                Steve Linton
-##
-##
-#Y  Copyright 2011,   The GAP Group
-##  to be listed in testinstall.g
 ##  these tests deal with various cases in long integer parsing where the number has
 ##  to be read in one two or three blocks, which may sometimes be exactly filled or
 ##  sometimes end with a partial block.
@@ -12,6 +7,7 @@
 ##  To be extended with similar tests for all the cases of float and long-float 
 ##  parsing when I have a reliable way of testing them.
 ##
+#@local x
 gap> START_TEST("longnumber.tst");
 
 # integers
@@ -193,7 +189,3 @@ stream:1
 ^^^
 gap> Unbind(x);
 gap> STOP_TEST( "longnumber.tst", 1);
-
-#############################################################################
-##
-#E

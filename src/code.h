@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  code.h                      GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares the functions of the coder package.
 **
@@ -16,6 +16,7 @@
 #ifndef GAP_CODE_H
 #define GAP_CODE_H
 
+#include "gapstate.h"
 #include "objects.h"
 
 /****************************************************************************
@@ -30,6 +31,8 @@ typedef struct {
     unsigned int type : 8;
 } StatHeader;
 
+GAP_STATIC_ASSERT((sizeof(StatHeader) % sizeof(Stat)) == 0,
+                  "StatHeader size must be multiple of Stat size");
 
 /****************************************************************************
 **
@@ -72,27 +75,58 @@ typedef struct {
     // if non-zero, this is an immediate integer encoding the line
     // number where a function ends
     Obj endline;
+
+    // if non-zero, this points to a dense plist containing constant values
+    // referenced by the code in this function body
+    Obj values;
+
 } BodyHeader;
 
-static inline BodyHeader *BODY_HEADER(Obj body)
+EXPORT_INLINE BodyHeader *BODY_HEADER(Obj body)
 {
     GAP_ASSERT(TNUM_OBJ(body) == T_BODY);
     return (BodyHeader *)ADDR_OBJ(body);
 }
 
-Obj GET_FILENAME_BODY(Obj body);
+Obj  GET_FILENAME_BODY(Obj body);
 void SET_FILENAME_BODY(Obj body, Obj val);
 
 UInt GET_GAPNAMEID_BODY(Obj body);
 void SET_GAPNAMEID_BODY(Obj body, UInt val);
 
-Obj GET_LOCATION_BODY(Obj body);
+Obj  GET_LOCATION_BODY(Obj body);
 void SET_LOCATION_BODY(Obj body, Obj val);
 
 UInt GET_STARTLINE_BODY(Obj body);
 void SET_STARTLINE_BODY(Obj body, UInt val);
 UInt GET_ENDLINE_BODY(Obj body);
 void SET_ENDLINE_BODY(Obj body, UInt val);
+
+Obj GET_VALUE_FROM_CURRENT_BODY(Int ix);
+
+EXPORT_INLINE Obj VALUES_BODY(Obj body)
+{
+    return BODY_HEADER(body)->values;
+}
+
+
+/****************************************************************************
+**
+*F  NewStatOrExpr(<type>,<size>,<line>) . . . . . .  allocate a new statement
+**
+**  'NewStatOrExpr' allocates a new statement or expressions memory block of
+**  type <type> and with <size> bytes. It also records the line number <line>
+**  of the statement for profiling. It returns the offset of the new
+**  statement.
+**
+**  Callers may pass zero for <line> to denote a statement which should not
+**  be tracked by the profiling code.
+*/
+Stat NewStatOrExpr(UInt type, UInt size, UInt line);
+
+
+void PushStat(Stat stat);
+
 
 /****************************************************************************
 **
@@ -105,6 +139,15 @@ enum {
     OFFSET_FIRST_STAT = sizeof(StatHeader)+sizeof(BodyHeader)
 };
 
+
+/****************************************************************************
+**
+*F  NewFunctionBody() . . . . . . . . . . . . . .  create a new function body
+*/
+Obj NewFunctionBody(void);
+
+
+void WRITE_EXPR(Expr expr, UInt idx, UInt val);
 
 
 /****************************************************************************
@@ -119,21 +162,21 @@ enum {
 enum STAT_TNUM {
     START_ENUM_RANGE(FIRST_STAT_TNUM),
 
-        T_PROCCALL_0ARGS,
-        T_PROCCALL_1ARGS,
-        T_PROCCALL_2ARGS,
-        T_PROCCALL_3ARGS,
-        T_PROCCALL_4ARGS,
-        T_PROCCALL_5ARGS,
-        T_PROCCALL_6ARGS,
-        T_PROCCALL_XARGS,
+        STAT_PROCCALL_0ARGS,
+        STAT_PROCCALL_1ARGS,
+        STAT_PROCCALL_2ARGS,
+        STAT_PROCCALL_3ARGS,
+        STAT_PROCCALL_4ARGS,
+        STAT_PROCCALL_5ARGS,
+        STAT_PROCCALL_6ARGS,
+        STAT_PROCCALL_XARGS,
 
-        T_PROCCALL_OPTS,
+        STAT_PROCCALL_OPTS,
 
-        // T_EMPTY could also be considered to be "T_SEQ_STAT0", but it
+        // STAT_EMPTY could also be considered to be "T_SEQ_STAT0", but it
         // must be an interruptible statement, so that loops with empty
         // body can be interrupted.
-        T_EMPTY,
+        STAT_EMPTY,
 
         // The statement types between FIRST_NON_INTERRUPT_STAT and
         // LAST_NON_INTERRUPT_STAT will not be interrupted (which may happen
@@ -141,43 +184,43 @@ enum STAT_TNUM {
         // run full). We don't want to compound statements to be interrupted,
         // relying instead on their sub-statements being interruptible. This
         // results in a slightly better user experience in break loops, where
-        // the interrupted statement is printed, which works better for single
-        // statements than for compound statements.
+        // the interrupted statement is printed, which works better for
+        // single statements than for compound statements.
         START_ENUM_RANGE(FIRST_NON_INTERRUPT_STAT),
 
             START_ENUM_RANGE(FIRST_COMPOUND_STAT),
 
-            T_SEQ_STAT,
-            T_SEQ_STAT2,
-            T_SEQ_STAT3,
-            T_SEQ_STAT4,
-            T_SEQ_STAT5,
-            T_SEQ_STAT6,
-            T_SEQ_STAT7,
+            STAT_SEQ_STAT,
+            STAT_SEQ_STAT2,
+            STAT_SEQ_STAT3,
+            STAT_SEQ_STAT4,
+            STAT_SEQ_STAT5,
+            STAT_SEQ_STAT6,
+            STAT_SEQ_STAT7,
 
-            T_IF,
-            T_IF_ELSE,
-            T_IF_ELIF,
-            T_IF_ELIF_ELSE,
+            STAT_IF,
+            STAT_IF_ELSE,
+            STAT_IF_ELIF,
+            STAT_IF_ELIF_ELSE,
 
-            T_FOR,
-            T_FOR2,
-            T_FOR3,
+            STAT_FOR,
+            STAT_FOR2,
+            STAT_FOR3,
 
-            T_FOR_RANGE,
-            T_FOR_RANGE2,
-            T_FOR_RANGE3,
+            STAT_FOR_RANGE,
+            STAT_FOR_RANGE2,
+            STAT_FOR_RANGE3,
 
-            T_WHILE,
-            T_WHILE2,
-            T_WHILE3,
+            STAT_WHILE,
+            STAT_WHILE2,
+            STAT_WHILE3,
 
-            T_REPEAT,
-            T_REPEAT2,
-            T_REPEAT3,
+            STAT_REPEAT,
+            STAT_REPEAT2,
+            STAT_REPEAT3,
 
 #ifdef HPCGAP
-            T_ATOMIC,
+            STAT_ATOMIC,
 #endif
 
             END_ENUM_RANGE(LAST_COMPOUND_STAT),
@@ -186,91 +229,49 @@ enum STAT_TNUM {
 
         START_ENUM_RANGE(FIRST_CONTROL_FLOW_STAT),
 
-            T_BREAK,
-            T_CONTINUE,
-            T_RETURN_OBJ,
-            T_RETURN_VOID,
+            STAT_BREAK,
+            STAT_CONTINUE,
+            STAT_RETURN_OBJ,
+            STAT_RETURN_VOID,
 
         END_ENUM_RANGE(LAST_CONTROL_FLOW_STAT),
 
-        T_ASS_LVAR,
-        T_UNB_LVAR,
+        STAT_ASS_LVAR,
+        STAT_UNB_LVAR,
 
-        T_ASS_HVAR,
-        T_UNB_HVAR,
+        STAT_ASS_HVAR,
+        STAT_UNB_HVAR,
 
-        T_ASS_GVAR,
-        T_UNB_GVAR,
+        STAT_ASS_GVAR,
+        STAT_UNB_GVAR,
 
-        T_ASS_LIST,
-        T_ASS2_LIST,
-        T_ASSS_LIST,
-        T_ASS_LIST_LEV,
-        T_ASSS_LIST_LEV,
-        T_UNB_LIST,
+        STAT_ASS_LIST,
+        STAT_ASS_MAT,
+        STAT_ASSS_LIST,
+        STAT_ASS_LIST_LEV,
+        STAT_ASSS_LIST_LEV,
+        STAT_UNB_LIST,
 
-        T_ASS_REC_NAME,
-        T_ASS_REC_EXPR,
-        T_UNB_REC_NAME,
-        T_UNB_REC_EXPR,
+        STAT_ASS_REC_NAME,
+        STAT_ASS_REC_EXPR,
+        STAT_UNB_REC_NAME,
+        STAT_UNB_REC_EXPR,
 
-        T_ASS_POSOBJ,
-        T_UNB_POSOBJ,
+        STAT_ASS_POSOBJ,
+        STAT_UNB_POSOBJ,
 
-        T_ASS_COMOBJ_NAME,
-        T_ASS_COMOBJ_EXPR,
-        T_UNB_COMOBJ_NAME,
-        T_UNB_COMOBJ_EXPR,
+        STAT_ASS_COMOBJ_NAME,
+        STAT_ASS_COMOBJ_EXPR,
+        STAT_UNB_COMOBJ_NAME,
+        STAT_UNB_COMOBJ_EXPR,
 
-        T_INFO,
-        T_ASSERT_2ARGS,
-        T_ASSERT_3ARGS,
+        STAT_INFO,
+        STAT_ASSERT_2ARGS,
+        STAT_ASSERT_3ARGS,
+        STAT_PRAGMA,
 
     END_ENUM_RANGE(LAST_STAT_TNUM),
 };
-
-#define T_NO_STAT		(Stat)(-1)
-
-
-
-#define STAT_HEADER(stat) (((StatHeader *)ADDR_STAT(stat)) - 1)
-#define CONST_STAT_HEADER(stat)                                              \
-    (((const StatHeader *)CONST_ADDR_STAT(stat)) - 1)
-
-
-/****************************************************************************
-**
-*F  TNUM_STAT(<stat>) . . . . . . . . . . . . . . . . . . type of a statement
-**
-**  'TNUM_STAT' returns the type of the statement <stat>.
-*/
-#define TNUM_STAT(stat) (CONST_STAT_HEADER(stat)->type)
-
-
-/****************************************************************************
-**
-*F  SIZE_STAT(<stat>) . . . . . . . . . . . . . . . . . . size of a statement
-**
-**  'SIZE_STAT' returns the size of the statement <stat>.
-*/
-#define SIZE_STAT(stat) (CONST_STAT_HEADER(stat)->size)
-
-/****************************************************************************
-**
-*F  LINE_STAT(<stat>) . . . . . . . . . . . . . . line number of a statement
-**
-**  'LINE_STAT' returns the line number of the statement <stat>.
-*/
-#define LINE_STAT(stat) (CONST_STAT_HEADER(stat)->line)
-
-/****************************************************************************
-**
-*F  VISITED_STAT(<stat>) . . . . . . . . . . . if statement has even been run
-**
-**  'VISITED_STAT' returns true if the statement has ever been executed
-**  while profiling is turned on.
-*/
-#define VISITED_STAT(stat) (CONST_STAT_HEADER(stat)->visited)
 
 
 /****************************************************************************
@@ -280,36 +281,120 @@ enum STAT_TNUM {
 **  'ADDR_STAT' returns   the  absolute address of the    memory block of the
 **  statement <stat>.
 */
-#define ADDR_STAT(stat) ((Stat *)(((char *)STATE(PtrBody)) + (stat)))
-#define CONST_ADDR_STAT(stat)                                                \
-    ((const Stat *)(((const char *)STATE(PtrBody)) + (stat)))
+EXPORT_INLINE const Stat * CONST_ADDR_STAT(Stat stat)
+{
+    return (const Stat *)STATE(PtrBody) + stat / sizeof(Stat);
+}
 
-#define READ_STAT(stat, idx) (CONST_ADDR_STAT(stat)[idx])
-#define WRITE_STAT(stat, idx, val) ADDR_STAT(stat)[idx] = val
 
 /****************************************************************************
 **
-*F  IS_REFLVAR(<expr>). . . . test if an expression is a reference to a local
-*F  REFLVAR_LVAR(<lvar>)  . . . . . convert a local to a reference to a local
-*F  LVAR_REFLVAR(<expr>)  . . . . . convert a reference to a local to a local
+*F  READ_STAT(<stat>,<idx>)
+*/
+EXPORT_INLINE Stat READ_STAT(Stat stat, UInt idx)
+{
+    return CONST_ADDR_STAT(stat)[idx];
+}
+
+
+/****************************************************************************
 **
-**  'IS_REFLVAR'  returns  1  if  the  expression <expr>  is  an  (immediate)
+*F  CONST_STAT_HEADER(<stat>)
+*/
+EXPORT_INLINE const StatHeader * CONST_STAT_HEADER(Stat stat)
+{
+    return (const StatHeader *)CONST_ADDR_STAT(stat) - 1;
+}
+
+
+/****************************************************************************
+**
+*F  TNUM_STAT(<stat>) . . . . . . . . . . . . . . . . . . type of a statement
+**
+**  'TNUM_STAT' returns the type of the statement <stat>.
+*/
+EXPORT_INLINE Int TNUM_STAT(Stat stat)
+{
+    return CONST_STAT_HEADER(stat)->type;
+}
+
+
+/****************************************************************************
+**
+*F  SIZE_STAT(<stat>) . . . . . . . . . . . . . . . . . . size of a statement
+**
+**  'SIZE_STAT' returns the size of the statement <stat>.
+*/
+EXPORT_INLINE Int SIZE_STAT(Stat stat)
+{
+    return CONST_STAT_HEADER(stat)->size;
+}
+
+
+/****************************************************************************
+**
+*F  LINE_STAT(<stat>) . . . . . . . . . . . . . . line number of a statement
+**
+**  'LINE_STAT' returns the line number of the statement <stat>.
+*/
+EXPORT_INLINE Int LINE_STAT(Stat stat)
+{
+    return CONST_STAT_HEADER(stat)->line;
+}
+
+
+/****************************************************************************
+**
+*F  VISITED_STAT(<stat>) . . . . . . . . . . . if statement has even been run
+**
+**  'VISITED_STAT' returns true if the statement has ever been executed
+**  while profiling is turned on.
+*/
+EXPORT_INLINE Int VISITED_STAT(Stat stat)
+{
+    return CONST_STAT_HEADER(stat)->visited;
+}
+
+
+/****************************************************************************
+**
+*F  SET_VISITED_STAT(<stat>) . . . . . . . . . . mark statement as having run
+**
+**  'SET_VISITED_STAT' marks the statement as having been executed while
+**  profiling wass turned on.
+*/
+void SET_VISITED_STAT(Stat stat);
+
+
+/****************************************************************************
+**
+*F  IS_REF_LVAR(<expr>) . . . test if an expression is a reference to a local
+*F  REF_LVAR_LVAR(<lvar>) . . . . . convert a local to a reference to a local
+*F  LVAR_REF_LVAR(<expr>) . . . . . convert a reference to a local to a local
+**
+**  'IS_REF_LVAR' returns 1 if the expression <expr> is an (immediate)
 **  reference to a local variable, and 0 otherwise.
 **
-**  'REFLVAR_LVAR'  returns  a (immediate) reference  to   the local variable
+**  'REF_LVAR_LVAR' returns a (immediate) reference to the local variable
 **  <lvar> (given by its index).
 **
-**  'LVAR_REFLVAR' returns the local variable (by  its index) to which <expr>
+**  'LVAR_REF_LVAR' returns the local variable (by its index) to which <expr>
 **  is a (immediate) reference.
 */
-#define IS_REFLVAR(expr)        \
-                        (((Int)(expr) & 0x03) == 0x03)
+EXPORT_INLINE Int IS_REF_LVAR(Expr expr)
+{
+    return ((Int)expr & 0x03) == 0x03;
+}
 
-#define REFLVAR_LVAR(lvar)      \
-                        ((Expr)(((lvar) << 2) + 0x03))
+EXPORT_INLINE Expr REF_LVAR_LVAR(Int lvar)
+{
+    return (Expr)((lvar << 2) + 0x03);
+}
 
-#define LVAR_REFLVAR(expr)      \
-                        ((Int)(expr) >> 2)
+EXPORT_INLINE Int LVAR_REF_LVAR(Expr expr)
+{
+    return (Int)expr >> 2;
+}
 
 
 /****************************************************************************
@@ -327,14 +412,20 @@ enum STAT_TNUM {
 **  'INT_INTEXPR' converts the (immediate) integer  expression <expr> to a  C
 **  integer.
 */
-#define IS_INTEXPR(expr)        \
-                        (((Int)(expr) & 0x03) == 0x01)
+EXPORT_INLINE Int IS_INTEXPR(Expr expr)
+{
+    return ((Int)expr & 0x03) == 0x01;
+}
 
-#define INTEXPR_INT(indx)       \
-                        ((Expr)(((UInt)(indx) << 2) + 0x01))
+EXPORT_INLINE Expr INTEXPR_INT(Int indx)
+{
+    return (Expr)(((UInt)indx << 2) + 0x01);
+}
 
-#define INT_INTEXPR(expr)       \
-                        (((Int)(expr)-0x01) >> 2)
+EXPORT_INLINE Int INT_INTEXPR(Expr expr)
+{
+    return ((Int)expr-0x01) >> 2;
+}
 
 
 /****************************************************************************
@@ -349,82 +440,82 @@ enum STAT_TNUM {
 enum EXPR_TNUM {
     START_ENUM_RANGE_INIT(FIRST_EXPR_TNUM, 128),
 
-    T_FUNCCALL_0ARGS,
-    T_FUNCCALL_1ARGS,
-    T_FUNCCALL_2ARGS,
-    T_FUNCCALL_3ARGS,
-    T_FUNCCALL_4ARGS,
-    T_FUNCCALL_5ARGS,
-    T_FUNCCALL_6ARGS,
-    T_FUNCCALL_XARGS,
-    T_FUNC_EXPR,
+    EXPR_FUNCCALL_0ARGS,
+    EXPR_FUNCCALL_1ARGS,
+    EXPR_FUNCCALL_2ARGS,
+    EXPR_FUNCCALL_3ARGS,
+    EXPR_FUNCCALL_4ARGS,
+    EXPR_FUNCCALL_5ARGS,
+    EXPR_FUNCCALL_6ARGS,
+    EXPR_FUNCCALL_XARGS,
+    EXPR_FUNC,
 
-    T_FUNCCALL_OPTS,
+    EXPR_FUNCCALL_OPTS,
 
-    T_OR,
-    T_AND,
-    T_NOT,
-    T_EQ,
-    T_NE,
-    T_LT,
-    T_GE,
-    T_GT,
-    T_LE,
-    T_IN,
-    T_SUM,
-    T_AINV,
-    T_DIFF,
-    T_PROD,
-    T_QUO,
-    T_MOD,
-    T_POW,
+    EXPR_OR,
+    EXPR_AND,
+    EXPR_NOT,
+    EXPR_EQ,
+    EXPR_NE,
+    EXPR_LT,
+    EXPR_GE,
+    EXPR_GT,
+    EXPR_LE,
+    EXPR_IN,
+    EXPR_SUM,
+    EXPR_AINV,
+    EXPR_DIFF,
+    EXPR_PROD,
+    EXPR_QUO,
+    EXPR_MOD,
+    EXPR_POW,
 
-    T_INTEXPR,
-    T_INT_EXPR,
-    T_TRUE_EXPR,
-    T_FALSE_EXPR,
-    T_TILDE_EXPR,
-    T_CHAR_EXPR,
-    T_PERM_EXPR,
-    T_PERM_CYCLE,
-    T_LIST_EXPR,
-    T_LIST_TILDE_EXPR,
-    T_RANGE_EXPR,
-    T_STRING_EXPR,
-    T_REC_EXPR,
-    T_REC_TILDE_EXPR,
+    EXPR_INT,
+    EXPR_INTPOS,
+    EXPR_TRUE,
+    EXPR_FALSE,
+    EXPR_TILDE,
+    EXPR_CHAR,
+    EXPR_PERM,
+    EXPR_PERM_CYCLE,
+    EXPR_LIST,
+    EXPR_LIST_TILDE,
+    EXPR_RANGE,
+    EXPR_STRING,
+    EXPR_REC,
+    EXPR_REC_TILDE,
 
-    T_FLOAT_EXPR_EAGER,
-    T_FLOAT_EXPR_LAZY,
+    EXPR_FLOAT_EAGER,
+    EXPR_FLOAT_LAZY,
 
-    T_REFLVAR,
-    T_ISB_LVAR,
+    EXPR_REF_LVAR,
+    EXPR_ISB_LVAR,
 
-    T_REF_HVAR,
-    T_ISB_HVAR,
+    EXPR_REF_HVAR,
+    EXPR_ISB_HVAR,
 
-    T_REF_GVAR,
-    T_ISB_GVAR,
+    EXPR_REF_GVAR,
+    EXPR_ISB_GVAR,
 
-    T_ELM_LIST,
-    T_ELM2_LIST,
-    T_ELMS_LIST,
-    T_ELM_LIST_LEV,
-    T_ELMS_LIST_LEV,
-    T_ISB_LIST,
+    EXPR_ELM_LIST,
+    EXPR_ELM_MAT,
+    EXPR_ELMS_LIST,
+    EXPR_ELM_LIST_LEV,
+    EXPR_ELMS_LIST_LEV,
+    EXPR_ISB_LIST,
 
-    T_ELM_REC_NAME,
-    T_ELM_REC_EXPR,
-    T_ISB_REC_NAME,
-    T_ISB_REC_EXPR,
+    EXPR_ELM_REC_NAME,
+    EXPR_ELM_REC_EXPR,
+    EXPR_ISB_REC_NAME,
+    EXPR_ISB_REC_EXPR,
 
-    T_ELM_POSOBJ,
-    T_ISB_POSOBJ,
+    EXPR_ELM_POSOBJ,
+    EXPR_ISB_POSOBJ,
 
-    T_ELM_COMOBJ_NAME,
-    T_ELM_COMOBJ_EXPR,
-    T_ISB_COMOBJ_NAME,
-    T_ISB_COMOBJ_EXPR,
+    EXPR_ELM_COMOBJ_NAME,
+    EXPR_ELM_COMOBJ_EXPR,
+    EXPR_ISB_COMOBJ_NAME,
+    EXPR_ISB_COMOBJ_EXPR,
 
     END_ENUM_RANGE(LAST_EXPR_TNUM)
 };
@@ -436,10 +527,14 @@ enum EXPR_TNUM {
 **
 **  'TNUM_EXPR' returns the type of the expression <expr>.
 */
-#define TNUM_EXPR(expr)         \
-                        (IS_REFLVAR( (expr) ) ? T_REFLVAR : \
-                         (IS_INTEXPR( (expr) ) ? T_INTEXPR : \
-                          TNUM_STAT(expr) ))
+EXPORT_INLINE Int TNUM_EXPR(Expr expr)
+{
+    if (IS_REF_LVAR(expr))
+        return EXPR_REF_LVAR;
+    if (IS_INTEXPR(expr))
+        return EXPR_INT;
+    return TNUM_STAT(expr);
+}
 
 
 /****************************************************************************
@@ -449,7 +544,7 @@ enum EXPR_TNUM {
 **  'SIZE_EXPR' returns the size of the expression <expr>.
 **
 **  Note  that  it is *fatal*  to apply  'SIZE_EXPR'   to expressions of type
-**  'T_REFLVAR' or 'T_INTEXPR'.
+**  'EXPR_REF_LVAR' or 'EXPR_INT'.
 */
 #define SIZE_EXPR(expr) SIZE_STAT(expr)
 
@@ -462,13 +557,11 @@ enum EXPR_TNUM {
 **  expression <expr>.
 **
 **  Note  that  it is *fatal*  to apply  'ADDR_EXPR'   to expressions of type
-**  'T_REFLVAR' or 'T_INTEXPR'.
+**  'EXPR_REF_LVAR' or 'EXPR_INT'.
 */
-#define ADDR_EXPR(expr) ADDR_STAT(expr)
 #define CONST_ADDR_EXPR(expr) CONST_ADDR_STAT(expr)
 
 #define READ_EXPR(expr, idx) (CONST_ADDR_EXPR(expr)[idx])
-#define WRITE_EXPR(expr, idx, val) ADDR_EXPR(expr)[idx] = val
 
 /****************************************************************************
 **
@@ -491,8 +584,6 @@ enum EXPR_TNUM {
 **  'SIZE_NARG_CALL' returns the size a  function call bag  should have for a
 **  function call bag with <narg> arguments.
 */
-#define SET_FUNC_CALL(call,x)   WRITE_EXPR(call, 0, x)
-#define SET_ARGI_CALL(call,i,x) WRITE_EXPR(call, i, x)
 #define FUNC_CALL(call)         READ_EXPR(call, 0)
 #define ARGI_CALL(call,i)       READ_EXPR(call, i)
 #define NARG_SIZE_CALL(size)    (((size) / sizeof(Expr)) - 1)
@@ -515,7 +606,6 @@ enum EXPR_TNUM {
 **  'SIZE_NARG_INFO' returns the size a  function call bag  should have for a
 **  function call bag with <narg> arguments.
 */
-#define SET_ARGI_INFO(info,i,x) WRITE_STAT(info, (i) - 1, x)
 #define ARGI_INFO(info,i)       READ_STAT(info, (i) - 1)
 #define NARG_SIZE_INFO(size)    ((size) / sizeof(Expr))
 #define SIZE_NARG_INFO(narg)    ((narg) * sizeof(Expr))
@@ -553,9 +643,9 @@ enum EXPR_TNUM {
 **
 **  ...only function expressions inbetween...
 */
-extern  void            CodeBegin ( void );
+void CodeBegin(void);
 
-extern Obj CodeEnd(UInt error);
+Obj CodeEnd(UInt error);
 
 
 /****************************************************************************
@@ -574,18 +664,15 @@ extern Obj CodeEnd(UInt error);
 **  arguments. <options> is 1 if options were present after the ':' in which
 **  case the options have been read already.
 */
-extern  void            CodeFuncCallBegin ( void );
+void CodeFuncCallBegin(void);
 
-extern  void            CodeFuncCallEnd (
-            UInt                funccall,
-            UInt                options,
-            UInt                nr );
+void CodeFuncCallEnd(UInt funccall, UInt options, UInt nr);
 
 
 /****************************************************************************
 **
 *F  CodeFuncExprBegin(<narg>,<nloc>,<nams>,<startline>) . code function expression, begin
-*F  CodeFuncExprEnd(<nr>) . . . . . . . . . . . code function expression, end
+*F  CodeFuncExprEnd(<nr>,<pushExpr>) . . . . .  code function expression, end
 **
 **  'CodeFuncExprBegin'  is an action to code  a  function expression.  It is
 **  called when the reader encounters the beginning of a function expression.
@@ -595,16 +682,22 @@ extern  void            CodeFuncCallEnd (
 **
 **  'CodeFuncExprEnd'  is an action to  code  a function  expression.  It  is
 **  called when the reader encounters the end of a function expression.  <nr>
-**  is the number of statements in the body of the function.
-**
+**  is the number of statements in the body of the function. If <pushExpr> is
+**  set, the current function expression is pushed on the expression stack.
 */
-extern void CodeFuncExprBegin (
-            Int                 narg,
-            Int                 nloc,
-            Obj                 nams,
-            Int startLine);
+void CodeFuncExprBegin(Int narg, Int nloc, Obj nams, Int startLine);
 
-extern void CodeFuncExprEnd(UInt nr);
+Expr CodeFuncExprEnd(UInt nr, UInt pushExpr);
+
+/****************************************************************************
+**
+*F  AddValueToBody( <val> ) . . . . . . . . . . .  store value in values list
+**
+**  'AddValueToBody' adds a value into the value list of the body of the
+**  function currently being coded, and returns the index at which the value
+**  was inserted. This function must only be called while coding a function.
+*/
+Int AddValueToBody(Obj val);
 
 /****************************************************************************
 **
@@ -615,25 +708,24 @@ extern void CodeFuncExprEnd(UInt nr);
 *F  CodeFuncCallOptionsEndElmEmpty() .. .  . . . . .code options, end element
 *F  CodeFuncCallOptionsEnd(<nr>)  . . . . . . . . . . . . . code options, end
 **
-**  The net effect of all of these is to leave a record expression on the stack
-**  containing the options record. It will be picked up by
-**  CodeFuncCallEnd()
+**  The net effect of all of these is to leave a record expression on the
+**  stack containing the options record. It will be picked up by
+**  CodeFuncCallEnd().
 **
 */
-extern void            CodeFuncCallOptionsBegin ( void );
+void CodeFuncCallOptionsBegin(void);
 
 
-extern void            CodeFuncCallOptionsBeginElmName (
-    UInt                rnam );
+void CodeFuncCallOptionsBeginElmName(UInt rnam);
 
-extern void            CodeFuncCallOptionsBeginElmExpr ( void );
+void CodeFuncCallOptionsBeginElmExpr(void);
 
-extern void            CodeFuncCallOptionsEndElm ( void );
+void CodeFuncCallOptionsEndElm(void);
 
 
-extern void            CodeFuncCallOptionsEndElmEmpty ( void );
+void CodeFuncCallOptionsEndElmEmpty(void);
 
-extern void            CodeFuncCallOptionsEnd ( UInt nr );
+void CodeFuncCallOptionsEnd(UInt nr);
 
 
 /****************************************************************************
@@ -666,19 +758,17 @@ extern void            CodeFuncCallOptionsEnd ( UInt nr );
 **  reader encounters the end of the statement.   <nr> is the number of 'if',
 **  'elif', or 'else' branches.
 */
-extern  void            CodeIfBegin ( void );
+void CodeIfBegin(void);
 
-extern  void            CodeIfElif ( void );
+void CodeIfElif(void);
 
-extern  void            CodeIfElse ( void );
+void CodeIfElse(void);
 
-extern  Int             CodeIfBeginBody ( void );
+Int CodeIfBeginBody(void);
 
-extern  Int             CodeIfEndBody (
-            UInt                nr );
+Int CodeIfEndBody(UInt nr);
 
-extern  void            CodeIfEnd (
-            UInt                nr );
+void CodeIfEnd(UInt nr);
 
 
 /****************************************************************************
@@ -708,48 +798,46 @@ extern  void            CodeIfEnd (
 **  reader encounters  the end of   the  statement, i.e., immediately   after
 **  'CodeForEndBody'.
 */
-extern  void            CodeForBegin ( void );
+void CodeForBegin(void);
 
-extern  void            CodeForIn ( void );
+void CodeForIn(void);
 
-extern  void            CodeForBeginBody ( void );
+void CodeForBeginBody(void);
 
-extern  void            CodeForEndBody (
-            UInt                nr );
+void CodeForEndBody(UInt nr);
 
-extern  void            CodeForEnd ( void );
+void CodeForEnd(void);
 
 /****************************************************************************
 **
-*F  CodeAtomicBegin()  . . . . . . .  code atomic-statement, begin of statement
-*F  CodeAtomicBeginBody()  . . . . . . . . code atomic-statement, begin of body
-*F  CodeAtomicEndBody( <nr> )  . . . . . . . code atomic-statement, end of body
-*F  CodeAtomicEnd()  . . . . . . . . .  code atomic-statement, end of statement
+*F  CodeAtomicBegin() . . . . . . . code atomic-statement, begin of statement
+*F  CodeAtomicBeginBody() . . . . . . .  code atomic-statement, begin of body
+*F  CodeAtomicEndBody(<nr>) . . . . . . .  code atomic-statement, end of body
+*F  CodeAtomicEnd() . . . . . . . . . code atomic-statement, end of statement
 **
-**  'CodeAtomicBegin'  is an action to  code a atomic-statement.   It is called
-**  when the  reader encounters the 'atomic',  i.e., *before* the condition is
+**  'CodeAtomicBegin' is an action to code an atomic-statement. It is called
+**  when the reader encounters the 'atomic', i.e., *before* the condition is
 **  read.
 **
-**  'CodeAtomicBeginBody'  is  an action   to code a  atomic-statement.   It is
-**  called when  the reader encounters  the beginning  of the statement body,
+**  'CodeAtomicBeginBody' is an action to code a atomic-statement. It is
+**  called when the reader encounters the beginning of the statement body,
 **  i.e., *after* the condition is read.
 **
-**  'CodeAtomicEndBody' is an action to  code a atomic-statement.  It is called
-**  when the reader encounters  the end of  the statement body.  <nr> is  the
+**  'CodeAtomicEndBody' is an action to code a atomic-statement. It is called
+**  when the reader encounters the end of the statement body. <nr> is the
 **  number of statements in the body.
 **
-**  'CodeAtomicEnd' is an action to code a atomic-statement.  It is called when
-**  the reader encounters  the end  of the  statement, i.e., immediate  after
-**  'CodeAtomicEndBody'.
+**  'CodeAtomicEnd' is an action to code a atomic-statement. It is called
+**  when the reader encounters the end of the statement, i.e., immediately
+**  after 'CodeAtomicEndBody'.
 */
 
-void CodeAtomicBegin ( void );
+void CodeAtomicBegin(void);
 
-void CodeAtomicBeginBody ( UInt nrexprs );
+void CodeAtomicBeginBody(UInt nrexprs);
 
-void CodeAtomicEndBody (
-    UInt                nrstats );
-void CodeAtomicEnd ( void );
+void CodeAtomicEndBody(UInt nrstats);
+void CodeAtomicEnd(void);
 
 /****************************************************************************
 **
@@ -760,7 +848,7 @@ void CodeAtomicEnd ( void );
 
 void CodeQualifiedExprBegin(UInt qual);
 
-void CodeQualifiedExprEnd( void );
+void CodeQualifiedExprEnd(void);
 
 
 /****************************************************************************
@@ -786,14 +874,13 @@ void CodeQualifiedExprEnd( void );
 **  the reader encounters  the end  of the  statement, i.e., immediate  after
 **  'CodeWhileEndBody'.
 */
-extern  void            CodeWhileBegin ( void );
+void CodeWhileBegin(void);
 
-extern  void            CodeWhileBeginBody ( void );
+void CodeWhileBeginBody(void);
 
-extern  void            CodeWhileEndBody (
-            UInt                nr );
+void CodeWhileEndBody(UInt nr);
 
-extern  void            CodeWhileEnd ( void );
+void CodeWhileEnd(void);
 
 
 /****************************************************************************
@@ -819,14 +906,13 @@ extern  void            CodeWhileEnd ( void );
 **  when  the reader encounters the end  of the statement,  i.e., *after* the
 **  condition is read.
 */
-extern  void            CodeRepeatBegin ( void );
+void CodeRepeatBegin(void);
 
-extern  void            CodeRepeatBeginBody ( void );
+void CodeRepeatBeginBody(void);
 
-extern  void            CodeRepeatEndBody (
-            UInt                nr );
+void CodeRepeatEndBody(UInt nr);
 
-extern  void            CodeRepeatEnd ( void );
+void CodeRepeatEnd(void);
 
 
 /****************************************************************************
@@ -836,7 +922,7 @@ extern  void            CodeRepeatEnd ( void );
 **  'CodeBreak' is the  action to code a  break-statement.  It is called when
 **  the reader encounters a 'break;'.
 */
-extern  void            CodeBreak ( void );
+void CodeBreak(void);
 
 
 /****************************************************************************
@@ -847,7 +933,7 @@ extern  void            CodeBreak ( void );
 **  called when the reader encounters a 'return <expr>;', but *after* reading
 **  the expression <expr>.
 */
-extern  void            CodeReturnObj ( void );
+void CodeReturnObj(void);
 
 
 /****************************************************************************
@@ -861,8 +947,8 @@ extern  void            CodeReturnObj ( void );
 **  be tracked by profiling. This is used for the implicit return put
 **  at the end of functions.
 */
-extern  void            CodeReturnVoid ( void );
-extern  void            CodeReturnVoidWhichIsNotProfiled ( void );
+void CodeReturnVoid(void);
+void CodeReturnVoidWhichIsNotProfiled(void);
 
 /****************************************************************************
 **
@@ -889,43 +975,43 @@ extern  void            CodeReturnVoidWhichIsNotProfiled ( void );
 **  'CodePow' are the actions to   code the respective operator  expressions.
 **  They are called by the reader *after* *both* operands are read.
 */
-extern  void            CodeOrL ( void );
+void CodeOrL(void);
 
-extern  void            CodeOr ( void );
+void CodeOr(void);
 
-extern  void            CodeAndL ( void );
+void CodeAndL(void);
 
-extern  void            CodeAnd ( void );
+void CodeAnd(void);
 
-extern  void            CodeNot ( void );
+void CodeNot(void);
 
-extern  void            CodeEq ( void );
+void CodeEq(void);
 
-extern  void            CodeNe ( void );
+void CodeNe(void);
 
-extern  void            CodeLt ( void );
+void CodeLt(void);
 
-extern  void            CodeGe ( void );
+void CodeGe(void);
 
-extern  void            CodeGt ( void );
+void CodeGt(void);
 
-extern  void            CodeLe ( void );
+void CodeLe(void);
 
-extern  void            CodeIn ( void );
+void CodeIn(void);
 
-extern  void            CodeSum ( void );
+void CodeSum(void);
 
-extern  void            CodeAInv ( void );
+void CodeAInv(void);
 
-extern  void            CodeDiff ( void );
+void CodeDiff(void);
 
-extern  void            CodeProd ( void );
+void CodeProd(void);
 
-extern  void            CodeQuo ( void );
+void CodeQuo(void);
 
-extern  void            CodeMod ( void );
+void CodeMod(void);
 
-extern  void            CodePow ( void );
+void CodePow(void);
 
 
 /****************************************************************************
@@ -935,7 +1021,7 @@ extern  void            CodePow ( void );
 **  'CodeIntExpr' is the action to code a literal integer expression.  <val>
 **  is the integer as a GAP object.
 */
-extern void CodeIntExpr(Obj val);
+void CodeIntExpr(Obj val);
 
 /****************************************************************************
 **
@@ -943,7 +1029,7 @@ extern void CodeIntExpr(Obj val);
 **
 **  'CodeTildeExpr' is the action to code a tilde expression.
 */
-extern  void            CodeTildeExpr ( void );
+void CodeTildeExpr(void);
 
 /****************************************************************************
 **
@@ -951,7 +1037,7 @@ extern  void            CodeTildeExpr ( void );
 **
 **  'CodeTrueExpr' is the action to code a literal true expression.
 */
-extern  void            CodeTrueExpr ( void );
+void CodeTrueExpr(void);
 
 
 /****************************************************************************
@@ -960,7 +1046,7 @@ extern  void            CodeTrueExpr ( void );
 **
 **  'CodeFalseExpr' is the action to code a literal false expression.
 */
-extern  void            CodeFalseExpr ( void );
+void CodeFalseExpr(void);
 
 
 /****************************************************************************
@@ -970,8 +1056,7 @@ extern  void            CodeFalseExpr ( void );
 **  'CodeCharExpr'  is the action  to  code a  literal  character expression.
 **  <chr> is the C character.
 */
-extern  void            CodeCharExpr (
-            Char                chr );
+void CodeCharExpr(Char chr);
 
 
 /****************************************************************************
@@ -988,12 +1073,9 @@ extern  void            CodeCharExpr (
 **  called when  the permutation is read completely.   <nrc> is the number of
 **  cycles.
 */
-extern  void            CodePermCycle (
-            UInt                nrx,
-            UInt                nrc );
+void CodePermCycle(UInt nrx, UInt nrc);
 
-extern  void            CodePerm (
-            UInt                nrc );
+void CodePerm(UInt nrc);
 
 
 /****************************************************************************
@@ -1003,37 +1085,36 @@ extern  void            CodePerm (
 *F  CodeListExprEndElm()  . . . . . . . . . code list expression, end element
 *F  CodeListExprEnd(<nr>,<range>,<top>,<tilde>) . . code list expression, end
 */
-extern  void            CodeListExprBegin (
-            UInt                top );
+void CodeListExprBegin(UInt top);
 
-extern  void            CodeListExprBeginElm (
-            UInt                pos );
+void CodeListExprBeginElm(UInt pos);
 
-extern  void            CodeListExprEndElm ( void );
+void CodeListExprEndElm(void);
 
-extern  void            CodeListExprEnd (
-            UInt                nr,
-            UInt                range,
-            UInt                top,
-            UInt                tilde );
+void CodeListExprEnd(UInt nr, UInt range, UInt top, UInt tilde);
 
 
 /****************************************************************************
 **
 *F  CodeStringExpr(<str>) . . . . . . . . . .  code literal string expression
 */
-extern  void            CodeStringExpr (
-            Obj              str );
+void CodeStringExpr(Obj str);
+
+void CodePragma(Obj pragma);
+
+
+/****************************************************************************
+**
+*F  CodeLazyFloatExpr(<str>,<pushExpr>) . . . . .  code lazy float expression
+*/
+Expr CodeLazyFloatExpr(Obj str, UInt pushExpr);
+
 
 /****************************************************************************
 **
 *F  CodeFloatExpr(<str>) . . . . . . . . . .  code literal float expression
 */
-extern  void            CodeFloatExpr (
-            Char *              str );
-
-extern  void            CodeLongFloatExpr (
-            Obj              str );
+void CodeFloatExpr(Obj str);
 
 
 /****************************************************************************
@@ -1044,20 +1125,15 @@ extern  void            CodeLongFloatExpr (
 *F  CodeRecExprEndElmExpr() . . . . . . . code record expression, end element
 *F  CodeRecExprEnd(<nr>,<top>,<tilde>)  . . . . . code record expression, end
 */
-extern  void            CodeRecExprBegin (
-            UInt                top );
+void CodeRecExprBegin(UInt top);
 
-extern  void            CodeRecExprBeginElmName (
-            UInt                rnam );
+void CodeRecExprBeginElmName(UInt rnam);
 
-extern  void            CodeRecExprBeginElmExpr ( void );
+void CodeRecExprBeginElmExpr(void);
 
-extern  void            CodeRecExprEndElm ( void );
+void CodeRecExprEndElm(void);
 
-extern  void            CodeRecExprEnd (
-            UInt                nr,
-            UInt                top,
-            UInt                tilde );
+void CodeRecExprEnd(UInt nr, UInt top, UInt tilde);
 
 
 /****************************************************************************
@@ -1072,11 +1148,9 @@ extern  void            CodeRecExprEnd (
 **  subexpressions.  The  *first* is the local variable,  the *second* is the
 **  right hand side expression.
 */
-extern  void            CodeAssLVar (
-            UInt                lvar );
+void CodeAssLVar(UInt lvar);
 
-extern  void            CodeUnbLVar (
-            UInt                lvar );
+void CodeUnbLVar(UInt lvar);
 
 
 /****************************************************************************
@@ -1088,13 +1162,11 @@ extern  void            CodeUnbLVar (
 **  encounters a local variable.
 **
 **  A   reference to   a local  variable    is represented immediately   (see
-**  'REFLVAR_LVAR').
+**  'REF_LVAR_LVAR').
 */
-extern  void            CodeRefLVar (
-            UInt                lvar );
+void CodeRefLVar(UInt lvar);
 
-extern  void            CodeIsbLVar (
-            UInt                lvar );
+void CodeIsbLVar(UInt lvar);
 
 
 /****************************************************************************
@@ -1109,11 +1181,9 @@ extern  void            CodeIsbLVar (
 **  two subexpressions.  The *first* is the higher  variable, the *second* is
 **  the right hand side expression.
 */
-extern  void            CodeAssHVar (
-            UInt                hvar );
+void CodeAssHVar(UInt hvar);
 
-extern  void            CodeUnbHVar (
-            UInt                hvar );
+void CodeUnbHVar(UInt hvar);
 
 
 /****************************************************************************
@@ -1127,11 +1197,9 @@ extern  void            CodeUnbHVar (
 **  A reference to a higher variable is represented by an expression bag with
 **  one subexpression.  This is the higher variable.
 */
-extern  void            CodeRefHVar (
-            UInt                hvar );
+void CodeRefHVar(UInt hvar);
 
-extern  void            CodeIsbHVar (
-            UInt                hvar );
+void CodeIsbHVar(UInt hvar);
 
 
 /****************************************************************************
@@ -1146,11 +1214,9 @@ extern  void            CodeIsbHVar (
 **  two subexpressions.  The *first* is the  global variable, the *second* is
 **  the right hand side expression.
 */
-extern  void            CodeAssGVar (
-            UInt                gvar );
+void CodeAssGVar(UInt gvar);
 
-extern  void            CodeUnbGVar (
-            UInt                gvar );
+void CodeUnbGVar(UInt gvar);
 
 
 /****************************************************************************
@@ -1163,11 +1229,9 @@ extern  void            CodeUnbGVar (
 **  A reference to a global variable is represented by an expression bag with
 **  one subexpression.  This is the global variable.
 */
-extern  void            CodeRefGVar (
-            UInt                gvar );
+void CodeRefGVar(UInt gvar);
 
-extern  void            CodeIsbGVar (
-            UInt                gvar );
+void CodeIsbGVar(UInt gvar);
 
 
 /****************************************************************************
@@ -1177,17 +1241,15 @@ extern  void            CodeIsbGVar (
 *F  CodeAssListLevel(<level>) . . . . . . .  code assignment to several lists
 *F  CodeAsssListLevel(<level>)  . . code multiple assignment to several lists
 */
-extern  void            CodeAssList ( Int narg );
+void CodeAssList(Int narg);
 
-extern  void            CodeAsssList ( void );
+void CodeAsssList(void);
 
-extern  void            CodeAssListLevel ( Int narg,
-            UInt                level );
+void CodeAssListLevel(Int narg, UInt level);
 
-extern  void            CodeAsssListLevel (
-            UInt                level );
+void CodeAsssListLevel(UInt level);
 
-extern  void            CodeUnbList ( Int narg );
+void CodeUnbList(Int narg);
 
 
 /****************************************************************************
@@ -1197,18 +1259,15 @@ extern  void            CodeUnbList ( Int narg );
 *F  CodeElmListLevel(<level>) . . . . . . . . code selection of several lists
 *F  CodeElmsListLevel(<level>)  . .  code multiple selection of several lists
 */
-extern  void            CodeElmList ( Int narg );
+void CodeElmList(Int narg);
 
-extern  void            CodeElmsList ( void );
+void CodeElmsList(void);
 
-extern  void            CodeElmListLevel (
-					  Int narg,
-					  UInt level);
+void CodeElmListLevel(Int narg, UInt level);
 
-extern  void            CodeElmsListLevel (
-            UInt                level );
+void CodeElmsListLevel(UInt level);
 
-extern  void            CodeIsbList ( Int narg );
+void CodeIsbList(Int narg);
 
 
 /****************************************************************************
@@ -1216,15 +1275,13 @@ extern  void            CodeIsbList ( Int narg );
 *F  CodeAssRecName(<rnam>)  . . . . . . . . . . . code assignment to a record
 *F  CodeAssRecExpr()  . . . . . . . . . . . . . . code assignment to a record
 */
-extern  void            CodeAssRecName (
-            UInt                rnam );
+void CodeAssRecName(UInt rnam);
 
-extern  void            CodeAssRecExpr ( void );
+void CodeAssRecExpr(void);
 
-extern  void            CodeUnbRecName (
-            UInt                rnam );
+void CodeUnbRecName(UInt rnam);
 
-extern  void            CodeUnbRecExpr ( void );
+void CodeUnbRecExpr(void);
 
 
 /****************************************************************************
@@ -1232,33 +1289,31 @@ extern  void            CodeUnbRecExpr ( void );
 *F  CodeElmRecName(<rnam>)  . . . . . . . . . . .  code selection of a record
 *F  CodeElmRecExpr()  . . . . . . . . . . . . . .  code selection of a record
 */
-extern  void            CodeElmRecName (
-            UInt                rnam );
+void CodeElmRecName(UInt rnam);
 
-extern  void            CodeElmRecExpr ( void );
+void CodeElmRecExpr(void);
 
-extern  void            CodeIsbRecName (
-            UInt                rnam );
+void CodeIsbRecName(UInt rnam);
 
-extern  void            CodeIsbRecExpr ( void );
+void CodeIsbRecExpr(void);
 
 
 /****************************************************************************
 **
 *F  CodeAssPosObj() . . . . . . . . . . . . . . . . code assignment to a list
 */
-extern  void            CodeAssPosObj ( void );
+void CodeAssPosObj(void);
 
-extern  void            CodeUnbPosObj ( void );
+void CodeUnbPosObj(void);
 
 
 /****************************************************************************
 **
 *F  CodeElmPosObj() . . . . . . . . . . . . . . . .  code selection of a list
 */
-extern  void            CodeElmPosObj ( void );
+void CodeElmPosObj(void);
 
-extern  void            CodeIsbPosObj ( void );
+void CodeIsbPosObj(void);
 
 
 /****************************************************************************
@@ -1266,15 +1321,13 @@ extern  void            CodeIsbPosObj ( void );
 *F  CodeAssComObjName(<rnam>) . . . . . . . . . . code assignment to a record
 *F  CodeAssComObjExpr() . . . . . . . . . . . . . code assignment to a record
 */
-extern  void            CodeAssComObjName (
-            UInt                rnam );
+void CodeAssComObjName(UInt rnam);
 
-extern  void            CodeAssComObjExpr ( void );
+void CodeAssComObjExpr(void);
 
-extern  void            CodeUnbComObjName (
-            UInt                rnam );
+void CodeUnbComObjName(UInt rnam);
 
-extern  void            CodeUnbComObjExpr ( void );
+void CodeUnbComObjExpr(void);
 
 
 /****************************************************************************
@@ -1282,15 +1335,13 @@ extern  void            CodeUnbComObjExpr ( void );
 *F  CodeElmComObjName(<rnam>) . . . . . . . . . .  code selection of a record
 *F  CodeElmComObjExpr() . . . . . . . . . . . . .  code selection of a record
 */
-extern  void            CodeElmComObjName (
-            UInt                rnam );
+void CodeElmComObjName(UInt rnam);
 
-extern  void            CodeElmComObjExpr ( void );
+void CodeElmComObjExpr(void);
 
-extern  void            CodeIsbComObjName (
-            UInt                rnam );
+void CodeIsbComObjName(UInt rnam);
 
-extern  void            CodeIsbComObjExpr ( void );
+void CodeIsbComObjExpr(void);
 
 /****************************************************************************
 **
@@ -1298,7 +1349,7 @@ extern  void            CodeIsbComObjExpr ( void );
 **
 */
 
-extern void CodeEmpty( void );
+void CodeEmpty(void);
 
 /****************************************************************************
 **
@@ -1309,12 +1360,11 @@ extern void CodeEmpty( void );
 **  These  actions deal  with the  Info  statement, which is coded specially,
 **  because not all of its arguments are always evaluated.
 */
-extern  void            CodeInfoBegin ( void );
+void CodeInfoBegin(void);
 
-extern  void            CodeInfoMiddle ( void );
+void CodeInfoMiddle(void);
 
-extern  void            CodeInfoEnd   (
-            UInt                narg );
+void CodeInfoEnd(UInt narg);
 
 
 /****************************************************************************
@@ -1325,18 +1375,18 @@ extern  void            CodeInfoEnd   (
 *F  CodeAssertEnd2Args() . . . . called after reading the closing parenthesis
 *F  CodeAssertEnd3Args() . . . . called after reading the closing parenthesis
 */
-extern  void            CodeAssertBegin ( void );
+void CodeAssertBegin(void);
 
-extern  void            CodeAssertAfterLevel ( void );
+void CodeAssertAfterLevel(void);
 
-extern  void            CodeAssertAfterCondition ( void );
+void CodeAssertAfterCondition(void);
 
-extern  void            CodeAssertEnd2Args ( void );
+void CodeAssertEnd2Args(void);
 
-extern  void            CodeAssertEnd3Args ( void );
+void CodeAssertEnd3Args(void);
 
 /*  CodeContinue() .  . . . . . . . . . . . .  code continue-statement */
-extern  void            CodeContinue ( void );
+void CodeContinue(void);
 
 
 /****************************************************************************

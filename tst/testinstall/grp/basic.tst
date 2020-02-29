@@ -16,6 +16,12 @@ gap> TrivialGroup(IsPermGroup);
 Group(())
 
 #
+# Creating groups over domains is not supported in GAP4
+#
+gap> Group(Group(()));
+Error, usage: Group(<gen>,...), Group(<gens>), Group(<gens>,<id>)
+
+#
 gap> TrivialGroup(1);
 Error, usage: TrivialGroup( [<filter>] )
 gap> TrivialGroup(IsRing);
@@ -225,57 +231,127 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `DihedralGroupCons' on 2 arguments
 
 #
-# quaternion groups
+gap> Q := DihedralGroup(32);;
+gap> gens := DihedralGenerators(Q);;
+gap> Group(gens) = Q;
+true
+gap> Q := Group(GeneratorsOfGroup(DihedralGroup(IsPermGroup, 32)));;
+gap> HasIsDihedralGroup(Q);
+false
+gap> HasDihedralGenerators(Q);
+false
+gap> gens := DihedralGenerators(Q);;
+gap> Group(gens) = Q;
+true
+gap> IsDihedralGroup(Q);
+true
+gap> Q := Group(GeneratorsOfGroup(DihedralGroup(IsPermGroup, 32)));;
+gap> HasIsDihedralGroup(Q);
+false
+gap> HasDihedralGenerators(Q);
+false
+gap> IsDihedralGroup(Q);
+true
+gap> HasDihedralGenerators(Q);
+true
+gap> Unbind(F);; Unbind(Q);;
+
 #
-gap> IdGroup(QuaternionGroup(4));
+# dicyclic groups
+#
+gap> IdGroup(DicyclicGroup(4));
 [ 4, 1 ]
-gap> IdGroup(QuaternionGroup(IsFpGroup,4));
+gap> IdGroup(DicyclicGroup(IsFpGroup,4));
 [ 4, 1 ]
-gap> QuaternionGroup(8);
+gap> DicyclicGroup(8);
 <pc group of size 8 with 3 generators>
-gap> QuaternionGroup(IsPcGroup,8);
+gap> DicyclicGroup(IsPcGroup,8);
 <pc group of size 8 with 3 generators>
-gap> QuaternionGroup(IsPermGroup,8);
+gap> DicyclicGroup(IsPermGroup,8);
 Group([ (1,5,3,7)(2,8,4,6), (1,2,3,4)(5,6,7,8) ])
-gap> QuaternionGroup(IsFpGroup,8);
+gap> DicyclicGroup(IsFpGroup,8);
 <fp group of size 8 on the generators [ r, s ]>
-gap> G:=QuaternionGroup(IsMatrixGroup, 8);
+gap> G:=DicyclicGroup(IsMatrixGroup, 8);
 <matrix group of size 8 with 2 generators>
 gap> FieldOfMatrixGroup(G); DimensionOfMatrixGroup(G);
 Rationals
 4
-gap> G:=QuaternionGroup(IsMatrixGroup, GF(2), 8);
+gap> G:=DicyclicGroup(IsMatrixGroup, GF(2), 8);
 <matrix group of size 8 with 2 generators>
 gap> FieldOfMatrixGroup(G); DimensionOfMatrixGroup(G);
 GF(2)
 8
-gap> G:=QuaternionGroup(IsMatrixGroup, GF(3), 8);
+gap> G:=DicyclicGroup(IsMatrixGroup, GF(3), 8);
 <matrix group of size 8 with 2 generators>
 gap> FieldOfMatrixGroup(G); DimensionOfMatrixGroup(G);
 GF(3)
 4
 gap> F:=FunctionField(GF(3),["t"]);
 FunctionField(...,[ t ])
-gap> G:=QuaternionGroup(IsMatrixGroup, F, 8);
+gap> G:=DicyclicGroup(IsMatrixGroup, F, 8);
 <matrix group of size 8 with 2 generators>
 gap> DimensionOfMatrixGroup(G);
 4
 
 #
-gap> QuaternionGroup(2,3);
-Error, usage: QuaternionGroup( [<filter>, ]<size> )
-gap> QuaternionGroup(IsRing,3);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `QuaternionGroupCons' on 2 arguments
-gap> QuaternionGroup(0);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `QuaternionGroupCons' on 2 arguments
-gap> QuaternionGroup(1);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `QuaternionGroupCons' on 2 arguments
-gap> QuaternionGroup(IsFpGroup,1);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `QuaternionGroupCons' on 2 arguments
+gap> DicyclicGroup(2,3);
+Error, usage: <filter> must be a filter
+gap> DicyclicGroup(IsRing,3);
+Error, usage: <size> must be a positive integer divisible by 4
+gap> DicyclicGroup(0);
+Error, usage: <size> must be a positive integer divisible by 4
+gap> DicyclicGroup(1);
+Error, usage: <size> must be a positive integer divisible by 4
+gap> DicyclicGroup(IsFpGroup,1);
+Error, usage: <size> must be a positive integer divisible by 4
+
+#
+# (generalised) quaternion groups
+#
+gap> QuaternionGroup(4);
+#I  Warning: QuaternionGroup called with <size> 4 which is less than 8
+<pc group of size 4 with 2 generators>
+gap> QuaternionGroup(8);
+<pc group of size 8 with 3 generators>
+gap> QuaternionGroup(12);
+#I  Warning: QuaternionGroup called with <size> 12 which is not a power of 2
+<pc group of size 12 with 3 generators>
+gap> QuaternionGroup(11);
+Error, usage: <size> must be a positive integer divisible by 4
+gap> GeneralisedQuaternionGroup(16);
+<pc group of size 16 with 4 generators>
+gap> Q := GeneralisedQuaternionGroup(IsFpGroup, 32);
+<fp group of size 32 on the generators [ r, s ]>
+gap> gens := GeneralisedQuaternionGenerators(Q);;
+gap> Group(gens) = Q;
+true
+gap> GeneralisedQuaternionGroup(IsMatrixGroup, 32);
+<matrix group of size 32 with 2 generators>
+gap> F:=FunctionField(GF(16),1);;
+gap> Q:=GeneralisedQuaternionGroup(IsMatrixGroup, F, 256); 
+<matrix group of size 256 with 2 generators>
+gap> HasIsGeneralisedQuaternionGroup(Q);
+true
+gap> Q := Group(GeneratorsOfGroup(GeneralisedQuaternionGroup(IsPermGroup, 32)));;
+gap> HasIsGeneralisedQuaternionGroup(Q);
+false
+gap> HasGeneralisedQuaternionGenerators(Q);
+false
+gap> gens := GeneralisedQuaternionGenerators(Q);;
+gap> Group(gens) = Q;
+true
+gap> IsGeneralisedQuaternionGroup(Q);
+true
+gap> Q := Group(GeneratorsOfGroup(GeneralisedQuaternionGroup(IsPermGroup, 32)));;
+gap> HasIsGeneralisedQuaternionGroup(Q);
+false
+gap> HasGeneralisedQuaternionGenerators(Q);
+false
+gap> IsGeneralisedQuaternionGroup(Q);
+true
+gap> HasGeneralisedQuaternionGenerators(Q);
+true
+gap> Unbind(F);; Unbind(Q);;
 
 #
 # elementary abelian groups

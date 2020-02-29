@@ -1,6 +1,11 @@
 /****************************************************************************
 **
-*W  julia_gc.c
+**  This file is part of GAP, a system for computational discrete algebra.
+**
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file stores code only required by the Julia garbage collector
 **
@@ -13,6 +18,7 @@
 
 #include "fibhash.h"
 #include "funcs.h"
+#include "gap.h"
 #include "gapstate.h"
 #include "gasman.h"
 #include "objects.h"
@@ -20,11 +26,13 @@
 #include "sysmem.h"
 #include "system.h"
 #include "vars.h"
-#include "gap.h"
+
+#include "bags.inc"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include <julia.h>
 #include <julia_gcext.h>
@@ -63,98 +71,6 @@
 // #define VALIDATE_MARKING
 
 
-/****************************************************************************
-**
-**
-*/
-
-#ifndef REQUIRE_PRECISE_MARKING
-
-#define MARK_CACHE_BITS 16
-#define MARK_CACHE_SIZE (1 << MARK_CACHE_BITS)
-
-#define MARK_HASH(x) (FibHash((x), MARK_CACHE_BITS))
-
-// The MarkCache exists to speed up the conservative tracing of
-// objects. While its performance benefit is minimal with the current
-// API functionality, it can significantly reduce overhead if a slower
-// conservative mechanism is used. It should be disabled for precise
-// object tracing, however. The cache does not affect conservative
-// *stack* tracing at all, only conservative tracing of objects.
-//
-// It functions by remembering valid object references in a (lossy)
-// hash table. If we find an object reference in that table, we no
-// longer need to verify that it is accurate, which is a potentially
-// expensive call to the Julia runtime.
-
-static Bag MarkCache[MARK_CACHE_SIZE];
-#ifdef COLLECT_MARK_CACHE_STATS
-static UInt MarkCacheHits, MarkCacheAttempts, MarkCacheCollisions;
-#endif
-
-#endif
-
-TNumInfoBags InfoBags[NUM_TYPES];
-
-UInt SizeAllBags;
-
-static inline Bag * DATA(BagHeader * bag)
-{
-    return (Bag *)(((char *)bag) + sizeof(BagHeader));
-}
-
-
-static TNumExtraMarkFuncBags ExtraMarkFuncBags;
-
-void SetExtraMarkFuncBags(TNumExtraMarkFuncBags func)
-{
-    ExtraMarkFuncBags = func;
-}
-
-
-/****************************************************************************
-**
-*F  InitFreeFuncBag(<type>,<free-func>)
-*/
-
-TNumFreeFuncBags TabFreeFuncBags[NUM_TYPES];
-
-void InitFreeFuncBag(UInt type, TNumFreeFuncBags finalizer_func)
-{
-    TabFreeFuncBags[type] = finalizer_func;
-}
-
-static void JFinalizer(jl_value_t * obj)
-{
-    BagHeader * hdr = (BagHeader *)obj;
-    Bag         contents = (Bag)(hdr + 1);
-    UInt        tnum = hdr->type;
-
-    // if a bag needing a finalizer is retyped to a new tnum which no longer
-    // needs one, it may happen that JFinalize is called even though
-    // TabFreeFuncBags[tnum] is NULL
-    if (TabFreeFuncBags[tnum])
-        TabFreeFuncBags[tnum]((Bag)&contents);
-}
-
-#if !defined(SCAN_STACK_FOR_MPTRS_ONLY)
-
-/****************************************************************************
-**
-**  Treap functionality
-**
-**  Treaps are probabilistically balanced binary trees. We use them for
-**  range queries on pointers for conservative scans. Unlike red-black
-**  trees, they're simple to implement, and unlike AVL trees, insertions
-**  take an expected O(1) number of mutations to the tree, making them
-**  more cache-friendly for an insertion-heavy workload.
-**
-**  Their downside is that they are probabilistic and that hypothetically,
-**  degenerate cases can occur. However, these are very unlikely, and if
-**  that turns out to be a problem, we can replace them with alternate
-**  balanced trees (B-trees being a likely suitable candidate).
-*/
-
 // Comparing pointers in C without triggering undefined behavior
 // can be difficult. As the GC already assumes that the memory
 // range goes from 0 to 2^k-1 (region tables), we simply convert
@@ -171,7 +87,6 @@ static inline int cmp_ptr(void * p, void * q)
     else
         return 0;
 }
-#endif
 
 static inline int lt_ptr(void * a, void * b)
 {
@@ -209,204 +124,70 @@ static inline void * align_ptr(void * p)
     return (void *)u;
 }
 
-#if !defined(SCAN_STACK_FOR_MPTRS_ONLY)
+#ifndef REQUIRE_PRECISE_MARKING
 
-typedef struct treap_t {
-    struct treap_t *left, *right;
-    size_t          prio;
-    void *          addr;
-    size_t          size;
-} treap_t;
+#define MARK_CACHE_BITS 16
+#define MARK_CACHE_SIZE (1 << MARK_CACHE_BITS)
 
-static treap_t * treap_free_list;
+#define MARK_HASH(x) (FibHash((x), MARK_CACHE_BITS))
 
-treap_t * alloc_treap(void)
-{
-    treap_t * result;
-    if (treap_free_list) {
-        result = treap_free_list;
-        treap_free_list = treap_free_list->right;
-    }
-    else
-        result = malloc(sizeof(treap_t));
-    result->left = NULL;
-    result->right = NULL;
-    result->addr = NULL;
-    result->size = 0;
-    return result;
-}
+// The MarkCache exists to speed up the conservative tracing of
+// objects. While its performance benefit is minimal with the current
+// API functionality, it can significantly reduce overhead if a slower
+// conservative mechanism is used. It should be disabled for precise
+// object tracing, however. The cache does not affect conservative
+// *stack* tracing at all, only conservative tracing of objects.
+//
+// It functions by remembering valid object references in a (lossy)
+// hash table. If we find an object reference in that table, we no
+// longer need to verify that it is accurate, which is a potentially
+// expensive call to the Julia runtime.
 
-static void free_treap(treap_t * t)
-{
-    t->right = treap_free_list;
-    treap_free_list = t;
-}
-
-static inline int test_bigval_range(treap_t * node, void * p)
-{
-    char * l = node->addr;
-    char * r = l + node->size;
-    if (lt_ptr(p, l))
-        return -1;
-    if (!lt_ptr(p, r))
-        return 1;
-    return 0;
-}
-
-
-#define L(t) ((t)->left)
-#define R(t) ((t)->right)
-
-static inline void treap_rot_right(treap_t ** treap)
-{
-    /*       t                 l       */
-    /*     /   \             /   \     */
-    /*    l     r    -->    a     t    */
-    /*   / \                     / \   */
-    /*  a   b                   b   r  */
-    treap_t * t = *treap;
-    treap_t * l = L(t);
-    treap_t * a = L(l);
-    treap_t * b = R(l);
-    L(l) = a;
-    R(l) = t;
-    L(t) = b;
-    *treap = l;
-}
-
-static inline void treap_rot_left(treap_t ** treap)
-{
-    /*     t                   r       */
-    /*   /   \               /   \     */
-    /*  l     r    -->      t     b    */
-    /*       / \           / \         */
-    /*      a   b         l   a        */
-    treap_t * t = *treap;
-    treap_t * r = R(t);
-    treap_t * a = L(r);
-    treap_t * b = R(r);
-    L(r) = t;
-    R(r) = b;
-    R(t) = a;
-    *treap = r;
-}
-
-static void * treap_find(treap_t * treap, void * p)
-{
-    while (treap) {
-        int c = test_bigval_range(treap, p);
-        if (c == 0)
-            return treap->addr;
-        else if (c < 0)
-            treap = L(treap);
-        else
-            treap = R(treap);
-    }
-    return NULL;
-}
-
-static void treap_insert(treap_t ** treap, treap_t * val)
-{
-    treap_t * t = *treap;
-    if (t == NULL) {
-        L(val) = NULL;
-        R(val) = NULL;
-        *treap = val;
-    }
-    else {
-        int c = cmp_ptr(val->addr, t->addr);
-        if (c < 0) {
-            treap_insert(&L(t), val);
-            if (L(t)->prio > t->prio) {
-                treap_rot_right(treap);
-            }
-        }
-        else if (c > 0) {
-            treap_insert(&R(t), val);
-            if (R(t)->prio > t->prio) {
-                treap_rot_left(treap);
-            }
-        }
-    }
-}
-
-static void treap_delete_node(treap_t ** treap)
-{
-    for (;;) {
-        treap_t * t = *treap;
-        if (L(t) == NULL) {
-            *treap = R(t);
-            free_treap(t);
-            break;
-        }
-        else if (R(t) == NULL) {
-            *treap = L(t);
-            free_treap(t);
-            break;
-        }
-        else {
-            if (L(t)->prio > R(t)->prio) {
-                treap_rot_right(treap);
-                treap = &R(*treap);
-            }
-            else {
-                treap_rot_left(treap);
-                treap = &L(*treap);
-            }
-        }
-    }
-}
-
-static int treap_delete(treap_t ** treap, void * addr)
-{
-    while (*treap != NULL) {
-        int c = cmp_ptr(addr, (*treap)->addr);
-        if (c == 0) {
-            treap_delete_node(treap);
-            return 1;
-        }
-        else if (c < 0) {
-            treap = &L(*treap);
-        }
-        else {
-            treap = &R(*treap);
-        }
-    }
-    return 0;
-}
-
-static uint64_t xorshift_rng_state = 1;
-
-static uint64_t xorshift_rng(void)
-{
-    uint64_t x = xorshift_rng_state;
-    x = x ^ (x >> 12);
-    x = x ^ (x << 25);
-    x = x ^ (x >> 27);
-    xorshift_rng_state = x;
-    return x * (uint64_t)0x2545F4914F6CDD1DUL;
-}
-
-
-static treap_t * bigvals;
-
-static void alloc_bigval(void * addr, size_t size)
-{
-    treap_t * node = alloc_treap();
-    node->addr = addr;
-    node->size = size;
-    node->prio = xorshift_rng();
-    treap_insert(&bigvals, node);
-}
-
-static void free_bigval(void * p)
-{
-    if (p) {
-        treap_delete(&bigvals, p);
-    }
-}
+static Bag MarkCache[MARK_CACHE_SIZE];
+#ifdef COLLECT_MARK_CACHE_STATS
+static UInt MarkCacheHits, MarkCacheAttempts, MarkCacheCollisions;
+#endif
 
 #endif
+
+static inline Bag * DATA(BagHeader * bag)
+{
+    return (Bag *)(((char *)bag) + sizeof(BagHeader));
+}
+
+
+static TNumExtraMarkFuncBags ExtraMarkFuncBags;
+
+void SetExtraMarkFuncBags(TNumExtraMarkFuncBags func)
+{
+    ExtraMarkFuncBags = func;
+}
+
+
+/****************************************************************************
+**
+*F  InitFreeFuncBag(<type>,<free-func>)
+*/
+
+static TNumFreeFuncBags TabFreeFuncBags[NUM_TYPES];
+
+void InitFreeFuncBag(UInt type, TNumFreeFuncBags finalizer_func)
+{
+    TabFreeFuncBags[type] = finalizer_func;
+}
+
+static void JFinalizer(jl_value_t * obj)
+{
+    BagHeader * hdr = (BagHeader *)obj;
+    Bag         contents = (Bag)(hdr + 1);
+    UInt        tnum = hdr->type;
+
+    // if a bag needing a finalizer is retyped to a new tnum which no longer
+    // needs one, it may happen that JFinalize is called even though
+    // TabFreeFuncBags[tnum] is NULL
+    if (TabFreeFuncBags[tnum])
+        TabFreeFuncBags[tnum]((Bag)&contents);
+}
 
 static jl_module_t *   Module;
 static jl_datatype_t * datatype_mptr;
@@ -417,10 +198,54 @@ static Bag *           GapStackBottom;
 static jl_ptls_t       JuliaTLS, SaveTLS;
 static size_t          max_pool_obj_size;
 static UInt            YoungRef;
+static int             FullGC;
+
 #if !defined(SCAN_STACK_FOR_MPTRS_ONLY)
-static size_t bigval_startoffset;
+typedef struct {
+    void * addr;
+    size_t size;
+} MemBlock;
+
+static inline int CmpMemBlock(MemBlock m1, MemBlock m2)
+{
+    char * l1 = (char *)m1.addr;
+    char * r1 = l1 + m1.size;
+    char * l2 = (char *)m2.addr;
+    char * r2 = l2 + m2.size;
+    if (lt_ptr(r1, l1))
+        return -1;
+    if (!lt_ptr(l2, r2))
+        return 1;
+    return 0;
+}
+
+#define ELEM_TYPE MemBlock
+#define COMPARE CmpMemBlock
+
+#include "baltree.h"
+
+static size_t         bigval_startoffset;
+static MemBlockTree * bigvals;
+
+void alloc_bigval(void * addr, size_t size)
+{
+    MemBlock mem = { addr, size };
+    MemBlockTreeInsert(bigvals, mem);
+}
+
+void free_bigval(void * addr)
+{
+    MemBlock mem = { addr, 0 };
+    MemBlockTreeRemove(bigvals, mem);
+}
 #endif
 
+typedef void * Ptr;
+
+#define ELEM_TYPE Ptr
+#define COMPARE cmp_ptr
+
+#include "dynarray.h"
 
 #ifndef NR_GLOBAL_BAGS
 #define NR_GLOBAL_BAGS 20000L
@@ -551,8 +376,10 @@ static void TryMark(void * p)
         // the object, so we subtract one word from the
         // address. This is safe, as the object is preceded
         // by a larger header.
-        p2 = treap_find(bigvals, (char *)p - 1);
-        if (p2) {
+        MemBlock   tmp = { (char *)p - 1, 0 };
+        MemBlock * found = MemBlockTreeFind(bigvals, tmp);
+        if (found) {
+            p2 = (jl_value_t *)found->addr;
             // It is possible for types to not be valid objects.
             // Objects with such types are not normally made visible
             // to the mark loop, so we need to avoid marking them
@@ -590,7 +417,7 @@ static void TryMark(void * p)
     }
 }
 
-static void TryMarkRangeReverse(void * start, void * end)
+static void FindLiveRangeReverse(PtrArray * arr, void * start, void * end)
 {
     if (lt_ptr(end, start)) {
         SWAP(void *, start, end);
@@ -599,17 +426,92 @@ static void TryMarkRangeReverse(void * start, void * end)
     char * q = (char *)end - sizeof(void *);
     while (!lt_ptr(q, p)) {
         void * addr = *(void **)q;
-        if (addr) {
-            TryMark(addr);
-#ifdef MARKING_STRESS_TEST
-            for (int j = 0; j < 1000; ++j) {
-                UInt val = (UInt)addr + rand() - rand();
-                TryMark((void *)val);
-            }
-#endif
+        if (addr && jl_gc_internal_obj_base_ptr(addr) == addr &&
+            jl_typeis(addr, datatype_mptr)) {
+            PtrArrayAdd(arr, addr);
         }
         q -= StackAlignBags;
     }
+}
+
+typedef struct {
+    jl_task_t * task;
+    PtrArray *  stack;
+} TaskInfo;
+
+static int CmpTaskInfo(TaskInfo i1, TaskInfo i2)
+{
+    return cmp_ptr(i1.task, i2.task);
+}
+
+static void MarkFromList(PtrArray * arr)
+{
+    for (Int i = 0; i < arr->len; i++) {
+        JMark(arr->items[i]);
+    }
+}
+
+#define ELEM_TYPE TaskInfo
+#define COMPARE CmpTaskInfo
+
+#include "baltree.h"
+
+static TaskInfoTree * task_stacks = NULL;
+
+static void SafeScanTaskStack(PtrArray * stack, void * start, void * end)
+{
+    volatile jl_jmp_buf * old_safe_restore =
+        (volatile jl_jmp_buf *)JuliaTLS->safe_restore;
+    jl_jmp_buf exc_buf;
+    if (!jl_setjmp(exc_buf, 0)) {
+        // The bottom of the stack may be protected with
+        // guard pages; accessing these results in segmentation
+        // faults. Julia catches those segmentation faults and
+        // longjmps to JuliaTLS->safe_restore; we use this
+        // mechamism to abort stack scanning when a protected
+        // page is hit. For this to work, we must scan the stack
+        // from top to bottom, so we see any guard pages last.
+        JuliaTLS->safe_restore = &exc_buf;
+        FindLiveRangeReverse(stack, start, end);
+    }
+    JuliaTLS->safe_restore = (jl_jmp_buf *)old_safe_restore;
+}
+
+static void
+ScanTaskStack(int rescan, jl_task_t * task, void * start, void * end)
+{
+    if (!task_stacks) {
+        task_stacks = TaskInfoTreeMake();
+    }
+    TaskInfo   tmp = { task, NULL };
+    TaskInfo * taskinfo = TaskInfoTreeFind(task_stacks, tmp);
+    PtrArray * stack;
+    if (taskinfo != NULL) {
+        stack = taskinfo->stack;
+        if (rescan)
+            PtrArraySetLen(stack, 0);
+    }
+    else {
+        tmp.stack = PtrArrayMake(1024);
+        stack = tmp.stack;
+        TaskInfoTreeInsert(task_stacks, tmp);
+    }
+    if (rescan) {
+        SafeScanTaskStack(stack, start, end);
+        // Remove duplicates
+        if (stack->len > 0) {
+            PtrArraySort(stack);
+            Int p = 0;
+            for (Int i = 1; i < stack->len; i++) {
+                if (stack->items[i] != stack->items[p]) {
+                    p++;
+                    stack->items[p] = stack->items[i];
+                }
+            }
+            PtrArraySetLen(stack, p + 1);
+        }
+    }
+    MarkFromList(stack);
 }
 
 static void TryMarkRange(void * start, void * end)
@@ -671,7 +573,8 @@ static void GapRootScanner(int full)
     // The reason is that if Julia is being initialized from GAP, it
     // cannot always reliably find the top of the stack for that task,
     // so we have to fall back to GAP for that.
-    if (!IsUsingLibGap() && JuliaTLS->tid == 0 && JuliaTLS->root_task == task) {
+    if (!IsUsingLibGap() && JuliaTLS->tid == 0 &&
+        JuliaTLS->root_task == task) {
         stackend = (char *)GapStackBottom;
     }
 
@@ -702,6 +605,26 @@ static void GapTaskScanner(jl_task_t * task, int root_task)
     size_t size;
     int    tid;
     char * stack = (char *)jl_task_stack_buffer(task, &size, &tid);
+    // If it is the current task, it has been scanned by GapRootScanner()
+    // already.
+    if (task == JuliaTLS->current_task)
+        return;
+    int rescan = 1;
+    if (!FullGC) {
+        // This is a temp hack to work around a problem with the
+        // generational GC. Basically, task stacks are treated as roots
+        // and are therefore being scanned regardless of whether they
+        // are old or new, which can be expensive in the conservative
+        // case. In order to avoid that, we're manually checking whether
+        // the old flag is set for a task.
+        //
+        // This works specifically for task stacks as the current task
+        // is being scanned regardless and a write barrier will flip the
+        // age bit back to new if tasks are being switched.
+        jl_taggedvalue_t * tag = jl_astaggedvalue(task);
+        if (tag->bits.gc & 2)
+            rescan = 0;
+    }
     if (stack && tid < 0) {
         if (task->copy_stack) {
             // We know which part of the task stack is actually used,
@@ -709,21 +632,7 @@ static void GapTaskScanner(jl_task_t * task, int root_task)
             stack = stack + size - task->copy_stack;
             size = task->copy_stack;
         }
-        volatile jl_jmp_buf * old_safe_restore =
-            (volatile jl_jmp_buf *)JuliaTLS->safe_restore;
-        jl_jmp_buf exc_buf;
-        if (!jl_setjmp(exc_buf, 0)) {
-            // The bottom of the stack may be protected with
-            // guard pages; accessing these results in segmentation
-            // faults. Julia catches those segmentation faults and
-            // longjmps to JuliaTLS->safe_restore; we use this
-            // mechamism to abort stack scanning when a protected
-            // page is hit. For this to work, we must scan the stack
-            // from top to bottom, so we see any guard pages last.
-            JuliaTLS->safe_restore = &exc_buf;
-            TryMarkRangeReverse(stack, stack + size);
-        }
-        JuliaTLS->safe_restore = (jl_jmp_buf *)old_safe_restore;
+        ScanTaskStack(rescan, task, stack, stack + size);
     }
 }
 
@@ -734,6 +643,7 @@ static void PreGCHook(int full)
     // GAP. So we save the TLS pointer temporarily and restore it
     // afterwards. In the long run, JuliaTLS needs to simply become
     // a thread-local variable.
+    FullGC = full;
     SaveTLS = JuliaTLS;
     JuliaTLS = jl_get_ptls_states();
     // This is the same code as in VarsBeforeCollectBags() for GASMAN.
@@ -799,6 +709,22 @@ static uintptr_t BagMarkFunc(jl_ptls_t ptls, jl_value_t * obj)
     return YoungRef;
 }
 
+//
+// This function is called from GAP.jl to set the super type our custom Julia
+// types to GAP.GapObj
+//
+void GAP_register_GapObj(jl_datatype_t * gapobj_type)
+{
+    if (!gapobj_type || !jl_is_datatype(gapobj_type)) {
+        Panic("GAP_register_GapObj: GapObj is not a datatype");
+    }
+
+    // DO THE GREAT MAGIC HACK (yes we are bad citizens :/) and
+    // change the super type of ForeignGAP.MPtr to GapObj
+    datatype_mptr->super = gapobj_type;
+    jl_gc_wb(datatype_mptr, datatype_mptr->super);
+}
+
 void InitBags(UInt initial_size, Bag * stack_bottom, UInt stack_align)
 {
     // HOOK: initialization happens here.
@@ -809,6 +735,7 @@ void InitBags(UInt initial_size, Bag * stack_bottom, UInt stack_align)
     // These callbacks need to be set before initialization so
     // that we can track objects allocated during `jl_init()`.
 #if !defined(SCAN_STACK_FOR_MPTRS_ONLY)
+    bigvals = MemBlockTreeMake();
     jl_gc_set_cb_notify_external_alloc(alloc_bigval, 1);
     jl_gc_set_cb_notify_external_free(free_bigval, 1);
     bigval_startoffset = jl_gc_external_obj_hdr_size();
@@ -817,22 +744,39 @@ void InitBags(UInt initial_size, Bag * stack_bottom, UInt stack_align)
     jl_gc_enable_conservative_gc_support();
     jl_init();
 
-    // Import GAPTypes module to have access to GapObj abstract type.
-    // Needs to be done before setting any GC states
-    jl_eval_string("import GAPTypes");
-    if (jl_exception_occurred()) {
-        Panic("could not import GAPTypes module into Julia");
+    Module = jl_new_module(jl_symbol("ForeignGAP"));
+    Module->parent = jl_main_module;
+
+    // If we were loaded from GAP.jl, then try to retrieve GapObj from it.
+    // We do this by extracting it from the relevant instances of the GAP.jl
+    // module, which we get from the global variable `__JULIAGAPMODULE` if
+    // present.
+    //
+    // Newer versions of GAP.jl do not need this mechanism and instead call
+    // GAP_register_GapObj.
+    jl_module_t *   parent_module;
+    jl_datatype_t * gapobj_type;
+
+    parent_module = (jl_module_t *)jl_get_global(
+        jl_main_module, jl_symbol("__JULIAGAPMODULE"));
+    if (parent_module) {
+        if (!jl_is_module(parent_module)) {
+            Panic("__JULIAGAPMODULE is set in julia main module, but does "
+                  "not point to a module");
+        }
+
+        // retrieve GapObj abstract julia type
+        gapobj_type =
+            (jl_datatype_t *)jl_get_global(parent_module, jl_symbol("GapObj"));
+        if (!gapobj_type) {
+            Panic("GapObj type is not bound in GAP module");
+        }
+        if (!jl_is_datatype(gapobj_type)) {
+            Panic("GapObj in the GAP module is not a datatype");
+        }
     }
-    // Get GapObj abstract julia type
-    jl_module_t * gaptypes_module =
-        (jl_module_t *)jl_get_global(jl_main_module, jl_symbol("GAPTypes"));
-    if (jl_exception_occurred()) {
-        Panic("Could not read global GAPTypes variable from Julia");
-    }
-    jl_datatype_t * gapobj_type =
-        (jl_datatype_t *)jl_get_global(gaptypes_module, jl_symbol("GapObj"));
-    if (jl_exception_occurred()) {
-        Panic("could not read GapObj variable from Julia");
+    else {
+        gapobj_type = jl_any_type;
     }
 
     JuliaTLS = jl_get_ptls_states();
@@ -844,20 +788,15 @@ void InitBags(UInt initial_size, Bag * stack_bottom, UInt stack_align)
     jl_gc_set_cb_post_gc(PostGCHook, 1);
     // jl_gc_enable(0); /// DEBUGGING
 
-    Module = jl_new_module(jl_symbol("ForeignGAP"));
-    Module->parent = jl_main_module;
-
-    // Import GapObj type into ForeignGAP module
-    jl_module_use(Module, gaptypes_module, jl_symbol("GapObj"));
 
     jl_set_const(jl_main_module, jl_symbol("ForeignGAP"),
                  (jl_value_t *)Module);
     datatype_mptr = jl_new_foreign_type(
         jl_symbol("MPtr"), Module, gapobj_type, MPtrMarkFunc, NULL, 1, 0);
-    datatype_bag = jl_new_foreign_type(jl_symbol("Bag"), Module, gapobj_type,
+    datatype_bag = jl_new_foreign_type(jl_symbol("Bag"), Module, jl_any_type,
                                        BagMarkFunc, JFinalizer, 1, 0);
     datatype_largebag =
-        jl_new_foreign_type(jl_symbol("LargeBag"), Module, gapobj_type,
+        jl_new_foreign_type(jl_symbol("LargeBag"), Module, jl_any_type,
                             BagMarkFunc, JFinalizer, 1, 1);
 
     // export datatypes to Julia level
@@ -1087,45 +1026,4 @@ void MarkJuliaWeakRef(void * p)
     // be live regardless.
     if (JMarkTyped(p, jl_weakref_type))
         YoungRef++;
-}
-
-inline void MarkArrayOfBags(const Bag array[], UInt count)
-{
-    for (UInt i = 0; i < count; i++) {
-        MarkBag(array[i]);
-    }
-}
-
-void MarkNoSubBags(Bag bag)
-{
-}
-
-void MarkOneSubBags(Bag bag)
-{
-    MarkArrayOfBags(CONST_PTR_BAG(bag), 1);
-}
-
-void MarkTwoSubBags(Bag bag)
-{
-    MarkArrayOfBags(CONST_PTR_BAG(bag), 2);
-}
-
-void MarkThreeSubBags(Bag bag)
-{
-    MarkArrayOfBags(CONST_PTR_BAG(bag), 3);
-}
-
-void MarkFourSubBags(Bag bag)
-{
-    MarkArrayOfBags(CONST_PTR_BAG(bag), 4);
-}
-
-void MarkAllSubBags(Bag bag)
-{
-    MarkArrayOfBags(CONST_PTR_BAG(bag), SIZE_BAG(bag) / sizeof(Bag));
-}
-
-void MarkAllButFirstSubBags(Bag bag)
-{
-    MarkArrayOfBags(CONST_PTR_BAG(bag) + 1, SIZE_BAG(bag) / sizeof(Bag) - 1);
 }

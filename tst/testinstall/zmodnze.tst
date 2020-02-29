@@ -1,7 +1,4 @@
-#############################################################################
-##
-#W  zmodnze.tst                  GAP library              Alexander Konovalov
-##
+#@local R,a,b,c,d
 gap> START_TEST("zmodnze.tst");
 gap> R:=RingInt(CF(4)) mod 5;
 (RingInt(CF(4)) mod 5)
@@ -73,7 +70,3 @@ gap> Number(R,x->IsUnit(R,x));
 gap> RingInt(GF(2));
 Error, RingOfIntegralCyclotomics : an argument is not cyclotomic field !
 gap> STOP_TEST( "zmodnze.tst", 1);
-
-#############################################################################
-##
-#E

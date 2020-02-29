@@ -1,9 +1,11 @@
 /****************************************************************************
 **
-*W  hookintrprtr.h                    GAP source              Chris Jefferson
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C) 2017 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains functions related to hooking the interpreter.
 **
@@ -73,9 +75,11 @@ extern void (*OriginalPrintExprFuncsForHook[256])(Expr expr);
 
 struct InterpreterHooks {
     void (*visitStat)(Stat stat);
+    void (*visitInterpretedStat)(Int line, Int pos);
     void (*enterFunction)(Obj func);
     void (*leaveFunction)(Obj func);
     void (*registerStat)(Stat stat);
+    void (*registerInterpretedStat)(Int line, Int pos);
     const char * hookName;
 };
 
@@ -122,37 +126,45 @@ void DeactivatePrintHooks(struct PrintHooks * hook);
 ** variable to avoid race conditions.
 */
 
-#define GAP_HOOK_LOOP(member, argument)                                      \
+#define GAP_HOOK_LOOP(member, ...)                                           \
     do {                                                                     \
-        Int i;                                                               \
+        Int                       i;                                         \
         struct InterpreterHooks * hook;                                      \
         for (i = 0; i < HookCount; ++i) {                                    \
             hook = activeHooks[i];                                           \
             if (hook && hook->member) {                                      \
-                (hook->member)(argument);                                    \
+                (hook->member)(__VA_ARGS__);                                 \
             }                                                                \
         }                                                                    \
-    } while(0)
+    } while (0)
 
-static inline void VisitStatIfHooked(Stat stat)
+EXPORT_INLINE void VisitStatIfHooked(Stat stat)
 {
     GAP_HOOK_LOOP(visitStat, stat);
 }
 
-static inline void HookedLineIntoFunction(Obj func)
+EXPORT_INLINE void HookedLineIntoFunction(Obj func)
 {
     GAP_HOOK_LOOP(enterFunction, func);
 }
 
 
-static inline void HookedLineOutFunction(Obj func)
+EXPORT_INLINE void HookedLineOutFunction(Obj func)
 {
     GAP_HOOK_LOOP(leaveFunction, func);
 }
 
-static inline void RegisterStatWithHook(Stat func)
+EXPORT_INLINE void RegisterStatWithHook(Stat func)
 {
     GAP_HOOK_LOOP(registerStat, func);
+}
+
+EXPORT_INLINE void InterpreterHook(Int file, Int line, Int skipped)
+{
+    GAP_HOOK_LOOP(registerInterpretedStat, file, line);
+    if (!skipped) {
+        GAP_HOOK_LOOP(visitInterpretedStat, file, line);
+    }
 }
 
 

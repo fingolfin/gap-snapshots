@@ -1,10 +1,5 @@
 #############################################################################
 ##
-#W  arithlst.tst                GAP library                     Thomas Breuer
-##
-##
-#Y  Copyright (C)  2000,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-##
 ##  Exclude from testinstall.g because it runs too long.
 ##
 gap> START_TEST("arithlst.tst");
@@ -72,7 +67,3 @@ gap> TestOfAdditiveListArithmetic( LieAlgebra( GF(3)^[2,2] ), 4 );
 # gap> TestOfAdditiveListArithmetic( blockmats, 4 );
 # gap> TestOfMultiplicativeListArithmetic( blockmats, 4 );
 gap> STOP_TEST( "arithlst.tst", 1);
-
-#############################################################################
-##
-#E

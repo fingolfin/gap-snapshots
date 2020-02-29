@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  vecmat.gi                   GAP Library                      Frank Celler
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains  the basic methods for  creating and doing  arithmetic
 ##  with GF2 vectors and matrices.
@@ -585,11 +586,6 @@ InstallOtherMethod( \[\], "for GF2 matrix",
       IsPosInt ],
     ELM_GF2MAT );
 
-InstallMethod( \[\], "for GF2 matrix",
-    [ IsGF2MatrixRep,
-      IsPosInt, IsPosInt ],
-    MAT_ELM_GF2MAT );
-
 
 #############################################################################
 ##
@@ -608,13 +604,6 @@ InstallOtherMethod( \[\]\:\=,
       IsPosInt,
       IsObject ],
     ASS_GF2MAT );
-
-InstallMethod( \[\]\:\=,
-    "for GF2 matrix",
-    [ IsGF2MatrixRep,
-      IsPosInt, IsPosInt,
-      IsObject ],
-    SET_MAT_ELM_GF2MAT );
 
 
 #############################################################################
@@ -680,10 +669,10 @@ InstallMethod( PrintObj,
 function( mat )
     local   i, j;
     Print( "\>\>[ \>\>" );
-    for i  in [ 1 .. Length(mat) ]  do
+    for i  in [ 1 .. NrRows(mat) ]  do
         if 1 < i  then Print( "\<,\< \>\>" );  fi;
         Print( "\>\>[ \>\>" );
-        for j  in [ 1 .. Length(mat[i]) ]  do
+        for j  in [ 1 .. NrCols(mat) ]  do
             if 1 < j  then Print( "\<,\< \>\>" );  fi;
             Print( mat[i][j] );
         od;
@@ -704,19 +693,11 @@ InstallMethod( ViewObj,
     0,
 
 function( mat )
-    if Length(mat) = 0  then
-        if IsMutable(mat)  then
-            Print( "<a 0x0 matrix over GF2>" );
-        else
-            Print( "<an immutable 0x0 matrix over GF2>" );
-        fi;
+    if IsMutable(mat)  then
+        Print("<a ",NrRows(mat),"x",NrCols(mat)," matrix over GF2>");
     else
-        if IsMutable(mat)  then
-            Print("<a ",Length(mat),"x",Length(mat[1])," matrix over GF2>");
-        else
-            Print( "<an immutable ", Length(mat), "x", Length(mat[1]),
-                   " matrix over GF2>" );
-        fi;
+        Print( "<an immutable ", NrRows(mat), "x", NrCols(mat),
+               " matrix over GF2>" );
     fi;
 end );
 
@@ -875,7 +856,7 @@ InstallMethod( InverseSameMutability,
     fi;
     if IsMutable(m) then
         if not IsMutable(m[1]) then
-            for i in [1..Length(m)] do
+            for i in [1..NrRows(m)] do
                 MakeImmutable(inv[i]);
             od;
         fi;
@@ -925,8 +906,8 @@ InstallMethod( OneOp,
         0,
         function(mat)
     local len;
-    len := Length(mat);
-    if len <> Length(mat[1]) then
+    len := NrRows(mat);
+    if len <> NrCols(mat) then
         return fail;
     fi;
     return GF2IdentityMatrix(len, 0);
@@ -944,8 +925,8 @@ InstallMethod( One,
     0,
         function(mat)
     local len;
-    len := Length(mat);
-    if len <> Length(mat[1]) then
+    len := NrRows(mat);
+    if len <> NrCols(mat) then
         return fail;
     fi;
     return GF2IdentityMatrix(len, 2);
@@ -963,11 +944,11 @@ InstallMethod( OneSameMutability,
     0,
         function(mat)
     local len,row1;
-    len := Length(mat);
-    row1 := mat[1];
-    if len <> Length(row1) then
+    len := NrRows(mat);
+    if len <> NrCols(mat) then
         return fail;
     fi;
+    row1 := mat[1];
     if not IsMutable(mat) then
         return GF2IdentityMatrix(len, 2);
     elif IsMutable(mat) and not IsMutable(row1) then
@@ -1608,7 +1589,7 @@ local sf, rep, ind, ind2, row, i,big,l;
   # get the indices of the rows that need changing the representation.
   ind:=[]; # rows to convert
   ind2:=[]; # rows to rebuild 
-  for i in [1..Length(matrix)] do
+  for i in [1..NrRows(matrix)] do
     if not rep(matrix[i]) then
       if big or IsLockedRepresentationVector(matrix[i]) 
         or (IsMutable(matrix[i]) and not change) then
@@ -1809,13 +1790,13 @@ end);
 
 #############################################################################
 ##
-#M  MultRowVector( <vl>, <mul>)
+#M  MultVector( <vl>, <mul>)
 ##
 
-InstallOtherMethod( MultRowVector, "for GF(2) vector and char 2 scalar",
+InstallOtherMethod( MultVector, "for GF(2) vector and char 2 scalar",
         IsCollsElms, [IsGF2VectorRep and IsRowVector and IsMutable,
                 IsFFE], 0,
-        MULT_ROW_VECTOR_GF2VECS_2);
+        MULT_VECTOR_GF2VECS_2);
 
 #############################################################################
 ##
@@ -2357,26 +2338,19 @@ InstallMethod( Vector, "for a list of gf2 elements and a gf2 vector",
     ConvertToVectorRep(r,2);
     return r;
   end );
-InstallMethod( Randomize, "for a mutable gf2 vector",
-  [ IsGF2VectorRep and IsMutable ],
-  function( v ) 
+
+InstallMethodWithRandomSource( Randomize,
+    "for a random source and a mutable gf2 vector",
+    [ IsRandomSource, IsGF2VectorRep and IsMutable ],
+  function( rs, v )
     local i;
-    MultRowVector(v,0);
-    for i in [1..Length(v)] do 
-        if Random(0,1) = 1 then v[i] := Z(2); fi;
-    od;
-    return v;
-  end );
-InstallMethod( Randomize, "for a mutable gf2 vector and a random source",
-  [ IsGF2VectorRep and IsMutable, IsRandomSource ],
-  function( v, rs ) 
-    local i;
-    MultRowVector(v,0);
+    MultVector(v,0);
     for i in [1..Length(v)] do 
         if Random(rs,0,1) = 1 then v[i] := Z(2); fi;
     od;
     return v;
   end );
+
 InstallMethod( MutableCopyMat, "for a gf2 matrix",
   [ IsGF2MatrixRep ],
   function( m )
@@ -2390,7 +2364,7 @@ InstallMethod( MatElm, "for a gf2 matrix and two integers",
   [ IsGF2MatrixRep, IsPosInt, IsPosInt ],
   MAT_ELM_GF2MAT );
 InstallMethod( SetMatElm, "for a gf2 matrix, two integers, and a ffe",
-  [ IsGF2MatrixRep, IsPosInt, IsPosInt, IsFFE ],
+  [ IsGF2MatrixRep and IsMutable, IsPosInt, IsPosInt, IsFFE ],
   SET_MAT_ELM_GF2MAT );
 
 InstallMethod( Matrix, "for a list of vecs, an integer, and a gf2 mat",
@@ -2476,19 +2450,12 @@ end );
 
 
 
-InstallMethod( Randomize, "for a mutable gf2 matrix",
-  [IsGF2MatrixRep and IsMutable],
-  function( m )
+InstallMethodWithRandomSource( Randomize,
+    "for a random source and a mutable gf2 matrix",
+    [ IsRandomSource, IsGF2MatrixRep and IsMutable ],
+  function( rs, m )
     local v;
-    for v in m do Randomize(v); od;
-    return m;
-  end );
-
-InstallMethod( Randomize, "for a mutable gf2 matrix, and a random source",
-  [IsGF2MatrixRep and IsMutable, IsRandomSource],
-  function( m, rs )
-    local v;
-    for v in m do Randomize(v,rs); od;
+    for v in m do Randomize( rs, v ); od;
     return m;
   end );
 
@@ -2504,20 +2471,6 @@ InstallMethod( Unpack, "for a gf2 vector",
 InstallOtherMethod( KroneckerProduct, "for two gf2 matrices",
   [IsGF2MatrixRep and IsMatrix, IsGF2MatrixRep and IsMatrix],
   KRONECKERPRODUCT_GF2MAT_GF2MAT );
-
-InstallMethod( Fold, "for a gf2 vector, a positive int, and a gf2 matrix",
-  [ IsVectorObj and IsGF2VectorRep, IsPosInt, IsGF2MatrixRep ],
-  function( v, rl, t )
-    local rows,i,tt,m;
-    m := [];
-    tt := ZeroVector(rl,v);
-    for i in [1..Length(v)/rl] do
-        CopySubVector(v,tt,[(i-1)*rl+1..i*rl],[1..rl]);
-        Add(m,ShallowCopy(tt)); 
-    od;
-    ConvertToMatrixRep(m,2);
-    return m;
-  end );
 
 InstallMethod( ConstructingFilter, "for a gf2 vector",
   [ IsGF2VectorRep ], function(v) return IsGF2VectorRep; end );
@@ -2662,9 +2615,3 @@ InstallMethod( NewCompanionMatrix,
     od;
     return ll;
   end );
-
-
-#############################################################################
-##
-#E
-##

@@ -3,7 +3,7 @@
   
   [33X[0;0YThe  functionality  of  [5XGAP[105X can be extended by loading [5XGAP[105X packages. The [5XGAP[105X
   distribution  already  contains  all currently redistributed [5XGAP[105X packages in
-  the [11Xgap-4.10.2/pkg[111X directory.[133X
+  the [11Xgap-4.11.0/pkg[111X directory.[133X
   
   [33X[0;0Y[5XGAP[105X packages are written by (groups of) [5XGAP[105X users who may not necessarily be
   members of the [5XGAP[105X developer team. The responsibility and copyright of a [5XGAP[105X
@@ -962,7 +962,7 @@
   should have no trouble in producing one.[133X
   
   [33X[0;0YMoreover,  using  the  [5XGAPDoc[105X  package,  it is also possible to produce HTML
-  version  of  the  documentation supporting MathJax ([7Xhttp://www.mathjax.org/[107X)
+  version  of  the documentation supporting MathJax ([7Xhttps://www.mathjax.org/[107X)
   for  the  high  quality  rendering  of mathematical symbols while viewing it
   online.  For  example,  if  you  are viewing the HTML version of the manual,
   compare how this formula will look with MathJax turned on/off:[133X
@@ -1146,9 +1146,9 @@
   
   [33X[0;0YTo  protect a function or variable against overwriting there is the function
   [2XBindGlobal[102X  ([14X4.9-8[114X),  or  alternatively  (and equivalently) you may define a
-  global    function    via    a    [2XDeclareGlobalFunction[102X    ([14X79.18-14[114X)    and
-  [2XInstallGlobalFunction[102X   ([14X79.18-14[114X)   pair   or   a  global  variable  via  a
-  [2XDeclareGlobalVariable[102X ([14X79.18-15[114X) and [2XInstallValue[102X ([14X79.18-16[114X) pair. There are
+  global     function    via    a    [2XDeclareGlobalFunction[102X    ([14X79.10-4[114X)    and
+  [2XInstallGlobalFunction[102X   ([14X79.10-4[114X)   pair   or   a   global  variable  via  a
+  [2XDeclareGlobalVariable[102X  ([14X79.10-1[114X)  and [2XInstallValue[102X ([14X79.10-2[114X) pair. There are
   also  operations  and their methods, and related objects like attributes and
   filters which also have [10XDeclare...[110X and [10XInstall...[110X pairs.[133X
   
@@ -1175,7 +1175,7 @@
   variable names.[133X
   
   [33X[0;0YOn   the   other   hand,   operations   and   their   methods  (defined  via
-  [2XDeclareOperation[102X  ([14X79.18-12[114X),  [2XInstallMethod[102X  ([14X78.2-1[114X) etc. pairs) and their
+  [2XDeclareOperation[102X  ([14X78.1-5[114X),  [2XInstallMethod[102X  ([14X78.3-1[114X)  etc. pairs)  and their
   relatives  do  not  need  this  consideration, as they avoid name clashes by
   allowing for more than one [21Xmethod[121X for the same-named object.[133X
   
@@ -1673,7 +1673,7 @@
   between  versions  "4.4.12",  "4.5.1"  and  "4.5.2"  than  between  versions
   "2008.12.17",  "2011.04.15"  and  "2011.09.14". The concept of using version
   numbers  to  convey the meaning of the status of the code and the way it has
-  been  modified  is  known as [21XSemantic Versioning[121X, see [7Xhttp://semver.org/[107X for
+  been  modified  is known as [21XSemantic Versioning[121X, see [7Xhttps://semver.org/[107X for
   further recommendations on its use.[133X
   
   [33X[0;0YSince  version  information  is  duplicated in several places throughout the
@@ -1892,15 +1892,20 @@
   [4X[32X  Example  [32X[104X
     [4X[28XYou should start GAP4 using `gap -A -x 80 -r -m 100m -o 1g -K 2g'.[128X[104X
     [4X[28X[128X[104X
-    [4X[28XArchitecture: x86_64-apple-darwin15.6.0-gcc-6-default64[128X[104X
+    [4X[28XArchitecture: SOMETHING-SOMETHING-gcc-default64[128X[104X
     [4X[28X[128X[104X
-    [4X[28Xtesting: /Users/alexk/GITREPS/gap/tst/testinstall/alghom.tst[128X[104X
-    [4X[28X     140 msec for alghom.tst        [128X[104X
-    [4X[28Xtesting: /Users/alexk/GITREPS/gap/tst/testinstall/algmat.tst[128X[104X
-    [4X[28X    1309 msec for algmat.tst        [128X[104X
-    [4X[28Xtesting: /Users/alexk/GITREPS/gap/tst/testinstall/algsc.tst[128X[104X
-    [4X[28X     500 msec for algsc.tst         [128X[104X
-    [4X[28X... further lines deleted ...[128X[104X
+    [4X[28Xtesting: ..../gap-4.X.Y/tst/testinstall/alghom.tst[128X[104X
+    [4X[28X      84 ms (55 ms GC) and 2.90MB allocated for alghom.tst[128X[104X
+    [4X[28Xtesting: ..../gap-4.X.Y/tst/testinstall/algmat.tst[128X[104X
+    [4X[28X     839 ms (114 ms GC) and 219MB allocated for algmat.tst[128X[104X
+    [4X[28X[ further lines deleted ][128X[104X
+    [4X[28Xtesting: ..../gap-4.X.Y/tst/testinstall/zmodnze.tst[128X[104X
+    [4X[28X     127 ms (119 ms GC) and 1.29MB allocated for zmodnze.tst[128X[104X
+    [4X[28X-----------------------------------[128X[104X
+    [4X[28Xtotal     62829 ms (24136 ms GC) and 8.61GB allocated[128X[104X
+    [4X[28X              0 failures in 252 files[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X#I  No errors detected while testing[128X[104X
   [4X[32X[104X
   
   [33X[0;0Y(optionally,  you may start [5XGAP[105X with the command line options which you will
@@ -1965,7 +1970,7 @@
   restrictive  (for  instance  forbidding  redistribution  for profit) or less
   restrictive  (allowing  your  software  to  be  incorporated into commercial
   software).  See [21XChoosing a License for the Distribution of Your Package[121X from
-  [7Xhttp://www.gap-system.org/Packages/Authors/authors.html[107X       and       also
+  [7Xhttps://www.gap-system.org/Packages/Authors/authors.html[107X       and      also
   [7Xhttps://choosealicense.com/[107X for further details.[133X
   
   [33X[0;0YIn  the  past  many  [5XGAP[105X  packages  used  the  text  [21XWe  adopt the copyright
@@ -1975,7 +1980,7 @@
   
   [33X[0;0Y[13X  [5Xpackagename[105X  is  free  software;  you can redistribute it and/or modify it
   under     the     terms     of    the    GNU    General    Public    License
-  ([7Xhttp://www.fsf.org/licenses/gpl.html[107X)  as  published  by  the Free Software
+  ([7Xhttps://www.fsf.org/licenses/gpl.html[107X)  as  published  by the Free Software
   Foundation;  either  version 2 of the License, or (at your option) any later
   version. [113X and also including a copy of the full text of the license.[133X
   
@@ -2084,7 +2089,7 @@
   version from it).[133X
   
   [33X[0;0YPlease  also  consider submitting your package to the [5XGAP[105X package refereeing
-  process   (see  [7Xhttp://www.gap-system.org/Contacts/submit.html[107X  for  further
+  process  (see  [7Xhttps://www.gap-system.org/Contacts/submit.html[107X  for  further
   information).[133X
   
   [33X[0;0YFor  packages  hosted  on GitHub publishing package release and establishing

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Hashmaps">
+<Heading>Hashmaps</Heading>
+
+<P/>
+ A hash map stores key-value pairs and allows efficient lookup of keys
+ by using a hash function.<P/>
+<P/>
+ <Package>datastructures</Package> currently provides a reference implementation
+ of hashmaps using a hashtable stored in a plain &GAP; list.
+<P/>
+<Section Label="Chapter_Hashmaps_Section_API">
+<Heading>API</Heading>
+
+<P/>
+<ManSection>
+  <Filt Arg="arg" Name="IsHashMap" Label="for IsObject and IsFinite"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+ Category of hash maps
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="[hashfunc[, eqfunc]] [capacity]" Name="HashMap" />
+ <Description>
+ Create a new hash map. The optional argument <A>hashfunc</A> must be a hash-
+ function , <A>eqfunc</A> must
+ be a binary equality testing function that returns <K>true</K> if the two arguments
+ are considered equal, and <K>false</K> if they are not. Refer to Chapter
+ <Ref Chap="Chapter_HashFunctions"/> about the requirements for hashfunctions and
+ equality testers.
+ The optional argument <A>capacity</A> determines the initial size of the hashmap.
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="h" Name="Keys" Label="for IsHashMap"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ Returns the list of keys of the hashmap <A>h</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="h" Name="Values" Label="for IsHashMap"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ Returns the set of values stored in the hashmap <A>h</A>. 
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="h" Name="KeyIterator" Label="for IsHashMap"/>
+ <Returns>an iterator
+</Returns>
+ <Description>
+ Returns an interator for the keys stored in the hashmap <A>h</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="h" Name="ValueIterator" Label="for IsHashMap"/>
+ <Returns>an iterator
+</Returns>
+ <Description>
+ Returns an interator for the values stored in the hashmap <A>h</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="h" Name="KeyValueIterator" Label="for IsHashMap"/>
+ <Returns>an iterator
+</Returns>
+ <Description>
+ Returns an interator for key-value-pairs stored in the hashmap <A>h</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="hashmap, object" Name="\[\]" Label="for IsHashMapRep, IsObject"/>
+ <Description>
+ List-style access for hashmaps.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="hashmap, object, object" Name="\[\]\:\=" Label="for IsHashMapRep, IsObject, IsObject"/>
+ <Description>
+ List-style assignment for hashmaps.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="object, hashmap" Name="\in" Label="for IsObject, IsHashMapRep"/>
+ <Description>
+ Test whether a key is stored in the hashmap.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="object, hashmap" Name="IsBound\[\]" Label="for IsHashMapRep, IsObject"/>
+ <Description>
+ Test whether a key is stored in the hashmap.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="object, hashmap" Name="Unbind\[\]" Label="for IsHashMapRep, IsObject"/>
+ <Description>
+ Delete a key from a hashmap.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="hashmap" Name="Size" Label="for IsHashMapRep"/>
+ <Description>
+ Determine the number of keys stored in a hashmap.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="object, hashmap" Name="IsEmpty" Label="for IsHashMapRep"/>
+ <Description>
+ Test whether a hashmap is empty.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+</Chapter>
+

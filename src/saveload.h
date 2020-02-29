@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  saveload.h                  GAP source                   Steve Linton
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares the functions concerned with saving and loading
 **  the workspace. There are support functions in gasman.c and elsewhere
@@ -31,32 +31,27 @@
 **  The return value is either True or Fail
 */
 
-extern Obj SaveWorkspace( Obj fname );
+Obj SaveWorkspace(Obj fname);
 
-extern void LoadWorkspace( Char *fname);
+void LoadWorkspace(Char * fname);
 
-extern void SaveUInt1(UInt1 x);
-extern void SaveUInt2(UInt2 x);
-extern void SaveUInt4(UInt4 x);
-extern void SaveUInt(UInt x);
-#ifdef SYS_IS_64_BIT
-extern void SaveUInt8(UInt8 x);
-#endif
-extern void SaveCStr(const Char *s);
-extern void SaveString(Obj string);
-extern void LoadString(Obj string);
-extern void SaveSubObj(Obj o);
+void SaveUInt1(UInt1 x);
+void SaveUInt2(UInt2 x);
+void SaveUInt4(UInt4 x);
+void SaveUInt(UInt x);
+void SaveUInt8(UInt8 x);
+void SaveCStr(const Char * s);
+void SaveString(Obj string);
+void LoadString(Obj string);
+void SaveSubObj(Obj o);
 
-extern UInt1 LoadUInt1( void );
-extern UInt2 LoadUInt2( void );
-extern UInt4 LoadUInt4( void );
-extern UInt LoadUInt( void );
-#ifdef SYS_IS_64_BIT
-extern UInt8 LoadUInt8( void);
-#endif
-extern void LoadCStr(Char *buf, UInt maxlen );
-extern Obj LoadSubObj( void );
-
+UInt1 LoadUInt1(void);
+UInt2 LoadUInt2(void);
+UInt4 LoadUInt4(void);
+UInt  LoadUInt(void);
+UInt8 LoadUInt8(void);
+void LoadCStr(Char * buf, UInt maxlen);
+Obj  LoadSubObj(void);
 
 
 /***************************************************************************

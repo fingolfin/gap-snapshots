@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  sparsevectorsorted.gi       GAP library                      Steve Linton
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Steve Linton.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains a constructor specifically for sparse vectors
 ##  in the sorted list representation and associated arithmetic methods
@@ -74,7 +75,7 @@ InstallGlobalFunction(SparseVectorBySortedList, function(arg)
     return l;
 end);
 
-## AddRowVector, MultRowVector
+## AddRowVector, MultVector
 ## products with scalars, scalar product, AddCoeffs, MultCoeffs,
 ##  more coeffs functions
 ## maybe product with matrices
@@ -267,9 +268,9 @@ InstallMethod(DIFF, [IsSparseRowVector and IsSparseListBySortedListRep, IsSparse
         function(v1,v2) return SUM(v1, AINV(v2)); end);
 
 
-InstallOtherMethod( MultRowVector, [IsSparseRowVector and IsSparseListBySortedListRep and IsMutable, IsMultiplicativeElement],
+InstallOtherMethod( MultVector, [IsSparseRowVector and IsSparseListBySortedListRep and IsMutable, IsMultiplicativeElement],
         function(v,x)
-    MultRowVector(v![SL_VALS],x);
+    MultVector(v![SL_VALS],x);
 end);
 
 InstallMethod( \*, [IsSparseRowVector and IsSparseListBySortedListRep, IsMultiplicativeElement],

@@ -1,0 +1,80 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Preliminaries}}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Definition and examples}}{3}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}\leavevmode {\color {Chapter }IsSkewbrace (for IsAttributeStoringRep)}}{3}{subsection.1.1.1}
+\contentsline {subsection}{\numberline {1.1.2}\leavevmode {\color {Chapter }Skewbrace (for IsList)}}{3}{subsection.1.1.2}
+\contentsline {subsection}{\numberline {1.1.3}\leavevmode {\color {Chapter }SmallSkewbrace (for IsInt, IsInt)}}{3}{subsection.1.1.3}
+\contentsline {subsection}{\numberline {1.1.4}\leavevmode {\color {Chapter }TrivialBrace (for IsGroup)}}{4}{subsection.1.1.4}
+\contentsline {subsection}{\numberline {1.1.5}\leavevmode {\color {Chapter }TrivialSkewbrace (for IsGroup)}}{4}{subsection.1.1.5}
+\contentsline {subsection}{\numberline {1.1.6}\leavevmode {\color {Chapter }SmallBrace (for IsInt, IsInt)}}{4}{subsection.1.1.6}
+\contentsline {subsection}{\numberline {1.1.7}\leavevmode {\color {Chapter }IdSkewbrace (for IsSkewbrace)}}{4}{subsection.1.1.7}
+\contentsline {subsection}{\numberline {1.1.8}\leavevmode {\color {Chapter }AutomorphismGroup (for IsSkewbrace)}}{4}{subsection.1.1.8}
+\contentsline {subsection}{\numberline {1.1.9}\leavevmode {\color {Chapter }IdBrace (for IsSkewbrace)}}{5}{subsection.1.1.9}
+\contentsline {subsection}{\numberline {1.1.10}\leavevmode {\color {Chapter }IsomorphismSkewbraces}}{5}{subsection.1.1.10}
+\contentsline {subsection}{\numberline {1.1.11}\leavevmode {\color {Chapter }DirectProductSkewbraces (for IsSkewbrace, IsSkewbrace)}}{5}{subsection.1.1.11}
+\contentsline {subsection}{\numberline {1.1.12}\leavevmode {\color {Chapter }DirectProductOp (for IsList, IsSkewbrace)}}{6}{subsection.1.1.12}
+\contentsline {subsection}{\numberline {1.1.13}\leavevmode {\color {Chapter }IsTwoSided (for IsSkewbrace)}}{6}{subsection.1.1.13}
+\contentsline {subsection}{\numberline {1.1.14}\leavevmode {\color {Chapter }IsAutomorphismGroupOfSkewbrace (for IsAutomorphismGroup)}}{6}{subsection.1.1.14}
+\contentsline {subsection}{\numberline {1.1.15}\leavevmode {\color {Chapter }IsClassical (for IsSkewbrace)}}{6}{subsection.1.1.15}
+\contentsline {subsection}{\numberline {1.1.16}\leavevmode {\color {Chapter }IsOfAbelianType (for IsSkewbrace)}}{6}{subsection.1.1.16}
+\contentsline {subsection}{\numberline {1.1.17}\leavevmode {\color {Chapter }IsBiSkewbrace (for IsSkewbrace)}}{6}{subsection.1.1.17}
+\contentsline {subsection}{\numberline {1.1.18}\leavevmode {\color {Chapter }IsOfNilpotentType (for IsSkewbrace)}}{7}{subsection.1.1.18}
+\contentsline {subsection}{\numberline {1.1.19}\leavevmode {\color {Chapter }IsTrivialSkewbrace (for IsSkewbrace)}}{7}{subsection.1.1.19}
+\contentsline {subsection}{\numberline {1.1.20}\leavevmode {\color {Chapter }Skewbrace2YB (for IsSkewbrace)}}{7}{subsection.1.1.20}
+\contentsline {subsection}{\numberline {1.1.21}\leavevmode {\color {Chapter }Brace2YB (for IsSkewbrace)}}{7}{subsection.1.1.21}
+\contentsline {subsection}{\numberline {1.1.22}\leavevmode {\color {Chapter }SkewbraceSubset2YB (for IsSkewbrace, IsCollection)}}{7}{subsection.1.1.22}
+\contentsline {subsection}{\numberline {1.1.23}\leavevmode {\color {Chapter }SemidirectProduct (for IsSkewbrace, IsSkewbrace, IsGeneralMapping)}}{8}{subsection.1.1.23}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Algebraic Properties of Braces}}{9}{chapter.2}
+\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }Braces and Radical Rings}}{9}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}\leavevmode {\color {Chapter }AdditiveGroupOfRing (for IsRing)}}{9}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}\leavevmode {\color {Chapter }IsJacobsonRadical (for IsRing)}}{9}{subsection.2.1.2}
+\contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter }Braces and Yang-Baxter Equation}}{9}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}\leavevmode {\color {Chapter }Evaluate (for IsYB, IsList)}}{9}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}\leavevmode {\color {Chapter }LyubashenkoYB (for IsInt, IsPerm, IsPerm)}}{10}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}\leavevmode {\color {Chapter }DehornoyClass (for IsYB)}}{10}{subsection.2.2.3}
+\contentsline {subsection}{\numberline {2.2.4}\leavevmode {\color {Chapter }DehornoyRepresentationOfStructureGroup (for IsYB, IsObject)}}{10}{subsection.2.2.4}
+\contentsline {subsection}{\numberline {2.2.5}\leavevmode {\color {Chapter }IdYB (for IsYB)}}{11}{subsection.2.2.5}
+\contentsline {subsection}{\numberline {2.2.6}\leavevmode {\color {Chapter }LinearRepresentationOfStructureGroup (for IsYB)}}{11}{subsection.2.2.6}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Ideals and left ideals}}{12}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Left ideals}}{12}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }LeftIdeals (for IsSkewbrace)}}{12}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}\leavevmode {\color {Chapter }StrongLeftIdeals (for IsSkewbrace)}}{12}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}\leavevmode {\color {Chapter }IsLeftIdeal (for IsSkewbrace, IsCollection)}}{12}{subsection.3.1.3}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }Ideals}}{13}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }IsIdeal (for IsSkewbrace, IsCollection)}}{13}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }Ideals (for IsSkewbrace)}}{13}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}\leavevmode {\color {Chapter }AsIdeal (for IsSkewbrace, IsCollection)}}{13}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}\leavevmode {\color {Chapter }IdealGeneratedBy (for IsSkewbrace, IsCollection)}}{13}{subsection.3.2.4}
+\contentsline {subsection}{\numberline {3.2.5}\leavevmode {\color {Chapter }IntersectionOfTwoIdeals (for IsSkewbrace and IsIdealInParent, IsSkewbrace and IsIdealInParent)}}{13}{subsection.3.2.5}
+\contentsline {subsection}{\numberline {3.2.6}\leavevmode {\color {Chapter }SumOfTwoIdeals (for IsSkewbrace and IsIdealInParent, IsSkewbrace and IsIdealInParent)}}{14}{subsection.3.2.6}
+\contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }Sequences (left) ideals}}{14}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}\leavevmode {\color {Chapter }LeftSeries (for IsSkewbrace)}}{14}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}\leavevmode {\color {Chapter }RightSeries (for IsSkewbrace)}}{14}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}\leavevmode {\color {Chapter }IsLeftNilpotent (for IsSkewbrace)}}{15}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}\leavevmode {\color {Chapter }IsSimpleSkewbrace (for IsSkewbrace)}}{15}{subsection.3.3.4}
+\contentsline {subsection}{\numberline {3.3.5}\leavevmode {\color {Chapter }IsRightNilpotent (for IsSkewbrace)}}{15}{subsection.3.3.5}
+\contentsline {subsection}{\numberline {3.3.6}\leavevmode {\color {Chapter }LeftNilpotentIdeals (for IsSkewbrace)}}{15}{subsection.3.3.6}
+\contentsline {subsection}{\numberline {3.3.7}\leavevmode {\color {Chapter }RightNilpotentIdeals (for IsSkewbrace)}}{15}{subsection.3.3.7}
+\contentsline {subsection}{\numberline {3.3.8}\leavevmode {\color {Chapter }SmoktunowiczSeries (for IsSkewbrace, IsInt)}}{16}{subsection.3.3.8}
+\contentsline {subsection}{\numberline {3.3.9}\leavevmode {\color {Chapter }Socle (for IsSkewbrace)}}{16}{subsection.3.3.9}
+\contentsline {section}{\numberline {3.4}\leavevmode {\color {Chapter }Mutipermutation skew braces}}{16}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}\leavevmode {\color {Chapter }SocleSeries (for IsSkewbrace)}}{16}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}\leavevmode {\color {Chapter }MultipermutationLevel (for IsSkewbrace)}}{16}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}\leavevmode {\color {Chapter }IsMultipermutation (for IsSkewbrace)}}{17}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}\leavevmode {\color {Chapter }Fix (for IsSkewbrace)}}{17}{subsection.3.4.4}
+\contentsline {subsection}{\numberline {3.4.5}\leavevmode {\color {Chapter }KernelOfLambda (for IsSkewbrace)}}{17}{subsection.3.4.5}
+\contentsline {subsection}{\numberline {3.4.6}\leavevmode {\color {Chapter }Quotient (for IsSkewbrace, IsSkewbrace)}}{17}{subsection.3.4.6}
+\contentsline {section}{\numberline {3.5}\leavevmode {\color {Chapter }Prime and semiprime ideals}}{17}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}\leavevmode {\color {Chapter }IsPrimeBrace (for IsSkewbrace)}}{17}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}\leavevmode {\color {Chapter }IsPrimeIdeal (for IsSkewbrace and IsIdealInParent)}}{18}{subsection.3.5.2}
+\contentsline {subsection}{\numberline {3.5.3}\leavevmode {\color {Chapter }PrimeIdeals (for IsSkewbrace)}}{18}{subsection.3.5.3}
+\contentsline {subsection}{\numberline {3.5.4}\leavevmode {\color {Chapter }IsSemiprime (for IsSkewbrace)}}{18}{subsection.3.5.4}
+\contentsline {subsection}{\numberline {3.5.5}\leavevmode {\color {Chapter }IsSemiprimeIdeal (for IsSkewbrace and IsIdealInParent)}}{18}{subsection.3.5.5}
+\contentsline {subsection}{\numberline {3.5.6}\leavevmode {\color {Chapter }SemiprimeIdeals (for IsSkewbrace)}}{19}{subsection.3.5.6}
+\contentsline {subsection}{\numberline {3.5.7}\leavevmode {\color {Chapter }BaerRadical (for IsSkewbrace)}}{19}{subsection.3.5.7}
+\contentsline {subsection}{\numberline {3.5.8}\leavevmode {\color {Chapter }IsBaer (for IsSkewbrace)}}{19}{subsection.3.5.8}
+\contentsline {subsection}{\numberline {3.5.9}\leavevmode {\color {Chapter }WedderburnRadical (for IsSkewbrace)}}{19}{subsection.3.5.9}
+\contentsline {subsection}{\numberline {3.5.10}\leavevmode {\color {Chapter }SolvableSeries (for IsSkewbrace)}}{19}{subsection.3.5.10}
+\contentsline {subsection}{\numberline {3.5.11}\leavevmode {\color {Chapter }IsMinimalIdeal (for IsSkewbrace and IsIdealInParent)}}{20}{subsection.3.5.11}
+\contentsline {subsection}{\numberline {3.5.12}\leavevmode {\color {Chapter }MinimalIdeals (for IsSkewbrace)}}{20}{subsection.3.5.12}
+\contentsline {chapter}{References}{21}{chapter*.2}
+\contentsline {chapter}{Index}{22}{section*.3}

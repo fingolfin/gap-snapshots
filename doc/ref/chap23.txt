@@ -334,15 +334,15 @@
     [4X[28X[ 6, 8, 10, 4 ][128X[104X
   [4X[32X[104X
   
-  [1X23.4-3 MultRowVector[101X
+  [1X23.4-3 MultVector[101X
   
-  [33X[1;0Y[29X[2XMultRowVector[102X( [3Xlist1[103X[, [3Xposs1[103X, [3Xlist2[103X, [3Xposs2[103X], [3Xmul[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMultVector[102X( [3Xlist1[103X, [3Xmul[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMultVectorLeft[102X( [3Xlist1[103X, [3Xmul[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
   
-  [33X[0;0YThe  five  argument  version  of  this operation replaces [3Xlist1[103X[10X[[110X[3Xposs1[103X[10X[[110X[22Xi[122X[10X]][110X by
-  [10X[3Xmul[103X[10X*[3Xlist2[103X[10X[[3Xposs2[103X[10X[[110X[22Xi[122X[10X]][110X for [22Xi[122X between [22X1[122X and [10XLength( [3Xposs1[103X[10X )[110X.[133X
+  [33X[0;0YThis operation calculates [3Xmul[103X*[3Xlist1[103X in-place.[133X
   
-  [33X[0;0YThe  two-argument version simply multiplies each element of [3Xlist1[103X, in-place,
-  by [3Xmul[103X.[133X
+  [33X[0;0YNote that [10XMultVector[110X is just a synonym for [10XMultVectorLeft[110X.[133X
   
   [1X23.4-4 CoeffsMod[101X
   

@@ -1,10 +1,12 @@
 #############################################################################
 ##
-#W  imf.gd                    GAP group library                Volkmar Felsch
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Volkmar Felsch.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1995,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains  the declarations of operations for the GAP library of
 ##  irreducible maximal finite integral matrix groups.
@@ -232,9 +234,3 @@ DeclareGlobalFunction( "OrbitShortVectors" );
 ##  The default value of n is 1.
 ##
 DeclareGlobalFunction( "IsomorphismPermGroupImfGroup" );
-
-
-#############################################################################
-##
-#E
-

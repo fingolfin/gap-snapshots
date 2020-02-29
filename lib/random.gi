@@ -1,10 +1,12 @@
 #############################################################################
 ##
-#W  random.gi                     GAP library                    Frank Lübeck
-#W                                                             Max Neunhöffer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Lübeck, Max Neunhöffer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2006 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file implements the basic operations for some types of random
 ##  sources.
@@ -315,5 +317,6 @@ end)();
 # This method must rank below Random(SomeRandomSource, IsList)
 # for any random source SomeRandomSource, to avoid an infinite loop.
 InstallMethodWithRandomSource( Random, "for a random source and a (finite) collection",
-    [ IsRandomSource, IsCollection and IsFinite ], -8,
+    [ IsRandomSource, IsCollection and IsFinite ],
+    {} -> -RankFilter(IsCollection and IsFinite),
     {rs, C} -> RandomList(rs, Enumerator( C ) ) );

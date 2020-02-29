@@ -29,7 +29,7 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version. For details, see 
 the file <F>LICENSE</F> in the root directory of the &GAP; distribution or see
-<URL>http://www.gnu.org/licenses/gpl.html</URL>.
+<URL>https://www.gnu.org/licenses/gpl.html</URL>.
 <P/>
 If you obtain &GAP; please send us a short notice to that effect, e.g.,
 an e-mail message to the address <Email>support@gap-system.org</Email>. 
@@ -37,7 +37,7 @@ This helps us to keep track of the number of &GAP; users.
 <P/>
 If you publish a mathematical result that was partly obtained using
 &GAP;, please cite &GAP;, just as you would cite another paper that you
-used (see below for sample citation). Also we would appreciate if you
+used (see below for a sample citation). Also we would appreciate if you
 could inform us about such a paper, which we will add to the &GAP;
 <URL Text="bibliography">https://www.gap-system.org/Doc/Bib/bib.html</URL>.
 <P/>
@@ -68,7 +68,7 @@ the following terms apply to the versions of &GAP; for Windows.
 <P/>
 The executable of &GAP; for Windows that we distribute was compiled with
 the <C>gcc</C> compiler supplied with <Package>Cygwin</Package> installation
-(<URL>http://cygwin.com/</URL>).
+(<URL>https://cygwin.com/</URL>).
 <P/>
 The GNU C compiler is
 <P/>
@@ -83,11 +83,11 @@ executable falls under the GPL too, which it does anyhow.
 <P/>
 The <F>cyggcc_s-1.dll</F>, <F>cygncurses-10.dll</F>, <F>cygncursesw-10.dll</F>,
 <F>cygpanel-10.dll</F>, <F>cygpopt-0.dll</F>, <F>cygreadline7.dll</F>,
-<F>cygstart.exe</F>, <F>cygwin1.dll</F>, <F>libW11.dll</F>, <F>mintty.exe</F>, 
-<F>rxvt.exe</F> and <F>regtool.exe</F> are taken unmodified from the 
+<F>cygstart.exe</F>, <F>cygwin1.dll</F>, <F>libW11.dll</F>, <F>mintty.exe</F> 
+and <F>regtool.exe</F> are taken unmodified from the 
 <Package>Cygwin</Package> distribution. They are copyright by RedHat Software
 and released under the GPL. For more information on <Package>Cygwin</Package>,
-see <URL>http://www.cygwin.com</URL>. 
+see <URL>https://www.cygwin.com</URL>.
 <P/>
 Please contact <Email>support@gap-system.org</Email> if you need further information.
 

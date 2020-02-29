@@ -1,53 +1,16 @@
 /****************************************************************************
 **
-*W  finfield.c                  GAP source                      Werner Nickel
-*W                                                         & Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the  functions  to compute  with elements  from  small
 **  finite fields.
 **
-**  Finite fields  are an  important   domain in computational   group theory
-**  because the classical matrix groups are defined over those finite fields.
-**  In GAP we  support  small  finite  fields  with  up  to  65536  elements,
-**  larger fields can be realized  as polynomial domains over smaller fields.
-**
-**  Elements in small finite fields are  represented  as  immediate  objects.
-**
-**      +----------------+-------------+---+
-**      |     <value>    |   <field>   |010|
-**      +----------------+-------------+---+
-**
-**  The least significant 3 bits of such an immediate object are always  010,
-**  flagging the object as an object of a small finite field.
-**
-**  The next 13 bits represent the small finite field where the element lies.
-**  They are simply an index into a global table of small finite fields.
-**
-**  The most significant 16 bits represent the value of the element.
-**
-**  If the  value is 0,  then the element is the  zero from the finite field.
-**  Otherwise the integer is the logarithm of this  element with respect to a
-**  fixed generator of the multiplicative group of the finite field plus one.
-**  In the following desriptions we denote this generator always with $z$, it
-**  is an element of order $o-1$, where $o$ is the order of the finite field.
-**  Thus 1 corresponds to $z^{1-1} = z^0 = 1$, i.e., the  one from the field.
-**  Likewise 2 corresponds to $z^{2-1} = z^1 = z$, i.e., the root itself.
-**
-**  This representation  makes multiplication very easy,  we only have to add
-**  the values and subtract 1 , because  $z^{a-1} * z^{b-1} = z^{(a+b-1)-1}$.
-**  Addition is reduced to * by the formula $z^a +  z^b = z^b * (z^{a-b}+1)$.
-**  This makes it neccessary to know the successor $z^a + 1$ of every value.
-**
-**  The  finite field  bag contains  the  successor for  every nonzero value,
-**  i.e., 'SUCC_FF(<ff>)[<a>]' is  the successor of  the element <a>, i.e, it
-**  is the  logarithm  of $z^{a-1} +   1$.  This list  is  usually called the
-**  Zech-Logarithm  table.  The zeroth  entry in the  finite field bag is the
-**  order of the finite field minus one.
+**  The concepts of this kernel module are documented in finfield.h
 */
 
 #include "finfield.h"
@@ -56,6 +19,7 @@
 #include "bool.h"
 #include "calls.h"
 #include "error.h"
+#include "finfield_conway.h"
 #include "gvars.h"
 #include "io.h"
 #include "lists.h"
@@ -65,170 +29,109 @@
 
 #ifdef HPCGAP
 #include "hpc/aobjects.h"
+#include "hpc/thread.h"
 #endif
 
+/****************************************************************************
+**
+*V  SuccFF  . . . . .  Tables for finite fields which are computed on demand
+*V  TypeFF
+*V  TypeFF0
+**
+**  SuccFF holds a plain list of successor lists.
+**  TypeFF holds the types of typical elements of the finite fields.
+**  TypeFF0 holds the types of the zero elements of the finite fields.
+*/
+
 Obj SuccFF;
+static Obj TypeFF;
+static Obj TypeFF0;
 
-Obj TypeFF;
-Obj TypeFF0;
 
+/****************************************************************************
+**
+*V  TYPE_FFE  . . . . . kernel copy of GAP function TYPE_FFE
+*V  TYPE_FFE0 . . . . . kernel copy of GAP function TYPE_FFE0
+**
+**  These GAP functions are called to compute types of finite field elemnents
+*/
 static Obj TYPE_FFE;
 static Obj TYPE_FFE0;
 
+/****************************************************************************
+**
+*V  PrimitiveRootMod
+**
+**  Local copy of GAP function PrimitiveRootMod, used when initializing new
+**  fields.
+*/
+static Obj PrimitiveRootMod;
+
 
 /****************************************************************************
 **
-*V  PolsFF  . . . . . . . . . .  list of Conway polynomials for finite fields
+*F  LookupPrimePower(<q>) . . . . . . . .  search for a prime power in tables
 **
-**  'PolsFF' is a  list of  Conway  polynomials for finite fields.   The even
-**  entries are the  proper prime powers,  odd entries are the  corresponding
-**  conway polynomials.
+**  Searches the tables of prime powers from ffdata.c for q, returns the
+**  index of q in SizeFF if it is present and 0 if not (the 0 position of
+**  SizeFF is unused).
 */
-unsigned long PolsFF[] = {
-       4, 1+2,
-       8, 1+2,
-      16, 1+2,
-      32, 1  +4,
-      64, 1+2  +8+16,
-     128, 1+2,
-     256, 1  +4+8+16,
-     512, 1      +16,
-    1024, 1+2+4+8   +32+64,
-    2048, 1  +4,
-    4096, 1+2  +8   +32+64+128,
-    8192, 1+2  +8+16,
-   16384, 1    +8   +32   +128,
-   32768, 1  +4  +16+32,
-   65536, 1  +4+8   +32,
-       9,  2 +2*3,
-      27,  1 +2*3,
-      81,  2           +2*27,
-     243,  1 +2*3,
-     729,  2 +2*3 +1*9       +2*81,
-    2187,  1      +2*9,
-    6561,  2 +2*3 +2*9       +1*81 +2*243,
-   19683,  1 +1*3 +2*9 +2*27,
-   59049,  2 +1*3            +2*81 +2*243 +2*729,
-      25,  2 +4*5,
-     125,  3 +3*5,
-     625,  2 +4*5 +4*25,
-    3125,  3 +4*5,
-   15625,  2      +1*25 +4*125 +1*625,
-      49,  3 +6*7,
-     343,  4      +6*49,
-    2401,  3 +4*7 +5*49,
-   16807,  4 +1*7,
-     121,  2 + 7*11,
-    1331,  9 + 2*11,
-   14641,  2 +10*11 +8*121,
-     169,  2 +12*13,
-    2197, 11 + 2*13,
-   28561,  2 +12*13 +3*169,
-     289,  3 +16*17,
-    4913, 14 + 1*17,
-     361,  2 +18*19,
-    6859, 17 + 4*19,
-     529,  5 +21*23,
-   12167, 18 + 2*23,
-     841,  2 +24*29,
-   24389, 27 + 2*29,
-     961,  3 +29*31,
-   29791, 28 + 1*31,
-    1369,  2 +33*37,
-   50653, 35 + 6*37,
-    1681,  6 + 38* 41,
-    1849,  3 + 42* 43,
-    2209,  5 + 45* 47,
-    2809,  2 + 49* 53,
-    3481,  2 + 58* 59,
-    3721,  2 + 60* 61,
-    4489,  2 + 63* 67,
-    5041,  7 + 69* 71,
-    5329,  5 + 70* 73,
-    6241,  3 + 78* 79,
-    6889,  2 + 82* 83,
-    7921,  3 + 82* 89,
-    9409,  5 + 96* 97,
-   10201,  2 + 97*101,
-   10609,  5 +102*103,
-   11449,  2 +103*107,
-   11881,  6 +108*109,
-   12769,  3 +101*113,
-   16129,  3 +126*127,
-   17161,  2 +127*131,
-   18769,  3 +131*137,
-   19321,  2 +138*139,
-   22201,  2 +145*149,
-   22801,  6 +149*151,
-   24649,  5 +152*157,
-   26569,  2 +159*163,
-   27889,  5 +166*167,
-   29929,  2 +169*173,
-   32041,  2 +172*179,
-   32761,  2 +177*181,
-   36481, 19 +190*191,
-   37249,  5 +192*193,
-   38809,  2 +192*197,
-   39601,  3 +193*199,
-   44521,  2 +207*211,
-   49729,  3 +221*223,
-   51529,  2 +220*227,
-   52441,  6 +228*229,
-   54289,  3 +232*233,
-   57121,  7 +237*239,
-   58081,  7 +238*241,
-   63001,  6 +242*251,
-};
-
-
-// used for successor bags
-static Obj TYPE_KERNEL_OBJECT;
-
-/****************************************************************************
-**
-*F  FiniteField(<p>,<d>)  . . . make the small finite field with <q> elements
-**
-**  'FiniteField' returns the small finite field with <p>^<d> elements.
-*/
-FF              FiniteField (
-    UInt                p,
-    UInt                d )
+static FF LookupPrimePower(UInt q)
 {
-    FF                  ff;             /* finite field, result            */
-    Obj                 tmp;            /* temporary bag                   */
-    Obj                 succBag;        /* successor table bag             */
-    FFV *               succ;           /* successor table                 */
-    FFV *               indx;           /* index table                     */
-    UInt                q;              /* size of finite field            */
-    UInt                poly;           /* Conway polynomial of extension  */
-    UInt                i, l, f, n, e;  /* loop variables                  */
-
-    /* calculate size of field */
-    q = 1;
-    for ( i = 1; i <= d; i++ ) q *= p;
+    UInt l, n;
+    FF   ff;
+    UInt e;
 
     /* search through the finite field table                               */
-    l = 1; n = NUM_SHORT_FINITE_FIELDS;
+    l = 1;
+    n = NUM_SHORT_FINITE_FIELDS;
     ff = 0;
     while (l <= n && SizeFF[l] <= q && q <= SizeFF[n]) {
-      /* interpolation search */
-      /* cuts iterations roughly in half compared to binary search at
-       * the expense of additional divisions. */
-      e = (q - SizeFF[l]+1) * (n-l) / (SizeFF[n]-SizeFF[l]+1);
-      ff = l + e;
-      if (SizeFF[ff] == q)
-        break;
-      if (SizeFF[ff] < q)
-        l = ff+1;
-      else
-        n = ff-1;
+        /* interpolation search */
+        /* cuts iterations roughly in half compared to binary search at
+         * the expense of additional divisions. */
+        e = (q - SizeFF[l] + 1) * (n - l) / (SizeFF[n] - SizeFF[l] + 1);
+        ff = l + e;
+        if (SizeFF[ff] == q)
+            break;
+        if (SizeFF[ff] < q)
+            l = ff + 1;
+        else
+            n = ff - 1;
     }
     if (ff < 1 || ff > NUM_SHORT_FINITE_FIELDS)
-      return 0;
-    if (CharFF[ff] != p)
-      return 0;
+        return 0;
     if (SizeFF[ff] != q)
-      return 0;
+        return 0;
+    return ff;
+}
+
+
+/****************************************************************************
+**
+*F  FiniteField(<p>,<d>) .  make the small finite field with <p>^<d> elements
+*F  FiniteFieldBySize(<q>) . .  make the small finite field with <q> elements
+**
+**  The work is done in the Lookup function above, and in FiniteFieldBySize
+**  where the successor tables are computed.
+*/
+
+FF FiniteFieldBySize(UInt q)
+{
+    FF    ff;            /* finite field, result            */
+    Obj   tmp;           /* temporary bag                   */
+    Obj   succBag;       /* successor table bag             */
+    FFV * succ;          /* successor table                 */
+    FFV * indx;          /* index table                     */
+    UInt  p;             /* characteristic of the field     */
+    UInt  poly;          /* Conway polynomial of extension  */
+    UInt  i, l, f, n, e; /* loop variables                  */
+    Obj   root;          /* will be a primitive root mod p  */
+
+    ff = LookupPrimePower(q);
+    if (!ff)
+        return 0;
+
 #ifdef HPCGAP
     /* Important correctness concern here:
      *
@@ -247,62 +150,77 @@ FF              FiniteField (
      * tables.
      */
     if (ATOMIC_ELM_PLIST(TypeFF0, ff))
-      return ff;
+        return ff;
 #else
     if (ELM_PLIST(TypeFF0, ff))
-      return ff;
+        return ff;
 #endif
 
-    /* allocate a bag for the successor table and one for a temporary         */
-    tmp  = NewBag( T_DATOBJ, sizeof(Obj) + q * sizeof(FFV) );
-    SET_TYPE_DATOBJ(tmp, TYPE_KERNEL_OBJECT );
+    // determine the characteristic of the field
+    p = CHAR_FF(ff);
 
-    succBag = NewBag( T_DATOBJ, sizeof(Obj) + q * sizeof(FFV) );
-    SET_TYPE_DATOBJ(succBag, TYPE_KERNEL_OBJECT );
+    /* allocate a bag for the successor table and one for a temporary */
+    tmp = NewKernelBuffer(sizeof(Obj) + q * sizeof(FFV));
+    succBag = NewKernelBuffer(sizeof(Obj) + q * sizeof(FFV));
 
-    indx = (FFV*)(1+ADDR_OBJ( tmp ));
-    succ = (FFV*)(1+ADDR_OBJ( succBag ));
+    indx = (FFV *)(1 + ADDR_OBJ(tmp));
+    succ = (FFV *)(1 + ADDR_OBJ(succBag));
 
     /* if q is a prime find the smallest primitive root $e$, use $x - e$   */
-    /*N 1990/02/04 mschoene there are few dumber ways to find prim. roots  */
-    if ( d == 1 ) {
-        for ( e = 1, i = 1; i != p-1; ++e ) {
-            for ( f = e, i = 1; f != 1; ++i )
-                f = (f * e) % p;
+
+    if (DEGR_FF(ff) == 1) {
+        if (p < 65537) {
+            /* for smaller primes we do this in the kernel for performance and
+            bootstrapping reasons
+            TODO -- review the threshold */
+            for (e = 1, i = 1; i != p - 1; ++e) {
+                for (f = e, i = 1; f != 1; ++i)
+                    f = (f * e) % p;
+            }
         }
-        poly = p-(e-1);
+        else {
+            /* Otherwise we ask the library */
+            root = CALL_1ARGS(PrimitiveRootMod, INTOBJ_INT(p));
+            e = INT_INTOBJ(root) + 1;
+        }
+        poly = p - (e - 1);
     }
 
     /* otherwise look up the polynomial used to construct this field       */
     else {
-        for ( i = 0; PolsFF[i] != q; i += 2 ) ;
-        poly = PolsFF[i+1];
+        for (i = 0; PolsFF[i] != q; i += 2)
+            ;
+        poly = PolsFF[i + 1];
     }
 
     /* construct 'indx' such that 'e = x^(indx[e]-1) % poly' for every e   */
-    indx[ 0 ] = 0;
-    for ( e = 1, n = 0; n < q-1; ++n ) {
-        indx[ e ] = n + 1;
+    indx[0] = 0;
+    for (e = 1, n = 0; n < q - 1; ++n) {
+        indx[e] = n + 1;
         /* e =p*e mod poly =x*e mod poly =x*x^n mod poly =x^{n+1} mod poly */
-        if ( p != 2 ) {
-            f = p * (e % (q/p));  l = ((p-1) * (e / (q/p))) % p;  e = 0;
-            for ( i = 1; i < q; i *= p )
-                e = e + i * ((f/i + l * (poly/i)) % p);
+        if (p != 2) {
+            f = p * (e % (q / p));
+            l = ((p - 1) * (e / (q / p))) % p;
+            e = 0;
+            for (i = 1; i < q; i *= p)
+                e = e + i * ((f / i + l * (poly / i)) % p);
         }
         else {
-            if ( 2*e & q )  e = 2*e ^ poly ^ q;
-            else            e = 2*e;
+            if (2 * e & q)
+                e = 2 * e ^ poly ^ q;
+            else
+                e = 2 * e;
         }
     }
 
     /* construct 'succ' such that 'x^(n-1)+1 = x^(succ[n]-1)' for every n  */
-    succ[ 0 ] = q-1;
-    for ( e = 1, f = p-1; e < q; e++ ) {
-        if ( e < f ) {
-            succ[ indx[e] ] = indx[ e+1 ];
+    succ[0] = q - 1;
+    for (e = 1, f = p - 1; e < q; e++) {
+        if (e < f) {
+            succ[indx[e]] = indx[e + 1];
         }
         else {
-            succ[ indx[e] ] = indx[ e+1-p ];
+            succ[indx[e]] = indx[e + 1 - p];
             f += p;
         }
     }
@@ -310,26 +228,41 @@ FF              FiniteField (
     /* enter the finite field in the tables                                */
 #ifdef HPCGAP
     MakeBagReadOnly(succBag);
-    ATOMIC_SET_ELM_PLIST_ONCE( SuccFF, ff, succBag );
+    ATOMIC_SET_ELM_PLIST_ONCE(SuccFF, ff, succBag);
     CHANGED_BAG(SuccFF);
-    tmp = CALL_1ARGS( TYPE_FFE, INTOBJ_INT(p) );
-    ATOMIC_SET_ELM_PLIST_ONCE( TypeFF, ff, tmp );
+    tmp = CALL_1ARGS(TYPE_FFE, INTOBJ_INT(p));
+    ATOMIC_SET_ELM_PLIST_ONCE(TypeFF, ff, tmp);
     CHANGED_BAG(TypeFF);
-    tmp = CALL_1ARGS( TYPE_FFE0, INTOBJ_INT(p) );
-    ATOMIC_SET_ELM_PLIST_ONCE( TypeFF0, ff, tmp );
+    tmp = CALL_1ARGS(TYPE_FFE0, INTOBJ_INT(p));
+    ATOMIC_SET_ELM_PLIST_ONCE(TypeFF0, ff, tmp);
     CHANGED_BAG(TypeFF0);
 #else
-    ASS_LIST( SuccFF, ff, succBag );
+    ASS_LIST(SuccFF, ff, succBag);
     CHANGED_BAG(SuccFF);
-    tmp = CALL_1ARGS( TYPE_FFE, INTOBJ_INT(p) );
-    ASS_LIST( TypeFF, ff, tmp );
+    tmp = CALL_1ARGS(TYPE_FFE, INTOBJ_INT(p));
+    ASS_LIST(TypeFF, ff, tmp);
     CHANGED_BAG(TypeFF);
-    tmp = CALL_1ARGS( TYPE_FFE0, INTOBJ_INT(p) );
-    ASS_LIST( TypeFF0, ff, tmp );
+    tmp = CALL_1ARGS(TYPE_FFE0, INTOBJ_INT(p));
+    ASS_LIST(TypeFF0, ff, tmp);
     CHANGED_BAG(TypeFF0);
 #endif
 
     /* return the finite field                                             */
+    return ff;
+}
+
+FF FiniteField(UInt p, UInt d)
+{
+    UInt q, i;
+    FF   ff;
+
+    q = 1;
+    for (i = 1; i <= d; i++)
+        q *= p;
+
+    ff = FiniteFieldBySize(q);
+    if (ff != 0 && CHAR_FF(ff) != p)
+        return 0;
     return ff;
 }
 
@@ -396,9 +329,7 @@ UInt CharFFE (
     return CHAR_FF( FLD_FFE(ffe) );
 }
 
-Obj FuncCHAR_FFE_DEFAULT (
-    Obj                 self,
-    Obj                 ffe )
+static Obj FuncCHAR_FFE_DEFAULT(Obj self, Obj ffe)
 {
     return INTOBJ_INT( CHAR_FF( FLD_FFE(ffe) ) );
 }
@@ -444,9 +375,7 @@ UInt DegreeFFE (
     return d;
 }
 
-Obj FuncDEGREE_FFE_DEFAULT (
-    Obj                 self,
-    Obj                 ffe )
+static Obj FuncDEGREE_FFE_DEFAULT(Obj self, Obj ffe)
 {
     return INTOBJ_INT( DegreeFFE( ffe ) );
 }
@@ -461,13 +390,14 @@ Obj FuncDEGREE_FFE_DEFAULT (
 **  'TypeFFE' is the function in 'TypeObjFuncs' for  elements in small finite
 **  fields.
 */
-Obj             TypeFFE (
-    Obj                 ffe )
+Obj TypeFFE(Obj ffe)
 {
-  if (VAL_FFE(ffe) == 0)
-    return TYPE_FF0( FLD_FFE( ffe ) );
-  else
-    return TYPE_FF( FLD_FFE( ffe ) );
+    Obj types = (VAL_FFE(ffe) == 0) ? TypeFF0 : TypeFF;
+#ifdef HPCGAP
+    return ATOMIC_ELM_PLIST(types, FLD_FFE(ffe));
+#else
+    return ELM_PLIST(types, FLD_FFE(ffe));
+#endif
 }
 
 
@@ -487,9 +417,7 @@ Obj             TypeFFE (
 **  Since '=' ought  to be transitive we also  want 'b = c'  to be 'true' and
 **  this is a problem, because they are represented over incompatible fields.
 */
-Int             EqFFE (
-    Obj                 opL,
-    Obj                 opR )
+static Int EqFFE(Obj opL, Obj opR)
 {
     FFV                 vL, vR;         /* value of left and right         */
     FF                  fL, fR;         /* field of left and right         */
@@ -545,9 +473,7 @@ Int             EqFFE (
 **  'LtFFEFFE' returns 'True' if the  finite field element <opL> is  strictly
 **  less than the finite field element <opR> and 'False' otherwise.
 */
-Int             LtFFE (
-    Obj                 opL,
-    Obj                 opR )
+static Int LtFFE(Obj opL, Obj opR)
 {
     FFV                 vL, vR;         /* value of left and right         */
     FF                  fL, fR;         /* field of left and right         */
@@ -604,9 +530,7 @@ Int             LtFFE (
 **  'PrFFV' prints the value <val> from the finite field <fld>.
 **
 */
-void            PrFFV (
-    FF                  fld,
-    FFV                 val )
+static void PrFFV(FF fld, FFV val)
 {
     UInt                q;              /* size   of finite field          */
     UInt                p;              /* char.  of finite field          */
@@ -654,8 +578,7 @@ void            PrFFV (
 **
 **  'PrFFE' prints the finite field element <ffe>.
 */
-void            PrFFE (
-    Obj                 ffe )
+static void PrFFE(Obj ffe)
 {
     PrFFV( FLD_FFE(ffe), VAL_FFE(ffe) );
 }
@@ -678,9 +601,7 @@ void            PrFFE (
 */
 static Obj SUM_FFE_LARGE;
 
-Obj             SumFFEFFE (
-    Obj                 opL,
-    Obj                 opR )
+static Obj SumFFEFFE(Obj opL, Obj opR)
 {
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fL, fR, fX;     /* field of left, right, result    */
@@ -722,9 +643,7 @@ Obj             SumFFEFFE (
     return NEW_FFE( fX, vX );
 }
 
-Obj             SumFFEInt (
-    Obj                 opL,
-    Obj                 opR )
+static Obj SumFFEInt(Obj opL, Obj opR)
 {
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fX;             /* field of result                 */
@@ -754,9 +673,7 @@ Obj             SumFFEInt (
     return NEW_FFE( fX, vX );
 }
 
-Obj             SumIntFFE (
-    Obj                 opL,
-    Obj                 opR )
+static Obj SumIntFFE(Obj opL, Obj opR)
 {
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fX;             /* field of result                 */
@@ -791,8 +708,7 @@ Obj             SumIntFFE (
 **
 *F  ZeroFFE(<op>) . . . . . . . . . . . . . .  zero of a finite field element
 */
-Obj             ZeroFFE (
-    Obj                 op )
+static Obj ZeroFFE(Obj op)
 {
     FF                  fX;             /* field of result                 */
 
@@ -808,8 +724,7 @@ Obj             ZeroFFE (
 **
 *F  AInvFFE(<op>) . . . . . . . . . . additive inverse of finite field element
 */
-Obj             AInvFFE (
-    Obj                 op )
+static Obj AInvFFE(Obj op)
 {
     FFV                 v, vX;          /* value of operand, result        */
     FF                  fX;             /* field of result                 */
@@ -845,9 +760,7 @@ Obj             AInvFFE (
 */
 static Obj DIFF_FFE_LARGE;
 
-Obj             DiffFFEFFE (
-    Obj                 opL,
-    Obj                 opR )
+static Obj DiffFFEFFE(Obj opL, Obj opR)
 {
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fL, fR, fX;     /* field of left, right, result    */
@@ -890,9 +803,7 @@ Obj             DiffFFEFFE (
     return NEW_FFE( fX, vX );
 }
 
-Obj             DiffFFEInt (
-    Obj                 opL,
-    Obj                 opR )
+static Obj DiffFFEInt(Obj opL, Obj opR)
 {
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fX;             /* field of result                 */
@@ -923,9 +834,7 @@ Obj             DiffFFEInt (
     return NEW_FFE( fX, vX );
 }
 
-Obj             DiffIntFFE (
-    Obj                 opL,
-    Obj                 opR )
+static Obj DiffIntFFE(Obj opL, Obj opR)
 {
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fX;             /* field of result                 */
@@ -974,9 +883,7 @@ Obj             DiffIntFFE (
 */
 static Obj PROD_FFE_LARGE;
 
-Obj             ProdFFEFFE (
-    Obj                 opL,
-    Obj                 opR )
+static Obj ProdFFEFFE(Obj opL, Obj opR)
 {
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fL, fR, fX;     /* field of left, right, result    */
@@ -1018,9 +925,7 @@ Obj             ProdFFEFFE (
     return NEW_FFE( fX, vX );
 }
 
-Obj             ProdFFEInt (
-    Obj                 opL,
-    Obj                 opR )
+static Obj ProdFFEInt(Obj opL, Obj opR)
 {
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fX;             /* field of result                 */
@@ -1050,9 +955,7 @@ Obj             ProdFFEInt (
     return NEW_FFE( fX, vX );
 }
 
-Obj             ProdIntFFE (
-    Obj                 opL,
-    Obj                 opR )
+static Obj ProdIntFFE(Obj opL, Obj opR)
 {
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fX;             /* field of result                 */
@@ -1087,8 +990,7 @@ Obj             ProdIntFFE (
 **
 *F  OneFFE(<op>)  . . . . . . . . . . . . . . . one of a finite field element
 */
-Obj             OneFFE (
-    Obj                 op )
+static Obj OneFFE(Obj op)
 {
     FF                  fX;             /* field of result                 */
 
@@ -1104,8 +1006,7 @@ Obj             OneFFE (
 **
 *F  InvFFE(<op>)  . . . . . . . . . . . . . . inverse of finite field element
 */
-Obj             InvFFE (
-    Obj                 op )
+static Obj InvFFE(Obj op)
 {
     FFV                 v, vX;          /* value of operand, result        */
     FF                  fX;             /* field of result                 */
@@ -1142,9 +1043,7 @@ Obj             InvFFE (
 */
 static Obj QUO_FFE_LARGE;
 
-Obj             QuoFFEFFE (
-    Obj                 opL,
-    Obj                 opR )
+static Obj QuoFFEFFE(Obj opL, Obj opR)
 {
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fL, fR, fX;     /* field of left, right, result    */
@@ -1183,19 +1082,13 @@ Obj             QuoFFEFFE (
 
     /* compute and return the result                                       */
     if ( vR == 0 ) {
-        opR = ErrorReturnObj(
-            "FFE operations: <divisor> must not be zero",
-            0L, 0L,
-            "you can replace <divisor> via 'return <divisor>;'" );
-        return QUO( opL, opR );
+        ErrorMayQuit("FFE operations: <divisor> must not be zero", 0, 0);
     }
     vX = QUO_FFV( vL, vR, SUCC_FF(fX) );
     return NEW_FFE( fX, vX );
 }
 
-Obj             QuoFFEInt (
-    Obj                 opL,
-    Obj                 opR )
+static Obj QuoFFEInt(Obj opL, Obj opR)
 {
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fX;             /* field of result                 */
@@ -1222,19 +1115,13 @@ Obj             QuoFFEInt (
 
     /* compute and return the result                                       */
     if ( vR == 0 ) {
-        opR = ErrorReturnObj(
-            "FFE operations: <divisor> must not be zero",
-            0L, 0L,
-            "you can replace <divisor> via 'return <divisor>;'" );
-        return QUO( opL, opR );
+        ErrorMayQuit("FFE operations: <divisor> must not be zero", 0, 0);
     }
     vX = QUO_FFV( vL, vR, sX );
     return NEW_FFE( fX, vX );
 }
 
-Obj             QuoIntFFE (
-    Obj                 opL,
-    Obj                 opR )
+static Obj QuoIntFFE(Obj opL, Obj opR)
 {
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fX;             /* field of result                 */
@@ -1261,11 +1148,7 @@ Obj             QuoIntFFE (
 
     /* compute and return the result                                       */
     if ( vR == 0 ) {
-        opR = ErrorReturnObj(
-            "FFE operations: <divisor> must not be zero",
-            0L, 0L,
-            "you can replace <divisor> via 'return <divisor>;'" );
-        return QUO( opL, opR );
+        ErrorMayQuit("FFE operations: <divisor> must not be zero", 0, 0);
     }
     vX = QUO_FFV( vL, vR, sX );
     return NEW_FFE( fX, vX );
@@ -1283,9 +1166,7 @@ Obj             QuoIntFFE (
 **  'PowFFEInt' just does the conversions mentioned  above and then calls the
 **  macro 'POW_FFV' to do the actual exponentiation.
 */
-Obj             PowFFEInt (
-    Obj                 opL,
-    Obj                 opR )
+static Obj PowFFEInt(Obj opL, Obj opR)
 {
     FFV                 vL, vX;         /* value of left, result           */
     Int                 vR;             /* value of right                  */
@@ -1305,11 +1186,7 @@ Obj             PowFFEInt (
     /* if the exponent is negative, invert the left operand                */
     if ( vR < 0 ) {
         if ( vL == 0 ) {
-            opL = ErrorReturnObj(
-                "FFE operations: <divisor> must not be zero",
-                0L, 0L,
-                "you can replace <divisor> via 'return <divisor>;'" );
-            return POW( opL, opR );
+            ErrorMayQuit("FFE operations: <divisor> must not be zero", 0, 0);
         }
         vL = QUO_FFV( 1, vL, sX );
         vR = -vR;
@@ -1331,9 +1208,7 @@ Obj             PowFFEInt (
 **
 *F  PowFFEFFE( <opL>, <opR> ) . . . . . . conjugate of a finite field element
 */
-Obj PowFFEFFE (
-    Obj                 opL,
-    Obj                 opR )
+static Obj PowFFEFFE(Obj opL, Obj opR)
 {
     /* get the field for the result                                        */
     if ( CHAR_FF( FLD_FFE(opL) ) != CHAR_FF( FLD_FFE(opR) ) ) {
@@ -1347,7 +1222,7 @@ Obj PowFFEFFE (
 
 /****************************************************************************
 **
-*F  FuncIS_FFE( <self>, <obj> ) . . . . . . .  test for finite field elements
+*F  FiltIS_FFE( <self>, <obj> ) . . . . . . .  test for finite field elements
 **
 **  'FuncIsFFE' implements the internal function 'IsFFE( <obj> )'.
 **
@@ -1355,11 +1230,9 @@ Obj PowFFEFFE (
 **  and 'false' otherwise.   'IsFFE' will cause  an  error if  called with an
 **  unbound variable.
 */
-Obj IsFFEFilt;
+static Obj IsFFEFilt;
 
-Obj FuncIS_FFE (
-    Obj                 self,
-    Obj                 obj )
+static Obj FiltIS_FFE(Obj self, Obj obj)
 {
     /* return 'true' if <obj> is a finite field element                    */
     if ( IS_FFE(obj) ) {
@@ -1383,12 +1256,9 @@ Obj FuncIS_FFE (
 **  'LogFFE'  returns the logarithm of  the nonzero finite  field element <z>
 **  with respect to the root <r> which must lie in the same field like <z>.
 */
-Obj LOG_FFE_LARGE;
+static Obj LOG_FFE_LARGE;
 
-Obj FuncLOG_FFE_DEFAULT (
-    Obj                 self,
-    Obj                 opZ,
-    Obj                 opR )
+static Obj FuncLOG_FFE_DEFAULT(Obj self, Obj opZ, Obj opR)
 {
     FFV                 vZ, vR;         /* value of left, right            */
     FF                  fZ, fR, fX;     /* field of left, right, common    */
@@ -1396,17 +1266,13 @@ Obj FuncLOG_FFE_DEFAULT (
     Int                 a, b, c, d, t;  /* temporaries                     */
 
     /* check the arguments                                                 */
-    while ( ! IS_FFE(opZ) || VAL_FFE(opZ) == 0 ) {
-        opZ = ErrorReturnObj(
-            "LogFFE: <z> must be a nonzero finite field element",
-             0L, 0L,
-             "you can replace <z> via 'return <z>;'" );
+    if (!IS_FFE(opZ) || VAL_FFE(opZ) == 0) {
+        ErrorMayQuit("LogFFE: <z> must be a nonzero finite field element", 0,
+                     0);
     }
-    while ( ! IS_FFE(opR) || VAL_FFE(opR) == 0 ) {
-        opR = ErrorReturnObj(
-            "LogFFE: <r> must be a nonzero finite field element",
-             0L, 0L,
-             "you can replace <r> via 'return <r>;'" );
+    if (!IS_FFE(opR) || VAL_FFE(opR) == 0) {
+        ErrorMayQuit("LogFFE: <r> must be a nonzero finite field element", 0,
+                     0);
     }
 
     /* get the values, handle trivial cases                                */
@@ -1473,10 +1339,12 @@ Obj FuncLOG_FFE_DEFAULT (
 **  element <z>, which must of course be  an element  of a prime field, i.e.,
 **  the smallest integer <i> such that '<i> * <z>^0 = <z>'.
 */
-Obj IntFF;
+static Obj IntFF;
+#ifdef HPCGAP
+static Int NumFF;
+#endif
 
-Obj INT_FF (
-    FF                  ff )
+static Obj INT_FF(FF ff)
 {
     Obj                 conv;           /* conversion table, result        */
     Int                 q;              /* size of finite field            */
@@ -1486,7 +1354,12 @@ Obj INT_FF (
     UInt                i;              /* loop variable                   */
 
     /* if the conversion table is not already known, construct it          */
+#ifdef HPCGAP
+    if ( NumFF < ff || (MEMBAR_READ(), ATOMIC_ELM_PLIST(IntFF, ff) == 0)) {
+        HashLock(&IntFF);
+#else
     if ( LEN_PLIST(IntFF) < ff || ELM_PLIST(IntFF,ff) == 0 ) {
+#endif
         q = SIZE_FF( ff );
         p = CHAR_FF( ff );
         conv = NEW_PLIST_IMM( T_PLIST, p-1 );
@@ -1497,18 +1370,27 @@ Obj INT_FF (
             SET_ELM_PLIST( conv, (z-1)/((q-1)/(p-1))+1, INTOBJ_INT(i) );
             z = succ[ z ];
         }
+#ifdef HPCGAP
+        GrowPlist(IntFF, ff);
+        ATOMIC_SET_ELM_PLIST( IntFF, ff, conv );
+        MEMBAR_WRITE();
+        NumFF = LEN_PLIST(IntFF);
+        HashUnlock(&IntFF);
+#else
         AssPlist( IntFF, ff, conv );
+#endif
     }
 
     /* return the conversion table                                           */
+#ifdef HPCGAP
+    return ATOMIC_ELM_PLIST( IntFF, ff);
+#else
     return ELM_PLIST( IntFF, ff );
+#endif
 }
 
 
-
-Obj FuncINT_FFE_DEFAULT (
-    Obj                 self,
-    Obj                 z )
+static Obj FuncINT_FFE_DEFAULT(Obj self, Obj z)
 {
     FFV                 v;              /* value of finite field element   */
     FF                  ff;             /* finite field                    */
@@ -1532,11 +1414,7 @@ Obj FuncINT_FFE_DEFAULT (
 
     /* check the argument                                                  */
     if ( (v-1) % ((q-1)/(p-1)) != 0 ) {
-        z = ErrorReturnObj(
-            "IntFFE: <z> must lie in prime field",
-            0L, 0L,
-            "you can replace <z> via 'return <z>;'" );
-        return FuncINT_FFE_DEFAULT( self, z );
+        ErrorMayQuit("IntFFE: <z> must lie in prime field", 0, 0);
     }
 
     /* convert the value into the prime field                              */
@@ -1558,17 +1436,9 @@ Obj FuncINT_FFE_DEFAULT (
 */
 static Obj ZOp;
 
-
-
-
-Obj FuncZ (
-    Obj                 self,
-    Obj                 q )
+static Obj FuncZ(Obj self, Obj q)
 {
     FF                  ff;             /* the finite field                */
-    UInt                p;              /* characteristic                  */
-    UInt                d;              /* degree                          */
-    UInt                r;              /* temporary                       */
 
     /* check the argument                                                  */
     if ( (IS_INTOBJ(q) && (INT_INTOBJ(q) > 65536)) ||
@@ -1576,73 +1446,45 @@ Obj FuncZ (
       return CALL_1ARGS(ZOp, q);
     
     if ( !IS_INTOBJ(q) || INT_INTOBJ(q)<=1 ) {
-        q = ErrorReturnObj(
-            "Z: <q> must be a positive prime power (not a %s)",
-            (Int)TNAM_OBJ(q), 0L,
-            "you can replace <q> via 'return <q>;'" );
-        return FuncZ( self, q );
+        RequireArgument("Z", q, "must be a positive prime power");
     }
 
-    /* compute the prime and check that <q> is a prime power               */
-    if ( INT_INTOBJ(q) % 2 == 0 ) {
-        p = 2;
-    }
-    else {
-        p = 3;
-        while ( INT_INTOBJ(q) % p != 0 ) {
-            p += 2;
-        }
-    }
-    d = 1;
-    r = p;
-    while ( r < INT_INTOBJ(q) ) {
-        d = d + 1;
-        r = r * p;
-    }
-    if ( r != INT_INTOBJ(q) ) {
-        q = ErrorReturnObj(
-            "Z: <q> must be a positive prime power (not a %s)",
-            (Int)TNAM_OBJ(q), 0L,
-            "you can replace <q> via 'return <q>;'" );
-        return FuncZ( self, q );
-    }
+    ff = FiniteFieldBySize(INT_INTOBJ(q));
 
-    /* get the finite field                                                */
-    ff = FiniteField( p, d );
+    if (!ff) {
+        RequireArgument("Z", q, "must be a positive prime power");
+    }
 
     /* make the root                                                       */
-    return NEW_FFE( ff, (p == 2 && d == 1 ? 1 : 2) );
+    return NEW_FFE(ff, (q == INTOBJ_INT(2)) ? 1 : 2);
 }
 
-Obj FuncZ2 ( Obj self, Obj p, Obj d)
+static Obj FuncZ2(Obj self, Obj p, Obj d)
 {
-  FF ff;
-  Int ip,id,id1;
-  UInt q;
-  if (ARE_INTOBJS(p,d))
-    {
-      ip = INT_INTOBJ(p);
-      id = INT_INTOBJ(d);
-      if (ip > 1 && id > 0 && id <= 16 && ip < 65536)
-        {
-          id1 = id;
-          q = ip;
-          while (--id1 > 0 && q <= 65536)
-            q *= ip;
-          if (q <= 65536)
-            {
-              /* get the finite field                                                */
-              ff = FiniteField( ip, id );
+    FF   ff;
+    Int  ip, id, id1;
+    UInt q;
+    if (ARE_INTOBJS(p, d)) {
+        ip = INT_INTOBJ(p);
+        id = INT_INTOBJ(d);
+        if (ip > 1 && id > 0 && id <= 16 && ip < 65536) {
+            id1 = id;
+            q = ip;
+            while (--id1 > 0 && q <= 65536)
+                q *= ip;
+            if (q <= 65536) {
+                /* get the finite field */
+                ff = FiniteField(ip, id);
 
-              if ( ff == 0 || CHAR_FF(ff) != ip )
-                ErrorMayQuit("Z: <p> must be a prime", 0, 0);
+                if (ff == 0 || CHAR_FF(ff) != ip)
+                    RequireArgument("Z", p, "must be a prime");
 
-              /* make the root                                                       */
-              return NEW_FFE( ff, (ip == 2 && id == 1 ? 1 : 2) );
+                /* make the root */
+                return NEW_FFE(ff, (ip == 2 && id == 1 ? 1 : 2));
             }
         }
     }
-  return CALL_2ARGS(ZOp, p, d);
+    return CALL_2ARGS(ZOp, p, d);
 }
 
 
@@ -1668,7 +1510,7 @@ static StructBagNames BagNames[] = {
 */
 static StructGVarFilt GVarFilts [] = {
 
-    GVAR_FILTER(IS_FFE, "obj", &IsFFEFilt),
+    GVAR_FILT(IS_FFE, "obj", &IsFFEFilt),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -1704,6 +1546,7 @@ static Int InitKernel (
     ImportFuncFromLibrary( "TYPE_FFE", &TYPE_FFE );
     ImportFuncFromLibrary( "TYPE_FFE0", &TYPE_FFE0 );
     ImportFuncFromLibrary( "ZOp", &ZOp );
+    InitFopyGVar( "PrimitiveRootMod", &PrimitiveRootMod );
     TypeObjFuncs[ T_FFE ] = TypeFFE;
 
     /* create the fields and integer conversion bags                       */
@@ -1719,8 +1562,6 @@ static Int InitKernel (
     ImportFuncFromLibrary( "QUO_FFE_LARGE",  &QUO_FFE_LARGE  );
     ImportFuncFromLibrary( "LOG_FFE_LARGE",  &LOG_FFE_LARGE  );
 
-    ImportGVarFromLibrary( "TYPE_KERNEL_OBJECT", &TYPE_KERNEL_OBJECT );
-    
     /* init filters and functions                                          */
     InitHdlrFiltsFromTable( GVarFilts );
     InitHdlrFuncsFromTable( GVarFuncs );
@@ -1782,6 +1623,13 @@ static Int InitLibrary (
 
     IntFF = NEW_PLIST( T_PLIST, NUM_SHORT_FINITE_FIELDS );
     SET_LEN_PLIST( IntFF, NUM_SHORT_FINITE_FIELDS );
+
+#ifdef HPCGAP
+    MakeBagPublic(SuccFF);
+    MakeBagPublic(TypeFF);
+    MakeBagPublic(TypeFF0);
+    MakeBagPublic(IntFF);
+#endif
 
     /* init filters and functions                                          */
     InitGVarFiltsFromTable( GVarFilts );

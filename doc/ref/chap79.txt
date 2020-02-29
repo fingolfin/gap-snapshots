@@ -3,415 +3,29 @@
   
   [33X[0;0YThis chapter is divided into three parts.[133X
   
-  [33X[0;0YIn  the  first  part, it is explained how to create filters (see [14X79.1[114X, [14X79.2[114X,
-  [14X79.3[114X,  [14X79.4[114X),  operations (see [14X79.5[114X), families (see [14X79.7[114X), types (see [14X79.8[114X),
-  and objects with given type (see [14X79.9[114X).[133X
+  [33X[0;0YIn  the  first  part,  it is explained how to create objects with given type
+  (see [14X79.1[114X).[133X
   
   [33X[0;0YIn  the  second part, first a few small examples are given, for dealing with
-  the  usual  cases  of  component  objects (see [14X79.10[114X) and positional objects
-  (see [14X79.11[114X),  and  for  the  implementation of new kinds of lists (see [14X79.12[114X
-  and [14X79.15[114X).  Finally,  the  external representation of objects is introduced
-  (see [14X79.16[114X), as a tool for representation independent access to an object.[133X
+  the  usual  cases  of  component  objects  (see [14X79.2[114X) and positional objects
+  (see [14X79.3[114X),  and  for  the  implementation  of  new kinds of lists (see [14X79.4[114X
+  and [14X79.7[114X).  Finally,  the  external  representation of objects is introduced
+  (see [14X79.8[114X), as a tool for representation independent access to an object.[133X
   
   [33X[0;0YThe  third part deals with some rules concerning the organization of the [5XGAP[105X
   library;  namely,  some commands for creating global variables are explained
-  (see [14X79.18[114X)  that  correspond to the ones discussed in the first part of the
+  (see [14X79.10[114X)  that  correspond to the ones discussed in the first part of the
   chapter,  and the idea of distinguishing declaration and implementation part
-  of [5XGAP[105X packages is outlined (see [14X79.19[114X).[133X
+  of [5XGAP[105X packages is outlined (see [14X79.11[114X).[133X
   
   [33X[0;0YSee  also  Chapter [14X81[114X for examples how the functions from the first part are
   used,  and why it is useful to have a declaration part and an implementation
   part.[133X
   
   
-  [1X79.1 [33X[0;0YCreating Categories[133X[101X
+  [1X79.1 [33X[0;0YCreating Objects[133X[101X
   
-  [1X79.1-1 NewCategory[101X
-  
-  [33X[1;0Y[29X[2XNewCategory[102X( [3Xname[103X, [3Xsuper[103X[, [3Xrank[103X] ) [32X function[133X
-  
-  [33X[0;0Y[2XNewCategory[102X  returns  a  new  category  [3Xcat[103X  that  has  the name [3Xname[103X and is
-  contained in the filter [3Xsuper[103X, see [14X13.2[114X. This means that every object in [3Xcat[103X
-  lies  automatically  also  in  [3Xsuper[103X.  We  say also that [3Xsuper[103X is an implied
-  filter of [3Xcat[103X.[133X
-  
-  [33X[0;0YFor  example, if one wants to create a category of group elements then [3Xsuper[103X
-  should  be [2XIsMultiplicativeElementWithInverse[102X ([14X31.14-13[114X) or a subcategory of
-  it.  If  no  specific  supercategory  of [3Xcat[103X is known, [3Xsuper[103X may be [2XIsObject[102X
-  ([14X12.1-1[114X).[133X
-  
-  [33X[0;0YThe  optional third argument [3Xrank[103X denotes the incremental rank (see [14X13.2[114X) of
-  [3Xcat[103X, the default value is 1.[133X
-  
-  [1X79.1-2 CategoryFamily[101X
-  
-  [33X[1;0Y[29X[2XCategoryFamily[102X( [3Xcat[103X ) [32X function[133X
-  
-  [33X[0;0YFor  a category [3Xcat[103X, [2XCategoryFamily[102X returns the [13Xfamily category[113X of [3Xcat[103X. This
-  is  a  category in which all families lie that know from their creation that
-  all their elements are in the category [3Xcat[103X, see [14X79.7[114X.[133X
-  
-  [33X[0;0YFor   example,   a   family   of   associative  words  is  in  the  category
-  [10XCategoryFamily(  IsAssocWord  )[110X,  and one can distinguish such a family from
-  others by this category. So it is possible to install methods for operations
-  that require one argument to be a family of associative words.[133X
-  
-  [33X[0;0Y[2XCategoryFamily[102X is quite technical, and in fact of minor importance.[133X
-  
-  [33X[0;0YSee also [2XCategoryCollections[102X ([14X30.2-4[114X).[133X
-  
-  
-  [1X79.2 [33X[0;0YCreating Representations[133X[101X
-  
-  [1X79.2-1 NewRepresentation[101X
-  
-  [33X[1;0Y[29X[2XNewRepresentation[102X( [3Xname[103X, [3Xsuper[103X, [3Xslots[103X[, [3Xreq[103X] ) [32X function[133X
-  
-  [33X[0;0Y[2XNewRepresentation[102X  returns  a  new representation [3Xrep[103X that has the name [3Xname[103X
-  and  is  a  subrepresentation  of  the representation [3Xsuper[103X. This means that
-  every object in [3Xrep[103X lies automatically also in [3Xsuper[103X. We say also that [3Xsuper[103X
-  is an implied filter of [3Xrep[103X.[133X
-  
-  [33X[0;0YEach representation in [5XGAP[105X is a subrepresentation of exactly one of the four
-  representations    [10XIsInternalRep[110X,   [10XIsDataObjectRep[110X,   [10XIsComponentObjectRep[110X,
-  [10XIsPositionalObjectRep[110X.  The data describing objects in the former two can be
-  accessed  only  via [5XGAP[105X kernel functions, the data describing objects in the
-  latter  two is accessible also in library functions, see [14X79.10[114X and [14X79.11[114X for
-  the details.[133X
-  
-  [33X[0;0YThe  third argument [3Xslots[103X is a list either of integers or of strings. In the
-  former case, [3Xrep[103X must be [10XIsPositionalObjectRep[110X or a subrepresentation of it,
-  and  [3Xslots[103X tells what positions of the objects in the representation [3Xrep[103X may
-  be  bound.  In  the  latter  case,  [3Xrep[103X  must  be  [10XIsComponentObjectRep[110X or a
-  subrepresentation  of,  and  [3Xslots[103X  lists the admissible names of components
-  that  objects  in  the representation [3Xrep[103X may have. The admissible positions
-  resp. component names of [3Xsuper[103X need not be be listed in [3Xslots[103X.[133X
-  
-  [33X[0;0YThe incremental rank (see [14X13.2[114X) of [3Xrep[103X is 1.[133X
-  
-  [33X[0;0YNote  that  for  objects  in  the  representation [3Xrep[103X, of course some of the
-  component names and positions reserved via [3Xslots[103X may be unbound.[133X
-  
-  [33X[0;0YExamples  for the use of [2XNewRepresentation[102X can be found in [14X79.10[114X, [14X79.11[114X, and
-  also in [14X81.3[114X.[133X
-  
-  
-  [1X79.3 [33X[0;0YCreating Attributes and Properties[133X[101X
-  
-  [33X[0;0YEach   method  that  is  installed  for  an  attribute  or  a  property  via
-  [2XInstallMethod[102X  ([14X78.2-1[114X) must require exactly one argument, and this must lie
-  in  the  filter  [3Xfilter[103X  that was entered as second argument of [2XNewAttribute[102X
-  ([14X79.3-1[114X) resp. [2XNewProperty[102X ([14X79.3-2[114X).[133X
-  
-  [33X[0;0YAs  for  any  operation  (see [14X79.5[114X),  for  attributes and properties one can
-  install  a  method  taking  an  argument  that  does  not  lie  in  [3Xfilt[103X via
-  [2XInstallOtherMethod[102X  ([14X78.2-2[114X), or a method for more than one argument; in the
-  latter case, clearly the result value is [13Xnot[113X stored in any of the arguments.[133X
-  
-  [1X79.3-1 NewAttribute[101X
-  
-  [33X[1;0Y[29X[2XNewAttribute[102X( [3Xname[103X, [3Xfilter[103X[, [3X"mutable"[103X][, [3Xrank[103X] ) [32X function[133X
-  
-  [33X[0;0Y[2XNewAttribute[102X  returns  a  new  attribute  getter  with  name  [3Xname[103X  that  is
-  applicable to objects with the property [3Xfilter[103X.[133X
-  
-  [33X[0;0YContrary to the situation with categories and representations, the tester of
-  the  new  attribute  does  [13Xnot[113X  imply [3Xfilter[103X. This is exactly because of the
-  possibility to install methods that do not require [3Xfilter[103X.[133X
-  
-  [33X[0;0YFor  example, the attribute [2XSize[102X ([14X30.4-6[114X) was created with second argument a
-  list  or  a collection, but there is also a method for [2XSize[102X ([14X30.4-6[114X) that is
-  applicable to a character table, which is neither a list nor a collection.[133X
-  
-  [33X[0;0YFor  the  optional  third  and  fourth  arguments,  there  are the following
-  possibilities.[133X
-  
-  [30X    [33X[0;6YThe  integer  argument  [3Xrank[103X  causes the attribute tester to have this
-        incremental rank (see [14X13.2[114X),[133X
-  
-  [30X    [33X[0;6YIf  the  argument [3Xmutable[103X is the string [10X"mutable"[110X or the boolean [10Xtrue[110X,
-        then the values of the attribute are mutable.[133X
-  
-  [30X    [33X[0;6YIf  the  argument [3Xmutable[103X is the boolean [10Xfalse[110X, then the values of the
-        attribute are immutable.[133X
-  
-  [33X[0;0YWhen  a  value  of  such  mutable attribute is set then this value itself is
-  stored,  not an immutable copy of it, and it is the user's responsibility to
-  set  an  object that is mutable. This is useful for an attribute whose value
-  is  some partial information that may be completed later. For example, there
-  is  an  attribute  [10XComputedSylowSubgroups[110X  for  the list holding those Sylow
-  subgroups  of  a  group  that  have  been  computed  already by the function
-  [2XSylowSubgroup[102X  ([14X39.13-1[114X),  and  this list is mutable because one may want to
-  enter groups into it as they are computed.[133X
-  
-  [33X[0;0YIf no argument for [3Xrank[103X is given, then the rank of the tester is 1.[133X
-  
-  [33X[0;0YEach  method for the new attribute that does [13Xnot[113X require its argument to lie
-  in [3Xfilter[103X must be installed using [2XInstallOtherMethod[102X ([14X78.2-2[114X).[133X
-  
-  [1X79.3-2 NewProperty[101X
-  
-  [33X[1;0Y[29X[2XNewProperty[102X( [3Xname[103X, [3Xfilter[103X[, [3Xrank[103X] ) [32X function[133X
-  
-  [33X[0;0Y[2XNewProperty[102X  returns a new property [3Xprop[103X with name [3Xname[103X (see also [14X13.7[114X). The
-  filter  [3Xfilter[103X  describes  the  involved  filters of [3Xprop[103X. As in the case of
-  attributes, [3Xfilter[103X is not implied by [3Xprop[103X.[133X
-  
-  [33X[0;0YThe  optional third argument [3Xrank[103X denotes the incremental rank (see [14X13.2[114X) of
-  the property [3Xprop[103X itself, i.e. [13Xnot[113X of its tester; the default value is 1.[133X
-  
-  
-  [1X79.4 [33X[0;0YCreating Other Filters[133X[101X
-  
-  [33X[0;0YIn  order to change the value of [3Xfilt[103X for an object [3Xobj[103X, one can use logical
-  implications (see [14X78.7[114X) or [2XSetFilterObj[102X ([14X79.4-2[114X), [2XResetFilterObj[102X ([14X79.4-3[114X).[133X
-  
-  [1X79.4-1 NewFilter[101X
-  
-  [33X[1;0Y[29X[2XNewFilter[102X( [3Xname[103X[, [3Xrank[103X] ) [32X function[133X
-  
-  [33X[0;0Y[2XNewFilter[102X  returns  a  simple filter with name [3Xname[103X (see [14X13.8[114X). The optional
-  second  argument [3Xrank[103X denotes the incremental rank (see [14X13.2[114X) of the filter,
-  the default value is 1.[133X
-  
-  [33X[0;0YThe default value of the new simple filter for each object is [9Xfalse[109X.[133X
-  
-  [1X79.4-2 SetFilterObj[101X
-  
-  [33X[1;0Y[29X[2XSetFilterObj[102X( [3Xobj[103X, [3Xfilter[103X ) [32X function[133X
-  
-  [33X[0;0Y[2XSetFilterObj[102X sets the value of [3Xfilter[103X (and of all filters implied by [3Xfilter[103X)
-  for [3Xobj[103X to [9Xtrue[109X,[133X
-  
-  [1X79.4-3 ResetFilterObj[101X
-  
-  [33X[1;0Y[29X[2XResetFilterObj[102X( [3Xobj[103X, [3Xfilter[103X ) [32X function[133X
-  
-  [33X[0;0Y[2XResetFilterObj[102X  sets  the value of [3Xfilter[103X for [3Xobj[103X to [9Xfalse[109X. (Implied filters
-  of  [3Xfilt[103X  are  not  touched.  This  might  create inconsistent situations if
-  applied carelessly).[133X
-  
-  
-  [1X79.5 [33X[0;0YCreating Operations[133X[101X
-  
-  [1X79.5-1 NewOperation[101X
-  
-  [33X[1;0Y[29X[2XNewOperation[102X( [3Xname[103X, [3Xargs-filts[103X ) [32X function[133X
-  
-  [33X[0;0Y[2XNewOperation[102X  returns  an  operation [3Xopr[103X with name [3Xname[103X. The list [3Xargs-filts[103X
-  describes  requirements  about  the  arguments  of [3Xopr[103X, namely the number of
-  arguments  must  be equal to the length of [3Xargs-filts[103X, and the [22Xi[122X-th argument
-  must lie in the filter [3Xargs-filts[103X[22X[i][122X.[133X
-  
-  [33X[0;0YEach  method  that  is  installed  for  [3Xopr[103X  via [2XInstallMethod[102X ([14X78.2-1[114X) must
-  require that the [22Xi[122X-th argument lies in the filter [3Xargs-filts[103X[22X[i][122X.[133X
-  
-  [33X[0;0YOne  can  install  methods  for other argument tuples via [2XInstallOtherMethod[102X
-  ([14X78.2-2[114X),  this  way  it is also possible to install methods for a different
-  number of arguments than the length of [3Xargs-filts[103X.[133X
-  
-  
-  [1X79.6 [33X[0;0YCreating Constructors[133X[101X
-  
-  [1X79.6-1 NewConstructor[101X
-  
-  [33X[1;0Y[29X[2XNewConstructor[102X( [3Xname[103X, [3Xargs-filts[103X ) [32X function[133X
-  
-  [33X[0;0Y[2XNewConstructor[102X   returns  a  constructor  [3Xcons[103X  with  name  [3Xname[103X.  The  list
-  [3Xargs-filts[103X  describes  requirements  about the arguments of [3Xcons[103X. Namely the
-  number  of arguments must be equal to the length of [3Xargs-filts[103X, and the [22Xi[122X-th
-  argument  must  lie  in  the  filter  [3Xargs-filts[103X[22X[i][122X for [22Xi ≠ 1[122X. A constructor
-  expects  the  first argument to be a [13Xfilter[113X instead of an object and it must
-  be a subset of the filter [3Xargs-filts[103X[22X[1][122X.[133X
-  
-  [33X[0;0YEach  method  that  is  installed  for  [3Xcons[103X via [2XInstallMethod[102X ([14X78.2-1[114X) must
-  require  that  the [22Xi[122X-th argument lies in the filter [3Xargs-filts[103X[22X[i][122X for [22Xi ≠ 1[122X.
-  Its  first  argument  is  a  filter  and  must  be  a  subset  of the filter
-  [3Xargs-filts[103X[22X[1][122X.[133X
-  
-  [33X[0;0YOne  can  install  methods  for other argument tuples via [2XInstallOtherMethod[102X
-  ([14X78.2-2[114X),  this  way  it is also possible to install methods for a different
-  number of arguments than the length of [3Xargs-filts[103X.[133X
-  
-  [33X[0;0YNote  that  the method selection for constructors works slightly differently
-  than  for  usual  operations.  As  stated  above,  applicabilty to the first
-  argument  in  an  argument  tuple  is  tested  by  determining  whether  the
-  argument-filter is a [13Xsubset[113X of [3Xargs-filts[103X[22X[1][122X.[133X
-  
-  [33X[0;0YThe  rank  of  a  method installed for a constructor is determined solely by
-  [3Xargs-filts[103X[22X[1][122X  of  the  method.  Instead  of  taking the sum of the ranks of
-  filters  involved  in its [3Xargs-filts[103X[22X[1][122X, the sum of [22X-1[122X times these values is
-  taken.  The  result  is  added  to  the  number  [3Xval[103X  used  in  the  call of
-  [2XInstallMethod[102X ([14X78.2-1[114X).[133X
-  
-  [33X[0;0YThis  has the following effects on the method selection for constructors. If
-  [3Xcons[103X  is  called  with  an argument tuple whose first argument is the filter
-  [3Xfilt[103X,  any  method  whose  first  argument  is  [13Xmore[113X  specific  than [3Xfilt[103X is
-  applicable  (if  its  other [3Xargs-filts[103X also match). Then the method with the
-  [21Xmost  general[121X  filter [3Xargs-filts[103X[22X[1][122X is chosen, since the rank is computed by
-  taking  [22X-1[122X  times  the ranks of the involved filters. Thus, a constructor is
-  chosen  which  returns  an  object  in  [3Xfilt[103X  using  as few extra filters as
-  possible,  which  presumably  is  both  more  flexible  to use and easier to
-  construct.[133X
-  
-  [33X[0;0YThe  following  example  showcases  this  behaviour.  Note that the argument
-  [3Xfilter[103X is only used for method dispatch.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[28XDeclareFilter( "IsMyObj" );[128X[104X
-    [4X[28XDeclareFilter( "IsMyFilter" );[128X[104X
-    [4X[28XDeclareFilter( "IsMyOtherFilter" );[128X[104X
-    [4X[28XBindGlobal( "MyFamily", NewFamily( "MyFamily" ) );[128X[104X
-    [4X[28X[128X[104X
-    [4X[28XDeclareConstructor( "NewMyObj", [ IsMyObj ] );[128X[104X
-    [4X[28X[128X[104X
-    [4X[28XInstallMethod( NewMyObj,[128X[104X
-    [4X[28X[ IsMyObj ],[128X[104X
-    [4X[28Xfunction( filter )[128X[104X
-    [4X[28X    local type;[128X[104X
-    [4X[28X    Print("General constructor\n");[128X[104X
-    [4X[28X    type := NewType( MyFamily, IsMyObj );[128X[104X
-    [4X[28X    return Objectify( type, [] );[128X[104X
-    [4X[28Xend );[128X[104X
-    [4X[28XInstallMethod( NewMyObj,[128X[104X
-    [4X[28X[ IsMyObj and IsMyFilter and IsMyOtherFilter ],[128X[104X
-    [4X[28Xfunction( filter )[128X[104X
-    [4X[28X    local type;[128X[104X
-    [4X[28X    Print("Special constructor\n");[128X[104X
-    [4X[28X    type := NewType( MyFamily, IsMyObj and IsMyFilter and IsMyOtherFilter );[128X[104X
-    [4X[28X    return Objectify( type, [] );[128X[104X
-    [4X[28Xend );[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YIf  only  IsMyObj  is  given,  both  methods  are applicable and the general
-  constructor  is  called.  If  also  IsMyFilter  is  given,  only the special
-  constructor is applicable.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xa := NewMyObj( IsMyObj );;[127X[104X
-    [4X[28XGeneral constructor[128X[104X
-    [4X[25Xgap>[125X [27XIsMyOtherFilter(a);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27Xb := NewMyObj( IsMyObj and IsMyFilter );;[127X[104X
-    [4X[28XSpecial constructor[128X[104X
-    [4X[25Xgap>[125X [27XIsMyOtherFilter(b);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xc := NewMyObj( IsMyObj and IsMyFilter and IsMyOtherFilter );;[127X[104X
-    [4X[28XSpecial constructor[128X[104X
-    [4X[25Xgap>[125X [27XIsMyOtherFilter(c);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X79.7 [33X[0;0YCreating Families[133X[101X
-  
-  [33X[0;0YFamilies are probably the least obvious part of the [5XGAP[105X type system, so some
-  remarks  about  the  role of families are necessary. When one uses [5XGAP[105X as it
-  is,  one  will (better: should) not meet families at all. The two situations
-  where families come into play are the following.[133X
-  
-  [33X[0;0YFirst,  since  families  are used to describe relations between arguments of
-  operations  in  the  method  selection  mechanism  (see Chapter [14X78[114X, and also
-  Chapter [14X13[114X),   one   has  to  prescribe  such  a  relation  in  each  method
-  installation (see [14X78.2[114X); usual relations are [2XReturnTrue[102X ([14X5.4-1[114X) (which means
-  that  any  relation  of  the actual arguments is admissible), [2XIsIdenticalObj[102X
-  ([14X12.5-1[114X)  (which  means  that  there  are two arguments that lie in the same
-  family),  and  [10XIsCollsElms[110X  (which  means  that there are two arguments, the
-  first  being  a  collection  of  elements that lie in the same family as the
-  second argument).[133X
-  
-  [33X[0;0YSecond  –and  this is the more complicated situation– whenever one creates a
-  new  kind of objects, one has to decide what its family shall be. If the new
-  object  shall  be  equal  to  existing  objects,  for  example if it is just
-  represented  in a different way, there is no choice: The new object must lie
-  in  the same family as all objects that shall be equal to it. So only if the
-  new  object is different (w.r.t. the equality [21X[10X=[110X[121X) from all other [5XGAP[105X objects,
-  we are likely to create a new family for it. Note that enlarging an existing
-  family  by  such new objects may be problematic because of implications that
-  have been installed for all objects of the family in question. The choice of
-  families  depends  on  the applications one has in mind. For example, if the
-  new  objects  in  question  are not likely to be arguments of operations for
-  which   family   relations  are  relevant  (for  example  binary  arithmetic
-  operations), one could create one family for all such objects, and regard it
-  as [21Xthe family of all those [5XGAP[105X objects that would in fact not need a family[121X.
-  On the other extreme, if one wants to create domains of the new objects then
-  one  has  to choose the family in such a way that all intended elements of a
-  domain  do  in  fact  lie  in  the same family. (Remember that a domain is a
-  collection,  see Chapter [14X12.4[114X, and that a collection consists of elements in
-  the same family, see Chapter [14X30[114X and Section [14X13.1[114X.)[133X
-  
-  [33X[0;0YLet  us  look  at  an example. Suppose that no permutations are available in
-  [5XGAP[105X,  and that we want to implement permutations. Clearly we want to support
-  permutation  groups,  but it is not a priori clear how to distribute the new
-  permutations  into  families.  We  can put all permutations into one family;
-  this  is  how in fact permutations are implemented in [5XGAP[105X. But it would also
-  be possible to put all permutations of a given degree into a family of their
-  own;  this  would  for  example  mean  that  for each degree, there would be
-  distinguished  trivial  permutations, and that the stabilizer of the point [10X5[110X
-  in  the  symmetric group on the points [10X1[110X, [10X2[110X, [22X...[122X, [10X5[110X is not regarded as equal
-  to  the  symmetric  group on [10X1[110X, [10X2[110X, [10X3[110X, [10X4[110X. Note that the latter approach would
-  have  the  advantage  that  it  is  no problem to construct permutations and
-  permutation  groups  acting  on  arbitrary  (finite)  sets,  for  example by
-  constructing  first  the  symmetric group on the set and then generating any
-  desired permutation group as a subgroup of this symmetric group.[133X
-  
-  [33X[0;0YSo  one  aspect  concerning  a  reasonable choice of families is to make the
-  families large enough for being able to form interesting domains of elements
-  in  the  family.  But on the other hand, it is useful to choose the families
-  small  enough  for  admitting  meaningful  relations  between  objects.  For
-  example,  the  elements  of  different  free  groups in [5XGAP[105X lie in different
-  families;  the  multiplication  of free group elements is installed only for
-  the  case that the two operands lie in the same family, with the effect that
-  one  cannot  erroneously  form  the  product of elements from different free
-  groups.  In  this  case,  families  appear  as  a  tool for providing useful
-  restrictions.[133X
-  
-  [33X[0;0YAs  another  example,  note that an element and a collection containing this
-  element  never  lie  in  the  same  family, by the general implementation of
-  collections;  namely,  the  family of a collection of elements in the family
-  [3XFam[103X  is the collections family of [3XFam[103X (see [2XCollectionsFamily[102X ([14X30.2-1[114X)). This
-  means  that  for  a collection, we need not (because we cannot) decide about
-  its family.[133X
-  
-  [33X[0;0YA  few  functions in [5XGAP[105X return families, see [2XCollectionsFamily[102X ([14X30.2-1[114X) and
-  [2XElementsFamily[102X ([14X30.2-3[114X).[133X
-  
-  [1X79.7-1 NewFamily[101X
-  
-  [33X[1;0Y[29X[2XNewFamily[102X( [3Xname[103X[, [3Xreq[103X[, [3Ximp[103X[, [3Xfamfilter[103X]]] ) [32X function[133X
-  
-  [33X[0;0Y[2XNewFamily[102X  returns  a  new  family  [3Xfam[103X with name [3Xname[103X. The argument [3Xreq[103X, if
-  present,  is a filter of which [3Xfam[103X shall be a subset. If one tries to create
-  an  object  in  [3Xfam[103X that does not lie in the filter [3Xreq[103X, an error message is
-  printed.  Also  the argument [3Ximp[103X, if present, is a filter of which [3Xfam[103X shall
-  be  a  subset.  Any  object  that  is  created  in  the  family [3Xfam[103X will lie
-  automatically in the filter [3Ximp[103X.[133X
-  
-  [33X[0;0YThe  filter  [3Xfamfilter[103X,  if given, specifies a filter that will hold for the
-  family [3Xfam[103X (not for objects in [3Xfam[103X).[133X
-  
-  [33X[0;0YFamilies are always represented as component objects (see [14X79.10[114X). This means
-  that components can be used to store and access useful information about the
-  family.[133X
-  
-  
-  [1X79.8 [33X[0;0YCreating Types[133X[101X
-  
-  [1X79.8-1 NewType[101X
-  
-  [33X[1;0Y[29X[2XNewType[102X( [3Xfamily[103X, [3Xfilter[103X[, [3Xdata[103X] ) [32X function[133X
-  
-  [33X[0;0Y[2XNewType[102X  returns  the type given by the family [3Xfamily[103X and the filter [3Xfilter[103X.
-  The optional third argument [3Xdata[103X is any object that denotes defining data of
-  the desired type.[133X
-  
-  [33X[0;0YFor  examples  where  [2XNewType[102X  is used, see [14X79.10[114X, [14X79.11[114X, and the example in
-  Chapter [14X81[114X.[133X
-  
-  
-  [1X79.9 [33X[0;0YCreating Objects[133X[101X
-  
-  [1X79.9-1 Objectify[101X
+  [1X79.1-1 Objectify[101X
   
   [33X[1;0Y[29X[2XObjectify[102X( [3Xtype[103X, [3Xdata[103X ) [32X function[133X
   
@@ -422,14 +36,14 @@
   
   [33X[0;0YIf  [3Xdata[103X is a list then [2XObjectify[102X turns it into a positional object, if [3Xdata[103X
   is  a  record then [2XObjectify[102X turns it into a component object (for examples,
-  see [14X79.10[114X and [14X79.11[114X).[133X
+  see [14X79.2[114X and [14X79.3[114X).[133X
   
   [33X[0;0Y[2XObjectify[102X does also return the object that it made out of [3Xdata[103X.[133X
   
-  [33X[0;0YFor  examples  where [2XObjectify[102X is used, see [14X79.10[114X, [14X79.11[114X, and the example in
+  [33X[0;0YFor  examples  where  [2XObjectify[102X  is used, see [14X79.2[114X, [14X79.3[114X, and the example in
   Chapter [14X81[114X.[133X
   
-  [1X79.9-2 ObjectifyWithAttributes[101X
+  [1X79.1-2 ObjectifyWithAttributes[101X
   
   [33X[1;0Y[29X[2XObjectifyWithAttributes[102X( [3Xobj[103X, [3Xtype[103X, [3Xattr1[103X, [3Xval1[103X, [3Xattr2[103X, [3Xval2[103X, [3X...[103X ) [32X function[133X
   
@@ -452,26 +66,27 @@
   simultaneously without type changes. This can produce a substantial speedup.[133X
   
   [33X[0;0YIf  the  conditions  of  the  last  sentence  are not fulfilled, an ordinary
-  [2XObjectify[102X  ([14X79.9-1[114X)  with  subsequent  setter  calls  for  the attributes is
+  [2XObjectify[102X  ([14X79.1-1[114X)  with  subsequent  setter  calls  for  the attributes is
   performed instead.[133X
   
   
-  [1X79.10 [33X[0;0YComponent Objects[133X[101X
+  [1X79.2 [33X[0;0YComponent Objects[133X[101X
   
-  [33X[0;0YA  [13Xcomponent  object[113X is an object in the representation [10XIsComponentObjectRep[110X
-  or  a  subrepresentation of it. Such an object [3Xcobj[103X is built from subobjects
-  that can be accessed via [10X[3Xcobj[103X[10X!.[3Xname[103X[10X[110X, similar to components of a record. Also
-  analogously  to  records,  values  can be assigned to components of [3Xcobj[103X via
-  [10X[3Xcobj[103X[10X!.[3Xname[103X[10X:=  [3Xval[103X[10X[110X. For the creation of component objects, see [14X79.9[114X. One must
-  be  [13Xvery  careful[113X  when  using  the  [10X!.[110X  operator, in order to interpret the
-  component  in the right way, and even more careful when using the assignment
-  to  components  using  [10X!.[110X,  in  order to keep the information stored in [3Xcobj[103X
-  consistent.[133X
+  [33X[0;0YA  [13Xcomponent  object[113X is an object in the representation [2XIsComponentObjectRep[102X
+  ([14X13.4-1[114X)  or  a  subrepresentation  of it. Such an object [3Xcobj[103X is built from
+  subobjects  that  can be accessed via [10X[3Xcobj[103X[10X!.[3Xname[103X[10X[110X, similar to components of a
+  record. Also analogously to records, values can be assigned to components of
+  [3Xcobj[103X  via [10X[3Xcobj[103X[10X!.[3Xname[103X[10X:= [3Xval[103X[10X[110X. For the creation of component objects, see [14X79.1[114X.
+  One  must  be [13Xvery careful[113X when using the [10X!.[110X operator, in order to interpret
+  the  component  in  the  right  way,  and  even  more careful when using the
+  assignment  to  components using [10X!.[110X, in order to keep the information stored
+  in [3Xcobj[103X consistent.[133X
   
   [33X[0;0YFirst  of  all,  in  the access or assignment to a component as shown above,
   [3Xname[103X  must be among the admissible component names for the representation of
-  [3Xcobj[103X,  see [14X79.2[114X.  Second, preferably only few low level functions should use
-  [10X!.[110X, whereas this operator should not occur in [21Xuser interactions[121X.[133X
+  [3Xcobj[103X,  see [2XNewRepresentation[102X ([14X13.4-4[114X). Second, preferably only few low level
+  functions  should  use  [10X!.[110X,  whereas  this operator should not occur in [21Xuser
+  interactions[121X.[133X
   
   [33X[0;0YNote  that even if [3Xcobj[103X claims that it is immutable, i.e., if [3Xcobj[103X is not in
   the category [2XIsMutable[102X ([14X12.6-2[114X), access and assignment via [10X!.[110X and [10X!.:=[110X work.
@@ -479,10 +94,10 @@
   immutable objects.[133X
   
   [33X[0;0YThe following example shows the implementation of an iterator (see [14X30.8[114X) for
-  the  domain of integers, which is represented as component object. See [14X79.11[114X
+  the  domain  of integers, which is represented as component object. See [14X79.3[114X
   for  an  implementation  using  positional  objects.  (In  practice, such an
   iterator   can  be  implemented  more  elegantly  using  [2XIteratorByFunctions[102X
-  ([14X30.8-8[114X), see [14X79.14[114X.)[133X
+  ([14X30.8-8[114X), see [14X79.6[114X.)[133X
   
   [33X[0;0YThe used succession of integers is [22X0, 1, -1, 2, -2, 3, -3, ...[122X, that is, [22Xa_n
   = n/2[122X if [22Xn[122X is even, and [22Xa_n = (1-n)/2[122X otherwise.[133X
@@ -493,9 +108,9 @@
   [4X[32X[104X
   
   [33X[0;0YThe  above  command  creates  a  new  representation  (see [2XNewRepresentation[102X
-  ([14X79.2-1[114X))    [10XIsIntegersIteratorCompRep[110X,    as    a    subrepresentation   of
-  [10XIsComponentObjectRep[110X, and with one admissible component [10Xcounter[110X. So no other
-  components than [10Xcounter[110X will be needed.[133X
+  ([14X13.4-4[114X))    [10XIsIntegersIteratorCompRep[110X,    as    a    subrepresentation   of
+  [2XIsComponentObjectRep[102X ([14X13.4-1[114X), and with one admissible component [10Xcounter[110X. So
+  no other components than [10Xcounter[110X will be needed.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28XInstallMethod( Iterator,[128X[104X
@@ -513,7 +128,7 @@
   Integers  )[110X.  Note  that  exactly the domain of integers is described by the
   filter [2XIsIntegers[102X ([14X14.1-2[114X).[133X
   
-  [33X[0;0YBy  the  call  to  [2XNewType[102X  ([14X79.8-1[114X), the returned object lies in the family
+  [33X[0;0YBy  the  call  to  [2XNewType[102X  ([14X13.9-3[114X), the returned object lies in the family
   containing  all iterators, which is [10XIteratorsFamily[110X, it lies in the category
   [2XIsIterator[102X  ([14X30.8-3[114X)  and  in  the representation [10XIsIntegersIteratorCompRep[110X;
   furthermore, it has the component [10Xcounter[110X with value [10X0[110X.[133X
@@ -544,7 +159,7 @@
     [4X[28X    end );[128X[104X
   [4X[32X[104X
   
-  [1X79.10-1 NamesOfComponents[101X
+  [1X79.2-1 NamesOfComponents[101X
   
   [33X[1;0Y[29X[2XNamesOfComponents[102X( [3Xcomobj[103X ) [32X function[133X
   
@@ -555,13 +170,13 @@
   ([14X29.1-2[114X).[133X
   
   
-  [1X79.11 [33X[0;0YPositional Objects[133X[101X
+  [1X79.3 [33X[0;0YPositional Objects[133X[101X
   
-  [33X[0;0YA [13Xpositional object[113X is an object in the representation [10XIsPositionalObjectRep[110X
-  or  a  subrepresentation of it. Such an object [3Xpobj[103X is built from subobjects
-  that  can  be  accessed via [10X[3Xpobj[103X[10X![[3Xpos[103X[10X][110X, similar to positions in a list. Also
-  analogously  to  lists,  values  can  be  assigned  to positions of [3Xpobj[103X via
-  [10X[3Xpobj[103X[10X![[3Xpos[103X[10X]:= [3Xval[103X[10X[110X. For the creation of positional objects, see [14X79.9[114X.[133X
+  [33X[0;0YA [13Xpositional object[113X is an object in the representation [2XIsPositionalObjectRep[102X
+  ([14X13.4-1[114X)  or  a  subrepresentation  of it. Such an object [3Xpobj[103X is built from
+  subobjects  that  can  be accessed via [10X[3Xpobj[103X[10X![[3Xpos[103X[10X][110X, similar to positions in a
+  list. Also analogously to lists, values can be assigned to positions of [3Xpobj[103X
+  via [10X[3Xpobj[103X[10X![[3Xpos[103X[10X]:= [3Xval[103X[10X[110X. For the creation of positional objects, see [14X79.1[114X.[133X
   
   [33X[0;0YOne  must be [13Xvery careful[113X when using the [10X![][110X operator, in order to interpret
   the  position  in  the  right  way,  and  even  more  careful when using the
@@ -570,8 +185,9 @@
   
   [33X[0;0YFirst  of all, in the access or assignment to a position as shown above, [3Xpos[103X
   must  be  among  the  admissible  positions  for the representation of [3Xpobj[103X,
-  see [14X79.2[114X.  Second,  preferably  only few low level functions should use [10X![][110X,
-  whereas this operator should not occur in [21Xuser interactions[121X.[133X
+  see [2XNewRepresentation[102X  ([14X13.4-4[114X).  Second,  preferably  only  few  low  level
+  functions  should  use  [10X![][110X,  whereas this operator should not occur in [21Xuser
+  interactions[121X.[133X
   
   [33X[0;0YNote  that even if [3Xpobj[103X claims that it is immutable, i.e., if [3Xpobj[103X is not in
   the category [2XIsMutable[102X ([14X12.6-2[114X), access and assignment via [10X![][110X work. This is
@@ -579,7 +195,7 @@
   objects.[133X
   
   [33X[0;0YThe following example shows the implementation of an iterator (see [14X30.8[114X) for
-  the domain of integers, which is represented as positional object. See [14X79.10[114X
+  the  domain of integers, which is represented as positional object. See [14X79.2[114X
   for an implementation using component objects, and more details.[133X
   
   [4X[32X  Example  [32X[104X
@@ -588,9 +204,9 @@
   [4X[32X[104X
   
   [33X[0;0YThe  above  command  creates  a  new  representation  (see [2XNewRepresentation[102X
-  ([14X79.2-1[114X))    [10XIsIntegersIteratorPosRep[110X,    as    a    subrepresentation    of
-  [10XIsComponentObjectRep[110X,  and with only the first position being admissible for
-  storing data.[133X
+  ([14X13.4-4[114X))    [10XIsIntegersIteratorPosRep[110X,    as    a    subrepresentation    of
+  [2XIsPositionalObjectRep[102X  ([14X13.4-1[114X),  and  with  only  the  first position being
+  admissible for storing data.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28XInstallMethod( Iterator,[128X[104X
@@ -608,7 +224,7 @@
   Integers  )[110X.  Note  that  exactly the domain of integers is described by the
   filter [2XIsIntegers[102X ([14X14.1-2[114X).[133X
   
-  [33X[0;0YBy  the  call  to  [2XNewType[102X  ([14X79.8-1[114X), the returned object lies in the family
+  [33X[0;0YBy  the  call  to  [2XNewType[102X  ([14X13.9-3[114X), the returned object lies in the family
   containing  all iterators, which is [10XIteratorsFamily[110X, it lies in the category
   [2XIsIterator[102X  ([14X30.8-3[114X)  and  in  the  representation [10XIsIntegersIteratorPosRep[110X;
   furthermore, the first position has value [10X0[110X.[133X
@@ -640,18 +256,18 @@
   [4X[32X[104X
   
   [33X[0;0YIt  should be noted that one can of course install both the methods shown in
-  Section [14X79.10[114X and [14X79.11[114X. The call [10XIterator( Integers )[110X will cause one of the
+  Section [14X79.2[114X  and  [14X79.3[114X. The call [10XIterator( Integers )[110X will cause one of the
   methods  to  be selected, and for the returned iterator, which will have one
   of  the  representations  we  constructed,  the  right [2XNextIterator[102X ([14X30.8-5[114X)
   method will be chosen.[133X
   
   
-  [1X79.12 [33X[0;0YImplementing New List Objects[133X[101X
+  [1X79.4 [33X[0;0YImplementing New List Objects[133X[101X
   
   [33X[0;0YThis  section  gives some hints for the quite usual situation that one wants
   to implement new objects that are lists. More precisely, one either wants to
   deal  with  lists  that  have  additional  features,  or one wants that some
-  objects also behave as lists. An example can be found in [14X79.13[114X.[133X
+  objects also behave as lists. An example can be found in [14X79.5[114X.[133X
   
   [33X[0;0YA [13Xlist[113X in [5XGAP[105X is an object in the category [2XIsList[102X ([14X21.1-1[114X). Basic operations
   for  lists  are  [2XLength[102X  ([14X21.17-5[114X),  [2X\[\][102X ([14X21.2-1[114X), and [2XIsBound\[\][102X ([14X21.2-1[114X)
@@ -705,7 +321,7 @@
   not equal w.r.t. [21X[10X=[110X[121X because they lie in different families.[133X
   
   
-  [1X79.13 [33X[0;0YExample – Constructing Enumerators[133X[101X
+  [1X79.5 [33X[0;0YExample – Constructing Enumerators[133X[101X
   
   [33X[0;0YWhen  dealing  with  countable sets, a usual task is to define enumerations,
   i.e.,  bijections  to the positive integers. In [5XGAP[105X, this can be implemented
@@ -739,8 +355,8 @@
   
   [33X[0;0YThe  bodies  of the functions have been omitted above; here is the code that
   is actually used in [5XGAP[105X. (The ordering coincides with that for the iterators
-  for  the  domain  of  rational  integers  that  have been discussed in [14X79.10[114X
-  and [14X79.11[114X.)[133X
+  for  the  domain  of  rational  integers  that  have  been discussed in [14X79.2[114X
+  and [14X79.3[114X.)[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xenum:= Enumerator( Integers );[127X[104X
@@ -771,7 +387,7 @@
   [33X[0;0YThe  situation becomes slightly more complicated if the set [22XS[122X in question is
   not  a  domain.  This is because one must provide also at least a method for
   computing  the  length  of  the  list,  and because one has to determine the
-  family  in  which  it  lies  (see [14X79.9[114X).  The latter should usually not be a
+  family  in  which  it  lies  (see [14X79.1[114X).  The latter should usually not be a
   problem  since  either  [22XS[122X  is  nonempty and all its elements lie in the same
   family  –in  this case one takes the collections family of any element in [22XS[122X–
   or the family of the enumerator must be [10XListsFamily[110X.[133X
@@ -844,7 +460,7 @@
   the data components [22XS[122X and [22Xk[122X are contained.[133X
   
   
-  [1X79.14 [33X[0;0YExample – Constructing Iterators[133X[101X
+  [1X79.6 [33X[0;0YExample – Constructing Iterators[133X[101X
   
   [33X[0;0YIterators  are a kind of objects that is implemented for several collections
   in  the  [5XGAP[105X  library  and  which  might be interesting also in other cases,
@@ -873,7 +489,7 @@
   [33X[0;0YThe bodies of two of the functions have been omitted above; here is the code
   that  is  actually  used  in  [5XGAP[105X. (The ordering coincides with that for the
   iterators  for  the  domain  of  rational  integers that have been discussed
-  in [14X79.10[114X and [14X79.11[114X.)[133X
+  in [14X79.2[114X and [14X79.3[114X.)[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xiter:= Iterator( Integers );[127X[104X
@@ -900,7 +516,7 @@
   [2XIteratorByFunctions[102X ([14X30.8-8[114X) in order to create the desired shallow copy.[133X
   
   
-  [1X79.15 [33X[0;0YArithmetic Issues in the Implementation of New Kinds of Lists[133X[101X
+  [1X79.7 [33X[0;0YArithmetic Issues in the Implementation of New Kinds of Lists[133X[101X
   
   [33X[0;0YWhen  designing  a  new kind of list objects in [5XGAP[105X, defining the arithmetic
   behaviour of these objects is an issue.[133X
@@ -963,18 +579,18 @@
   
   [33X[0;0YIf    a    list    in    the    filter    [2XIsGeneralizedRowVector[102X   ([14X21.12-1[114X)
   ([2XIsMultiplicativeGeneralizedRowVector[102X        ([14X21.12-2[114X))        lies       in
-  [10XIsAttributeStoringRep[110X, the values of additive (multiplicative) nesting depth
-  is  stored  in  the  list  and  need  not  be calculated for each arithmetic
-  operation.  One  can  then  store  the value(s) already upon creation of the
-  lists,  with  the  effect that the default arithmetic operations will access
-  elements of these lists only if this is unavoidable. For example, the sum of
-  two  plain lists of [21Xwrapped matrices[121X with stored nesting depths are computed
-  via  the method for adding two such wrapped lists, and without accessing any
-  of  their  rows (which might be expensive). In this sense, the wrapped lists
-  are treated as black boxes.[133X
+  [2XIsAttributeStoringRep[102X  ([14X13.5-5[114X),  the  values  of  additive (multiplicative)
+  nesting  depth  is  stored  in  the list and need not be calculated for each
+  arithmetic  operation. One can then store the value(s) already upon creation
+  of  the  lists,  with the effect that the default arithmetic operations will
+  access elements of these lists only if this is unavoidable. For example, the
+  sum  of  two  plain lists of [21Xwrapped matrices[121X with stored nesting depths are
+  computed  via  the  method  for  adding  two such wrapped lists, and without
+  accessing  any  of their rows (which might be expensive). In this sense, the
+  wrapped lists are treated as black boxes.[133X
   
   
-  [1X79.16 [33X[0;0YExternal Representation[133X[101X
+  [1X79.8 [33X[0;0YExternal Representation[133X[101X
   
   [33X[0;0YAn  operation  is  defined for elements rather than for objects in the sense
   that  if  the  arguments  are  replaced by objects that are equal to the old
@@ -1033,12 +649,12 @@
   representation  of  [3Xobj[103X  exists  for  which  the computation of the external
   representation  is  obtained  by  just  [21Xunpacking[121X [3Xobj[103X, in the sense that the
   desired  data  is  stored  in  a component or a position of [3Xobj[103X, if [3Xobj[103X is a
-  component object (see [14X79.10[114X) or a positional object (see [14X79.11[114X).[133X
+  component object (see [14X79.2[114X) or a positional object (see [14X79.3[114X).[133X
   
   [33X[0;0YTo  implement  an  external  representation means to install methods for the
   following two operations.[133X
   
-  [1X79.16-1 ExtRepOfObj[101X
+  [1X79.8-1 ExtRepOfObj[101X
   
   [33X[1;0Y[29X[2XExtRepOfObj[102X( [3Xobj[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XObjByExtRep[102X( [3Xfam[103X, [3Xdata[103X ) [32X operation[133X
@@ -1057,7 +673,7 @@
   representation.[133X
   
   
-  [1X79.17 [33X[0;0YMutability and Copying[133X[101X
+  [1X79.9 [33X[0;0YMutability and Copying[133X[101X
   
   [33X[0;0YAny  [5XGAP[105X  object is either mutable or immutable. This can be tested with the
   function  [2XIsMutable[102X  ([14X12.6-2[114X).  The  intended meaning of (im)mutability is a
@@ -1067,7 +683,7 @@
   way.[133X
   
   [33X[0;0YImmutability  is  enforced  in  different  ways  for  built-in objects (like
-  records, or lists) and for external objects (made using [2XObjectify[102X ([14X79.9-1[114X)).[133X
+  records, or lists) and for external objects (made using [2XObjectify[102X ([14X79.1-1[114X)).[133X
   
   [33X[0;0YFor  built-in  objects which are immutable, the kernel will prevent you from
   changing them. Thus[133X
@@ -1193,119 +809,69 @@
               these should explicitly require [2XIsMutable[102X ([14X12.6-2[114X).[133X
   
   
-  [1X79.18 [33X[0;0YGlobal Variables in the Library[133X[101X
+  [1X79.10 [33X[0;0YGlobal Variables in the Library[133X[101X
   
   [33X[0;0YGlobal  variables in the [5XGAP[105X library are usually read-only in order to avoid
   their being overwritten accidentally. See also Section [14X4.9[114X.[133X
   
-  [1X79.18-1 DeclareCategory[101X
+  [1X79.10-1 DeclareGlobalVariable[101X
   
-  [33X[1;0Y[29X[2XDeclareCategory[102X( [3Xname[103X, [3Xsuper[103X[, [3Xrank[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XDeclareGlobalVariable[102X( [3Xname[103X[, [3Xdescription[103X] ) [32X function[133X
   
-  [33X[0;0Ydoes  the  same  as [2XNewCategory[102X ([14X79.1-1[114X) and additionally makes the variable
-  [3Xname[103X read-only.[133X
+  [33X[0;0YFor  global  variables  that  are [13Xnot[113X functions, instead of using [2XBindGlobal[102X
+  ([14X4.9-8[114X)  one  can also declare the variable with [2XDeclareGlobalVariable[102X which
+  creates  a  new  global  variable  named  by  the string [3Xname[103X. If the second
+  argument  [3Xdescription[103X  is  entered then this must be a string that describes
+  the  meaning  of the global variable. [2XDeclareGlobalVariable[102X shall be used in
+  the  declaration part of the respective package (see [14X79.11[114X), values can then
+  be   assigned   to   the   new   variable   with   [2XInstallValue[102X   ([14X79.10-2[114X),
+  [2XInstallFlushableValue[102X    ([14X79.10-2[114X)    or   [2XInstallFlushableValueFromFunction[102X
+  ([14X79.10-2[114X), in the implementation part (again, see [14X79.11[114X).[133X
   
-  [1X79.18-2 TypeOfOperation[101X
+  [1X79.10-2 InstallValue[101X
   
-  [33X[1;0Y[29X[2XTypeOfOperation[102X( [3Xobject[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XInstallValue[102X( [3Xgvar[103X, [3Xvalue[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XInstallFlushableValue[102X( [3Xgvar[103X, [3Xvalue[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XInstallFlushableValueFromFunction[102X( [3Xgvar[103X, [3Xfunc[103X ) [32X function[133X
   
-  [33X[0;0Yreturns  a  string  from  the  list  [10X[ "Attribute", "Operation", "Property",
-  "Category",  "Representation",  "Filter", "Setter"][110X reflecting which type of
-  operation [3Xop[103X is.[133X
+  [33X[0;0Y[2XInstallValue[102X   assigns   the  value  [3Xvalue[103X  to  the  global  variable  [3Xgvar[103X.
+  [2XInstallFlushableValue[102X does the same but additionally provides that each call
+  of  [2XFlushCaches[102X  ([14X79.10-3[114X)  will  assign a structural copy of [3Xvalue[103X to [3Xgvar[103X.
+  [2XInstallFlushableValueFromFunction[102X instead assigns the result of [3Xfunc[103X to [3Xgvar[103X
+  ([3Xfunc[103X is re-evaluated for each invocation of [2XFlushCaches[102X ([14X79.10-3[114X)[133X
   
-  [33X[0;0Y(see [14X13.3[114X, [14X13.4[114X, [14X13.5[114X, [14X13.6[114X, [14X13.7[114X, [14X13.8[114X)[133X
+  [33X[0;0Y[2XInstallValue[102X  does  [13Xnot[113X  work  if  [3Xvalue[103X  is  an  [21Ximmediate object[121X, i.e., an
+  internally  represented small integer or finite field element. It also fails
+  for  booleans.  Furthermore,  [2XInstallFlushableValue[102X works only if [3Xvalue[103X is a
+  list  or  a  record.  (Note  that [2XInstallFlushableValue[102X makes sense only for
+  [13Xmutable[113X global variables.)[133X
   
-  [1X79.18-3 IsCategory[101X
+  [1X79.10-3 FlushCaches[101X
   
-  [33X[1;0Y[29X[2XIsCategory[102X( [3Xobject[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFlushCaches[102X(  ) [32X operation[133X
   
-  [33X[0;0Yreturns [10Xtrue[110X if [3Xobject[103X is a category (see [14X13.3[114X), and [10Xfalse[110X otherwise.[133X
+  [33X[0;0Y[2XFlushCaches[102X  resets the value of each global variable that has been declared
+  with  [2XDeclareGlobalVariable[102X  ([14X79.10-1[114X)  and  for which the initial value has
+  been       set       with       [2XInstallFlushableValue[102X      ([14X79.10-2[114X)      or
+  [2XInstallFlushableValueFromFunction[102X ([14X79.10-2[114X) to this initial value.[133X
   
-  [33X[0;0YNote that [5XGAP[105X categories are [13Xnot[113X categories in the usual mathematical sense.[133X
+  [33X[0;0Y[2XFlushCaches[102X  should  be used only for debugging purposes, since the involved
+  global  variables  include  for  example  lists that store finite fields and
+  cyclotomic  fields  used  in the current [5XGAP[105X session, in order to avoid that
+  these  fields  are  constructed  anew  in  each  call  to [2XGF[102X ([14X59.3-2[114X) and [2XCF[102X
+  ([14X60.1-1[114X).[133X
   
-  [1X79.18-4 IsRepresentation[101X
+  [1X79.10-4 DeclareGlobalFunction[101X
   
-  [33X[1;0Y[29X[2XIsRepresentation[102X( [3Xobject[103X ) [32X function[133X
-  
-  [33X[0;0Yreturns [10Xtrue[110X if [3Xobject[103X is a representation (see [14X13.4[114X), and [10Xfalse[110X otherwise.[133X
-  
-  [1X79.18-5 IsProperty[101X
-  
-  [33X[1;0Y[29X[2XIsProperty[102X( [3Xobject[103X ) [32X function[133X
-  
-  [33X[0;0Yreturns [10Xtrue[110X if [3Xobject[103X is a property (see [14X13.7[114X), and [10Xfalse[110X otherwise.[133X
-  
-  [1X79.18-6 IsAttribute[101X
-  
-  [33X[1;0Y[29X[2XIsAttribute[102X( [3Xobject[103X ) [32X function[133X
-  
-  [33X[0;0Yreturns [10Xtrue[110X if [3Xobject[103X is an attribute (see [14X13.5[114X), and [10Xfalse[110X otherwise.[133X
-  
-  [1X79.18-7 CategoryByName[101X
-  
-  [33X[1;0Y[29X[2XCategoryByName[102X( [3Xname[103X ) [32X function[133X
-  
-  [33X[0;0Yreturns the category with name [3Xname[103X if it is found, or fail otherwise.[133X
-  
-  [1X79.18-8 DeclareRepresentation[101X
-  
-  [33X[1;0Y[29X[2XDeclareRepresentation[102X( [3Xname[103X, [3Xsuper[103X, [3Xslots[103X[, [3Xreq[103X] ) [32X function[133X
-  
-  [33X[0;0Ydoes  the  same  as  [2XNewRepresentation[102X  ([14X79.2-1[114X)  and additionally makes the
-  variable [3Xname[103X read-only.[133X
-  
-  [1X79.18-9 DeclareAttribute[101X
-  
-  [33X[1;0Y[29X[2XDeclareAttribute[102X( [3Xname[103X, [3Xfilter[103X[, [3X"mutable"[103X][, [3Xrank[103X] ) [32X function[133X
-  
-  [33X[0;0Ydoes the same as [2XNewAttribute[102X ([14X79.3-1[114X), additionally makes the variable [3Xname[103X
-  read-only  and  also binds read-only global variables with names [10XHas[3Xname[103X[10X[110X and
-  [10XSet[3Xname[103X[10X[110X for the tester and setter of the attribute (see Section [14X13.6[114X).[133X
-  
-  [1X79.18-10 DeclareProperty[101X
-  
-  [33X[1;0Y[29X[2XDeclareProperty[102X( [3Xname[103X, [3Xfilter[103X[, [3Xrank[103X] ) [32X function[133X
-  
-  [33X[0;0Ydoes  the same as [2XNewProperty[102X ([14X79.3-2[114X), additionally makes the variable [3Xname[103X
-  read-only  and  also binds read-only global variables with names [10XHas[3Xname[103X[10X[110X and
-  [10XSet[3Xname[103X[10X[110X for the tester and setter of the property (see Section [14X13.6[114X).[133X
-  
-  [1X79.18-11 DeclareFilter[101X
-  
-  [33X[1;0Y[29X[2XDeclareFilter[102X( [3Xname[103X[, [3Xrank[103X] ) [32X function[133X
-  
-  [33X[0;0Ydoes the same as [2XNewFilter[102X ([14X79.4-1[114X) and additionally makes the variable [3Xname[103X
-  read-only.[133X
-  
-  [1X79.18-12 DeclareOperation[101X
-  
-  [33X[1;0Y[29X[2XDeclareOperation[102X( [3Xname[103X, [3Xfilters[103X ) [32X function[133X
-  
-  [33X[0;0Ydoes  the  same as [2XNewOperation[102X ([14X79.5-1[114X) and additionally makes the variable
-  [3Xname[103X read-only.[133X
-  
-  [1X79.18-13 DeclareConstructor[101X
-  
-  [33X[1;0Y[29X[2XDeclareConstructor[102X( [3Xname[103X, [3Xfilters[103X ) [32X function[133X
-  
-  [33X[0;0Ydoes the same as [2XNewConstructor[102X ([14X79.6-1[114X) and additionally makes the variable
-  [3Xname[103X read-only.[133X
-  
-  [33X[0;0YNote  that  for operations which are constructors special rules with respect
-  to  applicability  and  rank of the corresponding methods apply (see section
-  [2XNewConstructor[102X ([14X79.6-1[114X)).[133X
-  
-  [1X79.18-14 DeclareGlobalFunction[101X
-  
-  [33X[1;0Y[29X[2XDeclareGlobalFunction[102X( [3Xname[103X, [3Xinfo[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XDeclareGlobalFunction[102X( [3Xname[103X ) [32X function[133X
   [33X[1;0Y[29X[2XInstallGlobalFunction[102X( [3Xoper[103X, [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0Y[2XDeclareGlobalFunction[102X  [5XGAP[105X  functions  that  are not operations and that are
   intended  to be called by users should be notified to [5XGAP[105X in the declaration
-  part     of    the    respective    package    (see    Section [14X79.19[114X)    via
+  part     of    the    respective    package    (see    Section [14X79.11[114X)    via
   [2XDeclareGlobalFunction[102X,  which  returns  a  function  that  serves as a place
   holder for the function that will be installed later, and that will print an
-  error message if it is called. See also [2XDeclareSynonym[102X ([14X79.18-17[114X).[133X
+  error message if it is called. See also [2XDeclareSynonym[102X ([14X79.10-5[114X).[133X
   
   [33X[0;0YA global function declared with [2XDeclareGlobalFunction[102X can be given its value
   [3Xfunc[103X  via  [2XInstallGlobalFunction[102X;  [3Xgvar[103X  is the global variable (or a string
@@ -1316,46 +882,14 @@
     [4X[28XDeclareGlobalFunction( "SumOfTwoCubes" );[128X[104X
   [4X[32X[104X
   
-  [33X[0;0Yin  the  [21Xdeclaration  part[121X  (see  Section [14X79.19[114X)  might have a corresponding
+  [33X[0;0Yin  the  [21Xdeclaration  part[121X  (see  Section [14X79.11[114X)  might have a corresponding
   [21Ximplementation part[121X of:[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28XInstallGlobalFunction( SumOfTwoCubes, function(x, y) return x^3 + y^3; end);[128X[104X
   [4X[32X[104X
   
-  [1X79.18-15 DeclareGlobalVariable[101X
-  
-  [33X[1;0Y[29X[2XDeclareGlobalVariable[102X( [3Xname[103X[, [3Xdescription[103X] ) [32X function[133X
-  
-  [33X[0;0YFor  global  variables  that  are [13Xnot[113X functions, instead of using [2XBindGlobal[102X
-  ([14X4.9-8[114X)  one  can also declare the variable with [2XDeclareGlobalVariable[102X which
-  creates  a  new  global  variable  named  by  the string [3Xname[103X. If the second
-  argument  [3Xdescription[103X  is  entered then this must be a string that describes
-  the  meaning  of the global variable. [2XDeclareGlobalVariable[102X shall be used in
-  the  declaration part of the respective package (see [14X79.19[114X), values can then
-  be   assigned   to   the   new   variable   with   [2XInstallValue[102X  ([14X79.18-16[114X),
-  [2XInstallFlushableValue[102X    ([14X79.18-16[114X)   or   [2XInstallFlushableValueFromFunction[102X
-  ([14X79.18-16[114X), in the implementation part (again, see [14X79.19[114X).[133X
-  
-  [1X79.18-16 InstallValue[101X
-  
-  [33X[1;0Y[29X[2XInstallValue[102X( [3Xgvar[103X, [3Xvalue[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XInstallFlushableValue[102X( [3Xgvar[103X, [3Xvalue[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XInstallFlushableValueFromFunction[102X( [3Xgvar[103X, [3Xfunc[103X ) [32X function[133X
-  
-  [33X[0;0Y[2XInstallValue[102X   assigns   the  value  [3Xvalue[103X  to  the  global  variable  [3Xgvar[103X.
-  [2XInstallFlushableValue[102X does the same but additionally provides that each call
-  of  [2XFlushCaches[102X  ([14X79.18-18[114X)  will assign a structural copy of [3Xvalue[103X to [3Xgvar[103X.
-  [2XInstallFlushableValueFromFunction[102X instead assigns the result of [3Xfunc[103X to [3Xgvar[103X
-  ([3Xfunc[103X is re-evaluated for each invocation of [2XFlushCaches[102X ([14X79.18-18[114X)[133X
-  
-  [33X[0;0Y[2XInstallValue[102X  does  [13Xnot[113X  work  if  [3Xvalue[103X  is  an  [21Ximmediate object[121X, i.e., an
-  internally  represented small integer or finite field element. It also fails
-  for  booleans.  Furthermore,  [2XInstallFlushableValue[102X works only if [3Xvalue[103X is a
-  list  or  a  record.  (Note  that [2XInstallFlushableValue[102X makes sense only for
-  [13Xmutable[113X global variables.)[133X
-  
-  [1X79.18-17 DeclareSynonym[101X
+  [1X79.10-5 DeclareSynonym[101X
   
   [33X[1;0Y[29X[2XDeclareSynonym[102X( [3Xname[103X, [3Xvalue[103X ) [32X function[133X
   [33X[1;0Y[29X[2XDeclareSynonymAttr[102X( [3Xname[103X, [3Xvalue[103X ) [32X function[133X
@@ -1389,30 +923,8 @@
     [4X[28XDeclareSynonymAttr( "GeneratorsOfField", GeneratorsOfDivisionRing );[128X[104X
   [4X[32X[104X
   
-  [1X79.18-18 FlushCaches[101X
   
-  [33X[1;0Y[29X[2XFlushCaches[102X(  ) [32X operation[133X
-  
-  [33X[0;0Y[2XFlushCaches[102X  resets the value of each global variable that has been declared
-  with  [2XDeclareGlobalVariable[102X  ([14X79.18-15[114X)  and for which the initial value has
-  been       set       with      [2XInstallFlushableValue[102X      ([14X79.18-16[114X)      or
-  [2XInstallFlushableValueFromFunction[102X ([14X79.18-16[114X) to this initial value.[133X
-  
-  [33X[0;0Y[2XFlushCaches[102X  should  be used only for debugging purposes, since the involved
-  global  variables  include  for  example  lists that store finite fields and
-  cyclotomic  fields  used  in the current [5XGAP[105X session, in order to avoid that
-  these  fields  are  constructed  anew  in  each  call  to [2XGF[102X ([14X59.3-2[114X) and [2XCF[102X
-  ([14X60.1-1[114X).[133X
-  
-  [1X79.18-19 FilterByName[101X
-  
-  [33X[1;0Y[29X[2XFilterByName[102X( [3Xname[103X ) [32X function[133X
-  
-  [33X[0;0Yfinds  the  filter with name [3Xname[103X in the global FILTERS list. This is useful
-  to find filters that were created but not bound to a global variable.[133X
-  
-  
-  [1X79.19 [33X[0;0YDeclaration and Implementation Part[133X[101X
+  [1X79.11 [33X[0;0YDeclaration and Implementation Part[133X[101X
   
   [33X[0;0YEach  package  of  [5XGAP[105X code consists of two parts, the [13Xdeclaration part[113X that
   defines  the new categories and operations for the objects the package deals
@@ -1423,53 +935,53 @@
   
   [33X[0;0Y[5XGAP[105X  functions that are not operations and that are intended to be called by
   users   should   be   notified   to   [5XGAP[105X   in   the  declaration  part  via
-  [2XDeclareGlobalFunction[102X   ([14X79.18-14[114X).   Values  for  these  functions  can  be
-  installed in the implementation part via [2XInstallGlobalFunction[102X ([14X79.18-14[114X).[133X
+  [2XDeclareGlobalFunction[102X ([14X79.10-4[114X). Values for these functions can be installed
+  in the implementation part via [2XInstallGlobalFunction[102X ([14X79.10-4[114X).[133X
   
   [33X[0;0YCalls to the following functions belong to the declaration part.[133X
   
-  [33X[0;0Y[2XDeclareAttribute[102X ([14X79.18-9[114X),[133X
+  [30X    [33X[0;6Y[2XDeclareAttribute[102X ([14X13.5-4[114X),[133X
   
-  [33X[0;0Y[2XDeclareCategory[102X ([14X79.18-1[114X),[133X
+  [30X    [33X[0;6Y[2XDeclareCategory[102X ([14X13.3-5[114X),[133X
   
-  [33X[0;0Y[2XDeclareFilter[102X ([14X79.18-11[114X),[133X
+  [30X    [33X[0;6Y[2XDeclareFilter[102X ([14X13.8-2[114X),[133X
   
-  [33X[0;0Y[2XDeclareOperation[102X ([14X79.18-12[114X),[133X
+  [30X    [33X[0;6Y[2XDeclareOperation[102X ([14X78.1-5[114X),[133X
   
-  [33X[0;0Y[2XDeclareGlobalFunction[102X ([14X79.18-14[114X),[133X
+  [30X    [33X[0;6Y[2XDeclareGlobalFunction[102X ([14X79.10-4[114X),[133X
   
-  [33X[0;0Y[2XDeclareSynonym[102X ([14X79.18-17[114X),[133X
+  [30X    [33X[0;6Y[2XDeclareSynonym[102X ([14X79.10-5[114X),[133X
   
-  [33X[0;0Y[2XDeclareSynonymAttr[102X ([14X79.18-17[114X),[133X
+  [30X    [33X[0;6Y[2XDeclareSynonymAttr[102X ([14X79.10-5[114X),[133X
   
-  [33X[0;0Y[2XDeclareProperty[102X ([14X79.18-10[114X),[133X
+  [30X    [33X[0;6Y[2XDeclareProperty[102X ([14X13.7-5[114X),[133X
   
-  [33X[0;0Y[2XInstallTrueMethod[102X ([14X78.7-1[114X).[133X
+  [30X    [33X[0;6Y[2XInstallTrueMethod[102X ([14X78.8-1[114X).[133X
   
   [33X[0;0YCalls to the following functions belong to the implementation part.[133X
   
-  [33X[0;0Y[2XDeclareRepresentation[102X ([14X79.18-8[114X),[133X
+  [30X    [33X[0;6Y[2XDeclareRepresentation[102X ([14X13.4-5[114X),[133X
   
-  [33X[0;0Y[2XInstallGlobalFunction[102X ([14X79.18-14[114X),[133X
+  [30X    [33X[0;6Y[2XInstallGlobalFunction[102X ([14X79.10-4[114X),[133X
   
-  [33X[0;0Y[2XInstallMethod[102X ([14X78.2-1[114X),[133X
+  [30X    [33X[0;6Y[2XInstallMethod[102X ([14X78.3-1[114X),[133X
   
-  [33X[0;0Y[2XInstallImmediateMethod[102X ([14X78.6-1[114X),[133X
+  [30X    [33X[0;6Y[2XInstallImmediateMethod[102X ([14X78.7-1[114X),[133X
   
-  [33X[0;0Y[2XInstallOtherMethod[102X ([14X78.2-2[114X),[133X
+  [30X    [33X[0;6Y[2XInstallOtherMethod[102X ([14X78.3-2[114X),[133X
   
-  [33X[0;0Y[2XNewFamily[102X ([14X79.7-1[114X),[133X
+  [30X    [33X[0;6Y[2XNewFamily[102X ([14X13.1-2[114X),[133X
   
-  [33X[0;0Y[2XNewType[102X ([14X79.8-1[114X),[133X
+  [30X    [33X[0;6Y[2XNewType[102X ([14X13.9-3[114X),[133X
   
-  [33X[0;0Y[2XObjectify[102X ([14X79.9-1[114X).[133X
+  [30X    [33X[0;6Y[2XObjectify[102X ([14X79.1-1[114X).[133X
   
   [33X[0;0YWhenever  both  a  [10XNew[110X[3XSomething[103X and a [10XDeclare[110X[3XSomething[103X variant of a function
-  exist  (see [14X79.18[114X),  the use of [10XDeclare[110X[3XSomething[103X is recommended because this
+  exist  (see [14X79.10[114X),  the use of [10XDeclare[110X[3XSomething[103X is recommended because this
   protects  the  variables in question from being overwritten. Note that there
   are  [13Xno[113X functions [10XDeclareFamily[110X and [10XDeclareType[110X since families and types are
   created  dynamically,  hence  usually  no global variables are associated to
-  them.  Further  note  that  [2XDeclareRepresentation[102X  ([14X79.18-8[114X)  is regarded as
+  them.  Further  note  that  [2XDeclareRepresentation[102X  ([14X13.4-5[114X)  is  regarded as
   belonging  to  the  implementation  part, because usually representations of
   objects  are  accessed only in very few places, and all code that involves a
   particular   representation   is   contained   in  one  file;  additionally,

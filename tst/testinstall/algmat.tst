@@ -1,10 +1,5 @@
-#############################################################################
-##
-#W  algmat.tst                  GAP library                     Thomas Breuer
-##
-##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-##
+#@local a,b,c,cen,cenu,cenv,d,f,fullcen,l,mat,n,r,rada,radc,sum
+#@local u,ua,ub,uc,ud,uz,v,z,zero
 gap> START_TEST("algmat.tst");
 
 #############################################################################
@@ -31,7 +26,7 @@ true
 
 #############################################################################
 gap> z:= Algebra( GF(3), [], [ [ 0*Z(9), 0*Z(3) ], [ 0*Z(3), 0*Z(3) ] ] );
-<algebra over GF(3)>
+<algebra of dimension 0 over GF(3)>
 gap> IsGaussianMatrixSpace( z );
 true
 gap> IsTrivial( z );
@@ -253,7 +248,7 @@ false
 
 #############################################################################
 gap> n:= NullAlgebra( GF(3) );
-<algebra over GF(3)>
+<algebra of dimension 0 over GF(3)>
 gap> Dimension( n );
 0
 gap> b:= Basis( n );;
@@ -291,7 +286,3 @@ true
 
 #############################################################################
 gap> STOP_TEST( "algmat.tst", 1);
-
-#############################################################################
-##
-#E

@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  streams.gi                  GAP Library                      Frank Celler
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the methods for streams.
 ##
@@ -624,7 +625,11 @@ InputTextFileType := NewType(
 ##
 #V  InputTextFileStillOpen  . . . . . . . . . . . . . . .  list of open files
 ##
-InputTextFileStillOpen := [];
+if IsHPCGAP then
+  InputTextFileStillOpen := ShareSpecialObj([]);
+else
+  InputTextFileStillOpen := [];
+fi;
 
 
 #############################################################################
@@ -642,7 +647,9 @@ function( str )
     if fid = fail  then
         return fail;
     else
-        AddSet( InputTextFileStillOpen, fid );
+        atomic InputTextFileStillOpen do
+            AddSet( InputTextFileStillOpen, fid );
+        od;
         return Objectify( InputTextFileType, Immutable([fid, str]) );
     fi;
 end );
@@ -658,7 +665,9 @@ InstallMethod( CloseStream,
     [ IsInputStream and IsInputTextFileRep ],
 function( stream )
     CLOSE_FILE(stream![1]);
-    RemoveSet( InputTextFileStillOpen, stream![1] );
+    atomic InputTextFileStillOpen do
+        RemoveSet( InputTextFileStillOpen, stream![1] );
+    od;
     SET_TYPE_POSOBJ( stream, ClosedStreamType );
 end );
 
@@ -666,8 +675,10 @@ end );
 InstallAtExit( function()
     local   i;
 
-    for i  in InputTextFileStillOpen  do
-        CLOSE_FILE(i);
+    atomic InputTextFileStillOpen do
+        for i  in InputTextFileStillOpen  do
+            CLOSE_FILE(i);
+        od;
     od;
 
 end );
@@ -1061,7 +1072,11 @@ OutputTextFileType := NewType(
 ##
 #V  OutputTextFileStillOpen
 ##
-OutputTextFileStillOpen := [];
+if IsHPCGAP then
+  OutputTextFileStillOpen := ShareSpecialObj([]);
+else
+  OutputTextFileStillOpen := [];
+fi;
 
 
 #############################################################################
@@ -1080,7 +1095,9 @@ function( str, append )
     if fid = fail  then
         return fail;
     else
-        AddSet( OutputTextFileStillOpen, fid );
+        atomic OutputTextFileStillOpen do
+            AddSet( OutputTextFileStillOpen, fid );
+        od;
         return Objectify( OutputTextFileType, Immutable([fid, str, true]) );
     fi;
 end );
@@ -1102,15 +1119,19 @@ InstallMethod( CloseStream,
     [ IsOutputStream and IsOutputTextFileRep ],
 function( stream )
     CLOSE_FILE(stream![1]);
-    RemoveSet( OutputTextFileStillOpen, stream![1] );
+    atomic OutputTextFileStillOpen do
+        RemoveSet( OutputTextFileStillOpen, stream![1] );
+    od;
     SET_TYPE_POSOBJ( stream, ClosedStreamType );
 end );
 
 InstallAtExit( function()
     local   i;
 
-    for i  in OutputTextFileStillOpen  do
-        CLOSE_FILE(i);
+    atomic OutputTextFileStillOpen do
+        for i  in OutputTextFileStillOpen  do
+            CLOSE_FILE(i);
+        od;
     od;
 
 end );
@@ -1795,9 +1816,3 @@ InstallGlobalFunction( "UnInstallCharReadHookFunc",
 
 # to be bound means active:
 Unbind(OnCharReadHookActive);
-
-
-#############################################################################
-##
-#E
-

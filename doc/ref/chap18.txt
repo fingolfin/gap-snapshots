@@ -785,7 +785,7 @@
   represented  cyclotomics,  by default set to one million. This can be raised
   (although not lowered) using [2XSetCyclotomicsLimit[102X ([14X18.6-1[114X) and accessed using
   [2XGetCyclotomicsLimit[102X ([14X18.6-1[114X). The maximum value of the limit is [22X2^28-1[122X on [22X32[122X
-  bit  systems,  and  [22X2^32[122X  on [22X64[122X bit systems. So the maximal cyclotomic field
+  bit  systems,  and [22X2^32-1[122X on [22X64[122X bit systems. So the maximal cyclotomic field
   implemented in [5XGAP[105X is not really the field [22Xℚ^ab[122X.[133X
   
   [33X[0;0YIt  should  be emphasized that one disadvantage of representing a cyclotomic

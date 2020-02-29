@@ -488,6 +488,8 @@ You
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputTextFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="code">InputTextFile( <var class="Arg">filename</var> )</code> returns an input stream in the category <code class="func">IsInputTextStream</code> (<a href="chap10.html#X7C8956BB7FE2A89C"><span class="RefLink">10.1-4</span></a>) that delivers the characters from the file <var class="Arg">filename</var>. If <var class="Arg">filename</var> ends in <code class="code">.gz</code> and the file is a valid gzipped file, then the file will be transparently uncompressed.</p>
 
+<p><code class="code">InputTextFile</code> is designed for use with text files and automatically handles windows-style line endings. This means it should <em>not</em> be used for binary data. The <code class="func">IO_File</code> (<a href="../../pkg/io-4.7.0/doc/chap4.html#X7EC160D07E815DBB"><span class="RefLink">IO: IO_File mode</span></a>) function from the <strong class="pkg">IO</strong> package should be used to access binary data.</p>
+
 <p><a id="X83F53291822B7126" name="X83F53291822B7126"></a></p>
 
 <h5>10.5-2 OutputTextFile</h5>

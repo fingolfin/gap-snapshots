@@ -110,6 +110,14 @@ Group([ (1,2,3), (1,2), (4,5,6), (4,5), (7,8,9), (7,8) ])
 (4,5)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Image(Projection(d,2),(1,2,3)(4,5)(8,9));</span>
 (1,2)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=FreeGroup("a","b");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=f/ParseRelators(f,"a2,b3,(ab)5");</span>
+&lt;fp group on the generators [ a, b ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f2:=FreeGroup("x","y");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h:=f2/ParseRelators(f2,"x2,y4,xy=Yx");</span>
+&lt;fp group on the generators [ x, y ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d:=DirectProduct(g,h);</span>
+&lt;fp group on the generators [ a, b, x, y ]&gt;
 </pre></div>
 
 <p><a id="X87FE512E7DB7346C" name="X87FE512E7DB7346C"></a></p>

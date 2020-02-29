@@ -1,13 +1,12 @@
 #############################################################################
 ##
-#W  filter.g                    GAP library                     Thomas Breuer
-#W                                                             & Frank Celler
-#W                                                         & Martin Schönert
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer, Frank Celler, Martin Schönert.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file deals with filters.
 ##
@@ -52,8 +51,8 @@ fi;
 ##   2 = category
 ##   3 = representation kernel
 ##   4 = representation
-##   5 = attribute kernel
-##   6 = attribute
+##   5 = attribute tester kernel
+##   6 = attribute tester
 ##   7 = property kernel
 ##   8 = tester of 7
 ##   9 = property
@@ -64,13 +63,26 @@ if IsHPCGAP then
     LockAndMigrateObj(INFO_FILTERS, FILTER_REGION);
 fi;
 
-BIND_GLOBAL( "FNUM_CATS", MakeImmutable([ 1,  2 ]) );
-BIND_GLOBAL( "FNUM_REPS", MakeImmutable([ 3,  4 ]) );
-BIND_GLOBAL( "FNUM_ATTS", MakeImmutable([ 5,  6 ]) );
-BIND_GLOBAL( "FNUM_PROS", MakeImmutable([ 7,  9 ]) );
-BIND_GLOBAL( "FNUM_TPRS", MakeImmutable([ 8, 10 ]) );
+BIND_CONSTANT( "FNUM_CAT_KERN", 1 );
+BIND_CONSTANT( "FNUM_CAT", 2 );
+BIND_CONSTANT( "FNUM_REP_KERN", 3 );
+BIND_CONSTANT( "FNUM_REP", 4 );
+BIND_CONSTANT( "FNUM_ATTR_KERN", 5 );
+BIND_CONSTANT( "FNUM_ATTR", 6 );
+BIND_CONSTANT( "FNUM_PROP_KERN", 7 );
+BIND_CONSTANT( "FNUM_PROP", 9 );
+BIND_CONSTANT( "FNUM_TPR_KERN", 8 );
+BIND_CONSTANT( "FNUM_TPR", 10 );
 
-BIND_GLOBAL( "FNUM_CATS_AND_REPS", MakeImmutable([ 1 .. 4 ]) );
+BIND_GLOBAL( "FNUM_CATS", MakeImmutable([ FNUM_CAT_KERN, FNUM_CAT ]) );
+BIND_GLOBAL( "FNUM_REPS", MakeImmutable([ FNUM_REP_KERN, FNUM_REP ]) );
+BIND_GLOBAL( "FNUM_ATTS", MakeImmutable([ FNUM_ATTR_KERN, FNUM_ATTR ]) );
+BIND_GLOBAL( "FNUM_PROS", MakeImmutable([ FNUM_PROP_KERN, FNUM_PROP ]) );
+BIND_GLOBAL( "FNUM_TPRS", MakeImmutable([ FNUM_TPR_KERN, FNUM_TPR ]) );
+
+BIND_GLOBAL( "FNUM_CATS_AND_REPS",
+                MakeImmutable([ FNUM_CAT_KERN, FNUM_CAT,
+                                FNUM_REP_KERN, FNUM_REP ]) );
 
 
 #############################################################################
@@ -173,6 +185,64 @@ end );
 
 #############################################################################
 ##
+#F  SuspendMethodReordering( )
+#F  ResumeMethodReordering( )
+#F  ResetMethodReordering( )
+##
+##  <#GAPDoc Label="MethodReordering">
+##  <ManSection>
+##  <Func Name="SuspendMethodReordering" Arg=""/>
+##  <Func Name="ResumeMethodReordering" Arg=""/>
+##  <Func Name="ResetMethodReordering" Arg=""/>
+##
+##  <Description>
+##  These functions control whether the method reordering process described
+##  in <Ref Func="InstallTrueMethod"/> is invoked or not. Since this process
+##  can be comparatively time-consuming, it is usually suspended when a lot
+##  of implications are due to be installed, for instance when loading the
+##  library, or a package. This is done by calling
+##  <Ref Func="SuspendMethodReordering"/> once the installations are done,
+##  <Ref Func="ResumeMethodReordering"/> should be called. These pairs of calls
+##  can be nested. When the outermost pair is complete, method reordering
+##  takes place and is enabled in <Ref Func="InstallTrueMethod"/> thereafter.
+##
+##  <Ref Func="ResetMethodReordering"/> effectively exits all nested suspensions,
+##  resuming reordering immediately. This function is mainly provided for
+##  error recovery and similar purposes and is called on quitting from a
+##  break loop.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+
+#
+# This function will be defined in oper.g
+#
+RECALCULATE_ALL_METHOD_RANKS := fail;
+
+REORDER_METHODS_SUSPENSION_LEVEL := 1;
+
+BIND_GLOBAL( "SuspendMethodReordering", function()
+    REORDER_METHODS_SUSPENSION_LEVEL := REORDER_METHODS_SUSPENSION_LEVEL + 1;
+end);
+
+
+BIND_GLOBAL( "ResumeMethodReordering", function()
+    if REORDER_METHODS_SUSPENSION_LEVEL > 0 then
+        REORDER_METHODS_SUSPENSION_LEVEL := REORDER_METHODS_SUSPENSION_LEVEL - 1;
+    fi;
+    if REORDER_METHODS_SUSPENSION_LEVEL <= 0 then
+        RECALCULATE_ALL_METHOD_RANKS();
+    fi;
+end);
+
+BIND_GLOBAL( "ResetMethodReordering", function()
+    REORDER_METHODS_SUSPENSION_LEVEL := 0;
+    RECALCULATE_ALL_METHOD_RANKS();
+end);
+
+
+#############################################################################
+##
 #F  InstallTrueMethod( <newfil>, <filt> )
 ##
 ##  <#GAPDoc Label="InstallTrueMethod">
@@ -209,11 +279,20 @@ end );
 ##  This means that after the above implication has been installed,
 ##  one can rely on the fact that every object in the filter
 ##  <C>IsGroup and IsCyclic</C> will also be in the filter
-##  <Ref Func="IsCommutative"/>.
+##  <Ref Prop="IsCommutative"/>.
+##  <P/>
+##  Adding logical implications can change the rank of filters (see
+##  <Ref Func="RankFilter"/>) and consequently the rank, and so choice of
+##  methods for operations (see <Ref Sect="Applicable Methods and Method Selection"/>).
+##  By default <C>InstallTrueMethod</C> adjusts the method selection data
+##  structures to take care of this, but this process can be time-consuming,
+##  so functions <Ref Func="SuspendMethodReordering"/> and
+##  <Ref Func="ResumeMethodReordering"/> are provided to allow control of this process.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
+
 BIND_GLOBAL( "InstallTrueMethod", function ( tofilt, from )
 
     InstallTrueMethodNewFilter( tofilt, from );
@@ -221,6 +300,12 @@ BIND_GLOBAL( "InstallTrueMethod", function ( tofilt, from )
     # clear the caches because we do not know if filter <from> is new
     CLEAR_HIDDEN_IMP_CACHE( from );
     CLEAR_IMP_CACHE();
+
+    # maybe rerank methods to take account of new implication
+    if REORDER_METHODS_SUSPENSION_LEVEL = 0 then
+        RECALCULATE_ALL_METHOD_RANKS();
+    fi;
+
 end );
 
 
@@ -245,6 +330,15 @@ end );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
+BIND_GLOBAL( "REGISTER_FILTER", function( filter, id, rank, info )
+    atomic FILTER_REGION do
+      FILTERS[id] := filter;
+      IMM_FLAGS:= AND_FLAGS( IMM_FLAGS, FLAGS_FILTER( filter ) );
+      RANK_FILTERS[id] := rank;
+      INFO_FILTERS[id] := info;
+    od;
+end );
+
 BIND_GLOBAL( "NewFilter", function( arg )
     local   name,  implied,  rank,  filter;
 
@@ -272,12 +366,7 @@ BIND_GLOBAL( "NewFilter", function( arg )
     filter := NEW_FILTER( name );
 
     # Do some administrational work.
-    atomic FILTER_REGION do
-      FILTERS[ FLAG1_FILTER( filter ) ] := filter;
-      IMM_FLAGS:= AND_FLAGS( IMM_FLAGS, FLAGS_FILTER( filter ) );
-      RANK_FILTERS[ FLAG1_FILTER( filter ) ] := rank;
-      INFO_FILTERS[ FLAG1_FILTER( filter ) ] := 0;
-    od;
+    REGISTER_FILTER( filter, FLAG1_FILTER( filter ), rank, 0 );
 
     if implied <> 0 then
       InstallTrueMethodNewFilter( implied, filter );
@@ -419,17 +508,10 @@ BIND_GLOBAL( "RankFilter", function( filter )
     else
       all := WITH_IMPS_FLAGS(flags);
     fi;
-    for i  in TRUES_FLAGS(all)  do
-        if IsBound(RANK_FILTERS[i])  then
-            rank := rank + RANK_FILTERS[i];
-        else
-            rank := rank + 1;
-        fi;
+    atomic readonly FILTER_REGION do
+      for i  in TRUES_FLAGS(all)  do
+          rank := rank + RANK_FILTERS[i];
+      od;
     od;
     return rank;
 end );
-
-
-#############################################################################
-##
-#E

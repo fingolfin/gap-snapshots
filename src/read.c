@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  read.c                      GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This module contains the functions to read expressions and statements.
 */
@@ -26,12 +26,15 @@
 #include "scanner.h"
 #include "stats.h"
 #include "stringobj.h"
-#include "vars.h"
 #include "sysopt.h"
+#include "vars.h"
 
 #ifdef HPCGAP
 #include "hpc/thread.h"
 #endif
+
+
+struct ReaderState {
 
 /****************************************************************************
 **
@@ -43,22 +46,20 @@
 **  list), and popped again when the reader has finished reading the function
 **  expression (after reading the 'end').
 */
-/* TL: Obj             StackNams; */
-
-struct ReaderState {
+Obj  StackNams;
 
 /****************************************************************************
 **
 *V  ReadTop . . . . . . . . . . . . . . . . . . . . . .  top level expression
 *V  ReadTilde . . . . . . . . . . . . . . . . . . . . . . . . . .  tilde read
 **
-**  'ReadTop' is 0  if the reader is   currently not reading  a  list or record
-**  expression.  'ReadTop'  is 1 if the  reader is currently reading an outmost
-**  list or record expression.   'ReadTop' is larger than   1 if the  reader is
+**  'ReadTop' is 0 if the reader is currently not reading a list or record
+**  expression. 'ReadTop' is 1 if the reader is currently reading an outmost
+**  list or record expression. 'ReadTop' is larger than 1 if the reader is
 **  currently reading a nested list or record expression.
 **
-**  'ReadTilde' is 1 if the reader has read a  reference to the global variable
-**  '~' within the current outmost list or record expression.
+**  'ReadTilde' is 1 if the reader has read a reference to a '~' symbol
+**  within the current outmost list or record expression.
 */
 UInt ReadTop;
 UInt ReadTilde;
@@ -96,19 +97,13 @@ extern inline struct ReaderState * ReaderState(void)
 **  is <Statements>. The functions 'ReadExpr' and 'ReadStats' must therefore
 **  be declared forward.
 */
-static void            ReadExpr (
-    TypSymbolSet        follow,
-    Char                mode );
+static void ReadExpr(ScannerState * s, TypSymbolSet follow, Char mode);
 
-static UInt            ReadStats (
-    TypSymbolSet        follow );
+static UInt ReadStats(ScannerState * s, TypSymbolSet follow);
 
-static void            ReadFuncExprAbbrevSingle (
-    TypSymbolSet        follow );
+static void ReadFuncExprAbbrevSingle(ScannerState * s, TypSymbolSet follow);
 
-static void ReadAtom (
-    TypSymbolSet        follow,
-    Char                mode );
+static void ReadAtom(ScannerState * s, TypSymbolSet follow, Char mode);
 
 void PushGlobalForLoopVariable( UInt var)
 {
@@ -137,21 +132,20 @@ static UInt GlobalComesFromEnclosingForLoop (UInt var)
 }
 
 // match either a semicolon or a dual semicolon
-static void MatchSemicolon(TypSymbolSet skipto)
+static void MatchSemicolon(ScannerState * s, TypSymbolSet skipto)
 {
-    Match(STATE(Symbol) == S_DUALSEMICOLON ? S_DUALSEMICOLON
-                                           : S_SEMICOLON,
+    Match(s, s->Symbol == S_DUALSEMICOLON ? S_DUALSEMICOLON : S_SEMICOLON,
           ";", skipto);
 }
 
-// Search the plist 'nams' for a string equal to STATE(Value) between and
+// Search the plist 'nams' for a string equal to 'value' between and
 // including index 'start' and 'end' and return its index; return 0 if not
 // found.
-static UInt findValueInNams(Obj nams, UInt start, UInt end)
+static UInt findValueInNams(Obj nams, const Char * val, UInt start, UInt end)
 {
     GAP_ASSERT(LEN_PLIST(nams) < MAX_FUNC_LVARS);
     for (UInt i = start; i <= end; i++) {
-        if (strcmp(CSTR_STRING(ELM_PLIST(nams, i)), STATE(Value)) == 0) {
+        if (strcmp(CONST_CSTR_STRING(ELM_PLIST(nams, i)), val) == 0) {
             return i;
         }
     }
@@ -173,45 +167,42 @@ static UInt findValueInNams(Obj nams, UInt start, UInt end)
 
    empty options lists are handled further up
 */
-static void ReadFuncCallOption( TypSymbolSet follow )
+static void ReadFuncCallOption(ScannerState * s, TypSymbolSet follow)
 {
-  volatile UInt       rnam;           /* record component name           */
-  if ( STATE(Symbol) == S_IDENT ) {
-    rnam = RNamName( STATE(Value) );
-    Match( S_IDENT, "identifier", S_COMMA | follow );
-    TRY_IF_NO_ERROR { IntrFuncCallOptionsBeginElmName( rnam ); }
-  }
-  else if ( STATE(Symbol) == S_LPAREN ) {
-    Match( S_LPAREN, "(", S_COMMA | follow );
-    ReadExpr( follow, 'r' );
-    Match( S_RPAREN, ")", S_COMMA | follow );
-    TRY_IF_NO_ERROR { IntrFuncCallOptionsBeginElmExpr(); }
-  }
-  else {
-    SyntaxError("Identifier expected");
-  }
-  if ( STATE(Symbol) == S_ASSIGN )
-    {
-      Match( S_ASSIGN, ":=", S_COMMA | follow );
-      ReadExpr( S_COMMA | S_RPAREN|follow, 'r' );
-      TRY_IF_NO_ERROR { IntrFuncCallOptionsEndElm(); }
+    volatile UInt rnam; // record component name
+    if (s->Symbol == S_IDENT) {
+        rnam = RNamName(s->Value);
+        Match(s, S_IDENT, "identifier", S_COMMA | follow);
+        TRY_IF_NO_ERROR { IntrFuncCallOptionsBeginElmName(rnam); }
     }
-  else
-    {
-      TRY_IF_NO_ERROR { IntrFuncCallOptionsEndElmEmpty(); }
+    else if (s->Symbol == S_LPAREN) {
+        Match(s, S_LPAREN, "(", S_COMMA | follow);
+        ReadExpr(s, follow, 'r');
+        Match(s, S_RPAREN, ")", S_COMMA | follow);
+        TRY_IF_NO_ERROR { IntrFuncCallOptionsBeginElmExpr(); }
+    }
+    else {
+        SyntaxError(s, "Identifier expected");
+    }
+    if (s->Symbol == S_ASSIGN) {
+        Match(s, S_ASSIGN, ":=", S_COMMA | follow);
+        ReadExpr(s, S_COMMA | S_RPAREN | follow, 'r');
+        TRY_IF_NO_ERROR { IntrFuncCallOptionsEndElm(); }
+    }
+    else {
+        TRY_IF_NO_ERROR { IntrFuncCallOptionsEndElmEmpty(); }
     }
 }
 
-static void ReadFuncCallOptions( TypSymbolSet follow )
+static void ReadFuncCallOptions(ScannerState * s, TypSymbolSet follow)
 {
   volatile UInt nr;
   TRY_IF_NO_ERROR { IntrFuncCallOptionsBegin( ); }
-  ReadFuncCallOption( follow);
+  ReadFuncCallOption(s, follow);
   nr = 1;
-  while ( STATE(Symbol) == S_COMMA )
-    {
-      Match(S_COMMA, ",", follow );
-      ReadFuncCallOption( follow );
+  while (s->Symbol == S_COMMA) {
+      Match(s, S_COMMA, ",", follow);
+      ReadFuncCallOption(s, follow);
       nr++;
     }
   TRY_IF_NO_ERROR {
@@ -238,7 +229,7 @@ static UInt WarnOnUnboundGlobalsRNam;
 **  R_ELM_REC_EXPR      record access r.(expr)
 **  R_ELM_COMOBJ_NAME:  com obj access obj.<rnam>
 **  R_ELM_COMOBJ_EXPR:  com obj access obj.(expr)
-**  R_FUNCCALL          function call without options and with <narg> arguments
+**  R_FUNCCALL          function call without options & with <narg> arguments
 **  R_FUNCCALL_OPTS     function call with options and with <narg> arguments
 */
 enum REFTYPE {
@@ -259,20 +250,20 @@ enum REFTYPE {
 };
 
 typedef struct {
-    enum REFTYPE type;
-
+    UInt1 type;
+    UInt1 _padding;
     union {
-        UInt var;
-        UInt narg;
-        UInt rnam;
+        UInt2 nest0;
+        UInt2 level;
     };
-
     union {
-        UInt nest0;
-        UInt level;
+        UInt4 var;
+        UInt4 narg;
+        UInt4 rnam;
     };
 } LHSRef;
 
+GAP_STATIC_ASSERT(sizeof(LHSRef) <= 8, "LHSRef is too big");
 
 /****************************************************************************
 **
@@ -330,7 +321,7 @@ static UInt EvalRef(const LHSRef ref, Int needExpr)
         case R_INVALID:
         default:
             // This should never be reached
-            SyntaxError("Parse error in EvalRef");
+            Panic("Parse error in EvalRef");
         }
     }
     return 0;
@@ -385,12 +376,12 @@ static void AssignRef(const LHSRef ref)
         case R_FUNCCALL_OPTS:
         default:
             // This should never be reached
-            SyntaxError("Parse error in AssignRef");
+            Panic("Parse error in AssignRef");
         }
     }
 }
 
-static void UnbindRef(const LHSRef ref)
+static void UnbindRef(ScannerState * s, const LHSRef ref)
 {
     TRY_IF_NO_ERROR
     {
@@ -430,12 +421,12 @@ static void UnbindRef(const LHSRef ref)
         case R_FUNCCALL:
         case R_FUNCCALL_OPTS:
         default:
-            SyntaxError("Illegal operand for 'Unbind'");
+            SyntaxError(s, "Illegal operand for 'Unbind'");
         }
     }
 }
 
-static void IsBoundRef(const LHSRef ref)
+static void IsBoundRef(ScannerState * s, const LHSRef ref)
 {
     TRY_IF_NO_ERROR
     {
@@ -475,7 +466,7 @@ static void IsBoundRef(const LHSRef ref)
         case R_FUNCCALL:
         case R_FUNCCALL_OPTS:
         default:
-            SyntaxError("Illegal operand for 'IsBound'");
+            SyntaxError(s, "Illegal operand for 'IsBound'");
         }
     }
 }
@@ -484,123 +475,123 @@ static void IsBoundRef(const LHSRef ref)
 /****************************************************************************
 **
 */
-static LHSRef ReadSelector(TypSymbolSet follow, UInt level)
+static LHSRef ReadSelector(ScannerState * s, TypSymbolSet follow, UInt level)
 {
     volatile LHSRef ref;
 
     ref.type = R_INVALID;
 
     // <Var> '[' <Expr> ']'  list selector
-    if (STATE(Symbol) == S_LBRACK) {
-        Match(S_LBRACK, "[", follow);
-        ReadExpr(S_COMMA | S_RBRACK | follow, 'r');
+    if (s->Symbol == S_LBRACK) {
+        Match(s, S_LBRACK, "[", follow);
+        ReadExpr(s, S_COMMA | S_RBRACK | follow, 'r');
         ref.narg = 1;
-        while (STATE(Symbol) == S_COMMA) {
-            Match(S_COMMA, ",", follow | S_RBRACK);
-            ReadExpr(S_COMMA | S_RBRACK | follow, 'r');
+        while (s->Symbol == S_COMMA) {
+            Match(s, S_COMMA, ",", follow | S_RBRACK);
+            ReadExpr(s, S_COMMA | S_RBRACK | follow, 'r');
             ref.narg++;
         }
         if (ref.narg > 2) {
-          SyntaxError("'[]' only supports 1 or 2 indices");
+            SyntaxError(s, "'[]' only supports 1 or 2 indices");
         }
-        Match(S_RBRACK, "]", follow);
+        Match(s, S_RBRACK, "]", follow);
         ref.type = R_ELM_LIST;
         ref.level = level;
     }
 
     // <Var> '{' <Expr> '}'  sublist selector
-    else if (STATE(Symbol) == S_LBRACE) {
-        Match(S_LBRACE, "{", follow);
-        ReadExpr(S_RBRACE | follow, 'r');
-        Match(S_RBRACE, "}", follow);
+    else if (s->Symbol == S_LBRACE) {
+        Match(s, S_LBRACE, "{", follow);
+        ReadExpr(s, S_RBRACE | follow, 'r');
+        Match(s, S_RBRACE, "}", follow);
         ref.type = R_ELMS_LIST;
         ref.level = level;
     }
 
     // <Var> '![' <Expr> ']'  list selector
-    else if (STATE(Symbol) == S_BLBRACK) {
-        Match(S_BLBRACK, "![", follow);
-        ReadExpr(S_RBRACK | follow, 'r');
-        Match(S_RBRACK, "]", follow);
+    else if (s->Symbol == S_BLBRACK) {
+        Match(s, S_BLBRACK, "![", follow);
+        ReadExpr(s, S_RBRACK | follow, 'r');
+        Match(s, S_RBRACK, "]", follow);
         ref.type = R_ELM_POSOBJ;
     }
 
     // <Var> '.' <Ident>  record selector
-    else if (STATE(Symbol) == S_DOT) {
-        Match(S_DOT, ".", follow);
-        if (STATE(Symbol) == S_IDENT || STATE(Symbol) == S_INT) {
-            ref.rnam = RNamName(STATE(Value));
-            Match(STATE(Symbol), "identifier", follow);
+    else if (s->Symbol == S_DOT) {
+        Match(s, S_DOT, ".", follow);
+        if (s->Symbol == S_IDENT || s->Symbol == S_INT) {
+            ref.rnam = RNamName(s->Value);
+            Match(s, s->Symbol, "identifier", follow);
             ref.type = R_ELM_REC_NAME;
         }
-        else if (STATE(Symbol) == S_LPAREN) {
-            Match(S_LPAREN, "(", follow);
-            ReadExpr(S_RPAREN | follow, 'r');
-            Match(S_RPAREN, ")", follow);
+        else if (s->Symbol == S_LPAREN) {
+            Match(s, S_LPAREN, "(", follow);
+            ReadExpr(s, S_RPAREN | follow, 'r');
+            Match(s, S_RPAREN, ")", follow);
             ref.type = R_ELM_REC_EXPR;
         }
         else {
-            SyntaxError("Record component name expected");
+            SyntaxError(s, "Record component name expected");
         }
     }
 
     // <Var> '!.' <Ident>  record selector
-    else if (STATE(Symbol) == S_BDOT) {
-        Match(S_BDOT, "!.", follow);
-        if (STATE(Symbol) == S_IDENT || STATE(Symbol) == S_INT) {
-            ref.rnam = RNamName(STATE(Value));
-            Match(STATE(Symbol), "identifier", follow);
+    else if (s->Symbol == S_BDOT) {
+        Match(s, S_BDOT, "!.", follow);
+        if (s->Symbol == S_IDENT || s->Symbol == S_INT) {
+            ref.rnam = RNamName(s->Value);
+            Match(s, s->Symbol, "identifier", follow);
             ref.type = R_ELM_COMOBJ_NAME;
         }
-        else if (STATE(Symbol) == S_LPAREN) {
-            Match(S_LPAREN, "(", follow);
-            ReadExpr(S_RPAREN | follow, 'r');
-            Match(S_RPAREN, ")", follow);
+        else if (s->Symbol == S_LPAREN) {
+            Match(s, S_LPAREN, "(", follow);
+            ReadExpr(s, S_RPAREN | follow, 'r');
+            Match(s, S_RPAREN, ")", follow);
             ref.type = R_ELM_COMOBJ_EXPR;
         }
         else {
-            SyntaxError("Record component name expected");
+            SyntaxError(s, "Record component name expected");
         }
     }
 
     // <Var> '(' [ <Expr> { ',' <Expr> } ] ')'  function call
-    else if (STATE(Symbol) == S_LPAREN) {
-        Match(S_LPAREN, "(", follow);
+    else if (s->Symbol == S_LPAREN) {
+        Match(s, S_LPAREN, "(", follow);
         TRY_IF_NO_ERROR
         {
             IntrFuncCallBegin();
         }
         ref.narg = 0;
-        if (STATE(Symbol) != S_RPAREN && STATE(Symbol) != S_COLON) {
-            ReadExpr(S_RPAREN | follow, 'r');
+        if (s->Symbol != S_RPAREN && s->Symbol != S_COLON) {
+            ReadExpr(s, S_RPAREN | follow, 'r');
             ref.narg++;
         }
-        while (STATE(Symbol) == S_COMMA) {
-            Match(S_COMMA, ",", follow);
-            ReadExpr(S_RPAREN | follow, 'r');
+        while (s->Symbol == S_COMMA) {
+            Match(s, S_COMMA, ",", follow);
+            ReadExpr(s, S_RPAREN | follow, 'r');
             ref.narg++;
         }
         ref.type = R_FUNCCALL;
-        if (STATE(Symbol) == S_COLON) {
-            Match(S_COLON, ":", follow);
-            if (STATE(Symbol) != S_RPAREN) {    // save work for empty options
-                ReadFuncCallOptions(S_RPAREN | follow);
+        if (s->Symbol == S_COLON) {
+            Match(s, S_COLON, ":", follow);
+            if (s->Symbol != S_RPAREN) {    // save work for empty options
+                ReadFuncCallOptions(s, S_RPAREN | follow);
                 ref.type = R_FUNCCALL_OPTS;
             }
         }
-        Match(S_RPAREN, ")", follow);
+        Match(s, S_RPAREN, ")", follow);
     }
 
     return ref;
 }
 
-static void ReadReferenceModifiers(TypSymbolSet follow)
+static void ReadReferenceModifiers(ScannerState * s, TypSymbolSet follow)
 {
     UInt level = 0;
 
     // read one or more selectors
-    while (IS_IN(STATE(Symbol), S_LPAREN | S_LBRACK | S_LBRACE | S_DOT)) {
-        LHSRef ref = ReadSelector(follow, level);
+    while (IS_IN(s->Symbol, S_LPAREN | S_LBRACK | S_LBRACE | S_DOT)) {
+        LHSRef ref = ReadSelector(s, follow, level);
         level = EvalRef(ref, 1);
     }
 }
@@ -614,9 +605,9 @@ static void ReadReferenceModifiers(TypSymbolSet follow)
 **
 **  <Ident> :=  a|b|..|z|A|B|..|Z { a|b|..|z|A|B|..|Z|0|..|9|_ }
 */
-static LHSRef ReadVar(TypSymbolSet follow)
+static LHSRef ReadVar(ScannerState * s, TypSymbolSet follow)
 {
-    LHSRef ref = { R_INVALID, {0}, {0} };
+    LHSRef ref = { R_INVALID, 0, {0}, {0} };
 
     Obj  nams;                      // list of names of local vars.
     Obj  lvars;                     // environment
@@ -627,23 +618,23 @@ static LHSRef ReadVar(TypSymbolSet follow)
     Char varname[MAX_VALUE_LEN];    // copy of variable name
 
     /* all variables must begin with an identifier                         */
-    if ( STATE(Symbol) != S_IDENT ) {
-        SyntaxError( "Identifier expected" );
+    if (s->Symbol != S_IDENT) {
+        SyntaxError(s, "Identifier expected");
         return ref;
     }
 
     // try to look up the variable on the stack of local variables
-    const UInt countNams = LEN_PLIST(STATE(StackNams));
+    const UInt countNams = LEN_PLIST(ReaderState()->StackNams);
     for (nest = 0; nest < countNams; nest++) {
 #ifndef SYS_IS_64_BIT
         if (nest >= MAX_FUNC_EXPR_NESTING) {
             Pr("Warning: abandoning search for %g at %dth higher frame\n",
-               (Int)STATE(Value), MAX_FUNC_EXPR_NESTING);
+               (Int)s->Value, MAX_FUNC_EXPR_NESTING);
             break;
         }
 #endif
-        nams = ELM_PLIST(STATE(StackNams), countNams - nest);
-        indx = findValueInNams(nams, 1, LEN_PLIST(nams));
+        nams = ELM_PLIST(ReaderState()->StackNams, countNams - nest);
+        indx = findValueInNams(nams, s->Value, 1, LEN_PLIST(nams));
         if (indx != 0) {
             ref.type = (nest == 0) ? R_LVAR : R_HVAR;
             ref.var = (nest << MAX_FUNC_LVARS_BITS) + indx;
@@ -662,7 +653,7 @@ static LHSRef ReadVar(TypSymbolSet follow)
         while (ref.type == R_INVALID && lvars != 0 && lvars != STATE(BottomLVars)) {
             nams = NAMS_FUNC(FUNC_LVARS(lvars));
             if (nams != 0) {
-                indx = findValueInNams(nams, 1, LEN_PLIST(nams));
+                indx = findValueInNams(nams, s->Value, 1, LEN_PLIST(nams));
                 if (indx) {
                     ref.type = R_DVAR;
                     ref.var = (nest << MAX_FUNC_LVARS_BITS) + indx;
@@ -676,7 +667,7 @@ static LHSRef ReadVar(TypSymbolSet follow)
             if (nest >= MAX_FUNC_EXPR_NESTING) {
                 Pr("Warning: abandoning search for %g at %dth higher "
                    "frame\n",
-                   (Int)STATE(Value), MAX_FUNC_EXPR_NESTING);
+                   (Int)s->Value, MAX_FUNC_EXPR_NESTING);
                 break;
             }
 #endif
@@ -690,14 +681,14 @@ static LHSRef ReadVar(TypSymbolSet follow)
         ref.type = R_GVAR;
         // we do not want to call GVarName on this value until after we
         // have checked if this is the argument to a lambda function
-        strlcpy(varname, STATE(Value), sizeof(varname));
+        strlcpy(varname, s->Value, sizeof(varname));
     }
 
     // match away the identifier, now that we know the variable
-    Match( S_IDENT, "identifier", follow );
+    Match(s, S_IDENT, "identifier", follow);
 
     // If this isn't a lambda function, look up the name
-    if (STATE(Symbol) != S_MAPTO && ref.type == R_GVAR) {
+    if (s->Symbol != S_MAPTO && ref.type == R_GVAR) {
         ref.var = GVarName(varname);
     }
 
@@ -726,26 +717,26 @@ static LHSRef ReadVar(TypSymbolSet follow)
 **        |  <Var> '.' <Ident>
 **        |  <Var> '(' [ <Expr> { ',' <Expr> } ] [':' [ <options> ]] ')'
 */
-static void ReadCallVarAss(TypSymbolSet follow, Char mode)
+static void ReadCallVarAss(ScannerState * s, TypSymbolSet follow, Char mode)
 {
-    volatile LHSRef ref = ReadVar(follow);
+    volatile LHSRef ref = ReadVar(s, follow);
     if (ref.type == R_INVALID)
         return;
 
     // if this was actually the beginning of a function literal, then we are
     // in the wrong function
-    if (STATE(Symbol) == S_MAPTO) {
+    if (s->Symbol == S_MAPTO) {
         if (mode == 'r' || mode == 'x')
-            ReadFuncExprAbbrevSingle(follow);
+            ReadFuncExprAbbrevSingle(s, follow);
         else
-            SyntaxError("Function literal in impossible context");
+            SyntaxError(s, "Function literal in impossible context");
         return;
     }
 
     // Check if the variable is a constant
     if (ref.type == R_GVAR && IsConstantGVar(ref.var) && ValGVar(ref.var)) {
         // deal with references
-        if (mode == 'r' || (mode == 'x' && STATE(Symbol) != S_ASSIGN)) {
+        if (mode == 'r' || (mode == 'x' && s->Symbol != S_ASSIGN)) {
             Obj val = ValAutoGVar(ref.var);
             TRY_IF_NO_ERROR {
                 if (val == True)
@@ -755,7 +746,7 @@ static void ReadCallVarAss(TypSymbolSet follow, Char mode)
                 else if (IS_INTOBJ(val))
                     IntrIntObjExpr(val);
                 else
-                    SyntaxError("Invalid constant variable");
+                    SyntaxError(s, "Invalid constant variable");
             }
             return;
         }
@@ -769,7 +760,7 @@ static void ReadCallVarAss(TypSymbolSet follow, Char mode)
 
     if ( ref.type == R_GVAR            // Reading a global variable
       && mode != 'i'                // Not inside 'IsBound'
-      && LEN_PLIST(STATE(StackNams)) != 0   // Inside a function
+      && LEN_PLIST(ReaderState()->StackNams) != 0   // Inside a function
       && ref.var != ReaderState()->CurrLHSGVar  // Not LHS of assignment
       && ValGVar(ref.var) == 0          // Not an existing global var
       && ExprGVar(ref.var) == 0         // Or an auto var
@@ -780,52 +771,55 @@ static void ReadCallVarAss(TypSymbolSet follow, Char mode)
           ||  ELM_REC(GAPInfo,WarnOnUnboundGlobalsRNam) != False )
       && ! SyCompilePlease )        // Not compiling
     {
-        SyntaxWarning("Unbound global variable");
+        // Need to pass an offset, because we have already parsed more tokens
+        SyntaxWarningWithOffset(s, "Unbound global variable", 2);
     }
 
     /* followed by one or more selectors                                   */
-    while ( IS_IN( STATE(Symbol), S_LPAREN|S_LBRACK|S_LBRACE|S_DOT ) ) {
+    while (IS_IN(s->Symbol, S_LPAREN | S_LBRACK | S_LBRACE | S_DOT)) {
 
         /* so the prefix was a reference                                   */
         UInt level = EvalRef(ref, 1);
-        ref = ReadSelector(follow, level);
+        ref = ReadSelector(s, follow, level);
     }
 
     /* if we need a reference                                              */
-    if ( mode == 'r' || (mode == 'x' && STATE(Symbol) != S_ASSIGN) ) {
-        Int needExpr = mode == 'r' || !IS_IN(STATE(Symbol), S_SEMICOLON);
+    if (mode == 'r' || (mode == 'x' && s->Symbol != S_ASSIGN)) {
+        Int needExpr = mode == 'r' || !IS_IN(s->Symbol, S_SEMICOLON);
         EvalRef(ref, needExpr);
     }
 
     /* if we need a statement                                              */
-    else if ( mode == 's' || (mode == 'x' && STATE(Symbol) == S_ASSIGN) ) {
+    else if (mode == 's' || (mode == 'x' && s->Symbol == S_ASSIGN)) {
         if (ref.type == R_FUNCCALL || ref.type == R_FUNCCALL_OPTS) {
             TRY_IF_NO_ERROR {
                 IntrFuncCallEnd(0, ref.type == R_FUNCCALL_OPTS, ref.narg);
             }
         }
         else {
-            Match( S_ASSIGN, ":=", follow );
-            if ( LEN_PLIST(STATE(StackNams)) == 0 || !STATE(IntrCoding) ) {
+            Match(s, S_ASSIGN, ":=", follow);
+            UInt currLHSGVar = ReaderState()->CurrLHSGVar;
+            if ( LEN_PLIST(ReaderState()->StackNams) == 0 || !STATE(IntrCoding) ) {
                 ReaderState()->CurrLHSGVar = (ref.type == R_GVAR ? ref.var : 0);
             }
-            ReadExpr( follow, 'r' );
+            ReadExpr(s, follow, 'r');
             AssignRef(ref);
+            ReaderState()->CurrLHSGVar = currLHSGVar;
         }
     }
 
     /*  if we need an unbind                                               */
     else if ( mode == 'u' ) {
-        if (STATE(Symbol) != S_RPAREN) {
-            SyntaxError("'Unbind': argument should be followed by ')'");
+        if (s->Symbol != S_RPAREN) {
+            SyntaxError(s, "'Unbind': argument should be followed by ')'");
         }
-        UnbindRef(ref);
+        UnbindRef(s, ref);
     }
 
 
     /* if we need an isbound                                               */
     else /* if ( mode == 'i' ) */ {
-        IsBoundRef(ref);
+        IsBoundRef(s, ref);
     }
 
 }
@@ -840,13 +834,12 @@ static void ReadCallVarAss(TypSymbolSet follow, Char mode)
 **
 **  <Atom> := 'IsBound' '(' <Var> ')'
 */
-static void            ReadIsBound (
-    TypSymbolSet        follow )
+static void ReadIsBound(ScannerState * s, TypSymbolSet follow)
 {
-    Match( S_ISBOUND, "IsBound", follow );
-    Match( S_LPAREN, "(", follow );
-    ReadCallVarAss( S_RPAREN|follow, 'i' );
-    Match( S_RPAREN, ")", follow );
+    Match(s, S_ISBOUND, "IsBound", follow);
+    Match(s, S_LPAREN, "(", follow);
+    ReadCallVarAss(s, S_RPAREN|follow, 'i');
+    Match(s, S_RPAREN, ")", follow);
 }
 
 
@@ -864,34 +857,33 @@ static void            ReadIsBound (
 **  <Perm> :=  ( <Expr> {, <Expr>} ) { ( <Expr> {, <Expr>} ) }
 **
 */
-static void ReadPerm (
-    TypSymbolSet        follow )
+static void ReadPerm(ScannerState * s, TypSymbolSet follow)
 {
     volatile UInt       nrc;            /* number of cycles                */
     volatile UInt       nrx;            /* number of expressions in cycle  */
 
     /* read the first cycle (first expression has already been read)       */
     nrx = 1;
-    while ( STATE(Symbol) == S_COMMA ) {
-        Match( S_COMMA, ",", follow );
-        ReadExpr( S_COMMA|S_RPAREN|follow, 'r' );
+    while (s->Symbol == S_COMMA) {
+        Match(s, S_COMMA, ",", follow);
+        ReadExpr(s, S_COMMA|S_RPAREN|follow, 'r');
         nrx++;
     }
-    Match( S_RPAREN, ")", follow );
+    Match(s, S_RPAREN, ")", follow);
     nrc = 1;
     TRY_IF_NO_ERROR { IntrPermCycle( nrx, nrc ); }
 
     /* read the remaining cycles                                           */
-    while ( STATE(Symbol) == S_LPAREN ) {
-        Match( S_LPAREN, "(", follow );
-        ReadExpr( S_COMMA|S_RPAREN|follow, 'r' );
+    while (s->Symbol == S_LPAREN) {
+        Match(s, S_LPAREN, "(", follow);
+        ReadExpr(s, S_COMMA|S_RPAREN|follow, 'r');
         nrx = 1;
-        while ( STATE(Symbol) == S_COMMA ) {
-            Match( S_COMMA, ",", follow );
-            ReadExpr( S_COMMA|S_RPAREN|follow, 'r' );
+        while (s->Symbol == S_COMMA) {
+            Match(s, S_COMMA, ",", follow);
+            ReadExpr(s, S_COMMA|S_RPAREN|follow, 'r');
             nrx++;
         }
-        Match( S_RPAREN, ")", follow );
+        Match(s, S_RPAREN, ")", follow);
         nrc++;
         TRY_IF_NO_ERROR { IntrPermCycle( nrx, nrc ); }
     }
@@ -910,8 +902,7 @@ static void ReadPerm (
 **  <List> := '[' [ <Expr> ] {',' [ <Expr> ] } ']'
 **         |  '[' <Expr> [',' <Expr>] '..' <Expr> ']'
 */
-static void ReadListExpr (
-    TypSymbolSet        follow )
+static void ReadListExpr(ScannerState * s, TypSymbolSet follow)
 {
     volatile UInt       pos;            /* actual position of element      */
     volatile UInt       nr;             /* number of elements              */
@@ -920,7 +911,7 @@ static void ReadListExpr (
     struct ReaderState * volatile rs = ReaderState();
 
     /* '['                                                                 */
-    Match( S_LBRACK, "[", follow );
+    Match(s, S_LBRACK, "[", follow);
     rs->ReadTop++;
     if (rs->ReadTop == 1) {
         rs->ReadTilde = 0;
@@ -932,52 +923,52 @@ static void ReadListExpr (
     range = 0;
 
     /* [ <Expr> ]                                                          */
-    if ( STATE(Symbol) != S_COMMA && STATE(Symbol) != S_RBRACK ) {
+    if (s->Symbol != S_COMMA && s->Symbol != S_RBRACK) {
         TRY_IF_NO_ERROR { IntrListExprBeginElm( pos ); }
-        ReadExpr( S_RBRACK|follow, 'r' );
+        ReadExpr(s, S_RBRACK|follow, 'r');
         TRY_IF_NO_ERROR { IntrListExprEndElm(); }
         nr++;
     }
 
     /* {',' [ <Expr> ] }                                                   */
-    while ( STATE(Symbol) == S_COMMA ) {
-        Match( S_COMMA, ",", follow );
+    while (s->Symbol == S_COMMA) {
+        Match(s, S_COMMA, ",", follow);
         pos++;
-        if ( STATE(Symbol) != S_COMMA && STATE(Symbol) != S_RBRACK ) {
+        if (s->Symbol != S_COMMA && s->Symbol != S_RBRACK) {
             TRY_IF_NO_ERROR { IntrListExprBeginElm( pos ); }
-            ReadExpr( S_RBRACK|follow, 'r' );
+            ReadExpr(s, S_RBRACK|follow, 'r');
             TRY_IF_NO_ERROR { IntrListExprEndElm(); }
             nr++;
         }
     }
 
     /* incorrect place for three dots                                      */
-    if (STATE(Symbol) == S_DOTDOTDOT) {
-            SyntaxError("Only two dots in a range");
+    if (s->Symbol == S_DOTDOTDOT) {
+        SyntaxError(s, "Only two dots in a range");
     }
 
     /* '..' <Expr> ']'                                                     */
-    if ( STATE(Symbol) == S_DOTDOT ) {
+    if (s->Symbol == S_DOTDOT) {
         if ( pos != nr ) {
-            SyntaxError("Must have no unbound entries in range");
+            SyntaxError(s, "Must have no unbound entries in range");
         }
         if ( 2 < nr ) {
-            SyntaxError("Must have at most 2 entries before '..'");
+            SyntaxError(s, "Must have at most 2 entries before '..'");
         }
         range = 1;
-        Match( S_DOTDOT, "..", follow );
+        Match(s, S_DOTDOT, "..", follow);
         pos++;
         TRY_IF_NO_ERROR { IntrListExprBeginElm( pos ); }
-        ReadExpr( S_RBRACK|follow, 'r' );
+        ReadExpr(s, S_RBRACK|follow, 'r');
         TRY_IF_NO_ERROR { IntrListExprEndElm(); }
         nr++;
         if (rs->ReadTop == 1 && rs->ReadTilde == 1) {
-            SyntaxError("Sorry, '~' not allowed in range");
+            SyntaxError(s, "Sorry, '~' not allowed in range");
         }
     }
 
     /* ']'                                                                 */
-    Match( S_RBRACK, "]", follow );
+    Match(s, S_RBRACK, "]", follow);
     TRY_IF_NO_ERROR {
         IntrListExprEnd( nr, range, (rs->ReadTop == 1), (rs->ReadTilde == 1) );
     }
@@ -998,8 +989,7 @@ static void ReadListExpr (
 **
 **  <Record> := 'rec( [ <Ident>:=<Expr> {, <Ident>:=<Expr> } ] )'
 */
-static void ReadRecExpr (
-    TypSymbolSet        follow )
+static void ReadRecExpr(ScannerState * s, TypSymbolSet follow)
 {
     volatile UInt       rnam;           /* record component name           */
     volatile UInt       nr;             /* number of components            */
@@ -1007,8 +997,8 @@ static void ReadRecExpr (
     struct ReaderState * volatile rs = ReaderState();
 
     /* 'rec('                                                              */
-    Match( S_REC, "rec", follow );
-    Match( S_LPAREN, "(", follow|S_RPAREN|S_COMMA );
+    Match(s, S_REC, "rec", follow);
+    Match(s, S_LPAREN, "(", follow|S_RPAREN|S_COMMA);
     rs->ReadTop++;
     if ( rs->ReadTop == 1 ) {
         rs->ReadTilde = 0;
@@ -1019,39 +1009,39 @@ static void ReadRecExpr (
 
     /* [ <Ident> | '(' <Expr> ')' ':=' <Expr>                              */
     do {
-      if (nr || STATE(Symbol) == S_COMMA) {
-        Match(S_COMMA, ",", follow);
+      if (nr || s->Symbol == S_COMMA) {
+        Match(s, S_COMMA, ",", follow);
       }
-      if ( STATE(Symbol) != S_RPAREN ) {
-        if ( STATE(Symbol) == S_INT ) {
-          rnam = RNamName( STATE(Value) );
-          Match( S_INT, "integer", follow );
+      if ( s->Symbol != S_RPAREN ) {
+        if ( s->Symbol == S_INT ) {
+          rnam = RNamName( s->Value );
+          Match(s, S_INT, "integer", follow);
           TRY_IF_NO_ERROR { IntrRecExprBeginElmName( rnam ); }
         }
-        else if ( STATE(Symbol) == S_IDENT ) {
-          rnam = RNamName( STATE(Value) );
-          Match( S_IDENT, "identifier", follow );
+        else if ( s->Symbol == S_IDENT ) {
+          rnam = RNamName( s->Value );
+          Match(s, S_IDENT, "identifier", follow);
           TRY_IF_NO_ERROR { IntrRecExprBeginElmName( rnam ); }
         }
-        else if ( STATE(Symbol) == S_LPAREN ) {
-          Match( S_LPAREN, "(", follow );
-          ReadExpr( follow, 'r' );
-          Match( S_RPAREN, ")", follow );
+        else if ( s->Symbol == S_LPAREN ) {
+          Match(s, S_LPAREN, "(", follow);
+          ReadExpr(s, follow, 'r');
+          Match(s, S_RPAREN, ")", follow);
           TRY_IF_NO_ERROR { IntrRecExprBeginElmExpr(); }
         }
         else {
-          SyntaxError("Identifier expected");
+          SyntaxError(s, "Identifier expected");
         }
-        Match( S_ASSIGN, ":=", follow );
-        ReadExpr( S_RPAREN|follow, 'r' );
+        Match(s, S_ASSIGN, ":=", follow);
+        ReadExpr(s, S_RPAREN|follow, 'r');
         TRY_IF_NO_ERROR { IntrRecExprEndElm(); }
         nr++;
       }
 
-    } while (STATE(Symbol) == S_COMMA);
+    } while (s->Symbol == S_COMMA);
 
     /* ')'                                                                 */
-    Match( S_RPAREN, ")", follow );
+    Match(s, S_RPAREN, ")", follow);
     TRY_IF_NO_ERROR {
         IntrRecExprEnd( nr, (rs->ReadTop == 1), (rs->ReadTilde == 1) );
     }
@@ -1095,16 +1085,16 @@ typedef struct {
 **  responsible for reading the closing bracket.
 */
 
-static ArgList ReadFuncArgList(
-    TypSymbolSet        follow,
-    Int is_atomic,
-    UInt symbol,
-    const Char * symbolstr)
+static ArgList ReadFuncArgList(ScannerState * s,
+                               TypSymbolSet   follow,
+                               Int            is_atomic,
+                               UInt           symbol,
+                               const Char *   symbolstr)
 {
     Int        narg;           /* number of arguments             */
-    int        lockmode;       /* type of lock for current argument */
     Obj        nams;           /* list of local variables names   */
 #ifdef HPCGAP
+    LockQual   lockqual;
     Bag        locks = 0;      /* locks of the function */
 #endif
     UInt       isvarg = 0;     /* does function have varargs?     */
@@ -1117,64 +1107,70 @@ static ArgList ReadFuncArgList(
     /* make and push the new local variables list (args and locals)        */
     narg = 0;
     nams = NEW_PLIST(T_PLIST, 0);
-    if ( STATE(Symbol) != symbol ) {
+    if (s->Symbol != symbol) {
         goto start;
     }
 
-    while ( STATE(Symbol) == S_COMMA ) {
+    while (s->Symbol == S_COMMA) {
         if (isvarg) {
-            SyntaxError("Only final argument can be variadic");
+            SyntaxError(s, "Only final argument can be variadic");
         }
 
-        Match( S_COMMA, ",", follow );
+        Match(s, S_COMMA, ",", follow);
     start:
-        lockmode = 0;
-        switch (STATE(Symbol)) {
-        case S_READWRITE:
-            if (!is_atomic) {
-                SyntaxError("'readwrite' argument of non-atomic function");
-                Match(S_READWRITE, "readwrite", follow);
-                break;
-            }
-            lockmode++;
-        case S_READONLY:
-            if (!is_atomic) {
-                SyntaxError("'readonly' argument of non-atomic function");
-                Match(S_READONLY, "readonly", follow);
-                break;
-            }
-            lockmode++;
 #ifdef HPCGAP
-            GrowString(locks, narg+1);
-            SET_LEN_STRING(locks, narg+1);
-            CHARS_STRING(locks)[narg] = lockmode;
+        lockqual = LOCK_QUAL_NONE;
 #endif
-            if (STATE(Symbol) == S_READWRITE)
-                Match(S_READWRITE, "readwrite", follow);
-            else
-                Match(S_READONLY, "readonly", follow);
+        if (s->Symbol == S_READWRITE) {
+            if (!is_atomic) {
+                SyntaxError(s, "'readwrite' argument of non-atomic function");
+            }
+#ifdef HPCGAP
+            else {
+                lockqual = LOCK_QUAL_READWRITE;
+            }
+#endif
+            Match(s, S_READWRITE, "readwrite", follow);
         }
-        if (STATE(Symbol) == S_IDENT && findValueInNams(nams, 1, narg)) {
-            SyntaxError("Name used for two arguments");
+        else if (s->Symbol == S_READONLY) {
+            if (!is_atomic) {
+                SyntaxError(s, "'readonly' argument of non-atomic function");
+            }
+#ifdef HPCGAP
+            else {
+                lockqual = LOCK_QUAL_READONLY;
+            }
+#endif
+            Match(s, S_READONLY, "readonly", follow);
+        }
+        if (s->Symbol == S_IDENT && findValueInNams(nams, s->Value, 1, narg)) {
+            SyntaxError(s, "Name used for two arguments");
         }
         narg += 1;
-        PushPlist(nams, MakeImmString(STATE(Value)));
+        PushPlist(nams, MakeImmString(s->Value));
+#ifdef HPCGAP
+        if (is_atomic) {
+            GrowString(locks, narg);
+            SET_LEN_STRING(locks, narg);
+            CHARS_STRING(locks)[narg - 1] = lockqual;
+        }
+#endif
         if (LEN_PLIST(nams) >= MAX_FUNC_LVARS) {
-            SyntaxError("Too many function arguments");
+            SyntaxError(s, "Too many function arguments");
         }
-        Match(S_IDENT,"identifier",symbol|S_LOCAL|STATBEGIN|S_END|follow);
-        if(STATE(Symbol) == S_DOTDOT) {
-            SyntaxError("Three dots required for variadic argument list");
+        Match(s, S_IDENT,"identifier",symbol|S_LOCAL|STATBEGIN|S_END|follow);
+        if (s->Symbol == S_DOTDOT) {
+            SyntaxError(s, "Three dots required for variadic argument list");
         }
-        if(STATE(Symbol) == S_DOTDOTDOT) {
+        if (s->Symbol == S_DOTDOTDOT) {
             isvarg = 1;
-            Match(S_DOTDOTDOT, "...", follow);
+            Match(s, S_DOTDOTDOT, "...", follow);
         }
     }
-    Match( symbol, symbolstr, S_LOCAL|STATBEGIN|S_END|follow );
+    Match(s, symbol, symbolstr, S_LOCAL|STATBEGIN|S_END|follow);
 
     // Special case for function(arg)
-    if ( narg == 1 && ! strcmp( "arg", CSTR_STRING( ELM_PLIST(nams, narg) ) )) {
+    if ( narg == 1 && ! strcmp( "arg", CONST_CSTR_STRING( ELM_PLIST(nams, narg) ) )) {
         isvarg = 1;
     }
 
@@ -1184,13 +1180,73 @@ static ArgList ReadFuncArgList(
     args.isvarg = isvarg;
 #ifdef HPCGAP
     args.locks = locks;
+    if (locks)
+        MakeImmutable(args.locks);
 #endif
     return args;
 }
 
 
-static void ReadFuncExprBody(
-    TypSymbolSet follow, Int isAbbrev, Int nloc, ArgList args, Int startLine)
+void StartFakeFuncExpr(Int startLine)
+{
+    assert(STATE(IntrCoding) == 0);
+
+    // switch to coding mode now
+    CodeBegin();
+
+    // code a function expression (with no arguments and locals)
+    Obj nams = NEW_PLIST(T_PLIST, 0);
+
+    // If we are in the break loop, then a local variable context may well
+    // exist, and we have to create an empty local variable names list to
+    // match the function expression that we are creating.
+    //
+    // Without this, access to variables defined in the existing local
+    // variable context will be coded as LVAR accesses; but when we then
+    // execute this code, they will not actually be available in the current
+    // context, but rather one level up, i.e., they really should have been
+    // coded as HVARs.
+    //
+    // If we are not in a break loop, then this would be a waste of time and
+    // effort
+    if (LEN_PLIST(ReaderState()->StackNams) > 0) {
+        PushPlist(ReaderState()->StackNams, nams);
+    }
+
+    CodeFuncExprBegin(0, 0, nams, startLine);
+}
+
+
+void FinishAndCallFakeFuncExpr(void)
+{
+    assert(STATE(IntrCoding) == 0);
+
+    // code a function expression (with one statement in the body)
+    CodeFuncExprEnd(1, 1);
+
+    // switch back to immediate mode and get the function
+    Obj func = CodeEnd(0);
+
+    // If we are in a break loop, then we will have created a "dummy" local
+    // variable names list to get the counts right. Remove it.
+    const UInt len = LEN_PLIST(ReaderState()->StackNams);
+    if (len > 0)
+        PopPlist(ReaderState()->StackNams);
+
+    // call the function
+    CALL_0ARGS(func);
+
+    // push void
+    PushVoidObj();
+}
+
+
+static void ReadFuncExprBody(ScannerState * s,
+                             TypSymbolSet   follow,
+                             Int            isAbbrev,
+                             Int            nloc,
+                             ArgList        args,
+                             Int            startLine)
 {
     volatile UInt nr;           // number of statements
     volatile UInt nrError;      // copy of <STATE(NrError)>
@@ -1201,7 +1257,7 @@ static void ReadFuncExprBody(
     nrError = STATE(NrError);
 
     // push the new local variables list
-    PushPlist(STATE(StackNams), args.nams);
+    PushPlist(ReaderState()->StackNams, args.nams);
 
     // begin interpreting the function expression
     TRY_IF_NO_ERROR {
@@ -1211,7 +1267,7 @@ static void ReadFuncExprBody(
 
     if (isAbbrev) {
         // read the expression and turn it into a return-statement
-        ReadExpr(follow, 'r');
+        ReadExpr(s, follow, 'r');
         TRY_IF_NO_ERROR {
             IntrReturnObj();
         }
@@ -1225,7 +1281,7 @@ static void ReadFuncExprBody(
         // <Statements>
         UInt oldLoopNesting = ReaderState()->LoopNesting;
         ReaderState()->LoopNesting = 0;
-        nr = ReadStats(S_END | follow);
+        nr = ReadStats(s, S_END | follow);
         ReaderState()->LoopNesting = oldLoopNesting;
     }
 
@@ -1241,7 +1297,7 @@ static void ReadFuncExprBody(
     }
 
     // pop the new local variables list
-    PopPlist(STATE(StackNams));
+    PopPlist(ReaderState()->StackNams);
 }
 
 
@@ -1249,37 +1305,37 @@ static void ReadFuncExprBody(
 **
 *F  ReadLocals( <follow> )
 */
-static UInt ReadLocals(TypSymbolSet follow, Obj nams)
+static UInt ReadLocals(ScannerState * s, TypSymbolSet follow, Obj nams)
 {
     UInt narg = LEN_PLIST(nams);
     UInt nloc = 0;
 
-    Match(S_LOCAL, "local", follow);
+    Match(s, S_LOCAL, "local", follow);
 
     while (1) {
-        if (STATE(Symbol) == S_IDENT) {
-            if (findValueInNams(nams, narg + 1, narg + nloc)) {
-                SyntaxError("Name used for two locals");
+        if (s->Symbol == S_IDENT) {
+            if (findValueInNams(nams, s->Value, narg + 1, narg + nloc)) {
+                SyntaxError(s, "Name used for two locals");
             }
-            if (findValueInNams(nams, 1, narg)) {
-                SyntaxError("Name used for argument and local");
+            if (findValueInNams(nams, s->Value, 1, narg)) {
+                SyntaxError(s, "Name used for argument and local");
             }
             nloc += 1;
-            PushPlist(nams, MakeImmString(STATE(Value)));
+            PushPlist(nams, MakeImmString(s->Value));
             if (LEN_PLIST(nams) >= 65536) {
-                SyntaxError("Too many function arguments and locals");
+                SyntaxError(s, "Too many function arguments and locals");
             }
         }
-        Match(S_IDENT, "identifier", STATBEGIN | S_END | follow);
+        Match(s, S_IDENT, "identifier", STATBEGIN | S_END | follow);
 
-        if (STATE(Symbol) != S_COMMA)
+        if (s->Symbol != S_COMMA)
             break;
 
         // init to avoid strange message in case of empty string
-        STATE(Value)[0] = '\0';
-        Match(S_COMMA, ",", follow);
+        s->Value[0] = '\0';
+        Match(s, S_COMMA, ",", follow);
     }
-    MatchSemicolon(STATBEGIN | S_END | follow);
+    MatchSemicolon(s, STATBEGIN | S_END | follow);
 
     return nloc;
 }
@@ -1296,9 +1352,7 @@ static UInt ReadLocals(TypSymbolSet follow, Obj nams)
 **                             <Statements>
 **                'end'
 */
-static void ReadFuncExpr (
-    TypSymbolSet        follow,
-    Char mode)
+static void ReadFuncExpr(ScannerState * s, TypSymbolSet follow, Char mode)
 {
     Int     startLine;        // line number of function keyword
     int     is_atomic = 0;    // is this an atomic function?
@@ -1307,27 +1361,27 @@ static void ReadFuncExpr (
 
     /* begin the function               */
     startLine = GetInputLineNumber();
-    if (STATE(Symbol) == S_ATOMIC) {
-        Match(S_ATOMIC, "atomic", follow);
+    if (s->Symbol == S_ATOMIC) {
+        Match(s, S_ATOMIC, "atomic", follow);
         is_atomic = 1;
-    } else if (mode == 'a') { /* in this case the atomic keyword
-                                 was matched away by ReadAtomic before
-                                 we realised we were reading an atomic function */
+    } else if (mode == 'a') {
+        // in this case the atomic keyword was matched away by ReadAtomic
+        // before we realised we were reading an atomic function
         is_atomic = 1;
     }
-    Match( S_FUNCTION, "function", follow );
-    Match( S_LPAREN, "(", S_IDENT|S_RPAREN|S_LOCAL|STATBEGIN|S_END|follow );
+    Match(s, S_FUNCTION, "function", follow);
+    Match(s, S_LPAREN, "(", S_IDENT|S_RPAREN|S_LOCAL|STATBEGIN|S_END|follow);
 
-    args = ReadFuncArgList(follow, is_atomic, S_RPAREN, ")");
+    args = ReadFuncArgList(s, follow, is_atomic, S_RPAREN, ")");
 
-    if ( STATE(Symbol) == S_LOCAL ) {
-        nloc = ReadLocals(follow, args.nams);
+    if (s->Symbol == S_LOCAL) {
+        nloc = ReadLocals(s, follow, args.nams);
     }
 
-    ReadFuncExprBody(follow, 0, nloc, args, startLine);
+    ReadFuncExprBody(s, follow, 0, nloc, args, startLine);
 
     /* 'end'                                                               */
-    Match( S_END, "end", follow );
+    Match(s, S_END, "while parsing a function: statement or 'end'", follow);
 }
 
 
@@ -1341,16 +1395,16 @@ static void ReadFuncExpr (
 **
 **      <Function>      := '{' <ArgList> '}' '->' <Expr>
 */
-static void ReadFuncExprAbbrevMulti(TypSymbolSet follow)
+static void ReadFuncExprAbbrevMulti(ScannerState * s, TypSymbolSet follow)
 {
-    Match( S_LBRACE, "{", follow );
+    Match(s, S_LBRACE, "{", follow);
 
-    ArgList args = ReadFuncArgList(follow, 0, S_RBRACE, ")");
+    ArgList args = ReadFuncArgList(s, follow, 0, S_RBRACE, ")");
 
     /* match away the '->'                                                 */
-    Match(S_MAPTO, "->", follow);
+    Match(s, S_MAPTO, "->", follow);
 
-    ReadFuncExprBody(follow, 1, 0, args, GetInputLineNumber());
+    ReadFuncExprBody(s, follow, 1, 0, args, GetInputLineNumber());
 }
 
 /****************************************************************************
@@ -1363,11 +1417,11 @@ static void ReadFuncExprAbbrevMulti(TypSymbolSet follow)
 **
 **      <Function>      := <Var> '->' <Expr>
 */
-static void ReadFuncExprAbbrevSingle(TypSymbolSet follow)
+static void ReadFuncExprAbbrevSingle(ScannerState * s, TypSymbolSet follow)
 {
     /* make and push the new local variables list                          */
     Obj nams = NEW_PLIST(T_PLIST, 1);
-    PushPlist(nams, MakeImmString(STATE(Value)));
+    PushPlist(nams, MakeImmString(s->Value));
 
     ArgList args;
     args.narg = 1;
@@ -1378,9 +1432,9 @@ static void ReadFuncExprAbbrevSingle(TypSymbolSet follow)
 #endif
 
     /* match away the '->'                                                 */
-    Match(S_MAPTO, "->", follow);
+    Match(s, S_MAPTO, "->", follow);
 
-    ReadFuncExprBody(follow, 1, 0, args, GetInputLineNumber());
+    ReadFuncExprBody(s, follow, 1, 0, args, GetInputLineNumber());
 }
 
 /****************************************************************************
@@ -1406,90 +1460,88 @@ static void ReadFuncExprAbbrevSingle(TypSymbolSet follow)
 **
 **  <String>  := " { <any character> } "
 */
-static void ReadLiteral (
-    TypSymbolSet        follow,
-    Char mode)
+static void ReadLiteral(ScannerState * s, TypSymbolSet follow, Char mode)
 {
-    if (STATE(Symbol) == S_DOT) {
+    if (s->Symbol == S_DOT) {
         // HACK: The only way a dot could turn up here is in a floating point
         // literal that starts with '.'. Call back to the scanner to deal
         // with this.
-        ScanForFloatAfterDotHACK();
+        ScanForFloatAfterDotHACK(s);
     }
 
-    switch (STATE(Symbol)) {
+    switch (s->Symbol) {
 
     /* <Int>                                                               */
     case S_INT:
-        TRY_IF_NO_ERROR { IntrIntExpr(STATE(ValueObj), STATE(Value)); }
-        Match( S_INT, "integer", follow );
+        TRY_IF_NO_ERROR { IntrIntExpr(s->ValueObj, s->Value); }
+        Match(s, S_INT, "integer", follow);
         break;
 
     /* <Float> */
     case S_FLOAT:
-        TRY_IF_NO_ERROR { IntrFloatExpr(STATE(ValueObj), STATE(Value)); }
-        Match( S_FLOAT, "float", follow );
+        TRY_IF_NO_ERROR { IntrFloatExpr(s->ValueObj, s->Value); }
+        Match(s, S_FLOAT, "float", follow);
         break;
 
     /* 'true'                                                              */
     case S_TRUE:
-        Match( S_TRUE, "true", follow );
+        Match(s, S_TRUE, "true", follow);
         IntrTrueExpr();
         break;
 
     /* 'false'                                                             */
     case S_FALSE:
-        Match( S_FALSE, "false", follow );
+        Match(s, S_FALSE, "false", follow);
         IntrFalseExpr();
         break;
 
     /* '~'                                                                 */
     case S_TILDE:
         if (ReaderState()->ReadTop == 0) {
-            SyntaxError("'~' not allowed here");
+            SyntaxError(s, "'~' not allowed here");
         }
         ReaderState()->ReadTilde = 1;
         TRY_IF_NO_ERROR { IntrTildeExpr(); }
-        Match( S_TILDE, "~", follow );
+        Match(s, S_TILDE, "~", follow);
         break;
 
     /* <Char>                                                              */
     case S_CHAR:
-        TRY_IF_NO_ERROR { IntrCharExpr( STATE(Value)[0] ); }
-        Match( S_CHAR, "character", follow );
+        TRY_IF_NO_ERROR { IntrCharExpr( s->Value[0] ); }
+        Match(s, S_CHAR, "character", follow);
         break;
 
     /* string */
     case S_STRING:
-        GAP_ASSERT(STATE(ValueObj) != 0);
-        TRY_IF_NO_ERROR { IntrStringExpr(STATE(ValueObj)); }
-        Match(S_STRING, "", follow);
-        STATE(ValueObj) = 0;
+        GAP_ASSERT(s->ValueObj != 0);
+        TRY_IF_NO_ERROR { IntrStringExpr(s->ValueObj); }
+        Match(s, S_STRING, "", follow);
+        s->ValueObj = 0;
         break;
 
     /* <List>                                                              */
     case S_LBRACK:
-        ReadListExpr( follow );
+        ReadListExpr(s, follow);
         break;
 
     /* <Rec>                                                               */
     case S_REC:
-        ReadRecExpr( follow );
+        ReadRecExpr(s, follow);
         break;
 
     /* <Function>                                                          */
     case S_FUNCTION:
     case S_ATOMIC:
-        ReadFuncExpr( follow, mode );
+        ReadFuncExpr(s, follow, mode);
         break;
 
     case S_LBRACE:
-        ReadFuncExprAbbrevMulti( follow );
+        ReadFuncExprAbbrevMulti(s, follow);
         break;
 
     /* signal an error, we want to see a literal                           */
     default:
-        Match( S_INT, "literal", follow );
+        Match(s, S_INT, "literal", follow);
     }
 }
 
@@ -1498,7 +1550,7 @@ static void ReadLiteral (
 **
 *F  ReadAtom( <follow>, <mode> )  . . . . . . . . . . . . . . .  read an atom
 **
-**  'ReadAtom' reads an atom.  In case  of an error it skips  all symbols up to
+**  'ReadAtom' reads an atom. In case of an error it skips all symbols up to
 **  one contained in <follow>.
 **
 **   <Atom> := <Var>
@@ -1511,60 +1563,58 @@ static const UInt LiteralExprStateMask =
                           S_TILDE|S_REC|S_FUNCTION|
                           S_ATOMIC|S_FLOAT|S_DOT|S_MAPTO;
 
-static void ReadAtom (
-    TypSymbolSet        follow,
-    Char                mode )
+static void ReadAtom(ScannerState * s, TypSymbolSet follow, Char mode)
 {
     /* read a variable                                                     */
-    if ( STATE(Symbol) == S_IDENT ) {
-        ReadCallVarAss( follow, mode );
+    if (s->Symbol == S_IDENT) {
+        ReadCallVarAss(s, follow, mode);
     }
 
     /* 'IsBound' '(' <Var> ')'                                             */
-    else if ( STATE(Symbol) == S_ISBOUND ) {
-        ReadIsBound( follow );
+    else if (s->Symbol == S_ISBOUND) {
+        ReadIsBound(s, follow);
     }
     /* otherwise read a literal expression                                 */
-    else if ( IS_IN(STATE(Symbol), LiteralExprStateMask) ) {
-        ReadLiteral( follow, mode );
+    else if (IS_IN(s->Symbol, LiteralExprStateMask)) {
+        ReadLiteral(s, follow, mode);
     }
 
     /* '(' <Expr> ')'                                                      */
-    else if ( STATE(Symbol) == S_LPAREN ) {
-        Match( S_LPAREN, "(", follow );
-        if ( STATE(Symbol) == S_RPAREN ) {
-            Match( S_RPAREN, ")", follow );
+    else if (s->Symbol == S_LPAREN) {
+        Match(s, S_LPAREN, "(", follow);
+        if (s->Symbol == S_RPAREN) {
+            Match(s, S_RPAREN, ")", follow);
             TRY_IF_NO_ERROR { IntrPerm( 0UL ); }
             return;
         }
-        ReadExpr( S_RPAREN|follow, 'r' );
-        if ( STATE(Symbol) == S_COMMA ) {
-            ReadPerm( follow );
+        ReadExpr(s, S_RPAREN|follow, 'r');
+        if (s->Symbol == S_COMMA) {
+            ReadPerm(s, follow);
             return;
         }
-        Match( S_RPAREN, ")", follow );
+        Match(s, S_RPAREN, ")", follow);
     }
 
     /* otherwise signal an error                                           */
     else {
-        Match( S_INT, "expression", follow );
+        Match(s, S_INT, "expression", follow);
     }
 
-    ReadReferenceModifiers(follow);
+    ReadReferenceModifiers(s, follow);
 }
 
 /****************************************************************************
 **
 *F  ReadSign( <follow> )  . . . . . . . . . . . . . . read a sign, or nothing
 */
-static Int ReadSign(TypSymbolSet follow)
+static Int ReadSign(ScannerState * s, TypSymbolSet follow)
 {
-    if (STATE(Symbol) == S_PLUS) {
-        Match(S_PLUS, "unary +", follow);
+    if (s->Symbol == S_PLUS) {
+        Match(s, S_PLUS, "unary +", follow);
         return +1;
     }
-    if (STATE(Symbol) == S_MINUS) {
-        Match(S_MINUS, "unary -", follow);
+    if (s->Symbol == S_MINUS) {
+        Match(s, S_MINUS, "unary -", follow);
         return -1;
     }
     return 0;
@@ -1579,30 +1629,28 @@ static Int ReadSign(TypSymbolSet follow)
 **
 **  <Factor> := {'+'|'-'} <Atom> [ '^' {'+'|'-'} <Atom> ]
 */
-static void ReadFactor (
-    TypSymbolSet        follow,
-    Char                mode )
+static void ReadFactor(ScannerState * s, TypSymbolSet follow, Char mode)
 {
     volatile Int        sign1;
     volatile Int        sign2;
 
     /* { '+'|'-' }  leading sign                                           */
-    sign1 = ReadSign(follow);
+    sign1 = ReadSign(s, follow);
 
     /* <Atom>                                                              */
-    ReadAtom( follow, (sign1 == 0 ? mode : 'r') );
+    ReadAtom(s, follow, (sign1 == 0 ? mode : 'r'));
 
     /* ['^' <Atom> ] implemented as {'^' <Atom> } for better error message */
-    while ( STATE(Symbol) == S_POW ) {
+    while (s->Symbol == S_POW) {
 
         /* match the '^' away                                              */
-        Match( S_POW, "^", follow );
+        Match(s, S_POW, "^", follow);
 
         /* { '+'|'-' }  leading sign                                       */
-        sign2 = ReadSign(follow);
+        sign2 = ReadSign(s, follow);
 
         /* ['^' <Atom>]                                                    */
-        ReadAtom( follow, 'r' );
+        ReadAtom(s, follow, 'r');
 
         /* interpret the unary minus                                       */
         if ( sign2 == -1 ) {
@@ -1613,8 +1661,9 @@ static void ReadFactor (
         TRY_IF_NO_ERROR { IntrPow(); }
 
         /* check for multiple '^'                                          */
-        if ( STATE(Symbol) == S_POW ) { SyntaxError("'^' is not associative"); }
-
+        if (s->Symbol == S_POW) {
+            SyntaxError(s, "'^' is not associative");
+        }
     }
 
     /* interpret the unary minus                                           */
@@ -1633,21 +1682,20 @@ static void ReadFactor (
 **
 **  <Term> := <Factor> { '*'|'/'|'mod' <Factor> }
 */
-static void ReadTerm (
-    TypSymbolSet        follow,
-    Char                mode )
+static void ReadTerm(ScannerState * s, TypSymbolSet follow, Char mode)
 {
     volatile UInt       symbol;
 
     /* <Factor>                                                            */
-    ReadFactor( follow, mode );
+    ReadFactor(s, follow, mode);
 
     /* { '*'|'/'|'mod' <Factor> }                                          */
     /* do not use 'IS_IN', since 'IS_IN(S_POW,S_MULT|S_DIV|S_MOD)' is true */
-    while ( STATE(Symbol) == S_MULT || STATE(Symbol) == S_DIV || STATE(Symbol) == S_MOD ) {
-        symbol = STATE(Symbol);
-        Match( STATE(Symbol), "*, /, or mod", follow );
-        ReadFactor( follow, 'r' );
+    while (s->Symbol == S_MULT ||
+           s->Symbol == S_DIV || s->Symbol == S_MOD) {
+        symbol = s->Symbol;
+        Match(s, s->Symbol, "*, /, or mod", follow);
+        ReadFactor(s, follow, 'r');
         TRY_IF_NO_ERROR {
             if      ( symbol == S_MULT ) { IntrProd(); }
             else if ( symbol == S_DIV  ) { IntrQuo();  }
@@ -1666,20 +1714,18 @@ static void ReadTerm (
 **
 **  <Arith> := <Term> { '+'|'-' <Term> }
 */
-static void ReadAri (
-    TypSymbolSet        follow,
-    Char                mode )
+static void ReadAri(ScannerState * s, TypSymbolSet follow, Char mode)
 {
     UInt                symbol;
 
     /* <Term>                                                              */
-    ReadTerm( follow, mode );
+    ReadTerm(s, follow, mode);
 
     /* { '+'|'-' <Term> }                                                  */
-    while ( IS_IN( STATE(Symbol), S_PLUS|S_MINUS ) ) {
-        symbol = STATE(Symbol);
-        Match( STATE(Symbol), "+ or -", follow );
-        ReadTerm( follow, 'r' );
+    while (IS_IN(s->Symbol, S_PLUS | S_MINUS)) {
+        symbol = s->Symbol;
+        Match(s, s->Symbol, "+ or -", follow);
+        ReadTerm(s, follow, 'r');
         TRY_IF_NO_ERROR {
             if      ( symbol == S_PLUS  ) { IntrSum();  }
             else if ( symbol == S_MINUS ) { IntrDiff(); }
@@ -1697,28 +1743,26 @@ static void ReadAri (
 **
 **  <Rel> := { 'not' } <Arith> { '=|<>|<|>|<=|>=|in' <Arith> }
 */
-static void ReadRel (
-    TypSymbolSet        follow,
-    Char                mode )
+static void ReadRel(ScannerState * s, TypSymbolSet follow, Char mode)
 {
     volatile UInt       symbol;
     volatile UInt       isNot;
 
     /* { 'not' }                                                           */
     isNot = 0;
-    while ( STATE(Symbol) == S_NOT ) {
+    while (s->Symbol == S_NOT) {
         isNot++;
-        Match( S_NOT, "not", follow );
+        Match(s, S_NOT, "not", follow);
     }
 
     /* <Arith>                                                             */
-    ReadAri( follow, (isNot == 0 ? mode : 'r') );
+    ReadAri(s, follow, (isNot == 0 ? mode : 'r'));
 
     /* { '=|<>|<|>|<=|>=|in' <Arith> }                                     */
-    if ( IS_IN( STATE(Symbol), S_EQ|S_LT|S_GT|S_NE|S_LE|S_GE|S_IN ) ) {
-        symbol = STATE(Symbol);
-        Match( STATE(Symbol), "comparison operator", follow );
-        ReadAri( follow, 'r' );
+    if (IS_IN(s->Symbol, S_EQ | S_LT | S_GT | S_NE | S_LE | S_GE | S_IN)) {
+        symbol = s->Symbol;
+        Match(s, s->Symbol, "comparison operator", follow);
+        ReadAri(s, follow, 'r');
         TRY_IF_NO_ERROR {
             if      ( symbol == S_EQ ) { IntrEq(); }
             else if ( symbol == S_NE ) { IntrNe(); }
@@ -1746,18 +1790,16 @@ static void ReadRel (
 **
 **  <And> := <Rel> { 'and' <Rel> }
 */
-static void ReadAnd (
-    TypSymbolSet        follow,
-    Char                mode )
+static void ReadAnd(ScannerState * s, TypSymbolSet follow, Char mode)
 {
     /* <Rel>                                                               */
-    ReadRel( follow, mode );
+    ReadRel(s, follow, mode);
 
     /* { 'and' <Rel> }                                                     */
-    while ( STATE(Symbol) == S_AND ) {
-        Match( S_AND, "and", follow );
+    while (s->Symbol == S_AND) {
+        Match(s, S_AND, "and", follow);
         TRY_IF_NO_ERROR { IntrAndL(); }
-        ReadRel( follow, 'r' );
+        ReadRel(s, follow, 'r');
         TRY_IF_NO_ERROR { IntrAnd(); }
     }
 }
@@ -1773,26 +1815,25 @@ static void ReadAnd (
 **
 **  <QualifiedExpr> := ['readonly' | 'readwrite' ] <Expr>
 **
-**  These functions only do something meaningful inside HPC-GAP; in plain GAP,
+**  These functions only do something meaningful inside HPC-GAP; in plain GAP
 **  they are simply placeholders.
 */
-static void ReadQualifiedExpr (
-    TypSymbolSet        follow,
-    Char                mode )
+static void
+ReadQualifiedExpr(ScannerState * s, TypSymbolSet follow, Char mode)
 {
   volatile UInt access  = 0;
-  if (STATE(Symbol) == S_READWRITE) 
+  if (s->Symbol == S_READWRITE) 
     {
-      Match( S_READWRITE, "readwrite", follow | EXPRBEGIN );
+      Match(s, S_READWRITE, "readwrite", follow | EXPRBEGIN);
       access = 2;
     }
-  else if (STATE(Symbol) == S_READONLY) 
+  else if (s->Symbol == S_READONLY) 
     {
-      Match( S_READONLY, "readonly", follow | EXPRBEGIN );
+      Match(s, S_READONLY, "readonly", follow | EXPRBEGIN);
       access = 1;
     }
   TRY_IF_NO_ERROR { IntrQualifiedExprBegin(access); }
-  ReadExpr(follow,mode);
+  ReadExpr(s, follow,mode);
   TRY_IF_NO_ERROR { IntrQualifiedExprEnd(); }
 }
 
@@ -1807,29 +1848,28 @@ static void ReadQualifiedExpr (
 **
 **  <Expr> := <And> { 'or' <And> }
 **
-**  The <mode> is either 'r' indicating that the expression should be 
-**  evaluated as usual, 'x' indicating that it may be the left-hand-side of an
-**  assignment or 'a' indicating that it is a function expression following
-**  an "atomic" keyword and that the function should be made atomic.
+**  The <mode> is either 'r' indicating that the expression should be
+**  evaluated as usual, 'x' indicating that it may be the left-hand-side of
+**  an assignment or 'a' indicating that it is a function expression
+**  following an "atomic" keyword and that the function should be made
+**  atomic.
 **
-**  This last case exists because when reading "atomic function" in statement 
+**  This last case exists because when reading "atomic function" in statement
 **  context the atomic has been matched away before we can see that it is an
 **  atomic function literal, not an atomic statement.
 **
 **
 */
-static void ReadExpr (
-    TypSymbolSet        follow,
-    Char                mode )
+static void ReadExpr(ScannerState * s, TypSymbolSet follow, Char mode)
 {
     /* <And>                                                               */
-    ReadAnd( follow, mode );
+    ReadAnd(s, follow, mode);
 
     /* { 'or' <And> }                                                      */
-    while ( STATE(Symbol) == S_OR ) {
-        Match( S_OR, "or", follow );
+    while (s->Symbol == S_OR) {
+        Match(s, S_OR, "or", follow);
         TRY_IF_NO_ERROR { IntrOrL(); }
-        ReadAnd( follow, 'r' );
+        ReadAnd(s, follow, 'r');
         TRY_IF_NO_ERROR { IntrOr(); }
     }
 }
@@ -1844,13 +1884,12 @@ static void ReadExpr (
 **
 **  <Statement> := 'Unbind' '(' <Var> ')' ';'
 */
-static void ReadUnbind (
-    TypSymbolSet        follow )
+static void ReadUnbind(ScannerState * s, TypSymbolSet follow)
 {
-    Match( S_UNBIND, "Unbind", follow );
-    Match( S_LPAREN, "(", follow );
-    ReadCallVarAss( S_RPAREN|follow, 'u' );
-    Match( S_RPAREN, ")", follow );
+    Match(s, S_UNBIND, "Unbind", follow);
+    Match(s, S_LPAREN, "(", follow);
+    ReadCallVarAss(s, S_RPAREN|follow, 'u');
+    Match(s, S_RPAREN, ")", follow);
 }
 
 
@@ -1862,8 +1901,7 @@ static void ReadUnbind (
 **
 **  <Statement> :=  ';'
 */
-static void ReadEmpty (
-    TypSymbolSet        follow )
+static void ReadEmpty(ScannerState * s, TypSymbolSet follow)
 {
   IntrEmpty();
 }
@@ -1877,25 +1915,24 @@ static void ReadEmpty (
 **
 **  <Statement> := 'Info' '(' <Expr> ',' <Expr> { ',' <Expr> } ')' ';'
 */
-static void ReadInfo (
-    TypSymbolSet        follow )
+static void ReadInfo(ScannerState * s, TypSymbolSet follow)
 {
-    volatile UInt       narg;     /* number of arguments to print (or not)  */
+    volatile UInt narg;     // number of arguments to print (or not)
 
     TRY_IF_NO_ERROR { IntrInfoBegin(); }
-    Match( S_INFO, "Info", follow );
-    Match( S_LPAREN, "(", follow );
-    ReadExpr( S_RPAREN | S_COMMA | follow, 'r');
-    Match( S_COMMA, ",", S_RPAREN|follow);
-    ReadExpr( S_RPAREN | S_COMMA | follow, 'r');
+    Match(s, S_INFO, "Info", follow);
+    Match(s, S_LPAREN, "(", follow);
+    ReadExpr(s, S_RPAREN | S_COMMA | follow, 'r');
+    Match(s, S_COMMA, ",", S_RPAREN|follow);
+    ReadExpr(s, S_RPAREN | S_COMMA | follow, 'r');
     TRY_IF_NO_ERROR { IntrInfoMiddle(); }
     narg = 0;
-    while ( STATE(Symbol) == S_COMMA ) {
+    while (s->Symbol == S_COMMA) {
         narg++;
-        Match( S_COMMA, "", 0L);
-        ReadExpr( S_RPAREN | S_COMMA | follow, 'r');
+        Match(s, S_COMMA, "", 0L);
+        ReadExpr(s, S_RPAREN | S_COMMA | follow, 'r');
     }
-    Match( S_RPAREN, ")", follow );
+    Match(s, S_RPAREN, ")", follow);
     TRY_IF_NO_ERROR { IntrInfoEnd(narg); }
 }
 
@@ -1909,27 +1946,25 @@ static void ReadInfo (
 **
 **  <Statement> := 'Assert' '(' <Expr> ',' <Expr> [ ',' <Expr> ]  ')' ';'
 */
-static void ReadAssert (
-    TypSymbolSet        follow )
+static void ReadAssert(ScannerState * s, TypSymbolSet follow)
 {
     TRY_IF_NO_ERROR { IntrAssertBegin(); }
-    Match( S_ASSERT, "Assert", follow );
-    Match( S_LPAREN, "(", follow );
-    ReadExpr( S_RPAREN | S_COMMA | follow, 'r' );
+    Match(s, S_ASSERT, "Assert", follow);
+    Match(s, S_LPAREN, "(", follow);
+    ReadExpr(s, S_RPAREN | S_COMMA | follow, 'r');
     TRY_IF_NO_ERROR { IntrAssertAfterLevel(); }
-    Match( S_COMMA, ",", S_RPAREN|follow );
-    ReadExpr( S_RPAREN | S_COMMA | follow, 'r' );
+    Match(s, S_COMMA, ",", S_RPAREN|follow);
+    ReadExpr(s, S_RPAREN | S_COMMA | follow, 'r');
     TRY_IF_NO_ERROR { IntrAssertAfterCondition(); }
-    if ( STATE(Symbol) == S_COMMA )
-      {
-        Match( S_COMMA, "", 0L);
-        ReadExpr( S_RPAREN |  follow, 'r' );
-        Match( S_RPAREN, ")", follow );
+    if (s->Symbol == S_COMMA) {
+        Match(s, S_COMMA, "", 0L);
+        ReadExpr(s, S_RPAREN |  follow, 'r');
+        Match(s, S_RPAREN, ")", follow);
         TRY_IF_NO_ERROR { IntrAssertEnd3Args(); }
       }
     else
       {
-        Match( S_RPAREN, ")", follow );
+        Match(s, S_RPAREN, ")", follow);
         TRY_IF_NO_ERROR { IntrAssertEnd2Args(); }
       }
 }
@@ -1946,44 +1981,43 @@ static void ReadAssert (
 **                 [ 'else'               <Statements> ]
 **                 'fi' ';'
 */
-static void ReadIf (
-    TypSymbolSet        follow )
+static void ReadIf(ScannerState * s, TypSymbolSet follow)
 {
     volatile UInt       nrb;            /* number of branches              */
     volatile UInt       nrs;            /* number of statements in a body  */
 
-    /* 'if' <Expr>  'then' <Statements>                                     */
+    /* 'if' <Expr> 'then' <Statements>                                     */
     nrb = 0;
     TRY_IF_NO_ERROR { IntrIfBegin(); }
-    Match( S_IF, "if", follow );
-    ReadExpr( S_THEN|S_ELIF|S_ELSE|S_FI|follow, 'r' );
-    Match( S_THEN, "then", STATBEGIN|S_ELIF|S_ELSE|S_FI|follow );
+    Match(s, S_IF, "if", follow);
+    ReadExpr(s, S_THEN|S_ELIF|S_ELSE|S_FI|follow, 'r');
+    Match(s, S_THEN, "then", STATBEGIN|S_ELIF|S_ELSE|S_FI|follow);
     TRY_IF_NO_ERROR { IntrIfBeginBody(); }
-    nrs = ReadStats( S_ELIF|S_ELSE|S_FI|follow );
+    nrs = ReadStats(s, S_ELIF|S_ELSE|S_FI|follow);
     TRY_IF_NO_ERROR { nrb += IntrIfEndBody( nrs ); }
 
-    /* { 'elif' <Expr>  'then' <Statements> }                               */
-    while ( STATE(Symbol) == S_ELIF ) {
+    /* { 'elif' <Expr> 'then' <Statements> }                               */
+    while (s->Symbol == S_ELIF) {
         TRY_IF_NO_ERROR { IntrIfElif(); }
-        Match( S_ELIF, "elif", follow );
-        ReadExpr( S_THEN|S_ELIF|S_ELSE|S_FI|follow, 'r' );
-        Match( S_THEN, "then", STATBEGIN|S_ELIF|S_ELSE|S_FI|follow );
+        Match(s, S_ELIF, "elif", follow);
+        ReadExpr(s, S_THEN|S_ELIF|S_ELSE|S_FI|follow, 'r');
+        Match(s, S_THEN, "then", STATBEGIN|S_ELIF|S_ELSE|S_FI|follow);
         TRY_IF_NO_ERROR { IntrIfBeginBody(); }
-        nrs = ReadStats( S_ELIF|S_ELSE|S_FI|follow );
+        nrs = ReadStats(s, S_ELIF|S_ELSE|S_FI|follow);
         TRY_IF_NO_ERROR { nrb += IntrIfEndBody( nrs ); }
     }
 
-    /* [ 'else' <Statements> ]                                              */
-    if ( STATE(Symbol) == S_ELSE ) {
+    /* [ 'else' <Statements> ]                                             */
+    if (s->Symbol == S_ELSE) {
         TRY_IF_NO_ERROR { IntrIfElse(); }
-        Match( S_ELSE, "else", follow );
+        Match(s, S_ELSE, "else", follow);
         TRY_IF_NO_ERROR { IntrIfBeginBody(); }
-        nrs = ReadStats( S_FI|follow );
+        nrs = ReadStats(s, S_FI|follow);
         TRY_IF_NO_ERROR { nrb += IntrIfEndBody( nrs ); }
     }
 
     /* 'fi'                                                                */
-    Match( S_FI, "fi", follow );
+    Match(s, S_FI, "while parsing an 'if' statement: statement or 'fi'", follow);
     TRY_IF_NO_ERROR { IntrIfEnd( nrb ); }
 }
 
@@ -2001,12 +2035,11 @@ static void ReadIf (
 */
 
 
-static void ReadFor (
-    TypSymbolSet        follow )
+static void ReadFor(ScannerState * s, TypSymbolSet follow)
 {
     volatile UInt       nrs;            /* number of statements in body    */
-    volatile UInt       nrError;        /* copy of <STATE(NrError)>               */
-    volatile Bag        currLVars;      /* copy of <STATE(CurrLVars)>             */
+    volatile UInt       nrError;        /* copy of <STATE(NrError)>        */
+    volatile Bag        currLVars;      /* copy of <STATE(CurrLVars)>      */
 
     /* remember the current variables in case of an error                  */
     currLVars = STATE(CurrLVars);
@@ -2014,26 +2047,26 @@ static void ReadFor (
 
     /* 'for'                                                               */
     TRY_IF_NO_ERROR { IntrForBegin(); }
-    Match( S_FOR, "for", follow );
+    Match(s, S_FOR, "for", follow);
 
     /* <Var>                                                               */
-    ReadCallVarAss( follow, 'r' );
+    ReadCallVarAss(s, follow, 'r');
 
     /* 'in' <Expr>                                                         */
-    Match( S_IN, "in", S_DO|S_OD|follow );
+    Match(s, S_IN, "in", S_DO|S_OD|follow);
     TRY_IF_NO_ERROR { IntrForIn(); }
-    ReadExpr( S_DO|S_OD|follow, 'r' );
+    ReadExpr(s, S_DO|S_OD|follow, 'r');
 
-    /* 'do' <Statements>                                                    */
-    Match( S_DO, "do", STATBEGIN|S_OD|follow );
+    /* 'do' <Statements>                                                   */
+    Match(s, S_DO, "do", STATBEGIN|S_OD|follow);
     ReaderState()->LoopNesting++;
     TRY_IF_NO_ERROR { IntrForBeginBody(); }
-    nrs = ReadStats( S_OD|follow );
+    nrs = ReadStats(s, S_OD|follow);
     TRY_IF_NO_ERROR { IntrForEndBody( nrs ); }
     ReaderState()->LoopNesting--;
 
     /* 'od'                                                                */
-    Match( S_OD, "od", follow );
+    Match(s, S_OD, "while parsing a 'for' loop: statement or 'od'", follow);
     TRY_IF_NO_ERROR {
         IntrForEnd();
     }
@@ -2059,12 +2092,11 @@ static void ReadFor (
 **                     <Statements>
 **                 'od' ';'
 */
-static void ReadWhile (
-    TypSymbolSet        follow )
+static void ReadWhile(ScannerState * s, TypSymbolSet follow)
 {
     volatile UInt       nrs;            /* number of statements in body    */
-    volatile UInt       nrError;        /* copy of <STATE(NrError)>          */
-    volatile Bag        currLVars;      /* copy of <STATE(CurrLVars)>             */
+    volatile UInt       nrError;        /* copy of <STATE(NrError)>        */
+    volatile Bag        currLVars;      /* copy of <STATE(CurrLVars)>      */
 
     /* remember the current variables in case of an error                  */
     currLVars = STATE(CurrLVars);
@@ -2072,19 +2104,19 @@ static void ReadWhile (
 
     /* 'while' <Expr>  'do'                                                */
     TRY_IF_NO_ERROR { IntrWhileBegin(); }
-    Match( S_WHILE, "while", follow );
-    ReadExpr( S_DO|S_OD|follow, 'r' );
-    Match( S_DO, "do", STATBEGIN|S_DO|follow );
+    Match(s, S_WHILE, "while", follow);
+    ReadExpr(s, S_DO|S_OD|follow, 'r');
+    Match(s, S_DO, "do", STATBEGIN|S_DO|follow);
 
     //     <Statements>
     ReaderState()->LoopNesting++;
     TRY_IF_NO_ERROR { IntrWhileBeginBody(); }
-    nrs = ReadStats( S_OD|follow );
+    nrs = ReadStats(s, S_OD|follow);
     TRY_IF_NO_ERROR { IntrWhileEndBody( nrs ); }
     ReaderState()->LoopNesting--;
 
     /* 'od'                                                                */
-    Match( S_OD, "od", follow );
+    Match(s, S_OD, "while parsing a 'while' loop: statement or 'od'", follow);
     TRY_IF_NO_ERROR {
         IntrWhileEnd();
     }
@@ -2102,21 +2134,20 @@ static void ReadWhile (
 **
 *F  ReadAtomic( <follow> ) . . . . . . . . . . . . . .  read an atomic block
 **
-**  'ReadAtomic' reads an atomic block.  In case of an error it skips all symbols
-**  up to one contained in <follow>.
+**  'ReadAtomic' reads an atomic block. In case of an error it skips all
+**  symbols up to one contained in <follow>.
 **
 **  <Statement> := 'atomic' <QualifiedExpression> { ',' <QualifiedExpression } 'do' <Statements> 'od' ';'
 **
 **  These functions only do something meaningful inside HPC-GAP; in plain GAP,
 **  they are simply placeholders.
 */
-static void ReadAtomic (
-    TypSymbolSet        follow )
+static void ReadAtomic(ScannerState * s, TypSymbolSet follow)
 {
     volatile UInt       nrs;            /* number of statements in body    */
     volatile UInt       nexprs;         /* number of statements in body    */
-    volatile UInt       nrError;        /* copy of <STATE(NrError)>          */
-    volatile Bag        currLVars;      /* copy of <STATE(CurrLVars)>        */
+    volatile UInt       nrError;        /* copy of <STATE(NrError)>        */
+    volatile Bag        currLVars;      /* copy of <STATE(CurrLVars)>      */
 #ifdef HPCGAP
     volatile int        lockSP;         /* lock stack */
 #endif
@@ -2128,38 +2159,39 @@ static void ReadAtomic (
     lockSP    = RegionLockSP();
 #endif
 
-    Match( S_ATOMIC, "atomic", follow );
+    Match(s, S_ATOMIC, "atomic", follow);
     /* Might just be an atomic function literal as an expression */
-    if (STATE(Symbol) == S_FUNCTION) {
-      ReadExpr(follow, 'a');
-      return; }
+    if (s->Symbol == S_FUNCTION) {
+        ReadExpr(s, follow, 'a');
+        return;
+    }
 
     /* 'atomic' <QualifiedExpression> {',' <QualifiedExpression> } 'do'    */
     TRY_IF_NO_ERROR { IntrAtomicBegin(); }
 
-    ReadQualifiedExpr( S_DO|S_OD|follow, 'r' );
+    ReadQualifiedExpr(s, S_DO|S_OD|follow, 'r');
     nexprs = 1;
-    while (STATE(Symbol) == S_COMMA) {
-      Match( S_COMMA, "comma", follow | S_DO | S_OD );
-      ReadQualifiedExpr( S_DO|S_OD|follow, 'r' );
+    while (s->Symbol == S_COMMA) {
+      Match(s, S_COMMA, ",", follow | S_DO | S_OD);
+      ReadQualifiedExpr(s, S_DO|S_OD|follow, 'r');
       nexprs ++;
 #ifdef HPCGAP
       if (nexprs > MAX_ATOMIC_OBJS) {
-        SyntaxError("'atomic' statement can have at most 256 objects to lock");
+        SyntaxError(s, "'atomic' statement can have at most 256 objects to lock");
         return;
       }
 #endif
     }
 
-    Match( S_DO, "do or comma", STATBEGIN|S_DO|follow );
+    Match(s, S_DO, "do", STATBEGIN|S_DO|follow);
 
     //     <Statements>
     TRY_IF_NO_ERROR { IntrAtomicBeginBody(nexprs); }
-    nrs = ReadStats( S_OD|follow );
+    nrs = ReadStats(s, S_OD|follow);
     TRY_IF_NO_ERROR { IntrAtomicEndBody( nrs ); }
 
     /* 'od'                                                                */
-    Match( S_OD, "od", follow );
+    Match(s, S_OD, "while parsing an atomic block: statement or 'od'", follow);
     TRY_IF_NO_ERROR {
         IntrAtomicEnd();
     }
@@ -2190,8 +2222,7 @@ static void ReadAtomic (
 **                    <Statements>
 **                'until' <Expr> ';'
 */
-static void ReadRepeat (
-    TypSymbolSet        follow )
+static void ReadRepeat(ScannerState * s, TypSymbolSet follow)
 {
     volatile UInt       nrs;            /* number of statements in body    */
     volatile UInt       nrError;        /* copy of <STATE(NrError)>        */
@@ -2203,18 +2234,18 @@ static void ReadRepeat (
 
     /* 'repeat'                                                            */
     TRY_IF_NO_ERROR { IntrRepeatBegin(); }
-    Match( S_REPEAT, "repeat", follow );
+    Match(s, S_REPEAT, "repeat", follow);
 
     //  <Statements>
     ReaderState()->LoopNesting++;
     TRY_IF_NO_ERROR { IntrRepeatBeginBody(); }
-    nrs = ReadStats( S_UNTIL|follow );
+    nrs = ReadStats(s, S_UNTIL|follow);
     TRY_IF_NO_ERROR { IntrRepeatEndBody( nrs ); }
     ReaderState()->LoopNesting--;
 
     /* 'until' <Expr>                                                      */
-    Match( S_UNTIL, "until", EXPRBEGIN|follow );
-    ReadExpr( follow, 'r' );
+    Match(s, S_UNTIL, "while parsing a 'repeat' loop: statement or 'until'", EXPRBEGIN|follow);
+    ReadExpr(s, follow, 'r');
     TRY_IF_NO_ERROR {
         IntrRepeatEnd();
     }
@@ -2238,14 +2269,13 @@ static void ReadRepeat (
 **
 **  <Statement> := 'break' ';'
 */
-static void ReadBreak (
-    TypSymbolSet        follow )
+static void ReadBreak(ScannerState * s, TypSymbolSet follow)
 {
     if (!ReaderState()->LoopNesting)
-        SyntaxError("'break' statement not enclosed in a loop");
+        SyntaxError(s, "'break' statement not enclosed in a loop");
 
     /* skip the break symbol                                               */
-    Match( S_BREAK, "break", follow );
+    Match(s, S_BREAK, "break", follow);
 
     /* interpret the break statement                                       */
     TRY_IF_NO_ERROR { IntrBreak(); }
@@ -2253,23 +2283,22 @@ static void ReadBreak (
 
 /****************************************************************************
 **
-*F  ReadContinue(<follow>) . . . . . . . . . . . . . . .  read a continue statement
+*F  ReadContinue(<follow>) . . . . . . . . . . . .  read a continue statement
 **
-**  'ReadContinue' reads a  continue-statement.  In case  of an error  it skips all
-**  symbols up to one contained in <follow>.
+**  'ReadContinue' reads a continue-statement. In case of an error it skips
+**  all symbols up to one contained in <follow>.
 **
 **  <Statement> := 'continue' ';'
 */
-static void ReadContinue (
-    TypSymbolSet        follow )
+static void ReadContinue(ScannerState * s, TypSymbolSet follow)
 {
     if (!ReaderState()->LoopNesting)
-        SyntaxError("'continue' statement not enclosed in a loop");
+        SyntaxError(s, "'continue' statement not enclosed in a loop");
 
-    /* skip the continue symbol                                               */
-    Match( S_CONTINUE, "continue", follow );
+    // skip the continue symbol
+    Match(s, S_CONTINUE, "continue", follow);
 
-    /* interpret the continue statement                                       */
+    // interpret the continue statement
     TRY_IF_NO_ERROR { IntrContinue(); }
 }
 
@@ -2287,20 +2316,19 @@ static void ReadContinue (
 **  It is still legal to use parenthesis but they  are  no  longer  required,
 **  a return statement is not a function call and should not look  like  one.
 */
-static void ReadReturn (
-    TypSymbolSet        follow )
+static void ReadReturn(ScannerState * s, TypSymbolSet follow)
 {
     /* skip the return symbol                                              */
-    Match( S_RETURN, "return", follow );
+    Match(s, S_RETURN, "return", follow);
 
     /* 'return' with no expression following                               */
-    if (IS_IN(STATE(Symbol), S_SEMICOLON)) {
+    if (IS_IN(s->Symbol, S_SEMICOLON)) {
         TRY_IF_NO_ERROR { IntrReturnVoid(); }
     }
 
     /* 'return' with an expression following                               */
     else {
-        ReadExpr( follow, 'r' );
+        ReadExpr(s, follow, 'r');
         TRY_IF_NO_ERROR { IntrReturnObj(); }
     }
 }
@@ -2315,22 +2343,27 @@ static void ReadReturn (
 **
 **  <Statement> := 'TryNextMethod' '(' ')' ';'
 */
-static void ReadTryNext (
-    TypSymbolSet        follow )
+static void ReadTryNext(ScannerState * s, TypSymbolSet follow)
 {
-    Match( S_TRYNEXT, "TryNextMethod", follow );
-    Match( S_LPAREN, "(", follow );
-    Match( S_RPAREN, ")", follow );
+    Match(s, S_TRYNEXT, "TryNextMethod", follow);
+    Match(s, S_LPAREN, "(", follow);
+    Match(s, S_RPAREN, ")", follow);
     TRY_IF_NO_ERROR {
         IntrRefGVar( GVarName( "TRY_NEXT_METHOD" ) );
         IntrReturnObj();
     }
 }
 
-static void ReadHelp(TypSymbolSet follow)
+static void ReadHelp(ScannerState * s, TypSymbolSet follow)
 {
-    TRY_IF_NO_ERROR { IntrHelp(STATE(ValueObj)); }
-    STATE(ValueObj) = 0;
+    TRY_IF_NO_ERROR { IntrHelp(s->ValueObj); }
+    s->ValueObj = 0;
+}
+
+static void ReadPragma(ScannerState * s, TypSymbolSet follow)
+{
+    TRY_IF_NO_ERROR { IntrPragma(s->ValueObj); }
+    s->ValueObj = 0;
 }
 
 /****************************************************************************
@@ -2342,11 +2375,10 @@ static void ReadHelp(TypSymbolSet follow)
 **
 **  <Statement> := 'quit' ';'
 */
-static void            ReadQuit (
-    TypSymbolSet        follow )
+static void ReadQuit(ScannerState * s, TypSymbolSet follow)
 {
     /* skip the quit symbol                                                */
-    Match( S_QUIT, "quit", follow );
+    Match(s, S_QUIT, "quit", follow);
 
     /* interpret the quit                                                  */
     TRY_IF_NO_ERROR { IntrQuit(); }
@@ -2361,11 +2393,10 @@ static void            ReadQuit (
 **
 **  <Statement> := 'QUIT' ';'
 */
-static void            ReadQUIT (
-    TypSymbolSet        follow )
+static void ReadQUIT(ScannerState * s, TypSymbolSet follow)
 {
     /* skip the quit symbol                                                */
-    Match( S_QQUIT, "QUIT", follow );
+    Match(s, S_QQUIT, "QUIT", follow);
 
     /* interpret the quit                                                  */
     TRY_IF_NO_ERROR { IntrQUIT(); }
@@ -2395,43 +2426,46 @@ static void            ReadQUIT (
 **              |  'atomic' <QualifiedExpression> { ',' <QualifiedExpression> } 'do' <Statements> 'od' ';'
 **              |  ';'
 */
-static Int TryReadStatement(TypSymbolSet follow)
+static Int TryReadStatement(ScannerState * s, TypSymbolSet follow)
 {
-    switch (STATE(Symbol)) {
-    case S_IDENT:     ReadCallVarAss(follow,'s'); break;
-    case S_UNBIND:    ReadUnbind(    follow    ); break;
-    case S_INFO:      ReadInfo(      follow    ); break;
-    case S_ASSERT:    ReadAssert(    follow    ); break;
-    case S_IF:        ReadIf(        follow    ); break;
-    case S_FOR:       ReadFor(       follow    ); break;
-    case S_WHILE:     ReadWhile(     follow    ); break;
-    case S_REPEAT:    ReadRepeat(    follow    ); break;
-    case S_BREAK:     ReadBreak(     follow    ); break;
-    case S_CONTINUE:  ReadContinue(  follow    ); break;
-    case S_RETURN:    ReadReturn(    follow    ); break;
-    case S_TRYNEXT:   ReadTryNext(   follow    ); break;
-    case S_ATOMIC:    ReadAtomic(    follow    ); break;
-    case S_SEMICOLON: ReadEmpty(     follow    ); break;
-    case S_QUIT:      SyntaxError("'quit;' cannot be used in this context"); break;
-    case S_QQUIT:     SyntaxError("'QUIT;' cannot be used in this context"); break;
-    case S_HELP:      SyntaxError("'?' cannot be used in this context"); break;
+    switch (s->Symbol) {
+    case S_IDENT:     ReadCallVarAss(s, follow,'s'); break;
+    case S_UNBIND:    ReadUnbind(s,     follow    ); break;
+    case S_INFO:      ReadInfo(s,       follow    ); break;
+    case S_ASSERT:    ReadAssert(s,     follow    ); break;
+    case S_IF:        ReadIf(s,         follow    ); break;
+    case S_FOR:       ReadFor(s,        follow    ); break;
+    case S_WHILE:     ReadWhile(s,      follow    ); break;
+    case S_REPEAT:    ReadRepeat(s,     follow    ); break;
+    case S_BREAK:     ReadBreak(s,      follow    ); break;
+    case S_CONTINUE:  ReadContinue(s,   follow    ); break;
+    case S_RETURN:    ReadReturn(s,     follow    ); break;
+    case S_TRYNEXT:   ReadTryNext(s,    follow    ); break;
+    case S_ATOMIC:    ReadAtomic(s,     follow    ); break;
+    case S_SEMICOLON: ReadEmpty(s,      follow    ); break;
+    case S_PRAGMA:    ReadPragma(s,     follow    ); break;
+    case S_QUIT:      SyntaxError(s, "'quit;' cannot be used in this context"); break;
+    case S_QQUIT:     SyntaxError(s, "'QUIT;' cannot be used in this context"); break;
+    case S_HELP:      SyntaxError(s, "'?' cannot be used in this context"); break;
     default:         return 0;
     }
     return 1;
 }
 
-static UInt ReadStats (
-    TypSymbolSet        follow )
+static UInt ReadStats(ScannerState * s, TypSymbolSet follow)
 {
     UInt nr = 0;    // number of statements
 
     // read the statements
-    while ( IS_IN( STATE(Symbol), STATBEGIN|S_SEMICOLON ) ) {
-        if (!TryReadStatement(follow)) {
-            SyntaxError("statement expected");
+    while (IS_IN(s->Symbol, STATBEGIN | S_SEMICOLON)) {
+        if (!TryReadStatement(s, follow)) {
+            SyntaxError(s, "statement expected");
         }
         nr++;
-        MatchSemicolon(follow);
+        if (s->Symbol == S_PRAGMA)
+            Match(s, S_PRAGMA, "", 0);
+        else
+            MatchSemicolon(s, follow);
     }
 
     // return the number of statements
@@ -2451,30 +2485,31 @@ static UInt ReadStats (
 **
 **  'ReadEvalCommand' reads one command and interprets it immediately.
 **
-**  It does not expect the  first symbol of its input  already read and  won't
+**  It does not expect the first symbol of its input already read and won't
 **  read the  first symbol of the  next  input.
 **
 */
 
 static void RecreateStackNams( Obj context )
 {
+    Obj stackNams = ReaderState()->StackNams;
     Obj lvars = context;
     while (lvars != STATE(BottomLVars) && lvars != (Obj)0)  {
         Obj nams = NAMS_FUNC(FUNC_LVARS(lvars));
         if (nams != (Obj) 0) {
-            PushPlist( STATE(StackNams), nams);
+            PushPlist(stackNams, nams);
         }
         lvars = ENVI_FUNC(FUNC_LVARS(lvars));
     }
 
     // At this point we have the stack upside down, so invert it
-    const UInt countNams = LEN_PLIST(STATE(StackNams));
+    const UInt countNams = LEN_PLIST(stackNams);
     for (UInt i = 1; i <= countNams/2; i++) {
         const UInt j = countNams + 1 -i;
-        Obj tmpA = ELM_PLIST(STATE(StackNams), i);
-        Obj tmpB = ELM_PLIST(STATE(StackNams), j);
-        SET_ELM_PLIST(STATE(StackNams), i, tmpB);
-        SET_ELM_PLIST(STATE(StackNams), j, tmpA);
+        Obj tmpA = ELM_PLIST(stackNams, i);
+        Obj tmpB = ELM_PLIST(stackNams, j);
+        SET_ELM_PLIST(stackNams, i, tmpB);
+        SET_ELM_PLIST(stackNams, j, tmpA);
     }
 }
 
@@ -2493,9 +2528,10 @@ ExecStatus ReadEvalCommand(Obj context, Obj *evalResult, UInt *dualSemicolon)
 #endif
 
     struct ReaderState * volatile rs = ReaderState();
+    ScannerState * volatile       s = &STATE(Scanner);
 
     /* get the first symbol from the input                                 */
-    Match( STATE(Symbol), "", 0UL );
+    Match(s, s->Symbol, "", 0UL);
 
     // if scanning the first symbol produced a syntax error, abort
     if (STATE(NrError)) {
@@ -2504,13 +2540,15 @@ ExecStatus ReadEvalCommand(Obj context, Obj *evalResult, UInt *dualSemicolon)
     }
 
     /* if we have hit <end-of-file>, then give up                          */
-    if ( STATE(Symbol) == S_EOF )  { return STATUS_EOF; }
+    if (s->Symbol == S_EOF) {
+        return STATUS_EOF;
+    }
 
     /* print only a partial prompt from now on                             */
     STATE(Prompt) = SyQuiet ? "" : "> ";
 
     /* remember the old reader context                                     */
-    stackNams   = STATE(StackNams);
+    stackNams   = rs->StackNams;
     readTop     = rs->ReadTop;
     readTilde   = rs->ReadTilde;
     tilde       = STATE(Tilde);
@@ -2519,7 +2557,7 @@ ExecStatus ReadEvalCommand(Obj context, Obj *evalResult, UInt *dualSemicolon)
     memcpy( readJmpError, STATE(ReadJmpError), sizeof(syJmp_buf) );
 
     // initialize everything and begin an interpreter
-    STATE(StackNams)   = NEW_PLIST( T_PLIST, 16 );
+    rs->StackNams      = NEW_PLIST( T_PLIST, 16 );
     rs->ReadTop        = 0;
     rs->ReadTilde      = 0;
     STATE(Tilde)       = 0;
@@ -2536,27 +2574,28 @@ ExecStatus ReadEvalCommand(Obj context, Obj *evalResult, UInt *dualSemicolon)
 
     IntrBegin( context );
 
-    switch (STATE(Symbol)) {
+    switch (s->Symbol) {
     /* read an expression or an assignment or a procedure call             */
-    case S_IDENT:     ReadExpr(    S_SEMICOLON|S_EOF, 'x' ); break;
+    case S_IDENT:     ReadExpr(s,    S_SEMICOLON|S_EOF, 'x' ); break;
 
     // otherwise read a statement -- first handle some which are different on
     // the top level than inside a function, if/else or loop
-    case S_QUIT:      ReadQuit(    S_SEMICOLON|S_EOF      ); break;
-    case S_QQUIT:     ReadQUIT(    S_SEMICOLON|S_EOF      ); break;
-    case S_HELP:      ReadHelp(    S_SEMICOLON|S_EOF      ); break;
+    case S_QUIT:      ReadQuit(s,    S_SEMICOLON|S_EOF      ); break;
+    case S_QQUIT:     ReadQUIT(s,    S_SEMICOLON|S_EOF      ); break;
+    case S_HELP:      ReadHelp(s,    S_SEMICOLON|S_EOF      ); break;
+    case S_PRAGMA:    ReadPragma(s,  S_SEMICOLON|S_EOF      ); break;
 
     // otherwise try to read a generic statement
     default:
-        if (!TryReadStatement(S_SEMICOLON | S_EOF)) {
+        if (!TryReadStatement(s, S_SEMICOLON | S_EOF)) {
             // not a statement, but perhaps it is an expression
-            ReadExpr(S_SEMICOLON | S_EOF, 'r');
+            ReadExpr(s, S_SEMICOLON | S_EOF, 'r');
         }
     }
 
     /* every statement must be terminated by a semicolon                  */
-    if (!IS_IN(STATE(Symbol), S_SEMICOLON) && STATE(Symbol) != S_HELP) {
-        SyntaxError( "; expected");
+    if (!IS_IN(s->Symbol, S_SEMICOLON) && s->Symbol != S_HELP && s->Symbol != S_PRAGMA) {
+        SyntaxError(s, "; expected");
     }
 
     /* end the interpreter                                                 */
@@ -2565,7 +2604,7 @@ ExecStatus ReadEvalCommand(Obj context, Obj *evalResult, UInt *dualSemicolon)
 
         /* check for dual semicolon */
         if (dualSemicolon)
-            *dualSemicolon = (STATE(Symbol) == S_DUALSEMICOLON);
+            *dualSemicolon = (s->Symbol == S_DUALSEMICOLON);
     }
     CATCH_ERROR {
         IntrEnd(1, evalResult);
@@ -2581,7 +2620,7 @@ ExecStatus ReadEvalCommand(Obj context, Obj *evalResult, UInt *dualSemicolon)
 
     /* switch back to the old reader context                               */
     memcpy( STATE(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
-    STATE(StackNams)   = stackNams;
+    rs->StackNams      = stackNams;
     rs->ReadTop        = readTop;
     rs->ReadTilde      = readTilde;
     STATE(Tilde)       = tilde;
@@ -2620,18 +2659,21 @@ UInt ReadEvalFile(Obj *evalResult)
 #endif
 
     struct ReaderState * volatile rs = ReaderState();
+    ScannerState * volatile       s = &STATE(Scanner);
 
     /* get the first symbol from the input                                 */
-    Match( STATE(Symbol), "", 0UL );
+    Match(s, s->Symbol, "", 0UL);
 
     /* if we have hit <end-of-file>, then give up                          */
-    if ( STATE(Symbol) == S_EOF )  { return STATUS_EOF; }
+    if (s->Symbol == S_EOF) {
+        return STATUS_EOF;
+    }
 
     /* print only a partial prompt from now on                             */
     STATE(Prompt) = SyQuiet ? "" : "> ";
 
     /* remember the old reader context                                     */
-    stackNams   = STATE(StackNams);
+    stackNams   = rs->StackNams;
     readTop     = rs->ReadTop;
     readTilde   = rs->ReadTilde;
     tilde       = STATE(Tilde);
@@ -2642,7 +2684,7 @@ UInt ReadEvalFile(Obj *evalResult)
     memcpy( readJmpError, STATE(ReadJmpError), sizeof(syJmp_buf) );
 
     // initialize everything and begin an interpreter
-    STATE(StackNams) = NEW_PLIST( T_PLIST, 16 );
+    rs->StackNams    = NEW_PLIST( T_PLIST, 16 );
     rs->ReadTop      = 0;
     rs->ReadTilde    = 0;
     STATE(Tilde)     = 0;
@@ -2653,10 +2695,10 @@ UInt ReadEvalFile(Obj *evalResult)
 
     /* check for local variables                                           */
     nams = NEW_PLIST(T_PLIST, 0);
-    PushPlist( STATE(StackNams), nams );
+    PushPlist(rs->StackNams, nams);
     nloc = 0;
-    if ( STATE(Symbol) == S_LOCAL ) {
-        nloc = ReadLocals(0, nams);
+    if (s->Symbol == S_LOCAL) {
+        nloc = ReadLocals(s, 0, nams);
     }
 
     currLVars = STATE(CurrLVars);
@@ -2668,15 +2710,15 @@ UInt ReadEvalFile(Obj *evalResult)
     {
         UInt oldLoopNesting = rs->LoopNesting;
         rs->LoopNesting = 0;
-        nr = ReadStats(S_SEMICOLON | S_EOF);
+        nr = ReadStats(s, S_SEMICOLON | S_EOF);
         rs->LoopNesting = oldLoopNesting;
     }
 
     GAP_ASSERT(rs->LoopNesting == 0);
 
     /* we now want to be at <end-of-file>                                  */
-    if ( STATE(Symbol) != S_EOF ) {
-        SyntaxError("<end-of-file> expected");
+    if (s->Symbol != S_EOF) {
+        SyntaxError(s, "<end-of-file> expected");
     }
 
     /* fake the 'end;'                                                     */
@@ -2703,7 +2745,7 @@ UInt ReadEvalFile(Obj *evalResult)
     if (TLS(CurrentHashLock))
       HashUnlock(TLS(CurrentHashLock));
 #endif
-    STATE(StackNams) = stackNams;
+    rs->StackNams    = stackNams;
     rs->ReadTop      = readTop;
     rs->ReadTilde    = readTilde;
     STATE(Tilde)     = tilde;
@@ -2718,9 +2760,9 @@ UInt ReadEvalFile(Obj *evalResult)
 **
 *F  ReadEvalError() . . . . . . . . . . . . . . . . . .  return with an error
 */
-void            ReadEvalError ( void )
+void ReadEvalError(void)
 {
-    STATE(PtrBody)  = (Stat*)PTR_BAG(BODY_FUNC(CURR_FUNC()));
+    STATE(PtrBody)  = PTR_BAG(BODY_FUNC(CURR_FUNC()));
     STATE(PtrLVars) = PTR_BAG(STATE(CurrLVars));
     syLongjmp( &(STATE(ReadJmpError)), 1 );
 }
@@ -2728,9 +2770,10 @@ void            ReadEvalError ( void )
 
 /****************************************************************************
 **
-**   Reader state -- the next group of functions are used to "push" the current
-**  interpreter state allowing GAP code to be interpreted in the middle of other
-**  code. This is used, for instance, in the command-line editor.
+**  Reader state -- the next group of functions are used to "push" the
+**  current interpreter state allowing GAP code to be interpreted in the
+**  middle of other code. This is used, for instance, in the command-line
+**  editor.
 */
 
 
@@ -2747,8 +2790,8 @@ struct SavedReaderState {
   UInt                nrError;
 };
 
-static void SaveReaderState( struct SavedReaderState *s) {
-  s->stackNams   = STATE(StackNams);
+static void SaveReaderState(struct SavedReaderState *s) {
+  s->stackNams   = ReaderState()->StackNams;
   s->readTop     = ReaderState()->ReadTop;
   s->readTilde   = ReaderState()->ReadTilde;
   s->currLHSGVar = ReaderState()->CurrLHSGVar;
@@ -2760,8 +2803,8 @@ static void SaveReaderState( struct SavedReaderState *s) {
   memcpy( s->readJmpError, STATE(ReadJmpError), sizeof(syJmp_buf) );
 }
 
-static void ClearReaderState( void ) {
-  STATE(StackNams)   = NEW_PLIST( T_PLIST, 16 );
+static void ClearReaderState(void ) {
+  ReaderState()->StackNams   = NEW_PLIST( T_PLIST, 16 );
   ReaderState()->ReadTop     = 0;
   ReaderState()->ReadTilde   = 0;
   ReaderState()->CurrLHSGVar = 0;
@@ -2772,10 +2815,10 @@ static void ClearReaderState( void ) {
   STATE(NrError) = 0;
 }
 
-static void RestoreReaderState( const struct SavedReaderState *s) {
+static void RestoreReaderState(const struct SavedReaderState *s) {
   memcpy( STATE(ReadJmpError), s->readJmpError, sizeof(syJmp_buf) );
   STATE(UserHasQuit) = s->userHasQuit;
-  STATE(StackNams)   = s->stackNams;
+  ReaderState()->StackNams   = s->stackNams;
   ReaderState()->ReadTop     = s->readTop;
   ReaderState()->ReadTilde   = s->readTilde;
   ReaderState()->CurrLHSGVar = s->currLHSGVar;
@@ -2877,7 +2920,7 @@ static Int InitKernel (
     StructInitInfo *    module )
 {
 #if !defined(HPCGAP)
-    InitGlobalBag( &STATE(StackNams),      "src/read.c:StackNams"      );
+    InitGlobalBag(&ReaderState()->StackNams, "src/read.c:StackNams");
 #endif
     InitCopyGVar( "GAPInfo", &GAPInfo);
     /* return success                                                      */
@@ -2888,7 +2931,7 @@ static Int InitKernel (
 static Int InitModuleState(void)
 {
     STATE(ErrorLVars) = (UInt **)0;
-    STATE(StackNams) = NEW_PLIST(T_PLIST, 16);
+    ReaderState()->StackNams = NEW_PLIST(T_PLIST, 16);
     ReaderState()->ReadTop = 0;
     ReaderState()->ReadTilde = 0;
     ReaderState()->CurrLHSGVar = 0;

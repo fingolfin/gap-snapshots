@@ -464,7 +464,7 @@
   [33X[1;0Y[29X[2XIsSyllableAssocWordRep[102X( [3Xobj[103X ) [32X Representation[133X
   
   [33X[0;0YA word in syllable representation stores generator/exponents pairs (as given
-  by [2XExtRepOfObj[102X ([14X79.16-1[114X). Syllable access is fast, letter access is slow for
+  by  [2XExtRepOfObj[102X ([14X79.8-1[114X). Syllable access is fast, letter access is slow for
   such words.[133X
   
   [1X37.6-6 IsSyllableWordsFamily[101X
@@ -612,23 +612,24 @@
   [33X[1;0Y[29X[2XStraightLineProgramNC[102X( [3Xlines[103X[, [3Xnrgens[103X] ) [32X function[133X
   [33X[1;0Y[29X[2XStraightLineProgramNC[102X( [3Xstring[103X, [3Xgens[103X ) [32X function[133X
   
-  [33X[0;0YIn  the  first  form,  [3Xlines[103X  must  be a list of lists that defines a unique
-  straight  line  program  (see [2XIsStraightLineProgram[102X  ([14X37.8-1[114X)); in this case
-  [2XStraightLineProgram[102X  returns  this program, otherwise an error is signalled.
-  The optional argument [3Xnrgens[103X specifies the number of input generators of the
-  program;  if a line of form 1. (that is, a list of integers) occurs in [3Xlines[103X
-  except  in  the  last  position,  this number is not determined by [3Xlines[103X and
-  therefore   [13Xmust[113X   be   specified  by  the  argument  [3Xnrgens[103X;  if  not  then
-  [2XStraightLineProgram[102X returns [9Xfail[109X.[133X
+  [33X[0;0YIn  the  first  form,  [3Xlines[103X must be a nonempty list of lists that defines a
+  unique  straight  line program (see [2XIsStraightLineProgram[102X ([14X37.8-1[114X)); in this
+  case  [2XStraightLineProgram[102X  returns  this  program,  otherwise  an  error  is
+  signalled.  The  optional  argument  [3Xnrgens[103X  specifies  the  number of input
+  generators  of  the  program;  if  a  line  of  form  1. (that is, a list of
+  integers)  occurs  in  [3Xlines[103X except in the last position, this number is not
+  determined  by [3Xlines[103X and therefore [13Xmust[113X be specified by the argument [3Xnrgens[103X;
+  if not then [2XStraightLineProgram[102X returns [9Xfail[109X.[133X
   
-  [33X[0;0YIn  the  second  form,  [3Xstring[103X  must  be  a  string describing an arithmetic
-  expression in terms of the strings in the list [3Xgens[103X, where multiplication is
-  denoted  by concatenation, powering is denoted by [10X^[110X, and round brackets [10X([110X, [10X)[110X
-  may  be used. Each entry in [3Xgens[103X must consist only of uppercase or lowercase
-  letters  (i.e.,  letters  in  [2XIsAlphaChar[102X ([14X27.5-4[114X)) such that no entry is an
-  initial  part  of  another  one. Called with this input, [2XStraightLineProgram[102X
-  returns  a straight line program that evaluates to the word corresponding to
-  [3Xstring[103X when called with generators corresponding to [3Xgens[103X.[133X
+  [33X[0;0YIn  the  second  form,  [3Xstring[103X  must  be  a  nonempty  string  describing an
+  arithmetic  expression  in  terms  of  the  strings  in the list [3Xgens[103X, where
+  multiplication  is  denoted  by concatenation, powering is denoted by [10X^[110X, and
+  round  brackets  [10X([110X,  [10X)[110X  may be used. Each entry in [3Xgens[103X must consist only of
+  uppercase  or lowercase letters (i.e., letters in [2XIsAlphaChar[102X ([14X27.5-4[114X)) such
+  that  no  entry  is  an initial part of another one. Called with this input,
+  [2XStraightLineProgram[102X  returns  a  straight line program that evaluates to the
+  word  corresponding  to  [3Xstring[103X when called with generators corresponding to
+  [3Xgens[103X.[133X
   
   [33X[0;0YThe  [10XNC[110X  variant  does the same, except that the internal consistency of the
   program is not checked.[133X
@@ -799,14 +800,15 @@
   
   [33X[1;0Y[29X[2XIntegratedStraightLineProgram[102X( [3Xlistofprogs[103X ) [32X function[133X
   
-  [33X[0;0YFor  a  nonempty  dense list [3Xlistofprogs[103X of straight line programs that have
-  the   same  number  [22Xn[122X,  say,  of  inputs  (see [2XNrInputsOfStraightLineProgram[102X
-  ([14X37.8-4[114X))   and   for  which  the  results  (see [2XResultOfStraightLineProgram[102X
-  ([14X37.8-5[114X))   are   single   elements   (i.e.,   [13Xnot[113X   lists   of   elements),
-  [2XIntegratedStraightLineProgram[102X  returns  a  straight line program [3Xprog[103X with [22Xn[122X
-  inputs    such    that    for    each    [22Xn[122X-tuple    [3Xgens[103X    of   generators,
-  [10XResultOfStraightLineProgram(  [3Xprog[103X[10X,  [3Xgens[103X[10X  )[110X  is  equal  to  the  list [10XList(
-  [3Xlistofprogs[103X[10X, [3Xp[103X[10X -> ResultOfStraightLineProgram( [3Xp[103X[10X, [3Xgens[103X[10X )[110X.[133X
+  [33X[0;0YFor  a  nonempty  dense list [3Xlistofprogs[103X of straight line programs [22Xp_1, p_2,
+  ...,   p_m[122X,   say,   that   have   the   same   number  [22Xn[122X,  say,  of  inputs
+  (see [2XNrInputsOfStraightLineProgram[102X  ([14X37.8-4[114X)), [2XIntegratedStraightLineProgram[102X
+  returns  a  straight  line  program  [22Xprog[122X  with  [22Xn[122X inputs such that for each
+  [22Xn[122X-tuple [22Xgens[122X of generators, [10XResultOfStraightLineProgram( [110X[22Xprog, gens[122X[10X )[110X is the
+  concatenation  of  the  lists  [22Xr_1,  r_2,  ...,  r_m[122X,  where [22Xr_i[122X is equal to
+  [10XResultOfStraightLineProgram(  [110X[22Xp_i,  gens[122X[10X  )[110X  if  this  result  is  a list of
+  elements, and otherwise [22Xr_i[122X is equal to the list of length one that contains
+  this result.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xf:= FreeGroup( "x", "y" );;  gens:= GeneratorsOfGroup( f );;[127X[104X
@@ -822,6 +824,9 @@
     [4X[25Xgap>[125X [27Xprg:= IntegratedStraightLineProgram( [ prg3, prg1, prg2 ] );;[127X[104X
     [4X[25Xgap>[125X [27XResultOfStraightLineProgram( prg, gens );[127X[104X
     [4X[28X[ x^3*y^4, x^4*y^-1, x^3*y^4 ][128X[104X
+    [4X[25Xgap>[125X [27Xprg:= IntegratedStraightLineProgram( [ prg, prg ] );;[127X[104X
+    [4X[25Xgap>[125X [27XResultOfStraightLineProgram( prg, gens );[127X[104X
+    [4X[28X[ x^3*y^4, x^4*y^-1, x^3*y^4, x^3*y^4, x^4*y^-1, x^3*y^4 ][128X[104X
   [4X[32X[104X
   
   [1X37.8-9 RestrictOutputsOfSLP[101X

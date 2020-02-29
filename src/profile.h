@@ -1,9 +1,11 @@
 /****************************************************************************
 **
-*W  profile.h                     GAP source              Chris Jefferson
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C) 2014 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains profile related functionality.
 **
@@ -14,11 +16,22 @@
 
 #include "system.h"
 
+Int enableProfilingAtStartup(Char ** argv, void * dummy);
+Int enableMemoryProfilingAtStartup(Char ** argv, void * dummy);
+Int enableCodeCoverageAtStartup(Char ** argv, void * dummy);
+void pauseProfiling(void);
+void unpauseProfiling(void);
+
+// When a child is forked off, we force profile information to be stored
+// in a new file for the child, to avoid corruption.
+// This function is for use by the IO package
+void InformProfilingThatThisIsAForkedGAP(void);
+
+
 /****************************************************************************
 **
 *F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
-
 
 /****************************************************************************
 **

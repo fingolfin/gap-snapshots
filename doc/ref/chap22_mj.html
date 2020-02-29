@@ -54,6 +54,9 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap22_mj.html#X7C86C8D3853BE5EB">22.4-2 UniteBlistList</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap22_mj.html#X84EB70D37EB275DF">22.4-3 IntersectBlist</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap22_mj.html#X7AA138407D5A3BAC">22.4-4 SubtractBlist</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap22_mj.html#X7F14FF35786DAEF3">22.4-5 FlipBlist</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap22_mj.html#X7E9F6C197A79098F">22.4-6 SetAllBlist</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap22_mj.html#X87ED45A88688AE8E">22.4-7 ClearAllBlist</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap22_mj.html#X7C71B225841DFC0F">22.5 <span class="Heading">More about Boolean Lists</span></a>
 </span>
@@ -280,6 +283,69 @@ true
 </pre></div>
 
 <p>The function <code class="func">DifferenceBlist</code> (<a href="chap22_mj.html#X7D6FC2C58725708C"><span class="RefLink">22.3-3</span></a>) is the nondestructive counterpart to <code class="func">SubtractBlist</code>.</p>
+
+<p><a id="X7F14FF35786DAEF3" name="X7F14FF35786DAEF3"></a></p>
+
+<h5>22.4-5 FlipBlist</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FlipBlist</code>( <var class="Arg">blist</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Changes every entry in <var class="Arg">blist</var> that equals <code class="keyw">true</code> to <code class="keyw">false</code> and vice versa. If <code class="code">blist1</code> and <code class="code">blist2</code> are boolean lists with equal length and every value in <code class="code">blist2</code> is <code class="keyw">true</code>, then <code class="code">FlipBlist( blist1 )</code> is equivalent to <code class="code">SubtractBlist( blist2, blist1 ); blist1 := blist2;</code> but <code class="code">FlipBlist</code> is faster, and simpler to type.</p>
+
+<p><code class="func">FlipBlist</code> returns nothing, it is only called to change <var class="Arg">blist</var> in-place.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blist1 := [ true, true, true, true ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blist2 := [ true, false, true, false ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SubtractBlist( blist1, blist2 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blist1;</span>
+[ false, true, false, true ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FlipBlist( blist2 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blist2;</span>
+[ false, true, false, true ]
+</pre></div>
+
+<p><a id="X7E9F6C197A79098F" name="X7E9F6C197A79098F"></a></p>
+
+<h5>22.4-6 SetAllBlist</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetAllBlist</code>( <var class="Arg">blist</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Changes every entry in <var class="Arg">blist</var> to <code class="keyw">true</code>. If <code class="code">blist1</code> and <code class="code">blist2</code> are boolean lists with equal length and every value in <code class="code">blist2</code> is <code class="keyw">true</code>, then <code class="code">SetAllBlist( blist1 )</code> is equivalent to <code class="code">UniteBlist( blist1, blist2 );</code> but is faster, and simpler to type.</p>
+
+<p><code class="func">SetAllBlist</code> returns nothing, it is only called to change <var class="Arg">blist</var> in-place.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blist1 := [ true, true, true, true ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blist2 := [ true, false, true, false ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetAllBlist( blist1 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blist1;</span>
+[ true, true, true, true ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetAllBlist(blist2);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blist2;</span>
+[ true, true, true, true ]
+</pre></div>
+
+<p><a id="X87ED45A88688AE8E" name="X87ED45A88688AE8E"></a></p>
+
+<h5>22.4-7 ClearAllBlist</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ClearAllBlist</code>( <var class="Arg">blist</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Changes every entry in <var class="Arg">blist</var> to <code class="keyw">false</code>. If <code class="code">blist1</code> and <code class="code">blist2</code> are boolean lists with equal length and every value in <code class="code">blist2</code> is <code class="keyw">false</code>, then <code class="code">ClearAllBlist( blist1 )</code> is equivalent to <code class="code">IntersectBlist( blist1, blist2 );</code> but is faster, and simpler to type.</p>
+
+<p><code class="func">ClearAllBlist</code> returns nothing, it is only called to change <var class="Arg">blist</var> in-place.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blist1 := [ true, true, true, true ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blist2 := [ true, false, true, false ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ClearAllBlist( blist1 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blist1;</span>
+[ false, false, false, false ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ClearAllBlist(blist2);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blist2;</span>
+[ false, false, false, false ]
+</pre></div>
 
 <p><a id="X7C71B225841DFC0F" name="X7C71B225841DFC0F"></a></p>
 

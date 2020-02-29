@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  list.g                        GAP library                Martin Schönert
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Martin Schönert.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains some  list types and functions that  have to be  known
 ##  very early in the bootstrap stage (therefore they are not in list.gi)
@@ -21,13 +22,13 @@
 ##  <Filt Name="IsListDefault" Arg='list' Type='Category'/>
 ##
 ##  <Description>
-##  For a list <A>list</A>, <Ref Func="IsListDefault"/> indicates that the
+##  For a list <A>list</A>, <Ref Filt="IsListDefault"/> indicates that the
 ##  default methods for arithmetic operations of lists, such as pointwise
 ##  addition and multiplication as inner product or matrix product,
 ##  shall be applicable to <A>list</A>.
 ##  <P/>
-##  <Ref Func="IsListDefault"/> implies <Ref Func="IsGeneralizedRowVector"/>
-##  and <Ref Func="IsMultiplicativeGeneralizedRowVector"/>.
+##  <Ref Filt="IsListDefault"/> implies <Ref Filt="IsGeneralizedRowVector"/>
+##  and <Ref Filt="IsMultiplicativeGeneralizedRowVector"/>.
 ##  <P/>
 ##  All internally represented lists are in this category,
 ##  and also all lists in the representations <C>IsGF2VectorRep</C>,
@@ -38,9 +39,9 @@
 ##  <!--  strings and blists:-->
 ##  <!--  It does not really make sense to have them in <C>IsGeneralizedRowVector</C>.-->
 ##  Note that the result of an arithmetic operation with lists in
-##  <Ref Func="IsListDefault"/> will in general be an internally represented
+##  <Ref Filt="IsListDefault"/> will in general be an internally represented
 ##  list, so most <Q>wrapped list objects</Q> will not lie in
-##  <Ref Func="IsListDefault"/>.
+##  <Ref Filt="IsListDefault"/>.
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> v:= [ 1, 2 ];;  m:= [ v, 2*v ];;
@@ -344,10 +345,11 @@ InstallMethod( ASS_LIST,
 ##  tests if the object <A>obj</A> is a range, i.e. is a dense list of
 ##  integers that is also a range
 ##  (see&nbsp;<Ref Sect="Ranges"/> for a definition of <Q>range</Q>).
-##  <!-- shouldn't this better be a property?-->
 ##  <Example><![CDATA[
 ##  gap> IsRange( [1,2,3] );  IsRange( [7,5,3,1] );
 ##  true
+##  true
+##  gap> IsRange( [1 .. 3] );
 ##  true
 ##  gap> IsRange( [1,2,4,5] );  IsRange( [1,,3,,5,,7] );
 ##  false
@@ -368,14 +370,40 @@ DeclareCategoryKernel( "IsRange",
 ##
 #R  IsRangeRep( <obj> )
 ##
+##  <#GAPDoc Label="IsRangeRep">
 ##  <ManSection>
 ##  <Filt Name="IsRangeRep" Arg='obj' Type='Representation'/>
 ##
 ##  <Description>
-##  For internally represented ranges, there is a special representation
-##  which requires only a small amount of memory.
+##  Tests whether <A>obj</A> is represented as a range,
+##  that is by internally storing only the first value, the in- or decrement,
+##  and the last value of the range.
+##  <P/>
+##  To test whether a list is a range in the mathematical sense see <Ref
+##  Filt="IsRange"/>.
+##  <P/>
+##  Lists created by the syntactic construct
+##  <C>[ <A>first</A>, <A>second</A>  .. <A>last</A> ]</C>,
+##  see <Ref Sect="Ranges"/>, are in <Ref Filt="IsRangeRep"/>.
+##  <P/>
+#   Note that if you modify an <Ref Filt="IsRangeRep"/> object by assigning to
+#   one of its entries, or by using <Ref Oper="Add"/> or <Ref Oper="Append"/>,
+##  then the range may be converted into a plain list, even
+##  though the resulting list may still be a range, mathematically.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> IsRangeRep( [1 .. 3] );
+##  true
+##  gap> IsRangeRep( [1, 2, 3] );
+##  false
+##  gap> l := [1..3];;
+##  gap> l[1] := 1;;
+##  gap> l;
+##  [ 1, 2, 3 ]
+##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareRepresentationKernel( "IsRangeRep",                                   
     IsInternalRep, [], IS_OBJECT, IS_RANGE_REP );
@@ -391,47 +419,15 @@ DeclareRepresentationKernel( "IsRangeRep",
 ##
 ##  <Description>
 ##  For some lists the &GAP; kernel knows that they are in fact ranges.
-##  Those lists are represented internally in a compact way instead of the
-##  ordinary way.
+##  Those lists are represented internally in a compact way,
+##  namely in <Ref Filt="IsRangeRep"/>, instead of as plain lists.
+##  A list that is represented as a plain list might still be a
+##  range but &GAP; may not know this.
 ##  <P/>
 ##  If <A>list</A> is a range then <Ref Func="ConvertToRangeRep"/> changes
-##  the representation of <A>list</A> to this compact representation.
-##  <P/>
-##  This is important since this representation needs only 12 bytes for
-##  the entire range while the ordinary representation needs <M>4 length</M>
-##  bytes.
-##  <P/>
-##  Note that a list that is represented in the ordinary way might still be a
-##  range.
-##  It is just that &GAP; does not know this.
-##  The following rules tell you under which circumstances a range is
-##  represented  in the compact way,
-##  so you can write your program in such a way that you make best use of
-##  this compact representation for ranges.
-##  <P/>
-##  Lists created by the syntactic construct
-##  <C>[ <A>first</A>, <A>second</A>  .. <A>last</A> ]</C> are of course
-##  known to be ranges and are represented in the compact way.
-##  <P/>
-##  If you call <Ref Func="ConvertToRangeRep"/> for a list represented the
-##  ordinary way that is indeed a range,
-##  the representation is changed from the ordinary to the compact
-##  representation.
+##  the representation of <A>list</A> to <Ref Filt="IsRangeRep"/>.
 ##  A call of <Ref Func="ConvertToRangeRep"/> for a list that is not a range
 ##  is ignored.
-##  <P/>
-##  If you change a mutable range that is represented in the compact way,
-##  by assignment, <Ref Func="Add"/> or <Ref Func="Append"/>,
-##  the range will be converted to the ordinary representation, even if the
-##  change is such that the resulting list is still a proper range.
-##  <P/>
-##  Suppose you have built a proper range in such a way that it is
-##  represented in the ordinary way and that you now want to convert it to
-##  the compact representation to save space.
-##  Then you should call <Ref Func="ConvertToRangeRep"/> with that list as an
-##  argument.
-##  You can think of the call to <Ref Func="ConvertToRangeRep"/> as a hint
-##  to &GAP; that this list is a proper range.
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> r:= [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
@@ -875,8 +871,107 @@ DeclareSynonym( "IntersectBlist", INTER_BLIST );
 ##
 DeclareSynonym( "SubtractBlist", SUBTR_BLIST );
 
+#############################################################################
+##
+#F  FlipBlist( <blist> )
+##
+##  <#GAPDoc Label="FlipBlist">
+##  <ManSection>
+##  <Func Name="FlipBlist" Arg='blist'/>
+##
+##  <Description>
+##  Changes every entry in <A>blist</A> that equals <K>true</K> to <K>false</K>
+##  and vice versa. If <C>blist1</C> and <C>blist2</C> are boolean lists with
+##  equal length and every value in <C>blist2</C> is <K>true</K>,
+##  then <C>FlipBlist( blist1 )</C> is equivalent to
+##  <C>SubtractBlist( blist2, blist1 ); blist1 := blist2;</C>
+##  but <C>FlipBlist</C> is faster, and simpler to type.
+##  <P/>
+##  <Ref Func="FlipBlist"/> returns nothing, it is only called to change
+##  <A>blist</A> in-place.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> blist1 := [ true, true, true, true ];;
+##  gap> blist2 := [ true, false, true, false ];;
+##  gap> SubtractBlist( blist1, blist2 );
+##  gap> blist1;
+##  [ false, true, false, true ]
+##  gap> FlipBlist( blist2 );
+##  gap> blist2;
+##  [ false, true, false, true ]
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareSynonym( "FlipBlist", FLIP_BLIST );
 
 #############################################################################
 ##
-#E
+#F  ClearAllBlist( <blist> )
+##
+##  <#GAPDoc Label="ClearAllBlist">
+##  <ManSection>
+##  <Func Name="ClearAllBlist" Arg='blist'/>
+##
+##  <Description>
+##  Changes every entry in <A>blist</A> to <K>false</K>.
+##  If <C>blist1</C> and <C>blist2</C> are boolean lists with
+##  equal length and every value in <C>blist2</C> is <K>false</K>,
+##  then <C>ClearAllBlist( blist1 )</C> is equivalent to
+##  <C>IntersectBlist( blist1, blist2 );</C> but is faster, and simpler to
+##  type.
+##  <P/>
+##  <Ref Func="ClearAllBlist"/> returns nothing, it is only called to change
+##  <A>blist</A> in-place.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> blist1 := [ true, true, true, true ];;
+##  gap> blist2 := [ true, false, true, false ];;
+##  gap> ClearAllBlist( blist1 );
+##  gap> blist1;
+##  [ false, false, false, false ]
+##  gap> ClearAllBlist(blist2);
+##  gap> blist2;
+##  [ false, false, false, false ]
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareSynonym( "ClearAllBlist", CLEAR_ALL_BLIST );
 
+#############################################################################
+##
+#F  SetAllBlist( <blist> )
+##
+##  <#GAPDoc Label="SetAllBlist">
+##  <ManSection>
+##  <Func Name="SetAllBlist" Arg='blist'/>
+##
+##  <Description>
+##  Changes every entry in <A>blist</A> to <K>true</K>.
+##  If <C>blist1</C> and <C>blist2</C> are boolean lists with
+##  equal length and every value in <C>blist2</C> is <K>true</K>,
+##  then <C>SetAllBlist( blist1 )</C> is equivalent to
+##  <C>UniteBlist( blist1, blist2 );</C> but is faster, and simpler to
+##  type.
+##  <P/>
+##  <Ref Func="SetAllBlist"/> returns nothing, it is only called to change
+##  <A>blist</A> in-place.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> blist1 := [ true, true, true, true ];;
+##  gap> blist2 := [ true, false, true, false ];;
+##  gap> SetAllBlist( blist1 );
+##  gap> blist1;
+##  [ true, true, true, true ]
+##  gap> SetAllBlist(blist2);
+##  gap> blist2;
+##  [ true, true, true, true ]
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareSynonym( "SetAllBlist", SET_ALL_BLIST );

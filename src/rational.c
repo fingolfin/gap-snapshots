@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  rational.c                  GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains  the  functions  for  the  artithmetic  of  rationals.
 **
@@ -56,12 +56,28 @@
 
 
 #if defined(DEBUG_RATIONALS)
-#define CHECK_RAT(rat) if (TNUM_OBJ(rat) == T_RAT && \
-                           GcdInt(NUM_RAT(rat),DEN_RAT(rat)) != INTOBJ_INT(1)) \
-                             ErrorQuit("bad rational",0L,0L)
+#define CHECK_RAT(rat)                                                       \
+    if (TNUM_OBJ(rat) == T_RAT &&                                            \
+        (!LtInt(INTOBJ_INT(1), DEN_RAT(rat)) ||                              \
+         GcdInt(NUM_RAT(rat), DEN_RAT(rat)) != INTOBJ_INT(1)))               \
+    ErrorQuit("bad rational", 0L, 0L)
 #else
 #define CHECK_RAT(rat)
 #endif
+
+
+#define RequireRational(funcname, op)                                        \
+    RequireArgumentCondition(funcname, op,                                   \
+                             TNUM_OBJ(op) == T_RAT || IS_INT(op),            \
+                             "must be a rational")
+
+static inline Obj MakeRat(Obj num, Obj den)
+{
+    Obj rat = NewBag(T_RAT, 2 * sizeof(Obj));
+    SET_NUM_RAT(rat, num);
+    SET_DEN_RAT(rat, den);
+    return rat;
+}
 
 
 /****************************************************************************
@@ -72,11 +88,10 @@
 **
 **  'TypeRat' is the function in 'TypeObjFuncs' for rationals.
 */
-Obj             TYPE_RAT_POS;
-Obj             TYPE_RAT_NEG;
+static Obj TYPE_RAT_POS;
+static Obj TYPE_RAT_NEG;
 
-Obj             TypeRat (
-    Obj                 rat )
+static Obj TypeRat(Obj rat)
 {
     Obj                 num;
     CHECK_RAT(rat);
@@ -93,8 +108,7 @@ Obj             TypeRat (
 **
 **      <numerator> / <denominator>
 */
-void            PrintRat (
-    Obj                 rat )
+static void PrintRat(Obj rat)
 {
     Pr( "%>", 0L, 0L );
     PrintObj( NUM_RAT(rat) );
@@ -111,9 +125,7 @@ void            PrintRat (
 **  'EqRat' returns 'true' if the two rationals <ratL> and <ratR>  are  equal
 **  and 'false' otherwise.
 */
-Int             EqRat (
-    Obj                 opL,
-    Obj                 opR )
+static Int EqRat(Obj opL, Obj opR)
 {
     Obj                 numL, denL;     /* numerator and denominator left  */
     Obj                 numR, denR;     /* numerator and denominator right */
@@ -149,9 +161,7 @@ Int             EqRat (
 **  'LtRat' returns 'true'  if  the  rational  <ratL>  is  smaller  than  the
 **  rational <ratR> and 'false' otherwise.  Either operand may be an integer.
 */
-Int             LtRat (
-    Obj                 opL,
-    Obj                 opR )
+static Int LtRat(Obj opL, Obj opR)
 {
     Obj                 numL, denL;     /* numerator and denominator left  */
     Obj                 numR, denR;     /* numerator and denominator right */
@@ -188,9 +198,7 @@ Int             LtRat (
 **  'SumRat'  returns the   sum of two  rationals  <opL>  and <opR>.   Either
 **  operand may also be an integer.  The sum is reduced.
 */
-Obj             SumRat (
-    Obj                 opL,
-    Obj                 opR )
+static Obj SumRat(Obj opL, Obj opR)
 {
     Obj                 numL, denL;     /* numerator and denominator left  */
     Obj                 numR, denR;     /* numerator and denominator right */
@@ -238,10 +246,7 @@ Obj             SumRat (
 
     /* make the fraction or, if possible, the integer                      */
     if ( denS != INTOBJ_INT( 1L ) ) {
-        sum  = NewBag( T_RAT, 2 * sizeof(Obj) );
-        SET_NUM_RAT(sum, numS);
-        SET_DEN_RAT(sum, denS);
-        /* 'CHANGED_BAG' not needed, 'sum' is the youngest bag             */
+        sum = MakeRat(numS, denS);
     }
     else {
         sum = numS;
@@ -257,8 +262,7 @@ Obj             SumRat (
 **
 *F  ZeroRat(<op>) . . . . . . . . . . . . . . . . . . . .  zero of a rational
 */
-Obj             ZeroRat (
-    Obj                 op )
+static Obj ZeroRat(Obj op)
 {
     return INTOBJ_INT( 0L );
 }
@@ -268,17 +272,13 @@ Obj             ZeroRat (
 **
 *F  AInvRat(<op>) . . . . . . . . . . . . . .  additive inverse of a rational
 */
-Obj             AInvRat (
-    Obj                 op )
+static Obj AInvRat(Obj op)
 {
     Obj                 res;
     Obj                 tmp;
     CHECK_RAT(op);
-    res = NewBag( T_RAT, 2 * sizeof(Obj) );
     tmp = AInvInt( NUM_RAT(op) );
-    SET_NUM_RAT(res, tmp);
-    SET_DEN_RAT(res, DEN_RAT(op));
-    CHANGED_BAG(res);
+    res = MakeRat(tmp, DEN_RAT(op));
     CHECK_RAT(res);
     return res;
 }
@@ -288,7 +288,7 @@ Obj             AInvRat (
 **
 *F  AbsRat(<op>) . . . . . . . . . . . . . . . . absolute value of a rational
 */
-Obj AbsRat( Obj op )
+static Obj AbsRat(Obj op)
 {
     Obj res;
     Obj tmp;
@@ -297,45 +297,32 @@ Obj AbsRat( Obj op )
     if ( tmp == NUM_RAT(op))
         return op;
 
-    res = NewBag( T_RAT, 2 * sizeof(Obj) );
-    SET_NUM_RAT(res, tmp);
-    SET_DEN_RAT(res, DEN_RAT(op));
-    CHANGED_BAG(res);
+    res = MakeRat(tmp, DEN_RAT(op));
     CHECK_RAT(res);
     return res;
 
 }
 
-Obj FuncABS_RAT( Obj self, Obj op )
+static Obj FuncABS_RAT(Obj self, Obj op)
 {
-    Obj res;
-    res = ( TNUM_OBJ(op) == T_RAT ) ? AbsRat(op) : AbsInt(op);
-    if (res == Fail) {
-        ErrorMayQuit("AbsRat: argument must be a rational or integer (not a %s)",
-                     (Int)TNAM_OBJ(op), 0L);
-    }
-    return res;
+    RequireRational("AbsRat", op);
+    return (TNUM_OBJ(op) == T_RAT) ? AbsRat(op) : AbsInt(op);
 }
 
 /****************************************************************************
 **
 *F  SignRat(<op>) . . . . . . . . . . . . . . . . . . . .  sign of a rational
 */
-Obj SignRat( Obj op )
+static Obj SignRat(Obj op)
 {
     CHECK_RAT(op);
     return SignInt( NUM_RAT(op) );
 }
 
-Obj FuncSIGN_RAT( Obj self, Obj op )
+static Obj FuncSIGN_RAT(Obj self, Obj op)
 {
-    Obj res;
-    res = ( TNUM_OBJ(op) == T_RAT ) ? SignRat(op) : SignInt(op);
-    if (res == Fail) {
-        ErrorMayQuit("SignRat: argument must be a rational or integer (not a %s)",
-                     (Int)TNAM_OBJ(op), 0L);
-    }
-    return res;
+    RequireRational("SignRat", op);
+    return (TNUM_OBJ(op) == T_RAT) ? SignRat(op) : SignInt(op);
 }
 
 
@@ -346,9 +333,7 @@ Obj FuncSIGN_RAT( Obj self, Obj op )
 **  'DiffRat' returns the  difference  of  two  rationals  <opL>  and  <opR>.
 **  Either operand may also be an integer.  The difference is reduced.
 */
-Obj             DiffRat (
-    Obj                 opL,
-    Obj                 opR )
+static Obj DiffRat(Obj opL, Obj opR)
 {
     Obj                 numL, denL;     /* numerator and denominator left  */
     Obj                 numR, denR;     /* numerator and denominator right */
@@ -396,10 +381,7 @@ Obj             DiffRat (
 
     /* make the fraction or, if possible, the integer                      */
     if ( denD != INTOBJ_INT( 1L ) ) {
-        dif  = NewBag( T_RAT, 2 * sizeof(Obj) );
-        SET_NUM_RAT(dif, numD);
-        SET_DEN_RAT(dif, denD);
-        /* 'CHANGED_BAG' not needed, 'dif' is the youngest bag             */
+        dif = MakeRat(numD, denD);
     }
     else {
         dif = numD;
@@ -418,9 +400,7 @@ Obj             DiffRat (
 **  'ProdRat' returns the  product of two rationals <opL> and  <opR>.  Either
 **  operand may also be an integer.  The product is reduced.
 */
-Obj             ProdRat (
-    Obj                 opL,
-    Obj                 opR )
+static Obj ProdRat(Obj opL, Obj opR)
 {
     Obj                 numL, denL;     /* numerator and denominator left  */
     Obj                 numR, denR;     /* numerator and denominator right */
@@ -466,10 +446,7 @@ Obj             ProdRat (
 
     /* make the fraction or, if possible, the integer                      */
     if ( denP != INTOBJ_INT( 1L ) ) {
-        prd = NewBag( T_RAT, 2 * sizeof(Obj) );
-        SET_NUM_RAT(prd, numP);
-        SET_DEN_RAT(prd, denP);
-        /* 'CHANGED_BAG' not needed, 'prd' is the youngest bag             */
+        prd = MakeRat(numP, denP);
     }
     else {
         prd = numP;
@@ -485,8 +462,7 @@ Obj             ProdRat (
 **
 *F  OneRat(<op>)  . . . . . . . . . . . . . . . . . . . . . one of a rational
 */
-Obj             OneRat (
-    Obj                 op )
+static Obj OneRat(Obj op)
 {
     return INTOBJ_INT( 1L );
 }
@@ -496,12 +472,9 @@ Obj             OneRat (
 **
 *F  InvRat(<op>)  . . . . . . . . . . . . . . . . . . . inverse of a rational
 */
-extern  Obj             QuoRat (
-            Obj                 opL,
-            Obj                 opR );
+static Obj QuoRat(Obj opL, Obj opR);
 
-Obj             InvRat (
-    Obj                 op )
+static Obj InvRat(Obj op)
 {
   Obj res;
     CHECK_RAT(op);
@@ -520,9 +493,7 @@ Obj             InvRat (
 **  'QuoRat'  returns the quotient of two rationals <opL> and  <opR>.  Either
 **  operand may also be an integer.  The quotient is reduced.
 */
-Obj             QuoRat (
-    Obj                 opL,
-    Obj                 opR )
+static Obj QuoRat(Obj opL, Obj opR)
 {
     Obj                 numL, denL;     /* numerator and denominator left  */
     Obj                 numR, denR;     /* numerator and denominator right */
@@ -552,11 +523,7 @@ Obj             QuoRat (
 
     /* division by zero is an error                                        */
     if ( numR == INTOBJ_INT( 0L ) ) {
-        opR = ErrorReturnObj(
-            "Rational operations: <divisor> must not be zero",
-            0L, 0L,
-            "you can replace <divisor> via 'return <divisor>;'" );
-        return QUO( opL, opR );
+        ErrorMayQuit("Rational operations: <divisor> must not be zero", 0, 0);
     }
 
     /* we multiply the left numerator with the right denominator           */
@@ -584,10 +551,7 @@ Obj             QuoRat (
 
     /* make the fraction or, if possible, the integer                      */
     if ( denQ != INTOBJ_INT( 1L ) ) {
-        quo = NewBag( T_RAT, 2 * sizeof(Obj) );
-        SET_NUM_RAT(quo, numQ);
-        SET_DEN_RAT(quo, denQ);
-        /* 'CHANGED_BAG' not needed, 'quo' is the youngest bag             */
+        quo = MakeRat(numQ, denQ);
     }
     else {
         quo = numQ;
@@ -624,7 +588,7 @@ Obj             QuoRat (
 **  such that $0 \<= t/s \< n$ and $r/s - t/s$ is a multiple of $n$.  This is
 **  rarely needed while computing modular inverses is very useful.
 */
-Obj ModRat(Obj opL, Obj n)
+static Obj ModRat(Obj opL, Obj n)
 {
     // invert the denominator
     Obj d = InverseModInt( DEN_RAT(opL), n );
@@ -648,9 +612,7 @@ Obj ModRat(Obj opL, Obj n)
 **  'PowRat' raises the rational <opL> to the  power  given  by  the  integer
 **  <opR>.  The power is reduced.
 */
-Obj             PowRat (
-    Obj                 opL,
-    Obj                 opR )
+static Obj PowRat(Obj opL, Obj opR)
 {
     Obj                 numP, denP;     /* numerator and denominator power */
     Obj                 pow;            /* power                           */
@@ -671,10 +633,7 @@ Obj             PowRat (
     else if ( IS_POS_INT(opR) ) {
         numP = PowInt( NUM_RAT(opL), opR );
         denP = PowInt( DEN_RAT(opL), opR );
-        pow = NewBag( T_RAT, 2 * sizeof(Obj) );
-        SET_NUM_RAT(pow, numP);
-        SET_DEN_RAT(pow, denP);
-        /* 'CHANGED_BAG' not needed, 'pow' is the youngest bag             */
+        pow = MakeRat(numP, denP);
     }
 
     /* if <opR> is negative and numerator is 1 just power the denominator  */
@@ -693,16 +652,11 @@ Obj             PowRat (
     else {
         numP = PowInt( DEN_RAT(opL), AInvInt( opR ) );
         denP = PowInt( NUM_RAT(opL), AInvInt( opR ) );
-        pow  = NewBag( T_RAT, 2 * sizeof(Obj) );
-        if ( IS_POS_INT(denP) ) {
-            SET_NUM_RAT(pow, numP);
-            SET_DEN_RAT(pow, denP);
+        if (IS_NEG_INT(denP)) {
+            numP = AInvInt(numP);
+            denP = AInvInt(denP);
         }
-        else {
-            SET_NUM_RAT(pow, AInvInt( numP ));
-            SET_DEN_RAT(pow, AInvInt( denP ));
-        }
-        /* 'CHANGED_BAG' not needed, 'pow' is the youngest bag             */
+        pow = MakeRat(numP, denP);
     }
 
     /* return the result                                                   */
@@ -713,20 +667,18 @@ Obj             PowRat (
 
 /****************************************************************************
 **
-*F  IsRatHandler(<self>,<val>)  . . . . . . . . . . . . is a value a rational
+*F  FiltIS_RAT(<self>,<val>) . . . . . . . . . . . . .  is a value a rational
 **
-**  'IsRatHandler' implements the internal function 'IsRat'.
+**  'FiltIS_RAT' implements the internal function 'IsRat'.
 **
 **  'IsRat( <val> )'
 **
 **  'IsRat' returns  'true' if  the  value <val> is  a  rational and  'false'
 **  otherwise.
 */
-Obj             IsRatFilt;
+static Obj IsRatFilt;
 
-Obj             IsRatHandler (
-    Obj                 self,
-    Obj                 val )
+static Obj FiltIS_RAT(Obj self, Obj val)
 {
     /* return 'true' if <val> is a rational and 'false' otherwise          */
     if ( TNUM_OBJ(val) == T_RAT || IS_INT(val)  ) {
@@ -751,17 +703,10 @@ Obj             IsRatHandler (
 **
 **  'NumeratorRat' returns the numerator of the rational <rat>.
 */
-Obj             FuncNUMERATOR_RAT (
-    Obj                 self,
-    Obj                 rat )
+static Obj FuncNUMERATOR_RAT(Obj self, Obj rat)
 {
     /* check the argument                                                   */
-    while ( TNUM_OBJ(rat) != T_RAT && !IS_INT(rat) ) {
-        rat = ErrorReturnObj(
-            "NumeratorRat: <rat> must be a rational (not a %s)",
-            (Int)TNAM_OBJ(rat), 0L,
-            "you can replace <rat> via 'return <rat>;'" );
-    }
+    RequireRational("NumeratorRat", rat);
 
     /* return the numerator                                                */
     if ( TNUM_OBJ(rat) == T_RAT ) {
@@ -783,17 +728,10 @@ Obj             FuncNUMERATOR_RAT (
 **
 **  'DenominatorRat' returns the denominator of the rational <rat>.
 */
-Obj             FuncDENOMINATOR_RAT (
-    Obj                 self,
-    Obj                 rat )
+static Obj FuncDENOMINATOR_RAT(Obj self, Obj rat)
 {
     /* check the argument                                                  */
-    while ( TNUM_OBJ(rat) != T_RAT && !IS_INT(rat) ) {
-        rat = ErrorReturnObj(
-            "DenominatorRat: <rat> must be a rational (not a %s)",
-            (Int)TNAM_OBJ(rat), 0L,
-            "you can replace <rat> via 'return <rat>;'" );
-    }
+    RequireRational("DenominatorRat", rat);
 
     /* return the denominator                                              */
     if ( TNUM_OBJ(rat) == T_RAT ) {
@@ -810,7 +748,7 @@ Obj             FuncDENOMINATOR_RAT (
 **
 */
 
-void SaveRat(Obj rat)
+static void SaveRat(Obj rat)
 {
   SaveSubObj(NUM_RAT(rat));
   SaveSubObj(DEN_RAT(rat));
@@ -822,7 +760,7 @@ void SaveRat(Obj rat)
 **
 */
 
-void LoadRat(Obj rat)
+static void LoadRat(Obj rat)
 {
   SET_NUM_RAT(rat, LoadSubObj());
   SET_DEN_RAT(rat, LoadSubObj());
@@ -839,9 +777,7 @@ void LoadRat(Obj rat)
 */
 static StructGVarFilt GVarFilts [] = {
 
-    { "IS_RAT", "obj", &IsRatFilt,
-      IsRatHandler, "src/rational.c:IS_RAT" },
-
+    GVAR_FILT(IS_RAT, "obj", &IsRatFilt),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -851,12 +787,12 @@ static StructGVarFilt GVarFilts [] = {
 **
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
-static StructGVarFunc GVarFuncs [] = {
+static StructGVarFunc GVarFuncs[] = {
 
     GVAR_FUNC(NUMERATOR_RAT, 1, "rat"),
     GVAR_FUNC(DENOMINATOR_RAT, 1, "rat"),
-    GVAR_FUNC(ABS_RAT, 1, "rat"),
-    GVAR_FUNC(SIGN_RAT, 1, "rat"),
+    GVAR_FUNC(ABS_RAT, 1, "op"),
+    GVAR_FUNC(SIGN_RAT, 1, "op"),
     { 0, 0, 0, 0, 0 }
 
 };

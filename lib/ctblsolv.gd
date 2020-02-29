@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  ctblsolv.gd                 GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the declaration of operations for computing
 ##  characters of solvable groups.
@@ -130,12 +131,12 @@ DeclareAttribute( "BaumClausenInfo", IsGroup );
 ##
 ##  <Description>
 ##  Called with a finite group <A>G</A> and a field <A>F</A>,
-##  <Ref Func="IrreducibleRepresentations"/> returns a list of
+##  <Ref Attr="IrreducibleRepresentations"/> returns a list of
 ##  representatives of the irreducible matrix representations of <A>G</A>
 ##  over <A>F</A>, up to equivalence.
 ##  <P/>
 ##  If <A>G</A> is the only argument then
-##  <Ref Func="IrreducibleRepresentations"/> returns a list of
+##  <Ref Attr="IrreducibleRepresentations"/> returns a list of
 ##  representatives of the absolutely irreducible complex representations
 ##  of <A>G</A>, up to equivalence.
 ##  <P/>
@@ -157,7 +158,7 @@ DeclareAttribute( "BaumClausenInfo", IsGroup );
 ##  The representations obtained are <E>not</E> guaranteed to be <Q>nice</Q>
 ##  (for example preserving a unitary form) in any way.
 ##  <P/>
-##  See also <Ref Func="IrreducibleModules"/>,
+##  See also <Ref Oper="IrreducibleModules"/>,
 ##  which provides efficient methods for solvable groups.
 ##  <P/>
 ##  <Example><![CDATA[
@@ -203,7 +204,7 @@ DeclareOperation( "IrreducibleRepresentations",
 ##  <Attr Name="IrrBaumClausen" Arg='G'/>
 ##
 ##  <Description>
-##  <Ref Func="IrrBaumClausen"/> returns the absolutely irreducible ordinary
+##  <Ref Attr="IrrBaumClausen"/> returns the absolutely irreducible ordinary
 ##  characters of the factor group of the finite solvable group <A>G</A>
 ##  by the derived subgroup of its supersolvable residuum.
 ##  <P/>
@@ -358,7 +359,7 @@ DeclareGlobalFunction( "CoveringTriplesCharacters" );
 ##
 ##  <Description>
 ##  For a finite solvable group <A>G</A>,
-##  <Ref Func="IrrConlon"/> returns a list of certain irreducible characters
+##  <Ref Attr="IrrConlon"/> returns a list of certain irreducible characters
 ##  of <A>G</A>, among those all irreducibles that have the
 ##  supersolvable residuum of <A>G</A> in their kernels;
 ##  so if <A>G</A> is supersolvable,
@@ -369,15 +370,9 @@ DeclareGlobalFunction( "CoveringTriplesCharacters" );
 ##  (see&nbsp;<Cite Key="Con90a"/> and&nbsp;<Cite Key="Con90b"/>).
 ##  For each irreducible character in the returned list,
 ##  the monomiality information
-##  (see&nbsp;<Ref Func="TestMonomial" Label="for a group"/>) is stored.
+##  (see&nbsp;<Ref Attr="TestMonomial" Label="for a group"/>) is stored.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
 DeclareAttribute( "IrrConlon", IsGroup );
-
-
-#############################################################################
-##
-#E
-

@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  cyclotom.c                  GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file implements the arithmetic for elements from  cyclotomic  fields
 **  $Q(e^{{2 \pi i}/n}) = Q(e_n)$,  which  we  call  cyclotomics  for  short.
@@ -140,7 +140,7 @@ static inline void SET_NOF_CYC(Obj cyc, Obj val)
     COEFS_CYC(cyc)[0] = val;
 }
 
-#define XXX_CYC(cyc,len)        (EXPOS_CYC(cyc,len)[0])
+// #define XXX_CYC(cyc,len)        (EXPOS_CYC(cyc,len)[0])
 
 
 static ModuleStateOffset CycStateOffset = -1;
@@ -194,7 +194,8 @@ extern inline struct CycModuleState *CycState(void)
 #define LastNCyc    CycState()->LastNCyc
 
 
-void GrowResultCyc(UInt size) {
+static void GrowResultCyc(UInt size)
+{
     Obj *res;
     UInt i;
     if (ResultCyc == 0) {
@@ -217,10 +218,9 @@ void GrowResultCyc(UInt size) {
 **
 **  'TypeCyc' is the function in 'TypeObjFuncs' for cyclotomics.
 */
-Obj             TYPE_CYC;
+static Obj TYPE_CYC;
 
-Obj             TypeCyc (
-    Obj                 cyc )
+static Obj TypeCyc(Obj cyc)
 {
     return TYPE_CYC;
 }
@@ -235,8 +235,7 @@ Obj             TypeCyc (
 **  In principle this is very easy, but it is complicated because we  do  not
 **  want to print stuff like '+1*', '-1*', 'E(<n>)^0', 'E(<n>)^1, etc.
 */
-void            PrintCyc (
-    Obj                 cyc )
+static void PrintCyc(Obj cyc)
 {
     UInt                n;              /* order of the field              */
     UInt                len;            /* number of terms                 */
@@ -317,9 +316,7 @@ void            PrintCyc (
 **  'EqCyc'  is  pretty  simple because   every    cyclotomic  has a   unique
 **  representation, so we just have to compare the terms.
 */
-Int             EqCyc (
-    Obj                 opL,
-    Obj                 opR )
+static Int EqCyc(Obj opL, Obj opR)
 {
     UInt                len;            /* number of terms                 */
     const Obj *         cfl;            /* ptr to coeffs of left operand   */
@@ -373,9 +370,7 @@ Int             EqCyc (
 **  'LtCyc'  is  pretty  simple because   every    cyclotomic  has a   unique
 **  representation, so we just have to compare the terms.
 */
-Int             LtCyc (
-    Obj                 opL,
-    Obj                 opR )
+static Int LtCyc(Obj opL, Obj opR)
 {
     UInt                lel;            /* nr of terms of left operand     */
     const Obj *         cfl;            /* ptr to coeffs of left operand   */
@@ -419,16 +414,12 @@ Int             LtCyc (
         return 0L;
 }
 
-Int             LtCycYes (
-    Obj                 opL,
-    Obj                 opR )
+static Int LtCycYes(Obj opL, Obj opR)
 {
     return 1L;
 }
 
-Int             LtCycNot (
-    Obj                 opL,
-    Obj                 opR )
+static Int LtCycNot(Obj opL, Obj opR)
 {
     return 0L;
 }
@@ -489,8 +480,7 @@ Int             LtCycNot (
 **  Those divisions are quite expensive  on  some  processors, e.g., MIPS and
 **  SPARC, and they may singlehanded account for 20 percent of the runtime.
 */
-void            ConvertToBase (
-    UInt                n )
+static void ConvertToBase(UInt n)
 {
     Obj *               res;            /* pointer to the result           */
     UInt                nn;             /* copy of n to factorize          */
@@ -629,9 +619,7 @@ void            ConvertToBase (
 **  combination of   linear  independent  roots,  they  would  work  also  if
 **  cyclotomic integers were written as polynomials in $e_n$.
 */
-Obj             Cyclotomic (
-    UInt                n,
-    UInt                m )
+static Obj Cyclotomic(UInt n, UInt m)
 {
     Obj                 cyc;            /* cyclotomic, result              */
     UInt                len;            /* number of terms                 */
@@ -808,7 +796,7 @@ Obj             Cyclotomic (
 ** respectively.
 */
 
-UInt4 CyclotomicsLimit = 1000000;
+static UInt4 CyclotomicsLimit = 1000000;
 
 static UInt FindCommonField(UInt nl, UInt nr, UInt *ml, UInt *mr)
 {
@@ -841,7 +829,11 @@ static UInt FindCommonField(UInt nl, UInt nr, UInt *ml, UInt *mr)
 
   /* Handle the soft limit */
   while (n > CyclotomicsLimit) {
-    ErrorReturnVoid("This computation requires a cyclotomic field of degree %d, larger than the current limit of %d", n, (Int)CyclotomicsLimit, "You may return after raising the limit with SetCyclotomicsLimit");
+      ErrorReturnVoid(
+          "This computation requires a cyclotomic field of degree %d, larger "
+          "than the current limit of %d",
+          n, (Int)CyclotomicsLimit,
+          "You may return after raising the limit with SetCyclotomicsLimit");
   }
   
   /* Finish up */
@@ -852,42 +844,29 @@ static UInt FindCommonField(UInt nl, UInt nr, UInt *ml, UInt *mr)
   return n;
 }
 
-Obj FuncSetCyclotomicsLimit(Obj self, Obj NewLimit) {
-  UInt ok;
-  Int limit;
-  UInt ulimit;
-  do {
-    ok = 1;
-    if (!IS_INTOBJ(NewLimit)) {
-      ok = 0;
-      NewLimit = ErrorReturnObj("Cyclotomic Field size limit must be a small integer, not a %s ",(Int)TNAM_OBJ(NewLimit), 0L, "You can return a new value");
-    } else {
-      limit = INT_INTOBJ(NewLimit);
-      if (limit <= 0) {
-	ok = 0;
-	NewLimit = ErrorReturnObj("Cyclotomic Field size limit must be positive",0L, 0L, "You can return a new value");
-      } else {
-	ulimit = limit;
-	if (ulimit < CyclotomicsLimit) {
-	  ok = 0;
-	NewLimit = ErrorReturnObj("Cyclotomic Field size limit must not be less than old limit of %d",CyclotomicsLimit, 0L, "You can return a new value");
-	}
-#ifdef SYS_IS_64_BIT
-	else if (ulimit > (1L << 32)) {
-	  ok = 0;
-	  NewLimit = ErrorReturnObj("Cyclotomic field size limit must be less than 2^32", 0L, 0L,  "You can return a new value");
-	}
-#endif
-	
-      }
+static Obj FuncSetCyclotomicsLimit(Obj self, Obj newlimit)
+{
+    UInt ulimit = GetPositiveSmallInt("SetCyclotomicsLimit", newlimit);
+
+    if (ulimit < CyclotomicsLimit) {
+        ErrorMayQuit("SetCyclotomicsLimit: <newlimit> must not be less than "
+                     "old limit of %d",
+                     CyclotomicsLimit, 0);
     }
-  } while (!ok);
-  CyclotomicsLimit = ulimit;
-  return (Obj) 0L;
+#ifdef SYS_IS_64_BIT
+    if (ulimit >= (1L << 32)) {
+        ErrorMayQuit("Cyclotomic field size limit must be less than 2^32", 0,
+                     0);
+    }
+#endif
+
+    CyclotomicsLimit = ulimit;
+    return 0;
 }
 
-Obj FuncGetCyclotomicsLimit( Obj self) {
-  return INTOBJ_INT(CyclotomicsLimit);
+static Obj FuncGetCyclotomicsLimit(Obj self)
+{
+    return INTOBJ_INT(CyclotomicsLimit);
 }
 
 /****************************************************************************
@@ -900,9 +879,7 @@ Obj FuncGetCyclotomicsLimit( Obj self) {
 **  This   function  is lengthy  because  we  try to  use immediate   integer
 **  arithmetic if possible to avoid the function call overhead.
 */
-Obj             SumCyc (
-    Obj                 opL,
-    Obj                 opR )
+static Obj SumCyc(Obj opL, Obj opR)
 {
     UInt                nl, nr;         /* order of left and right field   */
     UInt                n;              /* order of smallest superfield    */
@@ -986,8 +963,7 @@ Obj             SumCyc (
 **
 **  'ZeroCyc' returns the additive neutral element of the cyclotomic <op>.
 */
-Obj             ZeroCyc (
-    Obj                 op )
+static Obj ZeroCyc(Obj op)
 {
     return INTOBJ_INT( 0L );
 }
@@ -999,8 +975,7 @@ Obj             ZeroCyc (
 **
 **  'AInvCyc' returns the additive inverse element of the cyclotomic <op>.
 */
-Obj             AInvCyc (
-    Obj                 op )
+static Obj AInvCyc(Obj op)
 {
     Obj                 res;            /* inverse, result                 */
     UInt                len;            /* number of terms                 */
@@ -1051,9 +1026,7 @@ Obj             AInvCyc (
 **  This   function  is lengthy  because  we  try to  use immediate   integer
 **  arithmetic if possible to avoid the function call overhead.
 */
-Obj             DiffCyc (
-    Obj                 opL,
-    Obj                 opR )
+static Obj DiffCyc(Obj opL, Obj opR)
 {
     UInt                nl, nr;         /* order of left and right field   */
     UInt                n;              /* order of smallest superfield    */
@@ -1140,9 +1113,7 @@ Obj             DiffCyc (
 **  This   function  is lengthy  because  we  try to  use immediate   integer
 **  arithmetic if possible to avoid the function call overhead.
 */
-Obj             ProdCycInt (
-    Obj                 opL,
-    Obj                 opR )
+static Obj ProdCycInt(Obj opL, Obj opR)
 {
     Obj                 hdP;            /* product, result                 */
     UInt                len;            /* number of terms                 */
@@ -1236,9 +1207,7 @@ Obj             ProdCycInt (
 **  This   function  is lengthy  because  we  try to  use immediate   integer
 **  arithmetic if possible to avoid the function call overhead.
 */
-Obj             ProdCyc (
-    Obj                 opL,
-    Obj                 opR )
+static Obj ProdCyc(Obj opL, Obj opR)
 {
     UInt                nl, nr;         /* order of left and right field   */
     UInt                n;              /* order of smallest superfield    */
@@ -1369,8 +1338,7 @@ Obj             ProdCyc (
 **  'OneCyc'  returns  the multiplicative neutral  element  of the cyclotomic
 **  <op>.
 */
-Obj             OneCyc (
-    Obj                 op )
+static Obj OneCyc(Obj op)
 {
     return INTOBJ_INT( 1L );
 }
@@ -1390,8 +1358,7 @@ Obj             OneCyc (
 **  can compute the quotient $prd / (op * prd)$ with 'ProdCycInt'.
 *T better multiply only the *different* conjugates?
 */
-Obj             InvCyc (
-    Obj                 op )
+static Obj InvCyc(Obj op)
 {
     Obj                 prd;            /* product of conjugates           */
     UInt                n;              /* order of the field              */
@@ -1450,9 +1417,7 @@ Obj             InvCyc (
 **  'PowCyc' returns the <opR>th, which must be  an  integer,  power  of  the
 **  cyclotomic <opL>.  The left operand may also be an integer or a rational.
 */
-Obj             PowCyc (
-    Obj                 opL,
-    Obj                 opR )
+static Obj PowCyc(Obj opL, Obj opR)
 {
     Obj                 pow;            /* power (result)                  */
     Int                 exp;            /* exponent (right operand)        */
@@ -1530,11 +1495,9 @@ Obj             PowCyc (
 **  'E'  returns a  primitive  root of order <n>, which must  be  a  positive
 **  integer, represented as cyclotomic.
 */
-Obj EOper;
+static Obj EOper;
 
-Obj FuncE (
-    Obj                 self,
-    Obj                 n )
+static Obj FuncE(Obj self, Obj n)
 {
     Obj *               res;            /* pointer into result bag         */
 
@@ -1544,12 +1507,7 @@ Obj FuncE (
     }
 
     /* get and check the argument                                          */
-    while ( !IS_INTOBJ(n) || INT_INTOBJ(n) <= 0 ) {
-        n = ErrorReturnObj(
-            "E: <n> must be a positive integer (not a %s)",
-            (Int)TNAM_OBJ(n), 0L,
-            "you can replace <n> via 'return <n>;'" );
-    }
+    GetPositiveSmallInt("E", n);
 
     /* for $e_1$ return 1 and for $e_2$ return -1                          */
     if ( n == INTOBJ_INT(1) )
@@ -1575,23 +1533,21 @@ Obj FuncE (
 
 /****************************************************************************
 **
-*F  FuncIS_CYC( <self>, <val> ) . . . . . .  test if an object is a cyclomtic
+*F  FiltIS_CYC( <self>, <val> ) . . . . . .  test if an object is a cyclomtic
 **
-**  'FuncIS_CYC' implements the internal function 'IsCyc'.
+**  'FiltIS_CYC' implements the internal function 'IsCyc'.
 **
 **  'IsCyc( <val> )'
 **
 **  'IsCyc' returns 'true'  if the value <val> is   a cyclotomic and  'false'
 **  otherwise.
 */
-Obj IsCycFilt;
+static Obj IsCycFilt;
 
-Obj FuncIS_CYC (
-    Obj                 self,
-    Obj                 val )
+static Obj FiltIS_CYC(Obj self, Obj val)
 {
     /* return 'true' if <obj> is a cyclotomic and 'false' otherwise        */
-    if ( IS_INT(val) || TNUM_OBJ(val) == T_CYC || TNUM_OBJ(val) == T_RAT )
+    if (IS_CYC(val))
         return True;
     else if ( TNUM_OBJ(val) < FIRST_EXTERNAL_TNUM ) {
         return False;
@@ -1615,11 +1571,9 @@ Obj FuncIS_CYC (
 **
 **  'IsCycInt' relies on the fact that the base is an integral base.
 */
-Obj IsCycIntOper;
+static Obj IsCycIntOper;
 
-Obj FuncIS_CYC_INT (
-    Obj                 self,
-    Obj                 val )
+static Obj FuncIS_CYC_INT(Obj self, Obj val)
 {
     UInt                len;            /* number of terms                 */
     const Obj *         cfs;            /* pointer to the coefficients     */
@@ -1652,20 +1606,18 @@ Obj FuncIS_CYC_INT (
 
 /****************************************************************************
 **
-*F  FuncCONDUCTOR( <self>, <cyc> )  . . . . . . . . . . . . N of a cyclotomic
+*F  AttrCONDUCTOR( <self>, <cyc> )  . . . . . . . . . . . . N of a cyclotomic
 **
-**  'FuncCONDUCTOR' implements the internal function 'Conductor'.
+**  'AttrCONDUCTOR' implements the internal function 'Conductor'.
 **
 **  'Conductor( <cyc> )'
 **
 **  'Conductor' returns the N of the cyclotomic <cyc>, i.e., the order of the
 **  roots of which <cyc> is written as a linear combination.
 */
-Obj ConductorAttr;
+static Obj ConductorAttr;
 
-Obj FuncCONDUCTOR (
-    Obj                 self,
-    Obj                 cyc )
+static Obj AttrCONDUCTOR(Obj self, Obj cyc)
 {
     UInt                n;              /* N of the cyclotomic, result     */
     UInt                m;              /* N of element of the list        */
@@ -1679,12 +1631,9 @@ Obj FuncCONDUCTOR (
     }
 
     /* check the argument                                                  */
-    while ( !IS_INT(cyc) && TNUM_OBJ(cyc) != T_RAT && TNUM_OBJ(cyc) != T_CYC
-         && ! IS_SMALL_LIST(cyc) ) {
-        cyc = ErrorReturnObj(
-            "Conductor: <cyc> must be a cyclotomic or a small list (not a %s)",
-            (Int)TNAM_OBJ(cyc), 0L,
-            "you can replace <cyc> via 'return <cyc>;'" );
+    if (!IS_CYC(cyc) && !IS_SMALL_LIST(cyc)) {
+        RequireArgument("Conductor", cyc,
+                        "must be a cyclotomic or a small list");
     }
 
     /* handle cyclotomics                                                  */
@@ -1701,11 +1650,11 @@ Obj FuncCONDUCTOR (
         n = 1;
         for ( i = 1; i <= LEN_LIST( list ); i++ ) {
             cyc = ELMV_LIST( list, i );
-            while ( !IS_INT(cyc) && TNUM_OBJ(cyc) != T_RAT && TNUM_OBJ(cyc) != T_CYC ) {
-                cyc = ErrorReturnObj(
+            if (!IS_INT(cyc) && TNUM_OBJ(cyc) != T_RAT &&
+                TNUM_OBJ(cyc) != T_CYC) {
+                ErrorMayQuit(
                     "Conductor: <list>[%d] must be a cyclotomic (not a %s)",
-                    (Int)i, (Int)TNAM_OBJ(cyc),
-                    "you can replace the list element with <cyc> via 'return <cyc>;'" );
+                    (Int)i, (Int)TNAM_OBJ(cyc));
             }
             if ( IS_INT(cyc) || TNUM_OBJ(cyc) == T_RAT ) {
                 m = 1;
@@ -1736,11 +1685,9 @@ Obj FuncCONDUCTOR (
 **  of which <cyc> is written as a linear combination.  The <i>th element  of
 **  the list is the coefficient of $e_l^{i-1}$.
 */
-Obj CoeffsCycOper;
+static Obj CoeffsCycOper;
 
-Obj FuncCOEFFS_CYC (
-    Obj                 self,
-    Obj                 cyc )
+static Obj FuncCOEFFS_CYC(Obj self, Obj cyc)
 {
     Obj                 list;           /* list of coefficients, result    */
     UInt                n;              /* order of field                  */
@@ -1755,18 +1702,13 @@ Obj FuncCOEFFS_CYC (
     }
 
     /* check the argument                                                  */
-    while ( !IS_INT(cyc) && TNUM_OBJ(cyc) != T_RAT && TNUM_OBJ(cyc) != T_CYC ) {
-        cyc = ErrorReturnObj(
-            "COEFFSCYC: <cyc> must be a cyclotomic (not a %s)",
-            (Int)TNAM_OBJ(cyc), 0L,
-            "you can replace <cyc> via 'return <cyc>;'" );
+    if (!IS_CYC(cyc)) {
+        RequireArgument("COEFFSCYC", cyc, "must be a cyclotomic");
     }
 
     /* if <cyc> is rational just put it in a list of length 1              */
     if ( IS_INT(cyc) || TNUM_OBJ(cyc) == T_RAT ) {
-        list = NEW_PLIST( T_PLIST, 1 );
-        SET_LEN_PLIST( list, 1 );
-        SET_ELM_PLIST( list, 1, cyc );
+        list = NewPlistFromArgs(cyc);
         /* 'CHANGED_BAG' not needed for last bag                           */
     }
 
@@ -1805,12 +1747,9 @@ Obj FuncCOEFFS_CYC (
 **  <ord> may be any integer, of course if it is not relative prime to  $ord$
 **  the mapping will not be an automorphism, though still an endomorphism.
 */
-Obj GaloisCycOper;
+static Obj GaloisCycOper;
 
-Obj FuncGALOIS_CYC (
-    Obj                 self,
-    Obj                 cyc,
-    Obj                 ord )
+static Obj FuncGALOIS_CYC(Obj self, Obj cyc, Obj ord)
 {
     Obj                 gal;            /* galois conjugate, result        */
     Obj                 sum;            /* sum of two coefficients         */
@@ -1823,32 +1762,20 @@ Obj FuncGALOIS_CYC (
     const UInt4 *       exs;            /* pointer to the exponents        */
     Obj *               res;            /* pointer to the result           */
     UInt                i;              /* loop variable                   */
-    UInt                tnumord, tnumcyc;
 
     /* do full operation for any but standard arguments */
-
-    tnumord = TNUM_OBJ(ord);
-    tnumcyc = TNUM_OBJ(cyc);
-    if ( FIRST_EXTERNAL_TNUM <= tnumcyc
-         || FIRST_EXTERNAL_TNUM <= tnumord 
-         || (tnumord != T_INT && tnumord != T_INTNEG && tnumord != T_INTPOS)
-         || ( tnumcyc != T_INT    && tnumcyc != T_RAT
-              && tnumcyc != T_INTPOS && tnumcyc != T_INTNEG
-              && tnumcyc != T_CYC )
-         )
-      {
+    if (!IS_INT(ord) || !IS_CYC(cyc)) {
         return DoOperation2Args( self, cyc, ord );
-      }
+    }
 
     /* get and check <ord>                                                 */
     if ( ! IS_INTOBJ(ord) ) {
-        ord = MOD( ord, FuncCONDUCTOR( 0, cyc ) );
+        ord = MOD( ord, AttrCONDUCTOR( 0, cyc ) );
     }
     o = INT_INTOBJ(ord);
 
     /* every galois automorphism fixes the rationals                       */
-    if ( tnumcyc == T_INT    || tnumcyc == T_RAT
-      || tnumcyc == T_INTPOS || tnumcyc == T_INTNEG ) {
+    if (TNUM_OBJ(cyc) != T_CYC) {
         return cyc;
     }
 
@@ -1981,11 +1908,9 @@ Obj FuncGALOIS_CYC (
 **  'CycList' returns the cyclotomic described by the list <list>
 **  of rationals.
 */
-Obj CycListOper;
+static Obj CycListOper;
 
-Obj FuncCycList (
-    Obj                 self,
-    Obj                 list )
+static Obj FuncCycList(Obj self, Obj list)
 {
     UInt                i;              /* loop variable                   */
     Obj *               res;            /* pointer into result bag         */
@@ -1999,8 +1924,7 @@ Obj FuncCycList (
 
     /* get and check the argument                                          */
     if ( ! IS_PLIST( list ) || ! IS_DENSE_LIST( list ) ) {
-        ErrorQuit( "CycList: <list> must be a dense plain list (not a %s)",
-                   (Int)TNAM_OBJ( list ), 0L );
+        RequireArgument("CycList", list, "must be a dense plain list");
     }
 
     /* enlarge the buffer if necessary                                     */
@@ -2015,8 +1939,8 @@ Obj FuncCycList (
             // reset ResultCyc, otherwise the next operation using it will see
             // our left-over garbage data
             SET_LEN_PLIST( ResultCyc, 0 );
-            ErrorQuit( "CycList: each entry must be a rational (not a %s)",
-                       (Int)TNAM_OBJ( val ), 0L );
+            RequireArgumentEx("CycList", val, 0,
+                              "each entry must be a rational");
         }
         res[i] = val;
     }
@@ -2034,7 +1958,7 @@ Obj FuncCycList (
 **
 **  'MarkCycSubBags' is the marking function for bags of type 'T_CYC'.
 */
-void MarkCycSubBags( Obj cyc )
+static void MarkCycSubBags(Obj cyc)
 {
     MarkArrayOfBags( COEFS_CYC( cyc ), SIZE_CYC(cyc) );
 }
@@ -2046,7 +1970,7 @@ void MarkCycSubBags( Obj cyc )
 **
 **  We do not save the XXX_CYC field, since it is not used.
 */
-void  SaveCyc ( Obj cyc )
+static void SaveCyc(Obj cyc)
 {
   UInt len, i;
   const Obj *coefs;
@@ -2067,7 +1991,7 @@ void  SaveCyc ( Obj cyc )
 **
 **  We do not load the XXX_CYC field, since it is not used.
 */
-void  LoadCyc ( Obj cyc )
+static void LoadCyc(Obj cyc)
 {
   UInt len, i;
   Obj *coefs;
@@ -2106,7 +2030,7 @@ static StructBagNames BagNames[] = {
 */
 static StructGVarFilt GVarFilts [] = {
 
-    GVAR_FILTER(IS_CYC, "obj", &IsCycFilt),
+    GVAR_FILT(IS_CYC, "obj", &IsCycFilt),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -2118,7 +2042,7 @@ static StructGVarFilt GVarFilts [] = {
 */
 static StructGVarAttr GVarAttrs [] = {
 
-    GVAR_FILTER(CONDUCTOR, "cyc", &ConductorAttr),
+    GVAR_ATTR(CONDUCTOR, "cyc", &ConductorAttr),
     { 0, 0, 0, 0, 0 }
 
 };

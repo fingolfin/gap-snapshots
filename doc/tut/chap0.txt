@@ -3,7 +3,7 @@
                                [1XGAP --- A Tutorial[101X
   
   
-                          Release 4.10.2, 19-Jun-2019
+                          Release 4.11.0, 29-Feb-2020
   
   
                                  The GAP Group
@@ -16,13 +16,13 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0YCopyright  ©  (1987-2019)  for  the  core  part of the [5XGAP[105X system by the [5XGAP[105X
+  [33X[0;0YCopyright  ©  (1987-2020)  for  the  core  part of the [5XGAP[105X system by the [5XGAP[105X
   Group.[133X
   
   [33X[0;0YMost  parts  of this distribution, including the core part of the [5XGAP[105X system
   are  distributed  under  the  terms  of  the GNU General Public License, see
-  [7Xhttp://www.gnu.org/licenses/gpl.html[107X or the file [11XGPL[111X in the [11Xetc[111X directory of
-  the [5XGAP[105X installation.[133X
+  [7Xhttps://www.gnu.org/licenses/gpl.html[107X  or  the file [11XGPL[111X in the [11Xetc[111X directory
+  of the [5XGAP[105X installation.[133X
   
   [33X[0;0YMore  detailed  information  about  copyright  and licenses of parts of this
   distribution can be found in [14X'Reference: Copyright and License'[114X.[133X

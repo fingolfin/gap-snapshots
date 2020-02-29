@@ -1,9 +1,12 @@
 #############################################################################
 ##
-#W  simple.gi                 GAP Library                    Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2011 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains basic constructions for simple groups of bounded size,
 ##  if necessary by calling the `atlasrep' package.
@@ -181,20 +184,20 @@ local p,f,z,G,o;
   # first generator differs for q=2,p=3
   if q=2 then 
     G:=Group(
-	o*[[1,1,0,0,0,0,0],
-	[0,1,0,0,0,0,0],
-	[0,0,1,1,1,0,0],
-	[0,0,0,1,0,0,0],
-	[0,0,0,0,1,0,0],
-	[0,0,0,0,0,1,1],
-	[0,0,0,0,0,0,1]],
-	o*[[0,0,1,0,0,0,0],
-	[1,0,0,0,0,0,0],
-	[0,0,0,0,0,1,0],
-	[0,0,0,1,0,0,0],
-	[0,1,0,0,0,0,0],
-	[0,0,0,0,0,0,1],
-	[0,0,0,0,1,0,0]]);
+        o*[[1,1,0,0,0,0,0],
+        [0,1,0,0,0,0,0],
+        [0,0,1,1,1,0,0],
+        [0,0,0,1,0,0,0],
+        [0,0,0,0,1,0,0],
+        [0,0,0,0,0,1,1],
+        [0,0,0,0,0,0,1]],
+        o*[[0,0,1,0,0,0,0],
+        [1,0,0,0,0,0,0],
+        [0,0,0,0,0,1,0],
+        [0,0,0,1,0,0,0],
+        [0,1,0,0,0,0,0],
+        [0,0,0,0,0,0,1],
+        [0,0,0,0,1,0,0]]);
   elif p=3 then 
     G:=Group(
     o*[[z^2,0,0,0,0,0,0],
@@ -230,7 +233,44 @@ local p,f,z,G,o;
       [0,0,0,0,1,0,0]]);
   fi;
 
+  SetSize(G,q^6*(q^6-1)*(q^2-1));
   return G; 
+end);
+
+# generators from 
+# Howlett, R. B.(5-SYD-SM); Rylands, L. J.; Taylor, D. E.(5-SYD-SM)
+# Matrix generators for exceptional groups of Lie type. 
+# J. Symbolic Comput. 31 (2001), no. 4, 429–445. 
+# Note that Magma uses slightly different generators
+BindGlobal("Chevalley3D4",function(q)
+local f,mu,m1,m2,x,n,o;
+  f:=GF(q^3);
+  o:=One(f);
+  mu:=PrimitiveRoot(f);
+  m1:=DiagonalMat([mu^(q^2),mu^(-q^2),mu^(q+1),mu^(q-1),
+                   mu^(-q+1),mu^(-q-1),mu^(q^2),mu^(-q^2)]);
+  x:=IdentityMat(8,f);
+  x[1,2]:=o;
+  x[3,4]:=o;
+  x[3,5]:=o;
+  x[3,6]:=o;
+  x[4,6]:=o;
+  x[5,6]:=o;
+  x[7,8]:=o;
+  n:=NullMat(8,8,f);
+  n[1,3]:=o;
+  n[2,1]:=-o;
+  n[3,7]:=o;
+  n[4,5]:=-o;
+  n[5,4]:=-o;
+  n[6,2]:=-o;
+  n[7,8]:=o;
+  n[8,6]:=o;
+  m2:=x*n;
+  x:=Group(m1,m2);
+  SetName(x,Concatenation("3D4(",String(q),")"));
+  SetSize(x,q^12*(q^8+q^4+1)*(q^6-1)*(q^2-1));
+  return x;
 end);
 
 InstallGlobalFunction(SimpleGroup,function(arg)
@@ -240,10 +280,10 @@ local brg,str,p,a,param,g,s,small,plus,sets;
     if p.series="Spor" then
       brg:=p.parameter[1];
       if '=' in brg then
-	brg:=brg{[1..Position(brg,'=')-1]};
+        brg:=brg{[1..Position(brg,'=')-1]};
       fi;
       while brg[Length(brg)]=' ' do
-	brg:=brg{[1..Length(brg)-1]};
+        brg:=brg{[1..Length(brg)-1]};
       od;
       brg:=[brg];
     else
@@ -281,52 +321,52 @@ local brg,str,p,a,param,g,s,small,plus,sets;
     if '+' in a or '-' in a then
       p:=Position(a,'+');
       if p<>fail then
-	plus:=1;
+        plus:=1;
       else
-	p:=Position(a,'-');
-	plus:=-1;
+        p:=Position(a,'-');
+        plus:=-1;
       fi;
       if Length(a)=1 then
-	# deal with "O+" class
-	Add(a,'1');
-      fi;
-      if a[p+1]='1' then
-	# gave O(+1,8,2) or so
-	plus:=fail;
+        # deal with "O+" class
+        Add(a,'1');
+      elif Length(a)>=p+1 and a[p+1]='1' and a[p+2]=',' then
+        # gave O(+1,8,2) or so
+        plus:=fail;
       fi;
       if plus<>fail then
-	if p=1 then
-	  # leading +-, possibly with comma
-	  a:=a{[2..Length(a)]};
-	  if Length(a)>1 and a[1]=',' then
-	    a:=a{[2..Length(a)]};
-	  fi;
-	else
-	  # internal +-
-	  a[p]:=',';
-	fi;
+        if p=1 then
+          # leading +-, possibly with comma
+          a:=a{[2..Length(a)]};
+          if a="1" then a:="";fi;
+          if Length(a)>1 and a[1]=',' then
+            a:=a{[2..Length(a)]};
+          fi;
+        else
+          # internal +-
+          a[p]:=',';
+        fi;
       fi;
 
     else
       plus:=fail;
     fi;
-#Error(plus,a);
 
-    p:=Position(a,',');
-    while p<>fail do
-      s:=a{[1..p-1]};
-      if s[1]='+' then
-	s:=s{[2..Length(s)]};
-      fi;
-      Add(param,Int(s));
-      a:=a{[p+1..Length(a)]};
+    if Length(a)>0 then
       p:=Position(a,',');
-    od;
-    if a[1]='+' then
-      a:=a{[2..Length(a)]};
+      while p<>fail do
+        s:=a{[1..p-1]};
+        if s[1]='+' then
+          s:=s{[2..Length(s)]};
+        fi;
+        Add(param,Int(s));
+        a:=a{[p+1..Length(a)]};
+        p:=Position(a,',');
+      od;
+      if a[1]='+' then
+        a:=a{[2..Length(a)]};
+      fi;
+      Add(param,Int(a));
     fi;
-    Add(param,Int(a));
-#Error();
 
     if plus<>fail then
       param:=Concatenation([plus],param);
@@ -345,9 +385,9 @@ local brg,str,p,a,param,g,s,small,plus,sets;
     if str="A" or str="ALT" then
       if Length(param)=1 and param[1]>4 then
         g:=AlternatingGroup(param[1]);
-	SetName(g,Concatenation("A",String(param[1])));
-	SetIsSimpleGroup(g,true);
-	return g;
+        SetName(g,Concatenation("A",String(param[1])));
+        SetIsSimpleGroup(g,true);
+        return g;
       else
         Error("illegal parameter for alternating groups");
       fi;
@@ -359,74 +399,74 @@ local brg,str,p,a,param,g,s,small,plus,sets;
     elif str="M" or str="MATHIEU" then
       if Length(param)=1 and param[1] in [11,12,22,23,24] then
         g:=MathieuGroup(param[1]);
-	SetName(g,Concatenation("M",String(param[1])));
-	return g;
+        SetName(g,Concatenation("M",String(param[1])));
+        return g;
       else
         Error("illegal parameter for Mathieu groups");
       fi;
 
     elif str="J" or str="JANKO" then
       if Length(param)=1 and param[1] in [1..4] then
-	if param[1]=1 then
-	  g:=PrimitiveGroup(266,1);
-	elif param[1]=2 then
-	  g:=PrimitiveGroup(100,1);
-	else
-	  g:=[,,"J3","J4"];
-	  g:=DoAtlasrepGroup([g[param[1]]]);
-	fi;
-	SetIsSimpleGroup(g,true);
-	return g;
+        if param[1]=1 then
+          g:=PrimitiveGroup(266,1);
+        elif param[1]=2 then
+          g:=PrimitiveGroup(100,1);
+        else
+          g:=[,,"J3","J4"];
+          g:=DoAtlasrepGroup([g[param[1]]]);
+        fi;
+        SetIsSimpleGroup(g,true);
+        return g;
       else
         Error("illegal parameter for Janko groups");
       fi;
 
     elif str="CO" or str="." or str="CONWAY" then
       if Length(param)=1 and param[1] in [1..3] then
-	if param[1]=3 then
-	  g:=PrimitiveGroup(276,3);
-	elif param[1]=2 then
-	  g:=PrimitiveGroup(2300,1);
-	else
-	  g:=DoAtlasrepGroup(["Co1"]);
-	fi;
-	SetIsSimpleGroup(g,true);
-	return g;
+        if param[1]=3 then
+          g:=PrimitiveGroup(276,3);
+        elif param[1]=2 then
+          g:=PrimitiveGroup(2300,1);
+        else
+          g:=DoAtlasrepGroup(["Co1"]);
+        fi;
+        SetIsSimpleGroup(g,true);
+        return g;
       else
         Error("illegal parameter for Conway groups");
       fi;
 
     elif str="FI" or str="FISCHER" then
       if Length(param)=1 and param[1] in [22,23,24] then
-	s:=Concatenation("Fi",String(param[1]));
-	if param[1] = 24 then Append(s,"'"); fi;
+        s:=Concatenation("Fi",String(param[1]));
+        if param[1] = 24 then Append(s,"'"); fi;
         g:=DoAtlasrepGroup([s]);
-	SetIsSimpleGroup(g,true);
-	return g;
+        SetIsSimpleGroup(g,true);
+        return g;
       else
         Error("illegal parameter for Fischer groups");
       fi;
     elif str="SUZ" or str="SZ" or str="SUZUKI" then
       if Length(param)=0 and str="SUZ" then
-	g:=PrimitiveGroup(1782,1);
-	SetIsSimpleGroup(g,true);
-	return g;
+        g:=PrimitiveGroup(1782,1);
+        SetIsSimpleGroup(g,true);
+        return g;
       elif Length(param)=1 and param[1]>7 and
         PrimeDivisors(param[1])=[2] and IsOddInt(LogInt(param[1],2)) then
-	g:=SuzukiGroup(IsPermGroup,param[1]);
-	SetName(g,Concatenation("Sz(",String(param),")"));
-	SetIsSimpleGroup(g,true);
-	return g;
+        g:=SuzukiGroup(IsPermGroup,param[1]);
+        SetName(g,Concatenation("Sz(",String(param),")"));
+        SetIsSimpleGroup(g,true);
+        return g;
       else
         Error("illegal parameter for Suzuki groups");
       fi;
     elif str="R" or str="REE" or str="2G" then
       if Length(param)=1 and param[1]>26 and
         PrimeDivisors(param[1])=[3] and IsOddInt(LogInt(param[1],3)) then
-	g:=ReeGroup(IsMatrixGroup,param[1]);
-	SetName(g,Concatenation("Ree(",String(param[1]),")"));
-	SetIsSimpleGroup(g,true);
-	return g;
+        g:=ReeGroup(IsMatrixGroup,param[1]);
+        SetName(g,Concatenation("Ree(",String(param[1]),")"));
+        SetIsSimpleGroup(g,true);
+        return g;
       else
         Error("illegal parameter for Ree groups");
       fi;
@@ -496,10 +536,10 @@ local brg,str,p,a,param,g,s,small,plus,sets;
       g:=Action(g,NormedRowVectors(GF(param[2])^param[1]),OnLines);
       s:=DerivedSubgroup(g);
       if s<>g and IsBound(g!.actionHomomorphism) then
-	s!.actionHomomorphism:=ActionHomomorphism(
-	  PreImage(g!.actionHomomorphism,s),
-	  HomeEnumerator(UnderlyingExternalSet(g!.actionHomomorphism)),
-	  OnLines,"surjective");
+        s!.actionHomomorphism:=ActionHomomorphism(
+          PreImage(g!.actionHomomorphism,s),
+          HomeEnumerator(UnderlyingExternalSet(g!.actionHomomorphism)),
+          OnLines,"surjective");
       fi;
       g:=s;
       s:=Concatenation("O(",String(param[1]),",",String(param[2]),")");
@@ -526,6 +566,8 @@ local brg,str,p,a,param,g,s,small,plus,sets;
       Error("wrong dimension/parity for O");
     fi;
 
+  elif str="D" then
+    return SimpleGroup("O",1,param[1]*2,param[2]);
   elif str="E" then
     if Length(param)<2 or not param[1] in [6,7,8] then
       Error("E(n,q) needs n=6,7,8");
@@ -558,9 +600,9 @@ local brg,str,p,a,param,g,s,small,plus,sets;
     else
       g:=ChevalleyG(a);
       g:=Action(g,
-	   Set(Orbit(g,One(DefaultFieldOfMatrixGroup(g))*[1,0,0,0,0,0,0],
-	     OnLines)),
-	  OnLines);
+           Set(Orbit(g,One(DefaultFieldOfMatrixGroup(g))*[1,0,0,0,0,0,0],
+             OnLines)),
+          OnLines);
     fi;
     s:=Concatenation("G_2(",String(a),")");
 
@@ -574,7 +616,7 @@ local brg,str,p,a,param,g,s,small,plus,sets;
     elif a=3 then
       g:=DoAtlasrepGroup(["3D4(3)"]);
     else
-      Error("Can't do yet");
+      return Chevalley3D4(a);
     fi;
     s:=Concatenation("3D4(",String(a),")");
 
@@ -594,12 +636,12 @@ local brg,str,p,a,param,g,s,small,plus,sets;
     if Length(a)>1 then
       SortParallel(List(a,Length),a);
       if IsBound(g!.actionHomomorphism) then
-	# pull back
-	p:=UnderlyingExternalSet(g!.actionHomomorphism);
-	a:=Action(Source(g!.actionHomomorphism),HomeEnumerator(p){a[1]},
-	     FunctionAction(p));
+        # pull back
+        p:=UnderlyingExternalSet(g!.actionHomomorphism);
+        a:=Action(Source(g!.actionHomomorphism),HomeEnumerator(p){a[1]},
+             FunctionAction(p));
       else
-	a:=Action(g,a[1]);
+        a:=Action(g,a[1]);
       fi;
       SetSize(a,Size(g));
       g:=a;
@@ -608,16 +650,16 @@ local brg,str,p,a,param,g,s,small,plus,sets;
     a:=Blocks(g,MovedPoints(g));
     if Length(a)>1 then
       if IsBound(g!.actionHomomorphism) then
-	# pull back
-	p:=UnderlyingExternalSet(g!.actionHomomorphism);
-	sets:=Set(List(a,x->HomeEnumerator(p){x}));
-	p:=FunctionAction(p);
-	a:=Action(Source(g!.actionHomomorphism),sets,
-	     function(set,g)
-	       return Set(List(set,x->p(x,g)));
-	     end);
+        # pull back
+        p:=UnderlyingExternalSet(g!.actionHomomorphism);
+        sets:=Set(List(a,x->HomeEnumerator(p){x}));
+        p:=FunctionAction(p);
+        a:=Action(Source(g!.actionHomomorphism),sets,
+             function(set,g)
+               return Set(List(set,x->p(x,g)));
+             end);
       else
-	a:=Action(g,a,OnSets);
+        a:=Action(g,a,OnSets);
       fi;
       SetSize(a,Size(g));
       g:=a;
@@ -691,7 +733,7 @@ local a,l,pos,g,b;
       if a[4]=0 then
         b:=a{[2,3]}; # 0 is filler
       else
-	b:=a{[2..4]};
+        b:=a{[2..4]};
       fi;
       g:=CallFuncList(SimpleGroup,b);
     fi;
@@ -843,20 +885,28 @@ local nam,e,EFactors,par,expo,prime,result,aut,i;
   local dd,df,dg,r,myprod,gal,i,s,j,ddn;
 
     if g>2 then 
-      # do a few basic cases first ...
+      # so triality is involved
+
+      # do a few basic cases first 
       if d=1 and f=1 and g=6 then
-	# subgroup classes S_3
-	dd:=[ [ 1, "1" ], [ 2, "2" ], [ 3, "3" ], [ 6, "3.2" ] ];
-	return dd;
+        # subgroup classes S_3
+        dd:=[ [ 1, "1" ], [ 2, "2" ], [ 3, "3" ], [ 6, "3.2" ] ];
+        return dd;
+      elif d=1 and f=2 and g=6 then
+        # subgroup classes 2\times S_3 (since S3 cannot act on C2)
+        dd:=[ [ 1, "1" ], [ 2, "2_1" ],[ 2, "2_2" ], [ 2, "2_3" ],
+              [ 3, "3" ], [ 4, "2x2" ], [ 6, "6" ], [6,"S3_1"],
+              [ 6, "S3_2" ], [ 12, "D12" ] ];
       elif d=4 and f=1 and g=6 then
-	# subgroup classes S_4 
-	dd:=[ [ 1, "1" ], [ 2, "2_1" ],[ 2, "2_2" ], [ 3, "3" ],
-	      [ 4, "4" ], [ 4, "(2^2)_{111}" ], [4,"(2^2)_{122}"],
-	      [ 6, "3.2" ], [ 8, "D8" ], [ 12, "A4" ], 
-	      [ 24, "S4" ] ];
-	return dd;
+        # subgroup classes S_4 
+        dd:=[ [ 1, "1" ], [ 2, "2_1" ],[ 2, "2_2" ], [ 3, "3" ],
+              [ 4, "4" ], [ 4, "(2^2)_{111}" ], [4,"(2^2)_{122}"],
+              [ 6, "3.2" ], [ 8, "D8" ], [ 12, "A4" ], 
+              [ 24, "S4" ] ];
+        return dd;
       else
-	Error("mixed triality not yet done");
+        Error("mixed triality not yet done");
+        return false;
       fi;
     fi;
 
@@ -874,24 +924,24 @@ local nam,e,EFactors,par,expo,prime,result,aut,i;
     local d2,g1,f1;
       d2:=c2[1];
       if c1[3]>0 and d2>0 then
-	d2:=((d2+1)^gal[c1[3]+1])-1;
+        d2:=((d2+1)^gal[c1[3]+1])-1;
       fi;
 
       if c1[2]=1 then
-	# g-action
-	d2:=-d2 mod d;
+        # g-action
+        d2:=-d2 mod d;
       fi;
 
       if g=1 then
-	g1:=0;
+        g1:=0;
       else
-	g1:=(c1[2]+c2[2]) mod g;
+        g1:=(c1[2]+c2[2]) mod g;
       fi;
 
       if f=1 then
-	f1:=0;
+        f1:=0;
       else
-	f1:=(c1[3]+c2[3]) mod f;
+        f1:=(c1[3]+c2[3]) mod f;
       fi;
       f1:=[(c1[1]+d2) mod d,g1,f1];
 #Print(c1,"*",c2,"=",f1,"\n");
@@ -910,33 +960,33 @@ local nam,e,EFactors,par,expo,prime,result,aut,i;
       dd:=List(ConjugacyClassesSubgroups(dd),Representative);
       ddn:=[];
       for i in dd do
-	if IsCyclic(i) then
-	  Add(ddn,String(Size(i)));
-	else
-	  r:="";
-	  s:=Reversed(ElementaryAbelianSeriesLargeSteps(i));
-	  for j in [2..Length(s)] do
-	    if Length(r)>0 then
-	      Add(r,'.');
-	    fi;
-	    j:=AbelianInvariants(s[j]/s[j-1]);
-	    Append(r,String(j[1]));
-	    if Length(j)>1 then
-	      Add(r,'^');
-	      Append(r,String(Length(j)));
-	    fi;
-	  od;
-	  Add(ddn,r);
-	fi;
+        if IsCyclic(i) then
+          Add(ddn,String(Size(i)));
+        else
+          r:="";
+          s:=Reversed(ElementaryAbelianSeriesLargeSteps(i));
+          for j in [2..Length(s)] do
+            if Length(r)>0 then
+              Add(r,'.');
+            fi;
+            j:=AbelianInvariants(s[j]/s[j-1]);
+            Append(r,String(j[1]));
+            if Length(j)>1 then
+              Add(r,'^');
+              Append(r,String(Length(j)));
+            fi;
+          od;
+          Add(ddn,r);
+        fi;
       od;
       r:=[];
       for i in [1..Length(dd)] do
-	if Number(ddn,x->x=ddn[i])=1 then
-	  Add(r,[Size(dd[i]),ddn[i]]);
-	else
-	  Add(r,[Size(dd[i]),Concatenation(ddn[i],"_",
-	    String(Number(ddn{[1..i]},x->x=ddn[i])))]);
-	fi;
+        if Number(ddn,x->x=ddn[i])=1 then
+          Add(r,[Size(dd[i]),ddn[i]]);
+        else
+          Add(r,[Size(dd[i]),Concatenation(ddn[i],"_",
+            String(Number(ddn{[1..i]},x->x=ddn[i])))]);
+        fi;
       od;
       
       return r;
@@ -1087,21 +1137,27 @@ local nam,e,EFactors,par,expo,prime,result,aut,i;
   fi;
 
   # kill trivial extension if given
-  e:=Filtered(e,x->x[1]>1);
+  if IsList(e) then 
+    e:=Filtered(e,x->x[1]>1);
 
-  # get size of full outer automorphisms
-  aut:=[1,nam];
-  for i in e do
-    if i[1]>aut[1] then
-      aut:=i;
-    fi;
-  od;
+    # get size of full outer automorphisms
+    aut:=[1,nam];
+    for i in e do
+      if i[1]>aut[1] then
+        aut:=i;
+      fi;
+    od;
+  else
+    aut:=false;
+  fi;
 
   result:=rec(idSimple:=id,
-	      tomName:=nam,
-	      allExtensions:=e,
-              fullAutGroup:=aut,
+              tomName:=nam,
+              allExtensions:=e,
               classicalId:=ClassicalIsomorphismTypeFiniteSimpleGroup(id));
+  if aut<>false then
+    result.fullAutGroup:=aut;
+  fi;
 
   return result;
 end);
@@ -1162,10 +1218,10 @@ local H,d,id,hom,field,C,dom,orbs;
     if IsMatrixGroup(Source(hom)) and Image(hom)=G and Size(Source(hom))/Size(G)<field then
       # test that the source is really the group we want
       if GeneratorsOfGroup(C)=GeneratorsOfGroup(Source(hom)) 
-	or Source(hom)=C then
-	  return hom;
+        or Source(hom)=C then
+          return hom;
       #else
-#	Print("different source -- ID\n");
+#       Print("different source -- ID\n");
       fi;
     fi;
   fi;

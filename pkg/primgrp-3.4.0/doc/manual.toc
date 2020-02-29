@@ -1,0 +1,22 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Primitive Permutation Groups}}{4}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Primitive Permutation Groups}}{4}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}\leavevmode {\color {Chapter }PrimitiveGroup}}{5}{subsection.1.1.1}
+\contentsline {subsection}{\numberline {1.1.2}\leavevmode {\color {Chapter }NrPrimitiveGroups}}{5}{subsection.1.1.2}
+\contentsline {subsection}{\numberline {1.1.3}\leavevmode {\color {Chapter }AllPrimitiveGroups}}{5}{subsection.1.1.3}
+\contentsline {subsection}{\numberline {1.1.4}\leavevmode {\color {Chapter }OnePrimitiveGroup}}{5}{subsection.1.1.4}
+\contentsline {subsection}{\numberline {1.1.5}\leavevmode {\color {Chapter }PrimitiveGroupsIterator}}{6}{subsection.1.1.5}
+\contentsline {subsection}{\numberline {1.1.6}\leavevmode {\color {Chapter }COHORTS{\textunderscore }PRIMITIVE{\textunderscore }GROUPS}}{6}{subsection.1.1.6}
+\contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }Index numbers of primitive groups}}{6}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}\leavevmode {\color {Chapter }PrimitiveIdentification}}{6}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}\leavevmode {\color {Chapter }SimsNo}}{7}{subsection.1.2.2}
+\contentsline {subsection}{\numberline {1.2.3}\leavevmode {\color {Chapter }PRIMITIVE{\textunderscore }INDICES{\textunderscore }MAGMA}}{7}{subsection.1.2.3}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Irreducible Matrix Groups}}{8}{chapter.2}
+\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }Irreducible Solvable Matrix Groups}}{8}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}\leavevmode {\color {Chapter }IrreducibleSolvableGroupMS}}{8}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}\leavevmode {\color {Chapter }NumberIrreducibleSolvableGroups}}{8}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}\leavevmode {\color {Chapter }AllIrreducibleSolvableGroups}}{8}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}\leavevmode {\color {Chapter }OneIrreducibleSolvableGroup}}{9}{subsection.2.1.4}
+\contentsline {subsection}{\numberline {2.1.5}\leavevmode {\color {Chapter }PrimitiveIndexIrreducibleSolvableGroup}}{9}{subsection.2.1.5}
+\contentsline {subsection}{\numberline {2.1.6}\leavevmode {\color {Chapter }IrreducibleSolvableGroup}}{9}{subsection.2.1.6}
+\contentsline {chapter}{References}{10}{chapter*.5}
+\contentsline {chapter}{Index}{11}{section*.6}

@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  alghom.gi                   GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains methods for algebra(-with-one) general mappings.
 ##
@@ -1314,7 +1315,7 @@ InstallOtherMethod( RepresentativeLinearOperation,
 ##
 ##  <Description>
 ##  For an algebra <A>A</A> and an ideal <A>I</A> in <A>A</A>,
-##  the return value of <Ref Func="NaturalHomomorphismByIdeal"/>
+##  the return value of <Ref Oper="NaturalHomomorphismByIdeal"/>
 ##  is a homomorphism of algebras, in particular the range of this mapping
 ##  is also an algebra.
 ##  <P/>
@@ -1809,9 +1810,3 @@ InstallMethod( IsomorphismSCFLMLOR,
     "for s.c. FLMLOR (return the identity mapping)",
     [ IsFLMLOR and IsSCAlgebraObjCollection ], SUM_FLAGS,
     IdentityMapping );
-
-
-#############################################################################
-##
-#E
-

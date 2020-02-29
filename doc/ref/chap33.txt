@@ -36,7 +36,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xr:=BinaryRelationByElements(Domain([1..3]),[Tuple([1,2]),Tuple([1,3])]);[127X[104X
-    [4X[28X<general mapping: <object> -> <object> >[128X[104X
+    [4X[28X<general mapping: Domain([ 1 .. 3 ]) -> Domain([ 1 .. 3 ]) >[128X[104X
   [4X[32X[104X
   
   
@@ -52,7 +52,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XIdentityBinaryRelation(5);[127X[104X
-    [4X[28X<equivalence relation on <object> >[128X[104X
+    [4X[28X<equivalence relation on Domain([ 1 .. 5 ]) >[128X[104X
     [4X[25Xgap>[125X [27Xs4:=SymmetricGroup(4);[127X[104X
     [4X[28XSym( [ 1 .. 4 ] )[128X[104X
     [4X[25Xgap>[125X [27XIdentityBinaryRelation(s4);[127X[104X
@@ -366,7 +366,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xer:=EquivalenceRelationByPartition(Domain([1..10]),[[1,3,5,7,9],[2,4,6,8,10]]);[127X[104X
-    [4X[28X<equivalence relation on <object> >[128X[104X
+    [4X[28X<equivalence relation on Domain([ 1 .. 10 ]) >[128X[104X
     [4X[25Xgap>[125X [27XIsEquivalenceRelation(er);[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
@@ -457,7 +457,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xer:=EquivalenceRelationByPartition(Domain([1..10]),[[1,3,5,7,9],[2,4,6,8,10]]);[127X[104X
-    [4X[28X<equivalence relation on <object> >[128X[104X
+    [4X[28X<equivalence relation on Domain([ 1 .. 10 ]) >[128X[104X
     [4X[25Xgap>[125X [27Xclasses := EquivalenceClasses(er);[127X[104X
     [4X[28X[ {1}, {2} ][128X[104X
   [4X[32X[104X

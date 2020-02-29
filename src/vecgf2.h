@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  vecgf2.h                    GAP source                       Frank Celler
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #ifndef GAP_VECGF2_H
@@ -17,19 +17,19 @@
 **
 *F  IS_GF2VEC_REP( <obj> )  . . . . . . check that <obj> is in GF2 vector rep
 */
-#define IS_GF2VEC_REP(obj) \
-  (TNUM_OBJ(obj)==T_DATOBJ && DoFilter(IsGF2VectorRep,obj) == True)
+#define IS_GF2VEC_REP(obj)                                                   \
+    (TNUM_OBJ(obj) == T_DATOBJ && DoFilter(IsGF2VectorRep, obj) == True)
 
 
 /****************************************************************************
 **
 *F  NEW_GF2VEC( <vec>, <type>, <len> )  . . . . . . . create a new GF2 vector
 */
-#define NEW_GF2VEC( vec, type, len ) \
-    do { \
-        vec = NewBag( T_DATOBJ, SIZE_PLEN_GF2VEC(len) ); \
-        SetTypeDatObj(vec, type); \
-        SET_LEN_GF2VEC(vec, len); \
+#define NEW_GF2VEC(vec, type, len)                                           \
+    do {                                                                     \
+        vec = NewBag(T_DATOBJ, SIZE_PLEN_GF2VEC(len));                       \
+        SetTypeDatObj(vec, type);                                            \
+        SET_LEN_GF2VEC(vec, len);                                            \
     } while (0)
 
 
@@ -43,14 +43,14 @@
 **  Note that 'LEN_GF2VEC' is a macro, so do not call it with  arguments that
 **  have side effects.
 */
-#define LEN_GF2VEC(list)         ((Int)(CONST_ADDR_OBJ(list)[1]))
+#define LEN_GF2VEC(list) ((Int)(CONST_ADDR_OBJ(list)[1]))
 
 
 /****************************************************************************
 **
 *F  NUMBER_BLOCKS_GF2VEC( <vec> ) . . . . . . . number of UInt blocks in list
 */
-#define NUMBER_BLOCKS_GF2VEC(list)      ((LEN_GF2VEC((list))+ BIPEB-1)/BIPEB)
+#define NUMBER_BLOCKS_GF2VEC(list) ((LEN_GF2VEC((list)) + BIPEB - 1) / BIPEB)
 
 
 /****************************************************************************
@@ -59,7 +59,8 @@
 **
 **  returns a pointer to the start of the data of the GF2 vector
 */
-#define BLOCKS_GF2VEC(list)             ((UInt*)(ADDR_OBJ(list)+2))
+#define BLOCKS_GF2VEC(list) ((UInt *)(ADDR_OBJ(list) + 2))
+#define CONST_BLOCKS_GF2VEC(list) ((const UInt *)(CONST_ADDR_OBJ(list) + 2))
 
 
 /****************************************************************************
@@ -74,7 +75,9 @@
 **  Note that 'BLOCK_ELM_GF2VEC' is a macro, so do not call it with arguments
 **  that have side effects.
 */
-#define BLOCK_ELM_GF2VEC(list, pos)    (BLOCKS_GF2VEC(list)[((pos)-1)/BIPEB])
+#define BLOCK_ELM_GF2VEC(list, pos) (BLOCKS_GF2VEC(list)[((pos)-1) / BIPEB])
+#define CONST_BLOCK_ELM_GF2VEC(list, pos)                                    \
+    (CONST_BLOCKS_GF2VEC(list)[((pos)-1) / BIPEB])
 
 
 /****************************************************************************
@@ -87,15 +90,15 @@
 **  Note that 'SET_LEN_GF2VEC' is a macro, so do  not  call it with arguments
 **  that have side effects.
 */
-#define SET_LEN_GF2VEC(list,len)        (ADDR_OBJ(list)[1] = (Obj)(len))
+#define SET_LEN_GF2VEC(list, len) (ADDR_OBJ(list)[1] = (Obj)(len))
 
 
 /****************************************************************************
 **
 *F  SIZE_PLEN_GF2VEC( <len> ) . . . . . . . . physical length of a GF2 vector
 */
-#define SIZE_PLEN_GF2VEC(len) \
-                           (2*sizeof(Obj)+((len)+BIPEB-1)/BIPEB*sizeof(UInt))
+#define SIZE_PLEN_GF2VEC(len)                                                \
+    (2 * sizeof(Obj) + ((len) + BIPEB - 1) / BIPEB * sizeof(UInt))
 
 
 /****************************************************************************
@@ -109,7 +112,7 @@
 **  Note that 'MASK_POS_GF2VEC' is a  macro, so do not call it with arguments
 **  that have side effects.
 */
-#define MASK_POS_GF2VEC( pos ) (((UInt) 1)<<((pos)-1)%BIPEB)
+#define MASK_POS_GF2VEC(pos) (((UInt)1) << ((pos)-1) % BIPEB)
 
 
 /****************************************************************************
@@ -123,8 +126,9 @@
 **  Note that 'ELM_GF2VEC' is a macro, so do  not call it with arguments that
 **  have side effects.
 */
-#define ELM_GF2VEC(list,pos) \
-  ((BLOCK_ELM_GF2VEC(list,pos) & MASK_POS_GF2VEC(pos)) ?  GF2One : GF2Zero)
+#define ELM_GF2VEC(list, pos)                                                \
+    ((CONST_BLOCK_ELM_GF2VEC(list, pos) & MASK_POS_GF2VEC(pos)) ? GF2One     \
+                                                                : GF2Zero)
 
 
 /****************************************************************************
@@ -137,7 +141,7 @@
 **  Note that 'LEN_GF2MAT' is a macro, so do not call it with  arguments that
 **  have side effects.
 */
-#define LEN_GF2MAT(list)         (INT_INTOBJ(CONST_ADDR_OBJ(list)[1]))
+#define LEN_GF2MAT(list) (INT_INTOBJ(CONST_ADDR_OBJ(list)[1]))
 
 
 /****************************************************************************
@@ -150,7 +154,7 @@
 **  Note that 'SET_LEN_GF2MAT' is a  macro, so do not  call it with arguments
 **  that have side effects.
 */
-#define SET_LEN_GF2MAT(list,len)    (ADDR_OBJ(list)[1]=INTOBJ_INT(len))
+#define SET_LEN_GF2MAT(list, len) (ADDR_OBJ(list)[1] = INTOBJ_INT(len))
 
 
 /****************************************************************************
@@ -164,7 +168,7 @@
 **  Note that 'ELM_GF2MAT' is a macro, so do  not call it with arguments that
 **  have side effects.
 */
-#define ELM_GF2MAT(list,pos)    (CONST_ADDR_OBJ(list)[pos+1])
+#define ELM_GF2MAT(list, pos) (CONST_ADDR_OBJ(list)[pos + 1])
 
 
 /****************************************************************************
@@ -178,14 +182,14 @@
 **  Note that 'ELM_GF2MAT' is a macro, so do  not call it with arguments that
 **  have side effects.
 */
-#define SET_ELM_GF2MAT(list,pos,elm)    (ADDR_OBJ(list)[pos+1]=elm)
+#define SET_ELM_GF2MAT(list, pos, elm) (ADDR_OBJ(list)[pos + 1] = elm)
 
 
 /****************************************************************************
 **
 *F  SIZE_PLEN_GF2MAT( <len> ) . . . . . . . . physical length of a GF2 matrix
 */
-#define SIZE_PLEN_GF2MAT(len)   (((len)+2)*sizeof(Obj))
+#define SIZE_PLEN_GF2MAT(len) (((len) + 2) * sizeof(Obj))
 
 /****************************************************************************
 **
@@ -202,7 +206,7 @@ extern Obj TYPE_LIST_GF2VEC_IMM;
 
 /****************************************************************************
 **
-*V  TYPE_LIST_GF2VEC_IMM_LOCKED. . . .  type of an immutable GF2 vector object
+*V  TYPE_LIST_GF2VEC_IMM_LOCKED . . . type of an immutable GF2 vector object
 **                                          with locked representation
 */
 extern Obj TYPE_LIST_GF2VEC_IMM_LOCKED;
@@ -231,7 +235,7 @@ extern Obj TYPE_LIST_GF2MAT_IMM;
 
 extern Obj IsGF2VectorRep;
 
-extern Obj ShallowCopyVecGF2( Obj vec );
+Obj ShallowCopyVecGF2(Obj vec);
 
 /****************************************************************************
 **
@@ -243,7 +247,7 @@ extern Obj ShallowCopyVecGF2( Obj vec );
 **
 *F  InitInfoGF2Vec()  . . . . . . . . . . . . . . . . table of init functions
 */
-StructInitInfo * InitInfoGF2Vec ( void );
+StructInitInfo * InitInfoGF2Vec(void);
 
 
-#endif // GAP_VECGF2_H
+#endif    // GAP_VECGF2_H

@@ -1,0 +1,140 @@
+  
+  
+                              [1X NormalizInterface [101X
+  
+  
+                           [1X [5XGAP[105X wrapper for Normaliz [101X
+  
+  
+                                     1.1.0
+  
+  
+                                 23 August 2019
+  
+  
+                               Sebastian Gutsche
+  
+                                    Max Horn
+  
+                                 Christof Söger
+  
+  
+  
+  Sebastian Gutsche
+      Email:    [7Xmailto:gutsche@mathematik.uni-siegen.de[107X
+      Homepage: [7Xhttps://algebra.mathematik.uni-siegen.de/gutsche/[107X
+      Address:  [33X[0;14YDepartment Mathematik[133X
+                [33X[0;14YUniversität Siegen[133X
+                [33X[0;14YWalter-Flex-Straße 3[133X
+                [33X[0;14Y57072 Siegen[133X
+                [33X[0;14YGermany[133X
+  
+  
+  Max Horn
+      Email:    [7Xmailto:max.horn@uni-siegen.de[107X
+      Homepage: [7Xhttps://www.quendi.de/math[107X
+      Address:  [33X[0;14YDepartment Mathematik[133X
+                [33X[0;14YUniversität Siegen[133X
+                [33X[0;14YWalter-Flex-Straße 3[133X
+                [33X[0;14Y57072 Siegen[133X
+                [33X[0;14YGermany[133X
+  
+  
+  Christof Söger
+      Email:    [7Xmailto:csoeger@uos.de[107X
+      Homepage: [7Xhttps://www.normaliz.uni-osnabrueck.de[107X
+      Address:  [33X[0;14YInstitut für Mathematik[133X
+                [33X[0;14YAlbrechtstr. 28a[133X
+                [33X[0;14Y49076 Osnabrück[133X
+                [33X[0;14YGermany[133X
+  
+  
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (NormalizInterface)[101X
+  
+  1 [33X[0;0YIntroduction[133X
+    1.1 [33X[0;0YWhat is the purpose of the this package?[133X
+  2 [33X[0;0YFunctions[133X
+    2.1 [33X[0;0YCreate a NmzCone[133X
+      2.1-1 NmzCone
+    2.2 [33X[0;0YUse a NmzCone[133X
+      2.2-1 NmzHasConeProperty
+      2.2-2 NmzKnownConeProperties
+      2.2-3 NmzSetVerboseDefault
+      2.2-4 NmzSetVerbose
+      2.2-5 NmzCompute
+      2.2-6 NmzConeProperty
+      2.2-7 NmzPrintConeProperties
+    2.3 [33X[0;0YCone properties[133X
+      2.3-1 NmzAffineDim
+      2.3-2 NmzClassGroup
+      2.3-3 NmzCongruences
+      2.3-4 NmzDeg1Elements
+      2.3-5 NmzDehomogenization
+      2.3-6 NmzEmbeddingDimension
+      2.3-7 NmzEquations
+      2.3-8 NmzExcludedFaces
+      2.3-9 NmzExtremeRays
+      2.3-10 NmzGenerators
+      2.3-11 NmzGeneratorOfInterior
+      2.3-12 NmzGrading
+      2.3-13 NmzHilbertBasis
+      2.3-14 NmzHilbertQuasiPolynomial
+      2.3-15 NmzHilbertSeries
+      2.3-16 NmzInclusionExclusionData
+      2.3-17 NmzIsDeg1ExtremeRays
+      2.3-18 NmzIsDeg1HilbertBasis
+      2.3-19 NmzIsGorenstein
+      2.3-20 NmzIsInhomogeneous
+      2.3-21 NmzIsIntegrallyClosed
+      2.3-22 NmzIsPointed
+      2.3-23 NmzIsReesPrimary
+      2.3-24 NmzMaximalSubspace
+      2.3-25 NmzModuleGenerators
+      2.3-26 NmzModuleGeneratorsOverOriginalMonoid
+      2.3-27 NmzModuleRank
+      2.3-28 NmzMultiplicity
+      2.3-29 NmzOriginalMonoidGenerators
+      2.3-30 NmzRank
+      2.3-31 NmzRecessionRank
+      2.3-32 NmzReesPrimaryMultiplicity
+      2.3-33 NmzSupportHyperplanes
+      2.3-34 NmzTriangulation
+      2.3-35 NmzTriangulationDetSum
+      2.3-36 NmzTriangulationSize
+      2.3-37 NmzVerticesFloat
+      2.3-38 NmzVerticesOfPolyhedron
+      2.3-39 NmzConeDecomposition
+      2.3-40 NmzEmbeddingDim
+      2.3-41 NmzExternalIndex
+      2.3-42 NmzGradingDenom
+      2.3-43 NmzIntegerHull
+      2.3-44 NmzInternalIndex
+      2.3-45 NmzStanleyDec
+      2.3-46 NmzSublattice
+      2.3-47 NmzUnitGroupIndex
+      2.3-48 NmzWeightedEhrhartQuasiPolynomial
+      2.3-49 NmzWeightedEhrhartSeries
+      2.3-50 NmzWitnessNotIntegrallyClosed
+      2.3-51 NmzEhrhartSeries
+      2.3-52 NmzEuclideanVolume
+      2.3-53 NmzProjectCone
+      2.3-54 NmzSuppHypsFloat
+      2.3-55 NmzVolume
+      2.3-56 NmzFVector
+      2.3-57 NmzFaceLattice
+      2.3-58 NmzBasisChange
+  3 [33X[0;0YExamples[133X
+    3.1 [33X[0;0YGenerators[133X
+    3.2 [33X[0;0YSystem of equations[133X
+    3.3 [33X[0;0YSystem of inhomogeneous equations[133X
+    3.4 [33X[0;0YCombined input[133X
+    3.5 [33X[0;0YUsing the dual mode[133X
+  4 [33X[0;0YInstalling NormalizInterface[133X
+    4.1 [33X[0;0YCompiling[133X
+  
+  
+  [32X

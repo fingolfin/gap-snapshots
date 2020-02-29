@@ -59,7 +59,7 @@
   the  garbage  collections.  Certain  subobjects,  such as small integers and
   elements of small finite fields, are not stored in the workspace, and so are
   not  subject to garbage collection, while certain other objects, such as the
-  Boolean values, are always reachable from global variables or the kernel and
+  boolean values, are always reachable from global variables or the kernel and
   so are never garbage collected.[133X
   
   [33X[0;0YSubobjects  reachable  without  going  through  a weak pointer object do not

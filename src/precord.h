@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  precord.h                   GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares the functions for plain records.
 */
@@ -17,7 +17,7 @@
 
 /****************************************************************************
 **
-*F * * * * * * * * * * standard macros for plain records  * * * * * * * * * *
+*F * * * * * * * * * standard functions for plain records * * * * * * * * * *
 */
 
 
@@ -29,14 +29,14 @@
 **  Note that you still have to set the actual length once you have populated
 **  the record!
 */
-extern Obj NEW_PREC(UInt len);
+Obj NEW_PREC(UInt len);
 
 
 /****************************************************************************
 **
 *F  IS_PREC( <rec> ) . . . . . . . . .  check if <rec> is in plain record rep
 */
-static inline Int IS_PREC(Obj rec)
+EXPORT_INLINE Int IS_PREC(Obj rec)
 {
     UInt tnum = TNUM_OBJ(rec);
     return tnum == T_PREC || tnum == T_PREC+IMMUTABLE;
@@ -51,18 +51,13 @@ static inline Int IS_PREC(Obj rec)
 **  This function is used in a GAP_ASSERT checking if calling functions like
 **  SET_ELM_PREC is acceptable on an Obj.
 **
-**  Unlike IS_PREC, this function also accepts precs which are being copied
-**  (and hence have the COPYING flag set), as well as component objects
-**  (which have the same memory layout as precs), as the precs APIs using it
-**  for assertion checks are in practice invoked on such objects, too.
+**  Unlike IS_PREC, this function also accepts component objects (which have
+**  the same memory layout as precs), as the precs APIs using it for
+**  assertion checks are in practice invoked on such objects, too.
 */
-static inline Int IS_PREC_OR_COMOBJ(Obj rec)
+EXPORT_INLINE Int IS_PREC_OR_COMOBJ(Obj rec)
 {
     UInt tnum = TNUM_OBJ(rec);
-#if !defined(USE_THREADSAFE_COPYING)
-    if (tnum > COPYING)
-        tnum -= COPYING;
-#endif
     return tnum == T_PREC || tnum == T_PREC+IMMUTABLE || tnum == T_COMOBJ;
 }
 
@@ -74,7 +69,7 @@ static inline Int IS_PREC_OR_COMOBJ(Obj rec)
 **  'CAPACITY_PREC' returns the maximum capacity of a PREC.
 **
 */
-static inline UInt CAPACITY_PREC(Obj rec)
+EXPORT_INLINE UInt CAPACITY_PREC(Obj rec)
 {
     return SIZE_OBJ(rec) / (2 * sizeof(Obj)) - 1;
 }
@@ -86,7 +81,7 @@ static inline UInt CAPACITY_PREC(Obj rec)
 **
 **  'LEN_PREC' returns the number of components of the plain record <rec>.
 */
-static inline UInt LEN_PREC(Obj rec)
+EXPORT_INLINE UInt LEN_PREC(Obj rec)
 {
     GAP_ASSERT(IS_PREC_OR_COMOBJ(rec));
     return ((const UInt *)(CONST_ADDR_OBJ(rec)))[1];
@@ -99,9 +94,10 @@ static inline UInt LEN_PREC(Obj rec)
 **
 **  'SET_LEN_PREC' sets the number of components of the plain record <rec>.
 */
-static inline void SET_LEN_PREC(Obj rec, UInt nr)
+EXPORT_INLINE void SET_LEN_PREC(Obj rec, UInt nr)
 {
     GAP_ASSERT(IS_PREC_OR_COMOBJ(rec));
+    GAP_ASSERT(nr <= CAPACITY_PREC(rec));
     ((UInt *)(ADDR_OBJ(rec)))[1] = nr;
 }
 
@@ -113,11 +109,11 @@ static inline void SET_LEN_PREC(Obj rec, UInt nr)
 **  'SET_RNAM_PREC' sets   the name of  the  <i>-th  record component  of the
 **  record <rec> to the record name <rnam>.
 */
-static inline void SET_RNAM_PREC(Obj rec, UInt i, UInt rnam)
+EXPORT_INLINE void SET_RNAM_PREC(Obj rec, UInt i, Int rnam)
 {
     GAP_ASSERT(IS_PREC_OR_COMOBJ(rec));
     GAP_ASSERT(i <= CAPACITY_PREC(rec));
-    *(UInt *)(ADDR_OBJ(rec)+2*(i)) = rnam;
+    *(Int *)(ADDR_OBJ(rec) + 2 * (i)) = rnam;
 }
 
 
@@ -128,11 +124,11 @@ static inline void SET_RNAM_PREC(Obj rec, UInt i, UInt rnam)
 **  'GET_RNAM_PREC' returns the record name of the <i>-th record component of
 **  the record <rec>.
 */
-static inline UInt GET_RNAM_PREC(Obj rec, UInt i)
+EXPORT_INLINE Int GET_RNAM_PREC(Obj rec, UInt i)
 {
     GAP_ASSERT(IS_PREC_OR_COMOBJ(rec));
-    GAP_ASSERT(i <= CAPACITY_PREC(rec));
-    return *(const UInt *)(CONST_ADDR_OBJ(rec)+2*(i));
+    GAP_ASSERT(i <= LEN_PREC(rec));
+    return *(const Int *)(CONST_ADDR_OBJ(rec) + 2 * (i));
 }
 
 
@@ -143,7 +139,7 @@ static inline UInt GET_RNAM_PREC(Obj rec, UInt i)
 **  'SET_ELM_PREC' sets  the value  of  the  <i>-th  record component of  the
 **  record <rec> to the value <val>.
 */
-static inline void SET_ELM_PREC(Obj rec, UInt i, Obj val)
+EXPORT_INLINE void SET_ELM_PREC(Obj rec, UInt i, Obj val)
 {
     GAP_ASSERT(IS_PREC_OR_COMOBJ(rec));
     GAP_ASSERT(i <= CAPACITY_PREC(rec));
@@ -158,10 +154,10 @@ static inline void SET_ELM_PREC(Obj rec, UInt i, Obj val)
 **  'GET_ELM_PREC' returns the value  of the <i>-th  record component of  the
 **  record <rec>.
 */
-static inline Obj GET_ELM_PREC(Obj rec, UInt i)
+EXPORT_INLINE Obj GET_ELM_PREC(Obj rec, UInt i)
 {
     GAP_ASSERT(IS_PREC_OR_COMOBJ(rec));
-    GAP_ASSERT(i <= CAPACITY_PREC(rec));
+    GAP_ASSERT(i <= LEN_PREC(rec));
     return *(CONST_ADDR_OBJ(rec)+2*(i)+1);
 }
 
@@ -173,17 +169,29 @@ static inline Obj GET_ELM_PREC(Obj rec, UInt i)
 
 /****************************************************************************
 **
-*F  FindPRec( <rec>, <rnam>, <pos>, <cleanup> )
+*F  PositionPRec( <rec>, <rnam>, <cleanup> )
 *F   . . . . . . . . . . . . . . . . . find a component name by binary search
 **
-**  Searches <rnam> in <rec>, sets <pos> to the position where it is found
-**  (return value 1) or where it should be inserted if it is not found
-**  (return value 0).
+**  Searches <rnam> in <rec>, returns the position where it is found, or 0
+**  if it is not present.
 **  If <cleanup> is nonzero, a dirty record is automatically cleaned up.
 **  If <cleanup> is 0, this does not happen.
+**
+**
+*F  FindPRec( <rec>, <rnam>, <pos>, <cleanup> )
+*F   . . . . . . . . . . . . . . . . . find a component name by binary search
+**  A deprecated variant of PositionPRec, which sets <pos> to the position
+**  where the value is contained (or NULL if it is not present) and returns 1
+**  if the record contained rnam, and 0 otherwise.
 **/
 
-extern UInt FindPRec( Obj rec, UInt rnam, UInt *pos, int cleanup );
+UInt PositionPRec(Obj rec, UInt rnam, int cleanup);
+
+EXPORT_INLINE UInt FindPRec(Obj rec, UInt rnam, UInt * pos, int cleanup)
+{
+    *pos = PositionPRec(rec, rnam, cleanup);
+    return (*pos != 0);
+}
 
 
 /****************************************************************************
@@ -194,9 +202,7 @@ extern UInt FindPRec( Obj rec, UInt rnam, UInt *pos, int cleanup );
 **  record name <rnam> in  the plain record <rec>.   An error is signalled if
 **  <rec> has no component with record name <rnam>.
 */
-extern  Obj             ElmPRec (
-            Obj                 rec,
-            UInt                rnam );
+Obj ElmPRec(Obj rec, UInt rnam);
 
 
 /****************************************************************************
@@ -206,9 +212,7 @@ extern  Obj             ElmPRec (
 **  'IsbPRec' returns 1 if the record <rec> has a component with  the  record
 **  name <rnam>, and 0 otherwise.
 */
-extern  Int             IsbPRec (
-            Obj                 rec,
-            UInt                rnam );
+Int IsbPRec(Obj rec, UInt rnam);
 
 
 /****************************************************************************
@@ -218,10 +222,7 @@ extern  Int             IsbPRec (
 **  'AssPRec' assigns the value <val> to the record component with the record
 **  name <rnam> in the plain record <rec>.
 */
-extern  void            AssPRec (
-            Obj                 rec,
-            UInt                rnam,
-            Obj                 val );
+void AssPRec(Obj rec, UInt rnam, Obj val);
 
 
 /****************************************************************************
@@ -231,9 +232,7 @@ extern  void            AssPRec (
 **  'UnbPRec'  removes the record component  with the record name <rnam> from
 **  the record <rec>.
 */
-extern  void            UnbPRec (
-            Obj                 rec,
-            UInt                rnam );
+void UnbPRec(Obj rec, UInt rnam);
 
 
 /****************************************************************************
@@ -249,19 +248,17 @@ extern  void            UnbPRec (
 **  If inplace is 0 a garbage collection may be triggered.
 **
 */
-extern  void            SortPRecRNam (
-            Obj                 rec,
-            int                 inplace );
+void SortPRecRNam(Obj rec, int inplace);
 
 
 #ifdef USE_THREADSAFE_COPYING
-extern void TraversePRecord(Obj obj);
-extern void CopyPRecord(Obj copy, Obj original);
+typedef struct TraversalState TraversalState;
+void TraversePRecord(TraversalState * traversal, Obj obj);
+void CopyPRecord(TraversalState * traversal, Obj copy, Obj original);
 #endif
 
 
-
-extern void MarkPRecSubBags(Obj bag);
+void MarkPRecSubBags(Obj bag);
 
 
 /****************************************************************************

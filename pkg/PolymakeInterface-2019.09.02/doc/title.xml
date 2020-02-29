@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    PolymakeInterface
+  </Title>
+  <Subtitle>
+    A package to provide algorithms for fans and cones of polymake to other packages
+  </Subtitle>
+  <Version>
+    2019.09.02
+  </Version>
+  <Author>
+    Thomas Baechler<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Thomas Baechler<Br/>
+Lehrstuhl B fuer Mathematik<Br/>
+RWTH Aachen<Br/>
+Templergraben 64<Br/>
+52062 Aachen<Br/>
+Germany<Br/>
+</Address>
+<Email>thomas@momo.math.rwth-aachen.de</Email>
+<Homepage>http://wwwb.math.rwth-aachen.de/~thomas/</Homepage>
+
+  </Author>
+  <Author>
+    Sebastian Gutsche<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Department Mathematik<Br/>
+Universität Siegen<Br/>
+Walter-Flex-Straße 3<Br/>
+57072 Siegen<Br/>
+Germany<Br/>
+</Address>
+<Email>gutsche@mathematik.uni-siegen.de</Email>
+<Homepage>https://sebasguts.github.io</Homepage>
+
+  </Author>
+  <Date>
+    2 September 2019
+  </Date>
+  <Copyright>
+    
+This package may be distributed under the terms and conditions
+of the GNU Public License Version 2 or (at your option) any later version.
+
+  </Copyright>
+  </TitlePage>

@@ -1,10 +1,6 @@
-#############################################################################
-##
-#W  semigrp.tst                 GAP library                    Andrew Solomon
-##
-##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-##
+#@local C,G,G0,J,K,L,M,M4,O4,QM4,S,T,a,b,c,cc1,cc2,cong,cong3,congM4,csi,d,e
+#@local e2,eM4,el,eqm4,er,erp,f,f2,f3,g,g1,g2,g3,g4,gens,gens3,i,k,m,o4,phi
+#@local q3,rels,rels3,s,s1,s2,s3,t,t1,t2,t3,u,x,x1,x2,y1,y2
 gap> START_TEST("semigrp.tst");
 gap> ###############################################
 gap> ##
@@ -392,7 +388,7 @@ gap> GeneratorsOfInverseMonoid(S);
 gap> S := FreeSemigroup(2);
 <free semigroup on the generators [ s1, s2 ]>
 gap> T := Subsemigroup(S, []);
-<semigroup of size 0, with 0 generators>
+<empty semigroup>
 gap> IsTrivial(T);
 false
 gap> IsEmpty(T);
@@ -498,9 +494,13 @@ Rank 2:  [H size = 1, 1 L-class, 1 R-class]
 Rank 2:  [H size = 1, 1 L-class, 1 R-class]
 Rank 1: *[H size = 1, 1 L-class, 1 R-class]
 
+# test printing an empty semigroup
+gap> S := FullTransformationMonoid(1);;
+gap> Subsemigroup(S, []);
+<empty transformation semigroup>
+gap> S := SymmetricInverseMonoid(1);;
+gap> Subsemigroup(S, []);
+<empty partial perm semigroup>
+
 #
 gap> STOP_TEST( "semigrp.tst", 1);
-
-#############################################################################
-##
-#E

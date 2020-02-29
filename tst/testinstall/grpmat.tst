@@ -1,10 +1,4 @@
-#############################################################################
-##
-#W  grpmat.tst                  GAP tests                   Heiko Theißen
-##
-##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-##
+#@local cl,g,gd,gens,hom,i,img,iso,pcgs,u,G
 gap> START_TEST("grpmat.tst");
 gap> i := E(4);; G := Group([[i,0],[0,-i]],[[0,1],[-1,0]]);;
 gap> gens := GeneratorsOfGroup( G );; IsSSortedList( gens );
@@ -53,11 +47,5 @@ gap> Size(img);
 gap> IsNaturalGL( TrivialSubgroup( GL(2,2) ) );
 false
 
-# Unbind variables so we can GC memory
-gap> Unbind(img); Unbind(iso); Unbind(g); Unbind(hom); Unbind(u);
-gap> Unbind(g); Unbind(gd); Unbind(G); Unbind(cl); Unbind(pcgs);
+#
 gap> STOP_TEST( "grpmat.tst", 1);
-
-#############################################################################
-##
-#E

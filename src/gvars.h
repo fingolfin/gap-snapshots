@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  gvars.h                     GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares the functions of the global variables package.
 **
@@ -41,7 +41,7 @@
 **  will return the value of <gvar>  after evaluating <gvar>-s expression, or
 **  0 if <gvar> was not an automatic variable.
 */
-extern Obj ValGVar(UInt gvar);
+Obj ValGVar(UInt gvar);
 
 #define VAL_GVAR(gvar)      ValGVar(gvar)
 
@@ -71,10 +71,12 @@ extern Obj ErrorMustHaveAssObjFunc;
 *F  AssGVar(<gvar>,<val>) . . . . . . . . . . . . assign to a global variable
 **
 **  'AssGVar' assigns the value <val> to the global variable <gvar>.
+**  'AssGVarWithoutReadOnlyCheck' does the same thing, while not checking if the
+**                            variable is read only.
 */
-extern  void            AssGVar (
-            UInt                gvar,
-            Obj                 val );
+void AssGVar(UInt gvar, Obj val);
+
+extern void AssGVarWithoutReadOnlyCheck(UInt gvar, Obj val);
 
 
 /****************************************************************************
@@ -85,8 +87,7 @@ extern  void            AssGVar (
 **  be 0 if  <gvar> has  no assigned value.    It will also cause a  function
 **  call, if <gvar> is automatic.
 */
-extern  Obj             ValAutoGVar (
-            UInt                gvar );
+Obj ValAutoGVar(UInt gvar);
 
 /****************************************************************************
 **
@@ -96,8 +97,7 @@ extern  Obj             ValAutoGVar (
 **  <gvar>.
 */
 #ifdef HPCGAP
-extern  Obj             ValGVarTL (
-            UInt                gvar );
+Obj ValGVarTL(UInt gvar);
 #else
 #define ValGVarTL(gvar)     ValGVar(gvar)
 #endif
@@ -110,8 +110,7 @@ extern  Obj             ValGVarTL (
 **  'NameGVar' returns the name of the global variable <gvar> as a GAP
 **  string.
 */
-extern  Obj            NameGVar (
-            UInt                gvar );
+Obj NameGVar(UInt gvar);
 
 
 /****************************************************************************
@@ -120,8 +119,7 @@ extern  Obj            NameGVar (
 **
 **  'ExprGVar' returns the expression of the automatic global variable <gvar>.
 */
-extern  Obj            ExprGVar (
-            UInt                gvar );
+Obj ExprGVar(UInt gvar);
 
 
 /****************************************************************************
@@ -130,26 +128,21 @@ extern  Obj            ExprGVar (
 **
 **  'GVarName' returns the global variable with the name <name>.
 */
-extern UInt GVarName (
-            const Char *              name );
+UInt GVarName(const Char * name);
 
 
 /****************************************************************************
 **
 *F  iscomplete_gvar( <name>, <len> )  . . . . . . . . . . . . .  check <name>
 */
-extern UInt iscomplete_gvar (
-            Char *              name,
-            UInt                len );
+UInt iscomplete_gvar(Char * name, UInt len);
 
 
 /****************************************************************************
 **
 *F  completion_gvar( <name>, <len> )  . . . . . . . . . . . . find completion
 */
-extern UInt completion_gvar (
-            Char *              name,
-            UInt                len );
+UInt completion_gvar(Char * name, UInt len);
 
 
 /****************************************************************************
@@ -158,42 +151,36 @@ extern UInt completion_gvar (
 *F  MakeReadWriteGVar( <gvar> ) . . . . . . make a global variable read-write
 *F  MakeConstantGVar( <gvar> ) . . . . . . make a global variable constant
 */
-extern void MakeReadOnlyGVar (
-    UInt                gvar );
+void MakeReadOnlyGVar(UInt gvar);
 
-extern void MakeReadWriteGVar (
-    UInt                gvar );
+void MakeReadWriteGVar(UInt gvar);
 
-extern void MakeConstantGVar (
-    UInt                gvar );
+void MakeConstantGVar(UInt gvar);
 
 /****************************************************************************
 **
 *F  MakeThreadLocalVar( <gvar>, <rnam> ) . . . . make a variable thread-local
 */
 #ifdef HPCGAP
-extern void MakeThreadLocalVar (
-    UInt                gvar,
-    UInt		rnam );
+void MakeThreadLocalVar(UInt gvar, UInt rnam);
 #endif
 
-extern Int IsReadOnlyGVar (
-    UInt                gvar );
+Int IsReadOnlyGVar(UInt gvar);
 
-extern Int IsConstantGVar(UInt gvar);
+Int IsConstantGVar(UInt gvar);
 
 
 /****************************************************************************
 **
 **  Some convenient helpers
 */
-static inline void AssReadOnlyGVar(UInt gvar, Obj val)
+EXPORT_INLINE void AssReadOnlyGVar(UInt gvar, Obj val)
 {
     AssGVar(gvar, val);
     MakeReadOnlyGVar(gvar);
 }
 
-static inline void AssConstantGVar(UInt gvar, Obj val)
+EXPORT_INLINE void AssConstantGVar(UInt gvar, Obj val)
 {
     AssGVar(gvar, val);
     MakeConstantGVar(gvar);
@@ -224,9 +211,7 @@ static inline void AssConstantGVar(UInt gvar, Obj val)
 **  event, this information  does not really want to  be saved  because it is
 **  kernel centred rather than workspace centred.
 */
-extern void InitCopyGVar (
-    const Char *        name ,
-    Obj *               copy );
+void InitCopyGVar(const Char * name, Obj * copy);
 
 
 /****************************************************************************
@@ -242,23 +227,14 @@ extern void InitCopyGVar (
 **  <gvar> has no assigned value, then <cvar> will  reference a function that
 **  signals the error ``<gvar> must have an assigned value''.
 */
-extern void InitFopyGVar (
-    const Char *        name,
-    Obj *               copy );
+void InitFopyGVar(const Char * name, Obj * copy);
 
 
 /****************************************************************************
 **
 *F  UpdateCopyFopyInfo()  . . . . . . . . . .  convert kernel info into plist
 */
-extern void UpdateCopyFopyInfo ( void );
-
-
-/****************************************************************************
-**
-*F  GVarsAfterCollectBags()
-*/
-extern void GVarsAfterCollectBags( void );
+void UpdateCopyFopyInfo(void);
 
 
 /****************************************************************************
@@ -286,12 +262,12 @@ typedef struct GVarDescriptor {
 } GVarDescriptor;
 
 
-extern void DeclareGVar(GVarDescriptor *gvar, const char *name);
-extern Obj GVarValue(GVarDescriptor *gvar);
-extern Obj GVarObj(GVarDescriptor *gvar);
-extern Obj GVarFunction(GVarDescriptor *gvar);
-extern Obj GVarOptFunction(GVarDescriptor *gvar);
-extern void SetGVar(GVarDescriptor *gvar, Obj obj);
+void DeclareGVar(GVarDescriptor * gvar, const char * name);
+Obj  GVarValue(GVarDescriptor * gvar);
+Obj  GVarObj(GVarDescriptor * gvar);
+Obj  GVarFunction(GVarDescriptor * gvar);
+Obj  GVarOptFunction(GVarDescriptor * gvar);
+void SetGVar(GVarDescriptor * gvar, Obj obj);
 #endif
 
 

@@ -58,10 +58,12 @@ several arguments</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X85E40340806C2B8C">5.5-1 IsFunction</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X874C7C6D8650D648">5.5-2 IsOperation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X87838FE885A9AAF9">5.5-3 FunctionsFamily</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X87838FE885A9AAF9">5.5-2 FunctionsFamily</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X81F732457F7BC851">5.6 <span class="Heading">Naming Conventions</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7A1721CD79F08E71">5.7 <span class="Heading">Code annotations (pragmas)</span></a>
 </span>
 </div>
 </div>
@@ -78,7 +80,7 @@ several arguments</span></a>
 
 <h5>5.1-1 NameFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NameFunction</code>( <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NameFunction</code>( <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the name of a function. For operations, this is the name used in their declaration. For functions, this is the variable name they were first assigned to. (For some internal functions, this might be a name <em>different</em> from the name that is documented.) If no such name exists, the string <code class="code">"unknown"</code> is returned.</p>
 
 
@@ -86,15 +88,20 @@ several arguments</span></a>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NameFunction(SylowSubgroup);</span>
 "SylowSubgroup"
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Blubberflutsch:=x-&gt;x;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HasNameFunction(Blubberflutsch);</span>
+true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NameFunction(Blubberflutsch);</span>
 "Blubberflutsch"
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a:=Blubberflutsch;;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NameFunction(a);</span>
 "Blubberflutsch"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetNameFunction(a, "f");</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NameFunction(a);</span>
+"f"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HasNameFunction(x-&gt;x);</span>
+false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NameFunction(x-&gt;x);</span>
 "unknown"
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NameFunction(NameFunction);</span>
-"NameFunction"
 </pre></div>
 
 <p><a id="X877F03F77FD74C98" name="X877F03F77FD74C98"></a></p>
@@ -278,26 +285,26 @@ function( arg... ) ... end
 <h5>5.3-1 MemoizePosIntFunction</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MemoizePosIntFunction</code>( <var class="Arg">function</var>[, <var class="Arg">options</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p><code class="func">MemoizePosIntFunction</code> returns a function which behaves the same as <var class="Arg">function</var>, except it caches the results; if the new function is called with the same input, then any call after the first will return the cached value, instead of recomputing it. The cache is flushed by calling <code class="func">FlushCaches</code> (<a href="chap79.html#X87A4316C818B3DE3"><span class="RefLink">79.18-18</span></a>).</p>
+<p><code class="func">MemoizePosIntFunction</code> returns a function which behaves the same as <var class="Arg">function</var>, except it caches the results for any inputs that are positive integers. Thus if the new function is called multiple times with the same input, then any call after the first will return the cached value, instead of recomputing it. By default, the cache can be flushed by calling <code class="func">FlushCaches</code> (<a href="chap79.html#X87A4316C818B3DE3"><span class="RefLink">79.10-3</span></a>).</p>
 
-<p>The returned function will only accept positive integers.</p>
+<p>The returned function will by default only accept positive integers.</p>
 
-<p>This function does not promise to never call <var class="Arg">function</var> more than once for any input -- values may be removed if the cache gets too large, or GAP chooses to flush all caches, or if multiple threads try to calculate the same value simultaneously.</p>
+<p>This function does not promise to never call <var class="Arg">function</var> more than once for any input -- values may be removed if the cache gets too large, or if <code class="func">FlushCaches</code> (<a href="chap79.html#X87A4316C818B3DE3"><span class="RefLink">79.10-3</span></a>) is called, or if multiple threads try to calculate the same value simultaneously.</p>
 
 <p>The optional second argument is a record which provides a number of configuration options. The following options are supported.</p>
 
 
 <dl>
 <dt><strong class="Mark"><code class="code">defaults</code> (default an empty list)</strong></dt>
-<dd><p>Used to initalise the cache, both initially and after each flush.</p>
+<dd><p>Used to initalise the cache, both initially and after each flush. If <code class="code">defaults[i]</code> is bound, then this is used as default vale for the input <code class="code">i</code>.</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">flush</code> (default <code class="keyw">true</code>)</strong></dt>
-<dd><p>If this is <code class="keyw">true</code>, the cache is emptied whenever <code class="func">FlushCaches</code> (<a href="chap79.html#X87A4316C818B3DE3"><span class="RefLink">79.18-18</span></a>) is called.</p>
+<dd><p>If this is <code class="keyw">true</code>, the cache is emptied whenever <code class="func">FlushCaches</code> (<a href="chap79.html#X87A4316C818B3DE3"><span class="RefLink">79.10-3</span></a>) is called; if false, then the cache cannot be flushed.</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">errorHandler</code> (defaults to <code class="func">Error</code> (<a href="chap6.html#X7E7AD8D87EBA1A08"><span class="RefLink">6.6-1</span></a>))</strong></dt>
-<dd><p>A function to be called when an input which is not a positive integer is passed to the cache. If this function returns a value, that value is returned by the cache.</p>
+<dd><p>A function to be called when an input which is not a positive integer is passed to the cache. The function can either raise an error, or else return a value which is then returned by the cache. Note that such a value does not get cached itself.</p>
 
 </dd>
 </dl>
@@ -327,7 +334,7 @@ Check: 2
 
 <h4>5.4 <span class="Heading">Functions that do nothing</span></h4>
 
-<p>The following functions return fixed results (or just their own argument). They can be useful in places when the syntax requires a function, but actually no functionality is required. So <code class="func">ReturnTrue</code> (<a href="chap5.html#X7DB422A2876CCC4D"><span class="RefLink">5.4-1</span></a>) is often used as family predicate in <code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>).</p>
+<p>The following functions return fixed results (or just their own argument). They can be useful in places when the syntax requires a function, but actually no functionality is required. So <code class="func">ReturnTrue</code> (<a href="chap5.html#X7DB422A2876CCC4D"><span class="RefLink">5.4-1</span></a>) is often used as family predicate in <code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.3-1</span></a>).</p>
 
 <p><a id="X7DB422A2876CCC4D" name="X7DB422A2876CCC4D"></a></p>
 
@@ -405,13 +412,13 @@ function( object... ) ... end
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=ReturnFirst;</span>
-function( object... ) ... end
+function( first, rest... ) ... end
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f(1);</span>
 1
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f(2,3,4);</span>
 2
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f();</span>
-Error, RETURN_FIRST requires one or more arguments
+Error, Function: number of arguments must be at least 1 (not 0)
 </pre></div>
 
 <p><a id="X810325697BDEF899" name="X810325697BDEF899"></a></p>
@@ -460,30 +467,9 @@ IdentityMapping( Sym( [ 1 .. 3 ] ) )
 false
 </pre></div>
 
-<p><a id="X874C7C6D8650D648" name="X874C7C6D8650D648"></a></p>
-
-<h5>5.5-2 IsOperation</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOperation</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
-<p>is the category of operations. Every operation is a function, but not vice versa.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MinimalPolynomial;  </span>
-&lt;Operation "MinimalPolynomial"&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsOperation(MinimalPolynomial);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFunction(MinimalPolynomial);         </span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Factorial;</span>
-function( n ) ... end
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsOperation(Factorial);</span>
-false
-</pre></div>
-
 <p><a id="X87838FE885A9AAF9" name="X87838FE885A9AAF9"></a></p>
 
-<h5>5.5-3 FunctionsFamily</h5>
+<h5>5.5-2 FunctionsFamily</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FunctionsFamily</code></td><td class="tdright">(&nbsp;family&nbsp;)</td></tr></table></div>
 <p>is the family of all functions.</p>
@@ -498,7 +484,7 @@ false
 
 <p>If the first part of the name of a function is a verb then the function may modify its argument(s) but does not return anything, for example <code class="func">Append</code> (<a href="chap21.html#X79E31DB27C82D6E1"><span class="RefLink">21.4-5</span></a>) appends the list given as second argument to the list given as first argument. Otherwise the function returns an object without changing the arguments, for example <code class="func">Concatenation</code> (<a href="chap21.html#X840C55A77D1BB2E1"><span class="RefLink">21.20-1</span></a>) returns the concatenation of the lists given as arguments.</p>
 
-<p>If the name of a function contains the word "<code class="code">Of</code>" then the return value is thought of as information deduced from the arguments. Usually such functions are attributes (see <a href="chap13.html#X7C701DBF7BAE649A"><span class="RefLink">13.5</span></a>). Examples are <code class="func">GeneratorsOfGroup</code> (<a href="chap39.html#X79C44528864044C5"><span class="RefLink">39.2-4</span></a>), which returns a list of generators for the group entered as argument, or <code class="func">DiagonalOfMat</code> (<a href="chap24.html#X82B6B0298179D895"><span class="RefLink">24.12-1</span></a>).</p>
+<p>If the name of a function contains the word "<code class="code">Of</code>" then the return value is thought of as information deduced from the arguments. Usually such functions are attributes (see <a href="chap13.html#X7C701DBF7BAE649A"><span class="RefLink">13.5</span></a>). Examples are <code class="func">GeneratorsOfGroup</code> (<a href="chap39.html#X79C44528864044C5"><span class="RefLink">39.2-4</span></a>), which returns a list of generators for the group entered as argument, or <code class="func">DiagonalOfMat</code> (<a href="chap24.html#X7A9139D686ACB7D8"><span class="RefLink">24.12-1</span></a>).</p>
 
 <p>For the setter and tester functions of an attribute <code class="code">Attr</code> the names <code class="code">SetAttr</code> resp. <code class="code">HasAttr</code> are available (see <a href="chap13.html#X7C701DBF7BAE649A"><span class="RefLink">13.5</span></a>).</p>
 
@@ -530,6 +516,59 @@ false
 <p>The idea is that the possibly time consuming check of the arguments can be omitted if one is sure that they are unnecessary. For example, if an algorithm produces generators of the derived subgroup of a group then it is guaranteed that they lie in the original group; <code class="func">Subgroup</code> (<a href="chap39.html#X7C82AA387A42DCA0"><span class="RefLink">39.3-1</span></a>) would check this, and <code class="func">SubgroupNC</code> (<a href="chap39.html#X7C82AA387A42DCA0"><span class="RefLink">39.3-1</span></a>) omits the check.</p>
 
 <p>Needless to say, all these rules are not followed slavishly, for example there is one operation <code class="func">Zero</code> (<a href="chap31.html#X8040AC7A79FFC442"><span class="RefLink">31.10-3</span></a>) instead of two operations <code class="code">ZeroOfElement</code> and <code class="code">ZeroOfAdditiveGroup</code>.</p>
+
+<p><a id="X7A1721CD79F08E71" name="X7A1721CD79F08E71"></a></p>
+
+<h4>5.7 <span class="Heading">Code annotations (pragmas)</span></h4>
+
+<p>GAP supports the use of code annotations (pragmas) in functions, i.e., adding comments to functions that are stored in the function object itself, unlike regular comments. Pragmas are single-line comments, starting with <code class="code">#%</code>:</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">function()</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      #% This is a pragma</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      #  This is not a pragma</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      return;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( last );</span>
+function (  )
+    #% This is a pragma
+    return;
+end
+</pre></div>
+
+<p>Pragmas can be used to mark parts of functions that should later be manipulated using <a href="chap4.html#X8732D9257FFCEA1B"><span class="RefLink">4.25</span></a>.</p>
+
+<p>Please note that heavy use of pragmas in functions slows down the execution of your function in the same way as adding empty <code class="code">;</code> statements to your code.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := function( )</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      local i;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      for i in [ 1 .. 1000000 ] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              i := i + 1;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      od;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">end;</span>
+function(  ) ... end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a();</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">time;</span>
+14
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := function( )</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      local i;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      for i in [ 1 .. 1000000 ] do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              i := i + 1;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              #% pragma</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              #% pragma</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              #% pragma</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              #% pragma</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              #% pragma</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      od;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">end;</span>
+function(  ) ... end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b();</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">time;</span>
+25
+</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6.html">[Next Chapter]</a>&nbsp;  </div>

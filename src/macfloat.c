@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  macfloat.c                   GAP source                      Steve Linton
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the functions for the macfloat package.
 **
@@ -26,10 +26,15 @@
 #include "bool.h"
 #include "error.h"
 #include "io.h"
+#include "integer.h"
 #include "modules.h"
 #include "plist.h"
 #include "saveload.h"
 #include "stringobj.h"
+
+#define RequireMacFloat(funcname, op) \
+    RequireArgumentCondition(funcname, op, IS_MACFLOAT(op), \
+        "must be a macfloat")
 
 
 /****************************************************************************
@@ -40,10 +45,9 @@
 **
 **  'TypeMacfloat' is the function in 'TypeObjFuncs' for macfloatean values.
 */
-Obj TYPE_MACFLOAT;
+static Obj TYPE_MACFLOAT;
 
-Obj TypeMacfloat (
-    Obj                 val )
+static Obj TypeMacfloat(Obj val)
 {  
     return TYPE_MACFLOAT;
 }
@@ -51,7 +55,8 @@ Obj TypeMacfloat (
 
 // helper function for printing a "decimal" representation of a macfloat
 // into a buffer.
-static void PrintMacfloatToBuf(char *buf, size_t bufsize, Double val, int precision)
+static void
+PrintMacfloatToBuf(char * buf, size_t bufsize, Double val, int precision)
 {
     // handle printing of NaN and infinities ourselves, to ensure
     // they are printed uniformly across all platforms
@@ -66,6 +71,24 @@ static void PrintMacfloatToBuf(char *buf, size_t bufsize, Double val, int precis
     }
     else {
         snprintf(buf, bufsize, "%.*" PRINTFFORMAT, precision, val);
+        // check if a period is in the output; this is not always the case,
+        // e.g. if the value is an integer
+        if (strchr(buf, '.'))
+            return;    // everything is fine
+        // we need to insert a '.'; either at the end, or before an exponent
+        // (e.g. "7e10" -> "7.e10"). For this we need 1 extra byte of storage,
+        // plus of course 1 byte for the string terminator; check if the
+        // buffer is big enough
+        if (strlen(buf) + 2 <= bufsize) {
+            char * loc = strchr(buf, 'e');
+            if (loc) {
+                memmove(loc + 1, loc, strlen(loc) + 1);
+                loc[0] = '.';
+            }
+            else {
+                strxcat(buf, ".", bufsize);
+            }
+        }
     }
 }
 
@@ -76,7 +99,7 @@ static void PrintMacfloatToBuf(char *buf, size_t bufsize, Double val, int precis
 **
 **  'PrintMacfloat' prints the macfloating value <macfloat>.
 */
-void PrintMacfloat(Obj x)
+static void PrintMacfloat(Obj x)
 {
     Char buf[1024];
     // TODO: should we use PRINTFDIGITS instead of 16?
@@ -92,17 +115,12 @@ void PrintMacfloat(Obj x)
 **  'EqMacfloat' returns 'True' if the two macfloatean values <macfloatL> and <macfloatR> are
 **  equal, and 'False' otherwise.
 */
-Int EqMacfloat (
-    Obj                 macfloatL,
-    Obj                 macfloatR )
+static Int EqMacfloat(Obj macfloatL, Obj macfloatR)
 {
   return VAL_MACFLOAT(macfloatL) == VAL_MACFLOAT(macfloatR);
 }
 
-Obj FuncEQ_MACFLOAT (
-    Obj                 self,
-    Obj                 macfloatL,
-    Obj                 macfloatR )
+static Obj FuncEQ_MACFLOAT(Obj self, Obj macfloatL, Obj macfloatR)
 {
   return EqMacfloat(macfloatL,macfloatR) ? True : False;
 }
@@ -113,9 +131,7 @@ Obj FuncEQ_MACFLOAT (
 *F  LtMacfloat( <macfloatL>, <macfloatR> )  . . . . . . . . .  test if <macfloatL> <  <macfloatR>
 **
 */
-Int LtMacfloat (
-    Obj                 macfloatL,
-    Obj                 macfloatR )
+static Int LtMacfloat(Obj macfloatL, Obj macfloatR)
 {
   return VAL_MACFLOAT(macfloatL) < VAL_MACFLOAT(macfloatR);
 }
@@ -126,7 +142,7 @@ Int LtMacfloat (
 *F  SaveMacfloat( <macfloat> ) . . . . . . . . . . . . . . . . . . . . save a Macfloatean 
 **
 */
-void SaveMacfloat( Obj obj )
+static void SaveMacfloat(Obj obj)
 {
     const UInt1 *data = (const UInt1 *)CONST_ADDR_OBJ(obj);
     for (UInt i = 0; i < sizeof(Double); i++)
@@ -138,7 +154,7 @@ void SaveMacfloat( Obj obj )
 *F  LoadMacfloat( <macfloat> ) . . . . . . . . . . . . . . . . . . . . save a Macfloatean 
 **
 */
-void LoadMacfloat( Obj obj )
+static void LoadMacfloat(Obj obj)
 {
     UInt1 *data = (UInt1 *)ADDR_OBJ(obj);
     for (UInt i = 0; i < sizeof(Double); i++)
@@ -160,19 +176,19 @@ Obj NEW_MACFLOAT( Double val )
 */
 
 
-Obj ZeroMacfloat( Obj f )
+static Obj ZeroMacfloat(Obj f)
 {
   return NEW_MACFLOAT((Double)0.0);
 }
 
 /****************************************************************************
 **
-*F  AinvMacfloat(<macfloat> ) . . . . . . . . . . . . . . . . . . . unary minus 
+*F  AInvMacfloat( <macfloat> ) . . . . . . . . . . . . . . . . .  unary minus
 **
 */
 
 
-Obj AInvMacfloat( Obj f )
+static Obj AInvMacfloat(Obj f)
 {
   return NEW_MACFLOAT(-VAL_MACFLOAT(f));
 }
@@ -184,7 +200,7 @@ Obj AInvMacfloat( Obj f )
 */
 
 
-Obj OneMacfloat( Obj f )
+static Obj OneMacfloat(Obj f)
 {
   return NEW_MACFLOAT((Double)1.0);
 }
@@ -196,7 +212,7 @@ Obj OneMacfloat( Obj f )
 */
 
 
-Obj InvMacfloat( Obj f )
+static Obj InvMacfloat(Obj f)
 {
   return NEW_MACFLOAT((Double)1.0/VAL_MACFLOAT(f));
 }
@@ -208,7 +224,7 @@ Obj InvMacfloat( Obj f )
 */
 
 
-Obj ProdMacfloat( Obj fl, Obj fr )
+static Obj ProdMacfloat(Obj fl, Obj fr)
 {
   return NEW_MACFLOAT(VAL_MACFLOAT(fl)*VAL_MACFLOAT(fr));
 }
@@ -220,7 +236,7 @@ Obj ProdMacfloat( Obj fl, Obj fr )
 */
 
 
-Obj PowMacfloat( Obj fl, Obj fr )
+static Obj PowMacfloat(Obj fl, Obj fr)
 {
   return NEW_MACFLOAT(MATH(pow)(VAL_MACFLOAT(fl),VAL_MACFLOAT(fr)));
 }
@@ -232,7 +248,7 @@ Obj PowMacfloat( Obj fl, Obj fr )
 */
 
 
-Obj SumMacfloat( Obj fl, Obj fr )
+static Obj SumMacfloat(Obj fl, Obj fr)
 {
   return NEW_MACFLOAT(VAL_MACFLOAT(fl)+VAL_MACFLOAT(fr));
 }
@@ -244,7 +260,7 @@ Obj SumMacfloat( Obj fl, Obj fr )
 */
 
 
-Obj DiffMacfloat( Obj fl, Obj fr )
+static Obj DiffMacfloat(Obj fl, Obj fr)
 {
   return NEW_MACFLOAT(VAL_MACFLOAT(fl)-VAL_MACFLOAT(fr));
 }
@@ -256,7 +272,7 @@ Obj DiffMacfloat( Obj fl, Obj fr )
 */
 
 
-Obj QuoMacfloat( Obj fl, Obj fr )
+static Obj QuoMacfloat(Obj fl, Obj fr)
 {
   return NEW_MACFLOAT(VAL_MACFLOAT(fl)/VAL_MACFLOAT(fr));
 }
@@ -268,7 +284,7 @@ Obj QuoMacfloat( Obj fl, Obj fr )
 */
 
 
-Obj LQuoMacfloat( Obj fl, Obj fr )
+static Obj LQuoMacfloat(Obj fl, Obj fr)
 {
   return NEW_MACFLOAT(VAL_MACFLOAT(fr)/VAL_MACFLOAT(fl));
 }
@@ -280,7 +296,7 @@ Obj LQuoMacfloat( Obj fl, Obj fr )
 */
 
 
-Obj ModMacfloat( Obj fl, Obj fr )
+static Obj ModMacfloat(Obj fl, Obj fr)
 {
   return NEW_MACFLOAT(MATH(fmod)(VAL_MACFLOAT(fl),VAL_MACFLOAT(fr)));
 }
@@ -292,7 +308,7 @@ Obj ModMacfloat( Obj fl, Obj fr )
 **
 */
 
-Obj FuncMACFLOAT_INT( Obj self, Obj i )
+static Obj FuncMACFLOAT_INT(Obj self, Obj i)
 {
   if (!IS_INTOBJ(i))
     return Fail;
@@ -306,14 +322,10 @@ Obj FuncMACFLOAT_INT( Obj self, Obj i )
 **
 */
 
-Obj FuncMACFLOAT_STRING( Obj self, Obj s )
+static Obj FuncMACFLOAT_STRING(Obj self, Obj s)
 {
+    RequireStringRep("MACFLOAT_STRING", s);
 
-  while (!IsStringConv(s))
-    {
-      s = ErrorReturnObj("MACFLOAT_STRING: object to be converted must be a string not a %s",
-			 (Int)TNAM_OBJ(s),0,"You can return a string to continue" );
-    }
   char * endptr;
   UChar *sp = CHARS_STRING(s);
   Obj res= NEW_MACFLOAT((Double) STRTOD((char *)sp,&endptr));
@@ -328,7 +340,7 @@ Obj FuncMACFLOAT_STRING( Obj self, Obj s )
 **
 */
 
-Obj SumIntMacfloat( Obj i, Obj f )
+static Obj SumIntMacfloat(Obj i, Obj f)
 {
   return NEW_MACFLOAT( (Double)(INT_INTOBJ(i)) + VAL_MACFLOAT(f));
 }
@@ -340,17 +352,17 @@ Obj SumIntMacfloat( Obj i, Obj f )
 **
 */
 
-#define MAKEMATHPRIMITIVE(NAME,name)			\
-  Obj Func##NAME##_MACFLOAT( Obj self, Obj f )		\
-  {							\
-    return NEW_MACFLOAT(MATH(name)(VAL_MACFLOAT(f)));	\
-  }
+#define MAKEMATHPRIMITIVE(NAME, name)                                        \
+    static Obj Func##NAME##_MACFLOAT(Obj self, Obj f)                        \
+    {                                                                        \
+        return NEW_MACFLOAT(MATH(name)(VAL_MACFLOAT(f)));                    \
+    }
 
-#define MAKEMATHPRIMITIVE2(NAME,name)					\
-  Obj Func##NAME##_MACFLOAT( Obj self, Obj f, Obj g)			\
-  {									\
-    return NEW_MACFLOAT(MATH(name)(VAL_MACFLOAT(f),VAL_MACFLOAT(g)));	\
-  }
+#define MAKEMATHPRIMITIVE2(NAME, name)                                       \
+    static Obj Func##NAME##_MACFLOAT(Obj self, Obj f, Obj g)                 \
+    {                                                                        \
+        return NEW_MACFLOAT(MATH(name)(VAL_MACFLOAT(f), VAL_MACFLOAT(g)));   \
+    }
 
 MAKEMATHPRIMITIVE(COS,cos)
 MAKEMATHPRIMITIVE(SIN,sin)
@@ -386,27 +398,32 @@ MAKEMATHPRIMITIVE(ABS,fabs)
 MAKEMATHPRIMITIVE2(ATAN2,atan2)
 MAKEMATHPRIMITIVE2(HYPOT,hypot)
 
-Obj FuncSIGN_MACFLOAT( Obj self, Obj f )
+static Obj FuncSIGN_MACFLOAT(Obj self, Obj f)
 {
   Double vf = VAL_MACFLOAT(f);
   
   return vf == 0. ? INTOBJ_INT(0) : signbit(vf) ? INTOBJ_INT(-1) : INTOBJ_INT(1);
 }
 
-Obj FuncSIGNBIT_MACFLOAT( Obj self, Obj f )
+static Obj FuncSIGNBIT_MACFLOAT(Obj self, Obj f)
 {
   return signbit(VAL_MACFLOAT(f)) ? True : False;
 }
 
 
-extern Obj FuncIntHexString(Obj,Obj);
-
-Obj FuncINTFLOOR_MACFLOAT( Obj self, Obj obj )
+static Obj FuncINTFLOOR_MACFLOAT(Obj self, Obj macfloat)
 {
+    RequireMacFloat("INTFLOOR_MACFLOAT", macfloat);
+
+    Double f = VAL_MACFLOAT(macfloat);
+    if (isnan(f))
+        ErrorQuit("cannot convert float nan to integer", 0, 0);
+    if (isinf(f))
+        ErrorQuit("cannot convert float %s to integer", (Int)(f > 0 ? "inf" : "-inf"), 0);
+
 #ifdef HAVE_TRUNC
-  Double f = trunc(VAL_MACFLOAT(obj));
+  f = trunc(f);
 #else
-  Double f = VAL_MACFLOAT(obj);
   if (f >= 0.0)
     f = floor(f);
   else
@@ -421,17 +438,19 @@ Obj FuncINTFLOOR_MACFLOAT( Obj self, Obj obj )
 
   Obj str = NEW_STRING(str_len);
   char *s = CSTR_STRING(str), *p = s+str_len-1;
-  if (f < 0.0)
-    f = -f, s[0] = '-';
+  if (f < 0.0) {
+    f = -f;
+    s[0] = '-';
+  }
   while (p > s || (p == s && s[0] != '-')) {
     int d = (int) fmod(f,16.0);
     *p-- = d < 10 ? '0'+d : 'a'+d-10;
     f /= 16.0;
   }
-  return FuncIntHexString(self,str);
+  return IntHexString(str);
 }
 
-Obj FuncSTRING_DIGITS_MACFLOAT( Obj self, Obj gapprec, Obj f)
+static Obj FuncSTRING_DIGITS_MACFLOAT(Obj self, Obj gapprec, Obj f)
 {
   Char buf[1024];
   Obj str;
@@ -443,12 +462,12 @@ Obj FuncSTRING_DIGITS_MACFLOAT( Obj self, Obj gapprec, Obj f)
   return str;
 }
 
-Obj FuncLDEXP_MACFLOAT( Obj self, Obj f, Obj i)
+static Obj FuncLDEXP_MACFLOAT(Obj self, Obj f, Obj i)
 {
   return NEW_MACFLOAT(ldexp(VAL_MACFLOAT(f),INT_INTOBJ(i)));
 }
 
-Obj FuncFREXP_MACFLOAT( Obj self, Obj f)
+static Obj FuncFREXP_MACFLOAT(Obj self, Obj f)
 {
   int i;
   Obj d = NEW_MACFLOAT(frexp (VAL_MACFLOAT(f), &i));
@@ -533,8 +552,6 @@ static StructGVarFunc GVarFuncs [] = {
 **
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
-extern Int EqObject (Obj,Obj);
-
 static Int InitKernel (
     StructInitInfo *    module )
 {

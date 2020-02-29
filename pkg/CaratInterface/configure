@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+# This script discovers various parameters of a GAP installation,
+# such as host architecture, location of the GMP library used for GAP,
+# compile and link flags, etc., and writes that information to the
+# file config.carat, which is then used by the Makefile.
+#
+#    Usage: ./configure [<path to GAP root directory>]
+#           ./configure [--with-gaproot=<path to GAP root directory>]
+#                       [--with-gmp=<path to GMP installation directory]
+#
+# The default path to the GAP root directory is ../..
+
+error() { printf "ERROR: %s\n" "$@" ; exit 1 ; }
+
+
+# get hold of $GAPROOT, and possibly $GMPDIR
+GMPDIR=
+GAPROOT="$(cd ../.. && pwd)"
+while [[ "$#" -ge 1 ]]; do
+  option="$1" ; shift
+  case "$option" in
+    --with-gmp=*)     GMPDIR="${option#--with-gmp=}"; ;;
+    --with-gaproot)   GAPROOT="$1"; shift; ;;
+    --with-gaproot=*) GAPROOT="${option#--with-gaproot=}"; ;;
+    *)                GAPROOT="$option"; ;;
+  esac
+done
+
+# we need an absolute path
+GAPROOT="$(cd $GAPROOT && pwd)"
+
+# check whether $GAPROOT is valid
+if [[ ! -f "$GAPROOT/sysinfo.gap" ]]; then
+  error "$GAPROOT is not the root of a gap installation (no sysinfo.gap)" \
+        "Please provide the absolute path of your GAP root directory as" \
+        "first argument with '--with-gaproot=' to this script."
+fi
+
+# read in sysinfo
+source "$GAPROOT/sysinfo.gap"
+
+# where is the GMP library?
+# if not set by this configure, get the GMP bundled with GAP
+if test -z "$GMPDIR"; then
+    if [[ -d "$GAPROOT/extern/install/gmp" ]]; then
+        GMPDIR="$GAPROOT/extern/install/gmp"
+    fi
+fi
+# if still no GMP, try the one given as --with-gmp=<path> in GAP's configure
+if test -z "$GMPDIR"; then
+    if [[ -f $GAPROOT/config.log ]]; then
+        for word in $(grep '\-\-with-gmp=' "$GAPROOT/config.log"); do
+            pp="${word#--with-gmp=}"
+            if [[ "$word" != "$pp" ]]; then
+                case "$pp" in
+                    yes|no|system|builtin) ;;
+                    *) GMPDIR="$pp"; ;;
+                esac
+            fi
+        done
+    fi
+fi
+
+# GMP directory to hand over to CARAT configure
+WITHGMP=
+if test -n "$GMPDIR"; then
+    WITHGMP="--with-gmp=$GMPDIR"
+fi
+
+# write out everything, so that we can include it in Makefile
+echo "GAPROOT=$GAPROOT"             > config.carat
+echo "ARCHDIR=$GAParch"            >> config.carat
+echo "CC=$GAP_CC"                  >> config.carat
+echo "FLAGS=$GAP_CFLAGS $CFLAGS"   >> config.carat
+echo "WITHGMP=$WITHGMP"            >> config.carat

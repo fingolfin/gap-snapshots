@@ -52,10 +52,11 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7B3709C584B3DA1E">7.4-2 DeclareInfoClass</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7A43B9E68765EE9E">7.4-3 SetInfoLevel</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7B2ADC37783104B9">7.4-4 InfoLevel</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X864E4B6886E2697D">7.4-5 Info</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X877BD99A82CB2643">7.4-6 <span class="Heading">Customizing <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) statements</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7BA636EF80A1435A">7.4-5 ShowUsedInfoClasses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X864E4B6886E2697D">7.4-6 Info</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X800234B5815CAC97">7.4-7 <span class="Heading">Customizing <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-6</span></a>) statements</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7A28F77C82D6A3E0">7.4-7 InfoWarning</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7A28F77C82D6A3E0">7.4-8 InfoWarning</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X86425F067FC63A4C">7.5 <span class="Heading">Assertions</span></a>
 </span>
@@ -137,7 +138,7 @@
 
 <p>This chapter describes some functions that are useful mainly for debugging and profiling purposes.</p>
 
-<p>Probably the most important debugging tool in <strong class="pkg">GAP</strong> is the break loop (see Section <a href="chap6.html#X8593B49F8705B486"><span class="RefLink">6.4</span></a>) which can be entered by putting an <code class="func">Error</code> (<a href="chap6.html#X7E7AD8D87EBA1A08"><span class="RefLink">6.6-1</span></a>) statement into your code or by hitting Control-C. In the break loop one can inspect variables, stack traces and issue commands as usual in an interactive <strong class="pkg">GAP</strong> session. See also the <code class="func">DownEnv</code> (<a href="chap6.html#X79E66DA2875303B0"><span class="RefLink">6.5-1</span></a>), <code class="func">UpEnv</code> (<a href="chap6.html#X79E66DA2875303B0"><span class="RefLink">6.5-1</span></a>) and <code class="func">Where</code> (<a href="chap6.html#X7A7FFA2B7C1EF5A3"><span class="RefLink">6.4-5</span></a>) functions.</p>
+<p>Probably the most important debugging tool in <strong class="pkg">GAP</strong> is the break loop (see Section <a href="chap6.html#X8593B49F8705B486"><span class="RefLink">6.4</span></a>) which can be entered by putting an <code class="func">Error</code> (<a href="chap6.html#X7E7AD8D87EBA1A08"><span class="RefLink">6.6-1</span></a>) statement into your code or by hitting Control-C. In the break loop one can inspect variables, stack traces and issue commands as usual in an interactive <strong class="pkg">GAP</strong> session. See also the <code class="func">DownEnv</code> (<a href="chap6.html#X79E66DA2875303B0"><span class="RefLink">6.5-1</span></a>), <code class="func">UpEnv</code> (<a href="chap6.html#X79E66DA2875303B0"><span class="RefLink">6.5-1</span></a>), <code class="func">Where</code> (<a href="chap6.html#X7A7FFA2B7C1EF5A3"><span class="RefLink">6.4-5</span></a>) and <code class="func">WhereWithVars</code> (<a href="chap6.html#X7A7FFA2B7C1EF5A3"><span class="RefLink">6.4-5</span></a>) functions.</p>
 
 <p>Sections <a href="chap7.html#X7FDA1D4B87BD25A8"><span class="RefLink">7.2</span></a> and <a href="chap7.html#X7D43A2D885B37739"><span class="RefLink">7.3</span></a> show how to get information about the methods chosen by the method selection mechanism (see chapter <a href="chap78.html#X8058CC8187162644"><span class="RefLink">78</span></a>).</p>
 
@@ -181,14 +182,14 @@ type 'quit;' to quit to outer loop
 <h5>7.1-3 ShowDetails</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShowDetails</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>This function is only available within a break loop caused by a "No Method Found"-error. It prints the details of this error: The operation, the number of arguments, a flag which indicates whether the operation is being traced, a flag which indicates whether the operation is a constructor method, and the number of methods that refused to apply by calling <code class="func">TryNextMethod</code> (<a href="chap78.html#X7EED949B83046A7F"><span class="RefLink">78.4-1</span></a>). The last number is called <code class="code">Choice</code> and is printed as an ordinal. So if exactly <span class="SimpleMath">k</span> methods were found but called <code class="func">TryNextMethod</code> (<a href="chap78.html#X7EED949B83046A7F"><span class="RefLink">78.4-1</span></a>) and there were no more methods it says <code class="code">Choice: </code><span class="SimpleMath">k</span><code class="code">th</code>.</p>
+<p>This function is only available within a break loop caused by a "No Method Found"-error. It prints the details of this error: The operation, the number of arguments, a flag which indicates whether the operation is being traced, a flag which indicates whether the operation is a constructor method, and the number of methods that refused to apply by calling <code class="func">TryNextMethod</code> (<a href="chap78.html#X7EED949B83046A7F"><span class="RefLink">78.5-1</span></a>). The last number is called <code class="code">Choice</code> and is printed as an ordinal. So if exactly <span class="SimpleMath">k</span> methods were found but called <code class="func">TryNextMethod</code> (<a href="chap78.html#X7EED949B83046A7F"><span class="RefLink">78.5-1</span></a>) and there were no more methods it says <code class="code">Choice: </code><span class="SimpleMath">k</span><code class="code">th</code>.</p>
 
 <p><a id="X7F6996CA872478B8" name="X7F6996CA872478B8"></a></p>
 
 <h5>7.1-4 ShowMethods</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShowMethods</code>( [<var class="Arg">verbosity</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>This function is only available within a break loop caused by a "No Method Found"-error. It prints an overview about the installed methods for those arguments the operation was called with (using <a href="chap7.html#X7FDA1D4B87BD25A8"><span class="RefLink">7.2</span></a>. The verbosity can be controlled by the optional integer parameter <var class="Arg">verbosity</var>. The default is 2, which lists all applicable methods. With verbosity 1 <code class="func">ShowMethods</code> only shows the number of installed methods and the methods matching, which can only be those that were already called but refused to work by calling <code class="func">TryNextMethod</code> (<a href="chap78.html#X7EED949B83046A7F"><span class="RefLink">78.4-1</span></a>). With verbosity 3 not only all installed methods but also the reasons why they do not match are displayed.</p>
+<p>This function is only available within a break loop caused by a "No Method Found"-error. It prints an overview about the installed methods for those arguments the operation was called with (using <a href="chap7.html#X7FDA1D4B87BD25A8"><span class="RefLink">7.2</span></a>. The verbosity can be controlled by the optional integer parameter <var class="Arg">verbosity</var>. The default is 2, which lists all applicable methods. With verbosity 1 <code class="func">ShowMethods</code> only shows the number of installed methods and the methods matching, which can only be those that were already called but refused to work by calling <code class="func">TryNextMethod</code> (<a href="chap78.html#X7EED949B83046A7F"><span class="RefLink">78.5-1</span></a>). With verbosity 3 not only all installed methods but also the reasons why they do not match are displayed.</p>
 
 <p><a id="X7E5E2E7B85029E34" name="X7E5E2E7B85029E34"></a></p>
 
@@ -242,7 +243,7 @@ type 'quit;' to quit to outer loop
 
 </dd>
 </dl>
-<p>When a method returned by <code class="func">ApplicableMethod</code> is called then it returns either the desired result or the string <code class="code">"TRY_NEXT_METHOD"</code>, which corresponds to a call to <code class="func">TryNextMethod</code> (<a href="chap78.html#X7EED949B83046A7F"><span class="RefLink">78.4-1</span></a>) in the method and means that the method selection would call the next applicable method.</p>
+<p>When a method returned by <code class="func">ApplicableMethod</code> is called then it returns either the desired result or the string <code class="code">"TRY_NEXT_METHOD"</code>, which corresponds to a call to <code class="func">TryNextMethod</code> (<a href="chap78.html#X7EED949B83046A7F"><span class="RefLink">78.5-1</span></a>) in the method and means that the method selection would call the next applicable method.</p>
 
 <p><em>Note:</em> The <strong class="pkg">GAP</strong> kernel provides special treatment for the infix operations <code class="code">\+</code>, <code class="code">\-</code>, <code class="code">\*</code>, <code class="code">\/</code>, <code class="code">\^</code>, <code class="code">\mod</code> and <code class="code">\in</code>. For some kernel objects (notably cyclotomic numbers, finite field elements and row vectors thereof) it calls kernel methods circumventing the method selection mechanism. Therefore for these operations <code class="func">ApplicableMethod</code> may return a method which is not the kernel method actually used.</p>
 
@@ -333,15 +334,15 @@ type 'quit;' to quit to outer loop
 
 <h4>7.4 <span class="Heading">Info Functions</span></h4>
 
-<p>The <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) mechanism permits operations to display intermediate results or information about the progress of the algorithms. Information is always given according to one or more <em>info classes</em>. Each of the info classes defined in the <strong class="pkg">GAP</strong> library usually covers a certain range of algorithms, so for example <code class="code">InfoLattice</code> covers all the cyclic extension algorithms for the computation of a subgroup lattice.</p>
+<p>The <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-6</span></a>) mechanism permits operations to display intermediate results or information about the progress of the algorithms. Information is always given according to one or more <em>info classes</em>. Each of the info classes defined in the <strong class="pkg">GAP</strong> library usually covers a certain range of algorithms, so for example <code class="code">InfoLattice</code> covers all the cyclic extension algorithms for the computation of a subgroup lattice.</p>
 
-<p>Note that not all info classes defined in the <strong class="pkg">GAP</strong> library are currently documented. Many <strong class="pkg">GAP</strong> packages define additional info classes, which are typically documented in the corresponding package documentation.</p>
+<p>Note that not all info classes defined in the <strong class="pkg">GAP</strong> library are currently documented. Many <strong class="pkg">GAP</strong> packages define additional info classes, which are typically documented in the corresponding package documentation. The function <code class="func">ShowUsedInfoClasses</code> (<a href="chap7.html#X7BA636EF80A1435A"><span class="RefLink">7.4-5</span></a>) will show all info classes which <strong class="pkg">GAP</strong> considers while executing code.</p>
 
 <p>The amount of information to be displayed by each info class can be separately specified by the user. This is done by selecting a non-negative integer <em>level</em> for the info class: no information will be displayed at level 0, and the higher the level, the more information that will be displayed. At creation, an info class has level 0. By default, all built-in GAP info classes have level 0, except for the following info classes, which have level 1:</p>
 
 
 <ul>
-<li><p><code class="func">InfoWarning</code> (<a href="chap7.html#X7A28F77C82D6A3E0"><span class="RefLink">7.4-7</span></a>),</p>
+<li><p><code class="func">InfoWarning</code> (<a href="chap7.html#X7A28F77C82D6A3E0"><span class="RefLink">7.4-8</span></a>),</p>
 
 </li>
 <li><p><code class="func">InfoPackageLoading</code> (<a href="chap76.html#X7D162DDF813D2BBA"><span class="RefLink">76.2-5</span></a>),</p>
@@ -391,9 +392,30 @@ type 'quit;' to quit to outer loop
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoLevel</code>( <var class="Arg">infoclass</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the info level of <var class="Arg">infoclass</var>.</p>
 
+<p><a id="X7BA636EF80A1435A" name="X7BA636EF80A1435A"></a></p>
+
+<h5>7.4-5 ShowUsedInfoClasses</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShowUsedInfoClasses</code>( <var class="Arg">infoclass</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Called with argument <code class="keyw">true</code>, this makes <strong class="pkg">GAP</strong> print the info class and level of any executed <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-6</span></a>) statement. Calling with the argument <code class="keyw">false</code> stops this printing. Each level of each info class is only printed once. The history of printed info classes and levels is reset whenever <code class="keyw">true</code> is passed.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ShowUsedInfoClasses(true);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Intersection(Group((1,3,2,4,5,6)), Group((1,2,3,4,5,6)));</span>
+#I Would print info with SetInfoLevel(InfoOptions,1)
+#I Would print info with SetInfoLevel(InfoBckt,1)
+#I Would print info with SetInfoLevel(InfoBckt,3)
+#I Would print info with SetInfoLevel(InfoBckt,5)
+Group(())
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Intersection(Group((1,3,2,4,5,6)), Group((1,2,3,4,5,6)));</span>
+Group(())
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ShowUsedInfoClasses(false);</span>
+</pre></div>
+
 <p><a id="X864E4B6886E2697D" name="X864E4B6886E2697D"></a></p>
 
-<h5>7.4-5 Info</h5>
+<h5>7.4-6 Info</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Info</code>( <var class="Arg">infoclass</var>, <var class="Arg">level</var>, <var class="Arg">info</var>[, <var class="Arg">moreinfo</var>, <var class="Arg">...</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>If the info level of <var class="Arg">infoclass</var> is at least <var class="Arg">level</var>, then the remaining arguments, <var class="Arg">info</var>, and possibly <var class="Arg">moreinfo</var> and so on, are evaluated. (Technically, <code class="func">Info</code> is a keyword and not a function.)</p>
@@ -402,7 +424,7 @@ type 'quit;' to quit to outer loop
 
 <p>If the info level of <var class="Arg">infoclass</var> is strictly less than <var class="Arg">level</var>, then the third and subsequent arguments are not evaluated. (The latter can save substantial time when displaying difficult results.)</p>
 
-<p>The behaviour can be customized with <code class="func">SetInfoHandler</code> (<a href="chap7.html#X877BD99A82CB2643"><span class="RefLink">7.4-6</span></a>).</p>
+<p>The behaviour can be customized with <code class="func">SetInfoHandler</code> (<a href="chap7.html#X800234B5815CAC97"><span class="RefLink">7.4-7</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -438,9 +460,9 @@ type 'quit;' to quit to outer loop
 1
 </pre></div>
 
-<p><a id="X877BD99A82CB2643" name="X877BD99A82CB2643"></a></p>
+<p><a id="X800234B5815CAC97" name="X800234B5815CAC97"></a></p>
 
-<h5>7.4-6 <span class="Heading">Customizing <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) statements</span></h5>
+<h5>7.4-7 <span class="Heading">Customizing <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-6</span></a>) statements</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetInfoHandler</code>( <var class="Arg">infoclass</var>, <var class="Arg">handler</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetInfoOutput</code>( <var class="Arg">infoclass</var>, <var class="Arg">out</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
@@ -451,22 +473,22 @@ type 'quit;' to quit to outer loop
 
 <p>This allows one to customize what happens in an <code class="code">Info(<var class="Arg">infoclass</var>, <var class="Arg">level</var>, ...)</code> statement.</p>
 
-<p>In the first function, <var class="Arg">handler</var> must be a function with three arguments <var class="Arg">infoclass</var>, <var class="Arg">level</var>, <var class="Arg">list</var>. Here <var class="Arg">list</var> is the list containing the third argument and any subsequent optional arguments of the <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) call.</p>
+<p>In the first function, <var class="Arg">handler</var> must be a function with three arguments <var class="Arg">infoclass</var>, <var class="Arg">level</var>, <var class="Arg">list</var>. Here <var class="Arg">list</var> is the list containing the third argument and any subsequent optional arguments of the <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-6</span></a>) call.</p>
 
 <p>The default handler is the function <code class="code">DefaultInfoHandler</code>. It prints <code class="code">"#I "</code>, then the third and further arguments of the info statement, and finally a <code class="code">"\n"</code>.</p>
 
-<p>If the first argument of an <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) statement is a sum of Info classes, the handler of the first summand is used.</p>
+<p>If the first argument of an <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-6</span></a>) statement is a sum of Info classes, the handler of the first summand is used.</p>
 
-<p>The file or stream to which <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) statements for individual <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) classes print can be overriden with <code class="func">SetInfoOutput</code>, retrieved with <code class="func">InfoOutput</code> and reset to the default with <code class="func">UnbindInfoOutput</code>. The initial default for all <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) classes is the string <code class="code">"*Print*"</code> which means the current output file. The default can be changed with <code class="func">SetDefaultInfoOutput</code>. The argument <var class="Arg">out</var> can be a filename or an open stream, the special names <code class="code">"*Print*"</code>, <code class="code">"*errout*</code> and <code class="code">"*stdout*</code> are also recognized.</p>
+<p>The file or stream to which <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-6</span></a>) statements for individual <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-6</span></a>) classes print can be overriden with <code class="func">SetInfoOutput</code>, retrieved with <code class="func">InfoOutput</code> and reset to the default with <code class="func">UnbindInfoOutput</code>. The initial default for all <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-6</span></a>) classes is the string <code class="code">"*Print*"</code> which means the current output file. The default can be changed with <code class="func">SetDefaultInfoOutput</code>. The argument <var class="Arg">out</var> can be a filename or an open stream, the special names <code class="code">"*Print*"</code>, <code class="code">"*errout*</code> and <code class="code">"*stdout*</code> are also recognized.</p>
 
-<p>For example, <code class="code">SetDefaultInfoOutput("*errout*");</code> would send <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) output to standard error, which can be interesting if <strong class="pkg">GAP</strong>s output is redirected.</p>
+<p>For example, <code class="code">SetDefaultInfoOutput("*errout*");</code> would send <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-6</span></a>) output to standard error, which can be interesting if <strong class="pkg">GAP</strong>s output is redirected.</p>
 
 <p><a id="X7A28F77C82D6A3E0" name="X7A28F77C82D6A3E0"></a></p>
 
-<h5>7.4-7 InfoWarning</h5>
+<h5>7.4-8 InfoWarning</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoWarning</code></td><td class="tdright">(&nbsp;info class&nbsp;)</td></tr></table></div>
-<p>is an info class to which general warnings are sent at level 1, which is its default level. More specialised warnings are shown via calls of <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) at <code class="func">InfoWarning</code> level 2, e.g. information about the autoloading of <strong class="pkg">GAP</strong> packages and the initial line matched when displaying an on-line help topic.</p>
+<p>is an info class to which general warnings are sent at level 1, which is its default level. More specialised warnings are shown via calls of <code class="func">Info</code> (<a href="chap7.html#X864E4B6886E2697D"><span class="RefLink">7.4-6</span></a>) at <code class="func">InfoWarning</code> level 2, e.g. information about the autoloading of <strong class="pkg">GAP</strong> packages and the initial line matched when displaying an on-line help topic.</p>
 
 <p><a id="X86425F067FC63A4C" name="X86425F067FC63A4C"></a></p>
 
@@ -580,11 +602,11 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 
 <p><code class="code">Method</code> is a string describing the method used to obtain timer values. This will usually contain the name of the syscall used.</p>
 
-<p><code class="code">Monotonic</code> is a boolean. If it is <code class="code">true</code>, then the values returned by <code class="func">NanosecondsSinceEpoch</code> are guaranteed to be strictly monotonically increasing between two calls, if it is <code class="code">false</code> then there is no such guarantee.</p>
+<p><code class="code">Monotonic</code> is a boolean. If it is <code class="keyw">true</code>, then the values returned by <code class="func">NanosecondsSinceEpoch</code> are guaranteed to be strictly monotonically increasing between two calls, if it is <code class="keyw">false</code> then there is no such guarantee.</p>
 
 <p><code class="code">Resolution</code> is an integer reflecting the resolution of the timer used in nanoseconds.</p>
 
-<p><code class="code">Reliable</code> is a boolean. If it is <code class="code">true</code> then the value <code class="code">Resolution</code> is deemed reliable in the sense that it was obtained by querying the operating system, otherwise <code class="code">Resolution</code> should be treated as an estimate.</p>
+<p><code class="code">Reliable</code> is a boolean. If it is <code class="keyw">true</code> then the value <code class="code">Resolution</code> is deemed reliable in the sense that it was obtained by querying the operating system, otherwise <code class="code">Resolution</code> should be treated as an estimate.</p>
 
 <p><a id="X7C0F91F982189624" name="X7C0F91F982189624"></a></p>
 
@@ -598,8 +620,8 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 <h5>7.6-5 Sleep</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sleep</code>( <var class="Arg">time</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NanoSleep</code>( <var class="Arg">time</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>These functions make GAP stop execution for a given period of time. The time to stop is given to <code class="func">Sleep</code> in seconds and <code class="func">NanoSleep</code> in nanoseconds.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MicroSleep</code>( <var class="Arg">time</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>These functions make GAP stop execution for a given period of time. The time to stop is given to <code class="func">Sleep</code> in seconds and <code class="func">MicroSleep</code> in microseconds.</p>
 
 <p><a id="X844CB04081A771FB" name="X844CB04081A771FB"></a></p>
 
@@ -660,7 +682,7 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 <h5>7.8-2 ProfileGlobalFunctions</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProfileGlobalFunctions</code>( [<var class="Arg">bool</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Called with argument <code class="keyw">true</code>, <code class="func">ProfileGlobalFunctions</code> starts profiling of all functions that have been declared via <code class="func">DeclareGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.18-14</span></a>). Old profile information for all these functions is cleared. A function call with the argument <code class="keyw">false</code> stops profiling of all these functions. Recorded information is still kept, so you can display it even after turning the profiling off.</p>
+<p>Called with argument <code class="keyw">true</code>, <code class="func">ProfileGlobalFunctions</code> starts profiling of all functions that have been declared via <code class="func">DeclareGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.10-4</span></a>). Old profile information for all these functions is cleared. A function call with the argument <code class="keyw">false</code> stops profiling of all these functions. Recorded information is still kept, so you can display it even after turning the profiling off.</p>
 
 <p>When <code class="func">ProfileGlobalFunctions</code> is called without argument, profile information for all global functions is displayed, see <code class="func">DisplayProfile</code> (<a href="chap7.html#X80FEA6A08775A48E"><span class="RefLink">7.8-9</span></a>).</p>
 
@@ -945,6 +967,9 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 <li><p>The profiler can only track GAP code which occurs in a function -- this is most obvious when looking at code coverage examples, which will appear to miss lines of code in files not in a function.</p>
 
 </li>
+<li><p>If the current GAP is forked, using the <code class="code">IO_fork</code> function in the <strong class="pkg">IO</strong> package, a new profile output file will be created for the new child process, with the process ID of the child attached to the end of the filename.</p>
+
+</li>
 </ul>
 <p>Profiles are transformed into a human-readable form with 'profiling' package, for example with the 'OutputAnnotatedCodeCoverageFiles' function.</p>
 
@@ -1099,10 +1124,29 @@ gaussian.tst              10
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Test</code>( <var class="Arg">fname</var>[, <var class="Arg">optrec</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>The argument <var class="Arg">fname</var> must be the name of a file or an open input stream. The content of this file or stream should contain <strong class="pkg">GAP</strong> input and output. The function <code class="func">Test</code> runs the input lines, compares the actual output with the output stored in <var class="Arg">fname</var> and reports differences. With an optional record as argument <var class="Arg">optrec</var> details of this process can be adjusted.</p>
+<p>The argument <var class="Arg">fname</var> must be the name of a file or an open input stream. The content of this file or stream should contain <strong class="pkg">GAP</strong> input and output. The function <code class="func">Test</code> runs the input lines, compares the actual output with the output stored in <var class="Arg">fname</var> and reports differences. With an optional record as argument <var class="Arg">optrec</var> details of this process can be adjusted. Note that the <code class="code">rewriteToFile</code> option is especially useful for generating test files.</p>
 
 <p>More precisely, the content of <var class="Arg">fname</var> must have the following format. <br /> Lines starting with <code class="code">"gap&gt; "</code> are considered as <strong class="pkg">GAP</strong> input, they can be followed by lines starting with <code class="code">"&gt; "</code> if the input is continued over several lines. <br /> To allow for comments in <var class="Arg">fname</var> the following lines are ignored by default: lines at the beginning of <var class="Arg">fname</var> that start with <code class="code">"#"</code> or are empty, and one empty line together with one or more lines starting with <code class="code">"#"</code>.<br /> All other lines are considered as <strong class="pkg">GAP</strong> output from the preceding <strong class="pkg">GAP</strong> input.</p>
 
+<p>Lines which begin "#@" define special configuration options for tests. The <code class="code">#@local</code> and <code class="code">#@exec</code> options can only be used before any <strong class="pkg">GAP</strong> input, and the other commands can only be used between individual tests (just before a line starting <code class="code">gap&gt;</code>, or at end of the file). Currently defined options are:</p>
+
+
+<dl>
+<dt><strong class="Mark">#@local identifierlist</strong></dt>
+<dd><p>Run all the tests in the input as if it is in a function with local variable list <code class="code">identifierlist</code>, which is a comma-separated list of identifers. Multiple #@local lines may be used.</p>
+
+</dd>
+<dt><strong class="Mark">#@exec gapcode</strong></dt>
+<dd><p>Execute the code <code class="code">gapcode</code> before any test in the input is run. This allows defining global variables when using <code class="code">#@local</code>.</p>
+
+</dd>
+<dt><strong class="Mark">#@if EXPR ...  [#@else] ... #@fi</strong></dt>
+<dd><p>A <code class="code">#@if</code> allows to conditionally skip parts of the test input depending on the value of a boolean expression. The exact behavior is done as follows:</p>
+
+<p>If the <strong class="pkg">GAP</strong> expression <code class="code">EXPR</code> evaluates to <code class="code">true</code>, then the lines after the <code class="code">#@if</code> are used until either a <code class="code">#@else</code> or <code class="code">#@fi</code> is reached. If a <code class="code">#@else</code> is present then the code after the <code class="code">#@else</code> is used if and only if <code class="code">EXPR</code> evaluated to <code class="code">false</code>. Finally, once <code class="code">#endif</code> is reached, evaluation continues normally.</p>
+
+</dd>
+</dl>
 <p>By default the actual <strong class="pkg">GAP</strong> output is compared exactly with the stored output, and if these are different some information about the differences is printed.</p>
 
 <p>If any differences are found then <code class="func">Test</code> returns <code class="keyw">false</code>, otherwise <code class="keyw">true</code>.</p>
@@ -1128,7 +1172,7 @@ gaussian.tst              10
 
 </dd>
 <dt><strong class="Mark"><code class="code">rewriteToFile</code></strong></dt>
-<dd><p>If this is bound to a string it is considered as a file name and that file is written with the same input and comment lines as <var class="Arg">fname</var> but the output substituted by the newly generated version; if it is bound to <code class="keyw">true</code>, then this is treated as if it was bound to <var class="Arg">fname</var> (default is <code class="keyw">false</code>).</p>
+<dd><p>If this is bound to a string it is considered as a file name and that file is written with the same input and comment lines as <var class="Arg">fname</var> but the output substituted by the newly generated version; if it is bound to <code class="keyw">true</code>, then this is treated as if it was bound to <var class="Arg">fname</var> (default is <code class="keyw">false</code>). This is especially useful for generating test files because it ensures that the test files are formatted exactly as <code class="func">Test</code> expects them to be.</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">writeTimings</code></strong></dt>
@@ -1216,7 +1260,7 @@ true
 
 <p>The argument <var class="Arg">inlist</var> must be either a single filename or directory name, or a list of filenames and directories. The function <code class="func">TestDirectory</code> will take create a list of files to be tested by taking any files in <var class="Arg">inlist</var>, and recursively searching any directories in <var class="Arg">inlist</var> for files ending in <code class="code">.tst</code>. Each of these files is then run through <code class="func">Test</code> (<a href="chap7.html#X87712F9D8732193C"><span class="RefLink">7.10-2</span></a>), and the results printed, and <code class="keyw">true</code> returned if all tests passed.</p>
 
-<p>If the optional argument <var class="Arg">optrec</var> is given it must be a record. The following components of <var class="Arg">optrec</var> are recognized and can change the default behaviour of <code class="func">TestDirectory</code>:</p>
+<p>If the optional argument <var class="Arg">optrec</var> is given it must be a record. Note that the <code class="code">rewriteToFile</code> option is especially useful for generating test files. The following components of <var class="Arg">optrec</var> are recognized and can change the default behaviour of <code class="func">TestDirectory</code>:</p>
 
 
 <dl>
@@ -1237,7 +1281,7 @@ true
 
 </dd>
 <dt><strong class="Mark"><code class="code">rewriteToFile</code></strong></dt>
-<dd><p>If <code class="keyw">true</code>, then rewrite each test file to disc, with the output substituted by the results of running the test (defaults to <code class="keyw">false</code>).</p>
+<dd><p>If <code class="keyw">true</code>, then rewrite each test file to disc, with the output substituted by the results of running the test (defaults to <code class="keyw">false</code>). This is especially useful for generating test files because it ensures that the test files are formatted exactly as <code class="func">Test</code> (<a href="chap7.html#X87712F9D8732193C"><span class="RefLink">7.10-2</span></a>) expects them to be.</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">exclude</code></strong></dt>

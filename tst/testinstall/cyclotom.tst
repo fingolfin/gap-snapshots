@@ -1,15 +1,4 @@
-#############################################################################
-##
-#W  cyclotom.tst                GAP library                     Thomas Breuer
-##
-##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-##
-##  This file is being maintained by Thomas Breuer.
-##  Please do not make any changes without consulting him.
-##  (This holds also for minor changes such as the removal of whitespace or
-##  the correction of typos.)
-##
+#@local a,cyc,gm,i,l1,l2,l3,mat,n,r,x,y,z,sets
 gap> START_TEST("cyclotom.tst");
 
 # Check basic arithmetic operations.
@@ -279,12 +268,29 @@ gap> for n in [120,122,125,127,128] do
 gap> GetCyclotomicsLimit();
 1000000
 gap> SetCyclotomicsLimit(1/2);
-Error, Cyclotomic Field size limit must be a small integer, not a rational 
+Error, SetCyclotomicsLimit: <newlimit> must be a positive small integer (not a\
+ rational)
 gap> SetCyclotomicsLimit(0);
-Error, Cyclotomic Field size limit must be positive
+Error, SetCyclotomicsLimit: <newlimit> must be a positive small integer (not t\
+he integer 0)
 gap> SetCyclotomicsLimit(100);
-Error, Cyclotomic Field size limit must not be less than old limit of 1000000
+Error, SetCyclotomicsLimit: <newlimit> must not be less than old limit of 1000\
+000
+#@if 8*GAPInfo.BytesPerVariable = 64
+gap> SetCyclotomicsLimit(2^32);
+Error, Cyclotomic field size limit must be less than 2^32
+#@fi
 gap> SetCyclotomicsLimit(1000000);
+
+#
+gap> List([1..10], n -> Order(E(n)));
+[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+gap> Order(1 + E(4));
+infinity
+gap> Order(2);
+infinity
+gap> Order(0);
+Error, argument must be nonzero
 
 #
 # test handling of invalid inputs
@@ -292,7 +298,7 @@ gap> SetCyclotomicsLimit(1000000);
 
 #
 gap> E(0);
-Error, E: <n> must be a positive integer (not a integer)
+Error, E: <n> must be a positive small integer (not the integer 0)
 
 #
 gap> IS_CYC('a');
@@ -304,18 +310,18 @@ false
 
 #
 gap> CONDUCTOR(fail);
-Error, Conductor: <cyc> must be a cyclotomic or a small list (not a boolean or\
- fail)
+Error, Conductor: <cyc> must be a cyclotomic or a small list (not the value 'f\
+ail')
 gap> CONDUCTOR([1,fail]);
 Error, Conductor: <list>[2] must be a cyclotomic (not a boolean or fail)
 
 #
 gap> COEFFS_CYC(false);
-Error, COEFFSCYC: <cyc> must be a cyclotomic (not a boolean or fail)
+Error, COEFFSCYC: <cyc> must be a cyclotomic (not the value 'false')
 
 #
 gap> CycList([1,fail]);
-Error, CycList: each entry must be a rational (not a boolean or fail)
+Error, CycList: each entry must be a rational (not the value 'fail')
 
 #
 # Some tests for some operations on certain pre-defined infinite collections
@@ -348,7 +354,3 @@ gap> SetX(r, r, {i,j} -> (sets[i]=sets[j]) = (i=j));
 
 #
 gap> STOP_TEST( "cyclotom.tst", 1);
-
-#############################################################################
-##
-#E

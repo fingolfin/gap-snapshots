@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  read.h                      GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This module declares the functions to read  expressions  and  statements.
 */
@@ -86,7 +86,7 @@
 **  pass 0 for dualSemicolon, in this case it is ignore.
 **
 */
-extern UInt ReadEvalCommand(Obj context, Obj *evalResult, UInt *dualSemicolon);
+UInt ReadEvalCommand(Obj context, Obj * evalResult, UInt * dualSemicolon);
 
 
 /****************************************************************************
@@ -99,29 +99,29 @@ extern UInt ReadEvalCommand(Obj context, Obj *evalResult, UInt *dualSemicolon);
 **  It does not expect the  first symbol of its input  already read and  wont
 **  reads to the end of the input (unless an error happens).
 */
-extern UInt ReadEvalFile(Obj *evalResult);
+UInt ReadEvalFile(Obj * evalResult);
 
 
 /****************************************************************************
 **
 *F  ReadEvalError() . . . . . . . . . . . . . . . . . .  return with an error
 */
-extern void ReadEvalError ( void ) NORETURN;
+void ReadEvalError(void) NORETURN;
+
 
 /****************************************************************************
 **
-*V  StackNams . . . . . . . . . . . .  stack of lists of local variable names
-**
-**  This is exported to support a rather nasty hack in intrprtr.c related to
-**  while loops and the break loop
 */
+void StartFakeFuncExpr(Int startLine);
+void FinishAndCallFakeFuncExpr(void);
 
-/* TL: extern Obj StackNams; */
 
+/****************************************************************************
+**
+*/
+void PushGlobalForLoopVariable(UInt var);
 
-extern void PushGlobalForLoopVariable( UInt var);
-
-extern void PopGlobalForLoopVariable( void );
+void PopGlobalForLoopVariable(void);
 
 
 /****************************************************************************
@@ -138,7 +138,7 @@ Obj Call0ArgsInNewReader(Obj f);
 **
 **  The current reader context is saved and a new one is started.
 */
-Obj Call1ArgsInNewReader(Obj f,Obj a);
+Obj Call1ArgsInNewReader(Obj f, Obj a);
 
 
 /****************************************************************************

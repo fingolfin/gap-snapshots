@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  csetgrp.gd                      GAP library              Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the declarations of operations for cosets.
 ##
@@ -193,7 +194,7 @@ DeclareAttribute("RightActingGroup",IsDoubleCoset);
 ##  For element operations such as <K>in</K>, a double coset behaves
 ##  like a set of group elements. The double coset stores <A>U</A> in the
 ##  attribute <C>LeftActingGroup</C>,
-##  <A>g</A> as <Ref Func="Representative"/>,
+##  <A>g</A> as <Ref Attr="Representative"/>,
 ##  and <A>V</A> as <C>RightActingGroup</C>.
 ##  </Description>
 ##  </ManSection>
@@ -246,7 +247,7 @@ DeclareOperation("DoubleCosetsNC",[IsGroup,IsGroup,IsGroup]);
 ##  the entries are lists of the form <M>[ r, n ]</M>
 ##  where <M>r</M> and <M>n</M> are an element of the double coset and the
 ##  size of the coset, respectively.
-##  This operation is faster than <Ref Func="DoubleCosetsNC"/> because no
+##  This operation is faster than <Ref Oper="DoubleCosetsNC"/> because no
 ##  double coset objects have to be created.
 ##  <Example><![CDATA[
 ##  gap> dc:=DoubleCosetRepsAndSizes(g,u,v);
@@ -275,7 +276,7 @@ DeclareOperation("DoubleCosetRepsAndSizes",[IsGroup,IsGroup,IsGroup]);
 ##  of representatives <M>h_i</M> such that
 ##  <A>D</A> <M>= \bigcup_{{h_i}} U h_i</M>.
 ##  The representatives returned are canonical for <M>U</M> (see
-##  <Ref Func="CanonicalRightCosetElement"/>) and form a set.
+##  <Ref Oper="CanonicalRightCosetElement"/>) and form a set.
 ##  <Example><![CDATA[
 ##  gap> u:=Subgroup(g,[(1,2,3),(1,2)]);;v:=Subgroup(g,[(3,4)]);;
 ##  gap> c:=DoubleCoset(u,(2,4),v);

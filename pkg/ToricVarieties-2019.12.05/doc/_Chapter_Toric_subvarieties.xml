@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Toric_subvarieties">
+<Heading>Toric subvarieties</Heading>
+
+<P/>
+<Section Label="Chapter_Toric_subvarieties_Section_The_GAP_category">
+<Heading>The GAP category</Heading>
+
+<ManSection>
+  <Filt Arg="M" Name="IsToricSubvariety" Label="for IsToricVariety"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+  The <A>GAP</A> category of a toric subvariety. Every toric subvariety is a toric variety,
+  so every method applicable to toric varieties is also applicable to toric subvarieties.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Toric_subvarieties_Section_Properties">
+<Heading>Properties</Heading>
+
+<ManSection>
+  <Prop Arg="vari" Name="IsClosedSubvariety" Label="for IsToricSubvariety"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+  Checks if the subvariety <A>vari</A> is a closed subset of its ambient variety.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="vari" Name="IsOpen" Label="for IsToricSubvariety"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+  Checks if a subvariety is a closed subset.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="vari" Name="IsWholeVariety" Label="for IsToricSubvariety"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+  Returns true if the subvariety <A>vari</A> is the whole variety.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Toric_subvarieties_Section_Attributes">
+<Heading>Attributes</Heading>
+
+<ManSection>
+  <Attr Arg="vari" Name="UnderlyingToricVariety" Label="for IsToricSubvariety"/>
+ <Returns>a variety
+</Returns>
+ <Description>
+  Returns the toric variety which is represented by <A>vari</A>. This
+  method implements the forgetful functor subvarieties -> varieties.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="vari" Name="InclusionMorphism" Label="for IsToricSubvariety"/>
+ <Returns>a morphism
+</Returns>
+ <Description>
+  If the variety <A>vari</A> is an open subvariety, this method returns
+  the inclusion morphism in its ambient variety. If not, it will fail.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="vari" Name="AmbientToricVariety" Label="for IsToricSubvariety"/>
+ <Returns>a variety
+</Returns>
+ <Description>
+  Returns the ambient toric variety of the subvariety <A>vari</A>
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Toric_subvarieties_Section_Methods">
+<Heading>Methods</Heading>
+
+<ManSection>
+  <Oper Arg="vari, cone" Name="ClosureOfTorusOrbitOfCone" Label="for IsToricVariety, IsCone"/>
+ <Returns>a subvariety
+</Returns>
+ <Description>
+  The method returns the closure of the orbit of the torus contained in <A>vari</A> which corresponds 
+  to the cone <A>cone</A> as a closed subvariety of <A>vari</A>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Toric_subvarieties_Section_Constructors">
+<Heading>Constructors</Heading>
+
+<ManSection>
+  <Oper Arg="vari, ambvari" Name="ToricSubvariety" Label="for IsToricVariety, IsToricVariety"/>
+ <Returns>a subvariety
+</Returns>
+ <Description>
+  The method returns the closure of the orbit of the torus contained in <A>vari</A> which corresponds 
+  to the cone <A>cone</A> as a closed subvariety of <A>vari</A>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+</Chapter>
+

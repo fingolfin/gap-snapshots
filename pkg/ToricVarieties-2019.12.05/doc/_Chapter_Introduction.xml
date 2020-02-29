@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Introduction">
+<Heading>Introduction</Heading>
+
+<P/>
+<Section Label="Chapter_Introduction_Section_What_is_the_goal_of_the_ToricVarieties_package">
+<Heading>What is the goal of the ToricVarieties package?</Heading>
+
+<P/>
+<Emph>ToricVarieties</Emph> provides data structures to handle toric varieties by their commutative algebra structure and by their
+combinatorics. For combinatorics, it uses the <Emph>Convex</Emph> package. Its goal is to provide a suitable framework to work with
+toric varieties. All combinatorial structures mentioned in this manual are the ones from <Emph>Convex</Emph>.
+<P/>
+</Section>
+
+
+</Chapter>
+

@@ -51,7 +51,7 @@
   infinitely many points.[133X
   
   [33X[0;0YOnce   a   dictionary   has   been   created,   it   is   possible   to  use
-  [2XRepresentationsOfObject[102X  ([14X13.4-1[114X)  to  check which representation is used by
+  [2XRepresentationsOfObject[102X  ([14X13.4-3[114X)  to  check which representation is used by
   [5XGAP[105X.[133X
   
   [33X[0;0YIn  the following example, we create a dictionary to store permutations with

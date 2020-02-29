@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<#Include SYSTEM "_Chapter_Introduction.xml">
+<#Include SYSTEM "_Chapter_Creating_polyhedra_and_their_Operations.xml">
+<#Include SYSTEM "_Chapter_Linear_Programs.xml">
+<#Include SYSTEM "_Chapter_Attributes_and_properties.xml">

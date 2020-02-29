@@ -1,10 +1,4 @@
-#############################################################################
-##
-#W  grpfree.tst                GAP-4 library                    Thomas Breuer
-##
-##
-#Y  Copyright 1997,    Lehrstuhl D für Mathematik,   RWTH Aachen,    Germany
-##
+#@local a,b,enum,F,H,first50,firstfifty,g,gens,iter,rho,i,G
 gap> START_TEST("grpfree.tst");
 gap> g:= FreeGroup( "a", "b" );
 <free group on the generators [ a, b ]>
@@ -77,7 +71,3 @@ Error, no 2nd choice method found for `FactorSemigroup' on 2 arguments
 
 #
 gap> STOP_TEST( "grpfree.tst", 1);
-
-#############################################################################
-##
-#E

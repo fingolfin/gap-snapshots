@@ -1,10 +1,13 @@
 /****************************************************************************
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002-2018 The GAP Group
+**  This file is part of GAP, a system for computational discrete algebra.
 **
-**  This files implements APIs for GAP modules, including builtin modules,
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
+**
+**  This file implements APIs for GAP modules, including builtin modules,
 **  or static and dynamic modules used by packages and end users to provide
 **  kernel extensions.
 */
@@ -17,13 +20,14 @@
 #include "compstat.h"
 #include "error.h"
 #include "funcs.h"
-#include "integer.h"
 #include "gap.h"
 #include "gapstate.h"
 #include "gvars.h"
+#include "integer.h"
 #include "intobj.h"
 #include "io.h"
 #include "lists.h"
+#include "modules_builtin.h"
 #include "opers.h"
 #include "plist.h"
 #include "saveload.h"
@@ -31,6 +35,10 @@
 #include "stringobj.h"
 #include "sysfiles.h"
 #include "sysopt.h"
+
+#ifdef HAVE_DLOPEN
+#include <dlfcn.h>
+#endif
 
 
 /****************************************************************************
@@ -46,10 +54,8 @@
 #define MAX_MODULE_FILENAMES (MAX_MODULES * 50)
 #endif
 
-Char   LoadedModuleFilenames[MAX_MODULE_FILENAMES];
-Char * NextLoadedModuleFilename = LoadedModuleFilenames;
-
-extern const InitInfoFunc InitFuncsBuiltinModules[];
+static Char   LoadedModuleFilenames[MAX_MODULE_FILENAMES];
+static Char * NextLoadedModuleFilename = LoadedModuleFilenames;
 
 typedef struct {
 
@@ -65,9 +71,9 @@ typedef struct {
 } StructInitInfoExt;
 
 
-StructInitInfoExt Modules[MAX_MODULES];
-UInt              NrModules;
-UInt              NrBuiltinModules;
+static StructInitInfoExt Modules[MAX_MODULES];
+static UInt       NrModules;
+static UInt       NrBuiltinModules;
 
 
 typedef struct {
@@ -118,17 +124,13 @@ static void RegisterModuleState(StructInitInfo * info)
 **
 *F  FuncGAP_CRC( <self>, <name> ) . . . . . . . create a crc value for a file
 */
-Obj FuncGAP_CRC(Obj self, Obj filename)
+static Obj FuncGAP_CRC(Obj self, Obj filename)
 {
     /* check the argument                                                  */
-    while (!IsStringConv(filename)) {
-        filename = ErrorReturnObj(
-            "<filename> must be a string (not a %s)", (Int)TNAM_OBJ(filename),
-            0L, "you can replace <filename> via 'return <filename>;'");
-    }
+    RequireStringRep("GAP_CRC", filename);
 
     /* compute the crc value                                               */
-    return INTOBJ_INT(SyGAPCRC(CSTR_STRING(filename)));
+    return ObjInt_Int(SyGAPCRC(CONST_CSTR_STRING(filename)));
 }
 
 
@@ -166,11 +168,46 @@ void ActivateModule(StructInitInfo * info)
         res = res || (info->initModuleState)();
 }
 
+
+/****************************************************************************
+**
+*F  SyLoadModule( <name>, <func> )  . . . . . . . . .  load a compiled module
+**
+**  This function attempts to load a compiled module <name>.
+**  If successful, it returns 0, and sets <func> to a pointer to the init
+**  function of the module. In case of an error, <func> is set to 0, and the
+**  return value indicates which error occurred.
+*/
+#ifdef HAVE_DLOPEN
+static Int SyLoadModule(const Char * name, InitInfoFunc * func)
+{
+    void *          init;
+    void *          handle;
+
+    *func = 0;
+
+    handle = dlopen( name, RTLD_LAZY | RTLD_GLOBAL);
+    if ( handle == 0 ) {
+      Pr("#W dlopen() error: %s\n", (long) dlerror(), 0L);
+      return 1;
+    }
+
+    init = dlsym( handle, "Init__Dynamic" );
+    if ( init == 0 )
+      return 3;
+
+    *func = (InitInfoFunc) init;
+    return 0;
+}
+#endif
+
+
+
 /****************************************************************************
 **
 *F  FuncLOAD_DYN( <self>, <name>, <crc> ) . . .  try to load a dynamic module
 */
-Obj FuncLOAD_DYN(Obj self, Obj filename, Obj crc)
+static Obj FuncLOAD_DYN(Obj self, Obj filename, Obj crc)
 {
     StructInitInfo * info;
     Obj              crc1;
@@ -178,34 +215,27 @@ Obj FuncLOAD_DYN(Obj self, Obj filename, Obj crc)
     InitInfoFunc     init;
 
     /* check the argument                                                  */
-    while (!IsStringConv(filename)) {
-        filename = ErrorReturnObj(
-            "<filename> must be a string (not a %s)", (Int)TNAM_OBJ(filename),
-            0L, "you can replace <filename> via 'return <filename>;'");
-    }
-    while (!IS_INTOBJ(crc) && crc != False) {
-        crc = ErrorReturnObj(
-            "<crc> must be a small integer or 'false' (not a %s)",
-            (Int)TNAM_OBJ(crc), 0L,
-            "you can replace <crc> via 'return <crc>;'");
+    RequireStringRep("LOAD_DYN", filename);
+    if (!IS_INTOBJ(crc) && crc != False) {
+        ErrorMayQuit(
+            "LOAD_DYN: <crc> must be a small integer or 'false' (not a %s)",
+            (Int)TNAM_OBJ(crc), 0);
     }
 
     /* try to read the module                                              */
-    res = SyLoadModule(CSTR_STRING(filename), &init);
+#ifdef HAVE_DLOPEN
+    res = SyLoadModule(CONST_CSTR_STRING(filename), &init);
     if (res == 1)
         ErrorQuit("module '%g' not found", (Int)filename, 0L);
     else if (res == 3)
         ErrorQuit("symbol 'Init_Dynamic' not found", 0L, 0L);
-    else if (res == 5)
-        ErrorQuit("forget symbol failed", 0L, 0L);
-
+#else
     /* no dynamic library support                                          */
-    else if (res == 7) {
-        if (SyDebugLoading) {
-            Pr("#I  LOAD_DYN: no support for dynamical loading\n", 0L, 0L);
-        }
-        return False;
+    if (SyDebugLoading) {
+        Pr("#I  LOAD_DYN: no support for dynamical loading\n", 0L, 0L);
     }
+    return False;
+#endif
 
     /* get the description structure                                       */
     info = (*init)();
@@ -230,7 +260,7 @@ Obj FuncLOAD_DYN(Obj self, Obj filename, Obj crc)
 
     /* check the crc value                                                 */
     if (crc != False) {
-        crc1 = INTOBJ_INT(info->crc);
+        crc1 = ObjInt_Int(info->crc);
         if (!EQ(crc, crc1)) {
             if (SyDebugLoading) {
                 Pr("#I  LOAD_DYN: crc values do not match, gap ", 0L, 0L);
@@ -244,7 +274,7 @@ Obj FuncLOAD_DYN(Obj self, Obj filename, Obj crc)
     }
 
     ActivateModule(info);
-    RecordLoadedModule(info, 0, CSTR_STRING(filename));
+    RecordLoadedModule(info, 0, CONST_CSTR_STRING(filename));
 
     return True;
 }
@@ -254,29 +284,24 @@ Obj FuncLOAD_DYN(Obj self, Obj filename, Obj crc)
 **
 *F  FuncLOAD_STAT( <self>, <name>, <crc> )  . . . . try to load static module
 */
-Obj FuncLOAD_STAT(Obj self, Obj filename, Obj crc)
+static Obj FuncLOAD_STAT(Obj self, Obj filename, Obj crc)
 {
     StructInitInfo * info = 0;
     Obj              crc1;
     Int              k;
 
     /* check the argument                                                  */
-    while (!IsStringConv(filename)) {
-        filename = ErrorReturnObj(
-            "<filename> must be a string (not a %s)", (Int)TNAM_OBJ(filename),
-            0L, "you can replace <filename> via 'return <filename>;'");
-    }
-    while (!IS_INTOBJ(crc) && crc != False) {
-        crc = ErrorReturnObj(
-            "<crc> must be a small integer or 'false' (not a %s)",
-            (Int)TNAM_OBJ(crc), 0L,
-            "you can replace <crc> via 'return <crc>;'");
+    RequireStringRep("LOAD_STAT", filename);
+    if (!IS_INTOBJ(crc) && crc != False) {
+        ErrorMayQuit(
+            "LOAD_STAT: <crc> must be a small integer or 'false' (not a %s)",
+            (Int)TNAM_OBJ(crc), 0);
     }
 
     /* try to find the module                                              */
     for (k = 0; CompInitFuncs[k]; k++) {
         info = (*(CompInitFuncs[k]))();
-        if (info && !strcmp(CSTR_STRING(filename), info->name)) {
+        if (info && !strcmp(CONST_CSTR_STRING(filename), info->name)) {
             break;
         }
     }
@@ -290,7 +315,7 @@ Obj FuncLOAD_STAT(Obj self, Obj filename, Obj crc)
 
     /* check the crc value                                                 */
     if (crc != False) {
-        crc1 = INTOBJ_INT(info->crc);
+        crc1 = ObjInt_Int(info->crc);
         if (!EQ(crc, crc1)) {
             if (SyDebugLoading) {
                 Pr("#I  LOAD_STAT: crc values do not match, gap ", 0L, 0L);
@@ -304,7 +329,7 @@ Obj FuncLOAD_STAT(Obj self, Obj filename, Obj crc)
     }
 
     ActivateModule(info);
-    RecordLoadedModule(info, 0, CSTR_STRING(filename));
+    RecordLoadedModule(info, 0, CONST_CSTR_STRING(filename));
 
     return True;
 }
@@ -314,7 +339,7 @@ Obj FuncLOAD_STAT(Obj self, Obj filename, Obj crc)
 **
 *F  FuncSHOW_STAT() . . . . . . . . . . . . . . . . . . . show static modules
 */
-Obj FuncSHOW_STAT(Obj self)
+static Obj FuncSHOW_STAT(Obj self)
 {
     Obj              modules;
     Obj              name;
@@ -333,20 +358,18 @@ Obj FuncSHOW_STAT(Obj self)
 
     /* make a list of modules with crc values                              */
     modules = NEW_PLIST(T_PLIST, 2 * im);
-    SET_LEN_PLIST(modules, 2 * im);
 
-    for (k = 0, im = 1; CompInitFuncs[k]; k++) {
+    for (k = 0; CompInitFuncs[k]; k++) {
         info = (*(CompInitFuncs[k]))();
         if (info == 0) {
             continue;
         }
         name = MakeImmString(info->name);
 
-        SET_ELM_PLIST(modules, im, name);
+        PushPlist(modules, name);
 
         /* compute the crc value                                           */
-        SET_ELM_PLIST(modules, im + 1, INTOBJ_INT(info->crc));
-        im += 2;
+        PushPlist(modules, ObjInt_Int(info->crc));
     }
 
     return modules;
@@ -357,7 +380,7 @@ Obj FuncSHOW_STAT(Obj self)
 **
 *F  FuncLoadedModules( <self> ) . . . . . . . . . . . list all loaded modules
 */
-Obj FuncLoadedModules(Obj self)
+static Obj FuncLoadedModules(Obj self)
 {
     Int              i;
     StructInitInfo * m;
@@ -414,7 +437,7 @@ void InitBagNamesFromTable(const StructBagNames * tab)
     Int i;
 
     for (i = 0; tab[i].tnum != -1; i++) {
-        InfoBags[tab[i].tnum].name = tab[i].name;
+        SET_TNAM_TNUM(tab[i].tnum, tab[i].name);
     }
 }
 
@@ -504,7 +527,7 @@ void InitGVarFiltsFromTable(const StructGVarFilt * tab)
         UInt gvar = GVarName(tab[i].name);
         Obj  name = NameGVar(gvar);
         Obj  args = ValidatedArgList(tab[i].name, 1, tab[i].argument);
-        AssReadOnlyGVar(gvar, NewFilter(name, 1, args, tab[i].handler));
+        AssReadOnlyGVar(gvar, NewFilter(name, args, tab[i].handler));
     }
 }
 
@@ -521,7 +544,7 @@ void InitGVarAttrsFromTable(const StructGVarAttr * tab)
         UInt gvar = GVarName(tab[i].name);
         Obj  name = NameGVar(gvar);
         Obj  args = ValidatedArgList(tab[i].name, 1, tab[i].argument);
-        AssReadOnlyGVar(gvar, NewAttribute(name, 1, args, tab[i].handler));
+        AssReadOnlyGVar(gvar, NewAttribute(name, args, tab[i].handler));
     }
 }
 
@@ -537,7 +560,7 @@ void InitGVarPropsFromTable(const StructGVarProp * tab)
         UInt gvar = GVarName(tab[i].name);
         Obj  name = NameGVar(gvar);
         Obj  args = ValidatedArgList(tab[i].name, 1, tab[i].argument);
-        AssReadOnlyGVar(gvar, NewProperty(name, 1, args, tab[i].handler));
+        AssReadOnlyGVar(gvar, NewProperty(name, args, tab[i].handler));
     }
 }
 
@@ -584,7 +607,7 @@ static void SetupFuncInfo(Obj func, const Char * cookie)
             start = buffer;
         filename = MakeImmString(start);
 
-        Obj body_bag = NewBag(T_BODY, sizeof(BodyHeader));
+        Obj body_bag = NewFunctionBody();
         SET_FILENAME_BODY(body_bag, filename);
         SET_LOCATION_BODY(body_bag, location);
         SET_BODY_FUNC(func, body_bag);
@@ -734,7 +757,7 @@ void ImportFuncFromLibrary(const Char * name, Obj * address)
 **
 *F  FuncExportToKernelFinished( <self> )  . . . . . . . . . . check functions
 */
-Obj FuncExportToKernelFinished(Obj self)
+static Obj FuncExportToKernelFinished(Obj self)
 {
     UInt i;
     Int  errs = 0;
@@ -803,12 +826,12 @@ void RecordLoadedModule(StructInitInfo * info,
 {
     UInt len;
     if (NrModules == MAX_MODULES) {
-        Pr("panic: no room to record module\n", 0L, 0L);
+        Panic("no room to record module");
     }
     len = strlen(filename);
     if (NextLoadedModuleFilename + len + 1 >
         LoadedModuleFilenames + MAX_MODULE_FILENAMES) {
-        Pr("panic: no room for module filename\n", 0L, 0L);
+        Panic("no room for module filename");
     }
     *NextLoadedModuleFilename = '\0';
     memcpy(NextLoadedModuleFilename, filename, len + 1);
@@ -864,21 +887,24 @@ void LoadModules(void)
                 /* and dynamic case */
                 InitInfoFunc init;
 
-                Int res = SyLoadModule(buf, &init);
-
+#ifdef HAVE_DLOPEN
+                int res = SyLoadModule(buf, &init);
                 if (res != 0) {
-                    Pr("Failed to load needed dynamic module %s, error code "
-                       "%d\n",
-                       (Int)buf, res);
-                    SyExit(1);
+                    Panic("Failed to load needed dynamic module %s, error "
+                          "code %d\n",
+                          buf, res);
                 }
                 info = (*init)();
                 if (info == 0) {
-                    Pr("Failed to init needed dynamic module %s, error code "
-                       "%d\n",
-                       (Int)buf, (Int)info);
-                    SyExit(1);
+                    Panic("Failed to init needed dynamic module %s, error "
+                          "code %d\n",
+                          buf, res);
                 }
+#else
+                Panic("workspace require dynamic module %s, but dynamic "
+                      "loading not supported",
+                      buf);
+#endif
             }
 
             ActivateModule(info);
@@ -894,14 +920,14 @@ void ModulesSetup(void)
     NrModules = 0;
     for (UInt i = 0; InitFuncsBuiltinModules[i]; i++) {
         if (NrModules == MAX_MODULES) {
-            Panic("panic: too many builtin modules");
+            Panic("too many builtin modules");
         }
         StructInitInfo * info = InitFuncsBuiltinModules[i]();
         Modules[NrModules++].info = info;
         if (SyDebugLoading) {
-            FPUTS_TO_STDERR("#I  InitInfo(builtin ");
-            FPUTS_TO_STDERR(info->name);
-            FPUTS_TO_STDERR(")\n");
+            fputs("#I  InitInfo(builtin ", stderr);
+            fputs(info->name, stderr);
+            fputs(")\n", stderr);
         }
 
         RegisterModuleState(info);
@@ -915,15 +941,13 @@ void ModulesInitKernel(void)
         StructInitInfo * info = Modules[i].info;
         if (info->initKernel) {
             if (SyDebugLoading) {
-                FPUTS_TO_STDERR("#I  InitKernel(builtin ");
-                FPUTS_TO_STDERR(info->name);
-                FPUTS_TO_STDERR(")\n");
+                fputs("#I  InitKernel(builtin ", stderr);
+                fputs(info->name, stderr);
+                fputs(")\n", stderr);
             }
             Int ret = info->initKernel(info);
             if (ret) {
-                FPUTS_TO_STDERR("#I  InitKernel(builtin ");
-                FPUTS_TO_STDERR(info->name);
-                FPUTS_TO_STDERR(") returned non-zero value\n");
+                Panic("InitKernel(builtin %s) returned non-zero value", info->name);
             }
         }
     }
@@ -935,15 +959,13 @@ void ModulesInitLibrary(void)
         StructInitInfo * info = Modules[i].info;
         if (info->initLibrary) {
             if (SyDebugLoading) {
-                FPUTS_TO_STDERR("#I  InitLibrary(builtin ");
-                FPUTS_TO_STDERR(info->name);
-                FPUTS_TO_STDERR(")\n");
+                fputs("#I  InitLibrary(builtin ", stderr);
+                fputs(info->name, stderr);
+                fputs(")\n", stderr);
             }
             Int ret = info->initLibrary(info);
             if (ret) {
-                FPUTS_TO_STDERR("#I  InitLibrary(builtin ");
-                FPUTS_TO_STDERR(info->name);
-                FPUTS_TO_STDERR(") returned non-zero value\n");
+                Panic("InitLibrary(builtin %s) returned non-zero value", info->name);
             }
         }
     }
@@ -955,15 +977,13 @@ void ModulesCheckInit(void)
         StructInitInfo * info = Modules[i].info;
         if (info->checkInit) {
             if (SyDebugLoading) {
-                FPUTS_TO_STDERR("#I  CheckInit(builtin ");
-                FPUTS_TO_STDERR(info->name);
-                FPUTS_TO_STDERR(")\n");
+                fputs("#I  CheckInit(builtin ", stderr);
+                fputs(info->name, stderr);
+                fputs(")\n", stderr);
             }
             Int ret = info->checkInit(info);
             if (ret) {
-                FPUTS_TO_STDERR("#I  CheckInit(builtin ");
-                FPUTS_TO_STDERR(info->name);
-                FPUTS_TO_STDERR(") returned non-zero value\n");
+                Panic("CheckInit(builtin %s) returned non-zero value", info->name);
             }
         }
     }
@@ -975,15 +995,13 @@ void ModulesInitModuleState(void)
         StructInitInfo * info = Modules[i].info;
         if (info->initModuleState) {
             if (SyDebugLoading) {
-                FPUTS_TO_STDERR("#I  InitModuleState(");
-                FPUTS_TO_STDERR(info->name);
-                FPUTS_TO_STDERR(")\n");
+                fputs("#I  InitModuleState(", stderr);
+                fputs(info->name, stderr);
+                fputs(")\n", stderr);
             }
             Int ret = info->initModuleState();
             if (ret) {
-                FPUTS_TO_STDERR("#I  InitModuleState(");
-                FPUTS_TO_STDERR(info->name);
-                FPUTS_TO_STDERR(") returned non-zero value\n");
+                Panic("InitModuleState(builtin %s) returned non-zero value", info->name);
             }
         }
     }
@@ -995,15 +1013,13 @@ void ModulesDestroyModuleState(void)
         StructInitInfo * info = Modules[i].info;
         if (info->destroyModuleState) {
             if (SyDebugLoading) {
-                FPUTS_TO_STDERR("#I  DestroyModuleState(");
-                FPUTS_TO_STDERR(info->name);
-                FPUTS_TO_STDERR(")\n");
+                fputs("#I  DestroyModuleState(", stderr);
+                fputs(info->name, stderr);
+                fputs(")\n", stderr);
             }
             Int ret = info->destroyModuleState();
             if (ret) {
-                FPUTS_TO_STDERR("#I  DestroyModuleState(");
-                FPUTS_TO_STDERR(info->name);
-                FPUTS_TO_STDERR(") returned non-zero value\n");
+                Panic("DestroyModuleState(builtin %s) returned non-zero value", info->name);
             }
         }
     }
@@ -1043,15 +1059,13 @@ void ModulesPostRestore(void)
         StructInitInfo * info = Modules[i].info;
         if (info->postRestore) {
             if (SyDebugLoading) {
-                FPUTS_TO_STDERR("#I  PostRestore(builtin ");
-                FPUTS_TO_STDERR(info->name);
-                FPUTS_TO_STDERR(")\n");
+                fputs("#I  PostRestore(builtin ", stderr);
+                fputs(info->name, stderr);
+                fputs(")\n", stderr);
             }
             Int ret = info->postRestore(info);
             if (ret) {
-                FPUTS_TO_STDERR("#I  PostRestore(builtin ");
-                FPUTS_TO_STDERR(info->name);
-                FPUTS_TO_STDERR(") returned non-zero value\n");
+                Panic("PostRestore(builtin %s) returned non-zero value", info->name);
             }
         }
     }

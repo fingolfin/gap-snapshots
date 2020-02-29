@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  stbc.gd                     GAP library                    Heiko Theißen
-#W                                                               Ákos Seress
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Heiko Theißen, Ákos Seress.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 
 
@@ -227,7 +227,7 @@ DeclareGlobalVariable( "DefaultStabChainOptions",
 ##  Let <A>base</A> be a base for a permutation group <M>G</M>, and let
 ##  <A>sgs</A> be a strong generating set for <M>G</M> with respect to
 ##  <A>base</A>; <A>one</A> must be the appropriate identity element of
-##  <M>G</M> (see <Ref Oper="One"/>, in most cases this will be <C>()</C>).
+##  <M>G</M> (see <Ref Attr="One"/>, in most cases this will be <C>()</C>).
 ##  This function constructs a stabilizer chain without the need to find
 ##  Schreier generators;
 ##  so this is much faster than the other algorithms.
@@ -857,6 +857,3 @@ DeclareGlobalFunction( "VerifySGS" );
 DeclareGlobalFunction( "ExtensionOnBlocks" );
 DeclareGlobalFunction( "ClosureRandomPermGroup" );
 #
-#############################################################################
-##
-#E

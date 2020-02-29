@@ -1,9 +1,12 @@
 #############################################################################
 ##
-#W  teaching.g                GAP library                   Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2008 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This  file contains routines that are primarily of interest in a teaching
 ##  context. It is made part of the general system to ensure it will be
@@ -254,7 +257,7 @@ DeclareGlobalFunction("AllHomomorphisms");
 ##  <Ref Func="AllSubgroups"/> returns a list of all subgroups of <A>G</A>,
 ##  intended primarily for use in class for small examples.
 ##  This list will quickly get very long and in general use of
-##  <Ref Func="ConjugacyClassesSubgroups"/> is recommended.
+##  <Ref Attr="ConjugacyClassesSubgroups"/> is recommended.
 ##  <Example><![CDATA[
 ##  gap> AllSubgroups(SymmetricGroup(3));
 ##  [ Group(()), Group([ (2,3) ]), Group([ (1,2) ]), Group([ (1,3) ]), 
@@ -949,7 +952,7 @@ local cl,cnt,bg,bw,bo,bi,k,gens,go,imgs,params,emb,clg,sg,vsu,c,i;
       else
 	# then something random
 	repeat
-	  if Length(gens)>2 and Random([1,2])=1 then
+	  if Length(gens)>2 and Random(1,2)=1 then
 	    # try to get down to 2 gens
 	    gens:=List([1,2],i->Random(H));
 	  else
@@ -959,7 +962,7 @@ local cl,cnt,bg,bw,bo,bi,k,gens,go,imgs,params,emb,clg,sg,vsu,c,i;
 	  for k in [1..Length(gens)] do
 	    go:=Order(gens[k]);
 	    # try a p-element
-	    if Random([1..3*Length(gens)])=1 then
+	    if Random(1,3*Length(gens))=1 then
 	      gens[k]:=gens[k]^(go/(Random(Factors(go))));
 	    fi;
 	  od;

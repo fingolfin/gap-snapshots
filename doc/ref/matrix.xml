@@ -305,6 +305,7 @@ see&nbsp;<Ref Sect="Mutability and Copyability"/>.
 <#Include Label="DeterminantMat">
 <#Include Label="DeterminantMatDestructive">
 <#Include Label="DeterminantMatDivFree">
+<#Include Label="MatObj_IsEmptyMatrix">
 <#Include Label="IsMonomialMatrix">
 <#Include Label="IsDiagonalMat">
 <#Include Label="IsUpperTriangularMat">
@@ -429,6 +430,7 @@ See also chapter <Ref Chap="Integral matrices and lattices"/>
 <Heading>Matrices as Linear Mappings</Heading>
 
 <#Include Label="CharacteristicPolynomial">
+<#Include Label="RationalCanonicalFormTransform">
 <#Include Label="JordanDecomposition">
 <#Include Label="BlownUpMat">
 <#Include Label="BlownUpVector">
@@ -499,7 +501,7 @@ compressed over different fields.
 <P/>
 This is enforced by the filter <C>IsLockedRepresentationVector</C>.  When a
 vector becomes part of a compressed matrix, this filter is set for it.
-Assignment, <Ref Func="Unbind" Label="unbind a list entry"/>,  
+Assignment, <Ref Oper="Unbind" Label="unbind a list entry"/>,  
 <Ref Func="ConvertToVectorRep" Label="for a list (and a field)"/> and
 <Ref Func="ConvertToMatrixRep" Label="for a list (and a field)"/>
 are all prevented from altering a vector with this filter.
@@ -547,14 +549,15 @@ written over finite fields.
 <Section Label="Inverse and Nullspace of an Integer Matrix Modulo an Ideal">
 <Heading>Inverse and Nullspace of an Integer Matrix Modulo an Ideal</Heading>
 
-The following two operations deal with matrices over a ring,
+The following operations deal with matrices over a ring,
 but only care about the residues of their entries modulo some ring element.
 In the case of the integers and a prime number <M>p</M>, say,
 this is effectively computation in a matrix over the prime field
 in characteristic <M>p</M>.
 
 <#Include Label="InverseMatMod">
-<#Include Label="NullspaceModQ">
+<#Include Label="BasisNullspaceModN">
+<#Include Label="NullspaceModN">
 
 </Section>
 
@@ -613,6 +616,15 @@ grease and level <A>b</A> blocking.
 <#Include Label="AsBlockMatrix">
 <#Include Label="BlockMatrix">
 <#Include Label="MatrixByBlockMatrix">
+
+</Section>
+
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<Section Label="Linear Programming">
+<Heading>Linear Programming</Heading>
+
+<#Include Label="SimplexMethod">
 
 </Section>
 </Chapter>

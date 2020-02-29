@@ -1,10 +1,12 @@
 #############################################################################
 ##
-#W  grpnames.g                                                  Gábor Horváth
-##                                                                Stefan Kohl
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Gábor Horváth, Stefan Kohl.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2004 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains a list of precomputed structure descriptions of small
 ##  groups.
@@ -567,7 +569,3 @@ NAMES_OF_SMALL_GROUPS :=
  "C2 x ((C5 x C5) : C2)",
  "C10 x C10" ] ];
 MakeReadOnlyGlobal( "NAMES_OF_SMALL_GROUPS" );
-
-#############################################################################
-##
-#E  grpnames.g . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

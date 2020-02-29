@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  grpramat.gi                 GAP Library                     Franz Gähler
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Franz Gähler.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains operations for matrix groups over the rationals
 ##
@@ -491,9 +492,3 @@ RedispatchOnCondition( IsomorphismPcGroup, true,
 RedispatchOnCondition( CompositionSeries, true,
     [ IsCyclotomicMatrixGroup ],
     [ IsFinite ], 0 );
-
-
-#############################################################################
-##
-#E
-

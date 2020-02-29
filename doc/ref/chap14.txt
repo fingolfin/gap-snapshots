@@ -16,6 +16,13 @@
     [4X[28X123456789012345678901234567890123456789012345678901234567890[128X[104X
   [4X[32X[104X
   
+  [33X[0;0YNote  that in a few places, only certain small integer values can be used. A
+  [13Xsmall  integer[113X  (also  referred  to  as  [13Ximmediate  integer[113X) is an integer [22Xn[122X
+  satisfying  [10XINTOBJ_MIN[110X  [22X≤  n  ≤[122X  [10XINTOBJ_MAX[110X, where [10XINTOBJ_MIN[110X and [10XINTOBJ_MAX[110X
+  equal  either  [22X-2^28[122X  and [22X2^28-1[122X (on 32-bit systems) or [22X-2^60[122X and [22X2^60-1[122X (on
+  64-bit  systems).  For  example,  the  elements of a range are restricted to
+  small integers (see [14X21.22[114X).[133X
+  
   [33X[0;0YMany  more  functions  that are mainly related to the prime residue group of
   integers  modulo  an  integer  are  described  in  chapter [14X15[114X, and functions
   dealing with combinatorics can be found in chapter [14X16[114X.[133X
@@ -958,10 +965,12 @@
   [1X14.7-2 Random[101X
   
   [33X[1;0Y[29X[2XRandom[102X( [3Xrs[103X, [3Xlist[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRandom[102X( [3Xrs[103X, [3Xcoll[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XRandom[102X( [3Xrs[103X, [3Xlow[103X, [3Xhigh[103X ) [32X operation[133X
   
-  [33X[0;0YThis operation returns a random element from list [3Xlist[103X, or an integer in the
-  range from the given (possibly large) integers [3Xlow[103X to [3Xhigh[103X, respectively.[133X
+  [33X[0;0YThis operation returns a random element from the list [3Xlist[103X or the collection
+  [3Xcoll[103X,  or  an  integer in the range from the given (possibly large) integers
+  [3Xlow[103X to [3Xhigh[103X, respectively.[133X
   
   [33X[0;0YThe  choice should only depend on the random source [3Xrs[103X and have no effect on
   other random sources.[133X

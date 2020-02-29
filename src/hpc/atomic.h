@@ -1,3 +1,13 @@
+/****************************************************************************
+**
+**  This file is part of GAP, a system for computational discrete algebra.
+**
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
 #ifndef GAP_ATOMIC_H
 #define GAP_ATOMIC_H
 
@@ -8,14 +18,7 @@
 #endif
 
 #ifndef WARD_ENABLED
-
-// disable -Wundef temporarily, to avoid warnings about AO_AO_TS_T
-// inside of libatomic_ops' header files.
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wundef"
 #include <atomic_ops.h>
-#pragma GCC diagnostic pop
-
 #else
 typedef size_t AO_t;
 #endif

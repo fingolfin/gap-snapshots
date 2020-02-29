@@ -198,7 +198,7 @@
 <p><strong class="pkg">GAP</strong> does not test whether the mapping <span class="SimpleMath">gens ↦ acts</span> actually induces a homomorphism and the results are unpredictable if this is not the case.</p>
 
 </dd>
-<dt><strong class="Mark"><code class="code">OrbitsDomain</code><span class="SimpleMath">( extset )</span></strong></dt>
+<dt><strong class="Mark"><code class="code">OrbitsDomain</code><span class="SimpleMath">( xset )</span></strong></dt>
 <dd><p>A third variant is to call the operation with an external set, which then provides <span class="SimpleMath">G</span>, <span class="SimpleMath">Ω</span> and <span class="SimpleMath">μ</span>. You will find more about external sets in Section <a href="chap41.html#X7FD3D2D2788709B7"><span class="RefLink">41.12</span></a>.</p>
 
 </dd>
@@ -460,8 +460,11 @@ Error, Action not well-defined. See the manual section
 <h5>41.4-2 Orbits</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Orbits</code>( <var class="Arg">G</var>, <var class="Arg">seeds</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Orbits</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Orbits</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a duplicate-free list of the orbits of the elements in <var class="Arg">seeds</var> under the action <var class="Arg">act</var> of <var class="Arg">G</var> or under <code class="func">OnPoints</code> (<a href="chap41.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>) if no action function is given.</p>
+
+<p>For a permutation group <var class="Arg">G</var>, one may also invoke this as <code class="code">Orbits(<var class="Arg">G</var>)</code>, which returns all the orbits of its natural action on the set of points moved by it. For example the group <span class="SimpleMath">⟨ (1,2,3), (4,5) ⟩</span> has the orbits <span class="SimpleMath">{1,2,3}</span> and <span class="SimpleMath">{4,5}</span>.</p>
 
 <p>(Note that the arrangement of orbits or of points within one orbit is not defined by the operation.)</p>
 
@@ -470,10 +473,13 @@ Error, Action not well-defined. See the manual section
 <h5>41.4-3 <span class="Heading">OrbitsDomain</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitsDomain</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitsDomain</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitsDomain</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a list of the orbits of <var class="Arg">G</var> on the domain <var class="Arg">Omega</var> (given as lists) under the action <var class="Arg">act</var> or under <code class="func">OnPoints</code> (<a href="chap41.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>) if no action function is given.</p>
 
 <p>This operation is often faster than <code class="func">Orbits</code> (<a href="chap41.html#X86BCAE17869BBEAA"><span class="RefLink">41.4-2</span></a>). The domain <var class="Arg">Omega</var> must be closed under the action of <var class="Arg">G</var>, otherwise an error can occur.</p>
+
+<p>For a permutation group <var class="Arg">G</var>, one may also invoke this as <code class="code">OrbitsDomain(<var class="Arg">G</var>)</code>, which returns all the orbits of its natural action on the set of points moved by it.</p>
 
 <p>(Note that the arrangement of orbits or of points within one orbit is not defined by the operation.)</p>
 
@@ -503,7 +509,7 @@ Error, Action not well-defined. See the manual section
 
 <h5>41.4-4 OrbitLength</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitLength</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>, <var class="Arg">pnt</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitLength</code>( <var class="Arg">G</var>[, <var class="Arg">Omega</var>], <var class="Arg">pnt</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>computes the length of the orbit of <var class="Arg">pnt</var> under the action function <var class="Arg">act</var> or <code class="func">OnPoints</code> (<a href="chap41.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>) if no action function is given.</p>
 
 <p><a id="X8032F73078DF2DDB" name="X8032F73078DF2DDB"></a></p>
@@ -511,18 +517,24 @@ Error, Action not well-defined. See the manual section
 <h5>41.4-5 <span class="Heading">OrbitLengths</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitLengths</code>( <var class="Arg">G</var>, <var class="Arg">seeds</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitLengths</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitLengths</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>computes the lengths of all the orbits of the elements in <var class="Arg">seeds</var> under the action <var class="Arg">act</var> of <var class="Arg">G</var>.</p>
+
+<p>For a permutation group <var class="Arg">G</var>, one may also invoke this as <code class="code">OrbitLengths(<var class="Arg">G</var>)</code>, which returns the lengths of all the orbits of its natural action on the set of points moved by it. For example the group <span class="SimpleMath">⟨ (1,2,3), (5,6) ⟩</span> has the orbit lengths 2 and 3.</p>
 
 <p><a id="X8520E2487F7E98AF" name="X8520E2487F7E98AF"></a></p>
 
 <h5>41.4-6 <span class="Heading">OrbitLengthsDomain</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitLengthsDomain</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitLengthsDomain</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitLengthsDomain</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>computes the lengths of all the orbits of <var class="Arg">G</var> on <var class="Arg">Omega</var>.</p>
 
 <p>This operation is often faster than <code class="func">OrbitLengths</code> (<a href="chap41.html#X8032F73078DF2DDB"><span class="RefLink">41.4-5</span></a>). The domain <var class="Arg">Omega</var> must be closed under the action of <var class="Arg">G</var>, otherwise an error can occur.</p>
+
+<p>For a permutation group <var class="Arg">G</var>, one may also invoke this as <code class="code">OrbitLengthsDomain(<var class="Arg">G</var>)</code>, which returns the length of all the orbits of its natural action on the set of points moved by it.</p>
 
 
 <div class="example"><pre>
@@ -531,6 +543,11 @@ Error, Action not well-defined. See the manual section
 12
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbitLengths(g,Arrangements([1..4],4),OnTuples);</span>
 [ 12, 12 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Group((1,2,3),(5,6,7));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbitLengthsDomain(g,[1,2,3]);</span>
+[ 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbitLengthsDomain(g);</span>
+[ 3, 3 ]
 </pre></div>
 
 <p><a id="X797BD60E7ACEF1B1" name="X797BD60E7ACEF1B1"></a></p>
@@ -543,7 +560,7 @@ Error, Action not well-defined. See the manual section
 
 <h5>41.5-1 OrbitStabilizer</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitStabilizer</code>( <var class="Arg">G</var>[, <var class="Arg">Omega</var>], <var class="Arg">pnt</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>], <var class="Arg">act</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitStabilizer</code>( <var class="Arg">G</var>[, <var class="Arg">Omega</var>], <var class="Arg">pnt</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>computes the orbit and the stabilizer of <var class="Arg">pnt</var> simultaneously in a single orbit-stabilizer algorithm.</p>
 
 <p>The stabilizer will have <var class="Arg">G</var> as its parent.</p>
@@ -558,8 +575,10 @@ Error, Action not well-defined. See the manual section
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Group((1,3,2),(2,4,3));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Stabilizer(g,4);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stab:=Stabilizer(g,4);</span>
 Group([ (1,3,2) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Parent(stab);</span>
+Group([ (1,3,2), (2,4,3) ])
 </pre></div>
 
 <p>The stabilizer of a set or tuple of points can be computed by specifying an action of sets or tuples of points.</p>
@@ -570,10 +589,12 @@ Group([ (1,3,2) ])
 Group([ (1,2)(3,4) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Stabilizer(g,[1,2],OnTuples);</span>
 Group(())
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbitStabilizer(g,[1,2],OnSets);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">orbstab:=OrbitStabilizer(g,[1,2],OnSets);</span>
 rec( 
   orbit := [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 2, 3 ], [ 3, 4 ], 
       [ 2, 4 ] ], stabilizer := Group([ (1,2)(3,4) ]) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Parent(orbstab.stabilizer);</span>
+Group([ (1,3,2), (2,4,3) ])
 </pre></div>
 
 <p>(See Section <a href="chap41.html#X81B8F9CD868CD953"><span class="RefLink">41.2</span></a> for information about specific actions.)</p>
@@ -901,17 +922,20 @@ S_4(6c) = 1/2[2^3]S(3)
 
 <p>We say that a group <var class="Arg">G</var> acts <em>transitively</em> on a domain <span class="SimpleMath">D</span> if and only if for every pair of points <span class="SimpleMath">d, e ∈ D</span> there is an element <span class="SimpleMath">g</span> in <var class="Arg">G</var> such that <span class="SimpleMath">d^g = e</span>.</p>
 
-<p>For permutation groups, the syntax <code class="code">IsTransitive(<var class="Arg">G</var>)</code> is also permitted and tests whether the group is transitive on the points moved by it, that is the group <span class="SimpleMath">⟨ (2,3,4),(2,3) ⟩</span> is transitive (on 3 points).</p>
+<p>For a permutation group <var class="Arg">G</var>, one may also invoke this as <code class="code">IsTransitive(<var class="Arg">G</var>)</code>, which tests whether the group is transitive with respect to its natural action on the set of points moved by it. For example the group <span class="SimpleMath">⟨ (2,3,4),(2,3) ⟩</span> is transitive on the set <span class="SimpleMath">{2, 3, 4}</span>.</p>
 
 <p><a id="X8295D733796B7A37" name="X8295D733796B7A37"></a></p>
 
 <h5>41.10-2 <span class="Heading">Transitivity</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Transitivity</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Transitivity</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Transitivity</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the degree <span class="SimpleMath">k</span> (a non-negative integer) of transitivity of the action implied by the arguments, i.e. the largest integer <span class="SimpleMath">k</span> such that the action is <span class="SimpleMath">k</span>-transitive. If the action is not transitive <code class="code">0</code> is returned.</p>
 
 <p>An action is <em><span class="SimpleMath">k</span>-transitive</em> if every <span class="SimpleMath">k</span>-tuple of points can be mapped simultaneously to every other <span class="SimpleMath">k</span>-tuple.</p>
+
+<p>For a permutation group <var class="Arg">G</var>, one may also invoke this as <code class="code">Transitivity(<var class="Arg">G</var>)</code>, which returns the degree of transitivity of the group with respect to its natural action on the set of points moved by it. For example the group <span class="SimpleMath">⟨ (2,3,4),(2,3) ⟩</span> is 3-transitive on the set <span class="SimpleMath">{2, 3, 4}</span>.</p>
 
 
 <div class="example"><pre>
@@ -919,6 +943,8 @@ S_4(6c) = 1/2[2^3]S(3)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTransitive(g,[1..5]);</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Transitivity(g,[1..4]);</span>
+2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Transitivity(g);</span>
 2
 </pre></div>
 
@@ -941,20 +967,26 @@ false
 <h5>41.10-4 <span class="Heading">IsSemiRegular</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemiRegular</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemiRegular</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemiRegular</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the action implied by the arguments is semiregular, or <code class="keyw">false</code> otherwise.</p>
 
-<p>An action is <em>semiregular</em> is the stabilizer of each point is the identity.</p>
+<p>An action is <em>semiregular</em> if the stabilizer of each point is the identity.</p>
+
+<p>For a permutation group <var class="Arg">G</var>, one may also invoke this as <code class="code">IsSemiRegular(<var class="Arg">G</var>)</code>, which tests whether the group is semiregular with respect to its natural action on the set of points moved by it. For example the group <span class="SimpleMath">⟨ (2,3,4) (5,6,7) ⟩</span> is semiregular on the set <span class="SimpleMath">{2, 3, 4, 5, 6, 7}</span>.</p>
 
 <p><a id="X7CF02C4785F0EAB5" name="X7CF02C4785F0EAB5"></a></p>
 
 <h5>41.10-5 <span class="Heading">IsRegular</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRegular</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRegular</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRegular</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the action implied by the arguments is regular, or <code class="keyw">false</code> otherwise.</p>
 
 <p>An action is <em>regular</em> if it is both semiregular (see <code class="func">IsSemiRegular</code> (<a href="chap41.html#X7B77040F8543CD6E"><span class="RefLink">41.10-4</span></a>)) and transitive (see <code class="func">IsTransitive</code> (<a href="chap41.html#X79B15750851828CB"><span class="RefLink">41.10-1</span></a>)). In this case every point <var class="Arg">pnt</var> of <var class="Arg">Omega</var> defines a one-to-one correspondence between <var class="Arg">G</var> and <var class="Arg">Omega</var>.</p>
+
+<p>For a permutation group <var class="Arg">G</var>, one may also invoke this as <code class="code">IsRegular(<var class="Arg">G</var>)</code>, which tests whether the group is regular with respect to its natural action on the set of points moved by it. For example the group <span class="SimpleMath">⟨ (2,3,4) ⟩</span> is regular on the set <span class="SimpleMath">{2, 3, 4}</span>.</p>
 
 
 <div class="example"><pre>
@@ -979,10 +1011,17 @@ false
 <h5>41.10-7 <span class="Heading">IsPrimitive</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPrimitive</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPrimitive</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPrimitive</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the action implied by the arguments is primitive, or <code class="keyw">false</code> otherwise.</p>
 
-<p>An action is <em>primitive</em> if it is transitive and the action admits no nontrivial block systems. See <a href="chap41.html#X7E9D3D0B7A9A8572"><span class="RefLink">41.11</span></a>.</p>
+<p>An action is <em>primitive</em> if it is transitive and the action admits no nontrivial block systems. See <a href="chap41.html#X7E9D3D0B7A9A8572"><span class="RefLink">41.11</span></a> for the definition of block systems.</p>
+
+<p>For a permutation group <var class="Arg">G</var>, one may also invoke this as <code class="code">IsPrimitive(<var class="Arg">G</var>)</code>, which tests whether the group is primitive with respect to its natural action on the set of points moved by it. For example the group <span class="SimpleMath">⟨ (2,3,4),(2,3) ⟩</span> is primitive on the set <span class="SimpleMath">{2, 3, 4}</span>.</p>
+
+<p>For an explanation of the meaning of all the inputs, please refer to  <a href="chap41.html#X83661AFD7B7BD1D9"><span class="RefLink">41.1</span></a>.</p>
+
+<p><em>Note:</em> This operation does not tell whether a matrix group is primitive in the sense of preserving a direct sum of vector spaces. To do this use <code class="code">IsPrimitiveMatrixGroup</code> or <code class="code">IsPrimitive</code> from the package <strong class="pkg">IRREDSOL</strong>.</p>
 
 
 <div class="example"><pre>

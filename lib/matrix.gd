@@ -1,15 +1,12 @@
 #############################################################################
 ##
-#W  matrix.gd                   GAP library                     Thomas Breuer
-#W                                                             & Frank Celler
-#W                                                         & Alexander Hulpke
-#W                                                           & Heiko Theißen
-#W                                                         & Martin Schönert
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer, Frank Celler, Alexander Hulpke, Heiko Theißen, Martin Schönert.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains those functions that mainly deal with matrices.
 ##
@@ -67,77 +64,120 @@ DeclareProperty( "IsGeneralizedCartanMatrix", IsMatrix );
 
 #############################################################################
 ##
-#O  IsDiagonalMat( <mat> )
+#P  IsDiagonalMatrix( <mat> )
+#P  IsDiagonalMat( <mat> )
 ##
 ##  <#GAPDoc Label="IsDiagonalMat">
 ##  <ManSection>
-##  <Oper Name="IsDiagonalMat" Arg='mat'/>
+##  <Prop Name="IsDiagonalMatrix" Arg='mat'/>
+##  <Prop Name="IsDiagonalMat" Arg='mat'/>
 ##
 ##  <Description>
-##  returns true if mat has only zero entries off the main diagonal, false
-##  otherwise.
+##  return <K>true</K> if the matrix <A>mat</A> has only zero entries
+##  off the main diagonal, and <K>false</K> otherwise.
+##  <Example><![CDATA[
+##  gap> IsDiagonalMatrix( [ [ 1 ] ] );
+##  true
+##  gap> IsDiagonalMatrix( [ [ 1, 0, 0 ], [ 0, 1, 0 ] ] );
+##  true
+##  gap> IsDiagonalMatrix( [ [ 0, 1 ], [ 1, 0 ] ] );
+##  false
+##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareOperation("IsDiagonalMat",[IsMatrix]);
+DeclareProperty( "IsDiagonalMatrix", IsMatrixObj );
+
+DeclareSynonym( "IsDiagonalMat", IsDiagonalMatrix );
+
 
 #############################################################################
 ##
-#O  IsUpperTriangularMat( <mat> )
+#P  IsUpperTriangularMatrix( <mat> )
+#P  IsUpperTriangularMat( <mat> )
 ##
 ##  <#GAPDoc Label="IsUpperTriangularMat">
 ##  <ManSection>
-##  <Oper Name="IsUpperTriangularMat" Arg='mat'/>
+##  <Prop Name="IsUpperTriangularMatrix" Arg='mat'/>
+##  <Prop Name="IsUpperTriangularMat" Arg='mat'/>
 ##
 ##  <Description>
-##  returns true if mat has only zero entries below the main diagonal, false
-##  otherwise.
+##  return <K>true</K> if the matrix <A>mat</A> has only zero entries below
+##  the main diagonal, and <K>false</K> otherwise.
+##  <Example><![CDATA[
+##  gap> IsUpperTriangularMatrix( [ [ 1 ] ] );
+##  true
+##  gap> IsUpperTriangularMatrix( [ [ 1, 2, 3 ], [ 0, 5, 6 ] ] );
+##  true
+##  gap> IsUpperTriangularMatrix( [ [ 0, 1 ], [ 1, 0 ] ] );
+##  false
+##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareOperation("IsUpperTriangularMat",[IsMatrix]);
+DeclareProperty( "IsUpperTriangularMatrix", IsMatrixObj );
+
+DeclareSynonym( "IsUpperTriangularMat", IsUpperTriangularMatrix );
+
 
 #############################################################################
 ##
-#O  IsLowerTriangularMat( <mat> )
+#P  IsLowerTriangularMatrix( <mat> )
+#P  IsLowerTriangularMat( <mat> )
 ##
 ##  <#GAPDoc Label="IsLowerTriangularMat">
 ##  <ManSection>
-##  <Oper Name="IsLowerTriangularMat" Arg='mat'/>
+##  <Prop Name="IsLowerTriangularMatrix" Arg='mat'/>
+##  <Prop Name="IsLowerTriangularMat" Arg='mat'/>
 ##
 ##  <Description>
-##  returns true if mat has only zero entries below the main diagonal, false
-##  otherwise.
+##  return <K>true</K> if the matrix <A>mat</A> has only zero entries above
+##  the main diagonal, and <K>false</K> otherwise.
+##  <Example><![CDATA[
+##  gap> IsLowerTriangularMatrix( [ [ 1 ] ] );
+##  true
+##  gap> IsLowerTriangularMatrix( [ [ 1, 0, 0 ], [ 2, 3, 0 ] ] );
+##  true
+##  gap> IsLowerTriangularMatrix( [ [ 0, 1 ], [ 1, 0 ] ] );
+##  false
+##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareOperation("IsLowerTriangularMat",[IsMatrix]);
+DeclareProperty( "IsLowerTriangularMatrix", IsMatrixObj );
+
+DeclareSynonym( "IsLowerTriangularMat", IsLowerTriangularMatrix );
+
 
 #############################################################################
 ##
-#O  DiagonalOfMat( <mat> )
+#F  DiagonalOfMatrix( <mat> )
+#F  DiagonalOfMat( <mat> )
 ##
 ##  <#GAPDoc Label="DiagonalOfMat">
 ##  <ManSection>
+##  <Func Name="DiagonalOfMatrix" Arg='mat'/>
 ##  <Func Name="DiagonalOfMat" Arg='mat'/>
 ##
 ##  <Description>
-##  returns the diagonal of the matrix <A>mat</A>. If <A>mat</A> is not a
+##  return the diagonal of the matrix <A>mat</A>. If <A>mat</A> is not a
 ##  square matrix, then the result has the same length as the rows of
 ##  <A>mat</A>, and is padded with zeros if <A>mat</A> has fewer rows than
 ##  columns.
 ##  <Example><![CDATA[
-##  gap> DiagonalOfMat([[1,2,3],[4,5,6]]);
+##  gap> DiagonalOfMatrix( [ [ 1, 2, 3 ], [ 4, 5, 6 ] ] );
 ##  [ 1, 5, 0 ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareGlobalFunction( "DiagonalOfMat" );
+DeclareGlobalFunction( "DiagonalOfMatrix" );
+
+DeclareSynonym( "DiagonalOfMat", DiagonalOfMatrix );
 
 
 #############################################################################
@@ -274,7 +314,7 @@ DeclareAttribute( "DepthOfUpperTriangularMatrix", IsMatrix );
 ##  These methods assume implicitly that <A>mat</A> is defined over an
 ##  integral domain whose quotient field is implemented in &GAP;. For
 ##  matrices defined over an arbitrary commutative ring with one 
-##  see&nbsp;<Ref Func="DeterminantMatDivFree"/>.
+##  see&nbsp;<Ref Oper="DeterminantMatDivFree"/>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -866,7 +906,7 @@ DeclareGlobalFunction( "SemiEchelonMatsNoCo" );
 ##  <Description>
 ##  A list of matrices over a field <M>F</M> is in semi-echelon form if the
 ##  list of row vectors obtained on concatenating the rows of each matrix
-##  is a semi-echelonized matrix (see <Ref Func="SemiEchelonMat"/>).
+##  is a semi-echelonized matrix (see <Ref Attr="SemiEchelonMat"/>).
 ##  <P/>
 ##  <Ref Oper="SemiEchelonMats"/> returns a record that contains information about
 ##  a semi-echelonized form of the list <A>mats</A> of matrices.
@@ -938,7 +978,7 @@ DeclareOperation( "SemiEchelonMatsDestructive", [ IsList ] );
 ##  <Ref Attr="TransposedMatImmutable"/> and <Ref Attr="TransposedMatAttr"/> 
 ##  are synonyms of <Ref Attr="TransposedMat"/>,
 ##  and <Ref Oper="TransposedMatOp"/> is a synonym of <Ref Oper="TransposedMatMutable"/>,
-##  in analogy to operations such as <Ref Func="Zero"/>.
+##  in analogy to operations such as <Ref Attr="Zero"/>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1224,16 +1264,20 @@ DeclareOperation( "TriangulizeMat", [ IsMatrix and IsMutable ] );
 ##
 ##  <Description>
 ##  returns a mutable list containing the entries of the <A>pos</A>th upper
-##  subdiagonal of <A>mat</A>.
+##  subdiagonal of the matrix <A>mat</A>.
 ##  <Example><![CDATA[
-##  gap> UpperSubdiagonal(mat,1);
+##  gap> UpperSubdiagonal( [ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ], 1 );
 ##  [ 2, 6 ]
+##  gap> UpperSubdiagonal( [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ], 1 );
+##  [ 2 ]
+##  gap> UpperSubdiagonal( [ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ] ], 1 );
+##  [ 2, 7 ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareOperation( "UpperSubdiagonal", [ IsMatrix, IsPosInt ] );
+DeclareOperation( "UpperSubdiagonal", [ IsMatrixObj, IsPosInt ] );
 
 
 #############################################################################
@@ -1480,43 +1524,56 @@ DeclareGlobalFunction( "NullMat" );
 
 #############################################################################
 ##
-#F  NullspaceModQ( <E>, <q> ) . . . . . . . . . . . .nullspace of <E> mod <q>
+#F  NullspaceModN( <M>, <n> ) . . . . . . . . . . . .nullspace of <M> mod <n>
 ##
-##  <#GAPDoc Label="NullspaceModQ">
+##  <#GAPDoc Label="NullspaceModN">
 ##  <ManSection>
-##  <Func Name="NullspaceModQ" Arg='E, q'/>
+##  <Func Name="NullspaceModQ" Arg='M, q'/>
+##  <Func Name="NullspaceModN" Arg='M, n'/>
 ##
 ##  <Description>
-##  <A>E</A> must be a matrix of integers and <A>q</A> a prime power.
-##  Then <Ref Func="NullspaceModQ"/> returns the set of all vectors of integers modulo
-##  <A>q</A>, which solve the homogeneous equation system given by <A>E</A> modulo <A>q</A>.
+##  <A>M</A> must be a matrix of integers and <A>n</A> a positive integer.
+##  Then <Ref Func="NullspaceModN"/> returns the set of all vectors of
+##  integers modulo <A>n</A>, which solve the homogeneous equation system
+##  <A>v</A> <A>M</A> = 0 modulo <A>n</A>.
+##  <P/>
+##  <Ref Func="NullspaceModQ"/> is a synonym for <Ref Func="NullspaceModN"/>.
 ##  <Example><![CDATA[
-##  gap> mat:= [ [ 1, 3 ], [ 1, 2 ], [ 1, 1 ] ];;  NullspaceModQ( mat, 5 );
-##  [ [ 0, 0, 0 ], [ 1, 3, 1 ], [ 2, 1, 2 ], [ 4, 2, 4 ], [ 3, 4, 3 ] ]
+##  gap> NullspaceModN( [ [ 2 ] ], 8 );
+##  [ [ 0 ], [ 4 ] ]
+##  gap> NullspaceModN( [ [ 2, 1 ], [ 0, 2 ] ], 6 );
+##  [ [ 0, 0 ], [ 0, 3 ] ]
+##  gap> mat:= [ [ 1, 3 ], [ 1, 2 ], [ 1, 1 ] ];;
+##  gap> NullspaceModN( mat, 5 );
+##  [ [ 0, 0, 0 ], [ 1, 3, 1 ], [ 2, 1, 2 ], [ 3, 4, 3 ], [ 4, 2, 4 ] ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareGlobalFunction( "NullspaceModQ" );
+DeclareGlobalFunction( "NullspaceModN" );
+DeclareSynonym( "NullspaceModQ", NullspaceModN );
 
 
 #############################################################################
 ##
-#F  BasisNullspaceModN( <M>, <n> ) . . . . . . .  .  nullspace of <E> mod <n>
+#F  BasisNullspaceModN( <M>, <n> ) . .  basis of the nullspace of <M> mod <n>
 ##
+##  <#GAPDoc Label="BasisNullspaceModN">
 ##  <ManSection>
 ##  <Func Name="BasisNullspaceModN" Arg='M, n'/>
 ##
 ##  <Description>
-##  <A>M</A> must be a matrix of integers modulo <A>n</A> and <A>n</A> a positive integer.  
-##  Then 'NullspaceModQ' returns a set <A>B</A> of vectors such that every <A>v</A> 
-##  such that <A>v</A> <A>M</A> = 0 modulo <A>n</A> can be expressed by a Z-linear combination
-##  of elements of <A>M</A>.
+##  <A>M</A> must be a matrix of integers and <A>n</A> a positive integer.
+##  Then <Ref Func="BasisNullspaceModN"/> returns a set <A>B</A> of vectors
+##  such that every vector <A>v</A> of integer modulo <A>n</A> satisfying
+##  <A>v</A> <A>M</A> = 0 modulo <A>n</A> can be expressed by a Z-linear
+##  combination of elements of <A>B</A>.
 ##  </Description>
 ##  </ManSection>
+##  <#/GAPDoc>
 ##
-DeclareGlobalFunction ("BasisNullspaceModN");
+DeclareGlobalFunction( "BasisNullspaceModN" );
 
 
 #############################################################################
@@ -1580,7 +1637,7 @@ DeclareGlobalFunction( "DiagonalMat" );
 ##  vector.
 ##  <P/>
 ##  More precisely, if <A>coeffs</A> is the coefficients list of a vector
-##  <M>v</M> w.r.t. a basis <M>B</M> (see&nbsp;<Ref Func="Basis"/>), say,
+##  <M>v</M> w.r.t. a basis <M>B</M> (see&nbsp;<Ref Attr="Basis"/>), say,
 ##  then the returned matrix describes the
 ##  reflection in <M>v</M> w.r.t. <M>B</M> as a map on a row space,
 ##  with action from the right.
@@ -1589,7 +1646,7 @@ DeclareGlobalFunction( "DiagonalMat" );
 ##  order of the reflection.
 ##  The default is a reflection of order 2.
 ##  For triflections one should choose a third root of unity etc.
-##  (see&nbsp;<Ref Func="E"/>).
+##  (see&nbsp;<Ref Oper="E"/>).
 ##  <P/>
 ##  <A>conj</A> is a function of one argument that conjugates a ring element.
 ##  The default is <Ref Attr="ComplexConjugate"/>.
@@ -1879,7 +1936,7 @@ DeclareSynonym("OnSubspacesByCanonicalBasisGF2",OnSubspacesByCanonicalBasis);
 ##  <P/>
 ##  If fields <A>F</A> and <A>E</A> are given, then <A>F</A> must be a
 ##  subfield of <A>E</A>, and <A>mat</A> must have entries in <A>E</A>.
-##  Then <Ref Oper="CharacteristicPolynomial"/> returns the characteristic
+##  Then <Ref Attr="CharacteristicPolynomial"/> returns the characteristic
 ##  polynomial of the <A>F</A>-linear mapping induced by <A>mat</A> 
 ##  on the underlying <A>E</A>-vector space of <A>mat</A>. In this case, 
 ##  the characteristic polynomial is computed using <Ref Func="BlownUpMat"/>
@@ -1893,16 +1950,16 @@ DeclareSynonym("OnSubspacesByCanonicalBasisGF2",OnSubspacesByCanonicalBasis);
 ##  <C>CharacteristicPolynomial(<A>F</A>, <A>E</A>, <A>mat</A>)</C> is a
 ##  multiple of the  minimal polynomial
 ##  <C>MinimalPolynomial(<A>F</A>, <A>mat</A>)</C>
-##  (see&nbsp;<Ref Func="MinimalPolynomial"/>).
+##  (see&nbsp;<Ref Oper="MinimalPolynomial"/>).
 ##  <P/>
 ##  Note that, up to &GAP; version 4.4.6,
-##  <Ref Oper="CharacteristicPolynomial"/> only  allowed to specify one field
+##  <Ref Attr="CharacteristicPolynomial"/> only  allowed to specify one field
 ##  (corresponding to <A>F</A>) as an argument.
 ##  That usage has been disabled because its definition turned out to be 
 ##  ambiguous and may have lead to unexpected results. (To ensure
 ##  backward compatibility, it is still possible to use the old form 
 ##  if <A>F</A> contains the default field of the matrix,
-##  see&nbsp;<Ref Func="DefaultFieldOfMatrix"/>,
+##  see&nbsp;<Ref Attr="DefaultFieldOfMatrix"/>,
 ##  but this feature will disappear in future versions of &GAP;.)
 ##  <Example><![CDATA[
 ##  gap> CharacteristicPolynomial( [ [ 1, 1 ], [ 0, 1 ] ] );
@@ -2078,7 +2135,7 @@ DeclareOperation("BaseField",[IsObject]);
 ##
 ##  <#GAPDoc Label="SimplexMethod">
 ##  <ManSection>
-##  <Oper Name="SimplexMethod" Arg='A,b,c'/>
+##  <Func Name="SimplexMethod" Arg='A,b,c'/>
 ##
 ##  <Description>
 ##  Find a rational vector <A>x</A> that maximizes <M><A>x</A>\cdot<A>c</A></M>, subject
@@ -2097,37 +2154,34 @@ DeclareGlobalFunction( "SimplexMethod" );
 
 #############################################################################
 ##
-#O  RationalCanonicalFormTransform( <A> )
+#O  RationalCanonicalFormTransform( <mat> )
 ##
-##  <#GAPDoc Label="Frobenius Normal Form">
+##  <#GAPDoc Label="RationalCanonicalFormTransform">
 ##  <ManSection>
-##  <Oper Name="RationalCanonicalFormTransform" Arg='A'/>
+##  <Func Name="RationalCanonicalFormTransform" Arg='mat'/>
 ##
 ##  <Description>
-##  For a matrix <A>A</A> return a matrix <A>P</A> such that
-##  <M><A>A</A>^<A>P</A></M> is in rational canonical form (also called Frobenius normal form).
-##  The algorithm used is the basic textbook version and thus not of optimal complexity.
+##  <Index>Frobenius Normal Form</Index>
+##  For a matrix <C>A</C>, return a matrix <C>P</C> such that
+##  <M>A^{P}</M> is in rational canonical form (also called
+##  Frobenius normal form). The algorithm used is the basic textbook
+##  version and thus not of optimal complexity.
 ##  <Example><![CDATA[
-##  gap> aa:=[ [ 0, -8, 12, 40, -36, 4, 0, 59, 15, -9 ], [ -2, -2, -2, 6, -11, 1, -1, 10, 1, 0 ],
-##  >   [ 1, 5, 0, -6, 12, -2, 0, -12, -4, 2 ], [ 0, 0, 0, 2, 0, 0, 0, 7, 0, 0 ],
-##  >   [ 0, 2, -3, -7, 8, -1, 0, -7, -3, 2 ], [ -5, -4, -6, 18, -30, 2, -2, 35, 5, -1 ],
-##  >   [ -1, -6, 6, 20, -28, 3, 0, 24, 10, -6 ], [ 0, 0, 0, -1, 0, 0, 0, -3, 0, 0 ],
-##  >   [ 0, 0, -1, -2, -2, 0, -1, -7, 0, 0 ], [ 0, -8, 9, 21, -36, 4, -2, 12, 12, -8 ] ];;
+##  gap> aa:=[[0,-8,12,40,-36,4,0,59,15,-9],[-2,-2,-2,6,-11,1,-1,10,1,0],
+##  > [1,5,0,-6,12,-2,0,-12,-4,2],[0,0,0,2,0,0,0,7,0,0],
+##  > [0,2,-3,-7,8,-1,0,-7,-3,2],[-5,-4,-6,18,-30,2,-2,35,5,-1],
+##  > [-1,-6,6,20,-28,3,0,24,10,-6],[0,0,0,-1,0,0,0,-3,0,0],
+##  > [0,0,-1,-2,-2,0,-1,-7,0,0],[0,-8,9,21,-36,4,-2,12,12,-8]];;
 ##  gap> t:=RationalCanonicalFormTransform(aa);;
 ##  gap> aa^t;
-##  [ [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ],
-##    [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 ],
-##    [ 0, 0, 0, 0, 0, 1, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0, -1 ],
-##    [ 0, 0, 0, 0, 0, 0, 0, 0, 1, -1 ] ]
+##  [ [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+##    [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ],
+##    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 ],
+##    [ 0, 0, 0, 0, 0, 1, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 ],
+##    [ 0, 0, 0, 0, 0, 0, 0, 1, 0, -1 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 1, -1 ] ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "RationalCanonicalFormTransform" );
-
-
-#############################################################################
-##
-#E
-

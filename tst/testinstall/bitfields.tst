@@ -1,3 +1,4 @@
+#@local bf,i,j,vals,x,y,z
 gap> START_TEST("bitfields.tst");
 
 # Test correct behaviour for a variety of numbers of fields
@@ -28,20 +29,52 @@ gap> for i in [1..2+GAPInfo.BytesPerVariable] do
 
 #
 # Now test various error and extreme conditions
-#<
+#
 gap> bf := MakeBitfields(1);
 rec( booleanGetters := [ function( data ) ... end ], 
   booleanSetters := [ function( data, val ) ... end ], 
   getters := [ function( data ) ... end ], 
   setters := [ function( data, val ) ... end ], widths := [ 1 ] )
+
+#
+gap> Display(bf.getters[1]);
+function ( data )
+    <<kernel or compiled code>>
+end
+gap> Display(bf.setters[1]);
+function ( data, val )
+    <<kernel or compiled code>>
+end
+gap> Display(bf.booleanGetters[1]);
+function ( data )
+    <<kernel or compiled code>>
+end
+gap> Display(bf.booleanSetters[1]);
+function ( data, val )
+    <<kernel or compiled code>>
+end
+
+#
 gap> bf.getters[1](Z(5));
-Error, Field getter: argument must be small integer
+Error, Field getter: <data> must be a small integer (not a ffe)
 gap> bf.setters[1](1, (1,2));
-Error, Field Setter: both arguments must be small integers
+Error, Field Setter: <val> must be a small integer (not a permutation (small))
 gap> bf.setters[1]([],1);
-Error, Field Setter: both arguments must be small integers
+Error, Field Setter: <data> must be a small integer (not a empty plain list)
 gap> BuildBitfields([1],Z(5));
 Error, Fields builder: values must be small integers
 gap> MakeBitfields(100);
 Error, MAKE_BITFIELDS: total widths too large
+
+#
+gap> NameFunction(bf.getters[1]);
+"<field getter>"
+gap> NameFunction(bf.setters[1]);
+"<field setter>"
+gap> NameFunction(bf.booleanGetters[1]);
+"<boolean field getter>"
+gap> NameFunction(bf.booleanSetters[1]);
+"<boolean field setter>"
+
+#
 gap> STOP_TEST("bitfields.tst", 1);

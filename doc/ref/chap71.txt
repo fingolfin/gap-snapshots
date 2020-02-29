@@ -286,10 +286,23 @@
   
   [33X[0;0YCalled  with  an  ordinary  character table [3Xordtbl[103X or a group [3XG[103X, [2XBrauerTable[102X
   returns  its  [3Xp[103X-modular  character  table if [5XGAP[105X can compute this table, and
-  [9Xfail[109X  otherwise.  The  [3Xp[103X-modular table can be computed for [3Xp[103X-solvable groups
-  (using  the  Fong-Swan  Theorem) and in the case that [3Xordtbl[103X is a table from
-  the  [5XGAP[105X  character  table  library  for  which  also the [3Xp[103X-modular table is
-  contained in the table library.[133X
+  [9Xfail[109X otherwise.[133X
+  
+  [33X[0;0YThe [3Xp[103X-modular table can be computed in the following cases.[133X
+  
+  [30X    [33X[0;6YThe  group  is  [3Xp[103X-solvable  (see  [2XIsPSolvable[102X  ([14X39.15-24[114X),  apply  the
+        Fong-Swan Theorem);[133X
+  
+  [30X    [33X[0;6Ythe  Sylow  [3Xp[103X-subgroup  of  [3XG[103X  is  cyclic,  and  all  [3Xp[103X-modular Brauer
+        characters  of [3XG[103X lift to ordinary characters (note that this situation
+        can be detected from the ordinary character table of [3XG[103X);[133X
+  
+  [30X    [33X[0;6Ythe  table [3Xordtbl[103X stores information how it was constructed from other
+        tables  (as a direct product or as an isoclinic variant, for example),
+        and the Brauer tables of the source tables can be computed;[133X
+  
+  [30X    [33X[0;6Y[3Xordtbl[103X  is a table from the [5XGAP[105X character table library for which also
+        the [3Xp[103X-modular table is contained in the table library.[133X
   
   [33X[0;0YThe  default method for a group and a prime delegates to [2XBrauerTable[102X for the
   ordinary  character  table of this group. The default method for [3Xordtbl[103X uses
@@ -363,7 +376,7 @@
   
   [33X[0;0YNew attributes and properties can be notified to [2XSupportedCharacterTableInfo[102X
   by  creating  them  with  [10XDeclareAttributeSuppCT[110X  and  [10XDeclarePropertySuppCT[110X
-  instead of [2XDeclareAttribute[102X ([14X79.18-9[114X) and [2XDeclareProperty[102X ([14X79.18-10[114X).[133X
+  instead of [2XDeclareAttribute[102X ([14X13.5-4[114X) and [2XDeclareProperty[102X ([14X13.7-5[114X).[133X
   
   [1X71.3-5 ConvertToCharacterTable[101X
   
@@ -371,7 +384,7 @@
   [33X[1;0Y[29X[2XConvertToCharacterTableNC[102X( [3Xrecord[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xrecord[103X  be  a  record.  [2XConvertToCharacterTable[102X  converts [3Xrecord[103X into a
-  component  object  (see [14X79.10[114X) representing a character table. The values of
+  component  object  (see [14X79.2[114X)  representing a character table. The values of
   those  components of [3Xrecord[103X whose names occur in [2XSupportedCharacterTableInfo[102X
   ([14X71.3-4[114X) correspond to attribute values of the returned character table. All
   other  components  of  the  record simply become components of the character
@@ -1690,7 +1703,7 @@
   [30X    [33X[0;6Y[2XIrr[102X ([14X71.8-2[114X) (closure under complex conjugation and Frobenius map).[133X
   
   [33X[0;0YIf  no  inconsistency occurs, [9Xtrue[109X is returned, otherwise each inconsistency
-  is  printed  to the screen if the level of [2XInfoWarning[102X ([14X7.4-7[114X) is at least [22X1[122X
+  is  printed  to the screen if the level of [2XInfoWarning[102X ([14X7.4-8[114X) is at least [22X1[122X
   (see [14X7.4[114X), and [9Xfalse[109X is returned at the end.[133X
   
   [1X71.12-3 IsPSolvableCharacterTable[101X
@@ -1959,12 +1972,21 @@
   
   [8X[10Xchars[110X[8X[108X
         [33X[0;6Yan  integer  or  a  list  of  integers  to  select  a  sublist  of the
-        irreducible characters of [3Xtbl[103X, or a list of characters of [3Xtbl[103X (in this
-        case the letter [10X"X"[110X is replaced by [10X"Y"[110X),[133X
+        irreducible  characters of [3Xtbl[103X, or a list of characters of [3Xtbl[103X (in the
+        latter case, the default letter [10X"X"[110X in the character names is replaced
+        by [10X"Y"[110X),[133X
+  
+  [8X[10Xcharnames[110X[8X[108X
+        [33X[0;6Ya  list  of  strings  of length equal to the number of characters that
+        shall be shown; they are used as labels for the characters,[133X
   
   [8X[10Xclasses[110X[8X[108X
         [33X[0;6Yan integer or a list of integers to select a sublist of the classes of
         [3Xtbl[103X,[133X
+  
+  [8X[10Xclassnames[110X[8X[108X
+        [33X[0;6Ya  list of strings of length equal to the number of classes that shall
+        be shown; they are used as labels for the classes,[133X
   
   [8X[10Xindicator[110X[8X[108X
         [33X[0;6Y[9Xtrue[109X  enables  the printing of the second Frobenius Schur indicator, a
@@ -1979,7 +2001,9 @@
         [33X[0;6Yan  integer  or a list of integers to select a subset of the available
         power  maps,  [9Xfalse[109X  to  suppress  the  printing of power maps, or the
         string  [10X"ATLAS"[110X to force a printing of class names and power maps in a
-        style similar to that used in the [5XAtlas[105X of Finite Groups [CCN+85],[133X
+        style similar to that used in the [5XAtlas[105X of Finite Groups [CCN+85] (the
+        [10X"ATLAS"[110X  variant  works  only  if the function [2XCambridgeMaps[102X ([14XCTblLib:
+        CambridgeMaps[114X) is available, which belongs to the [5XCTblLib[105X package),[133X
   
   [8X[10XDisplay[110X[8X[108X
         [33X[0;6Ythe  function  that  is actually called in order to display the table;
@@ -2742,28 +2766,45 @@
   
   [1X71.20-4 CharacterTableIsoclinic[101X
   
+  [33X[1;0Y[29X[2XCharacterTableIsoclinic[102X( [3Xtbl[103X[, [3Xarec[103X] ) [32X operation[133X
   [33X[1;0Y[29X[2XCharacterTableIsoclinic[102X( [3Xtbl[103X[, [3Xclasses[103X][, [3Xcentre[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XCharacterTableIsoclinic[102X( [3Xmodtbl[103X, [3Xordiso[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XSourceOfIsoclinicTable[102X( [3Xtbl[103X ) [32X attribute[133X
   
-  [33X[0;0YIf  [3Xtbl[103X  is  the  (ordinary  or modular) character table of a group with the
-  structure  [22X2.G.2[122X  with  a  central  subgroup  [22XZ[122X of order [22X2[122X or [22X4[122X and a normal
-  subgroup  [22XN[122X  of index [22X2[122X that contains [22XZ[122X then [2XCharacterTableIsoclinic[102X returns
-  the  table of the isoclinic group in the sense of the [5XAtlas[105X of Finite Groups
-  [CCN+85,  Chapter  6,  Section  7]. If [22XN[122X is not uniquely determined then the
-  positions  of the classes forming [22XN[122X must be entered as list [3Xclasses[103X. If [22XZ[122X is
-  not  unique  inside [22XN[122X then the positions of the classes in [22XZ[122X must be entered
-  as list [3Xcentre[103X; If [22XZ[122X has order [22X2[122X then [3Xcentre[103X can be also the position of the
-  involution in [22XZ[122X.[133X
+  [33X[0;0YLet [3Xtbl[103X be the (ordinary or modular) character table of a group [22XH[122X, say, with
+  the  structure  [22Xp.G.p[122X for some prime [22Xp[122X, that is, [22XH/Z[122X has a normal subgroup [22XN[122X
+  of index [22Xp[122X and a central subgroup [22XZ[122X of order [22Xp[122X contained in [22XN[122X.[133X
   
-  [33X[0;0YNote that also if [3Xtbl[103X is a Brauer table then [3Xclasses[103X and [3Xcentre[103X denote class
-  numbers w.r.t. the [13Xordinary[113X character table.[133X
+  [33X[0;0YThen  [2XCharacterTableIsoclinic[102X returns the table of an isoclinic group in the
+  sense of the [5XAtlas[105X of Finite Groups [CCN+85, Chapter 6, Section 7].[133X
   
-  [33X[0;0YFor   an   ordinary   character   table   that   has  been  constructed  via
-  [2XCharacterTableIsoclinic[102X,  the value of [2XSourceOfIsoclinicTable[102X is the list of
-  three arguments in the [2XCharacterTableIsoclinic[102X call.[133X
+  [33X[0;0YIf  [22Xp  =  2[122X  then also the case [22XH = 4.G.2[122X is supported, that is, [22XZ[122X has order
+  four and [22XN[122X has index two in [22XH[122X.[133X
   
-  [33X[0;0YNote   that   there  is  no  default  method  for  [13Xcomputing[113X  the  value  of
-  [2XSourceOfIsoclinicTable[102X.[133X
+  [33X[0;0YThe  optional  arguments  are  needed  if  [3Xtbl[103X  does not determine the class
+  positions  of [22XN[122X or [22XZ[122X uniquely, and in the case [22Xp > 2[122X if one wants to specify
+  a [21Xvariant number[121X for the result.[133X
+  
+  [30X    [33X[0;6YIn general, the values can be specified via a record [3Xarec[103X. If [22XN[122X is not
+        uniquely  determined  then the positions of the classes forming [22XN[122X must
+        be  entered  as the value of the component [10XnormalSubgroup[110X. If [22XZ[122X is not
+        unique  inside  [22XN[122X  then the class position of a generator of [22XZ[122X must be
+        entered as the value of the component [10XcentralElement[110X.[133X
+  
+  [30X    [33X[0;6YIf  [22Xp  = 2[122X then one may specify the positions of the classes forming [22XN[122X
+        via  a  list  [3Xclasses[103X, and the positions of the classes in [22XZ[122X as a list
+        [3Xcentre[103X;  if  [22XZ[122X has order [22X2[122X then [3Xcentre[103X can be also the position of the
+        involution in [22XZ[122X.[133X
+  
+  [33X[0;0YNote   that   also  if  [3Xtbl[103X  is  a  Brauer  table  then  [10XnormalSubgroup[110X  and
+  [10XcentralElement[110X,  resp.   [3Xclasses[103X and [3Xcentre[103X, denote class numbers w.r.t. the
+  [13Xordinary[113X character table.[133X
+  
+  [33X[0;0YIf  [22Xp[122X is odd then the [5XAtlas[105X construction describes [22Xp[122X isoclinic variants that
+  arise  from  [22Xp.G.p[122X.  (These  groups  need  not  be  pairwise nonisomorphic.)
+  Entering  an  integer [22Xk ∈ { 1, 2, ..., k-1 }[122X as the value of the component [10Xk[110X
+  of  [3Xarec[103X  yields the [22Xk[122X-th of the corresponding character tables; the default
+  for [10Xk[110X is [22X1[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xd8:= CharacterTable( "Dihedral", 8 );[127X[104X
@@ -2771,8 +2812,8 @@
     [4X[25Xgap>[125X [27Xnsg:= ClassPositionsOfNormalSubgroups( d8 );[127X[104X
     [4X[28X[ [ 1 ], [ 1, 3 ], [ 1 .. 3 ], [ 1, 3, 4 ], [ 1, 3 .. 5 ], [ 1 .. 5 ] [128X[104X
     [4X[28X ][128X[104X
-    [4X[25Xgap>[125X [27Xiso:= CharacterTableIsoclinic( d8, nsg[3] );;[127X[104X
-    [4X[25Xgap>[125X [27XDisplay( iso );[127X[104X
+    [4X[25Xgap>[125X [27Xisod8:= CharacterTableIsoclinic( d8, nsg[3] );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( isod8 );[127X[104X
     [4X[28XIsoclinic(Dihedral(8))[128X[104X
     [4X[28X[128X[104X
     [4X[28X     2  3  2  3  2  2[128X[104X
@@ -2785,9 +2826,86 @@
     [4X[28XX.3     1 -1  1  1 -1[128X[104X
     [4X[28XX.4     1 -1  1 -1  1[128X[104X
     [4X[28XX.5     2  . -2  .  .[128X[104X
-    [4X[25Xgap>[125X [27XSourceOfIsoclinicTable( iso );[127X[104X
-    [4X[28X[ CharacterTable( "Dihedral(8)" ), [ 1, 2, 3 ], [ 3 ], 3 ][128X[104X
+    [4X[25Xgap>[125X [27Xt1:= CharacterTable( SmallGroup( 27, 3 ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xt2:= CharacterTable( SmallGroup( 27, 4 ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xnsg:= ClassPositionsOfNormalSubgroups( t1 );[127X[104X
+    [4X[28X[ [ 1 ], [ 1, 4, 8 ], [ 1, 2, 4, 5, 8 ], [ 1, 3, 4, 7, 8 ], [128X[104X
+    [4X[28X  [ 1, 4, 6, 8, 11 ], [ 1, 4, 8, 9, 10 ], [ 1 .. 11 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xiso1:= CharacterTableIsoclinic( t1, rec( k:= 1,[127X[104X
+    [4X[25X>[125X [27X              normalSubgroup:= nsg[3] ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xiso2:= CharacterTableIsoclinic( t1, rec( k:= 2,[127X[104X
+    [4X[25X>[125X [27X              normalSubgroup:= nsg[3] ) );;[127X[104X
+    [4X[25Xgap>[125X [27XTransformingPermutationsCharacterTables( iso1, t1 ) <> fail;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XTransformingPermutationsCharacterTables( iso1, t2 ) <> fail;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XTransformingPermutationsCharacterTables( iso2, t2 ) <> fail;[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
+  
+  [33X[0;0YFor   an   ordinary   character   table   that   has  been  constructed  via
+  [2XCharacterTableIsoclinic[102X,  the  value  of [2XSourceOfIsoclinicTable[102X encodes this
+  construction, and is defined as follows. If [22Xp = 2[122X then the value is the list
+  with  entries  [3Xtbl[103X,  [3Xclasses[103X, the list of class positions of the nonidentity
+  elements  in  [22XZ[122X,  and the class position of a generator of [22XZ[122X. If [22Xp[122X is an odd
+  prime then the value is a record with the following components.[133X
+  
+  [8X[10Xtable[110X[8X[108X
+        [33X[0;6Ythe character table [3Xtbl[103X,[133X
+  
+  [8X[10Xp[110X[8X[108X
+        [33X[0;6Ythe prime [22Xp[122X,[133X
+  
+  [8X[10Xk[110X[8X[108X
+        [33X[0;6Ythe variant number [22Xk[122X,[133X
+  
+  [8X[10XouterClasses[110X[8X[108X
+        [33X[0;6Ythe  list of length [22Xp-1[122X that contains at position [22Xi[122X the sorted list of
+        class positions of the [22Xi[122X-th coset of the normal subgroup [22XN[122X[133X
+  
+  [8X[10XcentralElement[110X[8X[108X
+        [33X[0;6Ythe class position of a generator of the central subgroup [22XZ[122X.[133X
+  
+  [33X[0;0YThere    is    no    default    method    for   [13Xcomputing[113X   the   value   of
+  [2XSourceOfIsoclinicTable[102X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSourceOfIsoclinicTable( isod8 );[127X[104X
+    [4X[28X[ CharacterTable( "Dihedral(8)" ), [ 1 .. 3 ], [ 3 ], 3 ][128X[104X
+    [4X[25Xgap>[125X [27XSourceOfIsoclinicTable( iso1 );[127X[104X
+    [4X[28Xrec( centralElement := 4, k := 1, [128X[104X
+    [4X[28X  outerClasses := [ [ 3, 6, 9 ], [ 7, 10, 11 ] ], p := 3, [128X[104X
+    [4X[28X  table := CharacterTable( <pc group of size 27 with 3 generators> ) )[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIf the arguments of [2XCharacterTableIsoclinic[102X are a Brauer table [3Xmodtbl[103X and an
+  ordinary  table  [3Xordiso[103X  then  the [2XSourceOfIsoclinicTable[102X value of [3Xordiso[103X is
+  assumed  to  be  identical with the [2XOrdinaryCharacterTable[102X ([14X71.8-4[114X) value of
+  [3Xmodtbl[103X,  and  the  specified  isoclinic  table  of  [3Xmodtbl[103X is returned. This
+  variant is useful if one has already constructed [3Xordiso[103X in advance.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:= GL(2,3);;[127X[104X
+    [4X[25Xgap>[125X [27Xt:= CharacterTable( g );;[127X[104X
+    [4X[25Xgap>[125X [27Xiso:= CharacterTableIsoclinic( t );;[127X[104X
+    [4X[25Xgap>[125X [27Xt3:= t mod 3;;[127X[104X
+    [4X[25Xgap>[125X [27Xiso3:= CharacterTableIsoclinic( t3, iso );;[127X[104X
+    [4X[25Xgap>[125X [27XTransformingPermutationsCharacterTables( iso3,[127X[104X
+    [4X[25X>[125X [27X       CharacterTableIsoclinic( t3 ) ) <> fail;[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Y[13XTheoretical  background:[113X  Consider  the central product [22XK[122X of [22XH[122X with a cyclic
+  group [22XC[122X of order [22Xp^2[122X. That is, [22XK = H C[122X, [22XC ≤ Z(K)[122X, and the central subgroup [22XZ[122X
+  of  order  [22Xp[122X  in  [22XH[122X lies in [22XC[122X. There are [22Xp+1[122X subgroups of [22XK[122X that contain the
+  normal  subgroup  [22XN[122X of index [22Xp[122X in [22XH[122X. One of them is the central product of [22XC[122X
+  with  [22XN[122X,  the  others  are [22XH_0 = H[122X and its isoclinic variants [22XH_1, H_2, ...,
+  H_{p-1}[122X.  We  fix  [22Xg ∈ H ∖ N[122X and a generator [22Xz[122X of [22XC[122X, and get [22XH = N ∪ N g ∪ N
+  g^2  ∪  ⋯  ∪  N  g^{p-1}[122X.  Then [22XH_k[122X, [22X0 ≤ k ≤ p-1[122X, is given by [22XN ∪ N gz^k ∪ N
+  (gz^k)^2  ∪  ⋯  ∪  N  (gz^k)^{p-1}[122X.  The conjugacy classes of all [22XH_k[122X are in
+  bijection  via  multiplying  the elements with suitable powers of [22Xz[122X, and the
+  irreducible  characters  of  all  [22XH_k[122X  extend  to [22XK[122X and are in bijection via
+  multiplying the character values with suitable [22Xp^2[122X-th roots of unity.[133X
   
   [1X71.20-5 CharacterTableOfNormalSubgroup[101X
   
@@ -2885,6 +3003,45 @@
     [4X[25Xgap>[125X [27XCharacterParameters( wr )[1];[127X[104X
     [4X[28X[ [ 1, 1 ], [  ], [  ] ][128X[104X
   [4X[32X[104X
+  
+  [1X71.20-7 CharacterValueWreathSymmetric[101X
+  
+  [33X[1;0Y[29X[2XCharacterValueWreathSymmetric[102X( [3Xtbl[103X, [3Xn[103X, [3Xbeta[103X, [3Xpi[103X ) [32X function[133X
+  
+  [33X[0;0YLet  [3Xtbl[103X  be the ordinary character table of a group [22XG[122X, say. The aim of this
+  function  is to compute a single character value from the character table of
+  the wreath product of [22XG[122X with the full symmetric group on [3Xn[103X points.[133X
+  
+  [33X[0;0YThe  conjugacy classes and the irreducible characters of this wreath product
+  are  parametrized  by [22Xr[122X-tuples of partitions which together form a partition
+  of  [3Xn[103X  (see  [2XPartitionTuples[102X  ([14X16.2-30[114X)), where [22Xr[122X is the number of conjugacy
+  classes of [22XG[122X.[133X
+  
+  [33X[0;0YWe  describe  the  conjugacy class for which we want to compute the value by
+  the  [22Xr[122X-tuple  [3Xpi[103X  of  partitions in question, and describe the character for
+  which  we want to compute the value by the [22Xr[122X-tuple [3Xbeta[103X of [2XBetaSet[102X ([14X16.2-32[114X)
+  values of the [22Xr[122X-tuple of partitions in question.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xn:= 4;;[127X[104X
+    [4X[25Xgap>[125X [27Xclasspara:= [ [], [ 2, 1, 1 ] ];;[127X[104X
+    [4X[25Xgap>[125X [27Xcharpara:= [ [ 2, 1 ], [ 1 ] ];;[127X[104X
+    [4X[25Xgap>[125X [27Xbetas:= List( charpara, BetaSet );;[127X[104X
+    [4X[25Xgap>[125X [27Xc2:= CharacterTable( "Cyclic", 2 );;[127X[104X
+    [4X[25Xgap>[125X [27XCharacterValueWreathSymmetric( c2, n, betas, classpara );[127X[104X
+    [4X[28X0[128X[104X
+    [4X[25Xgap>[125X [27Xwr:= CharacterTableWreathSymmetric( c2, n );;[127X[104X
+    [4X[25Xgap>[125X [27Xclasspos:= Position( ClassParameters( wr ), classpara );;[127X[104X
+    [4X[25Xgap>[125X [27Xcharpos:= Position( CharacterParameters( wr ), charpara );;[127X[104X
+    [4X[25Xgap>[125X [27XIrr( wr )[ charpos, classpos ];[127X[104X
+    [4X[28X0[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThis  function  can  be  useful if one is interested in only a few character
+  values.  If  many  character values are needed then it is probably faster to
+  compute   the   whole   character   table   of   the  wreath  product  using
+  [2XCharacterTableWreathSymmetric[102X  ([14X71.20-6[114X), which uses intermediate results of
+  recursive computations and therefore can avoid repetitions.[133X
   
   
   [1X71.21 [33X[0;0YSorted Character Tables[133X[101X

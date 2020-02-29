@@ -1,0 +1,62 @@
+\GAPDocLabFile{happrog}
+\makelabel{happrog:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{happrog:Abstract}{}{X7AA6C5737B711C89}
+\makelabel{happrog:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{happrog:Acknowledgements}{}{X82A988D47DFAFCFA}
+\makelabel{happrog:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{happrog:Resolutions in Hap}{1}{X7C6DD73E7BB931AB}
+\makelabel{happrog:The Standard Representation HapResolutionRep}{1.1}{X804F611B7E23BDB1}
+\makelabel{happrog:The HapLargeGroupResolutionRep Representation}{1.2}{X8024014D8488FE30}
+\makelabel{happrog:Accessing and Manipulating Resolutions}{2}{X86374CEA7CDC6946}
+\makelabel{happrog:Representation-Independent Access Methods}{2.1}{X7A7225067E7895A9}
+\makelabel{happrog:Converting Between Representations}{2.2}{X7B94A2ED857C62D5}
+\makelabel{happrog:Special Methods for HapResolutionRep}{2.3}{X84FB45EB83B5822C}
+\makelabel{happrog:The HapLargeGroupResolutionRep Representation}{2.4}{X8024014D8488FE30}
+\makelabel{happrog:Contracting Homotopies}{3}{X792B9CC97C670AEA}
+\makelabel{happrog:The PartialContractingHomotopy Data Type}{3.1}{X7E957D2381DBE362}
+\makelabel{happrog:StrongestValidRepresentationForLetter}{2.1.1}{X7CBC6D4C783383BE}
+\makelabel{happrog:StrongestValidRepresentationForWord}{2.1.2}{X7C10841285614D04}
+\makelabel{happrog:PositionInGroupOfResolution}{2.1.3}{X780AD2DB7F5D4935}
+\makelabel{happrog:PositionInGroupOfResolutionNC}{2.1.3}{X780AD2DB7F5D4935}
+\makelabel{happrog:IsValidGroupInt}{2.1.4}{X7A58EC7B8130D6E2}
+\makelabel{happrog:GroupElementFromPosition}{2.1.5}{X822604B67B2A9133}
+\makelabel{happrog:MultiplyGroupElts}{2.1.6}{X7D3673E8840FA0B6}
+\makelabel{happrog:MultiplyFreeZGLetterWithGroupElt}{2.1.7}{X8540F3B37BAC695F}
+\makelabel{happrog:MultiplyFreeZGWordWithGroupElt}{2.1.8}{X826835B185CA4DAF}
+\makelabel{happrog:BoundaryOfFreeZGLetter}{2.1.9}{X7D8B54D7828D7C5C}
+\makelabel{happrog:BoundaryOfFreeZGWord}{2.1.10}{X81A6037F82C3C31E}
+\makelabel{happrog:ConvertStandardLetter}{2.2.1}{X7EB515317948BE8E}
+\makelabel{happrog:ConvertStandardLetterNC}{2.2.1}{X7EB515317948BE8E}
+\makelabel{happrog:ConvertStandardWord}{2.2.2}{X7A1CB5DF7A459D76}
+\makelabel{happrog:ConvertStandardWordNC}{2.2.2}{X7A1CB5DF7A459D76}
+\makelabel{happrog:ConvertLetterToStandardRep}{2.2.3}{X83153E2682184860}
+\makelabel{happrog:ConvertLetterToStandardRepNC}{2.2.3}{X83153E2682184860}
+\makelabel{happrog:ConvertWordToStandardRep}{2.2.4}{X848203218271A166}
+\makelabel{happrog:ConvertWordToStandardRepNC}{2.2.4}{X848203218271A166}
+\makelabel{happrog:IsFreeZGLetter}{2.3.1}{X7B803CC184BD2612}
+\makelabel{happrog:IsFreeZGWord}{2.3.2}{X7A36FB7B84E9A892}
+\makelabel{happrog:MultiplyGroupEltsNC}{2.3.3}{X836D3F9886EED6AC}
+\makelabel{happrog:MultiplyFreeZGLetterWithGroupEltNC}{2.3.4}{X85893CC5823508A8}
+\makelabel{happrog:MultiplyFreeZGWordWithGroupEltNC}{2.3.5}{X8073DE7E7AD8B7CB}
+\makelabel{happrog:BoundaryOfFreeZGLetterNC}{2.3.6}{X7BD3994E7C414149}
+\makelabel{happrog:BoundaryOfFreeZGWordNC}{2.3.7}{X84B1DA21805A0880}
+\makelabel{happrog:GroupRingOfResolution}{2.4.1}{X861BE6C787FA8032}
+\makelabel{happrog:MultiplyGroupEltsLargeGroupRep}{2.4.2}{X8338F7A37F240E33}
+\makelabel{happrog:MultiplyGroupEltsNCLargeGroupRep}{2.4.2}{X8338F7A37F240E33}
+\makelabel{happrog:IsFreeZGLetterNoTermCheckLargeGroupRep}{2.4.3}{X86F91A948022DEBB}
+\makelabel{happrog:IsFreeZGWordNoTermCheckLargeGroupRep}{2.4.4}{X793BA61478AEBE16}
+\makelabel{happrog:IsFreeZGLetterLargeGroupRep}{2.4.5}{X85A7BFC284E9D9CB}
+\makelabel{happrog:IsFreeZGWordLargeGroupRep}{2.4.6}{X7BF4A7EC83BE61C8}
+\makelabel{happrog:MultiplyFreeZGLetterWithGroupEltLargeGroupRep}{2.4.7}{X7A4B682079630694}
+\makelabel{happrog:MultiplyFreeZGLetterWithGroupEltNCLargeGroupRep}{2.4.7}{X7A4B682079630694}
+\makelabel{happrog:MultiplyFreeZGWordWithGroupEltLargeGroupRep}{2.4.8}{X7F2365D2851E3E3C}
+\makelabel{happrog:MultiplyFreeZGWordWithGroupEltNCLargeGroupRep}{2.4.8}{X7F2365D2851E3E3C}
+\makelabel{happrog:GeneratorsOfModuleOfResolutionLargeGroupRep}{2.4.9}{X8355F6E8842B3D8C}
+\makelabel{happrog:BoundaryOfGeneratorLargeGroupRep}{2.4.10}{X840DF79086D5473E}
+\makelabel{happrog:BoundaryOfGeneratorNCLargeGroupRep}{2.4.10}{X840DF79086D5473E}
+\makelabel{happrog:BoundaryOfFreeZGLetterNCLargeGroupRep}{2.4.11}{X83D90EC28357DCCE}
+\makelabel{happrog:BoundaryOfFreeZGLetterLargeGroupRep}{2.4.11}{X83D90EC28357DCCE}
+\makelabel{happrog:BoundaryOfFreeZGWordLargeGroupRep}{2.4.12}{X78C681D37F8DC2A1}
+\makelabel{happrog:ResolutionOfContractingHomotopy}{3.1.1}{X7D899ACD7EB512FA}
+\makelabel{happrog:PartialContractingHomotopyLookup}{3.1.2}{X79C69C9B877C6D60}
+\makelabel{happrog:PartialContractingHomotopyLookupNC}{3.1.2}{X79C69C9B877C6D60}

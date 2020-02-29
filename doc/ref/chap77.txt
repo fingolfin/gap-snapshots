@@ -14,6 +14,17 @@
   for  several  releases;  they may be removed when they don't seem to be used
   any more.[133X
   
+  [33X[0;0YInformation  about  obsolete  names  is  printed  by  [2XInfo[102X ([14X7.4-6[114X) using the
+  InfoObsolete  Info  class.  By  default  InfoObsolete  is  set  to  1. Newly
+  obsoleted  identifiers  should  at  first be outputted at info level 2. Once
+  they  have been removed from all packages, they should then be moved to info
+  level 1, so they are visible to normal users, for at least one major release
+  before being removed.[133X
+  
+  [33X[0;0YThe  functions DeclareObsoleteSynonym and DeclareObsoleteSynonymAttr take an
+  optional  final  paremeter,  specifying  the  info  level at which the given
+  obsolete symbol should be reported. It defaults to 1.[133X
+  
   [33X[0;0YThe obsolete [5XGAP[105X code is collected in two library files, [11Xlib/obsolete.gd[111X and
   [11Xlib/obsolete.gi[111X.  By  default,  these files are read when [5XGAP[105X is started. It
   may be useful to omit reading these files, for example in order to make sure
@@ -33,7 +44,7 @@
   [33X[0;0YThe concept of a group action is sometimes referred to as a [21Xgroup operation[121X.
   In  [5XGAP[105X 3  as well as in older versions of [5XGAP[105X 4 the term [10XOperation[110X was used
   instead  of  [10XAction[110X.  We decided to change the names to avoid confusion with
-  the term [21Xoperation[121X as in [2XDeclareOperation[102X ([14X79.18-12[114X) and [21Xoperations for Xyz[121X.[133X
+  the term [21Xoperation[121X as in [2XDeclareOperation[102X ([14X78.1-5[114X) and [21Xoperations for Xyz[121X.[133X
   
   [33X[0;0YHere are some examples of such name changes.[133X
   
@@ -95,24 +106,32 @@
         [10XNormedVectors[110X           │ [2XNormedRowVectors[102X ([14X61.9-11[114X)        
         [10XMutableIdentityMat[110X      │ [2XIdentityMat[102X ([14X24.5-1[114X)              
         [10XMutableNullMat[110X          │ [2XNullMat[102X ([14X24.5-2[114X)                  
+        [10XMultRowVector[110X           │ [2XMultVectorLeft[102X ([14X23.4-3[114X)           
   
-  [33X[0;0YThe  operation  [10XPositionFirstComponent[110X  has  been  deprecated in GAP 4.8 and
-  later  due  to  issues with its documentation and implementation. Instead of
-  [10XPositionFirstComponent(list,obj)[110X,  you may use [10XPositionSorted(list,[obj])[110X or
-  [10XPositionProperty(list,x->x[1]=obj)[110X  as  a  replacement,  depending  on  your
-  specific use case.[133X
+  [33X[0;0YThe  operation  [10XPositionFirstComponent[110X has been deprecated in GAP 4.8 due to
+  issues  with  its  documentation  and implementation, and was removed in GAP
+  4.10.    Instead    of   [10XPositionFirstComponent(list,obj)[110X,   you   may   use
+  [10XPositionSorted(list,[obj])[110X   or   [10XPositionProperty(list,x->x[1]=obj)[110X   as  a
+  replacement,  depending on your specific use case. The five argument version
+  of  the operation [10XMultRowVector[110X has been deprecated in GAP 4.10 since it was
+  unused and only available for coefficient lists. Note that [10XMultRowVector[110X was
+  also renamed to [10XMultVectorLeft[110X. The function [10XTemporaryGlobalVarName[110X has been
+  deprecated  in  GAP 4.11. Code using it typically can be restructured to not
+  need it, e.g. by using [2XEvalString[102X ([14X27.9-5[114X).[133X
   
   [1X77.4-1 InfoObsolete[101X
   
   [33X[1;0Y[29X[2XInfoObsolete[102X[32X info class[133X
   
   [33X[0;0Yis  an  info class to display warnings when an obsolete variable is used. By
-  default, these warnings are switched off since the info level for this class
-  is  0.  Setting  it  to  1  will trigger warnings if [5XGAP[105X will detect that an
-  obsolete variable is used at runtime.[133X
+  default,  the  info  level  for this class is set to 1, which will only show
+  variables which will be removed in the next major version of GAP. Setting it
+  to  2  will  trigger  further warnings, for variables which have alternative
+  names,  or  may  be removed in future. This class can be set to 0 to disable
+  all obsolete warnings.[133X
   
-  [33X[0;0YTo  check  that  the [5XGAP[105X code does not use obsolete variables at the parsing
-  time, and not at a runtime, use [10X-O[110X command line option, see [14X3.1[114X.[133X
+  [33X[0;0YTo  check  that  the [5XGAP[105X code does not use any obsolete variables at parsing
+  time, and not at a runtime, use the [10X-O[110X command line option, see [14X3.1[114X.[133X
   
   
   [1X77.5 [33X[0;0YThe former .gaprc file[133X[101X
@@ -155,20 +174,8 @@
   [10XIsSemilatticeAsSemigroup[110X  was  simply  a property of semigroups, there is no
   category [10XIsSemilattice[110X.[133X
   
-  [33X[0;0YFrom Version 4.8 onwards, [10XIsSemilatticeAsSemigroup[110X is renamed [10XIsSemilattice[110X,
-  and [10XIsMonoidAsSemigroup[110X returns [10Xtrue[110X for semigroups in the category [2XIsMonoid[102X
-  ([14X51.2-1[114X).[133X
-  
-  [1X77.6-1 IsSemilatticeAsSemigroup[101X
-  
-  [33X[1;0Y[29X[2XIsSemilatticeAsSemigroup[102X( [3XS[103X ) [32X property[133X
-  
-  [33X[0;0Y[10XIsSemilatticeAsSemigroup[110X  returns  [9Xtrue[109X  if the semigroup [3XS[103X is a semilattice
-  and [9Xfalse[109X if it is not.[133X
-  
-  [33X[0;0YA  semigroup  is  a [13Xsemilattice[113X if it is commutative and every element is an
-  idempotent. The idempotents of an inverse semigroup form a semilattice. This
-  is  identical  to [2XIsSemilattice[102X ([14XSemigroups: IsSemilattice[114X) # and is present
-  in  [5XGAP[105X 4.8  #  only  for the sake of compatibility with beta-releases. # It
-  should [13Xnot[113X be used in new code.[133X
+  [33X[0;0YFrom Version 4.8 onwards, [10XIsMonoidAsSemigroup[110X returns [9Xtrue[109X for semigroups in
+  the  category [2XIsMonoid[102X ([14X51.2-1[114X), and [10XIsSemilatticeAsSemigroup[110X has been moved
+  to   the   [5XSemigroups[105X   under   the   new  name  [2XIsSemilattice[102X  ([14XSemigroups:
+  IsSemilattice[114X).[133X
   

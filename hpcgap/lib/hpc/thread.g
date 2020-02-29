@@ -1,10 +1,12 @@
 #############################################################################
 ##
-#W  thread.g                    GAP library                  Reimer Behrends
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Reimer Behrends.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St.  Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  Types and threading primitives for shared memory concurrency.
 ##
@@ -81,18 +83,26 @@ BindGlobal("NewInterruptID", function()
   od;
 end);
 
-CreateThread(function()
-  local handlers;
-  handlers := rec(
-    SIGINT := DEFAULT_SIGINT_HANDLER,
-    SIGCHLD := DEFAULT_SIGCHLD_HANDLER,
-    SIGVTALRM := DEFAULT_SIGVTALRM_HANDLER,
-    SIGWINCH := DEFAULT_SIGWINCH_HANDLER
-  );
-  while true do
-    SIGWAIT(handlers);
-  od;
+BindGlobal("InstallHPCGAPSignalHandling", function()
+  if not IsBound(SignalHandlerThread) then
+    BindGlobal("SignalHandlerThread", CreateThread(function()
+      local handlers;
+      handlers := rec(
+        SIGINT := DEFAULT_SIGINT_HANDLER,
+        SIGCHLD := DEFAULT_SIGCHLD_HANDLER,
+        SIGVTALRM := DEFAULT_SIGVTALRM_HANDLER,
+        SIGWINCH := DEFAULT_SIGWINCH_HANDLER
+      );
+      while true do
+        SIGWAIT(handlers);
+      od;
+    end));
+  fi;
 end);
+
+if IsHPCGAP and not SINGLE_THREAD_STARTUP() then
+  InstallHPCGAPSignalHandling();
+fi;
 
 #
 # LockCounters are per region and per thread counters

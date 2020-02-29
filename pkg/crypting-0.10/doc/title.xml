@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    crypting
+  </Title>
+  <Subtitle>
+    Hashes and Crypto in &GAP;
+  </Subtitle>
+  <Version>
+    0.10
+  </Version>
+  <Author>
+    Markus Pfeiffer<Alt Only="LaTeX"><Br/></Alt>
+<Email>markus.pfeiffer+gap@morphism.de</Email>
+<Homepage>http://www.morphism.de/~markusp/</Homepage>
+
+  </Author>
+  <Date>
+    28 October 2019
+  </Date>
+  </TitlePage>

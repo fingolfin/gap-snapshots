@@ -2,7 +2,7 @@ dnl
 dnl Setup autoconf
 dnl
 AC_PREREQ([2.68])
-AC_INIT([GAP], [4.dev], [support@gap-system.org], [gap], [http://www.gap-system.org/])
+AC_INIT([GAP], [4.dev], [support@gap-system.org], [gap], [https://www.gap-system.org/])
 
 AC_CONFIG_SRCDIR([src/gap.c])
 AC_CONFIG_AUX_DIR([cnf])
@@ -17,9 +17,10 @@ AC_CANONICAL_HOST
 
 
 dnl
-dnl Set the language
+dnl Check for working C and C++ compiler; insist on C99 support
 dnl
 AC_PROG_CC_C99
+AC_PROG_CXX
 AC_LANG([C])
 
 
@@ -47,11 +48,11 @@ fi
 AC_MSG_RESULT([$ABI_CFLAGS])
 AC_SUBST([ABI_CFLAGS])
 
-dnl Add ABI_CFLAGS to CFLAGS *now*, so that all config tests we
+dnl Start using ABI_CFLAGS *now*, so that all configure tests we
 dnl run from here on use it.
 AS_IF([test -n $ABI_CFLAGS],[
-  CFLAGS="$CFLAGS $ABI_CFLAGS"
-  LDFLAGS="$LDFLAGS $ABI_CFLAGS"
+  CC="$CC $ABI_CFLAGS"
+  CXX="$CXX $ABI_CFLAGS"
 
   dnl Verify that the ABI_CFLAGS didn't break anything
     AC_LINK_IFELSE(
@@ -85,17 +86,6 @@ AC_MSG_RESULT([$ABI])
 AC_SUBST([ABI])
 
 
-dnl autoconf may set CXX to g++ even if there is no working C++ compiler.
-dnl So verify that CXX really is able to compile C++ code.
-AC_LANG_PUSH([C++])
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
-  [[#include <iostream>
-    #ifndef __cplusplus
-    #error "broken C++"
-    #endif]])],,
-  [CXX=;])
-AC_LANG_POP([C++])
-
 
 dnl
 dnl Miscellaneous tools
@@ -118,23 +108,9 @@ dnl
 dnl endianess
 AC_C_BIGENDIAN
 
-dnl shifts
-AC_MSG_CHECKING([whether right shifts are arithmetic])
-AC_COMPUTE_INT(RIGHTSHIFTMINUSONE, [(-1L >> 1)+1])
-AS_IF([test x"$RIGHTSHIFTMINUSONE" = x0],
-    [
-    HAVE_ARITHRIGHTSHIFT=1
-    AC_MSG_RESULT([yes])
-    ],[
-    HAVE_ARITHRIGHTSHIFT=0
-    AC_MSG_RESULT([no])
-    ])
-AC_DEFINE_UNQUOTED([HAVE_ARITHRIGHTSHIFT],
-    [$HAVE_ARITHRIGHTSHIFT],
-    [define as 1 if >> for long int behaves like an arithmetic right shift for negative numbers])
-
 dnl function attributes
 AX_GCC_FUNC_ATTRIBUTE([always_inline])
+AX_GCC_FUNC_ATTRIBUTE([format])
 AX_GCC_FUNC_ATTRIBUTE([noinline])
 AX_GCC_FUNC_ATTRIBUTE([noreturn])
 
@@ -156,9 +132,7 @@ AC_DEFUN([CHECK_COMPILER_BUILTIN],
             [Define to 1 if the system has the `]$1[' built-in function])], []
         )])
 
-CHECK_COMPILER_BUILTIN([__builtin_smul_overflow],[0,0,0]);
-CHECK_COMPILER_BUILTIN([__builtin_smull_overflow],[0,0,0]);
-CHECK_COMPILER_BUILTIN([__builtin_smulll_overflow],[0,0,0]);
+CHECK_COMPILER_BUILTIN([__builtin_mul_overflow],[0,0,0]);
 CHECK_COMPILER_BUILTIN([__builtin_clz],[0]);
 CHECK_COMPILER_BUILTIN([__builtin_clzl],[0]);
 CHECK_COMPILER_BUILTIN([__builtin_clzll],[0]);
@@ -213,9 +187,7 @@ AS_IF([test "x$with_gc" = xdefault],
     ])
 AS_CASE([$with_gc],
     [none|no],  [AC_MSG_ERROR([cannot run GAP without a garbage collector])],
-    [boehm],    [AS_IF([test "x$enable_hpcgap" = xno],
-                    [AC_MSG_ERROR([Boehm GC can only be used with HPC-GAP])])
-                 AC_SUBST([GC_SOURCES], [src/boehm_gc.c])
+    [boehm],    [AC_SUBST([GC_SOURCES], [src/boehm_gc.c])
                  AC_DEFINE([USE_BOEHM_GC],  [1], [define as 1 if Boehm GC is used])
                 ],
     [gasman],   [AS_IF([test "x$enable_hpcgap" = xyes],
@@ -235,7 +207,8 @@ dnl User setting: Debug mode (off by default)
 dnl
 AC_ARG_ENABLE([debug],
     [AS_HELP_STRING([--enable-debug], [enable debug mode])],
-    [AC_DEFINE([GAP_KERNEL_DEBUG], [1], [define if building in debug mode])],
+    [AC_DEFINE([GAP_KERNEL_DEBUG], [1], [define if building in debug mode])
+     AC_DEFINE([GAP_PRINT_BACKTRACE], [1], [to enable backtraces upon crashes])],
     [enable_debug=no]
     )
 AC_MSG_CHECKING([whether to enable debug mode])
@@ -251,7 +224,7 @@ AC_MSG_RESULT([$enable_memory_checking])
 
 AC_ARG_ENABLE([valgrind],
     [AS_HELP_STRING([--enable-valgrind], [enable valgrind extensions to GASMAN])],
-    [AC_DEFINE([MEMORY_CANARY], [1], [define if building with valgrind extensions])],
+    [AC_DEFINE([GAP_MEMORY_CANARY], [1], [define if building with valgrind extensions])],
     [enable_valgrind=no]
     )
 AC_MSG_CHECKING([whether to enable valgrind extensions to GASMAN])
@@ -283,19 +256,17 @@ AS_IF([test "x$enable_Werror" != "xno"],
   [ax_enable_compile_warnings=error],
   [ax_enable_compile_warnings=yes])
 
-#WARNING_CPPFLAGS=""
-AX_COMPILER_FLAGS_CFLAGS([WARNING_CPPFLAGS])
-AC_SUBST([WARNING_CPPFLAGS])
+AX_COMPILER_WARNING_FLAGS
 
 dnl
 dnl User setting: Enable popcnt (on by default)
 dnl
 
 AC_ARG_ENABLE([popcnt],
-    AS_HELP_STRING([--enable-popcnt], [use __builtin_popcntl if available]),
+    AS_HELP_STRING([--enable-popcnt], [use __builtin_popcountl if available]),
     [],
     [enable_popcnt=yes])
-AC_MSG_CHECKING([whether to try and use __builtin_popcntl])
+AC_MSG_CHECKING([whether to try and use __builtin_popcountl])
 AC_MSG_RESULT([$enable_popcnt])
 
 AS_IF([test "x$enable_popcnt" != "xno"],
@@ -304,7 +275,7 @@ AS_IF([test "x$enable_popcnt" != "xno"],
 
 AC_DEFINE_UNQUOTED([USE_POPCNT],
     [$USE_POPCNT],
-    [define as 1 if we should try and use the __builtin_popcntl function if available])
+    [define as 1 if we should try and use the __builtin_popcountl function if available])
 
 dnl
 dnl External dependencies
@@ -416,15 +387,7 @@ AS_IF([test $BUILD_ZLIB = no],
 AS_IF([test x$BUILD_ZLIB = xyes],[
   BUILD_ZLIB=yes
   ZLIB_CPPFLAGS='-I${abs_builddir}/extern/install/zlib/include'
-  AS_CASE([$host_os],
-    [*cygwin*],[
-      ZLIB_LDFLAGS='-L${abs_builddir}/extern/install/zlib/lib/ -lz'
-    ],
-    [*],[
-      ZLIB_LDFLAGS='${abs_builddir}/extern/install/zlib/lib/libz.a'
-    ]
-  )
-
+  ZLIB_LDFLAGS='-L${abs_builddir}/extern/install/zlib/lib/ -Wl,-rpath -Wl,${abs_builddir}/extern/install/zlib/lib/ -lz'
   ZLIB_LIBS=
 ])
 
@@ -443,31 +406,56 @@ AC_ARG_WITH([readline],
 dnl Now check if we can find GNU readline. We go to some extra efforts to
 dnl ensure it is GNU readline, and not e.g. BSD editline wrappers for
 dnl readline, which do not suffice for GAP.
+dnl
+dnl note that OpenBSD installs modern (v6+) GNU readline into /usr/local under name libereadline
+dnl and its headers into /usr/local/include/ereadline.
+dnl
 AS_IF([test "x$with_readline" != xno],[
-  READLINE_LIBS="-lreadline"
-  AS_CASE([x"$with_readline"],
-    [xyes|x],[
-      READLINE_CPPFLAGS=
-      READLINE_LDFLAGS=
-    ],
-    [*],[
-      READLINE_CPPFLAGS="-I$with_readline/include"
-      READLINE_LDFLAGS="-L$with_readline/lib"
-    ]
-  )
-
-  dnl We check for the symbol rl_ding to distinguish GNU readline
-  dnl from other readline implementation.
-  AX_CHECK_LIBRARY([READLINE], [readline/readline.h], [readline], [rl_ding], [], [], [])
-
-  AS_IF([test $ax_cv_have_READLINE = yes],[
-    AC_DEFINE([HAVE_LIBREADLINE], [1], [Define if you have libreadline])
-  ],[
-    AS_CASE([x"$with_readline"],
+ dnl Checking for rl_bind_keyseq rules out very old readline
+ dnl ereadline is the name of GNU readline library on OpenBSD
+ AS_CASE([x"$with_readline"],dnl set up needed -L flags
+    [xyes|x], [READLINE_LDFLAGS=],
+    [*], [READLINE_LDFLAGS="-L$with_readline/lib"])
+ save_LDFLAGS="$LDFLAGS"
+ LDFLAGS="$LDFLAGS $READLINE_LDFLAGS"
+ save_LIBS="$LIBS"
+ AC_SEARCH_LIBS([rl_bind_keyseq], [readline ereadline], [
+   AS_IF([test x$ac_cv_search_rl_bind_keyseq != "xnone required"],
+    [READLINE_LIBS=$ac_cv_search_rl_bind_keyseq], [READLINE_LIBS=])
+   AS_CASE([x"$with_readline"],dnl libereadline is a special case
+    [xyes|x], [
+      AS_IF([test x$ac_cv_search_rl_bind_keyseq = "x-lereadline"], [
+	READLINE_CPPFLAGS="-I/usr/local/include/ereadline"
+	], [
+	READLINE_CPPFLAGS=])
+    ], [*],[
+      AS_IF([test x$ac_cv_search_rl_bind_keyseq = "x-lereadline"], [
+	READLINE_CPPFLAGS="-I$with_readline/include/ereadline"
+	], [
+	READLINE_CPPFLAGS="-I$with_readline/include"])
+      ]
+   )
+  dnl We check that the corresponding header is present
+   save_CPPFLAGS="$CPPFLAGS"
+   CPPFLAGS="$READLINE_CPPFLAGS $CPPFLAGS"
+   AC_CHECK_HEADERS([readline/readline.h], [
+        AC_DEFINE([HAVE_LIBREADLINE], [1], [Define if you have lib(e)readline])
+	], [
+	AS_CASE([x"$with_readline"],
+            [x], [READLINE_CPPFLAGS= READLINE_LDFLAGS= READLINE_LIBS=],
+            [*], [AC_MSG_FAILURE([--with-readline was given, but further tests for readline failed])])
+        ]
+   )
+   CPPFLAGS="$save_CPPFLAGS"
+   break
+   ],[
+   AS_CASE([x"$with_readline"],
       [x], [READLINE_CPPFLAGS= READLINE_LDFLAGS= READLINE_LIBS=],
       [*], [AC_MSG_FAILURE([--with-readline was given, but test for readline failed])]
-    )
-  ])
+   )
+ ])dnl AC_SEARCH_LIBS([rl_bind_keyseq] ...) ends here
+ LDFLAGS="$save_LDFLAGS"
+ LIBS="$save_LIBS"
 ])
 
 AC_SUBST([READLINE_CPPFLAGS])
@@ -534,9 +522,6 @@ AS_IF([test "x$with_julia" != xno ],[
   AS_IF([ test $? != 0 ], [AC_MSG_ERROR([failed to obtain JULIA_LIBS from julia-config.jl])])
   JULIA_LIBS=${JULIA_LIBS//\'/}
   AC_MSG_RESULT([${JULIA_LIBS}])
-  AC_MSG_NOTICE([installing GAPTypes.jl])
-  ${JULIA} -e 'import Pkg; Pkg.add("GAPTypes")'
-  AS_IF([ test $? != 0 ], [AC_MSG_ERROR([failed to install GAPTypes.jl])])
 ],
 [
   AS_IF( [ test "x$with_gc" = xjulia ],
@@ -551,29 +536,10 @@ AC_SUBST([JULIA_LIBS])
 
 dnl TODO: check if $with_gc = julia; if so, error out if julia is not found
 
-dnl Find ward (if HPC-GAP mode is enabled)
-AC_ARG_WITH([ward],
-  [AS_HELP_STRING([--with-ward@<:@=PREFIX@:>@],
-    [prefix to the ward tool (used for building HPC-GAP)])],
-  [],
-  [with_ward=check])
-
-dnl If HPC-GAP is enabled, check for a usable ward, either in the prefix
-dnl specified by the user, or else in $srcdir/hpcgap/ward
-AS_IF([test "x$enable_hpcgap" = xyes],
+AS_IF([test "x$with_gc" = xboehm],
   [
-  # If the user specified a prefix, check only there.
-  # Otherwise, check in various relative paths, and in $PATH
-  AS_IF([test "x$with_ward" != xcheck],
-        [WARD_PATH="$with_ward/bin"],
-        [WARD_PATH="$srcdir/hpcgap/ward/bin:ward/bin:../ward/bin:$PATH"]
-        )
-  AC_PATH_PROG([ADDGUARDS2], [addguards2c addguards2], [], [$WARD_PATH])
-  AS_IF([test "x$ADDGUARDS2" = x], AC_MSG_ERROR([could not locate addguards2]))
-
-
   # We bundle two libraries we need for HPC-GAP:
-  # Boehm garbage collector, see http://www.hboehm.info/gc/
+  # Boehm garbage collector, see https://www.hboehm.info/gc/
   # libatomic_ops - part of Boehm GC, but see also https://github.com/ivmai/libatomic_ops
   #
   # We bundle them because we need a few patches to Boehm GC which are
@@ -594,11 +560,8 @@ AS_IF([test "x$enable_hpcgap" = xyes],
 
   ATOMIC_OPS_CFLAGS=$LIBATOMIC_OPS_CPPFLAGS
   ATOMIC_OPS_LIBS=$LIBATOMIC_OPS_LDFLAGS
-  ]
-)
 
-AS_IF([test "x$with_gc" = xboehm],
-  [
+
   BUILD_BOEHM_GC=yes
   BOEHM_GC_CPPFLAGS='-I${abs_builddir}/extern/install/gc/include'
   BOEHM_GC_LDFLAGS='${abs_builddir}/extern/install/gc/lib/libgc.la'
@@ -615,8 +578,8 @@ dnl Define kernel version
 dnl
 
 
-gap_kernel_major_version=3
-gap_kernel_minor_version=1
+gap_kernel_major_version=7
+gap_kernel_minor_version=0
 AC_SUBST([gap_kernel_major_version])
 AC_SUBST([gap_kernel_minor_version])
 
@@ -638,7 +601,7 @@ AS_IF([test "x$ARCHEXT" != "x"],
 AS_IF([test "x$ARCH" != "x"],
   [GAPARCH="$ARCH"])
 
-AC_DEFINE_UNQUOTED([SYS_ARCH], ["$GAPARCH"], [for backwards compatibility])
+AC_DEFINE_UNQUOTED([GAPARCH], ["$GAPARCH"], [for backwards compatibility])
 AC_SUBST([GAPARCH])
 
 AC_ARG_ENABLE([compat-mode],
@@ -702,7 +665,6 @@ case "$host_os" in
 
         AC_CONFIG_FILES([bin/gap.bat:cnf/cygwin/gap.bat.in], [chmod +x bin/gap.bat])
         AC_CONFIG_FILES([bin/gapcmd.bat:cnf/cygwin/gapcmd.bat.in], [chmod +x bin/gapcmd.bat])
-        AC_CONFIG_FILES([bin/gaprxvt.bat:cnf/cygwin/gaprxvt.bat.in], [chmod +x bin/gaprxvt.bat])
     ])
     ;;
   *darwin*)
@@ -745,9 +707,10 @@ AC_CHECK_HEADERS([signal.h])
 AC_CHECK_FUNCS([select])
 
 dnl various functions to deal with child processes
+AC_CHECK_HEADERS([spawn.h])
 AC_HEADER_SYS_WAIT
 AC_FUNC_FORK
-AC_CHECK_FUNCS([popen])
+AC_CHECK_FUNCS([popen posix_spawn])
 
 dnl signal handling
 AC_CHECK_TYPE([sig_atomic_t], [],
@@ -761,8 +724,6 @@ dnl
 dnl check for dynamic loading of modules
 dnl TODO: replace with libtool code?!
 dnl
-
-AC_CHECK_FUNCS([rld_load])
 
 AC_SEARCH_LIBS([dlopen], [dl],
     [AC_DEFINE([HAVE_DLOPEN], [1], [define as 1 if you have `dlopen' and `dlsym'])]
@@ -779,10 +740,6 @@ AC_CHECK_FUNCS([vm_allocate sbrk madvise sysconf])
 
 dnl check for functions dealing with strings and integers
 AC_CHECK_FUNCS([strlcpy strlcmp strlcat])
-
-dnl check for file access functions
-AC_HEADER_STAT
-AC_CHECK_FUNCS([stat lstat mkdtemp mkstemp])
 
 dnl check for large-file support (for accessing files whose sizes or inodes require 64bits)
 AC_SYS_LARGEFILE
@@ -824,7 +781,7 @@ AX_EXECINFO
 AS_IF([test "x$enable_hpcgap" = xyes],[
   AS_BOX([WARNING: Experimental HPC-GAP mode enabled])
   dnl also enable backtrace, to help debug spurious crashes
-  AC_DEFINE([PRINT_BACKTRACE], [1], [to enable backtraces upon crashes])
+  AC_DEFINE([GAP_PRINT_BACKTRACE], [1], [to enable backtraces upon crashes])
   ])
 
 dnl

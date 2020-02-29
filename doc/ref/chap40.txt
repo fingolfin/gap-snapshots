@@ -260,7 +260,7 @@
   
   [33X[0;0YComputing images requires to express an element of the source as word in the
   generators.  If  it  cannot  be  done  effectively  (this  is  determined by
-  [2XKnowsHowToDecompose[102X  ([14X39.25-7[114X)  which returns [9Xtrue[109X for example for arbitrary
+  [2XKnowsHowToDecompose[102X  ([14X39.26-7[114X)  which returns [9Xtrue[109X for example for arbitrary
   permutation  groups, for Pc groups or for finitely presented groups with the
   images of the free generators) the span of the generators has to be computed
   elementwise which can be very expensive and memory consuming.[133X

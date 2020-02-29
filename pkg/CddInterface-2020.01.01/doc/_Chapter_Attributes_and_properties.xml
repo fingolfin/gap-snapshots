@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Attributes_and_properties">
+<Heading>Attributes and properties</Heading>
+
+<Section Label="Chapter_Attributes_and_properties_Section_Attributes_and_properties_of_polyhedron">
+<Heading>Attributes and properties of polyhedron</Heading>
+
+<ManSection>
+  <Attr Arg="P" Name="Cdd_Canonicalize" Label="for IsCddPolyhedron"/>
+ <Returns>a CddPolyhedron
+</Returns>
+ <Description>
+ The function takes a polyhedron and reduces its defining inequalities (generators set) by deleting all redundant inequalities (generators). 
+ </Description>
+</ManSection>
+
+
+<#Include Label="Example3">
+
+<ManSection>
+  <Attr Arg="P" Name="Cdd_V_Rep" Label="for IsCddPolyhedron"/>
+ <Returns>a CddPolyhedron
+</Returns>
+ <Description>
+ The function takes a polyhedron and returns its reduced <Math>V</Math>-representation. 
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="P" Name="Cdd_H_Rep" Label="for IsCddPolyhedron"/>
+ <Returns>a CddPolyhedron
+</Returns>
+ <Description>
+ The function takes a polyhedron and returns its reduced <Math>H</Math>-representation. 
+ </Description>
+</ManSection>
+
+
+<#Include Label="Example4">
+
+<ManSection>
+  <Attr Arg="P" Name="Cdd_AmbientSpaceDimension" Label="for IsCddPolyhedron"/>
+ <Returns>The dimension of the ambient space of the polyhedron(i.e., the space that contains <Math>P</Math>).
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="P" Name="Cdd_Dimension" Label="for IsCddPolyhedron"/>
+ <Returns>The dimension of the polyhedron, where the dimension, <Math>\mathrm{dim}(P)</Math>, of a polyhedron <Math>P</Math>  is the maximum number of affinely independent points in <Math>P</Math> minus 1.
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="P" Name="Cdd_GeneratingVertices" Label="for IsCddPolyhedron"/>
+ <Returns>The reduced generating vertices of the polyhedron
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="P" Name="Cdd_GeneratingRays" Label="for IsCddPolyhedron"/>
+ <Returns>list
+</Returns>
+ <Description>
+ The output is the reduced generating rays of the polyhedron
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="P" Name="Cdd_Equalities" Label="for IsCddPolyhedron"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ The output is the reduced equalities of the polyhedron.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="P" Name="Cdd_Inequalities" Label="for IsCddPolyhedron"/>
+ <Description>
+ The output is the reduced inequalities of the polyhedron.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="P" Name="Cdd_InteriorPoint" Label="for IsCddPolyhedron"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ The output is an interior point in the polyhedron
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="P" Name="Cdd_Faces" Label="for IsCddPolyhedron"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ This function takes a <Math>H</Math>-represented polyhedron <Emph>P</Emph> and returns a list. Every entry in this 
+ list is a again a list, contains the dimension and linearity of the face defined as a polyhedron over the 
+ same system of inequalities.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="P, d" Name="Cdd_FacesWithFixedDimension" Label="for IsCddPolyhedron, IsInt"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ This function takes a <Math>H</Math>-represented polyhedron <Emph>P</Emph> and a positive integer <Emph>d</Emph>. 
+ The output is a list. Every entry in this 
+ list is the linearity of an <Emph>d</Emph>- dimensional face of <Emph>P</Emph> defined as a polyhedron over the 
+ same system of inequalities.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="P" Name="Cdd_FacesWithInteriorPoints" Label="for IsCddPolyhedron"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ This function takes a <Math>H</Math>-represented polyhedron <Emph>P</Emph> and returns a list. Every entry in this 
+ list is a again a list, contains the dimension, linearity of the face defined as a polyhedron over the 
+ same system of inequalities and an interior point in the face.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="P, d" Name="Cdd_FacesWithFixedDimensionAndInteriorPoints" Label="for IsCddPolyhedron, IsInt"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ This function takes a <Math>H</Math>-represented polyhedron <Emph>P</Emph> and a positive integer <Emph>d</Emph>.
+ The output is a list. Every entry in this 
+ list is a again a list, contains the linearity of the face defined as a polyhedron over the 
+ same system of inequalities and an interior point in this face.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="P" Name="Cdd_Facets" Label="for IsCddPolyhedron"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ This function takes a <Math>H</Math>-represented polyhedron <Emph>P</Emph> and returns a list. Every entry in this 
+ is the linearity of a facet defined as a polyhedron over the 
+ same system of inequalities.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="P" Name="Cdd_Lines" Label="for IsCddPolyhedron"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ This function takes a <Math>H</Math>-represented polyhedron <Emph>P</Emph> and returns a list. Every entry in this 
+ is the linearity of a ray (<Math>1</Math>-dimensional face) defined as a polyhedron over the
+ same system of inequalities.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="P" Name="Cdd_Vertices" Label="for IsCddPolyhedron"/>
+ <Returns>a list
+</Returns>
+ <Description>
+ This function takes a <Math>H</Math>-represented polyhedron <Emph>P</Emph> and returns a list. Every entry in this 
+ list is the linearity of a vertex defined as a polyhedron over the same system of inequalities.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="P" Name="Cdd_IsEmpty" Label="for IsCddPolyhedron"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+ The output is <C>true</C> if the polyhedron is empty and <C>false</C> otherwise
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="P" Name="Cdd_IsCone" Label="for IsCddPolyhedron"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+ The output is <C>true</C> if the polyhedron is cone and <C>false</C> otherwise
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="P" Name="Cdd_IsPointed" Label="for IsCddPolyhedron"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+ The output is <C>true</C> if the polyhedron is pointed and <C>false</C> otherwise
+ </Description>
+</ManSection>
+
+
+<#Include Label="demo">
+
+</Section>
+
+
+</Chapter>
+

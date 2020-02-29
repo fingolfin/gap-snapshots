@@ -1,8 +1,4 @@
-#############################################################################
-##
-#W  modifiers.tst                GAP Library
-##
-##
+#@local l,x,y
 gap> START_TEST("modifiers.tst");
 gap> x := rec();
 rec(  )

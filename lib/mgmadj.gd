@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  mgmadj.gd                    GAP library                  Andrew Solomon
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Andrew Solomon.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains declarations for magmas with zero adjoined.
 ##
@@ -19,7 +20,7 @@
 ##  <Returns>A multiplicative zero element.</Returns>
 ##  <Description>
 ##  for an element <A>elt</A> in the category 
-##  <Ref Func="IsMultiplicativeElementWithZero"/>,
+##  <Ref Filt="IsMultiplicativeElementWithZero"/>,
 ##  <C>MultiplicativeZeroOp</C> 
 ##  returns the element <M>z</M> in the family <M>F</M> of <A>elt</A>
 ##  with the property that <M>z * m = z = m * z</M> holds for all
@@ -27,10 +28,10 @@
 ##  <P/>
 ##
 ##  Families of elements in the category
-##  <Ref Func="IsMultiplicativeElementWithZero"/>
+##  <Ref Filt="IsMultiplicativeElementWithZero"/>
 ##  often arise from adjoining a new zero to an existing magma. 
 ##  See&nbsp;<Ref Attr="InjectionZeroMagma"/> or 
-##  <Ref Func="MagmaWithZeroAdjoined"/> for details.
+##  <Ref Attr="MagmaWithZeroAdjoined"/> for details.
 ##  <Example><![CDATA[
 ##  gap> G:=AlternatingGroup(5);;
 ##  gap> x:=Representative(MagmaWithZeroAdjoined(G));

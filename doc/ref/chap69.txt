@@ -57,10 +57,11 @@
   
   [33X[1;0Y[29X[2XPermutationGModule[102X( [3XG[103X, [3XF[103X ) [32X function[133X
   
-  [33X[0;0YCalled  with  a permutation group [3XG[103X and a finite field [3XF[103X, [2XPermutationGModule[102X
-  returns the natural permutation module [22XM[122X over [3XF[103X for the group of permutation
-  matrices  that acts on the canonical basis of [22XM[122X in the same way as [3XG[103X acts on
-  the points up to its largest moved point (see [2XLargestMovedPoint[102X ([14X42.3-2[114X)).[133X
+  [33X[0;0YCalled  with  a  permutation  group  [3XG[103X  and  a  field [3XF[103X ([3XF[103X may be infinite),
+  [2XPermutationGModule[102X  returns  the natural permutation module [22XM[122X over [3XF[103X for the
+  group  of  permutation matrices that acts on the canonical basis of [22XM[122X in the
+  same   way  as  [3XG[103X  acts  on  the  points  up  to  its  largest  moved  point
+  (see [2XLargestMovedPoint[102X ([14X42.3-2[114X)).[133X
   
   [1X69.2-2 TensorProductGModule[101X
   
@@ -278,25 +279,26 @@
   [33X[1;0Y[29X[2XMTX.InducedActionSubmodule[102X( [3Xmodule[103X, [3Xsub[103X ) [32X function[133X
   [33X[1;0Y[29X[2XMTX.InducedActionSubmoduleNB[102X( [3Xmodule[103X, [3Xsub[103X ) [32X function[133X
   
-  [33X[0;0Ycreates a new module corresponding to the action of [3Xmodule[103X on [3Xsub[103X. In the [10XNB[110X
-  version  the  basis  [3Xsub[103X must be normed. (That is it must be in echelon form
-  with pivots normed to 1, see [2XMTX.NormedBasisAndBaseChange[102X ([14X69.8-1[114X).)[133X
+  [33X[0;0Ycreates  a  new  module  corresponding  to  the  action  of  [3Xmodule[103X  on  the
+  non-trivial  submodule  [3Xsub[103X. In the [10XNB[110X version the basis [3Xsub[103X must be normed.
+  (That   is   it   must   be  in  echelon  form  with  pivots  normed  to  1,
+  see [2XMTX.NormedBasisAndBaseChange[102X ([14X69.8-1[114X).)[133X
   
   [1X69.8-3 MTX.InducedActionFactorModule[101X
   
   [33X[1;0Y[29X[2XMTX.InducedActionFactorModule[102X( [3Xmodule[103X, [3Xsub[103X[, [3Xcompl[103X] ) [32X function[133X
   
   [33X[0;0Ycreates  a new module corresponding to the action of [3Xmodule[103X on the factor of
-  [3Xsub[103X.  If [3Xcompl[103X is given, it has to be a basis of a (vector space-)complement
-  of [3Xsub[103X. The action then will correspond to [3Xcompl[103X.[133X
+  the  proper  submodule  [3Xsub[103X.  If  [3Xcompl[103X  is given, it has to be a basis of a
+  (vector space-)complement of [3Xsub[103X. The action then will correspond to [3Xcompl[103X.[133X
   
   [33X[0;0YThe basis [3Xsub[103X has to be given in normed form. (That is it must be in echelon
   form with pivots normed to 1, see [2XMTX.NormedBasisAndBaseChange[102X ([14X69.8-1[114X))[133X
   
-  [1X69.8-4 MTX.InducedActionMatrix[101X
+  [1X69.8-4 MTX.InducedActionSubMatrix[101X
   
-  [33X[1;0Y[29X[2XMTX.InducedActionMatrix[102X( [3Xmat[103X, [3Xsub[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XMTX.InducedActionMatrixNB[102X( [3Xmat[103X, [3Xsub[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XMTX.InducedActionSubMatrix[102X( [3Xmat[103X, [3Xsub[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XMTX.InducedActionSubMatrixNB[102X( [3Xmat[103X, [3Xsub[103X ) [32X function[133X
   [33X[1;0Y[29X[2XMTX.InducedActionFactorMatrix[102X( [3Xmat[103X, [3Xsub[103X[, [3Xcompl[103X] ) [32X function[133X
   
   [33X[0;0Ywork the same way as the above functions for modules, but take as input only

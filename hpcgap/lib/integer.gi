@@ -1,17 +1,12 @@
 #############################################################################
 ##
-#W  integer.gi                  GAP library                     Thomas Breuer
-#W                                                             & Frank Celler
-#W                                                              & Stefan Kohl
-#W                                                            & Werner Nickel
-#W                                                           & Alice Niemeyer
-#W                                                         & Martin Schönert
-#W                                                              & Alex Wegner
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer, Frank Celler, Stefan Kohl, Werner Nickel, Alice Niemeyer, Martin Schönert, Alex Wegner.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 
 
@@ -365,12 +360,14 @@ ADD_SET(Primes2, 4330075309599657322634371042967428373533799534566765522517);
 ADD_SET(Primes2, 549180361199324724418373466271912931710271534073773);
 ADD_SET(Primes2,  85411410016592864938535742262164288660754818699519364051241927961077872028620787589587608357877); 
 
-ShareSpecialObj(Primes2);
-
 InstallFlushableValue(ProbablePrimes2, []);
 IsSSortedList( ProbablePrimes2 );
 
-ShareSpecialObj(ProbablePrimes2);
+if IsHPCGAP then
+  ShareSpecialObj(Primes2);
+  ShareSpecialObj(ProbablePrimes2);
+fi;
+
 
 #############################################################################
 ##
@@ -468,7 +465,9 @@ end);
 ##
 BindGlobal("DivisorsIntCache",
 List([[1],[1,2],[1,3],[1,2,4],[1,5],[1,2,3,6],[1,7]], Immutable));
-MakeImmutable(DivisorsIntCache);
+if IsHPCGAP then
+  MakeImmutable(DivisorsIntCache);
+fi;
 
 InstallGlobalFunction(DivisorsInt,function ( n )
     local  divisors, factors, divs;
@@ -753,7 +752,7 @@ end);
 ##
 #F  PrimeDivisors( <n> ) . . . . . . . . . . . . . . list of prime divisors
 ##  
-##  delegating to FactorsInt
+##  delegating to Factors
 ##  
 InstallMethod( PrimeDivisors, "for integer", [ IsInt ], function(n)
   if n = 0 then
@@ -765,7 +764,7 @@ InstallMethod( PrimeDivisors, "for integer", [ IsInt ], function(n)
   if n = 1 then
     return [];
   fi;
-  return Set(FactorsInt(n));
+  return Set(Factors(Integers,n));
 end);
 
 
@@ -964,7 +963,16 @@ InstallGlobalFunction( IsPrimePowerInt, function(n)
             i := i + 1;
             k := Primes[i];
         else
+            # need more primes...
             k := NextPrimeInt( k );
+            # since we are now beyond the primes in Primes, for which we
+            # checked whether they divide n, we might now just as well
+            # test if k divides n, too
+            r := PVALUATION_INT(n, k);
+            if r > 0 then
+                if s = -1 and IsEvenInt(r) then return false; fi;
+                return n = k^r;
+            fi;
         fi;
     od;
 
@@ -1094,7 +1102,7 @@ InstallGlobalFunction(PrimePowersInt,function( n )
     elif n < 0  then
     	n := -1 * n;
     fi;
-    return Flat(Collected(FactorsInt(n)));
+    return Flat(Collected(Factors(Integers,n)));
 
 end);
 
@@ -1506,6 +1514,9 @@ InstallMethod( Quotient,
     [ IsIntegers, IsInt, IsInt ], 0,
     function ( Integers, n, m )
     local   q;
+    if m = 0 then
+        return fail;
+    fi;
     q := QuoInt( n, m );
     if n <> q * m  then
         q := fail;
@@ -1595,7 +1606,7 @@ InstallMethodWithRandomSource(Random,
     [IsRandomSource, IsIntegers],
     0,
     function( rg, Integers )
-    return NrBitsInt( Random( rg, [0..2^20-1] ) ) - 10;
+    return NrBitsInt( Random( rg, 0, 2^20-1 ) ) - 10;
     end );
 
 
@@ -1772,7 +1783,3 @@ InstallMethod(ViewString, "for integer", [IsInt], function(n)
     return String(n);
   fi;
 end);
-
-#############################################################################
-##
-#E

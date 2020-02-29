@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  padics.gd                   GAP Library                     Jens Hollmann
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Jens Hollmann.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the declaration part of the padic numbers.
 ##
@@ -160,7 +161,7 @@ DeclareOperation( "Valuation",  [ IsObject ] );
 ##  <Description>
 ##  (see also <Ref Oper="PadicNumber" Label="for pure padics"/>).
 ##  <P/>
-##  <Ref Func="PadicNumber"
+##  <Ref Oper="PadicNumber"
 ##   Label="for a p-adic extension family and a rational"/>
 ##  creates a <M>p</M>-adic number in the
 ##  <M>p</M>-adic numbers family <A>fam</A>.
@@ -218,7 +219,7 @@ DeclareOperation( "PadicNumber", [ IsPadicNumberFamily, IsObject ] );
 ##  <Oper Name="ShiftedPadicNumber" Arg='padic, int'/>
 ##
 ##  <Description>
-##  <Ref Func="ShiftedPadicNumber"/> takes a <M>p</M>-adic number
+##  <Ref Oper="ShiftedPadicNumber"/> takes a <M>p</M>-adic number
 ##  <A>padic</A> and an integer <A>shift</A>
 ##  and returns the <M>p</M>-adic number <M>c</M>,
 ##  that is <A>padic</A> <C>*</C> <M>p</M><C>^</C><A>shift</A>.
@@ -292,9 +293,3 @@ DeclareGlobalVariable( "PADICS_FAMILIES");
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "PadicExtensionNumberFamily" );
-
-
-#############################################################################
-##
-#E
-

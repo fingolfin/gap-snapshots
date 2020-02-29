@@ -65,7 +65,7 @@
         homomorphism  and  the  results  are  unpredictable if this is not the
         case.[133X
   
-  [8X[10XOrbitsDomain[110X[8X[22X( extset )[122X[108X
+  [8X[10XOrbitsDomain[110X[8X[22X( xset )[122X[108X
         [33X[0;6YA  third  variant is to call the operation with an external set, which
         then  provides  [22XG[122X,  [22XΩ[122X and [22Xμ[122X. You will find more about external sets in
         Section [14X41.12[114X.[133X
@@ -357,11 +357,17 @@
   [1X41.4-2 Orbits[101X
   
   [33X[1;0Y[29X[2XOrbits[102X( [3XG[103X, [3Xseeds[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XOrbits[102X( [3XG[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XOrbits[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  a  duplicate-free list of the orbits of the elements in [3Xseeds[103X under
   the  action  [3Xact[103X  of  [3XG[103X  or under [2XOnPoints[102X ([14X41.2-1[114X) if no action function is
   given.[133X
+  
+  [33X[0;0YFor  a  permutation  group  [3XG[103X,  one may also invoke this as [10XOrbits([3XG[103X[10X)[110X, which
+  returns  all  the orbits of its natural action on the set of points moved by
+  it.  For  example  the  group  [22X⟨ (1,2,3), (4,5) ⟩[122X has the orbits [22X{1,2,3}[122X and
+  [22X{4,5}[122X.[133X
   
   [33X[0;0Y(Note  that  the  arrangement of orbits or of points within one orbit is not
   defined by the operation.)[133X
@@ -370,6 +376,7 @@
   [1X41.4-3 [33X[0;0YOrbitsDomain[133X[101X
   
   [33X[1;0Y[29X[2XOrbitsDomain[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XOrbitsDomain[102X( [3XG[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XOrbitsDomain[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns a list of the orbits of [3XG[103X on the domain [3XOmega[103X (given as lists) under
@@ -377,6 +384,10 @@
   
   [33X[0;0YThis  operation  is often faster than [2XOrbits[102X ([14X41.4-2[114X). The domain [3XOmega[103X must
   be closed under the action of [3XG[103X, otherwise an error can occur.[133X
+  
+  [33X[0;0YFor  a  permutation  group  [3XG[103X,  one may also invoke this as [10XOrbitsDomain([3XG[103X[10X)[110X,
+  which  returns  all  the  orbits  of its natural action on the set of points
+  moved by it.[133X
   
   [33X[0;0Y(Note  that  the  arrangement of orbits or of points within one orbit is not
   defined by the operation.)[133X
@@ -404,7 +415,7 @@
   
   [1X41.4-4 OrbitLength[101X
   
-  [33X[1;0Y[29X[2XOrbitLength[102X( [3XG[103X, [3XOmega[103X, [3Xpnt[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XOrbitLength[102X( [3XG[103X[, [3XOmega[103X], [3Xpnt[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
   
   [33X[0;0Ycomputes  the  length  of  the orbit of [3Xpnt[103X under the action function [3Xact[103X or
   [2XOnPoints[102X ([14X41.2-1[114X) if no action function is given.[133X
@@ -413,15 +424,22 @@
   [1X41.4-5 [33X[0;0YOrbitLengths[133X[101X
   
   [33X[1;0Y[29X[2XOrbitLengths[102X( [3XG[103X, [3Xseeds[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XOrbitLengths[102X( [3XG[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XOrbitLengths[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Ycomputes  the  lengths  of all the orbits of the elements in [3Xseeds[103X under the
   action [3Xact[103X of [3XG[103X.[133X
   
+  [33X[0;0YFor  a  permutation  group  [3XG[103X,  one may also invoke this as [10XOrbitLengths([3XG[103X[10X)[110X,
+  which returns the lengths of all the orbits of its natural action on the set
+  of  points  moved  by  it.  For example the group [22X⟨ (1,2,3), (5,6) ⟩[122X has the
+  orbit lengths 2 and 3.[133X
+  
   
   [1X41.4-6 [33X[0;0YOrbitLengthsDomain[133X[101X
   
   [33X[1;0Y[29X[2XOrbitLengthsDomain[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XOrbitLengthsDomain[102X( [3XG[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XOrbitLengthsDomain[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Ycomputes the lengths of all the orbits of [3XG[103X on [3XOmega[103X.[133X
@@ -429,12 +447,21 @@
   [33X[0;0YThis  operation is often faster than [2XOrbitLengths[102X ([14X41.4-5[114X). The domain [3XOmega[103X
   must be closed under the action of [3XG[103X, otherwise an error can occur.[133X
   
+  [33X[0;0YFor    a    permutation   group   [3XG[103X,   one   may   also   invoke   this   as
+  [10XOrbitLengthsDomain([3XG[103X[10X)[110X,  which  returns  the  length of all the orbits of its
+  natural action on the set of points moved by it.[133X
+  
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg:=Group((1,3,2),(2,4,3));;[127X[104X
     [4X[25Xgap>[125X [27XOrbitLength(g,[1,2,3,4],OnTuples);[127X[104X
     [4X[28X12[128X[104X
     [4X[25Xgap>[125X [27XOrbitLengths(g,Arrangements([1..4],4),OnTuples);[127X[104X
     [4X[28X[ 12, 12 ][128X[104X
+    [4X[25Xgap>[125X [27Xg:=Group((1,2,3),(5,6,7));;[127X[104X
+    [4X[25Xgap>[125X [27XOrbitLengthsDomain(g,[1,2,3]);[127X[104X
+    [4X[28X[ 3 ][128X[104X
+    [4X[25Xgap>[125X [27XOrbitLengthsDomain(g);[127X[104X
+    [4X[28X[ 3, 3 ][128X[104X
   [4X[32X[104X
   
   
@@ -445,7 +472,7 @@
   
   [1X41.5-1 OrbitStabilizer[101X
   
-  [33X[1;0Y[29X[2XOrbitStabilizer[102X( [3XG[103X[, [3XOmega[103X], [3Xpnt[103X[, [3Xgens[103X, [3Xacts[103X], [3Xact[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XOrbitStabilizer[102X( [3XG[103X[, [3XOmega[103X], [3Xpnt[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
   
   [33X[0;0Ycomputes  the  orbit  and  the  stabilizer of [3Xpnt[103X simultaneously in a single
   orbit-stabilizer algorithm.[133X
@@ -461,8 +488,10 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg:=Group((1,3,2),(2,4,3));;[127X[104X
-    [4X[25Xgap>[125X [27XStabilizer(g,4);[127X[104X
+    [4X[25Xgap>[125X [27Xstab:=Stabilizer(g,4);[127X[104X
     [4X[28XGroup([ (1,3,2) ])[128X[104X
+    [4X[25Xgap>[125X [27XParent(stab);[127X[104X
+    [4X[28XGroup([ (1,3,2), (2,4,3) ])[128X[104X
   [4X[32X[104X
   
   [33X[0;0YThe  stabilizer of a set or tuple of points can be computed by specifying an
@@ -473,10 +502,12 @@
     [4X[28XGroup([ (1,2)(3,4) ])[128X[104X
     [4X[25Xgap>[125X [27XStabilizer(g,[1,2],OnTuples);[127X[104X
     [4X[28XGroup(())[128X[104X
-    [4X[25Xgap>[125X [27XOrbitStabilizer(g,[1,2],OnSets);[127X[104X
+    [4X[25Xgap>[125X [27Xorbstab:=OrbitStabilizer(g,[1,2],OnSets);[127X[104X
     [4X[28Xrec( [128X[104X
     [4X[28X  orbit := [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 2, 3 ], [ 3, 4 ], [128X[104X
     [4X[28X      [ 2, 4 ] ], stabilizer := Group([ (1,2)(3,4) ]) )[128X[104X
+    [4X[25Xgap>[125X [27XParent(orbstab.stabilizer);[127X[104X
+    [4X[28XGroup([ (1,3,2), (2,4,3) ])[128X[104X
   [4X[32X[104X
   
   [33X[0;0Y(See Section [14X41.2[114X for information about specific actions.)[133X
@@ -870,14 +901,16 @@
   [33X[0;0YWe  say  that  a  group [3XG[103X acts [13Xtransitively[113X on a domain [22XD[122X if and only if for
   every pair of points [22Xd, e ∈ D[122X there is an element [22Xg[122X in [3XG[103X such that [22Xd^g = e[122X.[133X
   
-  [33X[0;0YFor  permutation  groups,  the  syntax [10XIsTransitive([3XG[103X[10X)[110X is also permitted and
-  tests whether the group is transitive on the points moved by it, that is the
-  group [22X⟨ (2,3,4),(2,3) ⟩[122X is transitive (on 3 points).[133X
+  [33X[0;0YFor  a  permutation  group  [3XG[103X,  one may also invoke this as [10XIsTransitive([3XG[103X[10X)[110X,
+  which  tests  whether  the  group  is transitive with respect to its natural
+  action  on  the  set  of  points  moved  by  it.  For  example  the  group [22X⟨
+  (2,3,4),(2,3) ⟩[122X is transitive on the set [22X{2, 3, 4}[122X.[133X
   
   
   [1X41.10-2 [33X[0;0YTransitivity[133X[101X
   
   [33X[1;0Y[29X[2XTransitivity[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XTransitivity[102X( [3XG[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XTransitivity[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the degree [22Xk[122X (a non-negative integer) of transitivity of the action
@@ -887,11 +920,18 @@
   [33X[0;0YAn  action  is  [13X[22Xk[122X-transitive[113X  if  every  [22Xk[122X-tuple  of  points  can  be mapped
   simultaneously to every other [22Xk[122X-tuple.[133X
   
+  [33X[0;0YFor  a  permutation  group  [3XG[103X,  one may also invoke this as [10XTransitivity([3XG[103X[10X)[110X,
+  which  returns  the  degree of transitivity of the group with respect to its
+  natural  action  on  the  set of points moved by it. For example the group [22X⟨
+  (2,3,4),(2,3) ⟩[122X is 3-transitive on the set [22X{2, 3, 4}[122X.[133X
+  
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg:=Group((1,3,2),(2,4,3));;[127X[104X
     [4X[25Xgap>[125X [27XIsTransitive(g,[1..5]);[127X[104X
     [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27XTransitivity(g,[1..4]);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27XTransitivity(g);[127X[104X
     [4X[28X2[128X[104X
   [4X[32X[104X
   
@@ -913,17 +953,24 @@
   [1X41.10-4 [33X[0;0YIsSemiRegular[133X[101X
   
   [33X[1;0Y[29X[2XIsSemiRegular[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsSemiRegular[102X( [3XG[103X ) [32X property[133X
   [33X[1;0Y[29X[2XIsSemiRegular[102X( [3Xxset[103X ) [32X property[133X
   
   [33X[0;0Yreturns [9Xtrue[109X if the action implied by the arguments is semiregular, or [9Xfalse[109X
   otherwise.[133X
   
-  [33X[0;0YAn action is [13Xsemiregular[113X is the stabilizer of each point is the identity.[133X
+  [33X[0;0YAn action is [13Xsemiregular[113X if the stabilizer of each point is the identity.[133X
+  
+  [33X[0;0YFor  a  permutation  group  [3XG[103X, one may also invoke this as [10XIsSemiRegular([3XG[103X[10X)[110X,
+  which  tests  whether  the  group is semiregular with respect to its natural
+  action  on  the  set  of points moved by it. For example the group [22X⟨ (2,3,4)
+  (5,6,7) ⟩[122X is semiregular on the set [22X{2, 3, 4, 5, 6, 7}[122X.[133X
   
   
   [1X41.10-5 [33X[0;0YIsRegular[133X[101X
   
   [33X[1;0Y[29X[2XIsRegular[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsRegular[102X( [3XG[103X ) [32X property[133X
   [33X[1;0Y[29X[2XIsRegular[102X( [3Xxset[103X ) [32X property[133X
   
   [33X[0;0Yreturns  [9Xtrue[109X  if  the  action implied by the arguments is regular, or [9Xfalse[109X
@@ -932,6 +979,11 @@
   [33X[0;0YAn action is [13Xregular[113X if it is both semiregular (see [2XIsSemiRegular[102X ([14X41.10-4[114X))
   and transitive (see [2XIsTransitive[102X ([14X41.10-1[114X)). In this case every point [3Xpnt[103X of
   [3XOmega[103X defines a one-to-one correspondence between [3XG[103X and [3XOmega[103X.[133X
+  
+  [33X[0;0YFor  a  permutation group [3XG[103X, one may also invoke this as [10XIsRegular([3XG[103X[10X)[110X, which
+  tests whether the group is regular with respect to its natural action on the
+  set  of  points moved by it. For example the group [22X⟨ (2,3,4) ⟩[122X is regular on
+  the set [22X{2, 3, 4}[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XIsSemiRegular(g,Arrangements([1..4],3),OnTuples);[127X[104X
@@ -955,13 +1007,25 @@
   [1X41.10-7 [33X[0;0YIsPrimitive[133X[101X
   
   [33X[1;0Y[29X[2XIsPrimitive[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsPrimitive[102X( [3XG[103X ) [32X property[133X
   [33X[1;0Y[29X[2XIsPrimitive[102X( [3Xxset[103X ) [32X property[133X
   
   [33X[0;0Yreturns  [9Xtrue[109X  if the action implied by the arguments is primitive, or [9Xfalse[109X
   otherwise.[133X
   
   [33X[0;0YAn  action  is  [13Xprimitive[113X  if  it  is  transitive  and  the action admits no
-  nontrivial block systems. See [14X41.11[114X.[133X
+  nontrivial block systems. See [14X41.11[114X for the definition of block systems.[133X
+  
+  [33X[0;0YFor a permutation group [3XG[103X, one may also invoke this as [10XIsPrimitive([3XG[103X[10X)[110X, which
+  tests  whether  the group is primitive with respect to its natural action on
+  the  set  of  points moved by it. For example the group [22X⟨ (2,3,4),(2,3) ⟩[122X is
+  primitive on the set [22X{2, 3, 4}[122X.[133X
+  
+  [33X[0;0YFor an explanation of the meaning of all the inputs, please refer to  [14X41.1[114X.[133X
+  
+  [33X[0;0Y[13XNote:[113X  This  operation  does not tell whether a matrix group is primitive in
+  the  sense  of  preserving  a  direct  sum  of vector spaces. To do this use
+  [10XIsPrimitiveMatrixGroup[110X or [10XIsPrimitive[110X from the package [5XIRREDSOL[105X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XIsPrimitive(g,Orbit(g,(1,2)(3,4)));[127X[104X

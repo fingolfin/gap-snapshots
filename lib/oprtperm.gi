@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  oprtperm.gi                 GAP library                    Heiko Theißen
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Heiko Theißen.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 
 
@@ -278,7 +279,7 @@ InstallMethod( BlocksOp, "permgroup on integers",
                 img := eql[img];
             od;
 
-            # if its not our current block but a minimal block
+            # if it is not our current block but a minimal block
             if   img <> D[1]  and img <> cur  and leq[img] = img  then
 
                 # then try <img> as a new start
@@ -293,7 +294,7 @@ InstallMethod( BlocksOp, "permgroup on integers",
                 gen := Reversed( gen );
                 pnt := cur;
 
-            # otherwise if its not our current block but contains it
+            # otherwise if it is not our current block but contains it
             # by construction a nonminimal block contains the current block
             elif img <> D[1]  and img <> cur  and leq[img] <> img  then
 
@@ -716,7 +717,7 @@ local   blocks,   # block system of <G>, result
           img := eql[img];
         od;
 
-        # if its not our current block but a new block
+        # if it is not our current block but a new block
         if   img <> D[1]  and img <> cur and leq[img] = img
             and (iter[img] = 0 or iter[img] = start) then
 
@@ -739,7 +740,7 @@ local   blocks,   # block system of <G>, result
           gen := Reversed( gen );
           pnt := cur;
 
-        # otherwise if its not our current block but contains it
+        # otherwise if it is not our current block but contains it
         # by construction a nonminimal block contains the current block
         # - not any more it doesn't! Now we also have to check whether
         # the block appeared this time or earlier.
@@ -1277,7 +1278,7 @@ InstallTrueMethod(IsRegular,IsPermGroup and IsSemiRegular and IsTransitive);
 InstallOtherMethod( RepresentativeActionOp, "permgrp",true, [ IsPermGroup,
         IsObject, IsObject, IsFunction ], 
   # the objects might be group elements: rank up	
-  2*RankFilter(IsMultiplicativeElementWithInverse),
+  {} -> 2*RankFilter(IsMultiplicativeElementWithInverse),
     function ( G, d, e, act )
     local   rep,                # representative, result
             S,                  # stabilizer of <G>
@@ -1402,6 +1403,25 @@ InstallOtherMethod( RepresentativeActionOp, "permgrp",true, [ IsPermGroup,
         rep := RepOpSetsPermGroup( G, d, e );
       fi;
 
+    # action on tuples of sets
+    elif act = OnTuplesSets
+      and IsList(d) and ForAll(d,i->ForAll(i,IsInt)) 
+      and IsList(e) and ForAll(e,i->ForAll(i,IsInt)) then
+      
+      if List(d,Length)<>List(e,Length) then return fail;fi;
+
+      # conjugate one by one
+      rep:=One(G);
+      S:=G;
+      for i in [1..Length(d)] do
+        rep2:=RepresentativeAction(S,d[i],e[i],OnSets);
+        if rep2=fail then return fail;fi;
+        d:=List(d,x->OnSets(x,rep2));
+        S:=Stabilizer(S,e[i],OnSets);
+        rep:=rep*rep2;
+      od;
+      return rep;
+
     # other action, fall back on default representative
     else
         TryNextMethod();
@@ -1476,7 +1496,7 @@ PermGroupStabilizerOp:=function(arg)
          and IsList(d) and ForAll(d,i->ForAll(i,IsInt)) then
         K := PartitionStabilizerPermGroup( G, d );
 
-    #T OnSetTuples?
+    #T OnSetTuples? is hard
 
     # action on tuples of sets
     elif act = OnTuplesSets
@@ -1516,7 +1536,7 @@ InstallOtherMethod( StabilizerOp, "permutation group with generators list",
           IsList,
           IsFunction ],
   # the objects might be a group element: rank up	
-  RankFilter(IsMultiplicativeElementWithInverse)
+  {} -> RankFilter(IsMultiplicativeElementWithInverse)
   # and we are better even if the group is solvable
   +RankFilter(IsSolvableGroup),
   PermGroupStabilizerOp);
@@ -1528,7 +1548,7 @@ InstallOtherMethod( StabilizerOp, "permutation group with domain",true,
           IsList,
           IsFunction ],
   # the objects might be a group element: rank up	
-  RankFilter(IsMultiplicativeElementWithInverse)
+  {} -> RankFilter(IsMultiplicativeElementWithInverse)
   # and we are better even if the group is solvable
   +RankFilter(IsSolvableGroup),
   PermGroupStabilizerOp);
@@ -1603,9 +1623,3 @@ end );
 InstallGlobalFunction( OnTuplesTuples, function(e,g)
   return List(e,i->OnTuples(i,g));
 end );
-
-
-#############################################################################
-##
-#E
-

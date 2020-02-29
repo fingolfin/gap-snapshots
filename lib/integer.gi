@@ -1,17 +1,12 @@
 #############################################################################
 ##
-#W  integer.gi                  GAP library                     Thomas Breuer
-#W                                                             & Frank Celler
-#W                                                              & Stefan Kohl
-#W                                                            & Werner Nickel
-#W                                                           & Alice Niemeyer
-#W                                                         & Martin Schönert
-#W                                                              & Alex Wegner
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer, Frank Celler, Stefan Kohl, Werner Nickel, Alice Niemeyer, Martin Schönert, Alex Wegner.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 
 
@@ -368,6 +363,12 @@ ADD_SET(Primes2,  85411410016592864938535742262164288660754818699519364051241927
 InstallFlushableValue(ProbablePrimes2, []);
 IsSSortedList( ProbablePrimes2 );
 
+if IsHPCGAP then
+  ShareSpecialObj(Primes2);
+  ShareSpecialObj(ProbablePrimes2);
+fi;
+
+
 #############################################################################
 ##
 #F  BestQuoInt( <n>, <m> )
@@ -464,6 +465,9 @@ end);
 ##
 BindGlobal("DivisorsIntCache",
 List([[1],[1,2],[1,3],[1,2,4],[1,5],[1,2,3,6],[1,7]], Immutable));
+if IsHPCGAP then
+  MakeImmutable(DivisorsIntCache);
+fi;
 
 InstallGlobalFunction(DivisorsInt,function ( n )
     local  divisors, factors, divs;
@@ -1502,6 +1506,9 @@ InstallMethod( Quotient,
     [ IsIntegers, IsInt, IsInt ], 0,
     function ( Integers, n, m )
     local   q;
+    if m = 0 then
+        return fail;
+    fi;
     q := QuoInt( n, m );
     if n <> q * m  then
         q := fail;
@@ -1591,7 +1598,7 @@ InstallMethodWithRandomSource(Random,
     [IsRandomSource, IsIntegers],
     0,
     function( rg, Integers )
-    return NrBitsInt( Random( rg, [0..2^20-1] ) ) - 10;
+    return NrBitsInt( Random( rg, 0, 2^20-1 ) ) - 10;
     end );
 
 
@@ -1768,7 +1775,3 @@ InstallMethod(ViewString, "for integer", [IsInt], function(n)
     return String(n);
   fi;
 end);
-
-#############################################################################
-##
-#E

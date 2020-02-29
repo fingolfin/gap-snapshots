@@ -1,12 +1,11 @@
 /****************************************************************************
 **
-*W  opers.c                     GAP source                       Frank Celler
-*W                                                         & Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the functions of the  filters, operations, attributes,
 **  and properties package.
@@ -15,6 +14,7 @@
 #include "opers.h"
 
 #include "ariths.h"
+#include "bits_intern.h"
 #include "blister.h"
 #include "bool.h"
 #include "calls.h"
@@ -57,18 +57,33 @@ static Obj ArglistObjVal;
 static Obj ArglistObj;
 
 
+static Obj SetterAndFilter(Obj getter);
+static Obj TesterAndFilter(Obj getter);
+
+
 /****************************************************************************
 **
 *F * * * * * * * * * * * * internal flags functions * * * * * * * * * * * * *
 */
+
+#define RequireFlags(funcname, op)                                           \
+    RequireArgumentCondition(funcname, op, TNUM_OBJ(op) == T_FLAGS,          \
+                             "must be a flags list")
+
+#define RequireFilter(funcname, op, argname)                                                 \
+    RequireArgumentConditionEx(funcname, op, argname,          \
+                             IS_FILTER(op), "must be a filter")
+
+#define RequireOperation(op)                                                 \
+    RequireArgumentCondition(CSTR_STRING(NAME_FUNC(self)), op,               \
+                             IS_OPERATION(op), "must be an operation")
 
 
 /****************************************************************************
 **
 *F  PrintFlags( <flags> ) . . . . . . . . . . . . . . . .  print a flags list
 */
-void PrintFlags (
-    Obj                 flags )
+static void PrintFlags(Obj flags)
 {
     Pr( "<flag list>", 0L, 0L );
 }
@@ -80,8 +95,7 @@ void PrintFlags (
 */
 static Obj TYPE_FLAGS;
 
-Obj TypeFlags (
-    Obj                 flags )
+static Obj TypeFlags(Obj flags)
 {
     return TYPE_FLAGS;
 }
@@ -92,8 +106,7 @@ Obj TypeFlags (
 *F  SaveFlags( <flags> )  . . . . . . . . . . . . . . . . . save a flags list
 **
 */
-void SaveFlags (
-    Obj         flags )
+static void SaveFlags(Obj flags)
 {
     UInt        i, len, *ptr;
 
@@ -113,8 +126,7 @@ void SaveFlags (
 *F  LoadFlags( <flags> )  . . . . . . . . . . . . . . . . . load a flags list
 **
 */
-void LoadFlags(
-    Obj         flags )
+static void LoadFlags(Obj flags)
 {
     Obj         sub;
     UInt        i, len, *ptr;
@@ -151,9 +163,7 @@ void LoadFlags(
 */
 #define HASH_FLAGS_SIZE (Int4)67108879L
 
-Obj FuncHASH_FLAGS (
-    Obj                 self,
-    Obj                 flags )
+static Obj FuncHASH_FLAGS(Obj self, Obj flags)
 {
     Int4                 hash;
     Int4                 x;
@@ -162,11 +172,7 @@ Obj FuncHASH_FLAGS (
     Int                  i;
 
     /* do some trivial checks                                              */
-    while ( TNUM_OBJ(flags) != T_FLAGS ) {
-            flags = ErrorReturnObj( "<flags> must be a flags list (not a %s)",
-            (Int)TNAM_OBJ(flags), 0L,
-            "you can replace <flags> via 'return <flags>;'" );
-    }
+    RequireFlags("HASH_FLAGS", flags);
     if ( HASH_FLAGS(flags) != 0 ) {
         return HASH_FLAGS(flags);
     }
@@ -219,9 +225,7 @@ Obj FuncHASH_FLAGS (
 **
 **  see 'FuncPositionsTruesBlist' in "blister.c" for information.
 */
-Obj FuncTRUES_FLAGS (
-    Obj                 self,
-    Obj                 flags )
+static Obj FuncTRUES_FLAGS(Obj self, Obj flags)
 {
     Obj                 sub;            /* handle of the result            */
     Int                 len;            /* logical length of the list      */
@@ -232,11 +236,7 @@ Obj FuncTRUES_FLAGS (
     UInt                i;              /* loop variable                   */
 
     /* get and check the first argument                                    */
-    while ( TNUM_OBJ(flags) != T_FLAGS ) {
-        flags = ErrorReturnObj( "<flags> must be a flags list (not a %s)",
-            (Int)TNAM_OBJ(flags), 0L,
-            "you can replace <flags> via 'return <flags>;'" );
-    }
+    RequireFlags("TRUES_FLAGS", flags);
     if ( TRUES_FLAGS(flags) != 0 ) {
         return TRUES_FLAGS(flags);
     }
@@ -274,20 +274,14 @@ Obj FuncTRUES_FLAGS (
 **
 **  see 'FuncSIZE_FLAGS'
 */
-Obj FuncSIZE_FLAGS (
-    Obj                 self,
-    Obj                 flags )
+static Obj FuncSIZE_FLAGS(Obj self, Obj flags)
 {
     UInt *              ptr;            /* pointer to flags                */
     UInt                nrb;            /* number of blocks in flags       */
     UInt                n;              /* number of bits in flags         */
 
     /* get and check the first argument                                    */
-    while ( TNUM_OBJ(flags) != T_FLAGS ) {
-        flags = ErrorReturnObj( "<flags> must be a flags list (not a %s)",
-            (Int)TNAM_OBJ(flags), 0L,
-            "you can replace <flags> via 'return <flags>;'" );
-    }
+    RequireFlags("SIZE_FLAGS", flags);
     if ( TRUES_FLAGS(flags) != 0 ) {
         return INTOBJ_INT( LEN_PLIST( TRUES_FLAGS(flags) ) );
     }
@@ -307,7 +301,7 @@ Obj FuncSIZE_FLAGS (
 **
 *F  EqFlags( <flags1>, <flags2> ) . . . . . . . . . . equality of flags lists
 */
-Int EqFlags(Obj flags1, Obj flags2)
+static Int EqFlags(Obj flags1, Obj flags2)
 {
     Int                 len1;
     Int                 len2;
@@ -356,22 +350,11 @@ Int EqFlags(Obj flags1, Obj flags2)
 **
 *F  FuncIS_EQUAL_FLAGS( <self>, <flags1>, <flags2> )  equality of flags lists
 */
-Obj FuncIS_EQUAL_FLAGS (
-    Obj                 self,
-    Obj                 flags1,
-    Obj                 flags2 )
+static Obj FuncIS_EQUAL_FLAGS(Obj self, Obj flags1, Obj flags2)
 {
     /* do some trivial checks                                              */
-    while ( TNUM_OBJ(flags1) != T_FLAGS ) {
-        flags1 = ErrorReturnObj( "<flags1> must be a flags list (not a %s)",
-            (Int)TNAM_OBJ(flags1), 0L,
-            "you can replace <flags1> via 'return <flags1>;'" );
-    }
-    while ( TNUM_OBJ(flags2) != T_FLAGS ) {
-        flags2 = ErrorReturnObj( "<flags2> must be a flags list (not a %s)",
-            (Int)TNAM_OBJ(flags2), 0L,
-            "you can replace <flags2> via 'return <flags2>;'" );
-    }
+    RequireFlags("IS_EQUAL_FLAGS", flags1);
+    RequireFlags("IS_EQUAL_FLAGS", flags2);
 
     return EqFlags(flags1, flags2) ? True : False;
 }
@@ -433,16 +416,8 @@ Obj FuncIS_SUBSET_FLAGS (
     Obj                 flags2 )
 {
     /* do some correctness checks                                            */
-    while ( TNUM_OBJ(flags1) != T_FLAGS ) {
-        flags1 = ErrorReturnObj( "<flags1> must be a flags list (not a %s)",
-            (Int)TNAM_OBJ(flags1), 0L,
-            "you can replace <flags1> via 'return <flags1>;'" );
-    }
-    while ( TNUM_OBJ(flags2) != T_FLAGS ) {
-        flags2 = ErrorReturnObj( "<flags2> must be a flags list (not a %s)",
-            (Int)TNAM_OBJ(flags2), 0L,
-            "you can replace <flags2> via 'return <flags2>;'" );
-    }
+    RequireFlags("IS_SUBSET_FLAGS", flags1);
+    RequireFlags("IS_SUBSET_FLAGS", flags2);
     
     return IS_SUBSET_FLAGS(flags1, flags2) ? True : False;
 }
@@ -451,10 +426,7 @@ Obj FuncIS_SUBSET_FLAGS (
 **
 *F  FuncSUB_FLAGS( <self>, <flags1>, <flags2> ) . . .  substract a flags list
 */
-Obj FuncSUB_FLAGS (
-    Obj                 self,
-    Obj                 flags1,
-    Obj                 flags2 )
+static Obj FuncSUB_FLAGS(Obj self, Obj flags1, Obj flags2)
 {
     Obj                 flags;
     Int                 len1;
@@ -467,16 +439,8 @@ Obj FuncSUB_FLAGS (
     Int                 i;
 
     /* do some trivial checks                                              */
-    while ( TNUM_OBJ(flags1) != T_FLAGS ) {
-        flags1 = ErrorReturnObj( "<flags1> must be a flags list (not a %s)",
-            (Int)TNAM_OBJ(flags1), 0L,
-            "you can replace <flags1> via 'return <flags1>;'" );
-    }
-    while ( TNUM_OBJ(flags2) != T_FLAGS ) {
-        flags2 = ErrorReturnObj( "<flags2> must be a flags list (not a %s)",
-            (Int)TNAM_OBJ(flags2), 0L,
-            "you can replace <flags2> via 'return <flags2>;'" );
-    }
+    RequireFlags("SUB_FLAGS", flags1);
+    RequireFlags("SUB_FLAGS", flags2);
 
     /* do the real work                                                    */
     len1   = LEN_FLAGS(flags1);
@@ -518,10 +482,7 @@ static Int AndFlagsCacheMiss;
 static Int AndFlagsCacheLost;
 #endif
 
-Obj FuncAND_FLAGS (
-    Obj                 self,
-    Obj                 flags1,
-    Obj                 flags2 )
+static Obj FuncAND_FLAGS(Obj self, Obj flags1, Obj flags2)
 {
     Obj                 flags;
     Int                 len1;
@@ -545,16 +506,8 @@ Obj FuncAND_FLAGS (
 #endif
 
     /* do some trivial checks                                              */
-    while ( TNUM_OBJ(flags1) != T_FLAGS ) {
-        flags1 = ErrorReturnObj( "<flags1> must be a flags list (not a %s)",
-            (Int)TNAM_OBJ(flags1), 0L,
-            "you can replace <flags1> via 'return <flags1>;'" );
-    }
-    while ( TNUM_OBJ(flags2) != T_FLAGS ) {
-        flags2 = ErrorReturnObj( "<flags2> must be a flags list (not a %s)",
-            (Int)TNAM_OBJ(flags2), 0L,
-            "you can replace <flags2> via 'return <flags2>;'" );
-    }
+    RequireFlags("AND_FLAGS", flags1);
+    RequireFlags("AND_FLAGS", flags2);
 
     if (flags1 == flags2)
         return flags1;
@@ -590,10 +543,12 @@ Obj FuncAND_FLAGS (
             CHANGED_BAG(flags1);
         }
         hash = (UInt)flags2;
+        entry = 0;
         for ( i = 0;  i < 24;  i++ ) {
             hash2 = (hash + 97*i) % AND_FLAGS_HASH_SIZE;
             entry = ELM_PLIST( cache, 2*hash2+1 );
             if ( entry == 0 ) {
+                hash = hash2;
                 break;
             }
             if ( entry == flags2 ) {
@@ -607,10 +562,7 @@ Obj FuncAND_FLAGS (
                 return ELM_PLIST( cache, 2*hash2+2 );
             }
         }
-        if ( entry == 0 ) {
-            hash = hash2;
-        }
-        else {
+        if ( entry != 0 ) {
             next = (next+1) % 24;
             hash = (hash + 97*next) % AND_FLAGS_HASH_SIZE;
         }
@@ -667,18 +619,18 @@ Obj FuncAND_FLAGS (
     return flags;
 }
 
-Obj HIDDEN_IMPS;
-Obj WITH_HIDDEN_IMPS_FLAGS_CACHE;
-enum { HIDDEN_IMPS_CACHE_LENGTH = 2003 };
+static Obj HIDDEN_IMPS;
+static Obj WITH_HIDDEN_IMPS_FLAGS_CACHE;
+enum { HIDDEN_IMPS_CACHE_LENGTH = 20003 };
 
 /* Forward declaration of FuncFLAGS_FILTER */
-Obj FuncFLAGS_FILTER(Obj self, Obj oper);
-    
+static Obj FuncFLAGS_FILTER(Obj self, Obj oper);
+
 /****************************************************************************
 **
 *F  FuncInstallHiddenTrueMethod( <filter>, <filters> ) Add a hidden true method
 */
-Obj FuncInstallHiddenTrueMethod(Obj self, Obj filter, Obj filters)
+static Obj FuncInstallHiddenTrueMethod(Obj self, Obj filter, Obj filters)
 {
     Obj imp = FuncFLAGS_FILTER(0, filter);
     Obj imps = FuncFLAGS_FILTER(0, filters);
@@ -701,7 +653,7 @@ Obj FuncInstallHiddenTrueMethod(Obj self, Obj filter, Obj filters)
 **
 *F  FuncCLEAR_HIDDEN_IMP_CACHE( <self>, <flags> ) . . . .clear cache of flags
 */
-Obj FuncCLEAR_HIDDEN_IMP_CACHE(Obj self, Obj filter)
+static Obj FuncCLEAR_HIDDEN_IMP_CACHE(Obj self, Obj filter)
 {
   Int i;
   Obj flags = FuncFLAGS_FILTER(0, filter);
@@ -732,15 +684,14 @@ Obj FuncCLEAR_HIDDEN_IMP_CACHE(Obj self, Obj filter)
 static Int WITH_HIDDEN_IMPS_MISS=0;
 static Int WITH_HIDDEN_IMPS_HIT=0;
 #endif
-Obj FuncWITH_HIDDEN_IMPS_FLAGS(Obj self, Obj flags)
+static Obj FuncWITH_HIDDEN_IMPS_FLAGS(Obj self, Obj flags)
 {
     // do some trivial checks, so we can use IS_SUBSET_FLAGS
-    while ( TNUM_OBJ(flags) != T_FLAGS ) {
-            flags = ErrorReturnObj( "<flags> must be a flags list (not a %s)",
-            (Int)TNAM_OBJ(flags), 0L,
-            "you can replace <flags> via 'return <flags>;'" );
-    }
+    RequireFlags("WITH_HIDDEN_IMPS_FLAGS", flags);
 
+#ifdef HPCGAP
+    RegionWriteLock(REGION(WITH_HIDDEN_IMPS_FLAGS_CACHE));
+#endif
     Int changed, i, lastand, stop;
     Int hidden_imps_length = LEN_PLIST(HIDDEN_IMPS) / 2;
     Int base_hash = INT_INTOBJ(FuncHASH_FLAGS(0, flags)) % HIDDEN_IMPS_CACHE_LENGTH;
@@ -748,12 +699,8 @@ Obj FuncWITH_HIDDEN_IMPS_FLAGS(Obj self, Obj flags)
     Int hash_loop = 0;
     Obj cacheval;
     Obj old_with, old_flags, new_with, new_flags;
-    Int old_moving;
     Obj with = flags;
     
-#ifdef HPCGAP
-    RegionWriteLock(REGION(WITH_HIDDEN_IMPS_FLAGS_CACHE));
-#endif
     for(hash_loop = 0; hash_loop < 3; ++hash_loop)
     {
       cacheval = ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, hash*2+1);
@@ -793,31 +740,25 @@ Obj FuncWITH_HIDDEN_IMPS_FLAGS(Obj self, Obj flags)
 
     /* add to hash table, shuffling old values along (last one falls off) */
     hash = base_hash;
-    
-    old_moving = 1;
+
     new_with = with;
     new_flags = flags;
-    
-    for(hash_loop = 0; old_moving && hash_loop < 3; ++hash_loop) {
-      old_moving = 0;
-      if(ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, hash*2+1))
-      {
-        old_flags = ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, hash*2+1);
-        old_with = ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, hash*2+2);
-        old_moving = 1;
-      }
 
-      SET_ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, hash * 2 + 1, new_flags);
-      SET_ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, hash * 2 + 2, new_with);
+    for (hash_loop = 0; hash_loop < 3; ++hash_loop) {
+        old_flags = ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, hash * 2 + 1);
+        old_with = ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, hash * 2 + 2);
 
-      if(old_moving)
-      {
+        SET_ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, hash * 2 + 1, new_flags);
+        SET_ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, hash * 2 + 2, new_with);
+
+        if (!old_flags)
+            break;
+
         new_flags = old_flags;
         new_with = old_with;
         hash = (hash * 311 + 61) % HIDDEN_IMPS_CACHE_LENGTH;
-      }
     }
-    
+
     CHANGED_BAG(WITH_HIDDEN_IMPS_FLAGS_CACHE);
 #ifdef HPCGAP
     RegionWriteUnlock(REGION(WITH_HIDDEN_IMPS_FLAGS_CACHE));
@@ -829,13 +770,13 @@ Obj FuncWITH_HIDDEN_IMPS_FLAGS(Obj self, Obj flags)
 static Obj IMPLICATIONS_SIMPLE;
 static Obj IMPLICATIONS_COMPOSED;
 static Obj WITH_IMPS_FLAGS_CACHE;
-enum { IMPS_CACHE_LENGTH = 11001 };
+enum { IMPS_CACHE_LENGTH = 21001 };
 
 /****************************************************************************
 **
 *F  FuncCLEAR_IMP_CACHE( <self>, <flags> ) . . . . . . . clear cache of flags
 */
-Obj FuncCLEAR_IMP_CACHE(Obj self)
+static Obj FuncCLEAR_IMP_CACHE(Obj self)
 {
   Int i;
 #ifdef HPCGAP
@@ -860,14 +801,10 @@ Obj FuncCLEAR_IMP_CACHE(Obj self)
 static Int WITH_IMPS_FLAGS_MISS=0;
 static Int WITH_IMPS_FLAGS_HIT=0;
 #endif
-Obj FuncWITH_IMPS_FLAGS(Obj self, Obj flags)
+static Obj FuncWITH_IMPS_FLAGS(Obj self, Obj flags)
 {
     // do some trivial checks, so we can use IS_SUBSET_FLAGS
-    while ( TNUM_OBJ(flags) != T_FLAGS ) {
-            flags = ErrorReturnObj( "<flags> must be a flags list (not a %s)",
-            (Int)TNAM_OBJ(flags), 0L,
-            "you can replace <flags> via 'return <flags>;'" );
-    }
+    RequireFlags("WITH_IMPS_FLAGS", flags);
 
     Int changed, lastand, i, j, stop, imps_length;
     Int base_hash = INT_INTOBJ(FuncHASH_FLAGS(0, flags)) % IMPS_CACHE_LENGTH;
@@ -875,7 +812,6 @@ Obj FuncWITH_IMPS_FLAGS(Obj self, Obj flags)
     Int hash_loop = 0;
     Obj cacheval;
     Obj old_with, old_flags, new_with, new_flags;
-    Int old_moving;
     Obj with = flags;
     Obj imp;
     Obj trues;
@@ -941,38 +877,32 @@ Obj FuncWITH_IMPS_FLAGS(Obj self, Obj flags)
     /* add to hash table, shuffling old values along (last one falls off) */
     hash = base_hash;
     
-    old_moving = 1;
     new_with = with;
     new_flags = flags;
-    
-    for(hash_loop = 0; old_moving && hash_loop < 3; ++hash_loop) {
-      old_moving = 0;
-      if(ELM_PLIST(WITH_IMPS_FLAGS_CACHE, hash*2+1))
-      {
+
+    for (hash_loop = 0; hash_loop < 3; ++hash_loop) {
         old_flags = ELM_PLIST(WITH_IMPS_FLAGS_CACHE, hash*2+1);
         old_with = ELM_PLIST(WITH_IMPS_FLAGS_CACHE, hash*2+2);
-        old_moving = 1;
-      }
 
-      SET_ELM_PLIST(WITH_IMPS_FLAGS_CACHE, hash * 2 + 1, new_flags);
-      SET_ELM_PLIST(WITH_IMPS_FLAGS_CACHE, hash * 2 + 2, new_with);
-      CHANGED_BAG(WITH_IMPS_FLAGS_CACHE);
+        SET_ELM_PLIST(WITH_IMPS_FLAGS_CACHE, hash * 2 + 1, new_flags);
+        SET_ELM_PLIST(WITH_IMPS_FLAGS_CACHE, hash * 2 + 2, new_with);
 
-      if(old_moving)
-      {
+        if (!old_flags)
+            break;
+
         new_flags = old_flags;
         new_with = old_with;
         hash = (hash * 311 + 61) % IMPS_CACHE_LENGTH;
-      }
     }
-    
+
+    CHANGED_BAG(WITH_IMPS_FLAGS_CACHE);
 #ifdef HPCGAP
     RegionWriteUnlock(REGION(IMPLICATIONS_SIMPLE));
 #endif
     return with;
 }
 
-Obj FuncWITH_IMPS_FLAGS_STAT(Obj self)
+static Obj FuncWITH_IMPS_FLAGS_STAT(Obj self)
 {
     Obj res;
     res = NEW_PLIST(T_PLIST, 3);
@@ -1005,8 +935,7 @@ static Int CountFlags;
 **
 *F  SetterFilter( <oper> )  . . . . . . . . . . . . . . .  setter of a filter
 */
-Obj SetterFilter (
-    Obj                 oper )
+static Obj SetterFilter(Obj oper)
 {
     Obj                 setter;
 
@@ -1021,19 +950,13 @@ Obj SetterFilter (
 **
 *F  SetterAndFilter( <getter> )  . . . . . .  setter of a concatenated filter
 */
-Obj DoSetAndFilter (
-    Obj                 self,
-    Obj                 obj,
-    Obj                 val )
+static Obj DoSetAndFilter(Obj self, Obj obj, Obj val)
 {
     Obj                 op;
 
-    while (val != True)
-      val = ErrorReturnObj(
-             "You cannot set an \"and-filter\" except to true", 0L, 0L,
-             "you can type 'return true;' to set all components true\n"
-             "(but you might really want to reset just one component)");
-    
+    if (val != True)
+        ErrorMayQuit("You cannot set an \"and-filter\" except to true", 0, 0);
+
     /* call the first 'and'-ed function                                    */
     op = FLAG1_FILT( self );
     CALL_2ARGS( op, obj, val );
@@ -1047,8 +970,7 @@ Obj DoSetAndFilter (
 }
 
 
-Obj SetterAndFilter (
-    Obj                 getter )
+static Obj SetterAndFilter(Obj getter)
 {
     Obj                 setter;
     Obj                 obj;
@@ -1073,8 +995,7 @@ Obj SetterAndFilter (
 **
 *F  TesterFilter( <oper> )  . . . . . . . . . . . . . . .  tester of a filter
 */
-Obj TesterFilter (
-    Obj                 oper )
+static Obj TesterFilter(Obj oper)
 {
     Obj                 tester;
 
@@ -1089,8 +1010,7 @@ Obj TesterFilter (
 **
 *F  TestAndFilter( <getter> )  . . . . . . . .tester of a concatenated filter
 */
-Obj TesterAndFilter (
-    Obj                 getter )
+static Obj TesterAndFilter(Obj getter)
 {
     Obj                 tester;
 
@@ -1107,12 +1027,9 @@ Obj TesterAndFilter (
 
 /****************************************************************************
 **
-*F  NewFilter( <name>, <narg>, <nams>, <hdlr> )  . . . . .  make a new filter
+*F  NewFilter( <name>, <nams>, <hdlr> ) . . . . . . . . . . make a new filter
 */
-Obj DoSetFilter (
-    Obj                 self,
-    Obj                 obj,
-    Obj                 val )
+static Obj DoSetFilter(Obj self, Obj obj, Obj val)
 {
     Int                 flag1;
     Obj                 type;
@@ -1127,18 +1044,14 @@ Obj DoSetFilter (
     
     /* return the value of the feature                                     */
     if ( val != SAFE_ELM_FLAGS( flags, flag1 ) ) {
-        ErrorReturnVoid(
-            "value feature is already set the other way",
-            0L, 0L,
-            "you can 'return;' and ignore it" );
+        ErrorMayQuit("filter is already set the other way", 0, 0);
     }
 
     /* return 'void'                                                       */
     return 0;
 }
 
-Obj NewSetterFilter (
-    Obj                 getter )
+static Obj NewSetterFilter(Obj getter)
 {
     Obj                 setter;
 
@@ -1178,7 +1091,6 @@ Obj DoFilter (
 
 Obj NewFilter (
     Obj                 name,
-    Int                 narg,
     Obj                 nams,
     ObjFunc             hdlr )
 {
@@ -1189,11 +1101,12 @@ Obj NewFilter (
     
     flag1 = ++CountFlags;
 
-    getter = NewOperation( name, 1L, nams, (hdlr ? hdlr : DoFilter) );
+    GAP_ASSERT(hdlr);
+    getter = NewOperation(name, 1, nams, hdlr);
     SET_FLAG1_FILT(getter, INTOBJ_INT(flag1));
     SET_FLAG2_FILT(getter, INTOBJ_INT(0));
     flags = NEW_FLAGS( flag1 );
-    SET_ELM_FLAGS( flags, flag1, True );
+    SET_ELM_FLAGS( flags, flag1 );
     SET_FLAGS_FILT(getter, flags);
     SET_IS_FILTER(getter);
     CHANGED_BAG(getter);
@@ -1206,7 +1119,7 @@ Obj NewFilter (
     return getter;    
 }
 
-Obj FuncIS_FILTER(Obj self, Obj obj)
+static Obj FuncIS_FILTER(Obj self, Obj obj)
 {
     return IS_FILTER(obj) ? True : False;
 }
@@ -1216,9 +1129,7 @@ Obj FuncIS_FILTER(Obj self, Obj obj)
 **
 *F  NewAndFilter( <filt1>, <filt2> ) . . . . . make a new concatenated filter
 */
-Obj DoAndFilter (
-    Obj                 self,
-    Obj                 obj )
+static Obj DoAndFilter(Obj self, Obj obj)
 {
     Obj                 val;
     Obj                 op;
@@ -1248,6 +1159,9 @@ Obj NewAndFilter (
     Obj                 str;
     char*               s;
 
+    RequireFilter(0, oper1, "<oper1>");
+    RequireFilter(0, oper2, "<oper2>");
+
     if ( oper1 == ReturnTrueFilter )
         return oper2;
 
@@ -1262,9 +1176,9 @@ Obj NewAndFilter (
     s = CSTR_STRING(str);
     s[0] = '(';
     s[1] = 0;
-    strlcat(s, CSTR_STRING(NAME_FUNC(oper1)), str_len);
+    strlcat(s, CONST_CSTR_STRING(NAME_FUNC(oper1)), str_len);
     strlcat(s, " and ", str_len);
-    strlcat(s, CSTR_STRING(NAME_FUNC(oper2)), str_len);
+    strlcat(s, CONST_CSTR_STRING(NAME_FUNC(oper2)), str_len);
     strlcat(s, ")", str_len);
     SET_LEN_STRING(str, str_len - 1);
 
@@ -1282,7 +1196,7 @@ Obj NewAndFilter (
     return getter;
 }
 
-Obj FuncIS_AND_FILTER( Obj self, Obj filt )
+static Obj FuncIS_AND_FILTER(Obj self, Obj filt)
 {
   return (IS_FUNC(filt) && HDLR_FUNC(filt, 1) == DoAndFilter) ? True : False;
 }
@@ -1299,21 +1213,15 @@ Obj ReturnTrueFilter;
 **
 *F  NewReturnTrueFilter() . . . . . . . . . . create a new return true filter
 */
-Obj DoSetReturnTrueFilter (
-    Obj                 self,
-    Obj                 obj,
-    Obj                 val )
+static Obj DoSetReturnTrueFilter(Obj self, Obj obj, Obj val)
 {
     if ( val != True ) {
-         ErrorReturnVoid( "you cannot set this flag to 'false'",
-             0L, 0L,
-             "you can 'return;' and ignore it" );
+        ErrorMayQuit("you cannot set this flag to 'false'", 0, 0);
     }
     return 0;
 }
 
-Obj SetterReturnTrueFilter (
-    Obj                 getter )
+static Obj SetterReturnTrueFilter(Obj getter)
 {
     Obj                 setter;
 
@@ -1327,14 +1235,12 @@ Obj SetterReturnTrueFilter (
     return setter;    
 }
 
-Obj DoReturnTrueFilter (
-    Obj                 self,
-    Obj                 obj )
+static Obj DoReturnTrueFilter(Obj self, Obj obj)
 {
     return True;
 }
 
-Obj NewReturnTrueFilter ( void )
+static Obj NewReturnTrueFilter(void)
 {
     Obj                 getter;
     Obj                 setter;
@@ -1371,17 +1277,10 @@ Obj NewReturnTrueFilter ( void )
 **
 *F  FuncNEW_FILTER( <self>, <name> )  . . . . . . . . . . . . .  new filter
 */
-Obj FuncNEW_FILTER (
-    Obj                 self,
-    Obj                 name )
+static Obj FuncNEW_FILTER(Obj self, Obj name)
 {
-    /* check the argument                                                  */
-    if ( ! IsStringConv(name) ) {
-        ErrorQuit("usage: NewFilter( <name> )",0L,0L);
-    }
-
-    /* make the new operation                                              */
-    return NewFilter( name, 1L, (Obj)0, (ObjFunc)0 );
+    RequireStringRep("NewFilter", name);
+    return NewFilter(name, 0, DoFilter);
 }
 
 
@@ -1389,15 +1288,11 @@ Obj FuncNEW_FILTER (
 **
 *F  FuncFLAG1_FILTER( <self>, <oper> )  . . . . . . . . . . . .  `FLAG1_FILT'
 */
-Obj FuncFLAG1_FILTER (
-    Obj                 self,
-    Obj                 oper )
+static Obj FuncFLAG1_FILTER(Obj self, Obj oper)
 {
     Obj                 flag1;
 
-    if ( ! IS_OPERATION(oper) ) {
-        ErrorQuit("<oper> must be an operation",0L,0L);
-    }
+    RequireOperation(oper);
     flag1 = FLAG1_FILT( oper );
     if ( flag1 == 0 )
         flag1 = INTOBJ_INT(0);
@@ -1407,34 +1302,13 @@ Obj FuncFLAG1_FILTER (
 
 /****************************************************************************
 **
-*F  FuncSET_FLAG1_FILTER( <self>, <oper>, <flag1> ) . . . .  set `FLAG1_FILT'
-*/
-Obj FuncSET_FLAG1_FILTER (
-    Obj                 self,
-    Obj                 oper,
-    Obj                 flag1 )
-{
-    if ( ! IS_OPERATION(oper) ) {
-        ErrorQuit("<oper> must be an operation",0L,0L);
-    }
-    SET_FLAG1_FILT(oper, flag1);
-    return 0;
-}
-
-
-/****************************************************************************
-**
 *F  FuncFLAG2_FILTER( <self>, <oper> )  . . . . . . . . . . . .  `FLAG2_FILT'
 */
-Obj FuncFLAG2_FILTER (
-    Obj                 self,
-    Obj                 oper )
+static Obj FuncFLAG2_FILTER(Obj self, Obj oper)
 {
     Obj                 flag2;
 
-    if ( ! IS_OPERATION(oper) ) {
-        ErrorQuit("<oper> must be an operation",0L,0L);
-    }
+    RequireOperation(oper);
     flag2 = FLAG2_FILT( oper );
     if ( flag2 == 0 )
         flag2 = INTOBJ_INT(0);
@@ -1444,34 +1318,13 @@ Obj FuncFLAG2_FILTER (
 
 /****************************************************************************
 **
-*F  FuncSET_FLAG2_FILTER( <self>, <oper>, <flag2> ) . . . .  set `FLAG2_FILT'
-*/
-Obj FuncSET_FLAG2_FILTER (
-    Obj                 self,
-    Obj                 oper,
-    Obj                 flag2 )
-{
-    if ( ! IS_OPERATION(oper) ) {
-        ErrorQuit("<oper> must be an operation",0L,0L);
-    }
-    SET_FLAG2_FILT(oper, flag2);
-    return 0;
-}
-
-
-/****************************************************************************
-**
 *F  FuncFLAGS_FILTER( <self>, <oper> )  . . . . . . . . . . . .  `FLAGS_FILT'
 */
-Obj FuncFLAGS_FILTER (
-    Obj                 self,
-    Obj                 oper )
+static Obj FuncFLAGS_FILTER(Obj self, Obj oper)
 {
     Obj                 flags;
 
-    if ( ! IS_OPERATION(oper) ) {
-        ErrorQuit("<oper> must be an operation",0L,0L);
-    }
+    RequireOperation(oper);
     flags = FLAGS_FILT( oper );
     if ( flags == 0 )
         flags = False;
@@ -1481,34 +1334,13 @@ Obj FuncFLAGS_FILTER (
 
 /****************************************************************************
 **
-*F  FuncSET_FLAGS_FILTER( <self>, <oper>, <flags> ) . . . .  set `FLAGS_FILT'
-*/
-Obj FuncSET_FLAGS_FILTER (
-    Obj                 self,
-    Obj                 oper,
-    Obj                 flags )
-{
-    if ( ! IS_OPERATION(oper) ) {
-        ErrorQuit("<oper> must be an operation",0L,0L);
-    }
-    SET_FLAGS_FILT(oper, flags);
-    return 0;
-}
-
-
-/****************************************************************************
-**
 *F  FuncSETTER_FILTER( <self>, <oper> ) . . . . . . . . .  setter of a filter
 */
-Obj FuncSETTER_FILTER (
-    Obj                 self,
-    Obj                 oper )
+static Obj FuncSETTER_FILTER(Obj self, Obj oper)
 {
     Obj                 setter;
 
-    if ( ! IS_OPERATION(oper) ) {
-        ErrorQuit("<oper> must be an operation",0L,0L);
-    }
+    RequireOperation(oper);
     setter = SetterFilter( oper );
     if ( setter == 0 )  setter = False;
     return setter;
@@ -1517,57 +1349,16 @@ Obj FuncSETTER_FILTER (
 
 /****************************************************************************
 **
-*F  FuncSET_SETTER_FILTER( <self>, <oper>, <setter> )  set setter of a filter
-*/
-Obj FuncSET_SETTER_FILTER (
-    Obj                 self,
-    Obj                 oper,
-    Obj                 setter )
-{
-    if ( ! IS_OPERATION(oper) ) {
-        ErrorQuit("<oper> must be an operation",0L,0L);
-    }
-    SET_SETTR_FILT(oper, setter);
-    return 0;
-}
-
-
-/****************************************************************************
-**
 *F  FuncTESTER_FILTER( <self>, <oper> ) . . . . . . . . .  tester of a filter
 */
-Obj FuncTESTER_FILTER (
-    Obj                 self,
-    Obj                 oper )
+static Obj FuncTESTER_FILTER(Obj self, Obj oper)
 {
     Obj                 tester;
 
-    if ( ! IS_OPERATION(oper) ) {
-        ErrorQuit("<oper> must be an operation",0L,0L);
-    }
+    RequireOperation(oper);
     tester = TesterFilter( oper );
     if ( tester == 0 )  tester = False;
     return tester;
-}
-
-
-/****************************************************************************
-**
-*F  FuncSET_TESTER_FILTER( <self>, <oper>, <tester> )  set tester of a filter
-*/
-Obj FuncSET_TESTER_FILTER (
-    Obj                 self,
-    Obj                 oper,
-    Obj                 tester )
-{
-    if ( ! IS_OPERATION(oper) ) {
-        ErrorQuit("<oper> must be an operation",0L,0L);
-    }
-    if ( SIZE_OBJ(oper) != sizeof(OperBag) ) {
-        ResizeBag( oper, sizeof(OperBag) );
-    }
-    SET_TESTR_FILT(oper, tester);
-    return 0;
 }
 
 
@@ -1663,7 +1454,7 @@ static void FixTypeIDs( Bag b ) {
 
 #endif
 
-Obj FuncCOMPACT_TYPE_IDS( Obj self )
+static Obj FuncCOMPACT_TYPE_IDS(Obj self)
 {
 #ifdef USE_GASMAN
   NextTypeID = INT_INTOBJ_MIN;
@@ -1912,7 +1703,7 @@ static Obj NEXT_VMETHOD_PRINT_INFO;
 // Use of 'ALWAYS_INLINE' is critical for performance, see discussion
 // earlier in this file.
 enum {
-    BASE_SIZE_METHODS_OPER_ENTRY = 5,
+    BASE_SIZE_METHODS_OPER_ENTRY = 6,
 };
 static ALWAYS_INLINE Obj GetMethodUncached(
     UInt verbose, UInt constructor, UInt n, Obj methods, Int prec, Obj types[])
@@ -1931,6 +1722,9 @@ static ALWAYS_INLINE Obj GetMethodUncached(
         // entry n+3 is the rank
         // entry n+4 is the info text
         // entry n+5 is, if set, the location where the method was installed
+        // entry n+6 is, if set, the relative rank that was supplied when
+        //               the method was installed, either as a small integer
+        //               or a function of no arguments
 
         // check argument filters against the given types
         Obj filter;
@@ -2056,14 +1850,7 @@ static ALWAYS_INLINE Obj DoOperationNArgs(Obj  oper,
         types[1] = TYPE_OBJ_FEO(arg2);
     case 1:
         if (constructor) {
-            while (!IS_OPERATION(arg1)) {
-                arg1 = ErrorReturnObj("Constructor: the first argument must "
-                                      "be a filter not a %s",
-                                      (Int)TNAM_OBJ(arg1), 0L,
-                                      "you can replace the first argument "
-                                      "<arg1> via 'return <arg1>;'");
-            }
-
+            RequireFilter("Constructor", arg1, "the first argument");
             types[0] = FLAGS_FILT(arg1);
         }
         else
@@ -2179,6 +1966,7 @@ static ALWAYS_INLINE Obj DoOperationNArgs(Obj  oper,
             res = CALL_6ARGS(method, arg1, arg2, arg3, arg4, arg5, arg6);
             break;
         default:
+            res = 0; // redundant, but silences a warning later on
             GAP_ASSERT(0);
         }
     } while (res == TRY_NEXT_METHOD);
@@ -2356,51 +2144,52 @@ Obj NewOperation(Obj name, Int narg, Obj nams, ObjFunc hdlr)
 *F  DoConstructorXArgs( <oper> )
 */
 
-Obj DoConstructor0Args(Obj oper)
+static Obj DoConstructor0Args(Obj oper)
 {
     ErrorQuit("constructors must have at least one argument", 0L, 0L);
     return 0;
 }
 
-Obj DoConstructor1Args(Obj oper, Obj arg1)
+static Obj DoConstructor1Args(Obj oper, Obj arg1)
 {
     return DoOperationNArgs(oper, 1, 0, 1, arg1, 0, 0,
                             0, 0, 0);
 }
 
-Obj DoConstructor2Args(Obj oper, Obj arg1, Obj arg2)
+static Obj DoConstructor2Args(Obj oper, Obj arg1, Obj arg2)
 {
     return DoOperationNArgs(oper, 2, 0, 1, arg1, arg2,
                             0, 0, 0, 0);
 }
 
-Obj DoConstructor3Args(Obj oper, Obj arg1, Obj arg2, Obj arg3)
+static Obj DoConstructor3Args(Obj oper, Obj arg1, Obj arg2, Obj arg3)
 {
     return DoOperationNArgs(oper, 3, 0, 1, arg1, arg2,
                             arg3, 0, 0, 0);
 }
 
-Obj DoConstructor4Args(Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4)
+static Obj
+DoConstructor4Args(Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4)
 {
     return DoOperationNArgs(oper, 4, 0, 1, arg1, arg2,
                             arg3, arg4, 0, 0);
 }
 
-Obj DoConstructor5Args(
-    Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4, Obj arg5)
+static Obj
+DoConstructor5Args(Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4, Obj arg5)
 {
     return DoOperationNArgs(oper, 5, 0, 1, arg1, arg2,
                             arg3, arg4, arg5, 0);
 }
 
-Obj DoConstructor6Args(
+static Obj DoConstructor6Args(
     Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4, Obj arg5, Obj arg6)
 {
     return DoOperationNArgs(oper, 6, 0, 1, arg1, arg2,
                             arg3, arg4, arg5, arg6);
 }
 
-Obj DoConstructorXArgs(Obj self, Obj args)
+static Obj DoConstructorXArgs(Obj self, Obj args)
 {
     ErrorQuit("sorry: cannot yet have X argument constructors", 0L, 0L);
     return 0;
@@ -2419,52 +2208,52 @@ Obj DoConstructorXArgs(Obj self, Obj args)
 *F  DoVerboseConstructorXArgs( <oper> )
 */
 
-Obj DoVerboseConstructor0Args(Obj oper)
+static Obj DoVerboseConstructor0Args(Obj oper)
 {
     ErrorQuit("constructors must have at least one argument", 0L, 0L);
     return 0;
 }
 
-Obj DoVerboseConstructor1Args(Obj oper, Obj arg1)
+static Obj DoVerboseConstructor1Args(Obj oper, Obj arg1)
 {
     return DoOperationNArgs(oper, 1, 1, 1, arg1,
                             0, 0, 0, 0, 0);
 }
 
-Obj DoVerboseConstructor2Args(Obj oper, Obj arg1, Obj arg2)
+static Obj DoVerboseConstructor2Args(Obj oper, Obj arg1, Obj arg2)
 {
     return DoOperationNArgs(oper, 2, 1, 1, arg1,
                             arg2, 0, 0, 0, 0);
 }
 
-Obj DoVerboseConstructor3Args(Obj oper, Obj arg1, Obj arg2, Obj arg3)
+static Obj DoVerboseConstructor3Args(Obj oper, Obj arg1, Obj arg2, Obj arg3)
 {
     return DoOperationNArgs(oper, 3, 1, 1, arg1,
                             arg2, arg3, 0, 0, 0);
 }
 
-Obj DoVerboseConstructor4Args(
-    Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4)
+static Obj
+DoVerboseConstructor4Args(Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4)
 {
     return DoOperationNArgs(oper, 4, 1, 1, arg1,
                             arg2, arg3, arg4, 0, 0);
 }
 
-Obj DoVerboseConstructor5Args(
+static Obj DoVerboseConstructor5Args(
     Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4, Obj arg5)
 {
     return DoOperationNArgs(oper, 5, 1, 1, arg1,
                             arg2, arg3, arg4, arg5, 0);
 }
 
-Obj DoVerboseConstructor6Args(
+static Obj DoVerboseConstructor6Args(
     Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4, Obj arg5, Obj arg6)
 {
     return DoOperationNArgs(oper, 6, 1, 1, arg1,
                             arg2, arg3, arg4, arg5, arg6);
 }
 
-Obj DoVerboseConstructorXArgs(Obj self, Obj args)
+static Obj DoVerboseConstructorXArgs(Obj self, Obj args)
 {
     ErrorQuit("sorry: cannot yet have X argument constructors", 0L, 0L);
     return 0;
@@ -2475,7 +2264,7 @@ Obj DoVerboseConstructorXArgs(Obj self, Obj args)
 **
 *F  NewConstructor( <name>> )
 */
-Obj NewConstructor(Obj name)
+static Obj NewConstructor(Obj name)
 {
     Obj                 oper;
 
@@ -2502,13 +2291,6 @@ Obj NewConstructor(Obj name)
     /* return constructor                                                  */
     return oper;
 }
-
-
-/****************************************************************************
-**
-*F  DoAttribute( <name> ) . . . . . . . . . . . . . . .  make a new attribute
-*/
-
 
 
 /****************************************************************************
@@ -2564,15 +2346,13 @@ Obj DoAttribute (
     
     /* call the operation to compute the value                             */
     val = DoOperation1Args( self, obj );
-    while (val == (Obj) 0) {
-        val = ErrorReturnObj("Method for an attribute must return a value",
-                             0L, 0L,
-                             "you can supply a value <val> via 'return <val>;'");
+    if (val == 0) {
+        ErrorMayQuit("Method for an attribute must return a value", 0, 0);
     }
     val = CopyObj( val, 0 );
     
     /* set the value (but not for internal objects)                        */
-    if ( ENABLED_ATTR( self ) == 1 ) {
+    if ( ENABLED_ATTR( self ) == 1 && !IS_MUTABLE_OBJ( obj ) ) {
         switch ( TNUM_OBJ( obj ) ) {
         case T_COMOBJ:
         case T_POSOBJ:
@@ -2596,9 +2376,7 @@ Obj DoAttribute (
 */
 #define DoVerboseSetAttribute  DoVerboseOperation2Args
 
-Obj DoVerboseAttribute (
-    Obj                 self,
-    Obj                 obj )
+static Obj DoVerboseAttribute(Obj self, Obj obj)
 {
     Obj                 val;
     Int                 flag2;
@@ -2619,15 +2397,13 @@ Obj DoVerboseAttribute (
     
     /* call the operation to compute the value                             */
     val = DoVerboseOperation1Args( self, obj );
-    while (val == (Obj) 0) {
-        val = ErrorReturnObj("Method for an attribute must return a value",
-                             0L, 0L,
-                             "you can supply a value <val> via 'return <val>;'");
+    if (val == (Obj)0) {
+        ErrorMayQuit("Method for an attribute must return a value", 0, 0);
     }
     val = CopyObj( val, 0 );
     
     /* set the value (but not for internal objects)                        */
-    if ( ENABLED_ATTR( self ) == 1 ) {
+    if ( ENABLED_ATTR( self ) == 1  && !IS_MUTABLE_OBJ( obj ) ) {
         switch ( TNUM_OBJ( obj ) ) {
         case T_COMOBJ:
         case T_POSOBJ:
@@ -2649,9 +2425,7 @@ Obj DoVerboseAttribute (
 **
 **  DoMutableAttribute( <attr>, <obj> )
 */
-Obj DoMutableAttribute (
-    Obj                 self,
-    Obj                 obj )
+static Obj DoMutableAttribute(Obj self, Obj obj)
 {
     Obj                 val;
     Int                 flag2;
@@ -2674,7 +2448,7 @@ Obj DoMutableAttribute (
     val = DoOperation1Args( self, obj );
     
     /* set the value (but not for internal objects)                        */
-    if ( ENABLED_ATTR( self ) == 1 ) {
+    if ( ENABLED_ATTR( self ) == 1  && !IS_MUTABLE_OBJ( obj ) ) {
         switch ( TNUM_OBJ( obj ) ) {
         case T_COMOBJ:
         case T_POSOBJ:
@@ -2696,9 +2470,7 @@ Obj DoMutableAttribute (
 **
 **  DoVerboseMutableAttribute( <attr>, <obj> )
 */
-Obj DoVerboseMutableAttribute (
-    Obj                 self,
-    Obj                 obj )
+static Obj DoVerboseMutableAttribute(Obj self, Obj obj)
 {
     Obj                 val;
     Int                 flag2;
@@ -2721,7 +2493,7 @@ Obj DoVerboseMutableAttribute (
     val = DoVerboseOperation1Args( self, obj );
     
     /* set the value (but not for internal objects)                        */
-    if ( ENABLED_ATTR( self ) == 1 ) {
+    if ( ENABLED_ATTR( self ) == 1  && !IS_MUTABLE_OBJ( obj ) ) {
         switch ( TNUM_OBJ( obj ) ) {
         case T_COMOBJ:
         case T_POSOBJ:
@@ -2741,7 +2513,7 @@ Obj DoVerboseMutableAttribute (
 
 /****************************************************************************
 **
-*F  NewAttribute( <name>, <narg>, <nams>, <hdlr> )
+*F  NewAttribute( <name>, <nams>, <hdlr> )
 **
 ** MakeSetter, MakeTester and SetupAttribute are support functions
 */
@@ -2761,11 +2533,11 @@ static Obj WRAP_NAME(Obj name, const char *addon)
     memcpy( ptr, addon, addon_len );
     ptr += addon_len;
     *ptr++ = '(';
-    memcpy( ptr, CSTR_STRING(name), name_len );
+    memcpy( ptr, CONST_CSTR_STRING(name), name_len );
     ptr += name_len;
     *ptr++ = ')';
     *ptr = 0;
-    MakeImmutableString(fname);
+    MakeImmutable(fname);
     return fname;
 }
 
@@ -2779,10 +2551,10 @@ static Obj PREFIX_NAME(Obj name, const char *prefix)
     char *ptr = CSTR_STRING(fname);
     memcpy( ptr, prefix, prefix_len );
     ptr += prefix_len;
-    memcpy( ptr, CSTR_STRING(name), name_len );
+    memcpy( ptr, CONST_CSTR_STRING(name), name_len );
     ptr += name_len;
     *ptr = 0;
-    MakeImmutableString(fname);
+    MakeImmutable(fname);
     return fname;
 }
 
@@ -2809,7 +2581,7 @@ static Obj MakeTester( Obj name, Int flag1, Int flag2)
     SET_FLAG1_FILT(tester, INTOBJ_INT(flag1));
     SET_FLAG2_FILT(tester, INTOBJ_INT(flag2));
     flags = NEW_FLAGS( flag2 );
-    SET_ELM_FLAGS( flags, flag2, True );
+    SET_ELM_FLAGS( flags, flag2 );
     SET_FLAGS_FILT(tester, flags);
     SET_SETTR_FILT(tester, 0);
     SET_TESTR_FILT(tester, ReturnTrueFilter);
@@ -2833,12 +2605,10 @@ static void SetupAttribute(Obj attr, Obj setter, Obj tester, Int flag2)
     SET_ENABLED_ATTR(attr,1);
     CHANGED_BAG(attr);
 }
-
   
 
 Obj NewAttribute (
     Obj                 name,
-    Int                 narg,
     Obj                 nams,
     ObjFunc             hdlr )
 {
@@ -2852,12 +2622,14 @@ Obj NewAttribute (
     setter = MakeSetter(name, 0, flag2, DoSetAttribute);
     tester = MakeTester(name, 0, flag2);
 
-    getter = NewOperation( name, 1L, nams, (hdlr ? hdlr : DoAttribute) ); 
-    
+    GAP_ASSERT(hdlr);
+    getter = NewOperation(name, 1, nams, hdlr);
+
     SetupAttribute(getter, setter, tester, flag2);
 
     return getter;    
 }
+
 
 /****************************************************************************
 **
@@ -2865,7 +2637,7 @@ Obj NewAttribute (
 **  should not have any one-argument declarations) into an attribute
 */
 
-void ConvertOperationIntoAttribute( Obj oper, ObjFunc hdlr ) 
+static void ConvertOperationIntoAttribute(Obj oper, ObjFunc hdlr)
 {
     Obj                 setter;
     Obj                 tester;
@@ -2881,7 +2653,8 @@ void ConvertOperationIntoAttribute( Obj oper, ObjFunc hdlr )
     tester = MakeTester(name, 0, flag2);
 
     /* Change the handlers */
-    SET_HDLR_FUNC(oper, 1, hdlr ? hdlr : DoAttribute);
+    GAP_ASSERT(hdlr);
+    SET_HDLR_FUNC(oper, 1, hdlr);
 
     SetupAttribute( oper, setter, tester, flag2);
 }
@@ -2900,10 +2673,7 @@ Obj RESET_FILTER_OBJ;
 **
 **  DoSetProperty( <prop>, <obj>, <val> )
 */
-Obj DoSetProperty (
-    Obj                 self,
-    Obj                 obj,
-    Obj                 val )
+static Obj DoSetProperty(Obj self, Obj obj, Obj val)
 {
     Int                 flag1;
     Int                 flag2;
@@ -2924,10 +2694,7 @@ Obj DoSetProperty (
             return 0;
         }
         else {
-            ErrorReturnVoid(
-                "Value property is already set the other way",
-                0L, 0L,
-                "you can 'return;' to set it anyhow" );
+            ErrorMayQuit("property is already set the other way", 0, 0);
         }
     }
 
@@ -2950,14 +2717,11 @@ Obj DoSetProperty (
     if ( IS_PLIST(obj) || IS_RANGE(obj) || IS_STRING_REP(obj)
            || IS_BLIST_REP(obj) )  {
         if ( val == True ) {
-            FuncSET_FILTER_LIST( 0, obj, self );
+            SET_FILTER_LIST( obj, self );
         }
     }
     else {
-        ErrorReturnVoid(
-            "Value cannot be set for internal objects",
-            0L, 0L,
-            "you can 'return;' without setting it" );
+        ErrorMayQuit("property cannot be set for internal objects", 0, 0);
     }
 
     return 0;
@@ -2993,11 +2757,9 @@ Obj DoProperty (
 
     /* call the operation to compute the value                             */
     val = DoOperation1Args( self, obj );
-    while ( val != True && val != False ) {
-        val = ErrorReturnObj(
-               "Method for a property did not return true or false",
-               0L, 0L,
-               "you can 'return true;' or 'return false;'");
+    if (val != True && val != False) {
+        ErrorMayQuit("Method for a property did not return true or false", 0,
+                     0);
     }
 
     /* set the value (but not for internal objects)                        */
@@ -3024,9 +2786,7 @@ Obj DoProperty (
 **
 **  DoVerboseProperty( <prop>, <obj> )
 */
-Obj DoVerboseProperty (
-    Obj                 self,
-    Obj                 obj )
+static Obj DoVerboseProperty(Obj self, Obj obj)
 {
     Obj                 val;
     Int                 flag1;
@@ -3049,11 +2809,9 @@ Obj DoVerboseProperty (
 
     /* call the operation to compute the value                             */
     val = DoVerboseOperation1Args( self, obj );
-    while ( val != True && val != False ) {
-        val = ErrorReturnObj(
-               "Method for a property did not return true or false",
-               0L, 0L,
-               "you can 'return true;' or 'return false;'");
+    if (val != True && val != False) {
+        ErrorMayQuit("Method for a property did not return true or false", 0,
+                     0);
     }
 
     /* set the value (but not for internal objects)                        */
@@ -3078,11 +2836,10 @@ Obj DoVerboseProperty (
 
 /****************************************************************************
 **
-*F  NewProperty( <name>, <narg>, <nams>, <hdlr> )
+*F  NewProperty( <name>, <nams>, <hdlr> )
 */
 Obj NewProperty (
     Obj                 name,
-    Int                 narg,
     Obj                 nams,
     ObjFunc             hdlr )
 {
@@ -3099,13 +2856,14 @@ Obj NewProperty (
     setter = MakeSetter(name, flag1, flag2, DoSetProperty);
     tester = MakeTester(name, flag1, flag2);
 
-    getter = NewOperation( name, 1L, nams, (hdlr ? hdlr : DoProperty) );
+    GAP_ASSERT(hdlr);
+    getter = NewOperation(name, 1, nams, hdlr);
 
     SET_FLAG1_FILT(getter, INTOBJ_INT(flag1));
     SET_FLAG2_FILT(getter, INTOBJ_INT(flag2));
     flags = NEW_FLAGS( flag2 );
-    SET_ELM_FLAGS( flags, flag2, True );
-    SET_ELM_FLAGS( flags, flag1, True );
+    SET_ELM_FLAGS( flags, flag2 );
+    SET_ELM_FLAGS( flags, flag1 );
     SET_FLAGS_FILT(getter, flags);
     SET_SETTR_FILT(getter, setter);
     SET_TESTR_FILT(getter, tester);
@@ -3133,9 +2891,7 @@ Obj NewProperty (
 **
 **  DoUninstalledGlobalFunction( <oper>, <args> )
 */
-Obj DoUninstalledGlobalFunction (
-    Obj                 oper,
-    Obj                 args )
+static Obj DoUninstalledGlobalFunction(Obj oper, Obj args)
 {
     ErrorQuit( "%g: function is not yet defined",
                (Int)NAME_FUNC(oper), 0L );
@@ -3147,9 +2903,7 @@ Obj DoUninstalledGlobalFunction (
 **
 *F  NewGlobalFunction( <name>, <nams> )
 */
-Obj NewGlobalFunction (
-    Obj                 name,
-    Obj                 nams )
+static Obj NewGlobalFunction(Obj name, Obj nams)
 {
     Obj                 func;
     Obj                 namobj;
@@ -3178,14 +2932,8 @@ Obj NewGlobalFunction (
 /****************************************************************************
 **
 *F  InstallGlobalFunction( <oper>, <func> ) . . . . . . . . .  clone function
-**
-**  There is a problem  with uncompleted functions: if  they are  cloned then
-**  only   the orignal and not  the  clone will be  completed.  Therefore the
-**  clone must postpone the real cloning.
 */
-void InstallGlobalFunction (
-    Obj                 oper,
-    Obj                 func )
+static void InstallGlobalFunction(Obj oper, Obj func)
 {
     // get the name
     Obj name = NAME_FUNC(oper);
@@ -3194,7 +2942,7 @@ void InstallGlobalFunction (
     ResizeBag(oper, SIZE_OBJ(func));
     memcpy(ADDR_OBJ(oper), CONST_ADDR_OBJ(func), SIZE_OBJ(func));
 
-    SET_NAME_FUNC(oper, ConvImmString(name));
+    SET_NAME_FUNC(oper, name ? ImmutableString(name) : 0);
     CHANGED_BAG(oper);
 }
 
@@ -3218,13 +2966,13 @@ void SaveOperationExtras (
     SaveSubObj(header->setter);
     SaveSubObj(header->tester);
     SaveSubObj(header->extra);
-    for (UInt i = 0; i <= 7; i++)
+    for (UInt i = 0; i <= MAX_OPER_ARGS; i++)
         SaveSubObj(header->methods[i]);
 #ifdef HPCGAP
     // FIXME: We probably don't want to save/restore the cache?
     // (and that would include "normal" GAP, too...)
 #else
-    for (UInt i = 0; i <= 7; i++)
+    for (UInt i = 0; i <= MAX_OPER_ARGS; i++)
         SaveSubObj(header->cache[i]);
 #endif
 }
@@ -3249,13 +2997,13 @@ void LoadOperationExtras (
     header->setter = LoadSubObj();
     header->tester = LoadSubObj();
     header->extra = LoadSubObj();
-    for (UInt i = 0; i <= 7; i++)
+    for (UInt i = 0; i <= MAX_OPER_ARGS; i++)
         header->methods[i] = LoadSubObj();
 #ifdef HPCGAP
     // FIXME: We probably don't want to save/restore the cache?
     // (and that would include "normal" GAP, too...)
 #else
-    for (UInt i = 0; i <= 7; i++)
+    for (UInt i = 0; i <= MAX_OPER_ARGS; i++)
         header->cache[i] = LoadSubObj();
 #endif
 }
@@ -3272,17 +3020,10 @@ void LoadOperationExtras (
 **
 *F  FuncNEW_OPERATION( <self>, <name> ) . . . . . . . . . . . . new operation
 */
-Obj FuncNEW_OPERATION (
-    Obj                 self,
-    Obj                 name )
+static Obj FuncNEW_OPERATION(Obj self, Obj name)
 {
-    /* check the argument                                                  */
-    if ( ! IsStringConv(name) ) {
-        ErrorQuit("usage: NewOperation( <name> )",0L,0L);
-    }
-
-    /* make the new operation                                              */
-    return NewOperation( name, -1L, (Obj)0, DoOperationXArgs );
+    RequireStringRep("NewOperation", name);
+    return NewOperation(name, -1, 0, DoOperationXArgs);
 }
 
 
@@ -3290,20 +3031,13 @@ Obj FuncNEW_OPERATION (
 **
 *F  FuncNEW_CONSTRUCTOR( <self>, <name> ) . . . . . . . . . . new constructor
 */
-Obj FuncNEW_CONSTRUCTOR (
-    Obj                 self,
-    Obj                 name )
+static Obj FuncNEW_CONSTRUCTOR(Obj self, Obj name)
 {
-    /* check the argument                                                  */
-    if ( ! IsStringConv(name) ) {
-        ErrorQuit("usage: NewConstructor( <name> )",0L,0L);
-    }
-
-    /* make the new constructor                                            */
+    RequireStringRep("NewConstructor", name);
     return NewConstructor( name );
 }
 
-Obj FuncIS_CONSTRUCTOR(Obj self, Obj x)
+static Obj FuncIS_CONSTRUCTOR(Obj self, Obj x)
 {
     return (IS_FUNC(x) && HDLR_FUNC(x, 1) == DoConstructor1Args) ? True : False;
 }
@@ -3312,52 +3046,31 @@ Obj FuncIS_CONSTRUCTOR(Obj self, Obj x)
 **
 *F  FuncNEW_ATTRIBUTE( <self>, <name> ) . . . . . . . . . . . . new attribute
 */
-Obj FuncNEW_ATTRIBUTE (
-    Obj                 self,
-    Obj                 name )
+static Obj FuncNEW_ATTRIBUTE(Obj self, Obj name)
 {
-    /* check the argument                                                  */
-    if ( ! IsStringConv(name) ) {
-        ErrorQuit("usage: NewAttribute( <name> )",0L,0L);
-    }
-
-    /* make the new operation                                              */
-    return NewAttribute( name, -1L, (Obj)0, DoAttribute );
+    RequireStringRep("NewAttribute", name);
+    return NewAttribute(name, 0, DoAttribute);
 }
 /****************************************************************************
 **
 *F  FuncOPER_TO_ATTRIBUTE( <self>, oper ) make existing operation into attribute
 */
-Obj FuncOPER_TO_ATTRIBUTE (
-    Obj                 self,
-    Obj                 oper )
+static Obj FuncOPER_TO_ATTRIBUTE(Obj self, Obj oper)
 {
-    /* check the argument                                                  */
-  if ( ! IS_OPERATION(oper) ) {
-        ErrorQuit("usage: OPER_TO_ATTRIBUTE( <oper> )",0L,0L);
-    }
-
-    /* make the new operation                                              */
-  ConvertOperationIntoAttribute( oper, (ObjFunc) 0L );
-    return (Obj) 0L;
+    RequireOperation(oper);
+    ConvertOperationIntoAttribute(oper, DoAttribute);
+    return 0;
 }
 
 /****************************************************************************
 **
 *F  FuncOPER_TO_MUTABLE_ATTRIBUTE( <self>, oper ) make existing operation into attribute
 */
-Obj FuncOPER_TO_MUTABLE_ATTRIBUTE (
-    Obj                 self,
-    Obj                 oper )
+static Obj FuncOPER_TO_MUTABLE_ATTRIBUTE(Obj self, Obj oper)
 {
-    /* check the argument                                                  */
-  if ( ! IS_OPERATION(oper) ) {
-        ErrorQuit("usage: OPER_TO_MUTABLE_ATTRIBUTE( <oper> )",0L,0L);
-    }
-
-    /* make the new operation                                              */
-  ConvertOperationIntoAttribute( oper, DoMutableAttribute );
-  return (Obj) 0L;
+    RequireOperation(oper);
+    ConvertOperationIntoAttribute(oper, DoMutableAttribute);
+    return 0;
 }
 
 
@@ -3365,17 +3078,10 @@ Obj FuncOPER_TO_MUTABLE_ATTRIBUTE (
 **
 *F  FuncNEW_MUTABLE_ATTRIBUTE( <self>, <name> ) . . . . new mutable attribute
 */
-Obj FuncNEW_MUTABLE_ATTRIBUTE (
-    Obj                 self,
-    Obj                 name )
+static Obj FuncNEW_MUTABLE_ATTRIBUTE(Obj self, Obj name)
 {
-    /* check the argument                                                  */
-    if ( ! IsStringConv(name) ) {
-        ErrorQuit("usage: NewMutableAttribute( <name> )",0L,0L);
-    }
-
-    /* make the new operation                                              */
-    return NewAttribute( name, -1L, (Obj)0, DoMutableAttribute );
+    RequireStringRep("NewMutableAttribute", name);
+    return NewAttribute(name, 0, DoMutableAttribute);
 }
 
 
@@ -3383,17 +3089,10 @@ Obj FuncNEW_MUTABLE_ATTRIBUTE (
 **
 *F  FuncNEW_PROPERTY( <self>, <name> )  . . . . . . . . . . . .  new property
 */
-Obj FuncNEW_PROPERTY (
-    Obj                 self,
-    Obj                 name )
+static Obj FuncNEW_PROPERTY(Obj self, Obj name)
 {
-    /* check the argument                                                  */
-    if ( ! IsStringConv(name) ) {
-        ErrorQuit("usage: NewProperty( <name> )",0L,0L);
-    }
-
-    /* make the new operation                                              */
-    return NewProperty( name, -1L, (Obj)0, DoProperty );
+    RequireStringRep("NewProperty", name);
+    return NewProperty(name, 0, DoProperty);
 }
 
 
@@ -3401,19 +3100,13 @@ Obj FuncNEW_PROPERTY (
 **
 *F  FuncNEW_GLOBAL_FUNCTION( <self>, <name> ) . . . . . . new global function
 */
-Obj FuncNEW_GLOBAL_FUNCTION (
-    Obj                 self,
-    Obj                 name )
+static Obj FuncNEW_GLOBAL_FUNCTION(Obj self, Obj name)
 {
     Obj                 args;           
     Obj                 list;
 
-    /* check the argument                                                  */
-    if ( ! IsStringConv(name) ) {
-        ErrorQuit( "usage: NewGlobalFunction( <name> )", 0L, 0L );
-    }
+    RequireStringRep("NewGlobalFunction", name);
 
-    /* make the new operation                                              */
     args = MakeImmString("args");
     list = NEW_PLIST( T_PLIST, 1 );
     SET_LEN_PLIST( list, 1 );
@@ -3429,25 +3122,16 @@ Obj FuncNEW_GLOBAL_FUNCTION (
 */
 static Obj REREADING;
 
-Obj FuncINSTALL_GLOBAL_FUNCTION (
-    Obj                 self,
-    Obj                 oper,
-    Obj                 func )
+static Obj FuncINSTALL_GLOBAL_FUNCTION(Obj self, Obj oper, Obj func)
 {
     /* check the arguments                                                 */
-    if ( ! IS_FUNC(oper) ) {
-        ErrorQuit( "<oper> must be a function (not a %s)",
-                   (Int)TNAM_OBJ(oper), 0L );
-    }
+    RequireFunction("INSTALL_GLOBAL_FUNCTION", oper);
     if ( (REREADING != True) &&
          (HDLR_FUNC(oper,0) != (ObjFunc)DoUninstalledGlobalFunction) ) {
         ErrorQuit( "operation already installed",
                    0L, 0L );
     }
-    if ( ! IS_FUNC(func) ) {
-        ErrorQuit( "<func> must be a function (not a %s)",
-                   (Int)TNAM_OBJ(func), 0L );
-    }
+    RequireFunction("INSTALL_GLOBAL_FUNCTION", func);
     if ( IS_OPERATION(func) ) {
         ErrorQuit( "<func> must not be an operation", 0L, 0L );
     }
@@ -3460,13 +3144,11 @@ Obj FuncINSTALL_GLOBAL_FUNCTION (
 
 /****************************************************************************
 **
-*F  FuncIS_OPERATION( <self>, <obj> ) . . . . . . . . . is <obj> an operation
+*F  FiltIS_OPERATION( <self>, <obj> ) . . . . . . . . . is <obj> an operation
 */
 static Obj IsOperationFilt;
 
-Obj FuncIS_OPERATION (
-    Obj                 self,
-    Obj                 obj )
+static Obj FiltIS_OPERATION(Obj self, Obj obj)
 {
     if ( TNUM_OBJ(obj) == T_FUNCTION && IS_OPERATION(obj) ) {
         return True;
@@ -3484,9 +3166,7 @@ Obj FuncIS_OPERATION (
 **
 *F  FuncMETHODS_OPERATION( <self>, <oper>, <narg> ) . . . . .  list of method
 */
-Obj MethsOper (
-    Obj                 oper,
-    UInt                i )
+static Obj MethsOper(Obj oper, UInt i)
 {
     Obj                 methods;
     methods = METHS_OPER( oper, i );
@@ -3501,21 +3181,16 @@ Obj MethsOper (
     return methods;
 }
 
-Obj FuncMETHODS_OPERATION (
-    Obj                 self,
-    Obj                 oper,
-    Obj                 narg )
+static Obj FuncMETHODS_OPERATION(Obj self, Obj oper, Obj narg)
 {
     Int                 n;
     Obj                 meth;
 
-    if ( ! IS_OPERATION(oper) ) {
-        ErrorQuit("<oper> must be an operation",0L,0L);
-    }
-    if ( !IS_INTOBJ(narg) || INT_INTOBJ(narg) < 0 ) {
-        ErrorQuit("<narg> must be a nonnegative integer",0L,0L);
-    }
-    n = INT_INTOBJ( narg );
+    RequireOperation(oper);
+    n = IS_INTOBJ(narg) ? INT_INTOBJ(narg) : -1;
+    if (n < 0 || n > MAX_OPER_ARGS)
+        RequireArgument("METHODS_OPERATION", narg,
+                        "must be an integer between 0 and 6");
     meth = MethsOper( oper, (UInt)n );
 #ifdef HPCGAP
     MEMBAR_READ();
@@ -3528,28 +3203,23 @@ Obj FuncMETHODS_OPERATION (
 **
 *F  FuncCHANGED_METHODS_OPERATION( <self>, <oper>, <narg> ) . . . clear cache
 */
-Obj FuncCHANGED_METHODS_OPERATION (
-    Obj                 self,
-    Obj                 oper,
-    Obj                 narg )
+static Obj FuncCHANGED_METHODS_OPERATION(Obj self, Obj oper, Obj narg)
 {
     Obj *               cache;
     Bag                 cacheBag;
     Int                 n;
     Int                 i;
 
-    if ( ! IS_OPERATION(oper) ) {
-        ErrorQuit("<oper> must be an operation",0L,0L);
-    }
-    if ( !IS_INTOBJ(narg) || INT_INTOBJ(narg) < 0 ) {
-        ErrorQuit("<narg> must be a nonnegative integer",0L,0L);
-    }
+    RequireOperation(oper);
+    n = IS_INTOBJ(narg) ? INT_INTOBJ(narg) : -1;
+    if (n < 0 || n > MAX_OPER_ARGS)
+        RequireArgument("CHANGED_METHODS_OPERATION", narg,
+                        "must be an integer between 0 and 6");
 #ifdef HPCGAP
     if (!PreThreadCreation) {
         ErrorQuit("Methods may only be changed before thread creation",0L,0L);
     }
 #endif
-    n = INT_INTOBJ( narg );
     cacheBag = CacheOper( oper, (UInt) n );
     cache = ADDR_OBJ( cacheBag );
     for ( i = 1;  i < SIZE_OBJ(cacheBag) / sizeof(Obj);  i++ ) {
@@ -3563,21 +3233,15 @@ Obj FuncCHANGED_METHODS_OPERATION (
 **
 *F  FuncSET_METHODS_OPERATION( <self>, <oper>, <narg>, <list> ) . set methods
 */
-Obj FuncSET_METHODS_OPERATION (
-    Obj                 self,
-    Obj                 oper,
-    Obj                 narg,
-    Obj                 meths )
+static Obj FuncSET_METHODS_OPERATION(Obj self, Obj oper, Obj narg, Obj meths)
 {
     Int                 n;
 
-    if ( ! IS_OPERATION(oper) ) {
-        ErrorQuit("<oper> must be an operation",0L,0L);
-    }
-    if ( !IS_INTOBJ(narg) || INT_INTOBJ(narg) < 0 ) {
-        ErrorQuit("<narg> must be a nonnegative integer",0L,0L);
-    }
-    n = INT_INTOBJ( narg );
+    RequireOperation(oper);
+    n = IS_INTOBJ(narg) ? INT_INTOBJ(narg) : -1;
+    if (n < 0 || n > MAX_OPER_ARGS)
+        RequireArgument("SET_METHODS_OPERATION", narg,
+                        "must be an integer between 0 and 6");
 #ifdef HPCGAP
     MEMBAR_WRITE();
 #endif
@@ -3590,10 +3254,7 @@ Obj FuncSET_METHODS_OPERATION (
 **
 *F  FuncSETTER_FUNCTION( <self>, <name>, <filter> )  default attribute setter
 */
-Obj DoSetterFunction (
-    Obj                 self,
-    Obj                 obj,
-    Obj                 value )
+static Obj DoSetterFunction(Obj self, Obj obj, Obj value)
 {
     Obj                 tmp;
     Obj                 tester;
@@ -3639,10 +3300,7 @@ Obj DoSetterFunction (
 }
 
 
-Obj FuncSETTER_FUNCTION (
-    Obj                 self,
-    Obj                 name,
-    Obj                 filter )
+static Obj FuncSETTER_FUNCTION(Obj self, Obj name, Obj filter)
 {
     Obj                 func;
     Obj                 fname;
@@ -3665,9 +3323,7 @@ Obj FuncSETTER_FUNCTION (
 **
 *F  FuncGETTER_FUNCTION( <self>, <name> ) . . . . .  default attribute getter
 */
-Obj DoGetterFunction (
-    Obj                 self,
-    Obj                 obj )
+static Obj DoGetterFunction(Obj self, Obj obj)
 {
     switch (TNUM_OBJ(obj)) {
       case T_COMOBJ:
@@ -3683,9 +3339,7 @@ Obj DoGetterFunction (
 }
 
 
-Obj FuncGETTER_FUNCTION (
-    Obj                 self,
-    Obj                 name )
+static Obj FuncGETTER_FUNCTION(Obj self, Obj name)
 {
     Obj                 func;
     Obj                 fname;
@@ -3701,8 +3355,7 @@ Obj FuncGETTER_FUNCTION (
 **
 *F  FuncOPERS_CACHE_INFO( <self> )  . . . . . . .  return cache stats as list
 */
-Obj FuncOPERS_CACHE_INFO (
-    Obj                        self )
+static Obj FuncOPERS_CACHE_INFO(Obj self)
 {
     Obj                 list;
     Int                 i;
@@ -3773,8 +3426,7 @@ Obj FuncOPERS_CACHE_INFO (
 **
 *F  FuncCLEAR_CACHE_INFO( <self> )  . . . . . . . . . . . . clear cache stats
 */
-Obj FuncCLEAR_CACHE_INFO (
-    Obj                        self )
+static Obj FuncCLEAR_CACHE_INFO(Obj self)
 {
 #ifdef COUNT_OPERS
     AndFlagsCacheHit = 0;
@@ -3865,14 +3517,10 @@ void ChangeDoOperations (
 **
 *F  FuncTRACE_METHODS( <oper> ) . . . . . . . .  switch tracing of methods on
 */
-Obj FuncTRACE_METHODS (
-    Obj                 self,
-    Obj                 oper )
+static Obj FuncTRACE_METHODS(Obj self, Obj oper)
 {
     /* check the argument                                                  */
-    if (!IS_OPERATION(oper)) {
-        ErrorQuit( "<oper> must be an operation", 0L, 0L );
-    }
+    RequireOperation(oper);
 
     /* install trace handler                                               */
     ChangeDoOperations( oper, 1 );
@@ -3886,15 +3534,11 @@ Obj FuncTRACE_METHODS (
 **
 *F  FuncUNTRACE_METHODS( <oper> ) . . . . . . . switch tracing of methods off
 */
-Obj FuncUNTRACE_METHODS (
-    Obj                 self,
-    Obj                 oper )
+static Obj FuncUNTRACE_METHODS(Obj self, Obj oper)
 {
 
     /* check the argument                                                  */
-    if (!IS_OPERATION(oper)) {
-        ErrorQuit( "<oper> must be an operation", 0L, 0L );
-    }
+    RequireOperation(oper);
 
     /* install trace handler                                               */
     ChangeDoOperations( oper, 0 );
@@ -3908,10 +3552,7 @@ Obj FuncUNTRACE_METHODS (
 *F  FuncSET_ATTRIBUTE_STORING( <self>, <attr>, <val> )
 **               switch off or on the setter call of an attribute
 */
-Obj FuncSET_ATTRIBUTE_STORING (
-    Obj                 self,
-    Obj                 attr,
-    Obj                 val )
+static Obj FuncSET_ATTRIBUTE_STORING(Obj self, Obj attr, Obj val)
 {
   SET_ENABLED_ATTR(attr, (val == True) ? 1L : 0L);
   return 0;
@@ -3922,7 +3563,7 @@ Obj FuncSET_ATTRIBUTE_STORING (
 *F  FuncDO_NOTHING_SETTER(<self> , <obj>, <val> )
 **
 */
-Obj FuncDO_NOTHING_SETTER( Obj self, Obj obj, Obj val)
+static Obj FuncDO_NOTHING_SETTER(Obj self, Obj obj, Obj val)
 {
   return 0;
 }
@@ -3949,7 +3590,7 @@ static StructBagNames BagNames[] = {
 */
 static StructGVarFilt GVarFilts [] = {
 
-    GVAR_FILTER(IS_OPERATION, "obj", &IsOperationFilt),
+    GVAR_FILT(IS_OPERATION, "obj", &IsOperationFilt),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -3975,15 +3616,10 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC(TRUES_FLAGS, 1, "flags"),
     GVAR_FUNC(SIZE_FLAGS, 1, "flags"),
     GVAR_FUNC(FLAG1_FILTER, 1, "oper"),
-    GVAR_FUNC(SET_FLAG1_FILTER, 2, "oper, flag1"),
     GVAR_FUNC(FLAG2_FILTER, 1, "oper"),
-    GVAR_FUNC(SET_FLAG2_FILTER, 2, "oper, flag2"),
     GVAR_FUNC(FLAGS_FILTER, 1, "oper"),
-    GVAR_FUNC(SET_FLAGS_FILTER, 2, "oper, flags"),
     GVAR_FUNC(SETTER_FILTER, 1, "oper"),
-    GVAR_FUNC(SET_SETTER_FILTER, 2, "oper, other"),
     GVAR_FUNC(TESTER_FILTER, 1, "oper"),
-    GVAR_FUNC(SET_TESTER_FILTER, 2, "oper, other"),
     GVAR_FUNC(METHODS_OPERATION, 2, "oper, narg"),
     GVAR_FUNC(SET_METHODS_OPERATION, 3, "oper, narg, meths"),
     GVAR_FUNC(CHANGED_METHODS_OPERATION, 2, "oper, narg"),
@@ -4130,8 +3766,8 @@ static Int InitKernel (
     ImportFuncFromLibrary("VMETHOD_PRINT_INFO", &VMETHOD_PRINT_INFO);
     ImportFuncFromLibrary("NEXT_VMETHOD_PRINT_INFO", &NEXT_VMETHOD_PRINT_INFO);
 
-    ImportFuncFromLibrary( "SET_FILTER_OBJ",   &SET_FILTER_OBJ );
-    ImportFuncFromLibrary( "RESET_FILTER_OBJ", &RESET_FILTER_OBJ );
+    ImportFuncFromLibrary( "SetFilterObj",   &SET_FILTER_OBJ );
+    ImportFuncFromLibrary( "ResetFilterObj", &RESET_FILTER_OBJ );
 
     ImportFuncFromLibrary("HANDLE_METHOD_NOT_FOUND",
                           &HANDLE_METHOD_NOT_FOUND);
@@ -4210,8 +3846,8 @@ static Int InitLibrary (
     AssGVar(GVarName("HIDDEN_IMPS"), HIDDEN_IMPS);
 
 #ifdef HPCGAP
-    REGION(HIDDEN_IMPS) = NewRegion();
-    REGION(WITH_HIDDEN_IMPS_FLAGS_CACHE) = REGION(HIDDEN_IMPS);
+    SET_REGION(HIDDEN_IMPS, NewRegion());
+    SET_REGION(WITH_HIDDEN_IMPS_FLAGS_CACHE, REGION(HIDDEN_IMPS));
 #endif
 
     IMPLICATIONS_SIMPLE = NEW_PLIST(T_PLIST, 0);
@@ -4222,9 +3858,9 @@ static Int InitLibrary (
     AssGVar(GVarName("IMPLICATIONS_COMPOSED"), IMPLICATIONS_COMPOSED);
 
 #ifdef HPCGAP
-    REGION(IMPLICATIONS_SIMPLE) = NewRegion();
-    REGION(IMPLICATIONS_COMPOSED) = REGION(IMPLICATIONS_SIMPLE);
-    REGION(WITH_IMPS_FLAGS_CACHE) = REGION(IMPLICATIONS_SIMPLE);
+    SET_REGION(IMPLICATIONS_SIMPLE, NewRegion());
+    SET_REGION(IMPLICATIONS_COMPOSED, REGION(IMPLICATIONS_SIMPLE));
+    SET_REGION(WITH_IMPS_FLAGS_CACHE, REGION(IMPLICATIONS_SIMPLE));
 #endif
 
     /* make the 'true' operation                                           */  

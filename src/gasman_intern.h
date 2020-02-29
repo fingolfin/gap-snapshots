@@ -1,3 +1,13 @@
+/****************************************************************************
+**
+**  This file is part of GAP, a system for computational discrete algebra.
+**
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
 #ifndef GAP_GASMAN_INTERN_H
 #define GAP_GASMAN_INTERN_H
 
@@ -6,6 +16,88 @@
 #ifndef USE_GASMAN
 #error This file must only be included if GASMAN is used
 #endif
+
+
+/****************************************************************************
+**
+*V  NrAllBags . . . . . . . . . . . . . . . . .  number of all bags allocated
+**
+**  'NrAllBags' is the number of bags allocated since Gasman was initialized.
+**  It is incremented for each 'NewBag' call.
+*/
+extern  UInt                    NrAllBags;
+
+
+/****************************************************************************
+**
+*V  NrLiveBags  . . . . . . . . . .  number of bags that survived the last gc
+**
+**  'NrLiveBags' is the number of bags that were  live after the last garbage
+**  collection.  So after a full  garbage collection it is simply  the number
+**  of bags that have been found to be still live by this garbage collection.
+**  After a partial garbage collection it is the sum of the previous value of
+**  'NrLiveBags', which is the number  of live old  bags, and  the number  of
+**  bags that  have been found to  be still live  by this garbage collection,
+**  which is  the number of live   young  bags.   This  value  is used in the
+**  information messages,  and to find  out  how  many  free  identifiers are
+**  available.
+*/
+extern  UInt                    NrLiveBags;
+
+
+/****************************************************************************
+**
+*V  SizeLiveBags  . . . . . . .  total size of bags that survived the last gc
+**
+**  'SizeLiveBags' is  the total size of bags  that were  live after the last
+**  garbage collection.  So after a full garbage  collection it is simply the
+**  total size of bags that have been found to  be still live by this garbage
+**  collection.  After  a partial  garbage  collection it  is the sum  of the
+**  previous value of  'SizeLiveBags', which is the total   size of live  old
+**  bags, and the total size of bags that have been found to be still live by
+**  this garbage  collection,  which is  the  total size of  live young bags.
+**  This value is used in the information messages.
+*/
+extern  UInt                    SizeLiveBags;
+
+
+/****************************************************************************
+**
+*V  NrDeadBags  . . . . . . . number of bags that died since the last full gc
+**
+**  'NrDeadBags' is  the number of bags that died since the last full garbage
+**  collection.   So after a  full garbage  collection this is zero.  After a
+**  partial  garbage  collection it  is  the  sum  of the  previous value  of
+**  'NrDeadBags' and the  number of bags that  have been found to be dead  by
+**  this garbage collection.  This value is used in the information messages.
+*/
+extern  UInt                    NrDeadBags;
+
+
+/****************************************************************************
+**
+*V  SizeDeadBags  . . . . total size of bags that died since the last full gc
+**
+**  'SizeDeadBags' is  the total size  of bags that  died since the last full
+**  garbage collection.  So  after a full   garbage collection this  is zero.
+**  After a partial garbage collection it is the sum of the previous value of
+**  'SizeDeadBags' and the total size of bags that have been found to be dead
+**  by  this garbage  collection.   This  value  is used  in the  information
+**  message.
+*/
+extern  UInt8                   SizeDeadBags;
+
+
+/****************************************************************************
+**
+*V  NrDeadBags . . . . . . . . . . number of bags only reachable by weak ptrs
+**
+**  'NrHalfDeadBags'  is  the number of  bags  that  have  been  found to  be
+**  reachable only by way of weak pointers since the last garbage collection.
+**  The bodies of these bags are deleted, but their identifiers are marked so
+**  that weak pointer objects can recognize this situation.
+*/
+extern  UInt                    NrHalfDeadBags;
 
 
 /****************************************************************************
@@ -20,7 +112,7 @@
 **  "IsWeakDeadBag". Which should  always be   checked before copying   or
 **  using such an identifier.
 */
-extern void MarkBagWeakly( Bag bag );
+void MarkBagWeakly(Bag bag);
 
 /****************************************************************************
 **
@@ -30,9 +122,11 @@ extern void MarkBagWeakly( Bag bag );
 **  an object which was freed as the only references to it were weak.
 **  This is used for implement weak pointer references.
 */
-extern Int IsWeakDeadBag(Bag bag);
+Int IsWeakDeadBag(Bag bag);
 
 /****************************************************************************
+**
+**  Internal variables exported for the sake of the code in saveload.c
 **
 */
 extern  Bag *                   MptrBags;
@@ -43,8 +137,6 @@ extern  Bag *                   AllocBags;
 /****************************************************************************
 **
 *F  InitSweepFuncBags(<type>,<sweep-func>)  . . . . install sweeping function
-**
-**  'InitSweepFuncBags( <type>, <sweep-func> )'
 **
 **  'InitSweepFuncBags' installs the function <sweep-func> as sweeping
 **  function for bags of type <type>.
@@ -69,9 +161,7 @@ typedef void            (* TNumSweepFuncBags ) (
             Bag *                dst,
             UInt                 length);
 
-extern  void            InitSweepFuncBags (
-            UInt                tnum,
-            TNumSweepFuncBags    sweep_func );
+void InitSweepFuncBags(UInt tnum, TNumSweepFuncBags sweep_func);
 
 
 /****************************************************************************
@@ -92,20 +182,18 @@ typedef struct {
 extern TNumGlobalBags GlobalBags;
 
 
+void SortGlobals(UInt byWhat);
 
-extern void SortGlobals( UInt byWhat );
-
-extern Bag * GlobalByCookie(
-            const Char *        cookie );
+Bag * GlobalByCookie(const Char * cookie);
 
 
-extern void StartRestoringBags( UInt nBags, UInt maxSize);
+void StartRestoringBags(UInt nBags, UInt maxSize);
 
 
-extern Bag NextBagRestoring( UInt type, UInt flags, UInt size );
+Bag NextBagRestoring(UInt type, UInt flags, UInt size);
 
 
-extern void FinishedRestoringBags( void );
+void FinishedRestoringBags(void);
 
 
 /****************************************************************************
@@ -123,7 +211,7 @@ extern void FinishedRestoringBags( void );
 **  a pointer into the bags area            a real object
 **
 */
-extern void CheckMasterPointers( void );
+void CheckMasterPointers(void);
 
 
 /****************************************************************************
@@ -135,7 +223,26 @@ extern void CheckMasterPointers( void );
 **  collection, by simply  walking the masterpointer area. Not terribly safe.
 **
 */
-extern void CallbackForAllBags( void (*func)(Bag) );
+void CallbackForAllBags(void (*func)(Bag));
+
+
+/****************************************************************************
+**
+*/
+#ifdef GAP_MEM_CHECK
+Int enableMemCheck(Char ** argv, void * dummy);
+extern Int EnableMemCheck;
+#endif
+
+
+/****************************************************************************
+**
+*F  SetStackBottomBags(<stackBottom>)
+**
+**  Helper for the libgap API.
+**
+*/
+void SetStackBottomBags(void * stackBottom);
 
 
 #endif

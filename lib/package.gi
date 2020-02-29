@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  package.gi                  GAP Library                      Frank Celler
-#W                                                           Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler, Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains support for &GAP; packages.
 ##
@@ -161,6 +161,107 @@ InstallGlobalFunction( SetPackageInfo, function( record )
 
 #############################################################################
 ##
+#F  FindPackageInfosInSubdirectories( pkgdir, name )
+##
+##  Finds all PackageInfos in subdirectories of directory name in
+##  directory pkgdir, return a list of their paths.
+##
+BindGlobal( "FindPackageInfosInSubdirectories", function( pkgdir, name )
+    local pkgpath, file, files, subdir;
+    pkgpath:= Filename( [ pkgdir ], name );
+    # This can be 'fail' if 'name' is a void link.
+    if pkgpath = fail then
+      return [];
+    fi;
+
+    if not IsDirectoryPath( pkgpath ) then
+      return [];
+    fi;
+    if name in [ ".", ".." ] then
+      return [];
+    fi;
+
+    file:= Filename( [ pkgdir ],
+                      Concatenation( name, "/PackageInfo.g" ) );
+    if file = fail then
+      files := [];
+      # Perhaps some subdirectories contain `PackageInfo.g' files.
+      for subdir in Set( DirectoryContents( pkgpath ) ) do
+        if not subdir in [ ".", ".." ] then
+          pkgpath:= Filename( [ pkgdir ],
+                              Concatenation( name, "/", subdir ) );
+          if pkgpath <> fail and IsDirectoryPath( pkgpath )
+                              and not subdir in [ ".", ".." ] then
+            file:= Filename( [ pkgdir ],
+                Concatenation( name, "/", subdir, "/PackageInfo.g" ) );
+            if file <> fail then
+              Add( files,
+                    [ file, Concatenation( name, "/", subdir ) ] );
+            fi;
+          fi;
+        fi;
+      od;
+    else
+      files:= [ [ file, name ] ];
+    fi;
+    return files;
+end );
+
+
+#############################################################################
+##
+#F  AddPackageInfo( files )
+##
+BindGlobal( "AddPackageInfos", function( files, pkgdir, ignore )
+    local file, record, pkgname, version;
+    for file in files do
+      # Read the `PackageInfo.g' file.
+      Unbind( GAPInfo.PackageInfoCurrent );
+      Read( file[1] );
+      if IsBound( GAPInfo.PackageInfoCurrent ) then
+        record:= GAPInfo.PackageInfoCurrent;
+        Unbind( GAPInfo.PackageInfoCurrent );
+        pkgname:= LowercaseString( record.PackageName );
+        NormalizeWhitespace( pkgname );
+        version:= record.Version;
+
+        # If we have this version already then leave it out.
+        if ForAll( GAPInfo.PackagesInfo,
+                    r ->    r.PackageName <> record.PackageName
+                        or r.Version <> version ) then
+
+          # Check whether GAP wants to reset loadability.
+          if     IsBound( GAPInfo.PackagesRestrictions.( pkgname ) )
+              and GAPInfo.PackagesRestrictions.( pkgname ).OnInitialization(
+                      record ) = false then
+            Add( GAPInfo.PackagesInfoRefuseLoad, record );
+          elif pkgname in ignore then
+            LogPackageLoadingMessage( PACKAGE_DEBUG,
+                Concatenation( "ignore package ", record.PackageName,
+                " (user preference PackagesToIgnore)" ), "GAP" );
+          else
+            record.InstallationPath:= Filename( [ pkgdir ], file[2] );
+            if not IsBound( record.PackageDoc ) then
+              record.PackageDoc:= [];
+            elif IsRecord( record.PackageDoc ) then
+              record.PackageDoc:= [ record.PackageDoc ];
+            fi;
+            if IsHPCGAP then
+              # FIXME: we make the package info record immutable, to
+              # allow access from multiple threads; but that in turn
+              # can break packages, which rely on their package info
+              # record being readable (see issue #2568)
+              MakeImmutable(record);
+            fi;
+            Add( GAPInfo.PackagesInfo, record );
+          fi;
+        fi;
+      fi;
+    od;
+end );
+
+#############################################################################
+##
 #F  InitializePackagesInfoRecords()
 ##
 ##  In earlier versions, this function had an argument; now we ignore it.
@@ -219,80 +320,12 @@ InstallGlobalFunction( InitializePackagesInfoRecords, function( arg )
 
       # Loop over subdirectories of this package directory.
       for name in Set( DirectoryContents( Filename( pkgdir, "" ) ) ) do
-        pkgpath:= Filename( [ pkgdir ], name );
-        # This can be 'fail' if 'name' is a void link.
-        if pkgpath <> fail and IsDirectoryPath( pkgpath )
-                           and not name in [ ".", ".." ] then
-          file:= Filename( [ pkgdir ],
-                           Concatenation( name, "/PackageInfo.g" ) );
-          if file = fail then
-            # Perhaps some subdirectories contain `PackageInfo.g' files.
-            files:= [];
-            for subdir in Set( DirectoryContents( pkgpath ) ) do
-              if not subdir in [ ".", ".." ] then
-                pkgpath:= Filename( [ pkgdir ],
-                                    Concatenation( name, "/", subdir ) );
-                if pkgpath <> fail and IsDirectoryPath( pkgpath )
-                                   and not subdir in [ ".", ".." ] then
-                  file:= Filename( [ pkgdir ],
-                      Concatenation( name, "/", subdir, "/PackageInfo.g" ) );
-                  if file <> fail then
-                    Add( files,
-                         [ file, Concatenation( name, "/", subdir ) ] );
-                  fi;
-                fi;
-              fi;
-            od;
-          else
-            files:= [ [ file, name ] ];
-          fi;
 
-          for file in files do
+          ## Get all package dirs
+          files := FindPackageInfosInSubdirectories( pkgdir, name );
 
-            # Read the `PackageInfo.g' file.
-            Unbind( GAPInfo.PackageInfoCurrent );
-            Read( file[1] );
-            if IsBound( GAPInfo.PackageInfoCurrent ) then
-              record:= GAPInfo.PackageInfoCurrent;
-              Unbind( GAPInfo.PackageInfoCurrent );
-              pkgname:= LowercaseString( record.PackageName );
-              NormalizeWhitespace( pkgname );
-              version:= record.Version;
+          AddPackageInfos( files, pkgdir, ignore );
 
-              # If we have this version already then leave it out.
-              if ForAll( GAPInfo.PackagesInfo,
-                         r ->    r.PackageName <> record.PackageName
-                              or r.Version <> version ) then
-
-                # Check whether GAP wants to reset loadability.
-                if     IsBound( GAPInfo.PackagesRestrictions.( pkgname ) )
-                   and GAPInfo.PackagesRestrictions.( pkgname ).OnInitialization(
-                           record ) = false then
-                  Add( GAPInfo.PackagesInfoRefuseLoad, record );
-                elif pkgname in ignore then
-                  LogPackageLoadingMessage( PACKAGE_DEBUG,
-                      Concatenation( "ignore package ", record.PackageName,
-                      " (user preference PackagesToIgnore)" ), "GAP" );
-                else
-                  record.InstallationPath:= Filename( [ pkgdir ], file[2] );
-                  if not IsBound( record.PackageDoc ) then
-                    record.PackageDoc:= [];
-                  elif IsRecord( record.PackageDoc ) then
-                    record.PackageDoc:= [ record.PackageDoc ];
-                  fi;
-                  if IsHPCGAP then
-                    # FIXME: we make the package info record immutable, to
-                    # allow access from multiple threads; but that in turn
-                    # can break packages, which rely on their package info
-                    # record being readable (see issue #2568)
-                    MakeImmutable(record);
-                  fi;
-                  Add( GAPInfo.PackagesInfo, record );
-                fi;
-              fi;
-            fi;
-          od;
-        fi;
       od;
     od;
 
@@ -1045,7 +1078,7 @@ InstallGlobalFunction( IsPackageMarkedForLoading, function( name, version )
 #F  DefaultPackageBannerString( <inforec> )
 ##
 InstallGlobalFunction( DefaultPackageBannerString, function( inforec )
-    local len, sep, i, str, authors, role, fill, person;
+    local len, sep, i, str, authors, maintainers, contributors, printPersons;
 
     # Start with a row of `-' signs.
     len:= SizeScreen()[1] - 3;
@@ -1081,19 +1114,13 @@ InstallGlobalFunction( DefaultPackageBannerString, function( inforec )
     fi;
     Add( str, '\n' );
 
-    # Add info about the authors if there are authors;
-    # otherwise add maintainers.
-    if IsBound( inforec.Persons ) then
-      authors:= Filtered( inforec.Persons, x -> x.IsAuthor );
-      role:= "by ";
-      if IsEmpty( authors ) then
-        authors:= Filtered( inforec.Persons, x -> x.IsMaintainer );
-        role:= "maintained by ";
-      fi;
+    # Add info about the authors and/or maintainers
+    printPersons := function( role, persons )
+      local fill, person;
       fill:= ListWithIdenticalEntries( Length(role), ' ' );
       Append( str, role );
-      for i in [ 1 .. Length( authors ) ] do
-        person:= authors[i];
+      for i in [ 1 .. Length( persons ) ] do
+        person:= persons[i];
         Append( str, person.FirstNames );
         Append( str, " " );
         Append( str, person.LastName );
@@ -1102,9 +1129,9 @@ InstallGlobalFunction( DefaultPackageBannerString, function( inforec )
         elif IsBound( person.Email ) then
           Append( str, Concatenation( " (", person.Email, ")" ) );
         fi;
-        if   i = Length( authors ) then
+        if   i = Length( persons ) then
           Append( str, ".\n" );
-        elif i = Length( authors )-1 then
+        elif i = Length( persons )-1 then
           if i = 1 then
             Append( str, " and\n" );
           else
@@ -1116,12 +1143,35 @@ InstallGlobalFunction( DefaultPackageBannerString, function( inforec )
           Append( str, fill );
         fi;
       od;
+    end;
+    if IsBound( inforec.Persons ) then
+      authors:= Filtered( inforec.Persons, x -> x.IsAuthor );
+      if not IsEmpty( authors ) then
+        printPersons( "by ", authors );
+      fi;
+      contributors:= Filtered( inforec.Persons, x -> not x.IsAuthor and not x.IsMaintainer );
+      if not IsEmpty( contributors ) then
+        Append( str, "with contributions by:\n");
+        printPersons( "   ", contributors );
+      fi;
+      maintainers:= Filtered( inforec.Persons, x -> x.IsMaintainer );
+      if not IsEmpty( maintainers ) and authors <> maintainers then
+        Append( str, "maintained by:\n");
+        printPersons( "   ", maintainers );
+      fi;
     fi;
 
     # Add info about the home page of the package.
     if IsBound( inforec.PackageWWWHome ) then
       Append( str, "Homepage: " );
       Append( str, inforec.PackageWWWHome );
+      Append( str, "\n" );
+    fi;
+
+    # Add info about the issue tracker of the package.
+    if IsBound( inforec.IssueTrackerURL ) then
+      Append( str, "Report issues at " );
+      Append( str, inforec.IssueTrackerURL );
       Append( str, "\n" );
     fi;
 
@@ -1541,6 +1591,10 @@ InstallGlobalFunction( LoadPackage, function( arg )
       return path;
     fi;
 
+    # Suspend reordering of methods following InstallTrueMethod
+    # because it would slow things down too much
+    SuspendMethodReordering();
+
     # Compute the order in which the packages are loaded.
     # For each set of packages with cyclic dependencies,
     # we will first read all `init.g' files
@@ -1644,6 +1698,8 @@ InstallGlobalFunction( LoadPackage, function( arg )
     LogPackageLoadingMessage( PACKAGE_DEBUG, "return from LoadPackage",
         Name );
     GAPInfo.LoadPackageLevel:= GAPInfo.LoadPackageLevel - 1;
+
+    ResumeMethodReordering();
     return true;
     end );
 
@@ -1653,11 +1709,13 @@ InstallGlobalFunction( LoadPackage, function( arg )
 #F  LoadAllPackages()
 ##
 InstallGlobalFunction( LoadAllPackages, function()
+    SuspendMethodReordering();
     if ValueOption( "reversed" ) = true then
-    	List( Reversed( RecNames( GAPInfo.PackagesInfo ) ), LoadPackage );
+        List( Reversed( RecNames( GAPInfo.PackagesInfo ) ), LoadPackage );
     else
-    	List( RecNames( GAPInfo.PackagesInfo ), LoadPackage );
-    fi;	
+        List( RecNames( GAPInfo.PackagesInfo ), LoadPackage );
+    fi;
+    ResumeMethodReordering();
     end );
 
 
@@ -1727,12 +1785,6 @@ InstallGlobalFunction( ExtendRootDirectories, function( rootpaths )
           rootpaths ) );
       # Clear the cache.
       GAPInfo.DirectoriesLibrary:= AtomicRecord( rec() );
-      # Deal with an obsolete variable.
-      if IsBoundGlobal( "GAP_ROOT_PATHS" ) then
-        MakeReadWriteGlobal( "GAP_ROOT_PATHS" );
-        UnbindGlobal( "GAP_ROOT_PATHS" );
-        BindGlobal( "GAP_ROOT_PATHS", GAPInfo.RootPaths );
-      fi;
       # Reread the package information.
       if IsBound( GAPInfo.PackagesInfoInitialized ) and
          GAPInfo.PackagesInfoInitialized = true then
@@ -2154,6 +2206,9 @@ InstallGlobalFunction( ValidatePackageInfo, function( info )
         x -> IsString(x) and Length(x) = 10 and x{ [3,6] } = "//"
                  and ForAll( x{ [1,2,4,5,7,8,9,10] }, IsDigitChar ),
         "a string of the form `dd/mm/yyyy'" );
+    TestOption( record, "License",
+        x -> IsString(x) and 0 < Length(x),
+        "a nonempty string containing an SPDX ID" );
     TestMandat( record, "ArchiveURL", IsURL, "a string started with http://, https:// or ftp://" );
     TestMandat( record, "ArchiveFormats", IsString, "a string" );
     TestOption( record, "TextFiles", IsStringList, "a list of strings" );
@@ -3375,8 +3430,3 @@ InstallGlobalFunction( ShowPackageVariables, function( arg )
       Print( result );
     fi;
     end );
-
-
-#############################################################################
-##
-#E

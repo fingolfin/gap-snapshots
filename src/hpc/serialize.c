@@ -1,3 +1,13 @@
+/****************************************************************************
+**
+**  This file is part of GAP, a system for computational discrete algebra.
+**
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
 #include "hpc/serialize.h"
 
 #include "bool.h"
@@ -35,8 +45,8 @@ typedef struct SerializeModuleState {
 
 #ifndef WARD_ENABLED
 
-SerializationFunction   SerializationFuncByTNum[256];
-DeserializationFunction DeserializationFuncByTNum[256];
+static SerializationFunction   SerializationFuncByTNum[256];
+static DeserializationFunction DeserializationFuncByTNum[256];
 
 
 static void DeserializationError(void)
@@ -46,12 +56,12 @@ static void DeserializationError(void)
 
 /* Manage serialization state */
 
-void SaveSerializationState(volatile SerializeModuleState * state)
+static void SaveSerializationState(volatile SerializeModuleState * state)
 {
     *state = MODULE_STATE(Serialize);
 }
 
-void RestoreSerializationState(volatile SerializeModuleState * state)
+static void RestoreSerializationState(volatile SerializeModuleState * state)
 {
     MODULE_STATE(Serialize) = *state;
 }
@@ -120,7 +130,7 @@ static void ReadBytesNativeString(void * addr, UInt size)
     UInt off = MODULE_STATE(Serialize).index;
     if (off + size > max)
         DeserializationError();
-    memcpy(addr, CSTR_STRING(str) + off, size);
+    memcpy(addr, CONST_CSTR_STRING(str) + off, size);
     MODULE_STATE(Serialize).index += size;
 }
 
@@ -268,7 +278,7 @@ static inline Obj PopObj(void)
 #define OBJ_BACKREF(x) ((Obj)((x) << 2))
 #define BACKREF_OBJ(obj) (((UInt)(obj)) >> 2)
 
-int SerializedAlready(Obj obj)
+static int SerializedAlready(Obj obj)
 {
     Obj ref = LookupObjMap(MODULE_STATE(Serialize).registry, obj);
     if (ref) {
@@ -286,15 +296,15 @@ int SerializedAlready(Obj obj)
 
 /* TNum-specific serialization/deserialization functions */
 
-void RegisterSerializerFunctions(UInt                    tnum,
-                                 SerializationFunction   sfun,
-                                 DeserializationFunction dfun)
+static void RegisterSerializerFunctions(UInt                    tnum,
+                                        SerializationFunction   sfun,
+                                        DeserializationFunction dfun)
 {
     SerializationFuncByTNum[tnum] = sfun;
     DeserializationFuncByTNum[tnum] = dfun;
 }
 
-void SerializeObj(Obj obj)
+static void SerializeObj(Obj obj)
 {
     if (!obj) {
         /* Handle unbound list elements correctly */
@@ -305,13 +315,13 @@ void SerializeObj(Obj obj)
     SerializationFuncByTNum[TNUM_OBJ(obj)](obj);
 }
 
-Obj DeserializeObj(void)
+static Obj DeserializeObj(void)
 {
     UInt tnum = ReadTNum();
     return DeserializationFuncByTNum[tnum](tnum);
 }
 
-void SerializeInt(Obj obj)
+static void SerializeInt(Obj obj)
 {
     Int n = INT_INTOBJ(obj);
     WriteTNum(T_INT);
@@ -329,7 +339,7 @@ void SerializeInt(Obj obj)
     }
 }
 
-Obj DeserializeInt(UInt tnum)
+static Obj DeserializeInt(UInt tnum)
 {
     Int n = ReadByte();
     switch (n & 3) {
@@ -350,14 +360,14 @@ Obj DeserializeInt(UInt tnum)
     }
 }
 
-void SerializeRat(Obj obj)
+static void SerializeRat(Obj obj)
 {
     WriteTNum(TNUM_OBJ(obj));
     SerializeObj(NUM_RAT(obj));
     SerializeObj(DEN_RAT(obj));
 }
 
-Obj DeserializeRat(UInt tnum)
+static Obj DeserializeRat(UInt tnum)
 {
     Obj result, n, d;
     n = DeserializeObj();
@@ -368,7 +378,7 @@ Obj DeserializeRat(UInt tnum)
     return result;
 }
 
-void SerializeFFE(Obj obj)
+static void SerializeFFE(Obj obj)
 {
     UInt ffe = (UInt)obj;
     WriteTNum(T_FFE);
@@ -378,7 +388,7 @@ void SerializeFFE(Obj obj)
     WriteByte(ffe & 0xff);
 }
 
-Obj DeserializeFFE(UInt tnum)
+static Obj DeserializeFFE(UInt tnum)
 {
     UInt ffe = 0;
     ffe = ReadByte();
@@ -391,14 +401,14 @@ Obj DeserializeFFE(UInt tnum)
     return (Obj)ffe;
 }
 
-void SerializeChar(Obj obj)
+static void SerializeChar(Obj obj)
 {
     UChar ch = CHAR_VALUE(obj);
     WriteTNum(T_CHAR);
     WriteByte(ch);
 }
 
-Obj DeserializeChar(UInt tnum)
+static Obj DeserializeChar(UInt tnum)
 {
     UChar ch = ReadByte();
     return ObjsChar[ch];
@@ -409,7 +419,7 @@ Obj DeserializeChar(UInt tnum)
 #define COEFS_CYC(cyc) (ADDR_OBJ(cyc))
 #define EXPOS_CYC(cyc, len) ((UInt4 *)(ADDR_OBJ(cyc) + (len)))
 
-void SerializeCyc(Obj obj)
+static void SerializeCyc(Obj obj)
 {
     UInt len, i;
     WriteTNum(T_CYC);
@@ -423,7 +433,7 @@ void SerializeCyc(Obj obj)
     }
 }
 
-Obj DeserializeCyc(UInt tnum)
+static Obj DeserializeCyc(UInt tnum)
 {
     Obj  result;
     UInt i, len;
@@ -436,7 +446,7 @@ Obj DeserializeCyc(UInt tnum)
     return result;
 }
 
-void SerializeBool(Obj obj)
+static void SerializeBool(Obj obj)
 {
     WriteTNum(T_BOOL);
     if (obj == False) {
@@ -452,7 +462,7 @@ void SerializeBool(Obj obj)
         ErrorQuit("Internal serialization error: Bad boolean value", 0L, 0L);
 }
 
-Obj DeserializeBool(UInt tnum)
+static Obj DeserializeBool(UInt tnum)
 {
     UChar byte = ReadByte();
     switch (byte) {
@@ -468,7 +478,7 @@ Obj DeserializeBool(UInt tnum)
     }
 }
 
-void SerializeList(Obj obj)
+static void SerializeList(Obj obj)
 {
     UInt i, j, len;
     if (SerializedAlready(obj))
@@ -490,7 +500,7 @@ void SerializeList(Obj obj)
     }
 }
 
-Obj DeserializeList(UInt tnum)
+static Obj DeserializeList(UInt tnum)
 {
     UInt i, len = INT_INTOBJ(ReadImmediateObj());
     Obj  result = NEW_PLIST(tnum, len);
@@ -501,7 +511,7 @@ Obj DeserializeList(UInt tnum)
     return result;
 }
 
-void SerializeObjSet(Obj obj)
+static void SerializeObjSet(Obj obj)
 {
     UInt i, len;
     if (SerializedAlready(obj))
@@ -522,7 +532,7 @@ void SerializeObjSet(Obj obj)
     }
 }
 
-Obj DeserializeObjSet(UInt tnum)
+static Obj DeserializeObjSet(UInt tnum)
 {
     UInt i, len = INT_INTOBJ(ReadImmediateObj());
     Obj  result = NewObjSet();
@@ -532,7 +542,7 @@ Obj DeserializeObjSet(UInt tnum)
     return result;
 }
 
-void SerializeObjMap(Obj obj)
+static void SerializeObjMap(Obj obj)
 {
     UInt i, len;
     if (SerializedAlready(obj))
@@ -557,7 +567,7 @@ void SerializeObjMap(Obj obj)
     }
 }
 
-Obj DeserializeObjMap(UInt tnum)
+static Obj DeserializeObjMap(UInt tnum)
 {
     UInt i, len = INT_INTOBJ(ReadImmediateObj());
     Obj  result = NewObjSet();
@@ -570,7 +580,7 @@ Obj DeserializeObjMap(UInt tnum)
     return result;
 }
 
-void SerializeRecord(Obj obj)
+static void SerializeRecord(Obj obj)
 {
     UInt i, j, len;
     if (SerializedAlready(obj))
@@ -597,7 +607,7 @@ void SerializeRecord(Obj obj)
     }
 }
 
-Obj DeserializeRecord(UInt tnum)
+static Obj DeserializeRecord(UInt tnum)
 {
     UInt i, len = INT_INTOBJ(ReadImmediateObj());
     Obj  result = NEW_PREC(len);
@@ -609,20 +619,20 @@ Obj DeserializeRecord(UInt tnum)
         GROW_STRING(rnams, rnamlen + 1);
         ReadByteBlockData(rnams, sizeof(Obj), rnamlen);
         CSTR_STRING(rnams)[rnamlen] = '\0';
-        rnam = RNamName(CSTR_STRING(rnams));
+        rnam = RNamName(CONST_CSTR_STRING(rnams));
         SET_RNAM_PREC(result, i, rnam);
     }
     for (i = 1; i <= len; i++) {
         Obj el = DeserializeObj();
         SET_ELM_PREC(result, i, el);
     }
-    SortPRecRNam(result, 1);
+    SortPRecRNam(result, 0);
     if (tnum == T_PREC + IMMUTABLE)
         RetypeBag(result, tnum);
     return result;
 }
 
-void SerializeString(Obj obj)
+static void SerializeString(Obj obj)
 {
     if (SerializedAlready(obj))
         return;
@@ -630,7 +640,7 @@ void SerializeString(Obj obj)
     WriteByteBlock(obj, sizeof(UInt), GET_LEN_STRING(obj));
 }
 
-Obj DeserializeString(UInt tnum)
+static Obj DeserializeString(UInt tnum)
 {
     UInt len = ReadByteBlockLength();
     Obj  result = NewBag(tnum, SIZEBAG_STRINGLEN(len));
@@ -641,7 +651,7 @@ Obj DeserializeString(UInt tnum)
     return result;
 }
 
-void SerializeBlist(Obj obj)
+static void SerializeBlist(Obj obj)
 {
     if (SerializedAlready(obj))
         return;
@@ -649,7 +659,7 @@ void SerializeBlist(Obj obj)
     WriteByteBlock(obj, 0, SIZE_OBJ(obj));
 }
 
-Obj DeserializeBlist(UInt tnum)
+static Obj DeserializeBlist(UInt tnum)
 {
     UInt len = ReadByteBlockLength();
     Obj  result = NewBag(tnum, len);
@@ -658,7 +668,7 @@ Obj DeserializeBlist(UInt tnum)
     return result;
 }
 
-void SerializeRange(Obj obj)
+static void SerializeRange(Obj obj)
 {
     WriteTNum(TNUM_OBJ(obj));
     WriteImmediateObj(ADDR_OBJ(obj)[0]);
@@ -666,7 +676,7 @@ void SerializeRange(Obj obj)
     WriteImmediateObj(ADDR_OBJ(obj)[2]);
 }
 
-Obj DeserializeRange(UInt tnum)
+static Obj DeserializeRange(UInt tnum)
 {
     Obj result, r1, r2, r3;
     r1 = ReadImmediateObj();
@@ -737,7 +747,7 @@ static Obj PosObjToList(Obj obj)
  *
  */
 
-Obj LookupIntTag(Obj tag)
+static Obj LookupIntTag(Obj tag)
 {
     Obj map = GVarObj(&DESERIALIZATION_TAG_INT_GVar);
     Obj func = (Obj)0;
@@ -764,7 +774,7 @@ retry:
     }
 }
 
-Obj DeserializeTypedObj(UInt tnum)
+static Obj DeserializeTypedObj(UInt tnum)
 {
     UInt namelen, len, i;
     Obj  name, args, deserialization_rec, func, type, tag;
@@ -818,7 +828,7 @@ Obj DeserializeTypedObj(UInt tnum)
     namelen = ReadByteBlockLength();
     name = NEW_STRING(namelen);
     ReadByteBlockData(name, sizeof(UInt), namelen);
-    rnam = RNamName(CSTR_STRING(name));
+    rnam = RNamName(CONST_CSTR_STRING(name));
     len = INT_INTOBJ(ReadImmediateObj());
     args = NEW_PLIST(T_PLIST, len);
     SET_LEN_PLIST(args, len);
@@ -854,7 +864,7 @@ Obj DeserializeTypedObj(UInt tnum)
     return result;
 }
 
-Obj LookupTypeTag(Obj type)
+static Obj LookupTypeTag(Obj type)
 {
     Obj tags = GVarObj(&SERIALIZATION_TAG_GVar);
     Obj func, result;
@@ -874,7 +884,7 @@ Obj LookupTypeTag(Obj type)
     return (Obj)0;
 }
 
-void SerializeTypedObj(Obj obj)
+static void SerializeTypedObj(Obj obj)
 {
     Obj         type, rep, el1, el2, name;
     Int         skip, start, len;
@@ -989,7 +999,7 @@ void SerializeTypedObj(Obj obj)
     }
 }
 
-Obj DeserializeBackRef(UInt tnum)
+static Obj DeserializeBackRef(UInt tnum)
 {
     UInt ref = BACKREF_OBJ(ReadImmediateObj());
     if (!ref) /* special case for unbound entries */
@@ -999,7 +1009,7 @@ Obj DeserializeBackRef(UInt tnum)
     return ELM_PLIST(MODULE_STATE(Serialize).stack, ref);
 }
 
-void SerializeError(Obj obj)
+static void SerializeError(Obj obj)
 {
     char         buf[16];
     const Char * type = TNAM_OBJ(obj);
@@ -1010,13 +1020,13 @@ void SerializeError(Obj obj)
     ErrorQuit("Cannot serialize object of type %s", (UInt)type, 0L);
 }
 
-Obj DeserializeError(UInt tnum)
+static Obj DeserializeError(UInt tnum)
 {
     DeserializationError();
     return Fail;
 }
 
-Obj FuncSERIALIZE_TO_NATIVE_STRING(Obj self, Obj obj)
+static Obj FuncSERIALIZE_TO_NATIVE_STRING(Obj self, Obj obj)
 {
     Obj                         result;
     volatile SerializeModuleState state;
@@ -1038,7 +1048,7 @@ Obj FuncSERIALIZE_TO_NATIVE_STRING(Obj self, Obj obj)
     return result;
 }
 
-Obj FuncDESERIALIZE_NATIVE_STRING(Obj self, Obj string)
+static Obj FuncDESERIALIZE_NATIVE_STRING(Obj self, Obj string)
 {
     Obj                         result;
     volatile SerializeModuleState state;

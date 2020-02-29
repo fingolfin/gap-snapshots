@@ -11,27 +11,27 @@ gap> flags2 := FLAGS_FILTER(IsPGroup and IsMutable);
 
 #
 gap> HASH_FLAGS(fail);
-Error, <flags> must be a flags list (not a boolean or fail)
+Error, HASH_FLAGS: <flags> must be a flags list (not the value 'fail')
 gap> HASH_FLAGS(flags);
 2
 
 #
 gap> TRUES_FLAGS(fail);
-Error, <flags> must be a flags list (not a boolean or fail)
+Error, TRUES_FLAGS: <flags> must be a flags list (not the value 'fail')
 gap> TRUES_FLAGS(flags);
 [ 1 ]
 
 #
 gap> SIZE_FLAGS(fail);
-Error, <flags> must be a flags list (not a boolean or fail)
+Error, SIZE_FLAGS: <flags> must be a flags list (not the value 'fail')
 gap> SIZE_FLAGS(flags);
 1
 
 #
 gap> IS_EQUAL_FLAGS(fail, flags);
-Error, <flags1> must be a flags list (not a boolean or fail)
+Error, IS_EQUAL_FLAGS: <flags1> must be a flags list (not the value 'fail')
 gap> IS_EQUAL_FLAGS(flags, fail);
-Error, <flags2> must be a flags list (not a boolean or fail)
+Error, IS_EQUAL_FLAGS: <flags2> must be a flags list (not the value 'fail')
 gap> IS_EQUAL_FLAGS(flags, flags);
 true
 gap> IS_EQUAL_FLAGS(flags, flags2);
@@ -41,9 +41,9 @@ false
 
 #
 gap> IS_SUBSET_FLAGS(fail, flags);
-Error, <flags1> must be a flags list (not a boolean or fail)
+Error, IS_SUBSET_FLAGS: <flags1> must be a flags list (not the value 'fail')
 gap> IS_SUBSET_FLAGS(flags, fail);
-Error, <flags2> must be a flags list (not a boolean or fail)
+Error, IS_SUBSET_FLAGS: <flags2> must be a flags list (not the value 'fail')
 gap> IS_SUBSET_FLAGS(flags, flags);
 true
 gap> IS_SUBSET_FLAGS(flags, flags2);
@@ -53,9 +53,9 @@ true
 
 #
 gap> SUB_FLAGS(fail, flags);
-Error, <flags1> must be a flags list (not a boolean or fail)
+Error, SUB_FLAGS: <flags1> must be a flags list (not the value 'fail')
 gap> SUB_FLAGS(flags, fail);
-Error, <flags2> must be a flags list (not a boolean or fail)
+Error, SUB_FLAGS: <flags2> must be a flags list (not the value 'fail')
 gap> emptyFlags := SUB_FLAGS(flags, flags);
 <flag list>
 gap> TRUES_FLAGS(emptyFlags);
@@ -74,9 +74,9 @@ false
 
 #
 gap> AND_FLAGS(fail, flags);
-Error, <flags1> must be a flags list (not a boolean or fail)
+Error, AND_FLAGS: <flags1> must be a flags list (not the value 'fail')
 gap> AND_FLAGS(flags, fail);
-Error, <flags2> must be a flags list (not a boolean or fail)
+Error, AND_FLAGS: <flags2> must be a flags list (not the value 'fail')
 gap> TRUES_FLAGS(AND_FLAGS(flags, flags));
 [ 1 ]
 gap> TRUES_FLAGS(AND_FLAGS(emptyFlags, flags));
@@ -90,13 +90,14 @@ true
 
 #
 gap> WITH_HIDDEN_IMPS_FLAGS(fail);
-Error, <flags> must be a flags list (not a boolean or fail)
+Error, WITH_HIDDEN_IMPS_FLAGS: <flags> must be a flags list (not the value 'fa\
+il')
 gap> TRUES_FLAGS(WITH_HIDDEN_IMPS_FLAGS(flags));
 [ 1, 2 ]
 
 #
 gap> WITH_IMPS_FLAGS(fail);
-Error, <flags> must be a flags list (not a boolean or fail)
+Error, WITH_IMPS_FLAGS: <flags> must be a flags list (not the value 'fail')
 gap> TRUES_FLAGS(WITH_IMPS_FLAGS(flags));
 [ 1, 2 ]
 
@@ -113,7 +114,7 @@ Error, You cannot set an "and-filter" except to true
 gap> filter:=SETTER_FILTER(IsMutable);;
 gap> filter(G, false);
 gap> filter(G, true);
-Error, value feature is already set the other way
+Error, filter is already set the other way
 
 # test DoSetReturnTrueFilter
 gap> Setter(IS_OBJECT)(G, true);
@@ -123,51 +124,41 @@ Error, you cannot set this flag to 'false'
 # test DoSetProperty
 gap> SetIsPGroup(G, false);
 gap> SetIsPGroup(G, true);
-Error, Value property is already set the other way
+Error, property is already set the other way
 
 #
 gap> NEW_FILTER(fail);
-Error, usage: NewFilter( <name> )
+Error, NewFilter: <name> must be a string (not the value 'fail')
 
 #
 gap> FLAG1_FILTER(fail);
-Error, <oper> must be an operation
+Error, FLAG1_FILTER: <oper> must be an operation (not the value 'fail')
 gap> FLAG1_FILTER(Normalizer);
 0
-gap> SET_FLAG1_FILTER(fail, 1);
-Error, <oper> must be an operation
 
 #
 gap> FLAG2_FILTER(fail);
-Error, <oper> must be an operation
+Error, FLAG2_FILTER: <oper> must be an operation (not the value 'fail')
 gap> FLAG2_FILTER(Normalizer);
 0
-gap> SET_FLAG2_FILTER(fail, 1);
-Error, <oper> must be an operation
 
 #
 gap> FLAGS_FILTER(fail);
-Error, <oper> must be an operation
+Error, FLAGS_FILTER: <oper> must be an operation (not the value 'fail')
 gap> FLAGS_FILTER(Normalizer);
 false
-gap> SET_FLAGS_FILTER(fail, 1);
-Error, <oper> must be an operation
 
 #
 gap> SETTER_FILTER(fail);
-Error, <oper> must be an operation
+Error, SETTER_FILTER: <oper> must be an operation (not the value 'fail')
 gap> SETTER_FILTER(Normalizer);
 false
-gap> SET_SETTER_FILTER(fail, 1);
-Error, <oper> must be an operation
 
 #
 gap> TESTER_FILTER(fail);
-Error, <oper> must be an operation
+Error, TESTER_FILTER: <oper> must be an operation (not the value 'fail')
 gap> TESTER_FILTER(Normalizer);
 false
-gap> SET_TESTER_FILTER(fail, 1);
-Error, <oper> must be an operation
 
 #
 #
@@ -175,32 +166,35 @@ Error, <oper> must be an operation
 
 # DoOperationNArgs
 gap> SymmetricGroupCons(1,2);
-Error, Constructor: the first argument must be a filter not a integer
+Error, Constructor: the first argument must be a filter (not the integer 1)
 
 #
 gap> NEW_OPERATION(fail);
-Error, usage: NewOperation( <name> )
+Error, NewOperation: <name> must be a string (not the value 'fail')
 gap> NEW_CONSTRUCTOR(fail);
-Error, usage: NewConstructor( <name> )
+Error, NewConstructor: <name> must be a string (not the value 'fail')
 gap> NEW_ATTRIBUTE(fail);
-Error, usage: NewAttribute( <name> )
+Error, NewAttribute: <name> must be a string (not the value 'fail')
 gap> OPER_TO_ATTRIBUTE(fail);
-Error, usage: OPER_TO_ATTRIBUTE( <oper> )
+Error, OPER_TO_ATTRIBUTE: <oper> must be an operation (not the value 'fail')
 gap> OPER_TO_MUTABLE_ATTRIBUTE(fail);
-Error, usage: OPER_TO_MUTABLE_ATTRIBUTE( <oper> )
+Error, OPER_TO_MUTABLE_ATTRIBUTE: <oper> must be an operation (not the value '\
+fail')
 gap> NEW_MUTABLE_ATTRIBUTE(fail);
-Error, usage: NewMutableAttribute( <name> )
+Error, NewMutableAttribute: <name> must be a string (not the value 'fail')
 gap> NEW_PROPERTY(fail);
-Error, usage: NewProperty( <name> )
+Error, NewProperty: <name> must be a string (not the value 'fail')
 
 #
 gap> NEW_GLOBAL_FUNCTION(fail);
-Error, usage: NewGlobalFunction( <name> )
+Error, NewGlobalFunction: <name> must be a string (not the value 'fail')
 gap> INSTALL_GLOBAL_FUNCTION(fail, fail);
-Error, <oper> must be a function (not a boolean or fail)
+Error, INSTALL_GLOBAL_FUNCTION: <oper> must be a function (not the value 'fail\
+')
 gap> func := NEW_GLOBAL_FUNCTION("quux");;
 gap> INSTALL_GLOBAL_FUNCTION(func, fail);
-Error, <func> must be a function (not a boolean or fail)
+Error, INSTALL_GLOBAL_FUNCTION: <func> must be a function (not the value 'fail\
+')
 gap> INSTALL_GLOBAL_FUNCTION(func, Size);
 Error, <func> must not be an operation
 gap> INSTALL_GLOBAL_FUNCTION(func, x -> x);
@@ -209,32 +203,50 @@ Error, operation already installed
 
 #
 gap> METHODS_OPERATION(fail,1);
-Error, <oper> must be an operation
+Error, METHODS_OPERATION: <oper> must be an operation (not the value 'fail')
 gap> METHODS_OPERATION(Size,-1);
-Error, <narg> must be a nonnegative integer
+Error, METHODS_OPERATION: <narg> must be an integer between 0 and 6 (not the i\
+nteger -1)
 gap> METHODS_OPERATION(Size,0);
 [  ]
+gap> METHODS_OPERATION(Size,6);
+[  ]
+gap> METHODS_OPERATION(Size,7);
+Error, METHODS_OPERATION: <narg> must be an integer between 0 and 6 (not the i\
+nteger 7)
 
 # note: CHANGED_METHODS_OPERATION is not usable on HPC-GAP
 gap> CHANGED_METHODS_OPERATION(fail,1);
-Error, <oper> must be an operation
+Error, CHANGED_METHODS_OPERATION: <oper> must be an operation (not the value '\
+fail')
 gap> CHANGED_METHODS_OPERATION(Size,-1);
-Error, <narg> must be a nonnegative integer
+Error, CHANGED_METHODS_OPERATION: <narg> must be an integer between 0 and 6 (n\
+ot the integer -1)
 gap> if not IsHPCGAP then CHANGED_METHODS_OPERATION(Size,0); fi;
+gap> if not IsHPCGAP then CHANGED_METHODS_OPERATION(Size,6); fi;
+gap> CHANGED_METHODS_OPERATION(Size,7);
+Error, CHANGED_METHODS_OPERATION: <narg> must be an integer between 0 and 6 (n\
+ot the integer 7)
 
 #
 gap> SET_METHODS_OPERATION (fail,1,[]);
-Error, <oper> must be an operation
+Error, SET_METHODS_OPERATION: <oper> must be an operation (not the value 'fail\
+')
 gap> SET_METHODS_OPERATION (Size,-1,[]);
-Error, <narg> must be a nonnegative integer
+Error, SET_METHODS_OPERATION: <narg> must be an integer between 0 and 6 (not t\
+he integer -1)
 gap> SET_METHODS_OPERATION (Size,0,[]);
+gap> SET_METHODS_OPERATION (Size,6,[]);
+gap> SET_METHODS_OPERATION (Size,7,[]);
+Error, SET_METHODS_OPERATION: <narg> must be an integer between 0 and 6 (not t\
+he integer 7)
 
 #
 gap> f:=SETTER_FUNCTION("foobar", IsPGroup);;
 gap> f(fail, false);
 Error, <obj> must be a component object
 gap> SetIsPGroup(fail, false);
-Error, Value cannot be set for internal objects
+Error, property cannot be set for internal objects
 
 #
 gap> f:=GETTER_FUNCTION("foobar");;
@@ -264,7 +276,7 @@ gap> g:= Group( (1,2,3), (1,2) );;  Size( g );
 gap> TraceMethods();
 Error, `TraceMethods' require at least one argument
 gap> TraceMethods([ 1 ]);
-Error, <oper> must be an operation
+Error, TRACE_METHODS: <oper> must be an operation (not the integer 1)
 gap> TraceMethods( [ Size ] );
 gap> UntraceMethods( [ Size ] );
 
@@ -308,7 +320,7 @@ gap> MakeReadOnlyGlobal("NEXT_VMETHOD_PRINT_INFO");
 gap> UntraceMethods();
 Error, `UntraceMethods' require at least one argument
 gap> UntraceMethods([ 1 ]);
-Error, <oper> must be an operation
+Error, UNTRACE_METHODS: <oper> must be an operation (not the integer 1)
 gap> UntraceMethods( [ IsCyclic ] );
 
 #

@@ -1,3 +1,13 @@
+/****************************************************************************
+**
+**  This file is part of GAP, a system for computational discrete algebra.
+**
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
 #ifndef GAP_HPC_MISC_H
 #define GAP_HPC_MISC_H
 
@@ -37,6 +47,13 @@ extern UInt SyNumGCThreads;
 
 /****************************************************************************
 **
+*V  SingleThreadStartup . . . . . . . . .  start HPC-GAP with just one thread
+**
+*/
+extern UInt SingleThreadStartup;
+
+/****************************************************************************
+**
 *F  MergeSort() . . . . . . . . . . . . . . . sort an array using mergesort.
 **
 **  MergeSort() sorts an array of 'count' elements of individual size 'width'
@@ -46,7 +63,9 @@ extern UInt SyNumGCThreads;
 **
 */
 
-extern void MergeSort(void *data, UInt count, UInt width,
-  int (*lessThan)(const void *a, const void *));
+void MergeSort(void * data,
+               UInt   count,
+               UInt   width,
+               int (*lessThan)(const void * a, const void *));
 
 #endif  // GAP_HPC_MISC_H

@@ -115,7 +115,8 @@
   produced  a value or not, is available in the variable [2Xtime[102X ([14X7.6-4[114X). This is
   an  integer  that  holds the number of milliseconds. Similarly the amount of
   memory  allocated during that statement (in bytes) is stored in the variable
-  [2Xmemory_allocated[102X ([14X7.7-2[114X).[133X
+  [2Xmemory_allocated[102X ([14X7.7-2[114X). The variables [10Xlast[110X, [10Xlast2[110X, [10Xlast3[110X, [2Xtime[102X ([14X7.6-4[114X) and
+  [2Xmemory_allocated[102X ([14X7.7-2[114X) are all write-protected.[133X
   
   
   [1X6.2 [33X[0;0YSpecial Rules for Input Lines[133X[101X
@@ -500,7 +501,7 @@
   [33X[0;0YIn  cases  where  a  break loop is entered during a function that was called
   with  options  (see Chapter [14X8[114X), a [10Xquit;[110X will also cause the options stack to
   be  reset  and  an  [10XInfo[110X-ed  warning  stating this is emitted at [2XInfoWarning[102X
-  ([14X7.4-7[114X) level 1 (see Chapter [14X7.4[114X).[133X
+  ([14X7.4-8[114X) level 1 (see Chapter [14X7.4[114X).[133X
   
   [33X[0;0YNote  that  for  break  loops  entered by a call to [2XError[102X ([14X6.6-1[114X), the lines
   after [21X[10XEntering break read-eval-print loop ...[110X[121X and before the [10Xbrk>[110X prompt can
@@ -613,11 +614,13 @@
   [1X6.4-5 Where[101X
   
   [33X[1;0Y[29X[2XWhere[102X( [3Xnr[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XWhereWithVars[102X( [3Xnr[103X ) [32X function[133X
   
   [33X[0;0Yshows the last [3Xnr[103X commands on the execution stack during whose execution the
   error  occurred.  If not given, [3Xnr[103X defaults to 5. (Assume, for the following
   example,  that  after  the last example [2XOnBreak[102X ([14X6.4-3[114X) has been set back to
-  its default value.)[133X
+  its default value.). [2XWhereWithVars[102X acts the same as [2XWhere[102X while also showing
+  the arguments and local variables of each function.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XStabChain(SymmetricGroup(100)); # After this we typed ^C  [127X[104X
@@ -650,7 +653,7 @@
   If  this  creates  problems  for  debugging,  call  [5XGAP[105X  with  the [10X-M[110X option
   (see [14X3.1[114X) to avoid loading compiled code.[133X
   
-  [33X[0;0Y(Function  calls to [2XInfo[102X ([14X7.4-5[114X) and methods installed for binary operations
+  [33X[0;0Y(Function  calls to [2XInfo[102X ([14X7.4-6[114X) and methods installed for binary operations
   are handled in a special way. In rare circumstances it is possible therefore
   that  they  do  not  show  up  in a [2XWhere[102X log but the log refers to the [13Xlast[113X
   proper function call that happened before.)[133X
@@ -1005,7 +1008,7 @@
   [10XIsBound(GAPInfo.UseReadline);[110X if this is the case.[133X
   
   [33X[0;0YYou  can  use  all  the  features  of  [10Xreadline[110X, as for example explained in
-  [7Xhttp://tiswww.case.edu/php/chet/readline/rluserman.html[107X.    Therefore    the
+  [7Xhttps://tiswww.case.edu/php/chet/readline/rluserman.html[107X.    Therefore   the
   command  line  editing  in  [5XGAP[105X  is similar to the [10Xbash[110X shell and many other
   programs.  On  a  Unix/Linux  system  you  may  also have a manpage, try [10Xman
   readline[110X.[133X
@@ -1043,7 +1046,7 @@
   customize key bindings. If you want settings be used only within [5XGAP[105X you can
   write  them  between  lines  containing  [10X$if  GAP[110X and [10X$endif[110X. For a detailed
   documentation   of   the   available   settings   and   functions  see  here
-  ([7Xhttp://tiswww.case.edu/php/chet/readline/rluserman.html[107X).[133X
+  ([7Xhttps://tiswww.case.edu/php/chet/readline/rluserman.html[107X).[133X
   
   [4X[32X  From readline init file  [32X[104X
     [4X$if GAP[104X
@@ -1093,7 +1096,7 @@
   [33X[1;0Y[29X[2XSaveCommandLineHistory[102X( [[3Xfname[103X, ][[3Xapp[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xfail[109X or number of saved lines[133X
   
-  [33X[1;0Y[29X[2XReadCommandLineHistory[102X( [[3Xfname[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XReadCommandLineHistory[102X( [[3Xfname[103X, ][[3Xapp[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xfail[109X or number of added lines[133X
   
   [33X[0;0YThe  first  command  saves the lines in the command line history to the file
@@ -1102,8 +1105,9 @@
   not  exist. If the optional argument [3Xapp[103X is [9Xtrue[109X then the lines are appended
   to that file otherwise the file is overwritten.[133X
   
-  [33X[0;0YThe  second  command is the converse, it reads the lines from file [3Xfname[103X and
-  [13Xprepends[113X them to the current command line history.[133X
+  [33X[0;0YThe  second  command is the converse, it reads the lines from file [3Xfname[103X. If
+  the  optional  argument  [3Xapp[103X  is true the lines are appended to the history,
+  else it [13Xprepends[113X them.[133X
   
   [33X[0;0YBy  default, the command line history stores up to 1000 input lines. command
   line   history.   This   number  may  be  restricted  or  enlarged  via  via
@@ -1235,7 +1239,7 @@
   
   [33X[0;0Y[10Xvim[110X is a powerful editor that understands the basic [10Xvi[110X commands but provides
   much  more  functionality.  You  can  find  more  information  about it (and
-  download it) from [7Xhttp://www.vim.org[107X.[133X
+  download it) from [7Xhttps://www.vim.org[107X.[133X
   
   [33X[0;0YTo  get  support  for  [5XGAP[105X  syntax  in  vim, create in your home directory a
   directory  [11X.vim[111X  with subdirectories [11X.vim/syntax[111X and [11X.vim/indent[111X (If you are

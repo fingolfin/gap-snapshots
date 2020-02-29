@@ -1,0 +1,17 @@
+  
+  [1X1 [33X[0;0YIntroduction[133X[101X
+  
+  [33X[0;0YThe  [23X\textbf{NConvex}[123X  package  is  a  GAP  package. Its aim is to carry out
+  polyhedral  constructions  and computations, namely computing properties and
+  attributes  of  cones, polyhedrons, polytopes and fans. Its has been written
+  to  provide  the  needed  tools for the package \textbf{ToricVarieties}. All
+  written as part of the homalg-project.[133X
+  
+  
+  [1X1.1 [33X[0;0YInstallation[133X[101X
+  
+  
+  [1X1.2 [33X[0;0YRequirements[133X[101X
+  
+  [33X[0;0YHere is a list of the required Gap packages:[133X
+  

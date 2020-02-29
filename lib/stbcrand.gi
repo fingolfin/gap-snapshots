@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  stbcrand.gi                 GAP library                       Ákos Seress
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Ákos Seress.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1994,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This  file contains  the  functions for  a random Schreier-Sims algorithm
 ##  with verification.
@@ -408,7 +409,7 @@ InstallGlobalFunction( SCRMakeStabStrong,
     m:=0;
     while m < mlimit do
         m := m+1;
-        ran := Random([1..Length(S.orbit)]);
+        ran := Random(1, Length(S.orbit));
         coset := CosetRepAsWord(S.orbit[1],S.orbit[ran],S.transversal);
         coset := InverseAsWord(coset,gen,inv);
         if w <> S.identity then
@@ -457,7 +458,7 @@ InstallGlobalFunction( SCRMakeStabStrong,
                         jlimit:=Maximum(param[6],basesize[l]);
                         while j < jlimit do
                             j:=j+1;
-                            ran:=Random([1..Length(orbits[l])]);
+                            ran:=Random(1, Length(orbits[l]));
                             if ImageInWord(orbits[l][ran],residue[1])
                               <> orbits[l][ran]
                             then
@@ -545,7 +546,7 @@ InstallGlobalFunction( SCRStrongGenTest,
         if len > 2*param[3] then
             ran1 := SCRRandomPerm(len);
             ran2 := SCRRandomPerm(len);
-            len2 := Random([1 .. QuoInt(len,2)]);
+            len2 := Random(1, QuoInt(len,2));
             string := SCRRandomString(len+len2);
 
             # we form two random subproducts:
@@ -615,7 +616,7 @@ InstallGlobalFunction( SCRStrongGenTest,
                                 jlimit := Maximum(param[6],basesize[l]);
                                 while j < jlimit do
                                     j := j+1;
-                                    ran := Random([1..Length(orbits[l])]);
+                                    ran := Random(1, Length(orbits[l]));
                                     if ImageInWord(orbits[l][ran],residue[1])
                                       <> orbits[l][ran]
                                     then
@@ -724,7 +725,7 @@ InstallGlobalFunction( SCRStrongGenTest2, function ( S, param )
         if len > 2*param[3] then
             ran1 := SCRRandomPerm(len);
             ran2 := SCRRandomPerm(len);
-            len2 := Random([1 .. QuoInt(len,2)]);
+            len2 := Random(1, QuoInt(len,2));
             string := SCRRandomString(len+len2);
 
             # we form two random subproducts:
@@ -953,7 +954,7 @@ InstallGlobalFunction( SCRRandomPerm, function ( d )
     # use Floyd\'s algorithm
     rnd := [ 1 .. d ];
     for i  in [ 1 .. d-1 ]  do
-        k := Random( [ 1 .. d+1-i ] );
+        k := Random( 1, d+1-i );
         tmp := rnd[d+1-i];
         rnd[d+1-i] := rnd[k];
         rnd[k] := tmp;

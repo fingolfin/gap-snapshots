@@ -10,14 +10,14 @@
   find  information  about  algorithms  and  programming  for  other algebraic
   structures, such as semigroups and algebras.[133X
   
-  [33X[0;0YIn  addition  to  this  manual, there is the [13X[5XGAP[105X Reference Manual[113X containing
-  detailed  documentation  of  the  mathematical functionality of [5XGAP[105X, and the
-  manual  called  [13X[21X[5XGAP[105X  -  Changes  from  Earlier Versions[121X[113X which describes most
-  essential changes from previous [5XGAP[105X releases.[133X
+  [33X[0;0YIn  addition  to  this  manual,  there  are  [13X[5XGAP[105X Reference Manual[113X containing
+  detailed documentation of the mathematical functionality of [5XGAP[105X, and [13XHPC-GAP
+  Reference Manual[113X documenting a multi-threaded version of GAP.[133X
   
-  [33X[0;0YA  lot  of  the  functionality  of  the  system  and a number of contributed
-  extensions  are  provided  as  [21X[5XGAP[105X  packages[121X  and  each of these has its own
-  manual.[133X
+  [33X[0;0YThere  is  also  a  document  [11XCHANGES.md[111X  in  the root directory on the most
+  essential  changes from previous [5XGAP[105X releases. A lot of the functionality of
+  the  system  and  a  number  of  contributed  extensions are provided as [21X[5XGAP[105X
+  packages[121X and each of these has its own manual.[133X
   
   [33X[0;0YSubsequent  sections of this preface explain the structure of the system and
   list sources of further information about [5XGAP[105X.[133X
@@ -37,7 +37,7 @@
   language,  and use them in just the same way as the programs which form part
   of  the  system (the [21Xlibrary[121X). Indeed, we actively support the contribution,
   refereeing  and distribution of extensions to the system, in the form of [21X[5XGAP[105X
-  packages[121X.  Further details of this can be found in chapter [14X'Reference: Using
+  packages[121X.  Further details of this can be found in Chapter [14X'Reference: Using
   and Developing GAP Packages'[114X, and on our website.[133X
   
   [33X[0;0YDevelopment  of  [5XGAP[105X began at Lehrstuhl D für Mathematik, RWTH-Aachen, under
@@ -51,12 +51,12 @@
   Collins.[133X
   
   [33X[0;0YMore  information  on  the motivation and development of [5XGAP[105X to date, can be
-  found on our Web pages in a section entitled [21XRelease history and Prefaces[121X.[133X
+  found   on   our  website  in  a  section  entitled  [21XSome  History  of  [5XGAP[105X[121X:
+  [7Xhttps://www.gap-system.org/Doc/History/history.html[107X.[133X
   
   [33X[0;0YFor  those  readers  who have used an earlier version of [5XGAP[105X, an overview of
   the  changes  from  [5XGAP[105X 4.4  and  a  brief  summary  of changes from earlier
-  versions is given in a separate manual [14X'Changes: Changes between GAP 4.4 and
-  GAP 4.5'[114X.[133X
+  versions is given in [11XCHANGES.md[111X file in the main directory.[133X
   
   [33X[0;0YThe  system  that you are getting now consists of a [21Xcore system[121X and a number
   of packages. The core system consists of four main parts.[133X
@@ -64,7 +64,7 @@
   [31X1[131X   [33X[0;6YA [13Xkernel[113X, written in C, which provides the user with[133X
   
         [30X    [33X[0;12Yautomatic  dynamic  storage  management,  which the user needn't
-              bother about in his programming;[133X
+              bother about when programming;[133X
   
         [30X    [33X[0;12Ya   set  of  time-critical  basic  functions,  e.g.  [21Xarithmetic[121X,
               operations  for integers, finite fields, permutations and words,
@@ -89,9 +89,9 @@
   [31X2[131X   [33X[0;6YA  much  larger  [13Xlibrary of [5XGAP[105X functions[113X that implement algebraic and
         other  algorithms. Since this is written entirely in the [5XGAP[105X language,
         the [5XGAP[105X language is both the main implementation language and the user
-        language  of  the  system.  Therefore  the  user  can as easily as the
-        original  programmers  investigate  and vary algorithms of the library
-        and  add  new  ones  to  it,  first for own use and eventually for the
+        language  of  the  system.  Therefore  a  user  can,  as easily as the
+        original  programmers,  investigate and vary algorithms of the library
+        and add new ones to it, first for their own use and eventually for the
         benefit of all [5XGAP[105X users.[133X
   
   [31X3[131X   [33X[0;6YA  [13Xlibrary  of group theoretical data[113X which contains various libraries
@@ -141,11 +141,8 @@
   
   [1X1.2 [33X[0;0YFurther Information about [5XGAP[105X[101X[1X[133X[101X
   
-  [33X[0;0YInformation about [5XGAP[105X is best obtained from the [5XGAP[105X website[133X
-  
-  [33X[0;0Y[7Xhttps://www.gap-system.org[107X[133X
-  
-  [33X[0;0YThere you will find, amongst other things[133X
+  [33X[0;0YInformation   about   [5XGAP[105X   is   best   obtained   from   the   [5XGAP[105X  website
+  [7Xhttps://www.gap-system.org[107X. There you will find, amongst other things:[133X
   
   [30X    [33X[0;6Ydirections  to  the  sites from which you can download the current [5XGAP[105X
         distribution, all accepted and deposited [5XGAP[105X packages, and a selection
@@ -185,5 +182,5 @@
   
   [33X[0;0YThe GAP Group,[133X
   
-  [33X[0;0Y19-Jun-2019[133X
+  [33X[0;0Y29-Feb-2020[133X
   

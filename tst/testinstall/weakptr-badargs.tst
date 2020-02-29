@@ -1,46 +1,46 @@
 #############################################################################
+#@local w
 gap> START_TEST("weakptr-badargs.tst");
-gap> w := WeakPointerObject([1,,3,4]);
-Error, Variable: 'WeakPointerObject' must have a value
 gap> w := WeakPointerObj([1,,3,4]);;
 gap> SetElmWPObj(w, 0, 0);
-Error, SetElmWPObj: Position must be a positive integer
+Error, SetElmWPObj: <pos> must be a positive small integer (not the integer 0)
 gap> SetElmWPObj(w, [1,2], 0);
-Error, SetElmWPObj: Position must be a small integer, not a list (plain,cyc)
+Error, SetElmWPObj: <pos> must be a positive small integer (not a plain list o\
+f cyclotomics)
 gap> SetElmWPObj(w, (), 0);
-Error, SetElmWPObj: Position must be a small integer, not a permutation (small\
-)
+Error, SetElmWPObj: <pos> must be a positive small integer (not a permutation \
+(small))
 gap> SetElmWPObj((), 1, 1);
-Error, SetElmWPObj: First argument must be a weak pointer object, not a permut\
-ation (small)
+Error, SetElmWPObj: <wp> must be a weak pointer object (not a permutation (sma\
+ll))
 gap> UnbindElmWPObj(w, 0);
-Error, UnbindElmWPObj: Position must be a positive integer
+Error, UnbindElmWPObj: <pos> must be a positive small integer (not the integer\
+ 0)
 gap> UnbindElmWPObj(w, []);
-Error, UnbindElmWPObj: Position must be a small integer, not a list (plain,emp\
-ty)
+Error, UnbindElmWPObj: <pos> must be a positive small integer (not a empty pla\
+in list)
 gap> UnbindElmWPObj([], 2);
-Error, UnbindElmWPObj: First argument must be a weak pointer object, not a lis\
-t (plain,empty)
+Error, UnbindElmWPObj: <wp> must be a weak pointer object (not a empty plain l\
+ist)
 gap> ElmWPObj(w, 0);
-Error, ElmWPObj: Position must be a positive integer
+Error, ElmWPObj: <pos> must be a positive small integer (not the integer 0)
 gap> ElmWPObj(w, []);
-Error, ElmWPObj: Position must be a small integer, not a list (plain,empty)
+Error, ElmWPObj: <pos> must be a positive small integer (not a empty plain lis\
+t)
 gap> ElmWPObj([], 1);
-Error, ElmWPObj: First argument must be a weak pointer object, not a list (pla\
-in,empty)
-gap> IsBoundWPObj(w, 0);
-Error, Variable: 'IsBoundWPObj' must have a value
+Error, ElmWPObj: <wp> must be a weak pointer object (not a empty plain list)
 gap> IsBoundElmWPObj(w, 0);
-Error, IsBoundElmWPObj: Position must be a positive integer
+Error, IsBoundElmWPObj: <pos> must be a positive small integer (not the intege\
+r 0)
 gap> IsBoundElmWPObj(w, []);
-Error, IsBoundElmWPObj: Position must be a small integer, not a list (plain,em\
-pty)
+Error, IsBoundElmWPObj: <pos> must be a positive small integer (not a empty pl\
+ain list)
 gap> IsBoundElmWPObj([], 1);
-Error, IsBoundElmWPObj: First argument must be a weak pointer object, not a li\
-st (plain,empty)
+Error, IsBoundElmWPObj: <wp> must be a weak pointer object (not a empty plain \
+list)
 gap> LengthWPObj([]);
-Error, LengthWPObj: argument must be a weak pointer object, not a list (plain,\
-empty)
+Error, LengthWPObj: <wp> must be a weak pointer object (not a empty plain list\
+)
 gap> LengthWPObj(0);
-Error, LengthWPObj: argument must be a weak pointer object, not a integer
+Error, LengthWPObj: <wp> must be a weak pointer object (not the integer 0)
 gap> STOP_TEST( "weakptr-badargs.tst", 1);

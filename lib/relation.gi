@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  relation.gi                  GAP library                   Andrew Solomon
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Andrew Solomon.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the implementation for binary relations, equivalence
 ##  relations and equivalence classes on and over sets. 
@@ -959,7 +960,7 @@ InstallGlobalFunction(RandomBinaryRelationOnPoints,
             Error("error, <n> must be a positive integer");
         fi;
         return BinaryRelationOnPointsNC(
-            List([1..n],i->List([1..Random([1..n])],j->Random([1..n]))));
+            List([1..n],i->List([1..Random(1,n)],j->Random(1,n))));
     end);
 
 ############################################################################
@@ -2183,7 +2184,3 @@ function(rel)
     fi;
     return AsPermutation(Transformation(Flat(Successors(rel))));
 end);
-
-#############################################################################
-##
-#E

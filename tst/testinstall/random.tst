@@ -1,3 +1,4 @@
+#@local R,a,rm,g,orbs,orb,getOneInt
 gap> START_TEST("random.tst");
 gap> ReadGapRoot( "tst/testrandom.g" );
 
@@ -158,7 +159,7 @@ gap> randomTest(PurePadicNumberFamily(2,20), Random, function(x,y) return IsPure
 # We take a string and 0-pad it to 4 bytes
 gap> getOneInt := function(str)
 >   Init(GlobalMersenneTwister, str);
->   return Random([1..100000]);
+>   return Random(1, 100000);
 > end;;
 gap> getOneInt("") = getOneInt("\000");
 true

@@ -1,7 +1,11 @@
 /****************************************************************************
 **
-*W  io.h
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares functions responsible for input and output processing.
 **
@@ -21,13 +25,14 @@
 #include "system.h"
 
 
-extern Char GET_NEXT_CHAR(void);
-extern Char PEEK_NEXT_CHAR(void);
-extern Char PEEK_CURR_CHAR(void);
+Char GET_NEXT_CHAR(void);
+Char GET_NEXT_CHAR_NO_LC(void);
+Char PEEK_NEXT_CHAR(void);
+Char PEEK_CURR_CHAR(void);
 
 // skip the rest of the current line, ignoring line continuations
 // (used to handle comments)
-extern void SKIP_TO_END_OF_LINE(void);
+void SKIP_TO_END_OF_LINE(void);
 
 /****************************************************************************
 **
@@ -68,8 +73,7 @@ extern void SKIP_TO_END_OF_LINE(void);
 **  '*stdin*' for  that purpose.  This  file on   the other   hand  cannot be
 **  closed by 'CloseInput'.
 */
-extern UInt OpenInput (
-    const Char *        filename );
+UInt OpenInput(const Char * filename);
 
 
 /****************************************************************************
@@ -78,7 +82,7 @@ extern UInt OpenInput (
 **
 **  The same as 'OpenInput' but for streams.
 */
-extern UInt OpenInputStream(Obj stream, UInt echo);
+UInt OpenInputStream(Obj stream, UInt echo);
 
 
 /****************************************************************************
@@ -96,7 +100,7 @@ extern UInt OpenInputStream(Obj stream, UInt echo);
 **  Calling 'CloseInput' if the  corresponding  'OpenInput' call failed  will
 **  close the current output file, which will lead to very strange behaviour.
 */
-extern UInt CloseInput ( void );
+UInt CloseInput(void);
 
 
 /****************************************************************************
@@ -115,8 +119,7 @@ extern UInt CloseInput ( void );
 **  many   are too   many, but  16   files should  work everywhere.   Finally
 **  'OpenLog' will fail if there is already a current logfile.
 */
-extern UInt OpenLog (
-    const Char *        filename );
+UInt OpenLog(const Char * filename);
 
 
 /****************************************************************************
@@ -125,8 +128,7 @@ extern UInt OpenLog (
 **
 **  The same as 'OpenLog' but for streams.
 */
-extern UInt OpenLogStream (
-    Obj             stream );
+UInt OpenLogStream(Obj stream);
 
 
 /****************************************************************************
@@ -140,7 +142,7 @@ extern UInt OpenLogStream (
 **  'CloseLog' will fail if there is no logfile active and will return  0  in
 **  this case.
 */
-extern UInt CloseLog ( void );
+UInt CloseLog(void);
 
 
 /****************************************************************************
@@ -158,8 +160,7 @@ extern UInt CloseLog ( void );
 **  dependent  how many are too many,  but 16 files  should work  everywhere.
 **  Finally 'OpenInputLog' will fail if there is already a current logfile.
 */
-extern UInt OpenInputLog (
-    const Char *        filename );
+UInt OpenInputLog(const Char * filename);
 
 
 /****************************************************************************
@@ -168,8 +169,7 @@ extern UInt OpenInputLog (
 **
 **  The same as 'OpenInputLog' but for streams.
 */
-extern UInt OpenInputLogStream (
-    Obj                 stream );
+UInt OpenInputLogStream(Obj stream);
 
 
 /****************************************************************************
@@ -183,7 +183,7 @@ extern UInt OpenInputLogStream (
 **  'CloseInputLog' will fail if there is no logfile active and will return 0
 **  in this case.
 */
-extern UInt CloseInputLog ( void );
+UInt CloseInputLog(void);
 
 /****************************************************************************
  **
@@ -224,8 +224,7 @@ extern Obj  EndLineHook;
 **  dependent how many are  too many,  but  16 files should  work everywhere.
 **  Finally 'OpenOutputLog' will fail if there is already a current logfile.
 */
-extern UInt OpenOutputLog (
-    const Char *        filename );
+UInt OpenOutputLog(const Char * filename);
 
 
 /****************************************************************************
@@ -234,8 +233,7 @@ extern UInt OpenOutputLog (
 **
 **  The same as 'OpenOutputLog' but for streams.
 */
-extern UInt OpenOutputLogStream (
-    Obj                 stream );
+UInt OpenOutputLogStream(Obj stream);
 
 
 /****************************************************************************
@@ -249,7 +247,7 @@ extern UInt OpenOutputLogStream (
 **  'CloseOutputLog' will fail if there is  no logfile active and will return
 **  0 in this case.
 */
-extern UInt CloseOutputLog ( void );
+UInt CloseOutputLog(void);
 
 
 /****************************************************************************
@@ -283,8 +281,7 @@ extern UInt CloseOutputLog ( void );
 **  '*stdout*' for that purpose.  This  file  on the other hand   can not  be
 **  closed by 'CloseOutput'.
 */
-extern UInt OpenOutput (
-    const Char *        filename );
+UInt OpenOutput(const Char * filename);
 
 
 /****************************************************************************
@@ -293,8 +290,7 @@ extern UInt OpenOutput (
 **
 **  The same as 'OpenOutput' (and also 'OpenAppend') but for streams.
 */
-extern UInt OpenOutputStream (
-    Obj                 stream );
+UInt OpenOutputStream(Obj stream);
 
 
 /****************************************************************************
@@ -314,7 +310,7 @@ extern UInt OpenOutputStream (
 **  On the other  hand if you  forget  to call  'CloseOutput' at the end of a
 **  'PrintTo' call or an error will not yield much better results.
 */
-extern UInt CloseOutput ( void );
+UInt CloseOutput(void);
 
 
 /****************************************************************************
@@ -328,8 +324,7 @@ extern UInt CloseOutput ( void );
 **  it exists.  Appart from that 'OpenAppend' is equal to 'OpenOutput' so its
 **  description applies to 'OpenAppend' too.
 */
-extern UInt OpenAppend (
-    const Char *        filename );
+UInt OpenAppend(const Char * filename);
 
 
 /****************************************************************************
@@ -344,22 +339,22 @@ extern UInt OpenAppend (
 
 
 // get the filename of the current input
-extern const Char * GetInputFilename(void);
+const Char * GetInputFilename(void);
 
 // get the number of the current line in the current thread's input
-extern Int GetInputLineNumber(void);
+Int GetInputLineNumber(void);
 
 //
-extern const Char * GetInputLineBuffer(void);
+const Char * GetInputLineBuffer(void);
 
 //
-extern Int GetInputLinePosition(void);
+Int GetInputLinePosition(void);
 
 // get the filenameid (if any) of the current input
-extern UInt GetInputFilenameID(void);
+UInt GetInputFilenameID(void);
 
 // get the filename (as GAP string object) with the given id
-extern Obj GetCachedFilename(UInt id);
+Obj GetCachedFilename(UInt id);
 
 
 /* the widest allowed screen width */
@@ -368,7 +363,7 @@ extern Obj GetCachedFilename(UInt id);
 
 // Reset the indentation level of the current output to zero. The indentation
 // level can be modified via the '%>' and '%<' formats of 'Pr' resp. 'PrTo'.
-extern void ResetOutputIndent(void);
+void ResetOutputIndent(void);
 
 // If 'lock' is non-zero, then "lock" the current output, i.e., prevent calls
 // to 'OpenOutput' or 'CloseOutput' from changing it. If 'lock' is zero, then
@@ -376,7 +371,7 @@ extern void ResetOutputIndent(void);
 //
 // This is used to allow the 'Test' function of the GAP library to
 // consistently capture all output during testing, see 'FuncREAD_STREAM_LOOP'.
-extern void LockCurrentOutput(Int lock);
+void LockCurrentOutput(Int lock);
 
 /****************************************************************************
 **
@@ -407,19 +402,10 @@ extern void LockCurrentOutput(Int lock);
 **  must pass 0L if you don't make use of an argument to please lint.
 */
 
-extern  void            Pr (
-            const Char *    format,
-            Int                 arg1,
-            Int                 arg2 );
+void Pr(const Char * format, Int arg1, Int arg2);
 
-
-extern  void            SPrTo (
-			       Char * buffer,
-			       UInt maxlen,
-            const Char *    format,
-            Int                 arg1,
-            Int                 arg2 );
-
+void SPrTo(
+    Char * buffer, UInt maxlen, const Char * format, Int arg1, Int arg2);
 
 
 /****************************************************************************
@@ -427,7 +413,7 @@ extern  void            SPrTo (
 *F  FlushRestOfInputLine()  . . . . . . . . . . . . discard remainder of line
 */
 
-extern void FlushRestOfInputLine( void );
+void FlushRestOfInputLine(void);
 
 
 StructInitInfo * InitInfoIO(void);

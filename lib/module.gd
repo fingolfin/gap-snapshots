@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  module.gd                   GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file declares the operations for left modules, right modules,
 ##  and bimodules.
@@ -140,9 +141,9 @@ DeclareSynonym( "IsRightModule",
 ##  <P/>
 ##  Free left modules can have bases.
 ##  <P/>
-##  The characteristic (see&nbsp;<Ref Func="Characteristic"/>) of a
+##  The characteristic (see&nbsp;<Ref Attr="Characteristic"/>) of a
 ##  free left module is defined as the characteristic of its left acting
-##  domain (see&nbsp;<Ref Func="LeftActingDomain"/>).
+##  domain (see&nbsp;<Ref Attr="LeftActingDomain"/>).
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -200,7 +201,7 @@ InstallTrueMethod( IsFiniteDimensional, IsFreeLeftModule and IsFinite );
 ##  equal to <M>n</M>.
 ##  <P/>
 ##  Several functions delegate their tasks to full row modules,
-##  for example <Ref Func="Iterator"/> and <Ref Func="Enumerator"/>.
+##  for example <Ref Oper="Iterator"/> and <Ref Attr="Enumerator"/>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -371,7 +372,7 @@ DeclareSynonymAttr( "GeneratorsOfRightModule",
 ##  <Example><![CDATA[
 ##  gap> V:= LeftModuleByGenerators(Rationals, [[ 1, 0, 0 ], [ 0, 1, 0 ]]);;
 ##  gap> TrivialSubmodule( V );
-##  <vector space over Rationals, with 0 generators>
+##  <vector space of dimension 0 over Rationals>
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -523,7 +524,7 @@ DeclareOperation( "UseBasis", [ IsFreeLeftModule, IsHomogeneousList ] );
 ##  for that one can use for example row spaces
 ##  (see&nbsp;<Ref Func="FullRowSpace"/>) in the finite dimensional case
 ##  and polynomial rings
-##  (see&nbsp;<Ref Func="PolynomialRing" Label="for a ring and a rank (and an exclusion list)"/>)
+##  (see&nbsp;<Ref Oper="PolynomialRing" Label="for a ring and a rank (and an exclusion list)"/>)
 ##  in the infinite dimensional case.
 ##  Moreover, the definition of a <Q>natural</Q> addition for elements of a
 ##  given magma (for example a permutation group) is possible via the
@@ -661,6 +662,7 @@ DeclareGlobalFunction( "SubmoduleNC" );
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsRowModule", IsFreeLeftModule );
+InstallTrueMethod( IsFreeLeftModule, IsRowModule );
 
 InstallTrueMethod( IsRowModule, IsFullRowModule );
 
@@ -695,13 +697,13 @@ InstallTrueMethod( IsMatrixModule, IsFullMatrixModule );
 ##
 ##  <Description>
 ##  For a left module <A>M</A> that consists of row vectors
-##  (see&nbsp;<Ref Func="IsRowModule"/>),
-##  <Ref Func="DimensionOfVectors"/> returns the common length of all row
+##  (see&nbsp;<Ref Prop="IsRowModule"/>),
+##  <Ref Attr="DimensionOfVectors"/> returns the common length of all row
 ##  vectors in <A>M</A>.
 ##  For a left module <A>M</A> that consists of matrices
-##  (see&nbsp;<Ref Func="IsMatrixModule"/>),
-##  <Ref Func="DimensionOfVectors"/> returns the common matrix dimensions
-##  (see&nbsp;<Ref Func="DimensionsMat"/>) of all matrices in <A>M</A>.
+##  (see&nbsp;<Ref Prop="IsMatrixModule"/>),
+##  <Ref Attr="DimensionOfVectors"/> returns the common matrix dimensions
+##  (see&nbsp;<Ref Attr="DimensionsMat"/>) of all matrices in <A>M</A>.
 ##  <Example><![CDATA[
 ##  gap> DimensionOfVectors( GF(2)^5 );
 ##  5
@@ -726,9 +728,3 @@ DeclareAttribute( "DimensionOfVectors", IsFreeLeftModule );
 InstallTrueMethod( IsFiniteDimensional, IsRowModule and IsFreeLeftModule );
 InstallTrueMethod( IsFiniteDimensional,
     IsMatrixModule and IsFreeLeftModule );
-
-
-#############################################################################
-##
-#E
-

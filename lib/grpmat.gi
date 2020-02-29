@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  grpmat.gi                   GAP Library                      Frank Celler
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the methods for matrix groups.
 ##
@@ -28,7 +29,7 @@ function( grp )
 local gens,R;
   gens:= GeneratorsOfGroup( grp );
   if IsEmpty( gens ) then
-    return Field( One( grp )[1][1] );
+    return Field( One( grp )[1,1] );
   else
     R:=DefaultScalarDomainOfMatrixList(gens);
     if not IsField(R) then
@@ -70,7 +71,7 @@ InstallMethod( FieldOfMatrixGroup,
 
     gens:= GeneratorsOfGroup( grp );
     if IsEmpty( gens ) then
-      return Field( One( grp )[1][1] );
+      return Field( One( grp )[1,1] );
     else
       return FieldOfMatrixList(gens);
     fi;
@@ -85,7 +86,7 @@ InstallMethod( DimensionOfMatrixGroup, "from generators",
     [ IsMatrixGroup and HasGeneratorsOfGroup ],
     function( grp )
     if not IsEmpty( GeneratorsOfGroup( grp ) )  then
-        return Length( GeneratorsOfGroup( grp )[ 1 ] );
+      return NumberRows( GeneratorsOfGroup( grp )[1] );
     else
         TryNextMethod();
     fi;
@@ -93,7 +94,7 @@ end );
 
 InstallMethod( DimensionOfMatrixGroup, "from one",
     [ IsMatrixGroup and HasOne ], 1,
-    grp -> Length( One( grp ) ) );
+    grp -> NumberRows( One( grp ) ) );
 
 # InstallOtherMethod( DimensionOfMatrixGroup,
 #         "from source of nice monomorphism",
@@ -106,16 +107,6 @@ InstallMethod( DimensionOfMatrixGroup, "from one",
 #T why not delegate to `Representative' instead of installing
 #T different methods?
 
-#############################################################################
-##
-#M  One( <mat-grp> )
-##
-InstallOtherMethod( One,
-    "for matrix group, call `IdentityMat'",
-    [ IsMatrixGroup ],
-    grp -> ImmutableMatrix(DefaultFieldOfMatrixGroup(grp),
-             IdentityMat( DimensionOfMatrixGroup( grp ),
-	     DefaultFieldOfMatrixGroup( grp ) ) ));
 
 #############################################################################
 ##
@@ -177,7 +168,7 @@ local F, gens, evals, espaces, is, ise, gen, i, j,module,list,ind,vecs,mins;
 	mins:=MTX.BasesMinimalSubmodules(module);
       else
 	if Length(mins)>7 then
-	  mins:=mins{Set(List([1..7],x->Random([1..Length(mins)])))};
+	  mins:=mins{Set([1..7],x->Random(1,Length(mins)))};
 	fi;
       fi;
 
@@ -235,13 +226,13 @@ local field, dict, acts, start, j, zerov, zero, dim, base, partbas, heads,
       i, lo, imgs, xset, hom, R;
 
   field:=DefaultFieldOfMatrixGroup(G);
-  #dict := NewDictionary( One(G)[1], true , field ^ Length( One( G ) ) );
   acts:=GeneratorsOfGroup(G);
 
   if Length(acts)=0 then
-    start:=One(G);
+    start:= RowsOfMatrix( One( G) );
   elif act=OnRight then
-    start:=Concatenation(BasisVectorsForMatrixAction(G),One(G));
+    start:= Concatenation( BasisVectorsForMatrixAction( G ),
+                           RowsOfMatrix( One( G ) ) );
   elif act=OnLines then
     j:=One(G);
     start:=Concatenation(List(BasisVectorsForMatrixAction(G),
@@ -296,7 +287,13 @@ local field, dict, acts, start, j, zerov, zero, dim, base, partbas, heads,
     fi;
 
     if not IsZero(v) then
-      dict := NewDictionary( v, true , field ^ Length( One( G ) ) );
+      # do not go positional dictionary if we know it to be overkill
+      if HasSize(G) then
+        dict := NewDictionary( v, true , field ^ Length( One( G ))
+                  :blistlimi:=Maximum(10,Size(field))*Size(G) );
+      else
+        dict := NewDictionary( v, true , field ^ Length( One( G ) ) );
+      fi;
       # force `img' over field
       if (Size(field)=2 and not IsGF2VectorRep(img)) or
 	 (Size(field)>2 and Size(field)<=256 and not (Is8BitVectorRep(img)
@@ -474,11 +471,13 @@ local   nice,img,module,b;
     Info(InfoGroup,1,"over nonfield");
     #nice:=ActionHomomorphism( grp,AsSSortedList(grp),OnRight,"surjective");
     if canon then
-      nice:=SortedSparseActionHomomorphism( grp, One( grp ) );
+      nice:= SortedSparseActionHomomorphism( grp,
+                 RowsOfMatrix( One( grp ) ) );
       SetIsCanonicalNiceMonomorphism(nice,true);
     else
-      nice:=SparseActionHomomorphism( grp, One( grp ) );
-      nice:=nice*SmallerDegreePermutationRepresentation(Image(nice));
+      nice:= SparseActionHomomorphism( grp,
+                 RowsOfMatrix( One( grp ) ) );
+      nice:=nice*SmallerDegreePermutationRepresentation(Image(nice):cheap);
     fi;
   elif IsFinite(grp) and ( (HasIsNaturalGL(grp) and IsNaturalGL(grp)) or
              (HasIsNaturalSL(grp) and IsNaturalSL(grp)) ) then
@@ -487,7 +486,8 @@ local   nice,img,module,b;
     return NicomorphismFFMatGroupOnFullSpace(grp);
   elif canon then
     Info(InfoGroup,1,"canonical niceo");
-    nice:=SortedSparseActionHomomorphism( grp, One( grp ) );
+    nice:= SortedSparseActionHomomorphism( grp,
+               RowsOfMatrix( One( grp ) ) );
     SetIsCanonicalNiceMonomorphism(nice,true);
   else
     Info(InfoGroup,1,"act to find base");
@@ -505,11 +505,11 @@ local   nice,img,module,b;
     # try hard, unless absirr and orbit lengths at least 1/q^2 of domain --
     #then we expect improvements to be of little help
     if module<>fail and not (NrMovedPoints(img)>=
-      Size(DefaultFieldOfMatrixGroup(grp))^(Length(One(grp))-2)
+      Size( DefaultFieldOfMatrixGroup( grp ) )^( NumberRows( One( grp ) )-2 )
       and MTX.IsAbsolutelyIrreducible(module)) then
-	nice:=nice*SmallerDegreePermutationRepresentation(img);
+	nice:=nice*SmallerDegreePermutationRepresentation(img:cheap);
     else
-      nice:=nice*SmallerDegreePermutationRepresentation(img:cheap:=true);
+      nice:=nice*SmallerDegreePermutationRepresentation(img:cheap);
     fi;
   fi;
   SetIsInjective( nice, true );
@@ -675,8 +675,8 @@ InstallMethod( ViewObj,
 function(G)
 local gens;
   gens:=GeneratorsOfGroup(G);
-  if Length(gens)>0 and Length(gens)*
-                        Length(gens[1])^2 / GAPInfo.ViewLength > 8 then
+  if Length(gens)>0 and
+     Length(gens) * DimensionOfMatrixGroup(G)^2 / GAPInfo.ViewLength > 8 then
     Print("<matrix group");
     if HasSize(G) then
       Print(" of size ",Size(G));
@@ -794,11 +794,15 @@ InstallMethod( IsGeneratorsOfMagmaWithInverses,
     "for a list of matrices",
     [ IsRingElementCollCollColl ],
     function( matlist )
-    local dims;
-    if ForAll( matlist, IsMatrix ) then
-      dims:= DimensionsMat( matlist[1] );
-      return dims[1] = dims[2] and
-             ForAll( matlist, mat -> DimensionsMat( mat ) = dims ) and
+    local nrows, ncols;
+
+    if IsList( matlist ) and ForAll( matlist, IsMatrixObj ) then
+      nrows:= NumberRows( matlist[1] );
+      ncols:= NumberColumns( matlist[1] );
+      return nrows = ncols and
+             ForAll( matlist,
+                     mat -> NumberRows( mat ) = nrows and
+                            NumberColumns( mat ) = ncols ) and
              ForAll( matlist, mat -> Inverse( mat ) <> fail );
     fi;
     return false;
@@ -1030,7 +1034,7 @@ InstallMethod( PreImagesRepresentative,
 
     B:= Basis( iso );
     d:= Length( B );
-    n:= Length( mat ) / d;
+    n:= NumberRows( mat ) / d;
 
     if not IsInt( n ) then
       return fail;
@@ -1126,9 +1130,3 @@ InstallMethod( InvariantBilinearForm,
     Q:= InvariantQuadraticForm( matgrp ).matrix;
     return rec( matrix:= ( Q + TransposedMat( Q ) ) );
     end );
-
-
-#############################################################################
-##
-#E
-

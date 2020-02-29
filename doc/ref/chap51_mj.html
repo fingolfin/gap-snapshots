@@ -86,7 +86,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51_mj.html#X7F01FFB18125DED5">51.5-2 ReesCongruenceOfSemigroupIdeal</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51_mj.html#X7A3FF85984345540">51.5-3 IsLeftSemigroupIdeal</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51_mj.html#X7C0782D57C01E327">51.6 <span class="Heading">Congruences for semigroups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51_mj.html#X7914691E7DFFE27A">51.6 <span class="Heading">Congruences on semigroups</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51_mj.html#X78E34B737F0E009F">51.6-1 IsSemigroupCongruence</a></span>
@@ -688,11 +688,11 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemigroupIdeal</code>( <var class="Arg">I</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Categories of semigroup ideals.</p>
 
-<p><a id="X7C0782D57C01E327" name="X7C0782D57C01E327"></a></p>
+<p><a id="X7914691E7DFFE27A" name="X7914691E7DFFE27A"></a></p>
 
-<h4>51.6 <span class="Heading">Congruences for semigroups</span></h4>
+<h4>51.6 <span class="Heading">Congruences on semigroups</span></h4>
 
-<p>An equivalence or a congruence on a semigroup is the equivalence or congruence on the semigroup considered as a magma. So, to deal with equivalences and congruences on semigroups, magma functions are used. For documentation on equivalences and congruences for magmas, see <code class="func">Magma</code> (<a href="chap35_mj.html#X839147CF813312D6"><span class="RefLink">35.2-1</span></a>).</p>
+<p>An equivalence or a congruence on a semigroup is the equivalence or congruence on the semigroup considered as a magma. So, to deal with equivalences and congruences on semigroups, magma functions are used. For documentation on equivalences and congruences on magmas, see <code class="func">Magma</code> (<a href="chap35_mj.html#X839147CF813312D6"><span class="RefLink">35.2-1</span></a>).</p>
 
 <p><a id="X78E34B737F0E009F" name="X78E34B737F0E009F"></a></p>
 
@@ -832,12 +832,16 @@ true</pre></div>
 
 <h5>51.8-9 GreensRClasses</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensRClasses</code>( <var class="Arg">semigroup</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensLClasses</code>( <var class="Arg">semigroup</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensJClasses</code>( <var class="Arg">semigroup</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensDClasses</code>( <var class="Arg">semigroup</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensHClasses</code>( <var class="Arg">semigroup</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>return the <span class="SimpleMath">\(R\)</span>, <span class="SimpleMath">\(L\)</span>, <span class="SimpleMath">\(J\)</span>, <span class="SimpleMath">\(H\)</span>, or <span class="SimpleMath">\(D\)</span> Green's classes, respectively for semigroup <var class="Arg">semigroup</var>. <code class="func">EquivalenceClasses</code> (<a href="chap33_mj.html#X879439897EF4D728"><span class="RefLink">33.7-3</span></a>) for a Green's relation lead to one of these functions.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensRClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensLClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensHClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensJClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensDClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>If <var class="Arg">S</var> is a semigroup, then these attributes return the Green's <span class="SimpleMath">\(R\)</span>-, <span class="SimpleMath">\(L\)</span>-, <span class="SimpleMath">\(H\)</span>-, <span class="SimpleMath">\(J\)</span>-, or <span class="SimpleMath">\(D\)</span>-classes, respectively for the semigroup <var class="Arg">S</var>.</p>
+
+<p>Additionally, if <var class="Arg">S</var> is a Green's <span class="SimpleMath">\(D\)</span>-class of a semigroup, then <code class="code">GreensRClasses</code> and <code class="code">GreensLClasses</code> return the Green's <span class="SimpleMath">\(R\)</span>- or <span class="SimpleMath">\(L-\)</span>classes of the semigroup, respectively, contained in the <span class="SimpleMath">\(D\)</span>-class <var class="Arg">S</var>; if <var class="Arg">S</var> is a Green's <span class="SimpleMath">\(D\)</span>-, <span class="SimpleMath">\(R\)</span>-, or <span class="SimpleMath">\(L\)</span>-class of a semigroup, then <code class="code">GreensHClasses</code> returns the Green's <span class="SimpleMath">\(H\)</span>-classes of the semigroup contained in the Green's class <var class="Arg">S</var>.</p>
+
+<p><code class="func">EquivalenceClasses</code> (<a href="chap33_mj.html#X879439897EF4D728"><span class="RefLink">33.7-3</span></a>) for a Green's relation lead to one of these functions.</p>
 
 <p><a id="X7CB4A18685B850E2" name="X7CB4A18685B850E2"></a></p>
 

@@ -1,24 +1,24 @@
   
   [1X1 [33X[0;0YPreface[133X[101X
   
-  [33X[0;0YWelcome  to  [5XGAP[105X.  This is one of three manuals documenting the core part of
-  [5XGAP[105X,  the  other  being  the  [13X[5XGAP[105X  Tutorial[113X  . and the document called [13X[21X[5XGAP[105X -
-  Changes from Earlier Versions[121X[113X .[133X
+  [33X[0;0YWelcome to [5XGAP[105X. This is one of the manuals documenting the core part of [5XGAP[105X,
+  the others being the [13X[5XGAP[105X Tutorial[113X and [13XHPC-GAP Reference Manual[113X.[133X
   
-  [33X[0;0YThis preface serves not only to introduce [21XThe [5XGAP[105X Reference Manual[121X, but also
-  as an introduction to the whole system.[133X
+  [33X[0;0YThere  is also a document [11XCHANGES.md[111X on the changes from earlier versions in
+  the  root  directory.  This  preface  serves  not  only to introduce [21XThe [5XGAP[105X
+  Reference Manual[121X, but also as an introduction to the whole system.[133X
   
   [33X[0;0Y[5XGAP[105X  stands  for  [13XGroups, Algorithms and Programming[113X. The name was chosen to
-  reflect the aim of the system, which is introduced in this reference manual.
-  Since that choice, the system has become somewhat broader, and you will also
-  find  information  about  algorithms  and  programming  for  other algebraic
-  structures, such as semigroups and algebras.[133X
+  reflect  the  original  aim  of  the  system,  which  is  introduced in this
+  reference manual. Since that choice, the system has become somewhat broader,
+  and  you  will  also  find  information about algorithms and programming for
+  other algebraic structures, such as semigroups and algebras.[133X
   
-  [33X[0;0YThis  manual,  the [13X[5XGAP[105X reference manual[113X contains the official definitions of
+  [33X[0;0YThis  manual,  the [13X[5XGAP[105X Reference Manual[113X contains the official definitions of
   [5XGAP[105X  functions. It should contain all the information needed to use [5XGAP[105X, and
   is not intended to be read cover-to-cover.[133X
   
-  [33X[0;0YTo get started a new user may first look at parts of the [13X[5XGAP[105X Tutorial[113X .[133X
+  [33X[0;0YTo get started a new user may first look at parts of the [13X[5XGAP[105X Tutorial[113X.[133X
   
   [33X[0;0YA  lot  of  the  functionality  of  the  system  and a number of contributed
   extensions are provided as [21X[5XGAP[105X packages[121X which are developed independently of
@@ -52,7 +52,7 @@
   language,  and use them in just the same way as the programs which form part
   of  the  system (the [21Xlibrary[121X). Indeed, we actively support the contribution,
   refereeing  and distribution of extensions to the system, in the form of [21X[5XGAP[105X
-  packages[121X.  Further details of this can be found in chapter [14X'Reference: Using
+  packages[121X.  Further details of this can be found in Chapter [14X'Reference: Using
   and Developing GAP Packages'[114X, and on our website.[133X
   
   [33X[0;0YDevelopment  of  [5XGAP[105X began at Lehrstuhl D für Mathematik, RWTH-Aachen, under
@@ -66,12 +66,12 @@
   Collins.[133X
   
   [33X[0;0YMore  information  on  the motivation and development of [5XGAP[105X to date, can be
-  found on our Web pages in a section entitled [21XRelease history and Prefaces[121X.[133X
+  found   on   our  website  in  a  section  entitled  [21XSome  History  of  [5XGAP[105X[121X:
+  [7Xhttps://www.gap-system.org/Doc/History/history.html[107X.[133X
   
   [33X[0;0YFor  those  readers  who have used an earlier version of [5XGAP[105X, an overview of
   the  changes  from  [5XGAP[105X 4.4  and  a  brief  summary  of changes from earlier
-  versions is given in a separate manual [14X'Changes: Changes between GAP 4.4 and
-  GAP 4.5'[114X.[133X
+  versions is given in [11XCHANGES.md[111X file in the main directory.[133X
   
   [33X[0;0YThe  system  that you are getting now consists of a [21Xcore system[121X and a number
   of packages. The core system consists of four main parts.[133X
@@ -79,7 +79,7 @@
   [31X1[131X   [33X[0;6YA [13Xkernel[113X, written in C, which provides the user with[133X
   
         [30X    [33X[0;12Yautomatic  dynamic  storage  management,  which the user needn't
-              bother about in his programming;[133X
+              bother about when programming;[133X
   
         [30X    [33X[0;12Ya   set  of  time-critical  basic  functions,  e.g.  [21Xarithmetic[121X,
               operations  for integers, finite fields, permutations and words,
@@ -104,9 +104,9 @@
   [31X2[131X   [33X[0;6YA  much  larger  [13Xlibrary of [5XGAP[105X functions[113X that implement algebraic and
         other  algorithms. Since this is written entirely in the [5XGAP[105X language,
         the [5XGAP[105X language is both the main implementation language and the user
-        language  of  the  system.  Therefore  the  user  can as easily as the
-        original  programmers  investigate  and vary algorithms of the library
-        and  add  new  ones  to  it,  first for own use and eventually for the
+        language  of  the  system.  Therefore  a  user  can,  as easily as the
+        original  programmers,  investigate and vary algorithms of the library
+        and add new ones to it, first for their own use and eventually for the
         benefit of all [5XGAP[105X users.[133X
   
   [31X3[131X   [33X[0;6YA  [13Xlibrary  of group theoretical data[113X which contains various libraries
@@ -158,7 +158,7 @@
   
   [33X[0;0Y[5XGAP[105X  is  the  work of very many people, many of whom still maintain parts of
   the  system. A complete list of authors, and an approximation to the current
-  list  of  maintainers  can  be  found  on  the  [5XGAP[105X  World  Wide Web site at
+  list    of    maintainers   can   be   found   on   the   [5XGAP[105X   website   at
   [7Xhttps://www.gap-system.org/Contacts/People/authors.html[107X                  and
   [7Xhttps://www.gap-system.org/Contacts/People/modules.html[107X.  All  [5XGAP[105X  packages
   have their own authors and maintainers. It should however be noted that some
@@ -179,13 +179,13 @@
   [33X[0;0YWe  also  include with this distribution a number of packages which have not
   (yet)  gone  through  our  refereeing  process.  Some may be accepted in the
   future,  in  other  cases  the  authors have chosen not to submit them. More
-  information can be found on our World Wide Web site (see Section [14X1.5[114X).[133X
+  information can be found on our website (see Section [14X1.5[114X).[133X
   
   
   [1X1.3 [33X[0;0YAcknowledgements[133X[101X
   
   [33X[0;0YVery  many  people  have  worked  on, and contributed to, [5XGAP[105X over the years
-  since  its  inception.  On  our  Web  site you will find the prefaces to the
+  since  its  inception.  On  our  website  you  will find the prefaces to the
   previous  releases,  each of which acknowledges people who have made special
   contributions  to  that  release. Even so, it is appropriate to mention here
   Joachim  Neubüser  whose  vision  of  a free, open and extensible system for
@@ -195,7 +195,7 @@
   
   [1X1.4 [33X[0;0YCopyright and License[133X[101X
   
-  [33X[0;0YCopyright © (1987-2019) by the [5XGAP[105X Group,[133X
+  [33X[0;0YCopyright © (1987-2020) by the [5XGAP[105X Group,[133X
   
   [33X[0;0Yincorporating  the  Copyright  ©  1999,  2000  by School of Mathematical and
   Computational  Sciences,  University of St Andrews, North Haugh, St Andrews,
@@ -212,7 +212,7 @@
   terms  of  the  GNU General Public License as published by the Free Software
   Foundation;  either  version 2 of the License, or (at your option) any later
   version.  For details, see the file [11XLICENSE[111X in the root directory of the [5XGAP[105X
-  distribution or see [7Xhttp://www.gnu.org/licenses/gpl.html[107X.[133X
+  distribution or see [7Xhttps://www.gnu.org/licenses/gpl.html[107X.[133X
   
   [33X[0;0YIf  you  obtain  [5XGAP[105X  please send us a short notice to that effect, e.g., an
   e-mail  message  to the address [7Xmailto:support@gap-system.org[107X. This helps us
@@ -220,15 +220,15 @@
   
   [33X[0;0YIf  you  publish  a  mathematical result that was partly obtained using [5XGAP[105X,
   please  cite  [5XGAP[105X,  just  as you would cite another paper that you used (see
-  below  for sample citation). Also we would appreciate if you could inform us
-  about   such   a   paper,   which  we  will  add  to  the  [5XGAP[105X  bibliography
+  below  for  a sample citation). Also we would appreciate if you could inform
+  us  about  such  a  paper,  which  we  will  add  to  the  [5XGAP[105X  bibliography
   ([7Xhttps://www.gap-system.org/Doc/Bib/bib.html[107X).[133X
   
   [33X[0;0YSpecifically, please refer to[133X
   
   [4X[32X[104X
     [4X[GAP] The GAP Group, GAP - Groups, Algorithms, and Programming,[104X
-    [4X      Version 4.10.2; 2019 (https://www.gap-system.org)[104X
+    [4X      Version 4.11.0; 2020 (https://www.gap-system.org)[104X
   [4X[32X[104X
   
   [33X[0;0YYou are permitted to modify and redistribute [5XGAP[105X, but you are not allowed to
@@ -247,7 +247,7 @@
   terms apply to the versions of [5XGAP[105X for Windows.[133X
   
   [33X[0;0YThe  executable  of [5XGAP[105X for Windows that we distribute was compiled with the
-  [10Xgcc[110X compiler supplied with [5XCygwin[105X installation ([7Xhttp://cygwin.com/[107X).[133X
+  [10Xgcc[110X compiler supplied with [5XCygwin[105X installation ([7Xhttps://cygwin.com/[107X).[133X
   
   [33X[0;0YThe GNU C compiler is[133X
   
@@ -262,9 +262,9 @@
   
   [33X[0;0YThe  [11Xcyggcc_s-1.dll[111X, [11Xcygncurses-10.dll[111X, [11Xcygncursesw-10.dll[111X, [11Xcygpanel-10.dll[111X,
   [11Xcygpopt-0.dll[111X,   [11Xcygreadline7.dll[111X,  [11Xcygstart.exe[111X,  [11Xcygwin1.dll[111X,  [11XlibW11.dll[111X,
-  [11Xmintty.exe[111X,  [11Xrxvt.exe[111X  and  [11Xregtool.exe[111X are taken unmodified from the [5XCygwin[105X
+  [11Xmintty.exe[111X   and   [11Xregtool.exe[111X   are   taken   unmodified  from  the  [5XCygwin[105X
   distribution.  They  are copyright by RedHat Software and released under the
-  GPL. For more information on [5XCygwin[105X, see [7Xhttp://www.cygwin.com[107X.[133X
+  GPL. For more information on [5XCygwin[105X, see [7Xhttps://www.cygwin.com[107X.[133X
   
   [33X[0;0YPlease   contact   [7Xmailto:support@gap-system.org[107X   if   you   need   further
   information.[133X
@@ -272,11 +272,8 @@
   
   [1X1.5 [33X[0;0YFurther Information about [5XGAP[105X[101X[1X[133X[101X
   
-  [33X[0;0YInformation about [5XGAP[105X is best obtained from the [5XGAP[105X website[133X
-  
-  [33X[0;0Y[7Xhttps://www.gap-system.org[107X[133X
-  
-  [33X[0;0YThere you will find, amongst other things[133X
+  [33X[0;0YInformation   about   [5XGAP[105X   is   best   obtained   from   the   [5XGAP[105X  website
+  [7Xhttps://www.gap-system.org[107X. There you will find, amongst other things:[133X
   
   [30X    [33X[0;6Ydirections  to  the  sites from which you can download the current [5XGAP[105X
         distribution, all accepted and deposited [5XGAP[105X packages, and a selection
@@ -316,5 +313,5 @@
   
   [33X[0;0YThe GAP Group,[133X
   
-  [33X[0;0Y19-Jun-2019[133X
+  [33X[0;0Y29-Feb-2020[133X
   

@@ -1,9 +1,12 @@
 #############################################################################
 ##
-#W  ghomfp.gd                   GAP library                  Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
-#Y  (C) 2000 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 
 ############################################################################
@@ -229,7 +232,7 @@ DeclareGlobalFunction("KuKGenerators");
 ##  [ f1^2, f2^3, (f1*f2)^5, f1*f3^-1 ]
 ##  ]]></Example>
 ##  <P/>
-##  <Ref Func="IsomorphismSimplifiedFpGroup"/> uses Tietze transformations
+##  <Ref Attr="IsomorphismSimplifiedFpGroup"/> uses Tietze transformations
 ##  to simplify the presentation, see <Ref Sect="SimplifiedFpGroup"/>.
 ##  </Description>
 ##  </ManSection>
@@ -353,8 +356,3 @@ DeclareGlobalFunction("LargerQuotientBySubgroupAbelianization");
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction("ProcessEpimorphismToNewFpGroup");
-
-#############################################################################
-##
-#E
-

@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  basismut.gd                 GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file declares the categories and operations for mutable bases.
 ##  <#GAPDoc Label="[1]{basismut}">
@@ -17,7 +18,7 @@
 ##  stabilizer chains, which are (mutable or immutable) records that do not
 ##  need to know about the groups they describe,
 ##  whereas each (immutable) basis stores the underlying left module
-##  (see&nbsp;<Ref Func="UnderlyingLeftModule"/>).
+##  (see&nbsp;<Ref Attr="UnderlyingLeftModule"/>).
 ##  <P/>
 ##  So immutable bases and mutable bases are different categories of objects.
 ##  The only thing they have in common is that one can ask both for
@@ -31,11 +32,11 @@
 ##  hence these objects are unable to store attribute values.
 ##  <P/>
 ##  Basic operations for immutable bases are
-##  <Ref Func="NrBasisVectors"/>, <Ref Func="IsContainedInSpan"/>,
-##  <Ref Func="CloseMutableBasis"/>,
-##  <Ref Func="ImmutableBasis"/>,
-##  <Ref Func="Coefficients"/>, and <Ref Func="BasisVectors"/>.
-##  <Ref Func="ShallowCopy"/> for a mutable basis returns a mutable
+##  <Ref Oper="NrBasisVectors"/>, <Ref Oper="IsContainedInSpan"/>,
+##  <Ref Oper="CloseMutableBasis"/>,
+##  <Ref Oper="ImmutableBasis"/>,
+##  <Ref Oper="Coefficients"/>, and <Ref Attr="BasisVectors"/>.
+##  <Ref Oper="ShallowCopy"/> for a mutable basis returns a mutable
 ##  plain list containing the current basis vectors.
 ##  <!-- Also <Ref Attr="LeftActingDomain"/> (or the analogy for it) should be a basic-->
 ##  <!-- operation; up to now, apparantly one can avoid it,-->
@@ -217,24 +218,33 @@ DeclareOperation( "ImmutableBasis", [ IsMutableBasis, IsFreeLeftModule ] );
 ##
 ##  <Description>
 ##  For a mutable basis <A>MB</A> over the coefficient ring <M>R</M>, say,
-##  and a vector <A>v</A>, <C>CloseMutableBasis</C> changes <A>MB</A> such that afterwards
-##  it describes the <M>R</M>-span of the former basis vectors together with <A>v</A>.
+##  and a vector <A>v</A>, <Ref Oper="CloseMutableBasis"/> changes <A>MB</A>
+##  such that afterwards it describes the <M>R</M>-span of the former
+##  basis vectors together with <A>v</A>.
 ##  <P/>
 ##  <E>Note</E> that if <A>v</A> enlarges the dimension then this does in general <E>not</E>
 ##  mean that <A>v</A> is simply added to the basis vectors of <A>MB</A>.
 ##  Usually a linear combination of <A>v</A> and the other basis vectors is added,
 ##  and also the old basis vectors may be modified, for example in order to
-##  keep the list of basis vectors echelonized (see&nbsp;<Ref Func="IsSemiEchelonized"/>).
+##  keep the list of basis vectors echelonized
+##  (see&nbsp;<Ref Prop="IsSemiEchelonized"/>).
+##  <P/>
+##  <Ref Oper="CloseMutableBasis"/> returns <K>false</K> if <A>v</A> was
+##  already in the <M>R</M>-span described by <A>MB</A>,
+##  and <K>true</K> if <A>MB</A> got extended.
 ##  <Example><![CDATA[
 ##  gap> MB:= MutableBasis( Rationals, [ [ 1, 1, 3 ], [ 2, 2, 1 ] ] );
 ##  <mutable basis over Rationals, 2 vectors>
 ##  gap> IsContainedInSpan( MB, [ 1, 0, 0 ] );
 ##  false
 ##  gap> CloseMutableBasis( MB, [ 1, 0, 0 ] );
+##  true
 ##  gap> MB;
 ##  <mutable basis over Rationals, 3 vectors>
 ##  gap> IsContainedInSpan( MB, [ 1, 0, 0 ] );
 ##  true
+##  gap> CloseMutableBasis( MB, [ 1, 0, 0 ] );
+##  false
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -262,9 +272,3 @@ DeclareOperation( "CloseMutableBasis",
 ##  <#/GAPDoc>
 ##
 DeclareOperation( "IsContainedInSpan", [ IsMutableBasis, IsVector ] );
-
-
-#############################################################################
-##
-#E
-

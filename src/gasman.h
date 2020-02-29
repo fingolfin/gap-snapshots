@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  gasman.h                    GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares  the functions of  Gasman,  the  GAP  storage manager.
 **
@@ -43,8 +43,6 @@
 **
 *T  Bag . . . . . . . . . . . . . . . . . . . type of the identifier of a bag
 **
-**  'Bag'
-**
 **  Each bag is identified by its  *bag identifier*.  That  is each bag has a
 **  bag identifier and no  two live bags have the  same identifier.  'Bag' is
 **  the type of bag identifiers.
@@ -81,16 +79,14 @@ typedef UInt * *        Bag;
 typedef struct {
     uint8_t type : 8;
     uint8_t flags : 8;
-#if SIZEOF_VOID_P == 8
-    uint64_t size : 48;
-#elif SIZEOF_VOID_P == 4
-    uint16_t reserved : 16;
-    uint32_t size : 32;
-#endif
+    // the following unnamed field ensures that on 32 bit systems,
+    // the 'size' field is aligned to a 32 bit boundary
+    uint16_t : (sizeof(UInt) == 8) ? 0 : 16;
+    uint64_t size : (sizeof(UInt) == 8) ? 48 : 32;
 #ifdef USE_GASMAN
     Bag link;
 #endif
-#if defined(MEMORY_CANARY)
+#if defined(GAP_MEMORY_CANARY)
     // The following variable is marked as not readable or writable
     // in valgrind, to check for code reading before the start of a Bag.
     uint64_t memory_canary_padding[8];
@@ -115,7 +111,8 @@ enum {
 **
 **  'BAG_HEADER' returns the header of the bag with the identifier <bag>.
 */
-static inline BagHeader * BAG_HEADER(Bag bag) {
+EXPORT_INLINE BagHeader * BAG_HEADER(Bag bag)
+{
     GAP_ASSERT(bag);
     return (((BagHeader *)*bag) - 1);
 }
@@ -137,7 +134,8 @@ static inline BagHeader * BAG_HEADER(Bag bag) {
 **  to  call  to  mark all subbags  of a  given bag (see "InitMarkFuncBags").
 **  Apart from that {\Gasman} does not care at all about types.
 */
-static inline UInt TNUM_BAG(Bag bag) {
+EXPORT_INLINE UInt TNUM_BAG(Bag bag)
+{
     return BAG_HEADER(bag)->type;
 }
 
@@ -157,28 +155,28 @@ static inline UInt TNUM_BAG(Bag bag) {
 **  To test that all of them are set, compare the result to the original
 **  flags, e.g.
 **
-**  	if (TEST_BAG_FLAG(obj, FLAG1 | FLAG2 ) == (FLAG1 | FLAG2)) ...
+**      if (TEST_BAG_FLAG(obj, FLAG1 | FLAG2 ) == (FLAG1 | FLAG2)) ...
 **
 **  Similary, if you wish to test that FLAG1 is set and FLAG2 is not set,
 **  use:
 **
-**  	if (TEST_BAG_FLAG(obj, FLAG1 | FLAG2 ) == FLAG1) ...
+**      if (TEST_BAG_FLAG(obj, FLAG1 | FLAG2 ) == FLAG1) ...
 **
 **  Each flag must be a an integer with exactly one bit set, e.g. a value
 **  of the form (1 << i). Currently, 'i' must be in the range from 0 to
 **  7 (inclusive).
 */
-static inline uint8_t TEST_BAG_FLAG(Bag bag, uint8_t flag)
+EXPORT_INLINE uint8_t TEST_BAG_FLAG(Bag bag, uint8_t flag)
 {
     return BAG_HEADER(bag)->flags & flag;
 }
 
-static inline void SET_BAG_FLAG(Bag bag, uint8_t flag)
+EXPORT_INLINE void SET_BAG_FLAG(Bag bag, uint8_t flag)
 {
     BAG_HEADER(bag)->flags |= flag;
 }
 
-static inline void CLEAR_BAG_FLAG(Bag bag, uint8_t flag)
+EXPORT_INLINE void CLEAR_BAG_FLAG(Bag bag, uint8_t flag)
 {
     BAG_HEADER(bag)->flags &= ~flag;
 }
@@ -192,7 +190,7 @@ static inline void CLEAR_BAG_FLAG(Bag bag, uint8_t flag)
 **
 **  See also 'IS_INTOBJ' and 'IS_FFE'.
 */
-static inline Int IS_BAG_REF(Obj bag)
+EXPORT_INLINE Int IS_BAG_REF(Obj bag)
 {
     return bag && !((Int)bag & 0x03);
 }
@@ -201,8 +199,6 @@ static inline Int IS_BAG_REF(Obj bag)
 /****************************************************************************
 **
 *F  SIZE_BAG(<bag>) . . . . . . . . . . . . . . . . . . . . . . size of a bag
-**
-**  'SIZE_BAG( <bag> )'
 **
 **  'SIZE_BAG' returns  the  size of the bag   with the identifier  <bag> in
 **  bytes.
@@ -213,7 +209,7 @@ static inline Int IS_BAG_REF(Obj bag)
 **  the size of a bag when it allocates it with 'NewBag' and may later change
 **  it with 'ResizeBag' (see "NewBag" and "ResizeBag").
 */
-static inline UInt SIZE_BAG(Bag bag) {
+EXPORT_INLINE UInt SIZE_BAG(Bag bag) {
     return BAG_HEADER(bag)->size;
 }
 
@@ -227,7 +223,7 @@ static inline UInt SIZE_BAG(Bag bag) {
 **  atomic operations that require a memory barrier in between dereferencing
 **  the bag pointer and accessing the contents of the bag.
 */
-static inline UInt SIZE_BAG_CONTENTS(const void *ptr) {
+EXPORT_INLINE UInt SIZE_BAG_CONTENTS(const void *ptr) {
     return ((const BagHeader *)ptr)[-1].size;
 }
 
@@ -249,8 +245,6 @@ static inline UInt SIZE_BAG_CONTENTS(const void *ptr) {
 /****************************************************************************
 **
 *F  PTR_BAG(<bag>)  . . . . . . . . . . . . . . . . . . . .  pointer to a bag
-**
-**  'PTR_BAG( <bag> )'
 **
 **  'PTR_BAG' returns the address of the data area of the bag with identifier
 **  <bag>.  Using  this pointer the application  can then  read data from the
@@ -299,19 +293,19 @@ static inline UInt SIZE_BAG_CONTENTS(const void *ptr) {
 **  the application  must inform {\Gasman}  that it  has changed  the bag, by
 **  calling 'CHANGED_BAG(old)' in the above example (see "CHANGED_BAG").
 */
-static inline Bag *PTR_BAG(Bag bag)
+EXPORT_INLINE Bag *PTR_BAG(Bag bag)
 {
     GAP_ASSERT(bag != 0);
     return *(Bag**)bag;
 }
 
-static inline const Bag *CONST_PTR_BAG(Bag bag)
+EXPORT_INLINE const Bag *CONST_PTR_BAG(Bag bag)
 {
     GAP_ASSERT(bag != 0);
-    return *(const Bag**)bag;
+    return *(const Bag * const *)bag;
 }
 
-static inline void SET_PTR_BAG(Bag bag, Bag *val)
+EXPORT_INLINE void SET_PTR_BAG(Bag bag, Bag *val)
 {
     GAP_ASSERT(bag != 0);
     *(Bag**)bag = val;
@@ -321,8 +315,6 @@ static inline void SET_PTR_BAG(Bag bag, Bag *val)
 /****************************************************************************
 **
 *F  CHANGED_BAG(<bag>)  . . . . . . . .  notify Gasman that a bag has changed
-**
-**  'CHANGED_BAG( <bag> )'
 **
 **  'CHANGED_BAG'  informs {\Gasman} that the bag   with identifier <bag> has
 **  been changed by an assignment of another bag identifier.
@@ -358,7 +350,7 @@ static inline void SET_PTR_BAG(Bag bag, Bag *val)
 
 #if defined(USE_BOEHM_GC)
 
-static inline void CHANGED_BAG(Bag bag)
+EXPORT_INLINE void CHANGED_BAG(Bag bag)
 {
 }
 
@@ -368,27 +360,25 @@ void CHANGED_BAG(Bag bag);
 
 int IsGapObj(void *);
 
-#elif defined(MEMORY_CANARY)
+#elif defined(GAP_MEMORY_CANARY)
 
 /****************************************************************************
 **
-**  MEMORY_CANARY provides (basic) support for catching out-of-bounds memory
-**  problems in GAP. This is done through the excellent 'valgrind' program.
-**  valgrind is of limited use in GAP normally, because it doesn't understand
-**  GAP's memory manager. Enabling MEMORY_CANARY will make an executable where
-**  valgrind will detect memory issues.
+**  GAP_MEMORY_CANARY provides (basic) support for catching out-of-bounds
+**  memory problems in GAP. This is done through the excellent 'valgrind'
+**  program. Valgrind is of limited use in GAP normally, because it doesn't
+**  understand GAP's memory manager. Enabling GAP_MEMORY_CANARY will make an
+**  executable where valgrind will detect memory issues.
 **
-**  At the moment the detection is limited to only writing off the last allocated
-**  block.
 */
 
-extern void CHANGED_BAG(Bag b);
+void CHANGED_BAG(Bag b);
 
 #elif defined(USE_GASMAN)
 
 extern Bag * YoungBags;
 extern Bag   ChangedBags;
-static inline void CHANGED_BAG(Bag bag)
+EXPORT_INLINE void CHANGED_BAG(Bag bag)
 {
     if (CONST_PTR_BAG(bag) <= YoungBags && LINK_BAG(bag) == bag) {
         LINK_BAG(bag) = ChangedBags;
@@ -406,8 +396,6 @@ static inline void CHANGED_BAG(Bag bag)
 /****************************************************************************
 **
 *F  NewBag(<type>,<size>) . . . . . . . . . . . . . . . .  allocate a new bag
-**
-**  'NewBag( <type>, <size> )'
 **
 **  'NewBag' allocates a new bag  of type <type> and  <size> bytes.  'NewBag'
 **  returns the  identifier  of the new  bag,  which must be  passed as first
@@ -445,14 +433,12 @@ static inline void CHANGED_BAG(Bag bag)
 **  areas of all bags may  change.  So you  must not keep any  pointers to or
 **  into the data areas of bags over calls to 'NewBag' (see "PTR_BAG").
 */
-extern  Bag             NewBag (
-            UInt                type,
-            UInt                size );
+Bag NewBag(UInt type, UInt size);
 
 
 // NewWordSizedBag is the same as NewBag, except it rounds 'size' up to
 // the next multiple of sizeof(UInt)
-static inline Bag NewWordSizedBag(UInt type, UInt size)
+EXPORT_INLINE Bag NewWordSizedBag(UInt type, UInt size)
 {
     UInt padding = 0;
     if(size % sizeof(UInt) != 0) {
@@ -464,8 +450,6 @@ static inline Bag NewWordSizedBag(UInt type, UInt size)
 /****************************************************************************
 **
 *F  RetypeBag(<bag>,<new>)  . . . . . . . . . . . .  change the type of a bag
-**
-**  'RetypeBag( <bag>, <new> )'
 **
 **  'RetypeBag' changes the type of the bag with identifier <bag>  to the new
 **  type <new>.  The identifier, the size,  and also the  address of the data
@@ -485,23 +469,34 @@ static inline Bag NewWordSizedBag(UInt type, UInt size)
 **  data stored in the bag makes sense when the  bag is interpreted  as a bag
 **  of type <type>.
 */
-extern  void            RetypeBag (
-            Bag                 bag,
-            UInt                new_type );
+void RetypeBag(Bag bag, UInt new_type);
 
 #ifdef HPCGAP
-extern  void            RetypeBagIfWritable (
-            Bag                 bag,
-            UInt                new_type );
+void RetypeBagIfWritable(Bag bag, UInt new_type);
 #else
 #define RetypeBagIfWritable(x,y)     RetypeBag(x,y)
 #endif
 
+
+/****************************************************************************
+**
+**  'RetypeBagSM' works like 'RetypeBag', but ensures that the given bag
+**  returns the same mutability (SM).
+**
+**  FIXME: for now, this checks the tnums; later, this will be turned
+**  into a check for an object flag
+*/
+void RetypeBagSM(Bag bag, UInt new_type);
+#ifdef HPCGAP
+void RetypeBagSMIfWritable(Bag bag, UInt new_type);
+#else
+#define RetypeBagSMIfWritable(x,y)   RetypeBagSM(x,y)
+#endif
+
+
 /****************************************************************************
 **
 *F  ResizeBag(<bag>,<new>)  . . . . . . . . . . . .  change the size of a bag
-**
-**  'ResizeBag( <bag>, <new> )'
 **
 **  'ResizeBag' changes the size of the bag with  identifier <bag> to the new
 **  size <new>.  The identifier  of the bag  does not change, but the address
@@ -528,13 +523,11 @@ extern  void            RetypeBagIfWritable (
 **  data areas of all bags may change.  So you must not keep  any pointers to
 **  or into the data areas of bags over calls to 'ResizeBag' (see "PTR_BAG").
 */
-extern  UInt            ResizeBag (
-            Bag                 bag,
-            UInt                new_size );
+UInt ResizeBag(Bag bag, UInt new_size);
 
 // ResizedWordSizedBag is the same as ResizeBag, except it round 'size'
 // up to the next multiple of sizeof(UInt)
-static inline UInt ResizeWordSizedBag(Bag bag, UInt size)
+EXPORT_INLINE UInt ResizeWordSizedBag(Bag bag, UInt size)
 {
     UInt padding = 0;
     if(size % sizeof(UInt) != 0) {
@@ -547,8 +540,6 @@ static inline UInt ResizeWordSizedBag(Bag bag, UInt size)
 /****************************************************************************
 **
 *F  CollectBags(<size>,<full>)  . . . . . . . . . . . . . . collect dead bags
-**
-**  'CollectBags( <size>, <full> )'
 **
 **  'CollectBags' performs a  garbage collection.  This means  it deallocates
 **  the dead   bags and  compacts the  live   bags at the  beginning   of the
@@ -566,108 +557,32 @@ static inline UInt ResizeWordSizedBag(Bag bag, UInt size)
 **  of all bags may change.  So you must not keep any pointers to or into the
 **  data areas of bags over calls to 'CollectBags' (see "PTR_BAG").
 */
-extern  UInt            CollectBags (
-            UInt                size,
-            UInt                full );
+UInt CollectBags(UInt size, UInt full);
 
 
 /****************************************************************************
 **
 *F  SwapMasterPoint( <bag1>, <bag2> ) . . . swap pointer of <bag1> and <bag2>
 */
-extern void SwapMasterPoint (
-    Bag                 bag1,
-    Bag                 bag2 );
+void SwapMasterPoint(Bag bag1, Bag bag2);
 
 
 /****************************************************************************
 **
-*V  NrAllBags . . . . . . . . . . . . . . . . .  number of all bags allocated
 *V  SizeAllBags . . . . . . . . . . . . . .  total size of all bags allocated
-*V  NrLiveBags  . . . . . . . . . .  number of bags that survived the last gc
-*V  SizeLiveBags  . . . . . . .  total size of bags that survived the last gc
-*V  NrDeadBags  . . . . . . . number of bags that died since the last full gc
-*V  SizeDeadBags  . . . . total size of bags that died since the last full gc
-**
-**  'NrAllBags'
-**
-**  'NrAllBags' is the number of bags allocated since Gasman was initialized.
-**  It is incremented for each 'NewBag' call.
-**
-**  'SizeAllBags'
 **
 **  'SizeAllBags'  is the  total  size  of bags   allocated since Gasman  was
 **  initialized.  It is incremented for each 'NewBag' call.
-**
-**  'NrLiveBags'
-**
-**  'NrLiveBags' is the number of bags that were  live after the last garbage
-**  collection.  So after a full  garbage collection it is simply  the number
-**  of bags that have been found to be still live by this garbage collection.
-**  After a partial garbage collection it is the sum of the previous value of
-**  'NrLiveBags', which is the number  of live old  bags, and  the number  of
-**  bags that  have been found to  be still live  by this garbage collection,
-**  which is  the number of live   young  bags.   This  value  is used in the
-**  information messages,  and to find  out  how  many  free  identifiers are
-**  available.
-**
-**  'SizeLiveBags'
-**
-**  'SizeLiveBags' is  the total size of bags  that were  live after the last
-**  garbage collection.  So after a full garbage  collection it is simply the
-**  total size of bags that have been found to  be still live by this garbage
-**  collection.  After  a partial  garbage  collection it  is the sum  of the
-**  previous value of  'SizeLiveBags', which is the total   size of live  old
-**  bags, and the total size of bags that have been found to be still live by
-**  this garbage  collection,  which is  the  total size of  live young bags.
-**  This value is used in the information messages.
-**
-**  'NrDeadBags'
-**
-**  'NrDeadBags' is  the number of bags that died since the last full garbage
-**  collection.   So after a  full garbage  collection this is zero.  After a
-**  partial  garbage  collection it  is  the  sum  of the  previous value  of
-**  'NrDeadBags' and the  number of bags that  have been found to be dead  by
-**  this garbage collection.  This value is used in the information messages.
-**
-**  'SizeDeadBags'
-**
-**  'SizeDeadBags' is  the total size  of bags that  died since the last full
-**  garbage collection.  So  after a full   garbage collection this  is zero.
-**  After a partial garbage collection it is the sum of the previous value of
-**  'SizeDeadBags' and the total size of bags that have been found to be dead
-**  by  this garbage  collection.   This  value  is used  in the  information
-**  message.
-**
-**  'NrHalfDeadBags'
-** 
-**  'NrHalfDeadBags'  is  the number of  bags  that  have  been  found to  be
-**  reachable only by way of weak pointers since the last garbage collection.
-**  The bodies of these bags are deleted, but their identifiers are marked so
-**  that weak pointer objects can recognize this situation.  
 */
-
-extern  UInt                    NrAllBags;
-extern  UInt8                   SizeAllBags;
-extern  UInt                    NrLiveBags;
-extern  UInt                    SizeLiveBags;
-extern  UInt                    NrDeadBags;
-extern  UInt8                   SizeDeadBags;
-extern  UInt                    NrHalfDeadBags;
+extern UInt8 SizeAllBags;
 
 
 /****************************************************************************
 **
 *V  InfoBags[<type>]  . . . . . . . . . . . . . . . . .  information for bags
 **
-**  'InfoBags[<type>]'
-**
 **  'InfoBags[<type>]'  is a structure containing information for bags of the
 **  type <type>.
-**
-**  'InfoBags[<type>].name' is the name of the type <type>.   Note that it is
-**  the responsibility  of  the  application using  {\Gasman}   to enter this
-**  name.
 **
 **  'InfoBags[<type>].nrLive' is the number of  bags of type <type> that  are
 **  currently live.
@@ -684,99 +599,24 @@ extern  UInt                    NrHalfDeadBags;
 **  This  information is only  kept if {\Gasman} is  compiled with the option
 **  'COUNT_BAGS' defined.
 */
-typedef struct  {
-    const Char *            name;
 #ifdef COUNT_BAGS
+typedef struct  {
     UInt                    nrLive;
     UInt                    nrAll;
     UInt                    sizeLive;
     UInt                    sizeAll;
-#endif
 } TNumInfoBags;
 
 extern  TNumInfoBags            InfoBags [ 256 ];
+#endif
 
 
 #ifdef HPCGAP
 void MakeBagTypePublic(int type);
-Bag MakeBagPublic(Bag bag);
-Bag MakeBagReadOnly(Bag bag);
+Bag  MakeBagPublic(Bag bag);
+Bag  MakeBagReadOnly(Bag bag);
 #endif
 
-/****************************************************************************
-**
-*F  InitMsgsFuncBags(<msgs-func>) . . . . . . . . .  install message function
-**
-**  'InitMsgsFuncBags( <msgs-func> )'
-**
-**  'InitMsgsFuncBags' installs the function <msgs-func> as function used  by
-**  {\Gasman} to print messages during garbage collections.  <msgs-func> must
-**  be a function of  three 'unsigned  long'  arguments <full>,  <phase>, and
-**  <nr>.   <msgs-func> should format  this information and  display it in an
-**  appropriate way.   In fact you will usually  want to ignore  the messages
-**  for partial  garbage collections, since there are  so many  of those.  If
-**  you do not install a  messages  function  with  'InitMsgsFuncBags',  then
-**  'CollectBags' will be silent.
-**
-**  If <full> is 1, the current garbage collection is a full one.  If <phase>
-**  is 0, the garbage collection has just started and  <nr> should be ignored
-**  in this case.  If <phase> is 1 respectively 2, the garbage collection has
-**  completed the mark phase  and <nr> is  the total number  respectively the
-**  total  size of live bags.   If <phase> is  3  respectively 4, the garbage
-**  collection  has completed  the  sweep  phase,   and <nr>  is   the number
-**  respectively the total size of bags that died since the last full garbage
-**  collection.  If <phase> is  5 respectively 6,  the garbage collection has
-**  completed the check phase   and <nr> is    the size of the free   storage
-**  respectively the size of the workspace.  All sizes are measured in KByte.
-**
-**  If  <full> is 0,  the current garbage  collection  is a  partial one.  If
-**  <phase> is 0, the garbage collection has just  started and <nr> should be
-**  ignored  in  this  case.  If  <phase>  is 1  respectively 2,  the garbage
-**  collection  has   completed the  mark   phase  and  <nr>   is the  number
-**  respectively the  total size  of bags allocated  since  the last  garbage
-**  collection that  are still  live.   If <phase> is  3 respectively  4, the
-**  garbage collection has completed  the sweep phase and  <nr> is the number
-**  respectively the   total size of   bags allocated since  the last garbage
-**  collection that are already dead (thus the sum of the values from phase 1
-**  and 3  is the  total number of   bags  allocated since the  last  garbage
-**  collection).  If <phase> is 5 respectively 6,  the garbage collection has
-**  completed the  check phase  and <nr>  is   the size of  the  free storage
-**  respectively the size of the workspace.  All sizes are measured in KByte.
-**
-**  The message  function  should display   the information  for each   phase
-**  immediatly, i.e.,  by calling 'flush' if the  output device is a file, so
-**  that the user has some indication how much time each phase used.
-**
-**  For example {\GAP} displays messages for  full garbage collections in the
-**  following form{\:}
-**
-**    #G  FULL  47601/ 2341KB live  70111/ 5361KB dead   1376/ 4096KB free
-**
-**  where 47601 is the total number of bags surviving the garbage collection,
-**  using 2341 KByte, 70111 is  the total number  of bags that died since the
-**  last full garbage  collection, using 5361  KByte, 1376 KByte are free and
-**  the total size of the workspace is 4096 KByte.
-**
-**  And partial garbage collections are displayed in  {\GAP} in the following
-**  form{\:}
-**
-**    #G  PART     34/   41KB+live   3016/  978KB+dead   1281/ 4096KB free
-**
-**  where  34 is the  number of young bags that  were live after this garbage
-**  collection, all the old bags survived it  anyhow, using 41 KByte, 3016 is
-**  the number of young bags that died since  the last garbage collection, so
-**  34+3016 is the  number  of bags allocated  between  the last two  garbage
-**  collections, using 978 KByte and the other two numbers are as above.
-*/
-#ifdef USE_GASMAN
-typedef void            (* TNumMsgsFuncBags) (
-            UInt                full,
-            UInt                phase,
-            Int                 nr );
-
-extern  void            InitMsgsFuncBags (
-            TNumMsgsFuncBags    msgs_func );
-#endif
 
 /****************************************************************************
 **
@@ -800,8 +640,11 @@ extern  void            InitMsgsFuncBags (
 **  {\Gasman} already provides several marking functions, see below.
 */
 typedef void (* TNumMarkFuncBags )( Bag bag );
-extern void InitMarkFuncBags( UInt type, TNumMarkFuncBags mark_func );
+void InitMarkFuncBags(UInt type, TNumMarkFuncBags mark_func);
 
+#if !defined(USE_THREADSAFE_COPYING) && !defined(USE_BOEHM_GC)
+extern TNumMarkFuncBags TabMarkFuncBags[NUM_TYPES];
+#endif
 
 /****************************************************************************
 **
@@ -812,7 +655,7 @@ extern void InitMarkFuncBags( UInt type, TNumMarkFuncBags mark_func );
 **  simply returns.  For example   in  {\GAP} the  bags for   large  integers
 **  contain only the digits and no identifiers of bags.
 */
-extern void MarkNoSubBags( Bag bag );
+void MarkNoSubBags(Bag bag);
 
 
 /****************************************************************************
@@ -826,17 +669,15 @@ extern void MarkNoSubBags( Bag bag );
 **  the indicated number as bag identifiers as their initial entries.
 **  These functions mark those subbags and return.
 */
-extern void MarkOneSubBags( Bag bag );
-extern void MarkTwoSubBags( Bag bag );
-extern void MarkThreeSubBags( Bag bag );
-extern void MarkFourSubBags( Bag bag );
+void MarkOneSubBags(Bag bag);
+void MarkTwoSubBags(Bag bag);
+void MarkThreeSubBags(Bag bag);
+void MarkFourSubBags(Bag bag);
 
 
 /****************************************************************************
 **
 *F  MarkAllSubBags(<bag>) . . . . . .  marking function that marks everything
-**
-**  'MarkAllSubBags( <bag> )'
 **
 **  'MarkAllSubBags'  is  the marking function  for  types whose bags contain
 **  only identifier of other bags.  It marks every entry of such a bag.  Note
@@ -850,11 +691,11 @@ extern void MarkFourSubBags( Bag bag );
 **  bag identifiers for the elements  of the  list or 0   if an entry has  no
 **  assigned value.
 */
-extern void MarkAllSubBags( Bag bag );
+void MarkAllSubBags(Bag bag);
 
-extern void MarkAllSubBagsDefault ( Bag );
+void MarkAllSubBagsDefault(Bag);
 
-extern void MarkAllButFirstSubBags( Bag bag );
+void MarkAllButFirstSubBags(Bag bag);
 
 /****************************************************************************
 **
@@ -869,16 +710,13 @@ extern void MarkAllButFirstSubBags( Bag bag );
 **  harm in  calling 'MarkBag' for  something   that is not actually  a  bag
 **  identifier.
 */
-extern void MarkBag( Bag bag );
-
-
-/****************************************************************************
-**
-**  MARK_BAG is provided for backwards compatibility with existing code. New
-**  code should use MarkBag directly instead.
-**
-*/
-#define MARK_BAG(bag)   MarkBag(bag)
+#ifdef USE_BOEHM_GC
+EXPORT_INLINE void MarkBag( Bag bag )
+{
+}
+#else
+void MarkBag(Bag bag);
+#endif
 
 
 /****************************************************************************
@@ -893,9 +731,7 @@ extern void MarkArrayOfBags(const Bag array[], UInt count);
 
 /****************************************************************************
 **
-*F  InitGlobalBag(<addr>) . . . . . inform Gasman about global bag identifier
-**
-**  'InitGlobalBag( <addr>, <cookie> )'
+*F  InitGlobalBag(<addr>,<cookie>)  inform Gasman about global bag identifier
 **
 **  'InitGlobalBag'  informs {\Gasman} that there is  a bag identifier at the
 **  address <addr>, which must be of  type '(Bag\*)'.  {\Gasman} will look at
@@ -916,16 +752,12 @@ extern void MarkArrayOfBags(const Bag array[], UInt count);
 **  after a save and load
 */
 
-extern void InitGlobalBag (
-            Bag *               addr,
-            const Char *        cookie );
+void InitGlobalBag(Bag * addr, const Char * cookie);
 
 
 /****************************************************************************
 **
 *F  InitFreeFuncBag(<type>,<free-func>) . . . . . .  install freeing function
-**
-**  'InitFreeFuncBag( <type>, <free-func> )'
 **
 **  'InitFreeFuncBag' installs  the function <free-func>  as freeing function
 **  for bags of type <type>.
@@ -945,50 +777,46 @@ extern void InitGlobalBag (
 typedef void            (* TNumFreeFuncBags ) (
             Bag                 bag );
 
-extern  void            InitFreeFuncBag (
-            UInt                type,
-            TNumFreeFuncBags    free_func );
+void InitFreeFuncBag(UInt type, TNumFreeFuncBags free_func);
 
 
 /****************************************************************************
 **
-*F  InitCollectFuncBags(<bfr-func>,<aft-func>) . install collection functions
+*F  RegisterBeforeCollectFuncBags(<func>)  install before-collection function
+*F  RegisterAfterCollectFuncBags(<func>) .  install after-collection function
 **
-**  'InitCollectFuncBags( <before-func>, <after-func> )'
+**  Register a callback to be called before respectively after each garbage
+**  collection.
 **
-**  'InitCollectFuncBags' installs       the   functions  <before-func>   and
-**  <after-func> as collection functions.
+**  One use of a <before-func> is to call 'CHANGED_BAG' for bags that change
+**  very often, so you do not have to call 'CHANGED_BAG' for them every time
+**  they change.
 **
-**  The  <before-func> will be  called   before each garbage collection,  the
-**  <after-func>  will be called after each  garbage  collection.  One use of
-**  the   <before-func> is to  call 'CHANGED_BAG'  for bags  that change very
-**  often, so you do not have to call 'CHANGED_BAG'  for them every time they
-**  change.  One use of the <after-func> is to update a pointer for a bag, so
-**  you do not have to update that pointer after every operation that might
-**  cause a garbage collection.
+**  One use of after-collection callbacks is to update a pointer for a bag,
+**  so you do not have to update that pointer after every operation that
+**  might cause a garbage collection.
+**
+**  The number of callbacks which can be registered is limited. If the
+**  callback was successfully registered, 0 is returned, otherwise 1.
 */
 #ifdef USE_GASMAN
 typedef void            (* TNumCollectFuncBags) ( void );
 
-extern  void            InitCollectFuncBags (
-            TNumCollectFuncBags before_func,
-            TNumCollectFuncBags after_func );
-
-extern void SetStackBottomBags(void * StackBottom);
+int RegisterBeforeCollectFuncBags(TNumCollectFuncBags func);
+int RegisterAfterCollectFuncBags(TNumCollectFuncBags func);
 #endif
+
 
 // ExtraMarkFuncBags, if not NULL, is called during garbage collection
 // This is used for integrating GAP (possibly linked as a shared library) with
 // other code bases which use their own form of garbage collection. For
 // example, with Python (for SageMath).
 typedef void (*TNumExtraMarkFuncBags)(void);
-extern void SetExtraMarkFuncBags(TNumExtraMarkFuncBags func);
+void SetExtraMarkFuncBags(TNumExtraMarkFuncBags func);
 
 /****************************************************************************
 **
-*F  InitBags(...) . . . . . . . . . . . . . . . . . . . . . initialize Gasman
-**
-**  InitBags( <initialSize>, <stackStart>, <stackAlign> )
+*F  InitBags(<initialSize>,<stackStart>,<stackAlign>) . . . initialize Gasman
 **
 **  'InitBags'  initializes {\Gasman}.  It  must be called from a application
 **  using {\Gasman} before any bags can be allocated.
@@ -1010,22 +838,17 @@ extern void SetExtraMarkFuncBags(TNumExtraMarkFuncBags func);
 **  only be at addresses that are a multiple of 'sizeof(Bag)'. This value
 **  depends on the machine, the operating system, and the compiler.
 */
-extern void InitBags(UInt initialSize, Bag * stackStart, UInt stackAlign);
+void InitBags(UInt initialSize, Bag * stackStart, UInt stackAlign);
+
 
 /****************************************************************************
 **
 *F  FinishBags() end GASMAN and free memory
 */
-
-extern void FinishBags( void );
+void FinishBags(void);
 
 #if !defined(USE_GASMAN)
-void *AllocateMemoryBlock(UInt size);
-#endif
-
-
-#ifdef GAP_MEM_CHECK
-Int enableMemCheck(Char ** argv, void * dummy);
+void * AllocateMemoryBlock(UInt size);
 #endif
 
 #endif // GAP_GASMAN_H

@@ -239,6 +239,73 @@
   [33X[0;0YThe  function  [2XDifferenceBlist[102X ([14X22.3-3[114X) is the nondestructive counterpart to
   [2XSubtractBlist[102X.[133X
   
+  [1X22.4-5 FlipBlist[101X
+  
+  [33X[1;0Y[29X[2XFlipBlist[102X( [3Xblist[103X ) [32X function[133X
+  
+  [33X[0;0YChanges  every  entry  in [3Xblist[103X that equals [9Xtrue[109X to [9Xfalse[109X and vice versa. If
+  [10Xblist1[110X  and  [10Xblist2[110X  are  boolean lists with equal length and every value in
+  [10Xblist2[110X  is  [9Xtrue[109X,  then  [10XFlipBlist( blist1 )[110X is equivalent to [10XSubtractBlist(
+  blist2,  blist1 ); blist1 := blist2;[110X but [10XFlipBlist[110X is faster, and simpler to
+  type.[133X
+  
+  [33X[0;0Y[2XFlipBlist[102X returns nothing, it is only called to change [3Xblist[103X in-place.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xblist1 := [ true, true, true, true ];;[127X[104X
+    [4X[25Xgap>[125X [27Xblist2 := [ true, false, true, false ];;[127X[104X
+    [4X[25Xgap>[125X [27XSubtractBlist( blist1, blist2 );[127X[104X
+    [4X[25Xgap>[125X [27Xblist1;[127X[104X
+    [4X[28X[ false, true, false, true ][128X[104X
+    [4X[25Xgap>[125X [27XFlipBlist( blist2 );[127X[104X
+    [4X[25Xgap>[125X [27Xblist2;[127X[104X
+    [4X[28X[ false, true, false, true ][128X[104X
+  [4X[32X[104X
+  
+  [1X22.4-6 SetAllBlist[101X
+  
+  [33X[1;0Y[29X[2XSetAllBlist[102X( [3Xblist[103X ) [32X function[133X
+  
+  [33X[0;0YChanges every entry in [3Xblist[103X to [9Xtrue[109X. If [10Xblist1[110X and [10Xblist2[110X are boolean lists
+  with  equal  length  and  every  value  in [10Xblist2[110X is [9Xtrue[109X, then [10XSetAllBlist(
+  blist1  )[110X  is equivalent to [10XUniteBlist( blist1, blist2 );[110X but is faster, and
+  simpler to type.[133X
+  
+  [33X[0;0Y[2XSetAllBlist[102X returns nothing, it is only called to change [3Xblist[103X in-place.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xblist1 := [ true, true, true, true ];;[127X[104X
+    [4X[25Xgap>[125X [27Xblist2 := [ true, false, true, false ];;[127X[104X
+    [4X[25Xgap>[125X [27XSetAllBlist( blist1 );[127X[104X
+    [4X[25Xgap>[125X [27Xblist1;[127X[104X
+    [4X[28X[ true, true, true, true ][128X[104X
+    [4X[25Xgap>[125X [27XSetAllBlist(blist2);[127X[104X
+    [4X[25Xgap>[125X [27Xblist2;[127X[104X
+    [4X[28X[ true, true, true, true ][128X[104X
+  [4X[32X[104X
+  
+  [1X22.4-7 ClearAllBlist[101X
+  
+  [33X[1;0Y[29X[2XClearAllBlist[102X( [3Xblist[103X ) [32X function[133X
+  
+  [33X[0;0YChanges  every  entry  in  [3Xblist[103X  to [9Xfalse[109X. If [10Xblist1[110X and [10Xblist2[110X are boolean
+  lists   with  equal  length  and  every  value  in  [10Xblist2[110X  is  [9Xfalse[109X,  then
+  [10XClearAllBlist(  blist1  )[110X is equivalent to [10XIntersectBlist( blist1, blist2 );[110X
+  but is faster, and simpler to type.[133X
+  
+  [33X[0;0Y[2XClearAllBlist[102X returns nothing, it is only called to change [3Xblist[103X in-place.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xblist1 := [ true, true, true, true ];;[127X[104X
+    [4X[25Xgap>[125X [27Xblist2 := [ true, false, true, false ];;[127X[104X
+    [4X[25Xgap>[125X [27XClearAllBlist( blist1 );[127X[104X
+    [4X[25Xgap>[125X [27Xblist1;[127X[104X
+    [4X[28X[ false, false, false, false ][128X[104X
+    [4X[25Xgap>[125X [27XClearAllBlist(blist2);[127X[104X
+    [4X[25Xgap>[125X [27Xblist2;[127X[104X
+    [4X[28X[ false, false, false, false ][128X[104X
+  [4X[32X[104X
+  
   
   [1X22.5 [33X[0;0YMore about Boolean Lists[133X[101X
   

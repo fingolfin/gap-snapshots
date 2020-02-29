@@ -1,0 +1,51 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Introduction}}{4}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Abstract and Notation}}{4}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}\leavevmode {\color {Chapter }The natural action of crystallographic groups}}{4}{subsection.1.1.1}
+\contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }Requirements}}{5}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}\leavevmode {\color {Chapter }Recommendation concerning polymake}}{5}{subsection.1.2.1}
+\contentsline {section}{\numberline {1.3}\leavevmode {\color {Chapter }Global Variables}}{5}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}\leavevmode {\color {Chapter }InfoHAPcryst}}{5}{subsection.1.3.1}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Bits and Pieces}}{6}{chapter.2}
+\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }Matrices and Vectors}}{6}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}\leavevmode {\color {Chapter }SignRat}}{6}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}\leavevmode {\color {Chapter }VectorModOne}}{6}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}\leavevmode {\color {Chapter }IsSquareMat}}{6}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}\leavevmode {\color {Chapter }DimensionSquareMat}}{6}{subsection.2.1.4}
+\contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter }Affine Matrices OnRight}}{7}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}\leavevmode {\color {Chapter }LinearPartOfAffineMatOnRight}}{7}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}\leavevmode {\color {Chapter }BasisChangeAffineMatOnRight}}{7}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}\leavevmode {\color {Chapter }TranslationOnRightFromVector}}{7}{subsection.2.2.3}
+\contentsline {section}{\numberline {2.3}\leavevmode {\color {Chapter }Geometry}}{8}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}\leavevmode {\color {Chapter }GramianOfAverageScalarProductFromFiniteMatrixGroup}}{8}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}\leavevmode {\color {Chapter }Inequalities}}{8}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}\leavevmode {\color {Chapter }BisectorInequalityFromPointPair}}{8}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.4}\leavevmode {\color {Chapter }WhichSideOfHyperplane}}{8}{subsection.2.3.4}
+\contentsline {subsection}{\numberline {2.3.5}\leavevmode {\color {Chapter }RelativePositionPointAndPolygon}}{9}{subsection.2.3.5}
+\contentsline {section}{\numberline {2.4}\leavevmode {\color {Chapter }Space Groups}}{9}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}\leavevmode {\color {Chapter }PointGroupRepresentatives}}{9}{subsection.2.4.1}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Algorithms of Orbit-Stabilizer Type}}{10}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Orbit Stabilizer for Crystallographic Groups}}{10}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }OrbitStabilizerInUnitCubeOnRight}}{10}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}\leavevmode {\color {Chapter }OrbitStabilizerInUnitCubeOnRightOnSets}}{11}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}\leavevmode {\color {Chapter }OrbitPartInVertexSetsStandardSpaceGroup}}{11}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {3.1.4}\leavevmode {\color {Chapter }OrbitPartInFacesStandardSpaceGroup}}{12}{subsection.3.1.4}
+\contentsline {subsection}{\numberline {3.1.5}\leavevmode {\color {Chapter }OrbitPartAndRepresentativesInFacesStandardSpaceGroup}}{12}{subsection.3.1.5}
+\contentsline {subsection}{\numberline {3.1.6}\leavevmode {\color {Chapter }StabilizerOnSetsStandardSpaceGroup}}{12}{subsection.3.1.6}
+\contentsline {subsection}{\numberline {3.1.7}\leavevmode {\color {Chapter }RepresentativeActionOnRightOnSets}}{13}{subsection.3.1.7}
+\contentsline {subsection}{\numberline {3.1.8}\leavevmode {\color {Chapter }Getting other orbit parts}}{13}{subsection.3.1.8}
+\contentsline {subsection}{\numberline {3.1.9}\leavevmode {\color {Chapter }ShiftedOrbitPart}}{13}{subsection.3.1.9}
+\contentsline {subsection}{\numberline {3.1.10}\leavevmode {\color {Chapter }TranslationsToOneCubeAroundCenter}}{13}{subsection.3.1.10}
+\contentsline {subsection}{\numberline {3.1.11}\leavevmode {\color {Chapter }TranslationsToBox}}{13}{subsection.3.1.11}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Resolutions of Crystallographic Groups}}{15}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Fundamental Domains}}{15}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\leavevmode {\color {Chapter }FundamentalDomainStandardSpaceGroup}}{15}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\leavevmode {\color {Chapter }FundamentalDomainBieberbachGroup}}{15}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}\leavevmode {\color {Chapter }FundamentalDomainFromGeneralPointAndOrbitPartGeometric}}{17}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}\leavevmode {\color {Chapter }IsFundamentalDomainStandardSpaceGroup}}{17}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.5}\leavevmode {\color {Chapter }IsFundamentalDomainBieberbachGroup}}{17}{subsection.4.1.5}
+\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }Face Lattice and Resolution}}{18}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\leavevmode {\color {Chapter }ResolutionBieberbachGroup}}{18}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}\leavevmode {\color {Chapter }FaceLatticeAndBoundaryBieberbachGroup}}{18}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}\leavevmode {\color {Chapter }ResolutionFromFLandBoundary}}{19}{subsection.4.2.3}
+\contentsline {chapter}{References}{21}{chapter*.4}
+\contentsline {chapter}{Index}{22}{section*.5}

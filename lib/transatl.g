@@ -1,11 +1,14 @@
 #############################################################################
 ##
-#W  transatl.g                  GAP library                  Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2005 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
-##  This file contains synonym declarations for function sthat are spelled
+##  This file contains synonym declarations for functions that are spelled
 ##  differently on different sides of the Atlantic, such as
 ##  `Stabilizer/Stabiliser' and `Solvable/Soluble'.
 ##

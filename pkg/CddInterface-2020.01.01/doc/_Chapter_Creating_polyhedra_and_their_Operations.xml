@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Creating_polyhedra_and_their_Operations">
+<Heading>Creating polyhedra and their Operations</Heading>
+
+<Section Label="Chapter_Creating_polyhedra_and_their_Operations_Section_Creating_a_polyhedron">
+<Heading>Creating a polyhedron</Heading>
+
+<ManSection>
+  <Func Arg="ineq [, linearities_list ]" Name="Cdd_PolyhedronByInequalities" />
+ <Returns>a CddPolyhedron
+</Returns>
+ <Description>
+ The function takes a list in which every entry represents an inequality (or equality).
+ In case we want some entries to represent equalities we should refer  
+ in a second list to their indices.
+ </Description>
+</ManSection>
+
+
+<#Include Label="Example1">
+
+<ManSection>
+  <Func Arg="genes[, linearities_list ]" Name="Cdd_PolyhedronByGenerators" />
+ <Returns>a CddPolyhedron
+</Returns>
+ <Description>
+ The function takes a list in which every entry represents a vertex in the ambient vector space.
+ In case we want some vertices to be free (the vertex and its negative belong to the polyhedron) we should refer 
+ in a second list to their indices . 
+ </Description>
+</ManSection>
+
+
+<#Include Label="Example2">
+
+</Section>
+
+
+<Section Label="Chapter_Creating_polyhedra_and_their_Operations_Section_Some_operations_on_a_polyhedron">
+<Heading>Some operations on a polyhedron</Heading>
+
+<ManSection>
+  <Oper Arg="P, i" Name="Cdd_FourierProjection" Label="for IsCddPolyhedron, IsInt"/>
+ <Returns>a CddPolyhedron
+</Returns>
+ <Description>
+ The function returns the Fourier projection of the polyhedron in the subspace <Math>(O,x_1,\dots,x_{i-1},x_{i+1},\dots,x_n)</Math> after applying the Fourier elemination algorithm to get rid of the variable <Math>x_{i}</Math>.
+ </Description>
+</ManSection>
+
+
+<#Include Label="Fourier">
+
+</Section>
+
+
+<Section Label="Chapter_Creating_polyhedra_and_their_Operations_Section_Some_operations_on_two_polyhedrons">
+<Heading>Some operations on two polyhedrons</Heading>
+
+<ManSection>
+  <Oper Arg="P1, P2" Name="Cdd_IsContained" Label="for IsCddPolyhedron, IsCddPolyhedron"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+ The function returns <C>true</C> if <Math>P_1</Math> is contained in <Math>P_2</Math>, otherwise returns <C>false</C>.
+ </Description>
+</ManSection>
+
+
+<#Include Label="comparing_polyhedrons">
+
+<ManSection>
+  <Oper Arg="P1, P2" Name="Cdd_Intersection" Label="for IsCddPolyhedron, IsCddPolyhedron"/>
+ <Returns>a CddPolyhedron
+</Returns>
+ <Description>
+ The function returns the intersection of <Math>P_1</Math> and <Math>P_2</Math>
+ </Description>
+</ManSection>
+
+
+<#Include Label="intersection">
+
+<ManSection>
+  <Oper Arg="P1, P2" Name="\+" Label="for IsCddPolyhedron, IsCddPolyhedron"/>
+ <Returns>a CddPolyhedron
+</Returns>
+ <Description>
+ The function returns the Minkuwski sum of <Math>P_1</Math> and <Math>P_2</Math>.
+ </Description>
+</ManSection>
+
+
+<#Include Label="minkuwski">
+
+</Section>
+
+
+</Chapter>
+

@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  sgpres.gd                  GAP library                     Volkmar Felsch
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Volkmar Felsch.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the declarations for finitely presented groups
 ##  (fp groups).
@@ -331,7 +332,7 @@ DeclareOperation( "AugmentedCosetTableNormalClosure", [ IsGroup, IsGroup ] );
 ##  returns a coset table for the action of <A>G</A> on the cosets of
 ##  <A>H</A>.
 ##  The columns of the table correspond to the
-##  <Ref Func="GeneratorsOfGroup"/> value of <A>G</A>.
+##  <Ref Attr="GeneratorsOfGroup"/> value of <A>G</A>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -589,7 +590,7 @@ PresentationNormalClosure := PresentationNormalClosureRrs;
 ##  (see there for details),
 ##  the function <Ref Func="PresentationSubgroupMtc"/> returns a list of the
 ##  primary subgroup generators of <A>H</A> in the attribute
-##  <Ref Func="PrimaryGeneratorWords"/> of <M>P</M>.
+##  <Ref Attr="PrimaryGeneratorWords"/> of <M>P</M>.
 ##  In fact, this list is not very exciting here
 ##  because it is just a shallow copy of the value of
 ##  <Ref Func="GeneratorsOfPresentation"/> of <A>H</A>, however it is
@@ -724,7 +725,7 @@ DeclareGlobalFunction("PresentationSubgroupMtc");
 ##  Hence, all we need in addition is a list of words in the generators of
 ##  <A>G</A> which express the primary subgroup generators.
 ##  In fact, such a list is provided in the attribute
-##  <Ref Func="PrimaryGeneratorWords"/> of the resulting presentation.
+##  <Ref Attr="PrimaryGeneratorWords"/> of the resulting presentation.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1042,8 +1043,3 @@ DeclareGlobalFunction("CopiedAugmentedCosetTable");
 DeclareGlobalFunction("NEWTC_CosetEnumerator");
 DeclareGlobalFunction("NEWTC_PresentationMTC");
 DeclareGlobalFunction("NEWTC_CyclicSubgroupOrder");
-
-#############################################################################
-##  
-#E
-

@@ -1,10 +1,5 @@
-#############################################################################
-##
-#W  semipperm.tst
-#Y  James D. Mitchell
-##
-#############################################################################
-##
+#@local BruteForceInverseCheck,BruteForceIsoCheck,I,PPermDisplayLimit
+#@local PPermNotation,S,inv,x,f,T
 
 #
 gap> START_TEST("semipperm.tst");
@@ -86,6 +81,9 @@ gap> RankOfPartialPermSemigroup(S);
 gap> S := Group(PartialPerm([]));;
 gap> RankOfPartialPermSemigroup(S);
 0
+gap> S := Group([], PartialPerm([1, 2]));;
+gap> RankOfPartialPermSemigroup(S);
+2
 
 # Test Domain/ImageOfPartialPermCollection/Semigroup
 gap> S := Semigroup(PartialPerm([1, 2, 3], [4, 5, 11]), 

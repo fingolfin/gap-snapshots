@@ -1,8 +1,11 @@
 /****************************************************************************
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002-2018 The GAP Group
+**  This file is part of GAP, a system for computational discrete algebra.
+**
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
+**
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file implements functions and variables related to memory management,
 **  for use by GASMAN.
@@ -35,7 +38,9 @@ Int SyStorOverrun;
 Int SyStorKill;
 Int SyStorMin;
 
+#if defined(USE_GASMAN)
 UInt SyAllocPool;
+#endif
 
 
 /****************************************************************************
@@ -142,9 +147,6 @@ void SyMsgsBags (
     }
     /* package (window) mode full garbage collection messages              */
     if ( phase != 0 ) {
-      shifted =   3 <= phase && nr >= (1 << 21);
-      if (shifted)
-        nr *= 1024;
       cmd[0] = '@';
       cmd[1] = ( full ? '0' : ' ' ) + phase;
       cmd[2] = '\0';
@@ -153,13 +155,12 @@ void SyMsgsBags (
         str[i++] = '0' + (nr % 10);
       str[i++] = '+';
       str[i++] = '\0';
-      if (shifted)
-        str[i++] = 'k';
       syWinPut( 1, cmd, str );
     }
 }
 
 
+#if defined(USE_GASMAN)
 
 /****************************************************************************
 **
@@ -184,9 +185,14 @@ static inline UInt SyRoundUpToPagesize(UInt x)
     return r == 0 ? x : x - r + pagesize;
 }
 
-void *     POOL = NULL;
-UInt * * * syWorkspace = NULL;
-UInt       syWorksize = 0;
+static void *   POOL = NULL;
+static UInt *** syWorkspace = NULL;
+static UInt     syWorksize = 0;
+
+static inline UInt *** EndOfWorkspace(void)
+{
+    return syWorkspace + syWorksize * (1024 / sizeof(UInt **));
+}
 
 #ifdef GAP_MEM_CHECK
 
@@ -240,7 +246,7 @@ static int order_pointers(const void * a, const void * b)
     }
 }
 
-void * SyAnonMMap(size_t size)
+static void * SyAnonMMap(size_t size)
 {
     size = SyRoundUpToPagesize(size);
     membufSize = size;
@@ -275,11 +281,16 @@ int SyTryToIncreasePool(void)
     return -1;
 }
 
-#else
+#elif defined(HAVE_MADVISE)
 
-#ifdef HAVE_MADVISE
 #ifndef MAP_ANONYMOUS
 #define MAP_ANONYMOUS MAP_ANON
+#endif
+
+#ifdef SYS_IS_CYGWIN32
+#define GAP_MMAP_FLAGS MAP_PRIVATE|MAP_ANONYMOUS|MAP_NORESERVE
+#else
+#define GAP_MMAP_FLAGS MAP_PRIVATE|MAP_ANONYMOUS
 #endif
 
 static void *SyMMapStart = NULL;   /* Start of mmap'ed region for POOL */
@@ -292,7 +303,7 @@ void SyMAdviseFree(void) {
     void *from;
     if (!SyMMapStart) 
         return;
-    from = (char *) syWorkspace + syWorksize * 1024;
+    from = EndOfWorkspace();
     from = (void *)SyRoundUpToPagesize((UInt) from);
     if (from > SyMMapAdvised) {
         SyMMapAdvised = from;
@@ -323,34 +334,33 @@ void SyMAdviseFree(void) {
      * Maybe we do want to do this until it breaks to avoid questions
      * by users...
      */
-#ifndef NO_DIRTY_OSX_MMAP_TRICK
-#ifdef SYS_IS_DARWIN
+#if !defined(NO_DIRTY_OSX_MMAP_TRICK) && defined(SYS_IS_DARWIN)
     if (mmap(from, size, PROT_NONE,
             MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED, -1, 0) != from) {
-        Panic("gap: OS X trick to free pages did not work, bye!");
+        Panic("OS X trick to free pages did not work!");
     }
     if (mmap(from, size, PROT_READ|PROT_WRITE,
             MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED, -1, 0) != from) {
-        Panic("gap: OS X trick to free pages did not work, bye!");
+        Panic("OS X trick to free pages did not work!!");
     }
-#endif
 #endif
 }
 
-void *SyAnonMMap(size_t size) {
+static void * SyAnonMMap(size_t size)
+{
     void *result;
     size = SyRoundUpToPagesize(size);
 #ifdef SYS_IS_64_BIT
     /* The following is at 16 Terabyte: */
-    result = mmap((void *) (16L*1024*1024*1024*1024), size, 
-                  PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
+    result = mmap((void *) (16L*1024*1024*1024*1024), size,
+                  PROT_READ|PROT_WRITE, GAP_MMAP_FLAGS, -1, 0);
     if (result == MAP_FAILED) {
         result = mmap(NULL, size, PROT_READ|PROT_WRITE,
-            MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
+            GAP_MMAP_FLAGS, -1, 0);
     }
 #else
     result = mmap(NULL, size, PROT_READ|PROT_WRITE,
-        MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
+        GAP_MMAP_FLAGS, -1, 0);
 #endif
     if (result == MAP_FAILED)
         result = NULL;
@@ -360,7 +370,7 @@ void *SyAnonMMap(size_t size) {
     return result;
 }
 
-int SyTryToIncreasePool(void)
+static int SyTryToIncreasePool(void)
 /* This tries to increase the pool size by a factor of 3/2, if this
  * worked, then 0 is returned, otherwise -1. */
 {
@@ -371,7 +381,7 @@ int SyTryToIncreasePool(void)
     size = (Int) SyMMapEnd - (Int) SyMMapStart;
     newchunk = SyRoundUpToPagesize(size/2);
     result = mmap(SyMMapEnd, newchunk, PROT_READ|PROT_WRITE,
-                  MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
+                  GAP_MMAP_FLAGS, -1, 0);
     if (result == MAP_FAILED) return -1;
     if (result != SyMMapEnd) {
         munmap(result,newchunk);
@@ -385,21 +395,22 @@ int SyTryToIncreasePool(void)
 
 #else
 
-void SyMAdviseFree(void) {
+static void SyMAdviseFree(void)
+{
     /* do nothing */
 }
 
-int SyTryToIncreasePool(void)
+static int SyTryToIncreasePool(void)
 {
     return -1;   /* Refuse */
 }
 
-#endif
-#endif
+#endif // defined(GAP_MEM_CHECK)
 
-int halvingsdone = 0;
 
-void SyInitialAllocPool( void )
+static int halvingsdone = 0;
+
+static void SyInitialAllocPool(void)
 {
 #ifdef HAVE_SYSCONF
 #ifdef _SC_PAGESIZE
@@ -424,7 +435,7 @@ void SyInitialAllocPool( void )
        halvingsdone++;
        if (SyDebugLoading) fputs("gap: halving pool size.\n", stderr);
        if (SyAllocPool < 16*1024*1024) {
-           Panic("gap: cannot allocate initial memory, bye.");
+           Panic("cannot allocate initial memory");
        }
    } while (1);   /* Is left by break */
 
@@ -433,32 +444,30 @@ void SyInitialAllocPool( void )
    /* Now both syWorkspace and SyAllocPool are aligned to pagesize */
 }
 
-UInt ***SyAllocBagsFromPool(Int size, UInt need)
+static UInt *** SyAllocBagsFromPool(Int size, UInt need)
 {
   /* get the storage, but only if we stay within the bounds              */
   /* if ( (0 < size && syWorksize + size <= SyStorMax) */
   /* first check if we would get above SyStorKill, if yes exit! */
   if ( need < 2 && SyStorKill != 0 && 0 < size 
                 && SyStorKill < syWorksize + size ) {
-      Panic("gap: will not extend workspace above -K limit, bye!");
+      Panic("will not extend workspace above -K limit!");
   }
   if (size > 0) {
     while ((syWorksize+size)*1024 > SyAllocPool) {
         if (SyTryToIncreasePool()) return (UInt***)-1;
     }
-    return (UInt***)((char*)syWorkspace + syWorksize*1024);
+    return EndOfWorkspace();
   }
   else if  (size < 0 && (need >= 2 || SyStorMin <= syWorksize + size))
-    return (UInt***)((char*)syWorkspace + syWorksize*1024);
+    return EndOfWorkspace();
   else
     return (UInt***)-1;
 }
 
 #if defined(HAVE_SBRK) && !defined(HAVE_VM_ALLOCATE) /* prefer `vm_allocate' over `sbrk' */
 
-UInt * * * SyAllocBags (
-    Int                 size,
-    UInt                need )
+UInt *** SyAllocBags(Int size, UInt need)
 {
     UInt * * *          ret;
     UInt adjust = 0;
@@ -488,7 +497,7 @@ UInt * * * SyAllocBags (
         /* first check if we would get above SyStorKill, if yes exit! */
         if ( need < 2 && SyStorKill != 0 && 0 < size && 
              SyStorKill < syWorksize + size ) {
-            Panic("gap: will not extend workspace above -K limit, bye!");
+            Panic("will not extend workspace above -K limit!");
         }
         if (0 < size )
           {
@@ -497,15 +506,14 @@ UInt * * * SyAllocBags (
               {
                 ret = (UInt ***)sbrk(1024*1024*1024);
                 if (ret != (UInt ***)-1  && 
-                    ret != (UInt***)((char*)syWorkspace + syWorksize*1024))
+                    ret != EndOfWorkspace())
                   {
                     sbrk(-1024*1024*1024);
                     ret = (UInt ***)-1;
                   }
                 if (ret == (UInt ***)-1)
                   break;
-                memset((void *)((char *)syWorkspace + syWorksize*1024), 0, 
-                       1024*1024*1024);
+                memset(EndOfWorkspace(), 0, 1024*1024*1024);
                 size -= 1024*1024;
                 syWorksize += 1024*1024;
                 adjust++;
@@ -513,13 +521,13 @@ UInt * * * SyAllocBags (
 #endif
             ret = (UInt ***)sbrk(size*1024);
             if (ret != (UInt ***)-1  && 
-                ret != (UInt***)((char*)syWorkspace + syWorksize*1024))
+                ret != EndOfWorkspace())
               {
                 sbrk(-size*1024);
                 ret = (UInt ***)-1;
               }
             if (ret != (UInt ***)-1)
-              memset((void *)((char *)syWorkspace + syWorksize*1024), 0, 
+              memset(EndOfWorkspace(), 0, 
                      1024*size);
             
           }
@@ -555,7 +563,7 @@ UInt * * * SyAllocBags (
 
     /* test if the allocation failed                                       */
     if ( ret == (UInt***)-1 && need ) {
-        Panic("gap: cannot extend the workspace any more!");
+        Panic("cannot extend the workspace any more!");
     }
     /* if we de-allocated the whole workspace then remember this */
     if (syWorksize == 0)
@@ -586,7 +594,7 @@ UInt * * * SyAllocBags (
 #define task_self mach_task_self
 #endif
 
-vm_address_t syBase;
+static vm_address_t syBase;
  
 UInt * * * SyAllocBags (
     Int                 size,
@@ -607,17 +615,17 @@ UInt * * * SyAllocBags (
     else {
         if ( SyStorKill != 0 && 0 < size && SyStorKill < 1024*(syWorksize + size) ) {
             if (need) {
-                Panic("gap: will not extend workspace above -K limit, bye!");
+                Panic("will not extend workspace above -K limit!");
             }  
         }
         /* check that <size> is divisible by <vm_page_size>                    */
         else if ( size*1024 % vm_page_size != 0 ) {
-            Panic("gap: memory block size is not a multiple of vm_page_size");
+            Panic("memory block size is not a multiple of vm_page_size");
         }
 
         /* check that we don't try to shrink uninitialized memory                */
         else if ( size <= 0 && syBase == 0 ) {
-            Panic("gap: trying to shrink uninitialized vm memory");
+            Panic("trying to shrink uninitialized vm memory");
         }
 
         /* allocate memory anywhere on first call                              */
@@ -648,14 +656,14 @@ UInt * * * SyAllocBags (
 
         /* test if the allocation failed                                       */
         if ( ret == (UInt***)-1 && need ) {
-            Panic("gap: cannot extend the workspace any more!!");
+            Panic("cannot extend the workspace any more!!");
         }
     }
 
     /* otherwise return the result (which could be 0 to indicate failure)  */
     if ( ret == (UInt***)-1 ){
         if (need) {
-            Panic("gap: cannot extend the workspace any more!!!");
+            Panic("cannot extend the workspace any more!!!");
         }
         return (UInt***) 0;
     } 
@@ -670,3 +678,6 @@ UInt * * * SyAllocBags (
 }
 
 #endif
+
+
+#endif // defined(USE_GASMAN)

@@ -251,7 +251,7 @@
 
 <p><code class="func">PartialPermOp</code> returns the partial permutation that corresponds to the action of the object <var class="Arg">obj</var> on the domain or list <var class="Arg">list</var> via the function <var class="Arg">func</var>. If the optional third argument <var class="Arg">func</var> is not specified, then the action <code class="func">OnPoints</code> (<a href="chap41.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>) is used by default. Note that the returned partial permutation refers to the positions in <var class="Arg">list</var> even if <var class="Arg">list</var> itself consists of integers.</p>
 
-<p>This function is the analogue in the context of partial permutations of <code class="func">Permutation</code> (<span class="RefLink">Reference: Permutation for a group, an action domain, etc.</span>) or <code class="func">TransformationOp</code> (<a href="chap53.html#X7C2A3FC9782F2099"><span class="RefLink">53.2-5</span></a>).</p>
+<p>This function is the analogue in the context of partial permutations of <code class="func">Permutation</code> (<a href="chap41.html#X7807A33381DCAB26"><span class="RefLink">41.9-1</span></a>) or <code class="func">TransformationOp</code> (<a href="chap53.html#X7C2A3FC9782F2099"><span class="RefLink">53.2-5</span></a>).</p>
 
 <p>If <var class="Arg">obj</var> does not map the elements of <var class="Arg">list</var> injectively, then <code class="keyw">fail</code> is returned.</p>
 
@@ -814,7 +814,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; One</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>Returns: A partial permutation.</p>
 
-<p>As described in <code class="func">OneImmutable</code> (<span class="RefLink">Reference: OneImmutable</span>), <code class="code">One</code> returns the multiplicative neutral element of the partial permutation <var class="Arg">f</var>, which is the identity partial permutation on the union of the domain and image of <var class="Arg">f</var>. Equivalently, the one of <var class="Arg">f</var> is the join of the right one and left one of <var class="Arg">f</var>.</p>
+<p>As described in <code class="func">OneImmutable</code> (<a href="chap31.html#X8046262384895B2A"><span class="RefLink">31.10-2</span></a>), <code class="code">One</code> returns the multiplicative neutral element of the partial permutation <var class="Arg">f</var>, which is the identity partial permutation on the union of the domain and image of <var class="Arg">f</var>. Equivalently, the one of <var class="Arg">f</var> is the join of the right one and left one of <var class="Arg">f</var>.</p>
 
 
 <div class="example"><pre>
@@ -829,7 +829,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MultiplicativeZero</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>Returns: The empty partial permutation.</p>
 
-<p>As described in <code class="func">MultiplicativeZero</code> (<span class="RefLink">Reference: MultiplicativeZero</span>), <code class="code">Zero</code> returns the multiplicative zero element of the partial permutation <var class="Arg">f</var>, which is the empty partial permutation.</p>
+<p>As described in <code class="func">MultiplicativeZero</code> (<a href="chap35.html#X7B39F93C8136D642"><span class="RefLink">35.4-11</span></a>), <code class="code">Zero</code> returns the multiplicative zero element of the partial permutation <var class="Arg">f</var>, which is the empty partial permutation.</p>
 
 
 <div class="example"><pre>
@@ -1370,7 +1370,7 @@ false</pre></div>
 
 <dl>
 <dt><strong class="Mark">Partial permutation semigroups</strong></dt>
-<dd><p>If <var class="Arg">S</var> is a partial permutation semigroup that does not satisfy <code class="func">IsMonoid</code> (<span class="RefLink">Reference: IsMonoid</span>) but where <code class="code">MultiplicativeNeutralElement(<var class="Arg">S</var>)&lt;&gt;fail</code>, then <code class="code">IsomorphismPartialPermMonoid(<var class="Arg">S</var>)</code> returns an isomorphism from <var class="Arg">S</var> to an inverse monoid of partial permutations.</p>
+<dd><p>If <var class="Arg">S</var> is a partial permutation semigroup that does not satisfy <code class="func">IsMonoid</code> (<a href="chap51.html#X861C523483C6248C"><span class="RefLink">51.2-1</span></a>) but where <code class="code">MultiplicativeNeutralElement(<var class="Arg">S</var>)&lt;&gt;fail</code>, then <code class="code">IsomorphismPartialPermMonoid(<var class="Arg">S</var>)</code> returns an isomorphism from <var class="Arg">S</var> to an inverse monoid of partial permutations.</p>
 
 </dd>
 <dt><strong class="Mark">Permutation groups</strong></dt>

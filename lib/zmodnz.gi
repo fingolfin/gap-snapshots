@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  zmodnz.gi                   GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains methods for the elements of the rings $Z / n Z$
 ##  in their representation via the residue modulo $n$.
@@ -413,7 +414,7 @@ InstallMethod( \/,
     q := QuotientMod( Integers, x![1], y![1],
                  Fam!.Characteristic );
     if q = fail then
-        return fail;
+        Error("invalid division");
     fi;
     return ZmodnZObj( Fam, q );
     end );
@@ -427,7 +428,7 @@ InstallMethod( \/,
     q := QuotientMod( Integers, x![1], y,
                  Fam!.Characteristic );
     if q = fail then
-        return fail;
+        Error("invalid division");
     fi;
     return ZmodnZObj( Fam, q );
     end );
@@ -441,7 +442,7 @@ InstallMethod( \/,
     q := QuotientMod( Integers, x, y![1],
                  Fam!.Characteristic );
     if q = fail then
-        return fail;
+        Error("invalid division");
     fi;
     return ZmodnZObj( Fam, q );
     end );
@@ -657,6 +658,64 @@ end);
 
 #############################################################################
 ##
+#M  EuclideanDegree( <R>, <n> )
+##
+##  For an overview on the theory of euclidean rings which are not domains,
+##  see Pierre Samuel, "About Euclidean rings", J. Algebra, 1971 vol. 19 pp. 282-301.
+##  http://dx.doi.org/10.1016/0021-8693(71)90110-4
+
+InstallMethod( EuclideanDegree,
+    "for Z/nZ and an element in Z/nZ",
+    IsCollsElms,
+    [ IsZmodnZObjNonprimeCollection and IsWholeFamily and IsRing, IsZmodnZObj and IsModulusRep ],
+    function ( R, n )
+      return GcdInt( n![1], Characteristic( n ) );
+    end );
+
+
+#############################################################################
+##
+#M  QuotientRemainder( <R>, <n>, <m> )
+##
+InstallMethod( QuotientRemainder,
+    "for Z/nZ and two elements in Z/nZ",
+    IsCollsElmsElms,
+    [ IsZmodnZObjNonprimeCollection and IsWholeFamily and IsRing,
+      IsZmodnZObj and IsModulusRep, IsZmodnZObj and IsModulusRep ],
+    function ( R, n, m )
+    local u, s, q, r;
+    u := StandardAssociateUnit(R, m);
+    s := u * m; # the standard associate of m
+    q := QuoInt(n![1], s![1]);
+    r := n![1] - q * s![1];
+    return [ ZmodnZObj( FamilyObj( n ), (q * u![1]) mod Characteristic(R) ),
+             ZmodnZObj( FamilyObj( n ), r ) ];
+    end );
+
+
+#############################################################################
+##
+#M  Quotient( <R>, <n>, <m> ) . . . . . . . . . . . . . . . for `IsZmodnZObj'
+##
+InstallMethod( Quotient,
+    "for Z/nZ and two elements in Z/nZ",
+    IsCollsElmsElms,
+    [ IsZmodnZObjNonprimeCollection and IsWholeFamily and IsRing,
+      IsZmodnZObj and IsModulusRep, IsZmodnZObj and IsModulusRep ],
+    function ( R, x, y )
+    local Fam, q;
+    Fam := FamilyObj( x );
+    q := QuotientMod( Integers, x![1], y![1],
+                 Fam!.Characteristic );
+    if q = fail then
+        return fail;
+    fi;
+    return ZmodnZObj( Fam, q );
+    end );
+
+
+#############################################################################
+##
 #M  StandardAssociate( <r> )
 ##
 InstallMethod( StandardAssociate,
@@ -665,7 +724,7 @@ InstallMethod( StandardAssociate,
     [ IsZmodnZObjNonprimeCollection and IsWholeFamily and IsRing, IsZmodnZObj and IsModulusRep ],
     function ( R, r )
       local m, n;
-      m := ModulusOfZmodnZObj( r );
+      m := Characteristic( r );
       n := GcdInt( r![1], m );
       return ZmodnZObj( FamilyObj( r ), n );
     end );
@@ -679,19 +738,64 @@ InstallMethod( StandardAssociateUnit,
     IsCollsElms,
     [ IsZmodnZObjNonprimeCollection and IsWholeFamily and IsRing, IsZmodnZObj and IsModulusRep ],
     function ( R, r )
-      local m, n;
-      m := ModulusOfZmodnZObj( r );
+      local m, n, u, pd, p, d, e, x, residues, moduli;
+      # zero is associated to itself, so return identity
       if r![1] = 0 then
-        n := 1;
-      else
-        n := QuotientMod(GcdInt( r![1], m ), r![1], m);
+        return ZmodnZObj( FamilyObj( r ), 1 );
       fi;
-      return ZmodnZObj( FamilyObj( r ), n );
+      m := Characteristic( r );
+      # divide input by its standard associate
+      n := r![1] / GcdInt( r![1], m );
+      # we really need the "inverse" of n, i.e., a unit u such that r*u is
+      # equal to the standard associate. If n is a unit (i.e., coprime to the
+      # modulus m), we can invert it and use that as u:
+      if GcdInt( n, m ) = 1 then
+        u := (1 / n) mod m;
+        return ZmodnZObj( FamilyObj( r ), u );
+      fi;
+      # otherwise, first factor the modulus m into a product of prime powers,
+      # m = p_1^{d_1} \cdots p_k^{d_k}. Then compute the StandardAssociateUnit
+      # modulo each p_i^{d_i}; then finally use the Chinese Remainder Theorem
+      # to combine these back together.
+      residues := [];
+      moduli := [];
+      for pd in Collected(Factors(Integers, m)) do
+        p := pd[1];
+        d := pd[2];
+        pd := p^d;
+        if n mod p = 0 then
+            # if n is divisible by p, then in fact r![1] is divisible by p^d,
+            # i.e., it is 0 mod p^d, and we can choose 1 as the
+            # StandardAssociateUnit (mod p^d)
+            x := 1;
+        else
+            # if n is not divisible by p, we can invert it modulo p^d to get
+            # the StandardAssociateUnit (mod p^d)
+            x := 1 / n mod pd;
+        fi;
+        Add( residues, x );
+        Add( moduli, pd );
+      od;
+      u := ChineseRem( moduli, residues );
+      return ZmodnZObj( FamilyObj( r ), u );
     end );
 
 
 #############################################################################
 ##
+#M  IsAssociated( <R>, <n>, <m> )
+##
+InstallMethod( IsAssociated,
+    "for Z/nZ and two elements in Z/nZ",
+    IsCollsElmsElms,
+    [ IsZmodnZObjNonprimeCollection and IsWholeFamily and IsRing,
+      IsZmodnZObj and IsModulusRep, IsZmodnZObj and IsModulusRep ],
+    function ( R, n, m )
+      R := Characteristic( n );
+      return GcdInt( n![1], R ) = GcdInt( m![1], R );
+    end );
+
+
 ##  2. The collections
 ##
 
@@ -789,13 +893,13 @@ InstallMethod( PrintObj,
 InstallMethod( AsList,
     "for full ring Z/nZ",
     [ IsZmodnZObjNonprimeCollection and IsWholeFamily ],
-    RankFilter( IsRing ),
+    {} -> RankFilter( IsRing ),
     AsSSortedList );
 
 InstallMethod( AsSSortedList,
     "for full ring Z/nZ",
     [ IsZmodnZObjNonprimeCollection and IsWholeFamily ],
-    RankFilter( IsRing ),
+    {} -> RankFilter( IsRing ),
     function( R )
     local F;
     F:= ElementsFamily( FamilyObj( R ) );
@@ -812,9 +916,9 @@ InstallMethod( AsSSortedList,
 InstallMethodWithRandomSource(Random,
     "for a random source and full ring Z/nZ",
     [ IsRandomSource, IsZmodnZObjNonprimeCollection and IsWholeFamily ],
-    RankFilter( IsRing ),
+    {} -> RankFilter( IsRing ),
     { rs, R } -> ZmodnZObj( ElementsFamily( FamilyObj( R ) ),
-                    Random( rs, [ 0 .. Size( R ) - 1 ] ) ) );
+                    Random( rs, 0, Size( R ) - 1 ) ) );
 
 
 #############################################################################
@@ -953,33 +1057,20 @@ InstallGlobalFunction( ZmodpZ, function( p )
     return ZmodpZNC( AbsInt( p ) );
 end );
 
-InstallGlobalFunction( ZmodpZNC, function( p )
-    local pos, F;
+InstallGlobalFunction( ZmodpZNC, p -> GET_FROM_SORTED_CACHE( Z_MOD_NZ, p, function( )
+    local F;
 
-    # Check whether this has been stored already.
-    pos:= Position( Z_MOD_NZ[1], p );
-    if pos = fail then
+    # Get the family of element objects of our ring.
+    F:= FFEFamily( p );
 
-      # Get the family of element objects of our ring.
-      F:= FFEFamily( p );
-
-      # Make the domain.
-      F:= FieldOverItselfByGenerators( [ ZmodnZObj( F, 1 ) ] );
-      SetIsPrimeField( F, true );
-      SetIsWholeFamily( F, false );
-
-      # Store the field.
-      Add( Z_MOD_NZ[1], p );
-      Add( Z_MOD_NZ[2], F );
-      SortParallel( Z_MOD_NZ[1], Z_MOD_NZ[2] );
-
-    else
-      F:= Z_MOD_NZ[2][ pos ];
-    fi;
+    # Make the domain.
+    F:= FieldOverItselfByGenerators( [ ZmodnZObj( F, 1 ) ] );
+    SetIsPrimeField( F, true );
+    SetIsWholeFamily( F, false );
 
     # Return the field.
     return F;
-end );
+end ) );
 
 
 #############################################################################
@@ -1002,45 +1093,35 @@ InstallGlobalFunction( ZmodnZ, function( n )
       return ZmodpZNC( n );
     fi;
 
-    # Check whether this has been stored already.
-    pos:= Position( Z_MOD_NZ[1], n );
-    if pos = fail then
+    return GET_FROM_SORTED_CACHE( Z_MOD_NZ, n, function( )
 
-      # Construct the family of element objects of our ring.
-      F:= NewFamily( Concatenation( "Zmod", String( n ) ),
-                     IsZmodnZObj,
-                     IsZmodnZObjNonprime and CanEasilySortElements
-                                         and IsNoImmediateMethodsObject,
-                     CanEasilySortElements);
+    # Construct the family of element objects of our ring.
+    F:= NewFamily( Concatenation( "Zmod", String( n ) ),
+                   IsZmodnZObj,
+                   IsZmodnZObjNonprime and CanEasilySortElements
+                                       and IsNoImmediateMethodsObject,
+                   CanEasilySortElements);
 
-      # Install the data.
-      SetCharacteristic(F,n);
+    # Install the data.
+    SetCharacteristic(F,n);
 
-      # Store the objects type.
-      F!.typeOfZmodnZObj:= NewType( F,     IsZmodnZObjNonprime
-                                       and IsModulusRep );
+    # Store the objects type.
+    F!.typeOfZmodnZObj:= NewType( F, IsZmodnZObjNonprime and IsModulusRep );
 
-      # as n is no prime, the family is no UFD
-      SetIsUFDFamily(F,false);
+    # as n is no prime, the family is no UFD
+    SetIsUFDFamily(F,false);
 
-      # Make the domain.
-      R:= RingWithOneByGenerators( [ ZmodnZObj( F, 1 ) ] );
-      SetIsWholeFamily( R, true );
-      SetZero(F,Zero(R));
-      SetOne(F,One(R));
-      SetSize(R,n);
-
-      # Store the ring.
-      Add( Z_MOD_NZ[1], n );
-      Add( Z_MOD_NZ[2], R );
-      SortParallel( Z_MOD_NZ[1], Z_MOD_NZ[2] );
-
-    else
-      R:= Z_MOD_NZ[2][ pos ];
-    fi;
+    # Make the domain.
+    R:= RingWithOneByGenerators( [ ZmodnZObj( F, 1 ) ] );
+    SetIsWholeFamily( R, true );
+    SetZero(F,Zero(R));
+    SetOne(F,One(R));
+    SetSize(R,n);
 
     # Return the ring.
     return R;
+
+    end );
 end );
 
 
@@ -1111,7 +1192,7 @@ InstallMethod( DefaultRingByGenerators,
 InstallMethod( DefaultFieldOfMatrixGroup,
     "for a matrix group over a ring Z/nZ",
     [ IsMatrixGroup and IsZmodnZObjNonprimeCollCollColl ],
-    G -> ZmodnZ( Characteristic( Representative( G )[1][1] ) ) );
+    G -> ZmodnZ( Characteristic( Representative( G )[1,1] ) ) );
 
 
 #############################################################################
@@ -1122,9 +1203,3 @@ InstallMethod( DefaultFieldOfMatrixGroup,
 ##  an internal FFE, so this method just returns fail
 ##
 InstallMethod(AsInternalFFE, [IsZmodpZObj], ReturnFail);
-
-
-#############################################################################
-##
-#E
-

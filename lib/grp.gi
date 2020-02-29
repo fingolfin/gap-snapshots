@@ -1,13 +1,12 @@
 #############################################################################
 ##
-#W  grp.gi                      GAP library                     Thomas Breuer
-#W                                                               Frank Celler
-#W                                                               Bettina Eick
-#W                                                             Heiko Theißen
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer, Frank Celler, Bettina Eick, Heiko Theißen.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains generic methods for groups.
 ##
@@ -74,8 +73,8 @@ InstallMethod( IsCyclic,
 
 InstallMethod( Size,
     "for a cyclic group",
-    [ IsGroup and IsCyclic and HasGeneratorsOfGroup ],
-    -RankFilter(HasGeneratorsOfGroup),
+    [ IsGroup and IsCyclic and HasGeneratorsOfGroup and CanEasilyCompareElements ],
+    {} -> -RankFilter(HasGeneratorsOfGroup),
 function(G)
   local gens;
   if HasMinimalGeneratingSet(G) then
@@ -95,7 +94,7 @@ end);
 
 InstallMethod( MinimalGeneratingSet,"finite cyclic groups",true,
     [ IsGroup and IsCyclic and IsFinite ],
-    RankFilter(IsFinite and IsPcGroup),
+    {} -> RankFilter(IsFinite and IsPcGroup),
 function ( G )
 local g;
   if IsTrivial(G) then return []; fi;
@@ -564,12 +563,42 @@ InstallMethod( IsAlmostSimpleGroup,
 ##  By the odd order theorem, N is solvable, and so is G. Thus the order of
 ##  any non-solvable finite group is a multiple of 4.
 ##
+##  By Burnside's theorem, every group of order p^a q^b is solvable. If a
+##  group of such order is not already caught by the reasoning above, then
+##  it must have order 2^a q^b with a>1.
+##
 InstallImmediateMethod( IsSolvableGroup, IsGroup and HasSize, 10,
     function( G )
     local size;
     size := Size( G );
     if IsInt( size ) and size mod 4 <> 0 then
       return true;
+    fi;
+    TryNextMethod();
+    end );
+
+InstallMethod( IsSolvableGroup,
+    "if group size is known and is not divisible by 4 or p^a q^b",
+    [ IsGroup and HasSize ], 25,
+    function( G )
+    local size;
+    size := Size( G );
+    if IsInt( size ) then
+      if size mod 4 <> 0 then
+        return true;
+      else
+        size := size/4;
+        while size mod 2 = 0 do
+          size := size/2;
+        od;
+        if size = 1 then
+          SetIsPGroup( G, true );
+          SetPrimePGroup( G, 2 );
+          return true;
+        elif IsPrimePowerInt( size ) then
+          return true;
+        fi;
+      fi;
     fi;
     TryNextMethod();
     end );
@@ -1956,7 +1985,7 @@ InstallMethod( Socle, "for elementary abelian groups",
 ##
 InstallMethod( Socle, "for nilpotent groups",
               [ IsGroup and IsNilpotentGroup ],
-              RankFilter( IsGroup and IsFinite and IsNilpotentGroup )
+              {} -> RankFilter( IsGroup and IsFinite and IsNilpotentGroup )
               - RankFilter( IsGroup and IsNilpotentGroup ),
   function(G)
     local P, C, size, gen, abinv, indgen, i, p, q, soc;
@@ -2375,7 +2404,9 @@ local G,obj,close;
     fi;
 
     if close and not IsIdenticalObj( Parent( G ), obj ) then
-      Assert(2,IsSubset(Parent(G),obj));
+      if ValueOption("noassert")<>true then
+        Assert(2,IsSubset(Parent(G),obj));
+      fi;
       SetParent( obj, Parent( G ) );
     fi;
     return obj;
@@ -2618,7 +2649,7 @@ InstallMethod( IndexNC,
     "for two groups with known Size value",
     IsIdenticalObj,
     [ IsGroup and HasSize, IsGroup and HasSize and IsFinite ],
-    2 * RankFilter( IsHandledByNiceMonomorphism ),
+    {} -> 2 * RankFilter( IsHandledByNiceMonomorphism ),
     function( G, H )
     return Size( G ) / Size( H );
     end );
@@ -3207,6 +3238,22 @@ InstallMethod( HallSubgroupOp,
       SetHallSubgroup(G, ShallowCopy(smallpi), S);
     od;
     return S;
+    end );
+
+
+#############################################################################
+##
+#M  HallSubgroupOp( <G>, <pi> ) . . . . . . . . . . . . .  for a finite group
+##
+InstallMethod( HallSubgroupOp,
+    "fallback method for a finite group",
+    [ IsGroup and IsFinite, IsList ],
+    function( G, pi )
+    local iso, H;
+
+    iso := IsomorphismPermGroup( G );
+    H := HallSubgroup( ImagesSource( iso ), pi );
+    return PreImagesSet(iso, H);
     end );
 
 
@@ -4403,6 +4450,13 @@ InstallMethod( GroupWithGenerators,
 function( gens )
 local G,typ;
 
+  if IsGroup(gens) then
+    Info( InfoPerformance, 1,
+      "Calling `GroupWithGenerators' on a group usually is very inefficient.");
+    Info( InfoPerformance, 1,
+      "Use the list of generators of the group instead.");
+  fi;
+
   gens:=AsList(gens);
   typ:=MakeGroupyType(FamilyObj(gens),
           IsGroup and IsAttributeStoringRep 
@@ -4420,6 +4474,13 @@ InstallMethod( GroupWithGenerators,
     IsCollsElms, [ IsCollection, IsMultiplicativeElementWithInverse ],
 function( gens, id )
 local G,typ;
+
+  if IsGroup(gens) then
+    Info( InfoPerformance, 1,
+      "Calling `GroupWithGenerators' on a group usually is very inefficient.");
+    Info( InfoPerformance, 1,
+      "Use the list of generators of the group instead.");
+  fi;
 
   gens:=AsList(gens);
   typ:=MakeGroupyType(FamilyObj(gens),
@@ -4533,13 +4594,8 @@ InstallMethod( IsGeneratorsOfMagmaWithInverses,
 #F  Group( <gens>, <id> )
 ##
 InstallGlobalFunction( Group, function( arg )
-
-    if Length( arg ) = 1 and IsDomain( arg[1] ) then
-      Error( "no longer supported ..." );
-#T this was possible in GAP-3 ...
-
-    # special case for matrices, because they may look like lists
-    elif Length( arg ) = 1 and IsMatrix( arg[1] )
+    #  special case for matrices, because they may look like lists
+    if Length( arg ) = 1 and IsMatrix( arg[1] )
                            and IsGeneratorsOfMagmaWithInverses( arg ) then
       return GroupByGenerators( arg );
 
@@ -4847,11 +4903,19 @@ end);
 ##
 InstallMethod( MinimalNormalSubgroups,
     "generic search in NormalSubgroups",
-    [ IsGroup and IsFinite and HasNormalSubgroups],
+    [ IsGroup and IsFinite],
     function (G)
 
     local grps, sizes, n, min, i, j, k, size;
-    
+
+    # force an IsNilpotent check
+    # should have and IsSolvable check, as well,
+    # but methods for solvable groups are only in CRISP
+    # which aggeressively checks for solvability, anyway
+    if (not HasIsNilpotentGroup(G) and IsNilpotentGroup(G)) then
+      return MinimalNormalSubgroups( G );
+    fi;
+
     grps := ShallowCopy (NormalSubgroups (G));
     sizes := List (grps, Size);
     n := Length (grps);
@@ -4883,38 +4947,6 @@ InstallMethod( MinimalNormalSubgroups,
     return min;
   end);
 
-
-##############################################################################
-##
-#F  MinimalNormalSubgroups( <G> )
-##
-InstallMethod( MinimalNormalSubgroups,
-    "compute from conjugacy classes",
-    [ IsGroup and IsFinite ],
-    function( G )
-    local nt, c, r, U;
-
-    # force an IsNilpotent check
-    # should have and IsSolvable check, as well,
-    # but methods for solvable groups are only in CRISP
-    # which aggeressively checks for solvability, anyway
-    if (not HasIsNilpotentGroup(G) and IsNilpotentGroup(G)) then
-      return MinimalNormalSubgroups( G );
-    fi;
-
-    nt:= [];
-    for c in ConjugacyClasses( G ) do
-      r:= Representative( c );
-      if IsPrimeInt( Order( r ) ) then
-        U:= NormalClosure( G, SubgroupNC( G, [ r ] ) );
-        if ForAll( nt, N -> not IsSubset( U, N ) ) then
-          nt:= Filtered( nt, N -> not IsSubset( N, U ) );
-          Add( nt, U );
-        fi;
-      fi;
-    od;
-    return nt;
-    end );
 
 RedispatchOnCondition(MinimalNormalSubgroups, true,
     [IsGroup],
@@ -4955,8 +4987,8 @@ InstallMethod( MinimalNormalSubgroups, "for nilpotent groups",
               [ IsGroup and IsNilpotentGroup ],
   # IsGroup and IsFinite ranks higher than IsGroup and IsNilpotentGroup
   # so we have to increase the rank, otherwise the method for computation
-  # by conjugacy classes above is selected.
-  RankFilter( IsGroup and IsFinite and IsNilpotentGroup )
+  # by NormalSubgroups above is selected.
+  {} -> RankFilter( IsGroup and IsFinite and IsNilpotentGroup )
   - RankFilter( IsGroup and IsNilpotentGroup ),
   function(G)
     local soc, i, p, primes, gen, min, MinimalSubgroupsOfPGroupByGenerators;
@@ -5327,9 +5359,9 @@ function( grp )
     fi;
 
     # construct the next element
-    i := Random([ 1 .. Length(seed[1]) ]);
-    j := Random([ 1 .. Length(seed[1]) ]);
-    k := Random([ 1 .. Length(seed[1]) ]);
+    i := Random( 1, Length(seed[1]) );
+    j := Random( 1, Length(seed[1]) );
+    k := Random( 1, Length(seed[1]) );
     
     seed[3] := seed[3]*seed[1][i];
     seed[1][j] := seed[1][j]*seed[3];
@@ -5856,8 +5888,3 @@ InstallOtherMethod( Order,
     "for a group",
     [ IsGroup ],
     Size );
-
-
-#############################################################################
-##
-#E

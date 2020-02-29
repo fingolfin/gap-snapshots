@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  pcgsmodu.gd                 GAP Library                      Frank Celler
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the operations for polycylic generating systems modulo
 ##  another such system.
@@ -73,7 +74,7 @@ DeclareGlobalFunction( "ModuloTailPcgsByList" );
 ##  <Description>
 ##  returns a modulo pcgs for the factor <M><A>G</A>/<A>N</A></M> which must
 ##  be solvable, while <A>N</A> may be non-solvable.
-##  <Ref Func="ModuloPcgs"/> will return <E>a</E> pcgs for the factor,
+##  <Ref Oper="ModuloPcgs"/> will return <E>a</E> pcgs for the factor,
 ##  there is no guarantee that it will be <Q>compatible</Q> with any other
 ##  pcgs.
 ##  If this is required, the <K>mod</K> operator must be used on
@@ -178,9 +179,3 @@ DeclareProperty( "IsNumeratorParentPcgsFamilyPcgs", IsModuloPcgs );
 DeclareOperation( "ExponentsConjugateLayer",
   [IsModuloPcgs,IsMultiplicativeElementWithInverse,
                 IsMultiplicativeElementWithInverse] );
-
-
-#############################################################################
-##  
-#E
-

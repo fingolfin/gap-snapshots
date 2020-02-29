@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    HAPcryst
+  </Title>
+  <Subtitle>
+    A HAP extension for crystallographic groups
+  </Subtitle>
+  <Version>
+    Version 0.1.13
+  </Version>
+  <Author>
+    Marc Roeder<Alt Only="LaTeX"><Br/></Alt>
+<Email>roeder.marc@gmail.com</Email>
+
+  </Author>
+  <Date>
+    10 February 2020
+  </Date>
+  <Copyright>
+    
+            &copyright; 2007 Marc Röder. <P/>
+
+            This package is distributed under the terms of the GNU General
+            Public License version 2 or later (at your convenience). See the
+            file <File>LICENSE</File> or
+            <URL>https://www.gnu.org/copyleft/gpl.html</URL>
+        
+  </Copyright>
+  <Acknowledgements>
+    
+          This work was supported by Marie Curie Grant No. MTKD-CT-2006-042685
+        
+  </Acknowledgements>
+  </TitlePage>

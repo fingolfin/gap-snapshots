@@ -1,12 +1,11 @@
 /****************************************************************************
 **
-*W  ariths.h                    GAP source                       Frank Celler
-*W                                                         & Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares the functions of the  arithmetic  operations  package.
 */
@@ -67,7 +66,7 @@ extern ArithMethod1 ZeroFuncs[LAST_REAL_TNUM + 1];
 **
 **  'ZERO' returns the zero of the object <op>.
 */
-static inline Obj ZERO(Obj op)
+EXPORT_INLINE Obj ZERO(Obj op)
 {
     UInt tnum = TNUM_OBJ(op);
     return (*ZeroFuncs[tnum])(op);
@@ -87,7 +86,7 @@ extern ArithMethod1 ZeroMutFuncs[LAST_REAL_TNUM + 1];
 **
 **  'ZERO_MUT' returns the mutable zero of the object <op>.
 */
-static inline Obj ZERO_MUT(Obj op)
+EXPORT_INLINE Obj ZERO_MUT(Obj op)
 {
     UInt tnum = TNUM_OBJ(op);
     return (*ZeroMutFuncs[tnum])(op);
@@ -107,7 +106,7 @@ extern ArithMethod1 AInvFuncs[LAST_REAL_TNUM + 1];
 **
 **  'AINV' returns the additive inverse of the object <op>.
 */
-static inline Obj AINV(Obj op)
+EXPORT_INLINE Obj AINV(Obj op)
 {
     UInt tnum = TNUM_OBJ(op);
     return (*AInvFuncs[tnum])(op);
@@ -127,7 +126,7 @@ extern ArithMethod1 AInvMutFuncs[LAST_REAL_TNUM + 1];
 **
 **  'AINV_MUT' returns the mutable additive inverse of the object <op>.
 */
-static inline Obj AINV_MUT(Obj op)
+EXPORT_INLINE Obj AINV_MUT(Obj op)
 {
     UInt tnum = TNUM_OBJ(op);
     return (*AInvMutFuncs[tnum])(op);
@@ -171,7 +170,7 @@ extern ArithMethod1 OneFuncs[LAST_REAL_TNUM + 1];
 **
 **  'ONE' returns the one of the object <op>.
 */
-static inline Obj ONE(Obj op)
+EXPORT_INLINE Obj ONE(Obj op)
 {
     UInt tnum = TNUM_OBJ(op);
     return (*OneFuncs[tnum])(op);
@@ -192,7 +191,7 @@ extern ArithMethod1 OneMutFuncs[LAST_REAL_TNUM + 1];
 **  'ONE_MUT' returns the one of the object <op> with the same
 **  mutability level as <op>.
 */
-static inline Obj ONE_MUT(Obj op)
+EXPORT_INLINE Obj ONE_MUT(Obj op)
 {
     UInt tnum = TNUM_OBJ(op);
     return (*OneMutFuncs[tnum])(op);
@@ -212,7 +211,7 @@ extern ArithMethod1 InvFuncs[LAST_REAL_TNUM + 1];
 **
 **  'INV' returns the multiplicative inverse of the object <op>.
 */
-static inline Obj INV(Obj op)
+EXPORT_INLINE Obj INV(Obj op)
 {
     UInt tnum = TNUM_OBJ(op);
     return (*InvFuncs[tnum])(op);
@@ -232,7 +231,7 @@ extern ArithMethod1 InvMutFuncs[LAST_REAL_TNUM + 1];
 **
 **  'INV_MUT' returns the multiplicative inverse of the object <op>.
 */
-static inline Obj INV_MUT(Obj op)
+EXPORT_INLINE Obj INV_MUT(Obj op)
 {
     UInt tnum = TNUM_OBJ(op);
     return (*InvMutFuncs[tnum])(op);
@@ -259,7 +258,7 @@ extern CompaMethod EqFuncs[LAST_REAL_TNUM + 1][LAST_REAL_TNUM + 1];
 **  'EQ' returns a nonzero value  if the object <opL>  is equal to the object
 **  <opR>, and zero otherwise.
 */
-static inline Int EQ(Obj opL, Obj opR)
+EXPORT_INLINE Int EQ(Obj opL, Obj opR)
 {
     if (opL == opR)
         return 1;
@@ -271,6 +270,8 @@ static inline Int EQ(Obj opL, Obj opR)
 }
 
 extern Obj EqOper;
+
+Int EqObject(Obj opL, Obj opR);
 
 
 /****************************************************************************
@@ -287,7 +288,7 @@ extern CompaMethod LtFuncs[LAST_REAL_TNUM + 1][LAST_REAL_TNUM + 1];
 **  'LT' returns a nonzero value if the object <opL> is  less than the object
 **  <opR>, and zero otherwise.
 */
-static inline Int LT(Obj opL, Obj opR)
+EXPORT_INLINE Int LT(Obj opL, Obj opR)
 {
     if (opL == opR)
         return 0;
@@ -315,7 +316,7 @@ extern CompaMethod InFuncs[LAST_REAL_TNUM + 1][LAST_REAL_TNUM + 1];
 **  'IN' returns a nonzero   value if the object  <opL>  is a member  of  the
 **  object <opR>, and zero otherwise.
 */
-static inline Int IN(Obj opL, Obj opR)
+EXPORT_INLINE Int IN(Obj opL, Obj opR)
 {
     UInt tnumL = TNUM_OBJ(opL);
     UInt tnumR = TNUM_OBJ(opR);
@@ -347,7 +348,7 @@ extern ArithMethod2 SumFuncs[LAST_REAL_TNUM + 1][LAST_REAL_TNUM + 1];
 **        || ! SUM_INTOBJS( <res>, <opL>, <opR> ) )
 **          <res> = SUM( <opL>, <opR> );
 */
-static inline Obj SUM(Obj opL, Obj opR)
+EXPORT_INLINE Obj SUM(Obj opL, Obj opR)
 {
     UInt tnumL = TNUM_OBJ(opL);
     UInt tnumR = TNUM_OBJ(opR);
@@ -405,7 +406,7 @@ extern ArithMethod2 DiffFuncs[LAST_REAL_TNUM + 1][LAST_REAL_TNUM + 1];
 **        || ! DIFF_INTOBJS( <res>, <opL>, <opR> ) )
 **          <res> = DIFF( <opL>, <opR> );
 */
-static inline Obj DIFF(Obj opL, Obj opR)
+EXPORT_INLINE Obj DIFF(Obj opL, Obj opR)
 {
     UInt tnumL = TNUM_OBJ(opL);
     UInt tnumR = TNUM_OBJ(opR);
@@ -460,7 +461,7 @@ extern ArithMethod2 ProdFuncs[LAST_REAL_TNUM + 1][LAST_REAL_TNUM + 1];
 **        || ! PROD_INTOBJS( <res>, <opL>, <opR> ) )
 **          <res> = PROD( <opL>, <opR> );
 */
-static inline Obj PROD(Obj opL, Obj opR)
+EXPORT_INLINE Obj PROD(Obj opL, Obj opR)
 {
     UInt tnumL = TNUM_OBJ(opL);
     UInt tnumR = TNUM_OBJ(opR);
@@ -509,7 +510,7 @@ extern ArithMethod2 QuoFuncs[LAST_REAL_TNUM + 1][LAST_REAL_TNUM + 1];
 **
 **  'QUO' returns the quotient of the object <opL> by the object <opR>.
 */
-static inline Obj QUO(Obj opL, Obj opR)
+EXPORT_INLINE Obj QUO(Obj opL, Obj opR)
 {
     UInt tnumL = TNUM_OBJ(opL);
     UInt tnumR = TNUM_OBJ(opR);
@@ -530,7 +531,7 @@ extern ArithMethod2 LQuoFuncs[LAST_REAL_TNUM + 1][LAST_REAL_TNUM + 1];
 **
 **  'LQUO' returns the left quotient of the object <opL> by the object <opR>.
 */
-static inline Obj LQUO(Obj opL, Obj opR)
+EXPORT_INLINE Obj LQUO(Obj opL, Obj opR)
 {
     UInt tnumL = TNUM_OBJ(opL);
     UInt tnumR = TNUM_OBJ(opR);
@@ -551,7 +552,7 @@ extern ArithMethod2 PowFuncs[LAST_REAL_TNUM + 1][LAST_REAL_TNUM + 1];
 **
 **  'POW' returns the power of the object <opL> by the object <opL>.
 */
-static inline Obj POW(Obj opL, Obj opR)
+EXPORT_INLINE Obj POW(Obj opL, Obj opR)
 {
     UInt tnumL = TNUM_OBJ(opL);
     UInt tnumR = TNUM_OBJ(opR);
@@ -572,7 +573,7 @@ extern ArithMethod2 CommFuncs[LAST_REAL_TNUM + 1][LAST_REAL_TNUM + 1];
 **
 **  'COMM' returns the commutator of the two objects <opL> and <opR>.
 */
-static inline Obj COMM(Obj opL, Obj opR)
+EXPORT_INLINE Obj COMM(Obj opL, Obj opR)
 {
     UInt tnumL = TNUM_OBJ(opL);
     UInt tnumR = TNUM_OBJ(opR);
@@ -593,7 +594,7 @@ extern ArithMethod2 ModFuncs[LAST_REAL_TNUM + 1][LAST_REAL_TNUM + 1];
 **
 **  'MOD' returns the remainder of the object <opL> by the object <opR>.
 */
-static inline Obj MOD(Obj opL, Obj opR)
+EXPORT_INLINE Obj MOD(Obj opL, Obj opR)
 {
     UInt tnumL = TNUM_OBJ(opL);
     UInt tnumR = TNUM_OBJ(opR);
@@ -605,7 +606,7 @@ static inline Obj MOD(Obj opL, Obj opR)
 **
 *F  ChangeArithDoOperations( <oper>, <verb> )
 */
-extern void ChangeArithDoOperations(Obj oper, Int verb);
+void ChangeArithDoOperations(Obj oper, Int verb);
 
 
 /****************************************************************************

@@ -1,8 +1,14 @@
 #############################################################################
-#W  adjoin.gi                  GAP library                Steve Linton
 ##
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Steve Linton.
 ##
-##  This file contains the declarations for functions pertaining to 
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
+##
+##  This file contains the implementations for functions pertaining to 
 ##  adjoining an identity element to a semigroup. 
 ##
 
@@ -172,7 +178,3 @@ InstallMethod(ViewObj, [IsMonoidByAdjoiningIdentityElt],
     fi;
     ViewObj(me![1]);
 end);
-
-#############################################################################
-##
-#E  adjoin.gi . . . . . . . . . . . . . . . . . . . . . . . . . . . ends 

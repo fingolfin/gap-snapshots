@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  algmat.gi                   GAP library                     Thomas Breuer
-#W                                                            Willem de Graaf
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer, Willem de Graaf.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains those functions that mainly deal with matrix algebras,
 ##  that is, associative matrix algebras and matrix Lie algebras.
@@ -230,6 +230,7 @@ InstallOtherMethod( FLMLORByGenerators,
                             and IsTrivial
                             and IsAttributeStoringRep ),
                    rec() );
+    SetDimension( A, 0 );
     SetLeftActingDomain( A, F );
     SetGeneratorsOfLeftModule( A, empty );
     SetZero( A, zero );
@@ -360,6 +361,7 @@ InstallOtherMethod( FLMLORByGenerators,
                             and IsTrivial
                             and IsAttributeStoringRep ),
                    rec() );
+    SetDimension( A, 0 );
     SetLeftActingDomain( A, F );
     SetGeneratorsOfLeftModule( A, empty );
     SetZero( A, zero );
@@ -633,6 +635,7 @@ InstallMethod( TwoSidedIdealByGenerators,
                             and IsAttributeStoringRep ),
                    rec() );
 
+    SetDimension( I, 0 );
     SetLeftActingDomain( I, LeftActingDomain( A ) );
     SetGeneratorsOfTwoSidedIdeal( I, mats );
     SetGeneratorsOfLeftOperatorRing( I, mats );
@@ -727,6 +730,7 @@ InstallMethod( LeftIdealByGenerators,
                             and IsAttributeStoringRep ),
                    rec() );
 
+    SetDimension( I, 0 );
     SetLeftActingDomain( I, LeftActingDomain( A ) );
     SetGeneratorsOfLeftIdeal( I, mats );
     SetGeneratorsOfLeftOperatorRing( I, mats );
@@ -820,6 +824,7 @@ InstallMethod( RightIdealByGenerators,
                             and IsAttributeStoringRep ),
                    rec() );
 
+    SetDimension( I, 0 );
     SetLeftActingDomain( I, LeftActingDomain( A ) );
     SetGeneratorsOfRightIdeal( I, mats );
     SetGeneratorsOfLeftOperatorRing( I, mats );
@@ -1469,23 +1474,23 @@ InstallGlobalFunction( EmptyMatrix, function( char )
     fi;
 
     # Construct the matrix.
-    mat:= Objectify( NewType( Fam,
-                                  IsList
-                              and IsEmpty
-                              and IsOrdinaryMatrix
-                              and IsZero
-                              and IsAssociativeElement
-                              and IsCommutativeElement
-                              and IsJacobianElement
-                              and IsAttributeStoringRep ),
-                     rec() );
-
-    SetName( mat, Concatenation( "EmptyMatrix( ", String( char ), " )" ) );
+    mat := ObjectifyWithAttributes( rec(),
+             NewType( Fam,
+                          IsList
+                      and IsEmpty
+                      and IsOrdinaryMatrix
+                      and IsZero
+                      and IsAssociativeElement
+                      and IsCommutativeElement
+                      and IsJacobianElement
+                      and IsAttributeStoringRep ),
+             Name,          Concatenation("EmptyMatrix( ", String(char), " )" ),
+             DimensionsMat, [ 0, 0 ],
+             Length,        0,
+             NrRows,        0,
+             NrCols,        0) ;
     SetInverse( mat, mat );
     SetAdditiveInverse( mat, mat );
-    SetDimensionsMat( mat, [ 0, 0 ] );
-    SetLength( mat, 0 );
-
     return mat;
 end );
 
@@ -1748,9 +1753,3 @@ InstallMethod( IsomorphismMatrixFLMLOR,
 #T     N.spaceGenerators:= gens;
 #T     return N;
 #T     end;
-
-
-#############################################################################
-##
-#E
-

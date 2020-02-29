@@ -1,9 +1,12 @@
 #############################################################################
 ##
-#W  cache.gi                     GAP library                 Chris Jefferson
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Chris Jefferson.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2017 University of St Andrews, Scotland
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file defines various types of caching data structures
 ##
@@ -67,3 +70,62 @@ function(func, extra...)
         return v;
     end;
 end);
+
+if IsHPCGAP then
+
+InstallGlobalFunction(GET_FROM_SORTED_CACHE,
+function(cache, key, maker)
+    local pos, val;
+
+    # Check whether this has been stored already.
+    atomic readonly cache do
+      pos:= POSITION_SORTED_LIST( cache[1], key );
+      if pos <= Length( cache[1] ) and cache[1][pos] = key then
+        return cache[2][ pos ];
+      fi;
+    od;
+
+    # Compute new value.
+    val := maker();
+
+    # Store the value.
+    atomic readwrite cache do
+      pos:= POSITION_SORTED_LIST( cache[1], key );
+      if pos <= Length( cache[1] ) and cache[1][pos] = key then
+        # oops, another thread computed the value in the meantime;
+        # so use that instead
+        val:= cache[2][ pos ];
+      else
+        Add( cache[1], key, pos );
+        Add( cache[2], val, pos );
+      fi;
+    od;
+
+    # Return the value.
+    return val;
+end);
+
+else
+
+InstallGlobalFunction(GET_FROM_SORTED_CACHE,
+function(cache, key, maker)
+    local pos, val;
+
+    # Check whether this has been stored already.
+    pos:= POSITION_SORTED_LIST( cache[1], key );
+    if pos <= Length( cache[1] ) and cache[1][pos] = key then
+      return cache[2][ pos ];
+    fi;
+
+    # Compute new value.
+    val := maker();
+
+    # Store the value.
+    Add( cache[1], key, pos );
+    Add( cache[2], val, pos );
+
+    # Return the value.
+    return val;
+end);
+
+fi;

@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  saveload.c                  GAP source                       Steve Linton
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the functions concerned with saving and loading
 **  the workspace. There are support functions in gasman.c and elsewhere
@@ -56,11 +56,11 @@ static Int OpenForSave( Obj fname )
       Pr("Already saving\n",0L,0L);
       return 1;
     }
-  SaveFile = SyFopen(CSTR_STRING(fname), "wb");
+  SaveFile = SyFopen(CONST_CSTR_STRING(fname), "wb");
   if (SaveFile == -1)
     {
       Pr("Couldn't open file %s to save workspace\n",
-	 (UInt)CSTR_STRING(fname),0L);
+         (UInt)CONST_CSTR_STRING(fname),0L);
       return 1;
     }
   LBPointer = LoadBuffer;
@@ -83,7 +83,7 @@ static void CloseAfterSave( void )
 
 #endif
 
-static void OpenForLoad( Char *fname ) 
+static void OpenForLoad( const Char *fname ) 
 {
   if (LoadFile != -1)
     {
@@ -108,7 +108,7 @@ static void CloseAfterLoad( void )
   LoadFile = -1;
 }
 
-void SAVE_BYTE_BUF( void )
+static void SAVE_BYTE_BUF(void)
 {
   if (SyWrite(SaveFile, LoadBuffer, LBEnd - LoadBuffer) < 0)
     ErrorQuit("Cannot write to file, see 'LastSystemError();'\n", 0L, 0L);
@@ -119,9 +119,9 @@ void SAVE_BYTE_BUF( void )
 #define SAVE_BYTE(byte) {if (LBPointer >= LBEnd) {SAVE_BYTE_BUF();} \
                           *LBPointer++ = (UInt1)(byte);}
 
-const Char * LoadByteErrorMessage = "Unexpected End of File in Load\n";
+static const Char * LoadByteErrorMessage = "Unexpected End of File in Load\n";
 
-UInt1 LOAD_BYTE_BUF( void )
+static UInt1 LOAD_BYTE_BUF(void)
 {
   Int ret;
   ret = SyRead(LoadFile, LoadBuffer, 100000);
@@ -185,9 +185,6 @@ UInt4 LoadUInt4 ( void )
   return res;
 }
 
-
-#ifdef SYS_IS_64_BIT
-
 void SaveUInt8( UInt8 data )
 {
   SAVE_BYTE( (UInt1) (data & 0xFF) );
@@ -203,42 +200,35 @@ void SaveUInt8( UInt8 data )
 UInt8 LoadUInt8 ( void )
 {
   UInt8 res;
-  res = (UInt)LOAD_BYTE();
-  res |= (UInt)LOAD_BYTE() << 8;
-  res |= (UInt)LOAD_BYTE() << 16;
-  res |= (UInt)LOAD_BYTE() << 24;
-  res |= (UInt)LOAD_BYTE() << 32;
-  res |= (UInt)LOAD_BYTE() << 40;
-  res |= (UInt)LOAD_BYTE() << 48;
-  res |= (UInt)LOAD_BYTE() << 56;
+  res = (UInt8)LOAD_BYTE();
+  res |= (UInt8)LOAD_BYTE() << 8;
+  res |= (UInt8)LOAD_BYTE() << 16;
+  res |= (UInt8)LOAD_BYTE() << 24;
+  res |= (UInt8)LOAD_BYTE() << 32;
+  res |= (UInt8)LOAD_BYTE() << 40;
+  res |= (UInt8)LOAD_BYTE() << 48;
+  res |= (UInt8)LOAD_BYTE() << 56;
 
   return res;
 }
 
-
 void SaveUInt( UInt data )
 {
+#ifdef SYS_IS_64_BIT
     SaveUInt8(data);
-}
-
-UInt8 LoadUInt ( void )
-{
-    return LoadUInt8();
-}
-
 #else
-
-void SaveUInt( UInt data )
-{
     SaveUInt4(data);
+#endif
 }
 
 UInt LoadUInt ( void )
 {
+#ifdef SYS_IS_64_BIT
+    return LoadUInt8();
+#else
     return LoadUInt4();
-}
-
 #endif
+}
 
 void SaveCStr( const Char * str)
 {
@@ -275,7 +265,7 @@ void LoadCStr( Char *buf, UInt maxsize)
 void SaveString ( Obj string )
 {
   UInt i, len = GET_LEN_STRING(string);
-  UInt1 *p = (UInt1*)CHARS_STRING(string);
+  const UInt1 *p = CONST_CHARS_STRING(string);
   SaveUInt(len);
   for (i=0; i<len; i++)
     SAVE_BYTE(p[i]);
@@ -372,11 +362,8 @@ static void LoadBagData ( void )
   flags = LoadUInt1();
   size = LoadUInt();
 
-    if (TNAM_TNUM(type) == NULL)
-      {
-        Pr("Bad type %d, size %d\n",type,size);
-        exit(1);
-      }
+  if (TNAM_TNUM(type) == NULL)
+    Panic("Bad type %d, size %d\n", (int)type, (int)size);
 
   /* Get GASMAN to set up the bag for me */
   bag = NextBagRestoring( type, flags, size );
@@ -454,7 +441,7 @@ static void report( Bag bag)
   fprintf(file,"%li %li\n", (long) TNUM_BAG(bag), (long) SIZE_BAG(bag));
 }
 
-Obj FuncBagStats(Obj self, Obj filename)
+static Obj FuncBagStats(Obj self, Obj filename)
 {
   file = fopen((Char *)CHARS_STRING(filename),"w");
   CallbackForAllBags(report);
@@ -487,7 +474,7 @@ static void ScanBag( Bag bag)
     hit = bag;
 }
 
-Obj FuncFindBag( Obj self, Obj minsize, Obj maxsize, Obj tnum )
+static Obj FuncFindBag(Obj self, Obj minsize, Obj maxsize, Obj tnum)
 {
   hit = (Bag) 0;
   fb_minsize = INT_INTOBJ(minsize);
@@ -542,7 +529,6 @@ static Char * GetKernelDescription(void)
 static void WriteSaveHeader( void )
 {
   UInt i;
-  UInt globalcount = 0;
   
   SaveCStr("GAP workspace");
   SaveCStr(GetKernelDescription());
@@ -556,10 +542,10 @@ static void WriteSaveHeader( void )
   WriteEndiannessMarker();
   
   SaveCStr("Counts and Sizes");
-  for (i = 0; i < GlobalBags.nr; i++)
-    if (GlobalBags.cookie[i] != NULL)
-      globalcount++;
-  SaveUInt(globalcount);
+  for (i = 0; i < GlobalBags.nr; i++) {
+      GAP_ASSERT(GlobalBags.cookie[i] != NULL);
+  }
+  SaveUInt(GlobalBags.nr);
   SaveUInt(NextSaveIndex-1);
   SaveUInt(AllocBags - MptrEndBags);
 
@@ -569,11 +555,9 @@ static void WriteSaveHeader( void )
   SaveCStr("Kernel to WS refs");
   for (i = 0; i < GlobalBags.nr; i++)
     {
-      if (GlobalBags.cookie[i] != NULL)
-	{
-	  SaveCStr((const Char *)GlobalBags.cookie[i]);
-	  SaveSubObj(*(GlobalBags.addr[i]));
-	}
+      GAP_ASSERT(GlobalBags.cookie[i] != NULL);
+      SaveCStr((const Char *)GlobalBags.cookie[i]);
+      SaveSubObj(*(GlobalBags.addr[i]));
     }
 }
 #endif
@@ -626,7 +610,7 @@ Obj SaveWorkspace( Obj fname )
 }
 
 
-Obj FuncSaveWorkspace(Obj self, Obj filename )
+static Obj FuncSaveWorkspace(Obj self, Obj filename)
 {
   return SaveWorkspace( filename );
 }
@@ -654,7 +638,6 @@ void LoadWorkspace( Char * fname )
 
 #else
   UInt nGlobs, nBags, i, maxSize;
-  UInt globalcount = 0;
   Char buf[256];
   Obj * glob;
 
@@ -729,26 +712,20 @@ void LoadWorkspace( Char * fname )
                                  lookup */
   for (i = 0; i < GlobalBags.nr; i++)
     {
-      if (GlobalBags.cookie[i] != NULL)
-	globalcount++;
-      else
-	*(GlobalBags.addr[i]) = (Bag) 0;
+      GAP_ASSERT(GlobalBags.cookie[i] != NULL);
     }
-  if (nGlobs != globalcount)
-    {
-      Pr("Wrong number of global bags in saved workspace %d %d\n",
-         nGlobs, globalcount);
-      SyExit(1);
+    // TODO: the goal here is to stop exporting `GlobalBags` completely...
+    if (nGlobs != GlobalBags.nr) {
+        Panic("Wrong number of global bags in saved workspace %d %d",
+              (int)nGlobs, (int)GlobalBags.nr);
     }
-  for (i = 0; i < globalcount; i++)
-    {
-      LoadCStr(buf,256);
-      glob = GlobalByCookie(buf);
-      if (glob == (Obj *)0)
-        {
-          Pr("Global object cookie from workspace not found in kernel %s\n",
-             (Int)buf,0L);
-          SyExit(1);
+    for (i = 0; i < nGlobs; i++) {
+        LoadCStr(buf, 256);
+        glob = GlobalByCookie(buf);
+        if (glob == (Obj *)0) {
+            Panic(
+                "Global object cookie from workspace not found in kernel %s",
+                buf);
         }
       *glob = LoadSubObj();
       if (SyDebugLoading)
@@ -778,16 +755,16 @@ static void PrSavedObj( UInt x)
   if ((x & 3) == 1)
     Pr("Immediate  integer %d\n", INT_INTOBJ((Obj)x),0L);
   else if ((x & 3) == 2)
-    Pr("Immediate FFE %d %d\n", VAL_FFE(x), SIZE_FF(FLD_FFE(x)));
+    Pr("Immediate FFE %d %d\n", VAL_FFE((Obj)x), SIZE_FF(FLD_FFE((Obj)x)));
   else
     Pr("Reference to bag number %d\n",x>>2,0L);
 }
 
-Obj FuncDumpWorkspace( Obj self, Obj fname )
+static Obj FuncDumpWorkspace(Obj self, Obj fname)
 {
   UInt nMods, nGlobs, nBags, i, relative;
   Char buf[256];
-  OpenForLoad( CSTR_STRING(fname) );
+  OpenForLoad( CONST_CSTR_STRING(fname) );
   LoadCStr(buf,256);
   Pr("Header string: %s\n",(Int) buf, 0L);
   LoadCStr(buf,256);
@@ -814,9 +791,9 @@ Obj FuncDumpWorkspace( Obj self, Obj fname )
       Pr("Type: %d ",type,0);
       relative = LoadUInt();
       if (relative)
-	Pr("GAP root relative ", 0L, 0L);
+        Pr("GAP root relative ", 0L, 0L);
       else
-	Pr("absolute ", 0L, 0L);
+        Pr("absolute ", 0L, 0L);
       LoadCStr(buf,256);
       Pr("  %s\n",(Int)buf,0L);
     }

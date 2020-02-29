@@ -1,15 +1,12 @@
 #############################################################################
 ##
-#W  matrix.gi                   GAP library                     Thomas Breuer
-#W                                                             & Frank Celler
-#W                                                         & Alexander Hulpke
-#W                                                           & Heiko Theißen
-#W                                                         & Martin Schönert
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer, Frank Celler, Alexander Hulpke, Heiko Theißen, Martin Schönert.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains methods for matrices.
 ##
@@ -134,11 +131,11 @@ InstallMethod( IsGeneralizedCartanMatrix,
 
     local n, i, j;
 
-    if Length( A ) <> Length( A[1] ) then
+    if NrRows( A ) <> NrCols( A ) then
       Error( "<A> must be a square matrix" );
     fi;
 
-    n:= Length( A );
+    n:= NrRows( A );
     for i in [ 1 .. n ] do
       if A[i,i] <> 2 then
         return false;
@@ -161,17 +158,16 @@ InstallMethod( IsGeneralizedCartanMatrix,
 
 #############################################################################
 ##
-#M  IsDiagonalMat(<mat>)
+#M  IsDiagonalMatrix(<mat>)
 ##
-InstallOtherMethod( IsDiagonalMat,
+InstallMethod( IsDiagonalMatrix,
     "for a matrix",
-    [ IsMatrix ],
+    [ IsMatrixObj ],
     function( mat )
-   local  i, j,z;
-    if IsEmpty(mat) then return true;fi;
-    z:=Zero(mat[1,1]);
-    for i  in [ 1 .. Length( mat ) ]  do
-        for j  in [ 1 .. Length( mat[i] ) ]  do
+    local  i, j, z;
+    z:=ZeroOfBaseDomain(mat);
+    for i  in [ 1 .. NrRows( mat ) ]  do
+        for j  in [ 1 .. NrCols( mat ) ]  do
             if mat[i,j] <> z and i <> j  then
                 return false;
             fi;
@@ -180,22 +176,39 @@ InstallOtherMethod( IsDiagonalMat,
     return true;
     end);
 
-InstallOtherMethod( IsDiagonalMat, [ IsEmpty ], ReturnTrue );
+InstallTrueMethod( IsDiagonalMatrix, IsMatrixObj and IsEmptyMatrix );
 
 
 #############################################################################
 ##
-#M  IsUpperTriangularMat(<mat>)
+##  Note that an empty list is not a matrix,
+##  but 'IsDiagonalMat(rix)' used to return 'true' for it.
 ##
-InstallOtherMethod( IsUpperTriangularMat,
+##  Note also that there was no such hack for other operations such as
+##  'IsUpperTriangularMat(rix)' or 'IsLowerTriangularMat(rix)'.
+##
+##  And note that installing an implication from 'IsList and IsEmpty' to
+##  'IsDiagonalMatrix' does not work because the type of an empty plain list
+##  cannot store the information.
+##  Furthermore, we cannot simply install 'ReturnTrue' as a method because
+##  then the method installation would complain that one should just install
+##  an implication.
+##
+InstallOtherMethod( IsDiagonalMatrix, [ IsList and IsEmpty ], x -> true );
+
+
+#############################################################################
+##
+#M  IsUpperTriangularMatrix(<mat>)
+##
+InstallMethod( IsUpperTriangularMatrix,
     "for a matrix",
-    [ IsMatrix ],
+    [ IsMatrixObj ],
     function( mat )
-    local  i, j,z;
-    if IsEmpty(mat) then return true;fi;
-    z:=Zero(mat[1,1]);
-    for i  in [ 1 .. Length( mat ) ]  do
-        for j  in [ 1 .. i-1]  do
+    local  i, j, z;
+    z:=ZeroOfBaseDomain(mat);
+    for j  in [ 1 .. NrCols( mat ) ]  do
+        for i  in [ j+1 .. NrRows( mat ) ]  do
             if mat[i,j] <> z  then
                 return false;
             fi;
@@ -204,19 +217,19 @@ InstallOtherMethod( IsUpperTriangularMat,
     return true;
     end);
 
+
 #############################################################################
 ##
-#M  IsLowerTriangularMat(<mat>)
+#M  IsLowerTriangularMatrix(<mat>)
 ##
-InstallOtherMethod( IsLowerTriangularMat,
+InstallMethod( IsLowerTriangularMatrix,
     "for a matrix",
-    [ IsMatrix ],
+    [ IsMatrixObj ],
     function( mat )
-    local  i, j,z;
-    if IsEmpty(mat) then return true;fi;
-    z:=Zero(mat[1,1]);
-    for i  in [ 1 .. Length( mat ) ]  do
-        for j  in [ i+1 .. Length( mat[i] ) ]  do
+    local  i, j, z;
+    z:=ZeroOfBaseDomain(mat);
+    for i  in [ 1 .. NrRows( mat ) ]  do
+        for j  in [ i+1 .. NrCols( mat ) ]  do
             if mat[i,j] <> z  then
                 return false;
             fi;
@@ -225,20 +238,21 @@ InstallOtherMethod( IsLowerTriangularMat,
     return true;
     end);
 
+
 #############################################################################
 ##
-#M  DiagonalOfMat(<mat>)  . . . . . . . . . . . . . . . .  diagonal of matrix
+#M  DiagonalOfMatrix(<mat>) . . . . . . . . . . . . . . .  diagonal of matrix
 ##
-InstallGlobalFunction( DiagonalOfMat, function ( mat )
+InstallGlobalFunction( DiagonalOfMatrix, function ( mat )
     local   diag, i;
 
     diag := [];
     i := 1;
-    while i <= Length(mat) and i <= Length(mat[1]) do
+    while i <= NrRows(mat) and i <= NrCols(mat) do
         diag[i] := mat[i,i];
         i := i + 1;
     od;
-    while 1 <= Length(mat) and i <= Length(mat[1]) do
+    while 1 <= NrRows(mat) and i <= NrCols(mat) do
         diag[i] := mat[1,1] - mat[1,1];
         i := i + 1;
     od;
@@ -373,8 +387,8 @@ end );
 ##
 BindGlobal( "Matrix_OrderPolynomialInner", function( fld, mat, vec, vecs)
     local d, w, p, one, zero, zeroes, piv,  pols, x, t;
-    Info(InfoMatrix,2,"Order Polynomial Inner on ",Length(mat[1]),
-         " x ",Length(mat)," matrix over ",fld," with ",
+    Info(InfoMatrix,2,"Order Polynomial Inner on ",NrRows(mat),
+         " x ",NrCols(mat)," matrix over ",fld," with ",
          Number(vecs)," basis vectors already given");
     d := Length(vec);
     pols := [];
@@ -414,10 +428,10 @@ BindGlobal( "Matrix_OrderPolynomialInner", function( fld, mat, vec, vecs)
 
         if piv <=d  then
             x := Inverse(w[piv]);
-            MultRowVector(p, x);
+            MultVector(p, x);
             MakeImmutable(p);
             pols[piv] := p;
-            MultRowVector(w, x );
+            MultVector(w, x );
             MakeImmutable(w);
             vecs[piv] := w;
             vec := vec*mat;
@@ -454,16 +468,16 @@ BindGlobal( "Matrix_CharacteristicPolynomialSameField",
     function( fld, mat, ind)
     local i, n, ords, base, imat, vec, one,cp,op,zero,fam;
     Info(InfoMatrix,1,"Characteristic Polynomial called on ",
-         Length(mat[1])," x ",Length(mat)," matrix over ",fld);
+         NrRows(mat)," x ",NrCols(mat)," matrix over ",fld);
     imat := ImmutableMatrix(fld,mat);
-    n := Length(mat);
+    n := NrRows(mat);
     base := [];
     vec := ZeroOp(mat[1]);
     one := One(fld);
     zero := Zero(fld);
     fam := ElementsFamily(FamilyObj(fld));
     cp:=[one];
-    if Is8BitMatrixRep(mat) and Length(mat)>0 then
+    if Is8BitMatrixRep(mat) and NrRows(mat)>0 then
       # stay in the same field as matrix
       ConvertToVectorRepNC(cp,Q_VEC8BIT(mat[1]));
     fi;
@@ -500,16 +514,16 @@ BindGlobal( "Matrix_MinimalPolynomialSameField", function( fld, mat, ind )
           processVec, mp, dim, span,op,w, piv,j,ring;
 
     Info(InfoMatrix,1,"Minimal Polynomial called on ",
-         Length(mat[1])," x ",Length(mat)," matrix over ",fld);
+         NrRows(mat)," x ",NrCols(mat)," matrix over ",fld);
     imat := ImmutableMatrix(fld,mat);
-    n := Length(imat);
+    n := NrRows(imat);
     base := [];
     dim := 0; # should be number of bound positions in base
     one := One(fld);
     zero := Zero(fld);
     fam := ElementsFamily(FamilyObj(fld));
     mp:=[one];
-    if Is8BitMatrixRep(mat) and Length(mat)>0 then
+    if Is8BitMatrixRep(mat) and NrRows(mat)>0 then
       # stay in the same field as matrix
       ConvertToVectorRepNC(mp,Q_VEC8BIT(mat[1]));
     fi;
@@ -521,7 +535,7 @@ BindGlobal( "Matrix_MinimalPolynomialSameField", function( fld, mat, ind )
           #Add(vec,Random([one,zero]));
           vec[i]:=Random([one,zero]);
         od;
-        vec[Random([1..n])] := one; # make sure it's not zero
+        vec[Random(1,n)] := one; # make sure it's not zero
         #ConvertToVectorRepNC(vec,fld);
         MakeImmutable(vec);
         span := [];
@@ -549,7 +563,7 @@ BindGlobal( "Matrix_MinimalPolynomialSameField", function( fld, mat, ind )
                             piv := PositionNonZero(w, piv);
                         until piv > n or not IsBound(base[piv]);
                         if piv <= n then
-                            MultRowVector(w,Inverse(w[piv]));
+                            MultVector(w,Inverse(w[piv]));
                             MakeImmutable(w);
                             base[piv] := w;
                             dim := dim+1;
@@ -576,7 +590,7 @@ InstallMethod( Display,
 function( m )
     local   deg,  chr,  zero,  w,  t,  x,  v,  f,  z,  y;
 
-    if Length(m[1]) = 0 then
+    if NrCols(m) = 0 then
         TryNextMethod();
     fi;
     if  IsZmodnZObj(m[1,1]) then
@@ -592,7 +606,7 @@ function( m )
       # get the degree and characteristic
       deg  := Lcm( List( m, DegreeFFE ) );
       chr  := Characteristic(m[1,1]);
-      zero := Zero(m[1,1]);
+      zero := ZeroOfBaseDomain(m);
 
       # if it is a finite prime field,  use integers for display
       if deg = 1  then
@@ -813,8 +827,8 @@ function ( mat )
     local   m, rank;
 
     # check that the argument is an invertible square matrix
-    m := Length(mat);
-    if m <> Length(mat[1])  then
+    m := NrRows(mat);
+    if m <> NrCols(mat)  then
         Error( "Order: <mat> must be a square matrix" );
     fi;
     rank:= RankMat( mat );
@@ -849,7 +863,7 @@ local ord,i,vec,v,o;
 
   # loop over the standard basis vectors
   ord := 1;
-  for i  in [1..Length(mat)]  do
+  for i  in [1..NrRows(mat)]  do
 
     # compute the length of the orbit of the <i>th standard basis vector
     # (equivalently, of the orbit of `mat[<i>]',
@@ -911,8 +925,8 @@ end);
 #     fi;
 # 
 #     # Check that the argument is an invertible square matrix.
-#     m:= Length( cycmat );
-#     if m <> Length( cycmat[1] ) then
+#     m:= NrRows( cycmat );
+#     if m <> NrCols( cycmat ) then
 #       Error( "Order: <cycmat> must be a square matrix" );
 #     elif RankMat( cycmat ) <> m  then
 #       Error( "Order: <cycmat> must be invertible" );
@@ -932,7 +946,7 @@ end);
 #     # is bounded by the dimension of the matrix.
 # #T compute this (approximatively) for arbitrary cyclotomics
 # #T (by the way: why isn't this function called `AbsRat'?)
-#     if IsInt( trace ) and Length( cycmat ) < AbsInt( trace ) then
+#     if IsInt( trace ) and NrRows( cycmat ) < AbsInt( trace ) then
 #       return infinity;
 #     fi;
 # 
@@ -1022,8 +1036,8 @@ InstallMethod( Order,
           ordpowdet, I;
 
     # Check that the argument is an invertible square matrix.
-    dim:= Length( mat );
-    if dim <> Length( mat[1] ) then
+    dim:= NrRows( mat );
+    if dim <> NrCols( mat ) then
       Error( "Order: <mat> must be a square matrix" );
     fi;
 
@@ -1049,7 +1063,7 @@ InstallMethod( Order,
 
     # If the order is finite then the absolute value of the trace
     # is bounded by the dimension of the matrix.
-    if IsInt( trace ) and Length( mat ) < AbsInt( trace ) then
+    if IsInt( trace ) and NrRows( mat ) < AbsInt( trace ) then
       return infinity;
     fi;
 
@@ -1060,11 +1074,11 @@ InstallMethod( Order,
 
       # Check whether the trace is larger than the dimension.
       tracemat := BlownUpMat( Basis(F), [[ trace ]] );
-      if   AbsInt(Trace(tracemat)) > Length(mat) * Length(tracemat)
+      if   AbsInt(Trace(tracemat)) > NrRows(mat) * NrRows(tracemat)
       then return infinity; fi;
 
       mat:= BlownUpMat( Basis( F ), mat );
-      dim:= Length( mat );
+      dim:= NrRows( mat );
     fi;
 
     # Convert to an integer matrix if necessary.
@@ -1113,12 +1127,12 @@ InstallMethod( Order, "ordinary matrix of finite field elements", true,
     
     # the following limit is very crude but seems to work OK. It picks small
     # orders but still does not cost too much if the order gets larger.
-    if Length(mat) <> Length(mat[1]) then
+    if NrRows(mat) <> NrCols(mat) then
         Error("Order of non-square matrix is not defined");
     fi;
     o:=Characteristic(mat[1,1])^DegreeFFE(mat[1,1]); # size of field of
                                                      # first entry
-    o:=QuoInt(Length(mat),o)*5; 
+    o:=QuoInt(NrRows(mat),o)*5; 
 
     o:=OrderMatTrial(mat,o);
     if o<>fail then
@@ -1141,7 +1155,7 @@ InstallMethod( IsZero,
     local ncols,  # number of columns
           row;    # loop over rows in 'obj'
 
-    ncols:= DimensionsMat( mat )[2];
+    ncols:= NrCols( mat );
     for row in mat do
       if PositionNonZero( row ) <= ncols then
         return false;
@@ -1270,8 +1284,8 @@ function( mat )
     local   dim,  zero,  i,  j;
 
     # find the correct layer of <m>
-    dim  := Length(mat);
-    zero := Zero(mat[1,1]);
+    dim  := NrRows(mat);
+    zero := ZeroOfBaseDomain(mat);
     for i  in [ 1 .. dim-1 ]  do
         for j  in [ 1 .. dim-i ]  do
             if mat[j,i+j] <> zero  then
@@ -1324,9 +1338,9 @@ InstallMethod( DeterminantMatDestructive,
     local   det, sgn, row, zero, m, i, j, k, mult, row2, piv;
 
     # check that the argument is a square matrix and get the size
-    m := Length(mat);
-    zero := Zero(mat[1,1]);
-    if m <> Length(mat[1])  then
+    m := NrRows(mat);
+    zero := ZeroOfBaseDomain(mat);
+    if m <> NrCols(mat)  then
         Error("DeterminantMat: <mat> must be a square matrix");
     fi;
 
@@ -1361,11 +1375,11 @@ InstallMethod( DeterminantMatDestructive,
                 row2 := mat[j];
                 mult := -row2[k];
                 if  mult <> zero then
-                    MultRowVector( row2, piv );
+                    MultVector( row2, piv );
                     AddRowVector( row2, row, mult, k, m );
-                    MultRowVector( row2, Inverse(det) );
+                    MultVector( row2, Inverse(det) );
                 else
-                    MultRowVector( row2, piv/det);
+                    MultVector( row2, piv/det);
                 fi;
             od;
 
@@ -1399,11 +1413,11 @@ function( mat )
     Info( InfoMatrix, 1, "DeterminantMat called" );
 
     # check that the argument is a square matrix, and get the size
-    m := Length(mat);
-    if m = 0 or m <> Length(mat[1])  then
+    m := NrRows(mat);
+    if m = 0 or m <> NrCols(mat)  then
         Error( "<mat> must be a square matrix at least 1x1" );
     fi;
-    zero := Zero(mat[1,1]);
+    zero := ZeroOfBaseDomain(mat);
 
     # normalize rows using the inverse
     if IsFFECollColl(mat)  then
@@ -1443,7 +1457,7 @@ function( mat )
             # ... and normalize the row.
             x := row[k];
             det := det * x;
-            MultRowVector( mat[k], Inverse(x) );
+            MultVector( mat[k], Inverse(x) );
 
             # clear all entries in this column, adjust only columns > k
             # (Note that we need not clear the rows from 'k+1' to 'j'.)
@@ -1625,7 +1639,7 @@ InstallOtherMethod( DimensionsMat,
     [ IsMatrix ],
     function( A )
     if IsRectangularTable(A) then
-        return [ Length(A), Length(A[1]) ];
+        return [ NrRows(A), NrCols(A) ];
     else
         return fail;
     fi;
@@ -1640,8 +1654,8 @@ local R,M,transform,divide,swaprow, swapcol, addcol, addrow, multcol, multrow, l
   transform:=arg[3];
   divide:=arg[4];
 
-  l:=Length(M);
-  n:=Length(M[1]);
+  l:=NrRows(M);
+  n:=NrCols(M);
 
   basmat:=fail;
   if transform then
@@ -1717,11 +1731,11 @@ local R,M,transform,divide,swaprow, swapcol, addcol, addrow, multcol, multrow, l
   end;
 
   multrow:=function(a,m)
-    MultRowVector(M[a],m);
+    MultVector(M[a],m);
     if transform then
-      MultRowVector(left[a],m);
+      MultVector(left[a],m);
       if basmat<>fail then
-	MultRowVector(basmat[a],1/m);
+	MultVector(basmat[a],1/m);
       fi;
     fi;
   end;
@@ -1773,7 +1787,7 @@ local R,M,transform,divide,swaprow, swapcol, addcol, addrow, multcol, multrow, l
   end;
 
   start:=1;
-  while start<=Length(M) and start<=n do
+  while start<=NrRows(M) and start<=n do
 
     # find element of lowest degree and move it into pivot
     # hope is this will reduce the total number of iterations by making
@@ -1949,12 +1963,12 @@ InstallOtherMethod( MutableTransposedMat,
     function( mat )
     local trn, n, m, j;
 
-    m:= Length( mat );
+    m:= NrRows( mat );
     if m = 0 then return []; fi;
 
     # initialize the transposed
     m:= [ 1 .. m ];
-    n:= [ 1 .. Length( mat[1] ) ];
+    n:= [ 1 .. NrCols( mat ) ];
     trn:= [];
 
     # copy the entries
@@ -1975,10 +1989,10 @@ InstallOtherMethod( MutableTransposedMat,
     "for arbitrary lists of lists",
     [ IsList ],
     function( t )
-  local   res,  m,  i,  j;
+  local res, m, i, j, row;
   res := [];
   if Length(t)>0 and IsDenseList(t) and ForAll(t, IsDenseList) then
-        # special case with dense list of dense lists
+      # special case with dense list of dense lists
       m := Maximum(List(t, Length));
       for i in [m,m-1..1] do
           res[i] := [];
@@ -1987,16 +2001,17 @@ InstallOtherMethod( MutableTransposedMat,
           res{[1..Length(t[i])]}[i] := t[i];
       od;
   else
-        # general case, non dense lists allowed
+      # general case, non dense lists allowed
       for i in [1..Length(t)] do
           if IsBound(t[i]) then
-              if IsList(t[i]) then
-                  for j in [1..Length(t[i])] do
-                      if IsBound(t[i,j]) then
+              row := t[i];
+              if IsList(row) then
+                  for j in [1..Length(row)] do
+                      if IsBound(row[j]) then
                           if not IsBound(res[j]) then
                               res[j] := [];
                           fi;
-                          res[j,i] := t[i,j];
+                          res[j,i] := row[j];
                       fi;
                   od;
               else
@@ -2024,10 +2039,10 @@ InstallMethod( MutableTransposedMatDestructive,
     local   m,  n,  min,  i,  j,  store;
 
 
-    m:= Length( mat );
+    m:= NrRows( mat );
     if m = 0 then return []; fi;
 
-    n:= Length( mat[1] );
+    n:= NrCols( mat );
     min:= Minimum( m, n );
 
     # swap the entries in the "square part" of the matrix.
@@ -2106,25 +2121,25 @@ InstallMethod( TriangulizedNullspaceMatNT,
     local   nullspace, m, n, min, empty, i, k, row, zero, one;#
 
     TriangulizeMat( mat );
-    m := Length(mat);
-    n := Length(mat[1]);
-    zero := Zero( mat[1,1] );
-    one  := One( mat[1,1] );
+    m := NrRows(mat);
+    n := NrCols(mat);
+    zero := ZeroOfBaseDomain( mat );
+    one  := OneOfBaseDomain( mat );
     min := Minimum( m, n );
 
     # insert empty rows to bring the leading term of each row on the diagonal
     empty := 0*mat[1];
     i := 1;
-    while i <= Length(mat)  do
+    while i <= NrRows(mat)  do
         if i < n  and mat[i,i] = zero  then
-            for k in Reversed([i..Minimum(Length(mat),n-1)])  do
+            for k in Reversed([i..Minimum(NrRows(mat),n-1)])  do
                 mat[k+1] := mat[k];
             od;
             mat[i] := empty;
         fi;
         i := i+1;
     od;
-    for i  in [ Length(mat)+1 .. n ]  do
+    for i  in [ NrRows(mat)+1 .. n ]  do
         mat[i] := empty;
     od;
 
@@ -2290,10 +2305,10 @@ InstallMethod( SemiEchelonMatDestructive,
           row,       # the row of current interest
           inv;       # inverse of a matrix entry
 
-    nrows:= Length( mat );
-    ncols:= Length( mat[1] );
+    nrows:= NrRows( mat );
+    ncols:= NrCols( mat );
 
-    zero:= Zero( mat[1,1] );
+    zero:= ZeroOfBaseDomain( mat );
 
     heads:= ListWithIdenticalEntries( ncols, 0 );
     nzheads := [];
@@ -2318,7 +2333,7 @@ InstallMethod( SemiEchelonMatDestructive,
             if inv = fail then
               return fail;
             fi;
-            MultRowVector( row, inv );
+            MultVector( row, inv );
             Add( vectors, row );
             Add( nzheads, j );
             heads[j]:= Length( vectors );
@@ -2382,8 +2397,8 @@ InstallMethod( SemiEchelonMatTransformationDestructive,
           relations, # basis vectors of the null space of 'mat'
           row, head, x, row2,f;
 
-    nrows := Length( mat );
-    ncols := Length( mat[1] );
+    nrows := NrRows( mat );
+    ncols := NrCols( mat );
     
     f := DefaultFieldOfMatrix(mat);
     if f = fail then
@@ -2460,9 +2475,9 @@ InstallGlobalFunction( SemiEchelonMatsNoCo, function( mats )
           scalar,
           x;
 
-    zero:= Zero( mats[1][1,1] );
-    m:= Length( mats[1]    );
-    n:= Length( mats[1][1] );
+    zero:= ZeroOfBaseDomain( mats[1] );
+    m:= NrRows( mats[1] );
+    n:= NrCols( mats[1] );
 
     # Compute an echelonized basis.
     vectors := [];
@@ -2581,8 +2596,8 @@ InstallMethod( IsMonomialMatrix,
           row,   # loop over rows
           j;     # position of first non-zero element
 
-    len:= Length( M[1] );
-    if Length( M ) <> len  then
+    len:= NrCols( M );
+    if NrRows( M ) <> len  then
         return false;
     fi;
     found:= ListWithIdenticalEntries( len, false );
@@ -2611,12 +2626,12 @@ InstallMethod( InverseMatMod,
 function( mat, m )
     local   n,  MM, inv,  perm,  i,  pj,  elem,  liste,  l;
 
-    if Length(mat) <> Length(mat[1])  then
+    if NrRows(mat) <> NrCols(mat)  then
         Error( "<mat> must be a square matrix" );
     fi;
 
     MM := List( mat, x -> List( x, y -> y mod m ) );
-    n  := Length(MM);
+    n  := NrRows(MM);
 
     # construct the identity matrix
     inv := IdentityMat( n, Cyclotomics );
@@ -2682,27 +2697,28 @@ end );
 
 #############################################################################
 ##
-#M  ExteriorPower( <mat1>, <mat2> )
+#M  ExteriorPower( <mat>, <m> )
 ##
 InstallOtherMethod(ExteriorPower,
   "for matrices", true,[IsMatrix,IsPosInt],
 function ( A, m )
 local  basis;
-  basis := Combinations( [ 1 .. Length( A ) ], m );
+  basis := Combinations( [ 1 .. NrRows( A ) ], m );
   return List( basis, i->List( basis, j->DeterminantMat( A{i}{j} )));
 end);
 
 #############################################################################
 ##
-#M  SymmetricPower( <mat1>, <mat2> )
+#M  SymmetricPower( <mat>, <m> )
 ##
 InstallOtherMethod(SymmetricPower,
   "for matrices", true,[IsMatrix,IsPosInt],
 function ( A, m )
 local  basis, f;
   f := j->Product( List( Collected( j ), x->x[2]), Factorial );
-  basis := UnorderedTuples( [ 1 .. Length( A ) ], m );
+  basis := UnorderedTuples( [ 1 .. NrRows( A ) ], m );
   return List( basis, i-> List( basis, j->Permanent( A{i}{j}) / f( i )));
+#T This code makes sense only in characteristic zero.
 end);
 
 
@@ -2721,10 +2737,10 @@ InstallMethod( SolutionMatDestructive,
         function( mat, vec )
     local i,ncols,sem, vno, z,x, row, sol;
     ncols := Length(vec);
-    z := Zero(mat[1,1]);
-    sol := ListWithIdenticalEntries(Length(mat),z);
+    z := ZeroOfBaseDomain(mat);
+    sol := ListWithIdenticalEntries(NrRows(mat),z);
     ConvertToVectorRepNC(sol);
-    if ncols <> Length(mat[1]) then
+    if ncols <> NrCols(mat) then
         Error("SolutionMat: matrix and vector incompatible");
     fi;
     sem := SemiEchelonMatTransformationDestructive(mat);
@@ -2756,14 +2772,14 @@ end);
 #
 #    # solve <mat> * x = <vec>.
 #    vec  := ShallowCopy( vec );
-#    l    := Length( mat );
+#    l    := NrRows( mat );
 #    r    := 0;
-#    zero := Zero( mat[1,1] );
+#    zero := ZeroOfBaseDomain( mat );
 #    Info( InfoMatrix, 1, "SolutionMat called" );
 #
 #    # Run through all columns of the matrix.
 #    c := 1;
-#    while c <= Length( mat[ 1 ] ) and r < l  do
+#    while c <= NrCols( mat ) and r < l  do
 #
 #        # Find a nonzero entry in this column.
 #        s := r + 1;
@@ -2782,7 +2798,7 @@ end);
 #            v := vec[ s ];  vec[ s ] := vec[ r ];  vec[ r ] := tmp * v;
 #
 #            # Clear all entries in this column.
-#            for s  in [ 1 .. Length( mat ) ]  do
+#            for s  in [ 1 .. NrRows( mat ) ]  do
 #                if s <> r and mat[ s , c ] <> zero  then
 #                    tmp := mat[ s , c ];
 #                    mat[ s ] := mat[ s ] - tmp * mat[ r ];
@@ -2798,7 +2814,7 @@ end);
 #        if vec[ i ] <> zero  then return fail;  fi;
 #    od;
 #    h := [];
-#    s := Length( mat[ 1 ] );
+#    s := NrCols( mat );
 #    v := Zero( mat[ 1 , 1 ] );
 #    r := 1;
 #    c := 1;
@@ -2867,9 +2883,9 @@ function( M1, M2 )
       return [ M2, M1 ];
     elif Length( M2 ) = 0 then
       return [ M1, M2 ];
-    elif Length( M1[1] ) <> Length( M2[1] ) then
+    elif NrCols( M1 ) <> NrCols( M2 ) then
       Error( "dimensions of matrices are not compatible" );
-    elif Zero( M1[1,1] ) <> Zero( M2[1,1] ) then
+    elif ZeroOfBaseDomain( M1 ) <> ZeroOfBaseDomain( M2 ) then
       Error( "fields of matrices are not compatible" );
     fi;
 
@@ -2933,9 +2949,9 @@ InstallMethod( TriangulizeMat,
     if not IsEmpty( mat ) then
 
        # get the size of the matrix
-       m := Length(mat);
-       n := Length(mat[1]);
-       zero := Zero( mat[1,1] );
+       m := NrRows(mat);
+       n := NrCols(mat);
+       zero := ZeroOfBaseDomain( mat );
 
        # make sure that the rows are mutable
        for i in [ 1 .. m ] do
@@ -2966,7 +2982,7 @@ InstallMethod( TriangulizeMat,
                if x = fail then
                  TryNextMethod();
                fi;
-               MultRowVector( row, x );
+               MultVector( row, x );
                mat[i] := row;
 
                # clear all entries in this column
@@ -3016,22 +3032,10 @@ mat -> []);
 #M  UpperSubdiagonal( <mat>, <pos> )
 ##
 InstallMethod( UpperSubdiagonal,
-    [ IsMatrix,
-      IsPosInt ],
+    [ IsMatrixObj, IsPosInt ],
 function( mat, l )
-    local   dim,  exp,  i;
-
-    # collect exponents in <e>
-    dim := Length(mat);
-    exp := [];
-
-    # run through the diagonal
-    for i  in [ 1 .. dim-l ]  do
-        Add( exp, mat[i,l+i] );
-    od;
-
-    # and return
-    return exp;
+    return List( [ 1 .. Minimum( NrRows( mat ), NrCols( mat ) - l ) ],
+                 i -> mat[ i, l+i ] );
 end );
 
 
@@ -3051,7 +3055,7 @@ InstallGlobalFunction( BaseFixedSpace, function( matrices )
           j;
 
     I := matrices[1]^0;
-    size := Length(I);
+    size := NrRows(I);
     E := List( [ 1 .. size ], x -> [] );
     for M  in matrices  do
         N := M - I;
@@ -3286,6 +3290,12 @@ InstallGlobalFunction( NullMat, function ( arg )
     fi;
     zero := Zero(f);
 
+#    # special treatment for 0-dimensional spaces
+#    if m = 0 or n = 0 then
+#      return NullMapMatrix;
+#    fi;
+#T Adding this would break a test.
+
     # make an empty row
     row := ListWithIdenticalEntries(n,zero);
     ConvertToVectorRepNC( row, f );
@@ -3306,97 +3316,22 @@ end );
 
 #############################################################################
 ##
-#F  NullspaceModQ( <E>, <q> ) . . . . . . . . . . .  nullspace of <E> mod <q>
+#F  NullspaceModN( <M>, <n> ) . . . . . . . . . . .  nullspace of <M> mod <n>
 ##
-##  <E> must be a matrix of integers modulo <q> and <q>  a prime power.  Then
-##  'NullspaceModQ' returns  the set of  all vectors of  integers modulo <q>,
-##  which solve the homogeneous equation system given by <E> modulo <q>.
-##
-InstallGlobalFunction( NullspaceModQ, function( E, q )
-    local  facs,         # factors of <q>
-           p,            # prime of facs
-           pex,          # p-power
-           n,            # <q> = p^n
-           field,        # field with p elements
-           B,            # E over GF(p)
-           null,         # basis of nullspace of B
-           elem,         # all elements solving E mod p^i-1
-           e,            # one elem
-           r,            # inhomogenous part mod p^i-1
-           newelem,      # all elements solving E mod p^i
-           sol,          # solution of E * x = r mod p^i
-           ran,
-           new, o,
-           j, i,k;
+InstallGlobalFunction( NullspaceModN, function( M, n )
+    local B, coeffs;
 
-    # factorize q
-    facs  := Factors(Integers, q );
-    p     := facs[1];
-    n     := Length( facs );
-    field := GF(p);
-
-    # solve homogeneous system mod p
-    B    := One( field ) * E;
-    null := NullspaceMat( B );
-    if null = []  then
-        return [ListWithIdenticalEntries (Length(E),0)];
-    fi;
-
-    # set up
-    elem := List( AsList( FreeLeftModule(field,null,"basis") ),
-            x -> List( x, IntFFE ) );
-#T !
-    newelem := [ ];
-    o := One( field );
-
-    ran:=[1..Length(null[1])];
-    # run trough powers
-    for i  in [ 2..n ]  do
-        pex:=p^(i-1);
-        for e  in elem  do
-            #r   := o * ( - (e * E) / (p ^ ( i - 1 ) ) );
-            r   := o * ( - (e * E) / pex );
-            sol := SolutionMat( B, r );
-            if sol <> fail then
-
-                # accessing the elements of the compact vector `sol'
-                # frequently would be very expensive
-                sol:=List(sol,IntFFE);
-
-                for j  in [ 1..Length( elem ) ]  do
-                    #new := e + ( p^(i-1) * List( o * elem[j] + sol, IntFFE ) );
-                    new:=ShallowCopy(e);
-                    for k in ran do
-                      #new[k]:=new[k]+pex * IntFFE(o*elem[j,k]+ sol[k]);
-                      new[k]:=new[k]+pex * ((elem[j,k]+ sol[k]) mod p);
-                    od;
-#T !
-                    MakeImmutable(new); # otherwise newelem does not remember
-                                        # it is sorted!
-                    AddSet( newelem, new );
-                od;
-            fi;
-        od;
-        if Length( newelem ) = 0  then
-            return [];
-        fi;
-        elem    := newelem;
-        newelem := [ ];
-    od;
-    return elem;
+    B := BasisNullspaceModN(M, n);
+    coeffs := Cartesian(ListWithIdenticalEntries(Length(B), [0..n-1]));
+    return Set(coeffs, c -> c * B mod n);
 end );
 
 
 #############################################################################
 ##
-#F  BasisNullspaceModN( <M>, <n> ) . . . . . . .  .  nullspace of <E> mod <n>
+#F  BasisNullspaceModN( <M>, <n> ) . .  basis of the nullspace of <M> mod <n>
 ##
-##  <M> must be a matrix of integers modulo <n> and <n> a positive integer.
-##  Then 'NullspaceModQ' returns a set <B> of vectors such that every <v>
-##  such that <v> <M> = 0 modulo <n> can be expressed by a Z-linear combination
-##  of elements of <M>.
-##
-InstallGlobalFunction (BasisNullspaceModN, function (M, n)
+InstallGlobalFunction( BasisNullspaceModN, function( M, n )
     local snf, null, nullM, i, gcdex;
 
     # if n is a  prime, Gaussian elimination is fastest
@@ -3689,9 +3624,9 @@ InstallGlobalFunction( RandomUnimodularMat, function ( arg )
     for c  in [1..m]  do
 
         # multiply two random rows with a random? unimodular 2x2 matrix
-        i := Random(rs, [1..m]);
+        i := Random(rs, 1, m);
         repeat
-            j := Random(rs, [1..m]);
+            j := Random(rs, 1, m);
         until j <> i;
         repeat
             a := Random( rs, Integers );
@@ -3703,9 +3638,9 @@ InstallGlobalFunction( RandomUnimodularMat, function ( arg )
         mat[j] := ShallowCopy(gcd.coeff3 * v + gcd.coeff4 * w);
 
         # multiply two random cols with a random? unimodular 2x2 matrix
-        k := Random(rs, [1..m]);
+        k := Random(rs, 1, m);
         repeat
-            l := Random(rs, [1..m]);
+            l := Random(rs, 1, m);
         until l <> k;
         repeat
             a := Random( rs, Integers );
@@ -3858,7 +3793,7 @@ InstallGlobalFunction( DirectSumMat, function (arg)
         if Length(m)=0 then
             return 0;
         else
-            return Length(m[1]);
+            return NrCols(m);
         fi;
     end;
     r:=1; m:=[ ];
@@ -3892,7 +3827,7 @@ InstallMethod( TraceMat, "method for lists", [ IsList ],
 
     # check that the element is a square matrix
     m := Length(mat);
-    if m <> Length(mat[1])  then
+    if m <> NrCols(mat)  then
         Error("TraceMat: <mat> must be a square matrix");
     fi;
 
@@ -4039,31 +3974,40 @@ end);
 ##
 #M  DefaultScalarDomainOfMatrixList
 ##
-InstallMethod(DefaultScalarDomainOfMatrixList, "generic: form ring",
-  [IsListOrCollection],
-function(l)
-local i,j,k,fg,f;
-  # try to find out the field
-  if Length(l)=0 or ForAny(l,i->not IsMatrix(i)) then
-    Error("<l> must be a list of matrices");
-  fi;
-  fg:=[l[1][1,1]];
-  if Characteristic(fg)=0 then
-    f:=DefaultField(fg);
-  else
-    f:=DefaultRing(fg);
-  fi;
-  for i in l do
-    for j in i do
-      for k in j do
-        if not k in f then
-          Add(fg,k);
-          f:=DefaultRing(fg);
-        fi;
+InstallMethod( DefaultScalarDomainOfMatrixList,
+    "generic: form ring",
+    [ IsList ],
+    function(l)
+    local B, i,j,k,fg,f;
+    # try to find out the field
+    if Length( l ) = 0 or ForAny( l, i -> not IsMatrixObj( i ) ) then
+      Error( "<l> must be a nonempty list of matrices" );
+    elif ForAll( l, HasBaseDomain ) then
+      B:= BaseDomain( l[1] );
+      if ForAll( l, x -> B = BaseDomain( x ) ) then
+        return B;
+      fi;
+    elif ForAll( l, IsMatrix ) then
+      fg:=[l[1][1,1]];
+      if Characteristic(fg)=0 then
+        f:=DefaultField(fg);
+      else
+        f:=DefaultRing(fg);
+      fi;
+      for i in l do
+        for j in i do
+          for k in j do
+            if not k in f then
+              Add(fg,k);
+              f:=DefaultRing(fg);
+            fi;
+          od;
+        od;
       od;
-    od;
-  od;
-  return f;
+      return f;
+    fi;
+    Error( "all entries in <l> must either be lists of lists ",
+           "or have the same BaseDomain" );
 end);
 
 
@@ -4186,10 +4130,10 @@ local idx,i;
    if L=[1..Length(L)] then
      TriangulizeMat(M);
    else
-     idx:=Concatenation(L,Filtered([1..Length(M[1])],x->not x in L));
+     idx:=Concatenation(L,Filtered([1..NrCols(M)],x->not x in L));
      for i in [1..Length(M)] do M[i]:=M[i]{idx}; od;
      TriangulizeMat(M);
-     idx:=ListPerm(PermList(idx)^-1,Length(M[1]));
+     idx:=ListPerm(PermList(idx)^-1,NrCols(M));
      for i in [1..Length(M)] do M[i]:=M[i]{idx}; od;
    fi;
 
@@ -4320,7 +4264,7 @@ end);
 # for compact matrices (FL)
 BindGlobal("POW_MAT_INT", function(mat, n)
   local d, addb, trafo, value, t, ti, mm, pol, ind;
-  d := Length(mat);
+  d := NrRows(mat);
   # finding a better break even point probably also depends on q
   if n < 2^QuoInt(3*d,4) then
     return POW_OBJ_INT(mat, n);
@@ -4393,13 +4337,13 @@ BindGlobal("POW_MAT_INT", function(mat, n)
       val := MutableCopyMat(val);
     fi;
     i := i-1;
-    for j in [1..Length(mat)] do
+    for j in [1..NrRows(mat)] do
       val[j,j] := val[j,j]+c[i];
     od;
     while 1 < i  do
       val := mat * val;
       i := i - 1;
-      for j in [1..Length(mat)] do
+      for j in [1..NrRows(mat)] do
         val[j,j] := val[j,j]+c[i];
       od;
     od;
@@ -4420,7 +4364,7 @@ end);
 
 InstallMethod( \^,
     "for matrices, use char. poly. for large exponents",
-    [ IsMatrix, IsPosInt ], POW_MAT_INT );
+    [ IsMatrixObj, IsPosInt ], POW_MAT_INT );
 
 InstallGlobalFunction(RationalCanonicalFormTransform,function(mat)
 local cr,R,x,com,nf,matt,p,i,j,di,d,v;
@@ -4446,8 +4390,3 @@ local cr,R,x,com,nf,matt,p,i,j,di,d,v;
   od;
   return TransposedMat(p);
 end);
-
-
-#############################################################################
-##  
-#E

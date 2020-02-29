@@ -1,13 +1,11 @@
 /****************************************************************************
 **
-*W  infuncs.c                   GAP source                   Martin Schönert
-**                                                           & Alice Niemeyer
-**                                                           & Werner  Nickel
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 ** This file contains integer related functions which are independent of the
 ** large integer representation in use. See integer.c for other things.
@@ -18,6 +16,7 @@
 #include "bool.h"
 #include "calls.h"
 #include "error.h"
+#include "integer.h"
 #include "lists.h"
 #include "modules.h"
 #include "plist.h"
@@ -49,13 +48,13 @@
 #define UPPER_MASK 0x80000000UL /* most significant w-r bits */
 #define LOWER_MASK 0x7fffffffUL /* least significant r bits */
 
-void initGRMT(UInt4 *mt, UInt4 s)
+static void initGRMT(UInt4 * mt, UInt4 s)
 {
     UInt4 mti;
     mt[0]= s & 0xffffffffUL;
     for (mti=1; mti<624; mti++) {
         mt[mti] =
-	    (1812433253UL * (mt[mti-1] ^ (mt[mti-1] >> 30)) + mti);
+            (1812433253UL * (mt[mti-1] ^ (mt[mti-1] >> 30)) + mti);
         mt[mti] &= 0xffffffffUL;
     }
     /* store mti as last entry of mt[] */
@@ -63,7 +62,7 @@ void initGRMT(UInt4 *mt, UInt4 s)
 }
 
 // Read s[pos], returning 0 if pos is past the error of the array
-static inline UChar checkedReadChar(UChar * s, UInt4 pos, UInt4 len)
+static inline UChar checkedReadChar(const UChar * s, UInt4 pos, UInt4 len)
 {
     if (pos < len)
         return s[pos];
@@ -72,7 +71,7 @@ static inline UChar checkedReadChar(UChar * s, UInt4 pos, UInt4 len)
 }
 
 /* to read a seed string independently of endianness */
-static inline UInt4 uint4frombytes(UChar * s, UInt4 pos, UInt4 len)
+static inline UInt4 uint4frombytes(const UChar * s, UInt4 pos, UInt4 len)
 {
   UInt4 res;
   res = checkedReadChar(s, pos + 3, len);
@@ -85,30 +84,25 @@ static inline UInt4 uint4frombytes(UChar * s, UInt4 pos, UInt4 len)
   return res;
 }
 
-Obj FuncInitRandomMT( Obj self, Obj initstr)
+static Obj FuncInitRandomMT(Obj self, Obj initstr)
 {
   Obj str;
-  UChar *init_key;
+  const UChar *init_key;
   UInt4 *mt, key_length, byte_key_length, i, j, k, N = 624;
 
   /* check the seed, given as string */
-  while (! IsStringConv(initstr)) {
-     initstr = ErrorReturnObj(
-         "<initstr> must be a string, not a %s)",
-         (Int)TNAM_OBJ(initstr), 0L,
-         "you can replace <initstr> via 'return <initstr>;'" );
-  }
+  RequireStringRep("InitRandomMT", initstr);
 
   /* store array of 624 UInt4 and one UInt4 as counter "mti" and an
      endianness marker */
   str = NEW_STRING(4*626);
   SET_LEN_STRING(str, 4*626);
-  mt = (UInt4*) CHARS_STRING(str);
+  mt = (UInt4 *)(ADDR_OBJ(str) + 1);
   /* here the counter mti is set to 624 */
   initGRMT(mt, 19650218UL);
   i=1; j=0;
   /* Do not set these up until all garbage collection is done   */
-  init_key = CHARS_STRING(initstr);
+  init_key = CONST_CHARS_STRING(initstr);
   byte_key_length = GET_LEN_STRING(initstr);
   key_length = byte_key_length / 4;
   k = (N>key_length ? N : key_length);
@@ -172,24 +166,6 @@ UInt4 nextrandMT_int32(UInt4* mt)
 
     return y;
 }
-
-/****************************************************************************
-**
-*F  FuncHASHKEY_BAG(<self>,<obj>,<seed>,<offset>,<maxlen>)
-**
-**  'FuncHASHKEY_BAG' implements the internal function 'HASHKEY_BAG'.
-**
-**  'HASHKEY_BAG( <obj>, <seed>, <offset>, <maxlen> )'
-**
-**  takes a non-immediate object and a small integer <seed> and computes a
-**  hash value for the contents of the bag from these. (For this to be
-**  usable in algorithms, we need that objects of this kind are stored uniquely
-**  internally.
-**  The offset and the maximum number of bytes to process both count in
-**  bytes. The values passed to these parameters might depend on the word 
-**  length of the computer.
-**  A <maxlen> value of -1 indicates infinity.
-*/
 
 
 //-----------------------------------------------------------------------------
@@ -352,7 +328,6 @@ FORCE_INLINE uint64_t fmix8 ( uint64_t k )
 void MurmurHash3_x64_128 ( const void * key, const int len,
                            const UInt4 seed, void * out )
 {
-  const uint8_t * data = (const uint8_t*)key;
   const int nblocks = len / 16;
 
   uint64_t h1 = seed;
@@ -364,7 +339,7 @@ void MurmurHash3_x64_128 ( const void * key, const int len,
   //----------
   // body
 
-  const uint64_t * blocks = (const uint64_t *)(data);
+  const uint64_t * blocks = (const uint64_t *)key;
 
   int i;
   for(i = 0; i < nblocks; i++)
@@ -384,7 +359,7 @@ void MurmurHash3_x64_128 ( const void * key, const int len,
   //----------
   // tail
 
-  const uint8_t * tail = (const uint8_t*)(data + nblocks*16);
+  const uint8_t * tail = (const uint8_t*)key + nblocks*16;
 
   uint64_t k1 = 0;
   uint64_t k2 = 0;
@@ -430,11 +405,28 @@ void MurmurHash3_x64_128 ( const void * key, const int len,
 }
 #endif
 
-Obj FuncHASHKEY_BAG(Obj self, Obj obj, Obj opSeed, Obj opOffset, Obj opMaxLen)
+
+/****************************************************************************
+**
+*F  FuncHASHKEY_BAG(<self>,<obj>,<seed>,<offset>,<maxlen>)
+**
+**  'FuncHASHKEY_BAG' implements the internal function 'HASHKEY_BAG'.
+**
+**  'HASHKEY_BAG( <obj>, <seed>, <offset>, <maxlen> )'
+**
+**  takes a non-immediate object and a small integer <seed> and computes a
+**  hash value for the contents of the bag from these. For this to be usable
+**  in algorithms, we need that objects of this kind are stored uniquely
+**  internally.
+**  The offset and the maximum number of bytes to process both count in
+**  bytes. The values passed to these parameters might depend on the word
+**  length of the computer.
+**  A <maxlen> value of -1 indicates infinity.
+*/
+static Obj
+FuncHASHKEY_BAG(Obj self, Obj obj, Obj seed, Obj offset, Obj maxlen)
 {
   Int n;
-  Int offs;
-
   if ( IS_INTOBJ(obj) )
     return obj;
 
@@ -453,46 +445,25 @@ Obj FuncHASHKEY_BAG(Obj self, Obj obj, Obj opSeed, Obj opOffset, Obj opMaxLen)
   }
 
   /* check the arguments                                                 */
-  while ( !IS_INTOBJ(opSeed) ) {
-      opSeed = ErrorReturnObj(
-	  "HASHKEY_BAG: <seed> must be a small integer (not a %s)",
-	  (Int)TNAM_OBJ(opSeed), 0L,
-	  "you can replace <seed> via 'return <seed>;'" );
-  }
-  
-  do {
-    offs = -1;
+  Int s = GetSmallInt("HASHKEY_BAG", seed);
 
-    while ( !IS_INTOBJ(opOffset)  ) {
-      opOffset = ErrorReturnObj(
-       "HASHKEY_BAG: <offset> must be a small integer (not a %s)",
-       (Int)TNAM_OBJ(opOffset), 0L,
-       "you can replace <offset> via 'return <offset>;'" );      
-    }
-    offs = INT_INTOBJ(opOffset);
-    if ( offs < 0 || offs > SIZE_OBJ(obj)) {
-      opOffset = ErrorReturnObj(
-        "HashKeyBag: <offset> must be non-negative and less than the bag size",
-        0L, 0L,
-        "you can replace <offset> via 'return <offset>;'" );      
-      offs = -1; 
-    }
-  } while (offs < 0);
-
-  while ( !IS_INTOBJ(opMaxLen) ) {
-      opMaxLen = ErrorReturnObj(
-        "HASHKEY_BAG: <maxlen> must be a small integer (not a %s)",
-        (Int)TNAM_OBJ(opMaxLen), 0L,
-        "you can replace <maxlen> via 'return <maxlen>;'" );
+  Int offs = GetSmallInt("HASHKEY_BAG", offset);
+  if (offs < 0 || offs > SIZE_OBJ(obj)) {
+      ErrorMayQuit("HashKeyBag: <offset> must be non-negative and less than "
+                   "the bag size",
+                   0, 0);
   }
+
+  /* maximal number of bytes to read */
+  Int imaxlen = GetSmallInt("HASHKEY_BAG", maxlen);
 
   n=SIZE_OBJ(obj)-offs;
 
-  /* maximal number of bytes to read */
-  Int maxlen=INT_INTOBJ(opMaxLen);
-  if ((n>maxlen)&&(maxlen!=-1)) {n=maxlen;}; 
-  
-  return INTOBJ_INT(HASHKEY_BAG_NC( obj, (UInt4)INT_INTOBJ(opSeed), offs, (int) n));
+  if (n > imaxlen && imaxlen != -1) {
+      n = imaxlen;
+  }
+
+  return INTOBJ_INT(HASHKEY_BAG_NC(obj, (UInt4)s, offs, (int)n));
 }
 
 Int HASHKEY_MEM_NC(const void * ptr, UInt4 seed, Int read)
@@ -519,101 +490,109 @@ Int HASHKEY_WHOLE_BAG_NC(Obj obj, UInt4 seed)
     return HASHKEY_BAG_NC(obj, seed, 0, SIZE_OBJ(obj));
 }
 
+
 /****************************************************************************
 **
-*F SmallInt Bitfield operations
-*
-* The goal here it to set up a division of the usable bits in a small
-* integer into fields which can be accessed very quickly from GAP
-* level and quickly and conveniently from C. The purpose is to allow
-* implementation of data structures that divide up the bits within a
-* word without having to make them entirely opaque to the GAP level or
-* ridiculously slow
-*
-* The API is defined in lib/bitfields.gd and works by providing the
-* user with a collection of functions to get and set fields and
-* assemble an entire word.
-*
-* These functions are constructed here and have special handlers. The
-* information the handlers need about the size and position of the
-* bitfields are stored in some of the fields of the function header
-* which are not normally used for kernel functions. Specifically, we
-* use the NLOC_FUNC and FEXS_FUNC fields, which we alias as
-* MASK_BITFIELD_FUNC and OFFSET_BITFIELD_FUNC.
-*
-* For fields of size 1 we also offer Boolean setters and getters which
-* accept and return True for 1 and False for 0. This makes for much
-* nicer code on the GAP side.
-*
+*F  SmallInt Bitfield operations
+**
+**  The goal here it to set up a division of the usable bits in a small
+**  integer into fields which can be accessed very quickly from GAP level and
+**  quickly and conveniently from C. The purpose is to allow implementation
+**  of data structures that divide up the bits within a word without having
+**  to make them entirely opaque to the GAP level or ridiculously slow.
+**
+**  The API is defined in lib/bitfields.gd and works by providing the user
+**  with a collection of functions to get and set fields and assemble an
+**  entire word.
+**
+**  These functions are constructed here and have special handlers. The
+**  information the handlers need about the size and position of the
+**  bitfields are stored in special fields added after the regular function
+**  bag fields, and are referred to as MASK_BITFIELD_FUNC and
+**  OFFSET_BITFIELD_FUNC.
+**
+**  For fields of size 1 we also offer Boolean setters and getters which
+**  accept and return True for 1 and False for 0. This makes for much nicer
+**  code on the GAP side.
 */
+typedef struct {
+    FuncBag f;
 
+    Obj mask;
+    Obj offset;
+} BitfieldFuncBag;
+
+static inline const BitfieldFuncBag * CBFB(Obj func)
+{
+    return (const BitfieldFuncBag *)CONST_ADDR_OBJ(func);
+}
+
+static inline BitfieldFuncBag * BFB(Obj func)
+{
+    return (BitfieldFuncBag *)ADDR_OBJ(func);
+}
 
 static inline UInt MASK_BITFIELD_FUNC(Obj func)
 {
-  return NLOC_FUNC(func);
+    GAP_ASSERT(TNUM_OBJ(func) == T_FUNCTION);
+    GAP_ASSERT(SIZE_OBJ(func) == sizeof(BitfieldFuncBag));
+    return UInt_ObjInt(CBFB(func)->mask);
 }
 
 static inline void SET_MASK_BITFIELD_FUNC(Obj func, UInt mask)
 {
-  SET_NLOC_FUNC(func, mask);
+    GAP_ASSERT(TNUM_OBJ(func) == T_FUNCTION);
+    GAP_ASSERT(SIZE_OBJ(func) == sizeof(BitfieldFuncBag));
+    BFB(func)->mask = ObjInt_UInt(mask);
 }
 
 static inline UInt OFFSET_BITFIELD_FUNC(Obj func)
 {
-  GAP_ASSERT(IS_INTOBJ(FEXS_FUNC(func)));
-  return INT_INTOBJ(FEXS_FUNC(func));
+    GAP_ASSERT(TNUM_OBJ(func) == T_FUNCTION);
+    GAP_ASSERT(SIZE_OBJ(func) == sizeof(BitfieldFuncBag));
+    return UInt_ObjInt(CBFB(func)->offset);
 }
 
 static inline void SET_OFFFSET_BITFIELD_FUNC(Obj func, UInt offset)
 {
-  SET_FEXS_FUNC(func, INTOBJ_INT(offset));
+    GAP_ASSERT(TNUM_OBJ(func) == T_FUNCTION);
+    GAP_ASSERT(SIZE_OBJ(func) == sizeof(BitfieldFuncBag));
+    BFB(func)->offset = ObjInt_UInt(offset);
 }
 
 static Obj DoFieldGetter(Obj self, Obj data)
 {
+    UInt x = GetSmallInt("Field getter", data);
     UInt mask = MASK_BITFIELD_FUNC(self);
     UInt offset = OFFSET_BITFIELD_FUNC(self);
-    if (!IS_INTOBJ(data))
-        ErrorMayQuit("Field getter: argument must be small integer", 0, 0);
-    UInt x = INT_INTOBJ(data);
     return INTOBJ_INT((x & mask) >> offset);
 }
 
 static Obj DoFieldSetter(Obj self, Obj data, Obj val)
 {
+    UInt x = GetSmallInt("Field Setter", data);
+    UInt y = GetSmallInt("Field Setter", val);
     UInt mask = MASK_BITFIELD_FUNC(self);
     UInt offset = OFFSET_BITFIELD_FUNC(self);
-    if (!ARE_INTOBJS(data, val))
-        ErrorMayQuit("Field Setter: both arguments must be small integers", 0,
-                     0);
-    UInt x = INT_INTOBJ(data);
-    UInt y = INT_INTOBJ(val);
     return INTOBJ_INT((x & ~mask) | (y << offset));
 }
 
 static Obj DoBooleanFieldGetter(Obj self, Obj data)
 {
-  UInt mask = MASK_BITFIELD_FUNC(self);
-    if (!IS_INTOBJ(data))
-        ErrorMayQuit("Boolean Field getter: argument must be small integer", 0, 0);
-    UInt x = INT_INTOBJ(data);
+    UInt x = GetSmallInt("Boolean Field getter", data);
+    UInt mask = MASK_BITFIELD_FUNC(self);
     return (x & mask) ? True : False;
 }
 
 static Obj DoBooleanFieldSetter(Obj self, Obj data, Obj val)
 {
+    UInt x = GetSmallInt("Boolean Field Setter", data);
+    RequireTrueOrFalse("Boolean Field Setter", val);
     UInt mask = MASK_BITFIELD_FUNC(self);
-    if (!IS_INTOBJ(data))
-        ErrorMayQuit("Boolean Field Setter: data must be small integer", 0,
-                     0);
-    UInt x = INT_INTOBJ(data);
     if (val == True)
         x |= mask;
     else if (val == False)
         x &= ~mask;
-    else
-        ErrorMayQuit("Boolean Field Setter: value must be true or false", 0,
-                     0);
     return INTOBJ_INT(x);
 }
 
@@ -649,7 +628,7 @@ static Obj FuncBUILD_BITFIELDS(Obj self, Obj args)
 }
 
 
-Obj FuncMAKE_BITFIELDS(Obj self, Obj widths)
+static Obj FuncMAKE_BITFIELDS(Obj self, Obj widths)
 {
     if (!IS_LIST(widths))
         ErrorMayQuit("MAKE_BITFIELDS: widths must be a list", 0, 0);
@@ -667,6 +646,13 @@ Obj FuncMAKE_BITFIELDS(Obj self, Obj widths)
     if (starts[nfields] > 8 * sizeof(UInt))
         ErrorMayQuit("MAKE_BITFIELDS: total widths too large", 0, 0);
 
+    Obj nameSetter = MakeImmString("<field setter>");
+    Obj nameGetter = MakeImmString("<field getter>");
+    Obj nameBSetter = MakeImmString("<boolean field setter>");
+    Obj nameBGetter = MakeImmString("<boolean field getter>");
+    Obj dataArgs = ArgStringToList("data");
+    Obj dataValArgs = ArgStringToList("data, val");
+
     Obj  setters = NEW_PLIST_IMM(T_PLIST_DENSE, nfields);
     Obj  getters = NEW_PLIST_IMM(T_PLIST_DENSE, nfields);
     Obj  bsetters = NEW_PLIST_IMM(T_PLIST, nfields);
@@ -674,26 +660,28 @@ Obj FuncMAKE_BITFIELDS(Obj self, Obj widths)
     Obj  bgetters = NEW_PLIST_IMM(T_PLIST, nfields);
     for (UInt i = 1; i <= nfields; i++) {
         UInt mask = (1L << starts[i]) - (1L << starts[i - 1]);
-        Obj s = NewFunctionC("<field setter>", 2, "data, val", DoFieldSetter);
+        Obj  s = NewFunctionT(T_FUNCTION, sizeof(BitfieldFuncBag), nameSetter,
+                             2, dataValArgs, DoFieldSetter);
         SET_MASK_BITFIELD_FUNC(s, mask);
         SET_OFFFSET_BITFIELD_FUNC(s, starts[i - 1]);
         SET_ELM_PLIST(setters, i, s);
         CHANGED_BAG(setters);
-        Obj g = NewFunctionC("<field getter>", 1, "data", DoFieldGetter);
+        Obj g = NewFunctionT(T_FUNCTION, sizeof(BitfieldFuncBag), nameGetter,
+                             1, dataArgs, DoFieldGetter);
         SET_MASK_BITFIELD_FUNC(g, mask);
         SET_OFFFSET_BITFIELD_FUNC(g, starts[i - 1]);
         SET_ELM_PLIST(getters, i, g);
         CHANGED_BAG(getters);
         if (starts[i] - starts[i - 1] == 1) {
-            s = NewFunctionC("<boolean field setter>", 2, "data, val",
-                             DoBooleanFieldSetter);
+            s = NewFunctionT(T_FUNCTION, sizeof(BitfieldFuncBag), nameBSetter,
+                             2, dataValArgs, DoBooleanFieldSetter);
             SET_MASK_BITFIELD_FUNC(s, mask);
             SET_OFFFSET_BITFIELD_FUNC(s, starts[i - 1]);
             SET_ELM_PLIST(bsetters, i, s);
             CHANGED_BAG(bsetters);
             bslen = i;
-            g = NewFunctionC("<boolean field getter>", 1, "data",
-                             DoBooleanFieldGetter);
+            g = NewFunctionT(T_FUNCTION, sizeof(BitfieldFuncBag), nameBGetter,
+                             1, dataArgs, DoBooleanFieldGetter);
             SET_MASK_BITFIELD_FUNC(g, mask);
             SET_OFFFSET_BITFIELD_FUNC(g, starts[i - 1]);
             SET_ELM_PLIST(bgetters, i, g);
@@ -715,7 +703,7 @@ Obj FuncMAKE_BITFIELDS(Obj self, Obj widths)
         AssPRec(ms, RNamName("booleanSetters"), bsetters);
     }
     SortPRecRNam(ms, 0);
-    RetypeBag(ms, T_PREC + IMMUTABLE);
+    MakeImmutableNoRecurse(ms);
     return ms;
 }
 
@@ -730,10 +718,10 @@ Obj FuncMAKE_BITFIELDS(Obj self, Obj widths)
 **
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
-static StructGVarFunc GVarFuncs [] = {
+static StructGVarFunc GVarFuncs[] = {
 
 
-    GVAR_FUNC(HASHKEY_BAG, 4, "obj, int,int,int"),
+    GVAR_FUNC(HASHKEY_BAG, 4, "obj, seed, offset, maxlen"),
     GVAR_FUNC(InitRandomMT, 1, "initstr"),
     GVAR_FUNC(MAKE_BITFIELDS, -1, "widths"),
     GVAR_FUNC(BUILD_BITFIELDS, -2, "widths, vals"),

@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  claspcgs.gi                 GAP library                    Heiko Theißen
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Heiko Theißen.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen, Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains functions that  deal with conjugacy topics in solvable
 ##  groups using affine  methods.   These  topics includes   calculating  the
@@ -208,7 +209,7 @@ local   classes,    # classes to be constructed, the result
         if IsIdenticalObj( FamilyObj( U ), FamilyObj( cl.candidates ) )  then
             for c  in cl.candidates  do
                 exp:=ExponentsOfPcElement( N, LeftQuotient( h, c ) );
-                MultRowVector( exp, One( field ) );
+                MultVector( exp, One( field ) );
                 w:=exp * N!.subspace.projection;
                 exp{ N!.subspace.baseComplement }:=
                   exp{ N!.subspace.baseComplement }-w;
@@ -325,6 +326,7 @@ local  classes,    # classes to be constructed, the result
 	depthlev,   # depth at which N starts
 	one,zero,
 	vec,
+    dict,
 	kern,img;
 
     depthlev:=DepthOfPcElement(home,N[1]);
@@ -464,20 +466,30 @@ local  classes,    # classes to be constructed, the result
       #k:=ExternalOrbitsStabilizers( xset );
 
       # do the orbits stuff ourselves
-      blist:=BlistList([1..Length(aff)],[]);
+
+      # keep the dictionary to avoid recreating blist. Also override fixed
+      # limit.
+      dict:=NewDictionary(aff[1],true,aff:blistlimit:=Size(aff));
+
+      if not IsPositionDictionary(dict) then
+        blist:=BlistList([1..Length(aff)],[]);
+      else
+        blist:=dict!.blist;
+      fi;
       next:=1;
       k:=[];
       while next<>fail do
-        S:=Pcs_OrbitStabilizer(gens,aff,aff[next],imgs,OnRight);
-	# tick off
-	if IsPositionDictionary(S.dictionary) then
-	  UniteBlist(blist,S.dictionary!.blist);
-	else
+	if IsPositionDictionary(dict) then
+          S:=Pcs_OrbitStabilizer(gens,aff,aff[next],imgs,OnRight,dict);
+          #S.dictionary!.vals:=[]; #Not really that expensive to keep
+        else
+          S:=Pcs_OrbitStabilizer(gens,aff,aff[next],imgs,OnRight);
 	  for i in S.orbit do
 	    blist[PositionCanonical(aff,i)]:=true;
 	  od;
 	fi;
 	Unbind(S.dictionary);
+        S.orbit:=S.orbit{[1]}; # save memory
 
 	Add(k,S);
 
@@ -645,6 +657,22 @@ local  G,  home,  # the group and the home pcgs
           end;
   fi;
   indstep:=IndicesEANormalSteps(home);
+
+  # is the series large (but can be rectified)?
+  step:=IndicesEANormalStepsBounded(home,2^15);
+  if indstep<>step then
+    indstep:=step;
+    eas:=List(indstep,x->SubgroupByPcgs(GroupOfPcgs(home),
+      InducedPcgsByPcSequence(home,home{[x..Length(home)]})));
+  fi;
+
+  # is the series still large (and merits changing the pcgs)?
+  if Maximum(List([2..Length(eas)],x->IndexNC(eas[x-1],eas[x])))>2^15 then
+    step:=BoundedRefinementEANormalSeries(home,indstep,2^15);
+    home:=step[1];
+    indstep:=step[2];
+    eas:=ChiefNormalSeriesByPcgs(home);
+  fi;
 
   # check to which factors we want to lift
 
@@ -1855,7 +1883,3 @@ InstallGlobalFunction( CentralStepRatClPGroup,
     fi;
     return classes;
 end );
-        
-#############################################################################
-##
-#E  claspcgs.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

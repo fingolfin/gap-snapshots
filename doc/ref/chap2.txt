@@ -217,11 +217,11 @@
         seems  to be capable of opening a pdf at a given named destination (i.
         e.,  jump  to precisely the place where the information can be found).
         The  pdf  viewer  [10X"Skim"[110X is open source software, it can be downloaded
-        from [11Xhttp://skim-app.sourceforge.net/[111X.[133X
+        from [11Xhttps://skim-app.sourceforge.io/[111X.[133X
   
   [8X[10X"less"[110X[8X or [10X"more"[110X[8X[108X
         [33X[0;6YThis  is  the  same  as [10X"screen"[110X but additionally the user preferences
-        [10X"Pager"[110X  and  [10X""PagerOptions"[110X  are  set,  see the section [14X2.4[114X for more
+        [10X"Pager"[110X  and  [10X"PagerOptions"[110X  are  set,  see  the section [14X2.4[114X for more
         details.[133X
   
   [33X[0;0YPlease,     send     ideas     for     further     viewer     commands    to

@@ -1,10 +1,12 @@
 #############################################################################
 ##
-#W  csetgrp.gi                      GAP library              Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the generic operations for cosets.
 ##
@@ -78,6 +80,29 @@ local c,i;
   fi;
 end );
 
+
+# Brute-force algorithms that gives (as indices) all ways how to sum subsets
+# of `from` to obtain `to`
+BindGlobal("AllSubsetSummations",function(to,from)
+local erg,nerg,perm,i,e,c,sel;
+  erg:=[[]];
+  to:=ShallowCopy(to);
+  perm:=Sortex(to)^-1;
+  for i in to do
+    nerg:=[];
+    for e in erg do
+      sel:=Filtered(Difference([1..Length(from)],Union(e)),x->from[x]<=i);
+      for c in Combinations(sel) do
+        if Sum(from{c})=i then
+          Add(nerg,Concatenation(e,[c]));
+        fi;
+      od;
+    od;
+    erg:=nerg;
+  od;
+  return List(erg,x->Permuted(x,perm));
+end);
+
 # Find element in G to conjugate B into A
 # call with G,A,B;
 InstallGlobalFunction(DoConjugateInto,function(g,a,b,onlyone)
@@ -143,7 +168,58 @@ local cla,clb,i,j,k,imgs,bd,r,rep,b2,ex2,split,dc,
     return found;
   end;
 
-  gens:=MorFindGeneratingSystem(b,MorMaxFusClasses(MorRatClasses(b)));
+  if onlyone and IsSubset(a,b) then return One(g);fi;
+
+  # match points of perm group
+  if IsPermGroup(g) and IsSubset(g,a) and IsSubset(g,b) then
+    # how can we map orbits into orbits?
+    cla:=List(Orbits(a,MovedPoints(g)),Set);
+    clb:=List(Orbits(b,MovedPoints(g)),Set);
+    # no improvement if all orbits of a are fixed
+    if ForAny(cla,x->ForAny(GeneratorsOfGroup(g),y->OnSets(x,y)<>x)) then
+      r:=AllSubsetSummations(List(cla,Length),List(clb,Length));
+      dc:=[];
+      for i in r do
+        k:=List(i,x->Union(clb{x}));
+        k:=RepresentativeAction(g,k,cla,OnTuplesSets);
+        if k<>fail then
+          Add(dc,[i,k]);
+        fi;
+      od;
+      if Length(dc)>0 then g:=Stabilizer(g,cla,OnTuplesSets);fi;
+      rep:=[];
+      for i in dc do
+        r:=DoConjugateInto(g,a,b^i[2],onlyone);
+        if onlyone then
+          if r<>fail then return i[2]*r;fi;
+        else
+          if r<>fail then Append(rep,List(r,x->i[2]*x));fi;
+        fi;
+      od;
+      if onlyone then return fail; #otherwise would have found and stopped
+      else return rep;fi;
+
+    else
+      # orbits are fixed. Make sure b is so
+      if ForAny(clb,x->not ForAny(cla,y->IsSubset(y,x))) then
+        if onlyone then return fail;else return [];fi;
+      fi;
+    fi;
+  fi;
+
+  # don't try the `MorGen...` search for more than two generators if
+  # generator number seems OK
+  if Length(SmallGeneratingSet(b))=AbelianRank(b) and
+    Length(SmallGeneratingSet(b))>2 then
+    gens:=SmallGeneratingSet(b);
+  elif IsPermGroup(b) and Size(b)<RootInt(NrMovedPoints(b)^3,2) then
+    r:=SmallerDegreePermutationRepresentation(b:cheap);
+    k:=Image(r,b);
+    gens:=MorFindGeneratingSystem(k,MorMaxFusClasses(MorRatClasses(k)));
+    gens:=List(gens,x->PreImagesRepresentative(r,x));
+  else
+    gens:=MorFindGeneratingSystem(b,MorMaxFusClasses(MorRatClasses(b)));
+  fi;
   clb:=ConjugacyClasses(a);
   cla:=[];
   r:=[];
@@ -236,7 +312,7 @@ local o,b,img,G1,c,m,mt,hardlimit,gens,t,k,intersize;
         t:=RightTransversal(G,c:noascendingchain); # conjugates
         for k in t do
           if ForAll(gens,x->k*x/k in c) then
-            Info(InfoCoset,2,"Found Size ",Size(c),"\n");
+            Info(InfoCoset,2,"Found Size ",Size(c));
             # U is contained in c^k
             return c^k;
           fi;
@@ -244,7 +320,7 @@ local o,b,img,G1,c,m,mt,hardlimit,gens,t,k,intersize;
       else
         t:=DoConjugateInto(G,c,U,true:intersize:=intersize,onlyone:=true);
         if t<>fail and t<>[] then 
-          Info(InfoCoset,2,"Found Size ",Size(c),"\n");
+          Info(InfoCoset,2,"Found Size ",Size(c));
           return c^(Inverse(t));
         fi;
       fi;
@@ -306,71 +382,72 @@ local bound,a,b,c,cnt,r,i,j,bb,normalStep,gens,hardlimit,cheap,olda;
       a:=AsSubgroup(Parent(cc[i]),cc[i-1]);
       olda:=TrivialSubgroup(a);
       while Index(cc[i],a)>bound and Size(a)>Size(olda) do
-	olda:=a;
-	# try extension via normalizer
-	b:=Normalizer(cc[i],a);
-	if Size(b)>Size(a) then
-	 # extension by normalizer surely is a normal step
-	  normalStep:=true;
-	  bb:=b;
+        olda:=a;
+        # try extension via normalizer
+        b:=Normalizer(cc[i],a);
+        if Size(b)>Size(a) then
+         # extension by normalizer surely is a normal step
+          normalStep:=true;
+          bb:=b;
         else
-	  bb:=cc[i];
-	  normalStep:=false;
-	  b:=Centralizer(cc[i],Centre(a));
+          bb:=cc[i];
+          normalStep:=false;
+          b:=Centralizer(cc[i],Centre(a));
         fi;
-	if Size(b)=Size(a) or Index(b,a)>bound then
-	  cnt:=8+2^(LogInt(Index(bb,a),9));
-	  if cheap then cnt:=Minimum(cnt,50);fi;
-	  repeat
-	    if cnt<20 and not cheap then
-	      # if random failed: do hard work
-	      b:=IntermediateGroup(bb,a);
-	      if b=fail then
-		b:=bb;
-	      fi;
-	      cnt:=0;
-	    else
-	    # larger indices may take more tests...
-	      Info(InfoCoset,5,"Random");
-	      repeat
-		r:=Random(bb);
-	      until not(r in a);
-	      if normalStep then
-		# NC is safe
-		b:=ClosureSubgroupNC(a,r);
+        if Size(b)=Size(a) or Index(b,a)>bound then
+          cnt:=8+2^(LogInt(Index(bb,a),9));
+          #if cheap then cnt:=Minimum(cnt,50);fi;
+          cnt:=Minimum(cnt,40); # as we have better intermediate
+          repeat
+            if cnt<20 and not cheap then
+              # if random failed: do hard work
+              b:=IntermediateGroup(bb,a);
+              if b=fail then
+                b:=bb;
+              fi;
+              cnt:=0;
+            else
+            # larger indices may take more tests...
+              Info(InfoCoset,5,"Random");
+              repeat
+                r:=Random(bb);
+              until not(r in a);
+              if normalStep then
+                # NC is safe
+                b:=ClosureSubgroupNC(a,r);
               else
-		# self normalizing subgroup: thus every element not in <a>
-     		# will surely map one generator out
-	        j:=0;
-		gens:=GeneratorsOfGroup(a);
-		repeat
-		  j:=j+1;
+                # self normalizing subgroup: thus every element not in <a>
+                     # will surely map one generator out
+                j:=0;
+                gens:=GeneratorsOfGroup(a);
+                repeat
+                  j:=j+1;
                 until not(gens[j]^r in a);
-		r:=gens[j]^r;
+                r:=gens[j]^r;
 
-		# NC is safe
-		b:=ClosureSubgroupNC(a,r);
-	      fi;
-	      if Size(b)<Size(bb) then
-		Info(InfoCoset,1,"improvement found ",Size(bb)/Size(b));
-		bb:=b;
-	      fi;
-	      cnt:=cnt-1;
-	    fi;
-	  until Index(bb,a)<=bound or cnt<1;
-	fi;
-	if Index(b,a)>bound and Length(c)>1 then
-	  bb:=IntermediateGroup(b,c[Length(c)-1]);
-	  if bb<>fail and Size(bb)>Size(c[Length(c)]) then
-	    c:=Concatenation(c{[1..Length(c)-1]},[bb],Filtered(cc,x->Size(x)>=Size(b)));
-	    return RefinedChain(G,c);
-	  fi;
-	fi;
+                # NC is safe
+                b:=ClosureSubgroupNC(a,r);
+              fi;
+              if Size(b)<Size(bb) then
+                Info(InfoCoset,1,"improvement found ",Size(bb)/Size(b));
+                bb:=b;
+              fi;
+              cnt:=cnt-1;
+            fi;
+          until Index(bb,a)<=bound or cnt<1;
+        fi;
+        if Index(b,a)>bound and Length(c)>1 then
+          bb:=IntermediateGroup(b,c[Length(c)-1]);
+          if bb<>fail and Size(bb)>Size(c[Length(c)]) then
+            c:=Concatenation(c{[1..Length(c)-1]},[bb],Filtered(cc,x->Size(x)>=Size(b)));
+            return RefinedChain(G,c);
+          fi;
+        fi;
 
-	a:=b;
-	if a<>cc[i] then #not upper level
-	  Add(c,a);
-	fi;
+        a:=b;
+        if a<>cc[i] then #not upper level
+          Add(c,a);
+        fi;
 
       od;
     fi;
@@ -403,7 +480,7 @@ local d,fam;
   if not IsBound(fam!.doubleCosetsDefaultType) then
     fam!.doubleCosetsDefaultType:=NewType(fam,IsDoubleCosetDefaultRep
           and HasLeftActingGroup and HasRightActingGroup
-	  and HasRepresentative);
+          and HasRepresentative);
   fi;
   d:=rec();
   ObjectifyWithAttributes(d,fam!.doubleCosetsDefaultType,
@@ -418,9 +495,9 @@ function(U,g,V,sz)
 local d,fam,typ;
   fam:=FamilyObj(U);
   typ:=NewType(fam,IsDoubleCosetDefaultRep
-	  and HasIsFinite and IsFinite
+          and HasIsFinite and IsFinite
           and HasLeftActingGroup and HasRightActingGroup
-	  and HasRepresentative);
+          and HasRepresentative);
   d:=rec();
   ObjectifyWithAttributes(d,typ,
     LeftActingGroup,U,RightActingGroup,V,Representative,g);
@@ -439,16 +516,16 @@ function(a,b)
   if HasRepresentativesContainedRightCosets(b) then
     if HasRepresentativesContainedRightCosets(a) then
       return RepresentativesContainedRightCosets(a)
-	  =RepresentativesContainedRightCosets(b);
+          =RepresentativesContainedRightCosets(b);
     else
       return CanonicalRightCosetElement(LeftActingGroup(a),
          Representative(a)) in
-	 RepresentativesContainedRightCosets(b);
+         RepresentativesContainedRightCosets(b);
     fi;
   else
     return CanonicalRightCosetElement(LeftActingGroup(b),
-	Representative(b)) in
-	RepresentativesContainedRightCosets(a);
+        Representative(b)) in
+        RepresentativesContainedRightCosets(a);
   fi;
 end);
 
@@ -563,7 +640,7 @@ local d,fam;
   if not IsBound(fam!.rightCosetsDefaultType) then
     fam!.rightCosetsDefaultType:=NewType(fam,IsRightCosetDefaultRep and
           HasActingDomain and HasFunctionAction and HasRepresentative and
-	  HasCanonicalRepresentativeDeterminatorOfExternalSet);
+          HasCanonicalRepresentativeDeterminatorOfExternalSet);
   fi;
 
   d:=rec();
@@ -583,7 +660,7 @@ local d,fam,typ;
   fam:=FamilyObj(U);
   typ:=NewType(fam,IsRightCosetDefaultRep and
           HasActingDomain and HasFunctionAction and HasRepresentative
-	  and HasCanonicalRepresentativeDeterminatorOfExternalSet);
+          and HasCanonicalRepresentativeDeterminatorOfExternalSet);
 
   d:=rec();
   ObjectifyWithAttributes(d,typ,
@@ -749,6 +826,128 @@ local l;
   return Minimum(l);
 end);
 
+# TODO: In the long run this should become a more general operation, 
+# but for the moment it is specialized for the application at hand
+BindGlobal("DCFuseSubgroupOrbits",function(P,G,reps,act,lim,count)
+local live,orbs,orbset,done,nr,p,o,os,orbitextender,bahn,i,j,enum,dict,map,pam;
+
+  # return positive fuse number or negative position how far it got
+  orbitextender:=function(o,os,start,limit,this)
+  local i,gen,img,e;
+    i:=start;
+    while i<=Length(o) and Length(o)<limit do
+      for gen in GeneratorsOfGroup(G) do
+        img:=act(o[i],gen);
+        e:=Position(enum,img);
+        if not e in os then # duplicate? Still use os as we need to grow o
+          #p:=PositionProperty(orbset,x->e in x);
+          p:=LookupDictionary(dict,e);
+          if p<>fail and
+            # we could have found an element that we know (because of
+            # fusion) to be already in this orbit (but must store)
+            pam[map[p]]<>this then
+            p:=map[p]; #retrieved image position might have been fused away
+            return p;
+          fi;
+          Add(o,img);
+          AddSet(os,e);
+          if p=fail then AddDictionary(dict,e,this);fi;
+        fi;
+      od;
+      i:=i+1;
+    od;
+    #if i>Length(o) and Length(os)>Length(o) then Error("ran out of orbit");fi;
+    return -(i-1);
+  end;
+
+  bahn:=[];
+  enum:=Enumerator(P);
+  live:=[];
+  orbs:=[];
+  orbset:=[];
+  done:=[];
+  dict:=NewDictionary(1,true,rec(hashfun:=x->x));
+  map:=[];
+  pam:=[]; # reverse of map
+  for nr in [1..Length(reps)] do
+    #p:=PositionProperty(orbset,x->Position(enum,reps[nr]) in x);
+    p:=LookupDictionary(dict,Position(enum,reps[nr]));
+    if p=fail then
+      # start orbit algorithm
+      o:=[reps[nr]];
+      os:=[Position(enum,reps[nr])];
+      AddDictionary(dict,os[1],nr);
+      p:=orbitextender(o,os,1,lim,nr);
+      if p<0 then 
+        # new orbit
+        Info(InfoCoset,4,nr," lives");
+        Add(live,nr);
+        Add(orbs,o);
+        Add(orbset,os);
+        Add(done,-p);
+        Add(bahn,[nr]);
+        map[nr]:=Length(orbs);
+        pam[Length(orbs)]:=nr;
+        i:=1;
+        while Length(orbs)>count do
+          # one orbit too many
+          if ForAll(orbs,x->Length(x)>=lim) then 
+            if lim<20000 then
+              lim:=lim*2;
+            else
+              lim:=(QuoInt(lim,8000)+1)*8000;
+            fi;
+          fi;
+          Info(InfoCoset,4,"Redo ",i," ",lim);
+          p:=orbitextender(orbs[i],orbset[i],done[i],lim,pam[i]);
+          if p>0 then
+            Info(InfoCoset,4,"Join ",i," to ",p);
+            if p=i then Error("selfjoin cannot happen");fi;
+            bahn[p]:=Union(bahn[p],bahn[i]);
+
+            #UniteSet(orbset[p],orbset[i]);
+            for j in [1..Length(map)] do
+              if IsBound(map[j]) and map[j]=i then map[j]:=p; fi;
+            od;
+
+            # delete entry i, move higher ones one up
+            for j in [1..Length(map)] do
+              if IsBound(map[j]) and map[j]>i then map[j]:=map[j]-1; fi;
+            od;
+
+            # Remove entry i, i.e.
+            #p:=[i..Length(orbs)-1];
+            #orbs{p}:=orbs{p+1};Unbind(orbs[Length(orbs)]);
+            Remove(orbs,i);
+            Remove(orbset,i);
+            Remove(done,i);
+            Remove(bahn,i);
+            Remove(pam,i);
+          else
+            done[i]:=-p;
+          fi;
+          i:=i+1; if i>Length(orbs) then i:=1;fi;
+        od;
+      else
+        Info(InfoCoset,4,nr," fuses into ",p," @",Length(os));
+        map[nr]:=p; # and indeed nr itself maps to p
+        AddSet(bahn[p],nr);
+        #UniteSet(orbset[p],os);
+        # not needed
+        #for j in os do AddDictionary(dict,j,p); od;
+      fi;
+    else
+      p:=map[p]; #retrieved image position might have been fused away
+      Info(InfoCoset,4,nr," lies in ",p);
+      map[nr]:=p;
+      AddSet(bahn[p],nr);
+      #AddDictionary(dict,Position(enum,reps[nr]),p);
+    fi;
+  od;
+  return bahn;
+end);
+
+
 #############################################################################
 ##
 #F  CalcDoubleCosets( <G>, <A>, <B> ) . . . . . . . . .  double cosets: A\G/B
@@ -762,12 +961,14 @@ local c, flip, maxidx, refineChainActionLimit, cano, tryfct, p, r, t,
       stabs, dcs, homs, tra, a1, a2, indx, normal, hom, omi, omiz,c1,
       unten, compst, s, nr, nstab, lst, sifa, pinv, blist, bsz, cnt,
       ps, e, mop, mo, lstgens, lstgensop, rep, st, o, oi, i, img, ep,
-      siz, rt, j, canrep, rsiz, step, nu,
-      actlimit, uplimit, badlimit;
+      siz, rt, j, canrep,stab,step,nu,doneidx,orbcnt,posi,
+      sizes,cluster,sel,lr,lstabs,ssizes,num,
+      actlimit, uplimit, badlimit,avoidlimit;
 
-  actlimit:=100000; # maximal degree on which we try blocks
-  uplimit:=200;
-  badlimit:=50000;
+  actlimit:=300000; # maximal degree on which we try blocks
+  uplimit:=10000; # maximal index for up step
+  avoidlimit:=200000; # beyond this index we want to get smaller
+  badlimit:=1000000; # beyond this index things might break down
 
   # if a is small and b large, compute cosets b\G/a and take inverses of the
   # representatives: Since we compute stabilizers in b and a chain down to
@@ -794,7 +995,7 @@ local c, flip, maxidx, refineChainActionLimit, cano, tryfct, p, r, t,
   # compute ascending chain and refine if necessarily (we anyhow need action
   # on cosets).
   #c:=AscendingChain(G,a:refineChainActionLimit:=Index(G,a));
-  c:=AscendingChain(G,a:refineChainActionLimit:=actlimit);
+  c:=AscendingChain(G,a:refineChainActionLimit:=actlimit,indoublecoset);
 
   # cano indicates whether there is a final up step (and thus we need to
   # form canonical representatives). ```Canonical'' means that on each
@@ -802,12 +1003,13 @@ local c, flip, maxidx, refineChainActionLimit, cano, tryfct, p, r, t,
   # the transversal position).
   cano:=false;
 
-  if maxidx(c)>badlimit then
+  doneidx:=[]; # indices done already -- avoid duplicate
+  if maxidx(c)>avoidlimit then
     # try to do better
 
     # what about flipping (back)?
-    c1:=AscendingChain(G,b:refineChainActionLimit:=actlimit);
-    if maxidx(c1)<=badlimit then
+    c1:=AscendingChain(G,b:refineChainActionLimit:=actlimit,indoublecoset);
+    if maxidx(c1)<=avoidlimit then
       Info(InfoCoset,1,"flip to get better chain");
       c:=b;
       b:=a;
@@ -818,78 +1020,105 @@ local c, flip, maxidx, refineChainActionLimit, cano, tryfct, p, r, t,
     elif IsPermGroup(G) then
 
       actlimit:=Maximum(actlimit,NrMovedPoints(G));
-      badlimit:=Maximum(badlimit,NrMovedPoints(G));
+      avoidlimit:=Maximum(avoidlimit,NrMovedPoints(G));
 
       tryfct:=function(obj,act)
-	local G1,a1,c1;
-	if IsList(act) and Length(act)=2 then
-	  G1:=act[1];
-	  a1:=act[2];
-	else
-	  #Print(maxidx(c),obj,Length(Orbit(G,obj,act))," ",
-	  #          Length(Orbit(a,obj,act)),"\n");
-	  G1:=Stabilizer(G,obj,act);
-	  if Index(G,G1)<maxidx(c) then
-	    a1:=Stabilizer(a,obj,act);
-	  fi;
-	fi;
-	if Index(G,G1)<maxidx(c) and (
-	  maxidx(c)>10*actlimit or Size(a1)>Size(c[1])) then
-	  c1:=AscendingChain(G1,a1:refineChainActionLimit:=actlimit);
-	  if maxidx(c1)<maxidx(c) then
-	    c:=Concatenation(c1,[G]);
-	    cano:=true;
-	    Info(InfoCoset,1,"improved chain with up step ",obj,
-	    " index:",Size(a)/Size(a1));
-	  fi;
-	fi;
+        local G1,a1,c1;
+        if IsList(act) and Length(act)=2 then
+          G1:=act[1];
+          a1:=act[2];
+        else
+          #Print(maxidx(c),obj,Length(Orbit(G,obj,act))," ",
+          #          Length(Orbit(a,obj,act)),"\n");
+          G1:=Stabilizer(G,obj,act);
+          if Index(G,G1)<maxidx(c) then
+            a1:=Stabilizer(a,obj,act);
+          else
+            a1:=G;
+          fi;
+        fi;
+        Info(InfoCoset,4,"attempt up step ",obj," index:",Size(a)/Size(a1));
+        if Index(G,G1)<maxidx(c) and Index(a,a1)<=uplimit and (
+          maxidx(c)>avoidlimit or Size(a1)>Size(c[1])) then
+          c1:=AscendingChain(G1,a1:refineIndex:=avoidlimit,
+                                   refineChainActionLimit:=actlimit,
+                                   indoublecoset);
+          if maxidx(c1)<maxidx(c) then
+            c:=Concatenation(c1,[G]);
+            cano:=true;
+            Info(InfoCoset,1,"improved chain with up step ",obj,
+            " index:",Size(a)/Size(a1)," maxidx=",maxidx(c));
+          fi;
+        fi;
       end;
 
-      for i in TryMaximalSubgroupClassReps(G:cheap) do
-	if Index(G,i)<maxidx(c) and Index(G,i)<badlimit then
-	  p:=Intersection(a,i);
-	  if Index(a,p)<uplimit then
-	    Info(InfoCoset,3,"Try maximal of Indices ",Index(G,i),":",
-	      Index(a,p));
-	    tryfct("max",[i,p]);
-	  fi;
-	fi;
+      r:=Filtered(TryMaximalSubgroupClassReps(G:cheap),
+        x->Index(G,x)<=5*avoidlimit);
+      SortBy(r,a->-Size(a));
+      for i in r do
+        if Index(G,i)<maxidx(c) then
+          p:=Intersection(a,i);
+          AddSet(doneidx,Index(a,p));
+          if Index(a,p)<=uplimit then
+            Info(InfoCoset,3,"Try maximal of Indices ",Index(G,i),":",
+              Index(a,p));
+            tryfct("max",[i,p]);
+          fi;
+        fi;
       od;
 
       p:=LargestMovedPoint(a);
       tryfct(p,OnPoints); 
-	  
+          
       for i in Orbits(Stabilizer(a,p),Difference(MovedPoints(a),[p])) do
-	tryfct(Set([i[1],p]),OnSets);
+        tryfct(Set([i[1],p]),OnSets);
       od;
-	  
+          
     fi;
     
-    if maxidx(c)>10*actlimit then
+    if maxidx(c)>badlimit then
 
       r:=ShallowCopy(TryMaximalSubgroupClassReps(a:cheap));
-      r:=Filtered(r,x->Index(a,x)<uplimit);
+      r:=Filtered(r,x->Index(a,x)<uplimit and not Index(a,x) in doneidx);
 
-      Sort(r,function(a,b) return Size(a)<Size(b);end);
+      SortBy(r,a->-Size(a));
       for j in r do
-	#Print("j=",Size(j),"\n");
-	t:=AscendingChain(G,j:refineChainActionLimit:=actlimit);
-	if maxidx(t)<maxidx(c) and maxidx(t)<badlimit then
-	  c:=t;
-	  cano:=true;
-	  Info(InfoCoset,1,"improved chain with up step index:",
-		Size(a)/Size(j));
-	fi;
+        #Print("j=",Size(j),"\n");
+        t:=AscendingChain(G,j:refineIndex:=avoidlimit,
+                              refineChainActionLimit:=actlimit,indoublecoset);
+        Info(InfoCoset,4,"maxidx ",Index(a,j)," yields ",maxidx(t),": ",
+          List(t,Size));
+        if maxidx(t)<maxidx(c) and (maxidx(c)>badlimit or
+          # only increase up-step if index gets better by extra index
+          (maxidx(c)>maxidx(t)*Size(c[1])/Size(t[1])) ) then
+          c:=t;
+          cano:=true;
+          Info(InfoCoset,1,"improved chain with up step index:",
+                Size(a)/Size(j));
+        fi;
 
       od;
 
     fi;
 
+  elif ValueOption("sisyphus")=true then
+    # purely to allow for tests of up-step mechanism in smaller examples.
+    # This is creating unneccessary extra work and thus should never be used
+    # in practice, but will force some code to be run through.
+    c:=Concatenation([TrivialSubgroup(G)],c);
+    cano:=true;
   fi;
 
   r:=[One(G)];
   stabs:=[b];
   dcs:=[];
+
+  # Do we want to keep result for a smaller group (as cheaper fuse is possible
+  # outside function at a later stage)?
+  if ValueOption("noupfuse")=true then cano:=false;fi;
+
+  Info(InfoCoset,1,"Chosen series is ",List(c,Size));
+  #if ValueOption("indoublecoset")<>true then Error("GNASH");fi;
 
   # calculate setup for once
   homs:=[];
@@ -899,11 +1128,12 @@ local c, flip, maxidx, refineChainActionLimit, cano, tryfct, p, r, t,
     a2:=c[Length(c)-step];
     indx:=Index(a1,a2);
     normal:=IsNormal(a1,a2);
-    t:=RightTransversal(a1,a2);
+    # don't try to refine again for transversal, we've done so already.
+    t:=RightTransversal(a1,a2:noascendingchain);
     tra[step]:=t;
 
     # is it worth using a permutation representation?
-    if (step>1 or cano) and Length(t)<actlimit and IsPermGroup(G) and 
+    if (step>1 or cano) and Length(t)<badlimit and IsPermGroup(G) and 
       not normal then
       # in this case, we can beneficially compute the action once and then use
       # homomorphism methods to obtain the permutation image
@@ -925,9 +1155,9 @@ local c, flip, maxidx, refineChainActionLimit, cano, tryfct, p, r, t,
     normal:=IsNormal(a1,a2);
     indx:=Index(a1,a2);
     if normal then
-      Info(InfoCoset,1,"Normal Step :",indx);
+      Info(InfoCoset,1,"Normal Step :",indx,": ",Length(r)," double cosets");
     else
-      Info(InfoCoset,1,"Step :",indx);
+      Info(InfoCoset,1,"Step :",indx,": ",Length(r)," double cosets");
     fi;
     
 
@@ -944,155 +1174,167 @@ local c, flip, maxidx, refineChainActionLimit, cano, tryfct, p, r, t,
     nr:=[];
     nstab:=[];
     for nu in [1..Length(r)] do
-      Info(InfoCoset,5,"number ",nu);
       lst:=stabs[nu];
+      Info(InfoCoset,4,"number ",nu,", |stab|=",Size(lst));
       sifa:=Size(a2)*Size(b)/Size(lst); 
       p:=r[nu];
       pinv:=p^-1;
       blist:=BlistList([1..indx],[]);
       bsz:=indx;
+      orbcnt:=0;
 
       # if a2 is normal in a1, the stabilizer is the same for all Orbits of
       # right cosets. Thus we need to compute only one, and will receive all
       # others by simple calculations afterwards
 
       if normal then
-	cnt:=1;
+        cnt:=1;
       else
-	cnt:=indx;
+        cnt:=indx;
       fi;
 
-      while bsz>0 and cnt>0 do
-	cnt:=cnt-1;
+      lstgens:=GeneratorsOfGroup(lst);
+      if Length(lstgens)>2 then
+        lstgens:=SmallGeneratingSet(lst);
+      fi;
+      lstgensop:=List(lstgens,i->i^pinv); # conjugate generators: operation
+      # is on cosets a.p; we keep original cosets: Ua.p.g/p, this
+      # corresponds to conjugate operation
 
-	# compute orbit and stabilizers for the next step
+      if hom<>fail then
+        lstgensop:=List(lstgensop,i->Image(hom,i));
+      fi;
+
+      posi:=0;
+      while bsz>0 and cnt>0 do
+        cnt:=cnt-1;
+
+        # compute orbit and stabilizers for the next step
         # own Orbitalgorithm and stabilizer computation
 
-	ps:=Position(blist,false);
-	blist[ps]:=true;
-	bsz:=bsz-1;
-	e:=t[ps];
-	mop:=1;
-	mo:=ps;
+        #while blist[posi] do posi:=posi+1;od;
+        posi:=Position(blist,false,posi);
+        ps:=posi;
+        blist[ps]:=true;
+        bsz:=bsz-1;
+        e:=t[ps];
+        mop:=1;
+        mo:=ps;
 
-	lstgens:=GeneratorsOfGroup(lst);
-	if Length(lstgens)>2 then
-	  lstgens:=SmallGeneratingSet(lst);
-	fi;
-	lstgensop:=List(lstgens,i->i^pinv); # conjugate generators: operation
-	# is on cosets a.p; we keep original cosets: Ua.p.g/p, this
-	# corresponds to conjugate operation
+        rep := [ One(b) ];
+        st := TrivialSubgroup(lst);
 
-	rep := [ One(b) ];
-	st := TrivialSubgroup(lst);
+        o:=[ps];
+        if cano or compst then
+          oi:=[];
+          oi[ps]:=1; # reverse index
+        fi;
+        orbcnt:=orbcnt+1;
 
-	if hom<>fail then
-	  lstgensop:=List(lstgensop,i->Image(hom,i));
-	fi;
-	o:=[ps];
-	oi:=[];
-	oi[ps]:=1; # reverse index
+        i:=1;
+        while i<=Length(o) 
+          # will not grab if nonreg,. orbiut and stabilizer not computed,
+          # but comparatively low cost and huge help if hom=fail
+          and Size(st)*Length(o)<Size(lst) do
+          for j in [1..Length(lstgens)] do
+            if hom=fail then
+              img:=t[o[i]]*lstgensop[j];
+              ps:=PositionCanonical(t,img);
+            else
+              ps:=o[i]^lstgensop[j];
+            fi;
+            if blist[ps] then
+              if compst then
+                # known image
+                #NC is safe (initializing as TrivialSubgroup(G)
+                st := ClosureSubgroupNC(st,rep[i]*lstgens[j]/rep[oi[ps]]);
+              fi;
+            else
+              # new image
+              blist[ps]:=true;
+              bsz:=bsz-1;
+              Add(o,ps);
+              if cano or compst then
+                Add(rep,rep[i]*lstgens[j]);
+                if cano and ps<mo then
+                  mo:=ps;
+                  mop:=Length(rep);
+                fi;
+                oi[ps]:=Length(o);
+              fi;
+            fi;
+          od;
+          i:=i+1;
+        od;
+        Info(InfoCoset,5,"|o|=",Length(o));
 
-	i:=1;
-	while i<=Length(o) do
-	  for j in [1..Length(lstgens)] do
-	    if hom=fail then
-	      img:=t[o[i]]*lstgensop[j];
-	      ps:=PositionCanonical(t,img);
-	    else
-	      ps:=o[i]^lstgensop[j];
-	    fi;
-	    if blist[ps] then
-	      if compst then
-		# known image
-		#NC is safe (initializing as TrivialSubgroup(G)
-		st := ClosureSubgroupNC(st,rep[i]*lstgens[j]/rep[oi[ps]]);
-	      fi;
-	    else
-	      # new image
-	      blist[ps]:=true;
-	      bsz:=bsz-1;
-	      Add(o,ps);
-	      Add(rep,rep[i]*lstgens[j]);
-	      if cano and ps<mo then
-		mo:=ps;
-		mop:=Length(rep);
-	      fi;
-	      oi[ps]:=Length(o);
-	    fi;
-	  od;
-	  i:=i+1;
-	od;
+        ep:=e*rep[mop]*p;
+        Add(nr,ep);
 
-	ep:=e*rep[mop]*p;
-	st:=st^rep[mop];
-	Add(nr,ep);
+        if compst then
+          st:=st^rep[mop];
+          Add(nstab,st);
+        fi;
 
-	if cano and step=1 and not normal then 
-	  Add(omi,mo);
-	  Add(omiz,Length(o));
-	  #if Length(omi)=1 then
-	  #  omis:=st;
-	  #fi;
-	fi;
+        if cano and step=1 and not normal then 
+          Add(omi,mo);
+          Add(omiz,Length(o));
+        fi;
 
-	siz:=sifa*Length(o); #order
+        siz:=sifa*Length(o); #order
 
         if unten then
-	  if flip then
-	    Add(dcs,[ep^(-1),siz]);
-	  else
-	    Add(dcs,[ep,siz]);
-	  fi;
-	fi;
-
-	if compst then
-	  Add(nstab,st);
-	fi;
+          if flip then
+            Add(dcs,[ep^(-1),siz]);
+          else
+            Add(dcs,[ep,siz]);
+          fi;
+        fi;
 
       od;
+      Info(InfoCoset,4,"Get ",orbcnt," orbits");
 
       if normal then
-	# in the normal case, we can obtain the other orbits easily via
-	# the orbit theorem (same stabilizer)
-	rt:=RightTransversal(lst,st);
-	Assert(1,Length(rt)=Length(o));
+        # in the normal case, we can obtain the other orbits easily via
+        # the orbit theorem (same stabilizer)
+        rt:=RightTransversal(lst,st);
+        Assert(1,Length(rt)=Length(o));
 
-	while bsz>0 do
-	  ps:=Position(blist,false);
-	  e:=t[ps];
-	  blist[ps]:=true;
+        while bsz>0 do
+          ps:=Position(blist,false);
+          e:=t[ps];
+          blist[ps]:=true;
 
-	  ep:=e*p;
-	  mo:=ep;
-	  mop:=ps;
-	  # tick off the orbit
-	  for i in rt do
-	    #ps:=PositionCanonical(t,e*p*i/p);
-	    j:=ep*i/p;
-	    ps:=PositionCanonical(t,ep*i/p);
-	    if cano then
-	      if ps<mop then
-		mop:=ps;
-		mo:=j;
-	      fi;
-	    fi;
-	    blist[ps]:=true;
-	  od;
-	  bsz:=bsz-Length(rt);
+          ep:=e*p;
+          mo:=ep;
+          mop:=ps;
+          # tick off the orbit
+          for i in rt do
+            #ps:=PositionCanonical(t,e*p*i/p);
+            j:=ep*i/p;
+            ps:=PositionCanonical(t,ep*i/p);
+            if cano then
+              if ps<mop then
+                mop:=ps;
+                mo:=j;
+              fi;
+            fi;
+            blist[ps]:=true;
+          od;
+          bsz:=bsz-Length(rt);
 
-	  Add(nr,mo);
-	  Add(nstab,st);
+          Add(nr,mo);
+          Add(nstab,st);
 
-	  if unten then
-	    if flip then
-	      Add(dcs,[ep^(-1),siz]);
-	    else
-	      Add(dcs,[ep,siz]);
-	    fi;
-	  fi;
+          if unten then
+            if flip then
+              Add(dcs,[ep^(-1),siz]);
+            else
+              Add(dcs,[ep,siz]);
+            fi;
+          fi;
 
-	od;
+        od;
 
       fi;
 
@@ -1114,91 +1356,91 @@ local c, flip, maxidx, refineChainActionLimit, cano, tryfct, p, r, t,
       stb:=b;
       p:=One(G);
       for step in [1..Length(c)-1] do
-	calcs:=step<Length(c)-1;
-	pinv:=p^-1;
-	t:=tra[step];
-	hom:=homs[step];
-	# orbit-stabilizer algorithm
-	ps:=PositionCanonical(t,x);
-	mop:=1;
-	mo:=ps;
-	o:=[ps];
-	oi:=[];
-	oi[ps]:=1;
-	rep:=[One(stb)];
-	st:=TrivialSubgroup(b);
+        calcs:=step<Length(c)-1;
+        pinv:=p^-1;
+        t:=tra[step];
+        hom:=homs[step];
+        # orbit-stabilizer algorithm
+        ps:=PositionCanonical(t,x);
+        mop:=1;
+        mo:=ps;
+        o:=[ps];
+        oi:=[];
+        oi[ps]:=1;
+        rep:=[One(stb)];
+        st:=TrivialSubgroup(b);
 
-	lstgens:=GeneratorsOfGroup(stb);
-	if Length(lstgens)>4 and
-	  Length(lstgens)/(Length(AbelianInvariants(stb))+1)*2>5 then
-	  lstgens:=SmallGeneratingSet(stb);
-	fi;
-	lstgensop:=List(lstgens,i->i^pinv); # conjugate generators: operation
+        lstgens:=GeneratorsOfGroup(stb);
+        if Length(lstgens)>4 and
+          Length(lstgens)/(AbelianRank(stb)+1)*2>5 then
+          lstgens:=SmallGeneratingSet(stb);
+        fi;
+        lstgensop:=List(lstgens,i->i^pinv); # conjugate generators: operation
 
-	if hom<>fail then
-	  lstgensop:=List(lstgensop,i->Image(hom,i));
-	fi;
-	i:=1;
-	while i<=Length(o) do
-	  for j in [1..Length(lstgensop)] do
-	    if hom=fail then
-	      img:=t[o[i]]*lstgensop[j];
-	      ps:=PositionCanonical(t,img);
-	    else
-	      ps:=o[i]^lstgensop[j];
-	    fi;
-	    if IsBound(oi[ps]) then
-	      # known image
+        if hom<>fail then
+          lstgensop:=List(lstgensop,i->Image(hom,i));
+        fi;
+        i:=1;
+        while i<=Length(o) do
+          for j in [1..Length(lstgensop)] do
+            if hom=fail then
+              img:=t[o[i]]*lstgensop[j];
+              ps:=PositionCanonical(t,img);
+            else
+              ps:=o[i]^lstgensop[j];
+            fi;
+            if IsBound(oi[ps]) then
+              # known image
 
-	      # if there is only one orbit on the top step, we know the
-	      # stabilizer!
-	      if calcs then
-		#NC is safe (initializing as TrivialSubgroup(G)
-		st := ClosureSubgroupNC(st,rep[i]*lstgens[j]/rep[oi[ps]]);
-		if Size(st)*Length(o)=Size(b) then i:=Length(o);fi;
-	      fi;
-	      #fi;
-	    else
-	      Add(o,ps);
-	      Add(rep,rep[i]*lstgens[j]);
-	      if ps<mo then
-		mo:=ps;
-		mop:=Length(rep);
-		if step=1 and mo in omi then
-		  #Print("found\n");
-		  if Size(st)*omiz[Position(omi,mo)]=Size(stb) then
-		    # we have the minimum and the right stabilizer: break
-		    #Print("|Orbit|=",Length(o),
-		    #" of ",omiz[Position(omi,mo)]," min=",mo,"\n");
-		    i:=Length(o);
-		  fi;
-		fi;
-	      fi;
-	      oi[ps]:=Length(o);
-	      if Size(st)*Length(o)=Size(b) then i:=Length(o);fi;
-	    fi;
-	  od;
-	  i:=i+1;
-	od;
-	
-	if calcs then
-	  stb:=st^(rep[mop]);
-	fi;
-	#if HasSmallGeneratingSet(st) then
-	#  SetSmallGeneratingSet(stb,List(SmallGeneratingSet(st),x->x^rep[mop]));
-	#fi;
+              # if there is only one orbit on the top step, we know the
+              # stabilizer!
+              if calcs then
+                #NC is safe (initializing as TrivialSubgroup(G)
+                st := ClosureSubgroupNC(st,rep[i]*lstgens[j]/rep[oi[ps]]);
+                if Size(st)*Length(o)=Size(b) then i:=Length(o);fi;
+              fi;
+              #fi;
+            else
+              Add(o,ps);
+              Add(rep,rep[i]*lstgens[j]);
+              if ps<mo then
+                mo:=ps;
+                mop:=Length(rep);
+                if step=1 and mo in omi then
+                  #Print("found\n");
+                  if Size(st)*omiz[Position(omi,mo)]=Size(stb) then
+                    # we have the minimum and the right stabilizer: break
+                    #Print("|Orbit|=",Length(o),
+                    #" of ",omiz[Position(omi,mo)]," min=",mo,"\n");
+                    i:=Length(o);
+                  fi;
+                fi;
+              fi;
+              oi[ps]:=Length(o);
+              if Size(st)*Length(o)=Size(b) then i:=Length(o);fi;
+            fi;
+          od;
+          i:=i+1;
+        od;
+        
+        if calcs then
+          stb:=st^(rep[mop]);
+        fi;
+        #if HasSmallGeneratingSet(st) then
+        #  SetSmallGeneratingSet(stb,List(SmallGeneratingSet(st),x->x^rep[mop]));
+        #fi;
 
-	#else
-	#  stb:=omis;
-	#fi;
-	x:=x*(rep[mop]^pinv)/t[mo];
-	p:=t[mo]*p;
-	#Print("step ",step," |Orbit|=",Length(o),"nmin=",mo,"\n");
+        #else
+        #  stb:=omis;
+        #fi;
+        x:=x*(rep[mop]^pinv)/t[mo];
+        p:=t[mo]*p;
+        #Print("step ",step," |Orbit|=",Length(o),"nmin=",mo,"\n");
 
-	#if ForAny(GeneratorsOfGroup(stb),
-	#     i->not x*p*i/p in t!.subgroup) then
-	#     Error("RRR");
-	#fi;
+        #if ForAny(GeneratorsOfGroup(stb),
+        #     i->not x*p*i/p in t!.subgroup) then
+        #     Error("RRR");
+        #fi;
 
       od;
       return p;
@@ -1207,45 +1449,88 @@ local c, flip, maxidx, refineChainActionLimit, cano, tryfct, p, r, t,
     # now fuse orbits under the left action of a
     indx:=Index(a,a2);
     Info(InfoCoset,2,"fusion index ",indx);
-    t:=Filtered(RightTransversal(a,a2),x->not x in a2);
+    #t:=Filtered(RightTransversal(a,a2),x->not x in a2);
+    t:=RightTransversal(a,a2);
     sifa:=Size(a2)*Size(b);
 
-    SortParallel(r,stabs); # quick find
-    IsSSortedList(r);
-
-    bsz:=Length(r);
-    blist:=BlistList([1..bsz],[]);
-    while bsz>0 do
-      ps:=Position(blist,false);
-      blist[ps]:=true;
-      bsz:=bsz-1;
-      siz:=sifa/Size(stabs[ps]);
-      rsiz:=Size(a)*Size(b)/Size(Intersection(b,a^r[ps]));
-      o:=[ps];
-      e:=r[ps];
-      j:=1;
-      while siz<rsiz do #j<=Length(t) do
-	img:=t[j]*e;
-	img:=canrep(img);
-	ps:=Position(r,img);
-	if blist[ps]=false then
-	  blist[ps]:=true;
-	  siz:=siz+sifa/Size(stabs[ps]);
-	  bsz:=bsz-1;
-	  Add(o,ps);
-	fi;
-	j:=j+1;
-      od;
-      Info(InfoCoset,4,"end at ",j-1);
-      if flip then
-	Add(dcs,[r[o[1]]^(-1),siz]);
-      else
-	Add(dcs,[r[o[1]],siz]);
-      fi;
-      Info(InfoCoset,2,"new fusion ",Length(dcs)," orblen=",Length(o),
-           " remainder ",bsz);
+    # cluster according to A-double coset sizes and C lengths
+    #sizes:=List(r,x->Size(a)*Size(b)/Size(Intersection(b,a^x)));
+    hom:=ActionHomomorphism(a,t,OnRight,"surjective");
+    sizes:=[];
+    for i in [1..Length(r)] do
+      lr:=Intersection(a,b^(r[i]^-1));
+      # size of double coset and 
+      Add(sizes,[Size(a)*Size(b)/Size(lr),
+                 Length(OrbitsDomain(Image(hom,lr),[1..Length(t)],OnPoints))]);
     od;
+    ps:=ShallowCopy(sizes);
+    sizes:=Set(sizes); # sizes corresponding to clusters
+    cluster:=List(sizes,s->Filtered([1..Length(r)],x->ps[x]=s));
 
+    # now process per cluster
+    for i in [1..Length(sizes)] do
+      sel:=cluster[i];
+      lr:=r{sel};
+      lstabs:=stabs{sel};
+      SortParallel(lr,lstabs); # quick find
+      IsSSortedList(lr);
+      ssizes:=List(lstabs,x->sifa/Size(x));
+      num:=Sum(ssizes)/sizes[i][1]; # number of double cosets to be created
+      if num>1 and sizes[i][1]/Size(a)<=10*Index(a,a2)^2 then
+        # fuse orbits together
+        lr:=List(lr,x->CanonicalRightCosetElement(a,x));
+        o:=DCFuseSubgroupOrbits(G,b,lr,function(r,g)
+            return CanonicalRightCosetElement(a,r*g);
+          end,1000,num);
+        for j in o do
+          # record double coset
+          if flip then
+            Add(dcs,[lr[j[1]]^(-1),sizes[i][1]]);
+          else
+            Add(dcs,[lr[j[1]],sizes[i][1]]);
+          fi;
+          Info(InfoCoset,2,"orbit fusion ",Length(dcs)," orblen=",Length(j));
+        od;
+        lr:=[];lstabs:=[];
+      else
+        while num>1 do
+          # take first representative as rep for double coset
+          #stab:=Intersection(b,a^lr[1]);
+
+          # check how does its double coset a*lr[1]*b split up into a2-DC's
+          o:=OrbitsDomain(Image(hom,Intersection(a,b^(lr[1]^-1))),
+                [1..Length(t)],OnPoints);
+
+          # identify which of the a2-cosets they are they are (so we can
+          # remove them)
+          o:=List(o,x->Position(lr,canrep(t[x[1]]*lr[1])));
+
+          # record double coset
+          if flip then
+            Add(dcs,[lr[1]^(-1),sizes[i][1]]);
+          else
+            Add(dcs,[lr[1],sizes[i][1]]);
+          fi;
+          sel:=Difference([1..Length(lr)],o);
+          lr:=lr{sel};lstabs:=lstabs{sel};
+          Info(InfoCoset,2,"new fusion ",Length(dcs)," orblen=",Length(o),
+              " remainder ",Length(lr));
+
+          num:=num-1;
+        od;
+
+        # remainder must be a single double coset
+        if flip then
+          Add(dcs,[lr[1]^(-1),sizes[i][1]]);
+        else
+          Add(dcs,[lr[1],sizes[i][1]]);
+        fi;
+        Info(InfoCoset,2,"final fusion ",Length(dcs)," orblen=",Length(lr),
+            " remainder ",0);
+
+      fi;
+
+    od;
   fi;
 
   if AssertionLevel()>2 then
@@ -1261,14 +1546,14 @@ local c, flip, maxidx, refineChainActionLimit, cano, tryfct, p, r, t,
     for i in dcs do
       bsz:=bsz-i[2];
       if AssertionLevel()>0 then
-	r:=CanonicalRightCosetElement(a,i[1]);
-	if ForAny(t,j->r in RepresentativesContainedRightCosets(j)) then
-	  Error("duplicate!");
-	fi;
+        r:=CanonicalRightCosetElement(a,i[1]);
+        if ForAny(t,j->r in RepresentativesContainedRightCosets(j)) then
+          Error("duplicate!");
+        fi;
       fi;
       r:=DoubleCoset(a,i[1],b);
       if AssertionLevel()>0 and Size(r)<>i[2] then
-	Error("size error!");
+        Error("size error!");
       fi;
       Add(t,r);
     od;
@@ -1302,8 +1587,8 @@ InstallMethod(RightTransversalOp, "generic, use RightCosets",
   IsIdenticalObj,[IsGroup,IsGroup],0,
 function(G,U)
   return Objectify( NewType( FamilyObj( G ),
-		    IsRightTransversalViaCosetsRep and IsList and 
-		    IsDuplicateFreeList and IsAttributeStoringRep ),
+                    IsRightTransversalViaCosetsRep and IsList and 
+                    IsDuplicateFreeList and IsAttributeStoringRep ),
           rec( group := G,
             subgroup := U,
             cosets:=RightCosets(G,U)));
@@ -1399,12 +1684,12 @@ local trans,m,i;
   od;
   m:=Reversed(m);
   trans:=Objectify(NewType(FamilyObj(G),
-			IsFactoredTransversalRep and IsList 
-			and IsDuplicateFreeList and IsAttributeStoringRep),
+                        IsFactoredTransversalRep and IsList 
+                        and IsDuplicateFreeList and IsAttributeStoringRep),
           rec(group:=G,
-	      subgroup:=S,
-	      transversals:=t,
-	      moduli:=m) );
+              subgroup:=S,
+              transversals:=t,
+              moduli:=m) );
 
   return trans;
 end);
@@ -1438,9 +1723,3 @@ function( t, elm )
   od;
   return num+1;
 end );
-
-
-#############################################################################
-##
-#E
-

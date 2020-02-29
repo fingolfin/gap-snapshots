@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  oper1.g                     GAP library                      Steve Linton
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Steve Linton.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  Functions moved from oper.g, so as to be compiled in the default kernel
 ##
@@ -143,8 +144,8 @@ fi;
 #F  INSTALL_METHOD_FLAGS( <opr>, <info>, <rel>, <flags>, <rank>, <method> ) .
 ##
 BIND_GLOBAL( "INSTALL_METHOD_FLAGS",
-    function( opr, info, rel, flags, rank, method )
-    local   methods,  narg,  i,  k,  tmp, replace, match, j, lk;
+    function( opr, info, rel, flags, baserank, method )
+    local   methods,  narg,  i,  k,  tmp, replace, match, j, lk, rank;
 
     if IsHPCGAP then
         # TODO: once the GAP compiler supports 'atomic', use that
@@ -152,6 +153,11 @@ BIND_GLOBAL( "INSTALL_METHOD_FLAGS",
         lk := WRITE_LOCK(METHODS_OPERATION_REGION);
     fi;
     # add the number of filters required for each argument
+    if IS_FUNCTION(baserank) then
+        rank := baserank();
+    else
+        rank := baserank;
+    fi;
     if IS_CONSTRUCTOR(opr) then
         if 0 = LEN_LIST(flags)  then
             Error(NAME_FUNC(opr),": constructors must have at least one argument");
@@ -196,7 +202,7 @@ BIND_GLOBAL( "INSTALL_METHOD_FLAGS",
             if info = methods[k+narg+4] then
 
                 # ForAll not available
-                match := false;
+                match := true;
                 for j in [1..narg] do
                     match := match and methods[k+j+1] = flags[j];
                 od;
@@ -211,15 +217,15 @@ BIND_GLOBAL( "INSTALL_METHOD_FLAGS",
     fi;
     # push the other functions back
     if not REREADING or not replace then
-        methods{[narg+BASE_SIZE_METHODS_OPER_ENTRY+i+1..narg+BASE_SIZE_METHODS_OPER_ENTRY+LEN_LIST(methods)]}
-          := methods{[i+1..LEN_LIST(methods)]};
+        COPY_LIST_ENTRIES(methods, i+1, 1, methods, narg+BASE_SIZE_METHODS_OPER_ENTRY+i+1,1,
+                LEN_LIST(methods)-i);
     fi;
 
-    # install the new method
+    # check the family predicate
     if   rel = true  then
-        methods[i+1] := RETURN_TRUE;
+        rel := RETURN_TRUE;
     elif rel = false  then
-        methods[i+1] := RETURN_FALSE;
+        rel := RETURN_FALSE;
     elif IS_FUNCTION(rel)  then
         if CHECK_INSTALL_METHOD  then
             tmp := NARG_FUNC(rel);
@@ -228,22 +234,16 @@ BIND_GLOBAL( "INSTALL_METHOD_FLAGS",
                       narg, " arguments");
             fi;
         fi;
-        methods[i+1] := rel;
     else
         Error(NAME_FUNC(opr),
               ": <famrel> must be a function, `true', or `false'" );
     fi;
 
-    # install the filters
-    for k  in [ 1 .. narg ]  do
-        methods[i+k+1] := flags[k];
-    od;
-
-    # install the method
+    # check the method
     if   method = true  then
-        methods[i+(narg+2)] := RETURN_TRUE;
+        method := RETURN_TRUE;
     elif method = false  then
-        methods[i+(narg+2)] := RETURN_FALSE;
+        method := RETURN_FALSE;
     elif IS_FUNCTION(method)  then
         if CHECK_INSTALL_METHOD and not IS_OPERATION( method ) then
             tmp := NARG_FUNC(method);
@@ -252,16 +252,31 @@ BIND_GLOBAL( "INSTALL_METHOD_FLAGS",
                      narg, " arguments");
             fi;
         fi;
-        methods[i+(narg+2)] := method;
     else
         Error(NAME_FUNC(opr),
               ": <method> must be a function, `true', or `false'" );
     fi;
+
+    # install the family predicate
+    methods[i+1] := rel;
+
+    # install the filters
+    for k  in [ 1 .. narg ]  do
+        methods[i+k+1] := flags[k];
+    od;
+
+    # install the method
+    methods[i+(narg+2)] := method;
     methods[i+(narg+3)] := rank;
 
     methods[i+(narg+4)] := IMMUTABLE_COPY_OBJ(info);
+
     if BASE_SIZE_METHODS_OPER_ENTRY >= 5 then
         methods[i+(narg+5)] := MakeImmutable([INPUT_FILENAME(), READEVALCOMMAND_LINENUMBER, INPUT_LINENUMBER()]);
+    fi;
+
+    if BASE_SIZE_METHODS_OPER_ENTRY >= 6 then
+        methods[i+(narg+6)] := baserank;
     fi;
 
     # flush the cache
@@ -290,9 +305,11 @@ end );
 ##  if supplied <A>info</A> should be a short but informative string
 ##  that describes for what situation the method is installed,
 ##  <A>famp</A> should be a function to be applied to the families
-##  of the arguments,
-##  and <A>val</A> should be an integer that measures the priority
-##  of the method.
+##  of the arguments.
+##  <A>val</A> should be an integer that measures the priority of the
+##  method, or a function of no arguments which should return such an
+##  integer and will be called each time method order is being
+##  recalculated (see <Ref Func="InstallTrueMethod"/>).
 ##  <P/>
 ##  The default values for <A>info</A>, <A>famp</A>, and <A>val</A> are
 ##  the empty string,
@@ -306,8 +323,8 @@ end );
 ##  <A>opr</A> expects its methods to require certain filters for their
 ##  arguments.
 ##  For example, the argument of a method for the operation
-##  <Ref Func="Zero"/> must be
-##  in the category <Ref Func="IsAdditiveElementWithZero"/>.
+##  <Ref Attr="Zero"/> must be
+##  in the category <Ref Filt="IsAdditiveElementWithZero"/>.
 ##  It is not possible to use <Ref Func="InstallMethod"/> to install
 ##  a method for which the entries of <A>args-filts</A> do not imply
 ##  the respective requirements of the operation <A>opr</A>.
@@ -372,7 +389,7 @@ BIND_GLOBAL( "INSTALL_METHOD",
           rank,
           method,
           oreqs,
-          req, reqs, match, j, k, imp, notmatch, lk;
+          req, reqs, match, j, k, imp, notmatch, lk, funcname;
 
     if IsHPCGAP then
         # TODO: once the GAP compiler supports 'atomic', use that
@@ -455,9 +472,11 @@ BIND_GLOBAL( "INSTALL_METHOD",
     # Check the rank.
     if not IsBound( arglist[ pos ] ) then
       Error( "the method is missing in <arglist>" );
-    elif IS_INT( arglist[ pos ] ) then
-      rank:= arglist[ pos ];
-      pos:= pos + 1;
+    elif IS_INT( arglist[ pos ] ) or
+         (IS_FUNCTION( arglist[ pos ] ) and NARG_FUNC( arglist[ pos ] ) = 0
+           and pos < LEN_LIST(arglist)) then
+        rank := arglist[ pos ];
+        pos := pos+1;
     else
       rank:= 0;
     fi;
@@ -545,12 +564,10 @@ BIND_GLOBAL( "INSTALL_METHOD",
                   Ordinal(notmatch)," argument do not match a declaration of ",
                   NAME_FUNC(opr) );
           else
-            Print("InstallMethod warning: ",  NAME_FUNC(opr), "(\c",INPUT_FILENAME(),"\c +",
-                  INPUT_LINENUMBER(),") \c","required filters \c");
-            for j in NamesFilter(imp[notmatch]) do
-              Print(j,"/\c");
-            od;
-            Print(" for ",Ordinal(notmatch)," argument do not match \ca ",
+            Print("InstallMethod warning: ",  NAME_FUNC(opr), " at \c",INPUT_FILENAME(),":",
+                  INPUT_LINENUMBER()," \c","required filter \c",
+                  NAME_FUNC(filters[notmatch]),
+                  " for ",Ordinal(notmatch)," argument does not match any ",
                   "declaration\n");
           fi;
         fi;
@@ -580,6 +597,31 @@ BIND_GLOBAL( "INSTALL_METHOD",
         od;
 
       fi;
+    fi;
+
+    if IS_FUNCTION(method) and IsBound(HasNameFunction) and
+      IsBound(TYPE_FUNCTION_WITH_NAME) and IsBound(TYPE_OPERATION_WITH_NAME) and
+      not VAL_GVAR("HasNameFunction")(method) then
+        funcname := SHALLOW_COPY_OBJ(NAME_FUNC(opr));
+        APPEND_LIST_INTR(funcname, " ");
+        if info <> false then
+            APPEND_LIST_INTR(funcname, info);
+        else
+            APPEND_LIST_INTR(funcname, "method");
+        fi;
+        SET_NAME_FUNC(method, funcname);
+    fi;
+
+    if IS_FUNCTION(rank) and IsBound(HasNameFunction) and
+       IsBound(TYPE_FUNCTION_WITH_NAME) and IsBound(TYPE_OPERATION_WITH_NAME) and
+       not VAL_GVAR("HasNameFunction")(rank) then
+        funcname := "Priority calculation for ";
+        APPEND_LIST_INTR(funcname, NAME_FUNC(opr));
+        if info <> false then
+            APPEND_LIST_INTR(funcname, " ");
+            APPEND_LIST_INTR(funcname, info);
+        fi;
+        SET_NAME_FUNC(rank, funcname);
     fi;
 
     # Install the method in the operation.
@@ -732,7 +774,7 @@ end);
 ##  There are several functions that require as first argument a domain,
 ##  e.g., a  group, and as second argument something much simpler,
 ##  e.g., a prime.
-##  <Ref Func="SylowSubgroup"/> is an example.
+##  <Ref Oper="SylowSubgroup"/> is an example.
 ##  Since its value depends on two arguments, it cannot be an attribute,
 ##  yet one would like to store the Sylow subgroups once they have been
 ##  computed.
@@ -744,7 +786,7 @@ end);
 ##  course of a &GAP; session,
 ##  whenever a newly-computed Sylow subgroup is put into the list.
 ##  Therefore, this is a <E>mutable attribute</E>
-##  (see <Ref Sect="Creating Attributes and Properties"/>).
+##  (see <Ref Sect="Attributes"/>).
 ##  The list contains primes in each bound odd position and a corresponding
 ##  Sylow subgroup in the following even position.
 ##  More precisely, if
@@ -755,16 +797,16 @@ end);
 ##  in particular at most one Sylow <A>p</A> subgroup of <A>G</A> is stored
 ##  for each prime <A>p</A>.
 ##  This attribute value is maintained by the function
-##  <Ref Func="SylowSubgroup"/>,
+##  <Ref Oper="SylowSubgroup"/>,
 ##  which calls the operation <C>SylowSubgroupOp( <A>G</A>, <A>p</A> )</C>
 ##  to do the real work, if the prime <A>p</A> cannot be found in the list.
 ##  So methods that do the real work should be installed
 ##  for <C>SylowSubgroupOp</C>
-##  and not for <Ref Func="SylowSubgroup"/>.
+##  and not for <Ref Oper="SylowSubgroup"/>.
 ##  <P/>
 ##  The same mechanism works for other functions as well,
-##  e.g., for <Ref Func="PCore"/>,
-##  but also for <Ref Func="HallSubgroup"/>,
+##  e.g., for <Ref Oper="PCore"/>,
+##  but also for <Ref Oper="HallSubgroup"/>,
 ##  where the second argument is not a prime but a set of primes.
 ##  <P/>
 ##  <Ref Func="KeyDependentOperation"/> declares the two operations and the
@@ -787,7 +829,7 @@ end);
 ##  and raise an error if appropriate.
 ##  <P/>
 ##  For example, to set up the three objects
-##  <Ref Func="SylowSubgroup"/>,
+##  <Ref Oper="SylowSubgroup"/>,
 ##  <C>SylowSubgroupOp</C>,
 ##  <C>ComputedSylowSubgroups</C> together,
 ##  the declaration file <F>lib/grp.gd</F> contains the following line of
@@ -826,11 +868,11 @@ end);
 ##  <C>SylowSubgroupOp</C> (which are installed to do
 ##  the real work).
 ##  Note that no methods need be installed for
-##  <Ref Func="SylowSubgroup"/> and
+##  <Ref Oper="SylowSubgroup"/> and
 ##  <C>ComputedSylowSubgroups</C>.
 ##  If a method is installed with <Ref Func="InstallMethod"/>
 ##  for a wrapper operation such as
-##  <Ref Func="SylowSubgroup"/> then a warning is signalled
+##  <Ref Oper="SylowSubgroup"/> then a warning is signalled
 ##  provided the <Ref InfoClass="InfoWarning"/> level
 ##  is at least <C>1</C>.
 ##  (Use <Ref Func="InstallMethod"/> in order to suppress the
@@ -978,7 +1020,7 @@ end );
 ##  If supplied, <A>info</A> should be a short but informative string
 ##  that describes these conditions.
 ##  This can be used to enforce tests like
-##  <Ref Func="IsFinite"/> in situations when all
+##  <Ref Prop="IsFinite"/> in situations when all
 ##  existing methods require this property.
 ##  The list <A>cond</A> may have unbound entries in which case
 ##  the corresponding argument is ignored for further tests.
@@ -1048,8 +1090,3 @@ InstallMethod( ViewObj,
     [ IS_OBJECT ],
     0,
     PRINT_OBJ );
-
-
-#############################################################################
-##
-#E

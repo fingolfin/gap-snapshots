@@ -604,13 +604,12 @@
   [33X[0;0YCategories of semigroup ideals.[133X
   
   
-  [1X51.6 [33X[0;0YCongruences for semigroups[133X[101X
+  [1X51.6 [33X[0;0YCongruences on semigroups[133X[101X
   
   [33X[0;0YAn  equivalence  or  a  congruence  on  a  semigroup  is  the equivalence or
   congruence  on  the  semigroup  considered  as  a  magma.  So,  to deal with
   equivalences  and  congruences  on semigroups, magma functions are used. For
-  documentation   on  equivalences  and  congruences  for  magmas,  see  [2XMagma[102X
-  ([14X35.2-1[114X).[133X
+  documentation on equivalences and congruences on magmas, see [2XMagma[102X ([14X35.2-1[114X).[133X
   
   [1X51.6-1 IsSemigroupCongruence[101X
   
@@ -764,15 +763,23 @@
   
   [1X51.8-9 GreensRClasses[101X
   
-  [33X[1;0Y[29X[2XGreensRClasses[102X( [3Xsemigroup[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XGreensLClasses[102X( [3Xsemigroup[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XGreensJClasses[102X( [3Xsemigroup[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XGreensDClasses[102X( [3Xsemigroup[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XGreensHClasses[102X( [3Xsemigroup[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XGreensRClasses[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XGreensLClasses[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XGreensHClasses[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XGreensJClasses[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XGreensDClasses[102X( [3XS[103X ) [32X attribute[133X
   
-  [33X[0;0Yreturn  the  [22XR[122X,  [22XL[122X,  [22XJ[122X,  [22XH[122X, or [22XD[122X Green's classes, respectively for semigroup
-  [3Xsemigroup[103X. [2XEquivalenceClasses[102X ([14X33.7-3[114X) for a Green's relation lead to one of
-  these functions.[133X
+  [33X[0;0YIf  [3XS[103X  is  a semigroup, then these attributes return the Green's [22XR[122X-, [22XL[122X-, [22XH[122X-,
+  [22XJ[122X-, or [22XD[122X-classes, respectively for the semigroup [3XS[103X.[133X
+  
+  [33X[0;0YAdditionally,  if [3XS[103X is a Green's [22XD[122X-class of a semigroup, then [10XGreensRClasses[110X
+  and  [10XGreensLClasses[110X  return  the  Green's  [22XR[122X- or [22XL-[122Xclasses of the semigroup,
+  respectively,  contained  in  the  [22XD[122X-class  [3XS[103X;  if [3XS[103X is a Green's [22XD[122X-, [22XR[122X-, or
+  [22XL[122X-class of a semigroup, then [10XGreensHClasses[110X returns the Green's [22XH[122X-classes of
+  the semigroup contained in the Green's class [3XS[103X.[133X
+  
+  [33X[0;0Y[2XEquivalenceClasses[102X  ([14X33.7-3[114X)  for  a  Green's  relation lead to one of these
+  functions.[133X
   
   [1X51.8-10 GroupHClassOfGreensDClass[101X
   

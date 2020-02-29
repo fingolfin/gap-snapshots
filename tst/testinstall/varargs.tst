@@ -1,3 +1,4 @@
+#@local f
 gap> START_TEST("varargs.tst");
 gap> f := function(a,b...) return [a,b]; end;
 function( a, b... ) ... end
@@ -78,16 +79,16 @@ Syntax error: Three dots required for variadic argument list in stream:1
 f := function(a,b..) end;
                  ^^
 gap> Display(RETURN_FIRST);
-function ( object... )
-    <<kernel code from src/gap.c:RETURN_FIRST>>
+function ( first, rest... )
+    <<kernel code>> from src/gap.c:RETURN_FIRST
 end
 gap> Print(INSTALL_METHOD_FLAGS,"\n");
-function ( <<arg-1>>, <<arg-2>>, <<arg-3>>, <<arg-4>>, <<arg-5>>, <<arg-6>> )
-    <<compiled GAP code from GAPROOT/lib/oper1.g:146>>
+function ( opr, info, rel, flags, baserank, method )
+    <<compiled GAP code>> from GAPROOT/lib/oper1.g:147
 end
 gap> Display(InstallMethod);
-function ( <<arg-1>>... )
-    <<compiled GAP code from GAPROOT/lib/oper1.g:321>>
+function ( arg... )
+    <<compiled GAP code>> from GAPROOT/lib/oper1.g:338
 end
 gap> [1..2];
 [ 1, 2 ]

@@ -37,6 +37,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap30_mj.html#X856AC2DF7F7CBAAF">30.2-2 IsCollectionFamily</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap30_mj.html#X864BB3748546F63F">30.2-3 ElementsFamily</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap30_mj.html#X78C38017804B2EA7">30.2-4 CategoryCollections</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap30_mj.html#X85ABC1B4829778C7">30.2-5 DeclareCategoryCollections</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap30_mj.html#X7C3722DF8736FFDB">30.3 <span class="Heading">Lists and Collections</span></a>
 </span>
@@ -131,7 +132,7 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CollectionsFamily</code>( <var class="Arg">Fam</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For a family <var class="Arg">Fam</var>, <code class="func">CollectionsFamily</code> returns the family of all collections over <var class="Arg">Fam</var>, that is, of all dense lists and domains that consist of objects in <var class="Arg">Fam</var>.</p>
 
-<p>The <code class="func">NewFamily</code> (<a href="chap79_mj.html#X7FB4123E7E22137D"><span class="RefLink">79.7-1</span></a>) call in the standard method of <code class="func">CollectionsFamily</code> is executed with second argument <code class="func">IsCollection</code> (<a href="chap30_mj.html#X79C9FC7F86E2738C"><span class="RefLink">30.1-1</span></a>), since every object in the collections family must be a collection, and with third argument the collections categories of the involved categories in the implied filter of <var class="Arg">Fam</var>.</p>
+<p>The <code class="func">NewFamily</code> (<a href="chap13_mj.html#X7FB4123E7E22137D"><span class="RefLink">13.1-2</span></a>) call in the standard method of <code class="func">CollectionsFamily</code> is executed with second argument <code class="func">IsCollection</code> (<a href="chap30_mj.html#X79C9FC7F86E2738C"><span class="RefLink">30.1-1</span></a>), since every object in the collections family must be a collection, and with third argument the collections categories of the involved categories in the implied filter of <var class="Arg">Fam</var>.</p>
 
 <p>Note that families (see <a href="chap13_mj.html#X846063757EC05986"><span class="RefLink">13.1</span></a>) are used to describe relations between objects. Important such relations are that between an element <span class="SimpleMath">\(e\)</span> and each collection of elements that lie in the same family as <span class="SimpleMath">\(e\)</span>, and that between two collections whose elements lie in the same family. Therefore, all collections of elements in the family <var class="Arg">Fam</var> form the new family <code class="code">CollectionsFamily( <var class="Arg">Fam</var> )</code>.</p>
 
@@ -172,6 +173,13 @@ false
 <p>Let <var class="Arg">filter</var> be a filter that is <code class="keyw">true</code> for all elements of a family <var class="Arg">Fam</var>, by the construction of <var class="Arg">Fam</var>. Then <code class="func">CategoryCollections</code> returns the <em>collections category</em> of <var class="Arg">filter</var>. This is a category that is <code class="keyw">true</code> for all elements in <code class="code">CollectionsFamily( <var class="Arg">Fam</var> )</code>.</p>
 
 <p>For example, the construction of <code class="func">PermutationsFamily</code> (<a href="chap42_mj.html#X819628B083B3939B"><span class="RefLink">42.1-3</span></a>) guarantees that each of its elements lies in the filter <code class="func">IsPerm</code> (<a href="chap42_mj.html#X7AA69C6686FC49EA"><span class="RefLink">42.1-1</span></a>), and each collection of permutations (permutation group or dense list of permutations) lies in the category <code class="code">CategoryCollections( IsPerm )</code>. <code class="code">CategoryCollections( IsPerm )</code>. Note that this works only if the collections category is created <em>before</em> the collections family. So it is necessary to construct interesting collections categories immediately after the underlying category has been created.</p>
+
+<p><a id="X85ABC1B4829778C7" name="X85ABC1B4829778C7"></a></p>
+
+<h5>30.2-5 DeclareCategoryCollections</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareCategoryCollections</code>( <var class="Arg">filter</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Calls <code class="func">CategoryCollections</code> (<a href="chap30_mj.html#X78C38017804B2EA7"><span class="RefLink">30.2-4</span></a>) on the category that is bound to the global variable with name <var class="Arg">name</var> to obtain its collections category, and binds the latter to the global variable with name <code class="code">nname</code>. This name is defined as follows: If <var class="Arg">name</var> is of the form <code class="code"><var class="Arg">Something</var>Collection</code> then <code class="code">nname</code> is set to <code class="code"><var class="Arg">Something</var>CollColl</code>, if <var class="Arg">name</var> is of the form <code class="code"><var class="Arg">Something</var>Coll</code> then <code class="code">nname</code> is set to <code class="code"><var class="Arg">Something</var>CollColl</code>, otherwise we set <code class="code">nname</code> to <code class="code"><var class="Arg">name</var>Collection</code>.</p>
 
 <p><a id="X7C3722DF8736FFDB" name="X7C3722DF8736FFDB"></a></p>
 
@@ -276,7 +284,7 @@ false
 </dl>
 <p>If the result is known to have additional properties such as being strictly sorted (see <code class="func">IsSSortedList</code> (<a href="chap21_mj.html#X80CDAF45782E8DCB"><span class="RefLink">21.17-4</span></a>)) then it can be useful to set these properties after the construction of the enumerator, before it is used for the first time. And in the case that a new sorted enumerator of a domain is implemented via <code class="func">EnumeratorByFunctions</code>, and this construction is installed as a method for the operation <code class="func">Enumerator</code> (<a href="chap30_mj.html#X7EF8910F82B45EC7"><span class="RefLink">30.3-2</span></a>), then it should be installed also as a method for <code class="func">EnumeratorSorted</code> (<a href="chap30_mj.html#X80CD7DDC7D0C60D5"><span class="RefLink">30.3-3</span></a>).</p>
 
-<p>Note that it is <em>not</em> checked that <code class="func">EnumeratorByFunctions</code> really returns a dense and duplicate-free list. <code class="func">EnumeratorByFunctions</code> does <em>not</em> make a shallow copy of <var class="Arg">record</var>, this record is changed in place, see <a href="chap79_mj.html#X82E86CF37B123FD4"><span class="RefLink">79.9</span></a>.</p>
+<p>Note that it is <em>not</em> checked that <code class="func">EnumeratorByFunctions</code> really returns a dense and duplicate-free list. <code class="func">EnumeratorByFunctions</code> does <em>not</em> make a shallow copy of <var class="Arg">record</var>, this record is changed in place, see <a href="chap79_mj.html#X82E86CF37B123FD4"><span class="RefLink">79.1</span></a>.</p>
 
 <p>It would be easy to implement a slightly generalized setup for enumerators that need not be duplicate-free (where the three argument version of <code class="func">Position</code> (<a href="chap21_mj.html#X79975EC6783B4293"><span class="RefLink">21.16-1</span></a>) is supported), but the resulting overhead for the methods seems not to be justified.</p>
 
@@ -303,8 +311,8 @@ true
 
 <h5>30.3-6 SortedList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SortedList</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p><code class="func">SortedList</code> returns a new mutable and dense list <var class="Arg">new</var>. The argument must be a collection or list <var class="Arg">listorcoll</var> which may contain holes but whose elements lie in the same family (see <a href="chap13_mj.html#X846063757EC05986"><span class="RefLink">13.1</span></a>). <code class="code">Length( <var class="Arg">new</var> )</code> is the number of elements of <var class="Arg">listorcoll</var>, and <var class="Arg">new</var> contains the elements in sorted order, w.r.t. <code class="code">&lt;=</code>. <code class="code"><var class="Arg">new</var>[<var class="Arg">pos</var>]</code> executes in constant time (see <code class="func">IsConstantTimeAccessList</code> (<a href="chap21_mj.html#X7C84E16A85C99C8C"><span class="RefLink">21.1-6</span></a>)), and the size of <var class="Arg">new</var> in memory is proportional to its length.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SortedList</code>( <var class="Arg">listorcoll</var>[, <var class="Arg">func</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p><code class="func">SortedList</code> returns a new mutable and dense list <var class="Arg">new</var>. The argument must be a collection or list <var class="Arg">listorcoll</var> which may contain holes but whose elements lie in the same family (see <a href="chap13_mj.html#X846063757EC05986"><span class="RefLink">13.1</span></a>). <code class="code">Length( <var class="Arg">new</var> )</code> is the number of elements of <var class="Arg">listorcoll</var>, and <var class="Arg">new</var> contains the elements in sorted order, w.r.t. <code class="code">&lt;</code> or <var class="Arg">func</var> if it is specified. For details, please refer to <code class="func">Sort</code> (<a href="chap21_mj.html#X7FE4975F8166884D"><span class="RefLink">21.18-1</span></a>). <code class="code"><var class="Arg">new</var>[<var class="Arg">pos</var>]</code> executes in constant time (see <code class="func">IsConstantTimeAccessList</code> (<a href="chap21_mj.html#X7C84E16A85C99C8C"><span class="RefLink">21.1-6</span></a>)), and the size of <var class="Arg">new</var> in memory is proportional to its length.</p>
 
 
 <div class="example"><pre>
@@ -322,9 +330,15 @@ true
 
 <h5>30.3-7 SSortedList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SSortedList</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Set</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p><code class="func">SSortedList</code> ("strictly sorted list") returns a new dense, mutable, and duplicate free list <var class="Arg">new</var>. The argument must be a collection or list <var class="Arg">listorcoll</var> which may contain holes but whose elements lie in the same family (see <a href="chap13_mj.html#X846063757EC05986"><span class="RefLink">13.1</span></a>). <code class="code">Length( <var class="Arg">new</var> )</code> is the number of different elements of <var class="Arg">listorcoll</var>, and <var class="Arg">new</var> contains the different elements in strictly sorted order, w.r.t. <code class="func">\&lt;</code> (<a href="chap31_mj.html#X7EF67D047F03CA6F"><span class="RefLink">31.11-1</span></a>). <code class="code"><var class="Arg">new</var>[<var class="Arg">pos</var>]</code> executes in constant time (see <code class="func">IsConstantTimeAccessList</code> (<a href="chap21_mj.html#X7C84E16A85C99C8C"><span class="RefLink">21.1-6</span></a>)), and the size of <var class="Arg">new</var> in memory is proportional to its length.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SSortedList</code>( <var class="Arg">listorcoll</var>[, <var class="Arg">fun</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Set</code>( <var class="Arg">C</var>[, <var class="Arg">fun</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p><code class="func">SSortedList</code> ("strictly sorted list") returns a new dense, mutable, and duplicate free list <var class="Arg">new</var>. The argument must be a collection or list <var class="Arg">listorcoll</var> which may contain holes.</p>
+
+<p>If the optional argument <var class="Arg">fun</var> is not given then <code class="code">Length( <var class="Arg">new</var> )</code> is the number of different elements of <var class="Arg">listorcoll</var>, and <var class="Arg">new</var> contains the different elements in strictly sorted order, w.r.t. <code class="func">\&lt;</code> (<a href="chap31_mj.html#X7EF67D047F03CA6F"><span class="RefLink">31.11-1</span></a>). For that, any two entries of <var class="Arg">listorcoll</var> must be comparable via <code class="func">\&lt;</code> (<a href="chap31_mj.html#X7EF67D047F03CA6F"><span class="RefLink">31.11-1</span></a>). (Typically, the entries lie in the same family, see <a href="chap13_mj.html#X846063757EC05986"><span class="RefLink">13.1</span></a>.)</p>
+
+<p>If <var class="Arg">fun</var> is given then it must be a unary function. In this case, <var class="Arg">fun</var> is applied to all elements of <var class="Arg">listorcoll</var>, <var class="Arg">new</var> contains the different return values in strictly sorted order, and <code class="code">Length( <var class="Arg">new</var> )</code> is the number of different such values. For that, any two return values must be comparable via <code class="func">\&lt;</code> (<a href="chap31_mj.html#X7EF67D047F03CA6F"><span class="RefLink">31.11-1</span></a>).</p>
+
+<p><code class="code"><var class="Arg">new</var>[<var class="Arg">pos</var>]</code> executes in constant time (see <code class="func">IsConstantTimeAccessList</code> (<a href="chap21_mj.html#X7C84E16A85C99C8C"><span class="RefLink">21.1-6</span></a>)), and the size of <var class="Arg">new</var> in memory is proportional to its length.</p>
 
 <p><code class="func">Set</code> is simply a synonym for <code class="func">SSortedList</code>.</p>
 
@@ -336,8 +350,12 @@ true
 true
 true
 true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SSortedList( Group( (1,2,3) ), Order );</span>
+[ 1, 3 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SSortedList( [ 1, 2, 1,, 3, 2 ] );</span>
 [ 1, 2, 3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SSortedList( [ 1, 2, 1,, 3, 2 ], x -&gt; x^2 );</span>
+[ 1, 4, 9 ]
 </pre></div>
 
 <p><a id="X8289FCCC8274C89D" name="X8289FCCC8274C89D"></a></p>
@@ -877,7 +895,7 @@ true
 </dl>
 <p>Further (data) components may be contained in <var class="Arg">record</var> which can be used by these function.</p>
 
-<p><code class="func">IteratorByFunctions</code> does <em>not</em> make a shallow copy of <var class="Arg">record</var>, this record is changed in place (see Section  <a href="chap79_mj.html#X82E86CF37B123FD4"><span class="RefLink">79.9</span></a>).</p>
+<p><code class="func">IteratorByFunctions</code> does <em>not</em> make a shallow copy of <var class="Arg">record</var>, this record is changed in place (see Section  <a href="chap79_mj.html#X82E86CF37B123FD4"><span class="RefLink">79.1</span></a>).</p>
 
 <p>Iterators constructed with <code class="func">IteratorByFunctions</code> are in the filter <code class="func">IsStandardIterator</code> (<a href="chap30_mj.html#X83ADF8287ED0668E"><span class="RefLink">30.8-1</span></a>).</p>
 

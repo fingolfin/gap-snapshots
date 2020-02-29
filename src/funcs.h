@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  funcs.h                     GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file declares the functions of the function interpreter package.
 **
@@ -25,7 +25,7 @@
 **
 **  'MakeFunction' makes a function from the function expression bag <fexp>.
 */
-extern Obj MakeFunction(Obj fexp);
+Obj MakeFunction(Obj fexp);
 
 /****************************************************************************
 **
@@ -34,8 +34,8 @@ extern Obj MakeFunction(Obj fexp);
 **
 *F  ExecEnd(<error>)  . . . . . . . . . . . . . . . . . . .  end an execution
 */
-extern void ExecBegin(Obj frame);
-extern void ExecEnd(UInt error);
+void ExecBegin(Obj frame);
+void ExecEnd(UInt error);
 
 
 /****************************************************************************
@@ -45,19 +45,19 @@ extern void ExecEnd(UInt error);
 **  to protect against stack overflows and the resulting crashes.
 */
 
-void IncRecursionDepth(void);
+Int IncRecursionDepth(void);
 void DecRecursionDepth(void);
-Int GetRecursionDepth(void);
+Int  GetRecursionDepth(void);
 void SetRecursionDepth(Int depth);
 
 extern UInt RecursionTrapInterval;
-extern void RecursionDepthTrap( void );
+void        RecursionDepthTrap(void);
 
-static inline void CheckRecursionBefore( void )
+EXPORT_INLINE void CheckRecursionBefore( void )
 {
-    IncRecursionDepth();
+    Int depth = IncRecursionDepth();
     if ( RecursionTrapInterval &&
-         0 == (GetRecursionDepth() % RecursionTrapInterval) )
+         0 == (depth % RecursionTrapInterval) )
       RecursionDepthTrap();
 }
 

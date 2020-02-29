@@ -1,10 +1,5 @@
 #############################################################################
 ##
-#W  grpperm.tst                 GAP tests                    Alexander Hulpke
-##
-##
-#Y  Copyright (C)  1997
-##
 ##  Exclude from testinstall.g as it takes considerable time.
 ##
 gap> START_TEST("grpperm.tst");
@@ -255,4 +250,21 @@ gap> NrMovedPoints(Source(sm));
 157464
 gap> NrMovedPoints(Range(sm))<200;
 true
+
+# construct extensions
+gap> g:=PerfectGroup(IsPermGroup,3840,1);;
+gap> cf:=IrreducibleModules(g,GF(2),0)[2];;
+gap> List(cf,x->x.dimension);
+[ 1, 4, 4 ]
+gap> pos:=PositionProperty(cf,x->Size(MTX.ModuleAutomorphisms(x))=3);;
+gap> coh:=TwoCohomologyGeneric(g,cf[pos]);;
+gap> Length(coh.cohomology);
+2
+gap> e:=Elements(VectorSpace(GF(2),coh.cohomology));;
+gap> p:=List(e,x->FpGroupCocycle(coh,x,true));;
+gap> Length(p);
+4
+gap> p:=List(p,x->Image(IsomorphismPermGroup(x)));;
+gap> List(p,Size);
+[ 61440, 61440, 61440, 61440 ]
 gap> STOP_TEST( "grpperm.tst", 1);

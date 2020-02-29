@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  idealalg.gi                 GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains methods for (left/right/two-sided) ideals
 ##  in algebras and algebras-with-one.
@@ -407,7 +408,7 @@ InstallMethod( GeneratorsOfLeftModule,
     "for FLMLOR with known left ideal generators",
     true,
     [ IsFLMLOR and HasGeneratorsOfLeftIdeal ],
-    RankFilter( HasGeneratorsOfTwoSidedIdeal ),
+    {} -> RankFilter( HasGeneratorsOfTwoSidedIdeal ),
     I -> LeftModuleGeneratorsForIdealFromGenerators( I,
              GeneratorsOfLeftIdeal( I ),
              LeftActingRingOfIdeal( I ), "left" ) );
@@ -416,7 +417,7 @@ InstallMethod( GeneratorsOfLeftModule,
     "for FLMLOR with known right ideal generators",
     true,
     [ IsFLMLOR and HasGeneratorsOfRightIdeal ],
-    RankFilter( HasGeneratorsOfTwoSidedIdeal ),
+    {} -> RankFilter( HasGeneratorsOfTwoSidedIdeal ),
     I -> LeftModuleGeneratorsForIdealFromGenerators( I,
              GeneratorsOfRightIdeal( I ),
              RightActingRingOfIdeal( I ), "right" ) );
@@ -434,7 +435,7 @@ InstallMethod( GeneratorsOfLeftOperatorRing,
     "for FLMLOR with known left ideal generators",
     true,
     [ IsFLMLOR and HasGeneratorsOfLeftIdeal ],
-    RankFilter( HasGeneratorsOfTwoSidedIdeal ),
+    {} -> RankFilter( HasGeneratorsOfTwoSidedIdeal ),
     I -> LeftModuleGeneratorsForIdealFromGenerators( I,
              GeneratorsOfLeftIdeal( I ),
              LeftActingRingOfIdeal( I ), "left" ) );
@@ -443,7 +444,7 @@ InstallMethod( GeneratorsOfLeftOperatorRing,
     "for FLMLOR with known right ideal generators",
     true,
     [ IsFLMLOR and HasGeneratorsOfRightIdeal ],
-    RankFilter( HasGeneratorsOfTwoSidedIdeal ),
+    {} -> RankFilter( HasGeneratorsOfTwoSidedIdeal ),
     I -> LeftModuleGeneratorsForIdealFromGenerators( I,
              GeneratorsOfRightIdeal( I ),
              RightActingRingOfIdeal( I ), "right" ) );
@@ -534,9 +535,3 @@ InstallMethod( IsFiniteDimensional,
       TryNextMethod();
     fi;
     end );
-
-
-#############################################################################
-##
-#E
-

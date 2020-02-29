@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  list.gd                     GAP library                  Martin Schönert
-#W                                                            & Werner Nickel
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Martin Schönert, Werner Nickel.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the definition of operations and functions for lists.
 ##
@@ -53,12 +53,33 @@ BIND_GLOBAL( "ListsFamily", NewFamily( "ListsFamily", IsList ) );
 ##
 #R  IsPlistRep  . . . . . . . . . . . . . . . . representation of plain lists
 ##
+##  <#GAPDoc Label="IsPlistRep">
 ##  <ManSection>
-##  <Filt Name="IsPlistRep" Arg='obj' Type='Representation'/>
+##  <Filt Name="IsPlistRep" Arg='obj' Type='representation'/>
 ##
 ##  <Description>
+##  &GAP; lists created by entering comma separated values in square brackets
+##  are usually represented internally as so-called <E>plain lists</E>.
+##  Other representations of lists are <Ref Filt="IsBlistRep"/>,
+##  <Ref Filt="IsRangeRep"/>, <Ref Filt="IsStringRep"/>,
+##  or the ones that are chosen for implementing enumerators,
+##  see Section <Ref Sect="Enumerators"/>.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> IsPlistRep( [ 1, 2, 3 ] );
+##  true
+##  gap> IsPlistRep( "abc" );
+##  false
+##  gap> IsPlistRep( [ 1 .. 5 ] );
+##  false
+##  gap> IsPlistRep( BlistList( [ 1 .. 5 ], [ 1 ] ) );
+##  false
+##  gap> IsPlistRep( 0 );
+##  false
+##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareRepresentationKernel( "IsPlistRep",
     IsInternalRep, [], IS_OBJECT, IS_PLIST_REP );
@@ -147,7 +168,7 @@ InstallTrueMethod(HasLength,IsPlistRep);
 ##  <Oper Name="IsBound" Arg='list[n]' Label="for a list index"/>
 ##
 ##  <Description>
-##  <Ref Func="IsBound" Label="for a list index"/> returns <K>true</K>
+##  <Ref Oper="IsBound" Label="for a list index"/> returns <K>true</K>
 ##  if the list <A>list</A> has an element at index <A>n</A>,
 ##  and <K>false</K> otherwise.
 ##  <A>list</A> must evaluate to a list, or to an object for which a suitable
@@ -186,7 +207,7 @@ DeclareOperationKernel( "[]",
 ##  <Oper Name="GetWithDefault" Arg='list, n, default'/>
 ##
 ##  <Description>
-##  <Ref Func="GetWithDefault"/> returns the <A>n</A>th element of the list
+##  <Ref Oper="GetWithDefault"/> returns the <A>n</A>th element of the list
 ##  <A>list</A>, if <A>list</A> has a value at index <A>n</A>, and
 ##  <A>default</A> otherwise.
 ##  <P/>
@@ -252,11 +273,11 @@ DeclareOperationKernel( "Elm0List",
 ##  <Oper Name="Unbind" Arg='list[n]' Label="unbind a list entry"/>
 ##
 ##  <Description>
-##  <Ref Func="Unbind" Label="unbind a list entry"/> deletes the element with
+##  <Ref Oper="Unbind" Label="unbind a list entry"/> deletes the element with
 ##  index <A>n</A> in the mutable list <A>list</A>.  That is, after
-##  execution of <Ref Func="Unbind" Label="unbind a list entry"/>,
+##  execution of <Ref Oper="Unbind" Label="unbind a list entry"/>,
 ##  <A>list</A> no longer has an assigned value with index <A>n</A>.
-##  Thus <Ref Func="Unbind" Label="unbind a list entry"/> can be used to
+##  Thus <Ref Oper="Unbind" Label="unbind a list entry"/> can be used to
 ##  produce holes in a list.
 ##  Note that it is not an error to unbind a nonexistant list element.
 ##  <A>list</A> must evaluate to a list, or to an object for which a suitable
@@ -270,13 +291,13 @@ DeclareOperationKernel( "Elm0List",
 ##  [ , 2,,,, 7,,,, 11 ]
 ##  ]]></Example>
 ##  <P/>
-##  Note that <Ref Func="IsBound" Label="for a list index"/> and
-##  <Ref Func="Unbind" Label="unbind a list entry"/> are special
+##  Note that <Ref Oper="IsBound" Label="for a list index"/> and
+##  <Ref Oper="Unbind" Label="unbind a list entry"/> are special
 ##  in that they do not evaluate their argument,
-##  otherwise <Ref Func="IsBound" Label="for a list index"/>
+##  otherwise <Ref Oper="IsBound" Label="for a list index"/>
 ##  would always signal an error when it is supposed to return <K>false</K>
 ##  and there would be no way to tell
-##  <Ref Func="Unbind" Label="unbind a list entry"/>
+##  <Ref Oper="Unbind" Label="unbind a list entry"/>
 ##  which component to remove.
 ##  </Description>
 ##  </ManSection>
@@ -358,8 +379,8 @@ DeclareSynonym( "AsSSortedListList", AS_LIST_SORTED_LIST );
 ##  <Attr Name="AsPlist" Arg='l'/>
 ##
 ##  <Description>
-##  <C>AsPlist</C> returns a list in the representation <C>IsPlistRep</C>
-##  that is equal to the list <A>l</A>.
+##  <Ref Attr="AsPlist"/> returns a list in the representation
+##  <Ref Filt="IsPlistRep"/> that is equal to the list <A>l</A>.
 ##  It is used before calling kernel functions to sort plists.
 ##  </Description>
 ##  </ManSection>
@@ -479,14 +500,14 @@ InstallTrueMethod( IsFinite, IsHomogeneousList and IsInternalRep );
 ##  <Index Subkey="sorted">list</Index> and <K>false</K> otherwise.
 ##  <P/>
 ##  A list <A>list</A> is <E>sorted</E> if it is dense
-##  (see&nbsp;<Ref Func="IsDenseList"/>)
+##  (see&nbsp;<Ref Filt="IsDenseList"/>)
 ##  and satisfies the relation <M><A>list</A>[i] \leq <A>list</A>[j]</M>
 ##  whenever <M>i &lt; j</M>.
 ##  Note that a sorted list is not necessarily duplicate free
-##  (see&nbsp;<Ref Func="IsDuplicateFree"/> and <Ref Func="IsSSortedList"/>).
+##  (see&nbsp;<Ref Prop="IsDuplicateFree"/> and <Ref Prop="IsSSortedList"/>).
 ##  <P/>
 ##  Many sorted lists are in fact homogeneous
-##  (see&nbsp;<Ref Func="IsHomogeneousList"/>),
+##  (see&nbsp;<Ref Filt="IsHomogeneousList"/>),
 ##  but also non-homogeneous lists may be sorted
 ##  (see&nbsp;<Ref Sect="Comparison Operations for Elements"/>).
 ##  <P/>
@@ -494,7 +515,7 @@ InstallTrueMethod( IsFinite, IsHomogeneousList and IsInternalRep );
 ##  by binary search, see&nbsp;<Ref Sect="Sorted Lists and Sets"/>.
 ##  <P/>
 ##  Note that  &GAP; cannot  compare (by  less than)  arbitrary objects.
-##  This can cause  that <Ref Func="IsSortedList"/> runs  into an error,
+##  This can cause  that <Ref Prop="IsSortedList"/> runs  into an error,
 ##  if <A>obj</A> is a list with some non-comparable entries.
 ##  </Description>
 ##  </ManSection>
@@ -523,11 +544,11 @@ InstallTrueMethod( IsList, IsSortedList );
 ##  <Ref Prop="IsSet"/> is just a synonym for <Ref Prop="IsSSortedList"/>.
 ##  <P/>
 ##  A list <A>list</A> is <E>strictly sorted</E> if it is sorted
-##  (see&nbsp;<Ref Func="IsSortedList"/>)
+##  (see&nbsp;<Ref Prop="IsSortedList"/>)
 ##  and satisfies the relation <M><A>list</A>[i] &lt; <A>list</A>[j]</M>
 ##  whenever <M>i &lt; j</M>.
 ##  In particular, such lists are duplicate free
-##  (see&nbsp;<Ref Func="IsDuplicateFree"/>).
+##  (see&nbsp;<Ref Prop="IsDuplicateFree"/>).
 ##  <P/>
 ##  (Currently there is little special treatment of lists that are sorted
 ##  but not strictly sorted.
@@ -535,7 +556,7 @@ InstallTrueMethod( IsList, IsSortedList );
 ##  that they are sorted but not strictly sorted.)
 ##  <P/>
 ##  Note that  &GAP; cannot  compare (by  less than)  arbitrary objects.
-##  This can cause  that <Ref Func="IsSSortedList"/> runs  into an error,
+##  This can cause  that <Ref Prop="IsSSortedList"/> runs  into an error,
 ##  if <A>obj</A> is a list with some non-comparable entries.
 ##  </Description>
 ##  </ManSection>
@@ -546,16 +567,6 @@ DeclareSynonym( "IsSet", IsSSortedList );
 
 InstallTrueMethod( IsSortedList, IsSSortedList );
 InstallTrueMethod( IsSSortedList, IsList and IsEmpty );
-
-
-#############################################################################
-##
-#p  IsNSortedList( <list> )
-##
-##  returns `true' if the list <list> is not sorted (see~"IsSortedList").
-##
-DeclarePropertyKernel( "IsNSortedList", IsDenseList, IS_NSORT_LIST );
-#T (is currently not really supported, but we declare it anyway so that FILTERS is dense
 
 
 #############################################################################
@@ -573,7 +584,7 @@ DeclarePropertyKernel( "IsNSortedList", IsDenseList, IS_NSORT_LIST );
 ##  list or collection, and it is duplicate free;
 ##  <Index>duplicate free</Index>
 ##  otherwise it returns <K>false</K>.
-##  <Ref Prop="IsDuplicateFreeList"/> is a synonym for
+##  <Ref Filt="IsDuplicateFreeList"/> is a synonym for
 ##  <C>IsDuplicateFree and IsList</C>.
 ##  <P/>
 ##  A list is <E>duplicate free</E> if it is dense and does not contain equal
@@ -581,7 +592,7 @@ DeclarePropertyKernel( "IsNSortedList", IsDenseList, IS_NSORT_LIST );
 ##  Every domain (see&nbsp;<Ref Sect="Domains"/>) is duplicate free.
 ##  <P/>
 ##  Note that  &GAP; cannot  compare arbitrary objects (by equality).
-##  This can cause  that <Ref Func="IsDuplicateFree"/> runs  into an error,
+##  This can cause  that <Ref Prop="IsDuplicateFree"/> runs  into an error,
 ##  if <A>obj</A> is a list with some non-comparable entries.
 ##  </Description>
 ##  </ManSection>
@@ -689,7 +700,7 @@ DeclareOperation( "Position", [ IsList, IsObject, IS_INT ] );
 ##  <Oper Name="PositionsOp" Arg='list, obj'/>
 ##
 ##  <Description>
-##  returns the positions of <E>all</E> occurrences of <A>obj</A> in
+##  returns the set of positions of <E>all</E> occurrences of <A>obj</A> in
 ##  <A>list</A>.
 ##  <P/>
 ##  <Example><![CDATA[
@@ -720,12 +731,12 @@ DeclareOperation( "PositionsOp", [ IsList, IsObject ] );
 ##  The definition of this associate depends on <A>list</A>.
 ##  For internally represented lists it is defined as the element itself
 ##  (and <Ref Oper="PositionCanonical"/> thus defaults to
-##  <Ref Func="Position"/>,
+##  <Ref Oper="Position"/>,
 ##  but for example for certain enumerators
 ##  (see&nbsp;<Ref Sect="Enumerators"/>)
 ##  other canonical associates can be defined.
 ##  <P/>
-##  For example <Ref Func="RightTransversal"/> defines the
+##  For example <Ref Oper="RightTransversal"/> defines the
 ##  canonical associate to be the element in the transversal defining the
 ##  same coset of a subgroup in a group.
 ##  <P/>
@@ -796,8 +807,8 @@ DeclareOperation( "PositionNthOccurrence", [ IsList, IsObject, IS_INT ] );
 ##  and <K>false</K> otherwise.
 ##  <P/>
 ##  <Ref Func="PositionSorted"/> returns <A>pos</A> such that
-##  <M><A>list</A>[<A>pos</A>-1] &lt; <A>elm</A></M> and
-##  <M><A>elm</A> \leq <A>list</A>[<A>pos</A>]</M>.
+##  <M><A>list</A>[<A>pos</A>-1] &lt; <A>elm</A> \leq
+##  <A>list</A>[<A>pos</A>]</M> holds.
 ##  That means, if <A>elm</A> appears once in <A>list</A>,
 ##  its position is returned.
 ##  If <A>elm</A> appears several times in <A>list</A>,
@@ -807,12 +818,12 @@ DeclareOperation( "PositionNthOccurrence", [ IsList, IsObject, IS_INT ] );
 ##  is returned.
 ##  <P/>
 ##  <Ref Func="PositionSorted"/> uses binary search,
-##  whereas <Ref Func="Position"/> can in general
+##  whereas <Ref Oper="Position"/> can in general
 ##  use only linear search, see the remark at the beginning
 ##  of&nbsp;<Ref Sect="Sorted Lists and Sets"/>.
 ##  For sorting lists, see&nbsp;<Ref Sect="Sorting Lists"/>,
 ##  for testing whether a list is sorted,
-##  see&nbsp;<Ref Func="IsSortedList"/> and <Ref Func="IsSSortedList"/>.
+##  see&nbsp;<Ref Prop="IsSortedList"/> and <Ref Prop="IsSSortedList"/>.
 ##  <P/>
 ##  Specialized functions for certain kinds of lists must be installed 
 ##  as methods for the operation <C>PositionSortedOp</C>.
@@ -841,6 +852,63 @@ DeclareOperation( "PositionSortedOp", [ IsList, IsObject, IsFunction ] );
 #T DeclareOperation( "PositionSorted", [ IsHomogeneousList, IsObject ] );
 #T note the problem with inhomogeneous lists that may be sorted
 #T (although they cannot store this and claim that they are not sorted)
+
+
+#############################################################################
+##
+#F  PositionSortedBy( <list>, <val>, <func> )
+##
+##  <#GAPDoc Label="PositionSortedBy">
+##  <ManSection>
+##  <Func Name="PositionSortedBy" Arg='list, val, func'/>
+##
+##  <Description>
+##  <Index Key="PositionSortedByOp"><C>PositionSortedByOp</C></Index>
+##  This function returns the same value that would be returned by
+##  <C>PositionSorted(List(list, func), val)</C>, but computes it in
+##  a more efficient way.
+##  <P/>
+##  To be more precise, <A>func</A> must be a function on one argument which
+##  returns values that can be compared to <A>val</A>, and <A>list</A>
+##  must be a list for which <C>func(list[i]) &lt;= func(list[i+1])</C> holds
+##  for all relevant <A>i</A>. This property is not verified, and if the
+##  input violates it, then the result is undefined.
+##  <P/>
+##  <Ref Func="PositionSortedBy"/> returns <A>pos</A> such that
+##  <M><A>func</A>(<A>list</A>[<A>pos</A>-1]) &lt; <A>val</A>
+##  \leq <A>func</A>(<A>list</A>[<A>pos</A>])</M> holds.
+##  That means, if there are elements <C>elm</C> in <A>list</A>
+##  for which <M><A>func</A>(elm) = <A>val</A></M> holds, then
+##  the position of the first such element is returned.
+##  If no element of <A>list</A> satisfies this condition, then
+##  the lowest index where an element <A>elm</A> satisfying
+##  <M><A>func</A>(elm) = <A>val</A></M> must be inserted to preserve
+##  the property <C>func(list[i]) &lt;= func(list[i+1])</C> is returned.
+##  <P/>
+##  <Ref Func="PositionSortedBy"/> uses binary search.
+##  Each <C>func(list[i])</C> is computed at most once.
+##  <P/>
+##  Specialized functions for certain kinds of lists must be installed
+##  as methods for the operation <C>PositionSortedByOp</C>.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> PositionSortedBy( [ "", "ab", ], -1, Length );
+##  1
+##  gap> PositionSortedBy( [ "", "ab", ], 0, Length );
+##  1
+##  gap> PositionSortedBy( [ "", "ab", ], 1, Length );
+##  2
+##  gap> PositionSortedBy( [ "", "ab", ], 2, Length );
+##  2
+##  gap> PositionSortedBy( [ "", "ab", ], 3, Length );
+##  3
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction( "PositionSortedBy" );
+DeclareOperation("PositionSortedByOp", [ IsList, IsObject, IsFunction ]);
 
 
 #############################################################################
@@ -958,7 +1026,7 @@ DeclareGlobalFunction( "PositionMinimum" );
 ##  <Oper Name="PositionsProperty" Arg='list, func'/>
 ##
 ##  <Description>
-##  returns the list of all those positions in the list <A>list</A>
+##  returns the set of all those positions in the list <A>list</A>
 ##  which are bound and
 ##  for which the property tester function <A>func</A> returns <K>true</K>.
 ##  <P/>
@@ -970,7 +1038,7 @@ DeclareGlobalFunction( "PositionMinimum" );
 ##  [ 1, 3, 4, 8, 9, 11 ]
 ##  ]]></Example>
 ##  <P/>
-##  <Ref Func="PositionProperty"/> allows you to extract the position of the
+##  <Ref Oper="PositionProperty"/> allows you to extract the position of the
 ##  first element in a list that satisfies a certain property.
 ##  </Description>
 ##  </ManSection>
@@ -1007,11 +1075,11 @@ DeclareOperation( "PositionBound", [ IsList ] );
 
 #############################################################################
 ##
-#O  PositionsBound( <list> ) . . . . . . . . . positions of all bound entries
+#F  PositionsBound( <list> ) . . . . . . . . . positions of all bound entries
 ##
 ##  <#GAPDoc Label="PositionsBound">
 ##  <ManSection>
-##  <Oper Name="PositionsBound" Arg='list'/>
+##  <Func Name="PositionsBound" Arg='list'/>
 ##
 ##  <Description>
 ##  returns the set of all bound positions in the list
@@ -1030,7 +1098,6 @@ DeclareOperation( "PositionBound", [ IsList ] );
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "PositionsBound", [IsList] );
-
 
 
 #############################################################################
@@ -1276,7 +1343,7 @@ DeclareGlobalFunction( "Apply" );
 ##  <P/>
 ##  Note that <Ref Func="Concatenation" Label="for several lists"/> creates
 ##  a new list and leaves its arguments unchanged,
-##  while <Ref Func="Append"/> changes its first argument.
+##  while <Ref Oper="Append"/> changes its first argument.
 ##  For computing the union of proper sets,
 ##  <Ref Func="Union" Label="for a list"/> can be used,
 ##  see also <Ref Sect="Sorted Lists and Sets"/>.
@@ -1371,7 +1438,7 @@ DeclareOperation( "Collected", [ IsList ] );
 ##  Therefore <Ref Oper="DuplicateFreeList"/> can be used even if the
 ##  elements of <A>list</A> do not lie in the same family.
 ##  Otherwise, if <A>list</A> contains objects that can be compared with
-##  <Ref Func="\&lt;"/> then it is much more efficient to use 
+##  <Ref Oper="\&lt;"/> then it is much more efficient to use 
 ##  <Ref Oper="Set"/> instead of <Ref Oper="DuplicateFreeList"/>.
 ##  <P/>
 ##  <Ref Oper="Unique"/> is a synonym for <Ref Oper="DuplicateFreeList"/>.
@@ -1399,7 +1466,7 @@ DeclareSynonym( "Unique", DuplicateFreeList );
 ##  <Attr Name="AsDuplicateFreeList" Arg='list'/>
 ##
 ##  <Description>
-##  returns the same result as <Ref Func="DuplicateFreeList"/>,
+##  returns the same result as <Ref Oper="DuplicateFreeList"/>,
 ##  except that the result is immutable.
 ##  </Description>
 ##  </ManSection>
@@ -1455,7 +1522,7 @@ DeclareOperation( "DifferenceLists", [IsList, IsList] );
 ##  ]]></Example>
 ##  <P/>
 ##  To reconstruct a matrix from the list obtained by applying
-##  <Ref Func="Flat"/> to the matrix,
+##  <Ref Oper="Flat"/> to the matrix,
 ##  the sublist operator can be used, as follows.
 ##  <P/>
 ##  <Example><![CDATA[
@@ -1562,7 +1629,7 @@ DeclareOperation( "Shuffle", [IsDenseList and IsMutable] );
 ##  <Description>
 ##  Let <A>list1</A> and <A>list2</A> be two dense, but not necessarily
 ##  homogeneous lists
-##  (see&nbsp;<Ref Func="IsDenseList"/>, <Ref Func="IsHomogeneousList"/>),
+##  (see&nbsp;<Ref Filt="IsDenseList"/>, <Ref Filt="IsHomogeneousList"/>),
 ##  such that for each <M>i</M>, the entries in both lists at position
 ##  <M>i</M> can be compared via <C>&lt;</C>.
 ##  <Ref Func="IsLexicographicallyLess"/> returns <K>true</K> if <A>list1</A>
@@ -1605,7 +1672,7 @@ DeclareGlobalFunction( "IsLexicographicallyLess" );
 ##  <P/>
 ##  <Ref Oper="Sort"/> does not return anything,
 ##  it just changes the argument <A>list</A>.
-##  Use <Ref Func="ShallowCopy"/> if you want to keep <A>list</A>.
+##  Use <Ref Oper="ShallowCopy"/> if you want to keep <A>list</A>.
 ##  Use <Ref Func="Reversed"/> if you want to get a new list that is
 ##  sorted in decreasing order.
 ##  <P/>
@@ -1665,13 +1732,13 @@ DeclareOperation( "StableSortBy", [IsList and IsMutable, IsFunction ] );
 ##  that can be applied to <A>list</A> to obtain the sorted list.
 ##  The one argument form sorts via the operator <C>&lt;</C>,
 ##  the two argument form sorts w.r.t. the function <A>func</A>.
-##  The permutation returned by <Ref Func="Sortex"/> will keep
+##  The permutation returned by <Ref Oper="Sortex"/> will keep
 ##  elements which compare equal in the same relative order.
 ##  (If the list is not homogeneous it is the user's responsibility to ensure
 ##  that <C>&lt;</C> is defined for all element pairs,
 ##  see&nbsp;<Ref Sect="Comparison Operations for Elements"/>)
 ##  <P/>
-##  <Ref Func="Permuted"/> allows you to rearrange a list according to
+##  <Ref Oper="Permuted"/> allows you to rearrange a list according to
 ##  a given permutation.
 ##  <P/>
 ##  <Example><![CDATA[
@@ -1760,7 +1827,7 @@ DeclareGlobalFunction( "PermListList" );
 ##
 ##  <Description>
 ##  <Ref Oper="SortParallel"/> sorts the list <A>list1</A> in increasing order
-##  just as <Ref Func="Sort"/> does.
+##  just as <Ref Oper="Sort"/> does.
 ##  In parallel it applies the same exchanges that are necessary to sort
 ##  <A>list1</A> to the list <A>list2</A>,
 ##  which must of course have at least as many elements as <A>list1</A> does.
@@ -1787,14 +1854,14 @@ DeclareGlobalFunction( "PermListList" );
 ##  <#/GAPDoc>
 ##
 DeclareOperation( "SortParallel",
-    [ IsDenseList and IsMutable, IsDenseList and IsMutable ] );
+    [ IsList and IsMutable, IsList and IsMutable ] );
 DeclareOperation( "SortParallel",
-    [ IsDenseList and IsMutable, IsDenseList and IsMutable, IsFunction ] );
+    [ IsList and IsMutable, IsList and IsMutable, IsFunction ] );
 
 DeclareOperation( "StableSortParallel",
-    [ IsDenseList and IsMutable, IsDenseList and IsMutable ] );
+    [ IsList and IsMutable, IsList and IsMutable ] );
 DeclareOperation( "StableSortParallel",
-    [ IsDenseList and IsMutable, IsDenseList and IsMutable, IsFunction ] );
+    [ IsList and IsMutable, IsList and IsMutable, IsFunction ] );
 
 
 #############################################################################
@@ -1987,7 +2054,7 @@ DeclareGlobalFunction( "Cartesian" );
 ##  list <A>list</A> permuted according to the permutation <A>perm</A>.
 ##  That is <C><A>new</A>[<A>i</A>^<A>perm</A>] = <A>list</A>[<A>i</A>]</C>.
 ##  <P/>
-##  <Ref Func="Sortex"/> allows you to compute a permutation that must
+##  <Ref Oper="Sortex"/> allows you to compute a permutation that must
 ##  be applied to a list in order to get the sorted list.
 ##  <P/>
 ##  <Example><![CDATA[
@@ -2032,22 +2099,23 @@ DeclareGlobalFunction( "IteratorList" );
 
 #############################################################################
 ##
-#F  First( <list>, <func> ) . .  find first element in a list with a property
+#F  First( <list>[, <func>] ) .  find first element in a list with a property
 ##
 ##  <#GAPDoc Label="First">
 ##  <ManSection>
-##  <Func Name="First" Arg='list, func'/>
+##  <Func Name="First" Arg='list[, func]'/>
 ##
 ##  <Description>
 ##  <Ref Func="First"/> returns the first element of the list <A>list</A>
-##  for which the unary function <A>func</A> returns <K>true</K>.
+##  for which the unary function <A>func</A> returns <K>true</K>;
+##  if <A>func</A> is not given, the first element is returned.
 ##  <A>list</A> may contain holes.
 ##  <A>func</A> must return either <K>true</K> or <K>false</K> for each
 ##  element of <A>list</A>, otherwise an error is signalled.
 ##  If <A>func</A> returns <K>false</K> for all elements of <A>list</A>
 ##  then <Ref Func="First"/> returns <K>fail</K>.
 ##  <P/>
-##  <Ref Func="PositionProperty"/> allows you to find the
+##  <Ref Oper="PositionProperty"/> allows you to find the
 ##  position of the first element in a list that satisfies a certain
 ##  property.
 ##  <P/>
@@ -2071,10 +2139,10 @@ DeclareGlobalFunction( "First" );
 
 #############################################################################
 ##
-#O  FirstOp( <list>, <func> )
+#O  FirstOp( <list>[, <func>] )
 ##
 ##  <ManSection>
-##  <Oper Name="FirstOp" Arg='list, func'/>
+##  <Oper Name="FirstOp" Arg='list[, func]'/>
 ##
 ##  <Description>
 ##  <Ref Oper="FirstOp"/> is the operation called by <Ref Func="First"/>
@@ -2082,7 +2150,61 @@ DeclareGlobalFunction( "First" );
 ##  </Description>
 ##  </ManSection>
 ##
+DeclareOperation( "FirstOp", [ IsListOrCollection ] );
 DeclareOperation( "FirstOp", [ IsListOrCollection, IsFunction ] );
+
+
+#############################################################################
+##
+#F  Last( <list>[, <func>] ) . .  find last element in a list with a property
+##
+##  <#GAPDoc Label="Last">
+##  <ManSection>
+##  <Func Name="Last" Arg='list[, func]'/>
+##
+##  <Description>
+##  <Ref Func="Last"/> returns the last element of the list <A>list</A>
+##  for which the unary function <A>func</A> returns <K>true</K>;
+##  if <A>func</A> is not given, the first element is returned.
+##  <A>list</A> may contain holes.
+##  <A>func</A> must return either <K>true</K> or <K>false</K> for each
+##  element of <A>list</A>, otherwise an error is signalled.
+##  If <A>func</A> returns <K>false</K> for all elements of <A>list</A>
+##  then <Ref Func="Last"/> returns <K>fail</K>.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> Last( [10^7..10^8], IsPrime );
+##  99999989
+##  gap> Last( [10^5..10^6],
+##  >      n -> not IsPrime(n) and IsPrimePowerInt(n) );
+##  994009
+##  gap> Last( [ 1 .. 20 ], x -> x < 0 );
+##  fail
+##  gap> Last( [ fail ], x -> x = fail );
+##  fail
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction( "Last" );
+
+
+#############################################################################
+##
+#O  LastOp( <list>[, <func>] )
+##
+##  <ManSection>
+##  <Oper Name="LastOp" Arg='list[, func]'/>
+##
+##  <Description>
+##  <Ref Oper="LastOp"/> is the operation called by <Ref Func="Last"/>
+##  if <A>list</A> is not an internally represented list.
+##  </Description>
+##  </ManSection>
+##
+DeclareOperation( "LastOp", [ IsListOrCollection ] );
+DeclareOperation( "LastOp", [ IsListOrCollection, IsFunction ] );
 
 
 #############################################################################
@@ -2443,8 +2565,3 @@ DeclareGlobalFunction("BlistStringDecode");
 DeclareGlobalFunction("Average");
 DeclareGlobalFunction("Median");
 DeclareGlobalFunction("Variance");
-
-
-#############################################################################
-##
-#E

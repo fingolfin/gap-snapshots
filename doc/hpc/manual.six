@@ -327,6 +327,8 @@ entries :=
       "viewshared", "X80D0DFAB7F7241E8" ], 
   [ "\033[2XUNSAFE_VIEW\033[102X", "3.9-42", [ 3, 9, 42 ], 653, 26, 
       "unsafe_view", "X7FD39BCC8526AC53" ], 
+  [ "\033[9Xatomic\033[109X no value", "3.9-43", [ 3, 9, 43 ], 668, 26, 
+      "atomic no value", "X7FD1B1B785E24734" ], 
   [ "\033[2XBindOnce\033[102X", "3.11-1", [ 3, 11, 1 ], 740, 27, "bindonce", 
       "X83AD36A68503CF70" ], 
   [ "\033[2XTestBindOnce\033[102X", "3.11-2", [ 3, 11, 2 ], 761, 28, 

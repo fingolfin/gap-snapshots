@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  function.g                   GAP library                    Thomas Breuer
-#W                                                             & Frank Celler
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer, Frank Celler.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file deals with functions.
 ##
@@ -77,6 +77,48 @@ DeclareCategoryKernel( "IsOperation",
 
 #############################################################################
 ##
+#O  NameFunction( <func> )  . . . . . . . . . . . . . . .  name of a function
+##
+##  <#GAPDoc Label="NameFunction">
+##  <ManSection>
+##  <Attr Name="NameFunction" Arg='func'/>
+##
+##  <Description>
+##  returns the name of a function. For operations, this is the name used in
+##  their declaration. For functions, this is the variable name they were
+##  first assigned to. (For some internal functions, this might be a name
+##  <E>different</E> from the name that is documented.)
+##  If no such name exists, the string <C>"unknown"</C> is returned.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> NameFunction(SylowSubgroup);
+##  "SylowSubgroup"
+##  gap> Blubberflutsch:=x->x;;
+##  gap> HasNameFunction(Blubberflutsch);
+##  true
+##  gap> NameFunction(Blubberflutsch);
+##  "Blubberflutsch"
+##  gap> a:=Blubberflutsch;;
+##  gap> NameFunction(a);
+##  "Blubberflutsch"
+##  gap> SetNameFunction(a, "f");
+##  gap> NameFunction(a);
+##  "f"
+##  gap> HasNameFunction(x->x);
+##  false
+##  gap> NameFunction(x->x);
+##  "unknown"
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+##
+DeclareAttributeKernel("NameFunction", IS_OBJECT, NAME_FUNC);
+
+
+#############################################################################
+##
 #V  FunctionsFamily . . . . . . . . . . . . . . . . . . . family of functions
 ##
 ##  <#GAPDoc Label="FunctionsFamily">
@@ -105,6 +147,8 @@ BIND_GLOBAL( "FunctionsFamily", NewFamily( "FunctionsFamily", IsFunction ) );
 ##
 BIND_GLOBAL( "TYPE_FUNCTION", NewType( FunctionsFamily,
                           IsFunction and IsInternalRep ) );
+BIND_GLOBAL( "TYPE_FUNCTION_WITH_NAME", NewType( FunctionsFamily,
+                          IsFunction and IsInternalRep and HasNameFunction ) );
 
 
 #############################################################################
@@ -122,59 +166,9 @@ BIND_GLOBAL( "TYPE_OPERATION",
     NewType( FunctionsFamily,
              IsFunction and IsOperation and IsInternalRep ) );
 
-
-#############################################################################
-##
-#O  NameFunction( <func> )  . . . . . . . . . . . . . . .  name of a function
-##
-##  <#GAPDoc Label="NameFunction">
-##  <ManSection>
-##  <Oper Name="NameFunction" Arg='func'/>
-##
-##  <Description>
-##  returns the name of a function. For operations, this is the name used in
-##  their declaration. For functions, this is the variable name they were
-##  first assigned to. (For some internal functions, this might be a name
-##  <E>different</E> from the name that is documented.)
-##  If no such name exists, the string <C>"unknown"</C> is returned.
-##  <P/>
-##  <Example><![CDATA[
-##  gap> NameFunction(SylowSubgroup);
-##  "SylowSubgroup"
-##  gap> Blubberflutsch:=x->x;;
-##  gap> NameFunction(Blubberflutsch);
-##  "Blubberflutsch"
-##  gap> a:=Blubberflutsch;;
-##  gap> NameFunction(a);
-##  "Blubberflutsch"
-##  gap> NameFunction(x->x);
-##  "unknown"
-##  gap> NameFunction(NameFunction);
-##  "NameFunction"
-##  ]]></Example>
-##  </Description>
-##  </ManSection>
-##  <#/GAPDoc>
-##
-##
-DeclareOperationKernel("NameFunction", [IS_OBJECT], NAME_FUNC);
-
-
-#############################################################################
-##
-#O  SetNameFunction( <func>, <name> )  . . . . . . . .set  name of a function
-##
-##  <ManSection>
-##  <Oper Name="SetNameFunction" Arg='func, name'/>
-##
-##  <Description>
-##  changes the name of a function. This only changes the name stored in
-##  the function and used (for instance) in profiling. It does not change
-##  any assignments to global variables. 
-##  </Description>
-##  </ManSection>
-##
-DeclareOperationKernel( "SetNameFunction", [IS_OBJECT, IS_STRING], SET_NAME_FUNC );
+BIND_GLOBAL( "TYPE_OPERATION_WITH_NAME",
+    NewType( FunctionsFamily,
+             IsFunction and IsOperation and IsInternalRep and HasNameFunction ) );
 
 
 #############################################################################
@@ -562,13 +556,13 @@ BIND_GLOBAL( "ReturnNothing", RETURN_NOTHING );
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> f:=ReturnFirst;
-##  function( object... ) ... end
+##  function( first, rest... ) ... end
 ##  gap> f(1);
 ##  1
 ##  gap> f(2,3,4);
 ##  2
 ##  gap> f();
-##  Error, RETURN_FIRST requires one or more arguments
+##  Error, Function: number of arguments must be at least 1 (not 0)
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -658,7 +652,3 @@ InstallMethod( ViewObj, "for a function", true, [IsFunction], 0,
     fi;    
     Print(" ) ... end");
 end);
-
-#############################################################################
-##
-#E

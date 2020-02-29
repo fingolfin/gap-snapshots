@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  grppcatr.gi                 GAP Library                      Frank Celler
-#W                                                             & Bettina Eick
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Frank Celler, Bettina Eick.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the methods for attributes of polycylic groups.
 ##
@@ -486,7 +486,7 @@ InstallMethod( MaximalNormalSubgroups, "for abelian groups",
                # IsGroup and IsFinite ranks higher than IsGroup and IsAbelian,
                # so we have to increase the rank, otherwise the method for
                # normal subgroup computation is selected.
-               RankFilter( IsGroup and IsFinite and IsAbelian )
+               {} -> RankFilter( IsGroup and IsFinite and IsAbelian )
                - RankFilter( IsGroup and IsAbelian ),
 function( G )
     local Gf,     # FactorGroup of G
@@ -523,7 +523,7 @@ InstallMethod( MaximalNormalSubgroups, "for solvable groups",
                # IsGroup and IsSolvableGroup, so we have to increase the
                # rank, otherwise the method for normal subgroup computation
                # is selected.
-               RankFilter( IsGroup and IsFinite and IsSolvableGroup )
+               {} -> RankFilter( IsGroup and IsFinite and IsSolvableGroup )
                - RankFilter( IsGroup and IsSolvableGroup ),
 function( G )
     local Gf,     # FactorGroup of G
@@ -1006,9 +1006,3 @@ function( G, p )
     od;
     return ser;
 end );
-
-#############################################################################
-##
-
-#E  grppcatr.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##

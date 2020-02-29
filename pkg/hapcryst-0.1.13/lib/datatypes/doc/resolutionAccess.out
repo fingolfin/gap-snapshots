@@ -1,0 +1,10 @@
+\BOOKMARK [0][-]{chapter.1}{Resolutions in Hap}{}% 1
+\BOOKMARK [1][-]{section.1.1}{The Standard Representation HapResolutionRep}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{The HapLargeGroupResolutionRep Representation}{chapter.1}% 3
+\BOOKMARK [0][-]{chapter.2}{Accessing and Manipulating Resolutions}{}% 4
+\BOOKMARK [1][-]{section.2.1}{Representation-Independent Access Methods}{chapter.2}% 5
+\BOOKMARK [1][-]{section.2.2}{Converting Between Representations}{chapter.2}% 6
+\BOOKMARK [1][-]{section.2.3}{Special Methods for HapResolutionRep}{chapter.2}% 7
+\BOOKMARK [1][-]{section.2.4}{The HapLargeGroupResolutionRep Representation}{chapter.2}% 8
+\BOOKMARK [0][-]{chapter.3}{Contracting Homotopies}{}% 9
+\BOOKMARK [1][-]{section.3.1}{The PartialContractingHomotopy Data Type}{chapter.3}% 10

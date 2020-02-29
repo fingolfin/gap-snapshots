@@ -1,9 +1,12 @@
 #############################################################################
-#
-#W  ree.gd                        GAP library                Alexander Hulpke
 ##
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
-#Y  (C) 2001 School Math. Sci., University of St Andrews, Scotland
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 
 #############################################################################
@@ -33,7 +36,7 @@ DeclareConstructor( "ReeGroupCons", [ IsGroup, IsInt ] );
 ##  Constructs a group isomorphic to the Ree group <M>^2G_2(q)</M> where
 ##  <M>q = 3^{{1+2m}}</M> for <M>m</M> a non-negative integer.
 ##  <P/>
-##  If <A>filt</A> is not given it defaults to <Ref Func="IsMatrixGroup"/>
+##  If <A>filt</A> is not given it defaults to <Ref Filt="IsMatrixGroup"/>
 ##  and the generating matrices are based on&nbsp;<Cite Key="KLM01"/>.
 ##  (No particular choice of a generating set is guaranteed.)
 ##  For more information on possible values of <A>filt</A> see section
@@ -61,9 +64,3 @@ BindGlobal( "ReeGroup", function ( arg )
 end );
 
 DeclareSynonym( "Ree", ReeGroup );
-
-
-#############################################################################
-##
-#E
-

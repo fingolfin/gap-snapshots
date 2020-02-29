@@ -277,7 +277,9 @@ Integers
 <h5>56.1-9 Quotient</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Quotient</code>( [<var class="Arg">R</var>, ]<var class="Arg">r</var>, <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p><code class="func">Quotient</code> returns the quotient of the two ring elements <var class="Arg">r</var> and <var class="Arg">s</var> in the ring <var class="Arg">R</var>, if given, and otherwise in their default ring (see <code class="func">DefaultRing</code> (<a href="chap56_mj.html#X83AFFCC77DE6ABDA"><span class="RefLink">56.1-3</span></a>)). It returns <code class="keyw">fail</code> if the quotient does not exist in the respective ring.</p>
+<p><code class="func">Quotient</code> returns a (right) quotient of the two ring elements <var class="Arg">r</var> and <var class="Arg">s</var> in the ring <var class="Arg">R</var>, if given, and otherwise in their default ring (see <code class="func">DefaultRing</code> (<a href="chap56_mj.html#X83AFFCC77DE6ABDA"><span class="RefLink">56.1-3</span></a>)). More specifically, it returns a ring element <span class="SimpleMath">\(q\)</span> such that <span class="SimpleMath">\(r = q * s\)</span> holds, or <code class="keyw">fail</code> if no such elements exists in the respective ring.</p>
+
+<p>The result may not be unique if the ring contains zero divisors.</p>
 
 <p>(To perform the division in the quotient field of a ring, use the quotient operator <code class="code">/</code>.)</p>
 

@@ -1,9 +1,12 @@
 #############################################################################
 ##
-#W  ctblauto.gd                 GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the declaration of operations to calculate
 ##  automorphisms of matrices,
@@ -81,7 +84,7 @@ DeclareGlobalFunction( "FamiliesOfRows" );
 ##  <A>mat</A>.
 ##  For example, if <A>mat</A> is a list of irreducible characters of a group
 ##  then the list of element orders of the conjugacy classes
-##  (see&nbsp;<Ref Func="OrdersClassRepresentatives"/>) may be an entry in
+##  (see&nbsp;<Ref Attr="OrdersClassRepresentatives"/>) may be an entry in
 ##  <A>maps</A>.
 ##  </Description>
 ##  </ManSection>
@@ -101,10 +104,10 @@ DeclareOperation( "MatrixAutomorphisms", [ IsMatrix, IsList, IsPermGroup ] );
 ##
 ##  <Description>
 ##  <Ref Oper="TableAutomorphisms"/> returns the permutation group of those
-##  matrix automorphisms (see&nbsp;<Ref Func="MatrixAutomorphisms"/>) of the
+##  matrix automorphisms (see&nbsp;<Ref Oper="MatrixAutomorphisms"/>) of the
 ##  list <A>characters</A> that leave the element orders
-##  (see&nbsp;<Ref Func="OrdersClassRepresentatives"/>)
-##  and all stored power maps (see&nbsp;<Ref Func="ComputedPowerMaps"/>)
+##  (see&nbsp;<Ref Attr="OrdersClassRepresentatives"/>)
+##  and all stored power maps (see&nbsp;<Ref Attr="ComputedPowerMaps"/>)
 ##  of the character table <A>tbl</A> invariant.
 ##  <P/>
 ##  If <A>characters</A> is closed under Galois conjugacy
@@ -117,7 +120,7 @@ DeclareOperation( "MatrixAutomorphisms", [ IsMatrix, IsList, IsPermGroup ] );
 ##  The attribute <Ref Attr="AutomorphismsOfTable"/>
 ##  can be used to compute and store the table automorphisms for the case
 ##  that <A>characters</A> equals the
-##  <Ref Func="Irr" Label="for a character table"/> value of <A>tbl</A>.
+##  <Ref Attr="Irr" Label="for a character table"/> value of <A>tbl</A>.
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> tbld8:= CharacterTable( "Dihedral", 8 );;
@@ -237,9 +240,3 @@ DeclareOperation( "TransformingPermutations", [ IsMatrix, IsMatrix ] );
 ##
 DeclareOperation( "TransformingPermutationsCharacterTables",
     [ IsNearlyCharacterTable, IsNearlyCharacterTable ] );
-
-
-#############################################################################
-##
-#E
-

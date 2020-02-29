@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  straight.gi              GAP library                        Thomas Breuer
-#W                                                           Alexander Hulpke
-#W                                                            Max Neunhöffer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer, Alexander Hulpke, Max Neunhöffer.
 ##
-#Y  Copyright (C)  1999,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains the implementations of methods and functions
 ##  for straight line programs.
@@ -61,7 +61,8 @@ InstallGlobalFunction( StraightLineProgramNC, function( arg )
     # Get the arguments.
     if   Length( arg ) = 1 and not IsString( arg[1] ) then
       lines  := arg[1];
-    elif Length( arg ) = 2 and IsString( arg[1] ) then
+    elif Length( arg ) = 2 and IsString( arg[1] )
+                           and IsList( arg[2] ) then
       lines:= [];
       if not StringToStraightLineProgram( arg[1], arg[2], lines ) then
         return fail;
@@ -857,9 +858,6 @@ InstallGlobalFunction( "IntegratedStraightLineProgram",
     for prog in listofprogs do
 
       proglines:= LinesOfStraightLineProgram( prog );
-      if IsEmpty( proglines ) then
-        Error( "each in <listofprogs> must return a single element" );
-      fi;
 
       # Set the positions used up to here.
       offset:= nextoffset;
@@ -921,8 +919,16 @@ InstallGlobalFunction( "IntegratedStraightLineProgram",
 
         else
 
-          # Lines describing a list of words to be returned are forbidden.
-          Error( "each in <listofprogs> must return a single element" );
+          # The line describes a list of words to be returned.
+          line:= List( line, ShallowCopy );
+          for newline in line do
+            for j in [ 1, 3 .. Length( newline )-1 ] do
+              if shiftgens or n < newline[j] then
+                newline[j]:= newline[j] + offset;
+              fi;
+            od;
+          od;
+          Append( results, line );
 
         fi;
 
@@ -1514,7 +1520,7 @@ local a,b,	# lines of slp
 #    Assert(1,not
 #    ForAny([1..Length(l)],i->ForAny([1..i-1],j->PositionSublist(l[i],l[j])<>fail)));
     
-    Assert(1,Length(Set(l))=Length(l));
+    Assert(3,Length(Set(l))=Length(l));
     l:=StraightLineProgElm(seed,StraightLineProgramNC(l,seen));
     Assert(2,EvalStraightLineProgElm(aob)*EvalStraightLineProgElm(bob)=
              EvalStraightLineProgElm(l));
@@ -3018,8 +3024,3 @@ InstallMethod( LargestNrSlots, "for a straight line program",
     # Return the result.
     return maxnrslots;
   end );
-
-#############################################################################
-##
-#E
-

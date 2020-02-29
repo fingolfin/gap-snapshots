@@ -1,10 +1,12 @@
 #############################################################################
 ##
-#W  wordlett.gi                  GAP library                 Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  (C) 2001 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This  file contains  methods for   associative words  in letter
 ##  representation
@@ -607,7 +609,7 @@ local i,l,fam,e,m,mm,a,p,egen;
 
   # are the genimages simple generators themselves?
   if IsAssocWordWithInverseCollection(gens2) 
-     and ForAll(gens2,i->Length(i)=1) then
+     and ForAll(gens2,i->Length(i)=1 and not IsStraightLineProgElm(i)) then
     e:= List( gens2, i->LetterRepAssocWord(i)[1] );
     if Length(e)=Length(Set(List(e,AbsInt))) then
       # all images are different, no overlap. Try to form the image word
@@ -665,8 +667,3 @@ local i,l,fam,e,m,mm,a,p,egen;
 
   return m;
 end );
-
-#############################################################################
-##
-#E
-##

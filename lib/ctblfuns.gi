@@ -1,11 +1,12 @@
 #############################################################################
 ##
-#W  ctblfuns.gi                 GAP library                     Thomas Breuer
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Thomas Breuer.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-#Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains generic methods for class functions.
 ##
@@ -1831,11 +1832,10 @@ InstallMethod( ConstituentsOfCharacter,
     chi -> ConstituentsOfCharacter( UnderlyingCharacterTable( chi ), chi ) );
 
 InstallMethod( ConstituentsOfCharacter,
-    "for a character",
-    [ IsClassFunction and IsCharacter ],
-    function( chi )
-    local tbl,    # underlying table of `chi'
-          irr,    # irreducible characters of `tbl'
+    "for an ordinary table, and a character",
+    [ IsOrdinaryTable, IsClassFunction and IsCharacter ],
+    function( tbl, chi )
+    local irr,    # irreducible characters of `tbl'
           values, # character values
           deg,    # degree of `chi'
           const,  # list of constituents, result
@@ -1880,7 +1880,7 @@ InstallMethod( ConstituentsOfCharacter,
       scpr:= ScalarProduct( tbl, chi, i );
       if scpr <> 0 then
         Add( const, i );
-        proper:= proper and IsInt( scpr ) and ( 0 < scpr );
+        proper:= proper and IsPosInt( scpr );
       fi;
     od;
 
@@ -1896,15 +1896,18 @@ InstallMethod( ConstituentsOfCharacter,
     "for a Brauer table, and a homogeneous list",
     [ IsBrauerTable, IsHomogeneousList ],
     function( tbl, chi )
-    local irr,    # irreducible characters of `tbl'
-          dec;
+    local irr, intA, intB, dec;
 
     irr:= Irr( tbl );
-    dec:= Decomposition( irr, [ chi ], "nonnegative" )[1];
+    intA:= IntegralizedMat( irr );
+    intB:= IntegralizedMat( [ chi ], intA.inforec );
+    dec:= SolutionIntMat( intA.mat, intB.mat[1] );
     if dec = fail then
-      TryNextMethod();
+      Error( "<chi> is not a virtual character of <tbl>" );
     fi;
-    return irr{ Filtered( [ 1 .. Length( dec ) ], i -> dec[i] <> 0 ) };
+
+    return SortedList( irr{ Filtered( [ 1 .. Length( dec ) ],
+                                      i -> dec[i] <> 0 ) } );
     end );
 
 
@@ -4319,7 +4322,7 @@ InstallGlobalFunction( ReductionToFiniteField, function( value, p )
 
     if k <> 1 then
 
-      primes:= PrimeDivisors( m );
+      primes:= ShallowCopy( PrimeDivisors( m ) );
       sol:= fail;
 
       while not IsEmpty( primes ) do
@@ -5233,9 +5236,3 @@ InstallGlobalFunction( CollapsedMat, function( mat, maps )
 #T do I really need the component 'mat'?
                 fusion:= fusion );
 end );
-
-
-#############################################################################
-##
-#E
-

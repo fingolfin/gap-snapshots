@@ -1,9 +1,12 @@
 #############################################################################
 ##
-#W  ringsc.gi                   GAP library                  Alexander Hulpke
+##  This file is part of GAP, a system for computational discrete algebra.
+##  This file's authors include Alexander Hulpke.
 ##
+##  Copyright of GAP belongs to its developers, whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-#Y  Copyright (C) 2008 The GAP Group
+##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 ##  This file contains methods for elements of rings, given as Z-modules with
 ##  structure constants for multiplication. It is based on algsc.gi
@@ -33,7 +36,7 @@ InstallMethod( ObjByExtRep,
     [ IsSCRingObjFamily, IsHomogeneousList ],
     function( Fam, coeffs )
     if Length( coeffs ) <> Length( Fam!.names ) then
-      Error( "<coeffs> must be a list of length ", Fam!.names );
+      Error( "<coeffs> must be a list of length ", Length( Fam!.names ) );
     elif not ForAll( [1..Length(coeffs)], IsInt ) and
       ForAll([1..Length(coeffs)],p->Fam!.moduli[p]=0 or 
 	(0<=coeffs[p] and coeffs[p]<Fam!.moduli[p])) then
@@ -878,7 +881,7 @@ end);
 
 InstallOtherMethod(One,"for finite SC Rings",
   [IsRing],0,
-  #-RankFilter(IsRing),
+  #{} -> -RankFilter(IsRing),
 function(R)
   if not (IsSubringSCRing(R) and IsFinite(R)) then
     TryNextMethod();
@@ -906,7 +909,7 @@ end);
 
 InstallOtherMethod(OneOp,"for finite SC Rings family",
   [IsSCRingObjFamily],0,
-  #-RankFilter(IsRing),
+  #{} -> -RankFilter(IsRing),
 function(fam)
 local R;
   R:=fam!.fullSCRing;

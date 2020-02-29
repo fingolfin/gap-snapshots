@@ -1,11 +1,11 @@
 /****************************************************************************
 **
-*W  range.c                     GAP source                   Martin Schönert
+**  This file is part of GAP, a system for computational discrete algebra.
 **
+**  Copyright of GAP belongs to its developers, whose names are too numerous
+**  to list here. Please refer to the COPYRIGHT file for details.
 **
-*Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
-*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
-*Y  Copyright (C) 2002 The GAP Group
+**  SPDX-License-Identifier: GPL-2.0-or-later
 **
 **  This file contains the functions that deal with ranges.
 **
@@ -70,13 +70,13 @@
 **  'TypeRangeNSort' is the  function in 'TypeObjFuncs' for ranges which are
 **  not strictly sorted.
 */
-Obj TYPE_RANGE_NSORT_IMMUTABLE;
-Obj TYPE_RANGE_NSORT_MUTABLE;
+static Obj TYPE_RANGE_NSORT_IMMUTABLE;
+static Obj TYPE_RANGE_NSORT_MUTABLE;
 
-Obj TypeRangeNSort(Obj list)
+static Obj TypeRangeNSort(Obj list)
 {
-    return IS_MUTABLE_PLAIN_OBJ(list) ? TYPE_RANGE_NSORT_MUTABLE
-                                      : TYPE_RANGE_NSORT_IMMUTABLE;
+    return IS_MUTABLE_OBJ(list) ? TYPE_RANGE_NSORT_MUTABLE
+                                : TYPE_RANGE_NSORT_IMMUTABLE;
 }
 
     
@@ -87,13 +87,13 @@ Obj TypeRangeNSort(Obj list)
 **  'TypeRangeSSort' is the function in 'TypeObjFuncs' for ranges which are
 **  strictly sorted.
 */
-Obj TYPE_RANGE_SSORT_IMMUTABLE;
-Obj TYPE_RANGE_SSORT_MUTABLE;
+static Obj TYPE_RANGE_SSORT_IMMUTABLE;
+static Obj TYPE_RANGE_SSORT_MUTABLE;
 
-Obj TypeRangeSSort(Obj list)
+static Obj TypeRangeSSort(Obj list)
 {
-    return IS_MUTABLE_PLAIN_OBJ(list) ? TYPE_RANGE_SSORT_MUTABLE
-                                      : TYPE_RANGE_SSORT_IMMUTABLE;
+    return IS_MUTABLE_OBJ(list) ? TYPE_RANGE_SSORT_MUTABLE
+                                : TYPE_RANGE_SSORT_IMMUTABLE;
 }
 
 
@@ -112,38 +112,22 @@ Obj TypeRangeSSort(Obj list)
 **  has already been copied, it returns the value of the forwarding pointer.
 **
 **  'CopyRange' is the function in 'CopyObjFuncs' for ranges.
-**
-**  'CleanRange' removes the mark  and the forwarding  pointer from the range
-**  <list>.
-**
-**  'CleanRange' is the function in 'CleanObjFuncs' for ranges.
 */
-Obj CopyRange (
-    Obj                 list,
-    Int                 mut )
+static Obj CopyRange(Obj list, Int mut)
 {
     Obj                 copy;           /* copy, result                    */
 
-    /* don't change immutable objects                                      */
-    if ( ! IS_MUTABLE_OBJ(list) ) {
-        return list;
-    }
+    // immutable input is handled by COPY_OBJ
+    GAP_ASSERT(IS_MUTABLE_OBJ(list));
 
     /* make a copy                                                         */
-    if ( mut ) {
-        copy = NewBag( TNUM_OBJ(list), SIZE_OBJ(list) );
-    }
-    else {
-        copy = NewBag( IMMUTABLE_TNUM( TNUM_OBJ(list) ), SIZE_OBJ(list) );
-    }
+    copy = NewBag(TNUM_OBJ(list), SIZE_OBJ(list));
+    if (!mut)
+        MakeImmutableNoRecurse(copy);
     ADDR_OBJ(copy)[0] = CONST_ADDR_OBJ(list)[0];
 
     /* leave a forwarding pointer                                          */
-    ADDR_OBJ(list)[0] = copy;
-    CHANGED_BAG( list );
-
-    /* now it is copied                                                    */
-    RetypeBag( list, TNUM_OBJ(list) + COPYING );
+    PrepareCopy(list, copy);
 
     /* copy the subvalues                                                  */
     ADDR_OBJ(copy)[1] = CONST_ADDR_OBJ(list)[1];
@@ -151,43 +135,6 @@ Obj CopyRange (
 
     /* return the copy                                                     */
     return copy;
-}
-
-
-/****************************************************************************
-**
-*F  CopyRangeCopy( <list>, <mut> )  . . . . . . . . . . . copy a copied range
-*/
-Obj CopyRangeCopy (
-    Obj                 list,
-    Int                 mut )
-{
-    return CONST_ADDR_OBJ(list)[0];
-}
-
-
-/****************************************************************************
-**
-*F  CleanRange( <list> )  . . . . . . . . . . . . . . . . .  clean up a range
-*/
-void CleanRange (
-    Obj                 list )
-{
-}
-
-
-/****************************************************************************
-**
-*F  CleanRange( <list> )  . . . . . . . . . . . . . . clean up a copied range
-*/
-void CleanRangeCopy (
-    Obj                 list )
-{
-    /* remove the forwarding pointer                                       */
-    ADDR_OBJ(list)[0] = CONST_ADDR_OBJ( CONST_ADDR_OBJ(list)[0] )[0];
-
-    /* now it is cleaned                                                   */
-    RetypeBag( list, TNUM_OBJ(list) - COPYING );
 }
 
 #endif // !defined(USE_THREADSAFE_COPYING)
@@ -201,8 +148,7 @@ void CleanRangeCopy (
 **
 **  'PrintRange' handles bags of type 'T_RANGE'.
 */
-void            PrintRange (
-    Obj                 list )
+static void PrintRange(Obj list)
 {
     Pr( "%2>[ %2>%d",   
        GET_LOW_RANGE(list), 0L );
@@ -222,9 +168,7 @@ void            PrintRange (
 **  'EqRange' returns 'true' if the two ranges <listL>  and <listR> are equal
 **  and 'false' otherwise.
 */
-Int             EqRange (
-    Obj                 listL,
-    Obj                 listR )
+static Int EqRange(Obj listL, Obj listR)
 {
     return ( GET_LEN_RANGE(listL) == GET_LEN_RANGE(listR)
           && GET_LOW_RANGE(listL) == GET_LOW_RANGE(listR)
@@ -239,9 +183,7 @@ Int             EqRange (
 **  'LtRange' returns 'true'  if  the range  <listL> is less  than the  range
 **  <listR> and 'false' otherwise.
 */
-Int             LtRange (
-    Obj                 listL,
-    Obj                 listR )
+static Int LtRange(Obj listL, Obj listR)
 {
     /* first compare the first elements                                    */
     if ( GET_LOW_RANGE(listL) < GET_LOW_RANGE(listR) )
@@ -274,8 +216,7 @@ Int             LtRange (
 **
 **  'LenRange' is the function in 'LenListFuncs' for ranges.
 */
-Int             LenRange (
-    Obj                 list )
+static Int LenRange(Obj list)
 {
     return GET_LEN_RANGE( list );
 }
@@ -291,9 +232,7 @@ Int             LenRange (
 **
 **  'IsbRange' is the function in 'IsbListFuncs' for ranges.
 */
-Int             IsbRange (
-    Obj                 list,
-    Int                 pos )
+static Int IsbRange(Obj list, Int pos)
 {
     return (pos <= GET_LEN_RANGE(list));
 }
@@ -312,9 +251,7 @@ Int             IsbRange (
 **  that <pos> is  less than or  equal to the  length of <list>, this is  the
 **  responsibility of the caller.
 */
-Obj             Elm0Range (
-    Obj                 list,
-    Int                 pos )
+static Obj Elm0Range(Obj list, Int pos)
 {
     if ( pos <= GET_LEN_RANGE( list ) ) {
         return GET_ELM_RANGE( list, pos );
@@ -324,9 +261,7 @@ Obj             Elm0Range (
     }
 }
 
-Obj             Elm0vRange (
-    Obj                 list,
-    Int                 pos )
+static Obj Elm0vRange(Obj list, Int pos)
 {
     return GET_ELM_RANGE( list, pos );
 }
@@ -348,26 +283,19 @@ Obj             Elm0vRange (
 **  'ElmRange' is the function in  'ElmListFuncs' for ranges.  'ElmvRange' is
 **  the function in 'ElmvListFuncs' for ranges.
 */
-Obj             ElmRange (
-    Obj                 list,
-    Int                 pos )
+static Obj ElmRange(Obj list, Int pos)
 {
     /* check the position                                                  */
     if ( GET_LEN_RANGE( list ) < pos ) {
-        ErrorReturnVoid(
-            "List Element: <list>[%d] must have an assigned value",
-            (Int)pos, 0L,
-            "you can 'return;' after assigning a value" );
-        return ELM_LIST( list, pos );
+        ErrorMayQuit("List Element: <list>[%d] must have an assigned value",
+                     (Int)pos, 0);
     }
 
     /* return the selected element                                         */
     return GET_ELM_RANGE( list, pos );
 }
 
-Obj             ElmvRange (
-    Obj                 list,
-    Int                 pos )
+static Obj ElmvRange(Obj list, Int pos)
 {
     return GET_ELM_RANGE( list, pos );
 }
@@ -385,9 +313,7 @@ Obj             ElmvRange (
 **
 **  'ElmsRange' is the function in 'ElmsListFuncs' for ranges.
 */
-Obj             ElmsRange (
-    Obj                 list,
-    Obj                 poss )
+static Obj ElmsRange(Obj list, Obj poss)
 {
     Obj                 elms;           /* selected sublist, result        */
     Int                 lenList;        /* length of <list>                */
@@ -415,22 +341,18 @@ Obj             ElmsRange (
 
             /* get <position>                                              */
             Obj p = ELMW_LIST(poss, i);
-            while (!IS_INTOBJ(p)) {
-                p = ErrorReturnObj("List Elements: position is too large for "
-                                   "this type of list",
-                                   0L, 0L,
-                                   "you can supply a new position <pos> via "
-                                   "'return <pos>;'");
+            if (!IS_INTOBJ(p)) {
+                ErrorMayQuit("List Elements: position is too large for "
+                             "this type of list",
+                             0, 0);
             }
             pos = INT_INTOBJ(p);
 
             /* select the element                                          */
             if ( lenList < pos ) {
-                ErrorReturnVoid(
+                ErrorMayQuit(
                     "List Elements: <list>[%d] must have an assigned value",
-                    (Int)pos, 0L,
-                    "you can 'return;' after assigning a value" );
-                return ELMS_LIST( list, poss );
+                    (Int)pos, 0);
             }
 
             /* select the element                                          */
@@ -456,18 +378,14 @@ Obj             ElmsRange (
 
         /* check that no <position> is larger than 'LEN_LIST(<list>)'      */
         if ( lenList < pos ) {
-            ErrorReturnVoid(
+            ErrorMayQuit(
                 "List Elements: <list>[%d] must have an assigned value",
-                (Int)pos, 0L,
-                "you can 'return;' after assigning a value" );
-            return ELMS_LIST( list, poss );
+                (Int)pos, 0);
         }
         if ( lenList < pos + (lenPoss-1) * inc ) {
-            ErrorReturnVoid(
+            ErrorMayQuit(
                 "List Elements: <list>[%d] must have an assigned value",
-                (Int)(pos + (lenPoss-1) * inc), 0L,
-                "you can 'return;' after assigning a value" );
-            return ELMS_LIST( list, poss );
+                (Int)(pos + (lenPoss - 1) * inc), 0);
         }
 
         /* make the result range                                           */
@@ -488,6 +406,27 @@ Obj             ElmsRange (
 
 /****************************************************************************
 **
+*F  UnbRange( <list>, <pos> ) . . . .  unbind an element from a range
+**
+**  This is to avoid unpacking of the range to a plain list when <pos> is
+**  larger or equal to the length of <list>.
+*/
+static void UnbRange(Obj list, Int pos)
+{
+    GAP_ASSERT(IS_MUTABLE_OBJ(list));
+    const Int len = GET_LEN_RANGE(list);
+    if (len == pos && len > 2) {
+        SET_LEN_RANGE(list, len - 1);
+    }
+    else if (pos <= len) {
+        PLAIN_LIST(list);
+        UNB_LIST(list, pos);
+    }
+}
+
+
+/****************************************************************************
+**
 *F  AssRange(<list>,<pos>,<val>)  . . . . . . . . . . . . . assign to a range
 **
 **  'AssRange' assigns the value  <val> to the range  <list> at the  position
@@ -500,10 +439,7 @@ Obj             ElmsRange (
 **  same stuff as 'AssPlist'.  This is because a  range is not very likely to
 **  stay a range after the assignment.
 */
-void            AssRange (
-    Obj                 list,
-    Int                 pos,
-    Obj                 val )
+static void AssRange(Obj list, Int pos, Obj val)
 {
     /* convert the range into a plain list                                 */
     PLAIN_LIST( list );
@@ -537,10 +473,7 @@ void            AssRange (
 **  same stuff as 'AsssPlist'.  This is because a range is not very likely to
 **  stay a range after the assignment.
 */
-void            AsssRange (
-    Obj                 list,
-    Obj                 poss,
-    Obj                 vals )
+static void AsssRange(Obj list, Obj poss, Obj vals)
 {
     /* convert <list> to a plain list                                      */
     PLAIN_LIST( list );
@@ -560,8 +493,7 @@ void            AsssRange (
 **
 **  'IsPossRange' is the function in 'IsPossListFuncs' for ranges.
 */
-Int             IsPossRange (
-    Obj                 list )
+static Int IsPossRange(Obj list)
 {
     /* test if the first element is positive                               */
     if ( GET_LOW_RANGE( list ) <= 0 )
@@ -645,8 +577,7 @@ Obj             PosRange (
 **
 **  'PlainRange' is the function in 'PlainListFuncs' for ranges.
 */
-void            PlainRange (
-    Obj                 list )
+static void PlainRange(Obj list)
 {
     Int                 lenList;        /* length of <list>                */
     Int                 low;            /* first element of <list>         */
@@ -659,7 +590,7 @@ void            PlainRange (
     inc     = GET_INC_RANGE( list );
 
     /* change the type of the list, and allocate enough space              */
-    RetypeBag( list, IS_MUTABLE_OBJ(list) ? T_PLIST : T_PLIST + IMMUTABLE );
+    RetypeBagSM( list, T_PLIST );
     GROW_PLIST( list, lenList );
     SET_LEN_PLIST( list, lenList );
 
@@ -678,10 +609,9 @@ void            PlainRange (
 **  otherwise.  As a  side effect 'IsRange' converts proper ranges represented
 **  the ordinary way to the compact representation.
 */
-Obj IsRangeFilt;
+static Obj IsRangeFilt;
 
-Int             IsRange (
-    Obj                 list )
+static Int IsRange(Obj list)
 {
     Int                 isRange;        /* result of the test              */
     Int                 len;            /* logical length of list          */
@@ -743,13 +673,7 @@ Int             IsRange (
         /* if <list> is a range, convert to the compact representation   */
         isRange = (len < i);
         if ( isRange ) {
-            if ( IS_MUTABLE_OBJ(list) ) {
-                RetypeBag( list, (0 < inc ? T_RANGE_SSORT : T_RANGE_NSORT) );
-            }
-            else {
-                RetypeBag( list, (0 < inc ? T_RANGE_SSORT : T_RANGE_NSORT)
-                                 + IMMUTABLE );
-            }
+            RetypeBagSM( list, (0 < inc ? T_RANGE_SSORT : T_RANGE_NSORT) );
             ResizeBag( list, 3 * sizeof(Obj) );
             SET_LEN_RANGE( list, len );
             SET_LOW_RANGE( list, low );
@@ -775,9 +699,7 @@ Int             IsRange (
 **  a range and 'false' otherwise.  A range is a list without holes such that
 **  the elements are  consecutive integers.
 */
-Obj FuncIS_RANGE (
-    Obj                 self,
-    Obj                 obj )
+static Obj FiltIS_RANGE(Obj self, Obj obj)
 {
     /* let 'IsRange' do the work for lists                                 */
     return IsRange(obj) ? True : False;
@@ -790,7 +712,7 @@ Obj FuncIS_RANGE (
 **
 */
 
-void SaveRange( Obj range )
+static void SaveRange(Obj range)
 {
   SaveSubObj(CONST_ADDR_OBJ(range)[0]); /* length */
   SaveSubObj(CONST_ADDR_OBJ(range)[1]); /* base */
@@ -803,7 +725,7 @@ void SaveRange( Obj range )
 **
 */
 
-void LoadRange( Obj range )
+static void LoadRange(Obj range)
 {
   ADDR_OBJ(range)[0] = LoadSubObj(); /* length */
   ADDR_OBJ(range)[1] = LoadSubObj(); /* base */
@@ -821,18 +743,8 @@ Obj Range2Check (
 {
     Obj                 range;
     Int                 f, l;
-    if ( ! IS_INTOBJ(first) ) {
-        ErrorQuit(
-            "Range: <first> must be a positive small integer (not a %s)",
-            (Int)TNAM_OBJ(first), 0L );
-    }
-    f = INT_INTOBJ(first);
-    if ( ! IS_INTOBJ(last) ) {
-        ErrorQuit(
-            "Range: <last> must be a positive small integer (not a %s)",
-            (Int)TNAM_OBJ(last), 0L );
-    }
-    l = INT_INTOBJ(last);
+    f = GetSmallInt("Range", first);
+    l = GetSmallInt("Range", last);
     if ( f > l ) {
         range = NEW_PLIST( T_PLIST, 0 );
     }
@@ -861,30 +773,14 @@ Obj Range3Check (
     Obj                 last )
 {
     Obj                 range;
-    Int                 f, i, l;
-    if ( ! IS_INTOBJ(first) ) {
-        ErrorQuit(
-            "Range: <first> must be a positive small integer (not a %s)",
-            (Int)TNAM_OBJ(first), 0L );
-    }
-    f = INT_INTOBJ(first);
-    if ( ! IS_INTOBJ(second) ) {
-        ErrorQuit(
-            "Range: <second> must be a positive small integer (not a %s)",
-            (Int)TNAM_OBJ(second), 0L );
-    }
     if ( first == second ) {
         ErrorQuit(
             "Range: <second> must not be equal to <first> (%d)",
             (Int)INT_INTOBJ(first), 0L );
     }
-    i = INT_INTOBJ(second) - f;
-    if ( ! IS_INTOBJ(last) ) {
-        ErrorQuit(
-            "Range: <last> must be a positive small integer (not a %s)",
-            (Int)TNAM_OBJ(last), 0L );
-    }
-    l = INT_INTOBJ(last);
+    Int f = GetSmallInt("Range", first);
+    Int i = GetSmallInt("Range", second) - f;
+    Int l = GetSmallInt("Range", last);
     if ( (l - f) % i != 0 ) {
         ErrorQuit(
             "Range: <last>-<first> (%d) must be divisible by <inc> (%d)",
@@ -918,13 +814,11 @@ Obj Range3Check (
 
 /****************************************************************************
 **
-*F  FuncIS_RANGE_REP( <self>, <obj> ) . . . . . test if value is in range rep
+*F  FiltIS_RANGE_REP( <self>, <obj> ) . . . . . test if value is in range rep
 */
-Obj IsRangeRepFilt;
+static Obj IsRangeRepFilt;
 
-Obj FuncIS_RANGE_REP (
-    Obj                 self,
-    Obj                 obj )
+static Obj FiltIS_RANGE_REP(Obj self, Obj obj)
 {
     return (IS_RANGE( obj ) ? True : False);
 }
@@ -935,9 +829,9 @@ Obj FuncIS_RANGE_REP (
 **
 */
 
-void MakeImmutableRange( Obj range )
+static void MakeImmutableRange(Obj range)
 {
-  RetypeBag( range, IMMUTABLE_TNUM(TNUM_OBJ(range)));
+    MakeImmutableNoRecurse(range);
 }
 
 /****************************************************************************
@@ -960,11 +854,17 @@ static Int egcd (Int a, Int b, Int *lastx, Int *lasty)
   return a;
 } /* returns g=gcd(a,b), with lastx*a+lasty*b = g */
 
-Obj FuncINTER_RANGE( Obj self, Obj r1, Obj r2)
+static Obj FuncINTER_RANGE(Obj self, Obj r1, Obj r2)
 {
   Int low1, low2, inc1, inc2, lowi, inci, g, x, y;
   UInt len1, len2, leni;
   
+  if (!IS_RANGE(r1) || !IS_MUTABLE_OBJ(r1))
+      RequireArgumentEx("INTER_RANGE", r1, "<range1>",
+                        "must be a mutable range");
+  if (!IS_RANGE(r2))
+      RequireArgumentEx("INTER_RANGE", r2, "<range2>", "must be a range");
+
   low1 = GET_LOW_RANGE(r1);
   low2 = GET_LOW_RANGE(r2);
   inc1 = GET_INC_RANGE(r1);
@@ -1044,12 +944,6 @@ static StructBagNames BagNames[] = {
   { T_RANGE_NSORT +IMMUTABLE,          "list (range,nsort,imm)"        },
   { T_RANGE_SSORT,                     "list (range,ssort)"            },
   { T_RANGE_SSORT +IMMUTABLE,          "list (range,ssort,imm)"        },
-#if !defined(USE_THREADSAFE_COPYING)
-  { T_RANGE_NSORT            +COPYING, "list (range,nsort,copied)"     },
-  { T_RANGE_NSORT +IMMUTABLE +COPYING, "list (range,nsort,imm,copied)" },
-  { T_RANGE_SSORT            +COPYING, "list (range,ssort,copied)"     },
-  { T_RANGE_SSORT +IMMUTABLE +COPYING, "list (range,ssort,imm,copied)" },
-#endif
   { -1,                                ""                              }
 };
 
@@ -1163,8 +1057,8 @@ static Int ResetFiltTab [] = {
 */
 static StructGVarFilt GVarFilts [] = {
 
-    GVAR_FILTER(IS_RANGE, "obj", &IsRangeFilt),
-    GVAR_FILTER(IS_RANGE_REP, "obj", &IsRangeRepFilt),
+    GVAR_FILT(IS_RANGE, "obj", &IsRangeFilt),
+    GVAR_FILT(IS_RANGE_REP, "obj", &IsRangeRepFilt),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -1195,12 +1089,6 @@ static Int InitKernel (
     InitMarkFuncBags(   T_RANGE_NSORT +IMMUTABLE          , MarkAllSubBags );
     InitMarkFuncBags(   T_RANGE_SSORT                     , MarkAllSubBags );
     InitMarkFuncBags(   T_RANGE_SSORT +IMMUTABLE          , MarkAllSubBags );
-#if !defined(USE_THREADSAFE_COPYING)
-    InitMarkFuncBags(   T_RANGE_NSORT            +COPYING , MarkAllSubBags );
-    InitMarkFuncBags(   T_RANGE_NSORT +IMMUTABLE +COPYING , MarkAllSubBags );
-    InitMarkFuncBags(   T_RANGE_SSORT            +COPYING , MarkAllSubBags );
-    InitMarkFuncBags(   T_RANGE_SSORT +IMMUTABLE +COPYING , MarkAllSubBags );
-#endif
 
 #ifdef HPCGAP
     /* Make immutable bags public                                          */
@@ -1244,20 +1132,12 @@ static Int InitKernel (
     /* install the copy methods                                            */
     CopyObjFuncs [ T_RANGE_NSORT                     ] = CopyRange;
     CopyObjFuncs [ T_RANGE_NSORT +IMMUTABLE          ] = CopyRange;
-    CopyObjFuncs [ T_RANGE_NSORT            +COPYING ] = CopyRangeCopy;
-    CopyObjFuncs [ T_RANGE_NSORT +IMMUTABLE +COPYING ] = CopyRangeCopy;
     CopyObjFuncs [ T_RANGE_SSORT                     ] = CopyRange;
     CopyObjFuncs [ T_RANGE_SSORT +IMMUTABLE          ] = CopyRange;
-    CopyObjFuncs [ T_RANGE_SSORT            +COPYING ] = CopyRangeCopy;
-    CopyObjFuncs [ T_RANGE_SSORT +IMMUTABLE +COPYING ] = CopyRangeCopy;
-    CleanObjFuncs[ T_RANGE_NSORT                     ] = CleanRange;
-    CleanObjFuncs[ T_RANGE_NSORT +IMMUTABLE          ] = CleanRange;
-    CleanObjFuncs[ T_RANGE_NSORT            +COPYING ] = CleanRangeCopy;
-    CleanObjFuncs[ T_RANGE_NSORT +IMMUTABLE +COPYING ] = CleanRangeCopy;
-    CleanObjFuncs[ T_RANGE_SSORT                     ] = CleanRange;
-    CleanObjFuncs[ T_RANGE_SSORT +IMMUTABLE          ] = CleanRange;
-    CleanObjFuncs[ T_RANGE_SSORT            +COPYING ] = CleanRangeCopy;
-    CleanObjFuncs[ T_RANGE_SSORT +IMMUTABLE +COPYING ] = CleanRangeCopy;
+    CleanObjFuncs[ T_RANGE_NSORT                     ] = 0;
+    CleanObjFuncs[ T_RANGE_NSORT +IMMUTABLE          ] = 0;
+    CleanObjFuncs[ T_RANGE_SSORT                     ] = 0;
+    CleanObjFuncs[ T_RANGE_SSORT +IMMUTABLE          ] = 0;
 #endif
 
     /* Make immutable methods */
@@ -1319,6 +1199,8 @@ static Int InitKernel (
     ElmsListFuncs   [ T_RANGE_NSORT +IMMUTABLE ] = ElmsRange;
     ElmsListFuncs   [ T_RANGE_SSORT            ] = ElmsRange;
     ElmsListFuncs   [ T_RANGE_SSORT +IMMUTABLE ] = ElmsRange;
+    UnbListFuncs    [ T_RANGE_NSORT            ] = UnbRange;
+    UnbListFuncs    [ T_RANGE_SSORT            ] = UnbRange;
     AssListFuncs    [ T_RANGE_NSORT            ] = AssRange;
     AssListFuncs    [ T_RANGE_SSORT            ] = AssRange;
     AsssListFuncs   [ T_RANGE_NSORT            ] = AsssRange;
@@ -1331,6 +1213,10 @@ static Int InitKernel (
     IsHomogListFuncs[ T_RANGE_NSORT +IMMUTABLE ] = AlwaysYes;
     IsHomogListFuncs[ T_RANGE_SSORT            ] = AlwaysYes;
     IsHomogListFuncs[ T_RANGE_SSORT +IMMUTABLE ] = AlwaysYes;
+    IsTableListFuncs[ T_RANGE_NSORT            ] = AlwaysNo;
+    IsTableListFuncs[ T_RANGE_NSORT +IMMUTABLE ] = AlwaysNo;
+    IsTableListFuncs[ T_RANGE_SSORT            ] = AlwaysNo;
+    IsTableListFuncs[ T_RANGE_SSORT +IMMUTABLE ] = AlwaysNo;
     IsSSortListFuncs[ T_RANGE_NSORT            ] = AlwaysNo;
     IsSSortListFuncs[ T_RANGE_NSORT +IMMUTABLE ] = AlwaysNo;
     IsSSortListFuncs[ T_RANGE_SSORT            ] = AlwaysYes;
