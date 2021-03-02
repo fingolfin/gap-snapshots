@@ -23,7 +23,8 @@ and 'false' means that the matches are just printed" ],
     ) );
 
 ## reset to false for 'dumb' terminals
-if GAPInfo.SystemEnvironment.TERM = "dumb" then
+if not IsBound( GAPInfo.SystemEnvironment.TERM )
+   or GAPInfo.SystemEnvironment.TERM = "dumb" then
   SetUserPreference("browse", "SelectPackageName", false);
 fi;
 

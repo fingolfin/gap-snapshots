@@ -256,57 +256,6 @@ ReadOrComplete := function(name)
     fi;
 end;
 
-#############################################################################
-##
-##  Check whether kernel version and library version fit.
-##
-CallAndInstallPostRestore( function()
-    local nondigits, digits, i, char, have, need, haveint, needint;
-
-    if ( not IS_STRING(GAPInfo.NeedKernelVersion) and
-         not GAPInfo.KernelVersion in GAPInfo.NeedKernelVersion ) or
-       ( IS_STRING(GAPInfo.NeedKernelVersion) and
-         GAPInfo.KernelVersion <> GAPInfo.NeedKernelVersion ) then
-      Print( "\n\n",
-        "You are running a GAP kernel which does not fit with the library.\n\n" );
-
-      # Get the number parts of the two version numbers.
-      # (Version numbers are defined in "ext:Version Numbers".)
-      nondigits:= [];
-      digits:= "0123456789";
-      for i in [ 0 .. 255 ] do
-        char:= CHAR_INT( i );
-        if not char in digits then
-          ADD_LIST_DEFAULT( nondigits, char );
-        fi;
-      od;
-      have:= SplitStringInternal( GAPInfo.KernelVersion, nondigits, "" );
-      need:= SplitStringInternal( GAPInfo.NeedKernelVersion, nondigits, "" );
-
-      # Translate them to integers.
-      # (When this function is called during startup, the function
-      # `IntHexString' is available;
-      # it has the right monotony behaviour for the comparisons.)
-      haveint:= [];
-      needint:= [];
-      for i in [ 1 .. 3 ] do
-        haveint[i]:= IntHexString( have[i] );
-        needint[i]:= IntHexString( need[i] );
-      od;
-      Print( "Current kernel version:   ", haveint[1], ".", haveint[2], ".", haveint[3], "\n" );
-      Print( "Library requires version: ", needint[1], ".", needint[2], ".", needint[3], "\n" );
-
-      if haveint > needint then
-        # kernel newer
-        Print( "The GAP kernel is newer than the library.\n\n" );
-      else
-        # kernel older
-        Print( "The GAP kernel is older than the library. Perhaps you forgot to recompile?\n\n" );
-      fi;
-      Error( "Update to correct kernel version!\n\n" );
-    fi;
-end );
-
 
 #############################################################################
 ##
@@ -488,7 +437,13 @@ BindGlobal( "ShowKernelInformation", function()
     Print( suffix );
   end;
 
-  sysdate:= GAPInfo.BuildDateTime;
+  if GAPInfo.Date <> "today" then
+    sysdate := " of ";
+    Append(sysdate, GAPInfo.Date);
+  else
+    sysdate := " built on ";
+    Append(sysdate, GAPInfo.BuildDateTime);
+  fi;
 
   indent := "             ";
   if GAPInfo.TermEncoding = "UTF-8" then
@@ -502,7 +457,7 @@ BindGlobal( "ShowKernelInformation", function()
     gap := "GAP";
   fi;
   Print( " ",btop,"   ",gap," ", GAPInfo.BuildVersion,
-         " of ", sysdate, "\n",
+         sysdate, "\n",
          " ",vert,"  GAP  ",vert,"   https://www.gap-system.org\n",
          " ",bbot,"   Architecture: ", GAPInfo.Architecture, "\n" );
   if IsHPCGAP then
@@ -703,6 +658,8 @@ which may vanish in a future version of GAP"
   ) );
 # HACKUSERPREF temporary hack for AtlasRep and CTblLib:
 GAPInfo.UserPreferences.ReadObsolete := UserPreference("ReadObsolete");
+
+ReadLib("obsolete.g"); # the helpers in there are always read
 CallAndInstallPostRestore( function()
     if not GAPInfo.CommandLineOptions.O and UserPreference( "ReadObsolete" ) <> false and
        not IsBound( GAPInfo.Read_obsolete_gd ) then
@@ -976,10 +933,10 @@ fi;
 
 ResumeMethodReordering();
 
-InstallAndCallPostRestore( function()
+BindGlobal( "ProcessInitFiles", function(initFiles)
     local i, f, status;
-    for i in [1..Length(GAPInfo.InitFiles)] do
-        f := GAPInfo.InitFiles[i];
+    for i in [1..Length(initFiles)] do
+        f := initFiles[i];
         if IsRecord(f) then
             status := READ_NORECOVERY(InputTextString(f.command));
         else
@@ -993,7 +950,7 @@ InstallAndCallPostRestore( function()
                 PRINT_TO( "*errout*", "Reading file \"", f,
                     "\" has been aborted.\n");
             fi;
-            if i < Length (GAPInfo.InitFiles) then
+            if i < Length (initFiles) then
                 PRINT_TO( "*errout*",
                     "The remaining files or commands on the command line will not be read.\n" );
             fi;
@@ -1008,6 +965,9 @@ InstallAndCallPostRestore( function()
     od;
 end );
 
+InstallAndCallPostRestore( function()
+    ProcessInitFiles(GAPInfo.InitFiles);
+end );
 
 if GAPInfo.CommandLineOptions.norepl then
   # do not start an interactive session

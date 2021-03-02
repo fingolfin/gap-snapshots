@@ -1,0 +1,314 @@
+\begin{theindex}
+
+  \item \texttt  {AddDivisorToItsAmbientVariety}
+    \subitem for IsToricDivisor, \hyperpage{38}
+  \item \texttt  {AffineCone}
+    \subitem for IsToricVariety, \hyperpage{27}
+  \item \texttt  {AffineOpenCovering}
+    \subitem for IsToricVariety, \hyperpage{14}
+  \item \texttt  {AmbientToricVariety}
+    \subitem for IsToricDivisor, \hyperpage{36}
+    \subitem for IsToricSubvariety, \hyperpage{22}
+  \item \texttt  {AmpleDivisor}
+    \subitem for IsToricVariety and HasPolytopeOfVariety, 
+		\hyperpage{28}
+
+  \indexspace
+
+  \item \texttt  {BasisOfGlobalSections}
+    \subitem for IsToricDivisor, \hyperpage{36}
+  \item \texttt  {BlowupOfToricVariety}
+    \subitem for IsToricVariety, IsList, IsString, \hyperpage{40}
+  \item \texttt  {BlowUpOnIthMinimalTorusOrbit}
+    \subitem for IsToricVariety, IsInt, \hyperpage{19}
+  \item \texttt  {\texttt  {\char 92\relax }*}
+    \subitem for IsInt, IsToricDivisor, \hyperpage{38}
+    \subitem for IsToricVariety, IsToricVariety, \hyperpage{18}
+  \item \texttt  {\texttt  {\char 92\relax }+}
+    \subitem for IsToricDivisor, IsToricDivisor, \hyperpage{38}
+  \item \texttt  {\texttt  {\char 92\relax }-}
+    \subitem for IsToricDivisor, IsToricDivisor, \hyperpage{38}
+
+  \indexspace
+
+  \item \texttt  {CartierData}
+    \subitem for IsToricDivisor, \hyperpage{35}
+  \item \texttt  {CartierTorusInvariantDivisorGroup}
+    \subitem for IsToricVariety, \hyperpage{17}
+  \item \texttt  {CharacterLattice}
+    \subitem for IsToricVariety, \hyperpage{16}
+  \item \texttt  {CharacterOfPrincipalDivisor}
+    \subitem for IsToricDivisor, \hyperpage{36}
+  \item \texttt  {CharactersForClosedEmbedding}
+    \subitem for IsToricDivisor, \hyperpage{37}
+  \item \texttt  {CharacterToRationalFunction}
+    \subitem for IsHomalgElement, IsToricVariety, \hyperpage{18}
+  \item \texttt  {ClassGroup}
+    \subitem for IsToricMorphism, \hyperpage{31}
+    \subitem for IsToricVariety, \hyperpage{14}
+  \item \texttt  {ClassOfDivisor}
+    \subitem for IsToricDivisor, \hyperpage{36}
+  \item \texttt  {ClosureOfTorusOrbitOfCone}
+    \subitem for IsToricVariety, IsCone, \hyperpage{22}
+  \item \texttt  {Cone}
+    \subitem for IsToricVariety, \hyperpage{24}
+  \item \texttt  {ConeOfVariety}
+    \subitem for IsToricVariety, \hyperpage{24}
+  \item \texttt  {CoordinateRing}
+    \subitem for IsAffineToricVariety, \hyperpage{24}
+    \subitem for IsToricVariety, IsList, \hyperpage{24}
+  \item \texttt  {CoordinateRingOfTorus}
+    \subitem for IsToricVariety, \hyperpage{15}
+    \subitem for IsToricVariety, IsList, \hyperpage{18}
+  \item \texttt  {CotangentSheaf}
+    \subitem for IsToricVariety, \hyperpage{17}
+  \item \texttt  {CoxRing}
+    \subitem for IsToricVariety, \hyperpage{14}
+    \subitem for IsToricVariety, IsList, \hyperpage{18}
+  \item \texttt  {CoxRingOfTargetOfDivisorMorphism}
+    \subitem for IsToricDivisor, \hyperpage{37}
+    \subitem for IsToricDivisor, IsString, \hyperpage{39}
+  \item \texttt  {CoxVariety}
+    \subitem for IsToricVariety, \hyperpage{16}
+  \item \texttt  {CreateDivisor}
+    \subitem for IsHomalgElement, IsToricVariety, \hyperpage{39}
+    \subitem for IsList, IsToricVariety, \hyperpage{39}
+
+  \indexspace
+
+  \item \texttt  {DegreeOfDivisor}
+    \subitem for IsToricDivisor, \hyperpage{37}
+  \item \texttt  {Dimension}
+    \subitem for IsToricVariety, \hyperpage{15}
+  \item \texttt  {DimensionOfTorusfactor}
+    \subitem for IsToricVariety, \hyperpage{15}
+  \item \texttt  {DivisorOfCharacter}
+    \subitem for IsHomalgElement, IsToricVariety, \hyperpage{39}
+    \subitem for IsList, IsToricVariety, \hyperpage{39}
+  \item \texttt  {DivisorOfGivenClass}
+    \subitem for IsToricVariety, IsHomalgElement, \hyperpage{38}
+
+  \indexspace
+
+  \item \texttt  {EulerCharacteristic}
+    \subitem for IsToricVariety, \hyperpage{17}
+
+  \indexspace
+
+  \item \texttt  {Factors}
+    \subitem for IsToricVariety, \hyperpage{18}
+  \item \texttt  {Fan}
+    \subitem for IsToricVariety, \hyperpage{18}
+  \item \texttt  {FanOfVariety}
+    \subitem for IsToricVariety, \hyperpage{16}
+
+  \indexspace
+
+  \item \texttt  {HasNoTorusfactor}
+    \subitem for IsToricVariety, \hyperpage{14}
+  \item \texttt  {HasTorusfactor}
+    \subitem for IsToricVariety, \hyperpage{13}
+
+  \indexspace
+
+  \item \texttt  {InclusionMorphism}
+    \subitem for IsToricSubvariety, \hyperpage{22}
+  \item \texttt  {IntegerForWhichIsSureVeryAmple}
+    \subitem for IsToricDivisor, \hyperpage{36}
+  \item \texttt  {IrrelevantIdeal}
+    \subitem for IsToricVariety, \hyperpage{16}
+  \item \texttt  {IsAffine}
+    \subitem for IsToricVariety, \hyperpage{13}
+  \item \texttt  {IsAffineToricVariety}
+    \subitem for IsToricVariety, \hyperpage{23}
+  \item \texttt  {IsAmple}
+    \subitem for IsToricDivisor, \hyperpage{35}
+  \item \texttt  {IsBasepointFree}
+    \subitem for IsToricDivisor, \hyperpage{35}
+  \item \texttt  {IsCartier}
+    \subitem for IsToricDivisor, \hyperpage{34}
+  \item \texttt  {IsCategoryOfToricVarieties}
+    \subitem for IsHomalgCategory, \hyperpage{13}
+  \item \texttt  {IsClosedSubvariety}
+    \subitem for IsToricSubvariety, \hyperpage{21}
+  \item \texttt  {IsComplete}
+    \subitem for IsToricVariety, \hyperpage{13}
+  \item \texttt  {IsDirectProductOfPNs}
+    \subitem for IsToricVariety, \hyperpage{27}
+  \item \texttt  {IsIsomorphicToProjectiveSpace}
+    \subitem for IsToricVariety, \hyperpage{27}
+  \item \texttt  {IsMorphism}
+    \subitem for IsToricMorphism, \hyperpage{30}
+  \item \texttt  {IsNormalVariety}
+    \subitem for IsToricVariety, \hyperpage{13}
+  \item \texttt  {IsNumericallyEffective}
+    \subitem for IsToricDivisor, \hyperpage{35}
+  \item \texttt  {IsOpen}
+    \subitem for IsToricSubvariety, \hyperpage{21}
+  \item \texttt  {IsOrbifold}
+    \subitem for IsToricVariety, \hyperpage{14}
+  \item \texttt  {IsPrimedivisor}
+    \subitem for IsToricDivisor, \hyperpage{35}
+  \item \texttt  {IsPrincipal}
+    \subitem for IsToricDivisor, \hyperpage{35}
+  \item \texttt  {IsProductOf}
+    \subitem for IsToricVariety, \hyperpage{16}
+  \item \texttt  {IsProjective}
+    \subitem for IsToricVariety, \hyperpage{13}
+  \item \texttt  {IsProjectiveToricVariety}
+    \subitem for IsToricVariety, \hyperpage{26}
+  \item \texttt  {IsProper}
+    \subitem for IsToricMorphism, \hyperpage{30}
+  \item \texttt  {IsSimplicial}
+    \subitem for IsToricVariety, \hyperpage{14}
+  \item \texttt  {IsSmooth}
+    \subitem for IsToricVariety, \hyperpage{13}
+  \item \texttt  {IsToricDivisor}
+    \subitem for IsObject, \hyperpage{34}
+  \item \texttt  {IsToricMorphism}
+    \subitem for IsObject, \hyperpage{30}
+  \item \texttt  {IsToricSubvariety}
+    \subitem for IsToricVariety, \hyperpage{21}
+  \item \texttt  {IsToricVariety}
+    \subitem for IsObject, \hyperpage{12}
+  \item \texttt  {IsVeryAmple}
+    \subitem for IsToricDivisor, \hyperpage{35}
+  \item \texttt  {IsWholeVariety}
+    \subitem for IsToricSubvariety, \hyperpage{21}
+  \item \texttt  {ithBettiNumber}
+    \subitem for IsToricVariety, IsInt, \hyperpage{19}
+
+  \indexspace
+
+  \item \texttt  {ListOfVariablesOfCoordinateRing}
+    \subitem for IsAffineToricVariety, \hyperpage{24}
+  \item \texttt  {List}\-\texttt  {Of}\-\texttt  {Variables}\-\texttt  {Of}\-\texttt  {Coordinate}\-\texttt  {Ring}\-\texttt  {Of}\-\texttt  {Torus}
+    \subitem for IsToricVariety, \hyperpage{15}
+  \item \texttt  {ListOfVariablesOfCoxRing}
+    \subitem for IsToricVariety, \hyperpage{14}
+
+  \indexspace
+
+  \item \texttt  {MapFromCharacterToPrincipalDivisor}
+    \subitem for IsToricVariety, \hyperpage{15}
+  \item \texttt  {MapFromWeilDivisorsToClassGroup}
+    \subitem for IsToricVariety, \hyperpage{15}
+  \item \texttt  {MonomsOfCoxRingOfDegree}
+    \subitem for IsToricDivisor, \hyperpage{37}
+    \subitem for IsToricVariety, IsHomalgElement, \hyperpage{38}
+  \item \texttt  {Morphism}\-\texttt  {From}\-\texttt  {Coordinate}\-\texttt  {Ring}\-\texttt  {To}\-\texttt  {Coordinate}\-\texttt  {Ring}\-\texttt  {Of}\-\texttt  {Torus}
+    \subitem for IsToricVariety, \hyperpage{24}
+  \item \texttt  {MorphismFromCoxVariety}
+    \subitem for IsToricVariety, \hyperpage{16}
+  \item \texttt  {MorphismOnCartierDivisorGroup}
+    \subitem for IsToricMorphism, \hyperpage{31}
+  \item \texttt  {MorphismOnIthFactor}
+    \subitem for IsToricMorphism, \hyperpage{32}
+  \item \texttt  {MorphismOnWeilDivisorGroup}
+    \subitem for IsToricMorphism, \hyperpage{31}
+
+  \indexspace
+
+  \item \texttt  {NameOfVariety}
+    \subitem for IsToricVariety, \hyperpage{17}
+  \item \texttt  {NrOfqRationalPoints}
+    \subitem for IsToricVariety, IsInt, \hyperpage{19}
+
+  \indexspace
+
+  \item \texttt  {PicardGroup}
+    \subitem for IsToricMorphism, \hyperpage{31}
+    \subitem for IsToricVariety, \hyperpage{17}
+  \item \texttt  {Polytope}
+    \subitem for IsToricDivisor, \hyperpage{38}
+    \subitem for IsToricVariety, \hyperpage{27}
+  \item \texttt  {PolytopeOfDivisor}
+    \subitem for IsToricDivisor, \hyperpage{36}
+  \item \texttt  {PolytopeOfVariety}
+    \subitem for IsToricVariety, \hyperpage{27}
+  \item \texttt  {ProjectiveEmbedding}
+    \subitem for IsToricVariety, \hyperpage{27}
+
+  \indexspace
+
+  \item \texttt  {Range}
+    \subitem for IsToricMorphism, \hyperpage{32}
+  \item \texttt  {RangeObject}
+    \subitem for IsToricMorphism, \hyperpage{31}
+  \item \texttt  {RingMorphismOfDivisor}
+    \subitem for IsToricDivisor, \hyperpage{37}
+
+  \indexspace
+
+  \item \texttt  {SequenceOfBlowupsOfToricVariety}
+    \subitem for IsToricVariety, IsList, \hyperpage{40}
+  \item \texttt  {Source}
+    \subitem for IsToricMorphism, \hyperpage{31}
+  \item \texttt  {SourceObject}
+    \subitem for IsToricMorphism, \hyperpage{30}
+  \item \texttt  {SRIdeal}
+    \subitem for IsToricVariety, \hyperpage{16}
+
+  \indexspace
+
+  \item \texttt  {ToricImageObject}
+    \subitem for IsToricMorphism, \hyperpage{31}
+  \item \texttt  {ToricMorphism}
+    \subitem for IsToricVariety, IsList, \hyperpage{32}
+    \subitem for IsToricVariety, IsList, IsToricVariety, \hyperpage{32}
+  \item \texttt  {ToricSubvariety}
+    \subitem for IsToricVariety, IsToricVariety, \hyperpage{22}
+  \item \texttt  {ToricVarietiesFromGrading}
+    \subitem for IsList, \hyperpage{20}
+  \item \texttt  {ToricVariety}
+    \subitem for IsConvexObject, \hyperpage{19}
+    \subitem for IsList, \hyperpage{19}
+    \subitem for IsList, IsList, IsList, \hyperpage{19}
+    \subitem for IsList, IsList, IsList, IsList, \hyperpage{20}
+    \subitem for IsToricVariety, \hyperpage{19}
+  \item \texttt  {ToricVarietyFromGrading}
+    \subitem for IsList, \hyperpage{20}
+  \item \texttt  {TorusInvariantDivisorGroup}
+    \subitem for IsToricVariety, \hyperpage{15}
+  \item \texttt  {TorusInvariantPrimeDivisors}
+    \subitem for IsToricVariety, \hyperpage{16}
+  \item \texttt  {twitter}
+    \subitem for IsToricDivisor, \hyperpage{34}
+    \subitem for IsToricVariety, \hyperpage{13}
+
+  \indexspace
+
+  \item \texttt  {UnderlyingGridMorphism}
+    \subitem for IsToricMorphism, \hyperpage{30}
+  \item \texttt  {UnderlyingGroupElement}
+    \subitem for IsToricDivisor, \hyperpage{36}
+  \item \texttt  {UnderlyingListList}
+    \subitem for IsToricMorphism, \hyperpage{32}
+  \item \texttt  {UnderlyingSheaf}
+    \subitem for IsToricVariety, \hyperpage{17}
+  \item \texttt  {UnderlyingToricVariety}
+    \subitem for IsToricDivisor, \hyperpage{36}
+    \subitem for IsToricSubvariety, \hyperpage{22}
+
+  \indexspace
+
+  \item \texttt  {VarietyOfDivisorpolytope}
+    \subitem for IsToricDivisor, \hyperpage{37}
+  \item \texttt  {VeryAmpleMultiple}
+    \subitem for IsToricDivisor, \hyperpage{37}
+
+  \indexspace
+
+  \item \texttt  {WeilDivisorsOfVariety}
+    \subitem for IsToricVariety, \hyperpage{18}
+
+  \indexspace
+
+  \item \texttt  {ZariskiCotangentSheaf}
+    \subitem for IsToricVariety, \hyperpage{17}
+  \item \texttt  {Zariski}\-\texttt  {Cotangent}\-\texttt  {Sheaf}\-\texttt  {Via}\-\texttt  {Euler}\-\texttt  {Sequence}, 
+		\hyperpage{19}
+  \item \texttt  {Zariski}\-\texttt  {Cotangent}\-\texttt  {Sheaf}\-\texttt  {Via}\-\texttt  {Poincare}\-\texttt  {ResidueMap}, 
+		\hyperpage{19}
+
+\end{theindex}

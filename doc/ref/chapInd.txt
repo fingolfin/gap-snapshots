@@ -493,8 +493,8 @@
   [2XClassFunction[102X, for a character table and a list 72.6-1 
       for a group and a list 72.6-1 
   [2XClassFunctionSameType[102X 72.6-4 
-  [10XClassMultiplicationCoefficient[110X, for character tables 71.12-7 
   [2XClassMultiplicationCoefficient[102X, for character tables 71.12-7 
+  [10XClassMultiplicationCoefficient[110X, for character tables 71.12-7 
   [2XClassNames[102X 71.9-6 
   [2XClassNamesTom[102X 70.7-5 
   [2XClassOrbit[102X 71.9-12 
@@ -1207,8 +1207,8 @@
   [2XFlushCaches[102X 79.10-3 
   FOA triples 85. 
   [9Xfor[109X loop 4.20 
-  [2XForAll[102X 21.20-23 
-  [2XForAny[102X 21.20-24 
+  [2XForAll[102X 21.20-24 
+  [2XForAny[102X 21.20-25 
   [2XFORCE_QUIT_GAP[102X 6.7-4 
   [2XFpElmComparisonMethod[102X 47.3-3 
   [2XFpGroupCocycle[102X 39.25-2 
@@ -2471,7 +2471,7 @@
   [2XIsZmodpZObj[102X 14.5-4 
   [2XIsZmodpZObjLarge[102X 14.5-4 
   [2XIsZmodpZObjSmall[102X 14.5-4 
-  [2XIterated[102X 21.20-27 
+  [2XIterated[102X 21.20-28 
   [2XIterator[102X 30.8-1 
   iterator, for low index subgroups 47.10-1 
   [2XIteratorByBasis[102X 61.6-6 
@@ -2533,6 +2533,7 @@
       for a transformation coll 53.5-8 
   [2XLargestUnknown[102X 74.1-2 
   [10Xlast[110X 6.1 
+  [2XLast[102X 21.20-23 
   [10Xlast2[110X 6.1 
   [10Xlast3[110X 6.1 
   [2XLastSystemError[102X 9.1-1 
@@ -2650,7 +2651,7 @@
   list smaller, comparison 21.10 
   list unbind, operation 21.2 
   [2XListBlist[102X 22.2-2 
-  [2XListN[102X 21.20-28 
+  [2XListN[102X 21.20-29 
   [2XListOfDigits[102X 14.2-11 
   [2XListOp[102X, for IsVectorObj, IsFunction 26.4-3 
   [2XListPerm[102X 42.5-1 
@@ -3448,7 +3449,7 @@
   [2XProcess[102X 11.1-1 
   [2XPROD_GF2MAT_GF2MAT_ADVANCED[102X 24.16-2 
   [2XPROD_GF2MAT_GF2MAT_SIMPLE[102X 24.16-1 
-  [2XProduct[102X 21.20-25 
+  [2XProduct[102X 21.20-26 
   product, of words 37.4 
       rational functions 66.2 
   [2XProductCoeffs[102X 23.7-2 
@@ -4013,8 +4014,8 @@
   [2XSourceOfIsoclinicTable[102X 71.20-4 
   [2XSp[102X, for dimension and a ring 50.2-5 
   [2XSP[102X, for dimension and a ring 50.2-5 
-      for dimension and field size 50.2-5 
   [2XSp[102X, for dimension and field size 50.2-5 
+  [2XSP[102X, for dimension and field size 50.2-5 
   space 4.4 
   [2XSparseActionHomomorphism[102X 41.7-3 
   [2XSparseCartanMatrix[102X 64.7-2 
@@ -4192,7 +4193,7 @@
   [2XSuccessors[102X 33.2-9 
   Suffix 27.7-22 
   suggested package 76.11 
-  [2XSum[102X 21.20-26 
+  [2XSum[102X 21.20-27 
   [2XSumFactorizationFunctionPcgs[102X 45.12-1 
   [2XSumIntersectionMat[102X 24.11-4 
   [2XSumX[102X 21.21-3 

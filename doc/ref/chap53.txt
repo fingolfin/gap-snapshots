@@ -110,7 +110,7 @@
   
   [1X53.1-3 TransformationFamily[101X
   
-  [33X[1;0Y[29X[2XTransformationFamily[102X[32X family[133X
+  [33X[1;0Y[29X[2XTransformationFamily[102X [32X family[133X
   
   [33X[0;0YThe family of all transformations is [10XTransformationFamily[110X.[133X
   
@@ -307,7 +307,7 @@
   
   [1X53.2-8 IdentityTransformation[101X
   
-  [33X[1;0Y[29X[2XIdentityTransformation[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XIdentityTransformation[102X [32X global variable[133X
   [6XReturns:[106X  [33X[0;10YThe identity transformation.[133X
   
   [33X[0;0YReturns the identity transformation, which has degree [10X0[110X.[133X

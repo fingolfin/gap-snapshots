@@ -1126,16 +1126,16 @@ end );
 ##
 ##  Add the Browse applications to the list shown by `BrowseGapData'.
 ##
-BrowseGapDataAdd( "AMS Math. Subject Classif.", BrowseMSC, false, "\
+BrowseGapDataAdd( "AMS Math. Subject Classif.", BrowseMSC, "\
 an overview of the current AMS Mathematics Subject Classification codes" );
 
-BrowseGapDataAdd( "GAP Bibliography", BrowseBibliography, true, "\
+BrowseGapDataAdd( "GAP Bibliography", BrowseBibliography, "\
 an overview of GAP related publications, in a browse table \
 whose columns show authors, title, year, journal, and MSC code; \
 the return value is a record encoding the clicked bibliography entries" );
 
 BrowseGapDataAdd( "GAP Packages Bibliographies",
-    BrowseBibliographyGapPackages, true, "\
+    BrowseBibliographyGapPackages, "\
 the contents of the *bib and *bib.xml files of installed GAP packages, \
 shown in a browse table with columns for authors, title, year, journal, \
 and filename; \

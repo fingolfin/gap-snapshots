@@ -185,7 +185,7 @@ BindGlobal( "BrowseConwayPolynomials", function()
 ##
 ##  Add the Browse application to the list shown by `BrowseGapData'.
 ##
-BrowseGapDataAdd( "Conway Polynomials", BrowseConwayPolynomials, true, "\
+BrowseGapDataAdd( "Conway Polynomials", BrowseConwayPolynomials, "\
 the list of precomputed Conway polynomials, \
 shown in a browse table whose columns contain the characteristic, \
 the degree, the polynomial itself, \

@@ -1,0 +1,55 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Module Presentations}}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Functors}}{3}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}\leavevmode {\color {Chapter }FunctorStandardModuleLeft (for IsHomalgRing)}}{3}{subsection.1.1.1}
+\contentsline {subsection}{\numberline {1.1.2}\leavevmode {\color {Chapter }FunctorStandardModuleRight (for IsHomalgRing)}}{3}{subsection.1.1.2}
+\contentsline {subsection}{\numberline {1.1.3}\leavevmode {\color {Chapter }FunctorGetRidOfZeroGeneratorsLeft (for IsHomalgRing)}}{3}{subsection.1.1.3}
+\contentsline {subsection}{\numberline {1.1.4}\leavevmode {\color {Chapter }FunctorGetRidOfZeroGeneratorsRight (for IsHomalgRing)}}{3}{subsection.1.1.4}
+\contentsline {subsection}{\numberline {1.1.5}\leavevmode {\color {Chapter }FunctorLessGeneratorsLeft (for IsHomalgRing)}}{3}{subsection.1.1.5}
+\contentsline {subsection}{\numberline {1.1.6}\leavevmode {\color {Chapter }FunctorLessGeneratorsRight (for IsHomalgRing)}}{4}{subsection.1.1.6}
+\contentsline {subsection}{\numberline {1.1.7}\leavevmode {\color {Chapter }FunctorDualLeft (for IsHomalgRing)}}{4}{subsection.1.1.7}
+\contentsline {subsection}{\numberline {1.1.8}\leavevmode {\color {Chapter }FunctorDualRight (for IsHomalgRing)}}{4}{subsection.1.1.8}
+\contentsline {subsection}{\numberline {1.1.9}\leavevmode {\color {Chapter }FunctorDoubleDualLeft (for IsHomalgRing)}}{4}{subsection.1.1.9}
+\contentsline {subsection}{\numberline {1.1.10}\leavevmode {\color {Chapter }FunctorDoubleDualRight (for IsHomalgRing)}}{4}{subsection.1.1.10}
+\contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }GAP Categories}}{4}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}\leavevmode {\color {Chapter }IsLeftOrRightPresentationMorphism (for IsCapCategoryMorphism)}}{4}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}\leavevmode {\color {Chapter }IsLeftPresentationMorphism (for IsLeftOrRightPresentationMorphism)}}{5}{subsection.1.2.2}
+\contentsline {subsection}{\numberline {1.2.3}\leavevmode {\color {Chapter }IsRightPresentationMorphism (for IsLeftOrRightPresentationMorphism)}}{5}{subsection.1.2.3}
+\contentsline {subsection}{\numberline {1.2.4}\leavevmode {\color {Chapter }IsLeftOrRightPresentation (for IsCapCategoryObject)}}{5}{subsection.1.2.4}
+\contentsline {subsection}{\numberline {1.2.5}\leavevmode {\color {Chapter }IsLeftPresentation (for IsLeftOrRightPresentation)}}{5}{subsection.1.2.5}
+\contentsline {subsection}{\numberline {1.2.6}\leavevmode {\color {Chapter }IsRightPresentation (for IsLeftOrRightPresentation)}}{5}{subsection.1.2.6}
+\contentsline {section}{\numberline {1.3}\leavevmode {\color {Chapter }Constructors}}{5}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}\leavevmode {\color {Chapter }PresentationMorphism (for IsLeftOrRightPresentation, IsHomalgMatrix, IsLeftOrRightPresentation)}}{5}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.2}\leavevmode {\color {Chapter }AsMorphismBetweenFreeLeftPresentations (for IsHomalgMatrix)}}{5}{subsection.1.3.2}
+\contentsline {subsection}{\numberline {1.3.3}\leavevmode {\color {Chapter }AsMorphismBetweenFreeRightPresentations (for IsHomalgMatrix)}}{6}{subsection.1.3.3}
+\contentsline {subsection}{\numberline {1.3.4}\leavevmode {\color {Chapter }AsLeftPresentation (for IsHomalgMatrix)}}{6}{subsection.1.3.4}
+\contentsline {subsection}{\numberline {1.3.5}\leavevmode {\color {Chapter }AsRightPresentation (for IsHomalgMatrix)}}{6}{subsection.1.3.5}
+\contentsline {subsection}{\numberline {1.3.6}\leavevmode {\color {Chapter }AsLeftOrRightPresentation}}{6}{subsection.1.3.6}
+\contentsline {subsection}{\numberline {1.3.7}\leavevmode {\color {Chapter }FreeLeftPresentation (for IsInt, IsHomalgRing)}}{6}{subsection.1.3.7}
+\contentsline {subsection}{\numberline {1.3.8}\leavevmode {\color {Chapter }FreeRightPresentation (for IsInt, IsHomalgRing)}}{6}{subsection.1.3.8}
+\contentsline {subsection}{\numberline {1.3.9}\leavevmode {\color {Chapter }UnderlyingMatrix (for IsLeftOrRightPresentation)}}{7}{subsection.1.3.9}
+\contentsline {subsection}{\numberline {1.3.10}\leavevmode {\color {Chapter }UnderlyingHomalgRing (for IsLeftOrRightPresentation)}}{7}{subsection.1.3.10}
+\contentsline {subsection}{\numberline {1.3.11}\leavevmode {\color {Chapter }Annihilator (for IsLeftOrRightPresentation)}}{7}{subsection.1.3.11}
+\contentsline {subsection}{\numberline {1.3.12}\leavevmode {\color {Chapter }LeftPresentations (for IsHomalgRing)}}{7}{subsection.1.3.12}
+\contentsline {subsection}{\numberline {1.3.13}\leavevmode {\color {Chapter }RightPresentations (for IsHomalgRing)}}{7}{subsection.1.3.13}
+\contentsline {section}{\numberline {1.4}\leavevmode {\color {Chapter }Attributes}}{7}{section.1.4}
+\contentsline {subsection}{\numberline {1.4.1}\leavevmode {\color {Chapter }UnderlyingHomalgRing (for IsLeftOrRightPresentationMorphism)}}{7}{subsection.1.4.1}
+\contentsline {subsection}{\numberline {1.4.2}\leavevmode {\color {Chapter }UnderlyingMatrix (for IsLeftOrRightPresentationMorphism)}}{7}{subsection.1.4.2}
+\contentsline {section}{\numberline {1.5}\leavevmode {\color {Chapter }Non-Categorical Operations}}{8}{section.1.5}
+\contentsline {subsection}{\numberline {1.5.1}\leavevmode {\color {Chapter }StandardGeneratorMorphism (for IsLeftOrRightPresentation, IsInt)}}{8}{subsection.1.5.1}
+\contentsline {subsection}{\numberline {1.5.2}\leavevmode {\color {Chapter }CoverByFreeModule (for IsLeftOrRightPresentation)}}{8}{subsection.1.5.2}
+\contentsline {section}{\numberline {1.6}\leavevmode {\color {Chapter }Natural Transformations}}{8}{section.1.6}
+\contentsline {subsection}{\numberline {1.6.1}\leavevmode {\color {Chapter }NaturalIsomorphismFromIdentityToStandardModuleLeft (for IsHomalgRing)}}{8}{subsection.1.6.1}
+\contentsline {subsection}{\numberline {1.6.2}\leavevmode {\color {Chapter }NaturalIsomorphismFromIdentityToStandardModuleRight (for IsHomalgRing)}}{8}{subsection.1.6.2}
+\contentsline {subsection}{\numberline {1.6.3}\leavevmode {\color {Chapter }NaturalIsomorphismFromIdentityToGetRidOfZeroGeneratorsLeft (for IsHomalgRing)}}{8}{subsection.1.6.3}
+\contentsline {subsection}{\numberline {1.6.4}\leavevmode {\color {Chapter }NaturalIsomorphismFromIdentityToGetRidOfZeroGeneratorsRight (for IsHomalgRing)}}{9}{subsection.1.6.4}
+\contentsline {subsection}{\numberline {1.6.5}\leavevmode {\color {Chapter }NaturalIsomorphismFromIdentityToLessGeneratorsLeft (for IsHomalgRing)}}{9}{subsection.1.6.5}
+\contentsline {subsection}{\numberline {1.6.6}\leavevmode {\color {Chapter }NaturalIsomorphismFromIdentityToLessGeneratorsRight (for IsHomalgRing)}}{9}{subsection.1.6.6}
+\contentsline {subsection}{\numberline {1.6.7}\leavevmode {\color {Chapter }NaturalTransformationFromIdentityToDoubleDualLeft (for IsHomalgRing)}}{9}{subsection.1.6.7}
+\contentsline {subsection}{\numberline {1.6.8}\leavevmode {\color {Chapter }NaturalTransformationFromIdentityToDoubleDualRight (for IsHomalgRing)}}{9}{subsection.1.6.8}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Examples and Tests}}{10}{chapter.2}
+\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }Annihilator}}{10}{section.2.1}
+\contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter }Intersection of Submodules}}{10}{section.2.2}
+\contentsline {section}{\numberline {2.3}\leavevmode {\color {Chapter }Koszul Complex}}{11}{section.2.3}
+\contentsline {section}{\numberline {2.4}\leavevmode {\color {Chapter }Closed Monoidal Structure}}{13}{section.2.4}
+\contentsline {section}{\numberline {2.5}\leavevmode {\color {Chapter }Projectivity test}}{14}{section.2.5}
+\contentsline {chapter}{Index}{15}{section*.2}

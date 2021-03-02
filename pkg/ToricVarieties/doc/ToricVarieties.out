@@ -1,0 +1,46 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.1.1}{What is the goal of the ToricVarieties package?}{chapter.1}% 2
+\BOOKMARK [0][-]{chapter.2}{Installation of the ToricVarieties Package}{}% 3
+\BOOKMARK [0][-]{chapter.3}{Toric Varieties}{}% 4
+\BOOKMARK [1][-]{section.3.1}{Toric Varieties: Examples}{chapter.3}% 5
+\BOOKMARK [1][-]{section.3.2}{Toric variety: Category and Representations}{chapter.3}% 6
+\BOOKMARK [1][-]{section.3.3}{Properties}{chapter.3}% 7
+\BOOKMARK [1][-]{section.3.4}{Attributes}{chapter.3}% 8
+\BOOKMARK [1][-]{section.3.5}{Methods}{chapter.3}% 9
+\BOOKMARK [1][-]{section.3.6}{Constructors}{chapter.3}% 10
+\BOOKMARK [0][-]{chapter.4}{Toric subvarieties}{}% 11
+\BOOKMARK [1][-]{section.4.1}{The GAP category}{chapter.4}% 12
+\BOOKMARK [1][-]{section.4.2}{Properties}{chapter.4}% 13
+\BOOKMARK [1][-]{section.4.3}{Attributes}{chapter.4}% 14
+\BOOKMARK [1][-]{section.4.4}{Methods}{chapter.4}% 15
+\BOOKMARK [1][-]{section.4.5}{Constructors}{chapter.4}% 16
+\BOOKMARK [0][-]{chapter.5}{Affine toric varieties}{}% 17
+\BOOKMARK [1][-]{section.5.1}{Affine toric varieties: Examples}{chapter.5}% 18
+\BOOKMARK [1][-]{section.5.2}{The GAP category}{chapter.5}% 19
+\BOOKMARK [1][-]{section.5.3}{Attributes}{chapter.5}% 20
+\BOOKMARK [1][-]{section.5.4}{Methods}{chapter.5}% 21
+\BOOKMARK [1][-]{section.5.5}{Constructors}{chapter.5}% 22
+\BOOKMARK [0][-]{chapter.6}{Projective toric varieties}{}% 23
+\BOOKMARK [1][-]{section.6.1}{Projective toric varieties: Examples}{chapter.6}% 24
+\BOOKMARK [1][-]{section.6.2}{The GAP category}{chapter.6}% 25
+\BOOKMARK [1][-]{section.6.3}{Attribute}{chapter.6}% 26
+\BOOKMARK [1][-]{section.6.4}{Properties}{chapter.6}% 27
+\BOOKMARK [1][-]{section.6.5}{Methods}{chapter.6}% 28
+\BOOKMARK [1][-]{section.6.6}{Constructors}{chapter.6}% 29
+\BOOKMARK [0][-]{chapter.7}{Toric morphisms}{}% 30
+\BOOKMARK [1][-]{section.7.1}{Toric morphisms: Examples}{chapter.7}% 31
+\BOOKMARK [1][-]{section.7.2}{The GAP category}{chapter.7}% 32
+\BOOKMARK [1][-]{section.7.3}{Properties}{chapter.7}% 33
+\BOOKMARK [1][-]{section.7.4}{Attributes}{chapter.7}% 34
+\BOOKMARK [1][-]{section.7.5}{Methods}{chapter.7}% 35
+\BOOKMARK [1][-]{section.7.6}{Constructors}{chapter.7}% 36
+\BOOKMARK [0][-]{chapter.8}{Toric divisors}{}% 37
+\BOOKMARK [1][-]{section.8.1}{Toric divisors: Examples}{chapter.8}% 38
+\BOOKMARK [1][-]{section.8.2}{The GAP category}{chapter.8}% 39
+\BOOKMARK [1][-]{section.8.3}{Properties}{chapter.8}% 40
+\BOOKMARK [1][-]{section.8.4}{Attributes}{chapter.8}% 41
+\BOOKMARK [1][-]{section.8.5}{Methods}{chapter.8}% 42
+\BOOKMARK [1][-]{section.8.6}{Constructors}{chapter.8}% 43
+\BOOKMARK [0][-]{chapter.9}{Blowups of toric varieties}{}% 44
+\BOOKMARK [1][-]{section.9.1}{Constructors}{chapter.9}% 45
+\BOOKMARK [0][-]{section*.3}{Index}{}% 46

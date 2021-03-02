@@ -3,10 +3,10 @@
                                      [1X[5XBrowse[105X[101X
   
   
-                               ( Version 1.8.8 )
+                               ( Version 1.8.11 )
   
   
-                                   June 2018
+                                  August 2020
   
   
                                  Thomas Breuer
@@ -24,7 +24,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2006-2018 by Thomas Breuer and Frank Lübeck[133X
+  [33X[0;0Y© 2006-2020 by Thomas Breuer and Frank Lübeck[133X
   
   [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU
   Public License Version 3 or later, see [7Xhttp://www.gnu.org/licenses[107X.[133X
@@ -159,7 +159,9 @@
       A.1-6 DatabaseAttributeValueDefault
       A.1-7 DatabaseIdEnumeratorUpdate
       A.1-8 DatabaseAttributeCompute
-      A.1-9 DatabaseAttributeSetData
+      A.1-9 DatabaseAttributeString
+      A.1-10 DatabaseAttributeLoadData
+      A.1-11 DatabaseAttributeSetData
     A.2 [33X[0;0YUsing Database Attributes for Browse Tables[133X
       A.2-1 [33X[0;0YBrowse Relevant Components of Database Attributes[133X
       A.2-2 BrowseTableFromDatabaseIdEnumerator

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<!DOCTYPE Book SYSTEM "gapdoc.dtd"
+[
+<!ENTITY homalg '<Package>homalg</Package>'>
+<!ENTITY see '<Alt Only="LaTeX">$\to$</Alt><Alt Not="LaTeX">--&gt;</Alt>'>
+<!ENTITY GAP4 '<Package>GAP4</Package>'>
+<!ENTITY CAP '<Package>CAP</Package>'>
+<!ENTITY MonoidalCategories '<Package>MonoidalCategories</Package>'>
+]
+>
+<Book Name="MonoidalCategories">
+<#Include SYSTEM "title.xml">
+<TableOfContents/>
+<Body>
+<#Include SYSTEM "_AutoDocMainFile.xml">
+</Body>
+<TheIndex/>
+</Book>

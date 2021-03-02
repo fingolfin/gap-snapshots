@@ -23,7 +23,8 @@ and 'false' means that the matches are just shown in a pager" ],
     ) );
 
 ## reset to false for 'dumb' terminals
-if GAPInfo.SystemEnvironment.TERM = "dumb" then
+if not IsBound( GAPInfo.SystemEnvironment.TERM )
+   or GAPInfo.SystemEnvironment.TERM = "dumb" then
   SetUserPreference("browse", "SelectHelpMatches", false);
 fi;
 
@@ -36,7 +37,7 @@ IsFunction(HELP_SHOW_MATCHES);
 HELP_SHOW_MATCHES_LIB := HELP_SHOW_MATCHES;
 MakeReadWriteGVar("HELP_SHOW_MATCHES");
 HELP_SHOW_MATCHES := function( books, topic, frombegin )
-  local   exact,  match,  x,  lines,  cnt,  i,  str,  n,  line, j, c;
+  local   exact,  match,  x,  lines,  i,  str,  n,  line, j, c;
   
   if UserPreference( "browse", "SelectHelpMatches" ) = false then
     return HELP_SHOW_MATCHES_LIB(books, topic, frombegin);
@@ -71,13 +72,10 @@ HELP_SHOW_MATCHES := function( books, topic, frombegin )
   # more than one topic found, show overview in pager
   else
     lines := [];
-##          ["Help: several entries match this topic - type ?2 to get match [2]\n"];
     HELP_LAST.TOPICS:=[];
-    cnt := 0;
     # show exact matches first
     match := Concatenation(exact, match);
     for i  in match  do
-      cnt := cnt+1;
       topic := Concatenation(i[1].bookname,": ",i[1].entries[i[2]][1]);
       Add(HELP_LAST.TOPICS, i);
       line:= NCurses.AttributeLineFromEscape( topic );

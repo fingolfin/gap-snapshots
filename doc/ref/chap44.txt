@@ -450,7 +450,7 @@
   
   [1X44.7-1 CrystGroupDefaultAction[101X
   
-  [33X[1;0Y[29X[2XCrystGroupDefaultAction[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XCrystGroupDefaultAction[102X [32X global variable[133X
   
   [33X[0;0Ycan  have  either  of the two values [10XRightAction[110X and [10XLeftAction[110X. The initial
   value  is [10XRightAction[110X. For functions which have variants OnRight and OnLeft,

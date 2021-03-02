@@ -478,11 +478,11 @@ BrowseData.AtlasInfoGroup:= function( conditions, log, replay, t )
 ##  <Description>
 ##  This function shows the information available via the &GAP; package
 ##  <Package>AtlasRep</Package> in a browse table,
-##  cf. Section&nbsp;<Ref Sect="Accessing Data of the AtlasRep Package"
+##  cf. Section&nbsp;<Ref Sect="Accessing Data via AtlasRep"
 ##  BookName="atlasrep"/> in the <Package>AtlasRep</Package> manual.
 ##  <P/>
-##  The optional arguments can be used to restrict the table to public or
-##  private data, or to show an overview for one particular group.
+##  The optional arguments can be used to restrict the table to core data
+##  or data extensions, or to show an overview for one particular group.
 ##  The arguments are the same as for
 ##  <Ref Func="DisplayAtlasInfo" BookName="AtlasRep"/>,
 ##  see the documentation of this function for details.
@@ -539,6 +539,7 @@ BrowseData.AtlasInfoGroup:= function( conditions, log, replay, t )
 ##  >        "Q",           # quit the second level table,
 ##  >        "Q" ) );       # and quit the application.
 ##  gap> if IsBound( BrowseAtlasInfo ) and IsBound( AtlasProgramInfo ) then
+##  >      SetUserPreference( "AtlasRep", "AtlasRepMarkNonCoreData", "" );
 ##  >      tworeps:= BrowseAtlasInfo();
 ##  >    else
 ##  >      tworeps:= [ fail ];
@@ -548,8 +549,8 @@ BrowseData.AtlasInfoGroup:= function( conditions, log, replay, t )
 ##  >      Print( "no access to the Web ATLAS\n" );
 ##  >    else
 ##  >      Print( List( tworeps, x -> x.identifier[1] ), "\n" );
-##  [ "A5", "A6" ]
 ##  >    fi;
+##  [ "A5", "A6" ]
 ##  ]]></Example>
 ##  <P/>
 ##  <E>Implementation remarks</E>:
@@ -638,7 +639,7 @@ BindGlobal( "BrowseAtlasInfo", function( arg )
 ##
 ##  Add the Browse application to the list shown by `BrowseGapData'.
 ##
-BrowseGapDataAdd( "AtlasRep Overview", BrowseAtlasInfo, true, "\
+BrowseGapDataAdd( "AtlasRep Overview", BrowseAtlasInfo, "\
 an overview of the information provided by the \
 Atlas of Group Representations, \
 the return value is the list of records \

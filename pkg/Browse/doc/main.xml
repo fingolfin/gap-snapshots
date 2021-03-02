@@ -6,7 +6,7 @@
    ]>
 
 <!-- Documentation of the Browse package. 
-     Copyright 2006-2018 by Thomas Breuer and Frank Lübeck
+     Copyright 2006-2020 by Thomas Breuer and Frank Lübeck
      Lehrstuhl D für Mathematik, RWTH Aachen, Germany -->
      
 <Book Name="Browse"> 
@@ -17,7 +17,7 @@
 <#Include SYSTEM "../version">
  )
   </Version>
-  <Date>June 2018</Date>
+  <Date>August 2020</Date>
   <Author> Thomas Breuer
     <Email>Thomas.Breuer@Math.RWTH-Aachen.De</Email>
     <Homepage>http://www.math.rwth-aachen.de/~Thomas.Breuer</Homepage>
@@ -26,7 +26,7 @@
     <Email>Frank.Luebeck@Math.RWTH-Aachen.De</Email>
     <Homepage>http://www.math.rwth-aachen.de/~Frank.Luebeck</Homepage>
   </Author>
-  <Copyright> &copyright; 2006-2018 by Thomas Breuer and Frank Lübeck <P/>
+  <Copyright> &copyright; 2006-2020 by Thomas Breuer and Frank Lübeck <P/>
 <!-- We adopt the copyright regulations of &GAP; as detailed in the 
      copyright notice in the &GAP; Reference Manual. -->
     This package may be distributed under the terms and conditions of the

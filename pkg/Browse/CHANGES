@@ -1,6 +1,34 @@
 
         Main CHANGES between versions of the Browse package
 
+1.8.10
+  - Drop the support for the '.zoo' archive format.
+  - Make the installation safer in situations when GAP gets installed
+    via the Julia package 'GAP.jl'.
+  - support JSON format for files that belong to database attributes,
+    document 'DatabaseAttributeString' and related functions
+
+1.8.9
+  - The GAP Demo utility does no longer overwrite readline's C-g,
+    which has a documented meaning; now C-\ is used instead.
+  - In 'NCurses.BrowseDenseList', use the grid drawn by
+    'BrowseData.SpecialGridLineDrawPlus' only if there are column labels;
+    if there are no such labels, use 'BrowseData.SpecialGridLineDraw'.
+  - Some undocumented GAP library functions, such as 'STRING_LIST_DIR' and
+    'USER_HOME_EXPAND', are no longer used in Browse.
+    This simplifies the code but requires features introduced in GAP 4.11.
+    And since we require at least GAP 4.11, some compatibility code has
+    been removed.
+  - The 'Browse' method for character tables now supports the components
+    'charnames' and 'classnames' in the record given as the second argument.
+    (The same has recently been done in the corresponding 'Display' method
+    in the GAP library.)
+  - 'BrowseGapDataAdd' does no longer need the information whether the
+    Browse application will have a return value.
+    (Now it calls the GAP function 'CallFuncListWrap'.)
+  - Browse does no longer assume that 'GAPInfo.SystemEnvironment.TERM' is
+    available, in particular Browse does not try to set this component.
+
 1.8.8
   - Blocks in demo files can now be separated by lines starting with #%
     which makes testing demo files easier.
@@ -41,15 +69,15 @@
 1.8.6
   - 'NCurses.EditFields' now deals with long input strings by scrolling
     horizontally.
-  - 'BrowseAtlasInfo' now uses the improved setup of AtlasRep 1.6:
+  - 'BrowseAtlasInfo' now uses the improved setup of AtlasRep 2.0:
     With AtlasRep 1.5 or older, one had to guess the defining parameters
     of a straight line program from the displayed information;
-    AtlasRep 1.6 provides both more variants and a sufficient "identifier"
+    AtlasRep 2.0 provides both more variants and a sufficient "identifier"
     concept.
     If AtlasRep 1.5 or older is going to be loaded in the current GAP
     session then the file 'app/atlasbrowse_old.g' is read, which yields the
     old behaviour.
-    If AtlasRep 1.6 or newer is going to be loaded then the file
+    If AtlasRep 2.0 or newer is going to be loaded then the file
     'app/atlasbrowse.g' is read.
   - Symbolic values are now supported in selections that are offered by
     'BrowseUserPreferences', for example 'PACKAGE_ERROR' in the case of
@@ -119,7 +147,7 @@
    a new entry is added to the result.
  - `BrowsePackageVariables' now admits also the same argument syntax as the
    GAP library function `ShowPackageVariables', which is simpler than the one
-   which has to be used for packags that are loaded before `Browse'.
+   which has to be used for packages that are loaded before `Browse'.
    `BrowsePackageVariables' shows now also the comments of method
    installations, corresponding to the extension of the GAP library function
    `ShowPackageVariables'.

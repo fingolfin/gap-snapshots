@@ -8,10 +8,7 @@
 **
 */
 
-#define VERSION "1.8.8"
-
-const char * Revision_ncurses_c =
-   "VERSION";
+#define VERSION "1.8.11"
 
 /* read GAP source header files with a combined header file */
 
@@ -1451,7 +1448,6 @@ static Int PostRestore (
 {
     Int             i, gvar;
     Obj             tmp, vers;
-    char*           cvers = VERSION;
 
     /* setup and initialize the ncurses package */
     winlist = NEW_STRING(sizeof(Obj));
@@ -1485,7 +1481,7 @@ static Int PostRestore (
     endwin();
     
     for ( i = 0;  GVarFuncs[i].name != 0;  i++ ) {
-      AssPRec(tmp, RNamName((Char*)GVarFuncs[i].name), 
+      AssPRec(tmp, RNamName(GVarFuncs[i].name), 
               NewFunctionC( GVarFuncs[i].name, GVarFuncs[i].nargs, 
                  GVarFuncs[i].args, GVarFuncs[i].handler ) );
     }
@@ -1494,8 +1490,7 @@ static Int PostRestore (
     AssPRec(tmp, RNamName("lineDraw"), InitLineDraw() );
     AssPRec(tmp, RNamName("winlist"), winlist);
     AssPRec(tmp, RNamName("panellist"), panellist);
-    vers = NEW_STRING(strlen(cvers));
-    memcpy(CHARS_STRING(vers), cvers, strlen(cvers));
+    vers = MakeImmString(VERSION);
     AssPRec(tmp, RNamName("KernelModuleVersion"), vers);
     
     /* (re)assign   */

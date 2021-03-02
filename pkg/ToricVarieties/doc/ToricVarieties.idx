@@ -1,0 +1,137 @@
+\indexentry{IsToricVariety@\texttt  {IsToricVariety}!for IsObject|hyperpage}{12}
+\indexentry{IsCategoryOfToricVarieties@\texttt  {IsCategoryOfToricVarieties}!for IsHomalgCategory|hyperpage}{13}
+\indexentry{twitter@\texttt  {twitter}!for IsToricVariety|hyperpage}{13}
+\indexentry{IsNormalVariety@\texttt  {IsNormalVariety}!for IsToricVariety|hyperpage}{13}
+\indexentry{IsAffine@\texttt  {IsAffine}!for IsToricVariety|hyperpage}{13}
+\indexentry{IsProjective@\texttt  {IsProjective}!for IsToricVariety|hyperpage}{13}
+\indexentry{IsSmooth@\texttt  {IsSmooth}!for IsToricVariety|hyperpage}{13}
+\indexentry{IsComplete@\texttt  {IsComplete}!for IsToricVariety|hyperpage}{13}
+\indexentry{HasTorusfactor@\texttt  {HasTorusfactor}!for IsToricVariety|hyperpage}{13}
+\indexentry{HasNoTorusfactor@\texttt  {HasNoTorusfactor}!for IsToricVariety|hyperpage}{14}
+\indexentry{IsOrbifold@\texttt  {IsOrbifold}!for IsToricVariety|hyperpage}{14}
+\indexentry{IsSimplicial@\texttt  {IsSimplicial}!for IsToricVariety|hyperpage}{14}
+\indexentry{AffineOpenCovering@\texttt  {AffineOpenCovering}!for IsToricVariety|hyperpage}{14}
+\indexentry{CoxRing@\texttt  {CoxRing}!for IsToricVariety|hyperpage}{14}
+\indexentry{ListOfVariablesOfCoxRing@\texttt  {ListOfVariablesOfCoxRing}!for IsToricVariety|hyperpage}{14}
+\indexentry{ClassGroup@\texttt  {ClassGroup}!for IsToricVariety|hyperpage}{14}
+\indexentry{TorusInvariantDivisorGroup@\texttt  {TorusInvariantDivisorGroup}!for IsToricVariety|hyperpage}{15}
+\indexentry{MapFromCharacterToPrincipalDivisor@\texttt  {MapFromCharacterToPrincipalDivisor}!for IsToricVariety|hyperpage}{15}
+\indexentry{MapFromWeilDivisorsToClassGroup@\texttt  {MapFromWeilDivisorsToClassGroup}!for IsToricVariety|hyperpage}{15}
+\indexentry{Dimension@\texttt  {Dimension}!for IsToricVariety|hyperpage}{15}
+\indexentry{DimensionOfTorusfactor@\texttt  {DimensionOfTorusfactor}!for IsToricVariety|hyperpage}{15}
+\indexentry{CoordinateRingOfTorus@\texttt  {CoordinateRingOfTorus}!for IsToricVariety|hyperpage}{15}
+\indexentry{ListOfVariablesOfCoordinateRingOfTorus@\texttt  {List}\-\texttt  {Of}\-\texttt  {Variables}\-\texttt  {Of}\-\texttt  {Coordinate}\-\texttt  {Ring}\-\texttt  {Of}\-\texttt  {Torus}!for IsToricVariety|hyperpage}{15}
+\indexentry{IsProductOf@\texttt  {IsProductOf}!for IsToricVariety|hyperpage}{16}
+\indexentry{CharacterLattice@\texttt  {CharacterLattice}!for IsToricVariety|hyperpage}{16}
+\indexentry{TorusInvariantPrimeDivisors@\texttt  {TorusInvariantPrimeDivisors}!for IsToricVariety|hyperpage}{16}
+\indexentry{IrrelevantIdeal@\texttt  {IrrelevantIdeal}!for IsToricVariety|hyperpage}{16}
+\indexentry{SRIdeal@\texttt  {SRIdeal}!for IsToricVariety|hyperpage}{16}
+\indexentry{MorphismFromCoxVariety@\texttt  {MorphismFromCoxVariety}!for IsToricVariety|hyperpage}{16}
+\indexentry{CoxVariety@\texttt  {CoxVariety}!for IsToricVariety|hyperpage}{16}
+\indexentry{FanOfVariety@\texttt  {FanOfVariety}!for IsToricVariety|hyperpage}{16}
+\indexentry{CartierTorusInvariantDivisorGroup@\texttt  {CartierTorusInvariantDivisorGroup}!for IsToricVariety|hyperpage}{17}
+\indexentry{PicardGroup@\texttt  {PicardGroup}!for IsToricVariety|hyperpage}{17}
+\indexentry{NameOfVariety@\texttt  {NameOfVariety}!for IsToricVariety|hyperpage}{17}
+\indexentry{ZariskiCotangentSheaf@\texttt  {ZariskiCotangentSheaf}!for IsToricVariety|hyperpage}{17}
+\indexentry{CotangentSheaf@\texttt  {CotangentSheaf}!for IsToricVariety|hyperpage}{17}
+\indexentry{EulerCharacteristic@\texttt  {EulerCharacteristic}!for IsToricVariety|hyperpage}{17}
+\indexentry{UnderlyingSheaf@\texttt  {UnderlyingSheaf}!for IsToricVariety|hyperpage}{17}
+\indexentry{CoordinateRingOfTorus@\texttt  {CoordinateRingOfTorus}!for IsToricVariety, IsList|hyperpage}{18}
+\indexentry{bSlash*@\texttt  {\texttt  {\char 92\relax }*}!for IsToricVariety, IsToricVariety|hyperpage}{18}
+\indexentry{CharacterToRationalFunction@\texttt  {CharacterToRationalFunction}!for IsHomalgElement, IsToricVariety|hyperpage}{18}
+\indexentry{CoxRing@\texttt  {CoxRing}!for IsToricVariety, IsList|hyperpage}{18}
+\indexentry{WeilDivisorsOfVariety@\texttt  {WeilDivisorsOfVariety}!for IsToricVariety|hyperpage}{18}
+\indexentry{Fan@\texttt  {Fan}!for IsToricVariety|hyperpage}{18}
+\indexentry{Factors@\texttt  {Factors}!for IsToricVariety|hyperpage}{18}
+\indexentry{BlowUpOnIthMinimalTorusOrbit@\texttt  {BlowUpOnIthMinimalTorusOrbit}!for IsToricVariety, IsInt|hyperpage}{19}
+\indexentry{ZariskiCotangentSheafViaEulerSequence@\texttt  {Zariski}\-\texttt  {Cotangent}\-\texttt  {Sheaf}\-\texttt  {Via}\-\texttt  {Euler}\-\texttt  {Sequence}|hyperpage}{19}
+\indexentry{ZariskiCotangentSheafViaPoincareResidueMap@\texttt  {Zariski}\-\texttt  {Cotangent}\-\texttt  {Sheaf}\-\texttt  {Via}\-\texttt  {Poincare}\-\texttt  {ResidueMap}|hyperpage}{19}
+\indexentry{ithBettiNumber@\texttt  {ithBettiNumber}!for IsToricVariety, IsInt|hyperpage}{19}
+\indexentry{NrOfqRationalPoints@\texttt  {NrOfqRationalPoints}!for IsToricVariety, IsInt|hyperpage}{19}
+\indexentry{ToricVariety@\texttt  {ToricVariety}!for IsToricVariety|hyperpage}{19}
+\indexentry{ToricVariety@\texttt  {ToricVariety}!for IsList|hyperpage}{19}
+\indexentry{ToricVariety@\texttt  {ToricVariety}!for IsConvexObject|hyperpage}{19}
+\indexentry{ToricVariety@\texttt  {ToricVariety}!for IsList, IsList, IsList|hyperpage}{19}
+\indexentry{ToricVariety@\texttt  {ToricVariety}!for IsList, IsList, IsList, IsList|hyperpage}{20}
+\indexentry{ToricVarietiesFromGrading@\texttt  {ToricVarietiesFromGrading}!for IsList|hyperpage}{20}
+\indexentry{ToricVarietyFromGrading@\texttt  {ToricVarietyFromGrading}!for IsList|hyperpage}{20}
+\indexentry{IsToricSubvariety@\texttt  {IsToricSubvariety}!for IsToricVariety|hyperpage}{21}
+\indexentry{IsClosedSubvariety@\texttt  {IsClosedSubvariety}!for IsToricSubvariety|hyperpage}{21}
+\indexentry{IsOpen@\texttt  {IsOpen}!for IsToricSubvariety|hyperpage}{21}
+\indexentry{IsWholeVariety@\texttt  {IsWholeVariety}!for IsToricSubvariety|hyperpage}{21}
+\indexentry{UnderlyingToricVariety@\texttt  {UnderlyingToricVariety}!for IsToricSubvariety|hyperpage}{22}
+\indexentry{InclusionMorphism@\texttt  {InclusionMorphism}!for IsToricSubvariety|hyperpage}{22}
+\indexentry{AmbientToricVariety@\texttt  {AmbientToricVariety}!for IsToricSubvariety|hyperpage}{22}
+\indexentry{ClosureOfTorusOrbitOfCone@\texttt  {ClosureOfTorusOrbitOfCone}!for IsToricVariety, IsCone|hyperpage}{22}
+\indexentry{ToricSubvariety@\texttt  {ToricSubvariety}!for IsToricVariety, IsToricVariety|hyperpage}{22}
+\indexentry{IsAffineToricVariety@\texttt  {IsAffineToricVariety}!for IsToricVariety|hyperpage}{23}
+\indexentry{CoordinateRing@\texttt  {CoordinateRing}!for IsAffineToricVariety|hyperpage}{24}
+\indexentry{ListOfVariablesOfCoordinateRing@\texttt  {ListOfVariablesOfCoordinateRing}!for IsAffineToricVariety|hyperpage}{24}
+\indexentry{MorphismFromCoordinateRingToCoordinateRingOfTorus@\texttt  {Morphism}\-\texttt  {From}\-\texttt  {Coordinate}\-\texttt  {Ring}\-\texttt  {To}\-\texttt  {Coordinate}\-\texttt  {Ring}\-\texttt  {Of}\-\texttt  {Torus}!for IsToricVariety|hyperpage}{24}
+\indexentry{ConeOfVariety@\texttt  {ConeOfVariety}!for IsToricVariety|hyperpage}{24}
+\indexentry{CoordinateRing@\texttt  {CoordinateRing}!for IsToricVariety, IsList|hyperpage}{24}
+\indexentry{Cone@\texttt  {Cone}!for IsToricVariety|hyperpage}{24}
+\indexentry{IsProjectiveToricVariety@\texttt  {IsProjectiveToricVariety}!for IsToricVariety|hyperpage}{26}
+\indexentry{PolytopeOfVariety@\texttt  {PolytopeOfVariety}!for IsToricVariety|hyperpage}{27}
+\indexentry{AffineCone@\texttt  {AffineCone}!for IsToricVariety|hyperpage}{27}
+\indexentry{ProjectiveEmbedding@\texttt  {ProjectiveEmbedding}!for IsToricVariety|hyperpage}{27}
+\indexentry{IsIsomorphicToProjectiveSpace@\texttt  {IsIsomorphicToProjectiveSpace}!for IsToricVariety|hyperpage}{27}
+\indexentry{IsDirectProductOfPNs@\texttt  {IsDirectProductOfPNs}!for IsToricVariety|hyperpage}{27}
+\indexentry{Polytope@\texttt  {Polytope}!for IsToricVariety|hyperpage}{27}
+\indexentry{AmpleDivisor@\texttt  {AmpleDivisor}!for IsToricVariety and HasPolytopeOfVariety|hyperpage}{28}
+\indexentry{IsToricMorphism@\texttt  {IsToricMorphism}!for IsObject|hyperpage}{30}
+\indexentry{IsMorphism@\texttt  {IsMorphism}!for IsToricMorphism|hyperpage}{30}
+\indexentry{IsProper@\texttt  {IsProper}!for IsToricMorphism|hyperpage}{30}
+\indexentry{SourceObject@\texttt  {SourceObject}!for IsToricMorphism|hyperpage}{30}
+\indexentry{UnderlyingGridMorphism@\texttt  {UnderlyingGridMorphism}!for IsToricMorphism|hyperpage}{30}
+\indexentry{ToricImageObject@\texttt  {ToricImageObject}!for IsToricMorphism|hyperpage}{31}
+\indexentry{RangeObject@\texttt  {RangeObject}!for IsToricMorphism|hyperpage}{31}
+\indexentry{MorphismOnWeilDivisorGroup@\texttt  {MorphismOnWeilDivisorGroup}!for IsToricMorphism|hyperpage}{31}
+\indexentry{ClassGroup@\texttt  {ClassGroup}!for IsToricMorphism|hyperpage}{31}
+\indexentry{MorphismOnCartierDivisorGroup@\texttt  {MorphismOnCartierDivisorGroup}!for IsToricMorphism|hyperpage}{31}
+\indexentry{PicardGroup@\texttt  {PicardGroup}!for IsToricMorphism|hyperpage}{31}
+\indexentry{Source@\texttt  {Source}!for IsToricMorphism|hyperpage}{31}
+\indexentry{Range@\texttt  {Range}!for IsToricMorphism|hyperpage}{32}
+\indexentry{MorphismOnIthFactor@\texttt  {MorphismOnIthFactor}!for IsToricMorphism|hyperpage}{32}
+\indexentry{UnderlyingListList@\texttt  {UnderlyingListList}!for IsToricMorphism|hyperpage}{32}
+\indexentry{ToricMorphism@\texttt  {ToricMorphism}!for IsToricVariety, IsList|hyperpage}{32}
+\indexentry{ToricMorphism@\texttt  {ToricMorphism}!for IsToricVariety, IsList, IsToricVariety|hyperpage}{32}
+\indexentry{IsToricDivisor@\texttt  {IsToricDivisor}!for IsObject|hyperpage}{34}
+\indexentry{twitter@\texttt  {twitter}!for IsToricDivisor|hyperpage}{34}
+\indexentry{IsCartier@\texttt  {IsCartier}!for IsToricDivisor|hyperpage}{34}
+\indexentry{IsPrincipal@\texttt  {IsPrincipal}!for IsToricDivisor|hyperpage}{35}
+\indexentry{IsPrimedivisor@\texttt  {IsPrimedivisor}!for IsToricDivisor|hyperpage}{35}
+\indexentry{IsBasepointFree@\texttt  {IsBasepointFree}!for IsToricDivisor|hyperpage}{35}
+\indexentry{IsAmple@\texttt  {IsAmple}!for IsToricDivisor|hyperpage}{35}
+\indexentry{IsVeryAmple@\texttt  {IsVeryAmple}!for IsToricDivisor|hyperpage}{35}
+\indexentry{IsNumericallyEffective@\texttt  {IsNumericallyEffective}!for IsToricDivisor|hyperpage}{35}
+\indexentry{CartierData@\texttt  {CartierData}!for IsToricDivisor|hyperpage}{35}
+\indexentry{CharacterOfPrincipalDivisor@\texttt  {CharacterOfPrincipalDivisor}!for IsToricDivisor|hyperpage}{36}
+\indexentry{ClassOfDivisor@\texttt  {ClassOfDivisor}!for IsToricDivisor|hyperpage}{36}
+\indexentry{PolytopeOfDivisor@\texttt  {PolytopeOfDivisor}!for IsToricDivisor|hyperpage}{36}
+\indexentry{BasisOfGlobalSections@\texttt  {BasisOfGlobalSections}!for IsToricDivisor|hyperpage}{36}
+\indexentry{IntegerForWhichIsSureVeryAmple@\texttt  {IntegerForWhichIsSureVeryAmple}!for IsToricDivisor|hyperpage}{36}
+\indexentry{AmbientToricVariety@\texttt  {AmbientToricVariety}!for IsToricDivisor|hyperpage}{36}
+\indexentry{UnderlyingGroupElement@\texttt  {UnderlyingGroupElement}!for IsToricDivisor|hyperpage}{36}
+\indexentry{UnderlyingToricVariety@\texttt  {UnderlyingToricVariety}!for IsToricDivisor|hyperpage}{36}
+\indexentry{DegreeOfDivisor@\texttt  {DegreeOfDivisor}!for IsToricDivisor|hyperpage}{37}
+\indexentry{VarietyOfDivisorpolytope@\texttt  {VarietyOfDivisorpolytope}!for IsToricDivisor|hyperpage}{37}
+\indexentry{MonomsOfCoxRingOfDegree@\texttt  {MonomsOfCoxRingOfDegree}!for IsToricDivisor|hyperpage}{37}
+\indexentry{CoxRingOfTargetOfDivisorMorphism@\texttt  {CoxRingOfTargetOfDivisorMorphism}!for IsToricDivisor|hyperpage}{37}
+\indexentry{RingMorphismOfDivisor@\texttt  {RingMorphismOfDivisor}!for IsToricDivisor|hyperpage}{37}
+\indexentry{VeryAmpleMultiple@\texttt  {VeryAmpleMultiple}!for IsToricDivisor|hyperpage}{37}
+\indexentry{CharactersForClosedEmbedding@\texttt  {CharactersForClosedEmbedding}!for IsToricDivisor|hyperpage}{37}
+\indexentry{bSlash+@\texttt  {\texttt  {\char 92\relax }+}!for IsToricDivisor, IsToricDivisor|hyperpage}{38}
+\indexentry{bSlash-@\texttt  {\texttt  {\char 92\relax }-}!for IsToricDivisor, IsToricDivisor|hyperpage}{38}
+\indexentry{bSlash*@\texttt  {\texttt  {\char 92\relax }*}!for IsInt, IsToricDivisor|hyperpage}{38}
+\indexentry{MonomsOfCoxRingOfDegree@\texttt  {MonomsOfCoxRingOfDegree}!for IsToricVariety, IsHomalgElement|hyperpage}{38}
+\indexentry{DivisorOfGivenClass@\texttt  {DivisorOfGivenClass}!for IsToricVariety, IsHomalgElement|hyperpage}{38}
+\indexentry{AddDivisorToItsAmbientVariety@\texttt  {AddDivisorToItsAmbientVariety}!for IsToricDivisor|hyperpage}{38}
+\indexentry{Polytope@\texttt  {Polytope}!for IsToricDivisor|hyperpage}{38}
+\indexentry{CoxRingOfTargetOfDivisorMorphism@\texttt  {CoxRingOfTargetOfDivisorMorphism}!for IsToricDivisor, IsString|hyperpage}{39}
+\indexentry{DivisorOfCharacter@\texttt  {DivisorOfCharacter}!for IsHomalgElement, IsToricVariety|hyperpage}{39}
+\indexentry{DivisorOfCharacter@\texttt  {DivisorOfCharacter}!for IsList, IsToricVariety|hyperpage}{39}
+\indexentry{CreateDivisor@\texttt  {CreateDivisor}!for IsHomalgElement, IsToricVariety|hyperpage}{39}
+\indexentry{CreateDivisor@\texttt  {CreateDivisor}!for IsList, IsToricVariety|hyperpage}{39}
+\indexentry{BlowupOfToricVariety@\texttt  {BlowupOfToricVariety}!for IsToricVariety, IsList, IsString|hyperpage}{40}
+\indexentry{SequenceOfBlowupsOfToricVariety@\texttt  {SequenceOfBlowupsOfToricVariety}!for IsToricVariety, IsList|hyperpage}{40}

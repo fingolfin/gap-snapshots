@@ -3,7 +3,7 @@
   
   [33X[0;0YThe  functionality  of  [5XGAP[105X can be extended by loading [5XGAP[105X packages. The [5XGAP[105X
   distribution  already  contains  all currently redistributed [5XGAP[105X packages in
-  the [11Xgap-4.11.0/pkg[111X directory.[133X
+  the [11Xgap-4.11.1/pkg[111X directory.[133X
   
   [33X[0;0Y[5XGAP[105X packages are written by (groups of) [5XGAP[105X users who may not necessarily be
   members of the [5XGAP[105X developer team. The responsibility and copyright of a [5XGAP[105X
@@ -196,11 +196,11 @@
   [1X76.2-5 DisplayPackageLoadingLog[101X
   
   [33X[1;0Y[29X[2XDisplayPackageLoadingLog[102X( [[3Xseverity[103X] ) [32X function[133X
-  [33X[1;0Y[29X[2XInfoPackageLoading[102X[32X info class[133X
-  [33X[1;0Y[29X[2XPACKAGE_ERROR[102X[32X global variable[133X
-  [33X[1;0Y[29X[2XPACKAGE_WARNING[102X[32X global variable[133X
-  [33X[1;0Y[29X[2XPACKAGE_INFO[102X[32X global variable[133X
-  [33X[1;0Y[29X[2XPACKAGE_DEBUG[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XInfoPackageLoading[102X [32X info class[133X
+  [33X[1;0Y[29X[2XPACKAGE_ERROR[102X [32X global variable[133X
+  [33X[1;0Y[29X[2XPACKAGE_WARNING[102X [32X global variable[133X
+  [33X[1;0Y[29X[2XPACKAGE_INFO[102X [32X global variable[133X
+  [33X[1;0Y[29X[2XPACKAGE_DEBUG[102X [32X global variable[133X
   [33X[1;0Y[29X[2XLogPackageLoadingMessage[102X( [3Xseverity[103X, [3Xmessage[103X[, [3Xname[103X] ) [32X function[133X
   
   [33X[0;0YWhenever  [5XGAP[105X  considers  loading a package, log messages are collected in a

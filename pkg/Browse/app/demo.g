@@ -292,7 +292,7 @@ NCurses.update_panels();; NCurses.doupdate();;\n\
 ",
 "# get other panel back, and show line drawing characters:\n\
 NCurses.show_panel(pan2);;NCurses.werase(win2);;\n\
-for c in RecFields(NCurses.lineDraw) do\n\
+for c in RecNames(NCurses.lineDraw) do\n\
   NCurses.waddstr(win2, c);\n\
   NCurses.waddch(win2, '\\t');\n\
   NCurses.waddch(win2, NCurses.lineDraw.(c));\n\

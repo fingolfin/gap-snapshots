@@ -102,7 +102,7 @@
   
   [1X8.1-7 InfoOptions[101X
   
-  [33X[1;0Y[29X[2XInfoOptions[102X[32X info class[133X
+  [33X[1;0Y[29X[2XInfoOptions[102X [32X info class[133X
   
   [33X[0;0YThis  info  class can be used to enable messages about options being changed
   (level 1) or accessed (level 2).[133X

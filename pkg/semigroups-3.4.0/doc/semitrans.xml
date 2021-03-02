@@ -1,0 +1,378 @@
+#############################################################################
+##
+#W  semitrans.xml
+#Y  Copyright (C) 2011-14                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="SmallestElementSemigroup">
+<ManSection>
+  <Attr Name = "SmallestElementSemigroup" Arg = "S"/>
+  <Attr Name = "LargestElementSemigroup" Arg = "S"/>
+  <Returns>A transformation.</Returns>
+  <Description>
+    These attributes return the smallest and largest element of the
+    transformation semigroup <A>S</A>, respectively. Smallest means the first
+    element in the sorted set of elements of <A>S</A> and largest means the last
+    element in the set of elements. <P/>
+
+    It is not necessary to find the elements of the semigroup to determine the
+    smallest or largest element, and this function has considerable better
+    performance than the equivalent <C>Elements(<A>S</A>)[1]</C> and
+    <C>Elements(<A>S</A>)[Size(<A>S</A>)]</C>.
+
+    <Example><![CDATA[
+gap> S := Monoid(
+> Transformation([1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10]),
+> Transformation([2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7]));
+<transformation monoid of degree 11 with 2 generators>
+gap> SmallestElementSemigroup(S);
+IdentityTransformation
+gap> LargestElementSemigroup(S);
+Transformation( [ 11, 11, 10, 10, 7, 6, 5, 6, 2, 2, 4 ] )]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsTransitive">
+<ManSection>
+  <Prop Name = "IsTransitive" Arg = "S[, X]" Label = "for a transformation
+    semigroup and a set"/>
+  <Prop Name = "IsTransitive" Arg = "S[, n]" Label = "for a transformation
+    semigroup and a pos int"/>
+  <Returns><K>true</K> or <K>false</K>.</Returns>
+  <Description>
+    A transformation semigroup <A>S</A> is <E>transitive</E> or <E>strongly
+    connected</E> on the set <A>X</A> if for every <C>i, j</C> in <A>X</A>
+    there is an element <C>s</C> in <A>S</A> such that <C>i ^ s = j</C>. <P/>
+
+    If the optional second argument is a positive integer <A>n</A>, then
+    <C>IsTransitive</C> returns <K>true</K> if <A>S</A> is transitive on
+    <C>[1 .. <A>n</A>]</C>, and <K>false</K> if it is not. <P/>
+
+    If the optional second argument is not provided, then the degree of
+    <A>S</A> is used by default; see <Ref
+      Attr = "DegreeOfTransformationSemigroup" BookName = "ref"/>.
+
+    <Example><![CDATA[
+gap> S := Semigroup([
+>  Bipartition([
+>    [1, 2], [3, 6, -2], [4, 5, -3, -4], [-1, -6], [-5]]),
+>  Bipartition([
+>    [1, -4], [2, 3, 4, 5], [6], [-1, -6], [-2, -3], [-5]])]);
+<bipartition semigroup of degree 6 with 2 generators>
+gap> AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of size 11, degree 12 with 2 generators>
+gap> IsTransitive(last);
+false
+gap> IsTransitive(AsSemigroup(Group((1, 2, 3))));
+true]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ComponentRepsOfTransformationSemigroup">
+<ManSection>
+  <Attr Name = "ComponentRepsOfTransformationSemigroup" Arg = "S"/>
+  <Returns>The representatives of components of a transformation semigroup.</Returns>
+  <Description>
+    This function returns the representatives of the components of the
+    action of the transformation semigroup <A>S</A> on the set of positive
+    integers not greater than the degree of <A>S</A>. <P/>
+
+    The representatives are the least set of points such that every point can
+    be reached from some representative under the action of <A>S</A>.
+
+    <Example><![CDATA[
+gap> S := Semigroup(
+> Transformation([11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5]),
+> Transformation([12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12]));;
+gap> ComponentRepsOfTransformationSemigroup(S);
+[ 2, 3, 8 ]]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ComponentsOfTransformationSemigroup">
+<ManSection>
+  <Attr Name = "ComponentsOfTransformationSemigroup" Arg = "S"/>
+  <Returns>The components of a transformation semigroup.</Returns>
+  <Description>
+    This function returns the components of the action of the transformation
+    semigroup <A>S</A> on the set of positive integers not greater than the
+    degree of <A>S</A>; the components of <A>S</A> partition this set.
+
+    <Example><![CDATA[
+gap> S := Semigroup(
+> Transformation([11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5]),
+> Transformation([12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12]));;
+gap> ComponentsOfTransformationSemigroup(S);
+[ [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ] ]]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="CyclesOfTransformationSemigroup">
+<ManSection>
+  <Attr Name = "CyclesOfTransformationSemigroup" Arg = "S"/>
+  <Returns>The cycles of a transformation semigroup.</Returns>
+  <Description>
+    This function returns the cycles, or strongly connected components, of the
+    action of the transformation semigroup <A>S</A> on the set of positive
+    integers not greater than the degree of <A>S</A>.
+    <Example><![CDATA[
+gap> S := Semigroup(
+> Transformation([11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5]),
+> Transformation([12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12]));;
+gap> CyclesOfTransformationSemigroup(S);
+[ [ 12 ], [ 1, 11 ], [ 1, 11, 12, 5, 4, 6 ], 
+  [ 1, 11, 12, 5, 4, 10, 9, 6 ], [ 1, 12, 5, 4, 6 ], 
+  [ 1, 12, 5, 4, 10, 9, 6 ], [ 1, 12, 5, 4, 10, 9, 11 ], 
+  [ 11, 12, 5, 4, 10, 9 ], [ 12, 5, 4, 10, 7 ], [ 4, 10, 7 ] ]]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsSynchronizingSemigroup">
+  <ManSection>
+    <Prop Name = "IsSynchronizingSemigroup" Arg = "S"
+      Label = "for a transformation semigroup" />
+    <Prop Name = "IsSynchronizingSemigroup" Arg = "S, n"
+      Label = "for a transformation semigroup and a positive integer" />
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      For a positive integer <A>n</A>,
+      <C>IsSynchronizingSemigroup</C> returns <K>true</K> if the semigroup of
+      transformations <A>S</A> contains a transformation with constant value on
+      <C>[1 .. <A>n</A>]</C>.
+      Note that this function will return true whenever <C><A>n</A> = 1</C>.
+      See also <Ref Oper = "ConstantTransformation" BookName = "ref"/>.
+      <P/>
+
+      If the optional second argument is not specified, then <A>n</A> will be
+      taken to be the value of
+      <Ref Oper = "DegreeOfTransformationSemigroup" BookName = "ref"/> for
+      <A>S</A>.
+      <P/>
+
+      Note that the semigroup consisting of the identity transformation is the
+      unique transformation semigroup with degree <C>0</C>. In this special
+      case, the function <C>IsSynchronizingSemigroup</C> will return
+      <K>false</K>.<P/>
+
+      <Example><![CDATA[
+gap> S := Semigroup(
+> Transformation([1, 1, 8, 7, 6, 6, 4, 1, 8, 9]),
+> Transformation([5, 8, 7, 6, 10, 8, 7, 6, 9, 7]));;
+gap> IsSynchronizingSemigroup(S, 10);
+true
+gap> S := Semigroup(
+> Transformation([3, 8, 1, 1, 9, 9, 8, 7, 9, 6]),
+> Transformation([7, 6, 8, 7, 5, 6, 8, 7, 8, 9]));;
+gap> IsSynchronizingSemigroup(S, 10);
+false
+gap> Representative(MinimalIdeal(S));
+Transformation( [ 7, 8, 8, 7, 8, 8, 8, 7, 8, 8 ] )]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DigraphOfActionOnPairs">
+  <ManSection>
+    <Attr Name = "DigraphOfActionOnPairs" Arg = "S"
+      Label = "for a transformation semigroup" />
+    <Attr Name = "DigraphOfActionOnPairs" Arg = "S, n"
+      Label = "for a transformation semigroup and an integer" />
+    <Returns>A digraph, or <K>fail</K>.</Returns>
+    <Description>
+      If <A>S</A> is a transformation semigroup and <A>n</A> is a non-negative
+      integer such that <A>S</A> acts on the points <C>[1 .. <A>n</A>]</C>, then
+      <C>DigraphOfActionOnPairs(<A>S</A>, <A>n</A>)</C> returns a digraph
+      representing the <Ref Func="OnSets" BookName="ref"/> action of <A>S</A> on
+      the pairs of points in <C>[1 ..  <A>n</A>]</C>.
+      <P/>
+
+      If the optional argument <A>n</A> is not specified, then by default the
+      degree of <A>S</A> will be chosen for <A>n</A>; see <Ref
+        Attr="DegreeOfTransformationSemigroup" BookName="ref" />. If the
+      semigroup <A>S</A> does not act on <C>[1 ..  <A>n</A>]</C>, then
+      <C>DigraphOfActionOnPairs(<A>S</A>, <A>n</A>)</C> returns <K>fail</K>.
+      <P/>
+
+      The digraph returned by <C>DigraphOfActionOnPairs</C> has <M><A>n</A> + {n
+        \choose 2}</M> vertices: the vertices <C>[1 .. <A>n</A>]</C> correspond
+      to the points in <C>[1 .. <A>n</A>]</C>, and the remaining vertices
+      correspond to the pairs of points in <C>[1 .. <A>n</A>]</C>. This
+      correspondence is stored in the vertex labels of the digraph; see <Ref
+        Oper="DigraphVertexLabels" BookName="Digraphs" />.
+      <P/>
+
+      The edges of the digraph are defined as follows. For each pair <C>{i,
+        j}</C> in <C>[1 .. <A>n</A>]</C>, and for each generator <C>f</C> in
+      <C>GeneratorsOfSemigroup(<A>S</A>)</C>, there is an edge from the vertex
+      corresponding to <C>{i, j}</C> to the vertex corresponding to <C>{i ^ f, j
+        ^ f}</C>.  Since <C>f</C> is a transformation, the set <C>{i ^ f, j ^
+        f}</C> may correspond to a pair (in the case that <C>i ^ f &lt;&gt; j ^
+        f</C>), or to a point (in the case that <C>i ^ f = j ^ f</C>).  The
+      label of an edge is the position of the first transformation within
+      <C>GeneratorsOfSemigroup(<A>S</A>)</C> that maps the pair corresponding to
+      the source vertex to the pair/point corresponding to the range vertex. See
+      <Ref Attr="GeneratorsOfSemigroup" BookName="ref" /> and <Ref
+        Oper="DigraphEdgeLabels" BookName="Digraphs" /> for further information.
+      <P/>
+
+      Note that the digraph returned by <C>DigraphOfActionOnPairs</C> has no
+      multiple edges; see <Ref Prop="IsMultiDigraph" BookName="Digraphs"/>.
+
+      <Example><![CDATA[
+gap> x := Transformation([2, 4, 3, 4, 7, 1, 6]);;
+gap> y := Transformation([3, 3, 2, 3, 5, 1, 5]);;
+gap> S := Semigroup(x, y);
+<transformation semigroup of degree 7 with 2 generators>
+gap> gr := DigraphOfActionOnPairs(S);
+<immutable digraph with 28 vertices, 41 edges>
+gap> OnSets([2, 5], x);
+[ 4, 7 ]
+gap> DigraphVertexLabel(gr, 16);
+[ 2, 5 ]
+gap> DigraphVertexLabel(gr, 25);
+[ 4, 7 ]
+gap> DigraphEdgeLabel(gr, 16, 25);
+1
+gap> gr := DigraphOfActionOnPairs(S, 4);
+<immutable digraph with 10 vertices, 11 edges>
+gap> DigraphVertexLabels(gr);
+[ 1, 2, 3, 4, [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 2, 3 ], [ 2, 4 ], 
+  [ 3, 4 ] ]
+gap> DigraphOfActionOnPairs(S, 5);
+fail]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DigraphOfActionOnPoints">
+  <ManSection>
+    <Attr Name = "DigraphOfActionOnPoints" Arg = "S"
+      Label = "for a transformation semigroup" />
+    <Attr Name = "DigraphOfActionOnPoints" Arg = "S, n"
+      Label = "for a transformation semigroup and an integer" />
+    <Returns>A digraph, or <K>fail</K>.</Returns>
+    <Description>
+      If <A>S</A> is a transformation semigroup and <A>n</A> is a non-negative
+      integer such that <A>S</A> acts on the points <C>[1 .. <A>n</A>]</C>, then
+      <C>DigraphOfActionOnPoints(<A>S</A>, <A>n</A>)</C> returns a digraph
+      representing the <Ref Func="OnPoints" BookName="ref"/> action of <A>S</A>
+      on the set <C>[1 ..  <A>n</A>]</C>.
+      <P/>
+
+      If the optional argument <A>n</A> is not specified, then by default the
+      degree of <A>S</A> will be chosen for <A>n</A>; see <Ref
+        Attr="DegreeOfTransformationSemigroup" BookName="ref" />. If the
+      semigroup <A>S</A> does not act on <C>[1 ..  <A>n</A>]</C>, then
+      <C>DigraphOfActionOnPoints(<A>S</A>, <A>n</A>)</C> returns <K>fail</K>.
+      <P/>
+
+      The digraph returned by <C>DigraphOfActionOnPoints</C> has <A>n</A>
+      vertices, where the vertex <C>i</C> corresponds to the point <C>i</C>.
+      For each point <C>i</C> in <C>[1 .. <A>n</A>]</C>, and for each generator
+      <C>f</C> in <C>GeneratorsOfSemigroup(<A>S</A>)</C>, there is an edge from
+      the vertex <C>i</C> to the vertex <C>i ^ f</C>. See <Ref
+        Attr="GeneratorsOfSemigroup" BookName="ref" /> for further information.
+      <P/>
+
+      Note that the digraph returned by <C>DigraphOfActionOnPoints</C> has no
+      multiple edges; see <Ref Prop="IsMultiDigraph" BookName="Digraphs"/>.
+
+      <Example><![CDATA[
+gap> x := Transformation([2, 4, 2, 4, 7, 1, 6]);;
+gap> y := Transformation([3, 3, 2, 3, 5, 1, 5]);;
+gap> S := Semigroup(x, y);
+<transformation semigroup of degree 7 with 2 generators>
+gap> gr := DigraphOfActionOnPoints(S);
+<immutable digraph with 7 vertices, 12 edges>
+gap> OnPoints(2, x);
+4
+gap> gr2 := DigraphOfActionOnPoints(S, 4);
+<immutable digraph with 4 vertices, 7 edges>
+gap> gr2 = InducedSubdigraph(gr, [1 .. 4]);
+true
+gap> DigraphOfActionOnPoints(S, 5);
+fail]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+
+<#GAPDoc Label="IsConnectedTransformationSemigroup">
+  <ManSection>
+    <Prop Name = "IsConnectedTransformationSemigroup" Arg = "S"
+      Label = "for a transformation semigroup" />
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A transformation semigroup <A>S</A> is connected if the digraph returned
+      by the function <C>DigraphOfActionOnPoints</C> is connected. See 
+      <Ref Prop = "IsConnectedDigraph" BookName = "digraphs" /> and <Ref Attr
+        = "DigraphOfActionOnPoints" Label = "for a transformation semigroup"/>.
+      The function <C>IsConnectedTransformationSemigroup</C> returns <K>true</K>
+      if the semigroup <A>S</A> is connected and <K>false</K> otherwise.
+
+      <Example><![CDATA[
+gap> S := Semigroup([
+>  Transformation([2, 4, 3, 4]),
+>  Transformation([3, 3, 2, 3, 3])]);
+<transformation semigroup of degree 5 with 2 generators>
+gap> IsConnectedTransformationSemigroup(S);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="FixedPointsOfTransformationSemigroup">
+  <ManSection>
+    <Attr Name="FixedPointsOfTransformationSemigroup" Arg="S"
+      Label="for a transformation semigroup"/>
+    <Returns>A set of positive integers.</Returns>
+    <Description>
+      If <A>S</A> is a transformation semigroup, then
+      <C>FixedPointsOfTransformationSemigroup(<A>S</A>)</C> returns the set of
+      points <C>i</C> in <C>[1 .. DegreeOfTransformationSemigroup(<A>S</A>)]</C>
+      such that <C>i ^ f = i</C> for all <C>f</C> in <A>S</A>. <P/>
+      <Example><![CDATA[
+gap> f := Transformation([1, 4, 2, 4, 3, 7, 7]);
+Transformation( [ 1, 4, 2, 4, 3, 7, 7 ] )
+gap> S := Semigroup(f);
+<commutative transformation semigroup of degree 7 with 1 generator>
+gap> FixedPointsOfTransformationSemigroup(S);
+[ 1, 4, 7 ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="WreathProduct">
+  <ManSection>
+    <Oper Name = "WreathProduct" Arg = "M, S"/>
+    <Returns>A transformation semigroup.</Returns>
+    <Description>
+      If <A>M</A> is a transformation monoid (or a permutation group) of degree
+      <C>m</C>, and <A>S</A> is a transformation semigroup (or permutation
+      group) of degree <C>s</C>, the operation
+      <C>WreathProduct(<A>M</A>, <A>S</A>)</C> returns the wreath product of
+      <A>M</A> and <A>S</A>, in terms of an embedding in the full
+      transformation monoid of degree <C>m * s</C>.
+
+      <Example><![CDATA[
+gap> T := FullTransformationMonoid(3);;
+gap> C := Group((1, 3));;
+gap> W := WreathProduct(T, C);;
+gap> Size(W);
+39366
+gap> WW := WreathProduct(C, T);;
+gap> Size(WW);
+216
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

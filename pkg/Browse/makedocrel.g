@@ -78,7 +78,7 @@ GAPDocManualLabFromSixFile( bookname,
 pathtotst:= "tst";
 tstfilename:= "test.tst";
 authors:= [ "Thomas Breuer", "Frank Lübeck" ];
-copyrightyear:= "2013";
+copyrightyear:= "2020";
 tstheadertext:= Concatenation( "\
 This file contains the GAP code of the examples in the package\n\
 documentation files.\n\
@@ -107,9 +107,9 @@ ExampleFileHeader:= function( filename, pkgname, authors, copyrightyear,
       Append( str, RepeatedString( " ", linelen - Length( authors[i] ) - 2 ) );
       Append( str, authors[i] );
     od;
-    Append( str, "\n##\n#Y  Copyright (C)  " );
+    Append( str, "\n##\n#Y  Copyright (C) " );
     Append( str, String( copyrightyear ) );
-    Append( str, ",   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany" );
+    Append( str, ",  Lehrstuhl f. Alg. u. Zahlenth., RWTH Aachen, Germany" );
     Append( str, "\n##\n##  " );
     Append( str, ReplacedString( text, "\n", "\n##  " ) );
 

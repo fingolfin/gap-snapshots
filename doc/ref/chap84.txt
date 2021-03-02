@@ -205,7 +205,7 @@
   
   [1X84.4-1 HELP_VIEWER_INFO[101X
   
-  [33X[1;0Y[29X[2XHELP_VIEWER_INFO[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XHELP_VIEWER_INFO[102X [32X global variable[133X
   
   [33X[0;0YThe  record  [2XHELP_VIEWER_INFO[102X  contains  one component for each help viewer.
   Each such component is a record with two components: [10X.type[110X and [10X.show[110X.[133X

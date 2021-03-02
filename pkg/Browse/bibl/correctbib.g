@@ -40,7 +40,8 @@ CorrectGAPBibliography:= function()
       fi;
     od;
 
-    SortParallel(List(valid, x-> x.Label), valid);
+# Do NOT sort the list anymore (or use a better criterion) ...
+#   SortParallel(List(valid, x-> x.Label), valid);
     Exec( Concatenation( "mv ", fileold, " ", fileold, "~" ) );
     WriteBibFile( fileold, [ valid, parsenew[2], parsenew[3] ] );
 

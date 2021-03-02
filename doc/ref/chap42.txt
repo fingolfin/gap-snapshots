@@ -84,13 +84,13 @@
   
   [1X42.1-3 PermutationsFamily[101X
   
-  [33X[1;0Y[29X[2XPermutationsFamily[102X[32X family[133X
+  [33X[1;0Y[29X[2XPermutationsFamily[102X [32X family[133X
   
   [33X[0;0Yis the family of all permutations.[133X
   
   [1X42.1-4 PERM_INVERSE_THRESHOLD[101X
   
-  [33X[1;0Y[29X[2XPERM_INVERSE_THRESHOLD[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XPERM_INVERSE_THRESHOLD[102X [32X global variable[133X
   
   [33X[0;0YFor permutations of degree up to [10XPERM_INVERSE_THRESHOLD[110X whenever the inverse
   image  of  a  point  under  a  permutations is needed, the entire inverse is

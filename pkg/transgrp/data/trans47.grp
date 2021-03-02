@@ -1,0 +1,22 @@
+#############################################################################
+##
+#A  trans47.grp                 GAP group library           Alexander Hulpke
+##
+#A  @(#)$Id:$
+##
+#Y  Copyright (C) 2014, Derek Holt, University of Warwick
+#Y  Converted by Alexander Hulpke
+##
+##  This file contains part of the transitive groups of degree 47
+##
+Revision.trans47_grp:=
+"@(#)$Id:$";
+
+TRANSGRP[47]:=[];
+TRANSPROPERTIES[47]:=[];
+TRANSSELECT[47]:=[];
+TRANSLENGTHS[47]:=6;
+TRANSSIZES[47]:=
+[47,94,1081,2162,
+129311620755584090321482177576805989984598816194560000000000,
+258623241511168180642964355153611979969197632389120000000000];

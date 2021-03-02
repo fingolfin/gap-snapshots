@@ -3,7 +3,7 @@
                              [1XGAP - Reference Manual[101X
   
   
-                          Release 4.11.0, 29-Feb-2020
+                           Release 4.11.1, 2021-03-02
   
   
                                  The GAP Group
@@ -16,7 +16,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0YCopyright  ©  (1987-2020)  for  the  core  part of the [5XGAP[105X system by the [5XGAP[105X
+  [33X[0;0YCopyright  ©  (1987-2021)  for  the  core  part of the [5XGAP[105X system by the [5XGAP[105X
   Group.[133X
   
   [33X[0;0YMost  parts  of this distribution, including the core part of the [5XGAP[105X system
@@ -760,12 +760,13 @@
       21.20-20 Filtered
       21.20-21 Number
       21.20-22 First
-      21.20-23 ForAll
-      21.20-24 ForAny
-      21.20-25 Product
-      21.20-26 Sum
-      21.20-27 Iterated
-      21.20-28 ListN
+      21.20-23 Last
+      21.20-24 ForAll
+      21.20-25 ForAny
+      21.20-26 Product
+      21.20-27 Sum
+      21.20-28 Iterated
+      21.20-29 ListN
     21.21 [33X[0;0YAdvanced List Manipulations[133X
       21.21-1 ListX
       21.21-2 SetX

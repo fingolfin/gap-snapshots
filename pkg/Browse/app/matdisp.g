@@ -167,7 +167,6 @@ NCurses.BrowseDenseList:= function( list, arec )
           sepLabelsCol:= [ "", "-" ],
           sepLabelsRow:= [ "", " |" ],
           sepCol:= Concatenation( List( [ 1 .. n ], x -> " " ), [ "" ] ),
-          SpecialGrid:= BrowseData.SpecialGridLineDrawPlus,
         ),
       );
 
@@ -186,6 +185,11 @@ NCurses.BrowseDenseList:= function( list, arec )
       else
         r.work.convertEntry:= String;
 #T support a user default
+      fi;
+      if r.work.labelsCol <> [] then
+        r.work.SpecialGrid:= BrowseData.SpecialGridLineDrawPlus;
+      else
+        r.work.SpecialGrid:= BrowseData.SpecialGridLineDraw;
       fi;
 
       NCurses.BrowseGeneric( r );
@@ -218,21 +222,21 @@ InstallMethod( Browse,
     function( m )
     local deg, chr, q, z;
 
-    if Length( m[1] ) = 0 then
+    if NrCols( m ) = 0 then
       TryNextMethod();
     fi;
 
-    if IsZmodnZObj( m[1][1] ) then
+    if IsZmodnZObj( m[1,1] ) then
       NCurses.BrowseDenseList( List( m, r -> List( r, i -> i![1] ) ),
           rec( header:= [ Concatenation( "matrix over Integers mod ",
-                              String( Characteristic( m[1][1] ) ) ),
+                              String( Characteristic( m[1,1] ) ) ),
                           "" ],
                convertEntry:= NCurses.ReplaceZeroByDot,
              ) );
     else
       # get the degree and characteristic
       deg:= Lcm( List( m, DegreeFFE ) );
-      chr:= Characteristic( m[1][1] );
+      chr:= Characteristic( m[1,1] );
 
       if deg = 1 then
         # if it is a finite prime field, use integers for display
@@ -287,13 +291,13 @@ InstallMethod( Browse,
     function( m )
     local deg, chr, q, z;
 
-    if Length( m[1] ) = 0 then
+    if NrCols( m ) = 0 then
       TryNextMethod();
     fi;
 
     NCurses.BrowseDenseList( List( m, r -> List( r, i -> i![1] ) ),
         rec( header:= [ Concatenation( "matrix over Integers mod ",
-                            String( Characteristic( m[1][1] ) ) ),
+                            String( Characteristic( m[1,1] ) ) ),
                         "" ],
              convertEntry:= NCurses.ReplaceZeroByDot,
            ) );
@@ -312,12 +316,12 @@ InstallMethod( Browse,
     function(m)
     local deg, chr;
 
-    if Length( m ) = 0 or Length( m[1] ) = 0 then
+    if NrRows( m ) = 0 or NrCols( m ) = 0 then
       TryNextMethod();
     fi;
 
     deg:= Lcm( List( m, DegreeFFE ) );
-    chr:= Characteristic( m[1][1] );
+    chr:= Characteristic( m[1,1] );
     if deg = 1 or chr^deg <= MAXSIZE_GF_INTERNAL then
       TryNextMethod();
     fi;

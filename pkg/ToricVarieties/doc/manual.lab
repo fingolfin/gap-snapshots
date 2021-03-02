@@ -1,0 +1,194 @@
+\GAPDocLabFile{toricvarieties}
+\makelabel{toricvarieties:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{toricvarieties:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{toricvarieties:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{toricvarieties:Introduction}{1}{X7DFB63A97E67C0A1}
+\makelabel{toricvarieties:What is the goal of the ToricVarieties package?}{1.1}{X7F1616D17C9AA831}
+\makelabel{toricvarieties:Installation of the ToricVarieties Package}{2}{X80C6D4EB7BE8CEF0}
+\makelabel{toricvarieties:Toric Varieties}{3}{X866558FA7BC3F2C8}
+\makelabel{toricvarieties:Toric Varieties: Examples}{3.1}{X802337377FDC8121}
+\makelabel{toricvarieties:The Hirzebruch surface of index 5}{3.1.1}{X7F674AD387A33155}
+\makelabel{toricvarieties:A smooth, complete toric variety which is not projective}{3.1.2}{X8524CDF9849408FF}
+\makelabel{toricvarieties:Convenient construction of toric varieties}{3.1.3}{X83D1336D7AA5640E}
+\makelabel{toricvarieties:Toric varieties from gradings}{3.1.4}{X8130939E843A1494}
+\makelabel{toricvarieties:Blowups of toric varieties by star subdivisions of fans}{3.1.5}{X815F92AA7A126BD5}
+\makelabel{toricvarieties:Toric variety: Category and Representations}{3.2}{X8108B9978021989B}
+\makelabel{toricvarieties:Properties}{3.3}{X871597447BB998A1}
+\makelabel{toricvarieties:Attributes}{3.4}{X7C701DBF7BAE649A}
+\makelabel{toricvarieties:Methods}{3.5}{X8606FDCE878850EF}
+\makelabel{toricvarieties:Constructors}{3.6}{X86EC0F0A78ECBC10}
+\makelabel{toricvarieties:Toric subvarieties}{4}{X84370283823C138C}
+\makelabel{toricvarieties:The GAP category}{4.1}{X7819115082F3E2A6}
+\makelabel{toricvarieties:Properties}{4.2}{X871597447BB998A1}
+\makelabel{toricvarieties:Attributes}{4.3}{X7C701DBF7BAE649A}
+\makelabel{toricvarieties:Methods}{4.4}{X8606FDCE878850EF}
+\makelabel{toricvarieties:Constructors}{4.5}{X86EC0F0A78ECBC10}
+\makelabel{toricvarieties:Affine toric varieties}{5}{X82F418F483E4D0D6}
+\makelabel{toricvarieties:Affine toric varieties: Examples}{5.1}{X8068F91F7C001DE7}
+\makelabel{toricvarieties:Affine space}{5.1.1}{X782DF75D8761D85B}
+\makelabel{toricvarieties:The GAP category}{5.2}{X7819115082F3E2A6}
+\makelabel{toricvarieties:Attributes}{5.3}{X7C701DBF7BAE649A}
+\makelabel{toricvarieties:Methods}{5.4}{X8606FDCE878850EF}
+\makelabel{toricvarieties:Constructors}{5.5}{X86EC0F0A78ECBC10}
+\makelabel{toricvarieties:Projective toric varieties}{6}{X7EEBFF7883297DBC}
+\makelabel{toricvarieties:Projective toric varieties: Examples}{6.1}{X8403EE76819E200F}
+\makelabel{toricvarieties:P1xP1 created by a polytope}{6.1.1}{X83FD64C083E2CBC4}
+\makelabel{toricvarieties:P1xP1 from product of P1s}{6.1.2}{X7CE9FDAE7AA1C8C3}
+\makelabel{toricvarieties:The GAP category}{6.2}{X7819115082F3E2A6}
+\makelabel{toricvarieties:Attribute}{6.3}{X7D67342087888E39}
+\makelabel{toricvarieties:Properties}{6.4}{X871597447BB998A1}
+\makelabel{toricvarieties:Methods}{6.5}{X8606FDCE878850EF}
+\makelabel{toricvarieties:Constructors}{6.6}{X86EC0F0A78ECBC10}
+\makelabel{toricvarieties:Toric morphisms}{7}{X7FA18F537F3F5237}
+\makelabel{toricvarieties:Toric morphisms: Examples}{7.1}{X83CE579A7B2021DE}
+\makelabel{toricvarieties:Morphism between toric varieties and their class groups}{7.1.1}{X7D1DD8EA8098C432}
+\makelabel{toricvarieties:The GAP category}{7.2}{X7819115082F3E2A6}
+\makelabel{toricvarieties:Properties}{7.3}{X871597447BB998A1}
+\makelabel{toricvarieties:Attributes}{7.4}{X7C701DBF7BAE649A}
+\makelabel{toricvarieties:Methods}{7.5}{X8606FDCE878850EF}
+\makelabel{toricvarieties:Constructors}{7.6}{X86EC0F0A78ECBC10}
+\makelabel{toricvarieties:Toric divisors}{8}{X7FDB76897833225A}
+\makelabel{toricvarieties:Toric divisors: Examples}{8.1}{X7FE84D6F87076DA0}
+\makelabel{toricvarieties:Divisors on a toric variety}{8.1.1}{X7A7080E77E93A36F}
+\makelabel{toricvarieties:Polytope of toric divisors}{8.1.2}{X7AA4909E8359A584}
+\makelabel{toricvarieties:The GAP category}{8.2}{X7819115082F3E2A6}
+\makelabel{toricvarieties:Properties}{8.3}{X871597447BB998A1}
+\makelabel{toricvarieties:Attributes}{8.4}{X7C701DBF7BAE649A}
+\makelabel{toricvarieties:Methods}{8.5}{X8606FDCE878850EF}
+\makelabel{toricvarieties:Constructors}{8.6}{X86EC0F0A78ECBC10}
+\makelabel{toricvarieties:Blowups of toric varieties}{9}{X7BABCA3984A9F55C}
+\makelabel{toricvarieties:Constructors}{9.1}{X86EC0F0A78ECBC10}
+\makelabel{toricvarieties:Index}{Ind}{X83A0356F839C696F}
+\makelabel{toricvarieties:IsToricVariety for isobject}{3.2.1}{X825DA516855326E1}
+\makelabel{toricvarieties:IsCategoryOfToricVarieties for ishomalgcategory}{3.2.2}{X87C8FCC6816CD49C}
+\makelabel{toricvarieties:twitter for istoricvariety}{3.2.3}{X82DC51717AD9628C}
+\makelabel{toricvarieties:IsNormalVariety for istoricvariety}{3.3.1}{X7BB01CF579A454D7}
+\makelabel{toricvarieties:IsAffine for istoricvariety}{3.3.2}{X821D89E687652A94}
+\makelabel{toricvarieties:IsProjective for istoricvariety}{3.3.3}{X7C408D7B7E064821}
+\makelabel{toricvarieties:IsSmooth for istoricvariety}{3.3.4}{X7B602E5F83D130E6}
+\makelabel{toricvarieties:IsComplete for istoricvariety}{3.3.5}{X7FFBADCC7BB02030}
+\makelabel{toricvarieties:HasTorusfactor for istoricvariety}{3.3.6}{X7B50D0928436C668}
+\makelabel{toricvarieties:HasNoTorusfactor for istoricvariety}{3.3.7}{X7C48A0497D35EA70}
+\makelabel{toricvarieties:IsOrbifold for istoricvariety}{3.3.8}{X7D1DE31A87B88797}
+\makelabel{toricvarieties:IsSimplicial for istoricvariety}{3.3.9}{X86DC51D486B2A033}
+\makelabel{toricvarieties:AffineOpenCovering for istoricvariety}{3.4.1}{X87E5C0868418F3D0}
+\makelabel{toricvarieties:CoxRing for istoricvariety}{3.4.2}{X7F65180D85380B35}
+\makelabel{toricvarieties:ListOfVariablesOfCoxRing for istoricvariety}{3.4.3}{X868FA9D6867D8A3B}
+\makelabel{toricvarieties:ClassGroup for istoricvariety}{3.4.4}{X7F35787D83E1866B}
+\makelabel{toricvarieties:TorusInvariantDivisorGroup for istoricvariety}{3.4.5}{X86353AF986EDFEB9}
+\makelabel{toricvarieties:MapFromCharacterToPrincipalDivisor for istoricvariety}{3.4.6}{X7F2F17E382730BCF}
+\makelabel{toricvarieties:MapFromWeilDivisorsToClassGroup for istoricvariety}{3.4.7}{X7FF75DB77EF5600A}
+\makelabel{toricvarieties:Dimension for istoricvariety}{3.4.8}{X80ECD8BA7FF3CD96}
+\makelabel{toricvarieties:DimensionOfTorusfactor for istoricvariety}{3.4.9}{X85336FDD8728605B}
+\makelabel{toricvarieties:CoordinateRingOfTorus for istoricvariety}{3.4.10}{X84874BCA7C941D76}
+\makelabel{toricvarieties:ListOfVariablesOfCoordinateRingOfTorus for istoricvariety}{3.4.11}{X7DA644E9799B9EC4}
+\makelabel{toricvarieties:IsProductOf for istoricvariety}{3.4.12}{X872889BB7A8C950E}
+\makelabel{toricvarieties:CharacterLattice for istoricvariety}{3.4.13}{X7D5F531086B349DC}
+\makelabel{toricvarieties:TorusInvariantPrimeDivisors for istoricvariety}{3.4.14}{X7F3E55DB87BF1B9D}
+\makelabel{toricvarieties:IrrelevantIdeal for istoricvariety}{3.4.15}{X84FE626E7A333413}
+\makelabel{toricvarieties:SRIdeal for istoricvariety}{3.4.16}{X7FF5AFAF7EF6C050}
+\makelabel{toricvarieties:MorphismFromCoxVariety for istoricvariety}{3.4.17}{X78EDFFFA846DA36B}
+\makelabel{toricvarieties:CoxVariety for istoricvariety}{3.4.18}{X816182EE86750E10}
+\makelabel{toricvarieties:FanOfVariety for istoricvariety}{3.4.19}{X7EF6A88D79773074}
+\makelabel{toricvarieties:CartierTorusInvariantDivisorGroup for istoricvariety}{3.4.20}{X7FA1D58881BC17AF}
+\makelabel{toricvarieties:PicardGroup for istoricvariety}{3.4.21}{X7D5508407A039CBC}
+\makelabel{toricvarieties:NameOfVariety for istoricvariety}{3.4.22}{X7D964D0B7A315F74}
+\makelabel{toricvarieties:ZariskiCotangentSheaf for istoricvariety}{3.4.23}{X7A1AEE8A8531B014}
+\makelabel{toricvarieties:CotangentSheaf for istoricvariety}{3.4.24}{X875E6958856A7833}
+\makelabel{toricvarieties:EulerCharacteristic for istoricvariety}{3.4.25}{X7AEC5F2B7FBF4B4B}
+\makelabel{toricvarieties:UnderlyingSheaf for istoricvariety}{3.5.1}{X7B4B8A9A876591AA}
+\makelabel{toricvarieties:CoordinateRingOfTorus for istoricvariety, islist}{3.5.2}{X7864ED227FC67EAF}
+\makelabel{toricvarieties:CharacterToRationalFunction for ishomalgelement, istoricvariety}{3.5.4}{X7EB6407381DA770B}
+\makelabel{toricvarieties:CoxRing for istoricvariety, islist}{3.5.5}{X82AB2367795C5B53}
+\makelabel{toricvarieties:WeilDivisorsOfVariety for istoricvariety}{3.5.6}{X81304E6685492462}
+\makelabel{toricvarieties:Fan for istoricvariety}{3.5.7}{X7A073EC97B7B2F58}
+\makelabel{toricvarieties:Factors for istoricvariety}{3.5.8}{X7C48FD287E0B4F68}
+\makelabel{toricvarieties:BlowUpOnIthMinimalTorusOrbit for istoricvariety, isint}{3.5.9}{X7F9BA4A5850A7D3C}
+\makelabel{toricvarieties:ZariskiCotangentSheafViaEulerSequence}{3.5.10}{X807354E58223DA87}
+\makelabel{toricvarieties:ZariskiCotangentSheafViaPoincareResidueMap}{3.5.11}{X7EF0140085B37534}
+\makelabel{toricvarieties:ithBettiNumber for istoricvariety, isint}{3.5.12}{X8175E6A879BD0FFE}
+\makelabel{toricvarieties:NrOfqRationalPoints for istoricvariety, isint}{3.5.13}{X87AE434F7CC3DA0A}
+\makelabel{toricvarieties:ToricVariety for istoricvariety}{3.6.1}{X7D8E4D46802FED13}
+\makelabel{toricvarieties:ToricVariety for islist}{3.6.2}{X8202F293835E28AC}
+\makelabel{toricvarieties:ToricVariety for isconvexobject}{3.6.3}{X84BB2EF387E22171}
+\makelabel{toricvarieties:ToricVariety for islist, islist, islist}{3.6.4}{X87E98D4E82571595}
+\makelabel{toricvarieties:ToricVariety for islist, islist, islist, islist}{3.6.5}{X81C81F337B8C27D9}
+\makelabel{toricvarieties:ToricVarietiesFromGrading for islist}{3.6.6}{X837CE639825FEC9B}
+\makelabel{toricvarieties:ToricVarietyFromGrading for islist}{3.6.7}{X7965EE327B3EB0CF}
+\makelabel{toricvarieties:IsToricSubvariety for istoricvariety}{4.1.1}{X87E213557E5F2716}
+\makelabel{toricvarieties:IsClosedSubvariety for istoricsubvariety}{4.2.1}{X87BF07957A6F7DFC}
+\makelabel{toricvarieties:IsOpen for istoricsubvariety}{4.2.2}{X7BACBD04825801D6}
+\makelabel{toricvarieties:IsWholeVariety for istoricsubvariety}{4.2.3}{X84653ABF7DEB60D4}
+\makelabel{toricvarieties:UnderlyingToricVariety for istoricsubvariety}{4.3.1}{X7D34E83578D38C30}
+\makelabel{toricvarieties:InclusionMorphism for istoricsubvariety}{4.3.2}{X867EB68F85A046ED}
+\makelabel{toricvarieties:AmbientToricVariety for istoricsubvariety}{4.3.3}{X81765D817B1DEF4E}
+\makelabel{toricvarieties:ClosureOfTorusOrbitOfCone for istoricvariety, iscone}{4.4.1}{X7F23E4678532E242}
+\makelabel{toricvarieties:ToricSubvariety for istoricvariety, istoricvariety}{4.5.1}{X8554CD3F7EB77AC8}
+\makelabel{toricvarieties:IsAffineToricVariety for istoricvariety}{5.2.1}{X79DAFC45797A1DAD}
+\makelabel{toricvarieties:CoordinateRing for isaffinetoricvariety}{5.3.1}{X7E22127584BB20FA}
+\makelabel{toricvarieties:ListOfVariablesOfCoordinateRing for isaffinetoricvariety}{5.3.2}{X8205D8A97B0C130B}
+\makelabel{toricvarieties:MorphismFromCoordinateRingToCoordinateRingOfTorus for istoricvariety}{5.3.3}{X858127C1879C9539}
+\makelabel{toricvarieties:ConeOfVariety for istoricvariety}{5.3.4}{X7AFEEEA184161182}
+\makelabel{toricvarieties:CoordinateRing for istoricvariety, islist}{5.4.1}{X87A1BD8578B73E05}
+\makelabel{toricvarieties:Cone for istoricvariety}{5.4.2}{X83AB831683AF0F27}
+\makelabel{toricvarieties:IsProjectiveToricVariety for istoricvariety}{6.2.1}{X7AF9D03A849061DA}
+\makelabel{toricvarieties:PolytopeOfVariety for istoricvariety}{6.3.1}{X7FA85FA878557BEA}
+\makelabel{toricvarieties:AffineCone for istoricvariety}{6.3.2}{X7B42C7097EB11BD2}
+\makelabel{toricvarieties:ProjectiveEmbedding for istoricvariety}{6.3.3}{X8582D7EB79B603BA}
+\makelabel{toricvarieties:IsIsomorphicToProjectiveSpace for istoricvariety}{6.4.1}{X8333455D78336442}
+\makelabel{toricvarieties:IsDirectProductOfPNs for istoricvariety}{6.4.2}{X7BF350A77D5FE823}
+\makelabel{toricvarieties:Polytope for istoricvariety}{6.5.1}{X7EE3034280F74482}
+\makelabel{toricvarieties:AmpleDivisor for istoricvariety and haspolytopeofvariety}{6.5.2}{X80E4786583CCB24A}
+\makelabel{toricvarieties:IsToricMorphism for isobject}{7.2.1}{X819A80C87F2E520D}
+\makelabel{toricvarieties:IsMorphism for istoricmorphism}{7.3.1}{X8409007978D5DCE1}
+\makelabel{toricvarieties:IsProper for istoricmorphism}{7.3.2}{X785098297B93ED95}
+\makelabel{toricvarieties:SourceObject for istoricmorphism}{7.4.1}{X814F0ED07CB1C305}
+\makelabel{toricvarieties:UnderlyingGridMorphism for istoricmorphism}{7.4.2}{X831FCE4180C361F7}
+\makelabel{toricvarieties:ToricImageObject for istoricmorphism}{7.4.3}{X79348EE07FE1404B}
+\makelabel{toricvarieties:RangeObject for istoricmorphism}{7.4.4}{X7E28EB8A7AA75A90}
+\makelabel{toricvarieties:MorphismOnWeilDivisorGroup for istoricmorphism}{7.4.5}{X7A79548C7DD721E6}
+\makelabel{toricvarieties:ClassGroup for istoricmorphism}{7.4.6}{X85593D208343F9A9}
+\makelabel{toricvarieties:MorphismOnCartierDivisorGroup for istoricmorphism}{7.4.7}{X86DD03A485FBE855}
+\makelabel{toricvarieties:PicardGroup for istoricmorphism}{7.4.8}{X7A4613747EB37387}
+\makelabel{toricvarieties:Source for istoricmorphism}{7.4.9}{X7C22BDE88295E1A4}
+\makelabel{toricvarieties:Range for istoricmorphism}{7.4.10}{X79A63E2585025A8C}
+\makelabel{toricvarieties:MorphismOnIthFactor for istoricmorphism}{7.4.11}{X7E855CA87D388FCC}
+\makelabel{toricvarieties:UnderlyingListList for istoricmorphism}{7.5.1}{X8159CA087F1A607B}
+\makelabel{toricvarieties:ToricMorphism for istoricvariety, islist}{7.6.1}{X7C6ADA8E7911025F}
+\makelabel{toricvarieties:ToricMorphism for istoricvariety, islist, istoricvariety}{7.6.2}{X82AE442981070044}
+\makelabel{toricvarieties:IsToricDivisor for isobject}{8.2.1}{X86DC31368264C30A}
+\makelabel{toricvarieties:twitter for istoricdivisor}{8.2.2}{X7E2187387D71480B}
+\makelabel{toricvarieties:IsCartier for istoricdivisor}{8.3.1}{X85B6624A78CFA656}
+\makelabel{toricvarieties:IsPrincipal for istoricdivisor}{8.3.2}{X7C4E41557FDB17B3}
+\makelabel{toricvarieties:IsPrimedivisor for istoricdivisor}{8.3.3}{X87877F5D79A0D48C}
+\makelabel{toricvarieties:IsBasepointFree for istoricdivisor}{8.3.4}{X7A4D10EE7A939642}
+\makelabel{toricvarieties:IsAmple for istoricdivisor}{8.3.5}{X784E978A7838A358}
+\makelabel{toricvarieties:IsVeryAmple for istoricdivisor}{8.3.6}{X85F98B807A07756F}
+\makelabel{toricvarieties:IsNumericallyEffective for istoricdivisor}{8.3.7}{X83EBA3F0852F61FC}
+\makelabel{toricvarieties:CartierData for istoricdivisor}{8.4.1}{X7C9D1DF87C2BC4AB}
+\makelabel{toricvarieties:CharacterOfPrincipalDivisor for istoricdivisor}{8.4.2}{X82EBFD32813166B7}
+\makelabel{toricvarieties:ClassOfDivisor for istoricdivisor}{8.4.3}{X7BDB2B61844AA35D}
+\makelabel{toricvarieties:PolytopeOfDivisor for istoricdivisor}{8.4.4}{X8333191283099DD6}
+\makelabel{toricvarieties:BasisOfGlobalSections for istoricdivisor}{8.4.5}{X803FA0C780871883}
+\makelabel{toricvarieties:IntegerForWhichIsSureVeryAmple for istoricdivisor}{8.4.6}{X814933247B5D6242}
+\makelabel{toricvarieties:AmbientToricVariety for istoricdivisor}{8.4.7}{X7929762F79ABFA0D}
+\makelabel{toricvarieties:UnderlyingGroupElement for istoricdivisor}{8.4.8}{X86DCAD21785C0FA5}
+\makelabel{toricvarieties:UnderlyingToricVariety for istoricdivisor}{8.4.9}{X7ACCB998849BC939}
+\makelabel{toricvarieties:DegreeOfDivisor for istoricdivisor}{8.4.10}{X796D5B8B807A74B2}
+\makelabel{toricvarieties:VarietyOfDivisorpolytope for istoricdivisor}{8.4.11}{X7AE216928066B842}
+\makelabel{toricvarieties:MonomsOfCoxRingOfDegree for istoricdivisor}{8.4.12}{X86C6946780CC6D38}
+\makelabel{toricvarieties:CoxRingOfTargetOfDivisorMorphism for istoricdivisor}{8.4.13}{X874157CD83352D1C}
+\makelabel{toricvarieties:RingMorphismOfDivisor for istoricdivisor}{8.4.14}{X861A15E57E618D7F}
+\makelabel{toricvarieties:VeryAmpleMultiple for istoricdivisor}{8.5.1}{X7CE4802383A152FF}
+\makelabel{toricvarieties:CharactersForClosedEmbedding for istoricdivisor}{8.5.2}{X833D071081208C60}
+\makelabel{toricvarieties:MonomsOfCoxRingOfDegree for istoricvariety, ishomalgelement}{8.5.6}{X80B40FD58011D036}
+\makelabel{toricvarieties:DivisorOfGivenClass for istoricvariety, ishomalgelement}{8.5.7}{X789DC1A47E8D22D9}
+\makelabel{toricvarieties:AddDivisorToItsAmbientVariety for istoricdivisor}{8.5.8}{X7CEE2AF37AABA035}
+\makelabel{toricvarieties:Polytope for istoricdivisor}{8.5.9}{X821ED50B856BDF79}
+\makelabel{toricvarieties:CoxRingOfTargetOfDivisorMorphism for istoricdivisor, isstring}{8.5.10}{X84EDC7BC7BB19FBE}
+\makelabel{toricvarieties:DivisorOfCharacter for ishomalgelement, istoricvariety}{8.6.1}{X84823A8C80B00518}
+\makelabel{toricvarieties:DivisorOfCharacter for islist, istoricvariety}{8.6.2}{X814A40377CB29DC8}
+\makelabel{toricvarieties:CreateDivisor for ishomalgelement, istoricvariety}{8.6.3}{X78D779C681E9C1D8}
+\makelabel{toricvarieties:CreateDivisor for islist, istoricvariety}{8.6.4}{X7836CA92784E98B0}
+\makelabel{toricvarieties:BlowupOfToricVariety for istoricvariety, islist, isstring}{9.1.1}{X87EFC9AA7DF9981C}
+\makelabel{toricvarieties:SequenceOfBlowupsOfToricVariety for istoricvariety, islist}{9.1.2}{X81A6EDC085349C26}

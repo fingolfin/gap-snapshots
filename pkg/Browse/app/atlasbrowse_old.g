@@ -634,7 +634,7 @@ BindGlobal( "BrowseAtlasInfo", function( arg )
 ##
 ##  Add the Browse application to the list shown by `BrowseGapData'.
 ##
-BrowseGapDataAdd( "AtlasRep Overview", BrowseAtlasInfo, true, "\
+BrowseGapDataAdd( "AtlasRep Overview", BrowseAtlasInfo, "\
 an overview of the information provided by the \
 Atlas of Group Representations, \
 the return value is the list of records \

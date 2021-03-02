@@ -1,0 +1,803 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }CAP Categories}}{5}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Categories}}{5}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}\leavevmode {\color {Chapter }IsCapCategory (for IsObject)}}{5}{subsection.1.1.1}
+\contentsline {subsection}{\numberline {1.1.2}\leavevmode {\color {Chapter }IsCapCategoryCell (for IsAttributeStoringRep)}}{5}{subsection.1.1.2}
+\contentsline {subsection}{\numberline {1.1.3}\leavevmode {\color {Chapter }IsCapCategoryObject (for IsCapCategoryCell)}}{5}{subsection.1.1.3}
+\contentsline {subsection}{\numberline {1.1.4}\leavevmode {\color {Chapter }IsCapCategoryMorphism (for IsCapCategoryCell)}}{6}{subsection.1.1.4}
+\contentsline {subsection}{\numberline {1.1.5}\leavevmode {\color {Chapter }IsCapCategoryTwoCell (for IsCapCategoryCell)}}{6}{subsection.1.1.5}
+\contentsline {subsection}{\numberline {1.1.6}\leavevmode {\color {Chapter }AddCategoricalProperty}}{6}{subsection.1.1.6}
+\contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }Constructor}}{6}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}\leavevmode {\color {Chapter }CreateCapCategory}}{6}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}\leavevmode {\color {Chapter }CreateCapCategory (for IsString)}}{6}{subsection.1.2.2}
+\contentsline {section}{\numberline {1.3}\leavevmode {\color {Chapter }Internal Attributes}}{6}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}\leavevmode {\color {Chapter }CategoryFilter (for IsCapCategory)}}{6}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.2}\leavevmode {\color {Chapter }CellFilter (for IsCapCategory)}}{7}{subsection.1.3.2}
+\contentsline {subsection}{\numberline {1.3.3}\leavevmode {\color {Chapter }ObjectFilter (for IsCapCategory)}}{7}{subsection.1.3.3}
+\contentsline {subsection}{\numberline {1.3.4}\leavevmode {\color {Chapter }MorphismFilter (for IsCapCategory)}}{7}{subsection.1.3.4}
+\contentsline {subsection}{\numberline {1.3.5}\leavevmode {\color {Chapter }TwoCellFilter (for IsCapCategory)}}{7}{subsection.1.3.5}
+\contentsline {subsection}{\numberline {1.3.6}\leavevmode {\color {Chapter }CommutativeRingOfLinearCategory (for IsCapCategory)}}{7}{subsection.1.3.6}
+\contentsline {section}{\numberline {1.4}\leavevmode {\color {Chapter }Logic switcher}}{7}{section.1.4}
+\contentsline {subsection}{\numberline {1.4.1}\leavevmode {\color {Chapter }CapCategorySwitchLogicPropagationForObjectsOn}}{7}{subsection.1.4.1}
+\contentsline {subsection}{\numberline {1.4.2}\leavevmode {\color {Chapter }CapCategorySwitchLogicPropagationForObjectsOff}}{7}{subsection.1.4.2}
+\contentsline {subsection}{\numberline {1.4.3}\leavevmode {\color {Chapter }CapCategorySwitchLogicPropagationForMorphismsOn}}{8}{subsection.1.4.3}
+\contentsline {subsection}{\numberline {1.4.4}\leavevmode {\color {Chapter }CapCategorySwitchLogicPropagationForMorphismsOff}}{8}{subsection.1.4.4}
+\contentsline {subsection}{\numberline {1.4.5}\leavevmode {\color {Chapter }CapCategorySwitchLogicPropagationOn}}{8}{subsection.1.4.5}
+\contentsline {subsection}{\numberline {1.4.6}\leavevmode {\color {Chapter }CapCategorySwitchLogicPropagationOff}}{8}{subsection.1.4.6}
+\contentsline {subsection}{\numberline {1.4.7}\leavevmode {\color {Chapter }CapCategorySwitchLogicOn}}{8}{subsection.1.4.7}
+\contentsline {subsection}{\numberline {1.4.8}\leavevmode {\color {Chapter }CapCategorySwitchLogicOff}}{8}{subsection.1.4.8}
+\contentsline {section}{\numberline {1.5}\leavevmode {\color {Chapter }Tool functions}}{8}{section.1.5}
+\contentsline {subsection}{\numberline {1.5.1}\leavevmode {\color {Chapter }CanCompute (for IsCapCategory, IsString)}}{8}{subsection.1.5.1}
+\contentsline {subsection}{\numberline {1.5.2}\leavevmode {\color {Chapter }CheckConstructivenessOfCategory (for IsCapCategory, IsString)}}{9}{subsection.1.5.2}
+\contentsline {section}{\numberline {1.6}\leavevmode {\color {Chapter }Well-Definedness of Cells}}{9}{section.1.6}
+\contentsline {subsection}{\numberline {1.6.1}\leavevmode {\color {Chapter }IsWellDefined (for IsCapCategoryCell)}}{9}{subsection.1.6.1}
+\contentsline {section}{\numberline {1.7}\leavevmode {\color {Chapter }Unpacking data structures}}{9}{section.1.7}
+\contentsline {subsection}{\numberline {1.7.1}\leavevmode {\color {Chapter }Down (for IsObject)}}{9}{subsection.1.7.1}
+\contentsline {subsection}{\numberline {1.7.2}\leavevmode {\color {Chapter }DownOnlyMorphismData (for IsCapCategoryMorphism)}}{9}{subsection.1.7.2}
+\contentsline {subsection}{\numberline {1.7.3}\leavevmode {\color {Chapter }DownToBottom (for IsObject)}}{9}{subsection.1.7.3}
+\contentsline {section}{\numberline {1.8}\leavevmode {\color {Chapter }Caching}}{10}{section.1.8}
+\contentsline {subsection}{\numberline {1.8.1}\leavevmode {\color {Chapter }SetCachingOfCategory}}{10}{subsection.1.8.1}
+\contentsline {subsection}{\numberline {1.8.2}\leavevmode {\color {Chapter }SetCachingOfCategoryWeak}}{10}{subsection.1.8.2}
+\contentsline {subsection}{\numberline {1.8.3}\leavevmode {\color {Chapter }SetDefaultCaching}}{10}{subsection.1.8.3}
+\contentsline {section}{\numberline {1.9}\leavevmode {\color {Chapter }Sanity checks}}{10}{section.1.9}
+\contentsline {subsection}{\numberline {1.9.1}\leavevmode {\color {Chapter }DisableInputSanityChecks}}{10}{subsection.1.9.1}
+\contentsline {section}{\numberline {1.10}\leavevmode {\color {Chapter }Enable automatic calls of \texttt {Add}}}{11}{section.1.10}
+\contentsline {subsection}{\numberline {1.10.1}\leavevmode {\color {Chapter }EnableAddForCategoricalOperations}}{11}{subsection.1.10.1}
+\contentsline {section}{\numberline {1.11}\leavevmode {\color {Chapter }Performance tweaks}}{11}{section.1.11}
+\contentsline {section}{\numberline {1.12}\leavevmode {\color {Chapter }LaTeX}}{11}{section.1.12}
+\contentsline {subsection}{\numberline {1.12.1}\leavevmode {\color {Chapter }LaTeXOutput (for IsCapCategoryCell)}}{11}{subsection.1.12.1}
+\contentsline {subsection}{\numberline {1.12.2}\leavevmode {\color {Chapter }LaTeXOutput (for IsCapCategory)}}{12}{subsection.1.12.2}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Objects}}{13}{chapter.2}
+\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }Attributes for the Type of Objects}}{13}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}\leavevmode {\color {Chapter }CapCategory (for IsCapCategoryObject)}}{13}{subsection.2.1.1}
+\contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter }Equality for Objects}}{13}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}\leavevmode {\color {Chapter }IsEqualForObjects (for IsCapCategoryObject, IsCapCategoryObject)}}{13}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}\leavevmode {\color {Chapter }AddIsEqualForObjects (for IsCapCategory, IsFunction)}}{13}{subsection.2.2.2}
+\contentsline {section}{\numberline {2.3}\leavevmode {\color {Chapter }Categorical Properties of Objects}}{14}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}\leavevmode {\color {Chapter }IsProjective (for IsCapCategoryObject)}}{14}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}\leavevmode {\color {Chapter }AddIsProjective (for IsCapCategory, IsFunction)}}{14}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}\leavevmode {\color {Chapter }IsInjective (for IsCapCategoryObject)}}{14}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.4}\leavevmode {\color {Chapter }AddIsInjective (for IsCapCategory, IsFunction)}}{14}{subsection.2.3.4}
+\contentsline {subsection}{\numberline {2.3.5}\leavevmode {\color {Chapter }IsTerminal (for IsCapCategoryObject)}}{14}{subsection.2.3.5}
+\contentsline {subsection}{\numberline {2.3.6}\leavevmode {\color {Chapter }AddIsTerminal (for IsCapCategory, IsFunction)}}{14}{subsection.2.3.6}
+\contentsline {subsection}{\numberline {2.3.7}\leavevmode {\color {Chapter }IsInitial (for IsCapCategoryObject)}}{14}{subsection.2.3.7}
+\contentsline {subsection}{\numberline {2.3.8}\leavevmode {\color {Chapter }AddIsInitial (for IsCapCategory, IsFunction)}}{15}{subsection.2.3.8}
+\contentsline {subsection}{\numberline {2.3.9}\leavevmode {\color {Chapter }IsZeroForObjects (for IsCapCategoryObject)}}{15}{subsection.2.3.9}
+\contentsline {subsection}{\numberline {2.3.10}\leavevmode {\color {Chapter }IsZero (for IsCapCategoryObject)}}{15}{subsection.2.3.10}
+\contentsline {subsection}{\numberline {2.3.11}\leavevmode {\color {Chapter }AddIsZeroForObjects (for IsCapCategory, IsFunction)}}{15}{subsection.2.3.11}
+\contentsline {section}{\numberline {2.4}\leavevmode {\color {Chapter }Random Objects}}{15}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}\leavevmode {\color {Chapter }RandomObjectByInteger (for IsCapCategory, IsInt)}}{15}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}\leavevmode {\color {Chapter }AddRandomObjectByInteger (for IsCapCategory, IsFunction)}}{16}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.3}\leavevmode {\color {Chapter }RandomObjectByList (for IsCapCategory, IsList)}}{16}{subsection.2.4.3}
+\contentsline {subsection}{\numberline {2.4.4}\leavevmode {\color {Chapter }AddRandomObjectByList (for IsCapCategory, IsFunction)}}{16}{subsection.2.4.4}
+\contentsline {subsection}{\numberline {2.4.5}\leavevmode {\color {Chapter }RandomObject (for IsCapCategory, IsInt)}}{16}{subsection.2.4.5}
+\contentsline {section}{\numberline {2.5}\leavevmode {\color {Chapter }Tool functions for caches}}{16}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}\leavevmode {\color {Chapter }IsEqualForCacheForObjects (for IsCapCategoryObject, IsCapCategoryObject)}}{16}{subsection.2.5.1}
+\contentsline {subsection}{\numberline {2.5.2}\leavevmode {\color {Chapter }AddIsEqualForCacheForObjects (for IsCapCategory, IsFunction)}}{16}{subsection.2.5.2}
+\contentsline {section}{\numberline {2.6}\leavevmode {\color {Chapter }Adding Objects to a Category}}{17}{section.2.6}
+\contentsline {subsection}{\numberline {2.6.1}\leavevmode {\color {Chapter }Add (for IsCapCategory, IsCapCategoryObject)}}{17}{subsection.2.6.1}
+\contentsline {subsection}{\numberline {2.6.2}\leavevmode {\color {Chapter }AddObject (for IsCapCategory, IsAttributeStoringRep)}}{17}{subsection.2.6.2}
+\contentsline {subsection}{\numberline {2.6.3}\leavevmode {\color {Chapter }AddObjectRepresentation (for IsCapCategory, IsObject)}}{17}{subsection.2.6.3}
+\contentsline {subsection}{\numberline {2.6.4}\leavevmode {\color {Chapter }ObjectifyObjectForCAPWithAttributes}}{17}{subsection.2.6.4}
+\contentsline {section}{\numberline {2.7}\leavevmode {\color {Chapter }Well-Definedness of Objects}}{17}{section.2.7}
+\contentsline {subsection}{\numberline {2.7.1}\leavevmode {\color {Chapter }IsWellDefinedForObjects (for IsCapCategoryObject)}}{17}{subsection.2.7.1}
+\contentsline {subsection}{\numberline {2.7.2}\leavevmode {\color {Chapter }AddIsWellDefinedForObjects (for IsCapCategory, IsFunction)}}{18}{subsection.2.7.2}
+\contentsline {section}{\numberline {2.8}\leavevmode {\color {Chapter }Projectives}}{18}{section.2.8}
+\contentsline {subsection}{\numberline {2.8.1}\leavevmode {\color {Chapter }SomeProjectiveObject (for IsCapCategoryObject)}}{18}{subsection.2.8.1}
+\contentsline {subsection}{\numberline {2.8.2}\leavevmode {\color {Chapter }EpimorphismFromSomeProjectiveObject (for IsCapCategoryObject)}}{18}{subsection.2.8.2}
+\contentsline {subsection}{\numberline {2.8.3}\leavevmode {\color {Chapter }EpimorphismFromSomeProjectiveObjectWithGivenSomeProjectiveObject (for IsCapCategoryObject, IsCapCategoryObject)}}{18}{subsection.2.8.3}
+\contentsline {subsection}{\numberline {2.8.4}\leavevmode {\color {Chapter }ProjectiveLift (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{18}{subsection.2.8.4}
+\contentsline {subsection}{\numberline {2.8.5}\leavevmode {\color {Chapter }AddSomeProjectiveObject (for IsCapCategory, IsFunction)}}{18}{subsection.2.8.5}
+\contentsline {subsection}{\numberline {2.8.6}\leavevmode {\color {Chapter }AddEpimorphismFromSomeProjectiveObject (for IsCapCategory, IsFunction)}}{19}{subsection.2.8.6}
+\contentsline {subsection}{\numberline {2.8.7}\leavevmode {\color {Chapter }AddEpimorphismFromSomeProjectiveObjectWithGivenSomeProjectiveObject (for IsCapCategory, IsFunction)}}{19}{subsection.2.8.7}
+\contentsline {subsection}{\numberline {2.8.8}\leavevmode {\color {Chapter }AddProjectiveLift (for IsCapCategory, IsFunction)}}{19}{subsection.2.8.8}
+\contentsline {section}{\numberline {2.9}\leavevmode {\color {Chapter }Injectives}}{19}{section.2.9}
+\contentsline {subsection}{\numberline {2.9.1}\leavevmode {\color {Chapter }SomeInjectiveObject (for IsCapCategoryObject)}}{19}{subsection.2.9.1}
+\contentsline {subsection}{\numberline {2.9.2}\leavevmode {\color {Chapter }MonomorphismIntoSomeInjectiveObject (for IsCapCategoryObject)}}{19}{subsection.2.9.2}
+\contentsline {subsection}{\numberline {2.9.3}\leavevmode {\color {Chapter }MonomorphismIntoSomeInjectiveObjectWithGivenSomeInjectiveObject (for IsCapCategoryObject, IsCapCategoryObject)}}{20}{subsection.2.9.3}
+\contentsline {subsection}{\numberline {2.9.4}\leavevmode {\color {Chapter }InjectiveColift (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{20}{subsection.2.9.4}
+\contentsline {subsection}{\numberline {2.9.5}\leavevmode {\color {Chapter }AddSomeInjectiveObject (for IsCapCategory, IsFunction)}}{20}{subsection.2.9.5}
+\contentsline {subsection}{\numberline {2.9.6}\leavevmode {\color {Chapter }AddMonomorphismIntoSomeInjectiveObject (for IsCapCategory, IsFunction)}}{20}{subsection.2.9.6}
+\contentsline {subsection}{\numberline {2.9.7}\leavevmode {\color {Chapter }AddMonomorphismIntoSomeInjectiveObjectWithGivenSomeInjectiveObject (for IsCapCategory, IsFunction)}}{20}{subsection.2.9.7}
+\contentsline {subsection}{\numberline {2.9.8}\leavevmode {\color {Chapter }AddInjectiveColift (for IsCapCategory, IsFunction)}}{20}{subsection.2.9.8}
+\contentsline {section}{\numberline {2.10}\leavevmode {\color {Chapter }Simplified Objects}}{21}{section.2.10}
+\contentsline {subsection}{\numberline {2.10.1}\leavevmode {\color {Chapter }Simplify (for IsCapCategoryObject)}}{21}{subsection.2.10.1}
+\contentsline {subsection}{\numberline {2.10.2}\leavevmode {\color {Chapter }SimplifyObject (for IsCapCategoryObject, IsObject)}}{21}{subsection.2.10.2}
+\contentsline {subsection}{\numberline {2.10.3}\leavevmode {\color {Chapter }AddSimplifyObject (for IsCapCategory, IsFunction)}}{21}{subsection.2.10.3}
+\contentsline {subsection}{\numberline {2.10.4}\leavevmode {\color {Chapter }SimplifyObject{\textunderscore }IsoFromInputObject (for IsCapCategoryObject, IsObject)}}{21}{subsection.2.10.4}
+\contentsline {subsection}{\numberline {2.10.5}\leavevmode {\color {Chapter }AddSimplifyObject{\textunderscore }IsoFromInputObject (for IsCapCategory, IsFunction)}}{21}{subsection.2.10.5}
+\contentsline {subsection}{\numberline {2.10.6}\leavevmode {\color {Chapter }SimplifyObject{\textunderscore }IsoToInputObject (for IsCapCategoryObject, IsObject)}}{22}{subsection.2.10.6}
+\contentsline {subsection}{\numberline {2.10.7}\leavevmode {\color {Chapter }AddSimplifyObject{\textunderscore }IsoToInputObject (for IsCapCategory, IsFunction)}}{22}{subsection.2.10.7}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Morphisms}}{23}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Attributes for the Type of Morphisms}}{23}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }CapCategory (for IsCapCategoryMorphism)}}{23}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}\leavevmode {\color {Chapter }Source (for IsCapCategoryMorphism)}}{23}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}\leavevmode {\color {Chapter }Range (for IsCapCategoryMorphism)}}{23}{subsection.3.1.3}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }Categorical Properties of Morphisms}}{23}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }IsMonomorphism (for IsCapCategoryMorphism)}}{23}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }AddIsMonomorphism (for IsCapCategory, IsFunction)}}{24}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}\leavevmode {\color {Chapter }IsEpimorphism (for IsCapCategoryMorphism)}}{24}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}\leavevmode {\color {Chapter }AddIsEpimorphism (for IsCapCategory, IsFunction)}}{24}{subsection.3.2.4}
+\contentsline {subsection}{\numberline {3.2.5}\leavevmode {\color {Chapter }IsIsomorphism (for IsCapCategoryMorphism)}}{24}{subsection.3.2.5}
+\contentsline {subsection}{\numberline {3.2.6}\leavevmode {\color {Chapter }AddIsIsomorphism (for IsCapCategory, IsFunction)}}{24}{subsection.3.2.6}
+\contentsline {subsection}{\numberline {3.2.7}\leavevmode {\color {Chapter }IsSplitMonomorphism (for IsCapCategoryMorphism)}}{24}{subsection.3.2.7}
+\contentsline {subsection}{\numberline {3.2.8}\leavevmode {\color {Chapter }AddIsSplitMonomorphism (for IsCapCategory, IsFunction)}}{24}{subsection.3.2.8}
+\contentsline {subsection}{\numberline {3.2.9}\leavevmode {\color {Chapter }IsSplitEpimorphism (for IsCapCategoryMorphism)}}{25}{subsection.3.2.9}
+\contentsline {subsection}{\numberline {3.2.10}\leavevmode {\color {Chapter }AddIsSplitEpimorphism (for IsCapCategory, IsFunction)}}{25}{subsection.3.2.10}
+\contentsline {subsection}{\numberline {3.2.11}\leavevmode {\color {Chapter }IsOne (for IsCapCategoryMorphism)}}{25}{subsection.3.2.11}
+\contentsline {subsection}{\numberline {3.2.12}\leavevmode {\color {Chapter }AddIsOne (for IsCapCategory, IsFunction)}}{25}{subsection.3.2.12}
+\contentsline {subsection}{\numberline {3.2.13}\leavevmode {\color {Chapter }IsIdempotent (for IsCapCategoryMorphism)}}{25}{subsection.3.2.13}
+\contentsline {subsection}{\numberline {3.2.14}\leavevmode {\color {Chapter }AddIsIdempotent (for IsCapCategory, IsFunction)}}{25}{subsection.3.2.14}
+\contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }Random Morphisms}}{25}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}\leavevmode {\color {Chapter }RandomMorphismWithFixedSourceByInteger (for IsCapCategoryObject, IsInt)}}{26}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}\leavevmode {\color {Chapter }AddRandomMorphismWithFixedSourceByInteger (for IsCapCategory, IsFunction)}}{26}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}\leavevmode {\color {Chapter }RandomMorphismWithFixedSourceByList (for IsCapCategoryObject, IsList)}}{26}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}\leavevmode {\color {Chapter }AddRandomMorphismWithFixedSourceByList (for IsCapCategory, IsFunction)}}{26}{subsection.3.3.4}
+\contentsline {subsection}{\numberline {3.3.5}\leavevmode {\color {Chapter }RandomMorphismWithFixedRangeByInteger (for IsCapCategoryObject, IsInt)}}{26}{subsection.3.3.5}
+\contentsline {subsection}{\numberline {3.3.6}\leavevmode {\color {Chapter }AddRandomMorphismWithFixedRangeByInteger (for IsCapCategory, IsFunction)}}{27}{subsection.3.3.6}
+\contentsline {subsection}{\numberline {3.3.7}\leavevmode {\color {Chapter }RandomMorphismWithFixedRangeByList (for IsCapCategoryObject, IsList)}}{27}{subsection.3.3.7}
+\contentsline {subsection}{\numberline {3.3.8}\leavevmode {\color {Chapter }AddRandomMorphismWithFixedRangeByList (for IsCapCategory, IsFunction)}}{27}{subsection.3.3.8}
+\contentsline {subsection}{\numberline {3.3.9}\leavevmode {\color {Chapter }RandomMorphismWithFixedSourceAndRangeByInteger (for IsCapCategoryObject, IsCapCategoryObject, IsInt)}}{27}{subsection.3.3.9}
+\contentsline {subsection}{\numberline {3.3.10}\leavevmode {\color {Chapter }AddRandomMorphismWithFixedSourceAndRangeByInteger (for IsCapCategory, IsFunction)}}{27}{subsection.3.3.10}
+\contentsline {subsection}{\numberline {3.3.11}\leavevmode {\color {Chapter }RandomMorphismWithFixedSourceAndRangeByList (for IsCapCategoryObject, IsCapCategoryObject, IsList)}}{27}{subsection.3.3.11}
+\contentsline {subsection}{\numberline {3.3.12}\leavevmode {\color {Chapter }AddRandomMorphismWithFixedSourceAndRangeByList (for IsCapCategory, IsFunction)}}{28}{subsection.3.3.12}
+\contentsline {subsection}{\numberline {3.3.13}\leavevmode {\color {Chapter }RandomMorphismByInteger (for IsCapCategory, IsInt)}}{28}{subsection.3.3.13}
+\contentsline {subsection}{\numberline {3.3.14}\leavevmode {\color {Chapter }AddRandomMorphismByInteger (for IsCapCategory, IsFunction)}}{28}{subsection.3.3.14}
+\contentsline {subsection}{\numberline {3.3.15}\leavevmode {\color {Chapter }RandomMorphismByList (for IsCapCategory, IsList)}}{28}{subsection.3.3.15}
+\contentsline {subsection}{\numberline {3.3.16}\leavevmode {\color {Chapter }AddRandomMorphismByList (for IsCapCategory, IsFunction)}}{28}{subsection.3.3.16}
+\contentsline {subsection}{\numberline {3.3.17}\leavevmode {\color {Chapter }RandomMorphismWithFixedSource (for IsCapCategoryObject, IsInt)}}{28}{subsection.3.3.17}
+\contentsline {section}{\numberline {3.4}\leavevmode {\color {Chapter }Non-Categorical Properties of Morphisms}}{29}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}\leavevmode {\color {Chapter }IsIdenticalToIdentityMorphism (for IsCapCategoryMorphism)}}{29}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}\leavevmode {\color {Chapter }AddIsIdenticalToIdentityMorphism (for IsCapCategory, IsFunction)}}{29}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}\leavevmode {\color {Chapter }IsIdenticalToZeroMorphism (for IsCapCategoryMorphism)}}{29}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}\leavevmode {\color {Chapter }AddIsIdenticalToZeroMorphism (for IsCapCategory, IsFunction)}}{29}{subsection.3.4.4}
+\contentsline {subsection}{\numberline {3.4.5}\leavevmode {\color {Chapter }IsEndomorphism (for IsCapCategoryMorphism)}}{29}{subsection.3.4.5}
+\contentsline {subsection}{\numberline {3.4.6}\leavevmode {\color {Chapter }AddIsEndomorphism (for IsCapCategory, IsFunction)}}{30}{subsection.3.4.6}
+\contentsline {subsection}{\numberline {3.4.7}\leavevmode {\color {Chapter }IsAutomorphism (for IsCapCategoryMorphism)}}{30}{subsection.3.4.7}
+\contentsline {subsection}{\numberline {3.4.8}\leavevmode {\color {Chapter }AddIsAutomorphism (for IsCapCategory, IsFunction)}}{30}{subsection.3.4.8}
+\contentsline {section}{\numberline {3.5}\leavevmode {\color {Chapter }Adding Morphisms to a Category}}{30}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}\leavevmode {\color {Chapter }Add (for IsCapCategory, IsCapCategoryMorphism)}}{30}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}\leavevmode {\color {Chapter }AddMorphism (for IsCapCategory, IsAttributeStoringRep)}}{30}{subsection.3.5.2}
+\contentsline {subsection}{\numberline {3.5.3}\leavevmode {\color {Chapter }AddMorphismRepresentation (for IsCapCategory, IsObject)}}{30}{subsection.3.5.3}
+\contentsline {subsection}{\numberline {3.5.4}\leavevmode {\color {Chapter }ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes}}{30}{subsection.3.5.4}
+\contentsline {section}{\numberline {3.6}\leavevmode {\color {Chapter }Equality and Congruence for Morphisms}}{31}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}\leavevmode {\color {Chapter }IsCongruentForMorphisms (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{31}{subsection.3.6.1}
+\contentsline {subsection}{\numberline {3.6.2}\leavevmode {\color {Chapter }AddIsCongruentForMorphisms (for IsCapCategory, IsFunction)}}{31}{subsection.3.6.2}
+\contentsline {subsection}{\numberline {3.6.3}\leavevmode {\color {Chapter }IsEqualForMorphisms (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{31}{subsection.3.6.3}
+\contentsline {subsection}{\numberline {3.6.4}\leavevmode {\color {Chapter }AddIsEqualForMorphisms (for IsCapCategory, IsFunction)}}{31}{subsection.3.6.4}
+\contentsline {subsection}{\numberline {3.6.5}\leavevmode {\color {Chapter }IsEqualForMorphismsOnMor (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{31}{subsection.3.6.5}
+\contentsline {subsection}{\numberline {3.6.6}\leavevmode {\color {Chapter }AddIsEqualForMorphismsOnMor (for IsCapCategory, IsFunction)}}{32}{subsection.3.6.6}
+\contentsline {section}{\numberline {3.7}\leavevmode {\color {Chapter }Basic Operations for Morphisms in Ab-Categories}}{32}{section.3.7}
+\contentsline {subsection}{\numberline {3.7.1}\leavevmode {\color {Chapter }IsZeroForMorphisms (for IsCapCategoryMorphism)}}{32}{subsection.3.7.1}
+\contentsline {subsection}{\numberline {3.7.2}\leavevmode {\color {Chapter }AddIsZeroForMorphisms (for IsCapCategory, IsFunction)}}{32}{subsection.3.7.2}
+\contentsline {subsection}{\numberline {3.7.3}\leavevmode {\color {Chapter }AdditionForMorphisms (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{32}{subsection.3.7.3}
+\contentsline {subsection}{\numberline {3.7.4}\leavevmode {\color {Chapter }AddAdditionForMorphisms (for IsCapCategory, IsFunction)}}{32}{subsection.3.7.4}
+\contentsline {subsection}{\numberline {3.7.5}\leavevmode {\color {Chapter }SubtractionForMorphisms (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{32}{subsection.3.7.5}
+\contentsline {subsection}{\numberline {3.7.6}\leavevmode {\color {Chapter }AddSubtractionForMorphisms (for IsCapCategory, IsFunction)}}{33}{subsection.3.7.6}
+\contentsline {subsection}{\numberline {3.7.7}\leavevmode {\color {Chapter }AdditiveInverseForMorphisms (for IsCapCategoryMorphism)}}{33}{subsection.3.7.7}
+\contentsline {subsection}{\numberline {3.7.8}\leavevmode {\color {Chapter }AddAdditiveInverseForMorphisms (for IsCapCategory, IsFunction)}}{33}{subsection.3.7.8}
+\contentsline {subsection}{\numberline {3.7.9}\leavevmode {\color {Chapter }MultiplyWithElementOfCommutativeRingForMorphisms (for IsRingElement, IsCapCategoryMorphism)}}{33}{subsection.3.7.9}
+\contentsline {subsection}{\numberline {3.7.10}\leavevmode {\color {Chapter }\texttt {\char 92\relax }* (for IsRingElement, IsCapCategoryMorphism)}}{33}{subsection.3.7.10}
+\contentsline {subsection}{\numberline {3.7.11}\leavevmode {\color {Chapter }AddMultiplyWithElementOfCommutativeRingForMorphisms (for IsCapCategory, IsFunction)}}{33}{subsection.3.7.11}
+\contentsline {subsection}{\numberline {3.7.12}\leavevmode {\color {Chapter }ZeroMorphism (for IsCapCategoryObject, IsCapCategoryObject)}}{34}{subsection.3.7.12}
+\contentsline {subsection}{\numberline {3.7.13}\leavevmode {\color {Chapter }AddZeroMorphism (for IsCapCategory, IsFunction)}}{34}{subsection.3.7.13}
+\contentsline {section}{\numberline {3.8}\leavevmode {\color {Chapter }Subobject and Factorobject Operations}}{34}{section.3.8}
+\contentsline {subsection}{\numberline {3.8.1}\leavevmode {\color {Chapter }IsEqualAsSubobjects (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{34}{subsection.3.8.1}
+\contentsline {subsection}{\numberline {3.8.2}\leavevmode {\color {Chapter }AddIsEqualAsSubobjects (for IsCapCategory, IsFunction)}}{34}{subsection.3.8.2}
+\contentsline {subsection}{\numberline {3.8.3}\leavevmode {\color {Chapter }IsEqualAsFactorobjects (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{34}{subsection.3.8.3}
+\contentsline {subsection}{\numberline {3.8.4}\leavevmode {\color {Chapter }AddIsEqualAsFactorobjects (for IsCapCategory, IsFunction)}}{34}{subsection.3.8.4}
+\contentsline {subsection}{\numberline {3.8.5}\leavevmode {\color {Chapter }IsDominating (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{35}{subsection.3.8.5}
+\contentsline {subsection}{\numberline {3.8.6}\leavevmode {\color {Chapter }AddIsDominating (for IsCapCategory, IsFunction)}}{35}{subsection.3.8.6}
+\contentsline {subsection}{\numberline {3.8.7}\leavevmode {\color {Chapter }IsCodominating (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{35}{subsection.3.8.7}
+\contentsline {subsection}{\numberline {3.8.8}\leavevmode {\color {Chapter }AddIsCodominating (for IsCapCategory, IsFunction)}}{35}{subsection.3.8.8}
+\contentsline {section}{\numberline {3.9}\leavevmode {\color {Chapter }Identity Morphism and Composition of Morphisms}}{36}{section.3.9}
+\contentsline {subsection}{\numberline {3.9.1}\leavevmode {\color {Chapter }IdentityMorphism (for IsCapCategoryObject)}}{36}{subsection.3.9.1}
+\contentsline {subsection}{\numberline {3.9.2}\leavevmode {\color {Chapter }AddIdentityMorphism (for IsCapCategory, IsFunction)}}{36}{subsection.3.9.2}
+\contentsline {subsection}{\numberline {3.9.3}\leavevmode {\color {Chapter }PreCompose (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{36}{subsection.3.9.3}
+\contentsline {subsection}{\numberline {3.9.4}\leavevmode {\color {Chapter }PreCompose (for IsList)}}{36}{subsection.3.9.4}
+\contentsline {subsection}{\numberline {3.9.5}\leavevmode {\color {Chapter }AddPreCompose (for IsCapCategory, IsFunction)}}{36}{subsection.3.9.5}
+\contentsline {subsection}{\numberline {3.9.6}\leavevmode {\color {Chapter }PostCompose (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{36}{subsection.3.9.6}
+\contentsline {subsection}{\numberline {3.9.7}\leavevmode {\color {Chapter }PostCompose (for IsList)}}{36}{subsection.3.9.7}
+\contentsline {subsection}{\numberline {3.9.8}\leavevmode {\color {Chapter }AddPostCompose (for IsCapCategory, IsFunction)}}{37}{subsection.3.9.8}
+\contentsline {section}{\numberline {3.10}\leavevmode {\color {Chapter }Well-Definedness of Morphisms}}{37}{section.3.10}
+\contentsline {subsection}{\numberline {3.10.1}\leavevmode {\color {Chapter }IsWellDefinedForMorphisms (for IsCapCategoryMorphism)}}{37}{subsection.3.10.1}
+\contentsline {subsection}{\numberline {3.10.2}\leavevmode {\color {Chapter }AddIsWellDefinedForMorphisms (for IsCapCategory, IsFunction)}}{37}{subsection.3.10.2}
+\contentsline {section}{\numberline {3.11}\leavevmode {\color {Chapter }Lift/Colift}}{37}{section.3.11}
+\contentsline {subsection}{\numberline {3.11.1}\leavevmode {\color {Chapter }LiftAlongMonomorphism (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{38}{subsection.3.11.1}
+\contentsline {subsection}{\numberline {3.11.2}\leavevmode {\color {Chapter }AddLiftAlongMonomorphism (for IsCapCategory, IsFunction)}}{38}{subsection.3.11.2}
+\contentsline {subsection}{\numberline {3.11.3}\leavevmode {\color {Chapter }ColiftAlongEpimorphism (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{38}{subsection.3.11.3}
+\contentsline {subsection}{\numberline {3.11.4}\leavevmode {\color {Chapter }AddColiftAlongEpimorphism (for IsCapCategory, IsFunction)}}{38}{subsection.3.11.4}
+\contentsline {subsection}{\numberline {3.11.5}\leavevmode {\color {Chapter }IsLiftableAlongMonomorphism (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{38}{subsection.3.11.5}
+\contentsline {subsection}{\numberline {3.11.6}\leavevmode {\color {Chapter }AddIsLiftableAlongMonomorphism (for IsCapCategory, IsFunction)}}{38}{subsection.3.11.6}
+\contentsline {subsection}{\numberline {3.11.7}\leavevmode {\color {Chapter }IsColiftableAlongEpimorphism (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{39}{subsection.3.11.7}
+\contentsline {subsection}{\numberline {3.11.8}\leavevmode {\color {Chapter }AddIsColiftableAlongEpimorphism (for IsCapCategory, IsFunction)}}{39}{subsection.3.11.8}
+\contentsline {subsection}{\numberline {3.11.9}\leavevmode {\color {Chapter }Lift (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{39}{subsection.3.11.9}
+\contentsline {subsection}{\numberline {3.11.10}\leavevmode {\color {Chapter }AddLift (for IsCapCategory, IsFunction)}}{39}{subsection.3.11.10}
+\contentsline {subsection}{\numberline {3.11.11}\leavevmode {\color {Chapter }Colift (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{39}{subsection.3.11.11}
+\contentsline {subsection}{\numberline {3.11.12}\leavevmode {\color {Chapter }AddColift (for IsCapCategory, IsFunction)}}{39}{subsection.3.11.12}
+\contentsline {subsection}{\numberline {3.11.13}\leavevmode {\color {Chapter }IsLiftable (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{40}{subsection.3.11.13}
+\contentsline {subsection}{\numberline {3.11.14}\leavevmode {\color {Chapter }AddIsLiftable (for IsCapCategory, IsFunction)}}{40}{subsection.3.11.14}
+\contentsline {subsection}{\numberline {3.11.15}\leavevmode {\color {Chapter }IsColiftable (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{40}{subsection.3.11.15}
+\contentsline {subsection}{\numberline {3.11.16}\leavevmode {\color {Chapter }AddIsColiftable (for IsCapCategory, IsFunction)}}{40}{subsection.3.11.16}
+\contentsline {section}{\numberline {3.12}\leavevmode {\color {Chapter }Inverses}}{40}{section.3.12}
+\contentsline {subsection}{\numberline {3.12.1}\leavevmode {\color {Chapter }Inverse (for IsCapCategoryMorphism)}}{40}{subsection.3.12.1}
+\contentsline {subsection}{\numberline {3.12.2}\leavevmode {\color {Chapter }AddInverse (for IsCapCategory, IsFunction)}}{41}{subsection.3.12.2}
+\contentsline {section}{\numberline {3.13}\leavevmode {\color {Chapter }Tool functions for caches}}{41}{section.3.13}
+\contentsline {subsection}{\numberline {3.13.1}\leavevmode {\color {Chapter }IsEqualForCacheForMorphisms (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{41}{subsection.3.13.1}
+\contentsline {subsection}{\numberline {3.13.2}\leavevmode {\color {Chapter }AddIsEqualForCacheForMorphisms (for IsCapCategory, IsFunction)}}{41}{subsection.3.13.2}
+\contentsline {section}{\numberline {3.14}\leavevmode {\color {Chapter }IsHomSetInhabited}}{41}{section.3.14}
+\contentsline {subsection}{\numberline {3.14.1}\leavevmode {\color {Chapter }IsHomSetInhabited (for IsCapCategoryObject, IsCapCategoryObject)}}{41}{subsection.3.14.1}
+\contentsline {subsection}{\numberline {3.14.2}\leavevmode {\color {Chapter }AddIsHomSetInhabited (for IsCapCategory, IsFunction)}}{41}{subsection.3.14.2}
+\contentsline {section}{\numberline {3.15}\leavevmode {\color {Chapter }Homomorphism structures}}{42}{section.3.15}
+\contentsline {subsection}{\numberline {3.15.1}\leavevmode {\color {Chapter }HomomorphismStructureOnObjects (for IsCapCategoryObject, IsCapCategoryObject)}}{42}{subsection.3.15.1}
+\contentsline {subsection}{\numberline {3.15.2}\leavevmode {\color {Chapter }AddHomomorphismStructureOnObjects (for IsCapCategory, IsFunction)}}{42}{subsection.3.15.2}
+\contentsline {subsection}{\numberline {3.15.3}\leavevmode {\color {Chapter }HomomorphismStructureOnMorphisms (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{42}{subsection.3.15.3}
+\contentsline {subsection}{\numberline {3.15.4}\leavevmode {\color {Chapter }HomomorphismStructureOnMorphismsWithGivenObjects (for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject)}}{42}{subsection.3.15.4}
+\contentsline {subsection}{\numberline {3.15.5}\leavevmode {\color {Chapter }AddHomomorphismStructureOnMorphismsWithGivenObjects (for IsCapCategory, IsFunction)}}{42}{subsection.3.15.5}
+\contentsline {subsection}{\numberline {3.15.6}\leavevmode {\color {Chapter }DistinguishedObjectOfHomomorphismStructure (for IsCapCategory)}}{43}{subsection.3.15.6}
+\contentsline {subsection}{\numberline {3.15.7}\leavevmode {\color {Chapter }AddDistinguishedObjectOfHomomorphismStructure (for IsCapCategory, IsFunction)}}{43}{subsection.3.15.7}
+\contentsline {subsection}{\numberline {3.15.8}\leavevmode {\color {Chapter }InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure (for IsCapCategoryMorphism)}}{43}{subsection.3.15.8}
+\contentsline {subsection}{\numberline {3.15.9}\leavevmode {\color {Chapter }AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure (for IsCapCategory, IsFunction)}}{43}{subsection.3.15.9}
+\contentsline {subsection}{\numberline {3.15.10}\leavevmode {\color {Chapter }InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism (for IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryMorphism)}}{43}{subsection.3.15.10}
+\contentsline {subsection}{\numberline {3.15.11}\leavevmode {\color {Chapter }AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism (for IsCapCategory, IsFunction)}}{44}{subsection.3.15.11}
+\contentsline {subsection}{\numberline {3.15.12}\leavevmode {\color {Chapter }SolveLinearSystemInAbCategory (for IsList, IsList, IsList)}}{44}{subsection.3.15.12}
+\contentsline {subsection}{\numberline {3.15.13}\leavevmode {\color {Chapter }MereExistenceOfSolutionOfLinearSystemInAbCategory (for IsList, IsList, IsList)}}{44}{subsection.3.15.13}
+\contentsline {subsection}{\numberline {3.15.14}\leavevmode {\color {Chapter }HomStructure (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{44}{subsection.3.15.14}
+\contentsline {subsection}{\numberline {3.15.15}\leavevmode {\color {Chapter }HomStructure (for IsCapCategoryMorphism, IsCapCategoryObject)}}{44}{subsection.3.15.15}
+\contentsline {subsection}{\numberline {3.15.16}\leavevmode {\color {Chapter }HomStructure (for IsCapCategoryObject, IsCapCategoryMorphism)}}{44}{subsection.3.15.16}
+\contentsline {subsection}{\numberline {3.15.17}\leavevmode {\color {Chapter }HomStructure (for IsCapCategoryObject, IsCapCategoryObject)}}{45}{subsection.3.15.17}
+\contentsline {subsection}{\numberline {3.15.18}\leavevmode {\color {Chapter }HomStructure (for IsCapCategoryMorphism)}}{45}{subsection.3.15.18}
+\contentsline {subsection}{\numberline {3.15.19}\leavevmode {\color {Chapter }HomStructure (for IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryMorphism)}}{45}{subsection.3.15.19}
+\contentsline {subsection}{\numberline {3.15.20}\leavevmode {\color {Chapter }HomStructure (for IsCapCategory)}}{45}{subsection.3.15.20}
+\contentsline {subsection}{\numberline {3.15.21}\leavevmode {\color {Chapter }BasisOfExternalHom (for IsCapCategoryObject, IsCapCategoryObject)}}{45}{subsection.3.15.21}
+\contentsline {subsection}{\numberline {3.15.22}\leavevmode {\color {Chapter }AddBasisOfExternalHom (for IsCapCategory, IsFunction)}}{45}{subsection.3.15.22}
+\contentsline {subsection}{\numberline {3.15.23}\leavevmode {\color {Chapter }CoefficientsOfMorphismWithGivenBasisOfExternalHom (for IsCapCategoryMorphism, IsList)}}{46}{subsection.3.15.23}
+\contentsline {subsection}{\numberline {3.15.24}\leavevmode {\color {Chapter }AddCoefficientsOfMorphismWithGivenBasisOfExternalHom (for IsCapCategory, IsFunction)}}{46}{subsection.3.15.24}
+\contentsline {subsection}{\numberline {3.15.25}\leavevmode {\color {Chapter }CoefficientsOfMorphism (for IsCapCategoryMorphism)}}{46}{subsection.3.15.25}
+\contentsline {section}{\numberline {3.16}\leavevmode {\color {Chapter }Simplified Morphisms}}{46}{section.3.16}
+\contentsline {subsection}{\numberline {3.16.1}\leavevmode {\color {Chapter }SimplifyMorphism (for IsCapCategoryMorphism, IsObject)}}{47}{subsection.3.16.1}
+\contentsline {subsection}{\numberline {3.16.2}\leavevmode {\color {Chapter }AddSimplifyMorphism (for IsCapCategory, IsFunction)}}{47}{subsection.3.16.2}
+\contentsline {subsection}{\numberline {3.16.3}\leavevmode {\color {Chapter }SimplifySource (for IsCapCategoryMorphism, IsObject)}}{47}{subsection.3.16.3}
+\contentsline {subsection}{\numberline {3.16.4}\leavevmode {\color {Chapter }AddSimplifySource (for IsCapCategory, IsFunction)}}{47}{subsection.3.16.4}
+\contentsline {subsection}{\numberline {3.16.5}\leavevmode {\color {Chapter }SimplifySource{\textunderscore }IsoToInputObject (for IsCapCategoryMorphism, IsObject)}}{47}{subsection.3.16.5}
+\contentsline {subsection}{\numberline {3.16.6}\leavevmode {\color {Chapter }AddSimplifySource{\textunderscore }IsoToInputObject (for IsCapCategory, IsFunction)}}{47}{subsection.3.16.6}
+\contentsline {subsection}{\numberline {3.16.7}\leavevmode {\color {Chapter }SimplifySource{\textunderscore }IsoFromInputObject (for IsCapCategoryMorphism, IsObject)}}{48}{subsection.3.16.7}
+\contentsline {subsection}{\numberline {3.16.8}\leavevmode {\color {Chapter }AddSimplifySource{\textunderscore }IsoFromInputObject (for IsCapCategory, IsFunction)}}{48}{subsection.3.16.8}
+\contentsline {subsection}{\numberline {3.16.9}\leavevmode {\color {Chapter }SimplifyRange (for IsCapCategoryMorphism, IsObject)}}{48}{subsection.3.16.9}
+\contentsline {subsection}{\numberline {3.16.10}\leavevmode {\color {Chapter }AddSimplifyRange (for IsCapCategory, IsFunction)}}{48}{subsection.3.16.10}
+\contentsline {subsection}{\numberline {3.16.11}\leavevmode {\color {Chapter }SimplifyRange{\textunderscore }IsoToInputObject (for IsCapCategoryMorphism, IsObject)}}{48}{subsection.3.16.11}
+\contentsline {subsection}{\numberline {3.16.12}\leavevmode {\color {Chapter }AddSimplifyRange{\textunderscore }IsoToInputObject (for IsCapCategory, IsFunction)}}{48}{subsection.3.16.12}
+\contentsline {subsection}{\numberline {3.16.13}\leavevmode {\color {Chapter }SimplifyRange{\textunderscore }IsoFromInputObject (for IsCapCategoryMorphism, IsObject)}}{49}{subsection.3.16.13}
+\contentsline {subsection}{\numberline {3.16.14}\leavevmode {\color {Chapter }AddSimplifyRange{\textunderscore }IsoFromInputObject (for IsCapCategory, IsFunction)}}{49}{subsection.3.16.14}
+\contentsline {subsection}{\numberline {3.16.15}\leavevmode {\color {Chapter }SimplifySourceAndRange (for IsCapCategoryMorphism, IsObject)}}{49}{subsection.3.16.15}
+\contentsline {subsection}{\numberline {3.16.16}\leavevmode {\color {Chapter }AddSimplifySourceAndRange (for IsCapCategory, IsFunction)}}{49}{subsection.3.16.16}
+\contentsline {subsection}{\numberline {3.16.17}\leavevmode {\color {Chapter }SimplifySourceAndRange{\textunderscore }IsoToInputRange (for IsCapCategoryMorphism, IsObject)}}{49}{subsection.3.16.17}
+\contentsline {subsection}{\numberline {3.16.18}\leavevmode {\color {Chapter }AddSimplifySourceAndRange{\textunderscore }IsoToInputRange (for IsCapCategory, IsFunction)}}{49}{subsection.3.16.18}
+\contentsline {subsection}{\numberline {3.16.19}\leavevmode {\color {Chapter }SimplifySourceAndRange{\textunderscore }IsoFromInputRange (for IsCapCategoryMorphism, IsObject)}}{50}{subsection.3.16.19}
+\contentsline {subsection}{\numberline {3.16.20}\leavevmode {\color {Chapter }AddSimplifySourceAndRange{\textunderscore }IsoFromInputRange (for IsCapCategory, IsFunction)}}{50}{subsection.3.16.20}
+\contentsline {subsection}{\numberline {3.16.21}\leavevmode {\color {Chapter }SimplifySourceAndRange{\textunderscore }IsoToInputSource (for IsCapCategoryMorphism, IsObject)}}{50}{subsection.3.16.21}
+\contentsline {subsection}{\numberline {3.16.22}\leavevmode {\color {Chapter }AddSimplifySourceAndRange{\textunderscore }IsoToInputSource (for IsCapCategory, IsFunction)}}{50}{subsection.3.16.22}
+\contentsline {subsection}{\numberline {3.16.23}\leavevmode {\color {Chapter }SimplifySourceAndRange{\textunderscore }IsoFromInputSource (for IsCapCategoryMorphism, IsObject)}}{50}{subsection.3.16.23}
+\contentsline {subsection}{\numberline {3.16.24}\leavevmode {\color {Chapter }AddSimplifySourceAndRange{\textunderscore }IsoFromInputSource (for IsCapCategory, IsFunction)}}{51}{subsection.3.16.24}
+\contentsline {subsection}{\numberline {3.16.25}\leavevmode {\color {Chapter }SimplifyEndo (for IsCapCategoryMorphism, IsObject)}}{51}{subsection.3.16.25}
+\contentsline {subsection}{\numberline {3.16.26}\leavevmode {\color {Chapter }AddSimplifyEndo (for IsCapCategory, IsFunction)}}{51}{subsection.3.16.26}
+\contentsline {subsection}{\numberline {3.16.27}\leavevmode {\color {Chapter }SimplifyEndo{\textunderscore }IsoToInputObject (for IsCapCategoryMorphism, IsObject)}}{51}{subsection.3.16.27}
+\contentsline {subsection}{\numberline {3.16.28}\leavevmode {\color {Chapter }AddSimplifyEndo{\textunderscore }IsoToInputObject (for IsCapCategory, IsFunction)}}{51}{subsection.3.16.28}
+\contentsline {subsection}{\numberline {3.16.29}\leavevmode {\color {Chapter }SimplifyEndo{\textunderscore }IsoFromInputObject (for IsCapCategoryMorphism, IsObject)}}{51}{subsection.3.16.29}
+\contentsline {subsection}{\numberline {3.16.30}\leavevmode {\color {Chapter }AddSimplifyEndo{\textunderscore }IsoFromInputObject (for IsCapCategory, IsFunction)}}{52}{subsection.3.16.30}
+\contentsline {subsection}{\numberline {3.16.31}\leavevmode {\color {Chapter }Simplify (for IsCapCategoryMorphism)}}{52}{subsection.3.16.31}
+\contentsline {section}{\numberline {3.17}\leavevmode {\color {Chapter }Reduction by split epi summands}}{52}{section.3.17}
+\contentsline {subsection}{\numberline {3.17.1}\leavevmode {\color {Chapter }SomeReductionBySplitEpiSummand (for IsCapCategoryMorphism)}}{53}{subsection.3.17.1}
+\contentsline {subsection}{\numberline {3.17.2}\leavevmode {\color {Chapter }AddSomeReductionBySplitEpiSummand (for IsCapCategory, IsFunction)}}{53}{subsection.3.17.2}
+\contentsline {subsection}{\numberline {3.17.3}\leavevmode {\color {Chapter }SomeReductionBySplitEpiSummand{\textunderscore }MorphismToInputRange (for IsCapCategoryMorphism)}}{53}{subsection.3.17.3}
+\contentsline {subsection}{\numberline {3.17.4}\leavevmode {\color {Chapter }AddSomeReductionBySplitEpiSummand{\textunderscore }MorphismToInputRange (for IsCapCategory, IsFunction)}}{53}{subsection.3.17.4}
+\contentsline {subsection}{\numberline {3.17.5}\leavevmode {\color {Chapter }SomeReductionBySplitEpiSummand{\textunderscore }MorphismFromInputRange (for IsCapCategoryMorphism)}}{53}{subsection.3.17.5}
+\contentsline {subsection}{\numberline {3.17.6}\leavevmode {\color {Chapter }AddSomeReductionBySplitEpiSummand{\textunderscore }MorphismFromInputRange (for IsCapCategory, IsFunction)}}{53}{subsection.3.17.6}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Category 2-Cells}}{54}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Attributes for the Type of 2-Cells}}{54}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\leavevmode {\color {Chapter }Source (for IsCapCategoryTwoCell)}}{54}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\leavevmode {\color {Chapter }Range (for IsCapCategoryTwoCell)}}{54}{subsection.4.1.2}
+\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }Identity 2-Cell and Composition of 2-Cells}}{54}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\leavevmode {\color {Chapter }IdentityTwoCell (for IsCapCategoryMorphism)}}{54}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}\leavevmode {\color {Chapter }AddIdentityTwoCell (for IsCapCategory, IsFunction)}}{54}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}\leavevmode {\color {Chapter }HorizontalPreCompose (for IsCapCategoryTwoCell, IsCapCategoryTwoCell)}}{54}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}\leavevmode {\color {Chapter }AddHorizontalPreCompose (for IsCapCategory, IsFunction)}}{55}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}\leavevmode {\color {Chapter }HorizontalPostCompose (for IsCapCategoryTwoCell, IsCapCategoryTwoCell)}}{55}{subsection.4.2.5}
+\contentsline {subsection}{\numberline {4.2.6}\leavevmode {\color {Chapter }AddHorizontalPostCompose (for IsCapCategory, IsFunction)}}{55}{subsection.4.2.6}
+\contentsline {subsection}{\numberline {4.2.7}\leavevmode {\color {Chapter }VerticalPreCompose (for IsCapCategoryTwoCell, IsCapCategoryTwoCell)}}{55}{subsection.4.2.7}
+\contentsline {subsection}{\numberline {4.2.8}\leavevmode {\color {Chapter }AddVerticalPreCompose (for IsCapCategory, IsFunction)}}{55}{subsection.4.2.8}
+\contentsline {subsection}{\numberline {4.2.9}\leavevmode {\color {Chapter }VerticalPostCompose (for IsCapCategoryTwoCell, IsCapCategoryTwoCell)}}{55}{subsection.4.2.9}
+\contentsline {subsection}{\numberline {4.2.10}\leavevmode {\color {Chapter }AddVerticalPostCompose (for IsCapCategory, IsFunction)}}{55}{subsection.4.2.10}
+\contentsline {section}{\numberline {4.3}\leavevmode {\color {Chapter }Well-Definedness for 2-Cells}}{56}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}\leavevmode {\color {Chapter }IsWellDefinedForTwoCells (for IsCapCategoryTwoCell)}}{56}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}\leavevmode {\color {Chapter }AddIsWellDefinedForTwoCells (for IsCapCategory, IsFunction)}}{56}{subsection.4.3.2}
+\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Category of Categories}}{57}{chapter.5}
+\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }The Category Cat}}{57}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}\leavevmode {\color {Chapter }CapCat}}{57}{subsection.5.1.1}
+\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }Categories}}{57}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}\leavevmode {\color {Chapter }IsCapCategoryAsCatObject (for IsCapCategoryObject)}}{57}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}\leavevmode {\color {Chapter }IsCapFunctor (for IsCapCategoryMorphism)}}{57}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}\leavevmode {\color {Chapter }IsCapNaturalTransformation (for IsCapCategoryTwoCell)}}{57}{subsection.5.2.3}
+\contentsline {section}{\numberline {5.3}\leavevmode {\color {Chapter }Constructors}}{58}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}\leavevmode {\color {Chapter }AsCatObject (for IsCapCategory)}}{58}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}\leavevmode {\color {Chapter }AsCapCategory (for IsCapCategoryAsCatObject)}}{58}{subsection.5.3.2}
+\contentsline {section}{\numberline {5.4}\leavevmode {\color {Chapter }Functors}}{58}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}\leavevmode {\color {Chapter }CapFunctor (for IsString, IsCapCategory, IsCapCategory)}}{58}{subsection.5.4.1}
+\contentsline {subsection}{\numberline {5.4.2}\leavevmode {\color {Chapter }CapFunctor (for IsString, IsList, IsCapCategory)}}{58}{subsection.5.4.2}
+\contentsline {subsection}{\numberline {5.4.3}\leavevmode {\color {Chapter }SourceOfFunctor (for IsCapFunctor)}}{59}{subsection.5.4.3}
+\contentsline {subsection}{\numberline {5.4.4}\leavevmode {\color {Chapter }RangeOfFunctor (for IsCapFunctor)}}{59}{subsection.5.4.4}
+\contentsline {subsection}{\numberline {5.4.5}\leavevmode {\color {Chapter }AddObjectFunction (for IsCapFunctor, IsFunction)}}{59}{subsection.5.4.5}
+\contentsline {subsection}{\numberline {5.4.6}\leavevmode {\color {Chapter }FunctorObjectOperation (for IsCapFunctor)}}{59}{subsection.5.4.6}
+\contentsline {subsection}{\numberline {5.4.7}\leavevmode {\color {Chapter }AddMorphismFunction (for IsCapFunctor, IsFunction)}}{59}{subsection.5.4.7}
+\contentsline {subsection}{\numberline {5.4.8}\leavevmode {\color {Chapter }FunctorMorphismOperation (for IsCapFunctor)}}{60}{subsection.5.4.8}
+\contentsline {subsection}{\numberline {5.4.9}\leavevmode {\color {Chapter }ApplyFunctor}}{60}{subsection.5.4.9}
+\contentsline {subsection}{\numberline {5.4.10}\leavevmode {\color {Chapter }InputSignature (for IsCapFunctor)}}{60}{subsection.5.4.10}
+\contentsline {subsection}{\numberline {5.4.11}\leavevmode {\color {Chapter }InstallFunctor (for IsCapFunctor, IsString)}}{60}{subsection.5.4.11}
+\contentsline {subsection}{\numberline {5.4.12}\leavevmode {\color {Chapter }IdentityFunctor (for IsCapCategory)}}{61}{subsection.5.4.12}
+\contentsline {subsection}{\numberline {5.4.13}\leavevmode {\color {Chapter }FunctorCanonicalizeZeroObjects (for IsCapCategory)}}{61}{subsection.5.4.13}
+\contentsline {subsection}{\numberline {5.4.14}\leavevmode {\color {Chapter }NaturalIsomorphismFromIdentityToCanonicalizeZeroObjects (for IsCapCategory)}}{61}{subsection.5.4.14}
+\contentsline {subsection}{\numberline {5.4.15}\leavevmode {\color {Chapter }FunctorCanonicalizeZeroMorphisms (for IsCapCategory)}}{61}{subsection.5.4.15}
+\contentsline {subsection}{\numberline {5.4.16}\leavevmode {\color {Chapter }NaturalIsomorphismFromIdentityToCanonicalizeZeroMorphisms (for IsCapCategory)}}{61}{subsection.5.4.16}
+\contentsline {section}{\numberline {5.5}\leavevmode {\color {Chapter }Natural transformations}}{61}{section.5.5}
+\contentsline {subsection}{\numberline {5.5.1}\leavevmode {\color {Chapter }Name (for IsCapNaturalTransformation)}}{61}{subsection.5.5.1}
+\contentsline {subsection}{\numberline {5.5.2}\leavevmode {\color {Chapter }NaturalTransformation (for IsCapFunctor, IsCapFunctor)}}{62}{subsection.5.5.2}
+\contentsline {subsection}{\numberline {5.5.3}\leavevmode {\color {Chapter }AddNaturalTransformationFunction (for IsCapNaturalTransformation, IsFunction)}}{62}{subsection.5.5.3}
+\contentsline {subsection}{\numberline {5.5.4}\leavevmode {\color {Chapter }ApplyNaturalTransformation}}{62}{subsection.5.5.4}
+\contentsline {subsection}{\numberline {5.5.5}\leavevmode {\color {Chapter }InstallNaturalTransformation (for IsCapNaturalTransformation, IsString)}}{62}{subsection.5.5.5}
+\contentsline {subsection}{\numberline {5.5.6}\leavevmode {\color {Chapter }HorizontalPreComposeNaturalTransformationWithFunctor (for IsCapNaturalTransformation, IsCapFunctor)}}{62}{subsection.5.5.6}
+\contentsline {subsection}{\numberline {5.5.7}\leavevmode {\color {Chapter }HorizontalPreComposeFunctorWithNaturalTransformation (for IsCapFunctor, IsCapNaturalTransformation)}}{62}{subsection.5.5.7}
+\contentsline {chapter}{\numberline {6}\leavevmode {\color {Chapter }Universal Objects}}{63}{chapter.6}
+\contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }Kernel}}{63}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}\leavevmode {\color {Chapter }KernelObject (for IsCapCategoryMorphism)}}{63}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}\leavevmode {\color {Chapter }KernelEmbedding (for IsCapCategoryMorphism)}}{64}{subsection.6.1.2}
+\contentsline {subsection}{\numberline {6.1.3}\leavevmode {\color {Chapter }KernelEmbeddingWithGivenKernelObject (for IsCapCategoryMorphism, IsCapCategoryObject)}}{64}{subsection.6.1.3}
+\contentsline {subsection}{\numberline {6.1.4}\leavevmode {\color {Chapter }MorphismFromKernelObjectToSink (for IsCapCategoryMorphism)}}{64}{subsection.6.1.4}
+\contentsline {subsection}{\numberline {6.1.5}\leavevmode {\color {Chapter }MorphismFromKernelObjectToSinkWithGivenKernelObject (for IsCapCategoryMorphism, IsCapCategoryObject)}}{64}{subsection.6.1.5}
+\contentsline {subsection}{\numberline {6.1.6}\leavevmode {\color {Chapter }KernelLift (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{64}{subsection.6.1.6}
+\contentsline {subsection}{\numberline {6.1.7}\leavevmode {\color {Chapter }KernelLiftWithGivenKernelObject (for IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject)}}{64}{subsection.6.1.7}
+\contentsline {subsection}{\numberline {6.1.8}\leavevmode {\color {Chapter }AddKernelObject (for IsCapCategory, IsFunction)}}{65}{subsection.6.1.8}
+\contentsline {subsection}{\numberline {6.1.9}\leavevmode {\color {Chapter }AddKernelEmbedding (for IsCapCategory, IsFunction)}}{65}{subsection.6.1.9}
+\contentsline {subsection}{\numberline {6.1.10}\leavevmode {\color {Chapter }AddKernelEmbeddingWithGivenKernelObject (for IsCapCategory, IsFunction)}}{65}{subsection.6.1.10}
+\contentsline {subsection}{\numberline {6.1.11}\leavevmode {\color {Chapter }AddMorphismFromKernelObjectToSink (for IsCapCategory, IsFunction)}}{65}{subsection.6.1.11}
+\contentsline {subsection}{\numberline {6.1.12}\leavevmode {\color {Chapter }AddMorphismFromKernelObjectToSinkWithGivenKernelObject (for IsCapCategory, IsFunction)}}{65}{subsection.6.1.12}
+\contentsline {subsection}{\numberline {6.1.13}\leavevmode {\color {Chapter }AddKernelLift (for IsCapCategory, IsFunction)}}{65}{subsection.6.1.13}
+\contentsline {subsection}{\numberline {6.1.14}\leavevmode {\color {Chapter }AddKernelLiftWithGivenKernelObject (for IsCapCategory, IsFunction)}}{66}{subsection.6.1.14}
+\contentsline {subsection}{\numberline {6.1.15}\leavevmode {\color {Chapter }KernelObjectFunctorial (for IsList)}}{66}{subsection.6.1.15}
+\contentsline {subsection}{\numberline {6.1.16}\leavevmode {\color {Chapter }KernelObjectFunctorial (for IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism)}}{66}{subsection.6.1.16}
+\contentsline {subsection}{\numberline {6.1.17}\leavevmode {\color {Chapter }KernelObjectFunctorialWithGivenKernelObjects (for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism,IsCapCategoryMorphism, IsCapCategoryObject)}}{66}{subsection.6.1.17}
+\contentsline {subsection}{\numberline {6.1.18}\leavevmode {\color {Chapter }KernelObjectFunctorialWithGivenKernelObjects (for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism,IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject)}}{66}{subsection.6.1.18}
+\contentsline {subsection}{\numberline {6.1.19}\leavevmode {\color {Chapter }AddKernelObjectFunctorialWithGivenKernelObjects (for IsCapCategory, IsFunction)}}{67}{subsection.6.1.19}
+\contentsline {section}{\numberline {6.2}\leavevmode {\color {Chapter }Cokernel}}{67}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}\leavevmode {\color {Chapter }CokernelObject (for IsCapCategoryMorphism)}}{67}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}\leavevmode {\color {Chapter }CokernelProjection (for IsCapCategoryMorphism)}}{67}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.3}\leavevmode {\color {Chapter }CokernelProjectionWithGivenCokernelObject (for IsCapCategoryMorphism, IsCapCategoryObject)}}{68}{subsection.6.2.3}
+\contentsline {subsection}{\numberline {6.2.4}\leavevmode {\color {Chapter }MorphismFromSourceToCokernelObject (for IsCapCategoryMorphism)}}{68}{subsection.6.2.4}
+\contentsline {subsection}{\numberline {6.2.5}\leavevmode {\color {Chapter }MorphismFromSourceToCokernelObjectWithGivenCokernelObject (for IsCapCategoryMorphism, IsCapCategoryObject)}}{68}{subsection.6.2.5}
+\contentsline {subsection}{\numberline {6.2.6}\leavevmode {\color {Chapter }CokernelColift (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{68}{subsection.6.2.6}
+\contentsline {subsection}{\numberline {6.2.7}\leavevmode {\color {Chapter }CokernelColiftWithGivenCokernelObject (for IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject)}}{68}{subsection.6.2.7}
+\contentsline {subsection}{\numberline {6.2.8}\leavevmode {\color {Chapter }AddCokernelObject (for IsCapCategory, IsFunction)}}{68}{subsection.6.2.8}
+\contentsline {subsection}{\numberline {6.2.9}\leavevmode {\color {Chapter }AddCokernelProjection (for IsCapCategory, IsFunction)}}{69}{subsection.6.2.9}
+\contentsline {subsection}{\numberline {6.2.10}\leavevmode {\color {Chapter }AddCokernelProjectionWithGivenCokernelObject (for IsCapCategory, IsFunction)}}{69}{subsection.6.2.10}
+\contentsline {subsection}{\numberline {6.2.11}\leavevmode {\color {Chapter }AddMorphismFromSourceToCokernelObject (for IsCapCategory, IsFunction)}}{69}{subsection.6.2.11}
+\contentsline {subsection}{\numberline {6.2.12}\leavevmode {\color {Chapter }AddMorphismFromSourceToCokernelObjectWithGivenCokernelObject (for IsCapCategory, IsFunction)}}{69}{subsection.6.2.12}
+\contentsline {subsection}{\numberline {6.2.13}\leavevmode {\color {Chapter }AddCokernelColift (for IsCapCategory, IsFunction)}}{69}{subsection.6.2.13}
+\contentsline {subsection}{\numberline {6.2.14}\leavevmode {\color {Chapter }AddCokernelColiftWithGivenCokernelObject (for IsCapCategory, IsFunction)}}{69}{subsection.6.2.14}
+\contentsline {subsection}{\numberline {6.2.15}\leavevmode {\color {Chapter }CokernelObjectFunctorial (for IsList)}}{70}{subsection.6.2.15}
+\contentsline {subsection}{\numberline {6.2.16}\leavevmode {\color {Chapter }CokernelObjectFunctorial (for IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism)}}{70}{subsection.6.2.16}
+\contentsline {subsection}{\numberline {6.2.17}\leavevmode {\color {Chapter }CokernelObjectFunctorialWithGivenCokernelObjects (for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism,IsCapCategoryMorphism, IsCapCategoryObject)}}{70}{subsection.6.2.17}
+\contentsline {subsection}{\numberline {6.2.18}\leavevmode {\color {Chapter }CokernelObjectFunctorialWithGivenCokernelObjects (for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism,IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject)}}{70}{subsection.6.2.18}
+\contentsline {subsection}{\numberline {6.2.19}\leavevmode {\color {Chapter }AddCokernelObjectFunctorialWithGivenCokernelObjects (for IsCapCategory, IsFunction)}}{70}{subsection.6.2.19}
+\contentsline {section}{\numberline {6.3}\leavevmode {\color {Chapter }Zero Object}}{71}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}\leavevmode {\color {Chapter }ZeroObject (for IsCapCategory)}}{71}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}\leavevmode {\color {Chapter }ZeroObject (for IsCapCategoryCell)}}{71}{subsection.6.3.2}
+\contentsline {subsection}{\numberline {6.3.3}\leavevmode {\color {Chapter }MorphismFromZeroObject (for IsCapCategoryObject)}}{71}{subsection.6.3.3}
+\contentsline {subsection}{\numberline {6.3.4}\leavevmode {\color {Chapter }MorphismIntoZeroObject (for IsCapCategoryObject)}}{71}{subsection.6.3.4}
+\contentsline {subsection}{\numberline {6.3.5}\leavevmode {\color {Chapter }UniversalMorphismFromZeroObject (for IsCapCategoryObject)}}{71}{subsection.6.3.5}
+\contentsline {subsection}{\numberline {6.3.6}\leavevmode {\color {Chapter }UniversalMorphismFromZeroObjectWithGivenZeroObject (for IsCapCategoryObject, IsCapCategoryObject)}}{72}{subsection.6.3.6}
+\contentsline {subsection}{\numberline {6.3.7}\leavevmode {\color {Chapter }UniversalMorphismIntoZeroObject (for IsCapCategoryObject)}}{72}{subsection.6.3.7}
+\contentsline {subsection}{\numberline {6.3.8}\leavevmode {\color {Chapter }UniversalMorphismIntoZeroObjectWithGivenZeroObject (for IsCapCategoryObject, IsCapCategoryObject)}}{72}{subsection.6.3.8}
+\contentsline {subsection}{\numberline {6.3.9}\leavevmode {\color {Chapter }IsomorphismFromZeroObjectToInitialObject (for IsCapCategory)}}{72}{subsection.6.3.9}
+\contentsline {subsection}{\numberline {6.3.10}\leavevmode {\color {Chapter }IsomorphismFromInitialObjectToZeroObject (for IsCapCategory)}}{72}{subsection.6.3.10}
+\contentsline {subsection}{\numberline {6.3.11}\leavevmode {\color {Chapter }IsomorphismFromZeroObjectToTerminalObject (for IsCapCategory)}}{72}{subsection.6.3.11}
+\contentsline {subsection}{\numberline {6.3.12}\leavevmode {\color {Chapter }IsomorphismFromTerminalObjectToZeroObject (for IsCapCategory)}}{72}{subsection.6.3.12}
+\contentsline {subsection}{\numberline {6.3.13}\leavevmode {\color {Chapter }AddZeroObject (for IsCapCategory, IsFunction)}}{73}{subsection.6.3.13}
+\contentsline {subsection}{\numberline {6.3.14}\leavevmode {\color {Chapter }AddUniversalMorphismIntoZeroObject (for IsCapCategory, IsFunction)}}{73}{subsection.6.3.14}
+\contentsline {subsection}{\numberline {6.3.15}\leavevmode {\color {Chapter }AddUniversalMorphismIntoZeroObjectWithGivenZeroObject (for IsCapCategory, IsFunction)}}{73}{subsection.6.3.15}
+\contentsline {subsection}{\numberline {6.3.16}\leavevmode {\color {Chapter }AddUniversalMorphismFromZeroObject (for IsCapCategory, IsFunction)}}{73}{subsection.6.3.16}
+\contentsline {subsection}{\numberline {6.3.17}\leavevmode {\color {Chapter }AddUniversalMorphismFromZeroObjectWithGivenZeroObject (for IsCapCategory, IsFunction)}}{73}{subsection.6.3.17}
+\contentsline {subsection}{\numberline {6.3.18}\leavevmode {\color {Chapter }AddIsomorphismFromZeroObjectToInitialObject (for IsCapCategory, IsFunction)}}{73}{subsection.6.3.18}
+\contentsline {subsection}{\numberline {6.3.19}\leavevmode {\color {Chapter }AddIsomorphismFromInitialObjectToZeroObject (for IsCapCategory, IsFunction)}}{74}{subsection.6.3.19}
+\contentsline {subsection}{\numberline {6.3.20}\leavevmode {\color {Chapter }AddIsomorphismFromZeroObjectToTerminalObject (for IsCapCategory, IsFunction)}}{74}{subsection.6.3.20}
+\contentsline {subsection}{\numberline {6.3.21}\leavevmode {\color {Chapter }AddIsomorphismFromTerminalObjectToZeroObject (for IsCapCategory, IsFunction)}}{74}{subsection.6.3.21}
+\contentsline {subsection}{\numberline {6.3.22}\leavevmode {\color {Chapter }ZeroObjectFunctorial (for IsCapCategory)}}{74}{subsection.6.3.22}
+\contentsline {subsection}{\numberline {6.3.23}\leavevmode {\color {Chapter }AddZeroObjectFunctorial (for IsCapCategory, IsFunction)}}{74}{subsection.6.3.23}
+\contentsline {section}{\numberline {6.4}\leavevmode {\color {Chapter }Terminal Object}}{74}{section.6.4}
+\contentsline {subsection}{\numberline {6.4.1}\leavevmode {\color {Chapter }TerminalObject (for IsCapCategory)}}{75}{subsection.6.4.1}
+\contentsline {subsection}{\numberline {6.4.2}\leavevmode {\color {Chapter }TerminalObject (for IsCapCategoryCell)}}{75}{subsection.6.4.2}
+\contentsline {subsection}{\numberline {6.4.3}\leavevmode {\color {Chapter }UniversalMorphismIntoTerminalObject (for IsCapCategoryObject)}}{75}{subsection.6.4.3}
+\contentsline {subsection}{\numberline {6.4.4}\leavevmode {\color {Chapter }UniversalMorphismIntoTerminalObjectWithGivenTerminalObject (for IsCapCategoryObject, IsCapCategoryObject)}}{75}{subsection.6.4.4}
+\contentsline {subsection}{\numberline {6.4.5}\leavevmode {\color {Chapter }AddTerminalObject (for IsCapCategory, IsFunction)}}{75}{subsection.6.4.5}
+\contentsline {subsection}{\numberline {6.4.6}\leavevmode {\color {Chapter }AddUniversalMorphismIntoTerminalObject (for IsCapCategory, IsFunction)}}{75}{subsection.6.4.6}
+\contentsline {subsection}{\numberline {6.4.7}\leavevmode {\color {Chapter }AddUniversalMorphismIntoTerminalObjectWithGivenTerminalObject (for IsCapCategory, IsFunction)}}{76}{subsection.6.4.7}
+\contentsline {subsection}{\numberline {6.4.8}\leavevmode {\color {Chapter }TerminalObjectFunctorial (for IsCapCategory)}}{76}{subsection.6.4.8}
+\contentsline {subsection}{\numberline {6.4.9}\leavevmode {\color {Chapter }AddTerminalObjectFunctorial (for IsCapCategory, IsFunction)}}{76}{subsection.6.4.9}
+\contentsline {section}{\numberline {6.5}\leavevmode {\color {Chapter }Initial Object}}{76}{section.6.5}
+\contentsline {subsection}{\numberline {6.5.1}\leavevmode {\color {Chapter }InitialObject (for IsCapCategory)}}{76}{subsection.6.5.1}
+\contentsline {subsection}{\numberline {6.5.2}\leavevmode {\color {Chapter }InitialObject (for IsCapCategoryCell)}}{76}{subsection.6.5.2}
+\contentsline {subsection}{\numberline {6.5.3}\leavevmode {\color {Chapter }UniversalMorphismFromInitialObject (for IsCapCategoryObject)}}{77}{subsection.6.5.3}
+\contentsline {subsection}{\numberline {6.5.4}\leavevmode {\color {Chapter }UniversalMorphismFromInitialObjectWithGivenInitialObject (for IsCapCategoryObject, IsCapCategoryObject)}}{77}{subsection.6.5.4}
+\contentsline {subsection}{\numberline {6.5.5}\leavevmode {\color {Chapter }AddInitialObject (for IsCapCategory, IsFunction)}}{77}{subsection.6.5.5}
+\contentsline {subsection}{\numberline {6.5.6}\leavevmode {\color {Chapter }AddUniversalMorphismFromInitialObject (for IsCapCategory, IsFunction)}}{77}{subsection.6.5.6}
+\contentsline {subsection}{\numberline {6.5.7}\leavevmode {\color {Chapter }AddUniversalMorphismFromInitialObjectWithGivenInitialObject (for IsCapCategory, IsFunction)}}{77}{subsection.6.5.7}
+\contentsline {subsection}{\numberline {6.5.8}\leavevmode {\color {Chapter }InitialObjectFunctorial (for IsCapCategory)}}{77}{subsection.6.5.8}
+\contentsline {subsection}{\numberline {6.5.9}\leavevmode {\color {Chapter }AddInitialObjectFunctorial (for IsCapCategory, IsFunction)}}{77}{subsection.6.5.9}
+\contentsline {section}{\numberline {6.6}\leavevmode {\color {Chapter }Direct Sum}}{78}{section.6.6}
+\contentsline {subsection}{\numberline {6.6.1}\leavevmode {\color {Chapter }DirectSumOp (for IsList, IsCapCategoryObject)}}{78}{subsection.6.6.1}
+\contentsline {subsection}{\numberline {6.6.2}\leavevmode {\color {Chapter }ProjectionInFactorOfDirectSum (for IsList, IsInt)}}{79}{subsection.6.6.2}
+\contentsline {subsection}{\numberline {6.6.3}\leavevmode {\color {Chapter }ProjectionInFactorOfDirectSumOp (for IsList, IsInt, IsCapCategoryObject)}}{79}{subsection.6.6.3}
+\contentsline {subsection}{\numberline {6.6.4}\leavevmode {\color {Chapter }ProjectionInFactorOfDirectSumWithGivenDirectSum (for IsList, IsInt, IsCapCategoryObject)}}{79}{subsection.6.6.4}
+\contentsline {subsection}{\numberline {6.6.5}\leavevmode {\color {Chapter }InjectionOfCofactorOfDirectSum (for IsList, IsInt)}}{79}{subsection.6.6.5}
+\contentsline {subsection}{\numberline {6.6.6}\leavevmode {\color {Chapter }InjectionOfCofactorOfDirectSumOp (for IsList, IsInt, IsCapCategoryObject)}}{79}{subsection.6.6.6}
+\contentsline {subsection}{\numberline {6.6.7}\leavevmode {\color {Chapter }InjectionOfCofactorOfDirectSumWithGivenDirectSum (for IsList, IsInt, IsCapCategoryObject)}}{79}{subsection.6.6.7}
+\contentsline {subsection}{\numberline {6.6.8}\leavevmode {\color {Chapter }UniversalMorphismIntoDirectSum}}{79}{subsection.6.6.8}
+\contentsline {subsection}{\numberline {6.6.9}\leavevmode {\color {Chapter }UniversalMorphismIntoDirectSumOp (for IsList, IsList, IsCapCategoryObject)}}{80}{subsection.6.6.9}
+\contentsline {subsection}{\numberline {6.6.10}\leavevmode {\color {Chapter }UniversalMorphismIntoDirectSumWithGivenDirectSum (for IsList, IsList, IsCapCategoryObject)}}{80}{subsection.6.6.10}
+\contentsline {subsection}{\numberline {6.6.11}\leavevmode {\color {Chapter }UniversalMorphismFromDirectSum}}{80}{subsection.6.6.11}
+\contentsline {subsection}{\numberline {6.6.12}\leavevmode {\color {Chapter }UniversalMorphismFromDirectSumOp (for IsList, IsList, IsCapCategoryObject)}}{80}{subsection.6.6.12}
+\contentsline {subsection}{\numberline {6.6.13}\leavevmode {\color {Chapter }UniversalMorphismFromDirectSumWithGivenDirectSum (for IsList, IsList, IsCapCategoryObject)}}{81}{subsection.6.6.13}
+\contentsline {subsection}{\numberline {6.6.14}\leavevmode {\color {Chapter }IsomorphismFromDirectSumToDirectProduct (for IsList)}}{81}{subsection.6.6.14}
+\contentsline {subsection}{\numberline {6.6.15}\leavevmode {\color {Chapter }IsomorphismFromDirectSumToDirectProductOp (for IsList, IsCapCategoryObject)}}{81}{subsection.6.6.15}
+\contentsline {subsection}{\numberline {6.6.16}\leavevmode {\color {Chapter }IsomorphismFromDirectProductToDirectSum (for IsList)}}{81}{subsection.6.6.16}
+\contentsline {subsection}{\numberline {6.6.17}\leavevmode {\color {Chapter }IsomorphismFromDirectProductToDirectSumOp (for IsList, IsCapCategoryObject)}}{81}{subsection.6.6.17}
+\contentsline {subsection}{\numberline {6.6.18}\leavevmode {\color {Chapter }IsomorphismFromDirectSumToCoproduct (for IsList)}}{81}{subsection.6.6.18}
+\contentsline {subsection}{\numberline {6.6.19}\leavevmode {\color {Chapter }IsomorphismFromDirectSumToCoproductOp (for IsList, IsCapCategoryObject)}}{82}{subsection.6.6.19}
+\contentsline {subsection}{\numberline {6.6.20}\leavevmode {\color {Chapter }IsomorphismFromCoproductToDirectSum (for IsList)}}{82}{subsection.6.6.20}
+\contentsline {subsection}{\numberline {6.6.21}\leavevmode {\color {Chapter }IsomorphismFromCoproductToDirectSumOp (for IsList, IsCapCategoryObject)}}{82}{subsection.6.6.21}
+\contentsline {subsection}{\numberline {6.6.22}\leavevmode {\color {Chapter }MorphismBetweenDirectSums (for IsList)}}{82}{subsection.6.6.22}
+\contentsline {subsection}{\numberline {6.6.23}\leavevmode {\color {Chapter }AddMorphismBetweenDirectSums (for IsCapCategory, IsFunction)}}{82}{subsection.6.6.23}
+\contentsline {subsection}{\numberline {6.6.24}\leavevmode {\color {Chapter }MorphismBetweenDirectSumsOp (for IsList, IsInt, IsInt, IsCapCategoryMorphism)}}{82}{subsection.6.6.24}
+\contentsline {subsection}{\numberline {6.6.25}\leavevmode {\color {Chapter }ComponentOfMorphismIntoDirectSum (for IsCapCategoryMorphism, IsList, IsInt)}}{83}{subsection.6.6.25}
+\contentsline {subsection}{\numberline {6.6.26}\leavevmode {\color {Chapter }ComponentOfMorphismFromDirectSum (for IsCapCategoryMorphism, IsList, IsInt)}}{83}{subsection.6.6.26}
+\contentsline {subsection}{\numberline {6.6.27}\leavevmode {\color {Chapter }AddComponentOfMorphismIntoDirectSum (for IsCapCategory, IsFunction)}}{83}{subsection.6.6.27}
+\contentsline {subsection}{\numberline {6.6.28}\leavevmode {\color {Chapter }AddComponentOfMorphismFromDirectSum (for IsCapCategory, IsFunction)}}{83}{subsection.6.6.28}
+\contentsline {subsection}{\numberline {6.6.29}\leavevmode {\color {Chapter }AddProjectionInFactorOfDirectSum (for IsCapCategory, IsFunction)}}{83}{subsection.6.6.29}
+\contentsline {subsection}{\numberline {6.6.30}\leavevmode {\color {Chapter }AddProjectionInFactorOfDirectSumWithGivenDirectSum (for IsCapCategory, IsFunction)}}{83}{subsection.6.6.30}
+\contentsline {subsection}{\numberline {6.6.31}\leavevmode {\color {Chapter }AddInjectionOfCofactorOfDirectSum (for IsCapCategory, IsFunction)}}{84}{subsection.6.6.31}
+\contentsline {subsection}{\numberline {6.6.32}\leavevmode {\color {Chapter }AddInjectionOfCofactorOfDirectSumWithGivenDirectSum (for IsCapCategory, IsFunction)}}{84}{subsection.6.6.32}
+\contentsline {subsection}{\numberline {6.6.33}\leavevmode {\color {Chapter }AddUniversalMorphismIntoDirectSum (for IsCapCategory, IsFunction)}}{84}{subsection.6.6.33}
+\contentsline {subsection}{\numberline {6.6.34}\leavevmode {\color {Chapter }AddUniversalMorphismIntoDirectSumWithGivenDirectSum (for IsCapCategory, IsFunction)}}{84}{subsection.6.6.34}
+\contentsline {subsection}{\numberline {6.6.35}\leavevmode {\color {Chapter }AddUniversalMorphismFromDirectSum (for IsCapCategory, IsFunction)}}{84}{subsection.6.6.35}
+\contentsline {subsection}{\numberline {6.6.36}\leavevmode {\color {Chapter }AddUniversalMorphismFromDirectSumWithGivenDirectSum (for IsCapCategory, IsFunction)}}{84}{subsection.6.6.36}
+\contentsline {subsection}{\numberline {6.6.37}\leavevmode {\color {Chapter }AddIsomorphismFromDirectSumToDirectProduct (for IsCapCategory, IsFunction)}}{85}{subsection.6.6.37}
+\contentsline {subsection}{\numberline {6.6.38}\leavevmode {\color {Chapter }AddIsomorphismFromDirectProductToDirectSum (for IsCapCategory, IsFunction)}}{85}{subsection.6.6.38}
+\contentsline {subsection}{\numberline {6.6.39}\leavevmode {\color {Chapter }AddIsomorphismFromDirectSumToCoproduct (for IsCapCategory, IsFunction)}}{85}{subsection.6.6.39}
+\contentsline {subsection}{\numberline {6.6.40}\leavevmode {\color {Chapter }AddIsomorphismFromCoproductToDirectSum (for IsCapCategory, IsFunction)}}{85}{subsection.6.6.40}
+\contentsline {subsection}{\numberline {6.6.41}\leavevmode {\color {Chapter }AddDirectSum (for IsCapCategory, IsFunction)}}{85}{subsection.6.6.41}
+\contentsline {subsection}{\numberline {6.6.42}\leavevmode {\color {Chapter }DirectSumFunctorial (for IsList)}}{86}{subsection.6.6.42}
+\contentsline {subsection}{\numberline {6.6.43}\leavevmode {\color {Chapter }DirectSumFunctorialWithGivenDirectSums (for IsCapCategoryObject, IsList, IsCapCategoryObject)}}{86}{subsection.6.6.43}
+\contentsline {subsection}{\numberline {6.6.44}\leavevmode {\color {Chapter }AddDirectSumFunctorialWithGivenDirectSums (for IsCapCategory, IsFunction)}}{86}{subsection.6.6.44}
+\contentsline {section}{\numberline {6.7}\leavevmode {\color {Chapter }Coproduct}}{86}{section.6.7}
+\contentsline {subsection}{\numberline {6.7.1}\leavevmode {\color {Chapter }Coproduct (for IsList)}}{87}{subsection.6.7.1}
+\contentsline {subsection}{\numberline {6.7.2}\leavevmode {\color {Chapter }Coproduct (for IsCapCategoryObject, IsCapCategoryObject)}}{87}{subsection.6.7.2}
+\contentsline {subsection}{\numberline {6.7.3}\leavevmode {\color {Chapter }Coproduct (for IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject)}}{87}{subsection.6.7.3}
+\contentsline {subsection}{\numberline {6.7.4}\leavevmode {\color {Chapter }CoproductOp (for IsList, IsCapCategoryObject)}}{87}{subsection.6.7.4}
+\contentsline {subsection}{\numberline {6.7.5}\leavevmode {\color {Chapter }InjectionOfCofactorOfCoproduct (for IsList, IsInt)}}{87}{subsection.6.7.5}
+\contentsline {subsection}{\numberline {6.7.6}\leavevmode {\color {Chapter }InjectionOfCofactorOfCoproductOp (for IsList, IsInt, IsCapCategoryObject)}}{87}{subsection.6.7.6}
+\contentsline {subsection}{\numberline {6.7.7}\leavevmode {\color {Chapter }InjectionOfCofactorOfCoproductWithGivenCoproduct (for IsList, IsInt, IsCapCategoryObject)}}{87}{subsection.6.7.7}
+\contentsline {subsection}{\numberline {6.7.8}\leavevmode {\color {Chapter }UniversalMorphismFromCoproduct}}{88}{subsection.6.7.8}
+\contentsline {subsection}{\numberline {6.7.9}\leavevmode {\color {Chapter }UniversalMorphismFromCoproductOp (for IsList, IsList, IsCapCategoryObject)}}{88}{subsection.6.7.9}
+\contentsline {subsection}{\numberline {6.7.10}\leavevmode {\color {Chapter }UniversalMorphismFromCoproductWithGivenCoproduct (for IsList, IsList, IsCapCategoryObject)}}{88}{subsection.6.7.10}
+\contentsline {subsection}{\numberline {6.7.11}\leavevmode {\color {Chapter }AddCoproduct (for IsCapCategory, IsFunction)}}{88}{subsection.6.7.11}
+\contentsline {subsection}{\numberline {6.7.12}\leavevmode {\color {Chapter }AddInjectionOfCofactorOfCoproduct (for IsCapCategory, IsFunction)}}{88}{subsection.6.7.12}
+\contentsline {subsection}{\numberline {6.7.13}\leavevmode {\color {Chapter }AddInjectionOfCofactorOfCoproductWithGivenCoproduct (for IsCapCategory, IsFunction)}}{89}{subsection.6.7.13}
+\contentsline {subsection}{\numberline {6.7.14}\leavevmode {\color {Chapter }AddUniversalMorphismFromCoproduct (for IsCapCategory, IsFunction)}}{89}{subsection.6.7.14}
+\contentsline {subsection}{\numberline {6.7.15}\leavevmode {\color {Chapter }AddUniversalMorphismFromCoproductWithGivenCoproduct (for IsCapCategory, IsFunction)}}{89}{subsection.6.7.15}
+\contentsline {subsection}{\numberline {6.7.16}\leavevmode {\color {Chapter }CoproductFunctorial (for IsList)}}{89}{subsection.6.7.16}
+\contentsline {subsection}{\numberline {6.7.17}\leavevmode {\color {Chapter }CoproductFunctorialWithGivenCoproducts (for IsCapCategoryObject, IsList, IsCapCategoryObject)}}{89}{subsection.6.7.17}
+\contentsline {subsection}{\numberline {6.7.18}\leavevmode {\color {Chapter }AddCoproductFunctorialWithGivenCoproducts (for IsCapCategory, IsFunction)}}{89}{subsection.6.7.18}
+\contentsline {section}{\numberline {6.8}\leavevmode {\color {Chapter }Direct Product}}{90}{section.6.8}
+\contentsline {subsection}{\numberline {6.8.1}\leavevmode {\color {Chapter }DirectProductOp (for IsList, IsCapCategoryObject)}}{90}{subsection.6.8.1}
+\contentsline {subsection}{\numberline {6.8.2}\leavevmode {\color {Chapter }ProjectionInFactorOfDirectProduct (for IsList, IsInt)}}{90}{subsection.6.8.2}
+\contentsline {subsection}{\numberline {6.8.3}\leavevmode {\color {Chapter }ProjectionInFactorOfDirectProductOp (for IsList, IsInt, IsCapCategoryObject)}}{90}{subsection.6.8.3}
+\contentsline {subsection}{\numberline {6.8.4}\leavevmode {\color {Chapter }ProjectionInFactorOfDirectProductWithGivenDirectProduct (for IsList, IsInt, IsCapCategoryObject)}}{91}{subsection.6.8.4}
+\contentsline {subsection}{\numberline {6.8.5}\leavevmode {\color {Chapter }UniversalMorphismIntoDirectProduct}}{91}{subsection.6.8.5}
+\contentsline {subsection}{\numberline {6.8.6}\leavevmode {\color {Chapter }UniversalMorphismIntoDirectProductOp (for IsList, IsList, IsCapCategoryObject)}}{91}{subsection.6.8.6}
+\contentsline {subsection}{\numberline {6.8.7}\leavevmode {\color {Chapter }UniversalMorphismIntoDirectProductWithGivenDirectProduct (for IsList, IsList, IsCapCategoryObject)}}{91}{subsection.6.8.7}
+\contentsline {subsection}{\numberline {6.8.8}\leavevmode {\color {Chapter }AddDirectProduct (for IsCapCategory, IsFunction)}}{91}{subsection.6.8.8}
+\contentsline {subsection}{\numberline {6.8.9}\leavevmode {\color {Chapter }AddProjectionInFactorOfDirectProduct (for IsCapCategory, IsFunction)}}{92}{subsection.6.8.9}
+\contentsline {subsection}{\numberline {6.8.10}\leavevmode {\color {Chapter }AddProjectionInFactorOfDirectProductWithGivenDirectProduct (for IsCapCategory, IsFunction)}}{92}{subsection.6.8.10}
+\contentsline {subsection}{\numberline {6.8.11}\leavevmode {\color {Chapter }AddUniversalMorphismIntoDirectProduct (for IsCapCategory, IsFunction)}}{92}{subsection.6.8.11}
+\contentsline {subsection}{\numberline {6.8.12}\leavevmode {\color {Chapter }AddUniversalMorphismIntoDirectProductWithGivenDirectProduct (for IsCapCategory, IsFunction)}}{92}{subsection.6.8.12}
+\contentsline {subsection}{\numberline {6.8.13}\leavevmode {\color {Chapter }DirectProductFunctorial (for IsList)}}{92}{subsection.6.8.13}
+\contentsline {subsection}{\numberline {6.8.14}\leavevmode {\color {Chapter }DirectProductFunctorialWithGivenDirectProducts (for IsCapCategoryObject, IsList, IsCapCategoryObject)}}{92}{subsection.6.8.14}
+\contentsline {subsection}{\numberline {6.8.15}\leavevmode {\color {Chapter }AddDirectProductFunctorialWithGivenDirectProducts (for IsCapCategory, IsFunction)}}{93}{subsection.6.8.15}
+\contentsline {section}{\numberline {6.9}\leavevmode {\color {Chapter }Equalizer}}{93}{section.6.9}
+\contentsline {subsection}{\numberline {6.9.1}\leavevmode {\color {Chapter }Equalizer}}{93}{subsection.6.9.1}
+\contentsline {subsection}{\numberline {6.9.2}\leavevmode {\color {Chapter }EqualizerOp (for IsList, IsCapCategoryMorphism)}}{94}{subsection.6.9.2}
+\contentsline {subsection}{\numberline {6.9.3}\leavevmode {\color {Chapter }EmbeddingOfEqualizer (for IsList)}}{94}{subsection.6.9.3}
+\contentsline {subsection}{\numberline {6.9.4}\leavevmode {\color {Chapter }EmbeddingOfEqualizerOp (for IsList, IsCapCategoryMorphism)}}{94}{subsection.6.9.4}
+\contentsline {subsection}{\numberline {6.9.5}\leavevmode {\color {Chapter }EmbeddingOfEqualizerWithGivenEqualizer (for IsList, IsCapCategoryObject)}}{94}{subsection.6.9.5}
+\contentsline {subsection}{\numberline {6.9.6}\leavevmode {\color {Chapter }MorphismFromEqualizerToSink (for IsList)}}{94}{subsection.6.9.6}
+\contentsline {subsection}{\numberline {6.9.7}\leavevmode {\color {Chapter }MorphismFromEqualizerToSinkOp (for IsList, IsCapCategoryMorphism)}}{94}{subsection.6.9.7}
+\contentsline {subsection}{\numberline {6.9.8}\leavevmode {\color {Chapter }MorphismFromEqualizerToSinkWithGivenEqualizer (for IsList, IsCapCategoryObject)}}{95}{subsection.6.9.8}
+\contentsline {subsection}{\numberline {6.9.9}\leavevmode {\color {Chapter }UniversalMorphismIntoEqualizer (for IsList, IsCapCategoryMorphism)}}{95}{subsection.6.9.9}
+\contentsline {subsection}{\numberline {6.9.10}\leavevmode {\color {Chapter }UniversalMorphismIntoEqualizerWithGivenEqualizer (for IsList, IsCapCategoryMorphism, IsCapCategoryObject)}}{95}{subsection.6.9.10}
+\contentsline {subsection}{\numberline {6.9.11}\leavevmode {\color {Chapter }AddEqualizer (for IsCapCategory, IsFunction)}}{95}{subsection.6.9.11}
+\contentsline {subsection}{\numberline {6.9.12}\leavevmode {\color {Chapter }AddEmbeddingOfEqualizer (for IsCapCategory, IsFunction)}}{95}{subsection.6.9.12}
+\contentsline {subsection}{\numberline {6.9.13}\leavevmode {\color {Chapter }AddEmbeddingOfEqualizerWithGivenEqualizer (for IsCapCategory, IsFunction)}}{95}{subsection.6.9.13}
+\contentsline {subsection}{\numberline {6.9.14}\leavevmode {\color {Chapter }AddMorphismFromEqualizerToSink (for IsCapCategory, IsFunction)}}{96}{subsection.6.9.14}
+\contentsline {subsection}{\numberline {6.9.15}\leavevmode {\color {Chapter }AddMorphismFromEqualizerToSinkWithGivenEqualizer (for IsCapCategory, IsFunction)}}{96}{subsection.6.9.15}
+\contentsline {subsection}{\numberline {6.9.16}\leavevmode {\color {Chapter }AddUniversalMorphismIntoEqualizer (for IsCapCategory, IsFunction)}}{96}{subsection.6.9.16}
+\contentsline {subsection}{\numberline {6.9.17}\leavevmode {\color {Chapter }AddUniversalMorphismIntoEqualizerWithGivenEqualizer (for IsCapCategory, IsFunction)}}{96}{subsection.6.9.17}
+\contentsline {subsection}{\numberline {6.9.18}\leavevmode {\color {Chapter }EqualizerFunctorial (for IsList, IsCapCategoryMorphism, IsList)}}{96}{subsection.6.9.18}
+\contentsline {subsection}{\numberline {6.9.19}\leavevmode {\color {Chapter }EqualizerFunctorialWithGivenEqualizers (for IsCapCategoryObject, IsList, IsCapCategoryMorphism, IsList, IsCapCategoryObject)}}{96}{subsection.6.9.19}
+\contentsline {subsection}{\numberline {6.9.20}\leavevmode {\color {Chapter }AddEqualizerFunctorialWithGivenEqualizers (for IsCapCategory, IsFunction)}}{97}{subsection.6.9.20}
+\contentsline {section}{\numberline {6.10}\leavevmode {\color {Chapter }Coequalizer}}{97}{section.6.10}
+\contentsline {subsection}{\numberline {6.10.1}\leavevmode {\color {Chapter }Coequalizer}}{97}{subsection.6.10.1}
+\contentsline {subsection}{\numberline {6.10.2}\leavevmode {\color {Chapter }CoequalizerOp (for IsList, IsCapCategoryMorphism)}}{98}{subsection.6.10.2}
+\contentsline {subsection}{\numberline {6.10.3}\leavevmode {\color {Chapter }ProjectionOntoCoequalizer (for IsList)}}{98}{subsection.6.10.3}
+\contentsline {subsection}{\numberline {6.10.4}\leavevmode {\color {Chapter }ProjectionOntoCoequalizerOp (for IsList, IsCapCategoryMorphism)}}{98}{subsection.6.10.4}
+\contentsline {subsection}{\numberline {6.10.5}\leavevmode {\color {Chapter }ProjectionOntoCoequalizerWithGivenCoequalizer (for IsList, IsCapCategoryObject)}}{98}{subsection.6.10.5}
+\contentsline {subsection}{\numberline {6.10.6}\leavevmode {\color {Chapter }MorphismFromSourceToCoequalizer (for IsList)}}{98}{subsection.6.10.6}
+\contentsline {subsection}{\numberline {6.10.7}\leavevmode {\color {Chapter }MorphismFromSourceToCoequalizerOp (for IsList, IsCapCategoryMorphism)}}{98}{subsection.6.10.7}
+\contentsline {subsection}{\numberline {6.10.8}\leavevmode {\color {Chapter }MorphismFromSourceToCoequalizerWithGivenCoequalizer (for IsList, IsCapCategoryObject)}}{99}{subsection.6.10.8}
+\contentsline {subsection}{\numberline {6.10.9}\leavevmode {\color {Chapter }UniversalMorphismFromCoequalizer (for IsList, IsCapCategoryMorphism)}}{99}{subsection.6.10.9}
+\contentsline {subsection}{\numberline {6.10.10}\leavevmode {\color {Chapter }UniversalMorphismFromCoequalizerWithGivenCoequalizer (for IsList, IsCapCategoryMorphism, IsCapCategoryObject)}}{99}{subsection.6.10.10}
+\contentsline {subsection}{\numberline {6.10.11}\leavevmode {\color {Chapter }AddCoequalizer (for IsCapCategory, IsFunction)}}{99}{subsection.6.10.11}
+\contentsline {subsection}{\numberline {6.10.12}\leavevmode {\color {Chapter }AddProjectionOntoCoequalizer (for IsCapCategory, IsFunction)}}{99}{subsection.6.10.12}
+\contentsline {subsection}{\numberline {6.10.13}\leavevmode {\color {Chapter }AddProjectionOntoCoequalizerWithGivenCoequalizer (for IsCapCategory, IsFunction)}}{99}{subsection.6.10.13}
+\contentsline {subsection}{\numberline {6.10.14}\leavevmode {\color {Chapter }AddMorphismFromSourceToCoequalizer (for IsCapCategory, IsFunction)}}{100}{subsection.6.10.14}
+\contentsline {subsection}{\numberline {6.10.15}\leavevmode {\color {Chapter }AddMorphismFromSourceToCoequalizerWithGivenCoequalizer (for IsCapCategory, IsFunction)}}{100}{subsection.6.10.15}
+\contentsline {subsection}{\numberline {6.10.16}\leavevmode {\color {Chapter }AddUniversalMorphismFromCoequalizer (for IsCapCategory, IsFunction)}}{100}{subsection.6.10.16}
+\contentsline {subsection}{\numberline {6.10.17}\leavevmode {\color {Chapter }AddUniversalMorphismFromCoequalizerWithGivenCoequalizer (for IsCapCategory, IsFunction)}}{100}{subsection.6.10.17}
+\contentsline {subsection}{\numberline {6.10.18}\leavevmode {\color {Chapter }CoequalizerFunctorial (for IsList, IsCapCategoryMorphism, IsList)}}{100}{subsection.6.10.18}
+\contentsline {subsection}{\numberline {6.10.19}\leavevmode {\color {Chapter }CoequalizerFunctorialWithGivenCoequalizers (for IsCapCategoryObject, IsList, IsCapCategoryMorphism, IsList, IsCapCategoryObject)}}{101}{subsection.6.10.19}
+\contentsline {subsection}{\numberline {6.10.20}\leavevmode {\color {Chapter }AddCoequalizerFunctorialWithGivenCoequalizers (for IsCapCategory, IsFunction)}}{101}{subsection.6.10.20}
+\contentsline {section}{\numberline {6.11}\leavevmode {\color {Chapter }Fiber Product}}{101}{section.6.11}
+\contentsline {subsection}{\numberline {6.11.1}\leavevmode {\color {Chapter }IsomorphismFromFiberProductToKernelOfDiagonalDifference (for IsList)}}{102}{subsection.6.11.1}
+\contentsline {subsection}{\numberline {6.11.2}\leavevmode {\color {Chapter }IsomorphismFromFiberProductToKernelOfDiagonalDifferenceOp (for IsList, IsCapCategoryMorphism)}}{102}{subsection.6.11.2}
+\contentsline {subsection}{\numberline {6.11.3}\leavevmode {\color {Chapter }AddIsomorphismFromFiberProductToKernelOfDiagonalDifference (for IsCapCategory, IsFunction)}}{102}{subsection.6.11.3}
+\contentsline {subsection}{\numberline {6.11.4}\leavevmode {\color {Chapter }IsomorphismFromKernelOfDiagonalDifferenceToFiberProduct (for IsList)}}{102}{subsection.6.11.4}
+\contentsline {subsection}{\numberline {6.11.5}\leavevmode {\color {Chapter }IsomorphismFromKernelOfDiagonalDifferenceToFiberProductOp (for IsList, IsCapCategoryMorphism)}}{103}{subsection.6.11.5}
+\contentsline {subsection}{\numberline {6.11.6}\leavevmode {\color {Chapter }AddIsomorphismFromKernelOfDiagonalDifferenceToFiberProduct (for IsCapCategory, IsFunction)}}{103}{subsection.6.11.6}
+\contentsline {subsection}{\numberline {6.11.7}\leavevmode {\color {Chapter }IsomorphismFromFiberProductToEqualizerOfDirectProductDiagram (for IsList)}}{103}{subsection.6.11.7}
+\contentsline {subsection}{\numberline {6.11.8}\leavevmode {\color {Chapter }IsomorphismFromFiberProductToEqualizerOfDirectProductDiagramOp (for IsList, IsCapCategoryMorphism)}}{103}{subsection.6.11.8}
+\contentsline {subsection}{\numberline {6.11.9}\leavevmode {\color {Chapter }AddIsomorphismFromFiberProductToEqualizerOfDirectProductDiagram (for IsCapCategory, IsFunction)}}{103}{subsection.6.11.9}
+\contentsline {subsection}{\numberline {6.11.10}\leavevmode {\color {Chapter }IsomorphismFromEqualizerOfDirectProductDiagramToFiberProduct (for IsList)}}{104}{subsection.6.11.10}
+\contentsline {subsection}{\numberline {6.11.11}\leavevmode {\color {Chapter }IsomorphismFromEqualizerOfDirectProductDiagramToFiberProductOp (for IsList, IsCapCategoryMorphism)}}{104}{subsection.6.11.11}
+\contentsline {subsection}{\numberline {6.11.12}\leavevmode {\color {Chapter }AddIsomorphismFromEqualizerOfDirectProductDiagramToFiberProduct (for IsCapCategory, IsFunction)}}{104}{subsection.6.11.12}
+\contentsline {subsection}{\numberline {6.11.13}\leavevmode {\color {Chapter }DirectSumDiagonalDifference (for IsList)}}{104}{subsection.6.11.13}
+\contentsline {subsection}{\numberline {6.11.14}\leavevmode {\color {Chapter }DirectSumDiagonalDifferenceOp (for IsList, IsCapCategoryMorphism)}}{104}{subsection.6.11.14}
+\contentsline {subsection}{\numberline {6.11.15}\leavevmode {\color {Chapter }AddDirectSumDiagonalDifference (for IsCapCategory, IsFunction)}}{104}{subsection.6.11.15}
+\contentsline {subsection}{\numberline {6.11.16}\leavevmode {\color {Chapter }FiberProductEmbeddingInDirectSum (for IsList)}}{105}{subsection.6.11.16}
+\contentsline {subsection}{\numberline {6.11.17}\leavevmode {\color {Chapter }FiberProductEmbeddingInDirectSumOp (for IsList, IsCapCategoryMorphism)}}{105}{subsection.6.11.17}
+\contentsline {subsection}{\numberline {6.11.18}\leavevmode {\color {Chapter }AddFiberProductEmbeddingInDirectSum (for IsCapCategory, IsFunction)}}{105}{subsection.6.11.18}
+\contentsline {subsection}{\numberline {6.11.19}\leavevmode {\color {Chapter }FiberProduct}}{105}{subsection.6.11.19}
+\contentsline {subsection}{\numberline {6.11.20}\leavevmode {\color {Chapter }FiberProductOp (for IsList, IsCapCategoryMorphism)}}{105}{subsection.6.11.20}
+\contentsline {subsection}{\numberline {6.11.21}\leavevmode {\color {Chapter }ProjectionInFactorOfFiberProduct (for IsList, IsInt)}}{105}{subsection.6.11.21}
+\contentsline {subsection}{\numberline {6.11.22}\leavevmode {\color {Chapter }ProjectionInFactorOfFiberProductOp (for IsList, IsInt, IsCapCategoryMorphism)}}{106}{subsection.6.11.22}
+\contentsline {subsection}{\numberline {6.11.23}\leavevmode {\color {Chapter }ProjectionInFactorOfFiberProductWithGivenFiberProduct (for IsList, IsInt, IsCapCategoryObject)}}{106}{subsection.6.11.23}
+\contentsline {subsection}{\numberline {6.11.24}\leavevmode {\color {Chapter }MorphismFromFiberProductToSink (for IsList)}}{106}{subsection.6.11.24}
+\contentsline {subsection}{\numberline {6.11.25}\leavevmode {\color {Chapter }MorphismFromFiberProductToSinkOp (for IsList, IsCapCategoryMorphism)}}{106}{subsection.6.11.25}
+\contentsline {subsection}{\numberline {6.11.26}\leavevmode {\color {Chapter }MorphismFromFiberProductToSinkWithGivenFiberProduct (for IsList, IsCapCategoryObject)}}{106}{subsection.6.11.26}
+\contentsline {subsection}{\numberline {6.11.27}\leavevmode {\color {Chapter }UniversalMorphismIntoFiberProduct}}{106}{subsection.6.11.27}
+\contentsline {subsection}{\numberline {6.11.28}\leavevmode {\color {Chapter }UniversalMorphismIntoFiberProductOp (for IsList, IsList, IsCapCategoryMorphism)}}{107}{subsection.6.11.28}
+\contentsline {subsection}{\numberline {6.11.29}\leavevmode {\color {Chapter }UniversalMorphismIntoFiberProductWithGivenFiberProduct (for IsList, IsList, IsCapCategoryObject)}}{107}{subsection.6.11.29}
+\contentsline {subsection}{\numberline {6.11.30}\leavevmode {\color {Chapter }AddFiberProduct (for IsCapCategory, IsFunction)}}{107}{subsection.6.11.30}
+\contentsline {subsection}{\numberline {6.11.31}\leavevmode {\color {Chapter }AddProjectionInFactorOfFiberProduct (for IsCapCategory, IsFunction)}}{107}{subsection.6.11.31}
+\contentsline {subsection}{\numberline {6.11.32}\leavevmode {\color {Chapter }AddProjectionInFactorOfFiberProductWithGivenFiberProduct (for IsCapCategory, IsFunction)}}{107}{subsection.6.11.32}
+\contentsline {subsection}{\numberline {6.11.33}\leavevmode {\color {Chapter }AddMorphismFromFiberProductToSink (for IsCapCategory, IsFunction)}}{108}{subsection.6.11.33}
+\contentsline {subsection}{\numberline {6.11.34}\leavevmode {\color {Chapter }AddMorphismFromFiberProductToSinkWithGivenFiberProduct (for IsCapCategory, IsFunction)}}{108}{subsection.6.11.34}
+\contentsline {subsection}{\numberline {6.11.35}\leavevmode {\color {Chapter }AddUniversalMorphismIntoFiberProduct (for IsCapCategory, IsFunction)}}{108}{subsection.6.11.35}
+\contentsline {subsection}{\numberline {6.11.36}\leavevmode {\color {Chapter }AddUniversalMorphismIntoFiberProductWithGivenFiberProduct (for IsCapCategory, IsFunction)}}{108}{subsection.6.11.36}
+\contentsline {subsection}{\numberline {6.11.37}\leavevmode {\color {Chapter }FiberProductFunctorial (for IsList, IsList, IsList)}}{108}{subsection.6.11.37}
+\contentsline {subsection}{\numberline {6.11.38}\leavevmode {\color {Chapter }FiberProductFunctorialWithGivenFiberProducts (for IsCapCategoryObject, IsList, IsList, IsList, IsCapCategoryObject)}}{108}{subsection.6.11.38}
+\contentsline {subsection}{\numberline {6.11.39}\leavevmode {\color {Chapter }AddFiberProductFunctorialWithGivenFiberProducts (for IsCapCategory, IsFunction)}}{109}{subsection.6.11.39}
+\contentsline {section}{\numberline {6.12}\leavevmode {\color {Chapter }Pushout}}{109}{section.6.12}
+\contentsline {subsection}{\numberline {6.12.1}\leavevmode {\color {Chapter }IsomorphismFromPushoutToCokernelOfDiagonalDifference (for IsList)}}{110}{subsection.6.12.1}
+\contentsline {subsection}{\numberline {6.12.2}\leavevmode {\color {Chapter }IsomorphismFromPushoutToCokernelOfDiagonalDifferenceOp (for IsList, IsCapCategoryMorphism)}}{110}{subsection.6.12.2}
+\contentsline {subsection}{\numberline {6.12.3}\leavevmode {\color {Chapter }AddIsomorphismFromPushoutToCokernelOfDiagonalDifference (for IsCapCategory, IsFunction)}}{110}{subsection.6.12.3}
+\contentsline {subsection}{\numberline {6.12.4}\leavevmode {\color {Chapter }IsomorphismFromCokernelOfDiagonalDifferenceToPushout (for IsList)}}{110}{subsection.6.12.4}
+\contentsline {subsection}{\numberline {6.12.5}\leavevmode {\color {Chapter }IsomorphismFromCokernelOfDiagonalDifferenceToPushoutOp (for IsList, IsCapCategoryMorphism)}}{110}{subsection.6.12.5}
+\contentsline {subsection}{\numberline {6.12.6}\leavevmode {\color {Chapter }AddIsomorphismFromCokernelOfDiagonalDifferenceToPushout (for IsCapCategory, IsFunction)}}{110}{subsection.6.12.6}
+\contentsline {subsection}{\numberline {6.12.7}\leavevmode {\color {Chapter }IsomorphismFromPushoutToCoequalizerOfCoproductDiagram (for IsList)}}{111}{subsection.6.12.7}
+\contentsline {subsection}{\numberline {6.12.8}\leavevmode {\color {Chapter }IsomorphismFromPushoutToCoequalizerOfCoproductDiagramOp (for IsList, IsCapCategoryMorphism)}}{111}{subsection.6.12.8}
+\contentsline {subsection}{\numberline {6.12.9}\leavevmode {\color {Chapter }AddIsomorphismFromPushoutToCoequalizerOfCoproductDiagram (for IsCapCategory, IsFunction)}}{111}{subsection.6.12.9}
+\contentsline {subsection}{\numberline {6.12.10}\leavevmode {\color {Chapter }IsomorphismFromCoequalizerOfCoproductDiagramToPushout (for IsList)}}{111}{subsection.6.12.10}
+\contentsline {subsection}{\numberline {6.12.11}\leavevmode {\color {Chapter }IsomorphismFromCoequalizerOfCoproductDiagramToPushoutOp (for IsList, IsCapCategoryMorphism)}}{111}{subsection.6.12.11}
+\contentsline {subsection}{\numberline {6.12.12}\leavevmode {\color {Chapter }AddIsomorphismFromCoequalizerOfCoproductDiagramToPushout (for IsCapCategory, IsFunction)}}{112}{subsection.6.12.12}
+\contentsline {subsection}{\numberline {6.12.13}\leavevmode {\color {Chapter }DirectSumCodiagonalDifference (for IsList)}}{112}{subsection.6.12.13}
+\contentsline {subsection}{\numberline {6.12.14}\leavevmode {\color {Chapter }DirectSumCodiagonalDifferenceOp (for IsList, IsCapCategoryMorphism)}}{112}{subsection.6.12.14}
+\contentsline {subsection}{\numberline {6.12.15}\leavevmode {\color {Chapter }AddDirectSumCodiagonalDifference (for IsCapCategory, IsFunction)}}{112}{subsection.6.12.15}
+\contentsline {subsection}{\numberline {6.12.16}\leavevmode {\color {Chapter }DirectSumProjectionInPushout (for IsList)}}{112}{subsection.6.12.16}
+\contentsline {subsection}{\numberline {6.12.17}\leavevmode {\color {Chapter }DirectSumProjectionInPushoutOp (for IsList, IsCapCategoryMorphism)}}{112}{subsection.6.12.17}
+\contentsline {subsection}{\numberline {6.12.18}\leavevmode {\color {Chapter }AddDirectSumProjectionInPushout (for IsCapCategory, IsFunction)}}{113}{subsection.6.12.18}
+\contentsline {subsection}{\numberline {6.12.19}\leavevmode {\color {Chapter }Pushout (for IsList)}}{113}{subsection.6.12.19}
+\contentsline {subsection}{\numberline {6.12.20}\leavevmode {\color {Chapter }Pushout (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{113}{subsection.6.12.20}
+\contentsline {subsection}{\numberline {6.12.21}\leavevmode {\color {Chapter }PushoutOp (for IsList, IsCapCategoryMorphism)}}{113}{subsection.6.12.21}
+\contentsline {subsection}{\numberline {6.12.22}\leavevmode {\color {Chapter }InjectionOfCofactorOfPushout (for IsList, IsInt)}}{113}{subsection.6.12.22}
+\contentsline {subsection}{\numberline {6.12.23}\leavevmode {\color {Chapter }InjectionOfCofactorOfPushoutOp (for IsList, IsInt, IsCapCategoryMorphism)}}{113}{subsection.6.12.23}
+\contentsline {subsection}{\numberline {6.12.24}\leavevmode {\color {Chapter }InjectionOfCofactorOfPushoutWithGivenPushout (for IsList, IsInt, IsCapCategoryObject)}}{113}{subsection.6.12.24}
+\contentsline {subsection}{\numberline {6.12.25}\leavevmode {\color {Chapter }MorphismFromSourceToPushout (for IsList)}}{114}{subsection.6.12.25}
+\contentsline {subsection}{\numberline {6.12.26}\leavevmode {\color {Chapter }MorphismFromSourceToPushoutOp (for IsList, IsCapCategoryMorphism)}}{114}{subsection.6.12.26}
+\contentsline {subsection}{\numberline {6.12.27}\leavevmode {\color {Chapter }MorphismFromSourceToPushoutWithGivenPushout (for IsList, IsCapCategoryObject)}}{114}{subsection.6.12.27}
+\contentsline {subsection}{\numberline {6.12.28}\leavevmode {\color {Chapter }UniversalMorphismFromPushout}}{114}{subsection.6.12.28}
+\contentsline {subsection}{\numberline {6.12.29}\leavevmode {\color {Chapter }UniversalMorphismFromPushoutOp (for IsList, IsList, IsCapCategoryMorphism)}}{114}{subsection.6.12.29}
+\contentsline {subsection}{\numberline {6.12.30}\leavevmode {\color {Chapter }UniversalMorphismFromPushoutWithGivenPushout (for IsList, IsList, IsCapCategoryObject)}}{115}{subsection.6.12.30}
+\contentsline {subsection}{\numberline {6.12.31}\leavevmode {\color {Chapter }AddPushout (for IsCapCategory, IsFunction)}}{115}{subsection.6.12.31}
+\contentsline {subsection}{\numberline {6.12.32}\leavevmode {\color {Chapter }AddInjectionOfCofactorOfPushout (for IsCapCategory, IsFunction)}}{115}{subsection.6.12.32}
+\contentsline {subsection}{\numberline {6.12.33}\leavevmode {\color {Chapter }AddInjectionOfCofactorOfPushoutWithGivenPushout (for IsCapCategory, IsFunction)}}{115}{subsection.6.12.33}
+\contentsline {subsection}{\numberline {6.12.34}\leavevmode {\color {Chapter }AddMorphismFromSourceToPushout (for IsCapCategory, IsFunction)}}{115}{subsection.6.12.34}
+\contentsline {subsection}{\numberline {6.12.35}\leavevmode {\color {Chapter }AddMorphismFromSourceToPushoutWithGivenPushout (for IsCapCategory, IsFunction)}}{115}{subsection.6.12.35}
+\contentsline {subsection}{\numberline {6.12.36}\leavevmode {\color {Chapter }AddUniversalMorphismFromPushout (for IsCapCategory, IsFunction)}}{116}{subsection.6.12.36}
+\contentsline {subsection}{\numberline {6.12.37}\leavevmode {\color {Chapter }AddUniversalMorphismFromPushoutWithGivenPushout (for IsCapCategory, IsFunction)}}{116}{subsection.6.12.37}
+\contentsline {subsection}{\numberline {6.12.38}\leavevmode {\color {Chapter }PushoutFunctorial (for IsList, IsList, IsList)}}{116}{subsection.6.12.38}
+\contentsline {subsection}{\numberline {6.12.39}\leavevmode {\color {Chapter }PushoutFunctorialWithGivenPushouts (for IsCapCategoryObject, IsList, IsList, IsList, IsCapCategoryObject)}}{116}{subsection.6.12.39}
+\contentsline {subsection}{\numberline {6.12.40}\leavevmode {\color {Chapter }AddPushoutFunctorialWithGivenPushouts (for IsCapCategory, IsFunction)}}{116}{subsection.6.12.40}
+\contentsline {section}{\numberline {6.13}\leavevmode {\color {Chapter }Image}}{116}{section.6.13}
+\contentsline {subsection}{\numberline {6.13.1}\leavevmode {\color {Chapter }IsomorphismFromImageObjectToKernelOfCokernel (for IsCapCategoryMorphism)}}{117}{subsection.6.13.1}
+\contentsline {subsection}{\numberline {6.13.2}\leavevmode {\color {Chapter }AddIsomorphismFromImageObjectToKernelOfCokernel (for IsCapCategory, IsFunction)}}{117}{subsection.6.13.2}
+\contentsline {subsection}{\numberline {6.13.3}\leavevmode {\color {Chapter }IsomorphismFromKernelOfCokernelToImageObject (for IsCapCategoryMorphism)}}{117}{subsection.6.13.3}
+\contentsline {subsection}{\numberline {6.13.4}\leavevmode {\color {Chapter }AddIsomorphismFromKernelOfCokernelToImageObject (for IsCapCategory, IsFunction)}}{118}{subsection.6.13.4}
+\contentsline {subsection}{\numberline {6.13.5}\leavevmode {\color {Chapter }ImageObject (for IsCapCategoryMorphism)}}{118}{subsection.6.13.5}
+\contentsline {subsection}{\numberline {6.13.6}\leavevmode {\color {Chapter }ImageEmbedding (for IsCapCategoryMorphism)}}{118}{subsection.6.13.6}
+\contentsline {subsection}{\numberline {6.13.7}\leavevmode {\color {Chapter }ImageEmbeddingWithGivenImageObject (for IsCapCategoryMorphism, IsCapCategoryObject)}}{118}{subsection.6.13.7}
+\contentsline {subsection}{\numberline {6.13.8}\leavevmode {\color {Chapter }CoastrictionToImage (for IsCapCategoryMorphism)}}{118}{subsection.6.13.8}
+\contentsline {subsection}{\numberline {6.13.9}\leavevmode {\color {Chapter }CoastrictionToImageWithGivenImageObject (for IsCapCategoryMorphism, IsCapCategoryObject)}}{118}{subsection.6.13.9}
+\contentsline {subsection}{\numberline {6.13.10}\leavevmode {\color {Chapter }UniversalMorphismFromImage (for IsCapCategoryMorphism, IsList)}}{118}{subsection.6.13.10}
+\contentsline {subsection}{\numberline {6.13.11}\leavevmode {\color {Chapter }UniversalMorphismFromImageWithGivenImageObject (for IsCapCategoryMorphism, IsList, IsCapCategoryObject)}}{119}{subsection.6.13.11}
+\contentsline {subsection}{\numberline {6.13.12}\leavevmode {\color {Chapter }AddImageObject (for IsCapCategory, IsFunction)}}{119}{subsection.6.13.12}
+\contentsline {subsection}{\numberline {6.13.13}\leavevmode {\color {Chapter }AddImageEmbedding (for IsCapCategory, IsFunction)}}{119}{subsection.6.13.13}
+\contentsline {subsection}{\numberline {6.13.14}\leavevmode {\color {Chapter }AddImageEmbeddingWithGivenImageObject (for IsCapCategory, IsFunction)}}{119}{subsection.6.13.14}
+\contentsline {subsection}{\numberline {6.13.15}\leavevmode {\color {Chapter }AddCoastrictionToImage (for IsCapCategory, IsFunction)}}{119}{subsection.6.13.15}
+\contentsline {subsection}{\numberline {6.13.16}\leavevmode {\color {Chapter }AddCoastrictionToImageWithGivenImageObject (for IsCapCategory, IsFunction)}}{119}{subsection.6.13.16}
+\contentsline {subsection}{\numberline {6.13.17}\leavevmode {\color {Chapter }AddUniversalMorphismFromImage (for IsCapCategory, IsFunction)}}{120}{subsection.6.13.17}
+\contentsline {subsection}{\numberline {6.13.18}\leavevmode {\color {Chapter }AddUniversalMorphismFromImageWithGivenImageObject (for IsCapCategory, IsFunction)}}{120}{subsection.6.13.18}
+\contentsline {section}{\numberline {6.14}\leavevmode {\color {Chapter }Coimage}}{120}{section.6.14}
+\contentsline {subsection}{\numberline {6.14.1}\leavevmode {\color {Chapter }MorphismFromCoimageToImage (for IsCapCategoryMorphism)}}{121}{subsection.6.14.1}
+\contentsline {subsection}{\numberline {6.14.2}\leavevmode {\color {Chapter }MorphismFromCoimageToImageWithGivenObjects (for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject)}}{121}{subsection.6.14.2}
+\contentsline {subsection}{\numberline {6.14.3}\leavevmode {\color {Chapter }AddMorphismFromCoimageToImageWithGivenObjects (for IsCapCategory, IsFunction)}}{121}{subsection.6.14.3}
+\contentsline {subsection}{\numberline {6.14.4}\leavevmode {\color {Chapter }InverseMorphismFromCoimageToImage (for IsCapCategoryMorphism)}}{121}{subsection.6.14.4}
+\contentsline {subsection}{\numberline {6.14.5}\leavevmode {\color {Chapter }InverseMorphismFromCoimageToImageWithGivenObjects (for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject)}}{121}{subsection.6.14.5}
+\contentsline {subsection}{\numberline {6.14.6}\leavevmode {\color {Chapter }AddInverseMorphismFromCoimageToImageWithGivenObjects (for IsCapCategory, IsFunction)}}{121}{subsection.6.14.6}
+\contentsline {subsection}{\numberline {6.14.7}\leavevmode {\color {Chapter }IsomorphismFromCoimageToCokernelOfKernel (for IsCapCategoryMorphism)}}{122}{subsection.6.14.7}
+\contentsline {subsection}{\numberline {6.14.8}\leavevmode {\color {Chapter }AddIsomorphismFromCoimageToCokernelOfKernel (for IsCapCategory, IsFunction)}}{122}{subsection.6.14.8}
+\contentsline {subsection}{\numberline {6.14.9}\leavevmode {\color {Chapter }IsomorphismFromCokernelOfKernelToCoimage (for IsCapCategoryMorphism)}}{122}{subsection.6.14.9}
+\contentsline {subsection}{\numberline {6.14.10}\leavevmode {\color {Chapter }AddIsomorphismFromCokernelOfKernelToCoimage (for IsCapCategory, IsFunction)}}{122}{subsection.6.14.10}
+\contentsline {subsection}{\numberline {6.14.11}\leavevmode {\color {Chapter }Coimage (for IsCapCategoryMorphism)}}{122}{subsection.6.14.11}
+\contentsline {subsection}{\numberline {6.14.12}\leavevmode {\color {Chapter }CoimageProjection (for IsCapCategoryMorphism)}}{122}{subsection.6.14.12}
+\contentsline {subsection}{\numberline {6.14.13}\leavevmode {\color {Chapter }CoimageProjectionWithGivenCoimage (for IsCapCategoryMorphism, IsCapCategoryObject)}}{123}{subsection.6.14.13}
+\contentsline {subsection}{\numberline {6.14.14}\leavevmode {\color {Chapter }AstrictionToCoimage (for IsCapCategoryMorphism)}}{123}{subsection.6.14.14}
+\contentsline {subsection}{\numberline {6.14.15}\leavevmode {\color {Chapter }AstrictionToCoimageWithGivenCoimage (for IsCapCategoryMorphism, IsCapCategoryObject)}}{123}{subsection.6.14.15}
+\contentsline {subsection}{\numberline {6.14.16}\leavevmode {\color {Chapter }UniversalMorphismIntoCoimage (for IsCapCategoryMorphism, IsList)}}{123}{subsection.6.14.16}
+\contentsline {subsection}{\numberline {6.14.17}\leavevmode {\color {Chapter }UniversalMorphismIntoCoimageWithGivenCoimage (for IsCapCategoryMorphism, IsList, IsCapCategoryObject)}}{123}{subsection.6.14.17}
+\contentsline {subsection}{\numberline {6.14.18}\leavevmode {\color {Chapter }AddCoimage (for IsCapCategory, IsFunction)}}{123}{subsection.6.14.18}
+\contentsline {subsection}{\numberline {6.14.19}\leavevmode {\color {Chapter }AddCoimageProjection (for IsCapCategory, IsFunction)}}{124}{subsection.6.14.19}
+\contentsline {subsection}{\numberline {6.14.20}\leavevmode {\color {Chapter }AddCoimageProjectionWithGivenCoimage (for IsCapCategory, IsFunction)}}{124}{subsection.6.14.20}
+\contentsline {subsection}{\numberline {6.14.21}\leavevmode {\color {Chapter }AddAstrictionToCoimage (for IsCapCategory, IsFunction)}}{124}{subsection.6.14.21}
+\contentsline {subsection}{\numberline {6.14.22}\leavevmode {\color {Chapter }AddAstrictionToCoimageWithGivenCoimage (for IsCapCategory, IsFunction)}}{124}{subsection.6.14.22}
+\contentsline {subsection}{\numberline {6.14.23}\leavevmode {\color {Chapter }AddUniversalMorphismIntoCoimage (for IsCapCategory, IsFunction)}}{124}{subsection.6.14.23}
+\contentsline {subsection}{\numberline {6.14.24}\leavevmode {\color {Chapter }AddUniversalMorphismIntoCoimageWithGivenCoimage (for IsCapCategory, IsFunction)}}{124}{subsection.6.14.24}
+\contentsline {subsection}{\numberline {6.14.25}\leavevmode {\color {Chapter }CanonicalIdentificationFromImageObjectToCoimage (for IsCapCategoryMorphism)}}{125}{subsection.6.14.25}
+\contentsline {subsection}{\numberline {6.14.26}\leavevmode {\color {Chapter }AddCanonicalIdentificationFromImageObjectToCoimage (for IsCapCategory, IsFunction)}}{125}{subsection.6.14.26}
+\contentsline {subsection}{\numberline {6.14.27}\leavevmode {\color {Chapter }CanonicalIdentificationFromCoimageToImageObject (for IsCapCategoryMorphism)}}{125}{subsection.6.14.27}
+\contentsline {subsection}{\numberline {6.14.28}\leavevmode {\color {Chapter }AddCanonicalIdentificationFromCoimageToImageObject (for IsCapCategory, IsFunction)}}{125}{subsection.6.14.28}
+\contentsline {section}{\numberline {6.15}\leavevmode {\color {Chapter }Homology objects}}{125}{section.6.15}
+\contentsline {subsection}{\numberline {6.15.1}\leavevmode {\color {Chapter }HomologyObject (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{126}{subsection.6.15.1}
+\contentsline {subsection}{\numberline {6.15.2}\leavevmode {\color {Chapter }HomologyObjectFunctorial (for IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism)}}{126}{subsection.6.15.2}
+\contentsline {subsection}{\numberline {6.15.3}\leavevmode {\color {Chapter }HomologyObjectFunctorialWithGivenHomologyObjects (for IsCapCategoryObject, IsList, IsCapCategoryObject)}}{126}{subsection.6.15.3}
+\contentsline {subsection}{\numberline {6.15.4}\leavevmode {\color {Chapter }IsomorphismFromHomologyObjectToItsConstructionAsAnImageObject (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{126}{subsection.6.15.4}
+\contentsline {subsection}{\numberline {6.15.5}\leavevmode {\color {Chapter }IsomorphismFromItsConstructionAsAnImageObjectToHomologyObject (for IsCapCategoryMorphism, IsCapCategoryMorphism)}}{126}{subsection.6.15.5}
+\contentsline {subsection}{\numberline {6.15.6}\leavevmode {\color {Chapter }AddHomologyObject (for IsCapCategory, IsFunction)}}{127}{subsection.6.15.6}
+\contentsline {subsection}{\numberline {6.15.7}\leavevmode {\color {Chapter }AddHomologyObjectFunctorialWithGivenHomologyObjects (for IsCapCategory, IsFunction)}}{127}{subsection.6.15.7}
+\contentsline {chapter}{\numberline {7}\leavevmode {\color {Chapter }Add Functions}}{128}{chapter.7}
+\contentsline {section}{\numberline {7.1}\leavevmode {\color {Chapter }Functions Installed by Add}}{128}{section.7.1}
+\contentsline {section}{\numberline {7.2}\leavevmode {\color {Chapter }Add Method}}{129}{section.7.2}
+\contentsline {section}{\numberline {7.3}\leavevmode {\color {Chapter }InstallAdd Function}}{130}{section.7.3}
+\contentsline {section}{\numberline {7.4}\leavevmode {\color {Chapter }Enhancing the method name record}}{132}{section.7.4}
+\contentsline {section}{\numberline {7.5}\leavevmode {\color {Chapter }Install All Adds}}{133}{section.7.5}
+\contentsline {section}{\numberline {7.6}\leavevmode {\color {Chapter }Prepare functions}}{133}{section.7.6}
+\contentsline {subsection}{\numberline {7.6.1}\leavevmode {\color {Chapter }CAPOperationPrepareFunction}}{133}{subsection.7.6.1}
+\contentsline {subsection}{\numberline {7.6.2}\leavevmode {\color {Chapter }CAPAddPrepareFunction}}{133}{subsection.7.6.2}
+\contentsline {subsection}{\numberline {7.6.3}\leavevmode {\color {Chapter }ListCAPPrepareFunctions}}{134}{subsection.7.6.3}
+\contentsline {chapter}{\numberline {8}\leavevmode {\color {Chapter }Managing Derived Methods}}{135}{chapter.8}
+\contentsline {section}{\numberline {8.1}\leavevmode {\color {Chapter }Info Class}}{135}{section.8.1}
+\contentsline {subsection}{\numberline {8.1.1}\leavevmode {\color {Chapter }DerivationInfo}}{135}{subsection.8.1.1}
+\contentsline {subsection}{\numberline {8.1.2}\leavevmode {\color {Chapter }ActivateDerivationInfo}}{135}{subsection.8.1.2}
+\contentsline {subsection}{\numberline {8.1.3}\leavevmode {\color {Chapter }DeactivateDerivationInfo}}{135}{subsection.8.1.3}
+\contentsline {section}{\numberline {8.2}\leavevmode {\color {Chapter }Derivation Objects}}{135}{section.8.2}
+\contentsline {subsection}{\numberline {8.2.1}\leavevmode {\color {Chapter }IsDerivedMethod (for IsObject)}}{135}{subsection.8.2.1}
+\contentsline {subsection}{\numberline {8.2.2}\leavevmode {\color {Chapter }MakeDerivation (for IsString, IsFunction, IsDenseList,IsPosInt, IsDenseList, IsFunction)}}{135}{subsection.8.2.2}
+\contentsline {subsection}{\numberline {8.2.3}\leavevmode {\color {Chapter }DerivationName (for IsDerivedMethod)}}{136}{subsection.8.2.3}
+\contentsline {subsection}{\numberline {8.2.4}\leavevmode {\color {Chapter }DerivationWeight (for IsDerivedMethod)}}{136}{subsection.8.2.4}
+\contentsline {subsection}{\numberline {8.2.5}\leavevmode {\color {Chapter }DerivationFunctionsWithExtraFilters (for IsDerivedMethod)}}{136}{subsection.8.2.5}
+\contentsline {subsection}{\numberline {8.2.6}\leavevmode {\color {Chapter }CategoryFilter (for IsDerivedMethod)}}{136}{subsection.8.2.6}
+\contentsline {subsection}{\numberline {8.2.7}\leavevmode {\color {Chapter }IsApplicableToCategory (for IsDerivedMethod, IsCapCategory)}}{137}{subsection.8.2.7}
+\contentsline {subsection}{\numberline {8.2.8}\leavevmode {\color {Chapter }TargetOperation (for IsDerivedMethod)}}{137}{subsection.8.2.8}
+\contentsline {subsection}{\numberline {8.2.9}\leavevmode {\color {Chapter }UsedOperations (for IsDerivedMethod)}}{137}{subsection.8.2.9}
+\contentsline {subsection}{\numberline {8.2.10}\leavevmode {\color {Chapter }UsedOperationMultiples (for IsDerivedMethod)}}{137}{subsection.8.2.10}
+\contentsline {subsection}{\numberline {8.2.11}\leavevmode {\color {Chapter }UsedOperationsWithMultiples (for IsDerivedMethod)}}{137}{subsection.8.2.11}
+\contentsline {subsection}{\numberline {8.2.12}\leavevmode {\color {Chapter }InstallDerivationForCategory (for IsDerivedMethod, IsPosInt, IsCapCategory)}}{137}{subsection.8.2.12}
+\contentsline {subsection}{\numberline {8.2.13}\leavevmode {\color {Chapter }DerivationResultWeight (for IsDerivedMethod, IsDenseList)}}{137}{subsection.8.2.13}
+\contentsline {subsection}{\numberline {8.2.14}\leavevmode {\color {Chapter }FunctionCalledBeforeInstallation (for IsDerivedMethod)}}{137}{subsection.8.2.14}
+\contentsline {section}{\numberline {8.3}\leavevmode {\color {Chapter }Derivation Graphs}}{138}{section.8.3}
+\contentsline {subsection}{\numberline {8.3.1}\leavevmode {\color {Chapter }IsDerivedMethodGraph (for IsObject)}}{138}{subsection.8.3.1}
+\contentsline {subsection}{\numberline {8.3.2}\leavevmode {\color {Chapter }MakeDerivationGraph (for IsDenseList)}}{138}{subsection.8.3.2}
+\contentsline {subsection}{\numberline {8.3.3}\leavevmode {\color {Chapter }AddOperationsToDerivationGraph (for IsDerivedMethodGraph, IsDenseList)}}{138}{subsection.8.3.3}
+\contentsline {subsection}{\numberline {8.3.4}\leavevmode {\color {Chapter }AddDerivation (for IsDerivedMethodGraph, IsDerivedMethod)}}{138}{subsection.8.3.4}
+\contentsline {subsection}{\numberline {8.3.5}\leavevmode {\color {Chapter }AddDerivation (for IsDerivedMethodGraph, IsFunction, IsDenseList, IsObject)}}{138}{subsection.8.3.5}
+\contentsline {subsection}{\numberline {8.3.6}\leavevmode {\color {Chapter }AddDerivation (for IsDerivedMethodGraph, IsFunction, IsDenseList)}}{138}{subsection.8.3.6}
+\contentsline {subsection}{\numberline {8.3.7}\leavevmode {\color {Chapter }AddDerivation (for IsDerivedMethodGraph, IsFunction, IsFunction)}}{139}{subsection.8.3.7}
+\contentsline {subsection}{\numberline {8.3.8}\leavevmode {\color {Chapter }AddDerivationPair (for IsDerivedMethodGraph, IsFunction, IsFunction, IsDenseList, IsDenseList, IsDenseList)}}{139}{subsection.8.3.8}
+\contentsline {subsection}{\numberline {8.3.9}\leavevmode {\color {Chapter }AddDerivationPair (for IsDerivedMethodGraph, IsFunction, IsFunction, IsDenseList, IsDenseList)}}{139}{subsection.8.3.9}
+\contentsline {subsection}{\numberline {8.3.10}\leavevmode {\color {Chapter }AddDerivationPair (for IsDerivedMethodGraph, IsFunction, IsFunction, IsDenseList, IsFunction, IsFunction)}}{139}{subsection.8.3.10}
+\contentsline {subsection}{\numberline {8.3.11}\leavevmode {\color {Chapter }AddDerivationPair (for IsDerivedMethodGraph, IsFunction, IsFunction, IsFunction, IsFunction)}}{139}{subsection.8.3.11}
+\contentsline {subsection}{\numberline {8.3.12}\leavevmode {\color {Chapter }AddDerivationToCAP}}{139}{subsection.8.3.12}
+\contentsline {subsection}{\numberline {8.3.13}\leavevmode {\color {Chapter }AddDerivationPairToCAP}}{139}{subsection.8.3.13}
+\contentsline {subsection}{\numberline {8.3.14}\leavevmode {\color {Chapter }AddWithGivenDerivationPairToCAP}}{139}{subsection.8.3.14}
+\contentsline {subsection}{\numberline {8.3.15}\leavevmode {\color {Chapter }Operations (for IsDerivedMethodGraph)}}{139}{subsection.8.3.15}
+\contentsline {subsection}{\numberline {8.3.16}\leavevmode {\color {Chapter }DerivationsUsingOperation (for IsDerivedMethodGraph, IsString)}}{140}{subsection.8.3.16}
+\contentsline {subsection}{\numberline {8.3.17}\leavevmode {\color {Chapter }DerivationsOfOperation (for IsDerivedMethodGraph, IsString)}}{140}{subsection.8.3.17}
+\contentsline {section}{\numberline {8.4}\leavevmode {\color {Chapter }Managing Derivations in a Category}}{140}{section.8.4}
+\contentsline {subsection}{\numberline {8.4.1}\leavevmode {\color {Chapter }IsOperationWeightList (for IsObject)}}{140}{subsection.8.4.1}
+\contentsline {subsection}{\numberline {8.4.2}\leavevmode {\color {Chapter }MakeOperationWeightList (for IsCapCategory, IsDerivedMethodGraph)}}{140}{subsection.8.4.2}
+\contentsline {subsection}{\numberline {8.4.3}\leavevmode {\color {Chapter }DerivationGraph (for IsOperationWeightList)}}{140}{subsection.8.4.3}
+\contentsline {subsection}{\numberline {8.4.4}\leavevmode {\color {Chapter }CategoryOfOperationWeightList (for IsOperationWeightList)}}{140}{subsection.8.4.4}
+\contentsline {subsection}{\numberline {8.4.5}\leavevmode {\color {Chapter }CurrentOperationWeight (for IsOperationWeightList, IsString)}}{141}{subsection.8.4.5}
+\contentsline {subsection}{\numberline {8.4.6}\leavevmode {\color {Chapter }OperationWeightUsingDerivation (for IsOperationWeightList, IsDerivedMethod)}}{141}{subsection.8.4.6}
+\contentsline {subsection}{\numberline {8.4.7}\leavevmode {\color {Chapter }DerivationOfOperation (for IsOperationWeightList, IsString)}}{141}{subsection.8.4.7}
+\contentsline {subsection}{\numberline {8.4.8}\leavevmode {\color {Chapter }InstallDerivationsUsingOperation (for IsOperationWeightList, IsString)}}{141}{subsection.8.4.8}
+\contentsline {subsection}{\numberline {8.4.9}\leavevmode {\color {Chapter }Reevaluate (for IsOperationWeightList)}}{141}{subsection.8.4.9}
+\contentsline {subsection}{\numberline {8.4.10}\leavevmode {\color {Chapter }Saturate (for IsOperationWeightList)}}{141}{subsection.8.4.10}
+\contentsline {subsection}{\numberline {8.4.11}\leavevmode {\color {Chapter }AddPrimitiveOperation (for IsOperationWeightList, IsString, IsInt)}}{142}{subsection.8.4.11}
+\contentsline {subsection}{\numberline {8.4.12}\leavevmode {\color {Chapter }PrintDerivationTree (for IsOperationWeightList, IsString)}}{142}{subsection.8.4.12}
+\contentsline {subsection}{\numberline {8.4.13}\leavevmode {\color {Chapter }PrintTree (for IsObject, IsFunction, IsFunction)}}{142}{subsection.8.4.13}
+\contentsline {subsection}{\numberline {8.4.14}\leavevmode {\color {Chapter }PrintTreeRec (for IsObject, IsFunction, IsFunction, IsInt)}}{142}{subsection.8.4.14}
+\contentsline {section}{\numberline {8.5}\leavevmode {\color {Chapter }Min Heaps for Strings}}{142}{section.8.5}
+\contentsline {subsection}{\numberline {8.5.1}\leavevmode {\color {Chapter }IsStringMinHeap (for IsObject)}}{142}{subsection.8.5.1}
+\contentsline {subsection}{\numberline {8.5.2}\leavevmode {\color {Chapter }StringMinHeap}}{142}{subsection.8.5.2}
+\contentsline {subsection}{\numberline {8.5.3}\leavevmode {\color {Chapter }Add (for IsStringMinHeap, IsString, IsInt)}}{142}{subsection.8.5.3}
+\contentsline {subsection}{\numberline {8.5.4}\leavevmode {\color {Chapter }ExtractMin (for IsStringMinHeap)}}{143}{subsection.8.5.4}
+\contentsline {subsection}{\numberline {8.5.5}\leavevmode {\color {Chapter }DecreaseKey (for IsStringMinHeap, IsString, IsInt)}}{143}{subsection.8.5.5}
+\contentsline {subsection}{\numberline {8.5.6}\leavevmode {\color {Chapter }IsEmptyHeap (for IsStringMinHeap)}}{143}{subsection.8.5.6}
+\contentsline {subsection}{\numberline {8.5.7}\leavevmode {\color {Chapter }HeapSize (for IsStringMinHeap)}}{143}{subsection.8.5.7}
+\contentsline {subsection}{\numberline {8.5.8}\leavevmode {\color {Chapter }Contains (for IsStringMinHeap, IsString)}}{143}{subsection.8.5.8}
+\contentsline {subsection}{\numberline {8.5.9}\leavevmode {\color {Chapter }Swap (for IsStringMinHeap, IsPosInt, IsPosInt)}}{143}{subsection.8.5.9}
+\contentsline {subsection}{\numberline {8.5.10}\leavevmode {\color {Chapter }Heapify (for IsStringMinHeap, IsPosInt)}}{143}{subsection.8.5.10}
+\contentsline {chapter}{\numberline {9}\leavevmode {\color {Chapter }Technical Details}}{144}{chapter.9}
+\contentsline {section}{\numberline {9.1}\leavevmode {\color {Chapter }The Category Cat}}{144}{section.9.1}
+\contentsline {subsection}{\numberline {9.1.1}\leavevmode {\color {Chapter }ObjectCache (for IsCapFunctor)}}{144}{subsection.9.1.1}
+\contentsline {subsection}{\numberline {9.1.2}\leavevmode {\color {Chapter }MorphismCache (for IsCapFunctor)}}{144}{subsection.9.1.2}
+\contentsline {section}{\numberline {9.2}\leavevmode {\color {Chapter }Install Functions for IsWellDefined}}{144}{section.9.2}
+\contentsline {subsection}{\numberline {9.2.1}\leavevmode {\color {Chapter }InstallMethodWithToDoForIsWellDefined}}{144}{subsection.9.2.1}
+\contentsline {subsection}{\numberline {9.2.2}\leavevmode {\color {Chapter }InstallSetWithToDoForIsWellDefined (for IsObject, IsString, IsList)}}{145}{subsection.9.2.2}
+\contentsline {subsection}{\numberline {9.2.3}\leavevmode {\color {Chapter }DeclareAttributeWithToDoForIsWellDefined}}{145}{subsection.9.2.3}
+\contentsline {subsection}{\numberline {9.2.4}\leavevmode {\color {Chapter }DeclareFamilyProperty}}{145}{subsection.9.2.4}
+\contentsline {subsection}{\numberline {9.2.5}\leavevmode {\color {Chapter }CAP{\textunderscore }INTERNAL{\textunderscore }REPLACE{\textunderscore }STRINGS{\textunderscore }WITH{\textunderscore }FILTERS}}{145}{subsection.9.2.5}
+\contentsline {subsection}{\numberline {9.2.6}\leavevmode {\color {Chapter }CAP{\textunderscore }INTERNAL{\textunderscore }MERGE{\textunderscore }FILTER{\textunderscore }LISTS}}{145}{subsection.9.2.6}
+\contentsline {subsection}{\numberline {9.2.7}\leavevmode {\color {Chapter }CAP{\textunderscore }INTERNAL{\textunderscore }RETURN{\textunderscore }OPTION{\textunderscore }OR{\textunderscore }DEFAULT}}{145}{subsection.9.2.7}
+\contentsline {subsection}{\numberline {9.2.8}\leavevmode {\color {Chapter }CAP{\textunderscore }INTERNAL{\textunderscore }FIND{\textunderscore }APPEARANCE{\textunderscore }OF{\textunderscore }SYMBOL{\textunderscore }IN{\textunderscore }FUNCTION}}{145}{subsection.9.2.8}
+\contentsline {subsection}{\numberline {9.2.9}\leavevmode {\color {Chapter }CAP{\textunderscore }INTERNAL{\textunderscore }MERGE{\textunderscore }PRECONDITIONS{\textunderscore }LIST}}{146}{subsection.9.2.9}
+\contentsline {subsection}{\numberline {9.2.10}\leavevmode {\color {Chapter }CAP{\textunderscore }INTERNAL{\textunderscore }ASSERT{\textunderscore }IS{\textunderscore }CELL{\textunderscore }OF{\textunderscore }CATEGORY}}{146}{subsection.9.2.10}
+\contentsline {subsection}{\numberline {9.2.11}\leavevmode {\color {Chapter }CAP{\textunderscore }INTERNAL{\textunderscore }ASSERT{\textunderscore }IS{\textunderscore }OBJECT{\textunderscore }OF{\textunderscore }CATEGORY}}{146}{subsection.9.2.11}
+\contentsline {subsection}{\numberline {9.2.12}\leavevmode {\color {Chapter }CAP{\textunderscore }INTERNAL{\textunderscore }ASSERT{\textunderscore }IS{\textunderscore }MORPHISM{\textunderscore }OF{\textunderscore }CATEGORY}}{146}{subsection.9.2.12}
+\contentsline {subsection}{\numberline {9.2.13}\leavevmode {\color {Chapter }CAP{\textunderscore }INTERNAL{\textunderscore }ASSERT{\textunderscore }IS{\textunderscore }TWO{\textunderscore }CELL{\textunderscore }OF{\textunderscore }CATEGORY}}{147}{subsection.9.2.13}
+\contentsline {subsection}{\numberline {9.2.14}\leavevmode {\color {Chapter }CachingStatistic}}{147}{subsection.9.2.14}
+\contentsline {subsection}{\numberline {9.2.15}\leavevmode {\color {Chapter }BrowseCachingStatistic}}{147}{subsection.9.2.15}
+\contentsline {chapter}{\numberline {10}\leavevmode {\color {Chapter }Limits and Colimits}}{148}{chapter.10}
+\contentsline {section}{\numberline {10.1}\leavevmode {\color {Chapter }Specification of Limits and Colimits}}{148}{section.10.1}
+\contentsline {section}{\numberline {10.2}\leavevmode {\color {Chapter }Enhancing Limit Specifications}}{149}{section.10.2}
+\contentsline {section}{\numberline {10.3}\leavevmode {\color {Chapter }Validating entries of a method name record which are part of a limit or colimit}}{150}{section.10.3}
+\contentsline {chapter}{\numberline {11}\leavevmode {\color {Chapter }Examples and Tests}}{151}{chapter.11}
+\contentsline {section}{\numberline {11.1}\leavevmode {\color {Chapter }Functors}}{151}{section.11.1}
+\contentsline {section}{\numberline {11.2}\leavevmode {\color {Chapter }Homomorphism structure}}{152}{section.11.2}
+\contentsline {section}{\numberline {11.3}\leavevmode {\color {Chapter }Spectral Sequences}}{155}{section.11.3}
+\contentsline {section}{\numberline {11.4}\leavevmode {\color {Chapter }Homology object}}{158}{section.11.4}
+\contentsline {section}{\numberline {11.5}\leavevmode {\color {Chapter }Liftable}}{160}{section.11.5}
+\contentsline {section}{\numberline {11.6}\leavevmode {\color {Chapter }Monoidal Categories}}{160}{section.11.6}
+\contentsline {section}{\numberline {11.7}\leavevmode {\color {Chapter }MorphismFromSourceToPushout and MorphismFromFiberProductToSink}}{162}{section.11.7}
+\contentsline {section}{\numberline {11.8}\leavevmode {\color {Chapter }Opposite category}}{163}{section.11.8}
+\contentsline {section}{\numberline {11.9}\leavevmode {\color {Chapter }Generalized Morphisms Category}}{163}{section.11.9}
+\contentsline {section}{\numberline {11.10}\leavevmode {\color {Chapter }IsWellDefined}}{170}{section.11.10}
+\contentsline {section}{\numberline {11.11}\leavevmode {\color {Chapter }Kernel}}{171}{section.11.11}
+\contentsline {section}{\numberline {11.12}\leavevmode {\color {Chapter }FiberProduct}}{173}{section.11.12}
+\contentsline {chapter}{Index}{174}{section*.2}

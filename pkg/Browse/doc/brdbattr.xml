@@ -60,6 +60,10 @@ gives an impression what is possible.
 
 <#Include Label="DatabaseAttributeCompute_man">
 
+<#Include Label="DatabaseAttributeString_man">
+
+<#Include Label="DatabaseAttributeLoadData_man">
+
 <#Include Label="DatabaseAttributeSetData_man">
 
 </Section>

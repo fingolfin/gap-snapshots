@@ -1,0 +1,21 @@
+#############################################################################
+##
+#A  trans41.grp                 GAP group library           Alexander Hulpke
+##
+#A  @(#)$Id:$
+##
+#Y  Copyright (C) 2014, Derek Holt, University of Warwick
+#Y  Converted by Alexander Hulpke
+##
+##  This file contains part of the transitive groups of degree 41
+##
+Revision.trans41_grp:=
+"@(#)$Id:$";
+
+TRANSGRP[41]:=[];
+TRANSPROPERTIES[41]:=[];
+TRANSSELECT[41]:=[];
+TRANSLENGTHS[41]:=10;
+TRANSSIZES[41]:=[41,82,164,205,328,410,820,1640,
+16726263306581903554085031026720375832576000000000,
+33452526613163807108170062053440751665152000000000];

@@ -367,11 +367,16 @@ local l;
     fi;
     l:=TRANSPROPERTIES[deg][nr];
     if IsBound(l[5]) and IsString(l[5]) then
-      # translate string to blist
-      l:=ShallowCopy(l);
-      l[5]:=BlistStringDecode(l[5],TRANSPARTNUM[deg]-1);
-      MakeImmutable(l);
-      TRANSPROPERTIES[deg][nr]:=l;
+      if l[5]<>"false" then
+        # translate string to blist
+        l:=ShallowCopy(l);
+        l[5]:=BlistStringDecode(l[5],TRANSPARTNUM[deg]-1);
+        MakeImmutable(l);
+        TRANSPROPERTIES[deg][nr]:=l;
+      else
+        l:=ShallowCopy(l);
+        Unbind(l[5]);
+      fi;
     fi;
     return l;
   od;
@@ -594,9 +599,10 @@ local dom,p,s,t,a,cand,i,grp,deg,aiso,piso,co,cheap;
   #    SetConjugacyClasses(grp,t);
   #  fi;
 
-    if Length(cand)>1 and cheap<>2 then
-      s:=List(CycleStructuresGroup(grp),i->i=1);
-      cand:=Filtered(cand,i->TRANSProperties(deg,i)[5]=s);
+    if Length(cand)>1 and cheap<>2 and
+      ForAll(cand,i->IsBound(TRANSProperties(deg,i)[5])) then
+        s:=List(CycleStructuresGroup(grp),i->i=1);
+        cand:=Filtered(cand,i->TRANSProperties(deg,i)[5]=s);
     fi;
     if Length(cand)>1 then
       p:=List(cand,i->TransitiveGroup(deg,i));

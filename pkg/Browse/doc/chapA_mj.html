@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (Browse) - Appendix A: Some Tools for Database Handling</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -40,7 +40,9 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA_mj.html#X7C8DB23E79567A60">A.1-6 DatabaseAttributeValueDefault</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA_mj.html#X80A909727E3C8311">A.1-7 DatabaseIdEnumeratorUpdate</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA_mj.html#X812075CE7A01EA04">A.1-8 DatabaseAttributeCompute</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA_mj.html#X87A8B19C82E9FF0B">A.1-9 DatabaseAttributeSetData</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA_mj.html#X7925640478969610">A.1-9 DatabaseAttributeString</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA_mj.html#X877B91597F4007FD">A.1-10 DatabaseAttributeLoadData</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA_mj.html#X87A8B19C82E9FF0B">A.1-11 DatabaseAttributeSetData</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA_mj.html#X80E9CFA17EE7817A">A.2 <span class="Heading">Using Database Attributes for Browse Tables</span></a>
 </span>
@@ -141,7 +143,7 @@
 
 </dd>
 <dt><strong class="Mark"><code class="code">identifier</code></strong></dt>
-<dd><p>a string that identifies <var class="Arg">a</var> among all database attributes for the underlying database id enumerator (this is used by <code class="func">BrowseTableFromDatabaseIdEnumerator</code> (<a href="chapA_mj.html#X7F25A3E586653911"><span class="RefLink">A.2-2</span></a>) and when the data of <var class="Arg">a</var> are entered with <code class="func">DatabaseAttributeSetData</code> (<a href="chapA_mj.html#X87A8B19C82E9FF0B"><span class="RefLink">A.1-9</span></a>), for example when precomputed values are read from a file),</p>
+<dd><p>a string that identifies <var class="Arg">a</var> among all database attributes for the underlying database id enumerator (this is used by <code class="func">BrowseTableFromDatabaseIdEnumerator</code> (<a href="chapA_mj.html#X7F25A3E586653911"><span class="RefLink">A.2-2</span></a>) and when the data of <var class="Arg">a</var> are entered with <code class="func">DatabaseAttributeSetData</code> (<a href="chapA_mj.html#X87A8B19C82E9FF0B"><span class="RefLink">A.1-11</span></a>), for example when precomputed values are read from a file),</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">description</code></strong></dt>
@@ -191,7 +193,7 @@
 
 <dl>
 <dt><strong class="Mark"><code class="code">version</code></strong></dt>
-<dd><p>the <strong class="pkg">GAP</strong> object that is the <code class="code">version</code> component of the <code class="code">idenumerator</code> component at the time when the stored data were entered; this value is used by <code class="func">DatabaseIdEnumeratorUpdate</code> (<a href="chapA_mj.html#X80A909727E3C8311"><span class="RefLink">A.1-7</span></a>) for deciding whether the attribute values are outdated; if <var class="Arg">a</var><code class="code">.datafile</code> is bound then it is assumed that the <code class="code">version</code> component is set when this file is read, for example in the function <code class="func">DatabaseAttributeSetData</code> (<a href="chapA_mj.html#X87A8B19C82E9FF0B"><span class="RefLink">A.1-9</span></a>),</p>
+<dd><p>the <strong class="pkg">GAP</strong> object that is the <code class="code">version</code> component of the <code class="code">idenumerator</code> component at the time when the stored data were entered; this value is used by <code class="func">DatabaseIdEnumeratorUpdate</code> (<a href="chapA_mj.html#X80A909727E3C8311"><span class="RefLink">A.1-7</span></a>) for deciding whether the attribute values are outdated; if <var class="Arg">a</var><code class="code">.datafile</code> is bound then it is assumed that the <code class="code">version</code> component is set when this file is read, for example in the function <code class="func">DatabaseAttributeSetData</code> (<a href="chapA_mj.html#X87A8B19C82E9FF0B"><span class="RefLink">A.1-11</span></a>),</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">update</code></strong></dt>
@@ -220,7 +222,7 @@
 
 <dl>
 <dt><strong class="Mark"><code class="code">string</code></strong></dt>
-<dd><p>if bound, a function that takes the pair consisting of an identifier and the return value of the <code class="code">create</code> function for this identifier, and returns a string that shall represent this value when the data are printed to a file; the default function returns the <code class="func">String</code> (<a href="../../../doc/ref/chap27_mj.html#X81FB5BE27903EC32"><span class="RefLink">Reference: String</span></a>) value of the second argument.</p>
+<dd><p>if bound, a function that takes the pair consisting of an identifier and the return value of the <code class="code">create</code> function for this identifier, and returns a string that represents this value when the data are printed to a file with <code class="func">DatabaseAttributeString</code> (<a href="chapA_mj.html#X7925640478969610"><span class="RefLink">A.1-9</span></a>); the default function returns the <code class="func">String</code> (<a href="../../../doc/ref/chap27_mj.html#X81FB5BE27903EC32"><span class="RefLink">Reference: String</span></a>) value of the second argument.</p>
 
 </dd>
 </dl>
@@ -242,7 +244,7 @@
 
 <p>The function <code class="func">DatabaseAttributeCompute</code> (<a href="chapA_mj.html#X812075CE7A01EA04"><span class="RefLink">A.1-8</span></a>) can be used to "refresh" the attribute values, that is, all values or selected values can be recomputed; this can be necessary for example when the underlying database id enumerator gets extended.</p>
 
-<p>In data files, the function <code class="func">DatabaseAttributeSetData</code> (<a href="chapA_mj.html#X87A8B19C82E9FF0B"><span class="RefLink">A.1-9</span></a>) can be used to fill the <code class="code">data</code> component of the attribute.</p>
+<p>In data files, the function <code class="func">DatabaseAttributeSetData</code> (<a href="chapA_mj.html#X87A8B19C82E9FF0B"><span class="RefLink">A.1-11</span></a>) can be used to fill the <code class="code">data</code> component of the attribute. The contents of a data file can be produced with <code class="func">DatabaseAttributeString</code> (<a href="chapA_mj.html#X7925640478969610"><span class="RefLink">A.1-9</span></a>).</p>
 
 <p><a id="X7AE32F217CF16EDF" name="X7AE32F217CF16EDF"></a></p>
 
@@ -326,14 +328,32 @@
 
 </dd>
 </dl>
+<p><a id="X7925640478969610" name="X7925640478969610"></a></p>
+
+<h5>A.1-9 DatabaseAttributeString</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DatabaseAttributeString</code>( <var class="Arg">idenum</var>, <var class="Arg">idenumname</var>, <var class="Arg">attridentifier</var>, <var class="Arg">format</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: a string that describes the values of the attribute.</p>
+
+<p>Let <var class="Arg">idenum</var> be a database id enumerator (see Section <a href="chapA_mj.html#X7999CF7F79ACA240"><span class="RefLink">A.1-1</span></a>), <var class="Arg">idenumname</var> be a string that denotes the variable to which the enumerator is bound, <var class="Arg">attridentifier</var> be the name of an attribute of type <code class="code">"pairs"</code>, and <var class="Arg">format</var> be one of <code class="code">"GAP"</code>, <code class="code">"JSON"</code>. <code class="func">DatabaseAttributeString</code> returns a string that can be used to set the attribute values, using <code class="func">DatabaseAttributeLoadData</code> (<a href="chapA_mj.html#X877B91597F4007FD"><span class="RefLink">A.1-10</span></a>). In the <code class="code">"JSON"</code> case, it is not checked whether the <code class="code">string</code> function of the attribute creates valid JSON (e.g., whether the lists are dense).</p>
+
+<p><a id="X877B91597F4007FD" name="X877B91597F4007FD"></a></p>
+
+<h5>A.1-10 DatabaseAttributeLoadData</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DatabaseAttributeLoadData</code>( <var class="Arg">attr</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>If the data of the attribute <var class="Arg">attr</var> are stored in a file then this function loads the data. The data file is expected to be either in JSON format (which can be produced with <code class="func">DatabaseAttributeString</code> (<a href="chapA_mj.html#X7925640478969610"><span class="RefLink">A.1-9</span></a>), with fourth argument the string <code class="code">"JSON"</code>) and have filename extension <code class="code">.json</code>, or to contain a call to <code class="func">DatabaseAttributeSetData</code> (<a href="chapA_mj.html#X87A8B19C82E9FF0B"><span class="RefLink">A.1-11</span></a>) such that reading the file with <code class="func">Read</code> (<a href="../../../doc/ref/chap9_mj.html#X8373AC6B7D5F9167"><span class="RefLink">Reference: Read</span></a>) sets the data.</p>
+
 <p><a id="X87A8B19C82E9FF0B" name="X87A8B19C82E9FF0B"></a></p>
 
-<h5>A.1-9 DatabaseAttributeSetData</h5>
+<h5>A.1-11 DatabaseAttributeSetData</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DatabaseAttributeSetData</code>( <var class="Arg">dbidenum</var>, <var class="Arg">attridentifier</var>, <var class="Arg">version</var>, <var class="Arg">data</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">dbidenum</var> be a database id enumerator (see Section <a href="chapA_mj.html#X7999CF7F79ACA240"><span class="RefLink">A.1-1</span></a>), <var class="Arg">attridentifier</var> be a string that is the <code class="code">identifier</code> value of a database attribute of <var class="Arg">dbidenum</var>, <var class="Arg">data</var> be the <code class="code">data</code> list or record for the database attribute (depending on its <code class="code">type</code> value), and <var class="Arg">version</var> be the corresponding <code class="code">version</code> value.</p>
 
-<p><code class="func">DatabaseAttributeSetData</code> sets the <code class="code">data</code> and <code class="code">version</code> components of the attribute. This function can be used for example in data files.</p>
+<p><code class="func">DatabaseAttributeSetData</code> sets the <code class="code">data</code> and <code class="code">version</code> components of the attribute. This function is called when data files are loaded with <code class="func">DatabaseAttributeLoadData</code> (<a href="chapA_mj.html#X877B91597F4007FD"><span class="RefLink">A.1-10</span></a>).</p>
 
 <p><a id="X80E9CFA17EE7817A" name="X80E9CFA17EE7817A"></a></p>
 

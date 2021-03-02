@@ -290,7 +290,7 @@
   [3Xlist[103X[10X, [3Xpos[103X[10X )[110X.[133X
   
   [33X[0;0YAll  other  operations  for  lists, e.g., [2XAdd[102X ([14X21.4-2[114X), [2XAppend[102X ([14X21.4-5[114X), [2XSum[102X
-  ([14X21.20-26[114X),  are based on these operations. This means that it is sufficient
+  ([14X21.20-27[114X),  are based on these operations. This means that it is sufficient
   to install methods for the new list objects only for the basic operations.[133X
   
   [33X[0;0YSo  if  one  wants  to  implement  new list objects then one creates them as

@@ -88,14 +88,11 @@ Fetching Browse Separately
 To get the newest version of this  GAP 4 package download one of the archive
 files (where 'x.y' stands for the highest available version number)
     Browse-x.y.tar.gz
-    Browse-x.y.zoo
     Browse-x.y.tar.bz2
     Browse-x.y-win.zip      (with text files in DOS/Windows format)
 from http://www.math.rwth-aachen.de/~Browse (or from www.gap-system.org)
 and unpack it using 
     gunzip Browse-x.y.tar.gz; tar xvf Browse-x.y.tar
-respectively
-    unzoo -x Browse-x.y.zoo
 and so on.
 
 Note that  if you use  a web browser for  downloading the archive  file the

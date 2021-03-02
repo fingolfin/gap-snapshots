@@ -90,7 +90,7 @@
   
   [1X10.1-9 StreamsFamily[101X
   
-  [33X[1;0Y[29X[2XStreamsFamily[102X[32X family[133X
+  [33X[1;0Y[29X[2XStreamsFamily[102X [32X family[133X
   
   [33X[0;0YAll streams lie in the [2XStreamsFamily[102X.[133X
   

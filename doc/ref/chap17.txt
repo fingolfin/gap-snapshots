@@ -32,7 +32,7 @@
   
   [1X17.1-1 Rationals[101X
   
-  [33X[1;0Y[29X[2XRationals[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XRationals[102X [32X global variable[133X
   [33X[1;0Y[29X[2XIsRationals[102X( [3Xobj[103X ) [32X filter[133X
   
   [33X[0;0Y[2XRationals[102X  is  the  field  [22Xℚ[122X  of  rational  integers, as a set of cyclotomic

@@ -1,9 +1,112 @@
 # GAP - history of changes
 
-## GAP 4.11.0 (February 2020)
+## GAP 4.11.1 (February 2021)
 
-These changes are also listed on the
-[Wiki page](https://github.com/gap-system/GAP/wiki/gap-4.11-release-notes)
+### Fixed bugs that could lead to incorrect results
+
+- [#4178](https://github.com/gap-system/gap/pull/4178) Fixed bugs in `RestrictedPerm` with second argument a range
+
+### Fixed bugs that could lead to crashes
+
+- [#3965](https://github.com/gap-system/gap/pull/3965) Fix potential garbage collector crashes on 64bit ARM systems
+- [#4076](https://github.com/gap-system/gap/pull/4076) Fix an infinite loop in `BoundedRefinementEANormalSeries` if large factors could not be refined, fix protected option of `IsomorphismSimplifiedFpGroup`, improve documentation of `IsAutomorphismGroup`
+
+### Fixed bugs that could lead to error messages
+
+- [#3980](https://github.com/gap-system/gap/pull/3980) Fixed `Gcd` for rational polynomials
+
+### Other fixed bugs
+
+- [#3963](https://github.com/gap-system/gap/pull/3963) Provide automatic compression/decompression of filenames ending `.gz` (as is claimed for example in the documentation of `InputTextFile`)
+- [#3944](https://github.com/gap-system/gap/pull/3944) The error checking in `PartialPerm` has been corrected such that invalid inputs (numbers < 1) are detected
+- [#4006](https://github.com/gap-system/gap/pull/4006) Fix `gac` to ensure that binaries it creates on Linux can load and run, even if a GAP package with a compiled kernel extension (such as `IO`) is present
+
+### Improved and extended functionality
+
+- [#3790](https://github.com/gap-system/gap/pull/3790) Add further information to the library of simple groups
+- [#3840](https://github.com/gap-system/gap/pull/3840) Speed up garbage collection
+
+### Packages
+
+- [#4016](https://github.com/gap-system/gap/pull/4016) Improved `etc/Makefile.gappkg` (used by GAP packages that want to build a simple GAP kernel extension)
+
+### Fixes/improvements in the experimental way to allow 3rd party code to link GAP as a library (libgap)
+
+- [#4081](https://github.com/gap-system/gap/pull/4081) Enhance `GAP_ValueGlobalVariable` to supported automatic variables (see `DeclareAutoreadableVariables`)
+- [#4258](https://github.com/gap-system/gap/pull/4258) Fixed `GAP_Enter` macro so that GAP's recursion depth counter is saved/restored. Without this, if too many GAP errors occurred during runtime a segmentation fault could occur in the program using libgap
+
+### Fixes and improvements for the **Julia** integration
+
+- [#4042](https://github.com/gap-system/gap/pull/4042) Avoid access to JuliaTLS members by using `jl_threadid()` and `jl_get_current_task()` helpers, fix compiler constness warnings in weakptr.c
+- [#4053](https://github.com/gap-system/gap/pull/4053) Fix the logic for scanning tasks in the Julia GC
+- [#4058](https://github.com/gap-system/gap/pull/4058) Refine the logic for scanning Julia stacks
+- [#4071](https://github.com/gap-system/gap/pull/4071) Make the Julia GC threadsafe when used from GAP.jl
+
+### Other changes
+
+- [#3922](https://github.com/gap-system/gap/pull/3922) Build system: New feature to execute `BuildPackages.sh` in parallel mode by adding `--parallel`
+- [#4041](https://github.com/gap-system/gap/pull/4041) Build system: Fix `make check` in out-of-tree builds
+
+### Packages no longer redistributed with GAP
+
+**PolymakeInterface**: Following the withdrawal of the package **Convex** in GAP 4.11.0 because of being superseded by **NConvex**, the **PolymakeInterface** has also been withdrawn. These two packages are now replaced by **NormalizInterface** and **NConvex**.
+
+### Updated packages redistributed with GAP
+
+The GAP 4.11.1 distribution contains 151 packages, of which 49 have been updated since GAP 4.11.0. The changes include extending the Transitive Groups Library with representatives for all transitive permutation groups of degree at most 47 (due to Derek Holt), and fixing the ordering of groups of orders 3^7, 5^7, 7^7, 11^7 in the Small Groups Library. For other changes, we refer to the documentation of the packages. The full list of updated packages in the GAP 4.11.1 distribution is given below:
+
+[**4ti2Interface**](https://homalg-project.github.io/homalg_project/4ti2Interface/): 2019.09.02 -> 2020.10-02
+[**AGT**](https://github.com/rhysje00/agt): 0.1 -> 0.2
+[**AutoDoc**](https://gap-packages.github.io/AutoDoc): 2019.09.04 -> 2020.08.11
+[**Browse**](http://www.math.rwth-aachen.de/~Browse): 1.8.8 -> 1.8.11
+[**CAP**](http://homalg-project.github.io/CAP_project/CAP/): 2019.06.07 -> 2020.10-01
+[**CddInterface**](https://homalg-project.github.io/CddInterface): 2020.01.01 -> 2020.06.24
+[**CTblLib**](http://www.math.rwth-aachen.de/~Thomas.Breuer/ctbllib): 1.2.2 -> 1.3.1
+[**curlInterface**](https://gap-packages.github.io/curlInterface/): 2.1.1 -> 2.2.1
+[**Digraphs**](https://gap-packages.github.io/Digraphs): 1.1.1 -> 1.3.1
+[**ExamplesForHomalg**](https://homalg-project.github.io/homalg_project/ExamplesForHomalg/): 2019.09.02 -> 2020.10-02
+[**ferret**](https://gap-packages.github.io/ferret/): 1.0.2 -> 1.0.3
+[**GAPDoc**](http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc): 1.6.3 -> 1.6.4
+[**Gauss**](https://homalg-project.github.io/homalg_project/Gauss/): 2019.09.02 -> 2020.10-02
+[**GaussForHomalg**](https://homalg-project.github.io/homalg_project/GaussForHomalg/): 2019.09.02 -> 2020.10-02
+[**GeneralizedMorphismsForCAP**](http://homalg-project.github.io/CAP_project/GeneralizedMorphismsForCAP/): 2019.01.16 -> 2020.10-01
+[**GradedModules**](https://homalg-project.github.io/homalg_project/GradedModules/): 2020.01.02 -> 2020.10-02
+[**GradedRingForHomalg**](https://homalg-project.github.io/homalg_project/GradedRingForHomalg/): 2020.01.02 -> 2020.10-02
+[**HAP**](https://gap-packages.github.io/hap): 1.25 -> 1.29
+[**homalg**](https://homalg-project.github.io/homalg_project/homalg/): 2019.09.01 -> 2020.10-02
+[**HomalgToCAS**](https://homalg-project.github.io/homalg_project/HomalgToCAS/): 2019.12.08 -> 2020.10-02
+[**IO_ForHomalg**](https://homalg-project.github.io/homalg_project/IO_ForHomalg/): 2019.09.02 -> 2020.10-02
+[**IRREDSOL**](http://www.icm.tu-bs.de/~bhoeflin/irredsol/index.html): 1.4 -> 1.4.1
+[**json**](https://gap-packages.github.io/json/): 2.0.1 -> 2.0.2
+[**kan**](https://gap-packages.github.io/kan/): 1.29 -> 1.32
+[**LinearAlgebraForCAP**](http://homalg-project.github.io/CAP_project/LinearAlgebraForCAP/): 2019.01.16 -> 2020.10-01
+[**LocalizeRingForHomalg**](https://homalg-project.github.io/homalg_project/LocalizeRingForHomalg/): 2019.09.02 -> 2020.10-02
+[**matgrp**](http://www.math.colostate.edu/~hulpke/matgrp): 0.63 -> 0.64
+[**MatricesForHomalg**](https://homalg-project.github.io/homalg_project/MatricesForHomalg/): 2020.01.02 -> 2020.10-04
+[**ModulePresentationsForCAP**](http://homalg-project.github.io/CAP_project/ModulePresentationsForCAP/): 2019.01.16 -> 2020.10-01
+[**Modules**](https://homalg-project.github.io/homalg_project/Modules/): 2019.09.02 -> 2020.10-02
+[**MonoidalCategories**](http://homalg-project.github.io/CAP_project/MonoidalCategories/): 2019.06.07 -> 2020.10-01
+[**NConvex**](https://homalg-project.github.io/NConvex): 2019.12.10 -> 2020.11-04
+[**NumericalSgps**](https://gap-packages.github.io/numericalsgps): 1.2.1 -> 1.2.2
+[**PackageManager**](https://gap-packages.github.io/PackageManager/): 1.0 -> 1.1
+[**Polycyclic**](https://gap-packages.github.io/polycyclic/): 2.15.1 -> 2.16
+[**PrimGrp**](https://gap-packages.github.io/primgrp/): 3.4.0 -> 3.4.1
+[**profiling**](https://gap-packages.github.io/profiling/): 2.2.1 -> 2.3
+[**QPA**](https://folk.ntnu.no/oyvinso/QPA/): 1.30 -> 1.31
+[**RingsForHomalg**](https://homalg-project.github.io/homalg_project/RingsForHomalg/): 2019.12.08 -> 2020.11-01
+[**SCO**](https://homalg-project.github.io/homalg_project/SCO/): 2019.09.02 -> 2020.10-02
+[**Semigroups**](https://gap-packages.github.io/Semigroups): 3.2.3 -> 3.4.0
+[**singular**](https://gap-packages.github.io/singular/): 2019.10.01 -> 2020.12.18
+[**SmallGrp**](https://gap-packages.github.io/smallgrp/): 1.4.1 -> 1.4.2
+[**ToolsForHomalg**](https://homalg-project.github.io/homalg_project/ToolsForHomalg/): 2019.09.02 -> 2020.10-03
+[**ToricVarieties**](https://homalg-project.github.io/ToricVarieties_project/ToricVarieties/): 2019.12.05 -> 2021.01.12
+[**TransGrp**](https://www.math.colostate.edu/~hulpke/transgrp): 2.0.5 -> 3.0
+[**Wedderga**](https://gap-packages.github.io/wedderga): 4.9.5 -> 4.10.0
+[**XMod**](https://gap-packages.github.io/xmod/): 2.77 -> 2.82
+[**XModAlg**](https://gap-packages.github.io/xmodalg/): 1.17 -> 1.18
+
+
+## GAP 4.11.0 (February 2020)
 
 ### New features and major changes
 
@@ -53,11 +156,11 @@ These changes are also listed on the
 - [#2876](https://github.com/gap-system/gap/pull/2876) `IsomorphismTransformationSemigroup` now returns an `IdentityMapping` for a transformation semigroup
 - [#2923](https://github.com/gap-system/gap/pull/2923) Extend obsolete to support multiple levels
 - [#2936](https://github.com/gap-system/gap/pull/2936) Add back `ViewObj` method for generic fields
-- [#2946](https://github.com/gap-system/gap/pull/2946),
-  [#2955](https://github.com/gap-system/gap/pull/2955),
 - [#2952](https://github.com/gap-system/gap/pull/2952) Add command line option `--bare` to start GAP without even needed packages (developer tool)
 - [#2960](https://github.com/gap-system/gap/pull/2960) Add `List` method accepting an iterator and a function
-- [#2974](https://github.com/gap-system/gap/pull/2974),
+- [#2946](https://github.com/gap-system/gap/pull/2946),
+  [#2955](https://github.com/gap-system/gap/pull/2955),
+  [#2974](https://github.com/gap-system/gap/pull/2974),
   [#3372](https://github.com/gap-system/gap/pull/3372) Improve many error messages
 - [#2985](https://github.com/gap-system/gap/pull/2985) Improve support for custom list object implementations
 - [#2998](https://github.com/gap-system/gap/pull/2998),
@@ -299,7 +402,7 @@ These changes are also listed on the
 
   - `LatticeViaRadical` called `ClosureSubgroupNC` assuming that the
     parent contained all generators. It now calls `ClosureSubgroup`
-    instead, since this can not be always guaranteed (this could
+    instead, since this cannot always be guaranteed (this could
     happen, for example, in perfect subgroup computation). Also
     added an assertion to `ClosureSubgroupNC` to catch this
     situation in other cases. (Reported by Serge Bouc)
@@ -1182,7 +1285,7 @@ This is the first public release of GAP 4.9.
     compare the timing for `Sort([1..100000000] * 0)`. As a side
     effect, the result of sorting lists with equal entries may produce
     different answers compared to previous GAP versions. If you would
-    like to make your code independant of the exact employed sorting
+    like to make your code independent of the exact employed sorting
     algorithm, you can use the newly added `StableSort`, `StableSortBy`
     and `StableSortParallel`. (For some technical details, see
     [#609](https://github.com/gap-system/gap/pull/609)).
@@ -3033,7 +3136,7 @@ GAP 4.6.5 release:
     being called on a homomorphism whose image is not a permutation
     group. (Reported by Sebastian Gutsche)
 
-  - Fixed a bug in `ExponentsConjugateLayer` which occured, for
+  - Fixed a bug in `ExponentsConjugateLayer` which occurred, for
     example, in some calls of `SubgroupsSolvableGroup` (Reported
     by Ramon Esteban-Romero)
 
@@ -3798,7 +3901,7 @@ an introduction to GAP 4.5, accompanying its release announcement.
 
   - Due to improvements for vectors over finite fields, certain objects
     have more limitations on changing their base field. For example, one
-    can not create a compressed matrix over GF(2) and then assign an
+    cannot create a compressed matrix over GF(2) and then assign an
     element of GF(4) to one of its entries.
 
 ### No longer supported:
@@ -5825,6 +5928,245 @@ bug fix.
 
 Below we list changes in the main system (excluding packages) that have
 been corrected or added in bugfixes and updates for GAP 4.4.
+
+
+## GAP 4.3 Bugfix 5
+
+### Fixed bugs which could lead to wrong results:
+
+  - A wrong return format for `IsomorphicSubgroups` applied to cyclic
+    groups.
+
+  - A wrong `true` result of `IsSubset` for certain algebras.
+
+  - A bug in the subgroup conjugation test for permutation groups that
+    are not subgroups.
+
+  - A strange behaviour of `Intersection` for the case that a strictly
+    sorted list is the unique entry of the list that is given as the
+    argument; in this situation, this entry itself was returned instead
+    of a shallow copy.
+
+  - Possibly wrong result of `Centre` for pc groups.
+
+  - Possibly wrong result of `DirectSumDecomposition` for matrix Lie
+    algebras.
+
+### Fixed bugs which could lead to crashes:
+
+  - Segmentation faults and other strange behaviour when assigning
+    finite field elements of different characteristics into compressed
+    vectors.
+
+### Other fixed bugs:
+
+  - A missing method for `BaseOrthogonalSpaceMat`.
+
+  - A missing `Set` call in the construction of the global variable
+    `AUTOLOAD_PACKAGES`.
+
+  - A wrong display string of the numerator in rational functions
+    returned by `MolienSeries` (in the case that the constant term
+    of this numerator is zero).
+
+  - An error in the basis of a product space of algebras.
+
+  - An error in `LieNormalizer`, `LieCentralizer` for zero subspaces.
+
+  - An error in the computation of matrices of adjoint modules.
+
+  - A strange error message when constructing the simple Lie algebra
+    of type B1.
+
+  - An error in `ModuleByRestriction`.
+
+  - An error in `IrrBaumClausen` for the trivial group.
+
+  - An error with vector space bases of row spaces over fields which
+    neither are prime fields nor contain all entries of the vectors.
+
+  - An error with `IsMonomial`, when it uses the function
+    `TestMonomialFromLattice` (i.e., in hard cases, likely for
+    characters of nonsolvable groups).
+
+
+## GAP 4.3 Bugfix 4
+
+### Fixed bugs which could lead to wrong results:
+
+  - A problem with composing a homomorphism from an fp group with
+    another homomorphism (images may be wrong).
+
+  - An error in the comparison routine for univariate rational functions.
+
+  - A problem when calculating representations of a group in which class
+    arrangement in group and character table are not identical.
+
+  - Three missing primitive groups of degree 441 were addded.
+
+### Other fixed bugs:
+
+  - A problem with a homomorphism from a free group in the trivial
+    permutation group.
+
+  - A problem with the multiplication of rationals and elements in
+    large prime fields.
+
+  - A problem with attempting to create univariate polynomials of very
+    high degree.
+
+  - A problem with output going to errout incorrectly after a syntax error.
+
+  - An error in the function ReducedSCTable.
+
+  - An error in computing the Rees Matrix semigroup.
+
+  - A compatibility problem with earlier versions of gap in semigroup
+    and monoid rewriting systems.
+
+  - The behaviour of `PQuotient` when an attempt is made to compute a
+    p-quotient with more generators than the underlying data structure
+    was initialised with.
+
+  - A problem with computing `BasisVectors` for a basis of an algebraic
+    field extension.
+
+  - A problem with the definition of `IsRowVector` (which previously
+    returned `true` also for matrices).
+
+  - A problem with `BaumClausenInfo`.
+
+  - A problem with `IsRowModule` for infinite dimensional vector spaces
+    (which are not row spaces).
+
+  - A problem with `Difference` with first argument a list that is not
+    a set and second argument an empty list.
+
+  - The failure of Elements() to compute the elements of a pc group with non-prime relative orders.
+
+  - A wrong computation of single character values of Weyl groups of
+    type B and character tables of Weyl groups of type D. Furthermore,
+    a much more efficient function for computing all character values
+    is provided.
+
+  - Packages accidentally overwriting the setting of `InfoWarning`.
+
+  - A missing method for `IsPolynomial` for univariate rational functions.
+
+  - A problem in the on-line help which sometimes returned a blank entry
+    for a topic even though the topic was documented.
+
+  - A problem in the help system where a tilde in a filename was
+    replaced by a blank.
+
+  - A problem that prevented the documentation of some packages from
+    autoloading.
+
+
+## GAP 4.3 Bugfix 3
+
+### Fixed bugs which could lead to wrong results:
+
+  - An error in `IdGroup` that mistakenly was not corrected in Bugfix 2.
+
+  - An inconsistent setting of `IndicesNormalSteps`.
+
+  - A problem with the inversion routine for quaternions.
+
+
+## GAP 4.3 Bugfix 2
+
+### Fixed bugs which could lead to wrong results:
+
+  - The result of `ProjectiveSymplecticGroup(n,q);`.
+
+### Fixed bugs which could lead to crashes:
+
+  - A segmentation fault when appending to a length 0 compressed vector
+    over GF2.
+
+### Other fixed bugs:
+
+  - An error in the computation of inverses in quaternion algebras with
+    non-standard parameters.
+
+  - `GeneratorOfCyclicGroup` for a trivial pc group.
+
+  - A problem in backtrack routines using `Suborbits` if the group has
+    fixed points in the range `[1..max(Omega)]`.
+
+  - A problem with `CharacterTableDirectProduct` if exactly one argument
+    is a Brauer table.
+
+  - Problems with `IntScalarProduct` and `NonnegIntScalarProducts` if
+    the third argument is not a plain list (this situation does not
+    occur in GAP library functions).
+
+  - A problem with `GQuotient`.
+
+  - A problem with the linear algebra methods for Lie algebra cohomology.
+
+  - A Problem with requesting transitive groups of degree including 1.
+
+  - A Problem with inverting lists of compressed vectors over fields of
+    order greater than 2.
+
+  - An error in computing whether an element is in a Green's D equivalence
+    class or not.
+
+  - A missing method for `MovedPoints(perm)`.
+
+  - The method `IsGreensLessThanOrEqual` should work for Green's D classes
+    for finite groups.
+
+  - The method `GroupHClassOfGreensDClass` was not implemented and is
+    required for the Rees Matrix methods.
+
+  - The methods `AssociatedReesMatrixSemigroupOfDClass`, `IsZeroSimpleSemigroup`,
+    `IsomorphismReesMatrixSemigroup`, and `SandwichMatrixOfReesZeroMatrixSemigroup`
+    all create Greens classes using obsolete methods which for some
+    semigroups leads to infinite recursion or causes GAP to stop with
+    an error message.
+
+  - A problem with `CentralizerModulo` for permutation groups.
+
+  - A wrong name for PGL(2,49) in the primitive groups library of degree 50.
+
+  - Missing `Representative` methods for certain trivial groups and
+    trivial spaces.
+
+  - A missing setting of `IndicesNormalSteps`.
+
+
+## GAP 4.3 Bugfix 1
+
+### Fixed bugs which could lead to crashes:
+
+  - A segmentation fault when converting length 0 compressed vectors to
+    larger fields.
+
+### Other fixed bugs:
+
+  - A bug in the handling of Processes with empty input or output streams.
+
+  - An error in the function for computing quotients of algebra modules.
+
+  - An error in computing the strongly connected components of a binary
+    relation in which incorrect results can be returned.
+
+  - A "no method found" error in OrbitStabilizerAlgorithm for infinite groups.
+
+  - Calculation of iterated automorphism groups might stop with an error message.
+
+  - The output of the internal pager (see `Pager`) is no longer copied to log files.
+
+  - Some memory is not freed up as soon as it could be, resulting in
+    over-use of memory and over-large saved workspaces.
+
+  - Saving and loading a workspace using a kernel containing a statically
+    loaded user module (most likely a compiled GAP file) did not work.
+
+  - Problems with `EulerianFunction` for certain types of groups.
 
 
 ## Changes from Earlier Versions

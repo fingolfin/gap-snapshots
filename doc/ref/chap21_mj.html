@@ -204,12 +204,13 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X7C86D7F7795125F0">21.20-20 Filtered</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X8179B13D80E935FC">21.20-21 Number</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X82801DFA84E11272">21.20-22 First</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X7F06961278166671">21.20-23 ForAll</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X7AF82E747A8BDA75">21.20-24 ForAny</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X7E5C72F27B657948">21.20-25 Product</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X7A04B71C84CFCC2D">21.20-26 Sum</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X834E4DF57F3A20F0">21.20-27 Iterated</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X7D150C2881881139">21.20-28 ListN</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X7E5B62E780421CE9">21.20-23 Last</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X7F06961278166671">21.20-24 ForAll</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X7AF82E747A8BDA75">21.20-25 ForAny</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X7E5C72F27B657948">21.20-26 Product</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X7A04B71C84CFCC2D">21.20-27 Sum</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X834E4DF57F3A20F0">21.20-28 Iterated</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X7D150C2881881139">21.20-29 ListN</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap21_mj.html#X805CA0B68029B47A">21.21 <span class="Heading">Advanced List Manipulations</span></a>
 </span>
@@ -2435,9 +2436,29 @@ fail
 fail
 </pre></div>
 
+<p><a id="X7E5B62E780421CE9" name="X7E5B62E780421CE9"></a></p>
+
+<h5>21.20-23 Last</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Last</code>( <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><code class="func">Last</code> returns the last element of the list <var class="Arg">list</var> for which the unary function <var class="Arg">func</var> returns <code class="keyw">true</code>; if <var class="Arg">func</var> is not given, the first element is returned. <var class="Arg">list</var> may contain holes. <var class="Arg">func</var> must return either <code class="keyw">true</code> or <code class="keyw">false</code> for each element of <var class="Arg">list</var>, otherwise an error is signalled. If <var class="Arg">func</var> returns <code class="keyw">false</code> for all elements of <var class="Arg">list</var> then <code class="func">Last</code> returns <code class="keyw">fail</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Last( [10^7..10^8], IsPrime );</span>
+99999989
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Last( [10^5..10^6],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">     n -&gt; not IsPrime(n) and IsPrimePowerInt(n) );</span>
+994009
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Last( [ 1 .. 20 ], x -&gt; x &lt; 0 );</span>
+fail
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Last( [ fail ], x -&gt; x = fail );</span>
+fail
+</pre></div>
+
 <p><a id="X7F06961278166671" name="X7F06961278166671"></a></p>
 
-<h5>21.20-23 ForAll</h5>
+<h5>21.20-24 ForAll</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ForAll</code>( <var class="Arg">listorcoll</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>tests whether the unary function <var class="Arg">func</var> returns <code class="keyw">true</code> for all elements in the list or collection <var class="Arg">listorcoll</var>.</p>
@@ -2456,7 +2477,7 @@ false
 
 <p><a id="X7AF82E747A8BDA75" name="X7AF82E747A8BDA75"></a></p>
 
-<h5>21.20-24 ForAny</h5>
+<h5>21.20-25 ForAny</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ForAny</code>( <var class="Arg">listorcoll</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>tests whether the unary function <var class="Arg">func</var> returns <code class="keyw">true</code> for at least one element in the list or collection <var class="Arg">listorcoll</var>.</p>
@@ -2477,7 +2498,7 @@ true
 
 <p><a id="X7E5C72F27B657948" name="X7E5C72F27B657948"></a></p>
 
-<h5>21.20-25 Product</h5>
+<h5>21.20-26 Product</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Product</code>( <var class="Arg">listorcoll</var>[, <var class="Arg">func</var>][, <var class="Arg">init</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Called with one argument, a dense list or collection <var class="Arg">listorcoll</var>, <code class="func">Product</code> returns the product of the elements of <var class="Arg">listorcoll</var> (see <a href="chap30_mj.html#X8050A8037984E5B6"><span class="RefLink">30</span></a>).</p>
@@ -2504,7 +2525,7 @@ true
 
 <p><a id="X7A04B71C84CFCC2D" name="X7A04B71C84CFCC2D"></a></p>
 
-<h5>21.20-26 Sum</h5>
+<h5>21.20-27 Sum</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sum</code>( <var class="Arg">listorcoll</var>[, <var class="Arg">func</var>][, <var class="Arg">init</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Called with one argument, a dense list or collection <var class="Arg">listorcoll</var>, <code class="func">Sum</code> returns the sum of the elements of <var class="Arg">listorcoll</var> (see <a href="chap30_mj.html#X8050A8037984E5B6"><span class="RefLink">30</span></a>).</p>
@@ -2531,7 +2552,7 @@ true
 
 <p><a id="X834E4DF57F3A20F0" name="X834E4DF57F3A20F0"></a></p>
 
-<h5>21.20-27 Iterated</h5>
+<h5>21.20-28 Iterated</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Iterated</code>( <var class="Arg">list</var>, <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the result of the iterated application of the function <var class="Arg">f</var>, which must take two arguments, to the elements of the list <var class="Arg">list</var>. More precisely, if <var class="Arg">list</var> has length <span class="SimpleMath">\(n\)</span> then <code class="func">Iterated</code> returns the result of the following application, <span class="SimpleMath">\(\textit{f}( \ldots \textit{f}( \textit{f}( \textit{list}[1], \textit{list}[2] ), \textit{list}[3] ), \ldots, \textit{list}[n] )\)</span>.</p>
@@ -2544,7 +2565,7 @@ true
 
 <p><a id="X7D150C2881881139" name="X7D150C2881881139"></a></p>
 
-<h5>21.20-28 ListN</h5>
+<h5>21.20-29 ListN</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ListN</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var>, <var class="Arg">...</var>, <var class="Arg">listn</var>, <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>applies the <span class="SimpleMath">\(n\)</span>-argument function <var class="Arg">f</var> to the lists. That is, <code class="func">ListN</code> returns the list whose <span class="SimpleMath">\(i\)</span>-th entry is <span class="SimpleMath">\(\textit{f}(\textit{list1}[i], \textit{list2}[i], \ldots, \textit{listn}[i])\)</span>.</p>
@@ -2559,7 +2580,7 @@ true
 
 <h4>21.21 <span class="Heading">Advanced List Manipulations</span></h4>
 
-<p>The following functions are generalizations of <code class="func">List</code> (<a href="chap30_mj.html#X7F12F40E87F3C3A7"><span class="RefLink">30.3-5</span></a>), <code class="func">Set</code> (<a href="chap30_mj.html#X7E399AC97FD98217"><span class="RefLink">30.3-7</span></a>), <code class="func">Sum</code> (<a href="chap21_mj.html#X7A04B71C84CFCC2D"><span class="RefLink">21.20-26</span></a>), and <code class="func">Product</code> (<a href="chap21_mj.html#X7E5C72F27B657948"><span class="RefLink">21.20-25</span></a>).</p>
+<p>The following functions are generalizations of <code class="func">List</code> (<a href="chap30_mj.html#X7F12F40E87F3C3A7"><span class="RefLink">30.3-5</span></a>), <code class="func">Set</code> (<a href="chap30_mj.html#X7E399AC97FD98217"><span class="RefLink">30.3-7</span></a>), <code class="func">Sum</code> (<a href="chap21_mj.html#X7A04B71C84CFCC2D"><span class="RefLink">21.20-27</span></a>), and <code class="func">Product</code> (<a href="chap21_mj.html#X7E5C72F27B657948"><span class="RefLink">21.20-26</span></a>).</p>
 
 <p><a id="X8258477D7F72171B" name="X8258477D7F72171B"></a></p>
 

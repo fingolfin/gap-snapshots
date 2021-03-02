@@ -782,6 +782,9 @@ Int SyFopen (
     Char                cmd [1024];
     int                 flags = 0;
 
+    Char * terminator = strrchr(name, '.');
+    int endsgz = terminator && (strcmp(terminator, ".gz") == 0);
+
     /* handle standard files                                               */
     if ( strcmp( name, "*stdin*" ) == 0 ) {
         if ( strcmp( mode, "r" ) != 0 )
@@ -848,8 +851,11 @@ Int SyFopen (
 #endif
 
     /* try to open the file                                                */
-    syBuf[fid].fp = open(name,flags, 0644);
-    if ( 0 <= syBuf[fid].fp ) {
+    if (*mode == 'r' && endsgz && (syBuf[fid].gzfp = gzopen(name, mode))) {
+        syBuf[fid].type = gzip_socket;
+        syBuf[fid].fp = -1;
+        syBuf[fid].bufno = -1;
+    } else if (0 <= (syBuf[fid].fp = open(name, flags, 0644))) {
         syBuf[fid].type = raw_socket;
         syBuf[fid].echo = syBuf[fid].fp;
         syBuf[fid].bufno = -1;
@@ -2236,6 +2242,10 @@ static void initreadline(void)
   rl_add_defun( "handled-by-GAP", GAP_rl_func, -1 );
 
   rl_bind_keyseq("\\C-x\\C-g", GAP_set_macro);
+
+  // disable bracketed paste mode by default: it interferes with our handling
+  // of pastes of data involving REPL prompts "gap>"
+  rl_variable_bind("enable-bracketed-paste", "off");
 
   CLEFuncs = ELM_REC(GAPInfo, RNamName("CommandLineEditFunctions"));
   KeyHandler = ELM_REC(CLEFuncs, RNamName("KeyHandler"));

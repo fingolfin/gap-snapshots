@@ -83,7 +83,7 @@
   
   [1X69.3-1 MTX[101X
   
-  [33X[1;0Y[29X[2XMTX[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XMTX[102X [32X global variable[133X
   
   [33X[0;0YAll  MeatAxe  routines  are accessed via the global variable [2XMTX[102X, which is a
   record  whose  components hold the various functions. It is possible to have

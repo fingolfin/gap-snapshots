@@ -890,7 +890,7 @@
   
   [1X13.6-4 InfoAttributes[101X
   
-  [33X[1;0Y[29X[2XInfoAttributes[102X[32X info class[133X
+  [33X[1;0Y[29X[2XInfoAttributes[102X [32X info class[133X
   
   [33X[0;0YThis  info  class  (together  with  [2XInfoWarning[102X ([14X7.4-8[114X) is used for messages
   about attribute storing being disabled (at level 2) or enabled (level 3). It

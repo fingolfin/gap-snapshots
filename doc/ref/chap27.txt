@@ -344,7 +344,7 @@
   
   [1X27.4-6 CharsFamily[101X
   
-  [33X[1;0Y[29X[2XCharsFamily[102X[32X family[133X
+  [33X[1;0Y[29X[2XCharsFamily[102X [32X family[133X
   
   [33X[0;0YEach  character lies in the family [2XCharsFamily[102X, each nonempty string lies in
   the  collections  family of this family. Note the subtle differences between
@@ -446,7 +446,7 @@
   
   [1X27.7-2 DEFAULTDISPLAYSTRING[101X
   
-  [33X[1;0Y[29X[2XDEFAULTDISPLAYSTRING[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XDEFAULTDISPLAYSTRING[102X [32X global variable[133X
   
   [33X[0;0YThis is the default value for [2XDisplayString[102X ([14X27.7-1[114X).[133X
   
@@ -461,7 +461,7 @@
   
   [1X27.7-4 DEFAULTVIEWSTRING[101X
   
-  [33X[1;0Y[29X[2XDEFAULTVIEWSTRING[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XDEFAULTVIEWSTRING[102X [32X global variable[133X
   
   [33X[0;0YThis is the default value for [2XViewString[102X ([14X27.7-3[114X).[133X
   

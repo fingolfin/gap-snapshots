@@ -38,7 +38,7 @@
   
   [1X18.1-2 Cyclotomics[101X
   
-  [33X[1;0Y[29X[2XCyclotomics[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XCyclotomics[102X [32X global variable[133X
   
   [33X[0;0Yis the domain of all cyclotomics.[133X
   
@@ -300,8 +300,8 @@
   
   [33X[1;0Y[29X[2XIsInfinity[102X( [3Xobj[103X ) [32X Category[133X
   [33X[1;0Y[29X[2XIsNegInfinity[102X( [3Xobj[103X ) [32X Category[133X
-  [33X[1;0Y[29X[2Xinfinity[102X[32X global variable[133X
-  [33X[1;0Y[29X[2X-infinity[102X[32X global variable[133X
+  [33X[1;0Y[29X[2Xinfinity[102X [32X global variable[133X
+  [33X[1;0Y[29X[2X-infinity[102X [32X global variable[133X
   
   [33X[0;0Y[2Xinfinity[102X   and   [2X-infinity[102X   are   special   [5XGAP[105X   objects   that   lie   in
   [10XCyclotomicsFamily[110X. They are larger or smaller than all other objects in this

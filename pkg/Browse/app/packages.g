@@ -88,6 +88,8 @@ BindGlobal( "BrowseGapPackages", function()
     end;
 
     lowernames:= RecNames( GAPInfo.PackagesInfo );
+#T better sort by name?
+#T (note that e.g. JuliaInterface comes last, and help comes first)
     needed:= dependencies( lowernames, "NeededOtherPackages" );
     suggested:= dependencies( lowernames, "SuggestedOtherPackages" );
 
@@ -100,6 +102,8 @@ BindGlobal( "BrowseGapPackages", function()
     for i in [ 1 .. Length( lowernames ) ] do
       name:= lowernames[i];
       r:= GAPInfo.PackagesInfo.( name )[1];
+#T why the first?
+#T better prefer the one which is loaded, if applicable!
       auth:= [];
       if IsBound( r.Persons ) and IsList( r.Persons ) then
         for pr in r.Persons do
@@ -269,7 +273,7 @@ BindGlobal( "BrowseGapPackages", function()
 end );
 
 
-BrowseGapDataAdd( "GAP Packages", BrowseGapPackages, true, "\
+BrowseGapDataAdd( "GAP Packages", BrowseGapPackages, "\
 the list of installed GAP packages, \
 shown in a browse table whose columns contain the package name, \
 the names of author/maintainers, \

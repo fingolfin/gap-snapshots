@@ -220,7 +220,7 @@ InstallGlobalFunction( DatabaseAttributeValueDefault, function( attr, id )
     # If the `data' component is not bound then initialize it.
     if not IsBound( attr.data ) then
       if IsBound( attr.datafile ) and IsReadableFile( attr.datafile ) then
-        Read( attr.datafile );
+        DatabaseAttributeLoadData( attr );
       else
         DatabaseAttributeCompute( attr.idenumerator, attr.identifier );
       fi;
@@ -275,6 +275,60 @@ InstallGlobalFunction( DatabaseAttributeValueDefault, function( attr, id )
       result:= attr.eval( attr, result );
     fi;
     return result;
+end );
+
+
+#############################################################################
+##
+#F  DatabaseAttributeLoadData( <attr> )
+##
+InstallGlobalFunction( DatabaseAttributeLoadData, function( attr )
+    local filename, data;
+
+    if IsBound( attr.datafile ) and IsReadableFile( attr.datafile ) then
+      filename:= attr.datafile;
+      if EndsWith( filename, ".json" ) then
+        # evaluate the JSON text;
+        # note that Browse does not force that a JSON parser is available
+        if IsBound( AGR ) and IsBound( AGR.GapObjectOfJsonText ) then
+          data:= ValueGlobal( "AGR" ).GapObjectOfJsonText(
+                                          StringFile( filename ) );
+          if data.status = false then
+            Error( "the file '", filename,
+                   "' does not contain a valid JSON text" );
+          fi;
+          data:= data.value;
+        elif IsBound( JsonStringToGap ) then
+          data:= ValueGlobal( "JsonStringToGap" )( StringFile( filename ) );
+        else
+          Error( "cannot evaluate the JSON format file '", filename, "'" );
+        fi;
+        # consistency check
+        if EvalString( data.idenum ) <> attr.idenumerator then
+          Error( "file '", filename,
+                 "' contains data for the id enumerator '", data.idenum,
+                 "', not for the one of the attribute <attr>" );
+        elif data.attrid <> attr.identifier then
+          Error( "file '", filename,
+                 "' contains data for the attribute '", data.attrid,
+                 "' not '", attr.identifier, "'" );
+        fi;
+        if data.version <> attr.idenumerator.version then
+          Info( InfoWarning, 1,
+                "versions of attribute '", data.attrid,
+                "' and of id enumerator '", data.idenum,
+                "' are not compatible" );
+        fi;
+        # set the data
+        DatabaseAttributeSetData( attr.idenumerator, attr.identifier,
+            data.version,
+            rec( automatic:= data.automatic,
+                 nonautomatic:= data.nonautomatic ) );
+      else
+        # just read the file
+        Read( attr.datafile );
+      fi;
+    fi;
 end );
 
 
@@ -340,10 +394,7 @@ InstallGlobalFunction( DatabaseIdEnumeratorUpdate, function( dbidenum )
     for name in RecNames( dbidenum.attributes ) do
       attr:= dbidenum.attributes.( name );
       if not IsBound( attr.version ) then
-        if IsBound( attr.datafile ) and IsReadableFile( attr.datafile ) then
-          Read( attr.datafile );
-        fi;
-#T default value if `name' is bound?
+        DatabaseAttributeLoadData( attr );
         if not IsBound( attr.version ) then
           Error( "<attr>.version still not bound" );
         fi;
@@ -401,7 +452,7 @@ InstallGlobalFunction( DatabaseAttributeCompute, function( arg )
       attr2:= idenum.attributes.( attrid );
       if not IsBound( attr2.version ) and not IsBound( attr2.data ) and
          IsBound( attr2.datafile ) and IsReadableFile( attr2.datafile ) then
-        Read( attr2.datafile );
+        DatabaseAttributeLoadData( attr2 );
       fi;
       if not IsBound( attr2.version ) or attr2.version <> idenum.version then
         Info( InfoDatabaseAttribute, 1,
@@ -420,7 +471,7 @@ InstallGlobalFunction( DatabaseAttributeCompute, function( arg )
       if not IsBound( attr.data ) then
         # Fetch the known values; if necessary then initialize.
         if IsBound( attr.datafile ) and IsReadableFile( attr.datafile ) then
-          Read( attr.datafile );
+          DatabaseAttributeLoadData( attr );
         else
           attr.data:= [];
         fi;
@@ -464,7 +515,7 @@ InstallGlobalFunction( DatabaseAttributeCompute, function( arg )
       if not IsBound( attr.data ) then
         # Fetch the known values; if necessary then initialize.
         if IsBound( attr.datafile ) and IsReadableFile( attr.datafile ) then
-          Read( attr.datafile );
+          DatabaseAttributeLoadData( attr );
         else
           attr.data:= rec( automatic:= [], nonautomatic:= [] );
         fi;
@@ -516,39 +567,49 @@ end );
 
 #############################################################################
 ##
-#F  DatabaseAttributeString( idenum, idenumname, attridentifier )
+#F  DatabaseAttributeString( <idenum>, <idenumname>, <attridentifier>
+#F                           [, <format>] )
 ##
 InstallGlobalFunction( DatabaseAttributeString,
-    function( idenum, idenumname, attridentifier )
+    function( idenum, idenumname, attridentifier, format... )
     local attr, str, strfun, txt, comp, entry;
 
     if not IsBound( idenum.attributes.( attridentifier ) ) then
       Error( "<idenum> has no component <attridentifier>" );
+    elif Length( format ) = 0 then
+      format:= "GAP";
+    elif format[1] in [ "GAP", "JSON" ] then
+      format:= format[1];
+    else
+      Error( "<format>, if given, must be \"GAP\" or \"JSON\"" );
     fi;
+
     attr:= idenum.attributes.( attridentifier );
     if not IsBound( attr.data ) then
       if IsBound( attr.datafile ) and IsReadableFile( attr.datafile ) then
-        Read( attr.datafile );
+        DatabaseAttributeLoadData( attr );
       else
         DatabaseAttributeCompute( idenum, attridentifier );
       fi;
     fi;
-    str:= Concatenation( "DatabaseAttributeSetData( ", idenumname, ", \"",
-              attridentifier, "\",\n" );
-    if IsString( attr.version ) then
-      Append( str, Concatenation( "\"", attr.version, "\"," ) );
-    else
-      Append( str, Concatenation( String( attr.version ), "," ) );
-    fi;
+
     if attr.type = "values" then
-Print( "missing code!\n" );
+      Error( "the attribute <attr> must have the type \"pairs\"" );
+    elif IsBound( attr.string ) then
+      strfun:= attr.string;
     else
-      Append( str, "rec(\nautomatic:=[\n" );
-      if IsBound( attr.string ) then
-        strfun:= attr.string;
+      strfun:= String;
+    fi;
+
+    if format = "GAP" then
+      str:= Concatenation( "DatabaseAttributeSetData( ", idenumname, ", \"",
+                attridentifier, "\",\n" );
+      if IsString( attr.version ) then
+        Append( str, Concatenation( "\"", attr.version, "\"," ) );
       else
-        strfun:= String;
+        Append( str, Concatenation( String( attr.version ), "," ) );
       fi;
+      Append( str, "rec(\nautomatic:=[\n" );
       txt:= "],\nnonautomatic:=[\n";
       for comp in [ attr.data.automatic, attr.data.nonautomatic ] do
         for entry in comp do
@@ -559,6 +620,48 @@ Print( "missing code!\n" );
         Append( str, txt );
         txt:= "]));\n";
       od;
+    else
+      # Json format:
+      # - version
+      str:= "{\n\"version\": ";
+      if IsString( attr.version ) then
+        Append( str, Concatenation( "\"", attr.version, "\",\n" ) );
+      else
+        Append( str, Concatenation( String( attr.version ), ",\n" ) );
+      fi;
+
+      # - ID enumerator:
+      Append( str, Concatenation( "\"idenum\": \"", idenumname, "\",\n" ) );
+
+      # - attribute identifier:
+      Append( str, Concatenation( "\"attrid\": \"", attridentifier, "\",\n" ) );
+
+      # - automatically computed data:
+      Append( str, "\"automatic\": [\n" );
+      for entry in attr.data.automatic do
+        if entry[2] <> attr.dataDefault then
+          Append( str, strfun( entry ) );
+        fi;
+      od;
+      if not IsEmpty( attr.data.automatic ) then
+        Unbind( str[ Length( str ) ] );  # no newline
+        Unbind( str[ Length( str ) ] );  # no final comma allowed
+        Append( str, "\n" );
+      fi;
+
+      # - other data:
+      Append( str, "],\n\"nonautomatic\": [\n" );
+      for entry in attr.data.nonautomatic do
+        if entry[2] <> attr.dataDefault then
+          Append( str, strfun( entry ) );
+        fi;
+      od;
+      if not IsEmpty( attr.data.nonautomatic ) then
+        Unbind( str[ Length( str ) ] );  # no newline
+        Unbind( str[ Length( str ) ] );  # no final comma allowed
+        Append( str, "\n" );
+      fi;
+      Append( str, "]\n}\n" );
     fi;
 
     return str;

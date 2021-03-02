@@ -1,0 +1,21 @@
+\contentsline {chapter}{\numberline {1}\textcolor {Chapter }{Introduction}}{4}{chapter.1}%
+\contentsline {chapter}{\numberline {2}\textcolor {Chapter }{Double Coset Rewriting Systems}}{6}{chapter.2}%
+\contentsline {section}{\numberline {2.1}\textcolor {Chapter }{Rewriting Systems}}{6}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}\textcolor {Chapter }{KnuthBendixRewritingSystem}}{6}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}\textcolor {Chapter }{NextWord}}{7}{subsection.2.1.2}%
+\contentsline {section}{\numberline {2.2}\textcolor {Chapter }{Example 2 -- free product of two cyclic groups}}{7}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}\textcolor {Chapter }{DoubleCosetRewritingSystem}}{7}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}\textcolor {Chapter }{DisplayAsString}}{8}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}\textcolor {Chapter }{WordAcceptorOfReducedRws}}{9}{subsection.2.2.3}%
+\contentsline {section}{\numberline {2.3}\textcolor {Chapter }{Example 3 -- the trefoil group}}{10}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}\textcolor {Chapter }{PartialDoubleCosetRewritingSystem}}{10}{subsection.2.3.1}%
+\contentsline {section}{\numberline {2.4}\textcolor {Chapter }{Example 4 -- an infinite rewriting system}}{13}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}\textcolor {Chapter }{KBMagRewritingSystem}}{13}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}\textcolor {Chapter }{DCrules}}{14}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}\textcolor {Chapter }{WordToString}}{15}{subsection.2.4.3}%
+\contentsline {chapter}{\numberline {3}\textcolor {Chapter }{Development History}}{17}{chapter.3}%
+\contentsline {section}{\numberline {3.1}\textcolor {Chapter }{Versions of the package}}{17}{section.3.1}%
+\contentsline {section}{\numberline {3.2}\textcolor {Chapter }{What needs doing next?}}{17}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}\textcolor {Chapter }{DoubleCosetsAutomaton}}{17}{subsection.3.2.1}%
+\contentsline {chapter}{References}{19}{chapter*.5}%
+\contentsline {chapter}{Index}{20}{section*.6}%

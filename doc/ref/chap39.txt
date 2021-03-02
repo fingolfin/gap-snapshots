@@ -170,7 +170,7 @@
   
   [1X39.2-8 InfoGroup[101X
   
-  [33X[1;0Y[29X[2XInfoGroup[102X[32X info class[133X
+  [33X[1;0Y[29X[2XInfoGroup[102X [32X info class[133X
   
   [33X[0;0Yis the info class for the generic group theoretic functions (see [14X7.4[114X).[133X
   
@@ -937,7 +937,7 @@
   
   [1X39.9-6 InfoCoset[101X
   
-  [33X[1;0Y[29X[2XInfoCoset[102X[32X info class[133X
+  [33X[1;0Y[29X[2XInfoCoset[102X [32X info class[133X
   
   [33X[0;0YThe information function for coset and double coset operations is [2XInfoCoset[102X.[133X
   
@@ -1244,7 +1244,7 @@
   
   [1X39.11-7 InfoComplement[101X
   
-  [33X[1;0Y[29X[2XInfoComplement[102X[32X info class[133X
+  [33X[1;0Y[29X[2XInfoComplement[102X [32X info class[133X
   
   [33X[0;0YInfo class for the complement routines.[133X
   
@@ -2861,7 +2861,7 @@
   
   [1X39.20-13 InfoLattice[101X
   
-  [33X[1;0Y[29X[2XInfoLattice[102X[32X info class[133X
+  [33X[1;0Y[29X[2XInfoLattice[102X [32X info class[133X
   
   [33X[0;0Yis  the  information class used by the cyclic extension methods for subgroup
   lattice calculations.[133X
@@ -3057,7 +3057,7 @@
   
   [1X39.21-6 InfoPcSubgroup[101X
   
-  [33X[1;0Y[29X[2XInfoPcSubgroup[102X[32X info class[133X
+  [33X[1;0Y[29X[2XInfoPcSubgroup[102X [32X info class[133X
   
   [33X[0;0YInformation function for the subgroup lattice functions using pcgs.[133X
   
@@ -3323,7 +3323,7 @@
   
   [1X39.23-5 InfoCoh[101X
   
-  [33X[1;0Y[29X[2XInfoCoh[102X[32X info class[133X
+  [33X[1;0Y[29X[2XInfoCoh[102X [32X info class[133X
   
   [33X[0;0YThe info class for the cohomology calculations is [2XInfoCoh[102X.[133X
   

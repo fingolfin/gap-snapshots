@@ -595,7 +595,7 @@
   
   [1X43.8-3 DefaultStabChainOptions[101X
   
-  [33X[1;0Y[29X[2XDefaultStabChainOptions[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XDefaultStabChainOptions[102X [32X global variable[133X
   
   [33X[0;0Yare the options for [2XStabChain[102X ([14X43.8-1[114X) which are set as default.[133X
   
@@ -990,7 +990,7 @@
   
   [1X43.12-4 InfoBckt[101X
   
-  [33X[1;0Y[29X[2XInfoBckt[102X[32X info class[133X
+  [33X[1;0Y[29X[2XInfoBckt[102X [32X info class[133X
   
   [33X[0;0Yis the info class for the partition backtrack routines.[133X
   

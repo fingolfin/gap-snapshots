@@ -488,7 +488,7 @@ end );
 ##
 ##  Add the Browse application to the list shown by `BrowseGapData'.
 ##
-BrowseGapDataAdd( "GAP Manuals", BrowseGapManuals, false, "\
+BrowseGapDataAdd( "GAP Manuals", BrowseGapManuals, "\
 an overview of GAP documentation (main manuals and package manuals), \
 in a browse table which is categorized hierarchically by book names \
 and chapter, section, subsection headings; \

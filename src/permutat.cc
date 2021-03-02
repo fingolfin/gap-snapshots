@@ -96,6 +96,7 @@ extern "C" {
 Obj             IdentityPerm;
 
 
+static const UInt MAX_DEG_PERM4 = ((Int)1 << (sizeof(UInt) == 8 ? 32 : 28)) - 1;
 
 static ModuleStateOffset PermutatStateOffset = -1;
 
@@ -1726,19 +1727,13 @@ static inline Obj RESTRICTED_PERM(Obj perm, Obj dom, Obj test)
       len = GET_LEN_RANGE(dom);
       p = GET_LOW_RANGE(dom);
       inc = GET_INC_RANGE(dom);
-      while (p<1) {
-        p+=inc;
-        len=-1;
+      if (p < 1 || p + inc * (len - 1) < 1) {
+          return Fail;
       }
-      i=p+(inc*len)-1;
-      while (i>deg) {
-        i-=inc;
-      }
-      p-=1;
-      i-=1;
-      while (p<=i) {
-        ptRest[p]=ptPerm[p];
-        p+=inc;
+      for (i = p; i != p + inc * len; i += inc) {
+          if (i <= deg) {
+              ptRest[i - 1] = ptPerm[i - 1];
+          }
       }
     }
 

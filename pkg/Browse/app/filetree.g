@@ -10,24 +10,6 @@
 
 #############################################################################
 ##
-#F  BrowseData.DirectoryContents( <startfile> )
-##
-##  The GAP function `DirectoryContents' runs into an error when the
-##  directory cannot be opened.
-##
-BrowseData.DirectoryContents:= function( startfile )
-    local files;
-
-    files:= STRING_LIST_DIR( USER_HOME_EXPAND( startfile ) );
-    if files = fail then
-      return fail;
-    fi;
-    return SplitStringInternal( files, "", "\000" );
-end;
-
-
-#############################################################################
-##
 #F  BrowseData.DirectoryTree( <startpath>, <filename>, <inoknown> )
 ##
 ##  This function is called by `BrowseDirectory'.
@@ -51,7 +33,7 @@ BrowseData.DirectoryTree:= function( startpath, filename, inoknown )
         return Concatenation( filename, " (link to a file met already)" );
       fi;
       AddSet( inoknown, ino );
-      files:= BrowseData.DirectoryContents( startfile );
+      files:= DirectoryContents( startfile );
       if files = fail then
         return fail;
       fi;

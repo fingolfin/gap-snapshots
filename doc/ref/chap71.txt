@@ -359,7 +359,7 @@
   
   [1X71.3-4 SupportedCharacterTableInfo[101X
   
-  [33X[1;0Y[29X[2XSupportedCharacterTableInfo[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XSupportedCharacterTableInfo[102X [32X global variable[133X
   
   [33X[0;0Y[2XSupportedCharacterTableInfo[102X  is  a  list  that  contains at position [22X3i-2[122X an
   attribute  getter function, at position [22X3i-1[122X the name of this attribute, and
@@ -480,13 +480,13 @@
   
   [1X71.4-2 InfoCharacterTable[101X
   
-  [33X[1;0Y[29X[2XInfoCharacterTable[102X[32X info class[133X
+  [33X[1;0Y[29X[2XInfoCharacterTable[102X [32X info class[133X
   
   [33X[0;0Yis the info class (see [14X7.4[114X) for computations with character tables.[133X
   
   [1X71.4-3 NearlyCharacterTablesFamily[101X
   
-  [33X[1;0Y[29X[2XNearlyCharacterTablesFamily[102X[32X family[133X
+  [33X[1;0Y[29X[2XNearlyCharacterTablesFamily[102X [32X family[133X
   
   [33X[0;0YEvery character table like object lies in this family (see [14X13.1[114X).[133X
   

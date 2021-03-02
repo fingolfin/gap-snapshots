@@ -85,7 +85,7 @@
   
   [1X60.1-3 GaussianRationals[101X
   
-  [33X[1;0Y[29X[2XGaussianRationals[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XGaussianRationals[102X [32X global variable[133X
   [33X[1;0Y[29X[2XIsGaussianRationals[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Y[2XGaussianRationals[102X is the field [22Xℚ_4 = ℚ(sqrt{-1})[122X of Gaussian rationals, as a
@@ -451,7 +451,7 @@
   
   [1X60.5-1 GaussianIntegers[101X
   
-  [33X[1;0Y[29X[2XGaussianIntegers[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XGaussianIntegers[102X [32X global variable[133X
   
   [33X[0;0Y[2XGaussianIntegers[102X  is  the  ring  [22Xℤ[sqrt{-1}][122X of Gaussian integers. This is a
   subring of the cyclotomic field [2XGaussianRationals[102X ([14X60.1-3[114X).[133X

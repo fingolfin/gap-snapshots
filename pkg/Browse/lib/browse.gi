@@ -7527,7 +7527,8 @@ NCurses.BrowseGeneric:= function( arg )
 
     # If we know that there will be no chance to show anything
     # in visual mode then print a warning and give up.
-    if GAPInfo.SystemEnvironment.TERM = "dumb" then
+    if not IsBound( GAPInfo.SystemEnvironment.TERM )
+       or GAPInfo.SystemEnvironment.TERM = "dumb" then
       Info( InfoWarning, 1,
             "cannot switch to visual mode because of TERM = \"dumb\"" );
       return fail;

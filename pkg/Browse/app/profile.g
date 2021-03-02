@@ -555,8 +555,7 @@ end );
 ##
 ##  Add the Browse application to the list shown by `BrowseGapData'.
 ##
-BrowseGapDataAdd( "DisplayProfile as a Browse application", BrowseProfile,
-  false, "\
+BrowseGapDataAdd( "DisplayProfile as a Browse application", BrowseProfile, "\
 the profiled operations, methods, and global functions, \
 shown in a browse table; \
 the columns of the table contain \

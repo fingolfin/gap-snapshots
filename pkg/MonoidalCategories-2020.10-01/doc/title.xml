@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    MonoidalCategories
+  </Title>
+  <Subtitle>
+    Monoidal and monoidal (co)closed categories
+  </Subtitle>
+  <Version>
+    2020.10-01
+  </Version>
+  <Author>
+    Mohamed Barakat<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Walter-Flex-Str. 3<Br/>
+57068 Siegen<Br/>
+Germany<Br/>
+</Address>
+<Email>mohamed.barakat@uni-siegen.de</Email>
+<Homepage>http://algebra.mathematik.uni-siegen.de/barakat/</Homepage>
+
+  </Author>
+  <Author>
+    Sebastian Gutsche<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Department Mathematik<Br/>
+Universität Siegen<Br/>
+Walter-Flex-Straße 3<Br/>
+57068 Siegen<Br/>
+Germany<Br/>
+</Address>
+<Email>gutsche@mathematik.uni-siegen.de</Email>
+<Homepage>http://algebra.mathematik.uni-siegen.de/gutsche/</Homepage>
+
+  </Author>
+  <Author>
+    Sebastian Posur<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Department Mathematik<Br/>
+Universität Siegen<Br/>
+Walter-Flex-Straße 3<Br/>
+57068 Siegen<Br/>
+Germany<Br/>
+</Address>
+<Email>sebastian.posur@uni-siegen.de</Email>
+<Homepage>http://algebra.mathematik.uni-siegen.de/posur/</Homepage>
+
+  </Author>
+  <Date>
+    19 October 2020
+  </Date>
+  </TitlePage>

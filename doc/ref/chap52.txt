@@ -424,8 +424,8 @@
   
   [1X52.5-2 KB_REW[101X
   
-  [33X[1;0Y[29X[2XKB_REW[102X[32X global variable[133X
-  [33X[1;0Y[29X[2XGAPKB_REW[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XKB_REW[102X [32X global variable[133X
+  [33X[1;0Y[29X[2XGAPKB_REW[102X [32X global variable[133X
   
   [33X[0;0Y[10XKB_REW[110X  is  a global record variable whose components contain functions used
   for Knuth-Bendix. By default [10XKB_REW[110X is assigned to [10XGAPKB_REW[110X, which contains

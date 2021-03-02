@@ -87,7 +87,7 @@ DeclareAutoreadableVariables( "Browse", "app/tmdbatt2.g",
 ##  Add the Browse application to the list shown by `BrowseGapData'.
 ##
 BrowseGapDataAdd( "Overview of the GAP Library of Tables of Marks",
-    function() BrowseTomLibInfo(); end, false, "\
+    function() BrowseTomLibInfo(); end, "\
 an overview of the GAP library of tables of marks, \
 shown in a browse table whose rows correspond to the tables of marks, \
 and whose columns contain information about the group order, \

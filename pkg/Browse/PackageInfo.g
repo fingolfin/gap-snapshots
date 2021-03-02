@@ -1,9 +1,10 @@
 SetPackageInfo( rec(
 PackageName := "Browse",
-Version := "1.8.8",
-Date := "08/06/2018",
+Version := "1.8.11",
+Date := "28/08/2020",
+License := "GPL-3.0-or-later",
 Subtitle := "browsing applications and ncurses interface",
-ArchiveURL := "http://www.math.rwth-aachen.de/~Browse/Browse-1.8.8",
+ArchiveURL := "http://www.math.rwth-aachen.de/~Browse/Browse-1.8.11",
 ArchiveFormats := ".tar.bz2",
 Persons := [
   rec(
@@ -13,9 +14,9 @@ Persons := [
   IsMaintainer := true,
   Email := "Thomas.Breuer@Math.RWTH-Aachen.De",
   WWWHome := "http://www.math.rwth-aachen.de/~Thomas.Breuer",
-  PostalAddress := "Thomas Breuer\nLehrstuhl D für Mathematik\nRWTH Aachen\nPontdriesch 14/16\n52062 Aachen\nGERMANY\n",
+  PostalAddress := "Thomas Breuer\nLehrstuhl für Algebra und Zahlentheorie\nRWTH Aachen\nPontdriesch 14/16\n52062 Aachen\nGERMANY\n",
   Place := "Aachen",
-  Institution := "Lehrstuhl D für Mathematik, RWTH Aachen"
+  Institution := "Lehrstuhl für Algebra und Zahlentheorie, RWTH Aachen"
   ),
   rec(
   LastName := "Lübeck",
@@ -24,9 +25,9 @@ Persons := [
   IsMaintainer := true,
   Email := "Frank.Luebeck@Math.RWTH-Aachen.De",
   WWWHome := "http://www.math.rwth-aachen.de/~Frank.Luebeck",
-  PostalAddress := "Frank Lübeck\nLehrstuhl D für Mathematik\nRWTH Aachen\nPontdriesch 14/16\n52062 Aachen\nGERMANY\n",
+  PostalAddress := "Frank Lübeck\nLehrstuhl für Algebra und Zahlentheorie\nRWTH Aachen\nPontdriesch 14/16\n52062 Aachen\nGERMANY\n",
   Place := "Aachen",
-  Institution := "Lehrstuhl D für Mathematik, RWTH Aachen"
+  Institution := "Lehrstuhl für Algebra und Zahlentheorie, RWTH Aachen"
   )
 ],
 Status := "deposited",
@@ -47,9 +48,10 @@ PackageDoc := [
 )
 ],
 Dependencies := rec(
-  GAP := "4.8.2",  # because of partially variadic functions
+  GAP := "4.11.0",  # because of DirectoryContents, [i,j] syntax,
+                    # and BASE_SIZE_METHODS_OPER_ENTRY
   NeededOtherPackages := [ ["GAPDoc", ">= 1.6"], ], # more robust treatment of entries in *.bib files
-  SuggestedOtherPackages := [ ["AtlasRep",">=1.5"], [ "IO", ">=2.2" ] ],
+  SuggestedOtherPackages := [ ["AtlasRep",">=2.0"], [ "IO", ">=2.2" ] ],
   ExternalConditions := ["C-compiler", "ncurses development library"]
 ),
 AvailabilityTest := function()

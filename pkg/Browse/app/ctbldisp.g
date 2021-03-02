@@ -262,6 +262,12 @@ InstallMethod( Browse,
     if not IsBound( cletter ) then
       cletter:= "X";
     fi;
+    for record in options do
+      if IsBound( record.charnames ) and IsList( record.charnames ) then
+        charnames:= record.charnames;
+        break;
+      fi;
+    od;
     if not IsBound( charnames ) then
       charnames:= List( cnr,
           i -> Concatenation( cletter, ".", String( i ) ) );
@@ -315,11 +321,17 @@ InstallMethod( Browse,
 
     # (end of options handling)
 
-    # prepare classnames
+    # prepare class names
     if powermap = "ATLAS" then
       nam:= ClassNames( tbl, "ATLAS" );
     else
       nam:= ClassNames( tbl );
+      for record in options do
+        if IsBound( record.classnames ) and IsList( record.classnames ) then
+          nam:= record.classnames;
+          break;
+        fi;
+      od;
     fi;
 
     # prepare indicator
@@ -357,7 +369,7 @@ InstallMethod( Browse,
                  "that have been displayed in the current call" ],
               action := function( t )
                 local str;
-  
+
                 str:= legend( t.work.legend );
                 if IsEmpty( str ) then
                   str:= "(no irrationalities yet in this table)";
@@ -374,7 +386,7 @@ InstallMethod( Browse,
                  "show an overview of all irrationalities in the table" ],
               action := function( t )
                 local j, i, str;
-  
+
                 # We proceed column-wise, like the traditional `Display'.
                 for j in [ 1 .. t.work.n ] do
                   for i in [ 1 .. t.work.m ] do
@@ -547,7 +559,7 @@ InstallMethod( Browse,
     elif centralizers = true then
       # Add factored centralizer orders to the column labels.
       Add( table.work.sepLabelsCol, " " );
-      for p in Set( FactorsInt( Size( tbl ) ) ) do
+      for p in PrimeDivisors( Size( tbl ) ) do
         Add( table.work.labelsCol, List( SizesCentralizers( tbl ){ classes },
                x -> stringEntry( Number( Factors( x ), y -> y = p ),
                                  stringEntryData ) ) );
@@ -633,7 +645,6 @@ InstallMethod( Browse,
       if maxyx[1] < minyx then
         # Try to collapse power maps.
         if t.dynamic.togglePowerMaps then
-        
           for i in t.dynamic.hidecollabelspos do
             t.dynamic.isRejectedLabelsCol[i]:= true;
           od;

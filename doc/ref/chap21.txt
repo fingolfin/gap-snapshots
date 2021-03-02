@@ -2658,7 +2658,29 @@
     [4X[28Xfail[128X[104X
   [4X[32X[104X
   
-  [1X21.20-23 ForAll[101X
+  [1X21.20-23 Last[101X
+  
+  [33X[1;0Y[29X[2XLast[102X( [3Xlist[103X[, [3Xfunc[103X] ) [32X function[133X
+  
+  [33X[0;0Y[2XLast[102X  returns the last element of the list [3Xlist[103X for which the unary function
+  [3Xfunc[103X returns [9Xtrue[109X; if [3Xfunc[103X is not given, the first element is returned. [3Xlist[103X
+  may contain holes. [3Xfunc[103X must return either [9Xtrue[109X or [9Xfalse[109X for each element of
+  [3Xlist[103X,  otherwise  an  error  is  signalled.  If  [3Xfunc[103X  returns [9Xfalse[109X for all
+  elements of [3Xlist[103X then [2XLast[102X returns [9Xfail[109X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XLast( [10^7..10^8], IsPrime );[127X[104X
+    [4X[28X99999989[128X[104X
+    [4X[25Xgap>[125X [27XLast( [10^5..10^6],[127X[104X
+    [4X[25X>[125X [27X     n -> not IsPrime(n) and IsPrimePowerInt(n) );[127X[104X
+    [4X[28X994009[128X[104X
+    [4X[25Xgap>[125X [27XLast( [ 1 .. 20 ], x -> x < 0 );[127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27XLast( [ fail ], x -> x = fail );[127X[104X
+    [4X[28Xfail[128X[104X
+  [4X[32X[104X
+  
+  [1X21.20-24 ForAll[101X
   
   [33X[1;0Y[29X[2XForAll[102X( [3Xlistorcoll[103X, [3Xfunc[103X ) [32X function[133X
   
@@ -2676,7 +2698,7 @@
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
-  [1X21.20-24 ForAny[101X
+  [1X21.20-25 ForAny[101X
   
   [33X[1;0Y[29X[2XForAny[102X( [3Xlistorcoll[103X, [3Xfunc[103X ) [32X function[133X
   
@@ -2696,7 +2718,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X21.20-25 Product[101X
+  [1X21.20-26 Product[101X
   
   [33X[1;0Y[29X[2XProduct[102X( [3Xlistorcoll[103X[, [3Xfunc[103X][, [3Xinit[103X] ) [32X function[133X
   
@@ -2731,7 +2753,7 @@
     [4X[28X0*Z(2)[128X[104X
   [4X[32X[104X
   
-  [1X21.20-26 Sum[101X
+  [1X21.20-27 Sum[101X
   
   [33X[1;0Y[29X[2XSum[102X( [3Xlistorcoll[103X[, [3Xfunc[103X][, [3Xinit[103X] ) [32X function[133X
   
@@ -2766,7 +2788,7 @@
     [4X[28X0*Z(2)[128X[104X
   [4X[32X[104X
   
-  [1X21.20-27 Iterated[101X
+  [1X21.20-28 Iterated[101X
   
   [33X[1;0Y[29X[2XIterated[102X( [3Xlist[103X, [3Xf[103X ) [32X operation[133X
   
@@ -2780,7 +2802,7 @@
     [4X[28X3[128X[104X
   [4X[32X[104X
   
-  [1X21.20-28 ListN[101X
+  [1X21.20-29 ListN[101X
   
   [33X[1;0Y[29X[2XListN[102X( [3Xlist1[103X, [3Xlist2[103X, [3X...[103X, [3Xlistn[103X, [3Xf[103X ) [32X function[133X
   
@@ -2796,7 +2818,7 @@
   [1X21.21 [33X[0;0YAdvanced List Manipulations[133X[101X
   
   [33X[0;0YThe  following functions are generalizations of [2XList[102X ([14X30.3-5[114X), [2XSet[102X ([14X30.3-7[114X),
-  [2XSum[102X ([14X21.20-26[114X), and [2XProduct[102X ([14X21.20-25[114X).[133X
+  [2XSum[102X ([14X21.20-27[114X), and [2XProduct[102X ([14X21.20-26[114X).[133X
   
   [1X21.21-1 ListX[101X
   

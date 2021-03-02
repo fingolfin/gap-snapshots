@@ -397,7 +397,7 @@
   
   [1X70.6-1 InfoTom[101X
   
-  [33X[1;0Y[29X[2XInfoTom[102X[32X info class[133X
+  [33X[1;0Y[29X[2XInfoTom[102X [32X info class[133X
   
   [33X[0;0Yis the info class for computations concerning tables of marks.[133X
   
@@ -409,13 +409,13 @@
   
   [1X70.6-3 TableOfMarksFamily[101X
   
-  [33X[1;0Y[29X[2XTableOfMarksFamily[102X[32X family[133X
+  [33X[1;0Y[29X[2XTableOfMarksFamily[102X [32X family[133X
   
   [33X[0;0YEach table of marks belongs to this family.[133X
   
   [1X70.6-4 TableOfMarksComponents[101X
   
-  [33X[1;0Y[29X[2XTableOfMarksComponents[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XTableOfMarksComponents[102X [32X global variable[133X
   
   [33X[0;0YThe  list  [2XTableOfMarksComponents[102X  is  used  when a table of marks object is
   created     from    a    record    via    [2XConvertToTableOfMarks[102X    ([14X70.6-5[114X).

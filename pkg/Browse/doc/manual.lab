@@ -274,6 +274,8 @@
 \makelabel{browse:DatabaseAttributeValueDefault}{A.1.6}{X7C8DB23E79567A60}
 \makelabel{browse:DatabaseIdEnumeratorUpdate}{A.1.7}{X80A909727E3C8311}
 \makelabel{browse:DatabaseAttributeCompute}{A.1.8}{X812075CE7A01EA04}
-\makelabel{browse:DatabaseAttributeSetData}{A.1.9}{X87A8B19C82E9FF0B}
+\makelabel{browse:DatabaseAttributeString}{A.1.9}{X7925640478969610}
+\makelabel{browse:DatabaseAttributeLoadData}{A.1.10}{X877B91597F4007FD}
+\makelabel{browse:DatabaseAttributeSetData}{A.1.11}{X87A8B19C82E9FF0B}
 \makelabel{browse:BrowseTableFromDatabaseIdEnumerator}{A.2.2}{X7F25A3E586653911}
 \makelabel{browse:BrowseTomLibInfo}{A.4.1}{X844D143980A0E20D}

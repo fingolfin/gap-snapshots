@@ -64,7 +64,7 @@
   
   [1X75.1-1 InfoMonomial[101X
   
-  [33X[1;0Y[29X[2XInfoMonomial[102X[32X info class[133X
+  [33X[1;0Y[29X[2XInfoMonomial[102X [32X info class[133X
   
   [33X[0;0YMost  of  the  functions  described  in  this  chapter print some (hopefully
   useful)  [13Xinformation[113X  if the info level of the info class [2XInfoMonomial[102X is at
@@ -313,7 +313,7 @@
   
   [1X75.4-2 TestMonomialUseLattice[101X
   
-  [33X[1;0Y[29X[2XTestMonomialUseLattice[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XTestMonomialUseLattice[102X [32X global variable[133X
   
   [33X[0;0YThis  global  variable  controls for which groups the operation [2XTestMonomial[102X
   ([14X75.4-1[114X)  may  compute  the  subgroup  lattice.  The  value  can be set to a

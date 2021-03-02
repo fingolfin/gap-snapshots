@@ -34,6 +34,7 @@ CURDIR="$(pwd)"
 GAPROOT="$(cd .. && pwd)"
 COLORS=yes
 STRICT=no       # exit with non-zero exit code when encountering any failures
+PARALLEL=no
 PACKAGES=()
 
 # If output does not go into a terminal (but rather into a log file),
@@ -45,6 +46,10 @@ while [[ "$#" -ge 1 ]]; do
   case "$option" in
     --with-gaproot)   GAPROOT="$1"; shift ;;
     --with-gaproot=*) GAPROOT=${option#--with-gaproot=}; ;;
+    --parallel)       PARALLEL=yes; ;;
+
+    --with-gap)       GAP="$1"; shift ;;
+    --with-gap=*)     GAP=${option#--with-gap=}; ;;
 
     --no-color)       COLORS=no ;;
     --color)          COLORS=yes ;;
@@ -57,6 +62,12 @@ while [[ "$#" -ge 1 ]]; do
     *)                PACKAGES+=("$option") ;;
   esac
 done
+
+GAP="${GAP:-$GAPROOT/bin/gap.sh}"
+
+if [ "x$PARALLEL" = "xyes" ]; then
+  export MAKEFLAGS="${MAKEFLAGS:--j3}"
+fi;
 
 # If user specified no packages to build, build all packages in subdirectories.
 if [[ ${#PACKAGES[@]} == 0 ]]
@@ -160,15 +171,15 @@ build_fail() {
 run_configure_and_make() {
   # We want to know if this is an autoconf configure script
   # or not, without actually executing it!
-  if [[ -f autogen.sh && ! -f configure ]]
+  if [[ -x autogen.sh && ! -x configure ]]
   then
     ./autogen.sh
   fi
-  if [[ -f "configure" ]]
+  if [[ -x configure ]]
   then
     if grep Autoconf ./configure > /dev/null
     then
-      local PKG_NAME=$($GAPROOT/gap -q -T -A <<GAPInput
+      local PKG_NAME=$($GAP -q -T -A -r <<GAPInput
 Read("PackageInfo.g");
 Print(GAPInfo.PackageInfoCurrent.PackageName);
 GAPInput
@@ -197,16 +208,20 @@ build_one_package() {
   (  # start subshell
   set -e
   cd "$CURDIR/$PKG"
+  if [[ -x prerequisites.sh ]]
+  then
+    ./prerequisites.sh "$GAPROOT"
+  elif [[ -x build-normaliz.sh ]]
+  then
+    # used in NormalizInterface; to be replaced by prerequisites.sh in future
+    # versions
+    ./build-normaliz.sh "$GAPROOT"
+  fi
   case "$PKG" in
     # All but the last lines should end by '&&', otherwise (for some reason)
     # some packages that fail to build will not get reported in the logs.
     atlasrep*)
       chmod 1777 datagens dataword
-    ;;
-
-    NormalizInterface*)
-      ./build-normaliz.sh "$GAPROOT" && \
-      run_configure_and_make
     ;;
 
     pargap*)
@@ -241,7 +256,8 @@ build_one_package() {
 
 date >> "$LOGDIR/fail.log"
 for PKG in "${PACKAGES[@]}"
-do
+do 
+  ( 
   # cut off the ending slash (if exists)
   PKG="${PKG%/}"
   # cut off everything before the first slash to only keep the package name
@@ -278,7 +294,20 @@ do
     echo
     warning "$PKG does not seem to be a package directory, skipping"
   fi
+  ) &
+  if [ "x$PARALLEL" = "xyes" ]; then
+    # If more than 4 background jobs are running, wait for one to finish (if
+    # <wait -n> is available) or for all to finish (if only <wait> is available)
+    if [[ $(jobs -r -p | wc -l) -gt 4 ]]; then
+        wait -n 2>&1 >/dev/null || wait
+    fi
+  else
+    # wait for this package to finish building
+    wait
+  fi;
 done
+# Wait until all packages are built, if in parallel
+wait
 
 echo "" >> "$LOGDIR/fail.log"
 echo ""

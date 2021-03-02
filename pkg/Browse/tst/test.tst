@@ -4,7 +4,7 @@
 #W  test.tst                GAP 4 package Browse                Thomas Breuer
 #W                                                              Frank Lübeck
 ##
-#Y  Copyright (C)  2013,   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C) 2020,  Lehrstuhl f. Alg. u. Zahlenth., RWTH Aachen, Germany
 ##
 ##  This file contains the GAP code of the examples in the package
 ##  documentation files.
@@ -74,7 +74,7 @@ gap> NCurses.WidthAttributeLine( [ NCurses.attrs.BOLD, "abc",
 >        NCurses.attrs.NORMAL, "de" ] );
 5
 
-##  doc/../lib/ncurses.gi (3202-3209)
+##  doc/../lib/ncurses.gi (3204-3211)
 gap> NCurses.Alert( "Hello world!", 1000 );
 fail
 gap> NCurses.Alert( [ "Hello world!",
@@ -236,7 +236,7 @@ gap> if TestPackageAvailability( "CTblLib" ) = true then
 >      BrowseData.SetReplay( false );
 > fi;
 
-##  doc/../app/ctbldisp.g (687-699)
+##  doc/../app/ctbldisp.g (698-710)
 gap> BrowseData.SetReplay( Concatenation(
 >         # select the first entry
 >         "se",
@@ -267,7 +267,7 @@ gap> if TestPackageAvailability( "TomLib" ) = true then
 >      BrowseData.SetReplay( false );
 >    fi;
 
-##  doc/../app/atlasbrowse.g (524-553)
+##  doc/../app/atlasbrowse.g (524-554)
 gap> d:= [ NCurses.keys.DOWN ];;  r:= [ NCurses.keys.RIGHT ];;
 gap> c:= [ NCurses.keys.ENTER ];;
 gap> BrowseData.SetReplay( Concatenation(
@@ -285,6 +285,7 @@ gap> BrowseData.SetReplay( Concatenation(
 >        "Q",           # quit the second level table,
 >        "Q" ) );       # and quit the application.
 gap> if IsBound( BrowseAtlasInfo ) and IsBound( AtlasProgramInfo ) then
+>      SetUserPreference( "AtlasRep", "AtlasRepMarkNonCoreData", "" );
 >      tworeps:= BrowseAtlasInfo();
 >    else
 >      tworeps:= [ fail ];
@@ -294,8 +295,8 @@ gap> if fail in tworeps then
 >      Print( "no access to the Web ATLAS\n" );
 >    else
 >      Print( List( tworeps, x -> x.identifier[1] ), "\n" );
-[ "A5", "A6" ]
 >    fi;
+[ "A5", "A6" ]
 
 ##  doc/../app/manual.g (69-81)
 gap> n:= [ 14, 14, 14 ];;  # ``do nothing''
@@ -374,7 +375,7 @@ gap> BrowseData.SetReplay( Concatenation( "/GAP Packages",
 gap> BrowseGapData();;
 gap> BrowseData.SetReplay( false );
 
-##  doc/../app/filetree.g (118-130)
+##  doc/../app/filetree.g (100-112)
 gap> n:= [ 14, 14, 14 ];;  # ``do nothing''
 gap> BrowseData.SetReplay( Concatenation(
 >        "q",                                  # leave the selection
@@ -495,14 +496,14 @@ gap> demofile := Filename(dirs, "../app/demo.demo");;
 gap> LoadDemoFile("My first demo", demofile);
 gap> LoadDemoFile("My first demo (single lines)", demofile, true);
 
-##  doc/brdbattr.xml (89-95)
+##  doc/brdbattr.xml (93-99)
 gap> n:= 100;;
 gap> smallintenum1:= DatabaseIdEnumerator( rec(
 >      identifiers:= [ 1 .. n ],
 >      entry:= function( dbidenum, id ) return id; end,
 >    ) );;
 
-##  doc/brdbattr.xml (107-118)
+##  doc/brdbattr.xml (111-122)
 gap> DatabaseAttributeAdd( smallintenum1, rec(
 >      identifier:= "primes",
 >      type:= "values",
@@ -514,21 +515,21 @@ gap> DatabaseAttributeAdd( smallintenum1, rec(
 >      name:= "IsPrimePowerInt",
 >    ) );
 
-##  doc/brdbattr.xml (122-128)
+##  doc/brdbattr.xml (126-132)
 gap> DatabaseAttributeAdd( smallintenum1, rec(
 >      identifier:= "factors",
 >      type:= "values",
 >      name:= "Factors",
 >    ) );
 
-##  doc/brdbattr.xml (136-142)
+##  doc/brdbattr.xml (140-146)
 gap> DatabaseAttributeAdd( smallintenum1, rec(
 >      identifier:= "residue mod 11",
 >      type:= "values",
 >      create:= function( attr, id ) return id mod 11; end,
 >    ) );
 
-##  doc/brdbattr.xml (152-167)
+##  doc/brdbattr.xml (156-171)
 gap> factorialdata:= function( n )
 >      local result, i, f;
 >      result:= [];  i:= 1;  f:= 1;;
@@ -544,13 +545,13 @@ gap> DatabaseAttributeAdd( smallintenum1, rec(
 >      isSorted:= true,
 >    ) );
 
-##  doc/brdbattr.xml (179-184)
+##  doc/brdbattr.xml (183-188)
 gap> t1:= BrowseTableFromDatabaseIdEnumerator( smallintenum1,
 >           [ "self" ],
 >           [ "primes", "prime powers", "factors", "residue mod 11",
 >             "inverse factorial" ] );;
 
-##  doc/brdbattr.xml (188-203)
+##  doc/brdbattr.xml (192-207)
 gap> nop:= [ 14, 14, 14, 14, 14, 14 ];;  # ``do nothing''
 gap> sample_session:= Concatenation(
 >         # categorize by the first column, expand categories, wait, reset
@@ -566,7 +567,7 @@ gap> NCurses.BrowseGeneric( t1 );
 gap> BrowseData.SetReplay( false );
 gap> Unbind( t1.dynamic.replay );
 
-##  doc/brdbattr.xml (252-316)
+##  doc/brdbattr.xml (256-320)
 gap> smallintenum2:= DatabaseIdEnumerator( rec(
 >      identifiers:= [ 1 .. n ],
 >      entry:= function( dbidenum, id ) return id; end,
@@ -631,13 +632,13 @@ gap> t2:= BrowseTableFromDatabaseIdEnumerator( smallintenum2,
 >             "inverse factorial" ],
 >           t -> BrowseData.HeaderWithRowCounter( t, "Small integers", n ) );;
 
-##  doc/brdbattr.xml (320-325)
+##  doc/brdbattr.xml (324-329)
 gap> BrowseData.SetReplay( sample_session );
 gap> NCurses.BrowseGeneric( t2 );
 gap> BrowseData.SetReplay( false );
 gap> Unbind( t2.dynamic.replay );
 
-##  doc/brdbattr.xml (348-386)
+##  doc/brdbattr.xml (352-390)
 gap> DatabaseAttributeAdd( smallintenum2, rec(
 >      identifier:= "primes & prime powers",
 >      type:= "values",
@@ -676,7 +677,7 @@ gap> NCurses.BrowseGeneric( t3 );
 gap> BrowseData.SetReplay( false );
 gap> Unbind( t3.dynamic.replay );
 
-##  doc/brdbattr.xml (400-482)
+##  doc/brdbattr.xml (404-486)
 gap> smallintenum3:= DatabaseIdEnumerator( rec(
 >     identifiers:= [ 1 .. n ],
 >     entry:= function( dbidenum, id ) return id; end,
@@ -759,7 +760,7 @@ gap> DatabaseAttributeAdd( smallintenum3, rec(
 >       end,
 >     ) );
 
-##  doc/brdbattr.xml (488-500)
+##  doc/brdbattr.xml (492-504)
 gap> n:= 200;;
 gap> DatabaseIdEnumeratorUpdate( smallintenum3 );
 true

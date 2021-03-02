@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<!DOCTYPE Book SYSTEM "gapdoc.dtd"
+[
+<!ENTITY AutoDoc '<Package>AutoDoc</Package>'>
+<!ENTITY see '<Alt Only="LaTeX">$\to$</Alt><Alt Not="LaTeX">--&gt;</Alt>'>
+<!ENTITY XMod '<Package>XMod</Package>'>
+]
+>
+<Book Name="XMod">
+<#Include SYSTEM "title.xml">
+<TableOfContents/>
+<Body>
+<#Include SYSTEM "intro.xml">
+<#Include SYSTEM "gp2obj.xml">
+<#Include SYSTEM "gp2map.xml">
+<#Include SYSTEM "isoclinic.xml">
+<#Include SYSTEM "gp2up.xml">
+<#Include SYSTEM "gp2act.xml">
+<#Include SYSTEM "gp2ind.xml">
+<#Include SYSTEM "gp3xsq.xml">
+<#Include SYSTEM "gp3cat2.xml">
+<#Include SYSTEM "gp4objmap.xml">
+<#Include SYSTEM "gpd2obj.xml">
+<#Include SYSTEM "apps.xml">
+<#Include SYSTEM "hap.xml">
+<#Include SYSTEM "util.xml">
+<#Include SYSTEM "history.xml">
+<#Include SYSTEM "_AutoDocMainFile.xml">
+</Body>
+<Bibliography Databases="bib.xml"/>
+<TheIndex/>
+</Book>

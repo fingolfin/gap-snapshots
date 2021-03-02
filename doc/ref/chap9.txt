@@ -507,7 +507,7 @@
   [1X9.7-10 Reread[101X
   
   [33X[1;0Y[29X[2XReread[102X( [3Xfilename[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XREREADING[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XREREADING[102X [32X global variable[133X
   
   [33X[0;0YIn  general,  it is not possible to read the same [5XGAP[105X library file twice, or
   to  read  a  compiled  version  after reading a [5XGAP[105X version, because crucial

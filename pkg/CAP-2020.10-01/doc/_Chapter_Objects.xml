@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Objects">
+<Heading>Objects</Heading>
+
+<P/>
+  Any GAP object which is IsCapCategoryObject can be added to a category
+  and then becomes an object in this category.
+  Any object can belong to one or no category.
+  After a GAP object is added to the category, it knows which things can be
+  computed in its category and to which category it belongs.
+  It knows categorial properties and attributes, and the functions for existential quantifiers
+  can be applied to the object.
+<Section Label="Chapter_Objects_Section_Attributes_for_the_Type_of_Objects">
+<Heading>Attributes for the Type of Objects</Heading>
+
+<ManSection>
+  <Attr Arg="a" Name="CapCategory" Label="for IsCapCategoryObject"/>
+ <Returns>a category
+</Returns>
+ <Description>
+ The argument is an object <Math>a</Math>.
+ The output is the category <Math>\mathbf{C}</Math>
+ to which <Math>a</Math> was added.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+
+<Section Label="Chapter_Objects_Section_Equality_for_Objects">
+<Heading>Equality for Objects</Heading>
+
+<ManSection>
+  <Oper Arg="a,b" Name="IsEqualForObjects" Label="for IsCapCategoryObject, IsCapCategoryObject"/>
+ <Returns>a boolean
+</Returns>
+ <Description>
+ The arguments are two objects <Math>a</Math> and <Math>b</Math>.
+ The output is <C>true</C> if <Math>a = b</Math>,
+ otherwise the output is <C>false</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddIsEqualForObjects" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>IsEqualForObjects</C>.
+ <Math>F: (a,b) \mapsto \mathtt{IsEqualForObjects}(a,b)</Math>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Objects_Section_Categorical_Properties_of_Objects">
+<Heading>Categorical Properties of Objects</Heading>
+
+<ManSection>
+  <Prop Arg="a" Name="IsProjective" Label="for IsCapCategoryObject"/>
+ <Returns>a boolean
+</Returns>
+ <Description>
+ The argument is an object <Math>a</Math>.
+ The output is <C>true</C> if <Math>a</Math> is a projective object,
+ otherwise the output is <C>false</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddIsProjective" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>IsProjective</C>.
+ <Math>F: a \mapsto \mathtt{IsProjective}(a)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="a" Name="IsInjective" Label="for IsCapCategoryObject"/>
+ <Returns>a boolean
+</Returns>
+ <Description>
+ The argument is an object <Math>a</Math>.
+ The output is <C>true</C> if <Math>a</Math> is an injective object,
+ otherwise the output is <C>false</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddIsInjective" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>IsInjective</C>.
+ <Math>F: a \mapsto \mathtt{IsInjective}(a)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="a" Name="IsTerminal" Label="for IsCapCategoryObject"/>
+ <Returns>a boolean
+</Returns>
+ <Description>
+ The argument is an object <Math>a</Math> of a category <Math>\mathbf{C}</Math>.
+ The output is <C>true</C> if <Math>a</Math> is isomorphic to the terminal object of <Math>\mathbf{C}</Math>, 
+ otherwise the output is <C>false</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddIsTerminal" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>IsTerminal</C>.
+ <Math>F: a \mapsto \mathtt{IsTerminal}(a)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="a" Name="IsInitial" Label="for IsCapCategoryObject"/>
+ <Returns>a boolean
+</Returns>
+ <Description>
+ The argument is an object <Math>a</Math> of a category <Math>\mathbf{C}</Math>.
+ The output is <C>true</C> if <Math>a</Math> is isomorphic to the initial object of <Math>\mathbf{C}</Math>, 
+ otherwise the output is <C>false</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddIsInitial" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>IsInitial</C>.
+ <Math>F: a \mapsto \mathtt{IsInitial}(a)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="a" Name="IsZeroForObjects" Label="for IsCapCategoryObject"/>
+ <Returns>a boolean
+</Returns>
+ <Description>
+ The argument is an object <Math>a</Math> of a category <Math>\mathbf{C}</Math>.
+ The output is <C>true</C> if <Math>a</Math> is isomorphic to the zero object of <Math>\mathbf{C}</Math>, 
+ otherwise the output is <C>false</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="a" Name="IsZero" Label="for IsCapCategoryObject"/>
+ <Returns>a boolean
+</Returns>
+ <Description>
+ The argument is an object <Math>a</Math> of a category <Math>\mathbf{C}</Math>.
+ The output is <C>true</C> if <Math>a</Math> is isomorphic to the zero object of <Math>\mathbf{C}</Math>, 
+ otherwise the output is <C>false</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddIsZeroForObjects" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>IsZeroForObjects</C>.
+ <Math>F: a \mapsto \mathtt{IsZeroForObjects}(a)</Math>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Objects_Section_Random_Objects">
+<Heading>Random Objects</Heading>
+
+ CAP provides two principal methods to generate random objects:
+<List>
+<Item>
+<E>By integers</E>: The integer is simply a parameter that can be used to create a random object.
+</Item>
+<Item>
+<E>By lists</E>: The list is used when creating a random object would need more than one parameter. Lists offer more
+    flexibility at the expense of the genericity of the methods. This happens because lists that are valid as input in
+    some category may be not valid for other categories. Hence, these operations are not thought to be used in
+    generic categorical algorithms.
+</Item>
+</List>
+<ManSection>
+  <Oper Arg="C, n" Name="RandomObjectByInteger" Label="for IsCapCategory, IsInt"/>
+ <Returns>an object or <C>fail</C>
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and an integer <Math>n</Math>.
+ The output is a random object in <Math>C</Math> or <C>fail</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddRandomObjectByInteger" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>RandomObjectByInteger</C>.
+ The function <Math>F</Math> maps <Math>(C,n)</Math> to <C>fail</C> or to a random object in <Math>C</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, L" Name="RandomObjectByList" Label="for IsCapCategory, IsList"/>
+ <Returns>an object or <C>fail</C>
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a list <Math>L</Math>.
+ The output is a random object in <Math>C</Math> or <C>fail</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddRandomObjectByList" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>RandomObjectByList</C>.
+ The function <Math>F</Math> maps <Math>(C,L)</Math> to <C>fail</C> or to a random object in <Math>C</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection Label="AutoDoc_generated_group11">
+  <Oper Arg="C, n" Name="RandomObject" Label="for IsCapCategory, IsInt"/>
+  <Oper Arg="C, L" Name="RandomObject" Label="for IsCapCategory, IsList"/>
+ <Description>
+ These are convenient methods and they, depending on the input, delegate to one of the above methods.
+<P/>
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Objects_Section_Tool_functions_for_caches">
+<Heading>Tool functions for caches</Heading>
+
+<ManSection>
+  <Oper Arg="phi, psi" Name="IsEqualForCacheForObjects" Label="for IsCapCategoryObject, IsCapCategoryObject"/>
+ <Returns>true or false
+</Returns>
+ <Description>
+  Compares two objects in the cache
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="c,F" Name="AddIsEqualForCacheForObjects" Label="for IsCapCategory, IsFunction"/>
+ <Returns>northing
+</Returns>
+ <Description>
+  By default, CAP uses caches to store the values of Categorical operations.
+  To get a value out of the cache, one needs to compare the input of a basic operation
+  with its previous input. To compare objects in the category, IsEqualForCacheForObjects is
+  used. By default, IsEqualForCacheForObjects falls back to IsEqualForCache (see ToolsForHomalg),
+  which in turn defaults to recursive comparison for lists and <Code>IsIdenticalObj</Code> in all other cases.
+  If you add a function, this function
+  used instead. A function <Math>F: a,b \mapsto bool</Math> is expected here. The output has to be
+  true or false. Fail is not allowed in this context.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Section_Adding_Objects_to_a_Category">
+<Heading>Adding Objects to a Category</Heading>
+
+<ManSection>
+  <Oper Arg="category, object" Name="Add" Label="for IsCapCategory, IsCapCategoryObject"/>
+ <Description>
+  Adds <A>object</A> as an object to <A>category</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="category, object" Name="AddObject" Label="for IsCapCategory, IsAttributeStoringRep"/>
+ <Description>
+  Adds <A>object</A> as an object to <A>category</A>.
+  If <A>object</A> already lies in the filter <C>IsCapCategoryObject</C>,
+  the operation <Ref Oper="Add" Label="for IsCapCategory, IsCapCategoryObject" />
+  can be used instead.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="category, filter" Name="AddObjectRepresentation" Label="for IsCapCategory, IsObject"/>
+ <Description>
+  The argument <A>filter</A> is used to create an object type for the
+  category <A>category</A>, which is then used in <C>ObjectifyObjectForCAPWithAttributes</C>
+  to objectify objects for this category.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="object, category, [attribute1, value1, ...]" Name="ObjectifyObjectForCAPWithAttributes" />
+ <Returns>an object
+</Returns>
+ <Description>
+  Objectifies the object <A>object</A> with the type created
+  for objects in the category <A>category</A>. The type
+  is created by passing a representation to <C>AddObjectRepresentation</C>.
+  Objects which are objectified using this method do not have to be passed
+  to the <C>AddObject</C> function.
+  The optional arguments behave like the corresponding arguments in <C>ObjectifyWithAttributes</C>.
+  Also returns the objectified object.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Objects_Section_Well-Definedness_of_Objects">
+<Heading>Well-Definedness of Objects</Heading>
+
+<ManSection>
+  <Oper Arg="a" Name="IsWellDefinedForObjects" Label="for IsCapCategoryObject"/>
+ <Returns>a boolean
+</Returns>
+ <Description>
+ The argument is an object <Math>a</Math>.
+ The output is <C>true</C> if <Math>a</Math> is well-defined,
+ otherwise the output is <C>false</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddIsWellDefinedForObjects" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>IsWellDefinedForObjects</C>.
+ <Math>F: a \mapsto \mathtt{IsWellDefinedForObjects}( a )</Math>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Objects_Section_Projectives">
+<Heading>Projectives</Heading>
+
+ For a given object <Math>A</Math> in an abelian category having enough projectives,
+ the following commands allow us to compute some projective object <Math>P</Math>
+ together with an epimorphism <Math>\pi: P \rightarrow A</Math>.
+<ManSection>
+  <Attr Arg="A" Name="SomeProjectiveObject" Label="for IsCapCategoryObject"/>
+ <Returns>an object
+</Returns>
+ <Description>
+ The argument is an object <Math>A</Math>.
+ The output is some projective object <Math>P</Math>
+ for which there exists an epimorphism <Math>\pi: P \rightarrow A</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="A" Name="EpimorphismFromSomeProjectiveObject" Label="for IsCapCategoryObject"/>
+ <Returns>a morphism in <Math>\mathrm{Hom}(P,A)</Math>
+</Returns>
+ <Description>
+ The argument is an object <Math>A</Math>.
+ The output is an epimorphism <Math>\pi: P \rightarrow A</Math>
+ with <Math>P</Math> a projective object that equals the output of <Math>\mathrm{SomeProjectiveObject}(A)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="A, P" Name="EpimorphismFromSomeProjectiveObjectWithGivenSomeProjectiveObject" Label="for IsCapCategoryObject, IsCapCategoryObject"/>
+ <Returns>a morphism in <Math>\mathrm{Hom}(P,A)</Math>
+</Returns>
+ <Description>
+ The arguments are an object <Math>A</Math>
+ and a projective object <Math>P</Math> that equals the output of <Math>\mathrm{SomeProjectiveObject}(A)</Math>.
+ The output is an epimorphism <Math>\pi: P \rightarrow A</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="pi, epsilon" Name="ProjectiveLift" Label="for IsCapCategoryMorphism, IsCapCategoryMorphism"/>
+ <Returns>a morphism in <Math>\mathrm{Hom}(P,B)</Math>
+</Returns>
+ <Description>
+ The arguments are a morphism <Math>\pi: P \rightarrow A</Math> with <Math>P</Math> a projective, 
+ and an epimorphism <Math>\epsilon: B \rightarrow A</Math>.
+ The output is a morphism <Math>\lambda: P \rightarrow B</Math> such that
+ <Math>\epsilon \circ \lambda = \pi</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddSomeProjectiveObject" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>SomeProjectiveObject</C>.
+ <Math>F: A \mapsto P</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddEpimorphismFromSomeProjectiveObject" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>EpimorphismFromSomeProjectiveObject</C>.
+ <Math>F: A \mapsto \pi</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddEpimorphismFromSomeProjectiveObjectWithGivenSomeProjectiveObject" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>AddEpimorphismFromSomeProjectiveObjectWithGivenSomeProjectiveObject</C>.
+ <Math>F: (A,P) \mapsto \pi</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddProjectiveLift" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>ProjectiveLift</C>.
+ The function <Math>F</Math> maps a pair <Math>(\pi, \epsilon)</Math> to a projective lift <Math>\lambda</Math>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Objects_Section_Injectives">
+<Heading>Injectives</Heading>
+
+ For a given object <Math>A</Math> in an abelian category having enough injectives,
+ the following commands allow us to compute some injective object <Math>I</Math>
+ together with a monomorphism <Math>\iota: A \rightarrow I</Math>.
+<ManSection>
+  <Attr Arg="A" Name="SomeInjectiveObject" Label="for IsCapCategoryObject"/>
+ <Returns>an object
+</Returns>
+ <Description>
+ The argument is an object <Math>A</Math>.
+ The output is some injective object <Math>I</Math>
+ for which there exists a monomorphism <Math>\iota: A \rightarrow I</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="A" Name="MonomorphismIntoSomeInjectiveObject" Label="for IsCapCategoryObject"/>
+ <Returns>a morphism in <Math>\mathrm{Hom}(I,A)</Math>
+</Returns>
+ <Description>
+ The argument is an object <Math>A</Math>.
+ The output is a monomorphism <Math>\iota: A \rightarrow I</Math>
+ with <Math>I</Math> an injective object that equals the output of <Math>\mathrm{SomeInjectiveObject}(A)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="A, I" Name="MonomorphismIntoSomeInjectiveObjectWithGivenSomeInjectiveObject" Label="for IsCapCategoryObject, IsCapCategoryObject"/>
+ <Returns>a morphism in <Math>\mathrm{Hom}(I,A)</Math>
+</Returns>
+ <Description>
+ The arguments are an object <Math>A</Math>
+ and an injective object <Math>I</Math> that equals the output of <Math>\mathrm{SomeInjectiveObject}(A)</Math>.
+ The output is a monomorphism <Math>\iota: A \rightarrow I</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="\iota, \beta" Name="InjectiveColift" Label="for IsCapCategoryMorphism, IsCapCategoryMorphism"/>
+ <Returns>a morphism in <Math>\mathrm{Hom}(A,I)</Math>
+</Returns>
+ <Description>
+ The arguments are a morphism <Math>\iota: B \rightarrow A</Math>
+ and <Math>\beta: B \rightarrow I</Math> where <Math>I</Math> is an injective object.
+ The output is a morphism <Math>\lambda: A \rightarrow I</Math> such that
+ <Math>\lambda \circ \iota = \beta</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddSomeInjectiveObject" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>SomeInjectiveObject</C>.
+ <Math>F: A \mapsto I</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddMonomorphismIntoSomeInjectiveObject" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>MonomorphismIntoSomeInjectiveObject</C>.
+ <Math>F: A \mapsto \pi</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddMonomorphismIntoSomeInjectiveObjectWithGivenSomeInjectiveObject" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>AddMonomorphismIntoSomeInjectiveObjectWithGivenSomeInjectiveObject</C>.
+ <Math>F: (A,I) \mapsto \pi</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddInjectiveColift" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>InjectiveColift</C>.
+ The function <Math>F</Math> maps a pair <Math>(\iota, \beta)</Math> to an injective colift <Math>\lambda</Math> if it
+ exists, and to <C>fail</C> otherwise.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Objects_Section_Simplified_Objects">
+<Heading>Simplified Objects</Heading>
+
+ Let <Math>i</Math> be a positive integer or <Math>\infty</Math>.
+ For a given object <Math>A</Math>, an <Math>i</Math>-th simplified object of <Math>A</Math> consists of
+<List>
+<Item>
+an object <Math>A_i</Math>, 
+</Item>
+<Item>
+an isomorphism <Math>\iota_A^i: A \rightarrow A_i</Math>.
+</Item>
+</List>
+ The idea is that the greater the <Math>i</Math>, the "simpler" the <Math>A_i</Math> (but this could mean the harder the computation)
+ with <Math>\infty</Math> as a possible value.
+<ManSection>
+  <Attr Arg="A" Name="Simplify" Label="for IsCapCategoryObject"/>
+ <Returns>an object
+</Returns>
+ <Description>
+ The argument is an object <Math>A</Math>.
+ The output is a simplified object <Math>A_{\infty}</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="A, i" Name="SimplifyObject" Label="for IsCapCategoryObject, IsObject"/>
+ <Returns>an object
+</Returns>
+ <Description>
+ The arguments are an object <Math>A</Math> and a positive integer <Math>i</Math> or <C>infinity</C>.
+ The output is a simplified object <Math>A_i</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddSimplifyObject" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>SimplifyObject</C>.
+ The function <Math>F</Math> maps <Math>(A,i)</Math> to <Math>A_i</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="A, i" Name="SimplifyObject_IsoFromInputObject" Label="for IsCapCategoryObject, IsObject"/>
+ <Returns>a morphism in <Math>\mathrm{Hom}(A,A_i)</Math>
+</Returns>
+ <Description>
+ The arguments are an object <Math>A</Math> and a positive integer <Math>i</Math> or <C>infinity</C>.
+ The output is an isomorphism to a simplified object <Math>\iota_A^i: A \rightarrow A_i</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddSimplifyObject_IsoFromInputObject" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>SimplifyObject_IsoFromInputObject</C>.
+ The function <Math>F</Math> maps <Math>(A,i)</Math> to <Math>\iota_A^i</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="A, i" Name="SimplifyObject_IsoToInputObject" Label="for IsCapCategoryObject, IsObject"/>
+ <Returns>a morphism in <Math>\mathrm{Hom}(A_i,A)</Math>
+</Returns>
+ <Description>
+ The arguments are an object <Math>A</Math> and a positive integer <Math>i</Math> or <C>infinity</C>.
+ The output is an isomorphism from a simplified object <Math>(\iota_A^i)^{-1}: A_i \rightarrow A</Math>
+ which is the inverse of the output of <C>SimplifyObject_IsoFromInputObject</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddSimplifyObject_IsoToInputObject" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <C>SimplifyObject_IsoToInputObject</C>.
+ The function <Math>F</Math> maps <Math>(A,i)</Math> to <Math>(\iota_A^i)^{-1}</Math>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+</Chapter>
+

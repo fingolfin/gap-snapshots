@@ -68,7 +68,7 @@
   
   [1X2.2-4 ThreadVar[101X
   
-  [33X[1;0Y[29X[2XThreadVar[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XThreadVar[102X [32X global variable[133X
   
   [33X[0;0YAll  thread-local variables are stored in the thread-local record [2XThreadVar[102X.
   Thus,  if  [10Xx[110X  is  a  thread-local variable, using [10XThreadVar.x[110X is the same as

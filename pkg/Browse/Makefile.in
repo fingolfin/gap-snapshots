@@ -8,7 +8,7 @@ GAPINCL=-I$(GAPPATH)/src -I$(GAPPATH)/bin/@GAPARCH@
 
 PKGROOT=$(shell pwd)
 
-LOPTS=$(LDFLAGS) -lpanel -lncurses
+LOPTS=$(LDFLAGS) $(GAP_LIBS) -lpanel -lncurses
 
 .PHONY: clean doc test
 

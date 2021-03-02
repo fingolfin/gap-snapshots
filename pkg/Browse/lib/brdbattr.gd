@@ -311,9 +311,8 @@ DeclareInfoClass( "InfoDatabaseAttribute" );
 ##  <Item>
 ##    if bound, a function that takes the pair consisting of an identifier
 ##    and the return value of the <C>create</C> function for this identifier,
-##    and returns a string that shall represent this value when the data are
-##    printed to a file;
-##    <!-- crossref to <Ref Func="DatabaseAttributeString"/> -->
+##    and returns a string that represents this value when the data are
+##    printed to a file with <Ref Func="DatabaseAttributeString"/>;
 ##    the default function returns the <Ref Attr="String" BookName="ref"/>
 ##    value of the second argument.
 ##  </Item>
@@ -464,9 +463,8 @@ DeclareInfoClass( "InfoDatabaseAttribute" );
 ##  <P/>
 ##  In data files, the function <Ref Func="DatabaseAttributeSetData"/> can be
 ##  used to fill the <C>data</C> component of the attribute.
-##  <!-- Strings for replacing the contents of data files can be produced
-##  with <Ref Func="DatabaseAttributeString"/>. -->
-##
+##  The contents of a data file can be produced with
+##  <Ref Func="DatabaseAttributeString"/>.
 ##  </Subsection>
 ##  <#/GAPDoc>
 ##
@@ -680,6 +678,34 @@ DeclareGlobalFunction( "DatabaseIdEnumeratorUpdate" );
 
 #############################################################################
 ##
+#F  DatabaseAttributeLoadData( <attr> )
+##
+##  <#GAPDoc Label="DatabaseAttributeLoadData_man">
+##  <ManSection>
+##  <Func Name="DatabaseAttributeLoadData" Arg='attr'/>
+##
+##  <Returns>
+##  <K>true</K> or <K>false</K>.
+##  </Returns>
+##  <Description>
+##  If the data of the attribute <A>attr</A> are stored in a file
+##  then this function loads the data.
+##  The data file is expected to be either in JSON format (which can be
+##  produced with <Ref Func="DatabaseAttributeString"/>,
+##  with fourth argument the string <C>"JSON"</C>) and have filename
+##  extension <C>.json</C>,
+##  or to contain a call to <Ref Func="DatabaseAttributeSetData"/>
+##  such that reading the file with <Ref Func="Read" BookName="ref"/>
+##  sets the data.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction( "DatabaseAttributeLoadData" );
+
+
+#############################################################################
+##
 #F  DatabaseAttributeSetData( <dbidenum>, <attridentifier>, <version>,
 #F                            <data> )
 ##
@@ -699,7 +725,8 @@ DeclareGlobalFunction( "DatabaseIdEnumeratorUpdate" );
 ##  <P/>
 ##  <Ref Func="DatabaseAttributeSetData"/> sets the <C>data</C> and
 ##  <C>version</C> components of the attribute.
-##  This function can be used for example in data files.
+##  This function is called when data files are loaded with
+##  <Ref Func="DatabaseAttributeLoadData"/>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -709,7 +736,33 @@ DeclareGlobalFunction( "DatabaseAttributeSetData" );
 
 #############################################################################
 ##
-#F  DatabaseAttributeString( idenum, idenumname, attridentifier )
+#F  DatabaseAttributeString( <idenum>, <idenumname>, <attridentifier>
+#F                           [, <format>] )
+##
+##  <#GAPDoc Label="DatabaseAttributeString_man">
+##  <ManSection>
+##  <Func Name="DatabaseAttributeString"
+##   Arg='idenum, idenumname, attridentifier, format'/>
+##
+##  <Returns>
+##  a string that describes the values of the attribute.
+##  </Returns>
+##  <Description>
+##  Let <A>idenum</A> be a database id enumerator
+##  (see Section <Ref Subsect="subsect:dbidenum"/>),
+##  <A>idenumname</A> be a string that denotes the variable to which the
+##  enumerator is bound,
+##  <A>attridentifier</A> be the name of an attribute of type <C>"pairs"</C>,
+##  and <A>format</A> be one of <C>"GAP"</C>, <C>"JSON"</C>.
+##  <Ref Func="DatabaseAttributeString"/> returns a string that can be used
+##  to set the attribute values, using
+##  <Ref Func="DatabaseAttributeLoadData"/>.
+##  In the <C>"JSON"</C> case, it is not checked whether the <C>string</C>
+##  function of the attribute creates valid JSON (e.g., whether the lists are
+##  dense).
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "DatabaseAttributeString" );
 

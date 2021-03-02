@@ -32,9 +32,9 @@
   
   [1X14.1-1 Integers[101X
   
-  [33X[1;0Y[29X[2XIntegers[102X[32X global variable[133X
-  [33X[1;0Y[29X[2XPositiveIntegers[102X[32X global variable[133X
-  [33X[1;0Y[29X[2XNonnegativeIntegers[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XIntegers[102X [32X global variable[133X
+  [33X[1;0Y[29X[2XPositiveIntegers[102X [32X global variable[133X
+  [33X[1;0Y[29X[2XNonnegativeIntegers[102X [32X global variable[133X
   
   [33X[0;0YThese  global  variables represent the ring of integers and the semirings of
   positive and nonnegative integers, respectively.[133X
@@ -454,7 +454,7 @@
   
   [1X14.4-1 Primes[101X
   
-  [33X[1;0Y[29X[2XPrimes[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XPrimes[102X [32X global variable[133X
   
   [33X[0;0Y[2XPrimes[102X is a strictly sorted list of the 168 primes less than 1000.[133X
   
@@ -1028,8 +1028,8 @@
   [33X[1;0Y[29X[2XIsMersenneTwister[102X( [3Xrs[103X ) [32X Category[133X
   [33X[1;0Y[29X[2XIsGAPRandomSource[102X( [3Xrs[103X ) [32X Category[133X
   [33X[1;0Y[29X[2XIsGlobalRandomSource[102X( [3Xrs[103X ) [32X Category[133X
-  [33X[1;0Y[29X[2XGlobalMersenneTwister[102X[32X global variable[133X
-  [33X[1;0Y[29X[2XGlobalRandomSource[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XGlobalMersenneTwister[102X [32X global variable[133X
+  [33X[1;0Y[29X[2XGlobalRandomSource[102X [32X global variable[133X
   
   [33X[0;0YCurrently,   the  [5XGAP[105X  library  provides  three  types  of  random  sources,
   distinguished by the three listed categories.[133X

@@ -53,8 +53,7 @@
 \makelabel{ref:Syntax Trees}{4.25}{X8732D9257FFCEA1B}
 \makelabel{ref:Functions}{5}{X86FA580F8055B274}
 \makelabel{ref:Information about a function}{5.1}{X870553EF8605792F}
-\makelabel{ref:Calling  a  function  with  a  list  argument  that  is interpreted as several
-arguments}{5.2}{X851B58408520700D}
+\makelabel{ref:Calling a function with a list argument that is interpreted as several arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Wrapping a function, so the values produced are cached}{5.3}{X83066E5A80B5FB71}
 \makelabel{ref:Functions that do nothing}{5.4}{X7EB0A85F7D128BE0}
 \makelabel{ref:Function Types}{5.5}{X80FE39D27CE3DE1B}
@@ -2024,12 +2023,13 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Filtered}{21.20.20}{X7C86D7F7795125F0}
 \makelabel{ref:Number}{21.20.21}{X8179B13D80E935FC}
 \makelabel{ref:First}{21.20.22}{X82801DFA84E11272}
-\makelabel{ref:ForAll}{21.20.23}{X7F06961278166671}
-\makelabel{ref:ForAny}{21.20.24}{X7AF82E747A8BDA75}
-\makelabel{ref:Product}{21.20.25}{X7E5C72F27B657948}
-\makelabel{ref:Sum}{21.20.26}{X7A04B71C84CFCC2D}
-\makelabel{ref:Iterated}{21.20.27}{X834E4DF57F3A20F0}
-\makelabel{ref:ListN}{21.20.28}{X7D150C2881881139}
+\makelabel{ref:Last}{21.20.23}{X7E5B62E780421CE9}
+\makelabel{ref:ForAll}{21.20.24}{X7F06961278166671}
+\makelabel{ref:ForAny}{21.20.25}{X7AF82E747A8BDA75}
+\makelabel{ref:Product}{21.20.26}{X7E5C72F27B657948}
+\makelabel{ref:Sum}{21.20.27}{X7A04B71C84CFCC2D}
+\makelabel{ref:Iterated}{21.20.28}{X834E4DF57F3A20F0}
+\makelabel{ref:ListN}{21.20.29}{X7D150C2881881139}
 \makelabel{ref:ListX}{21.21.1}{X8258477D7F72171B}
 \makelabel{ref:SetX}{21.21.2}{X7AC321B87A2DCAF5}
 \makelabel{ref:SumX}{21.21.3}{X82B1411E7FBE925F}
@@ -4090,8 +4090,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:MeetOfPartialPerms}{54.2.5}{X81E2B6977E28CD00}
 \makelabel{ref:EmptyPartialPerm}{54.2.6}{X80EFB142817A0A9F}
 \makelabel{ref:RandomPartialPerm for a positive integer}{54.2.7}{X7E6ADC8583C31530}
-\makelabel{ref:RandomPartialPerm for a set of positive
-      integers}{54.2.7}{X7E6ADC8583C31530}
+\makelabel{ref:RandomPartialPerm for a set of positive integers}{54.2.7}{X7E6ADC8583C31530}
 \makelabel{ref:RandomPartialPerm for domain and image}{54.2.7}{X7E6ADC8583C31530}
 \makelabel{ref:DegreeOfPartialPerm}{54.3.1}{X8612A4DC864E7959}
 \makelabel{ref:DegreeOfPartialPermCollection}{54.3.1}{X8612A4DC864E7959}
@@ -4129,14 +4128,12 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:RightOne for a partial perm}{54.3.21}{X7A8FB86C78C49F85}
 \makelabel{ref:One for a partial perm}{54.3.22}{X857FC10C81507E8B}
 \makelabel{ref:MultiplicativeZero for a partial perm}{54.3.23}{X7D90CF497D58D759}
-\makelabel{ref:AsPartialPerm for a permutation and a set of
-    positive integers}{54.4.1}{X81B32CB182489ACA}
+\makelabel{ref:AsPartialPerm for a permutation and a set of positive integers}{54.4.1}{X81B32CB182489ACA}
 \makelabel{ref:AsPartialPerm for a permutation}{54.4.1}{X81B32CB182489ACA}
 \makelabel{ref:AsPartialPerm for a permutation and a positive integer}{54.4.1}{X81B32CB182489ACA}
 \makelabel{ref:AsPartialPerm for a transformation and a set of positive integer}{54.4.2}{X87EC67747B260E98}
 \makelabel{ref:AsPartialPerm for a transformation and a positive integer}{54.4.2}{X87EC67747B260E98}
-\makelabel{ref:LQUO for a permutation or partial permutation
-        and partial permutation}{54.5}{X848CD855802C6CE1}
+\makelabel{ref:LQUO for a permutation or partial permutation and partial permutation}{54.5}{X848CD855802C6CE1}
 \makelabel{ref:PermLeftQuoPartialPerm}{54.5.1}{X8382A0F8875CEB08}
 \makelabel{ref:PermLeftQuoPartialPermNC}{54.5.1}{X8382A0F8875CEB08}
 \makelabel{ref:PreImagePartialPerm}{54.5.2}{X7C7F5EAB7E9A381D}

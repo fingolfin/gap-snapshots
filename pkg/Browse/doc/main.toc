@@ -1,133 +1,135 @@
-\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Introduction and Overview}}{5}{chapter.1}
-\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Introduction}}{5}{section.1.1}
-\contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }Overview}}{6}{section.1.2}
-\contentsline {subsection}{\numberline {1.2.1}\leavevmode {\color {Chapter }The \texttt {ncurses} interface}}{6}{subsection.1.2.1}
-\contentsline {subsection}{\numberline {1.2.2}\leavevmode {\color {Chapter }Applications of \texttt {ncurses}}}{6}{subsection.1.2.2}
-\contentsline {subsection}{\numberline {1.2.3}\leavevmode {\color {Chapter }The interface to browse two-dimensional arrays}}{6}{subsection.1.2.3}
-\contentsline {subsection}{\numberline {1.2.4}\leavevmode {\color {Chapter }Applications of the generic function \texttt {NCurses.BrowseGeneric}}}{6}{subsection.1.2.4}
-\contentsline {section}{\numberline {1.3}\leavevmode {\color {Chapter }User preferences provided by the \textsf {Browse} package}}{6}{section.1.3}
-\contentsline {subsection}{\numberline {1.3.1}\leavevmode {\color {Chapter }The user preference \texttt {EnableMouseEvents}}}{7}{subsection.1.3.1}
-\contentsline {subsection}{\numberline {1.3.2}\leavevmode {\color {Chapter }The user preference \texttt {SelectHelpMatches}}}{7}{subsection.1.3.2}
-\contentsline {subsection}{\numberline {1.3.3}\leavevmode {\color {Chapter }The user preference \texttt {SelectPackageName}}}{7}{subsection.1.3.3}
-\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Interface to the \texttt {ncurses} Library}}{8}{chapter.2}
-\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }The \texttt {ncurses} Library}}{8}{section.2.1}
-\contentsline {subsection}{\numberline {2.1.1}\leavevmode {\color {Chapter }Setting the terminal}}{8}{subsection.2.1.1}
-\contentsline {subsection}{\numberline {2.1.2}\leavevmode {\color {Chapter }Manipulating windows}}{10}{subsection.2.1.2}
-\contentsline {subsection}{\numberline {2.1.3}\leavevmode {\color {Chapter }Manipulating panels}}{11}{subsection.2.1.3}
-\contentsline {subsection}{\numberline {2.1.4}\leavevmode {\color {Chapter }Getting keyboard input}}{11}{subsection.2.1.4}
-\contentsline {subsection}{\numberline {2.1.5}\leavevmode {\color {Chapter }Writing to windows}}{12}{subsection.2.1.5}
-\contentsline {subsection}{\numberline {2.1.6}\leavevmode {\color {Chapter }Line drawing characters}}{13}{subsection.2.1.6}
-\contentsline {subsection}{\numberline {2.1.7}\leavevmode {\color {Chapter }Text attributes and colors}}{14}{subsection.2.1.7}
-\contentsline {subsection}{\numberline {2.1.8}\leavevmode {\color {Chapter }Low level \texttt {ncurses} mouse support}}{15}{subsection.2.1.8}
-\contentsline {subsection}{\numberline {2.1.9}\leavevmode {\color {Chapter }Miscellaneous function}}{16}{subsection.2.1.9}
-\contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter }The \texttt {ncurses} \textsf {GAP} functions}}{16}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}\leavevmode {\color {Chapter }NCurses.ColorAttr}}{17}{subsection.2.2.1}
-\contentsline {subsection}{\numberline {2.2.2}\leavevmode {\color {Chapter }NCurses.SetTerm}}{17}{subsection.2.2.2}
-\contentsline {subsection}{\numberline {2.2.3}\leavevmode {\color {Chapter }NCurses.IsAttributeLine}}{18}{subsection.2.2.3}
-\contentsline {subsection}{\numberline {2.2.4}\leavevmode {\color {Chapter }NCurses.ConcatenationAttributeLines}}{18}{subsection.2.2.4}
-\contentsline {subsection}{\numberline {2.2.5}\leavevmode {\color {Chapter }NCurses.RepeatedAttributeLine}}{19}{subsection.2.2.5}
-\contentsline {subsection}{\numberline {2.2.6}\leavevmode {\color {Chapter }NCurses.PutLine}}{19}{subsection.2.2.6}
-\contentsline {subsection}{\numberline {2.2.7}\leavevmode {\color {Chapter }NCurses.WidthAttributeLine}}{19}{subsection.2.2.7}
-\contentsline {subsection}{\numberline {2.2.8}\leavevmode {\color {Chapter }NCurses.Grid}}{20}{subsection.2.2.8}
-\contentsline {subsection}{\numberline {2.2.9}\leavevmode {\color {Chapter }NCurses.WBorder}}{20}{subsection.2.2.9}
-\contentsline {subsection}{\numberline {2.2.10}\leavevmode {\color {Chapter }Mouse support in \texttt {ncurses} applications}}{20}{subsection.2.2.10}
-\contentsline {subsection}{\numberline {2.2.11}\leavevmode {\color {Chapter }NCurses.SaveWin}}{21}{subsection.2.2.11}
-\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Utilities using \texttt {ncurses}}}{22}{chapter.3}
-\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }\texttt {ncurses} utilities}}{22}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }NCurses.Alert}}{22}{subsection.3.1.1}
-\contentsline {subsection}{\numberline {3.1.2}\leavevmode {\color {Chapter }NCurses.Select}}{23}{subsection.3.1.2}
-\contentsline {subsection}{\numberline {3.1.3}\leavevmode {\color {Chapter }NCurses.GetLineFromUser}}{24}{subsection.3.1.3}
-\contentsline {subsection}{\numberline {3.1.4}\leavevmode {\color {Chapter }NCurses.Pager}}{25}{subsection.3.1.4}
-\contentsline {subsection}{\numberline {3.1.5}\leavevmode {\color {Chapter }Selection of help matches}}{26}{subsection.3.1.5}
-\contentsline {subsection}{\numberline {3.1.6}\leavevmode {\color {Chapter }Selection of package names}}{26}{subsection.3.1.6}
-\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }A Demo Function}}{26}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }NCurses.Demo}}{26}{subsection.3.2.1}
-\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Browsing Tables in \textsf {GAP} using \texttt {ncurses} {\textendash }The User Interface}}{27}{chapter.4}
-\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Features Supported by the Function \texttt {NCurses.BrowseGeneric} }}{28}{section.4.1}
-\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }Data Structures used by \texttt {NCurses.BrowseGeneric}}}{30}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}\leavevmode {\color {Chapter }BrowseData.IsBrowseTableCellData}}{30}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}\leavevmode {\color {Chapter }BrowseData.BlockEntry}}{31}{subsection.4.2.2}
-\contentsline {subsection}{\numberline {4.2.3}\leavevmode {\color {Chapter }BrowseData.IsBrowseTable}}{31}{subsection.4.2.3}
-\contentsline {section}{\numberline {4.3}\leavevmode {\color {Chapter }The Function \texttt {NCurses.BrowseGeneric}}}{34}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}\leavevmode {\color {Chapter }NCurses.BrowseGeneric}}{34}{subsection.4.3.1}
-\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Browsing Tables in \textsf {GAP} using \texttt {ncurses} {\textendash }The Programming Interface}}{36}{chapter.5}
-\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }Navigation Steps in Browse Tables}}{36}{section.5.1}
-\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }Modes in Browse Tables}}{37}{section.5.2}
-\contentsline {section}{\numberline {5.3}\leavevmode {\color {Chapter }Browse Applications}}{38}{section.5.3}
-\contentsline {section}{\numberline {5.4}\leavevmode {\color {Chapter }Predefined Browse Functionalities}}{39}{section.5.4}
-\contentsline {subsection}{\numberline {5.4.1}\leavevmode {\color {Chapter }BrowseData}}{39}{subsection.5.4.1}
-\contentsline {subsection}{\numberline {5.4.2}\leavevmode {\color {Chapter }BrowseData.SetReplay}}{44}{subsection.5.4.2}
-\contentsline {subsection}{\numberline {5.4.3}\leavevmode {\color {Chapter }BrowseData.AlertWithReplay}}{45}{subsection.5.4.3}
-\contentsline {subsection}{\numberline {5.4.4}\leavevmode {\color {Chapter }BrowseData.actions.ShowHelp}}{45}{subsection.5.4.4}
-\contentsline {subsection}{\numberline {5.4.5}\leavevmode {\color {Chapter }BrowseData.actions.SaveWindow}}{46}{subsection.5.4.5}
-\contentsline {subsection}{\numberline {5.4.6}\leavevmode {\color {Chapter }BrowseData.actions.QuitMode}}{46}{subsection.5.4.6}
-\contentsline {subsection}{\numberline {5.4.7}\leavevmode {\color {Chapter }BrowseData.actions.Error}}{46}{subsection.5.4.7}
-\contentsline {chapter}{\numberline {6}\leavevmode {\color {Chapter }Examples of Applications based on \texttt {NCurses.BrowseGeneric} }}{47}{chapter.6}
-\contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }The Operation \texttt {Browse}}}{47}{section.6.1}
-\contentsline {subsection}{\numberline {6.1.1}\leavevmode {\color {Chapter }Browse}}{47}{subsection.6.1.1}
-\contentsline {section}{\numberline {6.2}\leavevmode {\color {Chapter }Matrix Display}}{47}{section.6.2}
-\contentsline {subsection}{\numberline {6.2.1}\leavevmode {\color {Chapter }NCurses.BrowseDenseList}}{48}{subsection.6.2.1}
-\contentsline {subsection}{\numberline {6.2.2}\leavevmode {\color {Chapter }Browse (for a list of lists)}}{48}{subsection.6.2.2}
-\contentsline {section}{\numberline {6.3}\leavevmode {\color {Chapter }Character Table Display}}{49}{section.6.3}
-\contentsline {subsection}{\numberline {6.3.1}\leavevmode {\color {Chapter }Browse (for character tables)}}{49}{subsection.6.3.1}
-\contentsline {subsection}{\numberline {6.3.2}\leavevmode {\color {Chapter }BrowseDecompositionMatrix}}{50}{subsection.6.3.2}
-\contentsline {section}{\numberline {6.4}\leavevmode {\color {Chapter }Table of Marks Display}}{51}{section.6.4}
-\contentsline {subsection}{\numberline {6.4.1}\leavevmode {\color {Chapter }Browse (for tables of marks)}}{51}{subsection.6.4.1}
-\contentsline {section}{\numberline {6.5}\leavevmode {\color {Chapter }Table of Contents of \textsf {AtlasRep}}}{52}{section.6.5}
-\contentsline {subsection}{\numberline {6.5.1}\leavevmode {\color {Chapter }BrowseAtlasInfo}}{52}{subsection.6.5.1}
-\contentsline {section}{\numberline {6.6}\leavevmode {\color {Chapter }Access to \textsf {GAP} Manuals{\textendash }a Variant}}{54}{section.6.6}
-\contentsline {subsection}{\numberline {6.6.1}\leavevmode {\color {Chapter }BrowseGapManuals}}{54}{subsection.6.6.1}
-\contentsline {section}{\numberline {6.7}\leavevmode {\color {Chapter }Overview of Bibliographies}}{55}{section.6.7}
-\contentsline {subsection}{\numberline {6.7.1}\leavevmode {\color {Chapter }BrowseBibliography}}{56}{subsection.6.7.1}
-\contentsline {subsection}{\numberline {6.7.2}\leavevmode {\color {Chapter }BrowseBibliographyGapPackages}}{58}{subsection.6.7.2}
-\contentsline {subsection}{\numberline {6.7.3}\leavevmode {\color {Chapter }BrowseMSC}}{59}{subsection.6.7.3}
-\contentsline {section}{\numberline {6.8}\leavevmode {\color {Chapter }Profiling \textsf {GAP} functions{\textendash }a Variant}}{59}{section.6.8}
-\contentsline {subsection}{\numberline {6.8.1}\leavevmode {\color {Chapter }BrowseProfile}}{59}{subsection.6.8.1}
-\contentsline {section}{\numberline {6.9}\leavevmode {\color {Chapter }Variables defined in \textsf {GAP} packages{\textendash }a Variant}}{60}{section.6.9}
-\contentsline {subsection}{\numberline {6.9.1}\leavevmode {\color {Chapter }BrowsePackageVariables}}{60}{subsection.6.9.1}
-\contentsline {section}{\numberline {6.10}\leavevmode {\color {Chapter }Configuring User preferences{\textendash }a Variant}}{61}{section.6.10}
-\contentsline {subsection}{\numberline {6.10.1}\leavevmode {\color {Chapter }BrowseUserPreferences}}{61}{subsection.6.10.1}
-\contentsline {section}{\numberline {6.11}\leavevmode {\color {Chapter }Overview of \textsf {GAP} Data}}{62}{section.6.11}
-\contentsline {subsection}{\numberline {6.11.1}\leavevmode {\color {Chapter }BrowseGapData}}{62}{subsection.6.11.1}
-\contentsline {subsection}{\numberline {6.11.2}\leavevmode {\color {Chapter }BrowseGapDataAdd}}{64}{subsection.6.11.2}
-\contentsline {section}{\numberline {6.12}\leavevmode {\color {Chapter }Navigating in a Directory Tree}}{64}{section.6.12}
-\contentsline {subsection}{\numberline {6.12.1}\leavevmode {\color {Chapter }BrowseDirectory}}{64}{subsection.6.12.1}
-\contentsline {section}{\numberline {6.13}\leavevmode {\color {Chapter }A Puzzle}}{65}{section.6.13}
-\contentsline {subsection}{\numberline {6.13.1}\leavevmode {\color {Chapter }BrowsePuzzle}}{65}{subsection.6.13.1}
-\contentsline {section}{\numberline {6.14}\leavevmode {\color {Chapter }Peg Solitaire}}{66}{section.6.14}
-\contentsline {subsection}{\numberline {6.14.1}\leavevmode {\color {Chapter }PegSolitaire}}{66}{subsection.6.14.1}
-\contentsline {section}{\numberline {6.15}\leavevmode {\color {Chapter }Rubik's Cube}}{67}{section.6.15}
-\contentsline {subsection}{\numberline {6.15.1}\leavevmode {\color {Chapter }BrowseRubiksCube}}{68}{subsection.6.15.1}
-\contentsline {section}{\numberline {6.16}\leavevmode {\color {Chapter }Changing Sides}}{69}{section.6.16}
-\contentsline {subsection}{\numberline {6.16.1}\leavevmode {\color {Chapter }BrowseChangeSides}}{69}{subsection.6.16.1}
-\contentsline {section}{\numberline {6.17}\leavevmode {\color {Chapter }Sudoku}}{69}{section.6.17}
-\contentsline {subsection}{\numberline {6.17.1}\leavevmode {\color {Chapter }Sudoku.Init}}{70}{subsection.6.17.1}
-\contentsline {subsection}{\numberline {6.17.2}\leavevmode {\color {Chapter }Sudoku.Place}}{70}{subsection.6.17.2}
-\contentsline {subsection}{\numberline {6.17.3}\leavevmode {\color {Chapter }Sudoku.RandomGame}}{71}{subsection.6.17.3}
-\contentsline {subsection}{\numberline {6.17.4}\leavevmode {\color {Chapter }Sudoku.SimpleDisplay}}{71}{subsection.6.17.4}
-\contentsline {subsection}{\numberline {6.17.5}\leavevmode {\color {Chapter }Sudoku.DisplayString}}{72}{subsection.6.17.5}
-\contentsline {subsection}{\numberline {6.17.6}\leavevmode {\color {Chapter }Sudoku.OneSolution}}{72}{subsection.6.17.6}
-\contentsline {subsection}{\numberline {6.17.7}\leavevmode {\color {Chapter }Sudoku.UniqueSolution}}{73}{subsection.6.17.7}
-\contentsline {subsection}{\numberline {6.17.8}\leavevmode {\color {Chapter }PlaySudoku}}{73}{subsection.6.17.8}
-\contentsline {subsection}{\numberline {6.17.9}\leavevmode {\color {Chapter }Sudoku.HTMLGame}}{74}{subsection.6.17.9}
-\contentsline {section}{\numberline {6.18}\leavevmode {\color {Chapter }Utility for \textsf {GAP} Demos}}{74}{section.6.18}
-\contentsline {subsection}{\numberline {6.18.1}\leavevmode {\color {Chapter }LoadDemoFile}}{75}{subsection.6.18.1}
-\contentsline {chapter}{\numberline {A}\leavevmode {\color {Chapter }Some Tools for Database Handling}}{76}{appendix.A}
-\contentsline {section}{\numberline {A.1}\leavevmode {\color {Chapter }\textsf {GAP} Objects for Database Handling}}{76}{section.A.1}
-\contentsline {subsection}{\numberline {A.1.1}\leavevmode {\color {Chapter }Database Id Enumerators}}{76}{subsection.A.1.1}
-\contentsline {subsection}{\numberline {A.1.2}\leavevmode {\color {Chapter }Database Attributes}}{77}{subsection.A.1.2}
-\contentsline {subsection}{\numberline {A.1.3}\leavevmode {\color {Chapter }How to Deal with Database Id Enumerators and Database Attributes}}{80}{subsection.A.1.3}
-\contentsline {subsection}{\numberline {A.1.4}\leavevmode {\color {Chapter }DatabaseIdEnumerator}}{80}{subsection.A.1.4}
-\contentsline {subsection}{\numberline {A.1.5}\leavevmode {\color {Chapter }DatabaseAttributeAdd}}{80}{subsection.A.1.5}
-\contentsline {subsection}{\numberline {A.1.6}\leavevmode {\color {Chapter }DatabaseAttributeValueDefault}}{81}{subsection.A.1.6}
-\contentsline {subsection}{\numberline {A.1.7}\leavevmode {\color {Chapter }DatabaseIdEnumeratorUpdate}}{81}{subsection.A.1.7}
-\contentsline {subsection}{\numberline {A.1.8}\leavevmode {\color {Chapter }DatabaseAttributeCompute}}{81}{subsection.A.1.8}
-\contentsline {subsection}{\numberline {A.1.9}\leavevmode {\color {Chapter }DatabaseAttributeSetData}}{82}{subsection.A.1.9}
-\contentsline {section}{\numberline {A.2}\leavevmode {\color {Chapter }Using Database Attributes for Browse Tables}}{82}{section.A.2}
-\contentsline {subsection}{\numberline {A.2.1}\leavevmode {\color {Chapter }Browse Relevant Components of Database Attributes}}{82}{subsection.A.2.1}
-\contentsline {subsection}{\numberline {A.2.2}\leavevmode {\color {Chapter }BrowseTableFromDatabaseIdEnumerator}}{83}{subsection.A.2.2}
-\contentsline {section}{\numberline {A.3}\leavevmode {\color {Chapter }Example: Database Id Enumerators and Database Attributes}}{84}{section.A.3}
-\contentsline {section}{\numberline {A.4}\leavevmode {\color {Chapter }Example: An Overview of the \textsf {GAP} Library of Tables of Marks }}{90}{section.A.4}
-\contentsline {subsection}{\numberline {A.4.1}\leavevmode {\color {Chapter }BrowseTomLibInfo}}{90}{subsection.A.4.1}
-\contentsline {chapter}{References}{93}{appendix*.3}
-\contentsline {chapter}{Index}{94}{section*.4}
+\contentsline {chapter}{\numberline {1}\textcolor {Chapter }{Introduction and Overview}}{5}{chapter.1}%
+\contentsline {section}{\numberline {1.1}\textcolor {Chapter }{Introduction}}{5}{section.1.1}%
+\contentsline {section}{\numberline {1.2}\textcolor {Chapter }{Overview}}{6}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}\textcolor {Chapter }{The \texttt {ncurses} interface}}{6}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}\textcolor {Chapter }{Applications of \texttt {ncurses}}}{6}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.2.3}\textcolor {Chapter }{The interface to browse two-dimensional arrays}}{6}{subsection.1.2.3}%
+\contentsline {subsection}{\numberline {1.2.4}\textcolor {Chapter }{Applications of the generic function \texttt {NCurses.BrowseGeneric}}}{6}{subsection.1.2.4}%
+\contentsline {section}{\numberline {1.3}\textcolor {Chapter }{User preferences provided by the \textsf {Browse} package}}{6}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}\textcolor {Chapter }{The user preference \texttt {EnableMouseEvents}}}{7}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}\textcolor {Chapter }{The user preference \texttt {SelectHelpMatches}}}{7}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}\textcolor {Chapter }{The user preference \texttt {SelectPackageName}}}{7}{subsection.1.3.3}%
+\contentsline {chapter}{\numberline {2}\textcolor {Chapter }{Interface to the \texttt {ncurses} Library}}{8}{chapter.2}%
+\contentsline {section}{\numberline {2.1}\textcolor {Chapter }{The \texttt {ncurses} Library}}{8}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}\textcolor {Chapter }{Setting the terminal}}{8}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}\textcolor {Chapter }{Manipulating windows}}{10}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}\textcolor {Chapter }{Manipulating panels}}{11}{subsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.1.4}\textcolor {Chapter }{Getting keyboard input}}{11}{subsection.2.1.4}%
+\contentsline {subsection}{\numberline {2.1.5}\textcolor {Chapter }{Writing to windows}}{12}{subsection.2.1.5}%
+\contentsline {subsection}{\numberline {2.1.6}\textcolor {Chapter }{Line drawing characters}}{13}{subsection.2.1.6}%
+\contentsline {subsection}{\numberline {2.1.7}\textcolor {Chapter }{Text attributes and colors}}{14}{subsection.2.1.7}%
+\contentsline {subsection}{\numberline {2.1.8}\textcolor {Chapter }{Low level \texttt {ncurses} mouse support}}{15}{subsection.2.1.8}%
+\contentsline {subsection}{\numberline {2.1.9}\textcolor {Chapter }{Miscellaneous function}}{16}{subsection.2.1.9}%
+\contentsline {section}{\numberline {2.2}\textcolor {Chapter }{The \texttt {ncurses} \textsf {GAP} functions}}{16}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}\textcolor {Chapter }{NCurses.ColorAttr}}{17}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}\textcolor {Chapter }{NCurses.SetTerm}}{17}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}\textcolor {Chapter }{NCurses.IsAttributeLine}}{18}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}\textcolor {Chapter }{NCurses.ConcatenationAttributeLines}}{18}{subsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.2.5}\textcolor {Chapter }{NCurses.RepeatedAttributeLine}}{19}{subsection.2.2.5}%
+\contentsline {subsection}{\numberline {2.2.6}\textcolor {Chapter }{NCurses.PutLine}}{19}{subsection.2.2.6}%
+\contentsline {subsection}{\numberline {2.2.7}\textcolor {Chapter }{NCurses.WidthAttributeLine}}{19}{subsection.2.2.7}%
+\contentsline {subsection}{\numberline {2.2.8}\textcolor {Chapter }{NCurses.Grid}}{20}{subsection.2.2.8}%
+\contentsline {subsection}{\numberline {2.2.9}\textcolor {Chapter }{NCurses.WBorder}}{20}{subsection.2.2.9}%
+\contentsline {subsection}{\numberline {2.2.10}\textcolor {Chapter }{Mouse support in \texttt {ncurses} applications}}{20}{subsection.2.2.10}%
+\contentsline {subsection}{\numberline {2.2.11}\textcolor {Chapter }{NCurses.SaveWin}}{21}{subsection.2.2.11}%
+\contentsline {chapter}{\numberline {3}\textcolor {Chapter }{Utilities using \texttt {ncurses}}}{22}{chapter.3}%
+\contentsline {section}{\numberline {3.1}\textcolor {Chapter }{\texttt {ncurses} utilities}}{22}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}\textcolor {Chapter }{NCurses.Alert}}{22}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}\textcolor {Chapter }{NCurses.Select}}{23}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}\textcolor {Chapter }{NCurses.GetLineFromUser}}{24}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}\textcolor {Chapter }{NCurses.Pager}}{25}{subsection.3.1.4}%
+\contentsline {subsection}{\numberline {3.1.5}\textcolor {Chapter }{Selection of help matches}}{26}{subsection.3.1.5}%
+\contentsline {subsection}{\numberline {3.1.6}\textcolor {Chapter }{Selection of package names}}{26}{subsection.3.1.6}%
+\contentsline {section}{\numberline {3.2}\textcolor {Chapter }{A Demo Function}}{26}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}\textcolor {Chapter }{NCurses.Demo}}{26}{subsection.3.2.1}%
+\contentsline {chapter}{\numberline {4}\textcolor {Chapter }{Browsing Tables in \textsf {GAP} using \texttt {ncurses} {\textendash }The User Interface}}{27}{chapter.4}%
+\contentsline {section}{\numberline {4.1}\textcolor {Chapter }{Features Supported by the Function \texttt {NCurses.BrowseGeneric} }}{28}{section.4.1}%
+\contentsline {section}{\numberline {4.2}\textcolor {Chapter }{Data Structures used by \texttt {NCurses.BrowseGeneric}}}{30}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}\textcolor {Chapter }{BrowseData.IsBrowseTableCellData}}{30}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}\textcolor {Chapter }{BrowseData.BlockEntry}}{31}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}\textcolor {Chapter }{BrowseData.IsBrowseTable}}{31}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}\textcolor {Chapter }{The Function \texttt {NCurses.BrowseGeneric}}}{34}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}\textcolor {Chapter }{NCurses.BrowseGeneric}}{34}{subsection.4.3.1}%
+\contentsline {chapter}{\numberline {5}\textcolor {Chapter }{Browsing Tables in \textsf {GAP} using \texttt {ncurses} {\textendash }The Programming Interface}}{36}{chapter.5}%
+\contentsline {section}{\numberline {5.1}\textcolor {Chapter }{Navigation Steps in Browse Tables}}{36}{section.5.1}%
+\contentsline {section}{\numberline {5.2}\textcolor {Chapter }{Modes in Browse Tables}}{37}{section.5.2}%
+\contentsline {section}{\numberline {5.3}\textcolor {Chapter }{Browse Applications}}{38}{section.5.3}%
+\contentsline {section}{\numberline {5.4}\textcolor {Chapter }{Predefined Browse Functionalities}}{39}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}\textcolor {Chapter }{BrowseData}}{39}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}\textcolor {Chapter }{BrowseData.SetReplay}}{45}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}\textcolor {Chapter }{BrowseData.AlertWithReplay}}{45}{subsection.5.4.3}%
+\contentsline {subsection}{\numberline {5.4.4}\textcolor {Chapter }{BrowseData.actions.ShowHelp}}{45}{subsection.5.4.4}%
+\contentsline {subsection}{\numberline {5.4.5}\textcolor {Chapter }{BrowseData.actions.SaveWindow}}{46}{subsection.5.4.5}%
+\contentsline {subsection}{\numberline {5.4.6}\textcolor {Chapter }{BrowseData.actions.QuitMode}}{46}{subsection.5.4.6}%
+\contentsline {subsection}{\numberline {5.4.7}\textcolor {Chapter }{BrowseData.actions.Error}}{46}{subsection.5.4.7}%
+\contentsline {chapter}{\numberline {6}\textcolor {Chapter }{Examples of Applications based on \texttt {NCurses.BrowseGeneric} }}{47}{chapter.6}%
+\contentsline {section}{\numberline {6.1}\textcolor {Chapter }{The Operation \texttt {Browse}}}{47}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}\textcolor {Chapter }{Browse}}{47}{subsection.6.1.1}%
+\contentsline {section}{\numberline {6.2}\textcolor {Chapter }{Matrix Display}}{47}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}\textcolor {Chapter }{NCurses.BrowseDenseList}}{48}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}\textcolor {Chapter }{Browse (for a list of lists)}}{48}{subsection.6.2.2}%
+\contentsline {section}{\numberline {6.3}\textcolor {Chapter }{Character Table Display}}{49}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}\textcolor {Chapter }{Browse (for character tables)}}{49}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}\textcolor {Chapter }{BrowseDecompositionMatrix}}{50}{subsection.6.3.2}%
+\contentsline {section}{\numberline {6.4}\textcolor {Chapter }{Table of Marks Display}}{51}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}\textcolor {Chapter }{Browse (for tables of marks)}}{51}{subsection.6.4.1}%
+\contentsline {section}{\numberline {6.5}\textcolor {Chapter }{Table of Contents of \textsf {AtlasRep}}}{52}{section.6.5}%
+\contentsline {subsection}{\numberline {6.5.1}\textcolor {Chapter }{BrowseAtlasInfo}}{52}{subsection.6.5.1}%
+\contentsline {section}{\numberline {6.6}\textcolor {Chapter }{Access to \textsf {GAP} Manuals{\textendash }a Variant}}{54}{section.6.6}%
+\contentsline {subsection}{\numberline {6.6.1}\textcolor {Chapter }{BrowseGapManuals}}{54}{subsection.6.6.1}%
+\contentsline {section}{\numberline {6.7}\textcolor {Chapter }{Overview of Bibliographies}}{55}{section.6.7}%
+\contentsline {subsection}{\numberline {6.7.1}\textcolor {Chapter }{BrowseBibliography}}{56}{subsection.6.7.1}%
+\contentsline {subsection}{\numberline {6.7.2}\textcolor {Chapter }{BrowseBibliographyGapPackages}}{58}{subsection.6.7.2}%
+\contentsline {subsection}{\numberline {6.7.3}\textcolor {Chapter }{BrowseMSC}}{59}{subsection.6.7.3}%
+\contentsline {section}{\numberline {6.8}\textcolor {Chapter }{Profiling \textsf {GAP} functions{\textendash }a Variant}}{59}{section.6.8}%
+\contentsline {subsection}{\numberline {6.8.1}\textcolor {Chapter }{BrowseProfile}}{59}{subsection.6.8.1}%
+\contentsline {section}{\numberline {6.9}\textcolor {Chapter }{Variables defined in \textsf {GAP} packages{\textendash }a Variant}}{60}{section.6.9}%
+\contentsline {subsection}{\numberline {6.9.1}\textcolor {Chapter }{BrowsePackageVariables}}{60}{subsection.6.9.1}%
+\contentsline {section}{\numberline {6.10}\textcolor {Chapter }{Configuring User preferences{\textendash }a Variant}}{61}{section.6.10}%
+\contentsline {subsection}{\numberline {6.10.1}\textcolor {Chapter }{BrowseUserPreferences}}{61}{subsection.6.10.1}%
+\contentsline {section}{\numberline {6.11}\textcolor {Chapter }{Overview of \textsf {GAP} Data}}{62}{section.6.11}%
+\contentsline {subsection}{\numberline {6.11.1}\textcolor {Chapter }{BrowseGapData}}{62}{subsection.6.11.1}%
+\contentsline {subsection}{\numberline {6.11.2}\textcolor {Chapter }{BrowseGapDataAdd}}{64}{subsection.6.11.2}%
+\contentsline {section}{\numberline {6.12}\textcolor {Chapter }{Navigating in a Directory Tree}}{64}{section.6.12}%
+\contentsline {subsection}{\numberline {6.12.1}\textcolor {Chapter }{BrowseDirectory}}{64}{subsection.6.12.1}%
+\contentsline {section}{\numberline {6.13}\textcolor {Chapter }{A Puzzle}}{65}{section.6.13}%
+\contentsline {subsection}{\numberline {6.13.1}\textcolor {Chapter }{BrowsePuzzle}}{65}{subsection.6.13.1}%
+\contentsline {section}{\numberline {6.14}\textcolor {Chapter }{Peg Solitaire}}{66}{section.6.14}%
+\contentsline {subsection}{\numberline {6.14.1}\textcolor {Chapter }{PegSolitaire}}{66}{subsection.6.14.1}%
+\contentsline {section}{\numberline {6.15}\textcolor {Chapter }{Rubik's Cube}}{67}{section.6.15}%
+\contentsline {subsection}{\numberline {6.15.1}\textcolor {Chapter }{BrowseRubiksCube}}{68}{subsection.6.15.1}%
+\contentsline {section}{\numberline {6.16}\textcolor {Chapter }{Changing Sides}}{69}{section.6.16}%
+\contentsline {subsection}{\numberline {6.16.1}\textcolor {Chapter }{BrowseChangeSides}}{69}{subsection.6.16.1}%
+\contentsline {section}{\numberline {6.17}\textcolor {Chapter }{Sudoku}}{69}{section.6.17}%
+\contentsline {subsection}{\numberline {6.17.1}\textcolor {Chapter }{Sudoku.Init}}{70}{subsection.6.17.1}%
+\contentsline {subsection}{\numberline {6.17.2}\textcolor {Chapter }{Sudoku.Place}}{70}{subsection.6.17.2}%
+\contentsline {subsection}{\numberline {6.17.3}\textcolor {Chapter }{Sudoku.RandomGame}}{71}{subsection.6.17.3}%
+\contentsline {subsection}{\numberline {6.17.4}\textcolor {Chapter }{Sudoku.SimpleDisplay}}{71}{subsection.6.17.4}%
+\contentsline {subsection}{\numberline {6.17.5}\textcolor {Chapter }{Sudoku.DisplayString}}{72}{subsection.6.17.5}%
+\contentsline {subsection}{\numberline {6.17.6}\textcolor {Chapter }{Sudoku.OneSolution}}{72}{subsection.6.17.6}%
+\contentsline {subsection}{\numberline {6.17.7}\textcolor {Chapter }{Sudoku.UniqueSolution}}{73}{subsection.6.17.7}%
+\contentsline {subsection}{\numberline {6.17.8}\textcolor {Chapter }{PlaySudoku}}{73}{subsection.6.17.8}%
+\contentsline {subsection}{\numberline {6.17.9}\textcolor {Chapter }{Sudoku.HTMLGame}}{74}{subsection.6.17.9}%
+\contentsline {section}{\numberline {6.18}\textcolor {Chapter }{Utility for \textsf {GAP} Demos}}{74}{section.6.18}%
+\contentsline {subsection}{\numberline {6.18.1}\textcolor {Chapter }{LoadDemoFile}}{75}{subsection.6.18.1}%
+\contentsline {chapter}{\numberline {A}\textcolor {Chapter }{Some Tools for Database Handling}}{76}{appendix.A}%
+\contentsline {section}{\numberline {A.1}\textcolor {Chapter }{\textsf {GAP} Objects for Database Handling}}{76}{section.A.1}%
+\contentsline {subsection}{\numberline {A.1.1}\textcolor {Chapter }{Database Id Enumerators}}{76}{subsection.A.1.1}%
+\contentsline {subsection}{\numberline {A.1.2}\textcolor {Chapter }{Database Attributes}}{77}{subsection.A.1.2}%
+\contentsline {subsection}{\numberline {A.1.3}\textcolor {Chapter }{How to Deal with Database Id Enumerators and Database Attributes}}{80}{subsection.A.1.3}%
+\contentsline {subsection}{\numberline {A.1.4}\textcolor {Chapter }{DatabaseIdEnumerator}}{80}{subsection.A.1.4}%
+\contentsline {subsection}{\numberline {A.1.5}\textcolor {Chapter }{DatabaseAttributeAdd}}{80}{subsection.A.1.5}%
+\contentsline {subsection}{\numberline {A.1.6}\textcolor {Chapter }{DatabaseAttributeValueDefault}}{81}{subsection.A.1.6}%
+\contentsline {subsection}{\numberline {A.1.7}\textcolor {Chapter }{DatabaseIdEnumeratorUpdate}}{81}{subsection.A.1.7}%
+\contentsline {subsection}{\numberline {A.1.8}\textcolor {Chapter }{DatabaseAttributeCompute}}{81}{subsection.A.1.8}%
+\contentsline {subsection}{\numberline {A.1.9}\textcolor {Chapter }{DatabaseAttributeString}}{82}{subsection.A.1.9}%
+\contentsline {subsection}{\numberline {A.1.10}\textcolor {Chapter }{DatabaseAttributeLoadData}}{82}{subsection.A.1.10}%
+\contentsline {subsection}{\numberline {A.1.11}\textcolor {Chapter }{DatabaseAttributeSetData}}{82}{subsection.A.1.11}%
+\contentsline {section}{\numberline {A.2}\textcolor {Chapter }{Using Database Attributes for Browse Tables}}{83}{section.A.2}%
+\contentsline {subsection}{\numberline {A.2.1}\textcolor {Chapter }{Browse Relevant Components of Database Attributes}}{83}{subsection.A.2.1}%
+\contentsline {subsection}{\numberline {A.2.2}\textcolor {Chapter }{BrowseTableFromDatabaseIdEnumerator}}{84}{subsection.A.2.2}%
+\contentsline {section}{\numberline {A.3}\textcolor {Chapter }{Example: Database Id Enumerators and Database Attributes}}{84}{section.A.3}%
+\contentsline {section}{\numberline {A.4}\textcolor {Chapter }{Example: An Overview of the \textsf {GAP} Library of Tables of Marks }}{91}{section.A.4}%
+\contentsline {subsection}{\numberline {A.4.1}\textcolor {Chapter }{BrowseTomLibInfo}}{91}{subsection.A.4.1}%
+\contentsline {chapter}{References}{94}{appendix*.3}%
+\contentsline {chapter}{Index}{95}{section*.4}%

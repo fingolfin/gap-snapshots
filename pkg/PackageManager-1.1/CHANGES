@@ -1,0 +1,55 @@
+This file describes changes in the PackageManager package.
+
+1.1 (2020-10-14)
+  - Introduce CompilePackage for forcing a recompile
+  - Fixes to support newer BuildPackages.sh scripts
+  - Fix to work around double-compression issue (see GAP issue #4110)
+
+1.0 (2020-02-04)
+  - Interactive demo notebook
+  - Adjust test suite for use with Docker
+  - Major version number indicating a mature project
+
+0.5.1 (2019-07-18)
+  - Fix a broken test and an outdated error message
+
+0.5 (2019-07-12)
+  - Build package documentation on install, if not already present
+  - Check and fix existing package if Install or Update is called on it
+  - Run prerequisites.sh on install if it exists (mainly for Semigroups)
+  - Install dependencies in leaf-to-root order, rather than root-to-leaf
+  - Handle circular dependencies correctly
+  - Change this package's doc to use backticks instead of XML-style tags
+
+0.4 (2019-05-10)
+  - Introduce UpdatePackage
+  - Change behaviour of InstallPackage to allow interactive updates
+  - Check availability and recompile if needed after an attempted install/update
+
+0.3 (2019-03-26)
+  - Introduce InstallRequiredPackages to install the packages required by GAP
+  - Allow a branch name to be declared in InstallPackageFromGit/Hg
+  - Support .tar.bz2 archives
+  - Add an abstract
+
+0.2.3 (2019-02-22)
+  - Adjust tests to allow for more loaded packages
+
+0.2.2 (2019-02-15)
+  - Minor fixes
+
+0.2.1 (2018-10-04)
+  - Update documentation
+  - Handle dependencies better for cloned repositories
+  - Remove packages after failed installation
+
+0.2.0 (2018-10-03)
+  - Automatically install required dependencies when installing a package
+  - Check whether a newer version of a given package is already installed
+  - Refuse to overwrite an existing package
+  - Log output of failed shell commands such as tar or compilation script
+  - Print more info to the screen (InfoPackageManager is now 3 by default)
+  - Various bug fixes and minor improvements
+
+0.1.0 (2018-09-21)
+  - Initial release with InstallPackage, InstallPackageFrom*, and RemovePackage

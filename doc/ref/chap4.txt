@@ -1493,7 +1493,7 @@
     [4X[28X0[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe  user  should  compare  the  above  with the [5XGAP[105X function [2XSum[102X ([14X21.20-26[114X)
+  [33X[0;0YThe  user  should  compare  the  above  with the [5XGAP[105X function [2XSum[102X ([14X21.20-27[114X)
   which,  for  example,  may  take  a  list argument and optionally an initial
   element (which zero should the sum of an empty list return?).[133X
   

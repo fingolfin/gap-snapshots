@@ -237,7 +237,7 @@ end );
 ##
 ##  Add the Browse application to the list shown by `BrowseGapData'.
 ##
-BrowseGapDataAdd( "GAP Operations and Methods", BrowseGapMethods, false, "\
+BrowseGapDataAdd( "GAP Operations and Methods", BrowseGapMethods, "\
 the operations available in the current GAP session, \
 together with their methods, shown in a browse table; \
 the columns of the table contain the operation names, \

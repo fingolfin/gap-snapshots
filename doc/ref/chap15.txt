@@ -18,7 +18,7 @@
   
   [1X15.1-1 InfoNumtheor[101X
   
-  [33X[1;0Y[29X[2XInfoNumtheor[102X[32X info class[133X
+  [33X[1;0Y[29X[2XInfoNumtheor[102X [32X info class[133X
   
   [33X[0;0Y[2XInfoNumtheor[102X  is  the  info  class (see [14X7.4[114X) for the functions in the number
   theory chapter.[133X

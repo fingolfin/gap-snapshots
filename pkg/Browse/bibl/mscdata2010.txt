@@ -1419,7 +1419,7 @@
 18Gxx Homological algebra [See also 13Dxx, 16Exx, 20Jxx, 55Nxx, 55Uxx, 57Txx]
 18G05 Projectives and injectives [See also 13C10, 13C11, 16D40, 16D50]
 18G10 Resolutions; derived functors [See also 13D02, 16E05, 18E25]
-18G15 Ext and Tor, generalizations, K¨nneth formula [See also 55U25] u
+18G15 Ext and Tor, generalizations, Künneth formula [See also 55U25]
 18G20 Homological dimension [See also 13D05, 16E10]
 18G25 Relative homological algebra, projective classes
 18G30 Simplicial sets, simplicial objects (in a category) [See also 55U10]

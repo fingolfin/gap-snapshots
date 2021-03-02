@@ -25,7 +25,7 @@
   
   [1X24.1-1 InfoMatrix[101X
   
-  [33X[1;0Y[29X[2XInfoMatrix[102X[32X info class[133X
+  [33X[1;0Y[29X[2XInfoMatrix[102X [32X info class[133X
   
   [33X[0;0YThe info class for matrix operations is [2XInfoMatrix[102X.[133X
   

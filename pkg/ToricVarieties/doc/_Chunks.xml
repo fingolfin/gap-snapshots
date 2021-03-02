@@ -1,0 +1,590 @@
+<#GAPDoc Label="Hirzebruch5">
+<Example><![CDATA[
+gap> H5 := Fan( [[-1,5],[0,1],[1,0],[0,-1]],[[1,2],[2,3],[3,4],[4,1]] );
+<A fan in |R^2>
+gap> H5 := ToricVariety( H5 );
+<A toric variety of dimension 2>
+gap> IsComplete( H5 );
+true
+gap> IsAffine( H5 );
+false
+gap> IsOrbifold( H5 );
+true
+gap> IsProjective( H5 );
+true
+gap> TorusInvariantPrimeDivisors( H5 );
+[ <A prime divisor of a toric variety with coordinates ( 1, 0, 0, 0 )>,
+  <A prime divisor of a toric variety with coordinates ( 0, 1, 0, 0 )>,
+  <A prime divisor of a toric variety with coordinates ( 0, 0, 1, 0 )>,
+  <A prime divisor of a toric variety with coordinates ( 0, 0, 0, 1 )> ]
+gap> P := TorusInvariantPrimeDivisors( H5 );
+[ <A prime divisor of a toric variety with coordinates ( 1, 0, 0, 0 )>,
+  <A prime divisor of a toric variety with coordinates ( 0, 1, 0, 0 )>,
+  <A prime divisor of a toric variety with coordinates ( 0, 0, 1, 0 )>,
+  <A prime divisor of a toric variety with coordinates ( 0, 0, 0, 1 )> ]
+gap> A := P[ 1 ] - P[ 2 ] + 4*P[ 3 ];
+<A divisor of a toric variety with coordinates ( 1, -1, 4, 0 )>
+gap> A;
+<A divisor of a toric variety with coordinates ( 1, -1, 4, 0 )>
+gap> IsAmple( A );
+false
+gap> CoordinateRingOfTorus( H5,"x" );
+Q[x1,x1_,x2,x2_]/( x1*x1_-1, x2*x2_-1 )
+gap> D:=CreateDivisor( [ 0,0,0,0 ],H5 );
+<A divisor of a toric variety with coordinates 0>
+gap> BasisOfGlobalSections( D );
+[ |[ 1 ]| ]
+gap> D:=Sum( P );
+<A divisor of a toric variety with coordinates ( 1, 1, 1, 1 )>
+gap> BasisOfGlobalSections(D);
+[ |[ x1_ ]|, |[ x1_*x2 ]|, |[ 1 ]|, |[ x2 ]|,
+  |[ x1 ]|, |[ x1*x2 ]|, |[ x1^2*x2 ]|, 
+  |[ x1^3*x2 ]|, |[ x1^4*x2 ]|, |[ x1^5*x2 ]|, 
+  |[ x1^6*x2 ]| ]
+gap> divi := DivisorOfCharacter( [ 1,2 ],H5 );
+<A principal divisor of a toric variety with coordinates ( 9, -2, 2, 1 )>
+gap> BasisOfGlobalSections( divi );
+[ |[ x1_*x2_^2 ]| ]
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="nonprojective">
+<Example><![CDATA[
+gap> rays := [ [1,0,0], [-1,0,0], [0,1,0], [0,-1,0], [0,0,1], [0,0,-1],
+>           [2,1,1], [1,2,1], [1,1,2], [1,1,1] ];
+[ [ 1, 0, 0 ], [ -1, 0, 0 ], [ 0, 1, 0 ], [ 0, -1, 0 ], [ 0, 0, 1 ], [ 0, 0, -1 ], 
+[ 2, 1, 1 ], [ 1, 2, 1 ], [ 1, 1, 2 ], [ 1, 1, 1 ] ]
+gap> cones := [ [1,3,6], [1,4,6], [1,4,5], [2,3,6], [2,4,6], [2,3,5], [2,4,5],
+>            [1,5,9], [3,5,8], [1,3,7], [1,7,9], [5,8,9], [3,7,8],
+>            [7,9,10], [8,9,10], [7,8,10] ];
+[ [ 1, 3, 6 ], [ 1, 4, 6 ], [ 1, 4, 5 ], [ 2, 3, 6 ], [ 2, 4, 6 ], [ 2, 3, 5 ],
+  [ 2, 4, 5 ], [ 1, 5, 9 ], [ 3, 5, 8 ], [ 1, 3, 7 ], [ 1, 7, 9 ], [ 5, 8, 9 ], 
+  [ 3, 7, 8 ], [ 7, 9, 10 ], [ 8, 9, 10 ], [ 7, 8, 10 ] ]
+gap> F := Fan( rays, cones );
+<A fan in |R^3>
+gap> T := ToricVariety( F );
+<A toric variety of dimension 3>
+gap> [ IsSmooth( T ), IsComplete( T ), IsProjective( T ) ];
+[ true, true, false ]
+gap> SRIdeal( T );
+<A graded torsion-free (left) ideal given by 23 generators>
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="ConvenientConstructors">
+<Example><![CDATA[
+gap> rays := [ [1,0],[-1,0],[0,1],[0,-1] ];
+[ [ 1, 0 ], [ -1, 0 ], [ 0, 1 ], [ 0, -1 ] ]
+gap> cones := [ [1,3],[1,4],[2,3],[2,4] ];
+[ [1,3],[1,4],[2,3],[2,4] ]
+gap> weights := [ [1,0],[1,0],[0,1],[0,1] ];
+[ [1,0],[1,0],[0,1],[0,1] ]
+gap> weights2 := [ [1,1],[1,1],[1,2],[1,2] ];
+[ [1,1],[1,1],[1,2],[1,2] ]
+gap> tor1 := ToricVariety( rays, cones, weights, "x1,x2,y1,y2" );
+<A toric variety of dimension 2>
+gap> CoxRing( tor1 );
+Q[x2,y2,y1,x1]
+(weights: [ ( 1, 0 ), ( 0, 1 ), ( 0, 1 ), ( 1, 0 ) ])
+gap> tor2:= ToricVariety( rays, cones, weights, "q" );
+<A toric variety of dimension 2>
+gap> CoxRing( tor2 );
+Q[q_2,q_4,q_3,q_1]
+(weights: [ ( 1, 0 ), ( 0, 1 ), ( 0, 1 ), ( 1, 0 ) ])
+gap> tor3:= ToricVariety( rays, cones, weights );
+<A toric variety of dimension 2>
+gap> CoxRing( tor3 );
+Q[x_2,x_4,x_3,x_1]
+(weights: [ ( 1, 0 ), ( 0, 1 ), ( 0, 1 ), ( 1, 0 ) ])
+gap> tor4:= ToricVariety( rays, cones, weights2, "x1,x2,z1,z2" );
+<A toric variety of dimension 2>
+gap> CoxRing( tor4 );
+Q[x2,z2,z1,x1]
+(weights: [ ( 1, 1 ), ( 1, 2 ), ( 1, 2 ), ( 1, 1 ) ])
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="ToricVarietiesFromGrading">
+ The following example shows how to create the projective space <Math>\mathbb{P}^2</Math> from the grading of its Cox ring.
+ Note that this functionality requires the package TopcomInterface.
+<Log><![CDATA[
+gap> g := [[1,1,1]];
+[ [ 1,1,1 ] ]
+gap> v1 := ToricVarietyFromGrading( g );
+<A toric variety of dimension 2>
+gap> CoxRing( v1 );
+Q[x_1,x_2,x_3]
+(weights: [ 1, 1, 1 ])
+]]></Log>
+
+
+ The following example shows how to create the resolved conifold(s) from the grading of its Cox ring.
+<Log><![CDATA[
+gap> g2 := [[1,1,-1,-1]];
+[ [ 1,1,-1,-1 ] ]
+gap> v2 := ToricVarietiesFromGrading( g2 );
+[ <A toric variety of dimension 3>, <A toric variety of dimension 3> ]
+gap> CoxRing( v2[ 1 ] );
+Q[x_1,x_2,x_3,x_4]
+(weights: [ 1, -1, -1, 1 ])
+gap> Display( SRIdeal( v2[ 1 ] ) );
+x_2*x_3
+
+A (left) ideal generated by the entry of the above matrix
+
+(graded, degree of generator: -2)
+gap> Display( SRIdeal( v2[ 2 ] ) );
+x_1*x_4
+
+A (left) ideal generated by the entry of the above matrix
+
+(graded, degree of generator: 2)
+]]></Log>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Blowups">
+ The following code exemplifies blowups of the 3-dimensional affine space.
+<Example><![CDATA[
+gap> rays := [ [1,0,0], [0,1,0], [0,0,1] ];
+[ [1,0,0], [0,1,0], [0,0,1] ]
+gap> max_cones := [ [1,2,3] ];
+[ [1,2,3] ]
+gap> fan := Fan( rays, max_cones );
+<A fan in |R^3>
+gap> C3 := ToricVariety( rays, max_cones, [[0],[0],[0]], "x1,x2,x3" );
+<A toric variety of dimension 3>
+gap> B1C3 := BlowupOfToricVariety( C3, "x1,x2,x3", "u0" );
+<A toric variety of dimension 3>
+gap> [ IsComplete( B1C3 ), IsOrbifold( B1C3 ), IsSmooth( B1C3 ) ];
+[ false, true, true ]
+gap> B2C3 := BlowupOfToricVariety( B1C3, "x1,u0", "u1" );
+<A toric variety of dimension 3>
+gap> Rank( ClassGroup( B2C3 ) );
+3
+gap> B3C3 := BlowupOfToricVariety( B2C3, "x1,u1", "u2" );
+<A toric variety of dimension 3>
+gap> CoxRing( B3C3 );
+Q[x3,x2,x1,u0,u1,u2]
+(weights: [ ( 0, 1, 0, 0 ), ( 0, 1, 0, 0 ), ( 0, 1, 1, 1 ), 
+( 0, -1, 1, 0 ), ( 0, 0, -1, 1 ), ( 0, 0, 0, -1 ) ])
+]]></Example>
+
+
+ Likewise, we can also perform blowups of the 3-dimensional projective space.
+<Example><![CDATA[
+gap> rays := [ [1,0,0], [0,1,0], [0,0,1], [-1,-1,-1] ];
+[ [1,0,0], [0,1,0], [0,0,1], [-1,-1,-1] ]
+gap> max_cones := [ [1,2,3], [1,2,4], [1,3,4], [2,3,4] ];
+[ [1,2,3], [1,2,4], [1,3,4], [2,3,4] ]
+gap> fan := Fan( rays, max_cones );
+<A fan in |R^3>
+gap> P3 := ToricVariety( rays, max_cones, [[1],[1],[1],[1]], "x1,x2,x3,x4" );
+<A toric variety of dimension 3>
+gap> B1P3 := BlowupOfToricVariety( P3, "x1,x2,x3", "u0" );
+<A toric variety of dimension 3>
+gap> [ IsComplete( B1P3 ), IsOrbifold( B1P3 ), IsSmooth( B1P3 ) ];
+[ true, true, true ]
+gap> B2P3 := BlowupOfToricVariety( B1P3, "x1,u0", "u1" );
+<A toric variety of dimension 3>
+gap> Rank( ClassGroup( B2C3 ) );
+3
+gap> B3P3 := BlowupOfToricVariety( B2P3, "x1,u1", "u2" );
+<A toric variety of dimension 3>
+gap> CoxRing( B3P3 );
+Q[x4,x3,x2,x1,u0,u1,u2]
+(weights: [ ( 1, 0, 0, 0 ), ( 1, 1, 0, 0 ), ( 1, 1, 0, 0 ), 
+( 1, 1, 1, 1 ), ( 0, -1, 1, 0 ), ( 0, 0, -1, 1 ), ( 0, 0, 0, -1 ) ])
+]]></Example>
+
+
+ Also, we can perform blowups of a generalized Hirzebruch 3-fold.
+<Example><![CDATA[
+gap> vars := "u,s,v,t,r";
+"u,s,v,t,r"
+gap> rays := [ [0,0,-1],[1,0,0],[0,1,0],[-1,-1,-17],[0,0,1] ];
+[ [0,0,-1],[1,0,0],[0,1,0],[-1,-1,-17],[0,0,1] ]
+gap> cones := [ [1,2,3], [1,2,4], [1,3,4], [2,3,5], [2,4,5], [3,4,5] ];
+[ [1,2,3], [1,2,4], [1,3,4], [2,3,5], [2,4,5], [3,4,5] ]
+gap> weights := [ [1,-17], [0,1], [0,1], [0,1], [1,0] ];
+[ [1,-17], [0,1], [0,1], [0,1], [1,0] ]
+gap> H3fold := ToricVariety( rays, cones, weights, vars );
+<A toric variety of dimension 3>
+gap> B1H3fold := BlowupOfToricVariety( H3fold, "u,s", "u1" );
+<A toric variety of dimension 3>
+gap> CoxRing( B1H3fold );
+Q[t,u,r,v,u1,s]
+(weights: [ ( 0, 1, 0 ), ( 1, -17, 1 ), ( 1, 0, 0 ), 
+( 0, 1, 0 ), ( 0, 0, -1 ), ( 0, 1, 1 ) ])
+]]></Example>
+
+
+ This example easily extends to an entire sequence of blowups.
+<Example><![CDATA[
+gap> vars := "u,s,v,t,r,x,y,w";
+"u,s,v,t,r,x,y,w"
+gap> rays := [ [0,0,-1,-2,-3], [1,0,0,-2,-3], [0,1,0,-2,-3], [-1,-1,-17,-2,-3], 
+>           [0,0,1,-2,-3], [0, 0, 0, 1, 0], 
+> [0, 0, 0, 0, 1], [0, 0, 0, -2, -3] ];
+[ [0,0,-1,-2,-3], [1,0,0,-2,-3], [0,1,0,-2,-3], [-1,-1,-17,-2,-3], 
+[0,0,1,-2,-3], [0, 0, 0, 1, 0], [0, 0, 0, 0, 1], [0, 0, 0, -2, -3] ]
+gap> cones := [ [1,2,3,6,7], [1,2,3,6,8], [1,2,3,7,8], [1,2,4,6,7], [1,2,4,6,8],
+>            [1,2,4,7,8], [1,3,4,6,7], [1,3,4,6,8], [1,3,4,7,8], [2,3,5,6,7],
+>            [2,3,5,6,8], [2,3,5,7,8], [2,4,5,6,7], [2,4,5,6,8], [2,4,5,7,8],
+>            [3,4,5,6,7], [3,4,5,6,8], [3,4,5,7,8] ];
+[ [ 1, 2, 3, 6, 7 ], [ 1, 2, 3, 6, 8 ], [ 1, 2, 3, 7, 8 ],
+  [ 1, 2, 4, 6, 7 ], [ 1, 2, 4, 6, 8 ], [ 1, 2, 4, 7, 8 ],
+  [ 1, 3, 4, 6, 7 ], [ 1, 3, 4, 6, 8 ], [ 1, 3, 4, 7, 8 ],
+  [ 2, 3, 5, 6, 7 ], [ 2, 3, 5, 6, 8 ], [ 2, 3, 5, 7, 8 ],
+  [ 2, 4, 5, 6, 7 ], [ 2, 4, 5, 6, 8 ], [ 2, 4, 5, 7, 8 ],
+  [ 3, 4, 5, 6, 7 ], [ 3, 4, 5, 6, 8 ], [ 3, 4, 5, 7, 8 ] ]
+gap> w := [ [1,-17,0], [0,1,0], [0,1,0], [0,1,0], [1,0,0], [0,0,2], [0,0,3], 
+>        [-2,14,1] ];
+[ [1,-17,0], [0,1,0], [0,1,0], [0,1,0], [1,0,0], [0,0,2], [0,0,3], [-2,14,1] ]
+gap> base := ToricVariety( rays, cones, w, vars );
+<A toric variety of dimension 5>
+gap> b1 := BlowupOfToricVariety( base, "x,y,u", "u1" );
+<A toric variety of dimension 5>
+gap> b2 := BlowupOfToricVariety( b1, "x,y,u1", "u2" );
+<A toric variety of dimension 5>
+gap> b3 := BlowupOfToricVariety( b2, "y,u1", "u3" );
+<A toric variety of dimension 5>
+gap> b4 := BlowupOfToricVariety( b3, "y,u2", "u4" );
+<A toric variety of dimension 5>
+gap> b5 := BlowupOfToricVariety( b4, "u2,u3", "u5" );
+<A toric variety of dimension 5>
+gap> b6 := BlowupOfToricVariety( b5, "u1,u3", "u6" );
+<A toric variety of dimension 5>
+gap> b7 := BlowupOfToricVariety( b6, "u2,u4", "u7" );
+<A toric variety of dimension 5>
+gap> b8 := BlowupOfToricVariety( b7, "u3,u4", "u8" );
+<A toric variety of dimension 5>
+gap> b9 := BlowupOfToricVariety( b8, "u4,u5", "u9" );
+<A toric variety of dimension 5>
+gap> b10 := BlowupOfToricVariety( b9, "u5,u8", "u10" );
+<A toric variety of dimension 5>
+gap> b11 := BlowupOfToricVariety( b10, "u4,u8", "u11" );
+<A toric variety of dimension 5>
+gap> b12 := BlowupOfToricVariety( b11, "u4,u9", "u12" );
+<A toric variety of dimension 5>
+gap> b13 := BlowupOfToricVariety( b12, "u8,u9", "u13" );
+<A toric variety of dimension 5>
+gap> b14 := BlowupOfToricVariety( b13, "u9,u11", "u14" );
+<A toric variety of dimension 5>
+gap> b15 := BlowupOfToricVariety( b14, "u4,v", "d" );
+<A toric variety of dimension 5>
+gap> final_space := BlowupOfToricVariety( b15, "u3,u5", "u15" );
+<A toric variety of dimension 5>
+]]></Example>
+
+
+ This sequence of blowups can also be performed with a single command.
+<Example><![CDATA[
+gap> final_space2 := SequenceOfBlowupsOfToricVariety( base, 
+>                     [ ["x,y,u","u1"], 
+>                     ["x,y,u1","u2"],
+>                     ["y,u1","u3"],
+>                     ["y,u2","u4"],
+>                     ["u2,u3","u5"],
+>                     ["u1,u3","u6"],
+>                     ["u2,u4","u7"],
+>                     ["u3,u4","u8"],
+>                     ["u4,u5","u9"],
+>                     ["u5,u8","u10"],
+>                     ["u4,u8","u11"],
+>                     ["u4,u9","u12"],
+>                     ["u8,u9","u13"],
+>                     ["u9,u11","u14"],
+>                     ["u4,v","d"],
+>                     ["u3,u5","u15"] ] );
+<A toric variety of dimension 5>
+gap> [ IsComplete( final_space2 ), IsOrbifold( final_space2 ), 
+>   IsSmooth( final_space2 ) ];
+[ true, true, false ]
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="AffineSpace">
+<Example><![CDATA[
+gap> C:=Cone( [[1,0,0],[0,1,0],[0,0,1]] );
+<A cone in |R^3>
+gap> C3:=ToricVariety(C);
+<An affine normal toric variety of dimension 3>
+gap> Dimension(C3);
+3
+gap> IsOrbifold(C3);
+true
+gap> IsSmooth(C3);
+true
+gap> CoordinateRingOfTorus(C3,"x");
+Q[x1,x1_,x2,x2_,x3,x3_]/( x1*x1_-1, x2*x2_-1, x3*x3_-1 )
+gap> CoordinateRing(C3,"x");
+Q[x_1,x_2,x_3]
+gap> MorphismFromCoordinateRingToCoordinateRingOfTorus( C3 );
+<A monomorphism of rings>
+gap> C3;
+<An affine normal smooth toric variety of dimension 3>
+gap> StructureDescription( C3 );
+"|A^3"
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="P1P1_polytope">
+<Example><![CDATA[
+gap> P1P1 := Polytope( [[1,1],[1,-1],[-1,-1],[-1,1]] );
+<A polytope in |R^2>
+gap> P1P1 := ToricVariety( P1P1 );
+<A projective toric variety of dimension 2>
+gap> IsProjective( P1P1 );
+true
+gap> IsComplete( P1P1 );
+true 
+gap> CoordinateRingOfTorus( P1P1, "x" );
+Q[x1,x1_,x2,x2_]/( x1*x1_-1, x2*x2_-1 )
+gap> IsVeryAmple( Polytope( P1P1 ) );
+true
+gap> ProjectiveEmbedding( P1P1 );
+[ |[ x1_*x2_ ]|, |[ x1_ ]|, |[ x1_*x2 ]|, |[ x2_ ]|,
+|[ 1 ]|, |[ x2 ]|, |[ x1*x2_ ]|, |[ x1 ]|, |[ x1*x2 ]| ]
+gap> Length( ProjectiveEmbedding( P1P1 ) );
+9
+gap> CoxRing( P1P1 );
+Q[x_1,x_2,x_3,x_4]
+(weights: [ ( 0, 1 ), ( 1, 0 ), ( 1, 0 ), ( 0, 1 ) ])
+gap> Display( SRIdeal( P1P1 ) );
+x_1*x_4,
+x_2*x_3 
+
+A (left) ideal generated by the 2 entries of the above matrix
+
+(graded, degrees of generators: [ ( 0, 2 ), ( 2, 0 ) ])
+gap> Display( IrrelevantIdeal( P1P1 ) );
+x_1*x_2,
+x_1*x_3,
+x_2*x_4,
+x_3*x_4 
+
+A (left) ideal generated by the 4 entries of the above matrix
+
+(graded, degrees of generators: [ ( 1, 1 ), ( 1, 1 ), ( 1, 1 ), ( 1, 1 ) ])
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="P1P1_product">
+<Example><![CDATA[
+gap> P1 := ProjectiveSpace( 1 );
+<A projective toric variety of dimension 1>
+gap> IsComplete( P1 );
+true
+gap> IsSmooth( P1 );
+true
+gap> Dimension( P1 );
+1
+gap> CoxRing( P1, "q" );
+Q[q_1,q_2]
+(weights: [ 1, 1 ])
+gap> P1xP1 := P1*P1;
+<A projective smooth toric variety of dimension 2 which is a product 
+of 2 toric varieties>
+gap> ByASmallerPresentation( ClassGroup( P1xP1 ) );
+<A free left module of rank 2 on free generators>
+gap> CoxRing( P1xP1, "x1,y1,y2,x2" );
+Q[x1,y1,y2,x2]
+(weights: [ ( 0, 1 ), ( 1, 0 ), ( 1, 0 ), ( 0, 1 ) ])
+gap> Display( SRIdeal( P1xP1 ) );
+x1*x2,
+y1*y2
+
+A (left) ideal generated by the 2 entries of the above matrix
+
+(graded, degrees of generators: [ ( 0, 2 ), ( 2, 0 ) ])
+gap> Display( IrrelevantIdeal( P1xP1 ) );
+x1*y1,
+x1*y2,
+y1*x2,
+y2*x2
+
+A (left) ideal generated by the 4 entries of the above matrix
+
+(graded, degrees of generators: [ ( 1, 1 ), ( 1, 1 ), ( 1, 1 ), ( 1, 1 ) ])
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Morphism">
+<Example><![CDATA[
+gap> P1 := Polytope([[0],[1]]);
+<A polytope in |R^1>
+gap> P2 := Polytope([[0,0],[0,1],[1,0]]);
+<A polytope in |R^2>
+gap> P1 := ToricVariety( P1 );
+<A projective toric variety of dimension 1>
+gap> P2 := ToricVariety( P2 );
+<A projective toric variety of dimension 2>
+gap> P1P2 := P1*P2;
+<A projective toric variety of dimension 3
+ which is a product of 2 toric varieties>
+gap> ClassGroup( P1 );
+<A free left module of rank 1 on a free generator>
+gap> Display(ByASmallerPresentation(ClassGroup( P1 )));
+Z^(1 x 1)
+gap> ClassGroup( P2 );
+<A free left module of rank 1 on a free generator>
+gap> Display(ByASmallerPresentation(ClassGroup( P2 )));
+Z^(1 x 1)
+gap> ClassGroup( P1P2 );
+<A free left module of rank 2 on free generators>
+gap> Display( last );
+Z^(1 x 2)
+gap> PicardGroup( P1P2 );
+<A free left module of rank 2 on free generators>
+gap> P1P2;
+<A projective smooth toric variety of dimension 3 
+ which is a product of 2 toric varieties>
+gap> P2P1:=P2*P1;
+<A projective toric variety of dimension 3 
+ which is a product of 2 toric varieties>
+gap> M := [[0,0,1],[1,0,0],[0,1,0]];
+[ [ 0, 0, 1 ], [ 1, 0, 0 ], [ 0, 1, 0 ] ]
+gap> M := ToricMorphism(P1P2,M,P2P1);
+<A "homomorphism" of right objects>
+gap> IsMorphism(M);
+true
+gap> ClassGroup(M);
+<A homomorphism of left modules>
+gap> Display(ClassGroup(M));
+[ [  0,  1 ],
+  [  1,  0 ] ]
+
+the map is currently represented by the above 2 x 2 matrix
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Divisors">
+<Example><![CDATA[
+gap> H7 := Fan( [[0,1],[1,0],[0,-1],[-1,7]],[[1,2],[2,3],[3,4],[4,1]] );
+<A fan in |R^2>
+gap> H7 := ToricVariety( H7 );
+<A toric variety of dimension 2>
+gap> P := TorusInvariantPrimeDivisors( H7 );
+[ <A prime divisor of a toric variety with coordinates ( 1, 0, 0, 0 )>,
+  <A prime divisor of a toric variety with coordinates ( 0, 1, 0, 0 )>,
+  <A prime divisor of a toric variety with coordinates ( 0, 0, 1, 0 )>,
+  <A prime divisor of a toric variety with coordinates ( 0, 0, 0, 1 )> ]
+gap> D := P[1]+P[2];
+<A divisor of a toric variety with coordinates ( 1, 1, 0, 0 )>
+gap> IsBasepointFree(D);
+true
+gap> IsAmple(D);
+true
+gap> CoordinateRingOfTorus(H7,"x");
+Q[x1,x1_,x2,x2_]/( x1*x1_-1, x2*x2_-1 )
+gap> Polytope(D);
+<A polytope in |R^2>
+gap> CharactersForClosedEmbedding(D);
+[ |[ 1 ]|, |[ x2 ]|, |[ x1 ]|, |[ x1*x2 ]|, |[ x1^2*x2 ]|, 
+  |[ x1^3*x2 ]|, |[ x1^4*x2 ]|, |[ x1^5*x2 ]|, 
+  |[ x1^6*x2 ]|, |[ x1^7*x2 ]|, |[ x1^8*x2 ]| ]
+gap> CoxRingOfTargetOfDivisorMorphism(D);
+Q[x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8,x_9,x_10,x_11]
+(weights: [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ])
+gap> RingMorphismOfDivisor(D);
+<A "homomorphism" of rings>
+gap> Display(RingMorphismOfDivisor(D));
+Q[x_1,x_2,x_3,x_4]
+(weights: [ ( 0, 1 ), ( 1, 0 ), ( 1, -7 ), ( 0, 1 ) ])
+  ^
+  |
+[ x_1*x_2, x_1^8*x_3, x_2*x_4, x_1^7*x_3*x_4, x_1^6*x_3*x_4^2, 
+  x_1^5*x_3*x_4^3, x_1^4*x_3*x_4^4, x_1^3*x_3*x_4^5, x_1^2*x_3*x_4^6, 
+  x_1*x_3*x_4^7, x_3*x_4^8 ]
+  |
+  |
+Q[x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8,x_9,x_10,x_11]
+(weights: [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ])
+gap> ByASmallerPresentation(ClassGroup(H7));
+<A free left module of rank 2 on free generators>
+gap> MonomsOfCoxRingOfDegree(D);
+[ x_1*x_2, x_1^8*x_3, x_2*x_4, x_1^7*x_3*x_4, x_1^6*x_3*x_4^2, 
+  x_1^5*x_3*x_4^3, x_1^4*x_3*x_4^4, x_1^3*x_3*x_4^5, x_1^2*x_3*x_4^6, 
+  x_1*x_3*x_4^7, x_3*x_4^8 ]
+gap> D2:=D-2*P[2];
+<A divisor of a toric variety with coordinates ( 1, -1, 0, 0 )>
+gap> IsBasepointFree(D2);
+false
+gap> IsAmple(D2);
+false
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="PolytopeOfToricDivisor">
+<Example><![CDATA[
+gap> P1 := ProjectiveSpace( 1 );
+<A projective toric variety of dimension 1>
+gap> divisor := DivisorOfGivenClass( P1, [ -1 ] );
+<A divisor of a toric variety with coordinates ( -1, 0 )>
+gap> polytope := PolytopeOfDivisor( divisor );
+<A polytope in |R^1>
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="RationalNormalCone">
+<Example><![CDATA[
+gap> sigma := Cone( [ [ 7,-1 ],[ 0,1 ] ] );
+<A cone in |R^2>
+gap> C7:=ToricVariety( sigma );
+<An affine normal toric variety of dimension 2>
+gap> CoordinateRing( C7,[ "x" ] );
+Q[x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8]/(
+x_7^2-x_6*x_8, x_6*x_7-x_5*x_8, x_5*x_7-x_4*x_8,
+x_4*x_7-x_3*x_8, x_3*x_7-x_2*x_8, x_2*x_7-x_1*x_8,
+x_6^2-x_4*x_8, x_5*x_6-x_3*x_8,
+x_4*x_6-x_2*x_8, x_3*x_6-x_1*x_8, x_2*x_6-x_1*x_7,
+x_5^2-x_2*x_8, x_4*x_5-x_1*x_8, x_3*x_5-x_1*x_7,
+x_2*x_5-x_1*x_6, x_4^2-x_1*x_7, x_3*x_4-x_1*x_6,
+x_2*x_4-x_1*x_5, x_3^2-x_1*x_5, x_2*x_3-x_1*x_4, x_2^2-x_1*x_3 )
+gap> CoordinateRingOfTorus( C7, [ "y","z" ] );
+Q[y,y_,z,z_]/( z*z_-1, y*y_-1 )
+gap> MorphismFromCoordinateRingToCoordinateRingOfTorus( C7 );
+<A monomorphism of rings>
+gap> Display( last );
+Q[y,y_,z,z_]/( z*z_-1, y*y_-1 )
+  ^
+  |
+[ |[ y ]|, |[ y*z ]|, |[ y*z^2 ]|, |[ y*z^3 ]|, 
+  |[ y*z^4 ]|, |[ y*z^5 ]|, |[ y*z^6 ]|, |[ y*z^7 ]| ]
+  |
+  |
+Q[x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8]/(
+x_7^2-x_6*x_8, x_6*x_7-x_5*x_8, x_5*x_7-x_4*x_8,
+x_4*x_7-x_3*x_8, x_3*x_7-x_2*x_8, x_2*x_7-x_1*x_8,
+x_6^2-x_4*x_8, x_5*x_6-x_3*x_8,
+x_4*x_6-x_2*x_8, x_3*x_6-x_1*x_8, x_2*x_6-x_1*x_7,
+x_5^2-x_2*x_8, x_4*x_5-x_1*x_8, x_3*x_5-x_1*x_7,
+x_2*x_5-x_1*x_6, x_4^2-x_1*x_7, x_3*x_4-x_1*x_6,
+x_2*x_4-x_1*x_5, x_3^2-x_1*x_5, x_2*x_3-x_1*x_4, x_2^2-x_1*x_3 )
+]]></Example>
+
+
+
+<#/GAPDoc>

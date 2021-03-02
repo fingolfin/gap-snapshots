@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    ferret
+  </Title>
+  <Subtitle>
+    Backtrack Search in Permutation Groups
+  </Subtitle>
+  <Version>
+    1.0.3
+  </Version>
+  <Author>
+    Christopher Jefferson<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+St Andrews<Br/>
+Scotland<Br/>
+UK<Br/>
+</Address>
+<Email>caj21@st-andrews.ac.uk</Email>
+<Homepage>http://caj.host.cs.st-andrews.ac.uk/</Homepage>
+
+  </Author>
+  <Date>
+    27 May 2020
+  </Date>
+  <Copyright>
+    
+&copyright; by Christopher Jefferson
+
+  </Copyright>
+  </TitlePage>

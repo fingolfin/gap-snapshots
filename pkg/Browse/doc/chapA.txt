@@ -96,7 +96,7 @@
         [33X[0;6Ya  string  that  identifies  [3Xa[103X  among  all database attributes for the
         underlying    database    id    enumerator    (this    is    used   by
         [2XBrowseTableFromDatabaseIdEnumerator[102X ([14XA.2-2[114X) and when the data of [3Xa[103X are
-        entered   with  [2XDatabaseAttributeSetData[102X  ([14XA.1-9[114X),  for  example  when
+        entered  with  [2XDatabaseAttributeSetData[102X  ([14XA.1-11[114X),  for  example  when
         precomputed values are read from a file),[133X
   
   [8X[10Xdescription[110X[8X[108X
@@ -180,7 +180,7 @@
         used  by  [2XDatabaseIdEnumeratorUpdate[102X  ([14XA.1-7[114X) for deciding whether the
         attribute  values  are  outdated;  if  [3Xa[103X[10X.datafile[110X  is bound then it is
         assumed  that the [10Xversion[110X component is set when this file is read, for
-        example in the function [2XDatabaseAttributeSetData[102X ([14XA.1-9[114X),[133X
+        example in the function [2XDatabaseAttributeSetData[102X ([14XA.1-11[114X),[133X
   
   [8X[10Xupdate[110X[8X[108X
         [33X[0;6Ya  function  that takes [3Xa[103X as its argument, adjusts its data components
@@ -228,9 +228,9 @@
   [8X[10Xstring[110X[8X[108X
         [33X[0;6Yif  bound,  a function that takes the pair consisting of an identifier
         and  the  return value of the [10Xcreate[110X function for this identifier, and
-        returns  a  string  that  shall represent this value when the data are
-        printed to a file; the default function returns the [2XString[102X ([14XReference:
-        String[114X) value of the second argument.[133X
+        returns  a string that represents this value when the data are printed
+        to  a  file with [2XDatabaseAttributeString[102X ([14XA.1-9[114X); the default function
+        returns the [2XString[102X ([14XReference: String[114X) value of the second argument.[133X
   
   [33X[0;0YThe following optional component is needed for [13Xchecking[113X stored data.[133X
   
@@ -257,8 +257,9 @@
   this can be necessary for example when the underlying database id enumerator
   gets extended.[133X
   
-  [33X[0;0YIn  data files, the function [2XDatabaseAttributeSetData[102X ([14XA.1-9[114X) can be used to
-  fill the [10Xdata[110X component of the attribute.[133X
+  [33X[0;0YIn data files, the function [2XDatabaseAttributeSetData[102X ([14XA.1-11[114X) can be used to
+  fill the [10Xdata[110X component of the attribute. The contents of a data file can be
+  produced with [2XDatabaseAttributeString[102X ([14XA.1-9[114X).[133X
   
   [1XA.1-4 DatabaseIdEnumerator[101X
   
@@ -369,7 +370,32 @@
   [8X[10X"new"[110X[8X[108X
         [33X[0;6Ystored values are not recomputed.[133X
   
-  [1XA.1-9 DatabaseAttributeSetData[101X
+  [1XA.1-9 DatabaseAttributeString[101X
+  
+  [33X[1;0Y[29X[2XDatabaseAttributeString[102X( [3Xidenum[103X, [3Xidenumname[103X, [3Xattridentifier[103X, [3Xformat[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya string that describes the values of the attribute.[133X
+  
+  [33X[0;0YLet  [3Xidenum[103X be a database id enumerator (see Section [14XA.1-1[114X), [3Xidenumname[103X be a
+  string  that  denotes  the  variable  to  which  the  enumerator  is  bound,
+  [3Xattridentifier[103X  be  the  name of an attribute of type [10X"pairs"[110X, and [3Xformat[103X be
+  one  of  [10X"GAP"[110X, [10X"JSON"[110X. [2XDatabaseAttributeString[102X returns a string that can be
+  used  to set the attribute values, using [2XDatabaseAttributeLoadData[102X ([14XA.1-10[114X).
+  In  the  [10X"JSON"[110X  case,  it is not checked whether the [10Xstring[110X function of the
+  attribute creates valid JSON (e.g., whether the lists are dense).[133X
+  
+  [1XA.1-10 DatabaseAttributeLoadData[101X
+  
+  [33X[1;0Y[29X[2XDatabaseAttributeLoadData[102X( [3Xattr[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YIf  the  data  of the attribute [3Xattr[103X are stored in a file then this function
+  loads the data. The data file is expected to be either in JSON format (which
+  can  be  produced with [2XDatabaseAttributeString[102X ([14XA.1-9[114X), with fourth argument
+  the  string  [10X"JSON"[110X) and have filename extension [10X.json[110X, or to contain a call
+  to  [2XDatabaseAttributeSetData[102X  ([14XA.1-11[114X)  such that reading the file with [2XRead[102X
+  ([14XReference: Read[114X) sets the data.[133X
+  
+  [1XA.1-11 DatabaseAttributeSetData[101X
   
   [33X[1;0Y[29X[2XDatabaseAttributeSetData[102X( [3Xdbidenum[103X, [3Xattridentifier[103X, [3Xversion[103X, [3Xdata[103X ) [32X function[133X
   
@@ -380,7 +406,8 @@
   value.[133X
   
   [33X[0;0Y[2XDatabaseAttributeSetData[102X  sets  the  [10Xdata[110X  and  [10Xversion[110X  components  of  the
-  attribute. This function can be used for example in data files.[133X
+  attribute.  This  function  is  called  when  data  files  are  loaded  with
+  [2XDatabaseAttributeLoadData[102X ([14XA.1-10[114X).[133X
   
   
   [1XA.2 [33X[0;0YUsing Database Attributes for Browse Tables[133X[101X

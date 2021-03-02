@@ -221,7 +221,7 @@ BindGlobal("NextDemoBlock", function(l)
   if pos[2] < Length(blocks[pos[1]]) and not BrowseData.Demos.cont then
     # this is <Return><PageDown>
     BrowseData.Demos.cont := true;
-    return [2, "\007\015\007"];
+    return [2, "\034\015\034"];
   fi;
   BrowseData.Demos.cont := false;
   if pos[2] = Length(blocks[pos[1]]) then
@@ -240,11 +240,11 @@ end);
 ##  ReadlineInitLine(Concatenation("\"\033[6~\":\"", 
 ##          InvocationReadlineMacro("nextdemoblock"), "\""));
 
-GAPInfo.CommandLineEditFunctions.Functions.(INT_CHAR('G') mod 32) :=
+GAPInfo.CommandLineEditFunctions.Functions.(INT_CHAR('\\') mod 32) :=
   NextDemoBlock;
-BindKeysToGAPHandler("\007");
+BindKeysToGAPHandler("\034");
 # PageDown
-ReadlineInitLine("\"\033[6~\":\"\007\"");
+ReadlineInitLine("\"\033[6~\":\"\034\"");
 
 # PageUp key leads to the menu
 InstallReadlineMacro("settingsdemo", SettingsDemo);

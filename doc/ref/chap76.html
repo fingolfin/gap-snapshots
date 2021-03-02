@@ -148,7 +148,7 @@
 
 <h3>76 <span class="Heading">Using and Developing GAP Packages</span></h3>
 
-<p>The functionality of <strong class="pkg">GAP</strong> can be extended by loading <strong class="pkg">GAP</strong> packages. The <strong class="pkg">GAP</strong> distribution already contains all currently redistributed <strong class="pkg">GAP</strong> packages in the <code class="file">gap-4.11.0/pkg</code> directory.</p>
+<p>The functionality of <strong class="pkg">GAP</strong> can be extended by loading <strong class="pkg">GAP</strong> packages. The <strong class="pkg">GAP</strong> distribution already contains all currently redistributed <strong class="pkg">GAP</strong> packages in the <code class="file">gap-4.11.1/pkg</code> directory.</p>
 
 <p><strong class="pkg">GAP</strong> packages are written by (groups of) <strong class="pkg">GAP</strong> users who may not necessarily be members of the <strong class="pkg">GAP</strong> developer team. The responsibility and copyright of a <strong class="pkg">GAP</strong> package remains with the original author(s).</p>
 
@@ -546,7 +546,7 @@ you can 'return;' to continue
 <h5>76.3-16 BibEntry</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BibEntry</code>( <var class="Arg">pkgname</var>[, <var class="Arg">key</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Returns: a string in BibXMLext format (see <a href="../../pkg/GAPDoc-1.6.3/doc/chap7.html#X7FB8F6BD80D859D1"><span class="RefLink">GAPDoc: The BibXMLext Format</span></a>) that can be used for referencing the <strong class="pkg">GAP</strong> system or a <strong class="pkg">GAP</strong> package.</p>
+<p>Returns: a string in BibXMLext format (see <a href="../../pkg/GAPDoc-1.6.4/doc/chap7.html#X7FB8F6BD80D859D1"><span class="RefLink">GAPDoc: The BibXMLext Format</span></a>) that can be used for referencing the <strong class="pkg">GAP</strong> system or a <strong class="pkg">GAP</strong> package.</p>
 
 <p>If the argument <var class="Arg">pkgname</var> is the string <code class="code">"GAP"</code>, the function returns an entry for the current version of <strong class="pkg">GAP</strong>.</p>
 
@@ -556,9 +556,9 @@ you can 'return;' to continue
 
 <p>In each of the above cases, an optional argument <var class="Arg">key</var> can be given, a string which is then used as the key of the BibTeX entry instead of the default key that is generated from the system/package name and the version number.</p>
 
-<p><code class="func">BibEntry</code> requires the functions <code class="func">FormatParagraph</code> (<a href="../../pkg/GAPDoc-1.6.3/doc/chap6.html#X812058CE7C8E9022"><span class="RefLink">GAPDoc: FormatParagraph</span></a>) and <code class="func">NormalizedNameAndKey</code> (<a href="../../pkg/GAPDoc-1.6.3/doc/chap7.html#X7C9F0C337A0A0FF0"><span class="RefLink">GAPDoc: NormalizedNameAndKey</span></a>) from the <strong class="pkg">GAP</strong> package <strong class="pkg">GAPDoc</strong>.</p>
+<p><code class="func">BibEntry</code> requires the functions <code class="func">FormatParagraph</code> (<a href="../../pkg/GAPDoc-1.6.4/doc/chap6.html#X812058CE7C8E9022"><span class="RefLink">GAPDoc: FormatParagraph</span></a>) and <code class="func">NormalizedNameAndKey</code> (<a href="../../pkg/GAPDoc-1.6.4/doc/chap7.html#X7C9F0C337A0A0FF0"><span class="RefLink">GAPDoc: NormalizedNameAndKey</span></a>) from the <strong class="pkg">GAP</strong> package <strong class="pkg">GAPDoc</strong>.</p>
 
-<p>The functions <code class="func">ParseBibXMLextString</code> (<a href="../../pkg/GAPDoc-1.6.3/doc/chap7.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextString</span></a>) and <code class="func">StringBibXMLEntry</code> (<a href="../../pkg/GAPDoc-1.6.3/doc/chap7.html#X790A295680F7CD24"><span class="RefLink">GAPDoc: StringBibXMLEntry</span></a>) can be used to create for example a BibTeX entry from the return value, as follows.</p>
+<p>The functions <code class="func">ParseBibXMLextString</code> (<a href="../../pkg/GAPDoc-1.6.4/doc/chap7.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextString</span></a>) and <code class="func">StringBibXMLEntry</code> (<a href="../../pkg/GAPDoc-1.6.4/doc/chap7.html#X790A295680F7CD24"><span class="RefLink">GAPDoc: StringBibXMLEntry</span></a>) can be used to create for example a BibTeX entry from the return value, as follows.</p>
 
 
 <div class="example"><pre>
@@ -684,9 +684,9 @@ packagedir/
 
 </dd>
 <dt><strong class="Mark"><code class="file">doc</code></strong></dt>
-<dd><p>This directory should contain the package's documentation, written in an XML-based documentation format supported by the <strong class="pkg">GAP</strong> package <strong class="pkg">GAPDoc</strong> (see <a href="../../pkg/GAPDoc-1.6.3/doc/chap1.html#X7D4EE663818DA109"><span class="RefLink">GAPDoc: Introduction and Example</span></a>) which is used for the <strong class="pkg">GAP</strong> documentation itself.</p>
+<dd><p>This directory should contain the package's documentation, written in an XML-based documentation format supported by the <strong class="pkg">GAP</strong> package <strong class="pkg">GAPDoc</strong> (see <a href="../../pkg/GAPDoc-1.6.4/doc/chap1.html#X7D4EE663818DA109"><span class="RefLink">GAPDoc: Introduction and Example</span></a>) which is used for the <strong class="pkg">GAP</strong> documentation itself.</p>
 
-<p>The <strong class="pkg">Example</strong> package's documentation (see its <code class="file">doc</code> directory) may be used as a prototype. It consists of the master file <code class="file">main.xml</code>, further <code class="file">.xml</code> files for manual chapters (included in the manual via <code class="code">Include</code> directives in the master file) and the <strong class="pkg">GAP</strong> input file <code class="file">../makedocrel.g</code> which generates the manuals. Generally, one should also provide a <code class="file">manual.bib</code> BibTeX database file or an <code class="file">xml</code> file in the BibXMLext format (see <a href="../../pkg/GAPDoc-1.6.3/doc/chap7.html#X7FB8F6BD80D859D1"><span class="RefLink">GAPDoc: The BibXMLext Format</span></a>).</p>
+<p>The <strong class="pkg">Example</strong> package's documentation (see its <code class="file">doc</code> directory) may be used as a prototype. It consists of the master file <code class="file">main.xml</code>, further <code class="file">.xml</code> files for manual chapters (included in the manual via <code class="code">Include</code> directives in the master file) and the <strong class="pkg">GAP</strong> input file <code class="file">../makedocrel.g</code> which generates the manuals. Generally, one should also provide a <code class="file">manual.bib</code> BibTeX database file or an <code class="file">xml</code> file in the BibXMLext format (see <a href="../../pkg/GAPDoc-1.6.4/doc/chap7.html#X7FB8F6BD80D859D1"><span class="RefLink">GAPDoc: The BibXMLext Format</span></a>).</p>
 
 <p>One could also use the <strong class="pkg">AutoDoc</strong> which simplifies writing documentation by generating most of the <strong class="pkg">GAPDoc</strong> code automatically.</p>
 
@@ -718,7 +718,7 @@ packagedir/
 
 <p>Concerning the installation you should produce a <code class="file">README</code> file which gives a short description of the purpose of the package and contains proper instructions how to install your package. Again, check out some existing packages to get an idea how this could look like.</p>
 
-<p>Documentation for <strong class="pkg">GAP</strong> package should be prepared in an XML-based documentation format that is defined in and can be used with the <strong class="pkg">GAPDoc</strong> package (see <a href="../../pkg/GAPDoc-1.6.3/doc/chap1.html#X7D4EE663818DA109"><span class="RefLink">GAPDoc: Introduction and Example</span></a>).</p>
+<p>Documentation for <strong class="pkg">GAP</strong> package should be prepared in an XML-based documentation format that is defined in and can be used with the <strong class="pkg">GAPDoc</strong> package (see <a href="../../pkg/GAPDoc-1.6.4/doc/chap1.html#X7D4EE663818DA109"><span class="RefLink">GAPDoc: Introduction and Example</span></a>).</p>
 
 <p>There should be at least a text version of your documentation provided for use in the terminal running <strong class="pkg">GAP</strong> and some nicely printable version in <code class="code">.pdf</code> format. Many <strong class="pkg">GAP</strong> users like to browse the documentation in HTML format via their Web browser. As a package author, you are not obliged to provide an HTML version of your package manual, but if you use the <strong class="pkg">GAPDoc</strong> package you should have no trouble in producing one.</p>
 
@@ -772,7 +772,7 @@ true
 
 <p>Package files may follow the style used for the <strong class="pkg">GAP</strong> library. Every file in the <strong class="pkg">GAP</strong> library starts with a header that lists the filename, copyright, a short description of the file contents and the original authors of this file, and ends with a comment line <code class="code">#E</code>. Indentation in functions and the use of decorative spaces in the code are left to the decision of the authors of each file. Global (i.e. re-used elsewhere) comments usually are indented by two hash marks and two blanks, in particular, every declaration or method or function installation which is not only of local scope is separated by a header.</p>
 
-<p>Facilities to distribute a document over several files to allow the documentation for parts of some code to be stored in the same file as the code itself are provided by the <strong class="pkg">GAPDoc</strong> package (see <a href="../../pkg/GAPDoc-1.6.3/doc/chap4.html#X7A3355C07F57C280"><span class="RefLink">GAPDoc: Distributing a Document into Several Files</span></a>). The same approach is demonstrated by the <strong class="pkg">Example</strong> package. E.g. <code class="file">example/doc/example.xml</code> has the statement <code class="code">&lt;#Include Label="ListDirectory"&gt;</code> and <code class="file">example/lib/files.gd</code> contains</p>
+<p>Facilities to distribute a document over several files to allow the documentation for parts of some code to be stored in the same file as the code itself are provided by the <strong class="pkg">GAPDoc</strong> package (see <a href="../../pkg/GAPDoc-1.6.4/doc/chap4.html#X7A3355C07F57C280"><span class="RefLink">GAPDoc: Distributing a Document into Several Files</span></a>). The same approach is demonstrated by the <strong class="pkg">Example</strong> package. E.g. <code class="file">example/doc/example.xml</code> has the statement <code class="code">&lt;#Include Label="ListDirectory"&gt;</code> and <code class="file">example/lib/files.gd</code> contains</p>
 
 
 <div class="example"><pre>
@@ -789,7 +789,7 @@ true
 DeclareGlobalFunction( "ListDirectory" );
 </pre></div>
 
-<p>This is all put together in the file <code class="file">example/makedocrel.g</code> which builds the package documentation, calling <code class="func">MakeGAPDocDoc</code> (<a href="../../pkg/GAPDoc-1.6.3/doc/chap5.html#X826F530686F4D052"><span class="RefLink">GAPDoc: MakeGAPDocDoc</span></a>) with locations of library files containing parts of the documentation.</p>
+<p>This is all put together in the file <code class="file">example/makedocrel.g</code> which builds the package documentation, calling <code class="func">MakeGAPDocDoc</code> (<a href="../../pkg/GAPDoc-1.6.4/doc/chap5.html#X826F530686F4D052"><span class="RefLink">GAPDoc: MakeGAPDocDoc</span></a>) with locations of library files containing parts of the documentation.</p>
 
 <p>Alternatively, one could use the <strong class="pkg">AutoDoc</strong>, which simplifies writing documentation by generating most of the <strong class="pkg">GAPDoc</strong> code automatically. The equivalent of the fragment of the code above for <strong class="pkg">AutoDoc</strong> would look like</p>
 
@@ -1113,7 +1113,7 @@ For help, type: ?Example package
 ##  &lt;#/GAPDoc&gt;
 </pre></div>
 
-<p>notify <code class="func">MakeGAPDocDoc</code> (<a href="../../pkg/GAPDoc-1.6.3/doc/chap5.html#X826F530686F4D052"><span class="RefLink">GAPDoc: MakeGAPDocDoc</span></a>) that a part of the document is stored in <code class="file">PackageInfo.g</code> (see <code class="file">example/makedocrel.g</code>), read this data into the header of the main document via <code class="code">&lt;#Include Label="PKGVERSIONDATA"&gt;</code> directive and then use them via &amp;VERSION; and &amp;RELEASEDATE; entities almost everywhere where you need to refer to them (most commonly, in the title page and installation instructions).</p>
+<p>notify <code class="func">MakeGAPDocDoc</code> (<a href="../../pkg/GAPDoc-1.6.4/doc/chap5.html#X826F530686F4D052"><span class="RefLink">GAPDoc: MakeGAPDocDoc</span></a>) that a part of the document is stored in <code class="file">PackageInfo.g</code> (see <code class="file">example/makedocrel.g</code>), read this data into the header of the main document via <code class="code">&lt;#Include Label="PKGVERSIONDATA"&gt;</code> directive and then use them via &amp;VERSION; and &amp;RELEASEDATE; entities almost everywhere where you need to refer to them (most commonly, in the title page and installation instructions).</p>
 
 <p><a id="X8559D1FF7C9B7D14" name="X8559D1FF7C9B7D14"></a></p>
 

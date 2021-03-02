@@ -600,7 +600,7 @@
   
   [1X66.5-8 InfoPoly[101X
   
-  [33X[1;0Y[29X[2XInfoPoly[102X[32X info class[133X
+  [33X[1;0Y[29X[2XInfoPoly[102X [32X info class[133X
   
   [33X[0;0Yis the info class for univariate polynomials.[133X
   
@@ -1571,7 +1571,7 @@
   
   [1X66.18-4 InfoGroebner[101X
   
-  [33X[1;0Y[29X[2XInfoGroebner[102X[32X info class[133X
+  [33X[1;0Y[29X[2XInfoGroebner[102X [32X info class[133X
   
   [33X[0;0YThis info class gives information about Groebner basis calculations.[133X
   

@@ -1200,7 +1200,7 @@
   
   [1X61.12-2 NiceBasisFiltersInfo[101X
   
-  [33X[1;0Y[29X[2XNiceBasisFiltersInfo[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XNiceBasisFiltersInfo[102X [32X global variable[133X
   
   [33X[0;0YAn overview of all kinds of vector spaces that are currently handled by nice
   bases  is  given  by  the global list [10XNiceBasisFiltersInfo[110X. Examples of such

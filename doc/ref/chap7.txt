@@ -426,7 +426,7 @@
   
   [1X7.4-8 InfoWarning[101X
   
-  [33X[1;0Y[29X[2XInfoWarning[102X[32X info class[133X
+  [33X[1;0Y[29X[2XInfoWarning[102X [32X info class[133X
   
   [33X[0;0Yis an info class to which general warnings are sent at level 1, which is its
   default level. More specialised warnings are shown via calls of [2XInfo[102X ([14X7.4-6[114X)
@@ -563,7 +563,7 @@
   
   [1X7.6-4 time[101X
   
-  [33X[1;0Y[29X[2Xtime[102X[32X global variable[133X
+  [33X[1;0Y[29X[2Xtime[102X [32X global variable[133X
   
   [33X[0;0YIn the read-eval-print loop, [2Xtime[102X stores the number of milliseconds the last
   command  took  (see also [2Xmemory_allocated[102X ([14X7.7-2[114X) for the number of bytes of
@@ -589,7 +589,7 @@
   
   [1X7.7-2 memory_allocated[101X
   
-  [33X[1;0Y[29X[2Xmemory_allocated[102X[32X global variable[133X
+  [33X[1;0Y[29X[2Xmemory_allocated[102X [32X global variable[133X
   
   [33X[0;0YIn  the read-eval-print loop, [2Xmemory_allocated[102X stores the number of bytes of
   memory  allocated by the last completed statement (see also [2Xtime[102X ([14X7.6-4[114X) for
@@ -710,7 +710,7 @@
   [1X7.8-9 DisplayProfile[101X
   
   [33X[1;0Y[29X[2XDisplayProfile[102X( [[3Xfunctions[103X, ][[3Xmincount[103X, [3Xmintime[103X] ) [32X function[133X
-  [33X[1;0Y[29X[2XGAPInfo.ProfileThreshold[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XGAPInfo.ProfileThreshold[102X [32X global variable[133X
   
   [33X[0;0YCalled  without  arguments,  [2XDisplayProfile[102X displays the profile information
   for  profiled operations, methods and functions. If an argument [3Xfunctions[103X is

@@ -21,12 +21,6 @@
 
 BIND_GLOBAL( "GAPInfo", rec(
 
-# do not edit the following three lines. Occurences of `4.11.0' and `29-Feb-2020'
-# will be replaced by string matching by distribution wrapping scripts.
-    Version := MakeImmutable("4.11.0"),
-    Date := MakeImmutable("29-Feb-2020"),
-    NeedKernelVersion := MakeImmutable("4.11.0"),
-
 # Without the needed packages, GAP does not start.
     Dependencies := MakeImmutable(rec(
       NeededOtherPackages := [
@@ -117,6 +111,8 @@ BIND_GLOBAL( "GAPInfo", rec(
            help := [ "Disable the GAP read-evaluate-print loop (REPL)" ] ),
       rec( long := "nointeract", default := false,
            help := [ "Start GAP in non-interactive mode (disable read-evaluate-print loop (REPL) and break loop)" ] ),
+      rec( long := "systemfile", default := "",
+           help := [ "Read this file after 'lib/system.g'" ] ),
       rec( long := "bare", default := false,
            help := [ "Attempt to start GAP without even needed packages (developer tool)" ] ),
       ,
@@ -278,9 +274,11 @@ CallAndInstallPostRestore( function()
     local j, i, CommandLineOptions, opt, InitFiles, line, word, value, padspace;
 
     GAPInfo.KernelInfo:= KERNEL_INFO();
+    GAPInfo.Version := GAPInfo.KernelInfo.KERNEL_VERSION;
     GAPInfo.KernelVersion:= GAPInfo.KernelInfo.KERNEL_VERSION;
+    GAPInfo.Date := GAPInfo.KernelInfo.RELEASEDAY;
     GAPInfo.BuildVersion:= GAPInfo.KernelInfo.BUILD_VERSION;
-    GAPInfo.BuildDateTime:= GAPInfo.KernelInfo.BUILD_DATETIME;
+    GAPInfo.BuildDateTime := GAPInfo.KernelInfo.BUILD_DATETIME;
     GAPInfo.Architecture:= GAPInfo.KernelInfo.GAP_ARCHITECTURE;
 
     # The exact command line which called GAP as list of strings;
@@ -575,3 +573,11 @@ end);
 ##  </ManSection>
 ##
 #T really ???
+
+if GAPInfo.CommandLineOptions.systemfile <> ""
+   and not READ( GAPInfo.CommandLineOptions.systemfile ) then
+  PRINT_TO( "*errout*", "Could not read file \"",
+            GAPInfo.CommandLineOptions.systemfile,
+            "\" (command line option --systemfile).\n" );
+  QuitGap(1);
+fi;

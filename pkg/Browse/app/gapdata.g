@@ -217,7 +217,7 @@ BindGlobal( "BrowseGapData", function()
           select_entry:= rec(
             helplines:= [ "start the chosen Browse application" ],
             action:= function( t )
-              local oldreplay, replay, currlog, steps, pos;
+              local oldreplay, replay, currlog, steps, pos, ret;
 
               # Cut off the done replay part.
               if IsBound( BrowseData.defaults.dynamic.replay ) then
@@ -233,7 +233,13 @@ BindGlobal( "BrowseGapData", function()
               BrowseData.actions.QuitTable.action( t );
               pos:= t.dynamic.indexRow[ t.dynamic.selectedEntry[1] ] / 2;
               if BrowseData.GapDataOverviews[ pos ][3] then
-                t.dynamic.Return:= BrowseData.GapDataOverviews[ pos ][2]();
+                # We want to return a value if there is one.
+                ret:= CallFuncListWrap(
+                          BrowseData.GapDataOverviews[ pos ][2], [ ] );
+                if Length( ret ) = 1 then
+                  # There was a return value.
+                  t.dynamic.Return:= ret[1];
+                fi;
               else
                 BrowseData.GapDataOverviews[ pos ][2]();
               fi;

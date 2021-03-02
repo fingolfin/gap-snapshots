@@ -151,7 +151,7 @@
   
   [1X6.1-11 MAX_INTERRUPT[101X
   
-  [33X[1;0Y[29X[2XMAX_INTERRUPT[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XMAX_INTERRUPT[102X [32X global variable[133X
   
   [33X[0;0YThe global variable [2XMAX_INTERRUPT[102X is an integer containing the maximum value
   for    the    interrupt    arguments    to   [2XInterruptThread[102X   ([14X6.1-8[114X)   and

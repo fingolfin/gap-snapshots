@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    singular
+  </Title>
+  <Subtitle>
+    A &GAP; interface to Singular
+  </Subtitle>
+  <Version>
+    2020.12.18
+  </Version>
+  <Author>
+    Marco Costantini<Alt Only="LaTeX"><Br/></Alt>
+
+  </Author>
+  <Author>
+    Willem Adriaan de Graaf<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Willem de Graaf<Br/>
+Dipartimento di Matematica<Br/>
+Università degli Studi di Trento<Br/>
+I-38050 Povo (Trento)<Br/>
+Italy<Br/>
+</Address>
+<Email>degraaf@science.unitn.it</Email>
+<Homepage>https://www.science.unitn.it/~degraaf/</Homepage>
+
+  </Author>
+  <Date>
+    18 December 2020
+  </Date>
+  </TitlePage>

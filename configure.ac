@@ -2,13 +2,32 @@ dnl
 dnl Setup autoconf
 dnl
 AC_PREREQ([2.68])
-AC_INIT([GAP], [4.dev], [support@gap-system.org], [gap], [https://www.gap-system.org/])
+
+m4_define([gap_version], [4.11.1])
+m4_define([gap_releaseday], [2021-03-02])
+m4_define([gap_releaseyear], [2021])
+
+m4_define([gap_tarname], [gap-gap_version])
+
+AC_INIT([GAP],
+        gap_version,
+        [support@gap-system.org],
+        gap_tarname,
+        [https://www.gap-system.org/])
 
 AC_CONFIG_SRCDIR([src/gap.c])
 AC_CONFIG_AUX_DIR([cnf])
 
 AC_CONFIG_HEADERS([gen/config.h:src/config.h.in])
 AC_CONFIG_COMMANDS([gen/stamp-h], [echo timestamp > gen/stamp-h])
+
+dnl note that the final version used by the GAP kernel is GAP_BUILD_VERSION
+dnl and is computed by cnf/GAP-VERSION-GEN, which takes git commit hashes into
+dnl account to produce a more fine-grained version string for GAP development
+dnl versions.
+AC_SUBST([GAP_VERSION], "gap_version")
+AC_SUBST([GAP_RELEASEDAY], "gap_releaseday")
+AC_SUBST([GAP_RELEASEYEAR], "gap_releaseyear")
 
 dnl
 dnl Get canonical host information
@@ -214,6 +233,27 @@ AC_ARG_ENABLE([debug],
 AC_MSG_CHECKING([whether to enable debug mode])
 AC_MSG_RESULT([$enable_debug])
 
+dnl
+dnl Maintainer mode (on by default) controls whether our build system
+dnl automatically regenerates `configure` if `configure.ac` or any of its
+dnl other sources changes, by running `autoconf`. Similarly, it regenerates
+dnl `src/config.h.in` if necessary by running `autoheader`.
+dnl
+dnl While this is very useful when developing GAP, it can be problematic if
+dnl a user wants to compile a release version of GAP but does not have
+dnl autoconf installed; or if for some reason the GAP source code is readonly
+dnl and they want to run an out-of-tree build. Thus we allow turning this
+dnl off.
+AC_ARG_ENABLE([maintainer-mode],
+    [AS_HELP_STRING([--disable-maintainer-mode], [disable maintainer mode])],
+    [],
+    [enable_maintainer_mode=yes]
+    )
+AC_MSG_CHECKING([whether to enable maintainer-mode mode])
+AC_MSG_RESULT([$enable_maintainer_mode])
+AC_SUBST([MAINTAINER_MODE], [$enable_maintainer_mode])
+
+dnl
 AC_ARG_ENABLE([memory-checking],
     [AS_HELP_STRING([--enable-memory-checking], [enable memory checking])],
     [AC_DEFINE([GAP_MEM_CHECK], [1], [define if building with memory checking])],
@@ -222,6 +262,7 @@ AC_ARG_ENABLE([memory-checking],
 AC_MSG_CHECKING([whether to enable memory checking])
 AC_MSG_RESULT([$enable_memory_checking])
 
+dnl
 AC_ARG_ENABLE([valgrind],
     [AS_HELP_STRING([--enable-valgrind], [enable valgrind extensions to GASMAN])],
     [AC_DEFINE([GAP_MEMORY_CANARY], [1], [define if building with valgrind extensions])],
@@ -788,6 +829,8 @@ dnl
 dnl Output everything
 dnl
 AC_CONFIG_FILES([GNUmakefile])
+AC_CONFIG_FILES([CITATION])
 AC_CONFIG_FILES([doc/make_doc], [chmod +x doc/make_doc])
+AC_CONFIG_FILES([doc/versiondata])
 AC_CONFIG_FILES([gac:cnf/gac.in], [chmod +x gac])
 AC_OUTPUT

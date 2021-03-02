@@ -14,6 +14,8 @@
 **  and gasman.c for two other garbage collector implementations.
 **/
 
+#define _GNU_SOURCE
+
 #include "julia_gc.h"
 
 #include "fibhash.h"
@@ -29,6 +31,7 @@
 
 #include "bags.inc"
 
+#include <dlfcn.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -37,6 +40,13 @@
 #include <julia.h>
 #include <julia_gcext.h>
 
+// import jl_get_current_task from julia_internal.h, which unfortunately
+// isn't installed as part of a typical Julia installation
+JL_DLLEXPORT jl_value_t *jl_get_current_task(void);
+
+// jl_n_threads is not defined in Julia headers, but its existence is relied
+// on in the Base module. Thus, defining it as extern ought to be portable.
+extern int jl_n_threads;
 
 /****************************************************************************
 **
@@ -189,16 +199,22 @@ static void JFinalizer(jl_value_t * obj)
         TabFreeFuncBags[tnum]((Bag)&contents);
 }
 
-static jl_module_t *   Module;
 static jl_datatype_t * datatype_mptr;
 static jl_datatype_t * datatype_bag;
 static jl_datatype_t * datatype_largebag;
-static UInt            StackAlignBags;
+static UInt            StackAlignBags = sizeof(void *);
 static Bag *           GapStackBottom;
 static jl_ptls_t       JuliaTLS, SaveTLS;
+static Int             is_threaded;
+static jl_task_t *     RootTaskOfMainThread;
 static size_t          max_pool_obj_size;
 static UInt            YoungRef;
 static int             FullGC;
+
+void SetJuliaTLS(void)
+{
+    JuliaTLS = jl_get_ptls_states();
+}
 
 #if !defined(SCAN_STACK_FOR_MPTRS_ONLY)
 typedef struct {
@@ -278,11 +294,13 @@ static void * AllocateBagMemory(UInt type, UInt size)
     return result;
 }
 
+
 TNumMarkFuncBags TabMarkFuncBags[NUM_TYPES];
 
 void InitMarkFuncBags(UInt type, TNumMarkFuncBags mark_func)
 {
     // HOOK: set mark function for type `type`.
+    GAP_ASSERT(TabMarkFuncBags[type] == MarkAllSubBagsDefault);
     TabMarkFuncBags[type] = mark_func;
 }
 
@@ -366,6 +384,38 @@ void MarkJuliaObj(void * obj)
 // from which freed objects are then marked. Hence, we add additional checks
 // when traversing GAP master pointer and bag objects that this happens
 // only for live objects.
+//
+// We use "bottom" to refer to the origin of the stack, and "top" to describe
+// the current stack pointer. Confusingly, on most contemporary architectures,
+// the stack grows "downwards", which means that the "bottom" of the stack is
+// the highest address and "top" is the lowest. The stack is contained in a
+// stack buffer, which has a start and end (and the end of the stack buffer
+// coincides with the bottom of the stack).
+//
+//   +------------------------------------------------+
+//   | guard |    unused area          | active stack |
+//   | pages |  <--- growth ---        | frames       |
+//   +------------------------------------------------+
+//   ^                                 ^              ^
+//   |                                 |              |
+// start                              top         bottom/end
+//
+// All stacks in Julia are associated with tasks and we can use
+// jl_task_stack_buffer() to retrieve the buffer information (start and size)
+// for that stack. That said, in a couple of cases we make adjustments.
+//
+// 1. The stack buffer of the root task of the main thread, when started
+//    from GAP can extend past the point where Julia believes its bottom is.
+//    Therefore, for that stack, we use GapBottomStack instead.
+// 2. For the current task of the current thread, we know where exactly the
+//    top is and do not need to scan the entire stack buffer.
+//
+// As seen in the diagram above, the stack buffer can include guard pages,
+// which trigger a segmentation fault when accessed. As the extent of
+// guard pages is usually not known, we intercept segmentation faults and
+// scan the stack buffer from its end until we reach either the start of
+// the stack buffer or receive a segmentation fault due to hitting a guard
+// page.
 
 static void TryMark(void * p)
 {
@@ -458,23 +508,95 @@ static void MarkFromList(PtrArray * arr)
 
 static TaskInfoTree * task_stacks = NULL;
 
+// We need to access the safe_restore member of the Julia TLS. Unfortunately,
+// its offset changes with the Julia version. In order to be able to produce
+// a single gap executable resp. libgap shared library which works across
+// multiple versions, we do the following:
+// - Julia 1.3 and 1.4 are the reference, the relative offset there hence is
+//   defined to be 0 (the absolute offset of safe_restore is 6840 on Linux and
+//   6816 on macOS)
+// - Julia 1.5 uses relative offset 8 (absolute offset is 6848 reps. 6824)
+// - Julia 1.6 added APIs to get and set the safe_restore value
+static int safe_restore_offset;
+
+static void set_safe_restore_with_offset(jl_jmp_buf * buf)
+{
+    jl_ptls_t tls = (jl_ptls_t)((char *)JuliaTLS + safe_restore_offset);
+    tls->safe_restore = buf;
+}
+
+static jl_jmp_buf * get_safe_restore_with_offset(void)
+{
+    jl_ptls_t tls = (jl_ptls_t)((char *)JuliaTLS + safe_restore_offset);
+    return tls->safe_restore;
+}
+
+static void (*set_safe_restore)(jl_jmp_buf * buf);
+static jl_jmp_buf * (*get_safe_restore)(void);
+
+static void SetupSafeRestoreHandlers(void)
+{
+    get_safe_restore = dlsym(RTLD_DEFAULT, "jl_get_safe_restore");
+    set_safe_restore = dlsym(RTLD_DEFAULT, "jl_set_safe_restore");
+
+    // if the new API is available, just use it!
+    if (get_safe_restore && set_safe_restore)
+        return;
+
+    GAP_ASSERT(!set_safe_restore && !get_safe_restore);
+
+    // compute safe_restore_offset; at this point we really kinda
+    // know that the Julia version must be 1.3, 1.4 or 1.5. Deal with that
+    if (jl_ver_major() != 1 || jl_ver_minor() < 3 || jl_ver_minor() > 5)
+        jl_errorf("Julia version %s is not supported by this GAP",
+                  jl_ver_string());
+
+    switch (JULIA_VERSION_MINOR * 10 + jl_ver_minor()) {
+    case 33:
+    case 34:
+    case 43:
+    case 44:
+    case 55:
+        safe_restore_offset = 0;
+        break;
+    case 35:
+    case 45:
+        safe_restore_offset = 8;
+        break;
+    case 53:
+    case 54:
+        safe_restore_offset = -8;
+        break;
+    default:
+        // We should never actually get here...
+        jl_errorf("GAP compiled against Julia %s, but loaded with Julia %s",
+                  JULIA_VERSION_STRING, jl_ver_string());
+    }
+
+    // finally set our alternate get/set functions
+    get_safe_restore = get_safe_restore_with_offset;
+    set_safe_restore = set_safe_restore_with_offset;
+}
+
 static void SafeScanTaskStack(PtrArray * stack, void * start, void * end)
 {
-    volatile jl_jmp_buf * old_safe_restore =
-        (volatile jl_jmp_buf *)JuliaTLS->safe_restore;
+    volatile jl_jmp_buf * old_safe_restore = get_safe_restore();
     jl_jmp_buf exc_buf;
     if (!jl_setjmp(exc_buf, 0)) {
-        // The bottom of the stack may be protected with
-        // guard pages; accessing these results in segmentation
-        // faults. Julia catches those segmentation faults and
-        // longjmps to JuliaTLS->safe_restore; we use this
-        // mechamism to abort stack scanning when a protected
-        // page is hit. For this to work, we must scan the stack
-        // from top to bottom, so we see any guard pages last.
-        JuliaTLS->safe_restore = &exc_buf;
+        // The start of the stack buffer may be protected with guard
+        // pages; accessing these results in segmentation faults.
+        // Julia catches those segmentation faults and longjmps to
+        // JuliaTLS->safe_restore; we use this mechanism to abort stack
+        // scanning when a protected page is hit. For this to work, we
+        // must scan the stack from the end of the stack buffer towards
+        // the start (i.e. in the direction in which the stack grows).
+        // Note that this will by necessity also scan the unused area
+        // of the stack buffer past the stack top. We therefore also
+        // optimize scanning for areas that contain only null bytes.
+        set_safe_restore(&exc_buf);
         FindLiveRangeReverse(stack, start, end);
     }
-    JuliaTLS->safe_restore = (jl_jmp_buf *)old_safe_restore;
+    set_safe_restore((jl_jmp_buf *)old_safe_restore);
 }
 
 static void
@@ -514,7 +636,7 @@ ScanTaskStack(int rescan, jl_task_t * task, void * start, void * end)
     MarkFromList(stack);
 }
 
-static void TryMarkRange(void * start, void * end)
+static NOINLINE void TryMarkRange(void * start, void * end)
 {
     if (lt_ptr(end, start)) {
         SWAP(void *, start, end);
@@ -548,15 +670,9 @@ void CHANGED_BAG(Bag bag)
 
 static void GapRootScanner(int full)
 {
-    // Mark our Julia module (this contains references to our custom data
-    // types, which thus also will not be collected prematurely).
-    // We call jl_gc_mark_queue_obj() directly here, because we know that
-    // Module is a valid Julia object at this point, so further checks
-    // in JMark() can be skipped.
-    jl_gc_mark_queue_obj(JuliaTLS, (jl_value_t *)Module);
-    jl_task_t * task = JuliaTLS->current_task;
+    jl_task_t * task = (jl_task_t *)jl_get_current_task();
     size_t      size;
-    int         tid;
+    int         tid;    // unused
     // We figure out the end of the stack from the current task. While
     // `stack_bottom` is passed to InitBags(), we cannot use that if
     // current_task != root_task.
@@ -567,29 +683,30 @@ static void GapRootScanner(int full)
     //
     // 1. GAP is not being used as a library, but is the main program
     //    and in charge of the main() function.
-    // 2. The stack of the current task is that of the main task of the
-    //    main thread.
+    // 2. The stack of the current task is that of the root task of the
+    //    main thread (which has thread id 0).
     //
-    // The reason is that if Julia is being initialized from GAP, it
-    // cannot always reliably find the top of the stack for that task,
-    // so we have to fall back to GAP for that.
-    if (!IsUsingLibGap() && JuliaTLS->tid == 0 &&
-        JuliaTLS->root_task == task) {
+    // The reason is that when called from GAP, jl_init() does not
+    // reliably know where the bottom of the initial stack is. However,
+    // GAP does have that information, so we use that instead.
+    if (task == RootTaskOfMainThread) {
         stackend = (char *)GapStackBottom;
     }
 
-    // allow installing a custom marking function. This is used for
+    // Allow installing a custom marking function. This is used for
     // integrating GAP (possibly linked as a shared library) with other code
     // bases which use their own form of garbage collection. For example,
     // with Python (for SageMath).
     if (ExtraMarkFuncBags)
         (*ExtraMarkFuncBags)();
 
-    // scan the stack for further object references, and mark them
-    syJmp_buf registers;
-    sySetjmp(registers);
-    TryMarkRange(registers, (char *)registers + sizeof(syJmp_buf));
-    TryMarkRange((char *)registers + sizeof(syJmp_buf), stackend);
+    // We scan the stack of the current task from the stack pointer
+    // towards the stack bottom, ensuring that we also scan any
+    // references stored in registers.
+    jmp_buf registers;
+    setjmp(registers);
+    TryMarkRange(registers, (char *)registers + sizeof(jmp_buf));
+    TryMarkRange((char *)registers + sizeof(jmp_buf), stackend);
 
     // mark all global objects
     for (Int i = 0; i < GlobalCount; i++) {
@@ -600,15 +717,48 @@ static void GapRootScanner(int full)
     }
 }
 
-static void GapTaskScanner(jl_task_t * task, int root_task)
+static void (*active_task_stack)(jl_task_t *task,
+                                 char **active_start, char **active_end,
+                                 char **total_start, char **total_end);
+
+static void
+active_task_stack_fallback(jl_task_t *task,
+                                 char **active_start, char **active_end,
+                                 char **total_start, char **total_end)
 {
     size_t size;
     int    tid;
-    char * stack = (char *)jl_task_stack_buffer(task, &size, &tid);
+    *active_start = (char *)jl_task_stack_buffer(task, &size, &tid);
+
+    if (*active_start) {
+        // task->copy_stack is 0 if the COPY_STACKS implementation is
+        // not used or 1 if the task stack does not point to valid
+        // memory. If it is neither zero nor one, then we can use that
+        // value to determine the actual top of the stack.
+        switch (task->copy_stack) {
+        case 0:
+            // do not adjust stack.
+            break;
+        case 1:
+            // stack buffer is not valid memory.
+            return;
+        default:
+            // We know which part of the task stack is actually used,
+            // so we shorten the range we have to scan.
+            *active_start = *active_start + size - task->copy_stack;
+            size = task->copy_stack;
+        }
+        *active_end = *active_start + size;
+    }
+}
+
+static void GapTaskScanner(jl_task_t * task, int root_task)
+{
     // If it is the current task, it has been scanned by GapRootScanner()
     // already.
-    if (task == JuliaTLS->current_task)
+    if (task == (jl_task_t *)jl_get_current_task())
         return;
+
     int rescan = 1;
     if (!FullGC) {
         // This is a temp hack to work around a problem with the
@@ -625,14 +775,21 @@ static void GapTaskScanner(jl_task_t * task, int root_task)
         if (tag->bits.gc & 2)
             rescan = 0;
     }
-    if (stack && tid < 0) {
-        if (task->copy_stack) {
-            // We know which part of the task stack is actually used,
-            // so we shorten the range we have to scan.
-            stack = stack + size - task->copy_stack;
-            size = task->copy_stack;
+
+    char * active_start, * active_end, * total_start, * total_end;
+    active_task_stack(task, &active_start, &active_end, &total_start, &total_end);
+
+    if (active_start) {
+        if (task == RootTaskOfMainThread) {
+            active_end = (char *)GapStackBottom;
         }
-        ScanTaskStack(rescan, task, stack, stack + size);
+
+        // Unlike the stack of the current task that we scan in
+        // GapRootScanner, we do not know the stack pointer. We
+        // therefore use a separate routine that scans from the
+        // stack bottom until we reach the other end of the stack
+        // or a guard page.
+        ScanTaskStack(rescan, task, active_start, active_end);
     }
 }
 
@@ -645,7 +802,7 @@ static void PreGCHook(int full)
     // a thread-local variable.
     FullGC = full;
     SaveTLS = JuliaTLS;
-    JuliaTLS = jl_get_ptls_states();
+    SetJuliaTLS();
     // This is the same code as in VarsBeforeCollectBags() for GASMAN.
     // It is necessary because ASS_LVAR() and related functionality
     // does not call CHANGED_BAG() for performance reasons. CHANGED_BAG()
@@ -709,28 +866,18 @@ static uintptr_t BagMarkFunc(jl_ptls_t ptls, jl_value_t * obj)
     return YoungRef;
 }
 
+// Initialize the integration with Julia's garbage collector; in particular,
+// create Julia types for use in our allocations. The types will be stored
+// in the given 'module', and the MPtr type will be a subtype of 'parent'.
 //
-// This function is called from GAP.jl to set the super type our custom Julia
-// types to GAP.GapObj
-//
-void GAP_register_GapObj(jl_datatype_t * gapobj_type)
-{
-    if (!gapobj_type || !jl_is_datatype(gapobj_type)) {
-        Panic("GAP_register_GapObj: GapObj is not a datatype");
-    }
-
-    // DO THE GREAT MAGIC HACK (yes we are bad citizens :/) and
-    // change the super type of ForeignGAP.MPtr to GapObj
-    datatype_mptr->super = gapobj_type;
-    jl_gc_wb(datatype_mptr, datatype_mptr->super);
-}
-
-void InitBags(UInt initial_size, Bag * stack_bottom, UInt stack_align)
+// If 'module' is NULL then a new module 'ForeignGAP' is created & exported.
+// If 'parent' is NULL then 'jl_any_type' is used.
+void GAP_InitJuliaMemoryInterface(jl_module_t *   module,
+                                  jl_datatype_t * parent)
 {
     // HOOK: initialization happens here.
-    GapStackBottom = stack_bottom;
     for (UInt i = 0; i < NUM_TYPES; i++) {
-        TabMarkFuncBags[i] = MarkAllSubBags;
+        TabMarkFuncBags[i] = MarkAllSubBagsDefault;
     }
     // These callbacks need to be set before initialization so
     // that we can track objects allocated during `jl_init()`.
@@ -744,42 +891,19 @@ void InitBags(UInt initial_size, Bag * stack_bottom, UInt stack_align)
     jl_gc_enable_conservative_gc_support();
     jl_init();
 
-    Module = jl_new_module(jl_symbol("ForeignGAP"));
-    Module->parent = jl_main_module;
+    SetJuliaTLS();
+    SetupSafeRestoreHandlers();
 
-    // If we were loaded from GAP.jl, then try to retrieve GapObj from it.
-    // We do this by extracting it from the relevant instances of the GAP.jl
-    // module, which we get from the global variable `__JULIAGAPMODULE` if
-    // present.
-    //
-    // Newer versions of GAP.jl do not need this mechanism and instead call
-    // GAP_register_GapObj.
-    jl_module_t *   parent_module;
-    jl_datatype_t * gapobj_type;
-
-    parent_module = (jl_module_t *)jl_get_global(
-        jl_main_module, jl_symbol("__JULIAGAPMODULE"));
-    if (parent_module) {
-        if (!jl_is_module(parent_module)) {
-            Panic("__JULIAGAPMODULE is set in julia main module, but does "
-                  "not point to a module");
-        }
-
-        // retrieve GapObj abstract julia type
-        gapobj_type =
-            (jl_datatype_t *)jl_get_global(parent_module, jl_symbol("GapObj"));
-        if (!gapobj_type) {
-            Panic("GapObj type is not bound in GAP module");
-        }
-        if (!jl_is_datatype(gapobj_type)) {
-            Panic("GapObj in the GAP module is not a datatype");
-        }
-    }
-    else {
-        gapobj_type = jl_any_type;
+    // With Julia >= 1.6 we want to use `jl_active_task_stack` as introduced
+    // in https://github.com/JuliaLang/julia/pull/36823 but for older
+    // versions, we need fall back to `jl_task_stack_buffer`.
+    active_task_stack = dlsym(RTLD_DEFAULT, "jl_active_task_stack");
+    if (!active_task_stack) {
+        active_task_stack = active_task_stack_fallback;
     }
 
-    JuliaTLS = jl_get_ptls_states();
+    is_threaded = jl_n_threads > 1;
+
     // These callbacks potentially require access to the Julia
     // TLS and thus need to be installed after initialization.
     jl_gc_set_cb_root_scanner(GapRootScanner, 1);
@@ -788,27 +912,56 @@ void InitBags(UInt initial_size, Bag * stack_bottom, UInt stack_align)
     jl_gc_set_cb_post_gc(PostGCHook, 1);
     // jl_gc_enable(0); /// DEBUGGING
 
+    if (module == 0) {
+        jl_sym_t * sym = jl_symbol("ForeignGAP");
+        module = jl_new_module(sym);
+        module->parent = jl_main_module;
+        // make the module available in the Main module (this also ensures
+        // that it won't be GC'ed prematurely, and hence also our datatypes
+        // won't be GCed)
+        jl_set_const(jl_main_module, sym, (jl_value_t *)module);
+    }
 
-    jl_set_const(jl_main_module, jl_symbol("ForeignGAP"),
-                 (jl_value_t *)Module);
-    datatype_mptr = jl_new_foreign_type(
-        jl_symbol("MPtr"), Module, gapobj_type, MPtrMarkFunc, NULL, 1, 0);
-    datatype_bag = jl_new_foreign_type(jl_symbol("Bag"), Module, jl_any_type,
+    if (parent == 0) {
+        parent = jl_any_type;
+    }
+
+    // create and store data type for master pointers
+    datatype_mptr = jl_new_foreign_type(jl_symbol("MPtr"), module, parent,
+                                        MPtrMarkFunc, NULL, 1, 0);
+    GAP_ASSERT(jl_is_datatype(datatype_mptr));
+    jl_set_const(module, jl_symbol("MPtr"), (jl_value_t *)datatype_mptr);
+
+    // create and store data type for small bags
+    datatype_bag = jl_new_foreign_type(jl_symbol("Bag"), module, jl_any_type,
                                        BagMarkFunc, JFinalizer, 1, 0);
-    datatype_largebag =
-        jl_new_foreign_type(jl_symbol("LargeBag"), Module, jl_any_type,
-                            BagMarkFunc, JFinalizer, 1, 1);
+    GAP_ASSERT(jl_is_datatype(datatype_bag));
+    jl_set_const(module, jl_symbol("Bag"), (jl_value_t *)datatype_bag);
 
-    // export datatypes to Julia level
-    jl_set_const(Module, jl_symbol("MPtr"), (jl_value_t *)datatype_mptr);
-    jl_set_const(Module, jl_symbol("Bag"), (jl_value_t *)datatype_bag);
-    jl_set_const(Module, jl_symbol("LargeBag"),
+    // create and store data type for large bags
+    datatype_largebag =
+        jl_new_foreign_type(jl_symbol("LargeBag"), module, jl_any_type,
+                            BagMarkFunc, JFinalizer, 1, 1);
+    GAP_ASSERT(jl_is_datatype(datatype_largebag));
+    jl_set_const(module, jl_symbol("LargeBag"),
                  (jl_value_t *)datatype_largebag);
 
-    GAP_ASSERT(jl_is_datatype(datatype_mptr));
-    GAP_ASSERT(jl_is_datatype(datatype_bag));
-    GAP_ASSERT(jl_is_datatype(datatype_largebag));
+}
+
+void InitBags(UInt initial_size, Bag * stack_bottom, UInt stack_align)
+{
     StackAlignBags = stack_align;
+    GapStackBottom = stack_bottom;
+
+    if (!datatype_mptr) {
+        GAP_InitJuliaMemoryInterface(0, 0);
+    }
+
+    // If we are embedding Julia in GAP, remember the root task
+    // of the main thread. The extent of the stack buffer of that
+    // task is calculated a bit differently than for other tasks.
+    if (!IsUsingLibGap())
+        RootTaskOfMainThread = (jl_task_t *)jl_get_current_task();
 }
 
 UInt CollectBags(UInt size, UInt full)
@@ -822,6 +975,10 @@ void RetypeBag(Bag bag, UInt new_type)
 {
     BagHeader * header = BAG_HEADER(bag);
     UInt        old_type = header->type;
+
+    // exit early if nothing is to be done
+    if (old_type == new_type)
+        return;
 
 #ifdef COUNT_BAGS
     /* update the statistics      */
@@ -883,6 +1040,8 @@ Bag NewBag(UInt type, UInt size)
     if (size == 0)
         alloc_size++;
 
+    if (is_threaded)
+        SetJuliaTLS();
 #if defined(SCAN_STACK_FOR_MPTRS_ONLY)
     bag = jl_gc_alloc_typed(JuliaTLS, sizeof(void *), datatype_mptr);
     SET_PTR_BAG(bag, 0);
@@ -942,7 +1101,6 @@ UInt ResizeBag(Bag bag, UInt new_size)
     // update the size
     header->size = new_size;
 
-    // return success
     return 1;
 }
 

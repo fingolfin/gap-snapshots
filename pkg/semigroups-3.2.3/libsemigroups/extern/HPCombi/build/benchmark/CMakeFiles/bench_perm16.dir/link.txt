@@ -1,1 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/c++   -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/bench_perm16.dir/bench_perm16.cpp.o  -o bench_perm16 -lbenchmark -lpthread 

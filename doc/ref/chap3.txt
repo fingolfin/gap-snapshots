@@ -593,7 +593,7 @@
   
   [1X3.5-1 GAPInfo[101X
   
-  [33X[1;0Y[29X[2XGAPInfo[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XGAPInfo[102X [32X global variable[133X
   
   [33X[0;0YSeveral global values control the [5XGAP[105X session, such as the command line, the
   architecture,  or  the information about available and loaded packages. Many

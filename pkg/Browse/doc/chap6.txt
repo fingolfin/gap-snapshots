@@ -313,7 +313,7 @@
   
   [1X6.5 [33X[0;0YTable of Contents of [5XAtlasRep[105X[101X[1X[133X[101X
   
-  [33X[0;0YThe  [5XGAP[105X  package  [5XAtlasRep[105X  (see [WPN+07]) is an interface to a database of
+  [33X[0;0YThe  [5XGAP[105X  package  [5XAtlasRep[105X  (see [WPN+19]) is an interface to a database of
   representations and related data. The table of contents of this database can
   be  displayed via the function [2XDisplayAtlasInfo[102X ([14XAtlasRep: DisplayAtlasInfo[114X)
   of  this  package.  The  [5XBrowse[105X package provides an alternative based on the
@@ -328,17 +328,17 @@
   [6XReturns:[106X  [33X[0;10Ythe list of [21Xclicked[121X info records.[133X
   
   [33X[0;0YThis  function  shows the information available via the [5XGAP[105X package [5XAtlasRep[105X
-  in  a  browse  table,  cf. Section [14X'AtlasRep: Accessing Data of the AtlasRep
-  Package'[114X in the [5XAtlasRep[105X manual.[133X
+  in  a  browse  table, cf. Section [14X'AtlasRep: Accessing Data via AtlasRep'[114X in
+  the [5XAtlasRep[105X manual.[133X
   
-  [33X[0;0YThe  optional  arguments  can  be  used  to  restrict the table to public or
-  private data, or to show an overview for one particular group. The arguments
-  are  the  same as for [2XDisplayAtlasInfo[102X ([14XAtlasRep: DisplayAtlasInfo[114X), see the
-  documentation of this function for details. (Note that additional conditions
-  such as [2XIsPermGroup[102X ([14XReference: IsPermGroup[114X) can be entered also in the case
-  that  no  [3Xgapname[103X is given. In this situation, the additional conditions are
-  evaluated for the [21Xsecond level tables[121X that are opened by [21Xclicking[121X on a table
-  row or entry.)[133X
+  [33X[0;0YThe  optional  arguments  can  be used to restrict the table to core data or
+  data  extensions,  or  to  show  an  overview  for one particular group. The
+  arguments are the same as for [2XDisplayAtlasInfo[102X ([14XAtlasRep: DisplayAtlasInfo[114X),
+  see  the  documentation  of this function for details. (Note that additional
+  conditions  such as [2XIsPermGroup[102X ([14XReference: IsPermGroup[114X) can be entered also
+  in  the  case  that  no  [3Xgapname[103X is given. In this situation, the additional
+  conditions  are  evaluated  for  the  [21Xsecond level tables[121X that are opened by
+  [21Xclicking[121X on a table row or entry.)[133X
   
   [33X[0;0YWhen one [21Xclicks[121X on one of the table rows or entries then a browse table with
   an  overview  of  the  information  available  for  this group is shown, and
@@ -379,6 +379,7 @@
     [4X[25X>[125X [27X       "Q",           # quit the second level table,[127X[104X
     [4X[25X>[125X [27X       "Q" ) );       # and quit the application.[127X[104X
     [4X[25Xgap>[125X [27Xif IsBound( BrowseAtlasInfo ) and IsBound( AtlasProgramInfo ) then[127X[104X
+    [4X[25X>[125X [27X     SetUserPreference( "AtlasRep", "AtlasRepMarkNonCoreData", "" );[127X[104X
     [4X[25X>[125X [27X     tworeps:= BrowseAtlasInfo();[127X[104X
     [4X[25X>[125X [27X   else[127X[104X
     [4X[25X>[125X [27X     tworeps:= [ fail ];[127X[104X
@@ -388,8 +389,8 @@
     [4X[25X>[125X [27X     Print( "no access to the Web ATLAS\n" );[127X[104X
     [4X[25X>[125X [27X   else[127X[104X
     [4X[25X>[125X [27X     Print( List( tworeps, x -> x.identifier[1] ), "\n" );[127X[104X
-    [4X[28X[ "A5", "A6" ][128X[104X
     [4X[25X>[125X [27X   fi;[127X[104X
+    [4X[28X[ "A5", "A6" ][128X[104X
   [4X[32X[104X
   
   [33X[0;0Y[13XImplementation remarks[113X: The first browse table shown has a static header, no
@@ -970,7 +971,7 @@
   [30X    [33X[0;6Ythe   current   AMS  Mathematics  Subject  Classification  codes  (see
         [2XBrowseMSC[102X ([14X6.7-3[114X)),[133X
   
-  [30X    [33X[0;6Ythe contents of the [5XAtlasRep[105X package [WPN+07] (only if this package is
+  [30X    [33X[0;6Ythe contents of the [5XAtlasRep[105X package [WPN+19] (only if this package is
         loaded, see Section [14X6.5[114X),[133X
   
   [30X    [33X[0;6Ythe Conway polynomials in [5XGAP[105X (calls [10XBrowseConwayPolynomials()[110X),[133X
@@ -1045,16 +1046,16 @@
   
   [1X6.11-2 BrowseGapDataAdd[101X
   
-  [33X[1;0Y[29X[2XBrowseGapDataAdd[102X( [3Xtitle[103X, [3Xcall[103X, [3Xret[103X, [3Xdocumentation[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XBrowseGapDataAdd[102X( [3Xtitle[103X, [3Xcall[103X[, [3Xret[103X], [3Xdocumentation[103X ) [32X function[133X
   
   [33X[0;0YThis  function  extends the list [10XBrowseData.GapDataOverviews[110X by a new entry.
   The list is used by [2XBrowseGapData[102X ([14X6.11-1[114X).[133X
   
   [33X[0;0Y[3Xtitle[103X  must be a string of length at most [22X76[122X; it will be shown in the browse
   table that is opened by [2XBrowseGapData[102X ([14X6.11-1[114X). [3Xcall[103X must be a function that
-  takes  no  arguments;  it  will be called when [3Xtitle[103X is [21Xclicked[121X. [3Xret[103X must be
-  [9Xtrue[109X  if  [3Xcall[103X has a return value and if [2XBrowseGapData[102X ([14X6.11-1[114X) shall return
-  this  value,  and  [9Xfalse[109X  otherwise.  [3Xdocumentation[103X  must  be  a string that
+  takes  no arguments; it will be called when [3Xtitle[103X is [21Xclicked[121X. [3Xret[103X, if given,
+  must  be [9Xtrue[109X if [3Xcall[103X has a return value and if [2XBrowseGapData[102X ([14X6.11-1[114X) shall
+  return  this value, and [9Xfalse[109X otherwise. [3Xdocumentation[103X must be a string that
   describes what happens when the function [3Xcall[103X is called; it will be shown in
   the  footer  of  the  table  opened  by [2XBrowseGapData[102X ([14X6.11-1[114X) when [3Xtitle[103X is
   selected.[133X

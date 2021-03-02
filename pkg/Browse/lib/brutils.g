@@ -1,7 +1,3 @@
-
-#T  In BrowseGapDataAdd, no 'ret' argument is necessary if
-#T  CALL_WITH_CATCH is used!
-
 #############################################################################
 ##
 #W  brutils.g             GAP 4 package `Browse'                Thomas Breuer
@@ -515,11 +511,11 @@ end;
 
 #############################################################################
 ##
-#F  BrowseGapDataAdd( <title>, <call>, <ret>, <documentation> )
+#F  BrowseGapDataAdd( <title>, <call>[, <ret>], <documentation> )
 ##
 ##  <#GAPDoc Label="BrowseGapDataAdd_man">
 ##  <ManSection>
-##  <Func Name="BrowseGapDataAdd" Arg="title, call, ret, documentation"/>
+##  <Func Name="BrowseGapDataAdd" Arg="title, call[, ret], documentation"/>
 ##
 ##  <Description>
 ##  This function extends the list <C>BrowseData.GapDataOverviews</C>
@@ -530,8 +526,8 @@ end;
 ##  shown in the browse table that is opened by <Ref Func="BrowseGapData"/>.
 ##  <A>call</A> must be a function that takes no arguments; it will be called
 ##  when <A>title</A> is <Q>clicked</Q>.
-##  <A>ret</A> must be <K>true</K> if <A>call</A> has a return value
-##  and if <Ref Func="BrowseGapData"/> shall return this value,
+##  <A>ret</A>, if given, must be <K>true</K> if <A>call</A> has a
+##  return value and if <Ref Func="BrowseGapData"/> shall return this value,
 ##  and <K>false</K> otherwise.
 ##  <A>documentation</A> must be a string that describes what happens when
 ##  the function <A>call</A> is called; it will be shown in the footer of
@@ -541,11 +537,22 @@ end;
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-BindGlobal( "BrowseGapDataAdd", function( title, call, ret, documentation )
-    local currpkg, pos;
+BindGlobal( "BrowseGapDataAdd", function( title, call, documentation... )
+    local ret, currpkg, pos;
 
     if not IsBound( BrowseData.GapDataOverviews ) then
       BrowseData.GapDataOverviews:= [];
+    fi;
+    if Length( documentation ) = 1 then
+      # Return a value if there is one.
+      ret:= true;
+      documentation:= documentation[1];
+    elif Length( documentation ) = 2 then
+      ret:= documentation[1];
+      documentation:= documentation[2];
+    else
+      Error( "usage: BrowseGapDataAdd( <title>, <call>[, <ret>], ",
+             "<documentation> )" );
     fi;
     if   not ( IsString( title ) and Length( title ) <= 76 ) then
       Error( "<title> must be a string of length at most 76" );

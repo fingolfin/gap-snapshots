@@ -586,7 +586,7 @@ BindGlobal( "BrowseUserPreferences", function( arg )
 end );
 
 
-BrowseGapDataAdd( "GAP User Preferences", BrowseUserPreferences, false, "\
+BrowseGapDataAdd( "GAP User Preferences", BrowseUserPreferences, "\
 the currently available user preferences, \
 shown in a browse table whose columns contain the name of the package \
 for which the user preference is declared, \
