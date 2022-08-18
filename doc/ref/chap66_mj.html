@@ -130,6 +130,7 @@
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap66_mj.html#X83DD411179888783">66.14-1 UnivariateRationalFunctionByCoefficients</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap66_mj.html#X7B1EE4E07A9631C6">66.14-2 TaylorSeriesRationalFunction</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap66_mj.html#X7C59471783C3FEDC">66.15 <span class="Heading">Polynomial Rings and Function Fields</span></a>
 </span>
@@ -249,7 +250,7 @@
 
 <p>(Because of this printing convention, the name <code class="code">x_<var class="Arg">nr</var></code> is interpreted specially to always denote the variable with internal number <var class="Arg">nr</var>.)</p>
 
-<p>The indeterminate names have not necessarily any relations to variable names: this means that an indeterminate whose name is, say, "<code class="code">x</code>" cannot be accessed using the variable <code class="code">x</code>, unless <code class="code">x</code> was defined to be that indeterminate.</p>
+<p>The indeterminate names have not necessarily any relations to variable names: this means that an indeterminate whose name is "<code class="code">x</code>" cannot be accessed using the variable <code class="code">x</code>, unless <code class="code">x</code> was defined to be that indeterminate.</p>
 
 <p>When asking for indeterminates with certain names, <strong class="pkg">GAP</strong> usually will take the first (with respect to the internal numbering) indeterminates that are not yet named, name these accordingly and return them. Thus when asking for named indeterminates, no relation between names and indeterminate numbers can be guaranteed. The attribute <code class="code">IndeterminateNumberOfLaurentPolynomial(<var class="Arg">indet</var>)</code> will return the number of the indeterminate <var class="Arg">indet</var>.</p>
 
@@ -591,7 +592,7 @@ x^2*y^2+x
 <h5>66.4-12 IsPrimitivePolynomial</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPrimitivePolynomial</code>( <var class="Arg">F</var>, <var class="Arg">pol</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>For a univariate polynomial <var class="Arg">pol</var> of degree <span class="SimpleMath">\(d\)</span> in the indeterminate <span class="SimpleMath">\(X\)</span>, with coefficients in a finite field <var class="Arg">F</var> with <span class="SimpleMath">\(q\)</span> elements, say, <code class="func">IsPrimitivePolynomial</code> returns <code class="keyw">true</code> if</p>
+<p>For a univariate polynomial <var class="Arg">pol</var> of degree <span class="SimpleMath">\(d\)</span> in the indeterminate <span class="SimpleMath">\(X\)</span>, with coefficients in a finite field <var class="Arg">F</var> with <span class="SimpleMath">\(q\)</span> elements, <code class="func">IsPrimitivePolynomial</code> returns <code class="keyw">true</code> if</p>
 
 <ol>
 <li><p><var class="Arg">pol</var> divides <span class="SimpleMath">\(X^{{q^d-1}} - 1\)</span>, and</p>
@@ -621,14 +622,14 @@ x^2*y^2+x
 <h5>66.5-1 UnivariatePolynomial</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnivariatePolynomial</code>( <var class="Arg">ring</var>, <var class="Arg">cofs</var>[, <var class="Arg">ind</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>constructs an univariate polynomial over the ring <var class="Arg">ring</var> in the indeterminate <var class="Arg">ind</var> with the coefficients given by <var class="Arg">coefs</var>.</p>
+<p>constructs an univariate polynomial over the ring <var class="Arg">ring</var> in the indeterminate <var class="Arg">ind</var> with the coefficients given by <var class="Arg">cofs</var>.</p>
 
 <p><a id="X85178A3E7B4F11E0" name="X85178A3E7B4F11E0"></a></p>
 
 <h5>66.5-2 UnivariatePolynomialByCoefficients</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnivariatePolynomialByCoefficients</code>( <var class="Arg">fam</var>, <var class="Arg">cofs</var>, <var class="Arg">ind</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>constructs an univariate polynomial over the coefficients family <var class="Arg">fam</var> and in the indeterminate <var class="Arg">ind</var> with the coefficients given by <var class="Arg">coefs</var>. This function should be used in algorithms to create polynomials as it avoids overhead associated with <code class="func">UnivariatePolynomial</code> (<a href="chap66_mj.html#X8379F8CB7D0076BA"><span class="RefLink">66.5-1</span></a>).</p>
+<p>constructs an univariate polynomial over the coefficients family <var class="Arg">fam</var> and in the indeterminate <var class="Arg">ind</var> with the coefficients given by <var class="Arg">cofs</var>. This function should be used in algorithms to create polynomials as it avoids overhead associated with <code class="func">UnivariatePolynomial</code> (<a href="chap66_mj.html#X8379F8CB7D0076BA"><span class="RefLink">66.5-1</span></a>).</p>
 
 <p><a id="X78AF77C383245254" name="X78AF77C383245254"></a></p>
 
@@ -874,7 +875,7 @@ x^16+x
 
 <p>A variation is the evaluation at elements of another ring <span class="SimpleMath">\(R\)</span>, for which a multiplication with elements of the coefficient ring of <var class="Arg">ratfun</var> are defined. In this situation the identity element of <span class="SimpleMath">\(R\)</span> may be given by a further argument <var class="Arg">one</var> which will be used for <span class="SimpleMath">\(x^0\)</span> for any specialized indeterminate <span class="SimpleMath">\(x\)</span>.</p>
 
-<p>The second version takes an univariate rational function and specializes the value of its indeterminate to <var class="Arg">val</var>. Again, an optional argument <var class="Arg">one</var> may be given.</p>
+<p>The second version takes an univariate rational function and specializes the value of its indeterminate to <var class="Arg">val</var>. Again, an optional argument <var class="Arg">one</var> may be given. <code class="code">Value( <var class="Arg">upol</var>, <var class="Arg">val</var> )</code> can also be expressed as <code class="code">upol( <var class="Arg">val</var> )</code>.</p>
 
 
 <div class="example"><pre>
@@ -1078,7 +1079,7 @@ x^2+1
 <h5>66.13-1 LaurentPolynomialByCoefficients</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LaurentPolynomialByCoefficients</code>( <var class="Arg">fam</var>, <var class="Arg">cofs</var>, <var class="Arg">val</var>[, <var class="Arg">ind</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>constructs a Laurent polynomial over the coefficients family <var class="Arg">fam</var> and in the indeterminate <var class="Arg">ind</var> (defaulting to 1) with the coefficients given by <var class="Arg">coefs</var> and valuation <var class="Arg">val</var>.</p>
+<p>constructs a Laurent polynomial over the coefficients family <var class="Arg">fam</var> and in the indeterminate <var class="Arg">ind</var> (defaulting to 1) with the coefficients given by <var class="Arg">cofs</var> and valuation <var class="Arg">val</var>.</p>
 
 <p><a id="X86D58AB67F86469F" name="X86D58AB67F86469F"></a></p>
 
@@ -1116,6 +1117,19 @@ x^2
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnivariateRationalFunctionByCoefficients</code>( <var class="Arg">fam</var>, <var class="Arg">ncof</var>, <var class="Arg">dcof</var>, <var class="Arg">val</var>[, <var class="Arg">ind</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>constructs a univariate rational function over the coefficients family <var class="Arg">fam</var> and in the indeterminate <var class="Arg">ind</var> (defaulting to 1) with numerator and denominator coefficients given by <var class="Arg">ncof</var> and <var class="Arg">dcof</var> and valuation <var class="Arg">val</var>.</p>
+
+<p><a id="X7B1EE4E07A9631C6" name="X7B1EE4E07A9631C6"></a></p>
+
+<h5>66.14-2 TaylorSeriesRationalFunction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TaylorSeriesRationalFunction</code>( <var class="Arg">ratfun</var>, <var class="Arg">at</var>, <var class="Arg">deg</var>] )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Computes the taylor series up to degree <var class="Arg">deg</var> of <var class="Arg">ratfun</var> at <var class="Arg">at</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TaylorSeriesRationalFunction((x^5+3*x+7)/(x^5+x+1),0,11);</span>
+-50*x^11+36*x^10-26*x^9+22*x^8-18*x^7+14*x^6-10*x^5+4*x^4-4*x^3+4*x^2-4*x+7
+</pre></div>
 
 <p><a id="X7C59471783C3FEDC" name="X7C59471783C3FEDC"></a></p>
 
@@ -1659,7 +1673,7 @@ false
 
 <p>A monomial is a product of powers of indeterminates. A monomial is stored as a list (we call this the <em>expanded form</em> of the monomial) of the form <code class="code">[<var class="Arg">inum</var>,<var class="Arg">exp</var>,<var class="Arg">inum</var>,<var class="Arg">exp</var>,...]</code> where each <var class="Arg">inum</var> is the number of an indeterminate and <var class="Arg">exp</var> the corresponding exponent. The list must be sorted according to the numbers of the indeterminates. Thus for example, if <span class="SimpleMath">\(x\)</span>, <span class="SimpleMath">\(y\)</span> and <span class="SimpleMath">\(z\)</span> are the first three indeterminates, the expanded form of the monomial <span class="SimpleMath">\(x^5 z^8 = z^8 x^5\)</span> is <code class="code">[ 1, 5, 3, 8 ]</code>. The representation of a polynomials is a list of the form <code class="code">[<var class="Arg">mon</var>,<var class="Arg">coeff</var>,<var class="Arg">mon</var>,<var class="Arg">coeff</var>,...]</code> where <var class="Arg">mon</var> is a monomial in expanded form (that is given as list) and <var class="Arg">coeff</var> its coefficient. The monomials must be sorted according to the total degree/lexicographic order (This is the same as given by the "grlex" monomial ordering, see <code class="func">MonomialGrlexOrdering</code> (<a href="chap66_mj.html#X786C866C824D2688"><span class="RefLink">66.17-8</span></a>)). We call this the <em>external representation</em> of a polynomial. (The reason for ordering is that addition of polynomials becomes linear in the number of monomials instead of quadratic; the reason for the particular ordering chose is that it is compatible with multiplication and thus gives acceptable performance for quotient calculations.)</p>
 
-<p>The attributes that give a representation of a a rational function as a Laurent polynomial are <code class="func">CoefficientsOfLaurentPolynomial</code> (<a href="chap66_mj.html#X86D58AB67F86469F"><span class="RefLink">66.13-2</span></a>) and <code class="func">IndeterminateNumberOfUnivariateRationalFunction</code> (<a href="chap66_mj.html#X816C8D797C804380"><span class="RefLink">66.1-2</span></a>).</p>
+<p>The attributes that give a representation of a rational function as a Laurent polynomial are <code class="func">CoefficientsOfLaurentPolynomial</code> (<a href="chap66_mj.html#X86D58AB67F86469F"><span class="RefLink">66.13-2</span></a>) and <code class="func">IndeterminateNumberOfUnivariateRationalFunction</code> (<a href="chap66_mj.html#X816C8D797C804380"><span class="RefLink">66.1-2</span></a>).</p>
 
 <p>Algorithms should use only the attributes <code class="func">ExtRepNumeratorRatFun</code> (<a href="chap66_mj.html#X7DF955C87CBFC12B"><span class="RefLink">66.21-2</span></a>), <code class="func">ExtRepDenominatorRatFun</code> (<a href="chap66_mj.html#X8059E74D7DCABDBC"><span class="RefLink">66.21-3</span></a>), <code class="func">ExtRepPolynomialRatFun</code> (<a href="chap66_mj.html#X8406EE2E8775FBAB"><span class="RefLink">66.21-6</span></a>), <code class="func">CoefficientsOfLaurentPolynomial</code> (<a href="chap66_mj.html#X86D58AB67F86469F"><span class="RefLink">66.13-2</span></a>) and –if the univariate function is not constant– <code class="func">IndeterminateNumberOfUnivariateRationalFunction</code> (<a href="chap66_mj.html#X816C8D797C804380"><span class="RefLink">66.1-2</span></a>) as the low-level interface to work with a polynomial. They should not refer to the actual representation used.</p>
 
@@ -1815,7 +1829,7 @@ false
 <h5>66.24-3 HeuristicCancelPolynomialsExtRep</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HeuristicCancelPolynomialsExtRep</code>( <var class="Arg">fam</var>, <var class="Arg">ext1</var>, <var class="Arg">ext2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>is called by <code class="func">TryGcdCancelExtRepPolynomials</code> (<a href="chap66_mj.html#X7BFB55887A153003"><span class="RefLink">66.24-2</span></a>) to perform the actual work. It will return either <code class="keyw">fail</code> or a new list of of external representations of cancelled polynomials. The cancellation performed is not necessarily optimal.</p>
+<p>is called by <code class="func">TryGcdCancelExtRepPolynomials</code> (<a href="chap66_mj.html#X7BFB55887A153003"><span class="RefLink">66.24-2</span></a>) to perform the actual work. It will return either <code class="keyw">fail</code> or a new list of external representations of cancelled polynomials. The cancellation performed is not necessarily optimal.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap65_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap67_mj.html">[Next Chapter]</a>&nbsp;  </div>

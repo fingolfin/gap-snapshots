@@ -18,18 +18,20 @@
 
 #include "julia_gc.h"
 
+#include "common.h"
 #include "fibhash.h"
 #include "funcs.h"
 #include "gap.h"
 #include "gapstate.h"
+#include "gaptime.h"
 #include "gasman.h"
 #include "objects.h"
 #include "plist.h"
-#include "sysmem.h"
-#include "system.h"
 #include "vars.h"
 
 #include "bags.inc"
+
+#include "config.h"
 
 #include <dlfcn.h>
 #include <stdio.h>
@@ -38,29 +40,24 @@
 #include <unistd.h>
 
 #include <julia.h>
+#include <julia_threads.h>  // for jl_get_ptls_states
 #include <julia_gcext.h>
 
-// import jl_get_current_task from julia_internal.h, which unfortunately
-// isn't installed as part of a typical Julia installation
-JL_DLLEXPORT jl_value_t *jl_get_current_task(void);
-
-// jl_n_threads is not defined in Julia headers, but its existence is relied
-// on in the Base module. Thus, defining it as extern ought to be portable.
-extern int jl_n_threads;
+// fill in the data "behind" bags
+struct OpaqueBag {
+    void * body;
+};
+GAP_STATIC_ASSERT(sizeof(void *) == sizeof(struct OpaqueBag),
+                  "sizeof(OpaqueBag) is wrong");
 
 /****************************************************************************
 **
 **  Various options controlling special features of the Julia GC code follow
 */
 
-// if SCAN_STACK_FOR_MPTRS_ONLY is defined, stack scanning will only
-// look for references to master pointers, but not bags themselves. This
-// should be safe, as GASMAN uses the same mechanism. It is also faster
-// and avoids certain complicated issues that can lead to crashes, and
-// is therefore the default. The option to scan for all pointers remains
-// available for the time being and should be considered to be
-// deprecated.
-#define SCAN_STACK_FOR_MPTRS_ONLY
+// if SKIP_GUARD_PAGES is set, stack scanning will attempt to determine
+// the extent of any guard pages and skip them if needed.
+// #define SKIP_GUARD_PAGES
 
 // if REQUIRE_PRECISE_MARKING is defined, we assume that all marking
 // functions are precise, i.e., they only invoke MarkBag on valid bags,
@@ -85,6 +82,10 @@ extern int jl_n_threads;
 // can be difficult. As the GC already assumes that the memory
 // range goes from 0 to 2^k-1 (region tables), we simply convert
 // to uintptr_t and compare those.
+//
+#ifdef SKIP_GUARD_PAGES
+#include <pthread.h>
+#endif
 
 static inline int cmp_ptr(void * p, void * q)
 {
@@ -165,6 +166,11 @@ static inline Bag * DATA(BagHeader * bag)
     return (Bag *)(((char *)bag) + sizeof(BagHeader));
 }
 
+static inline void SET_PTR_BAG(Bag bag, Bag *val)
+{
+    GAP_ASSERT(bag != 0);
+    bag->body = val;
+}
 
 static TNumExtraMarkFuncBags ExtraMarkFuncBags;
 
@@ -202,59 +208,29 @@ static void JFinalizer(jl_value_t * obj)
 static jl_datatype_t * datatype_mptr;
 static jl_datatype_t * datatype_bag;
 static jl_datatype_t * datatype_largebag;
-static UInt            StackAlignBags = sizeof(void *);
 static Bag *           GapStackBottom;
 static jl_ptls_t       JuliaTLS, SaveTLS;
-static Int             is_threaded;
+static BOOL            is_threaded;
 static jl_task_t *     RootTaskOfMainThread;
 static size_t          max_pool_obj_size;
 static UInt            YoungRef;
 static int             FullGC;
+static UInt            startTime, totalTime;
+
+
+#if JULIA_VERSION_MAJOR == 1 && JULIA_VERSION_MINOR == 7
+JL_DLLEXPORT void *jl_get_ptls_states(void);
+#endif
 
 void SetJuliaTLS(void)
 {
+    // In Julia >= 1.7 we are supposed to use `jl_get_current_task()->ptls`
+    // instead of calling `jl_get_ptls_states`. But then we depend on the
+    // offset of the member `ptls` of struct `jl_task_t` not changing, so
+    // calling jl_get_ptls_states() is safer.
     JuliaTLS = jl_get_ptls_states();
+//    JuliaTLS = jl_get_current_task()->ptls;
 }
-
-#if !defined(SCAN_STACK_FOR_MPTRS_ONLY)
-typedef struct {
-    void * addr;
-    size_t size;
-} MemBlock;
-
-static inline int CmpMemBlock(MemBlock m1, MemBlock m2)
-{
-    char * l1 = (char *)m1.addr;
-    char * r1 = l1 + m1.size;
-    char * l2 = (char *)m2.addr;
-    char * r2 = l2 + m2.size;
-    if (lt_ptr(r1, l1))
-        return -1;
-    if (!lt_ptr(l2, r2))
-        return 1;
-    return 0;
-}
-
-#define ELEM_TYPE MemBlock
-#define COMPARE CmpMemBlock
-
-#include "baltree.h"
-
-static size_t         bigval_startoffset;
-static MemBlockTree * bigvals;
-
-void alloc_bigval(void * addr, size_t size)
-{
-    MemBlock mem = { addr, size };
-    MemBlockTreeInsert(bigvals, mem);
-}
-
-void free_bigval(void * addr)
-{
-    MemBlock mem = { addr, 0 };
-    MemBlockTreeRemove(bigvals, mem);
-}
-#endif
 
 typedef void * Ptr;
 
@@ -294,6 +270,22 @@ static void * AllocateBagMemory(UInt type, UInt size)
     return result;
 }
 
+
+/****************************************************************************
+**
+*F  MarkAllSubBagsDefault(<bag>) . . . marking function that marks everything
+**
+**  'MarkAllSubBagsDefault' is the same  as 'MarkAllSubBags' but is used as
+**  the initial default marking function. This allows to catch cases where
+**  'InitMarkFuncBags' is called twice for the same type: the first time is
+**  accepted because the marking function is still 'MarkAllSubBagsDefault';
+**  the second time raises a warning, because a non-default marking function
+**  is being replaced.
+*/
+static void MarkAllSubBagsDefault(Bag bag)
+{
+    MarkArrayOfBags(CONST_PTR_BAG(bag), SIZE_BAG(bag) / sizeof(Bag));
+}
 
 TNumMarkFuncBags TabMarkFuncBags[NUM_TYPES];
 
@@ -355,28 +347,18 @@ void MarkJuliaObj(void * obj)
 
 // Overview of conservative stack scanning
 //
-// A key aspect of conservative marking is that (1) we need to determine
-// whether a machine word is a pointer to a live object and (2) if it points
-// to the interior of the object, to determine its base address.
-//
-// For Julia's internal objects, we call back to Julia to find out the
-// necessary information. For external objects that we allocate ourselves in
-// `alloc_bigval()`, we use balanced binary trees (treaps) to determine that
-// information. Each node in such a tree contains an (address, size) pair
-// and we use the usual binary tree search to figure out whether there is a
-// node with an address range containing that address and, if so, returns
-// the `address` part of the pair.
+// A key aspect of conservative marking is that we need to determine whether a
+// machine word is a master pointer to a live object. We call back to Julia to
+// find out the necessary information.
 //
 // While at the C level, we will generally always have a reference to the
 // masterpointer, the presence of optimizing compilers, multiple threads, or
 // Julia tasks (= coroutines) means that we cannot necessarily rely on this
-// information; also, the `NewBag()` implementation may trigger a GC after
-// allocating the bag contents, but before allocating the master pointer.
+// information.
 //
 // As a consequence, we play it safe and assume that any word anywhere on
 // the stack (including Julia task stacks) that points to a master pointer
-// or the contents of a bag (including a location after the start of the
-// bag) indicates a valid reference that needs to be marked.
+// indicates a valid reference that needs to be marked.
 //
 // One additional concern is that Julia may opportunistically free a subset
 // of unreachable objects. Thus, with conservative stack scanning, it is
@@ -420,50 +402,13 @@ void MarkJuliaObj(void * obj)
 static void TryMark(void * p)
 {
     jl_value_t * p2 = jl_gc_internal_obj_base_ptr(p);
-    if (!p2) {
-#if !defined(SCAN_STACK_FOR_MPTRS_ONLY)
-        // It is possible for p to point past the end of
-        // the object, so we subtract one word from the
-        // address. This is safe, as the object is preceded
-        // by a larger header.
-        MemBlock   tmp = { (char *)p - 1, 0 };
-        MemBlock * found = MemBlockTreeFind(bigvals, tmp);
-        if (found) {
-            p2 = (jl_value_t *)found->addr;
-            // It is possible for types to not be valid objects.
-            // Objects with such types are not normally made visible
-            // to the mark loop, so we need to avoid marking them
-            // during conservative stack scanning.
-            // While jl_gc_internal_obj_base_ptr(p) already eliminates this
-            // case, it can still happen for bigval_t objects, so
-            // we run an explicit check that the type is a valid
-            // object for these.
-            p2 = (jl_value_t *)((char *)p2 + bigval_startoffset);
-            jl_taggedvalue_t * hdr = jl_astaggedvalue(p2);
-            if (hdr->type != jl_gc_internal_obj_base_ptr(hdr->type))
-                return;
-        }
-#endif
-    }
-    else {
+    if (p2 && jl_typeis(p2, datatype_mptr)) {
+#ifndef REQUIRE_PRECISE_MARKING
         // Prepopulate the mark cache with references we know
         // are valid and in current use.
-#ifndef REQUIRE_PRECISE_MARKING
-        if (jl_typeis(p2, datatype_mptr))
-            MarkCache[MARK_HASH((UInt)p2)] = (Bag)p2;
+        MarkCache[MARK_HASH((UInt)p2)] = (Bag)p2;
 #endif
-    }
-    if (p2) {
-#ifdef SCAN_STACK_FOR_MPTRS_ONLY
-        if (jl_typeis(p2, datatype_mptr))
-            JMark(p2);
-#else
-        void * ty = jl_typeof(p2);
-        if (ty != datatype_mptr && ty != datatype_bag &&
-            ty != datatype_largebag && ty != jl_weakref_type)
-            return;
         JMark(p2);
-#endif
     }
 }
 
@@ -480,7 +425,7 @@ static void FindLiveRangeReverse(PtrArray * arr, void * start, void * end)
             jl_typeis(addr, datatype_mptr)) {
             PtrArrayAdd(arr, addr);
         }
-        q -= StackAlignBags;
+        q -= C_STACK_ALIGN;
     }
 }
 
@@ -508,79 +453,33 @@ static void MarkFromList(PtrArray * arr)
 
 static TaskInfoTree * task_stacks = NULL;
 
-// We need to access the safe_restore member of the Julia TLS. Unfortunately,
-// its offset changes with the Julia version. In order to be able to produce
-// a single gap executable resp. libgap shared library which works across
-// multiple versions, we do the following:
-// - Julia 1.3 and 1.4 are the reference, the relative offset there hence is
-//   defined to be 0 (the absolute offset of safe_restore is 6840 on Linux and
-//   6816 on macOS)
-// - Julia 1.5 uses relative offset 8 (absolute offset is 6848 reps. 6824)
-// - Julia 1.6 added APIs to get and set the safe_restore value
-static int safe_restore_offset;
+#ifdef SKIP_GUARD_PAGES
 
-static void set_safe_restore_with_offset(jl_jmp_buf * buf)
+static size_t guardpages_size;
+
+void SetupGuardPagesSize(void)
 {
-    jl_ptls_t tls = (jl_ptls_t)((char *)JuliaTLS + safe_restore_offset);
-    tls->safe_restore = buf;
-}
-
-static jl_jmp_buf * get_safe_restore_with_offset(void)
-{
-    jl_ptls_t tls = (jl_ptls_t)((char *)JuliaTLS + safe_restore_offset);
-    return tls->safe_restore;
-}
-
-static void (*set_safe_restore)(jl_jmp_buf * buf);
-static jl_jmp_buf * (*get_safe_restore)(void);
-
-static void SetupSafeRestoreHandlers(void)
-{
-    get_safe_restore = dlsym(RTLD_DEFAULT, "jl_get_safe_restore");
-    set_safe_restore = dlsym(RTLD_DEFAULT, "jl_set_safe_restore");
-
-    // if the new API is available, just use it!
-    if (get_safe_restore && set_safe_restore)
-        return;
-
-    GAP_ASSERT(!set_safe_restore && !get_safe_restore);
-
-    // compute safe_restore_offset; at this point we really kinda
-    // know that the Julia version must be 1.3, 1.4 or 1.5. Deal with that
-    if (jl_ver_major() != 1 || jl_ver_minor() < 3 || jl_ver_minor() > 5)
-        jl_errorf("Julia version %s is not supported by this GAP",
-                  jl_ver_string());
-
-    switch (JULIA_VERSION_MINOR * 10 + jl_ver_minor()) {
-    case 33:
-    case 34:
-    case 43:
-    case 44:
-    case 55:
-        safe_restore_offset = 0;
-        break;
-    case 35:
-    case 45:
-        safe_restore_offset = 8;
-        break;
-    case 53:
-    case 54:
-        safe_restore_offset = -8;
-        break;
-    default:
-        // We should never actually get here...
-        jl_errorf("GAP compiled against Julia %s, but loaded with Julia %s",
-                  JULIA_VERSION_STRING, jl_ver_string());
+    // This is a generic implementation that assumes that all threads
+    // have the default guard pages. This should be correct for the
+    // current Julia implementation.
+    pthread_attr_t attr;
+    pthread_attr_init(&attr);
+    if (pthread_attr_getguardsize(&attr, &guardpages_size) < 0) {
+        perror("Julia GC initialization: pthread_attr_getguardsize");
+        abort();
     }
-
-    // finally set our alternate get/set functions
-    get_safe_restore = get_safe_restore_with_offset;
-    set_safe_restore = set_safe_restore_with_offset;
+    pthread_attr_destroy(&attr);
 }
+
+#endif
+
 
 static void SafeScanTaskStack(PtrArray * stack, void * start, void * end)
 {
-    volatile jl_jmp_buf * old_safe_restore = get_safe_restore();
+#ifdef SKIP_GUARD_PAGES
+    FindLiveRangeReverse(stack, start, end);
+#else
+    volatile jl_jmp_buf * old_safe_restore = jl_get_safe_restore();
     jl_jmp_buf exc_buf;
     if (!jl_setjmp(exc_buf, 0)) {
         // The start of the stack buffer may be protected with guard
@@ -593,10 +492,11 @@ static void SafeScanTaskStack(PtrArray * stack, void * start, void * end)
         // Note that this will by necessity also scan the unused area
         // of the stack buffer past the stack top. We therefore also
         // optimize scanning for areas that contain only null bytes.
-        set_safe_restore(&exc_buf);
+        jl_set_safe_restore(&exc_buf);
         FindLiveRangeReverse(stack, start, end);
     }
-    set_safe_restore((jl_jmp_buf *)old_safe_restore);
+    jl_set_safe_restore((jl_jmp_buf *)old_safe_restore);
+#endif
 }
 
 static void
@@ -642,7 +542,7 @@ static NOINLINE void TryMarkRange(void * start, void * end)
         SWAP(void *, start, end);
     }
     char * p = (char *)align_ptr(start);
-    char * q = (char *)end - sizeof(void *) + StackAlignBags;
+    char * q = (char *)end - sizeof(void *) + C_STACK_ALIGN;
     while (lt_ptr(p, q)) {
         void * addr = *(void **)p;
         if (addr) {
@@ -654,11 +554,11 @@ static NOINLINE void TryMarkRange(void * start, void * end)
             }
 #endif
         }
-        p += StackAlignBags;
+        p += C_STACK_ALIGN;
     }
 }
 
-int IsGapObj(void * p)
+BOOL IsGapObj(void * p)
 {
     return jl_typeis(p, datatype_mptr);
 }
@@ -704,7 +604,7 @@ static void GapRootScanner(int full)
     // towards the stack bottom, ensuring that we also scan any
     // references stored in registers.
     jmp_buf registers;
-    setjmp(registers);
+    _setjmp(registers);
     TryMarkRange(registers, (char *)registers + sizeof(jmp_buf));
     TryMarkRange((char *)registers + sizeof(jmp_buf), stackend);
 
@@ -714,41 +614,6 @@ static void GapRootScanner(int full)
         if (IS_BAG_REF(p)) {
             JMark(p);
         }
-    }
-}
-
-static void (*active_task_stack)(jl_task_t *task,
-                                 char **active_start, char **active_end,
-                                 char **total_start, char **total_end);
-
-static void
-active_task_stack_fallback(jl_task_t *task,
-                                 char **active_start, char **active_end,
-                                 char **total_start, char **total_end)
-{
-    size_t size;
-    int    tid;
-    *active_start = (char *)jl_task_stack_buffer(task, &size, &tid);
-
-    if (*active_start) {
-        // task->copy_stack is 0 if the COPY_STACKS implementation is
-        // not used or 1 if the task stack does not point to valid
-        // memory. If it is neither zero nor one, then we can use that
-        // value to determine the actual top of the stack.
-        switch (task->copy_stack) {
-        case 0:
-            // do not adjust stack.
-            break;
-        case 1:
-            // stack buffer is not valid memory.
-            return;
-        default:
-            // We know which part of the task stack is actually used,
-            // so we shorten the range we have to scan.
-            *active_start = *active_start + size - task->copy_stack;
-            size = task->copy_stack;
-        }
-        *active_end = *active_start + size;
     }
 }
 
@@ -777,9 +642,16 @@ static void GapTaskScanner(jl_task_t * task, int root_task)
     }
 
     char * active_start, * active_end, * total_start, * total_end;
-    active_task_stack(task, &active_start, &active_end, &total_start, &total_end);
+    jl_active_task_stack(task, &active_start, &active_end, &total_start, &total_end);
 
     if (active_start) {
+#ifdef SKIP_GUARD_PAGES
+        if (total_start == active_start && total_end == active_end) {
+            // The "active" range is actually the entire stack buffer
+            // and may include guard pages at the start.
+            active_start += guardpages_size;
+        }
+#endif
         if (task == RootTaskOfMainThread) {
             active_end = (char *)GapStackBottom;
         }
@@ -791,6 +663,11 @@ static void GapTaskScanner(jl_task_t * task, int root_task)
         // or a guard page.
         ScanTaskStack(rescan, task, active_start, active_end);
     }
+}
+
+UInt TotalGCTime(void)
+{
+    return totalTime;
 }
 
 static void PreGCHook(int full)
@@ -810,8 +687,9 @@ static void PreGCHook(int full)
     // we have to add a write barrier at the start of the GC, too.
     if (STATE(CurrLVars))
         CHANGED_BAG(STATE(CurrLVars));
-    /* information at the beginning of garbage collections                 */
-    SyMsgsBags(full, 0, 0);
+
+    startTime = SyTime();
+
 #ifndef REQUIRE_PRECISE_MARKING
     memset(MarkCache, 0, sizeof(MarkCache));
 #ifdef COLLECT_MARK_CACHE_STATS
@@ -823,9 +701,7 @@ static void PreGCHook(int full)
 static void PostGCHook(int full)
 {
     JuliaTLS = SaveTLS;
-    /* information at the end of garbage collections                 */
-    UInt totalAlloc = 0;    // FIXME -- is this data even available?
-    SyMsgsBags(full, 6, totalAlloc);
+    totalTime += SyTime() - startTime;
 #ifdef COLLECT_MARK_CACHE_STATS
     /* printf("\n>>>Attempts: %ld\nHit rate: %lf\nCollision rate: %lf\n",
       (long) MarkCacheAttempts,
@@ -870,7 +746,7 @@ static uintptr_t BagMarkFunc(jl_ptls_t ptls, jl_value_t * obj)
 // create Julia types for use in our allocations. The types will be stored
 // in the given 'module', and the MPtr type will be a subtype of 'parent'.
 //
-// If 'module' is NULL then a new module 'ForeignGAP' is created & exported.
+// If 'module' is NULL then 'jl_main_module' is used.
 // If 'parent' is NULL then 'jl_any_type' is used.
 void GAP_InitJuliaMemoryInterface(jl_module_t *   module,
                                   jl_datatype_t * parent)
@@ -881,26 +757,14 @@ void GAP_InitJuliaMemoryInterface(jl_module_t *   module,
     }
     // These callbacks need to be set before initialization so
     // that we can track objects allocated during `jl_init()`.
-#if !defined(SCAN_STACK_FOR_MPTRS_ONLY)
-    bigvals = MemBlockTreeMake();
-    jl_gc_set_cb_notify_external_alloc(alloc_bigval, 1);
-    jl_gc_set_cb_notify_external_free(free_bigval, 1);
-    bigval_startoffset = jl_gc_external_obj_hdr_size();
-#endif
     max_pool_obj_size = jl_gc_max_internal_obj_size();
     jl_gc_enable_conservative_gc_support();
     jl_init();
 
     SetJuliaTLS();
-    SetupSafeRestoreHandlers();
-
-    // With Julia >= 1.6 we want to use `jl_active_task_stack` as introduced
-    // in https://github.com/JuliaLang/julia/pull/36823 but for older
-    // versions, we need fall back to `jl_task_stack_buffer`.
-    active_task_stack = dlsym(RTLD_DEFAULT, "jl_active_task_stack");
-    if (!active_task_stack) {
-        active_task_stack = active_task_stack_fallback;
-    }
+#ifdef SKIP_GUARD_PAGES
+    SetupGuardPagesSize();
+#endif
 
     is_threaded = jl_n_threads > 1;
 
@@ -913,13 +777,7 @@ void GAP_InitJuliaMemoryInterface(jl_module_t *   module,
     // jl_gc_enable(0); /// DEBUGGING
 
     if (module == 0) {
-        jl_sym_t * sym = jl_symbol("ForeignGAP");
-        module = jl_new_module(sym);
-        module->parent = jl_main_module;
-        // make the module available in the Main module (this also ensures
-        // that it won't be GC'ed prematurely, and hence also our datatypes
-        // won't be GCed)
-        jl_set_const(jl_main_module, sym, (jl_value_t *)module);
+        module = jl_main_module;
     }
 
     if (parent == 0) {
@@ -927,10 +785,10 @@ void GAP_InitJuliaMemoryInterface(jl_module_t *   module,
     }
 
     // create and store data type for master pointers
-    datatype_mptr = jl_new_foreign_type(jl_symbol("MPtr"), module, parent,
+    datatype_mptr = jl_new_foreign_type(jl_symbol("GapObj"), module, parent,
                                         MPtrMarkFunc, NULL, 1, 0);
     GAP_ASSERT(jl_is_datatype(datatype_mptr));
-    jl_set_const(module, jl_symbol("MPtr"), (jl_value_t *)datatype_mptr);
+    jl_set_const(module, jl_symbol("GapObj"), (jl_value_t *)datatype_mptr);
 
     // create and store data type for small bags
     datatype_bag = jl_new_foreign_type(jl_symbol("Bag"), module, jl_any_type,
@@ -948,10 +806,10 @@ void GAP_InitJuliaMemoryInterface(jl_module_t *   module,
 
 }
 
-void InitBags(UInt initial_size, Bag * stack_bottom, UInt stack_align)
+void InitBags(UInt initial_size, Bag * stack_bottom)
 {
-    StackAlignBags = stack_align;
     GapStackBottom = stack_bottom;
+    totalTime = 0;
 
     if (!datatype_mptr) {
         GAP_InitJuliaMemoryInterface(0, 0);
@@ -971,7 +829,7 @@ UInt CollectBags(UInt size, UInt full)
     return 1;
 }
 
-void RetypeBag(Bag bag, UInt new_type)
+void RetypeBagIntern(Bag bag, UInt new_type)
 {
     BagHeader * header = BAG_HEADER(bag);
     UInt        old_type = header->type;
@@ -1042,10 +900,8 @@ Bag NewBag(UInt type, UInt size)
 
     if (is_threaded)
         SetJuliaTLS();
-#if defined(SCAN_STACK_FOR_MPTRS_ONLY)
     bag = jl_gc_alloc_typed(JuliaTLS, sizeof(void *), datatype_mptr);
     SET_PTR_BAG(bag, 0);
-#endif
 
     BagHeader * header = AllocateBagMemory(type, alloc_size);
 
@@ -1054,15 +910,9 @@ Bag NewBag(UInt type, UInt size)
     header->size = size;
 
 
-#if !defined(SCAN_STACK_FOR_MPTRS_ONLY)
-    // allocate the new masterpointer
-    bag = jl_gc_alloc_typed(JuliaTLS, sizeof(void *), datatype_mptr);
-    SET_PTR_BAG(bag, DATA(header));
-#else
     // change the masterpointer to reference the new bag memory
     SET_PTR_BAG(bag, DATA(header));
     jl_gc_wb_back((void *)bag);
-#endif
 
     // return the identifier of the new bag
     return bag;
@@ -1115,10 +965,7 @@ void InitGlobalBag(Bag * addr, const Char * cookie)
 
 void SwapMasterPoint(Bag bag1, Bag bag2)
 {
-    Obj * ptr1 = PTR_BAG(bag1);
-    Obj * ptr2 = PTR_BAG(bag2);
-    SET_PTR_BAG(bag1, ptr2);
-    SET_PTR_BAG(bag2, ptr1);
+    SWAP(UInt *, bag1->body, bag2->body);
 
     jl_gc_wb((void *)bag1, BAG_HEADER(bag1));
     jl_gc_wb((void *)bag2, BAG_HEADER(bag2));

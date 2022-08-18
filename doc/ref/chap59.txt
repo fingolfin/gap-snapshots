@@ -29,9 +29,10 @@
   [33X[0;0YObjects  in  the  category  [2XIsFFE[102X  are  used to implement elements of finite
   fields. In this manual, the term [13Xfinite field element[113X always means an object
   in [2XIsFFE[102X. All finite field elements of the same characteristic form a family
-  in [5XGAP[105X (see [14X13.1[114X). Any collection of finite field elements (see [2XIsCollection[102X
-  ([14X30.1-1[114X))  lies  in  [2XIsFFECollection[102X,  and  a collection of such collections
-  (e.g., a matrix of finite field elements) lies in [2XIsFFECollColl[102X.[133X
+  in  [5XGAP[105X  (see [14X13.1[114X).  Any  collection  of  finite field elements of the same
+  characteristic  (see [2XIsCollection[102X  ([14X30.1-1[114X))  lies in [2XIsFFECollection[102X, and a
+  collection  of  such  collections  (e.g., a matrix of finite field elements)
+  lies in [2XIsFFECollColl[102X.[133X
   
   [1X59.1-2 Z[101X
   
@@ -142,7 +143,7 @@
   [33X[0;0YElements   in  [2XIsLogOrderedFFE[102X  are  ordered  according  to  their  discrete
   logarithms  with  respect  to the [2XPrimitiveElement[102X ([14X58.2-3[114X) attribute of the
   field.  For  the comparison of finite field elements with other [5XGAP[105X objects,
-  see [14X4.12[114X.[133X
+  see [14X4.13[114X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XZ( 16 )^10 = Z( 4 )^2;  # illustrates embedding of GF(4) in GF(16)[127X[104X
@@ -287,6 +288,13 @@
   [33X[1;0Y[29X[2XAsInternalFFE[102X( [3Xffe[103X ) [32X attribute[133X
   
   [33X[0;0Yreturn an internal FFE equal to [3Xffe[103X if one exists, otherwise [10Xfail[110X[133X
+  
+  [1X59.2-7 RootFFE[101X
+  
+  [33X[1;0Y[29X[2XRootFFE[102X( [3XF[103X, [3Xz[103X, [3Xk[103X ) [32X operation[133X
+  
+  [33X[0;0Y[2XRootFFE[102X returns a finite field element [3Xr[103X from [3XF[103X whose [3Xk[103X-th power is [3Xz[103X. If no
+  such element exists then [9Xfail[109X is returned.[133X
   
   
   [1X59.3 [33X[0;0YCreating Finite Fields[133X[101X

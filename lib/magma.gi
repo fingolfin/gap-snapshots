@@ -74,8 +74,9 @@ InstallMethod( ViewString,
     true,
     [ IsMagma and HasGeneratorsOfMagma ], 0,
     function( M )
-    return STRINGIFY("<magma with ", Length( GeneratorsOfMagma(M) ), 
-    " generators>" );
+    local nrgens;
+    nrgens := Length( GeneratorsOfMagma(M) );
+    return STRINGIFY( "<magma with ", Pluralize( nrgens, "generator" ), ">" );
     end );
 
 InstallMethod( ViewString,
@@ -83,12 +84,13 @@ InstallMethod( ViewString,
     true,
     [ IsMagmaWithOne and HasGeneratorsOfMagmaWithOne ], 0,
     function( M )
-    if IsEmpty( GeneratorsOfMagmaWithOne( M ) ) then
+    local nrgens;
+    nrgens := Length( GeneratorsOfMagmaWithOne(M) );
+    if nrgens = 0 then
       return "<trivial magma-with-one>" ;
-    else
-      return STRINGIFY("<magma-with-one with ", 
-      Length( GeneratorsOfMagmaWithOne(M) ), " generators>" );
     fi;
+    return STRINGIFY( "<magma-with-one with ",
+                      Pluralize( nrgens, "generator" ), ">" );
     end );
 
 InstallMethod( ViewString,
@@ -96,13 +98,13 @@ InstallMethod( ViewString,
     true,
     [ IsMagmaWithInverses and HasGeneratorsOfMagmaWithInverses ], 0,
     function( M )
-    if IsEmpty( GeneratorsOfMagmaWithInverses( M ) ) then
+    local nrgens;
+    nrgens := Length( GeneratorsOfMagmaWithInverses( M ) );
+    if nrgens = 0 then
       return "<trivial magma-with-inverses>";
-    else
-      return STRINGIFY( "<magma-with-inverses with ",
-             Length( GeneratorsOfMagmaWithInverses( M ) ),
-             " generators>" );
     fi;
+    return STRINGIFY( "<magma-with-inverses with ",
+                      Pluralize( nrgens, "generator" ), ">" );
     end );
 
 
@@ -133,12 +135,11 @@ InstallMethod( IsTrivial,
 
 #############################################################################
 ##
-#M  IsAssociative( <M> )  . . . . . . . . test whether a magma is associative
+#M  IsAssociative( <M> )  . . . . .  test whether a collection is associative
 ##
 InstallMethod( IsAssociative,
-    "for a magma",
-    true,
-    [ IsMagma ], 0,
+    "for a collection",
+    [ IsCollection ],
     function( M )
 
     local elms,      # list of elements
@@ -163,7 +164,7 @@ InstallMethod( IsAssociative,
 
 #############################################################################
 ##
-#M  IsCommutative( <M> )  . . . . . . . . test whether a magma is commutative
+#M  IsCommutative( <M> )  . . . . .  test whether a collection is commutative
 ##
 InstallImmediateMethod( IsCommutative,
     IsMagma and IsAssociative and HasGeneratorsOfMagma, 0,
@@ -199,6 +200,26 @@ InstallMethod( IsCommutative,true,
     end );
 
 InstallMethod( IsCommutative,
+    "for a collection",
+    [ IsCollection ],
+    function( C )
+      local elms, n, x, y, i, j;
+
+      elms:= Enumerator( C );
+      n := Length( elms );
+      for i in [ 1 .. n ] do
+        for j in [ i + 1 .. n ] do
+          x := elms[ i ];
+          y := elms[ j ];
+          if x * y <> y * x then
+            return false;
+          fi;
+        od;
+      od;
+      return true;
+    end);
+
+InstallMethod( IsCommutative,
     "for a magma",
     true,
     [ IsMagma ], 0,
@@ -221,6 +242,38 @@ InstallMethod( IsCommutative,
     true,
     [ IsMagmaWithInverses and IsAssociative ], 0,
     IsCommutativeFromGenerators( GeneratorsOfMagmaWithInverses ) );
+
+
+#############################################################################
+##
+#P  IsFinitelyGeneratedMagma( <M> ) . . . . test whether a magma is fin. gen.
+##
+InstallMethod( IsFinitelyGeneratedMagma,
+    [ IsMagma and HasGeneratorsOfMagma ],
+    function( M )
+    if IsFinite( GeneratorsOfMagma( M ) ) then
+      return true;
+    fi;
+    TryNextMethod();
+    end );
+
+InstallMethod( IsFinitelyGeneratedMagma,
+    [ IsMagmaWithOne and HasGeneratorsOfMagmaWithOne ],
+    function( M )
+    if IsFinite( GeneratorsOfMagmaWithOne( M ) ) then
+      return true;
+    fi;
+    TryNextMethod();
+    end );
+
+InstallMethod( IsFinitelyGeneratedMagma,
+    [ IsMagmaWithInverses and HasGeneratorsOfMagmaWithInverses ],
+    function( M )
+    if IsFinite( GeneratorsOfMagmaWithInverses( M ) ) then
+      return true;
+    fi;
+    TryNextMethod();
+    end );
 
 
 #############################################################################
@@ -657,16 +710,7 @@ InstallOtherMethod( MagmaWithOneByGenerators,
 MakeMagmaWithInversesByFiniteGenerators:=function(family,gens)
 local M,typ,id,fam;
 
-  typ:=MakeGroupyType(FamilyObj(gens),
-            IsMagmaWithInverses and IsAttributeStoringRep 
-              and HasGeneratorsOfMagmaWithInverses
-              and HasIsEmpty,
-              gens,fail,false);
-
-  M:=rec();
-
-  ObjectifyWithAttributes( M,typ,
-    GeneratorsOfMagmaWithInverses, AsList( gens ));
+  M:=MakeGroupyObj(family, IsMagmaWithInverses, gens, fail);
 
   if HasIsAssociative( M ) and IsAssociative( M ) then
     SetIsFinitelyGeneratedGroup( M, true );

@@ -15,8 +15,7 @@
   [30X    [33X[0;6Ya  library  of  groups of small order (see [14X'smallgrp: The Small Groups
         Library'[114X),[133X
   
-  [30X    [33X[0;6Ythe  finite  perfect  groups of size at most [22X10^6[122X (excluding 11 sizes)
-        (see [14X50.6[114X).[133X
+  [30X    [33X[0;6Ythe finite perfect groups of size at most [22X2⋅ 10^6[122X (see [14X50.6[114X).[133X
   
   [30X    [33X[0;6Ythe  primitive  permutation  groups  of degree [22X< 4096[122X, provided by the
         [5XPrimGrp[105X package (see [14X'primgrp: Primitive Permutation Groups'[114X),[133X
@@ -98,11 +97,11 @@
     [4X[25Xgap>[125X [27XCyclicGroup(IsPermGroup,12);[127X[104X
     [4X[28XGroup([ (1,2,3,4,5,6,7,8,9,10,11,12) ])[128X[104X
     [4X[25Xgap>[125X [27Xmatgrp1:= CyclicGroup( IsMatrixGroup, 12 );[127X[104X
-    [4X[28X<matrix group of size 12 with 1 generators>[128X[104X
+    [4X[28X<matrix group of size 12 with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XFieldOfMatrixGroup( matgrp1 );[127X[104X
     [4X[28XRationals[128X[104X
     [4X[25Xgap>[125X [27Xmatgrp2:= CyclicGroup( IsMatrixGroup, GF(2), 12 );[127X[104X
-    [4X[28X<matrix group of size 12 with 1 generators>[128X[104X
+    [4X[28X<matrix group of size 12 with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XFieldOfMatrixGroup( matgrp2 );[127X[104X
     [4X[28XGF(2)[128X[104X
   [4X[32X[104X
@@ -187,8 +186,8 @@
   
   [1X50.1-8 DicyclicGroup[101X
   
-  [33X[1;0Y[29X[2XDicyclicGroup[102X( [[3Xfilt[103X[, [3Xfield[103X, ]][3Xn[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XQuaternionGroup[102X( [[3Xfilt[103X[, [3Xfield[103X, ]][3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XDicyclicGroup[102X( [[3Xfilt[103X, [[3Xfield[103X, ]][3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XQuaternionGroup[102X( [[3Xfilt[103X, [[3Xfield[103X, ]][3Xn[103X ) [32X function[133X
   
   [33X[0;0Y[2XDicyclicGroup[102X  constructs the dicyclic group of size [3Xn[103X in the category given
   by  the  filter  [3Xfilt[103X.  Here,  [3Xn[103X  must  be  a  multiple  of  4.  The synonym
@@ -331,6 +330,32 @@
   [4X[32X[104X
   
   
+  [1X50.1-16 [33X[0;0YGenerator Names[133X[101X
+  
+  [33X[0;0YFor  groups  created  as  finitely  presented  groups,  including polycyclic
+  groups, the generators are labelled, by default, with a letter and a number.
+  It  is possible to influence this naming with the option [10XgeneratorNames[110X, see
+  Section [14X4.12-2[114X. If this option holds a string, then the generators are named
+  with  this  string  and  sequential  numbers starting with [10X1[110X. If this option
+  holds  a  list of sufficient length consisting of nonempty strings, then the
+  generator names are taken from this list, in order.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfGroup(AbelianGroup([5,7]));[127X[104X
+    [4X[28X[ f1, f2 ][128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfGroup(AbelianGroup([5,7]:generatorNames:="a"));[127X[104X
+    [4X[28X[ a1, a2 ][128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfGroup(AbelianGroup([5,7]:generatorNames:=["u","v","w"]));[127X[104X
+    [4X[28X[ u, v ][128X[104X
+    [4X[25Xgap>[125X [27XAsSSortedList(DihedralGroup(12:generatorNames:="a"));[127X[104X
+    [4X[28X[ <identity> of ..., a1, a2, a3, a1*a2, a1*a3, a2*a3, a3^2, a1*a2*a3,[128X[104X
+    [4X[28X  a1*a3^2, a2*a3^2, a1*a2*a3^2 ][128X[104X
+    [4X[25Xgap>[125X [27XAsSSortedList(DihedralGroup(12:generatorNames:=["a","b","c"]));[127X[104X
+    [4X[28X[ <identity> of ..., a, b, c, a*b, a*c, b*c, c^2, a*b*c, a*c^2, b*c^2,[128X[104X
+    [4X[28X  a*b*c^2 ][128X[104X
+  [4X[32X[104X
+  
+  
   [1X50.2 [33X[0;0YClassical Groups[133X[101X
   
   [33X[0;0YThe following functions return classical groups.[133X
@@ -371,7 +396,9 @@
   
   [33X[0;0YNote  that  due  to  the different sources for the generators, the invariant
   forms  for  the  groups [22XΩ(e,d,q)[122X are in general different from the forms for
-  SO[22X(e,d,q)[122X and GO[22X(e,d,q)[122X.[133X
+  SO[22X(e,d,q)[122X  and  GO[22X(e,d,q)[122X. If version at least 1.2.6 of the [5XForms[105X package is
+  loaded then compatible groups can be created by specifying the desired form,
+  see the sections below.[133X
   
   
   [1X50.2-1 [33X[0;0YGeneralLinearGroup[133X[101X
@@ -452,8 +479,10 @@
   
   [1X50.2-3 GeneralUnitaryGroup[101X
   
-  [33X[1;0Y[29X[2XGeneralUnitaryGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XGU[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGeneralUnitaryGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X[, [3Xform[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XGeneralUnitaryGroup[102X( [[3Xfilt[103X, ][3Xform[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGU[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X[, [3Xform[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XGU[102X( [[3Xfilt[103X, ][3Xform[103X ) [32X function[133X
   
   [33X[0;0Yconstructs  a  group  isomorphic  to the general unitary group GU( [3Xd[103X, [3Xq[103X ) of
   those  [22X[3Xd[103X  × [3Xd[103X[122X matrices over the field with [22X[3Xq[103X^2[122X elements that respect a fixed
@@ -462,38 +491,73 @@
   [33X[0;0YIf [3Xfilt[103X is not given it defaults to [2XIsMatrixGroup[102X ([14X44.1-1[114X), and the returned
   group is the general unitary group itself.[133X
   
+  [33X[0;0YIf  version  at  least 1.2.6 of the [5XForms[105X package is loaded then the desired
+  sesquilinear form can be specified via [3Xform[103X, which can be either a matrix or
+  a  form  object  in [2XIsHermitianForm[102X ([14XForms: IsHermitianForm[114X) or a group with
+  stored  [2XInvariantSesquilinearForm[102X  ([14X44.5-3[114X)  value  (and  then  this form is
+  taken).[133X
+  
+  [33X[0;0YA  given  [3Xform[103X determines [3Xd[103X, and also [3Xq[103X except if [3Xform[103X is a matrix that does
+  not  store  its  [2XBaseDomain[102X ([14X26.3-1[114X) value. These parameters can be entered,
+  and an error is signalled if they do not fit to the given [3Xform[103X.[133X
+  
+  [33X[0;0YIf  [3Xform[103X  is  not  given  then  a  default  is  chosen  as  described in the
+  introduction to Section [14X50.2[114X.[133X
+  
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XGeneralUnitaryGroup( 3, 5 );[127X[104X
     [4X[28XGU(3,5)[128X[104X
+    [4X[25Xgap>[125X [27XGeneralUnitaryGroup( IsPermGroup, 3, 5 );[127X[104X
+    [4X[28XPerm_GU(3,5)[128X[104X
   [4X[32X[104X
   
   [1X50.2-4 SpecialUnitaryGroup[101X
   
-  [33X[1;0Y[29X[2XSpecialUnitaryGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XSU[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSpecialUnitaryGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X[, [3Xform[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XSpecialUnitaryGroup[102X( [[3Xfilt[103X, ][3Xform[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSU[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X[, [3Xform[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XSU[102X( [[3Xfilt[103X, ][3Xform[103X ) [32X function[133X
   
-  [33X[0;0Yconstructs a group isomorphic to the special unitary group GU([3Xd[103X, [3Xq[103X) of those
-  [22X[3Xd[103X  ×  [3Xd[103X[122X  matrices  over the field with [22X[3Xq[103X^2[122X elements whose determinant is the
-  identity  of  the  field and that respect a fixed nondegenerate sesquilinear
-  form, in the category given by the filter [3Xfilt[103X.[133X
+  [33X[0;0Yconstructs  a  group  isomorphic  to the special unitary group SU( [3Xd[103X, [3Xq[103X ) of
+  those  [22X[3Xd[103X  × [3Xd[103X[122X matrices over the field with [22X[3Xq[103X^2[122X elements whose determinant is
+  the   identity   of  the  field  and  that  respect  a  fixed  nondegenerate
+  sesquilinear form, in the category given by the filter [3Xfilt[103X.[133X
   
   [33X[0;0YIf [3Xfilt[103X is not given it defaults to [2XIsMatrixGroup[102X ([14X44.1-1[114X), and the returned
   group is the special unitary group itself.[133X
   
+  [33X[0;0YIf  version  at  least 1.2.6 of the [5XForms[105X package is loaded then the desired
+  sesquilinear form can be specified via [3Xform[103X, which can be either a matrix or
+  a  form  object  in [2XIsHermitianForm[102X ([14XForms: IsHermitianForm[114X) or a group with
+  stored  [2XInvariantSesquilinearForm[102X  ([14X44.5-3[114X)  value  (and  then  this form is
+  taken).[133X
+  
+  [33X[0;0YA  given  [3Xform[103X determines [3Xd[103X, and also [3Xq[103X except if [3Xform[103X is a matrix that does
+  not  store  its  [2XBaseDomain[102X ([14X26.3-1[114X) value. These parameters can be entered,
+  and an error is signalled if they do not fit to the given [3Xform[103X.[133X
+  
+  [33X[0;0YIf  [3Xform[103X  is  not  given  then  a  default  is  chosen  as  described in the
+  introduction to Section [14X50.2[114X.[133X
+  
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XSpecialUnitaryGroup( 3, 5 );[127X[104X
     [4X[28XSU(3,5)[128X[104X
+    [4X[25Xgap>[125X [27XSpecialUnitaryGroup( IsPermGroup, 3, 5 );[127X[104X
+    [4X[28XPerm_SU(3,5)[128X[104X
   [4X[32X[104X
   
   
   [1X50.2-5 [33X[0;0YSymplecticGroup[133X[101X
   
-  [33X[1;0Y[29X[2XSymplecticGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XSymplecticGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xring[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XSp[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XSp[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xring[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XSP[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XSP[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xring[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSymplecticGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X[, [3Xform[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XSymplecticGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xring[103X[, [3Xform[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XSymplecticGroup[102X( [[3Xfilt[103X, ][3Xform[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSp[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X[, [3Xform[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XSp[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xring[103X[, [3Xform[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XSp[102X( [[3Xfilt[103X, ][3Xform[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSP[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X[, [3Xform[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XSP[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xring[103X[, [3Xform[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XSP[102X( [[3Xfilt[103X, ][3Xform[103X ) [32X function[133X
   
   [33X[0;0Yconstructs  a group isomorphic to the symplectic group Sp( [3Xd[103X, [3Xq[103X ) of those [22X[3Xd[103X
   ×  [3Xd[103X[122X  matrices  over  the field with [3Xq[103X elements (respectively the ring [3Xring[103X)
@@ -504,7 +568,20 @@
   group is the symplectic group itself.[133X
   
   [33X[0;0YAt the moment finite fields or residue class rings [10XIntegers mod [3Xq[103X[10X[110X, with [3Xq[103X an
-  odd prime power are supported.[133X
+  odd prime power, are supported.[133X
+  
+  [33X[0;0YIf  version  at least 1.2.6 of the [5XForms[105X package is loaded and the arguments
+  describe  a  matrix group over a finite field then the desired bilinear form
+  can  be specified via [3Xform[103X, which can be either a matrix or a form object in
+  [2XIsBilinearForm[102X    ([14XForms:   IsBilinearForm[114X)   or   a   group   with   stored
+  [2XInvariantBilinearForm[102X ([14X44.5-1[114X) value (and then this form is taken).[133X
+  
+  [33X[0;0YA  given  [3Xform[103X  determines and [3Xd[103X, and also [3Xq[103X except if [3Xform[103X is a matrix that
+  does  not  store  its  [2XBaseDomain[102X  ([14X26.3-1[114X)  value.  These parameters can be
+  entered, and an error is signalled if they do not fit to the given [3Xform[103X.[133X
+  
+  [33X[0;0YIf  [3Xform[103X  is  not  given  then  a  default  is  chosen  as  described in the
+  introduction to Section [14X50.2[114X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XSymplecticGroup( 4, 2 );[127X[104X
@@ -513,12 +590,16 @@
     [4X[28XSp(6,Z/9Z)[128X[104X
     [4X[25Xgap>[125X [27XSize(g);[127X[104X
     [4X[28X95928796265538862080[128X[104X
+    [4X[25Xgap>[125X [27XSymplecticGroup( IsPermGroup, 4, 2 );[127X[104X
+    [4X[28XPerm_Sp(4,2)[128X[104X
   [4X[32X[104X
   
   [1X50.2-6 GeneralOrthogonalGroup[101X
   
-  [33X[1;0Y[29X[2XGeneralOrthogonalGroup[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XGO[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGeneralOrthogonalGroup[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X[, [3Xform[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XGeneralOrthogonalGroup[102X( [[3Xfilt[103X, ][3Xform[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGO[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X[, [3Xform[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XGO[102X( [[3Xfilt[103X, ][3Xform[103X ) [32X function[133X
   
   [33X[0;0Yconstructs  a group isomorphic to the general orthogonal group GO( [3Xe[103X, [3Xd[103X, [3Xq[103X )
   of  those  [22X[3Xd[103X  ×  [3Xd[103X[122X  matrices  over  the field with [3Xq[103X elements that respect a
@@ -530,52 +611,101 @@
   defaults  to  [2XIsMatrixGroup[102X  ([14X44.1-1[114X), and the returned group is the general
   orthogonal group itself.[133X
   
+  [33X[0;0YIf  version  at  least 1.2.6 of the [5XForms[105X package is loaded then the desired
+  quadratic  form can be specified via [3Xform[103X, which can be either a matrix or a
+  form  object  in  [2XIsQuadraticForm[102X  ([14XForms:  IsQuadraticForm[114X) or a group with
+  stored [2XInvariantQuadraticForm[102X ([14X44.5-5[114X) value (and then this form is taken).[133X
+  
+  [33X[0;0YA  given [3Xform[103X determines [3Xe[103X and [3Xd[103X, and also [3Xq[103X except if [3Xform[103X is a matrix that
+  does  not  store  its  [2XBaseDomain[102X  ([14X26.3-1[114X)  value.  These parameters can be
+  entered, and an error is signalled if they do not fit to the given [3Xform[103X.[133X
+  
+  [33X[0;0YIf  [3Xform[103X  is  not  given  then  a  default  is  chosen  as  described in the
+  introduction to Section [14X50.2[114X.[133X
+  
   [33X[0;0YNote  that  in [KL90],  GO  is  defined  as the stabilizer [22X∆(V, F, κ)[122X of the
   quadratic form, up to scalars, whereas our GO is called [22XI(V, F, κ)[122X there.[133X
   
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XGeneralOrthogonalGroup( 5, 3 );[127X[104X
+    [4X[28XGO(0,5,3)[128X[104X
+    [4X[25Xgap>[125X [27XGeneralOrthogonalGroup( -1, 8, 2 );[127X[104X
+    [4X[28XGO(-1,8,2)[128X[104X
+    [4X[25Xgap>[125X [27XGeneralOrthogonalGroup( IsPermGroup, -1, 8, 2 );[127X[104X
+    [4X[28XPerm_GO(-1,8,2)[128X[104X
+  [4X[32X[104X
+  
   [1X50.2-7 SpecialOrthogonalGroup[101X
   
-  [33X[1;0Y[29X[2XSpecialOrthogonalGroup[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XSO[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSpecialOrthogonalGroup[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X[, [3Xform[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XSpecialOrthogonalGroup[102X( [[3Xfilt[103X, ][3Xform[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSO[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X[, [3Xform[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XSO[102X( [[3Xfilt[103X, ][3Xform[103X ) [32X function[133X
   
-  [33X[0;0Y[2XSpecialOrthogonalGroup[102X  returns a group isomorphic to the special orthogonal
-  group  SO(  [3Xe[103X,  [3Xd[103X,  [3Xq[103X  ), which is the subgroup of all those matrices in the
-  general  orthogonal  group  (see [2XGeneralOrthogonalGroup[102X  ([14X50.2-6[114X)) that have
-  determinant one, in the category given by the filter [3Xfilt[103X. (The index of SO(
-  [3Xe[103X,  [3Xd[103X,  [3Xq[103X  )  in  GO(  [3Xe[103X, [3Xd[103X, [3Xq[103X ) is [22X2[122X if [3Xq[103X is odd, and [22X1[122X if [3Xq[103X is even.) Also
-  interesting  is  the  group  Omega(  [3Xe[103X, [3Xd[103X, [3Xq[103X ), see [2XOmega[102X ([14X50.2-8[114X), which is
-  always of index [22X2[122X in SO( [3Xe[103X, [3Xd[103X, [3Xq[103X ).[133X
+  [33X[0;0Yconstructs a group isomorphic to the special orthogonal group SO( [3Xe[103X, [3Xd[103X, [3Xq[103X ),
+  which  is the subgroup of all those matrices in the general orthogonal group
+  (see [2XGeneralOrthogonalGroup[102X  ([14X50.2-6[114X))  that  have  determinant  one, in the
+  category  given by the filter [3Xfilt[103X. (The index of SO( [3Xe[103X, [3Xd[103X, [3Xq[103X ) in GO( [3Xe[103X, [3Xd[103X,
+  [3Xq[103X  )  is  [22X2[122X  if [3Xq[103X is odd, and [22X1[122X if [3Xq[103X is even.) Also interesting is the group
+  Omega(  [3Xe[103X, [3Xd[103X, [3Xq[103X ), see [2XOmega[102X ([14X50.2-8[114X), which is of index [22X2[122X in SO( [3Xe[103X, [3Xd[103X, [3Xq[103X ),
+  except in the case [22X[3Xd[103X = 1[122X.[133X
   
   [33X[0;0YIf [3Xfilt[103X is not given it defaults to [2XIsMatrixGroup[102X ([14X44.1-1[114X), and the returned
   group is the special orthogonal group itself.[133X
   
+  [33X[0;0YIf  version  at  least 1.2.6 of the [5XForms[105X package is loaded then the desired
+  quadratic  form can be specified via [3Xform[103X, which can be either a matrix or a
+  form  object  in  [2XIsQuadraticForm[102X  ([14XForms:  IsQuadraticForm[114X) or a group with
+  stored [2XInvariantQuadraticForm[102X ([14X44.5-5[114X) value (and then this form is taken).[133X
+  
+  [33X[0;0YA  given [3Xform[103X determines [3Xe[103X and [3Xd[103X, and also [3Xq[103X except if [3Xform[103X is a matrix that
+  does  not  store  its  [2XBaseDomain[102X  ([14X26.3-1[114X)  value.  These parameters can be
+  entered, and an error is signalled if they do not fit to the given [3Xform[103X.[133X
+  
+  [33X[0;0YIf  [3Xform[103X  is  not  given  then  a  default  is  chosen  as  described in the
+  introduction to Section [14X50.2[114X.[133X
+  
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XGeneralOrthogonalGroup( 3, 7 );[127X[104X
-    [4X[28XGO(0,3,7)[128X[104X
-    [4X[25Xgap>[125X [27XGeneralOrthogonalGroup( -1, 4, 3 );[127X[104X
-    [4X[28XGO(-1,4,3)[128X[104X
-    [4X[25Xgap>[125X [27XSpecialOrthogonalGroup( 1, 4, 4 );[127X[104X
-    [4X[28XGO(+1,4,4)[128X[104X
+    [4X[25Xgap>[125X [27XSpecialOrthogonalGroup( 5, 3 );[127X[104X
+    [4X[28XSO(0,5,3)[128X[104X
+    [4X[25Xgap>[125X [27XSpecialOrthogonalGroup( -1, 8, 2 );  # here SO and GO coincide[127X[104X
+    [4X[28XGO(-1,8,2)[128X[104X
+    [4X[25Xgap>[125X [27XSpecialOrthogonalGroup( IsPermGroup, 5, 3 );[127X[104X
+    [4X[28XPerm_SO(0,5,3)[128X[104X
   [4X[32X[104X
   
   [1X50.2-8 Omega[101X
   
-  [33X[1;0Y[29X[2XOmega[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XOmega[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X[, [3Xform[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XOmega[102X( [[3Xfilt[103X, ][3Xform[103X ) [32X operation[133X
   
   [33X[0;0Yconstructs  a  group  isomorphic  to  the  group [22XΩ[122X( [3Xe[103X, [3Xd[103X, [3Xq[103X ) of those [22X[3Xd[103X × [3Xd[103X[122X
   matrices  over  the  field  with  [3Xq[103X  elements  that  respect  a non-singular
   quadratic  form  (see [2XInvariantQuadraticForm[102X  ([14X44.5-5[114X))  specified by [3Xe[103X, and
   that have square spinor norm in odd characteristic or Dickson invariant [22X0[122X in
-  even characteristic, respectively, in the category given by the filter [3Xfilt[103X.
-  For  odd  [3Xq[103X,  this  group  has always index two in the corresponding special
-  orthogonal  group,  which will be conjugate in [22XGL(d,q)[122X to the group returned
-  by  SO(  [3Xe[103X,  [3Xd[103X,  [3Xq[103X  ),  see  [2XSpecialOrthogonalGroup[102X  ([14X50.2-7[114X), but may fix a
-  different form (see [14X50.2[114X).[133X
+  even characteristic, respectively, in the category given by the filter [3Xfilt[103X.[133X
+  
+  [33X[0;0YFor  odd  [3Xq[103X  and [22X[3Xd[103X ≥ 2[122X, this group has always index two in the corresponding
+  special  orthogonal  group,  which will be conjugate in [22XGL(d,q)[122X to the group
+  returned  by SO( [3Xe[103X, [3Xd[103X, [3Xq[103X ), see [2XSpecialOrthogonalGroup[102X ([14X50.2-7[114X), but may fix
+  a different form (see [14X50.2[114X).[133X
   
   [33X[0;0YThe  value  of  [3Xe[103X must be [22X0[122X for odd [3Xd[103X (and can optionally be omitted in this
   case),  respectively  one  of  [22X1[122X  or  [22X-1[122X for even [3Xd[103X. If [3Xfilt[103X is not given it
   defaults  to  [2XIsMatrixGroup[102X ([14X44.1-1[114X), and the returned group is the group [22XΩ[122X(
   [3Xe[103X, [3Xd[103X, [3Xq[103X ) itself.[133X
+  
+  [33X[0;0YIf  version  at  least 1.2.6 of the [5XForms[105X package is loaded then the desired
+  quadratic  form can be specified via [3Xform[103X, which can be either a matrix or a
+  form  object  in  [2XIsQuadraticForm[102X  ([14XForms:  IsQuadraticForm[114X) or a group with
+  stored [2XInvariantQuadraticForm[102X ([14X44.5-5[114X) value (and then this form is taken).[133X
+  
+  [33X[0;0YA  given [3Xform[103X determines [3Xe[103X and [3Xd[103X, and also [3Xq[103X except if [3Xform[103X is a matrix that
+  does  not  store  its  [2XBaseDomain[102X  ([14X26.3-1[114X)  value.  These parameters can be
+  entered, and an error is signalled if they do not fit to the given [3Xform[103X.[133X
+  
+  [33X[0;0YIf  [3Xform[103X  is  not  given  then  a  default  is  chosen  as  described in the
+  introduction to Section [14X50.2[114X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg:= Omega( 3, 5 );  StructureDescription( g );[127X[104X
@@ -587,6 +717,11 @@
     [4X[25Xgap>[125X [27Xg:= Omega( -1, 4, 3 );  StructureDescription( g );[127X[104X
     [4X[28XOmega(-1,4,3)[128X[104X
     [4X[28X"A6"[128X[104X
+    [4X[25Xgap>[125X [27Xg:= Omega( IsPermGroup, 1, 6, 2 );  StructureDescription( g );[127X[104X
+    [4X[28XPerm_Omega(+1,6,2)[128X[104X
+    [4X[28X"A8"[128X[104X
+    [4X[25Xgap>[125X [27XIsSubset( GO( 3, 5 ), Omega( 3, 5 ) );  # different forms![127X[104X
+    [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
   [1X50.2-9 GeneralSemilinearGroup[101X
@@ -679,7 +814,31 @@
   [33X[0;0YIf  [3Xfilt[103X  is not given it defaults to [2XIsPermGroup[102X ([14X43.1-1[114X), and the returned
   group is the action on lines of the underlying vector space.[133X
   
-  [1X50.2-16 ProjectiveOmega[101X
+  [1X50.2-16 ProjectiveGeneralOrthogonalGroup[101X
+  
+  [33X[1;0Y[29X[2XProjectiveGeneralOrthogonalGroup[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPGO[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  
+  [33X[0;0Yconstructs  a group isomorphic to the projective group PGO( [3Xe[103X, [3Xd[103X, [3Xq[103X ) of GO(
+  [3Xe[103X,  [3Xd[103X,  [3Xq[103X ), modulo the centre (see [2XGeneralOrthogonalGroup[102X ([14X50.2-6[114X)), in the
+  category given by the filter [3Xfilt[103X.[133X
+  
+  [33X[0;0YIf  [3Xfilt[103X  is not given it defaults to [2XIsPermGroup[102X ([14X43.1-1[114X), and the returned
+  group is the action on lines of the underlying vector space.[133X
+  
+  [1X50.2-17 ProjectiveSpecialOrthogonalGroup[101X
+  
+  [33X[1;0Y[29X[2XProjectiveSpecialOrthogonalGroup[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPSO[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  
+  [33X[0;0Yconstructs  a group isomorphic to the projective group PSO( [3Xe[103X, [3Xd[103X, [3Xq[103X ) of SO(
+  [3Xe[103X,  [3Xd[103X,  [3Xq[103X ), modulo the centre (see [2XSpecialOrthogonalGroup[102X ([14X50.2-7[114X)), in the
+  category given by the filter [3Xfilt[103X.[133X
+  
+  [33X[0;0YIf  [3Xfilt[103X  is not given it defaults to [2XIsPermGroup[102X ([14X43.1-1[114X), and the returned
+  group is the action on lines of the underlying vector space.[133X
+  
+  [1X50.2-18 ProjectiveOmega[101X
   
   [33X[1;0Y[29X[2XProjectiveOmega[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
   [33X[1;0Y[29X[2XPOmega[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
@@ -690,6 +849,30 @@
   
   [33X[0;0YIf  [3Xfilt[103X  is not given it defaults to [2XIsPermGroup[102X ([14X43.1-1[114X), and the returned
   group is the action on lines of the underlying vector space.[133X
+  
+  [1X50.2-19 ProjectiveGeneralSemilinearGroup[101X
+  
+  [33X[1;0Y[29X[2XProjectiveGeneralSemilinearGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPGammaL[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  
+  [33X[0;0Y[2XProjectiveGeneralSemilinearGroup[102X  returns  a  group isomorphic to the factor
+  group  of  the  general semilinear group [10XGammaL([110X [3Xd[103X, [3Xq[103X [10X)[110X modulo the center of
+  its normal subgroup [10XGL([110X [3Xd[103X, [3Xq[103X [10X)[110X.[133X
+  
+  [33X[0;0YIf  [3Xfilt[103X  is not given it defaults to [2XIsPermGroup[102X ([14X43.1-1[114X), and the returned
+  group is the action on lines of the underlying vector space [10XGF([110X[3Xq[103X[10X)^[110X[3Xd[103X.[133X
+  
+  [1X50.2-20 ProjectiveSpecialSemilinearGroup[101X
+  
+  [33X[1;0Y[29X[2XProjectiveSpecialSemilinearGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPSigmaL[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  
+  [33X[0;0Y[2XProjectiveSpecialSemilinearGroup[102X  returns  a  group isomorphic to the factor
+  group  of  the  special semilinear group [10XSigmaL([110X [3Xd[103X, [3Xq[103X [10X)[110X modulo the center of
+  its normal subgroup [10XSL([110X [3Xd[103X, [3Xq[103X [10X)[110X.[133X
+  
+  [33X[0;0YIf  [3Xfilt[103X  is not given it defaults to [2XIsPermGroup[102X ([14X43.1-1[114X), and the returned
+  group is the action on lines of the underlying vector space [10XGF([110X[3Xq[103X[10X)^[110X[3Xd[103X.[133X
   
   
   [1X50.3 [33X[0;0YConjugacy Classes in Classical Groups[133X[101X
@@ -864,35 +1047,30 @@
   [1X50.6 [33X[0;0YFinite Perfect Groups[133X[101X
   
   [33X[0;0YThe [5XGAP[105X library of finite perfect groups provides, up to isomorphism, a list
-  of all perfect groups whose sizes are less than [22X10^6[122X excluding the following
-  sizes:[133X
-  
-  [30X    [33X[0;6YFor  [22Xn  =  61440[122X,  122880,  172032, 245760, 344064, 491520, 688128, or
-        983040,  the  perfect  groups  of  size  [22Xn[122X  have  not  completely been
-        determined  yet.  The  library  neither  provides  the number of these
-        groups nor the groups themselves.[133X
-  
-  [30X    [33X[0;6YFor [22Xn = 86016[122X, 368640, or 737280, the library does not yet contain the
-        perfect groups of size [22Xn[122X, it only provides their numbers which are 52,
-        46, and 54, respectively.[133X
-  
-  [33X[0;0YExcept for these eleven sizes, the list of altogether 1097 perfect groups in
-  the  library  is complete. It relies on results of Derek F. Holt and Wilhelm
-  Plesken  which  are published in their book [21XPerfect Groups[121X [HP89]. Moreover,
-  they have supplied us with files with presentations of 488 of the groups. In
-  terms  of  these,  the remaining 607 nontrivial groups in the library can be
-  described  as  276  direct products, 107 central products, and 224 subdirect
-  products. They are computed automatically by suitable [5XGAP[105X functions whenever
-  they  are needed. Two additional groups omitted from the book [21XPerfect Groups[121X
-  have also been included.[133X
+  of  all  perfect  groups  whose  sizes  are less than [22X2⋅ 10^6[122X. The groups of
+  orders  up to [22X10^6[122X have been enumerated by Derek F. Holt and Wilhelm Plesken
+  and  published  in  their  book [21XPerfect Groups[121X [HP89]. For orders [22Xn = 86016[122X,
+  368640,  or 737280 this work only counted the groups (but did not explicitly
+  list  them), the groups of orders [22Xn = 61440[122X, 122880, 172032, 245760, 344064,
+  491520, 688128, or 983040 were omitted.[133X
   
   [33X[0;0YWe  are  grateful  to Derek Holt and Wilhelm Plesken for making their groups
   available  to  the  [5XGAP[105X  community by contributing their files. It should be
   noted  that their book contains a lot of further information for many of the
   library  groups.  So  we  would  like to recommend it to any [5XGAP[105X user who is
-  interested in the groups.[133X
+  interested  in  the  groups.  The library of these has been brought into [5XGAP[105X
+  format by Volkmar Felsch.[133X
   
-  [33X[0;0YThe library has been brought into [5XGAP[105X format by Volkmar Felsch.[133X
+  [33X[0;0YSeveral  additional  groups  omitted  from the book [21XPerfect Groups[121X have also
+  been included. Two groups -- one of order 450000 with a factor group of type
+  [22XA_6[122X  and  the one of order 962280 -- were found by Jack Schmidt in 2005. Two
+  groups  of  order  243000 and one each of orders 729000, 871200, 878460 were
+  found in 2020 by Alexander Hulpke.[133X
+  
+  [33X[0;0YThe  perfect  groups of size less than [22X2⋅ 10^6[122X which had not been classified
+  in  the  work  of Holt and Plesken have been enumerated by Alexander Hulpke.
+  They  are stored directly and provide less construction information in their
+  names.[133X
   
   [33X[0;0YAs  all  groups are stored by presentations, a permutation representation is
   obtained  by  coset enumeration. Note that some of the library groups do not
@@ -903,12 +1081,13 @@
   
   [33X[1;0Y[29X[2XSizesPerfectGroups[102X(  ) [32X function[133X
   
-  [33X[0;0YThis  is  the  ordered list of all numbers up to [22X10^6[122X that occur as sizes of
-  perfect groups. One can iterate over the perfect groups library with:[133X
+  [33X[0;0YThis is the ordered list of all numbers up to [22X2⋅ 10^6[122X that occur as sizes of
+  perfect  groups.  One  can  iterate  over part of the perfect groups library
+  with:[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xfor n in SizesPerfectGroups() do[127X[104X
-    [4X[25X>[125X [27X     for k in [1..NrPerfectLibraryGroups(n)] do[127X[104X
+    [4X[25Xgap>[125X [27Xfor n in Intersection([100..500],SizesPerfectGroups()) do[127X[104X
+    [4X[25X>[125X [27X     for k in [1..NrPerfectGroups(n)] do[127X[104X
     [4X[25X>[125X [27X       pg := PerfectGroup(n,k);[127X[104X
     [4X[25X>[125X [27X     od;[127X[104X
     [4X[25X>[125X [27X   od;[127X[104X
@@ -926,7 +1105,7 @@
   filter  in  which  the  group  is  returned.  Possible  filters  so  far are
   [2XIsPermGroup[102X ([14X43.1-1[114X) and [2XIsSubgroupFpGroup[102X ([14X47.1-1[114X). In the latter case, the
   generators  and  relators  used  coincide  with  those  given in [HP89]. The
-  default filter is [2XIsSubgroupFpGroup[102X ([14X47.1-1[114X).[133X
+  default filter is [2XIsPermGroup[102X ([14X43.1-1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XG := PerfectGroup(IsPermGroup,6048,1);[127X[104X
@@ -935,6 +1114,10 @@
     [4X[28XA5 2^1 19^2 C 19^1[128X[104X
     [4X[25Xgap>[125X [27XNrMovedPoints(G);[127X[104X
     [4X[28X6859[128X[104X
+    [4X[25Xgap>[125X [27XG:=PerfectGroup(1866240,12);[127X[104X
+    [4X[28XPG1866240.12[128X[104X
+    [4X[25Xgap>[125X [27XNrMovedPoints(G);[127X[104X
+    [4X[28X270[128X[104X
   [4X[32X[104X
   
   [1X50.6-3 PerfectIdentification[101X
@@ -948,21 +1131,19 @@
   [1X50.6-4 NumberPerfectGroups[101X
   
   [33X[1;0Y[29X[2XNumberPerfectGroups[102X( [3Xsize[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNrPerfectGroups[102X( [3Xsize[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNumberPerfectLibraryGroups[102X( [3Xsize[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNrPerfectLibraryGroups[102X( [3Xsize[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the  number  of non-isomorphic perfect groups of size [3Xsize[103X for each
-  positive  integer  [3Xsize[103X  up to [22X10^6[122X except for the eight sizes listed at the
-  beginning  of  this section for which the number is not yet known. For these
-  values as well as for any argument out of range it returns [9Xfail[109X.[133X
+  positive  integer [3Xsize[103X up to [22X2⋅10^6[122X. Additionally, for odd [3Xsize[103X an answer is
+  returned  (odd  order  groups  are  solvable). For any other argument out of
+  range it returns [9Xfail[109X. [3XNrPerfectGroups[103X is a synonym for [2XNumberPerfectGroups[102X.
+  Moreover [3XNumberPerfectLibraryGroups[103X (and its synonym [3XNrPerfectLibraryGroups[103X)
+  exist  for  historical  reasons,  and return 0 instead of fail for arguments
+  outside the library scope.[133X
   
-  [1X50.6-5 NumberPerfectLibraryGroups[101X
-  
-  [33X[1;0Y[29X[2XNumberPerfectLibraryGroups[102X( [3Xsize[103X ) [32X function[133X
-  
-  [33X[0;0Yreturns the number of perfect groups of size [3Xsize[103X which are available in the
-  library of finite perfect groups. (The purpose of the function is to provide
-  a simple way to formulate a loop over all library groups of a given size.)[133X
-  
-  [1X50.6-6 SizeNumbersPerfectGroups[101X
+  [1X50.6-5 SizeNumbersPerfectGroups[101X
   
   [33X[1;0Y[29X[2XSizeNumbersPerfectGroups[102X( [3Xfactor1[103X, [3Xfactor2[103X, [3X...[103X ) [32X function[133X
   
@@ -1018,7 +1199,7 @@
   over all library groups which contain certain composition factors.[133X
   
   
-  [1X50.6-7 [33X[0;0YDisplayInformationPerfectGroups[133X[101X
+  [1X50.6-6 [33X[0;0YDisplayInformationPerfectGroups[133X[101X
   
   [33X[1;0Y[29X[2XDisplayInformationPerfectGroups[102X( [3Xsize[103X[, [3Xn[103X] ) [32X function[133X
   [33X[1;0Y[29X[2XDisplayInformationPerfectGroups[102X( [3Xsizenumberpair[103X ) [32X function[133X
@@ -1085,14 +1266,14 @@
   [4X[32X[104X
   
   
-  [1X50.6-8 [33X[0;0YMore about the Perfect Groups Library[133X[101X
+  [1X50.6-7 [33X[0;0YMore about the Perfect Groups Library[133X[101X
   
   [33X[0;0YFor  any  library  group  [22XG[122X,  the  library  files  do  not  only  provide  a
   presentation,  but,  in  addition, a list of one or more subgroups [22XS_1, ...,
   S_r[122X  of  [22XG[122X  such that there is a faithful permutation representation of [22XG[122X of
   degree  [22X∑_{i  =  1}^r [G:S_i][122X on the set [22X{ S_i g ∣ 1 ≤ i ≤ r, g ∈ G }[122X of the
   cosets  of  the  [22XS_i[122X. This allows one to construct the groups as permutation
-  groups.  The function [2XDisplayInformationPerfectGroups[102X ([14X50.6-7[114X) displays only
+  groups.  The function [2XDisplayInformationPerfectGroups[102X ([14X50.6-6[114X) displays only
   the available degree. The message[133X
   
   [4X[32X  Example  [32X[104X
@@ -1209,7 +1390,7 @@
   
   [33X[0;0YIf  such a group description has been given in the book for [22XG[122X (and, in fact,
   this  is  the  case  for  most  of  the  library groups), it is displayed by
-  [2XDisplayInformationPerfectGroups[102X  ([14X50.6-7[114X). Otherwise the function provides a
+  [2XDisplayInformationPerfectGroups[102X  ([14X50.6-6[114X). Otherwise the function provides a
   less  explicit description of the (in these cases unique) Holt-Plesken class
   to  which  [22XG[122X  belongs, together with a serial number if this is necessary to
   make it unique.[133X
@@ -1268,23 +1449,23 @@
   
   [33X[0;0YSecondly,  there  is  the  set  [22XQ_2(n)[122X  of  the  [22Xℚ[122X-classes  of the remaining
   i.m.f. subgroups  of  [22XGL_n(ℤ)[122X,  i.e.,  of those which are not maximal finite
-  subgroups of [22XGL_n(ℚ)[122X. For any such group [22XG[122X, say, there is at least one class
-  [22XC  ∈  Q_1(n)[122X  such  that [22XG[122X is conjugate under [22Xℚ[122X to a proper subgroup of some
-  group  [22XH  ∈  C[122X.  In fact, the class [22XC[122X is uniquely determined for any group [22XG[122X
-  occurring  in the library (though there seems to be no reason to assume that
-  this  property  should  hold  in  general). Hence we may call [22XC[122X the [13Xrational
+  subgroups  of [22XGL_n(ℚ)[122X. For any such group [22XG[122X, there is at least one class [22XC ∈
+  Q_1(n)[122X such that [22XG[122X is conjugate under [22Xℚ[122X to a proper subgroup of some group [22XH
+  ∈  C[122X.  In fact, the class [22XC[122X is uniquely determined for any group [22XG[122X occurring
+  in  the  library  (though  there  seems  to be no reason to assume that this
+  property  should  hold  in  general).  Hence  we  may  call  [22XC[122X  the [13Xrational
   i.m.f. class[113X  of  [22XG[122X. Finally, we will denote the number of classes in [22XQ_1(n)[122X
   and [22XQ_2(n)[122X by [22Xq_1(n)[122X and [22Xq_2(n)[122X, respectively.[133X
   
   [33X[0;0YAs  an  example,  let  us  consider the case [22Xn = 4[122X. There are 6 [22Xℤ[122X-classes of
   i.m.f. subgroups  of  [22XGL_4(ℤ)[122X with representative subgroups [22XG_1, ..., G_6[122X of
   isomorphism types [22XG_1 ≅ W(F_4)[122X, [22XG_2 ≅ D_12 ≀ C_2[122X, [22XG_3 ≅ G_4 ≅ C_2 × S_5[122X, [22XG_5
-  ≅  W(B_4)[122X,  and  [22XG_6  ≅ (D_12[122X[10XY[110X[22XD_12) : C_2[122X. The corresponding [22Xℚ[122X-classes, [22XR_1,
-  ...,  R_6[122X,  say,  are pairwise different except that [22XR_3[122X coincides with [22XR_4[122X.
-  The  groups  [22XG_1[122X,  [22XG_2[122X, and [22XG_3[122X are i.m.f. subgroups of [22XGL_4(ℚ)[122X, but [22XG_5[122X and
-  [22XG_6[122X  are not because they are conjugate under [22XGL_4(ℚ)[122X to proper subgroups of
-  [22XG_1[122X and [22XG_2[122X, respectively. So we have [22XQ_1(4) = { R_1, R_2, R_3 }[122X, [22XQ_2(4) = {
-  R_5, R_6 }[122X, [22Xq_1(4) = 3[122X, and [22Xq_2(4) = 2[122X.[133X
+  ≅ W(B_4)[122X, and [22XG_6 ≅ (D_12[122X[10XY[110X[22XD_12) : C_2[122X. The corresponding [22Xℚ[122X-classes, which we
+  denote  [22XR_1, ..., R_6[122X, are pairwise different except that [22XR_3[122X coincides with
+  [22XR_4[122X.  The  groups [22XG_1[122X, [22XG_2[122X, and [22XG_3[122X are i.m.f. subgroups of [22XGL_4(ℚ)[122X, but [22XG_5[122X
+  and [22XG_6[122X are not because they are conjugate under [22XGL_4(ℚ)[122X to proper subgroups
+  of  [22XG_1[122X and [22XG_2[122X, respectively. So we have [22XQ_1(4) = { R_1, R_2, R_3 }[122X, [22XQ_2(4)
+  = { R_5, R_6 }[122X, [22Xq_1(4) = 3[122X, and [22Xq_2(4) = 2[122X.[133X
   
   [33X[0;0YThe [22Xq_1(n)[122X [22Xℚ[122X-classes of i.m.f. subgroups of [22XGL_n(ℚ)[122X have been determined for
   each   dimension   [22Xn  ≤  31[122X.  The  current  [5XGAP[105X  library  provides  integral

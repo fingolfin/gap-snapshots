@@ -59,7 +59,7 @@ DeclareAttribute("AutomorphismGroup",IsDomain);
 ##
 ##  <Description>
 ##  indicates whether <A>G</A> consists of automorphisms of another group
-##  <M>H</M>, say.
+##  <M>H</M>.
 ##  The group <M>H</M> can be obtained from <A>G</A> via the attribute
 ##  <Ref Attr="AutomorphismDomain"/>.
 ##  </Description>
@@ -123,7 +123,9 @@ DeclareAttribute( "AutomorphismDomain", IsGroupOfAutomorphisms );
 ##  <Prop Name="IsAutomorphismGroup" Arg='G'/>
 ##
 ##  <Description>
-##  indicates whether <A>G</A> is the full automorphism group of another
+##  indicates whether <A>G</A>, which must be
+##  <Ref Prop="IsGroupOfAutomorphisms"/>,
+##  is the full automorphism group of another
 ##  group <M>H</M>, this group is given as <Ref Attr="AutomorphismDomain"/>
 ##  value of <A>G</A>.
 ##  <Example><![CDATA[
@@ -139,7 +141,7 @@ DeclareAttribute( "AutomorphismDomain", IsGroupOfAutomorphisms );
 ##    Pcgs([ (2,4), (1,2,3,4), (1,3)(2,4) ]) -> 
 ##      [ (2,4), (1,4,3,2), (1,3)(2,4) ] ]
 ##  gap> NiceObject(au);
-##  Group([ (1,2,3,4), (1,3)(2,4), (2,4) ])
+##  Group([ (1,2,4,6), (1,4)(2,6), (2,6)(3,5) ])
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -169,6 +171,27 @@ InstallTrueMethod( IsGroupOfAutomorphisms,IsAutomorphismGroup );
 ##  <#/GAPDoc>
 ##
 DeclareAttribute("InnerAutomorphismsAutomorphismGroup",IsGroup);
+
+#############################################################################
+##
+#A  InnerAutomorphismGroup(<G>)
+##
+##  <#GAPDoc Label="InnerAutomorphismGroup">
+##  <ManSection>
+##  <Attr Name="InnerAutomorphismGroup" Arg='G'/>
+##
+##  <Description>
+##  For a group <A>G</A> this attribute stores the group of inner
+##  automorphisms (automorphisms induced by conjugation) of the original group.
+##  <Example><![CDATA[
+##  gap> InnerAutomorphismGroup(SymmetricGroup(5));
+##  <group with 2 generators>
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareAttribute("InnerAutomorphismGroup", IsGroup);
 
 #############################################################################
 ##
@@ -281,7 +304,7 @@ DeclareGlobalFunction("MorMaxFusClasses");
 ##  checks these for properties such as generating a given group,
 ##  or fulfilling relations.
 ##  This can be used to find small generating sets or all types of Morphisms.
-##  The element tuples are used only up to up to inner automorphisms as
+##  The element tuples are used only up to inner automorphisms as
 ##  all images can be obtained easily from them by conjugation while
 ##  running through all of them usually would take too long.
 ##  <P/>
@@ -341,7 +364,7 @@ DeclareGlobalFunction("MorMaxFusClasses");
 ##  <Mark><C>condition</C></Mark>
 ##  <Item>
 ##   A function that will be applied to the homomorphism and must return
-##  <C>true</C> for the homomorphism to be accepted.
+##  <K>true</K> for the homomorphism to be accepted.
 ##  </Item>
 ##  </List>
 ##  <P/>
@@ -477,6 +500,7 @@ DeclareGlobalFunction("IsomorphismAbelianGroups");
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction("IsomorphismGroups");
+DeclareGlobalFunction("IsomorphismSimpleGroups");
 
 #############################################################################
 ##
@@ -509,7 +533,7 @@ DeclareGlobalFunction("IsomorphismGroups");
 ##  gap> h:=Group((1,2,3),(1,2));
 ##  Group([ (1,2,3), (1,2) ])
 ##  gap> quo:=GQuotients(g,h);
-##  [ [ (1,2,3,4), (1,3,4) ] -> [ (2,3), (1,2,3) ] ]
+##  [ [ (1,2,3,4), (1,4,3) ] -> [ (2,3), (1,2,3) ] ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>

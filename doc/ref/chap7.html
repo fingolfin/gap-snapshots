@@ -44,6 +44,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7EB04D387C53E4C1">7.3-3 UntraceMethods</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7B3018AA82D55949">7.3-4 UntraceAllMethods</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X81078D3387A38E31">7.3-5 TraceImmediateMethods</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X81B000CF86BA1534">7.3-6 TraceInternalMethods</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7A9C902479CB6F7C">7.4 <span class="Heading">Info Functions</span></a>
 </span>
@@ -128,9 +129,12 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X85679F17791D9B63">7.12 <span class="Heading">Global Memory Information</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X836977DE80416F3D">7.12-1 GasmanStatistics</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X85327FA5872E0356">7.12-2 GasmanMessageStatus</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X80C683247E94769F">7.12-3 GasmanLimits</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7F1F741D7F0899D1">7.12-1 <span class="Heading">Garbage Collection</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7848AB367F3A1221">7.12-2 CollectGarbage</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X836977DE80416F3D">7.12-3 GasmanStatistics</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X85327FA5872E0356">7.12-4 GasmanMessageStatus</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X80C683247E94769F">7.12-5 GasmanLimits</a></span>
 </div></div>
 </div>
 
@@ -328,7 +332,85 @@ type 'quit;' to quit to outer loop
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UntraceMethods( [ Size ] );</span>
 </pre></div>
 
-<p>This example gives an explanation for the two calls of the "system getter" for <code class="func">Size</code> (<a href="chap30.html#X858ADA3B7A684421"><span class="RefLink">30.4-6</span></a>). Namely, there are immediate methods that access the known size of the group. Note that the group <code class="code">g</code> was known to be finitely generated already before the size was computed, the calls of the immediate method for <code class="func">IsFinitelyGeneratedGroup</code> (<a href="chap39.html#X81E22D07871DF37E"><span class="RefLink">39.15-17</span></a>) after the call of <code class="func">Size</code> (<a href="chap30.html#X858ADA3B7A684421"><span class="RefLink">30.4-6</span></a>) have other arguments than <code class="code">g</code>.</p>
+<p>This example gives an explanation for the two calls of the "system getter" for <code class="func">Size</code> (<a href="chap30.html#X858ADA3B7A684421"><span class="RefLink">30.4-6</span></a>). Namely, there are immediate methods that access the known size of the group. Note that the group <code class="code">g</code> was known to be finitely generated already before the size was computed, the calls of the immediate method for <code class="func">IsFinitelyGeneratedGroup</code> (<a href="chap39.html#X81E22D07871DF37E"><span class="RefLink">39.15-18</span></a>) after the call of <code class="func">Size</code> (<a href="chap30.html#X858ADA3B7A684421"><span class="RefLink">30.4-6</span></a>) have other arguments than <code class="code">g</code>.</p>
+
+<p><a id="X81B000CF86BA1534" name="X81B000CF86BA1534"></a></p>
+
+<h5>7.3-6 TraceInternalMethods</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceInternalMethods</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UntraceInternalMethods</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GetTraceInternalMethodsCounts</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ClearTraceInternalMethodsCounts</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><code class="func">TraceInternalMethods</code> enables tracing for all internal methods. Internal methods are methods which implement many fundamental operations in GAP. In this version of GAP, the internal methods which can be traced are:</p>
+
+
+<dl>
+<dt><strong class="Mark">Zero, ZeroMut</strong></dt>
+<dd><p>Mutable and Immutable <code class="func">Zero</code> (<a href="chap31.html#X8040AC7A79FFC442"><span class="RefLink">31.10-3</span></a>)</p>
+
+</dd>
+<dt><strong class="Mark">AInv, AInvMut</strong></dt>
+<dd><p>Mutable and Immutable <code class="func">AdditiveInverse</code> (<a href="chap31.html#X84BB723C81D55D63"><span class="RefLink">31.10-9</span></a>)</p>
+
+</dd>
+<dt><strong class="Mark">One, OneMut</strong></dt>
+<dd><p>Mutable and Immutable <code class="func">One</code> (<a href="chap31.html#X8046262384895B2A"><span class="RefLink">31.10-2</span></a>)</p>
+
+</dd>
+<dt><strong class="Mark">Inv, InvMut</strong></dt>
+<dd><p>Mutable and Immutable <code class="func">Inverse</code> (<a href="chap31.html#X78EE524E83624057"><span class="RefLink">31.10-8</span></a>)</p>
+
+</dd>
+<dt><strong class="Mark">Sum</strong></dt>
+<dd><p>The operator <code class="func">\+</code> (<a href="chap31.html#X8481C9B97B214C23"><span class="RefLink">31.12-1</span></a>)</p>
+
+</dd>
+<dt><strong class="Mark">Diff</strong></dt>
+<dd><p>The operator <code class="code">-</code> operator</p>
+
+</dd>
+<dt><strong class="Mark">Prod</strong></dt>
+<dd><p>The operator <code class="func">\*</code> (<a href="chap31.html#X8481C9B97B214C23"><span class="RefLink">31.12-1</span></a>)</p>
+
+</dd>
+<dt><strong class="Mark">Quo</strong></dt>
+<dd><p>The operator <code class="func">\/</code> (<a href="chap31.html#X8481C9B97B214C23"><span class="RefLink">31.12-1</span></a>)</p>
+
+</dd>
+<dt><strong class="Mark">LQuo</strong></dt>
+<dd><p>The left-quotient operator</p>
+
+</dd>
+<dt><strong class="Mark">Pow</strong></dt>
+<dd><p>The operator <code class="func">\^</code> (<a href="chap31.html#X8481C9B97B214C23"><span class="RefLink">31.12-1</span></a>)</p>
+
+</dd>
+<dt><strong class="Mark">Comm</strong></dt>
+<dd><p>The operator <code class="func">Comm</code> (<a href="chap31.html#X80761843831B468E"><span class="RefLink">31.12-3</span></a>)</p>
+
+</dd>
+<dt><strong class="Mark">Mod</strong></dt>
+<dd><p>The operator <code class="func">\mod</code> (<a href="chap31.html#X8481C9B97B214C23"><span class="RefLink">31.12-1</span></a>)</p>
+
+</dd>
+</dl>
+<p><code class="func">UntraceInternalMethods</code> turns tracing off. As these methods can be called hundreds of thousands of times in simple GAP code, there isn't a statement printed each time one is called. Instead, the method <code class="func">GetTraceInternalMethodsCounts</code> returns how many times each operation has been applied to each type of variable (the type of a variable can be found with the <code class="code">TNAM_OBJ</code> method). The return value for two argument operators is a record of records <code class="code">r</code>, where <code class="code">r.op</code> stores information about operator <code class="code">op</code>. For one argument operators <code class="code">r.op.i</code> stores how many times <code class="code">op</code> was called with an argument of type <code class="code">i</code>, while for two argument operators <code class="code">r.op.i.j</code> stores how many times <code class="code">op</code> was called with arguments of type <code class="code">i</code> and <code class="code">j</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TraceInternalMethods();</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">2+3+4+5+6;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">2.0+2.0;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">3^(1,2,3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GetTraceInternalMethodsCounts();</span>
+rec( Pow := rec( integer := rec( ("permutation (small)") := 1 ) ),
+Sum := rec( integer := rec( integer := 4 ),
+    macfloat := rec( macfloat := 1 ) ) )
+# 'macfloat' is a floating point number
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UntraceInternalMethods();</span>
+</pre></div>
 
 <p><a id="X7A9C902479CB6F7C" name="X7A9C902479CB6F7C"></a></p>
 
@@ -376,7 +458,7 @@ type 'quit;' to quit to outer loop
 <h5>7.4-2 DeclareInfoClass</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareInfoClass</code>( <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>creates a new info class with name <var class="Arg">name</var> and binds it to the global variable <var class="Arg">name</var>. The variable must previously be writable, and is made readonly by this function.</p>
+<p>creates a new info class with name <var class="Arg">name</var> and binds it to the global variable <var class="Arg">name</var>. The variable must previously be writable, and is made read-only by this function.</p>
 
 <p><a id="X7A43B9E68765EE9E" name="X7A43B9E68765EE9E"></a></p>
 
@@ -403,7 +485,6 @@ type 'quit;' to quit to outer loop
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ShowUsedInfoClasses(true);</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Intersection(Group((1,3,2,4,5,6)), Group((1,2,3,4,5,6)));</span>
-#I Would print info with SetInfoLevel(InfoOptions,1)
 #I Would print info with SetInfoLevel(InfoBckt,1)
 #I Would print info with SetInfoLevel(InfoBckt,3)
 #I Would print info with SetInfoLevel(InfoBckt,5)
@@ -682,7 +763,7 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 <h5>7.8-2 ProfileGlobalFunctions</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProfileGlobalFunctions</code>( [<var class="Arg">bool</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Called with argument <code class="keyw">true</code>, <code class="func">ProfileGlobalFunctions</code> starts profiling of all functions that have been declared via <code class="func">DeclareGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.10-4</span></a>). Old profile information for all these functions is cleared. A function call with the argument <code class="keyw">false</code> stops profiling of all these functions. Recorded information is still kept, so you can display it even after turning the profiling off.</p>
+<p>Called with argument <code class="keyw">true</code>, <code class="func">ProfileGlobalFunctions</code> starts profiling of all functions that have been declared via <code class="func">DeclareGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.10-5</span></a>). Old profile information for all these functions is cleared. A function call with the argument <code class="keyw">false</code> stops profiling of all these functions. Recorded information is still kept, so you can display it even after turning the profiling off.</p>
 
 <p>When <code class="func">ProfileGlobalFunctions</code> is called without argument, profile information for all global functions is displayed, see <code class="func">DisplayProfile</code> (<a href="chap7.html#X80FEA6A08775A48E"><span class="RefLink">7.8-9</span></a>).</p>
 
@@ -736,7 +817,7 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 
 <h5>7.8-9 DisplayProfile</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DisplayProfile</code>( [<var class="Arg">functions</var>, ][<var class="Arg">mincount</var>, <var class="Arg">mintime</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DisplayProfile</code>( [<var class="Arg">functions</var>][,] [<var class="Arg">mincount</var>, <var class="Arg">mintime</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GAPInfo.ProfileThreshold</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
 <p>Called without arguments, <code class="func">DisplayProfile</code> displays the profile information for profiled operations, methods and functions. If an argument <var class="Arg">functions</var> is given, only profile information for the functions in the list <var class="Arg">functions</var> is shown. If two integer values <var class="Arg">mincount</var>, <var class="Arg">mintime</var> are given as arguments then the output is restricted to those functions that were called at least <var class="Arg">mincount</var> times or for which the total time spent (see below) was at least <var class="Arg">mintime</var> milliseconds. The defaults for <var class="Arg">mincount</var> and <var class="Arg">mintime</var> are the entries of the list stored in the global variable <code class="func">GAPInfo.ProfileThreshold</code>.</p>
 
@@ -748,7 +829,7 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 
 <p>At the end of the list, two lines are printed that show the total time used and the total memory allocated by the profiled functions not shown in the list (label <code class="code">OTHER</code>) and by all profiled functions (label <code class="code">TOTAL</code>), respectively.</p>
 
-<p>An interactive variant of <code class="func">DisplayProfile</code> is the function <code class="func">BrowseProfile</code> (<a href="../../pkg/Browse/doc/chap6.html#X7B42091982DE7AE7"><span class="RefLink">Browse: BrowseProfile</span></a>) that is provided by the <strong class="pkg">GAP</strong> package <strong class="pkg">Browse</strong>.</p>
+<p>An interactive variant of <code class="func">DisplayProfile</code> is the function <code class="func">BrowseProfile</code> (<a href="../../pkg/browse/doc/chap6.html#X7B42091982DE7AE7"><span class="RefLink">Browse: BrowseProfile</span></a>) that is provided by the <strong class="pkg">GAP</strong> package <strong class="pkg">Browse</strong>.</p>
 
 <p><a id="X7DAF9AB9793AE203" name="X7DAF9AB9793AE203"></a></p>
 
@@ -1054,7 +1135,7 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 
 <p>The global variable <code class="code">GAPInfo.Version</code> (see <code class="func">GAPInfo</code> (<a href="chap3.html#X8354754E7935F935"><span class="RefLink">3.5-1</span></a>)) contains the version number of the version of <strong class="pkg">GAP</strong>. Its value can be checked other version number using <code class="func">CompareVersionNumbers</code> (<a href="chap76.html#X787DFEB383545A49"><span class="RefLink">76.3-9</span></a>).</p>
 
-<p>To produce sample citations for the used version of <strong class="pkg">GAP</strong> or for a package available in this <strong class="pkg">GAP</strong> installation, use <code class="func">Cite</code> (<a href="chap76.html#X79637D9A7B1AD7F7"><span class="RefLink">76.3-17</span></a>).</p>
+<p>To produce sample citations for the used version of <strong class="pkg">GAP</strong> or for a package available in this <strong class="pkg">GAP</strong> installation, use <code class="func">Cite</code> (<a href="chap76.html#X79637D9A7B1AD7F7"><span class="RefLink">76.3-19</span></a>).</p>
 
 <p>If you wish to report a problem to <strong class="pkg">GAP</strong> Support or <strong class="pkg">GAP</strong> Forum, it may be useful to not only report the version used, but also to include the <strong class="pkg">GAP</strong> banner displays the information about the architecture for which the <strong class="pkg">GAP</strong> binary is built, used libraries and loaded packages.</p>
 
@@ -1143,7 +1224,7 @@ gaussian.tst              10
 <dt><strong class="Mark">#@if EXPR ...  [#@else] ... #@fi</strong></dt>
 <dd><p>A <code class="code">#@if</code> allows to conditionally skip parts of the test input depending on the value of a boolean expression. The exact behavior is done as follows:</p>
 
-<p>If the <strong class="pkg">GAP</strong> expression <code class="code">EXPR</code> evaluates to <code class="code">true</code>, then the lines after the <code class="code">#@if</code> are used until either a <code class="code">#@else</code> or <code class="code">#@fi</code> is reached. If a <code class="code">#@else</code> is present then the code after the <code class="code">#@else</code> is used if and only if <code class="code">EXPR</code> evaluated to <code class="code">false</code>. Finally, once <code class="code">#endif</code> is reached, evaluation continues normally.</p>
+<p>If the <strong class="pkg">GAP</strong> expression <code class="code">EXPR</code> evaluates to <code class="keyw">true</code>, then the lines after the <code class="code">#@if</code> are used until either a <code class="code">#@else</code> or <code class="code">#@fi</code> is reached. If a <code class="code">#@else</code> is present then the code after the <code class="code">#@else</code> is used if and only if <code class="code">EXPR</code> evaluated to <code class="keyw">false</code>. Finally, once <code class="code">#endif</code> is reached, evaluation continues normally.</p>
 
 </dd>
 </dl>
@@ -1165,6 +1246,10 @@ gaussian.tst              10
 </dd>
 <dt><strong class="Mark"><code class="code">compareFunction</code></strong></dt>
 <dd><p>This must be a function that gets two strings as input, the newly generated and the stored output of some <strong class="pkg">GAP</strong> input. The function must return <code class="keyw">true</code> or <code class="keyw">false</code>, indicating if the strings should be considered equivalent or not. By default <code class="func">\=</code> (<a href="chap31.html#X7EF67D047F03CA6F"><span class="RefLink">31.11-1</span></a>) is used. <br /> Two strings are recognized as abbreviations in this component: <code class="code">"uptowhitespace"</code> checks if the two strings become equal after removing all white space. And <code class="code">"uptonl"</code> compares the string up to trailing newline characters.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">transformFunction</code></strong></dt>
+<dd><p>This must be a function that gets one string as input, either the newly generated or the stored output of some <strong class="pkg">GAP</strong> input. The function must return a new string which will be used to compare the actual and the expected output. By default <code class="func">IdFunc</code> (<a href="chap5.html#X810325697BDEF899"><span class="RefLink">5.4-6</span></a>) is used. <br /> Two strings are recognized as abbreviations in this component: <code class="code">"removewhitespace"</code> removes all white space. And <code class="code">"removenl"</code> removes all trailing newline characters.</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">reportDiff</code></strong></dt>
@@ -1391,8 +1476,8 @@ you may 'return;' to continue
 0
 <span class="GAPbrkprompt">brk&gt;</span> <span class="GAPinput">return;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetRecursionTrapInterval(-1);</span>
-SetRecursionTrapInterval( &lt;interval&gt; ): &lt;interval&gt; must be a non-negative smal\
-l integer
+Error, SetRecursionTrapInterval: &lt;interval&gt; must be a small integer greater than 5 (n\
+ot the integer -1)
 not in any function
 Entering break read-eval-print loop ...
 you can 'quit;' to quit to outer loop, or
@@ -1408,13 +1493,40 @@ Segmentation fault
 
 <h4>7.12 <span class="Heading">Global Memory Information</span></h4>
 
-<p>The <strong class="pkg">GAP</strong> environment provides automatic memory management, so that the programmer does not need to concern themselves with allocating space for objects, or recovering space when objects are no longer needed. The component of the kernel which provides this is called <code class="code">GASMAN</code> (<strong class="pkg">GAP</strong> Storage MANager). Messages reporting garbage collections performed by <code class="code">GASMAN</code> can be switched on by the <code class="code">-g</code> command line option (see section <a href="chap3.html#X782751D5858A6EAF"><span class="RefLink">3.1</span></a>). There are also some facilities to access information from <code class="code">GASMAN</code> from <strong class="pkg">GAP</strong> programs.</p>
+<p><a id="X7F1F741D7F0899D1" name="X7F1F741D7F0899D1"></a></p>
+
+<h5>7.12-1 <span class="Heading">Garbage Collection</span></h5>
+
+<p>The <strong class="pkg">GAP</strong> environment provides automatic memory management, so that the programmer does not need to concern themselves with allocating space for objects, or recovering space when objects are no longer needed. The memory manager that shall be used by <strong class="pkg">GAP</strong> is specified at compile time. One of the choices is called <code class="code">GASMAN</code> (<strong class="pkg">GAP</strong> Storage MANager). (The name of the currently used garbage collector is stored in the variable <code class="code">GAPInfo.KernelInfo.GC</code>.)</p>
+
+<p>If <strong class="pkg">GAP</strong> uses <code class="code">GASMAN</code> then messages reporting garbage collections performed by <code class="code">GASMAN</code> can be switched on by the <code class="code">-g</code> command line option (see section <a href="chap3.html#X782751D5858A6EAF"><span class="RefLink">3.1</span></a>). There are also some facilities to access information from <code class="code">GASMAN</code> from <strong class="pkg">GAP</strong> programs, see below.</p>
+
+<p><a id="X7848AB367F3A1221" name="X7848AB367F3A1221"></a></p>
+
+<h5>7.12-2 CollectGarbage</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CollectGarbage</code>( <var class="Arg">full</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: nothing.</p>
+
+<p>This function forces a garbage collection. If <var class="Arg">full</var> is <code class="keyw">true</code> then it triggers a full garbage collection, otherwise a partial one.</p>
+
+<p><strong class="pkg">GAP</strong> invokes its garbage collector automatically, thus there is normally no need to call <code class="func">CollectGarbage</code>.</p>
+
+<p>The function <code class="func">CollectGarbage</code> was introduced in <strong class="pkg">GAP</strong> 4.12. In older <strong class="pkg">GAP</strong> versions, one can use <code class="code">GASMAN( "collect" )</code> (if <var class="Arg">full</var> is <code class="keyw">true</code>) or <code class="code">GASMAN( "partial" )</code> (if <var class="Arg">full</var> is not <code class="keyw">true</code>) instead.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CollectGarbage( false );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CollectGarbage( true );</span>
+</pre></div>
 
 <p><a id="X836977DE80416F3D" name="X836977DE80416F3D"></a></p>
 
-<h5>7.12-1 GasmanStatistics</h5>
+<h5>7.12-3 GasmanStatistics</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GasmanStatistics</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>This function is meaningful only if <code class="code">GASMAN</code> is the garbage collector used by <strong class="pkg">GAP</strong>, see Section <a href="chap7.html#X7F1F741D7F0899D1"><span class="RefLink">7.12-1</span></a>.</p>
+
 <p><code class="func">GasmanStatistics</code> returns a record containing some information from the garbage collection mechanism. The record may contain up to four components: <code class="code">full</code>, <code class="code">partial</code>, <code class="code">npartial</code>, and <code class="code">nfull</code>.</p>
 
 <p>The <code class="code">full</code> component will be present if a full garbage collection has taken place since <strong class="pkg">GAP</strong> started. It contains information about the most recent full garbage collection. It is a record, with eight components: <code class="code">livebags</code> contains the number of bags which survived the garbage collection; <code class="code">livekb</code> contains the total number of kilobytes occupied by those bags; <code class="code">deadbags</code> contains the total number of bags which were reclaimed by that garbage collection and all the partial garbage collections preceding it, since the previous full garbage collection; <code class="code">deadkb</code> contains the total number of kilobytes occupied by those bags; <code class="code">freekb</code> reports the total number of kilobytes available in the <strong class="pkg">GAP</strong> workspace for new objects; <code class="code">totalkb</code> reports the actual size of the workspace; <code class="code">time</code> reports the CPU time in milliseconds spent on the last garbage collection and <code class="code">cumulative</code> the total CPU time in milliseconds spent on that type of garbage collection since <strong class="pkg">GAP</strong> started.</p>
@@ -1427,20 +1539,24 @@ Segmentation fault
 
 <p><a id="X85327FA5872E0356" name="X85327FA5872E0356"></a></p>
 
-<h5>7.12-2 GasmanMessageStatus</h5>
+<h5>7.12-4 GasmanMessageStatus</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GasmanMessageStatus</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetGasmanMessageStatus</code>( <var class="Arg">stat</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>This function is meaningful only if <code class="code">GASMAN</code> is the garbage collector used by <strong class="pkg">GAP</strong>, see Section <a href="chap7.html#X7F1F741D7F0899D1"><span class="RefLink">7.12-1</span></a>.</p>
+
 <p><code class="func">GasmanMessageStatus</code> returns one of the strings <code class="code">"none"</code>, <code class="code">"full"</code>, or <code class="code">"all"</code>, depending on whether the garbage collector is currently set to print messages on no collections, full collections only, or all collections, respectively.</p>
 
 <p>Calling <code class="func">SetGasmanMessageStatus</code> with the argument <var class="Arg">stat</var>, which should be one of the three strings mentioned above, sets the garbage collector messaging level.</p>
 
 <p><a id="X80C683247E94769F" name="X80C683247E94769F"></a></p>
 
-<h5>7.12-3 GasmanLimits</h5>
+<h5>7.12-5 GasmanLimits</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GasmanLimits</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p><code class="func">GasmanLimits</code> returns a record with three components: <code class="code">min</code> is the minimum workspace size as set by the <code class="code">-m</code> command line option in kilobytes. The workspace size will never be reduced below this by the garbage collector. <code class="code">max</code> is the maximum workspace size, as set by the '-o' command line option, also in kilobytes. If the workspace would need to grow past this point, <strong class="pkg">GAP</strong> will enter a break loop to warn the user. A value of 0 indicates no limit. <code class="code">kill</code> is the absolute maximum, set by the <code class="code">-K</code> command line option. The workspace will never be allowed to grow past this limit.</p>
+<p>This function is meaningful only if <code class="code">GASMAN</code> is the garbage collector used by <strong class="pkg">GAP</strong>, see Section <a href="chap7.html#X7F1F741D7F0899D1"><span class="RefLink">7.12-1</span></a>.</p>
+
+<p><code class="func">GasmanLimits</code> returns a record with three components: <code class="code">min</code> is the minimum workspace size as set by the <code class="code">-m</code> command line option in kilobytes. The workspace size will never be reduced below this by the garbage collector. <code class="code">max</code> is the maximum workspace size, as set by the <code class="code">-o</code> command line option, also in kilobytes. If the workspace would need to grow past this point, <strong class="pkg">GAP</strong> will enter a break loop to warn the user. A value of 0 indicates no limit. <code class="code">kill</code> is the absolute maximum, set by the <code class="code">-K</code> command line option. The workspace will never be allowed to grow past this limit.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8.html">[Next Chapter]</a>&nbsp;  </div>

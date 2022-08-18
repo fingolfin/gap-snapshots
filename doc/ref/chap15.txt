@@ -125,7 +125,7 @@
   
   [1X15.3-1 OrderMod[101X
   
-  [33X[1;0Y[29X[2XOrderMod[102X( [3Xn[103X, [3Xm[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XOrderMod[102X( [3Xn[103X, [3Xm[103X[, [3Xbound[103X] ) [32X function[133X
   
   [33X[0;0Y[2XOrderMod[102X  returns  the  multiplicative  order  of  the  integer [3Xn[103X modulo the
   positive integer [3Xm[103X. If [3Xn[103X and [3Xm[103X are not coprime the order of [3Xn[103X is not defined
@@ -136,14 +136,21 @@
   prime  residues  modulo  [3Xm[103X  is  cyclic then each element of maximal order is
   called a primitive root modulo [3Xm[103X (see [2XIsPrimitiveRootMod[102X ([14X15.3-4[114X)).[133X
   
-  [33X[0;0Y[2XOrderMod[102X   usually   spends   most   of   its  time  factoring  [3Xm[103X  and  [22Xϕ([3Xm[103X)[122X
-  (see [2XFactorsInt[102X ([14X14.4-7[114X)).[133X
+  [33X[0;0YIf  no a priori known multiple [3Xbound[103X of the desired order is given, [2XOrderMod[102X
+  usually  spends  most of its time factoring [3Xm[103X for computing [22Xλ([3Xm[103X)[122X (see [2XLambda[102X
+  ([14X15.2-3[114X)) as the default for [3Xbound[103X, and then factoring [3Xbound[103X (see [2XFactorsInt[102X
+  ([14X14.4-7[114X)).[133X
+  
+  [33X[0;0YIf an incorrect [3Xbound[103X is given then the result will be wrong.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XOrderMod( 2, 7 );[127X[104X
     [4X[28X3[128X[104X
     [4X[25Xgap>[125X [27XOrderMod( 3, 7 );  # 3 is a primitive root modulo 7[127X[104X
     [4X[28X6[128X[104X
+    [4X[25Xgap>[125X [27Xm:= (5^166-1) / 167;;   # about 10^113[127X[104X
+    [4X[25Xgap>[125X [27XOrderMod( 5, m, 166 );  # needs minutes without third argument[127X[104X
+    [4X[28X166[128X[104X
   [4X[32X[104X
   
   [1X15.3-2 LogMod[101X

@@ -25,7 +25,7 @@ local l,f,dim,m;
   l:=List(l,i->ImmutableMatrix(f,i));
 
   if ForAny(l,i->Length(i)<>Length(i[1])) or
-    Length(Set(List(l,Length)))>1 then
+    Length(Set(l,Length))>1 then
     Error("<l> must be a list of square matrices of the same dimension");
   fi;
   m:=rec(field:=f,
@@ -381,21 +381,36 @@ SMTX_SpinnedBasis:=function( arg  )
       ngens:=Length(matrices);
    fi;
    ans:=[];
-   if Length(v)=0 then
-     return [];
-   fi;
-   if not IsList(v[1]) then
-     v:=[v];
-   fi;
    zero:=Zero(matrices[1][1][1]);
-   ans:=ShallowCopy(Basis(VectorSpace(F,v)));
-   if Length(ans)=0 then
-     return ans;
+   if IsList(v) and Length(v)=0 then
+     return [];
+   elif IsMatrix(v) then
+     TriangulizeMat(v);
+     ans:=Filtered(v,x->not IsZero(x));
+   elif IsList(v) and IsVectorObj(v[1]) then
+     v:=TriangulizedMat(Matrix(F,v));
+     ans:=Filtered(List(v),x->not IsZero(x));
+   else
+     # single vector (as vector or list)
+     ans:=[v];
    fi;
+
+
+   #ans:=ShallowCopy(Basis(VectorSpace(F,v)));
+
+   ans:=Filtered(ans,x->not IsZero(x));
+   if Length(ans)=0 then return ans; fi;
    ans:=List(ans, v -> ImmutableVector(F,v));
    dim:=Length(ans[1]);
    subdim:=Length(ans);
    leadpos:=SubGModLeadPos(ans,dim,subdim,zero);
+   for i in [1..Length(ans)] do
+     w:=ans[i];
+     j:=w[PositionNonZero(w)];
+     if not IsOne(j) then 
+       ans[i]:=j^-1*ans[i];
+     fi;
+   od;
 
    i:=1;
    while i <= subdim do
@@ -508,8 +523,8 @@ local s, c, q, leadpos, zero, zerov, smatrices, newg, im, newim, k, subi,
     # merit a basechange
 
     # first extend the basis
-    sub:=ShallowCopy(sub);
-    Append(sub,One(matrices[1]){Difference([1..dim],leadpos)});
+    sub:=List(sub);
+    Append(sub,List(One(matrices[1])){Difference([1..dim],leadpos)});
     sub:=ImmutableMatrix(F,sub);
     subi:=sub^-1;
     qmats:=[];
@@ -519,12 +534,12 @@ local s, c, q, leadpos, zero, zerov, smatrices, newg, im, newim, k, subi,
     for g in matrices do
       g:=sub*g*subi;
       if s then
-        h:=g{sr}{sr};
+        h:=ExtractSubMatrix(g,sr,sr);
         h:=ImmutableMatrix(F,h);
         Add(smats,h);
       fi;
       if q then
-        h:=g{qr}{qr};
+        h:=ExtractSubMatrix(g,qr,qr);
         h:=ImmutableMatrix(F,h);
         Add(qmats,h);
       fi;
@@ -909,7 +924,7 @@ local g1,g2,coefflist,M,pol;
      fi;
      Add(coefflist, g2);
   od;
-  Info(InfoMeatAxe,2,"Evaluated random element in algebra.");
+  Info(InfoMeatAxe,3,"Evaluated random element in algebra.");
   pol:=CharacteristicPolynomialMatrixNC(F,M,1);
   return [M,coefflist,pol];
 end;
@@ -1031,7 +1046,7 @@ SMTX_IrreducibilityTest:=function( module )
       # To choose random element, first add on a new generator as a product of
       # two randomly chosen unequal existing generators
       # Record the product in newgenlist.
-      Info(InfoMeatAxe,1,"Choosing random element number ",count);
+      Info(InfoMeatAxe,3,"Choosing random element number ",count);
 
       M:=SMTX.SMCoRaEl(matrices,ngens,newgenlist,dim,F);
 
@@ -1043,7 +1058,7 @@ SMTX_IrreducibilityTest:=function( module )
       idmat:=M^0;
 
       orig_pol:=pol;
-      Info(InfoMeatAxe,2,"Evaluated characteristic polynomial. Time = ",
+      Info(InfoMeatAxe,3,"Evaluated characteristic polynomial. Time = ",
            Runtime()-rt0,".");
       # Now we extract the irreducible factors of pol starting with those
       # of low degree
@@ -1058,7 +1073,7 @@ SMTX_IrreducibilityTest:=function( module )
             else
                fac:=Factors(R, pol: factoroptions:=rec(onlydegs:=[deg]));
                fac:=Filtered(fac,i->DegreeOfLaurentPolynomial(i)=deg);
-               Info(InfoMeatAxe,2,Length(fac)," factors of degree ",deg,
+               Info(InfoMeatAxe,3,Length(fac)," factors of degree ",deg,
                     ", Time = ",Runtime()-rt0,".");
             fi;
          until fac <> [] or deg = maxdeg;
@@ -1374,7 +1389,7 @@ local matrices, ngens, M, mat,  N, newgenlist, coefflist, orig_ngens,
                 " random elements and failed ",
                 "to find a good one. Type return to keep trying.");
       fi;
-      Info(InfoMeatAxe,2,"Choosing random element number ",count,".");
+      Info(InfoMeatAxe,3,"Choosing random element number ",count,".");
 
       M:=SMTX.SMCoRaEl(matrices,ngens,newgenlist,dim,F);
       ngens:=Length(matrices);
@@ -1384,7 +1399,7 @@ local matrices, ngens, M, mat,  N, newgenlist, coefflist, orig_ngens,
       M:=M[1];
       idmat:=M^0;
 
-      Info(InfoMeatAxe,2,"Evaluated characteristic polynomial. Time = ",
+      Info(InfoMeatAxe,3,"Evaluated characteristic polynomial. Time = ",
            Runtime()-rt0,".");
       # That is necessary in case p is defined over a smaller field that F.
       oldpol:=pol;
@@ -1400,7 +1415,7 @@ local matrices, ngens, M, mat,  N, newgenlist, coefflist, orig_ngens,
             else
                fac:=Factors(R, pol: factoroptions:=rec(onlydegs:=[deg]));
                fac:=Filtered(fac,i->DegreeOfLaurentPolynomial(i)<=deg);
-               Info(InfoMeatAxe,2,Length(fac)," factors of degree ",deg,
+               Info(InfoMeatAxe,3,Length(fac)," factors of degree ",deg,
                     ", Time = ",Runtime()-rt0,".");
                sfac:=Set(fac);
             fi;
@@ -1459,24 +1474,25 @@ SMTX.GoodElementGModule:=SMTX_GoodElementGModule;
 ##
 SMTX_FrobeniusAction:=function( arg )
 local   L, d, p, M, one, zero, R, h, v, w, i, j, nd, ans,
-        A, basis;
+        A, basis,fld;
 
-   if Length(arg) = 2  then
-      A:=arg[1];
-      v:=arg[2];
+   fld:=arg[1];
+   A:=arg[2];
+   v:=arg[3];
+   if Length(arg) = 3  then
       basis:=0;
-   elif Length(arg) = 3  then
-      A:=arg[1];
-      v:=arg[2];
-      basis:=arg[3];
+   elif Length(arg) = 4  then
+      basis:=arg[4];
    else
-      return Error("usage: SMTX.FrobeniusAction( <A>, <v>, [, <basis>] )");
+      return Error("usage: SMTX.FrobeniusAction(<F>, <A>, <v>, [, <basis>] )");
    fi;
    one :=One(A[1][1]);
    zero:=Zero(one);
    d:=Length( A );
    M:=ListWithIdenticalEntries(Length(A[1]) + 1,zero);
-   ConvertToVectorRep(M,DefaultField(v));
+   M:=ImmutableVector(fld,M);
+   v:=ImmutableVector(fld,v);
+   A:=ImmutableMatrix(fld,A);
 
    # L[i] (length d) will contain a vector with head entry 1 at position i,
    # which is in the current block.
@@ -1515,6 +1531,7 @@ local   L, d, p, M, one, zero, R, h, v, w, i, j, nd, ans,
       if h <= d  then
          #AH replaced Copy by ShallowCopy as only vector is used
          if basis <> 0 then basis[j]:=ShallowCopy(v); fi;
+
          R[h]:=p * w[h]^-1;
          L[h]:=w * w[h]^-1;
          j:=j + 1;
@@ -1708,7 +1725,7 @@ local dim, ndim, gcd, div, e, ct, F, q, ok,
    basisN:=[];
    Info(InfoMeatAxe,2,
      "Calc. Frobenius action of element from group algebra on nullspace.");
-   M0:=SMTX.FrobeniusAction(M,v,basisN);
+   M0:=SMTX.FrobeniusAction(F,M,v,basisN);
 
    zero:=Zero(F);
    one:= One(F);
@@ -1757,15 +1774,18 @@ local dim, ndim, gcd, div, e, ct, F, q, ok,
             # A matrix product gives us the basis for B in terms of the
             # original basis for the module.
             basisBN:=[];
-            C0:=SMTX.FrobeniusAction(C^pow,v0,basisBN);
+            C0:=SMTX.FrobeniusAction(F,C^pow,v0,basisBN);
             C:=[];
          until Length(C0) = e;
          Info(InfoMeatAxe,2,"Found one.");
-         basisB:=ShallowCopy(basisBN * basisN);
+         basisB:=List(
+           ImmutableMatrix(F,basisBN) *
+          ImmutableMatrix(F,basisN));
       else
          C0:=M0;
          basisB:=ShallowCopy(basisN);
       fi;
+      C0:=ImmutableMatrix(F,C0);
       # Now try to extend basisB to a basis for the whole module, by
       # translating it by the generating matrices.
       Info(InfoMeatAxe,2,"Trying to extend basis to whole module.");
@@ -1807,7 +1827,7 @@ local dim, ndim, gcd, div, e, ct, F, q, ok,
             SMTX.SetCentMat(module, Pinv * centmat * P); # get the base right
             # We will also record the minimal polynomial of C0 (and hence of
             # centmat) in case we need it at some future date.
-            SMTX.SetCentMatMinPoly(module, MinimalPolynomialMatrixNC(F,C0,1));
+            SMTX.SetCentMatMinPoly(module, MinimalPolynomial(F,C0,1));
             return false;
          fi;
          Info(InfoMeatAxe,2,"But it didn't.");
@@ -1843,7 +1863,7 @@ end;
 ## FieldGenCentMat( ) should only be applied to modules that have already
 ## been proved irreducible using IsIrreducible. It then tests for absolute
 ## irreducibility (if not already known) and does nothing if module is
-## absolutely irreducible. Otherwise, it returns a a matrix that generates
+## absolutely irreducible. Otherwise, it returns a matrix that generates
 ## (multiplicatively) the centralizing field (i.e. its multiplicative order
 ## is q^e - 1, where e is the degree of the centralizing field. This is not
 ## yet used, but maybe in future, if we wish to reduce the group to matrices
@@ -1986,7 +2006,7 @@ SMTX_CollectedFactors:= function( module )
            # build the submodule formed by their images
            mat:=Concatenation(homs);
            TriangulizeMat(mat);
-           mat:=Filtered(mat,i->not IsZero(i));
+           mat:=Filtered(List(mat),i->not IsZero(i));
            mat:=ImmutableMatrix(field,mat);
            if Length(mat)<cmod.dimension then
              # there is still some factor left
@@ -2352,6 +2372,8 @@ SMTX_IsomorphismComp:=function(module1, module2, action)
    matrices:=SMTX.MatrixSum(matrices1, matrices2);
    v1:=SMTX.AlgElNullspaceVec(module1);
    v2:=N[1];
+   if IsVectorObj(v1) then v1:=Unpack(v1);fi;
+   if IsVectorObj(v2) then v2:=Unpack(v2);fi;
    v:=Concatenation(v1, v2);
    basis:=SMTX.SpinnedBasis(v, matrices, F);
    if Length(basis) = dim then
@@ -2795,7 +2817,6 @@ SMTX_Homomorphism:=function(module1, module2, mat)
   for i in [1..ng] do
     for j in [1..dim1] do
       if gens1[i][j] * mat <> mat[j] * gens2[i] then
-        Print(i,j,"\n");
         Error("matrix does not define a homomorphism");
       fi;
     od;
@@ -3187,7 +3208,7 @@ local d, bs;
 end;
 SMTX.BasisRadical:=SMTX_BasisRadical;
 
-# the following assignement is for profiling
+# the following assignment is for profiling
 SMTX.funcs:=[SMTX_OrthogonalVector,SMTX_SpinnedBasis,SMTX_SubQuotActions,
   SMTX_SMCoRaEl,SMTX_IrreducibilityTest,SMTX_RandomIrreducibleSubGModule,
   SMTX_GoodElementGModule,SMTX_FrobeniusAction,SMTX_CompleteBasis,
@@ -3392,10 +3413,50 @@ end;
 
 #############################################################################
 ##
-#F  InvariantQuadraticForm( module ) . . . .
+#F  MTX.InvariantQuadraticForm( <module> )
 ##
-## Look for an invariant quadratic form of the absolutely irreducible
-## GModule module. Return fail, or the matrix of the form.
+##  <#GAPDoc Label="MTX.InvariantQuadraticForm">
+##  <ManSection>
+##  <Func Name="MTX.InvariantQuadraticForm" Arg='module'/>
+##
+##  <Description>
+##  returns either the matrix of an invariant quadratic form of the
+##  absolutely irreducible module <A>module</A>, or <K>fail</K>.
+##  <P/>
+##  If the characteristic of <A>module</A> is odd then <K>fail</K> is
+##  returned if there is no nonzero invariant bilinear form,
+##  otherwise a matrix of the bilinear form
+##  divided by <M>2</M> is returned;
+##  note that this matrix may be antisymmetric and thus describe the zero
+##  quadratic form.
+##  If the characteristic of <A>module</A> is <M>2</M> then <K>fail</K> is
+##  returned if <A>module</A> does not admit a nonzero quadratic form,
+##  otherwise a lower triangular matrix describing the form is returned.
+##  <P/>
+##  An error is signalled if <A>module</A> is not absolutely irreducible.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> g:= SO(-1, 4, 2);;
+##  gap> m:= GModuleByMats( GeneratorsOfGroup( g ), GF(2) );;
+##  gap> Display( MTX.InvariantQuadraticForm( m ) );
+##   . . . .
+##   1 . . .
+##   . . 1 .
+##   . . 1 1
+##  gap> g:= SP(4, 2);;
+##  gap> m:= GModuleByMats( GeneratorsOfGroup( g ), GF(2) );;
+##  gap> MTX.InvariantQuadraticForm( m );
+##  fail
+##  gap> g:= SP(4, 3);;
+##  gap> m:= GModuleByMats( GeneratorsOfGroup( g ), GF(3) );;
+##  gap> q:= MTX.InvariantQuadraticForm( m );;
+##  gap> q = - TransposedMat( q );  # antisymmetric inv. bilinear form
+##  true
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
 SMTX_InvariantQuadraticForm:=function( module  )
    local iso, bas, cgens, ciso, dim, f, z, x, i, j, qf, g, id, cqf, fix;
 
@@ -3422,7 +3483,7 @@ SMTX_InvariantQuadraticForm:=function( module  )
 
    # Matrix must be symplectic - perhaps it must be?
    for i in [1..dim] do if ciso[i][i] <> z then
-     Print("Non-symplectic failure!\n");
+     #Print("Non-symplectic failure!\n");
      return fail;
    fi; od;
 
@@ -3462,23 +3523,47 @@ SMTX.InvariantQuadraticForm:=SMTX_InvariantQuadraticForm;
 
 #############################################################################
 ##
-#F  OrthogonalSign( module ) . . . .
+#F  MTX.OrthogonalSign( <module> ) . . . .
 ##
-## When an absolutely irreducible G-module has an invariant quadratic
-## form, this implies that it embeds in a General Orthogonal group. In
-## even dimension there are two non-isomorphic General Orthogonal groups
-## "plus" and "minus" type `GeneralOrthogonalGroup(+1,<n>,<q>)' and
-## `GeneralOrthogobalGroup(-1,<n>,<q>)' in GAP terms. This function
-## decides which one the module embeds into.
+##  <#GAPDoc Label="MTX.OrthogonalSign">
+##  <ManSection>
+##  <Func Name="MTX.OrthogonalSign" Arg='module'/>
 ##
-## It returns:
-##  fail if the module is not absolutely irreducible, or
-##       does not stabilize a quadratic form.
-##  0    otherwise, if the dimension of the module is odd
-##  +1 or -1 otherwise, according to which GO the module embeds in
+##  <Description>
+##  Let <A>module</A> be an absolutely irreducible <M>G</M>-module.
+##  If <A>module</A> does not fix a nondegenerate quadratic form
+##  see <Ref Func="MTX.InvariantQuadraticForm"/>
+##  then <K>fail</K> is returned.
+##  Otherwise the sign <M>\epsilon \in \{ -1, 0, 1 \}</M> is returned
+##  such that <M>G</M> embeds into the general orthogonal group
+##  <M>GO^{\epsilon}(d, q)</M> w.r.t. the invariant quadratic form,
+##  see <Ref Func="GeneralOrthogonalGroup"/>.
+##  That is, <C>0</C> is returned if <A>module</A> has odd dimension,
+##  and <C>1</C> or <C>-1</C> is returned if the orthogonal group has
+##  plus or minus type, respectively.
+##  <P/>
+##  An error is signalled if <A>module</A> is not absolutely irreducible.
+##  <P/>
+##  The <C>SMTX</C> implementation uses an algorithm due to Jon Thackray.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> mats:= GeneratorsOfGroup( GO(1,4,2) );;
+##  gap> MTX.OrthogonalSign( GModuleByMats( mats, GF(2) ) );
+##  1
+##  gap> mats:= GeneratorsOfGroup( GO(-1,4,2) );;
+##  gap> MTX.OrthogonalSign( GModuleByMats( mats, GF(2) ) );
+##  -1
+##  gap> mats:= GeneratorsOfGroup( GO(5,3) );;
+##  gap> MTX.OrthogonalSign( GModuleByMats( mats, GF(3) ) );
+##  0
+##  gap> mats:= GeneratorsOfGroup( SP(4,2) );;
+##  gap> MTX.OrthogonalSign( GModuleByMats( mats, GF(2) ) );
+##  fail
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
 ##
-## This is an implementation of an algorithm by Jon Thackray
-
 SMTX.SetOrthogonalSign:=function(module,s)
   module.OrthogonalSign:=s;
 end;
@@ -3492,6 +3577,10 @@ SMTX_OrthogonalSign:=function(gm)
     b:=MTX.InvariantBilinearForm(gm);
     q:=MTX.InvariantQuadraticForm(gm);
     if q = fail then
+        return fail;
+    elif IsOddInt( Characteristic( gm.field ) ) and
+         q <> TransposedMat( q ) then
+        # There is no *nondegenerate* invariant quadratic form.
         return fail;
     fi;
     n:=Length(b);
@@ -3514,7 +3603,7 @@ SMTX_OrthogonalSign:=function(gm)
 
     #
     # Main loop of Thackray's algorithm, build up a totally isotropic
-    # subspace and restrict it's perp until the gap between is just 2 dimensional
+    # subspace and restrict its perp until the gap between is just 2 dimensional
     #
 
     while n > 2 do

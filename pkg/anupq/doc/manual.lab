@@ -1,0 +1,401 @@
+\GAPDocLabFile{anupq}
+\makelabel{anupq:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{anupq:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{anupq:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{anupq:Introduction}{1}{X7DFB63A97E67C0A1}
+\makelabel{anupq:Overview}{1.1}{X8389AD927B74BA4A}
+\makelabel{anupq:How to read this manual}{1.2}{X8416D2657E7831A1}
+\makelabel{anupq:Authors and Acknowledgements}{1.3}{X79D2480A7810A7CC}
+\makelabel{anupq:Mathematical Background and Terminology}{2}{X7E7F3B617F42EF03}
+\makelabel{anupq:Basic notions}{2.1}{X79A052C47C92AF09}
+\makelabel{anupq:pc Presentations and Consistency}{2.1.1}{X7BD675838609D547}
+\makelabel{anupq:Exponent-p Central Series and Weighted pc Presentations}{2.1.2}{X7944DB037F2277A6}
+\makelabel{anupq:p-Cover, p-Multiplicator}{2.1.3}{X7C43ACA37D391EBD}
+\makelabel{anupq:Descendants, Capable, Terminal, Nucleus}{2.1.4}{X801A27A08462AFAB}
+\makelabel{anupq:Laws}{2.1.5}{X81FBE7ED79EFF5EF}
+\makelabel{anupq:The p-quotient Algorithm}{2.2}{X7C8CE96D80FC3614}
+\makelabel{anupq:Finding the p-cover}{2.2.1}{X791EB6F77899CB3D}
+\makelabel{anupq:Imposing the Relations of the fp Group}{2.2.2}{X804CF5C97F7BB880}
+\makelabel{anupq:Imposing Laws}{2.2.3}{X7F1A8CCD84462775}
+\makelabel{anupq:The p-group generation Algorithm, Standard Presentation, Isomorphism Testing}{2.3}{X807FB2EC85E6648D}
+\makelabel{anupq:Infrastructure}{3}{X7917EFDF7AC06F04}
+\makelabel{anupq:Loading the ANUPQ Package}{3.1}{X833D58248067E13B}
+\makelabel{anupq:The ANUPQData Record}{3.2}{X83DE155A79C38DBE}
+\makelabel{anupq:Setting the Verbosity of ANUPQ via Info and InfoANUPQ}{3.3}{X83E5C7CF7D8739DF}
+\makelabel{anupq:Utility Functions}{3.4}{X810FFB1C8035C8BE}
+\makelabel{anupq:Attributes and a Property for fp and pc p-groups}{3.5}{X818175EF85CAA807}
+\makelabel{anupq:Hints and Warnings regarding the use of Options}{3.6}{X7BA20FA07B166B37}
+\makelabel{anupq:Non-interactive ANUPQ functions}{4}{X7C51F26D839279FF}
+\makelabel{anupq:Computing p-Quotients}{4.1}{X80406BD47EB186E9}
+\makelabel{anupq:Computing Standard Presentations}{4.2}{X7F05F8DC79733A8E}
+\makelabel{anupq:Testing p-Groups for Isomorphism}{4.3}{X8030FAE586423615}
+\makelabel{anupq:Computing Descendants of a p-Group}{4.4}{X8450C72580D91245}
+\makelabel{anupq:Interactive ANUPQ functions}{5}{X842C13C27B941744}
+\makelabel{anupq:Starting and Stopping Interactive ANUPQ Processes}{5.1}{X7935CDAD7936CA0A}
+\makelabel{anupq:Interactive ANUPQ Process Utility Functions}{5.2}{X7EE8000A800CEE2D}
+\makelabel{anupq:Interactive Versions of Non-interactive ANUPQ Functions}{5.3}{X823D2BBF7C4515D4}
+\makelabel{anupq:Low-level Interactive ANUPQ functions based on menu items of the pq program}{5.4}{X857F050C832A1FE4}
+\makelabel{anupq:General commands}{5.5}{X868B10557D470CF6}
+\makelabel{anupq:Commands from the Main p-Quotient menu}{5.6}{X7BDD5B278719C630}
+\makelabel{anupq:Commands from the Advanced p-Quotient menu}{5.7}{X7D27BE937B1DE16E}
+\makelabel{anupq:Commands from the Standard Presentation menu}{5.8}{X7B94EDA385FDD904}
+\makelabel{anupq:Commands from the Main p-Group Generation menu}{5.9}{X8490031B7AA7F237}
+\makelabel{anupq:Commands from the Advanced p-Group Generation menu}{5.10}{X7E8FBC2D83C43481}
+\makelabel{anupq:ANUPQ Options}{6}{X7B0946E97E7EB359}
+\makelabel{anupq:Overview}{6.1}{X8389AD927B74BA4A}
+\makelabel{anupq:Detailed descriptions of ANUPQ Options}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:Installing the ANUPQ Package}{7}{X7FB487238298CF42}
+\makelabel{anupq:Testing your ANUPQ installation}{7.1}{X854577C8800DC7C2}
+\makelabel{anupq:Running the pq program as a standalone}{7.2}{X82906B5184C61063}
+\makelabel{anupq:Examples}{A}{X7A489A5D79DA9E5C}
+\makelabel{anupq:The Relators Option}{A.1}{X80676E317BF4DF13}
+\makelabel{anupq:The Identities Option and PqEvaluateIdentities Function}{A.2}{X80B2AA7084C57F5D}
+\makelabel{anupq:A Large Example}{A.3}{X7A997D1A8532A84B}
+\makelabel{anupq:Developing descendants trees}{A.4}{X7FB6DA8D7BB90D8C}
+\makelabel{anupq:Bibliography}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{anupq:References}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{anupq:Index}{Ind}{X83A0356F839C696F}
+\makelabel{anupq:ANUPQ}{1.1}{X8389AD927B74BA4A}
+\makelabel{anupq:bug reports}{1.3}{X79D2480A7810A7CC}
+\makelabel{anupq:power-commutator presentation}{2.1.1}{X7BD675838609D547}
+\makelabel{anupq:pc presentation}{2.1.1}{X7BD675838609D547}
+\makelabel{anupq:pcp}{2.1.1}{X7BD675838609D547}
+\makelabel{anupq:pc generators}{2.1.1}{X7BD675838609D547}
+\makelabel{anupq:collection}{2.1.1}{X7BD675838609D547}
+\makelabel{anupq:consistent}{2.1.1}{X7BD675838609D547}
+\makelabel{anupq:confluent rewriting system}{2.1.1}{X7BD675838609D547}
+\makelabel{anupq:confluent}{2.1.1}{X7BD675838609D547}
+\makelabel{anupq:consistency conditions}{2.1.1}{X7BD675838609D547}
+\makelabel{anupq:exponent-p central series}{2.1.2}{X7944DB037F2277A6}
+\makelabel{anupq:class}{2.1.2}{X7944DB037F2277A6}
+\makelabel{anupq:p-class}{2.1.2}{X7944DB037F2277A6}
+\makelabel{anupq:weight function}{2.1.2}{X7944DB037F2277A6}
+\makelabel{anupq:weighted pcp}{2.1.2}{X7944DB037F2277A6}
+\makelabel{anupq:p-covering group}{2.1.3}{X7C43ACA37D391EBD}
+\makelabel{anupq:p-cover}{2.1.3}{X7C43ACA37D391EBD}
+\makelabel{anupq:p-multiplicator}{2.1.3}{X7C43ACA37D391EBD}
+\makelabel{anupq:p-multiplicator rank}{2.1.3}{X7C43ACA37D391EBD}
+\makelabel{anupq:multiplicator rank}{2.1.3}{X7C43ACA37D391EBD}
+\makelabel{anupq:descendant}{2.1.4}{X801A27A08462AFAB}
+\makelabel{anupq:immediate descendant}{2.1.4}{X801A27A08462AFAB}
+\makelabel{anupq:nucleus}{2.1.4}{X801A27A08462AFAB}
+\makelabel{anupq:capable}{2.1.4}{X801A27A08462AFAB}
+\makelabel{anupq:terminal}{2.1.4}{X801A27A08462AFAB}
+\makelabel{anupq:nucleus}{2.1.4}{X801A27A08462AFAB}
+\makelabel{anupq:allowable subgroup}{2.1.4}{X801A27A08462AFAB}
+\makelabel{anupq:extended automorphism}{2.1.4}{X801A27A08462AFAB}
+\makelabel{anupq:permutations}{2.1.4}{X801A27A08462AFAB}
+\makelabel{anupq:law}{2.1.5}{X81FBE7ED79EFF5EF}
+\makelabel{anupq:identical relation}{2.1.5}{X81FBE7ED79EFF5EF}
+\makelabel{anupq:exponent law}{2.1.5}{X81FBE7ED79EFF5EF}
+\makelabel{anupq:metabelian law}{2.1.5}{X81FBE7ED79EFF5EF}
+\makelabel{anupq:Engel identity}{2.1.5}{X81FBE7ED79EFF5EF}
+\makelabel{anupq:labelled pcp}{2.2.1}{X791EB6F77899CB3D}
+\makelabel{anupq:definition of generator}{2.2.1}{X791EB6F77899CB3D}
+\makelabel{anupq:tails}{2.2.1}{X791EB6F77899CB3D}
+\makelabel{anupq:exponent check}{2.2.3}{X7F1A8CCD84462775}
+\makelabel{anupq:p-group generation}{2.3}{X807FB2EC85E6648D}
+\makelabel{anupq:orbits}{2.3}{X807FB2EC85E6648D}
+\makelabel{anupq:standard presentation}{2.3}{X807FB2EC85E6648D}
+\makelabel{anupq:echelonised matrix}{2.3}{X807FB2EC85E6648D}
+\makelabel{anupq:label of standard matrix}{2.3}{X807FB2EC85E6648D}
+\makelabel{anupq:isomorphism testing}{2.3}{X807FB2EC85E6648D}
+\makelabel{anupq:compaction}{2.3}{X807FB2EC85E6648D}
+\makelabel{anupq:banner}{3.1}{X833D58248067E13B}
+\makelabel{anupq:ANUPQData}{3.2.1}{X7B90E89782BDA6D7}
+\makelabel{anupq:ANUPQDirectoryTemporary}{3.2.2}{X7FBB2F457E4BD6AB}
+\makelabel{anupq:InfoANUPQ}{3.3.1}{X7CBC9B458497BFF1}
+\makelabel{anupq:PqLeftNormComm}{3.4.1}{X8771393B7F53F534}
+\makelabel{anupq:PqGAPRelators}{3.4.2}{X7A567432879510A6}
+\makelabel{anupq:PqParseWord}{3.4.3}{X7F3C5D1C7EC36EAE}
+\makelabel{anupq:PqExample no arguments}{3.4.4}{X7BB0EB607F337265}
+\makelabel{anupq:PqExample}{3.4.4}{X7BB0EB607F337265}
+\makelabel{anupq:PqExample with filename}{3.4.4}{X7BB0EB607F337265}
+\makelabel{anupq:AllPqExamples}{3.4.5}{X823C93FC7B87F5BC}
+\makelabel{anupq:GrepPqExamples}{3.4.6}{X7E3E4B047DC2E323}
+\makelabel{anupq:ToPQLog}{3.4.7}{X8104B2BA872EFCCB}
+\makelabel{anupq:NuclearRank}{3.5.1}{X87DC922A78EB0DD6}
+\makelabel{anupq:MultiplicatorRank}{3.5.1}{X87DC922A78EB0DD6}
+\makelabel{anupq:IsCapable}{3.5.1}{X87DC922A78EB0DD6}
+\makelabel{anupq:menu item}{3.6}{X7BA20FA07B166B37}
+\makelabel{anupq:option}{3.6}{X7BA20FA07B166B37}
+\makelabel{anupq:troubleshooting tips}{3.6}{X7BA20FA07B166B37}
+\makelabel{anupq:ANUPQWarnOfOtherOptions}{3.6.1}{X81F4AAE084C34B4B}
+\makelabel{anupq:Pq}{4.1.1}{X86DD32D5803CF2C8}
+\makelabel{anupq:option Prime}{4.1.1}{X86DD32D5803CF2C8}
+\makelabel{anupq:option ClassBound}{4.1.1}{X86DD32D5803CF2C8}
+\makelabel{anupq:option Exponent}{4.1.1}{X86DD32D5803CF2C8}
+\makelabel{anupq:option Relators}{4.1.1}{X86DD32D5803CF2C8}
+\makelabel{anupq:option Metabelian}{4.1.1}{X86DD32D5803CF2C8}
+\makelabel{anupq:option Identities}{4.1.1}{X86DD32D5803CF2C8}
+\makelabel{anupq:option GroupName}{4.1.1}{X86DD32D5803CF2C8}
+\makelabel{anupq:option OutputLevel}{4.1.1}{X86DD32D5803CF2C8}
+\makelabel{anupq:option SetupFile}{4.1.1}{X86DD32D5803CF2C8}
+\makelabel{anupq:option PqWorkspace}{4.1.1}{X86DD32D5803CF2C8}
+\makelabel{anupq:option Relators}{4.1.1}{X86DD32D5803CF2C8}
+\makelabel{anupq:option Identities}{4.1.1}{X86DD32D5803CF2C8}
+\makelabel{anupq:PqEpimorphism}{4.1.2}{X7ADE5DDB87B99CC0}
+\makelabel{anupq:PqPCover}{4.1.3}{X81C3CE1E850DA252}
+\makelabel{anupq:automorphisms of p-groups}{4.2}{X7F05F8DC79733A8E}
+\makelabel{anupq:PqStandardPresentation}{4.2.1}{X86C9575D7CB65FBB}
+\makelabel{anupq:StandardPresentation}{4.2.1}{X86C9575D7CB65FBB}
+\makelabel{anupq:option Prime}{4.2.1}{X86C9575D7CB65FBB}
+\makelabel{anupq:option pQuotient}{4.2.1}{X86C9575D7CB65FBB}
+\makelabel{anupq:option ClassBound}{4.2.1}{X86C9575D7CB65FBB}
+\makelabel{anupq:option Exponent}{4.2.1}{X86C9575D7CB65FBB}
+\makelabel{anupq:option Metabelian}{4.2.1}{X86C9575D7CB65FBB}
+\makelabel{anupq:option GroupName}{4.2.1}{X86C9575D7CB65FBB}
+\makelabel{anupq:option OutputLevel}{4.2.1}{X86C9575D7CB65FBB}
+\makelabel{anupq:option StandardPresentationFile}{4.2.1}{X86C9575D7CB65FBB}
+\makelabel{anupq:option SetupFile}{4.2.1}{X86C9575D7CB65FBB}
+\makelabel{anupq:option PqWorkspace}{4.2.1}{X86C9575D7CB65FBB}
+\makelabel{anupq:EpimorphismPqStandardPresentation}{4.2.2}{X828C06D083C0D089}
+\makelabel{anupq:EpimorphismStandardPresentation}{4.2.2}{X828C06D083C0D089}
+\makelabel{anupq:IsPqIsomorphicPGroup}{4.3.1}{X854389FC780BB178}
+\makelabel{anupq:IsIsomorphicPGroup}{4.3.1}{X854389FC780BB178}
+\makelabel{anupq:PqDescendants}{4.4.1}{X80985CC479CD9FA3}
+\makelabel{anupq:option ClassBound}{4.4.1}{X80985CC479CD9FA3}
+\makelabel{anupq:option Relators}{4.4.1}{X80985CC479CD9FA3}
+\makelabel{anupq:option OrderBound}{4.4.1}{X80985CC479CD9FA3}
+\makelabel{anupq:option StepSize}{4.4.1}{X80985CC479CD9FA3}
+\makelabel{anupq:option RankInitialSegmentSubgroups}{4.4.1}{X80985CC479CD9FA3}
+\makelabel{anupq:option SpaceEfficient}{4.4.1}{X80985CC479CD9FA3}
+\makelabel{anupq:option CapableDescendants}{4.4.1}{X80985CC479CD9FA3}
+\makelabel{anupq:option AllDescendants}{4.4.1}{X80985CC479CD9FA3}
+\makelabel{anupq:option Exponent}{4.4.1}{X80985CC479CD9FA3}
+\makelabel{anupq:option Metabelian}{4.4.1}{X80985CC479CD9FA3}
+\makelabel{anupq:option GroupName}{4.4.1}{X80985CC479CD9FA3}
+\makelabel{anupq:option SubList}{4.4.1}{X80985CC479CD9FA3}
+\makelabel{anupq:option BasicAlgorithm}{4.4.1}{X80985CC479CD9FA3}
+\makelabel{anupq:option CustomiseOutput}{4.4.1}{X80985CC479CD9FA3}
+\makelabel{anupq:option SetupFile}{4.4.1}{X80985CC479CD9FA3}
+\makelabel{anupq:option PqWorkspace}{4.4.1}{X80985CC479CD9FA3}
+\makelabel{anupq:PqSupplementInnerAutomorphisms}{4.4.2}{X8364566A80A8C24B}
+\makelabel{anupq:PqList}{4.4.3}{X79AD54E987FCACBA}
+\makelabel{anupq:SavePqList}{4.4.4}{X85ADB9E6870EC3D1}
+\makelabel{anupq:PqStart with group and workspace size}{5.1.1}{X83B2EC237F37623C}
+\makelabel{anupq:PqStart with group}{5.1.1}{X83B2EC237F37623C}
+\makelabel{anupq:PqStart with workspace size}{5.1.1}{X83B2EC237F37623C}
+\makelabel{anupq:PqStart}{5.1.1}{X83B2EC237F37623C}
+\makelabel{anupq:PqQuit}{5.1.2}{X79DB761185BAB9C8}
+\makelabel{anupq:PqQuit for default process}{5.1.2}{X79DB761185BAB9C8}
+\makelabel{anupq:PqQuitAll}{5.1.3}{X7FF8F2657B1B008E}
+\makelabel{anupq:PqProcessIndex}{5.2.1}{X8558B20A80B999AE}
+\makelabel{anupq:PqProcessIndex for default process}{5.2.1}{X8558B20A80B999AE}
+\makelabel{anupq:PqProcessIndices}{5.2.2}{X7E4A56D67C865291}
+\makelabel{anupq:IsPqProcessAlive}{5.2.3}{X7C103DF78435AEC7}
+\makelabel{anupq:IsPqProcessAlive for default process}{5.2.3}{X7C103DF78435AEC7}
+\makelabel{anupq:interruption}{5.2.3}{X7C103DF78435AEC7}
+\makelabel{anupq:Pq interactive}{5.3.1}{X85408C4C790439E7}
+\makelabel{anupq:Pq interactive, for default process}{5.3.1}{X85408C4C790439E7}
+\makelabel{anupq:option Prime}{5.3.1}{X85408C4C790439E7}
+\makelabel{anupq:option ClassBound}{5.3.1}{X85408C4C790439E7}
+\makelabel{anupq:option Exponent}{5.3.1}{X85408C4C790439E7}
+\makelabel{anupq:option Relators}{5.3.1}{X85408C4C790439E7}
+\makelabel{anupq:option Metabelian}{5.3.1}{X85408C4C790439E7}
+\makelabel{anupq:option Identities}{5.3.1}{X85408C4C790439E7}
+\makelabel{anupq:option GroupName}{5.3.1}{X85408C4C790439E7}
+\makelabel{anupq:option OutputLevel}{5.3.1}{X85408C4C790439E7}
+\makelabel{anupq:option RedoPcp}{5.3.1}{X85408C4C790439E7}
+\makelabel{anupq:PqEpimorphism interactive}{5.3.2}{X839E6F578227A8EA}
+\makelabel{anupq:PqEpimorphism interactive, for default process}{5.3.2}{X839E6F578227A8EA}
+\makelabel{anupq:PqPCover interactive}{5.3.3}{X7AA64A2F8509A39A}
+\makelabel{anupq:PqPCover interactive, for default process}{5.3.3}{X7AA64A2F8509A39A}
+\makelabel{anupq:automorphisms of p-groups}{5.3.3}{X7AA64A2F8509A39A}
+\makelabel{anupq:PqStandardPresentation interactive}{5.3.4}{X805F32618005C087}
+\makelabel{anupq:StandardPresentation interactive}{5.3.4}{X805F32618005C087}
+\makelabel{anupq:option Prime}{5.3.4}{X805F32618005C087}
+\makelabel{anupq:option pQuotient}{5.3.4}{X805F32618005C087}
+\makelabel{anupq:option ClassBound}{5.3.4}{X805F32618005C087}
+\makelabel{anupq:option Exponent}{5.3.4}{X805F32618005C087}
+\makelabel{anupq:option Metabelian}{5.3.4}{X805F32618005C087}
+\makelabel{anupq:option GroupName}{5.3.4}{X805F32618005C087}
+\makelabel{anupq:option OutputLevel}{5.3.4}{X805F32618005C087}
+\makelabel{anupq:option StandardPresentationFile}{5.3.4}{X805F32618005C087}
+\makelabel{anupq:EpimorphismPqStandardPresentation interactive}{5.3.5}{X791392977B2D692D}
+\makelabel{anupq:EpimorphismStandardPresentation interactive}{5.3.5}{X791392977B2D692D}
+\makelabel{anupq:PqDescendants interactive}{5.3.6}{X795817217C53AB89}
+\makelabel{anupq:PqDescendants interactive, for default process}{5.3.6}{X795817217C53AB89}
+\makelabel{anupq:option ClassBound}{5.3.6}{X795817217C53AB89}
+\makelabel{anupq:option Relators}{5.3.6}{X795817217C53AB89}
+\makelabel{anupq:option OrderBound}{5.3.6}{X795817217C53AB89}
+\makelabel{anupq:option StepSize}{5.3.6}{X795817217C53AB89}
+\makelabel{anupq:option RankInitialSegmentSubgroups}{5.3.6}{X795817217C53AB89}
+\makelabel{anupq:option SpaceEfficient}{5.3.6}{X795817217C53AB89}
+\makelabel{anupq:option CapableDescendants}{5.3.6}{X795817217C53AB89}
+\makelabel{anupq:option AllDescendants}{5.3.6}{X795817217C53AB89}
+\makelabel{anupq:option Exponent}{5.3.6}{X795817217C53AB89}
+\makelabel{anupq:option Metabelian}{5.3.6}{X795817217C53AB89}
+\makelabel{anupq:option GroupName}{5.3.6}{X795817217C53AB89}
+\makelabel{anupq:option SubList}{5.3.6}{X795817217C53AB89}
+\makelabel{anupq:option BasicAlgorithm}{5.3.6}{X795817217C53AB89}
+\makelabel{anupq:option CustomiseOutput}{5.3.6}{X795817217C53AB89}
+\makelabel{anupq:PqSetPQuotientToGroup}{5.3.7}{X80CCF6D379E5A3B4}
+\makelabel{anupq:PqSetPQuotientToGroup for default process}{5.3.7}{X80CCF6D379E5A3B4}
+\makelabel{anupq:PqNrPcGenerators}{5.5.1}{X7DE2F6C686C672DD}
+\makelabel{anupq:PqNrPcGenerators for default process}{5.5.1}{X7DE2F6C686C672DD}
+\makelabel{anupq:PqFactoredOrder}{5.5.2}{X87FF98867E8FFB3C}
+\makelabel{anupq:PqFactoredOrder for default process}{5.5.2}{X87FF98867E8FFB3C}
+\makelabel{anupq:PqOrder}{5.5.3}{X7B4FC9E380001A71}
+\makelabel{anupq:PqOrder for default process}{5.5.3}{X7B4FC9E380001A71}
+\makelabel{anupq:PqPClass}{5.5.4}{X87C7F7EB7C10DC4B}
+\makelabel{anupq:PqPClass for default process}{5.5.4}{X87C7F7EB7C10DC4B}
+\makelabel{anupq:PqWeight}{5.5.5}{X7EA3B6917908C20A}
+\makelabel{anupq:PqWeight for default process}{5.5.5}{X7EA3B6917908C20A}
+\makelabel{anupq:PqCurrentGroup}{5.5.6}{X79862B83817E20E1}
+\makelabel{anupq:PqCurrentGroup for default process}{5.5.6}{X79862B83817E20E1}
+\makelabel{anupq:PqDisplayPcPresentation}{5.5.7}{X805A50687D82B9EC}
+\makelabel{anupq:PqDisplayPcPresentation for default process}{5.5.7}{X805A50687D82B9EC}
+\makelabel{anupq:PqSetOutputLevel}{5.5.8}{X80410979854280E1}
+\makelabel{anupq:PqSetOutputLevel for default process}{5.5.8}{X80410979854280E1}
+\makelabel{anupq:PqEvaluateIdentities}{5.5.9}{X7B8C72B37AE667F7}
+\makelabel{anupq:PqEvaluateIdentities for default process}{5.5.9}{X7B8C72B37AE667F7}
+\makelabel{anupq:PqPcPresentation}{5.6.1}{X7BF135DD84A781EB}
+\makelabel{anupq:PqPcPresentation for default process}{5.6.1}{X7BF135DD84A781EB}
+\makelabel{anupq:PqSavePcPresentation}{5.6.2}{X7D947CEA82C44898}
+\makelabel{anupq:PqSavePcPresentation for default process}{5.6.2}{X7D947CEA82C44898}
+\makelabel{anupq:PqRestorePcPresentation}{5.6.3}{X7FD001C0798EF219}
+\makelabel{anupq:PqRestorePcPresentation for default process}{5.6.3}{X7FD001C0798EF219}
+\makelabel{anupq:PqNextClass}{5.6.4}{X832F69597C095A27}
+\makelabel{anupq:PqNextClass for default process}{5.6.4}{X832F69597C095A27}
+\makelabel{anupq:option QueueFactor}{5.6.4}{X832F69597C095A27}
+\makelabel{anupq:PqComputePCover}{5.6.5}{X7CF9DF7A84D387CB}
+\makelabel{anupq:PqComputePCover for default process}{5.6.5}{X7CF9DF7A84D387CB}
+\makelabel{anupq:PqCollect}{5.7.1}{X8633356078CA4115}
+\makelabel{anupq:PqCollect for default process}{5.7.1}{X8633356078CA4115}
+\makelabel{anupq:PqSolveEquation}{5.7.2}{X86CCB77281FDC0FC}
+\makelabel{anupq:PqSolveEquation for default process}{5.7.2}{X86CCB77281FDC0FC}
+\makelabel{anupq:PqCommutator}{5.7.3}{X789B120B7E2F3017}
+\makelabel{anupq:PqCommutator for default process}{5.7.3}{X789B120B7E2F3017}
+\makelabel{anupq:PqSetupTablesForNextClass}{5.7.4}{X7A61A15E78F52743}
+\makelabel{anupq:PqSetupTablesForNextClass for default process}{5.7.4}{X7A61A15E78F52743}
+\makelabel{anupq:PqTails}{5.7.5}{X84F7DD8582B368D3}
+\makelabel{anupq:PqTails for default process}{5.7.5}{X84F7DD8582B368D3}
+\makelabel{anupq:PqComputeTails}{5.7.6}{X8389F6437ED634B8}
+\makelabel{anupq:PqComputeTails for default process}{5.7.6}{X8389F6437ED634B8}
+\makelabel{anupq:PqAddTails}{5.7.7}{X83CD6D888372DFB8}
+\makelabel{anupq:PqAddTails for default process}{5.7.7}{X83CD6D888372DFB8}
+\makelabel{anupq:PqDoConsistencyChecks}{5.7.8}{X82AA8FAE85826BB9}
+\makelabel{anupq:PqDoConsistencyChecks for default process}{5.7.8}{X82AA8FAE85826BB9}
+\makelabel{anupq:PqCollectDefiningRelations}{5.7.9}{X7A01EE0382689928}
+\makelabel{anupq:PqCollectDefiningRelations for default process}{5.7.9}{X7A01EE0382689928}
+\makelabel{anupq:PqCollectWordInDefiningGenerators}{5.7.10}{X7C2B4C1E7BEB19D5}
+\makelabel{anupq:PqCollectWordInDefiningGenerators for default process}{5.7.10}{X7C2B4C1E7BEB19D5}
+\makelabel{anupq:PqCommutatorDefiningGenerators}{5.7.11}{X7DB05AA587D7A052}
+\makelabel{anupq:PqCommutatorDefiningGenerators for default process}{5.7.11}{X7DB05AA587D7A052}
+\makelabel{anupq:PqDoExponentChecks}{5.7.12}{X80E563A97EDE083E}
+\makelabel{anupq:PqDoExponentChecks for default process}{5.7.12}{X80E563A97EDE083E}
+\makelabel{anupq:PqEliminateRedundantGenerators}{5.7.13}{X7BBAB2787B305516}
+\makelabel{anupq:PqEliminateRedundantGenerators for default process}{5.7.13}{X7BBAB2787B305516}
+\makelabel{anupq:PqRevertToPreviousClass}{5.7.14}{X783E53B5853F45E6}
+\makelabel{anupq:PqRevertToPreviousClass for default process}{5.7.14}{X783E53B5853F45E6}
+\makelabel{anupq:PqSetMaximalOccurrences}{5.7.15}{X8265A6DB81CD24DB}
+\makelabel{anupq:PqSetMaximalOccurrences for default process}{5.7.15}{X8265A6DB81CD24DB}
+\makelabel{anupq:PqSetMetabelian}{5.7.16}{X87A35ABB7E11595E}
+\makelabel{anupq:PqSetMetabelian for default process}{5.7.16}{X87A35ABB7E11595E}
+\makelabel{anupq:PqDoConsistencyCheck}{5.7.17}{X7C7D17F878AA1BAA}
+\makelabel{anupq:PqDoConsistencyCheck for default process}{5.7.17}{X7C7D17F878AA1BAA}
+\makelabel{anupq:PqJacobi}{5.7.17}{X7C7D17F878AA1BAA}
+\makelabel{anupq:PqJacobi for default process}{5.7.17}{X7C7D17F878AA1BAA}
+\makelabel{anupq:PqCompact}{5.7.18}{X843953F48319FDE1}
+\makelabel{anupq:PqCompact for default process}{5.7.18}{X843953F48319FDE1}
+\makelabel{anupq:PqEchelonise}{5.7.19}{X80344EEC78A09ACF}
+\makelabel{anupq:PqEchelonise for default process}{5.7.19}{X80344EEC78A09ACF}
+\makelabel{anupq:PqSupplyAutomorphisms}{5.7.20}{X852947327FC39DDF}
+\makelabel{anupq:PqSupplyAutomorphisms for default process}{5.7.20}{X852947327FC39DDF}
+\makelabel{anupq:PqExtendAutomorphisms}{5.7.21}{X7B919B537C042DAD}
+\makelabel{anupq:PqExtendAutomorphisms for default process}{5.7.21}{X7B919B537C042DAD}
+\makelabel{anupq:PqApplyAutomorphisms}{5.7.22}{X7CFD54657DE4BD39}
+\makelabel{anupq:PqApplyAutomorphisms for default process}{5.7.22}{X7CFD54657DE4BD39}
+\makelabel{anupq:PqDisplayStructure}{5.7.23}{X81A3D5BF87A34934}
+\makelabel{anupq:PqDisplayStructure for default process}{5.7.23}{X81A3D5BF87A34934}
+\makelabel{anupq:PqDisplayAutomorphisms}{5.7.24}{X853834B478C4EEE2}
+\makelabel{anupq:PqDisplayAutomorphisms for default process}{5.7.24}{X853834B478C4EEE2}
+\makelabel{anupq:PqWritePcPresentation}{5.7.25}{X80687A138626EB2D}
+\makelabel{anupq:PqWritePcPresentation for default process}{5.7.25}{X80687A138626EB2D}
+\makelabel{anupq:PqSPComputePcpAndPCover}{5.8.1}{X78D1963D85C71B7B}
+\makelabel{anupq:PqSPComputePcpAndPCover for default process}{5.8.1}{X78D1963D85C71B7B}
+\makelabel{anupq:PqSPStandardPresentation}{5.8.2}{X876F30187E89E467}
+\makelabel{anupq:PqSPStandardPresentation for default process}{5.8.2}{X876F30187E89E467}
+\makelabel{anupq:option ClassBound}{5.8.2}{X876F30187E89E467}
+\makelabel{anupq:option PcgsAutomorphisms}{5.8.2}{X876F30187E89E467}
+\makelabel{anupq:option StandardPresentationFile}{5.8.2}{X876F30187E89E467}
+\makelabel{anupq:PqSPSavePresentation}{5.8.3}{X7E1B2B088322F48A}
+\makelabel{anupq:PqSPSavePresentation for default process}{5.8.3}{X7E1B2B088322F48A}
+\makelabel{anupq:PqSPCompareTwoFilePresentations}{5.8.4}{X81D2F9FF7C241D1E}
+\makelabel{anupq:PqSPCompareTwoFilePresentations for default process}{5.8.4}{X81D2F9FF7C241D1E}
+\makelabel{anupq:PqSPIsomorphism}{5.8.5}{X7D1277E584590ECE}
+\makelabel{anupq:PqSPIsomorphism for default process}{5.8.5}{X7D1277E584590ECE}
+\makelabel{anupq:PqPGSupplyAutomorphisms}{5.9.1}{X794A8D667A9D725A}
+\makelabel{anupq:PqPGSupplyAutomorphisms for default process}{5.9.1}{X794A8D667A9D725A}
+\makelabel{anupq:PqPGExtendAutomorphisms}{5.9.2}{X87F251077C65B6DD}
+\makelabel{anupq:PqPGExtendAutomorphisms for default process}{5.9.2}{X87F251077C65B6DD}
+\makelabel{anupq:PqPGConstructDescendants}{5.9.3}{X82FD51A27D269E43}
+\makelabel{anupq:PqPGConstructDescendants for default process}{5.9.3}{X82FD51A27D269E43}
+\makelabel{anupq:PqPGSetDescendantToPcp with class}{5.9.4}{X7E9D511385D48A98}
+\makelabel{anupq:PqPGSetDescendantToPcp with class, for default process}{5.9.4}{X7E9D511385D48A98}
+\makelabel{anupq:PqPGSetDescendantToPcp}{5.9.4}{X7E9D511385D48A98}
+\makelabel{anupq:PqPGSetDescendantToPcp for default process}{5.9.4}{X7E9D511385D48A98}
+\makelabel{anupq:PqPGRestoreDescendantFromFile with class}{5.9.4}{X7E9D511385D48A98}
+\makelabel{anupq:PqPGRestoreDescendantFromFile with class, for default process}{5.9.4}{X7E9D511385D48A98}
+\makelabel{anupq:PqPGRestoreDescendantFromFile}{5.9.4}{X7E9D511385D48A98}
+\makelabel{anupq:PqPGRestoreDescendantFromFile for default process}{5.9.4}{X7E9D511385D48A98}
+\makelabel{anupq:PqAPGDegree}{5.10.1}{X7E539E4B78A6CE8D}
+\makelabel{anupq:PqAPGDegree for default process}{5.10.1}{X7E539E4B78A6CE8D}
+\makelabel{anupq:PqAPGPermutations}{5.10.2}{X7F1182A77AB7650C}
+\makelabel{anupq:PqAPGPermutations for default process}{5.10.2}{X7F1182A77AB7650C}
+\makelabel{anupq:PqAPGOrbits}{5.10.3}{X7DD9E7507AA888CC}
+\makelabel{anupq:PqAPGOrbits for default process}{5.10.3}{X7DD9E7507AA888CC}
+\makelabel{anupq:PqAPGOrbitRepresentatives}{5.10.4}{X795A756C78BE5923}
+\makelabel{anupq:PqAPGOrbitRepresentatives for default process}{5.10.4}{X795A756C78BE5923}
+\makelabel{anupq:PqAPGSingleStage}{5.10.5}{X7E5D6D5782FE190E}
+\makelabel{anupq:PqAPGSingleStage for default process}{5.10.5}{X7E5D6D5782FE190E}
+\makelabel{anupq:PqRead}{5.11.1}{X8464AF7E83A523C1}
+\makelabel{anupq:PqRead for default process}{5.11.1}{X8464AF7E83A523C1}
+\makelabel{anupq:PqReadAll}{5.11.2}{X7ADD82207D049A87}
+\makelabel{anupq:PqReadAll for default process}{5.11.2}{X7ADD82207D049A87}
+\makelabel{anupq:PqReadUntil}{5.11.3}{X7EBF3C3681671879}
+\makelabel{anupq:PqReadUntil for default process}{5.11.3}{X7EBF3C3681671879}
+\makelabel{anupq:PqReadUntil with modify map}{5.11.3}{X7EBF3C3681671879}
+\makelabel{anupq:PqReadUntil with modify map, for default process}{5.11.3}{X7EBF3C3681671879}
+\makelabel{anupq:PqWrite}{5.11.4}{X83CBE77F78057E21}
+\makelabel{anupq:PqWrite for default process}{5.11.4}{X83CBE77F78057E21}
+\makelabel{anupq:AllANUPQoptions}{6.1.1}{X7846E25D8065D78F}
+\makelabel{anupq:ANUPQoptions}{6.1.2}{X82D560C77D195089}
+\makelabel{anupq:option Prime}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option ClassBound}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option pQuotient}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option Exponent}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option Relators}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option Metabelian}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option GroupName}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option Identities}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option OutputLevel}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option RedoPcp}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option SetupFile}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option PqWorkspace}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option PcgsAutomorphisms}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option OrderBound}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option StepSize}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option RankInitialSegmentSubgroups}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option SpaceEfficient}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option CapableDescendants}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option AllDescendants}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option TreeDepth}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option SubList}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option NumberOfSolubleAutomorphisms}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option RelativeOrders}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option BasicAlgorithm}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option CustomiseOutput}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option StandardPresentationFile}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option QueueFactor}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option Bounds}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option PrintAutomorphisms}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option PrintPermutations}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:option Filename}{6.2}{X87EE6DD67C9996A3}
+\makelabel{anupq:ANUPQGAPEXEC}{7}{X7FB487238298CF42}
+\makelabel{anupq:ANUPQGAPEXEC}{7.1}{X854577C8800DC7C2}
+\makelabel{anupq:ANUPQGAPEXEC}{7.2}{X82906B5184C61063}
+\makelabel{anupq:B(5,4)}{A.3}{X7A997D1A8532A84B}
+\makelabel{anupq:PqDescendantsTreeCoclassOne}{A.4.1}{X805E6B418193CF2D}
+\makelabel{anupq:PqDescendantsTreeCoclassOne for default process}{A.4.1}{X805E6B418193CF2D}

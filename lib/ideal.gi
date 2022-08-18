@@ -356,8 +356,9 @@ InstallMethod( ViewObj,
     if HasDimension( I ) then
       Print( "\<,\< \>\>(dimension ", Dimension( I ), "\<\<\<\<)>" );
     else
-      Print( "\<,\< \>\>(", Length( GeneratorsOfLeftIdeal( I ) ),
-             " generators)\<\<\<\<>" );
+      Print( "\<,\< \>\>(",
+             Pluralize( Length( GeneratorsOfLeftIdeal( I ) ), "generator" ),
+             ")\<\<\<\<>" );
     fi;
     end );
 
@@ -372,8 +373,9 @@ InstallMethod( ViewObj,
     if HasDimension( I ) then
       Print( "\<,\< \>\>(dimension ", Dimension( I ), "\<\<\<\<)>" );
     else
-      Print( "\<,\< \>\>(", Length( GeneratorsOfRightIdeal( I ) ),
-             " generators)\<\<\<\<>" );
+      Print( "\<,\< \>\>(",
+             Pluralize( Length( GeneratorsOfRightIdeal( I ) ), "generator" ),
+             ")\<\<\<\<>" );
     fi;
     end );
 
@@ -389,10 +391,31 @@ InstallMethod( ViewObj,
     if HasDimension( I ) then
       Print( "\<,\< \>\>(dimension ", Dimension( I ), "\<\<\<\<)>" );
     else
-      Print( "\<,\< \>\>(", Length( GeneratorsOfTwoSidedIdeal( I ) ),
-             " generators)\<\<\<\<>" );
+      Print( "\<,\< \>\>(",
+             Pluralize( Length( GeneratorsOfTwoSidedIdeal( I ) ), "generator" ),
+             ")\<\<\<\<>" );
     fi;
     end );
+
+
+#############################################################################
+##
+#M  Representative( <I> ) . . . . one element of a left/right/two sided ideal
+##
+InstallMethod( Representative,
+    "for left ideal with known generators",
+    [ IsRing and HasGeneratorsOfLeftIdeal ],
+    RepresentativeFromGenerators( GeneratorsOfLeftIdeal ) );
+
+InstallMethod( Representative,
+    "for right ideal with known generators",
+    [ IsRing and HasGeneratorsOfRightIdeal ],
+    RepresentativeFromGenerators( GeneratorsOfRightIdeal ) );
+
+InstallMethod( Representative,
+    "for two-sided ideal with known generators",
+    [ IsRing and HasGeneratorsOfTwoSidedIdeal ],
+    RepresentativeFromGenerators( GeneratorsOfTwoSidedIdeal ) );
 
 
 #############################################################################
@@ -740,7 +763,7 @@ InstallMethod( \*,
         return [ r * z ];
       fi;
     elif IsFinite( R ) then
-      return Set( List( Enumerator( R ), elm -> r * elm ) );
+      return Set( Enumerator( R ), elm -> r * elm );
     else
       TryNextMethod();
     fi;
@@ -763,7 +786,7 @@ InstallMethod( \*,
         return [ z * r ];
       fi;
     elif IsFinite( R ) then
-      return Set( List( Enumerator( R ), elm -> elm * r ) );
+      return Set( Enumerator( R ), elm -> elm * r );
     else
       TryNextMethod();
     fi;

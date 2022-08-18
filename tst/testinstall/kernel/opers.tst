@@ -128,7 +128,7 @@ Error, property is already set the other way
 
 #
 gap> NEW_FILTER(fail);
-Error, NewFilter: <name> must be a string (not the value 'fail')
+Error, NEW_FILTER: <name> must be a string (not the value 'fail')
 
 #
 gap> FLAG1_FILTER(fail);
@@ -170,24 +170,24 @@ Error, Constructor: the first argument must be a filter (not the integer 1)
 
 #
 gap> NEW_OPERATION(fail);
-Error, NewOperation: <name> must be a string (not the value 'fail')
+Error, NEW_OPERATION: <name> must be a string (not the value 'fail')
 gap> NEW_CONSTRUCTOR(fail);
-Error, NewConstructor: <name> must be a string (not the value 'fail')
+Error, NEW_CONSTRUCTOR: <name> must be a string (not the value 'fail')
 gap> NEW_ATTRIBUTE(fail);
-Error, NewAttribute: <name> must be a string (not the value 'fail')
+Error, NEW_ATTRIBUTE: <name> must be a string (not the value 'fail')
 gap> OPER_TO_ATTRIBUTE(fail);
 Error, OPER_TO_ATTRIBUTE: <oper> must be an operation (not the value 'fail')
 gap> OPER_TO_MUTABLE_ATTRIBUTE(fail);
 Error, OPER_TO_MUTABLE_ATTRIBUTE: <oper> must be an operation (not the value '\
 fail')
 gap> NEW_MUTABLE_ATTRIBUTE(fail);
-Error, NewMutableAttribute: <name> must be a string (not the value 'fail')
+Error, NEW_MUTABLE_ATTRIBUTE: <name> must be a string (not the value 'fail')
 gap> NEW_PROPERTY(fail);
-Error, NewProperty: <name> must be a string (not the value 'fail')
+Error, NEW_PROPERTY: <name> must be a string (not the value 'fail')
 
 #
 gap> NEW_GLOBAL_FUNCTION(fail);
-Error, NewGlobalFunction: <name> must be a string (not the value 'fail')
+Error, NEW_GLOBAL_FUNCTION: <name> must be a string (not the value 'fail')
 gap> INSTALL_GLOBAL_FUNCTION(fail, fail);
 Error, INSTALL_GLOBAL_FUNCTION: <oper> must be a function (not the value 'fail\
 ')
@@ -242,6 +242,42 @@ Error, SET_METHODS_OPERATION: <narg> must be an integer between 0 and 6 (not t\
 he integer 7)
 
 #
+gap> oper := NewOperation("foobar", [IsList]);
+<Operation "foobar">
+gap> INSTALL_EARLY_METHOD(fail, fail);
+Error, INSTALL_EARLY_METHOD: <oper> must be an operation (not the value 'fail'\
+)
+gap> INSTALL_EARLY_METHOD(oper, fail);
+Error, INSTALL_EARLY_METHOD: <func> must be a function (not the value 'fail')
+gap> INSTALL_EARLY_METHOD(oper, oper);
+Error, <func> must not be an operation
+gap> InstallMethod(oper, [IsPlistRep], function(l) Print("IsPlistRep method\n"); end);
+gap> oper([1,2,3]);
+IsPlistRep method
+gap> INSTALL_EARLY_METHOD(oper, function(l) Print("early method\n"); TryNextMethod(); end);
+gap> oper([1,2,3]);
+early method
+IsPlistRep method
+gap> INSTALL_EARLY_METHOD(oper, ReturnTrue);
+Error, <func> must not be variadic
+gap> INSTALL_EARLY_METHOD(oper, {a,b,c,d,e,f,g} -> fail);
+Error, <func> must take at most 6 arguments
+gap> INSTALL_EARLY_METHOD(oper, x -> fail);
+Error, early method already installed
+
+#
+gap> EARLY_METHOD(fail, fail);
+Error, EARLY_METHOD: <oper> must be an operation (not the value 'fail')
+gap> EARLY_METHOD(oper, -1);
+Error, EARLY_METHOD: <narg> must be an integer between 0 and 6 (not the intege\
+r -1)
+gap> EARLY_METHOD(oper, 7);
+Error, EARLY_METHOD: <narg> must be an integer between 0 and 6 (not the intege\
+r 7)
+gap> List([0..6], n -> EARLY_METHOD(oper, n));
+[ fail, function( l ) ... end, fail, fail, fail, fail, fail ]
+
+#
 gap> f:=SETTER_FUNCTION("foobar", IsPGroup);;
 gap> f(fail, false);
 Error, <obj> must be a component object
@@ -256,18 +292,58 @@ Error, <obj> must be a component object
 #
 gap> CLEAR_CACHE_INFO();
 gap> opcheck := OPERS_CACHE_INFO();;
-gap> if GAPInfo.KernelInfo.KernelDebug then
->   if IsHPCGAP then
->     ops := [ 0, 0, 0, 6, 0, 0, 4, 0, 0, 0, 0];
->   else
->     ops := [ 0, 0, 0, 7, 0, 0, 2, 0, 0, 0, 0];
->   fi;
-> else
->  ops := [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-> fi;
-gap> ops[4] := opcheck[4];; # HACK: workaround diff on arm64/ppc64le/s390x
-gap> opcheck{[1..11]} = ops;
-true
+#@if GAPInfo.KernelInfo.KernelDebug and IsHPCGAP
+gap> opcheck{[1..11]};
+[ 2, 0, 0, 6, 0, 0, 6, 0, 0, 2, 0 ]
+#@fi
+
+# FIXME: the following code skips entry 4 (OperationHit, which is normally
+# equal to 7) because on arm64, ppc64le, and s390x builds on Travis, we see 6
+# instead. To get an idea what's going on, I inserted printf statements each
+# time OperationHit is incremented. For the arm64, ppc64le, and s390x builds
+# on Travis, this is what I get:
+#
+# OperationHit = 1 for ReadLine
+# OperationHit = 2 for CloseStream
+# OperationHit = 3 for CloseStream
+# OperationHit = 4 for InputTextString
+# OperationHit = 5 for OutputTextString
+# OperationHit = 6 for PrintFormattingStatus
+# OperationHit = 7 for ReadLine
+# OperationHit = 8 for CloseStream
+# ...
+#
+# In contrast, this is what I get on x86:
+# OperationHit = 1 for ReadLine
+# OperationHit = 2 for CloseStream
+# OperationHit = 3 for CloseStream
+# OperationHit = 4 for Int          <--------- this is new
+# OperationHit = 5 for InputTextString
+# OperationHit = 6 for OutputTextString
+# OperationHit = 7 for PrintFormattingStatus
+# OperationHit = 8 for ReadLine
+# OperationHit = 9 for CloseStream
+# ...
+#
+# I inserted some more code to pinpoint the GAP code leading to this, and I
+# found out that the Int call in question is the one in lib/test.gi:213; i.e.,
+# in this code:
+#
+#       Print("\r# line ", pos[i],
+#             " of ", nrlines,
+#             " (", Int(pos[i] / nrlines * 100), "%)",   # <- this is the Int call
+#             "\c");
+#
+# Thus the cause of this discrepancy remains a mystery.
+#
+#@if GAPInfo.KernelInfo.KernelDebug and not IsHPCGAP
+gap> opcheck{Difference([1..11], [4])};
+[ 2, 0, 0, 0, 0, 4, 0, 0, 2, 0 ]
+#@fi
+#@if not GAPInfo.KernelInfo.KernelDebug
+gap> opcheck{[1..11]};
+[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+#@fi
 
 #
 # method tracing

@@ -1,12 +1,13 @@
   
   [1X24 [33X[0;0YMatrices[133X[101X
   
-  [33X[0;0YMatrices are represented in [5XGAP[105X by lists of row vectors (see [14X23[114X) (for future
-  changes  to  this policy see Chapter [14X26[114X). The vectors must all have the same
-  length,  and  their  elements  must  lie  in  a  common ring. However, since
-  checking   rectangularness   can  be  expensive  functions  and  methods  of
-  operations   for   matrices  often  will  not  give  an  error  message  for
-  non-rectangular lists of lists –in such cases the result is undefined.[133X
+  [33X[0;0YIn  [5XGAP[105X, Matrices can be represented by lists of row vectors, see [14X23[114X. (For a
+  more general way to represent vectors and matrices, see Chapter [14X26[114X). The row
+  vectors  must  all  have  the  same length, and their elements must lie in a
+  common  ring.  However,  since  checking  rectangularness  can  be expensive
+  functions  and  methods  of  operations  for matrices often will not give an
+  error  message  for non-rectangular lists of lists –in such cases the result
+  is undefined.[133X
   
   [33X[0;0YBecause  matrices  are  just  a  special  case  of lists, all operations and
   functions  for  lists are applicable to matrices also (see chapter [14X21[114X). This
@@ -172,8 +173,8 @@
   
   [33X[0;0Yreturns  the  product of the row vector [3Xvec[103X and the matrix [3Xmat[103X. Probably the
   most  usual  situation  is  that  [3Xvec[103X  and [3Xmat[103X have the same lengths and are
-  defined  over  a common field, and that all rows of [3Xmat[103X have the same length
-  [22Xm[122X,  say;  in  this case the product is a new row vector of length [22Xm[122X over the
+  defined  over  a  common  field,  and  that all rows of [3Xmat[103X have some common
+  length  [22Xm[122X; in this case the product is a new row vector of length [22Xm[122X over the
   same  field which is the sum of the scalar multiples of the rows of [3Xmat[103X with
   the corresponding entries of [3Xvec[103X.[133X
   
@@ -200,10 +201,10 @@
   [33X[0;0YThis  form  evaluates  to  the (Cauchy) product of the two matrices [3Xmat1[103X and
   [3Xmat2[103X.  Probably  the  most  usual situation is that the number of columns of
   [3Xmat1[103X equals the number of rows of [3Xmat2[103X, and that the elements of [3Xmat[103X and [3Xvec[103X
-  lie  in  a common field; if [3Xmat1[103X is a matrix with [22Xm[122X rows and [22Xn[122X columns, say,
-  and  [3Xmat2[103X  is a matrix with [22Xn[122X rows and [22Xo[122X columns, the result is a new matrix
-  with [22Xm[122X rows and [22Xo[122X columns. The element in row [22Xi[122X at position [22Xj[122X of the product
-  is the sum of [22X[3Xmat1[103X[i][l] * [3Xmat2[103X[l][j][122X, with [22Xl[122X running from [22X1[122X to [22Xn[122X.[133X
+  lie  in  a  common  field; if [3Xmat1[103X is a matrix with [22Xm[122X rows and [22Xn[122X columns and
+  [3Xmat2[103X  is a matrix with [22Xn[122X rows and [22Xo[122X columns, the result is a new matrix with
+  [22Xm[122X  rows  and [22Xo[122X columns. The element in row [22Xi[122X at position [22Xj[122X of the product is
+  the sum of [22X[3Xmat1[103X[i][l] * [3Xmat2[103X[l][j][122X, with [22Xl[122X running from [22X1[122X to [22Xn[122X.[133X
   
   [33X[0;0Y[10XInverse( [3Xmat[103X[10X )[110X[133X
   
@@ -325,20 +326,22 @@
     [4X[28XGF(2^6)[128X[104X
   [4X[32X[104X
   
-  [1X24.4-3 TraceMat[101X
+  [1X24.4-3 TraceMatrix[101X
   
-  [33X[1;0Y[29X[2XTraceMat[102X( [3Xmat[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XTraceMatrix[102X( [3Xmat[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTraceMat[102X( [3Xmat[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XTrace[102X( [3Xmat[103X ) [32X attribute[133X
   
   [33X[0;0YThe trace of a square matrix is the sum of its diagonal entries.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XTraceMat([[1,2,3],[4,5,6],[7,8,9]]);[127X[104X
+    [4X[25Xgap>[125X [27XTraceMatrix([[1,2,3],[4,5,6],[7,8,9]]);[127X[104X
     [4X[28X15[128X[104X
   [4X[32X[104X
   
-  [1X24.4-4 DeterminantMat[101X
+  [1X24.4-4 DeterminantMatrix[101X
   
+  [33X[1;0Y[29X[2XDeterminantMatrix[102X( [3Xmat[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XDeterminantMat[102X( [3Xmat[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XDeterminant[102X( [3Xmat[103X ) [32X operation[133X
   
@@ -348,28 +351,30 @@
   whose  quotient  field  is  implemented in [5XGAP[105X. For matrices defined over an
   arbitrary commutative ring with one see [2XDeterminantMatDivFree[102X ([14X24.4-6[114X).[133X
   
-  [1X24.4-5 DeterminantMatDestructive[101X
+  [1X24.4-5 DeterminantMatrixDestructive[101X
   
+  [33X[1;0Y[29X[2XDeterminantMatrixDestructive[102X( [3Xmat[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XDeterminantMatDestructive[102X( [3Xmat[103X ) [32X operation[133X
   
-  [33X[0;0YDoes  the  same  as [2XDeterminantMat[102X ([14X24.4-4[114X), with the difference that it may
+  [33X[0;0YDoes the same as [2XDeterminantMatrix[102X ([14X24.4-4[114X), with the difference that it may
   destroy its argument. The matrix [3Xmat[103X must be mutable.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XDeterminantMat([[1,2],[2,1]]);[127X[104X
+    [4X[25Xgap>[125X [27XDeterminantMatrix([[1,2],[2,1]]);[127X[104X
     [4X[28X-3[128X[104X
     [4X[25Xgap>[125X [27Xmm:= [[1,2],[2,1]];;[127X[104X
-    [4X[25Xgap>[125X [27XDeterminantMatDestructive( mm );[127X[104X
+    [4X[25Xgap>[125X [27XDeterminantMatrixDestructive( mm );[127X[104X
     [4X[28X-3[128X[104X
     [4X[25Xgap>[125X [27Xmm;[127X[104X
     [4X[28X[ [ 1, 2 ], [ 0, -3 ] ][128X[104X
   [4X[32X[104X
   
-  [1X24.4-6 DeterminantMatDivFree[101X
+  [1X24.4-6 DeterminantMatrixDivFree[101X
   
+  [33X[1;0Y[29X[2XDeterminantMatrixDivFree[102X( [3Xmat[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XDeterminantMatDivFree[102X( [3Xmat[103X ) [32X operation[133X
   
-  [33X[0;0Yreturns the determinant of a square matrix [3Xmat[103X over an arbitrary commutative
+  [33X[0;0Yreturn  the determinant of a square matrix [3Xmat[103X over an arbitrary commutative
   ring with one using the division free method of Mahajan and Vinay [MV97].[133X
   
   [1X24.4-7 IsEmptyMatrix[101X
@@ -377,8 +382,9 @@
   [33X[1;0Y[29X[2XIsEmptyMatrix[102X( [3XM[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10YA boolean[133X
   
-  [33X[0;0YIs  [9Xtrue[109X  if  [3XM[103X either has zero columns or zero rows and [9Xfalse[109X otherwise. In
-  other words, a matrix is empty if it has no entries.[133X
+  [33X[0;0YIs  [9Xtrue[109X  if  the  matrix object [3XM[103X either has zero columns or zero rows, and
+  [9Xfalse[109X  otherwise.  In  other  words,  a  matrix object is empty if it has no
+  entries.[133X
   
   [1X24.4-8 IsMonomialMatrix[101X
   
@@ -530,8 +536,8 @@
   [33X[1;0Y[29X[2XTransposedMatMutable[102X( [3Xmat[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XTransposedMatOp[102X( [3Xmat[103X ) [32X operation[133X
   
-  [33X[0;0YThese  functions all return the transposed of the matrix [3Xmat[103X, i.e., a matrix
-  [3Xtrans[103X such that [10X[3Xtrans[103X[10X[[3Xi[103X[10X][[3Xk[103X[10X] = [3Xmat[103X[10X[[3Xk[103X[10X][[3Xi[103X[10X][110X holds.[133X
+  [33X[0;0YThese  functions all return the transposed of the matrix object [3Xmat[103X, i.e., a
+  matrix object [22Xtrans[122X such that [22Xtrans[i,k] = [3Xmat[103X[k,i][122X holds.[133X
   
   [33X[0;0YThey differ only w.r.t. the mutability of the result.[133X
   
@@ -580,7 +586,7 @@
   reflection in this vector.[133X
   
   [33X[0;0YMore  precisely,  if  [3Xcoeffs[103X is the coefficients list of a vector [22Xv[122X w.r.t. a
-  basis  [22XB[122X  (see [2XBasis[102X  ([14X61.5-2[114X)), say, then the returned matrix describes the
+  basis  [22XB[122X  (see [2XBasis[102X  ([14X61.5-2[114X))  then  the  returned  matrix  describes  the
   reflection  in  [22Xv[122X  w.r.t.  [22XB[122X  as  a map on a row space, with action from the
   right.[133X
   
@@ -647,32 +653,39 @@
   
   [33X[0;0Yreturns  a  new  random  mutable  [3Xm[103X[22X×[122X[3Xm[103X  matrix  with  integer entries that is
   invertible  over  the  integers.  Optionally,  a  random  source  [3Xrs[103X  can be
-  supplied.[133X
+  supplied.  If  the  option  [3Xdomain[103X  is  given, random selection is made from
+  [3Xdomain[103X, otherwise from [3XIntegers[103X[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xm := RandomUnimodularMat(3);[127X[104X
     [4X[28X[ [ -5, 1, 0 ], [ 12, -2, -1 ], [ -14, 3, 0 ] ][128X[104X
     [4X[25Xgap>[125X [27Xm^-1;[127X[104X
     [4X[28X[ [ -3, 0, 1 ], [ -14, 0, 5 ], [ -8, -1, 2 ] ][128X[104X
+    [4X[25Xgap>[125X [27XRandomUnimodularMat(3:domain:=[-1000..1000]);[127X[104X
+    [4X[28X[ [ 312330173, 15560030349, -125721926670 ],[128X[104X
+    [4X[28X[ -307290, -15309014, 123693281 ],[128X[104X
+    [4X[28X[ -684293792, -34090949551, 275448039848 ] ][128X[104X
   [4X[32X[104X
   
   
   [1X24.7 [33X[0;0YMatrices Representing Linear Equations and the Gaussian Algorithm[133X[101X
   
-  [1X24.7-1 RankMat[101X
+  [1X24.7-1 RankMatrix[101X
   
+  [33X[1;0Y[29X[2XRankMatrix[102X( [3Xmat[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XRankMat[102X( [3Xmat[103X ) [32X attribute[133X
   
-  [33X[0;0YIf  [3Xmat[103X is a matrix whose rows span a free module over the ring generated by
-  the  matrix entries and their inverses then [2XRankMat[102X returns the dimension of
-  this free module. Otherwise [9Xfail[109X is returned.[133X
+  [33X[0;0YIf  [3Xmat[103X  is  a  matrix  object  representing a matrix whose rows span a free
+  module over the ring generated by the matrix entries and their inverses then
+  [2XRankMatrix[102X  returns  the  dimension  of  this free module. Otherwise [9Xfail[109X is
+  returned.[133X
   
-  [33X[0;0YNote  that  [2XRankMat[102X  may  perform a Gaussian elimination. For large rational
+  [33X[0;0YNote  that [2XRankMatrix[102X may perform a Gaussian elimination. For large rational
   matrices this may take very long, because the entries may become very large.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xmat:=[[1,2,3],[4,5,6],[7,8,9]];;[127X[104X
-    [4X[25Xgap>[125X [27XRankMat(mat);[127X[104X
+    [4X[25Xgap>[125X [27XRankMatrix( mat );[127X[104X
     [4X[28X2[128X[104X
   [4X[32X[104X
   
@@ -1014,8 +1027,9 @@
   
   [33X[1;0Y[29X[2XSemiEchelonMatsDestructive[102X( [3Xmats[103X ) [32X operation[133X
   
-  [33X[0;0YDoes  the  same as [10XSemiEchelonmats[110X, except that it may destroy its argument.
-  Therefore the argument must be a list of matrices that re mutable.[133X
+  [33X[0;0YDoes  the  same as [2XSemiEchelonMats[102X ([14X24.10-4[114X), except that it may destroy its
+  argument.  Therefore  the  argument  must  be  a  list  of matrices that are
+  mutable.[133X
   
   
   [1X24.11 [33X[0;0YMatrices as Basis of a Row Space[133X[101X
@@ -1249,11 +1263,10 @@
   w.r.t. [3XB[103X.[133X
   
   [33X[0;0YMore  precisely,  regard [3Xmat[103X as the matrix of a linear transformation on the
-  row  space  [22XF^n[122X  w.r.t. the [22XF[122X-basis with vectors [22X(v_1, ldots, v_n)[122X, say, and
-  suppose  that  the basis [3XB[103X consists of the vectors [22X(b_1, ..., b_m)[122X; then the
-  returned  matrix is the matrix of the linear transformation on the row space
-  [22XK^mn[122X  w.r.t. the  [22XK[122X-basis  whose vectors are [22X(b_1 v_1, ... b_m v_1, ..., b_m
-  v_n)[122X.[133X
+  row  space [22XF^n[122X w.r.t. the [22XF[122X-basis with vectors [22X(v_1, ldots, v_n)[122X and suppose
+  that  the basis [3XB[103X consists of the vectors [22X(b_1, ..., b_m)[122X; then the returned
+  matrix  is  the  matrix  of  the linear transformation on the row space [22XK^mn[122X
+  w.r.t. the [22XK[122X-basis whose vectors are [22X(b_1 v_1, ... b_m v_1, ..., b_m v_n)[122X.[133X
   
   [33X[0;0YNote  that  the linear transformations act on [13Xrow[113X vectors, i.e., each row of
   the matrix is a concatenation of vectors of [3XB[103X-coefficients.[133X
@@ -1284,11 +1297,12 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X24.13-6 CompanionMat[101X
+  [1X24.13-6 CompanionMatrix[101X
   
-  [33X[1;0Y[29X[2XCompanionMat[102X( [3Xpoly[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCompanionMatrix[102X( [3Xpoly[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCompanionMat[102X( [3Xpoly[103X ) [32X operation[133X
   
-  [33X[0;0Ycomputes  a companion matrix of the polynomial [3Xpoly[103X. This matrix has [3Xpoly[103X as
+  [33X[0;0Ycompute  a  companion matrix of the polynomial [3Xpoly[103X. This matrix has [3Xpoly[103X as
   its minimal polynomial.[133X
   
   
@@ -1452,18 +1466,18 @@
   Together,  they  must generate an abelian p-group of exponent [3Xexpo[103X. Then the
   eigenvalues  of  [3Xmat[103X in the splitting field [10XGF([3Xq[103X[10X^[3Xr[103X[10X)[110X for some [3Xr[103X are powers of
   an   element   [22Xξ[122X   in   the   splitting  field,  which  is  of  order  [3Xexpo[103X.
-  [2XSimultaneousEigenvalues[102X   returns   a  matrix  of  integers  mod  [3Xexpo[103X,  say
-  [22X(a_{i,j})[122X,  such  that  the  power  [22Xξ^{a_{i,j}}[122X is an eigenvalue of the [3Xi[103X-th
-  matrix  in  [3Xmatlist[103X  and  the  eigenspaces  of the different matrices to the
-  eigenvalues [22Xξ^{a_{i,j}}[122X for fixed [3Xj[103X are equal.[133X
+  [2XSimultaneousEigenvalues[102X  returns  a  matrix  of integers mod [3Xexpo[103X [22X(a_{i,j})[122X,
+  such  that  the  power  [22Xξ^{a_{i,j}}[122X  is  an eigenvalue of the [3Xi[103X-th matrix in
+  [3Xmatlist[103X  and  the  eigenspaces  of the different matrices to the eigenvalues
+  [22Xξ^{a_{i,j}}[122X for fixed [3Xj[103X are equal.[133X
   
   
   [1X24.15 [33X[0;0YInverse and Nullspace of an Integer Matrix Modulo an Ideal[133X[101X
   
   [33X[0;0YThe following operations deal with matrices over a ring, but only care about
   the  residues  of their entries modulo some ring element. In the case of the
-  integers  and  a  prime  number [22Xp[122X, say, this is effectively computation in a
-  matrix over the prime field in characteristic [22Xp[122X.[133X
+  integers  and  a prime number [22Xp[122X, this is effectively computation in a matrix
+  over the prime field in characteristic [22Xp[122X.[133X
   
   [1X24.15-1 InverseMatMod[101X
   
@@ -1514,12 +1528,12 @@
   [1X24.16 [33X[0;0YSpecial Multiplication Algorithms for Matrices over GF(2)[133X[101X
   
   [33X[0;0YWhen  multiplying two compressed matrices [22XM[122X and [22XN[122X over GF(2) of dimensions [22Xa
-  ×  b[122X  and [22Xb × c[122X, say, where [22Xa[122X, [22Xb[122X and [22Xc[122X are all greater than or equal to 128,
-  [5XGAP[105X by default uses a more sophisticated matrix multiplication algorithm, in
-  which  linear  combinations  of  groups  of  8  rows of [22XM[122X are remembered and
-  re-used  in constructing various rows of the product. This is called level 8
-  grease.  To  optimise  memory access patterns, these combinations are stored
-  for  [22X(b+255)/256[122X  sets of 8 rows at once. This number is called the blocking
+  × b[122X and [22Xb × c[122X, where [22Xa[122X, [22Xb[122X and [22Xc[122X are all greater than or equal to 128, [5XGAP[105X by
+  default  uses a more sophisticated matrix multiplication algorithm, in which
+  linear  combinations  of groups of 8 rows of [22XM[122X are remembered and re-used in
+  constructing  various rows of the product. This is called level 8 grease. To
+  optimise   memory   access  patterns,  these  combinations  are  stored  for
+  [22X(b+255)/256[122X  sets  of  8  rows  at  once. This number is called the blocking
   level.[133X
   
   [33X[0;0YThese  levels  of  grease and blocking are found experimentally to give good
@@ -1605,7 +1619,7 @@
   [33X[1;0Y[29X[2XSimplexMethod[102X( [3XA[103X, [3Xb[103X, [3Xc[103X ) [32X function[133X
   
   [33X[0;0YFind  a  rational  vector  [3Xx[103X  that  maximizes [22X[3Xx[103X⋅[3Xc[103X[122X, subject to the constraint
-  [22X[3XA[103X⋅[3Xx[103Xle[3Xb[103X[122X.[133X
+  [22X[3XA[103X⋅[3Xx[103X≤[3Xb[103X[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XA:=[[3,1,1,4],[1,-3,2,3],[2,1,3,-1]];;[127X[104X

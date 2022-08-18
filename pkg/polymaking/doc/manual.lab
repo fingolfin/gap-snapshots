@@ -1,0 +1,76 @@
+\GAPDocLabFile{polymaking}
+\makelabel{polymaking:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{polymaking:Abstract}{}{X7AA6C5737B711C89}
+\makelabel{polymaking:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{polymaking:Acknowledgements}{}{X82A988D47DFAFCFA}
+\makelabel{polymaking:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{polymaking:Installation and Preface}{1}{X8794FBB27B46C08E}
+\makelabel{polymaking:033[1XA few words about the installation of polymake}{1.1}{X7A02C64B7A3777FF}
+\makelabel{polymaking:033[1XSetting variables for external programs}{1.2}{X851C596486F918F0}
+\makelabel{polymaking:Setting variables permanently}{1.2.3}{X7943B579846BDB76}
+\makelabel{polymaking:Polymake interaction}{2}{X86C82DCF81362F41}
+\makelabel{polymaking:Creating Polymake Objects}{2.1}{X83D426D5855D1FD6}
+\makelabel{polymaking:Accessing Properties of Polymake Objects}{2.2}{X7D9EBB0383B9BD1C}
+\makelabel{polymaking:033[1XExample: Creating and Accessing Polymake Objects}{2.3}{X7CEF475187927AEA}
+\makelabel{polymaking:Writing to Polymake Objects}{2.4}{X87BEE1B37D9F1F5E}
+\makelabel{polymaking:033[1XCalling Polymake and converting its output}{2.5}{X8468E0E381642B14}
+\makelabel{polymaking:An Example}{2.6}{X7B5623E3821CC0D0}
+\makelabel{polymaking:Global Variables}{3}{X7D9044767BEB1523}
+\makelabel{polymaking:033[1XGetting information about polymake output}{3.1}{X86AC0C6B807BEBDE}
+\makelabel{polymaking:033[1XVariables for system interaction}{3.2}{X7B786DAF80136FF4}
+\makelabel{polymaking:Converting Polymake Output}{4}{X7D23E80E841CDD67}
+\makelabel{polymaking:The General Method}{4.1}{X862D57D87A244DE2}
+\makelabel{polymaking:Converter- Philosopy}{4.1.1}{X7CDBEA427EE69C71}
+\makelabel{polymaking:Conversion Functions}{4.2}{X7FF4170183C83CC1}
+\makelabel{polymaking:Bibliography}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{polymaking:References}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{polymaking:Index}{Ind}{X83A0356F839C696F}
+\makelabel{polymaking:SetPolymakeDataDirectory}{1.2.1}{X794A38E981F9E76F}
+\makelabel{polymaking:SetPolymakeCommand}{1.2.2}{X854645287BC9303E}
+\makelabel{polymaking:CreateEmptyFile}{2.1.1}{X7C87B1807E036A85}
+\makelabel{polymaking:CreatePolymakeObject}{2.1.2}{X8625E7E2845F1634}
+\makelabel{polymaking:CreatePolymakeObject}{2.1.2}{X8625E7E2845F1634}
+\makelabel{polymaking:CreatePolymakeObject}{2.1.2}{X8625E7E2845F1634}
+\makelabel{polymaking:CreatePolymakeObject}{2.1.2}{X8625E7E2845F1634}
+\makelabel{polymaking:CreatePolymakeObject}{2.1.2}{X8625E7E2845F1634}
+\makelabel{polymaking:CreatePolymakeObject}{2.1.2}{X8625E7E2845F1634}
+\makelabel{polymaking:CheckAppVerTypList}{2.1.3}{X8135E88E87DD1551}
+\makelabel{polymaking:CreatePolymakeObjectFromFile}{2.1.4}{X7801F05A81E23EED}
+\makelabel{polymaking:CreatePolymakeObjectFromFile}{2.1.4}{X7801F05A81E23EED}
+\makelabel{polymaking:DirectoryOfPolymakeObject}{2.2.1}{X86D967C684B27108}
+\makelabel{polymaking:FilenameOfPolymakeObject}{2.2.2}{X87470AB079A2F550}
+\makelabel{polymaking:FullFilenameOfPolymakeObject}{2.2.3}{X809D309F7D31DD2C}
+\makelabel{polymaking:NamesKnownPropertiesOfPolymakeObject}{2.2.4}{X850B38F27F1BF7E8}
+\makelabel{polymaking:KnownPropertiesOfPolymakeObject}{2.2.5}{X7D79C5F1817041C5}
+\makelabel{polymaking:PropertyOfPolymakeObject}{2.2.6}{X7E538D1B7898C8E6}
+\makelabel{polymaking:AppendToPolymakeObject}{2.4.1}{X785DCA4487F168F8}
+\makelabel{polymaking:AppendPointlistToPolymakeObject}{2.4.2}{X7F5326338033B57C}
+\makelabel{polymaking:AppendVertexlistToPolymakeObject}{2.4.3}{X7E150BA67CEBC00E}
+\makelabel{polymaking:AppendInequalitiesToPolymakeObject}{2.4.4}{X7EBE5FB284FBFFE6}
+\makelabel{polymaking:ConvertMatrixToPolymakeString}{2.4.5}{X83DC7FC280731B04}
+\makelabel{polymaking:ClearPolymakeObject}{2.4.6}{X804AAE4882743E91}
+\makelabel{polymaking:ClearPolymakeObject}{2.4.6}{X804AAE4882743E91}
+\makelabel{polymaking:WriteKnownPropertyToPolymakeObject}{2.4.7}{X840C02CD815FF766}
+\makelabel{polymaking:UnbindKnownPropertyOfPolymakeObject}{2.4.8}{X7A3FF18C7FD1A626}
+\makelabel{polymaking:Polymake}{2.5.1}{X7DBA99E87EC51D53}
+\makelabel{polymaking:InfoPolymaking}{3.1.1}{X85BA7A3D7C698B68}
+\makelabel{polymaking:POLYMAKELASTFAILREASON}{3.1.2}{X79E1C63D8516D334}
+\makelabel{polymaking:POLYMAKECOMMAND}{3.2.1}{X7B35A5217C8C7B04}
+\makelabel{polymaking:POLYMAKEDATADIR}{3.2.2}{X7C07B16B873BA46D}
+\makelabel{polymaking:ConvertPolymakeOutputToGapNotation}{4.1.2}{X7EB6D80C816CF667}
+\makelabel{polymaking:SplitPolymakeOutputStringIntoBlocks}{4.1.3}{X841D81327C6F6E29}
+\makelabel{polymaking:ObjectConverters}{4.1.4}{X83199F737F4BE4FD}
+\makelabel{polymaking:ConvertPolymakeNumber}{4.2.1}{X7FC98443862DB83F}
+\makelabel{polymaking:ConvertPolymakeScalarToGAP}{4.2.2}{X7F2A1C2C808E4A07}
+\makelabel{polymaking:ConvertPolymakeMatrixOrListOfSetsToGAP}{4.2.3}{X82A7FF9983EB61E2}
+\makelabel{polymaking:ConvertPolymakeMatrixOrListOfSetsToGAPPlusOne}{4.2.3}{X82A7FF9983EB61E2}
+\makelabel{polymaking:ConvertPolymakeMatrixToGAP}{4.2.4}{X817C6B4180BF6365}
+\makelabel{polymaking:ConvertPolymakeMatrixToGAPKillOnes}{4.2.4}{X817C6B4180BF6365}
+\makelabel{polymaking:ConvertPolymakeVectorToGAP}{4.2.5}{X85F7F6787D346CC0}
+\makelabel{polymaking:ConvertPolymakeVectorToGAPKillOne}{4.2.5}{X85F7F6787D346CC0}
+\makelabel{polymaking:ConvertPolymakeIntVectorToGAPPlusOne}{4.2.5}{X85F7F6787D346CC0}
+\makelabel{polymaking:ConvertPolymakeBoolToGAP}{4.2.6}{X87B6F9867EE800C7}
+\makelabel{polymaking:ConvertPolymakeSetToGAP}{4.2.7}{X846B284085825FEA}
+\makelabel{polymaking:ConvertPolymakeListOfSetsToGAP}{4.2.8}{X7E7886D68356F592}
+\makelabel{polymaking:ConvertPolymakeListOfSetsToGAPPlusOne}{4.2.8}{X7E7886D68356F592}
+\makelabel{polymaking:ConvertPolymakeGraphToGAP}{4.2.9}{X7EBECAA07F8B58D8}

@@ -3,7 +3,7 @@
 ##
 #W  docxpl.tst             GAP 4 package AtlasRep               Thomas Breuer
 ##
-#Y  Copyright (C)  2019,   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C)  2022,   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
 ##  This file contains the GAP code of examples in the package
 ##  documentation files.
@@ -25,7 +25,7 @@ gap> if IsBound( BrowseData ) then
 >      data.replayInterval:= 1;
 >    fi;
 
-##  ./tutorial.xml (32-39)
+##  doc/tutorial.xml (32-39)
 gap> LoadPackage( "AtlasRep", false );
 true
 gap> LoadPackage( "CTblLib", false );
@@ -33,21 +33,21 @@ true
 gap> LoadPackage( "TomLib", false );
 true
 
-##  ./tutorial.xml (57-60)
+##  doc/tutorial.xml (57-60)
 gap> origpref:= UserPreference( "AtlasRep", "DisplayFunction" );;
 gap> SetUserPreference( "AtlasRep", "DisplayFunction", "Print" );
 
-##  ./tutorial.xml (70-75)
+##  doc/tutorial.xml (70-75)
 gap> priv:= Difference(
 >     List( AtlasOfGroupRepresentationsInfo.notified, x -> x.ID ),
 >     [ "core", "internal" ] );;
 gap> Perform( priv, AtlasOfGroupRepresentationsForgetData );
 
-##  ./tutorial.xml (82-85)
+##  doc/tutorial.xml (82-85)
 gap> globallevel:= InfoLevel( InfoAtlasRep );;
 gap> SetInfoLevel( InfoAtlasRep, 0 );
 
-##  ./tutorial.xml (170-181)
+##  doc/tutorial.xml (170-181)
 gap> g:= AtlasGroup( "M24" );
 Group([ (1,4)(2,7)(3,17)(5,13)(6,9)(8,15)(10,19)(11,18)(12,21)(14,16)
   (20,24)(22,23), (1,4,6)(2,21,14)(3,9,15)(5,18,10)(13,17,16)
@@ -59,7 +59,7 @@ true
 gap> AtlasGroup( "J5" );
 fail
 
-##  ./tutorial.xml (198-208)
+##  doc/tutorial.xml (198-208)
 gap> g:= AtlasSubgroup( "M24", 1 );
 Group([ (2,10)(3,12)(4,14)(6,9)(8,16)(15,18)(20,22)(21,24), (1,7,2,9)
   (3,22,10,23)(4,19,8,12)(5,14)(6,18)(13,16,17,24) ])
@@ -70,7 +70,7 @@ true
 gap> AtlasSubgroup( "M24", 100 );
 fail
 
-##  ./tutorial.xml (236-245)
+##  doc/tutorial.xml (236-245)
 gap> s:= AtlasSubgroup( "ON", 3 );
 <permutation group of size 175560 with 2 generators>
 gap> NrMovedPoints( s );  Size( s );
@@ -80,13 +80,13 @@ gap> hom:= SmallerDegreePermutationRepresentation( s );;
 gap> NrMovedPoints( Image( hom ) );
 1540
 
-##  ./tutorial.xml (254-259)
+##  doc/tutorial.xml (254-259)
 gap> j1:= AtlasGroup( "J1" );
 <permutation group of size 175560 with 2 generators>
 gap> NrMovedPoints( j1 );
 266
 
-##  ./tutorial.xml (268-277)
+##  doc/tutorial.xml (268-277)
 gap> g:= AtlasGroup( "ON" );
 <permutation group of size 460815505920 with 2 generators>
 gap> s:= AtlasSubgroup( g, 3 );
@@ -96,7 +96,7 @@ true
 gap> IsSubset( g, j1 );
 false
 
-##  ./tutorial.xml (293-327)
+##  doc/tutorial.xml (293-327)
 gap> DisplayAtlasInfo( "A5" );
 Representations for G = A5:    (all refer to std. generators 1)
 ---------------------------
@@ -131,17 +131,17 @@ Programs for G = A5:    (all refer to std. generators 1)
   (check)             
   (pres)              
 
-##  ./tutorial.xml (335-338)
+##  doc/tutorial.xml (335-338)
 gap> AtlasGroup( "A5", Position, 1 );
 Group([ (1,2)(3,4), (1,3,5) ])
 
-##  ./tutorial.xml (349-354)
+##  doc/tutorial.xml (349-354)
 gap> AtlasGroup( "A5", NrMovedPoints, 10 );
 Group([ (2,4)(3,5)(6,8)(7,10), (1,2,3)(4,6,7)(5,8,9) ])
 gap> AtlasGroup( "A5", Dimension, 4, Ring, GF(2) );
 <matrix group of size 60 with 2 generators>
 
-##  ./tutorial.xml (369-377)
+##  doc/tutorial.xml (369-377)
 gap> AtlasSubgroup( "A5", Dimension, 4, Ring, GF(2), 1 );
 <matrix group of size 12 with 2 generators>
 gap> g:= AtlasSubgroup( "A5", NrMovedPoints, 10, 3 );
@@ -150,7 +150,7 @@ gap> Size( g );  NrMovedPoints( g );
 6
 9
 
-##  ./tutorial.xml (425-444)
+##  doc/tutorial.xml (425-444)
 gap> info:= OneAtlasGeneratingSetInfo( "A5", NrMovedPoints, 10 );
 rec( charactername := "1a+4a+5a", constituents := [ 1, 4, 5 ], 
   contents := "core", groupname := "A5", id := "", 
@@ -170,7 +170,7 @@ rec( charactername := "1a+4a+5a", constituents := [ 1, 4, 5 ],
 gap> info2.generators;
 [ (2,4)(3,5)(6,8)(7,10), (1,2,3)(4,6,7)(5,8,9) ]
 
-##  ./tutorial.xml (455-464)
+##  doc/tutorial.xml (455-464)
 gap> g:= AtlasGroup( "A5", NrMovedPoints, 10 );;
 gap> AtlasRepInfoRecord( g );
 rec( charactername := "1a+4a+5a", constituents := [ 1, 4, 5 ], 
@@ -180,7 +180,7 @@ rec( charactername := "1a+4a+5a", constituents := [ 1, 4, 5 ],
   repname := "A5G1-p10B0", repnr := 3, size := 60, stabilizer := "S3",
   standardization := 1, transitivity := 1, type := "perm" )
 
-##  ./tutorial.xml (497-518)
+##  doc/tutorial.xml (497-518)
 gap> prginfo:= AtlasProgramInfo( "A5", "maxes", 1 );
 rec( groupname := "A5", identifier := [ "A5", "A5G1-max1W1", 1 ], 
   size := 12, standardization := 1, subgroupname := "A4", 
@@ -202,13 +202,13 @@ r[1]:= r[5]*r[4];
 gap> ResultOfStraightLineProgram( prg.program, info2.generators );
 [ (1,10)(2,3)(4,9)(7,8), (1,2,3)(4,6,7)(5,8,9) ]
 
-##  ./tutorial.xml (540-545)
+##  doc/tutorial.xml (540-545)
 gap> tbl:= CharacterTable( "M11" );;
 gap> modtbl:= tbl mod 2;;
 gap> CharacterDegrees( modtbl );
 [ [ 1, 1 ], [ 10, 1 ], [ 16, 2 ], [ 44, 1 ] ]
 
-##  ./tutorial.xml (561-570)
+##  doc/tutorial.xml (561-570)
 gap> DisplayAtlasInfo( "M11", Characteristic, 2 );
 Representations for G = M11:    (all refer to std. generators 1)
 ----------------------------
@@ -218,7 +218,7 @@ Representations for G = M11:    (all refer to std. generators 1)
 16: G <= GL(16a,4) character 16a
 17: G <= GL(16b,4) character 16b
 
-##  ./tutorial.xml (584-594)
+##  doc/tutorial.xml (584-594)
 gap> info:= OneAtlasGeneratingSetInfo( "M11", Characteristic, 2,
 >                                             Dimension, 10 );;
 gap> gens:= AtlasGenerators( info.identifier );;
@@ -229,7 +229,7 @@ rec( groupname := "M11", identifier := [ "M11", "M11G1-cclsW1", 1 ],
   standardization := 1, version := "1" )
 gap> reps:= ResultOfStraightLineProgram( ccls.program, gens.generators );;
 
-##  ./tutorial.xml (606-613)
+##  doc/tutorial.xml (606-613)
 gap> ord8prg:= RestrictOutputsOfSLP( ccls.program,
 >                   Filtered( [ 1 .. 10 ], i -> ccls.outputs[i][1] = '8' ) );
 <straight line program>
@@ -237,53 +237,53 @@ gap> ord8reps:= ResultOfStraightLineProgram( ord8prg, gens.generators );;
 gap> List( ord8reps, m -> Position( reps, m ) );
 [ 7, 8 ]
 
-##  ./tutorial.xml (621-624)
+##  doc/tutorial.xml (621-624)
 gap> List( reps, Order ) = OrdersClassRepresentatives( tbl );
 true
 
-##  ./tutorial.xml (639-643)
+##  doc/tutorial.xml (639-643)
 gap> fus:= GetFusionMap( modtbl, tbl );
 [ 1, 3, 5, 9, 10 ]
 gap> modreps:= reps{ fus };;
 
-##  ./tutorial.xml (653-658)
+##  doc/tutorial.xml (653-658)
 gap> char:= List( modreps, BrauerCharacterValue );
 [ 10, 1, 0, -1, -1 ]
 gap> Position( Irr( modtbl ), char );
 2
 
-##  ./tutorial.xml (675-681)
+##  doc/tutorial.xml (675-681)
 gap> grp:= Group( gens.generators );;
 gap> v:= GF(2)^10;;
 gap> orbs:= Orbits( grp, AsList( v ) );;
 gap> List( orbs, Length );
 [ 1, 396, 55, 330, 66, 165, 11 ]
 
-##  ./tutorial.xml (702-704)
+##  doc/tutorial.xml (702-704)
 gap> gens:= AtlasGenerators( "M11", 6, 1 );;
 
-##  ./tutorial.xml (712-718)
+##  doc/tutorial.xml (712-718)
 gap> id:= IdentityMat( 10, GF(2) );;
 gap> sub1:= Subspace( v, NullspaceMat( gens.generators[1] - id ) );;
 gap> sub2:= Subspace( v, NullspaceMat( gens.generators[2] - id ) );;
 gap> fix:= Intersection( sub1, sub2 );
 <vector space of dimension 1 over GF(2)>
 
-##  ./tutorial.xml (727-731)
+##  doc/tutorial.xml (727-731)
 gap> orb:= Orbit( grp, Basis( fix )[1] );;
 gap> act:= Action( grp, orb );;  Print( act, "\n" );
 Group( [ ( 1, 2)( 4, 6)( 5, 8)( 7,10), ( 1, 3, 5, 9)( 2, 4, 7,11) ] )
 
-##  ./tutorial.xml (743-751)
+##  doc/tutorial.xml (743-751)
 gap> permgrp:= Group( AtlasGenerators( "M11", 1 ).generators );;
 gap> Print( permgrp, "\n" );
-Group( [ ( 2,10)( 4,11)( 5, 7)( 8, 9), ( 1, 4, 3, 8)( 2, 5, 6, 9) ] )
+Group( [ ( 2,10)( 4,11)( 5, 7)( 8, 9), (1,4,3,8)(2,5,6,9) ] )
 gap> permgrp = act;
 false
 gap> IsConjugate( SymmetricGroup(11), permgrp, act );
 true
 
-##  ./tutorial.xml (766-791)
+##  doc/tutorial.xml (766-791)
 gap> DisplayAtlasInfo( "G2(3)", IsStraightLineProgram );
 Programs for G = G2(3):    (all refer to std. generators 1)
 -----------------------
@@ -309,27 +309,27 @@ gap> info:= OneAtlasGeneratingSetInfo( "G2(3)", Dimension, 7 );;
 gap> gens:= AtlasGenerators( info ).generators;;
 gap> imgs:= ResultOfStraightLineProgram( prog, gens );;
 
-##  ./tutorial.xml (804-808)
+##  doc/tutorial.xml (804-808)
 gap> g:= Group( gens );;
 gap> aut:= GroupHomomorphismByImagesNC( g, g, gens, imgs );;
 gap> SetIsBijective( aut, true );
 
-##  ./tutorial.xml (817-821)
+##  doc/tutorial.xml (817-821)
 gap> aut:= GroupHomomorphismByImages( g, g, gens, imgs );;
 gap> IsBijective( aut );
 true
 
-##  ./tutorial.xml (844-849)
+##  doc/tutorial.xml (844-849)
 gap> max1:= AtlasProgram( "G2(3)", 1 ).program;;
 gap> mgens:= ResultOfStraightLineProgram( max1, gens );;
 gap> comp:= CompositionOfStraightLinePrograms( max1, prog );;
 gap> mimgs:= ResultOfStraightLineProgram( comp, gens );;
 
-##  ./tutorial.xml (864-867)
+##  doc/tutorial.xml (864-867)
 gap> mimgs = List( mgens, x -> x^aut );
 true
 
-##  ./tutorial.xml (898-912)
+##  doc/tutorial.xml (898-912)
 gap> info:= OneAtlasGeneratingSetInfo( "M12", NrMovedPoints, 12 );
 rec( charactername := "1a+11a", constituents := [ 1, 2 ], 
   contents := "core", groupname := "M12", id := "a", 
@@ -344,7 +344,7 @@ gap> gensM11:= ResultOfStraightLineProgram( restM11.program,
 >                                           gensM12.generators );
 [ (3,9)(4,12)(5,10)(6,8), (1,4,11,5)(2,10,8,3) ]
 
-##  ./tutorial.xml (924-931)
+##  doc/tutorial.xml (924-931)
 gap> checkM11:= AtlasProgram( "M11", "check" );
 rec( groupname := "M11", identifier := [ "M11", "M11G1-check1", 1, 1 ]
     , program := <straight line decision>, standardization := 1, 
@@ -352,7 +352,7 @@ rec( groupname := "M11", identifier := [ "M11", "M11G1-check1", 1, 1 ]
 gap> ResultOfStraightLineDecision( checkM11.program, gensM11 );
 true
 
-##  ./tutorial.xml (940-947)
+##  doc/tutorial.xml (940-947)
 gap> restL211:= AtlasProgram( "M11", "maxes", 2 );;
 gap> gensL211:= ResultOfStraightLineProgram( restL211.program, gensM11 );
 [ (3,9)(4,12)(5,10)(6,8), (1,11,9)(2,12,8)(3,6,10) ]
@@ -360,7 +360,7 @@ gap> G:= Group( gensL211 );;  Size( G );  IsSimple( G );
 660
 true
 
-##  ./tutorial.xml (953-979)
+##  doc/tutorial.xml (953-979)
 gap> DisplayAtlasInfo( "M11", IsStraightLineProgram );
 Programs for G = M11:    (all refer to std. generators 1)
 ---------------------
@@ -387,19 +387,19 @@ Programs for G = M11:    (all refer to std. generators 1)
   (check)                                             
   (pres)                                              
 
-##  ./tutorial.xml (988-992)
+##  doc/tutorial.xml (988-992)
 gap> restL211std:= AtlasProgram( "M11", "maxes", 2, 1 );;
 gap> ResultOfStraightLineProgram( restL211std.program, gensM11 );
 [ (3,9)(4,12)(5,10)(6,8), (1,11,9)(2,12,8)(3,6,10) ]
 
-##  ./tutorial.xml (1009-1015)
+##  doc/tutorial.xml (1009-1015)
 gap> G:= MathieuGroup( 11 );;
 gap> gens:= GeneratorsOfGroup( G );
 [ (1,2,3,4,5,6,7,8,9,10,11), (3,7,11,8)(4,10,5,6) ]
 gap> ResultOfStraightLineDecision( checkM11.program, gens );
 false
 
-##  ./tutorial.xml (1025-1041)
+##  doc/tutorial.xml (1025-1041)
 gap> find:= AtlasProgram( "M11", "find" );
 rec( groupname := "M11", identifier := [ "M11", "M11G1-find1", 1, 1 ],
   program := <black box program>, standardization := 1, 
@@ -416,7 +416,7 @@ gap> G:= Group( gensL211 );;  Size( G );  IsSimple( G );
 660
 true
 
-##  ./tutorial.xml (1072-1080)
+##  doc/tutorial.xml (1072-1080)
 gap> tom:= TableOfMarks( "A5" );
 TableOfMarks( "A5" )
 gap> info:= StandardGeneratorsInfo( tom );
@@ -425,7 +425,7 @@ gap> info:= StandardGeneratorsInfo( tom );
       script := [ [ 1, 2 ], [ 2, 3 ], [ 1, 1, 2, 1, 5 ] ], 
       standardization := 1 ) ]
 
-##  ./tutorial.xml (1097-1122)
+##  doc/tutorial.xml (1097-1122)
 gap> info:= OneAtlasGeneratingSetInfo( "A5", Ring, Integers, Dimension, 4 );;
 gap> stdgens:= AtlasGenerators( info.identifier );
 rec( charactername := "4a", constituents := [ 4 ], contents := "core",
@@ -451,7 +451,7 @@ gap> GeneratorsOfGroup( sub );
   [ [ 1, 0, 0, 0 ], [ 0, 0, 1, 0 ], [ 0, 1, 0, 0 ], 
       [ -1, -1, -1, -1 ] ] ]
 
-##  ./tutorial.xml (1137-1145)
+##  doc/tutorial.xml (1137-1145)
 gap> tom:= TableOfMarks( "M22" );
 TableOfMarks( "M22" )
 gap> subord:= Size( UnderlyingGroup( tom ) ) / 770;
@@ -460,27 +460,27 @@ gap> ord:= OrdersTom( tom );;
 gap> tomstabs:= Filtered( [ 1 .. Length( ord ) ], i -> ord[i] = subord );
 [ 144 ]
 
-##  ./tutorial.xml (1154-1159)
+##  doc/tutorial.xml (1154-1159)
 gap> DisplayAtlasInfo( "M22", NrMovedPoints, 770 );
 Representations for G = M22:    (all refer to std. generators 1)
 ----------------------------
 12: G <= Sym(770) rank 9, on cosets of (A4xA4):4 < 2^4:A6
 
-##  ./tutorial.xml (1168-1174)
+##  doc/tutorial.xml (1168-1174)
 gap> maxtom:= MaximalSubgroupsTom( tom );
 [ [ 155, 154, 153, 152, 151, 150, 146, 145 ], 
   [ 22, 77, 176, 176, 231, 330, 616, 672 ] ]
 gap> List( tomstabs, i -> List( maxtom[1], j -> ContainedTom( tom, i, j ) ) );
 [ [ 0, 10, 0, 0, 0, 0, 0, 0 ] ]
 
-##  ./tutorial.xml (1193-1199)
+##  doc/tutorial.xml (1193-1199)
 gap> g:= AtlasGroup( "M22", NrMovedPoints, 770 );
 <permutation group of size 443520 with 2 generators>
 gap> allbl:= AllBlocks( g );;
 gap> List( allbl, Length );
 [ 10 ]
 
-##  ./tutorial.xml (1208-1216)
+##  doc/tutorial.xml (1208-1216)
 gap> stab:= Stabilizer( g, 1 );;
 gap> StructureDescription( stab : nice );
 "(A4 x A4) : C4"
@@ -489,7 +489,7 @@ gap> act:= Action( g, blocks, OnSets );;
 gap> StructureDescription( Stabilizer( act, 1 ) );
 "(C2 x C2 x C2 x C2) : A6"
 
-##  ./tutorial.xml (1231-1238)
+##  doc/tutorial.xml (1231-1238)
 gap> DisplayAtlasInfo( "M22", NrMovedPoints, 462 );
 Representations for G = M22:    (all refer to std. generators 1)
 ----------------------------
@@ -497,7 +497,7 @@ Representations for G = M22:    (all refer to std. generators 1)
 8: G <= Sym(462b) rank 8, on cosets of 2^4:A5 < L3(4), 2^4:S5
 9: G <= Sym(462c) rank 8, on cosets of 2^4:A5 < L3(4), 2^4:A6
 
-##  ./tutorial.xml (1253-1263)
+##  doc/tutorial.xml (1253-1263)
 gap> tom:= TableOfMarks( "M22" );
 TableOfMarks( "M22" )
 gap> genstom:= GeneratorsOfGroup( UnderlyingGroup( tom ) );;
@@ -508,12 +508,12 @@ rec( groupname := "M22", identifier := [ "M22", "M22G1-check1", 1, 1 ]
 gap> ResultOfStraightLineDecision( checkM22.program, genstom );
 true
 
-##  ./tutorial.xml (1272-1276)
+##  doc/tutorial.xml (1272-1276)
 gap> ord:= OrdersTom( tom );;
 gap> tomstabs:= Filtered( [ 1 .. Length( ord ) ], i -> ord[i] = 960 );
 [ 147, 148, 149 ]
 
-##  ./tutorial.xml (1287-1321)
+##  doc/tutorial.xml (1287-1321)
 gap> atlasreps:= AllAtlasGeneratingSetInfos( "M22", NrMovedPoints, 462 );
 [ rec( charactername := "1a+21a+55a+154a+231a", 
       constituents := [ 1, 2, 5, 7, 9 ], contents := "core", 
@@ -548,14 +548,14 @@ gap> tomstabreps:= List( atlasreps, G -> List( tomstabs,
 gap> List( tomstabreps, x -> List( x, NrMovedPoints ) );
 [ [ 462, 462, 461 ], [ 460, 462, 462 ], [ 462, 461, 462 ] ]
 
-##  ./tutorial.xml (1337-1343)
+##  doc/tutorial.xml (1337-1343)
 gap> stabs:= List( atlasreps, G -> Stabilizer( G, 1 ) );;
 gap> List( stabs, IdGroup );
 [ [ 960, 11358 ], [ 960, 11357 ], [ 960, 11357 ] ]
 gap> List( stabs, PerfectIdentification );
 [ [ 960, 2 ], [ 960, 1 ], [ 960, 1 ] ]
 
-##  ./tutorial.xml (1353-1360)
+##  doc/tutorial.xml (1353-1360)
 gap> maxtom:= MaximalSubgroupsTom( tom );
 [ [ 155, 154, 153, 152, 151, 150, 146, 145 ], 
   [ 22, 77, 176, 176, 231, 330, 616, 672 ] ]
@@ -563,18 +563,18 @@ gap> List( tomstabs, i -> List( maxtom[1], j -> ContainedTom( tom, i, j ) ) );
 [ [ 21, 0, 0, 0, 1, 0, 0, 0 ], [ 21, 6, 0, 0, 0, 0, 0, 0 ], 
   [ 0, 6, 0, 0, 0, 0, 0, 0 ] ]
 
-##  ./tutorial.xml (1391-1397)
+##  doc/tutorial.xml (1391-1397)
 gap> bl:= List( atlasreps, AllBlocks );;
 gap> List( bl, Length );
 [ 1, 3, 2 ]
 gap> List( bl, l -> List( l, Length ) );
 [ [ 6 ], [ 21, 21, 2 ], [ 21, 6 ] ]
 
-##  ./tutorial.xml (1424-1427)
+##  doc/tutorial.xml (1424-1427)
 gap> List( atlasreps, RankAction );
 [ 5, 8, 8 ]
 
-##  ./tutorial.xml (1440-1450)
+##  doc/tutorial.xml (1440-1450)
 gap> t:= CharacterTable( "M22" );;
 gap> perms:= PermChars( t, 462 );
 [ Character( CharacterTable( "M22" ),
@@ -585,7 +585,7 @@ gap> MatScalarProducts( t, Irr( t ), perms );
 [ [ 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0 ], 
   [ 1, 2, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0 ] ]
 
-##  ./../gap/utils.gd (185-207)
+##  doc/../gap/utils.gd (185-207)
 gap> AtlasClassNames( CharacterTable( "L3(4).3" ) );
 [ "1A", "2A", "3A", "4ABC", "5A", "5B", "7A", "7B", "3B", "3B'", 
   "3C", "3C'", "6B", "6B'", "15A", "15A'", "15B", "15B'", "21A", 
@@ -608,24 +608,24 @@ gap> AtlasClassNames( CharacterTable( "2.A5.2" ) );
 [ "1A_0", "1A_1", "2A_0", "3A_0", "3A_1", "5AB_0", "5AB_1", "2B_0", 
   "4A_0", "4A_1", "6A_0", "6A_1" ]
 
-##  ./../gap/utils.gd (253-256)
+##  doc/../gap/utils.gd (253-256)
 gap> AtlasCharacterNames( CharacterTable( "A5" ) );                   
 [ "1a", "3a", "3b", "4a", "5a" ]
 
-##  ./../gap/interfac.gd (447-453)
+##  doc/../gap/interfac.gd (455-461)
 gap> DisplayAtlasInfo( [ "M11", "A5" ] );
 group |  # | maxes | cl | cyc | out | fnd | chk | prs
 ------+----+-------+----+-----+-----+-----+-----+----
 M11   | 42 |     5 |  + |  +  |     |  +  |  +  |  + 
 A5*   | 18 |     3 |  + |     |     |     |  +  |  + 
 
-##  ./../gap/interfac.gd (476-481)
+##  doc/../gap/interfac.gd (484-489)
 gap> DisplayAtlasInfo( [ "M11", "A5" ], NrMovedPoints, 11 );
 group | # | maxes | cl | cyc | out | fnd | chk | prs
 ------+---+-------+----+-----+-----+-----+-----+----
 M11   | 1 |     5 |  + |  +  |     |  +  |  +  |  + 
 
-##  ./../gap/interfac.gd (492-504)
+##  doc/../gap/interfac.gd (500-512)
 gap> DisplayAtlasInfo( "A5", IsPermGroup, true );
 Representations for G = A5:    (all refer to std. generators 1)
 ---------------------------
@@ -638,7 +638,7 @@ Representations for G = A5:    (all refer to std. generators 1)
 1: G <= Sym(5) 3-trans., on cosets of A4 (1st max.)
 2: G <= Sym(6) 2-trans., on cosets of D10 (2nd max.)
 
-##  ./../gap/interfac.gd (509-528)
+##  doc/../gap/interfac.gd (517-536)
 gap> DisplayAtlasInfo( "A5", Dimension, [ 1 .. 3 ] );
 Representations for G = A5:    (all refer to std. generators 1)
 ---------------------------
@@ -658,7 +658,7 @@ Representations for G = A5:    (all refer to std. generators 1)
 17: G <= GL(3a,Field([Sqrt(5)])) character 3a
 18: G <= GL(3b,Field([Sqrt(5)])) character 3b
 
-##  ./../gap/interfac.gd (537-545)
+##  doc/../gap/interfac.gd (545-553)
 gap> DisplayAtlasInfo( "A5", Identifier, "a" );
 Representations for G = A5:    (all refer to std. generators 1)
 ---------------------------
@@ -667,7 +667,7 @@ Representations for G = A5:    (all refer to std. generators 1)
 12: G <= GL(3a,9)                character 3a
 17: G <= GL(3a,Field([Sqrt(5)])) character 3a
 
-##  ./../gap/interfac.gd (550-585)
+##  doc/../gap/interfac.gd (558-593)
 gap> DisplayAtlasInfo( "A5", NrMovedPoints, IsPrimeInt );
 Representations for G = A5:    (all refer to std. generators 1)
 ---------------------------
@@ -703,7 +703,7 @@ Representations for G = A5:    (all refer to std. generators 1)
 10: G <= GL(3,5)  character 3a
 11: G <= GL(5,5)  character 5a
 
-##  ./../gap/interfac.gd (595-608)
+##  doc/../gap/interfac.gd (603-616)
 gap> DisplayAtlasInfo( "A5", IsStraightLineProgram, true );
 Programs for G = A5:    (all refer to std. generators 1)
 --------------------
@@ -717,7 +717,7 @@ Programs for G = A5:    (all refer to std. generators 1)
   (check)             
   (pres)              
 
-##  ./../gap/interfac.gd (777-805)
+##  doc/../gap/interfac.gd (785-814)
 gap> gens1:= AtlasGenerators( "A5", 1 );
 rec( charactername := "1a+4a", constituents := [ 1, 4 ], 
   contents := "core", generators := [ (1,2)(3,4), (1,3,5) ], 
@@ -743,10 +743,11 @@ rec( charactername := "3a", constituents := [ 2 ], contents := "core",
          ], [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 1, 0, 0 ] ] ], 
   groupname := "A5", id := "a", 
   identifier := [ "A5", "A5G1-Ar3aB0.g", 1, 3 ], 
-  repname := "A5G1-Ar3aB0", repnr := 17, ring := NF(5,[ 1, 4 ]), 
-  size := 60, standardization := 1, type := "matalg" )
+  polynomial := [ -1, 1, 1 ], repname := "A5G1-Ar3aB0", repnr := 17, 
+  ring := NF(5,[ 1, 4 ]), size := 60, standardization := 1, 
+  type := "matalg" )
 
-##  ./../gap/interfac.gd (810-827)
+##  doc/../gap/interfac.gd (819-836)
 gap> gens1max2:= AtlasGenerators( "A5", 1, 2 );
 rec( charactername := "1a+4a", constituents := [ 1, 4 ], 
   contents := "core", generators := [ (1,2)(3,4), (2,3)(4,5) ], 
@@ -764,7 +765,7 @@ gap> Size( max2 );
 gap> IdGroup( max2 ) = IdGroup( DihedralGroup( 10 ) );
 true
 
-##  ./../gap/interfac.gd (1143-1163)
+##  doc/../gap/interfac.gd (1152-1172)
 gap> prog:= AtlasProgram( "A5", 2 );
 rec( groupname := "A5", identifier := [ "A5", "A5G1-max2W1", 1 ], 
   program := <straight line program>, size := 10, 
@@ -785,7 +786,7 @@ gap> maxgens:= ResultOfStraightLineProgram( prog.program,
 gap> maxgens = gens1max2.generators;
 true
 
-##  ./../gap/interfac.gd (1178-1189)
+##  doc/../gap/interfac.gd (1187-1198)
 gap> prog:= AtlasProgram( "J1", "cyclic" );
 rec( groupname := "J1", identifier := [ "J1", "J1G1-cycW1", 1 ], 
   outputs := [ "6A", "7A", "10B", "11A", "15B", "19A" ], 
@@ -797,12 +798,12 @@ gap> ResultOfStraightLineProgram( prog.program, gens );
   (x*y*x*(y*x*y)^3*x*y^2)^2*x*y*x*(y*x*y)^2*y, x*y*x*(y*x*y)^2*y, 
   (x*y)^2*y ]
 
-##  ./../gap/interfac.gd (880-884)
+##  doc/../gap/interfac.gd (889-893)
 gap> AtlasProgramInfo( "J1", "cyclic" );
 rec( groupname := "J1", identifier := [ "J1", "J1G1-cycW1", 1 ], 
   standardization := 1, version := "1" )
 
-##  ./../gap/interfac.gd (1264-1288)
+##  doc/../gap/interfac.gd (1283-1307)
 gap> info:= OneAtlasGeneratingSetInfo( "A5" );
 rec( charactername := "1a+4a", constituents := [ 1, 4 ], 
   contents := "core", groupname := "A5", id := "", 
@@ -827,7 +828,7 @@ true
 gap> OneAtlasGeneratingSetInfo( "A5", NrMovedPoints, 20 );
 fail
 
-##  ./../gap/interfac.gd (1298-1371)
+##  doc/../gap/interfac.gd (1317-1401)
 gap> info:= OneAtlasGeneratingSetInfo( "A5", IsMatrixGroup, true );
 rec( charactername := "4a", constituents := [ 4 ], contents := "core",
   dim := 4, groupname := "A5", id := "a", 
@@ -847,7 +848,8 @@ gap> info = OneAtlasGeneratingSetInfo( "A5", Dimension, 4 );
 true
 gap> info = OneAtlasGeneratingSetInfo( "A5", Characteristic, 2 );
 true
-gap> info = OneAtlasGeneratingSetInfo( "A5", Ring, GF(2) );
+gap> info2:= OneAtlasGeneratingSetInfo( "A5", Ring, GF(2) );;
+gap> info.identifier = info2.identifier; 
 true
 gap> OneAtlasGeneratingSetInfo( "A5", Characteristic, [2,5], Dimension, 2 );
 rec( charactername := "2a", constituents := [ 2 ], contents := "core",
@@ -878,30 +880,40 @@ rec( charactername := "4a", constituents := [ 4 ], contents := "core",
   standardization := 1, type := "matint" )
 gap> info = OneAtlasGeneratingSetInfo( "A5", Ring, Integers );
 true
-gap> info = OneAtlasGeneratingSetInfo( "A5", Ring, CF(37) );
-true
+gap> info2:= OneAtlasGeneratingSetInfo( "A5", Ring, CF(37) );;
+gap> info = info2;
+false
+gap> Difference( RecNames( info2 ), RecNames( info ) );
+[ "givenRing" ]
+gap> info2.givenRing;
+CF(37)
 gap> OneAtlasGeneratingSetInfo( "A5", Ring, Integers mod 77 );
 fail
 gap> info:= OneAtlasGeneratingSetInfo( "A5", Ring, CF(5), Dimension, 3 );
 rec( charactername := "3a", constituents := [ 2 ], contents := "core",
-  dim := 3, groupname := "A5", id := "a", 
+  dim := 3, givenRing := CF(5), groupname := "A5", id := "a", 
   identifier := [ "A5", "A5G1-Ar3aB0.g", 1, 3 ], 
-  repname := "A5G1-Ar3aB0", repnr := 17, ring := NF(5,[ 1, 4 ]), 
-  size := 60, standardization := 1, type := "matalg" )
-gap> gens:= AtlasGenerators( info.identifier );
+  polynomial := [ -1, 1, 1 ], repname := "A5G1-Ar3aB0", repnr := 17, 
+  ring := NF(5,[ 1, 4 ]), size := 60, standardization := 1, 
+  type := "matalg" )
+gap> gens:= AtlasGenerators( info );
 rec( charactername := "3a", constituents := [ 2 ], contents := "core",
   dim := 3, 
   generators := 
     [ [ [ -1, 0, 0 ], [ 0, -1, 0 ], [ -E(5)-E(5)^4, -E(5)-E(5)^4, 1 ] 
          ], [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 1, 0, 0 ] ] ], 
-  groupname := "A5", id := "a", 
+  givenRing := CF(5), groupname := "A5", id := "a", 
   identifier := [ "A5", "A5G1-Ar3aB0.g", 1, 3 ], 
-  repname := "A5G1-Ar3aB0", repnr := 17, ring := NF(5,[ 1, 4 ]), 
-  size := 60, standardization := 1, type := "matalg" )
+  polynomial := [ -1, 1, 1 ], repname := "A5G1-Ar3aB0", repnr := 17, 
+  ring := NF(5,[ 1, 4 ]), size := 60, standardization := 1, 
+  type := "matalg" )
+gap> gens2:= AtlasGenerators( info.identifier );;
+gap> Difference( RecNames( gens ), RecNames( gens2 ) );
+[ "givenRing" ]
 gap> OneAtlasGeneratingSetInfo( "A5", Ring, GF(17) );
 fail
 
-##  ./../gap/interfac.gd (1407-1430)
+##  doc/../gap/interfac.gd (1437-1460)
 gap> AllAtlasGeneratingSetInfos( "A5", IsPermGroup, true );
 [ rec( charactername := "1a+4a", constituents := [ 1, 4 ], 
       contents := "core", groupname := "A5", id := "", 
@@ -925,11 +937,11 @@ gap> AllAtlasGeneratingSetInfos( "A5", IsPermGroup, true );
       size := 60, stabilizer := "S3", standardization := 1, 
       transitivity := 1, type := "perm" ) ]
 
-##  ./../gap/interfac.gd (1571-1574)
+##  doc/../gap/interfac.gd (1602-1605)
 gap> g:= AtlasGroup( "A5" );
 Group([ (1,2)(3,4), (1,3,5) ])
 
-##  ./../gap/interfac.gd (1582-1594)
+##  doc/../gap/interfac.gd (1613-1625)
 gap> info:= OneAtlasGeneratingSetInfo( "A5" );
 rec( charactername := "1a+4a", constituents := [ 1, 4 ], 
   contents := "core", groupname := "A5", id := "", 
@@ -942,13 +954,13 @@ Group([ (1,2)(3,4), (1,3,5) ])
 gap> AtlasGroup( info.identifier );
 Group([ (1,2)(3,4), (1,3,5) ])
 
-##  ./../gap/interfac.gd (1665-1670)
+##  doc/../gap/interfac.gd (1696-1701)
 gap> g:= AtlasSubgroup( "A5", NrMovedPoints, 5, 1 );
 Group([ (1,5)(2,3), (1,3,5) ])
 gap> NrMovedPoints( g );
 4
 
-##  ./../gap/interfac.gd (1680-1694)
+##  doc/../gap/interfac.gd (1711-1725)
 gap> info:= OneAtlasGeneratingSetInfo( "A5" );
 rec( charactername := "1a+4a", constituents := [ 1, 4 ], 
   contents := "core", groupname := "A5", id := "", 
@@ -963,7 +975,7 @@ Group([ (1,5)(2,3), (1,3,5) ])
 gap> AtlasSubgroup( AtlasGroup( "A5" ), 1 );
 Group([ (1,5)(2,3), (1,3,5) ])
 
-##  ./../gap/interfac.gd (1468-1476)
+##  doc/../gap/interfac.gd (1498-1506)
 gap> AtlasRepInfoRecord( AtlasGroup( "A5" ) );
 rec( charactername := "1a+4a", constituents := [ 1, 4 ], 
   contents := "core", groupname := "A5", id := "", 
@@ -972,15 +984,78 @@ rec( charactername := "1a+4a", constituents := [ 1, 4 ],
   repname := "A5G1-p5B0", repnr := 1, size := 60, stabilizer := "A4", 
   standardization := 1, transitivity := 3, type := "perm" )
 
-##  ./../gap/interfac.gd (1522-1529)
+##  doc/../gap/interfac.gd (1552-1560)
 gap> AtlasRepInfoRecord( "A5" );
-rec( name := "A5", nrMaxes := 3, size := 60, sizesMaxes := [ 12, 10, 6 ], 
+rec( name := "A5", nrMaxes := 3, size := 60, 
+  sizesMaxes := [ 12, 10, 6 ], 
   slpMaxes := [ [ 1 .. 3 ], [ [ 1 ], [ 1 ], [ 1 ] ] ], 
   structureMaxes := [ "A4", "D10", "S3" ] )
 gap> AtlasRepInfoRecord( "J5" );
 rec(  )
 
-##  ./../gap/brmindeg.g (31-46)
+##  doc/../gap/interfac.gd (1781-1803)
+gap> g:= MathieuGroup( 12 );;
+gap> gens:= GeneratorsOfGroup( g );;  # switch to 2 generators
+gap> g:= Group( gens[1] * gens[3], gens[2] * gens[3] );;
+gap> EvaluatePresentation( g, "J0" );  # no pres. for group "J0"
+fail
+gap> relimgs:= EvaluatePresentation( g, "M11" );;
+gap> List( relimgs, Order );  # wrong group
+[ 3, 1, 5, 4, 10 ]
+gap> relimgs:= EvaluatePresentation( g, "M12" );;
+gap> List( relimgs, Order );  # generators are not standard
+[ 3, 4, 5, 4, 4 ]
+gap> g:= AtlasGroup( "M12" );;
+gap> relimgs:= EvaluatePresentation( g, "M12", 1 );;
+gap> List( relimgs, Order );  # right group, std. generators
+[ 1, 1, 1, 1, 1 ]
+gap> g:= AtlasGroup( "2.M12" );;
+gap> relimgs:= EvaluatePresentation( g, "M12", 1 );;
+gap> List( relimgs, Order );  # std. generators for extension
+[ 1, 2, 1, 1, 2 ]
+gap> Size( NormalClosure( g, SubgroupNC( g, relimgs ) ) );
+2
+
+##  doc/../gap/interfac.gd (1938-1946)
+gap> StandardGeneratorsData( MathieuGroup( 11 ), "J0" );
+fail
+gap> StandardGeneratorsData( MathieuGroup( 11 ), "M12" );
+"timeout"
+gap> repeat
+>      res:= StandardGeneratorsData( MathieuGroup( 12 ), "M11" );
+>    until res = fail;
+
+##  doc/../gap/interfac.gd (1954-1968)
+gap> gens:= GeneratorsOfGroup( MathieuGroup( 12 ) );;
+gap> std:= 1;;
+gap> res:= StandardGeneratorsData( gens, "M12", std );;
+gap> Set( RecNames( res ) );
+[ "gapname", "givengens", "givengenstostdgens", "std", "stdgens" ]
+gap> gens = res.givengens;
+true
+gap> ResultOfStraightLineProgram( res.givengenstostdgens, gens )
+>    = res.stdgens;
+true
+gap> evl:= EvaluatePresentation( res.stdgens, "M12", std );;
+gap> ForAll( evl, IsOne );
+true
+
+##  doc/../gap/interfac.gd (1979-1993)
+gap> g:= AtlasGroup( "2.M12", IsMatrixGroup, Characteristic, IsPosInt );;
+gap> gens:= Permuted( GeneratorsOfGroup( g ), (1,2) );;
+gap> res:= StandardGeneratorsData( gens, "M12", std : projective );;
+gap> gens = res.givengens;
+true
+gap> ResultOfStraightLineProgram( res.givengenstostdgens, gens )
+>    = res.stdgens;
+true
+gap> evl:= EvaluatePresentation( res.stdgens, "M12", std );;
+gap> ForAll( evl, IsOne );
+false
+gap> ForAll( evl, x -> IsCentral( g, x ) );
+true
+
+##  doc/../gap/brmindeg.g (31-46)
 gap> if IsBound( BrowseMinimalDegrees ) then
 >   down:= NCurses.keys.DOWN;;  DOWN:= NCurses.keys.NPAGE;;
 >   right:= NCurses.keys.RIGHT;;  END:= NCurses.keys.END;;
@@ -996,7 +1071,7 @@ gap> if IsBound( BrowseMinimalDegrees ) then
 >   BrowseData.SetReplay( false );
 > fi;
 
-##  ./../gap/brmindeg.g (57-64)
+##  doc/../gap/brmindeg.g (57-64)
 gap> if IsBound( BrowseMinimalDegrees ) then
 >   # just scroll in the table
 >   BrowseData.SetReplay( Concatenation( [ DOWN, DOWN, DOWN, END ],
@@ -1004,7 +1079,7 @@ gap> if IsBound( BrowseMinimalDegrees ) then
 >   BrowseMinimalDegrees( BibliographySporadicSimple.groupNamesJan05 );;
 > fi;
 
-##  ./../gap/brspor.g (165-178)
+##  doc/../gap/brspor.g (165-178)
 gap> if IsBound( BrowseBibliographySporadicSimple ) then
 >   enter:= NCurses.keys.ENTER;;  nop:= [ 14, 14, 14 ];;
 >   BrowseData.SetReplay( Concatenation(
@@ -1018,11 +1093,11 @@ gap> if IsBound( BrowseBibliographySporadicSimple ) then
 >   BrowseData.SetReplay( false );
 > fi;
 
-##  ./extend.xml (127-130)
+##  doc/extend.xml (127-130)
 gap> locallevel:= InfoLevel( InfoAtlasRep );;
 gap> SetInfoLevel( InfoAtlasRep, 1 );
 
-##  ./extend.xml (175-192)
+##  doc/extend.xml (175-192)
 gap> prv:= DirectoryTemporary( "privdir" );;
 gap> FileString( Filename( prv, "C4G1-p4B0.m1" ),
 >                MeatAxeString( [ (1,2,3,4) ], 4 ) );;
@@ -1040,7 +1115,7 @@ gap> FileString( Filename( prv, "A5G1-p60B0.m1" ),
 gap> FileString( Filename( prv, "A5G1-p60B0.m2" ),
 >      MeatAxeString( [ Permutation( (1,3,5), points, OnRight ) ], 60 ) );;
 
-##  ./extend.xml (216-230)
+##  doc/extend.xml (216-231)
 gap> FileString( Filename( prv, "toc.json" ), Concatenation( [ "{\n",
 >        "\"ID\":\"priv\",\n",
 >        "\"Data\":[\n",
@@ -1049,17 +1124,18 @@ gap> FileString( Filename( prv, "toc.json" ), Concatenation( [ "{\n",
 >        "[\"MXN\",[\"C4\",1]],\n",
 >        "[\"MXO\",[\"C4\",[2]]],\n",
 >        "[\"MXS\",[\"C4\",[\"C2\"]]],\n",
->        "[\"RNG\",[\"C4G1-Ar1aB0\",\"CF(4)\"]],\n",
+>        "[\"RNG\",[\"C4G1-Ar1aB0\",\"CF(4)\",",
+>                  "[\"QuadraticField\",-1],[1,0,1]]],\n",
 >        "[\"API\",[\"C4G1-p4B0\",[1,4,\"imprim\",\"1 < C2\"]]],\n",
 >        "[\"API\",[\"A5G1-p60B0\",[1,60,\"imprim\",\"1 < S3\"]]]\n",
 >        "]\n",
 >        "}\n" ] ) );;
 
-##  ./extend.xml (238-241)
+##  doc/extend.xml (239-242)
 gap> AtlasOfGroupRepresentationsNotifyData( prv, "priv", true );
 true
 
-##  ./extend.xml (249-329)
+##  doc/extend.xml (250-331)
 gap> DisplayAtlasInfo( [ "C4" ] );
 group | # | maxes | cl | cyc | out | fnd | chk | prs
 ------+---+-------+----+-----+-----+-----+-----+----
@@ -1130,8 +1206,9 @@ gap> AtlasGenerators( "C4", 2 );
 rec( contents := "priv", dim := 1, generators := [ [ [ E(4) ] ] ], 
   groupname := "C4", id := "a", 
   identifier := [ "C4", [ [ "priv", "C4G1-Ar1aB0.g" ] ], 1, 1 ], 
-  repname := "C4G1-Ar1aB0", repnr := 2, ring := GaussianRationals, 
-  size := 4, standardization := 1, type := "matalg" )
+  polynomial := [ 1, 0, 1 ], repname := "C4G1-Ar1aB0", repnr := 2, 
+  ring := GaussianRationals, size := 4, standardization := 1, 
+  type := "matalg" )
 gap> AtlasGenerators( "C4", 3 );
 fail
 gap> AtlasProgram( "C4", "other", "test" );
@@ -1140,14 +1217,14 @@ rec( groupname := "C4",
   program := <straight line program>, standardization := 1, 
   version := "1" )
 
-##  ./extend.xml (338-344)
+##  doc/extend.xml (340-346)
 gap> DisplayAtlasInfo( "contents", "priv" );
 group | # | maxes | cl | cyc | out | fnd | chk | prs
 ------+---+-------+----+-----+-----+-----+-----+----
 A5*   | 1 |       |    |     |     |     |     |    
 C4*   | 2 |     1 |    |     |   2 |     |     |    
 
-##  ./extend.xml (353-373)
+##  doc/extend.xml (355-375)
 gap> AGR.Test.Words( "priv" );
 true
 gap> AGR.Test.FileHeaders( "priv" );
@@ -1168,7 +1245,7 @@ gap> AGR.Test.Characters( "priv" : TryToExtendData );
 ["CHAR",["C4","C4G1-p4B0",0,[1,2,3,4],"1abcd"]],
 true
 
-##  ./extend.xml (396-410)
+##  doc/extend.xml (398-412)
 gap> AGR.CHAR("A5","A5G1-p60B0",
 > 0,[1,[2,3],[3,3],[4,4],[5,5]],"1a+3a^3b^3+4a^4+5a^5", "priv" );
 gap> AGR.CHAR("C4","C4G1-p4B0",0,[1,2,3,4],"1abcd", "priv" );
@@ -1183,7 +1260,7 @@ rec( charactername := "1abcd", constituents := [ 1, 2, 3, 4 ],
   stabilizer := "1 < C2", standardization := 1, transitivity := 1, 
   type := "perm" )
 
-##  ./extend.xml (418-443)
+##  doc/extend.xml (420-445)
 gap> Print( StringOfAtlasTableOfContents( "priv" ) );
 {
 "ID":"priv",
@@ -1198,7 +1275,7 @@ gap> Print( StringOfAtlasTableOfContents( "priv" ) );
 
 ["MXS",["C4",["C2"]]],
 
-["RNG",["C4G1-Ar1aB0","CF(4)"]],
+["RNG",["C4G1-Ar1aB0","CF(4)",["QuadraticField",-1],[1,0,1]]],
 
 ["API",["A5G1-p60B0",[1,60,"imprim","1 < S3"]]],
 ["API",["C4G1-p4B0",[1,4,"imprim","1 < C2"]]],
@@ -1209,7 +1286,7 @@ a^4+5a^5"]],
 ]
 }
 
-##  ./extend.xml (453-487)
+##  doc/extend.xml (455-489)
 gap> Print( StringOfAtlasTableOfContents(
 >               rec( ID:= "priv", DataURL:= "http://someurl" ) ) );
 {
@@ -1233,7 +1310,7 @@ gap> Print( StringOfAtlasTableOfContents(
 ["TOC",["maxes","C4G1-max1W1",[-27672877]]],
 ["TOC",["perm","C4G1-p4B0.m",[102601978]]],
 
-["RNG",["C4G1-Ar1aB0","CF(4)"]],
+["RNG",["C4G1-Ar1aB0","CF(4)",["QuadraticField",-1],[1,0,1]]],
 
 ["API",["A5G1-p60B0",[1,60,"imprim","1 < S3"]]],
 ["API",["C4G1-p4B0",[1,4,"imprim","1 < C2"]]],
@@ -1244,11 +1321,11 @@ a^4+5a^5"]],
 ]
 }
 
-##  ./extend.xml (498-501)
+##  doc/extend.xml (500-503)
 gap> AtlasOfGroupRepresentationsForgetData( "priv" );
 gap> SetInfoLevel( InfoAtlasRep, locallevel );
 
-##  ./../gap/bbox.gd (553-560)
+##  doc/../gap/bbox.gd (553-560)
 gap> dec:= StraightLineDecision( [ [ [ 1, 1, 2, 1 ], 3 ],
 > [ "Order", 1, 2 ], [ "Order", 2, 3 ], [ "Order", 3, 5 ] ] );
 <straight line decision>
@@ -1256,11 +1333,11 @@ gap> LinesOfStraightLineDecision( dec );
 [ [ [ 1, 1, 2, 1 ], 3 ], [ "Order", 1, 2 ], [ "Order", 2, 3 ], 
   [ "Order", 3, 5 ] ]
 
-##  ./../gap/bbox.gd (583-586)
+##  doc/../gap/bbox.gd (583-586)
 gap> NrInputsOfStraightLineDecision( dec );
 2
 
-##  ./../gap/scanmtx.gd (656-671)
+##  doc/../gap/scanmtx.gd (672-687)
 gap> str:= "inp 2\nchor 1 2\nchor 2 3\nmu 1 2 3\nchor 3 5";;
 gap> prg:= ScanStraightLineDecision( str );
 rec( program := <straight line decision> )
@@ -1276,13 +1353,13 @@ if Order( r[3] ) <> 5 then  return false;  fi;
 # return value:
 true
 
-##  ./../gap/bbox.gd (650-655)
+##  doc/../gap/bbox.gd (650-655)
 gap> dec:= StraightLineDecision( [ ], 1 );
 <straight line decision>
 gap> ResultOfStraightLineDecision( dec, [ () ] );
 true
 
-##  ./../gap/bbox.gd (660-671)
+##  doc/../gap/bbox.gd (660-671)
 gap> dec:= StraightLineDecision( [ [ [ 1, 1, 2, 1 ], 3 ],
 >       [ "Order", 1, 2 ], [ "Order", 2, 3 ], [ "Order", 3, 5 ] ] );
 <straight line decision>
@@ -1294,7 +1371,7 @@ false
 gap> ResultOfStraightLineDecision( dec, [ (1,2)(3,4), (1,4,5) ] );
 true
 
-##  ./../gap/bbox.gd (764-792)
+##  doc/../gap/bbox.gd (764-792)
 gap> check:= AtlasProgram( "L2(8)", "check" );
 rec( groupname := "L2(8)", 
   identifier := [ "L2(8)", "L28G1-check1", 1, 1 ], 
@@ -1323,7 +1400,7 @@ rec( contents := "core", generators := [ (2,4)(3,5), (1,2,3)(5,6,7) ],
 gap> ResultOfStraightLineDecision( check.program, gens.generators );
 true
 
-##  ./../gap/bbox.gd (980-992)
+##  doc/../gap/bbox.gd (980-992)
 gap> lines:= [ [ "Order", 1, 2 ], [ "Order", 2, 3 ],
 >              [ [ 1, 1, 2, 1 ], 3 ], [ "Order", 3, 5 ] ];;
 gap> dec:= StraightLineDecision( lines, 2 );
@@ -1336,7 +1413,7 @@ gap> LinesOfStraightLineDecision( asdec );
 [ [ "Order", 1, 2 ], [ "Order", 2, 3 ], [ [ 1, 1, 2, 1 ], 3 ], 
   [ "Order", 3, 5 ] ]
 
-##  ./../gap/bbox.gd (830-852)
+##  doc/../gap/bbox.gd (830-852)
 gap> dec:= StraightLineDecision( [ [ [ 1, 1, 2, 1 ], 3 ],
 > [ "Order", 1, 2 ], [ "Order", 2, 3 ], [ "Order", 3, 5 ] ] );
 <straight line decision>
@@ -1359,7 +1436,7 @@ gap> gens:= GeneratorsOfGroup( FreeGroup( "a", "b" ) );
 gap> ResultOfStraightLineProgram( prog, gens );
 [ a^2, b^3, (a*b)^5 ]
 
-##  ./../gap/bbox.gd (190-221)
+##  doc/../gap/bbox.gd (190-221)
 gap> findstr:= "\
 >   set V 0\n\
 > lbl START1\n\
@@ -1391,7 +1468,7 @@ gap> findstr:= "\
 gap> find:= ScanBBoxProgram( findstr );
 rec( program := <black box program> )
 
-##  ./../gap/bbox.gd (226-234)
+##  doc/../gap/bbox.gd (226-234)
 gap> checkstr:= "\
 > chor 1 2\n\
 > chor 2 3\n\
@@ -1400,7 +1477,7 @@ gap> checkstr:= "\
 gap> check:= ScanBBoxProgram( checkstr );
 rec( program := <black box program> )
 
-##  ./../gap/bbox.gd (330-350)
+##  doc/../gap/bbox.gd (330-350)
 gap> g:= AlternatingGroup( 5 );;
 gap> res:= RunBBoxProgram( find.program, g, [], rec() );;
 gap> IsBound( res.gens );  IsBound( res.result );
@@ -1421,7 +1498,7 @@ gap> res:= RunBBoxProgram( check.program, "dummy", othergens, rec() );;
 gap> res.result;
 false
 
-##  ./../gap/bbox.gd (388-400)
+##  doc/../gap/bbox.gd (388-400)
 gap> g:= AlternatingGroup( 5 );;
 gap> res:= ResultOfBBoxProgram( find.program, g );;
 gap> List( res, Order );
@@ -1434,7 +1511,7 @@ gap> othergens:= GeneratorsOfGroup( g );;
 gap> res:= ResultOfBBoxProgram( check.program, othergens );
 false
 
-##  ./../gap/bbox.gd (886-910)
+##  doc/../gap/bbox.gd (886-910)
 gap> f:= FreeGroup( "x", "y" );;  gens:= GeneratorsOfGroup( f );;
 gap> slp:= StraightLineProgram( [ [1,2,2,3], [3,-1] ], 2 );
 <straight line program>
@@ -1459,7 +1536,7 @@ true
 gap> ResultOfBBoxProgram( bboxdec, [ (1,2)(3,4), (1,3,4) ] );
 false
 
-##  ./../gap/bbox.gd (939-952)
+##  doc/../gap/bbox.gd (939-952)
 gap> Display( AsStraightLineProgram( bboxslp ) );
 # input:
 r:= [ g1, g2 ];
@@ -1473,7 +1550,7 @@ r[3]:= r[5]^-1;
 gap> AsStraightLineProgram( bboxdec );
 fail
 
-##  ./../gap/mindeg.gd (194-205)
+##  doc/../gap/mindeg.gd (194-205)
 gap> MinimalRepresentationInfo( "A5", NrMovedPoints );
 rec( 
   source := [ "computed (alternating group)", 
@@ -1485,7 +1562,7 @@ rec( source := [ "computed (char. table)" ], value := 2 )
 gap> MinimalRepresentationInfo( "A5", Size, 2 );
 rec( source := [ "computed (char. table)" ], value := 4 )
 
-##  ./../gap/mindeg.gd (338-357)
+##  doc/../gap/mindeg.gd (338-357)
 gap> SetMinimalRepresentationInfo( "A5", "NrMovedPoints", 5,
 >      "computed (alternating group)" );
 true
@@ -1505,7 +1582,7 @@ gap> SetMinimalRepresentationInfo( "A5", [ "Characteristic", 3 ], 3,
 >      "computed (char. table)" );
 true
 
-##  ./../gap/json.g (130-139)
+##  doc/../gap/json.g (130-139)
 gap> l:= [ [ 1 ] ];; l[2]:= l[1];;  l;
 [ [ 1 ], [ 1 ] ]
 gap> new:= AGR.GapObjectOfJsonText( AGR.JsonText( l ) ).value;
@@ -1515,10 +1592,10 @@ gap> Add( l[1], 2 );  l;
 gap> Add( new[1], 2 );  new;
 [ [ 1, 2 ], [ 1 ] ]
 
-##  ./../gap/json.g (144-146)
+##  doc/../gap/json.g (144-146)
 gap> l:= [];;  l[1]:= l;;
 
-##  ./../gap/json.g (300-316)
+##  doc/../gap/json.g (300-316)
 gap> AGR.JsonText( [] );
 "[]"
 gap> AGR.JsonText( "" );
@@ -1535,13 +1612,13 @@ gap> json:= AGR.JsonText( str );;  List( json, IntChar );
 gap> AGR.JsonText( str, "ASCII" );
 "\"\\u00F6\""
 
-##  ./../gap/json.g (424-429)
+##  doc/../gap/json.g (424-429)
 gap> AGR.GapObjectOfJsonText( "{ \"a\": 1 }" );
 rec( status := true, value := rec( a := 1 ) )
 gap> AGR.GapObjectOfJsonText( "{ \"a\": x }" );
 rec( errpos := 8, status := false )
 
-##  ./../gap/scanmtx.gd (318-337)
+##  doc/../gap/scanmtx.gd (334-353)
 gap> mat:= [ [ 1, -1 ], [ 0, 1 ] ] * Z(3)^0;;
 gap> str:= MeatAxeString( mat, 3 );
 "1 3 2 2\n12\n01\n"
@@ -1561,7 +1638,7 @@ gap> str:= MeatAxeString( perms, 8 );
 gap> perms = ScanMeatAxeFile( str, "string" );
 true
 
-##  ./../gap/scanmtx.gd (343-361)
+##  doc/../gap/scanmtx.gd (359-377)
 gap> perm:= (1,2,4);;
 gap> str:= MeatAxeString( perm, 3, [ 5, 6 ] );
 "2 3 5 6\n2\n4\n3\n1\n5\n"
@@ -1580,13 +1657,13 @@ gap> MeatAxeString( mat, 3 );
 "1 3 5 6\n010000\n000100\n001000\n100000\n000010\n"
 gap> SetUserPreference( "AtlasRep", "WriteMeatAxeFilesOfMode2", pref );
 
-##  ./../gap/scanmtx.gd (106-111)
+##  doc/../gap/scanmtx.gd (115-120)
 gap> FFList( GF(4) );
 [ 0*Z(2), Z(2)^0, Z(2^2), Z(2^2)^2 ]
 gap> IsBound( FFLists[4] );
 true
 
-##  ./../gap/scanmtx.gd (410-424)
+##  doc/../gap/scanmtx.gd (426-440)
 gap> tmpdir:= DirectoryTemporary();;
 gap> mat:= Filename( tmpdir, "mat" );;
 gap> q:= 4;;
@@ -1601,7 +1678,7 @@ gap> CMtxBinaryFFMatOrPerm( perms[2], n, Concatenation( prm, "2" ) );
 gap> CMtxBinaryFFMatOrPerm( perms[1], n, Concatenation( prm, "1a" ), 0 );
 gap> CMtxBinaryFFMatOrPerm( perms[2], n, Concatenation( prm, "2b" ), 1 );
 
-##  ./../gap/scanmtx.gd (451-464)
+##  doc/../gap/scanmtx.gd (467-480)
 gap> FFMatOrPermCMtxBinary( Concatenation( mat, "1" ) ) = mats[1];
 true
 gap> FFMatOrPermCMtxBinary( Concatenation( mat, "2" ) ) = mats[2];
@@ -1615,7 +1692,7 @@ true
 gap> FFMatOrPermCMtxBinary( Concatenation( prm, "2b" ) ) = perms[2];
 true
 
-##  ./../gap/scanmtx.gd (719-768)
+##  doc/../gap/scanmtx.gd (735-784)
 gap> str:= "inp 2\nmu 1 2 3\nmu 3 1 2\niv 2 1\noup 2 1 2";;
 gap> prg:= ScanStraightLineProgram( str, "string" );
 rec( program := <straight line program> )
@@ -1665,7 +1742,7 @@ gap> prg:= ScanStraightLineDecision( str );;
 gap> AtlasStringOfProgram( prg.program );
 "inp 2\nchor 1 2\nchor 2 3\nmu 1 2 3\nchor 3 5\n"
 
-##  ./../gap/access.gd (150-161)
+##  doc/../gap/access.gd (150-161)
 gap> format:= [ [ [ IsChar, "G", IsDigitChar ],
 >                 [ "p", IsDigitChar, AGR.IsLowerAlphaOrDigitChar,
 >                   "B", IsDigitChar, ".m", IsDigitChar ] ],
@@ -1677,7 +1754,7 @@ gap> AGR.ParseFilenameFormat( "A6G1-p15aB0.m1", format );
 gap> AGR.ParseFilenameFormat( "A6G1-f2r16B0.m1", format );
 fail
 
-##  ./../gap/utils.gd (393-428)
+##  doc/../gap/utils.gd (393-428)
 gap> id:= [ "A5", [ "A5G1-p5B0.m1", "A5G1-p5B0.m2" ], 1, 5 ];;
 gap> AtlasRepIdentifier( id ) = id;
 true
@@ -1713,7 +1790,7 @@ gap> newid:= AtlasRepIdentifier( oldid );
 gap> oldid = AtlasRepIdentifier( newid, "old" );
 true
 
-##  ./technica.xml (285-288)
+##  doc/technica.xml (285-288)
 gap> SetUserPreference( "AtlasRep", "DisplayFunction", origpref );
 gap> SetInfoLevel( InfoAtlasRep, globallevel );
 

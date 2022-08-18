@@ -61,7 +61,7 @@ Error := function( arg )
     od;
     Print("\n");
     if SHOULD_QUIT_ON_BREAK() then
-        FORCE_QUIT_GAP(1);
+        ForceQuitGap(1);
     fi;
     JUMP_TO_CATCH("early error");
 end;
@@ -73,7 +73,7 @@ ErrorInner := function(options, message)
     Print("Error before error-handling is initialized: ");
     Print(message);
     if SHOULD_QUIT_ON_BREAK() then
-        FORCE_QUIT_GAP(1);
+        ForceQuitGap(1);
     fi;
     JUMP_TO_CATCH("early error");
 end;
@@ -352,6 +352,16 @@ if IsHPCGAP then
   ENABLE_AUTO_RETYPING();
 fi;
 
+
+#############################################################################
+##
+##  The command line option '-L' is supported only if GASMAN is used.
+##
+if "-L" in GAPInfo.SystemCommandLine and GAPInfo.KernelInfo.GC <> "GASMAN" then
+  Error( "workspaces (-L option) are supported only if GASMAN is used" );
+fi;
+
+
 # try to find terminal encoding
 CallAndInstallPostRestore( function()
   local env, pos, enc, a, PositionSublist;
@@ -381,11 +391,11 @@ CallAndInstallPostRestore( function()
       env := GAPInfo.SystemEnvironment;
     fi;
     enc := fail;
-    if IsBound(env.LC_CTYPE) then
-      enc := env.LC_CTYPE;
-    fi;
-    if enc = fail and IsBound(env.LC_ALL) then
+    if IsBound(env.LC_ALL) then
       enc := env.LC_ALL;
+    fi;
+    if enc = fail and IsBound(env.LC_CTYPE) then
+      enc := env.LC_CTYPE;
     fi;
     if enc = fail and IsBound(env.LANG) then
       enc := env.LANG;
@@ -712,12 +722,14 @@ CallAndInstallPostRestore( function()
     fi;
 
     # option `-g'
-    if   GAPInfo.CommandLineOptions.g = 0 then
-      SetGasmanMessageStatus( "none" );
-    elif GAPInfo.CommandLineOptions.g = 1 then
-      SetGasmanMessageStatus( "full" );
-    else
-      SetGasmanMessageStatus( "all" );
+    if GAPInfo.KernelInfo.GC = "GASMAN" then
+      if   GAPInfo.CommandLineOptions.g = 0 then
+        SetGasmanMessageStatus( "none" );
+      elif GAPInfo.CommandLineOptions.g = 1 then
+        SetGasmanMessageStatus( "full" );
+      else
+        SetGasmanMessageStatus( "all" );
+      fi;
     fi;
 
     # maximal number of lines that are reasonably printed
@@ -939,6 +951,9 @@ BindGlobal( "ProcessInitFiles", function(initFiles)
         f := initFiles[i];
         if IsRecord(f) then
             status := READ_NORECOVERY(InputTextString(f.command));
+        elif EndsWith(f, ".tst") then
+            Test(f);
+            status := true;
         else
             status := READ_NORECOVERY(f);
         fi;

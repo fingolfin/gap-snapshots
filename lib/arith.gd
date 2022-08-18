@@ -1460,7 +1460,7 @@ DeclareOperationKernel( "ZeroMutable", [ IsAdditiveElementWithZero ],
 DeclareSynonym( "ZeroOp", ZeroMutable );
 
 DeclareOperationKernel( "ZeroSameMutability", [ IsAdditiveElementWithZero ],
-    ZERO );
+    ZERO_SAMEMUT );
 DeclareSynonym( "ZeroSM", ZeroSameMutability );
 
 
@@ -1540,7 +1540,7 @@ DeclareOperationKernel( "AdditiveInverseMutable",
 DeclareSynonym( "AdditiveInverseOp", AdditiveInverseMutable);
 
 DeclareOperationKernel( "AdditiveInverseSameMutability", 
-    [ IsAdditiveElementWithInverse ], AINV );
+    [ IsAdditiveElementWithInverse ], AINV_SAMEMUT );
 DeclareSynonym( "AdditiveInverseSM", AdditiveInverseSameMutability);
 
 
@@ -1653,7 +1653,7 @@ DeclareOperationKernel( "OneMutable", [ IsMultiplicativeElementWithOne ],
 DeclareSynonym( "OneOp", OneMutable);
 
 DeclareOperationKernel( "OneSameMutability",
-    [ IsMultiplicativeElementWithOne ], ONE_MUT );
+    [ IsMultiplicativeElementWithOne ], ONE_SAMEMUT );
 DeclareSynonym( "OneSM", OneSameMutability);
 
 
@@ -1739,7 +1739,7 @@ DeclareOperationKernel( "InverseMutable",
 DeclareSynonym( "InverseOp", InverseMutable );
 
 DeclareOperationKernel( "InverseSameMutability",
-    [ IsMultiplicativeElementWithInverse ], INV_MUT );
+    [ IsMultiplicativeElementWithInverse ], INV_SAMEMUT );
 DeclareSynonym( "InverseSM", InverseSameMutability );
 
 
@@ -2122,7 +2122,7 @@ DeclareProperty( "IsUFDFamily", IsFamily );
 ##  </ManSection>
 ##
 DeclareRepresentation("IsAdditiveElementAsMultiplicativeElementRep",
-  IsPositionalObjectRep and IsMultiplicativeElement,[]);
+  IsPositionalObjectRep and IsMultiplicativeElement);
 
 
 #############################################################################

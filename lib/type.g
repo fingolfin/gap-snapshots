@@ -109,8 +109,9 @@ end );
 ##  <Func Name="DeclareCategory" Arg='name, super[, rank]'/>
 ##
 ##  <Description>
-##  does the same as <Ref Func="NewCategory"/>
-##  and additionally makes the variable <A>name</A> read-only.
+##  does the same as <Ref Func="NewCategory"/> and then binds
+##  the result to the global variable <A>name</A>. The variable
+##  must previously be writable, and is made read-only by this function.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -122,33 +123,26 @@ end );
 
 #############################################################################
 ##
-#F  DeclareRepresentationKernel( <name>, <super>, <slots> [,<req>], <filt> )
+#F  DeclareRepresentationKernel( <name>, <super>, <filt> )
 ##
 ##  <ManSection>
-##  <Func Name="DeclareRepresentationKernel" Arg='name, super, slots [,req], filt'/>
+##  <Func Name="DeclareRepresentationKernel" Arg='name, super, filt'/>
 ##
 ##  <Description>
 ##  </Description>
 ##  </ManSection>
 ##
-BIND_GLOBAL( "DeclareRepresentationKernel", function ( arg )
-    local   rep, filt;
+BIND_GLOBAL( "DeclareRepresentationKernel", function ( name, super, rep )
+    local   filt;
     atomic readwrite CATS_AND_REPS, FILTER_REGION do
         if REREADING then
             for filt in CATS_AND_REPS do
-                if NAME_FUNC(FILTERS[filt]) = arg[1] then
-                    Print("#W DeclareRepresentationKernel \"",arg[1],"\" in Reread. ");
+                if NAME_FUNC(FILTERS[filt]) = name then
+                    Print("#W DeclareRepresentationKernel \"",name,"\" in Reread. ");
                     Print("Change of Super-rep not handled\n");
                     return FILTERS[filt];
                 fi;
             od;
-        fi;
-        if LEN_LIST(arg) = 4  then
-            rep := arg[4];
-        elif LEN_LIST(arg) = 5  then
-            rep := arg[5];
-        else
-            Error("usage: DeclareRepresentation( <name>, <super>, <slots> [, <req> ] )");
         fi;
         atomic readwrite CATS_AND_REPS, FILTER_REGION do
             ADD_LIST( CATS_AND_REPS, FLAG1_FILTER( rep ) );
@@ -156,20 +150,20 @@ BIND_GLOBAL( "DeclareRepresentationKernel", function ( arg )
         od;
 
     od;
-    InstallTrueMethod( arg[2], rep );
-    BIND_GLOBAL( arg[1], rep );
-    SET_NAME_FUNC( rep, arg[1] );
+    InstallTrueMethod( super, rep );
+    BIND_GLOBAL( name, rep );
+    SET_NAME_FUNC( rep, name );
 end );
 
 
 
 #############################################################################
 ##
-#F  NewRepresentation( <name>, <super>, <slots>[, <req>] )  .  representation
+#F  NewRepresentation( <name>, <super>[, <slots>[, <req>]] )  .  representation
 ##
 ##  <#GAPDoc Label="NewRepresentation">
 ##  <ManSection>
-##  <Func Name="NewRepresentation" Arg='name, super, slots[, req]'/>
+##  <Func Name="NewRepresentation" Arg='name, super[, slots[, req]]'/>
 ##
 ##  <Description>
 ##  <Ref Func="NewRepresentation"/> returns a new representation <A>rep</A>
@@ -189,25 +183,13 @@ end );
 ##  see&nbsp;<Ref Sect="Component Objects"/>
 ##  and&nbsp;<Ref Sect="Positional Objects"/> for the details.
 ##  <P/>
-##  The third argument <A>slots</A> is a list either of integers or of
-##  strings.
-##  In the former case,
-##  <A>rep</A> must be <Ref Filt="IsPositionalObjectRep"/> or a
-##  subrepresentation of it, and <A>slots</A> tells what positions of the
-##  objects in the representation <A>rep</A> may be bound.
-##  In the latter case,
-##  <A>rep</A> must be <Ref Filt="IsComponentObjectRep"/> or a
-##  subrepresentation of, and <A>slots</A> lists the admissible names of
-##  components that objects in the representation <A>rep</A> may have.
-##  The admissible positions resp. component names of <A>super</A> need not
-##  be be listed in <A>slots</A>.
+##  The optional third and fourth arguments <A>slots</A> and <A>req</A> are
+##  (and always were) unused and are only provided for backwards
+##  compatibility. Note that <A>slots</A> was required (but still unused)
+##  before GAP 4.12.
 ##  <P/>
 ##  The incremental rank (see&nbsp;<Ref Sect="Filters"/>)
 ##  of <A>rep</A> is 1.
-##  <P/>
-##  Note that for objects in the representation <A>rep</A>,
-##  of course some of the component names and positions reserved via
-##  <A>slots</A> may be unbound.
 ##  <P/>
 ##  Examples for the use of <Ref Func="NewRepresentation"/> can be found
 ##  in&nbsp;<Ref Sect="Component Objects"/>,
@@ -217,15 +199,15 @@ end );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-BIND_GLOBAL( "NewRepresentation", function ( arg )
+BIND_GLOBAL( "NewRepresentation", function ( name, super, arg... )
     local   rep, filt;
 
     # Do *not* create a new representation when the file is reread.
     if REREADING then
         atomic readonly CATS_AND_REPS, readwrite FILTER_REGION do
             for filt in CATS_AND_REPS do
-                if NAME_FUNC(FILTERS[filt]) = arg[1] then
-                    Print("#W NewRepresentation \"",arg[1],"\" in Reread. ");
+                if NAME_FUNC(FILTERS[filt]) = name then
+                    Print("#W NewRepresentation \"",name,"\" in Reread. ");
                     Print("Change of Super-rep not handled\n");
                     return FILTERS[filt];
                 fi;
@@ -234,13 +216,17 @@ BIND_GLOBAL( "NewRepresentation", function ( arg )
     fi;
 
     # Create the filter.
-    if LEN_LIST(arg) = 3  then
-        rep := NEW_FILTER( arg[1] );
-    elif LEN_LIST(arg) = 4  then
-        rep := NEW_FILTER( arg[1] );
-    else
-        Error("usage: NewRepresentation( <name>, <super>, <slots> [, <req> ] )");
+    if LEN_LIST(arg) > 2 then
+        Error("usage: NewRepresentation( <name>, <super>[, <slots> [, <req> ]] )");
+    elif LEN_LIST(arg) > 0 then
+        INFO_OBSOLETE(3, "starting with GAP 4.12, the third argument <slots> is unused",
+            " in ", INPUT_FILENAME(), ":", STRING_INT(INPUT_LINENUMBER()));
+        if LEN_LIST(arg) = 2 then
+            INFO_OBSOLETE(2, "the fourth argument <req> is unused",
+                " in ", INPUT_FILENAME(), ":", STRING_INT(INPUT_LINENUMBER()));
+        fi;
     fi;
+    rep := NEW_FILTER( name );
 
     # Do some administrational work.
     atomic readwrite CATS_AND_REPS, FILTER_REGION do
@@ -249,7 +235,7 @@ BIND_GLOBAL( "NewRepresentation", function ( arg )
     od;
 
     # Do not call this before adding 'rep' to 'FILTERS'.
-    InstallTrueMethodNewFilter( arg[2], rep );
+    InstallTrueMethodNewFilter( super, rep );
 
     # Return the filter.
     return rep;
@@ -258,15 +244,16 @@ end );
 
 #############################################################################
 ##
-#F  DeclareRepresentation( <name>, <super>, <slots> [,<req>] )
+#F  DeclareRepresentation( <name>, <super>[, <slots>[, <req>]] )
 ##
 ##  <#GAPDoc Label="DeclareRepresentation">
 ##  <ManSection>
-##  <Func Name="DeclareRepresentation" Arg='name, super, slots [,req]'/>
+##  <Func Name="DeclareRepresentation" Arg='name, super[, slots[, req]]'/>
 ##
 ##  <Description>
-##  does the same as <Ref Func="NewRepresentation"/>
-##  and additionally makes the variable <A>name</A> read-only.
+##  does the same as <Ref Func="NewRepresentation"/> and then binds
+##  the result to the global variable <A>name</A>. The variable
+##  must previously be writable, and is made read-only by this function.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -344,19 +331,19 @@ end );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareRepresentation( "IsInternalRep", IS_OBJECT, [], IS_OBJECT );
-DeclareRepresentation( "IsPositionalObjectRep", IS_OBJECT, [], IS_OBJECT );
-DeclareRepresentation( "IsComponentObjectRep", IS_OBJECT, [], IS_OBJECT );
-DeclareRepresentation( "IsDataObjectRep", IS_OBJECT, [], IS_OBJECT );
+DeclareRepresentation( "IsInternalRep", IS_OBJECT );
+DeclareRepresentation( "IsPositionalObjectRep", IS_OBJECT );
+DeclareRepresentation( "IsComponentObjectRep", IS_OBJECT );
+DeclareRepresentation( "IsDataObjectRep", IS_OBJECT );
 
 # the following are for HPC-GAP, but we also provide them in plain GAP, to
 # make it easier to write code which works in both.
 DeclareRepresentation( "IsNonAtomicComponentObjectRep",
-        IsComponentObjectRep, [], IS_OBJECT); 
+        IsComponentObjectRep );
 DeclareRepresentation( "IsReadOnlyPositionalObjectRep",
-        IsPositionalObjectRep, [], IS_OBJECT); 
+        IsPositionalObjectRep );
 DeclareRepresentation( "IsAtomicPositionalObjectRep",
-        IsPositionalObjectRep, [], IS_OBJECT); 
+        IsPositionalObjectRep );
 
 #############################################################################
 ##
@@ -417,8 +404,7 @@ DeclareRepresentation( "IsAtomicPositionalObjectRep",
 ##  (In earlier versions of GAP, a rule had been stated in a code file,
 ##  but this rule was not part of the manuals.)
 ##
-DeclareRepresentation( "IsAttributeStoringRep",
-    IsComponentObjectRep, [], IS_OBJECT );
+DeclareRepresentation( "IsAttributeStoringRep", IsComponentObjectRep );
 
 
 #############################################################################
@@ -433,15 +419,11 @@ DeclareCategory( "IsFamilyOfFamilies", IsFamily );
 DeclareCategory( "IsFamilyOfTypes"   , IsFamily );
 
 DeclareRepresentation( "IsFamilyDefaultRep",
-                            IsComponentObjectRep,
+                            IsComponentObjectRep );
 #T why not `IsAttributeStoringRep' ?
-                            "NAME,REQ_FLAGS,IMP_FLAGS,TYPES,TYPES_LIST_FAM",
-#T add nTypes, HASH_SIZE
-                            IsFamily );
 
 DeclareRepresentation( "IsTypeDefaultRep",
-                            IsPositionalObjectRep,
-                            "", IsType );
+                            IsPositionalObjectRep );
 
 if IsHPCGAP then
     BIND_GLOBAL( "FamilyOfFamilies", AtomicRecord( rec() ) );
@@ -463,7 +445,7 @@ FamilyOfFamilies!.TYPES         := [];
 FamilyOfFamilies!.nTYPES          := 0;
 FamilyOfFamilies!.HASH_SIZE       := 100;
 
-# for chaching types of homogeneous lists, assigned in kernel when needed 
+# for caching types of homogeneous lists, assigned in kernel when needed 
 if IsHPCGAP then
     FamilyOfFamilies!.TYPES_LIST_FAM  := MakeWriteOnceAtomic(AtomicList(27));
 else
@@ -501,7 +483,7 @@ FamilyOfTypes!.TYPES            := [];
 FamilyOfTypes!.nTYPES          := 0;
 FamilyOfTypes!.HASH_SIZE       := 100;
 
-# for chaching types of homogeneous lists, assigned in kernel when needed 
+# for caching types of homogeneous lists, assigned in kernel when needed 
 if IsHPCGAP then
     FamilyOfTypes!.TYPES_LIST_FAM  := MakeWriteOnceAtomic(AtomicList(27));
 else

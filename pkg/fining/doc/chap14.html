@@ -49,7 +49,7 @@
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X8550F38F7FB123DB">14.3-5 CollineationFixingSubgeometry</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X83E014688703D37B">14.4 <span class="Heading">Constructing elements of a subgeometry and basic operations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7836EC02824B9425">14.4 <span class="Heading">Constructing elements of a subgeometry</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X82E9593B8074AECB">14.4-1 VectorSpaceToElement</a></span>
@@ -68,13 +68,19 @@
 
 <h3>14 <span class="Heading">Subgeometries of projective spaces</span></h3>
 
-<p>Let <span class="SimpleMath">S=(P,L,I)</span> be a point-line incidence geometry. In case <span class="SimpleMath">S</span> is a projective space over a finite field, it is clear that every line (and every subspace as well) can be identified with the set of points incident with it. Furthermore, the incidence relation <span class="SimpleMath">I</span> is then symmetrised containment. To define a subgeometry mathematically, we follow <a href="chapBib.html#biBDembowski68">[Dem97]</a>. Let <span class="SimpleMath">P' ⊂ P</span> and let <span class="SimpleMath">L'</span> be a set of subsets of <span class="SimpleMath">P'</span>, such that every line <span class="SimpleMath">l' ∈ L'</span> is a subset of exactly one line <span class="SimpleMath">l ∈ L</span>. If <span class="SimpleMath">S'=(P',L',I)</span> is a projective space again, then we call <span class="SimpleMath">S'</span> a <em>subgeometry</em> of <span class="SimpleMath">S</span>. Note that this definition does not imply that the elements of <span class="SimpleMath">S'</span> are a subset of the elements of <span class="SimpleMath">S</span>. A typical example of a subgeometry is a Baer subplane of a projective plane. In this example, with <span class="SimpleMath">S'</span> the Baer subplane of the projective plane <span class="SimpleMath">S</span>, one could say that the set of points of <span class="SimpleMath">S'</span> is indeed a subset of the set of points of <span class="SimpleMath">S</span>, contrary to the set of lines of <span class="SimpleMath">S'</span>, which is not considered a subset of the set of lines of <span class="SimpleMath">S</span>, for various mathematical reasons. However, one could consider a line of <span class="SimpleMath">S'</span> as a set of points of <span class="SimpleMath">S'</span>, so the set of points of a line of <span class="SimpleMath">S'</span> is a subset of the set of points of a line of <span class="SimpleMath">S</span>. Another example is the subgeometry of a projective space induced by a subspace <span class="SimpleMath">π</span>. In this example, clearly, the set of elements of the induced subgeometry can, mathematically, be considered as a subset of the set of elements of <span class="SimpleMath">S</span>. The same considerations apply for classical polar spaes. These consideration have implications for the behaviour of certain operations in UNKNOWNEntity(fining), e.g. when computing the span and meet of different elements. Using geometry morphisms, and more particular a function like <code class="file">NaturalEmbeddingBySubField</code>, one can deal in an indirect way with subgeometries. However, using <code class="file">NaturalEmbeddingBySubField</code> is not flexible, and typical problems such as considering a subgeometry determined by a user chosen frame and a subfield, cannot be handled easily using <code class="file">NaturalEmbeddingBySubField</code>. Therefore <strong class="pkg">FinInG</strong> provides some functions to naturally construct subgeometries of projective spaces.</p>
+<p>Let <span class="SimpleMath">S=(P,L,I)</span> be a point-line incidence geometry. In case <span class="SimpleMath">S</span> is a projective space over a finite field, it is clear that every line (and every subspace as well) can be identified with the set of points incident with it. Furthermore, the incidence relation <span class="SimpleMath">I</span> is then symmetrised containment. To define a subgeometry mathematically, we follow <a href="chapBib.html#biBDembowski68">[Dem97]</a>. Let <span class="SimpleMath">P' ⊂ P</span> and let <span class="SimpleMath">L'</span> be a set of subsets of <span class="SimpleMath">P'</span>, such that every <span class="SimpleMath">l' ∈ L'</span> is a subset of exactly one line <span class="SimpleMath">l ∈ L</span>. If <span class="SimpleMath">S'=(P',L',I)</span> is a projective space again, then we call <span class="SimpleMath">S'</span> a <em>subgeometry</em> of <span class="SimpleMath">S</span>. Note that in general the subspaces of <span class="SimpleMath">S'</span> will be subsets of subspaces of <span class="SimpleMath">S</span>.</p>
 
-<p>A subgeometry in a projective space is completely determined by a frame of the projective space and a subfield of the base field of the projective space. The <em>standard frame</em> in an <span class="SimpleMath">n</span>-dimensional projective space <span class="SimpleMath">PG(n,q)</span> is the set of <span class="SimpleMath">n+2</span> points represented by <span class="SimpleMath">(1,0,...,0),(0,1,...,0),...,(0,0,...,1),(1,1,...,1)</span>. The subgeometry determined by the standard frame will be called <em>canonical</em>. Note that different frames may determine the same subgeometry (over a fixed subfield). A subgeometry that equals the subgeometry determined by the standard frame, will also be canonical.</p>
+<p>A typical example of a subgeometry is a Baer subplane of a projective plane. In this example, with <span class="SimpleMath">S'</span> the Baer subplane of the projective plane <span class="SimpleMath">S</span>, one could say that a point of <span class="SimpleMath">S'</span> is indeed a point of <span class="SimpleMath">S</span>, but a line of <span class="SimpleMath">S'</span>, is not a line of <span class="SimpleMath">S</span>. If one considers a line of <span class="SimpleMath">S'</span> as a set of points of <span class="SimpleMath">S'</span>, then a line of <span class="SimpleMath">S'</span> is a subset of the set of points on a line of <span class="SimpleMath">S</span>. Another example is the subgeometry of a projective space induced by a subspace <span class="SimpleMath">π</span>. In this example, clearly, the set of elements of the induced subgeometry can, mathematically, be considered as a subset of the set of elements of <span class="SimpleMath">S</span>.</p>
 
-<p>For a given subfield <span class="SimpleMath">GF(q') ⊂ GF(q)</span>, the canonical subgeometry determined by the standard frame in <span class="SimpleMath">PG(n,q)</span> is mathematically spoken the image of the <strong class="pkg">FinInG</strong> geometry morphism <code class="file">NaturalEmbeddingBySubField</code> of the projective space <span class="SimpleMath">PG(n,q')</span>. The coordinates of the points of the subgeometry will be exclusively over the subfield <span class="SimpleMath">GF(q')</span>, as are the coordinates of the vectors after normalizing defining any subspace of the subgeometry. Clearly, the Frobenius automorphism <span class="SimpleMath">x-&gt;x^q'</span> fixes all elements of the subgeometry.</p>
+<p>The same considerations apply for classical polar spaces. These consideration have implications for the behaviour of certain operations in <strong class="pkg">FinInG</strong>, e.g. when computing the span and meet of different elements.</p>
 
-<p>For an arbitrary frame of <span class="SimpleMath">PG(n,q)</span> and a subfield <span class="SimpleMath">GF(q')</span>, there exists a unique collineation of <span class="SimpleMath">PG(n,q)</span> fixing the subgeometry <span class="SimpleMath">PG(n,q')</span> pointwise. This collineation is the conjugation of the Frobenius automorhpism by the unique collineation mapping the defining frame of the subgeometry to the standard frame of <span class="SimpleMath">PG(n,q)</span>. Upon construction of a subgeometry, both collineations will be computed, and are of use when dealing with the full collineation group of a subgeometry. As for any incidence geometry in <strong class="pkg">FinInG</strong>, operations to compute this collineation group as well as particular action functions for subgeometries are provided.</p>
+<p>Using geometry morphisms, and more particular a function like <code class="file">NaturalEmbeddingBySubField</code>, one can deal in an indirect way with subgeometries. However, using <code class="file">NaturalEmbeddingBySubField</code> is not flexible, and typical problems such as considering a subgeometry determined by a user chosen frame and a subfield, cannot be handled easily. Therefore <strong class="pkg">FinInG</strong> provides some functions to naturally construct subgeometries of projective spaces.</p>
+
+<p>A subgeometry in a projective space is completely determined by a frame of the projective space and a subfield of the base field of the projective space. The <em>standard frame</em> in an <span class="SimpleMath">n</span>-dimensional projective space <span class="SimpleMath">PG(n,q)</span> is the set of <span class="SimpleMath">n+2</span> points represented by <span class="SimpleMath">(1,0,...,0),(0,1,...,0),...,(0,0,...,1),(1,1,...,1)</span>. The subgeometry determined by the standard frame will be called <em>canonical</em>. Note that different frames may determine the same subgeometry (over a fixed subfield).</p>
+
+<p>For a given subfield <span class="SimpleMath">GF(q') ⊂ GF(q)</span>, the canonical subgeometry determined by the standard frame in <span class="SimpleMath">PG(n,q)</span> is mathematically spoken the image of the <strong class="pkg">FinInG</strong> geometry morphism <code class="file">NaturalEmbeddingBySubField</code> of the projective space <span class="SimpleMath">PG(n,q')</span>. The coordinates of the points of the subgeometry will be exclusively over the subfield <span class="SimpleMath">GF(q')</span>, as are the coordinates of the vectors after normalizing defining any subspace of the subgeometry. Clearly, the Frobenius automorphism which maps <span class="SimpleMath">x</span> to <span class="SimpleMath">x^q'</span> fixes all elements of the subgeometry.</p>
+
+<p>For an arbitrary frame of <span class="SimpleMath">PG(n,q)</span> and a subfield <span class="SimpleMath">GF(q')</span>, there exists a natural collineation of <span class="SimpleMath">PG(n,q)</span> which fixes the subgeometry pointwise. This collineation is the conjugation of the Frobenius automorphism by the unique collineation mapping the defining frame of the subgeometry to the standard frame of <span class="SimpleMath">PG(n,q)</span>, i.e. the frame defining the canonical subsgeometry over <span class="SimpleMath">GF(q')</span>. Upon construction of a subgeometry, both collineations will be computed, and are of use when dealing with the full collineation group of a subgeometry. As for any incidence geometry in <strong class="pkg">FinInG</strong>, operations to compute this collineation group as well as particular action functions for subgeometries are provided.</p>
 
 <p>Subgeometries of projective spaces are constructed in a subcategory of <code class="code">IsProjectiveSpace</code>, as such, all operations applicable to projective spaces, are naturally applicable to subgeometries. Subspaces of subgeometries are constructed in a subcategory of <code class="code">IsSubspaceOfProjectiveSpace</code>. Hence, operations applicable to subspaces of projective spaces, are naturally applicable to subspaces of subgeometries.</p>
 
@@ -86,16 +92,16 @@
 
 <h5>14.1-1 IsSubgeometryOfProjectiveSpace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubgeometryOfProjectiveSpace</code></td><td class="tdright">( category )</td></tr></table></div>
-<p>This category is a subcategory of <code class="code">IsProjectiveSpace</code>, and contains all subgeometries of projective spaces. Note that mathmetically spoken, a subspace of a projective space is also a subgeometry. However, in <strong class="pkg">FinInG</strong>, subspaces of a projective space are constructed in a category that is not a subcategory of <code class="code">IsProjectiveSpace</code>. Since <code class="code">IsSubgeometryOfProjectiveSpace</code> is a subcategory of <code class="code">IsProjectiveSpace</code>, all operations applicable to projective spaces, are naturally applicable to subgeometries of projective spaces.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubgeometryOfProjectiveSpace</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<p>This category is a subcategory of <code class="code">IsProjectiveSpace</code>, and contains all subgeometries of projective spaces. Note that mathematically, a subspace of a projective space is also a subgeometry. However, in <strong class="pkg">FinInG</strong>, subspaces of a projective space are constructed in a category that is not a subcategory of <code class="code">IsProjectiveSpace</code>. Since <code class="code">IsSubgeometryOfProjectiveSpace</code> is a subcategory of <code class="code">IsProjectiveSpace</code>, all operations applicable to projective spaces, are naturally applicable to subgeometries of projective spaces.</p>
 
 <p><a id="X7D908542820D2FBE" name="X7D908542820D2FBE"></a></p>
 
 <h5>14.1-2 <span class="Heading">Categories for elements and collections of elements</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubspaceOfSubgeometryOfProjectiveSpace</code></td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubspacesOfSubgeometryOfProjectiveSpace</code></td><td class="tdright">( category )</td></tr></table></div>
-<p>dd</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubspaceOfSubgeometryOfProjectiveSpace</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubspacesOfSubgeometryOfProjectiveSpace</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<p>A subspace of a subgeometry belongs to the category <code class="code">IsSubspaceOfSubgeometryOfProjectiveSpace</code>.</p>
 
 <p><a id="X79A3CC6E85E72EC1" name="X79A3CC6E85E72EC1"></a></p>
 
@@ -105,11 +111,11 @@
 
 <h5>14.2-1 CanonicalSubgeometryOfProjectiveSpace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalSubgeometryOfProjectiveSpace</code>( <var class="Arg">pg</var>, <var class="Arg">subfield</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalSubgeometryOfProjectiveSpace</code>( <var class="Arg">pg</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A subgeometry of <var class="Arg">pg</var></p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalSubgeometryOfProjectiveSpace</code>( <var class="Arg">pg</var>, <var class="Arg">subfield</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalSubgeometryOfProjectiveSpace</code>( <var class="Arg">pg</var>, <var class="Arg">q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a subgeometry of <var class="Arg">pg</var></p>
 
-<p>This operation returns the subgeometry of <var class="Arg">pg</var> induced by the standard frame over the subfield <var class="Arg">subfield</var>. Alternatively, the integer <var class="Arg">q</var> can be used as the order of the subfield. It is checked whether the user specified subfield is indeed a subfield of the base field of <var class="Arg">pg</var>. If the subfield equals the base field of <var class="Arg">pg</var>, the projective space <var class="Arg">pg</var> is returned.</p>
+<p>This operation returns the subgeometry of <var class="Arg">pg</var> induced by the standard frame over the subfield <var class="Arg">subfield</var>. Alternatively, a prime power <var class="Arg">q</var> can be used as the order of the subfield. It is checked whether the user specified subfield is indeed a subfield of the base field of <var class="Arg">pg</var>. If the subfield equals the base field of <var class="Arg">pg</var>, the projective space <var class="Arg">pg</var> is returned.</p>
 
 
 <div class="example"><pre>
@@ -135,8 +141,8 @@ ProjectiveSpace(3, 729)
 
 <h5>14.2-2 RandomFrameOfProjectiveSpace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomFrameOfProjectiveSpace</code>( <var class="Arg">pg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A set of points of <var class="Arg">pg</var>, being a frame. Note that the returned object is also a set in the GAP sense, i.e. an ordered list without duplicates.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomFrameOfProjectiveSpace</code>( <var class="Arg">pg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a set of points of <var class="Arg">pg</var>, being a frame. Note that the returned object is also a set in the GAP sense, i.e. an ordered list without duplicates.</p>
 
 
 <div class="example"><pre>
@@ -163,7 +169,7 @@ ProjectiveSpace(6, 4)
 
 <h5>14.2-3 IsFrameOfProjectiveSpace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFrameOfProjectiveSpace</code>( <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFrameOfProjectiveSpace</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: true or false</p>
 
 <p>When <var class="Arg">list</var> is a list of points of a projective space, this operation returns true if and only if <var class="Arg">list</var> constitutes a frame of the projective space. It is checked as well whether all points in <var class="Arg">list</var> belong to the same projective space.</p>
@@ -187,11 +193,11 @@ true
 
 <h5>14.2-4 SubgeometryOfProjectiveSpaceByFrame</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubgeometryOfProjectiveSpaceByFrame</code>( <var class="Arg">pg</var>, <var class="Arg">list</var>, <var class="Arg">field</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubgeometryOfProjectiveSpaceByFrame</code>( <var class="Arg">pg</var>, <var class="Arg">list</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A subgeometry of <var class="Arg">pg</var></p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubgeometryOfProjectiveSpaceByFrame</code>( <var class="Arg">pg</var>, <var class="Arg">list</var>, <var class="Arg">field</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubgeometryOfProjectiveSpaceByFrame</code>( <var class="Arg">pg</var>, <var class="Arg">list</var>, <var class="Arg">q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a subgeometry of <var class="Arg">pg</var></p>
 
-<p>The argument <var class="Arg">pg</var> is a projective space which is not a subgeometry itself, the argument <var class="Arg">list</var> is a list of points of <var class="Arg">pg</var> defining a frame of <var class="Arg">pg</var>, and finally the argument <var class="Arg">field</var> is a subfield of the base field of <var class="Arg">pg</var>. Alternatively, the argument <var class="Arg">q</var> is an integer being the order of a subfield of the base field of <var class="Arg">pg</var>. This method returns the subgeometry definied by the frame in <var class="Arg">list</var> and the subfield <var class="Arg">field</var> of the subfield <span class="SimpleMath">GF(<var class="Arg">q</var>)</span>. This method checks whether the subfield <var class="Arg">field</var> or the <span class="SimpleMath">GF(<var class="Arg">q</var>)</span> is really a sub field of the base field of <var class="Arg">pg</var> and whether the list of points in <var class="Arg">list</var> is a frame of <var class="Arg">pg</var>. Note also that it is currently not possible to construct subgeometries recursively, so <var class="Arg">pg</var> may not be a subgeometry itself. If the specified subfield equals the base field of <var class="Arg">pg</var>, then the projective space <var class="Arg">pg</var> itself is returned.</p>
+<p>The argument <var class="Arg">pg</var> is a projective space which is not a subgeometry itself, the argument <var class="Arg">list</var> is a list of points of <var class="Arg">pg</var> defining a frame of <var class="Arg">pg</var>, and finally the argument <var class="Arg">field</var> is a subfield of the base field of <var class="Arg">pg</var>. Alternatively, the argument <var class="Arg">q</var> is the order of a subfield of the base field of <var class="Arg">pg</var>. This method returns the subgeometry definied by the frame in <var class="Arg">list</var> and the subfield <var class="Arg">field</var> of the subfield <span class="SimpleMath">GF(<var class="Arg">q</var>)</span>. This method checks whether the subfield <var class="Arg">field</var> or the field <span class="SimpleMath">GF(<var class="Arg">q</var>)</span> is really a subfield of the base field of <var class="Arg">pg</var> and whether the list of points in <var class="Arg">list</var> is a frame of <var class="Arg">pg</var>. Note also that it is currently not possible to construct subgeometries recursively, so <var class="Arg">pg</var> may not be a subgeometry itself. If the specified subfield equals the base field of <var class="Arg">pg</var>, then the projective space <var class="Arg">pg</var> itself is returned.</p>
 
 
 <div class="example"><pre>
@@ -220,8 +226,8 @@ ProjectiveSpace(3, 729)
 
 <h5>14.3-1 <span class="Heading">Underlying vector space and ambient projective space</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingVectorSpace</code>( <var class="Arg">sub</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AmbientSpace</code>( <var class="Arg">sub</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingVectorSpace</code>( <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AmbientSpace</code>( <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <span class="SimpleMath">P</span> be a projective space over the field <span class="SimpleMath">F</span>. Let <var class="Arg">sub</var> be a subgeometry of <span class="SimpleMath">P</span> over the subfield <span class="SimpleMath">F'</span>. The underlying vector space of <var class="Arg">sub</var> is defined as the underlying vector space of <span class="SimpleMath">P</span> (which is a vector space over the field <span class="SimpleMath">F</span>). The ambient space of a subgeometry <var class="Arg">sub</var> is the projective space <span class="SimpleMath">P</span>.</p>
 
 
@@ -260,8 +266,8 @@ ProjectiveSpace(2, 15625)
 
 <h5>14.3-2 DefiningFrameOfSubgeometry</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DefiningFrameOfSubgeometry</code>( <var class="Arg">sub</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: A set of projective points</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DefiningFrameOfSubgeometry</code>( <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a set of projective points</p>
 
 <p>This attribute returns a frame of the ambient space of <var class="Arg">sub</var> defining it. Note that different frames might define the same subgeometry, but the frame used to constructed <var class="Arg">sub</var> is stored at construction, and it is exactly this stored object that is returned by this attribute. The returned object is a set of points, and it is also a set in the GAP sense, i.e. an ordered list without duplicates.</p>
 
@@ -286,8 +292,13 @@ Subgeometry PG(2, 4) of ProjectiveSpace(2, 16)
 [ &lt;a point in ProjectiveSpace(2, 16)&gt;, &lt;a point in ProjectiveSpace(2, 16)&gt;, 
   &lt;a point in ProjectiveSpace(2, 16)&gt;, &lt;a point in ProjectiveSpace(2, 16)&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(def,x-&gt;Unpack(UnderlyingObject(x)));</span>
-[ [ Z(2)^0, Z(2^4)^3, 0*Z(2) ], [ Z(2)^0, Z(2^4)^9, Z(2^4)^4 ], 
-  [ Z(2)^0, Z(2^4)^13, Z(2)^0 ], [ Z(2)^0, Z(2^2)^2, Z(2^4)^14 ] ]
+[ [ Z(2)^0, 0*Z(2), Z(2^4)^9 ], [ Z(2)^0, Z(2^4)^4, Z(2^4)^11 ], 
+  [ Z(2)^0, Z(2^4)^2, Z(2^2)^2 ], [ Z(2)^0, Z(2^2)^2, Z(2^4)^14 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StandardFrame(sub);</span>
+[ &lt;a point in Subgeometry PG(2, 4) of ProjectiveSpace(2, 16)&gt;, 
+  &lt;a point in Subgeometry PG(2, 4) of ProjectiveSpace(2, 16)&gt;, 
+  &lt;a point in Subgeometry PG(2, 4) of ProjectiveSpace(2, 16)&gt;, 
+  &lt;a point in Subgeometry PG(2, 4) of ProjectiveSpace(2, 16)&gt; ]
 
 </pre></div>
 
@@ -295,9 +306,9 @@ Subgeometry PG(2, 4) of ProjectiveSpace(2, 16)
 
 <h5>14.3-3 <span class="Heading">Projective dimension and rank</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveDimension</code>( <var class="Arg">sub</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Dimension</code>( <var class="Arg">sub</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Rank</code>( <var class="Arg">sub</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveDimension</code>( <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Dimension</code>( <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Rank</code>( <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: an integer</p>
 
 <p>If <var class="Arg">sub</var> is a subgeometry of a projective space, then it is a projective space itself. Therefore, these three operations return the projective dimension of <var class="Arg">sub</var>, see also <a href="chap4.html#X84FDF25D797B874B"><span class="RefLink">4.1-3</span></a>.</p>
@@ -321,10 +332,10 @@ Subgeometry PG(7, 8) of ProjectiveSpace(7, 64)
 
 <h5>14.3-4 <span class="Heading">Underlying algebraic structures</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingVectorSpace</code>( <var class="Arg">sub</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseField</code>( <var class="Arg">sub</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubfieldOfSubgeometry</code>( <var class="Arg">sub</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A vector space, a finite field, a finite field, respectively</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingVectorSpace</code>( <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseField</code>( <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubfieldOfSubgeometry</code>( <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the first operation returns a vector space, the second and third operations return a finite field</p>
 
 <p>The operations <code class="file">UnderlyingVectorSpace</code> and <code class="file">BaseField</code> are defined for projective spaces, see <a href="chap4.html#X7D544D7985A4572D"><span class="RefLink">4.1-5</span></a> and <a href="chap4.html#X7BCBA564829D9E89"><span class="RefLink">4.1-4</span></a>. For a subgeometry of a projective space <var class="Arg">sub</var> with ambient space <var class="Arg">ps</var>, these operations return <code class="file">UnderlyingVectorSpace(ps)</code>, <code class="file">BaseField(ps)</code> respectively. The operation <code class="file">SubfieldOfSubgeometry</code> returns the subfield over which <var class="Arg">sub</var> is defined.</p>
 
@@ -355,10 +366,10 @@ GF(3^2)
 
 <h5>14.3-5 CollineationFixingSubgeometry</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CollineationFixingSubgeometry</code>( <var class="Arg">sub</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: A collineation of the ambient space of <var class="Arg">sub</var></p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CollineationFixingSubgeometry</code>( <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a collineation of the ambient space of <var class="Arg">sub</var></p>
 
-<p>Let <span class="SimpleMath">GF(q)</span> be the field over which <var class="Arg">sub</var> is defined, this is a subfield of <span class="SimpleMath">GF(q^t)</span> over which the ambient projective space <span class="SimpleMath">P</span> is defined. It is well known that there exists a collineation of <span class="SimpleMath">P</span> of order <span class="SimpleMath">t</span>, fixing all elements of <var class="Arg">sub</var>, which is returned by this operation. This collineation is the field automorphism of <span class="SimpleMath">GF(q^t)</span>, fixing all elements of the subfield <span class="SimpleMath">GF(q)</span>, conjugated by the collineation of <span class="SimpleMath">P</span> mapping the subgeometry <var class="Arg">sub</var> on the canonical subgeometry of <span class="SimpleMath">P</span> over <span class="SimpleMath">GF(q)</span> on the subgeometry <var class="Arg">sub</var>. In case of a quadratic field extension (i.e. <span class="SimpleMath">t=2</span>), this collineation is known in the literature as the Baer involution of the subgeometry.</p>
+<p>Let <span class="SimpleMath">GF(q)</span> be the field over which <var class="Arg">sub</var> is defined, this is a subfield of <span class="SimpleMath">GF(q^t)</span> over which the ambient projective space <span class="SimpleMath">P</span> is defined. It is well known that there exists a collineation of <span class="SimpleMath">P</span> of order <span class="SimpleMath">t</span>, fixing all elements of <var class="Arg">sub</var>, which is returned by this operation. This collineation is the collineation induced by the Frobenius map <span class="SimpleMath">x↦ x^q</span>, conjugated by the collineation of <span class="SimpleMath">P</span> mapping the subgeometry <var class="Arg">sub</var> to the canonical subgeometry of <span class="SimpleMath">P</span> over <span class="SimpleMath">GF(q)</span>. In case of a quadratic field extension (i.e. <span class="SimpleMath">t=2</span>), this collineation is known in the literature as the Baer involution of the subgeometry.</p>
 
 
 <div class="example"><pre>
@@ -373,18 +384,18 @@ Subgeometry PG(2, 7) of ProjectiveSpace(2, 343)
 
 </pre></div>
 
-<p><a id="X83E014688703D37B" name="X83E014688703D37B"></a></p>
+<p><a id="X7836EC02824B9425" name="X7836EC02824B9425"></a></p>
 
-<h4>14.4 <span class="Heading">Constructing elements of a subgeometry and basic operations</span></h4>
+<h4>14.4 <span class="Heading">Constructing elements of a subgeometry</span></h4>
 
 <p><a id="X82E9593B8074AECB" name="X82E9593B8074AECB"></a></p>
 
 <h5>14.4-1 VectorSpaceToElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; VectorSpaceToElement</code>( <var class="Arg">sub</var>, <var class="Arg">v</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A subspace of a subgeometry</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; VectorSpaceToElement</code>( <var class="Arg">sub</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a subspace of a subgeometry</p>
 
-<p><var class="Arg">sub</var> is a subgeometry of a projective space, and <var class="Arg">v</var> is either a row vector (for points) or an <span class="SimpleMath">m x n</span> matrix (for an (m-1)-dimensional subspace of a subgeometry of dimension <span class="SimpleMath">n-1</span> of a projective space). In the case that <var class="Arg">v</var> is a matrix, the rows represent generators for the subspace. An exceptional case is when v is a zero-vector, in which case the trivial subspace is returned. This method checks whether <var class="Arg">v</var> determines an element of <var class="Arg">sub</var>. The argument <var class="Arg">v</var> will typically be defined over the base field of <var class="Arg">sub</var>, which is the basefield of the ambient space of <var class="Arg">sub</var>.</p>
+<p><var class="Arg">sub</var> is a subgeometry of a projective space, and <var class="Arg">v</var> is either a row vector (for points) or a matrix (for higher dimensional subspaces). In the case that <var class="Arg">v</var> is a matrix, the rows represent generators for the subspace. An exceptional case is when <var class="Arg">v</var> is the zero-vector, in which case the trivial subspace is returned. This method checks whether <var class="Arg">v</var> determines an element of <var class="Arg">sub</var>.</p>
 
 
 <div class="example"><pre>
@@ -431,10 +442,10 @@ Subgeometry PG(2, 125) of ProjectiveSpace(2, 15625)
 
 <h5>14.4-2 ExtendElementOfSubgeometry</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtendElementOfSubgeometry</code>( <var class="Arg">el</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A subspace of a projective space</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtendElementOfSubgeometry</code>( <var class="Arg">el</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a subspace of a projective space</p>
 
-<p>The argument <var class="Arg">el</var> is an element of a subgeometry <span class="SimpleMath">P'</span> with ambient projective space <span class="SimpleMath">P</span>. The projective space is defined over a field <span class="SimpleMath">F</span>, the subgeometry <span class="SimpleMath">P'</span> is defined over a subfield <span class="SimpleMath">F'</span> of <span class="SimpleMath">F</span>. The underlying vectorspace of <var class="Arg">el</var> is a vector space over <span class="SimpleMath">F'</span> generated by a set <span class="SimpleMath">S</span> of vectors. This operation returns the element <span class="SimpleMath">pi</span> of <span class="SimpleMath">P</span>, corresponding to the vector space over <span class="SimpleMath">F</span> generated by the vectors in <span class="SimpleMath">S</span>. Note that the set <span class="SimpleMath">S</span> can be otbained using <code class="file">UnderlyingObject</code>, see <a href="chap3.html#X810D4D6D87069697"><span class="RefLink">3.2-2</span></a>.</p>
+<p>The argument <var class="Arg">el</var> is an element of a subgeometry <span class="SimpleMath">P'</span> with ambient projective space <span class="SimpleMath">P</span>. The projective space is defined over a field <span class="SimpleMath">F</span>, the subgeometry <span class="SimpleMath">P'</span> is defined over a subfield <span class="SimpleMath">F'</span> of <span class="SimpleMath">F</span>. The underlying vectorspace of <var class="Arg">el</var> is a vector space over <span class="SimpleMath">F'</span> generated by a set <span class="SimpleMath">S</span> of vectors. This operation returns the element of <span class="SimpleMath">P</span>, corresponding to the vector space over <span class="SimpleMath">F</span> generated by the vectors in <span class="SimpleMath">S</span>. Note that the set <span class="SimpleMath">S</span> can be otbained using <code class="file">UnderlyingObject</code>, see <a href="chap3.html#X810D4D6D87069697"><span class="RefLink">3.2-2</span></a>.</p>
 
 
 <div class="example"><pre>
@@ -479,8 +490,8 @@ true
 
 <h5>14.4-3 AmbientGeometry</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AmbientGeometry</code>( <var class="Arg">el</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: An incidence geometry</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AmbientGeometry</code>( <var class="Arg">el</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an incidence geometry</p>
 
 <p>For <var class="Arg">el</var> an element of a subgeometry <span class="SimpleMath">P</span>, which is also a projective space, this operation returns <span class="SimpleMath">P</span>.</p>
 
@@ -488,25 +499,27 @@ true
 
 <h5>14.4-4 <span class="Heading">Flags</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FlagOfIncidenceStructure</code>( <var class="Arg">sub</var>, <var class="Arg">els</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEmptyFlag</code>( <var class="Arg">flag</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsChamberOfIncidenceStructure</code>( <var class="Arg">flag</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>shadows, flags, shadows of flags, span, meet, ExtendElementOf</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FlagOfIncidenceStructure</code>( <var class="Arg">sub</var>, <var class="Arg">els</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEmptyFlag</code>( <var class="Arg">flag</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsChamberOfIncidenceStructure</code>( <var class="Arg">flag</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: true or false</p>
+
+<p>These operations are defined for projective spaces and so they are also applicable to subgeometries.</p>
 
 <p><a id="X80503DDC8270EE69" name="X80503DDC8270EE69"></a></p>
 
 <h4>14.5 <span class="Heading">Groups and actions</span></h4>
 
-<p>Let <span class="SimpleMath">P'</span> be a subgeometry of <span class="SimpleMath">P</span>. Within this framework, there are two possibilities to define the collineationgroup of <span class="SimpleMath">P'</span>. From the algebraic perspective, one could define a collineation to be a semilinear map preserving <span class="SimpleMath">P'</span>. In this perspective, one could consider all semilinear maps of the underlying vector space of <span class="SimpleMath">P</span>, since this is the underlying vector space of <span class="SimpleMath">P'</span> as well. However, this results in a group that does not act faithfully on the elements of <span class="SimpleMath">P'</span>. Since a non faithfull action causes problems when using the nice monomorphism functionality, we decided to define the collineation group of the subgeometry <span class="SimpleMath">P'</span> as the collineation group of the projective space isomorphic to <span class="SimpleMath">P'</span> conjugated by the collineation of <span class="SimpleMath">P</span> mapping <span class="SimpleMath">P'</span> on the canonical subgeometry of <span class="SimpleMath">P</span> over the same field as <span class="SimpleMath">P'</span>. Similarly, the projectivity group, respectively the special projectivity group, of <span class="SimpleMath">P'</span> is defined as the conjugate of the projectivity group, respectively special projectivity group, of the projective space isomorhpic to <span class="SimpleMath">P'</span>.</p>
+<p>Let <span class="SimpleMath">P'</span> be a subgeometry of <span class="SimpleMath">P</span>. Although one could argue that any semilinear map inducing a collineation preserving <span class="SimpleMath">P'</span> can be called a collineation of <span class="SimpleMath">P'</span>, this would cause problems with the nice monomorphism functionality, since such a collineation does not necessarily have a faithful action on the subgeometry. For this reason, we decided to define the collineation group of the subgeometry <span class="SimpleMath">P'</span> as the collineation group of the projective space isomorphic to <span class="SimpleMath">P'</span> conjugated by the collineation of <span class="SimpleMath">P</span> mapping <span class="SimpleMath">P'</span> on the canonical subgeometry of <span class="SimpleMath">P</span> over the same field as <span class="SimpleMath">P'</span>. Similarly, the projectivity group, respectively the special projectivity group, of <span class="SimpleMath">P'</span> is defined as the conjugate of the projectivity group, respectively special projectivity group, of the projective space isomorhpic to <span class="SimpleMath">P'</span>.</p>
 
 <p><a id="X78F858C8863C7721" name="X78F858C8863C7721"></a></p>
 
 <h5>14.5-1 <span class="Heading">Groups of collineations</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CollineationGroup</code>( <var class="Arg">sub</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectivityGroup</code>( <var class="Arg">sub</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SpecialProjectivityGroup</code>( <var class="Arg">sub</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A group of collineations</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CollineationGroup</code>( <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectivityGroup</code>( <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SpecialProjectivityGroup</code>( <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a group of collineations</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap13.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapA.html">[Next Chapter]</a>&nbsp;  </div>

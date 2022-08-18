@@ -87,9 +87,9 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XShowDeclarationsOfOperation(IsFinite);[127X[104X
     [4X[28XAvailable declarations for operation <Property "IsFinite">:[128X[104X
-    [4X[28X  1: GAPROOT/lib/coll.gd:1451 with 1 arguments, and filters [ IsListOrCollection ][128X[104X
-    [4X[28X  2: GAPROOT/lib/float.gd:212 with 1 arguments, and filters [ IsFloat ][128X[104X
-    [4X[28X  3: GAPROOT/lib/ctbl.gd:1195 with 1 arguments, and filters [ IsNearlyCharacterTable ][128X[104X
+    [4X[28X  1: GAPROOT/lib/coll.gd:1451 with 1 argument, and filters [ IsListOrCollection ][128X[104X
+    [4X[28X  2: GAPROOT/lib/float.gd:212 with 1 argument, and filters [ IsFloat ][128X[104X
+    [4X[28X  3: GAPROOT/lib/ctbl.gd:1195 with 1 argument, and filters [ IsNearlyCharacterTable ][128X[104X
   [4X[32X[104X
   
   [1X78.1-4 NewOperation[101X
@@ -112,8 +112,9 @@
   
   [33X[1;0Y[29X[2XDeclareOperation[102X( [3Xname[103X, [3Xfilters[103X ) [32X function[133X
   
-  [33X[0;0Ydoes  the  same as [2XNewOperation[102X ([14X78.1-4[114X) and additionally makes the variable
-  [3Xname[103X read-only.[133X
+  [33X[0;0Ydoes  the  same as [2XNewOperation[102X ([14X78.1-4[114X) and then binds the new operation to
+  the  global  variable [3Xname[103X. The variable must previously be writable, and is
+  made read-only by this function.[133X
   
   
   [1X78.2 [33X[0;0YConstructors[133X[101X
@@ -141,7 +142,7 @@
     [4X[25Xgap>[125X [27XInstallMethod(XCons, [IsPermGroup, IsInt], function(t,x) return SymmetricGroup(x); end);[127X[104X
     [4X[25Xgap>[125X [27XInstallMethod(XCons, [IsSemigroup, IsInt], function(t,x) return FullTransformationMonoid(x); end);[127X[104X
     [4X[25Xgap>[125X [27XXCons(IsGroup,3);[127X[104X
-    [4X[28X<pc group of size 3 with 1 generators>[128X[104X
+    [4X[28X<pc group of size 3 with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XXCons(IsPermGroup,3);[127X[104X
     [4X[28XSym( [ 1 .. 3 ] )[128X[104X
     [4X[25Xgap>[125X [27XXCons(IsSemigroup,4);[127X[104X
@@ -274,8 +275,9 @@
   
   [33X[1;0Y[29X[2XDeclareConstructor[102X( [3Xname[103X, [3Xfilters[103X ) [32X function[133X
   
-  [33X[0;0Ydoes the same as [2XNewConstructor[102X ([14X78.2-1[114X) and additionally makes the variable
-  [3Xname[103X read-only.[133X
+  [33X[0;0Ydoes  the  same  as [2XNewConstructor[102X ([14X78.2-1[114X) and then binds the result to the
+  global  variable [3Xname[103X. The variable must previously be writable, and is made
+  read-only by this function.[133X
   
   [33X[0;0YNote  that  for operations which are constructors special rules with respect
   to  applicability  and  rank of the corresponding methods apply (see section
@@ -328,13 +330,41 @@
   arguments  must  match a declaration of [3Xopr[103X and without the restriction that
   [3Xargs-filts[103X imply the respective requirements of the operation [3Xopr[103X.[133X
   
-  [1X78.3-3 InstallMethodWithRandomSource[101X
+  [1X78.3-3 InstallEarlyMethod[101X
+  
+  [33X[1;0Y[29X[2XInstallEarlyMethod[102X( [3Xopr[103X, [3Xmethod[103X ) [32X function[133X
+  
+  [33X[0;0Yinstalls  a special "early" function method [3Xmethod[103X for the operation [3Xopr[103X. An
+  early  method  is special in that it bypasses method dispatch, and is always
+  the first method to be called when invoking the operation.[133X
+  
+  [33X[0;0YThis  can  be  used  to  avoid method selection overhead for certain special
+  cases,  i.e.,  as an optimization. Overall, we recommend to use this feature
+  very sparingly, as it is tool with sharp edges: for example, any inputs that
+  are  handled  by an early method can not be intercepted by a regular method,
+  no  matter  how  high  its  rank  is;  this  can  preclude  other  kinds  of
+  optimizations.[133X
+  
+  [33X[0;0YAlso,  unlike regular methods, no checks are performed on the arguments. Not
+  even  the  required  filters  for the operation are tested, so early methods
+  must  be  careful  in  validating  their  inputs.  This  also means that any
+  operation  can  have at most one such early method for each arity (i.e., one
+  early method taking 1 argument, one early method taking 2 arguments, etc.).[133X
+  
+  [33X[0;0YIf  an  early  method  determines  that  it is not applicable, it can resume
+  regular method dispatch by invoking [2XTryNextMethod[102X ([14X78.5-1[114X).[133X
+  
+  [33X[0;0YFor  an  example  application  of  early  methods,  they  are  used by [2XFirst[102X
+  ([14X21.20-21[114X)  to  deal with internal lists, for which computing the exact type
+  (needed for method selection) can be very expensive.[133X
+  
+  [1X78.3-4 InstallMethodWithRandomSource[101X
   
   [33X[1;0Y[29X[2XInstallMethodWithRandomSource[102X( [3Xopr[103X, [3Xinfo[103X[, [3Xfamp[103X], [3Xargs-filts[103X[, [3Xval[103X], [3Xmethod[103X ) [32X function[133X
   [33X[1;0Y[29X[2XInstallOtherMethodWithRandomSource[102X( [3Xopr[103X, [3Xinfo[103X[, [3Xfamp[103X], [3Xargs-filts[103X[, [3Xval[103X], [3Xmethod[103X ) [32X function[133X
   
   [33X[0;0YThese  functions  are  designed  to  simplify  adding new methods for [2XRandom[102X
-  ([14X30.7-1[114X),  [2XPseudoRandom[102X ([14X30.7-2[114X), and [2XRandomize[102X ([14X26.4-9[114X) to [5XGAP[105X which can be
+  ([14X30.7-1[114X),  [2XPseudoRandom[102X ([14X30.7-2[114X), and [2XRandomize[102X ([14X26.6-4[114X) to [5XGAP[105X which can be
   called both with, and without, a random source.[133X
   
   [33X[0;0YThey   accept   the   same   arguments   as   [2XInstallMethod[102X   ([14X78.3-1[114X)   and
@@ -531,6 +561,17 @@
   integer,  which  cannot  be  guaranteed  to be very cheap, so one should not
   install this method as an immediate method.[133X
   
+  [1X78.7-2 IsNoImmediateMethodsObject[101X
+  
+  [33X[1;0Y[29X[2XIsNoImmediateMethodsObject[102X( [3Xobj[103X ) [32X filter[133X
+  
+  [33X[0;0YIf this filter is set immediate methods will be ignored for [3Xobj[103X. This can be
+  crucial  for  performance for objects like pcgs (see Section [14X45.1[114X), of which
+  many  are  created, which are collections, but for which all those immediate
+  methods  for  [2XIsTrivial[102X  ([14X30.4-3[114X)  et cetera do not really make sense. Other
+  examples of objects in [2XIsNoImmediateMethodsObject[102X are compressed vectors and
+  matrices over small finite fields, see the sections [14X23.3[114X and [14X24.14[114X.[133X
+  
   
   [1X78.8 [33X[0;0YLogical Implications[133X[101X
   
@@ -615,10 +656,10 @@
   provided  as a user convenience where mathematical usage forces it on us [13Xand[113X
   where  no conflicts arise. In programming the library, we use the underlying
   mathematically  precise  operations  or attributes, such as [2XRankMat[102X ([14X24.7-1[114X)
-  and  [10XRankOperation[110X.  These should be attributes if appropriate, and the only
-  role of the operation [10XRank[110X is to decide which attribute the user meant. That
-  way,  stored  information  is stored with [21Xfull mathematical precision[121X and is
-  less likely to be retrieved for a wrong purpose later.[133X
+  and [2XRankAction[102X ([14X41.10-3[114X). These should be attributes if appropriate, and the
+  only role of the operation [10XRank[110X is to decide which attribute the user meant.
+  That  way, stored information is stored with [21Xfull mathematical precision[121X and
+  is less likely to be retrieved for a wrong purpose later.[133X
   
   [33X[0;0YOne  word  about  possible  conflicts. A typical example is the mathematical
   term  [21Xcentre[121X,  which  is  defined as [22X{ x ∈ M | a * x = x * a ∀ a ∈ M }[122X for a

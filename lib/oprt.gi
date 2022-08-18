@@ -570,7 +570,7 @@ InstallGlobalFunction( ActionHomomorphism, function( arg )
          and IsBound( arg[ 2 ]!.actionHomomorphism )
          and IsActionHomomorphism( arg[ 2 ]!.actionHomomorphism )
          and Source( arg[ 2 ]!.actionHomomorphism ) = arg[ 1 ]  then
-        return arg[ 2 ]!.actionHomomorphism;  # GAP-3 compatability
+        return arg[ 2 ]!.actionHomomorphism;  # GAP-3 compatibility
     else
         if IsFunction( arg[ Length( arg ) ] )  then  p := 1;
                                                else  p := 0;  fi;
@@ -1111,11 +1111,9 @@ end );
 ##
 #M OrbitStabilizerAlgorithm
 ##
-InstallMethod( OrbitStabilizerAlgorithm,"use stabilizer size",true,
-  [IsGroup and IsFinite and CanComputeSizeAnySubgroup,IsObject,IsObject,
-   IsList,IsList,IsRecord],0,
+BindGlobal("DoOrbitStabilizerAlgorithmStabsize",
 function( G,D,blist,gens,acts, dopr )
-local   orb,  stb,  rep,  p,  q,  img,  sch,  i,d,act,
+local   orb,  stb,  rep,  p,  q,  img,  sch,  i,d,act,r,
         onlystab, # do we only care about stabilizer?
         getrep, # function to get representative
 	actsinv,# inverses of acts
@@ -1180,7 +1178,8 @@ local   orb,  stb,  rep,  p,  q,  img,  sch,  i,d,act,
       q:=PositionCanonical(D,d);
       blist[q]:=true;
     fi;
-    return rec( orbit := orb, stabilizer := G );
+    r:=rec( orbit := orb, stabilizer := G );
+    return r;
   fi;
 
 #  # test for small domains whether the orbit has length 1
@@ -1257,7 +1256,9 @@ local   orb,  stb,  rep,  p,  q,  img,  sch,  i,d,act,
 	    fi;
 	    if indh<Length(orb) then
 	      # the stabilizer cannot grow any more
-	      increp:=false;
+              if not (IsBound(dopr.returnReps) and dopr.returnReps) then
+                increp:=false;
+              fi;
 	      incstb:=false;
 	    fi;
 	  fi;
@@ -1274,7 +1275,9 @@ local   orb,  stb,  rep,  p,  q,  img,  sch,  i,d,act,
 	    indh:=QuoInt(ind,2);
 	    if indh<Length(orb) then
 	      # the stabilizer cannot grow any more
-	      increp:=false;
+              if not (IsBound(dopr.returnReps) and dopr.returnReps) then
+                increp:=false;
+              fi;
 	      incstb:=false;
 	    fi;
 	  else
@@ -1293,7 +1296,12 @@ local   orb,  stb,  rep,  p,  q,  img,  sch,  i,d,act,
 
 	if increp=false then #we know the stabilizer
 	  if onlystab then
-	    return rec(stabilizer:=stb);
+	    r:=rec(stabilizer:=stb);
+            if IsBound(dopr.returnReps) and dopr.returnReps then
+              r.rep:=rep;r.getrep:=getrep;r.actsinv:=actsinv;
+              r.dictionary:=dict;
+            fi;
+	    return r;
 	  # must the orbit contain the whole domain => extend?
 	elif ind=doml and (not IsBool(D)) and Length(orb)<doml then
 	    if blist=false then
@@ -1304,10 +1312,15 @@ local   orb,  stb,  rep,  p,  q,  img,  sch,  i,d,act,
 	      UniteBlist(blist,
 		BlistList([1..Length(blist)],[1..Length(blist)]));
 	    fi;
-	    return rec( orbit := orb, stabilizer := stb );
+	    r:=rec( orbit := orb, stabilizer := stb );
+            if IsBound(dopr.returnReps) and dopr.returnReps then
+              r.rep:=rep;r.getrep:=getrep;r.actsinv:=actsinv;
+              r.dictionary:=dict;
+            fi;
+	    return r;
 	  elif  ind=Length(orb) then
 	    # we have reached the full orbit. No further tests
-	    # neccessary
+	    # necessary
 
 	    # do we still need to tick off the orbit in `blist' to
 	    # please the caller?
@@ -1324,7 +1337,12 @@ local   orb,  stb,  rep,  p,  q,  img,  sch,  i,d,act,
 	      fi;
 	    fi;
 
-	    return rec( orbit := orb, stabilizer := stb );
+	    r:= rec( orbit := orb, stabilizer := stb );
+            if IsBound(dopr.returnReps) and dopr.returnReps then
+              r.rep:=rep;r.getrep:=getrep;r.actsinv:=actsinv;
+              r.dictionary:=dict;
+            fi;
+	    return r;
 	  fi;
 	fi;
       od;
@@ -1337,19 +1355,21 @@ local   orb,  stb,  rep,  p,  q,  img,  sch,  i,d,act,
       fi;
       p:=stopat;
       while p<=Length(orb) do
-	img := act( orb[ p ], acts[ i ] );
-	MakeImmutable(img);
-	q:=LookupDictionary(dict,img);
-	if q<=p then
-	  sch := getrep( p ) * gens[ i ] / getrep( q );
-	  if not sch in stb then
-	    stb:=ClosureSubgroupNC(stb,sch);
-	    if Size(G)/Size(stb)=Length(orb) then
-	      p:=Length(orb); #done
-	    fi;
-	  fi;
-	fi;
-	p:=p+1;
+        i:=1;
+        while i<=Length(gens) do
+          img := act( orb[ p ], acts[ i ] );
+          MakeImmutable(img);
+          q:=LookupDictionary(dict,img);
+          sch := getrep( p ) * gens[ i ] / getrep( q );
+          if not sch in stb then
+            stb:=ClosureSubgroupNC(stb,sch);
+            if Size(G)/Size(stb)=Length(orb) then
+              p:=Length(orb);i:=Length(gens); #done
+            fi;
+          fi;
+          i:=i+1;
+        od;
+        p:=p+1;
       od;
       #Error("after");
     fi;
@@ -1368,8 +1388,106 @@ local   orb,  stb,  rep,  p,  q,  img,  sch,  i,d,act,
     fi;
   fi;
 
-  return rec( orbit := orb, stabilizer := stb );
+  r:=rec( orbit := orb, stabilizer := stb );
+  if IsBound(dopr.returnReps) and dopr.returnReps then
+    r.rep:=rep;r.getrep:=getrep;r.actsinv:=actsinv;
+    r.dictionary:=dict;
+  fi;
+  return r;
 end );
+
+InstallMethod( OrbitStabilizerAlgorithm,"use stabilizer size",true,
+  [IsGroup and IsFinite and CanComputeSizeAnySubgroup,IsObject,IsObject,
+   IsList,IsList,IsRecord],0,
+function( G,D,blist,gens,acts, dopr )
+local pr,hom,pgens,pacts,pdopr,erg,cs,i,dict,orb,stb,rep,getrep,q,img,gen,
+  gena,actsinv,j,k,e,l,orbl,pcgs;
+  if HasSize(G) and Size(G)>10^5 
+    # not yet implemented for blist case
+    and blist=false then
+ 
+    pr:=PerfectResiduum(G);
+    if IndexNC(G,pr)>3 then
+      hom:=GroupHomomorphismByImagesNC(G,Group(acts),gens,acts);;
+      pgens:=ShallowCopy(SmallGeneratingSet(pr));
+      pacts:=List(pgens,x->ImagesRepresentative(hom,x));
+      pdopr:=ShallowCopy(dopr);
+      pdopr.returnReps:=true;
+      pdopr.onlystab:=false;
+      erg:=DoOrbitStabilizerAlgorithmStabsize(pr,D,blist,pgens,pacts,pdopr);
+      if not IsBound(erg.dictionary) then
+        # degenerate case, routine did not set up everything
+        return DoOrbitStabilizerAlgorithmStabsize(G,D,blist,gens,acts,dopr);
+      fi;
+      dict:=erg.dictionary; orb:=erg.orbit; stb:=erg.stabilizer;
+      rep:=erg.rep; getrep:=erg.getrep;
+      orbl:=Length(orb);
+      if IsBound(dopr.onlystab) and dopr.onlystab=true 
+        and 10*IndexNC(G,pr)<Length(orb) then
+        # it is cheaper to just find the right cosets than to (potentially)
+        # map the whole orbit
+        for i in RightTransversal(G,pr) do
+          gena:=ImagesRepresentative(hom,i);
+          img:=dopr.act(orb[1],gena);
+          q:=LookupDictionary(dict,img);
+          if IsInt(q) then
+            img:=i/getrep(q);
+            stb:=ClosureGroup(stb,img);
+          fi;
+        od;
+        return rec(stabilizer := stb);
+
+      else
+        cs:=CompositionSeriesThrough(G,[pr]);
+        cs:=Reversed(Filtered(cs,x->Size(x)>=Size(pr)));
+        pcgs:=[];
+        # step over the cyclic factors
+        for i in [2..Length(cs)] do
+          gen:=First(GeneratorsOfGroup(cs[i]),x->not x in cs[i-1]);
+          gena:=ImagesRepresentative(hom,gen);
+          img:=dopr.act(orb[1],gena);
+          q:=LookupDictionary(dict,img);
+          if q=fail then
+            # orbit grows
+            e:=First([1..Order(gen)],x->gen^x in cs[i-1]); # local order
+            Add(pcgs,[e,gen,gena]);
+            l:=Length(orb);
+            for j in [1..e-1] do
+              for k in [1..l] do
+                q:=(j-1)*l+k;
+                img:=dopr.act(orb[q],gena);
+                Add(orb,img);
+                AddDictionary(dict,img,Length(orb));
+              od;
+            od;
+          else
+            #Print(q,":",QuoInt(q-1,orbl),"\n");
+            if Length(pcgs)>0 then
+              # find correct position of orbit block
+              j:=Reversed(CoefficientsMultiadic(List(Reversed(pcgs),x->x[1]),
+                QuoInt(q-1,orbl)));
+              k:=Product([1..Length(pcgs)],x->pcgs[x][3]^j[x]);
+              img:=dopr.act(img,k^-1);
+              q:=LookupDictionary(dict,img);
+              k:=Product([1..Length(pcgs)],x->pcgs[x][2]^j[x]);
+            else
+              k:=One(G);
+            fi;
+            stb:=ClosureGroup(stb,gen/k/getrep(q));
+          fi;
+        od;
+        if IsBound(dopr.onlystab) and dopr.onlystab=true then
+          return rec(stabilizer := stb);
+        else
+	  return rec( orbit := orb, stabilizer := stb );
+        fi;
+
+      fi;
+    fi;
+  fi;
+  return DoOrbitStabilizerAlgorithmStabsize(G,D,blist,gens,acts,dopr);
+end);
+
 
 InstallMethod( OrbitStabilizerAlgorithm,"collect stabilizer generators",true,
   [IsGroup,IsObject,IsObject, IsList,IsList,IsRecord],0,
@@ -1483,7 +1601,7 @@ InstallMethod( OrbitsDomain, "for quick position domains", true,
 InstallMethod( OrbitsDomain, "for arbitrary domains", true,
     OrbitsishReq, 0,
 function( G, D, gens, acts, act )
-local   orbs, orb,sort,plist,pos,use,o;
+local   orbs, orb,sort,plist,pos,use,o,i,p;
   
   if Length(D)>0 and not IsMutable(D) and HasIsSSortedList(D) and IsSSortedList(D) 
     and CanEasilySortElements(D[1]) then
@@ -1501,14 +1619,22 @@ local   orbs, orb,sort,plist,pos,use,o;
   orbs := [  ];
   pos:=1;
   while Length(D)>0  and pos<=Length(D) do
+
     orb := OrbitOp( G,D, D[pos], gens, acts, act );
-    Add( orbs, orb );
     if plist then
+      orb:=ShallowCopy(orb);
+      use:=[1..Length(D)];
+      for i in [1..Length(orb)] do
+        p:=Position(D,orb[i]);
+        if p<>fail then # catch if domain is not closed
+          orb[i]:=D[p];
+          RemoveSet(use,p);
+        fi;
+      od;
+      D:=D{use};
       if sort then
-	D:=Difference(D,orb);
 	MakeImmutable(D); # to remember sortedness
-      else
-	D:=Filtered(D,i-> not i in orb);
+        IsSSortedList(D);
       fi;
     else
       for o in orb do
@@ -1520,6 +1646,7 @@ local   orbs, orb,sort,plist,pos,use,o;
 	pos:=pos+1;
       od;
     fi;
+    Add( orbs, orb );
   od;
   return Immutable( orbs );
 end );
@@ -1709,8 +1836,9 @@ local dict,p,i,img,imgs,hom,permimg,orb,imgn,ran,D,xset;
   ran:= Group( imgs, () );  # `imgs' has been created with `PermList'
 
   xset := ExternalSet( G, orb, gens, acts, act);
-  if IsMatrix(start) and (act=OnPoints or act=OnRight or act=OnLines) then
-    # act on vectors -- if we have a basis we have a base
+  if IsMatrix(start) and (act=OnPoints or act=OnRight) then
+    # act on vectors -- if we have a basis we have a base for ordinary
+    # action
     p:=RankMat(start);
     if p=Length(start[1]) then
       SetBaseOfGroup( xset, start );
@@ -1726,6 +1854,29 @@ local dict,p,i,img,imgs,hom,permimg,orb,imgn,ran,D,xset;
 	fi;
       od;
       SetBaseOfGroup( xset, start );
+    fi;
+  elif IsMatrix(start) and act=OnLines then
+    # projective action also needs all-1 vector.
+    img:=1+Zero(start); 
+
+    if img in orb then
+      start:=ShallowCopy(start);
+      p:=RankMat(start);
+      Add(start,img);
+      if p=Length(start[1]) then
+        SetBaseOfGroup( xset, start );
+      elif RankMat(orb{[1..Minimum(Length(orb),200)]})=Length(start[1]) then
+        i:=0;
+        # we know we will be successful
+        while p<Length(start[1]) do
+          i:=i+1;
+          if RankMat(Concatenation(start,[orb[i]]))>p then
+            Add(start,orb[i]);
+            p:=p+1;
+          fi;
+        od;
+        SetBaseOfGroup( xset, start );
+      fi;
     fi;
   fi;
 
@@ -2179,8 +2330,12 @@ InstallMethod( CyclesOp, true, [ IsObject, IsList, IsFunction ], 1,
     IsSSortedList(D);
     blist := BlistList( [ 1 .. Length( D ) ], [  ] );
     orbs := [  ];
-    next := 1;
-    while next <> fail do
+    next := 0;
+    while true do
+        next := Position( blist, false, next );
+        if next = fail then
+            return Immutable( orbs );
+        fi;
         pnt := D[ next ];
         orb := CycleOp( g, D[ next ], act );
         Add( orbs, orb );
@@ -2190,9 +2345,7 @@ InstallMethod( CyclesOp, true, [ IsObject, IsList, IsFunction ], 1,
                 blist[ pos ] := true;
             fi;
         od;
-        next := Position( blist, false, next );
     od;
-    return Immutable( orbs );
 end );
 
 #############################################################################
@@ -2221,7 +2374,7 @@ InstallMethod( BlocksOp,
     if Length(D)=1 then return Immutable([D]);fi;
     hom := ActionHomomorphism( G, D, gens, acts, act );
     B := Blocks( ImagesSource( hom ), [ 1 .. Length( D ) ],
-      Set(List(seed,x->Position(D,x))) );
+      Set(seed,x->Position(D,x)) );
     B:=List( B, b -> D{ b } );
     # force sortedness
     if Length(B[1])>0 and CanEasilySortElements(B[1][1]) then
@@ -2274,7 +2427,7 @@ InstallMethod( MaximalBlocksOp,
     H := G;
     blksH := blks;
     onsetact:=function(l,g)
-      return Set(List(l,i->act(i,g)));
+      return Set(l,i->act(i,g));
     end;
 
     while Length( blksH ) <> 1  do
@@ -2510,12 +2663,16 @@ end);
 ##
 #F  IsTransitive( <G>, <D>, <gens>, <acts>, <act> ) . . . . transitivity test
 ##
+##  We cannot assume that <G> acts on <D>.
+##  Thus it is in general not sufficient to check whether <D> is a subset of
+##  the <G>-orbit of a point in <D>, or whether <D> and this orbit have the
+##  same size.
+##
 InstallMethod( IsTransitive,
     "compare with orbit of element",
-    true,
-    OrbitsishReq, 0,
+    OrbitsishReq,
 function( G, D, gens, acts, act )
-    return Length(D)=0 or IsSubset( OrbitOp( G, D[ 1 ], gens, acts, act ), D );
+    return Length(D)=0 or IsEqualSet( OrbitOp( G, D[1], gens, acts, act ), D );
 end );
 
 
@@ -2563,10 +2720,15 @@ end );
 ##
 #M  SetEarns( <G>, fail ) . . . . . . . . . . . . . . . . .  never set `fail'
 ##
-InstallOtherMethod( SetEarns,"never set fail",
-    true, [ IsGroup, IsBool ], 0,
-function( G, failval )
+# the following is the system setter for `Earns'.
+SET_EARNS := SETTER_FUNCTION(
+    "Earns", HasEarns );
+
+InstallOtherMethod( SetEarns,"deduce not primitive affine",
+    true, [ IsGroup, IsList and IsEmpty ], 0,
+function( G, emptylist )
     Setter( IsPrimitiveAffine )( G, false );
+    SET_EARNS(G,emptylist);
 end );
 
 
@@ -2579,7 +2741,7 @@ InstallMethod( IsPrimitiveAffine,"primitive and earns",
     OrbitsishReq, 0,
     function( G, D, gens, acts, act )
     return     IsPrimitive( G, D, gens, acts, act )
-           and Earns( G, D, gens, acts, act ) <> fail;
+           and Earns( G, D, gens, acts, act ) <> [];
 end );
 
 
@@ -2926,6 +3088,9 @@ InstallMethod( RankAction,"via ophom",
     local   hom;
 
     hom := ActionHomomorphism( G, D, gens, acts, act );
+    if NrMovedPoints(Image(hom))<>Length(D) then
+      Error("RankAction: action must be transitive");
+    fi;
     return RankAction( Image( hom ), [ 1 .. Length( D ) ] );
 end );
 
@@ -2937,12 +3102,24 @@ InstallMethod( RankAction,
       IsList,
       IsFunction ], 0,
     function( G, D, gens, acts, act )
+    local S,olen;
     if    act <> OnPoints
        or not IsIdenticalObj( gens, acts )  then
         TryNextMethod();
     fi;
-    return Length( OrbitsDomain( Stabilizer( G, D, D[ 1 ], act ),
-                   D, act ) );
+
+    if IsFinite(G) then
+      S:=Stabilizer( G, D, D[ 1 ], act);
+      olen:=IndexNC(G,S);
+    else
+      S:=OrbitStabilizer(G,D,D[1],gens,acts,act);
+      olen:=Length(S.orbit);
+      S:=S.stabilizer;
+    fi;
+    if olen<>Length(D) then
+      Error("RankAction: action must be transitive");
+    fi;
+    return Length( OrbitsDomain( S, D, act ) );
 end );
 
 InstallMethod( RankAction,

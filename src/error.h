@@ -27,7 +27,7 @@
 **  break loop is entered, 0 when leaving.
 **
 **  Note that it is also possible to leave the break loop (or any GAP code)
-**  by longjmping. This should be tracked with RegisterSyLongjmpObserver.
+**  by longjmping. This should be tracked with RegisterThrowObserver.
 */
 
 typedef void (*intfunc)(Int);
@@ -40,7 +40,7 @@ Int RegisterBreakloopObserver(intfunc func);
 **                                   ERROR_OUTPUT global variable defined in
 **                                   error.g, or "*errout*" otherwise
 */
-UInt OpenErrorOutput(void);
+UInt OpenErrorOutput(TypOutputFile * output);
 
 /****************************************************************************
 **
@@ -68,12 +68,6 @@ void ErrorMayQuitNrArgs(Int narg, Int actual) NORETURN;
 */
 void ErrorMayQuitNrAtLeastArgs(Int narg, Int actual) NORETURN;
 
-/****************************************************************************
-**
-*F  ErrorQuitRange3( <first>, <second>, <last> ) . . .divisibility rules
-*/
-void ErrorQuitRange3(Obj first, Obj second, Obj last) NORETURN;
-
 
 /****************************************************************************
 **
@@ -100,13 +94,23 @@ void ErrorReturnVoid(const Char * msg, Int arg1, Int arg2, const Char * msg2);
 **
 **  If funcname is 0, then 'funcname: ' is omitted from the message.
 **  If argname is 0, then '<argname> ' is omitted from the message.
+**
+**  All string arguments are copied to a buffer before a garbage collection
+**  may be triggered, hence it is safe to pass pointers into string objects.
 */
-Obj RequireArgumentEx(const char * funcname,
-                      Obj          op,
-                      const char * argname,
-                      const char * msg) NORETURN;
+void RequireArgumentEx(const char * funcname,
+                       Obj          op,
+                       const char * argname,
+                       const char * msg) NORETURN;
 
 #define NICE_ARGNAME(op) "<" #op ">"
+
+/****************************************************************************
+**
+*F  SELF_NAME
+*/
+#define SELF_NAME SELF_NAME_HELPER(self, __func__)
+const char * SELF_NAME_HELPER(Obj self, const char * func);
 
 /****************************************************************************
 **
@@ -144,20 +148,26 @@ Obj RequireArgumentEx(const char * funcname,
 
 /****************************************************************************
 **
-*F  RequireSmallInt
+*F  RequireSmallIntEx, RequireSmallInt
 */
-#define RequireSmallInt(funcname, op, argname)                               \
+#define RequireSmallIntEx(funcname, op, argname)                             \
     RequireArgumentConditionEx(funcname, op, argname, IS_INTOBJ(op),         \
                                "must be a small integer")
+
+#define RequireSmallInt(funcname, op)                                        \
+    RequireSmallIntEx(funcname, op, NICE_ARGNAME(op))
 
 
 /****************************************************************************
 **
-*F  RequirePositiveSmallInt
+*F  RequirePositiveSmallIntEx, RequirePositiveSmallInt
 */
-#define RequirePositiveSmallInt(funcname, op, argname)                       \
+#define RequirePositiveSmallIntEx(funcname, op, argname)                     \
     RequireArgumentConditionEx(funcname, op, argname, IS_POS_INTOBJ(op),     \
                                "must be a positive small integer")
+
+#define RequirePositiveSmallInt(funcname, op)                                \
+    RequirePositiveSmallIntEx(funcname, op, NICE_ARGNAME(op))
 
 
 /****************************************************************************
@@ -167,6 +177,31 @@ Obj RequireArgumentEx(const char * funcname,
 #define RequireNonnegativeSmallInt(funcname, op)                             \
     RequireArgumentCondition(funcname, op, IS_NONNEG_INTOBJ(op),             \
                              "must be a non-negative small integer")
+
+
+/****************************************************************************
+**
+*F  ErrorBoundedInt
+*F  RequireBoundedIntEx, RequireBoundedInt
+**
+**  Require a small integer n satisfying min <= n <= max
+*/
+void ErrorBoundedInt(const char * funcname,
+                     Obj          op,
+                     const char * argname,
+                     int          min,
+                     int          max) NORETURN;
+
+#define RequireBoundedIntEx(funcname, op, argname, min, max)                 \
+    do {                                                                     \
+        if (!(IS_INTOBJ(op) && min <= INT_INTOBJ(op) &&                      \
+              INT_INTOBJ(op) <= max)) {                                      \
+            ErrorBoundedInt(funcname, op, argname, min, max);                \
+        }                                                                    \
+    } while (0)
+
+#define RequireBoundedInt(funcname, op, min, max)                            \
+    RequireBoundedIntEx(funcname, op, NICE_ARGNAME(op), min, max)
 
 
 /****************************************************************************
@@ -263,7 +298,7 @@ Obj RequireArgumentEx(const char * funcname,
 EXPORT_INLINE Int
 GetSmallIntEx(const char * funcname, Obj op, const char * argname)
 {
-    RequireSmallInt(funcname, op, argname);
+    RequireSmallIntEx(funcname, op, argname);
     return INT_INTOBJ(op);
 }
 
@@ -278,12 +313,28 @@ GetSmallIntEx(const char * funcname, Obj op, const char * argname)
 EXPORT_INLINE Int
 GetPositiveSmallIntEx(const char * funcname, Obj op, const char * argname)
 {
-    RequirePositiveSmallInt(funcname, op, argname);
+    RequirePositiveSmallIntEx(funcname, op, argname);
     return INT_INTOBJ(op);
 }
 
 #define GetPositiveSmallInt(funcname, op)                                    \
     GetPositiveSmallIntEx(funcname, op, NICE_ARGNAME(op))
+
+
+/****************************************************************************
+**
+*F  GetBoundedIntEx
+*F  GetBoundedInt
+*/
+EXPORT_INLINE Int GetBoundedIntEx(
+    const char * funcname, Obj op, const char * argname, int min, int max)
+{
+    RequireBoundedIntEx(funcname, op, argname, min, max);
+    return INT_INTOBJ(op);
+}
+
+#define GetBoundedInt(funcname, op, min, max)                                \
+    GetBoundedIntEx(funcname, op, NICE_ARGNAME(op), min, max)
 
 
 /****************************************************************************

@@ -11,7 +11,7 @@
 #ifndef GAP_BOEHM_GC_H
 #define GAP_BOEHM_GC_H
 
-#include "system.h"
+#include "common.h"
 
 #ifndef USE_BOEHM_GC
 #error This file can only be used when the Boehm GC collector is enabled
@@ -31,5 +31,6 @@
 #include <gc/gc_mark.h>
 #endif
 
+extern Int SyStorKill;
 
 #endif

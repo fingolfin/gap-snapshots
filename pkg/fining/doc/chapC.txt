@@ -6,8 +6,8 @@
   
   [1XC.1-1 ShrinkVec[101X
   
-  [29X[2XShrinkVec[102X( [3Xf1[103X, [3Xf2[103X, [3Xv[103X, [3Xbasis[103X ) [32X operation
-  [29X[2XShrinkVec[102X( [3Xf1[103X, [3Xf2[103X, [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XShrinkVec[102X( [3Xf1[103X, [3Xf2[103X, [3Xv[103X, [3Xbasis[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XShrinkVec[102X( [3Xf1[103X, [3Xf2[103X, [3Xv[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya vector[133X
   
   [33X[0;0YThe  argument [3Xf2[103X is a subfield of [3Xf1[103X and v is vector in a vectorspace [22XV[122X over
@@ -19,8 +19,8 @@
   
   [1XC.1-2 ShrinkMat[101X
   
-  [29X[2XShrinkMat[102X( [3Xbasis[103X, [3Xmatrix[103X ) [32X operation
-  [29X[2XShrinkMat[102X( [3Xf1[103X, [3Xf2[103X, [3Xmatrix[103X ) [32X operation
+  [33X[1;0Y[29X[2XShrinkMat[102X( [3Xbasis[103X, [3Xmatrix[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XShrinkMat[102X( [3Xf1[103X, [3Xf2[103X, [3Xmatrix[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya matrix[133X
   
   [33X[0;0YLet  [22XK[122X be the field [22XGF(q)[122X and let [22XL[122X be the field [22XGF(q^t)[122X. Asumme that [22XB[122X is a
@@ -43,7 +43,7 @@
   
   [1XC.1-3 BlownUpProjectiveSpace[101X
   
-  [29X[2XBlownUpProjectiveSpace[102X( [3Xbasis[103X, [3Xpg1[103X ) [32X operation
+  [33X[1;0Y[29X[2XBlownUpProjectiveSpace[102X( [3Xbasis[103X, [3Xpg1[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya projective space[133X
   
   [33X[0;0YLet  [3Xbasis[103X  be  a  basis  of  the  field [22XGF(q^t)[122X that is an extension of the
@@ -53,7 +53,7 @@
   
   [1XC.1-4 BlownUpProjectiveSpaceBySubfield[101X
   
-  [29X[2XBlownUpProjectiveSpaceBySubfield[102X( [3Xsubfield[103X, [3Xpg[103X ) [32X operation
+  [33X[1;0Y[29X[2XBlownUpProjectiveSpaceBySubfield[102X( [3Xsubfield[103X, [3Xpg[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya projective space[133X
   
   [33X[0;0YBlows  up  a  projective  space [3Xpg[103X with respect to the standard basis of the
@@ -61,8 +61,8 @@
   
   [1XC.1-5 BlownUpSubspaceOfProjectiveSpace[101X
   
-  [29X[2XBlownUpSubspaceOfProjectiveSpace[102X( [3Xbasis[103X, [3Xsubspace[103X ) [32X operation
-  [29X[2XBlownUpSubspaceOfProjectiveSpace[102X( [3Xbasis[103X, [3Xspace[103X ) [32X operation
+  [33X[1;0Y[29X[2XBlownUpSubspaceOfProjectiveSpace[102X( [3Xbasis[103X, [3Xsubspace[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XBlownUpSubspaceOfProjectiveSpace[102X( [3Xbasis[103X, [3Xspace[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya subspace of a projective space[133X
   
   [33X[0;0YThe  first flavour blows up a [3Xsubspace[103X of a projective space with respect to
@@ -72,7 +72,7 @@
   
   [1XC.1-6 BlownUpSubspaceOfProjectiveSpaceBySubfield[101X
   
-  [29X[2XBlownUpSubspaceOfProjectiveSpaceBySubfield[102X( [3Xsubfield[103X, [3Xsubspace[103X ) [32X operation
+  [33X[1;0Y[29X[2XBlownUpSubspaceOfProjectiveSpaceBySubfield[102X( [3Xsubfield[103X, [3Xsubspace[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya subspace of a projective space[133X
   
   [33X[0;0YBlows up a [3Xsubspace[103X of a projective space with respect to the standard basis
@@ -82,7 +82,7 @@
   
   [1XC.1-7 IsDesarguesianSpreadElement[101X
   
-  [29X[2XIsDesarguesianSpreadElement[102X( [3Xbasis[103X, [3Xsubspace[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsDesarguesianSpreadElement[102X( [3Xbasis[103X, [3Xsubspace[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0YChecks wether the [3Xsubspace[103X is a subspace which is obtained from a blowing up
@@ -96,8 +96,8 @@
   
   [1XC.2-1 QuadraticFormFieldReduction[101X
   
-  [29X[2XQuadraticFormFieldReduction[102X( [3Xqf1[103X, [3Xf2[103X, [3Xalpha[103X, [3Xbasis[103X ) [32X operation
-  [29X[2XQuadraticFormFieldReduction[102X( [3Xqf1[103X, [3Xf2[103X, [3Xalpha[103X ) [32X operation
+  [33X[1;0Y[29X[2XQuadraticFormFieldReduction[102X( [3Xqf1[103X, [3Xf2[103X, [3Xalpha[103X, [3Xbasis[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XQuadraticFormFieldReduction[102X( [3Xqf1[103X, [3Xf2[103X, [3Xalpha[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya quadratic form[133X
   
   [33X[0;0YLet  [22Xf[122X  be  quadratic  form  determining a polar space over the field [22XL[122X This
@@ -106,8 +106,8 @@
   
   [1XC.2-2 BilinearFormFieldReduction[101X
   
-  [29X[2XBilinearFormFieldReduction[102X( [3Xbil11[103X, [3Xf2[103X, [3Xalpha[103X, [3Xbasis[103X ) [32X operation
-  [29X[2XBilinearFormFieldReduction[102X( [3Xbil11[103X, [3Xf2[103X, [3Xalpha[103X ) [32X operation
+  [33X[1;0Y[29X[2XBilinearFormFieldReduction[102X( [3Xbil11[103X, [3Xf2[103X, [3Xalpha[103X, [3Xbasis[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XBilinearFormFieldReduction[102X( [3Xbil11[103X, [3Xf2[103X, [3Xalpha[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya bilinear form[133X
   
   [33X[0;0YLet  [22Xf[122X  be  bilinear  form  determining  a polar space over the field [22XL[122X This
@@ -116,8 +116,8 @@
   
   [1XC.2-3 HermitianFormFieldReduction[101X
   
-  [29X[2XHermitianFormFieldReduction[102X( [3Xhf1[103X, [3Xf2[103X, [3Xalpha[103X, [3Xbasis[103X ) [32X operation
-  [29X[2XHermitianFormFieldReduction[102X( [3Xhf1[103X, [3Xf2[103X, [3Xalpha[103X ) [32X operation
+  [33X[1;0Y[29X[2XHermitianFormFieldReduction[102X( [3Xhf1[103X, [3Xf2[103X, [3Xalpha[103X, [3Xbasis[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHermitianFormFieldReduction[102X( [3Xhf1[103X, [3Xf2[103X, [3Xalpha[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya hermitian form[133X
   
   [33X[0;0YLet  [22Xf[122X  be  bilinear  form  determining  a polar space over the field [22XL[122X This
@@ -129,8 +129,8 @@
   
   [1XC.3-1 PluckerCoordinates[101X
   
-  [29X[2XPluckerCoordinates[102X( [3Xmatrix[103X ) [32X operation
-  [29X[2XInversePluckerCoordinates[102X( [3Xvector[103X ) [32X operation
+  [33X[1;0Y[29X[2XPluckerCoordinates[102X( [3Xmatrix[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XInversePluckerCoordinates[102X( [3Xvector[103X ) [32X operation[133X
   
   [33X[0;0YThe first operation can also take a matrix representing a line of [22XPG(3,q)[122X as
   argument.  No  checks  are  performed  in  this case. It returns the plucker
@@ -141,7 +141,7 @@
   
   [1XC.3-2 IsomorphismPolarSpacesProjectionFromNucleus[101X
   
-  [29X[2XIsomorphismPolarSpacesProjectionFromNucleus[102X( [3Xquadric[103X, [3Xw[103X, [3Xboolean[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsomorphismPolarSpacesProjectionFromNucleus[102X( [3Xquadric[103X, [3Xw[103X, [3Xboolean[103X ) [32X operation[133X
   
   [33X[0;0YThis  operation  returns  the  isomorphism between a parabolic quadric and a
   sympletic  polar  space.  Although  it is checked whether the base field and
@@ -150,8 +150,8 @@
   
   [1XC.3-3 IsomorphismPolarSpacesNC[101X
   
-  [29X[2XIsomorphismPolarSpacesNC[102X( [3Xps1[103X, [3Xps2[103X ) [32X operation
-  [29X[2XIsomorphismPolarSpacesNC[102X( [3Xps1[103X, [3Xps2[103X, [3Xboolean[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsomorphismPolarSpacesNC[102X( [3Xps1[103X, [3Xps2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsomorphismPolarSpacesNC[102X( [3Xps1[103X, [3Xps2[103X, [3Xboolean[103X ) [32X operation[133X
   
   [33X[0;0Y[11XIsomorphismPolarSpacesNC[111X  is  the version of [11XIsomorphismPolarSpaces[111X where no
   checks  are built in, and which is only applicable when the two polar spaces
@@ -160,14 +160,14 @@
   
   [1XC.3-4 NaturalEmbeddingBySubspaceNC[101X
   
-  [29X[2XNaturalEmbeddingBySubspaceNC[102X( [3Xgeom1[103X, [3Xgeom2[103X, [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XNaturalEmbeddingBySubspaceNC[102X( [3Xgeom1[103X, [3Xgeom2[103X, [3Xv[103X ) [32X operation[133X
   
   [33X[0;0YThe  operation  [11XNaturalEmbeddingBySubspaceNC[111X  is the ``no check'' version of
   [11XNaturalEmbeddingBySubspace[111X.[133X
   
   [1XC.3-5 NaturalProjectionBySubspaceNC[101X
   
-  [29X[2XNaturalProjectionBySubspaceNC[102X( [3Xps[103X, [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XNaturalProjectionBySubspaceNC[102X( [3Xps[103X, [3Xv[103X ) [32X operation[133X
   
   [33X[0;0YThe  operation  [11XNaturalEmbeddingBySubspaceNC[111X  is the ``no check'' version of
   [11XNaturalEmbeddingBySubspace[111X.[133X

@@ -103,7 +103,7 @@
   = n/2[122X if [22Xn[122X is even, and [22Xa_n = (1-n)/2[122X otherwise.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28XIsIntegersIteratorCompRep := NewRepresentation( "IsIntegersIteratorRep",[128X[104X
+    [4X[28XDeclareRepresentation( "IsIntegersIteratorCompRep",[128X[104X
     [4X[28X    IsComponentObjectRep, [ "counter" ] );[128X[104X
   [4X[32X[104X
   
@@ -166,8 +166,8 @@
   [33X[0;0YFor  a component object [3Xcomobj[103X, [2XNamesOfComponents[102X returns a list of strings,
   which are the names of components currently bound in [3Xcomobj[103X.[133X
   
-  [33X[0;0YFor  a  record  [3Xcomobj[103X,  [2XNamesOfComponents[102X  returns  the  result of [2XRecNames[102X
-  ([14X29.1-2[114X).[133X
+  [33X[0;0YFor  a  record  [3Xcomobj[103X in internal representation, [2XNamesOfComponents[102X returns
+  the result of [2XRecNames[102X ([14X29.1-2[114X).[133X
   
   
   [1X79.3 [33X[0;0YPositional Objects[133X[101X
@@ -199,7 +199,7 @@
   for an implementation using component objects, and more details.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28XIsIntegersIteratorPosRep := NewRepresentation( "IsIntegersIteratorRep",[128X[104X
+    [4X[28XDeclareRepresentation( "IsIntegersIteratorPosRep",[128X[104X
     [4X[28X    IsPositionalObjectRep, [ 1 ] );[128X[104X
   [4X[32X[104X
   
@@ -215,7 +215,7 @@
     [4X[28X    function( Integers )[128X[104X
     [4X[28X    return Objectify( NewType( IteratorsFamily,[128X[104X
     [4X[28X                                   IsIterator[128X[104X
-    [4X[28X                               and IsIntegersIteratorRep ),[128X[104X
+    [4X[28X                               and IsIntegersIteratorPosRep ),[128X[104X
     [4X[28X                      [ 0 ] );[128X[104X
     [4X[28X    end );[128X[104X
   [4X[32X[104X
@@ -290,7 +290,7 @@
   [3Xlist[103X[10X, [3Xpos[103X[10X )[110X.[133X
   
   [33X[0;0YAll  other  operations  for  lists, e.g., [2XAdd[102X ([14X21.4-2[114X), [2XAppend[102X ([14X21.4-5[114X), [2XSum[102X
-  ([14X21.20-27[114X),  are based on these operations. This means that it is sufficient
+  ([14X21.20-26[114X),  are based on these operations. This means that it is sufficient
   to install methods for the new list objects only for the basic operations.[133X
   
   [33X[0;0YSo  if  one  wants  to  implement  new list objects then one creates them as
@@ -811,34 +811,74 @@
   
   [1X79.10 [33X[0;0YGlobal Variables in the Library[133X[101X
   
-  [33X[0;0YGlobal  variables in the [5XGAP[105X library are usually read-only in order to avoid
-  their being overwritten accidentally. See also Section [14X4.9[114X.[133X
+  [33X[0;0YGlobal  variables  in  the  [5XGAP[105X  library  are  usually read-only in order to
+  prevent them from being overwritten accidentally. See also Section [14X4.9[114X.[133X
   
-  [1X79.10-1 DeclareGlobalVariable[101X
+  [1X79.10-1 DeclareGlobalName[101X
+  
+  [33X[1;0Y[29X[2XDeclareGlobalName[102X( [3Xname[103X ) [32X function[133X
+  
+  [33X[0;0YFor  global variables, sometimes code needs to reference them before a value
+  can  sensibly  be  assigned  to  them.  For  example, consider the following
+  definition of a recursive function:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XBindGlobal( "fun", function(n)[128X[104X
+    [4X[28X  if n > 0 then[128X[104X
+    [4X[28X    return 2*fun(n-1);[128X[104X
+    [4X[28X  fi;[128X[104X
+    [4X[28X  return 1;[128X[104X
+    [4X[28Xend );[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe problem with that code is that it triggers a syntax warning about access
+  to  an unbound global variable, as [10Xfun[110X only gets assigned after the complete
+  statement has been parsed, yet that statement references [10Xfun[110X.[133X
+  
+  [33X[0;0YTo  resolve this, one can declare the variable with [2XDeclareGlobalName[102X before
+  assigning it via [2XBindGlobal[102X ([14X4.9-8[114X). This informs [5XGAP[105X that a global variable
+  with  the specified name will eventually be defined, and that thus no syntax
+  warnings pertaining to its use should be printed.[133X
+  
+  [33X[0;0YWe   recommend  using  [2XDeclareGlobalName[102X  instead  of  [2XDeclareGlobalVariable[102X
+  ([14X79.10-2[114X) or [2XDeclareGlobalFunction[102X ([14X79.10-5[114X) whenever possible.[133X
+  
+  [33X[0;0Y[2XDeclareGlobalName[102X  shall  be  used in the declaration part of the respective
+  package  (see [14X79.11[114X),  values  can  then  be assigned to the new variable as
+  usual, preferably via [2XBindGlobal[102X ([14X4.9-8[114X), in the implementation part (again,
+  see [14X79.11[114X).[133X
+  
+  [1X79.10-2 DeclareGlobalVariable[101X
   
   [33X[1;0Y[29X[2XDeclareGlobalVariable[102X( [3Xname[103X[, [3Xdescription[103X] ) [32X function[133X
   
   [33X[0;0YFor  global  variables  that  are [13Xnot[113X functions, instead of using [2XBindGlobal[102X
   ([14X4.9-8[114X)  one  can also declare the variable with [2XDeclareGlobalVariable[102X which
-  creates  a  new  global  variable  named  by  the string [3Xname[103X. If the second
-  argument  [3Xdescription[103X  is  entered then this must be a string that describes
-  the  meaning  of the global variable. [2XDeclareGlobalVariable[102X shall be used in
-  the  declaration part of the respective package (see [14X79.11[114X), values can then
-  be   assigned   to   the   new   variable   with   [2XInstallValue[102X   ([14X79.10-2[114X),
-  [2XInstallFlushableValue[102X    ([14X79.10-2[114X)    or   [2XInstallFlushableValueFromFunction[102X
-  ([14X79.10-2[114X), in the implementation part (again, see [14X79.11[114X).[133X
+  creates a new global variable named by the string [3Xname[103X.[133X
   
-  [1X79.10-2 InstallValue[101X
+  [33X[0;0YIn  the  past  the main application of this was to allow access to variables
+  before  they  were  assigned. Starting with [5XGAP[105X 4.12 we recommend to instead
+  use [2XDeclareGlobalName[102X ([14X79.10-1[114X) for this kind of problem. The main remaining
+  application for [2XDeclareGlobalVariable[102X is when one needs flushable values.[133X
+  
+  [33X[0;0YIf  used at all, then [2XDeclareGlobalVariable[102X shall be used in the declaration
+  part  of  the respective package (see [14X79.11[114X), values can then be assigned to
+  the   new   variable   with  [2XInstallValue[102X  ([14X79.10-3[114X),  [2XInstallFlushableValue[102X
+  ([14X79.10-3[114X)    or    [2XInstallFlushableValueFromFunction[102X   ([14X79.10-3[114X),   in   the
+  implementation part (again, see [14X79.11[114X).[133X
+  
+  [1X79.10-3 InstallValue[101X
   
   [33X[1;0Y[29X[2XInstallValue[102X( [3Xgvar[103X, [3Xvalue[103X ) [32X function[133X
   [33X[1;0Y[29X[2XInstallFlushableValue[102X( [3Xgvar[103X, [3Xvalue[103X ) [32X function[133X
   [33X[1;0Y[29X[2XInstallFlushableValueFromFunction[102X( [3Xgvar[103X, [3Xfunc[103X ) [32X function[133X
   
-  [33X[0;0Y[2XInstallValue[102X   assigns   the  value  [3Xvalue[103X  to  the  global  variable  [3Xgvar[103X.
+  [33X[0;0Y[2XInstallValue[102X  assigns  the value [3Xvalue[103X to the global variable [3Xgvar[103X if it was
+  previously      declared      via      [2XDeclareGlobalVariable[102X      ([14X79.10-2[114X).
   [2XInstallFlushableValue[102X does the same but additionally provides that each call
-  of  [2XFlushCaches[102X  ([14X79.10-3[114X)  will  assign a structural copy of [3Xvalue[103X to [3Xgvar[103X.
+  of  [2XFlushCaches[102X  ([14X79.10-4[114X)  will  assign a structural copy of [3Xvalue[103X to [3Xgvar[103X.
   [2XInstallFlushableValueFromFunction[102X instead assigns the result of [3Xfunc[103X to [3Xgvar[103X
-  ([3Xfunc[103X is re-evaluated for each invocation of [2XFlushCaches[102X ([14X79.10-3[114X)[133X
+  ([3Xfunc[103X is re-evaluated for each invocation of [2XFlushCaches[102X ([14X79.10-4[114X)[133X
   
   [33X[0;0Y[2XInstallValue[102X  does  [13Xnot[113X  work  if  [3Xvalue[103X  is  an  [21Ximmediate object[121X, i.e., an
   internally  represented small integer or finite field element. It also fails
@@ -846,14 +886,14 @@
   list  or  a  record.  (Note  that [2XInstallFlushableValue[102X makes sense only for
   [13Xmutable[113X global variables.)[133X
   
-  [1X79.10-3 FlushCaches[101X
+  [1X79.10-4 FlushCaches[101X
   
   [33X[1;0Y[29X[2XFlushCaches[102X(  ) [32X operation[133X
   
   [33X[0;0Y[2XFlushCaches[102X  resets the value of each global variable that has been declared
-  with  [2XDeclareGlobalVariable[102X  ([14X79.10-1[114X)  and  for which the initial value has
-  been       set       with       [2XInstallFlushableValue[102X      ([14X79.10-2[114X)      or
-  [2XInstallFlushableValueFromFunction[102X ([14X79.10-2[114X) to this initial value.[133X
+  with  [2XDeclareGlobalVariable[102X  ([14X79.10-2[114X)  and  for which the initial value has
+  been       set       with       [2XInstallFlushableValue[102X      ([14X79.10-3[114X)      or
+  [2XInstallFlushableValueFromFunction[102X ([14X79.10-3[114X) to this initial value.[133X
   
   [33X[0;0Y[2XFlushCaches[102X  should  be used only for debugging purposes, since the involved
   global  variables  include  for  example  lists that store finite fields and
@@ -861,17 +901,24 @@
   these  fields  are  constructed  anew  in  each  call  to [2XGF[102X ([14X59.3-2[114X) and [2XCF[102X
   ([14X60.1-1[114X).[133X
   
-  [1X79.10-4 DeclareGlobalFunction[101X
+  [1X79.10-5 DeclareGlobalFunction[101X
   
   [33X[1;0Y[29X[2XDeclareGlobalFunction[102X( [3Xname[103X ) [32X function[133X
   [33X[1;0Y[29X[2XInstallGlobalFunction[102X( [3Xoper[103X, [3Xfunc[103X ) [32X function[133X
   
-  [33X[0;0Y[2XDeclareGlobalFunction[102X  [5XGAP[105X  functions  that  are not operations and that are
-  intended  to be called by users should be notified to [5XGAP[105X in the declaration
-  part     of    the    respective    package    (see    Section [14X79.11[114X)    via
-  [2XDeclareGlobalFunction[102X,  which  returns  a  function  that  serves as a place
-  holder for the function that will be installed later, and that will print an
-  error message if it is called. See also [2XDeclareSynonym[102X ([14X79.10-5[114X).[133X
+  [33X[0;0Y[5XGAP[105X  functions that are not operations and that are intended to be called by
+  users    should    be    notified    to   [5XGAP[105X   via   [2XDeclareGlobalFunction[102X.
+  [2XDeclareGlobalFunction[102X  returns  a  function that serves as a placeholder for
+  the  function  that  will  be installed later. The placeholder will print an
+  error message if it is called. See also [2XDeclareSynonym[102X ([14X79.10-6[114X).[133X
+  
+  [33X[0;0YIn  the  past  the main application of this was to allow access to variables
+  before  they  were  assigned.  Starting  with  [5XGAP[105X  4.12 we recommend to use
+  [2XDeclareGlobalName[102X      ([14X79.10-1[114X)/[2XBindGlobal[102X      ([14X4.9-8[114X)      instead     of
+  [2XDeclareGlobalVariable[102X ([14X79.10-2[114X)/[2XInstallGlobalFunction[102X whenever possible.[133X
+  
+  [33X[0;0YIf  used  at  all, then [2XDeclareGlobalVariable[102X ([14X79.10-2[114X) shall be used in the
+  declaration part of the respective package (see [14X79.11[114X).[133X
   
   [33X[0;0YA global function declared with [2XDeclareGlobalFunction[102X can be given its value
   [3Xfunc[103X  via  [2XInstallGlobalFunction[102X;  [3Xgvar[103X  is the global variable (or a string
@@ -889,7 +936,7 @@
     [4X[28XInstallGlobalFunction( SumOfTwoCubes, function(x, y) return x^3 + y^3; end);[128X[104X
   [4X[32X[104X
   
-  [1X79.10-5 DeclareSynonym[101X
+  [1X79.10-6 DeclareSynonym[101X
   
   [33X[1;0Y[29X[2XDeclareSynonym[102X( [3Xname[103X, [3Xvalue[103X ) [32X function[133X
   [33X[1;0Y[29X[2XDeclareSynonymAttr[102X( [3Xname[103X, [3Xvalue[103X ) [32X function[133X
@@ -935,8 +982,8 @@
   
   [33X[0;0Y[5XGAP[105X  functions that are not operations and that are intended to be called by
   users   should   be   notified   to   [5XGAP[105X   in   the  declaration  part  via
-  [2XDeclareGlobalFunction[102X ([14X79.10-4[114X). Values for these functions can be installed
-  in the implementation part via [2XInstallGlobalFunction[102X ([14X79.10-4[114X).[133X
+  [2XDeclareGlobalFunction[102X ([14X79.10-5[114X). Values for these functions can be installed
+  in the implementation part via [2XInstallGlobalFunction[102X ([14X79.10-5[114X).[133X
   
   [33X[0;0YCalls to the following functions belong to the declaration part.[133X
   
@@ -948,11 +995,15 @@
   
   [30X    [33X[0;6Y[2XDeclareOperation[102X ([14X78.1-5[114X),[133X
   
-  [30X    [33X[0;6Y[2XDeclareGlobalFunction[102X ([14X79.10-4[114X),[133X
+  [30X    [33X[0;6Y[2XDeclareGlobalFunction[102X ([14X79.10-5[114X),[133X
   
-  [30X    [33X[0;6Y[2XDeclareSynonym[102X ([14X79.10-5[114X),[133X
+  [30X    [33X[0;6Y[2XDeclareGlobalName[102X ([14X79.10-1[114X),[133X
   
-  [30X    [33X[0;6Y[2XDeclareSynonymAttr[102X ([14X79.10-5[114X),[133X
+  [30X    [33X[0;6Y[2XDeclareGlobalVariable[102X ([14X79.10-2[114X),[133X
+  
+  [30X    [33X[0;6Y[2XDeclareSynonym[102X ([14X79.10-6[114X),[133X
+  
+  [30X    [33X[0;6Y[2XDeclareSynonymAttr[102X ([14X79.10-6[114X),[133X
   
   [30X    [33X[0;6Y[2XDeclareProperty[102X ([14X13.7-5[114X),[133X
   
@@ -962,7 +1013,9 @@
   
   [30X    [33X[0;6Y[2XDeclareRepresentation[102X ([14X13.4-5[114X),[133X
   
-  [30X    [33X[0;6Y[2XInstallGlobalFunction[102X ([14X79.10-4[114X),[133X
+  [30X    [33X[0;6Y[2XInstallGlobalFunction[102X ([14X79.10-5[114X),[133X
+  
+  [30X    [33X[0;6Y[2XInstallValue[102X ([14X79.10-3[114X),[133X
   
   [30X    [33X[0;6Y[2XInstallMethod[102X ([14X78.3-1[114X),[133X
   

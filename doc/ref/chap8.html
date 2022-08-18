@@ -52,7 +52,7 @@
 
 <p><code class="code">PopOptions();</code></p>
 
-<p>This can be abbreviated, to <code class="code">DoSomething( <var class="Arg">args</var> : <var class="Arg">stuff</var> );</code> with a small additional abbreviation of <var class="Arg">stuff</var> permitted. See <a href="chap4.html#X867D54987EF86D1D"><span class="RefLink">4.11-2</span></a> for details. The full form can be used where the same options are to run across several calls, or where the <code class="code">DoSomething</code> procedure is actually an infix operator, or other function with special syntax.</p>
+<p>This can be abbreviated, to <code class="code">DoSomething( <var class="Arg">args</var> : <var class="Arg">stuff</var> );</code> with a small additional abbreviation of <var class="Arg">stuff</var> permitted. See <a href="chap4.html#X867D54987EF86D1D"><span class="RefLink">4.12-2</span></a> for details. The full form can be used where the same options are to run across several calls, or where the <code class="code">DoSomething</code> procedure is actually an infix operator, or other function with special syntax.</p>
 
 <p>An alternative to this system is the use of additional optional arguments in procedure calls. This is not felt to be sufficient because many procedure calls might cause, for example, a coset enumeration and each would need to make provision for the possibility of extra arguments. In this system the options are pushed when the user-level procedure is called, and remain in effect (unless altered) for all procedures called by it.</p>
 
@@ -66,7 +66,7 @@
 
 <h5>8.1-1 PushOptions</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PushOptions</code>( <var class="Arg">options</var>, <var class="Arg">record</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PushOptions</code>( <var class="Arg">options_record</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function pushes a record of options onto the global option stack. Note that <code class="code">PushOptions( rec( <var class="Arg">opt</var>:= fail ) )</code> has the effect of resetting the option <var class="Arg">opt</var>, since an option that has never been set has the value <code class="keyw">fail</code> returned by <code class="func">ValueOption</code> (<a href="chap8.html#X7F9373AD7DB88D1F"><span class="RefLink">8.1-5</span></a>).</p>
 
 <p>Note that there is no check for misspelt or undefined options.</p>

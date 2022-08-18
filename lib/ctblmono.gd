@@ -229,7 +229,7 @@ DeclareProperty( "IsBergerCondition", IsClassFunction );
 ##  <Func Name="TestHomogeneous" Arg='chi, N'/>
 ##
 ##  <Description>
-##  For a group character <A>chi</A> of the group <M>G</M>, say,
+##  For a group character <A>chi</A> of a group <M>G</M>
 ##  and a normal subgroup <A>N</A> of <M>G</M>,
 ##  <Ref Func="TestHomogeneous"/> returns a record with information whether
 ##  the restriction of <A>chi</A> to <A>N</A> is homogeneous,
@@ -296,14 +296,15 @@ DeclareGlobalFunction( "TestHomogeneous" );
 ##  <Prop Name="IsPrimitiveCharacter" Arg='chi'/>
 ##
 ##  <Description>
-##  For a character <A>chi</A> of the group <M>G</M>, say,
+##  For a character <A>chi</A> of a group <M>G</M>,
 ##  <Ref Prop="IsPrimitiveCharacter"/> returns <K>true</K> if <A>chi</A> is
-##  not induced from any proper subgroup, and <K>false</K> otherwise.
+##  not induced from any proper subgroup, and <K>false</K> otherwise. This 
+##  currently only works for characters of soluble groups.
 ##  <P/>
 ##  <Example><![CDATA[
-##  gap> IsPrimitive( Irr( Sl23 )[4] );
+##  gap> IsPrimitiveCharacter( Irr( Sl23 )[4] );
 ##  true
-##  gap> IsPrimitive( Irr( Sl23 )[7] );
+##  gap> IsPrimitiveCharacter( Irr( Sl23 )[7] );
 ##  false
 ##  ]]></Example>
 ##  </Description>
@@ -379,7 +380,7 @@ DeclareProperty( "IsQuasiPrimitive", IsClassFunction );
 ##  <Description>
 ##  <Ref Func="TestInducedFromNormalSubgroup"/> returns a record with
 ##  information whether the irreducible character <A>chi</A> of the group
-##  <M>G</M>, say, is induced from a proper normal subgroup of <M>G</M>.
+##  <M>G</M> is induced from a proper normal subgroup of <M>G</M>.
 ##  If the second argument <A>N</A> is present,
 ##  which must be a normal subgroup of <M>G</M>
 ##  or the list of class positions of a normal subgroup of <M>G</M>,

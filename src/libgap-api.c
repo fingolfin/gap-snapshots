@@ -33,13 +33,16 @@
 #include "opers.h"
 #include "plist.h"
 #include "precord.h"
+#include "range.h"
 #include "records.h"
 #include "streams.h"
 #include "stringobj.h"
 
-static int UsingLibGap = 0;
+#include <stdio.h>
 
-int IsUsingLibGap(void)
+static BOOL UsingLibGap = FALSE;
+
+BOOL IsUsingLibGap(void)
 {
     return UsingLibGap;
 }
@@ -54,7 +57,7 @@ void GAP_Initialize(int              argc,
                     GAP_CallbackFunc errorCallback,
                     int              handleSignals)
 {
-    UsingLibGap = 1;
+    UsingLibGap = TRUE;
 
     InitializeGap(&argc, argv, handleSignals);
     SetExtraMarkFuncBags(markBagsCallback);
@@ -63,6 +66,20 @@ void GAP_Initialize(int              argc,
     GAP_True = True;
     GAP_False = False;
     GAP_Fail = Fail;
+}
+
+
+////
+//// Garbage collector interface
+////
+void GAP_MarkBag(Obj obj)
+{
+    MarkBag(obj);
+}
+
+void GAP_CollectBags(BOOL full)
+{
+    CollectBags(0, full);
 }
 
 
@@ -231,6 +248,66 @@ Obj GAP_CallFuncArray(Obj func, UInt narg, Obj args[])
     return result;
 }
 
+Obj GAP_CallFunc0Args(Obj func)
+{
+    Obj result;
+
+    if (TNUM_OBJ(func) == T_FUNCTION) {
+        result = CALL_0ARGS(func);
+    }
+    else {
+        Obj list = NewEmptyPlist();
+        result = DoOperation2Args(CallFuncListOper, func, list);
+    }
+
+    return result;
+}
+
+Obj GAP_CallFunc1Args(Obj func, Obj a1)
+{
+    Obj result;
+
+    if (TNUM_OBJ(func) == T_FUNCTION) {
+        result = CALL_1ARGS(func, a1);
+    }
+    else {
+        Obj list = NewPlistFromArgs(a1);
+        result = DoOperation2Args(CallFuncListOper, func, list);
+    }
+
+    return result;
+}
+
+Obj GAP_CallFunc2Args(Obj func, Obj a1, Obj a2)
+{
+    Obj result;
+
+    if (TNUM_OBJ(func) == T_FUNCTION) {
+        result = CALL_2ARGS(func, a1, a2);
+    }
+    else {
+        Obj list = NewPlistFromArgs(a1, a2);
+        result = DoOperation2Args(CallFuncListOper, func, list);
+    }
+
+    return result;
+}
+
+Obj GAP_CallFunc3Args(Obj func, Obj a1, Obj a2, Obj a3)
+{
+    Obj result;
+
+    if (TNUM_OBJ(func) == T_FUNCTION) {
+        result = CALL_3ARGS(func, a1, a2, a3);
+    }
+    else {
+        Obj list = NewPlistFromArgs(a1, a2, a3);
+        result = DoOperation2Args(CallFuncListOper, func, list);
+    }
+
+    return result;
+}
+
 
 ////
 //// floats
@@ -277,6 +354,16 @@ int GAP_IsLargeInt(Obj obj)
 Obj GAP_MakeObjInt(const UInt * limbs, Int size)
 {
     return MakeObjInt(limbs, size);
+}
+
+Obj GAP_NewObjIntFromInt(Int val)
+{
+    return ObjInt_Int(val);
+}
+
+Int GAP_ValueInt(Obj obj)
+{
+    return Int_ObjInt(obj);
 }
 
 Int GAP_SizeInt(Obj obj)
@@ -330,19 +417,49 @@ Obj GAP_NewPlist(Int capacity)
     return NEW_PLIST(T_PLIST_EMPTY, capacity);
 }
 
+static BOOL fitsInIntObj(Int i)
+{
+    return INT_INTOBJ_MIN <= i && i <= INT_INTOBJ_MAX;
+}
+
+Obj GAP_NewRange(Int len, Int low, Int inc)
+{
+    if (!inc) return GAP_Fail;
+    if (!fitsInIntObj(len)) return GAP_Fail;
+    if (!fitsInIntObj(low)) return GAP_Fail;
+    if (!fitsInIntObj(inc)) return GAP_Fail;
+    Int high = low + (len - 1) * inc;
+    if (!fitsInIntObj(high)) return GAP_Fail;
+    return NEW_RANGE(len, low, inc);
+}
+
 
 ////
 //// matrix obj
 ////
 
+static Obj IsMatrixOrMatrixObjFilt;
+static Obj IsMatrixFilt;
 static Obj IsMatrixObjFilt;
 static Obj NrRowsAttr;
 static Obj NrColsAttr;
 
+// Returns 1 if <obj> is a GAP matrix or matrix obj, 0 if not.
+int GAP_IsMatrixOrMatrixObj(Obj obj)
+{
+    return obj && CALL_1ARGS(IsMatrixOrMatrixObjFilt, obj) == True;
+}
+
+// Returns 1 if <obj> is a GAP matrix, 0 if not.
+int GAP_IsMatrix(Obj obj)
+{
+    return obj && CALL_1ARGS(IsMatrixFilt, obj) == True;
+}
+
 // Returns 1 if <obj> is a GAP matrix obj, 0 if not.
 int GAP_IsMatrixObj(Obj obj)
 {
-    return obj && DoFilter(IsMatrixObjFilt, obj) == True;
+    return obj && CALL_1ARGS(IsMatrixObjFilt, obj) == True;
 }
 
 // Returns the number of rows of the given GAP matrix obj.
@@ -353,17 +470,17 @@ UInt GAP_NrRows(Obj mat)
     return UInt_ObjInt(nrows);
 }
 
-// Returns the number of columns of the given GAP matrix obj.
-// If <mat> is not a GAP matrix obj, an error may be raised.
+// Returns the number of columns of the given GAP matrix or matrix obj.
+// If <mat> is not a GAP matrix or matrix obj, an error may be raised.
 UInt GAP_NrCols(Obj mat)
 {
     Obj ncols = CALL_1ARGS(NrColsAttr, mat);
     return UInt_ObjInt(ncols);
 }
 
-// Assign <val> at position <pos> into the GAP matrix obj <mat>.
+// Assign <val> at the <row>, <col> into the GAP matrix or matrix obj <mat>.
 // If <val> is zero, then this unbinds the list entry.
-// If <mat> is not a GAP matrix obj, an error may be raised.
+// If <mat> is not a GAP matrix or matrix obj, an error may be raised.
 void GAP_AssMat(Obj mat, UInt row, UInt col, Obj val)
 {
     Obj r = ObjInt_UInt(row);
@@ -373,8 +490,8 @@ void GAP_AssMat(Obj mat, UInt row, UInt col, Obj val)
 
 // Returns the element at the <row>, <col> in the GAP matrix obj <mat>.
 // Returns 0 if <row> or <col> are out of bounds, i.e., if either
-// is zero, or larger than the number of rows respectively columns of the list.
-// If <mat> is not a GAP matrix obj, an error may be raised.
+// is zero, or larger than the number of rows respectively columns of <mat>.
+// If <mat> is not a GAP matrix or matrix obj, an error may be raised.
 Obj GAP_ElmMat(Obj mat, UInt row, UInt col)
 {
     Obj r = ObjInt_UInt(row);
@@ -430,6 +547,11 @@ Obj GAP_MakeString(const char * string)
     return MakeString(string);
 }
 
+Obj GAP_MakeStringWithLen(const char * string, UInt len)
+{
+    return MakeStringWithLen(string, len);
+}
+
 Obj GAP_MakeImmString(const char * string)
 {
     return MakeImmString(string);
@@ -455,7 +577,7 @@ Obj GAP_CharWithValue(UChar obj)
     return ObjsChar[obj];
 }
 
-syJmp_buf * GAP_GetReadJmpError(void)
+jmp_buf * GAP_GetReadJmpError(void)
 {
     return &(STATE(ReadJmpError));
 }
@@ -489,7 +611,7 @@ void GAP_LeaveStack_(void)
 
 void GAP_EnterDebugMessage_(char * message, char * file, int line)
 {
-    fprintf(stderr, "%s: %d; %s:%d\n", message, EnterStackCount, file, line);
+    fprintf(stderr, "%s: %d; %s:%d\n", message, (int)EnterStackCount, file, line);
 }
 
 int GAP_Error_Prejmp_(const char * file, int line)
@@ -527,6 +649,8 @@ void GAP_Error_Postjmp_Returning_(void)
 */
 static Int InitKernel(StructInitInfo * module)
 {
+    InitFopyGVar("IsMatrixOrMatrixObj", &IsMatrixOrMatrixObjFilt);
+    InitFopyGVar("IsMatrix", &IsMatrixFilt);
     InitFopyGVar("IsMatrixObj", &IsMatrixObjFilt);
     InitFopyGVar("NrRows", &NrRowsAttr);
     InitFopyGVar("NrCols", &NrColsAttr);

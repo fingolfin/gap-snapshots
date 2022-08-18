@@ -184,6 +184,8 @@ than is shown here.
 <#Include Label="AtlasGroup">
 <#Include Label="AtlasSubgroup">
 <#Include Label="AtlasRepInfoRecord">
+<#Include Label="EvaluatePresentation">
+<#Include Label="StandardGeneratorsData">
 
 </Section>
 

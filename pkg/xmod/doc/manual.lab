@@ -1,0 +1,480 @@
+\GAPDocLabFile{xmod}
+\makelabel{xmod:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{xmod:Abstract}{}{X7AA6C5737B711C89}
+\makelabel{xmod:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{xmod:Acknowledgements}{}{X82A988D47DFAFCFA}
+\makelabel{xmod:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{xmod:Introduction}{1}{X7DFB63A97E67C0A1}
+\makelabel{xmod:2d-groups : crossed modules and cat1-groups}{2}{X7EB8288E8424F39F}
+\makelabel{xmod:Constructions for crossed modules}{2.1}{X7BAD9A7F7AFEEC89}
+\makelabel{xmod:Properties of crossed modules}{2.2}{X7CF622538749FE73}
+\makelabel{xmod:Pre-crossed modules}{2.3}{X7D435B6279032D4D}
+\makelabel{xmod:Cat1-groups and pre-cat1-groups}{2.4}{X7AAABC1D7E110988}
+\makelabel{xmod:Properties of cat1-groups and pre-cat1-groups}{2.5}{X8317816A8361F88C}
+\makelabel{xmod:Enumerating cat1-groups with a given source}{2.6}{X80D6CB4080417BFA}
+\makelabel{xmod:Selection of a small cat1-group}{2.7}{X7A6A70BD86DE458D}
+\makelabel{xmod:More functions for crossed modules and cat1-groups}{2.8}{X8614CDCF8063117F}
+\makelabel{xmod:The group groupoid associated to a cat1-group}{2.9}{X7CFAB044817E5E91}
+\makelabel{xmod:2d-mappings}{3}{X815144D67C1D1AE3}
+\makelabel{xmod:Morphisms of 2-dimensional groups}{3.1}{X7BBEA95E7AE1F317}
+\makelabel{xmod:Morphisms of pre-crossed modules}{3.2}{X78CADE4D7EB1EA44}
+\makelabel{xmod:Morphisms of pre-cat1-groups}{3.3}{X84DDF8247FC4982B}
+\makelabel{xmod:Operations on morphisms}{3.4}{X7B09A28579707CAF}
+\makelabel{xmod:Quasi-isomorphisms}{3.5}{X79C47E3D7855A117}
+\makelabel{xmod:Isoclinism of groups and crossed modules}{4}{X802AFE8E7EDB435E}
+\makelabel{xmod:More operations for crossed modules}{4.1}{X7E373BF3836B3A9C}
+\makelabel{xmod:Isoclinism for groups}{4.2}{X7B0D511A82FD945E}
+\makelabel{xmod:Isoclinism for crossed modules}{4.3}{X81338C977972AD83}
+\makelabel{xmod:Whitehead group of a crossed module}{5}{X85CD9A43847AE1B8}
+\makelabel{xmod:Derivations and Sections}{5.1}{X7C01AE7783898705}
+\makelabel{xmod:Whitehead Groups and Monoids}{5.2}{X83886F9484B44B03}
+\makelabel{xmod:Actors of 2d-groups}{6}{X84C872BB7F1E5F25}
+\makelabel{xmod:Actor of a crossed module}{6.1}{X7B853602873FC7AB}
+\makelabel{xmod:Induced constructions}{7}{X8339DF98872D2E1C}
+\makelabel{xmod:Coproducts of crossed modules}{7.1}{X80D3C8F97A10D5E5}
+\makelabel{xmod:Induced crossed modules}{7.2}{X7966FF497C36C465}
+\makelabel{xmod:Induced cat1-groups}{7.3}{X814A695779706E22}
+\makelabel{xmod:Crossed squares and Cat2-groups}{8}{X780368C083C76EDC}
+\makelabel{xmod:Definition of a crossed square and a crossed n-cube of groups}{8.1}{X7C4AFE8D85848C8F}
+\makelabel{xmod:Constructions for crossed squares}{8.2}{X820A7D30847BC828}
+\makelabel{xmod:Morphisms of crossed squares}{8.3}{X78A79A7E85128C7B}
+\makelabel{xmod:Definitions and constructions for cat2-groups and their morphisms}{8.4}{X86D5AA247B64ED51}
+\makelabel{xmod:Enumerating cat2-groups with a given source}{8.5}{X80FB2B328578DE42}
+\makelabel{xmod:Crossed cubes and Cat3-groups}{9}{X8637AC3D861E241A}
+\makelabel{xmod:Functions for (pre-)cat3-groups}{9.1}{X7CC52AF4840F478E}
+\makelabel{xmod:Enumerating cat3-groups with a given source}{9.2}{X80E074E37D02B2F6}
+\makelabel{xmod:Definition and constructions for catn-groups and their morphisms}{9.3}{X7F8538B580847268}
+\makelabel{xmod:Crossed modules of groupoids}{10}{X80B3A81B7E5CA3A9}
+\makelabel{xmod:Constructions for crossed modules of groupoids}{10.1}{X847F4ED77F50528C}
+\makelabel{xmod:Applications}{11}{X7DD7F0847FF2B96C}
+\makelabel{xmod:Free Loop Spaces}{11.1}{X8575260A80F735BD}
+\makelabel{xmod:Interaction with HAP}{12}{X81EC8C8A82C15298}
+\makelabel{xmod:Calling HAP functions}{12.1}{X865CE53A827FBE6F}
+\makelabel{xmod:Utility functions}{13}{X810FFB1C8035C8BE}
+\makelabel{xmod:Mappings}{13.1}{X7C9734B880042C73}
+\makelabel{xmod:Abelian Modules}{13.2}{X852BD9CA84C2AFF0}
+\makelabel{xmod:Development history}{14}{X810C43BC7F63C4B4}
+\makelabel{xmod:Changes from version to version}{14.1}{X7ACE7E8384B73156}
+\makelabel{xmod:Version 1 for GAP 3}{14.1.1}{X848198AA862249C4}
+\makelabel{xmod:Version 2}{14.1.2}{X7CF8E72D80AAB54F}
+\makelabel{xmod:Version 2.001 for GAP 4}{14.1.3}{X7F9CE0487BB6F660}
+\makelabel{xmod:Induced crossed modules}{14.1.4}{X7966FF497C36C465}
+\makelabel{xmod:Versions 2.002 -- 2.006}{14.1.5}{X7E0B70FD82DC5BA8}
+\makelabel{xmod:Versions 2.007 -- 2.010}{14.1.6}{X7F6E650E85384C25}
+\makelabel{xmod:Versions for GAP [4.5 .. 4.11]}{14.2}{X821A76C778540C6B}
+\makelabel{xmod:AllCat1s}{14.2.1}{X794BBE42839F2E18}
+\makelabel{xmod:Versions 2.43 - 2.56}{14.2.2}{X78C26CC27D48B1A8}
+\makelabel{xmod:Version 2.61}{14.2.3}{X8715310378F0F8D2}
+\makelabel{xmod:Version 2.63 - 2.74}{14.2.4}{X87993A637E468792}
+\makelabel{xmod:Version 2.75 - 2.85}{14.2.5}{X8581897A7EB46273}
+\makelabel{xmod:Version 2.86 - 2.87}{14.2.6}{X7E7203EB87B9407F}
+\makelabel{xmod:What needs doing next?}{14.3}{X83D1530487593182}
+\makelabel{xmod:Bibliography}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{xmod:References}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{xmod:Index}{Ind}{X83A0356F839C696F}
+\makelabel{xmod:InfoXMod}{1}{X7DFB63A97E67C0A1}
+\makelabel{xmod:2d-domain}{2}{X7EB8288E8424F39F}
+\makelabel{xmod:2d-group}{2}{X7EB8288E8424F39F}
+\makelabel{xmod:crossed module}{2.1}{X7BAD9A7F7AFEEC89}
+\makelabel{xmod:XMod}{2.1.1}{X7C8175AE7F76B586}
+\makelabel{xmod:XModByBoundaryAndAction}{2.1.1}{X7C8175AE7F76B586}
+\makelabel{xmod:XModByNormalSubgroup}{2.1.2}{X83050ED686776933}
+\makelabel{xmod:XModByTrivialAction}{2.1.3}{X867B2D53832EF05E}
+\makelabel{xmod:XModByAutomorphismGroup}{2.1.4}{X78B14FDA817CCEEF}
+\makelabel{xmod:XModByInnerAutomorphismGroup}{2.1.4}{X78B14FDA817CCEEF}
+\makelabel{xmod:XModByGroupOfAutomorphisms}{2.1.4}{X78B14FDA817CCEEF}
+\makelabel{xmod:XModByCentralExtension}{2.1.5}{X7D0F6FAA7AF69844}
+\makelabel{xmod:XModByPullback}{2.1.6}{X84FA2B0A795B6997}
+\makelabel{xmod:XModByAbelianModule}{2.1.7}{X824631577864961E}
+\makelabel{xmod:DirectProduct for crossed modules}{2.1.8}{X81704DFB795C0D29}
+\makelabel{xmod:Source for crossed modules}{2.1.9}{X790248A67CB9C33A}
+\makelabel{xmod:Range for crossed modules}{2.1.9}{X790248A67CB9C33A}
+\makelabel{xmod:Boundary for crossed modules}{2.1.9}{X790248A67CB9C33A}
+\makelabel{xmod:XModAction for crossed modules of groups}{2.1.9}{X790248A67CB9C33A}
+\makelabel{xmod:AutoGroup}{2.1.9}{X790248A67CB9C33A}
+\makelabel{xmod:ImageElmXModAction}{2.1.10}{X7AF6602C87845F1D}
+\makelabel{xmod:Size2d for crossed modules}{2.1.11}{X7846A7D37957B89E}
+\makelabel{xmod:Name for crossed modules}{2.1.12}{X85516B19803C01C0}
+\makelabel{xmod:IdGroup for crossed modules}{2.1.12}{X85516B19803C01C0}
+\makelabel{xmod:ExternalSetXMod}{2.1.12}{X85516B19803C01C0}
+\makelabel{xmod:Display for a 2d-group}{2.1.12}{X85516B19803C01C0}
+\makelabel{xmod:Is2DimensionalDomain}{2.2}{X7CF622538749FE73}
+\makelabel{xmod:Is2DimensionalGroup}{2.2}{X7CF622538749FE73}
+\makelabel{xmod:IsTrivialAction2DimensionalGroup}{2.2}{X7CF622538749FE73}
+\makelabel{xmod:IsNormalSubgroup2DimensionalGroup}{2.2}{X7CF622538749FE73}
+\makelabel{xmod:IsCentralExtension2DimensionalGroup}{2.2}{X7CF622538749FE73}
+\makelabel{xmod:IsAutomorphismGroup2DimensionalGroup}{2.2}{X7CF622538749FE73}
+\makelabel{xmod:IsAbelianModule2DimensionalGroup}{2.2}{X7CF622538749FE73}
+\makelabel{xmod:IsXMod}{2.2.1}{X7E77E6B881B1CE50}
+\makelabel{xmod:IsPreXMod}{2.2.1}{X7E77E6B881B1CE50}
+\makelabel{xmod:IsPerm2DimensionalGroup}{2.2.1}{X7E77E6B881B1CE50}
+\makelabel{xmod:IsPc2DimensionalGroup}{2.2.1}{X7E77E6B881B1CE50}
+\makelabel{xmod:IsFp2DimensionalGroup}{2.2.1}{X7E77E6B881B1CE50}
+\makelabel{xmod:IsNormal for crossed modules}{2.2.1}{X7E77E6B881B1CE50}
+\makelabel{xmod:SubXMod}{2.2.2}{X7884284383284A87}
+\makelabel{xmod:TrivialSubXMod}{2.2.2}{X7884284383284A87}
+\makelabel{xmod:NormalSubXMods}{2.2.2}{X7884284383284A87}
+\makelabel{xmod:KernelCokernelXMod}{2.2.3}{X7D8165F77B23BCF6}
+\makelabel{xmod:pre-crossed module}{2.3}{X7D435B6279032D4D}
+\makelabel{xmod:PreXModByBoundaryAndAction}{2.3.1}{X8487BE427858C5C9}
+\makelabel{xmod:SubPreXMod}{2.3.1}{X8487BE427858C5C9}
+\makelabel{xmod:Peiffer subgroup}{2.3.1}{X8487BE427858C5C9}
+\makelabel{xmod:PeifferSubgroup}{2.3.2}{X8527F4C07A8F359E}
+\makelabel{xmod:XModByPeifferQuotient}{2.3.2}{X8527F4C07A8F359E}
+\makelabel{xmod:cat1-group}{2.4}{X7AAABC1D7E110988}
+\makelabel{xmod:Cat1Group}{2.4.1}{X7CF4C37F87D27EBA}
+\makelabel{xmod:PreCat1Group}{2.4.1}{X7CF4C37F87D27EBA}
+\makelabel{xmod:PreCat1GroupByTailHeadEmbedding}{2.4.1}{X7CF4C37F87D27EBA}
+\makelabel{xmod:PreCat1GroupWithIdentityEmbedding}{2.4.1}{X7CF4C37F87D27EBA}
+\makelabel{xmod:Source for cat1-groups}{2.4.2}{X7C4FFC4086531157}
+\makelabel{xmod:Range for cat1-groups}{2.4.2}{X7C4FFC4086531157}
+\makelabel{xmod:TailMap}{2.4.2}{X7C4FFC4086531157}
+\makelabel{xmod:HeadMap}{2.4.2}{X7C4FFC4086531157}
+\makelabel{xmod:RangeEmbedding}{2.4.2}{X7C4FFC4086531157}
+\makelabel{xmod:KernelEmbedding}{2.4.2}{X7C4FFC4086531157}
+\makelabel{xmod:Boundary for cat1-groups}{2.4.2}{X7C4FFC4086531157}
+\makelabel{xmod:Name for cat1-groups}{2.4.2}{X7C4FFC4086531157}
+\makelabel{xmod:Size2d for cat1-groups}{2.4.2}{X7C4FFC4086531157}
+\makelabel{xmod:DiagonalCat1Group}{2.4.3}{X79944C7B87F767FD}
+\makelabel{xmod:TransposeCat1Group}{2.4.4}{X79385660821E54A3}
+\makelabel{xmod:TransposeIsomorphism}{2.4.4}{X79385660821E54A3}
+\makelabel{xmod:Cat1GroupByPeifferQuotient}{2.4.5}{X87544FAD873672E1}
+\makelabel{xmod:SubCat1Group}{2.4.6}{X85D9C5F881DBA9FC}
+\makelabel{xmod:SubPreCat1Group}{2.4.6}{X85D9C5F881DBA9FC}
+\makelabel{xmod:DirectProduct for cat1-groups}{2.4.7}{X7CE4F14585F6D473}
+\makelabel{xmod:IsCat1Group}{2.5.1}{X78E03FAB84A57D03}
+\makelabel{xmod:IsPreXCat1Group}{2.5.1}{X78E03FAB84A57D03}
+\makelabel{xmod:IsIdentityCat1Group}{2.5.1}{X78E03FAB84A57D03}
+\makelabel{xmod:IsPreCat1GroupWithIdentityEmbedding}{2.5.2}{X7B7CF88F83B0129D}
+\makelabel{xmod:IsomorphicPreCat1GroupWithIdentityEmbedding}{2.5.2}{X7B7CF88F83B0129D}
+\makelabel{xmod:IsomorphismToPreCat1GroupWithIdentityEmbedding}{2.5.2}{X7B7CF88F83B0129D}
+\makelabel{xmod:Cat1GroupOfXMod}{2.5.3}{X82F10A59867C765D}
+\makelabel{xmod:XModOfCat1Group}{2.5.3}{X82F10A59867C765D}
+\makelabel{xmod:PreCat1GroupRecordOfPreXMod}{2.5.3}{X82F10A59867C765D}
+\makelabel{xmod:PreXModRecordOfPreCat1Group}{2.5.3}{X82F10A59867C765D}
+\makelabel{xmod:AllCat1GroupsWithImage}{2.6.1}{X7BDEBBF17CE6A6D4}
+\makelabel{xmod:AllCat1GroupsWithImageIterator}{2.6.1}{X7BDEBBF17CE6A6D4}
+\makelabel{xmod:AllCat1GroupsWithImageNumber}{2.6.1}{X7BDEBBF17CE6A6D4}
+\makelabel{xmod:AllCat1GroupsWithImageUpToIsomorphism}{2.6.1}{X7BDEBBF17CE6A6D4}
+\makelabel{xmod:AllCat1GroupsMatrix}{2.6.2}{X7FBFC8C87FC1AC5A}
+\makelabel{xmod:AllCat1GroupsIterator}{2.6.3}{X7FEB2FCE7D9ADA85}
+\makelabel{xmod:AllCat1GroupsUpToIsomorphism}{2.6.3}{X7FEB2FCE7D9ADA85}
+\makelabel{xmod:AllCat1Groups}{2.6.3}{X7FEB2FCE7D9ADA85}
+\makelabel{xmod:CatnGroupNumbers for cat1-groups}{2.6.4}{X7C6346A17FEEDFA1}
+\makelabel{xmod:CatnGroupLists for cat1-groups}{2.6.4}{X7C6346A17FEEDFA1}
+\makelabel{xmod:InitCatnGroupRecords}{2.6.4}{X7C6346A17FEEDFA1}
+\makelabel{xmod:selection of a small cat1-group}{2.7}{X7A6A70BD86DE458D}
+\makelabel{xmod:CAT1LISTMAXSIZE}{2.7}{X7A6A70BD86DE458D}
+\makelabel{xmod:CAT1LISTNUMBERS}{2.7}{X7A6A70BD86DE458D}
+\makelabel{xmod:Cat1Select}{2.7.1}{X7B8E67D880E380C8}
+\makelabel{xmod:IdGroup for 2d-groups}{2.8.1}{X7831DB527CF9DD57}
+\makelabel{xmod:StructureDescription for 2d-groups}{2.8.1}{X7831DB527CF9DD57}
+\makelabel{xmod:IsSubXMod}{2.8.2}{X83BBC6818168C282}
+\makelabel{xmod:IsSubPreXMod}{2.8.2}{X83BBC6818168C282}
+\makelabel{xmod:IsSubCat1Group}{2.8.2}{X83BBC6818168C282}
+\makelabel{xmod:IsSubPreCat1Group}{2.8.2}{X83BBC6818168C282}
+\makelabel{xmod:IsSub2DimensionalGroup}{2.8.2}{X83BBC6818168C282}
+\makelabel{xmod:GroupGroupoid}{2.9.1}{X7AF5AF668331321E}
+\makelabel{xmod:GroupGroupoidElement}{2.9.2}{X8578AB6D7C1FC4F3}
+\makelabel{xmod:2d-mapping}{3}{X815144D67C1D1AE3}
+\makelabel{xmod:morphism of 2d-group}{3.1}{X7BBEA95E7AE1F317}
+\makelabel{xmod:crossed module morphism}{3.1}{X7BBEA95E7AE1F317}
+\makelabel{xmod:Source for 2d-group mappings}{3.1.1}{X7FFD094F7FFB1F17}
+\makelabel{xmod:Range for 2d-group mappings}{3.1.1}{X7FFD094F7FFB1F17}
+\makelabel{xmod:SourceHom}{3.1.1}{X7FFD094F7FFB1F17}
+\makelabel{xmod:RangeHom}{3.1.1}{X7FFD094F7FFB1F17}
+\makelabel{xmod:morphism}{3.2}{X78CADE4D7EB1EA44}
+\makelabel{xmod:IsXModMorphism}{3.2.1}{X82B912B18127A42A}
+\makelabel{xmod:IsPreXModMorphism}{3.2.1}{X82B912B18127A42A}
+\makelabel{xmod:IsInjective for pre-xmod morphisms}{3.2.2}{X7E078F497F4EFA9F}
+\makelabel{xmod:IsSurjective for pre-xmod morphisms}{3.2.2}{X7E078F497F4EFA9F}
+\makelabel{xmod:IsSingleValued for pre-xmod morphisms}{3.2.2}{X7E078F497F4EFA9F}
+\makelabel{xmod:IsTotal for pre-xmod morphisms}{3.2.2}{X7E078F497F4EFA9F}
+\makelabel{xmod:IsBijective for pre-xmod morphisms}{3.2.2}{X7E078F497F4EFA9F}
+\makelabel{xmod:IsEndo2DimensionalMapping}{3.2.2}{X7E078F497F4EFA9F}
+\makelabel{xmod:XModMorphism}{3.2.3}{X7CEABD6487CF2A38}
+\makelabel{xmod:XModMorphismByGroupHomomorphisms}{3.2.3}{X7CEABD6487CF2A38}
+\makelabel{xmod:PreXModMorphism}{3.2.3}{X7CEABD6487CF2A38}
+\makelabel{xmod:PreXModMorphismByGroupHomomorphisms}{3.2.3}{X7CEABD6487CF2A38}
+\makelabel{xmod:InclusionMorphism2DimensionalDomains for crossed modules}{3.2.3}{X7CEABD6487CF2A38}
+\makelabel{xmod:InnerAutomorphismXMod}{3.2.3}{X7CEABD6487CF2A38}
+\makelabel{xmod:IdentityMapping for pre-xmods}{3.2.3}{X7CEABD6487CF2A38}
+\makelabel{xmod:display a 2d-mapping}{3.2.3}{X7CEABD6487CF2A38}
+\makelabel{xmod:order of a 2d-automorphism}{3.2.3}{X7CEABD6487CF2A38}
+\makelabel{xmod:IsomorphismPerm2DimensionalGroup for pre-xmod morphisms}{3.2.4}{X854FC0C781AD62EC}
+\makelabel{xmod:IsomorphismPc2DimensionalGroup for pre-xmod morphisms}{3.2.4}{X854FC0C781AD62EC}
+\makelabel{xmod:IsomorphismByIsomorphisms}{3.2.4}{X854FC0C781AD62EC}
+\makelabel{xmod:MorphismOfPullback for a crossed module by pullback}{3.2.5}{X87BCAAF787A7FF69}
+\makelabel{xmod:IsCat1GroupMorphism}{3.3.1}{X7C47D0EC782D4C40}
+\makelabel{xmod:IsPreCat1GroupMorphism}{3.3.1}{X7C47D0EC782D4C40}
+\makelabel{xmod:Cat1GroupMorphism}{3.3.1}{X7C47D0EC782D4C40}
+\makelabel{xmod:Cat1GroupMorphismByGroupHomomorphisms}{3.3.1}{X7C47D0EC782D4C40}
+\makelabel{xmod:PreCat1GroupMorphism}{3.3.1}{X7C47D0EC782D4C40}
+\makelabel{xmod:PreCat1GroupMorphismByGroupHomomorphisms}{3.3.1}{X7C47D0EC782D4C40}
+\makelabel{xmod:InclusionMorphism2DimensionalDomains for cat1-groups}{3.3.1}{X7C47D0EC782D4C40}
+\makelabel{xmod:InnerAutomorphismCat1}{3.3.1}{X7C47D0EC782D4C40}
+\makelabel{xmod:IdentityMapping for precat1-morphisms}{3.3.1}{X7C47D0EC782D4C40}
+\makelabel{xmod:Cat1GroupMorphismOfXModMorphism}{3.3.2}{X7D7459E67B568B44}
+\makelabel{xmod:XModMorphismOfCat1GroupMorphism}{3.3.2}{X7D7459E67B568B44}
+\makelabel{xmod:IsomorphismPermObject}{3.3.3}{X7C6AF7C285D546B2}
+\makelabel{xmod:IsomorphismPerm2DimensionalGroup for pre-cat1 morphisms}{3.3.3}{X7C6AF7C285D546B2}
+\makelabel{xmod:IsomorphismFp2DimensionalGroup for pre-cat1 morphisms}{3.3.3}{X7C6AF7C285D546B2}
+\makelabel{xmod:IsomorphismPc2DimensionalGroup for pre-cat1 morphisms}{3.3.3}{X7C6AF7C285D546B2}
+\makelabel{xmod:SmallerDegreePermutationRepresentation2DimensionalGroup for perm 2d-groups}{3.3.4}{X837B0299846C2391}
+\makelabel{xmod:operations on morphisms}{3.4}{X7B09A28579707CAF}
+\makelabel{xmod:CompositionMorphism}{3.4.1}{X811F886081AAB95F}
+\makelabel{xmod:Kernel for 2d-mappings}{3.4.2}{X83C3A2478159DE76}
+\makelabel{xmod:Kernel2DimensionalMapping}{3.4.2}{X83C3A2478159DE76}
+\makelabel{xmod:quasi isomorphisms}{3.5}{X79C47E3D7855A117}
+\makelabel{xmod:QuotientQuasiIsomorphism}{3.5.1}{X86F08B1981618400}
+\makelabel{xmod:SubQuasiIsomorphism}{3.5.2}{X7C4C1C587B8932A7}
+\makelabel{xmod:QuasiIsomorphism}{3.5.3}{X83365AF2812E5C04}
+\makelabel{xmod:FactorPreXMod}{4.1.1}{X873ED97185D9176E}
+\makelabel{xmod:NaturalMorphismByNormalSubPreXMod}{4.1.1}{X873ED97185D9176E}
+\makelabel{xmod:IntersectionSubXMods}{4.1.2}{X8591E25680C5C575}
+\makelabel{xmod:Displacement}{4.1.3}{X7E20208279038BB8}
+\makelabel{xmod:DisplacementGroup}{4.1.3}{X7E20208279038BB8}
+\makelabel{xmod:DisplacementSubgroup}{4.1.3}{X7E20208279038BB8}
+\makelabel{xmod:CommutatorSubXMod}{4.1.4}{X86ACB83E7D70C625}
+\makelabel{xmod:CrossActionSubgroup}{4.1.4}{X86ACB83E7D70C625}
+\makelabel{xmod:DerivedSubXMod}{4.1.5}{X86E0804B780A7FD6}
+\makelabel{xmod:FixedPointSubgroupXMod}{4.1.6}{X85640DD17F5A2949}
+\makelabel{xmod:StabilizerSubgroupXMod}{4.1.6}{X85640DD17F5A2949}
+\makelabel{xmod:CentreXMod}{4.1.7}{X7B57446086BA1BF0}
+\makelabel{xmod:Centralizer}{4.1.7}{X7B57446086BA1BF0}
+\makelabel{xmod:Normalizer}{4.1.7}{X7B57446086BA1BF0}
+\makelabel{xmod:CentralQuotient}{4.1.8}{X814D9E1E78EEE665}
+\makelabel{xmod:IsAbelian2DimensionalGroup}{4.1.9}{X7F4222757B0E08B6}
+\makelabel{xmod:IsAspherical2DimensionalGroup}{4.1.9}{X7F4222757B0E08B6}
+\makelabel{xmod:IsSimplyConnected2DimensionalGroup}{4.1.9}{X7F4222757B0E08B6}
+\makelabel{xmod:IsFaithful2DimensionalGroup}{4.1.9}{X7F4222757B0E08B6}
+\makelabel{xmod:LowerCentralSeriesOfXMod}{4.1.10}{X87C524C08588AAC0}
+\makelabel{xmod:IsNilpotent2DimensionalGroup}{4.1.10}{X87C524C08588AAC0}
+\makelabel{xmod:NilpotencyClass2DimensionalGroup}{4.1.10}{X87C524C08588AAC0}
+\makelabel{xmod:IsomorphismXMods}{4.1.11}{X7C67623F797A0301}
+\makelabel{xmod:AllXMods}{4.1.12}{X81EE2188863E6E85}
+\makelabel{xmod:AllXModsWithGroups}{4.1.12}{X81EE2188863E6E85}
+\makelabel{xmod:AllXModsUpToIsomorphism}{4.1.12}{X81EE2188863E6E85}
+\makelabel{xmod:IsomorphismClassRepresentatives2dGroups}{4.1.12}{X81EE2188863E6E85}
+\makelabel{xmod:Isoclinism for groups}{4.2.1}{X7B0D511A82FD945E}
+\makelabel{xmod:AreIsoclinicDomains for groups}{4.2.1}{X7B0D511A82FD945E}
+\makelabel{xmod:IsStemDomain for groups}{4.2.2}{X7C72991985B58DB8}
+\makelabel{xmod:IsoclinicStemDomain for groups}{4.2.2}{X7C72991985B58DB8}
+\makelabel{xmod:AllStemGroupIds}{4.2.2}{X7C72991985B58DB8}
+\makelabel{xmod:AllStemGroupFamilies}{4.2.2}{X7C72991985B58DB8}
+\makelabel{xmod:IsoclinicRank for groups}{4.2.3}{X82DD52587F81C95C}
+\makelabel{xmod:IsoclinicMiddleLength for groups}{4.2.3}{X82DD52587F81C95C}
+\makelabel{xmod:Isoclinism for crossed modules}{4.3.1}{X81338C977972AD83}
+\makelabel{xmod:AreIsoclinicDomains for crossed modules of groups}{4.3.1}{X81338C977972AD83}
+\makelabel{xmod:IsStemDomain for crossed modules of groups}{4.3.2}{X7E86DCB083CA5915}
+\makelabel{xmod:IsoclinicStemDomain for crossed modules of groups}{4.3.2}{X7E86DCB083CA5915}
+\makelabel{xmod:IsoclinicRank for crossed modules of groups}{4.3.3}{X820C412679910975}
+\makelabel{xmod:IsoclinicMiddleLength for crossed modules of groups}{4.3.3}{X820C412679910975}
+\makelabel{xmod:up 2d-mapping of 2d-group}{5}{X85CD9A43847AE1B8}
+\makelabel{xmod:derivation, of crossed module}{5.1}{X7C01AE7783898705}
+\makelabel{xmod:Whitehead monoid}{5.1}{X7C01AE7783898705}
+\makelabel{xmod:regular derivation}{5.1}{X7C01AE7783898705}
+\makelabel{xmod:Whitehead group}{5.1}{X7C01AE7783898705}
+\makelabel{xmod:section, of cat1-group}{5.1}{X7C01AE7783898705}
+\makelabel{xmod:Whitehead multiplication}{5.1}{X7C01AE7783898705}
+\makelabel{xmod:DerivationByImages}{5.1.1}{X83EC6F7780F5636E}
+\makelabel{xmod:IsDerivation}{5.1.1}{X83EC6F7780F5636E}
+\makelabel{xmod:IsUp2DimensionalMapping}{5.1.1}{X83EC6F7780F5636E}
+\makelabel{xmod:UpImagePositions}{5.1.1}{X83EC6F7780F5636E}
+\makelabel{xmod:UpGeneratorImages}{5.1.1}{X83EC6F7780F5636E}
+\makelabel{xmod:PrincipalDerivation}{5.1.2}{X7F119F9580C150B1}
+\makelabel{xmod:SectionByHomomorphism}{5.1.3}{X7E1C72897CD31D66}
+\makelabel{xmod:IsSection}{5.1.3}{X7E1C72897CD31D66}
+\makelabel{xmod:SectionByDerivation}{5.1.3}{X7E1C72897CD31D66}
+\makelabel{xmod:DerivationBySection}{5.1.3}{X7E1C72897CD31D66}
+\makelabel{xmod:IdentityDerivation}{5.1.4}{X87D9F7257DFF0236}
+\makelabel{xmod:IdentitySection}{5.1.4}{X87D9F7257DFF0236}
+\makelabel{xmod:WhiteheadProduct}{5.1.5}{X7AD6E23F8254F400}
+\makelabel{xmod:WhiteheadOrder}{5.1.5}{X7AD6E23F8254F400}
+\makelabel{xmod:IsMonoidOfUp2DimensionalMappingsObj}{5.2}{X83886F9484B44B03}
+\makelabel{xmod:AllDerivations}{5.2.1}{X788884E48534F7CB}
+\makelabel{xmod:ImagesTable}{5.2.1}{X788884E48534F7CB}
+\makelabel{xmod:DerivationClass}{5.2.1}{X788884E48534F7CB}
+\makelabel{xmod:WhiteheadMonoidTable}{5.2.1}{X788884E48534F7CB}
+\makelabel{xmod:WhiteheadTransformationMonoid}{5.2.1}{X788884E48534F7CB}
+\makelabel{xmod:RegularDerivations}{5.2.2}{X84CD856C84BDB019}
+\makelabel{xmod:ImagesList}{5.2.2}{X84CD856C84BDB019}
+\makelabel{xmod:WhiteheadGroupTable}{5.2.2}{X84CD856C84BDB019}
+\makelabel{xmod:WhiteheadPermGroup}{5.2.2}{X84CD856C84BDB019}
+\makelabel{xmod:PrincipalDerivations}{5.2.3}{X8452E45878691CD3}
+\makelabel{xmod:AllSections}{5.2.4}{X813CAA17855172E4}
+\makelabel{xmod:RegularSections}{5.2.4}{X813CAA17855172E4}
+\makelabel{xmod:actor}{6.1}{X7B853602873FC7AB}
+\makelabel{xmod:AutomorphismPermGroup}{6.1.1}{X80F121357F06E72D}
+\makelabel{xmod:GeneratingAutomorphisms}{6.1.1}{X80F121357F06E72D}
+\makelabel{xmod:PermAutomorphismAsXModMorphism}{6.1.1}{X80F121357F06E72D}
+\makelabel{xmod:WhiteheadXMod}{6.1.2}{X790EBC7C7D320C03}
+\makelabel{xmod:LueXMod}{6.1.2}{X790EBC7C7D320C03}
+\makelabel{xmod:NorrieXMod}{6.1.2}{X790EBC7C7D320C03}
+\makelabel{xmod:ActorXMod}{6.1.2}{X790EBC7C7D320C03}
+\makelabel{xmod:crossed square}{6.1.2}{X790EBC7C7D320C03}
+\makelabel{xmod:XModCentre}{6.1.3}{X85CF21F57F0F1329}
+\makelabel{xmod:InnerActorXMod}{6.1.3}{X85CF21F57F0F1329}
+\makelabel{xmod:InnerMorphism}{6.1.3}{X85CF21F57F0F1329}
+\makelabel{xmod:CoproductXMod}{7.1.1}{X7C01F5D98046E44B}
+\makelabel{xmod:CoproductInfo}{7.1.1}{X7C01F5D98046E44B}
+\makelabel{xmod:induced crossed module}{7.2}{X7966FF497C36C465}
+\makelabel{xmod:InducedXMod}{7.2.1}{X874CB2A278AADE3A}
+\makelabel{xmod:IsInducedXMod}{7.2.1}{X874CB2A278AADE3A}
+\makelabel{xmod:InducedXModBySurjection}{7.2.1}{X874CB2A278AADE3A}
+\makelabel{xmod:InducedXModByCopower}{7.2.1}{X874CB2A278AADE3A}
+\makelabel{xmod:MorphismOfInducedXMod}{7.2.1}{X874CB2A278AADE3A}
+\makelabel{xmod:AllInducedXMods}{7.2.2}{X7B24D47F8078540F}
+\makelabel{xmod:induced cat1-groups}{7.3}{X814A695779706E22}
+\makelabel{xmod:InducedCat1Group}{7.3.1}{X7BCE57BE7F6E6B08}
+\makelabel{xmod:InducedCat1GroupByFreeProduct}{7.3.1}{X7BCE57BE7F6E6B08}
+\makelabel{xmod:3d-group}{8}{X780368C083C76EDC}
+\makelabel{xmod:3d-domain}{8}{X780368C083C76EDC}
+\makelabel{xmod:crossed square}{8.1}{X7C4AFE8D85848C8F}
+\makelabel{xmod:crossed pairing}{8.1}{X7C4AFE8D85848C8F}
+\makelabel{xmod:CrossedSquareByXMods}{8.2.1}{X866A7FAC7FCB62C2}
+\makelabel{xmod:PreCrossedSquareByPreXMods}{8.2.1}{X866A7FAC7FCB62C2}
+\makelabel{xmod:Display for a 3d-group}{8.2.1}{X866A7FAC7FCB62C2}
+\makelabel{xmod:Size3d for 3d-objects}{8.2.2}{X7FA98BD47FF9B044}
+\makelabel{xmod:CrossedSquareByNormalSubgroups}{8.2.3}{X7896DAF786F46234}
+\makelabel{xmod:CrossedPairingByCommutators}{8.2.3}{X7896DAF786F46234}
+\makelabel{xmod:CrossedSquareByNormalSubXMod}{8.2.4}{X7FA367977B1895A7}
+\makelabel{xmod:CrossedPairingBySingleXModAction}{8.2.4}{X7FA367977B1895A7}
+\makelabel{xmod:ActorCrossedSquare}{8.2.5}{X833362FE87ED3C48}
+\makelabel{xmod:CrossedPairingByDerivations}{8.2.5}{X833362FE87ED3C48}
+\makelabel{xmod:CrossedSquareByAutomorphismGroup}{8.2.6}{X82E4EA93824F7B26}
+\makelabel{xmod:CrossedPairingByConjugators}{8.2.6}{X82E4EA93824F7B26}
+\makelabel{xmod:CrossedSquareByPullback}{8.2.7}{X839E065783795CB8}
+\makelabel{xmod:CrossedSquareByXModSplitting}{8.2.8}{X7F5554907AF73190}
+\makelabel{xmod:CrossedPairingByPreImages}{8.2.8}{X7F5554907AF73190}
+\makelabel{xmod:CrossedSquare}{8.2.9}{X87FBE3CE87DC8CD5}
+\makelabel{xmod:Transpose3DimensionalGroup for crossed squares}{8.2.10}{X7F94830681EA19BE}
+\makelabel{xmod:CentralQuotient for crossed modules}{8.2.11}{X7C2647CB82DDD065}
+\makelabel{xmod:IsCrossedSquare}{8.2.12}{X8645AA3686F126D5}
+\makelabel{xmod:IsPreCrossedSquare}{8.2.12}{X8645AA3686F126D5}
+\makelabel{xmod:Is3dObject}{8.2.12}{X8645AA3686F126D5}
+\makelabel{xmod:IsPerm3dObject}{8.2.12}{X8645AA3686F126D5}
+\makelabel{xmod:IsPc3dObject}{8.2.12}{X8645AA3686F126D5}
+\makelabel{xmod:IsFp3dObject}{8.2.12}{X8645AA3686F126D5}
+\makelabel{xmod:Up2DimensionalGroup}{8.2.13}{X8679A5EC79200323}
+\makelabel{xmod:Left2DimensionalGroup}{8.2.13}{X8679A5EC79200323}
+\makelabel{xmod:Down2DimensionalGroup}{8.2.13}{X8679A5EC79200323}
+\makelabel{xmod:Right2DimensionalGroup}{8.2.13}{X8679A5EC79200323}
+\makelabel{xmod:DiagonalAction}{8.2.13}{X8679A5EC79200323}
+\makelabel{xmod:Diagonal2DimensionalGroup}{8.2.13}{X8679A5EC79200323}
+\makelabel{xmod:Name}{8.2.13}{X8679A5EC79200323}
+\makelabel{xmod:IsSymmetric3DimensionalGroup}{8.2.14}{X7F81DA90820F4405}
+\makelabel{xmod:IsAbelian3DimensionalGroup}{8.2.14}{X7F81DA90820F4405}
+\makelabel{xmod:IsTrivialAction3DimensionalGroup}{8.2.14}{X7F81DA90820F4405}
+\makelabel{xmod:IsNormalSub3DimensionalGroup}{8.2.14}{X7F81DA90820F4405}
+\makelabel{xmod:IsCentralExtension3DimensionalGroup}{8.2.14}{X7F81DA90820F4405}
+\makelabel{xmod:IsAutomorphismGroup3DimensionalGroup}{8.2.14}{X7F81DA90820F4405}
+\makelabel{xmod:CrossedPairing}{8.2.15}{X7CCAFF6A83FE7943}
+\makelabel{xmod:CrossedPairingMap}{8.2.15}{X7CCAFF6A83FE7943}
+\makelabel{xmod:ImageElmCrossedPairing}{8.2.15}{X7CCAFF6A83FE7943}
+\makelabel{xmod:Mapping2ArgumentsByFunction}{8.2.15}{X7CCAFF6A83FE7943}
+\makelabel{xmod:morphism of 3d-group}{8.3}{X78A79A7E85128C7B}
+\makelabel{xmod:crossed square morphism}{8.3}{X78A79A7E85128C7B}
+\makelabel{xmod:3d-mapping}{8.3}{X78A79A7E85128C7B}
+\makelabel{xmod:CrossedSquareMorphism}{8.3.1}{X83E733547A14FD61}
+\makelabel{xmod:CrossedSquareMorphismByXModMorphisms}{8.3.1}{X83E733547A14FD61}
+\makelabel{xmod:CrossedSquareMorphismByGroupHomomorphisms}{8.3.1}{X83E733547A14FD61}
+\makelabel{xmod:PreCrossedSquareMorphismByPreXModMorphisms}{8.3.1}{X83E733547A14FD61}
+\makelabel{xmod:PreCrossedSquareMorphismByGroupHomomorphisms}{8.3.1}{X83E733547A14FD61}
+\makelabel{xmod:Source}{8.3.2}{X7DE8173F80E07AB1}
+\makelabel{xmod:Range}{8.3.2}{X7DE8173F80E07AB1}
+\makelabel{xmod:Up2DimensionalMorphism}{8.3.2}{X7DE8173F80E07AB1}
+\makelabel{xmod:Left2DimensionalMorphism}{8.3.2}{X7DE8173F80E07AB1}
+\makelabel{xmod:Down2DimensionalMorphism}{8.3.2}{X7DE8173F80E07AB1}
+\makelabel{xmod:Right2DimensionalMorphism}{8.3.2}{X7DE8173F80E07AB1}
+\makelabel{xmod:IsCrossedSquareMorphism}{8.3.3}{X8284240C7B9BB783}
+\makelabel{xmod:IsPreCrossedSquareMorphism}{8.3.3}{X8284240C7B9BB783}
+\makelabel{xmod:IsBijective}{8.3.3}{X8284240C7B9BB783}
+\makelabel{xmod:IsEndomorphism3dObject}{8.3.3}{X8284240C7B9BB783}
+\makelabel{xmod:IsAutomorphism3dObject}{8.3.3}{X8284240C7B9BB783}
+\makelabel{xmod:InclusionMorphismHigherDimensionalDomains}{8.3.4}{X8614E38E7A67690E}
+\makelabel{xmod:cat2-group}{8.4}{X86D5AA247B64ED51}
+\makelabel{xmod:Cat2Group}{8.4.1}{X849D845586F92444}
+\makelabel{xmod:PreCat2Group}{8.4.1}{X849D845586F92444}
+\makelabel{xmod:IsCat2Group}{8.4.1}{X849D845586F92444}
+\makelabel{xmod:PreCat2GroupByPreCat1Groups}{8.4.1}{X849D845586F92444}
+\makelabel{xmod:DirectProduct}{8.4.2}{X861BA02C7902A4F4}
+\makelabel{xmod:DisplayLeadMaps}{8.4.3}{X85713B1C7C34324E}
+\makelabel{xmod:Transpose3DimensionalGroup for cat2-groups}{8.4.4}{X864B346686AAA522}
+\makelabel{xmod:Cat2GroupMorphism}{8.4.5}{X83616C237F4745FB}
+\makelabel{xmod:Cat2GroupMorphismByCat1GroupMorphisms}{8.4.5}{X83616C237F4745FB}
+\makelabel{xmod:Cat2GroupMorphismByGroupHomomorphisms}{8.4.5}{X83616C237F4745FB}
+\makelabel{xmod:PreCat2GroupMorphism}{8.4.5}{X83616C237F4745FB}
+\makelabel{xmod:PreCat2GroupMorphismByPreCat1GroupMorphisms}{8.4.5}{X83616C237F4745FB}
+\makelabel{xmod:PreCat2GroupMorphismByGroupHomomorphisms}{8.4.5}{X83616C237F4745FB}
+\makelabel{xmod:Cat2GroupOfCrossedSquare}{8.4.6}{X7D46CB517FCAA83B}
+\makelabel{xmod:CrossedSquareOfCat2Group}{8.4.6}{X7D46CB517FCAA83B}
+\makelabel{xmod:Subdiagonal2DimensionalGroup}{8.4.7}{X82F896C7851294B7}
+\makelabel{xmod:AllCat2GroupsWithImagesIterator}{8.5.1}{X7D421DE57B44F37A}
+\makelabel{xmod:AllCat2GroupsWithImagesNumber}{8.5.1}{X7D421DE57B44F37A}
+\makelabel{xmod:AllCat2GroupsWithImages}{8.5.1}{X7D421DE57B44F37A}
+\makelabel{xmod:AllCat2GroupsWithImagesUpToIsomorphism}{8.5.1}{X7D421DE57B44F37A}
+\makelabel{xmod:AllCat2GroupsWithFixedUp}{8.5.2}{X783F7FEB7B79B062}
+\makelabel{xmod:AllCat2GroupsWithFixedUpAndLeftRange}{8.5.2}{X783F7FEB7B79B062}
+\makelabel{xmod:AllCat2GroupsMatrix}{8.5.3}{X84636E047CDF2DF3}
+\makelabel{xmod:AllCat2GroupsIterator}{8.5.4}{X7EFCF9697E845B2C}
+\makelabel{xmod:AllCat2Groups}{8.5.4}{X7EFCF9697E845B2C}
+\makelabel{xmod:AllCat2GroupsUpToIsomorphism}{8.5.4}{X7EFCF9697E845B2C}
+\makelabel{xmod:AllCat2GroupFamilies}{8.5.4}{X7EFCF9697E845B2C}
+\makelabel{xmod:CatnGroupNumbers for cat2-groups}{8.5.4}{X7EFCF9697E845B2C}
+\makelabel{xmod:CatnGroupLists for cat2-groups}{8.5.4}{X7EFCF9697E845B2C}
+\makelabel{xmod:4d-group}{9}{X8637AC3D861E241A}
+\makelabel{xmod:4d-domain}{9}{X8637AC3D861E241A}
+\makelabel{xmod:cat3-group}{9}{X8637AC3D861E241A}
+\makelabel{xmod:Cat3Group}{9.1.1}{X7828496F7D72E232}
+\makelabel{xmod:PreCat3Group}{9.1.1}{X7828496F7D72E232}
+\makelabel{xmod:IsCat3Group}{9.1.1}{X7828496F7D72E232}
+\makelabel{xmod:PreCat3GroupByPreCat2Groups}{9.1.1}{X7828496F7D72E232}
+\makelabel{xmod:Front3DimensionalGroup}{9.1.2}{X7F5AFE34786D9A86}
+\makelabel{xmod:Up3DimensionalGroup}{9.1.2}{X7F5AFE34786D9A86}
+\makelabel{xmod:Left3DimensionalGroup}{9.1.2}{X7F5AFE34786D9A86}
+\makelabel{xmod:Right3DimensionalGroup}{9.1.2}{X7F5AFE34786D9A86}
+\makelabel{xmod:Down3DimensionalGroup}{9.1.2}{X7F5AFE34786D9A86}
+\makelabel{xmod:Back3DimensionalGroup}{9.1.2}{X7F5AFE34786D9A86}
+\makelabel{xmod:AllCat3GroupTriples}{9.2.1}{X83E4A7367DD13598}
+\makelabel{xmod:AllCat3GroupsNumber}{9.2.1}{X83E4A7367DD13598}
+\makelabel{xmod:AllCat3Groups}{9.2.1}{X83E4A7367DD13598}
+\makelabel{xmod:catn-group}{9.3}{X7F8538B580847268}
+\makelabel{xmod:PreCatnGroup}{9.3.1}{X81C3D39A81B20D76}
+\makelabel{xmod:CatnGroup}{9.3.1}{X81C3D39A81B20D76}
+\makelabel{xmod:crossed module of groupoids}{10}{X80B3A81B7E5CA3A9}
+\makelabel{xmod:crossed module over a groupoid}{10.1}{X847F4ED77F50528C}
+\makelabel{xmod:2dimensional-domain with objects}{10.1}{X847F4ED77F50528C}
+\makelabel{xmod:SinglePiecePreXModWithObjects}{10.1.1}{X86CD034F82F5F029}
+\makelabel{xmod:IsXModWithObjects}{10.1.2}{X7B76F2BF82E075FF}
+\makelabel{xmod:IsPreXModWithObjects}{10.1.2}{X7B76F2BF82E075FF}
+\makelabel{xmod:IsDirectProductWithCompleteDigraphDomain}{10.1.2}{X7B76F2BF82E075FF}
+\makelabel{xmod:Is2DimensionalGroupWithObjects}{10.1.2}{X7B76F2BF82E075FF}
+\makelabel{xmod:IsPermPreXModWithObjects}{10.1.3}{X858EB4F97D04D012}
+\makelabel{xmod:IsPcPreXModWithObjects}{10.1.3}{X858EB4F97D04D012}
+\makelabel{xmod:IsFpPreXModWithObjects}{10.1.3}{X858EB4F97D04D012}
+\makelabel{xmod:Root2dGroup}{10.1.4}{X797B1CD07C3682EE}
+\makelabel{xmod:XModAction for crossed modules of groupoids}{10.1.4}{X797B1CD07C3682EE}
+\makelabel{xmod:ObjectList}{10.1.4}{X797B1CD07C3682EE}
+\makelabel{xmod:loop space}{11.1}{X8575260A80F735BD}
+\makelabel{xmod:free loop space}{11.1}{X8575260A80F735BD}
+\makelabel{xmod:LoopClasses}{11.1.1}{X87781C76804E783E}
+\makelabel{xmod:LoopsXMod}{11.1.1}{X87781C76804E783E}
+\makelabel{xmod:AllLoopsXMod}{11.1.1}{X87781C76804E783E}
+\makelabel{xmod:SmallCat1Group}{12.1.1}{X8699357D7DC6279E}
+\makelabel{xmod:CatOneGroupToXMod}{12.1.2}{X7B00E3FB82DC305D}
+\makelabel{xmod:Cat1GroupToHAP}{12.1.2}{X7B00E3FB82DC305D}
+\makelabel{xmod:IdCat1Group}{12.1.3}{X84B7160284FD454A}
+\makelabel{xmod:inclusion mapping}{13.1}{X7C9734B880042C73}
+\makelabel{xmod:restriction mapping}{13.1}{X7C9734B880042C73}
+\makelabel{xmod:InclusionMappingGroups}{13.1.1}{X7F8E297F7C84DE51}
+\makelabel{xmod:MappingToOne}{13.1.1}{X7F8E297F7C84DE51}
+\makelabel{xmod:InnerAutomorphismsByNormalSubgroup}{13.1.2}{X81D29E737F3D4878}
+\makelabel{xmod:IsGroupOfAutomorphisms}{13.1.3}{X7FC631B786C1DC8B}
+\makelabel{xmod:abelian module}{13.2}{X852BD9CA84C2AFF0}
+\makelabel{xmod:AbelianModuleObject}{13.2.1}{X806DEFCC859BB4F1}
+\makelabel{xmod:IsAbelianModule}{13.2.1}{X806DEFCC859BB4F1}
+\makelabel{xmod:AbelianModuleGroup}{13.2.1}{X806DEFCC859BB4F1}
+\makelabel{xmod:AbelianModuleAction}{13.2.1}{X806DEFCC859BB4F1}
+\makelabel{xmod:version 1 for GAP 3}{14.1.1}{X848198AA862249C4}
+\makelabel{xmod:version 2.001 for GAP 4}{14.1.3}{X7F9CE0487BB6F660}

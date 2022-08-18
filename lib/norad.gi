@@ -474,7 +474,7 @@ local sus,ser,len,factorhom,uf,n,d,up,mran,nran,mpcgs,pcgs,pcisom,nf,ng,np,sub,
   #TODO use socle of radical factor
 
   uf:=Image(sus.rest);
-  ufr:=RadicalGroup(uf);
+  ufr:=SolvableRadical(uf);
   Info(InfoFitFree,1,"Radsize= ",Size(ufr)," index ",Index(uf,ufr));
 
   uff:=SmallGeneratingSet(uf);
@@ -1048,5 +1048,17 @@ local sus,ser,len,factorhom,uf,n,d,up,mran,nran,mpcgs,pcgs,pcisom,nf,ng,np,sub,
 
   return SubgroupByFittingFreeData(G,ng,nf,np);
   
+end);
+
+InstallMethod( NormalizerOp,"solvable radical", IsIdenticalObj,
+  [ IsGroup and CanComputeFittingFree, IsGroup],
+  -1, # deliberate lower ranking to amke sure this method only runs in cases
+  # in which no more specialized method is installed. Once the method has
+  # been used more broadly, and performance is better understood, this can
+  # be changed to 0
+function(G,U)
+  # small pc groups fall back on generic -- don't trigger here!
+  if IsPcGroup(G) then TryNextMethod();fi;
+  return NormalizerViaRadical(G,U);
 end);
 

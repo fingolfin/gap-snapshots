@@ -128,12 +128,12 @@ BIND_GLOBAL( "NEW_FAMILY",
         lock := WRITE_LOCK(DS_TYPE_CACHE);
         family!.TYPES           := MIGRATE_RAW([], DS_TYPE_CACHE);
         UNLOCK(lock);
-        # for chaching types of homogeneous lists (see TYPE_LIST_HOM in list.g),
+        # for caching types of homogeneous lists (see TYPE_LIST_HOM in list.g),
         # assigned in kernel when needed
         family!.TYPES_LIST_FAM  := MakeWriteOnceAtomic(AtomicList(27));
     else
         family!.TYPES           := [];
-        # for chaching types of homogeneous lists (see TYPE_LIST_HOM in list.g),
+        # for caching types of homogeneous lists (see TYPE_LIST_HOM in list.g),
         # assigned in kernel when needed
         family!.TYPES_LIST_FAM  := [];
         # for efficiency
@@ -613,7 +613,8 @@ BIND_GLOBAL( "Objectify", function ( type, obj )
     elif IS_REC( obj )  then
         SET_TYPE_COMOBJ( obj, type );
     fi;
-    if not IsNoImmediateMethodsObject(obj) then
+    if not ( IGNORE_IMMEDIATE_METHODS
+             or IsNoImmediateMethodsObject(obj) ) then
       RunImmediateMethods( obj, type![POS_FLAGS_TYPE] );
     fi;
     if IsHPCGAP then

@@ -125,7 +125,7 @@ InstallTrueMethod( IsString, IsCharCollection and IsList );
 ##  <#/GAPDoc>
 ##
 DeclareRepresentationKernel( "IsStringRep",
-    IsInternalRep, [], IS_OBJECT, IS_STRING_REP );
+    IsInternalRep, IS_STRING_REP );
 
 
 #############################################################################
@@ -226,13 +226,17 @@ BIND_GLOBAL( "TYPES_STRING",
           NewType( StringFamily, IsString and IsStringRep ), 
           # T_STRING + IMMUTABLE
           
-          ~[1], # T_STRING_NSORT
-          
-          ~[2], # T_STRING_NSORT + IMMUTABLE
+          NewType (StringFamily, IsString and IsStringRep and
+                  HasIsSSortedList and IsMutable ),
+          # T_STRING_NSORT
           
           NewType (StringFamily, IsString and IsStringRep and
+                  HasIsSSortedList ),
+          # T_STRING_NSORT +IMMUTABLE
+
+          NewType (StringFamily, IsString and IsStringRep and
                   IsSSortedList and IsMutable ),
-          # T_STRING_SSORT 
+          # T_STRING_SSORT
           
           NewType (StringFamily, IsString and IsStringRep and
                   IsSSortedList )
@@ -329,11 +333,9 @@ InstallMethod( String,
 ##  <ManSection>
 ##  <Func Name="UserHomeExpand" Arg='str'/>
 ##  <Description>
-##
 ##  If the string <A>str</A> starts with a <C>'~'</C> character this
 ##  function returns a new string with the leading <C>'~'</C> substituted by
-##  the users home directory as stored in <C>GAPInfo.UserHome</C>.
-##  
+##  the user's home directory as stored in <C>GAPInfo.UserHome</C>.
 ##  Otherwise <A>str</A> is returned unchanged.
 ##  </Description>
 ##  </ManSection>

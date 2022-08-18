@@ -295,7 +295,7 @@ Character( CharacterTable( "A5.2" ), [ 1, 1, 1, 1, -1, -1, -1 ] )
 <h5>72.2-1 UnderlyingCharacterTable</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingCharacterTable</code>( <var class="Arg">psi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>For a class function <var class="Arg">psi</var> of the group <span class="SimpleMath">\(G\)</span>, say, the character table of <span class="SimpleMath">\(G\)</span> is stored as value of <code class="func">UnderlyingCharacterTable</code>. The ordering of entries in the list <var class="Arg">psi</var> (see <code class="func">ValuesOfClassFunction</code> (<a href="chap72_mj.html#X7FE14712843C6486"><span class="RefLink">72.2-2</span></a>)) refers to the ordering of conjugacy classes in this character table.</p>
+<p>For a class function <var class="Arg">psi</var> of a group <span class="SimpleMath">\(G\)</span> the character table of <span class="SimpleMath">\(G\)</span> is stored as value of <code class="func">UnderlyingCharacterTable</code>. The ordering of entries in the list <var class="Arg">psi</var> (see <code class="func">ValuesOfClassFunction</code> (<a href="chap72_mj.html#X7FE14712843C6486"><span class="RefLink">72.2-2</span></a>)) refers to the ordering of conjugacy classes in this character table.</p>
 
 <p>If <var class="Arg">psi</var> is an ordinary class function then the underlying character table is the ordinary character table of <span class="SimpleMath">\(G\)</span> (see <code class="func">OrdinaryCharacterTable</code> (<a href="chap71_mj.html#X8011EEB684848039"><span class="RefLink">71.8-4</span></a>)), if <var class="Arg">psi</var> is a class function in characteristic <span class="SimpleMath">\(p \neq 0\)</span> then the underlying character table is the <span class="SimpleMath">\(p\)</span>-modular Brauer table of <span class="SimpleMath">\(G\)</span> (see <code class="func">BrauerTable</code> (<a href="chap71_mj.html#X8476B25A79D7A7FC"><span class="RefLink">71.3-2</span></a>)). So the underlying characteristic of <var class="Arg">psi</var> can be read off from the underlying character table.</p>
 
@@ -454,7 +454,7 @@ Character( S4, [ 6, 0, -2, 0, 0 ] )
 Character( S4, [ 24, 4, 8, 3, 4 ] )
 </pre></div>
 
-<p>The <em>powering</em> operator <code class="func">\^</code> (<a href="chap31_mj.html#X8481C9B97B214C23"><span class="RefLink">31.12-1</span></a>) has several meanings for class functions. The power of a class function by a nonnegative integer is clearly the tensor power. The power of a class function by an element that normalizes the underlying group or by a Galois automorphism is the conjugate class function. (As a consequence, the application of the permutation induced by such an action cannot be denoted by <code class="func">\^</code> (<a href="chap31_mj.html#X8481C9B97B214C23"><span class="RefLink">31.12-1</span></a>); instead one can use <code class="func">Permuted</code> (<a href="chap21_mj.html#X7B5A19098406347A"><span class="RefLink">21.20-18</span></a>).) The power of a class function by a group or a character table is the induced class function (see <code class="func">InducedClassFunction</code> (<a href="chap72_mj.html#X7FE39D3D78855D3B"><span class="RefLink">72.9-3</span></a>)). The power of a group element by a class function is the class function value at (the conjugacy class containing) this element.</p>
+<p>The <em>powering</em> operator <code class="func">\^</code> (<a href="chap31_mj.html#X8481C9B97B214C23"><span class="RefLink">31.12-1</span></a>) has several meanings for class functions. The power of a class function by a nonnegative integer is clearly the tensor power. The power of a class function by an element that normalizes the underlying group or by a Galois automorphism is the conjugate class function. (As a consequence, the application of the permutation induced by such an action cannot be denoted by <code class="func">\^</code> (<a href="chap31_mj.html#X8481C9B97B214C23"><span class="RefLink">31.12-1</span></a>); instead one can use <code class="func">Permuted</code> (<a href="chap21_mj.html#X7B5A19098406347A"><span class="RefLink">21.20-17</span></a>).) The power of a class function by a group or a character table is the induced class function (see <code class="func">InducedClassFunction</code> (<a href="chap72_mj.html#X7FE39D3D78855D3B"><span class="RefLink">72.9-3</span></a>)). The power of a group element by a class function is the class function value at (the conjugacy class containing) this element.</p>
 
 
 <div class="example"><pre>
@@ -556,7 +556,7 @@ Character( S4, [ 1, -1, 1, 1, -1 ] )
 <h5>72.5-2 PrintObj</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintObj</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
-<p>The default <code class="func">PrintObj</code> (<a href="chap6_mj.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>) method for class functions does the same as <code class="func">ViewObj</code> (<a href="chap6_mj.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>), except that the character table is is <code class="func">Print</code> (<a href="chap6_mj.html#X7AFA64D97A1F39A3"><span class="RefLink">6.3-4</span></a>)-ed instead of <code class="func">View</code> (<a href="chap6_mj.html#X851902C583B84CDC"><span class="RefLink">6.3-3</span></a>)-ed.</p>
+<p>The default <code class="func">PrintObj</code> (<a href="chap6_mj.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>) method for class functions does the same as <code class="func">ViewObj</code> (<a href="chap6_mj.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>), except that the character table is <code class="func">Print</code> (<a href="chap6_mj.html#X7AFA64D97A1F39A3"><span class="RefLink">6.3-4</span></a>)-ed instead of <code class="func">View</code> (<a href="chap6_mj.html#X851902C583B84CDC"><span class="RefLink">6.3-3</span></a>)-ed.</p>
 
 <p><em>Note</em> that if a class function is shown only with one of the strings <code class="code">"ClassFunction"</code>, <code class="code">"VirtualCharacter"</code>, it may still be that it is in fact a character; just this was not known at the time when the class function was printed.</p>
 
@@ -822,7 +822,7 @@ Character( CharacterTable( S4 ), [ 4, 2, 0, 1, 0 ] )
 <h5>72.8-7 Norm</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Norm</code>( [<var class="Arg">tbl</var>, ]<var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>For an ordinary class function <var class="Arg">chi</var> of the group <span class="SimpleMath">\(G\)</span>, say, we have <span class="SimpleMath">\(\textit{chi} = \sum_{{\chi \in Irr(G)}} a_{\chi} \chi\)</span>, with complex coefficients <span class="SimpleMath">\(a_{\chi}\)</span>. The <em>norm</em> of <var class="Arg">chi</var> is defined as <span class="SimpleMath">\(\sum_{{\chi \in Irr(G)}} a_{\chi} \overline{{a_{\chi}}}\)</span>.</p>
+<p>For an ordinary class function <var class="Arg">chi</var> of a group <span class="SimpleMath">\(G\)</span> we have <span class="SimpleMath">\(\textit{chi} = \sum_{{\chi \in Irr(G)}} a_{\chi} \chi\)</span>, with complex coefficients <span class="SimpleMath">\(a_{\chi}\)</span>. The <em>norm</em> of <var class="Arg">chi</var> is defined as <span class="SimpleMath">\(\sum_{{\chi \in Irr(G)}} a_{\chi} \overline{{a_{\chi}}}\)</span>.</p>
 
 
 <div class="example"><pre>
@@ -874,14 +874,14 @@ Character( CharacterTable( S4 ), [ 4, 2, 0, 1, 0 ] )
 <h5>72.8-9 KernelOfCharacter</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KernelOfCharacter</code>( [<var class="Arg">tbl</var>, ]<var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>For a class function <var class="Arg">chi</var> of the group <span class="SimpleMath">\(G\)</span>, say, <code class="func">KernelOfCharacter</code> returns the normal subgroup of <span class="SimpleMath">\(G\)</span> that is formed by those conjugacy classes for which the value of <var class="Arg">chi</var> equals the degree of <var class="Arg">chi</var>. If the underlying character table of <var class="Arg">chi</var> does not store the group <span class="SimpleMath">\(G\)</span> then an error is signalled. (See <code class="func">ClassPositionsOfKernel</code> (<a href="chap72_mj.html#X7B4708B47D9C05B3"><span class="RefLink">72.8-10</span></a>) for a way to handle the kernel implicitly, by listing the positions of conjugacy classes in the kernel.)</p>
+<p>For a class function <var class="Arg">chi</var> of a group <span class="SimpleMath">\(G\)</span>, <code class="func">KernelOfCharacter</code> returns the normal subgroup of <span class="SimpleMath">\(G\)</span> that is formed by those conjugacy classes for which the value of <var class="Arg">chi</var> equals the degree of <var class="Arg">chi</var>. If the underlying character table of <var class="Arg">chi</var> does not store the group <span class="SimpleMath">\(G\)</span> then an error is signalled. (See <code class="func">ClassPositionsOfKernel</code> (<a href="chap72_mj.html#X7B4708B47D9C05B3"><span class="RefLink">72.8-10</span></a>) for a way to handle the kernel implicitly, by listing the positions of conjugacy classes in the kernel.)</p>
 
 <p>The returned group is the kernel of any representation of <span class="SimpleMath">\(G\)</span> that affords <var class="Arg">chi</var>.</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( Irr( S4 ), KernelOfCharacter );</span>
-[ Alt( [ 1 .. 4 ] ), Group(()), Group([ (1,2)(3,4), (1,4)(2,3) ]),
+[ Alt( [ 1 .. 4 ] ), Group(()), Group([ (1,2)(3,4), (1,3)(2,4) ]),
   Group(()), Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]) ]
 </pre></div>
 
@@ -903,16 +903,16 @@ Character( CharacterTable( S4 ), [ 4, 2, 0, 1, 0 ] )
 <h5>72.8-11 CentreOfCharacter</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CentreOfCharacter</code>( [<var class="Arg">tbl</var>, ]<var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>For a character <var class="Arg">chi</var> of the group <span class="SimpleMath">\(G\)</span>, say, <code class="func">CentreOfCharacter</code> returns the <em>centre</em> of <var class="Arg">chi</var>, that is, the normal subgroup of all those elements of <span class="SimpleMath">\(G\)</span> for which the quotient of the value of <var class="Arg">chi</var> by the degree of <var class="Arg">chi</var> is a root of unity.</p>
+<p>For a character <var class="Arg">chi</var> of a group <span class="SimpleMath">\(G\)</span>, <code class="func">CentreOfCharacter</code> returns the <em>centre</em> of <var class="Arg">chi</var>, that is, the normal subgroup of all those elements of <span class="SimpleMath">\(G\)</span> for which the quotient of the value of <var class="Arg">chi</var> by the degree of <var class="Arg">chi</var> is a root of unity.</p>
 
 <p>If the underlying character table of <var class="Arg">psi</var> does not store the group <span class="SimpleMath">\(G\)</span> then an error is signalled. (See <code class="func">ClassPositionsOfCentre</code> (<a href="chap72_mj.html#X7CE5B4137B399274"><span class="RefLink">72.8-12</span></a>) for a way to handle the centre implicitly, by listing the positions of conjugacy classes in the centre.)</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( Irr( S4 ), CentreOfCharacter );</span>
-[ Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]), Group(()),
-  Group([ (1,2)(3,4), (1,4)(2,3) ]), Group(()), Group([ (), (1,2), (1,
-   2)(3,4), (1,2,3), (1,2,3,4) ]) ]
+[ Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]), Group(()), 
+  Group([ (1,2)(3,4), (1,3)(2,4) ]), Group(()), 
+  Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]) ]
 </pre></div>
 
 <p><a id="X7CE5B4137B399274" name="X7CE5B4137B399274"></a></p>
@@ -933,7 +933,7 @@ Character( CharacterTable( S4 ), [ 4, 2, 0, 1, 0 ] )
 <h5>72.8-13 InertiaSubgroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InertiaSubgroup</code>( [<var class="Arg">tbl</var>, ]<var class="Arg">G</var>, <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Let <var class="Arg">chi</var> be a character of the group <span class="SimpleMath">\(H\)</span>, say, and <var class="Arg">tbl</var> the character table of <span class="SimpleMath">\(H\)</span>; if the argument <var class="Arg">tbl</var> is not given then the underlying character table of <var class="Arg">chi</var> (see <code class="func">UnderlyingCharacterTable</code> (<a href="chap72_mj.html#X81B55C067D123B76"><span class="RefLink">72.2-1</span></a>)) is used instead. Furthermore, let <var class="Arg">G</var> be a group that contains <span class="SimpleMath">\(H\)</span> as a normal subgroup.</p>
+<p>Let <var class="Arg">chi</var> be a character of a group <span class="SimpleMath">\(H\)</span> and <var class="Arg">tbl</var> the character table of <span class="SimpleMath">\(H\)</span>; if the argument <var class="Arg">tbl</var> is not given then the underlying character table of <var class="Arg">chi</var> (see <code class="func">UnderlyingCharacterTable</code> (<a href="chap72_mj.html#X81B55C067D123B76"><span class="RefLink">72.2-1</span></a>)) is used instead. Furthermore, let <var class="Arg">G</var> be a group that contains <span class="SimpleMath">\(H\)</span> as a normal subgroup.</p>
 
 <p><code class="func">InertiaSubgroup</code> returns the stabilizer in <var class="Arg">G</var> of <var class="Arg">chi</var>, w.r.t. the action of <var class="Arg">G</var> on the classes of <span class="SimpleMath">\(H\)</span> via conjugation. In other words, <code class="func">InertiaSubgroup</code> returns the group of all those elements <span class="SimpleMath">\(g \in \textit{G}\)</span> that satisfy <span class="SimpleMath">\(\textit{chi}^g = \textit{chi}\)</span>.</p>
 
@@ -988,7 +988,7 @@ true
 <h5>72.8-17 CentralCharacter</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CentralCharacter</code>( [<var class="Arg">tbl</var>, ]<var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>For a character <var class="Arg">chi</var> of the group <span class="SimpleMath">\(G\)</span>, say, <code class="func">CentralCharacter</code> returns the <em>central character</em> of <var class="Arg">chi</var>.</p>
+<p>For a character <var class="Arg">chi</var> of a group <span class="SimpleMath">\(G\)</span>, <code class="func">CentralCharacter</code> returns the <em>central character</em> of <var class="Arg">chi</var>.</p>
 
 <p>The central character of <span class="SimpleMath">\(\chi\)</span> is the class function <span class="SimpleMath">\(\omega_{\chi}\)</span> defined by <span class="SimpleMath">\(\omega_{\chi}(g) = |g^G| \cdot \chi(g)/\chi(1)\)</span> for each <span class="SimpleMath">\(g \in G\)</span>.</p>
 
@@ -999,7 +999,7 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeterminantOfCharacter</code>( [<var class="Arg">tbl</var>, ]<var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p><code class="func">DeterminantOfCharacter</code> returns the <em>determinant character</em> of the character <var class="Arg">chi</var>. This is defined to be the character obtained by taking the determinant of representing matrices of any representation affording <var class="Arg">chi</var>; the determinant can be computed using <code class="func">EigenvaluesChar</code> (<a href="chap72_mj.html#X861B435C7F68AE7D"><span class="RefLink">72.8-19</span></a>).</p>
 
-<p>It is also possible to call <code class="func">Determinant</code> (<a href="chap24_mj.html#X83045F6F82C180E1"><span class="RefLink">24.4-4</span></a>) instead of <code class="func">DeterminantOfCharacter</code>.</p>
+<p>It is also possible to call <code class="func">Determinant</code> (<a href="chap24_mj.html#X8488D69A7ADDB4E2"><span class="RefLink">24.4-4</span></a>) instead of <code class="func">DeterminantOfCharacter</code>.</p>
 
 <p>Note that the determinant character is well-defined for virtual characters.</p>
 
@@ -1016,7 +1016,7 @@ Character( CharacterTable( S4 ), [ 1, -1, 1, 1, -1 ] )
 <h5>72.8-19 EigenvaluesChar</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EigenvaluesChar</code>( [<var class="Arg">tbl</var>, ]<var class="Arg">chi</var>, <var class="Arg">class</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Let <var class="Arg">chi</var> be a character of the group <span class="SimpleMath">\(G\)</span>, say. For an element <span class="SimpleMath">\(g \in G\)</span> in the <var class="Arg">class</var>-th conjugacy class, of order <span class="SimpleMath">\(n\)</span>, let <span class="SimpleMath">\(M\)</span> be a matrix of a representation affording <var class="Arg">chi</var>.</p>
+<p>Let <var class="Arg">chi</var> be a character of a group <span class="SimpleMath">\(G\)</span>. For an element <span class="SimpleMath">\(g \in G\)</span> in the <var class="Arg">class</var>-th conjugacy class, of order <span class="SimpleMath">\(n\)</span>, let <span class="SimpleMath">\(M\)</span> be a matrix of a representation affording <var class="Arg">chi</var>.</p>
 
 <p><code class="func">EigenvaluesChar</code> returns the list of length <span class="SimpleMath">\(n\)</span> where at position <span class="SimpleMath">\(k\)</span> the multiplicity of <code class="code">E</code><span class="SimpleMath">\((n)^k = \exp(2 \pi i k / n)\)</span> as an eigenvalue of <span class="SimpleMath">\(M\)</span> is stored.</p>
 
@@ -1074,7 +1074,7 @@ Character( CharacterTable( "A5" ),
 <h5>72.9-1 RestrictedClassFunction</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RestrictedClassFunction</code>( [<var class="Arg">tbl</var>, ]<var class="Arg">chi</var>, <var class="Arg">target</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Let <var class="Arg">chi</var> be a class function of the group <span class="SimpleMath">\(G\)</span>, say, and let <var class="Arg">target</var> be either a subgroup <span class="SimpleMath">\(H\)</span> of <span class="SimpleMath">\(G\)</span> or an injective homomorphism from <span class="SimpleMath">\(H\)</span> to <span class="SimpleMath">\(G\)</span> or the character table of <var class="Arg">H</var>. Then <code class="func">RestrictedClassFunction</code> returns the class function of <span class="SimpleMath">\(H\)</span> obtained by restricting <var class="Arg">chi</var> to <span class="SimpleMath">\(H\)</span>.</p>
+<p>Let <var class="Arg">chi</var> be a class function of a group <span class="SimpleMath">\(G\)</span> and let <var class="Arg">target</var> be either a subgroup <span class="SimpleMath">\(H\)</span> of <span class="SimpleMath">\(G\)</span> or an injective homomorphism from <span class="SimpleMath">\(H\)</span> to <span class="SimpleMath">\(G\)</span> or the character table of <var class="Arg">H</var>. Then <code class="func">RestrictedClassFunction</code> returns the class function of <span class="SimpleMath">\(H\)</span> obtained by restricting <var class="Arg">chi</var> to <span class="SimpleMath">\(H\)</span>.</p>
 
 <p>If <var class="Arg">chi</var> is a class function of a <em>factor group</em> <span class="SimpleMath">\(G\)</span>of <span class="SimpleMath">\(H\)</span>, where <var class="Arg">target</var> is either the group <span class="SimpleMath">\(H\)</span> or a homomorphism from <span class="SimpleMath">\(H\)</span> to <span class="SimpleMath">\(G\)</span> or the character table of <span class="SimpleMath">\(H\)</span> then the restriction can be computed in the case of the homomorphism; in the other cases, this is possible only if the factor fusion from <span class="SimpleMath">\(H\)</span> to <span class="SimpleMath">\(G\)</span> is stored on the character table of <span class="SimpleMath">\(H\)</span>.</p>
 
@@ -1111,7 +1111,7 @@ Character( CharacterTable( "A5" ), [ 1, 1, 1, 1, 1 ] )
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedClassFunction</code>( [<var class="Arg">tbl</var>, ]<var class="Arg">chi</var>, <var class="Arg">H</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedClassFunction</code>( [<var class="Arg">tbl</var>, ]<var class="Arg">chi</var>, <var class="Arg">hom</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedClassFunction</code>( [<var class="Arg">tbl</var>, ]<var class="Arg">chi</var>, <var class="Arg">suptbl</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Let <var class="Arg">chi</var> be a class function of the group <span class="SimpleMath">\(G\)</span>, say, and let <var class="Arg">target</var> be either a supergroup <span class="SimpleMath">\(H\)</span> of <span class="SimpleMath">\(G\)</span> or an injective homomorphism from <span class="SimpleMath">\(H\)</span> to <span class="SimpleMath">\(G\)</span> or the character table of <var class="Arg">H</var>. Then <code class="func">InducedClassFunction</code> returns the class function of <span class="SimpleMath">\(H\)</span> obtained by inducing <var class="Arg">chi</var> to <span class="SimpleMath">\(H\)</span>.</p>
+<p>Let <var class="Arg">chi</var> be a class function of a group <span class="SimpleMath">\(G\)</span> and let <var class="Arg">target</var> be either a supergroup <span class="SimpleMath">\(H\)</span> of <span class="SimpleMath">\(G\)</span> or an injective homomorphism from <span class="SimpleMath">\(H\)</span> to <span class="SimpleMath">\(G\)</span> or the character table of <var class="Arg">H</var>. Then <code class="func">InducedClassFunction</code> returns the class function of <span class="SimpleMath">\(H\)</span> obtained by inducing <var class="Arg">chi</var> to <span class="SimpleMath">\(H\)</span>.</p>
 
 <p><a id="X8484C0F985AD2D28" name="X8484C0F985AD2D28"></a></p>
 
@@ -1188,7 +1188,7 @@ Character( CharacterTable( "A5" ), [ 1, 1, 1, 1, 1 ] )
 <h5>72.10-1 ReducedClassFunctions</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedClassFunctions</code>( [<var class="Arg">tbl</var>, ][<var class="Arg">constituents</var>, ]<var class="Arg">reducibles</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Let <var class="Arg">reducibles</var> be a list of ordinary virtual characters of the group <span class="SimpleMath">\(G\)</span>, say. If <var class="Arg">constituents</var> is given then it must also be a list of ordinary virtual characters of <span class="SimpleMath">\(G\)</span>, otherwise we have <var class="Arg">constituents</var> equal to <var class="Arg">reducibles</var> in the following.</p>
+<p>Let <var class="Arg">reducibles</var> be a list of ordinary virtual characters of a group <span class="SimpleMath">\(G\)</span>. If <var class="Arg">constituents</var> is given then it must also be a list of ordinary virtual characters of <span class="SimpleMath">\(G\)</span>, otherwise we have <var class="Arg">constituents</var> equal to <var class="Arg">reducibles</var> in the following.</p>
 
 <p><code class="func">ReducedClassFunctions</code> returns a record with the components <code class="code">remainders</code> and <code class="code">irreducibles</code>, both lists of virtual characters of <span class="SimpleMath">\(G\)</span>. These virtual characters are computed as follows.</p>
 
@@ -1933,7 +1933,7 @@ Character( CharacterTable( "J1" ), [ 4180, 20, 10, 0, 0, 2, 1, 0, 0,
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermCharInfoRelative</code>( <var class="Arg">tbl</var>, <var class="Arg">tbl2</var>, <var class="Arg">permchars</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">tbl</var> and <var class="Arg">tbl2</var> be the ordinary character tables of two groups <span class="SimpleMath">\(H\)</span> and <span class="SimpleMath">\(G\)</span>, respectively, where <span class="SimpleMath">\(H\)</span> is of index two in <span class="SimpleMath">\(G\)</span>, and <var class="Arg">permchars</var> either the permutation character <span class="SimpleMath">\((1_U)^G\)</span>, for a subgroup <span class="SimpleMath">\(U\)</span> of <span class="SimpleMath">\(G\)</span>, or a list of such permutation characters. <code class="func">PermCharInfoRelative</code> returns a record with the same components as <code class="func">PermCharInfo</code> (<a href="chap72_mj.html#X8477004C7A31D28C"><span class="RefLink">72.13-1</span></a>), the only exception is that the entries of the <code class="code">ATLAS</code> component are names relative to <var class="Arg">tbl</var>.</p>
 
-<p>More precisely, the <span class="SimpleMath">\(i\)</span>-th entry of the <code class="code">ATLAS</code> component is a string describing the decomposition of the <span class="SimpleMath">\(i\)</span>-th entry in <var class="Arg">permchars</var>. The degrees and distinguishing letters of the constituents refer to the irreducibles of <var class="Arg">tbl</var>, as follows. The two irreducible characters of <var class="Arg">tbl2</var> of degree <span class="SimpleMath">\(N\)</span>, say, that extend the irreducible character <span class="SimpleMath">\(N\)</span> <code class="code">a</code> of <var class="Arg">tbl</var> are denoted by <span class="SimpleMath">\(N\)</span> <code class="code">a</code><span class="SimpleMath">\(^+\)</span> and <span class="SimpleMath">\(N \)</span><code class="code">a</code><span class="SimpleMath">\(^-\)</span>. The irreducible character of <var class="Arg">tbl2</var> of degree <span class="SimpleMath">\(2N\)</span>, say, whose restriction to <var class="Arg">tbl</var> is the sum of the irreducible characters <span class="SimpleMath">\(N\)</span> <code class="code">a</code> and <span class="SimpleMath">\(N\)</span> <code class="code">b</code> is denoted as <span class="SimpleMath">\(N\)</span> <code class="code">ab</code>. Multiplicities larger than <span class="SimpleMath">\(1\)</span> of constituents are denoted by exponents.</p>
+<p>More precisely, the <span class="SimpleMath">\(i\)</span>-th entry of the <code class="code">ATLAS</code> component is a string describing the decomposition of the <span class="SimpleMath">\(i\)</span>-th entry in <var class="Arg">permchars</var>. The degrees and distinguishing letters of the constituents refer to the irreducibles of <var class="Arg">tbl</var>, as follows. The two irreducible characters of <var class="Arg">tbl2</var> of degree <span class="SimpleMath">\(N\)</span> that extend the irreducible character <span class="SimpleMath">\(N\)</span> <code class="code">a</code> of <var class="Arg">tbl</var> are denoted by <span class="SimpleMath">\(N\)</span> <code class="code">a</code><span class="SimpleMath">\(^+\)</span> and <span class="SimpleMath">\(N \)</span><code class="code">a</code><span class="SimpleMath">\(^-\)</span>. The irreducible character of <var class="Arg">tbl2</var> of degree <span class="SimpleMath">\(2N\)</span> whose restriction to <var class="Arg">tbl</var> is the sum of the irreducible characters <span class="SimpleMath">\(N\)</span> <code class="code">a</code> and <span class="SimpleMath">\(N\)</span> <code class="code">b</code> is denoted as <span class="SimpleMath">\(N\)</span> <code class="code">ab</code>. Multiplicities larger than <span class="SimpleMath">\(1\)</span> of constituents are denoted by exponents.</p>
 
 <p>(This format is useful mainly for multiplicity free permutation characters.)</p>
 
@@ -2046,7 +2046,7 @@ Character( CharacterTable( "Sym(4)" ), [ 2, 0, 2, 2, 0 ] )
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestPerm3</code>( <var class="Arg">tbl</var>, <var class="Arg">chars</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestPerm4</code>( <var class="Arg">tbl</var>, <var class="Arg">chars</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestPerm5</code>( <var class="Arg">tbl</var>, <var class="Arg">chars</var>, <var class="Arg">modtbl</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>The first three of these functions implement tests of the properties of possible permutation characters listed in Section <a href="chap72_mj.html#X7D6336857E6BDF46"><span class="RefLink">72.13</span></a>, The other two implement test of additional properties. Let <var class="Arg">tbl</var> be the ordinary character table of a group <span class="SimpleMath">\(G\)</span>, say, <var class="Arg">char</var> a rational character of <var class="Arg">tbl</var>, and <var class="Arg">chars</var> a list of rational characters of <var class="Arg">tbl</var>. For applying <code class="func">TestPerm5</code>, the knowledge of a <span class="SimpleMath">\(p\)</span>-modular Brauer table <var class="Arg">modtbl</var> of <span class="SimpleMath">\(G\)</span> is required. <code class="func">TestPerm4</code> and <code class="func">TestPerm5</code> expect the characters in <var class="Arg">chars</var> to satisfy the conditions checked by <code class="func">TestPerm1</code> and <code class="func">TestPerm2</code> (see below).</p>
+<p>The first three of these functions implement tests of the properties of possible permutation characters listed in Section <a href="chap72_mj.html#X7D6336857E6BDF46"><span class="RefLink">72.13</span></a>, The other two implement test of additional properties. Let <var class="Arg">tbl</var> be the ordinary character table of a group <span class="SimpleMath">\(G\)</span>, <var class="Arg">char</var> a rational character of <var class="Arg">tbl</var>, and <var class="Arg">chars</var> a list of rational characters of <var class="Arg">tbl</var>. For applying <code class="func">TestPerm5</code>, the knowledge of a <span class="SimpleMath">\(p\)</span>-modular Brauer table <var class="Arg">modtbl</var> of <span class="SimpleMath">\(G\)</span> is required. <code class="func">TestPerm4</code> and <code class="func">TestPerm5</code> expect the characters in <var class="Arg">chars</var> to satisfy the conditions checked by <code class="func">TestPerm1</code> and <code class="func">TestPerm2</code> (see below).</p>
 
 <p>The return values of the functions were chosen parallel to the tests listed in <a href="chapBib_mj.html#biBNPP84">[NPP84]</a>.</p>
 
@@ -2082,7 +2082,7 @@ Character( CharacterTable( "Sym(4)" ), [ 2, 0, 2, 2, 0 ] )
 [ 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( lincomb, psi -&gt; TestPerm2( tbl, psi ) );</span>
 [ 0, 5, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set( List( TestPerm3(tbl, lincomb), x -&gt; Position(lincomb, x) ) );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set( TestPerm3(tbl, lincomb), x -&gt; Position(lincomb, x) );</span>
 [ 1, 4, 6, 7, 8, 9, 10, 11, 13 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tbl:= CharacterTable( "A7" );</span>
 CharacterTable( "A7" )
@@ -2202,11 +2202,13 @@ CharacterTable( "A7" )
 <h5>72.15-3 SizeOfFieldOfDefinition</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SizeOfFieldOfDefinition</code>( <var class="Arg">val</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>For a cyclotomic or a list of cyclotomics <var class="Arg">val</var>, and a prime integer <var class="Arg">p</var>, <code class="func">SizeOfFieldOfDefinition</code> returns the size of the smallest finite field in characteristic <var class="Arg">p</var> that contains the <var class="Arg">p</var>-modular reduction of <var class="Arg">val</var>.</p>
+<p>For a cyclotomic or a list of cyclotomics <var class="Arg">val</var>, and a prime integer <var class="Arg">p</var>, <code class="func">SizeOfFieldOfDefinition</code> returns the size of the smallest finite field in characteristic <var class="Arg">p</var> that contains the <var class="Arg">p</var>-modular reduction of <var class="Arg">val</var> if this can be determined, and <code class="keyw">fail</code> otherwise.</p>
 
-<p>The reduction map is defined as in <a href="chapBib_mj.html#biBJLPW95">[JLPW95]</a>, that is, the complex <span class="SimpleMath">\((\textit{p}^d-1)\)</span>-th root of unity <span class="SimpleMath">\(\exp(\textit{p}^d-1)\)</span> is mapped to the residue class of the indeterminate, modulo the ideal spanned by the Conway polynomial (see <code class="func">ConwayPolynomial</code> (<a href="chap59_mj.html#X7C2425A786F09054"><span class="RefLink">59.5-1</span></a>)) of degree <span class="SimpleMath">\(d\)</span> over the field with <span class="SimpleMath">\(p\)</span> elements.</p>
+<p>The latter happens if <var class="Arg">val</var> is not closed under Galois conjugacy and if the <var class="Arg">p</var>-modular reduction of some value cannot be determined via the function <code class="func">FrobeniusCharacterValue</code> (<a href="chap72_mj.html#X79BACBC47B4C413E"><span class="RefLink">72.15-1</span></a>). Note that the reduction map is defined as in <a href="chapBib_mj.html#biBJLPW95">[JLPW95]</a>, that is, the complex <span class="SimpleMath">\((\textit{p}^d-1)\)</span>-th root of unity <span class="SimpleMath">\(\exp(\textit{p}^d-1)\)</span> is mapped to the residue class of the indeterminate, modulo the ideal spanned by the Conway polynomial (see <code class="func">ConwayPolynomial</code> (<a href="chap59_mj.html#X7C2425A786F09054"><span class="RefLink">59.5-1</span></a>)) of degree <span class="SimpleMath">\(d\)</span> over the field with <span class="SimpleMath">\(p\)</span> elements.</p>
 
-<p>If <var class="Arg">val</var> is a Brauer character then the value returned is the size of the smallest finite field in characteristic <var class="Arg">p</var> over which the corresponding representation lives.</p>
+<p>If <var class="Arg">val</var> is closed under Galois conjugacy then the result can be determined without explicitly computing the <var class="Arg">p</var>-modular reduction of <var class="Arg">val</var>. This happens for example if <var class="Arg">val</var> is a Brauer character.</p>
+
+<p>If <var class="Arg">val</var> is an irreducible Brauer character then the value returned is the size of the smallest finite field in characteristic <var class="Arg">p</var> over which the corresponding representation lives.</p>
 
 <p><a id="X782400277F6316A4" name="X782400277F6316A4"></a></p>
 

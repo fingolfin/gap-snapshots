@@ -35,15 +35,15 @@
 
 #include "hpc/thread.h"
 
+#include "config.h"
+
+#ifndef GAP_DISABLE_SUBPROCESS_CODE
+
 #include <errno.h>
 #include <fcntl.h>
 #include <signal.h>
 #include <termios.h>
 #include <unistd.h>
-
-#ifdef HAVE_SPAWN_H
-#include <spawn.h>
-#endif
 
 #ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
@@ -57,6 +57,11 @@
   #elif defined(HAVE_PTY_H)
     #include <pty.h>      /* for openpty() on Cygwin, Interix, OSF/1 4 and 5 */
   #endif
+#endif
+
+#ifdef HAVE_SPAWN_H
+#define __USE_GNU    // ensures glibc exports posix_spawn_file_actions_addchdir_np
+#include <spawn.h>
 #endif
 
 
@@ -138,29 +143,29 @@ static void KillChild(UInt stream)
 **
 */
 #define PErr(msg)                                                            \
-    Pr(msg ": %s (errnor %d)\n", (Int)strerror(errno), (Int)errno);
+    Pr(msg ": %s (errno %d)\n", (Int)strerror(errno), (Int)errno);
 
 /****************************************************************************
 **
-*F  OpenPty( <master>, <slave> ) . . . . . . . . open a pty master/slave pair
+*F  OpenPty( <parent>, <child> ) . . . . . . . . open a pseudo terminal
 */
 
 #ifdef HAVE_OPENPTY
 
-static UInt OpenPty(int * master, int * slave)
+static UInt OpenPty(int * parent, int * child)
 {
     /* openpty is available on OpenBSD, NetBSD and FreeBSD, Mac OS X,
        Cygwin, Interix, OSF/1 4 and 5, and glibc (since 1998), and hence
        on most modern Linux systems. See also:
        https://www.gnu.org/software/gnulib/manual/html_node/openpty.html */
-    return (openpty(master, slave, NULL, NULL, NULL) < 0);
+    return (openpty(parent, child, NULL, NULL, NULL) < 0);
 }
 
 #elif defined(HAVE_POSIX_OPENPT)
 
-static UInt OpenPty(int * master, int * slave)
+static UInt OpenPty(int * parent, int * child)
 {
-    /* Attempt to use POSIX 98 pseudo ttys. Opening a master tty is done
+    /* Attempt to use POSIX 98 pseudo ttys. Opening a parent tty is done
        via posix_openpt, which is available on virtually every current
        UNIX system; indeed, according to gnulib, it is available on at
        least the following systems:
@@ -183,39 +188,39 @@ static UInt OpenPty(int * master, int * slave)
          - Interix 3.5
          - BeOS
        */
-    *master = posix_openpt(O_RDWR | O_NOCTTY);
-    if (*master < 0) {
+    *parent = posix_openpt(O_RDWR | O_NOCTTY);
+    if (*parent < 0) {
         PErr("OpenPty: posix_openpt failed");
         return 1;
     }
 
-    if (grantpt(*master)) {
+    if (grantpt(*parent)) {
         PErr("OpenPty: grantpt failed");
         goto error;
     }
-    if (unlockpt(*master)) {
-        close(*master);
+    if (unlockpt(*parent)) {
+        close(*parent);
         PErr("OpenPty: unlockpt failed");
         goto error;
     }
 
-    *slave = open(ptsname(*master), O_RDWR, 0);
-    if (*slave < 0) {
-        PErr("OpenPty: opening slave tty failed");
+    *child = open(ptsname(*parent), O_RDWR, 0);
+    if (*child < 0) {
+        PErr("OpenPty: opening child tty failed");
         goto error;
     }
     return 0;
 
 error:
-    close(*master);
+    close(*parent);
     return 1;
 }
 
 #else
 
-static UInt OpenPty(int * master, int * slave)
+static UInt OpenPty(int * parent, int * child)
 {
-    Pr("no pseudo tty support available\n", 0L, 0L);
+    Pr("no pseudo tty support available\n", 0, 0);
     return 1;
 }
 
@@ -275,13 +280,6 @@ static void ChildStatusChanged(int whichsig)
     HashUnlock(PtyIOStreams);
 
 #if !defined(HPCGAP)
-    /* Collect up any other zombie children */
-    do {
-        retcode = waitpid(-1, &status, WNOHANG);
-        if (retcode == -1 && errno != ECHILD)
-            Pr("#E Unexpected waitpid error %d\n", errno, 0);
-    } while (retcode != 0 && retcode != -1);
-
     signal(SIGCHLD, ChildStatusChanged);
 #endif
 }
@@ -292,22 +290,126 @@ static Obj FuncDEFAULT_SIGCHLD_HANDLER(Obj self)
     ChildStatusChanged(SIGCHLD);
     return (Obj)0;
 }
+#endif
 
 
-// HACK: since we can't use posix_spawn in a thread-safe manner, disable
-// it for HPC-GAP
+//
+// posix_spawn_file_actions_addchdir was only recently added to POSIX, and
+// most implementations therefore do not yet use this final name, but instead
+// provide the functionality under the alternate name
+// posix_spawn_file_actions_addchdir_np. To keep things simple, we detect this
+// case and use some preprocessor tricks to make things work in either case.
+//
+#if !defined(HAVE_POSIX_SPAWN_FILE_ACTIONS_ADDCHDIR) &&                      \
+    defined(HAVE_POSIX_SPAWN_FILE_ACTIONS_ADDCHDIR_NP)
+#define HAVE_POSIX_SPAWN_FILE_ACTIONS_ADDCHDIR
+#define posix_spawn_file_actions_addchdir(f, d)                              \
+    posix_spawn_file_actions_addchdir_np(f, d)
+#endif
+
+
+// Disable posix_spawn in HPC-GAP if we can't use it in a thread-safe manner
+#if defined(HPCGAP) && !defined(HAVE_POSIX_SPAWN_FILE_ACTIONS_ADDCHDIR)
 #undef HAVE_POSIX_SPAWN
+#endif
+
+// if neither posix_spawn_file_actions_addchdir nor O_CLOEXEC are available,
+// our posix_spawn code should not be used. This affects e.g. Linux systems
+// with an old glibc, see https://github.com/gap-system/gap/issues/3918.
+#if !defined(HAVE_POSIX_SPAWN_FILE_ACTIONS_ADDCHDIR) && !defined(O_CLOEXEC)
+#undef HAVE_POSIX_SPAWN
+#endif
+
+
+#ifdef HAVE_POSIX_SPAWN
+
+// O_DIRECTORY is not available in old Linux / glibc versions, but the way we
+// use it below, it is optional anyway
+#ifndef O_DIRECTORY
+#define O_DIRECTORY 0
+#endif
+
+
+// The following function behaves like posix_spawn, but also
+// changes the working directory temporarily to 'dir'.
+static int posix_spawn_with_dir(pid_t *                      pid,
+                                const char *                 path,
+                                posix_spawn_file_actions_t * file_actions,
+                                const posix_spawnattr_t *    attrp,
+                                char * const                 argv[],
+                                char * const                 envp[],
+                                const char *                 dir)
+{
+    // For systems that don't support fork+exec well (e.g. embedded systems,
+    // but also Windows), the POSIX Issue 6 (~2001) added posix_spawn() and
+    // friends. These can be used as a replacement for fork+exec in many
+    // applications. However, they curiously miss one very common demand when
+    // launching subprocesses: there is no way to override the working
+    // directory for the child process. This well-known deficiency has finally
+    // been realized as a problem by POSIX in 2018, just about 17 years after
+    // posix_spawn was first put into the standard, and so we might see a
+    // proper fix for this soon, i.e., possibly even within the next decade!
+    // See also <http://austingroupbugs.net/view.php?id=1208>.
+    //
+    // UPDATE: musl libc 1.1.24, glibc 2.29 and macOS 10.15 added preview
+    // versions of these new APIs (with suffix `_np` to indicate it), so we
+    // can actually start using them.
+    //
+    // UPDATE: the proposed change was accepted and applied to the draft of
+    // the next POSIX revision in mid-2020. When this will appear in public
+    // is anyones guess. On the upside, also OpenBSD, FreeBSD, and Solaris
+    // implement the _np versions of the API.
+
+#ifdef HAVE_POSIX_SPAWN_FILE_ACTIONS_ADDCHDIR
+    if (posix_spawn_file_actions_addchdir(file_actions, dir)) {
+        PErr("posix_spawn_with_dir: addchdir failed");
+        return 1;
+    }
+#else
+    // For older systems that lack posix_spawn_file_actions_addchdir or
+    // posix_spawn_file_actions_addchdir_np, we use the following fallback
+    // code.
+    //
+    // WARNING: This is not thread safe! As explained above, until recently,
+    // there was no portable way to do this race free, without using an
+    // external shim executable which sets the wd and then calls the actually
+    // target executable.
+    int oldwd = open(".", O_RDONLY | O_DIRECTORY | O_CLOEXEC);
+    if (oldwd == -1) {
+        PErr("posix_spawn_with_dir: cannot open current working directory");
+        return 1;
+    }
+    if (chdir(dir) == -1) {
+        PErr("posix_spawn_with_dir: cannot change working "
+             "directory for subprocess");
+        return 1;
+    }
+#endif
+
+    // spawn subprocess
+    int res = posix_spawn(pid, path, file_actions, attrp, argv, envp);
+    if (res) {
+        PErr("StartChildProcess: posix_spawn failed");
+    }
+
+#ifndef HAVE_POSIX_SPAWN_FILE_ACTIONS_ADDCHDIR
+    // restore working directory
+    if (fchdir(oldwd)) {
+        PErr("StartChildProcess: failed to restore working dir");
+    }
+    close(oldwd);    // ignore error
+#endif
+    return res;
+}
 
 #endif
+
 
 static Int
 StartChildProcess(const Char * dir, const Char * prg, Char * args[])
 {
-    int slave; /* pipe to child                   */
+    int child; /* pipe to child                   */
     Int stream;
-#ifdef HAVE_POSIX_SPAWN
-    int oldwd = -1;
-#endif
 
     struct termios tst; /* old and new terminal state      */
 
@@ -321,7 +423,7 @@ StartChildProcess(const Char * dir, const Char * prg, Char * args[])
     }
 
     /* open pseudo terminal for communication with gap */
-    if (OpenPty(&PtyIOStreams[stream].ptyFD, &slave)) {
+    if (OpenPty(&PtyIOStreams[stream].ptyFD, &child)) {
         PErr("StartChildProcess: open pseudo tty failed");
         FreeStream(stream);
         HashUnlock(PtyIOStreams);
@@ -329,8 +431,8 @@ StartChildProcess(const Char * dir, const Char * prg, Char * args[])
     }
 
     /* Now fiddle with the terminal sessions on the pty */
-    if (tcgetattr(slave, &tst) == -1) {
-        PErr("StartChildProcess: tcgetattr on slave pty failed");
+    if (tcgetattr(child, &tst) == -1) {
+        PErr("StartChildProcess: tcgetattr on child pty failed");
         goto cleanup;
     }
     tst.c_cc[VINTR] = 0377;
@@ -340,8 +442,8 @@ StartChildProcess(const Char * dir, const Char * prg, Char * args[])
     tst.c_cc[VTIME] = 0;
     tst.c_lflag    &= ~(ECHO|ICANON);
     tst.c_oflag    &= ~(ONLCR);
-    if (tcsetattr(slave, TCSANOW, &tst) == -1) {
-        PErr("StartChildProcess: tcsetattr on slave pty failed");
+    if (tcsetattr(child, TCSANOW, &tst) == -1) {
+        PErr("StartChildProcess: tcsetattr on child pty failed");
         goto cleanup;
     }
 
@@ -364,63 +466,29 @@ StartChildProcess(const Char * dir, const Char * prg, Char * args[])
 
     if (posix_spawn_file_actions_addclose(&file_actions,
                                           PtyIOStreams[stream].ptyFD)) {
-        PErr("StartChildProcess: posix_spawn_file_actions_addclose failed");
+        PErr("StartChildProcess: addclose failed");
         posix_spawn_file_actions_destroy(&file_actions);
         goto cleanup;
     }
 
-    if (posix_spawn_file_actions_adddup2(&file_actions, slave, 0)) {
-        PErr("StartChildProcess: "
-             "posix_spawn_file_actions_adddup2(slave, 0) failed");
+    if (posix_spawn_file_actions_adddup2(&file_actions, child, 0)) {
+        PErr("StartChildProcess: adddup2(child, 0) failed");
         posix_spawn_file_actions_destroy(&file_actions);
         goto cleanup;
     }
 
-    if (posix_spawn_file_actions_adddup2(&file_actions, slave, 1)) {
-        PErr("StartChildProcess: "
-             "posix_spawn_file_actions_adddup2(slave, 1) failed");
-        posix_spawn_file_actions_destroy(&file_actions);
-        goto cleanup;
-    }
-
-    // temporarily change the working directory
-    //
-    // WARNING: This is not thread safe! Unfortunately, there is no portable
-    // way to do this race free, without using an external shim executable
-    // which sets the wd and then calls the actually target executable. But at
-    // least this well-known deficiency has finally been realized as a problem
-    // by POSIX in 2018, just about 14 years after posix_spawn was first put
-    // into the standard), and so we might see a proper fix for this soon,
-    // i.e., possibly even within the next decade!
-    // See also <http://austingroupbugs.net/view.php?id=1208>
-    oldwd = open(".", O_RDONLY | O_DIRECTORY | O_CLOEXEC);
-    if (oldwd == -1) {
-        PErr("StartChildProcess: cannot open current working "
-             "directory");
-        posix_spawn_file_actions_destroy(&file_actions);
-        goto cleanup;
-    }
-    if (chdir(dir) == -1) {
-        PErr("StartChildProcess: cannot change working "
-             "directory for subprocess");
+    if (posix_spawn_file_actions_adddup2(&file_actions, child, 1)) {
+        PErr("StartChildProcess: adddup2(child, 1) failed");
         posix_spawn_file_actions_destroy(&file_actions);
         goto cleanup;
     }
 
     // spawn subprocess
-    if (posix_spawn(&PtyIOStreams[stream].childPID, prg, &file_actions, 0,
-                    args, environ)) {
-        PErr("StartChildProcess: posix_spawn failed");
+    if (posix_spawn_with_dir(&PtyIOStreams[stream].childPID, prg,
+                             &file_actions, 0, args, environ, dir)) {
+        PErr("StartChildProcess: posix_spawn_with_dir failed");
         goto cleanup;
     }
-
-    // restore working directory
-    if (fchdir(oldwd)) {
-        PErr("StartChildProcess: failed to restore working dir after "
-             "spawning");
-    }
-    close(oldwd);    // ignore error
-    oldwd = -1;
 
     // cleanup
     if (posix_spawn_file_actions_destroy(&file_actions)) {
@@ -432,11 +500,11 @@ StartChildProcess(const Char * dir, const Char * prg, Char * args[])
     if (PtyIOStreams[stream].childPID == 0) {
         /* Set up the child */
         close(PtyIOStreams[stream].ptyFD);
-        if (dup2(slave, 0) == -1)
+        if (dup2(child, 0) == -1)
             _exit(-1);
         fcntl(0, F_SETFD, 0);
 
-        if (dup2(slave, 1) == -1)
+        if (dup2(child, 1) == -1)
             _exit(-1);
         fcntl(1, F_SETFD, 0);
 
@@ -451,35 +519,25 @@ StartChildProcess(const Char * dir, const Char * prg, Char * args[])
         execv(prg, args);
 
         /* This should never happen */
-        close(slave);
+        close(child);
         _exit(1);
     }
 #endif
 
-    /* Now we're back in the master */
+    /* Now we're back in the parent */
     /* check if the fork was successful */
     if (PtyIOStreams[stream].childPID == -1) {
         PErr("StartChildProcess: cannot fork to subprocess");
         goto cleanup;
     }
-    close(slave);
+    close(child);
 
 
     HashUnlock(PtyIOStreams);
     return stream;
 
 cleanup:
-#ifdef HAVE_POSIX_SPAWN
-    if (oldwd >= 0) {
-        // restore working directory
-        if (fchdir(oldwd)) {
-            PErr("StartChildProcess: failed to restore working dir during "
-                 "cleanup");
-        }
-        close(oldwd);
-    }
-#endif
-    close(slave);
+    close(child);
     close(PtyIOStreams[stream].ptyFD);
     PtyIOStreams[stream].inuse = 0;
     FreeStream(stream);
@@ -498,11 +556,11 @@ static void HandleChildStatusChanges(UInt pty)
         PtyIOStreams[pty].changed = 0;
         PtyIOStreams[pty].blocked = 0;
         HashUnlock(PtyIOStreams);
-        ErrorQuit("Child Process is unexpectedly dead", (Int)0L, (Int)0L);
+        ErrorQuit("Child Process is unexpectedly dead", 0, 0);
     }
     else if (PtyIOStreams[pty].blocked) {
         HashUnlock(PtyIOStreams);
-        ErrorQuit("Child Process is still dead", (Int)0L, (Int)0L);
+        ErrorQuit("Child Process is still dead", 0, 0);
     }
     else if (PtyIOStreams[pty].changed) {
         PtyIOStreams[pty].blocked = 1;
@@ -626,7 +684,7 @@ static UInt HashLockStreamIfAvailable(Obj stream)
     HashLock(PtyIOStreams);
     if (!PtyIOStreams[pty].inuse) {
         HashUnlock(PtyIOStreams);
-        ErrorMayQuit("IOSTREAM %d is not in use", pty, 0L);
+        ErrorMayQuit("IOSTREAM %d is not in use", pty, 0);
     }
     return pty;
 }
@@ -711,7 +769,7 @@ static Obj FuncCLOSE_PTY_IOSTREAM(Obj self, Obj stream)
     retcode = waitpid(PtyIOStreams[pty].childPID, &status, WNOHANG);
     if (retcode == 0) {
         // Give process a second to quit
-        SySleep(1);
+        sleep(1);
         retcode = waitpid(PtyIOStreams[pty].childPID, &status, WNOHANG);
     }
     if (retcode == 0) {
@@ -746,6 +804,60 @@ static Obj FuncFD_OF_IOSTREAM(Obj self, Obj stream)
     return result;
 }
 
+#else // !defined(GAP_DISABLE_SUBPROCESS_CODE)
+
+int CheckChildStatusChanged(int childPID, int status)
+{
+    return 0;
+}
+
+static Obj FuncCREATE_PTY_IOSTREAM(Obj self, Obj dir, Obj prog, Obj args)
+{
+    return Fail;
+}
+
+static Obj FuncWRITE_IOSTREAM(Obj self, Obj stream, Obj string, Obj len)
+{
+    return Fail;
+}
+
+static Obj FuncREAD_IOSTREAM(Obj self, Obj stream, Obj len)
+{
+    return Fail;
+}
+
+static Obj FuncREAD_IOSTREAM_NOWAIT(Obj self, Obj stream, Obj len)
+{
+    return Fail;
+}
+
+static Obj FuncKILL_CHILD_IOSTREAM(Obj self, Obj stream)
+{
+    return 0;
+}
+
+static Obj FuncSIGNAL_CHILD_IOSTREAM(Obj self, Obj stream, Obj sig)
+{
+    return 0;
+}
+
+static Obj FuncCLOSE_PTY_IOSTREAM(Obj self, Obj stream)
+{
+    return 0;
+}
+
+static Obj FuncIS_BLOCKED_IOSTREAM(Obj self, Obj stream)
+{
+    return Fail;
+}
+
+static Obj FuncFD_OF_IOSTREAM(Obj self, Obj stream)
+{
+    return Fail;
+}
+
+#endif
+
 
 /****************************************************************************
 **
@@ -758,17 +870,17 @@ static Obj FuncFD_OF_IOSTREAM(Obj self, Obj stream)
 */
 static StructGVarFunc GVarFuncs[] = {
 
-    GVAR_FUNC(CREATE_PTY_IOSTREAM, 3, "dir, prog, args"),
-    GVAR_FUNC(WRITE_IOSTREAM, 3, "stream, string, len"),
-    GVAR_FUNC(READ_IOSTREAM, 2, "stream, len"),
-    GVAR_FUNC(READ_IOSTREAM_NOWAIT, 2, "stream, len"),
-    GVAR_FUNC(KILL_CHILD_IOSTREAM, 1, "stream"),
-    GVAR_FUNC(CLOSE_PTY_IOSTREAM, 1, "stream"),
-    GVAR_FUNC(SIGNAL_CHILD_IOSTREAM, 2, "stream, signal"),
-    GVAR_FUNC(IS_BLOCKED_IOSTREAM, 1, "stream"),
-    GVAR_FUNC(FD_OF_IOSTREAM, 1, "stream"),
+    GVAR_FUNC_3ARGS(CREATE_PTY_IOSTREAM, dir, prog, args),
+    GVAR_FUNC_3ARGS(WRITE_IOSTREAM, stream, string, len),
+    GVAR_FUNC_2ARGS(READ_IOSTREAM, stream, len),
+    GVAR_FUNC_2ARGS(READ_IOSTREAM_NOWAIT, stream, len),
+    GVAR_FUNC_1ARGS(KILL_CHILD_IOSTREAM, stream),
+    GVAR_FUNC_1ARGS(CLOSE_PTY_IOSTREAM, stream),
+    GVAR_FUNC_2ARGS(SIGNAL_CHILD_IOSTREAM, stream, signal),
+    GVAR_FUNC_1ARGS(IS_BLOCKED_IOSTREAM, stream),
+    GVAR_FUNC_1ARGS(FD_OF_IOSTREAM, stream),
 #ifdef HPCGAP
-    GVAR_FUNC(DEFAULT_SIGCHLD_HANDLER, 0, ""),
+    GVAR_FUNC_0ARGS(DEFAULT_SIGCHLD_HANDLER),
 #endif
 
     { 0, 0, 0, 0, 0 }
@@ -783,6 +895,7 @@ static StructGVarFunc GVarFuncs[] = {
 */
 static Int InitKernel(StructInitInfo * module)
 {
+#ifndef GAP_DISABLE_SUBPROCESS_CODE
     UInt i;
     PtyIOStreams[0].childPID = -1;
     for (i = 1; i < MAX_PTYS; i++) {
@@ -791,13 +904,15 @@ static Int InitKernel(StructInitInfo * module)
     }
     FreePtyIOStreams = MAX_PTYS - 1;
 
-    /* init filters and functions                                          */
-    InitHdlrFuncsFromTable(GVarFuncs);
-
 #if !defined(HPCGAP)
     /* Set up the trap to detect future dying children */
     signal(SIGCHLD, ChildStatusChanged);
 #endif
+
+#endif
+
+    /* init filters and functions                                          */
+    InitHdlrFuncsFromTable(GVarFuncs);
 
     return 0;
 }
@@ -806,7 +921,6 @@ static Int InitKernel(StructInitInfo * module)
 **
 *F  InitLibrary( <module> ) . . . . . . .  initialise library data structures
 */
-
 static Int InitLibrary(StructInitInfo * module)
 {
     /* init filters and functions                                          */

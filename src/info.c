@@ -40,9 +40,9 @@ static Obj ResetShowUsedInfoClassesHandler;
 static Obj ShowUsedInfoClassesHandler;
 
 
-Obj FuncShowUsedInfoClasses(Obj self, Obj choice)
+static Obj FuncShowUsedInfoClasses(Obj self, Obj choice)
 {
-    RequireTrueOrFalse("ShowUsedInfoClasses", choice);
+    RequireTrueOrFalse(SELF_NAME, choice);
 
     if (choice == True) {
         STATE(ShowUsedInfoClassesActive) = 1;
@@ -59,7 +59,7 @@ void InfoDoPrint(Obj cls, Obj lvl, Obj args)
 {
     if (IS_PLIST(cls))
         cls = ELM_PLIST(cls, 1);
-#if defined(HPCGAP)
+#ifdef HPCGAP
     Obj fun = Elm0AList(cls, INFODATA_HANDLER);
 #else
     Obj fun = ELM_PLIST(cls, INFODATA_HANDLER);
@@ -80,7 +80,7 @@ Obj InfoCheckLevel(Obj selectors, Obj level)
     // The fast-path only deals with the case where all arguments are of the
     // correct type, and were False is returned.
     if (CALL_1ARGS(IsInfoClassListRep, selectors) == True) {
-#if defined(HPCGAP)
+#ifdef HPCGAP
         Obj index = ElmAList(selectors, INFODATA_CURRENTLEVEL);
 #else
         Obj index = ELM_PLIST(selectors, INFODATA_CURRENTLEVEL);
@@ -105,7 +105,7 @@ Obj InfoCheckLevel(Obj selectors, Obj level)
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
 static StructGVarFunc GVarFuncs[] = {
-    GVAR_FUNC(ShowUsedInfoClasses, 1, "choice"), { 0, 0, 0, 0, 0 }
+    GVAR_FUNC_1ARGS(ShowUsedInfoClasses, choice), { 0, 0, 0, 0, 0 }
 };
 
 
@@ -127,7 +127,6 @@ static Int InitKernel(StructInitInfo * module)
     ImportFuncFromLibrary("SHOW_USED_INFO_CLASSES",
                           &ShowUsedInfoClassesHandler);
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -147,7 +146,6 @@ static Int InitLibrary(StructInitInfo * module)
     ExportAsConstantGVar(INFODATA_OUTPUT);
     ExportAsConstantGVar(INFODATA_NUM);
 
-    /* return success                                                      */
     return 0;
 }
 

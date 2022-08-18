@@ -16,7 +16,7 @@
 #ifndef GAP_STATS_H
 #define GAP_STATS_H
 
-#include "gapstate.h"
+#include "common.h"
 
 /****************************************************************************
 **
@@ -27,7 +27,7 @@
 **  the function  that should  be  called  if a  statement   of that type  is
 **  executed.
 */
-extern  UInt            (* ExecStatFuncs[256]) ( Stat stat );
+extern ExecStatFunc ExecStatFuncs[256];
 
 /****************************************************************************
 **
@@ -36,17 +36,19 @@ extern  UInt            (* ExecStatFuncs[256]) ( Stat stat );
 **  'EXEC_STAT' executes the statement <stat>.
 **
 **  If   this  causes   the  execution  of   a  return-value-statement,  then
-**  'EXEC_STAT' returns 1, and the return value is stored in 'ReturnObjStat'.
-**  If this causes the execution of a return-void-statement, then 'EXEC_STAT'
-**  returns 2.  If  this causes execution  of a break-statement (which cannot
-**  happen if <stat> is the body of a  function), then 'EXEC_STAT' returns 4.
-**  Otherwise 'EXEC_STAT' returns 0.
+**  'EXEC_STAT' returns 'STATUS_RETURN', and the return value is stored
+**  in 'STATE(ReturnObjStat)'. If a return-void-statement is executed, then
+**  'EXEC_STAT' returns 'STATUS_RETURN' and sets 'STATE(ReturnObjStat)' to
+**  zero. If a break-statement is executed (which cannot happen if <stat> is
+**  the body of a function), then 'EXEC_STAT' returns 'STATUS_BREAK', and
+**  similarly for a continue-statement 'STATUS_CONTINUE' is returned.
+**  Otherwise 'EXEC_STAT' returns 'STATUS_END'.
 **
 **  'EXEC_STAT'  causes  the  execution  of  <stat>  by dispatching   to  the
 **  executor, i.e., to the  function that executes statements  of the type of
 **  <stat>.
 */
-UInt EXEC_STAT(Stat stat);
+ExecStatus EXEC_STAT(Stat stat);
 
 // Executes the current function and returns its return value
 // if the last statement was STAT_RETURN_OBJ, or null if the last
@@ -62,19 +64,7 @@ Obj EXEC_CURR_FUNC(void);
 **  when the normal control flow needs to be interrupted by an external
 **  event.
 */
-
-extern UInt (* IntrExecStatFuncs[256]) ( Stat stat );
-
-
-/****************************************************************************
-**
-*V  ReturnObjStat . . . . . . . . . . . . . . . .  result of return-statement
-**
-**  'ReturnObjStat'  is   the result of the   return-statement  that was last
-**  executed.  It is set  in  'ExecReturnObj' and  used in the  handlers that
-**  interpret functions.
-*/
-/* TL: extern  Obj             ReturnObjStat; */
+extern ExecStatFunc IntrExecStatFuncs[256];
 
 
 /****************************************************************************
@@ -127,18 +117,14 @@ void PrintStat(Stat stat);
 **  statements a pointer to the  printer for statements  of this type,  i.e.,
 **  the function that should be called to print statements of this type.
 */
-extern  void            (* PrintStatFuncs[256] ) ( Stat stat );
+extern PrintStatFunc PrintStatFuncs[256];
 
 
 /****************************************************************************
  **
  *F  ClearError()  . . . . . . . . . . . . . .  reset execution and error flag
  *
- * FIXME: This function accesses NrError which is state of the scanner, so
- *        scanner should have an API for this.
- * 
  */
-
 void ClearError(void);
 
 

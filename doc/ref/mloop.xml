@@ -1,8 +1,7 @@
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <!-- %% -->
-<!-- %A  mloop.msk                  GAP documentation             Martin Schönert -->
+<!-- %A  mloop.xml                  GAP documentation             Martin Schönert -->
 <!-- %% -->
-<!-- %A @(#)<M>Id: mloop.msk,v 1.34 2006/09/12 14:51:14 jjm Exp </M> -->
 <!-- %% -->
 <!-- %Y Copyright 1990-1992, Lehrstuhl D für Mathematik, RWTH Aachen, Germany -->
 <!-- %% -->
@@ -986,36 +985,43 @@ or <C>brk></C> or <C>brk_<A>nn</A>></C> prompt.
 </ManSection>
 
 <ManSection>
-<Func Name="GAP_EXIT_CODE" Arg='ret'/>
+<Func Name="GapExitCode" Arg='[ret]'/>
 
 <Description>
-A <C>GAP_EXIT_CODE</C> sets the return value which will be used when
-&GAP; exits. This may be an integer, or a boolean (where
-<K>true</K> is interpreted as 0, and
-<K>false</K> is interpreted as 1.
+<Ref Func="GapExitCode"/> sets the exit value which is returned
+to the operating system (or parent process) when &GAP; exits.
+This may be an integer in the range [-128..127] (other values
+are reduced modulo 256), or a boolean. <K>true</K> corresponds
+to the return value 0, which by convention is treated as "success".
+<K>false</K> corresponds to the return value 1, which by convention
+is treated as "failure". The exit value is not changed if no argument
+is given.
+<P/>
+The <E>previous</E> exit code is returned.
+</Description>
+</ManSection>
+
+<ManSection>
+<Func Name="QuitGap" Arg='[ret]'/>
+
+<Description>
+<Ref Func="QuitGap"/> acts similarly to the keyword <C>QUIT</C>, except
+<C>QUIT</C> cannot be called from a function. It exits
+&GAP; cleanly, calling any function installed using <Ref Func="InstallAtExit"/>.
+The optional argument <A>ret</A> will be passed to <Ref Func="GapExitCode"/>.
 <P/>
 </Description>
 </ManSection>
 
 <ManSection>
-<Func Name="QUIT_GAP" Arg='[ret]'/>
+<Func Name="ForceQuitGap" Arg='[ret]'/>
 
 <Description>
-A <C>QUIT_GAP</C> acts similarly to the keyword <C>quit</C>. It exits
-&GAP; cleanly, calling any function installed using <C>InstallAtExit</C>.
-The optional argument will be passed to <C>GAP_EXIT_CODE</C>.
-<P/>
-</Description>
-</ManSection>
-
-<ManSection>
-<Func Name="FORCE_QUIT_GAP" Arg='[ret]'/>
-
-<Description>
-A <C>FORCE_QUIT_GAP</C> is similar to <C>QUIT_GAP</C>, except it ignores any
-functions installed with <C>InstallAtExit</C>, or any other functions
-normally run at GAP exit, and exits GAP immediately.
-The optional argument will be passed to <C>GAP_EXIT_CODE</C>.
+<Ref Func="ForceQuitGap"/> is similar to <Ref Func="QuitGap"/>, except it ignores any
+functions installed with <Ref Func="InstallAtExit"/>, or any other functions
+normally run at GAP exit, such as flushing any partially outputted lines
+to both the screen and files, and exits GAP immediately.
+The optional argument <A>ret</A> will be passed to <Ref Func="GapExitCode"/>.
 <P/>
 </Description>
 </ManSection>
@@ -1027,7 +1033,7 @@ The optional argument will be passed to <C>GAP_EXIT_CODE</C>.
 
 <Description>
 Before actually terminating, &GAP; will call (with no arguments) all
-of the functions that have been installed using <C>InstallAtExit</C>. These
+of the functions that have been installed using <Ref Func="InstallAtExit"/>. These
 typically perform tasks such as cleaning up temporary files created
 during the session, and closing open files. If an error occurs during
 the execution of one of these functions, that function is simply
@@ -1055,7 +1061,8 @@ different action may be appropriate.
 If, when &GAP; is exiting due to a <K>quit</K> or end-of-file (i.e. not due
 to a <K>QUIT</K>) the variable <Ref Var="SaveOnExitFile"/> is bound
 to a string value,
-then the system will try to save the workspace to that file.
+then the system will try to save the &GAP; workspace to that file,
+see <Ref Func="SaveWorkspace"/>.
 </Description>
 </ManSection>
 
@@ -1434,4 +1441,3 @@ interpret.
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <!-- %% -->
 <!-- %E -->
-

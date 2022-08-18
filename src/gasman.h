@@ -36,7 +36,7 @@
 #ifndef GAP_GASMAN_H
 #define GAP_GASMAN_H
 
-#include "system.h"
+#include "common.h"
 
 
 /****************************************************************************
@@ -66,7 +66,7 @@
 **  Note that bag identifiers are recycled.  That means that after a bag dies
 **  its identifier may be reused for a new bag.
 **
-**  The following is defined in "system.h"
+**  The following is defined in "common.h"
 **
 typedef UInt * *        Bag;
 */
@@ -74,7 +74,7 @@ typedef UInt * *        Bag;
 
 /****************************************************************************
 **
-**
+*T  BagHeader
 */
 typedef struct {
     uint8_t type : 8;
@@ -108,13 +108,20 @@ enum {
 /****************************************************************************
 **
 *F  BAG_HEADER(<bag>) . . . . . . . . . . . . . . . . . . . . header of a bag
+*F  CONST_BAG_HEADER(<bag>) . . . . . . . . . . . . read-only header of a bag
 **
 **  'BAG_HEADER' returns the header of the bag with the identifier <bag>.
 */
 EXPORT_INLINE BagHeader * BAG_HEADER(Bag bag)
 {
     GAP_ASSERT(bag);
-    return (((BagHeader *)*bag) - 1);
+    return ((*(BagHeader **)bag) - 1);
+}
+
+EXPORT_INLINE const BagHeader * CONST_BAG_HEADER(Bag bag)
+{
+    GAP_ASSERT(bag);
+    return ((*(const BagHeader **)bag) - 1);
 }
 
 
@@ -136,7 +143,7 @@ EXPORT_INLINE BagHeader * BAG_HEADER(Bag bag)
 */
 EXPORT_INLINE UInt TNUM_BAG(Bag bag)
 {
-    return BAG_HEADER(bag)->type;
+    return CONST_BAG_HEADER(bag)->type;
 }
 
 
@@ -162,13 +169,13 @@ EXPORT_INLINE UInt TNUM_BAG(Bag bag)
 **
 **      if (TEST_BAG_FLAG(obj, FLAG1 | FLAG2 ) == FLAG1) ...
 **
-**  Each flag must be a an integer with exactly one bit set, e.g. a value
+**  Each flag must be an integer with exactly one bit set, e.g. a value
 **  of the form (1 << i). Currently, 'i' must be in the range from 0 to
 **  7 (inclusive).
 */
 EXPORT_INLINE uint8_t TEST_BAG_FLAG(Bag bag, uint8_t flag)
 {
-    return BAG_HEADER(bag)->flags & flag;
+    return CONST_BAG_HEADER(bag)->flags & flag;
 }
 
 EXPORT_INLINE void SET_BAG_FLAG(Bag bag, uint8_t flag)
@@ -181,6 +188,7 @@ EXPORT_INLINE void CLEAR_BAG_FLAG(Bag bag, uint8_t flag)
     BAG_HEADER(bag)->flags &= ~flag;
 }
 
+
 /****************************************************************************
 **
 *F  IS_BAG_REF(<bag>) . . . . . . verify that <bag> is a valid bag identifier
@@ -190,7 +198,7 @@ EXPORT_INLINE void CLEAR_BAG_FLAG(Bag bag, uint8_t flag)
 **
 **  See also 'IS_INTOBJ' and 'IS_FFE'.
 */
-EXPORT_INLINE Int IS_BAG_REF(Obj bag)
+EXPORT_INLINE BOOL IS_BAG_REF(Obj bag)
 {
     return bag && !((Int)bag & 0x03);
 }
@@ -209,8 +217,9 @@ EXPORT_INLINE Int IS_BAG_REF(Obj bag)
 **  the size of a bag when it allocates it with 'NewBag' and may later change
 **  it with 'ResizeBag' (see "NewBag" and "ResizeBag").
 */
-EXPORT_INLINE UInt SIZE_BAG(Bag bag) {
-    return BAG_HEADER(bag)->size;
+EXPORT_INLINE UInt SIZE_BAG(Bag bag)
+{
+    return CONST_BAG_HEADER(bag)->size;
 }
 
 
@@ -223,7 +232,8 @@ EXPORT_INLINE UInt SIZE_BAG(Bag bag) {
 **  atomic operations that require a memory barrier in between dereferencing
 **  the bag pointer and accessing the contents of the bag.
 */
-EXPORT_INLINE UInt SIZE_BAG_CONTENTS(const void *ptr) {
+EXPORT_INLINE UInt SIZE_BAG_CONTENTS(const void *ptr)
+{
     return ((const BagHeader *)ptr)[-1].size;
 }
 
@@ -244,7 +254,9 @@ EXPORT_INLINE UInt SIZE_BAG_CONTENTS(const void *ptr) {
 
 /****************************************************************************
 **
-*F  PTR_BAG(<bag>)  . . . . . . . . . . . . . . . . . . . .  pointer to a bag
+*F  PTR_BAG(<bag>) . . . . . . . . . . . . . . . . . . . . . pointer to a bag
+*F  CONST_PTR_BAG(<bag>) . . . . . . . . . . . . . read-only pointer to a bag
+*F  SET_PTR_BAG(<bag>) . . . . . . . . . . . . . . . set the pointer to a bag
 **
 **  'PTR_BAG' returns the address of the data area of the bag with identifier
 **  <bag>.  Using  this pointer the application  can then  read data from the
@@ -305,11 +317,9 @@ EXPORT_INLINE const Bag *CONST_PTR_BAG(Bag bag)
     return *(const Bag * const *)bag;
 }
 
-EXPORT_INLINE void SET_PTR_BAG(Bag bag, Bag *val)
-{
-    GAP_ASSERT(bag != 0);
-    *(Bag**)bag = val;
-}
+#if defined(USE_BOEHM_GC)
+void SET_PTR_BAG(Bag bag, Bag *val);
+#endif
 
 
 /****************************************************************************
@@ -358,7 +368,7 @@ EXPORT_INLINE void CHANGED_BAG(Bag bag)
 
 void CHANGED_BAG(Bag bag);
 
-int IsGapObj(void *);
+BOOL IsGapObj(void *);
 
 #elif defined(GAP_MEMORY_CANARY)
 
@@ -449,7 +459,8 @@ EXPORT_INLINE Bag NewWordSizedBag(UInt type, UInt size)
 
 /****************************************************************************
 **
-*F  RetypeBag(<bag>,<new>)  . . . . . . . . . . . .  change the type of a bag
+*F  RetypeBag(<bag>,<new>) . . . . . . . . . . . . . change the type of a bag
+*F  RetypeBagIntern(<bag>,<new>) . . . . . . . . . . . . . internal interface
 **
 **  'RetypeBag' changes the type of the bag with identifier <bag>  to the new
 **  type <new>.  The identifier, the size,  and also the  address of the data
@@ -468,8 +479,11 @@ EXPORT_INLINE Bag NewWordSizedBag(UInt type, UInt size)
 **  It is, as usual, the responsibility of the application to ensure that the
 **  data stored in the bag makes sense when the  bag is interpreted  as a bag
 **  of type <type>.
+**
+**  'RetypeBagIntern' is the internal version of 'RetypeBag', implemented by
+**  the GC backend. It is called by 'RetypeBag'.
 */
-void RetypeBag(Bag bag, UInt new_type);
+void RetypeBagIntern(Bag bag, UInt new_type);
 
 #ifdef HPCGAP
 void RetypeBagIfWritable(Bag bag, UInt new_type);
@@ -477,11 +491,25 @@ void RetypeBagIfWritable(Bag bag, UInt new_type);
 #define RetypeBagIfWritable(x,y)     RetypeBag(x,y)
 #endif
 
+#ifdef GAP_KERNEL_DEBUG
+// This helper tests whether the type change is "allowed". As such, it rejects
+// attempts to retype an immutable list or record into a mutable one.
+void PrecheckRetypeBag(Bag bag, UInt new_type);
+#endif
+
+EXPORT_INLINE void RetypeBag(Bag bag, UInt new_type)
+{
+#ifdef GAP_KERNEL_DEBUG
+    PrecheckRetypeBag(bag, new_type);
+#endif
+    RetypeBagIntern(bag, new_type);
+}
+
 
 /****************************************************************************
 **
 **  'RetypeBagSM' works like 'RetypeBag', but ensures that the given bag
-**  returns the same mutability (SM).
+**  retains the same mutability (SM).
 **
 **  FIXME: for now, this checks the tnums; later, this will be turned
 **  into a check for an object flag
@@ -693,9 +721,13 @@ void MarkFourSubBags(Bag bag);
 */
 void MarkAllSubBags(Bag bag);
 
-void MarkAllSubBagsDefault(Bag);
 
+/****************************************************************************
+**
+*F  MarkAllButFirstSubBags(<bag>) . . . .  marks all subbags except the first
+*/
 void MarkAllButFirstSubBags(Bag bag);
+
 
 /****************************************************************************
 **
@@ -770,7 +802,7 @@ void InitGlobalBag(Bag * addr, const Char * cookie);
 **  A freeing function must *not* call 'NewBag', 'ResizeBag', or 'RetypeBag'.
 **
 **  When such  a function is  called for a bag <bag>,  its subbags  are still
-**  accessible.  Note that it it not specified, whether the freeing functions
+**  accessible.  Note that it is not specified whether the freeing functions
 **  for the subbags of   <bag> (if there   are freeing functions for  bags of
 **  their types) are called before or after the freeing function for <bag>.
 */
@@ -816,9 +848,9 @@ void SetExtraMarkFuncBags(TNumExtraMarkFuncBags func);
 
 /****************************************************************************
 **
-*F  InitBags(<initialSize>,<stackStart>,<stackAlign>) . . . initialize Gasman
+*F  InitBags(<initialSize>, <stackStart>) . . . . . . . . . initialize Gasman
 **
-**  'InitBags'  initializes {\Gasman}.  It  must be called from a application
+**  'InitBags'  initializes {\Gasman}.  It must be called from an application
 **  using {\Gasman} before any bags can be allocated.
 **
 **  <initialSize> must be the size of  the initial workspace that 'InitBags'
@@ -830,15 +862,8 @@ void SetExtraMarkFuncBags(TNumExtraMarkFuncBags func);
 **  the stack grows upward or downward. A value that usually works is the
 **  address of the argument 'argc' of the 'main' function of the application,
 **  i.e., '(Bag\*)\&argc'.
-**
-**  <stackAlign> must be the alignment of items of type 'Bag' on the stack.
-**  It must be a divisor of 'sizeof(Bag)'. The addresses of all identifiers
-**  on the stack must be a multiple of <stackAlign>. If it is 1, identifiers
-**  may be anywhere on the stack, and if it is 'sizeof(Bag)', identifiers may
-**  only be at addresses that are a multiple of 'sizeof(Bag)'. This value
-**  depends on the machine, the operating system, and the compiler.
 */
-void InitBags(UInt initialSize, Bag * stackStart, UInt stackAlign);
+void InitBags(UInt initialSize, Bag * stackStart);
 
 
 /****************************************************************************
@@ -850,5 +875,11 @@ void FinishBags(void);
 #if !defined(USE_GASMAN)
 void * AllocateMemoryBlock(UInt size);
 #endif
+
+/****************************************************************************
+**
+*F  TotalGCTime() . . . . . . . . . .  total time spent on garbage collection
+*/
+UInt TotalGCTime(void);
 
 #endif // GAP_GASMAN_H

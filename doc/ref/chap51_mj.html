@@ -126,7 +126,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51_mj.html#X7A0DE1F28470295E">51.9-5 ReesMatrixSemigroupElement</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51_mj.html#X7F03BE707AC7F8A0">51.9-6 IsReesMatrixSubsemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51_mj.html#X780BB78A79275244">51.9-7 IsReesMatrixSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51_mj.html#X879384D479EB1D82">51.9-8 Matrix</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51_mj.html#X7CACF4D686AF1D19">51.9-8 Matrix</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51_mj.html#X82FC5D6980C66AC4">51.9-9 <span class="Heading">Rows and columns</span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51_mj.html#X7D9719F887AFCF8F">51.9-10 UnderlyingSemigroup</a></span>
@@ -218,7 +218,7 @@ true</pre></div>
 <h5>51.1-6 AsSemigroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsSemigroup</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>If <var class="Arg">C</var> is a collection whose elements form a semigroup (see <code class="func">IsSemigroup</code> (<a href="chap51_mj.html#X7B412E5B8543E9B7"><span class="RefLink">51.1-1</span></a>)) then <code class="func">AsSemigroup</code> returns this semigroup. Otherwise <code class="keyw">fail</code> is returned.</p>
+<p>If <var class="Arg">C</var> is a collection whose elements form a semigroup under <code class="func">\*</code> (<a href="chap31_mj.html#X8481C9B97B214C23"><span class="RefLink">31.12-1</span></a>) (see <code class="func">IsSemigroup</code> (<a href="chap51_mj.html#X7B412E5B8543E9B7"><span class="RefLink">51.1-1</span></a>)) then <code class="func">AsSemigroup</code> returns this semigroup. Otherwise <code class="keyw">fail</code> is returned.</p>
 
 <p><a id="X7B1EEA3E82BFE09F" name="X7B1EEA3E82BFE09F"></a></p>
 
@@ -260,18 +260,43 @@ true
 <h5>51.1-10 <span class="Heading">FreeSemigroup</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeSemigroup</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">rank</var>[, <var class="Arg">name</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeSemigroup</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">name1</var>, <var class="Arg">name2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeSemigroup</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">name1</var>[, <var class="Arg">name2</var>[, <var class="Arg">...</var>]] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeSemigroup</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">names</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeSemigroup</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">infinity</var>, <var class="Arg">name</var>, <var class="Arg">init</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Called with a positive integer <var class="Arg">rank</var>, <code class="func">FreeSemigroup</code> returns a free semigroup on <var class="Arg">rank</var> generators. If the optional argument <var class="Arg">name</var> is given then the generators are printed as <var class="Arg">name</var><code class="code">1</code>, <var class="Arg">name</var><code class="code">2</code> etc., that is, each name is the concatenation of the string <var class="Arg">name</var> and an integer from <code class="code">1</code> to <var class="Arg">range</var>. The default for <var class="Arg">name</var> is the string <code class="code">"s"</code>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeSemigroup</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">infinity</var>[, <var class="Arg">name</var>][, <var class="Arg">init</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><code class="code">FreeSemigroup</code> returns a free semigroup. The number of generators, and the labels given to the generators, can be specified in several different ways. Warning: the labels of generators are only an aid for printing, and do not necessarily distinguish generators; see the examples at the end for more information.</p>
 
-<p>Called in the second form, <code class="func">FreeSemigroup</code> returns a free semigroup on as many generators as arguments, printed as <var class="Arg">name1</var>, <var class="Arg">name2</var> etc.</p>
 
-<p>Called in the third form, <code class="func">FreeSemigroup</code> returns a free semigroup on as many generators as the length of the list <var class="Arg">names</var>, the <span class="SimpleMath">\(i\)</span>-th generator being printed as <var class="Arg">names</var><span class="SimpleMath">\([i]\)</span>.</p>
+<dl>
+<dt><strong class="Mark">
+    1: For a given rank, and an optional generator name prefix
+  </strong></dt>
+<dd><p>Called with a positive integer <var class="Arg">rank</var>, <code class="func">FreeSemigroup</code> returns a free semigroup on <var class="Arg">rank</var> generators. The optional argument <var class="Arg">name</var> must be a string; its default value is <code class="code">"s"</code>.</p>
 
-<p>Called in the fourth form, <code class="func">FreeSemigroup</code> returns a free semigroup on infinitely many generators, where the first generators are printed by the names in the list <var class="Arg">init</var>, and the other generators by <var class="Arg">name</var> and an appended number.</p>
+<p>If <var class="Arg">name</var> is not given but the <code class="code">generatorNames</code> option is, then this option is respected as described in Section <a href="chap50_mj.html#X7D0FFDA4793995FC"><span class="RefLink">50.1-16</span></a>.</p>
 
-<p>If the extra argument <var class="Arg">wfilt</var> is given, it must be either <code class="func">IsSyllableWordsFamily</code> (<a href="chap37_mj.html#X7869716C84EA9D81"><span class="RefLink">37.6-6</span></a>) or <code class="func">IsLetterWordsFamily</code> (<a href="chap37_mj.html#X7E36F7897D82417F"><span class="RefLink">37.6-2</span></a>) or <code class="func">IsWLetterWordsFamily</code> (<a href="chap37_mj.html#X8719E7F27CDA1995"><span class="RefLink">37.6-4</span></a>) or <code class="func">IsBLetterWordsFamily</code> (<a href="chap37_mj.html#X8719E7F27CDA1995"><span class="RefLink">37.6-4</span></a>). This filter then specifies the representation used for the elements of the free semigroup (see <a href="chap37_mj.html#X80A9F39582ED296E"><span class="RefLink">37.6</span></a>). If no such filter is given, a letter representation is used.</p>
+<p>Otherwise, the generators of the returned free semigroup are labelled <var class="Arg">name</var><code class="code">1</code>, ..., <var class="Arg">name</var><code class="code">k</code>, where <code class="code">k</code> is the value of <var class="Arg">rank</var>.</p>
+
+</dd>
+<dt><strong class="Mark">2: For given generator names</strong></dt>
+<dd><p>Called with various (at least one) nonempty strings, <code class="func">FreeSemigroup</code> returns a free semigroup on as many generators as arguments, which are labelled <var class="Arg">name1</var>, <var class="Arg">name2</var>, etc.</p>
+
+</dd>
+<dt><strong class="Mark">3: For a given list of generator names</strong></dt>
+<dd><p>Called with a nonempty finite list <var class="Arg">names</var> of nonempty strings, <code class="func">FreeSemigroup</code> returns a free semigroup on <code class="code">Length(<var class="Arg">names</var>)</code> generators, whose <code class="code">i</code>-th generator is labelled <var class="Arg">names</var><code class="code">[i]</code>.</p>
+
+</dd>
+<dt><strong class="Mark">
+    4: For the rank <code class="keyw">infinity</code>,
+       an optional default generator name prefix,
+       and an optional finite list of generator names
+  </strong></dt>
+<dd><p>Called in the fourth form, <code class="func">FreeSemigroup</code> returns a free semigroup on infinitely many generators. The optional argument <var class="Arg">name</var> must be a string; its default value is <code class="code">"s"</code>, and the optional argument <var class="Arg">init</var> must be a finite list of nonempty strings; its default value is an empty list. The generators are initially labelled according to the list <var class="Arg">init</var>, followed by <var class="Arg">name</var><code class="code">i</code> for each <code class="code">i</code> in the range from <code class="code">Length(<var class="Arg">init</var>)+1</code> to <code class="keyw">infinity</code>; such a label is not allowed to appear in <var class="Arg">init</var>.</p>
+
+</dd>
+</dl>
+<p>If the optional first argument <var class="Arg">wfilt</var> is given, then it must be either <code class="code">IsSyllableWordsFamily</code>, <code class="code">IsLetterWordsFamily</code>, <code class="code">IsWLetterWordsFamily</code>, or <code class="code">IsBLetterWordsFamily</code>. This filter specifies the representation used for the elements of the free semigroup (see <a href="chap37_mj.html#X80A9F39582ED296E"><span class="RefLink">37.6</span></a>). If no such filter is given, a letter representation is used.</p>
+
+<p>For more on associative words see Chapter <a href="chap37_mj.html#X78C56A0A87CE380E"><span class="RefLink">37</span></a>.</p>
 
 
 <div class="example"><pre>
@@ -284,18 +309,32 @@ true
 &lt;free semigroup on the generators [ gen1, gen2 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f4 := FreeSemigroup( ["gen1" , "gen2"] );</span>
 &lt;free semigroup on the generators [ gen1, gen2 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeSemigroup( 3 : generatorNames := "boom" );</span>
+&lt;free semigroup on the generators [ boom1, boom2, boom3 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeSemigroup( 2 : generatorNames := [ "u", "v", "w" ] );</span>
+&lt;free semigroup on the generators [ u, v ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeSemigroup( infinity ) ;</span>
+&lt;free semigroup on the generators [ s1, s2, ... ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FreeSemigroup( infinity, "g", [ "a", "b" ]);</span>
+&lt;free semigroup on the generators [ a, b, ... ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfSemigroup( F ){[1..4]};</span>
+[ a, b, g3, g4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfSemigroup( FreeSemigroup( infinity, "gen" ) ){[1..3]};</span>
+[ gen1, gen2, gen3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfSemigroup( FreeSemigroup( infinity, [ "f" ] ) ){[1..3]};</span>
+[ f, s2, s3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeSemigroup(IsSyllableWordsFamily, 5);</span>
+&lt;free semigroup on the generators [ s1, s2, s3, s4, s5 ]&gt;
 </pre></div>
-
-<p>For more on associative words see Chapter <a href="chap37_mj.html#X78C56A0A87CE380E"><span class="RefLink">37</span></a>.</p>
 
 <p>Each free object defines a unique alphabet (and a unique family of words). Its generators are the letters of this alphabet, thus words of length one.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeGroup( 5 );</span>
-&lt;free group on the generators [ f1, f2, f3, f4, f5 ]&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeGroup( "a", "b" );</span>
-&lt;free group on the generators [ a, b ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeSemigroup( 5 );</span>
+&lt;free semigroup on the generators [ s1, s2, s3, s4, s5 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeMonoid( "a", "b" );</span>
+&lt;free monoid on the generators [ a, b ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeGroup( infinity );</span>
 &lt;free group with infinity generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeSemigroup( "x", "y" );</span>
@@ -308,18 +347,20 @@ true
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:= FreeGroup( "x", "x" );  gens:= GeneratorsOfGroup( f );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := FreeGroup( "x", "x" );</span>
 &lt;free group on the generators [ x, x ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens := GeneratorsOfGroup( f );</span>
+[ x, x ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens[1] = gens[2];</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:= FreeGroup( "f1*f2", "f2^-1", "Group( [ f1, f2 ] )" );</span>
 &lt;free group on the generators [ f1*f2, f2^-1, Group( [ f1, f2 ] ) ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens:= GeneratorsOfGroup( f );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens[1]*gens[2];</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens[1] * gens[2];</span>
 f1*f2*f2^-1
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens[1]/gens[3];</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens[1] / gens[3];</span>
 f1*f2*Group( [ f1, f2 ] )^-1
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens[3]/gens[1]/gens[2];</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens[3] / gens[1] / gens[2];</span>
 Group( [ f1, f2 ] )*f1*f2^-1*f2^-1^-1
 </pre></div>
 
@@ -407,20 +448,75 @@ fail
 <h5>51.2-9 <span class="Heading">FreeMonoid</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeMonoid</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">rank</var>[, <var class="Arg">name</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeMonoid</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">name1</var>, <var class="Arg">name2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeMonoid</code>( [<var class="Arg">wfilt</var>][,] [<var class="Arg">name1</var>[, <var class="Arg">name2</var>[, <var class="Arg">...</var>]]] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeMonoid</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">names</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeMonoid</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">infinity</var>, <var class="Arg">name</var>, <var class="Arg">init</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Called with a positive integer <var class="Arg">rank</var>, <code class="func">FreeMonoid</code> returns a free monoid on <var class="Arg">rank</var> generators. If the optional argument <var class="Arg">name</var> is given then the generators are printed as <var class="Arg">name</var><code class="code">1</code>, <var class="Arg">name</var><code class="code">2</code> etc., that is, each name is the concatenation of the string <var class="Arg">name</var> and an integer from <code class="code">1</code> to <var class="Arg">range</var>. The default for <var class="Arg">name</var> is the string <code class="code">"m"</code>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeMonoid</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">infinity</var>[, <var class="Arg">name</var>][, <var class="Arg">init</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><code class="code">FreeMonoid</code> returns a free monoid. The number of generators, and the labels given to the generators, can be specified in several different ways. Warning: the labels of generators are only an aid for printing, and do not necessarily distinguish generators; see the examples at the end of <code class="func">FreeSemigroup</code> (<a href="chap51_mj.html#X7C72E4747BF642BB"><span class="RefLink">51.1-10</span></a>) for more information.</p>
 
-<p>Called in the second form, <code class="func">FreeMonoid</code> returns a free monoid on as many generators as arguments, printed as <var class="Arg">name1</var>, <var class="Arg">name2</var> etc.</p>
 
-<p>Called in the third form, <code class="func">FreeMonoid</code> returns a free monoid on as many generators as the length of the list <var class="Arg">names</var>, the <span class="SimpleMath">\(i\)</span>-th generator being printed as <var class="Arg">names</var><code class="code">[</code><span class="SimpleMath">\(i\)</span><code class="code">]</code>.</p>
+<dl>
+<dt><strong class="Mark">
+    1: For a given rank, and an optional generator name prefix
+  </strong></dt>
+<dd><p>Called with a nonnegative integer <var class="Arg">rank</var>, <code class="func">FreeMonoid</code> returns a free monoid on <var class="Arg">rank</var> generators. The optional argument <var class="Arg">name</var> must be a string; its default value is <code class="code">"m"</code>.</p>
 
-<p>Called in the fourth form, <code class="func">FreeMonoid</code> returns a free monoid on infinitely many generators, where the first generators are printed by the names in the list <var class="Arg">init</var>, and the other generators by <var class="Arg">name</var> and an appended number.</p>
+<p>If <var class="Arg">name</var> is not given but the <code class="code">generatorNames</code> option is, then this option is respected as described in Section <a href="chap50_mj.html#X7D0FFDA4793995FC"><span class="RefLink">50.1-16</span></a>.</p>
 
-<p>If the extra argument <var class="Arg">wfilt</var> is given, it must be either <code class="func">IsSyllableWordsFamily</code> (<a href="chap37_mj.html#X7869716C84EA9D81"><span class="RefLink">37.6-6</span></a>) or <code class="func">IsLetterWordsFamily</code> (<a href="chap37_mj.html#X7E36F7897D82417F"><span class="RefLink">37.6-2</span></a>) or <code class="func">IsWLetterWordsFamily</code> (<a href="chap37_mj.html#X8719E7F27CDA1995"><span class="RefLink">37.6-4</span></a>) or <code class="func">IsBLetterWordsFamily</code> (<a href="chap37_mj.html#X8719E7F27CDA1995"><span class="RefLink">37.6-4</span></a>). This filter then specifies the representation used for the elements of the free monoid (see <a href="chap37_mj.html#X80A9F39582ED296E"><span class="RefLink">37.6</span></a>). If no such filter is given, a letter representation is used.</p>
+<p>Otherwise, the generators of the returned free monoid are labelled <var class="Arg">name</var><code class="code">1</code>, ..., <var class="Arg">name</var><code class="code">k</code>, where <code class="code">k</code> is the value of <var class="Arg">rank</var>.</p>
+
+</dd>
+<dt><strong class="Mark">2: For given generator names</strong></dt>
+<dd><p>Called with various nonempty strings, <code class="func">FreeMonoid</code> returns a free monoid on as many generators as arguments, which are labelled <var class="Arg">name1</var>, <var class="Arg">name2</var>, etc.</p>
+
+</dd>
+<dt><strong class="Mark">3: For a given list of generator names</strong></dt>
+<dd><p>Called with a finite list <var class="Arg">names</var> of nonempty strings, <code class="func">FreeMonoid</code> returns a free monoid on <code class="code">Length(<var class="Arg">names</var>)</code> generators, whose <code class="code">i</code>-th generator is labelled <var class="Arg">names</var><code class="code">[i]</code>.</p>
+
+</dd>
+<dt><strong class="Mark">
+    4: For the rank <code class="keyw">infinity</code>,
+       an optional default generator name prefix,
+       and an optional finite list of generator names
+  </strong></dt>
+<dd><p>Called in the fourth form, <code class="func">FreeMonoid</code> returns a free monoid on infinitely many generators. The optional argument <var class="Arg">name</var> must be a string; its default value is <code class="code">"m"</code>, and the optional argument <var class="Arg">init</var> must be a finite list of nonempty strings; its default value is an empty list. The generators are initially labelled according to the list <var class="Arg">init</var>, followed by <var class="Arg">name</var><code class="code">i</code> for each <code class="code">i</code> in the range from <code class="code">Length(<var class="Arg">init</var>)+1</code> to <code class="keyw">infinity</code>.</p>
+
+</dd>
+</dl>
+<p>If the optional first argument <var class="Arg">wfilt</var> is given, then it must be either <code class="code">IsSyllableWordsFamily</code>, <code class="code">IsLetterWordsFamily</code>, <code class="code">IsWLetterWordsFamily</code>, or <code class="code">IsBLetterWordsFamily</code>. This filter specifies the representation used for the elements of the free monoid (see <a href="chap37_mj.html#X80A9F39582ED296E"><span class="RefLink">37.6</span></a>). If no such filter is given, a letter representation is used.</p>
 
 <p>For more on associative words see Chapter <a href="chap37_mj.html#X78C56A0A87CE380E"><span class="RefLink">37</span></a>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeMonoid(5);</span>
+&lt;free monoid on the generators [ m1, m2, m3, m4, m5 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeMonoid(4, "gen");</span>
+&lt;free monoid on the generators [ gen1, gen2, gen3, gen4 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeMonoid(3 : generatorNames := "turbo");</span>
+&lt;free monoid on the generators [ turbo1, turbo2, turbo3 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeMonoid(2 : generatorNames := ["u", "v", "w"]);</span>
+&lt;free monoid on the generators [ u, v ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeMonoid(); FreeMonoid(0); FreeMonoid([]);</span>
+&lt;free monoid of rank zero&gt;
+&lt;free monoid of rank zero&gt;
+&lt;free monoid of rank zero&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeMonoid("a", "b", "c");</span>
+&lt;free monoid on the generators [ a, b, c ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeMonoid(["x", "y"]);</span>
+&lt;free monoid on the generators [ x, y ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeMonoid(infinity);</span>
+&lt;free monoid with infinity generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FreeMonoid(infinity, "g", ["a", "b"]);</span>
+&lt;free monoid with infinity generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfMonoid(F){[1..4]};</span>
+[ a, b, g3, g4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfMonoid(FreeMonoid(infinity, "gen")){[1..3]};</span>
+[ gen1, gen2, gen3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfMonoid(FreeMonoid(infinity, [ "f", "g" ])){[1..3]};</span>
+[ f, g, m3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeMonoid(IsSyllableWordsFamily, 50);</span>
+&lt;free monoid with 50 generators&gt;
+</pre></div>
 
 <p><a id="X7BFE938E857CA27D" name="X7BFE938E857CA27D"></a></p>
 
@@ -900,7 +996,7 @@ true</pre></div>
 
 <p>Thoroughout this section, wherever the distinction is unimportant, we will refer to Rees matrix or 0-matrix semigroups collectively as Rees matrix semigroups.</p>
 
-<p>Multiplication of elements of a Rees matrix semigroup obviously depends on the matrix used to create the semigroup. Hence elements of a Rees matrix semigroup can only be created with reference to the semigroup to which they belong. More specifically, every collection or semigroup of Rees matrix semigroup elements is created from a specific Rees matrix semigroup, which contains the whole family of its elements. So, it is not possible to multiply or compare elements belonging to distinct Rees matrix semigroups, since they belong to different families. This situation is similar to, say, free groups, and different to, say, permutations, which belong to a single family, and where arbitrary permutations can be compared and multiplied without reference to any group containing them.</p>
+<p>Multiplication of elements of a Rees matrix semigroup obviously depends on the matrix used to create the semigroup. Hence elements of a Rees matrix semigroup can only be created with reference to the semigroup to which they belong. More specifically, every collection or semigroup of Rees matrix semigroup elements is created from a specific Rees matrix semigroup, which contains the whole family of its elements. So, it is not possible to multiply or compare elements belonging to distinct Rees matrix semigroups, since they belong to different families. For example, this situation is similar to free groups, but it is different to permutations, which belong to a single family, and where arbitrary permutations can be compared and multiplied without reference to any group containing them.</p>
 
 <p>A subsemigroup of a Rees matrix semigroup is not necessarily a Rees matrix semigroup. Every semigroup consisting of elements of a Rees matrix semigroup satisfies the property <code class="func">IsReesMatrixSubsemigroup</code> (<a href="chap51_mj.html#X7F03BE707AC7F8A0"><span class="RefLink">51.9-6</span></a>) and every semigroup of Rees 0-matrix semigroup elements satisfies <code class="func">IsReesZeroMatrixSubsemigroup</code> (<a href="chap51_mj.html#X7F03BE707AC7F8A0"><span class="RefLink">51.9-6</span></a>).</p>
 
@@ -924,9 +1020,9 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReesZeroMatrixSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A Rees matrix or 0-matrix semigroup.</p>
 
-<p>When <var class="Arg">S</var> is a semigroup and <var class="Arg">mat</var> is an <code class="code">m</code> by <code class="code">n</code> matrix with entries in <var class="Arg">S</var>, the function <code class="code">ReesMatrixSemigroup</code> returns the <code class="code">n</code> by <code class="code">m</code> Rees matrix semigroup over <var class="Arg">S</var> with multiplication defined by <var class="Arg">mat</var>.</p>
+<p>When <var class="Arg">S</var> is a semigroup and <var class="Arg">mat</var> is an <code class="code">m</code> by <code class="code">n</code> matrix with entries in <var class="Arg">S</var>, the function <code class="func">ReesMatrixSemigroup</code> returns the <code class="code">n</code> by <code class="code">m</code> Rees matrix semigroup over <var class="Arg">S</var> with multiplication defined by <var class="Arg">mat</var>.</p>
 
-<p>The arguments of <code class="code">ReesZeroMatrixSemigroup</code> should be a semigroup <var class="Arg">S</var> and an <code class="code">m</code> by <code class="code">n</code> matrix <var class="Arg">mat</var> with entries in <var class="Arg">S</var> or equal to the integer <code class="code">0</code>. <code class="code">ReesZeroMatrixSemigroup</code> returns the <code class="code">n</code> by <code class="code">m</code> Rees 0-matrix semigroup over <var class="Arg">S</var> with multiplication defined by <var class="Arg">mat</var>. In <strong class="pkg">GAP</strong> a Rees 0-matrix semigroup always contains a multiplicative zero element, regardless of whether there are any entries in <var class="Arg">mat</var> which are equal to <code class="code">0</code>.</p>
+<p>The arguments of <code class="func">ReesZeroMatrixSemigroup</code> should be a semigroup <var class="Arg">S</var> and an <code class="code">m</code> by <code class="code">n</code> matrix <var class="Arg">mat</var> with entries in <var class="Arg">S</var> or equal to the integer <code class="code">0</code>. <code class="func">ReesZeroMatrixSemigroup</code> returns the <code class="code">n</code> by <code class="code">m</code> Rees 0-matrix semigroup over <var class="Arg">S</var> with multiplication defined by <var class="Arg">mat</var>. In <strong class="pkg">GAP</strong> a Rees 0-matrix semigroup always contains a multiplicative zero element, regardless of whether there are any entries in <var class="Arg">mat</var> which are equal to <code class="code">0</code>.</p>
 
 
 <div class="example"><pre>
@@ -948,9 +1044,9 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReesZeroMatrixSubsemigroup</code>( <var class="Arg">R</var>, <var class="Arg">I</var>, <var class="Arg">U</var>, <var class="Arg">J</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A Rees matrix or 0-matrix subsemigroup.</p>
 
-<p>The arguments of <code class="code">ReesMatrixSubsemigroup</code> should be a Rees matrix semigroup <var class="Arg">R</var>, subsets <var class="Arg">I</var> and <var class="Arg">J</var> of the rows and columns of <var class="Arg">R</var>, respectively, and a subsemigroup <var class="Arg">S</var> of the underlying semigroup of <var class="Arg">R</var>. <code class="code">ReesMatrixSubsemigroup</code> returns the subsemigroup of <var class="Arg">R</var> generated by the direct product of <var class="Arg">I</var>, <var class="Arg">U</var>, and <var class="Arg">J</var>.</p>
+<p>The arguments of <code class="func">ReesMatrixSubsemigroup</code> should be a Rees matrix semigroup <var class="Arg">R</var>, subsets <var class="Arg">I</var> and <var class="Arg">J</var> of the rows and columns of <var class="Arg">R</var>, respectively, and a subsemigroup <var class="Arg">U</var> of the underlying semigroup of <var class="Arg">R</var>. <code class="func">ReesMatrixSubsemigroup</code> returns the subsemigroup of <var class="Arg">R</var> generated by the direct product of <var class="Arg">I</var>, <var class="Arg">U</var>, and <var class="Arg">J</var>.</p>
 
-<p>The usage and returned value of <code class="code">ReesZeroMatrixSubsemigroup</code> is analogous when <var class="Arg">R</var> is a Rees 0-matrix semigroup.</p>
+<p>The usage and returned value of <code class="func">ReesZeroMatrixSubsemigroup</code> is analogous when <var class="Arg">R</var> is a Rees 0-matrix semigroup.</p>
 
 
 <div class="example"><pre>
@@ -959,10 +1055,10 @@ true</pre></div>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">[(), (), ()], [0, 0, ()]];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ReesZeroMatrixSemigroup(G, mat);</span>
 &lt;Rees 0-matrix semigroup 3x5 over 
-  &lt;permutation group of size 1007 with 1 generators&gt;&gt;
+  &lt;permutation group of size 1007 with 1 generator&gt;&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ReesZeroMatrixSubsemigroup(R, [1,3], G, [1..5]);</span>
 &lt;Rees 0-matrix semigroup 2x5 over 
-  &lt;permutation group of size 1007 with 1 generators&gt;&gt;
+  &lt;permutation group of size 1007 with 1 generator&gt;&gt;
 </pre></div>
 
 <p><a id="X7964B5C97FB9C07D" name="X7964B5C97FB9C07D"></a></p>
@@ -975,9 +1071,9 @@ true</pre></div>
 
 <p>Every finite simple semigroup is isomorphic to a Rees matrix semigroup over a group, and every finite 0-simple semigroup is isomorphic to a Rees 0-matrix semigroup over a group.</p>
 
-<p>If the argument <var class="Arg">S</var> is a simple semigroup, then <code class="code">IsomorphismReesMatrixSemigroup</code> returns an isomorphism to a Rees matrix semigroup over a group. If <var class="Arg">S</var> is not simple, then <code class="code">IsomorphismReesMatrixSemigroup</code> returns an error.</p>
+<p>If the argument <var class="Arg">S</var> is a simple semigroup, then <code class="func">IsomorphismReesMatrixSemigroup</code> returns an isomorphism to a Rees matrix semigroup over a group. If <var class="Arg">S</var> is not simple, then <code class="func">IsomorphismReesMatrixSemigroup</code> returns an error.</p>
 
-<p>If the argument <var class="Arg">S</var> is a 0-simple semigroup, then <code class="code">IsomorphismReesZeroMatrixSemigroup</code> returns an isomorphism to a Rees 0-matrix semigroup over a group. If <var class="Arg">S</var> is not 0-simple, then <code class="code">IsomorphismReesMatrixSemigroup</code> returns an error.</p>
+<p>If the argument <var class="Arg">S</var> is a 0-simple semigroup, then <code class="func">IsomorphismReesZeroMatrixSemigroup</code> returns an isomorphism to a Rees 0-matrix semigroup over a group. If <var class="Arg">S</var> is not 0-simple, then <code class="func">IsomorphismReesZeroMatrixSemigroup</code> returns an error.</p>
 
 <p>See <code class="func">IsSimpleSemigroup</code> (<a href="chap51_mj.html#X836F4692839F4874"><span class="RefLink">51.4-4</span></a>) and <code class="func">IsZeroSimpleSemigroup</code> (<a href="chap51_mj.html#X8193A60F839C064E"><span class="RefLink">51.4-5</span></a>).</p>
 
@@ -1021,7 +1117,7 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReesZeroMatrixSemigroupElement</code>( <var class="Arg">elt</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>Every element of a Rees matrix semigroup belongs to the category <code class="code">IsReesMatrixSemigroupElement</code>, and every element of a Rees 0-matrix semigroup belongs to the category <code class="code">IsReesZeroMatrixSemigroupElement</code>.</p>
+<p>Every element of a Rees matrix semigroup belongs to the category <code class="func">IsReesMatrixSemigroupElement</code>, and every element of a Rees 0-matrix semigroup belongs to the category <code class="func">IsReesZeroMatrixSemigroupElement</code>.</p>
 
 
 <div class="example"><pre>
@@ -1044,9 +1140,9 @@ false</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReesZeroMatrixSemigroupElement</code>( <var class="Arg">R</var>, <var class="Arg">i</var>, <var class="Arg">x</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: An element of a Rees matrix or <code class="code">0</code>-matrix semigroup.</p>
 
-<p>The arguments of <var class="Arg">ReesMatrixSemigroupElement</var> should be a Rees matrix subsemigroup <var class="Arg">R</var>, elements <var class="Arg">i</var> and <var class="Arg">j</var> of the the rows and columns of <var class="Arg">R</var>, respectively, and an element <var class="Arg">x</var> of the underlying semigroup of <var class="Arg">R</var>. <code class="code">ReesMatrixSemigroupElement</code> returns the element of <var class="Arg">R</var> with row index <var class="Arg">i</var>, underlying element <var class="Arg">x</var> in the underlying semigroup of <var class="Arg">R</var>, and column index <var class="Arg">j</var>, if such an element exist, if such an element exists.</p>
+<p>The arguments of <var class="Arg">ReesMatrixSemigroupElement</var> should be a Rees matrix subsemigroup <var class="Arg">R</var>, elements <var class="Arg">i</var> and <var class="Arg">j</var> of the the rows and columns of <var class="Arg">R</var>, respectively, and an element <var class="Arg">x</var> of the underlying semigroup of <var class="Arg">R</var>. <code class="func">ReesMatrixSemigroupElement</code> returns the element of <var class="Arg">R</var> with row index <var class="Arg">i</var>, underlying element <var class="Arg">x</var> in the underlying semigroup of <var class="Arg">R</var>, and column index <var class="Arg">j</var>, if such an element exist, if such an element exists.</p>
 
-<p>The usage of <code class="code">ReesZeroMatrixSemigroupElement</code> is analogous to that of <code class="code">ReesMatrixSemigroupElement</code>, when <var class="Arg">R</var> is a Rees 0-matrix semigroup.</p>
+<p>The usage of <code class="func">ReesZeroMatrixSemigroupElement</code> is analogous to that of <code class="func">ReesMatrixSemigroupElement</code>, when <var class="Arg">R</var> is a Rees 0-matrix semigroup.</p>
 
 <p>The row <var class="Arg">i</var>, underlying element <var class="Arg">x</var>, and column <var class="Arg">j</var> of an element <code class="code">y</code> of a Rees matrix (or 0-matrix) semigroup can be recovered from <code class="code">y</code> using <code class="code">y[1]</code>, <code class="code">y[2]</code>, and <code class="code">y[3]</code>, respectively.</p>
 
@@ -1097,7 +1193,7 @@ true</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReesZeroMatrixSemigroup</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>A subsemigroup of a Rees matrix semigroup <span class="SimpleMath">\(I\times U\times J\)</span> satisfies <code class="func">IsReesMatrixSemigroup</code> if and only if it is equal to <span class="SimpleMath">\(I'\times U'\times J'\)</span> where <span class="SimpleMath">\(I'\subseteq I\)</span>, <span class="SimpleMath">\(J'\subseteq J\)</span>, and <span class="SimpleMath">\(U'\)</span> is a subsemigroup of <span class="SimpleMath">\(U\)</span>. It can be costly to check that a subsemigroup defined by generators satisfies <code class="code">IsReesMatrixSemigroup</code>. The analogous statements holds for Rees 0-matrix semigroups.</p>
+<p>A subsemigroup of a Rees matrix semigroup <span class="SimpleMath">\(I\times U\times J\)</span> satisfies <code class="func">IsReesMatrixSemigroup</code> if and only if it is equal to <span class="SimpleMath">\(I'\times U'\times J'\)</span> where <span class="SimpleMath">\(I'\subseteq I\)</span>, <span class="SimpleMath">\(J'\subseteq J\)</span>, and <span class="SimpleMath">\(U'\)</span> is a subsemigroup of <span class="SimpleMath">\(U\)</span>. It can be costly to check that a subsemigroup defined by generators satisfies <code class="func">IsReesMatrixSemigroup</code>. The analogous statements holds for Rees 0-matrix semigroups.</p>
 
 <p>It is not necessarily the case that a simple subsemigroups of Rees matrix semigroups satisfies <code class="func">IsReesMatrixSemigroup</code>. A Rees matrix semigroup is simple if and only if its underlying semigroup is simple. A finite semigroup is simple if and only if it is isomorphic to a Rees matrix semigroup over a group; this isomorphism can be obtained explicitly using <code class="func">IsomorphismReesMatrixSemigroup</code> (<a href="chap51_mj.html#X7964B5C97FB9C07D"><span class="RefLink">51.9-3</span></a>).</p>
 
@@ -1142,16 +1238,18 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsReesZeroMatrixSemigroup(T);</span>
 false</pre></div>
 
-<p><a id="X879384D479EB1D82" name="X879384D479EB1D82"></a></p>
+<p><a id="X7CACF4D686AF1D19" name="X7CACF4D686AF1D19"></a></p>
 
 <h5>51.9-8 Matrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Matrix</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Matrix</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MatrixOfReesMatrixSemigroup</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MatrixOfReesZeroMatrixSemigroup</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A matrix.</p>
 
-<p>If <var class="Arg">R</var> is a Rees matrix or 0-matrix semigroup, then <code class="code">Matrix</code> returns the matrix used to define multiplication in <var class="Arg">R</var>.</p>
+<p>If <var class="Arg">R</var> is a Rees matrix or 0-matrix semigroup, then <code class="func">MatrixOfReesMatrixSemigroup</code> respectively <code class="func">MatrixOfReesZeroMatrixSemigroup</code> return the matrix used to define multiplication in <var class="Arg">R</var>. For convenience, one may also abbreviate either to <code class="func">Matrix</code>.</p>
 
-<p>More specifically, if <var class="Arg">R</var> is a Rees matrix or 0-matrix semigroup, which is a proper subsemigroup of another such semigroup, then <code class="code">Matrix</code> returns the matrix used to define the Rees matrix (or 0-matrix) semigroup consisting of the whole family to which the elements of <var class="Arg">R</var> belong. Thus, for example, a <code class="code">1</code> by <code class="code">1</code> Rees matrix semigroup can have a <code class="code">65</code> by <code class="code">15</code> matrix.</p>
+<p>More specifically, if <var class="Arg">R</var> is a Rees matrix or 0-matrix semigroup, which is a proper subsemigroup of another such semigroup, then <code class="func">Matrix</code> returns the matrix used to define the Rees matrix (or 0-matrix) semigroup consisting of the whole family to which the elements of <var class="Arg">R</var> belong. Thus, for example, a <code class="code">1</code> by <code class="code">1</code> Rees matrix semigroup can have a <code class="code">65</code> by <code class="code">15</code> matrix.</p>
 
 <p>Arbitrary subsemigroups of Rees matrix or 0-matrix semigroups do not have a matrix. Such a subsemigroup <var class="Arg">R</var> has a matrix if and only if it satisfies <code class="func">IsReesMatrixSemigroup</code> (<a href="chap51_mj.html#X780BB78A79275244"><span class="RefLink">51.9-7</span></a>) or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="chap51_mj.html#X780BB78A79275244"><span class="RefLink">51.9-7</span></a>).</p>
 
@@ -1177,9 +1275,9 @@ false</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Columns</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: The rows or columns of <var class="Arg">R</var>.</p>
 
-<p><code class="code">Rows</code> returns the rows of the Rees matrix or 0-matrix semigroup <var class="Arg">R</var>. Note that the rows of the semigroup correspond to the columns of the matrix used to define multiplication in <var class="Arg">R</var>.</p>
+<p><code class="func">Rows</code> returns the rows of the Rees matrix or 0-matrix semigroup <var class="Arg">R</var>. Note that the rows of the semigroup correspond to the columns of the matrix used to define multiplication in <var class="Arg">R</var>.</p>
 
-<p><code class="code">Columns</code> returns the columns of the Rees matrix or 0-matrix semigroup <var class="Arg">R</var>. Note that the columns of the semigroup correspond to the rows of the matrix used to define multiplication in <var class="Arg">R</var>.</p>
+<p><code class="func">Columns</code> returns the columns of the Rees matrix or 0-matrix semigroup <var class="Arg">R</var>. Note that the columns of the semigroup correspond to the rows of the matrix used to define multiplication in <var class="Arg">R</var>.</p>
 
 <p>Arbitrary subsemigroups of Rees matrix or 0-matrix semigroups do not have rows or columns. Such a subsemigroup <var class="Arg">R</var> has rows and columns if and only if it satisfies <code class="func">IsReesMatrixSemigroup</code> (<a href="chap51_mj.html#X780BB78A79275244"><span class="RefLink">51.9-7</span></a>) or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="chap51_mj.html#X780BB78A79275244"><span class="RefLink">51.9-7</span></a>).</p>
 
@@ -1203,7 +1301,7 @@ false</pre></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingSemigroup</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A semigroup.</p>
 
-<p><code class="code">UnderlyingSemigroup</code> returns the underlying semigroup of the Rees matrix or 0-matrix semigroup <var class="Arg">R</var>.</p>
+<p><code class="func">UnderlyingSemigroup</code> returns the underlying semigroup of the Rees matrix or 0-matrix semigroup <var class="Arg">R</var>.</p>
 
 <p>Arbitrary subsemigroups of Rees matrix or 0-matrix semigroups do not have an underlying semigroup. Such a subsemigroup <var class="Arg">R</var> has an underlying semigroup if and only if it satisfies <code class="func">IsReesMatrixSemigroup</code> (<a href="chap51_mj.html#X780BB78A79275244"><span class="RefLink">51.9-7</span></a>) or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="chap51_mj.html#X780BB78A79275244"><span class="RefLink">51.9-7</span></a>).</p>
 

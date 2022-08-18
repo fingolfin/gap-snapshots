@@ -755,7 +755,7 @@
   
   [1X31.11 [33X[0;0YComparison Operations for Elements[133X[101X
   
-  [33X[0;0YBinary  comparison  operations  have  been  introduced  already in [14X4.12[114X. The
+  [33X[0;0YBinary  comparison  operations  have  been  introduced  already in [14X4.13[114X. The
   underlying operations for which methods can be installed are the following.[133X
   
   
@@ -768,7 +768,7 @@
   operations [2X\=[102X and [2X\<[102X.[133X
   
   [33X[0;0YIn  general,  objects  in [13Xdifferent[113X families cannot be compared with [2X\<[102X. For
-  the reason and for exceptions from this rule, see [14X4.12[114X.[133X
+  the reason and for exceptions from this rule, see [14X4.13[114X.[133X
   
   [1X31.11-2 CanEasilyCompareElements[101X
   
@@ -811,7 +811,7 @@
   
   [1X31.12 [33X[0;0YArithmetic Operations for Elements[133X[101X
   
-  [33X[0;0Y[13XBinary[113X  arithmetic  operations  have  been  introduced  already in [14X4.13[114X. The
+  [33X[0;0Y[13XBinary[113X  arithmetic  operations  have  been  introduced  already in [14X4.14[114X. The
   underlying operations for which methods can be installed are the following.[133X
   
   

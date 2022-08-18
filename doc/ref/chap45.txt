@@ -444,14 +444,13 @@
   
   [1X45.7-4 InducedPcgs[101X
   
-  [33X[1;0Y[29X[2XInducedPcgs[102X( [3Xpcgs[103X, [3Xgrp[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XInducedPcgs[102X( [3Xpcgs[103X, [3Xgrp[103X ) [32X function[133X
   
   [33X[0;0Ycomputes a pcgs for [3Xgrp[103X which is induced by [3Xpcgs[103X. If [3Xpcgs[103X has a parent pcgs,
   then the result is induced with respect to this parent pcgs.[133X
   
-  [33X[0;0Y[2XInducedPcgs[102X  is  a  wrapper  function only. Therefore, methods for computing
-  computing   an   induced   pcgs   should  be  installed  for  the  operation
-  [10XInducedPcgsOp[110X.[133X
+  [33X[0;0Y[2XInducedPcgs[102X  is a wrapper function only. Therefore, methods for computing an
+  induced pcgs should be installed for the operation [10XInducedPcgsOp[110X.[133X
   
   [1X45.7-5 InducedPcgsByGenerators[101X
   
@@ -996,13 +995,13 @@
   [22XG_i[122X  is  the  smallest  normal subgroup of [22XG_{i-1}[122X with nilpotent factor. To
   obtain  the  LG-series  of  [3XG[103X we need to refine this series. Thus consider a
   factor  [22XF_i  := G_i / G_{i+1}[122X. Since [22XF_i[122X is finite nilpotent, it is a direct
-  product  of  its  Sylow  subgroups,  say [22XF_i = P_{i,1} ⋯ P_{i,r_i}[122X. For each
-  Sylow  [22Xp_j[122X-subgroup [22XP_{i,j}[122X we can consider its lower [22Xp_j[122X-central series. To
-  obtain  a  characteristic  central series with elementary abelian factors of
-  [22XF_i[122X  we loop over its Sylow subgroups. Each time we consider [22XP_{i,j}[122X in this
-  process  we  take  the  next  step  of its lower [22Xp_j[122X-central series into the
-  series of [22XF_i[122X. If there is no next step, then we just skip the consideration
-  of  [22XP_{i,j}[122X.  Note  that  the second term of the lower [22Xp[122X-central series of a
+  product  of  its  Sylow  subgroups [22XF_i = P_{i,1} ⋯ P_{i,r_i}[122X. For each Sylow
+  [22Xp_j[122X-subgroup [22XP_{i,j}[122X we can consider its lower [22Xp_j[122X-central series. To obtain
+  a  characteristic  central  series with elementary abelian factors of [22XF_i[122X we
+  loop over its Sylow subgroups. Each time we consider [22XP_{i,j}[122X in this process
+  we  take  the  next  step of its lower [22Xp_j[122X-central series into the series of
+  [22XF_i[122X.  If  there  is  no  next  step,  then we just skip the consideration of
+  [22XP_{i,j}[122X.  Note  that  the  second  term  of  the lower [22Xp[122X-central series of a
   [22Xp[122X-group  is in fact its Frattini subgroup. Thus the Frattini subgroup of [22XF_i[122X
   is  contained  in  the computed series of this group. We denote the Frattini
   subgroup of [22XF_i = G_i / G_{i+1}[122X by [22XG_i^* / G_{i+1}[122X.[133X

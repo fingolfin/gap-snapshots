@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE file SYSTEM "bibxmlext.dtd">
+
+<file>
+<entry id="johnson"><book>
+  <author>
+    <name><first>Francis</first><last>Johnson</last></name> </author>
+  <title>Syzygies and dihedral resolutions for dihedral groups
+</title>
+  <publisher>Communication in Algebra 44(5), pp 2034-2047
+</publisher>
+  <year>2016</year>
+</book></entry></file>
+
+<file>
+<entry id="kholodna"><book>
+  <author>
+    <name><first>Irina</first><last>Kholodna</last></name> </author>
+  <title>Low-dimensional homotopical syzygies
+</title>
+  <publisher>PhD Thesis, National University of Ireland Galway
+</publisher>
+  <year>2001</year>
+</book></entry></file>
+
+<file>
+<entry id="swan2"><book>
+  <author>
+    <name><first>RG</first><last>Swan</last></name> </author>
+  <title>Periodic resolutions for finite groups
+</title>
+  <publisher>Annals of Mathematics 72, pages 267-291
+</publisher>
+  <year>1960</year>
+</book></entry></file>
+
+<file>
+<entry id="greene"><book>
+  <author>
+    <name><first>Joshua</first><last>Greene</last></name> </author>
+  <title>The lens space realization problem
+</title>
+  <publisher>Annals of Mathematics 177, pages 449-511
+</publisher>
+  <year>2013</year>
+</book></entry></file>
+
+<file>
+<entry id="lmoser"><book>
+  <author>
+    <name><first>Louise</first><last>Moser</last></name>
+  </author>
+  <title>Elementary surgery along a torus knot
+</title>
+  <publisher>Pacific Journal of Mathematics, Vol. 38, No. 3 
+</publisher>
+  <year>1971</year>
+</book></entry></file>
+
+<file>
+<entry id="horadam"><book>
+  <author>
+    <name><first>K.J.</first><last>Horadam</last></name>
+  </author>
+  <title>An introduction to cocyclic generalised Hadamard matrices
+</title>
+  <publisher> Discrete Applied Math, 102,  115-130
+</publisher>
+  <year>2000</year>
+</book></entry></file>
+
+<file>
+<entry id="dpr"><book>
+  <author>
+    <name><first>R.</first><last>Dijkgraaf</last></name>
+<name><first>V.</first><last>Pasquier</last></name>
+<name><first>P.</first><last>Roche</last></name>
+  </author>
+  <title>Quasi-Hopf algebras, group cohomology  and orbifold models
+</title>
+  <publisher> Nuclear Phys. B Proc. Suppl. 18B,  60-72
+</publisher>
+  <year>1991</year>
+</book></entry></file>
+
+<file>
+<entry id="brody"><book>
+  <author>
+    <name><first>E.</first><last>Brody</last></name>
+  </author>
+  <title>The topological classification of the lens spaces
+</title>
+  <publisher> Ann. of Math. 71, 163–184
+</publisher>
+  <year>1960</year>
+</book></entry></file>
+
+<file>
+<entry id="reidemeister"><book>
+  <author>
+    <name><first>Kurt</first><last>Reidemeister</last></name>
+  </author>
+  <title>Homotopieringe und Linsenraume
+</title>
+  <publisher> Abh. Math. Sem. Univ. Hamburg 11
+, 102–109</publisher>
+  <year>1935</year>
+</book></entry></file>
+
+<file>
+<entry id="moise"><book>
+  <author>
+    <name><first>E.</first><last>Moise</last></name>
+  </author>
+  <title>Affine structures in 3-manifolds V. The triangulation theorem and Hauptvermu-
+tung</title>
+  <publisher> Annals of Math. 56, 96--114</publisher>
+  <year>1952</year>
+</book></entry></file>
+
+
+<file>
+<entry id="przytycki"><book>
+  <author>
+    <name><first>Jozef</first><last>Przytycki</last></name>
+    <name><first>Akira</first><last>Yasukhara</last></name>
+  </author>
+  <title>Symmetry of links and classification of lens spaces</title>
+  <publisher> Geom. Dedicata 98, 57--61</publisher>
+  <year>2003</year>
+</book></entry></file>
+
+
+
+<file>
+<entry id="tomoda"><book>
+  <author>
+    <name><first>Satoshi</first><last>Tomoda</last></name>
+    <name><first>Peter</first><last>Zvengrowski</last></name>
+  </author>
+  <title>Remarks on the cohomology of finite fundamental groups of 3-manifolds</title>
+  <publisher> Geometry and Topology Monographs 14, 519-556</publisher>
+  <year>2008</year>
+</book></entry></file>
+
+<file>
+<entry id="spreerkhuenel"><book>
+  <author>
+    <name><first>Jonathan</first><last>Spreer</last></name>
+    <name><first>Wolfgang</first><last>Khuenel</last></name>
+  </author>
+  <title>Combinatorial properties of the K3 surface: Simplicial blowups and slicings</title>
+  <publisher> Experimental Mathematics Volume 20 Issue 2</publisher>
+  <year>2011</year>
+</book></entry></file>
+
+
+<file>
+<entry id="milnor"><book>
+  <author>
+    <name><first>John</first><last>Milnor</last></name>
+  </author>
+  <title>On simply connected 4-manifolds</title>
+  <publisher> International symposium on algebraic topology, Universidad Nacional Autonoma de Mexico and UNESCO, Mexico City</publisher>
+  <year>1958</year>
+</book></entry></file>
+
+
+<file>
+<entry id="hatcher"><book>
+  <author>
+    <name><first>Allen</first><last>Hatcher</last></name>
+  </author>
+  <title>Algebraic Topology </title>
+  <publisher>Available online </publisher>
+  <year>2001</year>
+  <url>http://pi.math.cornell.edu/~hatcher/AT/ATplain.pdf </url>
+</book></entry></file>
+
+
+
+
+<file>
+<entry id="ksontini"><book>
+  <author>
+    <name><first>R.</first><last>Ksontini</last></name>
+  </author>
+  <title>Proprietes homotopiques du complexe de Quillen du groupe
+              symetrique</title>
+  <publisher>These de doctorat, Universitet de Lausanne </publisher>
+  <year>2000</year>
+  <url>http://sma.epfl.ch/~thevenaz/theses/Ksontini_thesis.pdf</url>
+</book></entry>
+</file>
+
+<file>
+<entry id="bergeron"><book>
+  <author>
+    <name><first>N.</first><last>Bergeron</last></name>
+  </author>
+  <title>Torsion homology growth in arithmetic groups </title>
+  <publisher>EuropeanMathematical Society, European Congress of Mathematicians, July 18-22 </publisher>
+  <year>2016</year>
+  <url>https://www.ems-ph.org/books/book.php?proj_nr=220</url>
+</book></entry>
+</file>
+
+
+<file>
+<entry id="rahmthesis"><book>
+  <author>
+    <name><first>A.</first><last>Rahm</last></name>
+  </author>
+  <title>Cohomologies and <M>K</M>-theory of Bianchi groups using computational geometric models </title>
+  <publisher>These de doctorat, Universite Joseph-Fourier -- Grenoble I </publisher>
+  <year>2010</year>
+  <url>https://tel.archives-ouvertes.fr/tel-00526976v6</url>
+</book></entry>
+</file>
+
+
+<file>
+<entry id="stein"><book>
+  <author>
+    <name><first>W.</first><last>Stein</last></name>
+  </author>
+  <title>Modular forms, a computational approach </title>
+  <publisher>AMS Graduate Studies in Mathematics </publisher>
+  <year>2007</year>
+<volume>79</volume>
+  <url>https://wstein.org/books/modform/modform/</url>
+</book></entry>
+</file>
+
+<file>
+<entry id="wieser"><book>
+  <author>
+    <name><first>G.</first><last>Wieser</last></name>
+  </author>
+  <title>Computational arithmetic of modular forms </title>
+  <publisher>Universitat Duisburg-Essen </publisher>
+  <year>2007/8</year>
+  <url>http://math.uni.lu/~wiese/notes/MFII.pdf</url>
+</book></entry>
+</file>
+
+
+<file>
+<entry id="eichler"><article>
+  <author>
+    <name><first>M.</first><last>Eichler</last></name>
+  </author>
+  <title>Eine Verallgemeinerung der Abelschen Integrale </title>
+  <journal>Mathematische Zeitschrift </journal>
+  <year>1957</year>
+  <volume>67</volume>
+<pages>267--298</pages>
+<issn>0025-5874</issn>
+<mrnumber>0089928</mrnumber>
+</article></entry>
+</file>
+
+<file>
+<entry id="sengun"><article>
+  <author>
+    <name><first>M. H.</first><last>Sengun</last></name>
+  </author>
+  <title>On the Integral Cohomology of Bianchi Groups </title>
+  <journal>Experimental Mathematics </journal>
+  <year>2011</year>
+  <volume>20(4)</volume>
+<pages>487--505</pages>
+<issn>1058-6458 print</issn>
+</article></entry>
+</file>
+
+
+<file>
+<entry id="schoennenbeck"><article>
+  <author>
+    <name><first>O.</first><last>Braun</last></name>
+<name><first>R.</first><last>Coulangeon</last></name>
+<name><first>G.</first><last>Nebe</last></name>
+<name><first>S.</first><last>Schoennenbeck</last></name>
+  </author>
+  <title>Computing in arithmetic groups with
+Voronoï’s algorithm</title>
+  <journal>J. Algebra </journal>
+  <year>2015</year>
+  <volume>435</volume>
+<pages>263--285</pages>
+</article></entry>
+</file>
+
+
+<file>
+<entry id="swan"><article>
+  <author>
+    <name><first>R.</first><last>Swan</last></name>
+  </author>
+  <title>Generators and relations for certain general linear groups </title>
+  <journal>Advances in Mathematics </journal>
+  <year>1971</year>
+  <volume>6</volume>
+<pages>1--77</pages>
+<mrnumber>0284516</mrnumber>
+</article></entry>
+</file>
+
+
+<file>
+<entry id="atkinlehner"><article>
+  <author>
+    <name><first>A.</first><last>Atkin</last></name>
+    <name><first>J.</first><last>Lehner</last></name>
+  </author>
+  <title>Hecke operators on <M>\Gamma_0(m)</M> </title>
+  <journal>Math. Ann. </journal>
+  <year>1970</year>
+  <volume>185</volume>
+<pages>134--160</pages>
+</article></entry>
+</file>
+
+
+<file>
+<entry id="kulkarni"><article>
+  <author>
+    <name><first>R.S..</first><last>Kulkarni</last></name>
+  </author>
+  <title>An arithmetic-geometric method in the study of the subgroups of the modular group </title>
+  <journal>American Journal of Mathematics </journal>
+  <year>1991</year>
+  <volume>113, No. 6</volume>
+<pages>1053--1133</pages>
+<url>https://www.jstor.org/stable/2374900</url>
+</article></entry>
+</file>
+
+
+<file>
+<entry id="shimura"><article>
+  <author>
+    <name><first>G.</first><last>Shimura</last></name>
+  </author>
+  <title>Sur les integrales attachees aux formes automorphes </title>
+  <journal>Journal of the Mathematical Society of Japan </journal>
+  <year>1959</year>
+  <volume>67</volume>
+<pages>291--311</pages>
+<issn> 0025-5645</issn>
+<mrnumber> 0120372</mrnumber>
+</article></entry>
+</file>
+
+
+
+<entry id="MR1758871"><article>
+  <author>
+    <name><first>Shin</first><last>Satoh</last></name>
+  </author>
+  <title>Virtual knot presentation of ribbon torus-knots</title>
+  <journal>J. Knot Theory Ramifications</journal>
+  <year>2000</year>
+  <volume>9</volume>
+  <number>4</number>
+  <pages>531--542</pages>
+  <issn>0218-2165</issn>
+  <mrnumber>1758871</mrnumber>
+  <mrclass>57Q45 (57M25)</mrclass>
+  <mrreviewer>Seiichi Kamada</mrreviewer>
+  <url>https://doi.org/10.1142/S0218216500000293</url>
+  <other type="doi">10.1142/S0218216500000293</other>
+  <other type="fjournal">Journal of Knot Theory and its Ramifications</other>
+</article></entry>
+
+
+<entry id="MR2441256"><article>
+  <author>
+    <name><first>Louis H.</first><last>Kauffman</last></name>
+    <name><first>Jo\~{a}o</first><last>Faria Martins</last></name>
+  </author>
+  <title>Invariants of welded virtual knots via crossed module
+              invariants of knotted surfaces</title>
+  <journal>Compos. Math.</journal>
+  <year>2008</year>
+  <volume>144</volume>
+  <number>4</number>
+  <pages>1046--1080</pages>
+  <issn>0010-437X</issn>
+  <mrnumber>2441256</mrnumber>
+  <mrclass>57M25 (57Q45)</mrclass>
+  <mrreviewer>Riccardo Piergallini</mrreviewer>
+  <url>https://doi.org/10.1112/S0010437X07003429</url>
+  <other type="doi">10.1112/S0010437X07003429</other>
+  <other type="fjournal">Compositio Mathematica</other>
+</article></entry>
+
+<entry id="buiellis"><article>
+  <author>
+    <name><first>A.T.</first><last>Bui</last></name>
+    <name><first>G.</first><last>Ellis</last></name>
+  </author>
+  <title>The homology of <M>SL_2(\mathbb Z[1/m])</M> for small <M>m</M> </title>
+  <journal>Journal of Algebra</journal>
+  <year>2014</year>
+  <volume>408</volume>
+  <pages>102--108</pages>
+  <url>https://www.sciencedirect.com/science/article/pii/S002186931300625X</url>
+</article></entry>
+
+<entry id="ellisharrisskoldberg"><article>
+  <author>
+    <name><first>G.</first><last>Ellis</last></name>
+    <name><first>J.</first><last>Harris</last></name>
+    <name><first>E.</first><last>Skoldberg</last></name>
+  </author>
+  <title>Polytopal resolutions for finite groups </title>
+  <journal> J. Reine Angew. Math.</journal>
+  <year>2006</year>
+  <volume>598</volume>
+  <pages>131--137</pages>
+</article></entry>
+
+
+<entry id="brownloday"><article>
+  <author>
+    <name><first>R.</first><last>Brown</last></name>
+    <name><first>J.-L.</first><last>Loday</last></name>
+  </author>
+  <title>Van Kampen theorems for diagrams of spaces </title>
+  <journal> Topology</journal>
+  <year>1987</year>
+  <volume>26</volume>
+  <pages>311--335</pages>
+</article></entry>
+

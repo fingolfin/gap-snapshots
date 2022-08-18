@@ -1339,6 +1339,7 @@ InstallMethod( PreImagesRepresentative,
 ##
 #M  ViewObj( <idmap> )  . . . . . . . . . . . . . . . .  for identity mapping
 #M  PrintObj( <idmap> ) . . . . . . . . . . . . . . . .  for identity mapping
+#M  String( <idmap> ) . . . . . . . . . . . . . . . . .  for identity mapping
 ##
 InstallMethod( ViewObj,
     "for identity mapping",
@@ -1365,6 +1366,17 @@ InstallMethod( PrintObj,
     function ( id )
     Print( "IdentityMapping( ", Source( id ), " )" );
     end );
+
+InstallMethod( String, 
+    "for identity mapping", 
+    [ IsGeneralMapping and IsOne ], 
+    # rank up, but just to exactly SUM_FLAGS, so that mappings in a special
+    # representation with a custom printing method still get that, even if
+    # the rank of IsGeneralMapping and IsOne happens to be increased a lot
+    {} -> SUM_FLAGS - RankFilter( IsGeneralMapping and IsOne ),
+  function ( id ) 
+    return StringFormatted( "IdentityMapping( {} )", Source(id) ); 
+  end );
 
 
 #############################################################################
@@ -1710,29 +1722,26 @@ InstallMethod( IsSurjective,
 
 #############################################################################
 ##
-#M  GeneralRestrictedMapping( <map>, <source>,<range> ) 
+#M  GeneralRestrictedMapping( <map>, <source>, <range> ) 
 ##
 InstallGlobalFunction(GeneralRestrictedMapping,
 function( map, s,r )
-local res, prop;      
+local filter, res, prop;      
 
   # Make the general mapping.
   if IsSPGeneralMapping( map )  then
-    res:= Objectify( TypeOfDefaultGeneralMapping( s,r,
-		      IsGeneralRestrictedMappingRep and IsSPGeneralMapping ),
-		    rec() );
+    filter := IsSPGeneralMapping;
   else
-    res:= Objectify( TypeOfDefaultGeneralMapping( s,r,
-		      IsGeneralRestrictedMappingRep and IsNonSPGeneralMapping ),
-		    rec() );
+    filter := IsNonSPGeneralMapping;
   fi;
+  res:= Objectify( TypeOfDefaultGeneralMapping( s,r,
+            IsGeneralRestrictedMappingRep and filter ),
+          rec() );
 
   # Enter the identifying information.
   res!.map:= map;
-  SetSource(res,s);
-  SetRange(res,r);
 
-  for prop in [IsSingleValued, IsTotal, IsInjective, RespectsMultiplication, , RespectsInverses,
+  for prop in [IsSingleValued, IsTotal, IsInjective, RespectsMultiplication, RespectsInverses,
 	  RespectsAddition, RespectsAdditiveInverses, RespectsScalarMultiplication] do
 	if Tester(prop)(map) and prop(map) then
 		Setter(prop)(res, true);

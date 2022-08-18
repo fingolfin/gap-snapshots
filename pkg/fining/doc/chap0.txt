@@ -6,24 +6,34 @@
                            [1XFinite Incidence Geometry[101X
   
   
-                                     1.4.1
+                                      1.5
   
   
-                                  31-Mar-2018
+                                   10/07/2022
   
   
-  John Bamberg, Anton Betten, Philippe Cara, Jan De Beule, Michel Lavrauw, Max
-                                  Neunhoeffer.
+                                  John Bamberg
+  
+                                  Anton Betten
+  
+                                  Jan De Beule
+  
+                                 Philippe Cara
+  
+                                 Michel Lavrauw
+  
+                                 Max Neunhöffer
   
   
   
-  John Bamberg, Anton Betten, Philippe Cara, Jan De Beule, Michel Lavrauw, Max Neunhoeffer.
+  
+  
       Email:    [7Xmailto:support@fining.org[107X
       Homepage: [7Xhttp://www.fining.org[107X
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2014-2018 by the authors[133X
+  [33X[0;0Y© 2014-2022 by the authors[133X
   
   [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU
   Public License Version 2 or higher.[133X
@@ -328,6 +338,7 @@
       7.5-6 TypeOfSubspace
       7.5-7 TangentSpace
       7.5-8 Pole
+      7.5-9 EvaluateForm
     7.6 [33X[0;0YShadow of elements[133X
       7.6-1 ShadowOfElement
       7.6-2 ElementsIncidentWithElementOfIncidenceStructure
@@ -561,12 +572,33 @@
       13.3-2 GeometryOfDiagram
       13.3-3 DrawDiagram
       13.3-4 DrawDiagramWithNeato
+  14 [33X[0;0YSubgeometries of projective spaces[133X
+    14.1 [33X[0;0YParticular Categories[133X
+      14.1-1 IsSubgeometryOfProjectiveSpace
+      14.1-2 [33X[0;0YCategories for elements and collections of elements[133X
+    14.2 [33X[0;0YSubgeometries of projective spaces[133X
+      14.2-1 CanonicalSubgeometryOfProjectiveSpace
+      14.2-2 RandomFrameOfProjectiveSpace
+      14.2-3 IsFrameOfProjectiveSpace
+      14.2-4 SubgeometryOfProjectiveSpaceByFrame
+    14.3 [33X[0;0YBasic operations[133X
+      14.3-1 [33X[0;0YUnderlying vector space and ambient projective space[133X
+      14.3-2 DefiningFrameOfSubgeometry
+      14.3-3 [33X[0;0YProjective dimension and rank[133X
+      14.3-4 [33X[0;0YUnderlying algebraic structures[133X
+      14.3-5 CollineationFixingSubgeometry
+    14.4 [33X[0;0YConstructing elements of a subgeometry[133X
+      14.4-1 VectorSpaceToElement
+      14.4-2 ExtendElementOfSubgeometry
+      14.4-3 AmbientGeometry
+      14.4-4 [33X[0;0YFlags[133X
+    14.5 [33X[0;0YGroups and actions[133X
+      14.5-1 [33X[0;0YGroups of collineations[133X
   A [33X[0;0YThe structure of [5XFinInG[105X[133X
     A.1 [33X[0;0YThe different components[133X
     A.2 [33X[0;0YThe complete inventory[133X
       A.2-1 [33X[0;0YDeclarations[133X
       A.2-2 [33X[0;0YFunctions/Methods[133X
-    A.3 [33X[0;0YThe filter graph(s)[133X
   B [33X[0;0YThe finite classical groups in [5XFinInG[105X[133X
     B.1 [33X[0;0YStandard forms used to produce the finite classical groups.[133X
       B.1-1 CanonicalGramMatrix

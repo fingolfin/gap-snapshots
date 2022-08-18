@@ -71,27 +71,24 @@
 
 
 ##  Section 1
-DeclareGlobalVariable("CompositeSPP2",
-  "Composite <10^7 that are strong psp base 2 and have no factor <1000");
-DeclareGlobalVariable("CCANT_1_7_3_q11");
-DeclareGlobalVariable("CCANT_1_7_3_q63");
-DeclareGlobalVariable("CCANT_1_7_3_q64");
-DeclareGlobalVariable("CCANT_1_7_3_q65");
 
 #############################################################################
 ##
 #F  IsSquareInt(<n>)
 ##
+##  <#GAPDoc Label="IsSquareInt">
 ##  <ManSection>
 ##  <Func Name="IsSquareInt" Arg='n'/>
 ##
 ##  <Description>
-##  <Ref Func="IsSquareInt"/> tests whether the (positive) integer <A>n</A>
-##  is square of an integer or not.
+##  <Ref Func="IsSquareInt"/> tests whether the integer <A>n</A> is the
+##  square of an integer or not.
 ##  This test is much faster than the simpler <C>RootInt</C><M>(n)^2=n</M>
-##  because of the initial residue tests.
+##  because it first tests whether <A>n</A> is a square residue modulo
+##  some small integers.
 ##  </Description>
 ##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareGlobalFunction("IsSquareInt");
 

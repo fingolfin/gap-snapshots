@@ -38,6 +38,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap59.html#X7DABD827848BCC2A">59.2-4 IntFFESymm</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap59.html#X8009968782F18888">59.2-5 IntVecFFE</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap59.html#X807959EE82CED148">59.2-6 AsInternalFFE</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap59.html#X794AEB148410825B">59.2-7 RootFFE</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap59.html#X81B54A8378734C33">59.3 <span class="Heading">Creating Finite Fields</span></a>
 </span>
@@ -85,7 +86,7 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFFECollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFFECollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFFECollCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
-<p>Objects in the category <code class="func">IsFFE</code> are used to implement elements of finite fields. In this manual, the term <em>finite field element</em> always means an object in <code class="func">IsFFE</code>. All finite field elements of the same characteristic form a family in <strong class="pkg">GAP</strong> (see <a href="chap13.html#X846063757EC05986"><span class="RefLink">13.1</span></a>). Any collection of finite field elements (see <code class="func">IsCollection</code> (<a href="chap30.html#X79C9FC7F86E2738C"><span class="RefLink">30.1-1</span></a>)) lies in <code class="func">IsFFECollection</code>, and a collection of such collections (e.g., a matrix of finite field elements) lies in <code class="func">IsFFECollColl</code>.</p>
+<p>Objects in the category <code class="func">IsFFE</code> are used to implement elements of finite fields. In this manual, the term <em>finite field element</em> always means an object in <code class="func">IsFFE</code>. All finite field elements of the same characteristic form a family in <strong class="pkg">GAP</strong> (see <a href="chap13.html#X846063757EC05986"><span class="RefLink">13.1</span></a>). Any collection of finite field elements of the same characteristic (see <code class="func">IsCollection</code> (<a href="chap30.html#X79C9FC7F86E2738C"><span class="RefLink">30.1-1</span></a>)) lies in <code class="func">IsFFECollection</code>, and a collection of such collections (e.g., a matrix of finite field elements) lies in <code class="func">IsFFECollColl</code>.</p>
 
 <p><a id="X7AA52FAF7EDEDD56" name="X7AA52FAF7EDEDD56"></a></p>
 
@@ -152,7 +153,7 @@ you can 'return;' to continue
 
 <p>Elements in <code class="func">IsLexOrderedFFE</code> are ordered lexicographically by their coefficients with respect to the canonical basis of the field.</p>
 
-<p>Elements in <code class="func">IsLogOrderedFFE</code> are ordered according to their discrete logarithms with respect to the <code class="func">PrimitiveElement</code> (<a href="chap58.html#X86DB31B57FB4F570"><span class="RefLink">58.2-3</span></a>) attribute of the field. For the comparison of finite field elements with other <strong class="pkg">GAP</strong> objects, see <a href="chap4.html#X7A274A1F8553B7E6"><span class="RefLink">4.12</span></a>.</p>
+<p>Elements in <code class="func">IsLogOrderedFFE</code> are ordered according to their discrete logarithms with respect to the <code class="func">PrimitiveElement</code> (<a href="chap58.html#X86DB31B57FB4F570"><span class="RefLink">58.2-3</span></a>) attribute of the field. For the comparison of finite field elements with other <strong class="pkg">GAP</strong> objects, see <a href="chap4.html#X7A274A1F8553B7E6"><span class="RefLink">4.13</span></a>.</p>
 
 
 <div class="example"><pre>
@@ -288,6 +289,13 @@ Z(3^2)^5
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsInternalFFE</code>( <var class="Arg">ffe</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>return an internal FFE equal to <var class="Arg">ffe</var> if one exists, otherwise <code class="code">fail</code></p>
 
+<p><a id="X794AEB148410825B" name="X794AEB148410825B"></a></p>
+
+<h5>59.2-7 RootFFE</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RootFFE</code>( <var class="Arg">F</var>, <var class="Arg">z</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p><code class="func">RootFFE</code> returns a finite field element <var class="Arg">r</var> from <var class="Arg">F</var> whose <var class="Arg">k</var>-th power is <var class="Arg">z</var>. If no such element exists then <code class="keyw">fail</code> is returned.</p>
+
 <p><a id="X81B54A8378734C33" name="X81B54A8378734C33"></a></p>
 
 <h4>59.3 <span class="Heading">Creating Finite Fields</span></h4>
@@ -416,7 +424,7 @@ FrobeniusAutomorphism( GF(2^4) )^2
 
 <p>See <a href="chapBib.html#biBL03">[Lüb03]</a> for further information on known Conway polynomials.</p>
 
-<p>An interactive overview of the Conway polynomials known to <strong class="pkg">GAP</strong> is provided by the function <code class="code">BrowseConwayPolynomials</code> from the <strong class="pkg">GAP</strong> package <strong class="pkg">Browse</strong>, see <code class="func">BrowseGapData</code> (<a href="../../pkg/Browse/doc/chap6.html#X850C786C87A4877B"><span class="RefLink">Browse: BrowseGapData</span></a>).</p>
+<p>An interactive overview of the Conway polynomials known to <strong class="pkg">GAP</strong> is provided by the function <code class="code">BrowseConwayPolynomials</code> from the <strong class="pkg">GAP</strong> package <strong class="pkg">Browse</strong>, see <code class="func">BrowseGapData</code> (<a href="../../pkg/browse/doc/chap6.html#X850C786C87A4877B"><span class="RefLink">Browse: BrowseGapData</span></a>).</p>
 
 <p>If <var class="Arg">pol</var> is a result returned by <code class="func">ConwayPolynomial</code> the command <code class="code">Print( InfoText( <var class="Arg">pol</var> ) );</code> will print some info on the origin of that particular polynomial.</p>
 

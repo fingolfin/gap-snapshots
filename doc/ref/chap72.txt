@@ -188,10 +188,10 @@
   
   [33X[1;0Y[29X[2XUnderlyingCharacterTable[102X( [3Xpsi[103X ) [32X attribute[133X
   
-  [33X[0;0YFor  a  class  function [3Xpsi[103X of the group [22XG[122X, say, the character table of [22XG[122X is
-  stored  as value of [2XUnderlyingCharacterTable[102X. The ordering of entries in the
-  list  [3Xpsi[103X  (see [2XValuesOfClassFunction[102X  ([14X72.2-2[114X))  refers  to the ordering of
-  conjugacy classes in this character table.[133X
+  [33X[0;0YFor  a class function [3Xpsi[103X of a group [22XG[122X the character table of [22XG[122X is stored as
+  value  of  [2XUnderlyingCharacterTable[102X. The ordering of entries in the list [3Xpsi[103X
+  (see [2XValuesOfClassFunction[102X  ([14X72.2-2[114X))  refers  to  the ordering of conjugacy
+  classes in this character table.[133X
   
   [33X[0;0YIf  [3Xpsi[103X is an ordinary class function then the underlying character table is
   the  ordinary character table of [22XG[122X (see [2XOrdinaryCharacterTable[102X ([14X71.8-4[114X)), if
@@ -390,7 +390,7 @@
   underlying  group  or  by  a  Galois  automorphism  is  the  conjugate class
   function.  (As  a consequence, the application of the permutation induced by
   such  an  action  cannot  be  denoted  by  [2X\^[102X ([14X31.12-1[114X); instead one can use
-  [2XPermuted[102X  ([14X21.20-18[114X).)  The  power  of  a  class  function  by  a group or a
+  [2XPermuted[102X  ([14X21.20-17[114X).)  The  power  of  a  class  function  by  a group or a
   character  table  is  the  induced  class function (see [2XInducedClassFunction[102X
   ([14X72.9-3[114X)).  The  power  of  a group element by a class function is the class
   function value at (the conjugacy class containing) this element.[133X
@@ -503,8 +503,8 @@
   [33X[1;0Y[29X[2XPrintObj[102X( [3Xchi[103X ) [32X method[133X
   
   [33X[0;0YThe  default  [2XPrintObj[102X  ([14X6.3-5[114X)  method for class functions does the same as
-  [2XViewObj[102X  ([14X6.3-5[114X),  except  that  the  character table is is [2XPrint[102X ([14X6.3-4[114X)-ed
-  instead of [2XView[102X ([14X6.3-3[114X)-ed.[133X
+  [2XViewObj[102X ([14X6.3-5[114X), except that the character table is [2XPrint[102X ([14X6.3-4[114X)-ed instead
+  of [2XView[102X ([14X6.3-3[114X)-ed.[133X
   
   [33X[0;0Y[13XNote[113X  that  if  a  class  function  is  shown  only  with one of the strings
   [10X"ClassFunction"[110X,  [10X"VirtualCharacter"[110X,  it  may still be that it is in fact a
@@ -807,9 +807,9 @@
   
   [33X[1;0Y[29X[2XNorm[102X( [[3Xtbl[103X, ][3Xchi[103X ) [32X attribute[133X
   
-  [33X[0;0YFor an ordinary class function [3Xchi[103X of the group [22XG[122X, say, we have [22X[3Xchi[103X = ∑_{χ ∈
-  Irr(G)}  a_χ χ[122X, with complex coefficients [22Xa_χ[122X. The [13Xnorm[113X of [3Xchi[103X is defined as
-  [22X∑_{χ ∈ Irr(G)} a_χ overline{a_χ}[122X.[133X
+  [33X[0;0YFor an ordinary class function [3Xchi[103X of a group [22XG[122X we have [22X[3Xchi[103X = ∑_{χ ∈ Irr(G)}
+  a_χ  χ[122X,  with complex coefficients [22Xa_χ[122X. The [13Xnorm[113X of [3Xchi[103X is defined as [22X∑_{χ ∈
+  Irr(G)} a_χ overline{a_χ}[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xtbl:= CharacterTable( "A5" );;[127X[104X
@@ -860,10 +860,10 @@
   
   [33X[1;0Y[29X[2XKernelOfCharacter[102X( [[3Xtbl[103X, ][3Xchi[103X ) [32X attribute[133X
   
-  [33X[0;0YFor  a class function [3Xchi[103X of the group [22XG[122X, say, [2XKernelOfCharacter[102X returns the
-  normal subgroup of [22XG[122X that is formed by those conjugacy classes for which the
-  value  of [3Xchi[103X equals the degree of [3Xchi[103X. If the underlying character table of
-  [3Xchi[103X   does   not   store   the   group   [22XG[122X   then  an  error  is  signalled.
+  [33X[0;0YFor  a class function [3Xchi[103X of a group [22XG[122X, [2XKernelOfCharacter[102X returns the normal
+  subgroup  of [22XG[122X that is formed by those conjugacy classes for which the value
+  of  [3Xchi[103X  equals  the degree of [3Xchi[103X. If the underlying character table of [3Xchi[103X
+  does    not    store   the   group   [22XG[122X   then   an   error   is   signalled.
   (See [2XClassPositionsOfKernel[102X  ([14X72.8-10[114X)  for  a  way  to  handle  the  kernel
   implicitly, by listing the positions of conjugacy classes in the kernel.)[133X
   
@@ -872,7 +872,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XList( Irr( S4 ), KernelOfCharacter );[127X[104X
-    [4X[28X[ Alt( [ 1 .. 4 ] ), Group(()), Group([ (1,2)(3,4), (1,4)(2,3) ]),[128X[104X
+    [4X[28X[ Alt( [ 1 .. 4 ] ), Group(()), Group([ (1,2)(3,4), (1,3)(2,4) ]),[128X[104X
     [4X[28X  Group(()), Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]) ][128X[104X
   [4X[32X[104X
   
@@ -893,10 +893,9 @@
   
   [33X[1;0Y[29X[2XCentreOfCharacter[102X( [[3Xtbl[103X, ][3Xchi[103X ) [32X attribute[133X
   
-  [33X[0;0YFor  a  character  [3Xchi[103X  of  the  group [22XG[122X, say, [2XCentreOfCharacter[102X returns the
-  [13Xcentre[113X  of  [3Xchi[103X, that is, the normal subgroup of all those elements of [22XG[122X for
-  which  the  quotient  of  the value of [3Xchi[103X by the degree of [3Xchi[103X is a root of
-  unity.[133X
+  [33X[0;0YFor  a  character  [3Xchi[103X of a group [22XG[122X, [2XCentreOfCharacter[102X returns the [13Xcentre[113X of
+  [3Xchi[103X,  that  is, the normal subgroup of all those elements of [22XG[122X for which the
+  quotient of the value of [3Xchi[103X by the degree of [3Xchi[103X is a root of unity.[133X
   
   [33X[0;0YIf  the underlying character table of [3Xpsi[103X does not store the group [22XG[122X then an
   error  is  signalled.  (See [2XClassPositionsOfCentre[102X  ([14X72.8-12[114X)  for  a way to
@@ -905,9 +904,9 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XList( Irr( S4 ), CentreOfCharacter );[127X[104X
-    [4X[28X[ Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]), Group(()),[128X[104X
-    [4X[28X  Group([ (1,2)(3,4), (1,4)(2,3) ]), Group(()), Group([ (), (1,2), (1,[128X[104X
-    [4X[28X   2)(3,4), (1,2,3), (1,2,3,4) ]) ][128X[104X
+    [4X[28X[ Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]), Group(()), [128X[104X
+    [4X[28X  Group([ (1,2)(3,4), (1,3)(2,4) ]), Group(()), [128X[104X
+    [4X[28X  Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]) ][128X[104X
   [4X[32X[104X
   
   [1X72.8-12 ClassPositionsOfCentre[101X
@@ -926,10 +925,10 @@
   
   [33X[1;0Y[29X[2XInertiaSubgroup[102X( [[3Xtbl[103X, ][3XG[103X, [3Xchi[103X ) [32X operation[133X
   
-  [33X[0;0YLet  [3Xchi[103X  be a character of the group [22XH[122X, say, and [3Xtbl[103X the character table of
-  [22XH[122X;  if  the argument [3Xtbl[103X is not given then the underlying character table of
-  [3Xchi[103X  (see [2XUnderlyingCharacterTable[102X  ([14X72.2-1[114X))  is used instead. Furthermore,
-  let [3XG[103X be a group that contains [22XH[122X as a normal subgroup.[133X
+  [33X[0;0YLet [3Xchi[103X be a character of a group [22XH[122X and [3Xtbl[103X the character table of [22XH[122X; if the
+  argument  [3Xtbl[103X  is  not  given  then  the  underlying  character table of [3Xchi[103X
+  (see [2XUnderlyingCharacterTable[102X  ([14X72.2-1[114X)) is used instead. Furthermore, let [3XG[103X
+  be a group that contains [22XH[122X as a normal subgroup.[133X
   
   [33X[0;0Y[2XInertiaSubgroup[102X  returns  the stabilizer in [3XG[103X of [3Xchi[103X, w.r.t. the action of [3XG[103X
   on the classes of [22XH[122X via conjugation. In other words, [2XInertiaSubgroup[102X returns
@@ -988,8 +987,8 @@
   
   [33X[1;0Y[29X[2XCentralCharacter[102X( [[3Xtbl[103X, ][3Xchi[103X ) [32X attribute[133X
   
-  [33X[0;0YFor  a  character  [3Xchi[103X  of  the  group  [22XG[122X, say, [2XCentralCharacter[102X returns the
-  [13Xcentral character[113X of [3Xchi[103X.[133X
+  [33X[0;0YFor  a  character  [3Xchi[103X  of  a  group [22XG[122X, [2XCentralCharacter[102X returns the [13Xcentral
+  character[113X of [3Xchi[103X.[133X
   
   [33X[0;0YThe  central  character  of  [22Xχ[122X is the class function [22Xω_χ[122X defined by [22Xω_χ(g) =
   |g^G| ⋅ χ(g)/χ(1)[122X for each [22Xg ∈ G[122X.[133X
@@ -1019,9 +1018,9 @@
   
   [33X[1;0Y[29X[2XEigenvaluesChar[102X( [[3Xtbl[103X, ][3Xchi[103X, [3Xclass[103X ) [32X operation[133X
   
-  [33X[0;0YLet  [3Xchi[103X  be  a  character  of the group [22XG[122X, say. For an element [22Xg ∈ G[122X in the
-  [3Xclass[103X-th  conjugacy class, of order [22Xn[122X, let [22XM[122X be a matrix of a representation
-  affording [3Xchi[103X.[133X
+  [33X[0;0YLet  [3Xchi[103X  be  a character of a group [22XG[122X. For an element [22Xg ∈ G[122X in the [3Xclass[103X-th
+  conjugacy class, of order [22Xn[122X, let [22XM[122X be a matrix of a representation affording
+  [3Xchi[103X.[133X
   
   [33X[0;0Y[2XEigenvaluesChar[102X  returns  the  list  of  length  [22Xn[122X  where  at position [22Xk[122X the
   multiplicity of [10XE[110X[22X(n)^k = exp(2 π i k / n)[122X as an eigenvalue of [22XM[122X is stored.[133X
@@ -1091,10 +1090,10 @@
   
   [33X[1;0Y[29X[2XRestrictedClassFunction[102X( [[3Xtbl[103X, ][3Xchi[103X, [3Xtarget[103X ) [32X operation[133X
   
-  [33X[0;0YLet  [3Xchi[103X be a class function of the group [22XG[122X, say, and let [3Xtarget[103X be either a
-  subgroup  [22XH[122X  of  [22XG[122X or an injective homomorphism from [22XH[122X to [22XG[122X or the character
-  table  of  [3XH[103X.  Then  [2XRestrictedClassFunction[102X returns the class function of [22XH[122X
-  obtained by restricting [3Xchi[103X to [22XH[122X.[133X
+  [33X[0;0YLet [3Xchi[103X be a class function of a group [22XG[122X and let [3Xtarget[103X be either a subgroup
+  [22XH[122X of [22XG[122X or an injective homomorphism from [22XH[122X to [22XG[122X or the character table of [3XH[103X.
+  Then  [2XRestrictedClassFunction[102X  returns  the  class function of [22XH[122X obtained by
+  restricting [3Xchi[103X to [22XH[122X.[133X
   
   [33X[0;0YIf  [3Xchi[103X  is a class function of a [13Xfactor group[113X [22XG[122Xof [22XH[122X, where [3Xtarget[103X is either
   the  group  [22XH[122X or a homomorphism from [22XH[122X to [22XG[122X or the character table of [22XH[122X then
@@ -1135,7 +1134,7 @@
   [33X[1;0Y[29X[2XInducedClassFunction[102X( [[3Xtbl[103X, ][3Xchi[103X, [3Xhom[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XInducedClassFunction[102X( [[3Xtbl[103X, ][3Xchi[103X, [3Xsuptbl[103X ) [32X operation[133X
   
-  [33X[0;0YLet  [3Xchi[103X be a class function of the group [22XG[122X, say, and let [3Xtarget[103X be either a
+  [33X[0;0YLet  [3Xchi[103X  be  a  class  function  of  a  group  [22XG[122X and let [3Xtarget[103X be either a
   supergroup  [22XH[122X of [22XG[122X or an injective homomorphism from [22XH[122X to [22XG[122X or the character
   table  of  [3XH[103X.  Then  [2XInducedClassFunction[102X  returns  the  class function of [22XH[122X
   obtained by inducing [3Xchi[103X to [22XH[122X.[133X
@@ -1223,8 +1222,8 @@
   
   [33X[1;0Y[29X[2XReducedClassFunctions[102X( [[3Xtbl[103X, ][[3Xconstituents[103X, ][3Xreducibles[103X ) [32X operation[133X
   
-  [33X[0;0YLet [3Xreducibles[103X be a list of ordinary virtual characters of the group [22XG[122X, say.
-  If  [3Xconstituents[103X  is  given  then it must also be a list of ordinary virtual
+  [33X[0;0YLet  [3Xreducibles[103X  be  a  list of ordinary virtual characters of a group [22XG[122X. If
+  [3Xconstituents[103X  is  given  then  it  must  also  be a list of ordinary virtual
   characters  of  [22XG[122X, otherwise we have [3Xconstituents[103X equal to [3Xreducibles[103X in the
   following.[133X
   
@@ -2073,10 +2072,10 @@
   [33X[0;0YMore precisely, the [22Xi[122X-th entry of the [10XATLAS[110X component is a string describing
   the   decomposition  of  the  [22Xi[122X-th  entry  in  [3Xpermchars[103X.  The  degrees  and
   distinguishing letters of the constituents refer to the irreducibles of [3Xtbl[103X,
-  as  follows.  The  two irreducible characters of [3Xtbl2[103X of degree [22XN[122X, say, that
-  extend  the  irreducible character [22XN[122X [10Xa[110X of [3Xtbl[103X are denoted by [22XN[122X [10Xa[110X[22X^+[122X and [22XN[122X[10Xa[110X[22X^-[122X.
-  The  irreducible  character  of [3Xtbl2[103X of degree [22X2N[122X, say, whose restriction to
-  [3Xtbl[103X is the sum of the irreducible characters [22XN[122X [10Xa[110X and [22XN[122X [10Xb[110X is denoted as [22XN[122X [10Xab[110X.
+  as  follows.  The two irreducible characters of [3Xtbl2[103X of degree [22XN[122X that extend
+  the  irreducible  character  [22XN[122X  [10Xa[110X  of [3Xtbl[103X are denoted by [22XN[122X [10Xa[110X[22X^+[122X and [22XN[122X[10Xa[110X[22X^-[122X. The
+  irreducible  character  of [3Xtbl2[103X of degree [22X2N[122X whose restriction to [3Xtbl[103X is the
+  sum  of  the  irreducible  characters  [22XN[122X  [10Xa[110X  and  [22XN[122X  [10Xb[110X  is  denoted as [22XN[122X [10Xab[110X.
   Multiplicities larger than [22X1[122X of constituents are denoted by exponents.[133X
   
   [33X[0;0Y(This format is useful mainly for multiplicity free permutation characters.)[133X
@@ -2249,8 +2248,8 @@
   [33X[0;0YThe  first  three  of  these  functions implement tests of the properties of
   possible  permutation  characters  listed  in  Section [14X72.13[114X,  The other two
   implement  test  of additional properties. Let [3Xtbl[103X be the ordinary character
-  table  of a group [22XG[122X, say, [3Xchar[103X a rational character of [3Xtbl[103X, and [3Xchars[103X a list
-  of  rational  characters  of [3Xtbl[103X. For applying [2XTestPerm5[102X, the knowledge of a
+  table  of  a  group [22XG[122X, [3Xchar[103X a rational character of [3Xtbl[103X, and [3Xchars[103X a list of
+  rational  characters  of  [3Xtbl[103X.  For  applying  [2XTestPerm5[102X, the knowledge of a
   [22Xp[122X-modular  Brauer  table  [3Xmodtbl[103X  of  [22XG[122X is required. [2XTestPerm4[102X and [2XTestPerm5[102X
   expect  the  characters  in  [3Xchars[103X  to  satisfy  the  conditions  checked by
   [2XTestPerm1[102X and [2XTestPerm2[102X (see below).[133X
@@ -2311,7 +2310,7 @@
     [4X[28X[ 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0 ][128X[104X
     [4X[25Xgap>[125X [27XList( lincomb, psi -> TestPerm2( tbl, psi ) );[127X[104X
     [4X[28X[ 0, 5, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1 ][128X[104X
-    [4X[25Xgap>[125X [27XSet( List( TestPerm3(tbl, lincomb), x -> Position(lincomb, x) ) );[127X[104X
+    [4X[25Xgap>[125X [27XSet( TestPerm3(tbl, lincomb), x -> Position(lincomb, x) );[127X[104X
     [4X[28X[ 1, 4, 6, 7, 8, 9, 10, 11, 13 ][128X[104X
     [4X[25Xgap>[125X [27Xtbl:= CharacterTable( "A7" );[127X[104X
     [4X[28XCharacterTable( "A7" )[128X[104X
@@ -2467,16 +2466,24 @@
   
   [33X[0;0YFor  a  cyclotomic  or  a  list  of  cyclotomics [3Xval[103X, and a prime integer [3Xp[103X,
   [2XSizeOfFieldOfDefinition[102X  returns  the  size  of the smallest finite field in
-  characteristic [3Xp[103X that contains the [3Xp[103X-modular reduction of [3Xval[103X.[133X
+  characteristic [3Xp[103X that contains the [3Xp[103X-modular reduction of [3Xval[103X if this can be
+  determined, and [9Xfail[109X otherwise.[133X
   
-  [33X[0;0YThe reduction map is defined as in [JLPW95], that is, the complex [22X([3Xp[103X^d-1)[122X-th
-  root   of   unity   [22Xexp([3Xp[103X^d-1)[122X  is  mapped  to  the  residue  class  of  the
-  indeterminate,   modulo   the   ideal   spanned  by  the  Conway  polynomial
-  (see [2XConwayPolynomial[102X ([14X59.5-1[114X)) of degree [22Xd[122X over the field with [22Xp[122X elements.[133X
+  [33X[0;0YThe  latter  happens  if [3Xval[103X is not closed under Galois conjugacy and if the
+  [3Xp[103X-modular  reduction  of  some  value  cannot be determined via the function
+  [2XFrobeniusCharacterValue[102X ([14X72.15-1[114X). Note that the reduction map is defined as
+  in [JLPW95],  that  is,  the  complex [22X([3Xp[103X^d-1)[122X-th root of unity [22Xexp([3Xp[103X^d-1)[122X is
+  mapped  to  the residue class of the indeterminate, modulo the ideal spanned
+  by  the  Conway  polynomial (see [2XConwayPolynomial[102X ([14X59.5-1[114X)) of degree [22Xd[122X over
+  the field with [22Xp[122X elements.[133X
   
-  [33X[0;0YIf  [3Xval[103X  is  a  Brauer  character then the value returned is the size of the
-  smallest  finite  field  in  characteristic  [3Xp[103X  over which the corresponding
-  representation lives.[133X
+  [33X[0;0YIf  [3Xval[103X  is  closed under Galois conjugacy then the result can be determined
+  without  explicitly  computing  the [3Xp[103X-modular reduction of [3Xval[103X. This happens
+  for example if [3Xval[103X is a Brauer character.[133X
+  
+  [33X[0;0YIf  [3Xval[103X  is  an  irreducible Brauer character then the value returned is the
+  size  of  the  smallest  finite  field  in  characteristic  [3Xp[103X over which the
+  corresponding representation lives.[133X
   
   [1X72.15-4 RealizableBrauerCharacters[101X
   

@@ -188,21 +188,25 @@
 
 <p>The ordering of the list entries can depend on the operating system.</p>
 
-<p>An interactive way to show the contents of a directory is provided by the function <code class="func">BrowseDirectory</code> (<a href="../../pkg/Browse/doc/chap6_mj.html#X859682DE8397261E"><span class="RefLink">Browse: BrowseDirectory</span></a>) from the <strong class="pkg">GAP</strong> package <strong class="pkg">Browse</strong>.</p>
+<p>An interactive way to show the contents of a directory is provided by the function <code class="func">BrowseDirectory</code> (<a href="../../pkg/browse/doc/chap6_mj.html#X859682DE8397261E"><span class="RefLink">Browse: BrowseDirectory</span></a>) from the <strong class="pkg">GAP</strong> package <strong class="pkg">Browse</strong>.</p>
 
 <p><a id="X86F4A32C83B82369" name="X86F4A32C83B82369"></a></p>
 
 <h5>9.3-8 DirectoryDesktop</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectoryDesktop</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>returns a directory object for the users desktop directory as defined on many modern operating systems. The function is intended to provide a cross-platform interface to a directory that is easily accessible by the user. Under Unix systems (including Mac OS X) this will be the <code class="code">Desktop</code> directory in the users home directory if it exists, and the users home directory otherwise. Under Windows it will the users <code class="code">Desktop</code> folder (or the appropriate name under different languages).</p>
+<p>returns a directory object for the user's desktop directory as defined on many modern operating systems. The function is intended to provide a cross-platform interface to a directory that is easily accessible by the user.</p>
+
+<p>Under Unix systems (including Mac OS X) this will be the <code class="code">Desktop</code> directory in the user's home directory if it exists, and the user's home directory otherwise. Under Windows it will be the user's <code class="code">Desktop</code> folder (or the appropriate name under different languages).</p>
 
 <p><a id="X7B0D818A808A3481" name="X7B0D818A808A3481"></a></p>
 
 <h5>9.3-9 DirectoryHome</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectoryHome</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>returns a directory object for the users home directory, defined as a directory in which the user will typically have full read and write access. The function is intended to provide a cross-platform interface to a directory that is easily accessible by the user. Under Unix systems (including Mac OS X) this will be the usual user home directory. Under Windows it will the users <code class="code">My Documents</code> folder (or the appropriate name under different languages).</p>
+<p>returns a directory object for the user's home directory, defined as a directory in which the user will typically have full read and write access. The function is intended to provide a cross-platform interface to a directory that is easily accessible by the user.</p>
+
+<p>Under Unix systems (including Mac OS X) this will be the usual user home directory. Under Windows it will be the user's <code class="code">My Documents</code> folder (or the appropriate name under different languages).</p>
 
 <p><a id="X8545E03E7D651456" name="X8545E03E7D651456"></a></p>
 
@@ -435,9 +439,9 @@ return a*10;
 <h5>9.7-7 CrcFile</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CrcFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>CRC (cyclic redundancy check) numbers provide a certain method of doing checksums. They are used by <strong class="pkg">GAP</strong> to check whether files have changed.</p>
+<p>This function computes a CRC (cyclic redundancy check) number for the content of the file <var class="Arg">filename</var>.</p>
 
-<p><code class="func">CrcFile</code> computes a checksum value for the file with filename <var class="Arg">filename</var> and returns this value as an integer. The function returns <code class="keyw">fail</code> if a system error occurred, say, for example, if <var class="Arg">filename</var> does not exist. In this case the function <code class="func">LastSystemError</code> (<a href="chap9_mj.html#X87D278437A916905"><span class="RefLink">9.1-1</span></a>) can be used to get information about the error.</p>
+<p><code class="func">CrcFile</code> computes a CRC (cyclic redundancy check) checksum value for the file with filename <var class="Arg">filename</var> and returns this value as an integer. The function returns <code class="keyw">fail</code> if an error occurred, for example, if <var class="Arg">filename</var> does not exist. In this case the function <code class="func">LastSystemError</code> (<a href="chap9_mj.html#X87D278437A916905"><span class="RefLink">9.1-1</span></a>) can be used to get information about the error. See also <code class="func">CrcFile</code> and <code class="func">HexSHA256</code> (<a href="chap27_mj.html#X7873D1F28779B490"><span class="RefLink">27.9-7</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -457,7 +461,7 @@ return a*10;
 <h5>9.7-9 UserHomeExpand</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UserHomeExpand</code>( <var class="Arg">str</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>If the string <var class="Arg">str</var> starts with a <code class="code">'~'</code> character this function returns a new string with the leading <code class="code">'~'</code> substituted by the users home directory as stored in <code class="code">GAPInfo.UserHome</code>. Otherwise <var class="Arg">str</var> is returned unchanged.</p>
+<p>If the string <var class="Arg">str</var> starts with a <code class="code">'~'</code> character this function returns a new string with the leading <code class="code">'~'</code> substituted by the user's home directory as stored in <code class="code">GAPInfo.UserHome</code>. Otherwise <var class="Arg">str</var> is returned unchanged.</p>
 
 <p><a id="X79EE267A7FAF28A6" name="X79EE267A7FAF28A6"></a></p>
 

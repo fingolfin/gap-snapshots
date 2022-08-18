@@ -69,9 +69,9 @@
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7ECC75048583853B">6.7-1 QUIT</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F5DDF5A80CFE6C2">6.7-2 GAP_EXIT_CODE</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B56D486842496DB">6.7-3 QUIT_GAP</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X85804CF082AFF6AE">6.7-4 FORCE_QUIT_GAP</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X838B50A9790DE55B">6.7-2 GapExitCode</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7AB1567987922580">6.7-3 QuitGap</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X85A8DD6B7A20DD89">6.7-4 ForceQuitGap</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A2C380986F46FEE">6.7-5 InstallAtExit</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X843C07A4869EAA1D">6.7-6 SaveOnExitFile</a></span>
 </div></div>
@@ -221,7 +221,7 @@ re continued on the next line."
 <tr>
 <td class="tdcenter"><code class="func">String</code> (<a href="chap27.html#X81FB5BE27903EC32"><span class="RefLink">27.7-6</span></a>)</td>
 </tr>
-</table><br /><p>&nbsp;</p><br />
+</table><br />
 </div>
 
 <p>This is to avoid circular delegations.</p>
@@ -364,7 +364,7 @@ C4
 <h5>6.3-7 SetNameObject</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetNameObject</code>( <var class="Arg">o</var>, <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p><code class="func">SetNameObject</code> sets the string <var class="Arg">s</var> as display name for object <var class="Arg">o</var> in an interactive session. When applying <code class="func">View</code> (<a href="chap6.html#X851902C583B84CDC"><span class="RefLink">6.3-3</span></a>) to object <var class="Arg">o</var>, for example in the system's main loop, <strong class="pkg">GAP</strong> will print the string <var class="Arg">s</var>. Calling <code class="func">SetNameObject</code> for the same object <var class="Arg">o</var> with <var class="Arg">s</var> set to <code class="code">fail</code> deletes the special viewing setup. since use of this features potentially slows down the whole print process, this function should be used sparingly.</p>
+<p><code class="func">SetNameObject</code> sets the string <var class="Arg">s</var> as display name for object <var class="Arg">o</var> in an interactive session. When applying <code class="func">View</code> (<a href="chap6.html#X851902C583B84CDC"><span class="RefLink">6.3-3</span></a>) to object <var class="Arg">o</var>, for example in the system's main loop, <strong class="pkg">GAP</strong> will print the string <var class="Arg">s</var>. Calling <code class="func">SetNameObject</code> for the same object <var class="Arg">o</var> with <var class="Arg">s</var> set to <code class="func">fail</code> (<a href="chap20.html#X8294AAC9860E87E5"><span class="RefLink">20.2-1</span></a>) deletes the special viewing setup. Since use of this features potentially slows down the whole print process, this function should be used sparingly.</p>
 
 
 <div class="example"><pre>
@@ -720,26 +720,28 @@ you can 'return;' to continue
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QUIT</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
 <p>An emergency way to leave <strong class="pkg">GAP</strong> is to enter <code class="keyw">QUIT</code> at any <code class="code">gap&gt;</code> or <code class="code">brk&gt;</code> or <code class="code">brk_<var class="Arg">nn</var>&gt;</code> prompt.</p>
 
-<p><a id="X7F5DDF5A80CFE6C2" name="X7F5DDF5A80CFE6C2"></a></p>
+<p><a id="X838B50A9790DE55B" name="X838B50A9790DE55B"></a></p>
 
-<h5>6.7-2 GAP_EXIT_CODE</h5>
+<h5>6.7-2 GapExitCode</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GAP_EXIT_CODE</code>( <var class="Arg">ret</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>A <code class="code">GAP_EXIT_CODE</code> sets the return value which will be used when <strong class="pkg">GAP</strong> exits. This may be an integer, or a boolean (where <code class="keyw">true</code> is interpreted as 0, and <code class="keyw">false</code> is interpreted as 1.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GapExitCode</code>( [<var class="Arg">ret</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><code class="func">GapExitCode</code> sets the exit value which is returned to the operating system (or parent process) when <strong class="pkg">GAP</strong> exits. This may be an integer in the range [-128..127] (other values are reduced modulo 256), or a boolean. <code class="keyw">true</code> corresponds to the return value 0, which by convention is treated as "success". <code class="keyw">false</code> corresponds to the return value 1, which by convention is treated as "failure". The exit value is not changed if no argument is given.</p>
 
-<p><a id="X7B56D486842496DB" name="X7B56D486842496DB"></a></p>
+<p>The <em>previous</em> exit code is returned.</p>
 
-<h5>6.7-3 QUIT_GAP</h5>
+<p><a id="X7AB1567987922580" name="X7AB1567987922580"></a></p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QUIT_GAP</code>( [<var class="Arg">ret</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>A <code class="code">QUIT_GAP</code> acts similarly to the keyword <code class="code">quit</code>. It exits <strong class="pkg">GAP</strong> cleanly, calling any function installed using <code class="code">InstallAtExit</code>. The optional argument will be passed to <code class="code">GAP_EXIT_CODE</code>.</p>
+<h5>6.7-3 QuitGap</h5>
 
-<p><a id="X85804CF082AFF6AE" name="X85804CF082AFF6AE"></a></p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuitGap</code>( [<var class="Arg">ret</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><code class="func">QuitGap</code> acts similarly to the keyword <code class="code">QUIT</code>, except <code class="code">QUIT</code> cannot be called from a function. It exits <strong class="pkg">GAP</strong> cleanly, calling any function installed using <code class="func">InstallAtExit</code> (<a href="chap6.html#X7A2C380986F46FEE"><span class="RefLink">6.7-5</span></a>). The optional argument <var class="Arg">ret</var> will be passed to <code class="func">GapExitCode</code> (<a href="chap6.html#X838B50A9790DE55B"><span class="RefLink">6.7-2</span></a>).</p>
 
-<h5>6.7-4 FORCE_QUIT_GAP</h5>
+<p><a id="X85A8DD6B7A20DD89" name="X85A8DD6B7A20DD89"></a></p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FORCE_QUIT_GAP</code>( [<var class="Arg">ret</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>A <code class="code">FORCE_QUIT_GAP</code> is similar to <code class="code">QUIT_GAP</code>, except it ignores any functions installed with <code class="code">InstallAtExit</code>, or any other functions normally run at GAP exit, and exits GAP immediately. The optional argument will be passed to <code class="code">GAP_EXIT_CODE</code>.</p>
+<h5>6.7-4 ForceQuitGap</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ForceQuitGap</code>( [<var class="Arg">ret</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><code class="func">ForceQuitGap</code> is similar to <code class="func">QuitGap</code> (<a href="chap6.html#X7AB1567987922580"><span class="RefLink">6.7-3</span></a>), except it ignores any functions installed with <code class="func">InstallAtExit</code> (<a href="chap6.html#X7A2C380986F46FEE"><span class="RefLink">6.7-5</span></a>), or any other functions normally run at GAP exit, such as flushing any partially outputted lines to both the screen and files, and exits GAP immediately. The optional argument <var class="Arg">ret</var> will be passed to <code class="func">GapExitCode</code> (<a href="chap6.html#X838B50A9790DE55B"><span class="RefLink">6.7-2</span></a>).</p>
 
 <p><a id="X7A2C380986F46FEE" name="X7A2C380986F46FEE"></a></p>
 
@@ -747,7 +749,7 @@ you can 'return;' to continue
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallAtExit</code>( <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QUITTING</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
-<p>Before actually terminating, <strong class="pkg">GAP</strong> will call (with no arguments) all of the functions that have been installed using <code class="code">InstallAtExit</code>. These typically perform tasks such as cleaning up temporary files created during the session, and closing open files. If an error occurs during the execution of one of these functions, that function is simply abandoned, no break loop is entered.</p>
+<p>Before actually terminating, <strong class="pkg">GAP</strong> will call (with no arguments) all of the functions that have been installed using <code class="func">InstallAtExit</code>. These typically perform tasks such as cleaning up temporary files created during the session, and closing open files. If an error occurs during the execution of one of these functions, that function is simply abandoned, no break loop is entered.</p>
 
 
 <div class="example"><pre>
@@ -763,7 +765,7 @@ bye
 <h5>6.7-6 SaveOnExitFile</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SaveOnExitFile</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
-<p>If, when <strong class="pkg">GAP</strong> is exiting due to a <code class="keyw">quit</code> or end-of-file (i.e. not due to a <code class="keyw">QUIT</code>) the variable <code class="func">SaveOnExitFile</code> is bound to a string value, then the system will try to save the workspace to that file.</p>
+<p>If, when <strong class="pkg">GAP</strong> is exiting due to a <code class="keyw">quit</code> or end-of-file (i.e. not due to a <code class="keyw">QUIT</code>) the variable <code class="func">SaveOnExitFile</code> is bound to a string value, then the system will try to save the <strong class="pkg">GAP</strong> workspace to that file, see <code class="func">SaveWorkspace</code> (<a href="chap3.html#X876544A57C73C488"><span class="RefLink">3.3-1</span></a>).</p>
 
 <p><a id="X82234FD181899530" name="X82234FD181899530"></a></p>
 
@@ -965,12 +967,14 @@ bye
 <div class="example"><pre>
 $if GAP
   set blink-matching-paren on
-  "\C-n": dump-functions
+  "\C-x\C-o": dump-functions
   "\ep": kill-region
 $endif
 </pre></div>
 
 <p>Alternatively, from within <strong class="pkg">GAP</strong> the command <code class="code">ReadlineInitLine(<var class="Arg">line</var>);</code> can be used, where <var class="Arg">line</var> is a string containing a line as in the init file.</p>
+
+<p>Caveat: <strong class="pkg">GAP</strong> overwrites the following keys (after reading the <code class="file">~/.inputrc</code> file): <code class="code">\C-g</code>, <code class="code">\C-i</code>, <code class="code">\C-n</code>, <code class="code">\C-o</code>, <code class="code">\C-p</code>, <code class="code">\C-r</code>, <code class="code">\C-\</code>, <code class="code">\e&lt;</code>, <code class="code">\e&gt;</code>, <code class="code">Up</code>, <code class="code">Down</code>, <code class="code">TAB</code>, <code class="code">Space</code>, <code class="code">PageUp</code>, <code class="code">PageDown</code>. So, do not redefine these in your <code class="file">~/.inputrc</code>.</p>
 
 <p>Note that after pressing <strong class="button">Ctrl-v</strong> the next special character is input verbatim. This is very useful to bind keys or key sequences. For example, binding the function key <strong class="button">F3</strong> to the command <code class="code">kill-whole-line</code> by using the sequence <strong class="button">Ctrl-v</strong> <strong class="button">F3</strong> looks on many terminals like this: <code class="code">ReadlineInitLine("\"^[OR\":kill-whole-line");</code>. (You can get the line back later with <strong class="button">Ctrl-y</strong>.)</p>
 
@@ -990,10 +994,10 @@ $endif
 
 <h5>6.9-3 SaveCommandLineHistory</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SaveCommandLineHistory</code>( [<var class="Arg">fname</var>, ][<var class="Arg">app</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SaveCommandLineHistory</code>( [<var class="Arg">fname</var>][,] [<var class="Arg">app</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">fail</code> or number of saved lines</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadCommandLineHistory</code>( [<var class="Arg">fname</var>, ][<var class="Arg">app</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadCommandLineHistory</code>( [<var class="Arg">fname</var>][,] [<var class="Arg">app</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">fail</code> or number of added lines</p>
 
 <p>The first command saves the lines in the command line history to the file given by the string <var class="Arg">fname</var>. The default for <var class="Arg">fname</var> is <code class="file">history</code> in the user's <strong class="pkg">GAP</strong> root path <code class="code">GAPInfo.UserGapRoot</code> or <code class="file">"~/.gap_hist"</code> if this directory does not exist. If the optional argument <var class="Arg">app</var> is <code class="keyw">true</code> then the lines are appended to that file otherwise the file is overwritten.</p>

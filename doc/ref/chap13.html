@@ -282,7 +282,7 @@ May imply with:
 
 <h4>13.3 <span class="Heading">Categories</span></h4>
 
-<p>The <em>categories</em> of an object are filters (see <a href="chap13.html#X84EFA4C07D4277BB"><span class="RefLink">13.2</span></a>) that determine what operations an object admits. For example, all integers form a category, all rationals form a category, and all rational functions form a category. An object which claims to lie in a certain category is accepting the requirement that it should have methods for certain operations (and perhaps that their behaviour should satisfy certain axioms). For example, an object lying in the category <code class="func">IsList</code> (<a href="chap21.html#X7C4CC4EA8299701E"><span class="RefLink">21.1-1</span></a>) must have methods for <code class="func">Length</code> (<a href="chap21.html#X780769238600AFD1"><span class="RefLink">21.17-5</span></a>), <code class="func">IsBound\[\]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>) and the list element access operation <code class="func">\[\]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>).</p>
+<p>The <em>categories</em> of an object are filters (see <a href="chap13.html#X84EFA4C07D4277BB"><span class="RefLink">13.2</span></a>) that determine what operations an object admits. For example, all integers form a category, all rationals form a category, and all rational functions form a category. An object which claims to lie in a certain category is accepting the requirement that it should have methods for certain operations (and perhaps that their behaviour should satisfy certain axioms). For example, an object lying in the category <code class="func">IsList</code> (<a href="chap21.html#X7C4CC4EA8299701E"><span class="RefLink">21.1-1</span></a>) must have methods for <code class="func">Length</code> (<a href="chap21.html#X780769238600AFD1"><span class="RefLink">21.17-5</span></a>), <code class="func">IsBound<span>\</span>[<span>\</span>]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>) and the list element access operation <code class="func"><span>\</span>[<span>\</span>]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>).</p>
 
 <p>An object can lie in several categories. For example, a row vector lies in the categories <code class="func">IsList</code> (<a href="chap21.html#X7C4CC4EA8299701E"><span class="RefLink">21.1-1</span></a>) and <code class="func">IsVector</code> (<a href="chap31.html#X802F34F280B29DF4"><span class="RefLink">31.14-14</span></a>); each list lies in the category <code class="func">IsCopyable</code> (<a href="chap12.html#X811EFD727EBD1ADC"><span class="RefLink">12.6-1</span></a>), and depending on whether or not it is mutable, it may lie in the category <code class="func">IsMutable</code> (<a href="chap12.html#X7999AD1D7A4F1F46"><span class="RefLink">12.6-2</span></a>). Every domain lies in the category <code class="func">IsDomain</code> (<a href="chap31.html#X86B4AC017FAF4D12"><span class="RefLink">31.9-1</span></a>).</p>
 
@@ -346,7 +346,7 @@ May imply with:
 <h5>13.3-1 IsCategory</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCategory</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>returns <code class="code">true</code> if <var class="Arg">object</var> is a category (see <a href="chap13.html#X7CC6903E78F24167"><span class="RefLink">13.3</span></a>), and <code class="code">false</code> otherwise.</p>
+<p>returns <code class="keyw">true</code> if <var class="Arg">object</var> is a category (see <a href="chap13.html#X7CC6903E78F24167"><span class="RefLink">13.3</span></a>), and <code class="keyw">false</code> otherwise.</p>
 
 <p>Note that <strong class="pkg">GAP</strong> categories are <em>not</em> categories in the usual mathematical sense.</p>
 
@@ -396,7 +396,7 @@ May imply with:
 <h5>13.3-5 DeclareCategory</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareCategory</code>( <var class="Arg">name</var>, <var class="Arg">super</var>[, <var class="Arg">rank</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>does the same as <code class="func">NewCategory</code> (<a href="chap13.html#X87F68F887B44DBBD"><span class="RefLink">13.3-4</span></a>) and additionally makes the variable <var class="Arg">name</var> read-only.</p>
+<p>does the same as <code class="func">NewCategory</code> (<a href="chap13.html#X87F68F887B44DBBD"><span class="RefLink">13.3-4</span></a>) and then binds the result to the global variable <var class="Arg">name</var>. The variable must previously be writable, and is made read-only by this function.</p>
 
 <p><a id="X787BACEE7937EF01" name="X787BACEE7937EF01"></a></p>
 
@@ -446,7 +446,7 @@ May imply with:
 <h5>13.4-2 IsRepresentation</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRepresentation</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>returns <code class="code">true</code> if <var class="Arg">object</var> is a representation (see <a href="chap13.html#X8698205F8648EB33"><span class="RefLink">13.4</span></a>), and <code class="code">false</code> otherwise.</p>
+<p>returns <code class="keyw">true</code> if <var class="Arg">object</var> is a representation (see <a href="chap13.html#X8698205F8648EB33"><span class="RefLink">13.4</span></a>), and <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X7BBE93BE7977750F" name="X7BBE93BE7977750F"></a></p>
 
@@ -466,16 +466,14 @@ May imply with:
 
 <h5>13.4-4 NewRepresentation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewRepresentation</code>( <var class="Arg">name</var>, <var class="Arg">super</var>, <var class="Arg">slots</var>[, <var class="Arg">req</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewRepresentation</code>( <var class="Arg">name</var>, <var class="Arg">super</var>[, <var class="Arg">slots</var>[, <var class="Arg">req</var>]] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">NewRepresentation</code> returns a new representation <var class="Arg">rep</var> that has the name <var class="Arg">name</var> and is a subrepresentation of the representation <var class="Arg">super</var>. This means that every object in <var class="Arg">rep</var> lies automatically also in <var class="Arg">super</var>. We say also that <var class="Arg">super</var> is an implied filter of <var class="Arg">rep</var>.</p>
 
 <p>Each representation in <strong class="pkg">GAP</strong> is a subrepresentation of exactly one of the four representations <code class="func">IsInternalRep</code> (<a href="chap13.html#X805F1C3B7C730062"><span class="RefLink">13.4-1</span></a>), <code class="func">IsDataObjectRep</code> (<a href="chap13.html#X805F1C3B7C730062"><span class="RefLink">13.4-1</span></a>), <code class="func">IsComponentObjectRep</code> (<a href="chap13.html#X805F1C3B7C730062"><span class="RefLink">13.4-1</span></a>), <code class="func">IsPositionalObjectRep</code> (<a href="chap13.html#X805F1C3B7C730062"><span class="RefLink">13.4-1</span></a>). The data describing objects in the former two can be accessed only via <strong class="pkg">GAP</strong> kernel functions, the data describing objects in the latter two is accessible also in library functions, see <a href="chap79.html#X866E223484649E5A"><span class="RefLink">79.2</span></a> and <a href="chap79.html#X834893D07FAA6FD2"><span class="RefLink">79.3</span></a> for the details.</p>
 
-<p>The third argument <var class="Arg">slots</var> is a list either of integers or of strings. In the former case, <var class="Arg">rep</var> must be <code class="func">IsPositionalObjectRep</code> (<a href="chap13.html#X805F1C3B7C730062"><span class="RefLink">13.4-1</span></a>) or a subrepresentation of it, and <var class="Arg">slots</var> tells what positions of the objects in the representation <var class="Arg">rep</var> may be bound. In the latter case, <var class="Arg">rep</var> must be <code class="func">IsComponentObjectRep</code> (<a href="chap13.html#X805F1C3B7C730062"><span class="RefLink">13.4-1</span></a>) or a subrepresentation of, and <var class="Arg">slots</var> lists the admissible names of components that objects in the representation <var class="Arg">rep</var> may have. The admissible positions resp. component names of <var class="Arg">super</var> need not be be listed in <var class="Arg">slots</var>.</p>
+<p>The optional third and fourth arguments <var class="Arg">slots</var> and <var class="Arg">req</var> are (and always were) unused and are only provided for backwards compatibility. Note that <var class="Arg">slots</var> was required (but still unused) before GAP 4.12.</p>
 
 <p>The incremental rank (see <a href="chap13.html#X84EFA4C07D4277BB"><span class="RefLink">13.2</span></a>) of <var class="Arg">rep</var> is 1.</p>
-
-<p>Note that for objects in the representation <var class="Arg">rep</var>, of course some of the component names and positions reserved via <var class="Arg">slots</var> may be unbound.</p>
 
 <p>Examples for the use of <code class="func">NewRepresentation</code> can be found in <a href="chap79.html#X866E223484649E5A"><span class="RefLink">79.2</span></a>, <a href="chap79.html#X834893D07FAA6FD2"><span class="RefLink">79.3</span></a>, and also in <a href="chap81.html#X85B914DD81732492"><span class="RefLink">81.3</span></a>.</p>
 
@@ -483,8 +481,8 @@ May imply with:
 
 <h5>13.4-5 DeclareRepresentation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareRepresentation</code>( <var class="Arg">name</var>, <var class="Arg">super</var>, <var class="Arg">slots</var>[, <var class="Arg">req</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>does the same as <code class="func">NewRepresentation</code> (<a href="chap13.html#X7CC8106F809E15CF"><span class="RefLink">13.4-4</span></a>) and additionally makes the variable <var class="Arg">name</var> read-only.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareRepresentation</code>( <var class="Arg">name</var>, <var class="Arg">super</var>[, <var class="Arg">slots</var>[, <var class="Arg">req</var>]] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>does the same as <code class="func">NewRepresentation</code> (<a href="chap13.html#X7CC8106F809E15CF"><span class="RefLink">13.4-4</span></a>) and then binds the result to the global variable <var class="Arg">name</var>. The variable must previously be writable, and is made read-only by this function.</p>
 
 <p><a id="X7C701DBF7BAE649A" name="X7C701DBF7BAE649A"></a></p>
 
@@ -515,7 +513,7 @@ May imply with:
 <h5>13.5-1 IsAttribute</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAttribute</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>returns <code class="code">true</code> if <var class="Arg">object</var> is an attribute (see <a href="chap13.html#X7C701DBF7BAE649A"><span class="RefLink">13.5</span></a>), and <code class="code">false</code> otherwise.</p>
+<p>returns <code class="keyw">true</code> if <var class="Arg">object</var> is an attribute (see <a href="chap13.html#X7C701DBF7BAE649A"><span class="RefLink">13.5</span></a>), and <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X7F7960338163AA88" name="X7F7960338163AA88"></a></p>
 
@@ -551,10 +549,10 @@ May imply with:
 <li><p>The integer argument <var class="Arg">rank</var> causes the attribute tester to have this incremental rank (see <a href="chap13.html#X84EFA4C07D4277BB"><span class="RefLink">13.2</span></a>),</p>
 
 </li>
-<li><p>If the argument <var class="Arg">mutable</var> is the string <code class="code">"mutable"</code> or the boolean <code class="code">true</code>, then the values of the attribute are mutable.</p>
+<li><p>If the argument <var class="Arg">mutable</var> is the string <code class="code">"mutable"</code> or the boolean <code class="keyw">true</code>, then the values of the attribute are mutable.</p>
 
 </li>
-<li><p>If the argument <var class="Arg">mutable</var> is the boolean <code class="code">false</code>, then the values of the attribute are immutable.</p>
+<li><p>If the argument <var class="Arg">mutable</var> is the boolean <code class="keyw">false</code>, then the values of the attribute are immutable.</p>
 
 </li>
 </ul>
@@ -569,7 +567,7 @@ May imply with:
 <h5>13.5-4 DeclareAttribute</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareAttribute</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>[, <var class="Arg">"mutable"</var>][, <var class="Arg">rank</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>does the same as <code class="func">NewAttribute</code> (<a href="chap13.html#X7B9654807858A3B0"><span class="RefLink">13.5-3</span></a>), additionally makes the variable <var class="Arg">name</var> read-only and also binds read-only global variables with names <code class="code">Has<var class="Arg">name</var></code> and <code class="code">Set<var class="Arg">name</var></code> for the tester and setter of the attribute (see Section <a href="chap13.html#X79DE5208877AE42A"><span class="RefLink">13.6</span></a>).</p>
+<p>does the same as <code class="func">NewAttribute</code> (<a href="chap13.html#X7B9654807858A3B0"><span class="RefLink">13.5-3</span></a>) and then binds the result to the global variable <var class="Arg">name</var>. The variable must previously be writable, and is made read-only by this function. It also binds read-only global variables with names <code class="code">Has<var class="Arg">name</var></code> and <code class="code">Set<var class="Arg">name</var></code> for the tester and setter of the attribute (see Section <a href="chap13.html#X79DE5208877AE42A"><span class="RefLink">13.6</span></a>).</p>
 
 <p><a id="X7A951C33839AF2C1" name="X7A951C33839AF2C1"></a></p>
 
@@ -691,8 +689,23 @@ false
 <h5>13.6-4 InfoAttributes</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoAttributes</code></td><td class="tdright">(&nbsp;info class&nbsp;)</td></tr></table></div>
-<p>This info class (together with <code class="func">InfoWarning</code> (<a href="chap7.html#X7A28F77C82D6A3E0"><span class="RefLink">7.4-8</span></a>) is used for messages about attribute storing being disabled (at level 2) or enabled (level 3). It may be used in the future for other messages concerning changes to attribute behaviour.</p>
+<p>This info class (together with <code class="func">InfoWarning</code> (<a href="chap7.html#X7A28F77C82D6A3E0"><span class="RefLink">7.4-8</span></a>)) is used for messages about attributes. Messages are shown under the following circumstances:</p>
 
+
+<ul>
+<li><p><code class="func">EnableAttributeValueStoring</code> (<a href="chap13.html#X7E5DACBE7A9A9AD1"><span class="RefLink">13.6-6</span></a>) is used (level 2).</p>
+
+</li>
+<li><p><code class="func">DisableAttributeValueStoring</code> (<a href="chap13.html#X7851E2DB79656DB0"><span class="RefLink">13.6-5</span></a>) is used (level 3).</p>
+
+</li>
+<li><p>When trying to assign to non-mutable attribute which already is set to a different value (level 3).</p>
+
+</li>
+<li><p>When the test filter for an attribute (i.e., <code class="code">HasFOO</code>) is set, but no value is assigned (level 3).</p>
+
+</li>
+</ul>
 <p><a id="X7851E2DB79656DB0" name="X7851E2DB79656DB0"></a></p>
 
 <h5>13.6-5 DisableAttributeValueStoring</h5>
@@ -758,7 +771,7 @@ Group([ (1,2,3,4,5), (1,2,3) ])
 <h5>13.7-1 IsProperty</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsProperty</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>returns <code class="code">true</code> if <var class="Arg">object</var> is a property (see <a href="chap13.html#X871597447BB998A1"><span class="RefLink">13.7</span></a>), and <code class="code">false</code> otherwise.</p>
+<p>returns <code class="keyw">true</code> if <var class="Arg">object</var> is a property (see <a href="chap13.html#X871597447BB998A1"><span class="RefLink">13.7</span></a>), and <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X7E51C08286E03E7F" name="X7E51C08286E03E7F"></a></p>
 
@@ -781,38 +794,42 @@ Group([ (1,2,3,4,5), (1,2,3) ])
 [ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite",
   "CanEasilyCompareElements", "CanEasilySortElements",
   "IsDuplicateFree", "IsGeneratorsOfMagmaWithInverses",
-  "IsAssociative", "IsGeneratorsOfSemigroup", "IsSimpleSemigroup",
+  "IsAssociative", "IsFinitelyGeneratedMagma",
+  "IsGeneratorsOfSemigroup", "IsSimpleSemigroup",
   "IsRegularSemigroup", "IsInverseSemigroup",
   "IsCompletelyRegularSemigroup", "IsCompletelySimpleSemigroup",
   "IsGroupAsSemigroup", "IsMonoidAsSemigroup", "IsOrthodoxSemigroup",
-  "IsFinitelyGeneratedGroup", "IsSubsetLocallyFiniteGroup",
-  "KnowsHowToDecompose", "IsInfiniteAbelianizationGroup",
-  "IsNilpotentByFinite", "IsTorsionFree", "IsFreeAbelian" ]
+  "IsFinitelyGeneratedMonoid", "IsFinitelyGeneratedGroup",
+  "IsSubsetLocallyFiniteGroup", "KnowsHowToDecompose",
+  "IsInfiniteAbelianizationGroup", "IsNilpotentByFinite",
+  "IsTorsionFree", "IsFreeAbelian" ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(g);</span>
 6
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownPropertiesOfObject(g);</span>
 [ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite",
   "CanEasilyCompareElements", "CanEasilySortElements",
   "IsDuplicateFree", "IsGeneratorsOfMagmaWithInverses",
-  "IsAssociative", "IsGeneratorsOfSemigroup", "IsSimpleSemigroup",
+  "IsAssociative", "IsFinitelyGeneratedMagma",
+  "IsGeneratorsOfSemigroup", "IsSimpleSemigroup",
   "IsRegularSemigroup", "IsInverseSemigroup",
   "IsCompletelyRegularSemigroup", "IsCompletelySimpleSemigroup",
   "IsGroupAsSemigroup", "IsMonoidAsSemigroup", "IsOrthodoxSemigroup",
-  "IsFinitelyGeneratedGroup", "IsSubsetLocallyFiniteGroup",
-  "KnowsHowToDecompose", "IsPerfectGroup", "IsSolvableGroup",
-  "IsPolycyclicGroup", "IsInfiniteAbelianizationGroup",
-  "IsNilpotentByFinite", "IsTorsionFree", "IsFreeAbelian" ]
+  "IsFinitelyGeneratedMonoid", "IsFinitelyGeneratedGroup",
+  "IsSubsetLocallyFiniteGroup", "KnowsHowToDecompose",
+  "IsPerfectGroup", "IsSolvableGroup", "IsPolycyclicGroup",
+  "IsInfiniteAbelianizationGroup", "IsNilpotentByFinite",
+  "IsTorsionFree", "IsFreeAbelian" ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownTruePropertiesOfObject(g);</span>
 [ "IsNonTrivial", "IsFinite", "CanEasilyCompareElements", 
   "CanEasilySortElements", "IsDuplicateFree", 
   "IsGeneratorsOfMagmaWithInverses", "IsAssociative", 
-  "IsGeneratorsOfSemigroup", "IsSimpleSemigroup", 
-  "IsRegularSemigroup", "IsInverseSemigroup", 
+  "IsFinitelyGeneratedMagma", "IsGeneratorsOfSemigroup", 
+  "IsSimpleSemigroup", "IsRegularSemigroup", "IsInverseSemigroup", 
   "IsCompletelyRegularSemigroup", "IsCompletelySimpleSemigroup", 
   "IsGroupAsSemigroup", "IsMonoidAsSemigroup", "IsOrthodoxSemigroup", 
-  "IsFinitelyGeneratedGroup", "IsSubsetLocallyFiniteGroup", 
-  "KnowsHowToDecompose", "IsSolvableGroup", "IsPolycyclicGroup", 
-  "IsNilpotentByFinite" ]
+  "IsFinitelyGeneratedMonoid", "IsFinitelyGeneratedGroup", 
+  "IsSubsetLocallyFiniteGroup", "KnowsHowToDecompose", 
+  "IsSolvableGroup", "IsPolycyclicGroup", "IsNilpotentByFinite" ]
 </pre></div>
 
 <p><a id="X7F2D6FD979FE23DD" name="X7F2D6FD979FE23DD"></a></p>
@@ -829,7 +846,7 @@ Group([ (1,2,3,4,5), (1,2,3) ])
 <h5>13.7-5 DeclareProperty</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareProperty</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>[, <var class="Arg">rank</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>does the same as <code class="func">NewProperty</code> (<a href="chap13.html#X7F2D6FD979FE23DD"><span class="RefLink">13.7-4</span></a>), additionally makes the variable <var class="Arg">name</var> read-only and also binds read-only global variables with names <code class="code">Has<var class="Arg">name</var></code> and <code class="code">Set<var class="Arg">name</var></code> for the tester and setter of the property (see Section <a href="chap13.html#X79DE5208877AE42A"><span class="RefLink">13.6</span></a>).</p>
+<p>does the same as <code class="func">NewProperty</code> (<a href="chap13.html#X7F2D6FD979FE23DD"><span class="RefLink">13.7-4</span></a>) and then binds the result to the global variable <var class="Arg">name</var>. The variable must previously be writable, and is made read-only by this function. It also binds read-only global variables with names <code class="code">Has<var class="Arg">name</var></code> and <code class="code">Set<var class="Arg">name</var></code> for the tester and setter of the property (see Section <a href="chap13.html#X79DE5208877AE42A"><span class="RefLink">13.6</span></a>).</p>
 
 <p><a id="X7997705185C7E720" name="X7997705185C7E720"></a></p>
 
@@ -849,8 +866,12 @@ Group([ (1,2,3,4,5), (1,2,3) ])
 
 <h5>13.8-1 NewFilter</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewFilter</code>( <var class="Arg">name</var>[, <var class="Arg">rank</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p><code class="func">NewFilter</code> returns a simple filter with name <var class="Arg">name</var> (see <a href="chap13.html#X7997705185C7E720"><span class="RefLink">13.8</span></a>). The optional second argument <var class="Arg">rank</var> denotes the incremental rank (see <a href="chap13.html#X84EFA4C07D4277BB"><span class="RefLink">13.2</span></a>) of the filter, the default value is 1.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewFilter</code>( <var class="Arg">name</var>[, <var class="Arg">implied</var>][, <var class="Arg">rank</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><code class="func">NewFilter</code> returns a simple filter with name <var class="Arg">name</var> (see <a href="chap13.html#X7997705185C7E720"><span class="RefLink">13.8</span></a>).</p>
+
+<p>The optional argument <var class="Arg">implied</var>, if given, must be a filter, meaning that for each object in the new filter, also <var class="Arg">implied</var> will be set. Note that resetting the new filter with <code class="func">ResetFilterObj</code> (<a href="chap13.html#X8117FD03870FB02E"><span class="RefLink">13.8-4</span></a>) does <em>not</em> reset <var class="Arg">implied</var>. If the new filter is intended to be set or reset manually for existing objects then the argument <var class="Arg">implied</var> will cause trouble; if the filter is not intended to be set or reset manually then perhaps calling <code class="func">NewCategory</code> (<a href="chap13.html#X87F68F887B44DBBD"><span class="RefLink">13.3-4</span></a>) is more appropriate than calling <code class="func">NewFilter</code>.</p>
+
+<p>The optional argument <var class="Arg">rank</var> denotes the incremental rank (see <a href="chap13.html#X84EFA4C07D4277BB"><span class="RefLink">13.2</span></a>) of the filter, the default value is 1.</p>
 
 <p>The default value of the new simple filter for each object is <code class="keyw">false</code>.</p>
 
@@ -858,8 +879,8 @@ Group([ (1,2,3,4,5), (1,2,3) ])
 
 <h5>13.8-2 DeclareFilter</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareFilter</code>( <var class="Arg">name</var>[, <var class="Arg">rank</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>does the same as <code class="func">NewFilter</code> (<a href="chap13.html#X821635DA7821ED74"><span class="RefLink">13.8-1</span></a>) and additionally makes the variable <var class="Arg">name</var> read-only.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareFilter</code>( <var class="Arg">name</var>[, <var class="Arg">implied</var>][, <var class="Arg">rank</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>does the same as <code class="func">NewFilter</code> (<a href="chap13.html#X821635DA7821ED74"><span class="RefLink">13.8-1</span></a>) and then binds the result to the global variable <var class="Arg">name</var>. The variable must previously be writable, and is made read-only by this function.</p>
 
 <p><a id="X7C92D53E7920CE02" name="X7C92D53E7920CE02"></a></p>
 
@@ -881,7 +902,7 @@ Group([ (1,2,3,4,5), (1,2,3) ])
 
 <h4>13.9 <span class="Heading">Types</span></h4>
 
-<p>We stated above (see <a href="chap13.html#X7E8202627B421DB1"><span class="RefLink">13</span></a>) that, for an object <var class="Arg">obj</var>, its <em>type</em> is formed from its family and its filters. There is a also a third component, used in a few situations, namely defining data of the type.</p>
+<p>We stated above (see <a href="chap13.html#X7E8202627B421DB1"><span class="RefLink">13</span></a>) that, for an object <var class="Arg">obj</var>, its <em>type</em> is formed from its family and its filters. There is also a third component, used in a few situations, namely defining data of the type.</p>
 
 <p><a id="X7D3E6B6482BE5B16" name="X7D3E6B6482BE5B16"></a></p>
 

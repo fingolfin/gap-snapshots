@@ -188,6 +188,37 @@ gap> Length(ConjugacyClassesSubgroups(SymmetricGroup(7):NoPrecomputedData));
 #I  Using (despite option) data library of perfect groups, as the perfect
 #I  subgroups otherwise cannot be obtained!
 96
+gap> g:=SimpleGroup("3D4(2)");;
+gap> hs:=List(IsomorphicSubgroups(g,SymmetricGroup(4)),Image);;
+gap> h:=First(hs,x->48=Length(Orbits(x,MovedPoints(g))));;
+gap> sub:=IntermediateSubgroups(g,h);;
+gap> Length(sub.subgroups);
+19
+
+# Without the 'grpmat' package, the following works in reasonable time only
+# if the 'LatticeSubgroups' method "via nice monomorphism" is available.
+gap> g:= Group( [                                # the group 2.J_2
+>  [ [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ],
+>    [ Z(5)^2, 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5) ],
+>    [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ],
+>    [ 0*Z(5), 0*Z(5), Z(5)^2, 0*Z(5), 0*Z(5), 0*Z(5) ],
+>    [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ],
+>    [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^2, 0*Z(5) ] ],
+>  [ [ 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ],
+>    [ 0*Z(5), Z(5)^2, Z(5)^2, 0*Z(5), 0*Z(5), 0*Z(5) ],
+>    [ Z(5)^0, Z(5), Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ],
+>    [ 0*Z(5), 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5) ],
+>    [ Z(5), 0*Z(5), Z(5)^2, Z(5)^2, Z(5)^2, Z(5)^0 ],
+>    [ Z(5)^3, Z(5), Z(5)^3, 0*Z(5), 0*Z(5), Z(5)^0 ] ] ] );;
+gap> Length( ConjugacyClassesSubgroups( g ) );
+245
+
+# Use stored maximals
+gap> g:=SimpleGroup("O+(6,5)");;
+gap> Size(g);
+7254000000
+gap> l:=LowLayerSubgroups(g,2);;Length(l);
+73
 
 # thats all, folks
-gap> STOP_TEST( "grplatt.tst", 1);
+gap> STOP_TEST( "grplatt.tst" );

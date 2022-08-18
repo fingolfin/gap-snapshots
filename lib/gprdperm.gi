@@ -12,20 +12,12 @@
 
 #############################################################################
 ##
-#M  DirectProductOp( <grps>, <G> )  . . . . . . direct product of perm groups
+#F  DirectProductOfPermGroupsWithMovedPoints( <grps>, <pnts> )
 ##
-InstallMethod( DirectProductOp,
-    "for a list of permutation groups, and a permutation group",
-    IsCollsElms,
-    [ IsList and IsPermCollColl, IsPermGroup ], 0,
-    function( grps, G )
-    local   oldgrps,  olds,  news,  perms,  gens,
+BindGlobal("DirectProductOfPermGroupsWithMovedPoints",
+    function( grps, pnts )
+    local   i,  oldgrps,  olds,  news,  perms,  gens,
             deg,  grp,  old,  new,  perm,  gen,  D, info;
-
-    # Check the arguments.
-    if not ForAll( grps, IsGroup ) then
-      TryNextMethod();
-    fi;
 
     oldgrps := [  ];
     olds    := [  ];
@@ -35,11 +27,12 @@ InstallMethod( DirectProductOp,
     deg     := 0;
     
     # loop over the groups
-    for grp  in grps  do
+    for i in [1..Length(grps)] do
 
         # find old domain, new domain, and conjugating permutation
-        old  := MovedPoints( grp );
-        new  := [deg+1..deg+Length(old)];
+        grp  := grps[i];
+        old  := Immutable(pnts[i]);
+        new  := MakeImmutable([deg+1..deg+Length(old)]);
         perm := MappingPermListList( old, new );
         deg  := deg + Length(old);
         Add( oldgrps, grp );
@@ -63,6 +56,25 @@ InstallMethod( DirectProductOp,
 
     SetDirectProductInfo( D, info );
     return D;
+    end );
+
+
+#############################################################################
+##
+#M  DirectProductOp( <grps>, <G> )  . . . . . . direct product of perm groups
+##
+InstallMethod( DirectProductOp,
+    "for a list of permutation groups, and a permutation group",
+    IsCollsElms,
+    [ IsList and IsPermCollColl, IsPermGroup ], 0,
+    function( grps, G )
+
+    # Check the arguments.
+    if not ForAll( grps, IsGroup ) then
+      TryNextMethod();
+    fi;
+
+    return DirectProductOfPermGroupsWithMovedPoints(grps, List(grps, MovedPoints));
     end );
 
 
@@ -598,6 +610,7 @@ local	G,H,	    # factors
     if IsEmpty( domI )  then
         domI := [ 1 ];
     fi;
+    domI := MakeImmutable(Set(domI));
     degI := Length( domI );
 
     # make the generators of the direct product of <deg> copies of <G>
@@ -662,6 +675,7 @@ local	G,H,	    # factors
       basegens:=basegens,
       I      := I,
       degI   := degI,
+      domI   := domI,
       hgens  := hgens,
       components := components,
       embeddingType := NewType(
@@ -704,13 +718,17 @@ local   emb, info;
 	  info.basegens[i]));
       fi;
     elif i=info.degI+1 then
-      emb:= GroupHomomorphismByImagesNC(info.I,W,GeneratorsOfGroup(info.I),
-                                        info.hgens);
-      emb:= GroupHomomorphismByImagesNC(info.groups[2],W,
-             GeneratorsOfGroup(info.groups[2]),
-             List(GeneratorsOfGroup(info.groups[2]),
-	          i->ImageElm(emb,ImageElm(info.alpha,i))));
-      SetIsInjective(emb,true);
+      if IsBound(info.productType) and info.productType=true then
+        emb:= GroupHomomorphismByImagesNC(info.I,W,GeneratorsOfGroup(info.I),
+                                          info.hgens);
+        emb:= GroupHomomorphismByImagesNC(info.groups[2],W,
+              GeneratorsOfGroup(info.groups[2]),
+              List(GeneratorsOfGroup(info.groups[2]),
+              i->ImageElm(emb,ImageElm(info.alpha,i))));
+        SetIsInjective(emb,true);
+      else
+        emb := Objectify( info.embeddingType , rec( component := i ) );
+      fi;
     else
       Error("no embedding <i> defined");
     fi;
@@ -727,7 +745,17 @@ end );
 ##
 InstallMethod( Source,"perm wreath product embedding",
   true, [ IsEmbeddingWreathProductPermGroup ], 0,
-    emb -> WreathProductInfo( Range( emb ) ).groups[1] );
+    function(emb)
+      local info;
+      info := WreathProductInfo( Range( emb ) );
+      # Embedding into top group
+      if emb!.component = info.degI + 1 then
+        return info.groups[2];
+      # Embedding into a component of the base group
+      else
+        return info.groups[1];
+      fi;
+    end);
 
 #############################################################################
 ##
@@ -738,7 +766,32 @@ InstallMethod( ImagesRepresentative,
         [ IsEmbeddingImprimitiveWreathProductPermGroup,
           IsMultiplicativeElementWithInverse ], 0,
     function( emb, g )
-    return g ^ WreathProductInfo( Range( emb ) ).perms[ emb!.component ];
+    local info, degI, x, shift, domI, degG, i, k, l;
+    info := WreathProductInfo(Range(emb));
+    degI := info.degI;
+    # Embedding into a component of the base group
+    if emb!.component <> degI + 1 then
+      return g ^ info.perms[emb!.component];
+    fi;
+    # Embedding into top group
+    x := g ^ info.alpha;
+    domI := info.domI;
+    degG := NrMovedPoints(info.groups[1]);
+    # force trivial group to act on 1 point
+    if degG = 0 then
+      degG := 1;
+    fi;
+    shift := [];
+    for i  in [1 .. degI]  do
+      k := Position(domI, domI[i] ^ x);
+      if k = fail then
+        return fail;
+      fi;
+      for l  in [1 .. degG]  do
+        shift[(i - 1) * degG + l] := (k - 1) * degG + l;
+      od;
+    od;
+    return PermList(shift);
 end );
 
 #############################################################################
@@ -752,11 +805,16 @@ InstallMethod( PreImagesRepresentative,
     function( emb, g )
     local info;
     info := WreathProductInfo( Range( emb ) );
+    # Embedding into top group
+    if emb!.component = info.degI + 1 then
+      return g ^ Projection(Range(emb));
+    fi;
+    # Embedding into component of base group
     if not g in info.base then
       return fail;
     fi;
     return RestrictedPermNC( g, info.components[ emb!.component ] )
-           ^ (info.perms[ emb!.component ] ^ -1);
+          ^ (info.perms[ emb!.component ] ^ -1);
 end );
 
 
@@ -793,13 +851,51 @@ end );
 InstallOtherMethod( Projection,"perm wreath product", true,
   [ IsPermGroup and HasWreathProductInfo ],0,
 function( W )
-local  info,proj,H;
+local  info, proj, H, degI, degK, constPoints, projFunc;
   info := WreathProductInfo( W );
   if IsBound( info.projection ) then return info.projection; fi;
 
+  # Imprimitive Action, tuple (i, j) corresponds
+  # to point i + degK * (j - 1)
   if IsBound(info.permimpr) and info.permimpr=true then
     proj:=ActionHomomorphism(W,info.components,OnSets,"surjective");
-  else
+  # Primitive Action, tuple (t_1, ..., t_degI) corresponds
+  # to point Sum_{i=1}^degI t_i * degK ^ (i - 1)
+  elif IsBound(info.productType) and info.productType=true then
+    degI := info.degI;
+    degK := NrMovedPoints(info.groups[1]);
+    # constPoints correspond to [1, 1, ...] and the one-vectors with a 2 in each position,
+    # i.e. [2, 1, 1, ...], [1, 2, 1, ...], [1, 1, 2, ...], ...
+    constPoints := Concatenation([0], List([0 .. degI - 1], i -> degK ^ i)) + 1;
+    projFunc := function(x)
+      local imageComponents, i, comp, topImages;
+      # Let x = (f_1, ..., f_m; h).
+      # imageComponents = [ [1 ^ f_1, 1 ^ f_2, 1 ^ f_3, ...] ^ (1, h)
+      #                     [2 ^ f_1, 1 ^ f_2, 1 ^ f_3, ...] ^ (1, h),
+      #                     [1 ^ f_1, 2 ^ f_2, 1 ^ f_3, ...] ^ (1, h), ... ]
+      # So we just need to check where the bit differs from the first point
+      # in order to compute the action of the top element h.
+      imageComponents := List(OnTuples(constPoints, x) - 1,
+                              p -> CoefficientsQadic(p, degK) + 1);
+      # The qadic expansion has no "trailing" zeros. Thus we need to append them.
+      # For example if (1, ..., 1) ^ (f_1, ..., f_m) = (1, ..., 1),
+      # we have imageComponents[1] = CoefficientsQadic(0, degK) + 1 = [].
+      # Note that we append 1's instead of 0's,
+      # since we already transformed the result of the qadic expansion
+      # from [{0, ..., degK - 1}, ...] to [{1, ..., degK}, ...].
+      for i in [1 .. degI + 1] do
+        comp := imageComponents[i];
+        Append(comp, ListWithIdenticalEntries(degI - Length(comp), 1));
+      od;
+      # For some reason, the action of the top component is in reverse order,
+      # i.e. [ p[m], ..., p[1] ] ^ (1, h) = [ p[m ^ (h ^ -1)], ..., p[1 ^ (h ^ -1)] ]
+      topImages := List([0 .. degI - 1], i -> PositionProperty([0 .. degI - 1],
+                        j -> imageComponents[1, degI - j] <>
+                             imageComponents[degI - i + 1, degI - j]));
+      return PermList(topImages);
+    end;
+    proj := GroupHomomorphismByFunction(W, info.groups[2], projFunc);
+  else # weird cases where we use `hom` for the construction of the wreath product
     H:=info.groups[2];
     proj:=List(info.basegens,i->One(H));
     proj:=GroupHomomorphismByImagesNC(W,H,
@@ -812,6 +908,86 @@ local  info,proj,H;
   return proj;
 end);
         
+#############################################################################
+##
+#M  ListWreathProductElementNC( <G>, <x> )
+##
+InstallMethod( ListWreathProductElementNC, "perm wreath product", true,
+ [ IsPermGroup and HasWreathProductInfo, IsObject, IsBool ], 0,
+function(G, x, testDecomposition)
+  local info, list, h, hIm, f, degK, i, j, constPoints, imageComponents, comp, restPerm;
+
+  info := WreathProductInfo(G);
+  # The top group element
+  h := x ^ Projection(G);
+  if h = fail then
+    return fail;
+  fi;
+  hIm := ImageElm(Embedding(G, info.degI + 1), h);
+  if hIm = fail then
+    return fail;
+  fi;
+  # The product of the base group elements
+  f := x * hIm ^ (-1);
+  list := EmptyPlist(info!.degI + 1);
+  list[info.degI + 1] := h;
+  # Imprimitive Action, tuple (i, j) corresponds
+  # to point i + degK * (j - 1)
+  if IsBound(info.permimpr) and info.permimpr then
+    for i in [1 .. info.degI] do
+        restPerm := RESTRICTED_PERM(f, info.components[i], testDecomposition);
+        if restPerm = fail then
+          return fail;
+        fi;
+        list[i] := restPerm ^ info.perms[i];
+    od;
+  # Primitive Action, tuple (t_1, ..., t_degI) corresponds
+  # to point Sum_{i=1}^degI t_i * degK ^ (i - 1)
+  elif IsBound(info.productType) and info.productType then
+    degK := NrMovedPoints(info.groups[1]);
+    # constPoints correspond to [1, 1, 1, ...], [2, 2, 2, ...], ...
+    constPoints := List([0 .. degK - 1], i -> Sum([0 .. info.degI - 1],
+                                                  j -> i * degK ^ j)) + 1;
+    # imageComponents = [ [1 ^ f_1, 1 ^ f_2, 1 ^ f_3, ...],
+    #                     [2 ^ f_1, 2 ^ f_2, 2 ^ f_3, ...], ... ]
+    imageComponents := List(OnTuples(constPoints, f) - 1,
+                            p -> CoefficientsQadic(p, degK) + 1);
+    # The qadic expansion has no "trailing" zeros. Thus we need to append them.
+    # For example if (1, ..., 1) ^ (f_1, ..., f_m) = (1, ..., 1),
+    # we have imageComponents[1] = CoefficientsQadic(0, degK) + 1 = [].
+    # Note that we append 1's instead of 0's,
+    # since we already transformed the result of the qadic expansion
+    # from [{0, ..., degK - 1}, ...] to [{1, ..., degK}, ...].
+    for i in [1 .. degK] do
+      comp := imageComponents[i];
+      Append(comp, ListWithIdenticalEntries(info.degI - Length(comp), 1));
+    od;
+    for j in [1 .. info.degI] do
+      list[j] := PermList(List([1 .. degK], i -> imageComponents[i,j]));
+      if list[j] = fail then
+        return fail;
+      fi;
+    od;
+  else
+    ErrorNoReturn("Error: cannot determine which action ",
+                  "was used for wreath product");
+  fi;
+  return list;
+end);
+
+#############################################################################
+##
+#M  WreathProductElementListNC(<G>, <list>)
+##
+InstallMethod( WreathProductElementListNC, "perm wreath product", true,
+ [ IsPermGroup and HasWreathProductInfo, IsList ], 0,
+function(G, list)
+  local info;
+
+  info := WreathProductInfo(G);
+  return Product(List([1 .. info.degI + 1], i -> list[i] ^ Embedding(G, i)));
+end);
+
 #############################################################################
 ##
 #F  WreathProductProductAction( <G>, <H> )   wreath product in product action

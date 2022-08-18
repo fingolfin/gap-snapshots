@@ -1,0 +1,284 @@
+\contentsline {chapter}{\numberline {1}\textcolor {Chapter }{Maintenance Issues for the \textsf {GAP} Character Table Library}}{10}{chapter.1}%
+\contentsline {section}{\numberline {1.1}\textcolor {Chapter }{Disproving Possible Character Tables (November 2006)}}{10}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}\textcolor {Chapter }{A Perfect Pseudo Character Table (November 2006)}}{10}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}\textcolor {Chapter }{An Error in the Character Table of $E_6(2)$ (March 2016)}}{13}{subsection.1.1.2}%
+\contentsline {subsection}{\numberline {1.1.3}\textcolor {Chapter }{An Error in a Power Map of the Character Table of $2.F_4(2).2$ (November 2015)}}{14}{subsection.1.1.3}%
+\contentsline {subsection}{\numberline {1.1.4}\textcolor {Chapter }{A Character Table with a Wrong Name (May 2017)}}{15}{subsection.1.1.4}%
+\contentsline {section}{\numberline {1.2}\textcolor {Chapter }{Some finite factor groups of perfect space groups (February 2014)}}{16}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}\textcolor {Chapter }{Constructing the space groups in question}}{16}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}\textcolor {Chapter }{Constructing the factor groups in question}}{17}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.2.3}\textcolor {Chapter }{Examples with point group $A_5$}}{18}{subsection.1.2.3}%
+\contentsline {subsection}{\numberline {1.2.4}\textcolor {Chapter }{Examples with point group $L_3(2)$}}{19}{subsection.1.2.4}%
+\contentsline {subsection}{\numberline {1.2.5}\textcolor {Chapter }{Example with point group SL$_2(7)$}}{21}{subsection.1.2.5}%
+\contentsline {subsection}{\numberline {1.2.6}\textcolor {Chapter }{Example with point group $2^3.L_3(2)$}}{22}{subsection.1.2.6}%
+\contentsline {subsection}{\numberline {1.2.7}\textcolor {Chapter }{Examples with point group $A_6$}}{23}{subsection.1.2.7}%
+\contentsline {subsection}{\numberline {1.2.8}\textcolor {Chapter }{Examples with point group $L_2(8)$}}{25}{subsection.1.2.8}%
+\contentsline {subsection}{\numberline {1.2.9}\textcolor {Chapter }{Example with point group $M_{11}$}}{26}{subsection.1.2.9}%
+\contentsline {subsection}{\numberline {1.2.10}\textcolor {Chapter }{Example with point group $U_3(3)$}}{27}{subsection.1.2.10}%
+\contentsline {subsection}{\numberline {1.2.11}\textcolor {Chapter }{Examples with point group $U_4(2)$}}{28}{subsection.1.2.11}%
+\contentsline {subsection}{\numberline {1.2.12}\textcolor {Chapter }{A remark on one of the example groups}}{29}{subsection.1.2.12}%
+\contentsline {section}{\numberline {1.3}\textcolor {Chapter }{Generality problems (December 2004/October 2015)}}{29}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}\textcolor {Chapter }{Listing possible generality problems}}{29}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}\textcolor {Chapter }{A generality problem concerning the group $J_3$ (April 2015)}}{38}{subsection.1.3.2}%
+\contentsline {section}{\numberline {1.4}\textcolor {Chapter }{Brauer Tables that can be derived from Known Tables}}{40}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}\textcolor {Chapter }{Brauer Tables via Construction Information}}{40}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}\textcolor {Chapter }{Liftable Brauer Characters (May 2017)}}{41}{subsection.1.4.2}%
+\contentsline {chapter}{\numberline {2}\textcolor {Chapter }{Using Table Automorphisms for Constructing Character Tables in \textsf {GAP}}}{43}{chapter.2}%
+\contentsline {section}{\numberline {2.1}\textcolor {Chapter }{Overview}}{43}{section.2.1}%
+\contentsline {section}{\numberline {2.2}\textcolor {Chapter }{Theoretical Background}}{43}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}\textcolor {Chapter }{Character Table Automorphisms}}{43}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}\textcolor {Chapter }{Permutation Equivalence of Character Tables}}{44}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}\textcolor {Chapter }{Class Fusions}}{45}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}\textcolor {Chapter }{Constructing Character Tables of Certain Isoclinic Groups}}{45}{subsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.2.5}\textcolor {Chapter }{Character Tables of Isoclinic Groups of the Structure $p.G.p$ (October 2016)}}{46}{subsection.2.2.5}%
+\contentsline {subsection}{\numberline {2.2.6}\textcolor {Chapter }{Isoclinic Double Covers of Almost Simple Groups}}{47}{subsection.2.2.6}%
+\contentsline {subsection}{\numberline {2.2.7}\textcolor {Chapter }{Characters of Normal Subgroups}}{49}{subsection.2.2.7}%
+\contentsline {section}{\numberline {2.3}\textcolor {Chapter }{The Constructions}}{49}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}\textcolor {Chapter }{Character Tables of Groups of the Structure $M.G.A$}}{49}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}\textcolor {Chapter }{Character Tables of Groups of the Structure $G.S_3$}}{50}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}\textcolor {Chapter }{Character Tables of Groups of the Structure $G.2^2$}}{52}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}\textcolor {Chapter }{Character Tables of Groups of the Structure $2^2.G$ (August 2005)}}{53}{subsection.2.3.4}%
+\contentsline {subsection}{\numberline {2.3.5}\textcolor {Chapter }{$p$-Modular Tables of Extensions by $p$-singular Automorphisms}}{55}{subsection.2.3.5}%
+\contentsline {subsection}{\numberline {2.3.6}\textcolor {Chapter }{Character Tables of Subdirect Products of Index Two (July 2007)}}{56}{subsection.2.3.6}%
+\contentsline {section}{\numberline {2.4}\textcolor {Chapter }{Examples for the Type $M.G.A$}}{57}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}\textcolor {Chapter }{Character Tables of Dihedral Groups}}{57}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}\textcolor {Chapter }{An $M.G.A$ Type Example with $M$ noncentral in $M.G$ (May 2004)}}{59}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}\textcolor {Chapter }{\textsf {Atlas} Tables of the Type $M.G.A$}}{60}{subsection.2.4.3}%
+\contentsline {subsection}{\numberline {2.4.4}\textcolor {Chapter }{More \textsf {Atlas} Tables of the Type $M.G.A$}}{65}{subsection.2.4.4}%
+\contentsline {subsection}{\numberline {2.4.5}\textcolor {Chapter }{The Character Tables of $4_2.L_3(4).2_3$ and $12_2.L_3(4).2_3$}}{68}{subsection.2.4.5}%
+\contentsline {subsection}{\numberline {2.4.6}\textcolor {Chapter }{The Character Tables of $12_1.U_4(3).2_2'$ and $12_2.U_4(3).2_3'$ (December{\nobreakspace }2015)}}{70}{subsection.2.4.6}%
+\contentsline {subsection}{\numberline {2.4.7}\textcolor {Chapter }{Groups of the Structures $3.U_3(8).3_1$ and $3.U_3(8).6$ (February 2017)}}{71}{subsection.2.4.7}%
+\contentsline {subsection}{\numberline {2.4.8}\textcolor {Chapter }{The Character Table of $(2^2 \times F_4(2)):2 < B$ (March{\nobreakspace }2003)}}{73}{subsection.2.4.8}%
+\contentsline {subsection}{\numberline {2.4.9}\textcolor {Chapter }{The Character Table of $2.(S_3 \times Fi_{22}.2) < 2.B$ (March{\nobreakspace }2003)}}{75}{subsection.2.4.9}%
+\contentsline {subsection}{\numberline {2.4.10}\textcolor {Chapter }{The Character Table of $(2 \times 2.Fi_{22}):2 < Fi_{24}$ (November{\nobreakspace }2008)}}{78}{subsection.2.4.10}%
+\contentsline {subsection}{\numberline {2.4.11}\textcolor {Chapter }{The Character Table of $S_3 \times 2.U_4(3).2_2 \leq 2.Fi_{22}$ (September 2002)}}{79}{subsection.2.4.11}%
+\contentsline {subsection}{\numberline {2.4.12}\textcolor {Chapter }{The Character Table of $4.HS.2 \leq HN.2$ (May 2002)}}{80}{subsection.2.4.12}%
+\contentsline {subsection}{\numberline {2.4.13}\textcolor {Chapter }{The Character Tables of $4.A_6.2_3$, $12.A_6.2_3$, and $4.L_2(25).2_3$}}{83}{subsection.2.4.13}%
+\contentsline {subsection}{\numberline {2.4.14}\textcolor {Chapter }{The Character Table of $4.L_2(49).2_3$ (December 2020)}}{89}{subsection.2.4.14}%
+\contentsline {subsection}{\numberline {2.4.15}\textcolor {Chapter }{The Character Table of $4.L_2(81).2_3$ (December 2020)}}{91}{subsection.2.4.15}%
+\contentsline {subsection}{\numberline {2.4.16}\textcolor {Chapter }{The Character Table of $9.U_3(8).3_3$ (March 2017)}}{92}{subsection.2.4.16}%
+\contentsline {subsection}{\numberline {2.4.17}\textcolor {Chapter }{Pseudo Character Tables of the Type $M.G.A$ (May 2004)}}{97}{subsection.2.4.17}%
+\contentsline {subsection}{\numberline {2.4.18}\textcolor {Chapter }{Some Extra-ordinary $p$-Modular Tables of the Type $M.G.A$ (September 2005)}}{100}{subsection.2.4.18}%
+\contentsline {section}{\numberline {2.5}\textcolor {Chapter }{Examples for the Type $G.S_3$}}{103}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}\textcolor {Chapter }{Small Examples}}{103}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}\textcolor {Chapter }{\textsf {Atlas} Tables of the Type $G.S_3$}}{104}{subsection.2.5.2}%
+\contentsline {section}{\numberline {2.6}\textcolor {Chapter }{Examples for the Type $G.2^2$}}{108}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}\textcolor {Chapter }{The Character Table of $A_6.2^2$}}{108}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}\textcolor {Chapter }{\textsf {Atlas} Tables of the Type $G.2^2$ {\textendash } Easy Cases}}{109}{subsection.2.6.2}%
+\contentsline {subsection}{\numberline {2.6.3}\textcolor {Chapter }{The Character Table of $S_4(9).2^2$ (September 2011)}}{114}{subsection.2.6.3}%
+\contentsline {subsection}{\numberline {2.6.4}\textcolor {Chapter }{The Character Tables of Groups of the Type $2.L_3(4).2^2$ (June 2010)}}{115}{subsection.2.6.4}%
+\contentsline {subsection}{\numberline {2.6.5}\textcolor {Chapter }{The Character Tables of Groups of the Type $6.L_3(4).2^2$ (October 2011)}}{119}{subsection.2.6.5}%
+\contentsline {subsection}{\numberline {2.6.6}\textcolor {Chapter }{The Character Tables of Groups of the Type $2.U_4(3).2^2$ (February 2012)}}{123}{subsection.2.6.6}%
+\contentsline {subsection}{\numberline {2.6.7}\textcolor {Chapter }{The Character Tables of Groups of the Type $4_1.L_3(4).2^2$ (October 2011)}}{126}{subsection.2.6.7}%
+\contentsline {subsection}{\numberline {2.6.8}\textcolor {Chapter }{The Character Tables of Groups of the Type $4_2.L_3(4).2^2$ (October 2011)}}{130}{subsection.2.6.8}%
+\contentsline {subsection}{\numberline {2.6.9}\textcolor {Chapter }{The Character Table of Aut$(L_2(81))$}}{134}{subsection.2.6.9}%
+\contentsline {subsection}{\numberline {2.6.10}\textcolor {Chapter }{The Character Table of $O_8^+(3).2^2_{111}$}}{135}{subsection.2.6.10}%
+\contentsline {section}{\numberline {2.7}\textcolor {Chapter }{Examples for the Type $2^2.G$}}{136}{section.2.7}%
+\contentsline {subsection}{\numberline {2.7.1}\textcolor {Chapter }{The Character Table of $2^2.Sz(8)$}}{137}{subsection.2.7.1}%
+\contentsline {subsection}{\numberline {2.7.2}\textcolor {Chapter }{\textsf {Atlas} Tables of the Type $2^2.G$ (September 2005)}}{139}{subsection.2.7.2}%
+\contentsline {subsection}{\numberline {2.7.3}\textcolor {Chapter }{The Character Table of $2^2.O_8^+(3)$ (March 2009)}}{143}{subsection.2.7.3}%
+\contentsline {subsection}{\numberline {2.7.4}\textcolor {Chapter }{The Character Table of the Schur Cover of $L_3(4)$ (September 2005)}}{144}{subsection.2.7.4}%
+\contentsline {section}{\numberline {2.8}\textcolor {Chapter }{Examples of Extensions by $p$-singular Automorphisms}}{146}{section.2.8}%
+\contentsline {subsection}{\numberline {2.8.1}\textcolor {Chapter }{Some $p$-Modular Tables of Groups of the Type $M.G.A$}}{146}{subsection.2.8.1}%
+\contentsline {subsection}{\numberline {2.8.2}\textcolor {Chapter }{Some $p$-Modular Tables of Groups of the Type $G.S_3$}}{147}{subsection.2.8.2}%
+\contentsline {subsection}{\numberline {2.8.3}\textcolor {Chapter }{$2$-Modular Tables of Groups of the Type $G.2^2$}}{148}{subsection.2.8.3}%
+\contentsline {subsection}{\numberline {2.8.4}\textcolor {Chapter }{The $3$-Modular Table of $U_3(8).3^2$}}{149}{subsection.2.8.4}%
+\contentsline {section}{\numberline {2.9}\textcolor {Chapter }{Examples of Subdirect Products of Index Two}}{150}{section.2.9}%
+\contentsline {subsection}{\numberline {2.9.1}\textcolor {Chapter }{Certain Dihedral Groups as Subdirect Products of Index Two}}{150}{subsection.2.9.1}%
+\contentsline {subsection}{\numberline {2.9.2}\textcolor {Chapter }{The Character Table of $(D_{10} \times HN).2 < M$ (June 2008)}}{151}{subsection.2.9.2}%
+\contentsline {subsection}{\numberline {2.9.3}\textcolor {Chapter }{A Counterexample (August 2015)}}{152}{subsection.2.9.3}%
+\contentsline {chapter}{\numberline {3}\textcolor {Chapter }{Constructing Character Tables of Central Extensions in \textsf {GAP}}}{154}{chapter.3}%
+\contentsline {section}{\numberline {3.1}\textcolor {Chapter }{Coprime Central Extensions}}{154}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}\textcolor {Chapter }{The Character Table Head}}{154}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}\textcolor {Chapter }{The Irreducible Characters}}{155}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}\textcolor {Chapter }{Ordering of Conjugacy Classes}}{156}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}\textcolor {Chapter }{Compatibility with Smaller Factor Groups}}{157}{subsection.3.1.4}%
+\contentsline {section}{\numberline {3.2}\textcolor {Chapter }{Examples}}{158}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}\textcolor {Chapter }{Central Extensions of Simple \textsf {Atlas} Groups}}{158}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}\textcolor {Chapter }{Central Extensions of Other \textsf {Atlas} Groups}}{160}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}\textcolor {Chapter }{Compatible Central Extensions of Maximal Subgroups}}{161}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}\textcolor {Chapter }{The \texttt {2B} Centralizer in $3.Fi_{24}'$ (January 2004)}}{162}{subsection.3.2.4}%
+\contentsline {chapter}{\numberline {4}\textcolor {Chapter }{\textsf {GAP} Computations Concerning Hamiltonian Cycles in the Generating Graphs of Finite Groups}}{164}{chapter.4}%
+\contentsline {section}{\numberline {4.1}\textcolor {Chapter }{Overview}}{164}{section.4.1}%
+\contentsline {section}{\numberline {4.2}\textcolor {Chapter }{Theoretical Background}}{165}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}\textcolor {Chapter }{Character-Theoretic Lower Bounds for Vertex Degrees}}{166}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}\textcolor {Chapter }{Checking the Criteria}}{167}{subsection.4.2.2}%
+\contentsline {section}{\numberline {4.3}\textcolor {Chapter }{\textsf {GAP} Functions for the Computations}}{167}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}\textcolor {Chapter }{Computing Vertex Degrees from the Group}}{168}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}\textcolor {Chapter }{Computing Lower Bounds for Vertex Degrees}}{170}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}\textcolor {Chapter }{Evaluating the (Lower Bounds for the) Vertex Degrees}}{172}{subsection.4.3.3}%
+\contentsline {section}{\numberline {4.4}\textcolor {Chapter }{Character-Theoretic Computations}}{174}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}\textcolor {Chapter }{Sporadic Simple Groups, except the Monster}}{175}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}\textcolor {Chapter }{The Monster}}{175}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}\textcolor {Chapter }{Nonsimple Automorphism Groups of Sporadic Simple Groups}}{178}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}\textcolor {Chapter }{Alternating and Symmetric Groups $A_n$, $S_n$, for $5 \leq n \leq 13$}}{179}{subsection.4.4.4}%
+\contentsline {section}{\numberline {4.5}\textcolor {Chapter }{Computations With Groups}}{179}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}\textcolor {Chapter }{Nonabelian Simple Groups of Order up to $10^7$}}{180}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}\textcolor {Chapter }{Nonsimple Groups with Nonsolvable Socle of Order at most $10^6$}}{182}{subsection.4.5.2}%
+\contentsline {section}{\numberline {4.6}\textcolor {Chapter }{The Groups ${{\rm PSL}}(2,q)$}}{184}{section.4.6}%
+\contentsline {chapter}{\numberline {5}\textcolor {Chapter }{\textsf {GAP} Computations with $O_8^+(5).S_3$ and $O_8^+(2).S_3$}}{188}{chapter.5}%
+\contentsline {section}{\numberline {5.1}\textcolor {Chapter }{Overview}}{188}{section.5.1}%
+\contentsline {section}{\numberline {5.2}\textcolor {Chapter }{Constructing Representations of $M.2$ and $S.2$}}{189}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}\textcolor {Chapter }{A Matrix Representation of the Weyl Group of Type $E_8$}}{189}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}\textcolor {Chapter }{Embedding the Weyl group of Type $E_8$ into GO${}^+(8,5)$}}{189}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}\textcolor {Chapter }{Compatible Generators of $M$, $M.2$, $S$, and $S.2$}}{190}{subsection.5.2.3}%
+\contentsline {section}{\numberline {5.3}\textcolor {Chapter }{Constructing Representations of $M.3$ and $S.3$}}{191}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}\textcolor {Chapter }{The Action of $M.3$ on $M$}}{191}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}\textcolor {Chapter }{The Action of $S.3$ on $S$}}{192}{subsection.5.3.2}%
+\contentsline {section}{\numberline {5.4}\textcolor {Chapter }{Constructing Compatible Generators of $H$ and $G$}}{194}{section.5.4}%
+\contentsline {section}{\numberline {5.5}\textcolor {Chapter }{Application: Regular Orbits of $H$ on $G/H$}}{194}{section.5.5}%
+\contentsline {section}{\numberline {5.6}\textcolor {Chapter }{Appendix: The Permutation Character $(1_H^G)_H$}}{195}{section.5.6}%
+\contentsline {section}{\numberline {5.7}\textcolor {Chapter }{Appendix: The Data File}}{198}{section.5.7}%
+\contentsline {chapter}{\numberline {6}\textcolor {Chapter }{Solvable Subgroups of Maximal Order in Sporadic Simple Groups}}{200}{chapter.6}%
+\contentsline {section}{\numberline {6.1}\textcolor {Chapter }{The Result}}{200}{section.6.1}%
+\contentsline {section}{\numberline {6.2}\textcolor {Chapter }{The Approach}}{204}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}\textcolor {Chapter }{Use the Table of Marks}}{204}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}\textcolor {Chapter }{Use Information from the Character Table Library}}{205}{subsection.6.2.2}%
+\contentsline {section}{\numberline {6.3}\textcolor {Chapter }{Cases where the Table of Marks is available in \textsf {GAP}}}{206}{section.6.3}%
+\contentsline {section}{\numberline {6.4}\textcolor {Chapter }{Cases where the Table of Marks is not available in \textsf {GAP}}}{208}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}\textcolor {Chapter }{$G = Ru$}}{208}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}\textcolor {Chapter }{$G = Suz$}}{209}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}\textcolor {Chapter }{$G = ON$}}{210}{subsection.6.4.3}%
+\contentsline {subsection}{\numberline {6.4.4}\textcolor {Chapter }{$G = Co_2$}}{210}{subsection.6.4.4}%
+\contentsline {subsection}{\numberline {6.4.5}\textcolor {Chapter }{$G = Fi_{22}$}}{211}{subsection.6.4.5}%
+\contentsline {subsection}{\numberline {6.4.6}\textcolor {Chapter }{$G = HN$}}{212}{subsection.6.4.6}%
+\contentsline {subsection}{\numberline {6.4.7}\textcolor {Chapter }{$G = Ly$}}{212}{subsection.6.4.7}%
+\contentsline {subsection}{\numberline {6.4.8}\textcolor {Chapter }{$G = Th$}}{213}{subsection.6.4.8}%
+\contentsline {subsection}{\numberline {6.4.9}\textcolor {Chapter }{$G = Fi_{23}$}}{213}{subsection.6.4.9}%
+\contentsline {subsection}{\numberline {6.4.10}\textcolor {Chapter }{$G = Co_1$}}{214}{subsection.6.4.10}%
+\contentsline {subsection}{\numberline {6.4.11}\textcolor {Chapter }{$G = J_4$}}{214}{subsection.6.4.11}%
+\contentsline {subsection}{\numberline {6.4.12}\textcolor {Chapter }{$G = Fi_{24}^{\prime }$}}{215}{subsection.6.4.12}%
+\contentsline {subsection}{\numberline {6.4.13}\textcolor {Chapter }{$G = B$}}{216}{subsection.6.4.13}%
+\contentsline {subsection}{\numberline {6.4.14}\textcolor {Chapter }{$G = M$}}{220}{subsection.6.4.14}%
+\contentsline {section}{\numberline {6.5}\textcolor {Chapter }{Proof of the Corollary}}{225}{section.6.5}%
+\contentsline {chapter}{\numberline {7}\textcolor {Chapter }{Large Nilpotent Subgroups of Sporadic Simple Groups}}{226}{chapter.7}%
+\contentsline {section}{\numberline {7.1}\textcolor {Chapter }{The Result}}{226}{section.7.1}%
+\contentsline {section}{\numberline {7.2}\textcolor {Chapter }{The Proof}}{228}{section.7.2}%
+\contentsline {section}{\numberline {7.3}\textcolor {Chapter }{Alternative: Use \textsf {GAP}'s Tables of Marks}}{231}{section.7.3}%
+\contentsline {chapter}{\numberline {8}\textcolor {Chapter }{Permutation Characters in \textsf {GAP}}}{234}{chapter.8}%
+\contentsline {section}{\numberline {8.1}\textcolor {Chapter }{Some Computations with $M_{24}$}}{234}{section.8.1}%
+\contentsline {section}{\numberline {8.2}\textcolor {Chapter }{All Possible Permutation Characters of $M_{11}$}}{237}{section.8.2}%
+\contentsline {section}{\numberline {8.3}\textcolor {Chapter }{The Action of $U_6(2)$ on the Cosets of $M_{22}$}}{239}{section.8.3}%
+\contentsline {section}{\numberline {8.4}\textcolor {Chapter }{Degree $20\,736$ Permutation Characters of $U_6(2)$}}{241}{section.8.4}%
+\contentsline {section}{\numberline {8.5}\textcolor {Chapter }{Degree $57\,572\,775$ Permutation Characters of $O_8^+(3)$}}{242}{section.8.5}%
+\contentsline {section}{\numberline {8.6}\textcolor {Chapter }{The Action of $O_7(3).2$ on the Cosets of $2^7.S_7$}}{243}{section.8.6}%
+\contentsline {section}{\numberline {8.7}\textcolor {Chapter }{The Action of $O_8^+(3).2_1$ on the Cosets of $2^7.A_8$}}{245}{section.8.7}%
+\contentsline {section}{\numberline {8.8}\textcolor {Chapter }{The Action of $S_4(4).4$ on the Cosets of $5^2.[2^5]$}}{248}{section.8.8}%
+\contentsline {section}{\numberline {8.9}\textcolor {Chapter }{The Action of $Co_1$ on the Cosets of Involution Centralizers}}{248}{section.8.9}%
+\contentsline {section}{\numberline {8.10}\textcolor {Chapter }{The Multiplicity Free Permutation Characters of $G_2(3)$}}{251}{section.8.10}%
+\contentsline {section}{\numberline {8.11}\textcolor {Chapter }{Degree $11\,200$ Permutation Characters of $O_8^+(2)$}}{252}{section.8.11}%
+\contentsline {section}{\numberline {8.12}\textcolor {Chapter }{A Proof of Nonexistence of a Certain Subgroup}}{253}{section.8.12}%
+\contentsline {section}{\numberline {8.13}\textcolor {Chapter }{A Permutation Character of the Lyons group}}{255}{section.8.13}%
+\contentsline {section}{\numberline {8.14}\textcolor {Chapter }{Identifying two subgroups of Aut$(U_3(5))$ (October{\nobreakspace }2001)}}{257}{section.8.14}%
+\contentsline {section}{\numberline {8.15}\textcolor {Chapter }{A Permutation Character of Aut$(O_8^+(2))$ (October{\nobreakspace }2001)}}{259}{section.8.15}%
+\contentsline {section}{\numberline {8.16}\textcolor {Chapter }{Four Primitive Permutation Characters of the Monster Group}}{260}{section.8.16}%
+\contentsline {subsection}{\numberline {8.16.1}\textcolor {Chapter }{The Subgroup $2^2.2^{11}.2^{22}.(S_3 \times M_{24})$ (June{\nobreakspace }2009)}}{261}{subsection.8.16.1}%
+\contentsline {subsection}{\numberline {8.16.2}\textcolor {Chapter }{The Subgroup $2^3.2^6.2^{12}.2^{18}.(L_3(2) \times 3.S_6)$ (September{\nobreakspace }2009)}}{263}{subsection.8.16.2}%
+\contentsline {subsection}{\numberline {8.16.3}\textcolor {Chapter }{The Subgroup $2^5.2^{10}.2^{20}.(S_3 \times L_5(2))$ (October{\nobreakspace }2009)}}{268}{subsection.8.16.3}%
+\contentsline {subsection}{\numberline {8.16.4}\textcolor {Chapter }{The Subgroup $2^{{10+16}}.O_{10}^+(2)$ (November{\nobreakspace }2009)}}{272}{subsection.8.16.4}%
+\contentsline {section}{\numberline {8.17}\textcolor {Chapter }{A permutation character of the Baby Monster (June{\nobreakspace }2012)}}{278}{section.8.17}%
+\contentsline {section}{\numberline {8.18}\textcolor {Chapter }{A permutation character of $2.B$ (October{\nobreakspace }2017)}}{280}{section.8.18}%
+\contentsline {section}{\numberline {8.19}\textcolor {Chapter }{Generation of sporadic simple groups by $\pi $- and $\pi '$-subgroups (December{\nobreakspace }2021)}}{283}{section.8.19}%
+\contentsline {chapter}{\numberline {9}\textcolor {Chapter }{Ambiguous Class Fusions in the \textsf {GAP} Character Table Library}}{293}{chapter.9}%
+\contentsline {section}{\numberline {9.1}\textcolor {Chapter }{Some \textsf {GAP} Utilities}}{293}{section.9.1}%
+\contentsline {section}{\numberline {9.2}\textcolor {Chapter }{Fusions Determined by Factorization through Intermediate Subgroups}}{294}{section.9.2}%
+\contentsline {subsection}{\numberline {9.2.1}\textcolor {Chapter }{$Co_3N5 \rightarrow Co_3$ (September 2002)}}{294}{subsection.9.2.1}%
+\contentsline {subsection}{\numberline {9.2.2}\textcolor {Chapter }{$31:15 \rightarrow B$ (March 2003)}}{295}{subsection.9.2.2}%
+\contentsline {subsection}{\numberline {9.2.3}\textcolor {Chapter }{$SuzN3 \rightarrow Suz$ (September 2002)}}{296}{subsection.9.2.3}%
+\contentsline {subsection}{\numberline {9.2.4}\textcolor {Chapter }{$F_{{3+}}N5 \rightarrow F_{{3+}}$ (March 2002)}}{297}{subsection.9.2.4}%
+\contentsline {section}{\numberline {9.3}\textcolor {Chapter }{Fusions Determined Using Commutative Diagrams Involving Smaller Subgroups}}{298}{section.9.3}%
+\contentsline {subsection}{\numberline {9.3.1}\textcolor {Chapter }{$BN7 \rightarrow B$ (March 2002)}}{298}{subsection.9.3.1}%
+\contentsline {subsection}{\numberline {9.3.2}\textcolor {Chapter }{$(A_4 \times O_8^+(2).3).2 \rightarrow Fi_{24}^{\prime }$ (November 2002)}}{299}{subsection.9.3.2}%
+\contentsline {subsection}{\numberline {9.3.3}\textcolor {Chapter }{$A_6 \times L_2(8).3 \rightarrow Fi_{24}^{\prime }$ (November 2002)}}{300}{subsection.9.3.3}%
+\contentsline {subsection}{\numberline {9.3.4}\textcolor {Chapter }{$(3^2:D_8 \times U_4(3).2^2).2 \rightarrow B$ (June 2007)}}{301}{subsection.9.3.4}%
+\contentsline {subsection}{\numberline {9.3.5}\textcolor {Chapter }{$7^{1+4}:(3 \times 2.S_7) \rightarrow M$ (May 2009)}}{303}{subsection.9.3.5}%
+\contentsline {subsection}{\numberline {9.3.6}\textcolor {Chapter }{$3^7.O_7(3):2 \rightarrow Fi_{24}$ (November 2010)}}{304}{subsection.9.3.6}%
+\contentsline {subsection}{\numberline {9.3.7}\textcolor {Chapter }{${}^2E_6(2)N3C \rightarrow {}^2E_6(2)$ (January 2019)}}{306}{subsection.9.3.7}%
+\contentsline {section}{\numberline {9.4}\textcolor {Chapter }{Fusions Determined Using Commutative Diagrams Involving Factor Groups}}{309}{section.9.4}%
+\contentsline {subsection}{\numberline {9.4.1}\textcolor {Chapter }{$3.A_7 \rightarrow 3.Suz$ (December 2010)}}{309}{subsection.9.4.1}%
+\contentsline {subsection}{\numberline {9.4.2}\textcolor {Chapter }{$S_6 \rightarrow U_4(2)$ (September 2011)}}{310}{subsection.9.4.2}%
+\contentsline {section}{\numberline {9.5}\textcolor {Chapter }{Fusions Determined Using Commutative Diagrams Involving Automorphic Extensions}}{311}{section.9.5}%
+\contentsline {subsection}{\numberline {9.5.1}\textcolor {Chapter }{$U_3(8).3_1 \rightarrow {}^2E_6(2)$ (December 2010)}}{311}{subsection.9.5.1}%
+\contentsline {subsection}{\numberline {9.5.2}\textcolor {Chapter }{$L_3(4).2_1 \rightarrow U_6(2)$ (December 2010)}}{313}{subsection.9.5.2}%
+\contentsline {section}{\numberline {9.6}\textcolor {Chapter }{Conditions Imposed by Brauer Tables}}{315}{section.9.6}%
+\contentsline {subsection}{\numberline {9.6.1}\textcolor {Chapter }{$L_2(16).4 \rightarrow J_3.2$ (January{\nobreakspace }2004)}}{315}{subsection.9.6.1}%
+\contentsline {subsection}{\numberline {9.6.2}\textcolor {Chapter }{$L_2(17) \rightarrow S_8(2)$ (July 2004)}}{316}{subsection.9.6.2}%
+\contentsline {subsection}{\numberline {9.6.3}\textcolor {Chapter }{$L_2(19) \rightarrow J_3$ (April 2003)}}{317}{subsection.9.6.3}%
+\contentsline {section}{\numberline {9.7}\textcolor {Chapter }{Fusions Determined by Information about the Groups}}{319}{section.9.7}%
+\contentsline {subsection}{\numberline {9.7.1}\textcolor {Chapter }{$U_3(3).2 \rightarrow Fi_{24}^{\prime }$ (November 2002)}}{320}{subsection.9.7.1}%
+\contentsline {subsection}{\numberline {9.7.2}\textcolor {Chapter }{$L_2(13).2 \rightarrow Fi_{24}^{\prime }$ (September 2002)}}{321}{subsection.9.7.2}%
+\contentsline {subsection}{\numberline {9.7.3}\textcolor {Chapter }{$M_{11} \rightarrow B$ (April 2009)}}{323}{subsection.9.7.3}%
+\contentsline {subsection}{\numberline {9.7.4}\textcolor {Chapter }{$L_2(11):2 \rightarrow B$ (April 2009)}}{324}{subsection.9.7.4}%
+\contentsline {subsection}{\numberline {9.7.5}\textcolor {Chapter }{$L_3(3) \rightarrow B$ (April 2009)}}{325}{subsection.9.7.5}%
+\contentsline {subsection}{\numberline {9.7.6}\textcolor {Chapter }{$L_2(17).2 \rightarrow B$ (March 2004)}}{325}{subsection.9.7.6}%
+\contentsline {subsection}{\numberline {9.7.7}\textcolor {Chapter }{$L_2(49).2_3 \rightarrow B$ (June 2006)}}{326}{subsection.9.7.7}%
+\contentsline {subsection}{\numberline {9.7.8}\textcolor {Chapter }{$2^3.L_3(2) \rightarrow G_2(5)$ (January{\nobreakspace }2004)}}{328}{subsection.9.7.8}%
+\contentsline {subsection}{\numberline {9.7.9}\textcolor {Chapter }{$5^{{1+4}}.2^{{1+4}}.A_5.4 \rightarrow B$ (April 2009)}}{329}{subsection.9.7.9}%
+\contentsline {subsection}{\numberline {9.7.10}\textcolor {Chapter }{The fusion from the character table of $7^2:2L_2(7).2$ into the table of marks (January{\nobreakspace }2004)}}{330}{subsection.9.7.10}%
+\contentsline {subsection}{\numberline {9.7.11}\textcolor {Chapter }{$3 \times U_4(2) \rightarrow 3_1.U_4(3)$ (March 2010)}}{333}{subsection.9.7.11}%
+\contentsline {subsection}{\numberline {9.7.12}\textcolor {Chapter }{$2.3^4.2^3.S_4 \rightarrow 2.A12$ (September 2011)}}{335}{subsection.9.7.12}%
+\contentsline {subsection}{\numberline {9.7.13}\textcolor {Chapter }{$127:7 \rightarrow L_7(2)$ (January 2012)}}{337}{subsection.9.7.13}%
+\contentsline {subsection}{\numberline {9.7.14}\textcolor {Chapter }{$L_2(59) \rightarrow M$ (May 2009)}}{338}{subsection.9.7.14}%
+\contentsline {subsection}{\numberline {9.7.15}\textcolor {Chapter }{$L_2(71) \rightarrow M$ (May 2009)}}{339}{subsection.9.7.15}%
+\contentsline {subsection}{\numberline {9.7.16}\textcolor {Chapter }{$L_2(41) \rightarrow M$ (April 2012)}}{340}{subsection.9.7.16}%
+\contentsline {chapter}{\numberline {10}\textcolor {Chapter }{\textsf {GAP} computations needed in the proof of \cite [Theorem 6.1 (ii)]{DNT}}}{342}{chapter.10}%
+\contentsline {section}{\numberline {10.1}\textcolor {Chapter }{$G/N \cong Sz(8)$ and $|N| = 2^{12}$}}{342}{section.10.1}%
+\contentsline {section}{\numberline {10.2}\textcolor {Chapter }{$G/N \cong M_{22}$ and $|N| = 2^{10}$}}{344}{section.10.2}%
+\contentsline {section}{\numberline {10.3}\textcolor {Chapter }{$G/N \cong J_2$ and $|N| = 2^{12}$}}{347}{section.10.3}%
+\contentsline {section}{\numberline {10.4}\textcolor {Chapter }{$G/N \cong J_2$ and $|N| = 5^{14}$}}{348}{section.10.4}%
+\contentsline {section}{\numberline {10.5}\textcolor {Chapter }{$G/N \cong J_2$ and $|N| = 2^{28}$}}{351}{section.10.5}%
+\contentsline {section}{\numberline {10.6}\textcolor {Chapter }{$G/N \cong {}^3D_4(2)$ and $|N| = 2^{26}$}}{352}{section.10.6}%
+\contentsline {section}{\numberline {10.7}\textcolor {Chapter }{$G/N \cong {}^3D_4(2)$ and $|N| = 3^{25}$}}{355}{section.10.7}%
+\contentsline {chapter}{\numberline {11}\textcolor {Chapter }{\textsf {GAP} Computations Concerning Probabilistic Generation of Finite Simple Groups}}{356}{chapter.11}%
+\contentsline {section}{\numberline {11.1}\textcolor {Chapter }{Overview}}{356}{section.11.1}%
+\contentsline {section}{\numberline {11.2}\textcolor {Chapter }{Prerequisites}}{360}{section.11.2}%
+\contentsline {subsection}{\numberline {11.2.1}\textcolor {Chapter }{Theoretical Background}}{360}{subsection.11.2.1}%
+\contentsline {subsection}{\numberline {11.2.2}\textcolor {Chapter }{Computational Criteria}}{361}{subsection.11.2.2}%
+\contentsline {section}{\numberline {11.3}\textcolor {Chapter }{\textsf {GAP} Functions for the Computations}}{362}{section.11.3}%
+\contentsline {subsection}{\numberline {11.3.1}\textcolor {Chapter }{General Utilities}}{362}{subsection.11.3.1}%
+\contentsline {subsection}{\numberline {11.3.2}\textcolor {Chapter }{Character-Theoretic Computations}}{364}{subsection.11.3.2}%
+\contentsline {subsection}{\numberline {11.3.3}\textcolor {Chapter }{Computations with Groups}}{369}{subsection.11.3.3}%
+\contentsline {section}{\numberline {11.4}\textcolor {Chapter }{Character-Theoretic Computations}}{377}{section.11.4}%
+\contentsline {subsection}{\numberline {11.4.1}\textcolor {Chapter }{Sporadic Simple Groups}}{377}{subsection.11.4.1}%
+\contentsline {subsection}{\numberline {11.4.2}\textcolor {Chapter }{Automorphism Groups of Sporadic Simple Groups}}{379}{subsection.11.4.2}%
+\contentsline {subsection}{\numberline {11.4.3}\textcolor {Chapter }{Other Simple Groups {\textendash } Easy Cases}}{386}{subsection.11.4.3}%
+\contentsline {subsection}{\numberline {11.4.4}\textcolor {Chapter }{Automorphism Groups of other Simple Groups {\textendash } Easy Cases}}{390}{subsection.11.4.4}%
+\contentsline {subsection}{\numberline {11.4.5}\textcolor {Chapter }{$O_8^-(3)$}}{393}{subsection.11.4.5}%
+\contentsline {subsection}{\numberline {11.4.6}\textcolor {Chapter }{$O_{10}^+(2)$}}{393}{subsection.11.4.6}%
+\contentsline {subsection}{\numberline {11.4.7}\textcolor {Chapter }{$O_{10}^-(2)$}}{394}{subsection.11.4.7}%
+\contentsline {subsection}{\numberline {11.4.8}\textcolor {Chapter }{$O_{12}^+(2)$}}{395}{subsection.11.4.8}%
+\contentsline {subsection}{\numberline {11.4.9}\textcolor {Chapter }{$O_{12}^-(2)$}}{397}{subsection.11.4.9}%
+\contentsline {subsection}{\numberline {11.4.10}\textcolor {Chapter }{$S_6(4)$}}{398}{subsection.11.4.10}%
+\contentsline {subsection}{\numberline {11.4.11}\textcolor {Chapter }{$\ast ${\nobreakspace }$S_6(5)$}}{400}{subsection.11.4.11}%
+\contentsline {subsection}{\numberline {11.4.12}\textcolor {Chapter }{$S_8(3)$}}{401}{subsection.11.4.12}%
+\contentsline {subsection}{\numberline {11.4.13}\textcolor {Chapter }{$U_4(4)$}}{402}{subsection.11.4.13}%
+\contentsline {subsection}{\numberline {11.4.14}\textcolor {Chapter }{$U_6(2)$}}{402}{subsection.11.4.14}%
+\contentsline {section}{\numberline {11.5}\textcolor {Chapter }{Computations using Groups}}{404}{section.11.5}%
+\contentsline {subsection}{\numberline {11.5.1}\textcolor {Chapter }{$A_{2m+1}$, $2 \leq m \leq 11$}}{404}{subsection.11.5.1}%
+\contentsline {subsection}{\numberline {11.5.2}\textcolor {Chapter }{$A_5$}}{406}{subsection.11.5.2}%
+\contentsline {subsection}{\numberline {11.5.3}\textcolor {Chapter }{$A_6$}}{407}{subsection.11.5.3}%
+\contentsline {subsection}{\numberline {11.5.4}\textcolor {Chapter }{$A_7$}}{411}{subsection.11.5.4}%
+\contentsline {subsection}{\numberline {11.5.5}\textcolor {Chapter }{$L_d(q)$}}{414}{subsection.11.5.5}%
+\contentsline {subsection}{\numberline {11.5.6}\textcolor {Chapter }{$\ast ${\nobreakspace }$L_d(q)$ with prime $d$}}{416}{subsection.11.5.6}%
+\contentsline {subsection}{\numberline {11.5.7}\textcolor {Chapter }{Automorphic Extensions of $L_d(q)$}}{418}{subsection.11.5.7}%
+\contentsline {subsection}{\numberline {11.5.8}\textcolor {Chapter }{$L_3(2)$}}{425}{subsection.11.5.8}%
+\contentsline {subsection}{\numberline {11.5.9}\textcolor {Chapter }{$M_{11}$}}{428}{subsection.11.5.9}%
+\contentsline {subsection}{\numberline {11.5.10}\textcolor {Chapter }{$M_{12}$}}{430}{subsection.11.5.10}%
+\contentsline {subsection}{\numberline {11.5.11}\textcolor {Chapter }{$O_7(3)$}}{432}{subsection.11.5.11}%
+\contentsline {subsection}{\numberline {11.5.12}\textcolor {Chapter }{$O_8^+(2)$}}{437}{subsection.11.5.12}%
+\contentsline {subsection}{\numberline {11.5.13}\textcolor {Chapter }{$O_8^+(3)$}}{443}{subsection.11.5.13}%
+\contentsline {subsection}{\numberline {11.5.14}\textcolor {Chapter }{$O^+_8(4)$}}{456}{subsection.11.5.14}%
+\contentsline {subsection}{\numberline {11.5.15}\textcolor {Chapter }{$\ast ${\nobreakspace }$O_9(3)$}}{459}{subsection.11.5.15}%
+\contentsline {subsection}{\numberline {11.5.16}\textcolor {Chapter }{$O_{10}^-(3)$}}{461}{subsection.11.5.16}%
+\contentsline {subsection}{\numberline {11.5.17}\textcolor {Chapter }{$O_{14}^-(2)$}}{463}{subsection.11.5.17}%
+\contentsline {subsection}{\numberline {11.5.18}\textcolor {Chapter }{$O_{12}^+(3)$}}{465}{subsection.11.5.18}%
+\contentsline {subsection}{\numberline {11.5.19}\textcolor {Chapter }{$\ast ${\nobreakspace }$S_4(8)$}}{467}{subsection.11.5.19}%
+\contentsline {subsection}{\numberline {11.5.20}\textcolor {Chapter }{$S_6(2)$}}{469}{subsection.11.5.20}%
+\contentsline {subsection}{\numberline {11.5.21}\textcolor {Chapter }{$S_8(2)$}}{472}{subsection.11.5.21}%
+\contentsline {subsection}{\numberline {11.5.22}\textcolor {Chapter }{$\ast ${\nobreakspace }$S_{10}(2)$}}{473}{subsection.11.5.22}%
+\contentsline {subsection}{\numberline {11.5.23}\textcolor {Chapter }{$U_4(2)$}}{474}{subsection.11.5.23}%
+\contentsline {subsection}{\numberline {11.5.24}\textcolor {Chapter }{$U_4(3)$}}{477}{subsection.11.5.24}%
+\contentsline {subsection}{\numberline {11.5.25}\textcolor {Chapter }{$U_6(3)$}}{480}{subsection.11.5.25}%
+\contentsline {subsection}{\numberline {11.5.26}\textcolor {Chapter }{$U_8(2)$}}{481}{subsection.11.5.26}%
+\contentsline {chapter}{References}{487}{chapter*.3}%
+\contentsline {chapter}{Index}{488}{section*.4}%

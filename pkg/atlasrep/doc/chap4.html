@@ -56,6 +56,8 @@
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X80958D068147325B">4.2-14 <span class="Heading">User preference <code class="code">DebugFileLoading</code></span></a>
 </span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X850D135E79EFF3F7">4.2-15 <span class="Heading">User preference <code class="code">AtlasRepJsonFilesAddresses</code></span></a>
+</span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7C50F18587ADC3B5">4.3 <span class="Heading">Web Contents for the <strong class="pkg">AtlasRep</strong> Package</span></a>
 </span>
@@ -168,13 +170,17 @@ drwxrwxrwt   3 you      you          1024 Apr 12 12:34 dataword
 
 <p>If you are working offline then you should set the value to <code class="keyw">false</code>.</p>
 
-<p>Changing the value in a running <strong class="pkg">GAP</strong> session does not affect the information shown by <code class="func">DisplayAtlasInfo</code> (<a href="chap3.html#X79DACFFA7E2D1A99"><span class="RefLink">3.5-1</span></a>), this information depends on the value of the preference at the time when the extension gets loaded.</p>
+<p>Changing the value in a running <strong class="pkg">GAP</strong> session does not affect the information shown by <code class="func">DisplayAtlasInfo</code> (<a href="chap3.html#X79DACFFA7E2D1A99"><span class="RefLink">3.5-1</span></a>), this information depends on the value of the preference at the time when the <strong class="pkg">AtlasRep</strong> package and its data extensions get loaded.</p>
 
 <p><a id="X7C36E9A78021A71A" name="X7C36E9A78021A71A"></a></p>
 
 <h5>4.2-2 <span class="Heading">User preference <code class="code">AtlasRepDataDirectory</code></span></h5>
 
-<p>The value must be a string that is the filename of a directory (in the sense of <code class="func">IsDirectoryPath</code> (<a href="../../../doc/ref/chap9.html#X7D1BE00F83C4EEE8"><span class="RefLink">Reference: IsDirectoryPath</span></a>)) that contains the directories in which downloaded data will be stored. The default is the installation path of the <strong class="pkg">AtlasRep</strong> package (including a trailing slash symbol).</p>
+<p>The value must be a string that is either empty or the filename of a directory (in the sense of <code class="func">IsDirectoryPath</code> (<a href="../../../doc/ref/chap9.html#X7D1BE00F83C4EEE8"><span class="RefLink">Reference: IsDirectoryPath</span></a>)) that contains the directories in which downloaded data will be stored.</p>
+
+<p>An empty string means that downloaded data are just kept in the <strong class="pkg">GAP</strong> session but not saved to local files.</p>
+
+<p>The default depends on the user's permissions for the directory of the <strong class="pkg">AtlasRep</strong> package: If this directory is writable for the user then the installation path of the <strong class="pkg">AtlasRep</strong> package (including a trailing slash symbol) is taken, otherwise the default is an empty string.</p>
 
 <p><a id="X7F21FFBE7F8108E4" name="X7F21FFBE7F8108E4"></a></p>
 
@@ -239,9 +245,9 @@ drwxrwxrwt   3 you      you          1024 Apr 12 12:34 dataword
 
 <h5>4.2-8 <span class="Heading">User preference <code class="code">HowToReadMeatAxeTextFiles</code></span></h5>
 
-<p>The value <code class="code">"fast"</code> means that <code class="func">ScanMeatAxeFile</code> (<a href="chap7.html#X83D5103780E1238F"><span class="RefLink">7.3-1</span></a>) reads text files via <code class="func">StringFile</code> (<a href="../../../pkg/GAPDoc-1.6.2/doc/chap6.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: StringFile</span></a>). Otherwise each file containing a matrix over a finite field is read line by line via <code class="func">ReadLine</code> (<a href="../../../doc/ref/chap10.html#X7D2CA44C7D110C4F"><span class="RefLink">Reference: ReadLine</span></a>), and the <strong class="pkg">GAP</strong> matrix is constructed line by line, in a compressed representation (see <a href="../../../doc/ref/chap23.html#X8679F7DD7DFCBD9C"><span class="RefLink">Reference: Row Vectors over Finite Fields</span></a> and <a href="../../../doc/ref/chap24.html#X873822B6830CE367"><span class="RefLink">Reference: Matrices over Finite Fields</span></a>); this makes it possible to read large matrices in a reasonable amount of space.</p>
+<p>The value <code class="code">"fast"</code> means that <code class="func">ScanMeatAxeFile</code> (<a href="chap7.html#X83D5103780E1238F"><span class="RefLink">7.3-1</span></a>) reads text files via <code class="func">StringFile</code> (<a href="/home/sam/.gap/pkg/GAPDoc-1.6.5/doc/chap6.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: StringFile</span></a>). Otherwise each file containing a matrix over a finite field is read line by line via <code class="func">ReadLine</code> (<a href="../../../doc/ref/chap10.html#X7D2CA44C7D110C4F"><span class="RefLink">Reference: ReadLine</span></a>), and the <strong class="pkg">GAP</strong> matrix is constructed line by line, in a compressed representation (see <a href="../../../doc/ref/chap23.html#X8679F7DD7DFCBD9C"><span class="RefLink">Reference: Row Vectors over Finite Fields</span></a> and <a href="../../../doc/ref/chap24.html#X873822B6830CE367"><span class="RefLink">Reference: Matrices over Finite Fields</span></a>); this makes it possible to read large matrices in a reasonable amount of space.</p>
 
-<p>The <code class="func">StringFile</code> (<a href="../../../pkg/GAPDoc-1.6.2/doc/chap6.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: StringFile</span></a>) approach is faster but needs more intermediate space when text files containing matrices over finite fields are read. For example, a <span class="SimpleMath">4370</span> by <span class="SimpleMath">4370</span> matrix over the field with two elements (as occurs for an irreducible representation of the Baby Monster) requires less than <span class="SimpleMath">3</span> MB space in <strong class="pkg">GAP</strong> but the corresponding <strong class="pkg">MeatAxe</strong> format text file is more than <span class="SimpleMath">19</span> MB large. This means that when one reads the file with the fast variant, <strong class="pkg">GAP</strong> will temporarily grow by more than this value.</p>
+<p>The <code class="func">StringFile</code> (<a href="/home/sam/.gap/pkg/GAPDoc-1.6.5/doc/chap6.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: StringFile</span></a>) approach is faster but needs more intermediate space when text files containing matrices over finite fields are read. For example, a <span class="SimpleMath">4370</span> by <span class="SimpleMath">4370</span> matrix over the field with two elements (as occurs for an irreducible representation of the Baby Monster) requires less than <span class="SimpleMath">3</span> MB space in <strong class="pkg">GAP</strong> but the corresponding <strong class="pkg">MeatAxe</strong> format text file is more than <span class="SimpleMath">19</span> MB large. This means that when one reads the file with the fast variant, <strong class="pkg">GAP</strong> will temporarily grow by more than this value.</p>
 
 <p>Note that this parameter has an effect only when <code class="func">ScanMeatAxeFile</code> (<a href="chap7.html#X83D5103780E1238F"><span class="RefLink">7.3-1</span></a>) is used. It has no effect for example if <strong class="pkg">MeatAxe</strong> binary files are read, cf. <code class="func">FFMatOrPermCMtxBinary</code> (<a href="chap7.html#X872FA00C7F791FBB"><span class="RefLink">7.3-5</span></a>).</p>
 
@@ -284,7 +290,7 @@ drwxrwxrwt   3 you      you          1024 Apr 12 12:34 dataword
 
 <h5>4.2-12 <span class="Heading">User preference <code class="code">DisplayFunction</code></span></h5>
 
-<p>The way how <code class="func">DisplayAtlasInfo</code> (<a href="chap3.html#X79DACFFA7E2D1A99"><span class="RefLink">3.5-1</span></a>) shows the requested overview is controlled by the package <strong class="pkg">AtlasRep</strong>'s user preference <code class="code">DisplayFunction</code>. The value must be a string that evaluates to a <strong class="pkg">GAP</strong> function. The default value is <code class="code">"Print"</code> (see <code class="func">Print</code> (<a href="../../../doc/ref/chap6.html#X7AFA64D97A1F39A3"><span class="RefLink">Reference: Print</span></a>)), other useful values are <code class="code">"PrintFormattedString"</code> (see <code class="func">PrintFormattedString</code> (<a href="../../../pkg/GAPDoc-1.6.2/doc/chap6.html#X812A8326844BC910"><span class="RefLink">GAPDoc: PrintFormattedString</span></a>)) and <code class="code">"AGR.Pager"</code>; the latter means that <code class="func">Pager</code> (<a href="../../../doc/ref/chap2.html#X7ED03E41792C3840"><span class="RefLink">Reference: Pager</span></a>) is called with the <code class="code">formatted</code> option, which is necessary for switching off <strong class="pkg">GAP</strong>'s automatic line breaking.</p>
+<p>The way how <code class="func">DisplayAtlasInfo</code> (<a href="chap3.html#X79DACFFA7E2D1A99"><span class="RefLink">3.5-1</span></a>) shows the requested overview is controlled by the package <strong class="pkg">AtlasRep</strong>'s user preference <code class="code">DisplayFunction</code>. The value must be a string that evaluates to a <strong class="pkg">GAP</strong> function. The default value is <code class="code">"Print"</code> (see <code class="func">Print</code> (<a href="../../../doc/ref/chap6.html#X7AFA64D97A1F39A3"><span class="RefLink">Reference: Print</span></a>)), other useful values are <code class="code">"PrintFormattedString"</code> (see <code class="func">PrintFormattedString</code> (<a href="/home/sam/.gap/pkg/GAPDoc-1.6.5/doc/chap6.html#X812A8326844BC910"><span class="RefLink">GAPDoc: PrintFormattedString</span></a>)) and <code class="code">"AGR.Pager"</code>; the latter means that <code class="func">Pager</code> (<a href="../../../doc/ref/chap2.html#X7ED03E41792C3840"><span class="RefLink">Reference: Pager</span></a>) is called with the <code class="code">formatted</code> option, which is necessary for switching off <strong class="pkg">GAP</strong>'s automatic line breaking.</p>
 
 <p><a id="X862C660878D422FA" name="X862C660878D422FA"></a></p>
 
@@ -298,11 +304,17 @@ drwxrwxrwt   3 you      you          1024 Apr 12 12:34 dataword
 
 <p>If the value is <code class="keyw">true</code> then debug messages are printed before and after data files get loaded. The default value is <code class="keyw">false</code>.</p>
 
+<p><a id="X850D135E79EFF3F7" name="X850D135E79EFF3F7"></a></p>
+
+<h5>4.2-15 <span class="Heading">User preference <code class="code">AtlasRepJsonFilesAddresses</code></span></h5>
+
+<p>The value, if set, must be a list of length two, the first entry being an URL describing a directory that contains Json format files of the available matrix representations in characteristic zero, and the second being a directory path where these files shall be stored locally. If the value is set (this is the default) then the functions of the package use the Json format files instead of the GAP format files.</p>
+
 <p><a id="X7C50F18587ADC3B5" name="X7C50F18587ADC3B5"></a></p>
 
 <h4>4.3 <span class="Heading">Web Contents for the <strong class="pkg">AtlasRep</strong> Package</span></h4>
 
-<p>The <span class="URL"><a href="http://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep">home page of the <strong class="pkg">AtlasRep</strong> package</a></span> provides</p>
+<p>The <span class="URL"><a href="https://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep">home page of the <strong class="pkg">AtlasRep</strong> package</a></span> provides</p>
 
 
 <ul>
@@ -312,16 +324,16 @@ drwxrwxrwt   3 you      you          1024 Apr 12 12:34 dataword
 <li><p>introductory package information,</p>
 
 </li>
-<li><p>the current <em>table of contents</em> of core data in the file <span class="URL"><a href="http://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/atlasprm.json"><code class="file">atlasprm.json</code></a></span> of the package, cf. <code class="func">StringOfAtlasTableOfContents</code> (<a href="chap5.html#X81C5440983E47DBD"><span class="RefLink">5.1-3</span></a>),</p>
+<li><p>the current <em>table of contents</em> of core data in the file <span class="URL"><a href="https://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/atlasprm.json"><code class="file">atlasprm.json</code></a></span> of the package, cf. <code class="func">StringOfAtlasTableOfContents</code> (<a href="chap5.html#X81C5440983E47DBD"><span class="RefLink">5.1-3</span></a>),</p>
 
 </li>
-<li><p>the <span class="URL"><a href="http://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/htm/data/changes.htm">list of changes of remote core data files</a></span>,</p>
+<li><p>the <span class="URL"><a href="https://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/htm/data/changes.htm">list of changes of remote core data files</a></span>,</p>
 
 </li>
-<li><p>a <span class="URL"><a href="http://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/atlasrepdata.tar.gz">starter archive</a></span> containing many small representations and programs, and</p>
+<li><p>a <span class="URL"><a href="https://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/atlasrepdata.tar.gz">starter archive</a></span> containing many small representations and programs, and</p>
 
 </li>
-<li><p>an <span class="URL"><a href="http://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/htm/data">overview of the core data</a></span> in a similar format as the information shown by the function <code class="func">DisplayAtlasInfo</code> (<a href="chap3.html#X79DACFFA7E2D1A99"><span class="RefLink">3.5-1</span></a>) of the package; more details can be found on the <span class="URL"><a href="http://brauer.maths.qmul.ac.uk/Atlas/v3">home page of the <strong class="pkg">ATLAS</strong> of Group Representations</a></span>.</p>
+<li><p>an <span class="URL"><a href="https://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/htm/data">overview of the core data</a></span> in a similar format as the information shown by the function <code class="func">DisplayAtlasInfo</code> (<a href="chap3.html#X79DACFFA7E2D1A99"><span class="RefLink">3.5-1</span></a>) of the package; more details can be found on the <span class="URL"><a href="http://atlas.math.rwth-aachen.de/Atlas/v3">home page of the <strong class="pkg">ATLAS</strong> of Group Representations</a></span>.</p>
 
 </li>
 </ul>

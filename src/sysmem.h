@@ -15,7 +15,11 @@
 #ifndef GAP_SYSMEM_H
 #define GAP_SYSMEM_H
 
-#include "system.h"
+#include "common.h"
+
+#ifndef USE_GASMAN
+#error This file must only be included if GASMAN is used
+#endif
 
 
 /****************************************************************************
@@ -32,7 +36,17 @@
 **  This is used in the function 'SyAllocBags' below.
 */
 extern Int SyStorMax;
-extern Int SyStorOverrun;
+
+// SyStorOverrun tracks whether an allocation exceeding the memory limit
+// specified by SyStorMax is exceeded. Several places in the GAP code base
+// check its values and will take appropriate actions if it is set to a
+// value different from SY_STOR_OVERRUN_CLEAR.
+typedef enum {
+    SY_STOR_OVERRUN_CLEAR,
+    SY_STOR_OVERRUN_TO_REPORT,
+    SY_STOR_OVERRUN_REPORTED
+} SyStorEnum;
+extern SyStorEnum SyStorOverrun;
 
 /****************************************************************************
 **
@@ -83,12 +97,27 @@ extern Int SyStorMin;
 */
 extern UInt SyAllocPool;
 
+/****************************************************************************
+**
+*V  SyMsgsFlagBags  . . . . . . . . . . . . . . . . .  enable gasman messages
+**
+**  'SyMsgsFlagBags' determines whether garbage collections are reported  or
+**  not.
+**
+**  Per default it is false, i.e. Gasman is silent about garbage collections.
+**  It can be changed by using the  '-g'  option  on the  GAP  command  line.
+**
+**  This is used in the function 'SyMsgsBags' below.
+**
+**  Put in this package because the command line processing takes place here.
+*/
+extern UInt SyMsgsFlagBags;
 
 /****************************************************************************
 **
 *F * * * * * * * * * * * * * * gasman interface * * * * * * * * * * * * * * *
 */
-#if defined(USE_GASMAN) && defined(GAP_MEM_CHECK)
+#if defined(GAP_MEM_CHECK)
 UInt   GetMembufCount(void);
 void * GetMembuf(UInt i);
 UInt   GetMembufSize(void);
@@ -153,6 +182,7 @@ UInt   GetMembufSize(void);
 */
 void SyMsgsBags(UInt full, UInt phase, Int nr);
 
+extern Int SyGasmanNumbers[2][9];
 
 /****************************************************************************
 **
@@ -165,13 +195,12 @@ void SyMsgsBags(UInt full, UInt phase, Int nr);
 **  This function is called by GASMAN after each successfully completed
 **  garbage collection.
 */
-#if defined(USE_GASMAN)
 void SyMAdviseFree(void);
-#endif
+
 
 /****************************************************************************
 **
-*F  SyAllocBags( <size>, <need> ) . . . allocate memory block of <size> kilobytes
+*F  SyAllocBags( <size>, <need> ) . allocate memory block of <size> kilobytes
 **
 **  'SyAllocBags' is called from Gasman to get new storage from the operating
 **  system. <size> is the needed amount in kilobytes (it is always a multiple
@@ -188,17 +217,31 @@ void SyMAdviseFree(void);
 **  'SyAllocBags' must abort,  because GAP assumes that  'NewBag'  will never
 **  fail.
 **
-**  <size> may also be negative in which case 'SyAllocBags' should return the
-**  storage to the operating system.  In this case  <need>  will always be 0.
-**  'SyAllocBags' can either accept this reduction and  return 1  and  return
-**  the storage to the operating system or refuse the reduction and return 0.
-**
 **  If the operating system does not support dynamic memory management, simply
 **  give 'SyAllocBags' a static buffer, from where it returns the blocks.
 */
-#if defined(USE_GASMAN)
-UInt *** SyAllocBags(Int size, UInt need);
-#endif
+void * SyAllocBags(Int size, UInt need);
+
+
+/****************************************************************************
+**
+*F  SyFreeBags( <size> ) . . . . . . . . . return <size> kilobytes to the OS
+**
+**  'SyFreeBags' should return the last <size> kilobytes of storage to the
+**  operating system. 'SyFreeBags' can either accept this reduction and
+**  return 1 and return the storage to the operating system or refuse the
+**  reduction and return 0.
+*/
+Int SyFreeBags(Int size);
+
+
+/****************************************************************************
+**
+*F  SyFreeAllBags( ) . . . . . . . . . . . . . .  return all memory to the OS
+**
+**  'SyFreeAllBags' returns all memory allocated by 'SyAllocBags' to the OS.
+*/
+void SyFreeAllBags(void);
 
 
 #endif // GAP_SYSMEM_H

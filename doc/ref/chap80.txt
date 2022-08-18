@@ -323,7 +323,7 @@
   the declarations this chapter is about).[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28XIsPermutationGroupByRelations:=NewRepresentation([128X[104X
+    [4X[28XDeclareRepresentation([128X[104X
     [4X[28X  "IsPermutationGroupByRelations",[128X[104X
     [4X[28X  IsComponentObjectRep and IsAttributeStoringRep and IsPermGroup,[128X[104X
     [4X[28X  ["degree","relations"]);[128X[104X
@@ -354,6 +354,7 @@
     [4X[28X  g:=Objectify(NewType(CollectionsFamily(PermutationsFamily),[128X[104X
     [4X[28X		       IsPermutationGroupByRelations),[128X[104X
     [4X[28X               rec(degree:=degree,relations:=relations));[128X[104X
+    [4X[28X  return g;[128X[104X
     [4X[28Xend;[128X[104X
   [4X[32X[104X
   

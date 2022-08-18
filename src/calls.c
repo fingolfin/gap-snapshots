@@ -42,6 +42,7 @@
 #ifdef USE_GASMAN
 #include "gasman_intern.h"
 #endif
+#include "gaptime.h"
 #include "gvars.h"
 #include "integer.h"
 #include "io.h"
@@ -52,6 +53,7 @@
 #include "saveload.h"
 #include "stats.h"
 #include "stringobj.h"
+#include "sysstr.h"
 #include "vars.h"
 
 #ifdef HPCGAP
@@ -158,7 +160,7 @@ static Obj DoWrap0args(Obj self)
 
 /****************************************************************************
 **
-*F  DoWrap1args( <self>, <arg1> ) . . . . . . . wrap up 1 arguments in a list
+*F  DoWrap1args( <self>, <arg1> ) . . . . . . . wrap up 1 argument in a list
 */
 static Obj DoWrap1args(Obj self, Obj arg1)
 {
@@ -332,7 +334,7 @@ static Obj DoFail0args(Obj self)
 
 /****************************************************************************
 **
-*F  DoFail1args( <self>,<arg1> ) . . .  fail a function call with 1 arguments
+*F  DoFail1args( <self>,<arg1> ) . . .  fail a function call with 1 argument
 */
 static Obj DoFail1args(Obj self, Obj arg1)
 {
@@ -494,7 +496,6 @@ static ALWAYS_INLINE Obj DoProfNNNargs (
     SET_STOR_WOUT_PROF( prof, STOR_WOUT_PROF(prof) + storCurr );
     StorDone += storCurr;
 
-    /* return the result from the function                                 */
     return result;
 }
 
@@ -507,7 +508,7 @@ static Obj DoProf0args (
 
 /****************************************************************************
 **
-*F  DoProf1args( <self>, <arg1>)  . . . . profile a function with 1 arguments
+*F  DoProf1args( <self>, <arg1>)  . . . . profile a function with 1 argument
 */
 static Obj DoProf1args (
     Obj                 self,
@@ -642,8 +643,8 @@ void InitHandlerFunc (
     }
 
     for (UInt i = 0; i < NHandlerFuncs; i++)
-        if (!strcmp(HandlerFuncs[i].cookie, cookie))
-            Pr("Duplicate cookie %s\n", (Int)cookie, 0L);
+        if (streq(HandlerFuncs[i].cookie, cookie))
+            Pr("Duplicate cookie %s\n", (Int)cookie, 0);
 
     HandlerFuncs[NHandlerFuncs].hdlr   = hdlr;
     HandlerFuncs[NHandlerFuncs].cookie = cookie;
@@ -677,9 +678,9 @@ static void CheckHandlersBag(
                         break;
                 }
                 if ( i == NHandlerFuncs ) {
-                    Pr("Unregistered Handler %d args  ", j, 0L);
+                    Pr("Unregistered Handler %d args  ", j, 0);
                     PrintObj(NAME_FUNC(bag));
-                    Pr("\n",0L,0L);
+                    Pr("\n", 0, 0);
                 }
             }
         }
@@ -703,7 +704,7 @@ static int IsLessHandlerInfo (
         case 2:
             return strcmp(h1->cookie, h2->cookie) < 0;
         default:
-            ErrorQuit( "Invalid sort mode %u", (Int)byWhat, 0L );
+            ErrorQuit("Invalid sort mode %u", (Int)byWhat, 0);
     }
 }
 
@@ -743,7 +744,7 @@ const Char * CookieOfHandler (
             if ( hdlr == HandlerFuncs[i].hdlr )
                 return HandlerFuncs[i].cookie;
         }
-        return (Char *)0L;
+        return (Char *)0;
     }
     else {
         top = NHandlerFuncs;
@@ -757,7 +758,7 @@ const Char * CookieOfHandler (
             else
                 return HandlerFuncs[middle].cookie;
         }
-        return (Char *)0L;
+        return (Char *)0;
     }
 }
 
@@ -770,10 +771,10 @@ ObjFunc HandlerOfCookie(
     {
       for (i = 0; i < NHandlerFuncs; i++)
         {
-          if (strcmp(cookie, HandlerFuncs[i].cookie) == 0)
+          if (streq(cookie, HandlerFuncs[i].cookie))
             return HandlerFuncs[i].hdlr;
         }
-      return (ObjFunc)0L;
+      return (ObjFunc)0;
     }
   else
     {
@@ -789,7 +790,7 @@ ObjFunc HandlerOfCookie(
         else
           return HandlerFuncs[middle].hdlr;
       }
-      return (ObjFunc)0L;
+      return (ObjFunc)0;
     }
 }
 
@@ -803,7 +804,7 @@ ObjFunc HandlerOfCookie(
 **  'NewFunction' creates and returns a new function.  <name> must be  a  GAP
 **  string containing the name of the function.  <narg> must be the number of
 **  arguments, where -1 means a variable number of arguments.  <nams> must be
-**  a GAP list containg the names  of  the  arguments.  <hdlr>  must  be  the
+**  a GAP list containing the names  of the arguments.  <hdlr>  must  be  the
 **  C function (accepting <self> and  the  <narg>  arguments)  that  will  be
 **  called to execute the function.
 */
@@ -985,15 +986,14 @@ static Obj TypeFunction(Obj func)
 
 static Obj PrintOperation;
 
-void PrintFunction (
-    Obj                 func )
+static void PrintFunction(Obj func)
 {
     Int                 narg;           /* number of arguments             */
     Int                 nloc;           /* number of locals                */
     UInt                i;              /* loop variable                   */
-    UInt                isvarg;         /* does function have varargs?     */
+    BOOL                isvarg;         /* does function have varargs?     */
 
-    isvarg = 0;
+    isvarg = FALSE;
 
     if ( IS_OPERATION(func) ) {
       CALL_1ARGS( PrintOperation, func );
@@ -1003,18 +1003,18 @@ void PrintFunction (
 #ifdef HPCGAP
     /* print 'function (' or 'atomic function ('                          */
     if (LCKS_FUNC(func)) {
-      Pr("%5>atomic function%< ( %>",0L,0L);
+      Pr("%5>atomic function%< ( %>", 0, 0);
     } else
-      Pr("%5>function%< ( %>",0L,0L);
+      Pr("%5>function%< ( %>", 0, 0);
 #else
     /* print 'function ('                                                  */
-    Pr("%5>function%< ( %>",0L,0L);
+    Pr("%5>function%< ( %>", 0, 0);
 #endif
 
     /* print the arguments                                                 */
     narg = NARG_FUNC(func);
     if (narg < 0) {
-      isvarg = 1;
+      isvarg = TRUE;
       narg = -narg;
     }
     
@@ -1024,24 +1024,25 @@ void PrintFunction (
             const Char * locks = CONST_CSTR_STRING(LCKS_FUNC(func));
             switch(locks[i-1]) {
             case LOCK_QUAL_READONLY:
-                Pr("%>readonly %<", 0L, 0L);
+                Pr("%>readonly %<", 0, 0);
                 break;
             case LOCK_QUAL_READWRITE:
-                Pr("%>readwrite %<", 0L, 0L);
+                Pr("%>readwrite %<", 0, 0);
                 break;
             }
         }
 #endif
         if ( NAMS_FUNC(func) != 0 )
-            Pr( "%H", (Int)NAMI_FUNC( func, (Int)i ), 0L );
+            Pr("%H", (Int)NAMI_FUNC(func, (Int)i), 0);
         else
-            Pr( "<<arg-%d>>", (Int)i, 0L );
+            Pr("<<arg-%d>>", (Int)i, 0);
         if(isvarg && i == narg) {
-            Pr("...", 0L, 0L);
+            Pr("...", 0, 0);
         }
-        if ( i != narg )  Pr("%<, %>",0L,0L);
+        if (i != narg)
+            Pr("%<, %>", 0, 0);
     }
-    Pr(" %<)\n",0L,0L);
+    Pr(" %<)\n", 0, 0);
 
     // print the body
     if (IsKernelFunction(func)) {
@@ -1051,27 +1052,28 @@ void PrintFunction (
         /* print the locals                                                */
         nloc = NLOC_FUNC(func);
         if ( nloc >= 1 ) {
-            Pr("%>local ",0L,0L);
+            Pr("%>local ", 0, 0);
             for ( i = 1; i <= nloc; i++ ) {
                 if ( NAMS_FUNC(func) != 0 )
-                    Pr( "%H", (Int)NAMI_FUNC( func, (Int)(narg+i) ), 0L );
+                    Pr("%H", (Int)NAMI_FUNC(func, (Int)(narg + i)), 0);
                 else
-                    Pr( "<<loc-%d>>", (Int)i, 0L );
-                if ( i != nloc )  Pr("%<, %>",0L,0L);
+                    Pr("<<loc-%d>>", (Int)i, 0);
+                if (i != nloc)
+                    Pr("%<, %>", 0, 0);
             }
-            Pr("%<;\n",0L,0L);
+            Pr("%<;\n", 0, 0);
         }
 
         // print the code
         Obj oldLVars;
-        SWITCH_TO_NEW_LVARS(func, narg, NLOC_FUNC(func), oldLVars);
+        oldLVars = SWITCH_TO_NEW_LVARS(func, narg, NLOC_FUNC(func));
         PrintStat( OFFSET_FIRST_STAT );
         SWITCH_TO_OLD_LVARS( oldLVars );
     }
-    Pr("%4<\n",0L,0L);
-    
+    Pr("%4<\n", 0, 0);
+
     /* print 'end'                                                         */
-    Pr("end",0L,0L);
+    Pr("end", 0, 0);
 }
 
 void PrintKernelFunction(Obj func)
@@ -1188,37 +1190,22 @@ Obj CallFuncList ( Obj func, Obj list )
     } else {
       result = DoOperation2Args(CallFuncListOper, func, list);
     }
-    /* return the result                                                   */
     return result;
 
 }
 
 static Obj FuncCALL_FUNC_LIST(Obj self, Obj func, Obj list)
 {
-    /* check that the second argument is a list                            */
-    RequireSmallList("CallFuncList", list);
+    RequireSmallList(SELF_NAME, list);
     return CallFuncList(func, list);
 }
 
 static Obj FuncCALL_FUNC_LIST_WRAP(Obj self, Obj func, Obj list)
 {
-    Obj retval, retlist;
-    /* check that the second argument is a list                            */
-    RequireSmallList("CallFuncListWrap", list);
-    retval = CallFuncList(func, list);
-
-    if (retval == 0)
-    {
-        retlist = NewImmutableEmptyPlist();
-    }
-    else
-    {
-        retlist = NEW_PLIST(T_PLIST, 1);
-        SET_LEN_PLIST(retlist, 1);
-        SET_ELM_PLIST(retlist, 1, retval);
-        CHANGED_BAG(retlist);
-    }
-    return retlist;
+    RequireSmallList(SELF_NAME, list);
+    Obj retval = CallFuncList(func, list);
+    return (retval == 0) ? NewImmutableEmptyPlist()
+                         : NewPlistFromArgs(retval);
 }
 
 /****************************************************************************
@@ -1253,7 +1240,7 @@ static Obj AttrNAME_FUNC(Obj self, Obj func)
 
 static Obj FuncSET_NAME_FUNC(Obj self, Obj func, Obj name)
 {
-    RequireStringRep("SET_NAME_FUNC", name);
+    RequireStringRep(SELF_NAME, name);
 
   if (TNUM_OBJ(func) == T_FUNCTION ) {
     SET_NAME_FUNC(func, ImmutableString(name));
@@ -1358,18 +1345,18 @@ static Obj FuncCLEAR_PROFILE_FUNC(Obj self, Obj func)
 {
     Obj                 prof;
 
-    RequireFunction("CLEAR_PROFILE_FUNC", func);
+    RequireFunction(SELF_NAME, func);
 
     /* clear profile info                                                  */
     prof = PROF_FUNC(func);
     if ( prof == 0 ) {
-        ErrorQuit( "<func> has corrupted profile info", 0L, 0L );
+        ErrorQuit("<func> has corrupted profile info", 0, 0);
     }
     if ( TNUM_OBJ(prof) == T_FUNCTION ) {
         prof = PROF_FUNC(prof);
     }
     if ( prof == 0 ) {
-        ErrorQuit( "<func> has corrupted profile info", 0L, 0L );
+        ErrorQuit("<func> has corrupted profile info", 0, 0);
     }
     SET_COUNT_PROF( prof, 0 );
     SET_TIME_WITH_PROF( prof, 0 );
@@ -1390,7 +1377,7 @@ static Obj FuncPROFILE_FUNC(Obj self, Obj func)
     Obj                 prof;
     Obj                 copy;
 
-    RequireFunction("PROFILE_FUNC", func);
+    RequireFunction(SELF_NAME, func);
 
     /* uninstall trace handler                                             */
     ChangeDoOperations( func, 0 );
@@ -1436,13 +1423,13 @@ static Obj FuncPROFILE_FUNC(Obj self, Obj func)
 */
 static Obj FuncIS_PROFILED_FUNC(Obj self, Obj func)
 {
-    RequireFunction("IS_PROFILED_FUNC", func);
+    RequireFunction(SELF_NAME, func);
     return ( TNUM_OBJ(PROF_FUNC(func)) != T_FUNCTION ) ? False : True;
 }
 
 static Obj FuncFILENAME_FUNC(Obj self, Obj func)
 {
-    RequireFunction("FILENAME_FUNC", func);
+    RequireFunction(SELF_NAME, func);
 
     if (BODY_FUNC(func)) {
         Obj fn =  GET_FILENAME_BODY(BODY_FUNC(func));
@@ -1454,7 +1441,7 @@ static Obj FuncFILENAME_FUNC(Obj self, Obj func)
 
 static Obj FuncSTARTLINE_FUNC(Obj self, Obj func)
 {
-    RequireFunction("STARTLINE_FUNC", func);
+    RequireFunction(SELF_NAME, func);
 
     if (BODY_FUNC(func)) {
         UInt sl = GET_STARTLINE_BODY(BODY_FUNC(func));
@@ -1466,7 +1453,7 @@ static Obj FuncSTARTLINE_FUNC(Obj self, Obj func)
 
 static Obj FuncENDLINE_FUNC(Obj self, Obj func)
 {
-    RequireFunction("ENDLINE_FUNC", func);
+    RequireFunction(SELF_NAME, func);
 
     if (BODY_FUNC(func)) {
         UInt el = GET_ENDLINE_BODY(BODY_FUNC(func));
@@ -1478,7 +1465,7 @@ static Obj FuncENDLINE_FUNC(Obj self, Obj func)
 
 static Obj FuncLOCATION_FUNC(Obj self, Obj func)
 {
-    RequireFunction("LOCATION_FUNC", func);
+    RequireFunction(SELF_NAME, func);
 
     if (BODY_FUNC(func)) {
         Obj sl = GET_LOCATION_BODY(BODY_FUNC(func));
@@ -1496,7 +1483,7 @@ static Obj FuncUNPROFILE_FUNC(Obj self, Obj func)
 {
     Obj                 prof;
 
-    RequireFunction("UNPROFILE_FUNC", func);
+    RequireFunction(SELF_NAME, func);
 
     /* uninstall trace handler                                             */
     ChangeDoOperations( func, 0 );
@@ -1528,7 +1515,7 @@ static Obj FuncIsKernelFunction(Obj self, Obj func)
     return IsKernelFunction(func) ? True : False;
 }
 
-Int IsKernelFunction(Obj func)
+BOOL IsKernelFunction(Obj func)
 {
     GAP_ASSERT(IS_FUNC(func));
     return (BODY_FUNC(func) == 0) ||
@@ -1539,14 +1526,14 @@ Int IsKernelFunction(Obj func)
 /* Returns a measure of the size of a GAP function */
 static Obj FuncFUNC_BODY_SIZE(Obj self, Obj func)
 {
-    RequireFunction("FUNC_BODY_SIZE", func);
+    RequireFunction(SELF_NAME, func);
     Obj body = BODY_FUNC(func);
     if (body == 0)
         return INTOBJ_INT(0);
     return ObjInt_UInt(SIZE_BAG(body));
 }
 
-#ifdef USE_GASMAN
+#ifdef GAP_ENABLE_SAVELOAD
 
 static void SaveHandler(ObjFunc hdlr)
 {
@@ -1681,13 +1668,13 @@ static StructGVarAttr GVarAttrs [] = {
 */
 static StructGVarOper GVarOpers [] = {
 
-    GVAR_OPER(CALL_FUNC_LIST, 2, "func, list", &CallFuncListOper),
-    GVAR_OPER(CALL_FUNC_LIST_WRAP, 2, "func, list", &CallFuncListWrapOper),
-    GVAR_OPER(SET_NAME_FUNC, 2, "func, name", &SET_NAME_FUNC_Oper),
-    GVAR_OPER(NARG_FUNC, 1, "func", &NARG_FUNC_Oper),
-    GVAR_OPER(NAMS_FUNC, 1, "func", &NAMS_FUNC_Oper),
-    GVAR_OPER(LOCKS_FUNC, 1, "func", &LOCKS_FUNC_Oper),
-    GVAR_OPER(PROF_FUNC, 1, "func", &PROF_FUNC_Oper),
+    GVAR_OPER_2ARGS(CALL_FUNC_LIST, func, list, &CallFuncListOper),
+    GVAR_OPER_2ARGS(CALL_FUNC_LIST_WRAP, func, list, &CallFuncListWrapOper),
+    GVAR_OPER_2ARGS(SET_NAME_FUNC, func, name, &SET_NAME_FUNC_Oper),
+    GVAR_OPER_1ARGS(NARG_FUNC, func, &NARG_FUNC_Oper),
+    GVAR_OPER_1ARGS(NAMS_FUNC, func, &NAMS_FUNC_Oper),
+    GVAR_OPER_1ARGS(LOCKS_FUNC, func, &LOCKS_FUNC_Oper),
+    GVAR_OPER_1ARGS(PROF_FUNC, func, &PROF_FUNC_Oper),
     { 0, 0, 0, 0, 0, 0 }
 
 };
@@ -1699,17 +1686,17 @@ static StructGVarOper GVarOpers [] = {
 */
 static StructGVarFunc GVarFuncs[] = {
 
-    GVAR_FUNC(CLEAR_PROFILE_FUNC, 1, "func"),
-    GVAR_FUNC(IS_PROFILED_FUNC, 1, "func"),
-    GVAR_FUNC(PROFILE_FUNC, 1, "func"),
-    GVAR_FUNC(UNPROFILE_FUNC, 1, "func"),
-    GVAR_FUNC(IsKernelFunction, 1, "func"),
-    GVAR_FUNC(FILENAME_FUNC, 1, "func"),
-    GVAR_FUNC(LOCATION_FUNC, 1, "func"),
-    GVAR_FUNC(STARTLINE_FUNC, 1, "func"),
-    GVAR_FUNC(ENDLINE_FUNC, 1, "func"),
+    GVAR_FUNC_1ARGS(CLEAR_PROFILE_FUNC, func),
+    GVAR_FUNC_1ARGS(IS_PROFILED_FUNC, func),
+    GVAR_FUNC_1ARGS(PROFILE_FUNC, func),
+    GVAR_FUNC_1ARGS(UNPROFILE_FUNC, func),
+    GVAR_FUNC_1ARGS(IsKernelFunction, func),
+    GVAR_FUNC_1ARGS(FILENAME_FUNC, func),
+    GVAR_FUNC_1ARGS(LOCATION_FUNC, func),
+    GVAR_FUNC_1ARGS(STARTLINE_FUNC, func),
+    GVAR_FUNC_1ARGS(ENDLINE_FUNC, func),
 
-    GVAR_FUNC(FUNC_BODY_SIZE, 1, "func"),
+    GVAR_FUNC_1ARGS(FUNC_BODY_SIZE, func),
 
     { 0, 0, 0, 0, 0 }
 
@@ -1759,7 +1746,7 @@ static Int InitKernel (
 
 
     /* initialise all 'Do<Something><N>args' handlers, give the most       */
-    /* common ones short cookies to save space in in the saved workspace   */
+    /* common ones short cookies to save space in the saved workspace   */
     InitHandlerFunc( DoFail0args, "f0" );
     InitHandlerFunc( DoFail1args, "f1" );
     InitHandlerFunc( DoFail2args, "f2" );
@@ -1786,7 +1773,6 @@ static Int InitKernel (
     InitHandlerFunc( DoProf6args, "p6" );
     InitHandlerFunc( DoProfXargs, "pX" );
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -1803,7 +1789,6 @@ static Int InitLibrary(StructInitInfo * module)
     InitGVarOpersFromTable( GVarOpers );
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 

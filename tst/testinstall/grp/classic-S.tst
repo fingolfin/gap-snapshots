@@ -37,8 +37,15 @@ gap> SO(IsPermGroup,3,5);
 Perm_SO(0,3,5)
 
 #
+gap> IsTrivial( SO(1,3) );
+true
+gap> IsTrivial( SO(1,4) );
+true
+
+#
 gap> SO(3);
-Error, usage: SpecialOrthogonalGroup( [<filter>, ][<e>, ]<d>, <q> )
+Error, usage: SpecialOrthogonalGroup( [<filt>, ][<e>, ]<d>, <q>[, <form>] )
+or SpecialOrthogonalGroup( [<filt>, ]<form> )
 gap> SO(3,6);
 Error, <subfield> must be a prime or a finite field
 gap> SO(-1,3,5);
@@ -76,7 +83,8 @@ SU(3,5)
 gap> SU(IsPermGroup,3,4);
 Perm_SU(3,4)
 gap> SU(3);
-Error, usage: SpecialUnitaryGroup( [<filter>, ]<d>, <q> )
+Error, usage: SpecialUnitaryGroup( [<filt>, ]<d>, <q>[, <form>] )
+or SpecialUnitaryGroup( [<filt>, ]<form> )
 gap> SU(3,6);
 Error, <subfield> must be a prime or a finite field
 
@@ -90,7 +98,9 @@ Perm_Sp(4,5)
 gap> Sp(3,5);
 Error, the dimension <d> must be even
 gap> Sp(4);
-Error, usage: SymplecticGroup( [<filter>, ]<d>, <q> )
+Error, usage: SymplecticGroup( [<filt>, ]<d>, <q>[, <form>] )
+or SymplecticGroup( [<filt>, ]<d>, <R>[, <form>] )
+or SymplecticGroup( [<filt>, ]<form> )
 gap> Sp(4,6);
 Error, <subfield> must be a prime or a finite field
 

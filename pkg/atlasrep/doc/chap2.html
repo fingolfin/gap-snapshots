@@ -123,7 +123,7 @@ true
 
 <h5>2.1-1 <span class="Heading">Accessing a Group in <strong class="pkg">AtlasRep</strong> via its Name</span></h5>
 
-<p>Each group that occurs in this database is specified by a <em>name</em>, which is a string similar to the name used in the <strong class="pkg">ATLAS</strong> of Finite Groups <a href="chapBib.html#biBCCN85">[CCN+85]</a>. For those groups whose character tables are contained in the <strong class="pkg">GAP</strong> Character Table Library <a href="chapBib.html#biBCTblLib">[Bre13]</a>, the names are equal to the <code class="func">Identifier</code> (<a href="../../../doc/ref/chap71.html#X79C40EE97890202F"><span class="RefLink">Reference: Identifier for character tables</span></a>) values of these character tables. Examples of such names are <code class="code">"M24"</code> for the Mathieu group <span class="SimpleMath">M_24</span>, <code class="code">"2.A6"</code> for the double cover of the alternating group <span class="SimpleMath">A_6</span>, and <code class="code">"2.A6.2_1"</code> for the double cover of the symmetric group <span class="SimpleMath">S_6</span>. The names that actually occur are listed in the first column of the overview table that is printed by the function <code class="func">DisplayAtlasInfo</code> (<a href="chap3.html#X79DACFFA7E2D1A99"><span class="RefLink">3.5-1</span></a>), called without arguments, see below. The other columns of the table describe the data that are available in the database.</p>
+<p>Each group that occurs in this database is specified by a <em>name</em>, which is a string similar to the name used in the <strong class="pkg">ATLAS</strong> of Finite Groups <a href="chapBib.html#biBCCN85">[CCN+85]</a>. For those groups whose character tables are contained in the <strong class="pkg">GAP</strong> Character Table Library <a href="chapBib.html#biBCTblLib">[Bre22]</a>, the names are equal to the <code class="func">Identifier</code> (<a href="../../../doc/ref/chap71.html#X79C40EE97890202F"><span class="RefLink">Reference: Identifier for character tables</span></a>) values of these character tables. Examples of such names are <code class="code">"M24"</code> for the Mathieu group <span class="SimpleMath">M_24</span>, <code class="code">"2.A6"</code> for the double cover of the alternating group <span class="SimpleMath">A_6</span>, and <code class="code">"2.A6.2_1"</code> for the double cover of the symmetric group <span class="SimpleMath">S_6</span>. The names that actually occur are listed in the first column of the overview table that is printed by the function <code class="func">DisplayAtlasInfo</code> (<a href="chap3.html#X79DACFFA7E2D1A99"><span class="RefLink">3.5-1</span></a>), called without arguments, see below. The other columns of the table describe the data that are available in the database.</p>
 
 <p>For example, <code class="func">DisplayAtlasInfo</code> (<a href="chap3.html#X79DACFFA7E2D1A99"><span class="RefLink">3.5-1</span></a>) may print the following lines. Omissions are indicated with "<code class="code">...</code>".</p>
 
@@ -489,7 +489,7 @@ true
 [ 1, 396, 55, 330, 66, 165, 11 ]
 </pre></div>
 
-<p>We see that there are six nontrivial orbits, and we can compute the permutation actions on these orbits directly using <code class="func">Action</code> (<a href="../../../doc/ref/chap40.html#X86C2BE2481FDC8EE"><span class="RefLink">Reference: Action homomorphisms</span></a>). However, for larger examples, one cannot write down all orbits on the row space, so one has to use another strategy if one is interested in a particular orbit.</p>
+<p>We see that there are six nontrivial orbits, and we can compute the permutation actions on these orbits directly using <code class="func">Action</code> (<a href="../../../doc/ref/chap41.html#X7FE417DD837987B4"><span class="RefLink">Reference: action</span></a>). However, for larger examples, one cannot write down all orbits on the row space, so one has to use another strategy if one is interested in a particular orbit.</p>
 
 <p>Let us assume that we are interested in the orbit of length <span class="SimpleMath">11</span>. The point stabilizer is the first maximal subgroup of <span class="SimpleMath">M_11</span>, thus the restriction of the representation to this subgroup has a nontrivial fixed point space. This restriction can be computed using the <strong class="pkg">AtlasRep</strong> package.</p>
 
@@ -524,7 +524,7 @@ Group( [ ( 1, 2)( 4, 6)( 5, 8)( 7,10), ( 1, 3, 5, 9)( 2, 4, 7,11) ] )
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">permgrp:= Group( AtlasGenerators( "M11", 1 ).generators );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Print( permgrp, "\n" );</span>
-Group( [ ( 2,10)( 4,11)( 5, 7)( 8, 9), ( 1, 4, 3, 8)( 2, 5, 6, 9) ] )
+Group( [ ( 2,10)( 4,11)( 5, 7)( 8, 9), (1,4,3,8)(2,5,6,9) ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">permgrp = act;</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsConjugate( SymmetricGroup(11), permgrp, act );</span>

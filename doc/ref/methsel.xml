@@ -3,7 +3,6 @@
 <!-- %W  methsel.tex               GAP manual                    Thomas Breuer -->
 <!-- %W                                                       Martin Schönert -->
 <!-- %% -->
-<!-- %H  @(#)<M>Id: methsel.tex,v 4.26 2006/09/13 12:31:52 gap Exp </M> -->
 <!-- %% -->
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
@@ -105,7 +104,7 @@ gap> InstallMethod(XCons, [IsGroup, IsInt], function(t,x) return CyclicGroup(x);
 gap> InstallMethod(XCons, [IsPermGroup, IsInt], function(t,x) return SymmetricGroup(x); end);
 gap> InstallMethod(XCons, [IsSemigroup, IsInt], function(t,x) return FullTransformationMonoid(x); end);
 gap> XCons(IsGroup,3);
-<pc group of size 3 with 1 generators>
+<pc group of size 3 with 1 generator>
 gap> XCons(IsPermGroup,3);
 Sym( [ 1 .. 3 ] )
 gap> XCons(IsSemigroup,4);
@@ -165,6 +164,7 @@ For declaring that a filter is implied by other filters there is
 
 <#Include Label="InstallMethod">
 <#Include Label="InstallOtherMethod">
+<#Include Label="InstallEarlyMethod">
 <#Include Label="InstallMethodWithRandomSource">
 
 </Section>
@@ -323,6 +323,7 @@ For attributes and properties,
 one can install also <E>immediate methods</E>.
 
 <#Include Label="InstallImmediateMethod">
+<#Include Label="IsNoImmediateMethodsObject">
 
 </Section>
 
@@ -376,7 +377,7 @@ forces it on us <E>and</E> where no conflicts arise.
 In programming the library, we use the underlying mathematically
 precise operations or attributes,
 such as <Ref Attr="RankMat"/> and
-<C>RankOperation</C>.
+<Ref Oper="RankAction" Label="for a group, an action domain, etc."/>.
 These should be attributes if appropriate, and the only role of the
 operation <C>Rank</C> is to decide which attribute the user meant.
 That way, stored information is stored with <Q>full mathematical precision</Q>

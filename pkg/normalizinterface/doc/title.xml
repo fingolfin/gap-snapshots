@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    NormalizInterface
+  </Title>
+  <Subtitle>
+    &GAP; wrapper for Normaliz
+  </Subtitle>
+  <Version>
+    1.3.4
+  </Version>
+  <Author>
+    Sebastian Gutsche<Alt Only="LaTeX"><Br/></Alt>
+<Email>gutsche@mathematik.uni-siegen.de</Email>
+
+  </Author>
+  <Author>
+    Max Horn<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Fachbereich Mathematik<Br/>
+TU Kaiserslautern<Br/>
+Gottlieb-Daimler-Straße 48<Br/>
+67663 Kaiserslautern<Br/>
+Germany<Br/>
+</Address>
+<Email>horn@mathematik.uni-kl.de</Email>
+<Homepage>https://www.quendi.de/math</Homepage>
+
+  </Author>
+  <Author>
+    Christof Söger<Alt Only="LaTeX"><Br/></Alt>
+<Email>csoeger@uos.de</Email>
+
+  </Author>
+  <Date>
+    7 August 2022
+  </Date>
+  </TitlePage>

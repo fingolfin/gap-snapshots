@@ -27,7 +27,7 @@
 ##  t1:=CurrentTime();res1:=TrigonalizeByThreads(m,4,5,40);;t2:=CurrentTime();
 ##  
 
-# (very?) temporary helper, until RecieveAnyChannel is available
+# (very?) temporary helper, until ReceiveAnyChannel is available
 # 
 # this version is bad, it eats up CPU cycles and doesn't provide a good
 # load balancing
@@ -48,7 +48,7 @@ end;
 ##  
 ##  TrigonalizeSubset(mat, pivots, inds)  
 ##  
-##  Arguments: matrix mat with, say, n rows;
+##  Arguments: matrix mat with n rows;
 ##             list pivots of length n, such that 
 ##                  pivots[i] = PositionNonZero(mat[i]) or = 0;
 ##             inds is a sublist of [1..n].

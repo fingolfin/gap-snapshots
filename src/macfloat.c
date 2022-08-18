@@ -25,16 +25,41 @@
 #include "ariths.h"
 #include "bool.h"
 #include "error.h"
-#include "io.h"
 #include "integer.h"
+#include "io.h"
 #include "modules.h"
 #include "plist.h"
 #include "saveload.h"
 #include "stringobj.h"
+#include "sysstr.h"
+
+#include "config.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+
 
 #define RequireMacFloat(funcname, op) \
     RequireArgumentCondition(funcname, op, IS_MACFLOAT(op), \
         "must be a macfloat")
+
+
+Double VAL_MACFLOAT(Obj obj)
+{
+    Double val;
+    memcpy(&val, CONST_ADDR_OBJ(obj), sizeof(Double));
+    return val;
+}
+
+void SET_VAL_MACFLOAT(Obj obj, Double val)
+{
+    memcpy(ADDR_OBJ(obj), &val, sizeof(Double));
+}
+
+BOOL IS_MACFLOAT(Obj obj)
+{
+    return TNUM_OBJ(obj) == T_MACFLOAT;
+}
 
 
 /****************************************************************************
@@ -139,27 +164,32 @@ static Int LtMacfloat(Obj macfloatL, Obj macfloatR)
 
 /****************************************************************************
 **
-*F  SaveMacfloat( <macfloat> ) . . . . . . . . . . . . . . . . . . . . save a Macfloatean 
+*F  SaveMacfloat( <macfloat> ) . . . . . . . . . . . . . . save a Macfloatean 
 **
 */
+#ifdef GAP_ENABLE_SAVELOAD
 static void SaveMacfloat(Obj obj)
 {
     const UInt1 *data = (const UInt1 *)CONST_ADDR_OBJ(obj);
     for (UInt i = 0; i < sizeof(Double); i++)
         SaveUInt1(data[i]);
 }
+#endif
+
 
 /****************************************************************************
 **
-*F  LoadMacfloat( <macfloat> ) . . . . . . . . . . . . . . . . . . . . save a Macfloatean 
+*F  LoadMacfloat( <macfloat> ) . . . . . . . . . . . . . . load a Macfloatean 
 **
 */
+#ifdef GAP_ENABLE_SAVELOAD
 static void LoadMacfloat(Obj obj)
 {
     UInt1 *data = (UInt1 *)ADDR_OBJ(obj);
     for (UInt i = 0; i < sizeof(Double); i++)
         data[i] = LoadUInt1();
 }
+#endif
 
 
 Obj NEW_MACFLOAT( Double val )
@@ -324,7 +354,7 @@ static Obj FuncMACFLOAT_INT(Obj self, Obj i)
 
 static Obj FuncMACFLOAT_STRING(Obj self, Obj s)
 {
-    RequireStringRep("MACFLOAT_STRING", s);
+    RequireStringRep(SELF_NAME, s);
 
   char * endptr;
   UChar *sp = CHARS_STRING(s);
@@ -370,33 +400,38 @@ MAKEMATHPRIMITIVE(TAN,tan)
 MAKEMATHPRIMITIVE(ACOS,acos)
 MAKEMATHPRIMITIVE(ASIN,asin)
 MAKEMATHPRIMITIVE(ATAN,atan)
+
+MAKEMATHPRIMITIVE(COSH,cosh)
+MAKEMATHPRIMITIVE(SINH,sinh)
+MAKEMATHPRIMITIVE(TANH,tanh)
+MAKEMATHPRIMITIVE(ACOSH,acosh)
+MAKEMATHPRIMITIVE(ASINH,asinh)
+MAKEMATHPRIMITIVE(ATANH,atanh)
+
 MAKEMATHPRIMITIVE(LOG,log)
-MAKEMATHPRIMITIVE(EXP,exp)
-#ifdef HAVE_LOG2
 MAKEMATHPRIMITIVE(LOG2,log2)
-#endif
-#ifdef HAVE_LOG10
 MAKEMATHPRIMITIVE(LOG10,log10)
-#endif
-#ifdef HAVE_LOG1P
 MAKEMATHPRIMITIVE(LOG1P,log1p)
-#endif
-#ifdef HAVE_EXP2
+
+MAKEMATHPRIMITIVE(EXP,exp)
 MAKEMATHPRIMITIVE(EXP2,exp2)
-#endif
-#ifdef HAVE_EXPM1
 MAKEMATHPRIMITIVE(EXPM1,expm1)
-#endif
 #ifdef HAVE_EXP10
 MAKEMATHPRIMITIVE(EXP10,exp10)
 #endif
+
 MAKEMATHPRIMITIVE(SQRT,sqrt)
+MAKEMATHPRIMITIVE(CBRT,cbrt)
 MAKEMATHPRIMITIVE(RINT,rint)
 MAKEMATHPRIMITIVE(FLOOR,floor)
 MAKEMATHPRIMITIVE(CEIL,ceil)
 MAKEMATHPRIMITIVE(ABS,fabs)
 MAKEMATHPRIMITIVE2(ATAN2,atan2)
 MAKEMATHPRIMITIVE2(HYPOT,hypot)
+
+MAKEMATHPRIMITIVE(ERF,erf)
+MAKEMATHPRIMITIVE(GAMMA,tgamma)
+
 
 static Obj FuncSIGN_MACFLOAT(Obj self, Obj f)
 {
@@ -413,7 +448,7 @@ static Obj FuncSIGNBIT_MACFLOAT(Obj self, Obj f)
 
 static Obj FuncINTFLOOR_MACFLOAT(Obj self, Obj macfloat)
 {
-    RequireMacFloat("INTFLOOR_MACFLOAT", macfloat);
+    RequireMacFloat(SELF_NAME, macfloat);
 
     Double f = VAL_MACFLOAT(macfloat);
     if (isnan(f))
@@ -499,52 +534,57 @@ static StructBagNames BagNames[] = {
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
 static StructGVarFunc GVarFuncs [] = {
-  GVAR_FUNC(MACFLOAT_INT, 1, "int"),
-  GVAR_FUNC(MACFLOAT_STRING, 1, "string"),
-  GVAR_FUNC(SIN_MACFLOAT, 1, "macfloat"),
-  GVAR_FUNC(COS_MACFLOAT, 1, "macfloat"),
-  GVAR_FUNC(TAN_MACFLOAT, 1, "macfloat"),
-  GVAR_FUNC(ASIN_MACFLOAT, 1, "macfloat"),
-  GVAR_FUNC(ACOS_MACFLOAT, 1, "macfloat"),
-  GVAR_FUNC(ATAN_MACFLOAT, 1, "macfloat"),
+    GVAR_FUNC_1ARGS(MACFLOAT_INT, int),
+    GVAR_FUNC_1ARGS(MACFLOAT_STRING, string),
 
-  GVAR_FUNC(ATAN2_MACFLOAT, 2, "real, imag"),
-  GVAR_FUNC(HYPOT_MACFLOAT, 2, "real, imag"),
-  GVAR_FUNC(LOG_MACFLOAT, 1, "macfloat"),
-  GVAR_FUNC(EXP_MACFLOAT, 1, "macfloat"),
-#ifdef HAVE_LOG2
-  GVAR_FUNC(LOG2_MACFLOAT, 1, "macfloat"),
-#endif
-#ifdef HAVE_LOG10
-  GVAR_FUNC(LOG10_MACFLOAT, 1, "macfloat"),
-#endif  
-#ifdef HAVE_LOG1P
-  GVAR_FUNC(LOG1P_MACFLOAT, 1, "macfloat"),
-#endif  
-#ifdef HAVE_EXP2
-  GVAR_FUNC(EXP2_MACFLOAT, 1, "macfloat"),
-#endif  
-#ifdef HAVE_EXPM1
-  GVAR_FUNC(EXPM1_MACFLOAT, 1, "macfloat"),
-#endif
+    GVAR_FUNC_1ARGS(SIN_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(COS_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(TAN_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(ASIN_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(ACOS_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(ATAN_MACFLOAT, macfloat),
+
+    GVAR_FUNC_1ARGS(SINH_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(COSH_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(TANH_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(ASINH_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(ACOSH_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(ATANH_MACFLOAT, macfloat),
+
+    GVAR_FUNC_2ARGS(ATAN2_MACFLOAT, real, imag),
+    GVAR_FUNC_2ARGS(HYPOT_MACFLOAT, real, imag),
+
+    GVAR_FUNC_1ARGS(LOG_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(LOG2_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(LOG10_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(LOG1P_MACFLOAT, macfloat),
+
+    GVAR_FUNC_1ARGS(EXP_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(EXP2_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(EXPM1_MACFLOAT, macfloat),
 #ifdef HAVE_EXP10
-  GVAR_FUNC(EXP10_MACFLOAT, 1, "macfloat"),
+    GVAR_FUNC_1ARGS(EXP10_MACFLOAT, macfloat),
 #endif
 
-  GVAR_FUNC(LDEXP_MACFLOAT, 2, "macfloat, int"),
-  GVAR_FUNC(FREXP_MACFLOAT, 1, "macfloat"),
-  GVAR_FUNC(SQRT_MACFLOAT, 1, "macfloat"),
-  GVAR_FUNC(RINT_MACFLOAT, 1, "macfloat"),
-  GVAR_FUNC(INTFLOOR_MACFLOAT, 1, "macfloat"),
-  GVAR_FUNC(FLOOR_MACFLOAT, 1, "macfloat"),
-  GVAR_FUNC(CEIL_MACFLOAT, 1, "macfloat"),
-  GVAR_FUNC(ABS_MACFLOAT, 1, "macfloat"),
-  GVAR_FUNC(SIGN_MACFLOAT, 1, "macfloat"),
-  GVAR_FUNC(SIGNBIT_MACFLOAT, 1, "macfloat"),
+    GVAR_FUNC_2ARGS(LDEXP_MACFLOAT, macfloat, int),
+    GVAR_FUNC_1ARGS(FREXP_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(SQRT_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(CBRT_MACFLOAT, macfloat),
 
-  GVAR_FUNC(STRING_DIGITS_MACFLOAT, 2, "digits, macfloat"),
-  GVAR_FUNC(EQ_MACFLOAT, 2, "x, y"),
-  { 0, 0, 0, 0, 0 }
+    GVAR_FUNC_1ARGS(ERF_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(GAMMA_MACFLOAT, macfloat),
+
+    GVAR_FUNC_1ARGS(RINT_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(INTFLOOR_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(FLOOR_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(CEIL_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(ABS_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(SIGN_MACFLOAT, macfloat),
+    GVAR_FUNC_1ARGS(SIGNBIT_MACFLOAT, macfloat),
+
+    GVAR_FUNC_2ARGS(STRING_DIGITS_MACFLOAT, digits, macfloat),
+    GVAR_FUNC_2ARGS(EQ_MACFLOAT, x, y),
+    { 0, 0, 0, 0, 0 }
 };
 
 
@@ -571,11 +611,13 @@ static Int InitKernel (
     ImportGVarFromLibrary( "TYPE_MACFLOAT", &TYPE_MACFLOAT );
     TypeObjFuncs[ T_MACFLOAT ] = TypeMacfloat;
 
+#ifdef GAP_ENABLE_SAVELOAD
     /* install the saving functions                                       */
     SaveObjFuncs[ T_MACFLOAT ] = SaveMacfloat;
 
     /* install the loading functions                                       */
     LoadObjFuncs[ T_MACFLOAT ] = LoadMacfloat;
+#endif
 
     /* install the printer for macfloatean values                              */
     PrintObjFuncs[ T_MACFLOAT ] = PrintMacfloat;
@@ -589,11 +631,11 @@ static Int InitKernel (
         EqFuncs[T_MACFLOAT][t] = EqFuncs[t][T_MACFLOAT] = EqObject;
 
     /* install the unary arithmetic methods                                */
-    ZeroFuncs[ T_MACFLOAT ] = ZeroMacfloat;
+    ZeroSameMutFuncs[T_MACFLOAT] = ZeroMacfloat;
     ZeroMutFuncs[ T_MACFLOAT ] = ZeroMacfloat;
     AInvMutFuncs[ T_MACFLOAT ] = AInvMacfloat;
     OneFuncs [ T_MACFLOAT ] = OneMacfloat;
-    OneMutFuncs [ T_MACFLOAT ] = OneMacfloat;
+    OneSameMut[T_MACFLOAT] = OneMacfloat;
     InvFuncs [ T_MACFLOAT ] = InvMacfloat;
 
     /* install binary arithmetic methods */
@@ -613,7 +655,6 @@ static Int InitKernel (
        at least for a while */
      
     
-    /* return success                                                      */
     return 0;
 }
 
@@ -628,7 +669,6 @@ static Int InitLibrary (
     /* init functions */
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 

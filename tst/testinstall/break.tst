@@ -46,7 +46,32 @@ for i in [1..5] do List([1..5], function(x) continue; return 1; end); od;
                                             ^^^^^^^^
 
 #
+gap> return;
+'return' must not be used in file read-eval loop
+gap> if true then return; fi;
+'return' must not be used in file read-eval loop
+gap> if false then return; fi; # FIXME: this should ideally also trigger an error
+gap> function() return; end();
+gap> for i in [1..5] do return; od; # FIXME: this should not be allowed
+gap> i;
+1
+
 #
+gap> return 42;
+'return' must not be used in file read-eval loop
+gap> if true then return 42; fi;
+'return' must not be used in file read-eval loop
+gap> if false then return 42; fi; # FIXME: this should ideally also trigger an error
+gap> function() return 42; end();
+42
+gap> for i in [1..5] do return 42; od; # FIXME: this should not be allowed
+gap> i;
+1
+
+#
+#
+gap> quit; # ignored
+gap> quit; 1; # ignore everything after `quit`
 gap> if true then quit; fi;
 Syntax error: 'quit;' cannot be used in this context in stream:1
 if true then quit; fi;
@@ -65,6 +90,8 @@ for i in [1..5] do quit; od;
                    ^^^^
 
 #
+gap> QUIT; # ignored
+gap> QUIT; 1; # ignore everything after `QUIT`
 gap> if true then QUIT; fi;
 Syntax error: 'QUIT;' cannot be used in this context in stream:1
 if true then QUIT; fi;

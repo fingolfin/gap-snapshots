@@ -211,8 +211,8 @@ DeclareCategory( "IsSubgroupFgGroup", IsGroup );
 ##  <Filt Name="IsSubgroupFpGroup" Arg='H' Type='Category'/>
 ##
 ##  <Description>
-##  returns <K>true</K> if <A>H</A> is a finitely presented group
-##  or a subgroup of a finitely presented group.
+##  is the category for finitely presented groups
+##  or subgroups of a finitely presented group.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -236,6 +236,13 @@ InstallTrueMethod(CanEasilyTestMembership, IsSubgroupFgGroup and IsWholeFamily);
 ##  <P/>
 ##  Free groups are a special case of finitely presented groups,
 ##  namely finitely presented groups with no relators.
+##
+##  <P/>
+##  Note that <C>FreeGroup(infinity)</C> (which exists e.g. for purposes of
+##  rewriting presentations with further generators) satisfies this filter,
+##  though of course it is not finitely generated (and thus not finitely
+##  presented). <C>IsFpGroup</C> thus is not a proper property test and
+##  slightly misnamed for the sake of its most prominent uses.
 ##  <P/>
 ##  Another special case are groups given by polycyclic presentations.
 ##  &GAP; uses a special representation for these groups which is created
@@ -247,7 +254,7 @@ InstallTrueMethod(CanEasilyTestMembership, IsSubgroupFgGroup and IsWholeFamily);
 ##  gap> IsFpGroup(g);
 ##  true
 ##  gap> h:=CyclicGroup(2);
-##  <pc group of size 2 with 1 generators>
+##  <pc group of size 2 with 1 generator>
 ##  gap> IsFpGroup(h);
 ##  false
 ##  ]]></Example>
@@ -742,7 +749,7 @@ DeclareGlobalFunction("SubgroupOfWholeGroupByQuotientSubgroup");
 ##  <#/GAPDoc>
 ##
 DeclareRepresentation("IsSubgroupOfWholeGroupByQuotientRep",
-  IsSubgroupFpGroup,["quot","sub"]);
+  IsSubgroupFpGroup and IsComponentObjectRep,["quot","sub"]);
 
 #############################################################################
 ##
@@ -1352,5 +1359,8 @@ DeclareGlobalFunction("StringFactorizationWord");
 # used to test whether abeliniazation can be mapped in GQuotients
 DeclareGlobalFunction("CanMapFiniteAbelianInvariants");
 
+# map fpgrp->fpmon creator
+DeclareGlobalFunction("MakeFpGroupToMonoidHomType1");
+
 # used in homomorphisms
-DeclareGlobalVariable("TRIVIAL_FP_GROUP");
+DeclareGlobalName("TRIVIAL_FP_GROUP");

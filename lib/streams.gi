@@ -14,38 +14,19 @@
 
 #############################################################################
 ##
-
 #F  # # # # # # # # # # # # # # closed stream # # # # # # # # # # # # # # # #
 ##
 
 
 #############################################################################
 ##
-
-#V  ClosedStreamType  . . . . . . . . . . . . . . . . type of a closed stream
-##
-ClosedStreamType := NewType(
-    StreamsFamily,
-    IsClosedStream );
-
-
-#############################################################################
-##
-
-#M  CloseStream( <stream> ) . . . . . . . . .  set type to <ClosedStreamType>
+#M  CloseStream( <stream> ) . . . . . . . . . . . . . . mark stream as closed
 ##
 InstallMethod( CloseStream,
     "non-process streams",
-    [ IsStream and IsComponentObjectRep],
+    [ IsStream ],
 function( stream )
-    SET_TYPE_COMOBJ( stream, ClosedStreamType );
-end );
-
-InstallMethod( CloseStream,
-    "non-process streams",
-    [ IsStream and IsPositionalObjectRep],
-function( stream )
-    SET_TYPE_POSOBJ( stream, ClosedStreamType );
+    SetFilterObj( stream, IsClosedStream );
 end );
 
 
@@ -55,7 +36,7 @@ end );
 ##
 InstallMethod( PrintObj,
     "closed stream",
-    [ IsClosedStream ],
+    [ IsClosedStream ], SUM_FLAGS,
 function( obj )
     Print( "closed-stream" );
 end );
@@ -63,7 +44,6 @@ end );
 
 #############################################################################
 ##
-
 #F  # # # # # # # # # # # # # #  input stream # # # # # # # # # # # # # # # #
 ##
 
@@ -153,85 +133,13 @@ end);
 
 #############################################################################
 ##
-#M  ReadAllLine( <iostream>[, <nofail>][, <IsAllLine>] ) . .  read whole line
-##
-InstallMethod( ReadAllLine, "iostream,boolean,function",
-        [ IsInputOutputStream, IsBool, IsFunction ],
-    function(iostream, nofail, IsAllLine)
-    local line, fd, moreOfline;
-    line := READ_IOSTREAM_NOWAIT(iostream![1], 1);
-    if nofail or line <> fail then
-        fd := FileDescriptorOfStream(iostream);
-        if line = fail then
-          line := "";
-        fi;
-        while not IsAllLine(line) do
-            UNIXSelect([fd], [], [], fail, fail);
-            moreOfline := ReadLine(iostream);
-            if moreOfline = fail then
-              Error("failed to find any more of line (iostream dead?)\n");
-            fi;
-            Append(line, moreOfline);
-        od;
-    fi;
-    return line;
-end);
-
-InstallOtherMethod( ReadAllLine, "iostream,boolean",
-        [ IsInputOutputStream, IsBool ],
-    function(iostream, nofail)
-    return ReadAllLine(iostream, nofail,
-                       line -> 0 < Length(line) and line[Length(line)] = '\n');
-end);
-
-InstallOtherMethod( ReadAllLine, "iostream,function",
-        [ IsInputOutputStream, IsFunction ],
-    function(iostream, IsAllLine)
-    return ReadAllLine(iostream, false, IsAllLine);
-end);
-
-InstallOtherMethod( ReadAllLine, "iostream",
-        [ IsInputOutputStream ],
-    iostream -> ReadAllLine(iostream, false)
-);
-
-# For an input stream that is not an input/output stream it's really
-# inappropriate to call ReadAllLine. We provide the functionality of
-# ReadLine only, in this case.
-InstallMethod( ReadAllLine, "stream,boolean,function",
-        [ IsInputStream, IsBool, IsFunction ],
-    function(stream, nofail, IsAllLine)
-    return ReadLine(stream); #ignore other arguments
-end);
-
-InstallOtherMethod( ReadAllLine, "stream,boolean",
-        [ IsInputStream, IsBool ],
-    function(stream, nofail)
-    return ReadLine(stream); #ignore other argument
-end);
-
-InstallOtherMethod( ReadAllLine, "stream,function",
-        [ IsInputStream, IsFunction ],
-    function(stream, IsAllLine)
-    return ReadLine(stream); #ignore other argument
-end);
-
-InstallOtherMethod( ReadAllLine, "stream",
-        [ IsInputStream ], ReadLine
-);
-
-
-
-
-#############################################################################
-##
 #M  Read( <input-stream> )	. . . . . . . . . .  read stream as GAP input
 ##
 InstallOtherMethod( Read,
     "input stream",
     [ IsInputStream ],
 function( stream )
-    READ_STREAM(stream);
+    READ(stream);
     CloseStream(stream);
 end );
 
@@ -243,7 +151,7 @@ end );
 InstallOtherMethod( ReadAsFunction,
     "input stream",
     [ IsInputStream ],
-    READ_AS_FUNC_STREAM );
+    READ_AS_FUNC );
 
 
 #############################################################################
@@ -260,7 +168,6 @@ end );
 
 #############################################################################
 ##
-
 #F  # # # # # # # # # # # # # # output stream # # # # # # # # # # # # # # # #
 ##
 
@@ -418,7 +325,6 @@ end );
 
 #############################################################################
 ##
-
 #F  # # # # # # # # # # # # # input text string # # # # # # # # # # # # # # #
 ##
 
@@ -448,7 +354,6 @@ end );
 
 #############################################################################
 ##
-
 #M  IsEndOfStream( <input-text-string> )
 ##
 InstallMethod( IsEndOfStream,
@@ -596,14 +501,12 @@ end );
 
 #############################################################################
 ##
-
 #F  # # # # # # # # # # # # # input text file # # # # # # # # # # # # # # # #
 ##
 
 
 #############################################################################
 ##
-
 #R  IsInputTextFileRep	. . . . .  representation of a input text file stream
 ##
 DeclareRepresentation(
@@ -650,14 +553,13 @@ function( str )
         atomic InputTextFileStillOpen do
             AddSet( InputTextFileStillOpen, fid );
         od;
-        return Objectify( InputTextFileType, Immutable([fid, str]) );
+        return Objectify( InputTextFileType, [fid, Immutable(str)] );
     fi;
 end );
 
 
 #############################################################################
 ##
-
 #M  CloseStream( <input-text-file> )  . . . . . . . . . . . . . .  close file
 ##
 InstallMethod( CloseStream,
@@ -668,7 +570,7 @@ function( stream )
     atomic InputTextFileStillOpen do
         RemoveSet( InputTextFileStillOpen, stream![1] );
     od;
-    SET_TYPE_POSOBJ( stream, ClosedStreamType );
+    SetFilterObj( stream, IsClosedStream );
 end );
 
 
@@ -779,17 +681,26 @@ function( stream, pos )
     return SEEK_POSITION_FILE( stream![1], pos );
 end );
 
+#############################################################################
+##
+#M  FileDescriptorOfStream( <input-text-file> )
+##
+
+InstallMethod(FileDescriptorOfStream,
+        [IsInputTextStream and IsInputTextFileRep],
+        function(stream)
+    return FD_OF_FILE(stream![1]);
+end);
+
 
 #############################################################################
 ##
-
 #F  # # # # # # # # # # # # # # input text none # # # # # # # # # # # # # # #
 ##
 
 
 #############################################################################
 ##
-
 #R  IsInputTextNoneRep	. . . . . . representation of dummy input text stream
 ##
 DeclareRepresentation(
@@ -812,14 +723,13 @@ InputTextNoneType := NewType(
 #M  InputTextNone() . . . . . . . . . .  create a new dummy input text stream
 ##
 InstallGlobalFunction( InputTextNone, function()
-    return Objectify( InputTextNoneType, Immutable([]) );
+    return Objectify( InputTextNoneType, [] );
 end );
 
 
 
 #############################################################################
 ##
-
 #M  IsEndOfStream( <input-text-none> )	. . . . . . . always at end-of-stream
 ##
 InstallMethod( IsEndOfStream,
@@ -918,20 +828,8 @@ InstallMethod( SeekPositionStream,
 
 #############################################################################
 ##
-
 #F  # # # # # # # # # # # #  output text string # # # # # # # # # # # # # # #
 ##
-
-
-#############################################################################
-##
-
-#R  IsOutputTextStringRep
-##
-DeclareRepresentation(
-    "IsOutputTextStringRep",
-    IsPositionalObjectRep,
-    ["string", "format"] );
 
 
 #############################################################################
@@ -1043,14 +941,12 @@ end);
 
 #############################################################################
 ##
-
 #F  # # # # # # # # # # # #  output text file # # # # # # # # # # # # # # # #
 ##
 
 
 #############################################################################
 ##
-
 #R  IsOutputTextFileRep
 ##
 DeclareRepresentation(
@@ -1084,21 +980,21 @@ fi;
 #M  OutputTextFile( <str>, <append> )
 ##
 InstallMethod( OutputTextFile,
-    "output text stream from file",
+    "output text stream to file",
     [ IsString,
       IsBool ],
 function( str, append )
     local   fid;
     str := UserHomeExpand(str);
 
-    fid := OUTPUT_TEXT_FILE( str, append );
+    fid := OUTPUT_TEXT_FILE( str, append, false );
     if fid = fail  then
         return fail;
     else
         atomic OutputTextFileStillOpen do
             AddSet( OutputTextFileStillOpen, fid );
         od;
-        return Objectify( OutputTextFileType, Immutable([fid, str, true]) );
+        return Objectify( OutputTextFileType, [fid, Immutable(str), true] );
     fi;
 end );
 
@@ -1108,6 +1004,37 @@ InstallOtherMethod( OutputTextFile,
         -SUM_FLAGS, # as low as possible
         function( str )
     Error("Usage OutputTextFile( <fname>, <append> )");
+end );
+
+#############################################################################
+##
+#M  OutputGzipFile( <str>, <append> )
+##
+InstallMethod( OutputGzipFile,
+    "output gzipped text to file",
+    [ IsString,
+      IsBool ],
+function( str, append )
+    local   fid;
+    str := UserHomeExpand(str);
+
+    fid := OUTPUT_TEXT_FILE( str, append, true );
+    if fid = fail  then
+        return fail;
+    else
+        atomic OutputTextFileStillOpen do
+            AddSet( OutputTextFileStillOpen, fid );
+        od;
+        return Objectify( OutputTextFileType, [fid, Immutable(str), true] );
+    fi;
+end );
+
+InstallOtherMethod( OutputGzipFile,
+        "error catching method, append not given",
+        [ IsString ],
+        -SUM_FLAGS, # as low as possible
+        function( str )
+    Error("Usage OutputGzipFile( <fname>, <append> )");
 end );
 
 #############################################################################
@@ -1122,7 +1049,7 @@ function( stream )
     atomic OutputTextFileStillOpen do
         RemoveSet( OutputTextFileStillOpen, stream![1] );
     od;
-    SET_TYPE_POSOBJ( stream, ClosedStreamType );
+    SetFilterObj( stream, IsClosedStream );
 end );
 
 InstallAtExit( function()
@@ -1180,6 +1107,17 @@ end );
 
 #############################################################################
 ##
+#M  FileDescriptorOfStream( <output-text-file> )
+##
+
+InstallMethod(FileDescriptorOfStream,
+        [IsOutputTextStream and IsOutputTextFileRep],
+        function(stream)
+    return FD_OF_FILE(stream![1]);
+end);
+
+#############################################################################
+##
 #M  PrintFormattingStatus( <output-text-file> )
 ##
 InstallMethod( PrintFormattingStatus, "output text file",
@@ -1201,27 +1139,26 @@ InstallMethod( SetPrintFormattingStatus, "output text file",
     fi;
 end);
 
-##  formatting status for stdout
-GAPInfo.FormattingStatusStdout := true;
+##  formatting status for stdout or current output
 InstallOtherMethod( PrintFormattingStatus, "for stdout", [IsString],
 function(str)
-  if str <> "*stdout*" then
-    Error("Only the string \"*stdout*\" is recognized by this method.");
+  if str = "*stdout*" then
+    return PRINT_FORMATTING_STDOUT();
+  elif str = "*errout*" then
+    return PRINT_FORMATTING_ERROUT();
+  else
+    Error("Only the strings \"*stdout*\" and \"*errout*\" are recognized by this method.");
   fi;
-  return GAPInfo.FormattingStatusStdout;
 end);
 
 InstallOtherMethod( SetPrintFormattingStatus, "for stdout", [IsString, IsBool],
 function(str, status)
-  if str <> "*stdout*" then
-    Error("Only the string \"*stdout*\" is recognized by this method.");
-  fi;
-  if status = false then
-    SET_PRINT_FORMATTING_STDOUT(false);
-    GAPInfo.FormattingStatusStdout := false;
+  if str = "*stdout*" then
+    SET_PRINT_FORMATTING_STDOUT(status);
+  elif str = "*errout*" then
+    SET_PRINT_FORMATTING_ERROUT(status);
   else
-    SET_PRINT_FORMATTING_STDOUT(true);
-    GAPInfo.FormattingStatusStdout := true;
+    Error("Only the strings \"*stdout*\" and \"*errout*\" are recognized by this method.");
   fi;
 end);
 
@@ -1235,7 +1172,6 @@ end);
 
 #############################################################################
 ##
-
 #R  IsOutputTextNoneRep	. . . . .  representation of dummy output text stream
 ##
 DeclareRepresentation(
@@ -1258,7 +1194,7 @@ OutputTextNoneType := NewType(
 #M  OutputTextNone()  . . . . . . . . . create a new dummy output text stream
 ##
 InstallGlobalFunction( OutputTextNone, function()
-    return Objectify( OutputTextNoneType, Immutable([]) );
+    return Objectify( OutputTextNoneType, [] );
 end );
 
 
@@ -1368,10 +1304,32 @@ InstallGlobalFunction( InputFromUser,
   end );
 
 
+#############################################################################
+##
+#M  OpenExternal(filename)  . . . . . . . . . . . . open file in external GUI
+##
+InstallGlobalFunction( OpenExternal, function(filename)
+    local file;
+    if ARCH_IS_MAC_OS_X() then
+      Exec(Concatenation("open \"",filename,"\""));
+    elif ARCH_IS_WINDOWS() then
+      Exec(Concatenation("cmd /c start \"",filename,"\""));
+    elif ARCH_IS_WSL() then
+      # If users pass a URL, make sure if does not get mangled.
+      if ForAny(["https://", "http://"], {pre} -> StartsWith(filename, pre)) then
+        file := filename;
+      else
+        file := Concatenation("$(wslpath -a -w \"",filename,"\")");
+      fi;
+      Exec(Concatenation("explorer.exe \"", file, "\""));
+    else
+      Exec(Concatenation("xdg-open \"",filename,"\""));
+    fi;
+end );
+
 
 #############################################################################
 ##
-
 #F  # # # # # # # # # # # # # iostream-by-pty # # # # # # # # # # # # # # # #
 ##
 
@@ -1396,7 +1354,7 @@ InputOutputStreamByPtyDefaultType :=
 #############################################################################
 ##
 #M  InputOutputLocalProcess(<current-dir>, <executable>, <args>)
-#M   . . .input/output stream to a process run as a "slave" on the local host
+##   . . .input/output stream to a child process on the local host
 ##
 
 InstallGlobalFunction( InputOutputLocalProcess,
@@ -1500,6 +1458,83 @@ InstallMethod( ReadLine, "iostream",
     return sofar;
 end);
 
+
+#############################################################################
+##
+#M  ReadAllLine( <iostream>[, <nofail>][, <IsAllLine>] ) . .  read whole line
+##
+InstallMethod( ReadAllLine, "iostream,boolean,function",
+        [ IsInputOutputStreamByPtyRep and IsInputOutputStream, IsBool, IsFunction ],
+    function(iostream, nofail, IsAllLine)
+    local line, fd, moreOfline;
+    line := READ_IOSTREAM_NOWAIT(iostream![1], 1);
+    if nofail or line <> fail then
+        fd := FileDescriptorOfStream(iostream);
+        if line = fail then
+          line := "";
+        fi;
+        while not IsAllLine(line) do
+            UNIXSelect([fd], [], [], fail, fail);
+            moreOfline := ReadLine(iostream);
+            if moreOfline = fail then
+              Error("failed to find any more of line (iostream dead?)\n");
+            fi;
+            Append(line, moreOfline);
+        od;
+    fi;
+    return line;
+end);
+
+InstallMethod( ReadAllLine, "iostream,boolean,function",
+        [ IsInputOutputStream, IsBool, IsFunction ],
+    function(iostream, nofail, IsAllLine)
+    ErrorNoReturn("not implemented");
+end);
+
+InstallOtherMethod( ReadAllLine, "iostream,boolean",
+        [ IsInputOutputStream, IsBool ],
+    function(iostream, nofail)
+    return ReadAllLine(iostream, nofail,
+                       line -> 0 < Length(line) and line[Length(line)] = '\n');
+end);
+
+InstallOtherMethod( ReadAllLine, "iostream,function",
+        [ IsInputOutputStream, IsFunction ],
+    function(iostream, IsAllLine)
+    return ReadAllLine(iostream, false, IsAllLine);
+end);
+
+InstallOtherMethod( ReadAllLine, "iostream",
+        [ IsInputOutputStream ],
+    iostream -> ReadAllLine(iostream, false)
+);
+
+# For an input stream that is not an input/output stream it's really
+# inappropriate to call ReadAllLine. We provide the functionality of
+# ReadLine only, in this case.
+# TODO: actually, why do we do this??? it seems better to simply produce
+# an error in this case?
+InstallMethod( ReadAllLine, "stream,boolean,function",
+        [ IsInputStream, IsBool, IsFunction ],
+    function(stream, nofail, IsAllLine)
+    return ReadLine(stream); #ignore other arguments
+end);
+
+InstallOtherMethod( ReadAllLine, "stream,boolean",
+        [ IsInputStream, IsBool ],
+    function(stream, nofail)
+    return ReadLine(stream); #ignore other argument
+end);
+
+InstallOtherMethod( ReadAllLine, "stream,function",
+        [ IsInputStream, IsFunction ],
+    function(stream, IsAllLine)
+    return ReadLine(stream); #ignore other argument
+end);
+
+InstallOtherMethod( ReadAllLine, "stream",
+        [ IsInputStream ], ReadLine
+);
 
 
 #############################################################################
@@ -1655,18 +1690,6 @@ end);
 ##
 
 InstallMethod(FileDescriptorOfStream,
-        [IsInputTextStream and IsInputTextFileRep],
-        function(stream)
-    return FD_OF_FILE(stream![1]);
-end);
-
-InstallMethod(FileDescriptorOfStream,
-        [IsOutputTextStream and IsOutputTextFileRep],
-        function(stream)
-    return FD_OF_FILE(stream![1]);
-end);
-
-InstallMethod(FileDescriptorOfStream,
         [IsInputOutputStreamByPtyRep and IsInputOutputStream],
         function(stream)
     return FD_OF_IOSTREAM(stream![1]);
@@ -1676,33 +1699,82 @@ end);
 
 #############################################################################
 ##
-
 #F  # # # # # # # # # # # # # CharReadHookFunc  # # # # # # # # # # # # # # #
 ##
 
 
-
+#############################################################################
+##
+#V  OnCharReadHookInFuncs . . . . . . . installed handler functions for input
+##
+##  'OnCharReadHookInFuncs' contains a list of functions that are installed as
+##  reading handlers for streams.
+BindGlobal( "OnCharReadHookInFuncs", [] );
 
 #############################################################################
 ##
-#V  OnCharReadHookInFuncs
-#V  OnCharReadHookInFds
-#V  OnCharReadHookInStreams
-#V  OnCharReadHookOutFuncs
-#V  OnCharReadHookOutFds
-#V  OnCharReadHookOutStreams
-#V  OnCharReadHookExcFuncs
-#V  OnCharReadHookExcFds
-#V  OnCharReadHookExcStreams
-InstallValue( OnCharReadHookInFuncs, []);
-InstallValue( OnCharReadHookInFds, []);
-InstallValue( OnCharReadHookInStreams, []);
-InstallValue( OnCharReadHookOutFuncs, []);
-InstallValue( OnCharReadHookOutFds, []);
-InstallValue( OnCharReadHookOutStreams, []);
-InstallValue( OnCharReadHookExcFuncs, []);
-InstallValue( OnCharReadHookExcFds, []);
-InstallValue( OnCharReadHookExcStreams, []);
+#V  OnCharReadHookInFds . . . . . . . . file descriptors for reading handlers
+##
+##  'OnCharReadHookInFds' contains a list of file descriptors of streams for
+##  which reading handlers are installed.
+BindGlobal( "OnCharReadHookInFds", [] );
+
+#############################################################################
+##
+#V  OnCharReadHookInStreams . . . . . . . . . . streams with reading handlers
+##
+##  'OnCharReadHookInStreams' contains a list of streams for which reading
+##  handlers are installed.
+BindGlobal( "OnCharReadHookInStreams", [] );
+
+#############################################################################
+##
+#V  OnCharReadHookOutFuncs . . . . . . installed handler functions for output
+##
+##  'OnCharReadHookOutFuncs' contains a list of functions that are installed
+##  as reading handlers for streams.
+BindGlobal( "OnCharReadHookOutFuncs", [] );
+
+#############################################################################
+##
+#V  OnCharReadHookOutFds . . . . . . .  file descriptors for writing handlers
+##
+##  'OnCharReadHookOutFds' contains a list of file descriptors of streams for
+##  which writing handlers are installed.
+BindGlobal( "OnCharReadHookOutFds", [] );
+
+#############################################################################
+##
+#V  OnCharReadHookOutStreams . . . . . . . . . . streams with writing handlers
+##
+##  'OnCharReadHookOutStreams' contains a list of streams for which writing
+##  handlers are installed.
+BindGlobal( "OnCharReadHookOutStreams", [] );
+
+#############################################################################
+##
+#V  OnCharReadHookExcFuncs . . . . installed handler functions for exceptions
+##
+##  'OnCharReadHookExcFuncs' contains a list of functions that are installed
+##  as exception handlers for streams.
+BindGlobal( "OnCharReadHookExcFuncs", [] );
+
+#############################################################################
+##
+#V  OnCharReadHookExcFds  . . . . . . file descriptors for exception handlers
+##
+##  'OnCharReadHookExcFds' contains a list of file descriptors of streams for
+##  which exception handlers are installed.
+BindGlobal( "OnCharReadHookExcFds", [] );
+
+#############################################################################
+##
+#V  OnCharReadHookExcStreams . . . . . . . .  streams with exception handlers
+##
+##  'OnCharReadHookExcStreams' contains a list of streams for which exception
+##  handlers are installed.
+BindGlobal( "OnCharReadHookExcStreams", [] );
+
 
 # Just to avoid warnings:
 OnCharReadHookActive := false;

@@ -240,6 +240,7 @@ local field, dict, acts, start, j, zerov, zero, dim, base, partbas, heads,
   else
     Error("illegal action");
   fi;
+  start:=List(start,x->ImmutableVector(field,x));
 
   zerov:=Zero(start[1]);
   zero:=zerov[1];
@@ -355,7 +356,14 @@ local field, dict, acts, start, j, zerov, zero, dim, base, partbas, heads,
 	if v<>zerov then
 	  Add(base,orb[i]);
 	  Add(partbas,ShallowCopy(orb[i]));
+          # filter for vector objects, not compressed FF vectors
+          if ForAny(partbas,x->IsVectorObj(x) and not IsDataObjectRep(x)) then
+            partbas:=Matrix(BaseDomain(partbas[1]),partbas);
+          fi;
 	  TriangulizeMat(partbas);
+          if IsMatrixObj(partbas) then
+            partbas:=ShallowCopy(RowsOfMatrix(partbas));
+          fi;
 	  heads:=List(partbas,PositionNonZero);
 	  if Length(partbas)>=dim then
 	    # full dimension reached
@@ -517,8 +525,33 @@ local   nice,img,module,b;
   return nice;
 end );
 
-InstallMethod( IsomorphismPermGroup,"matrix group", true,
-  [ IsMatrixGroup ], 10,
+
+#############################################################################
+##
+#M  IsomorphismPermGroup( <mat-grp> )
+##
+##  We want to use a method based on 'NicomorphismOfGeneralMatrixGroup'
+##  for the finite matrix group <mat-grp>.
+##
+##  If <mat-grp> does not know whether it is finite,
+##  there is currently no concurrent method,
+##  thus no rank shift is necessary for the method installation.
+##
+##  If <mat-grp> knows to be finite, we want our method to beat the one for
+##  'IsGroup and IsFinite and IsHandledByNiceMonomorphism'.
+##
+##  Installing just *one* method (with requirement 'IsMatrixGroup') would be
+##  possible via (dynamic) upranking,
+##  but here we install our method twice, with the different requirements
+##  'IsMatrixGroup' and 'IsMatrixGroup and IsFinite'.
+##  (Note that 'IsHandledByNiceMonomorphism' is implied by the latter,
+##  and that we apply the same downranking in the second installation
+##  that happens in the installation of the method for
+##  'IsGroup and IsFinite and IsHandledByNiceMonomorphism';
+##  we could get rid of the two downrankings, but this might affect code
+##  that is not distributed with GAP.)
+##
+BindGlobal( "IsomorphismPermGroupForMatrixGroup",
 function(G)
 local map;
   if HasNiceMonomorphism(G) and IsPermGroup(Range(NiceMonomorphism(G))) then
@@ -526,7 +559,7 @@ local map;
     if IsIdenticalObj(Source(map),G) then
       return map;
     fi;
-    return GeneralRestrictedMapping(map,G,Image(map,G));
+    return GeneralRestrictedMapping(map,G,NiceObject(G));
   else
     if not HasIsFinite(G) then
       Info(InfoWarning,1,
@@ -537,6 +570,21 @@ local map;
     return map;
   fi;
 end);
+
+InstallMethod( IsomorphismPermGroup,
+    "matrix group",
+    [ IsMatrixGroup ],
+    IsomorphismPermGroupForMatrixGroup );
+
+InstallMethod( IsomorphismPermGroup,
+    "finite matrix group",
+    [ IsMatrixGroup and IsFinite and IsHandledByNiceMonomorphism ],
+    # The downranking is compatible with that for the method for
+    # 'IsGroup and IsFinite and IsHandledByNiceMonomorphism'
+    # (see 'lib/grpnice.gi').
+    5-NICE_FLAGS,
+    IsomorphismPermGroupForMatrixGroup );
+
 
 #############################################################################
 ##
@@ -673,19 +721,19 @@ InstallMethod( ViewObj,
     "for a matrix group with stored generators",
     [ IsMatrixGroup and HasGeneratorsOfGroup ],
 function(G)
-local gens;
+local gens, nrgens;
   gens:=GeneratorsOfGroup(G);
-  if Length(gens)>0 and
-     Length(gens) * DimensionOfMatrixGroup(G)^2 / GAPInfo.ViewLength > 8 then
+  nrgens:=Length(gens);
+  if nrgens>0 and
+     nrgens * DimensionOfMatrixGroup(G)^2 / GAPInfo.ViewLength > 8 then
     Print("<matrix group");
     if HasSize(G) then
       Print(" of size ",Size(G));
     fi;
-    Print(" with ",Length(GeneratorsOfGroup(G)),
-          " generators>");
+    Print(" with ", Pluralize(nrgens, "generator"), ">");
   else
     Print("Group(");
-    ViewObj(GeneratorsOfGroup(G));
+    ViewObj(gens);
     Print(")");
   fi;
 end);
@@ -749,10 +797,55 @@ InstallMethod(IsSubgroupSL,"determinant test for generators",
   [IsMatrixGroup and HasGeneratorsOfGroup],
     G -> ForAll(GeneratorsOfGroup(G),i->IsOne(DeterminantMat(i))) );
 
+
+#############################################################################
+##
+#M  RespectsQuadraticForm( <Q>, <M> ) . . . . . . . . . .  is form invariant?
+##
+##  Let <Q> be the matrix of a quadratic form, and let <M> be a matrix of the
+##  same dimensions.
+##  The value of the form at the vector $v$ is $v <Q> v^{tr}$.
+##  If we define the matrix $i<Q>'$ by
+##  $<Q>'[i,i] = <Q>[i,i]$,
+##  $<Q>'[i,j] = 0$ for $i > j$,
+##  $<Q>'[i,j] = <Q>[i,j] + <Q>[j,i]$ for $i < j$,
+##  then $v <Q> v^{tr} = v <Q>' v^{tr}$ holds for all $v$.
+##  By definition, <M> leaves the form invariant
+##  if $v <M> <Q> <M>^{tr} v^{tr} = v <Q> v^{tr}$ holds for all $v$.
+##  This happens if and only if $(<M> <Q> <M>^{tr})' = <Q>'$ holds.
+##  (For the "only if" part,
+##  take the $i$-th standard basis vector $e_i$ to check the equality
+##  of the $i$-th diagonal element,
+##  and take $e_i + e_j$ to check the equality of the entry in position
+##  $(i,j)$.)
+##
+BindGlobal( "RespectsQuadraticForm", function( Q, M )
+    local Qimg;
+
+    Qimg:= M * Q * TransposedMat( M );
+    return ForAll( [ 1 .. NumberRows( M ) ],
+               i -> Q[i,i] = Qimg[i,i] and
+                    ForAll( [ 1 .. i-1 ],
+                        j -> Q[i,j] + Q[j,i] = Qimg[i,j] + Qimg[j,i] ) );
+    end );
+
+
 #############################################################################
 ##
 #M  <mat> in <G>  . . . . . . . . . . . . . . . . . . . .  is form invariant?
 ##
+InstallMethod( \in, "respecting quadratic form", IsElmsColls,
+    [ IsMatrix, IsFullSubgroupGLorSLRespectingQuadraticForm ],
+    NICE_FLAGS,  # this method is better than the one using a nice monom.;
+                 # it has the same rank as the method based on the inv.
+                 # bilinear form, which is cheaper to check,
+                 # thus we install the current method first
+    function( mat, G )
+    return IsSubset( FieldOfMatrixGroup( G ), FieldOfMatrixList( [ mat ] ) )
+       and ( not IsSubgroupSL( G ) or IsOne( DeterminantMat( mat ) ) )
+       and RespectsQuadraticForm( InvariantQuadraticForm( G ).matrix, mat );
+    end );
+
 InstallMethod( \in, "respecting bilinear form", IsElmsColls,
     [ IsMatrix, IsFullSubgroupGLorSLRespectingBilinearForm ],
     NICE_FLAGS,  # this method is better than the one using a nice monom.
@@ -796,7 +889,7 @@ InstallMethod( IsGeneratorsOfMagmaWithInverses,
     function( matlist )
     local nrows, ncols;
 
-    if IsList( matlist ) and ForAll( matlist, IsMatrixObj ) then
+    if IsList( matlist ) and ForAll( matlist, IsMatrixOrMatrixObj ) then
       nrows:= NumberRows( matlist[1] );
       ncols:= NumberColumns( matlist[1] );
       return nrows = ncols and
@@ -822,17 +915,11 @@ function( gens )
 local G,typ,f;
 
   if not IsFinite(gens) then TryNextMethod(); fi;
-  typ:=MakeGroupyType(FamilyObj(gens),
-          IsGroup and IsAttributeStoringRep
-            and HasGeneratorsOfMagmaWithInverses
-            and IsFinitelyGeneratedGroup and HasIsEmpty and IsFinite,
-          gens,false,true);
 
   f:=DefaultScalarDomainOfMatrixList(gens);
-  gens:=List(Immutable(gens),i->ImmutableMatrix(f,i));
+  gens:=List(gens,i->ImmutableMatrix(f,i));
 
-  G:=rec();
-  ObjectifyWithAttributes(G,typ,GeneratorsOfMagmaWithInverses,AsList(gens));
+  G:=MakeGroupyObj(FamilyObj(gens), IsGroup and IsFinite, gens,false);
 
   if IsField(f) then SetDefaultFieldOfMatrixGroup(G,f);fi;
 
@@ -846,18 +933,12 @@ function( gens, id )
 local G,typ,f;
 
   if not IsFinite(gens) then TryNextMethod(); fi;
-  typ:=MakeGroupyType(FamilyObj(gens), IsGroup and IsAttributeStoringRep 
-          and HasGeneratorsOfMagmaWithInverses and IsFinitelyGeneratedGroup
-          and HasIsEmpty and IsFinite and HasOne,
-          gens,id,true);
 
   f:=DefaultScalarDomainOfMatrixList(gens);
-  gens:=List(Immutable(gens),i->ImmutableMatrix(f,i));
+  gens:=List(gens,i->ImmutableMatrix(f,i));
   id:=ImmutableMatrix(f,id);
 
-  G:=rec();
-  ObjectifyWithAttributes(G,typ,GeneratorsOfMagmaWithInverses,AsList(gens),
-                          One,id);
+  G:=MakeGroupyObj(FamilyObj(gens), IsGroup and IsFinite, gens,id);
 
   if IsField(f) then SetDefaultFieldOfMatrixGroup(G,f);fi;
 
@@ -866,21 +947,71 @@ end );
 
 InstallMethod( GroupWithGenerators,
   "empty list of matrices with identity", true,
-  [ IsList and IsEmpty,IsMultiplicativeElementWithInverse and IsFFECollColl],
+  [ IsList and IsEmpty,
+    IsMultiplicativeElementWithInverse and IsFFECollColl],
 function( gens, id )
 local G,fam,typ,f;
-
-  if not IsFinite(gens) then TryNextMethod(); fi;
-  typ:=MakeGroupyType(FamilyObj([id]), IsGroup and IsAttributeStoringRep 
-            and HasGeneratorsOfMagmaWithInverses and HasOne and IsTrivial,
-            gens,id,true);
 
   f:=DefaultScalarDomainOfMatrixList([id]);
   id:=ImmutableMatrix(f,id);
 
-  G:=rec();
-  ObjectifyWithAttributes(G,typ,GeneratorsOfMagmaWithInverses,AsList(gens),
-                          One,id);
+  G:=MakeGroupyObj(FamilyObj([id]), IsGroup and IsTrivial, gens,id);
+
+  if IsField(f) then SetDefaultFieldOfMatrixGroup(G,f);fi;
+
+  return G;
+end );
+
+# ditto for nonprime ZmodnZ
+InstallMethod( GroupWithGenerators, "list of zmodnz matrices",
+    [ IsZmodnZObjNonprimeCollCollColl ],
+#T ???
+function( gens )
+local G,typ,f;
+
+  if not IsFinite(gens) then TryNextMethod(); fi;
+
+  f:=DefaultScalarDomainOfMatrixList(gens);
+  gens:=List(gens,i->ImmutableMatrix(f,i));
+
+  G:=MakeGroupyObj(FamilyObj(gens), IsGroup and IsFinite, gens, false);
+
+  if IsField(f) then SetDefaultFieldOfMatrixGroup(G,f);fi;
+
+  return G;
+end );
+
+InstallMethod( GroupWithGenerators,
+  "list of zmodnz matrices with identity", IsCollsElms,
+  [ IsZmodnZObjNonprimeCollCollColl,IsMultiplicativeElementWithInverse and
+  IsZmodnZObjNonprimeCollColl],
+function( gens, id )
+local G,typ,f;
+
+  if not IsFinite(gens) then TryNextMethod(); fi;
+
+  f:=DefaultScalarDomainOfMatrixList(gens);
+  gens:=List(gens,i->ImmutableMatrix(f,i));
+  id:=ImmutableMatrix(f,id);
+
+  G:=MakeGroupyObj(FamilyObj(gens), IsGroup and IsFinite, gens, id);
+
+  if IsField(f) then SetDefaultFieldOfMatrixGroup(G,f);fi;
+
+  return G;
+end );
+
+InstallMethod( GroupWithGenerators,
+  "empty list of zmodnz matrices with identity", true,
+  [ IsList and IsEmpty,
+    IsMultiplicativeElementWithInverse and IsZmodnZObjNonprimeCollColl],
+function( gens, id )
+local G,fam,typ,f;
+
+  f:=DefaultScalarDomainOfMatrixList([id]);
+  id:=ImmutableMatrix(f,id);
+
+  G:=MakeGroupyObj(FamilyObj([id]), IsGroup and IsTrivial, gens, id);
 
   if IsField(f) then SetDefaultFieldOfMatrixGroup(G,f);fi;
 

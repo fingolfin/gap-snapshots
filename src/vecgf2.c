@@ -215,7 +215,7 @@ static Obj AddPartialGF2VecGF2Vec(Obj sum, Obj vl, Obj vr, UInt n)
     // both operands lie in the same field
     len = LEN_GF2VEC(vl);
     if (len != LEN_GF2VEC(vr)) {
-        ErrorMayQuit("Vector +: vectors must have the same length", 0L, 0L);
+        ErrorMayQuit("Vector +: vectors must have the same length", 0, 0);
     }
 
 
@@ -257,7 +257,6 @@ static Obj AddPartialGF2VecGF2Vec(Obj sum, Obj vl, Obj vr, UInt n)
         while (ptS < end)
             *ptS++ = *ptL++ ^ *ptR++;
 
-    // return the result
     return sum;
 }
 
@@ -340,7 +339,6 @@ static Obj ProdGF2VecGF2Vec(Obj vl, Obj vr)
         mask <<= 1;
     }
 
-    // return the result
     return (n & 1) ? GF2One : GF2Zero;
 }
 
@@ -407,7 +405,6 @@ static Obj ProdGF2VecGF2Mat(Obj vl, Obj vr)
         }
     }
 
-    // return the result
     return prod;
 }
 
@@ -479,7 +476,6 @@ static Obj ProdGF2MatGF2Vec(Obj ml, Obj vr)
             BLOCK_ELM_GF2VEC(prod, j) |= MASK_POS_GF2VEC(j);
     }
 
-    // return the result
     return prod;
 }
 
@@ -1363,7 +1359,7 @@ static void ConvGF2Vec(Obj list)
             else if (!EQ(x, GF2Zero))
                 ErrorMayQuit(
                     "COPY_GF2VEC: argument must be a list of GF2 elements",
-                    0L, 0L);
+                    0, 0);
         }
 
         bit = bit << 1;
@@ -1393,10 +1389,7 @@ static void ConvGF2Vec(Obj list)
 */
 static Obj FuncCONV_GF2VEC(Obj self, Obj list)
 {
-    // check whether <list> is a GF2 vector
     ConvGF2Vec(list);
-
-    // return nothing
     return 0;
 }
 
@@ -1426,7 +1419,7 @@ static Obj NewGF2Vec(Obj list)
 
     if (!IS_LIST(list)) {
         ErrorMayQuit("COPY_GF2VEC: argument must be a list of GF2 elements",
-                     0L, 0L);
+                     0, 0);
     }
     if (!IS_PLIST(list)) {
         list = SHALLOW_COPY_OBJ(list);
@@ -1454,7 +1447,7 @@ static Obj NewGF2Vec(Obj list)
             else if (!EQ(x, GF2Zero))
                 ErrorMayQuit(
                     "COPY_GF2VEC: argument must be a list of GF2 elements",
-                    0L, 0L);
+                    0, 0);
         }
 
         bit = bit << 1;
@@ -1483,9 +1476,7 @@ static Obj NewGF2Vec(Obj list)
 */
 static Obj FuncCOPY_GF2VEC(Obj self, Obj list)
 {
-    // check whether <list> is a GF2 vector
     list = NewGF2Vec(list);
-
     return list;
 }
 
@@ -1493,7 +1484,7 @@ static Obj FuncCOPY_GF2VEC(Obj self, Obj list)
 **
 *F FuncCONV_GF2MAT (<self>, <list> ) . . . convert into a GF2 matrix rep
 **
-** <list> should be a a list of compressed GF2 vectors
+** <list> should be a list of compressed GF2 vectors
 **
 */
 static Obj FuncCONV_GF2MAT(Obj self, Obj list)
@@ -1517,7 +1508,7 @@ static Obj FuncCONV_GF2MAT(Obj self, Obj list)
             }
             ErrorMayQuit("CONV_GF2MAT: argument must be a list of compressed "
                          "GF2 vectors",
-                         0L, 0L);
+                         0, 0);
         }
         SetTypeDatObj(tmp, IS_MUTABLE_OBJ(tmp) ? TYPE_LIST_GF2VEC_LOCKED
                                                : TYPE_LIST_GF2VEC_IMM_LOCKED);
@@ -1537,13 +1528,10 @@ static Obj FuncCONV_GF2MAT(Obj self, Obj list)
 */
 static Obj FuncPLAIN_GF2VEC(Obj self, Obj list)
 {
-    // check whether <list> is a GF2 vector
     if (!IS_GF2VEC_REP(list)) {
-        RequireArgument("PLAIN_GF2VEC", list, "must be a GF2 vector");
+        RequireArgument(SELF_NAME, list, "must be a GF2 vector");
     }
     PlainGF2Vec(list);
-
-    // return nothing
     return 0;
 }
 
@@ -1705,7 +1693,7 @@ static Obj FuncLEN_GF2VEC(Obj self, Obj list)
 */
 static Obj FuncELM0_GF2VEC(Obj self, Obj list, Obj pos)
 {
-    UInt p = GetSmallInt("ELM0_GF2VEC", pos);
+    UInt p = GetSmallInt(SELF_NAME, pos);
     if (LEN_GF2VEC(list) < p) {
         return Fail;
     }
@@ -1725,7 +1713,7 @@ static Obj FuncELM0_GF2VEC(Obj self, Obj list, Obj pos)
 */
 static Obj FuncELM_GF2VEC(Obj self, Obj list, Obj pos)
 {
-    UInt p = GetSmallInt("ELM_GF2VEC", pos);
+    UInt p = GetSmallInt(SELF_NAME, pos);
     if (LEN_GF2VEC(list) < p) {
         ErrorMayQuit("List Element: <list>[%d] must have an assigned value",
                      p, 0);
@@ -1777,11 +1765,11 @@ static Obj FuncELMS_GF2VEC(Obj self, Obj list, Obj poss)
             if (!apos || !IS_INTOBJ(apos))
                 ErrorMayQuit("ELMS_GF2VEC: error at position %d in positions "
                              "list, entry must be bound to a small integer",
-                             i, 0L);
+                             i, 0);
             pos = INT_INTOBJ(apos);
             if (lenList < pos) {
                 ErrorMayQuit("List Elements: <list>[%d] must have a value",
-                             pos, 0L);
+                             pos, 0);
             }
 
             // assign the element into <elms>
@@ -1802,11 +1790,11 @@ static Obj FuncELMS_GF2VEC(Obj self, Obj list, Obj poss)
         // check that no <position> is larger than <lenList>
         if (lenList < pos) {
             ErrorMayQuit("List Elements: <list>[%d] must have a value", pos,
-                         0L);
+                         0);
         }
         if (lenList < pos + (lenPoss - 1) * inc) {
             ErrorMayQuit("List Elements: <list>[%d] must have a value",
-                         pos + (lenPoss - 1) * inc, 0L);
+                         pos + (lenPoss - 1) * inc, 0);
         }
 
         // make the result vector
@@ -1826,7 +1814,6 @@ static Obj FuncELMS_GF2VEC(Obj self, Obj list, Obj poss)
         }
     }
 
-    // return the result
     return elms;
 }
 
@@ -1848,7 +1835,7 @@ static Obj FuncASS_GF2VEC(Obj self, Obj list, Obj pos, Obj elm)
     RequireMutable("List Assignment", list, "list");
 
     // get the position
-    UInt p = GetSmallInt("ASS_GF2VEC", pos);
+    UInt p = GetSmallInt(SELF_NAME, pos);
 
     // if <elm> is Z(2) or 0*Z(2) and the position is OK, keep rep
     if (p <= LEN_GF2VEC(list) + 1) {
@@ -1890,8 +1877,6 @@ static Obj FuncASS_GF2VEC(Obj self, Obj list, Obj pos, Obj elm)
 static Obj FuncPLAIN_GF2MAT(Obj self, Obj list)
 {
     PlainGF2Mat(list);
-
-    // return nothing
     return 0;
 }
 
@@ -1912,7 +1897,7 @@ static Obj FuncASS_GF2MAT(Obj self, Obj list, Obj pos, Obj elm)
     RequireMutable("List Assignment", list, "list");
 
     // get the position
-    UInt p = GetSmallInt("ASS_GF2MAT", pos);
+    UInt p = GetSmallInt(SELF_NAME, pos);
 
     // if <elm> is a GF2 vector and the length is OK, keep the rep
     if (!IS_GF2VEC_REP(elm)) {
@@ -1955,7 +1940,7 @@ static Obj FuncASS_GF2MAT(Obj self, Obj list, Obj pos, Obj elm)
 */
 static Obj FuncELM_GF2MAT(Obj self, Obj mat, Obj row)
 {
-    UInt r = GetSmallInt("ELM_GF2MAT", row);
+    UInt r = GetSmallInt(SELF_NAME, row);
     if (LEN_GF2MAT(mat) < r) {
         ErrorMayQuit("row index %d exceeds %d, the number of rows", r,
                      LEN_GF2MAT(mat));
@@ -1983,7 +1968,7 @@ static Obj FuncUNB_GF2VEC(Obj self, Obj list, Obj pos)
     }
 
     // get the position
-    UInt p = GetSmallInt("UNB_GF2VEC", pos);
+    UInt p = GetSmallInt(SELF_NAME, pos);
 
     // if we unbind the last position keep the representation
     if (LEN_GF2VEC(list) < p) {
@@ -2016,7 +2001,7 @@ static Obj FuncUNB_GF2MAT(Obj self, Obj list, Obj pos)
     RequireMutable("List Unbind", list, "matrix");
 
     // get the position
-    UInt p = GetSmallInt("UNB_GF2MAT", pos);
+    UInt p = GetSmallInt(SELF_NAME, pos);
 
     // if we unbind the last position keep the representation
     if (p > 1 && LEN_GF2MAT(list) < p) {
@@ -2066,12 +2051,7 @@ static Obj FuncZERO_GF2VEC(Obj self, Obj mat)
 static Obj FuncZERO_GF2VEC_2(Obj self, Obj len)
 {
     Obj zero;
-
-    // create a new GF2 vector
-    if (!IS_INTOBJ(len))
-        ErrorMayQuit("ZERO_GF2VEC2: length must be a small integer, not a %s",
-                     (Int)TNAM_OBJ(len), 0L);
-
+    RequireNonnegativeSmallInt(SELF_NAME, len);
     NEW_GF2VEC(zero, TYPE_LIST_GF2VEC, INT_INTOBJ(len));
     return zero;
 }
@@ -2387,11 +2367,7 @@ static Obj FuncSHRINKCOEFFS_GF2VEC(Obj self, Obj vec)
     off = BIPEB - ((len - 1) % BIPEB + 1);
 
     // mask out the last bits
-#ifdef SYS_IS_64_BIT
-    *ptr &= 0xffffffffffffffff >> off;
-#else
-    *ptr &= 0xffffffff >> off;
-#endif
+    *ptr &= ALL_BITS_UINT >> off;
 
     // find last non-trivial block
     while (0 < nbb && !*ptr) {
@@ -2486,15 +2462,15 @@ static Obj FuncPOSITION_NONZERO_GF2VEC3(Obj self, Obj vec, Obj zero, Obj from)
 static Obj FuncCOPY_SECTION_GF2VECS(
     Obj self, Obj src, Obj dest, Obj from, Obj to, Obj howmany)
 {
-    Int ifrom = GetPositiveSmallInt("COPY_SECTION_GF2VECS", from);
-    Int ito = GetPositiveSmallInt("COPY_SECTION_GF2VECS", to);
-    Int ihowmany = GetSmallInt("COPY_SECTION_GF2VECS", howmany);
+    Int ifrom = GetPositiveSmallInt(SELF_NAME, from);
+    Int ito = GetPositiveSmallInt(SELF_NAME, to);
+    Int ihowmany = GetSmallInt(SELF_NAME, howmany);
 
     if (!IS_GF2VEC_REP(src)) {
-        RequireArgument("COPY_SECTION_GF2VECS", src, "must be a GF2 vector");
+        RequireArgument(SELF_NAME, src, "must be a GF2 vector");
     }
     if (!IS_GF2VEC_REP(dest)) {
-        RequireArgument("COPY_SECTION_GF2VECS", dest, "must be a GF2 vector");
+        RequireArgument(SELF_NAME, dest, "must be a GF2 vector");
     }
 
     UInt lens = LEN_GF2VEC(src);
@@ -2502,7 +2478,7 @@ static Obj FuncCOPY_SECTION_GF2VECS(
     if (ihowmany < 0 ||
         ifrom + ihowmany - 1 > lens || ito + ihowmany - 1 > lend)
         ErrorMayQuit("Bad argument values", 0, 0);
-    RequireMutable("COPY_SECTION_GF2VECS", dest, "vector");
+    RequireMutable(SELF_NAME, dest, "vector");
 
     CopySection_GF2Vecs(src, dest, (UInt)ifrom, (UInt)ito, (UInt)ihowmany);
     return (Obj)0;
@@ -2647,9 +2623,8 @@ static Obj FuncTRANSPOSED_GF2MAT(Obj self, Obj mat)
     UInt imod, nrb, nstart;
     UInt i, j, k, n;
 
-    // check argument
     if (TNUM_OBJ(mat) != T_POSOBJ) {
-        ErrorMayQuit("TRANSPOSED_GF2MAT: Need compressed matrix over GF(2)\n",
+        ErrorMayQuit("TRANSPOSED_GF2MAT: Need compressed matrix over GF(2)",
                      0, 0);
     }
     // type for mat
@@ -2741,11 +2716,7 @@ static Obj FuncNUMBER_GF2VEC(Obj self, Obj vec)
     off2 = BIPEB - off;    // number of insignificant bits in last word
 
     // mask out the last bits
-#ifdef SYS_IS_64_BIT
-    *num2 &= 0xffffffffffffffff >> off2;
-#else
-    *num2 &= 0xffffffff >> off2;
-#endif
+    *num2 &= ALL_BITS_UINT >> off2;
 
     if (len <= NR_SMALL_INT_BITS)
         // it still fits into a small integer
@@ -2899,7 +2870,7 @@ static Obj FuncDIST_GF2VEC_GF2VEC(Obj self, Obj vl, Obj vr)
 
     if (len != LEN_GF2VEC(vr)) {
         ErrorMayQuit("DIST_GF2VEC_GF2VEC: vectors must have the same length",
-                     0L, 0L);
+                     0, 0);
     }
 
     // calculate the offsets
@@ -2910,17 +2881,9 @@ static Obj FuncDIST_GF2VEC_GF2VEC(Obj self, Obj vl, Obj vr)
     off = (len - 1) % BIPEB + 1;    // number of significant bits in last word
     off = BIPEB - off;    // number of insignificant bits in last word
     end = ptL + ((len - 1) / BIPEB);
-#ifdef SYS_IS_64_BIT
-    *end &= 0xffffffffffffffff >> off;
-#else
-    *end &= 0xffffffff >> off;
-#endif
+    *end &= ALL_BITS_UINT >> off;
     end = ptR + ((len - 1) / BIPEB);
-#ifdef SYS_IS_64_BIT
-    *end &= 0xffffffffffffffff >> off;
-#else
-    *end &= 0xffffffff >> off;
-#endif
+    *end &= ALL_BITS_UINT >> off;
 
     return INTOBJ_INT(DistGF2Vecs(ptL, ptR, len));
 }
@@ -3096,11 +3059,8 @@ static Obj FuncA_CLOS_VEC(
 
     len = LEN_GF2VEC(vec);
 
-    if (!ARE_INTOBJS(cnt, stop))
-        ErrorMayQuit("AClosVec: cnt and stop must be small integers, not a "
-                     "%s and a %s",
-                     (Int)TNAM_OBJ(cnt), (Int)TNAM_OBJ(stop));
-
+    RequireNonnegativeSmallInt(SELF_NAME, cnt);
+    RequireNonnegativeSmallInt(SELF_NAME, stop);
 
     // get space for sum vector and zero out
     NEW_GF2VEC(sum, TYPE_LIST_GF2VEC, len);
@@ -3132,11 +3092,8 @@ static Obj FuncA_CLOS_VEC_COORDS(
     len = LEN_GF2VEC(vec);
     len2 = LEN_PLIST(veclis);
 
-    if (!ARE_INTOBJS(cnt, stop))
-        ErrorMayQuit("AClosVec: cnt and stop must be small integers, not a "
-                     "%s and a %s",
-                     (Int)TNAM_OBJ(cnt), (Int)TNAM_OBJ(stop));
-
+    RequireNonnegativeSmallInt(SELF_NAME, cnt);
+    RequireNonnegativeSmallInt(SELF_NAME, stop);
 
     // get space for sum vector and zero out
     NEW_GF2VEC(sum, TYPE_LIST_GF2VEC, len);
@@ -3239,10 +3196,8 @@ static Obj FuncCOSET_LEADERS_INNER_GF2(
     Obj  v, w;
     UInt lenv, lenw;
 
-    if (!ARE_INTOBJS(weight, tofind))
-        ErrorMayQuit("COSET_LEADERS_INNER_GF2: weight and tofind must be "
-                     "smal integers, not a %s and a %s",
-                     (Int)TNAM_OBJ(weight), (Int)TNAM_OBJ(tofind));
+    RequireSmallInt(SELF_NAME, weight);
+    RequireSmallInt(SELF_NAME, tofind);
 
     lenv = LEN_PLIST(veclis);
     NEW_GF2VEC(v, TYPE_LIST_GF2VEC, lenv);
@@ -3303,11 +3258,7 @@ static void ResizeGF2Vec(Obj vec, UInt newlen)
             ptr = BLOCKS_GF2VEC(vec) + (len - 1) / BIPEB;
             off = BIPEB - ((len - 1) % BIPEB +
                            1);    // number of insignificant bits in last word
-#ifdef SYS_IS_64_BIT
-            *ptr &= 0xffffffffffffffff >> off;
-#else
-            *ptr &= 0xffffffff >> off;
-#endif
+            *ptr &= ALL_BITS_UINT >> off;
             ptr++;
         }
 
@@ -3327,11 +3278,7 @@ static void ResizeGF2Vec(Obj vec, UInt newlen)
         if (newlen % BIPEB) {
             ptr = BLOCKS_GF2VEC(vec) + (newlen - 1) / BIPEB;
             off = BIPEB - ((newlen - 1) % BIPEB + 1);
-#ifdef SYS_IS_64_BIT
-            *ptr &= 0xffffffffffffffff >> off;
-#else
-            *ptr &= 0xffffffff >> off;
-#endif
+            *ptr &= ALL_BITS_UINT >> off;
         }
         SET_LEN_GF2VEC(vec, newlen);
         ResizeWordSizedBag(vec, SIZE_PLEN_GF2VEC(newlen));
@@ -3347,8 +3294,8 @@ static void ResizeGF2Vec(Obj vec, UInt newlen)
 
 static Obj FuncRESIZE_GF2VEC(Obj self, Obj vec, Obj newlen)
 {
-    RequireMutable("RESIZE_GF2VEC", vec, "vector");
-    RequireNonnegativeSmallInt("RESIZE_GF2VEC", newlen);
+    RequireMutable(SELF_NAME, vec, "vector");
+    RequireNonnegativeSmallInt(SELF_NAME, newlen);
     ResizeGF2Vec(vec, INT_INTOBJ(newlen));
     return (Obj)0;
 }
@@ -3389,7 +3336,7 @@ static void ShiftLeftGF2Vec(Obj vec, UInt amount)
             block |= (*ptr2) << (BIPEB - off);
             *ptr1++ = block;
         }
-        // Handle last block seperately to avoid reading off end of Bag
+        // Handle last block separately to avoid reading off end of Bag
         block = (*ptr2++) >> off;
         if (ptr2 < BLOCKS_GF2VEC(vec) + NUMBER_BLOCKS_GF2VEC(vec))
             block |= (*ptr2) << (BIPEB - off);
@@ -3406,8 +3353,8 @@ static void ShiftLeftGF2Vec(Obj vec, UInt amount)
 
 static Obj FuncSHIFT_LEFT_GF2VEC(Obj self, Obj vec, Obj amount)
 {
-    RequireMutable("SHIFT_LEFT_GF2VEC", vec, "vector");
-    RequireNonnegativeSmallInt("SHIFT_LEFT_GF2VEC", amount);
+    RequireMutable(SELF_NAME, vec, "vector");
+    RequireNonnegativeSmallInt(SELF_NAME, amount);
     ShiftLeftGF2Vec(vec, INT_INTOBJ(amount));
     return (Obj)0;
 }
@@ -3463,14 +3410,14 @@ static void ShiftRightGF2Vec(Obj vec, UInt amount)
 
 /****************************************************************************
 **
-*F  FuncSHIFT_RIGHT_GF2VEC(<self>, <vec>, <amount> )
+*F  FuncSHIFT_RIGHT_GF2VEC(<self>, <vec>, <amount>, <zero> )
 **
 */
 
-static Obj FuncSHIFT_RIGHT_GF2VEC(Obj self, Obj vec, Obj amount)
+static Obj FuncSHIFT_RIGHT_GF2VEC(Obj self, Obj vec, Obj amount, Obj zero)
 {
-    RequireMutable("SHIFT_RIGHT_GF2VEC", vec, "vector");
-    RequireNonnegativeSmallInt("SHIFT_RIGHT_GF2VEC", amount);
+    RequireMutable(SELF_NAME, vec, "vector");
+    RequireNonnegativeSmallInt(SELF_NAME, amount);
     ShiftRightGF2Vec(vec, INT_INTOBJ(amount));
     return (Obj)0;
 }
@@ -3496,11 +3443,7 @@ static void AddShiftedVecGF2VecGF2(Obj vec1, Obj vec2, UInt len2, UInt off)
         for (i = 0; i < (len2 - 1) / BIPEB; i++)
             *ptr1++ ^= *ptr2++;
         block = *ptr2;
-#ifdef SYS_IS_64_BIT
-        block &= (0xFFFFFFFFFFFFFFFF >> (BIPEB - (len2 - 1) % BIPEB - 1));
-#else
-        block &= (0xFFFFFFFF >> (BIPEB - (len2 - 1) % BIPEB - 1));
-#endif
+        block &= (ALL_BITS_UINT >> (BIPEB - (len2 - 1) % BIPEB - 1));
         *ptr1 ^= block;
     }
     else {
@@ -3515,11 +3458,7 @@ static void AddShiftedVecGF2VecGF2(Obj vec1, Obj vec2, UInt len2, UInt off)
 
         if (len2 % BIPEB) {
             block = *ptr2;
-#ifdef SYS_IS_64_BIT
-            block &= 0xFFFFFFFFFFFFFFFF >> (BIPEB - (len2 - 1) % BIPEB - 1);
-#else
-            block &= 0xFFFFFFFF >> (BIPEB - (len2 - 1) % BIPEB - 1);
-#endif
+            block &= ALL_BITS_UINT >> (BIPEB - (len2 - 1) % BIPEB - 1);
             *ptr1++ ^= block << shift1;
             if (len2 % BIPEB + off % BIPEB > BIPEB) {
                 assert(ptr1 < BLOCKS_GF2VEC(vec1) +
@@ -3539,8 +3478,8 @@ static void AddShiftedVecGF2VecGF2(Obj vec1, Obj vec2, UInt len2, UInt off)
 static Obj
 FuncADD_GF2VEC_GF2VEC_SHIFTED(Obj self, Obj vec1, Obj vec2, Obj len2, Obj off)
 {
-    RequireNonnegativeSmallInt("ADD_GF2VEC_GF2VEC_SHIFTED", off);
-    RequireNonnegativeSmallInt("ADD_GF2VEC_GF2VEC_SHIFTED", len2);
+    RequireNonnegativeSmallInt(SELF_NAME, off);
+    RequireNonnegativeSmallInt(SELF_NAME, len2);
     Int off1 = INT_INTOBJ(off);
     Int len2a = INT_INTOBJ(len2);
     if (len2a >= LEN_GF2VEC(vec2)) {
@@ -3611,10 +3550,9 @@ FuncPROD_COEFFS_GF2VEC(Obj self, Obj vec1, Obj len1, Obj vec2, Obj len2)
     UInt len1a, len2a;
     Obj  prod;
     UInt last;
-    if (!ARE_INTOBJS(len1, len2))
-        ErrorMayQuit("PROD_COEFFS_GF2VEC: vector lengths must be small "
-                     "integers, not a %s and a %s",
-                     (Int)TNAM_OBJ(len1), (Int)TNAM_OBJ(len2));
+
+    RequireSmallInt(SELF_NAME, len1);
+    RequireSmallInt(SELF_NAME, len2);
     len2a = INT_INTOBJ(len2);
     if (len2a > LEN_GF2VEC(vec2))
         ErrorMayQuit("PROD_COEFFS_GF2VEC: <len2> must not be more than the "
@@ -3680,8 +3618,8 @@ FuncREDUCE_COEFFS_GF2VEC(Obj self, Obj vec1, Obj len1, Obj vec2, Obj len2)
 {
     UInt last;
     Int  len2a;
-    RequireNonnegativeSmallInt("ReduceCoeffs", len1);
-    RequireNonnegativeSmallInt("ReduceCoeffs", len2);
+    RequireNonnegativeSmallInt(SELF_NAME, len1);
+    RequireNonnegativeSmallInt(SELF_NAME, len2);
     if (INT_INTOBJ(len1) > LEN_GF2VEC(vec1))
         ErrorMayQuit("ReduceCoeffs: given length <len1> of left argt "
                      "(%d)\nis longer than the argt (%d)",
@@ -3725,8 +3663,8 @@ FuncQUOTREM_COEFFS_GF2VEC(Obj self, Obj vec1, Obj len1, Obj vec2, Obj len2)
     Int len2a;
     Int len1a = INT_INTOBJ(len1);
     Obj quotv, remv, ret;
-    RequireNonnegativeSmallInt("QuotremCoeffs", len1);
-    RequireNonnegativeSmallInt("QuotremCoeffs", len2);
+    RequireNonnegativeSmallInt(SELF_NAME, len1);
+    RequireNonnegativeSmallInt(SELF_NAME, len2);
     if (INT_INTOBJ(len1) > LEN_GF2VEC(vec1))
         ErrorMayQuit("QuotremCoeffs: given length <len1> of left argt "
                      "(%d)\nis longer than the argt (%d)",
@@ -3785,7 +3723,6 @@ static Obj FuncSEMIECHELON_LIST_GF2VECS(Obj self, Obj mat)
     UInt i, len;
     UInt width;
     Obj  row;
-    // check argts
     len = LEN_PLIST(mat);
     if (!len)
         return TRY_NEXT_METHOD;
@@ -3820,7 +3757,6 @@ static Obj FuncSEMIECHELON_LIST_GF2VECS_TRANSFORMATIONS(Obj self, Obj mat)
     UInt i, len;
     UInt width;
     Obj  row;
-    // check argts
     len = LEN_PLIST(mat);
     if (!len)
         return TRY_NEXT_METHOD;
@@ -3851,7 +3787,6 @@ static Obj FuncTRIANGULIZE_LIST_GF2VECS(Obj self, Obj mat)
     UInt i, len;
     UInt width;
     Obj  row;
-    // check argts
     len = LEN_PLIST(mat);
     if (!len)
         return TRY_NEXT_METHOD;
@@ -3883,7 +3818,6 @@ static Obj FuncRANK_LIST_GF2VECS(Obj self, Obj mat)
     UInt i, len;
     UInt width;
     Obj  row;
-    // check argts
     len = LEN_PLIST(mat);
     if (!len)
         return TRY_NEXT_METHOD;
@@ -3914,7 +3848,6 @@ static Obj FuncDETERMINANT_LIST_GF2VECS(Obj self, Obj mat)
     UInt i, len;
     UInt width;
     Obj  row;
-    // check argts
     len = LEN_PLIST(mat);
     if (!len)
         return TRY_NEXT_METHOD;
@@ -4035,8 +3968,8 @@ static Obj FuncKRONECKERPRODUCT_GF2MAT_GF2MAT(Obj self, Obj matl, Obj matr)
 */
 static Obj FuncMAT_ELM_GF2MAT(Obj self, Obj mat, Obj row, Obj col)
 {
-    UInt r = GetPositiveSmallInt("MAT_ELM_GF2MAT", row);
-    UInt c = GetPositiveSmallInt("MAT_ELM_GF2MAT", col);
+    UInt r = GetPositiveSmallInt(SELF_NAME, row);
+    UInt c = GetPositiveSmallInt(SELF_NAME, col);
 
     if (LEN_GF2MAT(mat) < r) {
         ErrorMayQuit("row index %d exceeds %d, the number of rows", r,
@@ -4062,8 +3995,8 @@ static Obj FuncMAT_ELM_GF2MAT(Obj self, Obj mat, Obj row, Obj col)
 static Obj
 FuncSET_MAT_ELM_GF2MAT(Obj self, Obj mat, Obj row, Obj col, Obj elm)
 {
-    UInt r = GetPositiveSmallInt("SET_MAT_ELM_GF2MAT", row);
-    UInt c = GetPositiveSmallInt("SET_MAT_ELM_GF2MAT", col);
+    UInt r = GetPositiveSmallInt(SELF_NAME, row);
+    UInt c = GetPositiveSmallInt(SELF_NAME, col);
 
     if (LEN_GF2MAT(mat) < r) {
         ErrorMayQuit("row index %d exceeds %d, the number of rows", r,
@@ -4087,9 +4020,8 @@ FuncSET_MAT_ELM_GF2MAT(Obj self, Obj mat, Obj row, Obj col, Obj elm)
         BLOCK_ELM_GF2VEC(vec, c) &= ~MASK_POS_GF2VEC(c);
     }
     else {
-        ErrorMayQuit("SET_MAT_ELM_GF2MAT: assigned element must be a GF(2) "
-                     "element, not a %s",
-                     (Int)TNAM_OBJ(elm), 0L);
+        RequireArgumentEx(SELF_NAME, elm, 0,
+                          "assigned element must be a GF(2) element");
     }
 
     return 0;
@@ -4108,73 +4040,75 @@ FuncSET_MAT_ELM_GF2MAT(Obj self, Obj mat, Obj row, Obj col, Obj elm)
 */
 static StructGVarFunc GVarFuncs[] = {
 
-    GVAR_FUNC(CONV_GF2VEC, 1, "list"),
-    GVAR_FUNC(COPY_GF2VEC, 1, "list"),
-    GVAR_FUNC(PLAIN_GF2VEC, 1, "gf2vec"),
-    GVAR_FUNC(PLAIN_GF2MAT, 1, "gf2mat"),
-    GVAR_FUNC(EQ_GF2VEC_GF2VEC, 2, "gf2vec, gf2vec"),
-    GVAR_FUNC(LT_GF2VEC_GF2VEC, 2, "gf2vec, gf2vec"),
-    GVAR_FUNC(EQ_GF2MAT_GF2MAT, 2, "gf2mat, gf2mat"),
-    GVAR_FUNC(LT_GF2MAT_GF2MAT, 2, "gf2mat, gf2mat"),
-    GVAR_FUNC(LEN_GF2VEC, 1, "gf2vec"),
-    GVAR_FUNC(ELM0_GF2VEC, 2, "gf2vec, pos"),
-    GVAR_FUNC(ELM_GF2VEC, 2, "gf2vec, pos"),
-    GVAR_FUNC(ELMS_GF2VEC, 2, "gf2vec, poss"),
-    GVAR_FUNC(ASS_GF2VEC, 3, "gf2vec, pos, elm"),
-    GVAR_FUNC(ELM_GF2MAT, 2, "gf2mat, pos"),
-    GVAR_FUNC(ASS_GF2MAT, 3, "gf2mat, pos, elm"),
-    GVAR_FUNC(UNB_GF2VEC, 2, "gf2vec, pos"),
-    GVAR_FUNC(UNB_GF2MAT, 2, "gf2mat, pos"),
-    GVAR_FUNC(ZERO_GF2VEC, 1, "gf2vec"),
-    GVAR_FUNC(ZERO_GF2VEC_2, 1, "len"),
-    GVAR_FUNC(INV_GF2MAT_MUTABLE, 1, "gf2mat"),
-    GVAR_FUNC(INV_GF2MAT_SAME_MUTABILITY, 1, "gf2mat"),
-    GVAR_FUNC(INV_GF2MAT_IMMUTABLE, 1, "gf2mat"),
-    GVAR_FUNC(INV_PLIST_GF2VECS_DESTRUCTIVE, 1, "list"),
-    GVAR_FUNC(SUM_GF2VEC_GF2VEC, 2, "gf2vec, gf2vec"),
-    GVAR_FUNC(PROD_GF2VEC_GF2VEC, 2, "gf2vec, gf2vec"),
-    GVAR_FUNC(PROD_GF2VEC_GF2MAT, 2, "gf2vec, gf2mat"),
-    GVAR_FUNC(PROD_GF2MAT_GF2VEC, 2, "gf2mat, gf2vec"),
-    GVAR_FUNC(PROD_GF2MAT_GF2MAT, 2, "gf2matl, gf2matr"),
-    GVAR_FUNC(PROD_GF2MAT_GF2MAT_SIMPLE, 2, "gf2matl, gf2matr"),
-    GVAR_FUNC(PROD_GF2MAT_GF2MAT_ADVANCED,
-              4,
-              "gf2matl, gf2matr, greaselevel, blocklevel"),
-    GVAR_FUNC(ADDCOEFFS_GF2VEC_GF2VEC_MULT, 3, "gf2vec, gf2vec, mul"),
-    GVAR_FUNC(ADDCOEFFS_GF2VEC_GF2VEC, 2, "gf2vec, gf2vec"),
-    GVAR_FUNC(SHRINKCOEFFS_GF2VEC, 1, "gf2vec"),
-    GVAR_FUNC(POSITION_NONZERO_GF2VEC, 2, "gf2vec, zero"),
-    GVAR_FUNC(POSITION_NONZERO_GF2VEC3, 3, "gf2vec, zero, from"),
-    GVAR_FUNC(MULT_VECTOR_GF2VECS_2, 2, "gf2vecl, mul"),
-    GVAR_FUNC(APPEND_GF2VEC, 2, "gf2vecl, gf2vecr"),
-    GVAR_FUNC(SHALLOWCOPY_GF2VEC, 1, "gf2vec"),
-    GVAR_FUNC(NUMBER_GF2VEC, 1, "gf2vec"),
-    GVAR_FUNC(TRANSPOSED_GF2MAT, 1, "gf2mat"),
-    GVAR_FUNC(DIST_GF2VEC_GF2VEC, 2, "gf2vec, gf2vec"),
-    GVAR_FUNC(DIST_VEC_CLOS_VEC, 3, "list, gf2vec, list"),
-    GVAR_FUNC(SUM_GF2MAT_GF2MAT, 2, "matl, matr"),
-    GVAR_FUNC(A_CLOS_VEC, 4, "list, gf2vec, int, int"),
-    GVAR_FUNC(A_CLOS_VEC_COORDS, 4, "list, gf2vec, int, int"),
-    GVAR_FUNC(COSET_LEADERS_INNER_GF2, 4, "veclis, weight, tofind, leaders"),
-    GVAR_FUNC(CONV_GF2MAT, 1, "list"),
-    GVAR_FUNC(PROD_GF2VEC_ANYMAT, 2, "vec, mat"),
-    GVAR_FUNC(RIGHTMOST_NONZERO_GF2VEC, 1, "vec"),
-    GVAR_FUNC(RESIZE_GF2VEC, 2, "vec, newlen"),
-    GVAR_FUNC(SHIFT_LEFT_GF2VEC, 2, "vec, amount"),
-    GVAR_FUNC(SHIFT_RIGHT_GF2VEC, 3, "vec, amount, zero"),
-    GVAR_FUNC(ADD_GF2VEC_GF2VEC_SHIFTED, 4, "vec1, vec2,len2, off"),
-    GVAR_FUNC(PROD_COEFFS_GF2VEC, 4, "vec1, len1, vec2,len2"),
-    GVAR_FUNC(REDUCE_COEFFS_GF2VEC, 4, "vec1, len1, vec2,len2"),
-    GVAR_FUNC(QUOTREM_COEFFS_GF2VEC, 4, "vec1, len1, vec2,len2"),
-    GVAR_FUNC(SEMIECHELON_LIST_GF2VECS, 1, "mat"),
-    GVAR_FUNC(SEMIECHELON_LIST_GF2VECS_TRANSFORMATIONS, 1, "mat"),
-    GVAR_FUNC(TRIANGULIZE_LIST_GF2VECS, 1, "mat"),
-    GVAR_FUNC(DETERMINANT_LIST_GF2VECS, 1, "mat"),
-    GVAR_FUNC(RANK_LIST_GF2VECS, 1, "mat"),
-    GVAR_FUNC(KRONECKERPRODUCT_GF2MAT_GF2MAT, 2, "mat, mat"),
-    GVAR_FUNC(COPY_SECTION_GF2VECS, 5, "src, dest, from, to, howmany"),
-    GVAR_FUNC(MAT_ELM_GF2MAT, 3, "mat, row, col"),
-    GVAR_FUNC(SET_MAT_ELM_GF2MAT, 4, "mat, row, col, elm"),
+    GVAR_FUNC_1ARGS(CONV_GF2VEC, list),
+    GVAR_FUNC_1ARGS(COPY_GF2VEC, list),
+    GVAR_FUNC_1ARGS(PLAIN_GF2VEC, gf2vec),
+    GVAR_FUNC_1ARGS(PLAIN_GF2MAT, gf2mat),
+    GVAR_FUNC_2ARGS(EQ_GF2VEC_GF2VEC, gf2vec, gf2vec),
+    GVAR_FUNC_2ARGS(LT_GF2VEC_GF2VEC, gf2vec, gf2vec),
+    GVAR_FUNC_2ARGS(EQ_GF2MAT_GF2MAT, gf2mat, gf2mat),
+    GVAR_FUNC_2ARGS(LT_GF2MAT_GF2MAT, gf2mat, gf2mat),
+    GVAR_FUNC_1ARGS(LEN_GF2VEC, gf2vec),
+    GVAR_FUNC_2ARGS(ELM0_GF2VEC, gf2vec, pos),
+    GVAR_FUNC_2ARGS(ELM_GF2VEC, gf2vec, pos),
+    GVAR_FUNC_2ARGS(ELMS_GF2VEC, gf2vec, poss),
+    GVAR_FUNC_3ARGS(ASS_GF2VEC, gf2vec, pos, elm),
+    GVAR_FUNC_2ARGS(ELM_GF2MAT, gf2mat, pos),
+    GVAR_FUNC_3ARGS(ASS_GF2MAT, gf2mat, pos, elm),
+    GVAR_FUNC_2ARGS(UNB_GF2VEC, gf2vec, pos),
+    GVAR_FUNC_2ARGS(UNB_GF2MAT, gf2mat, pos),
+    GVAR_FUNC_1ARGS(ZERO_GF2VEC, gf2vec),
+    GVAR_FUNC_1ARGS(ZERO_GF2VEC_2, len),
+    GVAR_FUNC_1ARGS(INV_GF2MAT_MUTABLE, gf2mat),
+    GVAR_FUNC_1ARGS(INV_GF2MAT_SAME_MUTABILITY, gf2mat),
+    GVAR_FUNC_1ARGS(INV_GF2MAT_IMMUTABLE, gf2mat),
+    GVAR_FUNC_1ARGS(INV_PLIST_GF2VECS_DESTRUCTIVE, list),
+    GVAR_FUNC_2ARGS(SUM_GF2VEC_GF2VEC, gf2vec, gf2vec),
+    GVAR_FUNC_2ARGS(PROD_GF2VEC_GF2VEC, gf2vec, gf2vec),
+    GVAR_FUNC_2ARGS(PROD_GF2VEC_GF2MAT, gf2vec, gf2mat),
+    GVAR_FUNC_2ARGS(PROD_GF2MAT_GF2VEC, gf2mat, gf2vec),
+    GVAR_FUNC_2ARGS(PROD_GF2MAT_GF2MAT, gf2matl, gf2matr),
+    GVAR_FUNC_2ARGS(PROD_GF2MAT_GF2MAT_SIMPLE, gf2matl, gf2matr),
+    GVAR_FUNC_4ARGS(PROD_GF2MAT_GF2MAT_ADVANCED,
+                    gf2matl,
+                    gf2matr,
+                    greaselevel,
+                    blocklevel),
+    GVAR_FUNC_3ARGS(ADDCOEFFS_GF2VEC_GF2VEC_MULT, gf2vec, gf2vec, mul),
+    GVAR_FUNC_2ARGS(ADDCOEFFS_GF2VEC_GF2VEC, gf2vec, gf2vec),
+    GVAR_FUNC_1ARGS(SHRINKCOEFFS_GF2VEC, gf2vec),
+    GVAR_FUNC_2ARGS(POSITION_NONZERO_GF2VEC, gf2vec, zero),
+    GVAR_FUNC_3ARGS(POSITION_NONZERO_GF2VEC3, gf2vec, zero, from),
+    GVAR_FUNC_2ARGS(MULT_VECTOR_GF2VECS_2, gf2vecl, mul),
+    GVAR_FUNC_2ARGS(APPEND_GF2VEC, gf2vecl, gf2vecr),
+    GVAR_FUNC_1ARGS(SHALLOWCOPY_GF2VEC, gf2vec),
+    GVAR_FUNC_1ARGS(NUMBER_GF2VEC, gf2vec),
+    GVAR_FUNC_1ARGS(TRANSPOSED_GF2MAT, gf2mat),
+    GVAR_FUNC_2ARGS(DIST_GF2VEC_GF2VEC, gf2vec, gf2vec),
+    GVAR_FUNC_3ARGS(DIST_VEC_CLOS_VEC, list, gf2vec, list),
+    GVAR_FUNC_2ARGS(SUM_GF2MAT_GF2MAT, matl, matr),
+    GVAR_FUNC_4ARGS(A_CLOS_VEC, list, gf2vec, int, int),
+    GVAR_FUNC_4ARGS(A_CLOS_VEC_COORDS, list, gf2vec, int, int),
+    GVAR_FUNC_4ARGS(COSET_LEADERS_INNER_GF2, veclis, weight, tofind, leaders),
+    GVAR_FUNC_1ARGS(CONV_GF2MAT, list),
+    GVAR_FUNC_2ARGS(PROD_GF2VEC_ANYMAT, vec, mat),
+    GVAR_FUNC_1ARGS(RIGHTMOST_NONZERO_GF2VEC, vec),
+    GVAR_FUNC_2ARGS(RESIZE_GF2VEC, vec, newlen),
+    GVAR_FUNC_2ARGS(SHIFT_LEFT_GF2VEC, vec, amount),
+    GVAR_FUNC_3ARGS(SHIFT_RIGHT_GF2VEC, vec, amount, zero),
+    GVAR_FUNC_4ARGS(ADD_GF2VEC_GF2VEC_SHIFTED, vec1, vec2, len2, off),
+    GVAR_FUNC_4ARGS(PROD_COEFFS_GF2VEC, vec1, len1, vec2, len2),
+    GVAR_FUNC_4ARGS(REDUCE_COEFFS_GF2VEC, vec1, len1, vec2, len2),
+    GVAR_FUNC_4ARGS(QUOTREM_COEFFS_GF2VEC, vec1, len1, vec2, len2),
+    GVAR_FUNC_1ARGS(SEMIECHELON_LIST_GF2VECS, mat),
+    GVAR_FUNC_1ARGS(SEMIECHELON_LIST_GF2VECS_TRANSFORMATIONS, mat),
+    GVAR_FUNC_1ARGS(TRIANGULIZE_LIST_GF2VECS, mat),
+    GVAR_FUNC_1ARGS(DETERMINANT_LIST_GF2VECS, mat),
+    GVAR_FUNC_1ARGS(RANK_LIST_GF2VECS, mat),
+    GVAR_FUNC_2ARGS(KRONECKERPRODUCT_GF2MAT_GF2MAT, mat, mat),
+    GVAR_FUNC_5ARGS(COPY_SECTION_GF2VECS, src, dest, from, to, howmany),
+    GVAR_FUNC_3ARGS(MAT_ELM_GF2MAT, mat, row, col),
+    GVAR_FUNC_4ARGS(SET_MAT_ELM_GF2MAT, mat, row, col, elm),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -4192,15 +4126,15 @@ static Int InitKernel(StructInitInfo * module)
     RNrelns = 0;
 
     // import type functions
-    ImportGVarFromLibrary("TYPE_LIST_GF2VEC", &TYPE_LIST_GF2VEC);
-    ImportGVarFromLibrary("TYPE_LIST_GF2VEC_IMM", &TYPE_LIST_GF2VEC_IMM);
-    ImportGVarFromLibrary("TYPE_LIST_GF2VEC_IMM_LOCKED",
+    InitCopyGVar("TYPE_LIST_GF2VEC", &TYPE_LIST_GF2VEC);
+    InitCopyGVar("TYPE_LIST_GF2VEC_IMM", &TYPE_LIST_GF2VEC_IMM);
+    InitCopyGVar("TYPE_LIST_GF2VEC_IMM_LOCKED",
                           &TYPE_LIST_GF2VEC_IMM_LOCKED);
-    ImportGVarFromLibrary("TYPE_LIST_GF2VEC_LOCKED",
+    InitCopyGVar("TYPE_LIST_GF2VEC_LOCKED",
                           &TYPE_LIST_GF2VEC_LOCKED);
     ImportFuncFromLibrary("IsGF2VectorRep", &IsGF2VectorRep);
-    ImportGVarFromLibrary("TYPE_LIST_GF2MAT", &TYPE_LIST_GF2MAT);
-    ImportGVarFromLibrary("TYPE_LIST_GF2MAT_IMM", &TYPE_LIST_GF2MAT_IMM);
+    InitCopyGVar("TYPE_LIST_GF2MAT", &TYPE_LIST_GF2MAT);
+    InitCopyGVar("TYPE_LIST_GF2MAT_IMM", &TYPE_LIST_GF2MAT_IMM);
 
     // initialize one and zero of GF2
     ImportGVarFromLibrary("GF2One", &GF2One);
@@ -4212,7 +4146,6 @@ static Int InitKernel(StructInitInfo * module)
     InitFopyGVar("IsLockedRepresentationVector",
                  &IsLockedRepresentationVector);
 
-    // return success
     return 0;
 }
 
@@ -4226,7 +4159,6 @@ static Int InitLibrary(StructInitInfo * module)
     // init filters and functions
     InitGVarFuncsFromTable(GVarFuncs);
 
-    // return success
     return 0;
 }
 

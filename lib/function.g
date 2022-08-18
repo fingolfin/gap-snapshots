@@ -292,7 +292,7 @@ BIND_GLOBAL( "FilenameFunc", FILENAME_FUNC );
 ##  <Log><![CDATA[
 ##  gap> meth:= ApplicableMethod( Size, [ Group( () ) ] );;
 ##  gap> FilenameFunc( meth );
-##  "... some path ... gap4r5/lib/grpperm.gi"
+##  "... some path ... /lib/grpperm.gi"
 ##  gap> StartlineFunc( meth );
 ##  487
 ##  gap> EndlineFunc( meth );
@@ -313,8 +313,8 @@ BIND_GLOBAL( "EndlineFunc", ENDLINE_FUNC );
 ##
 ##  <Description>
 ##  Let <A>func</A> be a function.
-##  Returns a string describing the location of <A>func</A>, or an empty
-##  string if the information cannot be found. This uses the information
+##  Returns a string describing the location of <A>func</A>, or <K>fail</K>
+##  if the information cannot be found. This uses the information
 ##  provided by <Ref Func="FilenameFunc"/> and <Ref Func="StartlineFunc"/>
 ##  <P/>
 ##  <Log><![CDATA[
@@ -322,38 +322,39 @@ BIND_GLOBAL( "EndlineFunc", ENDLINE_FUNC );
 ##  "... some path ... gap/lib/coll.gi:2467"
 ##  # String is an attribute, so no information is stored
 ##  gap> LocationFunc( String );
-##  ""
+##  fail
 ##  ]]></Log>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-BIND_GLOBAL( "LocationFunc", function(x)
+BIND_GLOBAL( "LocationFunc", function(func)
     local nam, line, ret;
     # If someone passes something which isn't a true function,
     # like a method or attribute, just return.
-    if not(IS_FUNCTION(x)) then
-        return "";
+    if not IS_FUNCTION(func) then
+        Error("<func> must be a function");
     fi;
     ret := "";
-    nam := FILENAME_FUNC(x);
+    nam := FILENAME_FUNC(func);
     if nam = fail then
-        return ret;
+        return fail;
     fi;
-    line := STARTLINE_FUNC(x);
+    line := STARTLINE_FUNC(func);
     if line <> fail then
         APPEND_LIST(ret, nam);
         APPEND_LIST(ret, ":");
         APPEND_LIST(ret, STRING_INT(line));
         return ret;
     fi;
-    line := LOCATION_FUNC(x);
+    line := LOCATION_FUNC(func);
     if line <> fail then
         APPEND_LIST(ret, nam);
         APPEND_LIST(ret, ":");
         APPEND_LIST(ret, line);
+        return ret;
     fi;
-    return ret;
+    return fail;
 end);
 
 
@@ -419,7 +420,7 @@ end);
 ##  ]]></Example>
 ##  <Ref Oper="CallFuncListWrap"/> differs only in that the result is a list.
 ##  This returned list is empty if the called function returned no value,
-##  else it contains the returned value as it's single member. This allows
+##  else it contains the returned value as its single member. This allows
 ##  wrapping functions which may, or may not return a value.
 ##
 ##  <Example><![CDATA[
@@ -619,9 +620,6 @@ InstallMethod( ViewObj, "for a function", true, [IsFunction], 0,
     if narg < 0 then
         isvarg := true;
         narg := -narg;
-    fi;
-    if narg = 1 and nams <> fail and nams[1] = "arg" then
-        isvarg := true;
     fi;
     if narg <> 0 then
         if nams = fail then

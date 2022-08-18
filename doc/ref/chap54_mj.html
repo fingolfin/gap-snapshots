@@ -80,12 +80,21 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap54_mj.html#X848CD855802C6CE1">54.5 <span class="Heading">Operators and operations for partial permutations</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X8382A0F8875CEB08">54.5-1 PermLeftQuoPartialPerm</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X7C7F5EAB7E9A381D">54.5-2 PreImagePartialPerm</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X797A6CC084068219">54.5-3 ComponentPartialPermInt</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X87B1ED93785257C1">54.5-4 NaturalLeqPartialPerm</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X81BD69307D294A1C">54.5-5 ShortLexLeqPartialPerm</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X83560BE678ACF855">54.5-6 TrimPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X7B8630027B7F0BCC">54.5-1 Inverse</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X792D3BA278DAB869"><code>54.5-2 \^</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X7DC25BC47AAA9C73"><code>54.5-3 \/</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X8213CD6E7C461169"><code>54.5-4 \^</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X86469D597F8BC7CE"><code>54.5-5 \*</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X869DBDF67FA3817B"><code>54.5-6 \/</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X82E3A3E186A4F2D2">54.5-7 LeftQuotient</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X8659E9E57AC8D9CE"><code>54.5-8 \&lt;</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X7828338C7DB8AAC7"><code>54.5-9 \=</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X8382A0F8875CEB08">54.5-10 PermLeftQuoPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X7C7F5EAB7E9A381D">54.5-11 PreImagePartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X797A6CC084068219">54.5-12 ComponentPartialPermInt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X87B1ED93785257C1">54.5-13 NaturalLeqPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X81BD69307D294A1C">54.5-14 ShortLexLeqPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap54_mj.html#X83560BE678ACF855">54.5-15 TrimPartialPerm</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap54_mj.html#X7849595B81D063EE">54.6 <span class="Heading">Displaying partial permutations</span></a>
 </span>
@@ -936,48 +945,72 @@ true</pre></div>
 
 <h4>54.5 <span class="Heading">Operators and operations for partial permutations</span></h4>
 
+<p><a id="X7B8630027B7F0BCC" name="X7B8630027B7F0BCC"></a></p>
 
-<dl>
-<dt><strong class="Mark"><code class="code"><var class="Arg">f</var> ^ -1</code></strong></dt>
-<dd><p>returns the inverse of the partial permutation <var class="Arg">f</var>.</p>
+<h5>54.5-1 Inverse</h5>
 
-</dd>
-<dt><strong class="Mark"><code class="code"><var class="Arg">i</var> ^ <var class="Arg">f</var></code></strong></dt>
-<dd><p>returns the image of the positive integer <var class="Arg">i</var> under the partial permutation <var class="Arg">f</var> if it is defined and <code class="code">0</code> if it is not.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Inverse</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>returns the inverse of the partial permutation <var class="Arg">f</var>.</p>
 
-</dd>
-<dt><strong class="Mark"><code class="code"><var class="Arg">i</var> / <var class="Arg">f</var></code></strong></dt>
-<dd><p>returns the preimage of the positive integer <var class="Arg">i</var> under the partial permutation <var class="Arg">f</var> if it is defined and <code class="code">0</code> if it is not. Note that the inverse of <var class="Arg">f</var> is not calculated to find the preimage of <var class="Arg">i</var>.</p>
+<p><a id="X792D3BA278DAB869" name="X792D3BA278DAB869"></a></p>
 
-</dd>
-<dt><strong class="Mark"><code class="code"><var class="Arg">f</var> ^ <var class="Arg">g</var></code></strong></dt>
-<dd><p>returns <code class="code"><var class="Arg">g</var>^-1*<var class="Arg">f</var>*<var class="Arg">g</var></code> when <var class="Arg">f</var> is a partial permutation and <var class="Arg">g</var> is a permutation or partial permutation; see <code class="func">\^</code> (<a href="chap31_mj.html#X8481C9B97B214C23"><span class="RefLink">31.12-1</span></a>). This operation requires essentially the same number of steps as multiplying partial permutations, which is around one third as many as inverting and multiplying twice.</p>
+<h5><code>54.5-2 \^</code></h5>
 
-</dd>
-<dt><strong class="Mark"><code class="code"><var class="Arg">f</var> * <var class="Arg">g</var></code></strong></dt>
-<dd><p>returns the composition of <var class="Arg">f</var> and <var class="Arg">g</var> when <var class="Arg">f</var> and <var class="Arg">g</var> are partial permutations or permutations. The product of a permutation and a partial permutation is returned as a partial permutation.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \^</code>( <var class="Arg">i</var>, <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>returns the image of the positive integer <var class="Arg">i</var> under the partial permutation <var class="Arg">f</var> if it is defined and <code class="code">0</code> if it is not.</p>
 
-</dd>
-<dt><strong class="Mark"><code class="code"><var class="Arg">f</var> / <var class="Arg">g</var></code></strong></dt>
-<dd><p>returns <code class="code"><var class="Arg">f</var>*<var class="Arg">g</var>^-1</code> when <var class="Arg">f</var> is a partial permutation and <var class="Arg">g</var> is a permutation or partial permutation. This operation requires essentially the same number of steps as multiplying partial permutations, which is approximately half that required to first invert <var class="Arg">g</var> and then take the product with <var class="Arg">f</var>.</p>
+<p><a id="X7DC25BC47AAA9C73" name="X7DC25BC47AAA9C73"></a></p>
 
-</dd>
-<dt><strong class="Mark"><code class="code">LQUO(<var class="Arg">g</var>, <var class="Arg">f</var>)</code></strong></dt>
-<dd><p>returns <code class="code"><var class="Arg">g</var>^-1*<var class="Arg">f</var></code> when <var class="Arg">f</var> is a partial permutation and <var class="Arg">g</var> is a permutation or partial permutation. This operation requires essentially the same number of steps as multiplying partial permutations, which is approximately half that required to first invert <var class="Arg">g</var> and then take the product with <var class="Arg">f</var>.</p>
+<h5><code>54.5-3 \/</code></h5>
 
-</dd>
-<dt><strong class="Mark"><code class="code"><var class="Arg">f</var> &lt; <var class="Arg">g</var></code></strong></dt>
-<dd><p>returns <code class="keyw">true</code> if the image of <var class="Arg">f</var> on the range from 1 to the degree of <var class="Arg">f</var> is lexicographically less than the corresponding image for <var class="Arg">g</var> and <code class="keyw">false</code> if it is not. See <code class="func">NaturalLeqPartialPerm</code> (<a href="chap54_mj.html#X87B1ED93785257C1"><span class="RefLink">54.5-4</span></a>) and <code class="func">ShortLexLeqPartialPerm</code> (<a href="chap54_mj.html#X81BD69307D294A1C"><span class="RefLink">54.5-5</span></a>) for additional orders for partial permutations.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \/</code>( <var class="Arg">i</var>, <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>returns the preimage of the positive integer <var class="Arg">i</var> under the partial permutation <var class="Arg">f</var> if it is defined and <code class="code">0</code> if it is not. Note that the inverse of <var class="Arg">f</var> is not calculated to find the preimage of <var class="Arg">i</var>.</p>
 
-</dd>
-<dt><strong class="Mark"><code class="code"><var class="Arg">f</var> = <var class="Arg">g</var></code></strong></dt>
-<dd><p>returns <code class="keyw">true</code> if the partial permutation <var class="Arg">f</var> equals the partial permutation <var class="Arg">g</var> and returns <code class="keyw">false</code> if it does not.</p>
+<p><a id="X8213CD6E7C461169" name="X8213CD6E7C461169"></a></p>
 
-</dd>
-</dl>
+<h5><code>54.5-4 \^</code></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \^</code>( <var class="Arg">f</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><code class="code"><var class="Arg">f</var> ^ <var class="Arg">g</var></code> returns <code class="code"><var class="Arg">g</var>^-1*<var class="Arg">f</var>*<var class="Arg">g</var></code> when <var class="Arg">f</var> is a partial permutation and <var class="Arg">g</var> is a permutation or partial permutation; see <code class="func">\^</code> (<a href="chap31_mj.html#X8481C9B97B214C23"><span class="RefLink">31.12-1</span></a>). This operation requires essentially the same number of steps as multiplying partial permutations, which is around one third as many as inverting and multiplying twice.</p>
+
+<p><a id="X86469D597F8BC7CE" name="X86469D597F8BC7CE"></a></p>
+
+<h5><code>54.5-5 \*</code></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \*</code>( <var class="Arg">f</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><code class="code"><var class="Arg">f</var> * <var class="Arg">g</var></code> returns the composition of <var class="Arg">f</var> and <var class="Arg">g</var> when <var class="Arg">f</var> and <var class="Arg">g</var> are partial permutations or permutations. The product of a permutation and a partial permutation is returned as a partial permutation.</p>
+
+<p><a id="X869DBDF67FA3817B" name="X869DBDF67FA3817B"></a></p>
+
+<h5><code>54.5-6 \/</code></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \/</code>( <var class="Arg">f</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><code class="code"><var class="Arg">f</var> / <var class="Arg">g</var></code> returns <code class="code"><var class="Arg">f</var>*<var class="Arg">g</var>^-1</code> when <var class="Arg">f</var> is a partial permutation and <var class="Arg">g</var> is a permutation or partial permutation. This operation requires essentially the same number of steps as multiplying partial permutations, which is approximately half that required to first invert <var class="Arg">g</var> and then take the product with <var class="Arg">f</var>.</p>
+
+<p><a id="X82E3A3E186A4F2D2" name="X82E3A3E186A4F2D2"></a></p>
+
+<h5>54.5-7 LeftQuotient</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftQuotient</code>( <var class="Arg">g</var>, <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>returns <code class="code"><var class="Arg">g</var>^-1*<var class="Arg">f</var></code> when <var class="Arg">f</var> is a partial permutation and <var class="Arg">g</var> is a permutation or partial permutation. This operation requires essentially the same number of steps as multiplying partial permutations, which is approximately half that required to first invert <var class="Arg">g</var> and then take the product with <var class="Arg">f</var>.</p>
+
+<p><a id="X8659E9E57AC8D9CE" name="X8659E9E57AC8D9CE"></a></p>
+
+<h5><code>54.5-8 \&lt;</code></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \&lt;</code>( <var class="Arg">f</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><code class="code"><var class="Arg">f</var> &lt; <var class="Arg">g</var></code> returns <code class="keyw">true</code> if the image of <var class="Arg">f</var> on the range from 1 to the degree of <var class="Arg">f</var> is lexicographically less than the corresponding image for <var class="Arg">g</var> and <code class="keyw">false</code> if it is not. See <code class="func">NaturalLeqPartialPerm</code> (<a href="chap54_mj.html#X87B1ED93785257C1"><span class="RefLink">54.5-13</span></a>) and <code class="func">ShortLexLeqPartialPerm</code> (<a href="chap54_mj.html#X81BD69307D294A1C"><span class="RefLink">54.5-14</span></a>) for additional orders for partial permutations.</p>
+
+<p><a id="X7828338C7DB8AAC7" name="X7828338C7DB8AAC7"></a></p>
+
+<h5><code>54.5-9 \=</code></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \=</code>( <var class="Arg">f</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><code class="code"><var class="Arg">f</var> = <var class="Arg">g</var></code> returns <code class="keyw">true</code> if the partial permutation <var class="Arg">f</var> equals the partial permutation <var class="Arg">g</var> and returns <code class="keyw">false</code> if it does not.</p>
+
 <p><a id="X8382A0F8875CEB08" name="X8382A0F8875CEB08"></a></p>
 
-<h5>54.5-1 PermLeftQuoPartialPerm</h5>
+<h5>54.5-10 PermLeftQuoPartialPerm</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermLeftQuoPartialPerm</code>( <var class="Arg">f</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermLeftQuoPartialPermNC</code>( <var class="Arg">f</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
@@ -998,7 +1031,7 @@ true</pre></div>
 
 <p><a id="X7C7F5EAB7E9A381D" name="X7C7F5EAB7E9A381D"></a></p>
 
-<h5>54.5-2 PreImagePartialPerm</h5>
+<h5>54.5-11 PreImagePartialPerm</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImagePartialPerm</code>( <var class="Arg">f</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A positive integer or <code class="keyw">fail</code>.</p>
@@ -1024,7 +1057,7 @@ fail</pre></div>
 
 <p><a id="X797A6CC084068219" name="X797A6CC084068219"></a></p>
 
-<h5>54.5-3 ComponentPartialPermInt</h5>
+<h5>54.5-12 ComponentPartialPermInt</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComponentPartialPermInt</code>( <var class="Arg">f</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A set of positive integers.</p>
@@ -1047,7 +1080,7 @@ fail</pre></div>
 
 <p><a id="X87B1ED93785257C1" name="X87B1ED93785257C1"></a></p>
 
-<h5>54.5-4 NaturalLeqPartialPerm</h5>
+<h5>54.5-13 NaturalLeqPartialPerm</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalLeqPartialPerm</code>( <var class="Arg">f</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
@@ -1076,7 +1109,7 @@ false</pre></div>
 
 <p><a id="X81BD69307D294A1C" name="X81BD69307D294A1C"></a></p>
 
-<h5>54.5-5 ShortLexLeqPartialPerm</h5>
+<h5>54.5-14 ShortLexLeqPartialPerm</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShortLexLeqPartialPerm</code>( <var class="Arg">f</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
@@ -1108,7 +1141,7 @@ false</pre></div>
 
 <p><a id="X83560BE678ACF855" name="X83560BE678ACF855"></a></p>
 
-<h5>54.5-6 TrimPartialPerm</h5>
+<h5>54.5-15 TrimPartialPerm</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TrimPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: Nothing.</p>
@@ -1337,9 +1370,9 @@ true
 
 <p>The <em>natural partial order</em> <span class="SimpleMath">\(\leq\)</span> on an inverse semigroup <var class="Arg">S</var> is defined by <code class="code">s</code><span class="SimpleMath">\(\leq\)</span><code class="code">t</code> if there exists an idempotent <code class="code">e</code> in <var class="Arg">S</var> such that <code class="code">s=et</code>. Hence if <code class="code">f</code> and <code class="code">g</code> are partial permutations, then <code class="code">f</code><span class="SimpleMath">\(\leq\)</span><code class="code">g</code> if and only if <code class="code">f</code> is a restriction of <code class="code">g</code>; see <code class="func">RestrictedPartialPerm</code> (<a href="chap54_mj.html#X80ABBF4883C79060"><span class="RefLink">54.2-3</span></a>).</p>
 
-<p><code class="code">NaturalPartialOrder</code> returns the natural partial order on the inverse semigroup of partial permutations <var class="Arg">S</var> as a list of sets of positive integers where entry <code class="code">i</code> in <code class="code">NaturalPartialOrder(<var class="Arg">S</var>)</code> is the set of positions in <code class="code">Elements(<var class="Arg">S</var>)</code> of elements which are less than <code class="code">Elements(<var class="Arg">S</var>)[i]</code>. See also <code class="func">NaturalLeqPartialPerm</code> (<a href="chap54_mj.html#X87B1ED93785257C1"><span class="RefLink">54.5-4</span></a>).</p>
+<p><code class="code">NaturalPartialOrder</code> returns the natural partial order on the inverse semigroup of partial permutations <var class="Arg">S</var> as a list of sets of positive integers where entry <code class="code">i</code> in <code class="code">NaturalPartialOrder(<var class="Arg">S</var>)</code> is the set of positions in <code class="code">Elements(<var class="Arg">S</var>)</code> of elements which are less than <code class="code">Elements(<var class="Arg">S</var>)[i]</code>. See also <code class="func">NaturalLeqPartialPerm</code> (<a href="chap54_mj.html#X87B1ED93785257C1"><span class="RefLink">54.5-13</span></a>).</p>
 
-<p><code class="code">ReverseNaturalPartialOrder</code> returns the reverse of the natural partial order on the inverse semigroup of partial permutations <var class="Arg">S</var> as a list of sets of positive integers where entry <code class="code">i</code> in <code class="code">ReverseNaturalPartialOrder(<var class="Arg">S</var>)</code> is the set of positions in <code class="code">Elements(<var class="Arg">S</var>)</code> of elements which are greater than <code class="code">Elements(<var class="Arg">S</var>)[i]</code>. See also <code class="func">NaturalLeqPartialPerm</code> (<a href="chap54_mj.html#X87B1ED93785257C1"><span class="RefLink">54.5-4</span></a>).</p>
+<p><code class="code">ReverseNaturalPartialOrder</code> returns the reverse of the natural partial order on the inverse semigroup of partial permutations <var class="Arg">S</var> as a list of sets of positive integers where entry <code class="code">i</code> in <code class="code">ReverseNaturalPartialOrder(<var class="Arg">S</var>)</code> is the set of positions in <code class="code">Elements(<var class="Arg">S</var>)</code> of elements which are greater than <code class="code">Elements(<var class="Arg">S</var>)[i]</code>. See also <code class="func">NaturalLeqPartialPerm</code> (<a href="chap54_mj.html#X87B1ED93785257C1"><span class="RefLink">54.5-13</span></a>).</p>
 
 
 <div class="example"><pre>

@@ -28,6 +28,8 @@
 
 #include "objects.h"
 
+#include <string.h>
+
 /****************************************************************************
 **
 *F  NEW_PLIST(<type>,<plen>)  . . . . . . . . . . . allocate a new plain list
@@ -62,7 +64,7 @@ EXPORT_INLINE Obj NEW_PLIST_WITH_MUTABILITY(Int mut, UInt type, Int plen)
 **
 *F  IS_PLIST( <list> )  . . . . . . . . . . . check if <list> is a plain list
 */
-EXPORT_INLINE Int IS_PLIST(Obj list)
+EXPORT_INLINE BOOL IS_PLIST(Obj list)
 {
     return FIRST_PLIST_TNUM <= TNUM_OBJ(list) &&
            TNUM_OBJ(list) <= LAST_PLIST_TNUM;
@@ -80,7 +82,7 @@ EXPORT_INLINE Int IS_PLIST(Obj list)
 **  (which have the same memory layout as plists), as the plist APIs using it
 **  for assertion checks are in practice invoked on such objects, too.
 */
-EXPORT_INLINE Int IS_PLIST_OR_POSOBJ(Obj list)
+EXPORT_INLINE BOOL IS_PLIST_OR_POSOBJ(Obj list)
 {
     UInt tnum = TNUM_OBJ(list);
     return (FIRST_PLIST_TNUM <= tnum && tnum <= LAST_PLIST_TNUM) ||
@@ -224,7 +226,7 @@ EXPORT_INLINE Obj * BASE_PTR_PLIST(Obj list)
 **  whether they are dense or not (i.e. of type 'T_PLIST'),
 **  use 'IS_DENSE_LIST' instead.
 */
-EXPORT_INLINE Int IS_DENSE_PLIST(Obj list)
+EXPORT_INLINE BOOL IS_DENSE_PLIST(Obj list)
 {
     return T_PLIST_DENSE <= TNUM_OBJ(list) &&
            TNUM_OBJ(list) <= LAST_PLIST_TNUM;
@@ -234,7 +236,7 @@ EXPORT_INLINE Int IS_DENSE_PLIST(Obj list)
 **
 *F  IS_PLIST_MUTABLE( <list> )  . . . . . . . . . . . is a plain list mutable
 */
-EXPORT_INLINE Int IS_PLIST_MUTABLE(Obj list)
+EXPORT_INLINE BOOL IS_PLIST_MUTABLE(Obj list)
 {
     GAP_ASSERT(IS_PLIST(list));
     return !((TNUM_OBJ(list) - T_PLIST) % 2);
@@ -330,17 +332,31 @@ EXPORT_INLINE Obj NewPlistFromArray(const Obj * list, Int length)
 **
 *F  NewPlistFromArgs(<args...>) .  create a plain list from list of arguments
 **
-**  This macro turns a variable-length list of macro arguments into an array,
-**  which is then passed to NewPlistFromArray.
+**  NewPlistFromArgs turns a variable-length list of arguments into
+**  an array, which is then passed to NewPlistFromArray.
 **
-**  __VA_ARGS__ contains the list of arguments given to this macro.
-**  (Obj[]){ __VA_ARGS__ } creates an array of Obj containing the elements
-**  of __VA_ARGS__.
+**  There is no (nice) single implementation of NewPlistFromArgs that works
+**  in both C and C++, so there are two separate implementations.
 */
+#ifdef __cplusplus
+
+// For C++, we use a variadic template function (requires C++11)
+extern "C++" template <typename... Ts>
+Obj NewPlistFromArgs(Ts... args)
+{
+    const int size = sizeof...(args);
+    Obj       res[size] = { args... };
+    return NewPlistFromArray(res, size);
+}
+#else
+
+// For C, we use a variadic macro: __VA_ARGS__ contains the list of
+// arguments given to this macro. (Obj[]){ __VA_ARGS__ } creates an
+// array of Obj containing the elements of __VA_ARGS__.
 #define NewPlistFromArgs(...)                                                \
     NewPlistFromArray((Obj[]){ __VA_ARGS__ },                                \
                       ARRAY_SIZE(((Obj[]){ __VA_ARGS__ })))
-
+#endif
 
 /****************************************************************************
 **

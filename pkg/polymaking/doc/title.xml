@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    polymaking
+  </Title>
+  <Subtitle>
+    Interfacing the geometry software polymake
+  </Subtitle>
+  <Version>
+    Version 0.8.6
+  </Version>
+  <Author>
+    Marc Roeder<Alt Only="LaTeX"><Br/></Alt>
+<Email>roeder.marc@gmail.com</Email>
+
+  </Author>
+  <Date>
+    8 July 2021
+  </Date>
+  <Abstract>
+    
+            This package provides a very basic interface to the polymake
+            program by Ewgenij Gawrilow, Michael Joswig et al. <Cite
+            Key="polymake"></Cite>. The polymake program itself is not
+            included.
+        
+  </Abstract>
+  <Copyright>
+    
+            &copyright; 2007--2013 Marc Roeder. <P/>
+
+            This package is distributed under the terms of the GNU General
+            Public License version 2 or later (at your convenience). See the
+            file "LICENSE" or
+            <URL>https://www.gnu.org/copyleft/gpl.html</URL>
+        
+  </Copyright>
+  <Acknowledgements>
+    
+          This work has been supported by Marie Curie Grant No. MTKD-CT-2006-042685
+        
+  </Acknowledgements>
+  </TitlePage>

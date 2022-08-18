@@ -8,12 +8,12 @@ Subtitle := "Transitive Groups Library",
 
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers.
-Version := "3.0",
+Version := "3.6.3",
 
 ##  Release date of the current version in dd/mm/yyyy format.
 ##  Note that the oh-so-clever package tools cannot deal with single digits,
 ##  but will whine.
-Date := "01/08/2020",
+Date := "19/07/2022",
 
 ##  URL of the archive(s) of the current package release, but *without*
 ##  the format extension(s), like '.zoo', which are given next.
@@ -58,13 +58,6 @@ Persons := [
 ##    "other"         for all other packages
 ##
 Status := "deposited",
-
-##  You must provide the next two entries if and only if the status is 
-##  "accepted":
-# format: 'name (place)'
-# CommunicatedBy := "Mike Atkinson (St. Andrews)",
-# format: mm/yyyy
-# AcceptDate := "08/1999",
 
 ##  For a central overview of all packages and a collection of all package
 ##  archives it is necessary to have two files accessible which should be

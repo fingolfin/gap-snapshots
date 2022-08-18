@@ -28,11 +28,15 @@
 #include "records.h"
 #include "stats.h"
 #include "stringobj.h"
+#include "sysstr.h"
+#include "trycatch.h"
 #include "vars.h"
 
 #ifdef HPCGAP
 #include "hpc/thread.h"
 #endif
+
+#include <stdio.h>
 
 
 static Obj ErrorInner;
@@ -51,18 +55,18 @@ static Obj IsOutputStream;
 **                                   ERROR_OUTPUT global variable defined in
 **                                   error.g, or "*errout*" otherwise
 */
-UInt OpenErrorOutput( void )
+UInt OpenErrorOutput(TypOutputFile * output)
 {
     /* Try to print the output to stream. Use *errout* as a fallback. */
     UInt ret = 0;
 
     if (ERROR_OUTPUT != NULL) {
         if (IsStringConv(ERROR_OUTPUT)) {
-            ret = OpenOutput(CONST_CSTR_STRING(ERROR_OUTPUT));
+            ret = OpenOutput(output, CONST_CSTR_STRING(ERROR_OUTPUT), FALSE);
         }
         else {
             if (CALL_1ARGS(IsOutputStream, ERROR_OUTPUT) == True) {
-                ret = OpenOutputStream(ERROR_OUTPUT);
+                ret = OpenOutputStream(output, ERROR_OUTPUT);
             }
         }
     }
@@ -71,7 +75,7 @@ UInt OpenErrorOutput( void )
         /* It may be we already tried and failed to open *errout* above but
          * but this is an extreme case so it can't hurt to try again
          * anyways */
-        ret = OpenOutput("*errout*");
+        ret = OpenOutput(output, "*errout*", FALSE);
         if (ret) {
             Pr("failed to open error stream\n", 0, 0);
         }
@@ -88,33 +92,6 @@ UInt OpenErrorOutput( void )
 **
 *F  FuncDownEnv( <self>, <level> )  . . . . . . . . .  change the environment
 */
-
-static void DownEnvInner(Int depth)
-{
-    /* if we are asked to go up ... */
-    if (depth < 0) {
-        /* ... we determine which level we are supposed to end up on ... */
-        depth = STATE(ErrorLLevel) + depth;
-        if (depth < 0) {
-            depth = 0;
-        }
-        /* ... then go back to the top, and later go down to the appropriate
-         * level. */
-        STATE(ErrorLVars) = STATE(BaseShellContext);
-        STATE(ErrorLLevel) = 0;
-        STATE(ShellContext) = STATE(BaseShellContext);
-    }
-
-    /* now go down */
-    while (0 < depth && STATE(ErrorLVars) != STATE(BottomLVars) &&
-           PARENT_LVARS(STATE(ErrorLVars)) != STATE(BottomLVars)) {
-        STATE(ErrorLVars) = PARENT_LVARS(STATE(ErrorLVars));
-        STATE(ErrorLLevel)++;
-        STATE(ShellContext) = PARENT_LVARS(STATE(ShellContext));
-        depth--;
-    }
-}
-
 static Obj FuncDownEnv(Obj self, Obj args)
 {
     Int depth;
@@ -126,14 +103,14 @@ static Obj FuncDownEnv(Obj self, Obj args)
         depth = INT_INTOBJ(ELM_PLIST(args, 1));
     }
     else {
-        ErrorQuit("usage: DownEnv( [ <depth> ] )", 0L, 0L);
+        ErrorQuit("usage: DownEnv( [ <depth> ] )", 0, 0);
     }
-    if (STATE(ErrorLVars) == STATE(BottomLVars)) {
-        Pr("not in any function\n", 0L, 0L);
+    if (IsBottomLVars(STATE(ErrorLVars))) {
+        Pr("not in any function\n", 0, 0);
         return (Obj)0;
     }
 
-    DownEnvInner(depth);
+    STATE(ErrorLLevel) += depth;;
     return (Obj)0;
 }
 
@@ -147,20 +124,20 @@ static Obj FuncUpEnv(Obj self, Obj args)
         depth = INT_INTOBJ(ELM_PLIST(args, 1));
     }
     else {
-        ErrorQuit("usage: UpEnv( [ <depth> ] )", 0L, 0L);
+        ErrorQuit("usage: UpEnv( [ <depth> ] )", 0, 0);
     }
-    if (STATE(ErrorLVars) == STATE(BottomLVars)) {
-        Pr("not in any function\n", 0L, 0L);
+    if (IsBottomLVars(STATE(ErrorLVars))) {
+        Pr("not in any function\n", 0, 0);
         return (Obj)0;
     }
 
-    DownEnvInner(-depth);
+    STATE(ErrorLLevel) -= depth;
     return (Obj)0;
 }
 
 static Obj FuncCURRENT_STATEMENT_LOCATION(Obj self, Obj context)
 {
-    if (context == STATE(BottomLVars))
+    if (IsBottomLVars(context))
         return Fail;
 
     Obj func = FUNC_LVARS(context);
@@ -175,9 +152,7 @@ static Obj FuncCURRENT_STATEMENT_LOCATION(Obj self, Obj context)
         return Fail;
     }
 
-    Obj currLVars = STATE(CurrLVars);
-    SWITCH_TO_OLD_LVARS(context);
-    GAP_ASSERT(call == BRK_CALL_TO());
+    Obj currLVars = SWITCH_TO_OLD_LVARS(context);
 
     Obj retlist = Fail;
     Int type = TNUM_STAT(call);
@@ -193,14 +168,16 @@ static Obj FuncCURRENT_STATEMENT_LOCATION(Obj self, Obj context)
 
 static Obj FuncPRINT_CURRENT_STATEMENT(Obj self, Obj stream, Obj context)
 {
-    if (context == STATE(BottomLVars))
+    if (IsBottomLVars(context))
         return 0;
 
     /* HACK: we want to redirect output */
     /* Try to print the output to stream. Use *errout* as a fallback. */
-    if ((IsStringConv(stream) && !OpenOutput(CONST_CSTR_STRING(stream))) ||
-        (!IS_STRING(stream) && !OpenOutputStream(stream))) {
-        if (OpenOutput("*errout*")) {
+    TypOutputFile output = { 0 };
+    if ((IsStringConv(stream) &&
+         !OpenOutput(&output, CONST_CSTR_STRING(stream), FALSE)) ||
+        (!IS_STRING(stream) && !OpenOutputStream(&output, stream))) {
+        if (OpenOutput(&output, "*errout*", FALSE)) {
             Pr("PRINT_CURRENT_STATEMENT: failed to open error stream\n", 0, 0);
         }
         else {
@@ -208,41 +185,51 @@ static Obj FuncPRINT_CURRENT_STATEMENT(Obj self, Obj stream, Obj context)
         }
     }
 
-    Obj func = FUNC_LVARS(context);
-    GAP_ASSERT(func);
-    Stat call = STAT_LVARS(context);
-    Obj  body = BODY_FUNC(func);
-    if (IsKernelFunction(func)) {
-        PrintKernelFunction(func);
-        Obj funcname = NAME_FUNC(func);
-        if (funcname) {
-            Pr(" in function %g", (Int)funcname, 0);
+    BOOL rethrow = FALSE;
+    GAP_TRY
+    {
+        Obj func = FUNC_LVARS(context);
+        GAP_ASSERT(func);
+        Stat call = STAT_LVARS(context);
+        Obj  body = BODY_FUNC(func);
+        if (IsKernelFunction(func)) {
+            PrintKernelFunction(func);
+            Obj funcname = NAME_FUNC(func);
+            if (funcname) {
+                Pr(" in function %g", (Int)funcname, 0);
+            }
         }
-    }
-    else if (call < OFFSET_FIRST_STAT ||
-             call > SIZE_BAG(body) - sizeof(StatHeader)) {
-        Pr("<corrupted statement> ", 0L, 0L);
-    }
-    else {
-        Obj currLVars = STATE(CurrLVars);
-        SWITCH_TO_OLD_LVARS(context);
-        GAP_ASSERT(call == BRK_CALL_TO());
+        else if (call < OFFSET_FIRST_STAT ||
+                 call > SIZE_BAG(body) - sizeof(StatHeader)) {
+            Pr("<corrupted statement> ", 0, 0);
+        }
+        else {
+            Obj currLVars = SWITCH_TO_OLD_LVARS(context);
 
-        Int type = TNUM_STAT(call);
-        Obj filename = GET_FILENAME_BODY(body);
-        if (FIRST_STAT_TNUM <= type && type <= LAST_STAT_TNUM) {
-            PrintStat(call);
-            Pr(" at %g:%d", (Int)filename, LINE_STAT(call));
+            Int type = TNUM_STAT(call);
+            Obj filename = GET_FILENAME_BODY(body);
+            if (FIRST_STAT_TNUM <= type && type <= LAST_STAT_TNUM) {
+                PrintStat(call);
+                Pr(" at %g:%d", (Int)filename, LINE_STAT(call));
+            }
+            else if (FIRST_EXPR_TNUM <= type && type <= LAST_EXPR_TNUM) {
+                PrintExpr(call);
+                Pr(" at %g:%d", (Int)filename, LINE_STAT(call));
+            }
+            SWITCH_TO_OLD_LVARS(currLVars);
         }
-        else if (FIRST_EXPR_TNUM <= type && type <= LAST_EXPR_TNUM) {
-            PrintExpr(call);
-            Pr(" at %g:%d", (Int)filename, LINE_STAT(call));
-        }
-        SWITCH_TO_OLD_LVARS(currLVars);
+    }
+    GAP_CATCH
+    {
+        rethrow = TRUE;
     }
 
     /* HACK: close the output again */
-    CloseOutput();
+    CloseOutput(&output);
+
+    if (rethrow)
+        GAP_THROW();
+
     return 0;
 }
 
@@ -258,53 +245,28 @@ static Obj FuncCALL_WITH_CATCH(Obj self, Obj func, Obj args)
 
 Obj CALL_WITH_CATCH(Obj func, volatile Obj args)
 {
-    volatile syJmp_buf readJmpError;
     volatile Obj       res;
     volatile Obj       currLVars;
     volatile Obj       tilde;
-    volatile Int       recursionDepth;
 
     RequireFunction("CALL_WITH_CATCH", func);
     if (!IS_LIST(args))
         RequireArgument("CALL_WITH_CATCH", args, "must be a list");
 #ifdef HPCGAP
     if (!IS_PLIST(args)) {
-        args = SHALLOW_COPY_OBJ(args);
-        PLAIN_LIST(args);
+        args = PLAIN_LIST_COPY(args);
     }
 #endif
 
-    memcpy((void *)&readJmpError, (void *)&STATE(ReadJmpError),
-           sizeof(syJmp_buf));
     currLVars = STATE(CurrLVars);
-#ifdef GAP_KERNEL_DEBUG
-    volatile Stat currStat = BRK_CALL_TO();
-#endif
-    recursionDepth = GetRecursionDepth();
     tilde = STATE(Tilde);
     res = NEW_PLIST_IMM(T_PLIST_DENSE, 2);
 #ifdef HPCGAP
     int      lockSP = RegionLockSP();
     Region * savedRegion = TLS(currentRegion);
 #endif
-    if (sySetjmp(STATE(ReadJmpError))) {
-        SET_LEN_PLIST(res, 2);
-        SET_ELM_PLIST(res, 1, False);
-        SET_ELM_PLIST(res, 2, STATE(ThrownObject));
-        CHANGED_BAG(res);
-        STATE(ThrownObject) = 0;
-        SWITCH_TO_OLD_LVARS(currLVars);
-        GAP_ASSERT(currStat == BRK_CALL_TO());
-        SetRecursionDepth(recursionDepth);
-        STATE(Tilde) = tilde;
-#ifdef HPCGAP
-        PopRegionLocks(lockSP);
-        TLS(currentRegion) = savedRegion;
-        if (TLS(CurrentHashLock))
-            HashUnlock(TLS(CurrentHashLock));
-#endif
-    }
-    else {
+    GAP_TRY
+    {
         Obj result = CallFuncList(func, args);
         // Make an explicit check if an interrupt occurred
         // in case func was a kernel function.
@@ -324,8 +286,22 @@ Obj CALL_WITH_CATCH(Obj func, volatile Obj args)
         else
             SET_LEN_PLIST(res, 1);
     }
-    memcpy((void *)&STATE(ReadJmpError), (void *)&readJmpError,
-           sizeof(syJmp_buf));
+    GAP_CATCH
+    {
+        SET_LEN_PLIST(res, 2);
+        SET_ELM_PLIST(res, 1, False);
+        SET_ELM_PLIST(res, 2, STATE(ThrownObject));
+        CHANGED_BAG(res);
+        STATE(ThrownObject) = 0;
+        SWITCH_TO_OLD_LVARS(currLVars);
+        STATE(Tilde) = tilde;
+#ifdef HPCGAP
+        PopRegionLocks(lockSP);
+        TLS(currentRegion) = savedRegion;
+        if (TLS(CurrentHashLock))
+            HashUnlock(TLS(CurrentHashLock));
+#endif
+    }
     return res;
 }
 
@@ -335,29 +311,20 @@ static Obj FuncJUMP_TO_CATCH(Obj self, Obj payload)
     if (STATE(JumpToCatchCallback) != 0) {
         (*STATE(JumpToCatchCallback))();
     }
-    syLongjmp(&(STATE(ReadJmpError)), 1);
+    GAP_THROW();
     return 0;
 }
 
 static Obj FuncSetUserHasQuit(Obj Self, Obj value)
 {
     STATE(UserHasQuit) = INT_INTOBJ(value);
-    if (STATE(UserHasQuit))
-        SetRecursionDepth(0);
     return 0;
 }
 
 
 /****************************************************************************
 **
-*F RegisterBreakloopObserver( <func> )
-**
-** Register a function which will be called when the break loop is entered
-** and left. Function should take a single Int argument which will be 1 when
-** break loop is entered, 0 when leaving.
-**
-** Note that it is also possible to leave the break loop (or any GAP code)
-** by longjmping. This should be tracked with RegisterSyLongjmpObserver.
+*F  RegisterBreakloopObserver( <func> )
 */
 
 static intfunc signalBreakFuncList[16];
@@ -382,11 +349,9 @@ Int RegisterBreakloopObserver(intfunc func)
 static Obj ErrorMessageToGAPString(const Char * msg, Int arg1, Int arg2)
 {
     Char message[1024];
-    Obj  Message;
     SPrTo(message, sizeof(message), msg, arg1, arg2);
     message[sizeof(message) - 1] = '\0';
-    Message = MakeString(message);
-    return Message;
+    return MakeImmString(message);
 }
 
 
@@ -403,6 +368,14 @@ static Obj CallErrorInner(const Char * msg,
     // as one of the args could be a pointer into a Bag.
     Obj EarlyMsg = ErrorMessageToGAPString(msg, arg1, arg2);
 
+    if (!ErrorInner || !IS_FUNC(ErrorInner)) {
+        fprintf(stderr, "%s\n", CONST_CSTR_STRING(EarlyMsg));
+        if (!ErrorInner)
+            Panic("error handler not yet initialized");
+        else
+            Panic("error handler must be a function");
+    }
+
     Obj r = NEW_PREC(0);
     Obj l;
     Int i;
@@ -418,9 +391,8 @@ static Obj CallErrorInner(const Char * msg,
     AssPRec(r, RNamName("printThisStatement"),
             printThisStatement ? True : False);
     AssPRec(r, RNamName("lateMessage"), lateMessage);
-    l = NEW_PLIST_IMM(T_PLIST_HOM, 1);
-    SET_ELM_PLIST(l, 1, EarlyMsg);
-    SET_LEN_PLIST(l, 1);
+    l = NewPlistFromArgs(EarlyMsg);
+    MakeImmutableNoRecurse(l);
 
     // Signal functions about entering and leaving break loop
     for (i = 0; i < ARRAY_SIZE(signalBreakFuncList) && signalBreakFuncList[i];
@@ -462,18 +434,6 @@ void ErrorMayQuitNrAtLeastArgs(Int narg, Int actual)
     ErrorMayQuit(
         "Function: number of arguments must be at least %d (not %d)",
         narg, actual);
-}
-
-/****************************************************************************
-**
-*F  ErrorQuitRange3( <first>, <second>, <last> ) . . divisibility
-*/
-void ErrorQuitRange3(Obj first, Obj second, Obj last)
-{
-    ErrorQuit("Range expression <last>-<first> must be divisible by "
-              "<second>-<first>, not %d %d",
-              INT_INTOBJ(last) - INT_INTOBJ(first),
-              INT_INTOBJ(second) - INT_INTOBJ(first));
 }
 
 
@@ -561,41 +521,71 @@ void CheckSameLength(const Char * desc,
 **
 *F  RequireArgumentEx
 */
-Obj RequireArgumentEx(const char * funcname,
-                      Obj          op,
-                      const char * argname,
-                      const char * msg)
+void RequireArgumentEx(const char * funcname,
+                       Obj          op,
+                       const char * argname,
+                       const char * msg)
 {
     char msgbuf[1024] = { 0 };
     Int  arg1 = 0;
-    Int  arg2 = 0;
 
     if (funcname) {
-        strlcat(msgbuf, funcname, sizeof(msgbuf));
-        strlcat(msgbuf, ": ", sizeof(msgbuf));
+        gap_strlcat(msgbuf, funcname, sizeof(msgbuf));
+        gap_strlcat(msgbuf, ": ", sizeof(msgbuf));
     }
     if (argname) {
-        strlcat(msgbuf, argname, sizeof(msgbuf));
-        strlcat(msgbuf, " ", sizeof(msgbuf));
+        gap_strlcat(msgbuf, argname, sizeof(msgbuf));
+        gap_strlcat(msgbuf, " ", sizeof(msgbuf));
     }
-    strlcat(msgbuf, msg, sizeof(msgbuf));
+    gap_strlcat(msgbuf, msg, sizeof(msgbuf));
     if (IS_INTOBJ(op)) {
-        strlcat(msgbuf, " (not the integer %d)", sizeof(msgbuf));
+        gap_strlcat(msgbuf, " (not the integer %d)", sizeof(msgbuf));
         arg1 = INT_INTOBJ(op);
     }
     else if (op == True)
-        strlcat(msgbuf, " (not the value 'true')", sizeof(msgbuf));
+        gap_strlcat(msgbuf, " (not the value 'true')", sizeof(msgbuf));
     else if (op == False)
-        strlcat(msgbuf, " (not the value 'false')", sizeof(msgbuf));
+        gap_strlcat(msgbuf, " (not the value 'false')", sizeof(msgbuf));
     else if (op == Fail)
-        strlcat(msgbuf, " (not the value 'fail')", sizeof(msgbuf));
+        gap_strlcat(msgbuf, " (not the value 'fail')", sizeof(msgbuf));
     else {
-        strlcat(msgbuf, " (not a %s)", sizeof(msgbuf));
-        arg1 = (Int)TNAM_OBJ(op);
+        const char * tnam = TNAM_OBJ(op);
+        // heuristic to choose between 'a' and 'an': use 'an' before a vowel
+        // and 'a' otherwise; however, that's not always correct, e.g. it is
+        // "an FFE", so we add a special case for that as well
+        if (TNUM_OBJ(op) == T_FFE || tnam[0] == 'a' || tnam[0] == 'e' ||
+            tnam[0] == 'i' || tnam[0] == 'o' || tnam[0] == 'u')
+            gap_strlcat(msgbuf, " (not an %s)", sizeof(msgbuf));
+        else
+            gap_strlcat(msgbuf, " (not a %s)", sizeof(msgbuf));
+        arg1 = (Int)tnam;
     }
 
-    ErrorMayQuit(msgbuf, arg1, arg2);
+    ErrorMayQuit(msgbuf, arg1, 0);
 }
+
+const char * SELF_NAME_HELPER(Obj self, const char * func)
+{
+    if (self && NAME_FUNC(self))
+        return CONST_CSTR_STRING(NAME_FUNC(self));
+    return func;
+}
+
+void ErrorBoundedInt(
+    const char * funcname, Obj op, const char * argname, int min, int max)
+{
+#define BOUNDED_INT_FORMAT "must be an integer between %d and %d"
+    // The maximal number of decimal digits in a signed 64 bit value is 20, so
+    // reserve space for that (actually, we would need a bit less because the
+    // `%d` in the format string of course also adds to the length, but a
+    // few bytes more or less don't matter).
+    // Also note that in practice, `int` will be a 32 bit type anyway...
+    char msg[sizeof(BOUNDED_INT_FORMAT) + 2 * 20];
+    snprintf(msg, sizeof(msg), BOUNDED_INT_FORMAT, min, max);
+    RequireArgumentEx(funcname, op, argname, msg);
+#undef BOUNDED_INT_FORMAT
+}
+
 
 void AssertionFailure(void)
 {
@@ -609,16 +599,16 @@ void AssertionFailure(void)
 */
 static StructGVarFunc GVarFuncs[] = {
 
-    GVAR_FUNC(DownEnv, -1, "args"),
-    GVAR_FUNC(UpEnv, -1, "args"),
+    GVAR_FUNC_XARGS(DownEnv, -1, "args"),
+    GVAR_FUNC_XARGS(UpEnv, -1, "args"),
 
-    GVAR_FUNC(CALL_WITH_CATCH, 2, "func, args"),
-    GVAR_FUNC(JUMP_TO_CATCH, 1, "payload"),
+    GVAR_FUNC_2ARGS(CALL_WITH_CATCH, func, args),
+    GVAR_FUNC_1ARGS(JUMP_TO_CATCH, payload),
 
-    GVAR_FUNC(PRINT_CURRENT_STATEMENT, 2, "stream, context"),
-    GVAR_FUNC(CURRENT_STATEMENT_LOCATION, 1, "context"),
+    GVAR_FUNC_2ARGS(PRINT_CURRENT_STATEMENT, stream, context),
+    GVAR_FUNC_1ARGS(CURRENT_STATEMENT_LOCATION, context),
 
-    GVAR_FUNC(SetUserHasQuit, 1, "value"),
+    GVAR_FUNC_1ARGS(SetUserHasQuit, value),
 
     { 0, 0, 0, 0, 0 }
 
@@ -631,14 +621,16 @@ static StructGVarFunc GVarFuncs[] = {
 */
 static Int InitKernel(StructInitInfo * module)
 {
+    STATE(ThrownObject) = 0;
+    InitGlobalBag( &STATE(ThrownObject), "src/gap.c:ThrownObject"      );
+
     // init filters and functions
     InitHdlrFuncsFromTable(GVarFuncs);
 
-    ImportFuncFromLibrary("ErrorInner", &ErrorInner);
+    ImportGVarFromLibrary("ErrorInner", &ErrorInner);
     ImportFuncFromLibrary("IsOutputStream", &IsOutputStream);
     ImportGVarFromLibrary("ERROR_OUTPUT", &ERROR_OUTPUT);
 
-    // return success
     return 0;
 }
 
@@ -652,7 +644,6 @@ static Int InitLibrary(StructInitInfo * module)
     // init filters and functions
     InitGVarFuncsFromTable(GVarFuncs);
 
-    // return success
     return 0;
 }
 

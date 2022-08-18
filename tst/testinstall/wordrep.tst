@@ -98,19 +98,25 @@ true
 
 #
 gap> 8Bits_ExponentSyllable(w8, 4);
-Error, <pos> must be an integer between 1 and 3
+Error, NBits_ExponentSyllable: <pos> must be an integer between 1 and 3 (not t\
+he integer 4)
 gap> 16Bits_ExponentSyllable(w16, 4);
-Error, <pos> must be an integer between 1 and 3
+Error, NBits_ExponentSyllable: <pos> must be an integer between 1 and 3 (not t\
+he integer 4)
 gap> 32Bits_ExponentSyllable(w32, 4);
-Error, <pos> must be an integer between 1 and 3
+Error, NBits_ExponentSyllable: <pos> must be an integer between 1 and 3 (not t\
+he integer 4)
 
 #
 gap> 8Bits_GeneratorSyllable(w8, 4);
-Error, <pos> must be an integer between 1 and 3
+Error, NBits_GeneratorSyllable: <pos> must be an integer between 1 and 3 (not \
+the integer 4)
 gap> 16Bits_GeneratorSyllable(w16, 4);
-Error, <pos> must be an integer between 1 and 3
+Error, NBits_GeneratorSyllable: <pos> must be an integer between 1 and 3 (not \
+the integer 4)
 gap> 32Bits_GeneratorSyllable(w32, 4);
-Error, <pos> must be an integer between 1 and 3
+Error, NBits_GeneratorSyllable: <pos> must be an integer between 1 and 3 (not \
+the integer 4)
 
 #
 # test powering (esp. 8Bits_Power), with various shapes
@@ -272,6 +278,30 @@ gap> SetX(words16, words16, {a,b} -> (a/b) * b = a);
 [ true ]
 gap> SetX(words32, words32, {a,b} -> (a/b) * b = a);
 [ true ]
+
+# MappedWord with inverses
+gap> f:=FreeGroup(2);;
+gap> gens:=ShallowCopy(GeneratorsOfGroup(f));;
+gap> g:=GL(10,17);;
+gap> m:=List([1,2],x->PseudoRandom(g));;
+gap> w:=PseudoRandom(f:radius:=10000);;
+gap> gens:=ShallowCopy(GeneratorsOfGroup(f));;
+gap> e1:=MappedWord(w,gens,m);;
+gap> Append(gens,List(gens,x->x^-1));
+gap> Append(m,List(m,x->x^-1));
+gap> e2:=MappedWord(w,gens,m);;
+gap> e1=e2;
+true
+gap> g:=FreeGroup(IsSyllableWordsFamily,2);;
+gap> w:=MappedWord(w,gens{[1,2]},GeneratorsOfGroup(g));;
+gap> gens:=ShallowCopy(GeneratorsOfGroup(g));;
+gap> e2:=MappedWord(w,gens,m{[1,2]});;
+gap> e1=e2;
+true
+gap> Append(gens,List(gens,x->x^-1));
+gap> e2:=MappedWord(w,gens,m);;
+gap> e1=e2;
+true
 
 #
 gap> STOP_TEST("wordrep.tst", 1);

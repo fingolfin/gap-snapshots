@@ -116,11 +116,11 @@ Obj NewWord(Obj type, UInt npairs)
     ReadGuard(type);
 #endif
     word =
-        NewBag(T_DATOBJ, 2 * sizeof(Obj) + npairs * BITS_WORDTYPE(type) / 8L);
+        NewBag(T_DATOBJ, 2 * sizeof(Obj) + npairs * BITS_WORDTYPE(type) / 8);
     ADDR_OBJ(word)[1] = INTOBJ_INT(npairs);
     SetTypeDatObj(word, type);
 #ifdef HPCGAP
-    MakeBagReadOnly(word);
+    MakeBagPublic(word);
 #endif
     return word;
 }
@@ -207,7 +207,7 @@ static Obj NBits_ExponentSums3(Obj obj, Obj vstart, Obj vend)
     ebits = EBITS_WORD(obj);
 
     /* get the exponent masks                                              */
-    exps = 1UL << (ebits-1);
+    exps = (UInt)1 << (ebits-1);
     expm = exps - 1;
 
     /* get the number of gen/exp pairs                                     */
@@ -298,15 +298,13 @@ static Obj NBits_ExponentSyllable(Obj w, Obj pos)
 
     /* check <i>                                                           */
     num = NPAIRS_WORD(w);
-    i = GetPositiveSmallInt("NBits_ExponentSyllable", pos);
-    if (num < i)
-        ErrorMayQuit("<pos> must be an integer between 1 and %d", num, 0);
+    i = GetBoundedInt("NBits_ExponentSyllable", pos, 1, num);
 
     /* get the number of bits for exponents                                */
     ebits = EBITS_WORD(w);
 
     /* get the exponent masks                                              */
-    exps = 1UL << (ebits-1);
+    exps = (UInt)1 << (ebits-1);
     expm = exps - 1;
 
     /* return the <i> th exponent                                          */
@@ -356,7 +354,7 @@ static Obj NBits_ExtRepOfObj(Obj obj)
     ebits = EBITS_WORDTYPE(type);
 
     /* get the exponent masks                                              */
-    exps = 1UL << (ebits-1);
+    exps = (UInt)1 << (ebits-1);
     expm = exps - 1;
 
     /* get the number of gen/exp pairs                                     */
@@ -414,9 +412,7 @@ static Obj NBits_GeneratorSyllable(Obj w, Obj pos)
 
     /* check <i>                                                           */
     num = NPAIRS_WORD(w);
-    i = GetPositiveSmallInt("NBits_GeneratorSyllable", pos);
-    if (num < i)
-        ErrorMayQuit("<pos> must be an integer between 1 and %d", num, 0);
+    i = GetBoundedInt("NBits_GeneratorSyllable", pos, 1, num);
 
     /* get the number of bits for exponents                                */
     ebits = EBITS_WORD(w);
@@ -465,7 +461,7 @@ static Obj NBits_HeadByNumber(Obj l, Obj r)
     ebits = EBITS_WORD(l);
 
     /* get the generator mask                                              */
-    genm = ((1UL << (8*sizeof(UIntN)-ebits)) - 1) << ebits;
+    genm = (((UInt)1 << (8*sizeof(UIntN)-ebits)) - 1) << ebits;
 
     /* if <l> is the identity return                                       */
     nl = NPAIRS_WORD(l);
@@ -564,7 +560,7 @@ static Obj NBits_Less(Obj l, Obj r)
     ebits = EBITS_WORD(l);
     
     /* get the exponent masks                                              */
-    exps = 1UL << (ebits-1);
+    exps = (UInt)1 << (ebits-1);
     expm = exps - 1;
     
     /* Skip the common prefix and determine if the first word is smaller   */
@@ -576,7 +572,7 @@ static Obj NBits_Less(Obj l, Obj r)
             /* got a difference                                            */
 
             /* get the generator mask                                      */
-            genm = ((1UL << (8*sizeof(UIntN)-ebits)) - 1) << ebits;
+            genm = (((UInt)1 << (8*sizeof(UIntN)-ebits)) - 1) << ebits;
 
             /* compare the generators                                      */
             if ( (*pl & genm) != (*pr & genm) ) {
@@ -666,7 +662,7 @@ static Obj NBits_AssocWord(Obj type, Obj data)
     ebits = EBITS_WORDTYPE(type);
 
     /* get the exponent mask                                               */
-    expm = (1UL << ebits) - 1;
+    expm = ((UInt)1 << ebits) - 1;
 
     /* construct a new object                                              */
     num = LEN_LIST(data)/2;
@@ -728,12 +724,12 @@ static Obj NBits_ObjByVector(Obj type, Obj data)
     ebits = EBITS_WORDTYPE(type);
 
     /* get the exponent mask                                               */
-    expm = (1UL << ebits) - 1;
+    expm = ((UInt)1 << ebits) - 1;
 
     /* count the number of non-zero entries                                */
     for ( i = LEN_LIST(data), num = 0, j = 1;  0 < i;  i-- ) {
         vexp = ELMW_LIST(data,i);
-        RequireSmallInt("NBits_ObjByVector", vexp, "<vexp>");
+        RequireSmallInt("NBits_ObjByVector", vexp);
         if ( vexp != INTOBJ_INT(0) ) {
             j = i;
             num++;
@@ -804,12 +800,12 @@ static Obj NBits_Power(Obj l, Obj r)
     ebits = EBITS_WORD(l);
 
     /* get the exponent masks                                              */
-    exps = 1UL << (ebits-1);
+    exps = (UInt)1 << (ebits-1);
     expm = exps - 1;
-    invm = (1UL<<ebits)-1;
+    invm = ((UInt)1<<ebits)-1;
 
     /* get the generator mask                                              */
-    genm = ((1UL << (8*sizeof(UIntN)-ebits)) - 1) << ebits;
+    genm = (((UInt)1 << (8*sizeof(UIntN)-ebits)) - 1) << ebits;
 
     /* if <l> is the identity return <l>                                   */
     nl = NPAIRS_WORD(l);
@@ -877,7 +873,7 @@ static Obj NBits_Power(Obj l, Obj r)
 
         /* and fix the exponent at position <sr>                           */
         pr = DATA_WORD(obj);
-        pr[sr] = (pr[sr] & genm) | (ex & ((1UL<<ebits)-1));
+        pr[sr] = (pr[sr] & genm) | (ex & (((UInt)1<<ebits)-1));
         return obj;
     }
 
@@ -892,9 +888,9 @@ static Obj NBits_Power(Obj l, Obj r)
             return TRY_NEXT_METHOD;
         }
         if ( 0 < pow )
-            ex = ex & ((1UL<<ebits)-1);
+            ex = ex & (((UInt)1<<ebits)-1);
         else
-            ex = (-ex) & ((1UL<<ebits)-1);
+            ex = (-ex) & (((UInt)1<<ebits)-1);
 
         /* create a new word                                               */
         apw = ( pow < 0 ) ? -pow : pow;
@@ -1045,11 +1041,11 @@ static Obj NBits_Product(Obj l, Obj r)
     ebits = EBITS_WORD(l);
 
     /* get the exponent masks                                              */
-    exps = 1UL << (ebits-1);
+    exps = (UInt)1 << (ebits-1);
     expm = exps - 1;
 
     /* get the generator mask                                              */
-    genm = ((1UL << (8*sizeof(UIntN)-ebits)) - 1) << ebits;
+    genm = (((UInt)1 << (8*sizeof(UIntN)-ebits)) - 1) << ebits;
 
     /* if <l> or <r> is the identity return the other                      */
     nl = NPAIRS_WORD(l);
@@ -1090,7 +1086,7 @@ static Obj NBits_Product(Obj l, Obj r)
 
     /* handle the overlap                                                  */
     if ( over ) {
-        po[-1] = (po[-1] & genm) | (ex & ((1UL<<ebits)-1));
+        po[-1] = (po[-1] & genm) | (ex & (((UInt)1<<ebits)-1));
         sr++;
     }
 
@@ -1142,12 +1138,12 @@ static Obj NBits_Quotient(Obj l, Obj r)
     ebits = EBITS_WORD(l);
 
     /* get the exponent masks                                              */
-    exps = 1UL << (ebits-1);
+    exps = (UInt)1 << (ebits-1);
     expm = exps - 1;
-    sepm = (1UL << ebits) - 1;
+    sepm = ((UInt)1 << ebits) - 1;
 
     /* get the generator mask                                              */
-    genm = ((1UL << (8*sizeof(UIntN)-ebits)) - 1) << ebits;
+    genm = (((UInt)1 << (8*sizeof(UIntN)-ebits)) - 1) << ebits;
 
     /* if <r> is the identity return <l>                                   */
     nl = NPAIRS_WORD(l);
@@ -1232,7 +1228,7 @@ static Obj NBits_LengthWord(Obj w)
   data = CONST_DATA_WORD(w);
   
   /* get the exponent masks                                              */
-  exps = 1UL << (ebits-1);
+  exps = (UInt)1 << (ebits-1);
   expm = exps - 1;
   
   len = INTOBJ_INT(0);
@@ -1292,8 +1288,8 @@ static Obj FuncMULT_WOR_LETTREP(Obj self, Obj a, Obj b)
   Obj *q;
 
   /* short check */
-  RequirePlainList("MULT_WOR_LETTREP", a);
-  RequirePlainList("MULT_WOR_LETTREP", b);
+  RequirePlainList(SELF_NAME, a);
+  RequirePlainList(SELF_NAME, b);
 
   /* Find overlap */
   /* l:=Length(a); */
@@ -1390,9 +1386,9 @@ static Obj FuncMULT_BYT_LETTREP(Obj self, Obj a, Obj b)
   const Char *p,*q;
   
   /* short check, if necessary strings are compacted */
-  RequireStringRep("MULT_BYT_LETTREP", a);
-  RequireStringRep("MULT_BYT_LETTREP", b);
-  
+  RequireStringRep(SELF_NAME, a);
+  RequireStringRep(SELF_NAME, b);
+
   /* Find overlap */
   /* l:=Length(a); */
   l=GET_LEN_STRING(a);
@@ -1490,55 +1486,55 @@ static Obj FuncMULT_BYT_LETTREP(Obj self, Obj a, Obj b)
 */
 static StructGVarFunc GVarFuncs[] = {
 
-    GVAR_FUNC(8Bits_Equal, 2, "8_bits_word, 8_bits_word"),
-    GVAR_FUNC(8Bits_ExponentSums1, 1, "8_bits_word"),
-    GVAR_FUNC(8Bits_ExponentSums3, 3, "8_bits_word, start, end"),
-    GVAR_FUNC(8Bits_ExponentSyllable, 2, "8_bits_word, pos"),
-    GVAR_FUNC(8Bits_ExtRepOfObj, 1, "8_bits_word"),
-    GVAR_FUNC(8Bits_GeneratorSyllable, 2, "8_bits_word, pos"),
-    GVAR_FUNC(8Bits_Less, 2, "8_bits_word, 8_bits_word"),
-    GVAR_FUNC(8Bits_AssocWord, 2, "type, data"),
-    GVAR_FUNC(8Bits_ObjByVector, 2, "type, data"),
-    GVAR_FUNC(8Bits_HeadByNumber, 2, "16_bits_word, gen_num"),
-    GVAR_FUNC(8Bits_Power, 2, "8_bits_word, small_integer"),
-    GVAR_FUNC(8Bits_Product, 2, "8_bits_word, 8_bits_word"),
-    GVAR_FUNC(8Bits_Quotient, 2, "8_bits_word, 8_bits_word"),
-    GVAR_FUNC(8Bits_LengthWord, 1, "8_bits_word"),
+    GVAR_FUNC_2ARGS(8Bits_Equal, 8_bits_word, 8_bits_word),
+    GVAR_FUNC_1ARGS(8Bits_ExponentSums1, 8_bits_word),
+    GVAR_FUNC_3ARGS(8Bits_ExponentSums3, 8_bits_word, start, end),
+    GVAR_FUNC_2ARGS(8Bits_ExponentSyllable, 8_bits_word, pos),
+    GVAR_FUNC_1ARGS(8Bits_ExtRepOfObj, 8_bits_word),
+    GVAR_FUNC_2ARGS(8Bits_GeneratorSyllable, 8_bits_word, pos),
+    GVAR_FUNC_2ARGS(8Bits_Less, 8_bits_word, 8_bits_word),
+    GVAR_FUNC_2ARGS(8Bits_AssocWord, type, data),
+    GVAR_FUNC_2ARGS(8Bits_ObjByVector, type, data),
+    GVAR_FUNC_2ARGS(8Bits_HeadByNumber, 16_bits_word, gen_num),
+    GVAR_FUNC_2ARGS(8Bits_Power, 8_bits_word, small_integer),
+    GVAR_FUNC_2ARGS(8Bits_Product, 8_bits_word, 8_bits_word),
+    GVAR_FUNC_2ARGS(8Bits_Quotient, 8_bits_word, 8_bits_word),
+    GVAR_FUNC_1ARGS(8Bits_LengthWord, 8_bits_word),
 
-    GVAR_FUNC(16Bits_Equal, 2, "16_bits_word, 16_bits_word"),
-    GVAR_FUNC(16Bits_ExponentSums1, 1, "16_bits_word"),
-    GVAR_FUNC(16Bits_ExponentSums3, 3, "16_bits_word, start, end"),
-    GVAR_FUNC(16Bits_ExponentSyllable, 2, "16_bits_word, pos"),
-    GVAR_FUNC(16Bits_ExtRepOfObj, 1, "16_bits_word"),
-    GVAR_FUNC(16Bits_GeneratorSyllable, 2, "16_bits_word, pos"),
-    GVAR_FUNC(16Bits_Less, 2, "16_bits_word, 16_bits_word"),
-    GVAR_FUNC(16Bits_AssocWord, 2, "type, data"),
-    GVAR_FUNC(16Bits_ObjByVector, 2, "type, data"),
-    GVAR_FUNC(16Bits_HeadByNumber, 2, "16_bits_word, gen_num"),
-    GVAR_FUNC(16Bits_Power, 2, "16_bits_word, small_integer"),
-    GVAR_FUNC(16Bits_Product, 2, "16_bits_word, 16_bits_word"),
-    GVAR_FUNC(16Bits_Quotient, 2, "16_bits_word, 16_bits_word"),
-    GVAR_FUNC(16Bits_LengthWord, 1, "16_bits_word"),
+    GVAR_FUNC_2ARGS(16Bits_Equal, 16_bits_word, 16_bits_word),
+    GVAR_FUNC_1ARGS(16Bits_ExponentSums1, 16_bits_word),
+    GVAR_FUNC_3ARGS(16Bits_ExponentSums3, 16_bits_word, start, end),
+    GVAR_FUNC_2ARGS(16Bits_ExponentSyllable, 16_bits_word, pos),
+    GVAR_FUNC_1ARGS(16Bits_ExtRepOfObj, 16_bits_word),
+    GVAR_FUNC_2ARGS(16Bits_GeneratorSyllable, 16_bits_word, pos),
+    GVAR_FUNC_2ARGS(16Bits_Less, 16_bits_word, 16_bits_word),
+    GVAR_FUNC_2ARGS(16Bits_AssocWord, type, data),
+    GVAR_FUNC_2ARGS(16Bits_ObjByVector, type, data),
+    GVAR_FUNC_2ARGS(16Bits_HeadByNumber, 16_bits_word, gen_num),
+    GVAR_FUNC_2ARGS(16Bits_Power, 16_bits_word, small_integer),
+    GVAR_FUNC_2ARGS(16Bits_Product, 16_bits_word, 16_bits_word),
+    GVAR_FUNC_2ARGS(16Bits_Quotient, 16_bits_word, 16_bits_word),
+    GVAR_FUNC_1ARGS(16Bits_LengthWord, 16_bits_word),
 
-    GVAR_FUNC(32Bits_Equal, 2, "32_bits_word, 32_bits_word"),
-    GVAR_FUNC(32Bits_ExponentSums1, 1, "32_bits_word"),
-    GVAR_FUNC(32Bits_ExponentSums3, 3, "32_bits_word, start, end"),
-    GVAR_FUNC(32Bits_ExponentSyllable, 2, "32_bits_word, pos"),
-    GVAR_FUNC(32Bits_ExtRepOfObj, 1, "32_bits_word"),
-    GVAR_FUNC(32Bits_GeneratorSyllable, 2, "32_bits_word, pos"),
-    GVAR_FUNC(32Bits_Less, 2, "32_bits_word, 32_bits_word"),
-    GVAR_FUNC(32Bits_AssocWord, 2, "type, data"),
-    GVAR_FUNC(32Bits_ObjByVector, 2, "type, data"),
-    GVAR_FUNC(32Bits_HeadByNumber, 2, "16_bits_word, gen_num"),
-    GVAR_FUNC(32Bits_Power, 2, "32_bits_word, small_integer"),
-    GVAR_FUNC(32Bits_Product, 2, "32_bits_word, 32_bits_word"),
-    GVAR_FUNC(32Bits_Quotient, 2, "32_bits_word, 32_bits_word"),
-    GVAR_FUNC(32Bits_LengthWord, 1, "32_bits_word"),
+    GVAR_FUNC_2ARGS(32Bits_Equal, 32_bits_word, 32_bits_word),
+    GVAR_FUNC_1ARGS(32Bits_ExponentSums1, 32_bits_word),
+    GVAR_FUNC_3ARGS(32Bits_ExponentSums3, 32_bits_word, start, end),
+    GVAR_FUNC_2ARGS(32Bits_ExponentSyllable, 32_bits_word, pos),
+    GVAR_FUNC_1ARGS(32Bits_ExtRepOfObj, 32_bits_word),
+    GVAR_FUNC_2ARGS(32Bits_GeneratorSyllable, 32_bits_word, pos),
+    GVAR_FUNC_2ARGS(32Bits_Less, 32_bits_word, 32_bits_word),
+    GVAR_FUNC_2ARGS(32Bits_AssocWord, type, data),
+    GVAR_FUNC_2ARGS(32Bits_ObjByVector, type, data),
+    GVAR_FUNC_2ARGS(32Bits_HeadByNumber, 16_bits_word, gen_num),
+    GVAR_FUNC_2ARGS(32Bits_Power, 32_bits_word, small_integer),
+    GVAR_FUNC_2ARGS(32Bits_Product, 32_bits_word, 32_bits_word),
+    GVAR_FUNC_2ARGS(32Bits_Quotient, 32_bits_word, 32_bits_word),
+    GVAR_FUNC_1ARGS(32Bits_LengthWord, 32_bits_word),
 
-    GVAR_FUNC(NBits_NumberSyllables, 1, "N_bits_word"),
+    GVAR_FUNC_1ARGS(NBits_NumberSyllables, N_bits_word),
 
-    GVAR_FUNC(MULT_WOR_LETTREP, 2, "a, b"),
-    GVAR_FUNC(MULT_BYT_LETTREP, 2, "a, b"),
+    GVAR_FUNC_2ARGS(MULT_WOR_LETTREP, a, b),
+    GVAR_FUNC_2ARGS(MULT_BYT_LETTREP, a, b),
 
     { 0, 0, 0, 0, 0 }
 
@@ -1555,7 +1551,6 @@ static Int InitKernel (
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -1575,12 +1570,11 @@ static Int InitLibrary (
     ExportAsConstantGVar(AWP_NR_BITS_PAIR);
     ExportAsConstantGVar(AWP_FUN_OBJ_BY_VECTOR);
     ExportAsConstantGVar(AWP_FUN_ASSOC_WORD);
-    ExportAsConstantGVar(AWP_FIRST_FREE);
+    ExportAsConstantGVar(AWP_LAST_ENTRY);
 
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 

@@ -111,16 +111,23 @@
   
   [33X[0;0YChanging  the value in a running [5XGAP[105X session does not affect the information
   shown  by [2XDisplayAtlasInfo[102X ([14X3.5-1[114X), this information depends on the value of
-  the preference at the time when the extension gets loaded.[133X
+  the preference at the time when the [5XAtlasRep[105X package and its data extensions
+  get loaded.[133X
   
   
   [1X4.2-2 [33X[0;0YUser preference [10XAtlasRepDataDirectory[110X[101X[1X[133X[101X
   
-  [33X[0;0YThe value must be a string that is the filename of a directory (in the sense
-  of   [2XIsDirectoryPath[102X   ([14XReference:   IsDirectoryPath[114X))   that  contains  the
-  directories  in  which  downloaded  data  will be stored. The default is the
+  [33X[0;0YThe  value  must  be  a  string  that  is  either empty or the filename of a
+  directory  (in  the  sense  of [2XIsDirectoryPath[102X ([14XReference: IsDirectoryPath[114X))
+  that contains the directories in which downloaded data will be stored.[133X
+  
+  [33X[0;0YAn  empty string means that downloaded data are just kept in the [5XGAP[105X session
+  but not saved to local files.[133X
+  
+  [33X[0;0YThe  default  depends  on  the  user's  permissions for the directory of the
+  [5XAtlasRep[105X  package:  If  this  directory  is  writable  for the user then the
   installation  path  of  the  [5XAtlasRep[105X  package  (including  a trailing slash
-  symbol).[133X
+  symbol) is taken, otherwise the default is an empty string.[133X
   
   
   [1X4.2-3 [33X[0;0YUser preference [10XAtlasRepTOCData[110X[101X[1X[133X[101X
@@ -298,35 +305,46 @@
   files get loaded. The default value is [9Xfalse[109X.[133X
   
   
+  [1X4.2-15 [33X[0;0YUser preference [10XAtlasRepJsonFilesAddresses[110X[101X[1X[133X[101X
+  
+  [33X[0;0YThe  value,  if  set, must be a list of length two, the first entry being an
+  URL  describing a directory that contains Json format files of the available
+  matrix  representations  in  characteristic  zero,  and  the  second being a
+  directory  path  where  these files shall be stored locally. If the value is
+  set  (this  is  the  default) then the functions of the package use the Json
+  format files instead of the GAP format files.[133X
+  
+  
   [1X4.3 [33X[0;0YWeb Contents for the [5XAtlasRep[105X[101X[1X Package[133X[101X
   
   [33X[0;0YThe        home        page        of       the       [5XAtlasRep[105X       package
-  ([7Xhttp://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep[107X) provides[133X
+  ([7Xhttps://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep[107X) provides[133X
   
   [30X    [33X[0;6Ypackage archives,[133X
   
   [30X    [33X[0;6Yintroductory package information,[133X
   
   [30X    [33X[0;6Ythe  current  [13Xtable of contents[113X of core data in the file [11Xatlasprm.json[111X
-        ([7Xhttp://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/atlasprm.json[107X)
+        (
+        https://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/atlasprm.json[107X)
         of the package, cf. [2XStringOfAtlasTableOfContents[102X ([14X5.1-3[114X),[133X
   
   [30X    [33X[0;6Ythe     list    of    changes    of    remote    core    data    files
         (
-        http://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/htm/data/changes.htm
+        https://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/htm/data/changes.htm
         ),[133X
   
   [30X    [33X[0;6Ya                            starter                           archive
         (
-        http://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/atlasrepdata.tar.gz
+        https://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/atlasrepdata.tar.gz
         ) containing many small representations and programs, and[133X
   
   [30X    [33X[0;6Yan          overview          of         the         core         data
-        ([7Xhttp://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/htm/data[107X) in a
-        similar   format   as   the   information   shown   by   the  function
+        ([7Xhttps://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/htm/data[107X)  in
+        a   similar   format   as   the  information  shown  by  the  function
         [2XDisplayAtlasInfo[102X  ([14X3.5-1[114X) of the package; more details can be found on
         the    home    page    of   the   [5XATLAS[105X   of   Group   Representations
-        ([7Xhttp://brauer.maths.qmul.ac.uk/Atlas/v3[107X).[133X
+        ([7Xhttp://atlas.math.rwth-aachen.de/Atlas/v3[107X).[133X
   
   
   [1X4.4 [33X[0;0YExtending the [5XATLAS[105X[101X[1X Database[133X[101X

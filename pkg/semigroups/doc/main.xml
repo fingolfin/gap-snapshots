@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<!DOCTYPE Book SYSTEM "gapdoc.dtd"
+[
+<!ENTITY n '<Alt Not="Text"><M>n</M></Alt>
+    <Alt Only="Text"><C>n</C></Alt>'>
+<!ENTITY x '<Alt Not="Text"><M>x</M></Alt>
+    <Alt Only="Text"><C>x</C></Alt>'>
+<!ENTITY y '<Alt Not="Text"><M>y</M></Alt>
+    <Alt Only="Text"><C>y</C></Alt>'>
+<!ENTITY p '<Alt Not="Text"><M>p</M></Alt>
+    <Alt Only="Text"><C>p</C></Alt>'>
+<!ENTITY s '<Alt Not="Text"><M>s</M></Alt>
+    <Alt Only="Text"><C>s</C></Alt>'>
+<!ENTITY r '<Alt Not="Text"><M>r</M></Alt>
+    <Alt Only="Text"><C>r</C></Alt>'>
+<!ENTITY D '<Alt Only="HTML MathJax">\(\mathscr{D}\)</Alt><Alt Only="HTML noMathJax"><E>D</E></Alt><Alt Only="Text"><E>D</E></Alt><Alt Only="LaTeX"><M>\mathcal{D}</M></Alt>'>
+<!ENTITY L '<Alt Only="HTML MathJax">\(\mathscr{L}\)</Alt><Alt Only="HTML noMathJax"><E>L</E></Alt><Alt Only="Text"><E>L</E></Alt><Alt Only="LaTeX"><M>\mathcal{L}</M></Alt>'>
+<!ENTITY R '<Alt Only="HTML MathJax">\(\mathscr{R}\)</Alt><Alt Only="HTML noMathJax"><E>R</E></Alt><Alt Only="Text"><E>R</E></Alt><Alt Only="LaTeX"><M>\mathcal{R}</M></Alt>'>
+<!ENTITY i '<Alt Not="Text"><M>i</M></Alt>
+    <Alt Only="Text"><C>i</C></Alt>'>
+<!ENTITY VERSION '5.0.2'>
+<!ENTITY ARCHIVENAME 'semigroups-5.0.2.tar.gz'>
+<!ENTITY k '<Alt Not="Text"><M>k</M></Alt>
+    <Alt Only="Text"><C>k</C></Alt>'>
+<!ENTITY see '<Alt Only="LaTeX">$\to$</Alt><Alt Not="LaTeX">--&gt;</Alt>'>
+<!ENTITY GAPVERS '4.12.0'>
+<!ENTITY DATASTRUCTURESVERS '0.2.5'>
+<!ENTITY DIGRAPHSVERS '1.5.0'>
+<!ENTITY GENSSVERS '1.6.5'>
+<!ENTITY IMAGESVERS '1.3.1'>
+<!ENTITY IOVERS '4.5.1'>
+<!ENTITY ORBVERS '4.8.2'>
+<!ENTITY SEMIGROUPS '<Package>Semigroups</Package>'>
+<!ENTITY DATASTRUCTURES '<Alt Not="Text"><URL Text="datastructures">https://gap-packages.github.io/datastructures</URL></Alt>
+    <Alt Only="Text"><Package>datastructures</Package></Alt>'>
+<!ENTITY DIGRAPHS '<Alt Not="Text"><URL Text="Digraphs">https://digraphs.github.io/Digraphs</URL></Alt>
+    <Alt Only="Text"><Package>Digraphs</Package></Alt>'>
+<!ENTITY GENSS '<Alt Not="Text"><URL Text="genss">https://gap-packages.github.io/genss</URL></Alt>
+    <Alt Only="Text"><Package>genss</Package></Alt>'>
+<!ENTITY IMAGES '<Alt Not="Text"><URL Text="images">https://gap-packages.github.io/images/</URL></Alt>
+    <Alt Only="Text"><Package>images</Package></Alt>'>
+<!ENTITY IO '<Alt Not="Text"><URL Text="IO">https://gap-packages.github.io/io</URL></Alt>
+    <Alt Only="Text"><Package>IO</Package></Alt>'>
+<!ENTITY ORB '<Alt Not="Text"><URL Text="orb">https://gap-packages.github.io/orb</URL></Alt>
+    <Alt Only="Text"><Package>orb</Package></Alt>'>
+<!ENTITY GAPDOC '<Alt Not="Text"><URL Text="GAPDoc">http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc</URL></Alt>
+    <Alt Only="Text"><Package>GAPDoc</Package></Alt>'>
+<!ENTITY AUTODOC '<Alt Not="Text"><URL Text="AutoDoc">https://gap-packages.github.io/AutoDoc</URL></Alt>
+    <Alt Only="Text"><Package>AutoDoc</Package></Alt>'>
+<!ENTITY LIBSEMIGROUPS '<Alt Not="Text"><URL Text="libsemigroups">https://libsemigroups.readthedocs.io/en/latest/</URL></Alt>
+    <Alt Only="Text"><Package>libsemigroups</Package></Alt>'>
+<!ENTITY BLISS '<Alt Not="Text"><URL Text="bliss">http://www.tcs.tkk.fi/Software/bliss/</URL></Alt>
+    <Alt Only="Text"><Package>bliss</Package></Alt>'>
+<!ENTITY H '<Alt Only="HTML MathJax">\(\mathscr{H}\)</Alt><Alt Only="HTML noMathJax"><E>H</E></Alt><Alt Only="Text"><E>H</E></Alt><Alt Only="LaTeX"><M>\mathcal{H}</M></Alt>'>
+<!ENTITY J '<Alt Only="HTML MathJax">\(\mathscr{J}\)</Alt><Alt Only="HTML noMathJax"><E>J</E></Alt><Alt Only="Text"><E>J</E></Alt><Alt Only="LaTeX"><M>\mathcal{J}</M></Alt>'>
+<!ENTITY X '<Alt Not="Text"><M>X</M></Alt>
+    <Alt Only="Text"><C>X</C></Alt>'>
+<!ENTITY j '<Alt Not="Text"><M>j</M></Alt>
+    <Alt Only="Text"><C>j</C></Alt>'>
+<!ENTITY bfn '<Alt Not="Text"><M>\mathbf{n}</M></Alt>
+<Alt Only="Text"><E>n</E></Alt>'>
+<!ENTITY bbN '<Alt Not="Text"><M>\mathbb{N}</M></Alt>
+<Alt Only="Text"><E>N</E></Alt>'>
+<!ENTITY Semigroups '<Package>Semigroups</Package>'>
+]
+>
+<Book Name="Semigroups">
+<#Include SYSTEM "title.xml">
+<TableOfContents/>
+<Body>
+<#Include SYSTEM "z-chap01.xml">
+<#Include SYSTEM "z-chap02.xml">
+<#Include SYSTEM "z-chap03.xml">
+<#Include SYSTEM "z-chap04.xml">
+<#Include SYSTEM "z-chap05.xml">
+<#Include SYSTEM "z-chap06.xml">
+<#Include SYSTEM "z-chap07.xml">
+<#Include SYSTEM "z-chap08.xml">
+<#Include SYSTEM "z-chap09.xml">
+<#Include SYSTEM "z-chap10.xml">
+<#Include SYSTEM "z-chap11.xml">
+<#Include SYSTEM "z-chap12.xml">
+<#Include SYSTEM "z-chap13.xml">
+<#Include SYSTEM "z-chap14.xml">
+<#Include SYSTEM "z-chap15.xml">
+<#Include SYSTEM "z-chap16.xml">
+<#Include SYSTEM "z-chap17.xml">
+<#Include SYSTEM "_AutoDocMainFile.xml">
+</Body>
+<Bibliography Databases="bibliography.xml"/>
+<TheIndex/>
+</Book>

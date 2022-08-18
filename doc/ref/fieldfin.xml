@@ -1,8 +1,7 @@
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <!-- %% -->
-<!-- %A  fieldfin.msk                  GAP documentation             Thomas Breuer -->
+<!-- %A  fieldfin.xml                  GAP documentation             Thomas Breuer -->
 <!-- %% -->
-<!-- %A  @(#)<M>Id: fieldfin.msk,v 1.27 2006/03/07 22:57:27 sal Exp </M> -->
 <!-- %% -->
 <!-- %Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland -->
 <!-- %Y  Copyright (C) 2002 The GAP Group -->
@@ -54,6 +53,7 @@ and&nbsp;<Ref Sect="Matrices over Finite Fields"/>).
 <#Include Label="IntFFESymm">
 <#Include Label="IntVecFFE">
 <#Include Label="AsInternalFFE">
+<#Include Label="RootFFE">
 
 </Section>
 

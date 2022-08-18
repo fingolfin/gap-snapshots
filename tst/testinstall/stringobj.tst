@@ -93,6 +93,10 @@ gap> """x""" = "x";
 true
 gap> """""" = "";
 true
+gap> """x"y""" = "x\"y";
+true
+gap> """x""y""" = "x\"\"y";
+true
 gap> """\n""" = "\\n";
 true
 gap> """("\n")""" = "(\"\\n\")";
@@ -5204,6 +5208,26 @@ gap> IsHomogeneousList("a");
 true
 gap> "IsHomogeneousList" in CategoriesOfObject("");
 true
+
+# Append
+gap> s := "str";
+"str"
+gap> Append(s, "abc");
+gap> [s, IsString(s), IsStringRep(s)];
+[ "strabc", true, true ]
+gap> Append(s, ['a', 'b', 'c']);
+gap> [s, IsString(s), IsStringRep(s)];
+[ "strabcabc", true, true ]
+gap> Append(s, [1,2,3]);
+gap> [s, IsString(s), IsStringRep(s)];
+[ [ 's', 't', 'r', 'a', 'b', 'c', 'a', 'b', 'c', 1, 2, 3 ], false, false ]
+gap> s := s{[1..3]};
+"str"
+gap> [s, IsString(s), IsStringRep(s)];
+[ "str", true, false ]
+gap> Append(s, "xyz");
+gap> [s, IsString(s), IsStringRep(s)];
+[ "strxyz", true, false ]
 
 #
 gap> STOP_TEST( "stringobj.tst", 1);

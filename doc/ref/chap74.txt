@@ -78,7 +78,7 @@
   [1X74.1-4 [33X[0;0YComparison of Unknowns[133X[101X
   
   [33X[0;0YUnknowns  can  be [13Xcompared[113X via [10X=[110X and [10X<[110X with all cyclotomics and with certain
-  other  [5XGAP[105X  objects  (see [14X4.12[114X). We have [10XUnknown( [3Xn[103X[10X ) >= Unknown( [3Xm[103X[10X )[110X if and
+  other  [5XGAP[105X  objects  (see [14X4.13[114X). We have [10XUnknown( [3Xn[103X[10X ) >= Unknown( [3Xm[103X[10X )[110X if and
   only  if [10X[3Xn[103X[10X >= [3Xm[103X[10X[110X holds, unknowns are larger than all cyclotomics that are not
   unknowns.[133X
   

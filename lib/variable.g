@@ -19,7 +19,6 @@
 
 #############################################################################
 ##
-
 #C  IsToBeDefinedObj. . . . . . . .  represenation of "to be defined" objects
 ##
 DeclareCategory( "IsToBeDefinedObj", IsObject );
@@ -63,37 +62,6 @@ end );
 
 #############################################################################
 ##
-#O  FlushCaches( ) . . . . . . . . . . . . . . . . . . . . . Clear all caches
-##
-##  <#GAPDoc Label="FlushCaches">
-##  <ManSection>
-##  <Oper Name="FlushCaches" Arg=""/>
-##
-##  <Description>
-##  <Ref Oper="FlushCaches"/> resets the value of each global variable that
-##  has been declared with <Ref Func="DeclareGlobalVariable"/> and for which
-##  the initial value has been set with <Ref Func="InstallFlushableValue"/>
-##  or <Ref Func="InstallFlushableValueFromFunction"/>
-##  to this initial value.
-##  <P/>
-##  <Ref Oper="FlushCaches"/> should be used only for debugging purposes,
-##  since the involved global variables include for example lists that store
-##  finite fields and cyclotomic fields used in the current &GAP; session,
-##  in order to avoid that these fields are constructed anew in each call
-##  to <Ref Func="GF" Label="for field size"/> and
-##  <Ref Func="CF" Label="for (subfield and) conductor"/>.
-##  </Description>
-##  </ManSection>
-##  <#/GAPDoc>
-##
-DeclareOperation( "FlushCaches", [] );
-# This method is just that one method is callable. It is installed first, so
-# it will be last in line.
-InstallMethod( FlushCaches, "return method", [], function() end );
-
-
-#############################################################################
-##
 #F  DeclareGlobalVariable( <name>[, <description>] )
 ##
 ##  <#GAPDoc Label="DeclareGlobalVariable">
@@ -105,8 +73,16 @@ InstallMethod( FlushCaches, "return method", [], function() end );
 ##  instead of using <Ref Func="BindGlobal"/> one can also declare the
 ##  variable with <Ref Func="DeclareGlobalVariable"/>
 ##  which creates a new global variable named by the string <A>name</A>.
-##  If the second argument <A>description</A> is entered then this must be
-##  a string that describes the meaning of the global variable.
+##  <P/>
+##
+##  In the past the main application of this was to allow access to variables
+##  before they were assigned. Starting with &GAP; 4.12 we recommend to
+##  instead use <Ref Func="DeclareGlobalName"/> for this kind of problem.
+##  The main remaining application for <Ref Func="DeclareGlobalVariable"/>
+##  is when one needs flushable values.
+##  <P/>
+##
+##  If used at all, then
 ##  <Ref Func="DeclareGlobalVariable"/> shall be used in the declaration part
 ##  of the respective package
 ##  (see&nbsp;<Ref Sect="Declaration and Implementation Part"/>),
@@ -138,7 +114,8 @@ end );
 ##
 ##  <Description>
 ##  <Ref Func="InstallValue"/> assigns the value <A>value</A> to the global
-##  variable <A>gvar</A>.
+##  variable <A>gvar</A> if it was previously declared via
+##  <Ref Func="DeclareGlobalVariable"/>.
 ##  <Ref Func="InstallFlushableValue"/> does the same but additionally
 ##  provides that each call of <Ref Oper="FlushCaches"/>
 ##  will assign a structural copy of <A>value</A> to <A>gvar</A>.

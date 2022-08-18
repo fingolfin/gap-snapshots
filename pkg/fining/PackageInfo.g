@@ -13,11 +13,27 @@ SetPackageInfo( rec(
 
 PackageName := "FinInG",
 Subtitle := "Finite Incidence Geometry",
-Version := "1.4.1",
-Date := "31/03/2018",
+Version := "1.5",
+Date := "10/07/2022", # dd/mm/yyyy format
+License := "GPL-2.0-or-later",
 
-ArchiveURL := Concatenation("http://cage.ugent.be/fining/archive/fining-",~.Version),
-ArchiveFormats := ".tar.gz -win.zip .tar.bz2",
+IssueTrackerURL := "https://github.com/gap-packages/FinInG/issues",
+SourceRepository := rec(
+    Type := "git",
+    URL := "https://github.com/gap-packages/FinInG",
+),
+
+# TODO: change PackageWWWHome back to http://www.fining.org
+# (or better, https://www.fining.org) once it has the new
+# version
+PackageWWWHome  := "https://gap-packages.github.io/FinInG",
+README_URL      := Concatenation( ~.PackageWWWHome, "/README.md" ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
+ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/", LowercaseString(~.PackageName), "-", ~.Version ),
+
+ArchiveFormats := ".tar.gz .tar.bz2",
 
 Persons := [
   rec( 
@@ -53,24 +69,7 @@ Persons := [
     Place         := "Colorado",
     Institution   := "Colorado State University",
   ),
-  rec( 
-    LastName      := "De Beule",
-    FirstNames    := "Jan",
-    IsAuthor      := true,
-    IsMaintainer  := true,
-    Email         := "jan@debeule.eu",
-    WWWHome       := "http://www.debeule.eu",
-    PostalAddress := Concatenation( [
-                       "Jan De Beule\n",
-                       "Department of Mathematics\n",
-                       "Vrije Universiteit Brussel\n",
-                       "Pleinlaan 2\n",
-                       "B-1050 Brussel\n",
-                       "Belgium" ] ),
-    Place         := "Brussels",
-    Institution   := "Vrije Universiteit Brussel",
-  ),
-  rec( 
+  rec(
     LastName      := "Cara",
     FirstNames    := "Philippe",
     IsAuthor      := true,
@@ -87,6 +86,23 @@ Persons := [
     Place         := "Brussel",
     Institution   := "Vrije Universiteit Brussel",
   ),
+  rec(
+    LastName      := "De Beule",
+    FirstNames    := "Jan",
+    IsAuthor      := true,
+    IsMaintainer  := true,
+    Email         := "jan@debeule.eu",
+    WWWHome       := "http://www.debeule.eu",
+    PostalAddress := Concatenation( [
+    "Jan De Beule\n",
+    "Department of Mathematics\n",
+    "Vrije Universiteit Brussel\n",
+    "Pleinlaan 2\n",
+    "B-1050 Brussel\n",
+    "Belgium" ] ),
+    Place         := "Brussels",
+    Institution   := "Vrije Universiteit Brussel",
+  ),
   rec( 
     LastName      := "Lavrauw",
     FirstNames    := "Michel",
@@ -97,16 +113,11 @@ Persons := [
     PostalAddress := Concatenation( [
                        "Michel Lavrauw\n",
                        "Faculty of Engineering and Natural Sciences\n",
-                       "Sabancı Üniversitesi\n",
+                       "Sabanci Universitesi\n",
                        "Istanbul\n",
-                       "Turkey\n",
-                       "Università degli Studi di Padova\n",
-                       "Dipartimento di Tecnica e Gestione dei Sistemi Industriali\n",
-                       "Stradella S. Nicola, 3\n",
-                       "I-36100\n",
-                       "Italy" ] ),
+                       "Turkey\n" ] ),
     Place         := "Istanbul, and Vicenza",
-    Institution   := "Sabancı Üniversitesi, and Università degli Studi di Padova",
+    Institution   := "Sabancƒ± √úniversitesi, and Universit√† degli Studi di Padova",
   ),
   rec( 
     LastName      := "Neunhoeffer",
@@ -126,16 +137,27 @@ Persons := [
     Place         := "St Andrews",
     Institution   := "University of St Andrews"
   ),
-,
-  
+  rec(
+    LastName      := "Horn",
+    FirstNames    := "Max",
+    IsAuthor      := false,
+    IsMaintainer  := true,
+    Email         := "horn@mathematik.uni-kl.de",
+    WWWHome       := "https://www.quendi.de/math",
+    PostalAddress := Concatenation(
+                       "Fachbereich Mathematik\n",
+                       "TU Kaiserslautern\n",
+                       "Gottlieb-Daimler-Straﬂe 48\n",
+                       "67663 Kaiserslautern\n",
+                       "Germany" ),
+    Place         := "Kaiserslautern, Germany",
+    Institution   := "TU Kaiserslautern",
+  ),
 ],
 
 Status := "accepted",
-CommunicatedBy := "Alexander Konovalov (St Andrews)",
+CommunicatedBy := "Olexandr Konovalov (St Andrews)",
 AcceptDate := "11/2017",
-
-README_URL := "http://cage.ugent.be/fining/README",
-PackageInfoURL := "http://cage.ugent.be/fining/PackageInfo.g",
 
 AbstractHTML := "<span class=\"pkgname\">FinInG</span> is a package for computation\
  in Finite Incidence Geometry. It provides users with the basic tools to work in \
@@ -143,13 +165,11 @@ AbstractHTML := "<span class=\"pkgname\">FinInG</span> is a package for computat
  lands of generalised polygons. The algebraic power of GAP is employed, particularly \
  in its facility with matrix and permutation groups.",
 
-PackageWWWHome := "http://www.fining.org",
-
 PackageDoc := rec(
   # use same as in GAP            
   BookName  := "FinInG",
   ArchiveURLSubset := ["doc"],
-  HTMLStart := "doc/chap0.html",
+  HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   # the path to the .six file used by GAP's help system
   SixFile   := "doc/manual.six",
@@ -157,23 +177,20 @@ PackageDoc := rec(
   # fit on a single text line (appears with the '?books' command in GAP)
   # LongTitle := "Elementary Divisors of Integer Matrices",
   LongTitle := "FinInG - Finite Incidence Geometry",
-  # Should this help book be autoloaded when GAP starts up? This should
-  # usually be 'true', otherwise say 'false'. 
-  Autoload  := true
 ),
 
 
 ##  Are there restrictions on the operating system for this package? Or does
 ##  the package need other packages to be available?
 Dependencies := rec(
-  GAP := ">=4.8",
+  GAP := ">=4.10",
   NeededOtherPackages := [
-          ["cvec", ">=2.5.7"],
-          ["Forms", ">=1.2.3"],
-          ["GAPDoc", ">= 1.6"],
-          ["GenSS", ">=1.6.4"],
-          ["GRAPE", ">=4.7"],
-          ["Orb", ">=4.7.6"],
+          ["cvec", ">=2.7.4"],
+          ["Forms", ">=1.2.5"],
+          ["GAPDoc", ">= 1.6.3"],
+          ["GenSS", ">=1.6.6"],
+          ["GRAPE", ">=4.8.2"],
+          ["Orb", ">=4.8.3"],
       ],
   SuggestedOtherPackages := [],
   ExternalConditions := []
@@ -207,14 +224,17 @@ BannerString := Concatenation(
 
 TestFile := "tst/testall.g",
 
-IssueTrackerURL := "https://bitbucket.org/jdebeule/fining/issues",
-SourceRepository := rec(
-    Type := "git",
-    URL := "https://bitbucket.org/jdebeule/fining",
-),
-
 Keywords := ["FinInG", "finite", "geometry"],
 
+
+AutoDoc := rec(
+    entities := rec(
+        VERSION := ~.Version,
+        DATE := ~.Date,
+        YEAR := ~.Date{[7..10]},
+    ),
+    MainPage := false,
+    TitlePage := false,
+),
+
 ));
-
-

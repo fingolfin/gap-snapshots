@@ -248,7 +248,7 @@ InstallMethod( RepresentativeSmallest,
 ##
 ##  The default function for random selection in a finite collection computes
 ##  an enumerator of <C> and selects a random element of this list using the
-##  function `RandomList', which is a pseudo random number generator.
+##  function `RandomList', which uses a pseudo random number generator.
 ##
 
 # RandomList is not an operation to avoid the (often expensive) cost of
@@ -263,7 +263,7 @@ InstallGlobalFunction( RandomList, function(args...)
     source := args[1];
     list := args[2];
   else
-    Error(" Usage: RandomList([rs], list))");
+    Error( "usage: RandomList( [<rs>], <list> ) for a dense list <list>" );
   fi;
 
   return list[Random(source, 1, Length(list))];
@@ -409,9 +409,7 @@ InstallMethod( PrintObj,
 #F  EnumeratorByFunctions( <D>, <record> )
 #F  EnumeratorByFunctions( <Fam>, <record> )
 ##
-DeclareRepresentation( "IsEnumeratorByFunctionsRep", IsComponentObjectRep,
-    [ "ElementNumber", "NumberElement", "Length", "IsBound\\[\\]",
-      "Membership", "AsList", "ViewObj", "PrintObj" ] );
+DeclareRepresentation( "IsEnumeratorByFunctionsRep", IsComponentObjectRep );
 
 DeclareSynonym( "IsEnumeratorByFunctions",
     IsEnumeratorByFunctionsRep and IsDenseList and IsDuplicateFreeList );
@@ -911,13 +909,9 @@ InstallOtherMethod( NextIterator,
 #F  IteratorByFunctions( <record> )
 ##
 if IsHPCGAP then
-DeclareRepresentation( "IsIteratorByFunctionsRep", IsNonAtomicComponentObjectRep,
-    [ "NextIterator", "IsDoneIterator", "ShallowCopy",
-    , "ViewObj", "PrintObj"] );
+DeclareRepresentation( "IsIteratorByFunctionsRep", IsNonAtomicComponentObjectRep );
 else
-DeclareRepresentation( "IsIteratorByFunctionsRep", IsComponentObjectRep,
-    [ "NextIterator", "IsDoneIterator", "ShallowCopy",
-    , "ViewObj", "PrintObj"] );
+DeclareRepresentation( "IsIteratorByFunctionsRep", IsComponentObjectRep );
 fi;
 
 DeclareSynonym( "IsIteratorByFunctions",
@@ -3105,15 +3099,15 @@ InstallOtherMethod(SetSize,true,[IsObject and IsAttributeStoringRep,IsObject],
 function(obj,sz)
 local filt;
   if HasSize(obj) and Size(obj)<>sz then
-    if AssertionLevel()>2 then
-      # Make this an ordinary error (not ErrorNoReturn as suggested) to
-      # preserve all debugging options -- even use `return` to investigate
-      # what would have happened before this methods was introduced.
-      Error("size of ",obj," already set to ",Size(obj),
-        ", cannot be changed to ",sz);
-    fi;
+    CHECK_REPEATED_ATTRIBUTE_SET(obj, "Size", sz);
     return;
   fi;
+
+  # some sanity checks
+  Assert(0, not HasIsEmpty(obj) or (IsEmpty(obj) = (sz=0)));
+  Assert(0, not HasIsTrivial(obj) or (IsTrivial(obj) = (sz=1)));
+  Assert(0, not HasIsFinite(obj) or (IsFinite(obj) = (sz<>infinity)));
+
   if sz=0 then filt:=IsEmpty;
   elif sz=1 then filt:=IsTrivial;
   elif sz=infinity then filt:=IsNonTrivial and HasIsFinite;

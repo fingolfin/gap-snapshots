@@ -53,10 +53,17 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap53.html#X812CEC008609A8A2">53.4 <span class="Heading">Operators for transformations</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X83DBA2A18719EFA8">53.4-1 PermLeftQuoTransformation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X8275DFAA8270BB59">53.4-2 IsInjectiveListTrans</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X834A313B7DAF06D5">53.4-3 ComponentTransformationInt</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X82F5DEEC837B60A3">53.4-4 PreImagesOfTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X853031E37F214D10"><code>53.4-1 \^</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X824A8E247DE7E53E"><code>53.4-2 \^</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7F6573E67D27D822"><code>53.4-3 \*</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X828CA7137F97C124"><code>53.4-4 \/</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7856D91E8709EF5B">53.4-5 LeftQuotient</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X84B8E294826A9377"><code>53.4-6 \&lt;</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X7D454AAD851AE07E"><code>53.4-7 \=</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X83DBA2A18719EFA8">53.4-8 PermLeftQuoTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X8275DFAA8270BB59">53.4-9 IsInjectiveListTrans</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X834A313B7DAF06D5">53.4-10 ComponentTransformationInt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap53.html#X82F5DEEC837B60A3">53.4-11 PreImagesOfTransformation</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap53.html#X86DE4F7A7C535820">53.5 <span class="Heading">Attributes for transformations</span></a>
 </span>
@@ -320,9 +327,7 @@ Transformation( [ 2, 1, 2, 1, 1, 2 ] )</pre></div>
 <h5>53.2-8 IdentityTransformation</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityTransformation</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
-<p>Returns: The identity transformation.</p>
-
-<p>Returns the identity transformation, which has degree <code class="code">0</code>.</p>
+<p>This variable is bound to the identity transformation, which has degree <code class="code">0</code>.</p>
 
 
 <div class="example"><pre>
@@ -462,40 +467,58 @@ fail
 
 <h4>53.4 <span class="Heading">Operators for transformations</span></h4>
 
+<p><a id="X853031E37F214D10" name="X853031E37F214D10"></a></p>
 
-<dl>
-<dt><strong class="Mark"><code class="code"><var class="Arg">i</var> ^ <var class="Arg">f</var></code></strong></dt>
-<dd><p>returns the image of the positive integer <var class="Arg">i</var> under the transformation <var class="Arg">f</var>.</p>
+<h5><code>53.4-1 \^</code></h5>
 
-</dd>
-<dt><strong class="Mark"><code class="code"><var class="Arg">f</var> ^ <var class="Arg">g</var></code></strong></dt>
-<dd><p>returns <code class="code"><var class="Arg">g</var> ^ -1 * <var class="Arg">f</var> * <var class="Arg">g</var></code> when <var class="Arg">f</var> is a transformation and <var class="Arg">g</var> is a permutation <code class="func">\^</code> (<a href="chap31.html#X8481C9B97B214C23"><span class="RefLink">31.12-1</span></a>). This operation requires essentially the same number of steps as multiplying a transformation by a permutation, which is approximately one third of the number required to first invert <var class="Arg">g</var>, take the product with <var class="Arg">f</var>, and then the product with <var class="Arg">g</var>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \^</code>( <var class="Arg">i</var>, <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><code class="code"><var class="Arg">i</var> ^ <var class="Arg">f</var></code> returns the image of the positive integer <var class="Arg">i</var> under the transformation <var class="Arg">f</var>.</p>
 
-</dd>
-<dt><strong class="Mark"><code class="code"><var class="Arg">f</var> * <var class="Arg">g</var></code></strong></dt>
-<dd><p>returns the composition of <var class="Arg">f</var> and <var class="Arg">g</var> when <var class="Arg">f</var> and <var class="Arg">g</var> are transformations or permutations. The product of a permutation and a transformation is returned as a transformation.</p>
+<p><a id="X824A8E247DE7E53E" name="X824A8E247DE7E53E"></a></p>
 
-</dd>
-<dt><strong class="Mark"><code class="code"><var class="Arg">f</var> / <var class="Arg">g</var></code></strong></dt>
-<dd><p>returns <code class="code"><var class="Arg">f</var> * <var class="Arg">g</var> ^ -1</code> when <var class="Arg">f</var> is a transformation and <var class="Arg">g</var> is a permutation. This operation requires essentially the same number of steps as multiplying a transformation by a permutation, which is approximately half the number required to first invert <var class="Arg">g</var> and then take the product with <var class="Arg">f</var>.</p>
+<h5><code>53.4-2 \^</code></h5>
 
-</dd>
-<dt><strong class="Mark"><code class="code">LQUO( <var class="Arg">g</var>, <var class="Arg">f</var> )</code></strong></dt>
-<dd><p>returns <code class="code"><var class="Arg">g</var> ^ -1 * <var class="Arg">f</var></code> when <var class="Arg">f</var> is a transformation and <var class="Arg">g</var> is a permutation. This operation uses essentially the same number of steps as multiplying a transformation by a permutation, which is approximately half the number required to first invert <var class="Arg">g</var> and then take the product with <var class="Arg">f</var>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \^</code>( <var class="Arg">f</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><code class="code"><var class="Arg">f</var> ^ <var class="Arg">g</var></code> returns <code class="code"><var class="Arg">g</var> ^ -1 * <var class="Arg">f</var> * <var class="Arg">g</var></code> when <var class="Arg">f</var> is a transformation and <var class="Arg">g</var> is a permutation <code class="func">\^</code> (<a href="chap31.html#X8481C9B97B214C23"><span class="RefLink">31.12-1</span></a>). This operation requires essentially the same number of steps as multiplying a transformation by a permutation, which is approximately one third of the number required to first invert <var class="Arg">g</var>, take the product with <var class="Arg">f</var>, and then the product with <var class="Arg">g</var>.</p>
 
-</dd>
-<dt><strong class="Mark"><code class="code"><var class="Arg">f</var> &lt; <var class="Arg">g</var></code></strong></dt>
-<dd><p>returns <code class="keyw">true</code> if the image list of <var class="Arg">f</var> is lexicographically less than the image list of <var class="Arg">g</var> and <code class="keyw">false</code> if it is not.</p>
+<p><a id="X7F6573E67D27D822" name="X7F6573E67D27D822"></a></p>
 
-</dd>
-<dt><strong class="Mark"><code class="code"><var class="Arg">f</var> = <var class="Arg">g</var></code></strong></dt>
-<dd><p>returns <code class="keyw">true</code> if the transformation <var class="Arg">f</var> equals the transformation <var class="Arg">g</var> and returns <code class="keyw">false</code> if it does not.</p>
+<h5><code>53.4-3 \*</code></h5>
 
-</dd>
-</dl>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \*</code>( <var class="Arg">f</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><code class="code"><var class="Arg">f</var> * <var class="Arg">g</var></code> returns the composition of <var class="Arg">f</var> and <var class="Arg">g</var> when <var class="Arg">f</var> and <var class="Arg">g</var> are transformations or permutations. The product of a permutation and a transformation is returned as a transformation.</p>
+
+<p><a id="X828CA7137F97C124" name="X828CA7137F97C124"></a></p>
+
+<h5><code>53.4-4 \/</code></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \/</code>( <var class="Arg">f</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><code class="code"><var class="Arg">f</var> / <var class="Arg">g</var></code> returns <code class="code"><var class="Arg">f</var> * <var class="Arg">g</var> ^ -1</code> when <var class="Arg">f</var> is a transformation and <var class="Arg">g</var> is a permutation. This operation requires essentially the same number of steps as multiplying a transformation by a permutation, which is approximately half the number required to first invert <var class="Arg">g</var> and then take the product with <var class="Arg">f</var>.</p>
+
+<p><a id="X7856D91E8709EF5B" name="X7856D91E8709EF5B"></a></p>
+
+<h5>53.4-5 LeftQuotient</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftQuotient</code>( <var class="Arg">g</var>, <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>returns <code class="code"><var class="Arg">g</var> ^ -1 * <var class="Arg">f</var></code> when <var class="Arg">f</var> is a transformation and <var class="Arg">g</var> is a permutation. This operation uses essentially the same number of steps as multiplying a transformation by a permutation, which is approximately half the number required to first invert <var class="Arg">g</var> and then take the product with <var class="Arg">f</var>.</p>
+
+<p><a id="X84B8E294826A9377" name="X84B8E294826A9377"></a></p>
+
+<h5><code>53.4-6 \&lt;</code></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \&lt;</code>( <var class="Arg">i</var>, <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><code class="code"><var class="Arg">f</var> &lt; <var class="Arg">g</var></code> returns <code class="keyw">true</code> if the image list of <var class="Arg">f</var> is lexicographically less than the image list of <var class="Arg">g</var> and <code class="keyw">false</code> if it is not.</p>
+
+<p><a id="X7D454AAD851AE07E" name="X7D454AAD851AE07E"></a></p>
+
+<h5><code>53.4-7 \=</code></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \=</code>( <var class="Arg">f</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><code class="code"><var class="Arg">f</var> = <var class="Arg">g</var></code> returns <code class="keyw">true</code> if the transformation <var class="Arg">f</var> equals the transformation <var class="Arg">g</var> and returns <code class="keyw">false</code> if it does not.</p>
+
 <p><a id="X83DBA2A18719EFA8" name="X83DBA2A18719EFA8"></a></p>
 
-<h5>53.4-1 PermLeftQuoTransformation</h5>
+<h5>53.4-8 PermLeftQuoTransformation</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermLeftQuoTransformation</code>( <var class="Arg">f</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermLeftQuoTransformationNC</code>( <var class="Arg">f</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
@@ -517,7 +540,7 @@ fail
 
 <p><a id="X8275DFAA8270BB59" name="X8275DFAA8270BB59"></a></p>
 
-<h5>53.4-2 IsInjectiveListTrans</h5>
+<h5>53.4-9 IsInjectiveListTrans</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInjectiveListTrans</code>( <var class="Arg">list</var>, <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
@@ -541,7 +564,7 @@ true
 
 <p><a id="X834A313B7DAF06D5" name="X834A313B7DAF06D5"></a></p>
 
-<h5>53.4-3 ComponentTransformationInt</h5>
+<h5>53.4-10 ComponentTransformationInt</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComponentTransformationInt</code>( <var class="Arg">f</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A list of positive integers.</p>
@@ -561,7 +584,7 @@ true
 
 <p><a id="X82F5DEEC837B60A3" name="X82F5DEEC837B60A3"></a></p>
 
-<h5>53.4-4 PreImagesOfTransformation</h5>
+<h5>53.4-11 PreImagesOfTransformation</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImagesOfTransformation</code>( <var class="Arg">f</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A set of positive integers.</p>

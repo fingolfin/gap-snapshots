@@ -31,11 +31,19 @@ BindGlobal("STBBCKT_STRING_SUBORBITS2",MakeImmutable("Suborbits2"));
 BindGlobal("STBBCKT_STRING_SUBORBITS3",MakeImmutable("Suborbits3"));
 BindGlobal("STBBCKT_STRING_TWOCLOSURE",MakeImmutable("TwoClosure"));
 
+
+#############################################################################
+##
+#V  Refinements . . . . . . . . . . . . . . .  record of refinement processes
+##
+BindGlobal( "Refinements", AtomicRecord() );
+
+
 #############################################################################
 ##
 #F  IsSlicedPerm( <perm> )  . . . . . . . . . . . . . . . sliced permutations
 ##
-DeclareRepresentation( "IsSlicedPerm", IsPerm,
+DeclareRepresentation( "IsSlicedPerm", IsPerm and IsComponentObjectRep,
                         [ "length", "word", "lftObj","opr" ] );
 
 #############################################################################
@@ -88,7 +96,7 @@ InstallMethod( ViewObj,"sliced perm", true, [ IsSlicedPerm ], 0,
     Print( "<perm word of length ", perm!.length, ">" );
 end );
 
-DeclareRepresentation( "IsSlicedPermInv", IsPerm,
+DeclareRepresentation( "IsSlicedPermInv", IsPerm and IsComponentObjectRep,
                            [ "length", "word", "lftObj", "opr" ] );
 
 InstallOtherMethod( \^,"sliced perm", true, [ IsObject, IsSlicedPermInv ], 0,
@@ -692,26 +700,30 @@ local  dom,  # operation domain for the group
 	
 	# Map the suborbit <sub> with each old representative.
 	for o  in old  do
-	  if subs.reps[ o ] = true  then
-	    subs.reps[ o ] := InverseRepresentative( subs.stabChainTop,
-		SuboTruePos(ran, subs.blists[ o ] ) ) ^ -1;
-	  fi;
-	  for img  in OnTuples( sub, subs.reps[ o ] )  do
-	    
-	    # Find the suborbit <i> of the image.
-	    i := subs.which[ img ];
-	    
-	    # If this suborbit is encountered for the first time, add
-	    # it to <new> and store its distance <len>.
-	    if key[ i ] = 0  then
-	      Add( new, i );
-	      key[ i ] := len;
-	    fi;
-	    
-	    # Store the arrow which starts at suborbit <o>.
-	    key[ o ] := key[ o ] + d *
-			Length( sub ) ^ ( key[ i ] mod d );
-	  od;
+          if subs.reps[o]<>false then
+            if subs.reps[ o ] = true  then
+              subs.reps[ o ] := InverseRepresentative( subs.stabChainTop,
+                  SuboTruePos(ran, subs.blists[ o ] ) ) ^ -1;
+            fi;
+            for img  in OnTuples( sub, subs.reps[ o ] )  do
+              
+              # Find the suborbit <i> of the image.
+              i := subs.which[ img ];
+              
+              # If this suborbit is encountered for the first time, add
+              # it to <new> and store its distance <len>.
+              if key[ i ] = 0  then
+                Add( new, i );
+                key[ i ] := len;
+              fi;
+              
+              # Store the arrow which starts at suborbit <o>.
+              key[ o ] := key[ o ] + d *
+                          Length( sub ) ^ ( key[ i ] mod d );
+            od;
+          else
+            Info(InfoWarning,1,"suborbits variant triggered, check!");
+          fi;
 	od;
       od;
 
@@ -1544,12 +1556,6 @@ end );
     
 #############################################################################
 ##
-#V  Refinements . . . . . . . . . . . . . . .  record of refinement processes
-##
-InstallValue( Refinements, AtomicRecord() );
-
-#############################################################################
-##
 #F  Refinements.ProcessFixpoint( <pnt>, <cellnum> )  . . .  process a fixpoint
 ##
 InstallGlobalFunction(Refinements_ProcessFixpoint,
@@ -1952,6 +1958,13 @@ InstallGlobalFunction( NextLevelRegularGroups, function( P, rbase )
     
 end );
 
+BindGlobal("STBCTEARNS",function(G,Omega)
+  G:=Earns(G,Omega);
+  if Length(G)=0 then return fail;
+  elif Length(G)=1 then return G[1];
+  else Error("more than one Earns");fi;
+end);
+
 #############################################################################
 ##
 #F  RBaseGroupsBloxPermGroup( ... ) . . . . .  opr. on groups respecting blox
@@ -2015,10 +2028,10 @@ InstallGlobalFunction( RBaseGroupsBloxPermGroup, function( repr, G, Omega, E, di
         AddGeneratorsExtendSchreierTree( rbase.regorb,
                 GeneratorsOfGroup( E ) );
     elif IsPrimitive( E, Omega )  then
-        reg := Earns( E, Omega );
+        reg := STBCTEARNS( E, Omega );
         if reg <> fail  then
             Info( InfoBckt, 1, "Subgroup is affine" );
-            rbase.reggrp := Earns;
+            rbase.reggrp := STBCTEARNS;
             rbase.regorb := EmptyStabChain( [  ], One( reg ),
                                     Omega[ 1 ] );
             AddGeneratorsExtendSchreierTree( rbase.regorb,
@@ -2478,7 +2491,7 @@ dom, et, ft, Pr, rbase, BF, Q, data,lc;
         E := First( GeneratorsOfGroup( E ), gen -> Order( gen ) <> 1 );
         F := First( GeneratorsOfGroup( F ), gen -> Order( gen ) <> 1 );
         return RepOpElmTuplesPermGroup( true, G, [ E ], [ F ], L, R );
-    elif IsAbelian(E) and IsCyclic(F) then
+    elif IsCyclic(E) then
       # special case of cyclic groups
       if not IsCyclic(F) then return fail;fi;
       if Length( arg ) > 3  then
@@ -2494,7 +2507,6 @@ dom, et, ft, Pr, rbase, BF, Q, data,lc;
 	if found<>fail then return found;fi;
       od;
       return fail;
-      Error("hier");
     fi;
     # `Suborbits' uses all points. (AH, 7/17/02)
     mpG:=MovedPoints(GeneratorsOfGroup(G));
@@ -2834,7 +2846,7 @@ InstallGlobalFunction( PartitionStabilizerPermGroup, function(G,part)
 local pl,single,i,p,W,op,S;
 
   # first separate the sets of different lengths
-  pl:=Set(List(part,Length));
+  pl:=Set(part,Length);
   single:=[];
   for i in [1..Length(pl)] do
     pl[i]:=Filtered(part,j->Length(j)=pl[i]);
@@ -2943,24 +2955,36 @@ end );
 InstallMethod( Intersection2, "perm groups", IsIdenticalObj,
   [ IsPermGroup, IsPermGroup ], 0,
 function( G, H )
-local   Omega,  P,  rbase,  L,mg,mh,i;
-    
+local   omega, P, rbase, L, mg, mh, mg_minus_mh, mh_minus_mg;
+
     if IsIdenticalObj( G, H )  then
       return G;
     fi;
-    
-    # align the acting domains
-    mg:=MovedPoints(G);
-    mh:=MovedPoints(H);
-    Omega := Intersection(mg,mh);
 
-    # disjoint?
-    if Length(Omega)=0 then
-      return TrivialSubgroup(Parent(G));
-    fi;
+    # iterate taking stabilizer until G and H have the same set of moved points
+    while true do
+      # align the acting domains
+      mg:=MovedPoints(G);
+      mh:=MovedPoints(H);
+      omega := Intersection(mg,mh);
 
-    G:=Stabilizer(G,Difference(mg,mh),OnTuples);
-    H:=Stabilizer(H,Difference(mh,mg),OnTuples);
+      # no two points moved in common?
+      if Length(omega)<=1 then
+        return TrivialGroup(IsPermGroup);
+      fi;
+
+      mg_minus_mh:=Difference(mg,mh);
+      if Length(mg_minus_mh) > 0 then
+        G:=Stabilizer(G,mg_minus_mh,OnTuples);
+        continue;
+      fi;
+      mh_minus_mg:=Difference(mh,mg);
+      if Length(mh_minus_mg) > 0 then
+        H:=Stabilizer(H,mh_minus_mg,OnTuples);
+        continue;
+      fi;
+      break;
+    od;
 
     if IsSubset(G,H) then
       return H;
@@ -2988,8 +3012,8 @@ local   Omega,  P,  rbase,  L,mg,mh,i;
 #      fi;
 #    od;
 
-    P := OrbitsPartition( H, Omega );
-    rbase := EmptyRBase( [ G, H ], Omega, P );
+    P := OrbitsPartition( H, omega );
+    rbase := EmptyRBase( [ G, H ], omega, P );
     rbase.nextLevel := NextRBasePoint;
     
     # L := SubgroupNC( G, Concatenation

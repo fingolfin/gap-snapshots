@@ -1,0 +1,46 @@
+<#GAPDoc Label="AddSomeFunc">
+<Listing Type="Code"><![CDATA[
+DeclareOperation( "AddSomeFunc",
+                  [ IsCapCategory, IsList, IsInt ] );
+]]></Listing>
+
+<#/GAPDoc>
+<#GAPDoc Label="CapInternalInstallAdd">
+<Listing Type="Code"><![CDATA[
+DeclareOperation( "CapInternalInstallAdd",
+                  [ IsRecord ] );
+]]></Listing>
+
+<#/GAPDoc>
+<#GAPDoc Label="CAP_INTERNAL_VALID_RETURN_TYPES">
+<Listing Type="Code"><![CDATA[
+    [
+        "object",
+        "object_or_fail",
+        "morphism",
+        "morphism_or_fail",
+        "twocell",
+        "object_in_range_category_of_homomorphism_structure",
+        "morphism_in_range_category_of_homomorphism_structure",
+        "bool",
+        "other_object",
+        "other_morphism",
+        "list_of_morphisms",
+        "list_of_morphisms_or_fail",
+        "nonneg_integer_or_infinity",
+        "list_of_objects"
+    ]
+]]></Listing>
+
+<#/GAPDoc>
+<#GAPDoc Label="example_limit_record">
+<Listing Type="Code"><![CDATA[
+rec(
+  object_specification := [ "fixedobject", "varobject" ],
+  morphism_specification := [ [ 2, "varmorphism", 1 ] ],
+  limit_object_name := "FiberProduct",
+  colimit_object_name := "Pushout",
+)
+]]></Listing>
+
+<#/GAPDoc>

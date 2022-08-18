@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Technical_Details">
+<Heading>Technical Details</Heading>
+
+<P/>
+<Section Label="Chapter_Technical_Details_Section_The_Category_Cat">
+<Heading>The Category Cat</Heading>
+
+<ManSection>
+  <Attr Arg="functor" Name="ObjectCache" Label="for IsCapFunctor"/>
+ <Returns>IsCachingObject
+</Returns>
+ <Description>
+  Retuns the caching object which stores the results of the functor <A>functor</A> applied to objects.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="functor" Name="MorphismCache" Label="for IsCapFunctor"/>
+ <Returns>IsCachingObject
+</Returns>
+ <Description>
+  Retuns the caching object which stores the results of the functor <A>functor</A> applied to morphisms.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Technical_Details_Section_Install_Functions_for_IsWellDefined">
+<Heading>Install Functions for IsWellDefined</Heading>
+
+<ManSection>
+  <Func Arg="arg" Name="InstallMethodWithToDoForIsWellDefined" />
+ <Description>
+  The IsWellDefined filter is a basic function of CAP.
+  For every categorial construction the outcome is well defined if
+  and only if every input object or morphism of the construction is well defined.
+  So for every implementation of a categorial construction a ToDoListEntry needs
+  to be defined which propagates well definedness from the input cells to the output.
+  For not writing this construction in every method, this function can be used to install
+  a method which then installs the correct ToDoListEntries for the output.
+  The input syntax works exactly like InstallMethod, with one extension:
+  The method creates an auxilliary function which computes the output from the function given to
+  InstallMethodWithToDoForIsWellDefined, then installs the ToDoListEntries, and then installs the
+  auxilliary function instead of the original one. This is normally done with InstallMethod.
+  However, one can change this via the option InstallMethod, which can be set to any other function
+  which is then used instead of InstallMethod. This is used for the caching functions.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="arg1,arg2,arg3" Name="InstallSetWithToDoForIsWellDefined" Label="for IsObject, IsString, IsList"/>
+ <Description>
+  For the caching one needs the possibility to install setters for functions with multiple arguments.
+  This is a setter function which automatically adds ToDoListEntries for IsWellDefined like described above
+  for the manually setted result of a method.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg" Name="DeclareAttributeWithToDoForIsWellDefined" />
+ <Description>
+  Since attributes install their setters themselfes, one needs to declare attributes
+  in another way to ensure ToDoListEntries for IsWellDefined in the setter of an attribute.
+  This function works like DeclareAttribute, but installs ToDoListEntries for the setter of
+  the attribute. Please note that implementations still need to be done with InstallMethodWithToDoForIsWellDefined.
+ </Description>
+</ManSection>
+
+
+<P/>
+<ManSection>
+  <Func Arg="arg" Name="DeclareFamilyProperty" />
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="filter_or_string[, category]" Name="CAP_INTERNAL_REPLACE_STRING_WITH_FILTER" />
+ <Returns>a filter
+</Returns>
+ <Description>
+  The function takes a filter or one of the strings listed under <Code>filter_list</Code> in <Ref Sect="Section_CapInternalInstallAdd" />.
+  Filters are returned unchanged. If a string is given, the corresponding filter of the category <A>category</A> is returned.
+  If no category is given, generic filters (<Code>IsCapCategoryObject</Code>, <Code>IsCapCategoryMorphism</Code> etc.) are used.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="list[, category]" Name="CAP_INTERNAL_REPLACE_STRINGS_WITH_FILTERS" />
+ <Returns>Replaced list
+</Returns>
+ <Description>
+  Applies <Ref Func="CAP_INTERNAL_REPLACE_STRING_WITH_FILTER" /> to all elements of <A>list</A> and returns the result.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="list, additional list" Name="CAP_INTERNAL_MERGE_FILTER_LISTS" />
+ <Returns>merged lists
+</Returns>
+ <Description>
+  The first argument should be a dense list with filters, the second a sparse list containing filters
+  not longer then the first one. The filters of the second list are then appended (via and) to the
+  filters in the first list at the corresponding position, and the resulting list is returned.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="string, value" Name="CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT" />
+ <Returns>option value
+</Returns>
+ <Description>
+  Returns the value of the option with name string, or, if this value is fail,
+  the object value.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="function, symbol_list, loop_multiple, replacement_record" Name="CAP_INTERNAL_FIND_APPEARANCE_OF_SYMBOL_IN_FUNCTION" />
+ <Returns>a list of symbols with multiples
+</Returns>
+ <Description>
+  The function searches for the appearance of the strings in symbol list on the function function
+  and returns a list of pairs, containing the name of the symbol and the number of appearance.
+  If the symbol appears in a loop, the number of appearance is counted times the loop multiple.
+  Moreover, if appearances of found strings should be replaced by collections of other strings, then
+  these can be specified in the replacement record.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="list1, list2" Name="CAP_INTERNAL_MERGE_PRECONDITIONS_LIST" />
+ <Returns>merge list
+</Returns>
+ <Description>
+  The function takes two lists containing pairs of symbols (strings) and multiples.
+  The lists are merged that pairs where the string only appears in one list is then
+  added to the return list, if a pair with a string appears in both lists, the resulting
+  lists only contains this pair once, with the higher multiple from both lists.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="cell, category, human_readable_identifier_getter" Name="CAP_INTERNAL_ASSERT_IS_CELL_OF_CATEGORY" />
+ <Description>
+  The function throws an error if <A>cell</A> is not a cell of <A>category</A>.
+  If <A>category</A> is the boolean <C>false</C>, only general checks not specific to a concrete category are performed.
+  <A>human_readable_identifier_getter</A> is a 0-ary function returning a string which is used to refer to <A>cell</A> in the error message.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="object, category, human_readable_identifier_getter" Name="CAP_INTERNAL_ASSERT_IS_OBJECT_OF_CATEGORY" />
+ <Description>
+  The function throws an error if <A>object</A> is not an object of <A>category</A>.
+  If <A>category</A> is the boolean <C>false</C>, only general checks not specific to a concrete category are performed.
+  <A>human_readable_identifier_getter</A> is a 0-ary function returning a string which is used to refer to <A>object</A> in the error message.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="morphism, category, human_readable_identifier_getter" Name="CAP_INTERNAL_ASSERT_IS_MORPHISM_OF_CATEGORY" />
+ <Description>
+  The function throws an error if <A>morphism</A> is not a morphism of <A>category</A>.
+  If <A>category</A> is the boolean <C>false</C>, only general checks not specific to a concrete category are performed.
+  <A>human_readable_identifier_getter</A> is a 0-ary function returning a string which is used to refer to <A>morphism</A> in the error message.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="two_cell, category, human_readable_identifier_getter" Name="CAP_INTERNAL_ASSERT_IS_TWO_CELL_OF_CATEGORY" />
+ <Description>
+  The function throws an error if <A>two_cell</A> is not a <Math>2</Math>-cell of <A>category</A>.
+  If <A>category</A> is the boolean <C>false</C>, only general checks not specific to a concrete category are performed.
+  <A>human_readable_identifier_getter</A> is a 0-ary function returning a string which is used to refer to <A>two_cell</A> in the error message.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="list_of_objects, category, human_readable_identifier_getter" Name="CAP_INTERNAL_ASSERT_IS_LIST_OF_OBJECTS_OF_CATEGORY" />
+ <Description>
+  The function throws an error if <A>list_of_objects</A> is not a dense list of objects of <A>category</A>.
+  If <A>category</A> is the boolean <C>false</C>, only general checks not specific to a concrete category are performed.
+  <A>human_readable_identifier_getter</A> is a 0-ary function returning a string which is used to refer to <A>list_of_objects</A> in the error message.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="list_of_morphisms, category, human_readable_identifier_getter" Name="CAP_INTERNAL_ASSERT_IS_LIST_OF_MORPHISMS_OF_CATEGORY" />
+ <Description>
+  The function throws an error if <A>list_of_morphisms</A> is not a dense list of morphisms of <A>category</A>.
+  If <A>category</A> is the boolean <C>false</C>, only general checks not specific to a concrete category are performed.
+  <A>human_readable_identifier_getter</A> is a 0-ary function returning a string which is used to refer to <A>list_of_morphisms</A> in the error message.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="list_of_twocells, category, human_readable_identifier_getter" Name="CAP_INTERNAL_ASSERT_IS_LIST_OF_TWO_CELLS_OF_CATEGORY" />
+ <Description>
+  The function throws an error if <A>list_of_twocells</A> is not a dense list of <Math>2</Math>-cells of <A>category</A>.
+  If <A>category</A> is the boolean <C>false</C>, only general checks not specific to a concrete category are performed.
+  <A>human_readable_identifier_getter</A> is a 0-ary function returning a string which is used to refer to <A>list_of_twocells</A> in the error message.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="nnintorinf, human_readable_identifier_getter" Name="CAP_INTERNAL_ASSERT_IS_NON_NEGATIVE_INTEGER_OR_INFINITY" />
+ <Description>
+  The function throws an error if <A>nnintorinf</A> is not a nonnegative integer or infinity.
+  <A>human_readable_identifier_getter</A> is a 0-ary function returning a string which is used to refer to <A>nnintorinf</A> in the error message.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="category[, operation]" Name="CachingStatistic" />
+ <Description>
+ Prints statistics for all caches in <A>category</A>.
+ If <A>operation</A> is given (as a string), only statistics
+ for the given operation cache is stored.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="category" Name="BrowseCachingStatistic" />
+ <Description>
+ Displays statistics for all caches in <A>category</A>.
+ in a Browse window. Here "status" indicates if the cache is weak, strong, or inactive,
+ "hits" is the number of successful cache accesses, "misses" the number of unsuccessful cache
+ accesses, and "stored" the number of objects currently stored in the cache.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="alias_name, function_name, deprecation_date" Name="InstallDeprecatedAlias" />
+ <Description>
+   Makes the function given by <A>function_name</A> available under the alias <A>alias_name</A>
+   with a deprecation warning including the date <A>deprecation_date</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="filter1, filter2" Name="IsSpecializationOfFilter" />
+ <Description>
+   Checks if <A>filter2</A> is more special than <A>filter1</A>,
+   i.e. if <A>filter2</A> implies <A>filter1</A>.
+   <A>filter1</A> and/or <A>filter2</A> can also be one of the strings listed under <Code>filter_list</Code> in <Ref Sect="Section_CapInternalInstallAdd" /> and
+   in this case are replaced by the corresponding filters (e.g. <Code>IsCapCategory</Code>, <Code>IsCapCategoryObject</Code>, <Code>IsCapCategoryMorphism</Code>, ...).
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="filter_list1, filter_list2" Name="IsSpecializationOfFilterList" />
+ <Description>
+   Checks if <A>filter_list2</A> is more special than <A>filter_list1</A>,
+   i.e. if both lists have the same length and any element of <A>filter_list2</A> is more special than
+   the corresponding element of <A>filter_list1</A> in the sense of <Ref Func="IsSpecializationOfFilter" />.
+   <A>filter_list1</A> and <A>filter_list2</A> can also be the string <Code>"any"</Code>, respresenting a most general filter list of any length.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="same as for InstallMethod" Name="InstallMethodForCompilerForCAP" />
+ <Description>
+   Installs a method via <Code>InstallMethod</Code> and adds it to the list of methods known to the compiler.
+   See <Ref Func="CapJitAddKnownMethod" /> for requirements.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="same as for InstallOtherMethod" Name="InstallOtherMethodForCompilerForCAP" />
+ <Description>
+   Installs a method via <Code>InstallOtherMethod</Code> and adds it to the list of methods known to the compiler.
+   See <Ref Func="CapJitAddKnownMethod" /> for requirements.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="operation, filters, method" Name="CapJitAddKnownMethod" />
+ <Description>
+   Adds a method to the list of methods known to the compiler.
+   The first argument of the method must be a CAP category.
+   Method selection happens via the number of arguments and the category filter.
+   In particular, adding two methods (or a convenience method for a CAP operation)
+   with the same number of arguments and one category filter implying the other is not supported.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="name, input_filters, output_data_type" Name="CapJitAddTypeSignature" />
+ <Description>
+   (experimental) Adds a type signature for the global function or operation given by <A>name</A> to the compiler.
+   <A>input_filters</A> must be a list of filters, or the string '"any"' representing a most general filter list of any length.
+   <A>output_data_type</A> must be a filter, a data type, or a function.
+   If it is a function with one argument, it must accept a list of input types and return the corresponding data type of the output.
+   If it is a function with two arguments, it must accept the arguments of a function call of <A>name</A> (as syntax trees)
+   and the function stack and return a record with components <Code>args</Code> (the possibly modified arguments) and <Code>output_type</Code>
+   (the data type of the output).
+   See <Ref BookName="CompilerForCAP" Func="CapJitInferredDataTypes" /> for more details on data types.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="package_name, name, input_filters, output_data_type" Name="CapJitAddTypeSignatureDeferred" />
+ <Description>
+   (experimental) Same as <Ref Func="CapJitAddTypeSignature" />, but the filters and the output data type must be given as strings
+   which will be evaluated once <A>package_name</A> is loaded.
+   This should be used with care because errors will only be detected at runtime.
+ </Description>
+</ManSection>
+
+
+<ManSection Label="AutoDoc_generated_group13">
+  <Func Arg="category" Name="CapJitDataTypeOfCategory" />
+  <Func Arg="category" Name="CapJitDataTypeOfObjectOfCategory" />
+  <Func Arg="category" Name="CapJitDataTypeOfMorphismOfCategory" />
+ <Description>
+   (experimental) Returns the data type of the category (or objects or morphisms in the category) <A>category</A>.
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="predicate, func, initial_value" Name="CapFixpoint" />
+ <Description>
+   Computes a fixpoint of <A>func</A> with regard to equality given by <A>predicate</A>, starting with <A>initial_value</A>.
+   If no such fixpoint exists, the execution does not terminate.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="package_name" Name="TransitivelyNeededOtherPackages" />
+ <Description>
+   Returns a list of package names which are transitively needed other packages of the package <A>package_name</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="operation_name" Name="PackageOfCAPOperation" />
+ <Description>
+   Returns the name of the package to which the CAP operation given by <A>operation_name</A> belongs or fail if the package is not known.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="list, obj" Name="SafePosition" Label="for IsList, IsObject"/>
+ <Returns>an integer
+</Returns>
+ <Description>
+   Returns <Code>Position( </Code><A>list</A><Code>, </Code><A>obj</A><Code> )</Code> while asserting that this value is not <Code>fail</Code>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="n, args..." Name="NTuple" />
+ <Returns>a list
+</Returns>
+ <Description>
+   Returns <A>args</A> while asserting that its length is <A>n</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="first, second" Name="Pair" />
+ <Returns>a list
+</Returns>
+ <Description>
+   Alias for <Code>NTuple( 2, <A>first</A>, <A>second</A> )</Code>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="first, second, third" Name="Triple" />
+ <Returns>a list
+</Returns>
+ <Description>
+   Alias for <Code>NTuple( 3, <A>first</A>, <A>second</A>, <A>third</A> )</Code>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="category, underlying_category, constructor_name" Name="HandlePrecompiledTowers" />
+ <Description>
+   Handles the information stored in <Code><A>underlying_category</A>!.compiler_hints.precompiled_towers</Code> (if bound) which is a list of records with components:
+<List>
+<Item>
+<Code>remaining_constructors_in_tower</Code>: a non-empty list of strings (names of category constructors)
+</Item>
+<Item>
+<Code>precompiled_functions_adder</Code>: a function accepting a CAP category as input
+</Item>
+</List>
+<P/>
+   If <A>constructor_name</A> is the only entry of <Code>remaining_constructors_in_tower</Code>, <Code>precompiled_functions_adder</Code> is applied to <A>category</A>
+   (except if the option <Code>no_precompiled_code</Code> is set to <Code>true</Code>) and should add precompiled code.
+   Else, if <A>constructor_name</A> is the first entry of <Code>remaining_constructors_in_tower</Code>, the information is attached to <Code><A>category</A>!.compiler_hints.precompiled_towers</Code>
+   after removing <A>constructor_name</A> from <Code>remaining_constructors_in_tower</Code>.
+   Note: Currently, there is no logic for finding the "optimal" code to install if <A>constructor_name</A> is the only entry of <Code>remaining_constructors_in_tower</Code> of multiple entries.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+
+</Chapter>
+

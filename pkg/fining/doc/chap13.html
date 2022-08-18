@@ -15,9 +15,9 @@
 <body class="chap13"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chapA.html">A</a>  <a href="chapB.html">B</a>  <a href="chapC.html">C</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chapA.html">A</a>  <a href="chapB.html">B</a>  <a href="chapC.html">C</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
-<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap12.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapA.html">[Next Chapter]</a>&nbsp;  </div>
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap12.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap14.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap13_mj.html">[MathJax on]</a></p>
 <p><a id="X8328AFAC7CF1EB1B" name="X8328AFAC7CF1EB1B"></a></p>
@@ -86,14 +86,14 @@
 
 <h5>13.1-1 IsCosetGeometry</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCosetGeometry</code></td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCosetGeometry</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>This category is a subcategory of <code class="code">IsIncidenceGeometry</code>, and contains all coset geometries.</p>
 
 <p><a id="X86C97C4780C27E6F" name="X86C97C4780C27E6F"></a></p>
 
 <h5>13.1-2 CosetGeometry</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CosetGeometry</code>( <var class="Arg">G</var>, <var class="Arg">l</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CosetGeometry</code>( <var class="Arg">G</var>, <var class="Arg">l</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the coset incidence structure defined by the list <var class="Arg">l</var> of subgroups of the group <var class="Arg">G</var>.</p>
 
 <p><var class="Arg">G</var> must be a group and <var class="Arg">l</var> is a list of subgroups of <var class="Arg">G</var>. The subgroups in <var class="Arg">l</var> will be the <em>parabolic subgroups</em> of the <em>coset incidence structure</em> whose rank equals the length of <var class="Arg">l</var>.</p>
@@ -131,7 +131,7 @@ Sym( [ 1 .. 5 ] )
 
 <h5>13.1-3 IsIncident</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIncident</code>( <var class="Arg">ele1</var>, <var class="Arg">ele2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIncident</code>( <var class="Arg">ele1</var>, <var class="Arg">ele2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: true if and only if <var class="Arg">ele1</var> and <var class="Arg">ele2</var> are incident</p>
 
 <p><var class="Arg">ele1</var> and <var class="Arg">ele2</var> must be two elements in the same coset geometry.</p>
@@ -140,14 +140,14 @@ Sym( [ 1 .. 5 ] )
 
 <h5>13.1-4 ParabolicSubgroups</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ParabolicSubgroups</code>( <var class="Arg">cg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ParabolicSubgroups</code>( <var class="Arg">cg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the list of parabolic subgroups defining the coset geometry <var class="Arg">cg</var></p>
 
 <p><a id="X824D5D558425B4B5" name="X824D5D558425B4B5"></a></p>
 
 <h5>13.1-5 AmbientGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AmbientGroup</code>( <var class="Arg">cg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AmbientGroup</code>( <var class="Arg">cg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the group used to define the coset geometry <var class="Arg">cg</var></p>
 
 <p><var class="Arg">cg</var> must be a coset geometry.</p>
@@ -156,7 +156,7 @@ Sym( [ 1 .. 5 ] )
 
 <h5>13.1-6 Borelsubgroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Borelsubgroup</code>( <var class="Arg">cg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Borelsubgroup</code>( <var class="Arg">cg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the Borel subgroup of de geometry <var class="Arg">cg</var></p>
 
 <p>The Borel subgroup is equal to the stabilizer of a chamber. It corresponds to the intersection of all parabolic subgroups.</p>
@@ -165,7 +165,7 @@ Sym( [ 1 .. 5 ] )
 
 <h5>13.1-7 RandomElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomElement</code>( <var class="Arg">cg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomElement</code>( <var class="Arg">cg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a random element of <var class="Arg">cg</var></p>
 
 <p><var class="Arg">cg</var> must be a coset geometry.</p>
@@ -174,7 +174,7 @@ Sym( [ 1 .. 5 ] )
 
 <h5>13.1-8 RandomFlag</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomFlag</code>( <var class="Arg">cg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomFlag</code>( <var class="Arg">cg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a random flag of <var class="Arg">cg</var></p>
 
 <p><var class="Arg">cg</var> must be a coset geometry.</p>
@@ -183,7 +183,7 @@ Sym( [ 1 .. 5 ] )
 
 <h5>13.1-9 RandomChamber</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomChamber</code>( <var class="Arg">cg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomChamber</code>( <var class="Arg">cg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a random chamber of <var class="Arg">cg</var></p>
 
 <p><var class="Arg">cg</var> must be a coset geometry.</p>
@@ -245,7 +245,7 @@ true
 
 <h5>13.1-10 IsFlagTransitiveGeometry</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFlagTransitiveGeometry</code>( <var class="Arg">cg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFlagTransitiveGeometry</code>( <var class="Arg">cg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: true if and only if the group <var class="Arg">G</var> defining <var class="Arg">cg</var> acts flag-transitively.</p>
 
 <p><var class="Arg">cg</var> must be a coset geometry.</p>
@@ -277,7 +277,7 @@ true
 
 <h5>13.1-11 OnCosetGeometryElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnCosetGeometryElement</code>( <var class="Arg">ele</var>, <var class="Arg">g</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnCosetGeometryElement</code>( <var class="Arg">ele</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the image of the <code class="file">CosetGeometryElement</code> <var class="Arg">ele</var> under the action of <var class="Arg">g</var></p>
 
 <p>The group element <var class="Arg">g</var> must belong to <code class="file">AmbientGroup(AmbientGeometry(ele))</code>.</p>
@@ -286,7 +286,7 @@ true
 
 <h5><code>13.1-12 \^</code></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \^</code>( <var class="Arg">ele</var>, <var class="Arg">g</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \^</code>( <var class="Arg">ele</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: an element of a coset geometry</p>
 
 <p>This is an operation which returns the image of <var class="Arg">ele</var>, an element of a coset incidence structure, under <var class="Arg">g</var>, an element of <code class="file">AmbientGroup(AmbientGeometry(ele))</code>.</p>
@@ -295,7 +295,7 @@ true
 
 <h5><code>13.1-13 \^</code></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \^</code>( <var class="Arg">flg</var>, <var class="Arg">g</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \^</code>( <var class="Arg">flg</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a flag of a coset geometry</p>
 
 <p>This is an operation which returns the image of <var class="Arg">flg</var>, a flag of a coset incidence structure, under <var class="Arg">g</var>, an element of <code class="file">AmbientGroup(AmbientGeometry(flg))</code>.</p>
@@ -304,7 +304,7 @@ true
 
 <h5>13.1-14 IsFirmGeometry</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFirmGeometry</code>( <var class="Arg">cg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFirmGeometry</code>( <var class="Arg">cg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: true if and only if <var class="Arg">cg</var> is firm.</p>
 
 <p>An incidence geometry is said to be <em>firm</em> if every nonmaximal flag is contained in at least two chambers. <var class="Arg">cg</var> must be a coset geometry.</p>
@@ -313,7 +313,7 @@ true
 
 <h5>13.1-15 IsThickGeometry</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsThickGeometry</code>( <var class="Arg">cg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsThickGeometry</code>( <var class="Arg">cg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: true if and only if <var class="Arg">cg</var> is thick.</p>
 
 <p>An incidence geometry is said to be <em>thick</em> if every nonmaximal flag is contained in at least three chambers. <var class="Arg">cg</var> must be a coset geometry.</p>
@@ -322,7 +322,7 @@ true
 
 <h5>13.1-16 IsThinGeometry</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsThinGeometry</code>( <var class="Arg">cg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsThinGeometry</code>( <var class="Arg">cg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: true if and only if <var class="Arg">cg</var> is thin.</p>
 
 <p>An incidence geometry is said to be <em>thin</em> if every rank one residue contains exactly 2 elements. This means that every comaximal flag is contained in exactly 2 chambers. <var class="Arg">cg</var> must be a coset geometry.</p>
@@ -367,7 +367,7 @@ true
 
 <h5>13.1-17 IsConnected</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConnected</code>( <var class="Arg">cg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConnected</code>( <var class="Arg">cg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: true if and only if <var class="Arg">cg</var> is connected.</p>
 
 <p>A geometry is <em>connected</em> if and only if its incidence graph is connected. <var class="Arg">cg</var> must be a coset geometry.</p>
@@ -376,7 +376,7 @@ true
 
 <h5>13.1-18 IsResiduallyConnected</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsResiduallyConnected</code>( <var class="Arg">cg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsResiduallyConnected</code>( <var class="Arg">cg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: true if and only if <var class="Arg">cg</var> is residually connected.</p>
 
 <p>A geometry is <em>residually connected</em> if the incidence graphs of all its residues of rank at least 2 are connected. <var class="Arg">cg</var> must be a coset geometry.</p>
@@ -461,7 +461,7 @@ true
 
 <h5>13.1-19 StandardFlagOfCosetGeometry</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StandardFlagOfCosetGeometry</code>( <var class="Arg">cg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StandardFlagOfCosetGeometry</code>( <var class="Arg">cg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: standard chamber of <var class="Arg">cg</var></p>
 
 <p>The standard chamber just consists of all parabolic subgroups (i.e. the trivial cosets of these subgroups). The object returned is a FlagOfIncidenceStructure. <var class="Arg">cg</var> must be a coset geometry.</p>
@@ -470,7 +470,7 @@ true
 
 <h5>13.1-20 FlagToStandardFlag</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FlagToStandardFlag</code>( <var class="Arg">cg</var>, <var class="Arg">fl</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FlagToStandardFlag</code>( <var class="Arg">cg</var>, <var class="Arg">fl</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: element of the defining group of <var class="Arg">cg</var> which maps <var class="Arg">fl</var> to the standard chamber of <var class="Arg">cg</var>.</p>
 
 <p><var class="Arg">fl</var> must be a chamber given as a list of cosets of the parabolic subgroups of <var class="Arg">cg</var>.</p>
@@ -507,7 +507,7 @@ true
 
 <h5>13.1-21 CanonicalResidueOfFlag</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalResidueOfFlag</code>( <var class="Arg">cg</var>, <var class="Arg">fl</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalResidueOfFlag</code>( <var class="Arg">cg</var>, <var class="Arg">fl</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: coset geometry isomorphic to residue of <var class="Arg">fl</var> in <var class="Arg">cg</var></p>
 
 <p><var class="Arg">cg</var> must be a coset incidence structure and <var class="Arg">fl</var> must be a flag in that incidence structure. The returned coset incidence structure for a flag <span class="SimpleMath">{G_i_1g_i_1,G_i_2g_i_2,... , G_i_kg_i_k}</span> is the coset incidence structure defined by the group <span class="SimpleMath">H:=∩_j=1^kG_i_j</span> and parabolic subgroups <span class="SimpleMath">G_j∩ H</span> for <span class="SimpleMath">j</span> not in the type set <span class="SimpleMath">{i_1,i_2,... ,i_k}</span> of <var class="Arg">fl</var>.</p>
@@ -516,7 +516,7 @@ true
 
 <h5>13.1-22 ResidueOfFlag</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResidueOfFlag</code>( <var class="Arg">fl</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResidueOfFlag</code>( <var class="Arg">fl</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the residue of <var class="Arg">fl</var> in <code class="file">AmbientGeometry(fl)</code>.</p>
 
 <p>This is a <code class="file">CosetGeometry</code> method for the <code class="file">ResidueOfFlag</code> operation given in Chapter <a href="chap3.html#X838ACF8A7F100A2B"><span class="RefLink">3</span></a>. Note that the related operation <code class="file">CanonicalResidueOfFlag</code> takes <em>two</em> arguments.</p>
@@ -698,7 +698,7 @@ true
 
 <h5>13.1-23 IncidenceGraph</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IncidenceGraph</code>( <var class="Arg">cg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IncidenceGraph</code>( <var class="Arg">cg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: incidence graph of <var class="Arg">cg</var>.</p>
 
 <p><var class="Arg">cg</var> must be a coset geometry. The graph returned is a <strong class="pkg">GRAPE</strong> object. All <strong class="pkg">GRAPE</strong> functionality can now be used to analyse <var class="Arg">cg</var> via its incidence graph.</p>
@@ -707,7 +707,7 @@ true
 
 <h5>13.1-24 Rk2GeoGonality</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Rk2GeoGonality</code>( <var class="Arg">cg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Rk2GeoGonality</code>( <var class="Arg">cg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the gonality (i.e. half the girth) of the incidence graph of <var class="Arg">cg</var>.</p>
 
 <p><var class="Arg">cg</var> must be a coset geometry of rank 2.</p>
@@ -716,7 +716,7 @@ true
 
 <h5>13.1-25 Rk2GeoDiameter</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Rk2GeoDiameter</code>( <var class="Arg">cg</var>, <var class="Arg">type</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Rk2GeoDiameter</code>( <var class="Arg">cg</var>, <var class="Arg">type</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the point (or line) diameter.</p>
 
 <p><var class="Arg">cg</var> must be a coset geometry of rank 2. <var class="Arg">type</var> must be either <code class="code">1</code> or <code class="code">2</code>. This function computes the point diameter of <var class="Arg">cg</var> when <var class="Arg">type</var> is <code class="code">1</code> and the line diameter when <var class="Arg">type</var> is <code class="code">2</code>.</p>
@@ -725,7 +725,7 @@ true
 
 <h5>13.1-26 GeometryOfRank2Residue</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeometryOfRank2Residue</code>( <var class="Arg">resi</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeometryOfRank2Residue</code>( <var class="Arg">resi</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the geometry of the <code class="file">Rank2Residue</code> object <var class="Arg">resi</var>.</p>
 
 <p>The rank 2 residues of a geometry are fundamental when dealing with diagrams. Therefore they are kept in an attribute as (a list of) objects of type <code class="file">Rank2Residue</code>. The present operation just extracts the residue as a coset geometry from such a <code class="file">Rank2Residue</code> object.</p>
@@ -734,7 +734,7 @@ true
 
 <h5>13.1-27 Rank2Parameters</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Rank2Parameters</code>( <var class="Arg">cg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Rank2Parameters</code>( <var class="Arg">cg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a list of length 3.</p>
 
 <p><var class="Arg">cg</var> must be a coset geometry of rank 2. This function computes the gonality, point and line diameter of <var class="Arg">cg</var>. These appear as a list in the first entry of the returned list. The second entry contains a list of length 2 with the point order and the total number of points (i.e. elements of type 1) in the geometry. The last entry contains the line order and the number of lines (i.e. elements of type 2).</p>
@@ -770,7 +770,7 @@ true
 
 <h5>13.2-1 AutGroupIncidenceStructureWithNauty</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AutGroupIncidenceStructureWithNauty</code>( <var class="Arg">cg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AutGroupIncidenceStructureWithNauty</code>( <var class="Arg">cg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: permutation group isomorphic to the full automorphism group of <var class="Arg">cg</var>.</p>
 
 <p>The group is computed with <code class="file">nauty</code>, which is part of <strong class="pkg">GRAPE</strong> but has to be compiled on your system before use. The group returned is a permutation group acting on the set <code class="file">[1..Sum(TypesOfElementsOfIncidenceStructure(cg), t -&gt; NrElementsOfIncidenceStructure(cg,t))]</code>, which is exactly the vertex set of <code class="file">IncidenceGraph(cg)</code>. At the moment the action of the automorphism group on <code class="file">cg</code> is not provided but it can be recovered from the knowledge that the vertex set of <code class="file">IncidenceGraph(cg)</code> first contains all elements of type 1 in <code class="file">cg</code>, then all elements of type 2, etc. or, better still, with the <strong class="pkg">GRAPE</strong> command <code class="file">VertexNames</code> (see example below).</p>
@@ -779,7 +779,7 @@ true
 
 <h5>13.2-2 CorGroupIncidenceStructureWithNauty</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CorGroupIncidenceStructureWithNauty</code>( <var class="Arg">cg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CorGroupIncidenceStructureWithNauty</code>( <var class="Arg">cg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: permutation group isomorphic to the full automorphism group of <var class="Arg">cg</var>.</p>
 
 <p>The group is computed with <code class="file">nauty</code>, which is part of <strong class="pkg">GRAPE</strong> but has to be compiled on your system before use. The group returned is a permutation group acting on the set <code class="file">[1..Sum(TypesOfElementsOfIncidenceStructure(cg), t -&gt; NrElementsOfIncidenceStructure(cg,t))]</code>, which is exactly the vertex set of <code class="file">IncidenceGraph(cg)</code>. At the moment the action of the automorphism group on <code class="file">cg</code> is not provided but it can be recovered from the knowledge that the vertex set of <code class="file">IncidenceGraph(cg)</code> first contains all elements of type 1 in <code class="file">cg</code>, then all elements of type 2, etc. or with the <strong class="pkg">GRAPE</strong> command <code class="file">VertexNames</code>.</p>
@@ -828,7 +828,7 @@ CosetGeometry( Group( [ ( 3,11, 9, 7, 5)( 4,12,10, 8, 6),
 
 <h5>13.2-3 IsIsomorphicIncidenceStructureWithNauty</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIsomorphicIncidenceStructureWithNauty</code>( <var class="Arg">cg1</var>, <var class="Arg">cg2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIsomorphicIncidenceStructureWithNauty</code>( <var class="Arg">cg1</var>, <var class="Arg">cg2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: true iff cg1 and cg2 are isomorphic.</p>
 
 <p>We use <code class="file">nauty</code>, which is part of <strong class="pkg">GRAPE</strong> but has to be compiled on your system before use. Isomorphism is tested (with <code class="file">nauty</code>) after converting the coset geometries <var class="Arg">cg1</var> and <var class="Arg">cg2</var> to coloured graphs.</p>
@@ -889,7 +889,7 @@ true
 
 <h5>13.3-1 DiagramOfGeometry</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DiagramOfGeometry</code>( <var class="Arg">Gamma</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DiagramOfGeometry</code>( <var class="Arg">Gamma</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the diagram of the geometry <var class="Arg">Gamma</var></p>
 
 <p><var class="Arg">Gamma</var> must be a flag-transitive coset geometry.</p>
@@ -900,7 +900,7 @@ true
 
 <h5>13.3-2 GeometryOfDiagram</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeometryOfDiagram</code>( <var class="Arg">diag</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeometryOfDiagram</code>( <var class="Arg">diag</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the geometry of which <var class="Arg">diag</var> is the diagram</p>
 
 <p><var class="Arg">diag</var> must be a diagram object.</p>
@@ -909,9 +909,9 @@ true
 
 <h5>13.3-3 DrawDiagram</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DrawDiagram</code>( <var class="Arg">diag</var>, <var class="Arg">filename</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DrawDiagram</code>( <var class="Arg">diag</var>, <var class="Arg">filename</var>, <var class="Arg">vertexverbosity</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DrawDiagram</code>( <var class="Arg">diag</var>, <var class="Arg">filename</var>, <var class="Arg">vertexverbosity</var>, <var class="Arg">edgeverbosity</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DrawDiagram</code>( <var class="Arg">diag</var>, <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DrawDiagram</code>( <var class="Arg">diag</var>, <var class="Arg">filename</var>, <var class="Arg">vertexverbosity</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DrawDiagram</code>( <var class="Arg">diag</var>, <var class="Arg">filename</var>, <var class="Arg">vertexverbosity</var>, <var class="Arg">edgeverbosity</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: does not return anything but writes a file <var class="Arg">filename</var>.ps</p>
 
 <p><var class="Arg">diag</var> must be a diagram. Writes a file <var class="Arg">filename</var>.ps in the current directory with a pictorial version of the diagram. This command uses the <strong class="pkg">graphviz</strong> package which is available from http://www.graphviz.org.</p>
@@ -974,7 +974,7 @@ CosetGeometry( Group( [ (3,5,7), (1,7)(2,4,3)(5,8) ] ) )
 
 <h5>13.3-4 DrawDiagramWithNeato</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DrawDiagramWithNeato</code>( <var class="Arg">diag</var>, <var class="Arg">filename</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DrawDiagramWithNeato</code>( <var class="Arg">diag</var>, <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: does not return anything but writes a file <var class="Arg">filename</var>.ps</p>
 
 <p><var class="Arg">diag</var> must be a diagram. Writes a file <var class="Arg">filename</var>.ps in the current directory with a pictorial version of the diagram.</p>
@@ -986,10 +986,10 @@ CosetGeometry( Group( [ (3,5,7), (1,7)(2,4,3)(5,8) ] ) )
 <p><img src="./graphics/E6.jpg"></img> <img src="./graphics/E6bis.jpg"></img></p>
 
 
-<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap12.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapA.html">[Next Chapter]</a>&nbsp;  </div>
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap12.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap14.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chapA.html">A</a>  <a href="chapB.html">B</a>  <a href="chapC.html">C</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chapA.html">A</a>  <a href="chapB.html">B</a>  <a href="chapC.html">C</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

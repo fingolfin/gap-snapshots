@@ -128,26 +128,23 @@ end);
 #F  ApproximateRoot(<num>,<n>[,<digits>]) . . approximate th n-th root of num
 ##   numerically with a denominator of 'digits' digits.
 ##
-APPROXROOTS:=[];
-if IsHPCGAP then
-  ShareSpecialObj(APPROXROOTS);
-fi;
+BIND_GLOBAL( "APPROXROOTS", NEW_SORTED_CACHE(false) );
 
 BindGlobal("ApproximateRoot",function(arg)
-local r,e,f,x,nf,lf,c,store,letzt;
+local r,e,f,store,maker;
   r:=arg[1];
   e:=arg[2];
-
-  store:= e<=10 and IsInt(r) and 0<=r and r<=100;
-  if store and IsBound(APPROXROOTS[e]) and IsBound(APPROXROOTS[e][r+1])
-    then return APPROXROOTS[e][r+1];
-  fi;
-
   if Length(arg)>2 then
     f:=arg[3];
   else
     f:=10;
   fi; 
+
+  store:= e<=10 and IsInt(r) and 0<=r and r<=100 and f=10;
+
+  maker := function()
+  local x,nf,lf,c,letzt;
+
   x:=RootInt(NumeratorRat(r),e)/RootInt(DenominatorRat(r),e);
   nf:=r;
   c:=0;
@@ -173,13 +170,13 @@ local r,e,f,x,nf,lf,c,store,letzt;
     fi;
   # until 3 times no improvement
   until c>2 or x in letzt;
-  if store then
-    if not IsBound(APPROXROOTS[e]) then
-      APPROXROOTS[e]:=[];
-    fi;
-    APPROXROOTS[e][r+1]:=x;
-  fi;
   return x;
+  end;
+
+  if store then
+    return GET_FROM_SORTED_CACHE(APPROXROOTS, [e,r], maker);
+  fi;
+  return maker();
 end);
 
 #############################################################################
@@ -1270,7 +1267,7 @@ local  p2, res, j, i,ii,o,d,b,lco,degs, step, cnew, sel, deli,
           # coefficients (to make it  primitive),we do  a slightly
           # weaker test:  (test of  leading   coeffs is  first   in
           # 'TrialQuotientRPF') this just should  reduce the number of
-          # 'ProductMod' neccessary.   the  absolute  part  of  the
+          # 'ProductMod' necessary.   the  absolute  part  of  the
           # product must  divide  the absolute  part of  f  up to a
           # divisor of <lc>
           q:=CoefficientsOfLaurentPolynomial(f)[1][1] / q * lc;
@@ -1649,8 +1646,8 @@ local i,     # loops
     fi;
 
     # compute the possible degrees
-    tmp:=Set(List(Combinations(List(lp,DegreeOfLaurentPolynomial)),
-                  g -> Sum(g)));
+    tmp:=Set(Combinations(List(lp,DegreeOfLaurentPolynomial)),
+                  g -> Sum(g));
     if 1 = i  then
       deg:=tmp;
     else

@@ -18,11 +18,11 @@
 ## Checks if <Arg>object</Arg> is of type <C>SCSimplicialComplex</C>. The 
 ## object type <C>SCSimplicialComplex</C> is derived from the object type 
 ## <C>SCPropertyObject</C>.
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCEmpty();;
 ## gap> SCIsSimplicialComplex(c);
 ## true
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -48,14 +48,13 @@ SCIntFunc.SCViewProperties:=[ "Name", "Dim", "AltshulerSteinberg",
 InstallMethod(ViewObj,"for SCSimplicialComplex",
 [SCIsSimplicialComplex],
 function(sc)
-	Print(SCIntFunc.StringEx(sc,true,SCIntFunc.SCViewProperties));
+	Print(SCIntFunc.StringEx(sc));
 end);
 
 
-#serialize simplicial complex to string, only use attributes given in list view
 SCIntFunc.StringEx:=
-function(sc,view,vprops)
-	local buf,props,pprops,prop,p,pp,size,pos,sort,type;
+function(sc)
+	local type,buf,props,name,dim,n;
 
 	if(SCIsSimplicialComplex(sc)) then
 		type:="SimplicialComplex";
@@ -65,6 +64,122 @@ function(sc,view,vprops)
 		type:="OtherComplex";
 	fi;
 	
+	buf:=Concatenation("<",type,": ");
+	
+        name := SCName(sc);
+        if name = fail then
+          Append(buf,"unnamed complex");
+        else
+          Append(buf,name);
+        fi;
+
+	Append(buf," | dim = ");
+
+        if type = "NormalSurface" or type = "SimplicialComplex" then
+          dim := SCDim(sc);
+          if dim = fail then
+            Info(InfoSimpcomp,1,"SCIntFunc.StringEx: could not compute dimension of complex.");
+            Append(buf,"unknown");
+          else
+            Append(buf,String(dim));
+          fi;
+	else
+          Append(buf,"unknown");
+        fi;
+        if type = "SimplicialComplex" then
+          n := SCNumFaces(sc,0);
+          if n = fail then
+            Info(InfoSimpcomp,1,"SCIntFunc.StringEx: could not compute number of vertices of complex.");
+          else
+            Append(buf," | n = ");
+            Append(buf,String(n));
+          fi;
+        fi;
+
+	Append(buf,">");
+
+	return buf;
+end;
+
+
+################################################################################
+##<#GAPDoc Label="SCDetails">
+## <ManSection>
+## <Func Name="SCDetails" Arg="complex"/>
+## <Returns>a string of type <C>IsString</C> upon success, 
+## <K>fail</K> otherwise.</Returns>
+## <Description>
+## The function returns a list of known properties of <Arg>complex</Arg>
+## an lists some of these properties explicitly.
+## <Example><![CDATA[
+## gap> c:=SC([[1,2,3],[1,2,4],[1,3,4],[2,3,4]]);
+## gap> Print(SCDetails(c));
+## gap> c.F;
+## gap> c.Homology;
+## gap> Print(SCDetails(c));
+## ]]></Example>
+## </Description>
+## </ManSection>
+##<#/GAPDoc>
+################################################################################
+InstallGlobalFunction(SCDetails,
+function(arg)
+	local buf,props,pprops,prop,p,pp,size,pos,sort,type,sc,view,vprops;
+
+        if Length(arg) < 1 or Length(arg) > 3 then
+          Info(InfoSimpcomp,1,"SCDetails: function takes between one and three arguments.");
+	  return fail;
+	fi;
+
+        if Length(arg) >= 1 then
+          sc := arg[1];
+        fi;
+
+        if Length(arg) >= 2 then
+          view := arg[2];
+          if not IsBool(view) then
+            Info(InfoSimpcomp,1,"SCDetails: second argument must be of type IsBoolean.");
+	    return fail;
+	  fi;
+        fi;
+
+        if Length(arg) >= 3 then
+          vprops := arg[3];
+          if not IsList(vprops) then
+            Info(InfoSimpcomp,1,"SCDetails: third argument must be a list of strings.");
+	    return fail;
+	  fi;
+        fi;
+
+	if(SCIsSimplicialComplex(sc)) then
+		type:="SimplicialComplex";
+	elif(SCIsNormalSurface(sc)) then
+		type:="NormalSurface";
+	else
+		type:="OtherComplex";
+	fi;
+
+        if Length(arg) = 1 then
+          if type = "SimplicialComplex" then
+            vprops := SCIntFunc.SCViewProperties;
+          elif type = "NormalSurface" then
+            vprops := SCIntFunc.SCNSViewProperties;
+          else
+            vprops := [];
+          fi;
+          view := true;
+        fi;
+
+        if Length(arg) = 2 then
+          if type = "SimplicialComplex" then
+            vprops := SCIntFunc.SCViewProperties;
+          elif type = "NormalSurface" then
+            vprops := SCIntFunc.SCNSViewProperties;
+          else
+            vprops := [];
+          fi;
+        fi;
+        
 	buf:=Concatenation("[",type,"\n\n");
 	Append(buf," Properties known: ");
 	pos:=19;
@@ -112,7 +227,7 @@ function(sc,view,vprops)
 		Append(buf,pprops[p]);
 		pos:=pos+Length(pprops[p]);
 		if(p=Length(pprops)) then
-			Append(buf,".\n\n");
+			Append(buf,".\n");
 		else
 			Append(buf,", ");
 			pos:=pos+2;
@@ -135,13 +250,14 @@ function(sc,view,vprops)
 
 	Append(buf,Concatenation("\n/",type,"]"));
 	return buf;
-end;
+end);
+
 
 #simplicial complex -> string method
 InstallMethod(String,"for SCSimplicialComplex",
 [SCIsSimplicialComplex],
 function(sc)
-	return SCIntFunc.StringEx(sc,false,SCIntFunc.SCViewProperties);
+	return SCIntFunc.StringEx(sc);
 end);
 
 
@@ -150,7 +266,7 @@ InstallMethod(PrintObj,
 "for SCSimplicialComplex",
 [SCIsSimplicialComplex],
 function(sc)
-	Print(SCIntFunc.StringEx(sc,true,SCIntFunc.SCViewProperties));
+	Print(SCIntFunc.StringEx(sc));
 end);
 
 
@@ -187,11 +303,11 @@ end;
 ## Positively shifts the vertex labels of <Arg>complex</Arg> (provided that 
 ## all labels satisfy the property <C>IsAdditiveElement</C>) by the amount 
 ## specified in <Arg>value</Arg>.
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdSimplex(3)+10;;
 ## gap> c.Facets;
 ## [[11, 12, 13], [11, 12, 14], [11, 13, 14], [12, 13, 14]]
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -212,11 +328,11 @@ end);
 ## Negatively shifts the vertex labels of <Arg>complex</Arg> (provided that 
 ## all labels satisfy the property <C>IsAdditiveElement</C>) by the amount 
 ## specified in <Arg>value</Arg>.
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdSimplex(3)-1;;
 ## gap> c.Facets;
 ## [[0, 1, 2], [0, 1, 3], [0, 2, 3], [1, 2, 3]]
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -238,11 +354,11 @@ end);
 ## Multiplies the vertex labels of <Arg>complex</Arg> (provided that all 
 ## labels satisfy the property <C>IsAdditiveElement</C>) with the integer 
 ## specified in <Arg>value</Arg>.
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdSimplex(3)*10;;
 ## gap> c.Facets;
 ## [[10, 20, 30], [10, 20, 40], [10, 30, 40], [20, 30, 40]]
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -265,11 +381,11 @@ end);
 ## in <Arg>value</Arg> (provided that all labels satisfy the property 
 ## <C>IsAdditiveElement</C>). Warning: this might result in different vertices 
 ## being assigned the same label or even in invalid facet lists, so be careful.
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=(SCBdSimplex(3)*10) mod 7;;
 ## gap> c.Facets;
 ## [[3, 6, 2], [3, 6, 5], [3, 2, 5], [6, 2, 5]]
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -292,18 +408,9 @@ end);
 ## <Arg>complex</Arg>, i.e. the <Arg>value</Arg>-fold cartesian product of 
 ## copies of <Arg>complex</Arg>. The complex passed as argument is not altered. 
 ## Internally calls <Ref Func="SCCartesianPower"/>.
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdSimplex(2)^2; #a torus
-## [SimplicialComplex
-## 
-##  Properties known: Dim, Facets, Name, TopologicalType, SCVertices.
-## 
-##  Name="(S^1_3)^2"
-##  Dim=2
-##  TopologicalType="(S^1)^2"
-## 
-## /SimplicialComplex]
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -327,27 +434,15 @@ end);
 ## Uses the lexicographically first facets of both complexes to do the gluing. 
 ## The complexes passed as arguments are not altered. Internally calls 
 ## <Ref Func="SCConnectedSum"/>.
-## <Example>
-## gap> SCLib.SearchByName("RP^3");
-## [ [ 45, "RP^3" ], [ 103, "RP^3=L(2,1) (VT)" ], [ 246, "(S^2~S^1)#RP^3" ], 
-##   [ 247, "(S^2xS^1)#RP^3" ], [ 283, "(S^2~S^1)#2#RP^3" ], 
-##   [ 285, "(S^2xS^1)#2#RP^3" ], [ 409, "RP^3#RP^3" ], ...
+## <Example><![CDATA[
+## gap> SCLib.SearchByName("RP^3");;
 ## gap> c:=SCLib.Load(last[1][1]);;
 ## gap> SCLib.SearchByName("S^2~S^1"){[1..3]};
-## [ [ 14, "S^2~S^1 (VT)" ], [ 29, "S^2~S^1 (VT)" ], [ 34, "S^2~S^1 (VT)" ], 
-##   [ 42, "S^2~S^1 (VT)" ], [ 48, "S^2~S^1 (VT)" ], [ 49, "S^2~S^1 (VT)" ], 
-##   [ 84, "S^2~S^1 (VT)" ], [ 87, "S^2~S^1 (VT)" ], ...
+## [ [ 12, "S^2~S^1 (VT)" ], [ 26, "S^2~S^1 (VT)" ], 
+##   [ 27, "S^2~S^1 (VT)" ] ]
 ## gap> d:=SCLib.Load(last[1][1]);;
 ## gap> c:=c+d; #form RP^3#(S^2~S^1)
-## [SimplicialComplex
-## 
-##  Properties known: Dim, Facets, Name, SCVertices, Vertices.
-## 
-##  Name="RP^3#+-S^2~S^1 (VT)"
-##  Dim=3
-## 
-## /SimplicialComplex]
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -389,19 +484,11 @@ end);
 ## <Description>
 ## Forms the simplicial cartesian product of <Arg>complex1</Arg> and 
 ## <Arg>complex2</Arg>. Internally calls <Ref Func="SCCartesianProduct"/>.
-## <Example>
+## <Example><![CDATA[
 ## gap> SCLib.SearchByName("RP^2");
-## [ [ 3, "RP^2 (VT)" ], [ 284, "RP^2xS^1" ] ]
+## [ [ 3, "RP^2 (VT)" ], [ 262, "RP^2xS^1" ] ]
 ## gap> c:=SCLib.Load(last[1][1])*SCBdSimplex(3); #form RP^2 x S^2
-## [SimplicialComplex
-## 
-##  Properties known: Dim, Facets, Name, SCVertices.
-## 
-##  Name="RP^2 (VT)xS^2_4"
-##  Dim=4
-## 
-## /SimplicialComplex]
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -422,13 +509,13 @@ end);
 ## <Description>
 ## Calculates whether two simplicial complexes are isomorphic, i.e. are 
 ## equal up to a relabeling of the vertices.
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdSimplex(3);;
 ## gap> c=c+10;
 ## true
 ## gap> c=SCBdCrossPolytope(4);
 ## false
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -452,17 +539,9 @@ end);
 ## <Description>
 ## Computes the union of two simplicial complexes by calling 
 ## <Ref Func="SCUnion"/>.
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=Union(SCBdSimplex(3),SCBdSimplex(3)+3); #a wedge of two 2-spheres
-## [SimplicialComplex
-## 
-##  Properties known: Dim, Facets, Name, SCVertices.
-## 
-##  Name="S^2_4 cup S^2_4"
-##  Dim=2
-## 
-## /SimplicialComplex]
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -486,7 +565,7 @@ end);
 ## <Description>
 ## Computes the ``difference'' of two simplicial complexes by calling 
 ## <Ref Func="SCDifference" />.
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdSimplex(3);;
 ## gap> d:=SC([[1,2,3]]);;
 ## gap> disc:=Difference(c,d);;
@@ -495,7 +574,7 @@ end);
 ## gap> empty:=Difference(d,c);;
 ## gap> empty.Dim;
 ## -1
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -517,23 +596,14 @@ end);
 ## <Description>
 ## Computes the ``intersection'' of two simplicial complexes by calling 
 ## <Ref Func="SCIntersection" />.
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdSimplex(3);;        
 ## gap> d:=SCBdSimplex(3);;        
 ## gap> d:=SCMove(d,[[1,2,3],[]]);;
 ## gap> d:=d+1;;                   
-## gap> s1:=SCIntersection(c,d);   
-## [SimplicialComplex
-## 
-##  Properties known: Dim, Facets, Name, SCVertices.
-## 
-##  Name="S^2_4 cap unnamed complex m"
-##  Dim=1
-## 
-## /SimplicialComplex]
 ## gap> s1.Facets;                 
 ## [ [ 2, 3 ], [ 2, 4 ], [ 3, 4 ] ]
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -558,12 +628,12 @@ end);
 ## Makes a copy of <Arg>complex</Arg>. This is actually a ``deep copy'' 
 ## such that all properties of the copy can be altered without changing 
 ## the original complex. Internally calls <Ref Func="SCCopy"/>.
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdCrossPolytope(7);;
 ## gap> d:=ShallowCopy(c)+10;;
 ## gap> c.Facets=d.Facets;
 ## false
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -586,18 +656,18 @@ end);
 ## Makes a ``deep copy'' of <Arg>complex</Arg> -- this is a copy such that 
 ## all properties of the copy can be altered without changing the original 
 ## complex.
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdSimplex(4);;
 ## gap> d:=SCCopy(c)-1;;
 ## gap> c.Facets=d.Facets;
 ## false
-## </Example>
-## <Example>
+## ]]></Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdSimplex(4);;
 ## gap> d:=SCCopy(c);;
 ## gap> IsIdenticalObj(c,d);
 ## false
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -633,19 +703,15 @@ end);
 ## <M>d</M> is the dimension of the complex. <M>d+1</M> is returned instead 
 ## of <M>d</M>, as all lists in &GAP; are indexed beginning with 1 -- thus 
 ## this also holds for all the face lattice related properties of the complex.   
-## <Example>
-## gap> SCLib.SearchByAttribute("F=[12,66,108,54]");
-## [ [ 116, "S^2xS^1 (VT)" ], [ 117, "S^2xS^1 (VT)" ], 
-##   [ 118, "(S^2xS^1)#(S^2xS^1) (VT)" ], [ 119, "S^2~S^1 (VT)" ], 
-##   [ 120, "(S^2xS^1)#(S^2xS^1) (VT)" ], [ 121, "(S^2xS^1)#(S^2xS^1) (VT)" ], 
-##   [ 122, "S^2xS^1 (VT)" ], [ 123, "(S^2xS^1)#(S^2xS^1) (VT)" ], ...
+## <Example><![CDATA[
+## gap> SCLib.SearchByAttribute("F=[12,66,108,54]");;
 ## gap> c:=SCLib.Load(last[1][1]);;
 ## gap> for i in [1..Size(c)] do Print(c.F[i],"\n"); od;
 ## 12
 ## 66
 ## 108
 ## 54
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -673,19 +739,15 @@ end);
 ## <Description>
 ## Returns the ``size'' of a simplicial complex by calling 
 ## <C>Size(</C><Arg>complex</Arg><C>)</C>.   
-## <Example>
-## gap> SCLib.SearchByAttribute("F=[12,66,108,54]");
-## [ [ 116, "Sˆ2xSˆ1 (VT)" ], [ 117, "Sˆ2xSˆ1 (VT)" ],
-## [ 118, "(Sˆ2xSˆ1)#(Sˆ2xSˆ1) (VT)" ], [ 119, "Sˆ2˜Sˆ1 (VT)" ],
-## [ 120, "(Sˆ2xSˆ1)#(Sˆ2xSˆ1) (VT)" ], [ 121, "(Sˆ2xSˆ1)#(Sˆ2xSˆ1) (VT)" ],
-## [ 122, "Sˆ2xSˆ1 (VT)" ], [ 123, "(Sˆ2xSˆ1)#(Sˆ2xSˆ1) (VT)" ], ...
+## <Example><![CDATA[
+## gap> SCLib.SearchByAttribute("F=[12,66,108,54]");;
 ## gap> c:=SCLib.Load(last[1][1]);;
 ## gap> for i in [1..Length(c)] do Print(c.F[i],"\n"); od;
 ## 12
 ## 66
 ## 108
 ## 54
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -709,9 +771,9 @@ end);
 ## list. If <M>pos \geq d+2</M>, where <M>d</M> is the dimension of 
 ## <Arg>complex</Arg>, the empty set is returned. Note that <Arg>pos</Arg> 
 ## must be <M>\geq 1</M>.
-## <Example>
+## <Example><![CDATA[
 ## gap> SCLib.SearchByName("K^2");
-## [ [ 19, "K^2 (VT)" ], [ 230, "K^2 (VT)" ] ]
+## [ [ 18, "K^2 (VT)" ], [ 221, "K^2 (VT)" ] ]
 ## gap> c:=SCLib.Load(last[1][1]);;
 ## gap> c[2];
 ## [ [ 1, 2 ], [ 1, 3 ], [ 1, 7 ], [ 1, 9 ], [ 1, 13 ], [ 1, 14 ], [ 2, 3 ], 
@@ -723,7 +785,7 @@ end);
 ##   [ 13, 14 ] ]
 ## gap> c[4];
 ## [  ]
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -776,14 +838,14 @@ end);
 ## success, <K>fail</K> otherwise.</Returns>
 ## <Description>
 ## Provides an iterator object for the face lattice of a simplicial complex.   
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdCrossPolytope(4);;
 ## gap> for faces in c do Print(Length(faces),"\n"); od;
 ## 8
 ## 24
 ## 32
 ## 16
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -824,13 +886,13 @@ end);
 ## properties (apart from Facets, Dim and Name) dropped, clearing all 
 ## previously computed properties. See also <Ref Meth="SCPropertyDrop" /> 
 ## and <Ref Meth="SCPropertyTmpDrop" />.
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SC(SCFacets(SCBdCyclicPolytope(10,12)));
 ## gap> c.F; time;                                 
 ## gap> c.F; time;                                 
 ## gap> c:=SCPropertiesDropped(c);                 
 ## gap> c.F; time;                                 
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>

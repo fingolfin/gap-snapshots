@@ -289,7 +289,7 @@ end);
 
 
 <div class="example"><pre>
-IsPermutationGroupByRelations:=NewRepresentation(
+DeclareRepresentation(
   "IsPermutationGroupByRelations",
   IsComponentObjectRep and IsAttributeStoringRep and IsPermGroup,
   ["degree","relations"]);
@@ -310,6 +310,7 @@ local g
   g:=Objectify(NewType(CollectionsFamily(PermutationsFamily),
 		       IsPermutationGroupByRelations),
                rec(degree:=degree,relations:=relations));
+  return g;
 end;
 </pre></div>
 

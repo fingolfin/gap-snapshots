@@ -24,79 +24,6 @@ extern "C" {
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * * * pc word aspect * * * * * * * * * * * * * * *
-*/
-
-/****************************************************************************
-**
-*F  FuncNBitsPcWord_Comm( <self>, <left>, <right> )
-*/
-static Obj FuncNBitsPcWord_Comm(Obj self, Obj left, Obj right)
-{
-    return FuncFinPowConjCol_ReducedComm(
-        self, COLLECTOR_PCWORD(left), left, right );
-}
-
-
-/****************************************************************************
-**
-*F  FuncNBitsPcWord_Conjugate( <self>, <left>, <right> )
-*/
-static Obj FuncNBitsPcWord_Conjugate(Obj self, Obj left, Obj right)
-{
-    left = FuncFinPowConjCol_ReducedProduct(
-                self, COLLECTOR_PCWORD(left), left, right );
-    return FuncFinPowConjCol_ReducedLeftQuotient(
-                self, COLLECTOR_PCWORD(left), right, left );
-}
-
-
-/****************************************************************************
-**
-*F  FuncNBitsPcWord_LeftQuotient( <self>, <left>, <right> )
-*/
-static Obj FuncNBitsPcWord_LeftQuotient(Obj self, Obj left, Obj right)
-{
-    return FuncFinPowConjCol_ReducedLeftQuotient(
-        self, COLLECTOR_PCWORD(left), left, right );
-}
-
-
-/****************************************************************************
-**
-*F  FuncNBitsPcWord_PowerSmallInt( <self>, <left>, <right> )
-*/
-static Obj FuncNBitsPcWord_PowerSmallInt(Obj self, Obj left, Obj right)
-{
-    return FuncFinPowConjCol_ReducedPowerSmallInt(
-        self, COLLECTOR_PCWORD(left), left, right );
-}
-
-
-/****************************************************************************
-**
-*F  FuncNBitsPcWord_Product( <self>, <left>, <right> )
-*/
-static Obj FuncNBitsPcWord_Product(Obj self, Obj left, Obj right)
-{
-    return FuncFinPowConjCol_ReducedProduct(
-        self, COLLECTOR_PCWORD(left), left, right );
-}
-
-
-/****************************************************************************
-**
-*F  FuncNBitsPcWord_Quotient( <self>, <left>, <right> )
-*/
-static Obj FuncNBitsPcWord_Quotient(Obj self, Obj left, Obj right)
-{
-    return FuncFinPowConjCol_ReducedQuotient(
-        self, COLLECTOR_PCWORD(left), left, right );
-}
-
-
-/****************************************************************************
-**
 *F * * * * * * * * * * * * * * free word aspect * * * * * * * * * * * * * * *
 */
 
@@ -145,7 +72,7 @@ static Obj ExponentOfPcElement(Obj self, Obj pcgs, Obj w, Obj pos)
     /* otherwise find the syllable belonging to <exp>                      */
     else {
         ebits = EBITS_WORD(w);
-        exps  = 1UL << (ebits-1);
+        exps  = (UInt)1 << (ebits-1);
         expm  = exps - 1;
         npos  = INT_INTOBJ(pos);
         ptr   = CONST_DATA_WORD(w);
@@ -182,7 +109,7 @@ static Obj LeadingExponentOfPcElement(Obj self, Obj pcgs, Obj w)
 
     /* otherwise it is the exponent of the first syllable                  */
     else {
-        exps = 1UL << (EBITS_WORD(w)-1);
+        exps = (UInt)1 << (EBITS_WORD(w)-1);
         expm = exps - 1;
         p = CONST_DATA_WORD(w)[0];
         if ( p & exps )
@@ -224,7 +151,7 @@ static Obj ExponentsOfPcElement(Obj self, Obj pcgs, Obj w)
     le=1; /* last exponent which has been assigned+1 */
 
     ebits = EBITS_WORD(w);
-    exps  = 1UL << (ebits-1);
+    exps  = (UInt)1 << (ebits-1);
     expm  = exps - 1;
 
     ptr   = CONST_DATA_WORD(w);
@@ -385,24 +312,19 @@ static Obj Func32Bits_ExponentsOfPcElement(Obj self, Obj pcgs, Obj w)
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    GVAR_FUNC(NBitsPcWord_Comm, 2, "n_bits_pcword, n_bits_pcword"),
-    GVAR_FUNC(NBitsPcWord_Conjugate, 2, "n_bits_pcword, n_bits_pcword"),
-    GVAR_FUNC(NBitsPcWord_LeftQuotient, 2, "n_bits_pcword, n_bits_pcword"),
-    GVAR_FUNC(NBitsPcWord_PowerSmallInt, 2, "n_bits_pcword, small_integer"),
-    GVAR_FUNC(NBitsPcWord_Product, 2, "n_bits_pcword, n_bits_pcword"),
-    GVAR_FUNC(NBitsPcWord_Quotient, 2, "n_bits_pcword, n_bits_pcword"),
-    GVAR_FUNC(8Bits_DepthOfPcElement, 2, "8_bits_pcgs, 8_bits_pcword"),
-    GVAR_FUNC(8Bits_ExponentOfPcElement, 3, "8_bits_pcgs, 8_bits_pcword, int"),
-    GVAR_FUNC(8Bits_LeadingExponentOfPcElement, 2, "8_bits_pcgs, 8_bits_word"),
-    GVAR_FUNC(8Bits_ExponentsOfPcElement, 2, "8_bits_pcgs, 8_bits_pcword"),
-    GVAR_FUNC(16Bits_DepthOfPcElement, 2, "16_bits_pcgs, 16_bits_pcword"),
-    GVAR_FUNC(16Bits_ExponentOfPcElement, 3, "16_bits_pcgs, 16_bits_pcword, int"),
-    GVAR_FUNC(16Bits_LeadingExponentOfPcElement, 2, "16_bits_pcgs, 16_bits_word"),
-    GVAR_FUNC(16Bits_ExponentsOfPcElement, 2, "16_bits_pcgs, 16_bits_pcword"),
-    GVAR_FUNC(32Bits_DepthOfPcElement, 2, "32_bits_pcgs, 32_bits_pcword"),
-    GVAR_FUNC(32Bits_ExponentOfPcElement, 3, "32_bits_pcgs, 32_bits_pcword, int"),
-    GVAR_FUNC(32Bits_LeadingExponentOfPcElement, 2, "32_bits_pcgs, 32_bits_word"),
-    GVAR_FUNC(32Bits_ExponentsOfPcElement, 2, "32_bits_pcgs, 32_bits_pcword"),
+    GVAR_FUNC_2ARGS(8Bits_DepthOfPcElement, 8_bits_pcgs, 8_bits_pcword),
+    GVAR_FUNC_3ARGS(8Bits_ExponentOfPcElement, 8_bits_pcgs, 8_bits_pcword, int),
+    GVAR_FUNC_2ARGS(8Bits_LeadingExponentOfPcElement, 8_bits_pcgs, 8_bits_word),
+    GVAR_FUNC_2ARGS(8Bits_ExponentsOfPcElement, 8_bits_pcgs, 8_bits_pcword),
+    GVAR_FUNC_2ARGS(16Bits_DepthOfPcElement, 16_bits_pcgs, 16_bits_pcword),
+    GVAR_FUNC_3ARGS(16Bits_ExponentOfPcElement, 16_bits_pcgs, 16_bits_pcword, int),
+    GVAR_FUNC_2ARGS(16Bits_LeadingExponentOfPcElement, 16_bits_pcgs, 16_bits_word),
+    GVAR_FUNC_2ARGS(16Bits_ExponentsOfPcElement, 16_bits_pcgs, 16_bits_pcword),
+    GVAR_FUNC_2ARGS(32Bits_DepthOfPcElement, 32_bits_pcgs, 32_bits_pcword),
+    GVAR_FUNC_3ARGS(32Bits_ExponentOfPcElement, 32_bits_pcgs, 32_bits_pcword, int),
+    GVAR_FUNC_2ARGS(32Bits_LeadingExponentOfPcElement, 32_bits_pcgs, 32_bits_word),
+    GVAR_FUNC_2ARGS(32Bits_ExponentsOfPcElement, 32_bits_pcgs, 32_bits_pcword),
+
     { 0, 0, 0, 0, 0 }
 
 };
@@ -418,7 +340,6 @@ static Int InitKernel (
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -434,12 +355,11 @@ static Int InitLibrary (
     ExportAsConstantGVar(PCWP_FIRST_ENTRY);
     ExportAsConstantGVar(PCWP_NAMES);
     ExportAsConstantGVar(PCWP_COLLECTOR);
-    ExportAsConstantGVar(PCWP_FIRST_FREE);
+    ExportAsConstantGVar(PCWP_LAST_ENTRY);
 
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 

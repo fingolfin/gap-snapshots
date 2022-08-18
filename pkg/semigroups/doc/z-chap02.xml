@@ -1,0 +1,195 @@
+<Chapter Label = "Installing Semigroups">
+  <Heading>Installing &SEMIGROUPS;</Heading>
+
+  <Section Label = "For those in a hurry">
+    <Heading>For those in a hurry</Heading>
+    In this section we give a brief description of how to start using
+    &SEMIGROUPS;.<P/>
+
+    It is assumed that you have a working copy of &GAP; with version number
+    &GAPVERS; or higher. The most up-to-date version of &GAP; and instructions
+    on how to install it can be obtained from the main &GAP; webpage
+    <URL>https://www.gap-system.org</URL>.<P/>
+
+    The following is a summary of the steps that should lead to a
+    successful installation of &SEMIGROUPS;:
+
+    <List>
+
+      <Item>
+        ensure that the &DATASTRUCTURES; package version &DATASTRUCTURESVERS;
+        or higher is available.  &DATASTRUCTURES; must be compiled before
+        &SEMIGROUPS; can be loaded.
+      </Item>
+
+      <Item>
+        ensure that the &DIGRAPHS; package version &DIGRAPHSVERS; or higher is
+        available.  &DIGRAPHS; must be compiled before &SEMIGROUPS; can be
+        loaded.
+      </Item>
+
+      <Item>
+        ensure that the &GENSS; package version &GENSSVERS; or higher is
+        available.
+      </Item>
+
+      <Item>
+        ensure that the &IMAGES; package version &IMAGESVERS; or higher is
+        available.
+      </Item>
+
+      <Item>
+        ensure that the &IO; package version &IOVERS; or higher is available.
+        &IO; must be compiled before &SEMIGROUPS; can be loaded.
+      </Item>
+
+      <Item>
+        ensure that the &ORB; package version &ORBVERS; or higher is available.
+        &ORB; and &SEMIGROUPS; both perform better if &ORB; is compiled.
+      </Item>
+
+      <Item>
+        download the package archive <F>&ARCHIVENAME;</F> from
+        <URL Text = "the Semigroups package webpage">https://semigroups.github.io/Semigroups</URL>.
+      </Item>
+
+      <Item>
+        unzip and untar the file, this should create a directory called
+        <F>semigroups-&VERSION;</F>.
+      </Item>
+
+      <Item>
+        locate your &GAP; directory, the one containing the directories
+        <F>lib</F>, <F>doc</F> and so on. Move the directory
+        <F>&ARCHIVENAME;</F> into the <F>pkg</F> subdirectory of your &GAP;
+        directory.
+      </Item>
+
+      <Item>
+        from version 3.0.0, it is necessary to compile the &SEMIGROUPS; package.
+        &SEMIGROUPS; uses the
+        <URL Text="libsemigroups">
+          https://libsemigroups.github.io/libsemigroups/
+        </URL>
+        C++ library, which requires a compiler implementing the C++14 standard.
+        Inside the <F>pkg/semigroups-&VERSION;</F> directory, in your terminal
+        type
+        <Listing><![CDATA[
+./configure && make
+        ]]></Listing>
+        Further information about this step can be found in Section
+        <Ref Sect = "Compiling the kernel module"/>.
+      </Item>
+
+      <Item>
+        start &GAP; in the usual way (i.e. type <C>gap</C> at the command line).
+      </Item>
+
+      <Item>
+        type <C>LoadPackage("semigroups");</C>
+      </Item>
+    </List>
+
+    <E><B>Please note that</B> from version 3.0.0: &SEMIGROUPS; can only be
+      loaded if it has been compiled.</E><P/>
+
+    If you want to check that the package is working correctly, you
+    should run some of the tests described in Section
+    <Ref Sect = "Testing your installation"/>.
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label = "Compiling the kernel module">
+    <Heading>Compiling the kernel module</Heading>
+    As of version 3.0.0, the &SEMIGROUPS; package has a kernel module written
+    in C++ and this must be compiled.  The kernel module contains the interface
+    to the C++ library &LIBSEMIGROUPS;.  It is not possible to use the
+    &SEMIGROUPS; package without compiling it.
+    <P/>
+
+    To compile the kernel component inside the <F>pkg/&ARCHIVENAME;</F>
+    directory, type
+    <Listing><![CDATA[
+./configure && make
+    ]]></Listing>
+    <P/>
+
+    If you are using GCC to compile &SEMIGROUPS;, then version 5.0 or higher is
+    required. Trying to compile &SEMIGROUPS; with an earlier version of GCC
+    will result in an error at compile time. &SEMIGROUPS; only supports GCC
+    version 5.0 or higher, and clang version 5.0 or higher.<P/>
+
+    If you installed the package in a <F>pkg</F> directory other than the
+    standard <F>pkg</F> directory in your &GAP; installation, then you have to
+    do two things. Firstly during compilation you have to use the option
+    <C>--with-gaproot=PATH</C> of the <C>configure</C> script where <C>PATH</C>
+    is a path to the main &GAP; root directory (if not given the default
+    <C>../..</C> is assumed).<P/>
+
+    If you installed &GAP; on several architectures, you must execute the
+    configure/make step for each of the architectures. You can either do this
+    immediately after configuring and compiling &GAP; itself on this
+    architecture, or alternatively set the environment variable
+    <C>CONFIGNAME</C> to the name of the configuration you used when compiling
+    &GAP; before running <C>./configure</C>.  Note however that your compiler
+    choice and flags (environment variables <C>CC</C> and <C>CFLAGS</C>) need
+    to be chosen to match the setup of the original &GAP; compilation. For
+    example you have to specify 32-bit or 64-bit mode correctly!
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label = "Rebuilding the documentation">
+    <Heading>Rebuilding the documentation</Heading>
+
+    The &SEMIGROUPS; package comes complete with pdf, html, and text versions
+    of the documentation. However, you might find it necessary, at some point,
+    to rebuild the documentation. To rebuild the documentation the &GAPDoc; and
+    &AUTODOC; packages are required. To rebuild the documentation type:
+    <Listing><![CDATA[
+gap makedoc.g
+    ]]></Listing>
+    when you're inside the <F>pkg/semigroups-&VERSION;</F> directory.
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label = "Testing your installation">
+    <Heading>Testing your installation</Heading>
+
+    In this section we describe how to test that &SEMIGROUPS; is working as
+    intended.  To quickly test that &SEMIGROUPS; is installed correctly use
+    <Ref Func = "SemigroupsTestInstall"/>.  For more extensive tests use 
+    <Ref Func = "SemigroupsTestStandard"/>.  Finally, for lengthy benchmarking
+    tests use <Ref Func = "SemigroupsTestExtreme"/>.
+    <P/>
+
+    If something goes wrong, then please review the instructions in Section
+    <Ref Sect = "For those in a hurry"/> and ensure that &SEMIGROUPS; has been
+    properly installed.  If you continue having problems, please use the
+    <URL Text = "issue tracker">https://github.com/semigroups/Semigroups/issues</URL>
+    to report the issues you are having.
+
+    <#Include Label = "SemigroupsTestInstall">
+    <#Include Label = "SemigroupsTestStandard">
+    <#Include Label = "SemigroupsTestExtreme">
+    <#Include Label = "SemigroupsTestAll">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+    <Heading>More information during a computation</Heading>
+    <#Include Label = "InfoSemigroups">
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+</Chapter>

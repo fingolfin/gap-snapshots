@@ -408,7 +408,7 @@ end );
 ##  </Description>
 ##  </ManSection>
 ##
-##  Still used in hecke (11/2018)
+##  Not used in any redistributed package (07/2022)
 BIND_GLOBAL( "TeX", function( arg )
     local   str,  res,  obj;
 
@@ -934,12 +934,12 @@ local p,i;
       p:=p+2;
       if ISBOUND_GLOBAL(i) then
         # variable is assigned
-	HIDDEN_GVARS[p-1]:=VALUE_GLOBAL(i);
-	if IS_READ_ONLY_GLOBAL(i) then
-	  HIDDEN_GVARS[p]:=true;
-	  MAKE_READ_WRITE_GLOBAL(i);
-	else
-	  HIDDEN_GVARS[p]:=false;
+        HIDDEN_GVARS[p-1]:=VALUE_GLOBAL(i);
+        if IS_READ_ONLY_GLOBAL(i) then
+          HIDDEN_GVARS[p]:=true;
+          MAKE_READ_WRITE_GLOBAL(i);
+        else
+          HIDDEN_GVARS[p]:=false;
         fi;
       else
         HIDDEN_GVARS[p-1]:=fail; # needs to be assigned
@@ -969,32 +969,32 @@ local p,str,all,l,which;
     if all or str in which then
       # remove the value
       if ISBOUND_GLOBAL(str) then
-	if IS_READ_ONLY_GLOBAL(str) then
-	  MAKE_READ_WRITE_GLOBAL(str);
-	fi;
-	UNBIND_GLOBAL(str);
+        if IS_READ_ONLY_GLOBAL(str) then
+          MAKE_READ_WRITE_GLOBAL(str);
+        fi;
+        UNBIND_GLOBAL(str);
       fi;
 
       if HIDDEN_GVARS[p+2]<>fail then
-	#reassign a value
-	ASS_GVAR(str,HIDDEN_GVARS[p+1]);
-	if HIDDEN_GVARS[p+2]=true then
-	  MAKE_READ_ONLY_GLOBAL(str);
-	fi;
+        #reassign a value
+        ASS_GVAR(str,HIDDEN_GVARS[p+1]);
+        if HIDDEN_GVARS[p+2]=true then
+          MAKE_READ_ONLY_GLOBAL(str);
+        fi;
       fi;
 
       # remove the corresponding "HIDDEN_GVARS" entry
       if not all then
         if p+2<l then
-	  # move
-	  HIDDEN_GVARS{[p..l-3]}:=HIDDEN_GVARS{[p+3..l]};
-	fi;
-	# remove
-	Unbind(HIDDEN_GVARS[l-2]);
-	Unbind(HIDDEN_GVARS[l-1]);
-	Unbind(HIDDEN_GVARS[l]);
-	l:=l-3;
-	which:=Filtered(which,i->i<>str);
+          # move
+          HIDDEN_GVARS{[p..l-3]}:=HIDDEN_GVARS{[p+3..l]};
+        fi;
+        # remove
+        Unbind(HIDDEN_GVARS[l-2]);
+        Unbind(HIDDEN_GVARS[l-1]);
+        Unbind(HIDDEN_GVARS[l]);
+        l:=l-3;
+        which:=Filtered(which,i->i<>str);
       fi;
     fi;
     p:=p-3;
@@ -1003,3 +1003,79 @@ local p,str,all,l,which;
     HIDDEN_GVARS:=[];
   fi;
 end);
+
+#############################################################################
+##
+#F  RANDOM_SEED( <list> )
+##
+##  Moved to obsoletes in August 2019 for GAP 4.11.
+##
+##  Still used in gbnp, recog -- but only in the package tests (08/2019)
+BindGlobal("RANDOM_SEED", function ( n )
+    Init(GlobalRandomSource, n);
+end );
+
+##
+##  The variables R_N and R_X used to part of the state of GAP's random number
+##  generator, and even were mentioned in the documentation of GAP 4.4, albeit
+##  only in a parenthesis, and as an alternative to StateRandom /
+##  RestoreStateRandom, which in turn were made obsolete in GAP 4.5.
+##
+##  No code is known to use these, anywhere. But hypothetically, somebody might
+##  have ancient GAP code sitting somewhere which tries to access these two
+##  in some way. We thus try hard to make sure this leads to an error, instead
+##  of possibly working silently, and leading to an erroneous computations.
+##
+BindGlobal("R_N", fail);
+BindGlobal("R_X", fail);
+
+# Moved to obsolete in Nov. 2021 for 4.12
+InstallMethod( NaturalHomomorphism, "for a group with natural homomorphism stored",
+    [ IsGroup ],
+function(G)
+  Info(InfoWarning,0,"The use of `NaturalHomomorphism` for a `FactorGroup`\n",
+    "has been deprecated, as it caused side-effects.\n",
+    "Proceed at risk!");
+
+  if IsBound(G!.nathom) then
+    return G!.nathom;
+  else
+    Error("no natural homomorphism stored");
+  fi;
+end);
+
+
+#############################################################################
+##
+#F  TmpNameAllArchs( )
+##
+##  Still used in guava (10/2019)
+DeclareObsoleteSynonym( "TmpNameAllArchs", "TmpName" );
+
+#############################################################################
+##
+#F  ZERO
+##
+##  Not used in any redistributed package (07/2022)
+BindGlobal( "ZERO", ZeroSameMutability );
+
+#############################################################################
+##
+#F  AINV
+##
+##  Not used in any redistributed package (07/2022)
+BindGlobal( "AINV", AdditiveInverseSameMutability );
+
+#############################################################################
+##
+#F  ONE_MUT
+##
+##  Not used in any redistributed package (07/2022)
+BindGlobal( "ONE_MUT", OneSameMutability );
+
+#############################################################################
+##
+#F  INV_MUT
+##
+##  Not used in any redistributed package (07/2022)
+BindGlobal( "INV_MUT", InverseSameMutability );

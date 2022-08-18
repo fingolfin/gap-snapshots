@@ -16,22 +16,22 @@
 
 #############################################################################
 ##
-#V  TYPES_MAT8BIT . . . . . . . prepared types for compressed GF(q) matrices
+#V  TYPES_MAT8BIT . . . . . . . . prepared types for compressed GF(q) vectors
 ##
-##  A length 2 list of length 257 lists. TYPES_MAT8BIT[0][q] will be the type
-##  of mutable matrices over GF(q), TYPES_MAT8BIT[1][q] is the type of 
-##  immutable matrices. The 257th position is bound to 1 to stop the lists
+##  A length 2 list of length 257 lists. TYPES_MAT8BIT[1][q] will be the type
+##  of mutable vectors over GF(q), TYPES_MAT8BIT[2][q] is the type of 
+##  immutable vectors. The 257th position is bound to 1 to stop the lists
 ##  shrinking.
 ##
-##  It may later accessed directly by the kernel, so the format cannot be changed
+##  It is accessed directly by the kernel, so the format cannot be changed
 ##  without changing the kernel.
 ##
 
 if IsHPCGAP then
-    InstallValue(TYPES_MAT8BIT, [ FixedAtomicList(256), FixedAtomicList(256) ]);
+    BindGlobal("TYPES_MAT8BIT", [ FixedAtomicList(256), FixedAtomicList(256) ]);
     MakeReadOnlyObj(TYPES_MAT8BIT);
 else
-    InstallValue(TYPES_MAT8BIT, [[],[]]);
+    BindGlobal("TYPES_MAT8BIT", [[],[]]);
     TYPES_MAT8BIT[1][257] := 1;
     TYPES_MAT8BIT[2][257] := 1;
 fi;
@@ -150,7 +150,7 @@ InstallMethod( ViewObj, "for a compressed MatFFE",
     local r,c;
     r := m![1];
     c := LEN_VEC8BIT(m![2]);
-    if r*c > 25 then
+    if r*c > 25 or r = 0 or c = 0 then
         Print("< ");
         if not IsMutable(m) then
             Print("im");
@@ -240,37 +240,6 @@ InstallMethod( \-, "for two 8 bit matrices in same characteristic",
         DIFF_MAT8BIT_MAT8BIT
 );
 
-
-#############################################################################
-##
-#M  `PlainListCopyOp( <mat> ) 
-##
-##  Make the matrix into a plain list 
-##
-
-InstallMethod( PlainListCopyOp, "for an 8 bit vector",
-        true, [IsSmallList and Is8BitMatrixRep], 0,
-        function (m)
-    PLAIN_MAT8BIT(m);
-    return m;
-end);
-
-
-#############################################################################
-##
-#M  ELM0_LIST( <mat> ) 
-##
-##  alternative element access interface, returns fail when unbound
-##
-
-InstallMethod(ELM0_LIST, "for an 8 bit matrix",
-        true, [IsList and Is8BitMatrixRep, IsPosInt], 0,
-        function(m,p)
-    if p > m![1] then 
-        return fail;
-    fi;
-    return m![p+1];
-end);
 
 #############################################################################
 ##
@@ -400,7 +369,7 @@ InstallGlobalFunction(ConvertToMatrixRep,
         fi;
         
         if givenq and q1 <> q then
-            Error("ConvertTo8BitMatrixRep( <mat>, <q> ): not all entries of <mat> written over <q>");
+            Error("ConvertToMatrixRep( <mat>, <q> ): not all entries of <mat> written over <q>");
         fi;
         
         #

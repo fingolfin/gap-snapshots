@@ -19,6 +19,24 @@
 
 #############################################################################
 ##
+#V  Cyclotomics . . . . . . . . . . . . . . . . . .  field of all cyclotomics
+##
+BindGlobal( "Cyclotomics", Objectify( NewType(
+    CollectionsFamily( CyclotomicsFamily ),
+    IsField and IsAttributeStoringRep ),
+    rec() ) );
+SetName( Cyclotomics, "Cyclotomics" );
+SetLeftActingDomain( Cyclotomics, Rationals );
+SetIsFiniteDimensional( Cyclotomics, false );
+SetIsFinite( Cyclotomics, false );
+SetIsWholeFamily( Cyclotomics, true );
+SetDegreeOverPrimeField( Cyclotomics, infinity );
+SetDimension( Cyclotomics, infinity );
+SetRepresentative(Cyclotomics, 0);
+
+
+#############################################################################
+##
 #M  Conductor( <list> ) . . . . . . . . . . . . . . . . . . . . .  for a list
 ##
 ##  (This works not only for lists of cyclotomics but also for lists of
@@ -1678,7 +1696,7 @@ InstallMethod( GaloisMat,
     od;
 
     # Convert the `generators' component to a set of generating permutations.
-    generators:= Set( List( generators, PermList ) );
+    generators:= Set( generators, PermList );
     RemoveSet( generators, () );  # `generators' arose from `PermList'
     if IsEmpty( generators ) then
       generators:= [ () ];  # `generators' arose from `PermList'
@@ -1986,31 +2004,31 @@ InstallGlobalFunction( DenominatorCyc, function( cyc )
 # any of the other semirings.
 # To simplify the code using these lists, the final entry of each list is
 # fail, resp. the trivial filter IsObject.
-BindGlobal("CompareCyclotomicCollectionHelper_Semirings", [
+BindGlobal("CompareCyclotomicCollectionHelper_Semirings", MakeImmutable( [
 	PositiveIntegers, NonnegativeIntegers,
 	Integers, GaussianIntegers,
 	Rationals, GaussianRationals,
 	Cyclotomics, fail
-] );
+] ) );
 
-BindGlobal("CompareCyclotomicCollectionHelper_Filters", [
+BindGlobal("CompareCyclotomicCollectionHelper_Filters", MakeImmutable( [
 	IsPositiveIntegers, IsNonnegativeIntegers,
 	IsIntegers, IsGaussianIntegers,
 	IsRationals, IsGaussianRationals,
 	IsWholeFamily, IsObject
-] );
+] ) );
 
-BindGlobal("CompareCyclotomicCollectionHelper_Proxies", [
+BindGlobal("CompareCyclotomicCollectionHelper_Proxies", MakeImmutable( [
 	[ 1 ], [ 0, 1 ],
 	[ -1, 0, 1 ], [ -1, 0, 1, E(4) ],
 	[ -1, 0, 1/2, 1 ], [ -1, 0, 1/2, 1, E(4), 1/2+E(4) ],
 	[ -1, 0, 1/2, 1, E(4), 1/2+E(4), E(9) ], fail
-] );
+] ) );
 
+ForAll(CompareCyclotomicCollectionHelper_Proxies, IsSet);
 if IsHPCGAP then
     MakeReadOnlySingleObj(CompareCyclotomicCollectionHelper_Semirings);
     MakeReadOnlyObj(CompareCyclotomicCollectionHelper_Filters);
-    MakeImmutable(CompareCyclotomicCollectionHelper_Proxies);
 fi;
 
 

@@ -1,0 +1,160 @@
+<#GAPDoc Label="TerminalCategory">
+<Example><![CDATA[
+gap> T := TerminalCategory( );
+TerminalCategory( )
+gap> InfoOfInstalledOperationsOfCategory( T );
+68 primitive operations were used to derive 317 operations for this category
+which constructively
+* IsEquippedWithHomomorphismStructure
+* IsLinearCategoryOverCommutativeRing
+* IsAbelianCategoryWithEnoughInjectives
+* IsAbelianCategoryWithEnoughProjectives
+* IsRigidSymmetricClosedMonoidalCategory
+* IsRigidSymmetricCoclosedMonoidalCategory
+gap> i := InitialObject( T );
+<A zero object in TerminalCategory( )>
+gap> t := TerminalObject( T );
+<A zero object in TerminalCategory( )>
+gap> z := ZeroObject( T );
+<A zero object in TerminalCategory( )>
+gap> Display( i );
+A zero object in TerminalCategory( ).
+gap> Display( t );
+A zero object in TerminalCategory( ).
+gap> Display( z );
+A zero object in TerminalCategory( ).
+gap> IsIdenticalObj( i, z );
+true
+gap> IsIdenticalObj( t, z );
+true
+gap> IsWellDefined( z );
+true
+gap> id_z := IdentityMorphism( z );
+<A zero, identity morphism in TerminalCategory( )>
+gap> fn_z := ZeroObjectFunctorial( T );
+<A zero, isomorphism in TerminalCategory( )>
+gap> IsWellDefined( fn_z );
+true
+gap> IsEqualForMorphisms( id_z, fn_z );
+true
+gap> IsCongruentForMorphisms( id_z, fn_z );
+true
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="TerminalCategoryWithMultipleObjects">
+<Example><![CDATA[
+gap> T := TerminalCategoryWithMultipleObjects( );
+TerminalCategoryWithMultipleObjects( )
+gap> InfoOfInstalledOperationsOfCategory( T );
+68 primitive operations were used to derive 317 operations for this category
+which constructively
+* IsEquippedWithHomomorphismStructure
+* IsLinearCategoryOverCommutativeRing
+* IsAbelianCategoryWithEnoughInjectives
+* IsAbelianCategoryWithEnoughProjectives
+* IsRigidSymmetricClosedMonoidalCategory
+* IsRigidSymmetricCoclosedMonoidalCategory
+gap> i := InitialObject( T );
+<A zero object in TerminalCategoryWithMultipleObjects( )>
+gap> t := TerminalObject( T );
+<A zero object in TerminalCategoryWithMultipleObjects( )>
+gap> z := ZeroObject( T );
+<A zero object in TerminalCategoryWithMultipleObjects( )>
+gap> Display( i );
+ZeroObject
+gap> Display( t );
+ZeroObject
+gap> Display( z );
+ZeroObject
+gap> IsIdenticalObj( i, z );
+true
+gap> IsIdenticalObj( t, z );
+true
+gap> id_z := IdentityMorphism( z );
+<A zero, identity morphism in TerminalCategoryWithMultipleObjects( )>
+gap> fn_z := ZeroObjectFunctorial( T );
+<A zero, isomorphism in TerminalCategoryWithMultipleObjects( )>
+gap> IsEqualForMorphisms( id_z, fn_z );
+false
+gap> IsCongruentForMorphisms( id_z, fn_z );
+true
+gap> a := "a" / T;
+<A zero object in TerminalCategoryWithMultipleObjects( )>
+gap> Display( a );
+a
+gap> IsWellDefined( a );
+true
+gap> aa := ObjectConstructor( T, "a" );
+<A zero object in TerminalCategoryWithMultipleObjects( )>
+gap> Display( aa );
+a
+gap> a = aa;
+true
+gap> b := "b" / T;
+<A zero object in TerminalCategoryWithMultipleObjects( )>
+gap> Display( b );
+b
+gap> a = b;
+false
+gap> t := TensorProduct( a, b );
+<A zero object in TerminalCategoryWithMultipleObjects( )>
+gap> Display( t );
+TensorProductOnObjects
+gap> a = t;
+false
+gap> TensorProduct( a, a ) = t;
+true
+gap> m := MorphismConstructor( a, "m", b );
+<A zero, isomorphism in TerminalCategoryWithMultipleObjects( )>
+gap> Display( m );
+a
+|
+| m
+v
+b
+gap> IsWellDefined( m );
+true
+gap> n := MorphismConstructor( a, "n", b );
+<A zero, isomorphism in TerminalCategoryWithMultipleObjects( )>
+gap> Display( n );
+a
+|
+| n
+v
+b
+gap> IsEqualForMorphisms( m, n );
+false
+gap> IsCongruentForMorphisms( m, n );
+true
+gap> m = n;
+true
+gap> id := IdentityMorphism( a );
+<A zero, identity morphism in TerminalCategoryWithMultipleObjects( )>
+gap> Display( id );
+a
+|
+| IdentityMorphism
+v
+a
+gap> m = id;
+false
+gap> id = MorphismConstructor( a, "xyz", a );
+true
+gap> z := ZeroMorphism( a, a );
+<A zero, isomorphism in TerminalCategoryWithMultipleObjects( )>
+gap> Display( z );
+a
+|
+| ZeroMorphism
+v
+a
+gap> id = z;
+true
+]]></Example>
+
+
+
+<#/GAPDoc>

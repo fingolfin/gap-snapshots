@@ -244,8 +244,80 @@
   [2XSize[102X  ([14X30.4-6[114X).  Namely,  there  are immediate methods that access the known
   size  of the group. Note that the group [10Xg[110X was known to be finitely generated
   already  before the size was computed, the calls of the immediate method for
-  [2XIsFinitelyGeneratedGroup[102X  ([14X39.15-17[114X)  after  the  call of [2XSize[102X ([14X30.4-6[114X) have
+  [2XIsFinitelyGeneratedGroup[102X  ([14X39.15-18[114X)  after  the  call of [2XSize[102X ([14X30.4-6[114X) have
   other arguments than [10Xg[110X.[133X
+  
+  [1X7.3-6 TraceInternalMethods[101X
+  
+  [33X[1;0Y[29X[2XTraceInternalMethods[102X(  ) [32X function[133X
+  [33X[1;0Y[29X[2XUntraceInternalMethods[102X(  ) [32X function[133X
+  [33X[1;0Y[29X[2XGetTraceInternalMethodsCounts[102X(  ) [32X function[133X
+  [33X[1;0Y[29X[2XClearTraceInternalMethodsCounts[102X(  ) [32X function[133X
+  
+  [33X[0;0Y[2XTraceInternalMethods[102X  enables  tracing  for  all  internal methods. Internal
+  methods  are  methods which implement many fundamental operations in GAP. In
+  this version of GAP, the internal methods which can be traced are:[133X
+  
+  [8XZero, ZeroMut[108X
+        [33X[0;6YMutable and Immutable [2XZero[102X ([14X31.10-3[114X)[133X
+  
+  [8XAInv, AInvMut[108X
+        [33X[0;6YMutable and Immutable [2XAdditiveInverse[102X ([14X31.10-9[114X)[133X
+  
+  [8XOne, OneMut[108X
+        [33X[0;6YMutable and Immutable [2XOne[102X ([14X31.10-2[114X)[133X
+  
+  [8XInv, InvMut[108X
+        [33X[0;6YMutable and Immutable [2XInverse[102X ([14X31.10-8[114X)[133X
+  
+  [8XSum[108X
+        [33X[0;6YThe operator [2X\+[102X ([14X31.12-1[114X)[133X
+  
+  [8XDiff[108X
+        [33X[0;6YThe operator [10X-[110X operator[133X
+  
+  [8XProd[108X
+        [33X[0;6YThe operator [2X\*[102X ([14X31.12-1[114X)[133X
+  
+  [8XQuo[108X
+        [33X[0;6YThe operator [2X\/[102X ([14X31.12-1[114X)[133X
+  
+  [8XLQuo[108X
+        [33X[0;6YThe left-quotient operator[133X
+  
+  [8XPow[108X
+        [33X[0;6YThe operator [2X\^[102X ([14X31.12-1[114X)[133X
+  
+  [8XComm[108X
+        [33X[0;6YThe operator [2XComm[102X ([14X31.12-3[114X)[133X
+  
+  [8XMod[108X
+        [33X[0;6YThe operator [2X\mod[102X ([14X31.12-1[114X)[133X
+  
+  [33X[0;0Y[2XUntraceInternalMethods[102X  turns  tracing  off.  As these methods can be called
+  hundreds  of  thousands of times in simple GAP code, there isn't a statement
+  printed    each    time    one    is    called.    Instead,    the    method
+  [2XGetTraceInternalMethodsCounts[102X returns how many times each operation has been
+  applied  to  each type of variable (the type of a variable can be found with
+  the  [10XTNAM_OBJ[110X  method).  The  return  value  for two argument operators is a
+  record  of  records  [10Xr[110X, where [10Xr.op[110X stores information about operator [10Xop[110X. For
+  one  argument  operators  [10Xr.op.i[110X stores how many times [10Xop[110X was called with an
+  argument  of  type  [10Xi[110X,  while for two argument operators [10Xr.op.i.j[110X stores how
+  many times [10Xop[110X was called with arguments of type [10Xi[110X and [10Xj[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XTraceInternalMethods();[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27X2+3+4+5+6;;[127X[104X
+    [4X[25Xgap>[125X [27X2.0+2.0;;[127X[104X
+    [4X[25Xgap>[125X [27X3^(1,2,3);;[127X[104X
+    [4X[25Xgap>[125X [27XGetTraceInternalMethodsCounts();[127X[104X
+    [4X[28Xrec( Pow := rec( integer := rec( ("permutation (small)") := 1 ) ),[128X[104X
+    [4X[28XSum := rec( integer := rec( integer := 4 ),[128X[104X
+    [4X[28X    macfloat := rec( macfloat := 1 ) ) )[128X[104X
+    [4X[28X# 'macfloat' is a floating point number[128X[104X
+    [4X[25Xgap>[125X [27XUntraceInternalMethods();[127X[104X
+  [4X[32X[104X
   
   
   [1X7.4 [33X[0;0YInfo Functions[133X[101X
@@ -296,8 +368,8 @@
   [33X[1;0Y[29X[2XDeclareInfoClass[102X( [3Xname[103X ) [32X function[133X
   
   [33X[0;0Ycreates  a new info class with name [3Xname[103X and binds it to the global variable
-  [3Xname[103X. The variable must previously be writable, and is made readonly by this
-  function.[133X
+  [3Xname[103X.  The  variable  must  previously be writable, and is made read-only by
+  this function.[133X
   
   [1X7.4-3 SetInfoLevel[101X
   
@@ -323,7 +395,6 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XShowUsedInfoClasses(true);[127X[104X
     [4X[25Xgap>[125X [27XIntersection(Group((1,3,2,4,5,6)), Group((1,2,3,4,5,6)));[127X[104X
-    [4X[28X#I Would print info with SetInfoLevel(InfoOptions,1)[128X[104X
     [4X[28X#I Would print info with SetInfoLevel(InfoBckt,1)[128X[104X
     [4X[28X#I Would print info with SetInfoLevel(InfoBckt,3)[128X[104X
     [4X[28X#I Would print info with SetInfoLevel(InfoBckt,5)[128X[104X
@@ -642,7 +713,7 @@
   [33X[1;0Y[29X[2XProfileGlobalFunctions[102X( [[3Xbool[103X] ) [32X function[133X
   
   [33X[0;0YCalled  with  argument  [9Xtrue[109X, [2XProfileGlobalFunctions[102X starts profiling of all
-  functions  that  have been declared via [2XDeclareGlobalFunction[102X ([14X79.10-4[114X). Old
+  functions  that  have been declared via [2XDeclareGlobalFunction[102X ([14X79.10-5[114X). Old
   profile information for all these functions is cleared. A function call with
   the  argument  [9Xfalse[109X  stops  profiling  of  all  these  functions.  Recorded
   information  is  still  kept,  so  you can display it even after turning the
@@ -709,7 +780,7 @@
   
   [1X7.8-9 DisplayProfile[101X
   
-  [33X[1;0Y[29X[2XDisplayProfile[102X( [[3Xfunctions[103X, ][[3Xmincount[103X, [3Xmintime[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XDisplayProfile[102X( [[3Xfunctions[103X][,] [[3Xmincount[103X, [3Xmintime[103X] ) [32X function[133X
   [33X[1;0Y[29X[2XGAPInfo.ProfileThreshold[102X [32X global variable[133X
   
   [33X[0;0YCalled  without  arguments,  [2XDisplayProfile[102X displays the profile information
@@ -1071,7 +1142,7 @@
   number using [2XCompareVersionNumbers[102X ([14X76.3-9[114X).[133X
   
   [33X[0;0YTo  produce  sample  citations  for the used version of [5XGAP[105X or for a package
-  available in this [5XGAP[105X installation, use [2XCite[102X ([14X76.3-17[114X).[133X
+  available in this [5XGAP[105X installation, use [2XCite[102X ([14X76.3-19[114X).[133X
   
   [33X[0;0YIf  you  wish  to  report  a  problem to [5XGAP[105X Support or [5XGAP[105X Forum, it may be
   useful  to  not  only  report  the version used, but also to include the [5XGAP[105X
@@ -1183,10 +1254,10 @@
         on  the  value  of a boolean expression. The exact behavior is done as
         follows:[133X
   
-        [33X[0;6YIf the [5XGAP[105X expression [10XEXPR[110X evaluates to [10Xtrue[110X, then the lines after the
+        [33X[0;6YIf the [5XGAP[105X expression [10XEXPR[110X evaluates to [9Xtrue[109X, then the lines after the
         [10X#@if[110X are used until either a [10X#@else[110X or [10X#@fi[110X is reached. If a [10X#@else[110X is
         present  then  the  code  after the [10X#@else[110X is used if and only if [10XEXPR[110X
-        evaluated  to  [10Xfalse[110X.  Finally,  once  [10X#endif[110X  is  reached, evaluation
+        evaluated  to  [9Xfalse[109X.  Finally,  once  [10X#endif[110X  is  reached, evaluation
         continues normally.[133X
   
   [33X[0;0YBy default the actual [5XGAP[105X output is compared exactly with the stored output,
@@ -1215,6 +1286,15 @@
         [10X"uptowhitespace"[110X checks if the two strings become equal after removing
         all  white  space.  And  [10X"uptonl"[110X  compares  the string up to trailing
         newline characters.[133X
+  
+  [8X[10XtransformFunction[110X[8X[108X
+        [33X[0;6YThis  must  be  a  function  that gets one string as input, either the
+        newly  generated  or the stored output of some [5XGAP[105X input. The function
+        must  return a new string which will be used to compare the actual and
+        the expected output. By default [2XIdFunc[102X ([14X5.4-6[114X) is used.[133X
+        [33X[0;6YTwo  strings  are  recognized  as  abbreviations  in  this  component:
+        [10X"removewhitespace"[110X removes all white space. And [10X"removenl"[110X removes all
+        trailing newline characters.[133X
   
   [8X[10XreportDiff[110X[8X[108X
         [33X[0;6YA  function  that  gets  six arguments and reports a difference in the
@@ -1471,8 +1551,8 @@
     [4X[28X0[128X[104X
     [4X[26Xbrk>[126X [27Xreturn;[127X[104X
     [4X[25Xgap>[125X [27XSetRecursionTrapInterval(-1);[127X[104X
-    [4X[28XSetRecursionTrapInterval( <interval> ): <interval> must be a non-negative smal\[128X[104X
-    [4X[28Xl integer[128X[104X
+    [4X[28XError, SetRecursionTrapInterval: <interval> must be a small integer greater than 5 (n\[128X[104X
+    [4X[28Xot the integer -1)[128X[104X
     [4X[28Xnot in any function[128X[104X
     [4X[28XEntering break read-eval-print loop ...[128X[104X
     [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
@@ -1487,17 +1567,47 @@
   
   [1X7.12 [33X[0;0YGlobal Memory Information[133X[101X
   
+  
+  [1X7.12-1 [33X[0;0YGarbage Collection[133X[101X
+  
   [33X[0;0YThe  [5XGAP[105X  environment  provides  automatic  memory  management,  so that the
   programmer  does  not  need  to concern themselves with allocating space for
-  objects,  or  recovering  space  when  objects  are  no  longer  needed. The
-  component  of  the  kernel which provides this is called [10XGASMAN[110X ([5XGAP[105X Storage
-  MANager).  Messages reporting garbage collections performed by [10XGASMAN[110X can be
-  switched  on by the [10X-g[110X command line option (see section [14X3.1[114X). There are also
-  some facilities to access information from [10XGASMAN[110X from [5XGAP[105X programs.[133X
+  objects,  or  recovering space when objects are no longer needed. The memory
+  manager  that  shall be used by [5XGAP[105X is specified at compile time. One of the
+  choices  is  called [10XGASMAN[110X ([5XGAP[105X Storage MANager). (The name of the currently
+  used garbage collector is stored in the variable [10XGAPInfo.KernelInfo.GC[110X.)[133X
   
-  [1X7.12-1 GasmanStatistics[101X
+  [33X[0;0YIf  [5XGAP[105X uses [10XGASMAN[110X then messages reporting garbage collections performed by
+  [10XGASMAN[110X  can  be switched on by the [10X-g[110X command line option (see section [14X3.1[114X).
+  There  are  also  some facilities to access information from [10XGASMAN[110X from [5XGAP[105X
+  programs, see below.[133X
+  
+  [1X7.12-2 CollectGarbage[101X
+  
+  [33X[1;0Y[29X[2XCollectGarbage[102X( [3Xfull[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ynothing.[133X
+  
+  [33X[0;0YThis  function forces a garbage collection. If [3Xfull[103X is [9Xtrue[109X then it triggers
+  a full garbage collection, otherwise a partial one.[133X
+  
+  [33X[0;0Y[5XGAP[105X  invokes  its garbage collector automatically, thus there is normally no
+  need to call [2XCollectGarbage[102X.[133X
+  
+  [33X[0;0YThe  function  [2XCollectGarbage[102X  was  introduced  in  [5XGAP[105X 4.12.  In  older [5XGAP[105X
+  versions,  one  can  use  [10XGASMAN(  "collect"  )[110X (if [3Xfull[103X is [9Xtrue[109X) or [10XGASMAN(
+  "partial" )[110X (if [3Xfull[103X is not [9Xtrue[109X) instead.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XCollectGarbage( false );[127X[104X
+    [4X[25Xgap>[125X [27XCollectGarbage( true );[127X[104X
+  [4X[32X[104X
+  
+  [1X7.12-3 GasmanStatistics[101X
   
   [33X[1;0Y[29X[2XGasmanStatistics[102X(  ) [32X function[133X
+  
+  [33X[0;0YThis  function is meaningful only if [10XGASMAN[110X is the garbage collector used by
+  [5XGAP[105X, see Section [14X7.12-1[114X.[133X
   
   [33X[0;0Y[2XGasmanStatistics[102X  returns  a  record  containing  some  information from the
   garbage  collection mechanism. The record may contain up to four components:
@@ -1534,10 +1644,13 @@
   [33X[0;0YThe  [10Xnpartial[110X  and  [10Xnfull[110X  components  will  contain  the number of full and
   partial garbage collections performed since [5XGAP[105X started.[133X
   
-  [1X7.12-2 GasmanMessageStatus[101X
+  [1X7.12-4 GasmanMessageStatus[101X
   
   [33X[1;0Y[29X[2XGasmanMessageStatus[102X(  ) [32X function[133X
   [33X[1;0Y[29X[2XSetGasmanMessageStatus[102X( [3Xstat[103X ) [32X function[133X
+  
+  [33X[0;0YThis  function is meaningful only if [10XGASMAN[110X is the garbage collector used by
+  [5XGAP[105X, see Section [14X7.12-1[114X.[133X
   
   [33X[0;0Y[2XGasmanMessageStatus[102X  returns  one  of  the strings [10X"none"[110X, [10X"full"[110X, or [10X"all"[110X,
   depending  on  whether  the  garbage  collector  is  currently  set to print
@@ -1548,14 +1661,17 @@
   of  the  three strings mentioned above, sets the garbage collector messaging
   level.[133X
   
-  [1X7.12-3 GasmanLimits[101X
+  [1X7.12-5 GasmanLimits[101X
   
   [33X[1;0Y[29X[2XGasmanLimits[102X(  ) [32X function[133X
+  
+  [33X[0;0YThis  function is meaningful only if [10XGASMAN[110X is the garbage collector used by
+  [5XGAP[105X, see Section [14X7.12-1[114X.[133X
   
   [33X[0;0Y[2XGasmanLimits[102X  returns  a  record  with  three components: [10Xmin[110X is the minimum
   workspace  size  as  set  by  the  [10X-m[110X  command line option in kilobytes. The
   workspace  size  will  never be reduced below this by the garbage collector.
-  [10Xmax[110X  is  the maximum workspace size, as set by the '-o' command line option,
+  [10Xmax[110X  is  the  maximum  workspace size, as set by the [10X-o[110X command line option,
   also  in kilobytes. If the workspace would need to grow past this point, [5XGAP[105X
   will  enter  a break loop to warn the user. A value of 0 indicates no limit.
   [10Xkill[110X  is  the  absolute  maximum,  set  by  the  [10X-K[110X command line option. The

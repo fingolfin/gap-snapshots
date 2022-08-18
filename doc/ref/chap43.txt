@@ -103,10 +103,10 @@
   
   [33X[1;0Y[29X[2XSmallerDegreePermutationRepresentation[102X( [3XG[103X ) [32X function[133X
   
-  [33X[0;0YLet  [3XG[103X  be  a  permutation group that acts transitively on its moved points.
-  [2XSmallerDegreePermutationRepresentation[102X  tries to find a faithful permutation
-  representation  of smaller degree. The result is a group homomorphism onto a
-  permutation group, in the worst case this is the identity mapping on [3XG[103X.[133X
+  [33X[0;0YLet  [3XG[103X  be a permutation group. [2XSmallerDegreePermutationRepresentation[102X tries
+  to  find a faithful permutation representation of smaller degree. The result
+  is  a group homomorphism onto a permutation group, in the worst case this is
+  the identity mapping on [3XG[103X.[133X
   
   [33X[0;0YIf the [10Xcheap[110X option is given, the function only tries to reduce to orbits or
   actions  on blocks, otherwise also actions on cosets of random subgroups are
@@ -135,7 +135,11 @@
     [4X[28X24[128X[104X
     [4X[25Xgap>[125X [27Xsmall:= SmallerDegreePermutationRepresentation( image );;[127X[104X
     [4X[25Xgap>[125X [27XImage( small );[127X[104X
-    [4X[28XGroup([ (2,3), (2,3,4), (1,2)(3,4), (1,3)(2,4) ])[128X[104X
+    [4X[28XGroup([ (2,3), (1,2,3), (1,3)(2,4), (1,2)(3,4) ])[128X[104X
+    [4X[25Xgap>[125X [27Xg:=Image(IsomorphismPermGroup(GL(4,5)));;[127X[104X
+    [4X[25Xgap>[125X [27Xsm:=SmallerDegreePermutationRepresentation(g:cheap);;[127X[104X
+    [4X[25Xgap>[125X [27XNrMovedPoints(Range(sm));[127X[104X
+    [4X[28X624[128X[104X
   [4X[32X[104X
   
   [4X[32X  Example  [32X[104X
@@ -144,7 +148,7 @@
     [4X[28X720[128X[104X
     [4X[25Xgap>[125X [27Xq:=SmallerDegreePermutationRepresentation(p);;[127X[104X
     [4X[25Xgap>[125X [27XNrMovedPoints(Image(q));[127X[104X
-    [4X[28X6[128X[104X
+    [4X[28X12[128X[104X
   [4X[32X[104X
   
   
@@ -193,7 +197,7 @@
   
   [33X[1;0Y[29X[2XIsAlternatingGroup[102X( [3Xgroup[103X ) [32X property[133X
   
-  [33X[0;0Yis [9Xtrue[109X if the group [3Xgroup[103X is isomorphic to a alternating group.[133X
+  [33X[0;0Yis [9Xtrue[109X if the group [3Xgroup[103X is isomorphic to an alternating group.[133X
   
   [1X43.4-4 SymmetricParentGroup[101X
   
@@ -256,10 +260,10 @@
   [33X[0;0Yreturns  the socle type of the primitive permutation group [3XG[103X. The socle of a
   primitive group is the direct product of isomorphic simple groups, therefore
   the type is indicated by a record with components [10Xseries[110X, [10Xparameter[110X (both as
-  described  under [2XIsomorphismTypeInfoFiniteSimpleGroup[102X ([14X39.15-12[114X)), and [10Xwidth[110X
+  described  under [2XIsomorphismTypeInfoFiniteSimpleGroup[102X ([14X39.15-13[114X)), and [10Xwidth[110X
   for the number of direct factors.[133X
   
-  [33X[0;0YIf [3XG[103X does not have a faithful primitive action, the result is undefined.[133X
+  [33X[0;0YIf [3XG[103X does not act primitively on its moved points, an error is returned.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg:=AlternatingGroup(5);;[127X[104X
@@ -444,9 +448,10 @@
   [4X[32X[104X
   
   [33X[0;0YThe  result  is  still  correct,  and  the running time is actually somewhat
-  slower.  If  you  give  the  algorithm additional information so that it can
-  check  its  results, things become faster and the result is guaranteed to be
-  correct.[133X
+  slower.  If you give the algorithm the order of the group, then it can check
+  its  result,  and so things become faster and the result is guaranteed to be
+  correct.  This can be done with the [10Xsize[110X option (see [2XStabChain[102X ([14X43.8-1[114X)), or
+  by setting the size of the group beforehand with [10XSetSize[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xh:=Group( GeneratorsOfGroup( op ) );;[127X[104X
@@ -601,13 +606,26 @@
   
   [1X43.8-4 StabChainBaseStrongGenerators[101X
   
-  [33X[1;0Y[29X[2XStabChainBaseStrongGenerators[102X( [3Xbase[103X, [3Xsgs[103X, [3Xone[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XStabChainBaseStrongGenerators[102X( [3Xbase[103X, [3Xsgs[103X[, [3Xone[103X] ) [32X function[133X
   
   [33X[0;0YLet  [3Xbase[103X  be  a  base  for  a  permutation group [22XG[122X, and let [3Xsgs[103X be a strong
   generating  set  for  [22XG[122X  with  respect  to [3Xbase[103X; [3Xone[103X must be the appropriate
   identity  element  of  [22XG[122X (see [2XOne[102X ([14X31.10-2[114X), in most cases this will be [10X()[110X).
-  This  function  constructs  a  stabilizer  chain  without  the  need to find
-  Schreier generators; so this is much faster than the other algorithms.[133X
+  This  function constructs a stabilizer chain corresponding to the given base
+  and  strong  generating set without the need to find Schreier generators; so
+  this is much faster than the other algorithms.[133X
+  
+  [33X[0;0YIf  [3Xsgs[103X  is  nonempty, then the argument [3Xone[103X is optional; if not given, then
+  the [2XOne[102X ([14X31.10-2[114X) of [10X[3Xsgs[103X[10X[1][110X is taken as the identity element.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xsc := StabChainBaseStrongGenerators([1,2], [(1,3,4), (2,3,4)], ());[127X[104X
+    [4X[28X<stabilizer chain record, Base [ 1, 2 ], Orbit length 4, Size: 12>[128X[104X
+    [4X[25Xgap>[125X [27XGroupStabChain(sc) = AlternatingGroup(4);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XStabChainBaseStrongGenerators([1,3], [(1,2),(3,4)]);[127X[104X
+    [4X[28X<stabilizer chain record, Base [ 1, 3 ], Orbit length 2, Size: 4>[128X[104X
+  [4X[32X[104X
   
   [1X43.8-5 MinimalStabChain[101X
   

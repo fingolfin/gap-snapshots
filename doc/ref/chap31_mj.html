@@ -139,7 +139,7 @@
 
 <p><em>Domain</em> is <strong class="pkg">GAP</strong>'s name for structured sets. The ring of Gaussian integers <span class="SimpleMath">\(ℤ[\sqrt{{-1}}]\)</span> is an example of a domain, the group <span class="SimpleMath">\(D_{12}\)</span> of symmetries of a regular hexahedron is another.</p>
 
-<p>The <strong class="pkg">GAP</strong> library predefines some domains. For example the ring of Gaussian integers is predefined as <code class="func">GaussianIntegers</code> (<a href="chap60_mj.html#X80BD5EAB879F096E"><span class="RefLink">60.5-1</span></a>) (see <a href="chap60_mj.html#X85E9E90D7FE877CC"><span class="RefLink">60.5</span></a>) and the field of rationals is predefined as <code class="func">Rationals</code> (<a href="chap17_mj.html#X7B6029D18570C08A"><span class="RefLink">17.1-1</span></a>) (see <a href="chap17_mj.html#X87003045878E74DF"><span class="RefLink">17</span></a>). Most domains are constructed by functions, which are called <em>domain constructors</em> (see <a href="chap31_mj.html#X82039A218274826F"><span class="RefLink">31.3</span></a>). For example the group <span class="SimpleMath">\(D_{12}\)</span> is constructed by the construction <code class="code">Group( (1,2,3,4,5,6), (2,6)(3,5) )</code> (see <code class="func">Group</code> (<a href="chap39_mj.html#X7D8E473384DE9CD4"><span class="RefLink">39.2-1</span></a>)) and the finite field with 16 elements is constructed by <code class="code">GaloisField( 16 )</code> (see <code class="func">GaloisField</code> (<a href="chap59_mj.html#X8592DBB086A8A9BE"><span class="RefLink">59.3-2</span></a>)).</p>
+<p>The <strong class="pkg">GAP</strong> library predefines some domains. For example the ring of Gaussian integers is predefined as <code class="func">GaussianIntegers</code> (<a href="chap60_mj.html#X80BD5EAB879F096E"><span class="RefLink">60.5-1</span></a>) (see <a href="chap60_mj.html#X85E9E90D7FE877CC"><span class="RefLink">60.5</span></a>) and the field of rationals is predefined as <code class="func">Rationals</code> (<a href="chap17_mj.html#X7B6029D18570C08A"><span class="RefLink">17.1-1</span></a>) (see <a href="chap17_mj.html#X87003045878E74DF"><span class="RefLink">17</span></a>). Most domains are constructed by functions, which are called <em>domain constructors</em> (see <a href="chap31_mj.html#X82039A218274826F"><span class="RefLink">31.3</span></a>). For example the group <span class="SimpleMath">\(D_{12}\)</span> is constructed by the construction <code class="code">Group( (1,2,3,4,5,6), (2,6)(3,5) )</code> (see <code class="func">Group</code> (<a href="chap39_mj.html#X7D7B075385435151"><span class="RefLink">39.2-1</span></a>)) and the finite field with 16 elements is constructed by <code class="code">GaloisField( 16 )</code> (see <code class="func">GaloisField</code> (<a href="chap59_mj.html#X8592DBB086A8A9BE"><span class="RefLink">59.3-2</span></a>)).</p>
 
 <p>The first place where you need domains in <strong class="pkg">GAP</strong> is the obvious one. Sometimes you simply want to deal with a domain. For example if you want to compute the size of the group <span class="SimpleMath">\(D_{12}\)</span>, you had better be able to represent this group in a way that the <code class="func">Size</code> (<a href="chap30_mj.html#X858ADA3B7A684421"><span class="RefLink">30.4-6</span></a>) function can understand.</p>
 
@@ -185,7 +185,7 @@
 
 <h4>31.3 <span class="Heading">Constructing Domains</span></h4>
 
-<p>For several operational structures (see <a href="chap31_mj.html#X859C7AB97B34F55F"><span class="RefLink">31.1</span></a>), <strong class="pkg">GAP</strong> provides functions to construct domains with this structure (note that such functions do not exist for all operational structures). For example, <code class="func">Group</code> (<a href="chap39_mj.html#X7D8E473384DE9CD4"><span class="RefLink">39.2-1</span></a>) returns groups, <code class="func">VectorSpace</code> (<a href="chap61_mj.html#X805413157CE9BECF"><span class="RefLink">61.2-1</span></a>) returns vector spaces etc.:</p>
+<p>For several operational structures (see <a href="chap31_mj.html#X859C7AB97B34F55F"><span class="RefLink">31.1</span></a>), <strong class="pkg">GAP</strong> provides functions to construct domains with this structure (note that such functions do not exist for all operational structures). For example, <code class="func">Group</code> (<a href="chap39_mj.html#X7D7B075385435151"><span class="RefLink">39.2-1</span></a>) returns groups, <code class="func">VectorSpace</code> (<a href="chap61_mj.html#X805413157CE9BECF"><span class="RefLink">61.2-1</span></a>) returns vector spaces etc.:</p>
 
 <p><code class="code"><var class="Arg">Struct</var>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, ... )</code></p>
 
@@ -577,7 +577,7 @@ Error, resulting list would be too large (length infinity)
 
 <h4>31.11 <span class="Heading">Comparison Operations for Elements</span></h4>
 
-<p>Binary comparison operations have been introduced already in <a href="chap4_mj.html#X7A274A1F8553B7E6"><span class="RefLink">4.12</span></a>. The underlying operations for which methods can be installed are the following.</p>
+<p>Binary comparison operations have been introduced already in <a href="chap4_mj.html#X7A274A1F8553B7E6"><span class="RefLink">4.13</span></a>. The underlying operations for which methods can be installed are the following.</p>
 
 <p><a id="X7EF67D047F03CA6F" name="X7EF67D047F03CA6F"></a></p>
 
@@ -587,7 +587,7 @@ Error, resulting list would be too large (length infinity)
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \&lt;</code>( <var class="Arg">left-expr</var>, <var class="Arg">right-expr</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Note that the comparisons via <code class="code">&lt;&gt;</code>, <code class="code">&lt;=</code>, <code class="code">&gt;</code>, and <code class="code">&gt;=</code> are delegated to the operations <code class="func">\=</code> and <code class="func">\&lt;</code>.</p>
 
-<p>In general, objects in <em>different</em> families cannot be compared with <code class="func">\&lt;</code>. For the reason and for exceptions from this rule, see <a href="chap4_mj.html#X7A274A1F8553B7E6"><span class="RefLink">4.12</span></a>.</p>
+<p>In general, objects in <em>different</em> families cannot be compared with <code class="func">\&lt;</code>. For the reason and for exceptions from this rule, see <a href="chap4_mj.html#X7A274A1F8553B7E6"><span class="RefLink">4.13</span></a>.</p>
 
 <p><a id="X7EFE013B8634D214" name="X7EFE013B8634D214"></a></p>
 
@@ -613,7 +613,7 @@ Error, resulting list would be too large (length infinity)
 
 <h4>31.12 <span class="Heading">Arithmetic Operations for Elements</span></h4>
 
-<p><em>Binary</em> arithmetic operations have been introduced already in <a href="chap4_mj.html#X7B66C8707B5DE10A"><span class="RefLink">4.13</span></a>. The underlying operations for which methods can be installed are the following.</p>
+<p><em>Binary</em> arithmetic operations have been introduced already in <a href="chap4_mj.html#X7B66C8707B5DE10A"><span class="RefLink">4.14</span></a>. The underlying operations for which methods can be installed are the following.</p>
 
 <p><a id="X8481C9B97B214C23" name="X8481C9B97B214C23"></a></p>
 

@@ -12,6 +12,44 @@
 ##  the GASMAN garbage collector.
 ##
 
+
+#############################################################################
+##
+#F  CollectGarbage( <full> )
+##
+##  <#GAPDoc Label="CollectGarbage">
+##  <ManSection>
+##  <Func Name="CollectGarbage" Arg='full'/>
+##
+##  <Returns>
+##  nothing.
+##  </Returns>
+##  <Description>
+##  This function forces a garbage collection.
+##  If <A>full</A> is <K>true</K> then it triggers a full garbage collection,
+##  otherwise a partial one.
+##  <P/>
+##  &GAP; invokes its garbage collector automatically, thus there is normally
+##  no need to call <Ref Func="CollectGarbage"/>.
+##  <P/>
+##  The function <Ref Func="CollectGarbage"/> was introduced in
+##  &GAP;&nbsp;4.12.
+##  In older &GAP; versions,
+##  one can use <C>GASMAN( "collect" )</C> (if <A>full</A> is <K>true</K>)
+##  or <C>GASMAN( "partial" )</C> (if <A>full</A> is not <K>true</K>)
+##  instead.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> CollectGarbage( false );
+##  gap> CollectGarbage( true );
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction("CollectGarbage");
+
+
 #############################################################################
 ##
 #F  GasmanStatistics( )
@@ -21,6 +59,10 @@
 ##  <Func Name="GasmanStatistics" Arg=''/>
 ##
 ##  <Description>
+##  This function is meaningful only if <C>GASMAN</C> is
+##  the garbage collector used by &GAP;,
+##  see Section <Ref Subsect="Garbage Collection"/>.
+##  <P/>
 ##  <Ref Func="GasmanStatistics"/> returns a record containing some
 ##  information from the garbage collection mechanism.
 ##  The record may contain up to four components:
@@ -77,6 +119,10 @@ DeclareGlobalFunction("GasmanStatistics");
 ##  <Func Name="SetGasmanMessageStatus" Arg='stat'/>
 ##
 ##  <Description>
+##  This function is meaningful only if <C>GASMAN</C> is
+##  the garbage collector used by &GAP;,
+##  see Section <Ref Subsect="Garbage Collection"/>.
+##  <P/>
 ##  <Ref Func="GasmanMessageStatus"/> returns one of the strings
 ##  <C>"none"</C>, <C>"full"</C>, or <C>"all"</C>,
 ##  depending on whether the garbage collector is currently set to print
@@ -103,13 +149,17 @@ DeclareGlobalFunction("SetGasmanMessageStatus");
 ##  <Func Name="GasmanLimits" Arg=''/>
 ##
 ##  <Description>
+##  This function is meaningful only if <C>GASMAN</C> is
+##  the garbage collector used by &GAP;,
+##  see Section <Ref Subsect="Garbage Collection"/>.
+##  <P/>
 ##  <Ref Func="GasmanLimits"/> returns a record with three components:
 ##  <C>min</C> is the minimum workspace size as set by the <C>-m</C>
 ##  command line option in kilobytes.
 ##  The workspace size will never be reduced below this by the garbage
 ##  collector.
 ##  <C>max</C> is the maximum workspace size,
-##  as set by the '-o' command line option, also in kilobytes.
+##  as set by the <C>-o</C> command line option, also in kilobytes.
 ##  If the workspace would need to grow past this point,
 ##  &GAP; will enter a break loop to warn the user.
 ##  A value of 0 indicates no limit.

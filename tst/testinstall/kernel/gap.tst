@@ -1,37 +1,53 @@
 #
+# Tests for functions defined in src/gap.c
+#
+gap> START_TEST("kernel/gap.tst");
+
+# stress test the kernel helper `ViewObjHandler`: force an error
+# in ViewObj; afterwards everything should still work as before
+gap> l := [ ~ ];; r := rec(a:=~);;
+gap> cat := NewCategory("IsMockObject", IsObject);;
+gap> type := NewType(NewFamily("MockFamily"), cat);;
+gap> InstallMethod(ViewObj, [cat], function(s) Error("oops"); end);
+gap> InstallMethod(PrintObj, [cat], function(s) Error("uups"); end);
+gap> x:=Objectify(type,[]); r; Print(l, "\n");
+Error, oops
+rec( a := ~ )
+[ ~ ]
+gap> ViewObj(x); r; Print(l, "\n");
+Error, oops
+rec( a := ~ )
+[ ~ ]
+gap> PrintObj(x); r; Print(l, "\n");
+Error, uups
+rec( a := ~ )
+[ ~ ]
+
+#
 gap> SHELL();
-Error, SHELL takes 10 arguments
-gap> SHELL(1,2,3,4,5,6,7,8,9,10);
-Error, SHELL: 1st argument should be a local variables bag
+Error, Function: number of arguments must be 6 (not 0)
+gap> SHELL(1,2,3,4,5,6);
+Error, SHELL: <context> must be a local variables bag (not the integer 1)
 gap> lvars:=GetCurrentLVars();
 <lvars bag>
-gap> SHELL(lvars,2,3,4,5,6,7,8,9,10);
-Error, SHELL: 2nd argument (can return void) should be true or false
-gap> SHELL(lvars,true,3,4,5,6,7,8,9,10);
-Error, SHELL: 3rd argument (can return object) should be true or false
-gap> SHELL(lvars,true,true,fail,5,6,7,8,9,10);
-Error, SHELL: 4th argument (last depth) should be a small integer
-gap> SHELL(lvars,true,true,-1,5,6,7,8,9,10);
-#W SHELL: negative last depth treated as zero
-Error, SHELL: 5th argument (set time) should be true or false
-gap> SHELL(lvars,true,true,4,5,6,7,8,9,10);
-#W SHELL: last depth greater than 3 treated as 3
-Error, SHELL: 5th argument (set time) should be true or false
-gap> SHELL(lvars,true,true,0,5,6,7,8,9,10);
-Error, SHELL: 5th argument (set time) should be true or false
-gap> SHELL(lvars,true,true,0,false,6,7,8,9,10);
-Error, SHELL: 6th argument (prompt) must be a string of length at most 80 char\
-acters
-gap> SHELL(lvars,true,true,0,false,"abc",7,8,9,10);
-Error, SHELL: 7th argument (preCommandHook) must be function or false
-gap> SHELL(lvars,true,true,0,false,"abc",false,8,9,10);
-Error, SHELL: 8th argument (infile) must be a string
-gap> SHELL(lvars,true,true,0,false,"abc",false,"",9,10);
-Error, SHELL: 9th argument (outfile) must be a string
-gap> SHELL(lvars,true,true,0,false,"abc",false,"","",10);
-Error, SHELL: 10th argument (catch QUIT) should be true or false
-gap> SHELL(lvars,true,true,0,false,"abc",false,"","",false);
-Error, SHELL: can't open outfile 
+gap> SHELL(lvars,2,3,4,5,6);
+Error, SHELL: <canReturnVoid> must be 'true' or 'false' (not the integer 2)
+gap> SHELL(lvars,true,3,4,5,6);
+Error, SHELL: <canReturnObj> must be 'true' or 'false' (not the integer 3)
+gap> SHELL(lvars,true,true,4,5,6);
+Error, SHELL: <breakLoop> must be 'true' or 'false' (not the integer 4)
+gap> SHELL(lvars,true,true,true,5,6);
+Error, SHELL: <prompt> must be a string (not the integer 5)
+gap> SHELL(lvars,true,true,true,ListWithIdenticalEntries(81,'x'),6);
+Error, SHELL: <prompt> must be a string of length at most 80
+gap> SHELL(lvars,true,true,true,"abc",6);
+Error, SHELL: <preCommandHook> must be function or false (not the integer 6)
+
+#
+gap> RETURN_FIRST();
+Error, Function: number of arguments must be at least 1 (not 0)
+gap> RETURN_FIRST(1);
+1
 
 #
 gap> l:=RUNTIMES();; List(l,IsInt);
@@ -49,9 +65,9 @@ Error, SizeScreen: number of arguments must be 0 or 1 (not 2)
 gap> SizeScreen(100);
 Error, SizeScreen: <size> must be a list of length at most 2
 gap> SizeScreen([fail,fail]);
-Error, SizeScreen: <x> must be an integer
+Error, SizeScreen: <x> must be a small integer (not the value 'fail')
 gap> SizeScreen([100,fail]);
-Error, SizeScreen: <y> must be an integer
+Error, SizeScreen: <y> must be a small integer (not the value 'fail')
 
 #
 gap> WindowCmd(fail);
@@ -59,12 +75,12 @@ Error, WindowCmd: <args> must be a small list (not the value 'fail')
 gap> WindowCmd([]);
 Error, List Element: <list>[1] must have an assigned value
 gap> WindowCmd([fail]);
-Error, WindowCmd: <cmd> must be a string (not a boolean or fail)
+Error, WindowCmd: <cmd> must be a string (not the value 'fail')
 gap> WindowCmd([""]);
 Error, WindowCmd: <cmd> must be a string of length 3
 gap> WindowCmd(["abc",fail]);
-Error, WindowCmd: 2. argument must be a string or integer (not a boolean or fa\
-il)
+Error, WindowCmd: the argument in position 2 must be a string or integer (not \
+a boolean or fail)
 gap> WindowCmd(["abc"]);
 Error, window system: No Window Handler Present
 gap> WindowCmd(["abc",1,"foo"]);
@@ -115,25 +131,6 @@ gap> GAP_CRC("foobar");
 0
 
 #
-gap> LOAD_DYN(fail, fail);
-Error, LOAD_DYN: <filename> must be a string (not the value 'fail')
-gap> LOAD_DYN("foobar", fail);
-Error, LOAD_DYN: <crc> must be a small integer or 'false' (not a boolean or fa\
-il)
-
-#
-gap> LOAD_STAT(fail, fail);
-Error, LOAD_STAT: <filename> must be a string (not the value 'fail')
-gap> LOAD_STAT("foobar", fail);
-Error, LOAD_STAT: <crc> must be a small integer or 'false' (not a boolean or f\
-ail)
-gap> LOAD_STAT("foobar", false);
-false
-
-#
-gap> LoadedModules();;
-
-#
 gap> GASMAN();
 Error, usage: GASMAN( "display"|"displayshort"|"clear"|"collect"|"message"|"pa\
 rtial" )
@@ -141,10 +138,54 @@ gap> GASMAN(fail);
 Error, GASMAN: <cmd> must be a string (not the value 'fail')
 
 #
+gap> IsList(GASMAN_LIMITS());
+true
+
+#
+gap> IsInt(TOTAL_GC_TIME());
+true
+
+#
+gap> IsInt(TotalMemoryAllocated());
+true
+
+#
 gap> SIZE_OBJ(0);
 0
 gap> SIZE_OBJ(Z(2));
 0
+
+#
+gap> TNUM_OBJ(0);
+0
+gap> TNUM_OBJ(2^100);
+1
+gap> TNUM_OBJ(-2^100);
+2
+gap> TNUM_OBJ(1/2);
+3
+gap> TNUM_OBJ(Z(2));
+5
+gap> TNUM_OBJ(rec());
+20
+gap> TNUM_OBJ([]);
+34
+
+#
+gap> TNAM_OBJ(0);
+"integer"
+gap> TNAM_OBJ(2^100);
+"large positive integer"
+gap> TNAM_OBJ(-2^100);
+"large negative integer"
+gap> TNAM_OBJ(1/2);
+"rational"
+gap> TNAM_OBJ(Z(2));
+"ffe"
+gap> TNAM_OBJ(rec());
+"record (plain)"
+gap> TNAM_OBJ([]);
+"empty plain list"
 
 #
 gap> OBJ_HANDLE(-1);
@@ -176,29 +217,54 @@ gap> Sleep(0);
 gap> Sleep(1);
 
 #
-gap>    MicroSleep(fail);
+gap> MicroSleep(fail);
 Error, MicroSleep: <msecs> must be a small integer (not the value 'fail')
 gap> MicroSleep(0);
 gap> MicroSleep(1);
 
 #
-gap> GAP_EXIT_CODE("invalid");
-Error, GAP_EXIT_CODE: Argument must be boolean or integer
-gap> GAP_EXIT_CODE(fail);
-gap> GAP_EXIT_CODE(false);
-gap> GAP_EXIT_CODE(true);
+gap> exitCode := GapExitCode();;
+gap> GapExitCode(0);;
+gap> GapExitCode();
+0
+gap> GapExitCode("invalid");
+Error, GapExitCode: <code> Argument must be boolean or integer (not a list (st\
+ring))
+gap> GapExitCode(fail);
+0
+gap> GapExitCode(false);
+1
+gap> GapExitCode(true);
+1
+gap> GapExitCode(6);
+0
+gap> GapExitCode();
+6
+gap> GapExitCode(exitCode);
+6
+gap> GapExitCode(fail, fail);
+Error, usage: GapExitCode( [ <return value> ] )
 
 #
-gap> QUIT_GAP("invald");
-Error, usage: QUIT_GAP( [ <return value> ] )
-gap> QUIT_GAP(1, 2);
-Error, usage: QUIT_GAP( [ <return value> ] )
+gap> QuitGap("invalid");
+Error, usage: QuitGap( [ <return value> ] )
+gap> QuitGap(1, 2);
+Error, usage: QuitGap( [ <return value> ] )
 
 #
-gap> FORCE_QUIT_GAP("invald");
-Error, usage: FORCE_QUIT_GAP( [ <return value> ] )
-gap> FORCE_QUIT_GAP(1, 2);
-Error, usage: FORCE_QUIT_GAP( [ <return value> ] )
+gap> ForceQuitGap("invalid");
+Error, usage: ForceQuitGap( [ <return value> ] )
+gap> ForceQuitGap(1, 2);
+Error, usage: ForceQuitGap( [ <return value> ] )
 
 #
 gap> BREAKPOINT(0);
+
+#
+gap> UPDATE_STAT(fail, fail);
+Error, UPDATE_STAT: <name> must be a string (not the value 'fail')
+gap> UPDATE_STAT("foobar", fail);
+Error, UPDATE_STAT: unsupported <name> value 'foobar'
+
+#
+gap> STOP_TEST("kernel/gap.tst", 1);

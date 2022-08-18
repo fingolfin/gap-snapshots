@@ -191,7 +191,7 @@ DeclareAttributeSuppCT( "ComputedPowerMaps",
 ##  <Oper Name="PossiblePowerMaps" Arg='tbl, p[, options]'/>
 ##
 ##  <Description>
-##  For the ordinary character table <A>tbl</A> of the group <M>G</M>, say,
+##  For the ordinary character table <A>tbl</A> of a group <M>G</M>
 ##  and a prime integer <A>p</A>,
 ##  <Ref Oper="PossiblePowerMaps"/> returns the list of all maps that have
 ##  the following properties of the <M>p</M>-th power map of <A>tbl</A>.
@@ -751,7 +751,7 @@ DeclareAttributeSuppCT( "ComputedClassFusions",
 ##  <Ref Attr="ComputedClassFusions"/> list of <A>source</A>
 ##  contains a record with <C>name</C> component
 ##  <C>Identifier( <A>destination</A> )</C>,
-##  and returns returns the <C>map</C> component of the first such record.
+##  and returns the <C>map</C> component of the first such record.
 ##  <C>GetFusionMap( <A>source</A>, <A>destination</A>,
 ##  <A>specification</A> )</C> fetches
 ##  that fusion map for which the record additionally has the
@@ -865,7 +865,7 @@ DeclareAttributeSuppCT( "NamesOfFusionSources",
 ##
 ##  <Description>
 ##  For two ordinary character tables <A>subtbl</A> and <A>tbl</A> of the
-##  groups <M>H</M> and <M>G</M>, say,
+##  groups <M>H</M> and <M>G</M>,
 ##  <Ref Oper="PossibleClassFusions"/> returns the list of all maps that have
 ##  the following properties of class fusions from <A>subtbl</A> to
 ##  <A>tbl</A>.
@@ -1148,7 +1148,7 @@ DeclareGlobalFunction( "RepresentativesFusions" );
 ##  gap> CompositionMaps( map2, map1 );
 ##  [ [ 1, 2 ], [ 2, 3 ], 3, [ 1, 2 ] ]
 ##  gap> CompositionMaps( map1, map2 );
-##  [ [ 1, 2, 3, 4 ], [ 2, 3, 4 ], [ 2, 3, 4 ], [ 4, 5 ], [ 4, 5 ] ]
+##  [ [ 1, 2, 3, 4 ], [ 2 .. 4 ], [ 2 .. 4 ], [ 4, 5 ], [ 4, 5 ] ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>

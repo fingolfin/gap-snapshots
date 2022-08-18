@@ -113,11 +113,11 @@ InstallMethod( Lambda,
 
 #############################################################################
 ##
-#F  OrderMod( <n>, <m> )  . . . . . . . .  multiplicative order of an integer
+#F  OrderMod( <n>, <m>[, <bound>] ) . . .  multiplicative order of an integer
 ##
 #N  23-Apr-91 martin improve 'OrderMod' similar to 'IsPrimitiveRootMod'
 ##
-InstallGlobalFunction( OrderMod, function ( n, m )
+InstallGlobalFunction( OrderMod, function ( n, m, bound... )
     local  x, o, d;
 
     # check the arguments and reduce $n$ into the range $0..m-1$
@@ -125,7 +125,7 @@ InstallGlobalFunction( OrderMod, function ( n, m )
     if n < 0   then n := n mod m + m;  fi;
     if m <= n  then n := n mod m;      fi;
 
-    # return 0 if the $n$ is not relativ prime to $n$
+    # return 0 if $m$ is not coprime to $n$
     if GcdInt(m,n) <> 1  then
         o := 0;
 
@@ -138,7 +138,13 @@ InstallGlobalFunction( OrderMod, function ( n, m )
 
     # otherwise try the divisors of $\lambda(m)$ and their divisors, etc.
     else
-        o := Lambda( m );
+        if Length( bound ) = 1 then
+            # We know a multiple of the desired order.
+            o := bound[1];
+        else
+            # The default a priori known multiple is 'Lambda( m )'.
+            o := Lambda( m );
+        fi;
         for d in PrimeDivisors( o ) do
             while o mod d = 0  and PowerModInt(n,o/d,m) = 1  do
                 o := o / d;

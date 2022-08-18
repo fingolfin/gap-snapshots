@@ -1,4 +1,4 @@
-#@local neginf,posinf,r,nan,l,f,g
+#@local neginf,posinf,r,nan,l,f,g,a,b,e1,e2
 gap> START_TEST("float.tst");
 
 # make sure we are testing the built-in machine floats
@@ -31,6 +31,44 @@ gap> Float(infinity);
 inf
 gap> Float(-infinity);
 -inf
+
+#
+# Test converting rationals to machine floats
+#
+gap> f:=function(r, expected)
+>   local testExp;
+>   testExp:=function(actual, expected)
+>     if (actual - expected) > FLOAT.EPSILON then
+>       Error("expected ", expected, " but got ", actual);
+>     fi;
+>   end;
+>   testExp(Float(r), expected);
+>   testExp(Float(-r), -expected);
+>   testExp(NewFloat(IsIEEE754FloatRep, r), expected);
+>   testExp(NewFloat(IsIEEE754FloatRep, -r), -expected);
+>   testExp(MakeFloat(0.0, r), expected);
+>   testExp(MakeFloat(0.0, -r), -expected);
+> end;;
+gap> for a in [-1..1] do
+>      for b in [-1..1] do
+>        f( (10^309 + a) / (10^308 + b), 10.);
+>      od;
+>    od;
+gap> for a in [-1..1] do
+>      for b in [-1..1] do
+>        f( (10^309 + a) / (10^309 + b), 1.);
+>      od;
+>    od;
+gap> for e1 in [306..309] do for e2 in [306..309] do
+>      for a in [-1..1] do for b in [-1..1] do
+>        f( (10^e1 + a) / (10^e2 + b), 10.^(e1-e2));
+>      od; od;
+>    od; od;
+gap> for e1 in [1020..1025] do for e2 in [1020..1025] do
+>      for a in [-1..1] do for b in [-1..1] do
+>        f( (2^e1 + a) / (2^e2 + b), 2.^(e1-e2));
+>      od; od;
+>    od; od;
 
 #
 # input floats directly
@@ -628,20 +666,79 @@ gap> Sin(0.);
 0.
 gap> Tan(0.);
 0.
+gap> Sec(0.);
+1.
+gap> Csc(0.);
+inf
+gap> Cot(0.);
+inf
 gap> Acos(1.);
 0.
 gap> Asin(0.);
 0.
+gap> Atan(0.);
+0.
+
+#
+gap> Cosh(0.);
+1.
+gap> Sinh(0.);
+0.
+gap> Tanh(0.);
+0.
+gap> Sech(0.);
+1.
+gap> Csch(0.);
+inf
+gap> Coth(0.);
+inf
+gap> Asinh(0.);
+0.
+gap> Acosh(0.);
+nan
+gap> Atanh(0.);
+0.
+
+#
 gap> Log(1.);
 0.
+gap> Log2(1.);
+0.
+gap> Log10(1.);
+0.
+gap> Log1p(0.);
+0.
+
+#
 gap> Exp(0.);
 1.
-gap> if IsBound(Log2) then Assert(0, Log2(1.) = 0.); fi;
-gap> if IsBound(Log10) then Assert(0, Log10(1.) = 0.); fi;
-gap> if IsBound(Log1p) then Assert(0, Log1p(0.) = 0.); fi;
-gap> if IsBound(Exp2) then Assert(0, Exp2(0.) = 1.); fi;
-gap> if IsBound(Exp10) then Assert(0, Exp10(0.) = 1.); fi;
-gap> if IsBound(Expm1) then Assert(0, Expm1(0.) = 0.); fi;
+gap> Exp2(0.);
+1.
+gap> Exp10(0.);
+1.
+gap> Expm1(0.);
+0.
+
+#
+gap> CubeRoot(0.);
+0.
+gap> Square(0.);
+0.
+
+#
+gap> FrExp(0.);
+[ 0., 0 ]
+gap> LdExp(0.,0);
+0.
+gap> Norm(0.);
+0.
+gap> SinCos(0.);
+[ 0., 1. ]
+gap> Erf(0.);
+0.
+gap> #Zeta(0.);     # TODO: not implemented for machine floats
+gap> Gamma(1.);
+1.
 
 #
 gap> Round(1.3);
@@ -672,6 +769,26 @@ gap> Ceil(-1.9);
 -1.
 gap> Ceil(-1.3);
 -1.
+
+#
+gap> Trunc(1.3);
+1.
+gap> Trunc(1.9);
+1.
+gap> Trunc(-1.9);
+-1.
+gap> Trunc(-1.3);
+-1.
+
+#
+gap> Frac(1.3);
+0.3
+gap> Frac(1.9);
+0.9
+gap> Frac(-1.9);
+0.1
+gap> Frac(-1.3);
+0.7
 
 #
 gap> AbsoluteValue(1.3);

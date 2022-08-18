@@ -37,14 +37,7 @@
     [4X[28X#I  round 2[128X[104X
     [4X[28XReduced complex, F: [ 4, 6, 4 ][128X[104X
     [4X[28X#I  SCReduceComplexEx: computed locally minimal complex after 3 rounds.[128X[104X
-    [4X[28X[ true, [SimplicialComplex[128X[104X
-    [4X[28X    [128X[104X
-    [4X[28X     Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X    [128X[104X
-    [4X[28X     Name="unnamed complex 3"[128X[104X
-    [4X[28X     Dim=2[128X[104X
-    [4X[28X    [128X[104X
-    [4X[28X    /SimplicialComplex], 3 ][128X[104X
+    [4X[28X[ true, <SimplicialComplex: unnamed complex 3 | dim = 2 | n = 4>, 3 ][128X[104X
   [4X[32X[104X
   
   
@@ -205,7 +198,7 @@
   [4X[32X  Example  [32X[104X
     [4X[28X gap> SCRunTest();[128X[104X
     [4X[28X simpcomp package test[128X[104X
-    [4X[28X msecs: 6519[128X[104X
+    [4X[28X msecs: 8850[128X[104X
     [4X[28X true[128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X

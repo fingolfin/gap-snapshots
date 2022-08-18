@@ -116,13 +116,24 @@ EXPORT_INLINE void CLEAR_STOREDINV_PERM(Obj perm)
 }
 
 
+/****************************************************************************
+**
+*F  IMAGE(<i>,<pt>,<dg>)  . . . . . .  image of <i> under <pt> of degree <dg>
+**
+**  'IMAGE'  returns the  image of the   point <i> under  the permutation  of
+**  degree <dg> pointed to  by <pt>.   If the  point  <i> is greater  than or
+**  equal to <dg> the image is <i> itself.
+**
+**  'IMAGE' is  implemented as a macro so  do not use  it with arguments that
+**  have side effects.
+*/
 #define IMAGE(i,pt,dg)  (((i) < (dg)) ? (pt)[(i)] : (i))
 
 #define IS_PERM2(perm)  (TNUM_OBJ(perm) == T_PERM2)
 #define IS_PERM4(perm)  (TNUM_OBJ(perm) == T_PERM4)
 
 
-EXPORT_INLINE int IS_PERM(Obj f)
+EXPORT_INLINE BOOL IS_PERM(Obj f)
 {
     return (TNUM_OBJ(f) == T_PERM2 || TNUM_OBJ(f) == T_PERM4);
 }

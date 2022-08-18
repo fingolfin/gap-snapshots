@@ -600,9 +600,9 @@
   ([14XReference: Product[114X) executes a loop over all elements of the list.[133X
   
   [33X[0;0YThere  are  other  often  used  loops available as functions. Guess what the
-  function  [2XSum[102X  ([14XReference:  Sum[114X)  does.  The  function [2XList[102X ([14XReference: list
-  element  operation[114X) may take a list and a function as its arguments. It will
-  then  apply  the  function  to  each  element  of  the  list  and return the
+  function  [2XSum[102X  ([14XReference: Sum[114X) does. The function [2XList[102X ([14XReference: list and
+  non-list  difference[114X)  may  take  a list and a function as its arguments. It
+  will  then  apply  the  function  to each element of the list and return the
   corresponding  list  of results. A list of cubes is produced as follows with
   the function [10Xcubed[110X from Section [14X4[114X.[133X
   

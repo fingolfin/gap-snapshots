@@ -286,37 +286,37 @@ gap> for m in binary do InstallMethod(m, [cat, cat], 2, ReturnNothing); od;
 
 #
 gap> 0*a;
-Error, ZEROOp: method should have returned a value
+Error, ZeroSameMutability: method should have returned a value
 gap> Zero(a);
 Error, Method for an attribute must return a value
 gap> ZeroMutable(a);
 Error, ZeroOp: method should have returned a value
 gap> ZeroSameMutability(a);
-Error, ZEROOp: method should have returned a value
+Error, ZeroSameMutability: method should have returned a value
 gap> -a;
-Error, AInvOp: method should have returned a value
+Error, AdditiveInverseSameMutability: method should have returned a value
 gap> AdditiveInverse(a);
 Error, Method for an attribute must return a value
 gap> AdditiveInverseMutable(a);
 Error, AdditiveInverseOp: method should have returned a value
 gap> AdditiveInverseSameMutability(a);
-Error, AInvOp: method should have returned a value
+Error, AdditiveInverseSameMutability: method should have returned a value
 gap> a^0;
-Error, ONEOp: method should have returned a value
+Error, OneSameMutability: method should have returned a value
 gap> One(a);
 Error, Method for an attribute must return a value
 gap> OneMutable(a);
 Error, OneOp: method should have returned a value
 gap> OneSameMutability(a);
-Error, ONEOp: method should have returned a value
+Error, OneSameMutability: method should have returned a value
 gap> a^-1;
-Error, INVOp: method should have returned a value
+Error, InverseSameMutability: method should have returned a value
 gap> Inverse(a);
 Error, Method for an attribute must return a value
 gap> InverseMutable(a);
 Error, InvOp: method should have returned a value
 gap> InverseSameMutability(a);
-Error, INVOp: method should have returned a value
+Error, InverseSameMutability: method should have returned a value
 gap> a = b;
 false
 gap> a < b;
@@ -348,7 +348,7 @@ gap> TraceMethods(meths);
 gap> 0*a;
 #I  *: zero integer * additive element with zero
 #I  ZeroSameMutability
-Error, ZEROOp: method should have returned a value
+Error, ZeroSameMutability: method should have returned a value
 gap> Zero(a);
 #I  ZeroImmutable
 Error, Method for an attribute must return a value
@@ -357,10 +357,10 @@ gap> ZeroMutable(a);
 Error, ZeroOp: method should have returned a value
 gap> ZeroSameMutability(a);
 #I  ZeroSameMutability
-Error, ZEROOp: method should have returned a value
+Error, ZeroSameMutability: method should have returned a value
 gap> -a;
 #I  AdditiveInverseSameMutability
-Error, AInvOp: method should have returned a value
+Error, AdditiveInverseSameMutability: method should have returned a value
 gap> AdditiveInverse(a);
 #I  AdditiveInverseImmutable
 Error, Method for an attribute must return a value
@@ -369,11 +369,11 @@ gap> AdditiveInverseMutable(a);
 Error, AdditiveInverseOp: method should have returned a value
 gap> AdditiveInverseSameMutability(a);
 #I  AdditiveInverseSameMutability
-Error, AInvOp: method should have returned a value
+Error, AdditiveInverseSameMutability: method should have returned a value
 gap> a^0;
 #I  ^: for mult. element-with-one, and zero
 #I  OneSameMutability
-Error, ONEOp: method should have returned a value
+Error, OneSameMutability: method should have returned a value
 gap> One(a);
 #I  OneImmutable
 Error, Method for an attribute must return a value
@@ -382,11 +382,11 @@ gap> OneMutable(a);
 Error, OneOp: method should have returned a value
 gap> OneSameMutability(a);
 #I  OneSameMutability
-Error, ONEOp: method should have returned a value
+Error, OneSameMutability: method should have returned a value
 gap> a^-1;
 #I  ^: for mult. element-with-inverse, and negative integer
 #I  InverseSameMutability
-Error, INVOp: method should have returned a value
+Error, InverseSameMutability: method should have returned a value
 gap> Inverse(a);
 #I  InverseImmutable
 Error, Method for an attribute must return a value
@@ -395,7 +395,7 @@ gap> InverseMutable(a);
 Error, InvOp: method should have returned a value
 gap> InverseSameMutability(a);
 #I  InverseSameMutability
-Error, INVOp: method should have returned a value
+Error, InverseSameMutability: method should have returned a value
 gap> a = b;
 #I  =
 false

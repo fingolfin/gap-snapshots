@@ -243,7 +243,8 @@
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">       "[\"MXN\",[\"C4\",1]],\n",</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">       "[\"MXO\",[\"C4\",[2]]],\n",</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">       "[\"MXS\",[\"C4\",[\"C2\"]]],\n",</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "[\"RNG\",[\"C4G1-Ar1aB0\",\"CF(4)\"]],\n",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "[\"RNG\",[\"C4G1-Ar1aB0\",\"CF(4)\",",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                 "[\"QuadraticField\",-1],[1,0,1]]],\n",</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">       "[\"API\",[\"C4G1-p4B0\",[1,4,\"imprim\",\"1 &lt; C2\"]]],\n",</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">       "[\"API\",[\"A5G1-p60B0\",[1,60,\"imprim\",\"1 &lt; S3\"]]]\n",</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">       "]\n",</span>
@@ -332,8 +333,9 @@ rec( contents := "priv", generators := [ (1,2,3,4) ],
 rec( contents := "priv", dim := 1, generators := [ [ [ E(4) ] ] ], 
   groupname := "C4", id := "a", 
   identifier := [ "C4", [ [ "priv", "C4G1-Ar1aB0.g" ] ], 1, 1 ], 
-  repname := "C4G1-Ar1aB0", repnr := 2, ring := GaussianRationals, 
-  size := 4, standardization := 1, type := "matalg" )
+  polynomial := [ 1, 0, 1 ], repname := "C4G1-Ar1aB0", repnr := 2, 
+  ring := GaussianRationals, size := 4, standardization := 1, 
+  type := "matalg" )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AtlasGenerators( "C4", 3 );</span>
 fail
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AtlasProgram( "C4", "other", "test" );</span>
@@ -418,7 +420,7 @@ rec( charactername := "1abcd", constituents := [ 1, 2, 3, 4 ],
 
 ["MXS",["C4",["C2"]]],
 
-["RNG",["C4G1-Ar1aB0","CF(4)"]],
+["RNG",["C4G1-Ar1aB0","CF(4)",["QuadraticField",-1],[1,0,1]]],
 
 ["API",["A5G1-p60B0",[1,60,"imprim","1 &lt; S3"]]],
 ["API",["C4G1-p4B0",[1,4,"imprim","1 &lt; C2"]]],
@@ -457,7 +459,7 @@ a^4+5a^5"]],
 ["TOC",["maxes","C4G1-max1W1",[-27672877]]],
 ["TOC",["perm","C4G1-p4B0.m",[102601978]]],
 
-["RNG",["C4G1-Ar1aB0","CF(4)"]],
+["RNG",["C4G1-Ar1aB0","CF(4)",["QuadraticField",-1],[1,0,1]]],
 
 ["API",["A5G1-p60B0",[1,60,"imprim","1 &lt; S3"]]],
 ["API",["C4G1-p4B0",[1,4,"imprim","1 &lt; C2"]]],

@@ -521,14 +521,31 @@ InstallMethod( \^,
     "for class function and group element",
     [ IsClassFunction, IsMultiplicativeElementWithInverse ],
     function( chi, g )
-    local tbl, G;
+    local tbl, G, mtbl, pi, fus, inv, imgs;
+
     tbl:= UnderlyingCharacterTable( chi );
     if HasUnderlyingGroup( tbl ) then
+      # 'chi' is an ordinary character.
       G:= UnderlyingGroup( tbl );
       if IsElmsColls( FamilyObj( g ), FamilyObj( G ) ) then
         return ClassFunctionSameType( tbl, chi,
                Permuted( ValuesOfClassFunction( chi ),
                          CorrespondingPermutations( tbl, chi, [ g ] )[1] ) );
+      fi;
+    elif HasOrdinaryCharacterTable( tbl ) then
+      # 'chi' is a Brauer character.
+      mtbl:= tbl;
+      tbl:= OrdinaryCharacterTable( mtbl );
+      if HasUnderlyingGroup( tbl ) then
+        G:= UnderlyingGroup( tbl );
+        if IsElmsColls( FamilyObj( g ), FamilyObj( G ) ) then
+          pi:= CorrespondingPermutations( tbl, [ g ] )[1]^-1;
+          fus:= GetFusionMap( mtbl, tbl );
+          inv:= InverseMap( fus );
+          imgs:= List( [ 1 .. Length( fus ) ], i -> inv[ fus[i]^pi ] );
+          return ClassFunctionSameType( mtbl, chi,
+                 ValuesOfClassFunction( chi ){ imgs } );
+        fi;
       fi;
     fi;
     TryNextMethod();
@@ -579,20 +596,34 @@ InstallOtherMethod( \^,
 InstallOtherMethod( \^,
     [ IsMultiplicativeElementWithInverse, IsClassFunction ],
     function( g, chi )
-    local tbl, ccl, i;
+    local tbl, mtbl, ccl, i;
+
     tbl:= UnderlyingCharacterTable( chi );
-    if not HasUnderlyingGroup( tbl ) then
+    if HasOrdinaryCharacterTable( tbl ) then
+      # 'chi' is a Brauer character.
+      mtbl:= tbl;
+      tbl:= OrdinaryCharacterTable( mtbl );
+      if not HasUnderlyingGroup( tbl ) then
+        Error( "table <tbl> of <chi> does not store its group" );
+      elif not g in UnderlyingGroup( tbl )
+           or Order( g ) mod UnderlyingCharacteristic( mtbl ) = 0 then
+        Error( "<g> must be p-regular and lie in the underlying group of <chi>" );
+      else
+        ccl:= ConjugacyClasses( tbl ){ GetFusionMap( mtbl, tbl ) };
+      fi;
+    elif not HasUnderlyingGroup( tbl ) then
       Error( "table <tbl> of <chi> does not store its group" );
-    elif g in UnderlyingGroup( tbl ) then
-      ccl:= ConjugacyClasses( tbl );
-      for i in [ 1 .. Length( ccl ) ] do
-        if g in ccl[i] then
-          return ValuesOfClassFunction( chi )[i];
-        fi;
-      od;
-    else
+    elif not g in UnderlyingGroup( tbl ) then
       Error( "<g> must lie in the underlying group of <chi>" );
+    else
+      ccl:= ConjugacyClasses( tbl );
     fi;
+
+    for i in [ 1 .. Length( ccl ) ] do
+      if g in ccl[i] then
+        return ValuesOfClassFunction( chi )[i];
+      fi;
+    od;
     end );
 
 
@@ -1635,7 +1666,9 @@ InstallMethod( ScalarProduct,
     x2:= ValuesOfClassFunction( x2 );
     scpr:= 0;
     for i in [ 1 .. Length( x1 ) ] do
-      scpr:= scpr + x1[i] * GaloisCyc( x2[i], -1 ) * weight[i];
+      if x1[i]<>0 and x2[i]<>0 then
+        scpr:= scpr + x1[i] * GaloisCyc( x2[i], -1 ) * weight[i];
+      fi;
     od;
     return scpr / Size( tbl );
     end );
@@ -3238,18 +3271,24 @@ InstallMethod( ReducedClassFunctions,
 
     for i in [ 1 .. Length( reducibles ) ] do
       single:= reducibles[i];
-      for j in [ 1 .. upper[i] ] do
+
+      j:=1;
+      while j<=upper[i] do
         scpr:= ScalarProduct( ordtbl, single, constituents[j] );
         if IsInt( scpr ) then
           scpr:= Int( scpr / normsquare[j] );
           if scpr <> 0 then
             single:= single - scpr * constituents[j];
+            if ForAll(single,x->x=0) then
+              j:=upper[i];
+            fi;
           fi;
         else
           Info( InfoCharacterTable, 1,
                 "ReducedClassFunctions: scalar product of X[", j,
                 "] with Y[", i, "] not integral (ignore)" );
         fi;
+        j:=j+1;
       od;
       if ForAny( single, x -> x <> 0 ) then
         if single[1] < 0 then
@@ -4209,7 +4248,7 @@ InstallGlobalFunction( FrobeniusCharacterValue, function( value, p )
       for i in [ 2 .. m ] do
         lastvalue:= ProductCoeffs( y, lastvalue );
         ReduceCoeffs( lastvalue, conwaypol );
-#T bad that ReduceCoeffs does not predict how it deals with trailing zeros
+        ShrinkRowVector( lastvalue );
         PadCoeffs( lastvalue, k, zero );
         fieldbase[i]:= lastvalue;
         ConvertToVectorRepNC( fieldbase[i], p );
@@ -4217,7 +4256,6 @@ InstallGlobalFunction( FrobeniusCharacterValue, function( value, p )
 
       value:= ValuePol( SolutionMatDestructive( fieldbase, value ),
                         Z( p, m ) );
-
     fi;
 
     # Return the Frobenius character value.
@@ -4425,6 +4463,27 @@ end );
 ##
 #F  SizeOfFieldOfDefinition( <val>, <p> )
 ##
+##  Typically, <val> is a (Brauer) character, that is, a list of cyclotomic
+##  integers with conductor coprime to <p>, which is closed under Galois
+##  conjugacy.
+##  In this situation, the size of the field of definition is the smallest
+##  power <q> of <p> such that the difference of <val> and its image under
+##  the Galois automorphism 'GaloisCyc( ., <q> )' is divisible by <p> in the
+##  ring of cyclotomic integers.
+##  (This follows with the same number theoretic argument that is used in the
+##  proof of <Cite Key="Isa76" Where="Theorem 15.18."/>.)
+##
+##  If <val> is not closed under Galois automorphisms then the result depends
+##  on the definition of the reduction from cyclotomics to finite fields,
+##  and in general there is no way to avoid computing the reduction of <val>.
+##  For example, if we assume the reduction w.r.t. Conway polynomials then
+##  the reduction of the value 'EX(63)' in characteristic 2 lies in the prime
+##  field, whereas the reduction of its complex conjugate does not lie in the
+##  prime field.
+##  If we choose a different reduction homomorphism
+##  (for example, if we choose other polynomials to define the fields)
+##  then the situation may be the other way round.
+##
 ##  If the coefficients of the Zumbroich basis representation of the
 ##  difference $\alpha^{\ast p} - \alpha$ are divisible by $p$
 ##  then $\alpha$ is mapped to an element of the prime field under
@@ -4433,37 +4492,54 @@ end );
 ##  automorphism $\ast p$ or that all coefficients of $\alpha$
 ##  are divisible by $p$.)
 ##
-##  Otherwise, I do not know a better way to compute the size than explicitly
-##  computing the reductions.
-##
 InstallGlobalFunction( SizeOfFieldOfDefinition, function( val, p )
-    local values, entry;
+    local closed, values, entry, q;
+
+    closed:= false;
 
     # The first argument may be a cyclotomic or a list of cyclotomics.
     if   IsInt( val ) then
       return p;
     elif IsCyc( val ) then
-      if DenominatorCyc( val ) mod p = 0 then
-        return fail;
-      fi;
-      values:= [ val ];
-    elif IsList( val ) and IsCyclotomicCollection( val ) then
-      values:= [];
-      for entry in val do
-        if   not IsRat( entry ) then
-          Add( values, entry );
-        elif DenominatorCyc( entry ) mod p = 0 then
-          return fail;
-        fi;
-      od;
-    else
+      val:= [ val ];
+    elif IsClassFunction( val ) then
+      # This is expected to be the typical situation.
+      # We know in advance that 'val' is closed under Galois conjugacy.
+      closed:= true;
+      val:= ValuesOfClassFunction( val );
+    elif not ( IsList( val ) and IsCyclotomicCollection( val ) ) then
       Error( "<val> must be a cyclotomic or a list of cyclotomics" );
     fi;
 
+    values:= [];
+    for entry in val do
+      if DenominatorCyc( entry ) mod p = 0 or
+         Conductor( entry ) mod p = 0 then
+        return fail;
+      elif not IsRat( entry ) then
+        Add( values, entry );
+      fi;
+    od;
+
     if ForAll( values, x -> IsCycInt( ( GaloisCyc( x, p ) - x ) / p ) ) then
+      # All reductions lie in the prime field.
       return p;
+    elif closed then
+      # It is sufficient to look at powers of the map '*p'.
+      q:= p;
+      while true do
+        q:= q * p;
+        if ForAll( values,
+                   x -> IsCycInt( ( GaloisCyc( x, q ) - x ) / p ) ) then
+          return q;
+        fi;
+      od;
     fi;
 
+    # We have no better idea than to reduce each value.
+    # (Well, we could check whether 'values' is perhaps closed under
+    # Galois conjugacy, or check some generalization of this condition,
+    # but this is probably not worth the effort.)
     values:= List( values, x -> FrobeniusCharacterValue( x, p ) );
     if fail in values then
       return fail;
@@ -4540,13 +4616,6 @@ InstallMethod( BrauerCharacterValue,
 
     return value;
     end );
-
-
-#############################################################################
-##
-#V  ZEV_DATA
-##
-InstallFlushableValue( ZEV_DATA, [ [], [] ] );
 
 
 #############################################################################
@@ -4673,50 +4742,21 @@ InstallGlobalFunction( ZevDataValue, function( q, n )
 #F  ZevData( <q>, <n> )
 #F  ZevData( <q>, <n>, <listofpairs> )
 ##
-InstallGlobalFunction( ZevData, function( arg )
-    local q,
-          n,
-          pos,
-          pos2;
+InstallGlobalFunction( ZevData, function( q, n, listofpairs... )
+    local aux, result;
 
-    q:= arg[1];
-    n:= arg[2];
+    aux := GET_FROM_SORTED_CACHE(ZEV_DATA, q, {} -> NEW_SORTED_CACHE(false));
 
-    pos:= Position( ZEV_DATA[1], q );
-    if pos = fail then
-      Add( ZEV_DATA[1], q );
-      Add( ZEV_DATA[2], [ [], [] ] );
-      pos:= Length( ZEV_DATA[1] );
-    fi;
-
-    pos2:= Position( ZEV_DATA[2][ pos ][1], n );
-    if pos2 = fail then
-      Add( ZEV_DATA[2][ pos ][1], n );
-      pos2:= Length( ZEV_DATA[2][ pos ][1] );
-    fi;
-
-    if Length( arg ) = 3 then
-
-      # Store the third argument at this position.
-      if IsBound( ZEV_DATA[2][ pos ][2][ pos2 ] ) then
-        if ZEV_DATA[2][ pos ][2][ pos2 ] = arg[3] then
-          Info( InfoWarning, 1,
-                "ZevData( ", q, ", ", n, " ) was already stored" );
-        else
-          Error( "incompatible ZevData( ", q, ", ", n, " )" );
-        fi;
+    if Length( listofpairs ) = 1 then
+      listofpairs := listofpairs[1];
+      result := GET_FROM_SORTED_CACHE(aux, n, {} -> Immutable(listofpairs));
+      if result <> listofpairs then
+        Error( "incompatible ZevData( ", q, ", ", n, " )" );
       fi;
-      ZEV_DATA[2][ pos ][2][ pos2 ]:= Immutable( arg[3] );
-      return arg[3];
+      return result;
 
     else
-
-      # Get the entry.
-      if not IsBound( ZEV_DATA[2][ pos ][2][ pos2 ] ) then
-        ZEV_DATA[2][ pos ][2][ pos2 ]:= ZevDataValue( q, n );
-      fi;
-      return ZEV_DATA[2][ pos ][2][ pos2 ];
-
+      return GET_FROM_SORTED_CACHE(aux, n, {} -> ZevDataValue( q, n ));
     fi;
 end );
 

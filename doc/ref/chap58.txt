@@ -334,7 +334,7 @@
   
   [1X58.3-4 Norm[101X
   
-  [33X[1;0Y[29X[2XNorm[102X( [[3XL[103X[, [3XK[103X, ]][3Xz[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XNorm[102X( [[3XL[103X, [[3XK[103X, ]][3Xz[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XNorm[102X  returns  the  norm  of  the field element [3Xz[103X. If two fields [3XL[103X and [3XK[103X are
   given  then the norm is computed w.r.t. the field extension [3XL[103X[22X>[122X[3XK[103X, if only one
@@ -345,7 +345,7 @@
   
   [1X58.3-5 [33X[0;0YTraces of field elements and matrices[133X[101X
   
-  [33X[1;0Y[29X[2XTrace[102X( [[3XL[103X[, [3XK[103X, ]][3Xz[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTrace[102X( [[3XL[103X, [[3XK[103X, ]][3Xz[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XTrace[102X( [3Xmat[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XTrace[102X  returns  the  trace of the field element [3Xz[103X. If two fields [3XL[103X and [3XK[103X are
@@ -361,7 +361,7 @@
   
   [1X58.3-6 Conjugates[101X
   
-  [33X[1;0Y[29X[2XConjugates[102X( [[3XL[103X[, [3XK[103X, ]][3Xz[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XConjugates[102X( [[3XL[103X, [[3XK[103X, ]][3Xz[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XConjugates[102X  returns  the  list  of [13Xconjugates[113X of the field element [3Xz[103X. If two
   fields  [3XL[103X  and [3XK[103X are given then the conjugates are computed w.r.t. the field

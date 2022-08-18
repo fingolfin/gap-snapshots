@@ -439,8 +439,9 @@
   
   [33X[1;0Y[29X[2XIsAssociative[102X( [3XM[103X ) [32X property[133X
   
-  [33X[0;0YA  magma  [3XM[103X is [13Xassociative[113X if for all elements [22Xa, b, c ∈[122X [3XM[103X the equality [22X(a[122X[10X *
-  [110X[22Xb)[122X[10X * [110X[22Xc = a[122X[10X * [110X[22X(b[122X[10X * [110X[22Xc)[122X holds.[133X
+  [33X[0;0YA  collection  [3XM[103X  of  elements  that  can  be multiplied via [2X\*[102X ([14X31.12-1[114X) is
+  [13Xassociative[113X  if  for all elements [22Xa, b, c ∈[122X [3XM[103X the equality [22X(a[122X[10X * [110X[22Xb)[122X[10X * [110X[22Xc = a[122X[10X *
+  [110X[22X(b[122X[10X * [110X[22Xc)[122X holds.[133X
   
   [33X[0;0YAn  associative  magma  is  called  a  [13Xsemigroup[113X  (see [14X51[114X),  an  associative
   magma-with-one   is   called   a   [13Xmonoid[113X   (see [14X51[114X),   and  an  associative
@@ -458,8 +459,9 @@
   [33X[1;0Y[29X[2XIsCommutative[102X( [3XM[103X ) [32X property[133X
   [33X[1;0Y[29X[2XIsAbelian[102X( [3XM[103X ) [32X property[133X
   
-  [33X[0;0YA magma [3XM[103X is [13Xcommutative[113X if for all elements [22Xa, b ∈[122X [3XM[103X the equality [22Xa[122X[10X * [110X[22Xb = b[122X[10X
-  * [110X[22Xa[122X holds. [2XIsAbelian[102X is a synonym of [2XIsCommutative[102X.[133X
+  [33X[0;0YA  collection  [3XM[103X  of  elements  that  can  be multiplied via [2X\*[102X ([14X31.12-1[114X) is
+  [13Xcommutative[113X  if  for all elements [22Xa, b ∈[122X [3XM[103X the equality [22Xa[122X[10X * [110X[22Xb = b[122X[10X * [110X[22Xa[122X holds.
+  [2XIsAbelian[102X is a synonym of [2XIsCommutative[102X.[133X
   
   [33X[0;0YNote  that  the  commutativity  of  the [13Xaddition[113X [2X\+[102X ([14X31.12-1[114X) in an additive
   structure can be tested with [2XIsAdditivelyCommutative[102X ([14X55.3-1[114X).[133X

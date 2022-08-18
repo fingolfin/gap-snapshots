@@ -13,6 +13,34 @@
 ##  matrix groups
 ##
 
+InstallGlobalFunction(AttemptPermRadicalMethod,function(G,T)
+local R;
+  if not IsPermGroup(G) then return fail;fi;
+
+  if not (HasFittingFreeLiftSetup(G) or HasSolvableRadical(G)) then 
+    # do not force radical method if it was not tried
+    return false;
+  fi;
+
+  # used in assertions
+  if ValueOption("usebacktrack")=true then return false;
+  elif ValueOption("useradical")=true then return true;fi;
+
+  R:=SolvableRadical(G);
+
+  # any chance to apply it, and not too small?
+  if Size(R)=1 or Size(G)<10000 then return false; fi;
+
+  if T="CENT" then
+    # centralizer/element conjugacy -- degree compares well with radical
+    # factor, but 
+    return NrMovedPoints(G)^2>Size(G)/Size(R);
+  else
+    # Task not yet covered
+    return fail;
+  fi;
+end);
+
 InstallGlobalFunction(FittingFreeSubgroupSetup,function(G,U)
 local cache,ffs,pcisom,rest,it,kpc,k,x,ker,r,pool,i,xx,inv,pregens;
   ffs:=FittingFreeLiftSetup(G);
@@ -50,7 +78,12 @@ local cache,ffs,pcisom,rest,it,kpc,k,x,ker,r,pool,i,xx,inv,pregens;
   # in radical?
   if ForAll(MappingGeneratorsImages(rest)[2],IsOne) then
     ker:=U;
-    k:=InducedPcgsByGeneratorsNC(ffs.pcgs,GeneratorsOfGroup(U));
+    # trivial radical
+    if Length(ffs.pcgs)=0 then
+      k:=[];
+    else
+      k:=InducedPcgsByGeneratorsNC(ffs.pcgs,GeneratorsOfGroup(U));
+    fi;
   elif Length(ffs.pcgs)=0 then
     # no radical
     ker:=TrivialSubgroup(G);
@@ -203,7 +236,7 @@ local ffs,hom,U,rest,ker,r,p,l,i,depths,pcisom;
   U!.cachedFFS:=[[ffs,r]];
 
   # FittingFreeLiftSetup for U, if correct
-  if Size(RadicalGroup(Image(rest,U)))=1 then
+  if Size(SolvableRadical(Image(rest,U)))=1 then
     if ipcgs=MappingGeneratorsImages(ffs.pcisom)[1] then
       pcisom:=ffs.pcisom;
     else
@@ -330,9 +363,9 @@ end );
 
 #############################################################################
 ##
-#M  RadicalGroup( <G> ) . . . . . . . . . . . . . . using TF method
+#M  SolvableRadical( <G> ) . . . . . . . . . . . . . . using TF method
 ##
-InstallMethod( RadicalGroup, "TF method, use tree",true,
+InstallMethod( SolvableRadical, "TF method, use tree",
   [ IsGroup and IsFinite and HasFittingFreeLiftSetup], OVERRIDENICE,
 function(G)
 local f;
@@ -910,7 +943,7 @@ local s,o,a,n,d,f,fn,j,b,i;
       n:=Filtered(NormalSubgroups(i),x->Size(x)>1);
       # if G is not fitting-free it has a proper normal subgroup of
       #  prime-power order
-      if ForAny(n,x->IsPrimePowerInt(Size(x))) then
+      if ForAny(n,x->IsPGroup(x)) then
 	return fail;
       fi;
       n:=Filtered(n,IsNonabelianSimpleGroup);
@@ -1382,7 +1415,8 @@ end);
 ## Fitting free approach
 ##
 InstallMethod( HallSubgroupOp, "fitting free",true,
-    [ IsGroup and CanComputeFittingFree,IsList ],0,
+    [ IsGroup and IsFinite and CanComputeFittingFree,IsList ],
+    OVERRIDENICE,
 function(G,pi)
 local l;
   if CanEasilyComputePcgs(G) then
@@ -1395,6 +1429,35 @@ local l;
     return fail;
   else
     return l;
+  fi;
+end);
+
+
+#############################################################################
+##
+#M  SylowSubgroupOp( <G>, <pi> )
+##
+## Fitting free approach
+##
+InstallMethod( SylowSubgroupOp, "fitting free",true,
+  [ IsGroup and IsFinite and CanComputeFittingFree,IsPosInt ],
+  OVERRIDENICE,
+function(G,pi)
+local l;
+  if IsPermGroup(G) or IsPcGroup(G) then TryNextMethod();fi;
+
+  if Set(Factors(Size(G)))=[pi] then 
+    SetIsPGroup(G,true);
+    SetPrimePGroup(G, pi);
+    return G;
+  fi;
+  l:=HallViaRadical(G,[pi]);
+  if Length(l)=1 then
+    SetIsPGroup(l[1],true);
+    SetPrimePGroup(l[1],pi);
+    return l[1];
+  else
+    Error("There can be only one class");
   fi;
 end);
 
@@ -1434,4 +1497,5 @@ local ff,i,j,c,q,a,b,prev,sub,m,k;
   od;
   return c;
 end);
+
 

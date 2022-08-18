@@ -1,0 +1,219 @@
+#SIXFORMAT  GapDocGAP
+HELPBOOKINFOSIXTMP := rec(
+encoding := "UTF-8",
+bookname := "walrus",
+entries :=
+[ [ "Title page", ".", [ 0, 0, 0 ], 1, 1, "title page", "X7D2C85EC87DD46E5" ],
+  [ "Table of Contents", ".-1", [ 0, 0, 1 ], 31, 2, "table of contents", 
+      "X8537FEB07AF2BEC8" ], 
+  [ "\033[1X\033[33X\033[0;-2YOverview\033[133X\033[101X", "1", [ 1, 0, 0 ], 
+      1, 3, "overview", "X8389AD927B74BA4A" ], 
+  [ "\033[1X\033[33X\033[0;-2YExamples\033[133X\033[101X", "1.1", 
+      [ 1, 1, 0 ], 4, 3, "examples", "X7A489A5D79DA9E5C" ], 
+  [ "\033[1X\033[33X\033[0;-2YTesting Hyperbolicity\033[133X\033[101X", 
+      "1.2", [ 1, 2, 0 ], 94, 4, "testing hyperbolicity", "X861436A7862A92D2" 
+     ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YThe MAGMA-compatible interface\033[133X\033[101X"
+        , "1.3", [ 1, 3, 0 ], 137, 5, "the magma-compatible interface", 
+      "X792204DC7B217ECC" ], 
+  [ "\033[1X\033[33X\033[0;-2YPregroups\033[133X\033[101X", "2", [ 2, 0, 0 ], 
+      1, 6, "pregroups", "X84CF717F7CE7F8A4" ], 
+  [ "\033[1X\033[33X\033[0;-2YCreating Pregroups\033[133X\033[101X", "2.1", 
+      [ 2, 1, 0 ], 7, 6, "creating pregroups", "X7F44CAE5832B8511" ], 
+  [ "\033[1X\033[33X\033[0;-2YFilters and Representations\033[133X\033[101X", 
+      "2.2", [ 2, 2, 0 ], 71, 7, "filters and representations", 
+      "X7B1844C180E739B9" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YAttributes, Properties, and Operations\033[133X\\
+033[101X", "2.3", [ 2, 3, 0 ], 108, 8, "attributes properties and operations",
+      "X8053940287FA4077" ], 
+  [ "\033[1X\033[33X\033[0;-2YElements of Pregroups\033[133X\033[101X", 
+      "2.4", [ 2, 4, 0 ], 152, 9, "elements of pregroups", 
+      "X7E4700087FC3F933" ], 
+  [ "\033[1X\033[33X\033[0;-2YSmall Pregroups\033[133X\033[101X", "2.5", 
+      [ 2, 5, 0 ], 195, 9, "small pregroups", "X870A0A6A7CAE4680" ], 
+  [ "\033[1X\033[33X\033[0;-2YPregroup Presentations\033[133X\033[101X", "3", 
+      [ 3, 0, 0 ], 1, 11, "pregroup presentations", "X7A05461687E1FA84" ], 
+  [ "\033[1X\033[33X\033[0;-2YConcepts\033[133X\033[101X", "3.1", 
+      [ 3, 1, 0 ], 4, 11, "concepts", "X7AFDBDC078777B90" ], 
+  [ "\033[1X\033[33X\033[0;-2YLocations\033[133X\033[101X", "3.1-1", 
+      [ 3, 1, 1 ], 15, 11, "locations", "X83BEFE747F7726F5" ], 
+  [ "\033[1X\033[33X\033[0;-2YPlaces\033[133X\033[101X", "3.1-2", 
+      [ 3, 1, 2 ], 23, 11, "places", "X87FA460D81566861" ], 
+  [ "\033[1X\033[33X\033[0;-2YAttributes\033[133X\033[101X", "3.2", 
+      [ 3, 2, 0 ], 29, 11, "attributes", "X7C701DBF7BAE649A" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YCreating Pregroup Presentations\033[133X\033[101X\
+", "3.3", [ 3, 3, 0 ], 61, 12, "creating pregroup presentations", 
+      "X85C45E1578DB9E13" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YFilters, Attributes, and Properties\033[133X\033[\
+101X", "3.4", [ 3, 4, 0 ], 87, 13, "filters attributes and properties", 
+      "X7FC6BCF985E6819C" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YHyperbolicity testing for pregroup presentations\\
+033[133X\033[101X", "3.5", [ 3, 5, 0 ], 100, 13, 
+      "hyperbolicity testing for pregroup presentations", "X7E53DCE97DEEFA7D" 
+     ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YInput and Output of Pregroup Presentations\033[13\
+3X\033[101X", "3.6", [ 3, 6, 0 ], 129, 13, 
+      "input and output of pregroup presentations", "X801CA5197DF125C6" ], 
+  [ "Index", "ind", [ "Ind", 0, 0 ], 1, 15, "index", "X83A0356F839C696F" ], 
+  [ "\033[2XTriangleGroup\033[102X", "1.1-1", [ 1, 1, 1 ], 7, 3, 
+      "trianglegroup", "X7DE9B0FF7EEC5D80" ], 
+  [ "\033[2XTriangleCommutatorQuotient\033[102X", "1.1-2", [ 1, 1, 2 ], 34, 
+      3, "trianglecommutatorquotient", "X7A3CD8E481C3E802" ], 
+  [ "\033[2XTriSH\033[102X", "1.1-2", [ 1, 1, 2 ], 34, 3, "trish", 
+      "X7A3CD8E481C3E802" ], 
+  [ "\033[2XRandomTriangleQuotient\033[102X", "1.1-3", [ 1, 1, 3 ], 45, 4, 
+      "randomtrianglequotient", "X78BB0EB087263795" ], 
+  [ "\033[2XJackButtonGroup\033[102X", "1.1-4", [ 1, 1, 4 ], 53, 4, 
+      "jackbuttongroup", "X7968AC7887291888" ], 
+  [ "\033[2XRandomPregroupPresentation\033[102X", "1.1-5", [ 1, 1, 5 ], 72, 
+      4, "randompregrouppresentation", "X863AAC9078647B94" ], 
+  [ "\033[2XRandomPregroupWord\033[102X", "1.1-6", [ 1, 1, 6 ], 80, 4, 
+      "randompregroupword", "X7DEF4DA6781CCE1B" ], 
+  [ "\033[2XPregroupByTable\033[102X", "2.1-1", [ 2, 1, 1 ], 13, 6, 
+      "pregroupbytable", "X7E37DF907C05522C" ], 
+  [ "\033[2XPregroupByTableNC\033[102X", "2.1-1", [ 2, 1, 1 ], 13, 6, 
+      "pregroupbytablenc", "X7E37DF907C05522C" ], 
+  [ "\033[2XPregroupByRedRelators\033[102X for IsFreeGroup, IsList, IsList", 
+      "2.1-2", [ 2, 1, 2 ], 40, 6, 
+      "pregroupbyredrelators for isfreegroup islist islist", 
+      "X8137D096798C1BC8" ], 
+  [ "\033[2XPregroupOfFreeProduct\033[102X for IsGroup, IsGroup", "2.1-3", 
+      [ 2, 1, 3 ], 50, 7, "pregroupoffreeproduct for isgroup isgroup", 
+      "X8632A365791D87B7" ], 
+  [ "\033[2XPregroupOfFreeGroup\033[102X", "2.1-4", [ 2, 1, 4 ], 65, 7, 
+      "pregroupoffreegroup", "X8344F038858426A6" ], 
+  [ "\033[2XIsPregroup\033[102X for IsObject and IsCollection", "2.2-1", 
+      [ 2, 2, 1 ], 77, 7, "ispregroup for isobject and iscollection", 
+      "X86AA05DA7B7BA64B" ], 
+  [ 
+      "\033[2XIsPregroupTableRep\033[102X for IsPregroup andIsComponentObjectRep \
+andIsAttributeStoringRep", "2.2-2", [ 2, 2, 2 ], 82, 7, 
+      "ispregrouptablerep for ispregroup andiscomponentobjectrep andisattribut\
+estoringrep", "X78E417B3823387C2" ], 
+  [ 
+      "\033[2XIsPregroupOfFreeGroupRep\033[102X for IsPregroup andIsComponentObje\
+ctRep andIsAttributeStoringRep", "2.2-3", [ 2, 2, 3 ], 91, 7, 
+      "ispregroupoffreegrouprep for ispregroup andiscomponentobjectrep andisat\
+tributestoringrep", "X84F97B4D79FBAD44" ], 
+  [ 
+      "\033[2XIsPregroupOfFreeProductRep\033[102X for IsPregroup andIsComponentOb\
+jectRep andIsAttributeStoringRep", "2.2-4", [ 2, 2, 4 ], 99, 8, 
+      "ispregroupoffreeproductrep for ispregroup andiscomponentobjectrep andis\
+attributestoringrep", "X82866B1A7D018BB7" ], 
+  [ "\033[2X[]\033[102X for IsPregroup, IsInt", "2.3-1", [ 2, 3, 1 ], 114, 8, 
+      "[] for ispregroup isint", "X7946D406823A935B" ], 
+  [ "\033[2XIntermultPairs\033[102X for IsPregroup", "2.3-2", [ 2, 3, 2 ], 
+      121, 8, "intermultpairs for ispregroup", "X80EC827C83DB818B" ], 
+  [ "\033[2XOne\033[102X for IsPregroup", "2.3-3", [ 2, 3, 3 ], 127, 8, 
+      "one for ispregroup", "X7C1AE0D983EF9693" ], 
+  [ "\033[2XMultiplicationTable\033[102X for IsPregroup", "2.3-4", 
+      [ 2, 3, 4 ], 133, 8, "multiplicationtable for ispregroup", 
+      "X8761B5A57CC4DEA8" ], 
+  [ "\033[2XSetPregroupElementNames\033[102X for IsPregroup, IsList", 
+      "2.3-5", [ 2, 3, 5 ], 139, 8, 
+      "setpregroupelementnames for ispregroup islist", "X7BF3B344878B252F" ], 
+  [ "\033[2XPregroupElementNames\033[102X for IsPregroup", "2.3-6", 
+      [ 2, 3, 6 ], 146, 8, "pregroupelementnames for ispregroup", 
+      "X82B7E2227A94AC98" ], 
+  [ 
+      "\033[2XIsElementOfPregroup\033[102X for IsMultiplicativeElementWithInverse\
+", "2.4-1", [ 2, 4, 1 ], 155, 9, 
+      "iselementofpregroup for ismultiplicativeelementwithinverse", 
+      "X7CACF96A831CEB1F" ], 
+  [ 
+      "\033[2XIsElementOfPregroupRep\033[102X for IsElementOfPregroup and IsCompo\
+nentObjectRep", "2.4-2", [ 2, 4, 2 ], 160, 9, 
+      "iselementofpregrouprep for iselementofpregroup and iscomponentobjectrep\
+", "X80185F7579C23714" ], 
+  [ 
+      "\033[2XIsElementOfPregroupOfFreeGroupRep\033[102X for IsElementOfPregroup \
+and IsComponentObjectRep", "2.4-3", [ 2, 4, 3 ], 165, 9, 
+      "iselementofpregroupoffreegrouprep for iselementofpregroup and iscompone\
+ntobjectrep", "X838ECC967A2377BA" ], 
+  [ "\033[2XPregroupOf\033[102X for IsElementOfPregroup", "2.4-4", 
+      [ 2, 4, 4 ], 170, 9, "pregroupof for iselementofpregroup", 
+      "X784ACAE2800C3E7E" ], 
+  [ 
+      "\033[2XIsDefinedMultiplication\033[102X for IsElementOfPregroup, IsElement\
+OfPregroup", "2.4-5", [ 2, 4, 5 ], 176, 9, 
+      "isdefinedmultiplication for iselementofpregroup iselementofpregroup", 
+      "X84A42E6B7D542AD1" ], 
+  [ 
+      "\033[2XIsIntermultPair\033[102X for IsElementOfPregroup, IsElementOfPregro\
+up", "2.4-6", [ 2, 4, 6 ], 183, 9, 
+      "isintermultpair for iselementofpregroup iselementofpregroup", 
+      "X86FC5FDF87C3664A" ], 
+  [ "\033[2XPregroupInverse\033[102X for IsElementOfPregroup", "2.4-7", 
+      [ 2, 4, 7 ], 189, 9, "pregroupinverse for iselementofpregroup", 
+      "X87004CD07832F9DB" ], 
+  [ "\033[2XNrSmallPregroups\033[102X", "2.5-1", [ 2, 5, 1 ], 204, 10, 
+      "nrsmallpregroups", "X7AAEA96C79A55FB3" ], 
+  [ "\033[2XSmallPregroup\033[102X", "2.5-2", [ 2, 5, 2 ], 211, 10, 
+      "smallpregroup", "X7FD30E6F812704C8" ], 
+  [ "\033[2XIsPregroupLocation\033[102X for IsObject", "3.2-1", [ 3, 2, 1 ], 
+      32, 11, "ispregrouplocation for isobject", "X81378EEB81DF801A" ], 
+  [ "\033[2XInLetter\033[102X for IsPregroupLocation", "3.2-2", [ 3, 2, 2 ], 
+      37, 11, "inletter for ispregrouplocation", "X85EC64DC8116AF77" ], 
+  [ "\033[2XOutLetter\033[102X for IsPregroupLocation", "3.2-3", [ 3, 2, 3 ], 
+      41, 11, "outletter for ispregrouplocation", "X7E1013A1794D17DD" ], 
+  [ "\033[2XPlaces\033[102X for IsPregroupLocation", "3.2-4", [ 3, 2, 4 ], 
+      45, 12, "places for ispregrouplocation", "X81E1F7F984EC37C2" ], 
+  [ "\033[2XNextLocation\033[102X for IsPregroupLocation", "3.2-5", 
+      [ 3, 2, 5 ], 49, 12, "nextlocation for ispregrouplocation", 
+      "X7C88C1227C073A36" ], 
+  [ "\033[2XPrevLocation\033[102X for IsPregroupLocation", "3.2-6", 
+      [ 3, 2, 6 ], 53, 12, "prevlocation for ispregrouplocation", 
+      "X83B0E7F778108E23" ], 
+  [ "\033[2X__ID\033[102X for IsPregroupLocation", "3.2-7", [ 3, 2, 7 ], 57, 
+      12, "__id for ispregrouplocation", "X796A41AD85E9AD40" ], 
+  [ "\033[2XNewPregroupPresentation\033[102X", "3.3-1", [ 3, 3, 1 ], 64, 12, 
+      "newpregrouppresentation", "X7B85A7217AF54FB1" ], 
+  [ "\033[2XPregroupPresentationFromFp\033[102X", "3.3-2", [ 3, 3, 2 ], 71, 
+      12, "pregrouppresentationfromfp", "X78A45CA479E37F10" ], 
+  [ "\033[2XPregroupPresentationToFpGroup\033[102X", "3.3-3", [ 3, 3, 3 ], 
+      79, 12, "pregrouppresentationtofpgroup", "X7D9C7247794CA029" ], 
+  [ "\033[2XIsPregroupPresentation\033[102X for IsObject", "3.4-1", 
+      [ 3, 4, 1 ], 90, 13, "ispregrouppresentation for isobject", 
+      "X8194DE3E7908C921" ], 
+  [ 
+      "\033[2X\033[102X for IsPregroupPresentation and IsComponentObjectRep and I\
+sAttributeStoringRep", "3.4-2", [ 3, 4, 2 ], 95, 13, 
+      "for ispregrouppresentation and iscomponentobjectrep and isattributestor\
+ingrep", "X84191A7B78073D28" ], 
+  [ "\033[2XRSymTestOp\033[102X for IsPregroupPresentation, IsRat", "3.5-1", 
+      [ 3, 5, 1 ], 103, 13, "rsymtestop for ispregrouppresentation israt", 
+      "X7C607CC18455D320" ], 
+  [ "\033[2XRSymTest\033[102X", "3.5-2", [ 3, 5, 2 ], 110, 13, "rsymtest", 
+      "X83D3AC54833FF1CE" ], 
+  [ "\033[2XIsHyperbolic\033[102X for IsPregroupPresentation", "3.5-3", 
+      [ 3, 5, 3 ], 121, 13, "ishyperbolic for ispregrouppresentation", 
+      "X7DB6545987479C4B" ], 
+  [ "\033[2XIsHyperbolic\033[102X for IsPregroupPresentation, IsRat", 
+      "3.5-3", [ 3, 5, 3 ], 121, 13, 
+      "ishyperbolic for ispregrouppresentation israt", "X7DB6545987479C4B" ], 
+  [ "\033[2XIsHyperbolic\033[102X for IsFreeGroup, IsObject, IsObject, IsRat",
+      "3.5-3", [ 3, 5, 3 ], 121, 13, 
+      "ishyperbolic for isfreegroup isobject isobject israt", 
+      "X7DB6545987479C4B" ], 
+  [ "\033[2XPregroupPresentationToKBMAG\033[102X", "3.6-1", [ 3, 6, 1 ], 132, 
+      13, "pregrouppresentationtokbmag", "X81F8BD2784FA17A5" ], 
+  [ "\033[2XPregroupPresentationToStream\033[102X", "3.6-2", [ 3, 6, 2 ], 
+      141, 14, "pregrouppresentationtostream", "X844A431F8505219D" ], 
+  [ "\033[2XPregroupPresentationFromStream\033[102X", "3.6-3", [ 3, 6, 3 ], 
+      157, 14, "pregrouppresentationfromstream", "X86E791EB7FCD6FC7" ], 
+  [ "\033[2XPregroupPresentationToSimpleStream\033[102X", "3.6-4", 
+      [ 3, 6, 4 ], 172, 14, "pregrouppresentationtosimplestream", 
+      "X84B44E0580AE5C2A" ], 
+  [ "\033[2XPregroupPresentationToFile\033[102X", "3.6-5", [ 3, 6, 5 ], 179, 
+      14, "pregrouppresentationtofile", "X7B118D1D84350906" ], 
+  [ "\033[2XPregroupPresentationFromFile\033[102X", "3.6-6", [ 3, 6, 6 ], 
+      185, 14, "pregrouppresentationfromfile", "X808C30267956C4B0" ], 
+  [ "\033[2XPregroupPresentationToSimpleFile\033[102X", "3.6-7", [ 3, 6, 7 ], 
+      191, 14, "pregrouppresentationtosimplefile", "X84C6E86D7D3EC053" ] ]
+);

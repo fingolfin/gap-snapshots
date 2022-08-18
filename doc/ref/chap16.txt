@@ -394,7 +394,7 @@
   [4X[32X[104X
   
   [33X[0;0Y[10XTuples([3Xset[103X[10X,[3Xk[103X[10X)[110X can also be viewed as the [3Xk[103X-fold cartesian product of [3Xset[103X (see
-  [2XCartesian[102X ([14X21.20-16[114X)).[133X
+  [2XCartesian[102X ([14X21.20-15[114X)).[133X
   
   [33X[0;0YThe  function  [2XCombinations[102X  ([14X16.2-1[114X)  computes unordered selections without
   repetitions,  [2XArrangements[102X  ([14X16.2-4[114X)  computes  ordered  selections  without
@@ -525,13 +525,13 @@
   
   [33X[0;0Yreturns the set of all (unordered) partitions of the positive integer [3Xn[103X into
   sums  with [3Xk[103X summands. If [3Xk[103X is not given it returns all unordered partitions
-  of [3Xset[103X for all [3Xk[103X.[133X
+  of [3Xn[103X for all [3Xk[103X.[133X
   
   [33X[0;0YAn  [13Xunordered  partition[113X  is  an  unordered  sum  [22Xn = p_1 + p_2 + ⋯ + p_k[122X of
   positive integers and is represented by the list [22Xp = [ p_1, p_2, ..., p_k ][122X,
   in  nonincreasing  order, i.e., [22Xp_1 ≥ p_2 ≥ ... ≥ p_k[122X. We write [22Xp ⊢ n[122X. There
   are  approximately  [22Xexp(π  sqrt{2/3 n}) / (4 sqrt{3} n)[122X such partitions, use
-  [2XNrPartitions[102X ([14X16.2-20[114X) to compute the precise number.[133X
+  [2XNrPartitions[102X ([14X16.2-21[114X) to compute the precise number.[133X
   
   [33X[0;0YIf you want to loop over all partitions of some larger [3Xn[103X use the more memory
   efficient [2XIteratorOfPartitions[102X ([14X16.2-19[114X).[133X
@@ -553,7 +553,17 @@
   (see [14X30.8[114X)  of  the  set  of partitions of [3Xn[103X (see [2XPartitions[102X ([14X16.2-18[114X)). The
   partitions of [3Xn[103X are returned in lexicographic order.[133X
   
-  [1X16.2-20 NrPartitions[101X
+  [1X16.2-20 IteratorOfPartitionsSet[101X
+  
+  [33X[1;0Y[29X[2XIteratorOfPartitionsSet[102X( [3Xset[103X[, [3Xk[103X[, [3Xflag[103X]] ) [32X function[133X
+  
+  [33X[0;0Y[2XIteratorOfPartitionsSet[102X  returns  an  iterator  (see [14X30.8[114X) for all unordered
+  partitions  of  the  set  [3Xset[103X  into  pairwise  disjoint  nonempty  sets (see
+  [2XPartitionsSet[102X  ([14X16.2-16[114X)). If [3Xk[103X given and [3Xflag[103X is omitted or equal to [9Xfalse[109X,
+  then only partitions of size [3Xk[103X are computed. If [3Xk[103X is given and [3Xflag[103X is equal
+  to [9Xtrue[109X, then only partitions of size at most [3Xk[103X are computed.[133X
+  
+  [1X16.2-21 NrPartitions[101X
   
   [33X[1;0Y[29X[2XNrPartitions[102X( [3Xn[103X[, [3Xk[103X] ) [32X function[133X
   
@@ -573,10 +583,10 @@
     [4X[28X190569292[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe  function  [2XOrderedPartitions[102X  ([14X16.2-21[114X)  is  the  ordered counterpart of
+  [33X[0;0YThe  function  [2XOrderedPartitions[102X  ([14X16.2-22[114X)  is  the  ordered counterpart of
   [2XPartitions[102X ([14X16.2-18[114X).[133X
   
-  [1X16.2-21 OrderedPartitions[101X
+  [1X16.2-22 OrderedPartitions[101X
   
   [33X[1;0Y[29X[2XOrderedPartitions[102X( [3Xn[103X[, [3Xk[103X] ) [32X function[133X
   
@@ -592,7 +602,7 @@
   [33X[0;0YDo  not  call [2XOrderedPartitions[102X with an [3Xn[103X much larger than [22X15[122X, the list will
   simply become too large.[133X
   
-  [1X16.2-22 NrOrderedPartitions[101X
+  [1X16.2-23 NrOrderedPartitions[101X
   
   [33X[1;0Y[29X[2XNrOrderedPartitions[102X( [3Xn[103X[, [3Xk[103X] ) [32X function[133X
   
@@ -612,23 +622,23 @@
   [4X[32X[104X
   
   [33X[0;0YThe   function   [2XPartitions[102X   ([14X16.2-18[114X)  is  the  unordered  counterpart  of
-  [2XOrderedPartitions[102X ([14X16.2-21[114X).[133X
+  [2XOrderedPartitions[102X ([14X16.2-22[114X).[133X
   
-  [1X16.2-23 PartitionsGreatestLE[101X
+  [1X16.2-24 PartitionsGreatestLE[101X
   
   [33X[1;0Y[29X[2XPartitionsGreatestLE[102X( [3Xn[103X, [3Xm[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the set of all (unordered) partitions of the integer [3Xn[103X having parts
   less or equal to the integer [3Xm[103X.[133X
   
-  [1X16.2-24 PartitionsGreatestEQ[101X
+  [1X16.2-25 PartitionsGreatestEQ[101X
   
   [33X[1;0Y[29X[2XPartitionsGreatestEQ[102X( [3Xn[103X, [3Xm[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the  set  of  all  (unordered)  partitions  of the integer [3Xn[103X having
   greatest part equal to the integer [3Xm[103X.[133X
   
-  [1X16.2-25 RestrictedPartitions[101X
+  [1X16.2-26 RestrictedPartitions[101X
   
   [33X[1;0Y[29X[2XRestrictedPartitions[102X( [3Xn[103X, [3Xset[103X[, [3Xk[103X] ) [32X function[133X
   
@@ -643,7 +653,7 @@
   order.  The  difference  is  that here the [22Xp_i[122X must be elements from the set
   [3Xset[103X, while for ordinary partitions they may be elements from [10X[ 1 .. n ][110X.[133X
   
-  [1X16.2-26 NrRestrictedPartitions[101X
+  [1X16.2-27 NrRestrictedPartitions[101X
   
   [33X[1;0Y[29X[2XNrRestrictedPartitions[102X( [3Xn[103X, [3Xset[103X[, [3Xk[103X] ) [32X function[133X
   
@@ -660,7 +670,7 @@
   [33X[0;0YThe  last example tells us that there are 451 ways to return 50 pence change
   using 1, 2, 5, 10, 20 and 50 pence coins.[133X
   
-  [1X16.2-27 SignPartition[101X
+  [1X16.2-28 SignPartition[101X
   
   [33X[1;0Y[29X[2XSignPartition[102X( [3Xpi[103X ) [32X function[133X
   
@@ -676,7 +686,7 @@
     [4X[28X-1[128X[104X
   [4X[32X[104X
   
-  [1X16.2-28 AssociatedPartition[101X
+  [1X16.2-29 AssociatedPartition[101X
   
   [33X[1;0Y[29X[2XAssociatedPartition[102X( [3Xpi[103X ) [32X function[133X
   
@@ -690,7 +700,7 @@
     [4X[28X[ 1, 1, 1, 1, 1, 1 ][128X[104X
   [4X[32X[104X
   
-  [1X16.2-29 PowerPartition[101X
+  [1X16.2-30 PowerPartition[101X
   
   [33X[1;0Y[29X[2XPowerPartition[102X( [3Xpi[103X, [3Xk[103X ) [32X function[133X
   
@@ -706,7 +716,7 @@
     [4X[28X[ 5, 4, 2, 2, 2, 2, 1, 1, 1, 1 ][128X[104X
   [4X[32X[104X
   
-  [1X16.2-30 PartitionTuples[101X
+  [1X16.2-31 PartitionTuples[101X
   
   [33X[1;0Y[29X[2XPartitionTuples[102X( [3Xn[103X, [3Xr[103X ) [32X function[133X
   
@@ -718,7 +728,7 @@
   points,       see      [2XCharacterTableWreathSymmetric[102X      ([14X71.20-6[114X)      and
   [2XCharacterValueWreathSymmetric[102X ([14X71.20-7[114X).[133X
   
-  [1X16.2-31 NrPartitionTuples[101X
+  [1X16.2-32 NrPartitionTuples[101X
   
   [33X[1;0Y[29X[2XNrPartitionTuples[102X( [3Xn[103X, [3Xr[103X ) [32X function[133X
   
@@ -732,7 +742,7 @@
     [4X[28X  [ [  ], [ 3 ] ] ][128X[104X
   [4X[32X[104X
   
-  [1X16.2-32 BetaSet[101X
+  [1X16.2-33 BetaSet[101X
   
   [33X[1;0Y[29X[2XBetaSet[102X( [3Xalpha[103X ) [32X function[133X
   

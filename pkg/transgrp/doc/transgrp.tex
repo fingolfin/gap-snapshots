@@ -7,22 +7,23 @@ You are free to distribute it, provided that you make no modifications.
 The actual groups in the library and their generating sets are due to a
 number of authors:
 Gregory Butler, John McKay, Gordon
-Royle, Alexander Hulpke, John Cannon and Derek Holt. 
+Royle, Alexander Hulpke, John Cannon, Gareth Tracy, and Derek Holt. 
 
 The list of transitive  groups up  to degree 11
 was published in \cite{BM83},  the list of degree  12 was published in
 \cite{Roy87}, degree 14 and  15 were published in  \cite{Butler93} and
 degrees 16--30 were published in \cite{Hulpke96} and \cite{HulpkeTG}.
-Degree 32 was published in \cite{CanHolt32}, and degrees 34-46 have been
-obtained by Derek Holt (but are unpublished).
-Groups of prime degree of course are
-primitive and were known long before.
+Degree 32 was published in \cite{CanHolt32}, degrees 34-46 have been
+obtained by Derek Holt and Gordon Royle in \cite{HoltRoyle47},
+and degree 48 is due to Derek Holt, Gordon Royle, and Gareth Tracy in
+~\cite{HoltRoyleTracy48}.
+Groups of prime degree of course are primitive and were known long before.
 
 The transitive groups library will contain representatives for all
 transitive permutation groups of degree at most  47. Not all degrees might
 be yet available in the current release. Due to the total number,
-degree 32 needs to be downloaded separately, see section ``Supplemental
-Download'' below.
+degree 32 and 48 need to be downloaded separately, see section ``Supplemental
+Downloads'' below.
 
 Two permutations groups of the same degree are considered to be
 equivalent, if there is a renumbering of points, which maps one group into
@@ -91,6 +92,17 @@ result of `TransitiveIdentification' is undefined.
 \beginexample
 gap> TransitiveIdentification(Group((1,2),(1,2,3)));
 2
+\endexample
+
+\>MinimalTransitiveIndices( <deg> ) F
+
+returns a list of indices of the transitive groups of degree <deg>, which
+are minimally trransitive, i.e. for which every proper subgroup is not
+transitive.
+
+\beginexample
+gap> MinimalTransitiveIndices(12);
+[ 1, 2, 3, 4, 5, 7, 9, 17, 31, 34, 40, 46, 47, 57, 162, 166, 246 ]
 \endexample
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -168,7 +180,7 @@ the given degree. Routines should not try to access data structures of the
 library directly.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\Section{Supplemental Download}
+\Section{Supplemental Downloads}
 
 There are almost 3 million groups of degree 32 and these groups require over
 a GB of disk space when uncompressed.
@@ -180,7 +192,29 @@ https://www.math.colostate.edu/~hulpke/transgrp/trans32.tgz
 
 Simply unpack this archive (which is a tar archive compressed with gzip --
 consult your computer administrator on the correct way of unpacking)
-in the folder of the `transgrp' package (this
+in the top folder of the `transgrp' package (this
 folder will contain the `PackageInfo.g' file, it will create a folder dat32
 containing the groups of degree 32. Once you restart GAP it will
 automatically recognize the existence of these groups.
+
+The $195826352$ groups of degree 48 take over 30GB of disk space in
+compressed form and thus require a particular download:
+
+Create a folder `dat48' in the top folder of the `transgrp' package. Then
+download the 11 files `Trans48Part....tar' from
+\begintt
+https://zenodo.org/record/5935751
+\endtt
+and unpack them into this folder. 
+*Do not uncompress the resulting `.gz' files*
+(You can delete the `.tar' archive files afterwards.)
+Once GAP is restarted these groups will be available, but
+`TransitiveIdentification' (for groups not created from the library) or
+the `AllTransitiveGroups' selector will not work.
+
+Conversion of these groups to GAP is due in part to Jesse Lansdown, whose
+help is greatly appreciated
+
+Due to the compressed storage, it is perceivable that the groups of degree 48
+do not work under Windows. This has not been tested and no promise for this
+particular functionality is made.

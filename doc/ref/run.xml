@@ -1,11 +1,10 @@
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <!-- %% -->
-<!-- %W  run.msk                 GAP documentation                Frank Celler -->
+<!-- %W  run.xml                 GAP documentation                Frank Celler -->
 <!-- %W                                                     & Martin Schönert -->
 <!-- %W                                                     & Alexander Hulpke -->
 <!-- %W                                                    & Burkhard Höfling -->
 <!-- %% -->
-<!-- %H  @(#)<M>Id: run.msk,v 1.43 2006/09/27 21:40:31 gap Exp </M> -->
 <!-- %% -->
 <!-- %Y  Copyright 1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,   Germany -->
 <!-- %% -->
@@ -54,8 +53,7 @@ and to <C>gap -b -q -b -q</C> etc.
 &GAP; for UNIX will distinguish between upper and lower case options.
 <P/>
 As described in the &GAP; installation instructions (see the 
-<F>INSTALL</F> file in the &GAP; root directory, or at
-<URL>https://www.gap-system.org/Download/INSTALL</URL>),
+<F>INSTALL.md</F> file in the &GAP; root directory),
 usually you will not execute &GAP; directly. Instead  you  will
 call a (shell) script, with the name <C>gap</C>, which in turn executes  &GAP;.
 This  script sets some options which are necessary  to  make  &GAP;
@@ -80,16 +78,6 @@ which can be useful for debugging or testing.
 The needed packages (and their needed packages, and so on)
 are loaded in any case.
 </Item>
-<Mark><Index Key="-B"><C>-B</C></Index>
-<C>-B </C><A>architecture</A></Mark>
-<Item>
-Executable binary files that form part of &GAP; or of  a &GAP;  package
-are kept in a subdirectory of the <F>bin</F> directory within  the  &GAP; or
-package root directory. The subdirectory  name  is  determined  from  the
-operating system, processor and compiler details when &GAP;  (resp.  the
-package) is installed. Under rare circumstances, it may be  necessary  to
-override this name, and this can be done using the <C>-B</C> option.
-</Item>
 <Mark><Index Key="-b"><C>-b</C></Index>
 <C>-b</C></Mark>
 <Item>
@@ -97,6 +85,14 @@ tells &GAP; to suppress the banner. That means that  &GAP;  immediately
 prints the prompt. This is useful when, after a while, you get  tired  of
 the banner. This option can be repeated to enable the banner; each <C>-b</C>
 toggles the state of banner display.
+</Item>
+<Mark><Index Key="-c"><C>-c</C></Index>
+<C>-c </C><A>gapcode</A></Mark>
+<Item>
+tells &GAP; to execute the given &GAP; code as if it was entered into
+a temporary file which then is processed together with the other files
+given to GAP (see the explanation at the end of this list for further
+details on how filenames are processed). 
 </Item>
 <Mark><Index Key="-D"><C>-D</C></Index>
 <C>-D</C></Mark>
@@ -165,6 +161,8 @@ toggle; you must use <C>-n</C> to disable line editing.
 <Item>
 tells &GAP; to print a message every  time  a  full  garbage
 collection is performed.
+(This is available only if the <C>GASMAN</C> garbage collector is used,
+see <Ref Subsect="Garbage Collection"/>.)
 <P/>
 <Log><![CDATA[
 #G  FULL 44580/2479kb live   57304/4392kb dead   734/4096kb free
@@ -179,8 +177,10 @@ reclaimed by it, and that 734 kilobytes from a  total  allocated  memory  of
 <C>-g -g</C></Mark>
 <Item>
 If you give the option <C>-g</C> twice, &GAP; prints  a  information  message
-every time a  partial  or  full  garbage  collection  is  performed.  The
-message,
+every time a  partial  or  full  garbage  collection  is  performed.
+(This is available only if the <C>GASMAN</C> garbage collector is used,
+see <Ref Subsect="Garbage Collection"/>.)
+The message,
 <P/>
 <Log><![CDATA[
 #G  PART 9405/961kb+live   7525/1324kb+dead   2541/4096kb free
@@ -212,6 +212,8 @@ switched off. You have to set it explicitly when you want to enable it.
 <Item>
 The option <C>-L</C> tells &GAP; to load a saved workspace. See
 section&nbsp;<Ref Sect="Saving and Loading a Workspace"/>.
+(This is available only if the <C>GASMAN</C> garbage collector is used,
+see <Ref Subsect="Garbage Collection"/>.)
 </Item>
 <Mark><Index Key="-l"><C>-l</C></Index>
 <C>-l </C><A>path_list</A></Mark>
@@ -397,18 +399,18 @@ redirect the output to a printer, you may want to increase this value.
 <Item>
 Further arguments are taken as filenames of files that are read by &GAP;
 during startup, after the system  and private init   files are read,  but
-before the first prompt is  printed.
-The files are read in the order in which they appear on the command line.
-&GAP; only accepts up to 14 filenames on the command line.
+before the first prompt is  printed. Filenames ending with <C>.tst</C>
+are processed by <Ref Func="Test" />, all other files by <Ref Oper="Read" />.
+These files and also commands specified via the <C>-c</C> option are processed
+in the order in which they appear on the command line.
 If a file cannot be opened &GAP; will print an error message and will abort.
 </Item>
 </List>
 <P/>
 <Index Subkey="command line, internal">options</Index>
-<Index Key="-P"><C>-P</C></Index><Index Key="-W"><C>-W</C></Index>
-<Index Key="-z"><C>-z</C></Index><Index Key="-p"><C>-p</C></Index>
-Additional options, <C>-C</C>, <C>-P</C>, <C>-W</C>, <C>-p</C>
-and <C>-z</C> are  used  
+<Index Key="-C"><C>-C</C></Index>
+<Index Key="-P"><C>-P</C></Index><Index Key="-p"><C>-p</C></Index>
+Additional options, such as <C>-C</C>, <C>-P</C> and<C>-p</C> are used
 internally by the <Package>gac</Package> script (see <Ref Label="Kernel modules"/>)
 and/or on specific operating systems.
 
@@ -540,6 +542,10 @@ which GAP will not recognize.
 
 &GAP; workspace files are binary files that contain the data of a &GAP;
 session.
+Currently saving and loading workspace files are supported only when the
+<C>GASMAN</C> garbage collector is used,
+see Section <Ref Subsect="Garbage Collection"/>.
+<P/>
 One can produce a workspace file with <Ref Func="SaveWorkspace"/>,
 and load it into a new &GAP; session using the <C>-L</C> command line option,
 see Section <Ref Sect="Command Line Options"/>.
@@ -587,6 +593,7 @@ or called from a break loop.
 <#Include Label="ARCH_IS_UNIX">
 <#Include Label="ARCH_IS_MAC_OS_X">
 <#Include Label="ARCH_IS_WINDOWS">
+<#Include Label="ARCH_IS_WSL">
 
 </Section>
 

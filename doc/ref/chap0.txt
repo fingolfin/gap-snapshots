@@ -3,7 +3,7 @@
                              [1XGAP - Reference Manual[101X
   
   
-                           Release 4.11.1, 2021-03-02
+                           Release 4.12.0, 2022-08-18
   
   
                                  The GAP Group
@@ -16,7 +16,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0YCopyright  ©  (1987-2021)  for  the  core  part of the [5XGAP[105X system by the [5XGAP[105X
+  [33X[0;0YCopyright  ©  (1987-2022)  for  the  core  part of the [5XGAP[105X system by the [5XGAP[105X
   Group.[133X
   
   [33X[0;0YMost  parts  of this distribution, including the core part of the [5XGAP[105X system
@@ -63,6 +63,7 @@
       3.4-1 ARCH_IS_UNIX
       3.4-2 ARCH_IS_MAC_OS_X
       3.4-3 ARCH_IS_WINDOWS
+      3.4-4 ARCH_IS_WSL
     3.5 [33X[0;0YGlobal Values that Control the [5XGAP[105X Session[133X
       3.5-1 GAPInfo
     3.6 [33X[0;0YColoring the Prompt and Input[133X
@@ -92,24 +93,24 @@
       4.9-10 NamesSystemGVars
       4.9-11 NamesUserGVars
     4.10 [33X[0;0YNamespaces for [5XGAP[105X packages[133X
-    4.11 [33X[0;0YFunction Calls[133X
-      4.11-1 [33X[0;0YFunction Call With Arguments[133X
-      4.11-2 [33X[0;0YFunction Call With Options[133X
-    4.12 [33X[0;0YComparisons[133X
-    4.13 [33X[0;0YArithmetic Operators[133X
-    4.14 [33X[0;0YStatements[133X
-    4.15 [33X[0;0YAssignments[133X
-    4.16 [33X[0;0YProcedure Calls[133X
-    4.17 [33X[0;0YIf[133X
-    4.18 [33X[0;0YWhile[133X
-    4.19 [33X[0;0YRepeat[133X
-    4.20 [33X[0;0YFor[133X
-    4.21 [33X[0;0YBreak[133X
-    4.22 [33X[0;0YContinue[133X
-    4.23 [33X[0;0YFunction[133X
-    4.24 [33X[0;0YReturn (With or without Value)[133X
-    4.25 [33X[0;0YSyntax Trees[133X
-      4.25-1 SyntaxTree
+    4.11 [33X[0;0YFunction[133X
+    4.12 [33X[0;0YFunction Calls[133X
+      4.12-1 [33X[0;0YFunction Call With Arguments[133X
+      4.12-2 [33X[0;0YFunction Call With Options[133X
+    4.13 [33X[0;0YComparisons[133X
+    4.14 [33X[0;0YArithmetic Operators[133X
+    4.15 [33X[0;0YStatements[133X
+      4.15-1 [33X[0;0YAssignments[133X
+      4.15-2 [33X[0;0YProcedure Calls[133X
+      4.15-3 [33X[0;0YIf[133X
+      4.15-4 [33X[0;0YWhile[133X
+      4.15-5 [33X[0;0YRepeat[133X
+      4.15-6 [33X[0;0YFor[133X
+      4.15-7 [33X[0;0YBreak[133X
+      4.15-8 [33X[0;0YContinue[133X
+      4.15-9 [33X[0;0YReturn (With or without Value)[133X
+    4.16 [33X[0;0YSyntax Trees[133X
+      4.16-1 SyntaxTree
   5 [33X[0;0YFunctions[133X
     5.1 [33X[0;0YInformation about a function[133X
       5.1-1 NameFunction
@@ -161,9 +162,9 @@
       6.6-3 ErrorCount
     6.7 [33X[0;0YLeaving GAP[133X
       6.7-1 QUIT
-      6.7-2 GAP_EXIT_CODE
-      6.7-3 QUIT_GAP
-      6.7-4 FORCE_QUIT_GAP
+      6.7-2 GapExitCode
+      6.7-3 QuitGap
+      6.7-4 ForceQuitGap
       6.7-5 InstallAtExit
       6.7-6 SaveOnExitFile
     6.8 [33X[0;0YLine Editing[133X
@@ -194,6 +195,7 @@
       7.3-3 UntraceMethods
       7.3-4 UntraceAllMethods
       7.3-5 TraceImmediateMethods
+      7.3-6 TraceInternalMethods
     7.4 [33X[0;0YInfo Functions[133X
       7.4-1 NewInfoClass
       7.4-2 DeclareInfoClass
@@ -246,9 +248,11 @@
     7.11 [33X[0;0YDebugging Recursion[133X
       7.11-1 SetRecursionTrapInterval
     7.12 [33X[0;0YGlobal Memory Information[133X
-      7.12-1 GasmanStatistics
-      7.12-2 GasmanMessageStatus
-      7.12-3 GasmanLimits
+      7.12-1 [33X[0;0YGarbage Collection[133X
+      7.12-2 CollectGarbage
+      7.12-3 GasmanStatistics
+      7.12-4 GasmanMessageStatus
+      7.12-5 GasmanLimits
   8 [33X[0;0YOptions Stack[133X
     8.1 [33X[0;0YFunctions Dealing with the Options Stack[133X
       8.1-1 PushOptions
@@ -350,6 +354,8 @@
     10.11 [33X[0;0YComma separated files[133X
       10.11-1 ReadCSV
       10.11-2 PrintCSV
+    10.12 [33X[0;0YOpening files in the Operating System[133X
+      10.12-1 OpenExternal
   11 [33X[0;0YProcesses[133X
     11.1 [33X[0;0YProcess and Exec[133X
       11.1-1 Process
@@ -445,8 +451,9 @@
       14.2-8 LogInt
       14.2-9 RootInt
       14.2-10 SmallestRootInt
-      14.2-11 ListOfDigits
-      14.2-12 Random
+      14.2-11 IsSquareInt
+      14.2-12 ListOfDigits
+      14.2-13 Random
     14.3 [33X[0;0YQuotients and Remainders[133X
       14.3-1 QuoInt
       14.3-2 BestQuoInt
@@ -482,9 +489,10 @@
     14.7 [33X[0;0YRandom Sources[133X
       14.7-1 IsRandomSource
       14.7-2 Random
-      14.7-3 State
-      14.7-4 IsMersenneTwister
+      14.7-3 [33X[0;0YState and Reset for Random Sources[133X
+      14.7-4 [33X[0;0YKinds of Random Sources[133X
       14.7-5 RandomSource
+      14.7-6 [33X[0;0YImplementing new kinds of random sources[133X
     14.8 [33X[0;0YBitfields[133X
       14.8-1 MakeBitfields
       14.8-2 BuildBitfields
@@ -545,19 +553,20 @@
       16.2-17 NrPartitionsSet
       16.2-18 Partitions
       16.2-19 IteratorOfPartitions
-      16.2-20 NrPartitions
-      16.2-21 OrderedPartitions
-      16.2-22 NrOrderedPartitions
-      16.2-23 PartitionsGreatestLE
-      16.2-24 PartitionsGreatestEQ
-      16.2-25 RestrictedPartitions
-      16.2-26 NrRestrictedPartitions
-      16.2-27 SignPartition
-      16.2-28 AssociatedPartition
-      16.2-29 PowerPartition
-      16.2-30 PartitionTuples
-      16.2-31 NrPartitionTuples
-      16.2-32 BetaSet
+      16.2-20 IteratorOfPartitionsSet
+      16.2-21 NrPartitions
+      16.2-22 OrderedPartitions
+      16.2-23 NrOrderedPartitions
+      16.2-24 PartitionsGreatestLE
+      16.2-25 PartitionsGreatestEQ
+      16.2-26 RestrictedPartitions
+      16.2-27 NrRestrictedPartitions
+      16.2-28 SignPartition
+      16.2-29 AssociatedPartition
+      16.2-30 PowerPartition
+      16.2-31 PartitionTuples
+      16.2-32 NrPartitionTuples
+      16.2-33 BetaSet
     16.3 [33X[0;0YFibonacci and Lucas Sequences[133X
       16.3-1 Fibonacci
       16.3-2 Lucas
@@ -746,27 +755,26 @@
       21.20-6 Flat
       21.20-7 Reversed
       21.20-8 Shuffle
-      21.20-9 IsLexicographicallyLess
-      21.20-10 Apply
-      21.20-11 Perform
-      21.20-12 PermListList
-      21.20-13 [33X[0;0YMaximum[133X
-      21.20-14 [33X[0;0YMinimum[133X
-      21.20-15 [33X[0;0YMaximumList and MinimumList[133X
-      21.20-16 [33X[0;0YCartesian[133X
-      21.20-17 [33X[0;0YIteratorOfCartesianProduct[133X
-      21.20-18 Permuted
-      21.20-19 List
-      21.20-20 Filtered
-      21.20-21 Number
-      21.20-22 First
-      21.20-23 Last
-      21.20-24 ForAll
-      21.20-25 ForAny
-      21.20-26 Product
-      21.20-27 Sum
-      21.20-28 Iterated
-      21.20-29 ListN
+      21.20-9 Apply
+      21.20-10 Perform
+      21.20-11 PermListList
+      21.20-12 [33X[0;0YMaximum[133X
+      21.20-13 [33X[0;0YMinimum[133X
+      21.20-14 [33X[0;0YMaximumList and MinimumList[133X
+      21.20-15 [33X[0;0YCartesian[133X
+      21.20-16 [33X[0;0YIteratorOfCartesianProduct[133X
+      21.20-17 Permuted
+      21.20-18 List
+      21.20-19 Filtered
+      21.20-20 Number
+      21.20-21 First
+      21.20-22 Last
+      21.20-23 ForAll
+      21.20-24 ForAny
+      21.20-25 Product
+      21.20-26 Sum
+      21.20-27 Iterated
+      21.20-28 ListN
     21.21 [33X[0;0YAdvanced List Manipulations[133X
       21.21-1 ListX
       21.21-2 SetX
@@ -779,7 +787,8 @@
     21.23 [33X[0;0YEnumerators[133X
       21.23-1 IsQuickPositionList
     21.24 [33X[0;0YPlain Lists[133X
-      21.24-1 IsPlistRep
+      21.24-1 PlainListCopy
+      21.24-2 IsPlistRep
   22 [33X[0;0YBoolean Lists[133X
     22.1 [33X[0;0YIsBlist (Filter)[133X
       22.1-1 IsBlist
@@ -812,7 +821,7 @@
       23.3-2 ImmutableVector
       23.3-3 NumberFFVector
     23.4 [33X[0;0YCoefficient List Arithmetic[133X
-      23.4-1 AddRowVector
+      23.4-1 AddVector
       23.4-2 AddCoeffs
       23.4-3 MultVector
       23.4-4 CoeffsMod
@@ -846,10 +855,10 @@
     24.4 [33X[0;0YProperties and Attributes of Matrices[133X
       24.4-1 DimensionsMat
       24.4-2 DefaultFieldOfMatrix
-      24.4-3 TraceMat
-      24.4-4 DeterminantMat
-      24.4-5 DeterminantMatDestructive
-      24.4-6 DeterminantMatDivFree
+      24.4-3 TraceMatrix
+      24.4-4 DeterminantMatrix
+      24.4-5 DeterminantMatrixDestructive
+      24.4-6 DeterminantMatrixDivFree
       24.4-7 IsEmptyMatrix
       24.4-8 IsMonomialMatrix
       24.4-9 IsDiagonalMatrix
@@ -871,7 +880,7 @@
       24.6-2 RandomInvertibleMat
       24.6-3 RandomUnimodularMat
     24.7 [33X[0;0YMatrices Representing Linear Equations and the Gaussian Algorithm[133X
-      24.7-1 RankMat
+      24.7-1 RankMatrix
       24.7-2 TriangulizedMat
       24.7-3 TriangulizeMat
       24.7-4 NullspaceMat
@@ -911,7 +920,7 @@
       24.13-3 JordanDecomposition
       24.13-4 BlownUpMat
       24.13-5 BlownUpVector
-      24.13-6 CompanionMat
+      24.13-6 CompanionMatrix
     24.14 [33X[0;0YMatrices over Finite Fields[133X
       24.14-1 ImmutableMatrix
       24.14-2 ConvertToMatrixRep
@@ -964,23 +973,87 @@
       25.6-1 OrthogonalEmbeddings
       25.6-2 ShortestVectors
   26 [33X[0;0YVector and Matrix Objects[133X
-    26.1 [33X[0;0YFundamental Ideas and Rules[133X
-    26.2 [33X[0;0YCategories of Vectors and Matrices[133X
-    26.3 [33X[0;0YConstructing Vector and Matrix Objects[133X
-    26.4 [33X[0;0YOperations for Vector Objects[133X
-      26.4-1 PositionNonZero
-      26.4-2 PositionLastNonZero
-      26.4-3 ListOp
-      26.4-4 Unpack
-      26.4-5 ConcatenationOfVectors
-      26.4-6 ExtractSubVector
-      26.4-7 ZeroVector
-      26.4-8 ConstructingFilter
-      26.4-9 [33X[0;0YRandomize[133X
-      26.4-10 WeightOfVector
-      26.4-11 DistanceOfVectors
-    26.5 [33X[0;0YOperations for Row List Matrix Objects[133X
-    26.6 [33X[0;0YOperations for Flat Matrix Objects[133X
+    26.1 [33X[0;0YConcepts and Rules for Vector and Matrix Objects[133X
+    26.2 [33X[0;0YCategories of Vector and Matrix Objects[133X
+      26.2-1 IsVectorObj
+      26.2-2 IsMatrixObj
+      26.2-3 IsMatrixOrMatrixObj
+      26.2-4 IsRowListMatrix
+    26.3 [33X[0;0YDefining Attributes of Vector and Matrix Objects[133X
+      26.3-1 [33X[0;0YBaseDomain[133X
+      26.3-2 [33X[0;0YConstructingFilter[133X
+      26.3-3 [33X[0;0YCompatibleVectorFilter[133X
+      26.3-4 Length
+      26.3-5 [33X[0;0YNumberRows and NumberColumns[133X
+    26.4 [33X[0;0YConstructing Vector and Matrix Objects[133X
+      26.4-1 [33X[0;0YNewVector and NewZeroVector[133X
+      26.4-2 [33X[0;0YVector[133X
+      26.4-3 [33X[0;0YZeroVector[133X
+      26.4-4 [33X[0;0YNewMatrix, NewZeroMatrix, NewIdentityMatrix[133X
+      26.4-5 [33X[0;0YMatrix[133X
+      26.4-6 [33X[0;0YZeroMatrix[133X
+      26.4-7 [33X[0;0YIdentityMatrix[133X
+    26.5 [33X[0;0YOperations for Base Domains of Vector and Matrix Objects[133X
+      26.5-1 [33X[0;0YOneOfBaseDomain and ZeroOfBaseDomain[133X
+    26.6 [33X[0;0YOperations for Vector and Matrix Objects[133X
+      26.6-1 [33X[0;0YComparison of Vector and Matrix Objects[133X
+      26.6-2 [33X[0;0YUnpack[133X
+      26.6-3 [33X[0;0YChangedBaseDomain[133X
+      26.6-4 [33X[0;0YRandomize[133X
+    26.7 [33X[0;0YList Like Operations for Vector Objects[133X
+      26.7-1 [33X[0;0YElement Access and Assignment for Vector Objects[133X
+      26.7-2 PositionNonZero
+      26.7-3 PositionLastNonZero
+      26.7-4 ListOp
+    26.8 [33X[0;0YArithmetical Operations for Vector Objects[133X
+      26.8-1 [33X[0;0YUnary Arithmetical Operations for Vector Objects[133X
+      26.8-2 [33X[0;0YBinary Arithmetical Operations for Vector Objects[133X
+      26.8-3 AddVector
+      26.8-4 MultVector
+    26.9 [33X[0;0YOperations for Vector Objects[133X
+      26.9-1 [33X[0;0YConcatenationOfVectors[133X
+      26.9-2 ExtractSubVector
+      26.9-3 CopySubVector
+      26.9-4 WeightOfVector
+      26.9-5 DistanceOfVectors
+    26.10 [33X[0;0YArithmetical Operations for Matrix Objects[133X
+      26.10-1 [33X[0;0YUnary Arithmetical Operations for Matrix Objects[133X
+      26.10-2 [33X[0;0YBinary Arithmetical Operations for Matrix Objects[133X
+    26.11 [33X[0;0YOperations for Matrix Objects[133X
+      26.11-1 MatElm
+      26.11-2 SetMatElm
+      26.11-3 ExtractSubMatrix
+      26.11-4 MutableCopyMatrix
+      26.11-5 CopySubMatrix
+      26.11-6 CompatibleVector
+      26.11-7 RowsOfMatrix
+      26.11-8 [33X[0;0YCompanionMatrix[133X
+    26.12 [33X[0;0YOperations for Row List Matrix Objects[133X
+      26.12-1 IsPlistVectorRep
+      26.12-2 IsPlistMatrixRep
+      26.12-3 [33X[0;0YList Access for a Row List Matrix[133X
+      26.12-4 [33X[0;0YList Assignment for a Row List Matrix[133X
+      26.12-5 [33X[0;0YSublist Access for a Row List Matrix[133X
+      26.12-6 [33X[0;0YSublist Assignment for a Row List Matrix[133X
+      26.12-7 IsBound\[\]
+      26.12-8 Unbind\[\]
+      26.12-9 Add
+      26.12-10 Remove
+      26.12-11 Append
+      26.12-12 ShallowCopy
+      26.12-13 ListOp
+    26.13 [33X[0;0YImplementing New Vector and Matrix Objects Types[133X
+    26.14 [33X[0;0YBasic operations for row/column reductions[133X
+      26.14-1 MultMatrixRowLeft
+      26.14-2 MultMatrixRowRight
+      26.14-3 MultMatrixColumnRight
+      26.14-4 MultMatrixColumnLeft
+      26.14-5 AddMatrixRowsLeft
+      26.14-6 AddMatrixRowsRight
+      26.14-7 AddMatrixColumnsRight
+      26.14-8 AddMatrixColumnsLeft
+      26.14-9 SwapMatrixRows
+      26.14-10 SwapMatrixColumns
   27 [33X[0;0YStrings and Characters[133X
     27.1 [33X[0;0YIsChar and IsString[133X
       27.1-1 IsChar
@@ -1043,6 +1116,8 @@
       27.9-4 Ordinal
       27.9-5 EvalString
       27.9-6 CrcString
+      27.9-7 HexSHA256
+      27.9-8 Pluralize
     27.10 [33X[0;0YCalendar Arithmetic[133X
       27.10-1 DaysInYear
       27.10-2 DaysInMonth
@@ -1507,7 +1582,7 @@
   39 [33X[0;0YGroups[133X
     39.1 [33X[0;0YGroup Elements[133X
     39.2 [33X[0;0YCreating Groups[133X
-      39.2-1 Group
+      39.2-1 [33X[0;0YGroup[133X
       39.2-2 GroupByGenerators
       39.2-3 GroupWithGenerators
       39.2-4 GeneratorsOfGroup
@@ -1583,7 +1658,7 @@
       39.12-6 FrattiniSubgroup
       39.12-7 PrefrattiniSubgroup
       39.12-8 PerfectResiduum
-      39.12-9 RadicalGroup
+      39.12-9 SolvableRadical
       39.12-10 Socle
       39.12-11 SupersolvableResiduum
       39.12-12 PRump
@@ -1609,20 +1684,21 @@
       39.15-9 IsMonomialGroup
       39.15-10 IsSimpleGroup
       39.15-11 IsAlmostSimpleGroup
-      39.15-12 [33X[0;0YIsomorphismTypeInfoFiniteSimpleGroup[133X
-      39.15-13 SimpleGroup
-      39.15-14 SimpleGroupsIterator
-      39.15-15 SmallSimpleGroup
-      39.15-16 AllSmallNonabelianSimpleGroups
-      39.15-17 IsFinitelyGeneratedGroup
-      39.15-18 IsSubsetLocallyFiniteGroup
-      39.15-19 IsPGroup
-      39.15-20 IsPowerfulPGroup
-      39.15-21 PrimePGroup
-      39.15-22 PClassPGroup
-      39.15-23 RankPGroup
-      39.15-24 IsPSolvable
-      39.15-25 IsPNilpotent
+      39.15-12 IsQuasisimpleGroup
+      39.15-13 [33X[0;0YIsomorphismTypeInfoFiniteSimpleGroup[133X
+      39.15-14 SimpleGroup
+      39.15-15 SimpleGroupsIterator
+      39.15-16 SmallSimpleGroup
+      39.15-17 AllSmallNonabelianSimpleGroups
+      39.15-18 IsFinitelyGeneratedGroup
+      39.15-19 IsSubsetLocallyFiniteGroup
+      39.15-20 IsPGroup
+      39.15-21 IsPowerfulPGroup
+      39.15-22 PrimePGroup
+      39.15-23 PClassPGroup
+      39.15-24 RankPGroup
+      39.15-25 IsPSolvable
+      39.15-26 IsPNilpotent
     39.16 [33X[0;0YNumerical Group Attributes[133X
       39.16-1 AbelianInvariants
       39.16-2 Exponent
@@ -1646,6 +1722,7 @@
       39.17-16 AscendingChain
       39.17-17 IntermediateGroup
       39.17-18 IntermediateSubgroups
+      39.17-19 StructuralSeriesOfGroup
     39.18 [33X[0;0YFactor Groups[133X
       39.18-1 NaturalHomomorphismByNormalSubgroup
       39.18-2 FactorGroup
@@ -1758,7 +1835,8 @@
       40.7-3 AutomorphismDomain
       40.7-4 IsAutomorphismGroup
       40.7-5 InnerAutomorphismsAutomorphismGroup
-      40.7-6 InducedAutomorphism
+      40.7-6 InnerAutomorphismGroup
+      40.7-7 InducedAutomorphism
     40.8 [33X[0;0YCalculating with Group Automorphisms[133X
       40.8-1 AssignNiceMonomorphismAutomorphismGroup
       40.8-2 NiceMonomorphismAutomGroup
@@ -2276,6 +2354,8 @@
       49.4-2 WreathProductImprimitiveAction
       49.4-3 WreathProductProductAction
       49.4-4 KuKGenerators
+      49.4-5 ListWreathProductElement
+      49.4-6 WreathProductElementList
     49.5 [33X[0;0YFree Products[133X
       49.5-1 [33X[0;0YFreeProduct[133X
     49.6 [33X[0;0YEmbeddings and Projections for Group Products[133X
@@ -2298,6 +2378,7 @@
       50.1-13 MathieuGroup
       50.1-14 SuzukiGroup
       50.1-15 ReeGroup
+      50.1-16 [33X[0;0YGenerator Names[133X
     50.2 [33X[0;0YClassical Groups[133X
       50.2-1 [33X[0;0YGeneralLinearGroup[133X
       50.2-2 [33X[0;0YSpecialLinearGroup[133X
@@ -2314,7 +2395,11 @@
       50.2-13 ProjectiveGeneralUnitaryGroup
       50.2-14 ProjectiveSpecialUnitaryGroup
       50.2-15 ProjectiveSymplecticGroup
-      50.2-16 ProjectiveOmega
+      50.2-16 ProjectiveGeneralOrthogonalGroup
+      50.2-17 ProjectiveSpecialOrthogonalGroup
+      50.2-18 ProjectiveOmega
+      50.2-19 ProjectiveGeneralSemilinearGroup
+      50.2-20 ProjectiveSpecialSemilinearGroup
     50.3 [33X[0;0YConjugacy Classes in Classical Groups[133X
       50.3-1 NrConjugacyClassesGL
     50.4 [33X[0;0YConstructors for Basic Groups[133X
@@ -2324,10 +2409,9 @@
       50.6-2 [33X[0;0YPerfectGroup[133X
       50.6-3 PerfectIdentification
       50.6-4 NumberPerfectGroups
-      50.6-5 NumberPerfectLibraryGroups
-      50.6-6 SizeNumbersPerfectGroups
-      50.6-7 [33X[0;0YDisplayInformationPerfectGroups[133X
-      50.6-8 [33X[0;0YMore about the Perfect Groups Library[133X
+      50.6-5 SizeNumbersPerfectGroups
+      50.6-6 [33X[0;0YDisplayInformationPerfectGroups[133X
+      50.6-7 [33X[0;0YMore about the Perfect Groups Library[133X
     50.7 [33X[0;0YIrreducible Maximal Finite Integral Matrix Groups[133X
       50.7-1 ImfNumberQQClasses
       50.7-2 DisplayImfInvariants
@@ -2457,10 +2541,17 @@
       53.3-2 RestrictedTransformation
       53.3-3 PermutationOfImage
     53.4 [33X[0;0YOperators for transformations[133X
-      53.4-1 PermLeftQuoTransformation
-      53.4-2 IsInjectiveListTrans
-      53.4-3 ComponentTransformationInt
-      53.4-4 PreImagesOfTransformation
+      53.4-1 \^
+      53.4-2 \^
+      53.4-3 \*
+      53.4-4 \/
+      53.4-5 LeftQuotient
+      53.4-6 \<
+      53.4-7 \=
+      53.4-8 PermLeftQuoTransformation
+      53.4-9 IsInjectiveListTrans
+      53.4-10 ComponentTransformationInt
+      53.4-11 PreImagesOfTransformation
     53.5 [33X[0;0YAttributes for transformations[133X
       53.5-1 DegreeOfTransformation
       53.5-2 ImageListOfTransformation
@@ -2534,12 +2625,21 @@
       54.4-1 AsPartialPerm
       54.4-2 AsPartialPerm
     54.5 [33X[0;0YOperators and operations for partial permutations[133X
-      54.5-1 PermLeftQuoPartialPerm
-      54.5-2 PreImagePartialPerm
-      54.5-3 ComponentPartialPermInt
-      54.5-4 NaturalLeqPartialPerm
-      54.5-5 ShortLexLeqPartialPerm
-      54.5-6 TrimPartialPerm
+      54.5-1 Inverse
+      54.5-2 \^
+      54.5-3 \/
+      54.5-4 \^
+      54.5-5 \*
+      54.5-6 \/
+      54.5-7 LeftQuotient
+      54.5-8 \<
+      54.5-9 \=
+      54.5-10 PermLeftQuoPartialPerm
+      54.5-11 PreImagePartialPerm
+      54.5-12 ComponentPartialPermInt
+      54.5-13 NaturalLeqPartialPerm
+      54.5-14 ShortLexLeqPartialPerm
+      54.5-15 TrimPartialPerm
     54.6 [33X[0;0YDisplaying partial permutations[133X
     54.7 [33X[0;0YSemigroups and inverse semigroups of partial permutations[133X
       54.7-1 IsPartialPermSemigroup
@@ -2726,6 +2826,7 @@
       59.2-4 IntFFESymm
       59.2-5 IntVecFFE
       59.2-6 AsInternalFFE
+      59.2-7 RootFFE
     59.3 [33X[0;0YCreating Finite Fields[133X
       59.3-1 DefaultField
       59.3-2 GaloisField
@@ -2829,6 +2930,10 @@
       61.12-1 DeclareHandlingByNiceBasis
       61.12-2 NiceBasisFiltersInfo
       61.12-3 CheckForHandlingByNiceBasis
+    61.13 [33X[0;0YTensor Products and Exterior and Symmetric Powers[133X
+      61.13-1 TensorProduct
+      61.13-2 ExteriorPower
+      61.13-3 SymmetricPower
   62 [33X[0;0YAlgebras[133X
     62.1 [33X[0;0YInfoAlgebra (Info Class)[133X
       62.1-1 InfoAlgebra
@@ -3121,6 +3226,7 @@
       66.13-3 IndeterminateNumberOfLaurentPolynomial
     66.14 [33X[0;0YUnivariate Rational Functions[133X
       66.14-1 UnivariateRationalFunctionByCoefficients
+      66.14-2 TaylorSeriesRationalFunction
     66.15 [33X[0;0YPolynomial Rings and Function Fields[133X
       66.15-1 [33X[0;0YPolynomialRing[133X
       66.15-2 IndeterminatesOfPolynomialRing
@@ -3651,12 +3757,14 @@
       76.3-9 CompareVersionNumbers
       76.3-10 DeclareAutoreadableVariables
       76.3-11 [33X[0;0YKernel modules in [5XGAP[105X packages[133X
-      76.3-12 LoadDynamicModule
-      76.3-13 [33X[0;0YThe PackageInfo.g File[133X
-      76.3-14 ValidatePackageInfo
-      76.3-15 ShowPackageVariables
-      76.3-16 BibEntry
-      76.3-17 Cite
+      76.3-12 IsKernelExtensionAvailable
+      76.3-13 LoadKernelExtension
+      76.3-14 LoadDynamicModule
+      76.3-15 [33X[0;0YThe PackageInfo.g File[133X
+      76.3-16 ValidatePackageInfo
+      76.3-17 ShowPackageVariables
+      76.3-18 BibEntry
+      76.3-19 Cite
     76.4 [33X[0;0YGuidelines for Writing a GAP Package[133X
     76.5 [33X[0;0YStructure of a GAP Package[133X
     76.6 [33X[0;0YWriting Documentation and Tools Needed[133X
@@ -3711,7 +3819,8 @@
     78.3 [33X[0;0YMethod Installation[133X
       78.3-1 InstallMethod
       78.3-2 InstallOtherMethod
-      78.3-3 InstallMethodWithRandomSource
+      78.3-3 InstallEarlyMethod
+      78.3-4 InstallMethodWithRandomSource
     78.4 [33X[0;0YApplicable Methods and Method Selection[133X
     78.5 [33X[0;0YPartial Methods[133X
       78.5-1 TryNextMethod
@@ -3719,6 +3828,7 @@
       78.6-1 RedispatchOnCondition
     78.7 [33X[0;0YImmediate Methods[133X
       78.7-1 InstallImmediateMethod
+      78.7-2 IsNoImmediateMethodsObject
     78.8 [33X[0;0YLogical Implications[133X
       78.8-1 InstallTrueMethod
       78.8-2 SuspendMethodReordering
@@ -3738,11 +3848,12 @@
       79.8-1 ExtRepOfObj
     79.9 [33X[0;0YMutability and Copying[133X
     79.10 [33X[0;0YGlobal Variables in the Library[133X
-      79.10-1 DeclareGlobalVariable
-      79.10-2 InstallValue
-      79.10-3 FlushCaches
-      79.10-4 DeclareGlobalFunction
-      79.10-5 DeclareSynonym
+      79.10-1 DeclareGlobalName
+      79.10-2 DeclareGlobalVariable
+      79.10-3 InstallValue
+      79.10-4 FlushCaches
+      79.10-5 DeclareGlobalFunction
+      79.10-6 DeclareSynonym
     79.11 [33X[0;0YDeclaration and Implementation Part[133X
   80 [33X[0;0YExamples of Extending the System[133X
     80.1 [33X[0;0YAddition of a Method[133X
@@ -3796,7 +3907,6 @@
       86.2-1 SetElmWPObj
     86.3 [33X[0;0YAccessing Weak Pointer Objects as Lists[133X
     86.4 [33X[0;0YCopying Weak Pointer Objects[133X
-    86.5 [33X[0;0YThe GASMAN Interface for Weak Pointer Objects[133X
   87 [33X[0;0YMore about Stabilizer Chains[133X
     87.1 [33X[0;0YGeneralized Conjugation Technique[133X
     87.2 [33X[0;0YThe General Backtrack Algorithm with Ordered Partitions[133X

@@ -14,12 +14,11 @@
 # Free Software Foundation (FSF); either version 2.1 of the License, or
 # (at your option) any later version. For details, see the file 'LGPL' in
 # the doc subdirectory of the GBNP distribution or see the FSF's own site:
-# http://www.gnu.org/licenses/lgpl.html
+# https://www.gnu.org/licenses/lgpl.html
 ########################## END COPYRIGHT MESSAGE ##########################
 
 ### filename = "trunc.gi" 
 ### authors Cohen & Gijsbers
-### vs 0.9 $Id: trunc.gi 12772 2010-01-15 13:10:24Z jwk $
 
 ### THIS IS PART OF A GAP PACKAGE FOR COMPUTING NON-COMMUTATIVE GROBNER BASES 
  
@@ -352,7 +351,7 @@ end;
 ################## 
 ### CheckHomogeneousNPs
 ### <#GAPDoc Label="CheckHomogeneousNPs">
-### <ManSection Label="CheckHomogeneousNPs">
+### <ManSection>
 ### <Func Name="CheckHomogeneousNPs" Arg="Lnp, wtv" />
 ### <Returns>
 ### A list of weighted degrees of the polynomials if these are homogeneous
@@ -554,7 +553,7 @@ GBNP.MakeArgumentLevel:=function(mons,n) local i,hlp,mon,ans,arg;
 ################## 
 ### SGrobnerTrunc
 ### <#GAPDoc Label="SGrobnerTrunc">
-### <ManSection Label="SGrobnerTrunc">
+### <ManSection>
 ### <Func Name="SGrobnerTrunc"  Arg="Lnp, deg, wtv" />
 ### <Returns>
 ### A list of homogeneous NP polynomials if the first argument
@@ -604,7 +603,7 @@ end);
 ################## 
 ### BaseQATrunc
 ### <#GAPDoc Label="BaseQATrunc">
-### <ManSection Label="BaseQATrunc">
+### <ManSection>
 ### <Func Name="BaseQATrunc" Arg="Lnp, deg, wtv" />
 ### <Returns>
 ### A list of monomials if the first argument
@@ -652,7 +651,7 @@ end);
 ################## 
 ### DimsQATrunc
 ### <#GAPDoc Label="DimsQATrunc">
-### <ManSection Label="DimsQATrunc">
+### <ManSection>
 ### <Func Name="DimsQATrunc" Arg="Lnp, deg, wtv" />
 ### <Returns>
 ### A list of monomials if the first argument
@@ -706,7 +705,7 @@ end);
 ################## 
 ### FreqsQATrunc
 ### <#GAPDoc Label="FreqsQATrunc">
-### <ManSection Label="FreqsQATrunc">
+### <ManSection>
 ### <Func Name="FreqsQATrunc"  Arg="Lnp, deg, wtv" />
 ### <Returns>
 ### A list of multiplicities of frequencies of monomials if the first argument

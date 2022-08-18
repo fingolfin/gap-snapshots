@@ -33,8 +33,7 @@
 ##
 ##  
 
-BindGlobal("IsCoeffsModConwayPolRep", 
-        NewRepresentation( "IsCoeffsModConwayPolRep", IsPositionalObjectRep,3));
+DeclareRepresentation("IsCoeffsModConwayPolRep", IsPositionalObjectRep, 3);
 
 #############################################################################
 ##
@@ -172,7 +171,7 @@ InstallOtherMethod(ZOp,
         function(p,d)
     local   q;
     if not IsPrimeInt(p) then
-        Error("Z: <p> must be a prime");
+        Error("Z: <p> must be a prime (not the integer ", p, ")");
     fi;
     q := p^d;
     if q <= MAXSIZE_GF_INTERNAL or d =1 then
@@ -192,7 +191,7 @@ InstallMethod(ZOp,
     d := LogInt(q,p);
     Assert(1, q=p^d);
     if not IsPrimeInt(p) then
-        Error("Z: <q> must be a positive prime power");
+        Error("Z: <q> must be a positive prime power (not the integer ", q, ")");
     fi;
     if d > 1 then
         return FFECONWAY.ZNC(p,d);
@@ -213,7 +212,7 @@ end);
 ## output methods
 ##
 
-InstallMethod(String,"For large finite field elements",
+InstallMethod(String,"for large finite field elements",
         [IsFFE and IsCoeffsModConwayPolRep], 
         function(x)
     local   started,  coeffs,  fam,  s,  str,  i;
@@ -294,17 +293,17 @@ BindGlobal( "DisplayStringForLargeFiniteFieldElements",
     return s;
   end );
 
-InstallMethod(DisplayString,"For large finite field elements",
+InstallMethod(DisplayString,"for large finite field elements",
         [IsFFE and IsCoeffsModConwayPolRep], 
         DisplayStringForLargeFiniteFieldElements );
 
-InstallMethod(Display,"For large finite field elements",
+InstallMethod(Display,"for large finite field elements",
         [IsFFE and IsCoeffsModConwayPolRep], 
         function(x)
     Print(DisplayString(x));
 end);
 
-InstallMethod(ViewString,"For large finite field elements",
+InstallMethod(ViewString,"for large finite field elements",
         [IsFFE and IsCoeffsModConwayPolRep], 
         function(x)
     local   s;
@@ -319,7 +318,7 @@ InstallMethod(ViewString,"For large finite field elements",
     fi;
 end);
 
-InstallMethod(ViewObj, "For large finite field elements",
+InstallMethod(ViewObj, "for large finite field elements",
         [IsFFE and IsCoeffsModConwayPolRep], 
         function(x)
     Print(ViewString(x));
@@ -396,7 +395,7 @@ FFECONWAY.FiniteFieldEmbeddingRecord := function(p, d1,d2)
         z1 := PowerModCoeffs(x,n,c);
         fam!.ConwayFldEltReducers[d2](z1);
         m := [ZeroMutable(z1),z1];
-        m[1][1] := Z(p)^0;
+        m[1,1] := Z(p)^0;
         z := z1;
         for i in [2..d1-1] do
             z := ProductCoeffs(z,z1);
@@ -1499,7 +1498,7 @@ end);
 #M Coefficients of an element wrt the canonical basis -- are stored in the 
 ##                                                       element
 InstallMethod(Coefficients,
-        "For a FFE in Conway polynomial represntation wrt the canonical basis of its natural field",
+        "for a FFE in Conway polynomial representation wrt the canonical basis of its natural field",
         IsCollsElms,
         [IsCanonicalBasis and IsBasisFiniteFieldRep, IsFFE and IsCoeffsModConwayPolRep],
         function(cb,x)
@@ -1637,11 +1636,11 @@ InstallMethod( Display,
         TryNextMethod();
     fi;
     deg  := Lcm( List( m, DegreeFFE ) );
-    chr  := Characteristic(m[1][1]);
+    chr  := Characteristic(m[1,1]);
     if deg = 1 or chr^deg <= MAXSIZE_GF_INTERNAL then
         TryNextMethod();
     fi;
-    zero := Zero(m[1][1]);
+    zero := Zero(m[1,1]);
     Print("z = Z( ",chr,", ",deg,"); z2 = z^2, etc.\n");
     d := [];
     w := 1;

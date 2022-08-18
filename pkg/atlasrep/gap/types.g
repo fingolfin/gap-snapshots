@@ -314,36 +314,19 @@ AGR.DeclareDataType( "rep", "perm", rec(
 
     # We store the type, the full filename, and the list of CRC values.
     TOCEntryString := function( typename, entry )
-      local list, pos, name, crc, i, info;
+      local list, pos, name, crc, info;
 
       list:= AtlasOfGroupRepresentationsInfo.filenames;
       pos:= List( entry[5], nam -> PositionSorted( list, [ nam ] ) );
       if ForAll( pos, x -> x <= Length( list ) ) and
          List( pos, x -> list[x][1] ) = entry[5] then
         name:= list[ pos[1] ][2];
-        crc:= [];
-        for i in [ 1 .. Length( pos ) ] do
-          if Length( list[ pos[i] ] ) < 4 then
-            # There is no crc value yet.
-            # If the file is available locally then compute the value,
-            # otherwise leave it out.
-            info:= AtlasOfGroupRepresentationsLocalFilename(
-                       [ list[ pos[i] ]{ [ 3, 1 ] } ], typename );
-            info:= First( info, l -> l[2][1][2] = true );
-            if info <> fail then
-              crc[i]:= CrcFile( info[2][1][1] );
-            else
-              crc[i]:= fail;
-            fi;
-          else
-            crc[i]:= list[ pos[i] ][4];
-          fi;
-        od;
+        crc:= List( pos, i -> AGR_Checksum( list[i], typename ) );
         info:= Concatenation( "\"", typename, "\",\"",
             name{ [ 1 .. PositionSublist( name, ".m" ) + 1 ] }, "\"" );
         if not fail in crc then
-          Append( info, Concatenation( ",",
-                            ReplacedString( String( crc ), " ", "" ) ) );
+          Append( info, Concatenation( ",[",
+                            JoinStringsWithSeparator( crc, "," ), "]" ) );
         fi;
         return info;
       fi;
@@ -354,6 +337,9 @@ AGR.DeclareDataType( "rep", "perm", rec(
     # Note that `ScanMeatAxeFile' returns a list of permutations.
     ReadAndInterpretDefault := paths -> Concatenation( List( paths,
                                             ScanMeatAxeFile ) ),
+
+    InterpretDefault := strings -> Concatenation( List( strings,
+                                 str -> ScanMeatAxeFile( str, "string" ) ) ),
     ) );
 
 
@@ -571,36 +557,19 @@ AGR.DeclareDataType( "rep", "matff",   rec(
 
     # We store the type, the full filename, and the list of CRC values.
     TOCEntryString := function( typename, entry )
-      local list, pos, name, crc, i, info;
+      local list, pos, name, crc, info;
 
       list:= AtlasOfGroupRepresentationsInfo.filenames;
       pos:= List( entry[6], nam -> PositionSorted( list, [ nam ] ) );
       if ForAll( pos, x -> x <= Length( list ) ) and
          List( pos, x -> list[x][1] ) = entry[6] then
         name:= list[ pos[1] ][2];
-        crc:= [];
-        for i in [ 1 .. Length( pos ) ] do
-          if Length( list[ pos[i] ] ) < 4 then
-            # There is no crc value yet.
-            # If the file is available locally then compute the value,
-            # otherwise leave it out.
-            info:= AtlasOfGroupRepresentationsLocalFilename(
-                       [ list[ pos[i] ]{ [ 3, 1 ] } ], typename );
-            info:= First( info, l -> l[2][1][2] = true );
-            if info <> fail then
-              crc[i]:= CrcFile( info[2][1][1] );
-            else
-              crc[i]:= fail;
-            fi;
-          else
-            crc[i]:= list[ pos[i] ][4];
-          fi;
-        od;
+        crc:= List( pos, i -> AGR_Checksum( list[i], typename ) );
         info:= Concatenation( "\"", typename, "\",\"",
             name{ [ 1 .. PositionSublist( name, ".m" ) + 1 ] }, "\"" );
         if not fail in crc then
-          Append( info, Concatenation( ",",
-                            ReplacedString( String( crc ), " ", "" ) ) );
+          Append( info, Concatenation( ",[",
+                            JoinStringsWithSeparator( crc, "," ), "]" ) );
         fi;
         return info;
       fi;
@@ -609,6 +578,9 @@ AGR.DeclareDataType( "rep", "matff",   rec(
 
     # The default access reads the text format files.
     ReadAndInterpretDefault := paths -> List( paths, ScanMeatAxeFile ),
+
+    InterpretDefault := strings -> Concatenation( List( strings,
+                                 str -> ScanMeatAxeFile( str, "string" ) ) ),
     ) );
 
 
@@ -729,8 +701,21 @@ AGR.DeclareDataType( "rep", "matint",  rec(
     SortTOCEntries := entry -> entry{ [ 2, 3 ] },
 
     # There is only one file.
-    ReadAndInterpretDefault := paths -> AtlasDataGAPFormatFile(
-                                            paths[1] ).generators,
+    ReadAndInterpretDefault := function( paths )
+      if EndsWith( paths[1], ".json" ) then
+        return AtlasDataJsonFormatFile( paths[1] ).generators;
+      else
+        return AtlasDataGAPFormatFile( paths[1] ).generators;
+      fi;
+    end,
+
+    InterpretDefault := function( strings )
+      if strings[1][1] = '{' then
+        return AtlasDataJsonFormatFile( strings[1] ).generators;
+      else
+        return AtlasDataGAPFormatFile( strings[1] ).generators;
+      fi;
+    end,
     ) );
 
 
@@ -757,7 +742,7 @@ AGR.DeclareDataType( "rep", "matalg",  rec(
                         [ ParseBackwards, ParseForwards ] ],
 
     AddDescribingComponents := function( record, type )
-      local repid, parsed, info, pos;
+      local repid, parsed, info, F, gens, pos;
 
       repid:= record.identifier[2];
       if not IsString( repid ) then
@@ -771,7 +756,16 @@ AGR.DeclareDataType( "rep", "matalg",  rec(
       info:= First( AtlasOfGroupRepresentationsInfo.ringinfo,
                     x -> x[1] = info );
       if info <> fail then
-        record.ring:= info[3];
+        F:= info[3];
+        record.ring:= F;
+        if IsField( F ) then
+          gens:= GeneratorsOfField( F );
+          if Length( gens ) = 1 then
+            # is true for all currently available representations
+            record.polynomial:= CoefficientsOfUnivariatePolynomial(
+                                    MinimalPolynomial( Rationals, gens[1] ) );
+          fi;
+        fi;
       fi;
       if IsBound( AtlasOfGroupRepresentationsInfo.characterinfo.(
                       record.groupname ) ) then
@@ -815,13 +809,22 @@ AGR.DeclareDataType( "rep", "matalg",  rec(
           and AGR.CheckOneCondition( Ring,
                   x -> IsIdenticalObj( x, Cyclotomics ) or
                        ( not IsBound( info.ring ) and x = fail ) or
+                       # case of a field consisting of cyclotomics
                        ( IsBound( info.ring ) and
                          ( ( IsFunction( x ) and x( info.ring ) = true )
                            or ( IsRing( x ) and IsCyclotomicCollection( x )
 #T problem with GAP:
 #T 'IsSubset( Integers, CF(5) )' runs into an error
                                 and ( not IsIdenticalObj( x, Integers ) and
-                                      IsSubset( x, info.ring ) ) ) ) ), cond )
+                                      IsSubset( x, info.ring ) ) ) ) ) or
+                       # case of a field not consisting of cyclotomics
+                       ( IsBound( info.ring ) and
+                         IsBound( info.polynomial ) and
+                         IsField( x ) and
+                         1 in List( Factors(
+                                      UnivariatePolynomial( x,
+                                        info.polynomial * One( x ), 1 ) ),
+                                    Degree ) ), cond )
           and AGR.CheckOneCondition( Identifier,
                   x -> ( IsFunction( x ) and x( info.id ) = true )
                        or info.id = x, cond )
@@ -843,7 +846,7 @@ AGR.DeclareDataType( "rep", "matalg",  rec(
                  fi;
                  filename:= filename{ [ 1 .. Position( filename, '.' )-1 ] };
                  info:= First( AtlasOfGroupRepresentationsInfo.ringinfo,
-                               triple -> triple[1] = filename );
+                               l -> l[1] = filename );
                  if info = fail then
                    return Concatenation( "field info for `",filename,
                               "' missing" );
@@ -897,8 +900,14 @@ AGR.DeclareDataType( "rep", "matalg",  rec(
     SortTOCEntries := entry -> entry{ [ 2, 3 ] },
 
     # There is only one file.
-    ReadAndInterpretDefault := paths -> AtlasDataGAPFormatFile(
-                                            paths[1] ).generators,
+    # It may be a GAP format file or a Json format file.
+    ReadAndInterpretDefault := function( paths )
+      if EndsWith( paths[1], ".json" ) then
+        return AtlasDataJsonFormatFile( paths[1] ).generators;
+      else
+        return AtlasDataGAPFormatFile( paths[1] ).generators;
+      fi;
+    end,
     ) );
 
 
@@ -962,7 +971,7 @@ AGR.DeclareDataType( "rep", "matmodn", rec(
                   R -> ( IsFunction( R ) and R( info.ring ) ) or
                        ( IsRing( R )
                   and IsZmodnZObjNonprimeCollection( R )
-                  and ModulusOfZmodnZObj( One( R ) ) = Size( info.ring ) ),
+                  and Characteristic( One( R ) ) = Size( info.ring ) ),
                   cond )
           and AGR.CheckOneCondition( Identifier,
                   x -> ( IsFunction( x ) and x( info.id ) = true )
@@ -987,7 +996,7 @@ AGR.DeclareDataType( "rep", "matmodn", rec(
                  if   not IsZmodnZObjNonprimeCollCollColl( mats ) then
                    return Concatenation( "matrices in `", filename,
                               "' are not over a residue class ring" );
-                 elif ModulusOfZmodnZObj( mats[1][1][1] ) <> entry[2] then
+                 elif Characteristic( mats[1][1,1] ) <> entry[2] then
                    return Concatenation( "matrices in `", filename,
                               "' are not over Z/", entry[2], "Z" );
                  fi;
@@ -1002,6 +1011,9 @@ AGR.DeclareDataType( "rep", "matmodn", rec(
     # There is only one file.
     ReadAndInterpretDefault := paths -> AtlasDataGAPFormatFile(
                                             paths[1] ).generators,
+
+    InterpretDefault := strings -> AtlasDataGAPFormatFile(
+                                       strings[1], "string" ).generators,
     ) );
 
 
@@ -1090,7 +1102,7 @@ AGR.DeclareDataType( "rep", "quat",  rec(
                  fi;
                  filename:= filename{ [ 1 .. Position( filename, '.' )-1 ] };
                  info:= First( AtlasOfGroupRepresentationsInfo.ringinfo,
-                               triple -> triple[1] = filename );
+                               l -> l[1] = filename );
                  if info = fail then
                    return Concatenation( "field info for `",filename,
                               "' missing" );
@@ -1143,6 +1155,9 @@ AGR.DeclareDataType( "rep", "quat",  rec(
     # There is only one file.
     ReadAndInterpretDefault := paths -> AtlasDataGAPFormatFile(
                                             paths[1] ).generators,
+
+    InterpretDefault := strings -> AtlasDataGAPFormatFile(
+                                       strings[1], "string" ).generators,
     ) );
 
 
@@ -1548,7 +1563,7 @@ AGR.DeclareDataType( "prg", "maxes", rec(
             return fail;
           fi;
           prog:= [ prog.program, kerprg.program ];
-          prog:= IntegratedStraightLineProgramExt( prog );
+          prog:= IntegratedStraightLineProgram( prog );
         fi;
         result:= rec( program         := prog,
                       standardization := std,
@@ -1863,6 +1878,9 @@ AGR.DeclareDataType( "prg", "maxes", rec(
 
     # There is only one file.
     ReadAndInterpretDefault := paths -> ScanStraightLineProgram( paths[1] ),
+
+    InterpretDefault := strings -> ScanStraightLineProgram( strings[1],
+                                       "string" ),
     ) );
 
 
@@ -2233,6 +2251,9 @@ AGR.DeclareDataType( "prg", "classes", rec(
 
     # There is only one file.
     ReadAndInterpretDefault := paths -> ScanStraightLineProgram( paths[1] ),
+
+    InterpretDefault := strings -> ScanStraightLineProgram( strings[1],
+                                       "string" ),
     ) );
 
 
@@ -2338,6 +2359,9 @@ AGR.DeclareDataType( "prg", "cyclic", rec(
 
     # There is only one file.
     ReadAndInterpretDefault := paths -> ScanStraightLineProgram( paths[1] ),
+
+    InterpretDefault := strings -> ScanStraightLineProgram( strings[1],
+                                       "string" ),
     ) );
 
 
@@ -2427,6 +2451,9 @@ AGR.DeclareDataType( "prg", "cyc2ccl", rec(
 
     # There is only one file.
     ReadAndInterpretDefault := paths -> ScanStraightLineProgram( paths[1] ),
+
+    InterpretDefault := strings -> ScanStraightLineProgram( strings[1],
+                                       "string" ),
     ) );
 
 
@@ -2549,6 +2576,9 @@ AGR.DeclareDataType( "prg", "kernel", rec(
 
     # There is only one file.
     ReadAndInterpretDefault := paths -> ScanStraightLineProgram( paths[1] ),
+
+    InterpretDefault := strings -> ScanStraightLineProgram( strings[1],
+                                       "string" ),
     ) );
 
 
@@ -2692,6 +2722,9 @@ AGR.DeclareDataType( "prg", "maxstd", rec(
 
     # There is only one file.
     ReadAndInterpretDefault := paths -> ScanStraightLineProgram( paths[1] ),
+
+    InterpretDefault := strings -> ScanStraightLineProgram( strings[1],
+                                       "string" ),
     ) );
 
 
@@ -3041,6 +3074,9 @@ AGR.DeclareDataType( "prg", "out", rec(
 
     # There is only one file.
     ReadAndInterpretDefault := paths -> ScanStraightLineProgram( paths[1] ),
+
+    InterpretDefault := strings -> ScanStraightLineProgram( strings[1],
+                                       "string" ),
     ) );
 
 
@@ -3147,6 +3183,9 @@ AGR.DeclareDataType( "prg", "switch", rec(
 
     # There is only one file.
     ReadAndInterpretDefault := paths -> ScanStraightLineProgram( paths[1] ),
+
+    InterpretDefault := strings -> ScanStraightLineProgram( strings[1],
+                                       "string" ),
     ) );
 
 
@@ -3251,6 +3290,8 @@ AGR.DeclareDataType( "prg", "find", rec(
     # There is only one file.
     ReadAndInterpretDefault := paths -> ScanBBoxProgram( AGR.StringFile(
                                                              paths[1] ) ),
+
+    InterpretDefault := strings -> ScanBBoxProgram( strings[1] ),
 
     # If there is a representation for this group (independent of the
     # standardization) then we apply the script, and check whether at least
@@ -3470,6 +3511,8 @@ AGR.DeclareDataType( "prg", "check", rec(
     # There is only one file.
     ReadAndInterpretDefault := paths -> ScanStraightLineDecision(
                                             AGR.StringFile( paths[1] ) ),
+
+    InterpretDefault := strings -> ScanStraightLineDecision( strings[1] ),
     ) );
 
 
@@ -3535,6 +3578,8 @@ AGR.DeclareDataType( "prg", "pres", rec(
         fi;
       od;
 
+#T better add rows for pres. obtained by restandardization,
+#T in analogy to the maxes scripts plus "std." info
       return AGR.CommonDisplayPRG( "presentation", stdavail, data, true );
     end,
 
@@ -3542,7 +3587,7 @@ AGR.DeclareDataType( "prg", "pres", rec(
     # conditions: `[ "presentation" ]'
     #             or together with `[ "version", <vers> ]'
     AccessPRG := function( toc, groupname, std, conditions )
-      local version, record, entry;
+      local version, record, entry, tocs, toc2, record2, entry2, switch, pres;
 
       if not IsBound( toc.( groupname ) ) then
         return fail;
@@ -3557,6 +3602,7 @@ AGR.DeclareDataType( "prg", "pres", rec(
       record:= toc.( groupname );
 
       if IsBound( record.pres ) then
+        # Look for a presentation in the required standardization.
         for entry in record.pres do
           if ( std = true or entry[1] in std ) and
              ( version = true or AGR.VersionOfSLP( entry[3] ) = version ) then
@@ -3568,7 +3614,128 @@ AGR.DeclareDataType( "prg", "pres", rec(
             return entry;
           fi;
         od;
+        if std <> true then
+          # Look for a presentation in another standardization
+          # such that we have a restandardization program
+          # (in *any* table of contents).
+          tocs:= AGR.TablesOfContents( "all" );
+          for entry in record.pres do
+            if version = true or AGR.VersionOfSLP( entry[3] ) = version then
+              for toc2 in tocs do
+                if IsBound( toc2.( groupname ) ) then
+                  record2:= toc2.( groupname );
+                  if IsBound( record2.switch ) then
+                    for entry2 in record2.switch do
+                      if entry2[1] in std and entry2[2] = entry[1] then
+                        pres:= entry[3];
+                        if toc.TocID <> "core" then
+                          pres:= [ toc.TocID, pres ];
+                        fi;
+                        switch:= entry2[3];
+                        if toc2.TocID <> "core" then
+                          switch:= [ toc2.TocID, switch ];
+                        fi;
+                        return [ [ pres, switch ], entry2[1], entry[1] ];
+                      fi;
+                    od;
+                  fi;
+                fi;
+              od;
+            fi;
+          od;
+        fi;
       fi;
+      return fail;
+    end,
+
+    # Create the program info from the identifier.
+    AtlasProgramInfo := function( type, identifier, groupname )
+      local filename;
+
+      # If only one file is involved then use the default function.
+      filename:= identifier[2];
+      if IsString( filename ) or Length( filename ) = 1 then
+        return AtlasProgramInfoDefault( type, identifier, groupname );
+      fi;
+
+      # Two files are involved.
+      filename:= identifier[2][1];
+      if not IsString( filename ) then
+        filename:= filename[2];
+      fi;
+      type:= First( AGR.DataTypes( "prg" ), x -> x[1] = "pres" );
+      if AGR.ParseFilenameFormat( filename, type[2].FilenameFormat )
+             = fail then
+        return fail;
+      fi;
+
+      filename:= identifier[2][2];
+      if not IsString( filename ) then
+        filename:= filename[2];
+      fi;
+      type:= First( AGR.DataTypes( "prg" ), x -> x[1] = "switch" );
+      if AGR.ParseFilenameFormat( filename, type[2].FilenameFormat )
+             = fail then
+        return fail;
+      fi;
+
+      return rec( standardization := identifier[3],
+                  identifier      := identifier );
+    end,
+
+    # Create the program from the identifier.
+    AtlasProgram := function( type, identifier, groupname )
+      local type1, entry1, filename, type2, entry2, prog1, prog2, prog,
+            result;
+
+      if IsString( identifier[2] ) or Length( identifier[2] ) = 1 then
+        # The second entry describes one file.
+        return AtlasProgramDefault( type, identifier, groupname );
+      elif Length( identifier[2] ) = 2 then
+        # The second entry describes two files to be composed.
+        type1:= First( AGR.DataTypes( "prg" ), x -> x[1] = "switch" );
+        entry1:= identifier[2][2];
+        if IsString( entry1 ) then
+          filename:= entry1;
+          entry1:= [ "dataword", entry1 ];
+        else
+          filename:= entry1[2];
+        fi;
+        if AGR.ParseFilenameFormat( filename, type1[2].FilenameFormat )
+               = fail then
+          return fail;
+        fi;
+
+        type2:= First( AGR.DataTypes( "prg" ), x -> x[1] = "pres" );
+        entry2:= identifier[2][1];
+        if IsString( entry2 ) then
+          filename:= entry2;
+          entry2:= [ "dataword", entry2 ];
+        else
+          filename:= entry2[2];
+        fi;
+        if AGR.ParseFilenameFormat( filename, type2[2].FilenameFormat )
+               = fail then
+          return fail;
+        fi;
+
+        prog1:= AGR.FileContents( [ entry1 ], type1 );
+        if prog1 = fail then
+          return fail;
+        fi;
+        prog2:= AGR.FileContents( [ entry2 ], type2 );
+        if prog2 = fail then
+          return fail;
+        fi;
+
+        prog:= CompositionOfSLDAndSLP( prog2.program, prog1.program );
+        if prog <> fail then
+          return rec( program         := prog,
+                      standardization := identifier[3],
+                      identifier      := identifier );
+        fi;
+      fi;
+
       return fail;
     end,
 
@@ -3580,6 +3747,8 @@ AGR.DeclareDataType( "prg", "pres", rec(
     # There is only one file.
     ReadAndInterpretDefault := paths -> ScanStraightLineDecision(
                                             AGR.StringFile( paths[1] ) ),
+
+    InterpretDefault := strings -> ScanStraightLineDecision( strings[1] ),
     ) );
 
 
@@ -3689,6 +3858,9 @@ AGR.DeclareDataType( "prg", "otherscripts", rec(
 
     # There is only one file.
     ReadAndInterpretDefault := paths -> ScanStraightLineProgram( paths[1] ),
+
+    InterpretDefault := strings -> ScanStraightLineProgram( strings[1],
+                                       "string" ),
     ) );
 
 

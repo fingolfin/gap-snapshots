@@ -90,7 +90,7 @@
 ##  themselves (which are not domains in the sense of &GAP;).
 ##  <P/>
 ##  For computations with characters of a finite group <M>G</M> with <M>n</M>
-##  conjugacy classes, say, we fix an ordering of the classes, and then
+##  conjugacy classes, we fix an ordering of the classes, and then
 ##  identify each class with its position according to this ordering.
 ##  Each character of <M>G</M> can be represented by a list of length
 ##  <M>n</M> in which the character value for elements of the <M>i</M>-th
@@ -1093,6 +1093,7 @@ DeclareAttributeSuppCT( "OrdinaryCharacterTable", IsGroup, [] );
 #P  IsMonomial( <tbl> )
 #P  IsNilpotent( <tbl> )
 #P  IsPerfect( <tbl> )
+#P  IsQuasisimple( <tbl> )
 #P  IsSimple( <tbl> )
 #P  IsSporadicSimple( <tbl> )
 #P  IsSupersolvable( <tbl> )
@@ -1114,6 +1115,7 @@ DeclareAttributeSuppCT( "OrdinaryCharacterTable", IsGroup, [] );
 ##  <Prop Name="IsMonomial" Arg='tbl' Label="for a character table"/>
 ##  <Prop Name="IsNilpotent" Arg='tbl' Label="for a character table"/>
 ##  <Prop Name="IsPerfect" Arg='tbl' Label="for a character table"/>
+##  <Prop Name="IsQuasisimple" Arg='tbl' Label="for a character table"/>
 ##  <Prop Name="IsSimple" Arg='tbl' Label="for a character table"/>
 ##  <Prop Name="IsSolvable" Arg='tbl' Label="for a character table"/>
 ##  <Prop Name="IsSporadicSimple" Arg='tbl' Label="for a character table"/>
@@ -1133,37 +1135,40 @@ DeclareAttributeSuppCT( "OrdinaryCharacterTable", IsGroup, [] );
 ##  <Example><![CDATA[
 ##  gap> tables:= [ CharacterTable( CyclicGroup( 3 ) ),
 ##  >               CharacterTable( SymmetricGroup( 4 ) ),
-##  >               CharacterTable( AlternatingGroup( 5 ) ) ];;
+##  >               CharacterTable( AlternatingGroup( 5 ) ),
+##  >               CharacterTable( SL( 2, 5 ) ) ];;
 ##  gap> List( tables, AbelianInvariants );
-##  [ [ 3 ], [ 2 ], [  ] ]
+##  [ [ 3 ], [ 2 ], [  ], [  ] ]
 ##  gap> List( tables, CommutatorLength );
-##  [ 1, 1, 1 ]
+##  [ 1, 1, 1, 1 ]
 ##  gap> List( tables, Exponent );
-##  [ 3, 12, 30 ]
+##  [ 3, 12, 30, 60 ]
 ##  gap> List( tables, IsAbelian );
-##  [ true, false, false ]
+##  [ true, false, false, false ]
 ##  gap> List( tables, IsAlmostSimple );
-##  [ false, false, true ]
+##  [ false, false, true, false ]
 ##  gap> List( tables, IsCyclic );
-##  [ true, false, false ]
+##  [ true, false, false, false ]
 ##  gap> List( tables, IsFinite );
-##  [ true, true, true ]
+##  [ true, true, true, true ]
 ##  gap> List( tables, IsMonomial );
-##  [ true, true, false ]
+##  [ true, true, false, false ]
 ##  gap> List( tables, IsNilpotent );
-##  [ true, false, false ]
+##  [ true, false, false, false ]
 ##  gap> List( tables, IsPerfect );
-##  [ false, false, true ]
+##  [ false, false, true, true ]
+##  gap> List( tables, IsQuasisimple );
+##  [ false, false, true, true ]
 ##  gap> List( tables, IsSimple );
-##  [ true, false, true ]
+##  [ true, false, true, false ]
 ##  gap> List( tables, IsSolvable );
-##  [ true, true, false ]
+##  [ true, true, false, false ]
 ##  gap> List( tables, IsSupersolvable );
-##  [ true, false, false ]
+##  [ true, false, false, false ]
 ##  gap> List( tables, NrConjugacyClasses );
-##  [ 3, 5, 5 ]
+##  [ 3, 5, 5, 9 ]
 ##  gap> List( tables, Size );
-##  [ 3, 24, 60 ]
+##  [ 3, 24, 60, 120 ]
 ##  gap> IsomorphismTypeInfoFiniteSimpleGroup( CharacterTable( "C5" ) );
 ##  rec( name := "Z(5)", parameter := 5, series := "Z", shortname := "C5" 
 ##   )
@@ -1205,6 +1210,7 @@ DeclareAttributeSuppCT( "Size", IsNearlyCharacterTable, [] );
 #P  IsMonomialCharacterTable( <tbl> )
 #P  IsNilpotentCharacterTable( <tbl> )
 #P  IsPerfectCharacterTable( <tbl> )
+#P  IsQuasisimpleCharacterTable( <tbl> )
 #P  IsSimpleCharacterTable( <tbl> )
 #P  IsSolvableCharacterTable( <tbl> )
 #P  IsSporadicSimpleCharacterTable( <tbl> )
@@ -1216,6 +1222,7 @@ DeclareAttributeSuppCT( "Size", IsNearlyCharacterTable, [] );
 ##  <Prop Name="IsMonomialCharacterTable" Arg='tbl'/>
 ##  <Prop Name="IsNilpotentCharacterTable" Arg='tbl'/>
 ##  <Prop Name="IsPerfectCharacterTable" Arg='tbl'/>
+##  <Prop Name="IsQuasisimpleCharacterTable" Arg='tbl'/>
 ##  <Prop Name="IsSimpleCharacterTable" Arg='tbl'/>
 ##  <Prop Name="IsSolvableCharacterTable" Arg='tbl'/>
 ##  <Prop Name="IsSolubleCharacterTable" Arg='tbl'/>
@@ -1235,6 +1242,8 @@ DeclarePropertySuppCT( "IsAlmostSimpleCharacterTable",
 DeclarePropertySuppCT( "IsMonomialCharacterTable", IsNearlyCharacterTable );
 DeclarePropertySuppCT( "IsNilpotentCharacterTable", IsNearlyCharacterTable );
 DeclarePropertySuppCT( "IsPerfectCharacterTable", IsNearlyCharacterTable );
+DeclarePropertySuppCT( "IsQuasisimpleCharacterTable",
+    IsNearlyCharacterTable );
 DeclarePropertySuppCT( "IsSimpleCharacterTable", IsNearlyCharacterTable );
 DeclarePropertySuppCT( "IsSolvableCharacterTable", IsNearlyCharacterTable );
 DeclarePropertySuppCT( "IsSporadicSimpleCharacterTable",
@@ -1253,7 +1262,7 @@ InstallTrueMethod( IsMonomialCharacterTable,
 InstallTrueMethod( IsNilpotentCharacterTable,
     IsOrdinaryTable and IsAbelian );
 InstallTrueMethod( IsPerfectCharacterTable,
-    IsOrdinaryTable and IsSimpleCharacterTable );
+    IsOrdinaryTable and IsQuasisimpleCharacterTable );
 InstallTrueMethod( IsSimpleCharacterTable,
     IsOrdinaryTable and IsSporadicSimpleCharacterTable );
 InstallTrueMethod( IsSolvableCharacterTable,
@@ -1620,8 +1629,8 @@ DeclareAttributeSuppCT( "CharacterParameters", IsNearlyCharacterTable,
 ##  "A5"
 ##  gap> tbl:= CharacterTable( Group( () ) );;
 ##  gap> Identifier( tbl );  Identifier( tbl mod 2 );
-##  "CT8"
-##  "CT8mod2"
+##  "CT9"
+##  "CT9mod2"
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -1638,6 +1647,8 @@ DeclareAttributeSuppCT( "Identifier", IsNearlyCharacterTable, [] );
 ##  <Var Name="LARGEST_IDENTIFIER_NUMBER"/>
 ##
 ##  <Description>
+##  list containing the largest identifier of an ordinary character table in
+##  the current session.
 ##  <!--  We have to use a list in order to admit
 ##    <C>DeclareGlobalVariable</C> and
 ##    <C>InstallFlushableValue</C>.
@@ -1647,14 +1658,7 @@ DeclareAttributeSuppCT( "Identifier", IsNearlyCharacterTable, [] );
 ##  </Description>
 ##  </ManSection>
 ##
-DeclareGlobalVariable( "LARGEST_IDENTIFIER_NUMBER",
-    "list containing the largest identifier of an ordinary character table\
- in the current session" );
-if IsHPCGAP then
-    InstallValue( LARGEST_IDENTIFIER_NUMBER, FixedAtomicList([ 0 ]) );
-else
-    InstallFlushableValue( LARGEST_IDENTIFIER_NUMBER, [ 0 ] );
-fi;
+BindGlobal( "LARGEST_IDENTIFIER_NUMBER", FixedAtomicList([ 0 ]) );
 
 #############################################################################
 ##
@@ -2044,7 +2048,7 @@ DeclareAttribute( "ClassPositionsOfFittingSubgroup", IsOrdinaryTable );
 ##  <Attr Name="ClassPositionsOfSolvableRadical" Arg='ordtbl'/>
 ##
 ##  <Description>
-##  corresponds to <Ref Attr="RadicalGroup"/>
+##  corresponds to <Ref Attr="SolvableRadical"/>
 ##  for the group of the ordinary character table <A>ordtbl</A>.
 ##  <P/>
 ##  <Example><![CDATA[
@@ -2697,7 +2701,7 @@ DeclareSynonym( "ComputedIsPSolubleCharacterTables",
 ##
 ##  <Description>
 ##  For two ordinary character tables <A>tbl</A> and <A>subtbl</A> of a group
-##  <M>G</M> and its subgroup <M>U</M>, say,
+##  <M>G</M> and its subgroup <M>U</M>
 ##  and a list <A>fus</A> of positive integers that describes the class
 ##  fusion of <M>U</M> into <M>G</M>,
 ##  <Ref Func="IsClassFusionOfNormalSubgroup"/> returns <K>true</K>
@@ -3278,7 +3282,7 @@ DeclareGlobalFunction( "ConvertToCharacterTableNC" );
 ##  with value <K>true</K>, then no attribute values are set.
 ##  <P/>
 ##  (The handling of generic character tables may change in the future.
-##  Currently they are used just just for specialization,
+##  Currently they are used just for specialization,
 ##  see&nbsp;<Ref Chap="Generic Character Tables" BookName="ctbllib"/>.)
 ##  </Description>
 ##  </ManSection>
@@ -3591,7 +3595,7 @@ DeclareAttribute( "DisplayOptions", IsNearlyCharacterTable );
 ##  </Description>
 ##  </ManSection>
 ##
-DeclareGlobalVariable( "CharacterTableDisplayDefaults" );
+DeclareGlobalName( "CharacterTableDisplayDefaults" );
 
 
 #############################################################################
@@ -3870,7 +3874,7 @@ DeclareOperation( "CharacterTableFactorGroup",
 ##
 ##  <Description>
 ##  Let <A>tbl</A> be the (ordinary or modular) character table of a group
-##  <M>H</M>, say, with the structure <M>p.G.p</M> for some prime <M>p</M>,
+##  <M>H</M> with the structure <M>p.G.p</M> for some prime <M>p</M>,
 ##  that is, <M>H/Z</M> has a normal subgroup <M>N</M> of index <M>p</M>
 ##  and a central subgroup <M>Z</M> of order <M>p</M> contained in <M>N</M>.
 ##  <P/>
@@ -3913,7 +3917,7 @@ DeclareOperation( "CharacterTableFactorGroup",
 ##  If <M>p</M> is odd then the &ATLAS; construction describes <M>p</M>
 ##  isoclinic variants that arise from <M>p.G.p</M>.
 ##  (These groups need not be pairwise nonisomorphic.)
-##  Entering an integer <M>k \in \{ 1, 2, \ldots, k-1 \}</M> as the value of
+##  Entering an integer <M>k \in \{ 1, 2, \ldots, p-1 \}</M> as the value of
 ##  the component <C>k</C> of <A>arec</A> yields the <M>k</M>-th of the
 ##  corresponding character tables; the default for <C>k</C> is <M>1</M>.
 ##  <P/>
@@ -4115,12 +4119,9 @@ DeclareOperation( "CharacterTableIsoclinic",
 ##  gap> Length( index2 );
 ##  2
 ##  gap> tg:= CharacterTable( g );;
-##  gap> IsRecord(
-##  >        TransformingPermutationsCharacterTables( index2[1], tg ) );
-##  true
-##  gap> IsRecord(
-##  >        TransformingPermutationsCharacterTables( index2[2], tg ) );
-##  false
+##  gap> SortedList(List(index2,x->IsRecord(
+##  >       TransformingPermutationsCharacterTables(x,tg))));
+##  [ true, false ]
 ##  ]]></Example>
 ##  <P/>
 ##  Alternatively, we could construct the character table of the central
@@ -4148,7 +4149,7 @@ DeclareGlobalFunction( "CharacterTableOfNormalSubgroup" );
 ##   Arg='tbl, chars, degree, norm, galois'/>
 ##
 ##  <Description>
-##  returns a permutation <M>\pi</M>, say, that can be applied to the list
+##  returns a permutation <M>\pi</M> that can be applied to the list
 ##  <A>chars</A> of characters of the character table <A>tbl</A> in order to
 ##  sort this list w.r.t.&nbsp;increasing degree, norm, or both.
 ##  The arguments <A>degree</A>, <A>norm</A>, and <A>galois</A> must be
@@ -4253,7 +4254,7 @@ DeclareOperation( "SortedCharacters",
 ##   Arg='tbl, classes, orders, galois'/>
 ##
 ##  <Description>
-##  returns a permutation <M>\pi</M>, say, that can be applied to the columns
+##  returns a permutation <M>\pi</M> that can be applied to the columns
 ##  in the character table <A>tbl</A> in order to sort this table
 ##  w.r.t.&nbsp;increasing class length, element order, or both.
 ##  <A>classes</A> and <A>orders</A> must be Booleans.
@@ -4608,13 +4609,14 @@ DeclareGlobalFunction( "NormalSubgroupClasses" );
 ##    Character( CharacterTable( S4 ), [ 2, 0, 2, -1, 0 ] ), 
 ##    Character( CharacterTable( S4 ), [ 3, 1, -1, 0, -1 ] ), 
 ##    Character( CharacterTable( S4 ), [ 1, 1, 1, 1, 1 ] ) ]
-##  gap> kernel:= KernelOfCharacter( irr[3] );
-##  Group([ (1,2)(3,4), (1,4)(2,3) ])
+##  gap> kernel:= KernelOfCharacter( irr[3] );;
+##  gap> AsSet(kernel);
+##  [ (), (1,2)(3,4), (1,3)(2,4), (1,4)(2,3) ]
+##  gap> SetName(kernel,"V4");
 ##  gap> HasNormalSubgroupClassesInfo( tbl );
 ##  true
 ##  gap> NormalSubgroupClassesInfo( tbl );
-##  rec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ],
-##    nsgclasses := [ [ 1, 3 ] ], nsgfactors := [  ] )
+##  rec( nsg := [ V4 ], nsgclasses := [ [ 1, 3 ] ], nsgfactors := [  ] )
 ##  gap> ClassPositionsOfNormalSubgroup( tbl, kernel );
 ##  [ 1, 3 ]
 ##  gap> G := FactorGroupNormalSubgroupClasses( tbl, [ 1, 3 ] );;
@@ -4694,7 +4696,8 @@ DeclareRepresentation( "IsLibraryCharacterTableRep", IsAttributeStoringRep,
 ##  </Description>
 ##  </ManSection>
 ##
-DeclareRepresentation( "IsGenericCharacterTableRep", IsNearlyCharacterTable,
+DeclareRepresentation( "IsGenericCharacterTableRep",
+     IsNearlyCharacterTable and IsComponentObjectRep,
      [
      "domain",
      "wholetable",

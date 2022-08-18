@@ -22,6 +22,7 @@
 #include "opers.h"
 #include "plist.h"
 #include "stringobj.h"
+#include "symbols.h"
 
 #ifdef HPCGAP
 #include "hpc/thread.h"
@@ -29,7 +30,7 @@
 #endif
 
 
-static Obj HashRNam;
+static SymbolTable RNamSymbolTable;
 
 static Obj NamesRNam;
 
@@ -39,7 +40,7 @@ static Obj NamesRNam;
 **
 **  'IS_VALID_RNAM' returns if <rnam> is a valid record name.
 */
-static Int IS_VALID_RNAM(UInt rnam)
+static BOOL IS_VALID_RNAM(UInt rnam)
 {
     return rnam != 0 && rnam <= LEN_PLIST(NamesRNam);
 }
@@ -49,50 +50,9 @@ extern inline Obj NAME_RNAM(UInt rnam)
     return ELM_PLIST(NamesRNam, rnam);
 }
 
-
-#ifdef HPCGAP
-
-/****************************************************************************
-**
-*F  RNameLock . . . . . . . . . . . . . . . . . . . . .  lock for name table
-**
-**  'CountRnam' is the number of record names.
-*/
-static pthread_rwlock_t RNameLock;
-
-static void HPC_LockNames(int write)
+static void NewRNamCallback(SymbolTable * symtab, UInt id, Obj name)
 {
-  if (PreThreadCreation)
-    return;
-  if (write)
-    pthread_rwlock_wrlock(&RNameLock);
-  else
-    pthread_rwlock_rdlock(&RNameLock);
-}
-
-static void HPC_UnlockNames(void)
-{
-  if (!PreThreadCreation)
-    pthread_rwlock_unlock(&RNameLock);
-}
-
-#endif
-
-
-static inline UInt HashString( const Char * name, UInt len )
-{
-    UInt hash = 0;
-    while ( len-- > 0 ) {
-        hash = 65599 * hash + *name++;
-    }
-    return hash;
-}
-
-static inline int EqString(Obj str, const Char * name, UInt len)
-{
-    if (GET_LEN_STRING(str) != len)
-        return 0;
-    return memcmp(CONST_CSTR_STRING(str), name, len) == 0;
+    AssPlist(NamesRNam, id, name);
 }
 
 /****************************************************************************
@@ -102,106 +62,15 @@ static inline int EqString(Obj str, const Char * name, UInt len)
 **  'RNamName' returns  the record name with the  name  <name> (which is  a C
 **  string).
 */
-UInt            RNamName (
-    const Char *        name )
+UInt RNamName(const Char * name)
 {
-    return RNamNameWithLen(name, strlen(name));
-}
-
-UInt RNamNameWithLen(const Char * name, UInt len)
-{
-    Obj                 rnam;           /* record name (as imm intobj)     */
-    UInt                pos;            /* hash position                   */
-    Char                namx [1024];    /* temporary copy of <name>        */
-    Obj                 string;         /* temporary string object <name>  */
-    Obj                 table;          /* temporary copy of <HashRNam>    */
-    Obj                 rnam2;          /* one element of <table>          */
-    UInt                i;              /* loop variable                   */
-    UInt                sizeRNam;
-
+    UInt len = strlen(name);
     if (len > 1023) {
         // Note: We can't pass 'name' here, as it might get moved by garbage collection
         ErrorQuit("Record names must consist of at most 1023 characters", 0, 0);
     }
 
-    /* start looking in the table at the following hash position           */
-    const UInt hash = HashString( name, len );
-
-#ifdef HPCGAP
-    HPC_LockNames(0); /* try a read lock first */
-#endif
-
-    /* look through the table until we find a free slot or the global      */
-    sizeRNam = LEN_PLIST(HashRNam);
-    pos = (hash % sizeRNam) + 1;
-    while ( (rnam = ELM_PLIST( HashRNam, pos )) != 0
-         && !EqString( NAME_RNAM( INT_INTOBJ(rnam) ), name, len ) ) {
-        pos = (pos % sizeRNam) + 1;
-    }
-    if (rnam != 0) {
-#ifdef HPCGAP
-      HPC_UnlockNames();
-#endif
-      return INT_INTOBJ(rnam);
-    }
-#ifdef HPCGAP
-    if (!PreThreadCreation) {
-      HPC_UnlockNames(); /* switch to a write lock */
-      HPC_LockNames(1);
-      /* look through the table until we find a free slot or the global      */
-      sizeRNam = LEN_PLIST(HashRNam);
-      pos = (hash % sizeRNam) + 1;
-      while ( (rnam = ELM_PLIST( HashRNam, pos )) != 0
-           && !EqString( NAME_RNAM( INT_INTOBJ(rnam) ), name, len ) ) {
-          pos = (pos % sizeRNam) + 1;
-      }
-    }
-    if (rnam != 0) {
-      HPC_UnlockNames();
-      return INT_INTOBJ(rnam);
-    }
-#endif
-
-    /* if we did not find the global variable, make a new one and enter it */
-    /* (copy the name first, to avoid a stale pointer in case of a GC)     */
-    memcpy( namx, name, len );
-    namx[len] = 0;
-    string = MakeImmString(namx);
-
-    const UInt countRNam = PushPlist(NamesRNam, string);
-    rnam = INTOBJ_INT(countRNam);
-    SET_ELM_PLIST( HashRNam, pos, rnam );
-
-    /* if the table is too crowded, make a larger one, rehash the names     */
-    if ( sizeRNam < 3 * countRNam / 2 ) {
-        table = HashRNam;
-        sizeRNam = 2 * sizeRNam + 1;
-        HashRNam = NEW_PLIST( T_PLIST, sizeRNam );
-        SET_LEN_PLIST( HashRNam, sizeRNam );
-#ifdef HPCGAP
-        /* The list is briefly non-public, but this is safe, because
-         * the mutex protects it from being accessed by other threads.
-         */
-        MakeBagPublic(HashRNam);
-#endif
-        for ( i = 1; i <= (sizeRNam-1)/2; i++ ) {
-            rnam2 = ELM_PLIST( table, i );
-            if ( rnam2 == 0 )  continue;
-            string = NAME_RNAM( INT_INTOBJ(rnam2) );
-            pos = HashString( CONST_CSTR_STRING( string ), GET_LEN_STRING( string) );
-            pos = (pos % sizeRNam) + 1;
-            while ( ELM_PLIST( HashRNam, pos ) != 0 ) {
-                pos = (pos % sizeRNam) + 1;
-            }
-            SET_ELM_PLIST( HashRNam, pos, rnam2 );
-        }
-    }
-#ifdef HPCGAP
-    HPC_UnlockNames();
-#endif
-
-    /* return the record name                                              */
-    return INT_INTOBJ(rnam);
+    return LookupSymbol(&RNamSymbolTable, name);
 }
 
 
@@ -259,9 +128,7 @@ UInt            RNamObj (
 
     /* otherwise fail                                                      */
     else {
-        ErrorMayQuit("Record: '<rec>.(<obj>)' <obj> must be a string or a "
-                     "small integer (not a %s)",
-                     (Int)TNAM_OBJ(obj), 0);
+        RequireArgumentEx("Record", obj, 0, "'<rec>.(<obj>)' <obj> must be a string or a small integer");
     }
 }
 
@@ -322,7 +189,7 @@ static Obj FuncNameRNam(Obj self, Obj rnam)
 **  'IS_REC' returns a nonzero value if the object <obj> is a  record  and  0
 **  otherwise.
 */
-Int             (*IsRecFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
+BOOL (*IsRecFuncs[LAST_REAL_TNUM + 1])(Obj obj);
 
 static Obj IsRecFilt;
 
@@ -331,7 +198,7 @@ static Obj FiltIS_REC(Obj self, Obj obj)
     return (IS_REC(obj) ? True : False);
 }
 
-static Int IsRecObject(Obj obj)
+static BOOL IsRecObject(Obj obj)
 {
     return (DoFilter( IsRecFilt, obj ) == True);
 }
@@ -356,8 +223,7 @@ static Obj ElmRecHandler(Obj self, Obj rec, Obj rnam)
 
 static Obj ElmRecError(Obj rec, UInt rnam)
 {
-    ErrorMayQuit("Record Element: <rec> must be a record (not a %s)",
-                 (Int)TNAM_OBJ(rec), 0);
+    RequireArgument("Record Element", rec, "must be a record");
 }
 
 static Obj ElmRecObject(Obj obj, UInt rnam)
@@ -379,7 +245,7 @@ static Obj ElmRecObject(Obj obj, UInt rnam)
 **  name <rnam> and 0 otherwise.  An error is signalled if  <rec>  is  not  a
 **  record.
 */
-Int             (*IsbRecFuncs[LAST_REAL_TNUM+1]) ( Obj rec, UInt rnam );
+BOOL (*IsbRecFuncs[LAST_REAL_TNUM + 1])(Obj rec, UInt rnam);
 
 static Obj IsbRecOper;
 
@@ -389,13 +255,12 @@ static Obj IsbRecHandler(Obj self, Obj rec, Obj rnam)
                                                                : False);
 }
 
-static Int IsbRecError(Obj rec, UInt rnam)
+static BOOL IsbRecError(Obj rec, UInt rnam)
 {
-    ErrorMayQuit("Record IsBound: <rec> must be a record (not a %s)",
-                 (Int)TNAM_OBJ(rec), 0);
+    RequireArgument("Record IsBound", rec, "must be a record");
 }
 
-static Int IsbRecObject(Obj obj, UInt rnam)
+static BOOL IsbRecObject(Obj obj, UInt rnam)
 {
     return (DoOperation2Args( IsbRecOper, obj, INTOBJ_INT(rnam) ) == True);
 }
@@ -421,8 +286,7 @@ static Obj AssRecHandler(Obj self, Obj rec, Obj rnam, Obj obj)
 
 static void AssRecError(Obj rec, UInt rnam, Obj obj)
 {
-    ErrorMayQuit("Record Assignment: <rec> must be a record (not a %s)",
-                 (Int)TNAM_OBJ(rec), 0);
+    RequireArgument("Record Assignment", rec, "must be a record");
 }
 
 static void AssRecObject(Obj obj, UInt rnam, Obj val)
@@ -450,8 +314,7 @@ static Obj UnbRecHandler(Obj self, Obj rec, Obj rnam)
 
 static void UnbRecError(Obj rec, UInt rnam)
 {
-    ErrorMayQuit("Record Unbind: <rec> must be a record (not a %s)",
-                 (Int)TNAM_OBJ(rec), 0);
+    RequireArgument("Record Unbind", rec, "must be a record");
 }
 
 static void UnbRecObject(Obj obj, UInt rnam)
@@ -465,9 +328,7 @@ static void UnbRecObject(Obj obj, UInt rnam)
 *F  iscomplete( <name>, <len> ) . . . . . . . .  find the completions of name
 *F  completion( <name>, <len> ) . . . . . . . .  find the completions of name
 */
-UInt            iscomplete_rnam (
-    Char *              name,
-    UInt                len )
+BOOL iscomplete_rnam(Char * name, UInt len)
 {
     const Char *        curr;
     UInt                i, k;
@@ -476,9 +337,10 @@ UInt            iscomplete_rnam (
     for ( i = 1; i <= countRNam; i++ ) {
         curr = CONST_CSTR_STRING( NAME_RNAM( i ) );
         for ( k = 0; name[k] != 0 && curr[k] == name[k]; k++ ) ;
-        if ( k == len && curr[k] == '\0' )  return 1;
+        if (k == len && curr[k] == '\0')
+            return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
 UInt            completion_rnam (
@@ -574,9 +436,9 @@ static StructGVarOper GVarOpers [] = {
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    GVAR_FUNC(RNamObj, 1, "obj"),
-    GVAR_FUNC(NameRNam, 1, "rnam"),
-    GVAR_FUNC(ALL_RNAMES, 0, ""),
+    GVAR_FUNC_1ARGS(RNamObj, obj),
+    GVAR_FUNC_1ARGS(NameRNam, rnam),
+    GVAR_FUNC_0ARGS(ALL_RNAMES),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -595,7 +457,9 @@ static Int InitKernel (
     InitGlobalBag( &NamesRNam, "src/records.c:NamesRNam" );
 
     /* make the hash list of record names                                  */
-    InitGlobalBag( &HashRNam, "src/records.c:HashRNam" );
+    InitSymbolTableKernel(&RNamSymbolTable, "src/records.c:RNamSymbolCount",
+                          "src/records.c:RNamSymbolTable", NAME_RNAM,
+                          NewRNamCallback);
 
     /* init filters and functions                                          */
     InitHdlrFiltsFromTable( GVarFilts );
@@ -654,7 +518,6 @@ static Int InitKernel (
         UnbRecFuncs[ type ] = UnbRecObject;
     }
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -666,17 +529,12 @@ static Int InitKernel (
 static Int InitLibrary (
     StructInitInfo *    module )
 {
+    InitSymbolTableLibrary(&RNamSymbolTable, 28069);
+
     /* make the list of names of record names                              */
     NamesRNam = NEW_PLIST( T_PLIST, 0 );
 #ifdef HPCGAP
     MakeBagPublic(NamesRNam);
-#endif
-
-    /* make the hash list of record names                                  */
-    HashRNam = NEW_PLIST( T_PLIST, 14033 );
-    SET_LEN_PLIST( HashRNam, 14033 );
-#ifdef HPCGAP
-    MakeBagPublic(HashRNam);
 #endif
 
     /* init filters and functions                                          */
@@ -684,7 +542,6 @@ static Int InitLibrary (
     InitGVarOpersFromTable( GVarOpers );
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 

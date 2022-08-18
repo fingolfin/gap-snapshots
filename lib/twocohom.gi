@@ -669,184 +669,6 @@ end );
 
 # non-solvable cohomology based on rewriting
 
-# return isomorphism G-fp and fp->mon, such that presentation of monoid is
-# confluent (wrt wreath order). Returns list [fphom,monhom,ordering]
-BindGlobal("ConfluentMonoidPresentationForGroup",function(G)
-local iso,fp,n,dec,homs,mos,i,j,ffp,imo,m,k,gens,fm,mgens,rules,
-      loff,off,monreps,left,right,fmgens,r,diff,monreal,nums,reduce,hom,dept;
-  if IsSymmetricGroup(G) then
-    i:=SymmetricGroup(SymmetricDegree(G));
-    iso:=CheapIsomSymAlt(G,i)*IsomorphismFpGroup(i);
-    fp:=Range(iso);
-    hom:=IsomorphismFpMonoid(fp);
-    m:=Range(hom);
-    fm:=FreeMonoidOfFpMonoid(m);
-    k:=KnuthBendixRewritingSystem(m);
-    MakeConfluent(k);
-    rules:=Rules(k);
-    dept:=fail;
-  else
-    iso:=IsomorphismFpGroupByChiefSeries(G:rewrite);
-
-    fp:=Range(iso);
-    gens:=GeneratorsOfGroup(fp);
-    n:=Length(gens);
-    dec:=iso!.decompinfo;
-
-    fmgens:=[];
-    mgens:=[];
-    for i in gens do
-      Add(fmgens,i);
-      Add(fmgens,i^-1);
-      Add(mgens,String(i));
-      Add(mgens,String(i^-1));
-    od;
-    nums:=List(fmgens,x->LetterRepAssocWord(UnderlyingElement(x))[1]);
-    fm:=FreeMonoid(mgens);
-    mgens:=GeneratorsOfMonoid(fm);
-    rules:=[];
-    reduce:=function(w)
-    local red,i,p;
-      w:=LetterRepAssocWord(w);
-      repeat
-        i:=1;
-        red:=false;
-        while i<=Length(rules) and red=false do
-          p:=PositionSublist(w,LetterRepAssocWord(rules[i][1]));
-          if p<>fail then
-            #Print("Apply ",rules[i],p,w,"\n");
-            w:=Concatenation(w{[1..p-1]},LetterRepAssocWord(rules[i][2]),
-              w{[p+Length(rules[i][1])..Length(w)]});
-            red:=true;
-          else
-            i:=i+1;
-          fi;
-        od;
-      until red=false;
-      return AssocWordByLetterRep(FamilyObj(One(fm)),w);
-    end;
-
-
-    homs:=ShallowCopy(dec.homs);
-    mos:=[];
-    off:=Length(mgens);
-    dept:=[];
-    # go up so we may reduce tails
-    for i in [Length(homs),Length(homs)-1..1] do
-      Add(dept,off);
-      if IsPcgs(homs[i]) then
-        ffp:=AbelianGroup(IsFpGroup,RelativeOrders(homs[i]));
-      else
-        ffp:=Range(dec.homs[i]);
-      fi;
-      imo:=IsomorphismFpMonoid(ffp);
-      Add(mos,imo);
-      m:=Range(imo);
-      loff:=off-Length(GeneratorsOfMonoid(m));
-      monreps:=fmgens{[loff+1..off]};
-      monreal:=mgens{[loff+1..off]};
-      if IsBound(m!.rewritingSystem) then
-        k:=m!.rewritingSystem;
-      else
-        k:=KnuthBendixRewritingSystem(m);
-      fi;
-      MakeConfluent(k);
-      # convert rules
-      for r in Rules(k) do
-        left:=MappedWord(r[1],FreeGeneratorsOfFpMonoid(m),monreps);
-        right:=MappedWord(r[2],FreeGeneratorsOfFpMonoid(m),monreps);
-        diff:=LeftQuotient(PreImagesRepresentative(iso,right),
-                PreImagesRepresentative(iso,left));
-        diff:=ImagesRepresentative(iso,diff);
-
-        left:=MappedWord(r[1],FreeGeneratorsOfFpMonoid(m),monreal);
-        right:=MappedWord(r[2],FreeGeneratorsOfFpMonoid(m),monreal);
-        if not IsOne(diff) then 
-          right:=right*Product(List(LetterRepAssocWord(UnderlyingElement(diff)),
-            x->mgens[Position(nums,x)]));
-        fi;
-        right:=reduce(right); # monoid word might change
-        Add(rules,[left,right]);
-      od;
-      for j in [loff+1..off] do
-        # if the generator gets reduced away, won't need to use it
-        if reduce(mgens[j])=mgens[j] then
-          for k in [off+1..Length(mgens)] do
-            if reduce(mgens[k])=mgens[k] then
-              right:=fmgens[j]^-1*fmgens[k]*fmgens[j];
-              #collect
-              right:=ImagesRepresentative(iso,PreImagesRepresentative(iso,right));
-              right:=Product(List(LetterRepAssocWord(UnderlyingElement(right)),
-                x->mgens[Position(nums,x)]));
-              right:=reduce(mgens[j]*right);
-              Add(rules,[mgens[k]*mgens[j],right]);
-            fi;
-          od;
-        fi;
-      od;
-      #if i<Length(homs) then Error("ZU");fi;
-      off:=loff;
-    od;
-    Add(dept,off);
-    # calculate levels for ordering
-    dept:=dept+1;
-    dept:=List([1..Length(mgens)],
-      x->PositionProperty(dept,y->x>=y)-1);
-
-    if ForAny(rules,x->x[2]<>reduce(x[2])) then Error("irreduced right");fi;
-
-    # inverses are true inverses, also for extension
-    for i in [1..Length(gens)] do
-      left:=mgens[2*i-1]*mgens[2*i];
-      left:=reduce(left);
-      if left<>One(fm) then Add(rules,[left,One(fm)]); fi;
-      left:=mgens[2*i]*mgens[2*i-1];
-      left:=reduce(left);
-      if left<>One(fm) then Add(rules,[left,One(fm)]); fi;
-    od;
-  fi;
-
-  # finally create 
-  m:=FactorFreeMonoidByRelations(fm,rules);
-  mgens:=GeneratorsOfMonoid(m);
-
-  hom:=MagmaIsomorphismByFunctionsNC(fp,m,
-        function(w)
-          local l,i;
-          l:=[];
-          for i in LetterRepAssocWord(UnderlyingElement(w)) do
-            if i>0 then Add(l,2*i-1);
-            else Add(l,-2*i);fi;
-          od;
-          return ElementOfFpMonoid(FamilyObj(One(m)),
-                  AssocWordByLetterRep(FamilyObj(One(fm)),l));
-        end,
-        function(w)
-          local g,i,x;
-          g:=[];
-          for i in LetterRepAssocWord(UnderlyingElement(w)) do
-            if IsOddInt(i) then x:=(i+1)/2;
-            else x:=-i/2;fi;
-            # word must be freely cancelled
-            if Length(g)>0 and x=-g[Length(g)] then
-              Unbind(g[Length(g)]);
-            else Add(g,x); fi;
-          od;
-          return ElementOfFpGroup(FamilyObj(One(fp)),
-                  AssocWordByLetterRep(FamilyObj(One(FreeGroupOfFpGroup(fp))),g));
-        end);
-
-  hom!.type:=1;
-  if not HasIsomorphismFpMonoid(G) then
-    SetIsomorphismFpMonoid(G,hom);
-  fi;
-  if dept=fail then
-    return [iso,hom,k!.ordering];
-  else
-    return [iso,hom,WreathProductOrdering(fm,dept)];
-  fi;
-end);
-
 #############################################################################
 ##
 #M  TwoCohomology( G, M )
@@ -884,8 +706,9 @@ InstallMethod( TwoCohomologyGeneric,"generic, using rewriting system",true,
 function(G,mo)
 local field,fp,fpg,gens,hom,mats,fm,mon,kb,tzrules,dim,rules,eqs,i,j,k,l,o,l1,
       len1,l2,m,start,formalinverse,hastail,one,zero,new,v1,v2,collectail,
-      findtail,colltz,mapped,mapped2,onemat,zerovec,dict,max,mal,s,p,
-      c,nvars,htpos,zeroq,r,ogens,bds,model,q,pre,pcgs,miso,ker,solvec,rulpos;
+      findtail,colltz,mapped,mapped2,onemat,zerovec,max,mal,s,p,genkill,
+      c,nvars,htpos,zeroq,r,ogens,bds,model,q,pre,pcgs,miso,ker,solvec,rulpos,
+      nonone,lenpre,jv,olen,dag;
 
 
   # collect the word in factor group
@@ -897,17 +720,9 @@ local field,fp,fpg,gens,hom,mats,fm,mon,kb,tzrules,dim,rules,eqs,i,j,k,l,o,l1,
     while i<=Length(a) do
 
       # does a rule apply at position i?
-      j:=0;
-      s:=0;
-      mm:=Minimum(mal,Length(a)-i+1);
-      while j<mm do
-        s:=s*max+a[i+j];
-        p:=LookupDictionary(dict,s);
-        if p<>fail then break; fi;
-        j:=j+1;
-      od;
+      p:=RuleAtPosKBDAG(dag,a,i);
 
-      if p<>fail then
+      if IsInt(p) then
         a:=Concatenation(a{[1..i-1]},tzrules[p][2],
           a{[i+Length(tzrules[p][1])..Length(a)]});
         i:=Maximum(0,i-mal); # earliest which could be affected
@@ -923,12 +738,14 @@ local field,fp,fpg,gens,hom,mats,fm,mon,kb,tzrules,dim,rules,eqs,i,j,k,l,o,l1,
   local a,i;
     a:=onemat;
     for i in list do
-      a:=a*mats[i];
+      if i in nonone then
+        a:=a*mats[i];
+      fi;
     od;
     return a;
   end;
 
-  # normalform word and collect the tails
+  # normalform word and collect the tails 
   collectail:=function(wrd)
   local v,tail,i,j,s,p,mm;
     v:=List(rules,x->zero);
@@ -938,22 +755,19 @@ local field,fp,fpg,gens,hom,mats,fm,mon,kb,tzrules,dim,rules,eqs,i,j,k,l,o,l1,
     while i<=Length(wrd) do
 
       # does a rule apply at position i?
-      j:=0;
-      s:=0;
-      mm:=Minimum(mal,Length(wrd)-i+1);
-      while j<mm do
-        s:=s*max+wrd[i+j];
-        p:=LookupDictionary(dict,s);
-        if p<>fail and rulpos[p]<>fail then break; fi;
-        j:=j+1;
-      od;
+      p:=RuleAtPosKBDAG(dag,wrd,i);
 
-      if p<>fail and rulpos[p]<>fail then
+      if IsInt(p) and rulpos[p]<>fail then
         p:=rulpos[p];
         tail:=wrd{[i+Length(rules[p][1])..Length(wrd)]};
         wrd:=Concatenation(wrd{[1..i-1]},rules[p][2],tail);
-#Print("Apply ",p,"@",i,":",wrd,"\n");
-        if p in hastail then v[p]:=v[p]+mapped(tail); fi;
+        if p in hastail then 
+          if IsIdenticalObj(v[p],zero) then
+            v[p]:=mapped(tail);
+          else
+            v[p]:=v[p]+mapped(tail);
+          fi;
+        fi;
         i:=Maximum(0,i-mal); # earliest which could be affected
       fi;
       i:=i+1;
@@ -966,57 +780,45 @@ local field,fp,fpg,gens,hom,mats,fm,mon,kb,tzrules,dim,rules,eqs,i,j,k,l,o,l1,
 
   ogens:=GeneratorsOfGroup(G);
 
-  if false then
-    #  old general KB code, left for debugging
-    fp:=IsomorphismFpGroup(G);
-    fpg:=Range(fp);
-    fm:=IsomorphismFpMonoid(fpg);
-    mon:=Range(fm);
+#  if false then
+#    #  old general KB code, left for debugging
+#    fp:=IsomorphismFpGroup(G);
+#    fpg:=Range(fp);
+#    fm:=IsomorphismFpMonoid(fpg);
+#    mon:=Range(fm);
+#
+#    if IsBound(mon!.confl) then 
+#      tzrules:=mon!.confl;
+#    else
+#      kb:=KnuthBendixRewritingSystem(mon);
+#      MakeConfluent(kb);
+#      tzrules:=kb!.tzrules;
+#      mon!.confl:=tzrules;
+#    fi;
+#  else
 
-    if IsBound(mon!.confl) then 
-      tzrules:=mon!.confl;
-    else
-      kb:=KnuthBendixRewritingSystem(mon);
-      MakeConfluent(kb);
-      tzrules:=kb!.tzrules;
-      mon!.confl:=tzrules;
-    fi;
-  else
     # new approach with RWS from chief series
     mon:=ConfluentMonoidPresentationForGroup(G);
-    fp:=mon[1];
+    fp:=mon.fphom;
     fpg:=Range(fp);
-    fm:=mon[2];
+    fm:=mon.monhom;
     mon:=Range(fm);
     tzrules:=List(RelationsOfFpMonoid(mon),x->List(x,LetterRepAssocWord));
-  fi;
+#  fi;
 
-  # build data structure to find rule applicable at given position. Assumes
-  # that rule set is reduced.
-  max:=Maximum(Union(List(tzrules,x->x[1])))+1;
+  dag:=EmptyKBDAG(Union(List(GeneratorsOfMonoid(FreeMonoidOfFpMonoid(mon)),
+    LetterRepAssocWord)));
   mal:=Maximum(List(tzrules,x->Length(x[1])));
-  dict:=NewDictionary(max,Integers,true);
-  for i in [1..mal] do
-    p:=Filtered([1..Length(tzrules)],x->Length(tzrules[x][1])=i);
-    for j in p do
-      s:=0;
-      for k in [1..i] do
-        s:=s*max+tzrules[j][1][k];
-      od;
-      AddDictionary(dict,s,j);
-    od;
+  for i in [1..Length(tzrules)] do
+    AddRuleKBDAG(dag,tzrules[i][1],i);
   od;
 
   gens:=List(GeneratorsOfGroup(FamilyObj(fpg)!.wholeGroup),
     x->PreImagesRepresentative(fp,x));
 
-  hom:=GroupHomomorphismByImagesNC(G,Group(mo.generators),GeneratorsOfGroup(G),mo.generators);
+  hom:=GroupHomomorphismByImagesNC(G,Group(mo.generators),
+    GeneratorsOfGroup(G),mo.generators);
   mo:=GModuleByMats(List(gens,x->ImagesRepresentative(hom,x)),mo.field); # new gens
-
-  #rules:=ShallowCopy(kb!.tzrules);
-  #hastail:=Filtered([1..Length(rules)],x->Length(rules[x][1])<>2 or
-  #  Length(rules[x][2])>0 or formalinverse[rules[x][1][1]]<>rules[x][1][2]);
-  #IsSet(hastail); # quick membership test
 
   l1:=GeneratorsOfGroup(fpg);
   l1:=Concatenation(l1,List(l1,Inverse));
@@ -1032,6 +834,7 @@ local field,fp,fpg,gens,hom,mats,fm,mon,kb,tzrules,dim,rules,eqs,i,j,k,l,o,l1,
   # tails.
   hastail:=[];
   rules:=[];
+  genkill:=[]; # relations that kill generators. Needed for presenation.
   for r in tzrules do
     if Length(r[1])>=2 then
       Add(rules,r);
@@ -1040,27 +843,19 @@ local field,fp,fpg,gens,hom,mats,fm,mon,kb,tzrules,dim,rules,eqs,i,j,k,l,o,l1,
         then 
           AddSet(hastail,Length(rules));
       fi;
-    elif Length(r[1])>1 then
-      if Length(r[2])=0 then Error("generator is trivial");fi;
-      if Length(r[2])<>1 or formalinverse[r[1][1]]<>r[2][1] then
-        Add(rules,r);
-        AddSet(hastail,Length(rules));
-      else
-#Print("Not use: ",r,"\n");
-        # Do not use these rules for overlaps
-        if r[2][1]>r[1][1] then
-          Error("code assumes that larger number gets reduced to smaller");
-        fi;
-        if ForAny(rules,x->r[1][1] in x[2] or (x<>r and r[1][1] in x[1])) then
-          Error("rules are not reduced");
-        fi;
-      fi;
     else
-      # Length of r[1] is 1. That is this generator is not used.
-      # check that it is really just an inverse that goes away, otherwise
-      # awkward.
-      if formalinverse[r[1][1]]>r[1][1] then
-        Error("generator vanishes?");
+      # Length of r[1] is 1. That is, this generator is not used!
+      m:=First(RelationsOfFpMonoid(mon),x->List(x,LetterRepAssocWord)=r);
+      m:=List(m,x->PreImagesRepresentative(fm,ElementOfFpMonoid(FamilyObj(One(mon)),x)));
+      m:=List(m,UnderlyingElement); # free group elements/words
+
+      if not IsOne(m[1]*Subword(m[2],1,1)) then
+        # Does the relation make a generator redundant (by expressing it in the
+        # other gens)? If so, remember relation as needed to kill this generator, but
+        # no influence on Cohomology calculation (which just uses the rest)
+        if  m[1] in GeneratorsOfGroup(FreeGroupOfFpGroup(FamilyObj(fpg)!.wholeGroup))
+          then Add(genkill,r);
+        fi;
       fi;
     fi;
   od;
@@ -1087,6 +882,7 @@ local field,fp,fpg,gens,hom,mats,fm,mon,kb,tzrules,dim,rules,eqs,i,j,k,l,o,l1,
     mats:=List(GeneratorsOfMonoid(mon),
       x->ImagesRepresentative(m,
       PreImagesRepresentative(fm,x))); #Elements for monoid generators
+    nonone:=[1..Length(mats)];
     pre:=mats;
     onemat:=One(G);
     for i in [1..Length(hastail)] do
@@ -1104,13 +900,17 @@ local field,fp,fpg,gens,hom,mats,fm,mon,kb,tzrules,dim,rules,eqs,i,j,k,l,o,l1,
     x->ImagesRepresentative(hom,PreImagesRepresentative(fp,
     PreImagesRepresentative(fm,x)))); # matrices for monoid generators
   one:=One(mats[1]);
+  nonone:=Filtered([1..Length(mats)],x->not IsOne(mats[x]));
   zero:=zerovec;
   dim:=Length(zero);
   nvars:=dim*Length(hastail); #Number of variables
 
-  eqs:=[];
+#rk:=0;
   zeroq:=ImmutableVector(field,ListWithIdenticalEntries(nvars,Zero(field)));
+  eqs:=MutableBasis(field,[],zeroq);
+  olen:=[-1,0];
   for i in [1..Length(rules)] do
+    Info(InfoCoh,1,"First rule ",i,", ",Length(BasisVectors(eqs))," equations");
     l1:=rules[i][1];
     len1:=Length(l1);
     for j in [1..Length(rules)] do
@@ -1119,7 +919,6 @@ local field,fp,fpg,gens,hom,mats,fm,mon,kb,tzrules,dim,rules,eqs,i,j,k,l,o,l1,
       for o in [1..m-1] do # possible overlap Length
         start:=len1-o;
         if ForAll([1..o],k->l1[start+k]=l2[k]) then
-          #Print("Overlap ",l1," ",l2," ",o,"\n");
 
           # apply l1 first
           new:=Concatenation(rules[i][2],l2{[o+1..Length(l2)]});
@@ -1153,20 +952,47 @@ local field,fp,fpg,gens,hom,mats,fm,mon,kb,tzrules,dim,rules,eqs,i,j,k,l,o,l1,
               fi;
             od;
             for k in c do
-              if not IsZero(k) then
-                if model<>fail and not IsZero(solvec*k) then
-                  Error("model does not fit");
-                fi;
-                AddSet(eqs,ImmutableVector(field,k));
-              fi;
+
+	      if model<>fail and not IsZero(solvec*k) then
+		Error("model does not fit");
+	      fi;
+	      #AddSet(eqs,ImmutableVector(field,k));
+	      #k:=SiftedVector(eqs,ImmutableVector(field,k));
+  #Add(alleeqs,ImmutableVector(field,k));
+	      k:=SiftedVector(eqs,k);
+	      if not IsZero(k) then
+		CloseMutableBasis(eqs,ImmutableVector(field,k));
+
+	      fi;
+
             od;
           fi;
+
         fi;
       od;
     od;
+    Add(olen,Length(BasisVectors(eqs)));
+    if Length(olen)>3 and 
+      # if twice stayed the same after increase
+      olen[Length(olen)]=olen[Length(olen)-2] and
+      olen[Length(olen)]<>olen[Length(olen)-3] then
+
+      k:=List(BasisVectors(eqs),ShallowCopy);;
+      TriangulizeMat(k);
+      eqs:=MutableBasis(field,
+	List(k,x->ImmutableVector(field,x)),zeroq);
+    fi;
+
   od;
-  eqs:=Filtered(TriangulizedMat(eqs),x->not IsZero(x));
-  eqs:=NullspaceMat(TransposedMat(eqs)); # basis of cocycles
+
+  #eqs:=Filtered(TriangulizedMat(eqs),x->not IsZero(x));
+  eqs:=ShallowCopy(BasisVectors(eqs));
+  if Length(eqs)=0 then
+    eqs:=IdentityMat(Length(rules),field);
+  else
+    eqs:=ImmutableMatrix(field,eqs);
+    eqs:=NullspaceMat(TransposedMat(eqs)); # basis of cocycles
+  fi;
 
   # Now get Coboundaries
 
@@ -1201,7 +1027,7 @@ local field,fp,fpg,gens,hom,mats,fm,mon,kb,tzrules,dim,rules,eqs,i,j,k,l,o,l1,
           Append(new,v1-v2);
         od;
         new:=ImmutableVector(field,new);
-        Assert(0,SolutionMat(eqs,new)<>fail);
+        Assert(0,(Length(eqs)>0 and SolutionMat(eqs,new)<>fail) or IsZero(new));
         Add(bds,new);
       od;
     fi;
@@ -1236,7 +1062,10 @@ local field,fp,fpg,gens,hom,mats,fm,mon,kb,tzrules,dim,rules,eqs,i,j,k,l,o,l1,
     # rule that would get the tail
     Add(new,LeftQuotient(mapped2(rules[i][1]),mapped2(rules[i][2])));
   od;
+
   r.presentation:=rec(group:=FreeGroupOfFpGroup(fpg),relators:=new,
+    # relators to kill superfluous generators
+    killrelators:=List(genkill,i->LeftQuotient(mapped2(i[1]),mapped2(i[2]))),
     # position of relators with tails in tzrules
     monrulpos:=List(rules{hastail},x->Position(tzrules,x)),
     prewords:=List(ogens,x->UnderlyingElement(ImagesRepresentative(fp,x))));
@@ -1251,17 +1080,9 @@ local field,fp,fpg,gens,hom,mats,fm,mon,kb,tzrules,dim,rules,eqs,i,j,k,l,o,l1,
     while i<=Length(wrd) do
 
       # does a rule apply at position i?
-      j:=0;
-      s:=0;
-      mm:=Minimum(mal,Length(wrd)-i+1);
-      while j<mm do
-        s:=s*max+wrd[i+j];
-        p:=LookupDictionary(dict,s);
-        if p<>fail and rulpos[p]<>fail then break; fi;
-        j:=j+1;
-      od;
+      p:=RuleAtPosKBDAG(dag,wrd,i);
 
-      if p<>fail and rulpos[p]<>fail then
+      if IsInt(p) and rulpos[p]<>fail then
         p:=rulpos[p];
         tail:=wrd{[i+Length(rules[p][1])..Length(wrd)]};
         wrd:=Concatenation(wrd{[1..i-1]},rules[p][2],tail);
@@ -1326,17 +1147,9 @@ local field,fp,fpg,gens,hom,mats,fm,mon,kb,tzrules,dim,rules,eqs,i,j,k,l,o,l1,
       while i<=Length(wrd) do
 
         # does a rule apply at position i?
-        j:=0;
-        s:=0;
-        mm:=Minimum(mal,Length(wrd)-i+1);
-        while j<mm do
-          s:=s*max+wrd[i+j];
-          p:=LookupDictionary(dict,s);
-          if p<>fail and rulpos[p]<>fail then break; fi;
-          j:=j+1;
-        od;
+        p:=RuleAtPosKBDAG(dag,wrd,i);
 
-        if p<>fail and rulpos[p]<>fail then
+        if IsInt(p) and rulpos[p]<>fail then
           p:=rulpos[p];
           tail:=wrd{[i+Length(rules[p][1])..Length(wrd)]};
           wrd:=Concatenation(wrd{[1..i-1]},rules[p][2],tail);
@@ -1627,7 +1440,8 @@ end);
 InstallGlobalFunction(FpGroupCocycle,function(arg)
 local r,z,ogens,n,gens,str,dim,i,j,f,rels,new,quot,g,p,collect,m,e,fp,old,sim,
       it,hom,trysy,prime,mindeg,fps,ei,mgens,mwrd,nn,newfree,mfpi,mmats,sub,
-      tab,tab0,evalprod,gensmrep,invsmrep,zerob,step;
+      tab,tab0,evalprod,gensmrep,invsmrep,zerob,step,simi,simiq,wasbold,
+      mon,ord,mn,melmvec,killgens,frew,fffam,ofgens,rws,formalinverse;
 
   # function to evaluate product (as integer list) in gens (and their
   # inverses invs) with corresponding action mats
@@ -1644,17 +1458,174 @@ local r,z,ogens,n,gens,str,dim,i,j,f,rels,new,quot,g,p,collect,m,e,fp,old,sim,
       fi;
     od;
     return new;
-
   end;
 
+  melmvec:=function(v)
+  local i,a,w;
+    w:=One(f);
+    for i in [1..Length(v)] do
+      a:=Int(v[i]);
+      if prime=2 or a*2<prime then
+        w:=w*gens[2*i-1+mn]^a;
+      else
+        a:=prime-a;
+        w:=w*gens[2*i+mn]^a;
+      fi;
+    od;
+    return w;
+  end;
 
+  # formal inverse of module element
+  formalinverse:=function(w)
+  local l,i;
+    l:=[];
+    for i in Reversed(LetterRepAssocWord(w)) do
+      if IsEvenInt(i) then Add(l,i-1);
+      else Add(l,i+1);fi;
+    od;
+    return AssocWordByLetterRep(FamilyObj(w),l);
+  end;
 
   r:=arg[1];
   z:=arg[2];
   ogens:=GeneratorsOfGroup(r.presentation.group);
-
-  str:=List(ogens,String);
   dim:=r.module.dimension;
+  prime:=Size(r.module.field);
+
+  if ValueOption("normalform")<>true then
+    mon:=fail;
+  else
+    # Construct the monoid and rewriting system, as this is cheap to do but
+    # will allow for reduced multiplication. Do so before the group, so there is no
+    # issue about overwriting variables that might be needed later
+    mon:=Image(r.monhom);
+    ofgens:=FreeGeneratorsOfFpMonoid(mon);
+    fffam:=FamilyObj(One(FreeMonoidOfFpMonoid(mon)));
+    frew:=ReducedConfluentRewritingSystem(mon);
+    # generators that get killed. Do not use in RHS
+    killgens:=Filtered(GeneratorsOfMonoid(mon),x->UnderlyingElement(x)<>
+      ReducedForm(frew,UnderlyingElement(x)));
+    killgens:=Union(List(killgens,x->LetterRepAssocWord(UnderlyingElement(x))));
+
+    str:=List(GeneratorsOfMonoid(mon),String);
+    mn:=Length(str);
+    for i in [1..dim] do
+      Add(str,Concatenation("m",String(i)));
+      Add(str,Concatenation("m",String(i),"^-1"));
+    od;
+    f:=FreeMonoid(str);
+    gens:=GeneratorsOfMonoid(f);
+
+    rels:=[];
+    # inverse rules
+    for i in [1,3..Length(gens)-1] do
+      Add(rels,[gens[i]*gens[i+1],One(f)]);
+      Add(rels,[gens[i+1]*gens[i],One(f)]);
+    od;
+
+    # module is elementary abelian
+    for i in [mn+1,mn+3..Length(str)-1] do
+      if prime=2 then
+        Add(rels,[gens[i]^2,One(f)]);
+        Add(rels,[gens[i+1],gens[i]]);
+      else
+        j:=QuoInt(prime+1,2); # power that changes the exponent sign
+        Add(rels,[gens[i]^j,gens[i+1]^(j-1)]);
+        Add(rels,[gens[i+1]^j,gens[i]^(j-1)]);
+      fi;
+      for j in [i+2..Length(str)] do
+        Add(rels,[gens[j]*gens[i],gens[i]*gens[j]]);
+        Add(rels,[gens[j]*gens[i+1],gens[i+1]*gens[j]]);
+      od;
+    od;
+
+    # module rules
+    for i in [1..mn] do
+      if not i in killgens then
+        for j in [mn+1..Length(str)] do
+          new:=r.module.generators[QuoInt(i+1,2)];
+          if IsEvenInt(i) then new:=new^-1; fi;
+          new:=new[QuoInt(j-mn+1,2)];
+          if IsEvenInt(j) then new:=-new;fi;
+          Add(rels,[gens[j]*gens[i],gens[i]*melmvec(new)]);
+        od;
+      fi;
+    od;
+
+    # rules with tails
+    for i in [1..Length(r.presentation.monrulpos)] do
+      new:=RelationsOfFpMonoid(mon)[r.presentation.monrulpos[i]];
+      new:=List(new,x->MappedWord(x,ofgens,gens{[1..mn]}));
+      new[2]:=new[2]*melmvec(z{[(i-1)*dim+1..i*dim]});
+      Add(rels,new);
+    od;
+
+    # Any killed generators -- use just the same word expression
+    if r.presentation.killrelators<>[] then 
+      for i in Filtered(killgens,IsOddInt) do
+        new:=AssocWordByLetterRep(fffam,[i]);
+        new:=[new,ReducedForm(frew,new)];
+        new:=List(new,x->MappedWord(x,
+          ofgens,gens{[1..mn]}));
+        Add(rels,new);
+        RemoveSet(killgens,i);
+      od;
+    fi;
+
+    if HasReducedConfluentRewritingSystem(mon) then
+      ord:=OrderingOfRewritingSystem(ReducedConfluentRewritingSystem(mon));
+      if HasLevelsOfGenerators(ord) then
+        ord:=WreathProductOrdering(f,
+          Concatenation(LevelsOfGenerators(ord)+1,
+                        ListWithIdenticalEntries(2*dim,1)));
+      else
+        ord:=WreathProductOrdering(f,
+          Concatenation(ListWithIdenticalEntries(mn,2),
+                        ListWithIdenticalEntries(2*dim,1)));
+      fi;
+    else
+      ord:=WreathProductOrdering(f,
+        Concatenation(ListWithIdenticalEntries(mn,2),
+                      ListWithIdenticalEntries(2*dim,1)));
+    fi;
+
+    # if there is any [x^2,1] relation, this means the inverse needs to be
+    # mapped to the generator. (This will have been skipped in the
+    # monrulpos.)
+    for i in rels do
+      if Length(i[2])=0 and Length(i[1])=2 
+        and Length(Set(LetterRepAssocWord(i[1])))=1 then
+        new:=LetterRepAssocWord(i[1])[1];
+        if IsOddInt(new) then
+          Add(rels,[gens[new+1],gens[new]]);
+        fi;
+      fi;
+    od;
+
+    # temporary build to be able to reduce
+    mon:=FactorFreeMonoidByRelations(f,rels);
+    rws:=KnuthBendixRewritingSystem(FamilyObj(One(mon)),ord);
+
+    # handle inverses that get killed
+    for i in killgens do
+      new:=AssocWordByLetterRep(fffam,[i]);
+      new:=ReducedForm(frew,new); # what is it in the factor?
+      new:=MappedWord(new,ofgens,gens{[1..mn]});
+      # now left multiply with non-inverse generator
+      j:=ReducedForm(rws,gens[i-1]*new); #must be a tail.
+      j:=ReducedForm(rws,formalinverse(j)); # invert
+      Add(rels,[gens[i],new*j]);
+    od;
+
+    mon:=FactorFreeMonoidByRelations(f,rels);
+    rws:=KnuthBendixRewritingSystem(FamilyObj(One(mon)),ord:isconfluent);
+    ReduceRules(rws);
+    MakeConfluent(rws);  # will add rules to kill inverses, if needed
+    SetReducedConfluentRewritingSystem(mon,rws);
+  fi;
+
+  # now construct the group
+  str:=List(ogens,String);
   zerob:=ImmutableVector(r.module.field,
     ListWithIdenticalEntries(dim,Zero(r.module.field)));
   n:=Length(ogens);
@@ -1680,8 +1651,13 @@ local r,z,ogens,n,gens,str,dim,i,j,f,rels,new,quot,g,p,collect,m,e,fp,old,sim,
     od;
     Add(rels,new);
   od;
+  for i in [1..Length(r.presentation.killrelators)] do
+    new:=MappedWord(r.presentation.killrelators[i],ogens,gens{[1..n]});
+    Add(rels,new);
+  od;
+
   for i in [n+1..Length(gens)] do
-    Add(rels,gens[i]^r.prime);
+    Add(rels,gens[i]^prime);
     for j in [i+1..Length(gens)] do
       Add(rels,Comm(gens[i],gens[j]));
     od;
@@ -1693,8 +1669,14 @@ local r,z,ogens,n,gens,str,dim,i,j,f,rels,new,quot,g,p,collect,m,e,fp,old,sim,
     od;
   od;
   fp:=f/rels;
-  prime:=Size(r.module.field);
   SetSize(fp,Size(r.group)*prime^r.module.dimension);
+  simi:=fail;
+  wasbold:=false;
+
+  if mon<>fail then
+    rels:=MakeFpGroupToMonoidHomType1(fp,mon);
+    SetReducedMultiplication(fp);
+  fi;
 
   if Length(arg)>2 and arg[3]=true then
     if IsZero(z) and MTX.IsIrreducible(r.module) then
@@ -1726,12 +1708,45 @@ local r,z,ogens,n,gens,str,dim,i,j,f,rels,new,quot,g,p,collect,m,e,fp,old,sim,
       if IsPermGroup(p) then
         mindeg:=Minimum(List(Orbits(p,MovedPoints(p)),Length));
       fi;
+      it:=fail;
       while Size(p)<Size(fp) do
         # we allow do go immediately to normal subgroup of index up to 4.
         # This reduces search space
-        it:=DescSubgroupIterator(p:skip:=LogInt(Size(p),2));
         repeat
+          if it=fail then
+            # re-use the first quotient, helps with repeated subgroups iterator
+            if p=r.group then
+              m:=r.group;
+            else
+              m:=p;
+            fi;
+            # avoid working hard for outer automorphisms
+            e:=Filtered(DerivedSeriesOfGroup(m),
+              # roughly 5 for 1000, 30 for 10^6, 170 for 10^9
+              x->IndexNC(m,x)^4<=Size(m));
+            m:=e[Length(e)];
+            it:=DescSubgroupIterator(m:skip:=LogInt(Size(p),2));
+          fi;
+
+          wasbold:=false;
           m:=NextIterator(it);
+          # catch case of large permdegree, try naive first
+          if Index(p,m)=1 and IsPermGroup(p)
+            and NrMovedPoints(p)^2>Size(p) then
+            # take set stabilizer of orbit points.
+            e:=Set(List(Orbits(p,MovedPoints(p)),x->x[1]));
+            m:=Stabilizer(p,e,OnSets);
+	    if IndexNC(p,m)>10*NrMovedPoints(p) then
+	      m:=Intersection(MaximalSubgroupClassReps(p));
+	    fi;
+	    if IndexNC(p,m)>10*NrMovedPoints(p) then
+	      m:=p; # after all..
+	      wasbold:=false;
+	    else
+	      wasbold:=true;
+	    fi;
+          fi;
+          Info(InfoExtReps,3,"Found index ",Index(p,m));
           e:=fail;
           if Index(p,m)>=mindeg and (hom=false or Size(m)=1 or
             false<>MatricesStabilizerOneDim(r.module.field,
@@ -1745,6 +1760,9 @@ local r,z,ogens,n,gens,str,dim,i,j,f,rels,new,quot,g,p,collect,m,e,fp,old,sim,
               50
               # the rewriting seems to be sufficiently spiffy that we don't
               # need to worry about this more involved process.
+
+              # this might fail if generators are killed by rewriting
+              and Length(r.presentation.killrelators)=0
               then
 
               # Rewriting produces a bad presentation. Rather rebuild a new
@@ -1866,8 +1884,17 @@ local r,z,ogens,n,gens,str,dim,i,j,f,rels,new,quot,g,p,collect,m,e,fp,old,sim,
               fi;
 
             else
-              e:=LargerQuotientBySubgroupAbelianization(quot,m);
+              if simi=fail then
+                simi:=IsomorphismSimplifiedFpGroup(Source(quot));
+                simiq:=InverseGeneralMapping(simi)*quot;
+              fi;
+              e:=LargerQuotientBySubgroupAbelianization(simiq,m);
               if e<>fail then
+                i:=simi*DefiningQuotientHomomorphism(e);
+                j:=Image(DefiningQuotientHomomorphism(e));;
+                j:=List(Orbits(j,MovedPoints(j)),x->Stabilizer(j,x[1]));
+                j:=List(j,x->PreImage(i,x));
+                e:=Intersection(j);
                 e:=Intersection(e,KernelOfMultiplicativeGeneralMapping(quot));
               fi;
             fi;
@@ -1950,14 +1977,24 @@ local r,z,ogens,n,gens,str,dim,i,j,f,rels,new,quot,g,p,collect,m,e,fp,old,sim,
              Size(p)/Size(i)," at degree ",NrMovedPoints(p));
         hom:=false; # we don't have hom cheaply any longer as group changed.
         # this is not an issue if module is irreducible
+        it:=fail; simi:=fail; # cleanout info for first factor
       od;
       quot:=sim*quot;
       new:=GroupHomomorphismByImages(fp,p,GeneratorsOfGroup(fp),
         List(GeneratorsOfGroup(fp),x->ImagesRepresentative(quot,x)));
 
     fi;
-    new:=new*SmallerDegreePermutationRepresentation(p:cheap);
-    SetIsomorphismPermGroup(fp,new);
+    # if we used factor perm rep, be bolder
+    if IsPermGroup(p) then
+      new:=new*SmallerDegreePermutationRepresentation(p:cheap:=wasbold<>true);
+      SetIsomorphismPermGroup(fp,new);
+    elif IsPcGroup(p) then
+      SetIsomorphismPcGroup(fp,new);
+    fi;
+  fi;
+
+  if HasIsSolvableGroup(r.group) then
+    SetIsSolvableGroup(fp,IsSolvableGroup(r.group));
   fi;
 
   return fp;
@@ -1979,3 +2016,28 @@ local bas,ran,mats,o;
   o:=List(o,x->x[1]*coh.cohomology);
   return o;
 end);
+
+#############################################################################
+##
+#M  Extensions( G, M )
+##
+InstallOtherMethod(Extensions,"generic method for finite groups",
+    true,[IsGroup and IsFinite,IsObject],
+    -RankFilter(IsGroup and IsFinite),
+function(G,M)
+local coh;
+  coh:=TwoCohomologyGeneric(G,M);
+  return List(Elements(VectorSpace(coh.module.field,coh.cohomology)),
+    x->FpGroupCocycle(coh,x,true:normalform));
+end);
+
+InstallOtherMethod(ExtensionRepresentatives,"generic method for finite groups",
+  true,[IsGroup and IsFinite,IsObject,IsGroup],
+    -RankFilter(IsGroup and IsFinite),
+function(G,M,P)
+local coh;
+  coh:=TwoCohomologyGeneric(G,M);
+  return List(CompatiblePairOrbitRepsGeneric(P,coh),
+    x->FpGroupCocycle(coh,x,true:normalform));
+end);
+

@@ -98,7 +98,7 @@ InstallTrueMethod( IsFreeLeftModule,
 ##  The filter <Ref Filt="IsGaussianSpace"/> (see&nbsp;<Ref Sect="Filters"/>)
 ##  for the row space (see&nbsp;<Ref Filt="IsRowSpace"/>)
 ##  or matrix space (see&nbsp;<Ref Filt="IsMatrixSpace"/>) <A>V</A>
-##  over the field <M>F</M>, say,
+##  over a field <M>F</M>
 ##  indicates that the entries of all row vectors or matrices in <A>V</A>,
 ##  respectively, are all contained in <M>F</M>.
 ##  In this case, <A>V</A> is called a <E>Gaussian</E> vector space.
@@ -507,7 +507,7 @@ DeclareGlobalFunction( "VectorSpace" );
 ##  <Example><![CDATA[
 ##  gap> V:= VectorSpace( Rationals, [ [ 1, 2, 3 ], [ 1, 1, 1 ] ] );;
 ##  gap> W:= Subspace( V, [ [ 0, 1, 2 ] ] );
-##  <vector space over Rationals, with 1 generators>
+##  <vector space over Rationals, with 1 generator>
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -574,7 +574,7 @@ DeclareSynonym( "AsVectorSpace", AsLeftModule );
 ##  gap> V:= VectorSpace( Rationals, [ [ 1, 2, 3 ], [ 1, 1, 1 ] ] );;
 ##  gap> W:= VectorSpace( Rationals, [ [ 1/2, 1/2, 1/2 ] ] );;
 ##  gap> U:= AsSubspace( V, W );
-##  <vector space over Rationals, with 1 generators>
+##  <vector space over Rationals, with 1 generator>
 ##  gap> Parent( U ) = V;
 ##  true
 ##  gap> AsSubspace( V, [ [ 1, 1, 1 ] ] );

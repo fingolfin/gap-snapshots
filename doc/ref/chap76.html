@@ -50,13 +50,15 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X8495E5327D563AC3">76.3-10 DeclareAutoreadableVariables</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X85672DDD7D34D5F0">76.3-11 <span class="Heading">Kernel modules in <strong class="pkg">GAP</strong> packages</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X7C99782886B18C77">76.3-12 LoadDynamicModule</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X85C8DE357EE424D8">76.3-13 <span class="Heading">The PackageInfo.g File</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X7D23646086F33A9E">76.3-12 IsKernelExtensionAvailable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X85F1B83079A11F89">76.3-13 LoadKernelExtension</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X7C99782886B18C77">76.3-14 LoadDynamicModule</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X85C8DE357EE424D8">76.3-15 <span class="Heading">The PackageInfo.g File</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X79767C2482FF6F55">76.3-14 ValidatePackageInfo</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X7D34AC3287611B15">76.3-15 ShowPackageVariables</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X79EA4BD37940AD25">76.3-16 BibEntry</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X79637D9A7B1AD7F7">76.3-17 Cite</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X79767C2482FF6F55">76.3-16 ValidatePackageInfo</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X7D34AC3287611B15">76.3-17 ShowPackageVariables</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X79EA4BD37940AD25">76.3-18 BibEntry</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X79637D9A7B1AD7F7">76.3-19 Cite</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap76.html#X7EE8E5D97B0F8AFF">76.4 <span class="Heading">Guidelines for Writing a GAP Package</span></a>
 </span>
@@ -148,7 +150,7 @@
 
 <h3>76 <span class="Heading">Using and Developing GAP Packages</span></h3>
 
-<p>The functionality of <strong class="pkg">GAP</strong> can be extended by loading <strong class="pkg">GAP</strong> packages. The <strong class="pkg">GAP</strong> distribution already contains all currently redistributed <strong class="pkg">GAP</strong> packages in the <code class="file">gap-4.11.1/pkg</code> directory.</p>
+<p>The functionality of <strong class="pkg">GAP</strong> can be extended by loading <strong class="pkg">GAP</strong> packages. The <strong class="pkg">GAP</strong> distribution already contains all currently redistributed <strong class="pkg">GAP</strong> packages in the <code class="file">gap-4.12.0/pkg</code> directory.</p>
 
 <p><strong class="pkg">GAP</strong> packages are written by (groups of) <strong class="pkg">GAP</strong> users who may not necessarily be members of the <strong class="pkg">GAP</strong> developer team. The responsibility and copyright of a <strong class="pkg">GAP</strong> package remains with the original author(s).</p>
 
@@ -200,7 +202,7 @@
 true
 </pre></div>
 
-<p>The package name is case insensitive and may be appropriately abbreviated. At the time of writing, for example, <code class="code">LoadPackage("semi");</code> will load the <strong class="pkg">Semigroups</strong> package, and <code class="code">LoadPackage("j");</code> will load the <strong class="pkg">json</strong> package. If the abbreviation cannot be uniquely completed, a list of available completions will be offered, and <code class="func">LoadPackage</code> returns <code class="keyw">fail</code>. Thus the names of <em>all</em> installed packages can be shown by calling <code class="code">LoadPackage("");</code>.</p>
+<p>The package name is case insensitive and may be appropriately abbreviated. At the time of writing, for example, <code class="code">LoadPackage("semi");</code> will load the <strong class="pkg">Semigroups</strong> package, and <code class="code">LoadPackage("js");</code> will load the <strong class="pkg">json</strong> package. If the abbreviation cannot be uniquely completed, a list of available completions will be offered, and <code class="func">LoadPackage</code> returns <code class="keyw">fail</code>. Thus the names of <em>all</em> installed packages can be shown by calling <code class="code">LoadPackage("");</code>.</p>
 
 <p>When the optional argument string <var class="Arg">version</var> is present, the package will only be loaded in a version number equal to or greater than <var class="Arg">version</var> (see <code class="func">CompareVersionNumbers</code> (<a href="chap76.html#X787DFEB383545A49"><span class="RefLink">76.3-9</span></a>)). If the first character of <var class="Arg">version</var> is <code class="code">=</code> then only that version will be loaded.</p>
 
@@ -286,7 +288,7 @@ true
 
 </dd>
 </dl>
-<p>The log messages are created either by the functions of <strong class="pkg">GAP</strong>'s package loading mechanism or in the code of your package, for example in the <code class="code">AvailabilityTest</code> function of the package's <code class="file">PackageInfo.g</code> file (see <a href="chap76.html#X85C8DE357EE424D8"><span class="RefLink">76.3-13</span></a>), using <code class="func">LogPackageLoadingMessage</code>. The arguments of this function are <var class="Arg">severity</var> (which must be one of the above severity levels), <var class="Arg">message</var> (which must be either a string or a list of strings), and optionally <var class="Arg">name</var> (which must be the name of the package to which the message belongs). The argument <var class="Arg">name</var> is not needed if the function is called from a call of a package's <code class="code">AvailabilityTest</code> function (see <a href="chap76.html#X85C8DE357EE424D8"><span class="RefLink">76.3-13</span></a>) or is called from a package file that is read from <code class="file">init.g</code> or <code class="file">read.g</code>; in these cases, the name of the current package (stored in the record <code class="code">GAPInfo.PackageCurrent</code>) is taken. According to the above list, the <var class="Arg">severity</var> argument of <code class="func">LogPackageLoadingMessage</code> calls in a package's <code class="code">AvailabilityTest</code> function is either <code class="func">PACKAGE_WARNING</code> or <code class="func">PACKAGE_INFO</code>.</p>
+<p>The log messages are created either by the functions of <strong class="pkg">GAP</strong>'s package loading mechanism or in the code of your package, for example in the <code class="code">AvailabilityTest</code> function of the package's <code class="file">PackageInfo.g</code> file (see <a href="chap76.html#X85C8DE357EE424D8"><span class="RefLink">76.3-15</span></a>), using <code class="func">LogPackageLoadingMessage</code>. The arguments of this function are <var class="Arg">severity</var> (which must be one of the above severity levels), <var class="Arg">message</var> (which must be either a string or a list of strings), and optionally <var class="Arg">name</var> (which must be the name of the package to which the message belongs). The argument <var class="Arg">name</var> is not needed if the function is called from a call of a package's <code class="code">AvailabilityTest</code> function (see <a href="chap76.html#X85C8DE357EE424D8"><span class="RefLink">76.3-15</span></a>) or is called from a package file that is read from <code class="file">init.g</code> or <code class="file">read.g</code>; in these cases, the name of the current package (stored in the record <code class="code">GAPInfo.PackageCurrent</code>) is taken. According to the above list, the <var class="Arg">severity</var> argument of <code class="func">LogPackageLoadingMessage</code> calls in a package's <code class="code">AvailabilityTest</code> function is either <code class="func">PACKAGE_WARNING</code> or <code class="func">PACKAGE_INFO</code>.</p>
 
 <p>If you want to see the log messages already during the package loading process, you can set the level of the info class <code class="func">InfoPackageLoading</code> to one of the severity values listed above; afterwards the messages with at most this severity are shown immediately when they arise. In order to make this work already for autoloaded packages, you can call <code class="code">SetUserPreference("InfoPackageLoadingLevel", <var class="Arg">lev</var>);</code> to set the desired severity level <var class="Arg">lev</var>. This can for example be done in your <code class="file">gap.ini</code> file, see Section <a href="chap3.html#X87DF11C885E73583"><span class="RefLink">3.2-1</span></a>.</p>
 
@@ -325,7 +327,7 @@ true
 
 <p>If the optional argument <var class="Arg">checkall</var> is <code class="keyw">true</code> then all dependencies are checked, even if some have turned out to be not satisfied. This is useful when one is interested in the reasons why the package <var class="Arg">name</var> cannot be loaded. In this situation, calling first <code class="func">TestPackageAvailability</code> and then <code class="func">DisplayPackageLoadingLog</code> (<a href="chap76.html#X7D162DDF813D2BBA"><span class="RefLink">76.2-5</span></a>) with argument <code class="func">PACKAGE_INFO</code> (<a href="chap76.html#X7D162DDF813D2BBA"><span class="RefLink">76.2-5</span></a>) will give an overview of these reasons.</p>
 
-<p>You should <em>not</em> call <code class="func">TestPackageAvailability</code> in the test function of a package (the value of the component <code class="code">AvailabilityTest</code> in the <code class="file">PackageInfo.g</code> file of the package, see <a href="chap76.html#X85C8DE357EE424D8"><span class="RefLink">76.3-13</span></a>), because <code class="func">TestPackageAvailability</code> calls this test function.</p>
+<p>You should <em>not</em> call <code class="func">TestPackageAvailability</code> in the test function of a package (the value of the component <code class="code">AvailabilityTest</code> in the <code class="file">PackageInfo.g</code> file of the package, see <a href="chap76.html#X85C8DE357EE424D8"><span class="RefLink">76.3-15</span></a>), because <code class="func">TestPackageAvailability</code> calls this test function.</p>
 
 <p>The argument <var class="Arg">name</var> is case insensitive.</p>
 
@@ -343,7 +345,7 @@ true
 <h5>76.3-4 IsPackageMarkedForLoading</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPackageMarkedForLoading</code>( <var class="Arg">name</var>, <var class="Arg">version</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>This function can be used in the code of a package <span class="SimpleMath">A</span>, say, for testing whether the package <var class="Arg">name</var> in version <var class="Arg">version</var> will be loaded after the <code class="func">LoadPackage</code> (<a href="chap76.html#X79B373A77B29D1F5"><span class="RefLink">76.2-1</span></a>) call for the package <span class="SimpleMath">A</span> has been executed. This means that the package <var class="Arg">name</var> had been loaded before, or has been (directly or indirectly) requested as a needed or suggested package of the package <span class="SimpleMath">A</span> or of a package whose loading requested that <span class="SimpleMath">A</span> was loaded.</p>
+<p>This function can be used in the code of a package <span class="SimpleMath">A</span> for testing whether the package <var class="Arg">name</var> in version <var class="Arg">version</var> will be loaded after the <code class="func">LoadPackage</code> (<a href="chap76.html#X79B373A77B29D1F5"><span class="RefLink">76.2-1</span></a>) call for the package <span class="SimpleMath">A</span> has been executed. This means that the package <var class="Arg">name</var> had been loaded before, or has been (directly or indirectly) requested as a needed or suggested package of the package <span class="SimpleMath">A</span> or of a package whose loading requested that <span class="SimpleMath">A</span> was loaded.</p>
 
 <p><a id="X866ADD4E814A54F0" name="X866ADD4E814A54F0"></a></p>
 
@@ -375,11 +377,11 @@ make testpackage PKGNAME=pkgname
 <h5>76.3-7 DirectoriesPackageLibrary</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectoriesPackageLibrary</code>( <var class="Arg">name</var>[, <var class="Arg">path</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>takes the string <var class="Arg">name</var>, a name of a <strong class="pkg">GAP</strong> package, and returns a list of directory objects for those sub-directory/ies containing the library functions of this <strong class="pkg">GAP</strong> package, for the version that is already loaded or is currently going to be loaded or would be the first version <strong class="pkg">GAP</strong> would try to load if no other version is explicitly prescribed. (If the package <var class="Arg">name</var> is not yet loaded then we cannot guarantee that the returned directories belong to a version that really can be loaded.)</p>
+<p>takes the string <var class="Arg">name</var>, a name of a <strong class="pkg">GAP</strong> package, and returns a list that is either empty or contains one directory object <code class="code">dir</code> that describes the place where the library functions of this <strong class="pkg">GAP</strong> package should be located.</p>
 
-<p>The default is that the library functions are in the subdirectory <code class="file">lib</code> of the <strong class="pkg">GAP</strong> package's home directory. If this is not the case, then the second argument <var class="Arg">path</var> needs to be present and must be a string that is a path name relative to the home directory of the <strong class="pkg">GAP</strong> package with name <var class="Arg">name</var>.</p>
+<p>In the latter case, <code class="code">dir</code> is the <var class="Arg">path</var> subdirectory of a directory where the package <var class="Arg">name</var> is installed, where the default for <var class="Arg">path</var> is <code class="code">"lib"</code>, and where the package directory belongs to the version of <var class="Arg">name</var> that is already loaded or is currently going to be loaded or would be the first version <strong class="pkg">GAP</strong> would try to load if no other version is explicitly prescribed. (If the package <var class="Arg">name</var> is not yet loaded then we cannot guarantee that the directory belongs to a version that really can be loaded.)</p>
 
-<p>Note that <code class="func">DirectoriesPackageLibrary</code> is likely to be called in the <code class="code">AvailabilityTest</code> function in the package's <code class="file">PackageInfo.g</code> file (see <a href="chap76.html#X85C8DE357EE424D8"><span class="RefLink">76.3-13</span></a>).</p>
+<p>Note that <code class="func">DirectoriesPackageLibrary</code> is likely to be called in the <code class="code">AvailabilityTest</code> function in the package's <code class="file">PackageInfo.g</code> file (see <a href="chap76.html#X85C8DE357EE424D8"><span class="RefLink">76.3-15</span></a>).</p>
 
 <p>As an example, the following returns a directory object for the library functions of the <strong class="pkg">GAP</strong> package <strong class="pkg">Example</strong>:</p>
 
@@ -404,17 +406,16 @@ make testpackage PKGNAME=pkgname
 <h5>76.3-8 DirectoriesPackagePrograms</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectoriesPackagePrograms</code>( <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>returns a list of the <code class="code">bin/</code><var class="Arg">architecture</var> subdirectories of all packages <var class="Arg">name</var> where <var class="Arg">architecture</var> is the architecture on which <strong class="pkg">GAP</strong> has been compiled (this can be accessed as <code class="code">GAPInfo.Architecture</code>, see <code class="func">GAPInfo</code> (<a href="chap3.html#X8354754E7935F935"><span class="RefLink">3.5-1</span></a>)) and the version of the installed package coincides with the version of the package <var class="Arg">name</var> that is already loaded or is currently going to be loaded or would be the first version <strong class="pkg">GAP</strong> would try to load if no other version is explicitly prescribed. (If the package <var class="Arg">name</var> is not yet loaded then we cannot guarantee that the returned directories belong to a version that really can be loaded.)</p>
+<p>returns a list that is either empty or contains one directory object <code class="code">dir</code> that describes the place where external binaries of the <strong class="pkg">GAP</strong> package <var class="Arg">name</var> should be located.</p>
 
-<p>Note that <code class="func">DirectoriesPackagePrograms</code> is likely to be called in the <code class="code">AvailabilityTest</code> function in the package's <code class="file">PackageInfo.g</code> file (see <a href="chap76.html#X85C8DE357EE424D8"><span class="RefLink">76.3-13</span></a>).</p>
+<p>In the latter case, <code class="code">dir</code> is the <code class="code">bin/</code><var class="Arg">architecture</var> subdirectory of a directory where the package <var class="Arg">name</var> is installed, where <var class="Arg">architecture</var> is the architecture on which <strong class="pkg">GAP</strong> has been compiled (this can be accessed as <code class="code">GAPInfo.Architecture</code>, see <code class="func">GAPInfo</code> (<a href="chap3.html#X8354754E7935F935"><span class="RefLink">3.5-1</span></a>)), and where the package directory belongs to the version of <var class="Arg">name</var> that is already loaded or is currently going to be loaded or would be the first version <strong class="pkg">GAP</strong> would try to load if no other version is explicitly prescribed. (If the package <var class="Arg">name</var> is not yet loaded then we cannot guarantee that the directory belongs to a version that really can be loaded.)</p>
 
-<p>The directories returned by <code class="func">DirectoriesPackagePrograms</code> are the place where external binaries of the <strong class="pkg">GAP</strong> package <var class="Arg">name</var> for the current package version and the current architecture should be located.</p>
+<p>Note that <code class="func">DirectoriesPackagePrograms</code> is likely to be called in the <code class="code">AvailabilityTest</code> function in the package's <code class="file">PackageInfo.g</code> file (see <a href="chap76.html#X85C8DE357EE424D8"><span class="RefLink">76.3-15</span></a>).</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DirectoriesPackagePrograms( "nq" );</span>
-[ dir("/home/gap/4.0/pkg/nq/bin/x86_64-unknown-linux-gnu-gcc/64-bit/"),
-  dir("/home/gap/4.0/pkg/nq/bin/x86_64-unknown-linux-gnu-gcc/") ]
+[ dir("/home/gap/4.0/pkg/nq/bin/x86_64-pc-linux-gnu-default64-kv3/") ]
 </pre></div>
 
 <p><a id="X787DFEB383545A49" name="X787DFEB383545A49"></a></p>
@@ -451,46 +452,86 @@ make testpackage PKGNAME=pkgname
 $ gap4/bin/i386-ibm-linux-gcc2/gac -d test.c
 </pre></div>
 
-<p>This will produce a file <code class="file">test.so</code>, which then can be loaded into <strong class="pkg">GAP</strong> with <code class="func">LoadDynamicModule</code> (<a href="chap76.html#X7C99782886B18C77"><span class="RefLink">76.3-12</span></a>).</p>
+<p>This will produce a file <code class="file">test.so</code>, which then can be loaded into <strong class="pkg">GAP</strong> with <code class="func">LoadKernelExtension</code> (<a href="chap76.html#X85F1B83079A11F89"><span class="RefLink">76.3-13</span></a>). If the kernel module is required for the package to work, then its <code class="file">PackageInfo.g</code> should define a <code class="code">AvailabilityTest</code> which calls <code class="func">IsKernelExtensionAvailable</code> (<a href="chap76.html#X7D23646086F33A9E"><span class="RefLink">76.3-12</span></a>), see <a href="chap76.html#X7E4F39867CCC6026"><span class="RefLink">76.14-2</span></a> for details.</p>
+
+<p>Note that before GAP 4.12, <code class="func">LoadDynamicModule</code> (<a href="chap76.html#X7C99782886B18C77"><span class="RefLink">76.3-14</span></a>) was used for this. It is still available and in fact <code class="func">LoadKernelExtension</code> (<a href="chap76.html#X85F1B83079A11F89"><span class="RefLink">76.3-13</span></a>) call it; but the latter provides a higher level abstraction and is more convenient to use.</p>
+
+<p><a id="X7D23646086F33A9E" name="X7D23646086F33A9E"></a></p>
+
+<h5>76.3-12 IsKernelExtensionAvailable</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsKernelExtensionAvailable</code>( <var class="Arg">pkgname</var>[, <var class="Arg">modname</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>For use by packages: Search for a loadable kernel module inside package <var class="Arg">pkgname</var> with name <var class="Arg">modname</var> and return <code class="keyw">true</code> if found, otherwise <code class="keyw">false</code>. If <var class="Arg">modname</var> is omitted, then <var class="Arg">pkgname</var> is used instead. Note that package names are case insensitive, but <var class="Arg">modname</var> is not.</p>
+
+<p>This function first appeared in GAP 4.12. It is typically called in the <code class="code">AvailabilityTest</code> function of a package (see <a href="chap76.html#X7E4F39867CCC6026"><span class="RefLink">76.14-2</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsKernelExtensionAvailable("myPackageWithKernelExtension");</span>
+true
+</pre></div>
+
+<p><a id="X85F1B83079A11F89" name="X85F1B83079A11F89"></a></p>
+
+<h5>76.3-13 LoadKernelExtension</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoadKernelExtension</code>( <var class="Arg">pkgname</var>[, <var class="Arg">modname</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>For use by packages: Search for a loadable kernel module inside package <var class="Arg">pkgname</var> with name <var class="Arg">modname</var>, and load it if found. If <var class="Arg">modname</var> is omitted, then <var class="Arg">pkgname</var> is used instead. Note that package names are case insensitive, but <var class="Arg">modname</var> is not.</p>
+
+<p>This function first appeared in GAP 4.12. It is typically called in the <code class="file">init.g</code> file of a package.</p>
+
+<p>Previously, packages with a kernel module typically used code like this:</p>
+
+
+<div class="example"><pre>
+path := Filename(DirectoriesPackagePrograms("SomePackage"), "SomePackage.so");
+if path &lt;&gt; fail then
+  LoadDynamicModule(path);
+fi;
+</pre></div>
+
+<p>That can now be replaced by the following, which also produces more helpful error messages for the user:</p>
+
+
+<div class="example"><pre>
+LoadKernelExtension("SomePackage");
+</pre></div>
+
+<p>For packages where the name of the kernel extension is not identical to that of the package, you can either rename the kernel extension to have a matching name (recommended if you only have a single kernel extension in your package, which is how we recommend to set up things anyway), or else use the two argument version:</p>
+
+
+<div class="example"><pre>
+LoadKernelExtension("SomePackage", "kext"); # this will look for kext.so
+</pre></div>
 
 <p><a id="X7C99782886B18C77" name="X7C99782886B18C77"></a></p>
 
-<h5>76.3-12 LoadDynamicModule</h5>
+<h5>76.3-14 LoadDynamicModule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoadDynamicModule</code>( <var class="Arg">filename</var>[, <var class="Arg">crc</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>To load a compiled file, the command <code class="func">LoadDynamicModule</code> is used. This command loads <var class="Arg">filename</var> as module. If given, the CRC checksum <var class="Arg">crc</var> must match the value of the module (see <a href="chap9.html#X8241CEAD80415BB9"><span class="RefLink">9.7-7</span></a>).</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoadDynamicModule</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>To load a compiled file, the command <code class="func">LoadDynamicModule</code> is used. This command loads <var class="Arg">filename</var> as module.</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadDynamicModule("./test.so");</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CrcFile("test.so");</span>
-2906458206
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadDynamicModule("./test.so",1);</span>
-Error, &lt;crc&gt; mismatch (or no support for dynamic loading) called from
-&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
-Entering break read-eval-print loop ...
-you can 'quit;' to quit to outer loop, or
-you can 'return;' to continue
-<span class="GAPbrkprompt">brk&gt;</span> <span class="GAPinput">quit;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadDynamicModule("./test.so",2906458206);</span>
 </pre></div>
 
 <p>On some operating systems, once you have loaded a dynamic module with a certain filename, loading another with the same filename will have no effect, even if the file on disk has changed.</p>
 
 <p><a id="X85C8DE357EE424D8" name="X85C8DE357EE424D8"></a></p>
 
-<h5>76.3-13 <span class="Heading">The PackageInfo.g File</span></h5>
+<h5>76.3-15 <span class="Heading">The PackageInfo.g File</span></h5>
 
 <p>Each package has the file <code class="file">PackageInfo.g</code> which contains meta-information about the package (package name, version, author(s), relations to other packages, homepage, download archives, etc.). This file is used by the package loading mechanism and also for the redistribution of a package with <strong class="pkg">GAP</strong></p>
 
 <p><a id="X79767C2482FF6F55" name="X79767C2482FF6F55"></a></p>
 
-<h5>76.3-14 ValidatePackageInfo</h5>
+<h5>76.3-16 ValidatePackageInfo</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ValidatePackageInfo</code>( <var class="Arg">info</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function is intended to support package authors who create or modify <code class="file">PackageInfo.g</code> files. (It is <em>not</em> called when these files are read during the startup of <strong class="pkg">GAP</strong> or when packages are actually loaded.)</p>
 
-<p>The argument <var class="Arg">info</var> must be either a record as is contained in a <code class="file">PackageInfo.g</code> file or a a string which describes the path to such a file. The result is <code class="keyw">true</code> if the record or the contents of the file, respectively, has correct format, and <code class="keyw">false</code> otherwise; in the latter case information about the incorrect components is printed.</p>
+<p>The argument <var class="Arg">info</var> must be either a record as is contained in a <code class="file">PackageInfo.g</code> file or a string which describes the path to such a file. The result is <code class="keyw">true</code> if the record or the contents of the file, respectively, has correct format, and <code class="keyw">false</code> otherwise; in the latter case information about the incorrect components is printed.</p>
 
 <p>Note that the components used for package loading are checked as well as the components that are needed for composing the package overview web page or for updating the package archives.</p>
 
@@ -498,7 +539,7 @@ you can 'return;' to continue
 
 <p><a id="X7D34AC3287611B15" name="X7D34AC3287611B15"></a></p>
 
-<h5>76.3-15 ShowPackageVariables</h5>
+<h5>76.3-17 ShowPackageVariables</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShowPackageVariables</code>( <var class="Arg">pkgname</var>[, <var class="Arg">version</var>][, <var class="Arg">arec</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PackageVariablesInfo</code>( <var class="Arg">pkgname</var>, <var class="Arg">version</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
@@ -539,14 +580,14 @@ you can 'return;' to continue
 
 </dd>
 </dl>
-<p>An interactive variant of <code class="func">ShowPackageVariables</code> is the function <code class="func">BrowsePackageVariables</code> (<a href="../../pkg/Browse/doc/chap6.html#X8030B1688335783D"><span class="RefLink">Browse: BrowsePackageVariables</span></a>) that is provided by the <strong class="pkg">GAP</strong> package <strong class="pkg">Browse</strong>. For this function, it is not sensible to assume that the package <var class="Arg">pkgname</var> is not yet loaded before the function call, because one might be interested in packages that must be loaded before <strong class="pkg">Browse</strong> itself can be loaded. The solution is that <code class="func">BrowsePackageVariables</code> (<a href="../../pkg/Browse/doc/chap6.html#X8030B1688335783D"><span class="RefLink">Browse: BrowsePackageVariables</span></a>) takes the output of <code class="func">PackageVariablesInfo</code> as its second argument. The function <code class="func">PackageVariablesInfo</code> is used by both <code class="func">ShowPackageVariables</code> and <code class="func">BrowsePackageVariables</code> (<a href="../../pkg/Browse/doc/chap6.html#X8030B1688335783D"><span class="RefLink">Browse: BrowsePackageVariables</span></a>) for collecting the information about the package in question, and can be called before the package <strong class="pkg">Browse</strong> is loaded.</p>
+<p>An interactive variant of <code class="func">ShowPackageVariables</code> is the function <code class="func">BrowsePackageVariables</code> (<a href="../../pkg/browse/doc/chap6.html#X8030B1688335783D"><span class="RefLink">Browse: BrowsePackageVariables</span></a>) that is provided by the <strong class="pkg">GAP</strong> package <strong class="pkg">Browse</strong>. For this function, it is not sensible to assume that the package <var class="Arg">pkgname</var> is not yet loaded before the function call, because one might be interested in packages that must be loaded before <strong class="pkg">Browse</strong> itself can be loaded. The solution is that <code class="func">BrowsePackageVariables</code> (<a href="../../pkg/browse/doc/chap6.html#X8030B1688335783D"><span class="RefLink">Browse: BrowsePackageVariables</span></a>) takes the output of <code class="func">PackageVariablesInfo</code> as its second argument. The function <code class="func">PackageVariablesInfo</code> is used by both <code class="func">ShowPackageVariables</code> and <code class="func">BrowsePackageVariables</code> (<a href="../../pkg/browse/doc/chap6.html#X8030B1688335783D"><span class="RefLink">Browse: BrowsePackageVariables</span></a>) for collecting the information about the package in question, and can be called before the package <strong class="pkg">Browse</strong> is loaded.</p>
 
 <p><a id="X79EA4BD37940AD25" name="X79EA4BD37940AD25"></a></p>
 
-<h5>76.3-16 BibEntry</h5>
+<h5>76.3-18 BibEntry</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BibEntry</code>( <var class="Arg">pkgname</var>[, <var class="Arg">key</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Returns: a string in BibXMLext format (see <a href="../../pkg/GAPDoc-1.6.4/doc/chap7.html#X7FB8F6BD80D859D1"><span class="RefLink">GAPDoc: The BibXMLext Format</span></a>) that can be used for referencing the <strong class="pkg">GAP</strong> system or a <strong class="pkg">GAP</strong> package.</p>
+<p>Returns: a string in BibXMLext format (see <a href="../../pkg/gapdoc/doc/chap7.html#X7FB8F6BD80D859D1"><span class="RefLink">GAPDoc: The BibXMLext Format</span></a>) that can be used for referencing the <strong class="pkg">GAP</strong> system or a <strong class="pkg">GAP</strong> package.</p>
 
 <p>If the argument <var class="Arg">pkgname</var> is the string <code class="code">"GAP"</code>, the function returns an entry for the current version of <strong class="pkg">GAP</strong>.</p>
 
@@ -556,9 +597,9 @@ you can 'return;' to continue
 
 <p>In each of the above cases, an optional argument <var class="Arg">key</var> can be given, a string which is then used as the key of the BibTeX entry instead of the default key that is generated from the system/package name and the version number.</p>
 
-<p><code class="func">BibEntry</code> requires the functions <code class="func">FormatParagraph</code> (<a href="../../pkg/GAPDoc-1.6.4/doc/chap6.html#X812058CE7C8E9022"><span class="RefLink">GAPDoc: FormatParagraph</span></a>) and <code class="func">NormalizedNameAndKey</code> (<a href="../../pkg/GAPDoc-1.6.4/doc/chap7.html#X7C9F0C337A0A0FF0"><span class="RefLink">GAPDoc: NormalizedNameAndKey</span></a>) from the <strong class="pkg">GAP</strong> package <strong class="pkg">GAPDoc</strong>.</p>
+<p><code class="func">BibEntry</code> requires the functions <code class="func">FormatParagraph</code> (<a href="../../pkg/gapdoc/doc/chap6.html#X812058CE7C8E9022"><span class="RefLink">GAPDoc: FormatParagraph</span></a>) and <code class="func">NormalizedNameAndKey</code> (<a href="../../pkg/gapdoc/doc/chap7.html#X7C9F0C337A0A0FF0"><span class="RefLink">GAPDoc: NormalizedNameAndKey</span></a>) from the <strong class="pkg">GAP</strong> package <strong class="pkg">GAPDoc</strong>.</p>
 
-<p>The functions <code class="func">ParseBibXMLextString</code> (<a href="../../pkg/GAPDoc-1.6.4/doc/chap7.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextString</span></a>) and <code class="func">StringBibXMLEntry</code> (<a href="../../pkg/GAPDoc-1.6.4/doc/chap7.html#X790A295680F7CD24"><span class="RefLink">GAPDoc: StringBibXMLEntry</span></a>) can be used to create for example a BibTeX entry from the return value, as follows.</p>
+<p>The functions <code class="func">ParseBibXMLextString</code> (<a href="../../pkg/gapdoc/doc/chap7.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextString</span></a>) and <code class="func">StringBibXMLEntry</code> (<a href="../../pkg/gapdoc/doc/chap7.html#X790A295680F7CD24"><span class="RefLink">GAPDoc: StringBibXMLEntry</span></a>) can be used to create for example a BibTeX entry from the return value, as follows.</p>
 
 
 <div class="example"><pre>
@@ -587,14 +628,14 @@ you can 'return;' to continue
 
 <p><a id="X79637D9A7B1AD7F7" name="X79637D9A7B1AD7F7"></a></p>
 
-<h5>76.3-17 Cite</h5>
+<h5>76.3-19 Cite</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cite</code>( [<var class="Arg">pkgname</var>[, <var class="Arg">key</var>]] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Used with no arguments or with argument <code class="code">"GAP"</code> (case-insensitive), <code class="func">Cite</code> displays instructions on citing the version of <strong class="pkg">GAP</strong> that is being used. Suggestions are given in plain text, HTML, BibXML and BibTeX formats. The same instructions are also contained in the <code class="file">CITATION</code> file in the <strong class="pkg">GAP</strong> root directory.</p>
 
 <p>If <var class="Arg">pkgname</var> is the name of a <strong class="pkg">GAP</strong> package, instructions on citing this package will be displayed. They will be produced from the <code class="file">PackageInfo.g</code> file of the working version of this package that must be available in the <strong class="pkg">GAP</strong> installation being used. Otherwise, one will get a warning that no working version of the package is available.</p>
 
-<p>The optional 2nd argument <var class="Arg">key</var> has the same meaning as in <code class="func">BibEntry</code> (<a href="chap76.html#X79EA4BD37940AD25"><span class="RefLink">76.3-16</span></a>).</p>
+<p>The optional 2nd argument <var class="Arg">key</var> has the same meaning as in <code class="func">BibEntry</code> (<a href="chap76.html#X79EA4BD37940AD25"><span class="RefLink">76.3-18</span></a>).</p>
 
 <p><a id="X7EE8E5D97B0F8AFF" name="X7EE8E5D97B0F8AFF"></a></p>
 
@@ -616,7 +657,7 @@ you can 'return;' to continue
 
 <h4>76.5 <span class="Heading">Structure of a GAP Package</span></h4>
 
-<p>A <strong class="pkg">GAP</strong> package should have an alphanumeric name (<var class="Arg">packagename</var>, say); mixed case is fine, but there should be no whitespace characters. All files of a <strong class="pkg">GAP</strong> package <var class="Arg">packagename</var> must be collected in a single directory <var class="Arg">packagedir</var>, where <var class="Arg">packagedir</var> should be just <var class="Arg">packagename</var> optionally converted to lowercase and optionally followed by the package version (with or without hyphen to separate the version from <var class="Arg">packagename</var>). Let us call this directory the <em>home directory</em> of the package.</p>
+<p>A <strong class="pkg">GAP</strong> package should have an alphanumeric name; mixed case is fine, but there should be no whitespace characters. All files of a <strong class="pkg">GAP</strong> package <var class="Arg">packagename</var> must be collected in a single directory <var class="Arg">packagedir</var>, where <var class="Arg">packagedir</var> should be just <var class="Arg">packagename</var> optionally converted to lowercase and optionally followed by the package version (with or without hyphen to separate the version from <var class="Arg">packagename</var>). Let us call this directory the <em>home directory</em> of the package.</p>
 
 <p>To use the package with <strong class="pkg">GAP</strong>, the directory <var class="Arg">packagedir</var> must be a subdirectory of a <code class="file">pkg</code> directory in (one of) the <strong class="pkg">GAP</strong> root directories (see <a href="chap9.html#X7A4973627A5DB27D"><span class="RefLink">9.2</span></a>). For example, if <strong class="pkg">GAP</strong> is installed in <code class="file">/usr/local/gap4</code> then the files of the package <code class="code">MyPack</code> may be placed in the directory <code class="file">/usr/local/gap4/pkg/mypack</code>. The directory <var class="Arg">packagedir</var> preferably should have the following structure (below, a trailing <code class="code">/</code> distinguishes directories from ordinary files):</p>
 
@@ -674,7 +715,7 @@ packagedir/
 
 </dd>
 <dt><strong class="Mark"><code class="file">PackageInfo.g</code></strong></dt>
-<dd><p>Every <strong class="pkg">GAP</strong> package <em>must</em> have a <code class="file">PackageInfo.g</code> file which contains meta-information about the package (package name, version, author(s), relations to other packages, homepage, download archives, etc.). This information is used by the package loading mechanism and also for the redistribution of a package with <strong class="pkg">GAP</strong>. The <strong class="pkg">Example</strong> package's <code class="file">PackageInfo.g</code> file is well-commented and can be used as a prototype (see also <a href="chap76.html#X85C8DE357EE424D8"><span class="RefLink">76.3-13</span></a> for further details). It may also be created using the <strong class="pkg">PackageMaker</strong> mentioned above.</p>
+<dd><p>Every <strong class="pkg">GAP</strong> package <em>must</em> have a <code class="file">PackageInfo.g</code> file which contains meta-information about the package (package name, version, author(s), relations to other packages, homepage, download archives, etc.). This information is used by the package loading mechanism and also for the redistribution of a package with <strong class="pkg">GAP</strong>. The <strong class="pkg">Example</strong> package's <code class="file">PackageInfo.g</code> file is well-commented and can be used as a prototype (see also <a href="chap76.html#X85C8DE357EE424D8"><span class="RefLink">76.3-15</span></a> for further details). It may also be created using the <strong class="pkg">PackageMaker</strong> mentioned above.</p>
 
 </dd>
 <dt><strong class="Mark"><code class="file">init.g</code>, <code class="file">read.g</code></strong></dt>
@@ -684,9 +725,9 @@ packagedir/
 
 </dd>
 <dt><strong class="Mark"><code class="file">doc</code></strong></dt>
-<dd><p>This directory should contain the package's documentation, written in an XML-based documentation format supported by the <strong class="pkg">GAP</strong> package <strong class="pkg">GAPDoc</strong> (see <a href="../../pkg/GAPDoc-1.6.4/doc/chap1.html#X7D4EE663818DA109"><span class="RefLink">GAPDoc: Introduction and Example</span></a>) which is used for the <strong class="pkg">GAP</strong> documentation itself.</p>
+<dd><p>This directory should contain the package's documentation, written in an XML-based documentation format supported by the <strong class="pkg">GAP</strong> package <strong class="pkg">GAPDoc</strong> (see <a href="../../pkg/gapdoc/doc/chap1.html#X7D4EE663818DA109"><span class="RefLink">GAPDoc: Introduction and Example</span></a>) which is used for the <strong class="pkg">GAP</strong> documentation itself.</p>
 
-<p>The <strong class="pkg">Example</strong> package's documentation (see its <code class="file">doc</code> directory) may be used as a prototype. It consists of the master file <code class="file">main.xml</code>, further <code class="file">.xml</code> files for manual chapters (included in the manual via <code class="code">Include</code> directives in the master file) and the <strong class="pkg">GAP</strong> input file <code class="file">../makedocrel.g</code> which generates the manuals. Generally, one should also provide a <code class="file">manual.bib</code> BibTeX database file or an <code class="file">xml</code> file in the BibXMLext format (see <a href="../../pkg/GAPDoc-1.6.4/doc/chap7.html#X7FB8F6BD80D859D1"><span class="RefLink">GAPDoc: The BibXMLext Format</span></a>).</p>
+<p>The <strong class="pkg">Example</strong> package's documentation (see its <code class="file">doc</code> directory) may be used as a prototype. It consists of the master file <code class="file">main.xml</code>, further <code class="file">.xml</code> files for manual chapters (included in the manual via <code class="code">Include</code> directives in the master file) and the <strong class="pkg">GAP</strong> input file <code class="file">../makedocrel.g</code> which generates the manuals. Generally, one should also provide a <code class="file">manual.bib</code> BibTeX database file or an <code class="file">xml</code> file in the BibXMLext format (see <a href="../../pkg/gapdoc/doc/chap7.html#X7FB8F6BD80D859D1"><span class="RefLink">GAPDoc: The BibXMLext Format</span></a>).</p>
 
 <p>One could also use the <strong class="pkg">AutoDoc</strong> which simplifies writing documentation by generating most of the <strong class="pkg">GAPDoc</strong> code automatically.</p>
 
@@ -718,7 +759,7 @@ packagedir/
 
 <p>Concerning the installation you should produce a <code class="file">README</code> file which gives a short description of the purpose of the package and contains proper instructions how to install your package. Again, check out some existing packages to get an idea how this could look like.</p>
 
-<p>Documentation for <strong class="pkg">GAP</strong> package should be prepared in an XML-based documentation format that is defined in and can be used with the <strong class="pkg">GAPDoc</strong> package (see <a href="../../pkg/GAPDoc-1.6.4/doc/chap1.html#X7D4EE663818DA109"><span class="RefLink">GAPDoc: Introduction and Example</span></a>).</p>
+<p>Documentation for <strong class="pkg">GAP</strong> package should be prepared in an XML-based documentation format that is defined in and can be used with the <strong class="pkg">GAPDoc</strong> package (see <a href="../../pkg/gapdoc/doc/chap1.html#X7D4EE663818DA109"><span class="RefLink">GAPDoc: Introduction and Example</span></a>).</p>
 
 <p>There should be at least a text version of your documentation provided for use in the terminal running <strong class="pkg">GAP</strong> and some nicely printable version in <code class="code">.pdf</code> format. Many <strong class="pkg">GAP</strong> users like to browse the documentation in HTML format via their Web browser. As a package author, you are not obliged to provide an HTML version of your package manual, but if you use the <strong class="pkg">GAPDoc</strong> package you should have no trouble in producing one.</p>
 
@@ -746,7 +787,7 @@ SetPackageInfo( rec(
   PackageDoc := rec(
       BookName  := "test",
       SixFile   := "doc/manual.six",
-      Autoload  := true ),
+  ),
   Dependencies := rec(
       GAP       := "4.9",
       NeededOtherPackages := [ ["GAPDoc", "1.6"] ],
@@ -772,7 +813,7 @@ true
 
 <p>Package files may follow the style used for the <strong class="pkg">GAP</strong> library. Every file in the <strong class="pkg">GAP</strong> library starts with a header that lists the filename, copyright, a short description of the file contents and the original authors of this file, and ends with a comment line <code class="code">#E</code>. Indentation in functions and the use of decorative spaces in the code are left to the decision of the authors of each file. Global (i.e. re-used elsewhere) comments usually are indented by two hash marks and two blanks, in particular, every declaration or method or function installation which is not only of local scope is separated by a header.</p>
 
-<p>Facilities to distribute a document over several files to allow the documentation for parts of some code to be stored in the same file as the code itself are provided by the <strong class="pkg">GAPDoc</strong> package (see <a href="../../pkg/GAPDoc-1.6.4/doc/chap4.html#X7A3355C07F57C280"><span class="RefLink">GAPDoc: Distributing a Document into Several Files</span></a>). The same approach is demonstrated by the <strong class="pkg">Example</strong> package. E.g. <code class="file">example/doc/example.xml</code> has the statement <code class="code">&lt;#Include Label="ListDirectory"&gt;</code> and <code class="file">example/lib/files.gd</code> contains</p>
+<p>Facilities to distribute a document over several files to allow the documentation for parts of some code to be stored in the same file as the code itself are provided by the <strong class="pkg">GAPDoc</strong> package (see <a href="../../pkg/gapdoc/doc/chap4.html#X7A3355C07F57C280"><span class="RefLink">GAPDoc: Distributing a Document into Several Files</span></a>). The same approach is demonstrated by the <strong class="pkg">Example</strong> package. E.g. <code class="file">example/doc/example.xml</code> has the statement <code class="code">&lt;#Include Label="ListDirectory"&gt;</code> and <code class="file">example/lib/files.gd</code> contains</p>
 
 
 <div class="example"><pre>
@@ -789,7 +830,7 @@ true
 DeclareGlobalFunction( "ListDirectory" );
 </pre></div>
 
-<p>This is all put together in the file <code class="file">example/makedocrel.g</code> which builds the package documentation, calling <code class="func">MakeGAPDocDoc</code> (<a href="../../pkg/GAPDoc-1.6.4/doc/chap5.html#X826F530686F4D052"><span class="RefLink">GAPDoc: MakeGAPDocDoc</span></a>) with locations of library files containing parts of the documentation.</p>
+<p>This is all put together in the file <code class="file">example/makedocrel.g</code> which builds the package documentation, calling <code class="func">MakeGAPDocDoc</code> (<a href="../../pkg/gapdoc/doc/chap5.html#X826F530686F4D052"><span class="RefLink">GAPDoc: MakeGAPDocDoc</span></a>) with locations of library files containing parts of the documentation.</p>
 
 <p>Alternatively, one could use the <strong class="pkg">AutoDoc</strong>, which simplifies writing documentation by generating most of the <strong class="pkg">GAPDoc</strong> code automatically. The equivalent of the fragment of the code above for <strong class="pkg">AutoDoc</strong> would look like</p>
 
@@ -808,7 +849,7 @@ DeclareGlobalFunction( "ListDirectory" );
 
 <p>While the minimalistic <code class="file">PackageInfo.g</code> file described in <a href="chap76.html#X79AB306684AC8E7A"><span class="RefLink">76.7</span></a> is enough to let <strong class="pkg">GAP</strong> load the package, and check all specified dependencies, it is actually missing many extra fields which become relevant if you want to distribute your package: they contain lists of authors and/or maintainers including contact information, URLs of the package archives and README files, status information, text for a package overview webpage, and so on. All these details are required for a package to be redistributed with <strong class="pkg">GAP</strong>.</p>
 
-<p>The command <code class="func">ValidatePackageInfo</code> (<a href="chap76.html#X79767C2482FF6F55"><span class="RefLink">76.3-14</span></a>) can be used to get a quick idea about which fields are missing:</p>
+<p>The command <code class="func">ValidatePackageInfo</code> (<a href="chap76.html#X79767C2482FF6F55"><span class="RefLink">76.3-16</span></a>) can be used to get a quick idea about which fields are missing:</p>
 
 
 <div class="example"><pre>
@@ -856,15 +897,15 @@ Pager(StringFile(Filename(DirectoriesLibrary(),
 
 <p>The reason for this is that such functions and variables are <em>easily overwritten</em> and what's more you are not warned about it when it happens.</p>
 
-<p>To protect a function or variable against overwriting there is the function <code class="func">BindGlobal</code> (<a href="chap4.html#X7D39D3E17CF49F5B"><span class="RefLink">4.9-8</span></a>), or alternatively (and equivalently) you may define a global function via a <code class="func">DeclareGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.10-4</span></a>) and <code class="func">InstallGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.10-4</span></a>) pair or a global variable via a <code class="func">DeclareGlobalVariable</code> (<a href="chap79.html#X8324B5DE8300E0F2"><span class="RefLink">79.10-1</span></a>) and <code class="func">InstallValue</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.10-2</span></a>) pair. There are also operations and their methods, and related objects like attributes and filters which also have <code class="code">Declare...</code> and <code class="code">Install...</code> pairs.</p>
+<p>To protect a function or variable against overwriting there is the function <code class="func">BindGlobal</code> (<a href="chap4.html#X7D39D3E17CF49F5B"><span class="RefLink">4.9-8</span></a>), or alternatively (and equivalently) you may define a global function via a <code class="func">DeclareGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.10-5</span></a>) and <code class="func">InstallGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.10-5</span></a>) pair or a global variable via a <code class="func">DeclareGlobalVariable</code> (<a href="chap79.html#X8324B5DE8300E0F2"><span class="RefLink">79.10-2</span></a>) and <code class="func">InstallValue</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.10-3</span></a>) pair. There are also operations and their methods, and related objects like attributes and filters which also have <code class="code">Declare...</code> and <code class="code">Install...</code> pairs.</p>
 
-<p><em>Secondly</em>, it's a good idea to reduce the chance of accidental overwriting by choosing names for your functions and variables that begin with a string that identifies it with the package, e.g. some of the undocumented functions in the <strong class="pkg">Example</strong> package begin with <code class="code">Eg</code>. This is especially important in cases where you actually want the user to be able to change the value of a function or variable defined by your package, for which you have used direct assignments (for which the user will receive no warning if she accidentally overwrites them). It's also important for functions and variables defined via <code class="code">BindGlobal</code>, <code class="code">DeclareGlobalFunction</code>/<code class="code">InstallGlobalFunction</code> and <code class="code">DeclareGlobalVariable</code>/<code class="code">InstallValue</code>, in order to avoid name clashes that may occur with (extensions of) the <strong class="pkg">GAP</strong> library and other packages.</p>
+<p><em>Secondly</em>, it is a good idea to reduce the chance of accidental overwriting by choosing names for your functions and variables that begin with a string that identifies it with the package, e.g. some of the undocumented functions in the <strong class="pkg">Example</strong> package begin with <code class="code">Eg</code>. This is especially important in cases where you actually want the user to be able to change the value of a function or variable defined by your package, for which you have used direct assignments (for which the user will receive no warning if she accidentally overwrites them). It is also important for functions and variables defined via <code class="code">BindGlobal</code>, <code class="code">DeclareGlobalFunction</code>/<code class="code">InstallGlobalFunction</code> and <code class="code">DeclareGlobalVariable</code>/<code class="code">InstallValue</code>, in order to avoid name clashes that may occur with (extensions of) the <strong class="pkg">GAP</strong> library and other packages.</p>
 
 <p>Additionally, since <strong class="pkg">GAP</strong> 4.5 a package may place global variables into a local namespace as explained in <a href="chap4.html#X7DF8774F7D542298"><span class="RefLink">4.10</span></a> in order to avoid name clashes and preserve compatibility. This new feature allows you to define in your package global variables with the identifier ending with the <code class="code">@</code> symbol, e.g. <code class="code">xYz@</code>. Such variables may be used in your package code safely, as they may be accessed from outside the package only by their full name, i.e. <code class="code">xYz@YourPackageName</code>. This helps to prevent clashes between different packages or between a package and the <strong class="pkg">GAP</strong> library because of the same variable names.</p>
 
 <p>On the other hand, operations and their methods (defined via <code class="func">DeclareOperation</code> (<a href="chap78.html#X843F48137B899BC3"><span class="RefLink">78.1-5</span></a>), <code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.3-1</span></a>) etc. pairs) and their relatives do not need this consideration, as they avoid name clashes by allowing for more than one "method" for the same-named object.</p>
 
-<p>To demonstrate the definition of a function via a <code class="code">DeclareOperation</code>/<code class="code">InstallMethod</code> pair, the method <code class="func">Recipe</code> (<a href="../../pkg/Example-4.2.1/doc/chap1.html#X85B83BDB83B1C910"><span class="RefLink">Example: Recipe</span></a>) was included in the <strong class="pkg">Example</strong> package; <code class="code">Recipe( FruitCake );</code> gives a "method" for making a fruit cake (forgive the pun).</p>
+<p>To demonstrate the definition of a function via a <code class="code">DeclareOperation</code>/<code class="code">InstallMethod</code> pair, the method <code class="func">Recipe</code> (<a href="../../pkg/example/doc/chap1.html#X85B83BDB83B1C910"><span class="RefLink">Example: Recipe</span></a>) was included in the <strong class="pkg">Example</strong> package; <code class="code">Recipe( FruitCake );</code> gives a "method" for making a fruit cake (forgive the pun).</p>
 
 <p><em>Thirdly</em>, functions or variables with <code class="code">Set<var class="Arg">XXX</var></code> or <code class="code">Has<var class="Arg">XXX</var></code> names (even if they are defined as operations) should be avoided as these may clash with objects associated with attributes or properties (attributes and properties <var class="Arg">XXX</var> declared via the <code class="code">DeclareAttribute</code> and <code class="code">DeclareProperty</code> commands have associated with them testers of form <code class="code">Has<var class="Arg">XXX</var></code> and setters of form <code class="code">Set<var class="Arg">XXX</var></code>).</p>
 
@@ -878,7 +919,7 @@ Pager(StringFile(Filename(DirectoriesLibrary(),
 
 <p>In conclusion, here is some practical advice on how to check which variables are used by the package.</p>
 
-<p>Firstly, there is a function <code class="func">ShowPackageVariables</code> (<a href="chap76.html#X7D34AC3287611B15"><span class="RefLink">76.3-15</span></a>). If the package <var class="Arg">pkgname</var> is available but not yet loaded then <code class="code">ShowPackageVariables( pkgname )</code> prints a list of global variables that become bound and of methods that become installed when the package is loaded (for that, the package will be actually loaded, so <code class="code">ShowPackageVariables</code> can be called only once for the same package in the same <strong class="pkg">GAP</strong> session.) The second optional argument <var class="Arg">version</var> may specify a particular package version to be loaded. An error message will be printed if (the given version of) the package is not available or already loaded.</p>
+<p>Firstly, there is a function <code class="func">ShowPackageVariables</code> (<a href="chap76.html#X7D34AC3287611B15"><span class="RefLink">76.3-17</span></a>). If the package <var class="Arg">pkgname</var> is available but not yet loaded then <code class="code">ShowPackageVariables( pkgname )</code> prints a list of global variables that become bound and of methods that become installed when the package is loaded (for that, the package will be actually loaded, so <code class="code">ShowPackageVariables</code> can be called only once for the same package in the same <strong class="pkg">GAP</strong> session.) The second optional argument <var class="Arg">version</var> may specify a particular package version to be loaded. An error message will be printed if (the given version of) the package is not available or already loaded.</p>
 
 <p>Info lines for undocumented variables will be marked with an asterisk <code class="code">*</code>. Note that the <strong class="pkg">GAP</strong> help system is case insensitive, so it is difficult to document identifiers that differ only by case.</p>
 
@@ -929,7 +970,7 @@ new methods:
 
 <h4>76.11 <span class="Heading">Package Dependencies (Requesting one <strong class="pkg">GAP</strong> Package from within Another)</span></h4>
 
-<p>It is possible for one <strong class="pkg">GAP</strong> package <code class="code">A</code>, say, to require another package <code class="code">B</code>. For that, one simply adds the name and the (least) version number of the package <code class="code">B</code> to the <code class="code">NeededOtherPackages</code> component of the <code class="code">Dependencies</code> component of the <code class="file">PackageInfo.g</code> file of the package <code class="code">A</code>. In this situation, loading the package <code class="code">A</code> forces that also the package <code class="code">B</code> is loaded, and that <code class="code">A</code> cannot be loaded if <code class="code">B</code> is not available.</p>
+<p>It is possible for one <strong class="pkg">GAP</strong> package <code class="code">A</code> to require another package <code class="code">B</code>. For that, one simply adds the name and the (least) version number of the package <code class="code">B</code> to the <code class="code">NeededOtherPackages</code> component of the <code class="code">Dependencies</code> component of the <code class="file">PackageInfo.g</code> file of the package <code class="code">A</code>. In this situation, loading the package <code class="code">A</code> forces that also the package <code class="code">B</code> is loaded, and that <code class="code">A</code> cannot be loaded if <code class="code">B</code> is not available.</p>
 
 <p>If <code class="code">B</code> is not essential for <code class="code">A</code> but should be loaded if it is available (for example because <code class="code">B</code> provides some improvements of the main system that are useful for <code class="code">A</code>) then the name and the (least) version number of <code class="code">B</code> should be added to the <code class="code">SuggestedOtherPackages</code> component of the <code class="code">Dependencies</code> component of the <code class="file">PackageInfo.g</code> file of <code class="code">A</code>. In this situation, loading <code class="code">A</code> forces an attempt to load also <code class="code">B</code>, but <code class="code">A</code> is loaded even if <code class="code">B</code> is not available.</p>
 
@@ -970,7 +1011,7 @@ new methods:
 
 <p>It can happen that some code of a package depends on the availability of suggested packages, i.e., different initialisations are performed depending on whether a suggested package will eventually be loaded or not. One can test this condition with the function <code class="func">IsPackageMarkedForLoading</code> (<a href="chap76.html#X8067348B836BAF37"><span class="RefLink">76.3-4</span></a>). In particular, one should <em>not</em> call (and use the value returned by this call) the function <code class="func">LoadPackage</code> (<a href="chap76.html#X79B373A77B29D1F5"><span class="RefLink">76.2-1</span></a>) inside package code that is read during package loading. Note that for debugging purposes loading suggested packages may have been deliberately disabled via the global option <code class="code">OnlyNeeded</code>.</p>
 
-<p>Note that the separation of the <strong class="pkg">GAP</strong> code of packages into declaration part and implementation part does in general <em>not</em> allow one to actually <em>call</em> functions from a package when the implementation part is read. For example, in the case of a "cyclic dependency" as in the second example above, suppose that <code class="code">B</code> provides a new function <code class="code">f</code> or a new global record <code class="code">r</code>, say, which are declared in the declaration part of <code class="code">B</code>. Then the code in the implementation part of <code class="code">A</code> may contain calls to the functions defined in the declaration part of <code class="code">B</code>. However, the implementation part of <code class="code">A</code> may be read <em>before</em> the implementation part of <code class="code">B</code>. So one can in general not assume that during the loading of <code class="code">A</code>, the function <code class="code">f</code> can be called, or that one can access components of the record <code class="code">r</code>.</p>
+<p>Note that the separation of the <strong class="pkg">GAP</strong> code of packages into declaration part and implementation part does in general <em>not</em> allow one to actually <em>call</em> functions from a package when the implementation part is read. For example, in the case of a "cyclic dependency" as in the second example above, suppose that <code class="code">B</code> provides a new function <code class="code">f</code> or a new global record <code class="code">r</code> which are declared in the declaration part of <code class="code">B</code>. Then the code in the implementation part of <code class="code">A</code> may contain calls to the functions defined in the declaration part of <code class="code">B</code>. However, the implementation part of <code class="code">A</code> may be read <em>before</em> the implementation part of <code class="code">B</code>. So one can in general not assume that during the loading of <code class="code">A</code>, the function <code class="code">f</code> can be called, or that one can access components of the record <code class="code">r</code>.</p>
 
 <p>If one wants to call the function <code class="code">f</code> or to access components of the record <code class="code">r</code> in the code of the package <code class="code">A</code> then the problem is that it may be not possible to determine a cyclic dependency between <code class="code">A</code> and <code class="code">B</code> from the packages <code class="code">A</code> and <code class="code">B</code> alone. A safe solution is then to add the name of <code class="code">B</code> to the component <code class="code">Dependencies.OtherPackagesLoadedInAdvance</code> of the <code class="file">PackageInfo.g</code> file of <code class="code">A</code>. The effect is that package <code class="code">B</code> is completely loaded before the file <code class="file">read.g</code> of <code class="code">A</code> is read, provided that there is no cyclic dependency between <code class="code">A</code> and <code class="code">B</code>, and that package <code class="code">A</code> is regarded as not available in the case that such a cyclic dependency between <code class="code">A</code> and <code class="code">B</code> exists.</p>
 
@@ -1039,7 +1080,27 @@ AvailabilityTest := function()
 
 <p>However, if you look at the actual <code class="file">PackageInfo.g</code> file of the <strong class="pkg">example</strong> package, you will see that its <code class="code">AvailabilityTest</code> function always returns <code class="keyw">true</code>, and just logs the warning if the binary is not available (which may be later viewed with <code class="func">DisplayPackageLoadingLog</code> (<a href="chap76.html#X7D162DDF813D2BBA"><span class="RefLink">76.2-5</span></a>)). This means that the binary is not regarded as essential for this package.</p>
 
-<p>You might also have to cope with the situation that external binaries will only run under UNIX (and not, say, under Windows), or may not compile with some compilers or default compiler options. See <a href="chap3.html#X83BF07587F2CC6CD"><span class="RefLink">3.4</span></a> for information on how to test for the architecture.</p>
+<p>You might also have to cope with the situation that external binaries will only run under UNIX (and not e.g. under Windows), or may not compile with some compilers or default compiler options. See <a href="chap3.html#X83BF07587F2CC6CD"><span class="RefLink">3.4</span></a> for information on how to test for the architecture.</p>
+
+<p>Package using a kernel module (see <a href="chap76.html#X85672DDD7D34D5F0"><span class="RefLink">76.3-11</span></a>), one may use a test like this:</p>
+
+
+<div class="example"><pre>
+...
+AvailabilityTest := function()
+    # see if example.so exists and is a loadable kernel extension
+    if not IsKernelExtensionAvailable("example") then
+      LogPackageLoadingMessage( PACKAGE_WARNING,
+          [ "The kernel extension `example' is unavailable,",
+            "perhaps it needs to be recompiled?",
+            "See the installation instructions;",
+            "type: ?Installing the Example package" ] );
+      return false;
+    fi;
+    return true;
+  end,
+...
+</pre></div>
 
 <p>Last but not least: do not print anything in the <code class="code">AvailabilityTest</code> function of the package via <code class="code">Print</code> or <code class="code">Info</code>. Instead one should call <code class="func">LogPackageLoadingMessage</code> (<a href="chap76.html#X7D162DDF813D2BBA"><span class="RefLink">76.2-5</span></a>) to store a message which may be viewed later with <code class="func">DisplayPackageLoadingLog</code> (<a href="chap76.html#X7D162DDF813D2BBA"><span class="RefLink">76.2-5</span></a>) (the latter two functions have been introduced in <strong class="pkg">GAP</strong> 4.5)</p>
 
@@ -1100,7 +1161,7 @@ For help, type: ?Example package
 
 <p>It is very important that there should not ever be, for a given <strong class="pkg">GAP</strong> package, two different archives with the same package version number. If you make changes to your package and place a new archive of the package onto the public server, please ensure that a new archive has a new version number. This should be done even for very minor changes.</p>
 
-<p>For most of the packages it will be inappropriate to re-use the date of the release as a version number. It's much more obvious how big are the changes between versions "4.4.12", "4.5.1" and "4.5.2" than between versions "2008.12.17", "2011.04.15" and "2011.09.14". The concept of using version numbers to convey the meaning of the status of the code and the way it has been modified is known as "Semantic Versioning", see <span class="URL"><a href="https://semver.org/">https://semver.org/</a></span> for further recommendations on its use.</p>
+<p>For most of the packages it will be inappropriate to re-use the date of the release as a version number. It is much more obvious how big are the changes between versions "4.4.12", "4.5.1" and "4.5.2" than between versions "2008.12.17", "2011.04.15" and "2011.09.14". The concept of using version numbers to convey the meaning of the status of the code and the way it has been modified is known as "Semantic Versioning", see <span class="URL"><a href="https://semver.org/">https://semver.org/</a></span> for further recommendations on its use.</p>
 
 <p>Since version information is duplicated in several places throughout the package documentation, for <strong class="pkg">GAPDoc</strong>-based manuals you may define the version and the release manual in the comments in <code class="file">PackageInfo.g</code> file close to the place where you specified its <code class="code">Version</code> and <code class="code">Date</code> components, for example</p>
 
@@ -1113,7 +1174,7 @@ For help, type: ?Example package
 ##  &lt;#/GAPDoc&gt;
 </pre></div>
 
-<p>notify <code class="func">MakeGAPDocDoc</code> (<a href="../../pkg/GAPDoc-1.6.4/doc/chap5.html#X826F530686F4D052"><span class="RefLink">GAPDoc: MakeGAPDocDoc</span></a>) that a part of the document is stored in <code class="file">PackageInfo.g</code> (see <code class="file">example/makedocrel.g</code>), read this data into the header of the main document via <code class="code">&lt;#Include Label="PKGVERSIONDATA"&gt;</code> directive and then use them via &amp;VERSION; and &amp;RELEASEDATE; entities almost everywhere where you need to refer to them (most commonly, in the title page and installation instructions).</p>
+<p>notify <code class="func">MakeGAPDocDoc</code> (<a href="../../pkg/gapdoc/doc/chap5.html#X826F530686F4D052"><span class="RefLink">GAPDoc: MakeGAPDocDoc</span></a>) that a part of the document is stored in <code class="file">PackageInfo.g</code> (see <code class="file">example/makedocrel.g</code>), read this data into the header of the main document via <code class="code">&lt;#Include Label="PKGVERSIONDATA"&gt;</code> directive and then use them via &amp;VERSION; and &amp;RELEASEDATE; entities almost everywhere where you need to refer to them (most commonly, in the title page and installation instructions).</p>
 
 <p><a id="X8559D1FF7C9B7D14" name="X8559D1FF7C9B7D14"></a></p>
 
@@ -1216,7 +1277,7 @@ fi;
 
 <p>so it has clearly passed the test. If there are any error messages displayed between <code class="code">Loading ...</code> and <code class="code">Loaded ...</code> lines, they will signal on errors during loading of your package.</p>
 
-<p>Additionally, this test collects information about variables created since the library was read (obtained using <code class="func">NamesUserGVars</code> (<a href="chap4.html#X870169447AF490D8"><span class="RefLink">4.9-11</span></a>)) with either short names (no more than three characters) or names breaking a recommended naming convention that the <strong class="pkg">GAP</strong> core system and <strong class="pkg">GAP</strong> packages should not use global variables starting in the lowercase (see Section <a href="chap76.html#X7DEACD9786DE29F1"><span class="RefLink">76.10</span></a>). Their list will be displayed in the test log (in the example above, <strong class="pkg">Example</strong> packages does not create any such variables, so an empty list is displayed). It may be hard to attribute a particular identifier to a package, since it may be created by another package loaded because of dependencies, so when a more detailed and precise report on package variables is needed, it may be obtained using <code class="func">ShowPackageVariables</code> (<a href="chap76.html#X7D34AC3287611B15"><span class="RefLink">76.3-15</span></a>) (also, <code class="code">make testpackagesvars</code> called in the <strong class="pkg">GAP</strong> root directory produces such reports for each package and writes them to a file <code class="file">dev/log/testpackagesvars_...</code>).</p>
+<p>Additionally, this test collects information about variables created since the library was read (obtained using <code class="func">NamesUserGVars</code> (<a href="chap4.html#X870169447AF490D8"><span class="RefLink">4.9-11</span></a>)) with either short names (no more than three characters) or names breaking a recommended naming convention that the <strong class="pkg">GAP</strong> core system and <strong class="pkg">GAP</strong> packages should not use global variables starting in the lowercase (see Section <a href="chap76.html#X7DEACD9786DE29F1"><span class="RefLink">76.10</span></a>). Their list will be displayed in the test log (in the example above, <strong class="pkg">Example</strong> packages does not create any such variables, so an empty list is displayed). It may be hard to attribute a particular identifier to a package, since it may be created by another package loaded because of dependencies, so when a more detailed and precise report on package variables is needed, it may be obtained using <code class="func">ShowPackageVariables</code> (<a href="chap76.html#X7D34AC3287611B15"><span class="RefLink">76.3-17</span></a>) (also, <code class="code">make testpackagesvars</code> called in the <strong class="pkg">GAP</strong> root directory produces such reports for each package and writes them to a file <code class="file">dev/log/testpackagesvars_...</code>).</p>
 
 <p>Finally, each log file finishes with two large sections for loading all packages in the alphabetical and reverse alphabetical order (to check more combinations of loading one package after another). We are aiming at releasing only collections of package which do not break <code class="func">LoadAllPackages</code> (<a href="chap76.html#X80A0D21D78CF8494"><span class="RefLink">76.18-3</span></a>) in any of the four configurations, so if it is broken when you plug in the development version of your package into the released version of <strong class="pkg">GAP</strong>, it is likely that your package triggers this error. If you observe that <code class="func">LoadAllPackages</code> (<a href="chap76.html#X80A0D21D78CF8494"><span class="RefLink">76.18-3</span></a>) is broken and suspect that this is not the fault of your package, please contact the <strong class="pkg">GAP</strong> Support.</p>
 
@@ -1307,7 +1368,7 @@ total     62829 ms (24136 ms GC) and 8.61GB allocated
 
 <h4>76.22 <span class="Heading">Releasing a GAP Package</span></h4>
 
-<p>Currently, the <strong class="pkg">GAP</strong> distribution provides archives in four different formats.</p>
+<p>The <strong class="pkg">GAP</strong> distribution provides archives in several different formats.</p>
 
 
 <dl>
@@ -1323,10 +1384,6 @@ total     62829 ms (24136 ms GC) and 8.61GB allocated
 <dd><p>an archive in <code class="code">zip</code> format, where text files should have UNIX style line breaks</p>
 
 </dd>
-<dt><strong class="Mark"><code class="file">-win.zip</code></strong></dt>
-<dd><p>an archive in <code class="code">zip</code> format, where text files should have Windows style line breaks</p>
-
-</dd>
 </dl>
 <p>For convenience of possible users it is sensible that you provide an archive of your package in at least one of these formats.</p>
 
@@ -1338,25 +1395,7 @@ total     62829 ms (24136 ms GC) and 8.61GB allocated
 
 <p>The archive of a <strong class="pkg">GAP</strong> package should contain all files necessary for the package to work. In particular there should be a compiled documentation, which includes the <code class="file">manual.six</code>, <code class="file">manual.toc</code> and <code class="file">manual.lab</code> file in the documentation subdirectory which are created by <strong class="pkg">GAPDoc</strong> while TeXing the documentation. (The first two files are needed by the <strong class="pkg">GAP</strong> help system, and the <code class="file">manual.lab</code> file is needed if the main manuals or another package is referring to your package. Use the command <code class="code">GAPDocManualLab( packagename );</code> to create this file for your help books if you use <strong class="pkg">GAPDoc</strong>.)</p>
 
-<p>For packages which are redistributed via the <strong class="pkg">GAP</strong> website, we offer an automatic conversion of any of the formats listed above to all the others (note that this, as well as wrapping the <strong class="pkg">GAP</strong> distribution as a single archive containing the core system and all currently redistributed packages, will change file timestamps, so one should not rely on them anywhere in the package).</p>
-
-<p>To use the conversion and repackaging service, you can provide any of the four archive formats or even more than one, however you should adhere to the following rule: text files in <code class="file">.tar.gz</code> and <code class="file">.tar.bz2</code> archives must have UNIX style line breaks, while text files in <code class="file">-win.zip</code> archives must have DOS/Windows line breaks.</p>
-
-<p>The package wrapping tools for the <strong class="pkg">GAP</strong> distribution and webpages then will use a sensible list of file extensions to decide if a file is a text file (being conservative, it may miss a few text files). These rules may be prepended by the application of rules from the <code class="file">PackageInfo.g</code> file:</p>
-
-
-<ul>
-<li><p>if it has a <code class="code">.TextFiles</code> component, then consider the given files as text files before <strong class="pkg">GAP</strong> defaults will be applied;</p>
-
-</li>
-<li><p>if it has a <code class="code">.BinaryFiles</code> component, then consider given files as binary files before <strong class="pkg">GAP</strong> defaults will be applied;</p>
-
-</li>
-<li><p>if it has a <code class="code">.TextBinaryFilesPatterns</code> component, then apply it before <strong class="pkg">GAP</strong> defaults will be applied;</p>
-
-</li>
-</ul>
-<p>Utility functions from the <code class="file">lib/lbutil.g</code> file in <strong class="pkg">GAP</strong>, namely <code class="code">DosUnixLinebreaks</code>, <code class="code">UnixDosLinebreaks</code>, <code class="code">MacUnixLinebreaks</code> may be helpful. They are described in the comments to their source code.</p>
+<p>Note that wrapping the <strong class="pkg">GAP</strong> distribution as a single archive containing the core system and all currently redistributed packages, will change file timestamps, so one should not rely on them anywhere in the package.</p>
 
 <p>For packages hosted on GitHub publishing package release and establishing its website can be very efficiently automated using two tools: ReleaseTools (<span class="URL"><a href="https://github.com/gap-system/ReleaseTools">https://github.com/gap-system/ReleaseTools</a></span>) and GitHubPagesForGAP (<span class="URL"><a href="https://github.com/gap-system/GitHubPagesForGAP">https://github.com/gap-system/GitHubPagesForGAP</a></span>).</p>
 
@@ -1379,8 +1418,6 @@ total     62829 ms (24136 ms GC) and 8.61GB allocated
 
 </li>
 </ul>
-<p>In the latter case we can also provide some services for producing several archive formats from the archive you provide (e.g., you produce a <code class="code">.tar.gz</code> version of your archive and we produce also a <code class="code">.tar.bz2</code>, <code class="code">.zip</code> and a <code class="code">-win.zip</code> version from it).</p>
-
 <p>Please also consider submitting your package to the <strong class="pkg">GAP</strong> package refereeing process (see <span class="URL"><a href="https://www.gap-system.org/Contacts/submit.html">https://www.gap-system.org/Contacts/submit.html</a></span> for further information).</p>
 
 <p>For packages hosted on GitHub publishing package release and establishing its website can be very efficiently automated using two tools: GitHubPagesForGAP (<span class="URL"><a href="https://github.com/gap-system/GitHubPagesForGAP">https://github.com/gap-system/GitHubPagesForGAP</a></span>) and ReleaseTools (<span class="URL"><a href="https://github.com/gap-system/ReleaseTools">https://github.com/gap-system/ReleaseTools</a></span>).</p>
@@ -1438,7 +1475,7 @@ total     62829 ms (24136 ms GC) and 8.61GB allocated
 <li><p>correctly specifies package version, release date, and package authors;</p>
 
 </li>
-<li><p>passes validation using <code class="func">ValidatePackageInfo</code> (<a href="chap76.html#X79767C2482FF6F55"><span class="RefLink">76.3-14</span></a>);</p>
+<li><p>passes validation using <code class="func">ValidatePackageInfo</code> (<a href="chap76.html#X79767C2482FF6F55"><span class="RefLink">76.3-16</span></a>);</p>
 
 </li>
 <li><p>besides mandatory components, which are required to pass validation, also has relevant optional components (such as, for example, URLs of public source code repository and issue tracker; hints to distinguish binary and text files in case of non-standard file names and extensions, etc.);</p>

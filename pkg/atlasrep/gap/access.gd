@@ -191,10 +191,13 @@ DeclareGlobalFunction( "AtlasOfGroupRepresentationsLocalFilename" );
 ##  This implements the <E>location</E> and <E>fetch</E> steps
 ##  of the access to data files.
 ##  The return value is either <K>fail</K>
-##  or a pair <M>[ path, r ]</M>
-##  where <M>path</M> is either the local path (which really exists)
+##  or a pair <M>[ paths, r ]</M>
+##  where <M>paths</M> is the list of the local paths (which really exist)
 ##  and <C>r</C> is the record containing the function to be used for reading
-##  and interpreting the file contents.
+##  and interpreting the file contents
+##  or a triple <M>[ contents, r, "contents" ]</M>
+##  where <M>contents</M> is the list of strings that describe the contents
+##  of the files and <M>r</M> is again the relevant record.
 ##
 DeclareGlobalFunction( "AtlasOfGroupRepresentationsLocalFilenameTransfer" );
 
@@ -376,7 +379,9 @@ DeclareGlobalFunction(
 ##    <P/>
 ##    The return value must be <K>true</K> if the function succeeded with
 ##    making the file locally available (including postprocessing if
-##    applicable), and <K>false</K> otherwise.
+##    applicable), a string with the contents of the data file if the remote
+##    data were directly loaded into the &GAP; session (if no local caching
+##    is possible), and <K>false</K> otherwise.
 ##  </Item>
 ##  <Mark><C>contents( </C><M>files, type, filepaths</M><C> )</C></Mark>
 ##  <Item>
@@ -468,25 +473,6 @@ DeclareGlobalVariable( "AtlasOfGroupRepresentationsAccessFunctionsDefault" );
 ##  </List>
 ##  <#/GAPDoc>
 ##
-
-
-#############################################################################
-##
-#F  AtlasDataGAPFormatFile( <filename> )
-##
-##  <ManSection>
-##  <Func Name="AtlasDataGAPFormatFile" Arg='filename'/>
-##
-##  <Description>
-##  Let <A>filename</A> be the name of a file containing the generators of a
-##  representation in characteristic zero such that reading the file via
-##  <Ref Func="ReadAsFunction" BookName="ref"</C> yields a record
-##  containing the list of the generators and additional information.
-##  Then <Ref Func="AtlasDataGAPFormatFile"/> returns this record.
-##  </Description>
-##  </ManSection>
-##
-DeclareGlobalFunction( "AtlasDataGAPFormatFile" );
 
 
 #############################################################################

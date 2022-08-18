@@ -11,7 +11,7 @@
 #ifndef GAP_THREAD_H
 #define GAP_THREAD_H
 
-#include "system.h"
+#include "common.h"
 
 #if !defined(HPCGAP)
 
@@ -34,7 +34,7 @@
 
 extern int PreThreadCreation;
 
-#ifndef HAVE_NATIVE_TLS
+#ifndef USE_NATIVE_TLS
 void *AllocateTLS(void);
 void FreeTLS(void *address);
 #endif

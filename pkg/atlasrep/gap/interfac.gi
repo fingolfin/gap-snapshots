@@ -175,6 +175,9 @@ AGR.StringAtlasInfoContents:= function()
 
     # general information
     datadir:= UserPreference( "AtlasRep", "AtlasRepDataDirectory" );
+    if datadir = "" then
+      datadir:= "(no local caches available)";
+    fi;
     result:= [];
     Add( result, Concatenation( "- AtlasRepAccessRemoteFiles: ",
                      String( UserPreference( "AtlasRep",
@@ -736,6 +739,7 @@ InstallGlobalFunction( DisplayAtlasInfo, function( arg )
 ##
 #F  AtlasGenerators( <gapname>, <repnr>[, <maxnr>] )
 #F  AtlasGenerators( <identifier> )
+#F  AtlasGenerators( <inforecord> )
 ##
 ##  <identifier> is a list containing at the first position the string
 ##  <gapname>,
@@ -821,11 +825,25 @@ InstallGlobalFunction( AtlasGenerators, function( arg )
       return fail;
     fi;
     type:= First( AGR.DataTypes( "rep" ), l -> l[1] = rep.type );
+    if IsRecord( arg[1] ) then
+      PushOptions( rec( inforecord:= arg[1] ) );
+    fi;
     gens:= AGR.FileContents( filenames, type );
+    if IsRecord( arg[1] ) then
+      PopOptions();
+    fi;
     if gens = fail then
       return fail;
     fi;
     result:= ShallowCopy( rep );
+    if IsRecord( arg[1] ) then
+      if IsBound( arg[1].givenRing ) then
+        result.givenRing:= arg[1].givenRing;
+      fi;
+      if IsBound( arg[1].constructingFilter ) then
+        result.constructingFilter:= arg[1].constructingFilter;
+      fi;
+    fi;
 
     if IsBound( maxnr ) then
 
@@ -986,7 +1004,8 @@ end;
 ##  the condition.
 ##
 AGR.EvaluateCharacterCondition:= function( gapname, conditions, reps )
-    local pos, map, chi, tbl, pos2, p, dec, i, repnames, mapi, j, len;
+    local pos, map, pos2, p, chars, primes, consts, i, chi, tbl, ordtbl, dec,
+          const, j, repnames, mapi, len;
 
     # If 'Character' does not occur then we need not work.
     pos:= Position( conditions, Character );
@@ -1004,24 +1023,6 @@ AGR.EvaluateCharacterCondition:= function( gapname, conditions, reps )
     fi;
     map:= map.( gapname );
 
-    chi:= conditions[ pos+1 ];
-    if IsClassFunction( chi ) then
-      tbl:= UnderlyingCharacterTable( chi );
-      if IsOrdinaryTable( tbl ) then
-        if gapname <> Identifier( tbl ) then
-          return [];
-        fi;
-      elif gapname <> Identifier( OrdinaryCharacterTable( tbl ) ) then
-        return [];
-      fi;
-    else
-      tbl:= CharacterTable( gapname );
-      if tbl = fail then
-        Info( InfoAtlasRep, 1, "no character table for ", gapname, " known" );
-        return [];
-      fi;
-    fi;
-
     # Check whether also 'Characteristic' is specified.
     pos2:= Position( conditions, Characteristic );
     if pos2 = fail then
@@ -1035,45 +1036,53 @@ AGR.EvaluateCharacterCondition:= function( gapname, conditions, reps )
       fi;
     fi;
 
-    # Interpret the character.
-    if   IsClassFunction( chi ) then
-      # The character is explicitly given.
-      if p = "?" then
-        p:= [ UnderlyingCharacteristic( tbl ) ];
-      elif IsFunction( p ) then
-        if p( UnderlyingCharacteristic( tbl ) ) = true then
-          p:= [ UnderlyingCharacteristic( tbl ) ];
+    # Interpret the character(s).
+    chars:= conditions[ pos+1 ];
+    if IsClassFunction( chars ) then
+      chars:= [ chars ];
+    fi;
+    if IsList( chars ) and ForAll( chars, IsClassFunction ) then
+      # The characters are explicitly given.
+      # Compute the positions of their irreducible constituents.
+      primes:= [];
+      consts:= [];
+      for i in [ 1 .. Length( chars ) ] do
+        chi:= chars[i];
+        tbl:= UnderlyingCharacterTable( chi );
+        if IsOrdinaryTable( tbl ) then
+          ordtbl:= tbl;
         else
-          return [];
+          ordtbl:= OrdinaryCharacterTable( tbl );
         fi;
-      elif IsList( p ) then
-        if UnderlyingCharacteristic( tbl ) in p then
-          p:= [ UnderlyingCharacteristic( tbl ) ];
-        else
-          return [];
-        fi;
-      fi;
-      if p[1] = 0 then
-        dec:= MatScalarProducts( tbl, Irr( tbl ), [ chi ] )[1];
-      else
-        dec:= Decomposition( Irr( tbl ), [ chi ], "nonnegative" )[1];
-      fi;
-      if dec = fail or not ForAll( dec, x -> IsInt( x ) and 0 <= x ) then
-        Info( InfoAtlasRep, 1, "character does not decompose properly" );
-        return [];
-      fi;
-      chi:= [];
-      for i in [ 1 .. Length( dec ) ] do
-        if dec[i] = 1 then
-          Add( chi, i );
-        elif 1 < dec[i] then
-          Add( chi, [ i, dec[i] ] );
+        if gapname = Identifier( ordtbl ) and
+           ( p = "?" or
+             ( IsFunction( p ) and p( UnderlyingCharacteristic( tbl ) ) = true ) or
+             ( IsList( p ) and UnderlyingCharacteristic( tbl ) in p ) ) then
+          if IsOrdinaryTable( tbl ) then
+            dec:= MatScalarProducts( tbl, Irr( tbl ), [ chi ] )[1];
+          else
+            dec:= Decomposition( Irr( tbl ), [ chi ], "nonnegative" )[1];
+          fi;
+          const:= [];
+          if dec <> fail and ForAll( dec, x -> IsInt( x ) and 0 <= x ) then
+            AddSet( primes, UnderlyingCharacteristic( tbl ) );
+            for j in [ 1 .. Length( dec ) ] do
+              if dec[j] = 1 then
+                Add( const, j );
+              elif 1 < dec[j] then
+                Add( const, [ j, dec[j] ] );
+              fi;
+            od;
+            if Length( const ) = 1 and IsInt( const[1] ) then
+              const:= const[1];
+            fi;
+            Add( consts, const );
+          fi;
         fi;
       od;
-      if Length( chi ) = 1 then
-        chi:= chi[1];
-      fi;
-    elif not ( IsInt( chi ) or IsString( chi ) ) then
+      p:= primes;
+      chi:= consts;
+    elif not ( IsPosInt( chars ) or IsString( chars ) ) then
 #T perhaps admit a list of positions or strings?
       return [];
     else
@@ -1082,6 +1091,7 @@ AGR.EvaluateCharacterCondition:= function( gapname, conditions, reps )
         # No characteristic is specified, this means *ordinary* character.
         p:= [ 0 ];
       fi;
+      chi:= chars;
     fi;
 
     # Look for the character(s) in the info lists.
@@ -1095,24 +1105,24 @@ AGR.EvaluateCharacterCondition:= function( gapname, conditions, reps )
         for j in [ 1 .. Length( mapi[1] ) ] do
           if ( IsPosInt( chi ) and mapi[1][j] = chi ) or
              ( IsString( chi ) and mapi[3][j] = chi ) or
-             ( IsList( chi ) and mapi[1][j] = chi ) then
+             ( IsList( chi ) and mapi[1][j] in chi ) then
             # We have found a character that matches.
             Add( repnames, mapi[2][j] );
           fi;
         od;
       fi;
     od;
+
     if Length( repnames ) = 0 then
       return [];
     fi;
 
     # We will return a nonempty list. Remove 'Character' from 'conditions'.
-    len:= Length( conditions );
     for i in [ pos .. Length( conditions )-2 ] do
       conditions[i]:= conditions[ i+2 ];
     od;
-    Unbind( conditions[ len ] );
-    Unbind( conditions[ len-1 ] );
+    Remove( conditions );
+    Remove( conditions );
 
     return Filtered( reps, r -> r.repname in repnames );
     end;
@@ -1130,9 +1140,18 @@ AGR.EvaluateCharacterCondition:= function( gapname, conditions, reps )
 ##  or a list of group names.
 ##
 AGR.AtlasGeneratingSetInfo:= function( conditions, mode )
-    local pos, tocid, gapnames, types, std, position, result, gapname, reps,
-          cond, info, type;
+    local pos, tocid, gapnames, types, std, filter, givenRing, position,
+          result, gapname, reps, cond, info, type, F;
 
+    # Ignore the condition that no straight line programs are wanted.
+    pos:= Position( conditions, IsStraightLineProgram );
+    if pos <> fail and
+       pos < Length( conditions ) and conditions[ pos + 1 ] = false then
+      conditions:= Concatenation( conditions{ [ 1 .. pos-1 ] },
+                       conditions{ [ pos+2 .. Length( conditions ) ] } );
+    fi;
+
+    # Restrict the sources.
     pos:= Position( conditions, "contents" );
     if pos <> fail then
       tocid:= conditions[ pos+1 ];
@@ -1167,7 +1186,8 @@ AGR.AtlasGeneratingSetInfo:= function( conditions, mode )
 
     # Deal with a prescribed standardization.
     if 1 <= Length( conditions ) and
-       ( IsInt( conditions[1] ) or IsList( conditions[1] ) ) then
+       ( IsInt( conditions[1] ) or
+         ( IsList( conditions[1] ) and ForAll( conditions[1], IsInt ) ) ) then
       std:= conditions[1];
       if IsInt( std ) then
         std:= [ std ];
@@ -1175,6 +1195,32 @@ AGR.AtlasGeneratingSetInfo:= function( conditions, mode )
       conditions:= conditions{ [ 2 .. Length( conditions ) ] };
     else
       std:= true;
+    fi;
+
+    # Extract a prescribed 'ConstructingFilter'.
+    filter:= fail;
+    pos:= Position( conditions, ConstructingFilter );
+    if pos <> fail then
+      if pos = Length( conditions ) or not IsFilter( conditions[ pos+1 ] ) then
+        Error( "condition 'ConstructingFilter' must be followed by a filter" );
+      fi;
+      filter:= conditions[ pos+1 ];
+      conditions:= Concatenation( conditions{ [ 1 .. pos-1 ] },
+                       conditions{ [ pos+2 .. Length( conditions ) ] } );
+    fi;
+
+    # Extract a prescribed ring (but leave it in 'conditions').
+    givenRing:= fail;
+    pos:= Position( conditions, Ring );
+    if pos <> fail then
+      if pos = Length( conditions ) or not ( IsRing( conditions[ pos+1 ] )
+#T admit a list of rings!
+         or IsFunction( conditions[ pos+1 ] )
+         or conditions[ pos+1 ] = fail ) then
+        Error( "condition 'Ring' must be followed by a ring" );
+      elif IsRing( conditions[ pos+1 ] ) then
+        givenRing:= conditions[ pos+1 ];
+      fi;
     fi;
 
     # Deal with a prescribed representation number.
@@ -1213,6 +1259,20 @@ AGR.AtlasGeneratingSetInfo:= function( conditions, mode )
           type:= First( types, t -> t[1] = info.type );
           if ( std = true or info.standardization in std ) and
              type[2].AccessGroupCondition( info, ShallowCopy( cond ) ) then
+            # Hack:
+            # Store the desired ring/field if there is one,
+            # in order to create the matrices over the correct ring/field.
+            if givenRing <> fail and IsBound( info.ring )
+               and not IsIdenticalObj( givenRing, info.ring ) then
+              info:= ShallowCopy( info );
+              info.givenRing:= givenRing;
+            fi;
+            if filter <> fail then
+              info:= ShallowCopy( info );
+#T twice copy?
+              info.constructingFilter:= filter;
+            fi;
+
             if mode = "one" then
               return info;
             else
@@ -1342,24 +1402,40 @@ InstallMethod( AtlasRepInfoRecord,
 #F  AtlasGroup( <identifier> )
 ##
 InstallGlobalFunction( AtlasGroup, function( arg )
-    local info, gens, result;
+    local info, identifier, gapname, gens, result;
 
     if   Length( arg ) = 1 and IsRecord( arg[1] ) then
       info:= arg[1];
     elif Length( arg ) = 1 and IsList( arg[1] ) and not IsString( arg[1] ) then
-      info:= rec( identifier:= arg[1] );
+      # Find the info record with this identifier.
+      identifier:= arg[1];
+      gapname:= identifier[1];
+      info:= First( AGR.MergedTableOfContents( "all", gapname ),
+                    r -> r.identifier = identifier );
     else
       info:= CallFuncList( OneAtlasGeneratingSetInfo, arg );
     fi;
     if info <> fail then
-      gens:= AtlasGenerators( info.identifier );
+      gens:= AtlasGenerators( info );
       if gens <> fail then
         result:= GroupWithGenerators( gens.generators );
+        if IsBound( gens.isPrimitive ) then
+          SetIsPrimitive( result, gens.isPrimitive );
+        fi;
+        # Note that it would *not* be safe to set 'NrMovedPoints'
+        # or 'LargestMovedPoint' to 'gens.p'.
+        if IsBound( gens.rankAction ) then
+          SetRankAction( result, gens.rankAction );
+        fi;
         if IsBound( gens.size ) then
           SetSize( result, gens.size );
         fi;
+        if IsBound( gens.transitivity ) then
+          SetTransitivity( result, gens.transitivity );
+          SetIsTransitive( result, gens.transitivity > 0 );
+        fi;
+#T set known info about the group (IsSimple etc.)!
         SetAtlasRepInfoRecord( result, info );
-#T improve the sit. where only identifier is bound!
         return result;
       fi;
     fi;
@@ -1380,6 +1456,8 @@ InstallGlobalFunction( AtlasGroup, function( arg )
 #F  AtlasSubgroup( <gapname>[, <std>], Position, <n>, <maxnr> )
 #F  AtlasSubgroup( <G>, <maxnr> )
 #F  AtlasSubgroup( <identifier>, <maxnr> )
+##
+#T  ... or the same with '<maxnr>' replaced by '"maxes", <maxnr>, <maxstd>'
 ##
 InstallGlobalFunction( AtlasSubgroup, function( arg )
     local maxnr, info, groupname, std, prog, result, inforec;
@@ -1424,7 +1502,7 @@ InstallGlobalFunction( AtlasSubgroup, function( arg )
       result:= GroupWithGenerators( ResultOfStraightLineProgram( prog.program,
                                     GeneratorsOfGroup( arg[1] ) ) );
     else
-      result:= AtlasGenerators( info.identifier );
+      result:= AtlasGenerators( info );
       if result = fail then
         return fail;
       fi;
@@ -1604,6 +1682,104 @@ InstallGlobalFunction( AtlasProgram, function( arg )
     fi;
     return AtlasProgram( info.identifier );
 end );
+
+
+#############################################################################
+##
+#M  EvaluatePresentation( <G>, <gapname>[, <std>] )
+#M  EvaluatePresentation( <gens>, <gapname>[, <std>] )
+##
+InstallMethod( EvaluatePresentation,
+    [ "IsGroup", "IsString" ],
+    { G, gapname } -> EvaluatePresentation( GeneratorsOfGroup( G ), gapname, 1 ) );
+
+InstallMethod( EvaluatePresentation,
+    [ "IsHomogeneousList", "IsString" ],
+    { gens, gapname } -> EvaluatePresentation( gens, gapname, 1 ) );
+
+InstallMethod( EvaluatePresentation,
+    [ "IsGroup", "IsString", "IsPosInt" ],
+    { G, gapname, std } -> EvaluatePresentation( GeneratorsOfGroup( G ), gapname, std ) );
+
+InstallMethod( EvaluatePresentation,
+    [ "IsHomogeneousList", "IsString", "IsPosInt" ],
+    function( gens, gapname, std )
+      local prg;
+
+      prg:= AtlasProgram( gapname, std, "presentation" );
+      if prg = fail then
+        return fail;
+      elif NrInputsOfStraightLineDecision( prg.program )
+           <> Length( gens ) then
+        Error( "presentation for \"", gapname, "\" has ",
+               NrInputsOfStraightLineDecision( prg.program ),
+               " generators but ", Length( gens ),
+               " generators were given" );
+      fi;
+
+      prg:= StraightLineProgramFromStraightLineDecision( prg.program );
+
+      return ResultOfStraightLineProgram( prg, gens );
+    end );
+
+
+#############################################################################
+##
+#M  StandardGeneratorsData( <G>, <gapname>[, <std>] )
+#M  StandardGeneratorsData( <gens>, <gapname>[, <std>] )
+##
+InstallMethod( StandardGeneratorsData,
+    [ "IsGroup", "IsString" ],
+    function( G, gapname )
+      return StandardGeneratorsData( GeneratorsOfGroup( G ), gapname, 1 );
+    end );
+
+InstallMethod( StandardGeneratorsData,
+    [ "IsHomogeneousList", "IsString" ],
+    { gens, gapname } -> StandardGeneratorsData( gens, gapname, 1 ) );
+
+InstallMethod( StandardGeneratorsData,
+    [ "IsGroup", "IsString", "IsPosInt" ],
+    function( G, gapname, std )
+      return StandardGeneratorsData( GeneratorsOfGroup( G ), gapname, std );
+    end );
+
+InstallMethod( StandardGeneratorsData,
+    [ "IsHomogeneousList", "IsString", "IsPosInt" ],
+    function( gens, gapname, std )
+      local prg, options, mgens, res;
+
+      prg:= AtlasProgram( gapname, std, "find" );
+      if prg = fail then
+        return fail;
+      fi;
+      prg:= prg.program;
+
+      if ValueOption( "projective" ) = true then
+        # This is supported only for FFE matrix groups.
+        # We do not check this condition,
+        # 'ProjectiveOrder' will run into an error if it is not satisfied.
+        options:= rec( orderfunction:= mat -> ProjectiveOrder( mat )[1] );
+      else
+        options:= rec();
+      fi;
+
+      mgens:= GeneratorsWithMemory( gens );
+      res:= ResultOfBBoxProgram( prg, GroupWithGenerators( mgens ),
+                                 options );
+      if res = "timeout" then
+        return "timeout";
+      elif res = fail then
+        # The program has detected that 'gens' cannot belong to 'gapname'.
+        return fail;
+      fi;
+
+      return rec( gapname:= gapname,
+                  givengens:= gens,
+                  stdgens:= StripMemory( res ),
+                  givengenstostdgens:= SLPOfElms( res ),
+                  std:= std );
+    end );
 
 
 #############################################################################

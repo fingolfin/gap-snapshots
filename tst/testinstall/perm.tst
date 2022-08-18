@@ -1,4 +1,4 @@
-#@local checklens,n,permAll,permBig,permSml,x,y
+#@local checklens,n,permAll,permBig,permSml,x,y,moved,p,r,t,l
 gap> START_TEST("perm.tst");
 
 # Permutations come in two flavors in GAP, with two TNUMs: T_PERM2 for
@@ -86,6 +86,17 @@ gap> Print(permBig * (5,999999), "\n");
 [ (    5,999999), (    2,    3)(    5,999999), (    1,    2)(    5,999999), 
   (    1,    2,    3)(    5,999999), (    1,    3,    2)(    5,999999), 
   (    1,    3)(    5,999999) ]
+
+# Check String of large permutation
+# Check length, beginning and end, as the string is too long to include in
+# a test file
+gap> p := String(PermList(Concatenation([2..2^20], [1])));;
+gap> Length(p) = 7277505;
+true
+gap> p{[1..40]};
+"(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,"
+gap> p{[Length(p)-40..Length(p)]};
+",1048572,1048573,1048574,1048575,1048576)"
 
 #
 # EqPerm
@@ -273,6 +284,8 @@ gap> SetX(permAll, permAll, {a,b} -> Comm(a,b) = LeftQuotient((b*a), a*b));
 #
 gap> PermList([1,2,3]) = ();
 true
+gap> PermList([1..3]) = ();
+true
 gap> () = PermList([1,2,3]);
 true
 gap> (1,2) = PermList([2,1,3]);
@@ -288,6 +301,10 @@ gap> ForAll(checklens, n -> not(
 >  PermList(Concatenation([1..n-1], [n+1,n,n+2,n+4,n+3])) =
 >  PermList(Concatenation([1..n-1], [n+1,n+2,n,n+4,n+3]))));
 true
+gap> PermList([1..5]);
+()
+gap> PermList([5,4..1]);
+(1,5)(2,4)
 
 # PermList error handling
 gap> PermList(1);
@@ -302,6 +319,14 @@ gap> PermList([1,0,3]);
 fail
 gap> PermList([1,1,3]);
 fail
+gap> PermList([2..5]);
+fail
+gap> PermList([1,0..-4]);
+fail
+gap> PermList("abc");
+fail
+gap> PermList([true,false]); # argument is a blist
+fail
 
 # PermList error handling for T_PERM4
 gap> PermList(Concatenation([1..70000],[70001,,70003]));
@@ -314,19 +339,49 @@ gap> PermList(Concatenation([1..70000],[70001,1,70003]));
 fail
 
 #
-# LARGEST_MOVED_POINT_PERM
+# SmallestMovedPoint, LargestMovedPoint, MovedPoints, NrMovedPoints
 #
-gap> LARGEST_MOVED_POINT_PERM((2,3));
-3
-gap> LARGEST_MOVED_POINT_PERM((2,70000));
-70000
+gap> moved := {p} -> [SmallestMovedPoint(p), LargestMovedPoint(p), MovedPoints(p), NrMovedPoints(p)];;
+gap> moved((2,3));
+[ 2, 3, [ 2, 3 ], 2 ]
+gap> moved((2,70000));
+[ 2, 70000, [ 2, 70000 ], 2 ]
+gap> moved((70000, 70001));
+[ 70000, 70001, [ 70000, 70001 ], 2 ]
+gap> moved((1,2,3,4));
+[ 1, 4, [ 1, 2, 3, 4 ], 4 ]
+gap> moved(());
+[ infinity, 0, [  ], 0 ]
+gap> moved((1,2,3,4)^4);
+[ infinity, 0, [  ], 0 ]
+gap> moved([]);
+[ infinity, 0, [  ], 0 ]
+gap> moved([()]);
+[ infinity, 0, [  ], 0 ]
+gap> moved([(1,2),(5,6)]);
+[ 1, 6, [ 1, 2, 5, 6 ], 4 ]
+gap> moved(SymmetricGroup([5,7,9]));
+[ 5, 9, [ 5, 7 .. 9 ], 3 ]
+gap> moved(SymmetricGroup([5,7,9,70000]));
+[ 5, 70000, [ 5, 7, 9, 70000 ], 4 ]
+gap> moved(SymmetricGroup(1));
+[ infinity, 0, [  ], 0 ]
+gap> moved(Group((8,9,10),(13,15,19)));
+[ 8, 19, [ 8, 9, 10, 13, 15, 19 ], 6 ]
+gap> SMALLEST_MOVED_POINT_PERM(fail);
+Error, SMALLEST_MOVED_POINT_PERM: <perm> must be a permutation (not the value \
+'fail')
 gap> LARGEST_MOVED_POINT_PERM(fail);
-Error, LargestMovedPointPerm: <perm> must be a permutation (not the value 'fai\
-l')
+Error, LARGEST_MOVED_POINT_PERM: <perm> must be a permutation (not the value '\
+fail')
 
 #
 # CycleLengthPermInt, CyclePermInt
 #
+gap> Cycles((),[]);
+[  ]
+gap> Cycles((),[1]);
+[ [ 1 ] ]
 gap> Cycles((1,2,3)(4,5)(6,70),[4..7]);
 [ [ 4, 5 ], [ 6, 70 ], [ 7 ] ]
 gap> CycleLengths((1,2,3)(4,5)(6,70),[4..7]);
@@ -360,7 +415,7 @@ gap> Order( (1,2,3,4)(70,71,72) );
 gap> Order( (1,2,3,4)(70000,71000,72000) );
 12
 gap> ORDER_PERM(fail);
-Error, OrderPerm: <perm> must be a permutation (not the value 'fail')
+Error, ORDER_PERM: <perm> must be a permutation (not the value 'fail')
 
 #
 # SignPerm
@@ -370,13 +425,14 @@ gap> List(permSml, SignPerm);
 gap> List(permBig, SignPerm);
 [ 1, -1, -1, 1, 1, -1 ]
 gap> SIGN_PERM(fail);
-Error, SignPerm: <perm> must be a permutation (not the value 'fail')
+Error, SIGN_PERM: <perm> must be a permutation (not the value 'fail')
 
 #
 # SmallestGeneratorPerm
 #
 gap> SMALLEST_GENERATOR_PERM( 1 );
-Error, SmallestGeneratorPerm: <perm> must be a permutation (not the integer 1)
+Error, SMALLEST_GENERATOR_PERM: <perm> must be a permutation (not the integer \
+1)
 gap> SmallestGeneratorPerm( (1,3,2) );
 (1,2,3)
 gap> SmallestGeneratorPerm( (1,2,3) );
@@ -424,9 +480,9 @@ gap> OnTuples([(1,2),(1,3)],(1,2,70000));
 
 #
 gap> OnTuples([,1],());
-Error, OnTuples for perm: list must not contain holes
+Error, OnTuples: <tup> must not contain holes
 gap> OnTuples([,1],(70000,70001));
-Error, OnTuples for perm: list must not contain holes
+Error, OnTuples: <tup> must not contain holes
 
 #
 # OnSets for permutations
@@ -449,6 +505,20 @@ gap> OnSets([(3,4),(1,2)],(1,2,70000));
 [ (3,4), (2,70000) ]
 gap> OnSets([(1,2),(1,3)],(1,2,70000));
 [ (2,3), (2,70000) ]
+
+#
+# OnTuples and OnSets for a non-internal list
+#
+gap> r:=NewCategory("ListTestObject",IsSmallList);;
+gap> t:=NewType(ListsFamily, r and IsMutable and IsPositionalObjectRep);;
+gap> InstallMethod(IsBound\[\],[r,IsPosInt],{l,i}->true);
+gap> InstallMethod(\[\],[r,IsPosInt],{l,i}->i);
+gap> InstallMethod(Length,[r],l->3); # hard code length
+gap> l:=Objectify(t,[]);;
+gap> OnTuples(l, (1,3));
+[ 3, 2, 1 ]
+gap> OnSets(l, (1,3));
+[ 1, 2, 3 ]
 
 #
 # MappingPermListList
@@ -480,12 +550,14 @@ fail
 gap> MappingPermListList([1,2], [1000,1000]);
 fail
 gap> MappingPermListList((), []);
-Error, AddRowVector: <src> must be a dense list (not a permutation (small))
+Error, MappingPermListList: <src> must be a dense list (not a permutation (sma\
+ll))
 gap> MappingPermListList([], ());
-Error, AddRowVector: <dst> must be a dense list (not a permutation (small))
+Error, MappingPermListList: <dst> must be a dense list (not a permutation (sma\
+ll))
 gap> MappingPermListList("cheese", "cake");
-Error, AddRowVector: <src> must have the same length as <dst> (lengths are 6 a\
-nd 4)
+Error, MappingPermListList: <src> must have the same length as <dst> (lengths \
+are 6 and 4)
 gap> MappingPermListList("cheese", "cakeba");
 Error, <src> must be a dense list of positive small integers
 gap> MappingPermListList([1,2], [3,[]]);

@@ -325,7 +325,6 @@ end );
 
 #############################################################################
 ##
-
 #F  MaximalSubgroupClassesRepsLayer( <pcgs>, <layer> )
 ##
 MaximalSubgroupClassesRepsLayer := function( pcgs, l )
@@ -369,7 +368,6 @@ end;
 MAXSUBS_BY_PCGS:=function( G )
     local spec, first, max, i, new;
 
-    TryMaxSubgroupTainter(G);
     spec  := SpecialPcgs(G);
     first := LGFirst( spec );
     max   := [];
@@ -385,7 +383,7 @@ end;
 ##
 #M  MaximalSubgroupClassReps( <G> )
 ##
-InstallMethod( TryMaximalSubgroupClassReps,
+InstallMethod( CalcMaximalSubgroupClassReps,
     "pcgs computable groups using special pcgs",
     true, 
     [ IsGroup and CanEasilyComputePcgs and IsFinite ],
@@ -393,7 +391,7 @@ InstallMethod( TryMaximalSubgroupClassReps,
     MAXSUBS_BY_PCGS);
 
 #fallback
-InstallMethod( TryMaximalSubgroupClassReps,
+InstallMethod( CalcMaximalSubgroupClassReps,
     "pcgs computable groups using special pcgs",
     true, 
     [ IsGroup and IsSolvableGroup and IsFinite ],
@@ -613,7 +611,7 @@ end;
 ##
 InstallMethod( MinimalGeneratingSet,
     "pcgs computable groups using special pcgs",
-    true, [ IsPcGroup and IsFinite ], 0,
+    true, [ IsSolvableGroup and IsFinite and CanEasilyComputePcgs], 0,
 
 function( G )
     local spec, weights, first, m, mingens, i, start, next, j,
@@ -663,13 +661,8 @@ end );
 #M  SmallGeneratingSet(<G>) 
 ##
 InstallMethod(SmallGeneratingSet,"using minimal generating set",true,
-  [IsPcGroup and IsFinite],0,
-function (G)
-  if Length(Pcgs(G))>14 then
-    TryNextMethod();
-  fi;
-  return MinimalGeneratingSet(G);
-end);
+  [IsSolvableGroup and IsFinite and CanEasilyComputePcgs],0,
+  MinimalGeneratingSet);
 
 #############################################################################
 ##
@@ -806,7 +799,7 @@ InstallGlobalFunction (CentrePcGroup, function( G )
     m       := Length( spec );
 
     # get primes and set up
-    primes   := Set( List( weights, x -> x[3] ) );
+    primes   := Set( weights, x -> x[3] );
     cent     := List( primes, x -> [] );
 
     # the first nilpotent factor

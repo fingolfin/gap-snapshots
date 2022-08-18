@@ -130,18 +130,19 @@
   chapter [14X'Reference: Method Selection'[114X.[133X
   
   [33X[0;0YWe  only present the following rule of thumb here: Each installed method for
-  an  attribute,  say  [2XSize[102X ([14XReference: Size[114X), has a [21Xrequired filter[121X, which is
-  made  up  from certain simple filters which must yield [9Xtrue[109X for the argument
-  [3Xobj[103X  for this method to be applicable. To execute a call of [10XSize( [3Xobj[103X[10X )[110X, [5XGAP[105X
-  selects  among all applicable methods the one whose required filter combines
-  the  most  simple  filters;  the  idea  behind is that the more an algorithm
-  requires  of  [3Xobj[103X,  the more efficient it is expected to be. For example, if
-  [3Xobj[103X is a permutation group that is not (known to be) solvable, a method with
-  required filter [10XIsPermGroup and IsSolvableGroup[110X is not applicable, whereas a
-  method  with  required  filter  [2XIsPermGroup[102X  ([14XReference: IsPermGroup[114X) can be
-  chosen.  On the other hand, if [3Xobj[103X was known to be solvable, the method with
-  required  filter  [10XIsPermGroup  and IsSolvableGroup[110X would be preferred to the
-  one with required filter [2XIsPermGroup[102X ([14XReference: IsPermGroup[114X).[133X
+  an  attribute,  for  example  [2XSize[102X ([14XReference: Size[114X), has a [21Xrequired filter[121X,
+  which  is  made up from certain simple filters which must yield [9Xtrue[109X for the
+  argument  [3Xobj[103X  for  this method to be applicable. To execute a call of [10XSize(
+  [3Xobj[103X[10X  )[110X,  [5XGAP[105X  selects  among  all  applicable methods the one whose required
+  filter combines the most simple filters; the idea behind is that the more an
+  algorithm  requires  of  [3Xobj[103X,  the  more efficient it is expected to be. For
+  example, if [3Xobj[103X is a permutation group that is not (known to be) solvable, a
+  method   with   required  filter  [10XIsPermGroup  and  IsSolvableGroup[110X  is  not
+  applicable,  whereas  a  method with required filter [2XIsPermGroup[102X ([14XReference:
+  IsPermGroup[114X)  can  be  chosen.  On  the  other  hand, if [3Xobj[103X was known to be
+  solvable,  the  method  with required filter [10XIsPermGroup and IsSolvableGroup[110X
+  would  be  preferred to the one with required filter [2XIsPermGroup[102X ([14XReference:
+  IsPermGroup[114X).[133X
   
   [33X[0;0YIt  may  happen  that a method is applicable for a given argument but cannot
   compute  the  desired  value.  In  such  cases,  the method will execute the

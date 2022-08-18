@@ -150,6 +150,6 @@
   [33X[1;0Y[29X[2XRandom[102X( [3XRationals[103X ) [32X operation[133X
   
   [33X[0;0Y[2XRandom[102X  for rationals returns pseudo random rationals which are the quotient
-  of two random integers. See the description of [2XRandom[102X ([14X14.2-12[114X) for details.
+  of two random integers. See the description of [2XRandom[102X ([14X14.2-13[114X) for details.
   (Also see [2XRandom[102X ([14X30.7-1[114X).)[133X
   

@@ -5,7 +5,6 @@
 <!-- %W                                                     & Martin Schönert -->
 <!-- %W                                                       & Heiko Theißen -->
 <!-- %% -->
-<!-- %H  @(#)<M>Id: domain.tex,v 4.9 2000/09/15 15:00:14 gap Exp </M> -->
 <!-- %% -->
 <!-- %Y  Copyright 1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,   Germany -->
 <!-- %% -->
@@ -274,7 +273,8 @@ The functions <Ref Func="AsList" BookName="ref"/> and
 <Ref Func="AsSortedList" BookName="ref"/> mentioned above do not return
 domains, but they fit into the general pattern in the sense that they
 forget all the structure of the argument, including the fact that it is
-a domain, and return a list with the same elements as the argument has.
+a domain, and return an immutable list with the same elements as the
+argument has.
 
 </Section>
 
@@ -311,7 +311,8 @@ true
 ]]></Example>
 <P/>
 Many functions return subdomains of their arguments, for example
-the result of <C>SylowSubgroup( <A>G</A> )</C> is a group with parent group
+the result of <C>SylowSubgroup( <A>G</A>, <A>prime</A> )</C>
+is a group with parent group
 <A>G</A>.
 <P/>
 If you are sure that the domain <C>Something( <A>gens</A> )</C> is contained
@@ -331,7 +332,7 @@ and the functions whose names end with
 <Heading>Further Information about Domains</Heading>
 
 More information about domains can be found in
-Chapter&nbsp;<Ref Sect="Domains" BookName="ref"/>. Many other other chapters deal with specific
+Chapter&nbsp;<Ref Sect="Domains" BookName="ref"/>. Many other chapters deal with specific
 types of domain such as groups, vector spaces or algebras.
 
 </Section>

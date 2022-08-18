@@ -128,7 +128,7 @@ to create a GitHub account, see below for an alternative.
 From there you will have to wait on one of the GAP committers to respond to
 the request. This response might be an accept or some changes, improvements or
 alternatives will be suggested. We do not guarantee that all requests will be
-accepted. You may want to to read the section discussing the reviewing process
+accepted. You may want to read the section discussing the reviewing process
 below to make the review of your pull request go smoothly.
 
 
@@ -172,7 +172,7 @@ Please be careful to criticize constructively and not use dismissive language
 
 This section is based on <https://lornajane.net/posts/2015/code-reviews-before-you-even-run-the-code>.
 
-* Is it clear what feature / fix the contribution adresses?
+* Is it clear what feature / fix the contribution addresses?
 * If based on an issue, does it relate to exactly one issue?
 * Do the commit messages look good? Should some commits be squashed / broken up?
 * Does the list of changed files look sensible?
@@ -199,8 +199,8 @@ This section is based on <https://lornajane.net/posts/2015/code-reviews-before-y
 
 ## Additional Resources
 
-* [GAP Tutorial](https://www.gap-system.org/Manuals/doc/tut/chap0.html)
-* [GAP Manual](https://www.gap-system.org/Manuals/doc/ref/chap0.html)
+* [GAP Tutorial](https://www.gap-system.org/Manuals/doc/tut/chap0_mj.html)
+* [GAP Manual](https://www.gap-system.org/Manuals/doc/ref/chap0_mj.html)
 * [GAP Homepage](https://www.gap-system.org/)
 * [GAP on GitHub: Quickstart](https://github.com/gap-system/gap-git-cheat-sheet/raw/master/gap-git-cheat-sheet.pdf)
 * [Atlassian Git Tutorials](https://www.atlassian.com/git/tutorials/)

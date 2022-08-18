@@ -19,7 +19,7 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap12.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap14.html">[Next Chapter]</a>&nbsp;  </div>
 
-<p id="mathjaxlink" class="pcenter"></p>
+<p id="mathjaxlink" class="pcenter"><a href="chap13_mj.html">[MathJax on]</a></p>
 <p><a id="X82F59668851B5E80" name="X82F59668851B5E80"></a></p>
 <div class="ChapSects"><a href="chap13.html#X82F59668851B5E80">13 <span class="Heading">Library and I/O</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13.html#X7F84F1AD7AFB97CF">13.1 <span class="Heading">Simplicial complex library</span></a>
@@ -52,7 +52,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X871C94B978881445">13.2-7 SCImportPolymake</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X790C0AD9807A5D82">13.2-8 SCExportLatexTable</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X859BCB9986B55E14">13.2-9 SCExportJavaView</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7F214CF77E65C1A9">13.2-10 SCExportPolymake</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X87B05F177D4C2F27">13.2-10 SCExportRecognizer</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7B933EA27E8E79C8">13.2-11 SCExportSnapPy</a></span>
 </div></div>
 </div>
@@ -98,54 +98,21 @@
  gap&gt; SCLib;
  [Simplicial complex library. Properties:
  CalculateIndexAttributes=true
- Number of complexes in library=7649
+ Number of complexes in library=648
  IndexAttributes=[ "Name", "Dim", "F", "G", "H", "Chi", "Homology", "IsPM", 
    "IsManifold" ]
  Loaded=true
- Path="/home/jonathan/apps/gap-4.10.1/pkg/simpcomp/complexes/"
+ Path="/home/jonathan/bin/gap-4.11.1/pkg/simpcomp/complexes/"
  ]
  gap&gt; SCLib.Size;
- 7649
+ 648
  gap&gt; SCLib.SearchByName("S^4~");
- [ [ 463, "S^4~S^1 (VT)" ], [ 1474, "S^4~S^1 (VT)" ], [ 1475, "S^4~S^1 (VT)" ],
-   [ 2477, "S^4~S^1 (VT)" ], [ 4395, "S^4~S^1 (VT)" ], 
-   [ 4396, "S^4~S^1 (VT)" ], [ 4397, "S^4~S^1 (VT)" ], 
-   [ 4398, "S^4~S^1 (VT)" ], [ 4399, "S^4~S^1 (VT)" ], 
-   [ 4402, "S^4~S^1 (VT)" ], [ 4403, "S^4~S^1 (VT)" ], 
-   [ 4404, "S^4~S^1 (VT)" ] ]
+ [ [ 203, "S^4~S^1 (VT)" ], [ 330, "S^4~S^1 (VT)" ], [ 332, "S^4~S^1 (VT)" ], 
+   [ 395, "S^4~S^1 (VT)" ], [ 451, "S^4~S^1 (VT)" ], [ 452, "S^4~S^1 (VT)" ], 
+   [ 453, "S^4~S^1 (VT)" ], [ 454, "S^4~S^1 (VT)" ], [ 455, "S^4~S^1 (VT)" ], 
+   [ 458, "S^4~S^1 (VT)" ], [ 459, "S^4~S^1 (VT)" ], [ 460, "S^4~S^1 (VT)" ] ]
  gap&gt; SCLib.Load(last[1][1]);          
- [SimplicialComplex
- 
-  Properties known: AltshulerSteinberg, ConnectedComponents, Dim, 
-                    DualGraph, EulerCharacteristic, FVector, FacetsEx, 
-                    GVector, HVector, HasBoundary, HasInterior, 
-                    Homology, Interior, IsConnected, 
-                    IsEulerianManifold, IsManifold, IsOrientable, 
-                    IsPseudoManifold, IsPure, IsStronglyConnected, 
-                    MinimalNonFacesEx, Name, Neighborliness, 
-                    NumFaces[], Orientation, Reference, SkelExs[], 
-                    Vertices.
- 
-  Name="S^4~S^1 (VT)"
-  Dim=5
-  AltshulerSteinberg=2417917928025780
-  EulerCharacteristic=0
-  FVector=[ 13, 78, 195, 260, 195, 65 ]
-  GVector=[ 6, 21, -35 ]
-  HVector=[ 7, 28, -7, 28, 7, 1 ]
-  HasBoundary=false
-  HasInterior=true
-  Homology=[ [ 0, [ ] ], [ 1, [ ] ], [ 0, [ ] ], [ 0, [ ] ], [ 0, [ 2 ] ], [ 0,\
-  [ ] ] ]
-  IsConnected=true
-  IsEulerianManifold=true
-  IsOrientable=false
-  IsPseudoManifold=true
-  IsPure=true
-  IsStronglyConnected=true
-  Neighborliness=2
- 
- /SimplicialComplex]
+ &lt;SimplicialComplex: S^4~S^1 (VT) | dim = 5 | n = 13&gt;
  </pre></div>
 
 <p><a id="X85A9A589831467BB" name="X85A9A589831467BB"></a></p>
@@ -193,7 +160,7 @@
  gap&gt; all[1];
  [ 1, "Moebius Strip" ]
  gap&gt; Length(all);
- 7649
+ 648
  </pre></div>
 
 <p><a id="X802B22077DB1F14B" name="X802B22077DB1F14B"></a></p>
@@ -241,19 +208,7 @@
  gap&gt; c:=SCFromFacets([[1,2,3],[1,2,6],[1,3,5],[1,4,5],[1,4,6],
                        [2,3,4],[2,4,5],[2,5,6],[3,4,6],[3,5,6]]);;
  gap&gt; SCLibDetermineTopologicalType(c);
- [SimplicialComplex
- 
-  Properties known: BoundaryEx, Dim, FacetsEx, HasBoundary, 
-                    IsPseudoManifold, IsPure, Name, SkelExs[], 
-                    Vertices.
- 
-  Name="unnamed complex 167"
-  Dim=2
-  HasBoundary=false
-  IsPseudoManifold=true
-  IsPure=true
- 
- /SimplicialComplex]
+ &lt;SimplicialComplex: unnamed complex 250 | dim = 2 | n = 6&gt;
  </pre></div>
 
 <p><a id="X7C3151F280BC8754" name="X7C3151F280BC8754"></a></p>
@@ -332,9 +287,9 @@
 
 <div class="example"><pre>
  gap&gt; SCLibSearchByAttribute(SCLib,"Dim=4 and F[3]=Binomial(F[1],3)");
- [ [ 16, "CP^2 (VT)" ], [ 7494, "K3_16" ] ]
+ [ [ 16, "CP^2 (VT)" ], [ 520, "K3_16" ] ]
  gap&gt; SCLib.SearchByAttribute("Dim=4 and F[3]=Binomial(F[1],3)");
- [ [ 16, "CP^2 (VT)" ], [ 7494, "K3_16" ] ]
+ [ [ 16, "CP^2 (VT)" ], [ 520, "K3_16" ] ]
  </pre></div>
 
 <p><a id="X80EA086A80F86814" name="X80EA086A80F86814"></a></p>
@@ -349,12 +304,11 @@
 
 <div class="example"><pre>
  gap&gt; SCLibSearchByName(SCLib,"K3");
- [ [ 7494, "K3_16" ], [ 7513, "K3_17" ] ]
+ [ [ 520, "K3_16" ], [ 539, "K3_17" ] ]
  gap&gt; SCLib.SearchByName("K3"); #alternative syntax
- [ [ 7494, "K3_16" ], [ 7513, "K3_17" ] ]
+ [ [ 520, "K3_16" ], [ 539, "K3_17" ] ]
  gap&gt; SCLib.SearchByName("S^4x"); #search for products with S^4
- [ [ 713, "S^4xS^1 (VT)" ], [ 1472, "S^4xS^1 (VT)" ], [ 1473, "S^4xS^1 (VT)" ],
-   [ 7478, "S^4xS^2" ], [ 7541, "S^4xS^3" ], [ 7575, "S^4xS^4" ] ]
+ [ [ 282, "S^4xS^1 (VT)" ], [ 329, "S^4xS^1 (VT)" ], [ 331, "S^4xS^1 (VT)" ] ]
  </pre></div>
 
 <p><a id="X80BD14648113130B" name="X80BD14648113130B"></a></p>
@@ -369,7 +323,7 @@
 
 <div class="example"><pre>
  gap&gt; SCLibSize(SCLib); #SCLib is the repository of the global library
- 7649
+ 648
  </pre></div>
 
 <p><a id="X7A0856987A87A3C5" name="X7A0856987A87A3C5"></a></p>
@@ -411,11 +365,11 @@
  gap&gt; SCLibStatus(SCLib);
  [Simplicial complex library. Properties:
  CalculateIndexAttributes=true
- Number of complexes in library=7649
+ Number of complexes in library=648
  IndexAttributes=[ "Name", "Dim", "F", "G", "H", "Chi", "Homology", "IsPM", 
    "IsManifold" ]
  Loaded=true
- Path="/home/jonathan/apps/gap-4.10.1/pkg/simpcomp/complexes/"
+ Path="/home/jonathan/bin/gap-4.11.1/pkg/simpcomp/complexes/"
  ]
  </pre></div>
 
@@ -440,29 +394,7 @@
  gap&gt; SCSave(c,"/tmp/bddelta3");
  true
  gap&gt; d:=SCLoad("/tmp/bddelta3");
- [SimplicialComplex
- 
-  Properties known: AutomorphismGroup, AutomorphismGroupSize, 
-                    AutomorphismGroupStructure, 
-                    AutomorphismGroupTransitivity, Dim, 
-                    EulerCharacteristic, FacetsEx, GeneratorsEx, 
-                    HasBoundary, Homology, IsConnected, 
-                    IsStronglyConnected, Name, NumFaces[], 
-                    TopologicalType, Vertices.
- 
-  Name="S^2_4"
-  Dim=2
-  AutomorphismGroupSize=24
-  AutomorphismGroupStructure="S4"
-  AutomorphismGroupTransitivity=4
-  EulerCharacteristic=2
-  HasBoundary=false
-  Homology=[ [ 0, [ ] ], [ 0, [ ] ], [ 1, [ ] ] ]
-  IsConnected=true
-  IsStronglyConnected=true
-  TopologicalType="S^2"
- 
- /SimplicialComplex]
+ &lt;SimplicialComplex: S^2_4 | dim = 2 | n = 4&gt;
  gap&gt; c=d;
  true
  </pre></div>
@@ -482,29 +414,7 @@
  gap&gt; SCSaveXML(c,"/tmp/bddelta3");
  true
  gap&gt; d:=SCLoadXML("/tmp/bddelta3");
- [SimplicialComplex
- 
-  Properties known: AutomorphismGroup, AutomorphismGroupSize, 
-                    AutomorphismGroupStructure, 
-                    AutomorphismGroupTransitivity, Dim, 
-                    EulerCharacteristic, FacetsEx, GeneratorsEx, 
-                    HasBoundary, Homology, IsConnected, 
-                    IsStronglyConnected, Name, NumFaces[], 
-                    TopologicalType, Vertices.
- 
-  Name="S^2_4"
-  Dim=2
-  AutomorphismGroupSize=24
-  AutomorphismGroupStructure="S4"
-  AutomorphismGroupTransitivity=4
-  EulerCharacteristic=2
-  HasBoundary=false
-  Homology=[ [ 0, [ ] ], [ 0, [ ] ], [ 1, [ ] ] ]
-  IsConnected=true
-  IsStronglyConnected=true
-  TopologicalType="S^2"
- 
- /SimplicialComplex]
+ &lt;SimplicialComplex: S^2_4 | dim = 2 | n = 4&gt;
  gap&gt; c=d;
  true
  </pre></div>
@@ -588,14 +498,7 @@
  gap&gt; SCExportPolymake(c,"/tmp/bdbeta4.poly");
  true
  gap&gt; d:=SCImportPolymake("/tmp/bdbeta4.poly");
- [SimplicialComplex
- 
-  Properties known: Dim, FacetsEx, Name, Vertices.
- 
-  Name="polymake import '/tmp/bdbeta4.poly'"
-  Dim=3
- 
- /SimplicialComplex]
+ &lt;SimplicialComplex: polymake import '/tmp/bdbeta4.poly' | dim = 3 | n = 8&gt;
  gap&gt; c=d;
  true
  </pre></div>
@@ -632,11 +535,11 @@
  true
  </pre></div>
 
-<p><a id="X7F214CF77E65C1A9" name="X7F214CF77E65C1A9"></a></p>
+<p><a id="X87B05F177D4C2F27" name="X87B05F177D4C2F27"></a></p>
 
-<h5>13.2-10 SCExportPolymake</h5>
+<h5>13.2-10 SCExportRecognizer</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SCExportPolymake</code>( <var class="Arg">complex</var>, <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SCExportRecognizer</code>( <var class="Arg">complex</var>, <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> upon success, <code class="keyw">fail</code> otherwise.</p>
 
 <p>Exports the gluings of the tetrahedra of a given combinatorial <span class="SimpleMath">3</span>-manifold <var class="Arg">complex</var> in a format compatible with Matveev's <span class="SimpleMath">3</span>-manifold software <code class="code">Recognizer</code>.</p>

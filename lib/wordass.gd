@@ -201,7 +201,8 @@ DeclareCategory( "IsInfBitsFamily", IsSyllableWordsFamily );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareRepresentation( "IsSyllableAssocWordRep", IsAssocWord, [] );
+DeclareRepresentation( "IsSyllableAssocWordRep",
+                       IsAssocWord and IsPositionalObjectRep, [] );
 
 #############################################################################
 ##
@@ -223,7 +224,8 @@ if IsHPCGAP then
 DeclareRepresentation( "IsLetterAssocWordRep", 
                        IsAssocWord and IsAtomicPositionalObjectRep, [] );
 else
-DeclareRepresentation( "IsLetterAssocWordRep", IsAssocWord, [] );
+DeclareRepresentation( "IsLetterAssocWordRep",
+                       IsAssocWord and IsPositionalObjectRep, [] );
 fi;
 
 #############################################################################
@@ -397,7 +399,7 @@ InstallTrueMethod( IsGeneratorsOfMagmaWithInverses,
 ##  the result is undefined.)
 ##  <P/>
 ##  If the assignment overwrites existing variables a warning is given, if
-##  any of the variables if write protected, or any of the generator names   
+##  any of the variables is write protected, or any of the generator names
 ##  would not be a proper variable name, an error is raised.
 ##  </Description>
 ##  </ManSection>
@@ -516,12 +518,12 @@ DeclareOperation( "AssignGeneratorVariables", [IsDomain] );
 ##
 ##  <#GAPDoc Label="Length:wordass">
 ##  <ManSection>
-##  <Attr Name="Length" Arg='w' Label="for a associative word"/>
+##  <Attr Name="Length" Arg='w' Label="for an associative word"/>
 ##
 ##  <Description>
 ##  <Index Subkey="of a word">length</Index>
 ##  For an associative word <A>w</A>,
-##  <Ref Attr="Length" Label="for a associative word"/> returns
+##  <Ref Attr="Length" Label="for an associative word"/> returns
 ##  the number of letters in <A>w</A>.
 ##  <P/>
 ##  <Example><![CDATA[
@@ -1055,7 +1057,7 @@ DeclareGlobalFunction( "StoreInfoFreeMagma" );
 ##  If the only argument is a string <A>string</A> then
 ##  <Ref Func="InfiniteListOfNames"/> returns an infinite list with the
 ##  string <A>string</A><M>i</M> at position <M>i</M>.
-##  If a finite list <A>initnames</A> of length <M>n</M>, say,
+##  If a finite list <A>initnames</A> of length <M>n</M>
 ##  is given as second argument,
 ##  the <M>i</M>-th entry of the returned infinite list is equal to
 ##  <A>initnames</A><C>[</C><M>i</M><C>]</C> if <M>i \leq n</M>,
@@ -1078,7 +1080,7 @@ DeclareGlobalFunction( "InfiniteListOfNames" );
 ##  <Ref Func="InfiniteListOfGenerators"/> returns an infinite list
 ##  containing at position <M>i</M> the element in <A>Fam</A>
 ##  obtained as <C>ObjByExtRep( <A>Fam</A>, [ </C><M>i</M><C>, 1 ] )</C>.
-##  If a finite list <A>init</A> of length <M>n</M>, say,
+##  If a finite list <A>init</A> of length <M>n</M>
 ##  is given as second argument, the <M>i</M>-th entry of the returned
 ##  infinite list is equal to
 ##  <A>init</A><C>[</C><M>i</M><C>]</C> if <M>i \leq n</M>,

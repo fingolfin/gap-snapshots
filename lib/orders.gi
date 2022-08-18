@@ -154,7 +154,7 @@ InstallOtherMethod( OrderingByLessThanOrEqualFunctionNC,
 #A  LessThanOrEqualFunction( <ord> )
 ##
 InstallMethod( LessThanOrEqualFunction,
-  "for an ordering which has a a LessThanFunction", true,
+  "for an ordering which has a LessThanFunction", true,
   [IsOrdering and HasLessThanFunction], 0,
   function( ord)
     local fun;
@@ -172,7 +172,7 @@ end);
 #A  LessThanFunction( <ord> )
 ##
 InstallMethod( LessThanFunction,
-  "for an ordering which has a a LessThanOrEqualFunction", true,
+  "for an ordering which has a LessThanOrEqualFunction", true,
   [IsOrdering and HasLessThanOrEqualFunction], 0,
   function( ord)
     local fun;
@@ -678,7 +678,7 @@ InstallOtherMethod( ShortLexOrdering,
 ##  It returns true if <u> is less than or equal to <v>, with
 ##  respect to the shortlex ordering.
 ##  (the shortlex ordering is the default one given by u<=v)
-##  (we have this function here to assure compatability with gap4.2).
+##  (we have this function here to assure compatibility with gap4.2).
 ##
 InstallGlobalFunction( IsShortLexLessThanOrEqual,
 function( u, v )
@@ -1244,7 +1244,7 @@ InstallOtherMethod(BasicWreathProductOrdering,
 ##  for two associative words <u> and <v>.
 ##  It returns true if <u> is less than or equal to <v>, with
 ##  respect to the basic wreath product ordering. 
-##  (we have this function here to assure compatability with gap4.2).
+##  (we have this function here to assure compatibility with gap4.2).
 ##
 InstallGlobalFunction( IsBasicWreathLessThanOrEqual,
 function( u, v )

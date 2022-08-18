@@ -63,7 +63,7 @@ static Obj FuncSC_TABLE_ENTRY(Obj self, Obj table, Obj i, Obj j, Obj k)
     Int                 l;              /* loop variable                   */
 
     /* check the table                                                     */
-    RequireSmallList("SCTableEntry", table);
+    RequireSmallList(SELF_NAME, table);
     dim = LEN_LIST(table) - 2;
     if ( dim <= 0 ) {
         ErrorMayQuit(
@@ -72,12 +72,7 @@ static Obj FuncSC_TABLE_ENTRY(Obj self, Obj table, Obj i, Obj j, Obj k)
     }
 
     /* check <i>                                                           */
-    RequirePositiveSmallInt("SCTableEntry", i, NICE_ARGNAME(i));
-    if (dim < INT_INTOBJ(i)) {
-        ErrorMayQuit(
-            "SCTableEntry: <i> must be an integer between 1 and %d but is %d",
-            dim, INT_INTOBJ(i));
-    }
+    RequireBoundedInt(SELF_NAME, i, 1, dim);
 
     /* get and check the relevant row                                      */
     tmp = ELM_LIST( table, INT_INTOBJ(i) );
@@ -88,12 +83,7 @@ static Obj FuncSC_TABLE_ENTRY(Obj self, Obj table, Obj i, Obj j, Obj k)
     }
 
     /* check <j>                                                           */
-    RequirePositiveSmallInt("SCTableEntry", j, NICE_ARGNAME(j));
-    if (dim < INT_INTOBJ(j)) {
-        ErrorMayQuit(
-            "SCTableEntry: <j> must be an integer between 1 and %d but is %d",
-            dim, INT_INTOBJ(j));
-    }
+    RequireBoundedInt(SELF_NAME, j, 1, dim);
 
     /* get and check the basis and coefficients list                       */
     tmp = ELM_LIST( tmp, INT_INTOBJ(j) );
@@ -126,12 +116,7 @@ static Obj FuncSC_TABLE_ENTRY(Obj self, Obj table, Obj i, Obj j, Obj k)
     }
 
     /* check <k>                                                           */
-    RequirePositiveSmallInt("SCTableEntry", k, NICE_ARGNAME(k));
-    if (dim < INT_INTOBJ(k)) {
-        ErrorMayQuit(
-            "SCTableEntry: <k> must be an integer between 1 and %d but is %d",
-            dim, INT_INTOBJ(k));
-    }
+    RequireBoundedInt(SELF_NAME, k, 1, dim);
 
     /* look for the (i,j,k) entry                                          */
     for ( l = 1; l <= len; l++ ) {
@@ -169,12 +154,12 @@ static void SCTableProdAdd(Obj res, Obj coeff, Obj basis_coeffs, Int dim)
     coeffs = ELM_LIST( basis_coeffs, 2 );
     len = LEN_LIST( basis );
     if ( LEN_LIST( coeffs ) != len ) {
-        ErrorQuit("SCTableProduct: corrupted <table>",0L,0L);
+        ErrorQuit("SCTableProduct: corrupted <table>", 0, 0);
     }
     for ( l = 1; l <= len; l++ ) {
         k = ELM_LIST( basis, l );
         if ( ! IS_INTOBJ(k) || INT_INTOBJ(k) <= 0 || dim < INT_INTOBJ(k) ) {
-            ErrorQuit("SCTableProduct: corrupted <table>",0L,0L);
+            ErrorQuit("SCTableProduct: corrupted <table>", 0, 0);
         }
         c1 = ELM_LIST( coeffs, l );
         c1 = PROD( coeff, c1 );
@@ -197,10 +182,7 @@ static Obj FuncSC_TABLE_PRODUCT(Obj self, Obj table, Obj list1, Obj list2)
     Int                 i, j;           /* loop variables                  */
 
     /* check the arguments a bit                                           */
-    if ( ! IS_SMALL_LIST(table) ) {
-        ErrorMayQuit("SCTableProduct: <table> must be a list (not a %s)",
-                     (Int)TNAM_OBJ(table), 0);
-    }
+    RequireSmallList(SELF_NAME, table);
     dim = LEN_LIST(table) - 2;
     if ( dim <= 0 ) {
         ErrorMayQuit(
@@ -290,7 +272,6 @@ static Obj FuncSC_TABLE_PRODUCT(Obj self, Obj table, Obj list1, Obj list2)
         }
     }
 
-    /* return the result                                                   */
     return res;
 }
 
@@ -306,8 +287,8 @@ static Obj FuncSC_TABLE_PRODUCT(Obj self, Obj table, Obj list1, Obj list2)
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    GVAR_FUNC(SC_TABLE_ENTRY, 4, "table, i, j, k"),
-    GVAR_FUNC(SC_TABLE_PRODUCT, 3, "table, list1, list2"),
+    GVAR_FUNC_4ARGS(SC_TABLE_ENTRY, table, i, j, k),
+    GVAR_FUNC_3ARGS(SC_TABLE_PRODUCT, table, list1, list2),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -323,7 +304,6 @@ static Int InitKernel (
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -338,7 +318,6 @@ static Int InitLibrary (
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 

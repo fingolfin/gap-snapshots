@@ -202,8 +202,8 @@ GL(2,7)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TzPrintRelators( P );</span>
 #I  1. f2^3
 #I  2. f1^6
-#I  3. (f1^-1*f2^-1)^6
-#I  4. f1*f2*f1^-1*f2^-1*f1*f2^-1*f1^-1*f2*f1*f2^-1*f1^-1*f2^-1
+#I  3. (f1*f2)^6
+#I  4. f1*f2*f1^-1*f2*f1*f2^-1*f1^-1*f2*f1*f2*f1^-1*f2^-1
 #I  5. f1^-3*f2*f1*f2*(f1^-1*f2^-1)^2*f1^-2*f2
 </pre></div>
 
@@ -222,10 +222,10 @@ GL(2,7)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := FpGroupPresentation( P );</span>
 &lt;fp group on the generators [ a, b, c ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelatorsOfFpGroup( G );</span>
-[ c^2, b^4, (a*c)^3, (a*b^-2)^3, a^11, 
-  a^2*b*a^-2*b^-1*(b^-1*a)^2*a*b^-1, (a*(b*a^-1)^2*b^-1)^2, 
-  a^2*b*a^2*b^-2*a^-1*b*(a^-1*b^-1)^2, 
-  (a*b)^2*a^2*b^-1*a^-1*b^-1*a*c*b*c, a^2*(a^2*b)^2*a^-2*c*a*b*a^-1*c 
+[ c^2, b^4, (a*c)^3, (a*b^-2)^3, a^11,
+  a^2*b*a^-2*b^-1*(b^-1*a)^2*a*b^-1, (a*(b*a^-1)^2*b^-1)^2,
+  a^2*b*a^2*b^-2*a^-1*b*(a^-1*b^-1)^2,
+  a^2*b^-1*a^-1*b^-1*a*c*b*c*(a*b)^2, a^2*(a^2*b)^2*a^-2*c*a*b*a^-1*c
  ]
 </pre></div>
 
@@ -301,7 +301,7 @@ H := FpGroupPresentation( P );
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationSubgroupRrs</code>( <var class="Arg">G</var>, <var class="Arg">H</var>[, <var class="Arg">string</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationSubgroupRrs</code>( <var class="Arg">G</var>, <var class="Arg">table</var>[, <var class="Arg">string</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>uses the Reduced Reidemeister-Schreier method to compute a presentation <var class="Arg">P</var>, say, for a subgroup <var class="Arg">H</var> of a finitely presented group <var class="Arg">G</var>. The generators in the resulting presentation will be named <var class="Arg">string</var><code class="code">1</code>, <var class="Arg">string</var><code class="code">2</code>, <span class="SimpleMath">...</span>, the default string is <code class="code">"_x"</code>. You may access the <span class="SimpleMath">i</span>-th of these generators by <var class="Arg">P</var><code class="code">!.</code><span class="SimpleMath">i</span>.</p>
+<p>uses the Reduced Reidemeister-Schreier method to compute a presentation <var class="Arg">P</var> for a subgroup <var class="Arg">H</var> of a finitely presented group <var class="Arg">G</var>. The generators in the resulting presentation will be named <var class="Arg">string</var><code class="code">1</code>, <var class="Arg">string</var><code class="code">2</code>, <span class="SimpleMath">...</span>, the default string is <code class="code">"_x"</code>. You may access the <span class="SimpleMath">i</span>-th of these generators by <var class="Arg">P</var><code class="code">!.</code><span class="SimpleMath">i</span>.</p>
 
 <p>Alternatively to the subgroup <var class="Arg">H</var>, its coset table <var class="Arg">table</var> in <var class="Arg">G</var> may be given as second argument.</p>
 
@@ -368,7 +368,7 @@ g1
 <h5>48.2-4 PresentationSubgroupMtc</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationSubgroupMtc</code>( <var class="Arg">G</var>, <var class="Arg">H</var>[, <var class="Arg">string</var>][, <var class="Arg">print</var>, <var class="Arg">level</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>uses the Modified Todd-Coxeter coset representative enumeration method to compute a presentation <span class="SimpleMath">P</span>, say, for a subgroup <var class="Arg">H</var> of a finitely presented group <var class="Arg">G</var>. The presentation returned is in generators corresponding to the generators of <var class="Arg">H</var>. The generators in the resulting presentation will be named <var class="Arg">string</var><code class="code">1</code>, <var class="Arg">string</var><code class="code">2</code>, <span class="SimpleMath">...</span>, the default string is <code class="code">"_x"</code>. You may access the <span class="SimpleMath">i</span>-th of these generators by <span class="SimpleMath">P</span><code class="code">!.</code><span class="SimpleMath">i</span>.</p>
+<p>uses the Modified Todd-Coxeter coset representative enumeration method to compute a presentation <span class="SimpleMath">P</span> for a subgroup <var class="Arg">H</var> of a finitely presented group <var class="Arg">G</var>. The presentation returned is in generators corresponding to the generators of <var class="Arg">H</var>. The generators in the resulting presentation will be named <var class="Arg">string</var><code class="code">1</code>, <var class="Arg">string</var><code class="code">2</code>, <span class="SimpleMath">...</span>, the default string is <code class="code">"_x"</code>. You may access the <span class="SimpleMath">i</span>-th of these generators by <span class="SimpleMath">P</span><code class="code">!.</code><span class="SimpleMath">i</span>.</p>
 
 <p>The default print level is <span class="SimpleMath">1</span>. If the print level is set to <span class="SimpleMath">0</span>, then the printout of the implicitly called function <code class="func">DecodeTree</code> (<a href="chap48.html#X7ACBFE2F78D72A31"><span class="RefLink">48.10-1</span></a>) will be suppressed.</p>
 
@@ -403,7 +403,7 @@ g1
 <h5>48.2-5 PresentationNormalClosureRrs</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationNormalClosureRrs</code>( <var class="Arg">G</var>, <var class="Arg">H</var>[, <var class="Arg">string</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>uses the Reduced Reidemeister-Schreier method to compute a presentation <span class="SimpleMath">P</span>, say, for the normal closure of a subgroup <var class="Arg">H</var> of a finitely presented group <var class="Arg">G</var>. The generators in the resulting presentation will be named <var class="Arg">string</var><code class="code">1</code>, <var class="Arg">string</var><code class="code">2</code>, <span class="SimpleMath">...</span>, the default string is <code class="code">"_x"</code>. You may access the <span class="SimpleMath">i</span>-th of these generators by <span class="SimpleMath">P</span><code class="code">!.</code><span class="SimpleMath">i</span>.</p>
+<p>uses the Reduced Reidemeister-Schreier method to compute a presentation <span class="SimpleMath">P</span> for the normal closure of a subgroup <var class="Arg">H</var> of a finitely presented group <var class="Arg">G</var>. The generators in the resulting presentation will be named <var class="Arg">string</var><code class="code">1</code>, <var class="Arg">string</var><code class="code">2</code>, <span class="SimpleMath">...</span>, the default string is <code class="code">"_x"</code>. You may access the <span class="SimpleMath">i</span>-th of these generators by <span class="SimpleMath">P</span><code class="code">!.</code><span class="SimpleMath">i</span>.</p>
 
 <p><a id="X7A7E5D0084DB0B4F" name="X7A7E5D0084DB0B4F"></a></p>
 
@@ -451,7 +451,7 @@ d^-1*b^-1*d*c^-2
 
 <h4>48.4 <span class="Heading">Printing Presentations</span></h4>
 
-<p>Whenever you create a presentation <span class="SimpleMath">P</span>, say, or assign it to a variable, <strong class="pkg">GAP</strong> will respond by printing <span class="SimpleMath">P</span>. However, as <span class="SimpleMath">P</span> may contain a lot of generators and many relators of large length, it would be annoying if the standard print facilities displayed all this information in detail. So they restrict the printout to just one line of text containing the number of generators, the number of relators, and the total length of all relators of <span class="SimpleMath">P</span>. As compensation, <strong class="pkg">GAP</strong> offers some special print commands which display various details of a presentation. Note that there is also a function <code class="func">TzPrintOptions</code> (<a href="chap48.html#X7BC90B6882DE6D10"><span class="RefLink">48.11-2</span></a>). It is described in Section <a href="chap48.html#X856F37537E9927EE"><span class="RefLink">48.11</span></a>.</p>
+<p>Whenever you create a presentation <span class="SimpleMath">P</span>, or assign it to a variable, <strong class="pkg">GAP</strong> will respond by printing <span class="SimpleMath">P</span>. However, as <span class="SimpleMath">P</span> may contain a lot of generators and many relators of large length, it would be annoying if the standard print facilities displayed all this information in detail. So they restrict the printout to just one line of text containing the number of generators, the number of relators, and the total length of all relators of <span class="SimpleMath">P</span>. As compensation, <strong class="pkg">GAP</strong> offers some special print commands which display various details of a presentation. Note that there is also a function <code class="func">TzPrintOptions</code> (<a href="chap48.html#X7BC90B6882DE6D10"><span class="RefLink">48.11-2</span></a>). It is described in Section <a href="chap48.html#X856F37537E9927EE"><span class="RefLink">48.11</span></a>.</p>
 
 <p><a id="X847EA6737C21171C" name="X847EA6737C21171C"></a></p>
 
@@ -484,10 +484,10 @@ Group([ (1,2,3,4,5), (2,3,5,4), (1,6)(3,4) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TzPrintRelators( P );</span>
 #I  1. f3^2
 #I  2. f2^4
-#I  3. (f2^-1*f3)^2
+#I  3. (f2*f3)^2
 #I  4. f1^5
 #I  5. f1^2*f2*f1*f2^-1
-#I  6. f1^-1*f3*f1*f3*f1^-1*f2^2*f3
+#I  6. f1*f2^-2*f3*f1*f3*f1^-1*f3
 </pre></div>
 
 <p><a id="X852C52C37FAAB7DD" name="X852C52C37FAAB7DD"></a></p>
@@ -537,10 +537,10 @@ Group([ (1,2,3,4,5), (2,3,5,4), (1,6)(3,4) ])
 #I  relators:
 #I  1.  2  [ 3, 3 ]
 #I  2.  4  [ 2, 2, 2, 2 ]
-#I  3.  4  [ -2, 3, -2, 3 ]
+#I  3.  4  [ 2, 3, 2, 3 ]
 #I  4.  5  [ 1, 1, 1, 1, 1 ]
 #I  5.  5  [ 1, 1, 2, 1, -2 ]
-#I  6.  8  [ -1, 3, 1, 3, -1, 2, 2, 3 ]
+#I  6.  8  [ 1, -2, -2, 3, 1, 3, -1, 3 ]
 </pre></div>
 
 <p><a id="X82F6B0EE7C7C7901" name="X82F6B0EE7C7C7901"></a></p>
@@ -555,9 +555,9 @@ Group([ (1,2,3,4,5), (2,3,5,4), (1,6)(3,4) ])
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TzPrintPairs( P, 3 );</span>
-#I  1.  3  occurrences of  f2 * f3
-#I  2.  2  occurrences of  f2^-1 * f3
-#I  3.  2  occurrences of  f1 * f3
+#I  1.  3  occurrences of  f2^-1 * f3
+#I  2.  2  occurrences of  f2 * f3
+#I  3.  2  occurrences of  f1^-1 * f3
 </pre></div>
 
 <p><a id="X82455E5885D73FFF" name="X82455E5885D73FFF"></a></p>
@@ -579,7 +579,7 @@ Group([ (1,2,3,4,5), (2,3,5,4), (1,6)(3,4) ])
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := PerfectGroup( 120 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := PerfectGroup(IsFpGroup, 120 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := Subgroup( G, [ G.1^G.2, G.3 ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P := PresentationSubgroup( G, H );</span>
 &lt;presentation with 4 gens and 7 rels of total length 21&gt;
@@ -767,7 +767,7 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzSearch</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>searches for relator subwords which, in some relator, have a complement of shorter length and which occur in other relators, too, and uses them to reduce these other relators.</p>
 
-<p>The idea is to find pairs of relators <span class="SimpleMath">r_1</span> and <span class="SimpleMath">r_2</span> of length <span class="SimpleMath">l_1</span> and <span class="SimpleMath">l_2</span>, respectively, such that <span class="SimpleMath">l_1 ≤ l_2</span> and <span class="SimpleMath">r_1</span> and <span class="SimpleMath">r_2</span> coincide (possibly after inverting or conjugating one of them) in some maximal subword <span class="SimpleMath">w</span>, say, of length greater than <span class="SimpleMath">l_1/2</span>, and then to substitute each copy of <span class="SimpleMath">w</span> in <span class="SimpleMath">r_2</span> by the inverse complement of <span class="SimpleMath">w</span> in <span class="SimpleMath">r_1</span>.</p>
+<p>The idea is to find pairs of relators <span class="SimpleMath">r_1</span> and <span class="SimpleMath">r_2</span> of length <span class="SimpleMath">l_1</span> and <span class="SimpleMath">l_2</span>, respectively, such that <span class="SimpleMath">l_1 ≤ l_2</span> and <span class="SimpleMath">r_1</span> and <span class="SimpleMath">r_2</span> coincide (possibly after inverting or conjugating one of them) in some maximal subword <span class="SimpleMath">w</span> of length greater than <span class="SimpleMath">l_1/2</span>, and then to substitute each copy of <span class="SimpleMath">w</span> in <span class="SimpleMath">r_2</span> by the inverse complement of <span class="SimpleMath">w</span> in <span class="SimpleMath">r_1</span>.</p>
 
 <p>Two of the Tietze option parameters which are listed in section <a href="chap48.html#X856F37537E9927EE"><span class="RefLink">48.11</span></a> may strongly influence the performance and the results of the command <code class="func">TzSearch</code>. These are the parameters <code class="code">saveLimit</code> and <code class="code">searchSimultaneous</code>. The first of them has the following effect:</p>
 
@@ -779,7 +779,7 @@ true
 
 <p>First, it sorts the list of relators by increasing lengths. Then it performs a loop over this list. In each step of this loop, the current relator is treated as <em>short relator</em> <span class="SimpleMath">r_1</span>, and a subroutine is called which loops over the succeeding relators, treating them as <em>long relators</em> <span class="SimpleMath">r_2</span> and performing the respective comparisons and substitutions.</p>
 
-<p>As this subroutine performs a very expensive process, it has been implemented as a C routine in the <strong class="pkg">GAP</strong> kernel. For the given relator <span class="SimpleMath">r_1</span> of length <span class="SimpleMath">l_1</span>, say, it first determines the <em>minimal match length</em> <span class="SimpleMath">l</span> which is <span class="SimpleMath">l_1/2+1</span>, if <span class="SimpleMath">l_1</span> is even, or <span class="SimpleMath">(l_1+1)/2</span>, otherwise. Then it builds up a hash list for all subwords of length <span class="SimpleMath">l</span> occurring in the conjugates of <span class="SimpleMath">r_1</span> or <span class="SimpleMath">r_1^{-1}</span>, and finally it loops over all long relators <span class="SimpleMath">r_2</span> and compares the hash values of their subwords of length <span class="SimpleMath">l</span> against this list. A comparison of subwords which is much more expensive is only done if a hash match has been found.</p>
+<p>As this subroutine performs a very expensive process, it has been implemented as a C routine in the <strong class="pkg">GAP</strong> kernel. For the given relator <span class="SimpleMath">r_1</span> of length <span class="SimpleMath">l_1</span> it first determines the <em>minimal match length</em> <span class="SimpleMath">l</span> which is <span class="SimpleMath">l_1/2+1</span>, if <span class="SimpleMath">l_1</span> is even, or <span class="SimpleMath">(l_1+1)/2</span>, otherwise. Then it builds up a hash list for all subwords of length <span class="SimpleMath">l</span> occurring in the conjugates of <span class="SimpleMath">r_1</span> or <span class="SimpleMath">r_1^{-1}</span>, and finally it loops over all long relators <span class="SimpleMath">r_2</span> and compares the hash values of their subwords of length <span class="SimpleMath">l</span> against this list. A comparison of subwords which is much more expensive is only done if a hash match has been found.</p>
 
 <p>To improve the efficiency of this process we allow the subroutine to handle several short relators simultaneously provided that they have the same minimal match length. If, for example, it handles <span class="SimpleMath">n</span> short relators simultaneously, then you save <span class="SimpleMath">n - 1</span> loops over the long relators <span class="SimpleMath">r_2</span>, but you pay for it by additional fruitless subword comparisons. In general, you will not get the best performance by always choosing the maximal possible number of short relators to be handled simultaneously. In fact, the optimal choice of the number will depend on the concrete presentation under investigation. You can use the parameter <code class="code">searchSimultaneous</code> to prescribe an upper bound for the number of short relators to be handled simultaneously.</p>
 
@@ -792,7 +792,7 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzSearchEqual</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>searches for Tietze relator subwords which, in some relator, have a complement of equal length and which occur in other relators, too, and uses them to modify these other relators.</p>
 
-<p>The idea is to find pairs of relators <span class="SimpleMath">r_1</span> and <span class="SimpleMath">r_2</span> of length <span class="SimpleMath">l_1</span> and <span class="SimpleMath">l_2</span>, respectively, such that <span class="SimpleMath">l_1</span> is even, <span class="SimpleMath">l_1 ≤ l_2</span>, and <span class="SimpleMath">r_1</span> and <span class="SimpleMath">r_2</span> coincide (possibly after inverting or conjugating one of them) in some maximal subword <span class="SimpleMath">w</span>, say, of length at least <span class="SimpleMath">l_1/2</span>. Let <span class="SimpleMath">l</span> be the length of <span class="SimpleMath">w</span>. Then, if <span class="SimpleMath">l &gt; l_1/2</span>, the pair is handled as in <code class="func">TzSearch</code> (<a href="chap48.html#X7DF4BBDF839643DD"><span class="RefLink">48.7-2</span></a>). Otherwise, if <span class="SimpleMath">l = l_1/2</span>, then <code class="func">TzSearchEqual</code> substitutes each copy of <span class="SimpleMath">w</span> in <span class="SimpleMath">r_2</span> by the inverse complement of <span class="SimpleMath">w</span> in <span class="SimpleMath">r_1</span>.</p>
+<p>The idea is to find pairs of relators <span class="SimpleMath">r_1</span> and <span class="SimpleMath">r_2</span> of length <span class="SimpleMath">l_1</span> and <span class="SimpleMath">l_2</span>, respectively, such that <span class="SimpleMath">l_1</span> is even, <span class="SimpleMath">l_1 ≤ l_2</span>, and <span class="SimpleMath">r_1</span> and <span class="SimpleMath">r_2</span> coincide (possibly after inverting or conjugating one of them) in some maximal subword <span class="SimpleMath">w</span> of length at least <span class="SimpleMath">l_1/2</span>. Let <span class="SimpleMath">l</span> be the length of <span class="SimpleMath">w</span>. Then, if <span class="SimpleMath">l &gt; l_1/2</span>, the pair is handled as in <code class="func">TzSearch</code> (<a href="chap48.html#X7DF4BBDF839643DD"><span class="RefLink">48.7-2</span></a>). Otherwise, if <span class="SimpleMath">l = l_1/2</span>, then <code class="func">TzSearchEqual</code> substitutes each copy of <span class="SimpleMath">w</span> in <span class="SimpleMath">r_2</span> by the inverse complement of <span class="SimpleMath">w</span> in <span class="SimpleMath">r_1</span>.</p>
 
 <p>The Tietze option parameter <code class="code">searchSimultaneous</code> is used by <code class="func">TzSearchEqual</code> in the same way as described for <code class="func">TzSearch</code> (<a href="chap48.html#X7DF4BBDF839643DD"><span class="RefLink">48.7-2</span></a>). However, <code class="func">TzSearchEqual</code> does not use the parameter <code class="code">saveLimit</code>: The loop over the relators is executed exactly once.</p>
 
@@ -999,7 +999,7 @@ A5 2^4
 <h5>48.8-2 TzSubstituteCyclicJoins</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzSubstituteCyclicJoins</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>tries to find pairs of commuting generators <span class="SimpleMath">a</span> and <span class="SimpleMath">b</span>, say, such that the exponent of <span class="SimpleMath">a</span> (i. e. the least currently known positive integer <span class="SimpleMath">n</span> such that <span class="SimpleMath">a^n</span> is a relator in <var class="Arg">P</var>) is prime to the exponent of <span class="SimpleMath">b</span>. For each such pair, their product <span class="SimpleMath">a b</span> is substituted as a new generator, and <span class="SimpleMath">a</span> and <span class="SimpleMath">b</span> are eliminated.</p>
+<p>tries to find pairs of commuting generators <span class="SimpleMath">a</span> and <span class="SimpleMath">b</span> such that the exponent of <span class="SimpleMath">a</span> (i. e. the least currently known positive integer <span class="SimpleMath">n</span> such that <span class="SimpleMath">a^n</span> is a relator in <var class="Arg">P</var>) is prime to the exponent of <span class="SimpleMath">b</span>. For each such pair, their product <span class="SimpleMath">a b</span> is substituted as a new generator, and <span class="SimpleMath">a</span> and <span class="SimpleMath">b</span> are eliminated.</p>
 
 <p><a id="X85E703997A0212EE" name="X85E703997A0212EE"></a></p>
 
@@ -1100,7 +1100,7 @@ v = a*t*a
 
 <p><code class="func">DecodeTree</code> is called automatically by the command <code class="func">PresentationSubgroupMtc</code> (<a href="chap48.html#X80BA10F780EAE68E"><span class="RefLink">48.2-4</span></a>) where it reduces <var class="Arg">P</var> to a presentation on the given (primary) subgroup generators.</p>
 
-<p>In order to explain the effect of this command we need to insert a few remarks on the subgroup presentation commands described in section <a href="chap48.html#X8118FECE7AD1879B"><span class="RefLink">48.2</span></a>. All these commands have the common property that in the process of constructing a presentation for a given subgroup <var class="Arg">H</var> of a finitely presented group <var class="Arg">G</var> they first build up a highly redundant list of generators of <var class="Arg">H</var> which consists of an (in general small) list of "primary" generators, followed by an (in general large) list of "secondary" generators, and then construct a presentation <span class="SimpleMath">P_0</span>, say, <em>on a sublist of these generators</em> by rewriting the defining relators of <var class="Arg">G</var>. This sublist contains all primary, but, at least in general, by far not all secondary generators.</p>
+<p>In order to explain the effect of this command we need to insert a few remarks on the subgroup presentation commands described in section <a href="chap48.html#X8118FECE7AD1879B"><span class="RefLink">48.2</span></a>. All these commands have the common property that in the process of constructing a presentation for a given subgroup <var class="Arg">H</var> of a finitely presented group <var class="Arg">G</var> they first build up a highly redundant list of generators of <var class="Arg">H</var> which consists of an (in general small) list of "primary" generators, followed by an (in general large) list of "secondary" generators, and then construct a presentation <span class="SimpleMath">P_0</span> <em>on a sublist of these generators</em> by rewriting the defining relators of <var class="Arg">G</var>. This sublist contains all primary, but, at least in general, by far not all secondary generators.</p>
 
 <p>The role of the primary generators depends on the concrete choice of the subgroup presentation command. If the Modified Todd-Coxeter method is used, they are just the given generators of <var class="Arg">H</var>, whereas in the case of the Reduced Reidemeister-Schreier algorithm they are constructed by the program.</p>
 
@@ -1112,7 +1112,7 @@ v = a*t*a
 
 <p>Instead, we use the so called <em>decoding tree</em> procedure (see <a href="chapBib.html#biBAMW82">[AMW82]</a>, <a href="chapBib.html#biBAR84">[AR84]</a>). It proceeds as follows.</p>
 
-<p>Starting from <span class="SimpleMath">P = P_0</span>, it runs through a number of steps in each of which it eliminates the current "last" generator (with respect to the list of all primary and secondary generators). If the last generator <var class="Arg">g</var>, say, is a primary generator, then the procedure terminates. Otherwise it checks whether there is a relator in the current presentation which can be used to substitute <var class="Arg">g</var> by a Tietze transformation. If so, this is done. Otherwise, and only then, the tree definition of <var class="Arg">g</var> is added to <var class="Arg">P</var> as a new relator, and the generators involved are added as new generators if they have not yet been contained in <var class="Arg">P</var>. Subsequently, <var class="Arg">g</var> is eliminated.</p>
+<p>Starting from <span class="SimpleMath">P = P_0</span>, it runs through a number of steps in each of which it eliminates the current "last" generator (with respect to the list of all primary and secondary generators). If the last generator <var class="Arg">g</var> is a primary generator, then the procedure terminates. Otherwise it checks whether there is a relator in the current presentation which can be used to substitute <var class="Arg">g</var> by a Tietze transformation. If so, this is done. Otherwise, and only then, the tree definition of <var class="Arg">g</var> is added to <var class="Arg">P</var> as a new relator, and the generators involved are added as new generators if they have not yet been contained in <var class="Arg">P</var>. Subsequently, <var class="Arg">g</var> is eliminated.</p>
 
 <p>Note that the extension of <var class="Arg">P</var> by one or two new generators is <em>not</em> a Tietze transformation. In general, it will change the isomorphism type of the group defined by <var class="Arg">P</var>. However, it is a remarkable property of this procedure, that at the end, i.e., as soon as all secondary generators have been eliminated, it provides a presentation <span class="SimpleMath">P = P_1</span>, say, which defines a group isomorphic to <var class="Arg">H</var>. In fact, it is this presentation which is returned by the command <code class="func">DecodeTree</code> and hence by the command <code class="func">PresentationSubgroupMtc</code> (<a href="chap48.html#X80BA10F780EAE68E"><span class="RefLink">48.2-4</span></a>).</p>
 
@@ -1197,7 +1197,7 @@ v = a*t*a
 
 </dd>
 <dt><strong class="Mark"><code class="code">expandLimit</code>:</strong></dt>
-<dd><p>Whenever the routine for eliminating more than 1 generators is called for a presentation <var class="Arg">P</var> by the <code class="func">TzEliminate</code> (<a href="chap48.html#X85989AF886EC2BF6"><span class="RefLink">48.7-1</span></a>) command or the elimination phase of the <code class="func">TzGo</code> (<a href="chap48.html#X7C4A30328224C466"><span class="RefLink">48.6-1</span></a>) command, then it saves the given total length of the relators, and subsequently it checks the current total length against its value before each elimination. If the total length has increased to more than <code class="code">expandLimit</code> per cent of its original value, then the routine returns instead of eliminating another generator. Hence you may use the <code class="code">expandLimit</code> parameter as a break criterion for the <code class="func">TzGo</code> (<a href="chap48.html#X7C4A30328224C466"><span class="RefLink">48.6-1</span></a>) command. The default value of <code class="code">expandLimit</code> is 150.</p>
+<dd><p>Whenever the routine for eliminating more than 1 generator is called for a presentation <var class="Arg">P</var> by the <code class="func">TzEliminate</code> (<a href="chap48.html#X85989AF886EC2BF6"><span class="RefLink">48.7-1</span></a>) command or the elimination phase of the <code class="func">TzGo</code> (<a href="chap48.html#X7C4A30328224C466"><span class="RefLink">48.6-1</span></a>) command, then it saves the given total length of the relators, and subsequently it checks the current total length against its value before each elimination. If the total length has increased to more than <code class="code">expandLimit</code> per cent of its original value, then the routine returns instead of eliminating another generator. Hence you may use the <code class="code">expandLimit</code> parameter as a break criterion for the <code class="func">TzGo</code> (<a href="chap48.html#X7C4A30328224C466"><span class="RefLink">48.6-1</span></a>) command. The default value of <code class="code">expandLimit</code> is 150.</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">generatorsLimit</code>:</strong></dt>

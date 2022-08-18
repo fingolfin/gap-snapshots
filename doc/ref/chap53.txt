@@ -308,9 +308,8 @@
   [1X53.2-8 IdentityTransformation[101X
   
   [33X[1;0Y[29X[2XIdentityTransformation[102X [32X global variable[133X
-  [6XReturns:[106X  [33X[0;10YThe identity transformation.[133X
   
-  [33X[0;0YReturns the identity transformation, which has degree [10X0[110X.[133X
+  [33X[0;0YThis variable is bound to the identity transformation, which has degree [10X0[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XIdentityTransformation;[127X[104X
@@ -456,45 +455,64 @@
   
   [1X53.4 [33X[0;0YOperators for transformations[133X[101X
   
-  [8X[10X[3Xi[103X[8X[10X ^ [3Xf[103X[8X[10X[110X[8X[108X
-        [33X[0;6Yreturns  the  image of the positive integer [3Xi[103X under the transformation
-        [3Xf[103X.[133X
+  [1X53.4-1 \^[101X
   
-  [8X[10X[3Xf[103X[8X[10X ^ [3Xg[103X[8X[10X[110X[8X[108X
-        [33X[0;6Yreturns  [10X[3Xg[103X[10X  ^  -1  *  [3Xf[103X[10X  *  [3Xg[103X[10X[110X  when  [3Xf[103X  is a transformation and [3Xg[103X is a
-        permutation [2X\^[102X ([14X31.12-1[114X). This operation requires essentially the same
-        number  of  steps  as  multiplying  a transformation by a permutation,
-        which  is  approximately  one  third  of  the number required to first
-        invert [3Xg[103X, take the product with [3Xf[103X, and then the product with [3Xg[103X.[133X
+  [33X[1;0Y[29X[2X\^[102X( [3Xi[103X, [3Xf[103X ) [32X method[133X
   
-  [8X[10X[3Xf[103X[8X[10X * [3Xg[103X[8X[10X[110X[8X[108X
-        [33X[0;6Yreturns the composition of [3Xf[103X and [3Xg[103X when [3Xf[103X and [3Xg[103X are transformations or
-        permutations.  The  product  of  a permutation and a transformation is
-        returned as a transformation.[133X
+  [33X[0;0Y[10X[3Xi[103X[10X  ^  [3Xf[103X[10X[110X returns the image of the positive integer [3Xi[103X under the transformation
+  [3Xf[103X.[133X
   
-  [8X[10X[3Xf[103X[8X[10X / [3Xg[103X[8X[10X[110X[8X[108X
-        [33X[0;6Yreturns  [10X[3Xf[103X[10X * [3Xg[103X[10X ^ -1[110X when [3Xf[103X is a transformation and [3Xg[103X is a permutation.
-        This  operation  requires  essentially  the  same  number  of steps as
-        multiplying  a transformation by a permutation, which is approximately
-        half  the  number required to first invert [3Xg[103X and then take the product
-        with [3Xf[103X.[133X
+  [1X53.4-2 \^[101X
   
-  [8X[10XLQUO( [3Xg[103X[8X[10X, [3Xf[103X[8X[10X )[110X[8X[108X
-        [33X[0;6Yreturns  [10X[3Xg[103X[10X ^ -1 * [3Xf[103X[10X[110X when [3Xf[103X is a transformation and [3Xg[103X is a permutation.
-        This   operation   uses  essentially  the  same  number  of  steps  as
-        multiplying  a transformation by a permutation, which is approximately
-        half  the  number required to first invert [3Xg[103X and then take the product
-        with [3Xf[103X.[133X
+  [33X[1;0Y[29X[2X\^[102X( [3Xf[103X, [3Xg[103X ) [32X method[133X
   
-  [8X[10X[3Xf[103X[8X[10X < [3Xg[103X[8X[10X[110X[8X[108X
-        [33X[0;6Yreturns [9Xtrue[109X if the image list of [3Xf[103X is lexicographically less than the
-        image list of [3Xg[103X and [9Xfalse[109X if it is not.[133X
+  [33X[0;0Y[10X[3Xf[103X[10X  ^  [3Xg[103X[10X[110X  returns  [10X[3Xg[103X[10X  ^  -1  *  [3Xf[103X[10X  *  [3Xg[103X[10X[110X when [3Xf[103X is a transformation and [3Xg[103X is a
+  permutation  [2X\^[102X  ([14X31.12-1[114X).  This  operation  requires  essentially the same
+  number  of  steps as multiplying a transformation by a permutation, which is
+  approximately  one  third of the number required to first invert [3Xg[103X, take the
+  product with [3Xf[103X, and then the product with [3Xg[103X.[133X
   
-  [8X[10X[3Xf[103X[8X[10X = [3Xg[103X[8X[10X[110X[8X[108X
-        [33X[0;6Yreturns  [9Xtrue[109X  if the transformation [3Xf[103X equals the transformation [3Xg[103X and
-        returns [9Xfalse[109X if it does not.[133X
+  [1X53.4-3 \*[101X
   
-  [1X53.4-1 PermLeftQuoTransformation[101X
+  [33X[1;0Y[29X[2X\*[102X( [3Xf[103X, [3Xg[103X ) [32X method[133X
+  
+  [33X[0;0Y[10X[3Xf[103X[10X * [3Xg[103X[10X[110X returns the composition of [3Xf[103X and [3Xg[103X when [3Xf[103X and [3Xg[103X are transformations or
+  permutations.  The product of a permutation and a transformation is returned
+  as a transformation.[133X
+  
+  [1X53.4-4 \/[101X
+  
+  [33X[1;0Y[29X[2X\/[102X( [3Xf[103X, [3Xg[103X ) [32X method[133X
+  
+  [33X[0;0Y[10X[3Xf[103X[10X  / [3Xg[103X[10X[110X returns [10X[3Xf[103X[10X * [3Xg[103X[10X ^ -1[110X when [3Xf[103X is a transformation and [3Xg[103X is a permutation.
+  This  operation requires essentially the same number of steps as multiplying
+  a  transformation  by  a permutation, which is approximately half the number
+  required to first invert [3Xg[103X and then take the product with [3Xf[103X.[133X
+  
+  [1X53.4-5 LeftQuotient[101X
+  
+  [33X[1;0Y[29X[2XLeftQuotient[102X( [3Xg[103X, [3Xf[103X ) [32X method[133X
+  
+  [33X[0;0Yreturns  [10X[3Xg[103X[10X  ^ -1 * [3Xf[103X[10X[110X when [3Xf[103X is a transformation and [3Xg[103X is a permutation. This
+  operation  uses  essentially  the  same  number  of  steps  as multiplying a
+  transformation  by  a  permutation,  which  is approximately half the number
+  required to first invert [3Xg[103X and then take the product with [3Xf[103X.[133X
+  
+  [1X53.4-6 \<[101X
+  
+  [33X[1;0Y[29X[2X\<[102X( [3Xi[103X, [3Xf[103X ) [32X method[133X
+  
+  [33X[0;0Y[10X[3Xf[103X[10X < [3Xg[103X[10X[110X returns [9Xtrue[109X if the image list of [3Xf[103X is lexicographically less than the
+  image list of [3Xg[103X and [9Xfalse[109X if it is not.[133X
+  
+  [1X53.4-7 \=[101X
+  
+  [33X[1;0Y[29X[2X\=[102X( [3Xf[103X, [3Xg[103X ) [32X method[133X
+  
+  [33X[0;0Y[10X[3Xf[103X[10X  =  [3Xg[103X[10X[110X returns [9Xtrue[109X if the transformation [3Xf[103X equals the transformation [3Xg[103X and
+  returns [9Xfalse[109X if it does not.[133X
+  
+  [1X53.4-8 PermLeftQuoTransformation[101X
   
   [33X[1;0Y[29X[2XPermLeftQuoTransformation[102X( [3Xf[103X, [3Xg[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XPermLeftQuoTransformationNC[102X( [3Xf[103X, [3Xg[103X ) [32X function[133X
@@ -516,7 +534,7 @@
     [4X[28X(1,7,6)[128X[104X
   [4X[32X[104X
   
-  [1X53.4-2 IsInjectiveListTrans[101X
+  [1X53.4-9 IsInjectiveListTrans[101X
   
   [33X[1;0Y[29X[2XIsInjectiveListTrans[102X( [3Xlist[103X, [3Xobj[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
@@ -542,7 +560,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X53.4-3 ComponentTransformationInt[101X
+  [1X53.4-10 ComponentTransformationInt[101X
   
   [33X[1;0Y[29X[2XComponentTransformationInt[102X( [3Xf[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA list of positive integers.[133X
@@ -562,7 +580,7 @@
     [4X[28X[ 5, 7, 8, 3 ][128X[104X
   [4X[32X[104X
   
-  [1X53.4-4 PreImagesOfTransformation[101X
+  [1X53.4-11 PreImagesOfTransformation[101X
   
   [33X[1;0Y[29X[2XPreImagesOfTransformation[102X( [3Xf[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA set of positive integers.[133X

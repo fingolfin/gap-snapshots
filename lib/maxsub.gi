@@ -106,7 +106,7 @@ function( G, fampcgs,pcgs,fphom,words,wordgens,wordimgs)
       #z:=Size(Group(wordimgs,()))*Product(RelativeOrders(reps));
       reps:=SubgroupByFittingFreeData( G, ggens, wordimgs,reps);
       #SetSize(reps,z);
-#if IsSubset(reps,RadicalGroup(G)) then Error("radicalA");fi;
+#if IsSubset(reps,SolvableRadical(G)) then Error("radicalA");fi;
       reps!.classsize:=Size(ocr.oneCoboundaries);
       Add(cls,reps);
     od;
@@ -311,7 +311,7 @@ BindGlobal("MaximalSubgroupClassesSol",function(G)
 	  K:=Concatenation(spec{index},modu);
 	  K:=InducedPcgsByGenerators(ff.pcgs,K);
 	  K:=SubgroupByFittingFreeData(G,gensK,mgi[2]{sel},K);
-  #if IsSubset(K,RadicalGroup(G)) then Error("radicalB");fi;
+  #if IsSubset(K,SolvableRadical(G)) then Error("radicalB");fi;
 	  #cl := ConjugacyClassSubgroups( G, K );
 	  #SetSize( cl, p^(Length(pcgsF)-Length(modu)) );
 	  #Add( max, cl );
@@ -336,10 +336,10 @@ local m,f,i;
   i:=HasIsSolvableGroup(G); # remember if the group knew about its solvability
   if IsTrivial(G) then
     return G;
-  elif IsTrivial(RadicalGroup(G)) then
+  elif IsTrivial(SolvableRadical(G)) then
     return TrivialSubgroup(G);
   fi;
-  f:=RadicalGroup(G);
+  f:=SolvableRadical(G);
 
   # computing the radical also determines if the group is solvable; if
   # it is, and if solvability was not known before, redispatch, to give
@@ -540,9 +540,9 @@ function(G)
   return MaxesByLattice(G);
 end);
 
-InstallMethod(MaxesAlmostSimple,"table of marks and linear",true,[IsGroup],0,
+InstallMethod(MaxesAlmostSimple,"table of marks and classical",true,[IsGroup],0,
 function(G)
-local m,id,epi,H;
+local m,id,epi,H,ids,ft;
 
   # does the table of marks have it?
   m:=TomDataMaxesAlmostSimple(G);
@@ -551,17 +551,33 @@ local m,id,epi,H;
   if IsNonabelianSimpleGroup(G) then 
     # following is stopgap for L
     id:=DataAboutSimpleGroup(G);
-    if id.idSimple.series="A" then
+    ids:=id.idSimple;
+    if ids.series="A" then
       Info(InfoPerformance,1,"Alternating recognition needed!");
-      H:=AlternatingGroup(id.idSimple.parameter);
+      H:=AlternatingGroup(ids.parameter);
       m:=MaximalSubgroupClassReps(H); # library, natural
       epi:=IsomorphismGroups(G,H);
       m:=List(m,x->PreImage(epi,x));
       return m;
-    elif id.idSimple.series="L" then
-      m:=ClassicalMaximals("L",id.idSimple.parameter[1],id.idSimple.parameter[2]);
+    elif IsBound(ids.parameter) and IsList(ids.parameter) 
+      and Length(ids.parameter)=2 and ForAll(ids.parameter,IsInt) then
+
+      # O(odd,2) is stored as SP(odd-1,2)
+      if ids.series="B" and ids.parameter[2]=2 then
+        ids:=rec(name:=ids.name,parameter:=ids.parameter,series:="C",
+        shortname:=ids.shortname);
+        ft:=ids;
+      else 
+        ft:=fail;
+      fi;
+
+      # ClassicalMaximals will fail if it can't find
+      m:=ClassicalMaximals(ids.series,
+        ids.parameter[1],ids.parameter[2]);
       if m<>fail then
-	epi:=EpimorphismFromClassical(G:classicepiuseiso:=true);
+	epi:=EpimorphismFromClassical(G:classicepiuseiso:=true,
+          forcetype:=ft,
+          usemaximals:=false);
 	if epi<>fail then
 	  m:=List(m,x->SubgroupNC(Range(epi),
 	      List(GeneratorsOfGroup(x),y->ImageElm(epi,y))));
@@ -811,7 +827,6 @@ local G,types,ff,maxes,lmax,q,d,dorb,dorbt,i,dorbc,dorba,dn,act,comb,smax,soc,
   a1emb,a2emb,anew,wnew,e1,e2,emb,a1,a2,mm;
 
   G:=arg[1];
-  TryMaxSubgroupTainter(G);
 
   # which kinds of maxes do we want to get
   if Length(arg)>1 then
@@ -827,7 +842,7 @@ local G,types,ff,maxes,lmax,q,d,dorb,dorbt,i,dorbc,dorba,dn,act,comb,smax,soc,
   od;
 
   ff:=FittingFreeLiftSetup(G);
-  if Size(RadicalGroup(Image(ff.factorhom)))>1 then
+  if Size(SolvableRadical(Image(ff.factorhom)))>1 then
     # we can't use an inherited setup
     q:=Size(G);
     G:=Group(GeneratorsOfGroup(G));
@@ -984,7 +999,7 @@ for mm in lmax do mm!.type:="4a";od;
   for i in maxes do
     a2:=PreImage(ff.factorhom,i);
     if d then
-      SetRadicalGroup(a2,PreImage(ff.factorhom,RadicalGroup(i)));
+      SetSolvableRadical(a2,PreImage(ff.factorhom,SolvableRadical(i)));
     fi;
     Add(lmax,a2);
   od;
@@ -999,8 +1014,11 @@ end);
 InstallMethod(MaximalSubgroupClassReps,"TF method",true,
   [IsGroup and IsFinite and CanComputeFittingFree],OVERRIDENICE,DoMaxesTF);
 
-InstallMethod(TryMaximalSubgroupClassReps,"TF method",true,
-  [IsGroup and IsFinite and CanComputeFittingFree],OVERRIDENICE,DoMaxesTF);
+InstallMethod(CalcMaximalSubgroupClassReps,"TF method",true,
+  [IsGroup and IsFinite and CanComputeFittingFree],OVERRIDENICE,
+function(G)
+  return DoMaxesTF(G);
+end);
 
 #InstallMethod(MaximalSubgroupClassReps,"perm group",true,
 #  [IsPermGroup and IsFinite],0,DoMaxesTF);

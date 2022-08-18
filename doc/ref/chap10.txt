@@ -427,7 +427,10 @@
   line  breaks  and indentation, and [9Xfalse[109X otherwise. For non-text streams, it
   returns  [9Xfalse[109X.  If as argument [3Xstream[103X the string [10X"*stdout*"[110X is given, these
   functions  refer to the formatting status of the standard output (so usually
-  the users terminal screen).[133X
+  the user's terminal screen).[133X
+  
+  [33X[0;0YSimilarly,  the  string  [10X"*errout*"[110X  refers  to the formatting status of the
+  standard error output, which influences how error messages are printed.[133X
   
   [33X[0;0YThese  functions  do  not influence the behaviour of the low level functions
   [2XWriteByte[102X  ([14X10.4-1[114X),  [2XWriteLine[102X  ([14X10.4-2[114X)  or [2XWriteAll[102X ([14X10.4-3[114X) which always
@@ -482,12 +485,13 @@
   [1X10.5-2 OutputTextFile[101X
   
   [33X[1;0Y[29X[2XOutputTextFile[102X( [3Xfilename[103X, [3Xappend[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XOutputGzipFile[102X( [3Xfilename[103X, [3Xappend[103X ) [32X operation[133X
   
   [33X[0;0Y[10XOutputTextFile(  [3Xfilename[103X[10X, [3Xappend[103X[10X )[110X returns an output stream in the category
   [10XIsOutputTextFile[110X  that  writes  received characters to the file [3Xfilename[103X. If
   [3Xappend[103X  is  [9Xfalse[109X,  then  the  file  is  emptied  first,  otherwise received
-  characters  are  added  at the end of the file. If [3Xfilename[103X ends in [10X.gz[110X then
-  the file will be written with gzip compression.[133X
+  characters are added at the end of the file. [10XOutputGzipFile[110X acts identically
+  to [10XOutputTextFile[110X, except it compresses the output with gzip.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27X# use a temporary directory[127X[104X
@@ -627,14 +631,14 @@
   
   [33X[1;0Y[29X[2XInputOutputLocalProcess[102X( [3Xdir[103X, [3Xexecutable[103X, [3Xargs[103X ) [32X function[133X
   
-  [33X[0;0Ystarts up a slave process, whose executable file is [3Xexecutable[103X, with [21Xcommand
+  [33X[0;0Ystarts up a child process, whose executable file is [3Xexecutable[103X, with [21Xcommand
   line[121X  arguments  [3Xargs[103X  in  the  directory [3Xdir[103X. (Suitable choices for [3Xdir[103X are
   [10XDirectoryCurrent()[110X     or     [10XDirectoryTemporary()[110X     (see    Section [14X9.3[114X);
   [10XDirectoryTemporary()[110X  may  be a good choice when [3Xexecutable[103X generates output
   files  that  it  doesn't  itself remove afterwards.) [2XInputOutputLocalProcess[102X
   returns  an  InputOutputStream  object.  Bytes  written  to  this stream are
-  received  by  the slave process as if typed at a terminal on standard input.
-  Bytes  written  to standard output by the slave process can be read from the
+  received  by  the child process as if typed at a terminal on standard input.
+  Bytes  written  to standard output by the child process can be read from the
   stream.[133X
   
   [33X[0;0YWhen  the  stream  is  closed,  the signal SIGTERM is delivered to the child
@@ -802,4 +806,18 @@
   will be printed in the same arrangement as given in this list. If the option
   noheader  is  set  to  true the line with the record field names will not be
   printed.[133X
+  
+  
+  [1X10.12 [33X[0;0YOpening files in the Operating System[133X[101X
+  
+  [33X[0;0YIn  some  situations  it can be desirable to open a file outside of [5XGAP[105X, for
+  example HTML files, PDFs, or pictures.[133X
+  
+  [1X10.12-1 OpenExternal[101X
+  
+  [33X[1;0Y[29X[2XOpenExternal[102X( [3Xfilename[103X ) [32X function[133X
+  
+  [33X[0;0YOpen  the  file  [3Xfilename[103X using the default application for this file in the
+  operating  system. This can be used to open files like HTML and PDF files in
+  the GUI.[133X
   

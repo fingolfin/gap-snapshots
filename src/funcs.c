@@ -29,9 +29,9 @@
 #include "modules.h"
 #include "opers.h"
 #include "plist.h"
-#include "read.h"
 #include "stats.h"
 #include "stringobj.h"
+#include "trycatch.h"
 #include "vars.h"
 
 #ifdef HPCGAP
@@ -39,11 +39,13 @@
 #include "hpc/thread.h"
 #endif
 
+#include <stdlib.h>
+
+
 static ModuleStateOffset FuncsStateOffset = -1;
 
 struct FuncsModuleState {
     Int RecursionDepth;
-    Obj ExecState;
 };
 
 extern inline struct FuncsModuleState *FuncsState(void)
@@ -81,32 +83,6 @@ void SetRecursionDepth(Int depth)
 
 /****************************************************************************
 **
-*F ExecProccallOpts( <call> ). . execute a procedure call with options
-**
-** Calls with options are wrapped in an outer statement, which is
-** handled here
-*/
-
-static Obj PushOptions;
-static Obj PopOptions;
-
-static UInt ExecProccallOpts(Stat call)
-{
-  Obj opts;
-  
-  opts = EVAL_EXPR(READ_STAT(call, 0));
-  CALL_1ARGS(PushOptions, opts);
-
-  EXEC_STAT(READ_STAT(call, 1));
-
-  CALL_0ARGS(PopOptions);
-  
-  return 0;
-}
-
-
-/****************************************************************************
-**
 *F  ExecProccall0args(<call>)  .  execute a procedure call with 0    arguments
 *F  ExecProccall1args(<call>)  .  execute a procedure call with 1    arguments
 *F  ExecProccall2args(<call>)  .  execute a procedure call with 2    arguments
@@ -123,7 +99,10 @@ static UInt ExecProccallOpts(Stat call)
 **  resulting from the procedure call, which in fact is always 0.
 */
 
-static ALWAYS_INLINE Obj EvalOrExecCall(Int ignoreResult, UInt nr, Stat call)
+static Obj PushOptions;
+static Obj PopOptions;
+
+static ALWAYS_INLINE Obj EvalOrExecCall(Int ignoreResult, UInt nr, Stat call, Stat opts)
 {
     Obj func;
     Obj a[6] = { 0 };
@@ -132,7 +111,7 @@ static ALWAYS_INLINE Obj EvalOrExecCall(Int ignoreResult, UInt nr, Stat call)
 
     // evaluate the function
     func = EVAL_EXPR( FUNC_CALL( call ) );
- 
+
     // evaluate the arguments
     if (nr <= 6 && TNUM_OBJ(func) == T_FUNCTION) {
         for (UInt i = 1; i <= nr; i++) {
@@ -148,6 +127,10 @@ static ALWAYS_INLINE Obj EvalOrExecCall(Int ignoreResult, UInt nr, Stat call)
             SET_ELM_PLIST(args, i, argi);
             CHANGED_BAG(args);
         }
+    }
+
+    if (opts) {
+        CALL_1ARGS(PushOptions, EVAL_EXPR(opts));
     }
 
     // call the function
@@ -183,111 +166,114 @@ static ALWAYS_INLINE Obj EvalOrExecCall(Int ignoreResult, UInt nr, Stat call)
         }
     }
     if (STATE(UserHasQuit) || STATE(UserHasQUIT)) {
-        // the function must have called READ() and the user quit from
-        // a break loop inside it
-        ReadEvalError();
+        // the function must have called READ() and the user quit from a break loop
+        // inside it; or a file containing a `QUIT` statement was read at the top
+        // execution level (e.g. in init.g, before the primary REPL starts) after
+        // which the function was called, and now we are returning from that
+        GAP_THROW();
     }
 
-    if (ignoreResult) {
-        return 0;
-    }
-
-    if (result == 0) {
+    if (!ignoreResult && result == 0) {
         ErrorMayQuit("Function Calls: <func> must return a value", 0, 0);
     }
+
+    if (opts) {
+        CALL_0ARGS(PopOptions);
+    }
+
     return result;
 }
 
 
-static UInt ExecProccall0args(Stat call)
-{
-    EvalOrExecCall(1, 0, call);
+/****************************************************************************
+**
+*F  ExecProccallOpts( <call> ). . execute a procedure call with options
+**
+**  Calls with options are wrapped in an outer statement, which is
+**  handled here
+*/
 
-    // return 0 (to indicate that no leave-statement was executed)
-    return 0;
+static ExecStatus ExecProccallOpts(Stat call)
+{
+    Expr opts = READ_STAT(call, 0);
+    Expr real_call = READ_STAT(call, 1);
+    UInt type = TNUM_STAT(real_call);
+    GAP_ASSERT(/*STAT_PROCCALL_0ARGS <= type && */type <= STAT_PROCCALL_XARGS);
+    UInt narg = (type - STAT_PROCCALL_0ARGS);
+
+    EvalOrExecCall(1, narg, real_call, opts);
+
+    return STATUS_END;
 }
 
-static UInt ExecProccall1args(Stat call)
-{
-    EvalOrExecCall(1, 1, call);
 
-    // return 0 (to indicate that no leave-statement was executed)
-    return 0;
+static ExecStatus ExecProccall0args(Stat call)
+{
+    EvalOrExecCall(1, 0, call, 0);
+    return STATUS_END;
 }
 
-static UInt ExecProccall2args(Stat call)
+static ExecStatus ExecProccall1args(Stat call)
 {
-    EvalOrExecCall(1, 2, call);
-
-    // return 0 (to indicate that no leave-statement was executed)
-    return 0;
+    EvalOrExecCall(1, 1, call, 0);
+    return STATUS_END;
 }
 
-static UInt ExecProccall3args(Stat call)
+static ExecStatus ExecProccall2args(Stat call)
 {
-    EvalOrExecCall(1, 3, call);
-
-    // return 0 (to indicate that no leave-statement was executed)
-    return 0;
+    EvalOrExecCall(1, 2, call, 0);
+    return STATUS_END;
 }
 
-static UInt ExecProccall4args(Stat call)
+static ExecStatus ExecProccall3args(Stat call)
 {
-    EvalOrExecCall(1, 4, call);
-
-    // return 0 (to indicate that no leave-statement was executed)
-    return 0;
+    EvalOrExecCall(1, 3, call, 0);
+    return STATUS_END;
 }
 
-static UInt ExecProccall5args(Stat call)
+static ExecStatus ExecProccall4args(Stat call)
 {
-    EvalOrExecCall(1, 5, call);
-
-    // return 0 (to indicate that no leave-statement was executed)
-    return 0;
+    EvalOrExecCall(1, 4, call, 0);
+    return STATUS_END;
 }
 
-static UInt ExecProccall6args(Stat call)
+static ExecStatus ExecProccall5args(Stat call)
 {
-    EvalOrExecCall(1, 6, call);
-
-    // return 0 (to indicate that no leave-statement was executed)
-    return 0;
+    EvalOrExecCall(1, 5, call, 0);
+    return STATUS_END;
 }
 
-static UInt ExecProccallXargs(Stat call)
+static ExecStatus ExecProccall6args(Stat call)
+{
+    EvalOrExecCall(1, 6, call, 0);
+    return STATUS_END;
+}
+
+static ExecStatus ExecProccallXargs(Stat call)
 {
     // pass in 7 (instead of NARG_SIZE_CALL(SIZE_STAT(call)))
     // to allow the compiler to perform better optimizations
     // (as we know that the number of arguments is >= 7 here)
-    EvalOrExecCall(1, 7, call);
-
-    // return 0 (to indicate that no leave-statement was executed)
-    return 0;
+    EvalOrExecCall(1, 7, call, 0);
+    return STATUS_END;
 }
 
 /****************************************************************************
 **
-*F EvalFunccallOpts( <call> ). . evaluate a function call with options
+*F  EvalFunccallOpts( <call> ). . evaluate a function call with options
 **
-** Calls with options are wrapped in an outer statement, which is
-** handled here
+**  Calls with options are wrapped in an outer statement, which is
+**  handled here
 */
 
 static Obj EvalFunccallOpts(Expr call)
 {
-  Obj opts;
-  Obj res;
-
-
-  opts = EVAL_EXPR(READ_STAT(call, 0));
-  CALL_1ARGS(PushOptions, opts);
-
-  res = EVAL_EXPR(READ_STAT(call, 1));
-
-  CALL_0ARGS(PopOptions);
-  
-  return res;
+    Expr opts = READ_STAT(call, 0);
+    Expr real_call = READ_STAT(call, 1);
+    UInt type = TNUM_STAT(real_call);
+    GAP_ASSERT(EXPR_FUNCCALL_0ARGS <= type && type <= EXPR_FUNCCALL_XARGS);
+    UInt narg = (type - EXPR_FUNCCALL_0ARGS);
+    return EvalOrExecCall(0, narg, real_call, opts);
 }
 
 
@@ -309,37 +295,37 @@ static Obj EvalFunccallOpts(Expr call)
 
 static Obj EvalFunccall0args(Expr call)
 {
-    return EvalOrExecCall(0, 0, call);
+    return EvalOrExecCall(0, 0, call, 0);
 }
 
 static Obj EvalFunccall1args(Expr call)
 {
-    return EvalOrExecCall(0, 1, call);
+    return EvalOrExecCall(0, 1, call, 0);
 }
 
 static Obj EvalFunccall2args(Expr call)
 {
-    return EvalOrExecCall(0, 2, call);
+    return EvalOrExecCall(0, 2, call, 0);
 }
 
 static Obj EvalFunccall3args(Expr call)
 {
-    return EvalOrExecCall(0, 3, call);
+    return EvalOrExecCall(0, 3, call, 0);
 }
 
 static Obj EvalFunccall4args(Expr call)
 {
-    return EvalOrExecCall(0, 4, call);
+    return EvalOrExecCall(0, 4, call, 0);
 }
 
 static Obj EvalFunccall5args(Expr call)
 {
-    return EvalOrExecCall(0, 5, call);
+    return EvalOrExecCall(0, 5, call, 0);
 }
 
 static Obj EvalFunccall6args(Expr call)
 {
-    return EvalOrExecCall(0, 6, call);
+    return EvalOrExecCall(0, 6, call, 0);
 }
 
 static Obj EvalFunccallXargs(Expr call)
@@ -347,7 +333,7 @@ static Obj EvalFunccallXargs(Expr call)
     // pass in 7 (instead of NARG_SIZE_CALL(SIZE_EXPR(call)))
     // to allow the compiler to perform better optimizations
     // (as we know that the number of arguments is >= 7 here)
-    return EvalOrExecCall(0, 7, call);
+    return EvalOrExecCall(0, 7, call, 0);
 }
 
 
@@ -374,7 +360,7 @@ static Obj EvalFunccallXargs(Expr call)
 **  'DoExecFunc<i>args' first switches  to a new  values bag.  Then it enters
 **  the arguments <arg1>, <arg2>, and so on in this new  values bag.  Then it
 **  executes  the function body.   After  that it  switches back  to  the old
-**  values bag.  Finally it returns the result from 'STATE(ReturnObjStat)'.
+**  values bag.
 **
 **  Note that these functions are never called directly, they are only called
 **  through the function call mechanism.
@@ -396,9 +382,8 @@ void RecursionDepthTrap( void )
     if (GetRecursionDepth() > 0) {
         recursionDepth = GetRecursionDepth();
         SetRecursionDepth(0);
-        ErrorReturnVoid( "recursion depth trap (%d)",
-                         (Int)recursionDepth, 0L,
-                         "you may 'return;'" );
+        ErrorReturnVoid("recursion depth trap (%d)", (Int)recursionDepth, 0,
+                        "you may 'return;'");
         SetRecursionDepth(recursionDepth);
     }
 }
@@ -451,7 +436,7 @@ static void LockFuncArgs(Obj func, Int narg, const Obj * args)
       }
     }
     if (count && LockObjects(count, objects, mode) < 0)
-      ErrorMayQuit("Cannot lock arguments of atomic function", 0L, 0L );
+      ErrorMayQuit("Cannot lock arguments of atomic function", 0, 0);
     /* Push at least one region so that we can tell that we are inside
      * an atomic function. */
     if (!count)
@@ -473,7 +458,7 @@ static ALWAYS_INLINE Obj DoExecFunc(Obj func, Int narg, const Obj *arg)
 #endif
 
     /* switch to a new values bag                                          */
-    SWITCH_TO_NEW_LVARS( func, narg, NLOC_FUNC(func), oldLvars );
+    oldLvars = SWITCH_TO_NEW_LVARS(func, narg, NLOC_FUNC(func));
 
     /* enter the arguments                                                 */
     for (Int i = 0; i < narg; i++)
@@ -490,7 +475,6 @@ static ALWAYS_INLINE Obj DoExecFunc(Obj func, Int narg, const Obj *arg)
 
     CHECK_RECURSION_AFTER
 
-    /* return the result                                                   */
     return result;
 }
 
@@ -557,7 +541,7 @@ static Obj DoExecFuncXargs(Obj func, Obj args)
 #endif
 
     /* switch to a new values bag                                          */
-    SWITCH_TO_NEW_LVARS( func, len, NLOC_FUNC(func), oldLvars );
+    oldLvars = SWITCH_TO_NEW_LVARS(func, len, NLOC_FUNC(func));
 
     /* enter the arguments                                                 */
     for ( i = 1; i <= len; i++ ) {
@@ -575,7 +559,6 @@ static Obj DoExecFuncXargs(Obj func, Obj args)
 
     CHECK_RECURSION_AFTER
 
-    /* return the result                                                   */
     return result;
 }
 
@@ -604,7 +587,7 @@ static Obj DoPartialUnWrapFunc(Obj func, Obj args)
 #endif
 
     /* switch to a new values bag                                          */
-    SWITCH_TO_NEW_LVARS( func, named+1, NLOC_FUNC(func), oldLvars );
+    oldLvars = SWITCH_TO_NEW_LVARS(func, named + 1, NLOC_FUNC(func));
 
     /* enter the arguments                                                 */
     for (i = 1; i <= named; i++) {
@@ -627,7 +610,6 @@ static Obj DoPartialUnWrapFunc(Obj func, Obj args)
 
     CHECK_RECURSION_AFTER
 
-    /* return the result                                                   */
     return result;
 }
 
@@ -699,7 +681,7 @@ static void PrintFuncExpr(Expr expr)
 {
     /* get the function expression bag                                     */
     Obj fexp = GET_VALUE_FROM_CURRENT_BODY(READ_EXPR(expr, 0));
-    PrintFunction( fexp );
+    PrintObj( fexp );
 }
 
 
@@ -716,13 +698,13 @@ static void PrintFunccallOpts(Expr call);
 static void PrintProccall(Stat call)
 {
     PrintFunccall( call );
-    Pr( ";", 0L, 0L );
+    Pr(";", 0, 0);
 }
 
 static void PrintProccallOpts(Stat call)
 {
     PrintFunccallOpts( call );
-    Pr( ";", 0L, 0L );
+    Pr(";", 0, 0);
 }
 
 
@@ -738,17 +720,17 @@ static void            PrintFunccall1 (
     UInt                i;              /* loop variable                   */
 
     /* print the expression that should evaluate to a function             */
-    Pr("%2>",0L,0L);
+    Pr("%2>", 0, 0);
     PrintExpr( FUNC_CALL(call) );
 
     /* print the opening parenthesis                                       */
-    Pr("%<( %>",0L,0L);
+    Pr("%<( %>", 0, 0);
 
     /* print the expressions that evaluate to the actual arguments         */
     for ( i = 1; i <= NARG_SIZE_CALL( SIZE_EXPR(call) ); i++ ) {
         PrintExpr( ARGI_CALL(call,i) );
         if ( i != NARG_SIZE_CALL( SIZE_EXPR(call) ) ) {
-            Pr("%<, %>",0L,0L);
+            Pr("%<, %>", 0, 0);
         }
     }
 }
@@ -758,40 +740,18 @@ static void PrintFunccall(Expr call)
   PrintFunccall1( call );
   
   /* print the closing parenthesis                                       */
-  Pr(" %2<)",0L,0L);
+  Pr(" %2<)", 0, 0);
 }
 
 
 static void PrintFunccallOpts(Expr call)
 {
     PrintFunccall1(READ_STAT(call, 1));
-    Pr(" :%2> ", 0L, 0L);
+    Pr(" :%2> ", 0, 0);
     PrintRecExpr1(READ_STAT(call, 0));
-    Pr(" %4<)", 0L, 0L);
+    Pr(" %4<)", 0, 0);
 }
 
-  
-
-/****************************************************************************
-**
-*F  ExecBegin() . . . . . . . . . . . . . . . . . . . . .  begin an execution
-*F  ExecEnd(<error>)  . . . . . . . . . . . . . . . . . . .  end an execution
-*/
-
-void ExecBegin(Obj frame)
-{
-    // remember the old execution state
-    PushPlist(FuncsState()->ExecState, STATE(CurrLVars));
-
-    // set up new state
-    SWITCH_TO_OLD_LVARS( frame );
-}
-
-void ExecEnd(UInt error)
-{
-    // switch back to the old state
-    SWITCH_TO_OLD_LVARS(PopPlist(FuncsState()->ExecState));
-}
 
 /****************************************************************************
 **
@@ -801,11 +761,9 @@ void ExecEnd(UInt error)
 
 static Obj FuncSetRecursionTrapInterval(Obj self, Obj interval)
 {
-    while (!IS_INTOBJ(interval) || INT_INTOBJ(interval) <= 5)
-        interval = ErrorReturnObj(
-            "SetRecursionTrapInterval( <interval> ): "
-            "<interval> must be a small integer greater than 5",
-            0L, 0L, "you can replace <interval> via 'return <interval>;'");
+    if (!IS_INTOBJ(interval) || INT_INTOBJ(interval) <= 5)
+        RequireArgument(SELF_NAME, interval,
+                        "must be a small integer greater than 5");
     RecursionTrapInterval = INT_INTOBJ(interval);
     return 0;
 }
@@ -826,8 +784,8 @@ static Obj FuncGetRecursionDepth(Obj self)
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    GVAR_FUNC(SetRecursionTrapInterval, 1, "interval"),
-    GVAR_FUNC(GetRecursionDepth, 0, ""),
+    GVAR_FUNC_1ARGS(SetRecursionTrapInterval, interval),
+    GVAR_FUNC_0ARGS(GetRecursionDepth),
     { 0, 0, 0, 0, 0 }
 
 
@@ -844,7 +802,6 @@ static Int InitLibrary (
     InitGVarFuncsFromTable( GVarFuncs );
 
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -857,11 +814,6 @@ static Int InitKernel (
     StructInitInfo *    module )
 {
     RecursionTrapInterval = 5000;
-
-#if !defined(HPCGAP)
-    /* make the global variable known to Gasman                            */
-    InitGlobalBag( &FuncsState()->ExecState, "src/funcs.c:ExecState" );
-#endif
 
     /* Register the handler for our exported function                      */
     InitHdlrFuncsFromTable( GVarFuncs );
@@ -924,16 +876,13 @@ static Int InitKernel (
     InstallPrintExprFunc( EXPR_FUNCCALL_OPTS  , PrintFunccallOpts);
     InstallPrintExprFunc( EXPR_FUNC      , PrintFuncExpr);
 
-    /* return success                                                      */
     return 0;
 }
 
 static Int InitModuleState(void)
 {
-    FuncsState()->ExecState = NEW_PLIST(T_PLIST_EMPTY, 16);
     FuncsState()->RecursionDepth = 0;
 
-    // return success
     return 0;
 }
 

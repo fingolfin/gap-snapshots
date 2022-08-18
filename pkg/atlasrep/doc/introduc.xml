@@ -185,9 +185,105 @@ can be sent to&nbsp;<Email>sam@math.rwth-aachen.de</Email>.
 <!-- The section title is referenced in index.html. -->
 <Alt Only="HTML"><![CDATA[<a id="sect:news"/>]]></Alt>
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
-<Subsection Label="sect:What's New in Version 2.1?">
+<Subsection Label="sect:What's New in Version 2.1.3?">
 <Heading>What's New in Version &VERSIONNUMBER;?
 (&RELEASEMONTH; &RELEASEYEAR;)</Heading>
+
+The server address for the core part of the database has changed.
+
+<P/>
+
+Additional table of contents files are now available,
+which contain checksums in SHA256 format instead of the checksums
+computed by <Ref Func="CrcFile" BookName="ref"/> and
+<Ref Func="CrcString" BookName="ref"/>.
+Note that the latter values can be interpreted only by &GAP;.
+
+<P/>
+
+For <M>364</M> representations, the corresponding characters have been
+identified and can thus be used for accessing these representations
+with <Ref Func="OneAtlasGeneratingSetInfo"/>,
+see <Ref Func="DisplayAtlasInfo"/>.
+
+</Subsection>
+
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<Subsection Label="sect:What's New in Version 2.1.2?">
+<Heading>What's New in Version 2.1.2? (March 2022)</Heading>
+
+Not much.
+
+<P/>
+
+The release of Version&nbsp;2.1.2 was necessary for technical reasons:
+Now the testfile mentioned in <F>PackageInfo.g</F> exits &GAP; in the end,
+and the external links in the package documentation were corrected
+(the links in version&nbsp;2.1.1 pointed to a wrong directory).
+
+</Subsection>
+
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<Subsection Label="sect:What's New in Version 2.1.1?">
+<Heading>What's New in Version 2.1.1? (February 2022)</Heading>
+
+<List>
+<Item>
+  The new function <Ref Oper="EvaluatePresentation"
+  Label="for a group, a group name (and a number)"/> computes
+  the images of the relators of a presentation
+  (see Section <Ref Subsect="Semi-Presentations and Presentations"/>).
+</Item>
+<Item>
+  The new function <Ref Oper="StandardGeneratorsData"
+  Label="for a group, a group name (and a number)"/> allows one
+  to compute standard generators from given generators,
+  provided a recipe for that task (a <Q>find</Q> straight line program)
+  for the group in question is available.
+</Item>
+<Item>
+  The function <Ref Oper="AtlasGroup" Label="for various arguments"/>
+  sets known information about the group and the representation,
+  such as <Ref BookName="ref" Prop="IsPrimitive"/>.
+  <P/>
+  (Thanks to Steve Linton for suggesting this feature.)
+</Item>
+<Item>
+  The function <Ref Func="ResultOfBBoxProgram"/> now admits an optional
+  argument,
+  which is used as options record in calls to <Ref Func="RunBBoxProgram"/>.
+</Item>
+<Item>
+  The new user preference <C>"AtlasRepJsonFilesAddresses"</C>
+  (see Section <Ref Subsect="subsect:AtlasRepJsonFilesAddresses"/>)
+  allows one to use Json format data files for matrix representations
+  in characteristic zero,
+  which in turn makes it possible to create the matrices over
+  prescribed fields, for example fields returned by
+  <Ref Func="AlgebraicExtension" BookName="ref"/>.
+  The information stored in the table of contents file about the field of
+  entries of the matrix representations has been extended by
+  a &GAP; independent description of this field and the defining polynomial
+  used in the Json format data files.
+</Item>
+<Item>
+  When the value of the user preference <C>"AtlasRepDataDirectory"</C>
+  is an empty string then data files that are fetched from remote servers
+  are read into the &GAP; session without storing the files.
+  (An advantage is that one need not care about where one has permissions
+  for storing files. A disadvantage is of course that one has to fetch
+  a file again whenever it is needed.)
+</Item>
+</List>
+
+</Subsection>
+
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<Subsection Label="sect:What's New in Version 2.1.0?">
+<Heading>What's New in Version 2.1.0? (May 2019)</Heading>
 
 The main differences to earlier versions concern extensions of the
 available data.
@@ -981,6 +1077,13 @@ have been improved.
     Andries Brouwer suggested to add a tutorial
     (see Chapter <Ref Chap="chap:tutorial"/>),
     Klaus Lux suggested several improvements of this chapter.
+</Item>
+<Item>
+    The development of this &GAP; package has been supported
+    by the <URL><Link>https://www.computeralgebra.de/sfb/</Link>
+    <LinkText>SFB-TRR 195
+    <Q>Symbolic Tools in Mathematics and their Applications</Q></LinkText></URL>
+    (from 2017 until 2022).
 </Item>
 </List>
 

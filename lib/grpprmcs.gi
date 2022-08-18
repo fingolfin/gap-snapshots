@@ -39,7 +39,7 @@ end;
 #F  DisplayCompositionSeries( <S> ) . . . . . . . . . . . .  display function
 ##
 InstallGlobalFunction( DisplayCompositionSeries, function( S )
-    local   f,  i;
+    local   f,  i,s;
 
     # ok, we accept groups too
     if IsGroup( S )  then
@@ -53,7 +53,13 @@ InstallGlobalFunction( DisplayCompositionSeries, function( S )
     Print( GroupString( S[1], "G" ), "\n" );
     for i  in [2..Length(S)]  do
       f:=Image(NaturalHomomorphismByNormalSubgroup(S[i-1],S[i]));
-      Print( " | ",IsomorphismTypeInfoFiniteSimpleGroup(f).name,"\n");
+      s:=IsomorphismTypeInfoFiniteSimpleGroup(f);
+      if IsBound(s.shortname) then
+        s:=s.shortname;
+      else
+        s:=s.name;
+      fi;
+      Print( " | ",s,"\n");
       if i < Length(S)  then
 	Print( GroupString( S[i], "S" ), "\n" );
       else
@@ -81,7 +87,7 @@ end );
 ##  The program works for  permutation  groups  of  degree  < 2^20 = 1048576.
 ##  For higher degrees  `IsSimple'  and  `CasesCSPG'  must  be  extended with
 ##  longer lists of primitive  groups  from  extensions  in  Kantor's  tables
-##  (see JSC. 12(1991), pp. 517-526).  It may also be  neccessary  to  modify
+##  (see JSC. 12(1991), pp. 517-526).  It may also be  necessary  to  modify
 ##  `FindNormalCSPG'.
 ##
 ##  A general reference for the algorithm is:
@@ -1539,16 +1545,15 @@ end );
 
 #############################################################################
 ##
-#M  RadicalGroup()  . . . . . . . . . . . . .  radical of a permutation group
+#M  SolvableRadical( <G> )  . . . . . solvable radical of a permutation group
 ##
 ##  the radical is the maximal solvable normal subgroup
 ##  output of routine: the subgroup radical of workgroup
 ##  reference: Luks-Seress
 ##
-InstallMethod( RadicalGroup,
-    " for a permutation group",
-    true,
-    [ IsPermGroup ], 0,
+InstallMethod( SolvableRadical,
+    "for a permutation group",
+    [ IsPermGroup ],
     function(workgroup)
     local   n,          # degree of workgroup
             G,          # a factor group of workgroup
@@ -1604,7 +1609,7 @@ InstallMethod( RadicalGroup,
 	if Length(f)<3 or ForAll(f,i->i[2]=1) then
 	  Info(InfoGroup,1,"solvable kernel size ",f);
 	  # OK, transfer result back
-	  k:=RadicalGroup(Image(hom));
+	  k:=SolvableRadical(Image(hom));
 	  solvable:=PreImage(hom,k);
 	  map:=hom*NaturalHomomorphismByNormalSubgroup(Image(hom),k);
 	  SetKernelOfMultiplicativeGeneralMapping(map,solvable);
@@ -1766,7 +1771,7 @@ InstallMethod( RadicalGroup,
     solvable:=SubgroupNC(workgroup,solvable);
     g:=Group(map,());
     SetSize(g,Index(workgroup,solvable));
-    SetRadicalGroup(g,TrivialSubgroup(g));
+    SetSolvableRadical(g,TrivialSubgroup(g));
     map:=GroupHomomorphismByImagesNC(workgroup,g,
                                      GeneratorsOfGroup(workgroup),map);
     SetKernelOfMultiplicativeGeneralMapping(map,solvable);
@@ -1927,7 +1932,6 @@ end );
 
 #############################################################################
 ##
-
 #F  CentralizerNormalCSPG() . . . . . . . .  centralizer of a normal subgroup
 ##
 ##  computes the centralizer of a NORMAL subgroup N in G.

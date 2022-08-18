@@ -275,7 +275,7 @@ BindGlobal("StartInteractiveThread@", function()
     ThreadInfo@ := threadinfo;
     AcknowledgeHandShake(handshake, threadinfo);
     AtThreadExit(ThreadExit@);
-    THREAD_SESSION();
+    SESSION();
     UnregisterThread@(true);
   end, handshake);
   threadinfo := CompleteHandShake(handshake);
@@ -819,7 +819,7 @@ end);
 
 BindGlobal("CommandQUIT@", function(line)
   TERMINAL_CLOSE();
-  FORCE_QUIT_GAP();
+  ForceQuitGap();
 end);
 
 BindGlobal("InitializeCommands@", function()
@@ -1022,7 +1022,7 @@ end);
 BindGlobal("OutputLoop@", function()
   local packet, threadid, prefix, text, stdout, newlines,
     eol, last_thread, p, last, line, prompt;
-  stdout := OUTPUT_TEXT_FILE("*stdout*", false);
+  stdout := OUTPUT_TEXT_FILE("*stdout*", false, false);
   ControlThread@ := true;
   last_thread := false;
   eol := true;
@@ -1082,12 +1082,12 @@ BindGlobal("MULTI_SESSION", function()
   handshake := StartHandShake();
   ThreadInfo@ := NewThreadInfo@();
   BindGlobal("ControlThreadID@", CreateThread(MainLoop@, ThreadInfo@));
-  THREAD_SESSION();
+  SESSION();
   UnregisterThread@(true);
   CompleteHandShake(ProgramShutdown@);
   PROGRAM_CLEAN_UP();
   TERMINAL_CLOSE();
-  QUIT_GAP();
+  QuitGap();
 end);
 
 BindGlobal("ConsoleUIRegisterCommand", function(name, func)

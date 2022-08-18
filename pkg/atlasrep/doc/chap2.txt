@@ -70,7 +70,7 @@
   [33X[0;0YEach  group  that occurs in this database is specified by a [13Xname[113X, which is a
   string  similar to the name used in the [5XATLAS[105X of Finite Groups [CCN+85]. For
   those groups whose character tables are contained in the [5XGAP[105X Character Table
-  Library [Bre13],   the   names  are  equal  to  the  [2XIdentifier[102X  ([14XReference:
+  Library [Bre22],   the   names  are  equal  to  the  [2XIdentifier[102X  ([14XReference:
   Identifier  for character tables[114X) values of these character tables. Examples
   of  such  names  are [10X"M24"[110X for the Mathieu group [22XM_24[122X, [10X"2.A6"[110X for the double
   cover  of  the alternating group [22XA_6[122X, and [10X"2.A6.2_1"[110X for the double cover of
@@ -496,10 +496,10 @@
   [4X[32X[104X
   
   [33X[0;0YWe  see  that  there  are  six  nontrivial  orbits,  and  we can compute the
-  permutation actions on these orbits directly using [2XAction[102X ([14XReference: Action
-  homomorphisms[114X).  However,  for  larger  examples,  one cannot write down all
-  orbits  on  the  row  space,  so  one  has to use another strategy if one is
-  interested in a particular orbit.[133X
+  permutation  actions  on  these  orbits  directly  using  [2XAction[102X ([14XReference:
+  action[114X).  However,  for larger examples, one cannot write down all orbits on
+  the  row space, so one has to use another strategy if one is interested in a
+  particular orbit.[133X
   
   [33X[0;0YLet  us  assume  that we are interested in the orbit of length [22X11[122X. The point
   stabilizer  is  the  first maximal subgroup of [22XM_11[122X, thus the restriction of
@@ -537,7 +537,7 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xpermgrp:= Group( AtlasGenerators( "M11", 1 ).generators );;[127X[104X
     [4X[25Xgap>[125X [27XPrint( permgrp, "\n" );[127X[104X
-    [4X[28XGroup( [ ( 2,10)( 4,11)( 5, 7)( 8, 9), ( 1, 4, 3, 8)( 2, 5, 6, 9) ] )[128X[104X
+    [4X[28XGroup( [ ( 2,10)( 4,11)( 5, 7)( 8, 9), (1,4,3,8)(2,5,6,9) ] )[128X[104X
     [4X[25Xgap>[125X [27Xpermgrp = act;[127X[104X
     [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27XIsConjugate( SymmetricGroup(11), permgrp, act );[127X[104X

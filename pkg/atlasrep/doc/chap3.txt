@@ -32,7 +32,7 @@
   which are called [13Xthe [5XGAP[105X names[113X of the group in the following.[133X
   
   [33X[0;0YFor  a  group  [22XG[122X, say, whose character table is available in [5XGAP[105X's Character
-  Table  Library  (see  [Bre13]), the admissible names of [22XG[122X are the admissible
+  Table  Library  (see  [Bre22]), the admissible names of [22XG[122X are the admissible
   names  of  this character table. One such name is the [2XIdentifier[102X ([14XReference:
   Identifier for character tables[114X) value of the character table, see [14X'CTblLib:
   Admissible Names for Character Tables in CTblLib'[114X. This name is usually very
@@ -61,7 +61,7 @@
   definitions for each group that occurs in the [5XATLAS[105X of Group Representations
   can be found at[133X
   
-  [33X[0;0Y[7Xhttp://brauer.maths.qmul.ac.uk/Atlas/v3[107X.[133X
+  [33X[0;0Y[7Xhttp://atlas.math.rwth-aachen.de/Atlas/v3[107X.[133X
   
   [33X[0;0YWhen  one specifies the standardization, the [22Xi[122X-th set of standard generators
   is  denoted  by  the  number [22Xi[122X. Note that when more than one set of standard
@@ -245,7 +245,7 @@
   
   [1X3.5-1 DisplayAtlasInfo[101X
   
-  [33X[1;0Y[29X[2XDisplayAtlasInfo[102X( [[3Xlistofnames[103X, ][[3Xstd[103X, ][[3X"contents"[103X, [3Xsources[103X, ][[3X...[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XDisplayAtlasInfo[102X( [[3Xlistofnames[103X][,] [[3Xstd[103X][,] [[3X"contents"[103X, [3Xsources[103X][,] [[3X...[103X] ) [32X function[133X
   [33X[1;0Y[29X[2XDisplayAtlasInfo[102X( [3Xgapname[103X[, [3Xstd[103X][, [3X...[103X] ) [32X function[133X
   
   [33X[0;0YThis  function lists the information available via the [5XAtlasRep[105X package, for
@@ -266,7 +266,9 @@
         [10X"core"[110X   part,   which   means  the  data  from  the  [5XATLAS[105X  of  Group
         Representations,  and  the  [10X"internal"[110X part, which means the data that
         are  distributed  with  the  [5XAtlasRep[105X  package. Other parts can become
-        available by calls to [2XAtlasOfGroupRepresentationsNotifyData[102X ([14X5.1-1[114X).[133X
+        available  by  calls to [2XAtlasOfGroupRepresentationsNotifyData[102X ([14X5.1-1[114X).
+        Note  that the shown numbers of locally available files depend on what
+        has already been downloaded.[133X
   
   [33X[0;0YIn  each  case, the information will be printed to the screen or will be fed
   into   a   pager,   see   Section  [14X4.2-12[114X.  An  interactive  alternative  to
@@ -364,12 +366,13 @@
         considered,[133X
   
   [8X[10XIdentifier[110X[8X and [22Xid[122X[108X
-        [33X[0;6Yrestrict  to  representations with [10Xidentifier[110X component in the list [22Xid[122X
-        (note  that this component is itself a list, entering this list is not
+        [33X[0;6Yrestrict  to  representations  with  [10Xid[110X component in the list [22Xid[122X (note
+        that  this  component  is  itself  a  list,  entering this list is not
         admissible), or satisfying the function [22Xid[122X,[133X
   
-  [8X[10XIsPermGroup[110X[8X and [9Xtrue[109X[108X
-        [33X[0;6Yrestrict to permutation representations,[133X
+  [8X[10XIsPermGroup[110X[8X and [9Xtrue[109X (or [9Xfalse[109X)[108X
+        [33X[0;6Yrestrict  to  permutation  representations (or to representations that
+        are not permutation representations),[133X
   
   [8X[10XNrMovedPoints[110X[8X and [22Xn[122X[108X
         [33X[0;6Yfor  a positive integer, a list of positive integers, or a property [22Xn[122X,
@@ -408,8 +411,9 @@
         permutation   representations   for  which  this  information  is  not
         available,[133X
   
-  [8X[10XIsMatrixGroup[110X[8X and [9Xtrue[109X[108X
-        [33X[0;6Yrestrict to matrix representations,[133X
+  [8X[10XIsMatrixGroup[110X[8X and [9Xtrue[109X (or [9Xfalse[109X)[108X
+        [33X[0;6Yrestrict to matrix representations (or to representations that are not
+        matrix representations),[133X
   
   [8X[10XCharacteristic[110X[8X and [22Xp[122X[108X
         [33X[0;6Yfor  a  prime  integer,  a  list  of  prime integers, or a property [22Xp[122X,
@@ -457,11 +461,14 @@
         [33X[0;6Yfor  a  positive  integer [22Xn[122X, restrict to representations for which the
         character  is  known  to  be  the  [22Xn[122X-th irreducible character in [5XGAP[105X's
         library   character   table   of   the   group  in  question;  if  the
-        characteristic is not specified then it defaults to zero, and[133X
+        characteristic is not specified then it defaults to zero,[133X
   
   [8X[10XIsStraightLineProgram[110X[8X and [9Xtrue[109X[108X
         [33X[0;6Yrestrict  to  straight  line  programs,  straight  line decisions (see
-        Section [14X6.1[114X), and black box programs (see Section [14X6.2[114X).[133X
+        Section [14X6.1[114X), and black box programs (see Section [14X6.2[114X), and[133X
+  
+  [8X[10XIsStraightLineProgram[110X[8X and [9Xfalse[109X[108X
+        [33X[0;6Yrestrict to representations.[133X
   
   [33X[0;0YNote  that  the  above  conditions  refer  only  to  the information that is
   available  without  accessing the representations. For example, if it is not
@@ -501,7 +508,7 @@
   [1X3.5-2 [33X[0;0YExamples for DisplayAtlasInfo[133X[101X
   
   [33X[0;0YHere  are  some examples how [2XDisplayAtlasInfo[102X ([14X3.5-1[114X) can be called, and how
-  it output can be interpreted.[133X
+  its output can be interpreted.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XDisplayAtlasInfo( "contents" );[127X[104X
@@ -511,7 +518,7 @@
     [4X[28X[128X[104X
     [4X[28XID       | address, version, files                        [128X[104X
     [4X[28X---------+------------------------------------------------[128X[104X
-    [4X[28Xcore     | http://brauer.maths.qmul.ac.uk/Atlas/,         [128X[104X
+    [4X[28Xcore     | http://atlas.math.rwth-aachen.de/Atlas/,[128X[104X
     [4X[28X         | version 2019-04-08,                            [128X[104X
     [4X[28X         | 10586 files locally available.                 [128X[104X
     [4X[28X---------+------------------------------------------------[128X[104X
@@ -832,8 +839,9 @@
     [4X[28X         ], [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 1, 0, 0 ] ] ], [128X[104X
     [4X[28X  groupname := "A5", id := "a", [128X[104X
     [4X[28X  identifier := [ "A5", "A5G1-Ar3aB0.g", 1, 3 ], [128X[104X
-    [4X[28X  repname := "A5G1-Ar3aB0", repnr := 17, ring := NF(5,[ 1, 4 ]), [128X[104X
-    [4X[28X  size := 60, standardization := 1, type := "matalg" )[128X[104X
+    [4X[28X  polynomial := [ -1, 1, 1 ], repname := "A5G1-Ar3aB0", repnr := 17, [128X[104X
+    [4X[28X  ring := NF(5,[ 1, 4 ]), size := 60, standardization := 1, [128X[104X
+    [4X[28X  type := "matalg" )[128X[104X
   [4X[32X[104X
   
   [33X[0;0YEach of the above pairs of elements generates a group isomorphic to [22XA_5[122X.[133X
@@ -1081,7 +1089,7 @@
   
   [1X3.5-6 OneAtlasGeneratingSetInfo[101X
   
-  [33X[1;0Y[29X[2XOneAtlasGeneratingSetInfo[102X( [[3Xgapname[103X, ][[3Xstd[103X, ][[3X...[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XOneAtlasGeneratingSetInfo[102X( [[3Xgapname[103X][,] [[3Xstd[103X][,] [[3X...[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya   record   describing   a   representation  that  satisfies  the
             conditions, or [9Xfail[109X.[133X
   
@@ -1089,10 +1097,19 @@
   say.  If  the  database  contains at least one representation for [22XG[122X with the
   required  properties then [2XOneAtlasGeneratingSetInfo[102X returns a record [22Xr[122X whose
   components  are the same as those of the records returned by [2XAtlasGenerators[102X
-  ([14X3.5-3[114X),  except  that  the  component  [10Xgenerators[110X  is  not  contained;  the
-  component  [10Xidentifier[110X  of [22Xr[122X can be used as input for [2XAtlasGenerators[102X ([14X3.5-3[114X)
-  in  order to fetch the generators. If no representation satisfying the given
-  conditions is available then [9Xfail[109X is returned.[133X
+  ([14X3.5-3[114X),  except  that  the  component  [10Xgenerators[110X  is not contained, and an
+  additional component [10XgivenRing[110X is present if [10XRing[110X is one of the arguments in
+  the function call.[133X
+  
+  [33X[0;0YThe  information  in  [10XgivenRing[110X  can be used later to construct the matrices
+  over  the  prescribed  ring. Note that this ring may be for example a domain
+  constructed  with [2XAlgebraicExtension[102X ([14XReference: AlgebraicExtension[114X) instead
+  of  a  field  of  cyclotomics  or  of  a  finite  field  constructed with [2XGF[102X
+  ([14XReference: GF for field size[114X).[133X
+  
+  [33X[0;0YThe  component  [10Xidentifier[110X  of  [22Xr[122X  can  be used as input for [2XAtlasGenerators[102X
+  ([14X3.5-3[114X)  in  order  to fetch the generators. If no representation satisfying
+  the given conditions is available then [9Xfail[109X is returned.[133X
   
   [33X[0;0YIf the argument [3Xstd[103X is given then it must be a positive integer or a list of
   positive  integers,  denoting the sets of standard generators w. r. t. which
@@ -1169,7 +1186,8 @@
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xinfo = OneAtlasGeneratingSetInfo( "A5", Characteristic, 2 );[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xinfo = OneAtlasGeneratingSetInfo( "A5", Ring, GF(2) );[127X[104X
+    [4X[25Xgap>[125X [27Xinfo2:= OneAtlasGeneratingSetInfo( "A5", Ring, GF(2) );;[127X[104X
+    [4X[25Xgap>[125X [27Xinfo.identifier = info2.identifier; [127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XOneAtlasGeneratingSetInfo( "A5", Characteristic, [2,5], Dimension, 2 );[127X[104X
     [4X[28Xrec( charactername := "2a", constituents := [ 2 ], contents := "core",[128X[104X
@@ -1200,33 +1218,43 @@
     [4X[28X  standardization := 1, type := "matint" )[128X[104X
     [4X[25Xgap>[125X [27Xinfo = OneAtlasGeneratingSetInfo( "A5", Ring, Integers );[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xinfo = OneAtlasGeneratingSetInfo( "A5", Ring, CF(37) );[127X[104X
-    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xinfo2:= OneAtlasGeneratingSetInfo( "A5", Ring, CF(37) );;[127X[104X
+    [4X[25Xgap>[125X [27Xinfo = info2;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XDifference( RecNames( info2 ), RecNames( info ) );[127X[104X
+    [4X[28X[ "givenRing" ][128X[104X
+    [4X[25Xgap>[125X [27Xinfo2.givenRing;[127X[104X
+    [4X[28XCF(37)[128X[104X
     [4X[25Xgap>[125X [27XOneAtlasGeneratingSetInfo( "A5", Ring, Integers mod 77 );[127X[104X
     [4X[28Xfail[128X[104X
     [4X[25Xgap>[125X [27Xinfo:= OneAtlasGeneratingSetInfo( "A5", Ring, CF(5), Dimension, 3 );[127X[104X
     [4X[28Xrec( charactername := "3a", constituents := [ 2 ], contents := "core",[128X[104X
-    [4X[28X  dim := 3, groupname := "A5", id := "a", [128X[104X
+    [4X[28X  dim := 3, givenRing := CF(5), groupname := "A5", id := "a", [128X[104X
     [4X[28X  identifier := [ "A5", "A5G1-Ar3aB0.g", 1, 3 ], [128X[104X
-    [4X[28X  repname := "A5G1-Ar3aB0", repnr := 17, ring := NF(5,[ 1, 4 ]), [128X[104X
-    [4X[28X  size := 60, standardization := 1, type := "matalg" )[128X[104X
-    [4X[25Xgap>[125X [27Xgens:= AtlasGenerators( info.identifier );[127X[104X
+    [4X[28X  polynomial := [ -1, 1, 1 ], repname := "A5G1-Ar3aB0", repnr := 17, [128X[104X
+    [4X[28X  ring := NF(5,[ 1, 4 ]), size := 60, standardization := 1, [128X[104X
+    [4X[28X  type := "matalg" )[128X[104X
+    [4X[25Xgap>[125X [27Xgens:= AtlasGenerators( info );[127X[104X
     [4X[28Xrec( charactername := "3a", constituents := [ 2 ], contents := "core",[128X[104X
     [4X[28X  dim := 3, [128X[104X
     [4X[28X  generators := [128X[104X
     [4X[28X    [ [ [ -1, 0, 0 ], [ 0, -1, 0 ], [ -E(5)-E(5)^4, -E(5)-E(5)^4, 1 ] [128X[104X
     [4X[28X         ], [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 1, 0, 0 ] ] ], [128X[104X
-    [4X[28X  groupname := "A5", id := "a", [128X[104X
+    [4X[28X  givenRing := CF(5), groupname := "A5", id := "a", [128X[104X
     [4X[28X  identifier := [ "A5", "A5G1-Ar3aB0.g", 1, 3 ], [128X[104X
-    [4X[28X  repname := "A5G1-Ar3aB0", repnr := 17, ring := NF(5,[ 1, 4 ]), [128X[104X
-    [4X[28X  size := 60, standardization := 1, type := "matalg" )[128X[104X
+    [4X[28X  polynomial := [ -1, 1, 1 ], repname := "A5G1-Ar3aB0", repnr := 17, [128X[104X
+    [4X[28X  ring := NF(5,[ 1, 4 ]), size := 60, standardization := 1, [128X[104X
+    [4X[28X  type := "matalg" )[128X[104X
+    [4X[25Xgap>[125X [27Xgens2:= AtlasGenerators( info.identifier );;[127X[104X
+    [4X[25Xgap>[125X [27XDifference( RecNames( gens ), RecNames( gens2 ) );[127X[104X
+    [4X[28X[ "givenRing" ][128X[104X
     [4X[25Xgap>[125X [27XOneAtlasGeneratingSetInfo( "A5", Ring, GF(17) );[127X[104X
     [4X[28Xfail[128X[104X
   [4X[32X[104X
   
   [1X3.5-7 AllAtlasGeneratingSetInfos[101X
   
-  [33X[1;0Y[29X[2XAllAtlasGeneratingSetInfos[102X( [[3Xgapname[103X, ][[3Xstd[103X, ][[3X...[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XAllAtlasGeneratingSetInfos[102X( [[3Xgapname[103X][,] [[3Xstd[103X][,] [[3X...[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ythe  list  of  all records describing representations that satisfy
             the conditions.[133X
   
@@ -1269,7 +1297,7 @@
   
   [1X3.5-8 [33X[0;0YAtlasGroup[133X[101X
   
-  [33X[1;0Y[29X[2XAtlasGroup[102X( [[3Xgapname[103X, ][[3Xstd[103X, ][[3X...[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XAtlasGroup[102X( [[3Xgapname[103X][,] [[3Xstd[103X][,] [[3X...[103X] ) [32X function[133X
   [33X[1;0Y[29X[2XAtlasGroup[102X( [3Xidentifier[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya group that satisfies the conditions, or [9Xfail[109X.[133X
   
@@ -1418,11 +1446,197 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XAtlasRepInfoRecord( "A5" );[127X[104X
-    [4X[28Xrec( name := "A5", nrMaxes := 3, size := 60, sizesMaxes := [ 12, 10, 6 ], [128X[104X
+    [4X[28Xrec( name := "A5", nrMaxes := 3, size := 60, [128X[104X
+    [4X[28X  sizesMaxes := [ 12, 10, 6 ], [128X[104X
     [4X[28X  slpMaxes := [ [ 1 .. 3 ], [ [ 1 ], [ 1 ], [ 1 ] ] ], [128X[104X
     [4X[28X  structureMaxes := [ "A4", "D10", "S3" ] )[128X[104X
     [4X[25Xgap>[125X [27XAtlasRepInfoRecord( "J5" );[127X[104X
     [4X[28Xrec(  )[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.5-11 [33X[0;0YEvaluatePresentation[133X[101X
+  
+  [33X[1;0Y[29X[2XEvaluatePresentation[102X( [3XG[103X, [3Xgapname[103X[, [3Xstd[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XEvaluatePresentation[102X( [3Xgens[103X, [3Xgapname[103X[, [3Xstd[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list of group elements or [9Xfail[109X.[133X
+  
+  [33X[0;0YThe  first  argument  must  be  either  a  group  [3XG[103X  or a list [3Xgens[103X of group
+  generators,  and  [3Xgapname[103X  must  be  a  string  that  is  a  [5XGAP[105X  name  (see
+  Section [14X3.2[114X) of a group [22XH[122X, say. The optional argument [3Xstd[103X, if given, must be
+  a  positive  integer  that denotes a standardization of generators of [22XH[122X, the
+  default is [22X1[122X.[133X
+  
+  [33X[0;0Y[2XEvaluatePresentation[102X  returns  [9Xfail[109X  if  no  presentation for [22XH[122X w. r. t. the
+  standardization  [3Xstd[103X  is  stored  in the database, and otherwise returns the
+  list  of  results of evaluating the relators of a presentation for [22XH[122X at [3Xgens[103X
+  or   the   [2XGeneratorsOfGroup[102X  ([14XReference:  GeneratorsOfGroup[114X)  value  of  [3XG[103X,
+  respectively.  (An  error  is  signalled  if the number of generators is not
+  equal to the number of inputs of the presentation.)[133X
+  
+  [33X[0;0YThe  result  can  be used as follows. Let [22XN[122X be the normal closure of the the
+  result  in  [3XG[103X.  The  factor  group  [3XG[103X[22X/N[122X  is  an  epimorphic  image  of [22XH[122X. In
+  particular,  if  all  entries of the result have order [22X1[122X then [3XG[103X itself is an
+  epimorphic  image  of  [22XH[122X.  Moreover,  an epimorphism is given by mapping the
+  [3Xstd[103X-th  standard  generators of [22XH[122X to the [22XN[122X-cosets of the given generators of
+  [3XG[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:= MathieuGroup( 12 );;[127X[104X
+    [4X[25Xgap>[125X [27Xgens:= GeneratorsOfGroup( g );;  # switch to 2 generators[127X[104X
+    [4X[25Xgap>[125X [27Xg:= Group( gens[1] * gens[3], gens[2] * gens[3] );;[127X[104X
+    [4X[25Xgap>[125X [27XEvaluatePresentation( g, "J0" );  # no pres. for group "J0"[127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27Xrelimgs:= EvaluatePresentation( g, "M11" );;[127X[104X
+    [4X[25Xgap>[125X [27XList( relimgs, Order );  # wrong group[127X[104X
+    [4X[28X[ 3, 1, 5, 4, 10 ][128X[104X
+    [4X[25Xgap>[125X [27Xrelimgs:= EvaluatePresentation( g, "M12" );;[127X[104X
+    [4X[25Xgap>[125X [27XList( relimgs, Order );  # generators are not standard[127X[104X
+    [4X[28X[ 3, 4, 5, 4, 4 ][128X[104X
+    [4X[25Xgap>[125X [27Xg:= AtlasGroup( "M12" );;[127X[104X
+    [4X[25Xgap>[125X [27Xrelimgs:= EvaluatePresentation( g, "M12", 1 );;[127X[104X
+    [4X[25Xgap>[125X [27XList( relimgs, Order );  # right group, std. generators[127X[104X
+    [4X[28X[ 1, 1, 1, 1, 1 ][128X[104X
+    [4X[25Xgap>[125X [27Xg:= AtlasGroup( "2.M12" );;[127X[104X
+    [4X[25Xgap>[125X [27Xrelimgs:= EvaluatePresentation( g, "M12", 1 );;[127X[104X
+    [4X[25Xgap>[125X [27XList( relimgs, Order );  # std. generators for extension[127X[104X
+    [4X[28X[ 1, 2, 1, 1, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XSize( NormalClosure( g, SubgroupNC( g, relimgs ) ) );[127X[104X
+    [4X[28X2[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.5-12 [33X[0;0YStandardGeneratorsData[133X[101X
+  
+  [33X[1;0Y[29X[2XStandardGeneratorsData[102X( [3XG[103X, [3Xgapname[103X[, [3Xstd[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XStandardGeneratorsData[102X( [3Xgens[103X, [3Xgapname[103X[, [3Xstd[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya  record  that  describes  standard  generators  of  the group in
+            question, or [9Xfail[109X, or the string [10X"timeout"[110X.[133X
+  
+  [33X[0;0YThe  first  argument  must  be  either  a  group  [3XG[103X  or a list [3Xgens[103X of group
+  generators,  and  [3Xgapname[103X  must  be  a  string  that  is  a  [5XGAP[105X  name  (see
+  Section [14X3.2[114X) of a group [22XH[122X, say. The optional argument [3Xstd[103X, if given, must be
+  a  positive  integer  that denotes a standardization of generators of [22XH[122X, the
+  default is [22X1[122X.[133X
+  
+  [33X[0;0YIf  the  global  option  [10Xprojective[110X is given then the group elements must be
+  matrices  over  a finite field, and the group must be a central extension of
+  the  group  [22XH[122X by a normal subgroup that consists of scalar matrices. In this
+  case,  all  computations  will  be  carried  out  modulo scalar matrices (in
+  particular,   element   orders   will   be  computed  using  [2XProjectiveOrder[102X
+  ([14XReference:  ProjectiveOrder[114X)),  and  the  returned standard generators will
+  belong to [22XH[122X.[133X
+  
+  [33X[0;0Y[2XStandardGeneratorsData[102X returns[133X
+  
+  [8X[9Xfail[109X[108X
+        [33X[0;6Yif  no  black  box  program  for  computing  standard  generators of [22XH[122X
+        w. r. t. the  standardization [3Xstd[103X is stored in the database, or if the
+        black box program returns [9Xfail[109X because a runtime error occurred or the
+        program  has proved that the given group or generators cannot generate
+        a group isomorphic to [22XH[122X,[133X
+  
+  [8X[10X"timeout"[110X[8X[108X
+        [33X[0;6Yif  the  black  box  program returns [10X"timeout"[110X, typically because some
+        elements  of a given order were not found among a reasonable number of
+        random elements, or[133X
+  
+  [8Xa record containing standard generators[108X
+        [33X[0;6Yotherwise.[133X
+  
+  [33X[0;0YWhen the result is not a record then either the group is not isomorphic to [22XH[122X
+  (modulo  scalars  if  applicable),  or  we were unlucky with choosing random
+  elements.[133X
+  
+  [33X[0;0YWhen   a  record  is  returned  [13Xand[113X  [3XG[103X  or  the  group  generated  by  [3Xgens[103X,
+  respectively,  is isomorphic to [22XH[122X (or to a central extension of [22XH[122X by a group
+  of scalar matrices if the global option [10Xprojective[110X is given) then the result
+  describes the desired standard generators.[133X
+  
+  [33X[0;0YIf  [3XG[103X  or  the group generated by [3Xgens[103X, respectively, is [13Xnot[113X isomorphic to [22XH[122X
+  then it may still happen that [2XStandardGeneratorsData[102X returns a record. For a
+  proof  that  the  returned record describes the desired standard generators,
+  one  can  use  a presentation of [22XH[122X whose generators correspond to the [3Xstd[103X-th
+  standard generators, see [2XEvaluatePresentation[102X ([14X3.5-11[114X).[133X
+  
+  [33X[0;0YA returned record has the following components.[133X
+  
+  [8X[10Xgapname[110X[8X[108X
+        [33X[0;6Ythe string [3Xgapname[103X,[133X
+  
+  [8X[10Xgivengens[110X[8X[108X
+        [33X[0;6Ythe  list  of  group  generators  from  which standard generators were
+        computed,   either   [3Xgens[103X   or   the   [2XGeneratorsOfGroup[102X   ([14XReference:
+        GeneratorsOfGroup[114X) value of [3XG[103X,[133X
+  
+  [8X[10Xstdgens[110X[8X[108X
+        [33X[0;6Ya list of standard generators of the group,[133X
+  
+  [8X[10Xgivengenstostdgens[110X[8X[108X
+        [33X[0;6Ya  straight  line  program that takes [10Xgivengens[110X as inputs, and returns
+        [10Xstdgens[110X,[133X
+  
+  [8X[10Xstd[110X[8X[108X
+        [33X[0;6Ythe underlying standardization [3Xstd[103X.[133X
+  
+  [33X[0;0YThe first examples show three cases of failure, due to the unavailability of
+  a suitable black box program or to a wrong choice of [3Xgapname[103X. (In the search
+  for  standard  generators of [22XM_11[122X in the group [22XM_12[122X, one may or may not find
+  an  element  whose  order  does  not  appear in [22XM_11[122X; in the first case, the
+  result  is [9Xfail[109X, whereas a record is returned in the second case. Both cases
+  occur.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XStandardGeneratorsData( MathieuGroup( 11 ), "J0" );[127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27XStandardGeneratorsData( MathieuGroup( 11 ), "M12" );[127X[104X
+    [4X[28X"timeout"[128X[104X
+    [4X[25Xgap>[125X [27Xrepeat[127X[104X
+    [4X[25X>[125X [27X     res:= StandardGeneratorsData( MathieuGroup( 12 ), "M11" );[127X[104X
+    [4X[25X>[125X [27X   until res = fail;[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  next example shows a computation of standard generators for the Mathieu
+  group [22XM_12[122X. Using a presentation of [22XM_12[122X w. r. t. these standard generators,
+  we prove that the given group is isomorphic to [22XM_12[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgens:= GeneratorsOfGroup( MathieuGroup( 12 ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xstd:= 1;;[127X[104X
+    [4X[25Xgap>[125X [27Xres:= StandardGeneratorsData( gens, "M12", std );;[127X[104X
+    [4X[25Xgap>[125X [27XSet( RecNames( res ) );[127X[104X
+    [4X[28X[ "gapname", "givengens", "givengenstostdgens", "std", "stdgens" ][128X[104X
+    [4X[25Xgap>[125X [27Xgens = res.givengens;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XResultOfStraightLineProgram( res.givengenstostdgens, gens )[127X[104X
+    [4X[25X>[125X [27X   = res.stdgens;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xevl:= EvaluatePresentation( res.stdgens, "M12", std );;[127X[104X
+    [4X[25Xgap>[125X [27XForAll( evl, IsOne );[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  next  example shows the use of the global option [10Xprojective[110X. We take an
+  irreducible  matrix  representation of the double cover of the Mathieu group
+  [22XM_12[122X  (thus  the  center  is  represented  by  scalar  matrices) and compute
+  standard  generators  of the factor group [22XM_12[122X. Using a presentation of [22XM_12[122X
+  w. r. t. these  standard generators, we prove that the given group is modulo
+  scalars isomorphic to [22XM_12[122X, and we get generators for the kernel.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:= AtlasGroup( "2.M12", IsMatrixGroup, Characteristic, IsPosInt );;[127X[104X
+    [4X[25Xgap>[125X [27Xgens:= Permuted( GeneratorsOfGroup( g ), (1,2) );;[127X[104X
+    [4X[25Xgap>[125X [27Xres:= StandardGeneratorsData( gens, "M12", std : projective );;[127X[104X
+    [4X[25Xgap>[125X [27Xgens = res.givengens;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XResultOfStraightLineProgram( res.givengenstostdgens, gens )[127X[104X
+    [4X[25X>[125X [27X   = res.stdgens;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xevl:= EvaluatePresentation( res.stdgens, "M12", std );;[127X[104X
+    [4X[25Xgap>[125X [27XForAll( evl, IsOne );[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XForAll( evl, x -> IsCentral( g, x ) );[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
   

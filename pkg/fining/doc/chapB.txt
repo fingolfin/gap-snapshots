@@ -10,7 +10,7 @@
   
   [1XB.1-1 CanonicalGramMatrix[101X
   
-  [29X[2XCanonicalGramMatrix[102X( [3Xtype[103X, [3Xd[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XCanonicalGramMatrix[102X( [3Xtype[103X, [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya gram matrix usable as input to construct a sesquilinear form[133X
   
   [33X[0;0YThe  arguments  [3Xd[103X  and  [3Xf[103X  are  the  vector  dimension and the fininte field
@@ -45,7 +45,7 @@
   
   [1XB.1-2 CanonicalQuadraticForm[101X
   
-  [29X[2XCanonicalQuadraticForm[102X( [3Xtype[103X, [3Xd[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XCanonicalQuadraticForm[102X( [3Xtype[103X, [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya gram matrix usable as input to construct a quadratic form[133X
   
   [33X[0;0YThe  arguments  [3Xd[103X  and  [3Xf[103X  are  the  vector  dimension and the fininte field
@@ -79,7 +79,7 @@
   
   [1XB.2-1 SOdesargues[101X
   
-  [29X[2XSOdesargues[102X( [3Xe[103X, [3Xd[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XSOdesargues[102X( [3Xe[103X, [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe special isometry group of a canonical orthogonal polar space[133X
   
   [33X[0;0YThe argument [3Xe[103X determines the type of the othogonal polar space, i.e. -1,0,1
@@ -101,7 +101,7 @@
   
   [1XB.2-2 GOdesargues[101X
   
-  [29X[2XGOdesargues[102X( [3Xe[103X, [3Xd[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XGOdesargues[102X( [3Xe[103X, [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe isometry group of a canonical orthogonal polar space[133X
   
   [33X[0;0YThe argument [3Xe[103X determines the type of the othogonal polar space, i.e. -1,0,1
@@ -123,7 +123,7 @@
   
   [1XB.2-3 SUdesargues[101X
   
-  [29X[2XSUdesargues[102X( [3Xd[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XSUdesargues[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe special isometry group of a canonical hermitian polar space[133X
   
   [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
@@ -139,7 +139,7 @@
   
   [1XB.2-4 GUdesargues[101X
   
-  [29X[2XGUdesargues[102X( [3Xd[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XGUdesargues[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe isometry/similarity group of a canonical hermitian polar space[133X
   
   [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
@@ -155,7 +155,7 @@
   
   [1XB.2-5 Spdesargues[101X
   
-  [29X[2XSpdesargues[102X( [3Xd[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XSpdesargues[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe (special) isometry group of a canonical symplectic polar space[133X
   
   [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
@@ -171,7 +171,7 @@
   
   [1XB.2-6 GeneralSymplecticGroup[101X
   
-  [29X[2XGeneralSymplecticGroup[102X( [3Xd[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XGeneralSymplecticGroup[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe isometry group of a canonical symplectic form[133X
   
   [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
@@ -186,7 +186,7 @@
   
   [1XB.2-7 GSpdesargues[101X
   
-  [29X[2XGSpdesargues[102X( [3Xd[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XGSpdesargues[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe similarity group of a canonical symplectic polar space[133X
   
   [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
@@ -202,7 +202,7 @@
   
   [1XB.2-8 GammaSp[101X
   
-  [29X[2XGammaSp[102X( [3Xd[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XGammaSp[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe collineation group of a canonical symplectic polar space[133X
   
   [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
@@ -217,7 +217,7 @@
   
   [1XB.2-9 DeltaOminus[101X
   
-  [29X[2XDeltaOminus[102X( [3Xd[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XDeltaOminus[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe  similarity  group  of  a  canonical elliptic orthogonal polar
             space[133X
   
@@ -233,7 +233,7 @@
   
   [1XB.2-10 DeltaOplus[101X
   
-  [29X[2XDeltaOplus[102X( [3Xd[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XDeltaOplus[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe  similarity  group  of a canonical hyperbolic orthogonal polar
             space[133X
   
@@ -249,7 +249,7 @@
   
   [1XB.2-11 GammaOminus[101X
   
-  [29X[2XGammaOminus[102X( [3Xd[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XGammaOminus[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe  collineation  group  of a canonical elliptic orthogonal polar
             space[133X
   
@@ -265,7 +265,7 @@
   
   [1XB.2-12 GammaO[101X
   
-  [29X[2XGammaO[102X( [3Xd[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XGammaO[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe  collineation  group of a canonical parabolic orthogonal polar
             space[133X
   
@@ -283,7 +283,7 @@
   
   [1XB.2-13 GammaOplus[101X
   
-  [29X[2XGammaOplus[102X( [3Xd[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XGammaOplus[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe  collineation group of a canonical hyperbolic orthogonal polar
             space[133X
   
@@ -299,7 +299,7 @@
   
   [1XB.2-14 GammaU[101X
   
-  [29X[2XGammaU[102X( [3Xd[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XGammaU[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe collineation group of a canonical hermitian variety[133X
   
   [33X[0;0YThe  argument  [3Xd[103X  is  the dimension of the underlying vector space, [3Xf[103X is the
@@ -316,7 +316,7 @@
   
   [1XB.2-15 G2fining[101X
   
-  [29X[2XG2fining[102X( [3Xd[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XG2fining[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe chevalley group G_2(q)[133X
   
   [33X[0;0YThis  group  is  the  group  of  projectivities stabilising the split Cayley
@@ -329,7 +329,7 @@
   
   [1XB.2-16 3D4fining[101X
   
-  [29X[2X3D4fining[102X( [3Xd[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2X3D4fining[102X( [3Xd[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe chevalley group 3D4(q)[133X
   
   [33X[0;0Y[3Xd[103X must equal 7 and [3Xf[103X must be a field of order [22Xq^3[122X This group is the group of
@@ -347,7 +347,7 @@
   
   [1XB.3-1 FindBasePointCandidates[101X
   
-  [29X[2XFindBasePointCandidates[102X( [3Xg[103X, [3Xopt[103X, [3Xi[103X, [3XparentS[103X ) [32X operation
+  [33X[1;0Y[29X[2XFindBasePointCandidates[102X( [3Xg[103X, [3Xopt[103X, [3Xi[103X, [3XparentS[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya record[133X
   
   [33X[0;0YThe  returned record contains the base points for the action, and some other

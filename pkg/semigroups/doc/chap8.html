@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (Semigroups) - Chapter 8: 
+    Standard constructions
+  </title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap8"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap7.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap9.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap8_mj.html">[MathJax on]</a></p>
+<p><a id="X86EE8DC987BA646E" name="X86EE8DC987BA646E"></a></p>
+<div class="ChapSects"><a href="chap8.html#X86EE8DC987BA646E">8 <span class="Heading">
+    Standard constructions
+  </span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X79546641809113CE">8.1 <span class="Heading">
+     Products of semigroups
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X861BA02C7902A4F4">8.1-1 DirectProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X8786EFBC78D7D6ED">8.1-2 WreathProduct</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7F035EC07AA7CD97">8.2 <span class="Heading"> Dual semigroups </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X79F2643C8642A3B0">8.2-1 DualSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X83403224821CD079">8.2-2 IsDualSemigroupRep</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X79BAAA397FC1FA2E">8.2-3 IsDualSemigroupElement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7CB64FA378EC715B">8.2-4 AntiIsomorphismDualSemigroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7BEA92E67A6D349A">8.3 <span class="Heading">
+      Strong semilattices of semigroups
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X82C3F9C9861EEDFE">8.3-1 StrongSemilatticeOfSemigroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X798DE3E581978834">8.3-2 SSSE</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7B7B70F37C9C3836">8.3-3 IsSSSE</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X838F24247D4DBE18">8.3-4 IsStrongSemilatticeOfSemigroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X87100CE6836DE3DB">8.3-5 SemilatticeOfStrongSemilatticeOfSemigroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X79E6C08D87984579">8.3-6 SemigroupsOfStrongSemilatticeOfSemigroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X806655138370ECFF">8.3-7 HomomorphismsOfStrongSemilatticeOfSemigroups</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7CC4F6FE87AFE638">8.4 <span class="Heading">
+      McAlister triple semigroups
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X85C00EB085774624">8.4-1 IsMcAlisterTripleSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7B5FF3A27BB057F2">8.4-2 McAlisterTripleSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7A54FDB186CD2E94">8.4-3 McAlisterTripleSemigroupGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X8046966B7F9A1ED5">8.4-4 McAlisterTripleSemigroupPartialOrder</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X86C0C3EF84517DAB">8.4-5 McAlisterTripleSemigroupSemilattice</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X86D6442E85881DEA">8.4-6 McAlisterTripleSemigroupAction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7B4EC9FC82249A83">8.4-7 IsMcAlisterTripleSemigroupElement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X854BFB1C7BA57985">8.4-8 McAlisterTripleSemigroupElement</a></span>
+</div></div>
+</div>
+
+<h3>8 <span class="Heading">
+    Standard constructions
+  </span></h3>
+
+<p>In this chapter we describe some standard ways of constructing semigroups and monoids from other semigroups that are available in the <strong class="pkg">Semigroups</strong> package.</p>
+
+<p><a id="X79546641809113CE" name="X79546641809113CE"></a></p>
+
+<h4>8.1 <span class="Heading">
+     Products of semigroups
+    </span></h4>
+
+<p>In this section, we describe the functions in <strong class="pkg">Semigroups</strong> that can be used to create various products of semigroups.</p>
+
+<p><a id="X861BA02C7902A4F4" name="X861BA02C7902A4F4"></a></p>
+
+<h5>8.1-1 DirectProduct</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectProduct</code>( <var class="Arg">S</var>[, <var class="Arg">T</var>, <var class="Arg">...</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectProductOp</code>( <var class="Arg">list</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A transformation semigroup.</p>
+
+<p>The function <code class="code">DirectProduct</code> takes an arbitrary positive number of finite semigroups, and returns a semigroup that is isomorphic to their direct product.</p>
+
+<p>If these finite semigroups are all partial perm semigroups, all bipartition semigroups, or all PBR semigroups, then <code class="code">DirectProduct</code> returns a semigroup of the same type. Otherwise, <code class="code">DirectProduct</code> returns a transformation semigroup.</p>
+
+<p>The operation <code class="code">DirectProductOp</code> is included for consistency with the <strong class="pkg">GAP</strong> library (see <code class="func">DirectProductOp</code> (<a href="../../../doc/ref/chap49_mj.html#X861BA02C7902A4F4"><span class="RefLink">Reference: DirectProductOp</span></a>)). It takes exactly two arguments, namely a non-empty list <var class="Arg">list</var> of semigroups and one of these semigroups, <var class="Arg">S</var>, and returns the same result as <code class="code">CallFuncList(DirectProduct, <var class="Arg">list</var>)</code>.</p>
+
+<p>If <code class="code">D</code> is the direct product of a collection of semigroups, then an embedding of the <code class="code">i</code>th factor into <code class="code">D</code> can be accessed with the command <code class="code">Embedding(D, i)</code>, and a projection of <code class="code">D</code> onto its <code class="code">i</code>th factor can be accessed with the command <code class="code">Projection(D, i)</code>; see <code class="func">Embedding</code> (<a href="../../../doc/ref/chap32_mj.html#X86452F8587CBAEA0"><span class="RefLink">Reference: Embedding</span></a>) and <code class="func">Projection</code> (<a href="../../../doc/ref/chap32_mj.html#X8769E8DA80BC96C1"><span class="RefLink">Reference: Projection</span></a>) for more information.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseMonoid([PartialPerm([2, 1])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := InverseMonoid([PartialPerm([1, 2, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DirectProduct(S, T);</span>
+&lt;commutative inverse partial perm monoid of rank 5 with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements(D);</span>
+[ &lt;identity partial perm on [ 1, 2, 3, 4, 5 ]&gt;, (1,2)(3)(4)(5) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PartitionMonoid(2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DirectProduct(S, S, S);; IsRegularSemigroup(D);; D;</span>
+&lt;regular bipartition monoid of size 3375, degree 6 with 9 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([PartialPerm([2, 5, 0, 1, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                   PartialPerm([5, 2, 4, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := Semigroup([Bipartition([[1, -2], [2], [3, -1, -3]])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DirectProduct(S, T);</span>
+&lt;transformation semigroup of size 122, degree 9 with 63 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(D) = Size(S) * Size(T);</span>
+true</pre></div>
+
+<p><a id="X8786EFBC78D7D6ED" name="X8786EFBC78D7D6ED"></a></p>
+
+<h5>8.1-2 WreathProduct</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WreathProduct</code>( <var class="Arg">M</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A transformation semigroup.</p>
+
+<p>If <var class="Arg">M</var> is a transformation monoid (or a permutation group) of degree <code class="code">m</code>, and <var class="Arg">S</var> is a transformation semigroup (or permutation group) of degree <code class="code">s</code>, the operation <code class="code">WreathProduct(<var class="Arg">M</var>, <var class="Arg">S</var>)</code> returns the wreath product of <var class="Arg">M</var> and <var class="Arg">S</var>, in terms of an embedding in the full transformation monoid of degree <code class="code">m * s</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := FullTransformationMonoid(3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := Group((1, 3));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W := WreathProduct(T, C);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(W);</span>
+39366
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">WW := WreathProduct(C, T);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(WW);</span>
+216
+</pre></div>
+
+<p><a id="X7F035EC07AA7CD97" name="X7F035EC07AA7CD97"></a></p>
+
+<h4>8.2 <span class="Heading"> Dual semigroups </span></h4>
+
+<p>The <em>dual semigroup</em> of a semigroup <code class="code">S</code> is the semigroup with the same underlying set of elements but with reversed multiplication; this is anti-isomorphic to <code class="code">S</code>. In <strong class="pkg">Semigroups</strong> a semigroup and its dual are represented with disjoint sets of elements.</p>
+
+<p><a id="X79F2643C8642A3B0" name="X79F2643C8642A3B0"></a></p>
+
+<h5>8.2-1 DualSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DualSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: The dual semigroup of the given semigroup.</p>
+
+<p>The dual semigroup of a semigroup <var class="Arg">S</var> is the semigroup with the same underlying set as <var class="Arg">S</var>, but with multiplication reversed; this is anti-isomorphic to <var class="Arg">S</var>. This attribute returns a semigroup isomorphic to the dual semigroup of <var class="Arg">S</var>.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([1, 4, 3, 2, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([5, 4, 4, 1, 2])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DualSemigroup(S);</span>
+&lt;dual semigroup of &lt;transformation semigroup of degree 5 with 2 
+ generators&gt;&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S) = Size(D);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrDClasses(S) = NrDClasses(D);</span>
+true</pre></div>
+
+<p><a id="X83403224821CD079" name="X83403224821CD079"></a></p>
+
+<h5>8.2-2 IsDualSemigroupRep</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDualSemigroupRep</code>( <var class="Arg">sgrp</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<p>Returns: Returns <code class="keyw">true</code> if <var class="Arg">sgrp</var> is represented as a dual semigroup.</p>
+
+<p>Semigroups created using <code class="func">DualSemigroup</code> (<a href="chap8.html#X79F2643C8642A3B0"><span class="RefLink">8.2-1</span></a>) normally have this representation. The exception is semigroups which are the dual of semigroups already lying in this category. That is, a semigroup has the representation <code class="func">IsDualSemigroupRep</code> if and only if the corresponding dual semigroup does not.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([3, 5, 1, 1, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([1, 2, 4, 4, 3])]);</span>
+&lt;transformation semigroup of degree 5 with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DualSemigroup(S);</span>
+&lt;dual semigroup of &lt;transformation semigroup of degree 5 with 2 
+ generators&gt;&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDualSemigroupRep(D);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := DualSemigroup(D);</span>
+&lt;transformation semigroup of degree 5 with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDualSemigroupRep(R);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R = S;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := Range(IsomorphismTransformationSemigroup(D));</span>
+&lt;transformation semigroup of size 16, degree 17 with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDualSemigroupRep(T);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Representative(D);</span>
+&lt;Transformation( [ 3, 5, 1, 1, 2 ] ) in the dual semigroup&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V := Semigroup(x);</span>
+&lt;dual semigroup of &lt;commutative transformation semigroup of degree 5 
+ with 1 generator&gt;&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDualSemigroupRep(V);</span>
+true</pre></div>
+
+<p><a id="X79BAAA397FC1FA2E" name="X79BAAA397FC1FA2E"></a></p>
+
+<h5>8.2-3 IsDualSemigroupElement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDualSemigroupElement</code>( <var class="Arg">elt</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<p>Returns: Returns <code class="keyw">true</code> if <var class="Arg">elt</var> has the representation of a dual semigroup element.</p>
+
+<p>Elements of a dual semigroup obtained using <code class="func">AntiIsomorphismDualSemigroup</code> (<a href="chap8.html#X7CB64FA378EC715B"><span class="RefLink">8.2-4</span></a>) normally lie in this category. The exception is elements obtained by applying the map <code class="func">AntiIsomorphismDualSemigroup</code> (<a href="chap8.html#X7CB64FA378EC715B"><span class="RefLink">8.2-4</span></a>) to elements already in this category. That is, the elements of a semigroup lie in the category <code class="func">IsDualSemigroupElement</code> if and only if the elements of the corresponding dual semigroup do not.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SingularPartitionMonoid(4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DualSemigroup(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := GeneratorsOfSemigroup(S)[1];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map := AntiIsomorphismDualSemigroup(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t := s ^ map;</span>
+&lt;&lt;block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, -4 ]&gt;
+  in the dual semigroup&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDualSemigroupElement(t);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inv := InverseGeneralMapping(map);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := t ^ inv;</span>
+&lt;block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, -4 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDualSemigroupElement(x);</span>
+false</pre></div>
+
+<p><a id="X7CB64FA378EC715B" name="X7CB64FA378EC715B"></a></p>
+
+<h5>8.2-4 AntiIsomorphismDualSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AntiIsomorphismDualSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: An anti-isomorphism from <var class="Arg">S</var> to the corresponding dual semigroup.</p>
+
+<p>The dual semigroup of <var class="Arg">S</var> mathematically has the same underlying set as <var class="Arg">S</var>, but is represented with a different set of elements in <strong class="pkg">Semigroups</strong>. This function returns a mapping which is an anti-isomorphism from <var class="Arg">S</var> to its dual.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PartitionMonoid(3);</span>
+&lt;regular bipartition *-monoid of size 203, degree 3 with 4 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">map := AntiIsomorphismDualSemigroup(S);</span>
+MappingByFunction( &lt;regular bipartition *-monoid of size 203, 
+ degree 3 with 4 generators&gt;, &lt;dual semigroup of 
+&lt;regular bipartition *-monoid of size 203, degree 3 with 4 generators&gt;
+ &gt;, function( x ) ... end, function( x ) ... end )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inv := InverseGeneralMapping(map);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bipartition([[1, -2], [2, -3], [3, -1]]);</span>
+&lt;block bijection: [ 1, -2 ], [ 2, -3 ], [ 3, -1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := Bipartition([[1], [2, -2], [3, -3], [-1]]);</span>
+&lt;bipartition: [ 1 ], [ 2, -2 ], [ 3, -3 ], [ -1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">(x ^ map) * (y ^ map) = (y * x) ^ map;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x ^ map;</span>
+&lt;&lt;block bijection: [ 1, -2 ], [ 2, -3 ], [ 3, -1 ]&gt;
+  in the dual semigroup&gt;</pre></div>
+
+<p><a id="X7BEA92E67A6D349A" name="X7BEA92E67A6D349A"></a></p>
+
+<h4>8.3 <span class="Heading">
+      Strong semilattices of semigroups
+    </span></h4>
+
+<p>In this section, we describe how <strong class="pkg">Semigroups</strong> can be used to create and manipulate strong semilattices of semigroups (SSSs). Strong semilattices of semigroups are described, for example, in Section 4.1 of <a href="chapBib.html#biBHowie1995aa">[How95]</a>. They consist of a meet-semilattice <span class="SimpleMath">Y</span> along with a collection of semigroups <span class="SimpleMath">S_a</span> for each <span class="SimpleMath">a</span> in <span class="SimpleMath">Y</span>, and a collection of homomorphisms <span class="SimpleMath">f_ab : S_a → S_b</span> for each <span class="SimpleMath">a</span> and <span class="SimpleMath">b</span> in <span class="SimpleMath">Y</span> such that <span class="SimpleMath">a ≥ b</span>.</p>
+
+<p>The product of two elements <span class="SimpleMath">x ∈ S_a, y ∈ S_b</span> is defined to lie in the semigroup <span class="SimpleMath">S_c</span>, corresponding to the meet <span class="SimpleMath">c</span> of <span class="SimpleMath">a, b ∈ Y</span>. The exact element of <span class="SimpleMath">S_c</span> equal to the product is obtained using the homomorphisms of the SSS: <span class="SimpleMath">xy = (x f_ac) (y f_bc)</span>.</p>
+
+<p><a id="X82C3F9C9861EEDFE" name="X82C3F9C9861EEDFE"></a></p>
+
+<h5>8.3-1 StrongSemilatticeOfSemigroups</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StrongSemilatticeOfSemigroups</code>( <var class="Arg">D</var>, <var class="Arg">L</var>, <var class="Arg">H</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A strong semilattice of semigroups.</p>
+
+<p>If <var class="Arg">D</var> is a digraph, <var class="Arg">L</var> is a list of semigroups, and <var class="Arg">H</var> is a list of lists of maps, then this function returns a corresponding <code class="code">IsStrongSemilatticeOfSemigroups</code> object. The format of the arguments is not required to be exactly analogous to Howie's description above, but consistency amongst the arguments is required:</p>
+
+
+<ul>
+<li><p><var class="Arg">D</var> must be a digraph whose <code class="func">DigraphReflexiveTransitiveClosure</code> (<a href="https://gap-packages.github.io/io/doc/chap3_mj.html#X7A6C419080AD41DE"><span class="RefLink">Digraphs: DigraphReflexiveTransitiveClosure</span></a>) is a meet-semilattice. For example, <code class="code">Digraph([2, 3], [4], [4], []])</code> is valid and produces a semilattice where the meet of <code class="code">2</code> and <code class="code">3</code> is <code class="code">1</code>. See <code class="func">IsMeetSemilatticeDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap6_mj.html#X78D3E17B7F737516"><span class="RefLink">Digraphs: IsMeetSemilatticeDigraph</span></a>).</p>
+
+</li>
+<li><p><var class="Arg">L</var> must contain as many semigroups as there are vertices in <var class="Arg">D</var>.</p>
+
+</li>
+<li><p><var class="Arg">H</var> must be a list with as many elements as there are vertices in <var class="Arg">D</var>. Each element of <var class="Arg">H</var> must itself be a (possibly empty) list with as many entries as the corresponding vertex of <var class="Arg">D</var> has out-edges. The entries of each sublist must be the corresponding homomorphisms: for example, if <var class="Arg">D</var> is entered as above, then <code class="code">H[1][2]</code> must be the homomorphism <span class="SimpleMath">f_31</span>, i.e. <code class="code">H[1][2]</code> is an <code class="code">IsMapping</code> object whose domain is a superset of <code class="code">L[3]</code> and whose range is a subset of <code class="code">L[1]</code>.</p>
+
+</li>
+</ul>
+<p>Note that in the example above, the edge <span class="SimpleMath">1 → 4</span> is not entered as part of the argument <var class="Arg">D</var>, but it is still an edge in the reflexive transitive closure of <var class="Arg">D</var>. When creating the object, <strong class="pkg">GAP</strong> creates the homomorphism <span class="SimpleMath">f_41</span> by composing the mappings along paths that lead from 4 to 1, and checks that composing along all possible paths produces the same result.</p>
+
+<p><a id="X798DE3E581978834" name="X798DE3E581978834"></a></p>
+
+<h5>8.3-2 SSSE</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SSSE</code>( <var class="Arg">SSS</var>, <var class="Arg">n</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: An element of a strong semilattice of semigroups.</p>
+
+<p>If <var class="Arg">n</var> is a vertex of the underlying semilattice of the strong semilattice of semigroups <var class="Arg">SSS</var>, and if <var class="Arg">x</var> is an element of the <var class="Arg">n</var>th semigroup of <var class="Arg">SSS</var>, then this function returns the element of <var class="Arg">SSS</var> which lies in semigroup number <var class="Arg">n</var> and which corresponds to the element <var class="Arg">x</var> in that semigroup.</p>
+
+<p>This function returns an <code class="func">IsSSSE</code> (<a href="chap8.html#X7B7B70F37C9C3836"><span class="RefLink">8.3-3</span></a>) object. SSSEs from the same strong semilattice of semigroups can be compared and multiplied.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := Digraph([[2, 3], [4], [4], []]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S4 := FullTransformationMonoid(2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S3 := FullTransformationMonoid(3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pairs := [[Transformation([1, 2]), Transformation([2, 1])]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence(S4, pairs);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S2 := S4 / cong;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S1 := TrivialSemigroup();;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := [S1, S2, S3, S4];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">idfn := t -&gt; IdentityTransformation;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f21 := SemigroupHomomorphismByFunction(S2, S1, idfn);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f31 := SemigroupHomomorphismByFunction(S3, S1, idfn);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f42 := HomomorphismQuotientSemigroup(cong);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f43 := SemigroupHomomorphismByFunction(S4, S3, IdFunc);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := [[f21, f31], [f42], [f43], []];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SSS := StrongSemilatticeOfSemigroups(D, L, H);</span>
+&lt;strong semilattice of 4 semigroups&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(SSS);</span>
+34
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := SSSE(SSS, 3, Elements(S3)[10]);</span>
+SSSE(3, Transformation( [ 2, 1, 1 ] ))
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := SSSE(SSS, 4, Elements(S4)[1]);</span>
+SSSE(4, Transformation( [ 1, 1 ] ))
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x * y;</span>
+SSSE(3, Transformation( [ 1, 1, 1 ] ))</pre></div>
+
+<p><a id="X7B7B70F37C9C3836" name="X7B7B70F37C9C3836"></a></p>
+
+<h5>8.3-3 IsSSSE</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSSSE</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>All elements of an SSS belong in the category <code class="code">IsSSSE</code> (for "Strong Semilattice of Semigroups Element").</p>
+
+<p><a id="X838F24247D4DBE18" name="X838F24247D4DBE18"></a></p>
+
+<h5>8.3-4 IsStrongSemilatticeOfSemigroups</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsStrongSemilatticeOfSemigroups</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>Every Strong Semilattice of Semigroups in <strong class="pkg">GAP</strong> belongs to the category <code class="code">IsStrongSemilatticeOfSemigroups</code>. Basic operations in this category allow the user to recover the three essential elements of an SSS object: <code class="func">SemilatticeOfStrongSemilatticeOfSemigroups</code> (<a href="chap8.html#X87100CE6836DE3DB"><span class="RefLink">8.3-5</span></a>), <code class="func">SemigroupsOfStrongSemilatticeOfSemigroups</code> (<a href="chap8.html#X79E6C08D87984579"><span class="RefLink">8.3-6</span></a>), and <code class="func">HomomorphismsOfStrongSemilatticeOfSemigroups</code> (<a href="chap8.html#X806655138370ECFF"><span class="RefLink">8.3-7</span></a>).</p>
+
+<p><a id="X87100CE6836DE3DB" name="X87100CE6836DE3DB"></a></p>
+
+<h5>8.3-5 SemilatticeOfStrongSemilatticeOfSemigroups</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemilatticeOfStrongSemilatticeOfSemigroups</code>( <var class="Arg">SSS</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: A meet-semilattice digraph.</p>
+
+<p>If <var class="Arg">SSS</var> is a strong semilattice of semigroups, this function returns the underlying semilattice structure as a digraph. Note that this may not be equal to the digraph passed as input when <var class="Arg">SSS</var> was created: rather, it is the reflexive transitive closure of the input digraph.</p>
+
+<p><a id="X79E6C08D87984579" name="X79E6C08D87984579"></a></p>
+
+<h5>8.3-6 SemigroupsOfStrongSemilatticeOfSemigroups</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemigroupsOfStrongSemilatticeOfSemigroups</code>( <var class="Arg">SSS</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: A list of semigroups.</p>
+
+<p>If <var class="Arg">SSS</var> is a strong semilattice of semigroups, this function returns the list of semigroups that make up <var class="Arg">SSS</var>. The position of a semigroup in the list corresponds to the node of the semilattice where that semigroup lies.</p>
+
+<p><a id="X806655138370ECFF" name="X806655138370ECFF"></a></p>
+
+<h5>8.3-7 HomomorphismsOfStrongSemilatticeOfSemigroups</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomomorphismsOfStrongSemilatticeOfSemigroups</code>( <var class="Arg">SSS</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: A list of lists of mappings.</p>
+
+<p>If <var class="Arg">SSS</var> is a strong semilattice of <span class="SimpleMath">n</span> semigroups, this function returns an <span class="SimpleMath">n × n</span> list where the <span class="SimpleMath">(i, j)</span>th entry of the list is the homomorphism <span class="SimpleMath">f_ji</span>, provided <span class="SimpleMath">i ≤ j</span> in the semilattice. If this last condition is not true, then the entry is <code class="keyw">fail</code>.</p>
+
+<p><a id="X7CC4F6FE87AFE638" name="X7CC4F6FE87AFE638"></a></p>
+
+<h4>8.4 <span class="Heading">
+      McAlister triple semigroups
+    </span></h4>
+
+<p>In this section, we describe the functions in <strong class="pkg">GAP</strong> for creating and computing with McAlister triple semigroups and their subsemigroups. This implementation is based on the section in Chapter 5 of <a href="chapBib.html#biBHowie1995aa">[How95]</a> but differs from the treatment in Howie by using right actions instead of left. Some definitions found in the documentation are changed for this reason.</p>
+
+<p>The importance of the McAlister triple semigroups lies in the fact that they are exactly the E-unitary inverse semigroups, which are an important class in the study of inverse semigroups.</p>
+
+<p>First we define E-unitary inverse semigroups. It is standard to denote the subsemigroup of a semigroup consisting of its idempotents by <code class="code">E</code>. A semigroup <code class="code">S</code> is said to be <em>E-unitary</em> if for all <code class="code">e</code> in <code class="code">E</code> and for all <code class="code">s</code> in <code class="code">S</code>:</p>
+
+
+<ul>
+<li><p><code class="code">es</code> <span class="SimpleMath">∈</span> <code class="code">E</code> implies <code class="code">s</code> <span class="SimpleMath">∈</span> <code class="code">E</code>,</p>
+
+</li>
+<li><p><code class="code">se</code> <span class="SimpleMath">∈</span> <code class="code">E</code> implies <code class="code">s</code> <span class="SimpleMath">∈</span> <code class="code">E</code>.</p>
+
+</li>
+</ul>
+<p>For inverse semigroups these two conditions are equivalent. We are only interested in <em>E-unitary inverse semigroups</em>. Before defining McAlister triple semigroups we define a McAlister triple. A <em>McAlister triple</em> is a triple <code class="code">(G,X,Y)</code> which consists of:</p>
+
+
+<ul>
+<li><p>a partial order <code class="code">X</code>,</p>
+
+</li>
+<li><p>a subset <code class="code">Y</code> of <code class="code">X</code>,</p>
+
+</li>
+<li><p>a group <code class="code">G</code> which acts on <code class="code">X</code>, on the right, by order automorphisms. That means for all <code class="code">A,B</code> <span class="SimpleMath">∈</span> <code class="code">X</code> and for all <code class="code">g</code> <span class="SimpleMath">∈</span> <code class="code">G</code>: <code class="code">A</code> <span class="SimpleMath">≤</span> <code class="code">B</code> if and only if <code class="code">Ag</code> <span class="SimpleMath">≤</span> <code class="code">Bg</code>.</p>
+
+</li>
+</ul>
+<p>Furthermore, <code class="code">(G,X,Y)</code> must satisfy the following four properties to be a McAlister triple:</p>
+
+
+<dl>
+<dt><strong class="Mark"> M1 </strong></dt>
+<dd><p><code class="code">Y</code> is a subset of <code class="code">X</code> which is a join-semilattice together with the restriction of the order relation of <code class="code">X</code> to <code class="code">Y</code>.</p>
+
+</dd>
+<dt><strong class="Mark"> M2 </strong></dt>
+<dd><p><code class="code">Y</code> is an order ideal of <code class="code">X</code>. That is to say, for all <code class="code">A</code> <span class="SimpleMath">∈</span> <code class="code">X</code> and for all <code class="code">B</code> <span class="SimpleMath">∈</span> <code class="code">Y</code>: if <code class="code">A</code> <span class="SimpleMath">≤</span> <code class="code">B</code>, then <code class="code">A</code> <span class="SimpleMath">∈</span> <code class="code">Y</code>.</p>
+
+</dd>
+<dt><strong class="Mark"> M3 </strong></dt>
+<dd><p>Every element of <code class="code">X</code> is the image of some element in <code class="code">Y</code> moved by an element of <code class="code">G</code>. That is to say, for every <code class="code">A</code> <span class="SimpleMath">∈</span> <code class="code">X</code>, there exists some <code class="code">B</code> <span class="SimpleMath">∈</span> <code class="code">Y</code> and there exists <code class="code">g</code> <span class="SimpleMath">∈</span> <code class="code">G</code> such that <code class="code">A</code> = <code class="code">Bg</code>.</p>
+
+</dd>
+<dt><strong class="Mark"> M4 </strong></dt>
+<dd><p>Finally, for all <code class="code">g</code> <span class="SimpleMath">∈</span> <code class="code">G</code>, the intersection <code class="code">{yg : y </code><span class="SimpleMath">∈</span><code class="code"> Y}</code> <span class="SimpleMath">∩</span> <code class="code">Y</code> is non-empty.</p>
+
+</dd>
+</dl>
+<p>We may define an E-unitary inverse semigroup using a McAlister triple. Given <code class="code">(G,X,Y)</code> let <code class="code">M(G,X,Y)</code> be the set of all pairs <code class="code">(A,g)</code> in <code class="code">Y x G</code> such that <code class="code">A</code> acted on by the inverse of <code class="code">g</code> is in <code class="code">Y</code> together with multiplication defined by</p>
+
+<p><code class="code">(A,g)*(B,h) = (Join(A,Bg^-1),hg)</code></p>
+
+<p>where <code class="code">Join</code> is the natural join operation of the semilattice and <code class="code">Bg^-1</code> is <code class="code">B</code> acted on by the inverse of <code class="code">g</code>. With this operation, <code class="code">M(G,X,Y)</code> is a semigroup which we call a <em>McAlister triple semigroup</em> over <code class="code">(G,X,Y)</code>. In fact every McAlister triple semigroup is an E-unitary inverse semigroup and every E-unitary inverse semigroup is isomorphic to some McAlister triple semigroup. Note that there need not be a unqiue McAlister triple semigroup for a particular McAlister triple because in general there is more than one way for a group to act on a partial order.</p>
+
+<p><a id="X85C00EB085774624" name="X85C00EB085774624"></a></p>
+
+<h5>8.4-1 IsMcAlisterTripleSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMcAlisterTripleSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>This function returns <code class="keyw">true</code> if <var class="Arg">S</var> is a McAlister triple semigroup. A <em>McAlister triple semigroup</em> is a special representation of an E-unitary inverse semigroup <code class="func">IsEUnitaryInverseSemigroup</code> (<a href="chap12.html#X843EA0E37C968BBF"><span class="RefLink">12.2-3</span></a>) created by <code class="func">McAlisterTripleSemigroup</code> (<a href="chap8.html#X7B5FF3A27BB057F2"><span class="RefLink">8.4-2</span></a>).</p>
+
+<p><a id="X7B5FF3A27BB057F2" name="X7B5FF3A27BB057F2"></a></p>
+
+<h5>8.4-2 McAlisterTripleSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; McAlisterTripleSemigroup</code>( <var class="Arg">G</var>, <var class="Arg">X</var>, <var class="Arg">Y</var>[, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A McAlister triple semigroup.</p>
+
+<p>The following documentation covers the technical information needed to create McAlister triple semigroups in GAP, the underlying theory can be read in the introduction to Chapter <a href="chap8.html#X7CC4F6FE87AFE638"><span class="RefLink">8.4</span></a>.</p>
+
+<p>In this implementation the partial order <code class="code">X</code> of a McAlister triple is represented by a <code class="func">Digraph</code> (<a href="https://gap-packages.github.io/io/doc/chap3_mj.html#X834843057CE86655"><span class="RefLink">Digraphs: Digraph</span></a>) object <var class="Arg">X</var>. The digraph represents a partial order in the sense that vertices are the elements of the partial order and the order relation is defined by <code class="code">A</code> <span class="SimpleMath">≤</span> <code class="code">B</code> if and only if there is an edge from <code class="code">B</code> to <code class="code">A</code>. The semilattice <code class="code">Y</code> of the McAlister triple should be an induced subdigraph <var class="Arg">Y</var> of <var class="Arg">X</var> and the <code class="func">DigraphVertexLabels</code> (<a href="https://gap-packages.github.io/io/doc/chap5_mj.html#X7E51F2FE87140B32"><span class="RefLink">Digraphs: DigraphVertexLabels</span></a>) must correspond to the vertices of <var class="Arg">X</var> on which <var class="Arg">Y</var> is induced. That means that the following:</p>
+
+<p><code class="code"><var class="Arg">Y</var> = InducedSubdigraph(<var class="Arg">X</var>, DigraphVertexLabels(<var class="Arg">Y</var>)) </code></p>
+
+<p>must return <code class="keyw">true</code>. Herein if we say that a vertex <code class="code">A</code> of <var class="Arg">X</var> is 'in' <var class="Arg">Y</var> then we mean there is a vertex of <var class="Arg">Y</var> whose label is <code class="code">A</code>. Alerternatively the user may choose to give the argument <var class="Arg">Y</var> as the vertices of <var class="Arg">X</var> on which <var class="Arg">Y</var> is the induced subdigraph.</p>
+
+<p>A McAlister triple semigroup is created from a quadruple <code class="code">(<var class="Arg">G</var>, <var class="Arg">X</var>, <var class="Arg">Y</var>, <var class="Arg">act</var>)</code> where:</p>
+
+
+<ul>
+<li><p><var class="Arg">G</var> is a finite group.</p>
+
+</li>
+<li><p><var class="Arg">X</var> is a digraph satisfying <code class="func">IsPartialOrderDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap6_mj.html#X82BAE6D37D49A145"><span class="RefLink">Digraphs: IsPartialOrderDigraph</span></a>).</p>
+
+</li>
+<li><p><var class="Arg">Y</var> is a digraph satisfying <code class="func">IsJoinSemilatticeDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap6_mj.html#X78D3E17B7F737516"><span class="RefLink">Digraphs: IsJoinSemilatticeDigraph</span></a>) which is an induced subdigraph of <var class="Arg">X</var> satisfying the aforementioned labeling criteria. Furthermore the <code class="func">OutNeighbours</code> (<a href="https://gap-packages.github.io/io/doc/chap5_mj.html#X7E9880767AE68E00"><span class="RefLink">Digraphs: OutNeighbours</span></a>) of each vertex of <var class="Arg">X</var> which is in <var class="Arg">Y</var> must contain only vertices which are in <var class="Arg">Y</var>.</p>
+
+</li>
+<li><p><var class="Arg">act</var> is a function which takes as its first argument a vertex of the digraph <var class="Arg">X</var>, its second argument should be an element of <var class="Arg">G</var>, and it must return a vertex of <var class="Arg">X</var>. <var class="Arg">act</var> must be a right action, meaning that <var class="Arg">act</var><code class="code">(A,gh)=<var class="Arg">act</var>(<var class="Arg">act</var>(A,g),h)</code> holds for all <code class="code">A</code> in <var class="Arg">X</var> and <code class="code">g,h</code> <span class="SimpleMath">∈</span> <var class="Arg">G</var>. Furthermore the permutation represenation of this action must be a subgroup of the automorphism group of <var class="Arg">X</var>. That means we require the following to return <code class="keyw">true</code>:</p>
+
+<p><code class="code">IsSubgroup(AutomorphismGroup(</code><var class="Arg">X</var><code class="code">), Image(ActionHomomorphism(</code><var class="Arg">G</var><code class="code">, DigraphVertices(</code><var class="Arg">X</var><code class="code">), </code><var class="Arg">act</var><code class="code">));</code></p>
+
+<p>Furthermore every vertex of <var class="Arg">X</var> must be in the orbit of some vertex of <var class="Arg">X</var> which is in <var class="Arg">Y</var>. Finally, <var class="Arg">act</var> must fix the vertex of <var class="Arg">X</var> which is the minimal vertex of <var class="Arg">Y</var>, i.e. the unique vertex of <var class="Arg">Y</var> whose only out-neighbour is itself.</p>
+
+</li>
+</ul>
+<p>For user convienience, there are multiple versions of <code class="code">McAlisterTripleSemigroup</code>. When the argument <var class="Arg">act</var> is ommitted it is assumed to be <code class="func">OnPoints</code> (<a href="../../../doc/ref/chap41_mj.html#X7FE417DD837987B4"><span class="RefLink">Reference: OnPoints</span></a>). Additionally, the semilattice argument <var class="Arg">Y</var> may be replaced by a homogeneous list <var class="Arg">sub_ver</var> of vertices of <var class="Arg">X</var>. When <var class="Arg">sub_ver</var> is provided, <code class="code">McAlisterTripleSemigroup</code> is called with <var class="Arg">Y</var> equalling <code class="code">InducedSubdigraph(<var class="Arg">X</var>, <var class="Arg">sub_ver</var>)</code> with the appropriate labels.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Digraph([[1], [1, 2], [1, 2, 3], [1, 4], [1, 4, 5]]);</span>
+&lt;immutable digraph with 5 vertices, 11 edges&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := InducedSubdigraph(x, [1, 4, 5]);</span>
+&lt;immutable digraph with 3 vertices, 6 edges&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DigraphVertexLabels(y);</span>
+[ 1, 4, 5 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := AutomorphismGroup(x);</span>
+Group([ (2,4)(3,5) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := McAlisterTripleSemigroup(A, x, y, OnPoints);</span>
+&lt;McAlister triple semigroup over Group([ (2,4)(3,5) ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := McAlisterTripleSemigroup(A, x, y);</span>
+&lt;McAlister triple semigroup over Group([ (2,4)(3,5) ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S = T;</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphicSemigroup(S, T);</span>
+true</pre></div>
+
+<p><a id="X7A54FDB186CD2E94" name="X7A54FDB186CD2E94"></a></p>
+
+<h5>8.4-3 McAlisterTripleSemigroupGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; McAlisterTripleSemigroupGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: A group.</p>
+
+<p>Returns the group used to create the McAlister triple semigroup <var class="Arg">S</var> via <code class="func">McAlisterTripleSemigroup</code> (<a href="chap8.html#X7B5FF3A27BB057F2"><span class="RefLink">8.4-2</span></a>).</p>
+
+<p><a id="X8046966B7F9A1ED5" name="X8046966B7F9A1ED5"></a></p>
+
+<h5>8.4-4 McAlisterTripleSemigroupPartialOrder</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; McAlisterTripleSemigroupPartialOrder</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: A partial order digraph.</p>
+
+<p>Returns the <code class="func">IsPartialOrderDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap6_mj.html#X82BAE6D37D49A145"><span class="RefLink">Digraphs: IsPartialOrderDigraph</span></a>) used to create the McAlister triple semigroup <var class="Arg">S</var> via <code class="func">McAlisterTripleSemigroup</code> (<a href="chap8.html#X7B5FF3A27BB057F2"><span class="RefLink">8.4-2</span></a>).</p>
+
+<p><a id="X86C0C3EF84517DAB" name="X86C0C3EF84517DAB"></a></p>
+
+<h5>8.4-5 McAlisterTripleSemigroupSemilattice</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; McAlisterTripleSemigroupSemilattice</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: A join-semilattice digraph.</p>
+
+<p>Returns the <code class="func">IsJoinSemilatticeDigraph</code> (<a href="https://gap-packages.github.io/io/doc/chap6_mj.html#X78D3E17B7F737516"><span class="RefLink">Digraphs: IsJoinSemilatticeDigraph</span></a>) used to create the McAlister triple semigroup <var class="Arg">S</var> via <code class="func">McAlisterTripleSemigroup</code> (<a href="chap8.html#X7B5FF3A27BB057F2"><span class="RefLink">8.4-2</span></a>).</p>
+
+<p><a id="X86D6442E85881DEA" name="X86D6442E85881DEA"></a></p>
+
+<h5>8.4-6 McAlisterTripleSemigroupAction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; McAlisterTripleSemigroupAction</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: A function.</p>
+
+<p>Returns the action used to create the McAlister triple semigroup <var class="Arg">S</var> via <code class="func">McAlisterTripleSemigroup</code> (<a href="chap8.html#X7B5FF3A27BB057F2"><span class="RefLink">8.4-2</span></a>).</p>
+
+<p><a id="X7B4EC9FC82249A83" name="X7B4EC9FC82249A83"></a></p>
+
+<h5>8.4-7 IsMcAlisterTripleSemigroupElement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMcAlisterTripleSemigroupElement</code>( <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMTSE</code>( <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>Returns <code class="keyw">true</code> if <var class="Arg">x</var> is an element of a McAlister triple semigroup; in particular, this returns <code class="keyw">true</code> if <var class="Arg">x</var> has been created by <code class="func">McAlisterTripleSemigroupElement</code> (<a href="chap8.html#X854BFB1C7BA57985"><span class="RefLink">8.4-8</span></a>). The functions <code class="code">IsMTSE</code> and <code class="code">IsMcAlisterTripleSemigroupElement</code> are synonyms. The mathematical description of these objects can be found in the introduction to Chapter <a href="chap8.html#X7CC4F6FE87AFE638"><span class="RefLink">8.4</span></a>.</p>
+
+<p><a id="X854BFB1C7BA57985" name="X854BFB1C7BA57985"></a></p>
+
+<h5>8.4-8 McAlisterTripleSemigroupElement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; McAlisterTripleSemigroupElement</code>( <var class="Arg">S</var>, <var class="Arg">A</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MTSE</code>( <var class="Arg">S</var>, <var class="Arg">A</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A McAlister triple semigroup element.</p>
+
+<p>Returns the <em>McAlister triple semigroup element</em> of the McAlister triple semigroup <var class="Arg">S</var> which corresponds to a label <var class="Arg">A</var> of a vertex from the <code class="func">McAlisterTripleSemigroupSemilattice</code> (<a href="chap8.html#X86C0C3EF84517DAB"><span class="RefLink">8.4-5</span></a>) of <var class="Arg">S</var> and a group element <var class="Arg">g</var> of the <code class="func">McAlisterTripleSemigroupGroup</code> (<a href="chap8.html#X7A54FDB186CD2E94"><span class="RefLink">8.4-3</span></a>) of <var class="Arg">S</var>. The pair <var class="Arg">(A,g)</var> only represents an element of <var class="Arg">S</var> if the following holds: <var class="Arg">A</var> acted on by the inverse of <var class="Arg">g</var> (via <code class="func">McAlisterTripleSemigroupAction</code> (<a href="chap8.html#X86D6442E85881DEA"><span class="RefLink">8.4-6</span></a>)) is a vertex of the join-semilattice of <var class="Arg">S</var>.</p>
+
+<p>The functions <code class="code">MTSE</code> and <code class="code">McAlisterTripleSemigroupElement</code> are synonyms.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Digraph([[1], [1, 2], [1, 2, 3], [1, 4], [1, 4, 5]]);</span>
+&lt;immutable digraph with 5 vertices, 11 edges&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := InducedSubdigraph(x, [1, 2, 3]);</span>
+&lt;immutable digraph with 3 vertices, 6 edges&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := AutomorphismGroup(x);</span>
+Group([ (2,4)(3,5) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := McAlisterTripleSemigroup(A, x, y, OnPoints);</span>
+&lt;McAlister triple semigroup over Group([ (2,4)(3,5) ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := McAlisterTripleSemigroup(A, x, y);</span>
+&lt;McAlister triple semigroup over Group([ (2,4)(3,5) ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S = T;</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphicSemigroup(S, T);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := MTSE(S, 1, (2, 4)(3, 5));</span>
+(1, (2,4)(3,5))
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := MTSE(S, 2, ());</span>
+(2, ())
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a * a;</span>
+(1, ())
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMTSE(a * a);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a = MTSE(T, 1, (2, 4)(3, 5));</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a * b;</span>
+(1, (2,4)(3,5))</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap7.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap9.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

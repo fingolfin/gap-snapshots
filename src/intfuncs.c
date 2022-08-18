@@ -91,7 +91,7 @@ static Obj FuncInitRandomMT(Obj self, Obj initstr)
   UInt4 *mt, key_length, byte_key_length, i, j, k, N = 624;
 
   /* check the seed, given as string */
-  RequireStringRep("InitRandomMT", initstr);
+  RequireStringRep(SELF_NAME, initstr);
 
   /* store array of 624 UInt4 and one UInt4 as counter "mti" and an
      endianness marker */
@@ -445,9 +445,9 @@ FuncHASHKEY_BAG(Obj self, Obj obj, Obj seed, Obj offset, Obj maxlen)
   }
 
   /* check the arguments                                                 */
-  Int s = GetSmallInt("HASHKEY_BAG", seed);
+  Int s = GetSmallInt(SELF_NAME, seed);
 
-  Int offs = GetSmallInt("HASHKEY_BAG", offset);
+  Int offs = GetSmallInt(SELF_NAME, offset);
   if (offs < 0 || offs > SIZE_OBJ(obj)) {
       ErrorMayQuit("HashKeyBag: <offset> must be non-negative and less than "
                    "the bag size",
@@ -455,7 +455,7 @@ FuncHASHKEY_BAG(Obj self, Obj obj, Obj seed, Obj offset, Obj maxlen)
   }
 
   /* maximal number of bytes to read */
-  Int imaxlen = GetSmallInt("HASHKEY_BAG", maxlen);
+  Int imaxlen = GetSmallInt(SELF_NAME, maxlen);
 
   n=SIZE_OBJ(obj)-offs;
 
@@ -471,11 +471,11 @@ Int HASHKEY_MEM_NC(const void * ptr, UInt4 seed, Int read)
 #ifdef SYS_IS_64_BIT
     UInt8 hashout[2];
     MurmurHash3_x64_128(ptr, read, seed, (void *)hashout);
-    return hashout[0] % (1UL << 60);
+    return hashout[0] % ((UInt)1 << 60);
 #else
     UInt4 hashout;
     MurmurHash3_x86_32(ptr, read, seed, (void *)&hashout);
-    return hashout % (1UL << 28);
+    return hashout % ((UInt)1 << 28);
 #endif
 }
 
@@ -602,9 +602,7 @@ static Obj FuncBUILD_BITFIELDS(Obj self, Obj args)
     GAP_ASSERT(IS_PLIST(args));
     GAP_ASSERT(LEN_PLIST(args) >= 1 && ELM_PLIST(args, 1));
     Obj widths = ELM_PLIST(args, 1);
-    if (!IS_LIST(widths))
-        ErrorMayQuit("Fields builder: first argument must be list of widths",
-                     0, 0);
+    RequireSmallList(SELF_NAME, widths);
     UInt nfields = LEN_LIST(widths);
     if (LEN_PLIST(args) != nfields + 1)
         ErrorMayQuit(
@@ -618,8 +616,8 @@ static Obj FuncBUILD_BITFIELDS(Obj self, Obj args)
         x <<= INT_INTOBJ(y);
         GAP_ASSERT(ELM_PLIST(args, i + 1));
         Obj z = ELM_PLIST(args, i + 1);
-        if (!IS_INTOBJ(z))
-            ErrorMayQuit("Fields builder: values must be small integers", 0,
+        if (!IS_NONNEG_INTOBJ(z))
+            ErrorMayQuit("Fields builder: values must be non-negative small integers", 0,
                          0);
         GAP_ASSERT(INT_INTOBJ(z) < (1 << INT_INTOBJ(y)));
         x |= INT_INTOBJ(z);
@@ -630,15 +628,14 @@ static Obj FuncBUILD_BITFIELDS(Obj self, Obj args)
 
 static Obj FuncMAKE_BITFIELDS(Obj self, Obj widths)
 {
-    if (!IS_LIST(widths))
-        ErrorMayQuit("MAKE_BITFIELDS: widths must be a list", 0, 0);
+    RequireSmallList(SELF_NAME, widths);
     UInt nfields = LEN_LIST(widths);
     UInt starts[nfields + 1];
     starts[0] = 0;
     for (UInt i = 1; i <= nfields; i++) {
         Obj o = ELM_LIST(widths, i);
-        if (!IS_INTOBJ(o))
-            ErrorMayQuit("MAKE_BITFIELDS: widths must be small integers", 0,
+        if (!IS_NONNEG_INTOBJ(o))
+            ErrorMayQuit("MAKE_BITFIELDS: widths must be non-negative small integers", 0,
                          0);
         UInt width = INT_INTOBJ(o);
         starts[i] = starts[i - 1] + width;
@@ -721,10 +718,10 @@ static Obj FuncMAKE_BITFIELDS(Obj self, Obj widths)
 static StructGVarFunc GVarFuncs[] = {
 
 
-    GVAR_FUNC(HASHKEY_BAG, 4, "obj, seed, offset, maxlen"),
-    GVAR_FUNC(InitRandomMT, 1, "initstr"),
-    GVAR_FUNC(MAKE_BITFIELDS, -1, "widths"),
-    GVAR_FUNC(BUILD_BITFIELDS, -2, "widths, vals"),
+    GVAR_FUNC_4ARGS(HASHKEY_BAG, obj, seed, offset, maxlen),
+    GVAR_FUNC_1ARGS(InitRandomMT, initstr),
+    GVAR_FUNC_XARGS(MAKE_BITFIELDS, -1, "widths"),
+    GVAR_FUNC_XARGS(BUILD_BITFIELDS, -2, "widths, vals"),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -760,7 +757,6 @@ static Int InitLibrary (
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 

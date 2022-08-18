@@ -1296,135 +1296,94 @@ InstallGlobalFunction( AtlasRepIdentifier, function( arg )
 
 #############################################################################
 ##
-#F  IntegratedStraightLineProgramExt( <listofprogs> )
+#F  CompositionOfSLDAndSLP( <sld>, <slp> )
 ##
-##  The idea is to concatenate the lists of lines of the programs in the list
-##  <listofprogs> after shifting the positions they refer to.
-##  If a program overwrites some of the original generators then we first
-##  copy the generators.
+##  Return a straight line decision that first applies the straight line
+##  program <slp> to its inputs and then returns the result of the
+##  straight line decision <sld> on the outputs.
 ##
-BindGlobal( "IntegratedStraightLineProgramExt",
-    function( listofprogs )
-    local n,          # number of inputs of all in `listofprogs'
-          lines,      # list of lines of the result program
-          results,    # results line of the result program
-          nextoffset, # maximal position used up to now
-          prog,       # loop over `listofprogs'
-          proglines,  # list of lines of `prog'
-          offset,     # maximal position used before the current program
-          shiftgens,  # use a copy of the original generators
-          i, line,    # loop over `proglines'
-          newline,    # line with shifted source positions
-          j;          # loop over the odd positions in `newline'
+##  A typical situation is that <slp> is a restandardization script
+##  and <sld> is a presentation.
+##
+InstallGlobalFunction( CompositionOfSLDAndSLP,
+    function( sld, slp )
+    local lines, len, lastline, inp2, max, i, pos, line;
 
-    # Check the input.
-    if    not IsDenseList( listofprogs )
-       or IsEmpty( listofprogs )
-       or not ForAll( listofprogs, IsStraightLineProgram ) then
-      Error( "<listofprogs> must be a nonempty list ",
-             "of straight line programs" );
-    fi;
-    n:= NrInputsOfStraightLineProgram( listofprogs[1] );
-    if not ForAll( listofprogs,
-                   prog -> NrInputsOfStraightLineProgram( prog ) = n ) then
-      Error( "all in <listofprogs> must have the same number of inputs" );
-    fi;
+    lines:= ShallowCopy( LinesOfStraightLineProgram( slp ) );
+    len:= Length( lines );
+    lastline:= lines[ len ];
+    inp2:= NrInputsOfStraightLineDecision( sld );
 
-    # Initialize the list of lines, the results line, and the offset.
-    lines:= [];
-    results:= [];
-    nextoffset:= n;
+    if ForAll( lastline, IsList ) then
 
-    # Loop over the programs, and add the results to `results'.
-    for prog in listofprogs do
-
-      proglines:= LinesOfStraightLineProgram( prog );
-      if IsEmpty( proglines ) then
-        Error( "each in <listofprogs> must return a single element" );
+      # Check that the programs fit together.
+      if inp2 <> Length( lastline ) then
+        Error( "outputs of <slp> incompatible with inputs of <sld>" );
       fi;
 
-      # Set the positions used up to here.
-      offset:= nextoffset;
-
-      # If necessary protect the original generators from being replaced,
-      # and work with a shifted copy.
-      shiftgens:= false;
-      if ForAny( proglines, line ->     Length( line ) = 2
-                                    and IsList( line[1] )
-                                    and line[2] in [ 1 .. n ] ) then
-        Append( lines, List( [ 1 .. n ], i -> [ [ i, 1 ], i + offset ] ) );
-        nextoffset:= offset + n;
-        shiftgens:= true;
-      else
-        offset:= offset - n;
-      fi;
-
-      # Loop over the program.
-      for i in [ 1 .. Length( proglines ) ] do
-
-        line:= proglines[i];
-
-        if   not IsEmpty( line ) and IsInt( line[1] ) then
-
-          # The line describes a word to be appended.
-          # (Increase the positions by `offset'.)
-          newline:= ShallowCopy( line );
-          for j in [ 1, 3 .. Length( newline )-1 ] do
-            if shiftgens or n < newline[j] then
-              newline[j]:= newline[j] + offset;
-            fi;
-          od;
-          if i = Length( proglines ) then
-            Add( results, newline );
-          else
-            Add( lines, newline );
-            nextoffset:= nextoffset + 1;
-          fi;
-
-        elif 2 = Length( line ) and IsInt( line[2] ) then
-
-          # The line describes a word that shall replace.
-          # (Increase the positions and the destination by `offset'.)
-          newline:= ShallowCopy( line[1] );
-          for j in [ 1, 3 .. Length( newline )-1 ] do
-            if shiftgens or n < newline[j] then
-              newline[j]:= newline[j] + offset;
-            fi;
-          od;
-          if i = Length( proglines ) then
-            Add( results, newline );
-          else
-            newline:= [ newline, line[2] + offset ];
-            Add( lines, newline );
-            if nextoffset < newline[2] then
-              nextoffset:= newline[2];
-            fi;
-          fi;
-
+      # The last line is a list of external representations of assoc. words.
+      # Copy them first to safe positions, then to the first positions.
+      max:= NrInputsOfStraightLineProgram( slp );
+      for i in [ 1 .. len-1 ] do
+        if IsList( lines[i][1] ) then
+          max:= Maximum( max, lines[i][2] );
         else
-
-          # The line describes a list of words to be returned.
-          line:= List( line, ShallowCopy );
-          for newline in line do
-            for j in [ 1, 3 .. Length( newline )-1 ] do
-              if shiftgens or n < newline[j] then
-                newline[j]:= newline[j] + offset;
-              fi;
-            od;
-          od;
-          Append( results, line );
-
+          max:= max + 1;
         fi;
-
+      od;
+      Unbind( lines[ len ] );
+      pos:= max;
+      for i in lastline do
+        max:= max + 1;
+        Add( lines, [ i, max ] );
+      od;
+      for i in [ 1 .. Length( lastline ) ] do
+        Add( lines, [ [ pos + i, 1 ], i ] );
       od;
 
+    else
+      # Check that the programs fit together.
+      if inp2 <> 1 then
+        Error( "outputs of <slp> incompatible with inputs of <sld>" );
+      fi;
+
+      if Length( lastline ) = 2 and IsList( lastline[1] ) then
+
+        # The last line is a pair of the external representation of an assoc.
+        # word and a positive integer.
+        # Copy the word to position 1 if necessary.
+        if lastline[2] <> 1 then
+          Add( lines, [ [ lastline[2], 1 ], 1 ] );
+        fi;
+
+      else
+
+        # The last line is the external representation of an assoc. word.
+        # Store it at position 1.
+        lines[ Length( lines ) ]:= [ lastline, 1 ];
+
+      fi;
+
+    fi;
+
+    # Append the lines of `sld'.
+    # (Rewrite lines of type 1.)
+    max:= inp2;
+    for line in LinesOfStraightLineDecision( sld ) do
+      if line[1] = "Order" then
+        Add( lines, line );
+      elif ForAll( line, IsInt ) then
+        max:= max + 1;
+        Add( lines, [ line, max ] );
+      else
+        max:= Maximum( max, line[2] );
+        Add( lines, line );
+      fi;
     od;
 
-    # Add the results line.
-    Add( lines, results );
-
-    # Construct and return the new program.
-    return StraightLineProgramNC( lines, n );
+    # Construct and return the new decision.
+    return StraightLineDecisionNC( lines,
+                                   NrInputsOfStraightLineProgram( slp ) );
     end );
 
 
@@ -1901,7 +1860,7 @@ AGR.CreateHTMLOverview:= function( tocid, info... )
     if IsBound( info.dir ) then
       dir:= info.dir;
     elif tocid = "core" then
-      dir:= Filename( DirectoriesPackageLibrary( "atlasrep", "htm" ), "" );
+      dir:= Filename( DirectoriesPackageLibrary( "atlasrep", "htm/data" ), "" );
     else
       Error( "info.dir must be bound" );
     fi;

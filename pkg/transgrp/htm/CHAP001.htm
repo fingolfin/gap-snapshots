@@ -8,7 +8,7 @@
 <li> <A HREF="CHAP001.htm#SECT001">Transitive Permutation Groups</a>
 <li> <A HREF="CHAP001.htm#SECT002">Selection Functions</a>
 <li> <A HREF="CHAP001.htm#SECT003">Interfacing with the library</a>
-<li> <A HREF="CHAP001.htm#SECT004">Supplemental Download</a>
+<li> <A HREF="CHAP001.htm#SECT004">Supplemental Downloads</a>
 </ol><p>
 <p>
 The Transitive Groups Library is created by Alexander Hulpke.
@@ -17,22 +17,23 @@ You are free to distribute it, provided that you make no modifications.
 The actual groups in the library and their generating sets are due to a
 number of authors:
 Gregory Butler, John McKay, Gordon
-Royle, Alexander Hulpke, John Cannon and Derek Holt. 
+Royle, Alexander Hulpke, John Cannon, Gareth Tracy, and Derek Holt. 
 <p>
 The list of transitive  groups up  to degree 11
 was published in <a href="biblio.htm#BM83"><cite>BM83</cite></a>,  the list of degree  12 was published in
 <a href="biblio.htm#Roy87"><cite>Roy87</cite></a>, degree 14 and  15 were published in  <a href="biblio.htm#Butler93"><cite>Butler93</cite></a> and
 degrees 16--30 were published in <a href="biblio.htm#Hulpke96"><cite>Hulpke96</cite></a> and <a href="biblio.htm#HulpkeTG"><cite>HulpkeTG</cite></a>.
-Degree 32 was published in <a href="biblio.htm#CanHolt32"><cite>CanHolt32</cite></a>, and degrees 34-46 have been
-obtained by Derek Holt (but are unpublished).
-Groups of prime degree of course are
-primitive and were known long before.
+Degree 32 was published in <a href="biblio.htm#CanHolt32"><cite>CanHolt32</cite></a>, degrees 34-46 have been
+obtained by Derek Holt and Gordon Royle in <a href="biblio.htm#HoltRoyle47"><cite>HoltRoyle47</cite></a>,
+and degree 48 is due to Derek Holt, Gordon Royle, and Gareth Tracy in
+&nbsp;<a href="biblio.htm#HoltRoyleTracy48"><cite>HoltRoyleTracy48</cite></a>.
+Groups of prime degree of course are primitive and were known long before.
 <p>
 The transitive groups library will contain representatives for all
 transitive permutation groups of degree at most  47. Not all degrees might
 be yet available in the current release. Due to the total number,
-degree 32 needs to be downloaded separately, see section ``Supplemental
-Download'' below.
+degree 32 and 48 need to be downloaded separately, see section ``Supplemental
+Downloads'' below.
 <p>
 Two permutations groups of the same degree are considered to be
 equivalent, if there is a renumbering of points, which maps one group into
@@ -104,6 +105,18 @@ result of <code>TransitiveIdentification</code> is undefined.
 <pre>
 gap&gt; TransitiveIdentification(Group((1,2),(1,2,3)));
 2
+</pre>
+<p>
+<a name = "SSEC001.5"></a>
+<li><code>MinimalTransitiveIndices( </code><var>deg</var><code> ) F</code>
+<p>
+returns a list of indices of the transitive groups of degree <var>deg</var>, which
+are minimally trransitive, i.e. for which every proper subgroup is not
+transitive.
+<p>
+<pre>
+gap&gt; MinimalTransitiveIndices(12);
+[ 1, 2, 3, 4, 5, 7, 9, 17, 31, 34, 40, 46, 47, 57, 162, 166, 246 ]
 </pre>
 <p>
 <p>
@@ -183,7 +196,7 @@ the given degree. Routines should not try to access data structures of the
 library directly.
 <p>
 <p>
-<h2><a name="SECT004">1.4 Supplemental Download</a></h2>
+<h2><a name="SECT004">1.4 Supplemental Downloads</a></h2>
 <p><p>
 There are almost 3 million groups of degree 32 and these groups require over
 a GB of disk space when uncompressed.
@@ -195,12 +208,34 @@ https://www.math.colostate.edu/~hulpke/transgrp/trans32.tgz
 <p>
 Simply unpack this archive (which is a tar archive compressed with gzip --
 consult your computer administrator on the correct way of unpacking)
-in the folder of the <code>transgrp</code> package (this
+in the top folder of the <code>transgrp</code> package (this
 folder will contain the <code>PackageInfo.g</code> file, it will create a folder dat32
 containing the groups of degree 32. Once you restart GAP it will
 automatically recognize the existence of these groups.
 <p>
+The <var>195826352</var> groups of degree 48 take over 30GB of disk space in
+compressed form and thus require a particular download:
+<p>
+Create a folder <code>dat48</code> in the top folder of the <code>transgrp</code> package. Then
+download the 11 files <code>Trans48Part....tar</code> from
+<pre>
+https://zenodo.org/record/5935751
+</pre>
+and unpack them into this folder. 
+<strong>Do not uncompress the resulting <code>.gz</code> files</strong>
+(You can delete the <code>.tar</code> archive files afterwards.)
+Once GAP is restarted these groups will be available, but
+<code>TransitiveIdentification</code> (for groups not created from the library) or
+the <code>AllTransitiveGroups</code> selector will not work.
+<p>
+Conversion of these groups to GAP is due in part to Jesse Lansdown, whose
+help is greatly appreciated
+<p>
+Due to the compressed storage, it is perceivable that the groups of degree 48
+do not work under Windows. This has not been tested and no promise for this
+particular functionality is made.
+<p>
 [<a href = "chapters.htm">Up</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<address>transgrp manual<br>August 2020
+<address>transgrp manual<br>February 2022
 </address></body></html>

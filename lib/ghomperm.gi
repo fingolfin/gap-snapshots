@@ -588,7 +588,7 @@ local dom, l, n, i, j,o,ld,mp,lp,x;
   # do not take all elements but a sampler
   #if Length(shorb)>10000 then
   #  mp:=[1..Length(shorb)];
-  #  shorb:=shorb{Set(List([1..5000],i->Random(mp)))};
+  #  shorb:=shorb{Set([1..5000],i->Random(mp))};
   #fi;
   if Length(shorb)>3000 then
     mp:=[1..Length(shorb)];
@@ -989,6 +989,15 @@ InstallMethod( IsSingleValued, true,
     function( hom )
     local   sch;
     
+  # force stabilizer chain -- might get CoKernel for free
+  if not HasStabChainMutable(hom) then
+    StabChainMutable(hom);
+  fi;
+
+  if IsBound(hom!.CoKernelOfMultiplicativeGeneralMapping) then
+    return IsTrivial(CoKernelOfMultiplicativeGeneralMapping(hom));
+  fi;
+
     for sch in CoKernelGensIterator( hom )  do
         if sch <> One( sch )  then
             return false;
@@ -1495,7 +1504,7 @@ InstallMethod( PreImagesRepresentative,"constituent homomorphism",
 function( hom, elm )
 local D,DP;
   if not HasStabChainMutable(Source(hom)) then
-    # do not enforce a stabchain if not neccessary -- it could be big
+    # do not enforce a stabchain if not necessary -- it could be big
     TryNextMethod();
   fi;
   D:=Enumerator(UnderlyingExternalSet(hom));
@@ -1973,8 +1982,8 @@ function( hom )
   if IsEndoGeneralMapping( hom ) then
 
     # cheap test for cycle structures
-    if Length(Set(List(MappingGeneratorsImages(hom),
-      x->List(x,CycleStructurePerm))))>1
+    if Length(Set(MappingGeneratorsImages(hom),
+      x->List(x,CycleStructurePerm)))>1
     then
       return false;
     fi;

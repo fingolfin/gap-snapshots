@@ -45,20 +45,20 @@
   
   [1X3.1-1 IsIncidenceStructure[101X
   
-  [29X[2XIsIncidenceStructure[102X[32X Category
+  [33X[1;0Y[29X[2XIsIncidenceStructure[102X [32X Category[133X
   
   [33X[0;0YTop level category for all objects representing an incidence structure.[133X
   
   [1X3.1-2 IsIncidenceGeometry[101X
   
-  [29X[2XIsIncidenceGeometry[102X[32X Category
+  [33X[1;0Y[29X[2XIsIncidenceGeometry[102X [32X Category[133X
   
   [33X[0;0YCategory  for all objects representing an incidence geometry. All particular
   geometries implemented in [5XFinInG[105X are incidence geometries.[133X
   
   [1X3.1-3 IncidenceStructure[101X
   
-  [29X[2XIncidenceStructure[102X( [3Xeles[103X, [3Xinc_rel[103X, [3Xtype[103X, [3Xtypeset[103X ) [32X operation
+  [33X[1;0Y[29X[2XIncidenceStructure[102X( [3Xeles[103X, [3Xinc_rel[103X, [3Xtype[103X, [3Xtypeset[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan incidence structure[133X
   
   [33X[0;0Y[3Xeles[103X  is  a  set containing the elements of the incidence structure. [3Xinc_rel[103X
@@ -108,10 +108,10 @@
   
   [1X3.1-4 [33X[0;0YMain categories in [10XIsIncidenceGeometry[110X[101X[1X[133X[101X
   
-  [29X[2XIsLieGeometry[102X[32X Category
-  [29X[2XIsAffineSpace[102X[32X Category
-  [29X[2XIsGeneralisedPolygon[102X[32X Category
-  [29X[2XIsCosetGeometry[102X[32X Category
+  [33X[1;0Y[29X[2XIsLieGeometry[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsAffineSpace[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsGeneralisedPolygon[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsCosetGeometry[102X [32X Category[133X
   
   [33X[0;0YWithin  each  category, several subcategories are declared. Subcategories of
   [10XIsLieGeometry[110X   are   discussed   in   Section   [14X3.6[114X  and  subcategories  of
@@ -147,8 +147,8 @@
   
   [1X3.1-6 TypesOfElementsOfIncidenceStructure[101X
   
-  [29X[2XTypesOfElementsOfIncidenceStructure[102X( [3Xinc[103X ) [32X attribute
-  [29X[2XTypesOfElementsOfIncidenceStructurePlural[102X( [3Xinc[103X ) [32X attribute
+  [33X[1;0Y[29X[2XTypesOfElementsOfIncidenceStructure[102X( [3Xinc[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTypesOfElementsOfIncidenceStructurePlural[102X( [3Xinc[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya list of strings or integers[133X
   
   [33X[0;0YBoth    attributes    are    declared    for   objects   in   the   category
@@ -170,8 +170,8 @@
   
   [1X3.1-7 Rank[101X
   
-  [29X[2XRank[102X( [3Xinc[103X ) [32X operation
-  [29X[2XRankAttr[102X( [3Xinc[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRank[102X( [3Xinc[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRankAttr[102X( [3Xinc[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Yrank  of  [3Xinc[103X,  an  object  which  must  belong  to  the  category
             [10XIsIncidenceStructure[110X[133X
   
@@ -192,7 +192,7 @@
   
   [1X3.1-8 IncidenceGraph[101X
   
-  [29X[2XIncidenceGraph[102X( [3Xinc[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIncidenceGraph[102X( [3Xinc[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya graph[133X
   
   [33X[0;0YThe  vertices  are the elements of [3Xinc[103X, adjacency between different vertices
@@ -289,14 +289,14 @@
   
   [1X3.2-1 [33X[0;0YMain categories for individual elements of incidence structures[133X[101X
   
-  [29X[2XIsElementOfIncidenceStructure[102X[32X Category
-  [29X[2XIsElementOfIncidenceGeometry[102X[32X Category
-  [29X[2XIsElementOfLieGeometry[102X[32X Category
-  [29X[2XIsElementOfAffineSpace[102X[32X Category
-  [29X[2XIsElementOfCosetGeometry[102X[32X Category
-  [29X[2XIsSubspaceOfProjectiveSpace[102X[32X Category
-  [29X[2XIsSubspaceOfClassicalPolarSpace[102X[32X Category
-  [29X[2XIsElementOfGeneralisedPolygon[102X[32X Category
+  [33X[1;0Y[29X[2XIsElementOfIncidenceStructure[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsElementOfIncidenceGeometry[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsElementOfLieGeometry[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsElementOfAffineSpace[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsElementOfCosetGeometry[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsSubspaceOfProjectiveSpace[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsSubspaceOfClassicalPolarSpace[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsElementOfGeneralisedPolygon[102X [32X Category[133X
   
   [33X[0;0YIn general, elements of an incidence structure belonging to [10XIsIncStr[110X, are in
   the  category  [10XIsElementOfIncStr[110X.  The inclusion for different categories of
@@ -325,7 +325,7 @@
   
   [1X3.2-2 UnderlyingObject[101X
   
-  [29X[2XUnderlyingObject[102X( [3Xel[103X ) [32X operation
+  [33X[1;0Y[29X[2XUnderlyingObject[102X( [3Xel[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan object[133X
   
   [33X[0;0YAn  element  of  an incidence structure has a type and an underlying object.
@@ -400,7 +400,7 @@
   
   [1X3.2-3 Type[101X
   
-  [29X[2XType[102X( [3Xel[103X ) [32X operation
+  [33X[1;0Y[29X[2XType[102X( [3Xel[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan integer[133X
   
   [33X[0;0YAn  element  of  an incidence structure has a type and an underlying object.
@@ -423,7 +423,7 @@
   
   [1X3.2-4 ObjectToElement[101X
   
-  [29X[2XObjectToElement[102X( [3Xinc[103X, [3Xt[103X, [3Xobj[103X ) [32X operation
+  [33X[1;0Y[29X[2XObjectToElement[102X( [3Xinc[103X, [3Xt[103X, [3Xobj[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan element of the incidence structure [3Xinc[103X[133X
   
   [33X[0;0YIf  [3Xobj[103X  represents  an element of [3Xinc[103X of type [3Xt[103X, this operation returns the
@@ -437,13 +437,13 @@
   [1X3.2-5 [33X[0;0YMain categories for collections of all the elements of a given type of[101X
   [1Xan incidence structure[133X[101X
   
-  [29X[2XIsElementsOfIncidenceStructure[102X[32X Category
-  [29X[2XIsElementsOfIncidenceGeometry[102X[32X Category
-  [29X[2XIsElementsOfLieGeometry[102X[32X Category
-  [29X[2XIsElementsOfAffineSpace[102X[32X Category
-  [29X[2XIsElementsOfCosetGeometry[102X[32X Category
-  [29X[2XIsSubspacesOfProjectiveSpace[102X[32X Category
-  [29X[2XIsSubspacesOfClassicalPolarSpace[102X[32X Category
+  [33X[1;0Y[29X[2XIsElementsOfIncidenceStructure[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsElementsOfIncidenceGeometry[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsElementsOfLieGeometry[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsElementsOfAffineSpace[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsElementsOfCosetGeometry[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsSubspacesOfProjectiveSpace[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsSubspacesOfClassicalPolarSpace[102X [32X Category[133X
   
   [33X[0;0YFor  a given incidence structure, the collection of elements of a given type
   can  be  constructed. constructed here means that an object is returned that
@@ -462,8 +462,8 @@
   
   [1X3.2-6 ElementsOfIncidenceStructure[101X
   
-  [29X[2XElementsOfIncidenceStructure[102X( [3Xinc[103X, [3Xj[103X ) [32X operation
-  [29X[2XElementsOfIncidenceStructure[102X( [3Xinc[103X, [3Xstr[103X ) [32X operation
+  [33X[1;0Y[29X[2XElementsOfIncidenceStructure[102X( [3Xinc[103X, [3Xj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XElementsOfIncidenceStructure[102X( [3Xinc[103X, [3Xstr[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya collection of elements[133X
   
   [33X[0;0Y[3Xinc[103X must be an incidence structure, [3Xj[103X must be a type of element of [3Xinc[103X. This
@@ -503,7 +503,7 @@
   
   [1X3.2-7 ElementsOfIncidenceStructure[101X
   
-  [29X[2XElementsOfIncidenceStructure[102X( [3Xinc[103X ) [32X operation
+  [33X[1;0Y[29X[2XElementsOfIncidenceStructure[102X( [3Xinc[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya collection of elements[133X
   
   [33X[0;0Y[3Xinc[103X  must  be  an  incidence  structure,  then  this  operation  returns the
@@ -514,10 +514,10 @@
   
   [1X3.2-8 [33X[0;0YShort names for ElementsOfIncidenceStructure[133X[101X
   
-  [29X[2XPoints[102X( [3Xinc[103X ) [32X operation
-  [29X[2XLines[102X( [3Xinc[103X ) [32X operation
-  [29X[2XPlanes[102X( [3Xinc[103X ) [32X operation
-  [29X[2XSolids[102X( [3Xinc[103X ) [32X operation
+  [33X[1;0Y[29X[2XPoints[102X( [3Xinc[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLines[102X( [3Xinc[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPlanes[102X( [3Xinc[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSolids[102X( [3Xinc[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YThe points, lines, planes, solids, respectively of [3Xinc[103X[133X
   
   [33X[0;0YFor  geometries  in  [10XIsLieGeometry[110X, [10XIsAffineSpace[110X, and [10XIsGeneralisedPolygon[110X,
@@ -540,8 +540,8 @@
   
   [1X3.2-9 NrElementsOfIncidenceStructure[101X
   
-  [29X[2XNrElementsOfIncidenceStructure[102X( [3Xinc[103X, [3Xj[103X ) [32X operation
-  [29X[2XNrElementsOfIncidenceStructure[102X( [3Xinc[103X, [3Xstr[103X ) [32X operation
+  [33X[1;0Y[29X[2XNrElementsOfIncidenceStructure[102X( [3Xinc[103X, [3Xj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNrElementsOfIncidenceStructure[102X( [3Xinc[103X, [3Xstr[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya positive integer[133X
   
   [33X[0;0Y[3Xinc[103X must be an incidence structure, [3Xj[103X must be a type of element of [3Xinc[103X. This
@@ -567,7 +567,7 @@
   
   [1X3.2-10 Random[101X
   
-  [29X[2XRandom[102X( [3XC[103X ) [32X operation
+  [33X[1;0Y[29X[2XRandom[102X( [3XC[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan element in the collection [3XC[103X[133X
   
   [33X[0;0Y[3XC[103X  is a collection of elements of an incidence structure, i.e., an object in
@@ -586,8 +586,8 @@
   
   [1X3.2-11 IsIncident[101X
   
-  [29X[2XIsIncident[102X( [3Xu[103X, [3Xv[103X ) [32X operation
-  [29X[2X\*[102X( [3Xu[103X, [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsIncident[102X( [3Xu[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2X\*[102X( [3Xu[103X, [3Xv[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0Y[3Xu[103X  and  [3Xv[103X  must be elements of an incidence structure. This function returns
@@ -618,7 +618,7 @@
   
   [1X3.2-12 AmbientGeometry[101X
   
-  [29X[2XAmbientGeometry[102X( [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XAmbientGeometry[102X( [3Xv[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe ambient geometry of the element [3Xv[103X[133X
   
   [33X[0;0YIf [3Xv[103X is an element of an incidence geometry currently implemented in [5XFinInG[105X,
@@ -667,7 +667,7 @@
   
   [1X3.3-1 FlagOfIncidenceStructure[101X
   
-  [29X[2XFlagOfIncidenceStructure[102X( [3Xinc[103X, [3Xl[103X ) [32X operation
+  [33X[1;0Y[29X[2XFlagOfIncidenceStructure[102X( [3Xinc[103X, [3Xl[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe flag consisting of the elements of [3Xinc[103X in the list [3Xl[103X[133X
   
   [33X[0;0YIt  is  checked  if  all  elements  in [3Xl[103X are incident and belong to the same
@@ -689,7 +689,7 @@
   
   [1X3.3-2 IsChamberOfIncidenceStructure[101X
   
-  [29X[2XIsChamberOfIncidenceStructure[102X( [3Xflag[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsChamberOfIncidenceStructure[102X( [3Xflag[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue if and only if [3Xflag[103X contains an element of each type[133X
   
   [33X[0;0YThe incidence structure is determined by the elements.[133X
@@ -716,7 +716,7 @@
   
   [1X3.3-3 IsEmptyFlag[101X
   
-  [29X[2XIsEmptyFlag[102X( [3Xflag[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsEmptyFlag[102X( [3Xflag[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0YIt  is  possible to construct the empty flag of an incidence structure. This
@@ -724,7 +724,7 @@
   
   [1X3.3-4 ElementsOfFlag[101X
   
-  [29X[2XElementsOfFlag[102X( [3Xflag[103X ) [32X operation
+  [33X[1;0Y[29X[2XElementsOfFlag[102X( [3Xflag[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya list of elements[133X
   
   [33X[0;0YThis operations simply returns the list of elements that define [3Xflag[103X[133X
@@ -748,7 +748,7 @@
   
   [1X3.3-5 Rank[101X
   
-  [29X[2XRank[102X( [3Xflag[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRank[102X( [3Xflag[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Yan integer[133X
   
   [33X[0;0YThis operations returns the number of elements that define [3Xflag[103X[133X
@@ -771,7 +771,7 @@
   
   [1X3.3-6 Size[101X
   
-  [29X[2XSize[102X( [3Xflag[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSize[102X( [3Xflag[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Yan integer[133X
   
   [33X[0;0YThis operations returns the number of elements that define [3Xflag[103X[133X
@@ -794,7 +794,7 @@
   
   [1X3.3-7 AmbientGeometry[101X
   
-  [29X[2XAmbientGeometry[102X( [3Xflag[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAmbientGeometry[102X( [3Xflag[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Yan incidence structure[133X
   
   [33X[0;0YThis operations returns the ambient geometry of the [3Xflag[103X[133X
@@ -817,7 +817,7 @@
   
   [1X3.3-8 Type[101X
   
-  [29X[2XType[102X( [3Xflag[103X ) [32X operation
+  [33X[1;0Y[29X[2XType[102X( [3Xflag[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan list of integers[133X
   
   [33X[0;0YThis operations returns the list of types of the elements defining [3Xflag[103X[133X
@@ -844,8 +844,8 @@
   
   [1X3.3-9 IsIncident[101X
   
-  [29X[2XIsIncident[102X( [3Xel[103X, [3Xflag[103X ) [32X operation
-  [29X[2XIsIncident[102X( [3Xflag[103X, [3Xel[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsIncident[102X( [3Xel[103X, [3Xflag[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsIncident[102X( [3Xflag[103X, [3Xel[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0YAn  element  is  incident with a flag if and only if it is incident with all
@@ -874,8 +874,8 @@
   
   [1X3.4-1 ShadowOfElement[101X
   
-  [29X[2XShadowOfElement[102X( [3Xinc[103X, [3Xv[103X, [3Xstr[103X ) [32X operation
-  [29X[2XShadowOfElement[102X( [3Xinc[103X, [3Xv[103X, [3Xj[103X ) [32X operation
+  [33X[1;0Y[29X[2XShadowOfElement[102X( [3Xinc[103X, [3Xv[103X, [3Xstr[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XShadowOfElement[102X( [3Xinc[103X, [3Xv[103X, [3Xj[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YThe collection of elements of type [3Xstr[103X or type [3Xj[103X incident with [3Xv[103X[133X
   
   [33X[0;0Y[3Xinc[103X  is  an  incidence structure, [3Xv[103X must be an element of [3Xinc[103X, [3Xstr[103X must be a
@@ -913,7 +913,7 @@
   
   [1X3.4-2 ElementsIncidentWithElementOfIncidenceStructure[101X
   
-  [29X[2XElementsIncidentWithElementOfIncidenceStructure[102X( [3Xv[103X, [3Xj[103X ) [32X operation
+  [33X[1;0Y[29X[2XElementsIncidentWithElementOfIncidenceStructure[102X( [3Xv[103X, [3Xj[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YThe collection of elements of type [3Xj[103X incident with [3Xv[103X[133X
   
   [33X[0;0YThis    operation    is    applicable    for    objects   [3Xv[103X   belonging   to
@@ -922,10 +922,10 @@
   
   [1X3.4-3 ShadowOfFlag[101X
   
-  [29X[2XShadowOfFlag[102X( [3Xinc[103X, [3Xflag[103X, [3Xstr[103X ) [32X operation
-  [29X[2XShadowOfFlag[102X( [3Xinc[103X, [3Xlist[103X, [3Xstr[103X ) [32X operation
-  [29X[2XShadowOfFlag[102X( [3Xinc[103X, [3Xflag[103X, [3Xj[103X ) [32X operation
-  [29X[2XShadowOfFlag[102X( [3Xinc[103X, [3Xlist[103X, [3Xj[103X ) [32X operation
+  [33X[1;0Y[29X[2XShadowOfFlag[102X( [3Xinc[103X, [3Xflag[103X, [3Xstr[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XShadowOfFlag[102X( [3Xinc[103X, [3Xlist[103X, [3Xstr[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XShadowOfFlag[102X( [3Xinc[103X, [3Xflag[103X, [3Xj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XShadowOfFlag[102X( [3Xinc[103X, [3Xlist[103X, [3Xj[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YThe collection of elements of type [3Xstr[103X or type [3Xj[103X incident with all
             elements of [3Xflag[103X, or with all elements of [3Xlist[103X[133X
   
@@ -950,7 +950,7 @@
   
   [1X3.4-4 ResidueOfFlag[101X
   
-  [29X[2XResidueOfFlag[102X( [3Xflag[103X ) [32X operation
+  [33X[1;0Y[29X[2XResidueOfFlag[102X( [3Xflag[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan incidence structure[133X
   
   [33X[0;0YConsider  the  flag  [3Xflag[103X,  and  its  ambient  geometry [22XG[122X. All elements of [22XG[122X
@@ -981,14 +981,14 @@
   
   [1X3.4-5 [33X[0;0YShort names for ElementsIncidentWithElementOfIncidenceStructure[133X[101X
   
-  [29X[2XPoints[102X( [3Xinc[103X, [3Xv[103X ) [32X operation
-  [29X[2XLines[102X( [3Xinc[103X, [3Xv[103X ) [32X operation
-  [29X[2XPlanes[102X( [3Xinc[103X, [3Xv[103X ) [32X operation
-  [29X[2XSolids[102X( [3Xinc[103X, [3Xv[103X ) [32X operation
-  [29X[2XPoints[102X( [3Xv[103X ) [32X operation
-  [29X[2XLines[102X( [3Xv[103X ) [32X operation
-  [29X[2XPlanes[102X( [3Xv[103X ) [32X operation
-  [29X[2XSolids[102X( [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XPoints[102X( [3Xinc[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLines[102X( [3Xinc[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPlanes[102X( [3Xinc[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSolids[102X( [3Xinc[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPoints[102X( [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLines[102X( [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPlanes[102X( [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSolids[102X( [3Xv[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YThe  collections of elements of [3Xinc[103X of respective type 1, 2, 3 and
             4, that are incident with [3Xv[103X[133X
   
@@ -1042,7 +1042,7 @@
   
   [1X3.5-1 Iterator[101X
   
-  [29X[2XIterator[102X( [3XC[103X ) [32X operation
+  [33X[1;0Y[29X[2XIterator[102X( [3XC[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan iterator for the collection [3XC[103X[133X
   
   [33X[0;0Y[3XC[103X  is  a  collection  of  elements of an incidence structure. An iterator is
@@ -1091,7 +1091,7 @@
   
   [1X3.5-2 Enumerator[101X
   
-  [29X[2XEnumerator[102X( [3XC[103X ) [32X operation
+  [33X[1;0Y[29X[2XEnumerator[102X( [3XC[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan enumerator for the collection [3XC[103X[133X
   
   [33X[0;0Y[3XC[103X  is  a  collection of elements of an incidence structure. An enumerator is
@@ -1131,7 +1131,7 @@
   
   [1X3.5-3 List[101X
   
-  [29X[2XList[102X( [3XC[103X ) [32X operation
+  [33X[1;0Y[29X[2XList[102X( [3XC[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yall objects in the collection [3XC[103X[133X
   
   [4X[32X  Example  [32X[104X
@@ -1274,7 +1274,7 @@
   
   [1X3.5-4 AsList[101X
   
-  [29X[2XAsList[102X( [3XC[103X ) [32X operation
+  [33X[1;0Y[29X[2XAsList[102X( [3XC[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan ORB object containing all objects in [3XC[103X[133X
   
   [33X[0;0YThe  returned object is an ORB object. All objects can easily be obtained by
@@ -1404,8 +1404,8 @@
   
   [1X3.6-1 [33X[0;0YMain categories in [10XIsLieGeometry[110X[101X[1X[133X[101X
   
-  [29X[2XIsProjectiveSpace[102X[32X Category
-  [29X[2XIsClassicalPolarSpace[102X[32X Category
+  [33X[1;0Y[29X[2XIsProjectiveSpace[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsClassicalPolarSpace[102X [32X Category[133X
   
   [33X[0;0YIn [5XFinInG[105X, a [13XLie geometry[113X [22XG[122X refers to a geometry whose automorphism group is
   a  (subgroup of a) group of Lie type. Generally spoken, one could say that a
@@ -1433,7 +1433,7 @@
   
   [1X3.6-2 AmbientSpace[101X
   
-  [29X[2XAmbientSpace[102X( [3Xig[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAmbientSpace[102X( [3Xig[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ythe ambient projective space of a Lie geometry [3Xig[103X[133X
   
   [4X[32X  Example  [32X[104X
@@ -1448,7 +1448,7 @@
   
   [1X3.6-3 UnderlyingVectorSpace[101X
   
-  [29X[2XUnderlyingVectorSpace[102X( [3Xig[103X ) [32X operation
+  [33X[1;0Y[29X[2XUnderlyingVectorSpace[102X( [3Xig[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe underlying vectorspace of the Lie geometry [3Xig[103X[133X
   
   [4X[32X  Example  [32X[104X
@@ -1461,7 +1461,7 @@
   
   [1X3.6-4 ProjectiveDimension[101X
   
-  [29X[2XProjectiveDimension[102X( [3Xig[103X ) [32X operation
+  [33X[1;0Y[29X[2XProjectiveDimension[102X( [3Xig[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe projective dimension of the ambient projective space of [3Xig[103X[133X
   
   [4X[32X  Example  [32X[104X
@@ -1481,7 +1481,7 @@
   
   [1X3.6-5 IsEmptySubspace[101X
   
-  [29X[2XIsEmptySubspace[102X[32X Category
+  [33X[1;0Y[29X[2XIsEmptySubspace[102X [32X Category[133X
   
   [33X[0;0YCategory  for  objects  representing  the empty subspace of a particular Lie
   geometry. Empty subspaces of different geometries will be different objects,
@@ -1496,8 +1496,8 @@
   
   [1X3.7-1 VectorSpaceToElement[101X
   
-  [29X[2XVectorSpaceToElement[102X( [3Xig[103X, [3Xv[103X ) [32X operation
-  [29X[2XVectorSpaceToElement[102X( [3Xig[103X, [3Xl[103X ) [32X operation
+  [33X[1;0Y[29X[2XVectorSpaceToElement[102X( [3Xig[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XVectorSpaceToElement[102X( [3Xig[103X, [3Xl[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe  element of [3Xig[103X, represented by the subspace spanned by [3Xv[103X or [3Xl[103X,
             or returns the empty subspace.[133X
   
@@ -1544,7 +1544,7 @@
   
   [1X3.7-2 UnderlyingObject[101X
   
-  [29X[2XUnderlyingObject[102X( [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XUnderlyingObject[102X( [3Xv[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya  CVEC  object,  which  is  the vector or matrix representing the
             element [3Xv[103X[133X
   
@@ -1565,7 +1565,7 @@
   
   [1X3.7-3 \in[101X
   
-  [29X[2X\in[102X( [3Xu[103X, [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2X\in[102X( [3Xu[103X, [3Xv[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue  if  and only if the element [3Xu[103X is set-theoretically contained
             in the element [3Xw[103X[133X
   
@@ -1593,8 +1593,8 @@
   
   [1X3.7-4 [33X[0;0YMore short names for [11XElementsIncidentWithElementOfIncidenceStructure[111X[101X[1X[133X[101X
   
-  [29X[2XHyperplanes[102X( [3Xinc[103X, [3Xv[103X ) [32X operation
-  [29X[2XHyperplanes[102X( [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XHyperplanes[102X( [3Xinc[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHyperplanes[102X( [3Xv[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe  elements  of type [22Xj-1[122X incident with [3Xv[103X, which is an element of
             type [22Xj[122X[133X
   
@@ -1650,8 +1650,8 @@
   
   [1X3.8-1 ElementToElement[101X
   
-  [29X[2XElementToElement[102X( [3Xps[103X, [3Xel[103X ) [32X operation
-  [29X[2XEmbed[102X( [3Xps[103X, [3Xel[103X ) [32X operation
+  [33X[1;0Y[29X[2XElementToElement[102X( [3Xps[103X, [3Xel[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XEmbed[102X( [3Xps[103X, [3Xel[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Y[3Xel[103X as an element of [3Xps[103X[133X
   
   [33X[0;0YLet     [3Xps[103X     be     any     Lie     geometry.    This    method    returns

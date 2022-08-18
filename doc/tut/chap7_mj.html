@@ -53,7 +53,7 @@
 
 <h3>7 <span class="Heading">Domains</span></h3>
 
-<p><em>Domain</em> is <strong class="pkg">GAP</strong>'s name for structured sets. We already saw examples of domains in Chapters <a href="chap5_mj.html#X8171DAF2833FF728"><span class="RefLink">5</span></a> and <a href="chap6_mj.html#X853484B982F1DF96"><span class="RefLink">6</span></a>: the groups <code class="code">s8</code> and <code class="code">a8</code> in Section <a href="chap5_mj.html#X85ED46007CED6191"><span class="RefLink">5.1</span></a> are domains, likewise the field <code class="code">f</code> and the vector space <code class="code">v</code> in Section <a href="chap6_mj.html#X7DAD6700787EC845"><span class="RefLink">6.1</span></a> are domains. They were constructed by functions such as <code class="func">Group</code> (<span class="RefLink">Reference: Group Libraries</span>) and <code class="func">GF</code> (<span class="RefLink">Reference: GF for field size</span>), and they could be passed as arguments to other functions such as <code class="func">DerivedSubgroup</code> (<span class="RefLink">Reference: DerivedSubgroup</span>) and <code class="func">Dimension</code> (<span class="RefLink">Reference: Dimension</span>).</p>
+<p><em>Domain</em> is <strong class="pkg">GAP</strong>'s name for structured sets. We already saw examples of domains in Chapters <a href="chap5_mj.html#X8171DAF2833FF728"><span class="RefLink">5</span></a> and <a href="chap6_mj.html#X853484B982F1DF96"><span class="RefLink">6</span></a>: the groups <code class="code">s8</code> and <code class="code">a8</code> in Section <a href="chap5_mj.html#X85ED46007CED6191"><span class="RefLink">5.1</span></a> are domains, likewise the field <code class="code">f</code> and the vector space <code class="code">v</code> in Section <a href="chap6_mj.html#X7DAD6700787EC845"><span class="RefLink">6.1</span></a> are domains. They were constructed by functions such as <code class="func">Group</code> (<span class="RefLink">Reference: Group</span>) and <code class="func">GF</code> (<span class="RefLink">Reference: GF for field size</span>), and they could be passed as arguments to other functions such as <code class="func">DerivedSubgroup</code> (<span class="RefLink">Reference: DerivedSubgroup</span>) and <code class="func">Dimension</code> (<span class="RefLink">Reference: Dimension</span>).</p>
 
 <p><a id="X7D94C6F07ACEA397" name="X7D94C6F07ACEA397"></a></p>
 
@@ -197,7 +197,7 @@ true
 fail
 </pre></div>
 
-<p>The functions <code class="func">AsList</code> (<span class="RefLink">Reference: AsList</span>) and <code class="func">AsSortedList</code> (<span class="RefLink">Reference: AsSortedList</span>) mentioned above do not return domains, but they fit into the general pattern in the sense that they forget all the structure of the argument, including the fact that it is a domain, and return a list with the same elements as the argument has.</p>
+<p>The functions <code class="func">AsList</code> (<span class="RefLink">Reference: AsList</span>) and <code class="func">AsSortedList</code> (<span class="RefLink">Reference: AsSortedList</span>) mentioned above do not return domains, but they fit into the general pattern in the sense that they forget all the structure of the argument, including the fact that it is a domain, and return an immutable list with the same elements as the argument has.</p>
 
 <p><a id="X8318352D7B5F19BA" name="X8318352D7B5F19BA"></a></p>
 
@@ -219,7 +219,7 @@ true
 true
 </pre></div>
 
-<p>Many functions return subdomains of their arguments, for example the result of <code class="code">SylowSubgroup( <var class="Arg">G</var> )</code> is a group with parent group <var class="Arg">G</var>.</p>
+<p>Many functions return subdomains of their arguments, for example the result of <code class="code">SylowSubgroup( <var class="Arg">G</var>, <var class="Arg">prime</var> )</code> is a group with parent group <var class="Arg">G</var>.</p>
 
 <p>If you are sure that the domain <code class="code">Something( <var class="Arg">gens</var> )</code> is contained in the domain <var class="Arg">D</var> then you can also call <code class="code">SubsomethingNC( <var class="Arg">D</var>, <var class="Arg">gens</var> )</code> instead of <code class="code">Subsomething( <var class="Arg">D</var>, <var class="Arg">gens</var> )</code>. The <code class="code">NC</code> stands for "no check", and the functions whose names end with <code class="code">NC</code> omit the check of containment.</p>
 
@@ -227,7 +227,7 @@ true
 
 <h4>7.8 <span class="Heading">Further Information about Domains</span></h4>
 
-<p>More information about domains can be found in Chapter <span class="RefLink">Reference: Domains</span>. Many other other chapters deal with specific types of domain such as groups, vector spaces or algebras.</p>
+<p>More information about domains can be found in Chapter <span class="RefLink">Reference: Domains</span>. Many other chapters deal with specific types of domain such as groups, vector spaces or algebras.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8_mj.html">[Next Chapter]</a>&nbsp;  </div>

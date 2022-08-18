@@ -326,34 +326,6 @@ InstallMethod( Size,
 		return ShallowCopy(subs!.size);
 	end);
 
-# CHECKED 11/09/11 jdb
-#############################################################################
-#O  \in( <x>, <dom> )
-# returns true if <x> belongs to the elements collected in <dom> It is checked if their 
-# geometry matches.
-## 
-InstallMethod( \in, 
-	"for an element and set of elements",  
-	# 1*SUM_FLAGS+3 increases the ranking for this method
-    [IsElementOfIncidenceStructure, IsElementsOfIncidenceStructure], 1*SUM_FLAGS+3,
-	function( x, dom )
-		return x in dom!.geometry and x!.type = dom!.type;
-	end );
-
-# CHECKED 11/09/11 jdb
-#############################################################################
-#O  \in( <x>, <dom> )
-# returns true if <x> belongs to the elements collected in <dom> It is checked if their 
-# geometry matches.
-## 
-InstallMethod( \in, 
-	"for an element and domain",  
-	# 1*SUM_FLAGS+3 increases the ranking for this method
-    [IsElementOfIncidenceStructure, IsAllElementsOfIncidenceStructure], 1*SUM_FLAGS+3,
-	function( x, dom )
-		return x in dom!.geometry;
-	end );
-
 #############################################################################
 # Constructor methods and some operations/attributes for subspaces of 
 # projective spaces.
@@ -727,6 +699,7 @@ InstallMethod( Dimension,
 #InstallMethod( Dimension, [ IsEmpty ], function(x) return -1;end );
 
 # CHECKED 8/09/11 jdb
+# 31/5/2020: still ok, but undocumentend!
 #############################################################################
 #O  StandardFrame( <subspace> ) returns a standard frame for <subspace>
 ##
@@ -979,43 +952,6 @@ InstallMethod( Size,
 		vs!.type - Size(vs!.inner)));
 	end);
 
-#############################################################################
-# Shortcuts to ShadowOfElement, specifically for projective spaces. 
-#############################################################################
-
-# CHECKED 7/09/2011 jdb
-#############################################################################
-#O  Hyperplanes( <el> )
-# returns the hyperplanes incident with <el>, relying on ShadowOfElement 
-# for particular <el>.
-##
-#InstallMethod( Hyperplanes, 
-#	"for elements of a Lie geometry",
-#	[ IsSubspaceOfProjectiveSpace ],
-#	function( var )
-#		local geo, d, f;
-#		geo := var!.geo;
-#		#d := geo!.dimension;
-#		#f := geo!.basefield;
-#		# return ShadowOfElement( ProjectiveSpace(d, f), var, var!.type - 1 ); changed this into
-#	    return ShadowOfElement( geo, var, geo!.dimension );
-# end );
-
-# CHECKED 7/09/2011 jdb
-#############################################################################
-#O  Hyperplanes( <geo>, <el> )
-# returns the hyperplanes incident with <el>, relying on ShadowOfElement 
-# for particular <el>.
-##
-#InstallMethod( Hyperplanes, 
-#	"for a Lie geometry and elements of a Lie geometry",
-#	[ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ],
-#	function( geo, var )
-#		local d, f;
-#		d := geo!.dimension;
-#		f := geo!.basefield;
-#		return ShadowOfElement( geo, var, geo!.dimension );
-#end );
 
 #############################################################################
 # Constructors for groups of projective spaces.
@@ -1510,7 +1446,7 @@ InstallMethod( ShadowOfFlag,
           outer := localouter,
           factorspace := localfactorspace,
 		  parentflag := flag,
-          size := Size(Subspaces(localfactorspace)) #this causes a problem when localfactorspace consists of cvec/cmat.
+          size := Size(Subspaces(localfactorspace)) #this is wrong!!! But since we do some work again in the iterator, it's never used!
         )
       );
 	end);
@@ -2430,7 +2366,7 @@ InstallMethod( ElationOfProjectiveSpace,
 	mat := UnderlyingObject(sub);
 	f := BaseField(sub);
 	vssub := VectorSpace(f,mat);
-	e0 := UnderlyingObject(centre);
+	e0 := Unpack(UnderlyingObject(centre));
 	ei := BasisVectors(Basis(ComplementSpace(vssub,[e0])));
 	en := UnderlyingObject(point1);
 	M := Concatenation([e0],ei,[en]);
@@ -2462,7 +2398,7 @@ InstallMethod( ProjectiveElationGroup,
 	mat := UnderlyingObject(sub);
 	f := BaseField(sub);
 	vssub := VectorSpace(f,mat);
-	e0 := UnderlyingObject(centre);
+	e0 := Unpack(UnderlyingObject(centre));
 	ei := BasisVectors(Basis(ComplementSpace(vssub,[e0])));
 	en := BasisVectors(Basis(ComplementSpace(f^(n+1),mat)))[1];
 	M := Concatenation([e0],ei,[en]);
@@ -2631,4 +2567,71 @@ InstallMethod( IncidenceGraph,
         graph := Graph(coll,elements,OnProjSubspaces,adj,true);
         Setter( IncidenceGraphAttr )( ps, graph );
         return graph;
+    end );
+
+# Added 18/09/18 jdb.
+#############################################################################
+#O  EvaluateForm( <form>, <el1>, <el2> )
+# returns the "action" of <form> (sesquilinear) on the subspaces <el1> and <el2>.
+# All it does is unpack the underlyingobject and call the existing method
+# for EvaluateForm and matrices/vectors (and counts on checking of input
+# of the existing method.
+#
+InstallMethod( EvaluateForm,
+    "for a sesquilinear form and two elements of a Lie geometry",
+    [IsSesquilinearForm, IsElementOfLieGeometry, IsElementOfLieGeometry],
+    function(form, el1, el2)
+    local list;
+    list := Set([AmbientSpace(el1)!.vectorspace,AmbientSpace(el2)!.vectorspace]);
+    if Size(list) <> 1 or not form!.vectorspace in list then
+        Error("underlying vectorspaces of <form>, <el1> and <el2> do not match");
+    fi;
+    return EvaluateForm(form,Unpack(UnderlyingObject(el1)),Unpack(UnderlyingObject(el2)));
+    end );
+
+# Added 18/09/18 jdb.
+#############################################################################
+#O  EvaluateForm( <form>, <el1> )
+# returns the "action" of <form> (quadratic) on the subspace <el1>.
+# All it does is unpack the underlyingobject and call the existing method
+# for EvaluateForm and matrices/vectors (and counts on checking of input
+# of the existing method.
+#
+InstallMethod( EvaluateForm,
+    "for a quadratic form and two elements of a Lie geometry",
+    [IsQuadraticForm, IsElementOfLieGeometry ],
+    function(form, el1 )
+    if not form!.vectorspace = AmbientSpace(el1)!.vectorspace then
+        Error("underlying vectorspaces of <form> and <el1> do not match");
+    fi;
+    return EvaluateForm(form,Unpack(UnderlyingObject(el1)));
+    end );
+
+# Added 18/09/18 jdb.
+#############################################################################
+#O  \^( <el>, <form> )
+# returns the "action" of <form> (quadratic) on the subspace <el1>.
+# All it does is call EvaluateForm
+#
+InstallMethod( \^,
+    "for an element of a Lie geometry and a quadratic form",
+    [IsElementOfLieGeometry, IsQuadraticForm ],
+    function(el1, form)
+        return EvaluateForm(form,el1);
+    end );
+
+# Added 18/09/18 jdb.
+#############################################################################
+#O  \^( <pair>, <form> )
+# returns the "action" of <form> (quadratic) on the subspace <el1>.
+# All it does is call EvaluateForm
+#
+InstallMethod( \^,
+    "for two elements of a Lie geometry and a sesquilinear form",
+    [IsSubspaceOfProjectiveSpaceCollection, IsSesquilinearForm ],
+    function(pair, form)
+        if Size(pair) <> 2 then
+            Error("The first argument must be a pair of subspaces of a projective space");
+        fi;
+        return EvaluateForm(form,pair[1],pair[2]);
     end );

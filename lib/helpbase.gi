@@ -128,11 +128,11 @@ BindGlobal( "TRANSATL", MakeImmutable(
 ##
 ##  This approach may suggest wrong spellings for topics containing the 
 ##  substring "Size" or "size", since it's not possible to detect whether 
-##  "size" is a part of another word or a word itselg (e.g. both spellings 
+##  "size" is a part of another word or a word itself (e.g. both spellings
 ##  "emphasize" and  "emphasise" may be used). However, this only creates 
 ##  a tiny and really neglectible overhead (try e.g. `??SizesCentralisers'
 ##  or `??Centralizers, Normalizers and Intersections'); however it ensures 
-##  that help searches may be successfull even if they use inconsistent 
+##  that help searches may be successful even if they use inconsistent 
 ##  spelling. In practice, we expect that the majority of help searches 
 ##  will match no more than one pattern. One could use the utility function 
 ##  `FindMultiSpelledHelpEntries' below to see that the help system contains 
@@ -211,10 +211,10 @@ if Length(positions) > 0 then # matches found
   for i in [1..Length(positions)] do
     Add( chop, [ topic{[begin..patterns[i].start-1 ]} ] );
     Add( chop, patterns[i].pattern );
-    begin := Minimum( patterns[i].finish+1, Length(topic) );
+    begin := Minimum( patterns[i].finish, Length(topic) )+1;
   od;
 
-  if begin < Length( topic ) then
+  if begin <= Length( topic ) then
     Add( chop, [ topic{[begin..Length(topic)]} ] );
   fi;
 
@@ -265,10 +265,10 @@ end);
 ##  Analyse/Analyze, Factorisation/Factorization etc. 
 ##
 ##  "FindMultiSpelledHelpEntries" reports help entries that contains more
-##  than one occurence of spelling patterns from the `TRANSATL' list.
+##  than one occurrence of spelling patterns from the `TRANSATL' list.
 ##  It may falsely report entries containing the substring "Size" or "size",
 ##  since it's not possible to detect whether "size" is a part of another 
-##  word or a word itselg (e.g. both spellings "emphasize" and  "emphasise" 
+##  word or a word itself (e.g. both spellings "emphasize" and  "emphasise"
 ##  may be used).
 ##
 BindGlobal( "FindMultiSpelledHelpEntries", function( )
@@ -490,7 +490,7 @@ end);
 # in second list: for each book a list 
 #                 [short name, long name, 
 #                  directory containing the manual.six file] 
-InstallValue(HELP_KNOWN_BOOKS, [[],[]]);
+BindGlobal("HELP_KNOWN_BOOKS", [[],[]]);
 if IsHPCGAP then
   LockAndMigrateObj(HELP_KNOWN_BOOKS,HELP_REGION);
 fi;
@@ -596,7 +596,7 @@ end);
 ##  The `default' handler functions will be assigned helpdef.g, see there for
 ##  more details on the interfaces of each of these functions.
 ##  
-InstallValue(HELP_BOOK_HANDLER, rec(default:=rec()));
+BindGlobal("HELP_BOOK_HANDLER", rec(default:=rec()));
 if IsHPCGAP then
   LockAndMigrateObj(HELP_BOOK_HANDLER,HELP_REGION);
 fi;
@@ -629,7 +629,7 @@ fi;
 ##  components  in  this help  book record  depend  on  the format  of the
 ##  documentation and the corresponding handler functions.
 ##  
-InstallValue(HELP_BOOKS_INFO, rec());
+BindGlobal("HELP_BOOKS_INFO", rec());
 if IsHPCGAP then
   LockAndMigrateObj(HELP_BOOKS_INFO,HELP_REGION);
 fi;
@@ -1005,8 +1005,8 @@ InstallGlobalFunction(HELP_GET_MATCHES, function( books, topic, frombegin )
       return m[2];
     fi;
   end;
-  if Length(match) > 1 and Length(Set(List(match, 
-                            m-> [m[1].bookname,getsecnum(m)]))) = 1 then
+  if Length(match) > 1 and Length(Set(match, 
+                            m-> [m[1].bookname,getsecnum(m)])) = 1 then
     match := [match[1]];
   fi;
 
@@ -1162,12 +1162,12 @@ end);
 # here we store the last 16 requests 
 HELP_RING_IDX :=  0;
 HELP_RING_SIZE := 16;
-InstallValue(HELP_BOOK_RING, ListWithIdenticalEntries( HELP_RING_SIZE, 
+BindGlobal("HELP_BOOK_RING", ListWithIdenticalEntries( HELP_RING_SIZE, 
                                              ["tutorial"] ));
 if IsHPCGAP then
   LockAndMigrateObj(HELP_BOOK_RING,HELP_REGION);
 fi;
-InstallValue(HELP_TOPIC_RING, ListWithIdenticalEntries( HELP_RING_SIZE, 
+BindGlobal("HELP_TOPIC_RING", ListWithIdenticalEntries( HELP_RING_SIZE, 
                                              "welcome to gap" ));
 if IsHPCGAP then
   LockAndMigrateObj(HELP_TOPIC_RING,HELP_REGION);
@@ -1179,7 +1179,7 @@ if IsHPCGAP then
 fi;
 # here we store the last shown topic, initialized with 0 (leading to
 # show "Tutorial: Help", see below)
-InstallValue(HELP_LAST, rec(MATCH := 0, BOOK := 0, 
+BindGlobal("HELP_LAST", rec(MATCH := 0, BOOK := 0, 
              NEXT_VIEWER := false, TOPICS := []));
 NAMES_SYSTEM_GVARS:= "to be defined in init.g";
 
@@ -1187,6 +1187,9 @@ InstallGlobalFunction(HELP, function( str )
   local origstr, nwostr, p, book, books, move, add;
 
   origstr := ShallowCopy(str);
+  while Last( origstr ) = ';' do
+    Remove( origstr );
+  od;
   nwostr := NormalizedWhitespace(origstr);
   
   # extract the book

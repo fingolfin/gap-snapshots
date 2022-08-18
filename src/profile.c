@@ -18,6 +18,7 @@
 #include "code.h"
 #include "error.h"
 #include "funcs.h"
+#include "gaptime.h"
 #include "hookintrprtr.h"
 #include "io.h"
 #include "lists.h"
@@ -25,10 +26,15 @@
 #include "plist.h"
 #include "stringobj.h"
 #include "sysfiles.h"
+#include "sysstr.h"
+#include "trycatch.h"
 #include "vars.h"
 
 #include "hpc/thread.h"
 
+#include "config.h"
+
+#include <stdio.h>
 #include <sys/time.h>                   // for gettimeofday
 #include <sys/types.h>
 #include <unistd.h>
@@ -69,7 +75,7 @@
 **
 **  1) From our initial trace, we don't know if a line has a statement on
 **     it to be executed! Therefore we also provide the ability to store the
-**     line of each created statement, so we can chck which lines have code
+**     line of each created statement, so we can check which lines have code
 **     on them.
 **
 **  2) If we wait until the user can run HookedLine, they have missed
@@ -92,7 +98,7 @@
 **  ever evaluated and it appears to never be executed. We special case this
 **  if ForRange, by marking the range as evaluated.
 **
-**  We purposesfully ignore EXPR_TRUE and EXPR_FALSE, which represent the
+**  We purposefully ignore EXPR_TRUE and EXPR_FALSE, which represent the
 **  constants 'true' and 'false', as they are often read but not 'executed'.
 **  We already ignored all integer and float constants anyway.
 **  However, the main reason this was added is that GAP represents 'else'
@@ -192,12 +198,12 @@ static void outputVersionInfo(void)
             "  \"TimeType\": \"%s\"}\n",
             profileState.OutputRepeats ? "false" : "true",
             timeTypeNames[profileState.tickMethod]);
-    // Explictly flush, so this information is in the file
+    // Explicitly flush, so this information is in the file
     // even if GAP crashes
     fflush(profileState.Stream);
 }
 
-static void ProfileRegisterLongJmpOccurred(void)
+static void ProfileRegisterLongJmpOccurred(int depth)
 {
     profileState.LongJmpOccurred = 1;
 }
@@ -282,7 +288,7 @@ static void HookedLineOutput(Obj func, char type)
               (int)profileState.lastNotOutputted.fileID);
     }
 
-    // We output 'File' here for compatability with
+    // We output 'File' here for compatibility with
     // profiling v1.3.0 and earlier, FileId provides the same information
     // in a more useful and compact form.
     fprintf(profileState.Stream, "{\"Type\":\"%c\",\"Fun\":\"%s\",\"Line\":%"
@@ -330,16 +336,11 @@ static void leaveFunction(Obj func)
 ** of GAP's execution, before anything else is done.
 */
 
-#ifdef HAVE_POPEN
-static int endsWithgz(const char* s)
+static BOOL endsWithgz(const char * s)
 {
   s = strrchr(s, '.');
-  if(s)
-    return strcmp(s, ".gz") == 0;
-  else
-    return 0;
+  return s && streq(s, ".gz");
 }
-#endif
 
 static void fopenMaybeCompressed(const char* name, struct ProfileState* ps)
 {
@@ -382,7 +383,7 @@ void InformProfilingThatThisIsAForkedGAP(void)
     HashLock(&profileState);
     if (profileState.status == Profile_Active) {
         char filenamecpy[GAP_PATH_MAX];
-        // Allow 20 chracters to allow space for .%d.gz
+        // Allow 20 characters to allow space for .%d.gz
         const int SUPPORTED_PATH_LEN = GAP_PATH_MAX - 20;
         if(strlen(profileState.filename) > SUPPORTED_PATH_LEN) {
            Panic("Filename can be at most %d character when forking", SUPPORTED_PATH_LEN);
@@ -435,16 +436,14 @@ static inline Int8 getTicks(void)
 
 static inline void printOutput(UInt line, int nameid, int exec, int visited)
 {
-    Int8 ticks = 0, newticks = 0;
-
     if (profileState.lastOutputted.line != line ||
         profileState.lastOutputted.fileID != nameid ||
         profileState.lastOutputtedExec != exec) {
 
         if (profileState.OutputRepeats) {
-            newticks = getTicks();
+            Int newticks = getTicks();
 
-            ticks = newticks - profileState.lastOutputtedTime;
+            Int ticks = newticks - profileState.lastOutputtedTime;
 
             // Basic sanity check
             if (ticks < 0)
@@ -459,7 +458,6 @@ static inline void printOutput(UInt line, int nameid, int exec, int visited)
                     ticksDone = (ticks / profileState.minimumProfileTick) *
                                 profileState.minimumProfileTick;
                 }
-                ticks -= ticksDone;
                 outputFilenameIdIfRequired(nameid);
                 fprintf(profileState.Stream,
                         "{\"Type\":\"%c\",\"Ticks\":%d,\"Line\":%d,"
@@ -624,12 +622,12 @@ enableAtStartup(char * filename, Int repeats, TickMethod tickMethod)
         Panic("Failed to open '%s' for profiling output.\n", filename);
     }
 
-    strlcpy(profileState.filename, filename, GAP_PATH_MAX);
+    gap_strlcpy(profileState.filename, filename, GAP_PATH_MAX);
 
     ActivateHooks(&profileHooks);
 
     profileState.status = Profile_Active;
-    RegisterSyLongjmpObserver(ProfileRegisterLongJmpOccurred);
+    RegisterThrowObserver(ProfileRegisterLongJmpOccurred);
     profileState.profiledPreviously = 1;
 #ifdef HPCGAP
     profileState.profiledThread = TLS(threadID);
@@ -695,7 +693,7 @@ static Obj FuncACTIVATE_PROFILING(Obj self,
     OutputtedFilenameList = NEW_PLIST(T_PLIST, 0);
     profileState.visitedDepths = NEW_PLIST(T_PLIST, 0);
 
-    RequireStringRep("ACTIVATE_PROFILING", filename);
+    RequireStringRep(SELF_NAME, filename);
 
     if(coverage != True && coverage != False) {
       ErrorMayQuit("<coverage> must be a boolean",0,0);
@@ -726,7 +724,7 @@ static Obj FuncACTIVATE_PROFILING(Obj self,
 
     profileState.lastOutputtedTime = getTicks();
 
-    RequireNonnegativeSmallInt("ACTIVATE_PROFILING", resolution);
+    RequireNonnegativeSmallInt(SELF_NAME, resolution);
 
     HashLock(&profileState);
 
@@ -748,7 +746,7 @@ static Obj FuncACTIVATE_PROFILING(Obj self,
 
     fopenMaybeCompressed(CONST_CSTR_STRING(filename), &profileState);
 
-    strlcpy(profileState.filename, CONST_CSTR_STRING(filename), GAP_PATH_MAX);
+    gap_strlcpy(profileState.filename, CONST_CSTR_STRING(filename), GAP_PATH_MAX);
 
     if(profileState.Stream == 0) {
       HashUnlock(&profileState);
@@ -756,7 +754,7 @@ static Obj FuncACTIVATE_PROFILING(Obj self,
     }
 
     profileState.status = Profile_Active;
-    RegisterSyLongjmpObserver(ProfileRegisterLongJmpOccurred);
+    RegisterThrowObserver(ProfileRegisterLongJmpOccurred);
     profileState.profiledPreviously = 1;
 #ifdef HPCGAP
     profileState.profiledThread = TLS(threadID);
@@ -813,13 +811,13 @@ static Int CurrentColour = 0;
 static void setColour(void)
 {
   if(CurrentColour == 0) {
-    Pr("\x1b[0m",0L,0L);
+    Pr("\x1b[0m", 0, 0);
   }
   else if(CurrentColour == 1) {
-    Pr("\x1b[32m",0L,0L);
+    Pr("\x1b[32m", 0, 0);
   }
   else if(CurrentColour == 2) {
-    Pr("\x1b[31m",0L,0L);
+    Pr("\x1b[31m", 0, 0);
   }
 }
 
@@ -933,12 +931,15 @@ static Obj FuncACTIVATE_COLOR_PROFILING(Obj self, Obj arg)
 */
 static StructGVarFunc GVarFuncs[] = {
 
-    GVAR_FUNC(ACTIVATE_PROFILING,
-              5,
-              "filename,coverage,wallTime,recordMem,resolution"),
-    GVAR_FUNC(DEACTIVATE_PROFILING, 0, ""),
-    GVAR_FUNC(IsLineByLineProfileActive, 0, ""),
-    GVAR_FUNC(ACTIVATE_COLOR_PROFILING, 1, "arg"),
+    GVAR_FUNC_5ARGS(ACTIVATE_PROFILING,
+                    filename,
+                    coverage,
+                    wallTime,
+                    recordMem,
+                    resolution),
+    GVAR_FUNC_0ARGS(DEACTIVATE_PROFILING),
+    GVAR_FUNC_0ARGS(IsLineByLineProfileActive),
+    GVAR_FUNC_1ARGS(ACTIVATE_COLOR_PROFILING, arg),
     { 0, 0, 0, 0, 0 }
 };
 
@@ -955,7 +956,6 @@ static Int InitLibrary (
 
     profileState.visitedDepths = NEW_PLIST(T_PLIST, 0);
     OutputtedFilenameList = NEW_PLIST(T_PLIST, 0);
-    /* return success                                                      */
     return 0;
 }
 
@@ -991,7 +991,7 @@ static StructInitInfo module = {
     // init struct using C99 designated initializers; for a full list of
     // fields, please refer to the definition of StructInitInfo
     .type = MODULE_BUILTIN,
-    .name = "stats",
+    .name = "profile",
     .initKernel = InitKernel,
     .initLibrary = InitLibrary,
     .postRestore = PostRestore

@@ -11,23 +11,23 @@
 #ifndef GAP_TLSCONFIG_H
 #define GAP_TLSCONFIG_H
 
-#include "system.h"
+#include "common.h"
 
 #if !defined(HPCGAP)
 #error This header is only meant to be used with HPC-GAP
 #endif
 
 
-#ifndef HAVE_NATIVE_TLS
+#ifndef USE_NATIVE_TLS
 
 enum {
-    TLS_SIZE = (sizeof(UInt) == 8) ? (1L << 20) : (1L << 18),
+    TLS_SIZE = (sizeof(UInt) == 8) ? (1 << 20) : (1 << 18),
 };
-#define TLS_MASK (~(TLS_SIZE - 1L))
+#define TLS_MASK (~(TLS_SIZE - 1))
 
 GAP_STATIC_ASSERT((TLS_SIZE & (TLS_SIZE - 1)) == 0,
                   "TLS_SIZE must be a power of 2");
 
-#endif // HAVE_NATIVE_TLS
+#endif // USE_NATIVE_TLS
 
 #endif // GAP_TLSCONFIG_H

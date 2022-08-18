@@ -1,4 +1,4 @@
-#@local f,g,h,l,mh,r,x,makeCounter
+#@local f,g,h,l,mh,r,x,makeCounter,funcloop,funcstr
 gap> START_TEST("function.tst");
 gap> IsKernelFunction(IsKernelFunction);
 true
@@ -137,6 +137,34 @@ gap> Print({x,y} -> x + y, "\n");
 function ( x, y )
     return x + y;
 end
+gap> String({x,y} -> x + y);
+"function ( x, y ) return x + y; end"
+
+# Test nesting
+gap> Print(function(x) if x then if x then while x do od; fi; fi; end, "\n");
+function ( x )
+    if x then
+        if x then
+            while x do
+                ;
+            od;
+        fi;
+    fi;
+    return;
+end
+gap> String(function(x) if x then if x then while x do od; fi; fi; end);
+"function ( x ) if x then if x then while x do ; od; fi; fi; return; end"
+
+# Check strings in functions
+gap> Print({x} -> "a     b","\n");
+function ( x )
+    return "a     b";
+end
+gap> String({x} -> "a     b");
+"function ( x ) return \"a     b\"; end"
+gap> funcstr := Concatenation("function ( x ) return \"a", ListWithIdenticalEntries(1000, ' '),"b\"; end");;
+gap> String(EvalString(funcstr)) = funcstr;
+true
 gap> f := ({x,y} -> x + y);
 function( x, y ) ... end
 gap> f(2,3);
@@ -184,6 +212,25 @@ function (  )
     TryNextMethod();
 end
 
+# The number of arguments of a function
+# is not determined by the name "arg" of the parameter.
+gap> f:= function( arg ) return 0; end;
+function( arg... ) ... end
+gap> ViewString( f );
+"function( arg... ) ... end"
+gap> Print( f, "\n" );
+function ( arg... )
+    return 0;
+end
+gap> f:= arg -> 0;
+function( arg ) ... end
+gap> ViewString( f );
+"function( arg ) ... end"
+gap> Print( f, "\n" );
+function ( arg )
+    return 0;
+end
+
 #
 gap> InstallGlobalFunction("CheeseCakeFunction123123", function() end);
 Error, global function `CheeseCakeFunction123123' is not declared yet
@@ -203,4 +250,45 @@ gap> h();
 [ 7, 8, 9 ]
 
 #
+# Test functions can be evaluated, printed to a string, and re-parsed
+gap> funcloop := function(func)
+> local syntax, strA, strB, syntaxB;
+> syntax := SYNTAX_TREE(func);
+> strA := String(func);
+> strB := String(EvalString(strA));
+> syntaxB := SYNTAX_TREE(EvalString(strB));
+> if strA <> strB then Error("Function did not round-trip as String"); fi;
+> # Remove name of functions
+> Unbind(syntax.name); Unbind(syntaxB.name);
+> if syntax <> syntaxB then Error("Function did not round-trip as SyntaxTree"); fi;
+> Print(strA,"\n");
+> end;;
+gap> funcloop(x -> x + x);
+function ( x ) return x + x; end
+gap> funcloop(x -> (x + x) + x);
+function ( x ) return x + x + x; end
+gap> funcloop(x -> x + (x + x));
+function ( x ) return x + (x + x); end
+gap> funcloop(x -> x = x);
+function ( x ) return x = x; end
+gap> funcloop(x -> (x = x) = x);
+function ( x ) return (x = x) = x; end
+gap> funcloop(x -> x = (x = x));
+function ( x ) return x = (x = x); end
+gap> funcloop(x -> (x < x) < x);
+function ( x ) return (x < x) < x; end
+gap> funcloop(x -> (x < x) > x);
+function ( x ) return (x < x) > x; end
+gap> funcloop(x -> (x in x) in x);
+function ( x ) return (x in x) in x; end
+gap> funcloop(x -> x in (x in x));
+function ( x ) return x in (x in x); end
+gap> funcloop(x -> (x and x) in x);
+function ( x ) return (x and x) in x; end
+gap> funcloop(x -> x and (x in x));
+function ( x ) return x and x in x; end
+gap> funcloop(x -> (x in x) and x);
+function ( x ) return x in x and x; end
+gap> funcloop(x -> x in (x and x));
+function ( x ) return x in (x and x); end
 gap> STOP_TEST("function.tst", 1);

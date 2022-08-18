@@ -1,0 +1,31 @@
+\GAPDocLabFile{deepthought}
+\makelabel{deepthought:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{deepthought:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{deepthought:The Deep Thought algorithm}{1}{X83D5BFC3847045B8}
+\makelabel{deepthought:Category DTObj}{1.1}{X7A5FAA018026C0B7}
+\makelabel{deepthought:Using Deep Thought functions}{2}{X82DA17B77A8A5B61}
+\makelabel{deepthought:Computing Deep Thought polynomials}{2.1}{X7EA3FBDF7B809C2B}
+\makelabel{deepthought:Computations with Deep Thought polynomials}{2.2}{X7DEEE5BD87A77227}
+\makelabel{deepthought:Computations with pcp-elements}{2.3}{X7E972B8C7A6CD87A}
+\makelabel{deepthought:Accessing Deep Thought polynomials}{2.4}{X81E6D7BE805AEA32}
+\makelabel{deepthought:Bibliography}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{deepthought:References}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{deepthought:Index}{Ind}{X83A0356F839C696F}
+\makelabel{deepthought:DTPDTapplicability}{2.1.1}{X85D338758560944F}
+\makelabel{deepthought:DTPDTObjFromCollector}{2.1.2}{X86F89471783A781E}
+\makelabel{deepthought:DTPExp}{2.2.1}{X7D7E8A7E837393D5}
+\makelabel{deepthought:DTPInverse}{2.2.2}{X7E6A77648287C534}
+\makelabel{deepthought:DTPIsInNormalForm}{2.2.3}{X832D51A385C2B55E}
+\makelabel{deepthought:DTPMultiply}{2.2.4}{X81BFA2BC82C955D4}
+\makelabel{deepthought:DTPMultiplyr}{2.2.5}{X7CF4337B7C9E1559}
+\makelabel{deepthought:DTPMultiplyrs}{2.2.6}{X80B149C187ED3B23}
+\makelabel{deepthought:DTPNormalForm}{2.2.7}{X8159A2E083BADB3D}
+\makelabel{deepthought:DTPOrder}{2.2.8}{X7C12EF818683CB66}
+\makelabel{deepthought:DTPSolveEquation}{2.2.9}{X7881AABE84C7EB33}
+\makelabel{deepthought:DTPPCPExp}{2.3.1}{X82FE9D938612F732}
+\makelabel{deepthought:DTPPCPInverse}{2.3.2}{X87E377E5844A7841}
+\makelabel{deepthought:DTPPCPNormalForm}{2.3.3}{X836633C77892C287}
+\makelabel{deepthought:DTPPCPOrder}{2.3.4}{X85B1ED637A2A4D79}
+\makelabel{deepthought:DTPPCPSolveEquation}{2.3.5}{X86E6DA84863440B5}
+\makelabel{deepthought:DTPDisplayDTObj}{2.4.1}{X85DDC77C7B704389}
+\makelabel{deepthought:DTPpols2GAPpols}{2.4.2}{X7BD122177D9A9D4F}

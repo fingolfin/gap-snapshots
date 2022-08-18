@@ -41,7 +41,7 @@
   
   [1X7.1-1 IsClassicalPolarSpace[101X
   
-  [29X[2XIsClassicalPolarSpace[102X[32X Category
+  [33X[1;0Y[29X[2XIsClassicalPolarSpace[102X [32X Category[133X
   
   [33X[0;0YThis  category  is  a  subcategory  of  [10XIsLieGeometry[110X,  and contains all the
   geometries associated to a non-degenerate sesquilinear or quadratic form.[133X
@@ -80,8 +80,8 @@
   
   [1X7.1-2 PolarSpace[101X
   
-  [29X[2XPolarSpace[102X( [3Xform[103X ) [32X operation
-  [29X[2XPolarSpace[102X( [3Xpol[103X ) [32X operation
+  [33X[1;0Y[29X[2XPolarSpace[102X( [3Xform[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPolarSpace[102X( [3Xpol[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya classical polar space[133X
   
   [33X[0;0Y[3Xform[103X  must  be  a  sesquilinear  or quadratic form created by use of the GAP
@@ -239,8 +239,8 @@
   
   [1X7.2-1 SymplecticSpace[101X
   
-  [29X[2XSymplecticSpace[102X( [3Xd[103X, [3XF[103X ) [32X operation
-  [29X[2XSymplecticSpace[102X( [3Xd[103X, [3Xq[103X ) [32X operation
+  [33X[1;0Y[29X[2XSymplecticSpace[102X( [3Xd[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSymplecticSpace[102X( [3Xd[103X, [3Xq[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya symplectic polar space[133X
   
   [33X[0;0YThis function returns the symplectic polar space of dimension [3Xd[103X over [3XF[103X for a
@@ -263,8 +263,8 @@
   
   [1X7.2-2 HermitianPolarSpace[101X
   
-  [29X[2XHermitianPolarSpace[102X( [3Xd[103X, [3XF[103X ) [32X operation
-  [29X[2XHermitianPolarSpace[102X( [3Xd[103X, [3Xq[103X ) [32X operation
+  [33X[1;0Y[29X[2XHermitianPolarSpace[102X( [3Xd[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHermitianPolarSpace[102X( [3Xd[103X, [3Xq[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya Hermitian polar space[133X
   
   [33X[0;0YThis  function returns the Hermitian polar space of dimension [3Xd[103X over [3XF[103X for a
@@ -287,8 +287,8 @@
   
   [1X7.2-3 ParabolicQuadric[101X
   
-  [29X[2XParabolicQuadric[102X( [3Xd[103X, [3XF[103X ) [32X operation
-  [29X[2XParabolicQuadric[102X( [3Xd[103X, [3Xq[103X ) [32X operation
+  [33X[1;0Y[29X[2XParabolicQuadric[102X( [3Xd[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XParabolicQuadric[102X( [3Xd[103X, [3Xq[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya parabolic quadric[133X
   
   [33X[0;0Y[3Xd[103X  must  be  an  even  positive integer. This function returns the parabolic
@@ -332,8 +332,8 @@
   
   [1X7.2-4 HyperbolicQuadric[101X
   
-  [29X[2XHyperbolicQuadric[102X( [3Xd[103X, [3XF[103X ) [32X operation
-  [29X[2XHyperbolicQuadric[102X( [3Xd[103X, [3Xq[103X ) [32X operation
+  [33X[1;0Y[29X[2XHyperbolicQuadric[102X( [3Xd[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHyperbolicQuadric[102X( [3Xd[103X, [3Xq[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya hyperbolic quadric[133X
   
   [33X[0;0Y[3Xd[103X  must  be  an  odd  positive integer. This function returns the hyperbolic
@@ -378,8 +378,8 @@
   
   [1X7.2-5 EllipticQuadric[101X
   
-  [29X[2XEllipticQuadric[102X( [3Xd[103X, [3XF[103X ) [32X operation
-  [29X[2XEllipticQuadric[102X( [3Xd[103X, [3Xq[103X ) [32X operation
+  [33X[1;0Y[29X[2XEllipticQuadric[102X( [3Xd[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XEllipticQuadric[102X( [3Xd[103X, [3Xq[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan elliptic quadric[133X
   
   [33X[0;0Y[3Xd[103X  must  be  an  odd  positive  integer.  This function returns the elliptic
@@ -429,7 +429,7 @@
   
   [1X7.2-6 IsCanonicalPolarSpace[101X
   
-  [29X[2XIsCanonicalPolarSpace[102X( [3Xps[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIsCanonicalPolarSpace[102X( [3Xps[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0YThis  attribute returns true when a polar space with a particular underlying
@@ -466,8 +466,8 @@
   
   [1X7.2-7 CanonicalPolarSpace[101X
   
-  [29X[2XCanonicalPolarSpace[102X( [3Xform[103X ) [32X operation
-  [29X[2XCanonicalPolarSpace[102X( [3XP[103X ) [32X operation
+  [33X[1;0Y[29X[2XCanonicalPolarSpace[102X( [3Xform[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCanonicalPolarSpace[102X( [3XP[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya classical polar space[133X
   
   [33X[0;0Ythe  canonical  polar  space  isometric  to  the  given polar space [3XP[103X or the
@@ -475,8 +475,8 @@
   
   [1X7.2-8 StandardPolarSpace[101X
   
-  [29X[2XStandardPolarSpace[102X( [3Xform[103X ) [32X operation
-  [29X[2XStandardPolarSpace[102X( [3XP[103X ) [32X operation
+  [33X[1;0Y[29X[2XStandardPolarSpace[102X( [3Xform[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XStandardPolarSpace[102X( [3XP[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya classical polar space[133X
   
   [33X[0;0Ythe  polar  space  induced by a standard form and similar to the given polar
@@ -487,7 +487,7 @@
   
   [1X7.3-1 UnderlyingVectorSpace[101X
   
-  [29X[2XUnderlyingVectorSpace[102X( [3Xps[103X ) [32X operation
+  [33X[1;0Y[29X[2XUnderlyingVectorSpace[102X( [3Xps[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya vector space[133X
   
   [33X[0;0YThe  polar  space  [3Xps[103X  is  the  geometry  associated  with a sesquilinear or
@@ -507,7 +507,7 @@
   
   [1X7.3-2 AmbientSpace[101X
   
-  [29X[2XAmbientSpace[102X( [3Xps[103X ) [32X operation
+  [33X[1;0Y[29X[2XAmbientSpace[102X( [3Xps[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe ambient projective space[133X
   
   [33X[0;0YWhen  [3Xps[103X  is  a  polar  space, this operation returns the ambient projective
@@ -528,8 +528,8 @@
   
   [1X7.3-3 ProjectiveDimension[101X
   
-  [29X[2XProjectiveDimension[102X( [3Xps[103X ) [32X operation
-  [29X[2XDimension[102X( [3Xps[103X ) [32X operation
+  [33X[1;0Y[29X[2XProjectiveDimension[102X( [3Xps[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDimension[102X( [3Xps[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe dimension of the ambient projective space of [3Xps[103X[133X
   
   [33X[0;0YWhen  [3Xps[103X is a polar space, an ambient projective space [22XP[122X is uniquely defined
@@ -550,7 +550,7 @@
   
   [1X7.3-4 Rank[101X
   
-  [29X[2XRank[102X( [3Xps[103X ) [32X operation
+  [33X[1;0Y[29X[2XRank[102X( [3Xps[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe rank of [3Xps[103X[133X
   
   [33X[0;0YWhen  [3Xps[103X  is  a  polar  space, its rank, i.e. the number of different types,
@@ -574,7 +574,7 @@
   
   [1X7.3-5 BaseField[101X
   
-  [29X[2XBaseField[102X( [3Xps[103X ) [32X operation
+  [33X[1;0Y[29X[2XBaseField[102X( [3Xps[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe base field of the polar space [3Xps[103X[133X
   
   [4X[32X  Example  [32X[104X
@@ -591,7 +591,7 @@
   
   [1X7.3-6 IsHyperbolicQuadric[101X
   
-  [29X[2XIsHyperbolicQuadric[102X( [3Xps[103X ) [32X property
+  [33X[1;0Y[29X[2XIsHyperbolicQuadric[102X( [3Xps[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0Yreturns true if and only if [3Xps[103X is a hyperbolic quadric.[133X
@@ -620,7 +620,7 @@
   
   [1X7.3-7 IsEllipticQuadric[101X
   
-  [29X[2XIsEllipticQuadric[102X( [3Xps[103X ) [32X property
+  [33X[1;0Y[29X[2XIsEllipticQuadric[102X( [3Xps[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0Yreturns true if and only if [3Xps[103X is an elliptic quadric.[133X
@@ -649,7 +649,7 @@
   
   [1X7.3-8 IsParabolicQuadric[101X
   
-  [29X[2XIsParabolicQuadric[102X( [3Xps[103X ) [32X property
+  [33X[1;0Y[29X[2XIsParabolicQuadric[102X( [3Xps[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0Yreturns true if and only if [3Xps[103X is a parabolic quadric.[133X
@@ -701,7 +701,7 @@
   
   [1X7.4-1 VectorSpaceToElement[101X
   
-  [29X[2XVectorSpaceToElement[102X( [3Xps[103X, [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XVectorSpaceToElement[102X( [3Xps[103X, [3Xv[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan element of the polar space [3Xgeo[103X[133X
   
   [33X[0;0YLet [3Xps[103X be a polar space, and [3Xv[103X is either a row vector (for points) or an [22Xm[122Xx[22Xn[122X
@@ -739,7 +739,7 @@
   
   [1X7.4-2 EmptySubspace[101X
   
-  [29X[2XEmptySubspace[102X( [3Xps[103X ) [32X operation
+  [33X[1;0Y[29X[2XEmptySubspace[102X( [3Xps[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe trivial subspace in the projective [3Xps[103X[133X
   
   [33X[0;0YThe  object  returned  by  this  operation  is contained in every projective
@@ -756,8 +756,8 @@
   
   [1X7.4-3 ProjectiveDimension[101X
   
-  [29X[2XProjectiveDimension[102X( [3Xsub[103X ) [32X operation
-  [29X[2XDimension[102X( [3Xsub[103X ) [32X operation
+  [33X[1;0Y[29X[2XProjectiveDimension[102X( [3Xsub[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDimension[102X( [3Xsub[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe  projective  dimension  of  a  subspace  of a polar space. The
             operation   [11XProjectiveDimension[111X   is   also   applicable   on  the
             EmptySubspace[133X
@@ -783,7 +783,7 @@
   
   [1X7.4-4 ElementsOfIncidenceStructure[101X
   
-  [29X[2XElementsOfIncidenceStructure[102X( [3Xps[103X, [3Xj[103X ) [32X operation
+  [33X[1;0Y[29X[2XElementsOfIncidenceStructure[102X( [3Xps[103X, [3Xj[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe collection of elements of the projective space [3Xps[103X of type [3Xj[103X[133X
   
   [33X[0;0YFor  the  projective  space [3Xps[103X of dimension [22Xd[122X and the type [3Xj[103X, [22X1 ≤ j ≤ d[122X this
@@ -808,7 +808,7 @@
   
   [1X7.4-5 AmbientSpace[101X
   
-  [29X[2XAmbientSpace[102X( [3Xel[103X ) [32X operation
+  [33X[1;0Y[29X[2XAmbientSpace[102X( [3Xel[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yreturns the ambient space of an element [3Xel[103X of a polar space[133X
   
   [33X[0;0YThis  operation  is  also  applicable  on  the  trivial  subspace. For a Lie
@@ -828,7 +828,7 @@
   
   [1X7.4-6 Coordinates[101X
   
-  [29X[2XCoordinates[102X( [3Xp[103X ) [32X operation
+  [33X[1;0Y[29X[2XCoordinates[102X( [3Xp[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe homogeneous coordinates of the point [3Xp[103X[133X
   
   [4X[32X  Example  [32X[104X
@@ -847,9 +847,9 @@
   
   [1X7.5-1 [33X[0;0YIncidence and containment[133X[101X
   
-  [29X[2XIsIncident[102X( [3Xel1[103X, [3Xel2[103X ) [32X operation
-  [29X[2X\*[102X( [3Xel1[103X, [3Xel2[103X ) [32X operation
-  [29X[2X\in[102X( [3Xel1[103X, [3Xel2[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsIncident[102X( [3Xel1[103X, [3Xel2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2X\*[102X( [3Xel1[103X, [3Xel2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2X\in[102X( [3Xel1[103X, [3Xel2[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0YRecall  that  for  projective  spaces, incidence is symmetrized containment,
@@ -894,7 +894,7 @@
   
   [1X7.5-2 Span[101X
   
-  [29X[2XSpan[102X( [3Xu[103X, [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XSpan[102X( [3Xu[103X, [3Xv[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan element[133X
   
   [33X[0;0Y[3Xu[103X  and  [3Xv[103X are elements of a projective or polar space. This function returns
@@ -920,7 +920,7 @@
   
   [1X7.5-3 Meet[101X
   
-  [29X[2XMeet[102X( [3Xu[103X, [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XMeet[102X( [3Xu[103X, [3Xv[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan element[133X
   
   [33X[0;0Y[3Xu[103X  and  [3Xv[103X are elements of a projective or polar space. This function returns
@@ -946,7 +946,7 @@
   
   [1X7.5-4 IsCollinear[101X
   
-  [29X[2XIsCollinear[102X( [3Xps[103X, [3Xu[103X, [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsCollinear[102X( [3Xps[103X, [3Xu[103X, [3Xv[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YBoolean[133X
   
   [33X[0;0Y[3Xu[103X and [3Xv[103X are points of the ambient space of the polar space [3Xps[103X. This function
@@ -997,7 +997,7 @@
   
   [1X7.5-5 PolarityOfProjectiveSpace[101X
   
-  [29X[2XPolarityOfProjectiveSpace[102X( [3Xps[103X ) [32X operation
+  [33X[1;0Y[29X[2XPolarityOfProjectiveSpace[102X( [3Xps[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya polarity of a projective space[133X
   
   [33X[0;0Y[3Xps[103X  must  be a polar space. This operation returns, when possible a polarity
@@ -1031,7 +1031,7 @@
   
   [1X7.5-6 TypeOfSubspace[101X
   
-  [29X[2XTypeOfSubspace[102X( [3Xps[103X, [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XTypeOfSubspace[102X( [3Xps[103X, [3Xv[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya string[133X
   
   [33X[0;0YThis  operation  is  a convenient way to find out the intersection type of a
@@ -1061,8 +1061,8 @@
   
   [1X7.5-7 TangentSpace[101X
   
-  [29X[2XTangentSpace[102X( [3Xel[103X ) [32X operation
-  [29X[2XTangentSpace[102X( [3Xps[103X, [3Xel[103X ) [32X operation
+  [33X[1;0Y[29X[2XTangentSpace[102X( [3Xel[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XTangentSpace[102X( [3Xps[103X, [3Xel[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA subspace of a projective space[133X
   
   [33X[0;0YLet  [3Xel[103X  be an element of a classical polar space. The first version returns
@@ -1109,7 +1109,7 @@
   
   [1X7.5-8 Pole[101X
   
-  [29X[2XPole[102X( [3Xps[103X, [3Xel[103X ) [32X operation
+  [33X[1;0Y[29X[2XPole[102X( [3Xps[103X, [3Xel[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA subspace of a projective space[133X
   
   [33X[0;0YLet  [3Xel[103X  be  a  subspace  of  the  ambient space of the polar space [3Xps[103X. This
@@ -1133,6 +1133,47 @@
     [4X[28X [128X[104X
   [4X[32X[104X
   
+  [1X7.5-9 EvaluateForm[101X
+  
+  [33X[1;0Y[29X[2XEvaluateForm[102X( [3Xform[103X, [3Xel1[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XEvaluateForm[102X( [3Xform[103X, [3Xel1[103X, [3Xel2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2X\^[102X( [3Xform[103X, [3Xel1[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2X\^[102X( [3Xform[103X, [3Xel1[103X, [3Xel2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya  finite  field  element  or  a  list  (of lists) of finite field
+            elements[133X
+  
+  [33X[0;0YThis  method  passes  [3Xform[103X  and the underlying vector or matrix of [3Xel1[103X, when
+  [3Xform[103X  is  a quadratic form, and [3Xel1[103X and [3Xel2[103X when [3Xform[103X is a sesquilinear form
+  to  the  operation  [11XEvaluate[111X  of  the package [5XForms[105X. The same applies to the
+  respective methods for [11X\^[111X. The example below illustrates how the points of a
+  projective space that evaluate to zero under a given form, are precisely the
+  points of the quadric associated with the given form.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf := GF(5);[127X[104X
+    [4X[28XGF(5)[128X[104X
+    [4X[25Xgap>[125X [27Xmat := IdentityMat(4,f);[127X[104X
+    [4X[28X[ [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ], [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], [128X[104X
+    [4X[28X  [ 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5) ], [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat,f);[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27Xpg := PG(3,5);[127X[104X
+    [4X[28XProjectiveSpace(3, 5)[128X[104X
+    [4X[25Xgap>[125X [27Xpts := Filtered(Points(pg),x->[x,x]^form = Zero(f));;[127X[104X
+    [4X[25Xgap>[125X [27Xps := PolarSpace(form);[127X[104X
+    [4X[28X<polar space in ProjectiveSpace(3,GF(5)): x_1^2+x_2^2+x_3^2+x_4^2=0 >[128X[104X
+    [4X[25Xgap>[125X [27XCollected(List(pts,x->x in ps));[127X[104X
+    [4X[28X[ [ true, 36 ] ][128X[104X
+    [4X[25Xgap>[125X [27XSize(Points(ps));[127X[104X
+    [4X[28X36[128X[104X
+    [4X[25Xgap>[125X [27Xqform := QuadraticForm(ps);[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27Xpts2 := Filtered(Points(pg),x->x^qform = Zero(f));;[127X[104X
+    [4X[25Xgap>[125X [27XCollected(List(pts2,x->x in ps));[127X[104X
+    [4X[28X[ [ true, 36 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
   
   [1X7.6 [33X[0;0YShadow of elements[133X[101X
   
@@ -1143,8 +1184,8 @@
   
   [1X7.6-1 ShadowOfElement[101X
   
-  [29X[2XShadowOfElement[102X( [3Xps[103X, [3Xel[103X, [3Xi[103X ) [32X operation
-  [29X[2XShadowOfElement[102X( [3Xps[103X, [3Xel[103X, [3Xstr[103X ) [32X operation
+  [33X[1;0Y[29X[2XShadowOfElement[102X( [3Xps[103X, [3Xel[103X, [3Xi[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XShadowOfElement[102X( [3Xps[103X, [3Xel[103X, [3Xstr[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe  elements  of  type  [3Xi[103X  incident  with  [3Xel[103X. The second variant
             determines  the  type  [3Xi[103X  from  the  position  of  [3Xstr[103X in the list
             returned by [11XTypesOfElementsOfIncidenceStructurePlural[111X[133X
@@ -1181,7 +1222,7 @@
   
   [1X7.6-2 ElementsIncidentWithElementOfIncidenceStructure[101X
   
-  [29X[2XElementsIncidentWithElementOfIncidenceStructure[102X( [3Xel[103X, [3Xi[103X ) [32X operation
+  [33X[1;0Y[29X[2XElementsIncidentWithElementOfIncidenceStructure[102X( [3Xel[103X, [3Xi[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe  elements of type [3Xi[103X incident with [3Xel[103X, in other words, the type
             [3Xi[103X shadow of the element [3Xel[103X[133X
   
@@ -1295,7 +1336,7 @@
   
   [1X7.7-1 SpecialIsometryGroup[101X
   
-  [29X[2XSpecialIsometryGroup[102X( [3Xps[103X ) [32X operation
+  [33X[1;0Y[29X[2XSpecialIsometryGroup[102X( [3Xps[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe special isometry group of the polar space [3Xps[103X[133X
   
   [4X[32X  Example  [32X[104X
@@ -1324,7 +1365,7 @@
   
   [1X7.7-2 IsometryGroup[101X
   
-  [29X[2XIsometryGroup[102X( [3Xps[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsometryGroup[102X( [3Xps[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe isometry group of the polar space [3Xps[103X[133X
   
   [4X[32X  Example  [32X[104X
@@ -1353,7 +1394,7 @@
   
   [1X7.7-3 SimilarityGroup[101X
   
-  [29X[2XSimilarityGroup[102X( [3Xps[103X ) [32X operation
+  [33X[1;0Y[29X[2XSimilarityGroup[102X( [3Xps[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe similarity group of the polar space [3Xps[103X[133X
   
   [4X[32X  Example  [32X[104X
@@ -1382,7 +1423,7 @@
   
   [1X7.7-4 CollineationGroup[101X
   
-  [29X[2XCollineationGroup[102X( [3Xps[103X ) [32X operation
+  [33X[1;0Y[29X[2XCollineationGroup[102X( [3Xps[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe collineation group of the polar space [3Xps[103X[133X
   
   [33X[0;0YIn  most  cases,  the  full projective semisimilarity group is returned. For
@@ -1427,8 +1468,8 @@
   
   [1X7.8-2 Enumerator[101X
   
-  [29X[2XEnumerator[102X( [3XC[103X ) [32X operation
-  [29X[2XList[102X( [3XC[103X ) [32X operation
+  [33X[1;0Y[29X[2XEnumerator[102X( [3XC[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XList[102X( [3XC[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan enumerator for the collection [3XC[103X and a list with all elements of
             [3XC[103X[133X
   
@@ -1455,7 +1496,7 @@
   
   [1X7.8-4 Iterator[101X
   
-  [29X[2XIterator[102X( [3Xelements[103X ) [32X operation
+  [33X[1;0Y[29X[2XIterator[102X( [3Xelements[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan iterator[133X
   
   [33X[0;0Y[3XC[103X is a collection of subspaces of a polar space.[133X
@@ -1478,7 +1519,7 @@
   
   [1X7.8-5 AsList[101X
   
-  [29X[2XAsList[102X( [3Xsubspaces[103X ) [32X operation
+  [33X[1;0Y[29X[2XAsList[102X( [3Xsubspaces[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan Orb object or list[133X
   
   [4X[32X  Example  [32X[104X

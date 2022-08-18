@@ -120,10 +120,10 @@
   
   [33X[1;0Y[29X[2XBlowUpIsomorphism[102X( [3Xmatgrp[103X, [3XB[103X ) [32X function[133X
   
-  [33X[0;0YFor  a  matrix  group  [3Xmatgrp[103X and a basis [3XB[103X of a field extension [22XL / K[122X, say,
-  such  that the entries of all matrices in [3Xmatgrp[103X lie in [22XL[122X, [2XBlowUpIsomorphism[102X
-  returns  the  isomorphism  with source [3Xmatgrp[103X that is defined by mapping the
-  matrix [22XA[122X to [10XBlownUpMat[110X[22X( A, [3XB[103X )[122X, see [2XBlownUpMat[102X ([14X24.13-4[114X).[133X
+  [33X[0;0YFor a matrix group [3Xmatgrp[103X and a basis [3XB[103X of a field extension [22XL / K[122X such that
+  the  entries  of  all matrices in [3Xmatgrp[103X lie in [22XL[122X, [2XBlowUpIsomorphism[102X returns
+  the  isomorphism  with source [3Xmatgrp[103X that is defined by mapping the matrix [22XA[122X
+  to [10XBlownUpMat[110X[22X( A, [3XB[103X )[122X, see [2XBlownUpMat[102X ([14X24.13-4[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg:= GL(2,4);;[127X[104X
@@ -224,12 +224,11 @@
   [33X[1;0Y[29X[2XInvariantSesquilinearForm[102X( [3Xmatgrp[103X ) [32X attribute[133X
   
   [33X[0;0YThis  attribute  describes  a  sesquilinear form that is invariant under the
-  matrix  group  [3Xmatgrp[103X  over  the field [22XF[122X with [22Xq^2[122X elements, say. The form is
-  given by a record with the component [10Xmatrix[110X which is is a matrix [22XM[122X such that
-  for  every  generator  [22Xg[122X  of [3Xmatgrp[103X the equation [22Xg ⋅ M ⋅ (g^tr)^f = M[122X holds,
-  where [22Xf[122X is the automorphism of [22XF[122X that raises each element to its [22Xq[122X-th power.
-  ([22Xf[122X can be obtained as a power of the [2XFrobeniusAutomorphism[102X ([14X59.4-1[114X) value of
-  [22XF[122X.)[133X
+  matrix group [3Xmatgrp[103X over the field [22XF[122X with [22Xq^2[122X elements. The form is given by
+  a  record  with the component [10Xmatrix[110X which is a matrix [22XM[122X such that for every
+  generator  [22Xg[122X  of  [3Xmatgrp[103X the equation [22Xg ⋅ M ⋅ (g^tr)^f = M[122X holds, where [22Xf[122X is
+  the  automorphism of [22XF[122X that raises each element to its [22Xq[122X-th power. ([22Xf[122X can be
+  obtained as a power of the [2XFrobeniusAutomorphism[102X ([14X59.4-1[114X) value of [22XF[122X.)[133X
   
   [1X44.5-4 IsFullSubgroupGLorSLRespectingSesquilinearForm[101X
   
@@ -455,7 +454,7 @@
   [33X[0;0Ycan  have  either  of the two values [10XRightAction[110X and [10XLeftAction[110X. The initial
   value  is [10XRightAction[110X. For functions which have variants OnRight and OnLeft,
   this  variable determines which variant is returned by the generic form. The
-  value  of  [2XCrystGroupDefaultAction[102X  can  be  changed  with with the function
+  value   of   [2XCrystGroupDefaultAction[102X   can  be  changed  with  the  function
   [2XSetCrystGroupDefaultAction[102X ([14X44.7-2[114X).[133X
   
   [1X44.7-2 SetCrystGroupDefaultAction[101X

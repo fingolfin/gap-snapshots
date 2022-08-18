@@ -38,16 +38,13 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap86.html#X830918AC8702A189">86.4 <span class="Heading">Copying Weak Pointer Objects</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap86.html#X7C1EFEEB8071E0A2">86.5 <span class="Heading">The GASMAN Interface for Weak Pointer Objects</span></a>
-</span>
-</div>
 </div>
 
 <h3>86 <span class="Heading">Weak Pointers</span></h3>
 
 <p>This chapter describes the use of the kernel feature of <em>weak pointers</em>. This feature is primarily intended for use only in <strong class="pkg">GAP</strong> internals, and should be used extremely carefully otherwise.</p>
 
-<p>The GASMAN garbage collector is the part of the kernel that manages memory in the users workspace. It will normally only reclaim the storage used by an object when the object cannot be reached as a subobject of any <strong class="pkg">GAP</strong> variable, or from any reference in the kernel. We say that any link to object <span class="SimpleMath">a</span> from object <span class="SimpleMath">b</span> "keeps object <span class="SimpleMath">a</span> alive", as long as <span class="SimpleMath">b</span> is alive. It is occasionally convenient, however, to have a link to an object which <em>does not keep it alive</em>, and this is a weak pointer. The most common use is in caches, and similar structures, where it is only necessary to remember how to solve problem <span class="SimpleMath">x</span> as long as some other link to <span class="SimpleMath">x</span> exists.</p>
+<p>The garbage collector (see Section <a href="chap7.html#X7F1F741D7F0899D1"><span class="RefLink">7.12-1</span></a>) is the part of the kernel that manages memory in the user's workspace. It will normally only reclaim the storage used by an object when the object cannot be reached as a subobject of any <strong class="pkg">GAP</strong> variable, or from any reference in the kernel. We say that any link to object <span class="SimpleMath">a</span> from object <span class="SimpleMath">b</span> "keeps object <span class="SimpleMath">a</span> alive", as long as <span class="SimpleMath">b</span> is alive. It is occasionally convenient, however, to have a link to an object which <em>does not keep it alive</em>, and this is a weak pointer. The most common use is in caches, and similar structures, where it is only necessary to remember how to solve problem <span class="SimpleMath">x</span> as long as some other link to <span class="SimpleMath">x</span> exists.</p>
 
 <p>The following section <a href="chap86.html#X86D963DC7968899B"><span class="RefLink">86.1</span></a> describes the semantics of the objects that contain weak pointers. Following sections describe the functions available to manipulate them.</p>
 
@@ -74,11 +71,11 @@ WeakPointerObj( [ 1, , [ 2, 3 ], fail, rec( a := 1 ) ] )
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GASMAN("collect");</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CollectGarbage( true );</span>
 
 ... (perhaps more computations and garbage collections) ...
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GASMAN("collect");</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CollectGarbage( true );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w;</span>
 WeakPointerObj( [ 1, , , fail ] )
 </pre></div>
@@ -95,7 +92,7 @@ WeakPointerObj( [ 1, , , fail ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w[1] := l;;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w;</span>
 WeakPointerObj( [ [ 1, 2, 3 ], , , fail ] )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GASMAN("collect");</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CollectGarbage( true );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w;                </span>
 WeakPointerObj( [ [ 1, 2, 3 ], , , fail ] )
 </pre></div>
@@ -149,7 +146,7 @@ fail
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">2;;3;;4;;GASMAN("collect"); # clear last, last2, last3</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">2;; 3;; 4;; CollectGarbage( true );  # clear last, last2, last3</span>
 </pre></div>
 
 <p><span class="SimpleMath">...</span> we get the following.</p>
@@ -183,14 +180,6 @@ true
 <p>It is possible to apply <code class="func">StructuralCopy</code> (<a href="chap12.html#X7C1E70587EBDD2CB"><span class="RefLink">12.7-2</span></a>) to a weak pointer object, obtaining a new weak pointer object containing copies of the objects in the original. This <em>may not be safe</em> if a badly timed garbage collection occurs during copying.</p>
 
 <p>Applying <code class="func">Immutable</code> (<a href="chap12.html#X7F0ABF2C870B0CBB"><span class="RefLink">12.6-3</span></a>) to a weak pointer object produces an immutable plain list containing immutable copies of the objects contained in the weak pointer object. An immutable weak pointer object is a contradiction in terms.</p>
-
-<p><a id="X7C1EFEEB8071E0A2" name="X7C1EFEEB8071E0A2"></a></p>
-
-<h4>86.5 <span class="Heading">The GASMAN Interface for Weak Pointer Objects</span></h4>
-
-<p>The key support for weak pointers is in the files <code class="file">src/gasman.c</code> and <code class="file">src/gasman.h</code>. This document assumes familiarity with the rest of the operation of GASMAN. A kernel type (tnum) of bags which are intended to act as weak pointers to their subobjects must meet three conditions. Firstly, the marking function installed for that tnum must use <code class="code">MarkBagWeakly</code> for those subbags, rather than <code class="code">MarkBag</code>. Secondly, before any access to such a subbag, it must be checked with <code class="code">IsWeakDeadBag</code>. If that returns <code class="keyw">true</code>, then the subbag has evaporated in a recent garbage collection and must not be accessed. Typically the reference to it should be removed. Thirdly, a <em>sweeping function</em> must be installed for that tnum which copies the bag, removing all references to dead weakly held subbags.</p>
-
-<p>The files <code class="file">src/weakptr.c</code> and <code class="file">src/weakptr.h</code> use this interface to support weak pointer objects. Other objects with weak behaviour could be implemented in a similar way.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap85.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap87.html">[Next Chapter]</a>&nbsp;  </div>

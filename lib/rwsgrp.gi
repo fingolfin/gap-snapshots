@@ -92,7 +92,6 @@ end );
 
 #############################################################################
 ##
-
 #M  Comm( <elm-by-rws>, <elm-by-rws> )
 ##
 InstallMethod( Comm,
@@ -234,11 +233,8 @@ end );
 ##
 InstallMethod( \^,
     "rws-element ^ int",
-    IsIdenticalObj,
     [ IsMultiplicativeElementWithInverseByRws,
       IsInt ],
-    0,
-
 function( left, right )
     local   fam;
 
@@ -280,7 +276,6 @@ end );
 
 #############################################################################
 ##
-
 #M  MultiplicativeElementsWithInversesFamilyByRws( <rws> )
 ##
 InstallMethod( MultiplicativeElementsWithInversesFamilyByRws,
@@ -313,7 +308,6 @@ end );
 
 #############################################################################
 ##
-
 #M  GroupByRws( <rws> )
 ##
 InstallMethod( GroupByRws,

@@ -1,9 +1,8 @@
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <!-- %% -->
-<!-- %W  types.msk                 GAP manual                    Thomas Breuer -->
+<!-- %W  types.xml                 GAP manual                    Thomas Breuer -->
 <!-- %W                                                       Martin Schönert -->
 <!-- %% -->
-<!-- %H  @(#)<M>Id: types.msk,v 1.30 2006/03/07 14:48:33 sal Exp </M> -->
 <!-- %% -->
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
@@ -722,7 +721,7 @@ one can use logical implications
 <Heading>Types</Heading>
 
 We stated above (see <Ref Chap="Types of Objects"/>) that, for an object <A>obj</A>,
-its <E>type</E> is formed from its family and its filters.  There is a also
+its <E>type</E> is formed from its family and its filters.  There is also
 a third component, used in a few situations, namely defining data of
 the type.
 

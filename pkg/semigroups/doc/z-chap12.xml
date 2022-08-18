@@ -1,0 +1,78 @@
+<Chapter Label = "Properties of semigroups">
+  <Heading>
+    Properties of semigroups
+  </Heading>
+
+  In this chapter we decribe the methods that are available in &SEMIGROUPS; for
+  determining various properties of a semigroup or monoid.
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+    <Heading>
+      Arbitrary semigroups
+    </Heading>
+
+    In this section we describe the properties of an arbitrary semigroup or
+    monoid that can be determined using the &SEMIGROUPS; package.
+    <P/>
+
+    <#Include Label = "IsBand">
+    <#Include Label = "IsBlockGroup">
+    <#Include Label = "IsCommutativeSemigroup">
+    <#Include Label = "IsCompletelyRegularSemigroup">
+    <#Include Label = "IsCongruenceFreeSemigroup">
+    <#Include Label = "IsSurjectiveSemigroup">
+    <#Include Label = "IsGroupAsSemigroup">
+    <#Include Label = "IsIdempotentGenerated">
+    <#Include Label = "IsLeftSimple">
+    <#Include Label = "IsLeftZeroSemigroup">
+    <#Include Label = "IsMonogenicSemigroup">
+    <#Include Label = "IsMonogenicMonoid">
+    <#Include Label = "IsMonoidAsSemigroup">
+    <#Include Label = "IsOrthodoxSemigroup">
+    <#Include Label = "IsRectangularBand">
+    <#Include Label = "IsRectangularGroup">
+    <#Include Label = "IsRegularSemigroup">
+    <#Include Label = "IsRightZeroSemigroup">
+    <#Include Label = "IsRTrivial">
+    <#Include Label = "IsSemigroupWithAdjoinedZero">
+    <#Include Label = "IsSemilattice">
+    <#Include Label = "IsSimpleSemigroup">
+    <#Include Label = "IsSynchronizingSemigroup">
+    <#Include Label = "IsUnitRegularMonoid">
+    <#Include Label = "IsZeroGroup">
+    <#Include Label = "IsZeroRectangularBand">
+    <#Include Label = "IsZeroSemigroup">
+    <#Include Label = "IsZeroSimpleSemigroup">
+
+  </Section>
+
+  <Section>
+    <Heading>
+      Inverse semigroups
+    </Heading>
+
+    In this section we describe the properties of an inverse semigroup or
+    monoid that can be determined using the &SEMIGROUPS; package.
+    <P/>
+
+    <#Include Label = "IsCliffordSemigroup">
+    <#Include Label = "IsBrandtSemigroup">
+    <#Include Label = "IsEUnitaryInverseSemigroup">
+    <#Include Label = "IsFInverseSemigroup">
+    <#Include Label = "IsFInverseMonoid">
+    <#Include Label = "IsFactorisableInverseMonoid">
+    <#Include Label = "IsJoinIrreducible">
+    <#Include Label = "IsMajorantlyClosed">
+    <#Include Label = "IsMonogenicInverseSemigroup">
+    <#Include Label = "IsMonogenicInverseMonoid">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+</Chapter>
+

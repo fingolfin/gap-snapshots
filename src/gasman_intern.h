@@ -20,88 +20,6 @@
 
 /****************************************************************************
 **
-*V  NrAllBags . . . . . . . . . . . . . . . . .  number of all bags allocated
-**
-**  'NrAllBags' is the number of bags allocated since Gasman was initialized.
-**  It is incremented for each 'NewBag' call.
-*/
-extern  UInt                    NrAllBags;
-
-
-/****************************************************************************
-**
-*V  NrLiveBags  . . . . . . . . . .  number of bags that survived the last gc
-**
-**  'NrLiveBags' is the number of bags that were  live after the last garbage
-**  collection.  So after a full  garbage collection it is simply  the number
-**  of bags that have been found to be still live by this garbage collection.
-**  After a partial garbage collection it is the sum of the previous value of
-**  'NrLiveBags', which is the number  of live old  bags, and  the number  of
-**  bags that  have been found to  be still live  by this garbage collection,
-**  which is  the number of live   young  bags.   This  value  is used in the
-**  information messages,  and to find  out  how  many  free  identifiers are
-**  available.
-*/
-extern  UInt                    NrLiveBags;
-
-
-/****************************************************************************
-**
-*V  SizeLiveBags  . . . . . . .  total size of bags that survived the last gc
-**
-**  'SizeLiveBags' is  the total size of bags  that were  live after the last
-**  garbage collection.  So after a full garbage  collection it is simply the
-**  total size of bags that have been found to  be still live by this garbage
-**  collection.  After  a partial  garbage  collection it  is the sum  of the
-**  previous value of  'SizeLiveBags', which is the total   size of live  old
-**  bags, and the total size of bags that have been found to be still live by
-**  this garbage  collection,  which is  the  total size of  live young bags.
-**  This value is used in the information messages.
-*/
-extern  UInt                    SizeLiveBags;
-
-
-/****************************************************************************
-**
-*V  NrDeadBags  . . . . . . . number of bags that died since the last full gc
-**
-**  'NrDeadBags' is  the number of bags that died since the last full garbage
-**  collection.   So after a  full garbage  collection this is zero.  After a
-**  partial  garbage  collection it  is  the  sum  of the  previous value  of
-**  'NrDeadBags' and the  number of bags that  have been found to be dead  by
-**  this garbage collection.  This value is used in the information messages.
-*/
-extern  UInt                    NrDeadBags;
-
-
-/****************************************************************************
-**
-*V  SizeDeadBags  . . . . total size of bags that died since the last full gc
-**
-**  'SizeDeadBags' is  the total size  of bags that  died since the last full
-**  garbage collection.  So  after a full   garbage collection this  is zero.
-**  After a partial garbage collection it is the sum of the previous value of
-**  'SizeDeadBags' and the total size of bags that have been found to be dead
-**  by  this garbage  collection.   This  value  is used  in the  information
-**  message.
-*/
-extern  UInt8                   SizeDeadBags;
-
-
-/****************************************************************************
-**
-*V  NrDeadBags . . . . . . . . . . number of bags only reachable by weak ptrs
-**
-**  'NrHalfDeadBags'  is  the number of  bags  that  have  been  found to  be
-**  reachable only by way of weak pointers since the last garbage collection.
-**  The bodies of these bags are deleted, but their identifiers are marked so
-**  that weak pointer objects can recognize this situation.
-*/
-extern  UInt                    NrHalfDeadBags;
-
-
-/****************************************************************************
-**
 *F  MarkBagWeakly(<bag>) . . . . . . . . . . . . .  mark a bag as weakly live
 **
 **  'MarkBagWeakly' is an alternative to MarkBag, intended to be used by the
@@ -122,17 +40,36 @@ void MarkBagWeakly(Bag bag);
 **  an object which was freed as the only references to it were weak.
 **  This is used for implement weak pointer references.
 */
-Int IsWeakDeadBag(Bag bag);
+BOOL IsWeakDeadBag(Bag bag);
 
 /****************************************************************************
 **
-**  Internal variables exported for the sake of the code in saveload.c
+**  IS_VALID_BAG_ID
+**
+**  This performs a stricter test than IS_BAG_REF does
+*/
+BOOL IS_VALID_BAG_ID(Bag bag);
+
+/****************************************************************************
+**
+**  MASTER_POINTER_NUMBER
 **
 */
-extern  Bag *                   MptrBags;
-extern  Bag *                   MptrEndBags;
-extern  Bag *                   AllocBags;
+UInt MASTER_POINTER_NUMBER(Bag bag);
 
+/****************************************************************************
+**
+**  RESTORE_BAG_CONTENT_POINTER
+**
+*/
+Bag RESTORE_BAG_CONTENT_POINTER(UInt offset);
+
+/****************************************************************************
+**
+**  GASMAN_USED_MEMORY
+**
+*/
+UInt GASMAN_USED_MEMORY(void);
 
 /****************************************************************************
 **
@@ -182,7 +119,7 @@ typedef struct {
 extern TNumGlobalBags GlobalBags;
 
 
-void SortGlobals(UInt byWhat);
+void SortGlobals(void);
 
 Bag * GlobalByCookie(const Char * cookie);
 

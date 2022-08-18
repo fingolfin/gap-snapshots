@@ -815,9 +815,9 @@
   [33X[1;0Y[29X[2XNormalizerTom[102X( [3Xtom[103X, [3Xsub[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XNormalizersTom[102X( [3Xtom[103X ) [32X attribute[133X
   
-  [33X[0;0YLet [3Xtom[103X be the table of marks of a group [22XG[122X, say. [2XNormalizerTom[102X tries to find
-  the  conjugacy  class of the normalizer [22XN[122X in [22XG[122X of a subgroup [22XU[122X in the [3Xsub[103X-th
-  class  of [3Xtom[103X. The return value is either the list of class numbers of those
+  [33X[0;0YLet  [3Xtom[103X be the table of marks of a group [22XG[122X. [2XNormalizerTom[102X tries to find the
+  conjugacy class of the normalizer [22XN[122X in [22XG[122X of a subgroup [22XU[122X in the [3Xsub[103X-th class
+  of  [3Xtom[103X.  The  return  value  is  either  the list of class numbers of those
   subgroups  that  have  the  right  size  and  contain  the  subgroup and all
   subgroups  that clearly contain it as a normal subgroup, or the class number
   of  the  normalizer if it is uniquely determined by these conditions. If [3Xtom[103X
@@ -897,13 +897,12 @@
   
   [33X[1;0Y[29X[2XDecomposedFixedPointVector[102X( [3Xtom[103X, [3Xfix[103X ) [32X operation[133X
   
-  [33X[0;0YLet  [3Xtom[103X  be the table of marks of the group [22XG[122X, say, and let [3Xfix[103X be a vector
-  of  fixed point numbers w.r.t. an action of [22XG[122X, i.e., a vector which contains
-  for  each  class  of  subgroups  the  number of fixed points under the given
-  action.  [2XDecomposedFixedPointVector[102X  returns  the  decomposition of [3Xfix[103X into
-  rows   of   the   table  of  marks.  This  decomposition  corresponds  to  a
-  decomposition  of the action into transitive constituents. Trailing zeros in
-  [3Xfix[103X may be omitted.[133X
+  [33X[0;0YLet  [3Xtom[103X be the table of marks of a group [22XG[122X and let [3Xfix[103X be a vector of fixed
+  point  numbers w.r.t. an action of [22XG[122X, i.e., a vector which contains for each
+  class  of  subgroups  the  number  of  fixed  points under the given action.
+  [2XDecomposedFixedPointVector[102X returns the decomposition of [3Xfix[103X into rows of the
+  table  of  marks.  This  decomposition corresponds to a decomposition of the
+  action into transitive constituents. Trailing zeros in [3Xfix[103X may be omitted.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XDecomposedFixedPointVector( a5, [ 16, 4, 1, 0, 1, 1, 1 ] );[127X[104X
@@ -965,7 +964,7 @@
   
   [33X[1;0Y[29X[2XFactorGroupTom[102X( [3Xtom[103X, [3Xn[103X ) [32X operation[133X
   
-  [33X[0;0YFor a table of marks [3Xtom[103X of the group [22XG[122X, say, and the normal subgroup [22XN[122X of [22XG[122X
+  [33X[0;0YFor  a  table  of  marks  [3Xtom[103X  of  a  group [22XG[122X and the normal subgroup [22XN[122X of [22XG[122X
   corresponding  to the [3Xn[103X-th class of subgroups of [3Xtom[103X, [2XFactorGroupTom[102X returns
   the table of marks of the factor group [22XG / N[122X.[133X
   

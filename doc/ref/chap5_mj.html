@@ -73,7 +73,7 @@ several arguments</span></a>
 
 <h3>5 <span class="Heading">Functions</span></h3>
 
-<p>The section <a href="chap4_mj.html#X815F71EA7BC0EB6F"><span class="RefLink">4.23</span></a> describes how to define a function. In this chapter we describe functions that give information about functions, and various utility functions used either when defining functions or calling functions.</p>
+<p>The section <a href="chap4_mj.html#X815F71EA7BC0EB6F"><span class="RefLink">4.11</span></a> describes how to define a function. In this chapter we describe functions that give information about functions, and various utility functions used either when defining functions or calling functions.</p>
 
 <p><a id="X870553EF8605792F" name="X870553EF8605792F"></a></p>
 
@@ -179,7 +179,7 @@ fail
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">meth:= ApplicableMethod( Size, [ Group( () ) ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FilenameFunc( meth );</span>
-"... some path ... gap4r5/lib/grpperm.gi"
+"... some path ... /lib/grpperm.gi"
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StartlineFunc( meth );</span>
 487
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">EndlineFunc( meth );</span>
@@ -191,7 +191,7 @@ fail
 <h5>5.1-6 LocationFunc</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LocationFunc</code>( <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Let <var class="Arg">func</var> be a function. Returns a string describing the location of <var class="Arg">func</var>, or an empty string if the information cannot be found. This uses the information provided by <code class="func">FilenameFunc</code> (<a href="chap5_mj.html#X80E108C57F90FAA3"><span class="RefLink">5.1-4</span></a>) and <code class="func">StartlineFunc</code> (<a href="chap5_mj.html#X7FF7643781D2C194"><span class="RefLink">5.1-5</span></a>)</p>
+<p>Let <var class="Arg">func</var> be a function. Returns a string describing the location of <var class="Arg">func</var>, or <code class="keyw">fail</code> if the information cannot be found. This uses the information provided by <code class="func">FilenameFunc</code> (<a href="chap5_mj.html#X80E108C57F90FAA3"><span class="RefLink">5.1-4</span></a>) and <code class="func">StartlineFunc</code> (<a href="chap5_mj.html#X7FF7643781D2C194"><span class="RefLink">5.1-5</span></a>)</p>
 
 
 <div class="example"><pre>
@@ -199,7 +199,7 @@ fail
 "... some path ... gap/lib/coll.gi:2467"
 # String is an attribute, so no information is stored
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LocationFunc( String );</span>
-""
+fail
 </pre></div>
 
 <p><a id="X845A929B83D46E01" name="X845A929B83D46E01"></a></p>
@@ -239,7 +239,7 @@ several arguments</span></h4>
 13
 </pre></div>
 
-<p>A more useful application of <code class="func">CallFuncList</code> is for a function <code class="code">g</code> that is called in the body of a function <code class="code">f</code> with (a sublist of) the arguments of <code class="code">f</code>, where <code class="code">f</code> has been defined with a single formal argument <code class="code">arg</code> (see <a href="chap4_mj.html#X815F71EA7BC0EB6F"><span class="RefLink">4.23</span></a>), as in the following code fragment.</p>
+<p>A more useful application of <code class="func">CallFuncList</code> is for a function <code class="code">g</code> that is called in the body of a function <code class="code">f</code> with (a sublist of) the arguments of <code class="code">f</code>, where <code class="code">f</code> has been defined with a single formal argument <code class="code">arg</code> (see <a href="chap4_mj.html#X815F71EA7BC0EB6F"><span class="RefLink">4.11</span></a>), as in the following code fragment.</p>
 
 
 <div class="example"><pre>
@@ -269,7 +269,7 @@ function( arg... ) ... end
 [ 1, 9, 7, 3, 2 ]
 </pre></div>
 
-<p><code class="func">CallFuncListWrap</code> differs only in that the result is a list. This returned list is empty if the called function returned no value, else it contains the returned value as it's single member. This allows wrapping functions which may, or may not return a value.</p>
+<p><code class="func">CallFuncListWrap</code> differs only in that the result is a list. This returned list is empty if the called function returned no value, else it contains the returned value as its single member. This allows wrapping functions which may, or may not return a value.</p>
 
 
 <div class="example"><pre>
@@ -288,11 +288,11 @@ function( arg... ) ... end
 <h5>5.3-1 MemoizePosIntFunction</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MemoizePosIntFunction</code>( <var class="Arg">function</var>[, <var class="Arg">options</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p><code class="func">MemoizePosIntFunction</code> returns a function which behaves the same as <var class="Arg">function</var>, except it caches the results for any inputs that are positive integers. Thus if the new function is called multiple times with the same input, then any call after the first will return the cached value, instead of recomputing it. By default, the cache can be flushed by calling <code class="func">FlushCaches</code> (<a href="chap79_mj.html#X87A4316C818B3DE3"><span class="RefLink">79.10-3</span></a>).</p>
+<p><code class="func">MemoizePosIntFunction</code> returns a function which behaves the same as <var class="Arg">function</var>, except it caches the results for any inputs that are positive integers. Thus if the new function is called multiple times with the same input, then any call after the first will return the cached value, instead of recomputing it. By default, the cache can be flushed by calling <code class="func">FlushCaches</code> (<a href="chap79_mj.html#X87A4316C818B3DE3"><span class="RefLink">79.10-4</span></a>).</p>
 
 <p>The returned function will by default only accept positive integers.</p>
 
-<p>This function does not promise to never call <var class="Arg">function</var> more than once for any input -- values may be removed if the cache gets too large, or if <code class="func">FlushCaches</code> (<a href="chap79_mj.html#X87A4316C818B3DE3"><span class="RefLink">79.10-3</span></a>) is called, or if multiple threads try to calculate the same value simultaneously.</p>
+<p>This function does not promise to never call <var class="Arg">function</var> more than once for any input -- values may be removed if the cache gets too large, or if <code class="func">FlushCaches</code> (<a href="chap79_mj.html#X87A4316C818B3DE3"><span class="RefLink">79.10-4</span></a>) is called, or if multiple threads try to calculate the same value simultaneously.</p>
 
 <p>The optional second argument is a record which provides a number of configuration options. The following options are supported.</p>
 
@@ -303,7 +303,7 @@ function( arg... ) ... end
 
 </dd>
 <dt><strong class="Mark"><code class="code">flush</code> (default <code class="keyw">true</code>)</strong></dt>
-<dd><p>If this is <code class="keyw">true</code>, the cache is emptied whenever <code class="func">FlushCaches</code> (<a href="chap79_mj.html#X87A4316C818B3DE3"><span class="RefLink">79.10-3</span></a>) is called; if false, then the cache cannot be flushed.</p>
+<dd><p>If this is <code class="keyw">true</code>, the cache is emptied whenever <code class="func">FlushCaches</code> (<a href="chap79_mj.html#X87A4316C818B3DE3"><span class="RefLink">79.10-4</span></a>) is called; if false, then the cache cannot be flushed.</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">errorHandler</code> (defaults to <code class="func">Error</code> (<a href="chap6_mj.html#X7E7AD8D87EBA1A08"><span class="RefLink">6.6-1</span></a>))</strong></dt>
@@ -540,7 +540,7 @@ function (  )
 end
 </pre></div>
 
-<p>Pragmas can be used to mark parts of functions that should later be manipulated using <a href="chap4_mj.html#X8732D9257FFCEA1B"><span class="RefLink">4.25</span></a>.</p>
+<p>Pragmas can be used to mark parts of functions that should later be manipulated using <a href="chap4_mj.html#X8732D9257FFCEA1B"><span class="RefLink">4.16</span></a>.</p>
 
 <p>Please note that heavy use of pragmas in functions slows down the execution of your function in the same way as adding empty <code class="code">;</code> statements to your code.</p>
 

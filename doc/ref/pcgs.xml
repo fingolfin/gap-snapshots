@@ -1,9 +1,8 @@
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <!-- %% -->
-<!-- %A  pcgs.msk                    GAP documentation            Alexander Hulpke -->
+<!-- %A  pcgs.xml                    GAP documentation            Alexander Hulpke -->
 <!-- %A                                                               Bettina Eick -->
 <!-- %% -->
-<!-- %A  @(#)<M>Id: pcgs.msk,v 1.33 2003/01/30 17:23:11 gap Exp </M> -->
 <!-- %% -->
 <!-- %Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland -->
 <!-- %Y  Copyright (C) 2002 The GAP Group -->
@@ -415,7 +414,7 @@ subgroup of <M>G_{{i-1}}</M> with nilpotent factor. To obtain the LG-series
 of <A>G</A> we need to refine this series.
 Thus consider a factor <M>F_i := G_i / G_{{i+1}}</M>.
 Since <M>F_i</M> is finite nilpotent, it is a direct
-product of its Sylow subgroups, say <M>F_i = P_{{i,1}} \cdots P_{{i,r_i}}</M>.
+product of its Sylow subgroups <M>F_i = P_{{i,1}} \cdots P_{{i,r_i}}</M>.
 For each Sylow <M>p_j</M>-subgroup <M>P_{{i,j}}</M> we can consider its
 lower <M>p_j</M>-central series. To obtain a characteristic central series
 with elementary abelian factors of <M>F_i</M> we loop over its Sylow subgroups.

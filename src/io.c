@@ -21,114 +21,47 @@
 
 #include "io.h"
 
+#include "ariths.h"
 #include "bool.h"
 #include "calls.h"
 #include "error.h"
 #include "gapstate.h"
 #include "gaputils.h"
 #include "gvars.h"
+#include "listfunc.h"
 #include "lists.h"
 #include "modules.h"
 #include "plist.h"
 #include "read.h"
 #include "scanner.h"
 #include "stringobj.h"
+#include "symbols.h"
 #include "sysfiles.h"
 #include "sysopt.h"
+#include "sysstr.h"
+#include "trycatch.h"
 
 #ifdef HPCGAP
 #include "hpc/aobjects.h"
 #endif
 
-
-/****************************************************************************
-**
-*T  TypInputFile  . . . . . . . . . .  structure of an open input file, local
-**
-**  'TypInputFile' describes the  information stored  for  open input  files:
-**
-**  'isstream' is 'true' if input come from a stream.
-**
-**  'file'  holds the  file identifier  which  is received from 'SyFopen' and
-**  which is passed to 'SyFgets' and 'SyFclose' to identify this file.
-**
-**  'name' is the name of the file, this is only used in error messages.
-**
-**  'line' is a  buffer that holds the  current input  line.  This is  always
-**  terminated by the character '\0'.  Because 'line' holds  only part of the
-**  line for very long lines the last character need not be a <newline>.
-**
-**  'stream' is non-zero if the input points to a stream.
-**
-**  'sline' contains the next line from the stream as GAP string.
-**
-**  The following variables are used to store the state of the interpreter
-**  and stream when another input file is opened:
-**
-**  'ptr' points to the current character within that line.  This is not used
-**  for the current input file, where 'In' points to the  current  character.
-**
-**  'number' is the number of the current line, is used in error messages.
-**
-**  'interpreterStartLine' is the number of the line where the fragment of
-**  code currently being interpreted started. This is used for profiling
-**
-**
-*/
-typedef struct {
-    UInt   isstream;
-    Int    file;
-    Char   name[256];
-    UInt   gapnameid;
-    Char   line[32768];
-    Char * ptr;
-    UInt   symbol;
-    Int    interpreterStartLine;
-    Int    number;
-    Obj    stream;
-    UInt   isstringstream;
-    Obj    sline;
-    Int    spos;
-    UInt   echo;
-} TypInputFile;
+#include <limits.h>
 
 
-/****************************************************************************
-**
-*T  TypOutputFiles  . . . . . . . . . structure of an open output file, local
-**
-**  'TypOutputFile' describes the information stored for open  output  files:
-**  'file' holds the file identifier which is  received  from  'SyFopen'  and
-**  which is passed to  'SyFputs'  and  'SyFclose'  to  identify  this  file.
-**  'line' is a buffer that holds the current output line.
-**  'pos' is the position of the current character on that line.
-*/
-/* the maximal number of used line break hints */
-#define MAXHINTS 100
-typedef struct {
-    UInt isstream;
-    UInt isstringstream;
-    Int  file;
-    Char line[MAXLENOUTPUTLINE];
-    Int  pos;
-    Int  format;
-    Int  indent;
-
-    /* each hint is a tripel (position, value, indent) */
-    Int hints[3 * MAXHINTS + 1];
-    Obj stream;
-} TypOutputFile;
-
-
-static Char GetLine(void);
+static Char GetLine(TypInputFile * input);
 static void PutLine2(TypOutputFile * output, const Char * line, UInt len);
 
 static Obj ReadLineFunc;
 static Obj WriteAllFunc;
-static Obj IsStringStream;
+static Obj IsInputStringStream;
+static Obj IsOutputStringStream;
+static Obj PositionStream;
+static Obj SeekPositionStream;
+
 static Obj PrintPromptHook = 0;
 Obj EndLineHook = 0;
 static Obj PrintFormattingStatus;
+static Obj SetPrintFormattingStatus;
 
 /****************************************************************************
 **
@@ -137,9 +70,7 @@ static Obj PrintFormattingStatus;
 **  'FilenameCache' is a list of previously opened filenames.
 */
 static Obj FilenameCache;
-
-/* TODO: Eliminate race condition in HPC-GAP */
-static Char promptBuf[81];
+static SymbolTable FilenameSymbolTable;
 
 static ModuleStateOffset IOStateOffset = -1;
 
@@ -149,16 +80,7 @@ enum {
 
 struct IOModuleState {
 
-    // The stack of the open input files
-    TypInputFile * InputStack[MAX_OPEN_FILES];
-    int            InputStackPointer;
-
-    // The stack of open output files
-    TypOutputFile * OutputStack[MAX_OPEN_FILES];
-    int             OutputStackPointer;
-
-    // A pointer to the current input file. It points to the top of the stack
-    // 'InputFiles'.
+    // A pointer to the current input file
     TypInputFile * Input;
 
     // A pointer to the current output file. It points to the top of the
@@ -182,10 +104,17 @@ struct IOModuleState {
     TypOutputFile InputLogFileOrStream;
     TypOutputFile OutputLogFileOrStream;
 
+    TypOutputFile DefaultOutput;
+
+#ifdef HPCGAP
+    Obj DefaultOutputStream;
+    Obj DefaultInputStream;
+#endif
+
     Int NoSplitLine;
 
-    Char   Pushback;
-    Char * RealIn;
+    BOOL PrintFormattingForStdout;
+    BOOL PrintFormattingForErrout;
 };
 
 // for debugging from GDB / lldb, we mark this as extern inline
@@ -194,53 +123,45 @@ extern inline struct IOModuleState * IO(void)
     return (struct IOModuleState *)StateSlotsAtOffset(IOStateOffset);
 }
 
-void LockCurrentOutput(Int lock)
+void LockCurrentOutput(BOOL lock)
 {
     IO()->IgnoreStdoutErrout = lock ? IO()->Output : NULL;
 }
 
+TypInputFile * GetCurrentInput(void)
+{
+    return IO()->Input;
+}
 
 /****************************************************************************
 **
-*F  GET_NEXT_CHAR()  . . . . . . . . . . . . .  get the next character, local
+*F  GetNextChar() . . . . . . . . . . . . . . . get the next character, local
 **
-**  'GET_NEXT_CHAR' returns the next character from  the current input file.
-**  This character is afterwards also available as '*In'.
+**  'GetNextChar' returns the next character from  the current input file.
 */
-
-
-static inline Int IS_CHAR_PUSHBACK_EMPTY(void)
+Char GetNextChar(TypInputFile * input)
 {
-    return STATE(In) != &IO()->Pushback;
-}
-
-Char GET_NEXT_CHAR(void)
-{
-    if (STATE(In) == &IO()->Pushback) {
-        STATE(In) = IO()->RealIn;
-    }
-    else
-        STATE(In)++;
+    input->ptr++;
 
     // handle line continuation, i.e., backslash followed by new line; and
     // also the case when we run out of buffered data
-    while (*STATE(In) == '\\' || *STATE(In) == 0) {
+    while (*input->ptr == '\\' || *input->ptr == 0) {
 
         // if we run out of data, get more, and try again
-        if (*STATE(In) == 0) {
-            GetLine();
+        if (*input->ptr == 0) {
+            GetLine(input);
             continue;
         }
 
         // we have seen a backslash; so check now if it starts a
         // line continuation, i.e., whether it is followed by a line terminator
-        if (STATE(In)[1] == '\n') {
+        if (input->ptr[1] == '\n') {
             // LF is the line terminator used in Unix and its relatives
-            STATE(In) += 2;
+            input->ptr += 2;
         }
-        else if (STATE(In)[1] == '\r' && STATE(In)[2] == '\n') {
+        else if (input->ptr[1] == '\r' && input->ptr[2] == '\n') {
             // CR+LF is the line terminator used by Windows
-            STATE(In) += 3;
+            input->ptr += 3;
         }
         else {
             // if we see a backlash without a line terminator after it, stop
@@ -249,115 +170,93 @@ Char GET_NEXT_CHAR(void)
 
         // if we get here, we saw a line continuation; change the prompt to a
         // partial prompt from now on
-        STATE(Prompt) = SyQuiet ? "" : "> ";
+        SetPrompt("> ");
     }
 
-    return *STATE(In);
+    return *input->ptr;
 }
 
-// GET_NEXT_CHAR_NO_LC is like GET_NEXT_CHAR, but does not handle
+// GET_NEXT_CHAR_NO_LC is like GetNextChar, but does not handle
 // line continuations. This is used when skipping to the end of the
 // current line, when handling comment lines.
-Char GET_NEXT_CHAR_NO_LC(void)
+Char GET_NEXT_CHAR_NO_LC(TypInputFile * input)
 {
-    if (STATE(In) == &IO()->Pushback) {
-        STATE(In) = IO()->RealIn;
-    }
-    else
-        STATE(In)++;
-
-    if (!*STATE(In))
-        GetLine();
-
-    return *STATE(In);
+    char c = *(++input->ptr);
+    return c ? c : GetLine(input);
 }
 
-Char PEEK_NEXT_CHAR(void)
+Char PEEK_NEXT_CHAR(TypInputFile * input)
 {
-    assert(IS_CHAR_PUSHBACK_EMPTY());
-
     // store the current character
-    IO()->Pushback = *STATE(In);
+    char c = *input->ptr;
 
-    // read next character
-    GET_NEXT_CHAR();
+    // read next character; this will increment input->ptr and then
+    // possibly read in new line data, and so even might end up reseting
+    // input->ptr to point at the start of the line buffer, which is
+    // equal to Input->line+1
+    char next = GetNextChar(input);
 
-    // fake insert the previous character
-    IO()->RealIn = STATE(In);
-    STATE(In) = &IO()->Pushback;
-    return *IO()->RealIn;
+    // push back the previous character: first, return input->ptr to the
+    // previous position; then, if we detect that GetNextChar read a new
+    // line, also restore the previous character by placing it in the "push
+    // back buffer"
+    GAP_ASSERT(input->ptr > input->line);
+    input->ptr--;
+    if (input->ptr == input->line)
+        *input->ptr = c;
+
+    // return the next character
+    return next;
 }
 
-Char PEEK_CURR_CHAR(void)
+Char PEEK_CURR_CHAR(TypInputFile * input)
 {
-    return *STATE(In);
+    Char c = *input->ptr;
+
+    // if no character is available then get one
+    if (c == '\0') {
+        GAP_ASSERT(input->ptr > input->line);
+        input->ptr--;
+        c = GetNextChar(input);
+    }
+
+    return c;
 }
 
-void SKIP_TO_END_OF_LINE(void)
+void SKIP_TO_END_OF_LINE(TypInputFile * input)
 {
-    Char c = *STATE(In);
+    Char c = *input->ptr;
     while (c != '\n' && c != '\r' && c != '\377')
-        c = GET_NEXT_CHAR_NO_LC();
+        c = GET_NEXT_CHAR_NO_LC(input);
 }
 
 
-const Char * GetInputFilename(void)
+Int GetInputLineNumber(TypInputFile * input)
 {
-    GAP_ASSERT(IO()->Input);
-    return IO()->Input->name;
+    return input ? input->number : 0;
 }
 
-Int GetInputLineNumber(void)
+const Char * GetInputLineBuffer(TypInputFile * input)
 {
-    GAP_ASSERT(IO()->Input);
-    return IO()->Input->number;
+    GAP_ASSERT(input);
+    // first byte of Input->line is reserved for the pushback buffer, so add 1
+    return input->line + 1;
 }
 
-const Char * GetInputLineBuffer(void)
+Int GetInputLinePosition(TypInputFile * input)
 {
-    GAP_ASSERT(IO()->Input);
-    return IO()->Input->line;
+    GAP_ASSERT(input);
+    return input->ptr - GetInputLineBuffer(input);
 }
 
-// Get current line position. In the case where we pushed back the last
-// character on the previous line we return the first character of the
-// current line, as we cannot retrieve the previous line.
-Int GetInputLinePosition(void)
+UInt GetInputFilenameID(TypInputFile * input)
 {
-    if (STATE(In) == &IO()->Pushback) {
-        // Subtract 2 as a value was pushed back
-        Int pos = IO()->RealIn - IO()->Input->line - 2;
-        if (pos < 0)
-            pos = 0;
-        return pos;
-    }
-    else {
-        return STATE(In) - IO()->Input->line - 1;
-    }
+    return input ? input->gapnameid : 0;
 }
 
-UInt GetInputFilenameID(void)
+static void AddCachedFilename(SymbolTable * symtab, UInt id, Obj name)
 {
-    GAP_ASSERT(IO()->Input);
-    UInt gapnameid = IO()->Input->gapnameid;
-    if (gapnameid == 0) {
-        Obj filename = MakeImmString(GetInputFilename());
-#ifdef HPCGAP
-        // TODO/FIXME: adjust this code to work more like the corresponding
-        // code below for GAP?!?
-        gapnameid = AddAList(FilenameCache, filename);
-#else
-        Obj pos = POS_LIST(FilenameCache, filename, INTOBJ_INT(1));
-        if (pos == Fail) {
-            gapnameid = PushPlist(FilenameCache, filename);
-        }
-        else {
-            gapnameid = INT_INTOBJ(pos);
-        }
-#endif
-        IO()->Input->gapnameid = gapnameid;
-    }
-    return gapnameid;
+    AssPlist(FilenameCache, id, name);
 }
 
 Obj GetCachedFilename(UInt id)
@@ -371,75 +270,44 @@ Obj GetCachedFilename(UInt id)
 *F * * * * * * * * * * * open input/output functions  * * * * * * * * * * * *
 */
 
-#if !defined(HPCGAP)
-static TypInputFile  InputFiles[MAX_OPEN_FILES];
-static TypOutputFile OutputFiles[MAX_OPEN_FILES];
-#endif
-
-static TypInputFile * PushNewInput(void)
-{
-    GAP_ASSERT(IO()->InputStackPointer < MAX_OPEN_FILES);
-    const int sp = IO()->InputStackPointer++;
-#ifdef HPCGAP
-    if (!IO()->InputStack[sp]) {
-        IO()->InputStack[sp] = AllocateMemoryBlock(sizeof(TypInputFile));
-    }
-#endif
-    GAP_ASSERT(IO()->InputStack[sp]);
-    return IO()->InputStack[sp];
-}
-
-static TypOutputFile * PushNewOutput(void)
-{
-    GAP_ASSERT(IO()->OutputStackPointer < MAX_OPEN_FILES);
-    const int sp = IO()->OutputStackPointer++;
-#ifdef HPCGAP
-    if (!IO()->OutputStack[sp]) {
-        IO()->OutputStack[sp] = AllocateMemoryBlock(sizeof(TypOutputFile));
-    }
-#endif
-    GAP_ASSERT(IO()->OutputStack[sp]);
-    return IO()->OutputStack[sp];
-}
-
 #ifdef HPCGAP
 static GVarDescriptor DEFAULT_INPUT_STREAM;
 static GVarDescriptor DEFAULT_OUTPUT_STREAM;
 
-static UInt OpenDefaultInput(void)
+static UInt OpenDefaultInput(TypInputFile * input)
 {
   Obj func, stream;
-  stream = TLS(DefaultInput);
+  stream = IO()->DefaultInputStream;
   if (stream)
-      return OpenInputStream(stream, 0);
+      return OpenInputStream(input, stream, FALSE);
   func = GVarOptFunction(&DEFAULT_INPUT_STREAM);
   if (!func)
-    return OpenInput("*stdin*");
+    return OpenInput(input, "*stdin*");
   stream = CALL_0ARGS(func);
   if (!stream)
-    ErrorQuit("DEFAULT_INPUT_STREAM() did not return a stream", 0L, 0L);
+    ErrorQuit("DEFAULT_INPUT_STREAM() did not return a stream", 0, 0);
   if (IsStringConv(stream))
-    return OpenInput(CONST_CSTR_STRING(stream));
-  TLS(DefaultInput) = stream;
-  return OpenInputStream(stream, 0);
+    return OpenInput(input, CONST_CSTR_STRING(stream));
+  IO()->DefaultInputStream = stream;
+  return OpenInputStream(input, stream, FALSE);
 }
 
-static UInt OpenDefaultOutput(void)
+static UInt OpenDefaultOutput(TypOutputFile * output)
 {
   Obj func, stream;
-  stream = TLS(DefaultOutput);
+  stream = IO()->DefaultOutputStream;
   if (stream)
-    return OpenOutputStream(stream);
+    return OpenOutputStream(output, stream);
   func = GVarOptFunction(&DEFAULT_OUTPUT_STREAM);
   if (!func)
-    return OpenOutput("*stdout*");
+    return OpenOutput(output, "*stdout*", FALSE);
   stream = CALL_0ARGS(func);
   if (!stream)
-    ErrorQuit("DEFAULT_OUTPUT_STREAM() did not return a stream", 0L, 0L);
+    ErrorQuit("DEFAULT_OUTPUT_STREAM() did not return a stream", 0, 0);
   if (IsStringConv(stream))
-    return OpenOutput(CONST_CSTR_STRING(stream));
-  TLS(DefaultOutput) = stream;
-  return OpenOutputStream(stream);
+    return OpenOutput(output, CONST_CSTR_STRING(stream), FALSE);
+  IO()->DefaultOutputStream = stream;
+  return OpenOutputStream(output, stream);
 }
 #endif
 
@@ -460,10 +328,6 @@ static UInt OpenDefaultOutput(void)
 **  may  also fail if  you have too  many files open at once.   It  is system
 **  dependent how many are  too many, but  16  files should  work everywhere.
 **
-**  Directely after the 'OpenInput' call the variable  'Symbol' has the value
-**  'S_ILLEGAL' to indicate that no symbol has yet been  read from this file.
-**  The first symbol is read by 'Read' in the first call to 'Match' call.
-**
 **  You can open  '*stdin*' to  read  from the standard  input file, which is
 **  usually the terminal, or '*errin*' to  read from the standard error file,
 **  which  is  the  terminal  even if '*stdin*'  is  redirected from  a file.
@@ -473,61 +337,54 @@ static UInt OpenDefaultOutput(void)
 **  'stderr'  (Unix file  descriptor  2)  is  not a  terminal,  because  of a
 **  redirection say, to avoid that break loops take their input from a file.
 **
-**  It is not neccessary to open the initial input  file, 'InitScanner' opens
+**  It is not necessary to open the initial input  file, 'InitScanner' opens
 **  '*stdin*' for  that purpose.  This  file on   the other   hand  cannot be
 **  closed by 'CloseInput'.
 */
-UInt OpenInput (
-    const Char *        filename )
+UInt OpenInput(TypInputFile * input, const Char * filename)
 {
-    Int                 file;
+    GAP_ASSERT(input);
 
-    /* fail if we can not handle another open input file                   */
-    if (IO()->InputStackPointer == MAX_OPEN_FILES)
-        return 0;
+    Int file;
 
 #ifdef HPCGAP
     /* Handle *defin*; redirect *errin* to *defin* if the default
      * channel is already open. */
-    if (! strcmp(filename, "*defin*") ||
-        (! strcmp(filename, "*errin*") && TLS(DefaultInput)) )
-        return OpenDefaultInput();
+    if (streq(filename, "*defin*") ||
+        (streq(filename, "*errin*") && IO()->DefaultInputStream))
+        return OpenDefaultInput(input);
 #endif
 
     /* try to open the input file                                          */
-    file = SyFopen( filename, "r" );
+    file = SyFopen(filename, "r", TRUE);
     if ( file == -1 )
         return 0;
 
-    /* remember the current position in the current file                   */
-    if (IO()->InputStackPointer > 0) {
-        GAP_ASSERT(IS_CHAR_PUSHBACK_EMPTY());
-        IO()->Input->ptr = STATE(In);
-        IO()->Input->symbol = STATE(Scanner).Symbol;
-        IO()->Input->interpreterStartLine = STATE(InterpreterStartLine);
-    }
-
     /* enter the file identifier and the file name                         */
-    IO()->Input = PushNewInput();
-    IO()->Input->isstream = 0;
-    IO()->Input->file = file;
-    IO()->Input->name[0] = '\0';
+#ifdef GAP_KERNEL_DEBUG
+    // paranoia: fill with garbage, to verify we initialize everything
+    memset(input, 0x47, sizeof(TypInputFile));
+#endif
+    input->prev = IO()->Input;
+    input->stream = 0;
+    input->file = file;
 
     // enable echo for stdin and errin
-    if (!strcmp("*errin*", filename) || !strcmp("*stdin*", filename))
-        IO()->Input->echo = 1;
+    if (streq("*errin*", filename) || streq("*stdin*", filename))
+        input->echo = TRUE;
     else
-        IO()->Input->echo = 0;
+        input->echo = FALSE;
 
-    strlcpy(IO()->Input->name, filename, sizeof(IO()->Input->name));
-    IO()->Input->gapnameid = 0;
+    input->gapnameid = LookupSymbol(&FilenameSymbolTable, filename);
 
-    /* start with an empty line and no symbol                              */
-    STATE(In) = IO()->Input->line;
-    STATE(In)[0] = STATE(In)[1] = '\0';
-    STATE(Scanner).Symbol = S_ILLEGAL;
-    STATE(InterpreterStartLine) = 0;
-    IO()->Input->number = 1;
+    // start with an empty line
+    input->line[0] = '\0';    // init the pushback buffer
+    input->line[1] = '\0';    // empty line buffer
+    input->ptr = input->line + 1;
+    input->number = 1;
+    input->lastErrorLine = 0;
+
+    IO()->Input = input;
 
     /* indicate success                                                    */
     return 1;
@@ -540,44 +397,37 @@ UInt OpenInput (
 **
 **  The same as 'OpenInput' but for streams.
 */
-UInt OpenInputStream(Obj stream, UInt echo)
+UInt OpenInputStream(TypInputFile * input, Obj stream, BOOL echo)
 {
-    /* fail if we can not handle another open input file                   */
-    if (IO()->InputStackPointer == MAX_OPEN_FILES)
-        return 0;
-
-    /* remember the current position in the current file                   */
-    if (IO()->InputStackPointer > 0) {
-        GAP_ASSERT(IS_CHAR_PUSHBACK_EMPTY());
-        IO()->Input->ptr = STATE(In);
-        IO()->Input->symbol = STATE(Scanner).Symbol;
-        IO()->Input->interpreterStartLine = STATE(InterpreterStartLine);
-    }
+    GAP_ASSERT(input);
 
     /* enter the file identifier and the file name                         */
-    IO()->Input = PushNewInput();
-    IO()->Input->isstream = 1;
-    IO()->Input->stream = stream;
-    IO()->Input->isstringstream =
-        (CALL_1ARGS(IsStringStream, stream) == True);
-    if (IO()->Input->isstringstream) {
-        IO()->Input->sline = CONST_ADDR_OBJ(stream)[2];
-        IO()->Input->spos = INT_INTOBJ(CONST_ADDR_OBJ(stream)[1]);
+#ifdef GAP_KERNEL_DEBUG
+    // paranoia: fill with garbage, to verify we initialize everything
+    memset(input, 0x47, sizeof(TypInputFile));
+#endif
+    input->prev = IO()->Input;
+    input->stream = stream;
+    input->file = -1;
+    input->isstringstream = (CALL_1ARGS(IsInputStringStream, stream) == True);
+    if (input->isstringstream) {
+        input->sline = CONST_ADDR_OBJ(stream)[2];
+        input->spos = INT_INTOBJ(CONST_ADDR_OBJ(stream)[1]);
     }
     else {
-        IO()->Input->sline = 0;
+        input->sline = 0;
     }
-    IO()->Input->file = -1;
-    IO()->Input->echo = echo;
-    strlcpy(IO()->Input->name, "stream", sizeof(IO()->Input->name));
-    IO()->Input->gapnameid = 0;
+    input->echo = echo;
+    input->gapnameid = LookupSymbol(&FilenameSymbolTable, "stream");
 
-    /* start with an empty line and no symbol                              */
-    STATE(In) = IO()->Input->line;
-    STATE(In)[0] = STATE(In)[1] = '\0';
-    STATE(Scanner).Symbol = S_ILLEGAL;
-    STATE(InterpreterStartLine) = 0;
-    IO()->Input->number = 1;
+    // start with an empty line
+    input->line[0] = '\0';    // init the pushback buffer
+    input->line[1] = '\0';    // empty line buffer
+    input->ptr = input->line + 1;
+    input->number = 1;
+    input->lastErrorLine = 0;
+
+    IO()->Input = input;
 
     /* indicate success                                                    */
     return 1;
@@ -594,47 +444,41 @@ UInt OpenInputStream(Obj stream, UInt echo)
 **
 **  'CloseInput' will not close the initial input file '*stdin*', and returns
 **  0  if such  an  attempt is made.   This is  used in  'Error'  which calls
-**  'CloseInput' until it returns 0, therebye closing all open input files.
+**  'CloseInput' until it returns 0, thereby closing all open input files.
 **
 **  Calling 'CloseInput' if the  corresponding  'OpenInput' call failed  will
 **  close the current output file, which will lead to very strange behaviour.
 */
-UInt CloseInput ( void )
+UInt CloseInput(TypInputFile * input)
 {
-    /* refuse to close the initial input file                              */
-#ifdef HPCGAP
-    // In HPC-GAP, only for the main thread.
-    if (TLS(threadID) != 0) {
-        if (IO()->InputStackPointer <= 0)
-            return 0;
-    } else
-#else
-    if (IO()->InputStackPointer <= 1)
-        return 0;
-#endif
+    GAP_ASSERT(input);
+    GAP_ASSERT(input == IO()->Input);
 
-    /* close the input file                                                */
-    if (!IO()->Input->isstream) {
-        SyFclose(IO()->Input->file);
+    // revert to previous input
+    IO()->Input = input->prev;
+
+    if (input->stream) {
+        // if the input stream supports seeking, update its position to
+        // reflect the actual state of things: we may have read and buffered
+        // more bytes than we actually processed
+        int offset = strlen(input->ptr);
+        // check for EOF
+        if (input->ptr[0] == '\377' && input->ptr[1] == '\0')
+            offset = 0;
+        if (offset) {
+            Obj pos = CALL_1ARGS(PositionStream, input->stream);
+            C_DIFF_FIA(pos, pos, INTOBJ_INT(offset));
+            CALL_2ARGS(SeekPositionStream, input->stream, pos);
+        }
+    } else {
+        // close the input file
+        SyFclose(input->file);
     }
 
-    /* don't keep GAP objects alive unnecessarily */
-    memset(IO()->Input, 0, sizeof(TypInputFile));
+    // don't keep GAP objects alive unnecessarily
+    input->stream = 0;
+    input->sline = 0;
 
-    /* revert to last file                                                 */
-    const int sp = --IO()->InputStackPointer;
-#ifdef HPCGAP
-    if (sp == 0) {
-        IO()->Input = NULL;
-        return 1;
-    }
-#endif
-    IO()->Input = IO()->InputStack[sp - 1];
-    STATE(In) = IO()->Input->ptr;
-    STATE(Scanner).Symbol = IO()->Input->symbol;
-    STATE(InterpreterStartLine) = IO()->Input->interpreterStartLine;
-
-    /* indicate success                                                    */
     return 1;
 }
 
@@ -643,11 +487,9 @@ UInt CloseInput ( void )
 *F  FlushRestOfInputLine()  . . . . . . . . . . . . discard remainder of line
 */
 
-void FlushRestOfInputLine( void )
+void FlushRestOfInputLine(TypInputFile * input)
 {
-  STATE(In)[0] = STATE(In)[1] = '\0';
-  /* IO()->Input->number = 1; */
-  STATE(Scanner).Symbol = S_ILLEGAL;
+    input->ptr[0] = input->ptr[1] = '\0';
 }
 
 /****************************************************************************
@@ -675,8 +517,8 @@ UInt OpenLog (
         return 0;
 
     /* try to open the file                                                */
-    IO()->OutputLogFileOrStream.file = SyFopen(filename, "w");
-    IO()->OutputLogFileOrStream.isstream = 0;
+    IO()->OutputLogFileOrStream.file = SyFopen(filename, "w", FALSE);
+    IO()->OutputLogFileOrStream.stream = 0;
     if (IO()->OutputLogFileOrStream.file == -1)
         return 0;
 
@@ -703,7 +545,6 @@ UInt OpenLogStream (
         return 0;
 
     /* try to open the file                                                */
-    IO()->OutputLogFileOrStream.isstream = 1;
     IO()->OutputLogFileOrStream.stream = stream;
     IO()->OutputLogFileOrStream.file = -1;
 
@@ -734,7 +575,7 @@ UInt CloseLog ( void )
         return 0;
 
     /* close the logfile                                                   */
-    if (!IO()->InputLog->isstream) {
+    if (!IO()->InputLog->stream) {
         SyFclose(IO()->InputLog->file);
     }
     IO()->InputLog = 0;
@@ -769,8 +610,8 @@ UInt OpenInputLog (
         return 0;
 
     /* try to open the file                                                */
-    IO()->InputLogFileOrStream.file = SyFopen(filename, "w");
-    IO()->InputLogFileOrStream.isstream = 0;
+    IO()->InputLogFileOrStream.file = SyFopen(filename, "w", FALSE);
+    IO()->InputLogFileOrStream.stream = 0;
     if (IO()->InputLogFileOrStream.file == -1)
         return 0;
 
@@ -796,7 +637,6 @@ UInt OpenInputLogStream (
         return 0;
 
     /* try to open the file                                                */
-    IO()->InputLogFileOrStream.isstream = 1;
     IO()->InputLogFileOrStream.stream = stream;
     IO()->InputLogFileOrStream.file = -1;
 
@@ -829,7 +669,7 @@ UInt CloseInputLog ( void )
         return 0;
 
     /* close the logfile                                                   */
-    if (!IO()->InputLog->isstream) {
+    if (!IO()->InputLog->stream) {
         SyFclose(IO()->InputLog->file);
     }
 
@@ -865,8 +705,8 @@ UInt OpenOutputLog (
 
     /* try to open the file                                                */
     memset(&IO()->OutputLogFileOrStream, 0, sizeof(TypOutputFile));
-    IO()->OutputLogFileOrStream.isstream = 0;
-    IO()->OutputLogFileOrStream.file = SyFopen(filename, "w");
+    IO()->OutputLogFileOrStream.stream = 0;
+    IO()->OutputLogFileOrStream.file = SyFopen(filename, "w", FALSE);
     if (IO()->OutputLogFileOrStream.file == -1)
         return 0;
 
@@ -893,7 +733,6 @@ UInt OpenOutputLogStream (
 
     /* try to open the file                                                */
     memset(&IO()->OutputLogFileOrStream, 0, sizeof(TypOutputFile));
-    IO()->OutputLogFileOrStream.isstream = 1;
     IO()->OutputLogFileOrStream.stream = stream;
     IO()->OutputLogFileOrStream.file = -1;
 
@@ -926,7 +765,7 @@ UInt CloseOutputLog ( void )
         return 0;
 
     /* close the logfile                                                   */
-    if (!IO()->OutputLog->isstream) {
+    if (!IO()->OutputLog->stream) {
         SyFclose(IO()->OutputLog->file);
     }
 
@@ -959,50 +798,62 @@ UInt CloseOutputLog ( void )
 **  'OpenOutput' passes  those  file names to 'SyFopen'  like any other name,
 **  they are just a convention between the main and the system package.
 **
-**  It is not neccessary to open the initial output file, 'InitScanner' opens
-**  '*stdout*' for that purpose.  This  file  on the other hand   can not  be
-**  closed by 'CloseOutput'.
+**  The function does nothing and returns success for '*stdout*' and
+**  '*errout*' when 'LockCurrentOutput(1)' is in effect (used for testing
+**  purposes).
+**
+**  It is not necessary to open the initial output file; '*stdout'* is
+**  opened for that purpose during startup. This file on the other hand  can
+**  not be closed by 'CloseOutput'.
+**
+**  If <append> is set to true, then 'OpenOutput' does not truncate the file
+**  to size 0 if it exists.
 */
-UInt OpenOutput (
-    const Char *        filename )
+UInt OpenOutput(TypOutputFile * output, const Char * filename, BOOL append)
 {
-    Int                 file;
+    GAP_ASSERT(output);
 
     // do nothing for stdout and errout if caught
     if (IO()->Output != NULL && IO()->IgnoreStdoutErrout == IO()->Output &&
-        (strcmp(filename, "*errout*") == 0 ||
-         strcmp(filename, "*stdout*") == 0)) {
+        (streq(filename, "*errout*") || streq(filename, "*stdout*"))) {
         return 1;
     }
-
-    /* fail if we can not handle another open output file                  */
-    if (IO()->OutputStackPointer == MAX_OPEN_FILES)
-        return 0;
 
 #ifdef HPCGAP
     /* Handle *defout* specially; also, redirect *errout* if we already
      * have a default channel open. */
-    if ( ! strcmp( filename, "*defout*" ) ||
-         (! strcmp( filename, "*errout*" ) && TLS(threadID) != 0) )
-        return OpenDefaultOutput();
+    if (streq(filename, "*defout*") ||
+        (streq(filename, "*errout*") && TLS(threadID) != 0))
+        return OpenDefaultOutput(output);
 #endif
 
     /* try to open the file                                                */
-    file = SyFopen( filename, "w" );
+    Int file = SyFopen(filename, append ? "a" : "w", FALSE);
     if ( file == -1 )
         return 0;
 
     /* put the file on the stack, start at position 0 on an empty line     */
-    IO()->Output = PushNewOutput();
-    IO()->Output->file = file;
-    IO()->Output->line[0] = '\0';
-    IO()->Output->pos = 0;
-    IO()->Output->indent = 0;
-    IO()->Output->isstream = 0;
-    IO()->Output->format = 1;
+#ifdef GAP_KERNEL_DEBUG
+    // paranoia: fill with garbage, to verify we initialize everything
+    memset(output, 0x47, sizeof(TypOutputFile));
+#endif
+    output->prev = IO()->Output;
+    IO()->Output = output;
+    output->isstringstream = FALSE;
+    output->stream = 0;
+    output->file = file;
+    output->line[0] = '\0';
+    output->pos = 0;
+    if (streq(filename, "*stdout*"))
+        output->format = IO()->PrintFormattingForStdout;
+    else if (streq(filename, "*errout*"))
+        output->format = IO()->PrintFormattingForErrout;
+    else
+        output->format = TRUE;
+    output->indent = 0;
 
     /* variables related to line splitting, very bad place to split        */
-    IO()->Output->hints[0] = -1;
+    output->hints[0] = -1;
 
     /* indicate success                                                    */
     return 1;
@@ -1017,27 +868,27 @@ UInt OpenOutput (
 */
 
 
-UInt OpenOutputStream (
-    Obj                 stream )
+UInt OpenOutputStream(TypOutputFile * output, Obj stream)
 {
-    /* fail if we can not handle another open output file                  */
-    if (IO()->OutputStackPointer == MAX_OPEN_FILES)
-        return 0;
+    GAP_ASSERT(output);
 
     /* put the file on the stack, start at position 0 on an empty line     */
-    IO()->Output = PushNewOutput();
-    IO()->Output->stream = stream;
-    IO()->Output->isstringstream =
-        (CALL_1ARGS(IsStringStream, stream) == True);
-    IO()->Output->format =
-        (CALL_1ARGS(PrintFormattingStatus, stream) == True);
-    IO()->Output->line[0] = '\0';
-    IO()->Output->pos = 0;
-    IO()->Output->indent = 0;
-    IO()->Output->isstream = 1;
+#ifdef GAP_KERNEL_DEBUG
+    // paranoia: fill with garbage, to verify we initialize everything
+    memset(output, 0x47, sizeof(TypOutputFile));
+#endif
+    output->prev = IO()->Output;
+    IO()->Output = output;
+    output->isstringstream = (CALL_1ARGS(IsOutputStringStream, stream) == True);
+    output->stream = stream;
+    output->file = -1;
+    output->line[0] = '\0';
+    output->pos = 0;
+    output->format = (CALL_1ARGS(PrintFormattingStatus, stream) == True);
+    output->indent = 0;
 
     /* variables related to line splitting, very bad place to split        */
-    IO()->Output->hints[0] = -1;
+    output->hints[0] = -1;
 
     /* indicate success                                                    */
     return 1;
@@ -1061,80 +912,40 @@ UInt OpenOutputStream (
 **  On the other  hand if you  forget  to call  'CloseOutput' at the end of a
 **  'PrintTo' call or an error will not yield much better results.
 */
-UInt CloseOutput ( void )
+UInt CloseOutput(TypOutputFile * output)
 {
+    GAP_ASSERT(output);
+
     // silently refuse to close the test output file; this is probably an
     // attempt to close *errout* which is silently not opened, so let's
     // silently not close it
     if (IO()->IgnoreStdoutErrout == IO()->Output)
         return 1;
 
+    GAP_ASSERT(output == IO()->Output);
+
     /* refuse to close the initial output file '*stdout*'                  */
 #ifdef HPCGAP
-    if (IO()->OutputStackPointer <= 1 && IO()->Output->isstream &&
-        TLS(DefaultOutput) == IO()->Output->stream)
+    if (output->prev == 0 && output->stream &&
+        IO()->DefaultOutputStream == output->stream)
         return 0;
 #else
-    if (IO()->OutputStackPointer <= 1)
+    if (output->prev == 0)
         return 0;
 #endif
 
     /* flush output and close the file                                     */
-    Pr( "%c", (Int)'\03', 0L );
-    if (!IO()->Output->isstream) {
-        SyFclose(IO()->Output->file);
+    Pr("%c", (Int)'\03', 0);
+    if (!output->stream) {
+        SyFclose(output->file);
     }
 
     /* revert to previous output file and indicate success                 */
-    const int sp = --IO()->OutputStackPointer;
-    IO()->Output = sp ? IO()->OutputStack[sp - 1] : 0;
+    IO()->Output = output->prev;
 
-    return 1;
-}
+    // don't keep GAP objects alive unnecessarily
+    output->stream = 0;
 
-
-/****************************************************************************
-**
-*F  OpenAppend( <filename> )  . . open a file as current output for appending
-**
-**  'OpenAppend' opens the file  with the name  <filename> as current output.
-**  All subsequent output will go  to that file, until either   it is  closed
-**  again  with 'CloseOutput' or  another  file is  opened with 'OpenOutput'.
-**  Unlike 'OpenOutput' 'OpenAppend' does not truncate the file to size 0  if
-**  it exists.  Appart from that 'OpenAppend' is equal to 'OpenOutput' so its
-**  description applies to 'OpenAppend' too.
-*/
-UInt OpenAppend (
-    const Char *        filename )
-{
-    Int                 file;
-
-    /* fail if we can not handle another open output file                  */
-    if (IO()->OutputStackPointer == MAX_OPEN_FILES)
-        return 0;
-
-#ifdef HPCGAP
-    if ( ! strcmp( filename, "*defout*") )
-        return OpenDefaultOutput();
-#endif
-
-    /* try to open the file                                                */
-    file = SyFopen( filename, "a" );
-    if ( file == -1 )
-        return 0;
-
-    /* put the file on the stack, start at position 0 on an empty line     */
-    IO()->Output = PushNewOutput();
-    IO()->Output->file = file;
-    IO()->Output->line[0] = '\0';
-    IO()->Output->pos = 0;
-    IO()->Output->indent = 0;
-    IO()->Output->isstream = 0;
-
-    /* variables related to line splitting, very bad place to split        */
-    IO()->Output->hints[0] = -1;
-
-    /* indicate success                                                    */
     return 1;
 }
 
@@ -1147,27 +958,37 @@ UInt OpenAppend (
 
 /****************************************************************************
 **
+*F  SetPrompt( <prompt> ) . . . . . . . . . . . . . set the user input prompt
+*/
+void SetPrompt(const char * prompt)
+{
+    if (SyQuiet)
+        prompt = "";
+    gap_strlcpy(STATE(Prompt), prompt, sizeof(STATE(Prompt)));
+}
+
+
+/****************************************************************************
+**
 *F  GetLine2( <input>, <buffer>, <length> ) . . . . . . . . get a line, local
 */
-static Int GetLine2 (
-    TypInputFile *          input,
-    Char *                  buffer,
-    UInt                    length )
+static Int GetLine2(TypInputFile * input)
 {
-#ifdef HPCGAP
-    if ( ! input ) {
-        input = IO()->Input;
-        if (!input)
-            OpenDefaultInput();
-        input = IO()->Input;
-    }
-#endif
+    Char * buffer = input->line + 1;
+    UInt   length = sizeof(input->line) - 1;
 
-    if ( input->isstream ) {
+    if ( input->stream ) {
         if (input->sline == 0 ||
-            (IS_STRING(input->sline) &&
+            (IS_STRING_REP(input->sline) &&
              GET_LEN_STRING(input->sline) <= input->spos)) {
-            input->sline = CALL_1ARGS( ReadLineFunc, input->stream );
+            // If we are in the process of quitting, we cannot call
+            // GAP functions, so we just return EOF.
+            if (STATE(UserHasQuit) || STATE(UserHasQUIT)) {
+                input->sline = Fail;
+            }
+            else {
+                input->sline = CALL_1ARGS(ReadLineFunc, input->stream);
+            }
             input->spos  = 0;
         }
         if ( input->sline == Fail || ! IS_STRING(input->sline) ) {
@@ -1221,11 +1042,11 @@ static Int GetLine2 (
 
 /****************************************************************************
 **
-*F  GetLine() . . . . . . . . . . . . . . . . . . . . . . . get a line, local
+*F  GetLine( <input> ) . . . . . . . . . . . . . . . . . .  get a line, local
 **
 **  'GetLine'  fetches another  line from  the  input 'Input' into the buffer
-**  'Input->line', sets the pointer 'In' to  the beginning of this buffer and
-**  returns the first character from the line.
+**  'Input->line', sets the pointer 'Input->ptr' to the beginning of this
+**  buffer and returns the first character from the line.
 **
 **  If   the input file is  '*stdin*'   or '*errin*' 'GetLine'  first  prints
 **  'Prompt', unless it is '*stdin*' and GAP was called with option '-q'.
@@ -1233,26 +1054,20 @@ static Int GetLine2 (
 **  If there is an  input logfile in use  and the input  file is '*stdin*' or
 **  '*errin*' 'GetLine' echoes the new line to the logfile.
 */
-static Char GetLine(void)
+static Char GetLine(TypInputFile * input)
 {
+    GAP_ASSERT(input);
+
     /* if file is '*stdin*' or '*errin*' print the prompt and flush it     */
     /* if the GAP function `PrintPromptHook' is defined then it is called  */
     /* for printing the prompt, see also `EndLineHook'                     */
-    if (!IO()->Input->isstream) {
-        if (IO()->Input->file == 0) {
-            if ( ! SyQuiet ) {
-                if (IO()->Output->pos > 0)
-                    Pr("\n", 0L, 0L);
-                if ( PrintPromptHook )
-                     Call0ArgsInNewReader( PrintPromptHook );
-                else
-                     Pr( "%s%c", (Int)STATE(Prompt), (Int)'\03' );
-            } else
-                Pr( "%c", (Int)'\03', 0L );
+    if (!input->stream) {
+        if (input->file == 0 && SyQuiet) {
+            Pr("%c", (Int)'\03', 0);
         }
-        else if (IO()->Input->file == 2) {
+        else if (input->file == 0 || input->file == 2) {
             if (IO()->Output->pos > 0)
-                Pr("\n", 0L, 0L);
+                Pr("\n", 0, 0);
             if ( PrintPromptHook )
                  Call0ArgsInNewReader( PrintPromptHook );
             else
@@ -1261,28 +1076,29 @@ static Char GetLine(void)
     }
 
     /* bump the line number                                                */
-    if (IO()->Input->line < STATE(In) && *(STATE(In) - 1) == '\n') {
-        IO()->Input->number++;
+    if (input->ptr > input->line && input->ptr[-1] == '\n') {
+        input->number++;
     }
 
-    /* initialize 'STATE(In)', no errors on this line so far                      */
-    STATE(In) = IO()->Input->line;
-    STATE(In)[0] = '\0';
-    STATE(NrErrLine) = 0;
+    // initialize 'input->ptr', no errors on this line so far
+    input->line[0] = '\0';    // init the pushback buffer
+    input->line[1] = '\0';    // empty line buffer
+    input->ptr = input->line + 1;
+    input->lastErrorLine = 0;
 
     /* try to read a line                                              */
-    if (!GetLine2(IO()->Input, IO()->Input->line,
-                  sizeof(IO()->Input->line))) {
-        STATE(In)[0] = '\377';  STATE(In)[1] = '\0';
+    if (!GetLine2(input)) {
+        input->ptr[0] = '\377';
+        input->ptr[1] = '\0';
     }
 
     /* if necessary echo the line to the logfile                      */
-    if (IO()->InputLog != 0 && IO()->Input->echo == 1)
-        if ( !(STATE(In)[0] == '\377' && STATE(In)[1] == '\0') )
-            PutLine2(IO()->InputLog, STATE(In), strlen(STATE(In)));
+    if (IO()->InputLog != 0 && input->echo == 1)
+        if (!(input->ptr[0] == '\377' && input->ptr[1] == '\0'))
+            PutLine2(IO()->InputLog, input->ptr, strlen(input->ptr));
 
     /* return the current character                                        */
-    return *STATE(In);
+    return *input->ptr;
 }
 
 
@@ -1300,33 +1116,24 @@ static Char GetLine(void)
 **  knows the length of <line>, so it is not necessary to compute it again
 **  with the inefficient C- strlen.  (FL)
 */
-
 static void PutLine2(TypOutputFile * output, const Char * line, UInt len)
 {
-  Obj                     str;
-  UInt                    lstr;
-  if ( output->isstream ) {
-    /* special handling of string streams, where we can copy directly */
+    Obj str;
+
     if (output->isstringstream) {
-      str = CONST_ADDR_OBJ(output->stream)[1];
-      lstr = GET_LEN_STRING(str);
-      GROW_STRING(str, lstr+len);
-      memcpy(CHARS_STRING(str) + lstr, line, len);
-      SET_LEN_STRING(str, lstr + len);
-      *(CHARS_STRING(str) + lstr + len) = '\0';
-      CHANGED_BAG(str);
-      return;
+        // special handling of string streams, where we can copy directly
+        str = CONST_ADDR_OBJ(output->stream)[1];
+        ConvString(str);
+        AppendCStr(str, line, len);
     }
-
-    /* Space for the null is allowed for in GAP strings */
-    str = MakeImmStringWithLen(line, len);
-
-    /* now delegate to library level */
-    CALL_2ARGS( WriteAllFunc, output->stream, str );
-  }
-  else {
-    SyFputs( line, output->file );
-  }
+    else if (output->stream) {
+        // delegate to library level
+        str = MakeImmStringWithLen(line, len);
+        CALL_2ARGS(WriteAllFunc, output->stream, str);
+    }
+    else {
+        SyFputs(line, output->file);
+    }
 }
 
 
@@ -1346,8 +1153,8 @@ static void PutLineTo(TypOutputFile * stream, UInt len)
 {
   PutLine2( stream, stream->line, len );
 
-  /* if neccessary echo it to the logfile                                */
-  if (IO()->OutputLog != 0 && !stream->isstream) {
+  /* if necessary echo it to the logfile                                */
+  if (IO()->OutputLog != 0 && !stream->stream) {
       if (stream->file == 1 || stream->file == 3) {
           PutLine2(IO()->OutputLog, stream->line, len);
       }
@@ -1579,10 +1386,9 @@ static void PutChrTo(TypOutputFile * stream, Char ch)
 *F  FuncToggleEcho( )
 **
 */
-
 static Obj FuncToggleEcho(Obj self)
 {
-    IO()->Input->echo = 1 - IO()->Input->echo;
+    IO()->Input->echo = !IO()->Input->echo;
     return (Obj)0;
 }
 
@@ -1607,14 +1413,12 @@ static Obj FuncCPROMPT(Obj self)
 **  uses the content of <prompt> as `Prompt' (at most 80 characters).
 **  (important is the flush character without resetting the cursor column)
 */
-
 static Obj FuncPRINT_CPROMPT(Obj self, Obj prompt)
 {
   if (IS_STRING_REP(prompt)) {
     /* by assigning to Prompt we also tell readline (if used) what the
        current prompt is  */
-    strlcpy(promptBuf, CONST_CSTR_STRING(prompt), sizeof(promptBuf));
-    STATE(Prompt) = promptBuf;
+    SetPrompt(CONST_CSTR_STRING(prompt));
   }
   Pr("%s%c", (Int)STATE(Prompt), (Int)'\03' );
   return (Obj) 0;
@@ -1626,13 +1430,66 @@ void ResetOutputIndent(void)
     IO()->Output->indent = 0;
 }
 
+
+
+/****************************************************************************
+**
+*V  AllKeywords
+**
+*/
+static const char * AllKeywords[] = {
+    "and",     "atomic",   "break",         "continue", "do",     "elif",
+    "else",    "end",      "false",         "fi",       "for",    "function",
+    "if",      "in",       "local",         "mod",      "not",    "od",
+    "or",      "readonly", "readwrite",     "rec",      "repeat", "return",
+    "then",    "true",     "until",         "while",    "quit",   "QUIT",
+    "IsBound", "Unbind",   "TryNextMethod", "Info",     "Assert",
+};
+
+
+/****************************************************************************
+**
+*F  IsKeyword( )
+**
+*/
+static BOOL IsKeyword(const char * str)
+{
+    for (UInt i = 0; i < ARRAY_SIZE(AllKeywords); i++) {
+        if (streq(str, AllKeywords[i])) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+
+/****************************************************************************
+**
+*F  FuncALL_KEYWORDS( )
+**
+*/
+static Obj FuncALL_KEYWORDS(Obj self)
+{
+    Obj l = NewEmptyPlist();
+    for (UInt i = 0; i < ARRAY_SIZE(AllKeywords); i++) {
+        Obj s = MakeImmString(AllKeywords[i]);
+        ASS_LIST(l, i+1, s);
+    }
+    SortDensePlist(l);
+    SET_FILT_LIST(l, FN_IS_HOMOG);
+    SET_FILT_LIST(l, FN_IS_SSORT);
+    MakeImmutable(l);
+    return l;
+}
+
+
 /****************************************************************************
 **
 *F  Pr( <format>, <arg1>, <arg2> )  . . . . . . . . .  print formatted output
 *F  PrTo( <stream>, <format>, <arg1>, <arg2> )  . . .  print formatted output
 **
 **  'Pr' is the output function. The first argument is a 'printf' like format
-**  string containing   up   to 2  '%'  format   fields,   specifing  how the
+**  string containing   up   to 2  '%'  format   fields,  specifying  how the
 **  corresponding arguments are to be  printed.  The two arguments are passed
 **  as  'Int'   integers.   This  is possible  since every  C object  ('int',
 **  'char', pointers) except 'float' or 'double', which are not used  in GAP,
@@ -1655,7 +1512,7 @@ void ResetOutputIndent(void)
 **          Between the '%' and the 'd' an integer might be used  to  specify
 **          the width of a field in which the integer is right justified.  If
 **          the first character is '0' 'Pr' pads with '0' instead of <space>.
-**  '%i'    is a synonym of %d, in line with recent C library developements
+**  '%i'    is a synonym of %d, in line with recent C library developments
 **  '%I'    print an identifier, given as a null terminated character string.
 **  '%H'    print an identifier, given as GAP string in STRING_REP
 **  '%>'    increment the indentation level.
@@ -1664,7 +1521,7 @@ void ResetOutputIndent(void)
 **
 **  You must always  cast the arguments to  '(Int)'  to avoid  problems  with
 **  those compilers with a default integer size of 16 instead of 32 bit.  You
-**  must pass 0L if you don't make use of an argument to please lint.
+**  must pass 0 if you don't make use of an argument to please lint.
 */
 static inline void FormatOutput(
     void (*put_a_char)(void *state, Char c),
@@ -1914,7 +1771,7 @@ static inline void FormatOutput(
         prec--;
       }
       for ( const Char * q = (const Char *)arg1; *q != '\0'; q++ ) {
-        if ( !IsIdent(*q) && !IsDigit(*q) ) {
+        if ( !IsIdent(*q) ) {
           prec--;
         }
         prec--;
@@ -1931,7 +1788,7 @@ static inline void FormatOutput(
       for ( Int i = 0; ((const Char *)arg1)[i] != '\0'; i++ ) {
         Char c = ((const Char *)arg1)[i];
 
-        if ( !IsIdent(c) && !IsDigit(c) ) {
+        if ( !IsIdent(c) ) {
           put_a_char(state, '\\');
         }
         put_a_char(state, c);
@@ -1997,7 +1854,7 @@ void Pr (
 {
 #ifdef HPCGAP
     if (!IO()->Output) {
-        OpenDefaultOutput();
+        OpenDefaultOutput(&IO()->DefaultOutput);
     }
 #endif
     PrTo(IO()->Output, format, arg1, arg2);
@@ -2029,7 +1886,7 @@ static Obj FuncINPUT_FILENAME(Obj self)
     if (IO()->Input == 0)
         return MakeImmString("*defin*");
 
-    UInt gapnameid = GetInputFilenameID();
+    UInt gapnameid = GetInputFilenameID(IO()->Input);
     return GetCachedFilename(gapnameid);
 }
 
@@ -2040,14 +1897,78 @@ static Obj FuncINPUT_LINENUMBER(Obj self)
 
 static Obj FuncSET_PRINT_FORMATTING_STDOUT(Obj self, Obj val)
 {
-    IO()->OutputStack[1]->format = (val != False);
-    return val;
+    BOOL format = (val != False);
+    TypOutputFile * output = IO()->Output;
+    while (output) {
+        if (!output->stream && output->file == 1)
+            output->format = format;
+        output = output->prev;
+    }
+    IO()->PrintFormattingForStdout = format;
+    return 0;
+}
+
+static Obj FuncPRINT_FORMATTING_STDOUT(Obj self)
+{
+    return IO()->PrintFormattingForStdout ? True : False;
+}
+
+static Obj FuncSET_PRINT_FORMATTING_ERROUT(Obj self, Obj val)
+{
+    BOOL format = (val != False);
+    TypOutputFile * output = IO()->Output;
+    while (output) {
+        if (!output->stream && output->file == 3)
+            output->format = format;
+        output = output->prev;
+    }
+    IO()->PrintFormattingForErrout = format;
+    return 0;
+}
+
+static Obj FuncPRINT_FORMATTING_ERROUT(Obj self)
+{
+    return IO()->PrintFormattingForErrout ? True : False;
+}
+
+/****************************************************************************
+**
+*F  FuncCALL_WITH_FORMATTING_STATUS( <status>, <func>, <args> )
+**
+**  Temporarily set the formatting status of the active output stream to
+**  <status>, then call the function <func> with the arguments in <args>.
+*/
+static Obj FuncCALL_WITH_FORMATTING_STATUS(Obj self, Obj status, Obj func, Obj args)
+{
+    RequireTrueOrFalse(SELF_NAME, status);
+    RequireSmallList(SELF_NAME, args);
+
+    TypOutputFile * output = IO()->Output;
+    if (!output)
+        ErrorMayQuit("CALL_WITH_FORMATTING_STATUS called while no output is open", 0, 0);
+
+    BOOL old = output->format;
+    output->format = (status != False);
+
+    Obj result;
+    GAP_TRY
+    {
+        result = CallFuncList(func, args);
+    }
+    GAP_CATCH
+    {
+        output->format = old;
+        GAP_THROW();
+    }
+
+    output->format = old;
+    return result;
 }
 
 static Obj FuncIS_INPUT_TTY(Obj self)
 {
     GAP_ASSERT(IO()->Input);
-    if (IO()->Input->isstream)
+    if (IO()->Input->stream)
         return False;
     return SyBufIsTTY(IO()->Input->file) ? True : False;
 }
@@ -2055,7 +1976,7 @@ static Obj FuncIS_INPUT_TTY(Obj self)
 static Obj FuncIS_OUTPUT_TTY(Obj self)
 {
     GAP_ASSERT(IO()->Output);
-    if (IO()->Output->isstream)
+    if (IO()->Output->stream)
         return False;
     return SyBufIsTTY(IO()->Output->file) ? True : False;
 }
@@ -2067,15 +1988,20 @@ static Obj FuncGET_FILENAME_CACHE(Obj self)
 
 static StructGVarFunc GVarFuncs [] = {
 
-    GVAR_FUNC(ToggleEcho, 0, ""),
-    GVAR_FUNC(CPROMPT, 0, ""),
-    GVAR_FUNC(PRINT_CPROMPT, 1, "prompt"),
-    GVAR_FUNC(INPUT_FILENAME, 0, ""),
-    GVAR_FUNC(INPUT_LINENUMBER, 0, ""),
-    GVAR_FUNC(SET_PRINT_FORMATTING_STDOUT, 1, "format"),
-    GVAR_FUNC(IS_INPUT_TTY, 0, ""),
-    GVAR_FUNC(IS_OUTPUT_TTY, 0, ""),
-    GVAR_FUNC(GET_FILENAME_CACHE, 0, ""),
+    GVAR_FUNC_0ARGS(ToggleEcho),
+    GVAR_FUNC_0ARGS(CPROMPT),
+    GVAR_FUNC_1ARGS(PRINT_CPROMPT, prompt),
+    GVAR_FUNC_0ARGS(ALL_KEYWORDS),
+    GVAR_FUNC_0ARGS(INPUT_FILENAME),
+    GVAR_FUNC_0ARGS(INPUT_LINENUMBER),
+    GVAR_FUNC_1ARGS(SET_PRINT_FORMATTING_STDOUT, format),
+    GVAR_FUNC_0ARGS(PRINT_FORMATTING_STDOUT),
+    GVAR_FUNC_1ARGS(SET_PRINT_FORMATTING_ERROUT, format),
+    GVAR_FUNC_0ARGS(PRINT_FORMATTING_ERROUT),
+    GVAR_FUNC_3ARGS(CALL_WITH_FORMATTING_STATUS, status, func, args),
+    GVAR_FUNC_0ARGS(IS_INPUT_TTY),
+    GVAR_FUNC_0ARGS(IS_OUTPUT_TTY),
+    GVAR_FUNC_0ARGS(GET_FILENAME_CACHE),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -2087,24 +2013,14 @@ static StructGVarFunc GVarFuncs [] = {
 static Int InitLibrary (
     StructInitInfo *    module )
 {
-#ifdef HPCGAP
-    FilenameCache = NewAtomicList(T_ALIST, 0);
-#else
+    InitSymbolTableLibrary(&FilenameSymbolTable, 7079);
     FilenameCache = NEW_PLIST(T_PLIST, 0);
-#endif
 
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
-
-#if !defined(HPCGAP)
-static Char OutputFilesStreamCookie[MAX_OPEN_FILES][9];
-static Char InputFilesStreamCookie[MAX_OPEN_FILES][9];
-static Char InputFilesSlineCookie[MAX_OPEN_FILES][9];
-#endif
 
 static Int InitKernel (
     StructInitInfo *    module )
@@ -2113,16 +2029,14 @@ static Int InitKernel (
     IO()->Output = 0;
     IO()->InputLog = 0;
     IO()->OutputLog = 0;
+    IO()->PrintFormattingForStdout = TRUE;
+    IO()->PrintFormattingForErrout = TRUE;
 
-#if !defined(HPCGAP)
-    for (Int i = 0; i < MAX_OPEN_FILES; i++) {
-        IO()->InputStack[i] = &InputFiles[i];
-        IO()->OutputStack[i] = &OutputFiles[i];
-    }
-#endif
+    OpenOutput(&IO()->DefaultOutput, "*stdout*", FALSE);
 
-    OpenInput("*stdin*");
-    OpenOutput("*stdout*");
+    InitSymbolTableKernel(&FilenameSymbolTable, "FilenameSymbolCount",
+                          "FilenameSymbolTable", GetCachedFilename,
+                          AddCachedFilename);
 
     InitGlobalBag( &FilenameCache, "FilenameCache" );
 
@@ -2132,41 +2046,26 @@ static Int InitKernel (
     DeclareGVar(&DEFAULT_OUTPUT_STREAM, "DEFAULT_OUTPUT_STREAM");
 
 #else
-    // Initialize cookies for streams. Also initialize the cookies for the
-    // GAP strings which hold the latest lines read from the streams  and the
-    // name of the current input file. For HPC-GAP we don't need the cookies
-    // anymore, since the data got moved to thread-local storage.
-    for (Int i = 0; i < MAX_OPEN_FILES; i++) {
-        strxcpy(OutputFilesStreamCookie[i], "ostream0", sizeof(OutputFilesStreamCookie[i]));
-        OutputFilesStreamCookie[i][7] = '0' + i;
-        InitGlobalBag(&(OutputFiles[i].stream), &(OutputFilesStreamCookie[i][0]));
-
-        strxcpy(InputFilesStreamCookie[i], "istream0", sizeof(InputFilesStreamCookie[i]));
-        InputFilesStreamCookie[i][7] = '0' + i;
-        InitGlobalBag(&(InputFiles[i].stream), &(InputFilesStreamCookie[i][0]));
-
-        strxcpy(InputFilesSlineCookie[i], "isline 0", sizeof(InputFilesSlineCookie[i]));
-        InputFilesSlineCookie[i][7] = '0' + i;
-        InitGlobalBag(&(InputFiles[i].sline), &(InputFilesSlineCookie[i][0]));
-    }
-
     /* tell GASMAN about the global bags                                   */
     InitGlobalBag(&(IO()->InputLogFileOrStream.stream),
-                  "src/scanner.c:InputLogFileOrStream");
+                  "src/io.c:InputLogFileOrStream");
     InitGlobalBag(&(IO()->OutputLogFileOrStream.stream),
-                  "src/scanner.c:OutputLogFileOrStream");
+                  "src/io.c:OutputLogFileOrStream");
 #endif
 
     /* import functions from the library                                   */
     ImportFuncFromLibrary( "ReadLine", &ReadLineFunc );
     ImportFuncFromLibrary( "WriteAll", &WriteAllFunc );
-    ImportFuncFromLibrary( "IsInputTextStringRep", &IsStringStream );
+    ImportFuncFromLibrary( "IsInputTextStringRep", &IsInputStringStream );
+    ImportFuncFromLibrary( "IsOutputTextStringRep", &IsOutputStringStream );
+    ImportFuncFromLibrary( "PositionStream", &PositionStream );
+    ImportFuncFromLibrary( "SeekPositionStream", &SeekPositionStream );
     InitCopyGVar( "PrintPromptHook", &PrintPromptHook );
     InitCopyGVar( "EndLineHook", &EndLineHook );
     InitFopyGVar( "PrintFormattingStatus", &PrintFormattingStatus);
+    InitFopyGVar( "SetPrintFormattingStatus", &SetPrintFormattingStatus);
 
     InitHdlrFuncsFromTable( GVarFuncs );
-    /* return success                                                      */
     return 0;
 }
 
@@ -2178,7 +2077,7 @@ static StructInitInfo module = {
     // init struct using C99 designated initializers; for a full list of
     // fields, please refer to the definition of StructInitInfo
     .type = MODULE_BUILTIN,
-    .name = "scanner",
+    .name = "io",
     .initKernel = InitKernel,
     .initLibrary = InitLibrary,
 

@@ -83,14 +83,14 @@ DeclareOperation( "Directory", [ IsString ] );
 ##  <Func Name="DirectoryHome" Arg=''/>
 ##
 ##  <Description>
-##  returns a directory object for the users home directory, defined as a
+##  returns a directory object for the user's home directory, defined as a
 ##  directory in which the user will typically have full read and write
 ##  access.
 ##  The function is intended to provide a cross-platform interface to a
 ##  directory that is easily accessible by the user.
-##
+##  <P/>
 ##  Under Unix systems (including Mac OS X) this will be the
-##  usual user home directory. Under Windows it will the users 
+##  usual user home directory. Under Windows it will be the user's
 ##  <C>My Documents</C> folder (or the appropriate name under different
 ##  languages).
 ##  </Description>
@@ -108,15 +108,15 @@ DeclareGlobalFunction( "DirectoryHome" );
 ##  <Func Name="DirectoryDesktop" Arg=''/>
 ##
 ##  <Description>
-##  returns a directory object for the users desktop directory as defined on
+##  returns a directory object for the user's desktop directory as defined on
 ##  many modern operating systems. 
 ##  The function is intended to provide a cross-platform interface to a
 ##  directory that is easily accessible by the user.
-##
+##  <P/>
 ##  Under Unix systems (including Mac OS X) this will be the
-##  <C>Desktop</C> directory in the users home directory if it exists, and
-##  the users home directory otherwise. 
-##  Under Windows it will the users <C>Desktop</C> folder
+##  <C>Desktop</C> directory in the user's home directory if it exists, and
+##  the user's home directory otherwise.
+##  Under Windows it will be the user's <C>Desktop</C> folder
 ##  (or the appropriate name under different
 ##  languages).
 ##  </Description>
@@ -477,14 +477,6 @@ BIND_GLOBAL( "DirectoryTemporary", function( arg )
   if dir = fail  then
     return fail;
   fi;
-  if ARCH_IS_WINDOWS() then
-    # We want to deliver a Windows path
-    if dir{[1..10]} = "/cygdrive/" then
-        drive := dir[11];
-        dir := Concatenation("C:",dir{[12..Length(dir)]});
-        dir[1] := drive;
-    fi;
-  fi;
 
   # remember directory name
   Add( GAPInfo.DirectoriesTemporary, dir );
@@ -543,16 +535,18 @@ end );
 ##  <Func Name="CrcFile" Arg='filename'/>
 ##
 ##  <Description>
-##  CRC (cyclic redundancy check) numbers provide a certain method of doing
-##  checksums. They are used by &GAP; to check whether
-##  files have changed.
+##  <Index>hash function</Index>
+##  <Index>checksum</Index>
+##  This function computes a CRC (cyclic redundancy check) number for the
+##  content of the file <A>filename</A>.
 ##  <P/>
-##  <Ref Func="CrcFile"/> computes a checksum value for the file with
-##  filename <A>filename</A> and returns this value as an integer.
-##  The function returns <K>fail</K> if a system error occurred, say,
+##  <Ref Func="CrcFile"/> computes a CRC (cyclic redundancy check) checksum
+##  value for the file with filename <A>filename</A> and returns this value
+##  as an integer. The function returns <K>fail</K> if an error occurred,
 ##  for example, if <A>filename</A> does not exist.
 ##  In this case the function <Ref Func="LastSystemError"/>
 ##  can be used to get information about the error.
+##  See also <Ref Func="CrcFile"/> and <Ref Func="HexSHA256"/>.
 ##  <P/>
 ##  <Log><![CDATA[
 ##  gap> CrcFile( "lib/morpheus.gi" );
@@ -572,65 +566,169 @@ end );
 
 #############################################################################
 ##
-#F  LoadDynamicModule( <filename> [, <crc> ] )  . . . . . . . . load a module
+#F  LoadDynamicModule( <filename> ) . . . . . .  try to load a dynamic module
 ##
+##  <#GAPDoc Label="LoadDynamicModule">
 ##  <ManSection>
-##  <Func Name="LoadDynamicModule" Arg='filename [, crc ]'/>
+##  <Func Name="LoadDynamicModule" Arg='filename'/>
 ##
 ##  <Description>
+##  To load a compiled file, the command <Ref Func="LoadDynamicModule"/> is
+##  used. This command loads <A>filename</A> as module.
+##  <P/>
+##  <Log><![CDATA[
+##  gap> LoadDynamicModule("./test.so");
+##  ]]></Log>
+##  <P/>
+##  On some operating systems, once you have loaded a dynamic module with a
+##  certain filename, loading another with the same filename will have no
+##  effect, even if the file on disk has changed.
 ##  </Description>
 ##  </ManSection>
+##  <#/GAPDoc>
 ##
-BIND_GLOBAL( "LoadDynamicModule", function( arg )
+BIND_GLOBAL( "LoadDynamicModule", function( filename )
 
-    if Length(arg) = 1  then
-        if not LOAD_DYN( arg[1], false )  then
-            Error( "no support for dynamic loading" );
-        fi;
-    elif Length(arg) = 2  then
-        if not LOAD_DYN( arg[1], arg[2] )  then
-            Error( "<crc> mismatch (or no support for dynamic loading)" );
-        fi;
-    else
-        Error( "usage: LoadDynamicModule( <filename> [, <crc> ] )" );
+    if not LOAD_DYN( filename )  then
+        Error( "no support for dynamic loading" );
     fi;
 
 end );
 
 #############################################################################
 ##
-#F  LoadStaticModule( <filename> [, <crc> ] )   . . . . . . . . load a module
+#F  LoadStaticModule( <filename> ) . . . . . . .  try to load a static module
 ##
 ##  <ManSection>
-##  <Func Name="LoadStaticModule" Arg='filename [, crc ]'/>
+##  <Func Name="LoadStaticModule" Arg='filename'/>
 ##
 ##  <Description>
 ##  </Description>
 ##  </ManSection>
 ##
-BIND_GLOBAL( "LoadStaticModule", function( arg )
+BIND_GLOBAL( "LoadStaticModule", function( filename )
 
-    if Length(arg) = 1  then
-        if not arg[1] in SHOW_STAT() then
-            Error( "unknown static module ", arg[1] );
-        fi;
-
-        if not LOAD_STAT( arg[1], false )  then
-            Error( "loading static module ", arg[1], " failed" );
-        fi;
-    elif Length(arg) = 2  then
-        if not arg[1] in SHOW_STAT() then
-            Error( "unknown static module ", arg[1] );
-        fi;
-
-        if not LOAD_STAT( arg[1], arg[2] )  then
-            Error( "loading static module ", arg[1],
-                   " failed, possible crc mismatch" );
-        fi;
-    else
-        Error( "usage: LoadStaticModule( <filename> [, <crc> ] )" );
+    if not filename in SHOW_STAT() then
+        Error( "unknown static module ", filename );
     fi;
 
+    if not LOAD_STAT( filename )  then
+        Error( "loading static module ", filename, " failed" );
+    fi;
+
+end );
+
+
+#############################################################################
+##
+#F  IsKernelExtensionAvailable( <pkgname> [, <modname> ] )
+##
+##  <#GAPDoc Label="IsKernelExtensionAvailable">
+##  <ManSection>
+##  <Func Name="IsKernelExtensionAvailable" Arg='pkgname[, modname]'/>
+##
+##  <Description>
+##  For use by packages: Search for a loadable kernel module inside package
+##  <A>pkgname</A> with name <A>modname</A> and return <K>true</K> if found,
+##  otherwise <K>false</K>.
+##  If <A>modname</A> is omitted, then <A>pkgname</A> is used instead. Note
+##  that package names are case insensitive, but <A>modname</A> is not.
+##  <P/>
+##  This function first appeared in GAP 4.12. It is typically called in the
+##  <C>AvailabilityTest</C> function of a package
+##  (see <Ref Subsect="Test for the Existence of GAP Package Binaries"/>).
+##  <Log><![CDATA[
+##  gap> IsKernelExtensionAvailable("myPackageWithKernelExtension");
+##  true
+##  ]]></Log>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+BIND_GLOBAL( "IsKernelExtensionAvailable", function( pkgname, modname... )
+    local fname;
+
+    if Length(modname) = 0 then
+        modname := pkgname;
+    elif Length(modname) = 1 then
+        modname := modname[1];
+    else
+        Error( "usage: IsKernelExtensionAvailable( <pkgname> [, <modname> ] )" );
+    fi;
+
+    if modname in SHOW_STAT() then
+        return true;
+    fi;
+    fname := Filename(DirectoriesPackagePrograms(pkgname), Concatenation(modname, ".so"));
+    if fname <> fail then
+        return IS_LOADABLE_DYN(fname);
+    fi;
+    return false;
+end );
+
+
+#############################################################################
+##
+#F  LoadKernelExtension( <pkgname> [, <modname> ] )
+##
+##  <#GAPDoc Label="LoadKernelExtension">
+##  <ManSection>
+##  <Func Name="LoadKernelExtension" Arg='pkgname[, modname]'/>
+##
+##  <Description>
+##  For use by packages: Search for a loadable kernel module inside package
+##  <A>pkgname</A> with name <A>modname</A>, and load it if found.
+##  If <A>modname</A> is omitted, then <A>pkgname</A> is used instead. Note
+##  that package names are case insensitive, but <A>modname</A> is not.
+##  <P/>
+##  This function first appeared in GAP 4.12. It is typically called in the
+##  <F>init.g</F> file of a package.
+##  <P/>
+##  Previously, packages with a kernel module typically used code like this:
+##  <Listing><![CDATA[
+##  path := Filename(DirectoriesPackagePrograms("SomePackage"), "SomePackage.so");
+##  if path <> fail then
+##    LoadDynamicModule(path);
+##  fi;
+##  ]]></Listing>
+##  That can now be replaced by the following, which also produces more
+##  helpful error messages for the user:
+##  <Listing><![CDATA[
+##  LoadKernelExtension("SomePackage");
+##  ]]></Listing>
+##  For packages where the name of the kernel extension is not identical to
+##  that of the package, you can either rename the kernel extension to have a
+##  matching name (recommended if you only have a single kernel extension in
+##  your package, which is how we recommend to set up things anyway), or else
+##  use the two argument version:
+##  <Log><![CDATA[
+##  LoadKernelExtension("SomePackage", "kext"); # this will look for kext.so
+##  ]]></Log>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+BIND_GLOBAL( "LoadKernelExtension", function( pkgname, modname... )
+    local fname;
+
+    if Length(modname) = 0 then
+        modname := pkgname;
+    elif Length(modname) = 1 then
+        modname := modname[1];
+    else
+        Error( "usage: LoadKernelExtension( <pkgname> [, <modname> ] )" );
+    fi;
+
+    if modname in SHOW_STAT() then
+        LoadStaticModule(modname);
+        return true;
+    fi;
+    fname := Filename(DirectoriesPackagePrograms(pkgname), Concatenation(modname, ".so"));
+    if fname <> fail then
+        LoadDynamicModule(fname);
+        return true;
+    fi;
+    return false;
 end );
 
 
@@ -678,3 +776,33 @@ BIND_GLOBAL("CHARS_LALPHA",
   Immutable(SSortedList("abcdefghijklmnopqrstuvwxyz")));
 BIND_GLOBAL("CHARS_SYMBOLS",Immutable(SSortedList(
   " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~")));
+
+
+##  <#GAPDoc Label="HexSHA256">
+##  <ManSection>
+##  <Func Name="HexSHA256" Arg='string'/>
+##  <Func Name="HexSHA256" Arg='stream'/>
+##
+##  <Description>
+##  <Index>hash function</Index>
+##  <Index>checksum</Index>
+##  Return the SHA-256 cryptographic checksum of the bytes in <A>string</A>,
+##  resp. of the data in the input stream object <A>stream</A>
+##  (see Chapter&nbsp;<Ref Chap="Streams"/> to learn about streams)
+##  when read from the current position until EOF (end-of-file).
+##  <P/>
+##  The checksum is returned as string with 64 lowercase hexadecimal digits.
+##  <Example><![CDATA[
+##  gap> HexSHA256("abcd");
+##  "88d4266fd4e6338d13b845fcf289579d209c897823b9217da3e161936f031589"
+##  gap> HexSHA256(InputTextString("abcd"));
+##  "88d4266fd4e6338d13b845fcf289579d209c897823b9217da3e161936f031589"
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction("HexSHA256");
+
+BIND_GLOBAL("GAP_SHA256_State_Type",
+           NewType(NewFamily("GAP_SHA256_State_Family"), IsObject) );

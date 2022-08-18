@@ -27,8 +27,8 @@
   
   [1X12.1-1 IsGeneralisedPolygon[101X
   
-  [29X[2XIsGeneralisedPolygon[102X[32X Category
-  [29X[2XIsGeneralisedPolygonRep[102X[32X Representation
+  [33X[1;0Y[29X[2XIsGeneralisedPolygon[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsGeneralisedPolygonRep[102X [32X Representation[133X
   
   [33X[0;0YThis  category  is  a  subcategory  of [10XIsIncidenceGeometry[110X, and contains all
   generalised  polygons.  Generalised  polygons  constructed through functions
@@ -37,10 +37,10 @@
   
   [1X12.1-2 [33X[0;0YSubcategories in [10XIsGeneralisedPolygon[110X[101X[1X[133X[101X
   
-  [29X[2XIsProjectivePlaneCategory[102X[32X Category
-  [29X[2XIsGeneralisedQuadrangle[102X[32X Category
-  [29X[2XIsGeneralisedHexagon[102X[32X Category
-  [29X[2XIsGeneralisedOctagon[102X[32X Category
+  [33X[1;0Y[29X[2XIsProjectivePlaneCategory[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsGeneralisedQuadrangle[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsGeneralisedHexagon[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsGeneralisedOctagon[102X [32X Category[133X
   
   [33X[0;0YAll  generalised  polygons in [5XFinInG[105X belong to one of these four categories.
   It  is  not possible to construct generalised polygons of which the gonality
@@ -53,14 +53,14 @@
   
   [1X12.1-3 IsWeakGeneralisedPolygon[101X
   
-  [29X[2XIsWeakGeneralisedPolygon[102X[32X Category
+  [33X[1;0Y[29X[2XIsWeakGeneralisedPolygon[102X [32X Category[133X
   
   [33X[0;0Y[10XIsWeakGeneralisedPolygon[110X is the category for weak generalised polygons.[133X
   
   
   [1X12.1-4 [33X[0;0YSubcategories in [10XIsProjectivePlaneCategory[110X[101X[1X[133X[101X
   
-  [29X[2XIsDesarguesianPlane[102X[32X Category
+  [33X[1;0Y[29X[2XIsDesarguesianPlane[102X [32X Category[133X
   
   [33X[0;0Y[10XIsDesarguesianPlane[110X      is     declared     as     a     subcategory     of
   [10XIsProjectivePlaneCategory[110X   and   [10XIsProjecticeSpace[110X.  Projective  spaces  of
@@ -69,8 +69,8 @@
   
   [1X12.1-5 [33X[0;0YSubcategories in [10XIsGeneralisedQuadrangle[110X[101X[1X[133X[101X
   
-  [29X[2XIsClassicalGQ[102X[32X Category
-  [29X[2XIsElationGQ[102X[32X Category
+  [33X[1;0Y[29X[2XIsClassicalGQ[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsElationGQ[102X [32X Category[133X
   
   [33X[0;0Y[10XIsClassicalGQ[110X  is  declared  as a subcategory of [10XIsGeneralisedQuadrangle[110X and
   [10XIsClassicalPolarSpace[110X.  All  classical  polar  spaces  of  rank  2 belong to
@@ -94,7 +94,7 @@
   
   [1X12.1-6 IsClassicalGeneralisedHexagon[101X
   
-  [29X[2XIsClassicalGeneralisedHexagon[102X[32X Category
+  [33X[1;0Y[29X[2XIsClassicalGeneralisedHexagon[102X [32X Category[133X
   
   [33X[0;0Y[10XIsClassicalGeneralisedHexagon[110X     is     declared    as    subcategory    of
   [10XIsGeneralisedHexagon[110X  and [10XIsLieGeometry[110X. The so called classical generalised
@@ -125,7 +125,7 @@
   
   [1X12.2-1 GeneralisedPolygonByBlocks[101X
   
-  [29X[2XGeneralisedPolygonByBlocks[102X( [3Xl[103X ) [32X operation
+  [33X[1;0Y[29X[2XGeneralisedPolygonByBlocks[102X( [3Xl[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya generalised polygon[133X
   
   [33X[0;0YThe  argument [3Xl[103X is a finite homogeneous list consisting of ordered sets of a
@@ -155,7 +155,7 @@
   
   [1X12.2-2 GeneralisedPolygonByIncidenceMatrix[101X
   
-  [29X[2XGeneralisedPolygonByIncidenceMatrix[102X( [3Xincmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XGeneralisedPolygonByIncidenceMatrix[102X( [3Xincmat[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya generalised polygon[133X
   
   [33X[0;0YThe argument [22Xincmat[122X is a matrix representing the incidence matrix of a point
@@ -195,8 +195,8 @@
   
   [1X12.2-3 GeneralisedPolygonByElements[101X
   
-  [29X[2XGeneralisedPolygonByElements[102X( [3Xpts[103X, [3Xlns[103X, [3Xinc[103X ) [32X operation
-  [29X[2XGeneralisedPolygonByElements[102X( [3Xpts[103X, [3Xlns[103X, [3Xinc[103X, [3Xgrp[103X, [3Xact[103X ) [32X operation
+  [33X[1;0Y[29X[2XGeneralisedPolygonByElements[102X( [3Xpts[103X, [3Xlns[103X, [3Xinc[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGeneralisedPolygonByElements[102X( [3Xpts[103X, [3Xlns[103X, [3Xinc[103X, [3Xgrp[103X, [3Xact[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya generalised polygon[133X
   
   [33X[0;0YThe  argument  [3Xpts[103X,  [3Xlns[103X and [3Xinc[103X are respectively a set of objects, a set of
@@ -284,7 +284,7 @@
   
   [1X12.3-1 Order[101X
   
-  [29X[2XOrder[102X( [3Xgp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XOrder[102X( [3Xgp[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya pair of positive integers[133X
   
   [33X[0;0YThis method returns the parameters [22X(s,t)[122X of the generalised polygon [3Xgp[103X. That
@@ -310,14 +310,14 @@
   
   [1X12.3-2 IncidenceGraphAttr[101X
   
-  [29X[2XIncidenceGraphAttr[102X( [3Xgp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIncidenceGraphAttr[102X( [3Xgp[103X ) [32X attribute[133X
   
   [33X[0;0YThis  attribute  is  declared  for  objects in [10XIsGeneralisedPolygon[110X. It is a
   mutable attribute and can be accessed by the operation [11XIncidenceGraph[111X.[133X
   
   [1X12.3-3 IncidenceGraph[101X
   
-  [29X[2XIncidenceGraph[102X( [3Xgp[103X ) [32X operation
+  [33X[1;0Y[29X[2XIncidenceGraph[102X( [3Xgp[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya graph[133X
   
   [33X[0;0YThe  argument  [3Xgp[103X  is  a  generalised  polygon.  This  operation returns the
@@ -398,7 +398,7 @@
   
   [1X12.3-4 IncidenceMatrixOfGeneralisedPolygon[101X
   
-  [29X[2XIncidenceMatrixOfGeneralisedPolygon[102X( [3Xgp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIncidenceMatrixOfGeneralisedPolygon[102X( [3Xgp[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya matrix[133X
   
   [33X[0;0YThis  method returns the incidence matrix of the generalised polygon via the
@@ -434,7 +434,7 @@
   
   [1X12.3-5 CollineationGroup[101X
   
-  [29X[2XCollineationGroup[102X( [3Xgp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCollineationGroup[102X( [3Xgp[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya group[133X
   
   [33X[0;0YThis  attribute  returns  the  full  collineation  group  of the generalised
@@ -638,7 +638,7 @@
   
   [1X12.3-6 CollineationAction[101X
   
-  [29X[2XCollineationAction[102X( [3Xgroup[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCollineationAction[102X( [3Xgroup[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya function[133X
   
   [33X[0;0Y[3Xgroup[103X  is  a  collineation  group  of  a generalised polygon, computed using
@@ -711,7 +711,7 @@
   
   [1X12.3-7 BlockDesignOfGeneralisedPolygon[101X
   
-  [29X[2XBlockDesignOfGeneralisedPolygon[102X( [3Xgp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XBlockDesignOfGeneralisedPolygon[102X( [3Xgp[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya block design[133X
   
   [33X[0;0YThis  method  allows  one  to  use  the  GAP  package  [5XDESIGN[105X  to  analyse a
@@ -728,7 +728,6 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XLoadPackage("design");[127X[104X
-    [4X[28X#W BIND_GLOBAL: variable `BlockDesign' already has a value[128X[104X
     [4X[28X-----------------------------------------------------------------------------[128X[104X
     [4X[28XLoading  DESIGN 1.6 (The Design Package for GAP)[128X[104X
     [4X[28Xby Leonard H. Soicher (http://www.maths.qmul.ac.uk/~leonard/).[128X[104X
@@ -800,9 +799,9 @@
   
   [1X12.4-1 [33X[0;0YCollections of elements of generalised polygons[133X[101X
   
-  [29X[2XElementsOfIncidencStructure[102X( [3Xgp[103X, [3Xi[103X ) [32X attribute
-  [29X[2XPoints[102X( [3Xgp[103X ) [32X attribute
-  [29X[2XLines[102X( [3Xgp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XElementsOfIncidencStructure[102X( [3Xgp[103X, [3Xi[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XPoints[102X( [3Xgp[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLines[102X( [3Xgp[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya collection of elements of a generalised polygon[133X
   
   [33X[0;0Y[3Xgp[103X  is  any  generalised polygon, [3Xi[103X is a natural number, necessarily [22X1[122X or [22X2[122X.
@@ -811,7 +810,7 @@
   
   [1X12.4-2 Size[101X
   
-  [29X[2XSize[102X( [3Xels[103X ) [32X operation
+  [33X[1;0Y[29X[2XSize[102X( [3Xels[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya number[133X
   
   [33X[0;0Y[3Xels[103X  is  a  collection  of elements of a generalised polygon. This operation
@@ -820,9 +819,9 @@
   
   [1X12.4-3 [33X[0;0YCreating elements from objects and retrieving objects from elements[133X[101X
   
-  [29X[2XObjectToElement[102X( [3Xgp[103X, [3Xobj[103X ) [32X operation
-  [29X[2XObjectToElement[102X( [3Xgp[103X, [3Xtype[103X, [3Xobj[103X ) [32X operation
-  [29X[2XUnderlyingObject[102X( [3Xel[103X ) [32X operation
+  [33X[1;0Y[29X[2XObjectToElement[102X( [3Xgp[103X, [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XObjectToElement[102X( [3Xgp[103X, [3Xtype[103X, [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XUnderlyingObject[102X( [3Xel[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya collection of elements of a generalised polygon[133X
   
   [33X[0;0YTo   create  elements  in  [3Xgp[103X  (of  type  [3Xtype[103X),  one  of  the  versions  of
@@ -872,8 +871,8 @@
   
   [1X12.4-4 [33X[0;0YIncidence[133X[101X
   
-  [29X[2XIsIncident[102X( [3Xv[103X, [3Xw[103X ) [32X operation
-  [29X[2X\*[102X( [3Xv[103X, [3Xw[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsIncident[102X( [3Xv[103X, [3Xw[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2X\*[102X( [3Xv[103X, [3Xw[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0YLet  [3Xv[103X  and [3Xw[103X be two elements of a generalised polygon. It is checked if the
@@ -882,7 +881,7 @@
   
   [1X12.4-5 Span[101X
   
-  [29X[2XSpan[102X( [3Xv[103X, [3Xw[103X ) [32X operation
+  [33X[1;0Y[29X[2XSpan[102X( [3Xv[103X, [3Xw[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya line of a generalised polygon or fail[133X
   
   [33X[0;0YLet  [3Xv[103X  and [3Xw[103X be two elements of a generalised polygon. It is checked if the
@@ -926,7 +925,7 @@
   
   [1X12.4-6 Meet[101X
   
-  [29X[2XMeet[102X( [3Xv[103X, [3Xw[103X ) [32X operation
+  [33X[1;0Y[29X[2XMeet[102X( [3Xv[103X, [3Xw[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya point of a generalised polygon or fail[133X
   
   [33X[0;0YLet  [3Xv[103X  and [3Xw[103X be two elements of a generalised polygon. It is checked if the
@@ -971,10 +970,10 @@
   
   [1X12.4-7 [33X[0;0YShadow elements[133X[101X
   
-  [29X[2XShadowOfElement[102X( [3Xgeo[103X, [3Xv[103X, [3Xj[103X ) [32X operation
-  [29X[2XPoints[102X( [3Xel[103X ) [32X operation
-  [29X[2XLines[102X( [3Xel[103X ) [32X operation
-  [29X[2XElementsIncidentWithElementOfIncidenceStructure[102X( [3Xel[103X, [3Xi[103X ) [32X operation
+  [33X[1;0Y[29X[2XShadowOfElement[102X( [3Xgeo[103X, [3Xv[103X, [3Xj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPoints[102X( [3Xel[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLines[102X( [3Xel[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XElementsIncidentWithElementOfIncidenceStructure[102X( [3Xel[103X, [3Xi[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA collection of elements[133X
   
   [33X[0;0Y[3Xgeo[103X  is  a generalised polygon, [3Xv[103X must be an element of [3Xgeo[103X, [3Xj[103X is an integer
@@ -1020,7 +1019,7 @@
   
   [1X12.4-8 DistanceBetweenElements[101X
   
-  [29X[2XDistanceBetweenElements[102X( [3Xv[103X, [3Xw[103X ) [32X operation
+  [33X[1;0Y[29X[2XDistanceBetweenElements[102X( [3Xv[103X, [3Xw[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya number[133X
   
   [33X[0;0YLet  [3Xv[103X  and [3Xw[103X be two elements of a generalised polygon. It is checked if the
@@ -1153,7 +1152,7 @@
   
   [1X12.5-2 IsLieGeometry[101X
   
-  [29X[2XIsLieGeometry[102X[32X Category
+  [33X[1;0Y[29X[2XIsLieGeometry[102X [32X Category[133X
   
   [33X[0;0YRecall  that the classical generalised hexagons are constructed as an object
   in  [11XIsLieGeometry[111X.  This  makes most operations described in the appropriate
@@ -1161,9 +1160,9 @@
   
   [1X12.5-3 SplitCayleyHexagon[101X
   
-  [29X[2XSplitCayleyHexagon[102X( [3Xq[103X ) [32X operation
-  [29X[2XSplitCayleyHexagon[102X( [3Xf[103X ) [32X operation
-  [29X[2XSplitCayleyHexagon[102X( [3Xps[103X ) [32X operation
+  [33X[1;0Y[29X[2XSplitCayleyHexagon[102X( [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSplitCayleyHexagon[102X( [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSplitCayleyHexagon[102X( [3Xps[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya generalised hexagon[133X
   
   [4X[32X  Example  [32X[104X
@@ -1192,9 +1191,9 @@
   
   [1X12.5-4 TwistedTrialityHexagon[101X
   
-  [29X[2XTwistedTrialityHexagon[102X( [3Xq[103X ) [32X operation
-  [29X[2XTwistedTrialityHexagon[102X( [3Xf[103X ) [32X operation
-  [29X[2XTwistedTrialityHexagon[102X( [3Xps[103X ) [32X operation
+  [33X[1;0Y[29X[2XTwistedTrialityHexagon[102X( [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XTwistedTrialityHexagon[102X( [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XTwistedTrialityHexagon[102X( [3Xps[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya generalised hexagon[133X
   
   [4X[32X  Example  [32X[104X
@@ -1214,7 +1213,7 @@
   
   [1X12.5-5 VectorSpaceToElement[101X
   
-  [29X[2XVectorSpaceToElement[102X( [3Xgh[103X, [3Xvec[103X ) [32X operation
+  [33X[1;0Y[29X[2XVectorSpaceToElement[102X( [3Xgh[103X, [3Xvec[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan element of a classical generlised hexagon[133X
   
   [33X[0;0YThe  argument  [3Xvec[103X  is  one  vector or a list of vectors from the underlying
@@ -1247,7 +1246,7 @@
   
   [1X12.5-6 ObjectToElement[101X
   
-  [29X[2XObjectToElement[102X( [3Xgh[103X, [3Xobj[103X ) [32X operation
+  [33X[1;0Y[29X[2XObjectToElement[102X( [3Xgh[103X, [3Xobj[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan element of a classical generlised hexagon[133X
   
   [33X[0;0YThe  argument  [3Xobj[103X  is  one  vector or a list of vectors from the underlying
@@ -1288,12 +1287,12 @@
   
   [1X12.5-7 UnderlyingObject[101X
   
-  [29X[2XUnderlyingObject[102X( [3Xgh[103X, [3Xobj[103X ) [32X operation
+  [33X[1;0Y[29X[2XUnderlyingObject[102X( [3Xgh[103X, [3Xobj[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya vector or a matrix[133X
   
   [1X12.5-8 \in[101X
   
-  [29X[2X\in[102X( [3Xx[103X, [3Xgh[103X ) [32X operation
+  [33X[1;0Y[29X[2X\in[102X( [3Xx[103X, [3Xgh[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [4X[32X  Example  [32X[104X
@@ -1322,8 +1321,8 @@
   
   [1X12.5-9 [33X[0;0YSpan and meet of elements[133X[101X
   
-  [29X[2XSpan[102X( [3Xx[103X, [3Xy[103X ) [32X operation
-  [29X[2XMeet[102X( [3Xx[103X, [3Xy[103X ) [32X operation
+  [33X[1;0Y[29X[2XSpan[102X( [3Xx[103X, [3Xy[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMeet[102X( [3Xx[103X, [3Xy[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya subspace of a projective space[133X
   
   [33X[0;0Y[3Xx[103X  and  [3Xy[103X are two elements of a classical generalised hexagon. The operation
@@ -1371,7 +1370,7 @@
   
   [1X12.5-10 CollineationGroup[101X
   
-  [29X[2XCollineationGroup[102X( [3Xgh[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCollineationGroup[102X( [3Xgh[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya group of collineations[133X
   
   [33X[0;0Y[3Xgh[103X  is  a  classical  generalised  hexagon.  This attribute returns the full
@@ -1473,8 +1472,8 @@
   
   [1X12.6-2 [33X[0;0YCategories[133X[101X
   
-  [29X[2XIsEGQByKantorFamily[102X[32X Category
-  [29X[2XIsElementOfKantorFamily[102X[32X Category
+  [33X[1;0Y[29X[2XIsEGQByKantorFamily[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsElementOfKantorFamily[102X [32X Category[133X
   
   [33X[0;0Y[10XIsEGQByKantorFamily[110X  is  a  subcategory  of  [10XIsElationGQ[110X.  It  contains  all
   elations  generalised quadrangles that are constructed from a Kantor family.
@@ -1485,7 +1484,7 @@
   
   [1X12.6-3 [33X[0;0YKantor families[133X[101X
   
-  [29X[2XIsKantorFamily[102X( [3Xg[103X, [3Xf[103X, [3Xfstar[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsKantorFamily[102X( [3Xg[103X, [3Xf[103X, [3Xfstar[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0YThere  is  no  specific way to construct a Kantor family in [5XFinInG[105X. However,
@@ -1495,7 +1494,7 @@
   
   [1X12.6-4 EGQByKantorFamily[101X
   
-  [29X[2XEGQByKantorFamily[102X( [3Xg[103X, [3Xf[103X, [3Xfstar[103X ) [32X operation
+  [33X[1;0Y[29X[2XEGQByKantorFamily[102X( [3Xg[103X, [3Xf[103X, [3Xfstar[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya generalised quadrangle[133X
   
   [33X[0;0YLet  [3Xg[103X  be  a group and [3Xf[103X and [3Xfstar[103X two collections of subgroups, satisfying
@@ -1532,10 +1531,10 @@
   
   [1X12.6-5 [33X[0;0YRepresentation of elements and underlying objects[133X[101X
   
-  [29X[2XObjectToElement[102X( [3Xegq[103X, [3Xt[103X, [3Xobj[103X ) [32X operation
-  [29X[2XObjectToElement[102X( [3Xegq[103X, [3Xobj[103X ) [32X operation
-  [29X[2XBasePointOfEGQ[102X( [3Xegq[103X ) [32X operation
-  [29X[2XUnderlyingObject[102X( [3Xel[103X ) [32X operation
+  [33X[1;0Y[29X[2XObjectToElement[102X( [3Xegq[103X, [3Xt[103X, [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XObjectToElement[102X( [3Xegq[103X, [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XBasePointOfEGQ[102X( [3Xegq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XUnderlyingObject[102X( [3Xel[103X ) [32X operation[133X
   
   [33X[0;0YFor  technical reasons, the underlying objects of the elements of an elation
   generalised quadrangle constructed from a Kantor family, are not exactly the
@@ -1600,9 +1599,9 @@
   
   [1X12.6-6 [33X[0;0YElation group and natural action on elements[133X[101X
   
-  [29X[2XElationGroup[102X( [3Xegq[103X ) [32X attribute
-  [29X[2XOnKantorFamily[102X( [3Xg[103X, [3Xel[103X ) [32X function
-  [29X[2XCollineationAction[102X( [3Xg[103X ) [32X attribute
+  [33X[1;0Y[29X[2XElationGroup[102X( [3Xegq[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XOnKantorFamily[102X( [3Xg[103X, [3Xel[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCollineationAction[102X( [3Xg[103X ) [32X attribute[133X
   
   [33X[0;0YThe  attribute  [11XElationGroup[111X  is  naturally  set upon creation of an elation
   generalised  quadrangle  from  a  Kantor family. The elements of the elation
@@ -1825,7 +1824,7 @@
   
   [1X12.6-8 qClan[101X
   
-  [29X[2XqClan[102X( [3Xlist[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XqClan[102X( [3Xlist[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya q-clan.[133X
   
   [33X[0;0YGiven  a  list  [3Xlist[103X  of [22X2 ×[122X matrices over the field [3Xf[103X, it is checked if the
@@ -1835,11 +1834,11 @@
   
   [1X12.6-9 [33X[0;0YParticular q-clans[133X[101X
   
-  [29X[2XLinearqClan[102X( [3Xq[103X ) [32X operation
-  [29X[2XFisherThasWalkerKantorBettenqClan[102X( [3Xq[103X ) [32X operation
-  [29X[2XKantorMonomialqClan[102X( [3Xq[103X ) [32X operation
-  [29X[2XKantorKnuthqClan[102X( [3Xq[103X ) [32X operation
-  [29X[2XFisherqClan[102X( [3Xq[103X ) [32X operation
+  [33X[1;0Y[29X[2XLinearqClan[102X( [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XFisherThasWalkerKantorBettenqClan[102X( [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XKantorMonomialqClan[102X( [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XKantorKnuthqClan[102X( [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XFisherqClan[102X( [3Xq[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya q-clan[133X
   
   [33X[0;0YSome  famous  q-clans  are built in. We refer to ... for more information on
@@ -1847,7 +1846,7 @@
   
   [1X12.6-10 KantorFamilyByqClan[101X
   
-  [29X[2XKantorFamilyByqClan[102X( [3Xclan[103X ) [32X operation
+  [33X[1;0Y[29X[2XKantorFamilyByqClan[102X( [3Xclan[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA Kantor family.[133X
   
   [33X[0;0YThe  Kantor family constructed from a q-clan will be a matrix group together
@@ -1855,7 +1854,7 @@
   
   [1X12.6-11 EGQByqClan[101X
   
-  [29X[2XEGQByqClan[102X( [3Xclan[103X ) [32X operation
+  [33X[1;0Y[29X[2XEGQByqClan[102X( [3Xclan[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YAn elation generalised quadrangle constructed from a q-clan.[133X
   
   [33X[0;0YGiven  a  q-clan  [3Xclan[103X,  the  operation  [11XKantorFamilyByqClan[111X will be used to
@@ -1938,14 +1937,14 @@
   
   [1X12.6-13 IsEGQByBLTSet[101X
   
-  [29X[2XIsEGQByBLTSet[102X[32X Category
+  [33X[1;0Y[29X[2XIsEGQByBLTSet[102X [32X Category[133X
   
   [33X[0;0Y[10XIsEGQByBLTSet[110X  is  a  subcategory  of  [10XIsElationGQ[110X. It contains all elations
   generalised quadrangles that are constructed from a BLT set.[133X
   
   [1X12.6-14 BLTSetByqClan[101X
   
-  [29X[2XBLTSetByqClan[102X( [3Xclan[103X ) [32X operation
+  [33X[1;0Y[29X[2XBLTSetByqClan[102X( [3Xclan[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA BLT-set.[133X
   
   [33X[0;0YThe  BLT-set  is  a  set  of points of the parabolic quadric in [22XPG(4,q)[122X with
@@ -1986,7 +1985,7 @@
   
   [1X12.6-15 EGQByBLTSet[101X
   
-  [29X[2XEGQByBLTSet[102X( [3Xblt[103X ) [32X operation
+  [33X[1;0Y[29X[2XEGQByBLTSet[102X( [3Xblt[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YAn elation generalised quadrangle.[133X
   
   [33X[0;0Y[3Xblt[103X  is  a BLT-set, this operation returns an elation generalised quadrangle
@@ -2043,7 +2042,7 @@
   
   [1X12.6-16 DefiningPlanesOfEGQByBLTSet[101X
   
-  [29X[2XDefiningPlanesOfEGQByBLTSet[102X( [3Xegq[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDefiningPlanesOfEGQByBLTSet[102X( [3Xegq[103X ) [32X attribute[133X
   
   [33X[0;0YFor   an  elation  generalised  quadrangle  in  the  category  [10XIsEGQByBLTSet[110X
   (constructed  from  a  BLT-set),  the  planes  of the polar space [22XW(5,q)[122X, as
@@ -2079,9 +2078,9 @@
   
   [1X12.6-17 [33X[0;0YRepresentation of elements and underlying objects[133X[101X
   
-  [29X[2XObjectToElement[102X( [3Xegq[103X, [3Xt[103X, [3Xobj[103X ) [32X operation
-  [29X[2XObjectToElement[102X( [3Xegq[103X, [3Xobj[103X ) [32X operation
-  [29X[2XUnderlyingObject[102X( [3Xel[103X ) [32X operation
+  [33X[1;0Y[29X[2XObjectToElement[102X( [3Xegq[103X, [3Xt[103X, [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XObjectToElement[102X( [3Xegq[103X, [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XUnderlyingObject[102X( [3Xel[103X ) [32X operation[133X
   
   [33X[0;0YThe  underlying objects of the elements of an elation generalised quadrangle
   in  the category [10XIsEGQByBLTSet[110X are elements of the polar space [22XW(5,q)[122X in its
@@ -2147,7 +2146,7 @@
   
   [1X12.6-18 CollineationSubgroup[101X
   
-  [29X[2XCollineationSubgroup[102X( [3Xegq[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCollineationSubgroup[102X( [3Xegq[103X ) [32X attribute[133X
   
   [33X[0;0YFor   an  elation  generalised  quadrangle  in  the  category  [10XIsEGQByBLTSet[110X
   (constructed  from  a  BLT  set),  the  planes of the polar space [22XW(5,q)[122X, as

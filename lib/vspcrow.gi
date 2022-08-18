@@ -155,6 +155,48 @@ InstallMethod( LeftModuleByGenerators,
     return V;
     end );
 
+InstallOtherMethod( LeftModuleByGenerators,
+    "for division ring and list of vector objects",
+    IsElmsColls,
+    [ IsDivisionRing, IsList ],
+    # ensure it ranks above the generic method
+    function( F, mat )
+    local V,typ;
+
+    # filter for vector objects, not compressed FF vectors
+    if not ForAll(mat,x->IsVectorObj(x) and not IsDataObjectRep(x)) then
+      TryNextMethod();
+    fi;
+    typ:=IsAttributeStoringRep and HasIsEmpty and IsFiniteDimensional;
+    if ForAll( mat, row -> IsSubset( F, BaseDomain(row) ) ) then
+      typ:=typ and IsGaussianRowSpace;
+    else
+      typ:=typ and IsVectorSpace and IsRowModule and IsNonGaussianRowSpace;
+    fi;
+
+    if Length(mat)>0 and ForAny(mat,x->not IsZero(x)) then
+      typ:=typ and IsNonTrivial;
+    else
+      typ:=typ and IsTrivial;
+    fi;
+
+    if HasIsFinite(F) then
+      if IsFinite(F) then
+        typ:=typ and IsFinite;
+      else
+        typ:=typ and HasIsFinite; # i.e. not finite
+      fi;
+    fi;
+
+    V:= Objectify( NewType( FamilyObj( mat ), typ), rec() );
+
+    SetLeftActingDomain( V, F );
+    SetGeneratorsOfLeftModule( V, AsList( mat ) );
+    SetDimensionOfVectors( V, Length( mat[1] ) );
+
+    return V;
+    end );
+
 
 #############################################################################
 ##
@@ -289,11 +331,8 @@ InstallMethod( LinearCombination, IsCollsElms,
 ##
 #M  Coefficients( <B>, <v> )  .  method for semi-ech. basis of Gaussian space
 ##
-InstallMethod( Coefficients,
-    "for semi-ech. basis of a Gaussian row space, and a row vector",
-    IsCollsElms,
-    [ IsBasis and IsSemiEchelonBasisOfGaussianRowSpaceRep, IsRowVector ],
-    function( B, v )
+
+COEFFS_SEMI_ECH_BASIS:=function( B, v )
     local vectors,   # basis vectors of `B'
           heads,     # heads info of `B'
           len,       # length of `v'
@@ -315,8 +354,7 @@ InstallMethod( Coefficients,
     fi;
 
     # Preset the coefficients list with zeroes.
-    zero:= Zero( v[1] );
-    coeff:= List( vectors, x -> zero );
+    coeff:= ListWithIdenticalEntries( Length( vectors ), Zero( v[1] ) );
 
     # Compute the coefficients of the base vectors.
     v:= ShallowCopy( v );
@@ -334,8 +372,19 @@ InstallMethod( Coefficients,
 
     # Return the coefficients.
     return coeff;
-    end );
+    end;
 
+InstallMethod( Coefficients,
+    "for semi-ech. basis of a Gaussian row space, and a row vector",
+    IsCollsElms,
+    [ IsBasis and IsSemiEchelonBasisOfGaussianRowSpaceRep, IsRowVector ],
+    COEFFS_SEMI_ECH_BASIS);
+
+InstallMethod( Coefficients,
+    "for semi-ech. basis of a Gaussian row space, and vector object",
+    IsCollsElms,
+    [ IsBasis and IsSemiEchelonBasisOfGaussianRowSpaceRep, IsVectorObj ],
+    COEFFS_SEMI_ECH_BASIS);
 
 #############################################################################
 ##
@@ -641,15 +690,23 @@ InstallMethod( SemiEchelonBasis,
     return B;
     end );
 
-InstallMethod( SemiEchelonBasis,
-    "for Gaussian row space and matrix",
+InstallOtherMethod( SemiEchelonBasis,
+    "for Gaussian row space and list of vector objects",
     IsIdenticalObj,
-    [ IsGaussianRowSpace, IsMatrix ],
+    [ IsGaussianRowSpace, IsList ],
     function( V, gens )
     local heads,   # heads info for the basis
           B,       # the basis, result
           gensi,   # immutable copy
+          flag,
           v;       # loop over vector space generators
+
+    flag:=false;
+    if ForAll(gens,x->IsVectorObj(x) and not IsDataObjectRep(x)) then
+      flag:=true;
+    elif not IsMatrix(gens) then
+      TryNextMethod();
+    fi;
 
     # Check that the vectors form a semi-echelonized basis.
     heads:= HeadsInfoOfSemiEchelonizedMat( gens, DimensionOfVectors( V ) );
@@ -670,6 +727,7 @@ InstallMethod( SemiEchelonBasis,
     fi;
     SetUnderlyingLeftModule( B, V );
     gensi := ImmutableMatrix(LeftActingDomain(V), gens);
+    if flag then gensi:=RowsOfMatrix(gensi);fi;
     SetBasisVectors( B, gensi );
 
     B!.heads:= heads;
@@ -705,6 +763,40 @@ InstallMethod( SemiEchelonBasisNC,
     fi;
     SetUnderlyingLeftModule( B, V );
     gensi := ImmutableMatrix(LeftActingDomain(V), gens);
+    SetBasisVectors( B, gens );
+
+    # Provide the `heads' information.
+    B!.heads:= HeadsInfoOfSemiEchelonizedMat( gens, DimensionOfVectors( V ) );
+
+    # Return the basis.
+    return B;
+    end );
+
+InstallOtherMethod( SemiEchelonBasisNC,
+    "for Gaussian row space and list of vector objects",
+    IsIdenticalObj,
+    [ IsGaussianRowSpace, IsList ],
+    function( V, gens )
+    local B,  # the basis, result
+          gensi; # immutable copy
+
+    # filter for vector objects, not compressed FF vectors
+    if not ForAll(gens,x->IsVectorObj(x) and not IsDataObjectRep(x)) then
+      TryNextMethod();
+    fi;
+
+    B:= Objectify( NewType( FamilyObj( gens ),
+                                IsFiniteBasisDefault
+                            and IsSemiEchelonized
+                            and IsSemiEchelonBasisOfGaussianRowSpaceRep ),
+                   rec() );
+    if IsEmpty( gens ) then
+      SetIsEmpty( B, true );
+    else
+      SetIsRectangularTable( B, true );
+    fi;
+    SetUnderlyingLeftModule( B, V );
+    gensi := RowsOfMatrix(ImmutableMatrix(LeftActingDomain(V), gens));
     SetBasisVectors( B, gens );
 
     # Provide the `heads' information.
@@ -882,9 +974,18 @@ InstallMethod( Intersection2,
       S:= Intersection2( AsVectorSpace( S, V ), AsVectorSpace( S, W ) );
     else
 
-      # Compute the intersection of two spaces over the same field.
+    # Compute the intersection of two spaces over the same field.
+    if ForAll(GeneratorsOfLeftModule(V),
+        x->IsVectorObj(x) and not IsDataObjectRep(x))
+      and ForAll(GeneratorsOfLeftModule(W),
+        x->IsVectorObj(x) and not IsDataObjectRep(x)) then
+      mat:= SumIntersectionMat( Matrix(LeftActingDomain(V),
+          GeneratorsOfLeftModule( V )),Matrix(LeftActingDomain(W),
+                                  GeneratorsOfLeftModule( W ) ))[2];
+    else
       mat:= SumIntersectionMat( BasisVectors(SemiEchelonBasis( V )),
                                 BasisVectors(SemiEchelonBasis( W )) )[2];
+    fi;
 #T why not just the generators if no basis is known yet?
       if IsEmpty( mat ) then
         S:= TrivialSubspace( V );
@@ -1067,6 +1168,10 @@ InstallMethod( CanonicalBasis,
 
       # Make a copy to avoid changing the original argument.
       B:= List( GeneratorsOfLeftModule( V ), ShallowCopy );
+      # filter for vector objects, not compressed FF vectors
+      if ForAny(B,x->IsVectorObj(x) and not IsDataObjectRep(x)) then
+        B:=List(B,Unpack);
+      fi;
       m:= Length( B );
       n:= Length( B[1] );
 
@@ -1498,7 +1603,7 @@ InstallMethod( ViewObj,
     [ IsMutableBasis and IsMutableBasisOfGaussianRowSpaceRep ],
     function( MB )
     Print( "<mutable basis over ", MB!.leftActingDomain, ", ",
-           Length( MB!.basisVectors ), " vectors>" );
+           Pluralize( Length( MB!.basisVectors ), "vector" ), ">" );
     end );
 
 

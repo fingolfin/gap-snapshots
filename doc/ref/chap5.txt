@@ -1,7 +1,7 @@
   
   [1X5 [33X[0;0YFunctions[133X[101X
   
-  [33X[0;0YThe  section [14X4.23[114X  describes  how  to  define a function. In this chapter we
+  [33X[0;0YThe  section [14X4.11[114X  describes  how  to  define a function. In this chapter we
   describe  functions  that  give  information  about  functions,  and various
   utility functions used either when defining functions or calling functions.[133X
   
@@ -116,7 +116,7 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xmeth:= ApplicableMethod( Size, [ Group( () ) ] );;[127X[104X
     [4X[25Xgap>[125X [27XFilenameFunc( meth );[127X[104X
-    [4X[28X"... some path ... gap4r5/lib/grpperm.gi"[128X[104X
+    [4X[28X"... some path ... /lib/grpperm.gi"[128X[104X
     [4X[25Xgap>[125X [27XStartlineFunc( meth );[127X[104X
     [4X[28X487[128X[104X
     [4X[25Xgap>[125X [27XEndlineFunc( meth );[127X[104X
@@ -128,15 +128,15 @@
   [33X[1;0Y[29X[2XLocationFunc[102X( [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0YLet [3Xfunc[103X be a function. Returns a string describing the location of [3Xfunc[103X, or
-  an  empty  string  if  the  information  cannot  be  found.  This  uses  the
-  information provided by [2XFilenameFunc[102X ([14X5.1-4[114X) and [2XStartlineFunc[102X ([14X5.1-5[114X)[133X
+  [9Xfail[109X  if the information cannot be found. This uses the information provided
+  by [2XFilenameFunc[102X ([14X5.1-4[114X) and [2XStartlineFunc[102X ([14X5.1-5[114X)[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XLocationFunc( Intersection );[127X[104X
     [4X[28X"... some path ... gap/lib/coll.gi:2467"[128X[104X
     [4X[28X# String is an attribute, so no information is stored[128X[104X
     [4X[25Xgap>[125X [27XLocationFunc( String );[127X[104X
-    [4X[28X""[128X[104X
+    [4X[28Xfail[128X[104X
   [4X[32X[104X
   
   [1X5.1-7 PageSource[101X
@@ -187,7 +187,7 @@
   
   [33X[0;0YA more useful application of [2XCallFuncList[102X is for a function [10Xg[110X that is called
   in  the body of a function [10Xf[110X with (a sublist of) the arguments of [10Xf[110X, where [10Xf[110X
-  has  been  defined  with  a single formal argument [10Xarg[110X (see [14X4.23[114X), as in the
+  has  been  defined  with  a single formal argument [10Xarg[110X (see [14X4.11[114X), as in the
   following code fragment.[133X
   
   [4X[32X  Example  [32X[104X
@@ -222,7 +222,7 @@
   
   [33X[0;0Y[2XCallFuncListWrap[102X  differs  only  in that the result is a list. This returned
   list is empty if the called function returned no value, else it contains the
-  returned  value  as it's single member. This allows wrapping functions which
+  returned  value  as  its single member. This allows wrapping functions which
   may, or may not return a value.[133X
   
   [4X[32X  Example  [32X[104X
@@ -243,13 +243,13 @@
   except it caches the results for any inputs that are positive integers. Thus
   if  the  new function is called multiple times with the same input, then any
   call  after  the  first will return the cached value, instead of recomputing
-  it. By default, the cache can be flushed by calling [2XFlushCaches[102X ([14X79.10-3[114X).[133X
+  it. By default, the cache can be flushed by calling [2XFlushCaches[102X ([14X79.10-4[114X).[133X
   
   [33X[0;0YThe returned function will by default only accept positive integers.[133X
   
   [33X[0;0YThis function does not promise to never call [3Xfunction[103X more than once for any
   input  --  values  may  be  removed  if  the  cache  gets  too  large, or if
-  [2XFlushCaches[102X ([14X79.10-3[114X) is called, or if multiple threads try to calculate the
+  [2XFlushCaches[102X ([14X79.10-4[114X) is called, or if multiple threads try to calculate the
   same value simultaneously.[133X
   
   [33X[0;0YThe  optional  second  argument  is  a  record  which  provides  a number of
@@ -261,7 +261,7 @@
         [10Xi[110X.[133X
   
   [8X[10Xflush[110X[8X (default [9Xtrue[109X)[108X
-        [33X[0;6YIf  this  is [9Xtrue[109X, the cache is emptied whenever [2XFlushCaches[102X ([14X79.10-3[114X)
+        [33X[0;6YIf  this  is [9Xtrue[109X, the cache is emptied whenever [2XFlushCaches[102X ([14X79.10-4[114X)
         is called; if false, then the cache cannot be flushed.[133X
   
   [8X[10XerrorHandler[110X[8X (defaults to [2XError[102X ([14X6.6-1[114X))[108X
@@ -523,7 +523,7 @@
   [4X[32X[104X
   
   [33X[0;0YPragmas  can  be  used  to  mark  parts  of  functions  that should later be
-  manipulated using [14X4.25[114X.[133X
+  manipulated using [14X4.16[114X.[133X
   
   [33X[0;0YPlease  note that heavy use of pragmas in functions slows down the execution
   of your function in the same way as adding empty [10X;[110X statements to your code.[133X

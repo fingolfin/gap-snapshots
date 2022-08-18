@@ -14,12 +14,11 @@
 # Free Software Foundation (FSF); either version 2.1 of the License, or
 # (at your option) any later version. For details, see the file 'LGPL' in
 # the doc subdirectory of the GBNP distribution or see the FSF's own site:
-# http://www.gnu.org/licenses/lgpl.html
+# https://www.gnu.org/licenses/lgpl.html
 ########################## END COPYRIGHT MESSAGE ##########################
 
 ### filename = "nparith.gi"
 ### vs 0.9
-### $Id: nparith.gi 12772 2010-01-15 13:10:24Z jwk $
  
 ### THIS IS PART OF A GAP PACKAGE FOR COMPUTING WITH NON-COMMUTATIVE POLYNOMIALS
  
@@ -45,7 +44,7 @@
 ################## 
 ### AddNP
 ### <#GAPDoc Label="AddNP">
-### <ManSection Label="AddNP">
+### <ManSection>
 ### <Func Name="AddNP" Comm="" Arg="u, v, c, d" />
 ### <Returns>
 ### <A>c</A><M>*</M><A>u</A><M>+</M><A>d</A><M>*</M><A>v</A>
@@ -134,7 +133,7 @@ end);
 ################## 
 ### LtNP
 ### <#GAPDoc Label="LtNP">
-### <ManSection Label="LtNP">
+### <ManSection>
 ### <Func Name="LtNP" Comm="less than" Arg="u, v" />
 ### <Returns>
 ### <C>true</C> if <M>u &lt; v</M> and <C>false</C> if <M>u \geq v</M>
@@ -176,7 +175,7 @@ end);;
 ################## 
 ### GtNP
 ### <#GAPDoc Label="GtNP">
-### <ManSection Label="GtNP">
+### <ManSection>
 ### <Func Name="GtNP" Comm="greater than" Arg="u, v" />
 ### <Returns>
 ### <C>true</C> if <M>u &gt; v</M> and <C>false</C> if <M>u \leq v</M>
@@ -219,7 +218,7 @@ end);;
 ### LMonsNP
 ###
 ### <#GAPDoc Label="LMonsNP">
-### <ManSection Label="LMonsNP">
+### <ManSection>
 ### <Func Name="LMonsNP" Comm="returns the leading monomials of a list of noncommutative polynomials" Arg="Lnp" />
 ###
 ### <Returns>
@@ -258,7 +257,7 @@ end);
 ################## 
 ### CleanNP
 ### <#GAPDoc Label="CleanNP">
-### <ManSection Label="CleanNP">
+### <ManSection>
 ### <Func Name="CleanNP" Comm="clean up for NP" Arg="u" />
 ### <Returns>
 ### The cleaned up version of <A>u</A>
@@ -315,7 +314,7 @@ end);;
 ################## 
 ### MkMonicNP
 ### <#GAPDoc Label="MkMonicNP">
-### <ManSection Label="MkMonicNP">
+### <ManSection>
 ### <Func Name="MkMonicNP" Comm="makes an NP monic by multiplying with the right scalar." Arg="np" />
 ### <Returns>
 ### <A>np</A> made monic
@@ -355,7 +354,7 @@ end);;
 ################# 
 ### BimulNP
 ### <#GAPDoc Label="BimulNP">
-### <ManSection Label="BimulNP">
+### <ManSection>
 ### <Func Name="BimulNP" Comm="" Arg="ga, np, dr" />
 ### <Returns>
 ###  the polynomial <A>ga</A><M>*</M><A>np</A><M>*</M><A>dr</A> in
@@ -397,7 +396,7 @@ end);;
 ################# 
 ### MulNP
 ### <#GAPDoc Label="MulNP">
-### <ManSection Label="MulNP">
+### <ManSection>
 ### <Func Name="MulNP" Comm="Multiplication of two polynomials" Arg="np1, np2" />
 ### <Returns>
 ### <A>np1</A><M>*</M><A>np2</A>
@@ -631,7 +630,7 @@ end;
 ####################
 ###
 ### <#GAPDoc Label="NumAlgGensNP">
-### <ManSection Label="NumAlgGensNP">
+### <ManSection>
 ### <Func Name="NumAlgGensNP" Comm="" Arg="np" />
 ### <Returns>
 ###  The minimum number <C>t</C> so that <A>np</A> belongs to the free
@@ -668,7 +667,7 @@ end);
 ########################
 ###
 ### <#GAPDoc Label="NumAlgGensNPList">
-### <ManSection Label="NumAlgGensNPList">
+### <ManSection>
 ### <Func Name="NumAlgGensNPList" Comm="" Arg="Lnp" />
 ### <Returns>
 ###  The minimum number <C>t</C> so that each polynomial in <A>Lnp</A>
@@ -758,7 +757,7 @@ end;
 ####################
 ###
 ### <#GAPDoc Label="NumModGensNP">
-### <ManSection Label="NumModGensNP">
+### <ManSection>
 ### <Func Name="NumModGensNP" Comm="" Arg="npm" />
 ### <Returns>
 ###  The minimum number <C>mt</C> so that <A>npm</A> belongs to the free
@@ -800,7 +799,7 @@ end);
 ### NumModGensNPList ###
 ########################
 ### <#GAPDoc Label="NumModGensNPList">
-### <ManSection Label="NumModGensNPList">
+### <ManSection>
 ### <Func Name="NumModGensNPList" Comm="" Arg="Lnpm" />
 ### <Returns>
 ###  The minimum number <C>mt</C> so that each member of <A>npm</A> belongs

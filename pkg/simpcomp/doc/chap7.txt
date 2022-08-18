@@ -24,14 +24,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X gap> SCNSEmpty();[128X[104X
-    [4X[28X [NormalSurface[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Name="empty normal surface"[128X[104X
-    [4X[28X  Dim=-1[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X /NormalSurface][128X[104X
+    [4X[28X <NormalSurface: empty normal surface | dim = -1>[128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
   
@@ -46,14 +39,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X gap> sl:=SCNSFromFacets([[1,2,3],[1,2,4,5],[1,3,4,6],[2,3,5,6],[4,5,6]]);[128X[104X
-    [4X[28X [NormalSurface[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Name="unnamed complex 86"[128X[104X
-    [4X[28X  Dim=2[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X /NormalSurface][128X[104X
+    [4X[28X <NormalSurface: unnamed complex 114 | dim = 2>[128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
   
@@ -67,14 +53,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X gap> sl:=SCNS([[1,2,3],[1,2,4,5],[1,3,4,6],[2,3,5,6],[4,5,6]]);[128X[104X
-    [4X[28X [NormalSurface[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Name="unnamed complex 87"[128X[104X
-    [4X[28X  Dim=2[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X /NormalSurface][128X[104X
+    [4X[28X <NormalSurface: unnamed complex 115 | dim = 2>[128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
   
@@ -94,20 +73,8 @@
     [4X[28X [ [ 19, "S^3 (VT)" ] ][128X[104X
     [4X[28X gap> c:=SCLib.Load(last[1][1]);;                       [128X[104X
     [4X[28X gap> sl:=SCNSSlicing(c,[[1..5],[6..10]]);    [128X[104X
-    [4X[28X [NormalSurface[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Properties known: ConnectedComponents, Dim, EulerCharacteristic, FVector, Fac\[128X[104X
-    [4X[28X etsEx, Genus, IsConnected, IsOrientable, NSTriangulation, Name, TopologicalTyp\[128X[104X
-    [4X[28X e, Vertices.[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Name="slicing [ [ 1, 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10 ] ] of S^3 (VT)"[128X[104X
-    [4X[28X  Dim=2[128X[104X
-    [4X[28X  FVector=[ 17, 36, 12, 9 ][128X[104X
-    [4X[28X  EulerCharacteristic=2[128X[104X
-    [4X[28X  IsOrientable=true[128X[104X
-    [4X[28X  TopologicalType="S^2"[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X /NormalSurface][128X[104X
+    [4X[28X <NormalSurface: slicing [ [ 1, 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10 ] ] of S^3 (VT) \[128X[104X
+    [4X[28X | dim = 2>[128X[104X
     [4X[28X gap> sl.Facets;[128X[104X
     [4X[28X [ [ [ 1, 6 ], [ 1, 8 ], [ 1, 9 ] ], [ [ 1, 6 ], [ 1, 8 ], [ 3, 6 ], [ 3, 8 ] ][128X[104X
     [4X[28X     , [ [ 1, 6 ], [ 1, 9 ], [ 4, 6 ], [ 4, 9 ] ], [128X[104X
@@ -124,20 +91,8 @@
     [4X[28X   [ [ 4, 6 ], [ 4, 7 ], [ 4, 9 ] ], [ [ 4, 6 ], [ 4, 7 ], [ 5, 6 ], [ 5, 7 ] ][128X[104X
     [4X[28X     , [ [ 5, 6 ], [ 5, 7 ], [ 5, 8 ] ], [ [ 5, 7 ], [ 5, 8 ], [ 5, 10 ] ] ][128X[104X
     [4X[28X gap> sl:=SCNSSlicing(c,[[1,3,5,7,9],[2,4,6,8,10]]);    [128X[104X
-    [4X[28X [NormalSurface[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Properties known: ConnectedComponents, Dim, EulerCharacteristic, FVector, Fac\[128X[104X
-    [4X[28X etsEx, Genus, IsConnected, IsOrientable, NSTriangulation, Name, TopologicalTyp\[128X[104X
-    [4X[28X e, Vertices.[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Name="slicing [ [ 1, 3, 5, 7, 9 ], [ 2, 4, 6, 8, 10 ] ] of S^3 (VT)"[128X[104X
-    [4X[28X  Dim=2[128X[104X
-    [4X[28X  FVector=[ 25, 50, 0, 25 ][128X[104X
-    [4X[28X  EulerCharacteristic=0[128X[104X
-    [4X[28X  IsOrientable=true[128X[104X
-    [4X[28X  TopologicalType="T^2"[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X /NormalSurface][128X[104X
+    [4X[28X <NormalSurface: slicing [ [ 1, 3, 5, 7, 9 ], [ 2, 4, 6, 8, 10 ] ] of S^3 (VT) \[128X[104X
+    [4X[28X | dim = 2>[128X[104X
     [4X[28X gap> sl.Facets;                           [128X[104X
     [4X[28X [ [ [ 1, 2 ], [ 1, 4 ], [ 3, 2 ], [ 3, 4 ] ], [128X[104X
     [4X[28X   [ [ 1, 2 ], [ 1, 4 ], [ 9, 2 ], [ 9, 4 ] ], [128X[104X
@@ -185,35 +140,9 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X gap> sl:=SCNSSlicing(SCBdSimplex(4),[[1],[2..5]]);[128X[104X
-    [4X[28X [NormalSurface[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Properties known: ConnectedComponents, Dim, EulerCharacteristic, FVector, Fac\[128X[104X
-    [4X[28X etsEx, Genus, IsConnected, IsOrientable, NSTriangulation, Name, TopologicalTyp\[128X[104X
-    [4X[28X e, Vertices.[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Name="slicing [ [ 1 ], [ 2, 3, 4, 5 ] ] of S^3_5"[128X[104X
-    [4X[28X  Dim=2[128X[104X
-    [4X[28X  FVector=[ 4, 6, 4 ][128X[104X
-    [4X[28X  EulerCharacteristic=2[128X[104X
-    [4X[28X  IsOrientable=true[128X[104X
-    [4X[28X  TopologicalType="S^2"[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X /NormalSurface][128X[104X
+    [4X[28X <NormalSurface: slicing [ [ 1 ], [ 2, 3, 4, 5 ] ] of S^3_5 | dim = 2>[128X[104X
     [4X[28X gap> sl_2:=SCCopy(sl);                          [128X[104X
-    [4X[28X [NormalSurface[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Properties known: ConnectedComponents, Dim, EulerCharacteristic, FVector, Fac\[128X[104X
-    [4X[28X etsEx, Genus, IsConnected, IsOrientable, NSTriangulation, Name, TopologicalTyp\[128X[104X
-    [4X[28X e, Vertices.[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Name="slicing [ [ 1 ], [ 2, 3, 4, 5 ] ] of S^3_5"[128X[104X
-    [4X[28X  Dim=2[128X[104X
-    [4X[28X  FVector=[ 4, 6, 4 ][128X[104X
-    [4X[28X  EulerCharacteristic=2[128X[104X
-    [4X[28X  IsOrientable=true[128X[104X
-    [4X[28X  TopologicalType="S^2"[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X /NormalSurface][128X[104X
+    [4X[28X <NormalSurface: slicing [ [ 1 ], [ 2, 3, 4, 5 ] ] of S^3_5 | dim = 2>[128X[104X
     [4X[28X gap> IsIdenticalObj(sl,sl_2);                     [128X[104X
     [4X[28X false[128X[104X
     [4X[28X [128X[104X
@@ -260,46 +189,13 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X gap> sl:=SCNSSlicing(SCBdCrossPolytope(4),[[1,2],[3..8]]);[128X[104X
-    [4X[28X [NormalSurface[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Properties known: ConnectedComponents, Dim, EulerCharacteristic, FVector, Fac\[128X[104X
-    [4X[28X etsEx, IsConnected, IsOrientable, NSTriangulation, Name, TopologicalType, Vert\[128X[104X
-    [4X[28X ices.[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Name="slicing [ [ 1, 2 ], [ 3, 4, 5, 6, 7, 8 ] ] of Bd(\beta^4)"[128X[104X
-    [4X[28X  Dim=2[128X[104X
-    [4X[28X  FVector=[ 12, 24, 16 ][128X[104X
-    [4X[28X  EulerCharacteristic=4[128X[104X
-    [4X[28X  IsOrientable=true[128X[104X
-    [4X[28X  TopologicalType="S^2 U S^2"[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X /NormalSurface][128X[104X
+    [4X[28X <NormalSurface: slicing [ [ 1, 2 ], [ 3, 4, 5, 6, 7, 8 ] ] of Bd(\beta^4) | di\[128X[104X
+    [4X[28X m = 2>[128X[104X
     [4X[28X gap> cc:=SCConnectedComponents(sl);[128X[104X
-    [4X[28X [ [NormalSurface[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, EulerCharacteristic, FVector, FacetsEx, Genus, IsC\[128X[104X
-    [4X[28X onnected, IsOrientable, NSTriangulation, Name, TopologicalType, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="unnamed complex 302_cc_#1"[128X[104X
-    [4X[28X      Dim=2[128X[104X
-    [4X[28X      FVector=[ 6, 12, 8 ][128X[104X
-    [4X[28X      EulerCharacteristic=2[128X[104X
-    [4X[28X      IsOrientable=true[128X[104X
-    [4X[28X      TopologicalType="S^2"[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /NormalSurface], [NormalSurface[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, EulerCharacteristic, FVector, FacetsEx, Genus, IsC\[128X[104X
-    [4X[28X onnected, IsOrientable, NSTriangulation, Name, TopologicalType, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="unnamed complex 302_cc_#2"[128X[104X
-    [4X[28X      Dim=2[128X[104X
-    [4X[28X      FVector=[ 6, 12, 8 ][128X[104X
-    [4X[28X      EulerCharacteristic=2[128X[104X
-    [4X[28X      IsOrientable=true[128X[104X
-    [4X[28X      TopologicalType="S^2"[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /NormalSurface] ][128X[104X
+    [4X[28X [ <NormalSurface: Connected component #1 of slicing [ [ 1, 2 ], [ 3, 4, 5, 6, \[128X[104X
+    [4X[28X 7, 8 ] ] of Bd(\beta^4) | dim = 2>, [128X[104X
+    [4X[28X   <NormalSurface: Connected component #2 of slicing [ [ 1, 2 ], [ 3, 4, 5, 6, \[128X[104X
+    [4X[28X 7, 8 ] ] of Bd(\beta^4) | dim = 2> ][128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
   
@@ -416,7 +312,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X gap> SCLib.SearchByName("(S^2xS^1)#20");       [128X[104X
-    [4X[28X [ [ 7619, "(S^2xS^1)#20" ] ][128X[104X
+    [4X[28X [ [ 633, "(S^2xS^1)#20" ] ][128X[104X
     [4X[28X gap> c:=SCLib.Load(last[1][1]);;[128X[104X
     [4X[28X gap> c.F;[128X[104X
     [4X[28X [ 27, 298, 542, 271 ][128X[104X
@@ -435,7 +331,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X gap> SCLib.SearchByName("(S^2xS^1)#20");[128X[104X
-    [4X[28X [ [ 7619, "(S^2xS^1)#20" ] ][128X[104X
+    [4X[28X [ [ 633, "(S^2xS^1)#20" ] ][128X[104X
     [4X[28X gap> c:=SCLib.Load(last[1][1]);;               [128X[104X
     [4X[28X gap> c.F;                               [128X[104X
     [4X[28X [ 27, 298, 542, 271 ][128X[104X
@@ -458,7 +354,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X gap> SCLib.SearchByName("(S^2xS^1)#20");       [128X[104X
-    [4X[28X [ [ 7619, "(S^2xS^1)#20" ] ][128X[104X
+    [4X[28X [ [ 633, "(S^2xS^1)#20" ] ][128X[104X
     [4X[28X gap> c:=SCLib.Load(last[1][1]);;[128X[104X
     [4X[28X gap> c.F;[128X[104X
     [4X[28X [ 27, 298, 542, 271 ][128X[104X
@@ -481,59 +377,10 @@
   [4X[32X  Example  [32X[104X
     [4X[28X gap> list:=SCLib.SearchByAttribute("Dim=3 and F[1]=10");;[128X[104X
     [4X[28X gap> c:=SCLib.Load(list[1][1]);[128X[104X
-    [4X[28X [SimplicialComplex[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Properties known: AltshulerSteinberg, AutomorphismGroup, [128X[104X
-    [4X[28X                    AutomorphismGroupSize, AutomorphismGroupStructure, [128X[104X
-    [4X[28X                    AutomorphismGroupTransitivity, ConnectedComponents, [128X[104X
-    [4X[28X                    Dim, DualGraph, EulerCharacteristic, FVector, [128X[104X
-    [4X[28X                    FacetsEx, GVector, GeneratorsEx, HVector, [128X[104X
-    [4X[28X                    HasBoundary, HasInterior, Homology, Interior, [128X[104X
-    [4X[28X                    IsCentrallySymmetric, IsConnected, [128X[104X
-    [4X[28X                    IsEulerianManifold, IsManifold, IsOrientable, [128X[104X
-    [4X[28X                    IsPseudoManifold, IsPure, IsStronglyConnected, [128X[104X
-    [4X[28X                    MinimalNonFacesEx, Name, Neighborliness, [128X[104X
-    [4X[28X                    NumFaces[], Orientation, Reference, SkelExs[], [128X[104X
-    [4X[28X                    Vertices.[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Name="S^3 (VT)"[128X[104X
-    [4X[28X  Dim=3[128X[104X
-    [4X[28X  AltshulerSteinberg=0[128X[104X
-    [4X[28X  AutomorphismGroupSize=200[128X[104X
-    [4X[28X  AutomorphismGroupStructure="(D10 x D10) : C2"[128X[104X
-    [4X[28X  AutomorphismGroupTransitivity=1[128X[104X
-    [4X[28X  EulerCharacteristic=0[128X[104X
-    [4X[28X  FVector=[ 10, 35, 50, 25 ][128X[104X
-    [4X[28X  GVector=[ 5, 5 ][128X[104X
-    [4X[28X  HVector=[ 6, 11, 6, 1 ][128X[104X
-    [4X[28X  HasBoundary=false[128X[104X
-    [4X[28X  HasInterior=true[128X[104X
-    [4X[28X  Homology=[ [ 0, [ ] ], [ 0, [ ] ], [ 0, [ ] ], [ 1, [ ] ] ][128X[104X
-    [4X[28X  IsCentrallySymmetric=false[128X[104X
-    [4X[28X  IsConnected=true[128X[104X
-    [4X[28X  IsEulerianManifold=true[128X[104X
-    [4X[28X  IsOrientable=true[128X[104X
-    [4X[28X  IsPseudoManifold=true[128X[104X
-    [4X[28X  IsPure=true[128X[104X
-    [4X[28X  IsStronglyConnected=true[128X[104X
-    [4X[28X  Neighborliness=1[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X /SimplicialComplex][128X[104X
+    [4X[28X <SimplicialComplex: S^3 (VT) | dim = 3 | n = 10>[128X[104X
     [4X[28X gap> sl:=SCNSSlicing(c,[[1..5],[6..10]]);[128X[104X
-    [4X[28X [NormalSurface[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Properties known: ConnectedComponents, Dim, EulerCharacteristic, FVector, Fac\[128X[104X
-    [4X[28X etsEx, Genus, IsConnected, IsOrientable, NSTriangulation, Name, TopologicalTyp\[128X[104X
-    [4X[28X e, Vertices.[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Name="slicing [ [ 1, 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10 ] ] of S^3 (VT)"[128X[104X
-    [4X[28X  Dim=2[128X[104X
-    [4X[28X  FVector=[ 17, 36, 12, 9 ][128X[104X
-    [4X[28X  EulerCharacteristic=2[128X[104X
-    [4X[28X  IsOrientable=true[128X[104X
-    [4X[28X  TopologicalType="S^2"[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X /NormalSurface][128X[104X
+    [4X[28X <NormalSurface: slicing [ [ 1, 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10 ] ] of S^3 (VT) \[128X[104X
+    [4X[28X | dim = 2>[128X[104X
     [4X[28X gap> SCIsConnected(sl);[128X[104X
     [4X[28X true[128X[104X
     [4X[28X [128X[104X
@@ -564,20 +411,7 @@
   [4X[32X  Example  [32X[104X
     [4X[28X gap> c:=SCBdSimplex(4);;[128X[104X
     [4X[28X gap> sl:=SCNSSlicing(c,[[1,2],[3,4,5]]);[128X[104X
-    [4X[28X [NormalSurface[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Properties known: ConnectedComponents, Dim, EulerCharacteristic, FVector, Fac\[128X[104X
-    [4X[28X etsEx, Genus, IsConnected, IsOrientable, NSTriangulation, Name, TopologicalTyp\[128X[104X
-    [4X[28X e, Vertices.[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Name="slicing [ [ 1, 2 ], [ 3, 4, 5 ] ] of S^3_5"[128X[104X
-    [4X[28X  Dim=2[128X[104X
-    [4X[28X  FVector=[ 6, 9, 2, 3 ][128X[104X
-    [4X[28X  EulerCharacteristic=2[128X[104X
-    [4X[28X  IsOrientable=true[128X[104X
-    [4X[28X  TopologicalType="S^2"[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X /NormalSurface][128X[104X
+    [4X[28X <NormalSurface: slicing [ [ 1, 2 ], [ 3, 4, 5 ] ] of S^3_5 | dim = 2>[128X[104X
     [4X[28X gap> SCIsOrientable(sl);[128X[104X
     [4X[28X true[128X[104X
     [4X[28X [128X[104X
@@ -659,7 +493,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X gap> SCLib.SearchByName("(S^2xS^1)#20");      [128X[104X
-    [4X[28X [ [ 7619, "(S^2xS^1)#20" ] ][128X[104X
+    [4X[28X [ [ 633, "(S^2xS^1)#20" ] ][128X[104X
     [4X[28X gap> c:=SCLib.Load(last[1][1]);;[128X[104X
     [4X[28X gap> c.F;[128X[104X
     [4X[28X [ 27, 298, 542, 271 ][128X[104X
@@ -709,44 +543,7 @@
   [4X[32X  Example  [32X[104X
     [4X[28X gap> list:=SCLib.SearchByAttribute("Dim=3 and F[1]=10");;[128X[104X
     [4X[28X gap> c:=SCLib.Load(list[1][1]);[128X[104X
-    [4X[28X [SimplicialComplex[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Properties known: AltshulerSteinberg, AutomorphismGroup, [128X[104X
-    [4X[28X                    AutomorphismGroupSize, AutomorphismGroupStructure, [128X[104X
-    [4X[28X                    AutomorphismGroupTransitivity, ConnectedComponents, [128X[104X
-    [4X[28X                    Dim, DualGraph, EulerCharacteristic, FVector, [128X[104X
-    [4X[28X                    FacetsEx, GVector, GeneratorsEx, HVector, [128X[104X
-    [4X[28X                    HasBoundary, HasInterior, Homology, Interior, [128X[104X
-    [4X[28X                    IsCentrallySymmetric, IsConnected, [128X[104X
-    [4X[28X                    IsEulerianManifold, IsManifold, IsOrientable, [128X[104X
-    [4X[28X                    IsPseudoManifold, IsPure, IsStronglyConnected, [128X[104X
-    [4X[28X                    MinimalNonFacesEx, Name, Neighborliness, [128X[104X
-    [4X[28X                    NumFaces[], Orientation, Reference, SkelExs[], [128X[104X
-    [4X[28X                    Vertices.[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Name="S^3 (VT)"[128X[104X
-    [4X[28X  Dim=3[128X[104X
-    [4X[28X  AltshulerSteinberg=0[128X[104X
-    [4X[28X  AutomorphismGroupSize=200[128X[104X
-    [4X[28X  AutomorphismGroupStructure="(D10 x D10) : C2"[128X[104X
-    [4X[28X  AutomorphismGroupTransitivity=1[128X[104X
-    [4X[28X  EulerCharacteristic=0[128X[104X
-    [4X[28X  FVector=[ 10, 35, 50, 25 ][128X[104X
-    [4X[28X  GVector=[ 5, 5 ][128X[104X
-    [4X[28X  HVector=[ 6, 11, 6, 1 ][128X[104X
-    [4X[28X  HasBoundary=false[128X[104X
-    [4X[28X  HasInterior=true[128X[104X
-    [4X[28X  Homology=[ [ 0, [ ] ], [ 0, [ ] ], [ 0, [ ] ], [ 1, [ ] ] ][128X[104X
-    [4X[28X  IsCentrallySymmetric=false[128X[104X
-    [4X[28X  IsConnected=true[128X[104X
-    [4X[28X  IsEulerianManifold=true[128X[104X
-    [4X[28X  IsOrientable=true[128X[104X
-    [4X[28X  IsPseudoManifold=true[128X[104X
-    [4X[28X  IsPure=true[128X[104X
-    [4X[28X  IsStronglyConnected=true[128X[104X
-    [4X[28X  Neighborliness=1[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X /SimplicialComplex][128X[104X
+    [4X[28X <SimplicialComplex: S^3 (VT) | dim = 3 | n = 10>[128X[104X
     [4X[28X gap> sl1:=SCNSSlicing(c,[[1..5],[6..10]]);;[128X[104X
     [4X[28X gap> sl2:=sl1+10;;[128X[104X
     [4X[28X gap> sl3:=SCUnion(sl1,sl2);;[128X[104X

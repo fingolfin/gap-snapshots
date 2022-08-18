@@ -27,14 +27,16 @@ MarkupGlobals := rec(
         lt := "&lt;",
         leq := "&#8804;",
         ast := "&#8727;",
+        cdot := " &#8901; ",
         rightarrow:= "&#8594;",
         sub := [ "<sub>", "</sub>" ],
         super := [ "<sup>", "</sup>" ],
         center:= [ "<center>", "</center>" ],
-        bold := [ "", "" ],
+        bold := [ "<strong>", "</strong>" ],
         dot := ".",
         splitdot := ":",
         times := " &times; ",
+        wreath := " &#8768; ",
         xi := "&#958;",
         Z := "ℤ",
         outerbrackets:= [ "", "" ],
@@ -45,14 +47,16 @@ MarkupGlobals := rec(
         lt := "<",
         leq := "\\leq",
         ast := "\\ast",
+        cdot := " \\cdot ",
         rightarrow:= "\\rightarrow",
         sub := [ "_{", "}" ],
         super := [ "^{", "}" ],
         center:= [ "\n\\begin{center}\n", "\n\\end{center}\n" ],
-        bold := [ "", "" ],
+        bold := [ "\\textbf{", "}" ],
         dot := ".",
         splitdot := ":",
         times := " \\times ",
+        wreath := " \\wr ",
         xi := "\\xi",
         Z := "\\texttt{{\\ensuremath{\\mathbb Z}}}",
         outerbrackets:= [ "", "" ],
@@ -63,14 +67,16 @@ MarkupGlobals := rec(
         lt := "&lt;",
         leq := "\\leq",
         ast := "\\ast",
+        cdot := " \\cdot ",
         rightarrow:= "\\rightarrow",
         sub := [ "_{", "}" ],
         super := [ "^{", "}" ],
         center:= [ "\n\\begin{center}\n", "\n\\end{center}\n" ],
-        bold := [ "", "" ],
+        bold := [ "\\textbf{", "}" ],
         dot := ".",
         splitdot := ":",
         times := " \\times ",
+        wreath := " \\wr ",
         xi := "\\xi",
         Z := "\\texttt{{\\ensuremath{\\mathbb Z}}}",
         outerbrackets:= [ "\\(", "\\)" ],
@@ -86,8 +92,6 @@ MarkupGlobals := rec(
 ##  This is used in 'ctbltoc/gap/htmltbl.g'.
 ##
 MarkupFactoredNumber:= function( n, global )
-    local str, pair;
-
     if   global = "LaTeX" then
       global:= MarkupGlobals.LaTeX;
     elif global = "HTML" then
@@ -100,22 +104,15 @@ MarkupFactoredNumber:= function( n, global )
       return "1";
     fi;
 
-    str:= "";
-
     # Loop over the prime factors and the corresponding exponents.
-    for pair in Collected( Factors( n ) ) do
-      Append( str, String( pair[1] ) );
-      if 1 < pair[2] then
-        Append( str, global.super[1] );
-        Append( str, String( pair[2] ) );
-        Append( str, global.super[2] );
-      fi;
-      Append( str, " " );
-    od;
-    Unbind( str[ Length( str ) ] );
-
-    # Return the result.
-    return str;
+    return ReplacedString(
+               JoinStringsWithSeparator(
+                   List( Collected( Factors( n ) ),
+                         pair -> Concatenation( 
+                                     String( pair[1] ), global.super[1],
+                                     String( pair[2] ), global.super[2] ) ),
+                   global.cdot ),
+               Concatenation( global.super[1], "1", global.super[2] ), "" );
 end;
 
 
@@ -126,23 +123,33 @@ end;
 ##  Let <name> be a string describing a group structure,
 ##  and <global> be one of "HTML", "LaTex", "MathJax", or a component of
 ##  'MarkupGlobals'.
-##  This function first turns <name> into a tree describing the hierarchy
-##  given by the substrings " < " and " -> " (only on the outermost level)
-##  and brackets,
-##  then splits the strings that occur in this tree at
-##  the following characters.
-##  ',' (appears in some MFER strings),
-##  'x' (for direct product),
-##  '.' and ':' (for product and semidirect product, respectively),
-##  '_' (for a subscript),
-##  '^' (for an exponent),
-##  where the weakest binding is treated first.
-##  Then the strings that occur in the resulting tree are converted:
-##  numbers following a capital letter are turned into subscripts,
-##  and the characters '+', '-' are turned into superscripts.
-##  Finally, this tree is imploded into a string, where the characters at
-##  which the input was split are replaced by the relevant entries of
-##  <global>.
+##  This function proceeds as follows.
+##  - If <name> consists of two group names that are combined with '" < "'
+##    or '" -> "' then treat the parts separately;
+##    this occurs in names used in the MFER package.
+##  - If <name> contains the character '/' that is not surrounded by
+##    digit characters then just return <name>;
+##    this occurs for table identifiers such as 'P1/G1/L1/V1/ext2'.
+##  - If name ends with 'M<n>' or 'N<n>' or 'N<n><char>' then keep this
+##    suffix and normalize the part until this suffix,
+##    *except* if 'M<n>' stands for a Mathieu group.
+##  - In all other cases, it turns <name> into a tree describing the
+##    hierarchy given by the substrings " < " and " -> "
+##    (only on the outermost level) and brackets,
+##    then splits the strings that occur in this tree at
+##    the following characters.
+##    ',' (appears in some MFER strings),
+##    'x' (for direct product),
+##    '.' and ':' (for product and semidirect product, respectively),
+##    '_' (for a subscript),
+##    '^' (for an exponent),
+##    where the weakest binding is treated first.
+##  - Then the strings that occur in the resulting tree are converted:
+##    numbers following a capital letter are turned into subscripts,
+##    and the characters '+', '-' are turned into superscripts.
+##  - Finally, this tree is imploded into a string, where the characters at
+##    which the input was split are replaced by the relevant entries of
+##    <global>.
 ##
 NormalizedNameOfGroup:= function( name, global )
     local extractbrackets, split, convertstring, convertatoms, concatenate,
@@ -224,6 +231,21 @@ NormalizedNameOfGroup:= function( name, global )
         od;
       od;
 
+      for i in [ 1 .. Length( tree ) ] do
+        entry:= tree[i];
+        if IsString( entry ) then
+          pos:= PositionSublist( entry, "wr" );
+          if pos <> fail then
+            return [ rec( op:= "wreath",
+                        left:= split( Concatenation( tree{ [ 1 .. i-1 ] },
+                               [ entry{ [ 1 .. pos-1 ] } ] ) ),
+                        right:= split( Concatenation( [ entry{ [ pos+2
+                                   .. Length( entry ) ] } ],
+                                   tree{ [ i+1 .. Length( tree ) ] } ) ) ) ];
+          fi;
+        fi;
+      od;
+
       return tree;
     end;
 
@@ -271,36 +293,34 @@ NormalizedNameOfGroup:= function( name, global )
     convertstring:= function( str )
       local digits, letters, lower, special, pos, len, string, dig;
 
+      NormalizeWhitespace( str );
+
       digits  := "0123456789";
       letters := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
       lower   := "abcdefghijklmnopqrstuvwxyz";
 
       # translate special cases
       special:= TransposedMat( [
-         [ "McL", Concatenation( global.bold[1], "M", global.super[1], "c",
-                                 global.super[2], "L", global.bold[2] ) ],
-         [ "F3+", Concatenation( global.bold[1], "F", global.bold[2],
-                                 global.sub[1], "3+", global.sub[2] ) ],
-         [ "Fi24'", Concatenation( global.bold[1], "Fi", global.bold[2],
-                                 global.sub[1], "24", global.sub[2],
+         [ "McL", Concatenation( "M", global.super[1], "c",
+                                 global.super[2], "L" ) ],
+         [ "F3+", Concatenation( "F", global.sub[1], "3+", global.sub[2] ) ],
+         [ "Fi24'", Concatenation( "Fi", global.sub[1], "24", global.sub[2],
                                  global.super[1], "'", global.super[2] ) ],
          [ "2E6", Concatenation( global.super[1], "2", global.super[2],
-                                 global.bold[1], "E", global.bold[2],
-                                 global.sub[1], "6", global.sub[2] ) ],
+                                 "E", global.sub[1], "6", global.sub[2] ) ],
          [ "2F4", Concatenation( global.super[1], "2", global.super[2],
-                                 global.bold[1], "F", global.bold[2],
-                                 global.sub[1], "4", global.sub[2] ) ],
+                                 "F", global.sub[1], "4", global.sub[2] ) ],
          [ "3D4", Concatenation( global.super[1], "3", global.super[2],
-                                 global.bold[1], "D", global.bold[2],
-                                 global.sub[1], "4", global.sub[2] ) ],
-         [ "Isoclinic", "Isoclinic" ],  # prevent from being set in boldface
+                                 "D", global.sub[1], "4", global.sub[2] ) ],
          ] );
-
-      NormalizeWhitespace( str );
-
       pos:= Position( special[1], str );
       if pos <> fail then
-        return special[2][ pos ];
+        string:= special[2][ pos ];
+        if StartsWith( string, "^" ) then
+          # This happens only in the LaTeX situation.
+          string:= Concatenation( "{}", string );
+        fi;
+        return string;
       fi;
 
       # general heuristics
@@ -308,64 +328,23 @@ NormalizedNameOfGroup:= function( name, global )
       len:= Length( str );
       string:= "";
 
-      # initial digits become superscripts if an uppercase letter follows
-#T no, must have been treated above ...
-#T really?
-      dig:= "";
+      # initial digits (happens if 'str' consists oly of digits)
       while pos <= len and str[ pos ] in digits do
-        Add( dig, str[ pos ] );
+        Add( string, str[ pos ] );
         pos:= pos + 1;
       od;
 
-      # copy letter part
-      if pos <= len and str[ pos ] in letters then
-        if not IsEmpty( dig ) then
-          Append( string, dig );
-        fi;
-        Append( string, global.bold[1] );
-
-        while pos <= len and str[ pos ] in letters do
-          Add( string, str[ pos ] );
-          pos:= pos + 1;
-        od;
-        Append( string, global.bold[2] );
-      else
-        Append( string, dig );
-      fi;
-
-      # following digits become subscripts
-      if pos <= len and str[ pos ] in digits then
-        Append( string, global.sub[1] );
-        while pos <= len and str[ pos ] in digits do
-          Add( string, str[ pos ] );
-          pos:= pos + 1;
-        od;
-        Append( string, global.sub[2] );
-      fi;
-
-      # A following '+' or '-' becomes a superscript if it is the last letter
-      # except if it is the only letter
-      # (and except for '"F3+"' but this has been handled above ...).
-      if pos = len and str[ pos ] in "+-" then
-        if pos = 1 then
-          Append( string, global.( [ str[ pos ] ] ) );
-          pos:= pos + 1;
-        else
-          Append( string, global.super[1] );
-          Append( string, global.( [ str[ pos ] ] ) );
-          pos:= pos + 1;
-          Append( string, global.super[2] );
-        fi;
-      fi;
-
-      # In the tail, just take care of subscripts.
       while pos <= len do
-        if str[ pos ] <> '_' then
-          Add( string, str[ pos ] );
-          pos:= pos + 1;
-        else
-#T does this occur?
-          pos:= pos + 1;
+        # copy letter part
+        if str[ pos ] in letters then
+          while pos <= len and str[ pos ] in letters do
+            Add( string, str[ pos ] );
+            pos:= pos + 1;
+          od;
+        fi;
+
+        # following digits become subscripts
+        if pos <= len and str[ pos ] in digits then
           Append( string, global.sub[1] );
           while pos <= len and str[ pos ] in digits do
             Add( string, str[ pos ] );
@@ -373,12 +352,39 @@ NormalizedNameOfGroup:= function( name, global )
           od;
           Append( string, global.sub[2] );
         fi;
-      od;
 
-      # a hack:
-      if IsBound( string[1] ) and string[1] = '^' then
-        string:= Concatenation( "{}", string );
-      fi;
+        # A following '+' or '-' becomes a superscript if it is the last letter
+        # except if it is the only letter
+        # (and except for '"F3+"' but this has been handled above ...).
+        if pos = len and str[ pos ] in "+-" then
+          if pos = 1 then
+            Append( string, global.( [ str[ pos ] ] ) );
+            pos:= pos + 1;
+          else
+            Append( string, global.super[1] );
+            Append( string, global.( [ str[ pos ] ] ) );
+            pos:= pos + 1;
+            Append( string, global.super[2] );
+          fi;
+        fi;
+
+        if pos <= len and not IsAlphaChar( str[ pos ] ) then
+          while pos <= len do
+            if str[ pos ] <> '_' then
+              Add( string, str[ pos ] );
+              pos:= pos + 1;
+            else
+              pos:= pos + 1;
+              Append( string, global.sub[1] );
+              while pos <= len and str[ pos ] in digits do
+                Add( string, str[ pos ] );
+                pos:= pos + 1;
+              od;
+              Append( string, global.sub[2] );
+            fi;
+          od;
+        fi;
+      od;
 
       return string;
     end;
@@ -445,8 +451,16 @@ NormalizedNameOfGroup:= function( name, global )
             Add( result, Concatenation( concatenate( entry.left ),
                              global.sub[1], right, global.sub[2] ) );
           elif entry.op = 'x' then
+            right:= concatenate( entry.right );
+            if Length( right ) = 0 then
+              Add( result, Concatenation( concatenate( entry.left ), "x" ) );
+            else
+              Add( result, Concatenation( concatenate( entry.left ),
+                               global.times, concatenate( entry.right ) ) );
+            fi;
+          elif entry.op = "wreath" then
             Add( result, Concatenation( concatenate( entry.left ),
-                             global.times, concatenate( entry.right ) ) );
+                             global.wreath, concatenate( entry.right ) ) );
           elif entry.op = '.' then
             Add( result, Concatenation( concatenate( entry.left ),
                              global.dot, concatenate( entry.right ) ) );
@@ -487,9 +501,57 @@ NormalizedNameOfGroup:= function( name, global )
                  global.outerbrackets[2] );
     fi;
 
+    # Replace <name> by structure information known to CTblLib.
+    if IsBound( StructureDescriptionCharacterTableName ) then
+      name:= ValueGlobal( "StructureDescriptionCharacterTableName" )( name );
+    fi;
+
+    # If <name> contains the character '/' that is not surrounded by
+    # digit characters then just return <name>.
+    pos:= Position( name, '/' );
+    if pos <> fail and pos <> 1 and pos <> Length( name ) and not
+       ( IsDigitChar( name[ pos-1 ] ) and IsDigitChar( name[ pos+1 ] ) ) then
+      return ShallowCopy( name );
+    fi;
+
+    # If name ends with 'M<n>' or 'N<n>' or 'N<n><char>' or 'C<n><char>'
+    # then keep this suffix and normalize the part until this suffix,
+    # *except* if 'M<n>' stands for a Mathieu group.
+    pos:= Length( name );
+    while pos > 0 and IsDigitChar( name[ pos ] ) do
+      pos:= pos - 1;
+    od;
+    if pos < Length( name ) and pos > 0 and name <> "3^6:2M12" and
+       ( name[ pos ] = 'N' or
+         name = "M12C4" or
+         ( name[ pos ] = 'M' and pos > 1 and not name[ pos-1 ] in ".:x" ) ) then
+      return Concatenation( NormalizedNameOfGroup( name{ [ 1 .. pos-1 ] },
+                                                   global ),
+                            name{ [ pos .. Length( name ) ] } );
+    fi;
+    pos:= Length( name ) - 1;
+    while pos > 0 and IsDigitChar( name[ pos ] ) do
+      pos:= pos - 1;
+    od;
+    if pos < Length( name ) - 1 and pos > 1 and name[ pos ] in "CN" then
+      return Concatenation( NormalizedNameOfGroup( name{ [ 1 .. pos-1 ] },
+                                                   global ),
+                            name{ [ pos .. Length( name ) ] } );
+    fi;
+
+    # Hack for a few names which contain proper subnames '<name>N<p>':
+    # If there is an outer round bracket then recurse with its contents.
+    result:= extractbrackets( NormalizedWhitespace( name ) );
+    if Length( result ) = 3 and result[1] = "" and result[3] = ".2" and
+       IsRecord( result[2] ) and result[2].op = '(' then
+      return Concatenation( "(",
+                 NormalizedNameOfGroup( name{ [ 2 .. Length( name ) - 3 ] },
+                                        global ), ").2" );
+    fi;
+
+    # Now apply the translation rules.
     result:= concatenate( convertatoms( split( extractbrackets(
                  NormalizedWhitespace( name ) ) ) ) );
-
     for i in [ 1 .. 3 ] do
       result:= ReplacedString( result,
                    Concatenation( ".2<sub>", String( i ), "'</sub>" ),
@@ -520,7 +582,7 @@ end;
 ##  <colclasses>
 ##      must be a list of style classes for the <th> and <td> elements
 ##      (typically defining the alignments of the columns).
-##      
+##
 HTMLStandardTable:= function( header, matrix, tblclass, colclasses )
     local str, i, ncols, row;
 
@@ -579,10 +641,10 @@ end;
 ##  'HTMLHeader' returns the string that prints as follows.
 ##
 ##  <?xml version="1.0" encoding="UTF-8"?>
-##  
+##
 ##  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 ##           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-##  
+##
 ##  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 ##  <head>
 ##  <title>
@@ -622,7 +684,7 @@ HTMLHeader:= function( titlestring, stylesheetpath, commonheading, heading )
     fi;
     if IsList( stylesheetpath ) and ForAll( stylesheetpath, IsString ) then
       Append( str, Concatenation( List( stylesheetpath,
-          path -> Concatenation( 
+          path -> Concatenation(
                       "<link rel=\"stylesheet\" type=\"text/css\" href=\"",
                       path, "\" />\n" ) ) ) );
     fi;

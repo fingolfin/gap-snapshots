@@ -11,9 +11,9 @@
  */
 
 #include "common.h"
+#include "intobj.h"
 
-#include <intobj.h>
-
+#include <string.h>
 
 void records(void)
 {
@@ -59,6 +59,42 @@ void lists(void)
     assert(ret == 0);
 }
 
+void ranges(void)
+{
+    const int len = 5;
+    int i;
+    Obj r, val;
+
+    r = GAP_NewRange(len, 1, 1); // [1..5]
+    assert(GAP_IsList(r));
+    assert(GAP_LenList(r) == len);
+    for (i = 1; i <= len; ++i) {
+        val = GAP_ElmList(r, i);
+        assert(GAP_IsSmallInt(val));
+        assert(GAP_EQ(val, GAP_NewObjIntFromInt(i)));
+    }
+
+    r = GAP_NewRange(len, 1, 3); // [1,4..16]
+    assert(GAP_IsList(r));
+    assert(GAP_LenList(r) == len);
+    for (i = 1; i <= len; ++i) {
+        val = GAP_ElmList(r, i);
+        assert(GAP_IsSmallInt(val));
+        assert(GAP_EQ(val, GAP_NewObjIntFromInt(1 + (i-1) * 3)));
+    }
+
+
+    r = GAP_NewRange(len, 10, -2); // [10,8..2]
+    assert(GAP_IsList(r));
+    assert(GAP_LenList(r) == len);
+    for (i = 1; i <= len; ++i) {
+        val = GAP_ElmList(r, i);
+        assert(GAP_IsSmallInt(val));
+        assert(GAP_EQ(val, GAP_NewObjIntFromInt(10 - 2*(i-1))));
+    }
+
+}
+
 void matrices(void)
 {
     Obj mat, val, row, ret;
@@ -66,16 +102,26 @@ void matrices(void)
     mat = GAP_NewPlist(1);
     val = INTOBJ_INT(42);
 
-    assert(!GAP_IsMatrixObj(mat));   // empty list, not yet a matrix
+    assert(!GAP_IsMatrixOrMatrixObj(mat));   // empty list, not yet a matrix
+    assert(!GAP_IsMatrixObj(mat));
+    assert(!GAP_IsMatrix(mat));
+    assert(!GAP_IsMatrixOrMatrixObj(0));
     assert(!GAP_IsMatrixObj(0));
+    assert(!GAP_IsMatrix(0));
+    assert(!GAP_IsMatrixOrMatrixObj(val));
     assert(!GAP_IsMatrixObj(val));
+    assert(!GAP_IsMatrix(val));
 
     row = GAP_NewPlist(2);
     GAP_AssList(row, 1, INTOBJ_INT(1));
     GAP_AssList(row, 2, INTOBJ_INT(2));
     GAP_AssList(mat, 1, row);
+    assert(!GAP_IsMatrixOrMatrixObj(row));
     assert(!GAP_IsMatrixObj(row));
-    assert(GAP_IsMatrixObj(mat));
+    assert(!GAP_IsMatrix(row));
+    assert(GAP_IsMatrixOrMatrixObj(mat));
+    assert(!GAP_IsMatrixObj(mat));   // list of lists, not proper matrix object
+    assert(GAP_IsMatrix(mat));
 
     GAP_AssMat(mat, 1, 1, val);
     ret = GAP_ElmMat(mat, 1, 1);
@@ -114,6 +160,8 @@ void integers(void)
     assert(GAP_IsInt(i1));
     assert(GAP_IsSmallInt(i1));
     assert(!GAP_IsLargeInt(i1));
+    assert(GAP_EQ(i1, GAP_NewObjIntFromInt(0)));
+    assert(GAP_ValueInt(i1) == 0);
 
     const UInt limbs2[8] = { 1, 1, 1, 1, 1, 1, 1, 1 };
     i2 = GAP_MakeObjInt(limbs2, -8);
@@ -199,6 +247,10 @@ int main(int argc, char ** argv)
 
     printf("# Testing lists... ");
     lists();
+    printf("success\n");
+
+    printf("# Testing ranges... ");
+    ranges();
     printf("success\n");
 
     printf("# Testing matrices... ");

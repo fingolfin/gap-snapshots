@@ -1,0 +1,291 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# ModulePresentationsForCAP: Category R-pres for CAP
+#
+# Implementations
+#
+
+#############################
+##
+## Constructors
+##
+#############################
+
+##
+InstallMethod( PresentationMorphism,
+               [ IsLeftOrRightPresentation, IsHomalgMatrix, IsLeftOrRightPresentation ],
+               
+  function( source, matrix, range )
+    local category, left;
+    
+    category := CapCategory( source );
+    
+    left := IsLeftPresentation( source );
+    
+    if not IsCapCategory( source ) = IsCapCategory( range ) then
+        
+        Error( "source and range must lie in the same category" );
+        
+    fi;
+    
+    if not IsIdenticalObj( UnderlyingHomalgRing( source ), HomalgRing( matrix ) ) then
+        
+        Error( "matrix can not present a morphism between these objects" );
+        
+    fi;
+    
+    if left then
+        
+        if IsBound( source!.nr_generators ) and NrRows( matrix ) <> source!.nr_generators then
+            
+            Error( "the number of rows of the given matrix is incorrect" );
+            
+        fi;
+        
+        if HasUnderlyingMatrix( source ) and NrRows( matrix ) <> NrColumns( UnderlyingMatrix( source ) ) then
+            
+            Error( "the number of rows of the given matrix is incorrect" );
+            
+        fi;
+        
+        if IsBound( range!.nr_generators ) and NrColumns( matrix ) <> range!.nr_generators then
+            
+            Error( "the number of columns of the given matrix is incorrect" );
+            
+        fi;
+        
+        if HasUnderlyingMatrix( range ) and NrColumns( matrix ) <> NrColumns( UnderlyingMatrix( range ) ) then
+            
+            Error( "the number of columns of the given matrix is incorrect" );
+            
+        fi;
+        
+    else
+        
+        if IsBound( source!.nr_generators ) and NrColumns( matrix ) <> source!.nr_generators then
+            
+            Error( "the number of columns of the given matrix is incorrect" );
+            
+        fi;
+        
+        if HasUnderlyingMatrix( source ) and NrColumns( matrix ) <> NrRows( UnderlyingMatrix( source ) ) then
+            
+            Error( "the number of columns of the given matrix is incorrect" );
+            
+        fi;
+        
+        if IsBound( range!.nr_generators ) and NrRows( matrix ) <> range!.nr_generators then
+            
+            Error( "the number of rows of the given matrix is incorrect" );
+            
+        fi;
+        
+        if HasUnderlyingMatrix( range ) and NrRows( matrix ) <> NrRows( UnderlyingMatrix( range ) ) then
+            
+            Error( "the number of rows of the given matrix is incorrect" );
+            
+        fi;
+        
+    fi;
+    
+    return ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes( rec( ), category,
+                             source,
+                             range,
+                             UnderlyingMatrix, matrix );
+    
+end );
+
+##
+InstallMethod( UnderlyingHomalgRing,
+               [ IsLeftOrRightPresentationMorphism ],
+               
+  mor -> UnderlyingRing( CapCategory( mor ) ) );
+
+##
+InstallMethod( AsMorphismBetweenFreeLeftPresentations,
+               [ IsHomalgMatrix ],
+               
+  function( matrix )
+    local source, range, ring;
+    
+    ring := HomalgRing( matrix );
+    
+    source := FreeLeftPresentation( NrRows( matrix ), ring );
+    
+    range := FreeLeftPresentation( NrColumns( matrix ), ring );
+    
+    return PresentationMorphism( source, matrix, range );
+    
+end );
+
+##
+InstallMethod( AsMorphismBetweenFreeRightPresentations,
+               [ IsHomalgMatrix ],
+               
+  function( matrix )
+    local source, range, ring;
+    
+    ring := HomalgRing( matrix );
+    
+    source := FreeRightPresentation( NrColumns( matrix ), ring );
+    
+    range := FreeRightPresentation( NrRows( matrix ), ring );
+    
+    return PresentationMorphism( source, matrix, range );
+    
+end );
+
+##############################################
+##
+## Arithmetics
+##
+##############################################
+
+##
+InstallMethod( \*,
+               [ IsRingElement, IsLeftPresentationMorphism ],
+               
+  function( ring_element, left_presentation )
+    
+    return PresentationMorphism( Source( left_presentation ),
+                                 ring_element * UnderlyingMatrix( left_presentation ),
+                                 Range( left_presentation ) );
+    
+end );
+
+##
+InstallMethod( \*,
+               [ IsRightPresentationMorphism, IsRingElement ],
+               
+  function( right_presentation, ring_element )
+    
+    return PresentationMorphism( Source( right_presentation ),
+                                 UnderlyingMatrix( right_presentation ) * ring_element,
+                                 Range( right_presentation ) );
+    
+end );
+
+
+##############################################
+##
+## Non categorical methods
+##
+##############################################
+
+##
+InstallMethod( StandardGeneratorMorphism,
+               [ IsLeftPresentation, IsPosInt ],
+               
+  function( module_presentation, i_th_generator )
+    local tensor_unit, homalg_ring, number_of_generators, matrix;
+    
+    number_of_generators := NrColumns( UnderlyingMatrix( module_presentation ) );
+    
+    if i_th_generator > number_of_generators then
+      
+      Error( Concatenation( "number of standard generators is ", 
+                            String( number_of_generators ), ", which is smaller than ", String( i_th_generator ) ) );
+      
+    fi;
+    
+    tensor_unit := TensorUnit( CapCategory( module_presentation ) );
+    
+    homalg_ring := UnderlyingHomalgRing( tensor_unit );
+    
+    matrix := List( [ 1 .. number_of_generators ], i -> 0 );
+    
+    matrix[ i_th_generator ] := 1;
+    
+    matrix := HomalgMatrix( matrix, 1, number_of_generators, homalg_ring );
+    
+    return PresentationMorphism( tensor_unit, matrix, module_presentation );
+    
+end );
+
+##
+InstallMethod( StandardGeneratorMorphism,
+               [ IsRightPresentation, IsPosInt ],
+               
+  function( module_presentation, i_th_generator )
+    local tensor_unit, homalg_ring, number_of_generators, matrix;
+    
+    number_of_generators := NrRows( UnderlyingMatrix( module_presentation ) );
+    
+    if i_th_generator > number_of_generators then
+      
+      Error( Concatenation( "number of standard generators is ", 
+                            String( number_of_generators ), ", which is smaller than ", String( i_th_generator ) ) );
+      
+    fi;
+    
+    tensor_unit := TensorUnit( CapCategory( module_presentation ) );
+    
+    homalg_ring := UnderlyingHomalgRing( tensor_unit );
+    
+    matrix := List( [ 1 .. number_of_generators ], i -> 0 );
+    
+    matrix[ i_th_generator ] := 1;
+    
+    matrix := HomalgMatrix( matrix, number_of_generators, 1, homalg_ring );
+    
+    return PresentationMorphism( tensor_unit, matrix, module_presentation );
+    
+end );
+
+##
+InstallMethod( CoverByFreeModule,
+               [ IsLeftPresentation ],
+               
+  function( left_presentation )
+    local underlying_ring, number_of_generators, free_presentation;
+    
+    underlying_ring := UnderlyingHomalgRing( left_presentation );
+    
+    number_of_generators := NrColumns( UnderlyingMatrix( left_presentation ) );
+    
+    free_presentation := FreeLeftPresentation( number_of_generators, underlying_ring );
+    
+    return PresentationMorphism( free_presentation, HomalgIdentityMatrix( number_of_generators, underlying_ring ), left_presentation );
+    
+end );
+
+##
+InstallMethod( CoverByFreeModule,
+               [ IsRightPresentation ],
+               
+  function( right_presentation )
+    local underlying_ring, number_of_generators, free_presentation;
+    
+    underlying_ring := UnderlyingHomalgRing( right_presentation );
+    
+    number_of_generators := NrRows( UnderlyingMatrix( right_presentation ) );
+    
+    free_presentation := FreeRightPresentation( number_of_generators, underlying_ring );
+    
+    return PresentationMorphism( free_presentation, HomalgIdentityMatrix( number_of_generators, underlying_ring ), right_presentation );
+    
+end );
+
+####################################
+##
+## View
+##
+####################################
+
+##
+InstallMethod( Display,
+               [ IsLeftOrRightPresentationMorphism ],
+               # FIXME: Fix the rank in GenericView and delete this afterwards
+               9999,
+               
+  function( morphism )
+    
+    Display( UnderlyingMatrix( morphism ) );
+    
+    Print( "\n" );
+    
+    Print( StringMutable( morphism ) );
+    
+    Print( "\n" );
+    
+end );
+

@@ -160,7 +160,7 @@ false
 <h5>75.3-1 TestHomogeneous</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestHomogeneous</code>( <var class="Arg">chi</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>For a group character <var class="Arg">chi</var> of the group <span class="SimpleMath">\(G\)</span>, say, and a normal subgroup <var class="Arg">N</var> of <span class="SimpleMath">\(G\)</span>, <code class="func">TestHomogeneous</code> returns a record with information whether the restriction of <var class="Arg">chi</var> to <var class="Arg">N</var> is homogeneous, i.e., is a multiple of an irreducible character.</p>
+<p>For a group character <var class="Arg">chi</var> of a group <span class="SimpleMath">\(G\)</span> and a normal subgroup <var class="Arg">N</var> of <span class="SimpleMath">\(G\)</span>, <code class="func">TestHomogeneous</code> returns a record with information whether the restriction of <var class="Arg">chi</var> to <var class="Arg">N</var> is homogeneous, i.e., is a multiple of an irreducible character.</p>
 
 <p><var class="Arg">N</var> may be given also as list of conjugacy class positions w.r.t. the character table of <span class="SimpleMath">\(G\)</span>.</p>
 
@@ -210,13 +210,13 @@ rec( comment := "restricts irreducibly", isHomogeneous := true )
 <h5>75.3-2 IsPrimitiveCharacter</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPrimitiveCharacter</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>For a character <var class="Arg">chi</var> of the group <span class="SimpleMath">\(G\)</span>, say, <code class="func">IsPrimitiveCharacter</code> returns <code class="keyw">true</code> if <var class="Arg">chi</var> is not induced from any proper subgroup, and <code class="keyw">false</code> otherwise.</p>
+<p>For a character <var class="Arg">chi</var> of a group <span class="SimpleMath">\(G\)</span>, <code class="func">IsPrimitiveCharacter</code> returns <code class="keyw">true</code> if <var class="Arg">chi</var> is not induced from any proper subgroup, and <code class="keyw">false</code> otherwise. This currently only works for characters of soluble groups.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPrimitive( Irr( Sl23 )[4] );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPrimitiveCharacter( Irr( Sl23 )[4] );</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPrimitive( Irr( Sl23 )[7] );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPrimitiveCharacter( Irr( Sl23 )[7] );</span>
 false
 </pre></div>
 
@@ -255,7 +255,7 @@ rec( character := Character( CharacterTable( Group(
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestInducedFromNormalSubgroup</code>( <var class="Arg">chi</var>[, <var class="Arg">N</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInducedFromNormalSubgroup</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p><code class="func">TestInducedFromNormalSubgroup</code> returns a record with information whether the irreducible character <var class="Arg">chi</var> of the group <span class="SimpleMath">\(G\)</span>, say, is induced from a proper normal subgroup of <span class="SimpleMath">\(G\)</span>. If the second argument <var class="Arg">N</var> is present, which must be a normal subgroup of <span class="SimpleMath">\(G\)</span> or the list of class positions of a normal subgroup of <span class="SimpleMath">\(G\)</span>, it is checked whether <var class="Arg">chi</var> is induced from <var class="Arg">N</var>.</p>
+<p><code class="func">TestInducedFromNormalSubgroup</code> returns a record with information whether the irreducible character <var class="Arg">chi</var> of the group <span class="SimpleMath">\(G\)</span> is induced from a proper normal subgroup of <span class="SimpleMath">\(G\)</span>. If the second argument <var class="Arg">N</var> is present, which must be a normal subgroup of <span class="SimpleMath">\(G\)</span> or the list of class positions of a normal subgroup of <span class="SimpleMath">\(G\)</span>, it is checked whether <var class="Arg">chi</var> is induced from <var class="Arg">N</var>.</p>
 
 <p>The result contains always the components <code class="code">isInduced</code> (either <code class="keyw">true</code> or <code class="keyw">false</code>) and <code class="code">comment</code> (a string telling a reason for the value of the component <code class="code">isInduced</code>). In the <code class="keyw">true</code> case there is a component <code class="code">character</code> which contains a character of a maximal normal subgroup from which <var class="Arg">chi</var> is induced.</p>
 

@@ -1,0 +1,742 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  isoclinic.xml          XMod documentation            Alper Odabas  -->
+<!--                                                       & Enver Uslu  -->
+<!--  Copyright (C) 2015-2022, Chris Wensley et al                       --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Chapter Label="chap-isclnc">
+<Heading>Isoclinism of groups and crossed modules</Heading>
+
+This chapter describes some functions written by Alper Odaba&#x15f; and  
+Enver Uslu, and reported in their paper <Cite Key="IOU1" />. 
+Section <Ref Sect="sect-more-xmod-ops" /> contains some additional 
+basic functions for crossed modules, 
+constructing quotients, centres, centralizers and normalizers.
+In Sections <Ref Sect="sect-isoclinic-groups" /> and 
+<Ref Sect="sect-isoclinic-xmods" /> 
+there are functions dealing specifically with isoclinism 
+for groups and for crossed modules. 
+Since these functions represent a recent addition to the package 
+(as of November 2015), 
+the function names are liable to change in future versions. 
+The notion of isoclinism has been crucial to the enumeration of groups 
+of prime power order, see for example James, Newman and O'Brien, 
+<Cite Key="JNO" />.
+
+<Section Label="sect-more-xmod-ops">
+<Heading>More operations for crossed modules</Heading>
+
+<ManSection>
+   <Oper Name="FactorPreXMod"
+         Arg="X1 X2" />
+   <Oper Name="NaturalMorphismByNormalSubPreXMod"
+         Arg="X1 X2" />
+<Description>
+When <M>\calX_2 = (\partial_2 : S_2 \to R_2)</M> 
+is a normal sub-precrossed module of 
+<M>\calX_1 = (\partial_1 : S_1 \to R_1)</M>, 
+then the quotient precrossed module is 
+<M>(\partial : S_2/S_1 \to R_2/R_1)</M>
+with the induced boundary and action maps. 
+Quotienting a precrossed module by it's Peiffer subgroup 
+is a special case of this construction. 
+(Permutation representations vary between different versions of &GAP;.) 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> d24 := DihedralGroup( IsPermGroup, 24 );; 
+gap> SetName( d24, "d24" );
+gap> Y24 := XModByAutomorphismGroup( d24 );; 
+gap> Size2d( Y24 );
+[ 24, 48 ]
+gap> X24 := Image( IsomorphismPerm2DimensionalGroup( Y24 ) );
+[d24->Group([ (2,4), (1,2,3,4), (6,7), (5,6,7) ])]
+gap> nsx := NormalSubXMods( X24 );; 
+gap> Length( nsx );
+40
+gap> ids := List( nsx, n -> IdGroup(n) );; 
+gap> pos1 := Position( ids, [ [4,1], [8,3] ] );;
+gap> Xn1 := nsx[pos1]; 
+[Group( [ f2*f4^2, f3*f4 ] )->Group( [ f3, f4, f5 ] )]
+gap> nat1 := NaturalMorphismByNormalSubPreXMod( X24, Xn1 );; 
+gap> Qn1 := FactorPreXMod( X24, Xn1 );; 
+gap> [ Size2d( Xn1 ), Size2d( Qn1 ) ];
+[ [ 4, 8 ], [ 6, 6 ] ]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="IntersectionSubXMods"
+         Arg="X0 X1 X2" />
+<Description>
+When <C>X1,X2</C> are subcrossed modules of <C>X0</C>, 
+then the source and range of their intersection are the intersections 
+of the sources and ranges of <C>X1</C> and <C>X2</C> respectively. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> pos2 := Position( ids, [ [24,6], [12,4] ] );;
+gap> Xn2 := nsx[pos2];; 
+gap> IdGroup( Xn2 );         
+[ [ 24, 6 ], [ 12, 4 ] ]
+gap> pos3 := Position( ids, [ [12,2], [24,5] ] );;
+gap> Xn3 := nsx[pos3];; 
+gap> IdGroup( Xn3 );
+[ [ 12, 2 ], [ 24, 5 ] ]
+gap> Xn23 := IntersectionSubXMods( X24, Xn2, Xn3 );;
+gap> IdGroup( Xn23 );
+[ [ 12, 2 ], [ 6, 2 ] ]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="Displacement"
+         Arg="alpha r s" />
+   <Oper Name="DisplacementGroup"
+         Arg="X0 Q T" />
+   <Attr Name="DisplacementSubgroup"
+         Arg="X0" />
+<Description> 
+Commutators may be written 
+<M>[r,q] = r^{-1}q^{-1}rq = (q^{-1})^rq = r^{-1}r^q</M>, 
+and satisfy identities 
+<Display> 
+[r,q]^p = [r^p,q^p], \qquad 
+[pr,q] = [p,q]^r[r,q], \qquad 
+[r,pq] = [r,q][r,p]^q, \qquad 
+[r,q]^{-1} = [q,r]. 
+</Display> 
+In a similar way, when a group <M>R</M> acts on a group <M>S</M>, 
+the <E>displacement</E> of <M>s \in S</M> by <M>r \in R</M> 
+is defined to be <M>\langle r,s \rangle := (s^{-1})^rs \in S</M>. 
+When <M>\calX = (\partial : S \to R)</M> is a pre-crossed module, 
+the first crossed module axiom requires 
+<M>\partial\langle r,s \rangle = [r,\partial s]</M>. 
+When <M>\alpha</M> is the action of <M>\calX</M>, 
+the <Ref Oper="Displacement"/> function may be used to calculate 
+<M>\langle r,s \rangle</M>. 
+Displacements satisfy the following identities, 
+where <M>s,t \in S,~ p,q,r \in R</M>:  
+<Display>
+\langle r,s \rangle^p = \langle r^p,s^p \rangle, \qquad 
+\langle qr,s \rangle = \langle q,s \rangle^r \langle r,s \rangle, \qquad 
+\langle r,st \rangle = \langle r,t \rangle \langle r,s \rangle^t, \qquad 
+\langle r,s \rangle^{-1} = \langle r^{-1},s^r \rangle. 
+</Display> 
+The operation <Ref Oper="DisplacementGroup"/> applied to <C>X0,Q,T</C> 
+is the subgroup of <C>S</C> consisting of all the displacements 
+<M>\langle r,s \rangle, r \in Q \leqslant R, s \in T \leqslant S</M>.  
+The <Ref Attr="DisplacementSubgroup"/> of <M>\calX</M> is the subgroup 
+<M>\Disp(\calX)</M> of <M>S</M> 
+given by <C>DisplacementGroup(X0,R,S)</C>. 
+The identities imply  
+<M>\langle r,s \rangle^t = 
+   \langle r,st^{r^{-1}} \rangle \langle r^{-1},t \rangle</M>, 
+so <M>\Disp(\calX)</M> is normal in <M>S</M>. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> pos4 := Position( ids, [ [6,2], [24,14] ] );;
+gap> Xn4 := nsx[pos4];; 
+gap> bn4 := Boundary( Xn4 );;
+gap> Sn4 := Source(Xn4);; 
+gap> Rn4 := Range(Xn4);; 
+gap> genRn4 := GeneratorsOfGroup( Rn4 );;
+gap> L := List( genRn4, g -> ( Order(g) = 2 ) and 
+>                 not ( IsNormal( Rn4, Subgroup( Rn4, [g] ) ) ) );;
+gap> pos := Position( L, true );;
+gap> s := Sn4.1;  r := genRn4[pos]; 
+(1,3,5,7,9,11)(2,4,6,8,10,12)
+(6,7)
+gap> act := XModAction( Xn4 );; 
+gap> d := Displacement( act, r, s );
+(1,5,9)(2,6,10)(3,7,11)(4,8,12)
+gap> Image( bn4, d ) = Comm( r, Image( bn4, s ) );  
+true
+gap> Qn4 := Subgroup( Rn4, [ (6,7), (1,3), (2,4) ] );;   
+gap> Tn4 := Subgroup( Sn4, [ (1,3,5,7,9,11)(2,4,6,8,10,12) ] );;
+gap> DisplacementGroup( Xn4, Qn4, Tn4 );                        
+Group([ (1,5,9)(2,6,10)(3,7,11)(4,8,12) ])
+gap> DisplacementSubgroup( Xn4 );
+Group([ (1,5,9)(2,6,10)(3,7,11)(4,8,12) ])
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="CommutatorSubXMod"
+         Arg="X X1 X2" />
+   <Oper Name="CrossActionSubgroup"
+         Arg="X X1 X2" />
+<Description>
+When <M>\calX_1 = (N \to Q), \calX_2 = (M \to P)</M> 
+are two normal subcrossed modules of <M>\calX = (\partial : S \to R)</M>, 
+the displacements <M>\langle p,n \rangle</M> and <M>\langle q,m \rangle</M> 
+all map by <M>\partial</M> into <M>[Q,P]</M>. 
+These displacements form a normal subgroup of <M>S</M>, 
+called the <C>CrossActionSubgroup</C>. 
+The <C>CommutatorSubXMod</C> <M>[\calX_1,\calX_2]</M> 
+has this subgroup as source and <M>[P,Q]</M> as range, 
+and is normal in <M>\calX</M>. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> CAn23 := CrossActionSubgroup( X24, Xn2, Xn3 );;
+gap> IdGroup( CAn23 );
+[ 12, 2 ]
+gap> Cn23 := CommutatorSubXMod( X24, Xn2, Xn3 );;
+gap> IdGroup( Cn23 );
+[ [ 12, 2 ], [ 6, 2 ] ]
+gap> Xn23 = Cn23;
+true
+]]>
+</Example>
+
+<ManSection>
+   <Attr Name="DerivedSubXMod"
+         Arg="X0" />
+<Description>
+The <C>DerivedSubXMod</C> of <M>\calX</M> is the normal subcrossed module 
+<M>[\calX,\calX] = (\partial' : \Disp(\calX) \to [R,R])</M> 
+where <M>\partial'</M> is the restriction of <M>\partial</M> 
+(see page 66 of Norrie's thesis <Cite Key="N2" />). 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> DXn4 := DerivedSubXMod( Xn4 );;
+gap> IdGroup( DXn4 );
+[ [ 3, 1 ], [ 3, 1 ] ]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="FixedPointSubgroupXMod"
+         Arg="X0 T Q" />
+   <Oper Name="StabilizerSubgroupXMod"
+         Arg="X0 T Q" />
+<Description>
+The <C>FixedPointSubgroupXMod(X,T,Q)</C> 
+for <M>\calX=(\partial : S \to R)</M> is the subgroup 
+<M>\Fix(\calX,T,Q)</M> 
+of elements <M>t \in T \leqslant S</M> individually fixed 
+under the action of <M>Q \leqslant R</M>. 
+<P/>
+The <C>StabilizerSubgroupXMod(X,T,Q)</C> for <M>\calX</M> 
+is the subgroup <M>\Stab(\calX,T,Q)</M> of <M>Q \leqslant R</M> 
+whose elements act trivially on the whole of <M>T \leqslant S</M> 
+(see page 19 of Norrie's thesis <Cite Key="N2" />). 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> fix := FixedPointSubgroupXMod( Xn4, Sn4, Rn4 );
+Group([ (1,7)(2,8)(3,9)(4,10)(5,11)(6,12) ])
+gap> stab := StabilizerSubgroupXMod( Xn4, Sn4, Rn4 );;
+gap> IdGroup( stab );
+[ 12, 5 ]
+]]>
+</Example>
+
+<ManSection>
+   <Attr Name="CentreXMod"
+         Arg="X0" />
+   <Oper Name="Centralizer"
+         Arg="X Y" />
+   <Oper Name="Normalizer"
+         Arg="X Y" />
+<Description>
+The <E>centre</E> <M>Z(\calX)</M>   
+of <M>\calX = (\partial : S \to R)</M> 
+has as source the fixed point subgroup <M>\Fix(\calX,S,R)</M>. 
+The range is the intersection of the centre <M>Z(R)</M>
+with the stabilizer subgroup. 
+<P/> 
+When <M>\calY = (T \to Q)</M> is a subcrossed module of 
+<M>\calX = (\partial : S \to R)</M>, the <E>centralizer</E> 
+<M>C_{\calX}(\calY)</M> of <M>\calY</M> 
+has as source the fixed point subgroup <M>\Fix(\calX,S,Q)</M>. 
+The range is the intersection of the centralizer <M>C_R(Q)</M> 
+with <M>\Stab(\calX,T,R)</M>. 
+<P/>
+The <E>normalizer</E> <M>N_{\calX}(\calY)</M> 
+of <M>\calY</M> has as source the subgroup of <M>S</M> 
+consisting of the displacements <M>\langle s,q \rangle</M> 
+which lie in <M>S</M>. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> ZXn4 := CentreXMod( Xn4 );      
+[Group( [ f3*f4 ] )->Group( [ f3, f5 ] )]
+gap> IdGroup( ZXn4 );
+[ [ 2, 1 ], [ 4, 2 ] ]
+gap> CDXn4 := Centralizer( Xn4, DXn4 );
+[Group( [ f3*f4 ] )->Group( [ f2 ] )]
+gap> IdGroup( CDXn4 );    
+[ [ 2, 1 ], [ 3, 1 ] ]
+gap> NDXn4 := Normalizer( Xn4, DXn4 ); 
+[Group( <identity> of ... )->Group( [ f5, f2*f3 ] )]
+gap> IdGroup( NDXn4 );
+[ [ 1, 1 ], [ 12, 5 ] ]
+]]>
+</Example>
+
+<ManSection>
+   <Attr Name="CentralQuotient"
+         Arg="G" /> 
+<Description>
+The <C>CentralQuotient</C> of a group <M>G</M> is the crossed module 
+<M>(G \to G/Z(G))</M> 
+with the natural homomorphism as the boundary map. 
+This is a special case of <Ref Oper="XModByCentralExtension"/>. 
+<P/>
+Similarly, the central quotient of a crossed module 
+<M>\calX</M> is the crossed square 
+<M>(\calX \Rightarrow \calX/Z(\calX))</M> 
+(see section <Ref Sect="sect-xsq-constructions"/>). 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> Q24 := CentralQuotient( d24);  IdGroup( Q24 );                     
+[d24->d24/Z(d24)]
+[ [ 24, 6 ], [ 12, 4 ] ]
+]]>
+</Example>
+
+<ManSection>
+   <Prop Name="IsAbelian2DimensionalGroup"
+         Arg="X0" />
+   <Prop Name="IsAspherical2DimensionalGroup"
+         Arg="X0" />
+   <Prop Name="IsSimplyConnected2DimensionalGroup"
+         Arg="X0" />
+   <Prop Name="IsFaithful2DimensionalGroup"
+         Arg="X0" />
+<Description>
+A crossed module is <E>abelian</E> if it equal to its centre. 
+This is the case when the range group is abelian and the action is trivial. 
+<P/>
+A crossed module is <E>aspherical</E> if the boundary has trivial kernel. 
+<P/>
+A crossed module is <E>simply connected</E> if the boundary 
+has trivial cokernel. 
+<P/>
+A crossed module is <E>faithful</E> if the action is faithful.
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> [ IsAbelian2DimensionalGroup(Xn4), IsAbelian2DimensionalGroup(X24) ];
+[ false, false ]
+gap> pos7 := Position( ids, [ [3,1], [6,1] ] );;
+gap> [ IsAspherical2DimensionalGroup(nsx[pos7]), IsAspherical2DimensionalGroup(X24) ];
+[ true, false ]
+gap> [ IsSimplyConnected2DimensionalGroup(Xn4), IsSimplyConnected2DimensionalGroup(X24) ];
+[ true, true ]
+gap> [ IsFaithful2DimensionalGroup(Xn4), IsFaithful2DimensionalGroup(X24) ];              
+[ false, true ] 
+]]>
+</Example>
+
+<ManSection>
+   <Attr Name="LowerCentralSeriesOfXMod"
+         Arg="X0" />
+   <Prop Name="IsNilpotent2DimensionalGroup"
+         Arg="X0" />
+   <Attr Name="NilpotencyClass2DimensionalGroup"
+         Arg="X0" />
+<Description>
+Let <M>\calY</M> be a subcrossed module of <M>\calX</M>. 
+A <E> series of length</E> <M>n</M> from <M>\calX</M> 
+to <M>\calY</M> has the form 
+<Display>
+\calX ~=~ \calX_0 ~\unrhd~ \calX_1 ~\unrhd~ \cdots 
+                ~\unrhd~ \calX_i ~\unrhd~ \cdots 
+                ~\unrhd~ \calX_n ~=~ \calY 
+                \quad (1 \leqslant i \leqslant n). 
+</Display> 
+The quotients <M>\calF_i = \calX_i / \calX_{i-1}</M> 
+are the <E>factors</E> of the series. 
+<P/>
+A factor <M>\calF_i</M> is <E>central</E> if 
+<M>\calX_{i-1} \unlhd \calX</M> and 
+<M>\calF_i</M> is a subcrossed module of the centre of 
+<M>\calX / \calX_{i-1}</M>.  
+<P/>
+A series is <E>central</E> if all its factors are central. 
+<P/>
+<M>\calX</M> is <E>soluble</E> if it has a series 
+all of whose factors are abelian. 
+<P/>
+<M>\calX</M> is <E>nilpotent</E> is it has a series 
+all of whose factors are central factors of <M>\calX</M>. 
+<P/>
+The <E>lower central series</E> of <M>\calX</M> 
+is the sequence (see <Cite Key="N2" />, p.77): 
+<Display>
+\calX ~=~ \Gamma_1(\calX) ~\unrhd~ \Gamma_2(\calX) 
+              ~\unrhd~ \cdots 
+\qquad \mbox{where} \qquad  
+\Gamma_j(\calX) ~=~ [ \Gamma_{j-1}(\calX), \calX].
+</Display> 
+If <M>\calX</M> is nilpotent, then its lower central series 
+is its most rapidly descending central series. 
+<P/>
+The least integer <M>c</M> such that  <M>\Gamma_{c+1}(\calX)</M> 
+is the trivial crossed module is the <E>nilpotency class</E> 
+of <M>\calX</M>.
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> lcs := LowerCentralSeries( X24 );;      
+gap> List( lcs, g -> IdGroup(g) );
+[ [ [ 24, 6 ], [ 48, 38 ] ], [ [ 12, 2 ], [ 6, 2 ] ], [ [ 6, 2 ], [ 3, 1 ] ], 
+  [ [ 3, 1 ], [ 3, 1 ] ] ]
+gap> IsNilpotent2DimensionalGroup( X24 );      
+false
+gap> NilpotencyClassOf2DimensionalGroup( X24 );
+0
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="IsomorphismXMods"
+         Arg="X1 X2" />
+<Description>
+The function <C>IsomorphismXMods</C> computes an isomorphism 
+<M>\mu : \calX_1 \to \calX_2</M>, 
+provided one exists, or else returns <C>fail</C>. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> gend24 := GeneratorsOfGroup( d24 );;             
+gap> a := gend24[1];; b:= gend24[2];; 
+gap> J := Subgroup( d24, [a^2,b] ); 
+Group([ (1,3,5,7,9,11)(2,4,6,8,10,12), (2,12)(3,11)(4,10)(5,9)(6,8) ])
+gap> K := Subgroup( d24, [a^2,a*b] );
+Group([ (1,3,5,7,9,11)(2,4,6,8,10,12), (1,12)(2,11)(3,10)(4,9)(5,8)(6,7) ])
+gap> XJ := XModByNormalSubgroup( d24, J );;
+gap> XK := XModByNormalSubgroup( d24, K );;
+gap> iso := IsomorphismXMods( XJ, XK );;
+gap> SourceHom( iso );
+[ (1,3,5,7,9,11)(2,4,6,8,10,12), (2,12)(3,11)(4,10)(5,9)(6,8) ] -> 
+[ (1,3,5,7,9,11)(2,4,6,8,10,12), (1,12)(2,11)(3,10)(4,9)(5,8)(6,7) ]
+gap> RangeHom( iso ); 
+[ (1,2,3,4,5,6,7,8,9,10,11,12), (2,12)(3,11)(4,10)(5,9)(6,8) ] -> 
+[ (1,2,3,4,5,6,7,8,9,10,11,12), (1,12)(2,11)(3,10)(4,9)(5,8)(6,7) ]
+]]>
+</Example>
+
+<ManSection>
+   <Func Name="AllXMods"
+         Arg="args" />
+   <Oper Name="AllXModsWithGroups"
+         Arg="src rng" />
+   <Oper Name="AllXModsUpToIsomorphism"
+         Arg="src rng" />
+   <Oper Name="IsomorphismClassRepresentatives2dGroups"
+         Arg="L" />
+<Description>
+The global function <C>AllXMods</C> may be called in three ways. 
+Firstly, as <C>AllXMods(S,R)</C> to compute all crossed modules with chosen 
+source and range groups: this calls <C>AllXModsWithGroups(S,R)</C>.  
+Secondly, <C>AllXMods([n,m])</C> computes all crossed modules with a 
+given size <C>[n,m]</C>. 
+Thirdly <C>AllXMods(ord)</C> to compute all crossed modules whose associated 
+cat1-groups have a given size <C>ord</C>. 
+<P/> 
+The function <C>AllXModsUpToIsomorphism(S,R)</C> returns a list of 
+representatives of the isomorphism classes of crossed modules 
+with source <M>S</M> and range <M>R</M>. 
+<P/> 
+If <C>L</C> is a list returned by, for example, <C>AllXModsWithGroups(S,R)</C>, 
+then the isomorphism class representatives for this list is returned by 
+<C>IsomorphismClassRepresentatives2dGroups(L)</C>. This result is the same 
+as that given by <C>AllXModsUpToIsomorphism(S,R)</C>. 
+<P/>
+In the example we see that there are <M>4</M> crossed modules, 
+in <M>3</M> isomorphism classes, 
+<M>(C_6 \to S_3)</M>; forming a subset of the <M>17</M> crossed modules 
+with size <C>[6,6]</C>; and that these form a subset of the <M>205</M> 
+crossed modules whose cat1-group has size <M>36</M>. 
+
+There are <M>40</M> precrossed modules with size <C>[6,6]</C>. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> c6 := SmallGroup( 6, 2 );; 
+gap> s3 := SmallGroup( 6, 1 );; 
+gap> Ac6s3 := AllXMods( c6, s3 );;   
+gap> Length( Ac6s3 );           
+4
+gap> Ic6s3 := AllXModsUpToIsomorphism( c6, s3 );; 
+gap> List( Ic6s3, obj -> IsTrivialAction2DimensionalGroup( obj ) ); 
+[ true, false, false ]
+gap> Kc6s3 := List( Ic6s3, obj -> KernelCokernelXMod( obj ) );; 
+gap> List( Kc6s3, obj -> IdGroup( obj ) );
+[ [ [ 6, 2 ], [ 6, 1 ] ], [ [ 6, 2 ], [ 6, 1 ] ], [ [ 2, 1 ], [ 2, 1 ] ] ]
+[ ]
+gap> A66 := AllXMods( [6,6] );;   
+gap> Length( A66 );
+17
+gap> IA66 := IsomorphismClassRepresentatives2dGroups( A66 );;
+gap> Length( IA66 );
+9
+gap> x36 := AllXMods( 36 );; 
+gap> Length( x36 ); 
+205
+gap> size36 := List( x36, x -> Size2d( x ) );;
+gap> Collected( size36 );
+[ [ [ 1, 36 ], 14 ], [ [ 2, 18 ], 7 ], [ [ 3, 12 ], 21 ], [ [ 4, 9 ], 14 ], 
+  [ [ 6, 6 ], 17 ], [ [ 9, 4 ], 102 ], [ [ 12, 3 ], 8 ], [ [ 18, 2 ], 18 ], 
+  [ [ 36, 1 ], 4 ] ]
+]]>
+</Example>
+
+</Section>
+
+
+
+<Section Label="sect-isoclinic-groups">
+<Heading>Isoclinism for groups</Heading>
+
+<ManSection>
+   <Oper Name="Isoclinism"
+         Arg="G H" Label="for groups" />
+   <Oper Name="AreIsoclinicDomains"
+         Arg="G H" Label="for groups" />
+<Description>
+Let <M>G,H</M> be groups with central quotients <M>Q(G)</M> and <M>Q(H)</M> 
+and derived subgroups <M>[G,G]</M> and <M>[H,H]</M> respectively. 
+Let <M>c_G : G/Z(G) \times G/Z(G) \to [G,G]</M> 
+and <M>c_H : H/Z(H) \times H/Z(H) \to [H,H]</M> be the two commutator maps.  
+An <E>isoclinism</E> <M>G \sim H</M> is a pair of isomorphisms 
+<M>(\eta,\xi)</M> where <M>\eta : G/Z(G) \to H/Z(H)</M> and 
+<M>\xi : [G,G] \to [H,H]</M> such that
+<M>c_G * \xi = (\eta \times \eta) * c_H</M>. 
+Isoclinism is an equivalence relation, and all abelian groups are isoclinic 
+to the trivial group.
+<P/>
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> G := SmallGroup( 64, 6 );;  StructureDescription( G ); 
+"(C8 x C4) : C2"
+gap> QG := CentralQuotient( G );;  IdGroup( QG );
+[ [ 64, 6 ], [ 8, 3 ] ]
+gap> H := SmallGroup( 32, 41 );;  StructureDescription( H );
+"C2 x Q16"
+gap> QH := CentralQuotient( H );;  IdGroup( QH );
+[ [ 32, 41 ], [ 8, 3 ] ]
+gap> Isoclinism( G, H );
+[ [ f1, f2, f3 ] -> [ f1, f2*f3, f3 ], [ f3, f5 ] -> [ f4*f5, f5 ] ]
+gap> K := SmallGroup( 32, 43 );;  StructureDescription( K );
+"(C2 x D8) : C2"
+gap> QK := CentralQuotient( K );;  IdGroup( QK );                       
+[ [ 32, 43 ], [ 16, 11 ] ]
+gap> AreIsoclinicDomains( G, K );
+false
+]]>
+</Example>
+
+
+<ManSection>
+   <Prop Name="IsStemDomain"
+         Arg="G" Label="for groups" />
+   <Attr Name="IsoclinicStemDomain"
+         Arg="G" Label="for groups" />
+   <Oper Name="AllStemGroupIds"
+         Arg="n" />
+   <Oper Name="AllStemGroupFamilies"
+         Arg="n" />
+<Description>
+A group <M>G</M> is a <E>stem group</E> if <M>Z(G) \leq [G,G]</M>. 
+Every group is isoclinic to a stem group, but distinct stem groups 
+may be isoclinic. 
+For example, groups <M>D_8, Q_8</M> are two isoclinic stem groups. 
+<P/>
+The function <C>IsoclinicStemDomain </C> returns a stem group 
+isoclinic to <M>G</M>. 
+<P/>
+The function <C>AllStemGroupIds</C> returns the <C>IdGroup</C> list 
+of the stem groups of a specified size, while <C>AllStemGroupFamilies</C> 
+splits this list into isoclinism classes.  
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> DerivedSubgroup(G);     
+Group([ f3, f5 ])
+gap> IsStemDomain( G );
+false
+gap> IsoclinicStemDomain( G );
+<pc group of size 16 with 4 generators>
+gap> AllStemGroupIds( 32 );
+[ [ 32, 6 ], [ 32, 7 ], [ 32, 8 ], [ 32, 18 ], [ 32, 19 ], [ 32, 20 ], 
+  [ 32, 27 ], [ 32, 28 ], [ 32, 29 ], [ 32, 30 ], [ 32, 31 ], [ 32, 32 ], 
+  [ 32, 33 ], [ 32, 34 ], [ 32, 35 ], [ 32, 43 ], [ 32, 44 ], [ 32, 49 ], 
+  [ 32, 50 ] ]
+gap> AllStemGroupFamilies( 32 );
+[ [ [ 32, 6 ], [ 32, 7 ], [ 32, 8 ] ], [ [ 32, 18 ], [ 32, 19 ], [ 32, 20 ] ],
+  [ [ 32, 27 ], [ 32, 28 ], [ 32, 29 ], [ 32, 30 ], [ 32, 31 ], [ 32, 32 ], 
+      [ 32, 33 ], [ 32, 34 ], [ 32, 35 ] ], [ [ 32, 43 ], [ 32, 44 ] ], 
+  [ [ 32, 49 ], [ 32, 50 ] ] ]
+]]>
+</Example>
+
+<ManSection Label="group-rank">
+   <Attr Name="IsoclinicRank"
+         Arg="G" Label="for groups" />
+   <Attr Name="IsoclinicMiddleLength"
+         Arg="G" Label="for groups" />
+<Description>
+Let <M>G</M> be a finite <M>p</M>-group. 
+Then <M>\log_p |[G,G] / (Z(G) \cap [G,G])|</M> is called the 
+<E>middle length</E> of <M>G</M>. 
+Also <M>\log_p |Z(G) \cap [G,G]| + \log_p |G/Z(G)|</M> 
+is called the <E>rank</E> of <M>G</M>. 
+These invariants appear in the tables of isoclinism families of 
+groups of order 128 in <Cite Key="JNO" />.
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> IsoclinicMiddleLength( G );
+1
+gap> IsoclinicRank( G );
+4
+]]>
+</Example>
+
+
+</Section>
+
+
+<Section Label="sect-isoclinic-xmods">
+<Heading>Isoclinism for crossed modules</Heading>
+
+<ManSection>
+   <Oper Name="Isoclinism"
+         Arg="X0 Y0" Label="for crossed modules" />
+   <Oper Name="AreIsoclinicDomains"
+         Arg="X0 Y0" Label="for crossed modules of groups" />
+<Description>
+Let <M>\calX,\calY</M> be crossed modules with central quotients 
+<M>Q(\calX)</M> and <M> Q(\calY)</M>,  
+and derived subcrossed modules <M>[\calX,\calX]</M> 
+and <M>[\calY,\calY]</M> respectively. 
+Let <M>c_\calX : Q(\calX) \times Q(\calX) 
+                    \to [\calX,\calX]</M> 
+and <M>c_\calY : Q(\calY) \times Q(\calY) 
+                    \to [\calY,\calY]</M> 
+be the two commutator maps.  
+An <E>isoclinism</E> <M>\calX \sim \calY</M> 
+is a pair of bijective morphisms 
+<M>(\eta,\xi)</M> where <M>\eta : Q(\calX) \to Q(\calY)</M> 
+and <M>\xi : [\calX,\calX] \to [\calY,\calY]</M> 
+such that
+<M>c_\calX * \xi = (\eta \times \eta) * c_\calY</M>. 
+Isoclinism is an equivalence relation, and all abelian crossed modules 
+are isoclinic to the trivial crossed module. 
+<P/>
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> C8 := Cat1Group( 16, 8, 2 );;
+gap> X8 := XMod(C8);  IdGroup( X8 );
+[Group( [ f1*f2*f3, f3, f4 ] )->Group( [ f2, f2 ] )]
+[ [ 8, 1 ], [ 2, 1 ] ]
+gap> C9 := Cat1Group( 32, 9, 2 );
+[(C8 x C2) : C2 => Group( [ f2, f2 ] )]
+gap> X9 := XMod( C9 );  IdGroup( X9 );
+[Group( [ f1*f2*f3, f3, f4, f5 ] )->Group( [ f2, f2 ] )]
+[ [ 16, 5 ], [ 2, 1 ] ]
+gap> AreIsoclinicDomains( X8, X9 );
+true
+gap> ism89 := Isoclinism( X8, X9 );;
+gap> Display( ism89 );
+[ [[Group( [ f1, f2, <identity> of ... ] ) -> Group( [ f2, f2 ] )] => [Group( 
+    [ f1, f2, <identity> of ..., <identity> of ... ] ) -> Group( 
+    [ f2, f2 ] )]], 
+  [[Group( [ f3 ] ) -> Group( <identity> of ... )] => [Group( 
+    [ f3 ] ) -> Group( <identity> of ... )]] ]
+]]>
+</Example>
+
+<ManSection>
+   <Prop Name="IsStemDomain"
+         Arg="X0" Label="for crossed modules of groups" />
+   <Attr Name="IsoclinicStemDomain"
+         Arg="X0" Label="for crossed modules of groups" />
+<Description>
+A crossed module <M>\calX</M> is a <E>stem crossed module</E> 
+if <M>Z(\calX) \leq [\calX,\calX]</M>. 
+Every crossed module is isoclinic to a stem crossed module, 
+but distinct stem crossed modules may be isoclinic. 
+<P/>
+A method for <C>IsoclinicStemDomain</C> has yet to be implemented. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> IsStemDomain(X8);
+true
+gap> IsStemDomain(X9);
+false
+]]>
+</Example>
+
+<ManSection>
+   <Attr Name="IsoclinicRank"
+         Arg="X0" Label="for crossed modules of groups" />
+   <Attr Name="IsoclinicMiddleLength"
+         Arg="X0" Label="for crossed modules of groups" />
+<Description>
+The formulae in subsection <Ref Subsect="group-rank" /> 
+are applied to the crossed module.
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> IsoclinicMiddleLength(X8);
+[ 1, 0 ]
+gap> IsoclinicRank(X8);        
+[ 3, 1 ]
+]]>
+</Example>
+
+</Section>
+
+</Chapter>

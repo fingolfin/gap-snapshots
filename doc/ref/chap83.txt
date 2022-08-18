@@ -72,10 +72,9 @@
   [33X[0;0YThe  following  tools  from the [5XGAP[105X package [5XBrowse[105X can be used for accessing
   the code of functions.[133X
   
-  [30X    [33X[0;6Y[2XBrowseGapMethods[102X ([14XBrowse: BrowseGapMethods see BrowseGapData[114X) shows an
-        overview  of  [5XGAP[105X's operations and methods, and allows one to navigate
-        through  the  files  that  contain the implementations of the methods,
-        using a pager.[133X
+  [30X    [33X[0;6Y[2XBrowseGapMethods[102X ([14XBrowse: BrowseGapMethods[114X) shows an overview of [5XGAP[105X's
+        operations  and  methods, and allows one to navigate through the files
+        that contain the implementations of the methods, using a pager.[133X
   
   [30X    [33X[0;6Y[2XBrowseProfile[102X ([14XBrowse: BrowseProfile[114X) shows profiling results (similar
         to  [2XDisplayProfile[102X  ([14X7.8-9[114X))  and  allows  one to navigate through the

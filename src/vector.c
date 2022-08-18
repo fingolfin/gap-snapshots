@@ -66,7 +66,6 @@ static Obj SumIntVector(Obj elmL, Obj vecR)
             ptrS[i] = elmS;
     }
 
-    /* return the result                                                   */
     return vecS;
 }
 
@@ -113,7 +112,6 @@ static Obj SumVectorInt(Obj vecL, Obj elmR)
             ptrS[i] = elmS;
     }
 
-    /* return the result                                                   */
     return vecS;
 }
 
@@ -182,7 +180,6 @@ static Obj SumVectorVector(Obj vecL, Obj vecR)
             ptrS[i] = ptrL[i];
         }
 
-    /* return the result                                                   */
     return vecS;
 }
 
@@ -229,7 +226,6 @@ static Obj DiffIntVector(Obj elmL, Obj vecR)
             ptrD[i] = elmD;
     }
 
-    /* return the result                                                   */
     return vecD;
 }
 
@@ -276,7 +272,6 @@ static Obj DiffVectorInt(Obj vecL, Obj elmR)
             ptrD[i] = elmD;
     }
 
-    /* return the result                                                   */
     return vecD;
 }
 
@@ -340,7 +335,7 @@ static Obj DiffVectorVector(Obj vecL, Obj vecR)
         for (; i <= lenR; i++) {
             elmR = ptrR[i];
             if (! IS_INTOBJ(elmR) || ! DIFF_INTOBJS(elmD, INTOBJ_INT(0), elmR)) {
-                elmD = AINV(elmR);
+                elmD = AINV_SAMEMUT(elmR);
                 ptrR = CONST_ADDR_OBJ(vecR);
                 ptrD = ADDR_OBJ(vecD);
                 ptrD[i] = elmD;
@@ -354,7 +349,6 @@ static Obj DiffVectorVector(Obj vecL, Obj vecR)
             ptrD[i] = ptrL[i];
         }
 
-    /* return the result                                                   */
     return vecD;
 }
 
@@ -401,7 +395,6 @@ static Obj ProdIntVector(Obj elmL, Obj vecR)
             ptrP[i] = elmP;
     }
 
-    /* return the result                                                   */
     return vecP;
 }
 
@@ -448,7 +441,6 @@ static Obj ProdVectorInt(Obj vecL, Obj elmR)
             ptrP[i] = elmP;
     }
 
-    /* return the result                                                   */
     return vecP;
 }
 
@@ -508,7 +500,6 @@ static Obj ProdVectorVector(Obj vecL, Obj vecR)
         elmP = elmS;
     }
 
-    /* return the result                                                   */
     return elmP;
 }
 
@@ -564,7 +555,7 @@ static Obj ProdVectorMatrix(Obj vecL, Obj matR)
         vecR = ELM_PLIST(matR, i);
         ptrR = CONST_ADDR_OBJ(vecR);
         ptrP = ADDR_OBJ(vecP);
-        if (elmL == INTOBJ_INT(1L)) {
+        if (elmL == INTOBJ_INT(1)) {
             for (k = 1; k <= col; k++) {
                 elmT = ptrR[k];
                 elmP = ptrP[k];
@@ -579,7 +570,8 @@ static Obj ProdVectorMatrix(Obj vecL, Obj matR)
                 else
                     ptrP[k] = elmS;
             }
-        } else if (elmL == INTOBJ_INT(-1L)) {
+        }
+        else if (elmL == INTOBJ_INT(-1)) {
             for (k = 1; k <= col; k++) {
                 elmT = ptrR[k];
                 elmP = ptrP[k];
@@ -595,10 +587,11 @@ static Obj ProdVectorMatrix(Obj vecL, Obj matR)
                     ptrP[k] = elmS;
 
             }
-        } else if (elmL != INTOBJ_INT(0L)) {
+        }
+        else if (elmL != INTOBJ_INT(0)) {
             for (k = 1; k <= col; k++) {
                 elmR = ptrR[k];
-                if (elmR != INTOBJ_INT(0L)) {
+                if (elmR != INTOBJ_INT(0)) {
                     if (! ARE_INTOBJS(elmL, elmR)
                             || ! PROD_INTOBJS(elmT, elmL, elmR)) {
                         elmT = PROD(elmL, elmR);
@@ -624,7 +617,6 @@ static Obj ProdVectorMatrix(Obj vecL, Obj matR)
         }
     }
 
-    /* return the result                                                   */
     return vecP;
 }
 
@@ -684,7 +676,7 @@ static Obj ZeroMutVector(Obj vec)
 */
 static StructGVarFunc GVarFuncs [] = {
 
-  GVAR_FUNC(PROD_VECTOR_MATRIX, 2, "vec, mat"),
+  GVAR_FUNC_2ARGS(PROD_VECTOR_MATRIX, vec, mat),
   { 0, 0, 0, 0, 0 }
 };
 
@@ -704,7 +696,7 @@ static Int InitKernel (
 
     /* install the arithmetic operation methods                            */
     for (t1 = T_PLIST_CYC; t1 <= T_PLIST_CYC_SSORT + IMMUTABLE; t1++) {
-        ZeroFuncs[ t1 ] = ZeroVector;
+        ZeroSameMutFuncs[t1] = ZeroVector;
         ZeroMutFuncs[ t1 ] = ZeroMutVector;
 
         for (t2 = T_PLIST_CYC; t2 <= T_PLIST_CYC_SSORT + IMMUTABLE; t2++) {
@@ -720,7 +712,6 @@ static Int InitKernel (
         }
     }
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -735,7 +726,6 @@ static Int InitLibrary (
     /* init filters and functions                                          */
     InitGVarFuncsFromTable(GVarFuncs);
 
-    /* return success                                                      */
     return 0;
 }
 

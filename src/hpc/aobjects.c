@@ -21,7 +21,6 @@
 #include "calls.h"
 #include "error.h"
 #include "fibhash.h"
-#include "gapstate.h"
 #include "gaputils.h"
 #include "gvars.h"
 #include "io.h"
@@ -32,6 +31,8 @@
 #include "precord.h"
 #include "records.h"
 #include "stringobj.h"
+
+#include <stdlib.h>
 
 
 static Obj TYPE_ALIST;
@@ -90,39 +91,9 @@ static Obj TypeTLRecord(Obj obj)
   return TYPE_TLREC;
 }
 
-static void SetTypeAList(Obj obj, Obj kind)
-{
-  switch (TNUM_OBJ(obj)) {
-    case T_ALIST:
-    case T_FIXALIST:
-      HashLock(obj);
-      ADDR_OBJ(obj)[1] = kind;
-      CHANGED_BAG(obj);
-      RetypeBag(obj, T_APOSOBJ);
-      HashUnlock(obj);
-      break;
-    case T_APOSOBJ:
-      HashLock(obj);
-      ADDR_OBJ(obj)[1] = kind;
-      CHANGED_BAG(obj);
-      HashUnlock(obj);
-      break;
-  }
-  MEMBAR_WRITE();
-}
-
-static void SetTypeARecord(Obj obj, Obj kind)
-{
-  ADDR_OBJ(obj)[0] = kind;
-  CHANGED_BAG(obj);
-  RetypeBag(obj, T_ACOMOBJ);
-  MEMBAR_WRITE();
-}
-
-
 static void ArgumentError(const char *message)
 {
-  ErrorQuit(message, 0, 0);
+    ErrorQuit(message, 0, 0);
 }
 
 Obj NewAtomicList(UInt tnum, UInt capacity)
@@ -238,13 +209,13 @@ static Obj FuncMakeFixedAtomicList(Obj self, Obj list) {
           return list;
         default:
           HashUnlock(list);
-          ArgumentError("MakeFixedAtomicList: Argument must be atomic list");
+          RequireArgument(SELF_NAME, list, "must be an atomic list");
           return (Obj) 0; /* flow control hint */
       }
       HashUnlock(list);
       break;
     default:
-      ArgumentError("MakeFixedAtomicList: Argument must be atomic list");
+      RequireArgument(SELF_NAME, list, "must be an atomic list");
   }
   return (Obj) 0; /* flow control hint */
 }
@@ -271,14 +242,10 @@ static Obj FuncGET_ATOMIC_LIST(Obj self, Obj list, Obj index)
   UInt len;
   const AtomicObj *addr;
   if (TNUM_OBJ(list) != T_ALIST && TNUM_OBJ(list) != T_FIXALIST)
-    ArgumentError("GET_ATOMIC_LIST: First argument must be an atomic list");
+    RequireArgument(SELF_NAME, list, "must be an atomic list");
   addr = CONST_ADDR_ATOM(list);
   len = ALIST_LEN((UInt) addr[0].atom);
-  if (!IS_INTOBJ(index))
-    ArgumentError("GET_ATOMIC_LIST: Second argument must be an integer");
-  n = INT_INTOBJ(index);
-  if (n <= 0 || n > len)
-    ArgumentError("GET_ATOMIC_LIST: Index out of range");
+  n = GetBoundedInt(SELF_NAME, index, 1, len);
   MEMBAR_READ(); /* read barrier */
   return addr[n+1].obj;
 }
@@ -320,14 +287,10 @@ static Obj FuncSET_ATOMIC_LIST(Obj self, Obj list, Obj index, Obj value)
   UInt len;
   AtomicObj *addr;
   if (TNUM_OBJ(list) != T_ALIST && TNUM_OBJ(list) != T_FIXALIST)
-    ArgumentError("SET_ATOMIC_LIST: First argument must be an atomic list");
+    RequireArgument(SELF_NAME, list, "must be an atomic list");
   addr = ADDR_ATOM(list);
   len = ALIST_LEN((UInt) addr[0].atom);
-  if (!IS_INTOBJ(index))
-    ArgumentError("SET_ATOMIC_LIST: Second argument must be an integer");
-  n = INT_INTOBJ(index);
-  if (n <= 0 || n > len)
-    ArgumentError("SET_ATOMIC_LIST: Index out of range");
+  n = GetBoundedInt(SELF_NAME, index, 1, len);
   addr[n+1].obj = value;
   CHANGED_BAG(list);
   MEMBAR_WRITE(); /* write barrier */
@@ -345,9 +308,7 @@ static Obj FuncCOMPARE_AND_SWAP(Obj self, Obj list, Obj index, Obj old, Obj new)
     AtomicObj * addr;
     Obj         result;
 
-    if (!IS_INTOBJ(index))
-        ArgumentError("COMPARE_AND_SWAP: Second argument must be an integer");
-    UInt n = INT_INTOBJ(index);
+    UInt n = GetPositiveSmallInt(SELF_NAME, index);
 
     switch (TNUM_OBJ(list)) {
     case T_FIXALIST:
@@ -356,13 +317,12 @@ static Obj FuncCOMPARE_AND_SWAP(Obj self, Obj list, Obj index, Obj old, Obj new)
     case T_ALIST:
         return AtomicCompareSwapAList(list, n, old, new);
     default:
-      ArgumentError("COMPARE_AND_SWAP: First argument must an atomic list");
+        RequireArgument(SELF_NAME, list, "must be an atomic list");
   }
   addr = ADDR_ATOM(list);
   len = ALIST_LEN((UInt)addr[0].atom);
 
-  if (n <= 0 || n > len)
-    ArgumentError("COMPARE_AND_SWAP: Index out of range");
+  RequireBoundedInt(SELF_NAME, index, 1, len);
   aold.obj = old;
   anew.obj = new;
   result = COMPARE_AND_SWAP(&(addr[n+1].atom), aold.atom, anew.atom) ?
@@ -396,17 +356,12 @@ static Obj FuncATOMIC_ADDITION(Obj self, Obj list, Obj index, Obj inc)
     case T_APOSOBJ:
       break;
     default:
-      ArgumentError("ATOMIC_ADDITION: First argument must be a fixed atomic list");
+      RequireArgument(SELF_NAME, list, "must be a fixed atomic list");
   }
   addr = ADDR_ATOM(list);
   len = ALIST_LEN((UInt) addr[0].atom);
-  if (!IS_INTOBJ(index))
-    ArgumentError("ATOMIC_ADDITION: Second argument must be an integer");
-  n = INT_INTOBJ(index);
-  if (n <= 0 || n > len)
-    ArgumentError("ATOMIC_ADDITION: Index out of range");
-  if (!IS_INTOBJ(inc))
-    ArgumentError("ATOMIC_ADDITION: increment is not an integer");
+  n = GetBoundedInt(SELF_NAME, index, 1, len);
+  RequireSmallInt(SELF_NAME, index);
   do
   {
     aold = addr[n+1];
@@ -420,9 +375,9 @@ static Obj FuncATOMIC_ADDITION(Obj self, Obj list, Obj index, Obj inc)
 
 static Obj FuncAddAtomicList(Obj self, Obj list, Obj obj)
 {
-  if (TNUM_OBJ(list) != T_ALIST)
-    ArgumentError("AddAtomicList: First argument must be an atomic list");
-  return INTOBJ_INT(AddAList(list, obj));
+    if (TNUM_OBJ(list) != T_ALIST)
+        RequireArgument(SELF_NAME, list, "must be a non-fixed atomic list");
+    return INTOBJ_INT(AddAList(list, obj));
 }
 
 Obj FromAtomicList(Obj list)
@@ -443,9 +398,9 @@ Obj FromAtomicList(Obj list)
 
 static Obj FuncFromAtomicList(Obj self, Obj list)
 {
-  if (TNUM_OBJ(list) != T_FIXALIST && TNUM_OBJ(list) != T_ALIST)
-    ArgumentError("FromAtomicList: First argument must be an atomic list");
-  return FromAtomicList(list);
+    if (TNUM_OBJ(list) != T_FIXALIST && TNUM_OBJ(list) != T_ALIST)
+        RequireArgument(SELF_NAME, list, "must be an atomic list");
+    return FromAtomicList(list);
 }
 
 static void MarkAtomicList(Bag bag)
@@ -544,9 +499,9 @@ static void PrintAtomicList(Obj obj)
 
   if (TNUM_OBJ(obj) == T_FIXALIST)
     Pr("<fixed atomic list of size %d>",
-      ALIST_LEN((UInt)(CONST_ADDR_OBJ(obj)[0])), 0L);
+      ALIST_LEN((UInt)(CONST_ADDR_OBJ(obj)[0])), 0);
   else
-    Pr("<atomic list of size %d>", ALIST_LEN((UInt)(CONST_ADDR_OBJ(obj)[0])), 0L);
+    Pr("<atomic list of size %d>", ALIST_LEN((UInt)(CONST_ADDR_OBJ(obj)[0])), 0);
 }
 
 static inline Obj ARecordObj(Obj record)
@@ -582,18 +537,18 @@ static void PrintTLRecord(Obj obj)
   if (TLS(threadID) < (UInt)table[TLR_SIZE]) {
     record = table[TLR_DATA+TLS(threadID)];
   }
-  Pr("%2>rec( %2>", 0L, 0L);
+  Pr("%2>rec( %2>", 0, 0);
   if (record) {
     for (i = 1; i <= LEN_PREC(record); i++) {
       Obj val = GET_ELM_PREC(record, i);
-      Pr("%H", (Int)NAME_RNAM(labs(GET_RNAM_PREC(record, i))), 0L);
-      Pr ("%< := %>", 0L, 0L);
+      Pr("%H", (Int)NAME_RNAM(labs(GET_RNAM_PREC(record, i))), 0);
+      Pr ("%< := %>", 0, 0);
       if (val)
         PrintObj(val);
       else
-        Pr("<undefined>", 0L, 0L);
+        Pr("<undefined>", 0, 0);
       if (i < LEN_PREC(record))
-        Pr("%2<, %2>", 0L, 0L);
+        Pr("%2<, %2>", 0, 0);
       else
         comma = 1;
     }
@@ -605,15 +560,15 @@ static void PrintTLRecord(Obj obj)
     Obj value = deftable[AR_DATA+2*i+1].obj;
     if (key && (!record || !PositionPRec(record, key, 0))) {
       if (comma)
-        Pr("%2<, %2>", 0L, 0L);
-      Pr("%H", (Int)(NAME_RNAM(key)), 0L);
-      Pr ("%< := %>", 0L, 0L);
+        Pr("%2<, %2>", 0, 0);
+      Pr("%H", (Int)(NAME_RNAM(key)), 0);
+      Pr ("%< := %>", 0, 0);
       PrintObj(CopyTraversed(value));
       comma = 1;
     }
   }
   HashUnlockShared(defrec);
-  Pr(" %4<)", 0L, 0L);
+  Pr(" %4<)", 0, 0);
 }
 
 
@@ -853,16 +808,17 @@ Obj FromAtomicRecord(Obj record)
 
 static Obj FuncFromAtomicRecord(Obj self, Obj record)
 {
-  if (TNUM_OBJ(record) != T_AREC)
-    ArgumentError("FromAtomicRecord: First argument must be an atomic record");
-  return FromAtomicRecord(record);
+    if (TNUM_OBJ(record) != T_AREC)
+        RequireArgument(SELF_NAME, record, "must be an atomic record");
+    return FromAtomicRecord(record);
 }
 
 static Obj FuncFromAtomicComObj(Obj self, Obj comobj)
 {
-  if (TNUM_OBJ(comobj) != T_ACOMOBJ)
-    ArgumentError("FromAtomicComObj: First argument must be an atomic record");
-  return FromAtomicRecord(comobj);
+    if (TNUM_OBJ(comobj) != T_ACOMOBJ)
+        RequireArgument(SELF_NAME, comobj,
+                        "must be an atomic component object");
+    return FromAtomicRecord(comobj);
 }
 
 Obj NewAtomicRecord(UInt capacity)
@@ -941,7 +897,7 @@ void UnbARecord(Obj record, UInt rnam) {
    SetARecordField(record, rnam, Undefined);
 }
 
-Int IsbARecord(Obj record, UInt rnam)
+BOOL IsbARecord(Obj record, UInt rnam)
 {
   return GetARecordField(record, rnam) != (Obj) 0;
 }
@@ -1078,7 +1034,7 @@ static void UnbTLRecord(Obj record, UInt rnam)
 }
 
 
-static Int IsbTLRecord(Obj record, UInt rnam)
+static BOOL IsbTLRecord(Obj record, UInt rnam)
 {
   return GetTLRecordField(record, rnam) != (Obj) 0;
 }
@@ -1109,8 +1065,8 @@ static Obj FuncGET_ATOMIC_RECORD(Obj self, Obj record, Obj field, Obj def)
   UInt fieldname;
   Obj result;
   if (TNUM_OBJ(record) != T_AREC)
-    ArgumentError("GET_ATOMIC_RECORD: First argument must be an atomic record");
-  RequireStringRep("GET_ATOMIC_RECORD", field);
+    RequireArgument(SELF_NAME, record, "must be an atomic record");
+  RequireStringRep(SELF_NAME, field);
   fieldname = RNamName(CONST_CSTR_STRING(field));
   result = GetARecordField(record, fieldname);
   return result ? result : def;
@@ -1121,13 +1077,13 @@ static Obj FuncSET_ATOMIC_RECORD(Obj self, Obj record, Obj field, Obj value)
   UInt fieldname;
   Obj result;
   if (TNUM_OBJ(record) != T_AREC)
-    ArgumentError("SET_ATOMIC_RECORD: First argument must be an atomic record");
-  RequireStringRep("SET_ATOMIC_RECORD", field);
+    RequireArgument(SELF_NAME, record, "must be an atomic record");
+  RequireStringRep(SELF_NAME, field);
   fieldname = RNamName(CONST_CSTR_STRING(field));
   result = SetARecordField(record, fieldname, value);
   if (!result)
     ErrorQuit("SET_ATOMIC_RECORD: Field '%s' already exists",
-      (UInt) CONST_CSTR_STRING(field), 0L);
+      (UInt) CONST_CSTR_STRING(field), 0);
   return result;
 }
 
@@ -1136,12 +1092,12 @@ static Obj FuncUNBIND_ATOMIC_RECORD(Obj self, Obj record, Obj field)
   UInt fieldname;
   Obj exists;
   if (TNUM_OBJ(record) != T_AREC)
-    ArgumentError("UNBIND_ATOMIC_RECORD: First argument must be an atomic record");
-  RequireStringRep("UNBIND_ATOMIC_RECORD", field);
+    RequireArgument(SELF_NAME, record, "must be an atomic record");
+  RequireStringRep(SELF_NAME, field);
   fieldname = RNamName(CONST_CSTR_STRING(field));
   if (GetARecordUpdatePolicy(record) != AREC_RW)
     ErrorQuit("UNBIND_ATOMIC_RECORD: Record elements cannot be changed",
-      (UInt) CONST_CSTR_STRING(field), 0L);
+      (UInt) CONST_CSTR_STRING(field), 0);
   exists = GetARecordField(record, fieldname);
   if (exists)
     SetARecordField(record, fieldname, (Obj) 0);
@@ -1204,32 +1160,30 @@ static int OnlyConstructors(Obj precord) {
 
 static Obj FuncThreadLocalRecord(Obj self, Obj args)
 {
-  switch (LEN_PLIST(args)) {
-    case 0:
-      return NewTLRecord(NEW_PREC(0), NEW_PREC(0));
-    case 1:
-      if (TNUM_OBJ(ELM_PLIST(args, 1)) != T_PREC)
-        ArgumentError("ThreadLocalRecord: First argument must be a record");
-      return NewTLRecord(ELM_PLIST(args, 1), NEW_PREC(0));
-    case 2:
-      if (TNUM_OBJ(ELM_PLIST(args, 1)) != T_PREC)
-        ArgumentError("ThreadLocalRecord: First argument must be a record");
-      if (TNUM_OBJ(ELM_PLIST(args, 2)) != T_PREC ||
-          !OnlyConstructors(ELM_PLIST(args, 2)))
-        ArgumentError("ThreadLocalRecord: Second argument must be a record containing parameterless functions");
-      return NewTLRecord(ELM_PLIST(args, 1), ELM_PLIST(args, 2));
-    default:
-      ArgumentError("ThreadLocalRecord: Too many arguments");
-      return (Obj) 0; /* flow control hint */
-  }
+    Obj defaults, constructors;
+    Int narg = LEN_PLIST(args);
+
+    if (narg >= 2) {
+        ArgumentError("ThreadLocalRecord: Too many arguments");
+    }
+
+    defaults = (narg >= 1) ? ELM_PLIST(args, 1) : NEW_PREC(0);
+    constructors = (narg >= 2) ? ELM_PLIST(args, 2) : NEW_PREC(0);
+    RequirePlainRec(SELF_NAME, defaults);
+    RequirePlainRec(SELF_NAME, constructors);
+
+    if (!OnlyConstructors(constructors))
+        ArgumentError("ThreadLocalRecord: <constructors> must be a record containing parameterless functions");
+
+    return NewTLRecord(defaults, constructors);
 }
 
 static Obj FuncSetTLDefault(Obj self, Obj record, Obj name, Obj value)
 {
   if (TNUM_OBJ(record) != T_TLREC)
-    ArgumentError("SetTLDefault: First argument must be a thread-local record");
+    RequireArgument(SELF_NAME, record, "must be a thread-local record");
   if (!IS_STRING(name) && !IS_INTOBJ(name))
-    ArgumentError("SetTLDefault: Second argument must be a string or integer");
+    RequireArgument(SELF_NAME, value, "must be a string or an integer");
   SetTLDefault(record, RNamObj(name), value);
   return (Obj) 0;
 }
@@ -1237,10 +1191,10 @@ static Obj FuncSetTLDefault(Obj self, Obj record, Obj name, Obj value)
 static Obj FuncSetTLConstructor(Obj self, Obj record, Obj name, Obj function)
 {
   if (TNUM_OBJ(record) != T_TLREC)
-    ArgumentError("SetTLConstructor: First argument must be a thread-local record");
+    RequireArgument(SELF_NAME, record, "must be a thread-local record");
   if (!IS_STRING(name) && !IS_INTOBJ(name))
-    ArgumentError("SetTLConstructor: Second argument must be a string or integer");
-  RequireFunction("SetTLConstructor", function);
+    RequireArgument(SELF_NAME, name, "must be a string or an integer");
+  RequireFunction(SELF_NAME, function);
   SetTLConstructor(record, RNamObj(name), function);
   return (Obj) 0;
 }
@@ -1292,7 +1246,8 @@ Obj ElmAList(Obj list, Int pos)
   return result;
 }
 
-static Int IsbAList(Obj list, Int pos) {
+static BOOL IsbAList(Obj list, Int pos)
+{
   const AtomicObj *addr = CONST_ADDR_ATOM(list);
   UInt len;
   MEMBAR_READ();
@@ -1351,7 +1306,7 @@ static void EnlargeAList(Obj list, Int pos)
             HashUnlock(list);
             ErrorQuit(
                 "Atomic List Assignment: extending fixed size atomic list",
-                0L, 0L);
+                0, 0);
             return; /* flow control hint */
         }
         addr = ADDR_ATOM(list);
@@ -1383,8 +1338,7 @@ void AssAList(Obj list, Int pos, Obj obj)
   if (pos < 1) {
     ErrorQuit(
         "Atomic List Element: <pos>=%d is an invalid index for <list>",
-        (Int) pos, 0L);
-    return; /* flow control hint */
+        (Int) pos, 0);
   }
 
   EnlargeAList(list, pos);
@@ -1418,8 +1372,7 @@ static Obj AtomicCompareSwapAList(Obj list, Int pos, Obj old, Obj new)
     if (pos < 1) {
         ErrorQuit(
             "Atomic List Element: <pos>=%d is an invalid index for <list>",
-            (Int)pos, 0L);
-        return False; /* flow control hint */
+            (Int)pos, 0);
     }
 
     EnlargeAList(list, pos);
@@ -1447,8 +1400,7 @@ UInt AddAList(Obj list, Obj obj)
   if (TNUM_OBJ(list) != T_ALIST) {
     HashUnlock(list);
     ErrorQuit("Atomic List Assignment: extending fixed size atomic list",
-      0L, 0L);
-    return 0; /* flow control hint */
+      0, 0);
   }
   addr = ADDR_ATOM(list);
   pol = (UInt)addr[0].atom;
@@ -1628,7 +1580,7 @@ static Obj BindOncePosObj(Obj obj, Obj index, Obj *new, int eval, const char *cu
       UInt *mptr[2];
       mptr[0] = (UInt *)contents;
       mptr[1] = 0;
-      ResizeBag(mptr, sizeof(Bag) * (n+1));
+      ResizeBag((Bag)mptr, sizeof(Bag) * (n+1));
       MEMBAR_WRITE();
       SET_PTR_BAG(obj, (void *)(mptr[0]));
     }
@@ -1730,7 +1682,7 @@ static Obj FuncStrictBindOnce(Obj self, Obj obj, Obj index, Obj new) {
   Obj result;
   result = BindOnce(obj, index, &new, 0, "StrictBindOnce");
   if (result)
-    ErrorQuit("StrictBindOnce: Element already initialized", 0L, 0L);
+    ErrorQuit("StrictBindOnce: Element already initialized", 0, 0);
   return result;
 }
 
@@ -1781,38 +1733,38 @@ static StructBagNames BagNames[] = {
 
 static StructGVarFunc GVarFuncs[] = {
 
-    GVAR_FUNC(AtomicList, -1, "list|count, obj"),
-    GVAR_FUNC(FixedAtomicList, -1, "list|count, obj"),
-    GVAR_FUNC(MakeFixedAtomicList, 1, "list"),
-    GVAR_FUNC(FromAtomicList, 1, "list"),
-    GVAR_FUNC(AddAtomicList, 2, "list, obj"),
-    GVAR_FUNC(GET_ATOMIC_LIST, 2, "list, index"),
-    GVAR_FUNC(SET_ATOMIC_LIST, 3, "list, index, value"),
-    GVAR_FUNC(COMPARE_AND_SWAP, 4, "list, index, old, new"),
-    GVAR_FUNC(ATOMIC_BIND, 3, "list, index, new"),
-    GVAR_FUNC(ATOMIC_UNBIND, 3, "list, index, old"),
+    GVAR_FUNC_XARGS(AtomicList, -1, "list|count, obj"),
+    GVAR_FUNC_XARGS(FixedAtomicList, -1, "list|count, obj"),
+    GVAR_FUNC_1ARGS(MakeFixedAtomicList, list),
+    GVAR_FUNC_1ARGS(FromAtomicList, list),
+    GVAR_FUNC_2ARGS(AddAtomicList, list, obj),
+    GVAR_FUNC_2ARGS(GET_ATOMIC_LIST, list, index),
+    GVAR_FUNC_3ARGS(SET_ATOMIC_LIST, list, index, value),
+    GVAR_FUNC_4ARGS(COMPARE_AND_SWAP, list, index, old, new),
+    GVAR_FUNC_3ARGS(ATOMIC_BIND, list, index, new),
+    GVAR_FUNC_3ARGS(ATOMIC_UNBIND, list, index, old),
 
-    GVAR_FUNC(ATOMIC_ADDITION, 3, "list, index, inc"),
-    GVAR_FUNC(AtomicRecord, -1, "[capacity]"),
-    GVAR_FUNC(IS_ATOMIC_LIST, 1, "object"),
-    GVAR_FUNC(IS_FIXED_ATOMIC_LIST, 1, "object"),
-    GVAR_FUNC(IS_ATOMIC_RECORD, 1, "object"),
-    GVAR_FUNC(GET_ATOMIC_RECORD, 3, "record, field, default"),
-    GVAR_FUNC(SET_ATOMIC_RECORD, 3, "record, field, value"),
-    GVAR_FUNC(UNBIND_ATOMIC_RECORD, 2, "record, field"),
-    GVAR_FUNC(FromAtomicRecord, 1, "record"),
-    GVAR_FUNC(FromAtomicComObj, 1, "record"),
-    GVAR_FUNC(ThreadLocalRecord, -1, "record [, record]"),
-    GVAR_FUNC(SetTLDefault, 3, "threadLocalRecord, name, value"),
-    GVAR_FUNC(SetTLConstructor, 3, "threadLocalRecord, name, function"),
-    GVAR_FUNC(MakeWriteOnceAtomic, 1, "obj"),
-    GVAR_FUNC(MakeReadWriteAtomic, 1, "obj"),
-    GVAR_FUNC(MakeStrictWriteOnceAtomic, 1, "obj"),
-    GVAR_FUNC(BindOnce, 3, "obj, index, value"),
-    GVAR_FUNC(StrictBindOnce, 3, "obj, index, value"),
-    GVAR_FUNC(TestBindOnce, 3, "obj, index, value"),
-    GVAR_FUNC(BindOnceExpr, 3, "obj, index, func"),
-    GVAR_FUNC(TestBindOnceExpr, 3, "obj, index, func"),
+    GVAR_FUNC_3ARGS(ATOMIC_ADDITION, list, index, inc),
+    GVAR_FUNC_XARGS(AtomicRecord, -1, "[capacity]"),
+    GVAR_FUNC_1ARGS(IS_ATOMIC_LIST, object),
+    GVAR_FUNC_1ARGS(IS_FIXED_ATOMIC_LIST, object),
+    GVAR_FUNC_1ARGS(IS_ATOMIC_RECORD, object),
+    GVAR_FUNC_3ARGS(GET_ATOMIC_RECORD, record, field, default),
+    GVAR_FUNC_3ARGS(SET_ATOMIC_RECORD, record, field, value),
+    GVAR_FUNC_2ARGS(UNBIND_ATOMIC_RECORD, record, field),
+    GVAR_FUNC_1ARGS(FromAtomicRecord, record),
+    GVAR_FUNC_1ARGS(FromAtomicComObj, record),
+    GVAR_FUNC_XARGS(ThreadLocalRecord, -1, "record [, record]"),
+    GVAR_FUNC_3ARGS(SetTLDefault, threadLocalRecord, name, value),
+    GVAR_FUNC_3ARGS(SetTLConstructor, threadLocalRecord, name, function),
+    GVAR_FUNC_1ARGS(MakeWriteOnceAtomic, obj),
+    GVAR_FUNC_1ARGS(MakeReadWriteAtomic, obj),
+    GVAR_FUNC_1ARGS(MakeStrictWriteOnceAtomic, obj),
+    GVAR_FUNC_3ARGS(BindOnce, obj, index, value),
+    GVAR_FUNC_3ARGS(StrictBindOnce, obj, index, value),
+    GVAR_FUNC_3ARGS(TestBindOnce, obj, index, value),
+    GVAR_FUNC_3ARGS(BindOnceExpr, obj, index, func),
+    GVAR_FUNC_3ARGS(TestBindOnceExpr, obj, index, func),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -1877,11 +1829,6 @@ static Int InitKernel (
   TypeObjFuncs[ T_AREC ] = TypeARecord;
   TypeObjFuncs[ T_ACOMOBJ ] = TypeARecord;
   TypeObjFuncs[ T_TLREC ] = TypeTLRecord;
-  SetTypeObjFuncs[ T_ALIST ] = SetTypeAList;
-  SetTypeObjFuncs[ T_FIXALIST ] = SetTypeAList;
-  SetTypeObjFuncs[ T_APOSOBJ ] = SetTypeAList;
-  SetTypeObjFuncs[ T_AREC ] = SetTypeARecord;
-  SetTypeObjFuncs[ T_ACOMOBJ ] = SetTypeARecord;
   /* install global variables */
   InitCopyGVar("TYPE_ALIST", &TYPE_ALIST);
   InitCopyGVar("TYPE_AREC", &TYPE_AREC);
@@ -1997,7 +1944,6 @@ static Int InitKernel (
       }
   }
 
-  /* return success                                                      */
   return 0;
 }
 
@@ -2012,7 +1958,6 @@ static Int InitLibrary (
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 

@@ -47,7 +47,7 @@
 
 <h3>5 <span class="Heading">Groups and Homomorphisms</span></h3>
 
-<p>In this chapter we will show some computations with groups. The examples deal mostly with permutation groups, because they are the easiest to input. The functions mentioned here, like <code class="func">Group</code> (<span class="RefLink">Reference: Group Libraries</span>), <code class="func">Size</code> (<span class="RefLink">Reference: Size</span>) or <code class="func">SylowSubgroup</code> (<span class="RefLink">Reference: SylowSubgroup</span>), however, are the same for all kinds of groups, although the algorithms which compute the information of course will be different in most cases.</p>
+<p>In this chapter we will show some computations with groups. The examples deal mostly with permutation groups, because they are the easiest to input. The functions mentioned here, like <code class="func">Group</code> (<span class="RefLink">Reference: Group</span>), <code class="func">Size</code> (<span class="RefLink">Reference: Size</span>) or <code class="func">SylowSubgroup</code> (<span class="RefLink">Reference: SylowSubgroup</span>), however, are the same for all kinds of groups, although the algorithms which compute the information of course will be different in most cases.</p>
 
 <p><a id="X85ED46007CED6191" name="X85ED46007CED6191"></a></p>
 
@@ -121,9 +121,9 @@ true
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hom := NaturalHomomorphismByNormalSubgroup( norm, elab );</span>
-[ (2,3)(6,7), (3,4)(7,8), (3,5)(4,6), (5,7)(6,8), (5,6)(7,8),
+[ (2,3)(6,7), (3,4)(7,8), (3,5)(4,6), (5,7)(6,8), (5,6)(7,8), 
   (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,7)(6,8), (1,5)(2,6)(3,7)(4,8)
- ] -&gt; [ (1,2)(5,6), (2,3)(6,7), (2,4)(3,5), (4,6)(5,7), (4,5)(6,7),
+ ] -&gt; [ (1,2)(5,6), (2,3)(6,7), (2,4)(3,5), (4,6)(5,7), (4,5)(6,7), 
   (), (), () ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := Image( hom );</span>
 Group([ (1,2)(5,6), (2,3)(6,7), (2,4)(3,5), (4,6)(5,7), (4,5)(6,7),
@@ -132,7 +132,7 @@ Group([ (1,2)(5,6), (2,3)(6,7), (2,4)(3,5), (4,6)(5,7), (4,5)(6,7),
 168
 </pre></div>
 
-<p>The factor group is again represented as a permutation group (its first three generators are trivial, meaning that the first three generators of the preimage are in the kernel of <code class="code">hom</code>). However, the action domain of this factor group has nothing to do with the action domain of <code class="code">norm</code>. (It only happens that both are subsets of the natural numbers.) We can now form images and preimages under the natural homomorphism. The set of preimages of an element under <code class="code">hom</code> is a coset modulo <code class="code">elab</code>. We use the function <code class="func">PreImages</code> (<span class="RefLink">Reference: PreImages</span>) here because <code class="code">hom</code> is not a bijection, so an element of the range can have several preimages or none at all.</p>
+<p>The factor group is again represented as a permutation group (its last three generators are trivial, meaning that the last three generators of the preimage are in the kernel of <code class="code">hom</code>). However, the action domain of this factor group has nothing to do with the action domain of <code class="code">norm</code>. (It only happens that both are subsets of the natural numbers.) We can now form images and preimages under the natural homomorphism. The set of preimages of an element under <code class="code">hom</code> is a coset modulo <code class="code">elab</code>. We use the function <code class="func">PreImages</code> (<span class="RefLink">Reference: PreImages</span>) here because <code class="code">hom</code> is not a bijection, so an element of the range can have several preimages or none at all.</p>
 
 
 <div class="example"><pre>
@@ -156,7 +156,7 @@ RightCoset(Group([ (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,7)(6,8), (1,5)
 true
 </pre></div>
 
-<p>The factor group <code class="code">f</code> is a simple group, i.e., it has no non-trivial normal subgroups. <strong class="pkg">GAP</strong> can detect this fact, and it can then also find the name by which this simple group is known among group theorists. (Such names are of course not available for non-simple groups.)</p>
+<p>The factor group <code class="code">f</code> is a simple group, i.e., it is a non-trivial group whose only normal subgroups are its trivial subgroup and itself. <strong class="pkg">GAP</strong> can detect this fact, and it can then also find the name by which this simple group is known among group theorists. (Such names are of course not available for non-simple groups.)</p>
 
 
 <div class="example"><pre>
@@ -204,8 +204,6 @@ false
 
 <p>In order to get another representation of <code class="code">a8</code>, we consider another action, namely that on the elements of a certain conjugacy class by conjugation.</p>
 
-<p>In the following example we temporarily increase the line length limit from its default value 80 to 82 in order to make the long expression fit into one line.</p>
-
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ccl := ConjugacyClasses( a8 );; Length( ccl );</span>
@@ -229,7 +227,7 @@ false
 
 <p>Note also the function <code class="func">First</code> (<span class="RefLink">Reference: First</span>), used to find the first element in a list which passes some test.</p>
 
-<p>In this example, we have specified the action function <code class="func">OnPoints</code> (<span class="RefLink">Reference: OnPoints</span>) in this example, which is defined as <code class="code">OnPoints( </code><span class="SimpleMath">\(d\)</span><code class="code">, </code><span class="SimpleMath">\(g\)</span><code class="code"> ) = </code><span class="SimpleMath">\(d\)</span><code class="code"> ^ </code><span class="SimpleMath">\(g\)</span>. This "caret" operator denotes conjugation in a group if both arguments <span class="SimpleMath">\(d\)</span> and <span class="SimpleMath">\(g\)</span> are group elements (contained in a common group), but it also denotes the natural action of permutations on positive integers (and exponentiation of integers as well, of course). It is in fact the default action and will be supplied by the system if not given. Another common action is for example always assumes <code class="func">OnRight</code> (<span class="RefLink">Reference: OnRight</span>), which means right multiplication, defined as <span class="SimpleMath">\(d\)</span><code class="code"> * </code><span class="SimpleMath">\(g\)</span>. (Group actions in <strong class="pkg">GAP</strong> are always from the right.)</p>
+<p>In this example, we have specified the action function <code class="func">OnPoints</code> (<span class="RefLink">Reference: OnPoints</span>) in this example, which is defined as <code class="code">OnPoints( </code><span class="SimpleMath">\(d\)</span><code class="code">, </code><span class="SimpleMath">\(g\)</span><code class="code"> ) = </code><span class="SimpleMath">\(d\)</span><code class="code"> ^ </code><span class="SimpleMath">\(g\)</span>. This "caret" operator denotes conjugation in a group if both arguments <span class="SimpleMath">\(d\)</span> and <span class="SimpleMath">\(g\)</span> are group elements (contained in a common group), but it also denotes the natural action of permutations on positive integers (and exponentiation of integers as well, of course). It is in fact the default action and will be supplied by the system if not given. Another common action is for example <code class="func">OnRight</code> (<span class="RefLink">Reference: OnRight</span>), which means right multiplication, defined as <span class="SimpleMath">\(d\)</span><code class="code"> * </code><span class="SimpleMath">\(g\)</span>. (Group actions in <strong class="pkg">GAP</strong> are always from the right.)</p>
 
 <p>We now have a permutation representation <code class="code">op</code> on 112 points, which we test for primitivity. If it is not primitive, we can obtain a minimal block system (i.e., one where the blocks have minimal length) by the function <code class="func">Blocks</code> (<span class="RefLink">Reference: Blocks</span>).</p>
 
@@ -240,7 +238,7 @@ false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks := Blocks( op, [ 1 .. 112 ] );;</span>
 </pre></div>
 
-<p>Note that we must specify the domain of the action. You might think that the functions <code class="func">IsPrimitive</code> (<span class="RefLink">Reference: IsPrimitive</span>) and <code class="func">Blocks</code> (<span class="RefLink">Reference: Blocks</span>) could use <code class="code">[ 1 .. 112 ]</code> as default domain if no domain was given. But this is not so easy, for example would the default domain of <code class="code">Group( (2,3,4) )</code> be <code class="code">[ 1 .. 4 ]</code> or <code class="code">[ 2 .. 4 ]</code>? To avoid confusion, all action functions require that you specify the domain of action. If we had specified <code class="code">[ 1 .. 113 ]</code> in the primitivity test above, point 113 would have been a fixpoint (and the action would not even have been transitive).</p>
+<p>Note that we must specify the domain of the action. You might think that the functions <code class="func">IsPrimitive</code> (<span class="RefLink">Reference: IsPrimitive</span>) and <code class="func">Blocks</code> (<span class="RefLink">Reference: Blocks</span>) could use <code class="code">[ 1 .. 112 ]</code> as default domain if no domain was given. But this is not so easy, for example would the default domain of <code class="code">Group( (2,3,4) )</code> be <code class="code">[ 1 .. 4 ]</code> or <code class="code">[ 2 .. 4 ]</code>? To avoid confusion, all action functions require that you specify the domain of action. If we had specified <code class="code">[ 1 .. 113 ]</code> in the primitivity test above, point 113 would have been a fixed point (and the action would not even have been transitive).</p>
 
 <p>Now <code class="code">blocks</code> is a list of blocks (i.e., a list of lists), which we do not print here for the sake of saving paper (try it for yourself). In fact all we want to know is the size of the blocks, or rather how many there are (the product of these two numbers must of course be 112). Then we can obtain a new permutation group of the corresponding degree by letting <code class="code">op</code> act on these blocks setwise.</p>
 
@@ -254,7 +252,7 @@ false
 true
 </pre></div>
 
-<p>Note that we give a third argument (the action function <code class="func">OnSets</code> (<span class="RefLink">Reference: OnSets</span>)) to indicate that the action is not the default action on points but an action on sets of elements given as sorted lists. (Section <span class="RefLink">Reference: Basic Actions</span> lists all actions that are pre-defined by <strong class="pkg">GAP</strong>.)</p>
+<p>Note that we give a third argument (the action function <code class="func">OnSets</code> (<span class="RefLink">Reference: OnSets</span>)) to indicate that the action is not the default action on points but an action on sets of elements given as strictly sorted lists. (Section <span class="RefLink">Reference: Basic Actions</span> lists all actions that are pre-defined by <strong class="pkg">GAP</strong>.)</p>
 
 <p>The action of <code class="code">op</code> on the given block system gave us a new representation on 56 points which is primitive, i.e., the point stabilizer is a maximal subgroup. We compute its preimage in the representation on eight points using the associated action homomorphisms (which of course in this case are monomorphisms). We construct the composition of two homomorphisms with the <code class="code">*</code> operator, reading left-to-right.</p>
 
@@ -384,7 +382,7 @@ Group([ (1,2,3)(4,6,5)(7,8,9)(10,12,11)(13,14,15), (1,2,3)(4,13,9)
 
 <h4>5.3 <span class="Heading">Subgroups as Stabilizers</span></h4>
 
-<p>Action functions can also be used without constructing external sets. We will try to find several subgroups in <code class="code">a8</code> as stabilizers of such actions. One subgroup is immediately available, namely the stabilizer of one point. The index of the stabilizer must of course be equal to the length of the orbit, i.e., 8.</p>
+<p>Action functions can also be used to construct subgroups. We will try to find several subgroups in <code class="code">a8</code> as stabilizers of such actions. One subgroup is immediately available, namely the stabilizer of one point. The index of the stabilizer must of course be equal to the length of the orbit, i.e., 8.</p>
 
 
 <div class="example"><pre>
@@ -472,7 +470,7 @@ true
 
 <p>So we have found a supergroup of <code class="code">u56</code> that is conjugate in <code class="code">a8</code> to <code class="code">u8</code>. This is not surprising, since <code class="code">u8</code> is a point stabilizer, and <code class="code">u56</code> is a two point stabilizer in the natural action of <code class="code">a8</code> on eight points.</p>
 
-<p>Here is a <em>warning</em>: If you specify <code class="func">OnSets</code> (<span class="RefLink">Reference: OnSets</span>) as third argument to a function like <code class="func">Stabilizer</code> (<span class="RefLink">Reference: Stabilizers</span>), you have to make sure that the point (i.e. the second argument) is indeed a set. Otherwise you will get a puzzling error message or even wrong results! In the above example, the second argument <code class="code">blocks[1]</code> came from the function <code class="func">Blocks</code> (<span class="RefLink">Reference: Blocks</span>), which returns a list of sets, so everything was OK.</p>
+<p>Here is a <em>warning</em>: If you specify <code class="func">OnSets</code> (<span class="RefLink">Reference: OnSets</span>) as third argument to a function like <code class="func">Stabilizer</code> (<span class="RefLink">Reference: Stabilizer</span>), you have to make sure that the point (i.e. the second argument) is indeed a set. Otherwise you will get a puzzling error message or even wrong results! In the above example, the second argument <code class="code">blocks[1]</code> came from the function <code class="func">Blocks</code> (<span class="RefLink">Reference: Blocks</span>), which returns a list of sets, so everything was OK.</p>
 
 <p>Actually there is a third block system of <code class="code">a8_56</code> that gives rise to a third subgroup.</p>
 
@@ -494,7 +492,7 @@ true
 true
 </pre></div>
 
-<p><code class="func">Stabilizer</code> (<span class="RefLink">Reference: Stabilizers</span>) is not only applicable to groups like <code class="code">a8</code> but also to their subgroups like <code class="code">u56</code>. So another method to find a new subgroup is to compute the stabilizer of another point in <code class="code">u56</code>. Note that <code class="code">u56</code> already leaves 1 and 2 fixed.</p>
+<p><code class="func">Stabilizer</code> (<span class="RefLink">Reference: Stabilizer</span>) is not only applicable to groups like <code class="code">a8</code> but also to their subgroups like <code class="code">u56</code>. So another method to find a new subgroup is to compute the stabilizer of another point in <code class="code">u56</code>. Note that <code class="code">u56</code> already leaves 1 and 2 fixed.</p>
 
 
 <div class="example"><pre>
@@ -568,10 +566,11 @@ true
 105
 </pre></div>
 
-<p>Of course the stabilizer <code class="code">u105</code> is in fact the centralizer of the element <code class="code">(1,2)(3,4)(5,6)(7,8)</code>. <code class="func">Stabilizer</code> (<span class="RefLink">Reference: Stabilizers</span>) notices that and computes the stabilizer using the centralizer algorithm for permutation groups. In the usual way we now look for the subgroups above <code class="code">u105</code>.</p>
+<p>Of course the stabilizer <code class="code">u105</code> is in fact the centralizer of the element <code class="code">(1,2)(3,4)(5,6)(7,8)</code>. <code class="func">Stabilizer</code> (<span class="RefLink">Reference: Stabilizer</span>) notices that and computes the stabilizer using the centralizer algorithm for permutation groups. In the usual way we now look for the subgroups above <code class="code">u105</code>.</p>
 
 
 <div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">orb:=Set(orb);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks := Blocks( a8, orb );; Length( blocks );</span>
 15
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set(blocks[1]);</span>
@@ -580,22 +579,22 @@ true
   (1,8)(2,7)(3,6)(4,5) ]
 </pre></div>
 
-<p>To find the subgroup of index 15 we again use closure. Now we must be a little bit careful to avoid confusion. <code class="code">u105</code> is the stabilizer of <code class="code">(1,2)(3,4)(5,6)(7,8)</code>. We know that there is a correspondence between the points of the orbit and the cosets of <code class="code">u105</code>. The point <code class="code">(1,2)(3,4)(5,6)(7,8)</code> corresponds to <code class="code">u105</code>. To get the subgroup above <code class="code">u105</code> that has index 15 in <code class="code">a8</code>, we must form the closure of <code class="code">u105</code> with an element of the coset that corresponds to any other point in the first block. If we choose the point <code class="code">(1,3)(2,4)(5,8)(6,7)</code>, we must use an element of <code class="code">a8</code> that maps <code class="code">(1,2)(3,4)(5,6)(7,8)</code> to <code class="code">(1,3)(2,4)(5,8)(6,7)</code>. The function <code class="func">RepresentativeAction</code> (<span class="RefLink">Reference: RepresentativeAction</span>) does what we need. It takes a group and two points and returns an element of the group that maps the first point to the second. In fact it also allows you to specify the action as an optional fourth argument as usual, but we do not need this here. If no such element exists in the group, i.e., if the two points do not lie in one orbit under the group, <code class="func">RepresentativeAction</code> (<span class="RefLink">Reference: RepresentativeAction</span>) returns <code class="keyw">fail</code>.</p>
+<p>To find the subgroup of index 15 we again use closure. Now we must be a little bit careful to avoid confusion. <code class="code">u105</code> is the stabilizer of <code class="code">(1,2)(3,4)(5,6)(7,8)</code>. We know that there is a correspondence between the points of the orbit and the cosets of <code class="code">u105</code>. The point <code class="code">(1,2)(3,4)(5,6)(7,8)</code> corresponds to <code class="code">u105</code>. To get the subgroup above <code class="code">u105</code> that has index 15 in <code class="code">a8</code>, we must form the closure of <code class="code">u105</code> with an element of the coset that corresponds to any other point in the first block. If we choose the point <code class="code">(1,3)(2,4)(5,7)(6,8)</code>, we must use an element of <code class="code">a8</code> that maps <code class="code">(1,2)(3,4)(5,6)(7,8)</code> to <code class="code">(1,3)(2,4)(5,7)(6,8)</code>. The function <code class="func">RepresentativeAction</code> (<span class="RefLink">Reference: RepresentativeAction</span>) does what we need. It takes a group and two points and returns an element of the group that maps the first point to the second. In fact it also allows you to specify the action as an optional fourth argument as usual, but we do not need this here. If no such element exists in the group, i.e., if the two points do not lie in one orbit under the group, <code class="func">RepresentativeAction</code> (<span class="RefLink">Reference: RepresentativeAction</span>) returns <code class="keyw">fail</code>.</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rep := RepresentativeAction( a8, (1,2)(3,4)(5,6)(7,8),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                       (1,3)(2,4)(5,8)(6,7) );</span>
-(1,5,7,2,8,4,3)
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                       (1,3)(2,4)(5,7)(6,8) );</span>
+(2,3)(6,7)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u15 := ClosureGroup( u105, rep );; Index( a8, u15 );</span>
 15
 </pre></div>
 
-<p><code class="code">u15</code> is of course a maximal subgroup, because <code class="code">a8</code> has no subgroups of index 3 or 5. There is in fact another class of subgroups of index 15 above <code class="code">u105</code> that we get by adding <code class="code">(2,3)(6,7)</code> to <code class="code">u105</code>.</p>
+<p><code class="code">u15</code> is of course a maximal subgroup, because <code class="code">a8</code> has no subgroups of index 3 or 5. There is in fact another class of subgroups of index 15 above <code class="code">u105</code> that we get by adding <code class="code">(2,3)(6,8)</code> to <code class="code">u105</code>.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u15b := ClosureGroup( u105, (2,3)(6,7) );; Index( a8, u15b );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u15b := ClosureGroup( u105, (2,3)(6,8) );; Index( a8, u15b );</span>
 15
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RepresentativeAction( a8, u15, u15b );</span>
 fail
@@ -723,7 +722,7 @@ false
 
 <h4>5.5 <span class="Heading">Nice Monomorphisms</span></h4>
 
-<p>For some types of groups, the best method to calculate in an isomorphic group in a "better" representation (say, a permutation group). We call an injective homomorphism, that will give such an isomorphic image a "nice monomorphism".</p>
+<p>For some types of groups, the best method for calculations in it is to use instead an isomorphic group in a "better" representation (say, a permutation group). We call an injective homomorphism, that will give such an isomorphic image a "nice monomorphism".</p>
 
 <p>For example in the case of a matrix group we can take the action on the underlying vector space (or a suitable subset) to obtain such a monomorphism:</p>
 
@@ -781,8 +780,8 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">niceaut := NiceObject( aut );</span>
 Group([ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismGroups( niceaut, SymmetricGroup( 4 ) );</span>
-[ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ] -&gt;
-[ (1,2,3,4), (1,3,4), (1,3)(2,4), (1,4)(2,3) ]
+[ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ] -&gt; 
+[ (1,4,2,3), (1,4,2), (1,2)(3,4), (1,3)(2,4) ]
 </pre></div>
 
 <p>The range of a nice monomorphism is in most cases a permutation group, because nice monomorphisms are mostly action homomorphisms. In some cases, like in our last example, the group is solvable and you might prefer a pc group as nice object. You cannot change the nice monomorphism of the automorphism group (because it is the value of the attribute <code class="func">NiceMonomorphism</code> (<span class="RefLink">Reference: NiceMonomorphism</span>)), but you can compose it with an isomorphism from the permutation group to a pc group to obtain your personal nicer monomorphism. If you reconstruct the automorphism group, you can even prescribe it this nicer monomorphism as its <code class="func">NiceMonomorphism</code> (<span class="RefLink">Reference: NiceMonomorphism</span>), because a newly-constructed group will not yet have a <code class="func">NiceMonomorphism</code> (<span class="RefLink">Reference: NiceMonomorphism</span>) set.</p>

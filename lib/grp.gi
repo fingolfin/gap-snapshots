@@ -107,21 +107,21 @@ end);
 ##
 #M  MinimalGeneratingSet(<G>) . . . . . . . . . . . . . for groups
 ##
-InstallMethod(MinimalGeneratingSet,"solvable group via pc",true,
-  [IsGroup],0,
+InstallMethod(MinimalGeneratingSet,"test solvable and 2-generator noncyclic",
+  true, [IsGroup and IsFinite],0,
 function(G)
 local i;
-  if not IsSolvableGroup(G) then
-    if IsGroup(G) and HasGeneratorsOfGroup(G)
+  if not HasIsSolvableGroup(G) and IsSolvableGroup(G) and
+  CanEasilyComputePcgs(G)  then
+    # discovered solvable -- redo
+    return MinimalGeneratingSet(G);
+  elif not IsSolvableGroup(G) then
+    if IsGroup(G) and (not IsCyclic(G)) and HasGeneratorsOfGroup(G)
         and Length(GeneratorsOfGroup(G)) = 2 then
       return GeneratorsOfGroup(G);
     fi;
     TryNextMethod();
   fi;
-  i:=IsomorphismPcGroup(G);
-  G:=Image(i,G);
-  G:=MinimalGeneratingSet(G);
-  return List(G,j->PreImagesRepresentative(i,j));
 end);
 
 #############################################################################
@@ -548,6 +548,16 @@ InstallMethod( IsAlmostSimpleGroup,
 
 #############################################################################
 ##
+#P  IsQuasisimpleGroup( <G> )
+##
+InstallMethod( IsQuasisimpleGroup,
+    "for a group",
+    [ IsGroup ],
+    G -> IsPerfectGroup( G ) and IsSimpleGroup( G / Centre( G ) ) );
+
+
+#############################################################################
+##
 #M  IsSolvableGroup( <G> )  . . . . . . . . . . . test if a group is solvable
 ##
 ##  By the Feit–Thompson odd order theorem, every group of odd order is
@@ -939,6 +949,64 @@ InstallMethod( CompositionSeries,
     "for simple group", true, [IsGroup and IsSimpleGroup], 100,
     S->[S,TrivialSubgroup(S)]);
 
+InstallMethod(CompositionSeriesThrough,"intersection/union",IsElmsColls,
+  [IsGroup and IsFinite,IsList],0,
+function(G,normals)
+local cs,i,j,pre,post,c,new,rev;
+  cs:=CompositionSeries(G);
+  # find normal subgroups not yet in
+  normals:=Filtered(normals,x->not x in cs);
+  # do we satisfy by sheer dumb luck?
+  if Length(normals)=0 then return cs;fi;
+
+  SortBy(normals,x->-Size(x));
+  # check that this is a valid series
+  Assert(0,ForAll([2..Length(normals)],i->IsSubset(normals[i-1],normals[i])));
+
+  # Now move series through normals by closure/intersection
+  for j in normals do
+    # first in cs that does not contain j
+    pre:=PositionProperty(cs,x->not IsSubset(x,j));
+    # first contained in j. 
+    post:=PositionProperty(cs,x->Size(j)>=Size(x) and IsSubset(j,x));
+
+    # if j is in the series, then pre>post. pre=post impossible
+    if pre<post then
+      # so from pre to post-1 needs to be changed
+      new:=cs{[1..pre-1]};
+
+      rev:=[j];
+      i:=post-1;
+      repeat
+        if not IsSubset(rev[Length(rev)],cs[i]) then
+          c:=ClosureGroup(cs[i],j);
+          if Size(c)>Size(rev[Length(rev)]) then
+            # proper down step
+            Add(rev,c);
+          fi;
+        fi;
+        i:=i-1;
+        # at some point this must reach j, then no further step needed
+      until Size(c)=Size(cs[pre-1]) or i<pre; 
+      Append(new,Filtered(Reversed(rev),x->Size(x)<Size(cs[pre-1])));
+
+      i:=pre;
+      repeat
+        if not IsSubset(cs[i],new[Length(new)]) then
+          c:=Intersection(cs[i],j);
+          if Size(c)<Size(new[Length(new)]) then
+            # proper down step
+            Add(new,c);
+          fi;
+        fi;
+        i:=i+1;
+      until Size(c)=Size(cs[post]);
+    fi;
+    cs:=Concatenation(new,cs{[post+1..Length(cs)]});
+  od;
+  return cs;
+end);
+
 
 #############################################################################
 ##
@@ -1209,6 +1277,11 @@ function(G)
   return exp;
 end);
 
+# ranked below the method for abelian groups
+InstallMethod( Exponent,
+    [ "IsGroup and IsFinite and HasConjugacyClasses" ],
+    G-> Lcm(List(ConjugacyClasses(G), c-> Order(Representative(c)))) );
+
 InstallMethod( Exponent,
     "method for finite abelian groups with generators",
     [ IsGroup and IsAbelian and HasGeneratorsOfGroup and IsFinite ],
@@ -1402,25 +1475,8 @@ InstallMethod(MaximalSubgroupClassReps,"default, catch dangerous options",
   true,[IsGroup],0,
 function(G)
 local H,a,m,i,l;
-  # easy case, go without options
-  if not HasTryMaximalSubgroupClassReps(G) then
-    return TryMaximalSubgroupClassReps(G:
-           # as if options were unset
-           cheap:=fail,intersize:=fail,inmax:=fail,nolattice:=fail);
-  fi;
-
-  # hard case -- `Try` is stored
-  if not IsBound(G!.maxsubtrytaint) or G!.maxsubtrytaint=false then
-    # stored and untainted, just go on
-    return TryMaximalSubgroupClassReps(G); 
-  fi;
-
-  # compute anew for new group to avoid taint
-  H:=Group(GeneratorsOfGroup(G));
-  for i in [Size,IsNaturalAlternatingGroup,IsNaturalSymmetricGroup] do
-    if Tester(i)(G) then Setter(i)(H,i(G));fi;
-  od;
-  m:=TryMaximalSubgroupClassReps(H:
+  # use ``try'' and set flags so that a known partial result is not used
+  m:=TryMaximalSubgroupClassReps(G:
           cheap:=false,intersize:=false,inmax:=false,nolattice:=false);
   l:=[];
   for i in m do
@@ -1430,21 +1486,54 @@ local H,a,m,i,l;
   od;
 
   # now we know list is untained, store 
-  SetTryMaximalSubgroupClassReps(G,l);
   return l;
 
 end);
 
-InstallMethod(TryMaximalSubgroupClassReps,"fetch known correct data",true,
-    [IsGroup and HasMaximalSubgroupClassReps],SUM_FLAGS,
-    MaximalSubgroupClassReps);
-
-InstallGlobalFunction(TryMaxSubgroupTainter,function(G)
-  if ForAny(["cheap","intersize","inmax","nolattice"],
-       x->not ValueOption(x) in [fail,false]) then
-       G!.maxsubtrytaint:=true;
+# handle various options and flags
+InstallGlobalFunction(TryMaximalSubgroupClassReps,
+function(G)
+local cheap,nolattice,intersize,attr,kill,i,flags,sup,sub,l;
+  if HasMaximalSubgroupClassReps(G) then
+    return MaximalSubgroupClassReps(G);
   fi;
+  # the four possible options
+  cheap:=ValueOption("cheap");
+  if cheap=fail then cheap:=false;fi;
+  nolattice:=ValueOption("nolattice");
+  if nolattice=fail then nolattice:=false;fi;
+  intersize:=ValueOption("intersize");
+  if intersize=fail then intersize:=false;fi;
+  #inmax:=ValueOption("inmax"); # should have no impact on validity of stored
+  attr:=StoredPartialMaxSubs(G);
+  # now find whether any stored information matches and which ones would be
+  # superseded
+  kill:=[];
+  for i in [1..Length(attr)] do
+    flags:=attr[i][1];
+    # could use this stored result
+    sup:=flags[3]=false or (IsInt(intersize) and intersize<=flags[3]);
+    # would supersede the stored result
+    sub:=intersize=false or (IsInt(flags[3]) and intersize>=flags[3]);
+    sup:=sup and (cheap or not flags[1]); 
+    sub:=sub and (not cheap or flags[1]);
+    sup:=sup and (nolattice or not flags[2]);
+    sub:=sub and (not nolattice or flags[2]);
+    if sup then return attr[i][2];fi; # use stored
+    if sub then AddSet(kill,i);fi; # use stored
+  od;
+  l:=CalcMaximalSubgroupClassReps(G);
+  Add(attr,Immutable([[cheap,nolattice,intersize],l]));
+  # finally kill superseded ones (by replacing with last, which possibly was
+  # just added)
+  for i in Reversed(Set(kill)) do
+    attr[i]:=attr[Length(attr)];
+    Unbind(attr[Length(attr)]);
+  od;
+  return l;
 end);
+
+InstallMethod(StoredPartialMaxSubs,"set",true,[IsGroup],0,x->[]);
 
 #############################################################################
 ##
@@ -1555,9 +1644,9 @@ InstallMethod( ComputedOmegas, [ IsGroup ], 0, G -> [  ] );
 
 #############################################################################
 ##
-#M  RadicalGroup( <G> ) . . . . . . . . . . . . . . . . .  radical of a group
+#M  SolvableRadical( <G> )  . . . . . . . . . . . solvable radical of a group
 ##
-InstallMethod(RadicalGroup,
+InstallMethod( SolvableRadical,
   "factor out Fitting subgroup",
   [IsGroup and IsFinite],
 function(G)
@@ -1565,13 +1654,13 @@ function(G)
   F := FittingSubgroup(G);
   if IsTrivial(F) then return F; fi;
   f := NaturalHomomorphismByNormalSubgroupNC(G,F);
-  return PreImage(f,RadicalGroup(Image(f)));
+  return PreImage(f,SolvableRadical(Image(f)));
 end);
 
-RedispatchOnCondition( RadicalGroup, true, [IsGroup], [IsFinite], 0);
+RedispatchOnCondition( SolvableRadical, true, [IsGroup], [IsFinite], 0);
 
-InstallMethod( RadicalGroup,
-    "solvable group is its own radical",
+InstallMethod( SolvableRadical,
+    "solvable group is its own solvable radical",
     [ IsGroup and IsSolvableGroup ], 100,
     IdFunc );
 
@@ -1892,7 +1981,7 @@ function( G )
     fi;
     spec := SpecialPcgs( G );
     weights := LGWeights( spec );
-    primes := Set( List( weights, x -> x[3] ) );
+    primes := Set( weights, x -> x[3] );
     comp := List( primes, x -> false );
     for i in [1..Length( primes )] do
         gens := spec{Filtered( [1..Length(spec)],
@@ -1919,7 +2008,7 @@ function( G )
     fi;
     spec := SpecialPcgs( G );
     weights := LGWeights( spec );
-    primes := Set( List( weights, x -> x[3] ) );
+    primes := Set( weights, x -> x[3] );
     comp := List( primes, x -> false );
     for i in [1..Length( primes )] do
         gens := spec{Filtered( [1..Length(spec)],
@@ -1949,7 +2038,7 @@ function( G )
     fi;
     spec := SpecialPcgs( G );
     weights := LGWeights( spec );
-    primes := Set( List( weights, x -> x[3] ) );
+    primes := Set( weights, x -> x[3] );
     pis    := Combinations( primes );
     comp   := List( pis, x -> false );
     for i in [1..Length( pis )] do
@@ -1996,7 +2085,7 @@ InstallMethod( Socle, "for nilpotent groups",
       soc := TrivialSubgroup(G);
       # now socle is the product of Omega of Sylow subgroups of the center
       for P in SylowSystem(Center(G)) do
-        soc := ClosureSubgroupNC(soc, Omega(P, PrimePGroup(P)));
+        soc := ClosureSubgroupNC(soc, AsSubgroup(G,Omega(P, PrimePGroup(P))));
       od;
     else
       # compute generators for the torsion Omega p-subgroups of the center
@@ -2319,6 +2408,11 @@ InstallMethod( ClosureGroup, "groups with cheap membership test", IsCollsElms,
   [IsGroup and CanEasilyTestMembership,IsMultiplicativeElementWithInverse],
   ClosureGroupIntest);
 
+InstallMethod( ClosureGroup, "trivial subgroup", IsIdenticalObj,
+  [IsGroup and IsTrivial,IsGroup],
+function(T,U)
+  return U;
+end);
 
 #############################################################################
 ##
@@ -2390,6 +2484,9 @@ InstallGlobalFunction( ClosureSubgroupNC, function(arg)
 local G,obj,close;
     G:=arg[1];
     obj:=arg[2];
+    if HasIsTrivial(G) and IsTrivial(G) and IsGroup(obj) then
+      obj:=AsSubgroup(Parent(G),obj);
+    fi;
     if not HasParent( G ) then
       # don't be obnoxious
       Info(InfoWarning,3,"`ClosureSubgroup' called for orphan group" );
@@ -2577,6 +2674,7 @@ function( G, N )
 local hom,F,new;
   hom:=NaturalHomomorphismByNormalSubgroupNC( G, N );
   F:=ImagesSource(hom);
+  #TODO: Remove the !.nathom component
   if not IsBound(F!.nathom) then
     F!.nathom:=hom;
   else
@@ -2589,16 +2687,6 @@ local hom,F,new;
   fi;
   return F;
 end );
-
-InstallMethod( NaturalHomomorphism, "for a group with natural homomorphism stored",
-    [ IsGroup ],
-function(G)
-  if IsBound(G!.nathom) then
-    return G!.nathom;
-  else
-    Error("no natural homomorphism stored");
-  fi;
-end);
 
 InstallOtherMethod( \/,
     "generic method for two groups",
@@ -2906,6 +2994,18 @@ function(G,U)
   return U;
 end);
 
+InstallOtherMethod( NormalClosure, "generic method for a list of generators",
+  IsIdenticalObj, [ IsGroup, IsList ],
+function(G, list)
+  return NormalClosure(G, Group(list, One(G)));
+end);
+
+InstallOtherMethod( NormalClosure, "generic method for an empty list of generators",
+  [ IsGroup, IsList and IsEmpty ],
+function(G, list)
+  return TrivialSubgroup(G);
+end);
+
 #############################################################################
 ##
 #M  NormalIntersection( <G>, <U> )  . . . . . intersection with normal subgrp
@@ -3067,6 +3167,50 @@ InstallMethod( PCoreOp,
 #M  Stabilizer( <G>, <obj> )
 ##
 
+#############################################################################
+##
+#M  StructuralSeriesOfGroup( <G> )
+##
+InstallMethod( StructuralSeriesOfGroup, "generic",true,[IsGroup and IsFinite],0,
+function(G)
+local ser,r,nat,f,Pker,d,i,j,u,loc,p;
+  ser:=[];
+  r:=SolvableRadical(G);
+  ser:=[G];
+  if Size(r)<Size(G) then
+    nat:=NaturalHomomorphismByNormalSubgroupNC(G,r);
+    f:=Image(nat,G);
+    Pker:=f;
+    d:=DirectFactorsFittingFreeSocle(f);
+    for i in d do
+      Pker:=Intersection(Pker,Normalizer(f,i));
+    od;
+    if Size(Pker)<Size(f) then Add(ser,PreImage(nat,Pker)); fi;
+    if Size(Socle(f))<Size(Pker) then Add(ser,PreImage(nat,Socle(f)));fi;
+    Add(ser,r);
+  fi;
+  d:=DerivedSeriesOfGroup(r);
+  for i in [2..Length(d)] do
+    u:=d[i];
+    loc:=[u];
+    p:=Set(Factors(IndexNC(d[i-1],u)));
+    for j in p do
+      u:=ClosureGroup(u,SylowSubgroup(d[i-1],j));
+      #force elementary
+      while not ForAll(GeneratorsOfGroup(u),x->x^j in loc[Length(loc)]) do
+        r:=NaturalHomomorphismByNormalSubgroupNC(u,loc[Length(loc)]);
+        Pker:=Omega(Range(r),j,1);
+        r:=PreImage(r,Pker);
+        Add(loc,r);
+      od;
+      if Size(u)<Size(ser[Length(ser)]) then
+        Add(loc,u);
+      fi;
+    od;
+    Append(ser,Reversed(loc));
+  od;
+  return ser;
+end);
 
 #############################################################################
 ##
@@ -4233,8 +4377,9 @@ InstallGlobalFunction( SmallSimpleGroup,
 
     if order < 60 then return fail; fi;
 
-    if   order > 10^18
-    then Error("simple groups of order > 10^18 are currently\n",
+    if   order > SIMPLE_GROUPS_ITERATOR_RANGE then 
+      Error("simple groups of order > ",SIMPLE_GROUPS_ITERATOR_RANGE,
+                " are currently\n",
                "not available via this function.");
     fi;
 
@@ -4260,9 +4405,10 @@ InstallGlobalFunction( AllSmallNonabelianSimpleGroups,
 
     min:=Minimum(orders);
     max:=Maximum(orders);
-    if max>10^18 then 
-      Error("simple groups of order > 10^18 are currently\n",
-               "not available via this function.");
+    if max> SIMPLE_GROUPS_ITERATOR_RANGE then 
+      Error("simple groups of order > ",SIMPLE_GROUPS_ITERATOR_RANGE,
+        " are currently\n",
+        "not available via this function.");
     fi;
     it:=SimpleGroupsIterator(min,max);
     grps:=[];
@@ -4342,26 +4488,25 @@ InstallMethod( ViewString,
     "for a group with generators",
     [ IsGroup and HasGeneratorsOfMagmaWithInverses ],
     function( G )
-    if IsEmpty( GeneratorsOfMagmaWithInverses( G ) ) then
+    local nrgens;
+    nrgens := Length( GeneratorsOfMagmaWithInverses( G ) );
+    if nrgens = 0 then
         return "<trivial group>";
-    else
-        return Concatenation("<group with ",
-                       String( Length( GeneratorsOfMagmaWithInverses( G ) ) ),
-                       " generators>");
     fi;
+    return Concatenation("<group with ", Pluralize( nrgens, "generator" ), ">");
     end );
 
 InstallMethod( ViewString,
     "for a group with generators and size",
     [ IsGroup and HasGeneratorsOfMagmaWithInverses and HasSize],
     function( G )
-    if IsEmpty( GeneratorsOfMagmaWithInverses( G ) ) then
+    local nrgens;
+    nrgens := Length(GeneratorsOfMagmaWithInverses( G ) );
+    if nrgens = 0 then
         return "<trivial group>";
-    else
-        return Concatenation("<group of size ", String(Size(G))," with ",
-             String(Length( GeneratorsOfMagmaWithInverses( G ) )),
-             " generators>");
     fi;
+    return Concatenation("<group of size ", String(Size(G))," with ",
+                         Pluralize(nrgens, "generator"), ">");
     end );
 
 InstallMethod( ViewObj, "for a group",
@@ -4413,6 +4558,7 @@ end );
 InstallGlobalFunction(MakeGroupyType,
 function(fam,filt,gens,id,isgroup)
 
+  filt:=filt and HasIsEmpty;  # having HasIsEmpty but not IsEmpty indicates "non-empty"
   if IsFinite(gens) then
     if isgroup then
       filt:=filt and IsFinitelyGeneratedGroup;
@@ -4433,10 +4579,41 @@ function(fam,filt,gens,id,isgroup)
         fi;
       fi;
     elif isgroup and Length(gens)<=1 then # cyclic not for magmas
-      filt:=filt and IsCyclic;
+      if Length(gens) = 0 then
+        filt:=filt and IsTrivial;
+      else
+        filt:=filt and IsCyclic;
+      fi;
     fi;
   fi;
   return NewType(fam,filt);
+end);
+
+InstallGlobalFunction(MakeGroupyObj,
+function(fam,filt,gens,id,attr...)
+  local isgroup, typ;
+  Assert(0, IsList(attr));
+  Assert(0, IsEvenInt(Length(attr)));
+
+  # set generators
+  Append(attr, [ GeneratorsOfMagmaWithInverses, gens ]);
+
+  # set one, if given
+  if not IsBool(id) then
+    Append(attr, [ One, id ]);
+  fi;
+
+  # make the type
+  filt := IsAttributeStoringRep and filt;
+  isgroup := IS_IMPLIED_BY(IsGroup, filt);
+  typ := MakeGroupyType(fam,filt,gens,id,isgroup);
+
+  if isgroup and IS_IMPLIED_BY(IsTrivial, typ) then
+    Append(attr, [ Size, 1 ]);
+  fi;
+
+  return CallFuncList(ObjectifyWithAttributes, Concatenation([rec(), typ], attr));
+
 end);
 
 #############################################################################
@@ -4458,15 +4635,7 @@ local G,typ;
   fi;
 
   gens:=AsList(gens);
-  typ:=MakeGroupyType(FamilyObj(gens),
-          IsGroup and IsAttributeStoringRep 
-          and HasIsEmpty and HasGeneratorsOfMagmaWithInverses,
-          gens,false,true);
-
-  G:=rec();
-  ObjectifyWithAttributes(G,typ,GeneratorsOfMagmaWithInverses,gens);
-
-  return G;
+  return MakeGroupyObj(FamilyObj(gens), IsGroup, gens, false);
 end );
 
 InstallMethod( GroupWithGenerators,
@@ -4483,16 +4652,7 @@ local G,typ;
   fi;
 
   gens:=AsList(gens);
-  typ:=MakeGroupyType(FamilyObj(gens),
-          IsGroup and IsAttributeStoringRep 
-            and HasIsEmpty and HasGeneratorsOfMagmaWithInverses and HasOne,
-            gens,id,true);
-
-  G:=rec();
-  ObjectifyWithAttributes(G,typ,GeneratorsOfMagmaWithInverses,gens,
-                          One,id);
-
-  return G;
+  return MakeGroupyObj(FamilyObj(gens), IsGroup, gens, id);
 end );
 
 InstallMethod( GroupWithGenerators,"method for empty list and element",
@@ -4502,16 +4662,7 @@ local G,fam,typ;
 
   fam:= CollectionsFamily( FamilyObj( id ) );
 
-  typ:=IsGroup and IsAttributeStoringRep
-        and HasGeneratorsOfMagmaWithInverses and HasOne and IsTrivial;
-  typ:=NewType(fam,typ);
-
-  G:= rec();
-  ObjectifyWithAttributes( G, typ,
-                            GeneratorsOfMagmaWithInverses, empty,
-                            One, id );
-
-  return G;
+  return MakeGroupyObj(fam, IsGroup, empty, id);
 end );
 
 
@@ -5045,9 +5196,7 @@ RedispatchOnCondition(MinimalNormalSubgroups, true,
 ##
 #M  SmallGeneratingSet(<G>)
 ##
-InstallMethod(SmallGeneratingSet,"generators subset",
-  [IsGroup and HasGeneratorsOfGroup],
-function (G)
+BindGlobal("SMALLGENERATINGSETGENERIC",function (G)
 local  i, U, gens,test;
   gens := Set(GeneratorsOfGroup(G));
   i := 1;
@@ -5067,6 +5216,9 @@ local  i, U, gens,test;
   od;
   return gens;
 end);
+
+InstallMethod(SmallGeneratingSet,"generators subset",
+  [IsGroup and HasGeneratorsOfGroup],SMALLGENERATINGSETGENERIC);
 
 #############################################################################
 ##
@@ -5111,57 +5263,66 @@ InstallGlobalFunction( PowerMapOfGroupWithInvariants,
           j,         # loop over `cand'
           c,         # one candidate
           pow,       # power of a representative
-          powinv;    # invariants of `pow'
+          powinv,    # invariants of `pow'
+          limit;     # do we limit calculation if exponent exceeds order?
 
     reps := List( ccl, Representative );
     ord  := List( reps, Order );
     invs := [];
     map  := [];
     nccl := Length( ccl );
+    limit:=ValueOption("onlyuptoorder")=true;
 
     # Loop over the classes
     for i in [ 1 .. nccl ] do
 
-      candord:= ord[i] / Gcd( ord[i], n );
-      cand:= Filtered( [ 1 .. nccl ], x -> ord[x] = candord );
-      if Length( cand ) = 1 then
-
-        # The image is unique, no membership test is necessary.
-        map[i]:= cand[1];
-
+      if ord[i]=1 then
+        # identity always maps to itself
+        map[i]:=i;
+      elif n>ord[i] and limit then
+        map[i]:=0;
       else
-
-        # We check the invariants.
-        pow:= Representative( ccl[i] )^n;
-        powinv:= List( invariants, fun -> fun( pow ) );
-        for c in cand do
-          if not IsBound( invs[c] ) then
-            invs[c]:= List( invariants, fun -> fun( reps[c] ) );
-          fi;
-        od;
-        cand:= Filtered( cand, c -> invs[c] = powinv );
-        len:= Length( cand );
-        if len = 1 then
+        candord:= ord[i] / Gcd( ord[i], n );
+        cand:= Filtered( [ 1 .. nccl ], x -> ord[x] = candord );
+        if Length( cand ) = 1 then
 
           # The image is unique, no membership test is necessary.
           map[i]:= cand[1];
 
         else
 
-          # We have to check all candidates except one.
-          for j in [ 1 .. len - 1 ] do
-            c:= cand[j];
-            if pow in ccl[c] then
-              map[i]:= c;
-              break;
+          # We check the invariants.
+          pow:= Representative( ccl[i] )^n;
+          powinv:= List( invariants, fun -> fun( pow ) );
+          for c in cand do
+            if not IsBound( invs[c] ) then
+              invs[c]:= List( invariants, fun -> fun( reps[c] ) );
             fi;
           od;
+          cand:= Filtered( cand, c -> invs[c] = powinv );
+          len:= Length( cand );
+          if len = 1 then
 
-          # The last candidate may be the right one.
-          if not IsBound( map[i] ) then
-            map[i]:= cand[ len ];
+            # The image is unique, no membership test is necessary.
+            map[i]:= cand[1];
+
+          else
+
+            # We have to check all candidates except one.
+            for j in [ 1 .. len - 1 ] do
+              c:= cand[j];
+              if pow in ccl[c] then
+                map[i]:= c;
+                break;
+              fi;
+            od;
+
+            # The last candidate may be the right one.
+            if not IsBound( map[i] ) then
+              map[i]:= cand[ len ];
+            fi;
+
           fi;
-
         fi;
 
       fi;
@@ -5793,7 +5954,7 @@ function(G,elm)
 
 
   # no pool needed: If the length of w is n, and g is a generator, the
-  # length of w/g can not be less than n-1 (otherwise (w/g)*g is a shorter
+  # length of w/g cannot be less than n-1 (otherwise (w/g)*g is a shorter
   # word) and cannot be more than n+1 (otherwise w/g is a shorter word for
   # it). Thus, if the length of w/g is OK mod 3, it is the right path.
 

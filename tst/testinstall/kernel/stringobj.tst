@@ -17,9 +17,11 @@ Error, ShrinkAllocationString: <str> must be a string (not the integer 1)
 
 #
 gap> CHAR_INT(fail);
-Error, CHAR_INT: <val> must be a small integer (not the value 'fail')
+Error, CHAR_INT: <val> must be an integer between 0 and 255 (not the value 'fa\
+il')
 gap> CHAR_INT(-1);
-Error, <val> must be an integer between 0 and 255
+Error, CHAR_INT: <val> must be an integer between 0 and 255 (not the integer -\
+1)
 gap> CHAR_INT(65);
 'A'
 
@@ -31,9 +33,11 @@ gap> INT_CHAR('A');
 
 #
 gap> CHAR_SINT(fail);
-Error, CHAR_SINT: <val> must be a small integer (not the value 'fail')
+Error, CHAR_SINT: <val> must be an integer between -128 and 127 (not the value\
+ 'fail')
 gap> CHAR_SINT(255);
-Error, <val> must be an integer between -128 and 127
+Error, CHAR_SINT: <val> must be an integer between -128 and 127 (not the integ\
+er 255)
 gap> CHAR_SINT(65);
 'A'
 
@@ -55,7 +59,7 @@ Error, INTLIST_STRING: <val> must be a string (not the integer 1)
 gap> SINTLIST_STRING("ABC");
 [ 65, 66, 67 ]
 gap> SINTLIST_STRING(1);
-Error, INTLIST_STRING: <val> must be a string (not the integer 1)
+Error, SINTLIST_STRING: <val> must be a string (not the integer 1)
 
 #
 gap> STRING_SINTLIST([ 65, 66, 67 ]);
@@ -74,12 +78,40 @@ gap> REVNEG_STRING(1);
 Error, REVNEG_STRING: <val> must be a string (not the integer 1)
 
 #
+# TypeString
+#
+
+# Verify that sorted strings remember their sorting status
+gap> s:="abc";
+"abc"
+gap> HasIsSSortedList(s);
+false
+gap> IsSSortedList(s);
+true
+gap> TNAM_OBJ(s);
+"list (string,ssort)"
+gap> HasIsSSortedList(s);
+true
+
+# Verify that unsorted strings remember their sorting status
+gap> s:="cba";
+"cba"
+gap> HasIsSSortedList(s);
+false
+gap> IsSSortedList(s);
+false
+gap> TNAM_OBJ(s);
+"list (string,nsort)"
+gap> HasIsSSortedList(s);
+true
+
+#
 gap> CONV_STRING(1);
-Error, ConvString: <string> must be a string (not the integer 1)
+Error, CONV_STRING: <string> must be a string (not the integer 1)
 
 #
 gap> COPY_TO_STRING_REP(1);
-Error, CopyToStringRep: <string> must be a string (not the integer 1)
+Error, COPY_TO_STRING_REP: <string> must be a string (not the integer 1)
 
 #
 gap> POSITION_SUBSTRING("abc","x",0);
@@ -106,9 +138,9 @@ Error, NormalizeWhitespace: <string> must be a string (not the integer 1)
 gap> s:="abcdabcd";; REMOVE_CHARACTERS(s, "db"); s;
 "acac"
 gap> REMOVE_CHARACTERS(1,1);
-Error, RemoveCharacters: <string> must be a string (not the integer 1)
+Error, REMOVE_CHARACTERS: <string> must be a string (not the integer 1)
 gap> REMOVE_CHARACTERS(s,1);
-Error, RemoveCharacters: <rem> must be a string (not the integer 1)
+Error, REMOVE_CHARACTERS: <rem> must be a string (not the integer 1)
 
 #
 gap> s:="abc";; TranslateString(s,UPPERCASETRANSTABLE); s;

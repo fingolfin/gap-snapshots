@@ -11,7 +11,7 @@
 ##
 #W  gac, the GAP compiler
 ##
-##  gac [-d] [-c|-C] [-o <output>] {-f<option>} <input>...
+##  gac [-d] [-c|-C] [-o <output>] <input>...
 ##
 ##  'gac'  compiles the input files.   Input files  must be  GAP  source code
 ##  (suffix '.g' or '.gap'),  C source code (suffix '.c'),  or compiled  code
@@ -29,10 +29,6 @@
 ##
 ##  If '-C is given, then 'gac' only compiles the input files to C code, which 
 ##  will require compilation and linking to be usable.
-##
-##  If '-r' is given, then statically compiled files will be assumed to be given
-##  by pathnames relative to the GAP root, and will be compiled for automatic loading
-##  when files are sought relative to the GAP root.
 ##
 ##  The option '-o <output>' tells 'gac' to name the output file <output>.
 ##
@@ -53,60 +49,94 @@
 ##   -k|--gap-compiler
 ##
 
-SHELL="@SHELL@"
+# read sysinfo.gap, which sets GAP_CFLAGS, GAP_CPPFLAGS, etc.
+. "@SYSINFO_GAPROOT@/sysinfo.gap"
 
-# absolute path of the directory in which GAP was compiled
-abs_top_builddir="@abs_top_builddir@"
-
-# path of the directory the GAP sources contained in
-abs_top_srcdir="@abs_top_srcdir@"
-
-#
-libdir="@libdir@"
-
-# path to the GAP executable
-gap_compiler="${abs_top_builddir}/gap"
-
-libtool="$SHELL $abs_top_builddir/libtool"
-CC="@CC@"
-
-# These three should be filled in by the standard autoconf procedures 
-c_compiler="$libtool --mode=compile $CC"
-c_linker="$libtool --mode=link $CC -export-dynamic"
-
-# read sysinfo.gap, which should set GAP_CFLAGS, GAP_CPPFLAGS, GAP_LDFLAGS, GAP_LIBS
-. "${abs_top_builddir}/sysinfo.gap"
-
-# These will need special care
-c_dyn_linker="$libtool --mode=link $CC -module -avoid-version -rpath $libdir"
+# Extract sysinfo settings...
+gap_compiler="${GAP}"
+c_compiler="${GAP_CC}"
+cxx_compiler="${GAP_CXX}"
+c_dyn_linker="${GAP_CC}"
 c_addlibs=""
 
-GAPARCH=@GAPARCH@
-SYS_IS_CYGWIN32=@SYS_IS_CYGWIN32@
-if [ X"$SYS_IS_CYGWIN32" = X"yes" ] ; then
-    c_dyn_linker="$c_dyn_linker -no-undefined -version-info 0:0:0"
-    # FIXME: use correct DLL path (also after "make install")
-    c_dyn_linker="$c_dyn_linker -Wl,${abs_top_builddir}/bin/${GAPARCH}/gap.dll"
+GAP_CFLAGS="${GAP_CFLAGS} ${GAC_CFLAGS}"
+GAP_CXXFLAGS="${GAP_CXXFLAGS} ${GAC_CFLAGS}"
+GAP_LDFLAGS="${GAP_LDFLAGS} ${GAC_LDFLAGS}"
+
+
+# is output going to a terminal?
+if test -t 1; then
+
+    # does the terminal support color?
+    ncolors=$(tput colors)
+
+    if test -n "$ncolors" && test $ncolors -ge 8; then
+        bold="$(tput bold)"
+        underline="$(tput smul)"
+        standout="$(tput smso)"
+        normal="$(tput sgr0)"
+        black="$(tput setaf 0)"
+        red="$(tput setaf 1)"
+        green="$(tput setaf 2)"
+        yellow="$(tput setaf 3)"
+        blue="$(tput setaf 4)"
+        magenta="$(tput setaf 5)"
+        cyan="$(tput setaf 6)"
+        white="$(tput setaf 7)"
+    fi
 fi
 
+notice() {
+    printf "${green}%s${normal}\n" "$*"
+}
+
+warning() {
+    printf "${yellow}WARNING: %s${normal}\n" "$*"
+}
+
+error() {
+    printf "${red}ERROR: %s${normal}\n" "$*" 1>&2
+    exit 1
+}
+
+
+#############################################################################
+##
+#F  echo_and_run
+##
+echo_and_run () {
+    cmd="$1" ; shift
+    echo "$cmd" "$@"
+    "$cmd" "$@"
+}
 
 #############################################################################
 ##
 #F  gap_compile <output> <input> <module-name> <identifier>
 ##
 gap_compile () {
-    echo ${gap_compiler} -C $1 $2 $3 $4
-    ${gap_compiler} -C "$1" "$2" "$3" "$4"
+    mkdir -p $(dirname $1)
+    echo_and_run ${gap_compiler} -C "$1" "$2" "$3" "$4"
 }
 
 
 #############################################################################
 ##
-#F  c_compile   <output> <input> <options>
+#F  c_compile <output> <input>
 ##
 c_compile () {
-    echo ${c_compiler} $3 -o $1 ${GAP_CPPFLAGS} -c $2
-    ${c_compiler} $3 -o $1 ${GAP_CPPFLAGS} -c $2 || exit 1
+    mkdir -p $(dirname $1)
+    echo_and_run ${c_compiler} ${GAP_CFLAGS} -o $1 ${GAP_CPPFLAGS} -c $2 || exit 1
+}
+
+
+#############################################################################
+##
+#F  cxx_compile <output> <input>
+##
+cxx_compile () {
+    mkdir -p $(dirname $1)
+    echo_and_run ${cxx_compiler} ${GAP_CXXFLAGS} -o $1 ${GAP_CPPFLAGS} -c $2 || exit 1
 }
 
 
@@ -115,38 +145,16 @@ c_compile () {
 #F  c_link_dyn <output> <input>
 ##
 c_link_dyn () {
-    echo ${c_dyn_linker} ${GAP_LDFLAGS} -o $1 $2 ${c_addlibs}
-    output_la=${1%.so}.la
-    output_dir=$(dirname $1)
-    ${c_dyn_linker} ${GAP_LDFLAGS} -o "$output_la" $2 ${c_addlibs} || exit 1
-    if [ X"$SYS_IS_CYGWIN32" = X"yes" ] ; then
-        # GAP assumes shared libraries end in .so
-        for dllfile in `cd $output_dir/.libs; ls *.dll`; do
-            cp $output_dir/.libs/$dllfile $output_dir/${dllfile%.dll}.so
-        done
-    else
-        cp $output_dir/.libs/*.so $output_dir
-    fi;
+    mkdir -p $(dirname $1)
+    echo_and_run ${c_dyn_linker} -o $1 $2 ${GAP_LDFLAGS} ${c_addlibs} || exit 1
 }
 
-
-#############################################################################
-##
-#F  c_link <output> <inputs_o>
-##
-c_link () {
-    echo ${c_linker} ${GAP_LDFLAGS} -o $1 $2 ${GAP_LIBS}
-    ${c_linker} ${GAP_LDFLAGS} -o $1 $2 ${GAP_LIBS} || exit 1
-}
 
 #############################################################################
 ##
 #F process_o_file <basename> <filename> 
 ##
 ## Compile according to comp_mode and comp_howfar
-## 
-## This does everything except the final link phase in the static case
-## in that case it adds the basename and object file path of $names and $objects
 ##
 
 process_o_file () {
@@ -166,25 +174,21 @@ process_o_file () {
 #F process_c_file <basename> <filename> 
 ##
 ## Compile according to comp_mode and comp_howfar
-## 
-## This does everything except the final link phase in the static case
-## in that case it adds the basename and object file path of $names and $objects
 ##
 
 process_c_file () {
     name=$1
     c_file=$2
-    extra_cflags=$3
 
     if [ $comp_howfar != "object" ]; then
-       o_file=${gactmp}/$$_${name}.lo
-        temps_o="${temps_o} ${o_file}"
+       o_file=${gactmp}/$$_${name}.o
+       temps_o="${temps_o} ${o_file}"
     elif [ "X$output" != "X" ]; then
        o_file=$output
     else 
-       o_file=${name}.lo
+       o_file=${name}.o
     fi
-    c_compile $o_file $c_file "$GAP_CFLAGS $extra_cflags"
+    c_compile $o_file $c_file
     if [ $comp_howfar = "link" ]; then
       process_o_file $name $o_file
     fi 
@@ -192,12 +196,34 @@ process_c_file () {
 
 #############################################################################
 ##
+#F process_cxx_file <basename> <filename>
+##
+## Similar to process_c_file, just for C++ files.
+##
+
+process_cxx_file () {
+  name=$1
+  cxx_file=$2
+
+  if [ $comp_howfar != "object" ]; then
+    o_file=${gactmp}/$$_${name}.o
+    temps_o="${temps_o} ${o_file}"
+  elif [ "X$output" != "X" ]; then
+    o_file=$output
+  else
+    o_file=${name}.o
+  fi
+  cxx_compile $o_file $cxx_file
+  if [ $comp_howfar = "link" ]; then
+    process_o_file $name $o_file
+  fi
+}
+
+#############################################################################
+##
 #F process_gap_file <filename> <ext>
 ##
 ## Compile according to comp_mode and comp_howfar
-## 
-## This does everything except the final link phase in the static case
-## in that case it adds the basename and object file path of $names and $objects
 ##
 
 process_gap_file () {
@@ -215,10 +241,6 @@ process_gap_file () {
   gap_compile_name=$input  
   if [ $comp_mode = "comp_static" ]; then
     gap_compile_id=Init_${name}
-    if [ $comp_static_root_relative = "yes" ]; then
-        gap_compile_in=${abs_top_srcdir}/$input;
-        gap_compile_name=GAPROOT/$input;
-    fi
   else
     gap_compile_id=Init_Dynamic
   fi
@@ -226,10 +248,9 @@ process_gap_file () {
   if [ $comp_howfar != "c_code" ]; then
     process_c_file $name $c_file
     if [ "$savetemps" = "true" ]; then
-        echo "Leaving C file " $c_file
+        notice "Leaving C file " $c_file
     else
-        echo rm -f $c_file
-        rm -f $c_file
+        echo_and_run rm -f $c_file
     fi
   fi
 }
@@ -240,10 +261,9 @@ process_gap_file () {
 ##
 clean_up () {
      if [ "$savetemps" = "true" ]; then
-        echo "Leaving files on cleanup: " ${temps_c} ${temps_o}
+        notice "Leaving files on cleanup: " ${temps_c} ${temps_o}
     else
-        echo rm -f ${temps_c} ${temps_o}
-        rm -f ${temps_c} ${temps_o}
+        echo_and_run rm -f ${temps_c} ${temps_o}
     fi
 }
 trap "clean_up" 2 3
@@ -254,13 +274,11 @@ trap "clean_up" 2 3
 ##  parse the arguments
 ##
 if [ $# = 0 ]; then
-    echo "usage: $0 [-d|-r] [-c|-C] [-o <output>] <input>..."
-    exit 1
+    error "usage: $0 [-d] [-c|-C] [-o <output>] <input>..."
 fi
 
 comp_mode="comp_static"
 comp_howfar="link"
-comp_static_root_relative="no"
 output=""
 inputs=""
 savetemps="false"
@@ -276,16 +294,14 @@ while [ $# -gt 0 ]; do
 
     -o|--output)          shift; output="$1";;
   
-    -r)                   comp_static_root_relative="yes";;
-
     -save-temps)          savetemps="true";;
-
-    -f*)                  echo "$0: no such option '$1'"
-                          exit 1;;
 
     -k|--gap-compiler)    shift; gap_compiler="$1";;
 
-    -p)                   shift; GAP_CFLAGS="${GAP_CFLAGS} $1";;
+    -p)                   shift;
+                          GAP_CFLAGS="${GAP_CFLAGS} $1"
+                          GAP_CXXFLAGS="${GAP_CXXFLAGS} $1"
+                          ;;
 
     -P)                   shift; GAP_LDFLAGS="${GAP_LDFLAGS} $1";;
 
@@ -294,65 +310,16 @@ while [ $# -gt 0 ]; do
     *.g|*.gap|*.gd|*.gi|*.c|*.cc|*.cpp|*.cxx|*.s|*.o|*.lo)
                           inputs="${inputs} $1";;
 
-    *)                    echo "$0: cannot handle this argument '$1'"
-                          exit 1;;
+    *)                    error "$0: cannot handle this argument '$1'";;
 
     esac
     shift
 done
 
 if [ "X${inputs}" = "X" ]; then
-    echo "$0: no input files given"
-    exit 1
+    error "$0: no input files given"
 fi
 
-
-
-
-#############################################################################
-##
-#F  make_compstat 
-##
-
-make_compstat () {
-    # make 'compstat.c' and compile it
-    temps_c="${temps_c} ${gactmp}/$$compstat.c"
-    (
-        echo     "/* made by 'gac', can be thrown away */"
-        echo     "#include \"compiled.h\""
-
-        echo     "#ifndef AVOID_PRECOMPILED"
-        echo     "extern StructInitInfo * Init__type1 ( void );"
-        echo     "extern StructInitInfo * Init__oper1( void );"
-        echo     "#endif"
-
-        for name in ${names}; do
-            echo "extern StructInitInfo * Init__${name} ( void );"
-        done
-
-        echo     "InitInfoFunc CompInitFuncs [] = {"
-        echo     "#ifndef AVOID_PRECOMPILED"
-        echo     "    Init__type1,"
-        echo     "    Init__oper1,"
-        echo     "#endif"
-
-        for name in ${names}; do
-            echo "    Init__${name},"
-        done
-        echo "    0"
-        echo "};"
-    ) > ${gactmp}/$$compstat.c
-
-    temps_o="${gactmp}/$$compstat.lo ${temps_o}"
-    c_compile ${gactmp}/$$compstat.o ${gactmp}/$$compstat.c "${GAP_CFLAGS}"
-    if [ "$savetemps" = "true" ]; then
-        echo "Leaving temp file " ${gactmp}/$$compstat.c
-    else
-        echo rm -f ${gactmp}/$$compstat.c
-        rm -f ${gactmp}/$$compstat.c
-    fi
-    objects="${gactmp}/$$compstat.lo ${objects}"
-}
 
 make_tmpdir () {
     if command -v mktemp >/dev/null 2>&1 ; then
@@ -387,53 +354,50 @@ for input in ${inputs}; do
 
         *.cc) # compile '.cc' source files (C++)
             name=$(basename ${input} .cc)
-            process_c_file $name $input "-x c++";;
+            process_cxx_file $name $input;;
 
         *.cpp) # compile '.cpp' source files (also C++)
             name=$(basename ${input} .cpp)
-            process_c_file $name $input "-x c++";;
+            process_cxx_file $name $input;;
+
+        *.cxx) # compile '.cxx' source files (also C++)
+            name=$(basename ${input} .cxx)
+            process_cxx_file $name $input;;
 
         *.s) # compile '.s' source files (assembler)
             name=$(basename ${input} .s)
             process_c_file $name $input;; # HACK: just use the C compiler
 
-        *.o) # look over '.o' source files
+        *.o) # add '.o' object files to the linker list
             name=$(basename ${input} .o)
             process_o_file $name $input;;
 
-        *.lo) # look over '.lo' source files
+        *.lo)
+            # for backwards compatibility, treat .lo files like .o files this
+            # is useful for package that use an old Makefile.gappkg which
+            # hardcodes the file extension .lo for object files created by
+            # gac. So this only works if the .lo files are honest object files
+            # with the wrong extension; it does *not* support linking .lo
+            # files created by GNU libtool.
             name=$(basename ${input} .lo)
             process_o_file $name $input;;
         esac
     done
 
 
-#  static link phase
+# link phase
 if [ $comp_howfar = "link" ]; then
     if [ $comp_mode = "comp_static" ]; then
-        make_compstat
-
-        # link everything together
-        if [ "X${output}" = "X" ]; then output="gacout"; fi
-
-        for object in $GAP_OBJS;  do
-            if [ ${object} != "obj/src/compstat.lo" ]; then
-                objects="${abs_top_builddir}/${object} ${objects}"
-            fi
-        done
-
-        c_link ${output} "${objects}"
-
-    else
-        if [ "X${output}" = "X" ]; then output="${name}.la"; fi
-        c_link_dyn ${output} "${objects}"
+        error "$0: static linking is not supported anymore, use -d / --dynamic"
     fi
+
+    if [ "X${output}" = "X" ]; then output="${name}.so"; fi
+    c_link_dyn ${output} "${objects}"
     
     if [ "$savetemps" = "true" ]; then
-        echo "Leaving object files " ${temps_o}
+        notice "Leaving object files " ${temps_o}
     else
-        echo rm -f ${temps_o}
-        rm -f ${temps_o}
+        echo_and_run rm -f ${temps_o}
     fi
 fi
 

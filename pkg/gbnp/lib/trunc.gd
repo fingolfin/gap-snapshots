@@ -14,7 +14,7 @@
 # Free Software Foundation (FSF); either version 2.1 of the License, or
 # (at your option) any later version. For details, see the file 'LGPL' in
 # the doc subdirectory of the GBNP distribution or see the FSF's own site:
-# http://www.gnu.org/licenses/lgpl.html
+# https://www.gnu.org/licenses/lgpl.html
 ########################## END COPYRIGHT MESSAGE ##########################
 
 ### filename = "trunc.gd"
@@ -23,7 +23,6 @@
 ### 	made to accompany "trunc.gi" from Cohen & Gijsbers 
 ###
 ### This is a part of the GBNP package, version 0.9
-### $Id: trunc.gd 12772 2010-01-15 13:10:24Z jwk $
 
 DeclareGlobalFunction("CheckHomogeneousNPs");
 DeclareGlobalFunction("SGrobnerTrunc");

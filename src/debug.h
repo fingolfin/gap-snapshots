@@ -23,9 +23,6 @@
 
 // Enable various GAP debugging features
 #define COUNT_BAGS
-#define COUNT_OPERS
-#define DEBUG_GMP 1
-#define DEBUG_MASTERPOINTERS
 #else
 #define GAP_ASSERT(x)
 #endif

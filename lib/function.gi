@@ -29,9 +29,6 @@ function(func)
         isvarg := true;
         narg := -narg;
     fi;
-    if narg = 1 and nams <> fail and nams[1] = "arg" then
-        isvarg := true;
-    fi;
     if narg <> 0 then
         if nams = fail then
             Append(result, STRINGIFY("<",narg," unnamed arguments>"));
@@ -84,10 +81,10 @@ function(fun)
     local  s, stream;
     s := "";
     stream := OutputTextString(s, true);
+    SetPrintFormattingStatus(stream, false);
     PrintTo(stream, fun);
     CloseStream(stream);
-    NormalizeWhitespace(s);
-    return MakeImmutable(s);
+    return ReplacedString(s, "\n", " ");
 end);
 
 BIND_GLOBAL( "VIEW_STRING_OPERATION",

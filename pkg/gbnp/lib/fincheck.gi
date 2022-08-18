@@ -14,13 +14,12 @@
 # Free Software Foundation (FSF); either version 2.1 of the License, or
 # (at your option) any later version. For details, see the file 'LGPL' in
 # the doc subdirectory of the GBNP distribution or see the FSF's own site:
-# http://www.gnu.org/licenses/lgpl.html
+# https://www.gnu.org/licenses/lgpl.html
 ########################## END COPYRIGHT MESSAGE ##########################
 
 ### filename = "fincheck.gi"
 ### author: Chris Krook
 ### This is an add on for the GBNP package, since version 0.8.3
-### $Id: fincheck.gi 12659 2009-11-12 16:04:56Z jwk $
 
 # This files contains some functions to investigate the growth of a
 # monomial algebra. (The growth of the quotient algebra by an ideal with
@@ -126,7 +125,7 @@ end;
 ##################
 ### PreprocessAnalysisQA
 ### <#GAPDoc Label="PreprocessAnalysisQA">
-### <ManSection Label="PreprocessAnalysisQA">
+### <ManSection>
 ### <Func Name="PreprocessAnalysisQA" Comm="computes the left-reduced set for some monomial obstructional set" Arg="Lm, t, iterations" />
 ### <Returns>
 ### The left-reduced list of `obstructions', 
@@ -214,7 +213,7 @@ end);;
 ### FinCheckQA
 ###
 ### <#GAPDoc Label="FinCheckQA">
-### <ManSection Label="FinCheckQA">
+### <ManSection>
 ### <Func Name="FinCheckQA" Comm="determine wether a monomial algebra is finite or infinite dimensional" Arg="Lm, t" />
 ### <Returns>
 ### <Code>true</Code>, if the quotient algebra is finite dimensional and<Code>
@@ -337,7 +336,7 @@ end);
 ### DetermineGrowthQA
 ###
 ### <#GAPDoc Label="DetermineGrowthQA">
-### <ManSection Label="DetermineGrowthQA">
+### <ManSection>
 ### <Func Name="DetermineGrowthQA" Comm=" determine the growth of a monomial
 ### algebra 
 ### (finite, polynomial growth of degree d, exponential growth)" Arg="Lm, t, exact" />
@@ -584,7 +583,7 @@ end);
 ###################################
 ### function HilbertSeriesQA
 ### <#GAPDoc Label="HilbertSeriesQA">
-### <ManSection Label="HilbertSeriesQA">
+### <ManSection>
 ### <Func Name="HilbertSeriesQA" Comm="compute partial Hilbert series" Arg="Lm, t, d" />
 ### <Returns>
 ### A list of coefficients of the Hilbert series up to degree <A>d</A>

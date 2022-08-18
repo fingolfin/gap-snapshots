@@ -10,8 +10,9 @@
 SetPackageInfo( rec( 
   PackageName := "Forms", 
   Subtitle := "Sesquilinear and Quadratic",
-  Version := "1.2.5",
-  Date := "27/09/2018",
+  Version := "1.2.8",
+  Date := "09/07/2022",
+  License := "GPL-2.0-or-later",
 
 ##  URL of the archive(s) of the current package release, but *without*
 ##  the format extension(s), like '.zoo', which are given next.
@@ -21,8 +22,22 @@ SetPackageInfo( rec(
 ##  directory containing the package (in our "example" probably:
 ##  example/init.g, ...    or  example-1.3/init.g, ...  )
 # 
-ArchiveURL := "http://cage.ugent.be/geometry/software/forms/forms-1.2.5",
-ArchiveFormats := ".tar.gz -win.zip .tar.bz2",
+
+SourceRepository := rec(
+    Type := "git",
+    URL := Concatenation( "https://github.com/gap-packages/", LowercaseString(~.PackageName) ),
+    
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+PackageWWWHome  := Concatenation( "https://gap-packages.github.io/", LowercaseString(~.PackageName) ),
+README_URL      := Concatenation( ~.PackageWWWHome, "/README" ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
+ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/", LowercaseString(~.PackageName), "-", ~.Version ),
+
+ArchiveFormats := ".tar.gz .zip .tar.bz2",
+
 Persons := [
   rec( 
     LastName      := "Bamberg",
@@ -32,7 +47,6 @@ Persons := [
     Email         := "bamberg@maths.uwa.edu.au",
     WWWHome       := "http://school.maths.uwa.edu.au/~bamberg/",
     PostalAddress := Concatenation( [
-                       "John Bamberg\n",
                        "School of Mathematics and Statistics\n",
                        "The University of Western Australia\n",
                        "35 Stirling Highway\n",
@@ -49,8 +63,7 @@ Persons := [
     Email         := "jan@debeule.eu",
     WWWHome       := "http://www.debeule.eu",
     PostalAddress := Concatenation( [
-                       "Jan De Beule\n",
-                       "Department of Mathematics\n",
+                       "Department of Mathematics and Data Science\n",
                        "Vrije Universiteit Brussel\n",
                        "Pleinlaan 2\n",
                        "B-1050 Brussel\n",
@@ -58,34 +71,47 @@ Persons := [
     Place         := "Brussels",
     Institution   := "Vrije Universiteit Brussel",
   ),
+  rec(
+    LastName      := "Horn",
+    FirstNames    := "Max",
+    IsAuthor      := false,
+    IsMaintainer  := true,
+    Email         := "horn@mathematik.uni-kl.de",
+    WWWHome       := "https://www.quendi.de/math",
+    PostalAddress := Concatenation(
+                       "Fachbereich Mathematik\n",
+                       "TU Kaiserslautern\n",
+                       "Gottlieb-Daimler-Straße 48\n",
+                       "67663 Kaiserslautern\n",
+                       "Germany" ),
+    Place         := "Kaiserslautern, Germany",
+    Institution   := "TU Kaiserslautern",
+  ),
 ],
 
 Status := "accepted",
-README_URL := "http://cage.ugent.be/geometry/software/forms/README",
-PackageInfoURL := "http://cage.ugent.be/geometry/software/forms/PackageInfo.g",
-AbstractHTML := "This package can be used for work with sesquilinear and quadratic forms on finite vector spaces; objects that are used to describe polar spaces and classical groups.",
+CommunicatedBy := "Leonard Soicher (London)",
+AcceptDate := "03/2009",
 
-PackageWWWHome := "http://cage.ugent.be/geometry/forms.php",
+AbstractHTML := "This package can be used for work with sesquilinear and quadratic forms on finite vector spaces; objects that are used to describe polar spaces and classical groups.",
             
 PackageDoc := rec(
   # use same as in GAP            
   BookName  := "Forms",
   ArchiveURLSubset := ["doc"],
-  HTMLStart := "doc/chap0.html",
+  HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Forms - Sesquilinear and Quadratic",
-  Autoload  := true),
+),
 
 Dependencies := rec(
-  GAP := ">=4.8",
-  NeededOtherPackages := [["GAPDoc", ">= 1.6"]],
+  GAP := ">=4.9",
+  NeededOtherPackages := [],
   SuggestedOtherPackages := [],
   ExternalConditions := []),
 
-AvailabilityTest := function()
-    return true;
-  end,
+AvailabilityTest := ReturnTrue,
 
 BannerString := Concatenation( 
   "---------------------------------------------------------------------\n",
@@ -97,15 +123,18 @@ BannerString := Concatenation(
    "For help, type: ?Forms \n",
   "---------------------------------------------------------------------\n" ),
 
-Autoload := false,
-
 TestFile := "tst/testall.g",
 
 Keywords := ["Forms", "Sesquilinear", "Quadratic"],
 
-CommunicatedBy := "Leonard Soicher (London)",
-AcceptDate := "03/2009"
+AutoDoc := rec(
+    TitlePage := rec(
+        Copyright := Concatenation(
+            "&copyright; 2015-2022 by the authors<P/>\n\n",
+            "This package may be distributed under the terms and conditions ",
+            "of the GNU Public License Version 2 or (at your option) any later version.\n"
+            ),
+    )
+),
 
 ));
-
-

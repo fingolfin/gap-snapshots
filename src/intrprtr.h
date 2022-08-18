@@ -19,78 +19,79 @@
 #ifndef GAP_INTRPRTR_H
 #define GAP_INTRPRTR_H
 
-#include "system.h"
+#include "common.h"
 #include "gap.h"
 
-/****************************************************************************
-**
-*V  IntrIgnoring  . . . . . . . . . interpreter is currently ignoring actions
-**
-**  If 'IntrIgnoring'  is  non-zero,  the interpreter  is  currently ignoring
-**  actions.  The interpreter switches to this mode for  the right operand of
-**  'or' and 'and'  constructs where the  left operand already determines the
-**  outcome.
-**
-**  This mode is also used in Info and Assert, when arguments are not printed. 
-*/
-/* TL: extern UInt IntrIgnoring; */
+
+struct IntrState {
+
+    // If 'IntrIgnoring' is non-zero, the interpreter is currently ignoring
+    // actions. The interpreter switches to this mode for the right operand of
+    // 'or' and 'and' constructs where the left operand already determines the
+    // outcome.
+    //
+    // This mode is also used in Info and Assert, when arguments are not
+    // printed.
+    UInt ignoring;
+
+    // If 'coding' is non-zero, the interpreter is currently coding actions.
+    // The interpreter switches to this mode for constructs that it cannot
+    // directly interpret, such as loops or function bodies.
+    UInt coding;
+
+    // If 'returning' is non-zero, the interpreter is currently exiting
+    // statements enclosing a return statement. Actions from these statements
+    // are ignored.
+    ExecStatus returning;
+
+    // Record the first line of the fragment of code currently being
+    // interpreted in 'startLine', so we can mark interpreted code lines when
+    // profiling
+    UInt startLine;
+
+    // The id of the file or stream from which the code being read originates
+    // from. Can be turned into a string object via `GetCachedFilename`.
+    UInt gapnameid;
+
+    // 'StackObj' is the stack of values.
+    Obj StackObj;
+};
+
+typedef struct IntrState IntrState;
 
 
 /****************************************************************************
 **
-*V  IntrCoding  . . . . . . . . . . . interpreter is currently coding actions
+*F  IntrBegin(<intr>) . . . . . . . . . . . . . . . . .  start an interpreter
+*F  IntrEnd(<intr>,<error>,<result>)  . . . . . . . . . . stop an interpreter
 **
-**  If 'IntrCoding' is non-zero, the interpreter is currently coding actions.
-**  The interpreter  switches  to this  mode for  constructs  that it  cannot
-**  directly interpret, such as loops or function bodies.
-*/
-/* TL: extern UInt IntrCoding; */
-
-/****************************************************************************
+**  'IntrBegin' starts a new interpreter.
 **
-*V  IntrReturning  . . . . . . . interpreter is currently exiting statements
-**                                 enclosing a return;
-**
-**  If 'IntrReturning' is non-zero, the interpreter is currently exiting
-**  statements enclosing a return statement. Actions from these statements
-**  are ignored.
-*/
-/* TL: extern UInt IntrReturning; */
-
-/****************************************************************************
-**
-*F  IntrBegin() . . . . . . . . . . . . . . . . . . . .  start an interpreter
-*F  IntrEnd(<error>,<result>)  . . . . . . . . . . . . .  stop an interpreter
-**
-**  'IntrBegin' starts a new interpreter in context <frame>. If in doubt,
-**  pass STATE(BottomLVars) as <frame>
-**
-**  'IntrEnd' stops the current interpreter.
+**  'IntrEnd' stops the given interpreter.
 **
 **  If <error>  is non-zero a  syntax error was found by  the reader, and the
 **  interpreter only clears up the mess.
 **
 **  If 'IntrEnd' returns 'STATUS_END', then no return-statement or
-**  quit-statement was interpreted. If 'IntrEnd' returns 'STATUS_RETURN_VAL',
-**  then a return-value-statement was interpreted and in this case the return
-**  value is assigned to the address <result> points at (but only if <result>
-**  is not 0). If 'IntrEnd' returns 'STATUS_RETURN_VOID', then a
-**  return-void-statement was interpreted. If 'IntrEnd' returns 'STATUS_QUIT',
-**  then a quit-statement was interpreted.
+**  quit-statement was interpreted. If 'IntrEnd' returns 'STATUS_RETURN',
+**  then a return-statement was interpreted. If a value was returned, and the
+**  <result> is non-zero, then the returned value is assigned to the address
+**  <result> points at. If 'IntrEnd' returns 'STATUS_QUIT', then a
+**  quit-statement was interpreted. If 'IntrEnd' returns 'STATUS_QQUIT', then
+**  a QUIT-statement was interpreted.
 */
-void IntrBegin(Obj frame);
+void IntrBegin(IntrState * intr);
 
-ExecStatus IntrEnd(UInt error, Obj * result);
+ExecStatus IntrEnd(IntrState * intr, BOOL error, Obj * result);
 
 
 /****************************************************************************
 **
-*F  IntrAbortCoding(<lvars>) . . . . . . . . . . . . . . . . . . abort coding
+*F  IntrAbortCoding() . . . . . . . . . . . . . . . . . . . . .  abort coding
 **
-**  'IntrAbortCoding' aborts coding, if it is active, and resets the active
-**  lvars to <lvars>.
+**  'IntrAbortCoding' aborts coding, if it is active.
 */
-void IntrAbortCoding(Obj lvars);
+void IntrAbortCoding(IntrState * intr);
 
 
 /****************************************************************************
@@ -109,9 +110,9 @@ void IntrAbortCoding(Obj lvars);
 **  arguments. <options> is 1 if options were present after the ':' in which
 **  case the options have been read already.
 */
-void IntrFuncCallBegin(void);
+void IntrFuncCallBegin(IntrState * intr);
 
-void IntrFuncCallEnd(UInt funccall, UInt options, UInt nr);
+void IntrFuncCallEnd(IntrState * intr, UInt funccall, UInt options, UInt nr);
 
 /****************************************************************************
 **
@@ -125,17 +126,17 @@ void IntrFuncCallEnd(UInt funccall, UInt options, UInt nr);
 **  The net effect of all of these is to leave a record object on the stack
 **  where IntrFuncCallEnd can use it
 */
-void IntrFuncCallOptionsBegin(void);
+void IntrFuncCallOptionsBegin(IntrState * intr);
 
-void IntrFuncCallOptionsBeginElmName(UInt rnam);
+void IntrFuncCallOptionsBeginElmName(IntrState * intr, UInt rnam);
 
-void IntrFuncCallOptionsBeginElmExpr(void);
+void IntrFuncCallOptionsBeginElmExpr(IntrState * intr);
 
-void IntrFuncCallOptionsEndElm(void);
+void IntrFuncCallOptionsEndElm(IntrState * intr);
 
-void IntrFuncCallOptionsEndElmEmpty(void);
+void IntrFuncCallOptionsEndElmEmpty(IntrState * intr);
 
-void IntrFuncCallOptionsEnd(UInt nr);
+void IntrFuncCallOptionsEnd(IntrState * intr, UInt nr);
 
 /****************************************************************************
 **
@@ -152,9 +153,10 @@ void IntrFuncCallOptionsEnd(UInt nr);
 **  called when the reader encounters the end  of a function expression. <nr>
 **  is the number of statements in the body of the function.
 */
-void IntrFuncExprBegin(Int narg, Int nloc, Obj nams, Int startLine);
+void IntrFuncExprBegin(
+    IntrState * intr, Int narg, Int nloc, Obj nams, Int startLine);
 
-void IntrFuncExprEnd(UInt nr);
+void IntrFuncExprEnd(IntrState * intr, UInt nr, Int endLine);
 
 
 /****************************************************************************
@@ -189,17 +191,17 @@ void IntrFuncExprEnd(UInt nr);
 **  the reader  encounters the end of the  statement.  <nr>  is the number of
 **  'if', 'elif', or 'else' branches.
 */
-void IntrIfBegin(void);
+void IntrIfBegin(IntrState * intr);
 
-void IntrIfElif(void);
+void IntrIfElif(IntrState * intr);
 
-void IntrIfElse(void);
+void IntrIfElse(IntrState * intr);
 
-void IntrIfBeginBody(void);
+void IntrIfBeginBody(IntrState * intr);
 
-Int IntrIfEndBody(UInt nr);
+Int IntrIfEndBody(IntrState * intr, UInt nr);
 
-void IntrIfEnd(UInt nr);
+void IntrIfEnd(IntrState * intr, UInt nr);
 
 
 /****************************************************************************
@@ -233,15 +235,15 @@ void IntrIfEnd(UInt nr);
 **  Since loops cannot be interpreted immediately,  the interpreter calls the
 **  coder  to create a  procedure (with no arguments) and  calls that.
 */
-void IntrForBegin(void);
+void IntrForBegin(IntrState * intr, Obj stackNams);
 
-void IntrForIn(void);
+void IntrForIn(IntrState * intr);
 
-void IntrForBeginBody(void);
+void IntrForBeginBody(IntrState * intr);
 
-void IntrForEndBody(UInt nr);
+void IntrForEndBody(IntrState * intr, UInt nr);
 
-void IntrForEnd(void);
+void IntrForEnd(IntrState * intr, Obj stackNams);
 
 
 /****************************************************************************
@@ -270,17 +272,26 @@ void IntrForEnd(void);
 **  Since loops cannot be interpreted immediately,  the interpreter calls the
 **  coder  to create a  procedure (with no arguments) and  calls that.
 */
-void IntrWhileBegin(void);
+void IntrWhileBegin(IntrState * intr, Obj stackNams);
 
-void IntrWhileBeginBody(void);
+void IntrWhileBeginBody(IntrState * intr);
 
-void IntrWhileEndBody(UInt nr);
+void IntrWhileEndBody(IntrState * intr, UInt nr);
 
-void IntrWhileEnd(void);
+void IntrWhileEnd(IntrState * intr, Obj stackNams);
 
-void IntrQualifiedExprBegin(UInt access);
 
-void IntrQualifiedExprEnd(void);
+/****************************************************************************
+**
+*F  IntrQualifiedExprBegin(<qual>) .  interpret readonly/readwrite expr start
+*F  IntrQualifiedExprEnd() . . . . . .  interpret readonly/readwrite expr end
+**
+**  These functions interpret the beginning and end of the readonly/readwrite
+**  qualified expressions of an atomic statement.
+*/
+void IntrQualifiedExprBegin(IntrState * intr, UInt qual);
+
+void IntrQualifiedExprEnd(IntrState * intr);
 
 
 /****************************************************************************
@@ -290,20 +301,20 @@ void IntrQualifiedExprEnd(void);
 *F  IntrAtomicEndBody(<nr>) . . . . . interpret atomic-statement, end of body
 *F  IntrAtomicEnd() . . . . . .  interpret atomic-statement, end of statement
 **
-**  'IntrAtomicBegin' is an action to interpret a atomic-statement. It is
+**  'IntrAtomicBegin' is an action to interpret an atomic-statement. It is
 **  called when the reader encounters the 'atomic', i.e., *before* the
 **  condition is read.
 **
-**  'IntrAtomicBeginBody' is an action to interpret a atomic-statement. It is
+**  'IntrAtomicBeginBody' is an action to interpret an atomic-statement. It is
 **  called when the reader encounters the beginning of the statement body,
 **  i.e., *after* the expressions to be locked have been read. <nrexprs> is
 **  the number of such  expressions.
 **
-**  'IntrAtomicEndBody' is an action to interpret a atomic-statement. It is
+**  'IntrAtomicEndBody' is an action to interpret an atomic-statement. It is
 **  called when the reader encounters the end of the statement body. <nr> is
 **  the number of statements in the body.
 **
-**  'IntrAtomicEnd' is an action to interpret a atomic-statement. It is
+**  'IntrAtomicEnd' is an action to interpret an atomic-statement. It is
 **  called when the reader encounters the end of the statement, i.e.,
 **  lyimmediate after 'IntrAtomicEndBody'.
 **
@@ -311,13 +322,13 @@ void IntrQualifiedExprEnd(void);
 **  they are simply placeholders.
 */
 
-void IntrAtomicBegin(void);
+void IntrAtomicBegin(IntrState * intr, Obj stackNams);
 
-void IntrAtomicBeginBody(UInt nrexprs);
+void IntrAtomicBeginBody(IntrState * intr, UInt nrexprs);
 
-void IntrAtomicEndBody(Int nrstats);
+void IntrAtomicEndBody(IntrState * intr, Int nrstats);
 
-void IntrAtomicEnd(void);
+void IntrAtomicEnd(IntrState * intr, Obj stackNams);
 
 #ifdef HPCGAP
 /* TODO: move these constants to a more appropriate location */
@@ -353,13 +364,13 @@ enum {
 **  Since loops cannot be interpreted immediately,  the interpreter calls the
 **  coder  to create a  procedure (with no arguments) and  calls that.
 */
-void IntrRepeatBegin(void);
+void IntrRepeatBegin(IntrState * intr, Obj stackNams);
 
-void IntrRepeatBeginBody(void);
+void IntrRepeatBeginBody(IntrState * intr);
 
-void IntrRepeatEndBody(UInt nr);
+void IntrRepeatEndBody(IntrState * intr, UInt nr);
 
-void IntrRepeatEnd(void);
+void IntrRepeatEnd(IntrState * intr, Obj stackNams);
 
 
 /****************************************************************************
@@ -372,7 +383,7 @@ void IntrRepeatEnd(void);
 **  Break-statements are  always coded (if  they are not ignored), since they
 **  can only appear in loops.
 */
-void IntrBreak(void);
+void IntrBreak(IntrState * intr);
 
 
 /****************************************************************************
@@ -383,7 +394,7 @@ void IntrBreak(void);
 **  is  called when  the reader encounters  a  'return  <expr>;', but *after*
 **  reading the expression <expr>.
 */
-void IntrReturnObj(void);
+void IntrReturnObj(IntrState * intr);
 
 
 /****************************************************************************
@@ -393,7 +404,7 @@ void IntrReturnObj(void);
 **  'IntrReturnVoid' is the action to interpret  a return-void-statement.  It
 **  is called when the reader encounters a 'return;'.
 */
-void IntrReturnVoid(void);
+void IntrReturnVoid(IntrState * intr);
 
 
 /****************************************************************************
@@ -403,7 +414,7 @@ void IntrReturnVoid(void);
 **  'IntrQuit' is the  action to interpret   a quit-statement.  It  is called
 **  when the reader encounters a 'quit;'.
 */
-void IntrQuit(void);
+void IntrQuit(IntrState * intr);
 
 /****************************************************************************
 **
@@ -412,7 +423,7 @@ void IntrQuit(void);
 **  'IntrQUIT' is the  action to interpret   a QUIT-statement.  It  is called
 **  when the reader encounters a 'QUIT;'.
 */
-void IntrQUIT(void);
+void IntrQUIT(IntrState * intr);
 
 
 /****************************************************************************
@@ -428,9 +439,9 @@ void IntrQUIT(void);
 **  the reader encountered  the  end of  the  expression, i.e., *after*  both
 **  operands are read.
 */
-void IntrOrL(void);
+void IntrOrL(IntrState * intr);
 
-void IntrOr(void);
+void IntrOr(IntrState * intr);
 
 
 /****************************************************************************
@@ -446,9 +457,9 @@ void IntrOr(void);
 **  the reader encountered   the end of   the expression, i.e., *after*  both
 **  operands are read.
 */
-void IntrAndL(void);
+void IntrAndL(IntrState * intr);
 
-void IntrAnd(void);
+void IntrAnd(IntrState * intr);
 
 
 /****************************************************************************
@@ -458,7 +469,7 @@ void IntrAnd(void);
 **  'IntrNot' is the action to interpret a not-expression.  It is called when
 **  the reader encounters a not-expression, *after* the operand is read.
 */
-void IntrNot(void);
+void IntrNot(IntrState * intr);
 
 
 /****************************************************************************
@@ -474,17 +485,17 @@ void IntrNot(void);
 **  actions to interpret the respective operator expression.  They are called
 **  by the reader *after* *both* operands are read.
 */
-void IntrEq(void);
+void IntrEq(IntrState * intr);
 
-void IntrNe(void);
+void IntrNe(IntrState * intr);
 
-void IntrLt(void);
+void IntrLt(IntrState * intr);
 
-void IntrGe(void);
+void IntrGe(IntrState * intr);
 
-void IntrGt(void);
+void IntrGt(IntrState * intr);
 
-void IntrLe(void);
+void IntrLe(IntrState * intr);
 
 
 /****************************************************************************
@@ -494,7 +505,7 @@ void IntrLe(void);
 **  'IntrIn'  is the action  to interpret an  in-expression.  It is called by
 **  the reader *after* *both* operands are read.
 */
-void IntrIn(void);
+void IntrIn(IntrState * intr);
 
 
 /****************************************************************************
@@ -511,26 +522,26 @@ void IntrIn(void);
 **  are  the actions to interpret  the  respective operator expression.  They
 **  are called by the reader *after* *both* operands are read.
 */
-void IntrSum(void);
+void IntrSum(IntrState * intr);
 
-void IntrAInv(void);
+void IntrAInv(IntrState * intr);
 
-void IntrDiff(void);
+void IntrDiff(IntrState * intr);
 
-void IntrProd(void);
+void IntrProd(IntrState * intr);
 
-void IntrQuo(void);
+void IntrQuo(IntrState * intr);
 
-void IntrMod(void);
+void IntrMod(IntrState * intr);
 
-void IntrPow(void);
+void IntrPow(IntrState * intr);
 
 
 /****************************************************************************
 **
 *F  IntrIntObjExpr(<val>)
 */
-void IntrIntObjExpr(Obj val);
+void IntrIntObjExpr(IntrState * intr, Obj val);
 
 
 /****************************************************************************
@@ -540,7 +551,7 @@ void IntrIntObjExpr(Obj val);
 **  'IntrIntExpr' is the action  to  interpret a literal  integer expression.
 **  <str> is the integer as a (null terminated) C character string.
 */
-void IntrIntExpr(Obj string, Char * str);
+void IntrIntExpr(IntrState * intr, Obj string, Char * str);
 
 
 /****************************************************************************
@@ -550,7 +561,7 @@ void IntrIntExpr(Obj string, Char * str);
 **  'IntrFloatExpr' is the action  to  interpret a literal  float expression.
 **  <str> is the float as a (null terminated) C character string.
 */
-void IntrFloatExpr(Obj string, Char * str);
+void IntrFloatExpr(IntrState * intr, Obj string, Char * str);
 
 
 /****************************************************************************
@@ -559,7 +570,7 @@ void IntrFloatExpr(Obj string, Char * str);
 **
 **  'IntrTrueExpr' is the action to interpret a literal true expression.
 */
-void IntrTrueExpr(void);
+void IntrTrueExpr(IntrState * intr);
 
 
 /****************************************************************************
@@ -568,7 +579,7 @@ void IntrTrueExpr(void);
 **
 **  'IntrFalseExpr' is the action to interpret a literal false expression.
 */
-void IntrFalseExpr(void);
+void IntrFalseExpr(IntrState * intr);
 
 /****************************************************************************
 **
@@ -576,9 +587,9 @@ void IntrFalseExpr(void);
 **
 **  'IntrTildeExpr' is the action to interpret a tilde expression.
 */
-void IntrTildeExpr(void);
+void IntrTildeExpr(IntrState * intr);
 
-void IntrHelp(Obj topic);
+void IntrHelp(IntrState * intr, Obj topic);
 
 /****************************************************************************
 **
@@ -587,7 +598,7 @@ void IntrHelp(Obj topic);
 **  'IntrCharExpr' is the action to interpret a literal character expression.
 **  <chr> is the C character.
 */
-void IntrCharExpr(Char chr);
+void IntrCharExpr(IntrState * intr, Char chr);
 
 
 /****************************************************************************
@@ -595,9 +606,9 @@ void IntrCharExpr(Char chr);
 *F  IntrPermCycle(<nr>) . . . . . .  interpret literal permutation expression
 *F  IntrPerm(<nr>)  . . . . . . . .  interpret literal permutation expression
 */
-void IntrPermCycle(UInt nrx, UInt nrc);
+void IntrPermCycle(IntrState * intr, UInt nrx, UInt nrc);
 
-void IntrPerm(UInt nrc);
+void IntrPerm(IntrState * intr, UInt nrc);
 
 
 /****************************************************************************
@@ -607,22 +618,23 @@ void IntrPerm(UInt nrc);
 *F  IntrListExprEndElm()  . . . . . . . . .  interpret list expr, end element
 *F  IntrListExprEnd(<nr>,<range>,<top>,<tilde>) . .  interpret list expr, end
 */
-void IntrListExprBegin(UInt top);
+void IntrListExprBegin(IntrState * intr, UInt top);
 
-void IntrListExprBeginElm(UInt pos);
+void IntrListExprBeginElm(IntrState * intr, UInt pos);
 
-void IntrListExprEndElm(void);
+void IntrListExprEndElm(IntrState * intr);
 
-void IntrListExprEnd(UInt nr, UInt range, UInt top, UInt tilde);
+void IntrListExprEnd(
+    IntrState * intr, UInt nr, UInt range, UInt top, UInt tilde);
 
 
 /****************************************************************************
 **
 *F  IntrStringExpr(<str>) . . . . . . . . interpret literal string expression
 */
-void IntrStringExpr(Obj string);
+void IntrStringExpr(IntrState * intr, Obj string);
 
-void IntrPragma(Obj pragma);
+void IntrPragma(IntrState * intr, Obj pragma);
 
 
 /****************************************************************************
@@ -633,87 +645,87 @@ void IntrPragma(Obj pragma);
 *F  IntrRecExprEndElmExpr() . . . . . . .  interpret record expr, end element
 *F  IntrRecExprEnd(<nr>,<top>,<tilde>)  . . . . .  interpret record expr, end
 */
-void IntrRecExprBegin(UInt top);
+void IntrRecExprBegin(IntrState * intr, UInt top);
 
-void IntrRecExprBeginElmName(UInt rnam);
+void IntrRecExprBeginElmName(IntrState * intr, UInt rnam);
 
-void IntrRecExprBeginElmExpr(void);
+void IntrRecExprBeginElmExpr(IntrState * intr);
 
-void IntrRecExprEndElm(void);
+void IntrRecExprEndElm(IntrState * intr);
 
-void IntrRecExprEnd(UInt nr, UInt top, UInt tilde);
+void IntrRecExprEnd(IntrState * intr, UInt nr, UInt top, UInt tilde);
 
 
 /****************************************************************************
 **
 *F  IntrAssLVar(<lvar>) . . . . . . . . . . . . interpret assignment to local
 */
-void IntrAssLVar(UInt lvar);
+void IntrAssLVar(IntrState * intr, UInt lvar);
 
-void IntrUnbLVar(UInt lvar);
+void IntrUnbLVar(IntrState * intr, UInt lvar);
 
 
 /****************************************************************************
 **
 *F  IntrRefLVar(<lvar>) . . . . . . . . . . . .  interpret reference to local
 */
-void IntrRefLVar(UInt lvar);
+void IntrRefLVar(IntrState * intr, UInt lvar);
 
-void IntrIsbLVar(UInt lvar);
+void IntrIsbLVar(IntrState * intr, UInt lvar);
 
 
 /****************************************************************************
 **
 *F  IntrAssHVar(<hvar>) . . . . . . . . . . .  interpret assignment to higher
 */
-void IntrAssHVar(UInt hvar);
+void IntrAssHVar(IntrState * intr, UInt hvar);
 
-void IntrUnbHVar(UInt hvar);
+void IntrUnbHVar(IntrState * intr, UInt hvar);
 
 
 /****************************************************************************
 **
 *F  IntrRefHVar(<hvar>) . . . . . . . . . . . . interpret reference to higher
 */
-void IntrRefHVar(UInt hvar);
+void IntrRefHVar(IntrState * intr, UInt hvar);
 
-void IntrIsbHVar(UInt hvar);
+void IntrIsbHVar(IntrState * intr, UInt hvar);
 
 
 /****************************************************************************
 **
 *F  IntrAssDVar(<dvar>) . . . . . . . . . . . . interpret assignment to debug
 */
-void IntrAssDVar(UInt dvar, UInt depth);
+void IntrAssDVar(IntrState * intr, UInt dvar, UInt depth);
 
-void IntrUnbDVar(UInt dvar, UInt depth);
+void IntrUnbDVar(IntrState * intr, UInt dvar, UInt depth);
 
 
 /****************************************************************************
 **
 *F  IntrRefDVar(<dvar>) . . . . . . . . . . . .  interpret reference to debug
 */
-void IntrRefDVar(UInt dvar, UInt depth);
+void IntrRefDVar(IntrState * intr, UInt dvar, UInt depth);
 
-void IntrIsbDVar(UInt dvar, UInt depth);
+void IntrIsbDVar(IntrState * intr, UInt dvar, UInt depth);
 
 
 /****************************************************************************
 **
 *F  IntrAssGVar(<gvar>) . . . . . . . . . . .  interpret assignment to global
 */
-void IntrAssGVar(UInt gvar);
+void IntrAssGVar(IntrState * intr, UInt gvar);
 
-void IntrUnbGVar(UInt gvar);
+void IntrUnbGVar(IntrState * intr, UInt gvar);
 
 
 /****************************************************************************
 **
 *F  IntrRefGVar(<gvar>) . . . . . . . . . . . . interpret reference to global
 */
-void IntrRefGVar(UInt gvar);
+void IntrRefGVar(IntrState * intr, UInt gvar);
 
-void IntrIsbGVar(UInt gvar);
+void IntrIsbGVar(IntrState * intr, UInt gvar);
 
 
 /****************************************************************************
@@ -723,15 +735,15 @@ void IntrIsbGVar(UInt gvar);
 *F  IntrAssListLevel(<level>) . . . . . interpret assignment to several lists
 *F  IntrAsssListLevel(<level>)  . . intr multiple assignment to several lists
 */
-void IntrAssList(Int narg);
+void IntrAssList(IntrState * intr, Int narg);
 
-void IntrAsssList(void);
+void IntrAsssList(IntrState * intr);
 
-void IntrAssListLevel(Int narg, UInt level);
+void IntrAssListLevel(IntrState * intr, Int narg, UInt level);
 
-void IntrAsssListLevel(UInt level);
+void IntrAsssListLevel(IntrState * intr, UInt level);
 
-void IntrUnbList(Int narg);
+void IntrUnbList(IntrState * intr, Int narg);
 
 
 /****************************************************************************
@@ -741,15 +753,15 @@ void IntrUnbList(Int narg);
 *F  IntrElmListLevel(<level>) . . . . .  interpret selection of several lists
 *F  IntrElmsListLevel(<level>)  . .  intr multiple selection of several lists
 */
-void IntrElmList(Int narg);
+void IntrElmList(IntrState * intr, Int narg);
 
-void IntrElmsList(void);
+void IntrElmsList(IntrState * intr);
 
-void IntrElmListLevel(Int narg, UInt level);
+void IntrElmListLevel(IntrState * intr, Int narg, UInt level);
 
-void IntrElmsListLevel(UInt level);
+void IntrElmsListLevel(IntrState * intr, UInt level);
 
-void IntrIsbList(Int narg);
+void IntrIsbList(IntrState * intr, Int narg);
 
 
 /****************************************************************************
@@ -757,13 +769,13 @@ void IntrIsbList(Int narg);
 *F  IntrAssRecName(<rnam>)  . . . . . . . .  interpret assignment to a record
 *F  IntrAssRecExpr()  . . . . . . . . . . .  interpret assignment to a record
 */
-void IntrAssRecName(UInt rnam);
+void IntrAssRecName(IntrState * intr, UInt rnam);
 
-void IntrAssRecExpr(void);
+void IntrAssRecExpr(IntrState * intr);
 
-void IntrUnbRecName(UInt rnam);
+void IntrUnbRecName(IntrState * intr, UInt rnam);
 
-void IntrUnbRecExpr(void);
+void IntrUnbRecExpr(IntrState * intr);
 
 
 /****************************************************************************
@@ -771,31 +783,31 @@ void IntrUnbRecExpr(void);
 *F  IntrElmRecName(<rnam>)  . . . . . . . . . interpret selection of a record
 *F  IntrElmRecExpr()  . . . . . . . . . . . . interpret selection of a record
 */
-void IntrElmRecName(UInt rnam);
+void IntrElmRecName(IntrState * intr, UInt rnam);
 
-void IntrElmRecExpr(void);
+void IntrElmRecExpr(IntrState * intr);
 
-void IntrIsbRecName(UInt rnam);
+void IntrIsbRecName(IntrState * intr, UInt rnam);
 
-void IntrIsbRecExpr(void);
+void IntrIsbRecExpr(IntrState * intr);
 
 
 /****************************************************************************
 **
 *F  IntrAssPosObj() . . . . . . . . . . . .  interpret assignment to a posobj
 */
-void IntrAssPosObj(void);
+void IntrAssPosObj(IntrState * intr);
 
-void IntrUnbPosObj(void);
+void IntrUnbPosObj(IntrState * intr);
 
 
 /****************************************************************************
 **
 *F  IntrElmPosObj() . . . . . . . . . . . . . interpret selection of a posobj
 */
-void IntrElmPosObj(void);
+void IntrElmPosObj(IntrState * intr);
 
-void IntrIsbPosObj(void);
+void IntrIsbPosObj(IntrState * intr);
 
 
 /****************************************************************************
@@ -803,13 +815,13 @@ void IntrIsbPosObj(void);
 *F  IntrAssComObjName(<rnam>) . . . . . . .  interpret assignment to a comobj
 *F  IntrAssComObjExpr() . . . . . . . . . .  interpret assignment to a comobj
 */
-void IntrAssComObjName(UInt rnam);
+void IntrAssComObjName(IntrState * intr, UInt rnam);
 
-void IntrAssComObjExpr(void);
+void IntrAssComObjExpr(IntrState * intr);
 
-void IntrUnbComObjName(UInt rnam);
+void IntrUnbComObjName(IntrState * intr, UInt rnam);
 
-void IntrUnbComObjExpr(void);
+void IntrUnbComObjExpr(IntrState * intr);
 
 
 /****************************************************************************
@@ -817,20 +829,20 @@ void IntrUnbComObjExpr(void);
 *F  IntrElmComObjName(<rnam>) . . . . . . . . interpret selection of a comobj
 *F  IntrElmComObjExpr() . . . . . . . . . . . interpret selection of a comobj
 */
-void IntrElmComObjName(UInt rnam);
+void IntrElmComObjName(IntrState * intr, UInt rnam);
 
-void IntrElmComObjExpr(void);
+void IntrElmComObjExpr(IntrState * intr);
 
-void IntrIsbComObjName(UInt rnam);
+void IntrIsbComObjName(IntrState * intr, UInt rnam);
 
-void IntrIsbComObjExpr(void);
+void IntrIsbComObjExpr(IntrState * intr);
 
 /****************************************************************************
 **
 *F  IntrEmpty() . . . . . . . . . . . . .  Interpret an empty statement body
 **
 */
-void IntrEmpty(void);
+void IntrEmpty(IntrState * intr);
 
 /****************************************************************************
 **
@@ -839,9 +851,9 @@ void IntrEmpty(void);
 *F  IntrInfoEnd( <narg> ) . . Info statement complete, <narg> things to print
 */
 
-void IntrInfoBegin(void);
-void IntrInfoMiddle(void);
-void IntrInfoEnd(UInt narg);
+void IntrInfoBegin(IntrState * intr);
+void IntrInfoMiddle(IntrState * intr);
+void IntrInfoEnd(IntrState * intr, UInt narg);
 
 
 /****************************************************************************
@@ -859,44 +871,20 @@ void IntrInfoEnd(UInt narg);
 **
 *F  IntrAssertEnd2Args() . . . . called after reading the closing parenthesis
 *F  IntrAssertEnd3Args() . . . . called after reading the closing parenthesis
-**
-*V  CurrentAssertionLevel . . . .  . . . . . . . . . . . copy of GAP variable
 */
 
-void IntrAssertBegin(void);
-void IntrAssertAfterLevel(void);
-void IntrAssertAfterCondition(void);
-void IntrAssertEnd2Args(void);
-void IntrAssertEnd3Args(void);
+void IntrAssertBegin(IntrState * intr);
+void IntrAssertAfterLevel(IntrState * intr);
+void IntrAssertAfterCondition(IntrState * intr);
+void IntrAssertEnd2Args(IntrState * intr);
+void IntrAssertEnd3Args(IntrState * intr);
 
-extern Obj              CurrentAssertionLevel;
-
-/****************************************************************************
-**
-*F  IntrSaveWSBegin() . . . . . . . . . . . . . Start interpreting a save WS
-**
-*F  IntrSaveWSEnd() . . . . . . . . . . . . . . Actually save the workspace
-**
-**  'IntrSaveWSBegin' is called when the reader starts reading a
-**  SaveWorkspace command. 
-*/
-
-void IntrSaveWSBegin(void);
-
-void IntrSaveWSEnd(void);
 
 /****************************************************************************
 **
 *F  IntrContinue() . . . . . . . . . . . . . . . interpret continue-statement
 */
-void IntrContinue(void);
-
-
-/****************************************************************************
-**
-*F  PushVoidObj() . . . . . . . . . . . . . .  push void value onto the stack
-*/
-void PushVoidObj(void);
+void IntrContinue(IntrState * intr);
 
 
 /****************************************************************************

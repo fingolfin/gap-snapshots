@@ -94,7 +94,7 @@ AtlasRep Package</title>
 <li><p>a pair <span class="SimpleMath">\([ l, i ]\)</span> where <span class="SimpleMath">\(l\)</span> is a list of form 1. and <span class="SimpleMath">\(i\)</span> is a positive integer,</p>
 
 </li>
-<li><p>a list <span class="SimpleMath">\([ \)</span><code class="code">"Order"</code><span class="SimpleMath">\(, i, n ]\)</span> where <span class="SimpleMath">\(i\)</span> and <span class="SimpleMath">\(n\)</span> are positive integers.</p>
+<li><p>a list <span class="SimpleMath">\([\)</span> <code class="code">"Order"</code><span class="SimpleMath">\(, i, n ]\)</span> where <span class="SimpleMath">\(i\)</span> and <span class="SimpleMath">\(n\)</span> are positive integers.</p>
 
 </li>
 </ol>
@@ -381,7 +381,7 @@ r[6]:= r[3]^5;
 
 <p>A specification of the language can be found in <a href="chapBib_mj.html#biBNic06">[Nic06]</a>, see also</p>
 
-<p><span class="URL"><a href="http://brauer.maths.qmul.ac.uk/Atlas/info/blackbox.html">http://brauer.maths.qmul.ac.uk/Atlas/info/blackbox.html</a></span>.</p>
+<p><span class="URL"><a href="http://atlas.math.rwth-aachen.de/Atlas/info/blackbox.html">http://atlas.math.rwth-aachen.de/Atlas/info/blackbox.html</a></span>.</p>
 
 <p>The <em>inputs</em> of a black box program may be explicit group elements, and the program may also ask for random elements from a given group. The <em>program steps</em> form products, inverses, conjugates, commutators, etc. of known elements, <em>tests</em> concern essentially the orders of elements, and the <em>result</em> is a list of group elements or <code class="keyw">true</code> or <code class="keyw">false</code> or <code class="keyw">fail</code>.</p>
 
@@ -430,7 +430,7 @@ r[6]:= r[3]^5;
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ScanBBoxProgram</code>( <var class="Arg">string</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: a record containing the black box program encoded by the input string, or <code class="keyw">fail</code>.</p>
 
-<p>For a string <var class="Arg">string</var> that describes a black box program, e.g., the return value of <code class="func">StringFile</code> (<a href="../../../pkg/GAPDoc-1.6.2/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: StringFile</span></a>), <code class="func">ScanBBoxProgram</code> computes this black box program. If this is successful then the return value is a record containing as the value of its component <code class="code">program</code> the corresponding <strong class="pkg">GAP</strong> object that represents the program, otherwise <code class="keyw">fail</code> is returned.</p>
+<p>For a string <var class="Arg">string</var> that describes a black box program, e.g., the return value of <code class="func">StringFile</code> (<a href="/home/sam/.gap/pkg/GAPDoc-1.6.5/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: StringFile</span></a>), <code class="func">ScanBBoxProgram</code> computes this black box program. If this is successful then the return value is a record containing as the value of its component <code class="code">program</code> the corresponding <strong class="pkg">GAP</strong> object that represents the program, otherwise <code class="keyw">fail</code> is returned.</p>
 
 <p>As the first example, we construct a black box program that tries to find standard generators for the alternating group <span class="SimpleMath">\(A_5\)</span>; these standard generators are any pair of elements of the orders <span class="SimpleMath">\(2\)</span> and <span class="SimpleMath">\(3\)</span>, respectively, such that their product has order <span class="SimpleMath">\(5\)</span>.</p>
 
@@ -514,7 +514,7 @@ rec( program := &lt;black box program&gt; )
 
 </dd>
 <dt><strong class="Mark"><code class="code">orderfunction</code></strong></dt>
-<dd><p>the function for computing element orders (default <code class="func">Order</code> (<a href="../../../doc/ref/chap31_mj.html#X84F59A2687C62763"><span class="RefLink">Reference: Order</span></a>)),</p>
+<dd><p>the function for computing element orders (default <code class="func">Order</code> (<a href="../../../doc/ref/chap15_mj.html#X85A0C67982D9057A"><span class="RefLink">Reference: order</span></a>)),</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">quiet</code></strong></dt>
@@ -559,10 +559,10 @@ false
 
 <h5>6.2-4 ResultOfBBoxProgram</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResultOfBBoxProgram</code>( <var class="Arg">prog</var>, <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResultOfBBoxProgram</code>( <var class="Arg">prog</var>, <var class="Arg">G</var>[, <var class="Arg">options</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: a list of group elements or <code class="keyw">true</code>, <code class="keyw">false</code>, <code class="keyw">fail</code>, or the string <code class="code">"timeout"</code>.</p>
 
-<p>This function calls <code class="func">RunBBoxProgram</code> (<a href="chap6_mj.html#X7D211A5D8602B330"><span class="RefLink">6.2-3</span></a>) with the black box program <var class="Arg">prog</var> and second argument either a group or a list of group elements; the default options of <code class="func">RunBBoxProgram</code> (<a href="chap6_mj.html#X7D211A5D8602B330"><span class="RefLink">6.2-3</span></a>) are assumed. The return value is <code class="keyw">fail</code> if this call yields <code class="keyw">fail</code>, otherwise the <code class="code">gens</code> component of the result, if bound, or the <code class="code">result</code> component if not.</p>
+<p>This function calls <code class="func">RunBBoxProgram</code> (<a href="chap6_mj.html#X7D211A5D8602B330"><span class="RefLink">6.2-3</span></a>) with the black box program <var class="Arg">prog</var> and second argument either a group or a list of group elements; if <var class="Arg">options</var> is not given then the default options of <code class="func">RunBBoxProgram</code> (<a href="chap6_mj.html#X7D211A5D8602B330"><span class="RefLink">6.2-3</span></a>) are assumed. The return value is <code class="keyw">fail</code> if this call yields <code class="keyw">fail</code>, otherwise the <code class="code">gens</code> component of the result, if bound, or the <code class="code">result</code> component if not.</p>
 
 <p>Note that a <em>group</em> <var class="Arg">G</var> is used as the second argument in the call of <code class="func">RunBBoxProgram</code> (<a href="chap6_mj.html#X7D211A5D8602B330"><span class="RefLink">6.2-3</span></a>) (the source for random elements), whereas a <em>list</em> <var class="Arg">G</var> is used as the third argument (the inputs).</p>
 
@@ -806,7 +806,7 @@ true
 <li><p>If the name of <span class="SimpleMath">\(G\)</span> has the form <code class="code">"L2(</code><span class="SimpleMath">\(q\)</span><code class="code">)"</code> (denoting projective special linear groups in dimension two) then the minimal degree is <span class="SimpleMath">\(q + 1\)</span>, except if <span class="SimpleMath">\(q \in \{ 2, 3, 5, 7, 9, 11 \}\)</span>, see <a href="chapBib_mj.html#biBHup67">[Hup67, Satz II.8.28]</a>.</p>
 
 </li>
-<li><p>If the largest maximal subgroup of <span class="SimpleMath">\(G\)</span> is core-free then the index of this subgroup is the minimal degree. (This is used when the two character tables in question and the class fusion are available in <strong class="pkg">GAP</strong>'s Character Table Library <a href="chapBib_mj.html#biBCTblLib">[Bre13]</a>; this happens for many character tables of simple groups.)</p>
+<li><p>If the largest maximal subgroup of <span class="SimpleMath">\(G\)</span> is core-free then the index of this subgroup is the minimal degree. (This is used when the two character tables in question and the class fusion are available in <strong class="pkg">GAP</strong>'s Character Table Library <a href="chapBib_mj.html#biBCTblLib">[Bre22]</a>; this happens for many character tables of simple groups.)</p>
 
 </li>
 <li><p>If <span class="SimpleMath">\(G\)</span> has a unique minimal normal subgroup then each minimal faithful permutation representation is transitive. (Note that the core of each point stabilizer is either trivial or contains the unique minimal normal subgroup.)</p>

@@ -121,7 +121,7 @@ InstallMethod( DerivedSeries, [ IsGroup ], DerivedSeriesOfGroup );
 ##
 DeclareOperation( "Determinant", [ IsObject ] );
 
-InstallMethod( Determinant, [ IsMatrix ], DeterminantMat );
+InstallMethod( Determinant, [ IsMatrixOrMatrixObj ], DeterminantMat );
 InstallMethod( Determinant, [ IsClassFunction ], DeterminantOfCharacter );
 
 
@@ -229,6 +229,22 @@ DeclareOperation( "IsAlmostSimple", [ IsObject ] );
 InstallMethod( IsAlmostSimple, [ IsGroup   ], IsAlmostSimpleGroup   );
 InstallMethod( IsAlmostSimple, [ IsOrdinaryTable ],
     IsAlmostSimpleCharacterTable );
+
+
+#############################################################################
+##
+#O  IsQuasisimple( <obj> )
+##
+##  is `true' if <obj> is a quasisimple group
+##  or a quasisimple character table or ...
+##
+DeclareOperation( "IsQuasisimple", [ IsObject ] );
+
+DeclareSynonym( "IsQuasiSimple", IsQuasisimple );
+
+InstallMethod( IsQuasisimple, [ IsGroup ], IsQuasisimpleGroup );
+InstallMethod( IsQuasisimple, [ IsOrdinaryTable ],
+    IsQuasisimpleCharacterTable );
 
 
 #############################################################################

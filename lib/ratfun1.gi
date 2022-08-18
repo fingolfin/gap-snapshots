@@ -42,7 +42,13 @@ local f,typ,lc;
   
   # slightly better to do this after the Length has been determined
   if IsFFECollection(coeff) and IS_PLIST_REP(coeff) then
-    coeff := ImmutableVector(DefaultRing(coeff), coeff);
+    f:=DefaultRing(coeff);
+    if IsFinite(f) and Size(f)>MAXSIZE_GF_INTERNAL then
+      # do not pack Zmodnz objects into vectors
+      coeff := Immutable(coeff);
+    else
+      coeff := ImmutableVector(f, coeff);
+    fi;
   fi;
 
   
@@ -1253,12 +1259,12 @@ local q,p,e,i,j,cnt,sel,si;
     # is the denominator a constant?
     if Length(den[1])>0 then
       q:=den[1];
-      e:=q{[2,4..Length(q)]}; # the exponents exponents
-      q:=q{[1,3..Length(q)-1]}; # the indeterminant occuring
+      e:=q{[2,4..Length(q)]}; # the exponents
+      q:=q{[1,3..Length(q)-1]}; # the indeterminate occurring
       IsSSortedList(q);
       i:=1;
       while i<Length(num) and ForAny(e,j->j>0) do
-	cnt:=0; # how many indeterminants did we find
+	cnt:=0; # how many indeterminates did we find
 	for j in [1,3..Length(num[i])-1] do
 	  p:=Position(q,num[i][j]); # uses PositionSorted
 	  if p<>fail then

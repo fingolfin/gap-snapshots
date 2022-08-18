@@ -13,7 +13,7 @@
 #ifndef GAP_IOSTREAM_H
 #define GAP_IOSTREAM_H
 
-#include "system.h"
+#include "common.h"
 
 // Provide a feature macro to let libraries check if GAP supports
 // CheckChildStatusChanged.
@@ -28,9 +28,9 @@ int CheckChildStatusChanged(int childPID, int status);
 
 /****************************************************************************
 **
-*F  InitInfoFloat()  . . . . . . . . . . . . . . . . . table of init functions
+*F  InitInfoIOStream()  . . . . . . . . . . . . . . . table of init functions
 */
-StructInitInfo * InitInfoIOStream ( void );
+StructInitInfo * InitInfoIOStream(void);
 
 
 #endif // GAP_IOSTREAM_H

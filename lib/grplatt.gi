@@ -1247,6 +1247,27 @@ InstallMethod(LatticeSubgroups, "for the trivial group", true,
   0,
   G -> LatticeFromClasses(G,[G^G]));
 
+InstallMethod( LatticeSubgroups,
+    "via nice monomorphism",
+    [ IsGroup and IsFinite and IsHandledByNiceMonomorphism ],
+    # This method should be ranked below the "via radical" method
+    # but above the "cyclic extension" method.
+    {} -> - RankFilter( IsHandledByNiceMonomorphism ) + 1/2,
+    function( G )
+    local hom, lattice, classes;
+
+    hom:= NiceMonomorphism( G );
+    lattice:= LatticeSubgroups( NiceObject( G ) );
+    classes:= List( ConjugacyClassesSubgroups( lattice ),
+                    C -> ConjugacyClassSubgroups( G,
+                             PreImage( hom, Representative( C ) ) ) );
+
+    # It can be assumed that the list is sorted.
+    return Objectify( NewType( FamilyObj( classes ), IsLatticeSubgroupsRep ),
+                      rec( conjugacyClassesSubgroups:= classes,
+                           group:= G ) );
+    end );
+
 RedispatchOnCondition( LatticeSubgroups, true,
     [ IsGroup ], [ IsFinite ], 0 );
 
@@ -1259,8 +1280,8 @@ InstallMethod(ViewObj,"lattice",true,[IsLatticeSubgroupsRep],0,
 function(l)
   Print("<subgroup lattice of ");
   ViewObj(l!.group);
-  Print(", ", Length(l!.conjugacyClassesSubgroups)," classes, ",
-    Sum(l!.conjugacyClassesSubgroups,Size)," subgroups");
+  Print(", ", Pluralize(Length(l!.conjugacyClassesSubgroups),"class"),
+        ", ", Pluralize(Sum(l!.conjugacyClassesSubgroups,Size),"subgroup"));
   if IsBound(l!.func) then
     Print(", restricted under further condition l!.func");
   fi;
@@ -1332,7 +1353,7 @@ local badsizes,n,un,cl,r,i,l,u,bw,cnt,gens,go,imgs,bg,bi,emb,nu,k,j,
       D,params,might,bo;
   if IsSolvableGroup(G) then
     return [TrivialSubgroup(G)];
-  elif Size(RadicalGroup(G))>1 and (IsPermGroup(G) or IsMatrixGroup(G)) then
+  elif Size(SolvableRadical(G))>1 and (IsPermGroup(G) or IsMatrixGroup(G)) then
     D:=LatticeViaRadical(G,IsPerfectGroup);
     D:=List(D!.conjugacyClassesSubgroups,Representative);
     if simple then
@@ -1343,7 +1364,7 @@ local badsizes,n,un,cl,r,i,l,u,bw,cnt,gens,go,imgs,bg,bi,emb,nu,k,j,
     return D;
   else
     PerfGrpLoad(0);
-    badsizes := Union(PERFRec.notAvailable,PERFRec.notKnown);
+    badsizes := PERFRec.notKnown;
     D:=G;
     D:=PerfectResiduum(D);
     n:=Size(D);
@@ -1549,7 +1570,7 @@ function (L)
     if IsPermGroup(grp) then
       notperm:=false;
       dom:=[1..LargestMovedPoint(grp)];
-      orbs:=List(classes,i->Set(List(Orbits(Representative(i),dom),Set)));
+      orbs:=List(classes,i->Set(Orbits(Representative(i),dom),Set));
       orbs:=List(orbs,i->List([1..Maximum(dom)],p->Length(First(i,j->p in j))));
     else
       notperm:=true;
@@ -1564,7 +1585,7 @@ function (L)
     maxsz:=[];
     if IsSolvableGroup(grp) then
       # maxes of grp
-      maxsz[lcl]:=Set(List(MaximalSubgroupClassReps(grp),Size));
+      maxsz[lcl]:=Set(MaximalSubgroupClassReps(grp),Size);
     else
       maxsz[lcl]:=fail; # don't know about group
     fi;
@@ -1584,7 +1605,7 @@ function (L)
         Info(InfoLattice,2," testing class ",i);
 
 	if IsSolvableGroup(I) then
-	  maxsz[i]:=Set(List(MaximalSubgroupClassReps(I),Size));
+	  maxsz[i]:=Set(MaximalSubgroupClassReps(I),Size);
 	else
 	  maxsz[i]:=fail;
 	fi;
@@ -1778,11 +1799,10 @@ end);
 #F  MaximalSubgroupClassReps(<G>) . . . . reps of conjugacy classes of
 #F                                                          maximal subgroups
 ##
-InstallMethod(TryMaximalSubgroupClassReps,"using lattice",true,[IsGroup],0,
+InstallMethod(CalcMaximalSubgroupClassReps,"using lattice",true,[IsGroup],0,
 function (G)
     local   maxs,lat;
 
-    TryMaxSubgroupTainter(G);
     if ValueOption("nolattice")=true then return fail;fi;
     #AH special AG treatment
     if not HasIsSolvableGroup(G) and IsSolvableGroup(G) then
@@ -1895,7 +1915,7 @@ local G,	# group
 	  Info(InfoLattice,2,"factorsize=",Index(j,N),"/",Index(M,N));
 
 	  # reasons not to go complements
-	  if (HasAbelianFactorGroup(j,N) and
+	  if (HasElementaryAbelianFactorGroup(j,N) and
 	    p^(Length(mpcgs)*LogInt(Index(j,M),p))>100)
 	    then
             Info(InfoLattice,3,"Set l to fail");
@@ -1912,6 +1932,7 @@ local G,	# group
 	    fi;
 	    ocr.factorfphom:=j!.lattfpres;
 	    Assert(3,KernelOfMultiplicativeGeneralMapping(ocr.factorfphom)=M);
+            SetSize(Image(ocr.factorfphom),Size(j)/Size(M));
 
 	    # we want only normal complements. Therefore the 1-Coboundaries must
 	    # be trivial. We compute these first.
@@ -1957,8 +1978,11 @@ local G,	# group
 			      MappingGeneratorsImages(ocr.factorfphom)[2],
 			      List(GeneratorsOfGroup(M),
 				x->One(Range(ocr.factorfphom)))));
-
+                    
 		  fi;
+                  #SetSize(Image(qhom),Size(Image(ocr.factorfphom)));
+                  SetKernelOfMultiplicativeGeneralMapping(qhom,M);
+
 		  Assert(2,GroupHomomorphismByImages(Source(qhom),Range(qhom),
 		    MappingGeneratorsImages(qhom)[1],
 		    MappingGeneratorsImages(qhom)[2])<>fail);
@@ -1974,7 +1998,7 @@ local G,	# group
 		    # action on the factor
 		    lc:=[];
 		    for i in [1..Length(l)] do
-		      lc[i]:=ImagesRepresentative(qhom,l[i]^(elm^-1));
+		      lc[i]:=ImagesRepresentative(qhom,l[i]^(elm^-1):noshort);
 		      l[i]:=l[i]^elm;
 		    od;
 		    # other generators for same complement, these should be
@@ -2063,6 +2087,23 @@ local G,	# group
 	    if onlysimple then
 	      # all groups obtained will have a solvable factor
 	      l:=[];
+            elif HasElementaryAbelianFactorGroup(j,N) then
+              #Error("invar");
+              r:=ModuloPcgs(j,N);
+              jg:=RelativeOrders(r)[1];
+              l:=MTX.BasesSubmodules(GModuleByMats(LinearActionLayer(G,r),
+                GF(jg)));
+	      Info(InfoLattice,2,"found ",Length(l)," submodules");
+	      idx:=LogInt(Index(j,M),jg);
+              C:=List(GeneratorsOfGroup(M),x->ExponentsOfPcElement(r,x))*Z(jg)^0;
+              C:=Filtered(TriangulizedMat(C),x->not IsZero(x));
+              l:=Filtered(l,x->Length(x)=idx 
+                and RankMat(Concatenation(x,C))=Length(r));
+              l:=List(l,x->ClosureGroup(N,List(x,
+                y->PcElementByExponents(r,y))));
+	      l:=Filtered(l,i->IsNormal(G,i));
+	      Info(InfoLattice,1,Length(l)," of these normal");
+	      Append(nnt,l);
 	    else
 	      Info(InfoLattice,1,"using invariant subgroups");
 	      idx:=Index(j,M);
@@ -2296,7 +2337,7 @@ local n,i,s;
   # deal with large EA socle factor for fitting free
 
   # this could be a bit shorter.
-  if Size(RadicalGroup(G))=1 then
+  if Size(SolvableRadical(G))=1 then
     n:=NormalSubgroups(PerfectResiduum(G));
     n:=Filtered(n,x->IsNormal(G,x));
   else
@@ -2339,9 +2380,9 @@ local rt,op,a,l,i,j,u,max,subs;
   subs:=List([1..l],i->Filtered([1..i-1],j->IsSubset(a[i],a[j])));
       # List the sets we know to be contained in each set
 
-  max:=Set(List(Difference([1..l],Union(subs)), # sets which are
+  max:=Set(Difference([1..l],Union(subs)), # sets which are
 						# contained in no other
-      i->[i,l+1]));
+      i->[i,l+1]);
 
   for i in [1..l] do
     #take all subsets
@@ -2398,14 +2439,14 @@ local uind,subs,incl,i,j,k,m,gens,t,c,p,conj,bas,basl,r;
       # test orbit split
       bas:=List(Orbits(U,MovedPoints(G)),Length);
       if NrCombinations(bas)<10^6 then
-        bas:=Set(List(Combinations(bas),Sum));
+        bas:=Set(Combinations(bas),Sum);
 	m:=Filtered(m,
 	  x->ForAll(List(Orbits(x,MovedPoints(G)),Length),z->z in bas));
       fi;
     fi;
 
     Info(InfoLattice,1,"Subgroup ",i,", Order ",Size(subs[i]),": ",Length(m),
-      " maxes");
+      " maxes. So far found ",Length(subs)," ratio ",EvalF(i/Length(subs)));
     for j in m do
       Info(InfoLattice,2,"Max index ",Index(subs[i],j));
       # maximals must be self-normalizing or normal
@@ -3016,11 +3057,6 @@ InstallMethod(TomDataAlmostSimpleRecognition,"generic",true,
   [IsGroup],0,
 function(G)
 local T,t,hom,inf,nam,i,aut;
-  # avoid the isomorphism test falling back
-  if ValueOption("cheap")=true and IsInt(ValueOption("intersize")) and
-  ValueOption("intersize")<=Size(G) then
-    return fail;
-  fi;
 
   T:=PerfectResiduum(G);
   inf:=DataAboutSimpleGroup(T);
@@ -3073,6 +3109,12 @@ end);
 
 InstallGlobalFunction(TomDataMaxesAlmostSimple,function(G)
 local recog,m;
+  # avoid the isomorphism test falling back
+  if ValueOption("cheap")=true and IsInt(ValueOption("intersize")) and
+  ValueOption("intersize")<=Size(G) then
+    return fail;
+  fi;
+
   recog:=TomDataAlmostSimpleRecognition(G);
   if recog=fail then
     return fail;
@@ -3118,7 +3160,7 @@ end);
 #F  LowLayerSubgroups( [<act>,] <G>, <lim> [,<cond> [,<dosub>]] )
 ##
 InstallGlobalFunction(LowLayerSubgroups,function(arg)
-local act,offset,G,lim,cond,dosub,all,m,i,j,new,old;
+local act,offset,G,lim,cond,dosub,all,alln,m,i,j,jn,new,old,t,k,conjg;
   act:=arg[1];
   if IsGroup(act) and IsGroup(arg[2]) then
     offset:=2;
@@ -3138,6 +3180,7 @@ local act,offset,G,lim,cond,dosub,all,m,i,j,new,old;
   fi;
 
   all:=[G];
+  alln:=[G]; # Normalizers
   m:=[G];
   for i in [1..lim] do
     Info(InfoLattice,1,"Layer ",i,": ",Length(m)," groups");
@@ -3158,25 +3201,55 @@ local act,offset,G,lim,cond,dosub,all,m,i,j,new,old;
     m:=[];
     # any conjugate before?
     for j in new do
-      old:=Filtered(all,x->Size(x)=Size(j));
-      if ForAll(old,x->RepresentativeAction(act,x,j)=fail) then
+      jn:=Normalizer(act,j);
+      old:=Filtered([1..Length(all)],x->
+        Size(all[x])=Size(j) and Size(alln[x])=Size(jn));
+      old:=all{old};
+      if Length(old)>1 then
+        # do we go through normalizer transversal
+        if QuoInt(IndexNC(act,jn),Length(old))<1000 
+          or not (IsPermGroup(G) or IsPcGroup(G)) then
+          t:=RightTransversal(act,jn);
+          k:=1;
+          while k<=Length(t) do
+            conjg:=t[k];
+            conjg:=List(GeneratorsOfGroup(j),x->x^conjg);
+            if ForAny(old,x->ForAll(conjg,y->y in x)) then
+              # conjugate --  delete and stop
+              j:=fail;
+              old:=fail;
+              k:=Length(t); # exit loop
+            fi;
+            k:=k+1;
+          od;
+
+        fi;
+        # delete so no further test
+        if old<>fail then
+          old:=[];
+        fi;
+      fi;
+      # test if candidates left
+      if old<>fail and ForAll(old,x->RepresentativeAction(act,x,j)=fail) then
         Add(m,j);
       fi;
     od;
-    m:=List(SubgroupsOrbitsAndNormalizers(act,m,false),x->x.representative);
+    m:=SubgroupsOrbitsAndNormalizers(act,m,false);
     Info(InfoLattice,1,"Layer ",i,": ",Length(m)," new");
+    Append(alln,List(m,x->x.normalizer));
+    m:=List(m,x->x.representative);
     Append(all,m);
   od;
   return all;
 end);
 
-#############################################################################
-##
-#F  ContainedConjugates( <G>, <A>, <B> )
-##
-InstallMethod(ContainedConjugates,"finite groups",IsFamFamFam,[IsGroup,IsGroup,IsGroup],0,
-function(G,A,B)
-local l,N,dc,gens,i;
+DoContainedConjugates:=function(arg)
+local G,A,B,onlyone,l,N,dc,gens,i;
+  G:=arg[1];
+  A:=arg[2];
+  B:=arg[3];
+  if Length(arg)>3 then onlyone:=arg[4]; else onlyone:=false;fi;
+
   if not IsFinite(G) and IsFinite(A) and IsFinite(B) then
      TryNextMethod();
   fi;
@@ -3184,7 +3257,8 @@ local l,N,dc,gens,i;
     Error("A and B must be subgroups of G");
   fi;
   if Size(A) mod Size(B)<>0 then
-    return []; # cannot be contained by order
+    # cannot be contained by order
+    if onlyone then return fail;else return [];fi;
   fi;
 
   l:=[];
@@ -3194,15 +3268,30 @@ local l,N,dc,gens,i;
     gens:=SmallGeneratingSet(B);
     for i in dc do
       if ForAll(gens,x->x^i[1] in A) then
+        if onlyone then return [B^i[1],i[1]];fi;
         Add(l,[B^i[1],i[1]]);
       fi;
     od;
+    if onlyone then return fail;fi;
     return l;
+  elif onlyone then
+    l:=DoConjugateInto(G,A,B,true);
+    if IsIdenticalObj(FamilyObj(l),FamilyObj(One(G))) then return [B^l,l];
+    else return fail;fi;
   else
     l:=DoConjugateInto(G,A,B,false);
     return List(l,x->[B^x,x]);
   fi;
-end);
+end;
+
+#############################################################################
+##
+#F  ContainedConjugates( <G>, <A>, <B> )
+##
+InstallMethod(ContainedConjugates,"finite groups",IsFamFamFam,
+  [IsGroup,IsGroup,IsGroup],0,DoContainedConjugates);
+InstallOtherMethod(ContainedConjugates,"onlyone",IsFamFamFamX,
+  [IsGroup,IsGroup,IsGroup,IsBool],0,DoContainedConjugates);
 
 #############################################################################
 ##
@@ -3262,14 +3351,13 @@ local l,N,t,gens,i,c,o,rep,r,sub,gen;
   fi;
 end);
 
-InstallMethod(MinimalFaithfulPermutationDegree,"use lattice",true,
-  [IsGroup and IsFinite],0,
-function(G)
+BindGlobal("DoMinimalFaithfulPermutationDegree",
+function(G,dorep)
 local c,n,deg,ind,core,i,j,sum;
   if Size(G)=1 then
     # option allows to calculate actual representation -- maybe access under
     # different name
-    if ValueOption("representation")<>true then
+    if dorep=false then
       return 1;
     else
       return GroupHomomorphismByImages(G,Group(()),[One(G)],[()]);
@@ -3311,7 +3399,7 @@ local c,n,deg,ind,core,i,j,sum;
 
   od;
 
-  if ValueOption("representation")<>true then
+  if dorep=false then
     return deg[Length(n)][1]; # smallest degree
   fi;
   # calculate the representation
@@ -3328,6 +3416,23 @@ local c,n,deg,ind,core,i,j,sum;
 
   return GroupHomomorphismByImages(G,ind,GeneratorsOfGroup(G),sum);
 
+end);
+
+InstallMethod(MinimalFaithfulPermutationDegree,"use lattice",true,
+  [IsGroup and IsFinite],0,
+function(G)
+  if ValueOption("representation")=true then
+    Error("Use of the `representation` option discontinued,\n",
+    "Use `MinimalFaithfulPermutationRepresentation` instead");
+    return MinimalFaithfulPermutationRepresentation(G);
+  fi;
+  return DoMinimalFaithfulPermutationDegree(G,false);
+end);
+
+InstallMethod(MinimalFaithfulPermutationRepresentation,"use lattice",true,
+  [IsGroup and IsFinite],0,
+function(G)
+  return DoMinimalFaithfulPermutationDegree(G,true);
 end);
 
 
@@ -3440,29 +3545,53 @@ local divs,limit,mode,l,process,done,bound,maxer,prime;
   if limit<20 then limit:=1;fi;
   maxer:=function(sub)
   local m,a,b,len,sz,i,j,k,r,tb;
-    #Print("call maxer for ",Size(sub)," |l|=",Length(l)," |process|=",Length(process),"\n");
-    if bound>1 and prime^(Length(AbelianInvariants(sub))-3)>bound then
-      i:=0;
-      repeat
-        m:=BoundedIndexAbelianized(G,sub,bound*prime^i);
-        i:=i+1;
-      until Size(m)<Size(sub);
-      if Size(m)^2<Size(sub) then
-        m:=MaximalSubgroupClassReps(sub:cheap:=false);
-      else
-        # add maxes not containing derived
-        if IsSolvableGroup(sub) then
-          i:=IsomorphismPcGroup(sub);
-          a:=DerivedSubgroup(Image(i));
-          a:=Filtered(MaximalSubgroupClassReps(Image(i)),
-            x->not IsSubset(x,a));
-          a:=List(a,x->PreImage(i,x));
-        else
-          a:=DerivedSubgroup(sub);
-          a:=Filtered(MaximalSubgroupClassReps(sub),
-            x->not IsSubset(x,a));
+    Info(InfoLattice,1,"call maxer for ",Size(sub)," |l|=",Length(l),
+      " |process|=",Length(process));
+    if bound>1 then
+      # nonabelian indices
+      a:=CompositionSeries(sub);
+      m:=1;
+      for i in [2..Length(a)] do
+        if IndexNC(a[i-1],a[i])>m and 
+          not HasAbelianFactorGroup(a[i-1],a[i]) then
+          m:=Maximum(IndexNC(a[i-1],a[i]),m);
         fi;
-        m:=Concatenation([m],a);
+      od;
+      # big (hope simple) bits
+      if m>=10^7 and (not IsPerfectGroup(sub)) 
+        # proper abelian factor
+        and IndexNC(sub,PerfectResiduum(sub)) in [2..bound] 
+        # not all abelian is direct factor
+        and IndexNC(sub,
+          ClosureGroup(PerfectResiduum(sub),SolvableRadical(sub)))>1 then
+        m:=MaximalSubgroupClassReps(
+          ClosureGroup(PerfectResiduum(sub),SolvableRadical(sub)):cheap:=false);
+      elif bound>1 and prime^(Length(AbelianInvariants(sub))-3)>bound then
+        i:=0;
+        repeat
+          m:=BoundedIndexAbelianized(G,sub,bound*prime^i);
+          i:=i+1;
+        until Size(m)<Size(sub);
+        if Size(m)^2<Size(sub) then
+          m:=MaximalSubgroupClassReps(sub:cheap:=false);
+        else
+          # add maxes not containing derived
+          if IsSolvableGroup(sub) then
+            i:=IsomorphismPcGroup(sub);
+            a:=DerivedSubgroup(Image(i));
+            a:=Filtered(MaximalSubgroupClassReps(Image(i)),
+              x->not IsSubset(x,a));
+            a:=List(a,x->PreImage(i,x));
+          else
+            a:=DerivedSubgroup(sub);
+            a:=Filtered(MaximalSubgroupClassReps(sub),
+              x->not IsSubset(x,a));
+          fi;
+          m:=Concatenation([m],a);
+        fi;
+
+      else
+        m:=MaximalSubgroupClassReps(sub:cheap:=false);
       fi;
     else
       m:=MaximalSubgroupClassReps(sub:cheap:=false);

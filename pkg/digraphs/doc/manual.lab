@@ -1,0 +1,525 @@
+\GAPDocLabFile{digraphs}
+\makelabel{digraphs:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{digraphs:Abstract}{}{X7AA6C5737B711C89}
+\makelabel{digraphs:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{digraphs:Acknowledgements}{}{X82A988D47DFAFCFA}
+\makelabel{digraphs:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{digraphs:The Digraphs package}{1}{X7F202ABA780E595D}
+\makelabel{digraphs:Introduction}{1.1}{X7DFB63A97E67C0A1}
+\makelabel{digraphs:Definitions}{1.1.1}{X84541F61810C741D}
+\makelabel{digraphs:Installing Digraphs}{2}{X817088B27F90D596}
+\makelabel{digraphs:For those in a hurry}{2.1}{X7DA3059C79842BF3}
+\makelabel{digraphs:Configuration options}{2.1.1}{X7C1F2E6D860DBDEC}
+\makelabel{digraphs:Optional package dependencies}{2.2}{X780AA9D97EBCA95D}
+\makelabel{digraphs:The Grape package}{2.2.1}{X8493C7587FCF6D8B}
+\makelabel{digraphs:Compiling the kernel module}{2.3}{X849F6196875A6DF5}
+\makelabel{digraphs:Rebuilding the documentation}{2.4}{X857CBE5484CF703A}
+\makelabel{digraphs:Testing your installation}{2.5}{X7862D3F37C5BBDEF}
+\makelabel{digraphs:Creating digraphs}{3}{X7D34861E863A5D93}
+\makelabel{digraphs:Creating digraphs}{3.1}{X7D34861E863A5D93}
+\makelabel{digraphs:Changing representations}{3.2}{X83608C407CC8836D}
+\makelabel{digraphs:New digraphs from old}{3.3}{X85126078848B420A}
+\makelabel{digraphs:Random digraphs}{3.4}{X85B5D9B97F5187B7}
+\makelabel{digraphs:Standard examples}{3.5}{X7C76D1DC7DAF03D3}
+\makelabel{digraphs:Operators}{4}{X7AD6F77E7D95C996}
+\makelabel{digraphs:Operators for digraphs}{4.1}{X84E0B5B88358C96B}
+\makelabel{digraphs:Attributes and operations}{5}{X8739F6CD78C90B14}
+\makelabel{digraphs:Vertices and edges}{5.1}{X7E814B6478F7D015}
+\makelabel{digraphs:Neighbours and degree}{5.2}{X7D7CE8328187D0DF}
+\makelabel{digraphs:Reachability and connectivity}{5.3}{X8537F4088400DC48}
+\makelabel{digraphs:Cayley graphs of groups}{5.4}{X82F900777D677F55}
+\makelabel{digraphs:Associated semigroups}{5.5}{X790FD6647ECCAE3C}
+\makelabel{digraphs:Planarity}{5.6}{X7E2305528492DDC0}
+\makelabel{digraphs:Properties of digraphs}{6}{X7ADDEFD478D470D5}
+\makelabel{digraphs:Edge properties}{6.1}{X7F49388F8245F0E9}
+\makelabel{digraphs:Regularity}{6.2}{X7AAF896982EC22FA}
+\makelabel{digraphs:Connectivity and cycles}{6.3}{X780DAEB37C5E07FD}
+\makelabel{digraphs:Planarity}{6.4}{X7E2305528492DDC0}
+\makelabel{digraphs:Homomorphisms and transformations}{6.5}{X83DC8AD283C41326}
+\makelabel{digraphs:Homomorphisms}{7}{X84975388859F203D}
+\makelabel{digraphs:Acting on digraphs}{7.1}{X8200192B80AD2071}
+\makelabel{digraphs:Isomorphisms and canonical labellings}{7.2}{X7E48B9F87A0F22D4}
+\makelabel{digraphs:Homomorphisms of digraphs}{7.3}{X7E1A02FE8384C03C}
+\makelabel{digraphs:Finding cliques and independent sets}{8}{X7A7E0B957932DF44}
+\makelabel{digraphs:Finding cliques}{8.1}{X788474E38446039B}
+\makelabel{digraphs:Finding independent sets}{8.2}{X7E31253287708348}
+\makelabel{digraphs:Visualising and IO}{9}{X81714DBC80CC4BCB}
+\makelabel{digraphs:Visualising a digraph}{9.1}{X7CF67F8278D9469C}
+\makelabel{digraphs:Reading and writing digraphs to a file}{9.2}{X81C9B1DC791C0BBD}
+\makelabel{digraphs:Grape to Digraphs Command Map}{A}{X800DAF137BA8E25B}
+\makelabel{digraphs:Functions to construct and modify graphs}{A.1}{X7CC8A9DB86F9F0F4}
+\makelabel{digraphs:Functions to inspect graphs, vertices and edges}{A.2}{X7C38A6397D2770FB}
+\makelabel{digraphs:Functions to determine regularity properties of graphs}{A.3}{X78A5A34783C70CD7}
+\makelabel{digraphs:Some special vertex subsets of a graph}{A.4}{X7C74978D85F7AF5C}
+\makelabel{digraphs:Functions to construct new graphs from old}{A.5}{X7E51B92F7E89E266}
+\makelabel{digraphs:Vertex-Colouring and Complete Subgraphs}{A.6}{X7A61E3FC7A2BB50E}
+\makelabel{digraphs:Automorphism groups and isomorphism testing for graphs}{A.7}{X7DFC61EC7CBDBC7E}
+\makelabel{digraphs:Bibliography}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{digraphs:References}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{digraphs:Index}{Ind}{X83A0356F839C696F}
+\makelabel{digraphs:Digraphs package overview}{1}{X7F202ABA780E595D}
+\makelabel{digraphs:DigraphsMakeDoc}{2.4.1}{X870631C38610AC25}
+\makelabel{digraphs:DigraphsTestInstall}{2.5.1}{X86AF4DAE80B978DA}
+\makelabel{digraphs:DigraphsTestStandard}{2.5.2}{X7A20088B7C406C4A}
+\makelabel{digraphs:DigraphsTestExtreme}{2.5.3}{X7885EF3E785D4298}
+\makelabel{digraphs:IsDigraph}{3.1.1}{X7877ADC77F85E630}
+\makelabel{digraphs:IsMutableDigraph}{3.1.2}{X7D7EDF83820ED6F5}
+\makelabel{digraphs:IsImmutableDigraph}{3.1.3}{X7CAFAA89804F80BD}
+\makelabel{digraphs:IsCayleyDigraph}{3.1.4}{X7E749324800B38A5}
+\makelabel{digraphs:IsDigraphWithAdjacencyFunction}{3.1.5}{X80F1B6D28478D8B9}
+\makelabel{digraphs:DigraphByOutNeighboursType}{3.1.6}{X86E798B779515678}
+\makelabel{digraphs:DigraphFamily}{3.1.6}{X86E798B779515678}
+\makelabel{digraphs:Digraph}{3.1.7}{X834843057CE86655}
+\makelabel{digraphs:Digraph for a list and function}{3.1.7}{X834843057CE86655}
+\makelabel{digraphs:Digraph for a group, list, function, and function}{3.1.7}{X834843057CE86655}
+\makelabel{digraphs:DigraphByAdjacencyMatrix}{3.1.8}{X8023FE387A3AB609}
+\makelabel{digraphs:DigraphByEdges}{3.1.9}{X7F37B6768349E269}
+\makelabel{digraphs:EdgeOrbitsDigraph}{3.1.10}{X7B75C1D680757D6F}
+\makelabel{digraphs:DigraphByInNeighbours}{3.1.11}{X81BC49B57EAADEFB}
+\makelabel{digraphs:DigraphByInNeighbors}{3.1.11}{X81BC49B57EAADEFB}
+\makelabel{digraphs:CayleyDigraph}{3.1.12}{X7FCADADC7EC28478}
+\makelabel{digraphs:ListNamedDigraphs}{3.1.13}{X7BB820C9813F035F}
+\makelabel{digraphs:AsBinaryRelation}{3.2.1}{X7FBC4BDB82FBEDD2}
+\makelabel{digraphs:AsDigraph for a transformation or perm}{3.2.2}{X855E2AC47A4F5B55}
+\makelabel{digraphs:Graph}{3.2.3}{X7B335342839E5146}
+\makelabel{digraphs:AsGraph}{3.2.4}{X7C4F13E080EC16B0}
+\makelabel{digraphs:AsTransformation}{3.2.5}{X7C5360B2799943F3}
+\makelabel{digraphs:DigraphImmutableCopy}{3.3.1}{X83D93A8A8251E6F9}
+\makelabel{digraphs:DigraphMutableCopy}{3.3.1}{X83D93A8A8251E6F9}
+\makelabel{digraphs:DigraphCopySameMutability}{3.3.1}{X83D93A8A8251E6F9}
+\makelabel{digraphs:DigraphCopy}{3.3.1}{X83D93A8A8251E6F9}
+\makelabel{digraphs:DigraphImmutableCopyIfImmutable}{3.3.2}{X8399F7427B227228}
+\makelabel{digraphs:DigraphImmutableCopyIfMutable}{3.3.2}{X8399F7427B227228}
+\makelabel{digraphs:DigraphMutableCopyIfMutable}{3.3.2}{X8399F7427B227228}
+\makelabel{digraphs:DigraphMutableCopyIfImmutable}{3.3.2}{X8399F7427B227228}
+\makelabel{digraphs:InducedSubdigraph}{3.3.3}{X83C51DA182CCEA2F}
+\makelabel{digraphs:ReducedDigraph}{3.3.4}{X7CAF093B85A93D2F}
+\makelabel{digraphs:ReducedDigraphAttr}{3.3.4}{X7CAF093B85A93D2F}
+\makelabel{digraphs:MaximalSymmetricSubdigraph}{3.3.5}{X829E3EAC7C4B3B1E}
+\makelabel{digraphs:MaximalSymmetricSubdigraphAttr}{3.3.5}{X829E3EAC7C4B3B1E}
+\makelabel{digraphs:MaximalSymmetricSubdigraphWithoutLoops}{3.3.5}{X829E3EAC7C4B3B1E}
+\makelabel{digraphs:MaximalSymmetricSubdigraphWithoutLoopsAttr}{3.3.5}{X829E3EAC7C4B3B1E}
+\makelabel{digraphs:MaximalAntiSymmetricSubdigraph}{3.3.6}{X79BA6A66846D5A95}
+\makelabel{digraphs:MaximalAntiSymmetricSubdigraphAttr}{3.3.6}{X79BA6A66846D5A95}
+\makelabel{digraphs:UndirectedSpanningForest}{3.3.7}{X7DD9766C86D3ED20}
+\makelabel{digraphs:UndirectedSpanningForestAttr}{3.3.7}{X7DD9766C86D3ED20}
+\makelabel{digraphs:UndirectedSpanningTree}{3.3.7}{X7DD9766C86D3ED20}
+\makelabel{digraphs:UndirectedSpanningTreeAttr}{3.3.7}{X7DD9766C86D3ED20}
+\makelabel{digraphs:DigraphShortestPathSpanningTree}{3.3.8}{X79C770918610AD97}
+\makelabel{digraphs:QuotientDigraph}{3.3.9}{X7D1D26D27F5B56C2}
+\makelabel{digraphs:DigraphReverse}{3.3.10}{X78DECD26811EFD7C}
+\makelabel{digraphs:DigraphReverseAttr}{3.3.10}{X78DECD26811EFD7C}
+\makelabel{digraphs:DigraphDual}{3.3.11}{X7F71D99D852B130F}
+\makelabel{digraphs:DigraphDualAttr}{3.3.11}{X7F71D99D852B130F}
+\makelabel{digraphs:DigraphSymmetricClosure}{3.3.12}{X874883DD7DD450C4}
+\makelabel{digraphs:DigraphSymmetricClosureAttr}{3.3.12}{X874883DD7DD450C4}
+\makelabel{digraphs:DigraphTransitiveClosure}{3.3.13}{X7A6C419080AD41DE}
+\makelabel{digraphs:DigraphTransitiveClosureAttr}{3.3.13}{X7A6C419080AD41DE}
+\makelabel{digraphs:DigraphReflexiveTransitiveClosure}{3.3.13}{X7A6C419080AD41DE}
+\makelabel{digraphs:DigraphReflexiveTransitiveClosureAttr}{3.3.13}{X7A6C419080AD41DE}
+\makelabel{digraphs:DigraphTransitiveReduction}{3.3.14}{X82AD17517E273600}
+\makelabel{digraphs:DigraphTransitiveReductionAttr}{3.3.14}{X82AD17517E273600}
+\makelabel{digraphs:DigraphReflexiveTransitiveReduction}{3.3.14}{X82AD17517E273600}
+\makelabel{digraphs:DigraphReflexiveTransitiveReductionAttr}{3.3.14}{X82AD17517E273600}
+\makelabel{digraphs:DigraphAddVertex}{3.3.15}{X83B2506D79453208}
+\makelabel{digraphs:DigraphAddVertices for a digraph and an integer}{3.3.16}{X8134BEE7786BD3A7}
+\makelabel{digraphs:DigraphAddVertices for a digraph and a list of labels}{3.3.16}{X8134BEE7786BD3A7}
+\makelabel{digraphs:DigraphAddEdge for a digraph and an edge}{3.3.17}{X7E58CC4880627658}
+\makelabel{digraphs:DigraphAddEdge for a digraph, source, and range}{3.3.17}{X7E58CC4880627658}
+\makelabel{digraphs:DigraphAddEdgeOrbit}{3.3.18}{X7BE5C7028760B053}
+\makelabel{digraphs:DigraphAddEdges}{3.3.19}{X8693A61B7F752C76}
+\makelabel{digraphs:DigraphRemoveVertex}{3.3.20}{X7B634A2B83C08B16}
+\makelabel{digraphs:DigraphRemoveVertices}{3.3.21}{X7E290E847A5A299A}
+\makelabel{digraphs:DigraphRemoveEdge for a digraph and an edge}{3.3.22}{X8433E3BC7E5EA6BF}
+\makelabel{digraphs:DigraphRemoveEdge for a digraph, source, and range}{3.3.22}{X8433E3BC7E5EA6BF}
+\makelabel{digraphs:DigraphRemoveEdgeOrbit}{3.3.23}{X85981D9187F49018}
+\makelabel{digraphs:DigraphRemoveEdges}{3.3.24}{X87093FDA7F88E732}
+\makelabel{digraphs:DigraphRemoveLoops}{3.3.25}{X79324AF7818C0C02}
+\makelabel{digraphs:DigraphRemoveLoopsAttr}{3.3.25}{X79324AF7818C0C02}
+\makelabel{digraphs:DigraphRemoveAllMultipleEdges}{3.3.26}{X7DCCD0247897A3DE}
+\makelabel{digraphs:DigraphRemoveAllMultipleEdgesAttr}{3.3.26}{X7DCCD0247897A3DE}
+\makelabel{digraphs:DigraphReverseEdges for a digraph and a list of edges}{3.3.27}{X7821753D85402A8C}
+\makelabel{digraphs:DigraphReverseEdge for a digraph and an edge}{3.3.27}{X7821753D85402A8C}
+\makelabel{digraphs:DigraphReverseEdge for a digraph, source, and range}{3.3.27}{X7821753D85402A8C}
+\makelabel{digraphs:DigraphDisjointUnion for an arbitrary number of digraphs}{3.3.28}{X814F1DFC83DB273F}
+\makelabel{digraphs:DigraphDisjointUnion for a list of digraphs}{3.3.28}{X814F1DFC83DB273F}
+\makelabel{digraphs:DigraphEdgeUnion for a positive number of digraphs}{3.3.29}{X7DA997697D310E44}
+\makelabel{digraphs:DigraphEdgeUnion for a list of digraphs}{3.3.29}{X7DA997697D310E44}
+\makelabel{digraphs:DigraphJoin for a positive number of digraphs}{3.3.30}{X7DDFC759860E3390}
+\makelabel{digraphs:DigraphJoin for a list of digraphs}{3.3.30}{X7DDFC759860E3390}
+\makelabel{digraphs:DigraphCartesianProduct for a positive number of digraphs}{3.3.31}{X7D625CC87DBFFDED}
+\makelabel{digraphs:DigraphCartesianProduct for a list of digraphs}{3.3.31}{X7D625CC87DBFFDED}
+\makelabel{digraphs:DigraphDirectProduct for a positive number of digraphs}{3.3.32}{X84D24DC9833B54A5}
+\makelabel{digraphs:DigraphDirectProduct for a list of digraphs}{3.3.32}{X84D24DC9833B54A5}
+\makelabel{digraphs:ConormalProduct}{3.3.33}{X8160BCC378AF000F}
+\makelabel{digraphs:HomomorphicProduct}{3.3.34}{X79FD2AF279F20A72}
+\makelabel{digraphs:LexicographicProduct}{3.3.35}{X8151176882BA9901}
+\makelabel{digraphs:ModularProduct}{3.3.36}{X807F95057F9DF576}
+\makelabel{digraphs:StrongProduct}{3.3.37}{X82E200F07FEFAF27}
+\makelabel{digraphs:DigraphCartesianProductProjections}{3.3.38}{X8795087A78FE7D54}
+\makelabel{digraphs:DigraphDirectProductProjections}{3.3.39}{X84FB64F185B804C2}
+\makelabel{digraphs:LineDigraph}{3.3.40}{X8595BF937B749F22}
+\makelabel{digraphs:EdgeDigraph}{3.3.40}{X8595BF937B749F22}
+\makelabel{digraphs:LineUndirectedDigraph}{3.3.41}{X8364C6F17A1680CB}
+\makelabel{digraphs:EdgeUndirectedDigraph}{3.3.41}{X8364C6F17A1680CB}
+\makelabel{digraphs:DoubleDigraph}{3.3.42}{X7FB8B48C87C0ED16}
+\makelabel{digraphs:BipartiteDoubleDigraph}{3.3.43}{X7C6E6CB284982C7A}
+\makelabel{digraphs:DigraphAddAllLoops}{3.3.44}{X8167A50A83256ED1}
+\makelabel{digraphs:DigraphAddAllLoopsAttr}{3.3.44}{X8167A50A83256ED1}
+\makelabel{digraphs:DistanceDigraph for digraph and int}{3.3.45}{X865436437DF95FEF}
+\makelabel{digraphs:DistanceDigraph for digraph and list}{3.3.45}{X865436437DF95FEF}
+\makelabel{digraphs:DigraphClosure}{3.3.46}{X86F9CCEA839ABC48}
+\makelabel{digraphs:DigraphMycielskian}{3.3.47}{X7B5AC5FE859F4D80}
+\makelabel{digraphs:DigraphMycielskianAttr}{3.3.47}{X7B5AC5FE859F4D80}
+\makelabel{digraphs:RandomDigraph}{3.4.1}{X86CF9F66788B2A24}
+\makelabel{digraphs:RandomMultiDigraph}{3.4.2}{X78FE275E7E77D56F}
+\makelabel{digraphs:RandomTournament}{3.4.3}{X7D36B5E57F055051}
+\makelabel{digraphs:RandomLattice}{3.4.4}{X7A023E4787682475}
+\makelabel{digraphs:AndrasfaiGraph}{3.5.1}{X7D5E3E337D03EDFF}
+\makelabel{digraphs:BananaTree}{3.5.2}{X8636C2898395B7DF}
+\makelabel{digraphs:BinaryTree}{3.5.3}{X7FC309427BB170D8}
+\makelabel{digraphs:BinomialTreeGraph}{3.5.4}{X845C374280D6EAA4}
+\makelabel{digraphs:BishopsGraph}{3.5.5}{X7E3240047C92733F}
+\makelabel{digraphs:BishopGraph}{3.5.5}{X7E3240047C92733F}
+\makelabel{digraphs:BondyGraph}{3.5.6}{X81A0AC37816D287B}
+\makelabel{digraphs:BookGraph}{3.5.7}{X861F493382FA7C0B}
+\makelabel{digraphs:StackedBookGraph}{3.5.8}{X7B5E9D857D47F5C2}
+\makelabel{digraphs:ChainDigraph}{3.5.9}{X870594FC866AC88E}
+\makelabel{digraphs:CirculantGraph}{3.5.10}{X7DB5AB657A797CF2}
+\makelabel{digraphs:CompleteDigraph}{3.5.11}{X812417E278198D9C}
+\makelabel{digraphs:CompleteBipartiteDigraph}{3.5.12}{X8795B0AD856014FA}
+\makelabel{digraphs:CompleteMultipartiteDigraph}{3.5.13}{X873F29CC863241F8}
+\makelabel{digraphs:CycleDigraph}{3.5.14}{X80C29DDE876FFBEB}
+\makelabel{digraphs:DigraphCycle}{3.5.14}{X80C29DDE876FFBEB}
+\makelabel{digraphs:CycleGraph}{3.5.15}{X7F6EC0AE81531C3C}
+\makelabel{digraphs:EmptyDigraph}{3.5.16}{X80DAE31A79FEFD40}
+\makelabel{digraphs:NullDigraph}{3.5.16}{X80DAE31A79FEFD40}
+\makelabel{digraphs:GearGraph}{3.5.17}{X7CE45E2B782ADE9A}
+\makelabel{digraphs:HaarGraph}{3.5.18}{X795B62398767E313}
+\makelabel{digraphs:HalvedCubeGraph}{3.5.19}{X801024F57DDC8A39}
+\makelabel{digraphs:HanoiGraph}{3.5.20}{X7C43BDE47DF6553A}
+\makelabel{digraphs:HelmGraph}{3.5.21}{X782ABFCE812B020A}
+\makelabel{digraphs:HypercubeGraph}{3.5.22}{X7EE552F88609B1A2}
+\makelabel{digraphs:JohnsonDigraph}{3.5.23}{X80ED9CE785819607}
+\makelabel{digraphs:KellerGraph}{3.5.24}{X79483C677AF65688}
+\makelabel{digraphs:KingsGraph}{3.5.25}{X80576A8C861512FD}
+\makelabel{digraphs:KneserGraph}{3.5.26}{X8655BA8584B3ACD0}
+\makelabel{digraphs:KnightsGraph}{3.5.27}{X84609DCA79FD9B56}
+\makelabel{digraphs:LindgrenSousselierGraph}{3.5.28}{X7F61140C822880DA}
+\makelabel{digraphs:LollipopGraph}{3.5.29}{X832E82CF87BF5D43}
+\makelabel{digraphs:MobiusLadderGraph}{3.5.30}{X853613228110588E}
+\makelabel{digraphs:MycielskiGraph}{3.5.31}{X825943547FD7A687}
+\makelabel{digraphs:OddGraph}{3.5.32}{X7904BB2982014ADA}
+\makelabel{digraphs:PathGraph}{3.5.33}{X815055168405B7F0}
+\makelabel{digraphs:PermutationStarGraph}{3.5.34}{X7A38DFC47AAE4A96}
+\makelabel{digraphs:PetersenGraph}{3.5.35}{X823F43217A6C375D}
+\makelabel{digraphs:GeneralisedPetersenGraph}{3.5.36}{X7B5441F386BD105E}
+\makelabel{digraphs:PrismGraph}{3.5.37}{X85425DC5847E6D20}
+\makelabel{digraphs:StackedPrismGraph}{3.5.38}{X817982877B48D5BD}
+\makelabel{digraphs:QueensGraph}{3.5.39}{X785C3F1F7D690151}
+\makelabel{digraphs:QueenGraph}{3.5.39}{X785C3F1F7D690151}
+\makelabel{digraphs:RooksGraph}{3.5.40}{X7A6DD11881874F51}
+\makelabel{digraphs:RookGraph}{3.5.40}{X7A6DD11881874F51}
+\makelabel{digraphs:SquareGridGraph}{3.5.41}{X8404987F849D7CF2}
+\makelabel{digraphs:GridGraph}{3.5.41}{X8404987F849D7CF2}
+\makelabel{digraphs:TriangularGridGraph}{3.5.42}{X8234361278E8816F}
+\makelabel{digraphs:StarGraph}{3.5.43}{X78F78C077CBAE1EC}
+\makelabel{digraphs:TadpoleGraph}{3.5.44}{X81D59C4D809F4AD3}
+\makelabel{digraphs:WalshHadamardGraph}{3.5.45}{X7BFA33067F83F8B0}
+\makelabel{digraphs:WebGraph}{3.5.46}{X84F3B70A82EEE780}
+\makelabel{digraphs:WheelGraph}{3.5.47}{X817EA60D828A765E}
+\makelabel{digraphs:WindmillGraph}{3.5.48}{X7BE44CA27AA5F8DB}
+\makelabel{digraphs:< (for digraphs)}{4.1}{X84E0B5B88358C96B}
+\makelabel{digraphs:IsSubdigraph}{4.1.1}{X829B911D7EFD2D85}
+\makelabel{digraphs:IsUndirectedSpanningTree}{4.1.2}{X833C3299787E2309}
+\makelabel{digraphs:IsUndirectedSpanningForest}{4.1.2}{X833C3299787E2309}
+\makelabel{digraphs:DigraphVertices}{5.1.1}{X7C45F7D878D896AC}
+\makelabel{digraphs:DigraphNrVertices}{5.1.2}{X7C6F19B57CB2E882}
+\makelabel{digraphs:DigraphEdges}{5.1.3}{X7D1C6A4D7ECEC317}
+\makelabel{digraphs:DigraphNrEdges}{5.1.4}{X85E1CFDD7E164AD0}
+\makelabel{digraphs:DigraphNrLoops}{5.1.5}{X7BDABAF07917462B}
+\makelabel{digraphs:DigraphSinks}{5.1.6}{X85D5E08280914EE4}
+\makelabel{digraphs:DigraphSources}{5.1.7}{X7F5C6268839BE98C}
+\makelabel{digraphs:DigraphTopologicalSort}{5.1.8}{X785C30378064CF47}
+\makelabel{digraphs:DigraphVertexLabel}{5.1.9}{X7CA91E4B7904F793}
+\makelabel{digraphs:SetDigraphVertexLabel}{5.1.9}{X7CA91E4B7904F793}
+\makelabel{digraphs:DigraphVertexLabels}{5.1.10}{X7E51F2FE87140B32}
+\makelabel{digraphs:SetDigraphVertexLabels}{5.1.10}{X7E51F2FE87140B32}
+\makelabel{digraphs:DigraphEdgeLabel}{5.1.11}{X79FAEACC7F438C2F}
+\makelabel{digraphs:SetDigraphEdgeLabel}{5.1.11}{X79FAEACC7F438C2F}
+\makelabel{digraphs:DigraphEdgeLabels}{5.1.12}{X7C24851087D4A8FB}
+\makelabel{digraphs:SetDigraphEdgeLabels for a digraph and a list of lists}{5.1.12}{X7C24851087D4A8FB}
+\makelabel{digraphs:SetDigraphEdgeLabels for a digraph and a function}{5.1.12}{X7C24851087D4A8FB}
+\makelabel{digraphs:DigraphInEdges}{5.1.13}{X7EFAF01B7A155157}
+\makelabel{digraphs:DigraphOutEdges}{5.1.14}{X7BECFE6687ECD028}
+\makelabel{digraphs:IsDigraphEdge for digraph and list}{5.1.15}{X7BB8ED88835F07B4}
+\makelabel{digraphs:IsDigraphEdge for digraph and two pos ints}{5.1.15}{X7BB8ED88835F07B4}
+\makelabel{digraphs:IsMatching}{5.1.16}{X848FED0B7B4ACD1F}
+\makelabel{digraphs:IsMaximalMatching}{5.1.16}{X848FED0B7B4ACD1F}
+\makelabel{digraphs:IsMaximumMatching}{5.1.16}{X848FED0B7B4ACD1F}
+\makelabel{digraphs:IsPerfectMatching}{5.1.16}{X848FED0B7B4ACD1F}
+\makelabel{digraphs:DigraphMaximalMatching}{5.1.17}{X7B7A67277B1C9A02}
+\makelabel{digraphs:DigraphMaximumMatching}{5.1.18}{X78E9847A858788D1}
+\makelabel{digraphs:AdjacencyMatrix}{5.2.1}{X7DC2CD70830BEE60}
+\makelabel{digraphs:AdjacencyMatrixMutableCopy}{5.2.1}{X7DC2CD70830BEE60}
+\makelabel{digraphs:CharacteristicPolynomial}{5.2.2}{X87FA0A727CDB060B}
+\makelabel{digraphs:BooleanAdjacencyMatrix}{5.2.3}{X8507DC4F794780C1}
+\makelabel{digraphs:BooleanAdjacencyMatrixMutableCopy}{5.2.3}{X8507DC4F794780C1}
+\makelabel{digraphs:DigraphAdjacencyFunction}{5.2.4}{X7AFCE34A7A04D5C1}
+\makelabel{digraphs:DigraphRange}{5.2.5}{X7FDEBF3279759961}
+\makelabel{digraphs:DigraphSource}{5.2.5}{X7FDEBF3279759961}
+\makelabel{digraphs:OutNeighbours}{5.2.6}{X7E9880767AE68E00}
+\makelabel{digraphs:OutNeighbors}{5.2.6}{X7E9880767AE68E00}
+\makelabel{digraphs:OutNeighboursMutableCopy}{5.2.6}{X7E9880767AE68E00}
+\makelabel{digraphs:OutNeighborsMutableCopy}{5.2.6}{X7E9880767AE68E00}
+\makelabel{digraphs:InNeighbours}{5.2.7}{X85C7AA5A81DA6E11}
+\makelabel{digraphs:InNeighbors}{5.2.7}{X85C7AA5A81DA6E11}
+\makelabel{digraphs:InNeighboursMutableCopy}{5.2.7}{X85C7AA5A81DA6E11}
+\makelabel{digraphs:InNeighborsMutableCopy}{5.2.7}{X85C7AA5A81DA6E11}
+\makelabel{digraphs:OutDegrees}{5.2.8}{X7F5ACE807D1BC2E2}
+\makelabel{digraphs:OutDegreeSequence}{5.2.8}{X7F5ACE807D1BC2E2}
+\makelabel{digraphs:OutDegreeSet}{5.2.8}{X7F5ACE807D1BC2E2}
+\makelabel{digraphs:InDegrees}{5.2.9}{X7ADDFBFD7A365775}
+\makelabel{digraphs:InDegreeSequence}{5.2.9}{X7ADDFBFD7A365775}
+\makelabel{digraphs:InDegreeSet}{5.2.9}{X7ADDFBFD7A365775}
+\makelabel{digraphs:OutDegreeOfVertex}{5.2.10}{X7A09EB648070276D}
+\makelabel{digraphs:OutNeighboursOfVertex}{5.2.11}{X83315B0186850806}
+\makelabel{digraphs:OutNeighborsOfVertex}{5.2.11}{X83315B0186850806}
+\makelabel{digraphs:InDegreeOfVertex}{5.2.12}{X7C9CD0527CB9E6EF}
+\makelabel{digraphs:InNeighboursOfVertex}{5.2.13}{X7C0DA18B8291F302}
+\makelabel{digraphs:InNeighborsOfVertex}{5.2.13}{X7C0DA18B8291F302}
+\makelabel{digraphs:DigraphLoops}{5.2.14}{X83271F607BD809CF}
+\makelabel{digraphs:PartialOrderDigraphMeetOfVertices}{5.2.15}{X7DDB33B686B3A2C6}
+\makelabel{digraphs:PartialOrderDigraphJoinOfVertices}{5.2.15}{X7DDB33B686B3A2C6}
+\makelabel{digraphs:DegreeMatrix}{5.2.16}{X7BEAE1C78267F54D}
+\makelabel{digraphs:LaplacianMatrix}{5.2.17}{X865390B08331936B}
+\makelabel{digraphs:DigraphDiameter}{5.3.1}{X7F16B9EB8398459C}
+\makelabel{digraphs:DigraphShortestDistance for a digraph and two vertices}{5.3.2}{X8104A9D37BCD8A05}
+\makelabel{digraphs:DigraphShortestDistance for a digraph and a list}{5.3.2}{X8104A9D37BCD8A05}
+\makelabel{digraphs:DigraphShortestDistance for a digraph, a list, and a list}{5.3.2}{X8104A9D37BCD8A05}
+\makelabel{digraphs:DigraphShortestDistances}{5.3.3}{X81F99BC67E9D050F}
+\makelabel{digraphs:DigraphLongestDistanceFromVertex}{5.3.4}{X8223718079D98A82}
+\makelabel{digraphs:DigraphDistanceSet for a digraph, a pos int, and an int}{5.3.5}{X7CB7DDCD84621D38}
+\makelabel{digraphs:DigraphDistanceSet for a digraph, a pos int, and a list}{5.3.5}{X7CB7DDCD84621D38}
+\makelabel{digraphs:DigraphGirth}{5.3.6}{X79A3DA4078CF3C90}
+\makelabel{digraphs:DigraphOddGirth}{5.3.7}{X8374B7357EC189C1}
+\makelabel{digraphs:DigraphUndirectedGirth}{5.3.8}{X84688B337BDDBB09}
+\makelabel{digraphs:DigraphConnectedComponents}{5.3.9}{X842FAD6A7B835977}
+\makelabel{digraphs:DigraphNrConnectedComponents}{5.3.9}{X842FAD6A7B835977}
+\makelabel{digraphs:DigraphConnectedComponent}{5.3.10}{X8484EC557810CD31}
+\makelabel{digraphs:DigraphStronglyConnectedComponents}{5.3.11}{X833ECD6B7A84944C}
+\makelabel{digraphs:DigraphNrStronglyConnectedComponents}{5.3.11}{X833ECD6B7A84944C}
+\makelabel{digraphs:DigraphStronglyConnectedComponent}{5.3.12}{X7EFCB5017D662254}
+\makelabel{digraphs:DigraphBicomponents}{5.3.13}{X7F1B5A2782F598B1}
+\makelabel{digraphs:ArticulationPoints}{5.3.14}{X7DDE06E47E605DD7}
+\makelabel{digraphs:Bridges}{5.3.15}{X84D5A125848BD800}
+\makelabel{digraphs:StrongOrientation}{5.3.16}{X865590147BD1C507}
+\makelabel{digraphs:StrongOrientationAttr}{5.3.16}{X865590147BD1C507}
+\makelabel{digraphs:DigraphPeriod}{5.3.17}{X853D0B0981A33433}
+\makelabel{digraphs:DigraphFloydWarshall}{5.3.18}{X864A31A8809F61C2}
+\makelabel{digraphs:IsReachable}{5.3.19}{X7FBAB09E7C0BE5CF}
+\makelabel{digraphs:IsDigraphPath}{5.3.20}{X7ECD22877AEA89CC}
+\makelabel{digraphs:IsDigraphPath for a digraph and list}{5.3.20}{X7ECD22877AEA89CC}
+\makelabel{digraphs:VerticesReachableFrom}{5.3.21}{X7CAE81D97B43DDF3}
+\makelabel{digraphs:DigraphPath}{5.3.22}{X8039170B82A32257}
+\makelabel{digraphs:DigraphShortestPath}{5.3.23}{X80E9D645843973A6}
+\makelabel{digraphs:Dominators}{5.3.24}{X7FE79CB278CE6991}
+\makelabel{digraphs:DominatorTree}{5.3.25}{X7D66A0FB7F6100FB}
+\makelabel{digraphs:IteratorOfPaths}{5.3.26}{X7C0416FE7A69CA2C}
+\makelabel{digraphs:DigraphAllSimpleCircuits}{5.3.27}{X7ECD16838704FAAA}
+\makelabel{digraphs:DigraphLongestSimpleCircuit}{5.3.28}{X7C735C4E86BDD5F6}
+\makelabel{digraphs:DigraphLayers}{5.3.29}{X870E04307C5F213F}
+\makelabel{digraphs:DigraphDegeneracy}{5.3.30}{X7B2E42327DA118E0}
+\makelabel{digraphs:DigraphDegeneracyOrdering}{5.3.31}{X827C2BD17A4547E3}
+\makelabel{digraphs:HamiltonianPath}{5.3.32}{X863FDFC4839A3B82}
+\makelabel{digraphs:NrSpanningTrees}{5.3.33}{X82F30D5681466BC6}
+\makelabel{digraphs:DigraphDijkstra for a source and target}{5.3.34}{X79352A8286D1D8F6}
+\makelabel{digraphs:DigraphDijkstra for a source}{5.3.34}{X79352A8286D1D8F6}
+\makelabel{digraphs:GroupOfCayleyDigraph}{5.4.1}{X7A000B1D7CCF7093}
+\makelabel{digraphs:SemigroupOfCayleyDigraph}{5.4.1}{X7A000B1D7CCF7093}
+\makelabel{digraphs:GeneratorsOfCayleyDigraph}{5.4.2}{X8528455987D7D2BF}
+\makelabel{digraphs:AsSemigroup for a filter and a digraph}{5.5.1}{X87D5C60D7B0C1309}
+\makelabel{digraphs:AsMonoid}{5.5.1}{X87D5C60D7B0C1309}
+\makelabel{digraphs:AsSemigroup for a filter, semilattice digraph, and two lists}{5.5.2}{X7C6D5EC27C51066B}
+\makelabel{digraphs:KuratowskiPlanarSubdigraph}{5.6.1}{X7DC478637E8C190D}
+\makelabel{digraphs:KuratowskiOuterPlanarSubdigraph}{5.6.2}{X78E8F09A8286501B}
+\makelabel{digraphs:PlanarEmbedding}{5.6.3}{X84E3947E7D39BA64}
+\makelabel{digraphs:OuterPlanarEmbedding}{5.6.4}{X85DFB8C18088711F}
+\makelabel{digraphs:SubdigraphHomeomorphicToK23}{5.6.5}{X806D2D6B85E0B269}
+\makelabel{digraphs:SubdigraphHomeomorphicToK33}{5.6.5}{X806D2D6B85E0B269}
+\makelabel{digraphs:SubdigraphHomeomorphicToK4}{5.6.5}{X806D2D6B85E0B269}
+\makelabel{digraphs:DigraphHasLoops}{6.1.1}{X7D92935C7D535187}
+\makelabel{digraphs:IsAntiSymmetricDigraph}{6.1.2}{X7DB1BC2286FC08E2}
+\makelabel{digraphs:IsAntisymmetricDigraph}{6.1.2}{X7DB1BC2286FC08E2}
+\makelabel{digraphs:IsBipartiteDigraph}{6.1.3}{X860CFB0C8665F356}
+\makelabel{digraphs:IsCompleteBipartiteDigraph}{6.1.4}{X790A4DBF8533516E}
+\makelabel{digraphs:IsCompleteDigraph}{6.1.5}{X81F28D4D879FE3B2}
+\makelabel{digraphs:IsCompleteMultipartiteDigraph}{6.1.6}{X7FD1A15779FEC341}
+\makelabel{digraphs:IsEmptyDigraph}{6.1.7}{X7E894CCF7B1C27AE}
+\makelabel{digraphs:IsNullDigraph}{6.1.7}{X7E894CCF7B1C27AE}
+\makelabel{digraphs:IsEquivalenceDigraph}{6.1.8}{X83762C257DED2751}
+\makelabel{digraphs:IsFunctionalDigraph}{6.1.9}{X7E8F37E585DAED52}
+\makelabel{digraphs:IsMultiDigraph}{6.1.10}{X7BB84CFC7E8B2B26}
+\makelabel{digraphs:IsReflexiveDigraph}{6.1.11}{X8462D8E2792B23F6}
+\makelabel{digraphs:IsSymmetricDigraph}{6.1.12}{X81B3EA7887219860}
+\makelabel{digraphs:IsTournament}{6.1.13}{X7DD8D1A185EBE865}
+\makelabel{digraphs:IsTransitiveDigraph}{6.1.14}{X7F0835667F29F0C0}
+\makelabel{digraphs:IsPreorderDigraph}{6.1.15}{X8617726C7829F796}
+\makelabel{digraphs:IsQuasiorderDigraph}{6.1.15}{X8617726C7829F796}
+\makelabel{digraphs:IsPartialOrderDigraph}{6.1.16}{X82BAE6D37D49A145}
+\makelabel{digraphs:IsMeetSemilatticeDigraph}{6.1.17}{X78D3E17B7F737516}
+\makelabel{digraphs:IsJoinSemilatticeDigraph}{6.1.17}{X78D3E17B7F737516}
+\makelabel{digraphs:IsLatticeDigraph}{6.1.17}{X78D3E17B7F737516}
+\makelabel{digraphs:IsInRegularDigraph}{6.2.1}{X7A3F78B37E31D9E1}
+\makelabel{digraphs:IsOutRegularDigraph}{6.2.2}{X7F0A806E7BCB413C}
+\makelabel{digraphs:IsRegularDigraph}{6.2.3}{X7AF9DB1E7DB12306}
+\makelabel{digraphs:IsDistanceRegularDigraph}{6.2.4}{X7E2082AC7CAE59CD}
+\makelabel{digraphs:IsAcyclicDigraph}{6.3.1}{X7BD08D4478218F77}
+\makelabel{digraphs:IsChainDigraph}{6.3.2}{X79563B297C220FB5}
+\makelabel{digraphs:IsConnectedDigraph}{6.3.3}{X83C08C0B7EC1A91F}
+\makelabel{digraphs:IsBiconnectedDigraph}{6.3.4}{X838FAF2D825977BE}
+\makelabel{digraphs:IsBridgelessDigraph}{6.3.5}{X7D2A6572820B7F24}
+\makelabel{digraphs:IsStronglyConnectedDigraph}{6.3.6}{X7B37B9467C68C208}
+\makelabel{digraphs:IsAperiodicDigraph}{6.3.7}{X80E883967EBE839E}
+\makelabel{digraphs:IsDirectedTree}{6.3.8}{X7B46EA6C7B2DF2FB}
+\makelabel{digraphs:IsUndirectedTree}{6.3.9}{X80FC20FA7AC4BC2A}
+\makelabel{digraphs:IsUndirectedForest}{6.3.9}{X80FC20FA7AC4BC2A}
+\makelabel{digraphs:IsEulerianDigraph}{6.3.10}{X79DFBB198525544E}
+\makelabel{digraphs:IsHamiltonianDigraph}{6.3.11}{X79EFEBC37C2D262D}
+\makelabel{digraphs:IsCycleDigraph}{6.3.12}{X7E91320B8028F5D8}
+\makelabel{digraphs:IsPlanarDigraph}{6.4.1}{X8606D415858C40AA}
+\makelabel{digraphs:IsOuterPlanarDigraph}{6.4.2}{X8251E8B187E7F059}
+\makelabel{digraphs:IsDigraphCore}{6.5.1}{X78C0B2637985648B}
+\makelabel{digraphs:IsEdgeTransitive}{6.5.2}{X8361CA6E8401FF26}
+\makelabel{digraphs:IsVertexTransitive}{6.5.3}{X7B26E4447A1611E9}
+\makelabel{digraphs:OnDigraphs for a digraph and a perm}{7.1.1}{X808972017C486F1F}
+\makelabel{digraphs:OnDigraphs for a digraph and a transformation}{7.1.1}{X808972017C486F1F}
+\makelabel{digraphs:OnMultiDigraphs}{7.1.2}{X7AFBA7608498F9CE}
+\makelabel{digraphs:OnMultiDigraphs for a digraph, perm, and perm}{7.1.2}{X7AFBA7608498F9CE}
+\makelabel{digraphs:DigraphsUseNauty}{7.2.1}{X83E593F3855B122E}
+\makelabel{digraphs:DigraphsUseBliss}{7.2.1}{X83E593F3855B122E}
+\makelabel{digraphs:AutomorphismGroup for a digraph}{7.2.2}{X858C32127A190175}
+\makelabel{digraphs:BlissAutomorphismGroup for a digraph}{7.2.3}{X7E7B0D88865A89F6}
+\makelabel{digraphs:BlissAutomorphismGroup for a digraph and homogenous list}{7.2.3}{X7E7B0D88865A89F6}
+\makelabel{digraphs:BlissAutomorphismGroup for a digraph, homogenous list, and list}{7.2.3}{X7E7B0D88865A89F6}
+\makelabel{digraphs:NautyAutomorphismGroup}{7.2.4}{X857758B18144C0CD}
+\makelabel{digraphs:AutomorphismGroup for a digraph and a homogeneous list}{7.2.5}{X877732B1783C391B}
+\makelabel{digraphs:AutomorphismGroup for a digraph, homogeneous list, and list}{7.2.6}{X7DA2C4FE837FFE01}
+\makelabel{digraphs:BlissCanonicalLabelling for a digraph}{7.2.7}{X7D676FE67A6684FF}
+\makelabel{digraphs:NautyCanonicalLabelling for a digraph}{7.2.7}{X7D676FE67A6684FF}
+\makelabel{digraphs:BlissCanonicalLabelling for a digraph and a list}{7.2.8}{X87DA265D803DB337}
+\makelabel{digraphs:NautyCanonicalLabelling for a digraph and a list}{7.2.8}{X87DA265D803DB337}
+\makelabel{digraphs:BlissCanonicalDigraph}{7.2.9}{X877B1D377EC197D7}
+\makelabel{digraphs:NautyCanonicalDigraph}{7.2.9}{X877B1D377EC197D7}
+\makelabel{digraphs:DigraphGroup}{7.2.10}{X803ACEDA7BBAC5B3}
+\makelabel{digraphs:DigraphOrbits}{7.2.11}{X8096C5287E459279}
+\makelabel{digraphs:DigraphOrbitReps}{7.2.12}{X8386028782F2D3FF}
+\makelabel{digraphs:DigraphSchreierVector}{7.2.13}{X8657604E87A25E5F}
+\makelabel{digraphs:DigraphStabilizer}{7.2.14}{X78913684795FB256}
+\makelabel{digraphs:IsIsomorphicDigraph for digraphs}{7.2.15}{X7B4F24B283C9EE28}
+\makelabel{digraphs:IsIsomorphicDigraph for digraphs and homogeneous lists}{7.2.16}{X7D4A1FA8868DA930}
+\makelabel{digraphs:IsomorphismDigraphs for digraphs}{7.2.17}{X8219FE6C839D9457}
+\makelabel{digraphs:IsomorphismDigraphs for digraphs and homogeneous lists}{7.2.18}{X7ED93C0F86D9D34F}
+\makelabel{digraphs:RepresentativeOutNeighbours}{7.2.19}{X7E1C806D81DFE15E}
+\makelabel{digraphs:IsDigraphIsomorphism for digraphs and transformation or permutation}{7.2.20}{X80183D4A7C51365A}
+\makelabel{digraphs:IsDigraphIsomorphism}{7.2.20}{X80183D4A7C51365A}
+\makelabel{digraphs:IsDigraphAutomorphism for a digraph and a transformation or permutation}{7.2.20}{X80183D4A7C51365A}
+\makelabel{digraphs:IsDigraphAutomorphism}{7.2.20}{X80183D4A7C51365A}
+\makelabel{digraphs:IsDigraphColouring}{7.2.21}{X7F16B8B3825A627A}
+\makelabel{digraphs:IsDigraphColouring for a transformation}{7.2.21}{X7F16B8B3825A627A}
+\makelabel{digraphs:MaximalCommonSubdigraph}{7.2.22}{X7D4378F27B49C9AC}
+\makelabel{digraphs:MinimalCommonSuperdigraph}{7.2.23}{X7B99C75B8021FCDA}
+\makelabel{digraphs:HomomorphismDigraphsFinder}{7.3.1}{X79ABF0E783FD67C7}
+\makelabel{digraphs:DigraphHomomorphism}{7.3.2}{X85E9B019877AD7FE}
+\makelabel{digraphs:HomomorphismsDigraphs}{7.3.3}{X8653EDA183E06D05}
+\makelabel{digraphs:HomomorphismsDigraphsRepresentatives}{7.3.3}{X8653EDA183E06D05}
+\makelabel{digraphs:DigraphMonomorphism}{7.3.4}{X82D0FCD87D47ACA8}
+\makelabel{digraphs:MonomorphismsDigraphs}{7.3.5}{X84B4BDB984C2A9A8}
+\makelabel{digraphs:MonomorphismsDigraphsRepresentatives}{7.3.5}{X84B4BDB984C2A9A8}
+\makelabel{digraphs:DigraphEpimorphism}{7.3.6}{X7CB5AD9F861684FD}
+\makelabel{digraphs:EpimorphismsDigraphs}{7.3.7}{X7DFB1F5D873937B3}
+\makelabel{digraphs:EpimorphismsDigraphsRepresentatives}{7.3.7}{X7DFB1F5D873937B3}
+\makelabel{digraphs:DigraphEmbedding}{7.3.8}{X7AD04CC186E86CCA}
+\makelabel{digraphs:EmbeddingsDigraphs}{7.3.9}{X82EBDF137EEDC5FD}
+\makelabel{digraphs:EmbeddingsDigraphsRepresentatives}{7.3.9}{X82EBDF137EEDC5FD}
+\makelabel{digraphs:IsDigraphHomomorphism for digraphs and a permutation or transformation}{7.3.10}{X80FE9FCB79718A61}
+\makelabel{digraphs:IsDigraphHomomorphism}{7.3.10}{X80FE9FCB79718A61}
+\makelabel{digraphs:IsDigraphEpimorphism for digraphs and a permutation or transformation}{7.3.10}{X80FE9FCB79718A61}
+\makelabel{digraphs:IsDigraphEpimorphism}{7.3.10}{X80FE9FCB79718A61}
+\makelabel{digraphs:IsDigraphMonomorphism for digraphs and a permutation or transformation}{7.3.10}{X80FE9FCB79718A61}
+\makelabel{digraphs:IsDigraphMonomorphism}{7.3.10}{X80FE9FCB79718A61}
+\makelabel{digraphs:IsDigraphEndomorphism for digraphs and a permutation or transformation}{7.3.10}{X80FE9FCB79718A61}
+\makelabel{digraphs:IsDigraphEndomorphism}{7.3.10}{X80FE9FCB79718A61}
+\makelabel{digraphs:IsDigraphEmbedding for digraphs and a permutation or transformation}{7.3.11}{X7D6B5A0887903810}
+\makelabel{digraphs:IsDigraphEmbedding}{7.3.11}{X7D6B5A0887903810}
+\makelabel{digraphs:DigraphsRespectsColouring}{7.3.12}{X7F80709A80CBFA98}
+\makelabel{digraphs:GeneratorsOfEndomorphismMonoid}{7.3.13}{X7E93B268823F6478}
+\makelabel{digraphs:GeneratorsOfEndomorphismMonoidAttr}{7.3.13}{X7E93B268823F6478}
+\makelabel{digraphs:DigraphColouring for a digraph and a number of colours}{7.3.14}{X86D0A74B83D6B9A7}
+\makelabel{digraphs:DigraphGreedyColouring for a digraph and vertex order}{7.3.15}{X7AB7200D831013C1}
+\makelabel{digraphs:DigraphGreedyColouring for a digraph and vertex order function}{7.3.15}{X7AB7200D831013C1}
+\makelabel{digraphs:DigraphGreedyColouring for a digraph}{7.3.15}{X7AB7200D831013C1}
+\makelabel{digraphs:DigraphWelshPowellOrder}{7.3.16}{X7F9CB3B27B9590DB}
+\makelabel{digraphs:ChromaticNumber}{7.3.17}{X807D49358529A37C}
+\makelabel{digraphs:DigraphCore}{7.3.18}{X863487EF7D64EF56}
+\makelabel{digraphs:IsClique}{8.1.1}{X80670E3E7C36183F}
+\makelabel{digraphs:IsMaximalClique}{8.1.1}{X80670E3E7C36183F}
+\makelabel{digraphs:CliquesFinder}{8.1.2}{X7A3BC9FF8169ABCD}
+\makelabel{digraphs:DigraphClique}{8.1.3}{X789854AC7B466402}
+\makelabel{digraphs:DigraphMaximalClique}{8.1.3}{X789854AC7B466402}
+\makelabel{digraphs:DigraphMaximalCliques}{8.1.4}{X84EA2F9482B8D4AF}
+\makelabel{digraphs:DigraphMaximalCliquesReps}{8.1.4}{X84EA2F9482B8D4AF}
+\makelabel{digraphs:DigraphCliques}{8.1.4}{X84EA2F9482B8D4AF}
+\makelabel{digraphs:DigraphCliquesReps}{8.1.4}{X84EA2F9482B8D4AF}
+\makelabel{digraphs:DigraphMaximalCliquesAttr}{8.1.4}{X84EA2F9482B8D4AF}
+\makelabel{digraphs:DigraphMaximalCliquesRepsAttr}{8.1.4}{X84EA2F9482B8D4AF}
+\makelabel{digraphs:CliqueNumber}{8.1.5}{X78427A8B81FEB457}
+\makelabel{digraphs:IsIndependentSet}{8.2.1}{X790733B67B0BC894}
+\makelabel{digraphs:IsMaximalIndependentSet}{8.2.1}{X790733B67B0BC894}
+\makelabel{digraphs:DigraphIndependentSet}{8.2.2}{X84350678782BFAB7}
+\makelabel{digraphs:DigraphMaximalIndependentSet}{8.2.2}{X84350678782BFAB7}
+\makelabel{digraphs:DigraphMaximalIndependentSets}{8.2.3}{X7D2C78EB81A798A9}
+\makelabel{digraphs:DigraphMaximalIndependentSetsReps}{8.2.3}{X7D2C78EB81A798A9}
+\makelabel{digraphs:DigraphIndependentSets}{8.2.3}{X7D2C78EB81A798A9}
+\makelabel{digraphs:DigraphIndependentSetsReps}{8.2.3}{X7D2C78EB81A798A9}
+\makelabel{digraphs:DigraphMaximalIndependentSetsAttr}{8.2.3}{X7D2C78EB81A798A9}
+\makelabel{digraphs:DigraphMaximalIndependentSetsRepsAttr}{8.2.3}{X7D2C78EB81A798A9}
+\makelabel{digraphs:Splash}{9.1.1}{X83B3318784E78415}
+\makelabel{digraphs:DotDigraph}{9.1.2}{X7F9B99C478EE093A}
+\makelabel{digraphs:DotColoredDigraph}{9.1.2}{X7F9B99C478EE093A}
+\makelabel{digraphs:DotVertexLabelledDigraph}{9.1.2}{X7F9B99C478EE093A}
+\makelabel{digraphs:DotVertexColoredDigraph}{9.1.2}{X7F9B99C478EE093A}
+\makelabel{digraphs:DotEdgeColoredDigraph}{9.1.2}{X7F9B99C478EE093A}
+\makelabel{digraphs:DotSymmetricDigraph}{9.1.3}{X78DA31D1869D2F94}
+\makelabel{digraphs:DotSymmetricColoredDigraph}{9.1.3}{X78DA31D1869D2F94}
+\makelabel{digraphs:DotSymmetricVertexColoredDigraph}{9.1.3}{X78DA31D1869D2F94}
+\makelabel{digraphs:DotSymmetricEdgeColoredDigraph}{9.1.3}{X78DA31D1869D2F94}
+\makelabel{digraphs:DotPartialOrderDigraph}{9.1.4}{X84120D447E2CAC23}
+\makelabel{digraphs:DotPreorderDigraph}{9.1.5}{X7F5653C8854FAEA6}
+\makelabel{digraphs:DotQuasiorderDigraph}{9.1.5}{X7F5653C8854FAEA6}
+\makelabel{digraphs:DotHighlightedDigraph}{9.1.6}{X808D12CF81E2C19F}
+\makelabel{digraphs:String}{9.2.1}{X81FB5BE27903EC32}
+\makelabel{digraphs:PrintString}{9.2.1}{X81FB5BE27903EC32}
+\makelabel{digraphs:DigraphFromGraph6String}{9.2.2}{X873D6EB8836A3C61}
+\makelabel{digraphs:DigraphFromDigraph6String}{9.2.2}{X873D6EB8836A3C61}
+\makelabel{digraphs:DigraphFromSparse6String}{9.2.2}{X873D6EB8836A3C61}
+\makelabel{digraphs:DigraphFromDiSparse6String}{9.2.2}{X873D6EB8836A3C61}
+\makelabel{digraphs:Graph6String}{9.2.3}{X782A052979EA2376}
+\makelabel{digraphs:Digraph6String}{9.2.3}{X782A052979EA2376}
+\makelabel{digraphs:Sparse6String}{9.2.3}{X782A052979EA2376}
+\makelabel{digraphs:DiSparse6String}{9.2.3}{X782A052979EA2376}
+\makelabel{digraphs:DigraphFile}{9.2.4}{X7845ACDA7D4D333D}
+\makelabel{digraphs:ReadDigraphs}{9.2.5}{X7E8142007ED0CB9F}
+\makelabel{digraphs:WriteDigraphs}{9.2.6}{X82A4F0767C9EFC87}
+\makelabel{digraphs:IteratorFromDigraphFile}{9.2.7}{X86D531B287733561}
+\makelabel{digraphs:DigraphPlainTextLineEncoder}{9.2.8}{X7AAA35867B5D8BF4}
+\makelabel{digraphs:DigraphPlainTextLineDecoder}{9.2.8}{X7AAA35867B5D8BF4}
+\makelabel{digraphs:TournamentLineDecoder}{9.2.9}{X7808D99079295C22}
+\makelabel{digraphs:AdjacencyMatrixUpperTriangleLineDecoder}{9.2.10}{X7DF22D1687D096D6}
+\makelabel{digraphs:TCodeDecoder}{9.2.11}{X875393338486D77D}
+\makelabel{digraphs:PlainTextString}{9.2.12}{X8540FC21796A793F}
+\makelabel{digraphs:DigraphFromPlainTextString}{9.2.12}{X8540FC21796A793F}
+\makelabel{digraphs:WritePlainTextDigraph}{9.2.13}{X81BD23697857B244}
+\makelabel{digraphs:ReadPlainTextDigraph}{9.2.13}{X81BD23697857B244}
+\makelabel{digraphs:WriteDIMACSDigraph}{9.2.14}{X804FDF6A7ED64049}
+\makelabel{digraphs:ReadDIMACSDigraph}{9.2.14}{X804FDF6A7ED64049}

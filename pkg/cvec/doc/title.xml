@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    cvec
+  </Title>
+  <Subtitle>
+    Compact vectors over finite fields
+  </Subtitle>
+  <Version>
+    2.7.6
+  </Version>
+  <Author>
+    Max Neunhöffer<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Gustav-Freytag-Straße 40<Br/>
+50354 Hürth<Br/>
+Germany<Br/>
+</Address>
+<Email>max@9hoeffer.de</Email>
+<Homepage>http://www-groups.mcs.st-and.ac.uk/~neunhoef</Homepage>
+
+  </Author>
+  <Date>
+    6 August 2022
+  </Date>
+  <Copyright>
+          &copyright; 2005-2014 by Max Neunhöffer<P/>
+
+      <Package>cvec</Package> is free software: you can redistribute it and/or modify
+      it under the terms of the GNU General Public License as published by
+      the Free Software Foundation, either version 2 of the License, or
+      (at your option) any later version. <P/>
+
+      <Package>cvec</Package> is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+      GNU General Public License for more details. <P/>
+
+      For a copy of the GNU General Public License, see
+      the file <F>LICENSE</F> included with this software,
+      or see <URL>https://www.gnu.org/licenses/gpl.html</URL>.
+      
+  </Copyright>
+  </TitlePage>

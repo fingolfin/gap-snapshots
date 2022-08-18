@@ -443,27 +443,43 @@ true
 
 # HashFuncForPPerm and HASH_FUNC_FOR_PPERM
 gap> f := PartialPerm([65536]);;
-gap> GAPInfo.BytesPerVariable = 8 and HASH_FUNC_FOR_PPERM(f, 10 ^ 6) in [260581,402746]
-> or GAPInfo.BytesPerVariable = 4 and HASH_FUNC_FOR_PPERM(f, 10 ^ 6) = 953600;
+#@if GAPInfo.BytesPerVariable = 8
+gap> HASH_FUNC_FOR_PPERM(f, 10 ^ 6) in [260581, 402746];
 true
+#@else
+gap> HASH_FUNC_FOR_PPERM(f, 10 ^ 6);
+953600
+#@fi
 gap> f := PartialPermNC([65535]);;
-gap> GAPInfo.BytesPerVariable = 8 and HASH_FUNC_FOR_PPERM(f, 10 ^ 6) = 354405
-> or GAPInfo.BytesPerVariable = 4 and HASH_FUNC_FOR_PPERM(f, 10 ^ 6) = 287798;
-true
+#@if GAPInfo.BytesPerVariable = 8
+gap> HASH_FUNC_FOR_PPERM(f, 10 ^ 6);
+354405
+#@else
+gap> HASH_FUNC_FOR_PPERM(f, 10 ^ 6);
+287798
+#@fi
 gap> f := PartialPerm([1, 2, 3, 4, 5, 6, 7, 9, 11, 12, 15, 16, 19],
 >                     [2, 4, 11, 1, 20, 10, 15, 16, 5, 3, 6, 12, 9]);;
-gap> GAPInfo.BytesPerVariable = 8 and HASH_FUNC_FOR_PPERM(f, 10 ^ 6) in [773594,109657]
-> or GAPInfo.BytesPerVariable = 4 and HASH_FUNC_FOR_PPERM(f, 10 ^ 6) in [982764,570602];
+#@if GAPInfo.BytesPerVariable = 8
+gap> HASH_FUNC_FOR_PPERM(f, 10 ^ 6) in [773594, 109657];
 true
+#@else
+gap> HASH_FUNC_FOR_PPERM(f, 10 ^ 6) in [982764, 570602];
+true
+#@fi
 gap> f := PartialPermNC([65536]);;
 gap> g := PartialPermNC([2, 65536], [70000, 1]);;
 gap> h := f * g;
 <identity partial perm on [ 1 ]>
 gap> IsPPerm4Rep(h);
 true
-gap> GAPInfo.BytesPerVariable = 8 and HASH_FUNC_FOR_PPERM(h, 10 ^ 6) in [567548,351540]
-> or GAPInfo.BytesPerVariable = 4 and HASH_FUNC_FOR_PPERM(h, 10 ^ 6) in [464636,754304];
+#@if GAPInfo.BytesPerVariable = 8
+gap> HASH_FUNC_FOR_PPERM(h, 10 ^ 6) in [567548, 351540];
 true
+#@else
+gap> HASH_FUNC_FOR_PPERM(h, 10 ^ 6) in [464636, 754304];
+true
+#@fi
 gap> IsPPerm2Rep(h);
 true
 
@@ -3671,7 +3687,7 @@ gap> EMPTY_PPERM4 * PartialPermNC([1]);
 
 # PowIntPPerm2
 gap> (-1) ^ PartialPerm([1]);
-Error, usage: the first argument must be a positive integer,
+Error, usage: the first argument must be a positive small integer,
 gap> "a" ^ PartialPerm([1]);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `^' on 2 arguments
@@ -3681,7 +3697,7 @@ Error, no 1st choice method found for `^' on 2 arguments
 
 # PowIntPPerm2
 gap> (-1) ^ PPerm4([1]);
-Error, usage: the first argument must be a positive integer,
+Error, usage: the first argument must be a positive small integer,
 gap> "a" ^ PPerm4([1]);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `^' on 2 arguments
@@ -4090,6 +4106,22 @@ gap> OnSets(["a"], PPerm4([1, 2, 3, 4, 5, 7], [6, 4, 5, 3, 8, 2]));
 Error, <set> must be a list of positive small integers
 gap> OnTuples(["a"], PPerm4([1, 2, 3, 4, 5, 7], [6, 4, 5, 3, 8, 2]));
 Error, <tup> must be a list of small integers
+
+# Test regression for OnSets and OnTuples on empty sets
+gap> OnSets([], PartialPerm([])) = [];
+true
+gap> OnTuples([], PartialPerm([])) = [];
+true
+gap> OnSets([1], PartialPerm([])) = [];
+true
+gap> OnTuples([1], PartialPerm([])) = [];
+true
+
+#
+gap> SetUserPreference("PartialPermDisplayLimit", 1);
+gap> PartialPerm([1], [2]);
+<partial perm on 1 pt with degree 1, codegree 2>
+gap> SetUserPreference("PartialPermDisplayLimit", 100);;
 
 #
 gap> SetUserPreference("PartialPermDisplayLimit", display);;

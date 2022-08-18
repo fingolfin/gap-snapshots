@@ -1,0 +1,88 @@
+\begin{theindex}
+
+  \item \texttt  {BoundaryOfFreeZGLetter}, \hyperpage{7}
+  \item \texttt  {BoundaryOfFreeZGLetterNC}, \hyperpage{9}
+  \item \texttt  {Boundary}\-\texttt  {Of}\-\texttt  {Free}\-\texttt  {Z}\-\texttt  {G}\-\texttt  {Letter}\-\texttt  {N}\-\texttt  {C{\textunderscore }}\-\texttt  {Large}\-\texttt  {GroupRep}, 
+		\hyperpage{12}
+  \item \texttt  {Boundary}\-\texttt  {Of}\-\texttt  {Free}\-\texttt  {Z}\-\texttt  {G}\-\texttt  {Letter{\textunderscore }}\-\texttt  {Large}\-\texttt  {GroupRep}, 
+		\hyperpage{12}
+  \item \texttt  {BoundaryOfFreeZGWord}, \hyperpage{8}
+  \item \texttt  {BoundaryOfFreeZGWordNC}, \hyperpage{10}
+  \item \texttt  {Boundary}\-\texttt  {Of}\-\texttt  {Free}\-\texttt  {Z}\-\texttt  {G}\-\texttt  {Word{\textunderscore }}\-\texttt  {Large}\-\texttt  {GroupRep}, 
+		\hyperpage{12}
+  \item \texttt  {Boundary}\-\texttt  {Of}\-\texttt  {Generator}\-\texttt  {N}\-\texttt  {C{\textunderscore }}\-\texttt  {Large}\-\texttt  {GroupRep}, 
+		\hyperpage{11}
+  \item \texttt  {Boundary}\-\texttt  {Of}\-\texttt  {Generator{\textunderscore }}\-\texttt  {Large}\-\texttt  {GroupRep}, 
+		\hyperpage{11}
+
+  \indexspace
+
+  \item \texttt  {ConvertLetterToStandardRep}, \hyperpage{8}
+  \item \texttt  {ConvertLetterToStandardRepNC}, \hyperpage{8}
+  \item \texttt  {ConvertStandardLetter}, \hyperpage{8}
+  \item \texttt  {ConvertStandardLetterNC}, \hyperpage{8}
+  \item \texttt  {ConvertStandardWord}, \hyperpage{8}
+  \item \texttt  {ConvertStandardWordNC}, \hyperpage{8}
+  \item \texttt  {ConvertWordToStandardRep}, \hyperpage{8}
+  \item \texttt  {ConvertWordToStandardRepNC}, \hyperpage{8}
+
+  \indexspace
+
+  \item \texttt  {Generators}\-\texttt  {Of}\-\texttt  {Module}\-\texttt  {Of}\-\texttt  {Resolution{\textunderscore }}\-\texttt  {Large}\-\texttt  {GroupRep}, 
+		\hyperpage{11}
+  \item \texttt  {GroupElementFromPosition}, \hyperpage{7}
+  \item \texttt  {GroupRingOfResolution}, \hyperpage{10}
+
+  \indexspace
+
+  \item \texttt  {IsFreeZGLetter}, \hyperpage{9}
+  \item \texttt  {IsFree}\-\texttt  {Z}\-\texttt  {G}\-\texttt  {Letter}\-\texttt  {No}\-\texttt  {Term}\-\texttt  {Check{\textunderscore }}\-\texttt  {Large}\-\texttt  {GroupRep}, 
+		\hyperpage{10}
+  \item \texttt  {IsFree}\-\texttt  {Z}\-\texttt  {G}\-\texttt  {Letter{\textunderscore }}\-\texttt  {Large}\-\texttt  {GroupRep}, 
+		\hyperpage{11}
+  \item \texttt  {IsFreeZGWord}, \hyperpage{9}
+  \item \texttt  {IsFree}\-\texttt  {Z}\-\texttt  {G}\-\texttt  {Word}\-\texttt  {No}\-\texttt  {Term}\-\texttt  {Check{\textunderscore }}\-\texttt  {Large}\-\texttt  {GroupRep}, 
+		\hyperpage{10}
+  \item \texttt  {IsFree}\-\texttt  {Z}\-\texttt  {G}\-\texttt  {Word{\textunderscore }}\-\texttt  {Large}\-\texttt  {GroupRep}, 
+		\hyperpage{11}
+  \item \texttt  {IsValidGroupInt}, \hyperpage{7}
+
+  \indexspace
+
+  \item \texttt  {MultiplyFreeZGLetterWithGroupElt}, \hyperpage{7}
+  \item \texttt  {MultiplyFreeZGLetterWithGroupEltNC}, \hyperpage{9}
+  \item \texttt  {Multiply}\-\texttt  {Free}\-\texttt  {Z}\-\texttt  {G}\-\texttt  {Letter}\-\texttt  {With}\-\texttt  {Group}\-\texttt  {Elt}\-\texttt  {N}\-\texttt  {C{\textunderscore }}\-\texttt  {Large}\-\texttt  {GroupRep}, 
+		\hyperpage{11}
+  \item \texttt  {Multiply}\-\texttt  {Free}\-\texttt  {Z}\-\texttt  {G}\-\texttt  {Letter}\-\texttt  {With}\-\texttt  {Group}\-\texttt  {Elt{\textunderscore }}\-\texttt  {Large}\-\texttt  {GroupRep}, 
+		\hyperpage{11}
+  \item \texttt  {MultiplyFreeZGWordWithGroupElt}, \hyperpage{7}
+  \item \texttt  {MultiplyFreeZGWordWithGroupEltNC}, \hyperpage{9}
+  \item \texttt  {Multiply}\-\texttt  {Free}\-\texttt  {Z}\-\texttt  {G}\-\texttt  {Word}\-\texttt  {With}\-\texttt  {Group}\-\texttt  {Elt}\-\texttt  {N}\-\texttt  {C{\textunderscore }}\-\texttt  {Large}\-\texttt  {GroupRep}, 
+		\hyperpage{11}
+  \item \texttt  {Multiply}\-\texttt  {Free}\-\texttt  {Z}\-\texttt  {G}\-\texttt  {Word}\-\texttt  {With}\-\texttt  {Group}\-\texttt  {Elt{\textunderscore }}\-\texttt  {Large}\-\texttt  {GroupRep}, 
+		\hyperpage{11}
+  \item \texttt  {MultiplyGroupElts}, \hyperpage{7}
+  \item \texttt  {MultiplyGroupEltsNC}, \hyperpage{9}
+  \item \texttt  {Multiply}\-\texttt  {Group}\-\texttt  {Elts}\-\texttt  {N}\-\texttt  {C{\textunderscore }}\-\texttt  {Large}\-\texttt  {GroupRep}, 
+		\hyperpage{10}
+  \item \texttt  {Multiply}\-\texttt  {Group}\-\texttt  {Elts{\textunderscore }}\-\texttt  {Large}\-\texttt  {GroupRep}, 
+		\hyperpage{10}
+
+  \indexspace
+
+  \item \texttt  {PartialContractingHomotopyLookup}, \hyperpage{13}
+  \item \texttt  {PartialContractingHomotopyLookupNC}, \hyperpage{13}
+  \item \texttt  {PositionInGroupOfResolution}, \hyperpage{6}
+  \item \texttt  {PositionInGroupOfResolutionNC}, \hyperpage{6}
+
+  \indexspace
+
+  \item \texttt  {ResolutionOfContractingHomotopy}, \hyperpage{13}
+
+  \indexspace
+
+  \item \texttt  {Strongest}\-\texttt  {Valid}\-\texttt  {Representation}\-\texttt  {For}\-\texttt  {Letter}, 
+		\hyperpage{6}
+  \item \texttt  {StrongestValidRepresentationForWord}, \hyperpage{6}
+
+\end{theindex}

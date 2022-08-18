@@ -22,45 +22,36 @@
 ##
 #R  IsSingleCollectorRep( <obj> )
 ##
-DeclareRepresentation(
-    "IsSingleCollectorRep",
-    IsPositionalObjectRep, [1..SCP_AVECTOR],
-    IsPowerConjugateCollector and IsFinite );
+DeclareRepresentation( "IsSingleCollectorRep",
+    IsPositionalObjectRep );
 
 
 #############################################################################
 ##
 #R  Is8BitsSingleCollectorRep( <obj> )
 ##
-DeclareRepresentation(
-    "Is8BitsSingleCollectorRep",
-    IsSingleCollectorRep, [],
-    IsPowerConjugateCollector and IsFinite );
+DeclareRepresentation( "Is8BitsSingleCollectorRep",
+    IsSingleCollectorRep );
 
 
 #############################################################################
 ##
 #R  Is16BitsSingleCollectorRep( <obj> )
 ##
-DeclareRepresentation(
-    "Is16BitsSingleCollectorRep",
-    IsSingleCollectorRep, [],
-    IsPowerConjugateCollector and IsFinite );
+DeclareRepresentation( "Is16BitsSingleCollectorRep",
+    IsSingleCollectorRep );
 
 
 #############################################################################
 ##
 #R  Is32BitsSingleCollectorRep( <obj> )
 ##
-DeclareRepresentation(
-    "Is32BitsSingleCollectorRep",
-    IsSingleCollectorRep, [],
-    IsPowerConjugateCollector and IsFinite );
+DeclareRepresentation( "Is32BitsSingleCollectorRep",
+    IsSingleCollectorRep );
 
 
 #############################################################################
 ##
-
 #P  IsDefaultRhsTypeSingleCollector
 ##
 ##  This feature is set as soon as all right hand sides have the same type as
@@ -73,7 +64,6 @@ DeclareFilter( "IsDefaultRhsTypeSingleCollector" );
 
 #############################################################################
 ##
-
 #F  SingleCollector_CollectWord( <sc>, <v>, <w> )
 ##
 ##  'CollectWord' implements  a  single  collector  for a presentation  of  a
@@ -295,7 +285,6 @@ end;
 
 #############################################################################
 ##
-
 #M  Rules( <sc> )
 ##
 InstallMethod( Rules,
@@ -833,7 +822,6 @@ end );
 ##
 #############################################################################
 ##
-
 #M  SingleCollector( <fgrp>, <orders> )
 ##
 
@@ -1103,7 +1091,6 @@ end );
 
 #############################################################################
 ##
-
 #M  CollectWordOrFail( <sc>, <v>, <w> )
 ##
 
@@ -1464,7 +1451,6 @@ end );
 
 #############################################################################
 ##
-
 #M  ReducedComm( <sc>, <left>, <right> )
 ##
 

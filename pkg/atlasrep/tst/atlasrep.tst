@@ -434,6 +434,13 @@ gap> IsRecord( OneAtlasGeneratingSetInfo( "M11", Character, 2 ) );
 true
 gap> IsRecord( OneAtlasGeneratingSetInfo( Character, 2 ) );
 true
+gap> x:= Indeterminate( Rationals, "x" );;
+gap> f:= x^2-5;;
+gap> F:= AlgebraicExtension( Rationals, f );;
+gap> info:= OneAtlasGeneratingSetInfo( "A5", Dimension, 3, Ring, F );;
+gap> info.givenRing = F;
+true
+gap> AtlasGroup( "A5", Characteristic, 0, Dimension, 3 );;
 
 # Check access to straight line programs with unusual parameters.
 gap> IsRecord( AtlasProgramInfo( "M11", "maxes", 1, "version", 1 ) );
@@ -491,6 +498,62 @@ true
 gap> IsRecord( AtlasProgramInfo( "L3(5)", 1, "restandardize", 2,
 >                                "version", 10^6 ) );
 false
+
+# Check the variants of 'StandardGeneratorsData'.
+gap> StandardGeneratorsData( Group( () ), "M11" );
+"timeout"
+gap> repeat
+>      res:= StandardGeneratorsData( MathieuGroup( 12 ), "M11" );
+>    until res = fail;
+gap> StandardGeneratorsData( MathieuGroup( 11 ), "M11", 9 );
+fail
+gap> gens:= List( GeneratorsOfGroup( MathieuGroup( 11 ) ),
+>                 x -> PermutationMat( x, 11, GF(2) ) );;
+gap> g:= Group( gens );;
+gap> IsRecord( StandardGeneratorsData( gens, "M11" ) );
+true
+gap> IsRecord( StandardGeneratorsData( gens, "M11", 1 ) );
+true
+gap> IsRecord( StandardGeneratorsData( gens, "M11" : projective ) );
+true
+gap> IsRecord( StandardGeneratorsData( gens, "M11", 1 : projective ) );
+true
+gap> IsRecord( StandardGeneratorsData( g, "M11" ) );
+true
+gap> IsRecord( StandardGeneratorsData( g, "M11", 1 ) );
+true
+gap> IsRecord( StandardGeneratorsData( g, "M11" : projective ) );
+true
+gap> IsRecord( StandardGeneratorsData( g, "M11", 1 : projective ) );
+true
+gap> StandardGeneratorsData( g, "M11", 9 );
+fail
+gap> StandardGeneratorsData( g, "M11", 9 : projective );
+fail
+
+# Check the variants of 'EvaluatePresentation'.
+gap> EvaluatePresentation( Group( () ), "M11" );
+Error, presentation for "M11" has 2 generators but 1 generators were given
+gap> EvaluatePresentation( Group( () ), "M11", 1 );
+Error, presentation for "M11" has 2 generators but 1 generators were given
+gap> EvaluatePresentation( [], "M11" );
+Error, presentation for "M11" has 2 generators but 0 generators were given
+gap> EvaluatePresentation( [], "M11", 1 );
+Error, presentation for "M11" has 2 generators but 0 generators were given
+gap> EvaluatePresentation( [ (), (), () ], "M11" );
+Error, presentation for "M11" has 2 generators but 3 generators were given
+gap> EvaluatePresentation( gens, "M11", 9 );
+fail
+gap> g:= AtlasGroup( "M11" );;
+gap> gens:= GeneratorsOfGroup( g );;
+gap> ForAll( EvaluatePresentation( gens, "M11" ), IsOne );
+true
+gap> ForAll( EvaluatePresentation( gens, "M11", 1 ), IsOne );
+true
+gap> ForAll( EvaluatePresentation( g, "M11" ), IsOne );
+true
+gap> ForAll( EvaluatePresentation( g, "M11", 1 ), IsOne );
+true
 
 # Call 'AtlasClassNames' for all tables of almost simple and quasisimple
 # groups that are not simple.
@@ -551,13 +614,36 @@ gap> for name in AllCharacterTableNames() do
 >    od;
 
 # Check that the function 'StringOfAtlasTableOfContents' works.
+# We do *not* want to recompute checksums,
+# since this would require all data files to be locally available.
+# Thus we test only the checksum format that is actually used in
+# 'AtlasOfGroupRepresentationsInfo.filenames'.
+# For the 'core' t.o.c. ...
 gap> dir:= DirectoriesPackageLibrary( "atlasrep", "" );;
-gap> str:= StringOfAtlasTableOfContents( "core" );;
-gap> str = StringFile( Filename( dir, "atlasprm.json" ) );
+gap> if IsString( AtlasOfGroupRepresentationsInfo.filenames[1][4] ) then
+>      filename:= Filename( dir, "atlasprm_SHA.json" );;
+>      f:= AGR.GapObjectOfJsonText( AGR.StringFile( filename ) );;
+>      str:= StringOfAtlasTableOfContents( f.value : SHA:= true );;
+>    else
+>      filename:= Filename( dir, "atlasprm.json" );;
+>      f:= AGR.GapObjectOfJsonText( AGR.StringFile( filename ) );;
+>      str:= StringOfAtlasTableOfContents( f.value );;
+>    fi;
+gap> str = AGR.StringFile( filename );
 true
+
+# ... and for the 'internal' t.o.c.
 gap> dir:= DirectoriesPackageLibrary( "atlasrep", "datapkg" );;
-gap> str:= StringOfAtlasTableOfContents( "internal" );;
-gap> str = StringFile( Filename( dir, "toc.json" ) );
+gap> if IsString( AtlasOfGroupRepresentationsInfo.filenames[1][4] ) then
+>      filename:= Filename( dir, "toc_SHA.json" );;
+>      f:= AGR.GapObjectOfJsonText( AGR.StringFile( filename ) );;
+>      str:= StringOfAtlasTableOfContents( f.value : SHA:= true );;
+>    else
+>      filename:= Filename( dir, "toc.json" );;
+>      f:= AGR.GapObjectOfJsonText( AGR.StringFile( filename ) );;
+>      str:= StringOfAtlasTableOfContents( f.value );;
+>    fi;
+gap> str = AGR.StringFile( filename );
 true
 
 # Done.

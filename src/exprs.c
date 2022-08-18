@@ -49,7 +49,7 @@
 **  i.e., the function that should be  called to evaluate expressions of this
 **  type.
 */
-Obj             (* EvalExprFuncs [256]) ( Expr expr );
+EvalExprFunc EvalExprFuncs[256];
 
 
 /****************************************************************************
@@ -61,7 +61,7 @@ Obj             (* EvalExprFuncs [256]) ( Expr expr );
 **  i.e., a pointer to  a function which  is  guaranteed to return a  boolean
 **  value that should be called to evaluate expressions of this type.
 */
-Obj             (* EvalBoolFuncs [256]) ( Expr expr );
+EvalBoolFunc EvalBoolFuncs[256];
 
 
 /****************************************************************************
@@ -75,8 +75,8 @@ Obj             (* EvalBoolFuncs [256]) ( Expr expr );
 */
 static Obj EvalUnknownExpr(Expr expr)
 {
-    Pr( "Panic: tried to evaluate an expression of unknown type '%d'\n",
-        (Int)TNUM_EXPR(expr), 0L );
+    Pr("Panic: tried to evaluate an expression of unknown type '%d'\n",
+       (Int)TNUM_EXPR(expr), 0);
     return 0;
 }
 
@@ -490,13 +490,13 @@ static Obj EvalSum(Expr expr)
 
 /****************************************************************************
 **
-*F  EvalAInv(<expr>)  . . . . . . . . . . . . . . evaluate a additive inverse
+*F  EvalAInv(<expr>)  . . . . . . . . . . . . .  evaluate an additive inverse
 **
 **  'EvalAInv' evaluates  the additive  inverse-expression  and  returns  its
 **  value, i.e., the  additive inverse of  the operand.  'EvalAInv' is called
 **  from 'EVAL_EXPR' to evaluate expressions of type 'EXPR_AINV'.
 **
-**  'EvalAInv' evaluates the operand and then calls the 'AINV' macro.
+**  'EvalAInv' evaluates the operand and then calls the 'AINV_SAMEMUT' macro.
 */
 static Obj EvalAInv(Expr expr)
 {
@@ -510,7 +510,7 @@ static Obj EvalAInv(Expr expr)
 
     /* compute the additive inverse                                        */
     SET_BRK_CALL_TO(expr);     /* Note possible call for FuncWhere */
-    val = AINV( opL );
+    val = AINV_SAMEMUT(opL);
 
     /* return the value                                                    */
     return val;
@@ -714,7 +714,7 @@ static Obj EvalIntExpr(Expr expr)
 static Obj EvalTildeExpr(Expr expr)
 {
     if( ! (STATE(Tilde)) ) {
-        ErrorQuit("'~' does not have a value here",0L,0L);
+        ErrorQuit("'~' does not have a value here", 0, 0);
     }
     return STATE(Tilde);
 }
@@ -980,13 +980,7 @@ static Obj EvalRangeExpr(Expr expr)
              ErrorQuit("Range: the length of a range must be a small integer",
                         0, 0);
         }
-        if ( 0 < inc )
-            range = NEW_RANGE_SSORT();
-        else
-            range = NEW_RANGE_NSORT();
-        SET_LEN_RANGE( range, (high-low) / inc + 1 );
-        SET_LOW_RANGE( range, low );
-        SET_INC_RANGE( range, inc );
+        range = NEW_RANGE((high - low) / inc + 1, low, inc);
     }
 
     /* return the range                                                    */
@@ -1084,7 +1078,6 @@ static Obj EvalRecExpr(Expr expr)
     rec = RecExpr1( expr );
     RecExpr2( rec, expr );
 
-    /* return the result                                                   */
     return rec;
 }
 
@@ -1223,7 +1216,7 @@ void            PrintExpr (
 **  expressions a pointer to the printer for expressions  of this type, i.e.,
 **  the function that should be called to print expressions of this type.
 */
-void            (* PrintExprFuncs[256] ) ( Expr expr );
+PrintExprFunc PrintExprFuncs[256];
 
 
 /****************************************************************************
@@ -1237,8 +1230,8 @@ void            (* PrintExprFuncs[256] ) ( Expr expr );
 */
 static void PrintUnknownExpr(Expr expr)
 {
-    Pr( "Panic: tried to print an expression of unknown type '%d'\n",
-        (Int)TNUM_EXPR(expr), 0L );
+    Pr("Panic: tried to print an expression of unknown type '%d'\n",
+       (Int)TNUM_EXPR(expr), 0);
 }
 
 
@@ -1284,16 +1277,16 @@ static void PrintNot(Expr expr)
     PrintPrecedence = 6;
     
     /* if necessary print the opening parenthesis                          */
-    if ( oldPrec >= PrintPrecedence ) Pr("%>(%>",0L,0L);
-    else Pr("%2>",0L,0L);
+    if ( oldPrec >= PrintPrecedence ) Pr("%>(%>", 0, 0);
+    else Pr("%2>", 0, 0);
     
-    Pr("not%> ",0L,0L);
+    Pr("not%> ", 0, 0);
     PrintExpr(READ_EXPR(expr, 0));
-    Pr("%<",0L,0L);
+    Pr("%<", 0, 0);
     
     /* if necessary print the closing parenthesis                          */
-    if ( oldPrec >= PrintPrecedence ) Pr("%2<)",0L,0L);
-    else Pr("%2<",0L,0L);
+    if ( oldPrec >= PrintPrecedence ) Pr("%2<)", 0, 0);
+    else Pr("%2<", 0, 0);
     
     PrintPrecedence = oldPrec;
 }
@@ -1314,16 +1307,16 @@ static void PrintAInv(Expr expr)
     PrintPrecedence = 11;
     
     /* if necessary print the opening parenthesis                          */
-    if ( oldPrec >= PrintPrecedence ) Pr("%>(%>",0L,0L);
-    else Pr("%2>",0L,0L);
+    if ( oldPrec >= PrintPrecedence ) Pr("%>(%>", 0, 0);
+    else Pr("%2>", 0, 0);
     
-    Pr("-%> ",0L,0L);
+    Pr("-%> ", 0, 0);
     PrintExpr(READ_EXPR(expr, 0));
-    Pr("%<",0L,0L);
+    Pr("%<", 0, 0);
     
     /* if necessary print the closing parenthesis                          */
-    if ( oldPrec >= PrintPrecedence ) Pr("%2<)",0L,0L);
-    else Pr("%2<",0L,0L);
+    if ( oldPrec >= PrintPrecedence ) Pr("%2<)", 0, 0);
+    else Pr("%2<", 0, 0);
     
     PrintPrecedence = oldPrec;
 }
@@ -1332,6 +1325,7 @@ static void PrintBinop(Expr expr)
 {
     UInt                oldPrec;        /* old precedence level           */
     const Char *        op;             /* operand                         */
+    BOOL                printEqPrec = FALSE; /* Print() at equal precedence */
     /* remember the current precedence level                              */
     oldPrec = PrintPrecedence;
 
@@ -1354,10 +1348,17 @@ static void PrintBinop(Expr expr)
     case EXPR_POW:    op = "^";    PrintPrecedence = 16;  break;
     default:       op = "<bogus-operator>";   break;
     }
+    // The logical operators (=|<>|<|>|<=|>=|in) need brackets at
+    // equal precedence level
+    if (PrintPrecedence == 8) {
+        printEqPrec = TRUE;
+    }
 
     /* if necessary print the opening parenthesis                          */
-    if ( oldPrec > PrintPrecedence ) Pr("%>(%>",0L,0L);
-    else Pr("%2>",0L,0L);
+    if (oldPrec > PrintPrecedence ||
+        (oldPrec == PrintPrecedence && printEqPrec))
+        Pr("%>(%>", 0, 0);
+    else Pr("%2>", 0, 0);
 
     /* print the left operand                                              */
     if ( TNUM_EXPR(expr) == EXPR_POW
@@ -1365,16 +1366,16 @@ static void PrintBinop(Expr expr)
                  && INT_INTEXPR(READ_EXPR(expr, 0)) < 0)
                 || TNUM_EXPR(READ_EXPR(expr, 0)) == T_INTNEG)
              || TNUM_EXPR(READ_EXPR(expr, 0)) == EXPR_POW) ) {
-        Pr( "(", 0L, 0L );
+        Pr( "(", 0, 0);
         PrintExpr(READ_EXPR(expr, 0));
-        Pr( ")", 0L, 0L );
+        Pr(")", 0, 0);
     }
     else {
         PrintExpr(READ_EXPR(expr, 0));
     }
 
     /* print the operator                                                  */
-    Pr("%2< %2>%s%> %<",(Int)op,0L);
+    Pr("%2< %2>%s%> %<",(Int)op, 0);
 
     /* print the right operand                                             */
     PrintPrecedence++;
@@ -1382,8 +1383,10 @@ static void PrintBinop(Expr expr)
     PrintPrecedence--;
 
     /* if necessary print the closing parenthesis                          */
-    if ( oldPrec > PrintPrecedence ) Pr("%2<)",0L,0L);
-    else Pr("%2<",0L,0L);
+    if (oldPrec > PrintPrecedence ||
+        (oldPrec == PrintPrecedence && printEqPrec))
+        Pr("%2<)", 0, 0);
+    else Pr("%2<", 0, 0);
 
     /* restore the old precedence level                                   */
     PrintPrecedence = oldPrec;
@@ -1399,7 +1402,7 @@ static void PrintBinop(Expr expr)
 static void PrintIntExpr(Expr expr)
 {
     if ( IS_INTEXPR(expr) ) {
-        Pr( "%d", INT_INTEXPR(expr), 0L );
+        Pr("%d", INT_INTEXPR(expr), 0);
     }
     else {
         PrintInt(EvalIntExpr(expr));
@@ -1413,7 +1416,7 @@ static void PrintIntExpr(Expr expr)
 */
 static void PrintTildeExpr(Expr expr)
 {
-    Pr( "~", 0L, 0L );
+    Pr("~", 0, 0);
 }
 
 /****************************************************************************
@@ -1422,7 +1425,7 @@ static void PrintTildeExpr(Expr expr)
 */
 static void PrintTrueExpr(Expr expr)
 {
-    Pr( "true", 0L, 0L );
+    Pr("true", 0, 0);
 }
 
 
@@ -1432,7 +1435,7 @@ static void PrintTrueExpr(Expr expr)
 */
 static void PrintFalseExpr(Expr expr)
 {
-    Pr( "false", 0L, 0L );
+    Pr("false", 0, 0);
 }
 
 
@@ -1445,14 +1448,14 @@ static void PrintCharExpr(Expr expr)
     UChar               chr;
 
     chr = READ_EXPR(expr, 0);
-    if      ( chr == '\n'  )  Pr("'\\n'",0L,0L);
-    else if ( chr == '\t'  )  Pr("'\\t'",0L,0L);
-    else if ( chr == '\r'  )  Pr("'\\r'",0L,0L);
-    else if ( chr == '\b'  )  Pr("'\\b'",0L,0L);
-    else if ( chr == '\03' )  Pr("'\\c'",0L,0L);
-    else if ( chr == '\''  )  Pr("'\\''",0L,0L);
-    else if ( chr == '\\'  )  Pr("'\\\\'",0L,0L);
-    else                      Pr("'%c'",(Int)chr,0L);
+    if      ( chr == '\n'  )  Pr("'\\n'", 0, 0);
+    else if ( chr == '\t'  )  Pr("'\\t'", 0, 0);
+    else if ( chr == '\r'  )  Pr("'\\r'", 0, 0);
+    else if ( chr == '\b'  )  Pr("'\\b'", 0, 0);
+    else if ( chr == '\03' )  Pr("'\\c'", 0, 0);
+    else if ( chr == '\''  )  Pr("'\\''", 0, 0);
+    else if ( chr == '\\'  )  Pr("'\\\\'", 0, 0);
+    else                      Pr("'%c'",(Int)chr, 0);
 }
 
 
@@ -1469,23 +1472,23 @@ static void PrintPermExpr(Expr expr)
 
     /* if there are no cycles, print the identity permutation              */
     if ( SIZE_EXPR(expr) == 0 ) {
-        Pr("()",0L,0L);
+        Pr("()", 0, 0);
     }
     
     /* print all cycles                                                    */
     for ( i = 1; i <= SIZE_EXPR(expr)/sizeof(Expr); i++ ) {
         cycle = READ_EXPR(expr, i - 1);
-        Pr("%>(",0L,0L);
+        Pr("%>(", 0, 0);
 
         /* print all entries of that cycle                                 */
         for ( j = 1; j <= SIZE_EXPR(cycle)/sizeof(Expr); j++ ) {
-            Pr("%>",0L,0L);
+            Pr("%>", 0, 0);
             PrintExpr(READ_EXPR(cycle, j - 1));
-            Pr("%<",0L,0L);
-            if ( j < SIZE_EXPR(cycle)/sizeof(Expr) )  Pr(",",0L,0L);
+            Pr("%<", 0, 0);
+            if ( j < SIZE_EXPR(cycle)/sizeof(Expr) )  Pr(",", 0, 0);
         }
 
-        Pr("%<)",0L,0L);
+        Pr("%<)", 0, 0);
     }
 }
 
@@ -1506,18 +1509,18 @@ static void PrintListExpr(Expr expr)
     len = SIZE_EXPR( expr ) / sizeof(Expr);
 
     /* loop over the entries                                               */
-    Pr("%2>[ %2>",0L,0L);
+    Pr("%2>[ %2>", 0, 0);
     for ( i = 1;  i <= len;  i++ ) {
         elm = READ_EXPR(expr, i - 1);
         if ( elm != 0 ) {
-            if ( 1 < i )  Pr("%<,%< %2>",0L,0L);
+            if ( 1 < i )  Pr("%<,%< %2>", 0, 0);
             PrintExpr( elm );
         }
         else {
-            if ( 1 < i )  Pr("%2<,%2>",0L,0L);
+            if ( 1 < i )  Pr("%2<,%2>", 0, 0);
         }
     }
-    Pr(" %4<]",0L,0L);
+    Pr(" %4<]", 0, 0);
 }
 
 
@@ -1530,15 +1533,15 @@ static void PrintListExpr(Expr expr)
 static void PrintRangeExpr(Expr expr)
 {
     if ( SIZE_EXPR( expr ) == 2*sizeof(Expr) ) {
-        Pr("%2>[ %2>",0L,0L);    PrintExpr( READ_EXPR(expr, 0) );
-        Pr("%2< .. %2>",0L,0L);  PrintExpr( READ_EXPR(expr, 1) );
-        Pr(" %4<]",0L,0L);
+        Pr("%2>[ %2>", 0, 0);    PrintExpr( READ_EXPR(expr, 0) );
+        Pr("%2< .. %2>", 0, 0);  PrintExpr( READ_EXPR(expr, 1) );
+        Pr(" %4<]", 0, 0);
     }
     else {
-        Pr("%2>[ %2>",0L,0L);    PrintExpr( READ_EXPR(expr, 0) );
-        Pr("%<,%< %2>",0L,0L);   PrintExpr( READ_EXPR(expr, 1) );
-        Pr("%2< .. %2>",0L,0L);  PrintExpr( READ_EXPR(expr, 2) );
-        Pr(" %4<]",0L,0L);
+        Pr("%2>[ %2>", 0, 0);    PrintExpr( READ_EXPR(expr, 0) );
+        Pr("%<,%< %2>", 0, 0);   PrintExpr( READ_EXPR(expr, 1) );
+        Pr("%2< .. %2>", 0, 0);  PrintExpr( READ_EXPR(expr, 2) );
+        Pr(" %4<]", 0, 0);
     }
 }
 
@@ -1566,7 +1569,7 @@ static void PrintStringExpr(Expr expr)
 static void PrintFloatExprLazy(Expr expr)
 {
     UInt ix = READ_EXPR(expr, 1);
-    Pr("%g", (Int)GET_VALUE_FROM_CURRENT_BODY(ix), 0L);
+    Pr("%g", (Int)GET_VALUE_FROM_CURRENT_BODY(ix), 0);
 }
 
 /****************************************************************************
@@ -1579,7 +1582,7 @@ static void PrintFloatExprEager(Expr expr)
 {
     UInt ix = READ_EXPR(expr, 1);
     Char mark = (Char)READ_EXPR(expr, 2);
-    Pr("%g_", (Int)GET_VALUE_FROM_CURRENT_BODY(ix), 0L);
+    Pr("%g_", (Int)GET_VALUE_FROM_CURRENT_BODY(ix), 0);
     if (mark != '\0') {
         Pr("%c", mark, 0);
     }
@@ -1602,32 +1605,30 @@ void            PrintRecExpr1 (
         /* print an ordinary record name                                   */
         tmp = READ_EXPR(expr, 2 * i - 2);
         if ( IS_INTEXPR(tmp) ) {
-            Pr( "%H", (Int)NAME_RNAM( INT_INTEXPR(tmp) ), 0L );
+            Pr("%H", (Int)NAME_RNAM(INT_INTEXPR(tmp)), 0);
         }
 
         /* print an evaluating record name                                 */
         else {
-            Pr(" (",0L,0L);
+            Pr(" (", 0, 0);
             PrintExpr( tmp );
-            Pr(")",0L,0L);
+            Pr(")", 0, 0);
         }
 
         /* print the component                                             */
         tmp = READ_EXPR(expr, 2 * i - 1);
-        Pr("%< := %>",0L,0L);
+        Pr("%< := %>", 0, 0);
         PrintExpr( tmp );
         if ( i < SIZE_EXPR(expr)/(2*sizeof(Expr)) )
-            Pr("%2<,\n%2>",0L,0L);
-
+            Pr("%2<,\n%2>", 0, 0);
     }
 }
 
 static void PrintRecExpr(Expr expr)
 {
-    Pr("%2>rec(\n%2>",0L,0L);
+    Pr("%2>rec(\n%2>", 0, 0);
     PrintRecExpr1(expr);
-    Pr(" %4<)",0L,0L);
-
+    Pr(" %4<)", 0, 0);
 }
 
 
@@ -1653,7 +1654,7 @@ static Obj FuncFLUSH_FLOAT_LITERAL_CACHE(Obj self)
  */
 static StructGVarFunc GVarFuncs [] = {
 
-  GVAR_FUNC(FLUSH_FLOAT_LITERAL_CACHE, 0, ""),
+  GVAR_FUNC_0ARGS(FLUSH_FLOAT_LITERAL_CACHE),
   { 0, 0, 0, 0, 0 }
 
 };
@@ -1783,7 +1784,6 @@ static Int InitKernel (
     InstallPrintExprFunc( EXPR_REC       , PrintRecExpr);
     InstallPrintExprFunc( EXPR_REC_TILDE , PrintRecExpr);
 
-    /* return success                                                      */
     return 0;
 }
 

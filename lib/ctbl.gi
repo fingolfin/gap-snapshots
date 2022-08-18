@@ -1312,7 +1312,7 @@ InstallMethod( IsSimpleCharacterTable,
 ##  a simple group of prime order by outer automorphisms.
 ##  (These groups are not regarded as almost simple.)
 ##  Namely, such a group has a unique minimal normal subgroup <M>N</M> of
-##  prime order <M>p</M>, say,
+##  prime order <M>p</M>
 ##  and all nontrivial conjugacy classes of <M>G</M> inside <M>N</M>
 ##  have length <M>[G:N]</M>.
 ##
@@ -1336,6 +1336,17 @@ InstallMethod( IsAlmostSimpleCharacterTable,
     return     ( not IsPrimeInt( nsg ) )
            and IsomorphismTypeInfoFiniteSimpleGroup( nsg ) <> fail;
     end );
+
+
+#############################################################################
+##
+#M  IsQuasisimpleCharacterTable( <tbl> )  . . for an ordinary character table
+##
+InstallMethod( IsQuasisimpleCharacterTable,
+    "for an ordinary character table",
+    [ IsOrdinaryTable ],
+    ordtbl -> IsPerfectCharacterTable( ordtbl ) and
+       IsSimpleCharacterTable( ordtbl / ClassPositionsOfCentre( ordtbl ) ) );
 
 
 #############################################################################
@@ -1867,7 +1878,7 @@ InstallMethod( ClassPositionsOfNormalSubgroups,
           inter;    # intersection of two kernels
 
     # Get the kernels of irreducible characters.
-    kernels:= Set( List( Irr( tbl ), ClassPositionsOfKernel ) );
+    kernels:= Set( Irr( tbl ), ClassPositionsOfKernel );
 
     # Form all possible intersections of the kernels.
     normal:= ShallowCopy( kernels );
@@ -1916,7 +1927,7 @@ InstallMethod( ClassPositionsOfMaximalNormalSubgroups,
 
     # Every normal subgroup is an intersection of kernels of characters,
     # so maximal normal subgroups are kernels of irreducible characters.
-    normal:= Set( List( Irr( tbl ), ClassPositionsOfKernel ) );
+    normal:= Set( Irr( tbl ), ClassPositionsOfKernel );
 
     # Remove non-maximal kernels
     RemoveSet( normal, [ 1 .. NrConjugacyClasses( tbl ) ] );
@@ -1952,8 +1963,8 @@ InstallMethod( ClassPositionsOfMinimalNormalSubgroups,
           minimal,   # list of minimal kernels
           k;         # one kernel
 
-    normal:= Set( List( [ 2 .. NrConjugacyClasses( tbl ) ],
-                        i -> ClassPositionsOfNormalClosure( tbl, [ i ] ) ) );
+    normal:= Set( [ 2 .. NrConjugacyClasses( tbl ) ],
+                        i -> ClassPositionsOfNormalClosure( tbl, [ i ] ) );
 
     # Remove non-minimal kernels
     Sort( normal, function(x,y) return Length(x) < Length(y); end );
@@ -2204,7 +2215,7 @@ InstallMethod( ClassPositionsOfSolvableRadical,
 ##
 #M  ClassPositionsOfLowerCentralSeries( <tbl> )
 ##
-##  Let <A>tbl</A> be the character table of the group <M>G</M>, say.
+##  Let <A>tbl</A> be the character table of a group <M>G</M>.
 ##  The lower central series <M>[ K_1, K_2, \ldots, K_n ]</M> of <M>G</M>
 ##  is defined by <M>K_1 = G</M>, and <M>K_{i+1} = [ K_i, G ]</M>.
 ##  <C>ClassPositionsOfLowerCentralSeries( <A>tbl</A> )</C> is a list
@@ -3909,55 +3920,63 @@ InstallMethod( IndicatorOp,
     "for a Brauer character table and <n> = 2",
     [ IsBrauerTable, IsHomogeneousList, IsPosInt ],
     function( modtbl, ibr, n )
-    local ordtbl,
-          irr,
-          ordindicator,
-          fus,
-          indicator,
-          i,
-          j,
-          odd;
+    local indicator, princ, i, ordtbl, irr, ordindicator, fus, j, odd;
+
+    indicator:= [];
 
     if   n <> 2 then
       Error( "for Brauer table <modtbl> only for <n> = 2" );
+    elif ibr <> Irr( modtbl ) then
+      Error( "only for <ibr> equal to Irr(<modtbl>)" );
     elif UnderlyingCharacteristic( modtbl ) = 2 then
-      Error( "for Brauer table <modtbl> only in odd characteristic" );
-    fi;
-
-    ordtbl:= OrdinaryCharacterTable( modtbl );
-    irr:= Irr( ordtbl );
-    ordindicator:= Indicator( ordtbl, irr, 2 );
-    fus:= GetFusionMap( modtbl, ordtbl );
-
-    # compute indicators block by block
-    indicator:= [];
-
-    for i in BlocksInfo( modtbl ) do
-      if not IsBound( i.decmat ) then
-        i.decmat:= Decomposition( ibr{ i.modchars },
-                         List( irr{ i.ordchars },
-                               x -> x{ fus } ), "nonnegative" );
-      fi;
-      for j in [ 1 .. Length( i.modchars ) ] do
-        if ForAny( ibr[ i.modchars[j] ],
-                   x -> not IsInt(x) and GaloisCyc(x,-1) <> x ) then
-
-          # indicator of a Brauer character is 0 iff it has
-          # at least one nonreal value
-          indicator[ i.modchars[j] ]:= 0;
-
+      # In general, we cannot compute the indicator character-theoretically,
+      # we apply necessary conditions.
+      princ:= BlocksInfo( modtbl )[1].modchars;
+      for i in [ 1 .. Length( ibr ) ] do
+        if ibr[i] <> ComplexConjugate( ibr[i] ) then
+          # Non-real characters have indicator 0.
+          indicator[i]:= 0;
+        elif not i in princ then
+          # Real characters outside the principal block have indicator 1.
+          indicator[i]:= 1;
+        elif Set( ibr[i] ) = [ 1 ] then
+          # The trivial character is defined to have indicator 1.
+          indicator[i]:= 1;
         else
-
-          # indicator is equal to the indicator of any real ordinary
-          # character containing it as constituent, with odd multiplicity
-          odd:= Filtered( [ 1 .. Length( i.decmat ) ],
-                          x -> i.decmat[x][j] mod 2 <> 0 );
-          odd:= List( odd, x -> ordindicator[ i.ordchars[x] ] );
-          indicator[ i.modchars[j] ]:= First( odd, x -> x <> 0 );
-
+          # Set 'Unknown()' for all other characters.
+          indicator[i]:= Unknown();
         fi;
       od;
-    od;
+    else
+      ordtbl:= OrdinaryCharacterTable( modtbl );
+      irr:= Irr( ordtbl );
+      ordindicator:= Indicator( ordtbl, irr, 2 );
+      fus:= GetFusionMap( modtbl, ordtbl );
+
+      # compute indicators block by block
+      for i in BlocksInfo( modtbl ) do
+        if not IsBound( i.decmat ) then
+          i.decmat:= Decomposition( ibr{ i.modchars },
+                           List( irr{ i.ordchars },
+                                 x -> x{ fus } ), "nonnegative" );
+        fi;
+        for j in [ 1 .. Length( i.modchars ) ] do
+          if ForAny( ibr[ i.modchars[j] ],
+                     x -> not IsInt(x) and GaloisCyc(x,-1) <> x ) then
+            # indicator of a Brauer character is 0 iff it has
+            # at least one nonreal value
+            indicator[ i.modchars[j] ]:= 0;
+          else
+            # indicator is equal to the indicator of any real ordinary
+            # character containing it as constituent, with odd multiplicity
+            odd:= Filtered( [ 1 .. Length( i.decmat ) ],
+                            x -> i.decmat[x][j] mod 2 <> 0 );
+            odd:= List( odd, x -> ordindicator[ i.ordchars[x] ] );
+            indicator[ i.modchars[j] ]:= First( odd, x -> x <> 0 );
+          fi;
+        od;
+      od;
+    fi;
 
     return indicator;
     end );
@@ -4758,8 +4777,14 @@ BindGlobal( "CharacterTableDisplayDefault", function( tbl, options )
           linelen,           # line length
           q,                 # quadratic cyc / powermap entry
           indicator,         # list of primes
-          indic,             # indicators
-          iw,                # width of indicator column
+          OD,                # show a column with orthog. discriminants
+          iw,                # width of indicator columns
+          indic,             # indicator values
+          oddata,            # orthog. discriminants
+          ind2,              # 2nd indicator
+          iwsum,             # total width of (OD and) indicator columns
+          entry,             # run over 'oddata'
+          pos,               # position in 'cnr'
           stringEntry,       # local function
           stringEntryData,   # data accessed by `stringEntry'
           cc,                # column number
@@ -4966,6 +4991,19 @@ BindGlobal( "CharacterTableDisplayDefault", function( tbl, options )
       fi;
     od;
 
+    # print orthogonal discriminants (if available)
+    OD:= false;
+    if chars_from_irr then
+      for record in options do
+        if IsBound( record.OD ) then
+          if record.OD = true then
+            OD:= true;
+          fi;
+          break;
+        fi;
+      od;
+    fi;
+
     # (end of options handling)
 
     # line length
@@ -4996,28 +5034,56 @@ BindGlobal( "CharacterTableDisplayDefault", function( tbl, options )
       od;
     fi;
 
-    # prepare indicator
+    # prepare indicator and OD
     # (compute the values if they are not stored but use stored values)
-    iw:= [ 0 ];
-    if indicator <> [] then
-      indic:= [];
-      for i in indicator do
-        if chars_from_irr and IsBound( ComputedIndicators( tbl )[i] ) then
-          indic[i]:= ComputedIndicators( tbl )[i]{ cnr };
-        else
-          indic[i]:= Indicator( tbl, Irr( tbl ){ cnr }, i );
-        fi;
-        if i = 2 then
-          iw[i]:= 2;
-        else
-          iw[i]:= Maximum( Length( String( Maximum( Set( indic[i] ) ) ) ),
-                           Length( String( Minimum( Set( indic[i] ) ) ) ),
-                           Length( String( i ) ) ) + 1;
-        fi;
-        iw[1]:= iw[1] + iw[i];
-      od;
-      iw[1]:= iw[1] + 1;
+    iw:= [];
+    indic:= [];
+    if OD then
+      if not 2 in indicator then
+        indicator:= Concatenation( [ 2 ], indicator );
+      fi;
+      indicator:= Concatenation( [ "OD" ], indicator );
     fi;
+    if indicator <> [] then
+      for i in [ 1 .. Length( indicator ) ] do
+        if indicator[i] = "OD" then
+          indic[1]:= ListWithIdenticalEntries( Length( cnr ), "" );
+          if IsBoundGlobal( "OrthogonalDiscriminants" ) then
+            oddata:= ValueGlobal( "OrthogonalDiscriminants" )( tbl );
+            for j in [ 1 .. Length( cnr ) ] do
+              if IsBound( oddata[ cnr[j] ] ) then
+                indic[1][j]:= oddata[ cnr[j] ];
+              fi;
+            od;
+          else
+            # Show '?' and empty strings.
+            ind2:= Indicator( tbl, Irr( tbl ){ cnr }, 2 );
+            for j in [ 1 .. Length( cnr ) ] do
+              if ( not ind2[ cnr[j] ] in [ -1, 0 ] ) and
+                 Irr( tbl )[ cnr[j] ][1] mod 2 = 0 then
+                indic[1][j]:= "?";
+              fi;
+            od;
+          fi;
+          iw[i]:= Maximum( 2, Maximum( List( indic[1], Length ) ) ) + 1;
+        else
+          if chars_from_irr and
+             IsBound( ComputedIndicators( tbl )[ indicator[i] ] ) then
+            indic[i]:= ComputedIndicators( tbl )[ indicator[i] ]{ cnr };
+          else
+            indic[i]:= Indicator( tbl, chars, indicator[i] );
+          fi;
+          if indicator[i] = 2 then
+            iw[i]:= 2;
+          else
+            iw[i]:= Maximum( Length( String( Maximum( Set( indic[i] ) ) ) ),
+                             Length( String( Minimum( Set( indic[i] ) ) ) ),
+                             Length( String( indicator[i] ) ) ) + 1;
+          fi;
+        fi;
+      od;
+    fi;
+    iwsum:= Sum( iw, 0 ) + 1;
 
     if Length( cnr ) = 0 then
       prin:= [ 3 ];
@@ -5042,7 +5108,7 @@ BindGlobal( "CharacterTableDisplayDefault", function( tbl, options )
        # determine number of cols for next page
        acol:= 0;
        if indicator <> [] then
-          prin[1]:= prin[1] + iw[1];
+          prin[1]:= prin[1] + iwsum;
        fi;
        len:= prin[1];
        while col+acol < ncols and len < linelen do
@@ -5154,10 +5220,10 @@ BindGlobal( "CharacterTableDisplayDefault", function( tbl, options )
        # empty column resp. indicators
        Print( "\n" );
        if indicator <> [] then
-          prin[1]:= prin[1] - iw[1];
+          prin[1]:= prin[1] - iwsum;
           Print( String( "", prin[1] ) );
-          for i in indicator do
-             Print( String( i, iw[i] ) );
+          for i in [ 1 .. Length( iw ) ] do
+             Print( String( indicator[i], iw[i] ) );
           od;
        fi;
 
@@ -5170,14 +5236,16 @@ BindGlobal( "CharacterTableDisplayDefault", function( tbl, options )
           Print( String( charnames[i], -prin[1] ) );
 
           # indicators
-          for j in indicator do
-            if j = 2 then
+          for j in [ 1 .. Length( indicator ) ] do
+            if indicator[j] = 2 then
                if indic[j][i] = 0 then
                  Print( String( "o", iw[j] ) );
                elif indic[j][i] = 1 then
                  Print( String( "+", iw[j] ) );
                elif indic[j][i] = -1 then
                  Print( String( "-", iw[j] ) );
+               else
+                 Print( String( "?", iw[j] ) );
                fi;
             else
                if indic[j][i] = 0 then
@@ -5218,7 +5286,7 @@ fi;
 ##
 #V  CharacterTableDisplayDefaults
 ##
-InstallValue( CharacterTableDisplayDefaults, rec(
+BindGlobal( "CharacterTableDisplayDefaults", rec(
       Global:= rec(
         centralizers    := true,
 
@@ -5881,7 +5949,7 @@ InstallMethod( CharacterTableIsoclinic,
 ##
 #M  CharacterTableIsoclinic( <ordtbl>, <nsg> )
 ##
-##  Perhaps <nsg> is is fact <center>, so do not delegate to the case
+##  Perhaps <nsg> is in fact <center>, so do not delegate to the case
 ##  where the second argument is a record.
 ##
 InstallMethod( CharacterTableIsoclinic,
@@ -5919,7 +5987,7 @@ InstallMethod( CharacterTableIsoclinic,
 ##  class positions of the i-th coset of the relevant normal subgroup 'N'
 ##  in 'H' that is given by <p>.G' or '4.G',
 ##  and <xpos> is the class position in 'H' of a generating element of the
-##  relevant central subgroup 'C', say, of order <p> or 4 in 'N'.
+##  relevant central subgroup 'C' of order <p> or 4 in 'N'.
 ##  <center> is a list that describes 'C', as follows;
 ##  if 'H' has the structure '4.G.2' then <center> contains the class
 ##  positions in 'H' of elements of the orders 2 and 4 in 'C',
@@ -6124,8 +6192,8 @@ InstallMethod( CharacterTableIsoclinic,
       fi;
     else
       nsg:= fail;
-      for ker in Set( List( LinearCharacters( tbl ),
-                            ClassPositionsOfKernel ) ) do
+      for ker in Set( LinearCharacters( tbl ),
+                            ClassPositionsOfKernel ) do
         p2:= size / Sum( classes{ ker }, 0 );
         if ( p = p2 and xpos in ker ) or
            ( p = fail and IsPrimeInt( p2 )
@@ -6353,7 +6421,8 @@ InstallMethod( CharacterTableIsoclinic,
       if p = 2 then
         irreducibles:= List( Irr( modtbl ), ValuesOfClassFunction );
       else
-        factorfusion:= GetFusionMap( reg, ordiso );
+        factorfusion:= GetFusionMap( modtbl,
+                                     OrdinaryCharacterTable( modtbl ) );
         nsg:= List( source[2], i -> Position( factorfusion, i ) );
         centre:= List( source[3], i -> Position( factorfusion, i ) );
         xpos:= Position( factorfusion, source[4] );
@@ -6365,7 +6434,8 @@ InstallMethod( CharacterTableIsoclinic,
       if p = source.p then
         irreducibles:= List( Irr( modtbl ), ValuesOfClassFunction );
       else
-        factorfusion:= GetFusionMap( reg, ordiso );
+        factorfusion:= GetFusionMap( modtbl,
+                                     OrdinaryCharacterTable( modtbl ) );
         xpos:= Position( factorfusion, source.centralElement );
         centre:= [ xpos ];
         outer:= List( source.outerClasses,
@@ -6390,11 +6460,10 @@ InstallMethod( CharacterTableIsoclinic,
     # With `IrreducibleCharactersOfIsoclinicGroup', we get irreducibles
     # that fit to t2, thus we have to apply the permutation from t2 to t3.
     if HasClassPermutation( ordiso ) then
+      fus:= GetFusionMap( modtbl, OrdinaryCharacterTable( modtbl ) );
+      inv:= InverseMap( GetFusionMap( reg, ordiso ) );
       pi:= ClassPermutation( ordiso );
-      fus:= GetFusionMap( reg, ordiso );
-      inv:= InverseMap( fus );
-      pi:= PermList( List( [ 1 .. Length( fus ) ],
-                           i -> inv[ fus[i]^pi ] ) );
+      pi:= PermList( List( fus, x -> inv[ x^pi ] ) );
       irreducibles:= List( irreducibles, x -> Permuted( x, pi ) );
     fi;
 

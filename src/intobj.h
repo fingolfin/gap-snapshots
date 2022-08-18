@@ -34,7 +34,7 @@
 #ifndef GAP_INTOBJ_H
 #define GAP_INTOBJ_H
 
-#include "system.h"
+#include "common.h"
 
 enum {
     NR_SMALL_INT_BITS = sizeof(UInt) * 8 - 4,
@@ -56,7 +56,7 @@ enum {
 **  'IS_INTOBJ' returns 1 if the object <o> is an (immediate) integer object,
 **  and 0 otherwise.
 */
-EXPORT_INLINE Int IS_INTOBJ(Obj o)
+EXPORT_INLINE BOOL IS_INTOBJ(Obj o)
 {
     return (Int)o & 0x01;
 }
@@ -69,7 +69,7 @@ EXPORT_INLINE Int IS_INTOBJ(Obj o)
 **  'IS_POS_INTOBJ' returns 1 if the object <o> is an (immediate) integer
 **  object encoding a positive integer, and 0 otherwise.
 */
-EXPORT_INLINE Int IS_POS_INTOBJ(Obj o)
+EXPORT_INLINE BOOL IS_POS_INTOBJ(Obj o)
 {
     return ((Int)o & 0x01) && ((Int)o > 0x01);
 }
@@ -81,7 +81,7 @@ EXPORT_INLINE Int IS_POS_INTOBJ(Obj o)
 **  'IS_NONNEG_INTOBJ' returns 1 if the object <o> is an (immediate) integer
 **  object encoding a non-negative integer, and 0 otherwise.
 */
-EXPORT_INLINE Int IS_NONNEG_INTOBJ(Obj o)
+EXPORT_INLINE BOOL IS_NONNEG_INTOBJ(Obj o)
 {
     return ((Int)o & 0x01) && ((Int)o > 0);
 }
@@ -133,27 +133,6 @@ EXPORT_INLINE Obj INTOBJ_INT(Int i)
     GAP_ASSERT(INT_INTOBJ(o) == i);
     return o;
 }
-
-/****************************************************************************
-**
-*F  EQ_INTOBJS( <o>, <l>, <r> ) . . . . . . . . . compare two integer objects
-**
-**  'EQ_INTOBJS' returns 'True' if the  (immediate)  integer  object  <l>  is
-**  equal to the (immediate) integer object <r> and  'False'  otherwise.  The
-**  result is also stored in <o>.
-*/
-#define EQ_INTOBJS(o, l, r) ((o) = (((Int)(l)) == ((Int)(r)) ? True : False))
-
-
-/****************************************************************************
-**
-*F  LT_INTOBJS( <o>, <l>, <r> ) . . . . . . . . . compare two integer objects
-**
-**  'LT_INTOBJS' returns 'True' if the  (immediate)  integer  object  <l>  is
-**  less than the (immediate) integer object <r> and  'False' otherwise.  The
-**  result is also stored in <o>.
-*/
-#define LT_INTOBJS(o, l, r) ((o) = (((Int)(l)) < ((Int)(r)) ? True : False))
 
 
 //
@@ -248,9 +227,9 @@ EXPORT_INLINE Obj prod_intobjs(Int l, Int r)
 #else
 
 #ifdef SYS_IS_64_BIT
-typedef Int4 HalfInt;
+#define HalfInt Int4
 #else
-typedef Int2 HalfInt;
+#define HalfInt Int2
 #endif
 
 EXPORT_INLINE Obj prod_intobjs(Int l, Int r)
@@ -277,6 +256,7 @@ EXPORT_INLINE Obj prod_intobjs(Int l, Int r)
 
     return (Obj)0;
 }
+#undef HalfInt
 #endif
 
 #define PROD_INTOBJS(o, l, r) ((o) = prod_intobjs((Int)(l), (Int)(r)))

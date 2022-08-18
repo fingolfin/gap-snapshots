@@ -56,13 +56,13 @@ end
 
 #
 gap> bf.getters[1](Z(5));
-Error, Field getter: <data> must be a small integer (not a ffe)
+Error, Field getter: <data> must be a small integer (not an ffe)
 gap> bf.setters[1](1, (1,2));
 Error, Field Setter: <val> must be a small integer (not a permutation (small))
 gap> bf.setters[1]([],1);
-Error, Field Setter: <data> must be a small integer (not a empty plain list)
+Error, Field Setter: <data> must be a small integer (not an empty plain list)
 gap> BuildBitfields([1],Z(5));
-Error, Fields builder: values must be small integers
+Error, Fields builder: values must be non-negative small integers
 gap> MakeBitfields(100);
 Error, MAKE_BITFIELDS: total widths too large
 

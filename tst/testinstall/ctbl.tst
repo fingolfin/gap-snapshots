@@ -171,6 +171,19 @@ CT2
 X.1    + 0   1 -1  1
 X.2    + 1   2  . -1
 X.3    + 1   1  1  1
+gap> Display( t, rec( indicator:= [ 1, 2 ] ) );
+CT2
+
+          2  1  1  .
+          3  1  .  1
+
+            1a 2a 3a
+         2P 1a 1a 3a
+         3P 1a 2a 1a
+       1 2
+X.1    0 +   1 -1  1
+X.2    0 +   2  . -1
+X.3    1 +   1  1  1
 gap> Display( t, rec( powermap:= false ) );
 CT2
 
@@ -247,7 +260,7 @@ CharacterTable( <pc group of size 8 with 3 generators> )
 gap> Print( t, "\n" );
 CharacterTable( Group( [ f1, f2, f3 ] ) )
 gap> ViewString( t );
-"CharacterTable( <group of size 8 with 3 generators> )"
+"CharacterTable( <group of size 8 with \>3\< generators> )"
 gap> PrintString( t );
 "CharacterTable( \"Group( \>[ f1, f2, f3 ]\<\> )\< )"
 gap> t:= CharacterTable( SymmetricGroup( 5 ) );;
@@ -277,6 +290,18 @@ gap> IsMutable( ComputedIndicators( t ) );
 true
 gap> ForAny( ComputedIndicators( t ), IsMutable );
 false
+gap> t:= CharacterTable( CyclicGroup( 2 ) );;
+gap> SetIdentifier( t, "C2" );
+gap> ComputedIndicators( t )[2]:= [ Unknown(), Unknown() ];;
+gap> Display( t, rec( indicator:= true ) );
+C2
+
+        2  1  1
+
+          1a 2a
+       2
+X.1    ?   1  1
+X.2    ?   1 -1
 gap> PrimeBlocks( t, 2 );;
 gap> Length( ComputedPrimeBlockss( t ) );
 2
@@ -321,6 +346,22 @@ gap> g:= SmallGroup( 96, 66 );;
 gap> t:= CharacterTable( g );;
 gap> ClassPositionsOfSupersolvableResiduum( t );
 [ 1, 5, 6 ]
+
+# test another bugfix ('IsSimple' does not imply 'IsPerfect')
+gap> t:= CharacterTable( CyclicGroup( 2 ) );;
+gap> IsSimpleCharacterTable( t );
+true
+gap> IsPerfectCharacterTable( t );
+false
+
+# compute indicators
+gap> t:= CharacterTable( SymmetricGroup( 4 ) );;
+gap> Indicator( t, 2 );
+[ 1, 1, 1, 1, 1 ]
+gap> Indicator( t mod 3, 2 );
+[ 1, 1, 1, 1 ]
+gap> ForAny( Indicator( t mod 2, 2 ), IsUnknown );
+true
 
 ##
 gap> STOP_TEST( "ctbl.tst" );

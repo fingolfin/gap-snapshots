@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    JupyterKernel
+  </Title>
+  <Subtitle>
+    Jupyter kernel written in &GAP;
+  </Subtitle>
+  <Version>
+    1.4.1
+  </Version>
+  <Author>
+    Markus Pfeiffer<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+School of Computer Science<Br/>
+North Haugh<Br/>
+St Andrews<Br/>
+Fife<Br/>
+KY16 9SX<Br/>
+Scotland<Br/>
+</Address>
+<Email>markus.pfeiffer@morphism.de</Email>
+<Homepage>https://markusp.morphism.de/</Homepage>
+
+  </Author>
+  <Author>
+    Manuel Martins<Alt Only="LaTeX"><Br/></Alt>
+<Email>manuelmachadomartins@gmail.com</Email>
+<Homepage>http://github.com/mcmartins</Homepage>
+
+  </Author>
+  <Date>
+    1 September 2021
+  </Date>
+  </TitlePage>

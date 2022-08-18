@@ -1,0 +1,46 @@
+\GAPDocLabFile{sgpviz}
+\makelabel{sgpviz:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{sgpviz:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{sgpviz:Acknowledgements}{}{X82A988D47DFAFCFA}
+\makelabel{sgpviz:Colophon}{}{X7982162280BC7A61}
+\makelabel{sgpviz:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{sgpviz:Introduction}{1}{X7DFB63A97E67C0A1}
+\makelabel{sgpviz:Basics}{2}{X868F7BAB7AC2EEBC}
+\makelabel{sgpviz:Examples}{2.1}{X7A489A5D79DA9E5C}
+\makelabel{sgpviz:Some attributes}{2.2}{X85134313846D1A8A}
+\makelabel{sgpviz:Some basic functions}{2.3}{X78CA2A0D869C51DC}
+\makelabel{sgpviz:Cayley graphs}{2.4}{X789D5E5A8558AA07}
+\makelabel{sgpviz:Drawings of semigroups}{3}{X826F747F81441D2E}
+\makelabel{sgpviz:Drawing the D-class of an element of a semigroup}{3.1}{X7F71117D7F0259B8}
+\makelabel{sgpviz:Drawing the D-classes of a semigroup}{3.2}{X81CCF2BB81C4DF6F}
+\makelabel{sgpviz:Cayley graphs}{3.3}{X789D5E5A8558AA07}
+\makelabel{sgpviz:Schützenberger graphs}{3.4}{X79B26A588771144F}
+\makelabel{sgpviz:User friendly ways to give semigroups and automata}{4}{X83D3B9D482790646}
+\makelabel{sgpviz:Finite automata}{4.1}{X811E5FC2849C5644}
+\makelabel{sgpviz:Finite semigroups}{4.2}{X836830E97ED27F7F}
+\makelabel{sgpviz:Semigroups given through generators and relations}{4.2.2}{X83397F6B7B44CACD}
+\makelabel{sgpviz:Semigroups given by partial transformations}{4.2.3}{X7FCC7AFB793048E2}
+\makelabel{sgpviz:Syntatic semigroups}{4.2.4}{X854F0DDF7D612393}
+\makelabel{sgpviz:Bibliography}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{sgpviz:References}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{sgpviz:Index}{Ind}{X83A0356F839C696F}
+\makelabel{sgpviz:License}{}{X81488B807F2A1CF1}
+\makelabel{sgpviz:HasCommutingIdempotents}{2.2.1}{X7F7FAED380682973}
+\makelabel{sgpviz:IsInverseSemigroup}{2.2.2}{X83F1529479D56665}
+\makelabel{sgpviz:PartialTransformation}{2.3.1}{X7A65787A83C0F8EF}
+\makelabel{sgpviz:ReduceNumberOfGenerators}{2.3.2}{X7EEED52C7D38E1CA}
+\makelabel{sgpviz:SemigroupFactorization}{2.3.3}{X7BBEBEE885D05208}
+\makelabel{sgpviz:GrahamBlocks}{2.3.4}{X7FB7633483A45209}
+\makelabel{sgpviz:RightCayleyGraphAsAutomaton}{2.4.1}{X822983CD7F01B5EA}
+\makelabel{sgpviz:RightCayleyGraphMonoidAsAutomaton}{2.4.2}{X82F7D3E485D615D8}
+\makelabel{sgpviz:DrawDClassOfElement}{3.1.1}{X87448A11856B0F2D}
+\makelabel{sgpviz:DotForDrawingDClassOfElement}{3.1.2}{X78DC47A785011D84}
+\makelabel{sgpviz:DrawDClasses}{3.2.1}{X7BDBEDA37ADCAADE}
+\makelabel{sgpviz:DotForDrawingDClasses}{3.2.2}{X84B611718473E019}
+\makelabel{sgpviz:DrawRightCayleyGraph}{3.3.1}{X7EB36DB07C6F58A0}
+\makelabel{sgpviz:DrawCayleyGraph}{3.3.2}{X86798CC9823D1DB2}
+\makelabel{sgpviz:DotForDrawingRightCayleyGraph}{3.3.3}{X8487357A85497320}
+\makelabel{sgpviz:DrawSchutzenbergerGraphs}{3.4.1}{X7B7B58B77EA25719}
+\makelabel{sgpviz:DotForDrawingSchutzenbergerGraphs}{3.4.2}{X7884329D82F6C65B}
+\makelabel{sgpviz:XAutomaton}{4.1.1}{X8470C731867684DF}
+\makelabel{sgpviz:XSemigroup}{4.2.1}{X7CFD37938771E821}

@@ -53,70 +53,81 @@ BIND_GLOBAL( "GAPInfo", rec(
     # These options must be kept in sync with those in system.c, so the help output
     # for those options is correct
     CommandLineOptionData := [
+      rec( section:= ["Startup:"] ),
       rec( short:= "h", long := "help", default := false, help := ["print this help and exit"] ),
+      rec( long := "version", default := false, help := ["print the GAP version and exit"] ),
+      rec( long := "print-gaproot", default := false, help := ["print the primary GAP root and exit"] ),
       rec( short:= "b", long := "banner", default := false, help := ["disable/enable the banner"] ),
+      rec( short:= "c", default := "", arg := "<expr>", help := [ "execute the expression <expr>"] ),
+      rec( long := "systemfile", default := "", arg := "<file>",
+           help := [ "read this file after 'lib/system.g'" ] ),
+      ,
+      rec( section:= ["Input/output:"] ),
       rec( short:= "q", long := "quiet", default := false, help := ["enable/disable quiet mode"] ),
-      rec( short:= "e", default := false, help := ["disable/enable quitting on <ctr>-D"] ),
+      rec( short:= "e", default := false, help := ["disable/enable quitting on <ctrl>-D"] ),
       rec( short:= "f", default := false, help := ["force line editing"] ),
       rec( short:= "n", default := false, help := ["prevent line editing"] ),
       rec( short:= "E", long := "readline", default := true,
            help := ["disable/enable use of readline library (if", "possible)"] ),
       rec( short:= "x", long := "width", default := "", arg := "<num>", help := ["set line width"] ),
       rec( short:= "y", long := "lines", default := "", arg := "<num>", help := ["set number of lines"] ),
+      rec( short:= "p", default := false, help := ["enable/disable package output mode", "(for use by XGAP and similar interfaces)"] ),
+      ,
+      rec( section:= ["Memory:",
+                      "  (may use postfix 'k' = *1024, 'm' = *1024*1024,",
+                      "                   'g' = *1024*1024*1024):"] ),
       ,
       rec( short:= "g", long := "gasinfo", default := 0,
-           help := ["show GASMAN messages (full/all/no garbage","collections)"] ),
+           help := ["show GASMAN messages (full/all/no garbage","collections)", "(only available if GAP uses GASMAN)"] ),
       rec( short:= "m", long := "minworkspace", default := "128m", arg := "<mem>",
            help := ["set the initial workspace size"] ),
       rec( short:= "o", long := "maxworkspace", default := "2g", arg := "<mem>",
-           help := [ "set workspace size where GAP will warn about", "excessive memory usage (GAP may allocate more)"] ),
+           help := [ "set workspace size where GAP will warn about", "excessive memory usage (GAP may allocate more)", "(only available if GAP uses GASMAN)"] ),
       rec( short:= "K", long := "limitworkspace", default := "0", arg := "<mem>",
            help := [ "set maximal workspace size (GAP never", "allocates more)"] ),
-      rec( short:= "s", default := "4g", arg := "<mem>", help := [ "set the initially mapped virtual memory" ] ),
-      rec( short:= "a", default := "0",  arg := "<mem>",help := [ "set amount to pre-malloc-ate",
-             "postfix 'k' = *1024, 'm' = *1024*1024,", "'g' = *1024*1024*1024"] ),
+      rec( short:= "s", default := "4g", arg := "<mem>", help := [ "set the initially mapped virtual memory", "(only available if GAP uses GASMAN)" ] ),
       ,
+      rec( section:= ["Roots:"] ),
       rec( short:= "l", long := "roots", default := [], arg := "<paths>",
-           help := [ "set the GAP root paths",
+           help := [ "set or modify the GAP root paths",
                      "Directories are separated using ';'.",
                      "Putting ';' on the start/end of list appends",
                      "directories to the end/start of existing list",
                      "of root paths" ] ),
       rec( short:= "r", default := false, help := ["disable/enable user GAP root dir", "GAPInfo.UserGapRoot"] ),
+      ,
+      rec( section:= ["Loading:"] ),
       rec( short:= "A", default := false, help := ["disable/enable autoloading of suggested", "GAP packages"] ),
-      rec( short:= "B", default := "",    arg := "<name>", help := [ "current architecture"] ),
       rec( short:= "D", default := false, help := ["enable/disable debugging the loading of files"] ),
       rec( short:= "M", default := false, help := ["disable/enable loading of compiled modules"] ),
-      rec( short:= "N", default := false, help := ["do not use hidden implications"] ),
-      rec( short:= "O", default := false, help := ["disable/enable loading of obsolete files"] ),
+      ,
+      rec( section:= ["Error handling, REPL:"] ),
       rec( short:= "T", long := "nobreakloop", default := false, help := ["disable/enable break loop and error traceback"] ),
-      rec( long := "alwaystrace", default := false, help := ["always print error traceback (overrides behaviour of -T)"] ),
-      rec( long := "quitonbreak", default := false, help := ["quit GAP with non-zero return value instead of entering break loop"]),
-      ,
-      rec( short:= "L", default := "", arg := "<file>", help := [ "restore a saved workspace"] ),
-      rec( short:= "R", default := false, help := ["prevent restoring of workspace (ignoring -L)"] ),
-      ,
-      rec( short:= "p", default := false, help := ["enable/disable package output mode"] ),
-      rec( short := "E", default :=false ),
-      rec( short := "s", default := "4g" ),
-      rec( short := "z", default := "20" ),
-      rec( long := "prof", default := "", arg := "<file>",
-           help := [ "Run ProfileLineByLine(<filename>) on GAP start"] ),
-      rec( long := "memprof", default := "", arg := "<file>",
-           help := [ "Run ProfileLineByLine(<filename>) with recordMem := true on GAP start"] ),
-      rec( long := "cover", default := "", arg := "<file>",
-           help := [ "Run CoverageLineByLine(<filename>) on GAP start"] ),
-      rec( long := "enableMemCheck", default := false),
+      rec( long := "alwaystrace", default := false, help := ["always print error traceback", "(overrides behaviour of -T)"] ),
+      rec( long := "quitonbreak", default := false, help := ["quit GAP with non-zero return value instead", "of entering break loop"]),
       rec( long := "norepl", default := false,
            help := [ "Disable the GAP read-evaluate-print loop (REPL)" ] ),
       rec( long := "nointeract", default := false,
-           help := [ "Start GAP in non-interactive mode (disable read-evaluate-print loop (REPL) and break loop)" ] ),
-      rec( long := "systemfile", default := "",
-           help := [ "Read this file after 'lib/system.g'" ] ),
-      rec( long := "bare", default := false,
-           help := [ "Attempt to start GAP without even needed packages (developer tool)" ] ),
+           help := [ "Start GAP in non-interactive mode (disable REPL", "and break loop)" ] ),
       ,
-      rec( short:= "c", default := "", arg := "<expr>", help := [ "execute the given expression"] ),
+      rec( section:= ["Workspaces:", "  (only available if GAP uses GASMAN)"] ),
+      rec( short:= "L", default := "", arg := "<file>", help := [ "restore a saved workspace"] ),
+      rec( short:= "R", default := false, help := ["prevent restoring of workspace (ignoring -L)"] ),
+      ,
+      rec( section:= ["Profiling:"] ),
+      rec( long := "prof", default := "", arg := "<file>",
+           help := [ "Run ProfileLineByLine(<file>) on GAP start"] ),
+      rec( long := "memprof", default := "", arg := "<file>",
+           help := [ "Run ProfileLineByLine(<file>) on GAP start", "with recordMem := true"] ),
+      rec( long := "cover", default := "", arg := "<file>",
+           help := [ "Run CoverageLineByLine(<file>) on GAP start"] ),
+      rec( long := "enableMemCheck", default := false), # TODO: document this?
+      ,
+      rec( section:= ["Internal developer tools"] ),
+      rec( short:= "N", default := false, help := ["do not use hidden implications"] ),
+      rec( short:= "O", default := false, help := ["disable/enable loading of obsolete files"] ),
+      rec( long := "bare", default := false,
+           help := [ "Attempt to start GAP without even needed", "packages" ] ),
     ],
     ) );
 
@@ -184,6 +195,7 @@ if IsHPCGAP then
     GAPInfo.TestData:= ThreadLocalRecord( rec() );
     APPEND_LIST_INTR(GAPInfo.CommandLineOptionData, [
         ,
+        rec( section:= ["HPC-GAP:"] ),
         rec( short:= "S", default := false, help := ["disable/enable multi-threaded interface"] ),
         rec( short:= "P", default := "0", arg := "<num>", help := ["set number of logical processors"] ),
         rec( short:= "G", default := "0", arg := "<num>", help := ["set number of GC threads"] ),
@@ -243,7 +255,7 @@ end );
 
 
 #########################################################################
-# For backwards compatability, we make the canonical version of an option
+# For backwards compatibility, we make the canonical version of an option
 # its short version if it exists.
 #
 # Set up a map to tell us the canonical name of any command line option
@@ -256,7 +268,7 @@ CallAndInstallPostRestore( function()
       if IsBound(option.long) then
         GAPInfo.CommandLineOptionCanonicalName.(option.long) := option.short;
       fi;
-    else
+    elif IsBound(option.long) then
         GAPInfo.CommandLineOptionCanonicalName.(option.long) := option.long;
     fi;
   od;
@@ -336,7 +348,7 @@ CallAndInstallPostRestore( function()
     for opt in GAPInfo.CommandLineOptionData do
       if IsBound(opt.short) then
         CommandLineOptions.( opt.short ):= SHALLOW_COPY_OBJ( opt.default );
-      else
+      elif IsBound(opt.long) then
         CommandLineOptions.( opt.long ):= SHALLOW_COPY_OBJ( opt.default );
       fi;
     od;
@@ -390,6 +402,11 @@ CallAndInstallPostRestore( function()
     # use the same as the kernel
     CommandLineOptions.E:= GAPInfo.KernelInfo.HAVE_LIBREADLINE;
 
+    # -L is valid only if GAP uses GASMAN.
+    if GAPInfo.KernelInfo.GC <> "GASMAN" then
+      CommandLineOptions.L:= "";
+    fi;
+
     # --nointeract implies no break loop and no repl
     if CommandLineOptions.nointeract then
       CommandLineOptions.T := true;
@@ -398,7 +415,6 @@ CallAndInstallPostRestore( function()
 
     if CommandLineOptions.bare then
       CommandLineOptions.A := true;
-      GAPInfo.Dependencies := MakeImmutable(rec( NeededOtherPackages := [] ));
     fi;
 
     MakeImmutable( CommandLineOptions );
@@ -410,75 +426,94 @@ CallAndInstallPostRestore( function()
     padspace := function(strlen, len)
       local i;
       for i in [strlen+1..len] do
-        PRINT_TO("*errout*", " ");
+        PRINT_TO("*stdout*", " ");
       od;
     end;
 
     # Evaluate the `-h' option.
     if GAPInfo.CommandLineOptions.h then
-      PRINT_TO( "*errout*",
+      PRINT_TO( "*stdout*",
         "usage: gap [OPTIONS] [FILES]\n",
         "       run the Groups, Algorithms and Programming system, Version ",
         GAPInfo.KernelVersion, "\n\n" );
 
       for i in [ 1 .. LENGTH( GAPInfo.CommandLineOptionData ) ] do
-        if IsBound( GAPInfo.CommandLineOptionData[i] ) and
-           IsBound( GAPInfo.CommandLineOptionData[i].help ) then
-          opt:= GAPInfo.CommandLineOptionData[i];
+        if not IsBound(GAPInfo.CommandLineOptionData[i]) then
+          PRINT_TO( "*stdout*", "\n" );
+          continue;
+        fi;
+        opt:= GAPInfo.CommandLineOptionData[i];
+        if IsBound( opt.help ) then
 
           # At least one of opt.short or opt.long must be bound
           if(IsBound(opt.short)) then
-            PRINT_TO("*errout*", " -", opt.short);
+            PRINT_TO("*stdout*", "  -", opt.short);
             if(IsBound(opt.long)) then
-              PRINT_TO("*errout*", ", --", opt.long);
+              PRINT_TO("*stdout*", ", --", opt.long);
               padspace(4+LENGTH(opt.long), 18);
             else
               padspace(0, 18);
             fi;
             if(IsBound(opt.arg)) then
-              PRINT_TO("*errout*", " ", opt.arg);
+              PRINT_TO("*stdout*", " ", opt.arg);
               padspace(LENGTH(opt.arg)+1, 8);
             else
               padspace(0, 8);
             fi;
           else
-            PRINT_TO("*errout*", "   ");
+            PRINT_TO("*stdout*", "    ");
             # opt.short unbound, opt.long bound
 
-            PRINT_TO("*errout*", "  --", opt.long);
+            PRINT_TO("*stdout*", "  --", opt.long);
             padspace(4+LENGTH(opt.long), 18);
             if(IsBound(opt.arg)) then
-              PRINT_TO("*errout*", " ", opt.arg);
+              PRINT_TO("*stdout*", " ", opt.arg);
               padspace(LENGTH(opt.arg)+1, 8);
             else
               padspace(0, 8);
             fi;
           fi;
           if IsBound(opt.long) and LENGTH(opt.long) > 14 then
-            PRINT_TO("*errout*", "\n");
+            PRINT_TO("*stdout*", "\n");
             padspace(0, 3+18+8+3);
           else
-            PRINT_TO("*errout*", "   ");
+            PRINT_TO("*stdout*", "   ");
           fi;
 
-          PRINT_TO("*errout*", opt.help[1], "\n");
+          PRINT_TO("*stdout*", opt.help[1], "\n");
           for j in [2..LENGTH(opt.help)] do
-            padspace(0, 3+18+8+3);
-            PRINT_TO("*errout*", opt.help[j],"\n");
+            padspace(0, 4+18+8+3 + 2);
+            PRINT_TO("*stdout*", opt.help[j],"\n");
           od;
-        else
-          if not IsBound(GAPInfo.CommandLineOptionData[i]) then
-            PRINT_TO( "*errout*", "\n" );
-          fi;
+        elif IsBound(opt.section) then
+          PRINT_TO( "*stdout*", opt.section[1], "\n" );
+          for j in [2..LENGTH(opt.section)] do
+            #padspace(0, 3);
+            PRINT_TO("*stdout*", opt.section[j],"\n");
+          od;
         fi;
       od;
 
-      PRINT_TO("*errout*",
+      PRINT_TO("*stdout*",
        "\n",
        "  Boolean options toggle the current value each time they are called.\n",
        "  Default actions are indicated first.\n",
        "\n" );
-      QUIT_GAP();
+      QuitGap();
+    fi;
+
+    # Evaluate the '--print-gaproot' option.
+    if GAPInfo.CommandLineOptions.( "print-gaproot" ) then
+      for line in GAPInfo.RootPaths do
+        value:= SHALLOW_COPY_OBJ( line );
+        APPEND_LIST_INTR( value, "sysinfo.gap" );
+        if IsExistingFile( value ) then
+          PRINT_TO( "*stdout*", line );
+          QuitGap(0);
+        fi;
+      od;
+      PRINT_TO( "*errout*", "failed to determine primary GAP root" );
+      QuitGap(1);
     fi;
 end );
 
@@ -512,13 +547,20 @@ end );
 ##  <Func Name="ARCH_IS_WINDOWS" Arg=''/>
 ##
 ##  <Description>
-##  tests whether &GAP; is running on a Windows system.
+##  tests whether &GAP; is running on a Windows system without
+##  standard POSIX tools available (such as a shell).
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
 BIND_GLOBAL("ARCH_IS_WINDOWS",function()
-  return POSITION_SUBSTRING (GAPInfo.Architecture, "cygwin", 0) <> fail;
+  # Exit early is we are not in Cygwin
+  if POSITION_SUBSTRING (GAPInfo.Architecture, "cygwin", 0) = fail then
+    return false;
+  fi;
+  # Check if programs we need exist in their standard Cygwin locations
+  return not (IsExistingFile("/usr/bin/sh") or IsExistingFile("/bin/sh")) or
+         not (IsExistingFile("/usr/bin/xdg-open") or IsExistingFile("/bin/xdg-open"));
 end);
 
 #############################################################################
@@ -531,7 +573,7 @@ end);
 ##
 ##  <Description>
 ##  tests whether &GAP; is running on Mac OS X. Note that on Mac OS X, also
-##  <Ref Func="ARCH_IS_UNIX"/> will be <C>true</C>.
+##  <Ref Func="ARCH_IS_UNIX"/> will be <K>true</K>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -557,6 +599,33 @@ end);
 ##
 BIND_GLOBAL("ARCH_IS_UNIX",function()
   return not ARCH_IS_WINDOWS();
+end);
+
+#############################################################################
+##
+#F  ARCH_IS_WSL()
+##
+##  <#GAPDoc Label="ARCH_IS_WSL">
+##  <ManSection>
+##  <Func Name="ARCH_IS_WSL" Arg=''/>
+##
+##  <Description>
+##  tests whether &GAP; is running on a Windows system inside the
+##  'Windows Subsystem for Linux'. Note that in this case
+##  <Ref Func="ARCH_IS_UNIX"/> will be <K>true</K>, and in most situations
+##  WSL can be treated identically to Linux.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+BIND_GLOBAL("ARCH_IS_WSL",function()
+  # There is no official way to detect this, but this method is
+  # suggested: https://github.com/microsoft/WSL/issues/423
+  # Note that at some point the string was changed from 'Microsoft' to
+  # 'microsoft'.
+  return ARCH_IS_UNIX() and IsBound(GAPInfo.KernelInfo.uname.release) and (
+    POSITION_SUBSTRING(GAPInfo.KernelInfo.uname.release, "Microsoft", 0) <> fail or
+    POSITION_SUBSTRING(GAPInfo.KernelInfo.uname.release, "microsoft", 0) <> fail);
 end);
 
 #############################################################################

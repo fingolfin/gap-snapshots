@@ -435,6 +435,26 @@ DeclareGlobalFunction( "AtlasRepIdentifier" );
 
 #############################################################################
 ##
+#F  CompositionOfSLDAndSLP( <sld>, <slp> )
+##
+##  <ManSection>
+##  <Func Name="CompositionOfSLDAndSLP" Arg='sld, slp'/>
+##
+##  <Description>
+##  Return a straight line decision that first applies the straight line
+##  program <A>slp</A> to its inputs and then returns the result of the
+##  straight line decision <A>sld</A> on the outputs.
+##  <P/>
+##  A typical situation is that <A>slp</A> is a restandardization script
+##  and <A>sld</A> is a presentation.
+##  </Description>
+##  </ManSection>
+##
+DeclareGlobalFunction( "CompositionOfSLDAndSLP" );
+
+
+#############################################################################
+##
 #F  AtlasRepComputedKernelGenerators( <gapname>, <std>,
 #F                                    <factgapname>, <factstd>,
 #F                                    <bound> )

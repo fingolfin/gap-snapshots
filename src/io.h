@@ -22,17 +22,104 @@
 #ifndef GAP_IO_H
 #define GAP_IO_H
 
-#include "system.h"
+#include "common.h"
 
 
-Char GET_NEXT_CHAR(void);
-Char GET_NEXT_CHAR_NO_LC(void);
-Char PEEK_NEXT_CHAR(void);
-Char PEEK_CURR_CHAR(void);
+/****************************************************************************
+**
+*T  TypInputFile  . . . . . . . . . .  structure of an open input file, local
+**
+**  'TypInputFile' describes the information stored for open input files.
+*/
+struct TypInputFile {
+    // pointer to the previously active input
+    struct TypInputFile * prev;
 
-// skip the rest of the current line, ignoring line continuations
-// (used to handle comments)
-void SKIP_TO_END_OF_LINE(void);
+    // non-zero if input come from a string stream
+    BOOL isstringstream;
+
+    // if input comes from a stream, this points to a GAP IsInputStream object
+    Obj stream;
+
+    // holds the file identifier received from 'SyFopen' and which is passed
+    // to 'SyFgets' and 'SyFclose' to identify this file
+    Int file;
+
+    //
+    UInt gapnameid;
+
+    // a buffer that holds the current input line; always terminated
+    // by the character '\0'. Because 'line' holds only part of the line for
+    // very long lines the last character need not be a <newline>.
+    // The actual line data starts in line[1]; the first byte line[0]
+    // is reserved for the "pushback buffer" used by PEEK_NEXT_CHAR.
+    char line[32768];
+
+    // the next line from the stream as GAP string
+    Obj sline;
+
+    //
+    Int spos;
+
+    //
+    BOOL echo;
+
+    // pointer to the current character within the current line
+    char * ptr;
+
+    // the number of the current line; used in error messages
+    UInt number;
+
+    // 'lastErrorLine' is an integer whose value is the number of the last
+    // line on which an error was found. It is set by 'SyntaxError'.
+    //
+    // If 'lastErrorLine' is equal to the current line number 'SyntaxError'
+    // will not print an error message. This is used to prevent the printing
+    // of multiple error messages for one line, since they usually just
+    // reflect the fact that the parser has not resynchronized yet.
+    UInt lastErrorLine;
+};
+
+
+/****************************************************************************
+**
+*/
+enum {
+    // the maximal number of used line break hints
+    MAXHINTS = 100,
+
+    // the widest allowed screen width
+    MAXLENOUTPUTLINE = 4096,
+};
+
+
+/****************************************************************************
+**
+*T  TypOutputFile . . . . . . . . . . structure of an open output file, local
+**
+**  'TypOutputFile' describes the information stored for open  output  files:
+**  'file' holds the file identifier which is  received  from  'SyFopen'  and
+**  which is passed to  'SyFputs'  and  'SyFclose'  to  identify  this  file.
+**  'line' is a buffer that holds the current output line.
+**  'pos' is the position of the current character on that line.
+*/
+struct TypOutputFile {
+    // pointer to the previously active output
+    struct TypOutputFile * prev;
+
+    BOOL isstringstream;
+    Obj  stream;
+    Int  file;
+
+    char line[MAXLENOUTPUTLINE];
+    Int  pos;
+    BOOL format;
+    Int  indent;
+
+    /* each hint is a triple (position, value, indent) */
+    Int hints[3 * MAXHINTS + 1];
+};
+
 
 /****************************************************************************
 **
@@ -56,7 +143,7 @@ void SKIP_TO_END_OF_LINE(void);
 **  may  also fail if  you have too  many files open at once.   It  is system
 **  dependent how many are  too many, but  16  files should  work everywhere.
 **
-**  Directely after the 'OpenInput' call the variable  'Symbol' has the value
+**  Directly after the 'OpenInput' call the variable  'Symbol' has the value
 **  'S_ILLEGAL' to indicate that no symbol has yet been  read from this file.
 **  The first symbol is read by 'Read' in the first call to 'Match' call.
 **
@@ -69,11 +156,11 @@ void SKIP_TO_END_OF_LINE(void);
 **  'stderr'  (Unix file  descriptor  2)  is  not a  terminal,  because  of a
 **  redirection say, to avoid that break loops take their input from a file.
 **
-**  It is not neccessary to open the initial input  file, 'InitScanner' opens
+**  It is not necessary to open the initial input  file, 'InitScanner' opens
 **  '*stdin*' for  that purpose.  This  file on   the other   hand  cannot be
 **  closed by 'CloseInput'.
 */
-UInt OpenInput(const Char * filename);
+UInt OpenInput(TypInputFile * input, const Char * filename);
 
 
 /****************************************************************************
@@ -82,7 +169,7 @@ UInt OpenInput(const Char * filename);
 **
 **  The same as 'OpenInput' but for streams.
 */
-UInt OpenInputStream(Obj stream, UInt echo);
+UInt OpenInputStream(TypInputFile * input, Obj stream, BOOL echo);
 
 
 /****************************************************************************
@@ -95,12 +182,12 @@ UInt OpenInputStream(Obj stream, UInt echo);
 **
 **  'CloseInput' will not close the initial input file '*stdin*', and returns
 **  0  if such  an  attempt is made.   This is  used in  'Error'  which calls
-**  'CloseInput' until it returns 0, therebye closing all open input files.
+**  'CloseInput' until it returns 0, thereby closing all open input files.
 **
 **  Calling 'CloseInput' if the  corresponding  'OpenInput' call failed  will
 **  close the current output file, which will lead to very strange behaviour.
 */
-UInt CloseInput(void);
+UInt CloseInput(TypInputFile * input);
 
 
 /****************************************************************************
@@ -198,6 +285,12 @@ UInt CloseInputLog(void);
 /* TL: extern  const Char *    Prompt; */
 
 /****************************************************************************
+**
+*F  SetPrompt( <prompt> ) . . . . . . . . . . . . . set the user input prompt
+*/
+void SetPrompt(const char * prompt);
+
+/****************************************************************************
  **
  *V  PrintPromptHook . . . . . . . . . . . . . . function for printing prompt
  *V  EndLineHook . . . . . . . . . . . function called at end of command line
@@ -277,20 +370,23 @@ UInt CloseOutputLog(void);
 **  '*errout*' when 'LockCurrentOutput(1)' is in effect (used for testing
 **  purposes).
 **
-**  It is not neccessary to open the initial output file, 'InitScanner' opens
-**  '*stdout*' for that purpose.  This  file  on the other hand   can not  be
-**  closed by 'CloseOutput'.
+**  It is not necessary to open the initial output file; '*stdout'* is
+**  opened for that purpose during startup. This file on the other hand  can
+**  not be closed by 'CloseOutput'.
+**
+**  If <append> is set to true, then 'OpenOutput' does not truncate the file
+**  to size 0 if it exists.
 */
-UInt OpenOutput(const Char * filename);
+UInt OpenOutput(TypOutputFile * output, const Char * filename, BOOL append);
 
 
 /****************************************************************************
 **
 *F  OpenOutputStream( <stream> )  . . . . . . open a stream as current output
 **
-**  The same as 'OpenOutput' (and also 'OpenAppend') but for streams.
+**  The same as 'OpenOutput' but for streams.
 */
-UInt OpenOutputStream(Obj stream);
+UInt OpenOutputStream(TypOutputFile * output, Obj stream);
 
 
 /****************************************************************************
@@ -310,55 +406,34 @@ UInt OpenOutputStream(Obj stream);
 **  On the other  hand if you  forget  to call  'CloseOutput' at the end of a
 **  'PrintTo' call or an error will not yield much better results.
 */
-UInt CloseOutput(void);
+UInt CloseOutput(TypOutputFile * output);
 
 
-/****************************************************************************
-**
-*F  OpenAppend( <filename> )  . . open a file as current output for appending
-**
-**  'OpenAppend' opens the file  with the name  <filename> as current output.
-**  All subsequent output will go  to that file, until either   it is  closed
-**  again  with 'CloseOutput' or  another  file is  opened with 'OpenOutput'.
-**  Unlike 'OpenOutput' 'OpenAppend' does not truncate the file to size 0  if
-**  it exists.  Appart from that 'OpenAppend' is equal to 'OpenOutput' so its
-**  description applies to 'OpenAppend' too.
-*/
-UInt OpenAppend(const Char * filename);
+TypInputFile * GetCurrentInput(void);
 
+Char GetNextChar(TypInputFile * input);
+Char GET_NEXT_CHAR_NO_LC(TypInputFile * input);
+Char PEEK_NEXT_CHAR(TypInputFile * input);
+Char PEEK_CURR_CHAR(TypInputFile * input);
 
-/****************************************************************************
-**
-*V  In  . . . . . . . . . . . . . . . . . pointer to current character, local
-**
-**  'In' is a  pointer to  the current  input character, i.e.,  '*In' is  the
-**  current input character.  It points into the buffer 'Input->line'.
-*/
-
-/* TL: extern Char *          In; */
-
-
-// get the filename of the current input
-const Char * GetInputFilename(void);
+// skip the rest of the current line, ignoring line continuations
+// (used to handle comments)
+void SKIP_TO_END_OF_LINE(TypInputFile * input);
 
 // get the number of the current line in the current thread's input
-Int GetInputLineNumber(void);
+Int GetInputLineNumber(TypInputFile * input);
 
 //
-const Char * GetInputLineBuffer(void);
+const Char * GetInputLineBuffer(TypInputFile * input);
 
 //
-Int GetInputLinePosition(void);
+Int GetInputLinePosition(TypInputFile * input);
 
 // get the filenameid (if any) of the current input
-UInt GetInputFilenameID(void);
+UInt GetInputFilenameID(TypInputFile * input);
 
 // get the filename (as GAP string object) with the given id
 Obj GetCachedFilename(UInt id);
-
-
-/* the widest allowed screen width */
-#define MAXLENOUTPUTLINE  4096
 
 
 // Reset the indentation level of the current output to zero. The indentation
@@ -371,14 +446,14 @@ void ResetOutputIndent(void);
 //
 // This is used to allow the 'Test' function of the GAP library to
 // consistently capture all output during testing, see 'FuncREAD_STREAM_LOOP'.
-void LockCurrentOutput(Int lock);
+void LockCurrentOutput(BOOL lock);
 
 /****************************************************************************
 **
 *F  Pr( <format>, <arg1>, <arg2> )  . . . . . . . . .  print formatted output
 **
 **  'Pr' is the output function. The first argument is a 'printf' like format
-**  string containing   up   to 2  '%'  format   fields,   specifing  how the
+**  string containing   up   to 2  '%'  format   fields,  specifying  how the
 **  corresponding arguments are to be  printed.  The two arguments are passed
 **  as  'long'  integers.   This  is possible  since every  C object  ('int',
 **  'char', pointers) except 'float' or 'double', which are not used  in GAP,
@@ -389,17 +464,28 @@ void LockCurrentOutput(Int lock);
 **          its ASCII or EBCDIC code, and this character is printed.
 **  '%s'    the corresponding argument is the address of  a  null  terminated
 **          character string which is printed.
+**  '%S'    the corresponding argument is the address of  a  null  terminated
+**          character string which is printed with escapes.
+**  '%g'    the corresponding argument is the address of an Obj which points
+**          to a string in STRING_REP format which is printed in '%s' format
+**  '%G'    the corresponding argument is the address of an Obj which points
+**          to a string in STRING_REP format which is printed in '%S' format
+**  '%C'    the corresponding argument is the address of an Obj which points
+**          to a string in STRING_REP format which is printed with C escapes
 **  '%d'    the corresponding argument is a signed integer, which is printed.
 **          Between the '%' and the 'd' an integer might be used  to  specify
 **          the width of a field in which the integer is right justified.  If
 **          the first character is '0' 'Pr' pads with '0' instead of <space>.
+**  '%i'    is a synonym of %d, in line with recent C library developments
+**  '%I'    print an identifier, given as a null terminated character string.
+**  '%H'    print an identifier, given as GAP string in STRING_REP
 **  '%>'    increment the indentation level.
 **  '%<'    decrement the indentation level.
 **  '%%'    can be used to print a single '%' character. No argument is used.
 **
 **  You must always  cast the arguments to  '(long)' to avoid  problems  with
 **  those compilers with a default integer size of 16 instead of 32 bit.  You
-**  must pass 0L if you don't make use of an argument to please lint.
+**  must pass 0 if you don't make use of an argument to please lint.
 */
 
 void Pr(const Char * format, Int arg1, Int arg2);
@@ -413,7 +499,7 @@ void SPrTo(
 *F  FlushRestOfInputLine()  . . . . . . . . . . . . discard remainder of line
 */
 
-void FlushRestOfInputLine(void);
+void FlushRestOfInputLine(TypInputFile * input);
 
 
 StructInitInfo * InitInfoIO(void);

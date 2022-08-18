@@ -16,7 +16,7 @@
 #F  PerfGrpLoad(<size>)  force loading of secondary files, return index
 ##
 InstallGlobalFunction( PerfGrpLoad, function(sz)
-local p,pos;
+local p,pos,name,libname;
   if PERFRec=fail then
     ReadGrp("perf0.grp");
   fi;
@@ -25,12 +25,33 @@ local p,pos;
   if pos=fail then
     return fail;
   fi;
-  if IsBound(PERFGRP[pos]) then
+  if IsBound(PERFGRP[pos]) and PERFGRP[pos]<>fail and PERFGRP[pos][1]<>fail then
     return pos;
   fi;
   # get the file number
-  p:=PositionSorted(PERFRec.covered,pos);
-  ReadGrp(Concatenation("perf",String(p),".grp"));
+  p:=Position(PERFRec.newlyAdded,sz);
+  if p=fail then
+    p:=PositionSorted(PERFRec.covered,pos);
+  else
+    p:=12+p;
+  fi;
+  name:=Concatenation("perf",String(p),".grp");
+  libname := SHALLOW_COPY_OBJ( "grp" );
+  APPEND_LIST_INTR( libname, "/" );
+  APPEND_LIST_INTR( libname, name );
+  while not READ_GAP_ROOT( libname ) do
+    Error("\n\n",
+    "For reasons of size, the perfect groups library for orders >10^6 is\n",
+    "not distributed fully by default. To access the group requested, get\n",
+    "the file ",name," from\n",
+    "https://github.com/hulpke/extraperfect\n",
+    "and put it in the `grp` subdirectory of your GAP installation. Then",
+    " type \n\nreturn;\n\n",
+    "to continue in this GAP session ",
+    "(which will read in the file).\n\n\n");
+  od;
+
+  ReadGrp(name);
   return pos;
 end );
 
@@ -56,7 +77,7 @@ end );
 #F  NumberPerfectGroups( size )
 ##
 ##  `NumberPerfectGroups'  returns the number of nonisomorphic perfect groups
-##  of size size for 1 <= size <= 1 000 000.
+##  of size `size' for 1 <= size <= 1 000 000.
 ##
 ##  Exception:  The number of  perfect groups  is not yet known for the eight
 ##  sizes  61440, 122880, 172032, 245760, 344064, 491520, 688128, and 983040.
@@ -72,7 +93,7 @@ InstallGlobalFunction( NumberPerfectGroups, function ( size )
     PerfGrpLoad(0);
 
     # get the number and return it.
-    if not size in [ 1 .. 1000000 ] or size in PERFRec.notKnown then
+    if not size in [ 1 .. 2000000 ] or size in PERFRec.notKnown then
       return fail;
     elif not size in PERFRec.sizes then
       return 0;
@@ -81,30 +102,14 @@ InstallGlobalFunction( NumberPerfectGroups, function ( size )
     fi;
 end );
 
+InstallGlobalFunction(NumberPerfectLibraryGroups,function(size)
+local a;
+  a:=NumberPerfectGroups(size);
+  if a=fail then return 0;
+  else return a;fi;
+end);
 
-#############################################################################
-##
-#F  NumberPerfectLibraryGroups( size )
-##
-##  `NumberPerfectLibraryGroups'  returns the number of nonisomorphic perfect
-##  groups of size size for 1 <= size <= 1 000 000 which are available in the
-##  perfect groups library.
-##
-InstallGlobalFunction( NumberPerfectLibraryGroups, function ( size )
-local sizenum;
 
-    if size=1 then
-      return 1;
-    elif IsOddInt(size) then return 0;fi;
-    # get the number and return it.
-    sizenum := PerfGrpLoad( size );
-    if sizenum = fail or size in PERFRec.notAvailable then
-        return 0;
-    else
-        return PERFRec.number[sizenum];
-    fi;
-
-end );
 
 #############################################################################
 ##
@@ -120,7 +125,7 @@ end );
 ##  or  [ 3, <size1>, <n1>, <size2>, <n2>, <string1>, <string2> ... ]
 ##
 ##  In the first case,  the resulting group G is just the direct product D of
-##  the n1-th group of size size1, G1, and the n2-th group of size size2, G2,
+##  the n1-th group of size `size1', G1, and the n2-th group of size `size2', G2,
 ##  from the perfect groups library.
 ##
 ##  In the second case,  the string entries  are expected  to be the names of
@@ -198,7 +203,7 @@ end;
 ##  or  [ 4, <size1>, <n1>, <size2>, <n2>, <over>, <n1'>, <n2'> ]
 ##
 ##  The resulting group G is the subdirect product of the n1-th group of size
-##  size1, G1, and the n2-th group of size size2, G2, from the perfect groups
+##  `size1', G1, and the n2-th group of size `size2', G2, from the perfect groups
 ##  library over the perfect group G0 of size over.
 ##
 ##  Note:  This function is an internal function, hence the arguments are not
@@ -439,12 +444,13 @@ InstallGlobalFunction( PerfectGroup, function(arg)
 local func,sz,p;
   PerfGrpLoad(0); # force loading
   if not IsFunction(arg[1]) then 
-    func:=IsSubgroupFpGroup;
+    func:=IsPermGroup;
     sz:=arg;
   else
     func:=arg[1];
     sz:=arg{[2..Length(arg)]};
   fi;
+  if func=IsFpGroup then func:=IsSubgroupFpGroup;fi;
   # list given
   if Length(sz)=1 then
     if not IsList(sz[1]) then
@@ -455,8 +461,6 @@ local func,sz,p;
   fi;
   if sz[1] in PERFRec.notKnown then
     Error("Perfect groups of size ",sz[1]," not known");
-  elif sz[1] in PERFRec.notAvailable then
-    Error("Perfect groups of size ",sz[1]," not available");
   fi;
   p:=PerfGrpLoad(sz[1]);
   if p=fail or sz[2]>PERFRec.number[p] then
@@ -478,10 +482,10 @@ end );
 #F  DisplayInformationPerfectGroups( [ <size>, <n> ] )  . . . . . . . . . . .
 ##
 ##  `DisplayInformationPerfectGroups'  displays  some invariants  of the n-th
-##  group of size size from the perfect groups library.
+##  group of size `size' from the perfect groups library.
 ##
 ##  If no value of n has been specified, the invariants will be displayed for
-##  all groups of size size available in the library.
+##  all groups of size `size' available in the library.
 ##
 InstallGlobalFunction( DisplayInformationPerfectGroups,
     function ( arg )
@@ -490,7 +494,7 @@ local size,i,nr,n,leng,sizenum,hpnum,description,centre,orbsize;
   if IsInt(arg[1]) then
     size:=arg[1];
     if Length(arg)=1 then
-      nr:=[1..NumberPerfectLibraryGroups(size)];
+      nr:=[1..NumberPerfectGroups(size)];
     else
       nr:=arg[2];
     fi;
@@ -504,10 +508,7 @@ local size,i,nr,n,leng,sizenum,hpnum,description,centre,orbsize;
   fi;
 
   sizenum:=PerfGrpLoad(size);
-  if size in PERFRec.notAvailable then
-    Print("#I  no information available about size ",size,"\n");
-    return;
-  elif size in PERFRec.notKnown then
+  if size in PERFRec.notKnown then
     Print("#I  no information known about size ",size,"\n");
     return;
   fi;
@@ -654,7 +655,7 @@ local a6a6, a6a6a6, empty, factor, minsize, minsizenum, n, nn, num, pos,
         # check the size for being a multiple of minsize.
         if PERFRec.sizes[sizenum] mod minsize = 0 then
 
-            # loop over the library groups of size size.
+            # loop over the library groups of size `size'.
             size := PERFRec.sizes[sizenum];
 	    PerfGrpLoad(size);
             nn := PERFRec.number[sizenum];
@@ -690,11 +691,11 @@ local s,l;
   fi;
   s:=Size(G);
   PerfGrpLoad(0);
-  if s>=10^6 or s in PERFRec.notAvailable or s in PERFRec.notKnown then
+  if NumberPerfectLibraryGroups(s) = 0 then
     Print("#W  No information about size ",s," available\n");
     return fail;
   fi;
-  l:=NumberPerfectLibraryGroups(s);
+  l:=NumberPerfectGroups(s);
   while l>1 do
     if IsomorphismGroups(G,PerfectGroup(IsPermGroup,s,l))<>fail then
       return [s,l];

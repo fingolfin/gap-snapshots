@@ -206,11 +206,13 @@
   polycyclic groups, see Chapter [14X47.14[114X for further information.[133X
   
   [33X[0;0YAnother  way  is  to create and manipulate a collector of a pc group by hand
-  and  to  use  it to define a pc group. [5XGAP[105X provides different collectors for
-  different  collecting strategies; at the moment, there are two collectors to
-  choose  from: the single collector for finite pc groups (see [2XSingleCollector[102X
-  ([14X46.4-2[114X))  and  the combinatorial collector for finite [22Xp[122X-groups. See [Sim94]
-  for further information on collecting strategies.[133X
+  and  to  use it to define a pc group. This is the most technical way and has
+  little  error  checking  and thus is intended mostly for experts who want to
+  create  a  pc  presentation  in  a  particular  way.  [5XGAP[105X provides different
+  collectors for different collecting strategies; at the moment, there are two
+  collectors  to  choose  from: the single collector for finite pc groups (see
+  [2XSingleCollector[102X   ([14X46.4-2[114X))  and  the  combinatorial  collector  for  finite
+  [22Xp[122X-groups. See [Sim94] for further information on collecting strategies.[133X
   
   [33X[0;0YA  collector  is  initialized with an underlying free group and the relative
   orders of the pc series. Then one adds the right hand sides of the power and
@@ -272,7 +274,8 @@
   collector [3Xcoll[103X.[133X
   
   [33X[0;0YFor  [3Xi[103X  [22X<[122X  [3Xj[103X, [2XSetConjugate[102X sets the conjugate [22Xf_j^{f_i}[122X to equal [3Xw[103X, which is
-  assumed to be a word in [22Xf_{i+1}, ..., f_n[122X.[133X
+  assumed  to  be  a  canonical  word  in  [22Xf_{i+1},  ..., f_n[122X. No check of the
+  arguments is performed.[133X
   
   [1X46.4-4 SetCommutator[101X
   
@@ -282,7 +285,8 @@
   collector [3Xcoll[103X.[133X
   
   [33X[0;0YFor  [3Xi[103X  [22X<[122X  [3Xj[103X,  [2XSetCommutator[102X  sets the commutator of [22Xf_j[122X and [22Xf_i[122X to equal [3Xw[103X,
-  which is assumed to be a word in [22Xf_{i+1}, ..., f_n[122X.[133X
+  which  is  assumed  to be a canonical word in [22Xf_{i+1}, ..., f_n[122X. No check of
+  the arguments is performed.[133X
   
   [1X46.4-5 SetPower[101X
   
@@ -291,8 +295,8 @@
   [33X[0;0YLet  [22Xf_1,  ...,  f_n[122X  be  the generators of the underlying free group of the
   collector [3Xcoll[103X, and let [22Xr_i[122X be the corresponding relative orders.[133X
   
-  [33X[0;0Y[2XSetPower[102X  sets the power [22Xf_i^{r_i}[122X to equal [3Xw[103X, which is assumed to be a word
-  in [22Xf_{i+1}, ..., f_n[122X.[133X
+  [33X[0;0Y[2XSetPower[102X  sets  the  power  [22Xf_i^{r_i}[122X  to  equal [3Xw[103X, which is assumed to be a
+  canonical word in [22Xf_{i+1}, ..., f_n[122X. No check of the arguments is performed.[133X
   
   [1X46.4-6 GroupByRws[101X
   
@@ -382,7 +386,7 @@
     [4X[25Xgap>[125X [27Xmodu := ModuloPcgs( G, H );[127X[104X
     [4X[28XPcgs([ (4,5) ])[128X[104X
     [4X[25Xgap>[125X [27XPcGroupWithPcgs(modu);[127X[104X
-    [4X[28X<pc group of size 2 with 1 generators>[128X[104X
+    [4X[28X<pc group of size 2 with 1 generator>[128X[104X
   [4X[32X[104X
   
   [1X46.5-2 IsomorphismPcGroup[101X
@@ -583,13 +587,15 @@
   
   [1X46.8-8 CompatiblePairs[101X
   
-  [33X[1;0Y[29X[2XCompatiblePairs[102X( [3XG[103X, [3XM[103X[, [3XD[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XCompatiblePairs[102X( [[3XA[103X, ][3XG[103X, [3XM[103X[, [3XD[103X] ) [32X function[133X
   
   [33X[0;0Yreturns  the group of compatible pairs of the group [3XG[103X with the [3XG[103X-module [3XM[103X as
   subgroup of the direct product Aut([3XG[103X) [22X×[122X Aut([3XM[103X). Here Aut([3XM[103X) is considered as
   subgroup  of  a  general  linear  group. The optional argument [3XD[103X should be a
   subgroup  of Aut([3XG[103X) [22X×[122X Aut([3XM[103X). If it is given, then only the compatible pairs
-  in [3XD[103X are computed.[133X
+  in  [3XD[103X  are computed. If a group [3XA[103X of automorphisms of [3XG[103X is given as optional
+  first  argument,  it  is  used in place of the full automorphism group of [3XG[103X,
+  avoiding the need to compute this automorphism group.[133X
   
   [1X46.8-9 ExtensionRepresentatives[101X
   
@@ -741,6 +747,6 @@
   [33X[0;0YThe  integer  [3Xn[103X  gives  a  certain amount of control over the probability to
   detect  all  isomorphisms. If it is [22X0[122X, then nothing will be done at all. The
   larger  [3Xn[103X  is,  the  larger  is the probability of finding all isomorphisms.
-  However,  due  to  the  underlying  method  we  can  not  guarantee that the
-  algorithm finds all isomorphisms, no matter how large [3Xn[103X is.[133X
+  However, due to the underlying method we cannot guarantee that the algorithm
+  finds all isomorphisms, no matter how large [3Xn[103X is.[133X
   

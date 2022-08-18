@@ -47,6 +47,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7C825AF087A27884">3.4-1 ARCH_IS_UNIX</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X82A6893A7EC8FA72">3.4-2 ARCH_IS_MAC_OS_X</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7A14B659847B8627">3.4-3 ARCH_IS_WINDOWS</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X87E7CC3B8395BBB3">3.4-4 ARCH_IS_WSL</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X8719B2118511645F">3.5 <span class="Heading">Global Values that Control the <strong class="pkg">GAP</strong> Session</span></a>
 </span>
@@ -72,7 +73,7 @@
 
 <p><strong class="pkg">GAP</strong> for UNIX will distinguish between upper and lower case options.</p>
 
-<p>As described in the <strong class="pkg">GAP</strong> installation instructions (see the <code class="file">INSTALL</code> file in the <strong class="pkg">GAP</strong> root directory, or at <span class="URL"><a href="https://www.gap-system.org/Download/INSTALL">https://www.gap-system.org/Download/INSTALL</a></span>), usually you will not execute <strong class="pkg">GAP</strong> directly. Instead you will call a (shell) script, with the name <code class="code">gap</code>, which in turn executes <strong class="pkg">GAP</strong>. This script sets some options which are necessary to make <strong class="pkg">GAP</strong> work on your system. This means that the default settings mentioned below may not be what you experience when you execute <strong class="pkg">GAP</strong> on your system.</p>
+<p>As described in the <strong class="pkg">GAP</strong> installation instructions (see the <code class="file">INSTALL.md</code> file in the <strong class="pkg">GAP</strong> root directory), usually you will not execute <strong class="pkg">GAP</strong> directly. Instead you will call a (shell) script, with the name <code class="code">gap</code>, which in turn executes <strong class="pkg">GAP</strong>. This script sets some options which are necessary to make <strong class="pkg">GAP</strong> work on your system. This means that the default settings mentioned below may not be what you experience when you execute <strong class="pkg">GAP</strong> on your system.</p>
 
 <p>During a <strong class="pkg">GAP</strong> session, one can find the current values of command line options in the record <code class="code">GAPInfo.CommandLineOptions</code> (see <code class="func">GAPInfo</code> (<a href="chap3.html#X8354754E7935F935"><span class="RefLink">3.5-1</span></a>)), whose component names are the command line options (without the leading <code class="code">-</code>).</p>
 
@@ -84,13 +85,13 @@
 
 </dd>
 <dt><strong class="Mark">
-<code class="code">-B </code><var class="Arg">architecture</var></strong></dt>
-<dd><p>Executable binary files that form part of <strong class="pkg">GAP</strong> or of a <strong class="pkg">GAP</strong> package are kept in a subdirectory of the <code class="file">bin</code> directory within the <strong class="pkg">GAP</strong> or package root directory. The subdirectory name is determined from the operating system, processor and compiler details when <strong class="pkg">GAP</strong> (resp. the package) is installed. Under rare circumstances, it may be necessary to override this name, and this can be done using the <code class="code">-B</code> option.</p>
+<code class="code">-b</code></strong></dt>
+<dd><p>tells <strong class="pkg">GAP</strong> to suppress the banner. That means that <strong class="pkg">GAP</strong> immediately prints the prompt. This is useful when, after a while, you get tired of the banner. This option can be repeated to enable the banner; each <code class="code">-b</code> toggles the state of banner display.</p>
 
 </dd>
 <dt><strong class="Mark">
-<code class="code">-b</code></strong></dt>
-<dd><p>tells <strong class="pkg">GAP</strong> to suppress the banner. That means that <strong class="pkg">GAP</strong> immediately prints the prompt. This is useful when, after a while, you get tired of the banner. This option can be repeated to enable the banner; each <code class="code">-b</code> toggles the state of banner display.</p>
+<code class="code">-c </code><var class="Arg">gapcode</var></strong></dt>
+<dd><p>tells <strong class="pkg">GAP</strong> to execute the given <strong class="pkg">GAP</strong> code as if it was entered into a temporary file which then is processed together with the other files given to GAP (see the explanation at the end of this list for further details on how filenames are processed).</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -140,7 +141,7 @@
 </dd>
 <dt><strong class="Mark">
 <code class="code">-g</code></strong></dt>
-<dd><p>tells <strong class="pkg">GAP</strong> to print a message every time a full garbage collection is performed.</p>
+<dd><p>tells <strong class="pkg">GAP</strong> to print a message every time a full garbage collection is performed. (This is available only if the <code class="code">GASMAN</code> garbage collector is used, see <a href="chap7.html#X7F1F741D7F0899D1"><span class="RefLink">7.12-1</span></a>.)</p>
 
 
 <div class="example"><pre>
@@ -152,7 +153,7 @@
 </dd>
 <dt><strong class="Mark">
 <code class="code">-g -g</code></strong></dt>
-<dd><p>If you give the option <code class="code">-g</code> twice, <strong class="pkg">GAP</strong> prints a information message every time a partial or full garbage collection is performed. The message,</p>
+<dd><p>If you give the option <code class="code">-g</code> twice, <strong class="pkg">GAP</strong> prints a information message every time a partial or full garbage collection is performed. (This is available only if the <code class="code">GASMAN</code> garbage collector is used, see <a href="chap7.html#X7F1F741D7F0899D1"><span class="RefLink">7.12-1</span></a>.) The message,</p>
 
 
 <div class="example"><pre>
@@ -174,7 +175,7 @@
 </dd>
 <dt><strong class="Mark">
 <code class="code">-L </code><var class="Arg">filename</var></strong></dt>
-<dd><p>The option <code class="code">-L</code> tells <strong class="pkg">GAP</strong> to load a saved workspace. See section <a href="chap3.html#X7CB282757ACB1C09"><span class="RefLink">3.3</span></a>.</p>
+<dd><p>The option <code class="code">-L</code> tells <strong class="pkg">GAP</strong> to load a saved workspace. See section <a href="chap3.html#X7CB282757ACB1C09"><span class="RefLink">3.3</span></a>. (This is available only if the <code class="code">GASMAN</code> garbage collector is used, see <a href="chap7.html#X7F1F741D7F0899D1"><span class="RefLink">7.12-1</span></a>.)</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -269,11 +270,11 @@ gap: hmm, I cannot find 'lib/init.g' maybe use option '-l &lt;gaproot&gt;'?
 </dd>
 <dt><strong class="Mark">
 <var class="Arg">filename</var> ...</strong></dt>
-<dd><p>Further arguments are taken as filenames of files that are read by <strong class="pkg">GAP</strong> during startup, after the system and private init files are read, but before the first prompt is printed. The files are read in the order in which they appear on the command line. <strong class="pkg">GAP</strong> only accepts up to 14 filenames on the command line. If a file cannot be opened <strong class="pkg">GAP</strong> will print an error message and will abort.</p>
+<dd><p>Further arguments are taken as filenames of files that are read by <strong class="pkg">GAP</strong> during startup, after the system and private init files are read, but before the first prompt is printed. Filenames ending with <code class="code">.tst</code> are processed by <code class="func">Test</code> (<a href="chap7.html#X87712F9D8732193C"><span class="RefLink">7.10-2</span></a>), all other files by <code class="func">Read</code> (<a href="chap9.html#X8373AC6B7D5F9167"><span class="RefLink">9.7-1</span></a>). These files and also commands specified via the <code class="code">-c</code> option are processed in the order in which they appear on the command line. If a file cannot be opened <strong class="pkg">GAP</strong> will print an error message and will abort.</p>
 
 </dd>
 </dl>
-<p>Additional options, <code class="code">-C</code>, <code class="code">-P</code>, <code class="code">-W</code>, <code class="code">-p</code> and <code class="code">-z</code> are used internally by the <strong class="pkg">gac</strong> script (see <a href="chap76.html#X85672DDD7D34D5F0"><span class="RefLink">76.3-11</span></a>) and/or on specific operating systems.</p>
+<p>Additional options, such as <code class="code">-C</code>, <code class="code">-P</code> and<code class="code">-p</code> are used internally by the <strong class="pkg">gac</strong> script (see <a href="chap76.html#X85672DDD7D34D5F0"><span class="RefLink">76.3-11</span></a>) and/or on specific operating systems.</p>
 
 <p><a id="X7FD66F977A3B02DF" name="X7FD66F977A3B02DF"></a></p>
 
@@ -326,7 +327,7 @@ RepAc := RepresentativeAction;
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetUserPreference</code>( [<var class="Arg">package</var>, ]<var class="Arg">name</var>, <var class="Arg">value</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UserPreference</code>( [<var class="Arg">package</var>, ]<var class="Arg">name</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShowUserPreferences</code>( <var class="Arg">package1</var>, <var class="Arg">package2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WriteGapIniFile</code>( [<var class="Arg">dir</var>, ][<var class="Arg">ignorecurrent</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WriteGapIniFile</code>( [<var class="Arg">dir</var>][,] [<var class="Arg">ignorecurrent</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Some aspects of the behaviour of <strong class="pkg">GAP</strong> can be customized by the user via <em>user preferences</em>. Examples include the way help sections are displayed or the use of colors in the terminal.</p>
 
 <p>User preferences are specified via a pair of strings, the first is the (case insensitive) name of a package (or <code class="code">"GAP"</code> for the core <strong class="pkg">GAP</strong> library) and the second is some arbitrary case sensitive string.</p>
@@ -425,7 +426,9 @@ fail
 
 <h4>3.3 <span class="Heading">Saving and Loading a Workspace</span></h4>
 
-<p><strong class="pkg">GAP</strong> workspace files are binary files that contain the data of a <strong class="pkg">GAP</strong> session. One can produce a workspace file with <code class="func">SaveWorkspace</code> (<a href="chap3.html#X876544A57C73C488"><span class="RefLink">3.3-1</span></a>), and load it into a new <strong class="pkg">GAP</strong> session using the <code class="code">-L</code> command line option, see Section <a href="chap3.html#X782751D5858A6EAF"><span class="RefLink">3.1</span></a>.</p>
+<p><strong class="pkg">GAP</strong> workspace files are binary files that contain the data of a <strong class="pkg">GAP</strong> session. Currently saving and loading workspace files are supported only when the <code class="code">GASMAN</code> garbage collector is used, see Section <a href="chap7.html#X7F1F741D7F0899D1"><span class="RefLink">7.12-1</span></a>.</p>
+
+<p>One can produce a workspace file with <code class="func">SaveWorkspace</code> (<a href="chap3.html#X876544A57C73C488"><span class="RefLink">3.3-1</span></a>), and load it into a new <strong class="pkg">GAP</strong> session using the <code class="code">-L</code> command line option, see Section <a href="chap3.html#X782751D5858A6EAF"><span class="RefLink">3.1</span></a>.</p>
 
 <p>One purpose of workspace files is of course the possibility to save a "snapshot" image of the current <strong class="pkg">GAP</strong> workspace in a file.</p>
 
@@ -464,14 +467,21 @@ true
 <h5>3.4-2 ARCH_IS_MAC_OS_X</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ARCH_IS_MAC_OS_X</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>tests whether <strong class="pkg">GAP</strong> is running on Mac OS X. Note that on Mac OS X, also <code class="func">ARCH_IS_UNIX</code> (<a href="chap3.html#X7C825AF087A27884"><span class="RefLink">3.4-1</span></a>) will be <code class="code">true</code>.</p>
+<p>tests whether <strong class="pkg">GAP</strong> is running on Mac OS X. Note that on Mac OS X, also <code class="func">ARCH_IS_UNIX</code> (<a href="chap3.html#X7C825AF087A27884"><span class="RefLink">3.4-1</span></a>) will be <code class="keyw">true</code>.</p>
 
 <p><a id="X7A14B659847B8627" name="X7A14B659847B8627"></a></p>
 
 <h5>3.4-3 ARCH_IS_WINDOWS</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ARCH_IS_WINDOWS</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>tests whether <strong class="pkg">GAP</strong> is running on a Windows system.</p>
+<p>tests whether <strong class="pkg">GAP</strong> is running on a Windows system without standard POSIX tools available (such as a shell).</p>
+
+<p><a id="X87E7CC3B8395BBB3" name="X87E7CC3B8395BBB3"></a></p>
+
+<h5>3.4-4 ARCH_IS_WSL</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ARCH_IS_WSL</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>tests whether <strong class="pkg">GAP</strong> is running on a Windows system inside the 'Windows Subsystem for Linux'. Note that in this case <code class="func">ARCH_IS_UNIX</code> (<a href="chap3.html#X7C825AF087A27884"><span class="RefLink">3.4-1</span></a>) will be <code class="keyw">true</code>, and in most situations WSL can be treated identically to Linux.</p>
 
 <p><a id="X8719B2118511645F" name="X8719B2118511645F"></a></p>
 
@@ -499,13 +509,13 @@ true
 <h5>3.6-1 ColorPrompt</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ColorPrompt</code>( <var class="Arg">bool</var>[, <var class="Arg">optrec</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>With <code class="code">ColorPrompt(true);</code> <strong class="pkg">GAP</strong> changes its user interface: The prompts and the user input are displayed in different colors. Switch off the colored prompts with <code class="code">ColorPrompt(false);</code>.</p>
+<p><code class="func">ColorPrompt</code> changes <strong class="pkg">GAP</strong>'s user interface: After calling <code class="code">ColorPrompt(true);</code>, the prompts and the user input are displayed in colors different from the color that is used for the output. This is also the default for a <strong class="pkg">GAP</strong> session. Switch off these colorings with <code class="code">ColorPrompt(false);</code>.</p>
 
-<p>Note that this will only work if your terminal emulation in which you run <strong class="pkg">GAP</strong> understands the so called ANSI color escape sequences –almost all terminal emulations on current UNIX/Linux (<code class="code">xterm</code>, <code class="code">rxvt</code>, <code class="code">konsole</code>, ...) systems do so.</p>
+<p>Note that colors will only work if your terminal emulation in which you run <strong class="pkg">GAP</strong> understands the so called ANSI color escape sequences –almost all terminal emulations on current UNIX/Linux (<code class="code">xterm</code>, <code class="code">rxvt</code>, <code class="code">konsole</code>, ...) systems do so.</p>
 
 <p>The colors shown depend on the terminal configuration and cannot be forced from an application. If your terminal follows the ANSI conventions you see the standard prompt in bold blue and the break loop prompt in bold red, as well as your input in red.</p>
 
-<p>If it works for you and you like it, put a call of <code class="code">SetUserPreference("UseColorPrompt", true);</code> in your <code class="file">gap.ini</code> file. If you want a more complicated setting as explained below then put your <code class="code">SetUserPreference("UseColorPrompt", rec( ... ) );</code> call into your <code class="file">gaprc</code> file.</p>
+<p>If you prefer to switch off colors for prompts and input at the start of your <strong class="pkg">GAP</strong> sessions, put a call of <code class="code">SetUserPreference("UseColorPrompt", false);</code> in your <code class="file">gap.ini</code> file. If you want a more complicated setting as explained below then put your <code class="code">SetUserPreference("UseColorPrompt", rec( ... ) );</code> call into your <code class="file">gaprc</code> file.</p>
 
 <p>The optional second argument <var class="Arg">optrec</var> allows one to further customize the behaviour. It must be a record from which the following components are recognized:</p>
 

@@ -19,7 +19,7 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap13.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap15.html">[Next Chapter]</a>&nbsp;  </div>
 
-<p id="mathjaxlink" class="pcenter"></p>
+<p id="mathjaxlink" class="pcenter"><a href="chap14_mj.html">[MathJax on]</a></p>
 <p><a id="X7D09DEB478A09E55" name="X7D09DEB478A09E55"></a></p>
 <div class="ChapSects"><a href="chap14.html#X7D09DEB478A09E55">14 <span class="Heading">Interfaces to other software packages</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X79FC20A5832313F5">14.1 <span class="Heading">Interface to the <strong class="pkg">GAP</strong>-package <strong class="pkg">homalg</strong></span></a>
@@ -106,7 +106,7 @@
 
 <div class="example"><pre>
  gap&gt; SCLib.SearchByName("K3");
- [ [ 7494, "K3_16" ], [ 7513, "K3_17" ] ]
+ [ [ 520, "K3_16" ], [ 539, "K3_17" ] ]
  gap&gt; c:=SCLib.Load(last[1][1]);;
  gap&gt; SCHomalgHomology(c,0);
  #I  SCHomalgHomologyOp: Q-homology ranks: [ 1, 0, 22, 0, 1 ]
@@ -129,7 +129,7 @@
 
 <div class="example"><pre>
  gap&gt; SCLib.SearchByName("K3");
- [ [ 7494, "K3_16" ], [ 7513, "K3_17" ] ]
+ [ [ 520, "K3_16" ], [ 539, "K3_17" ] ]
  gap&gt; c:=SCLib.Load(last[1][1]);;
  gap&gt; SCHomalgHomologyBasis(c,0);
  #I  SCHomalgHomologyBasisOp: constructed Q-homology groups.
@@ -151,7 +151,7 @@
 
 <div class="example"><pre>
  gap&gt; SCLib.SearchByName("K3");
- [ [ 7494, "K3_16" ], [ 7513, "K3_17" ] ]
+ [ [ 520, "K3_16" ], [ 539, "K3_17" ] ]
  gap&gt; c:=SCLib.Load(last[1][1]);;
  gap&gt; SCHomalgCohomology(c,0);
  #I  SCHomalgCohomologyOp: Q-cohomology ranks: [ 1, 0, 22, 0, 1 ]
@@ -174,7 +174,7 @@
 
 <div class="example"><pre>
  gap&gt; SCLib.SearchByName("K3");
- [ [ 7494, "K3_16" ], [ 7513, "K3_17" ] ]
+ [ [ 520, "K3_16" ], [ 539, "K3_17" ] ]
  gap&gt; c:=SCLib.Load(last[1][1]);;
  gap&gt; SCHomalgCohomologyBasis(c,0);
  #I  SCHomalgCohomologyBasisOp: constructed Q-cohomology groups.

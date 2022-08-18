@@ -219,7 +219,11 @@ InstallTrueMethod( IsGroup, IsFinitelyGeneratedGroup );
 InstallFactorMaintenance( IsFinitelyGeneratedGroup,
     IsGroup and IsFinitelyGeneratedGroup, IsObject, IsGroup );
 
-InstallTrueMethod( IsFinitelyGeneratedGroup, IsGroup and IsFinite );
+# make IsFinitelyGeneratedGroup equivalent to IsGroup and IsFinitelyGeneratedMagma
+InstallTrueMethod( IsFinitelyGeneratedGroup, IsGroup and IsFinitelyGeneratedMagma );
+InstallTrueMethod( HasIsFinitelyGeneratedGroup, IsGroup and HasIsFinitelyGeneratedMagma );
+InstallTrueMethod( IsFinitelyGeneratedMagma, IsFinitelyGeneratedGroup );
+InstallTrueMethod( HasIsFinitelyGeneratedMagma, HasIsFinitelyGeneratedGroup );
 
 #############################################################################
 ##
@@ -625,8 +629,13 @@ InstallTrueMethod( IsPerfectGroup, IsGroup and IsTrivial );
 ##
 DeclareProperty( "IsSimpleGroup", IsGroup );
 InstallTrueMethod( IsGroup and IsNonTrivial, IsSimpleGroup );
+
 DeclareSynonymAttr( "IsNonabelianSimpleGroup", IsSimpleGroup and IsPerfectGroup );
+# ... implies not abelian, not nilpotent (also not solvable, but
+# HasIsSolvableGroup only gets defined later)
 InstallTrueMethod( HasIsAbelian, IsNonabelianSimpleGroup );
+InstallTrueMethod( HasIsNilpotentGroup, IsNonabelianSimpleGroup );
+#InstallTrueMethod( HasIsSolvableGroup, IsNonabelianSimpleGroup );
 
 InstallIsomorphismMaintenance( IsSimpleGroup, IsGroup, IsGroup );
 
@@ -707,7 +716,7 @@ InstallIsomorphismMaintenance( IsSporadicSimpleGroup, IsGroup, IsGroup );
 ##  true
 ##  gap> IsAlmostSimpleGroup( SymmetricGroup( 3 ) );
 ##  false
-##  gap> IsAlmostSimpleGroup( SL( 2, 5 ) );            
+##  gap> IsAlmostSimpleGroup( SL( 2, 5 ) );
 ##  false
 ##  ]]></Example>
 ##  </Description>
@@ -719,6 +728,43 @@ InstallTrueMethod( IsGroup and IsNonTrivial, IsAlmostSimpleGroup );
 
 # nonabelian simple groups are almost simple
 InstallTrueMethod( IsAlmostSimpleGroup, IsNonabelianSimpleGroup );
+
+#############################################################################
+##
+#P  IsQuasisimpleGroup( <G> )
+##
+##  <#GAPDoc Label="IsQuasisimpleGroup">
+##  <ManSection>
+##  <Prop Name="IsQuasisimpleGroup" Arg='G'/>
+##
+##  <Description>
+##  A group <A>G</A> is <E>quasisimple</E> if <A>G</A> is perfect
+##  (see <Ref Prop="IsPerfectGroup"/>)
+##  and if <A>G</A><M>/Z(</M><A>G</A><M>)</M> is simple
+##  (see <Ref Prop="IsSimpleGroup"/>), where <M>Z(</M><A>G</A><M>)</M>
+##  is the centre of <A>G</A> (see <Ref Attr="Centre"/>).
+##  <P/>
+##  <Example><![CDATA[
+##  gap> IsQuasisimpleGroup( AlternatingGroup( 5 ) );
+##  true
+##  gap> IsQuasisimpleGroup( SymmetricGroup( 5 ) );
+##  false
+##  gap> IsQuasisimpleGroup( SL( 2, 5 ) );
+##  true
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareProperty( "IsQuasisimpleGroup", IsGroup );
+InstallTrueMethod( IsGroup and IsNonTrivial, IsQuasisimpleGroup );
+
+# Nonabelian simple groups are quasisimple, quasisimple groups are perfect.
+InstallTrueMethod( IsQuasisimpleGroup, IsNonabelianSimpleGroup );
+InstallTrueMethod( IsPerfectGroup, IsQuasisimpleGroup );
+
+# We can expect that people will try the name with capital s.
+DeclareSynonymAttr( "IsQuasiSimpleGroup", IsQuasisimpleGroup );
 
 #############################################################################
 ##
@@ -808,7 +854,11 @@ InstallFactorMaintenance( IsSolvableGroup,
 InstallTrueMethod( IsSolvableGroup, IsMonomialGroup );
 InstallTrueMethod( IsSolvableGroup, IsSupersolvableGroup );
 
+# nontrivial solvable groups are not perfect
 InstallTrueMethod( HasIsPerfectGroup, IsGroup and IsSolvableGroup and IsNonTrivial );
+
+# nonabelian simple groups are not solvable
+InstallTrueMethod( HasIsSolvableGroup, IsNonabelianSimpleGroup );
 
 
 #############################################################################
@@ -1035,20 +1085,26 @@ DeclareAttribute( "CommutatorFactorGroup", IsGroup );
 #############################################################################
 ##
 #A  CompositionSeries( <G> )
+#A  CompositionSeriesThrough( <G>, <normals> )
 ##
 ##  <#GAPDoc Label="CompositionSeries">
 ##  <ManSection>
 ##  <Attr Name="CompositionSeries" Arg='G'/>
+##  <Oper Name="CompositionSeriesThrough" Arg='G, normals'/>
 ##
 ##  <Description>
 ##  A composition series is a subnormal series which cannot be refined.
 ##  This attribute returns <E>one</E> composition series (of potentially many
-##  possibilities).
+##  possibilities). The variant <Ref Oper="CompositionSeriesThrough"/> takes
+##  as second argument a list <A>normals</A> of normal subgroups of the
+##  group, and returns a composition series that incorporates these normal
+##  subgroups.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
 DeclareAttribute( "CompositionSeries", IsGroup );
+DeclareOperation( "CompositionSeriesThrough", [IsGroup,IsList] );
 #T and for module?
 
 
@@ -1071,9 +1127,9 @@ DeclareAttribute( "CompositionSeries", IsGroup );
 ##   ]
 ##  gap> DisplayCompositionSeries(Group((1,2,3,4,5,6,7),(1,2)));
 ##  G (2 gens, size 5040)
-##   | Z(2)
+##   | C2
 ##  S (5 gens, size 2520)
-##   | A(7)
+##   | A7
 ##  1 (0 gens, size 1)
 ##  ]]></Example>
 ##  </Description>
@@ -1228,11 +1284,13 @@ DeclareAttribute( "MaximalSubgroups", IsGroup );
 ##
 DeclareAttribute("MaximalSubgroupClassReps",IsGroup);
 
+# functions to calculate maximal subgroups (or fail if not possible)
+DeclareOperation("CalcMaximalSubgroupClassReps",[IsGroup]);
+DeclareGlobalFunction("TryMaximalSubgroupClassReps");
 # utility attribute: Allow use with limiting options, so could hold `fail'.
-DeclareAttribute("TryMaximalSubgroupClassReps",IsGroup,"mutable");
+DeclareAttribute("StoredPartialMaxSubs",IsGroup,"mutable");
 
 # utility function in maximal subgroups code
-DeclareGlobalFunction("TryMaxSubgroupTainter");
 DeclareGlobalFunction("DoMaxesTF");
 
 # make this an operation to allow for overloading and TryNextMethod();
@@ -1278,8 +1336,8 @@ DeclareGlobalFunction("MaximalSolvableSubgroups");
 ##  <Description>
 ##  is the smallest normal subgroup of <A>G</A> that has a solvable factor group.
 ##  <Example><![CDATA[
-##  gap> PerfectResiduum(Group((1,2,3,4,5),(1,2)));
-##  Group([ (1,3,2), (1,4,3), (2,5,4) ])
+##  gap> PerfectResiduum(SymmetricGroup(5));
+##  Alt( [ 1 .. 5 ] )
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -1880,9 +1938,9 @@ DeclareAttribute( "MinimalNormalSubgroups", IsGroup );
 ##  <Description>
 ##  returns a list of all normal subgroups of <A>G</A>.
 ##  <Example><![CDATA[
-##  gap> g:=SymmetricGroup(4);; NormalSubgroups(g);
-##  [ Sym( [ 1 .. 4 ] ), Alt( [ 1 .. 4 ] ),
-##    Group([ (1,4)(2,3), (1,3)(2,4) ]), Group(()) ]
+##  gap> g:=SymmetricGroup(4);;
+##  gap> List( NormalSubgroups(g), StructureDescription );
+##  [ "S4", "A4", "C2 x C2", "1" ]
 ##  gap> g:=AbelianGroup([2,2]);; NormalSubgroups(g);
 ##  [ <pc group of size 4 with 2 generators>, Group([ f2 ]),
 ##    Group([ f1*f2 ]), Group([ f1 ]), Group([  ]) ]
@@ -1908,9 +1966,9 @@ DeclareAttribute( "NormalSubgroups", IsGroup );
 ##  returns a list of all characteristic subgroups of <A>G</A>, that is
 ##  subgroups that are invariant under all automorphisms.
 ##  <Example><![CDATA[
-##  gap> g:=SymmetricGroup(4);; CharacteristicSubgroups(g);
-##  [ Sym( [ 1 .. 4 ] ), Group([ (2,4,3), (1,4)(2,3), (1,3)(2,4) ]), 
-##    Group([ (1,4)(2,3), (1,3)(2,4) ]), Group(()) ]
+##  gap> g:=SymmetricGroup(4);;
+##  gap> List( CharacteristicSubgroups(g), StructureDescription );
+##  [ "S4", "A4", "C2 x C2", "1" ]
 ##  gap> g:=AbelianGroup([2,2]);; CharacteristicSubgroups(g);
 ##  [ <pc group of size 4 with 2 generators>, Group([  ]) ]
 ##  ]]></Example>
@@ -1972,7 +2030,6 @@ DeclareAttribute( "NrConjugacyClasses", IsGroup );
 ##  \{ g \in <A>G</A> \mid g^{{<A>p</A>^{<A>n</A>}}} = 1 \}</M>.
 ##  The default value for <A>n</A> is <C>1</C>.
 ##  <P/>
-##  <E>@At the moment methods exist only for abelian <A>G</A> and <A>n</A>=1.@</E>
 ##  <Example><![CDATA[
 ##  gap> h:=SmallGroup(16,10);
 ##  <pc group of size 16 with 4 generators>
@@ -2019,25 +2076,26 @@ DeclareAttribute( "ComputedAgemos", IsGroup, "mutable" );
 
 #############################################################################
 ##
-#A  RadicalGroup( <G> )
+#A  SolvableRadical( <G> )
 ##
-##  <#GAPDoc Label="RadicalGroup">
+##  <#GAPDoc Label="SolvableRadical">
 ##  <ManSection>
-##  <Attr Name="RadicalGroup" Arg='G'/>
+##  <Attr Name="SolvableRadical" Arg='G'/>
 ##
 ##  <Description>
-##  is the radical of <A>G</A>, i.e., the largest solvable normal subgroup of <A>G</A>.
+##  is the solvable radical of the group <A>G</A>,
+##  i.e., the largest solvable normal subgroup of <A>G</A>.
 ##  <Example><![CDATA[
-##  gap> RadicalGroup(SL(2,5));
+##  gap> rad:= SolvableRadical( SL(2,5) );
 ##  <group of 2x2 matrices of size 2 over GF(5)>
-##  gap> Size(last);
+##  gap> Size( rad );
 ##  2
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareAttribute( "RadicalGroup", IsGroup );
+DeclareAttribute( "SolvableRadical", IsGroup );
 
 
 #############################################################################
@@ -2145,7 +2203,7 @@ DeclareAttribute( "LargestElementGroup", IsGroup );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareAttribute( "MinimalGeneratingSet", IsGroup );
+DeclareAttribute( "MinimalGeneratingSet", IsSemigroup );
 
 
 #############################################################################
@@ -2170,7 +2228,7 @@ DeclareAttribute( "MinimalGeneratingSet", IsGroup );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareAttribute( "SmallGeneratingSet", IsGroup );
+DeclareAttribute( "SmallGeneratingSet", IsSemigroup );
 
 
 #############################################################################
@@ -2790,8 +2848,10 @@ DeclareOperation( "CosetTableNormalClosure", [ IsGroup, IsGroup ] );
 ##
 ##  <Description>
 ##  returns the image of the <C>NaturalHomomorphismByNormalSubgroup(<A>G</A>,<A>N</A>)</C>.
-##  The homomorphism will be returned by calling the function
-##  <C>NaturalHomomorphism</C> on the result.
+##  This function is provided for compatibility with older code, but if a
+##  connection between group and factor is desired, users need to start by
+##  obtaining the <C>NaturalHomomorphismByNormalSubgroup</C> in the first
+##   place.
 ##  The <C>NC</C> version does not test whether <A>N</A> is normal in <A>G</A>.
 ##  <Example><![CDATA[
 ##  gap> g:=Group((1,2,3,4),(1,2));;n:=Subgroup(g,[(1,2)(3,4),(1,3)(2,4)]);;
@@ -2799,8 +2859,7 @@ DeclareOperation( "CosetTableNormalClosure", [ IsGroup, IsGroup ] );
 ##  [ (1,2,3,4), (1,2) ] -> [ f1*f2, f1 ]
 ##  gap> Size(ImagesSource(hom));
 ##  6
-##  gap> FactorGroup(g,n);;
-##  gap> StructureDescription(last);
+##  gap> StructureDescription(Image(hom,g));
 ##  "S3"
 ##  ]]></Example>
 ##  </Description>
@@ -2819,8 +2878,9 @@ DeclareOperation( "FactorGroupNC", [ IsGroup, IsGroup ] );
 ##  <Oper Name="NaturalHomomorphism" Arg='F'/>
 ##
 ##  <Description>
-##  For a group <A>F</A> obtained via <C>FactorGroup</C>, this operation
-##  returns the natural homomorphism onto <A>F</A>
+##  This function is obsolete now and will give an error message. Users
+##  should use <C>NaturalHomomorphismByNormalSubgroup</C> in the first place to
+##  get the homomorphism and then get the factor group as the image.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -3128,12 +3188,19 @@ DeclareOperation( "IsSubnormal", [ IsGroup, IsGroup ] );
 ##  <#GAPDoc Label="NormalClosure">
 ##  <ManSection>
 ##  <Oper Name="NormalClosure" Arg='G, U'/>
+##  <Oper Name="NormalClosure" Arg='G, list' Label="for group and a list"/>
 ##
 ##  <Description>
 ##  The normal closure of <A>U</A> in <A>G</A> is the smallest normal subgroup 
 ##  of the closure of <A>G</A> and <A>U</A> which contains <A>U</A>.
+##  <P/>
+##  The second argument may also be a list of group elements, in which
+##  case the normal closure of the group generated by these elements is
+##  computed.
 ##  <Example><![CDATA[
 ##  gap> NormalClosure(g,Subgroup(g,[(1,2,3)])) = Group([ (1,2,3), (2,3,4) ]);
+##  true
+##  gap> NormalClosure(g,[(1,2,3)]) = Group([ (1,2,3), (2,3,4) ]);
 ##  true
 ##  gap> NormalClosure(g,Group((3,4,5))) = Group([ (3,4,5), (1,5,4), (1,2,5) ]);
 ##  true
@@ -3242,8 +3309,8 @@ DeclareOperation("CentralizerModulo", [IsGroup,IsGroup,IsObject]);
 ##  gap> PCentralSeries(g,2);
 ##  [ <pc group of size 12 with 3 generators>, Group([ y3, y*y3 ]), Group([ y*y3 ]) ]
 ##  gap> g:=SymmetricGroup(4);;
-##  gap> PCentralSeries(g,2);
-##  [ Sym( [ 1 .. 4 ] ), Group([ (1,2,3), (2,3,4) ]) ]
+##  gap> List(PCentralSeries(g,2), StructureDescription);
+##  [ "S4", "A4" ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -3317,6 +3384,32 @@ KeyDependentOperation( "PRump", IsGroup, IsPosInt, "prime" );
 ##  <#/GAPDoc>
 ##
 KeyDependentOperation( "PCore", IsGroup, IsPosInt, "prime" );
+
+#############################################################################
+##
+#A  StructuralSeriesOfGroup( <G> )
+##
+##  <#GAPDoc Label="StructuralSeriesOfGroup">
+##  <ManSection>
+##  <Attr Name="StructuralSeriesOfGroup" Arg='G'/>
+##
+##  <Description>
+##  The structural series of a finite group <A>G</A> is a descending series
+##  of characteristic subgroups which goes throught the derived series of
+##  the solvable radical of $G$, refined into elementary abelian factors, as
+##  well as the socle and the <A>Pker</A> (kernel of the action on socle
+##  components) of the radical factor
+##  <Example><![CDATA[
+##  gap> gp:=WreathProduct(SymmetricGroup(5),SymmetricGroup(3));;
+##  gap> gp:=WreathProduct(Group((1,2,3,4,5,6)),gp);;
+##  gap> List(StructuralSeriesOfGroup(gp),Size);
+##  [ 4874877920083968000, 812479653347328000, 101559956668416000, 470184984576, 32768, 1 ]
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareAttribute( "StructuralSeriesOfGroup", IsGroup );
 
 
 #############################################################################
@@ -3462,7 +3555,7 @@ KeyDependentOperation( "HallSubgroup", IsGroup, IsList, ReturnTrue );
 ##  </Description>
 ##  </ManSection>
 ##
-DeclareGlobalFunction( "NormalHallSubgroupsFromSylows", [ IsGroup ] );
+DeclareGlobalFunction( "NormalHallSubgroupsFromSylows" );
 
 
 #############################################################################
@@ -3638,6 +3731,8 @@ DeclareOperation( "GroupWithGenerators",
 # are not needed
 DeclareGlobalFunction("MakeGroupyType");
 
+DeclareGlobalFunction("MakeGroupyObj");
+
 
 #############################################################################
 ##
@@ -3646,6 +3741,7 @@ DeclareGlobalFunction("MakeGroupyType");
 ##
 ##  <#GAPDoc Label="Group">
 ##  <ManSection>
+##  <Heading>Group</Heading>
 ##  <Func Name="Group" Arg='gen, ...' Label="for several generators"/>
 ##  <Func Name="Group" Arg='gens[, id]'
 ##   Label="for a list of generators (and an identity element)"/>
@@ -4359,7 +4455,7 @@ DeclareAttribute( "IsomorphismFpGroup", IsGroup );
 ##    [ [ 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ], 
 ##        [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1 ] ] ]
 ##  gap> iso := IsomorphismFpGroupByGenerators( G, gens );;
-##  #I  the image group has 2 gens and 10 rels of total length 118
+##  #I  the image group has 2 gens and 10 rels of total length 132
 ##  gap> iso := IsomorphismFpGroupByGenerators( G, gens : 
 ##  >                                           method := "regular");;
 ##  #I  the image group has 2 gens and 6 rels of total length 56
@@ -4426,6 +4522,29 @@ DeclareGlobalFunction( "IsomorphismFpGroupByPcgs" );
 ##  <#/GAPDoc>
 ##
 DeclareAttribute( "IsomorphismFpGroupForRewriting", IsGroup );
+
+
+#############################################################################
+##
+#A  ConfluentMonoidPresentationForGroup( <G> )
+##
+##  <#GAPDoc Label="ConfluentMonoidPresentationForGroup">
+##  <ManSection>
+##  <Attr Name="ConfluentMonoidPresentationForGroup" Arg='G'/>
+##
+##  <Description>
+##  This attribute holds, for a (finite) group <A>G</A>, a record that holds
+##  information about a confluent monoid presentation, namely a homomorphism
+##  from <A>G</A> to a finitely presented group, a homomorphism from this
+##  finitely presented group to a finitely presented monoid, whose presentation
+##  is a confluent rewriting system, and an ordering wrt. which this system is
+##  confluent.  It is made an attribute
+##  to ensure that iterated cohomology computations use the same presentation.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareAttribute( "ConfluentMonoidPresentationForGroup", IsGroup );
 
 
 #############################################################################

@@ -178,7 +178,7 @@ false
 
 <h5>30.2-5 DeclareCategoryCollections</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareCategoryCollections</code>( <var class="Arg">filter</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareCategoryCollections</code>( <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Calls <code class="func">CategoryCollections</code> (<a href="chap30_mj.html#X78C38017804B2EA7"><span class="RefLink">30.2-4</span></a>) on the category that is bound to the global variable with name <var class="Arg">name</var> to obtain its collections category, and binds the latter to the global variable with name <code class="code">nname</code>. This name is defined as follows: If <var class="Arg">name</var> is of the form <code class="code"><var class="Arg">Something</var>Collection</code> then <code class="code">nname</code> is set to <code class="code"><var class="Arg">Something</var>CollColl</code>, if <var class="Arg">name</var> is of the form <code class="code"><var class="Arg">Something</var>Coll</code> then <code class="code">nname</code> is set to <code class="code"><var class="Arg">Something</var>CollColl</code>, otherwise we set <code class="code">nname</code> to <code class="code"><var class="Arg">name</var>Collection</code>.</p>
 
 <p><a id="X7C3722DF8736FFDB" name="X7C3722DF8736FFDB"></a></p>
@@ -233,7 +233,7 @@ false
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EnumeratorByFunctions</code>( <var class="Arg">D</var>, <var class="Arg">record</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EnumeratorByFunctions</code>( <var class="Arg">Fam</var>, <var class="Arg">record</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p><code class="func">EnumeratorByFunctions</code> returns an immutable, dense, and duplicate-free list <span class="SimpleMath">\(enum\)</span> for which <code class="func">IsBound</code> (<a href="chap21_mj.html#X79EC565A7DCEC938"><span class="RefLink">21.5-1</span></a>), element access via <code class="func">\[\]</code> (<a href="chap21_mj.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>), <code class="func">Length</code> (<a href="chap21_mj.html#X780769238600AFD1"><span class="RefLink">21.17-5</span></a>), and <code class="func">Position</code> (<a href="chap21_mj.html#X79975EC6783B4293"><span class="RefLink">21.16-1</span></a>) are computed via prescribed functions.</p>
+<p><code class="func">EnumeratorByFunctions</code> returns an immutable, dense, and duplicate-free list <span class="SimpleMath">\(enum\)</span> for which <code class="func">IsBound</code> (<a href="chap21_mj.html#X79EC565A7DCEC938"><span class="RefLink">21.5-1</span></a>), element access via <code class="func"><span>\</span>[<span>\</span>]</code> (<a href="chap21_mj.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>), <code class="func">Length</code> (<a href="chap21_mj.html#X780769238600AFD1"><span class="RefLink">21.17-5</span></a>), and <code class="func">Position</code> (<a href="chap21_mj.html#X79975EC6783B4293"><span class="RefLink">21.16-1</span></a>) are computed via prescribed functions.</p>
 
 <p>Let <var class="Arg">record</var> be a record with at least the following components.</p>
 
@@ -295,6 +295,8 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; List</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For a collection <var class="Arg">C</var> (see <a href="chap30_mj.html#X8050A8037984E5B6"><span class="RefLink">30</span></a>) that is not a list, <code class="func">List</code> returns a new mutable list <var class="Arg">new</var> such that <code class="code">Length( <var class="Arg">new</var> )</code> is the number of different elements of <var class="Arg">C</var>, and <var class="Arg">new</var> contains the different elements of <var class="Arg">C</var> in an unspecified order which may change for repeated calls. <code class="code"><var class="Arg">new</var>[<var class="Arg">pos</var>]</code> executes in constant time (see <code class="func">IsConstantTimeAccessList</code> (<a href="chap21_mj.html#X7C84E16A85C99C8C"><span class="RefLink">21.1-6</span></a>)), and the size of <var class="Arg">new</var> is proportional to its length. The generic method for this case is <code class="code">ShallowCopy( Enumerator( <var class="Arg">C</var> ) )</code>.</p>
 
+<p>Developers who wish to adapt this for custom list or collection types need to install suitable methods for the operation <code class="code">ListOp</code>.</p>
+
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">l:= List( Group( (1,2,3) ) );</span>
@@ -305,7 +307,7 @@ false
 true
 </pre></div>
 
-<p>(See also <code class="func">List</code> (<a href="chap21_mj.html#X86CB7DCE8510F977"><span class="RefLink">21.20-19</span></a>).)</p>
+<p>(See also <code class="func">List</code> (<a href="chap21_mj.html#X86CB7DCE8510F977"><span class="RefLink">21.20-18</span></a>).)</p>
 
 <p><a id="X82CE157A7FAD8036" name="X82CE157A7FAD8036"></a></p>
 
@@ -363,7 +365,7 @@ true
 <h5>30.3-8 AsList</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsList</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p><code class="func">AsList</code> returns a immutable list <var class="Arg">imm</var>. If the argument is a list (which may contain holes), then <code class="code">Length( <var class="Arg">imm</var> )</code> is the <code class="func">Length</code> (<a href="chap21_mj.html#X780769238600AFD1"><span class="RefLink">21.17-5</span></a>) value of this list, and <var class="Arg">imm</var> contains the elements (and holes) of of the list in the same order. If the argument is a collection that is not a list, then <code class="code">Length( <var class="Arg">imm</var> )</code> is the number of different elements of this collection, and <var class="Arg">imm</var> contains the different elements of the collection in an unspecified order, which may change for repeated calls of <code class="func">AsList</code>. <code class="code"><var class="Arg">imm</var>[<var class="Arg">pos</var>]</code> executes in constant time (see <code class="func">IsConstantTimeAccessList</code> (<a href="chap21_mj.html#X7C84E16A85C99C8C"><span class="RefLink">21.1-6</span></a>)), and the size of <var class="Arg">imm</var> in memory is proportional to its length.</p>
+<p><code class="func">AsList</code> returns a immutable list <var class="Arg">imm</var>. If the argument is a list (which may contain holes), then <code class="code">Length( <var class="Arg">imm</var> )</code> is the <code class="func">Length</code> (<a href="chap21_mj.html#X780769238600AFD1"><span class="RefLink">21.17-5</span></a>) value of this list, and <var class="Arg">imm</var> contains the elements (and holes) of the list in the same order. If the argument is a collection that is not a list, then <code class="code">Length( <var class="Arg">imm</var> )</code> is the number of different elements of this collection, and <var class="Arg">imm</var> contains the different elements of the collection in an unspecified order, which may change for repeated calls of <code class="func">AsList</code>. <code class="code"><var class="Arg">imm</var>[<var class="Arg">pos</var>]</code> executes in constant time (see <code class="func">IsConstantTimeAccessList</code> (<a href="chap21_mj.html#X7C84E16A85C99C8C"><span class="RefLink">21.1-6</span></a>)), and the size of <var class="Arg">imm</var> in memory is proportional to its length.</p>
 
 <p>If you expect to do many element tests in the resulting list, it might be worth to use a sorted list instead, using <code class="func">AsSSortedList</code> (<a href="chap30_mj.html#X856D927378C33548"><span class="RefLink">30.3-10</span></a>).</p>
 
@@ -699,9 +701,9 @@ false
 
 <p>The method used by <strong class="pkg">GAP</strong> to obtain random elements may depend on the type object.</p>
 
-<p>Most methods which produce random elements in <strong class="pkg">GAP</strong> use a global random number generator (see <code class="func">GlobalMersenneTwister</code> (<a href="chap14_mj.html#X7F772E2686B35865"><span class="RefLink">14.7-4</span></a>)). This random number generator is (deliberately) initialized to the same values when <strong class="pkg">GAP</strong> is started, so different runs of <strong class="pkg">GAP</strong> with the same input will always produce the same result, even if random calculations are involved.</p>
+<p>Most methods which produce random elements in <strong class="pkg">GAP</strong> use a global random number generator (see <code class="func">GlobalMersenneTwister</code> (<a href="chap14_mj.html#X7AC96008820FAF1F"><span class="RefLink">14.7-4</span></a>)). This random number generator is (deliberately) initialized to the same values when <strong class="pkg">GAP</strong> is started, so different runs of <strong class="pkg">GAP</strong> with the same input will always produce the same result, even if random calculations are involved.</p>
 
-<p>See <code class="func">Reset</code> (<a href="chap14_mj.html#X819E3E3080297347"><span class="RefLink">14.7-3</span></a>) for a description of how to reset the random number generator to a previous state.</p>
+<p>See <code class="func">Reset</code> (<a href="chap14_mj.html#X86FFFBC9790F9742"><span class="RefLink">14.7-3</span></a>) for a description of how to reset the random number generator to a previous state.</p>
 
 <p><a id="X7FF906E57D6936F8" name="X7FF906E57D6936F8"></a></p>
 
@@ -709,11 +711,13 @@ false
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Random</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Random</code>( <var class="Arg">from</var>, <var class="Arg">to</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p><code class="func">Random</code> returns a (pseudo-)random element of the list or collection <var class="Arg">listorcoll</var>.</p>
+<p><code class="func">Random</code> returns a (pseudo-)random element of the dense, nonempty list or nonempty collection <var class="Arg">listorcoll</var>. The behaviour for non-dense or empty lists, and for empty collections (see <code class="func">IsDenseList</code> (<a href="chap21_mj.html#X870AA9D8798C93DD"><span class="RefLink">21.1-2</span></a>), <code class="func">IsEmpty</code> (<a href="chap30_mj.html#X7969C48780C5C1BC"><span class="RefLink">30.4-1</span></a>)) is undefined.</p>
 
-<p>As lists or ranges are restricted in length (<span class="SimpleMath">\(2^{28}-1\)</span> or <span class="SimpleMath">\(2^{60}-1\)</span> depending on your system), the second form returns a random integer in the range <var class="Arg">from</var> to <var class="Arg">to</var> (inclusive) for arbitrary integers <var class="Arg">from</var> and <var class="Arg">to</var>.</p>
+<p>As lists or ranges are restricted in length (<span class="SimpleMath">\(2^{28}-1\)</span> or <span class="SimpleMath">\(2^{60}-1\)</span> depending on your system), the second form returns a random integer in the range <var class="Arg">from</var> to <var class="Arg">to</var> (inclusive) for arbitrary integers <var class="Arg">from</var> and <var class="Arg">to</var>. The behaviour in the case that <var class="Arg">from</var> is larger than <var class="Arg">to</var> is undefined.</p>
 
-<p>The distribution of elements returned by <code class="func">Random</code> depends on the argument. For a list the distribution is uniform (all elements are equally likely). The same holds usually for finite collections that are not lists. For infinite collections some reasonable distribution is used.</p>
+<p>See Section <a href="chap14_mj.html#X85361FAE8088C006"><span class="RefLink">14.7</span></a> for more about computing random elements, in particular for <code class="func">Random</code> (<a href="chap14_mj.html#X821004F286282D49"><span class="RefLink">14.7-2</span></a>) methods that take a random source as the first argument.</p>
+
+<p>The distribution of elements returned by <code class="func">Random</code> depends on the argument. For a dense, nonempty list the distribution is uniform (all elements are equally likely). The same holds usually for finite collections that are not lists. For infinite collections some reasonable distribution is used.</p>
 
 <p>See the chapters of the various collections to find out which distribution is being used.</p>
 
@@ -748,7 +752,21 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomList</code>( [<var class="Arg">rs</var>, ]<var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For a dense list <var class="Arg">list</var>, <code class="func">RandomList</code> returns a (pseudo-)random element with equal distribution.</p>
 
-<p>The random source <var class="Arg">rs</var> is used to choose a random number. If <var class="Arg">rs</var> is absent, this function uses the <code class="func">GlobalMersenneTwister</code> (<a href="chap14_mj.html#X7F772E2686B35865"><span class="RefLink">14.7-4</span></a>) to produce the random elements (a source of high quality random numbers).</p>
+<p>The random source <var class="Arg">rs</var> (see <a href="chap14_mj.html#X85361FAE8088C006"><span class="RefLink">14.7</span></a>) is used to choose a random number. If <var class="Arg">rs</var> is absent, this function uses the <code class="func">GlobalMersenneTwister</code> (<a href="chap14_mj.html#X7AC96008820FAF1F"><span class="RefLink">14.7-4</span></a>) to produce the random elements (a source of high quality random numbers).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomList( [ 1 .. 6 ] );</span>
+3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">elms:= AsList( Group( (1,2,3) ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomList( elms );  RandomList( elms );</span>
+(1,2,3)
+(1,3,2)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rs:= RandomSource( IsMersenneTwister, 1 );</span>
+&lt;RandomSource in IsMersenneTwister&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomList( rs, elms );</span>
+(1,2,3)
+</pre></div>
 
 <p><a id="X85A3F00985453F95" name="X85A3F00985453F95"></a></p>
 

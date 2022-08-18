@@ -46,12 +46,12 @@ local gens,mat,G;
   gens:=List(GeneratorsOfGroup(SymmetricGroup(n)),i->PermutationMat(i,n));
   # sign swapper
   mat:= IdentityMat(n,1);
-  mat[1][1]:=-1;
+  mat[1,1]:=-1;
   Add(gens,mat);
   # elementary addition
   if n>1 then
     mat:= IdentityMat(n,1);
-    mat[1][2]:=1;
+    mat[1,2]:=1;
     Add(gens,mat);
   fi;
   gens:=List(gens,Immutable);
@@ -84,7 +84,7 @@ local gens,mat,G;
     Add(gens,mat);
     # elementary addition
     mat:= IdentityMat(n,1);
-    mat[1][2]:=1;
+    mat[1,2]:=1;
     Add(gens,mat);
   fi;
   gens:=List(gens,Immutable);
@@ -151,7 +151,7 @@ end );
 ##
 #M  CrystGroupDefaultAction . . . . . . . . . . . . . . RightAction initially
 ##
-InstallValue( CrystGroupDefaultAction, RightAction );
+BindGlobal( "CrystGroupDefaultAction", RightAction );
 
 #############################################################################
 ##
@@ -251,7 +251,9 @@ function( G )
 
     # if not rational, use the nice monomorphism into a rational matrix group
     if not IsRationalMatrixGroup( G ) then
-        return IsFinite( Image( NiceMonomorphism( G ) ) );
+        # the following does not use NiceObject(G) as the only method for
+        # that currently requires IsHandledByNiceMonomorphism
+        return IsFinite( Image( NiceMonomorphism( G ), G ) );
     fi;
 
     # if not integer, choose basis in which it is integer

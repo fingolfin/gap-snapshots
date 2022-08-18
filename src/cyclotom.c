@@ -30,7 +30,7 @@
 **
 **  For example for $n = 45$ we take the roots $e_{45}^i$ such  that  $i$  is
 **  not congruent to $(45/5)*[-(5/5-1)/2..(5/5-1)/2]$ mod $5$, i.e.,   is not
-**  divisable by 5, and is not congruent  to $(45/9)[-(9/3-1)/2 .. (9/3-1)/2]
+**  divisible by 5, and is not congruent  to $(45/9)[-(9/3-1)/2 .. (9/3-1)/2]
 **  = [-5,0,5]$ mod $9$,  i.e.,  $i \in [1,2,3,6,7,8,11,12,16,17,19,21,24,26,
 **  28,29,33,34,37,38,39,42,43,44]$.
 **
@@ -243,7 +243,7 @@ static void PrintCyc(Obj cyc)
 
     n   = INT_INTOBJ( NOF_CYC(cyc) );
     len = SIZE_CYC(cyc);
-    Pr("%>",0L,0L);
+    Pr("%>", 0, 0);
     for ( i = 1; i < len; i++ ) {
         // Store value in local variable, as they can change during Pr
         const Obj *   cfs = CONST_COEFS_CYC(cyc);
@@ -252,11 +252,11 @@ static void PrintCyc(Obj cyc)
         UInt4         exsi = exs[i];
 
         if (cfsi == INTOBJ_INT(1) && exsi == 0)
-            Pr("1",0L,0L);
+            Pr("1", 0, 0);
         else if (cfsi == INTOBJ_INT(1) && exsi == 1 && i == 1)
-            Pr("%>E(%d%<)",n,0L);
+            Pr("%>E(%d%<)", n, 0);
         else if (cfsi == INTOBJ_INT(1) && exsi == 1)
-            Pr("%>+E(%d%<)",n,0L);
+            Pr("%>+E(%d%<)", n, 0);
         else if (cfsi == INTOBJ_INT(1) && i == 1)
             Pr("%>E(%d)%>^%2<%d", n, (Int)exsi);
         else if (cfsi == INTOBJ_INT(1))
@@ -264,45 +264,45 @@ static void PrintCyc(Obj cyc)
         else if (LT(INTOBJ_INT(0), cfsi) && exsi == 0)
             PrintObj(cfsi);
         else if (LT(INTOBJ_INT(0), cfsi) && exsi == 1 && i == 1) {
-            Pr("%>", 0L, 0L);
+            Pr("%>", 0, 0);
             PrintObj(cfsi);
-            Pr("%>*%<E(%d%<)", n, 0L);
+            Pr("%>*%<E(%d%<)", n, 0);
         }
         else if (LT(INTOBJ_INT(0), cfsi) && exsi == 1) {
-            Pr("%>+", 0L, 0L);
+            Pr("%>+", 0, 0);
             PrintObj(cfsi);
-            Pr("%>*%<E(%d%<)", n, 0L);
+            Pr("%>*%<E(%d%<)", n, 0);
         }
         else if (LT(INTOBJ_INT(0), cfsi) && i == 1) {
-            Pr("%>", 0L, 0L);
+            Pr("%>", 0, 0);
             PrintObj(cfsi);
             Pr("%>*%<E(%d)%>^%2<%d", n, (Int)exsi);
         }
         else if (LT(INTOBJ_INT(0), cfsi)) {
-            Pr("%>+", 0L, 0L);
+            Pr("%>+", 0, 0);
             PrintObj(cfsi);
             Pr("%>*%<E(%d)%>^%2<%d", n, (Int)exsi);
         }
         else if (cfsi == INTOBJ_INT(-1) && exsi == 0)
-            Pr("%>-%<1",0L,0L);
+            Pr("%>-%<1", 0, 0);
         else if (cfsi == INTOBJ_INT(-1) && exsi == 1)
-            Pr("%>-E(%d%<)",n,0L);
+            Pr("%>-E(%d%<)", n, 0);
         else if (cfsi == INTOBJ_INT(-1))
             Pr("%>-E(%d)%>^%2<%d", n, (Int)exsi);
         else if (exsi == 0)
             PrintObj(cfsi);
         else if (exsi == 1) {
-            Pr("%>", 0L, 0L);
+            Pr("%>", 0, 0);
             PrintObj(cfsi);
-            Pr("%>*%<E(%d%<)", n, 0L);
+            Pr("%>*%<E(%d%<)", n, 0);
         }
         else {
-            Pr("%>", 0L, 0L);
+            Pr("%>", 0, 0);
             PrintObj(cfsi);
             Pr("%>*%<E(%d)%>^%2<%d", n, (Int)exsi);
         }
     }
-    Pr("%<",0L,0L);
+    Pr("%<", 0, 0);
 }
 
 
@@ -327,11 +327,11 @@ static Int EqCyc(Obj opL, Obj opR)
 
     /* compare the order of both fields                                    */
     if ( NOF_CYC(opL) != NOF_CYC(opR) )
-        return 0L;
+        return 0;
 
     /* compare the number of terms                                         */
     if ( SIZE_CYC(opL) != SIZE_CYC(opR) )
-        return 0L;
+        return 0;
 
     /* compare the cyclotomics termwise                                    */
     len = SIZE_CYC(opL);
@@ -341,13 +341,13 @@ static Int EqCyc(Obj opL, Obj opR)
     exr = CONST_EXPOS_CYC(opR,len);
     for ( i = 1; i < len; i++ ) {
         if ( exl[i] != exr[i] )
-            return 0L;
+            return 0;
         else if ( ! EQ(cfl[i],cfr[i]) )
-            return 0L;
+            return 0;
     }
 
     /* all terms are equal                                                 */
-    return 1L;
+    return 1;
 }
 
 
@@ -383,9 +383,9 @@ static Int LtCyc(Obj opL, Obj opR)
     /* compare the order of both fields                                    */
     if ( NOF_CYC(opL) != NOF_CYC(opR) ) {
         if ( INT_INTOBJ( NOF_CYC(opL) ) < INT_INTOBJ( NOF_CYC(opR) ) )
-            return 1L;
+            return 1;
         else
-            return 0L;
+            return 0;
     }
 
     /* compare the cyclotomics termwise                                    */
@@ -411,17 +411,17 @@ static Int LtCyc(Obj opL, Obj opR)
     else if ( ler < lel )
         return LT( cfl[i], INTOBJ_INT(0) );
     else
-        return 0L;
+        return 0;
 }
 
 static Int LtCycYes(Obj opL, Obj opR)
 {
-    return 1L;
+    return 1;
 }
 
 static Int LtCycNot(Obj opL, Obj opR)
 {
-    return 0L;
+    return 0;
 }
 
 
@@ -444,9 +444,9 @@ static Int LtCycNot(Obj opL, Obj opR)
 **  Now we subtract $c$ times the left hand side from 'ResultCyc'.
 **
 **  If $p^2$  does not divide  $n$ then the roots  that are  not in the  base
-**  because of $p$ are those  whose exponent is divisable  by $p$.  But $n/p$
-**  is not  divisable by $p$, so  neither of the exponent $k*n/p+i, k=1..p-1$
-**  is divisable by $p$, so those new roots are acceptable w.r.t. $p$.
+**  because of $p$ are those  whose exponent is divisible  by $p$.  But $n/p$
+**  is not  divisible by $p$, so  neither of the exponent $k*n/p+i, k=1..p-1$
+**  is divisible by $p$, so those new roots are acceptable w.r.t. $p$.
 **
 **  A similar argument shows that  the new  roots  are also acceptable w.r.t.
 **  $p$ even if $p^2$ divides $n$...
@@ -460,7 +460,7 @@ static Int LtCycNot(Obj opL, Obj opR)
 **
 **  For an example, suppose 'ResultCyc' is $e_{45}+e_{45}^5 =: e+e^5$.  $e^5$
 **  does  not lie in the  base  because $5  \in 5*[-1,0,1]$  mod $9$ and also
-**  because it is  divisable  by 5.  After  subtracting  $e^5*(1+e_3+e_3^2) =
+**  because it is  divisible  by 5.  After  subtracting  $e^5*(1+e_3+e_3^2) =
 **  e^5+e^{20}+e^{35}$ from  'ResultCyc' we get $e-e^{20}-e^{35}$.  Those two
 **  roots are  still not  in the  base because of  5.  But  after subtracting
 **  $-e^{20}*(1+e_5+e_5^2+e_5^3+e_5^4)=-e^{20}-e^{29}-e^{38}-e^2-e^{11}$  and
@@ -601,7 +601,7 @@ static void ConvertToBase(UInt n)
 **  <m> must be a divisor of $n$ and  gives a  hint about possible subfields.
 **  If a prime $p$ divides <m> then no  reduction into a subfield whose order
 **  is $n /  p$  is possible.   In the  arithmetic   functions  you can  take
-**  $lcm(n_l,n_r) / gcd(n_l,n_r) = n / gcd(n_l,n_r)$.  If you can not provide
+**  $lcm(n_l,n_r) / gcd(n_l,n_r) = n / gcd(n_l,n_r)$.  If you cannot provide
 **  such a hint just pass 1.
 **
 **  A special case of the  reduction is the case that  the  cyclotomic  is  a
@@ -634,7 +634,7 @@ static Obj Cyclotomic(UInt n, UInt m)
     UInt                p;              /* prime factor                    */
     static UInt         lastN;          /* rember last n, dont recompute:  */
     static UInt         phi;            /* Euler phi(n)                    */
-    static UInt         isSqfree;       /* is n squarefree?                */
+    static BOOL         isSqfree;       /* is n squarefree?                */
     static UInt         nrp;            /* number of its prime factors     */
 
     /* get a pointer to the cyclotomic and a copy of n to factor           */
@@ -658,7 +658,7 @@ static Obj Cyclotomic(UInt n, UInt m)
         }
     }
 
-    /* if all exps are divisable 1 < k replace $e_n^i$ by $e_{n/k}^{i/k}$  */
+    /* if all exps are divisible 1 < k replace $e_n^i$ by $e_{n/k}^{i/k}$  */
     /* this is the only way a prime whose square divides $n$ could reduce  */
     if ( 1 < gcd ) {
         for ( i = 1; i < n/gcd; i++ ) {
@@ -672,12 +672,13 @@ static Obj Cyclotomic(UInt n, UInt m)
     if ( n != lastN ) {
         lastN = n;
         phi = n;  k = n;
-        isSqfree = 1;
+        isSqfree = TRUE;
         nrp = 0;
         for ( p = 2; p <= k; p++ ) {
             if ( k % p == 0 ) {
                 phi = phi * (p-1) / p;
-                if ( k % (p*p) == 0 )  isSqfree = 0;
+                if (k % (p * p) == 0)
+                    isSqfree = FALSE;
                 nrp++;
                 while ( k % p == 0 )  k = k / p;
             }
@@ -708,7 +709,7 @@ static Obj Cyclotomic(UInt n, UInt m)
         if ( nn % p != 0 )  continue;
         nn = nn / p;  while ( nn % p == 0 )  nn = nn / p;
 
-        /* if $p$ is not quadratic and the number of terms is divisiable   */
+        /* if $p$ is not quadratic and the number of terms is divisible   */
         /* $p-1$ and $p$ divides $m$ not then a reduction is possible      */
         if ( n % (p*p) != 0 && len % (p-1) == 0 && m % p != 0 ) {
 
@@ -784,7 +785,6 @@ static Obj Cyclotomic(UInt n, UInt m)
         /* 'CHANGED_BAG' not needed for last bag                           */
     }
 
-    /* return the result                                                   */
     return cyc;
 }
 
@@ -822,7 +822,7 @@ static UInt FindCommonField(UInt nl, UInt nr, UInt *ml, UInt *mr)
   n8 = (UInt8)nl * ((UInt8)*ml);  
   /* Check if it is too large for a small int */
   if (n8 > INT_INTOBJ_MAX)
-    ErrorMayQuit("This computation would require a cyclotomic field too large to be handled",0L, 0L);
+    ErrorMayQuit("This computation would require a cyclotomic field too large to be handled", 0, 0);
 
   /* Switch to UInt now we know we can*/
   n = (UInt)n8;
@@ -846,7 +846,7 @@ static UInt FindCommonField(UInt nl, UInt nr, UInt *ml, UInt *mr)
 
 static Obj FuncSetCyclotomicsLimit(Obj self, Obj newlimit)
 {
-    UInt ulimit = GetPositiveSmallInt("SetCyclotomicsLimit", newlimit);
+    UInt ulimit = GetPositiveSmallInt(SELF_NAME, newlimit);
 
     if (ulimit < CyclotomicsLimit) {
         ErrorMayQuit("SetCyclotomicsLimit: <newlimit> must not be less than "
@@ -965,7 +965,7 @@ static Obj SumCyc(Obj opL, Obj opR)
 */
 static Obj ZeroCyc(Obj op)
 {
-    return INTOBJ_INT( 0L );
+    return INTOBJ_INT(0);
 }
 
 
@@ -997,7 +997,7 @@ static Obj AInvCyc(Obj op)
     for ( i = 1; i < len; i++ ) {
         if ( ! IS_INTOBJ( cfs[i] ) || cfs[i] == INTOBJ_MIN ) {
             CHANGED_BAG( res );
-            prd = AINV( cfs[i] );
+            prd = AINV_SAMEMUT(cfs[i]);
             cfs = CONST_COEFS_CYC(op);
             exs = CONST_EXPOS_CYC(op,len);
             cfp = COEFS_CYC(res);
@@ -1011,7 +1011,6 @@ static Obj AInvCyc(Obj op)
     }
     CHANGED_BAG( res );
 
-    /* return the result                                                   */
     return res;
 }
 
@@ -1172,27 +1171,19 @@ static Obj ProdCycInt(Obj opL, Obj opR)
 
     /* otherwise multiply every coefficent                                 */
     else {
-        hdP = NewBag( T_CYC, SIZE_CYC(opL) * (sizeof(Obj)+sizeof(UInt4)) );
-        SET_NOF_CYC(hdP, NOF_CYC(opL));
+        len = SIZE_OBJ(opL);
+        hdP = NewBag(T_CYC, len);
+        memcpy( ADDR_OBJ(hdP), CONST_ADDR_OBJ(opL), len);
         len = SIZE_CYC(opL);
-        cfs = CONST_COEFS_CYC(opL);
-        exs = CONST_EXPOS_CYC(opL,len);
         cfp = COEFS_CYC(hdP);
-        exp = EXPOS_CYC(hdP,len);
         for ( i = 1; i < len; i++ ) {
-            CHANGED_BAG( hdP );
-            prd = PROD( cfs[i], opR );
-            cfs = CONST_COEFS_CYC(opL);
-            exs = CONST_EXPOS_CYC(opL,len);
+            prd = PROD( cfp[i], opR );
             cfp = COEFS_CYC(hdP);
-            exp = EXPOS_CYC(hdP,len);
             cfp[i] = prd;
-            exp[i] = exs[i];
+            CHANGED_BAG( hdP );
         }
-        CHANGED_BAG( hdP );
     }
 
-    /* return the result                                                   */
     return hdP;
 }
 
@@ -1340,7 +1331,7 @@ static Obj ProdCyc(Obj opL, Obj opR)
 */
 static Obj OneCyc(Obj op)
 {
-    return INTOBJ_INT( 1L );
+    return INTOBJ_INT(1);
 }
 
 
@@ -1463,7 +1454,7 @@ static Obj PowCyc(Obj opL, Obj opR)
     /* otherwise compute the power with repeated squaring                  */
     else {
 
-        /* if neccessary invert the cyclotomic                             */
+        /* if necessary invert the cyclotomic                             */
         if ( exp < 0 ) {
             opL = InvCyc( opL );
             exp = -exp;
@@ -1479,7 +1470,6 @@ static Obj PowCyc(Obj opL, Obj opR)
 
     }
 
-    /* return the result                                                   */
     return pow;
 }
 
@@ -1506,7 +1496,6 @@ static Obj FuncE(Obj self, Obj n)
         return DoOperation1Args( self, n );
     }
 
-    /* get and check the argument                                          */
     GetPositiveSmallInt("E", n);
 
     /* for $e_1$ return 1 and for $e_2$ return -1                          */
@@ -1630,9 +1619,8 @@ static Obj AttrCONDUCTOR(Obj self, Obj cyc)
         return DoAttribute( ConductorAttr, cyc );
     }
 
-    /* check the argument                                                  */
     if (!IS_CYC(cyc) && !IS_SMALL_LIST(cyc)) {
-        RequireArgument("Conductor", cyc,
+        RequireArgument(SELF_NAME, cyc,
                         "must be a cyclotomic or a small list");
     }
 
@@ -1701,9 +1689,8 @@ static Obj FuncCOEFFS_CYC(Obj self, Obj cyc)
         return DoOperation1Args( self, cyc );
     }
 
-    /* check the argument                                                  */
     if (!IS_CYC(cyc)) {
-        RequireArgument("COEFFSCYC", cyc, "must be a cyclotomic");
+        RequireArgument(SELF_NAME, cyc, "must be a cyclotomic");
     }
 
     /* if <cyc> is rational just put it in a list of length 1              */
@@ -1727,7 +1714,6 @@ static Obj FuncCOEFFS_CYC(Obj self, Obj cyc)
         /* 'CHANGED_BAG' not needed for last bag                           */
     }
 
-    /* return the result                                                   */
     return list;
 }
 
@@ -1892,7 +1878,6 @@ static Obj FuncGALOIS_CYC(Obj self, Obj cyc, Obj ord)
 
     }
 
-    /* return the result                                                   */
     return gal;
 }
 
@@ -1922,9 +1907,8 @@ static Obj FuncCycList(Obj self, Obj list)
         return DoOperation1Args( self, list );
     }
 
-    /* get and check the argument                                          */
     if ( ! IS_PLIST( list ) || ! IS_DENSE_LIST( list ) ) {
-        RequireArgument("CycList", list, "must be a dense plain list");
+        RequireArgument(SELF_NAME, list, "must be a dense plain list");
     }
 
     /* enlarge the buffer if necessary                                     */
@@ -1939,7 +1923,7 @@ static Obj FuncCycList(Obj self, Obj list)
             // reset ResultCyc, otherwise the next operation using it will see
             // our left-over garbage data
             SET_LEN_PLIST( ResultCyc, 0 );
-            RequireArgumentEx("CycList", val, 0,
+            RequireArgumentEx(SELF_NAME, val, 0,
                               "each entry must be a rational");
         }
         res[i] = val;
@@ -1966,10 +1950,11 @@ static void MarkCycSubBags(Obj cyc)
 
 /****************************************************************************
 **
-*F  SaveCyc() . . . . . . . . . . . . . . . . . . . . . .  save a cyclotyomic
+*F  SaveCyc() . . . . . . . . . . . . . . . . . . . . . . . save a cyclotomic
 **
 **  We do not save the XXX_CYC field, since it is not used.
 */
+#ifdef GAP_ENABLE_SAVELOAD
 static void SaveCyc(Obj cyc)
 {
   UInt len, i;
@@ -1984,13 +1969,16 @@ static void SaveCyc(Obj cyc)
   for (i = 1; i < len; i++)
     SaveUInt4(*expos++);
 }
+#endif
+
 
 /****************************************************************************
 **
-*F  LoadCyc() . . . . . . . . . . . . . . . . . . . . . .  load a cyclotyomic
+*F  LoadCyc() . . . . . . . . . . . . . . . . . . . . . . . load a cyclotomic
 **
 **  We do not load the XXX_CYC field, since it is not used.
 */
+#ifdef GAP_ENABLE_SAVELOAD
 static void LoadCyc(Obj cyc)
 {
   UInt len, i;
@@ -2005,6 +1993,7 @@ static void LoadCyc(Obj cyc)
   for (i = 1; i < len; i++)
     *expos++ = LoadUInt4();
 }
+#endif
 
 
 /****************************************************************************
@@ -2054,11 +2043,11 @@ static StructGVarAttr GVarAttrs [] = {
 */
 static StructGVarOper GVarOpers [] = {
 
-    GVAR_OPER(E, 1, "n", &EOper),
-    GVAR_OPER(IS_CYC_INT, 1, "obj", &IsCycIntOper),
-    GVAR_OPER(COEFFS_CYC, 1, "cyc", &CoeffsCycOper),
-    GVAR_OPER(GALOIS_CYC, 2, "cyc, n", &GaloisCycOper),
-    GVAR_OPER(CycList, 1, "list", &CycListOper),
+    GVAR_OPER_1ARGS(E, n, &EOper),
+    GVAR_OPER_1ARGS(IS_CYC_INT, obj, &IsCycIntOper),
+    GVAR_OPER_1ARGS(COEFFS_CYC, cyc, &CoeffsCycOper),
+    GVAR_OPER_2ARGS(GALOIS_CYC, cyc, n, &GaloisCycOper),
+    GVAR_OPER_1ARGS(CycList, list, &CycListOper),
     { 0, 0, 0, 0, 0, 0 }
 
 };
@@ -2069,8 +2058,8 @@ static StructGVarOper GVarOpers [] = {
 *V  GVarFuncs . . . . . . . . . . . . . . . . .  list of functions to export
 */
 static StructGVarFunc GVarFuncs [] = {
-  GVAR_FUNC(SetCyclotomicsLimit, 1, "newlimit"),
-  GVAR_FUNC(GetCyclotomicsLimit, 0, ""),
+  GVAR_FUNC_1ARGS(SetCyclotomicsLimit, newlimit),
+  GVAR_FUNC_0ARGS(GetCyclotomicsLimit),
   { 0, 0, 0, 0, 0 }
 };
 
@@ -2104,9 +2093,11 @@ static Int InitKernel (
     InitHdlrOpersFromTable( GVarOpers );
     InitHdlrFuncsFromTable( GVarFuncs );
 
+#ifdef GAP_ENABLE_SAVELOAD
     /* and the saving function                                             */
     SaveObjFuncs[ T_CYC ] = SaveCyc;
     LoadObjFuncs[ T_CYC ] = LoadCyc;
+#endif
 
     /* install the evaluation and print function                           */
     PrintObjFuncs[ T_CYC ] = PrintCyc;
@@ -2124,14 +2115,14 @@ static Int InitKernel (
     LtFuncs[   T_CYC    ][ T_RAT    ] = LtCycNot;
 
     /* install the unary arithmetic methods                                */
-    ZeroFuncs[ T_CYC ] = ZeroCyc;
+    ZeroSameMutFuncs[T_CYC] = ZeroCyc;
     ZeroMutFuncs[ T_CYC ] = ZeroCyc;
-    AInvFuncs[ T_CYC ] = AInvCyc;
+    AInvSameMutFuncs[T_CYC] = AInvCyc;
     AInvMutFuncs[ T_CYC ] = AInvCyc;
     OneFuncs [ T_CYC ] = OneCyc;
-    OneMutFuncs [ T_CYC ] = OneCyc;
+    OneSameMut[T_CYC] = OneCyc;
     InvFuncs [ T_CYC ] = InvCyc;
-    InvMutFuncs [ T_CYC ] = InvCyc;
+    InvSameMutFuncs[T_CYC] = InvCyc;
 
     /* install the arithmetic methods                                      */
     SumFuncs[  T_CYC    ][ T_CYC    ] = SumCyc;
@@ -2166,7 +2157,6 @@ static Int InitKernel (
 #ifdef HPCGAP
     MakeBagTypePublic(T_CYC);
 #endif
-    /* return success                                                      */
     return 0;
 }
 
@@ -2187,7 +2177,6 @@ static Int InitLibrary (
     InitGVarOpersFromTable( GVarOpers );
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -2198,7 +2187,6 @@ static Int InitModuleState(void)
     LastECyc = 0;
     LastNCyc = 0;
 
-    // return success
     return 0;
 }
 

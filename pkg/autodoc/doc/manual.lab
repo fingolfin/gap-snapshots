@@ -1,0 +1,119 @@
+\GAPDocLabFile{autodoc}
+\makelabel{autodoc:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{autodoc:Abstract}{}{X7AA6C5737B711C89}
+\makelabel{autodoc:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{autodoc:Acknowledgements}{}{X82A988D47DFAFCFA}
+\makelabel{autodoc:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{autodoc:Getting started using AutoDoc}{1}{X7A0D7AA484F466E1}
+\makelabel{autodoc:Creating a package manual from scratch}{1.1}{X7BFBC6907B26AA95}
+\makelabel{autodoc:Documenting code with AutoDoc}{1.2}{X87A00EED866E22E8}
+\makelabel{autodoc:Using AutoDoc in an existing GAPDoc manual}{1.3}{X7FA614637B807F4D}
+\makelabel{autodoc:Using AutoDoc on a complete GAPDoc manual}{1.3.1}{X7F3CEB097AF47C1E}
+\makelabel{autodoc:Setting different GAPDoc options}{1.3.2}{X7D0DDF2284F2D24A}
+\makelabel{autodoc:Checklist for converting an existing GAPDoc manual to use AutoDoc}{1.3.3}{X83448D91868D7994}
+\makelabel{autodoc:Scaffolds}{1.4}{X8524193D824CDE0D}
+\makelabel{autodoc:Generating a title page}{1.4.1}{X7CF22DE28478316F}
+\makelabel{autodoc:Generating the main XML file}{1.4.2}{X7CD72CC780874FD5}
+\makelabel{autodoc:What data is used from PackageInfo.g?}{1.4.3}{X799956EA85D3FC15}
+\makelabel{autodoc:AutoDoc worksheets}{1.5}{X80ED3C2A78146AD1}
+\makelabel{autodoc:AutoDoc documentation comments}{2}{X87668C487B1A2094}
+\makelabel{autodoc:Documenting declarations}{2.1}{X871482CE838C68F6}
+\makelabel{autodoc:@Description descr}{2.1.1}{X7F1D85188262A827}
+\makelabel{autodoc:@Returns retval}{2.1.2}{X7DCAB2F87E8FAE90}
+\makelabel{autodoc:@Arguments args}{2.1.3}{X81DAA454857F7971}
+\makelabel{autodoc:@Group grpname}{2.1.4}{X8677FE8F80C00B14}
+\makelabel{autodoc:@Label label}{2.1.5}{X7B0E20A27D64DF6F}
+\makelabel{autodoc:@ChapterInfo chapter, section}{2.1.8}{X78938EE37A532FFA}
+\makelabel{autodoc:Other documentation comments}{2.2}{X8152FEF9844B1ACD}
+\makelabel{autodoc:@Chapter name}{2.2.1}{X823E613385D09F6F}
+\makelabel{autodoc:@Section name}{2.2.2}{X78AA98BA7E0635D0}
+\makelabel{autodoc:@Subsection name}{2.2.3}{X7FD77434802A3580}
+\makelabel{autodoc:@BeginGroup [grpname]}{2.2.4}{X7D3060C17EDBCED1}
+\makelabel{autodoc:@EndGroup}{2.2.5}{X7C17EB007FD42C87}
+\makelabel{autodoc:@GroupTitle title}{2.2.6}{X82FB96F37FAE8167}
+\makelabel{autodoc:@Level lvl}{2.2.7}{X7BF81EAF80D1A4B5}
+\makelabel{autodoc:@ResetLevel}{2.2.8}{X7C6723D57F424215}
+\makelabel{autodoc:@BeginExample and @EndExample}{2.2.9}{X83D6DA3B83D3436C}
+\makelabel{autodoc:@BeginExampleSession and @EndExampleSession}{2.2.10}{X861E2E778510CAF7}
+\makelabel{autodoc:@BeginLog and @EndLog}{2.2.11}{X81A2D44D834C0A17}
+\makelabel{autodoc:@BeginLogSession and @EndLogSession}{2.2.12}{X7BADE876794FF309}
+\makelabel{autodoc:@DoNotReadRestOfFile}{2.2.13}{X78DC644E8519280C}
+\makelabel{autodoc:@BeginChunk name, @EndChunk, and @InsertChunk name}{2.2.14}{X83C01F9B7FA1C973}
+\makelabel{autodoc:@BeginCode name, @EndCode, and @InsertCode name}{2.2.15}{X7D3671AF86B995B9}
+\makelabel{autodoc:@LatexOnly text, @BeginLatexOnly, and @EndLatexOnly}{2.2.16}{X8033B34F80A12A10}
+\makelabel{autodoc:@NotLatex text, @BeginNotLatex, and @EndNotLatex}{2.2.17}{X7EF303147F1BCC22}
+\makelabel{autodoc:Title page commands}{2.3}{X841E3AD584F5385C}
+\makelabel{autodoc:Plain text files}{2.4}{X828AE38F80CB02E7}
+\makelabel{autodoc:Grouping}{2.5}{X7D7A38F87BC40C48}
+\makelabel{autodoc:A family of operations}{2.5.1}{X79BF060F8436C586}
+\makelabel{autodoc:Level}{2.6}{X8209AFDE8209AFDE}
+\makelabel{autodoc:Markdown-like formatting of text in AutoDoc}{2.7}{X79558A2F7FE187B4}
+\makelabel{autodoc:Lists}{2.7.1}{X7B256AE5780F140A}
+\makelabel{autodoc:Math modes}{2.7.2}{X871412737A0E12E2}
+\makelabel{autodoc:Emphasize}{2.7.3}{X7ED0330479146EFC}
+\makelabel{autodoc:Inline code}{2.7.4}{X838CCDEB7E0ECEE2}
+\makelabel{autodoc:Deprecated commands}{2.8}{X78CA9E5C7F494C19}
+\makelabel{autodoc:AutoDoc worksheets}{3}{X80ED3C2A78146AD1}
+\makelabel{autodoc:Worksheets}{3.1}{X801D4A2F8292704C}
+\makelabel{autodoc:AutoDoc}{4}{X7CBD8AAF7DCEF352}
+\makelabel{autodoc:The AutoDoc() function}{4.1}{X863584DB8497D8BA}
+\makelabel{autodoc:Examples}{4.2}{X7A489A5D79DA9E5C}
+\makelabel{autodoc:Bibliography}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{autodoc:References}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{autodoc:Index}{Ind}{X83A0356F839C696F}
+\makelabel{autodoc:makedoc.g}{1.1}{X7BFBC6907B26AA95}
+\makelabel{autodoc:}{1.3.3}{X83448D91868D7994}
+\makelabel{autodoc:}{1.3.3}{X83448D91868D7994}
+\makelabel{autodoc:}{1.3.3}{X83448D91868D7994}
+\makelabel{autodoc:}{1.3.3}{X83448D91868D7994}
+\makelabel{autodoc:}{1.3.3}{X83448D91868D7994}
+\makelabel{autodoc:}{1.3.3}{X83448D91868D7994}
+\makelabel{autodoc:}{1.3.3}{X83448D91868D7994}
+\makelabel{autodoc:@Description descr}{2.1.1}{X7F1D85188262A827}
+\makelabel{autodoc:@Returns retval}{2.1.2}{X7DCAB2F87E8FAE90}
+\makelabel{autodoc:@Arguments args}{2.1.3}{X81DAA454857F7971}
+\makelabel{autodoc:@Group grpname}{2.1.4}{X8677FE8F80C00B14}
+\makelabel{autodoc:@Label label}{2.1.5}{X7B0E20A27D64DF6F}
+\makelabel{autodoc:AProperty testlabel}{2.1.6}{X83B63B847B5199CF}
+\makelabel{autodoc:AProperty for IsObject}{2.1.7}{X78A9022A7D5CB20E}
+\makelabel{autodoc:@ChapterInfo}{2.1.8}{X78938EE37A532FFA}
+\makelabel{autodoc:@Chapter}{2.2.1}{X823E613385D09F6F}
+\makelabel{autodoc:@ChapterLabel}{2.2.1}{X823E613385D09F6F}
+\makelabel{autodoc:@ChapterTitle}{2.2.1}{X823E613385D09F6F}
+\makelabel{autodoc:@Section}{2.2.2}{X78AA98BA7E0635D0}
+\makelabel{autodoc:@SectionLabel}{2.2.2}{X78AA98BA7E0635D0}
+\makelabel{autodoc:@SectionTitle}{2.2.2}{X78AA98BA7E0635D0}
+\makelabel{autodoc:@Subsection}{2.2.3}{X7FD77434802A3580}
+\makelabel{autodoc:@SubsectionLabel}{2.2.3}{X7FD77434802A3580}
+\makelabel{autodoc:@SubsectionTitle}{2.2.3}{X7FD77434802A3580}
+\makelabel{autodoc:@BeginGroup}{2.2.4}{X7D3060C17EDBCED1}
+\makelabel{autodoc:@EndGroup}{2.2.5}{X7C17EB007FD42C87}
+\makelabel{autodoc:@GroupTitle}{2.2.6}{X82FB96F37FAE8167}
+\makelabel{autodoc:@Level}{2.2.7}{X7BF81EAF80D1A4B5}
+\makelabel{autodoc:@ResetLevel}{2.2.8}{X7C6723D57F424215}
+\makelabel{autodoc:@BeginExample}{2.2.9}{X83D6DA3B83D3436C}
+\makelabel{autodoc:@EndExample}{2.2.9}{X83D6DA3B83D3436C}
+\makelabel{autodoc:@BeginExampleSession}{2.2.10}{X861E2E778510CAF7}
+\makelabel{autodoc:@EndExampleSession}{2.2.10}{X861E2E778510CAF7}
+\makelabel{autodoc:@BeginLog}{2.2.11}{X81A2D44D834C0A17}
+\makelabel{autodoc:@EndLog}{2.2.11}{X81A2D44D834C0A17}
+\makelabel{autodoc:@BeginLogSession}{2.2.12}{X7BADE876794FF309}
+\makelabel{autodoc:@EndLogSession}{2.2.12}{X7BADE876794FF309}
+\makelabel{autodoc:@DoNotReadRestOfFile}{2.2.13}{X78DC644E8519280C}
+\makelabel{autodoc:@BeginChunk name}{2.2.14}{X83C01F9B7FA1C973}
+\makelabel{autodoc:@EndChunk}{2.2.14}{X83C01F9B7FA1C973}
+\makelabel{autodoc:@InsertChunk name}{2.2.14}{X83C01F9B7FA1C973}
+\makelabel{autodoc:@BeginCode name}{2.2.15}{X7D3671AF86B995B9}
+\makelabel{autodoc:@EndCode}{2.2.15}{X7D3671AF86B995B9}
+\makelabel{autodoc:@InsertCode name}{2.2.15}{X7D3671AF86B995B9}
+\makelabel{autodoc:@LatexOnly text}{2.2.16}{X8033B34F80A12A10}
+\makelabel{autodoc:@BeginLatexOnly}{2.2.16}{X8033B34F80A12A10}
+\makelabel{autodoc:@EndLatexOnly}{2.2.16}{X8033B34F80A12A10}
+\makelabel{autodoc:@NotLatex text}{2.2.17}{X7EF303147F1BCC22}
+\makelabel{autodoc:@BeginNotLatex}{2.2.17}{X7EF303147F1BCC22}
+\makelabel{autodoc:@EndNotLatex}{2.2.17}{X7EF303147F1BCC22}
+\makelabel{autodoc:FirstOperation for IsInt}{2.5.1}{X79BF060F8436C586}
+\makelabel{autodoc:SecondOperation for IsInt, IsGroup}{2.5.1}{X79BF060F8436C586}
+\makelabel{autodoc:ThirdOperation for IsGroup, IsInt}{2.5.1}{X79BF060F8436C586}
+\makelabel{autodoc:AutoDocWorksheet}{3.1.1}{X809FE4137C08B28D}
+\makelabel{autodoc:AutoDoc}{4.1.1}{X7CBD8AAF7DCEF352}

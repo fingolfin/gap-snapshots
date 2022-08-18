@@ -3,7 +3,7 @@
   
   [33X[0;0YIn  this  chapter  we  will show some computations with groups. The examples
   deal  mostly with permutation groups, because they are the easiest to input.
-  The  functions mentioned here, like [2XGroup[102X ([14XReference: Group Libraries[114X), [2XSize[102X
+  The   functions   mentioned   here,  like  [2XGroup[102X  ([14XReference:  Group[114X),  [2XSize[102X
   ([14XReference:  Size[114X) or [2XSylowSubgroup[102X ([14XReference: SylowSubgroup[114X), however, are
   the  same for all kinds of groups, although the algorithms which compute the
   information of course will be different in most cases.[133X
@@ -120,9 +120,9 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xhom := NaturalHomomorphismByNormalSubgroup( norm, elab );[127X[104X
-    [4X[28X[ (2,3)(6,7), (3,4)(7,8), (3,5)(4,6), (5,7)(6,8), (5,6)(7,8),[128X[104X
+    [4X[28X[ (2,3)(6,7), (3,4)(7,8), (3,5)(4,6), (5,7)(6,8), (5,6)(7,8), [128X[104X
     [4X[28X  (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,7)(6,8), (1,5)(2,6)(3,7)(4,8)[128X[104X
-    [4X[28X ] -> [ (1,2)(5,6), (2,3)(6,7), (2,4)(3,5), (4,6)(5,7), (4,5)(6,7),[128X[104X
+    [4X[28X ] -> [ (1,2)(5,6), (2,3)(6,7), (2,4)(3,5), (4,6)(5,7), (4,5)(6,7), [128X[104X
     [4X[28X  (), (), () ][128X[104X
     [4X[25Xgap>[125X [27Xf := Image( hom );[127X[104X
     [4X[28XGroup([ (1,2)(5,6), (2,3)(6,7), (2,4)(3,5), (4,6)(5,7), (4,5)(6,7),[128X[104X
@@ -131,8 +131,8 @@
     [4X[28X168[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe  factor  group  is  again  represented as a permutation group (its first
-  three generators are trivial, meaning that the first three generators of the
+  [33X[0;0YThe factor group is again represented as a permutation group (its last three
+  generators  are  trivial,  meaning  that  the  last  three generators of the
   preimage  are  in  the  kernel  of  [10Xhom[110X). However, the action domain of this
   factor  group  has  nothing  to  do with the action domain of [10Xnorm[110X. (It only
   happens  that  both  are  subsets  of  the natural numbers.) We can now form
@@ -163,10 +163,11 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe  factor  group  [10Xf[110X  is a simple group, i.e., it has no non-trivial normal
-  subgroups.  [5XGAP[105X  can detect this fact, and it can then also find the name by
-  which  this  simple group is known among group theorists. (Such names are of
-  course not available for non-simple groups.)[133X
+  [33X[0;0YThe  factor group [10Xf[110X is a simple group, i.e., it is a non-trivial group whose
+  only  normal  subgroups  are its trivial subgroup and itself. [5XGAP[105X can detect
+  this  fact, and it can then also find the name by which this simple group is
+  known  among  group  theorists.  (Such names are of course not available for
+  non-simple groups.)[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XIsSimple( f ); IsomorphismTypeInfoFiniteSimpleGroup( f );[127X[104X
@@ -230,10 +231,6 @@
   [33X[0;0YIn  order  to  get another representation of [10Xa8[110X, we consider another action,
   namely that on the elements of a certain conjugacy class by conjugation.[133X
   
-  [33X[0;0YIn  the following example we temporarily increase the line length limit from
-  its default value 80 to 82 in order to make the long expression fit into one
-  line.[133X
-  
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xccl := ConjugacyClasses( a8 );; Length( ccl );[127X[104X
     [4X[28X14[128X[104X
@@ -272,9 +269,8 @@
   natural  action  of permutations on positive integers (and exponentiation of
   integers  as  well, of course). It is in fact the default action and will be
   supplied  by  the  system if not given. Another common action is for example
-  always   assumes   [2XOnRight[102X   ([14XReference:   OnRight[114X),   which   means   right
-  multiplication,  defined as [22Xd[122X[10X * [110X[22Xg[122X. (Group actions in [5XGAP[105X are always from the
-  right.)[133X
+  [2XOnRight[102X ([14XReference: OnRight[114X), which means right multiplication, defined as [22Xd[122X[10X
+  * [110X[22Xg[122X. (Group actions in [5XGAP[105X are always from the right.)[133X
   
   [33X[0;0YWe now have a permutation representation [10Xop[110X on 112 points, which we test for
   primitivity.  If  it  is not primitive, we can obtain a minimal block system
@@ -293,7 +289,7 @@
   this  is not so easy, for example would the default domain of [10XGroup( (2,3,4)
   )[110X  be  [10X[  1  ..  4 ][110X or [10X[ 2 .. 4 ][110X? To avoid confusion, all action functions
   require  that  you  specify the domain of action. If we had specified [10X[ 1 ..
-  113  ][110X  in  the primitivity test above, point 113 would have been a fixpoint
+  113 ][110X in the primitivity test above, point 113 would have been a fixed point
   (and the action would not even have been transitive).[133X
   
   [33X[0;0YNow  [10Xblocks[110X  is  a  list  of blocks (i.e., a list of lists), which we do not
@@ -314,8 +310,9 @@
   
   [33X[0;0YNote  that  we give a third argument (the action function [2XOnSets[102X ([14XReference:
   OnSets[114X)) to indicate that the action is not the default action on points but
-  an  action  on  sets of elements given as sorted lists. (Section [14X'Reference:
-  Basic Actions'[114X lists all actions that are pre-defined by [5XGAP[105X.)[133X
+  an   action   on   sets   of   elements  given  as  strictly  sorted  lists.
+  (Section [14X'Reference:  Basic  Actions'[114X lists all actions that are pre-defined
+  by [5XGAP[105X.)[133X
   
   [33X[0;0YThe  action  of [10Xop[110X on the given block system gave us a new representation on
   56  points  which  is  primitive,  i.e.,  the  point stabilizer is a maximal
@@ -479,11 +476,10 @@
   
   [1X5.3 [33X[0;0YSubgroups as Stabilizers[133X[101X
   
-  [33X[0;0YAction  functions  can  also  be used without constructing external sets. We
-  will try to find several subgroups in [10Xa8[110X as stabilizers of such actions. One
-  subgroup  is  immediately available, namely the stabilizer of one point. The
-  index  of the stabilizer must of course be equal to the length of the orbit,
-  i.e., 8.[133X
+  [33X[0;0YAction  functions  can  also  be used to construct subgroups. We will try to
+  find several subgroups in [10Xa8[110X as stabilizers of such actions. One subgroup is
+  immediately  available, namely the stabilizer of one point. The index of the
+  stabilizer must of course be equal to the length of the orbit, i.e., 8.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xu8 := Stabilizer( a8, 1 );[127X[104X
@@ -603,7 +599,7 @@
   stabilizer in the natural action of [10Xa8[110X on eight points.[133X
   
   [33X[0;0YHere  is  a  [13Xwarning[113X:  If  you  specify  [2XOnSets[102X ([14XReference: OnSets[114X) as third
-  argument to a function like [2XStabilizer[102X ([14XReference: Stabilizers[114X), you have to
+  argument  to a function like [2XStabilizer[102X ([14XReference: Stabilizer[114X), you have to
   make  sure  that  the  point  (i.e.  the  second  argument) is indeed a set.
   Otherwise  you  will  get a puzzling error message or even wrong results! In
   the  above  example,  the  second  argument [10Xblocks[1][110X came from the function
@@ -631,7 +627,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [33X[0;0Y[2XStabilizer[102X ([14XReference: Stabilizers[114X) is not only applicable to groups like [10Xa8[110X
+  [33X[0;0Y[2XStabilizer[102X  ([14XReference: Stabilizer[114X) is not only applicable to groups like [10Xa8[110X
   but  also  to  their  subgroups  like  [10Xu56[110X.  So another method to find a new
   subgroup is to compute the stabilizer of another point in [10Xu56[110X. Note that [10Xu56[110X
   already leaves 1 and 2 fixed.[133X
@@ -725,11 +721,12 @@
   [4X[32X[104X
   
   [33X[0;0YOf  course  the  stabilizer  [10Xu105[110X  is in fact the centralizer of the element
-  [10X(1,2)(3,4)(5,6)(7,8)[110X.  [2XStabilizer[102X  ([14XReference: Stabilizers[114X) notices that and
+  [10X(1,2)(3,4)(5,6)(7,8)[110X.  [2XStabilizer[102X  ([14XReference:  Stabilizer[114X) notices that and
   computes  the  stabilizer  using  the  centralizer algorithm for permutation
   groups. In the usual way we now look for the subgroups above [10Xu105[110X.[133X
   
   [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xorb:=Set(orb);;[127X[104X
     [4X[25Xgap>[125X [27Xblocks := Blocks( a8, orb );; Length( blocks );[127X[104X
     [4X[28X15[128X[104X
     [4X[25Xgap>[125X [27XSet(blocks[1]);[127X[104X
@@ -745,8 +742,8 @@
   corresponds to [10Xu105[110X. To get the subgroup above [10Xu105[110X that has index 15 in [10Xa8[110X,
   we  must  form  the  closure  of  [10Xu105[110X  with  an  element  of the coset that
   corresponds  to  any  other point in the first block. If we choose the point
-  [10X(1,3)(2,4)(5,8)(6,7)[110X,   we   must   use   an   element   of   [10Xa8[110X  that  maps
-  [10X(1,2)(3,4)(5,6)(7,8)[110X      to      [10X(1,3)(2,4)(5,8)(6,7)[110X.     The     function
+  [10X(1,3)(2,4)(5,7)(6,8)[110X,   we   must   use   an   element   of   [10Xa8[110X  that  maps
+  [10X(1,2)(3,4)(5,6)(7,8)[110X      to      [10X(1,3)(2,4)(5,7)(6,8)[110X.     The     function
   [2XRepresentativeAction[102X ([14XReference: RepresentativeAction[114X) does what we need. It
   takes  a  group and two points and returns an element of the group that maps
   the  first  point  to  the second. In fact it also allows you to specify the
@@ -757,18 +754,18 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xrep := RepresentativeAction( a8, (1,2)(3,4)(5,6)(7,8),[127X[104X
-    [4X[25X>[125X [27X                                       (1,3)(2,4)(5,8)(6,7) );[127X[104X
-    [4X[28X(1,5,7,2,8,4,3)[128X[104X
+    [4X[25X>[125X [27X                                       (1,3)(2,4)(5,7)(6,8) );[127X[104X
+    [4X[28X(2,3)(6,7)[128X[104X
     [4X[25Xgap>[125X [27Xu15 := ClosureGroup( u105, rep );; Index( a8, u15 );[127X[104X
     [4X[28X15[128X[104X
   [4X[32X[104X
   
   [33X[0;0Y[10Xu15[110X  is of course a maximal subgroup, because [10Xa8[110X has no subgroups of index 3
   or 5.  There  is  in  fact another class of subgroups of index 15 above [10Xu105[110X
-  that we get by adding [10X(2,3)(6,7)[110X to [10Xu105[110X.[133X
+  that we get by adding [10X(2,3)(6,8)[110X to [10Xu105[110X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xu15b := ClosureGroup( u105, (2,3)(6,7) );; Index( a8, u15b );[127X[104X
+    [4X[25Xgap>[125X [27Xu15b := ClosureGroup( u105, (2,3)(6,8) );; Index( a8, u15b );[127X[104X
     [4X[28X15[128X[104X
     [4X[25Xgap>[125X [27XRepresentativeAction( a8, u15, u15b );[127X[104X
     [4X[28Xfail[128X[104X
@@ -955,10 +952,10 @@
   
   [1X5.5 [33X[0;0YNice Monomorphisms[133X[101X
   
-  [33X[0;0YFor  some  types  of  groups,  the best method to calculate in an isomorphic
-  group  in  a  [21Xbetter[121X  representation  (say, a permutation group). We call an
-  injective  homomorphism,  that  will  give  such  an isomorphic image a [21Xnice
-  monomorphism[121X.[133X
+  [33X[0;0YFor  some  types of groups, the best method for calculations in it is to use
+  instead  an  isomorphic group in a [21Xbetter[121X representation (say, a permutation
+  group). We call an injective homomorphism, that will give such an isomorphic
+  image a [21Xnice monomorphism[121X.[133X
   
   [33X[0;0YFor  example  in  the  case  of a matrix group we can take the action on the
   underlying   vector   space   (or  a  suitable  subset)  to  obtain  such  a
@@ -1031,8 +1028,8 @@
     [4X[25Xgap>[125X [27Xniceaut := NiceObject( aut );[127X[104X
     [4X[28XGroup([ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ])[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismGroups( niceaut, SymmetricGroup( 4 ) );[127X[104X
-    [4X[28X[ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ] ->[128X[104X
-    [4X[28X[ (1,2,3,4), (1,3,4), (1,3)(2,4), (1,4)(2,3) ][128X[104X
+    [4X[28X[ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ] -> [128X[104X
+    [4X[28X[ (1,4,2,3), (1,4,2), (1,2)(3,4), (1,3)(2,4) ][128X[104X
   [4X[32X[104X
   
   [33X[0;0YThe  range  of  a  nice  monomorphism  is in most cases a permutation group,

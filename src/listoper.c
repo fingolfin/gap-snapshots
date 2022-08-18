@@ -55,7 +55,7 @@ Int             EqListList (
     lenL = LEN_LIST( listL );
     lenR = LEN_LIST( listR );
     if ( lenL != lenR ) {
-        return 0L;
+        return 0;
     }
 
     /* loop over the elements and compare them                             */
@@ -63,18 +63,18 @@ Int             EqListList (
         elmL = ELMV0_LIST( listL, i );
         elmR = ELMV0_LIST( listR, i );
         if ( elmL == 0 && elmR != 0 ) {
-            return 0L;
+            return 0;
         }
         else if ( elmR == 0 && elmL != 0 ) {
-            return 0L;
+            return 0;
         }
         else if ( ! EQ( elmL, elmR ) ) {
-            return 0L;
+            return 0;
         }
     }
 
     /* no differences found, the lists are equal                           */
-    return 1L;
+    return 1;
 }
 
 static Obj FuncEQ_LIST_LIST_DEFAULT(Obj self, Obj listL, Obj listR)
@@ -110,10 +110,10 @@ Int             LtListList (
         elmL = ELMV0_LIST( listL, i );
         elmR = ELMV0_LIST( listR, i );
         if ( elmL == 0 && elmR != 0 ) {
-            return 1L;
+            return 1;
         }
         else if ( elmR == 0 && elmL != 0 ) {
-            return 0L;
+            return 0;
         }
         else if ( ! EQ( elmL, elmR ) ) {
             return LT( elmL, elmR );
@@ -139,7 +139,7 @@ static Obj FuncLT_LIST_LIST_DEFAULT(Obj self, Obj listL, Obj listR)
 */
 static Int InList(Obj objL, Obj listR)
 {
-  return Fail != POS_LIST( listR, objL, INTOBJ_INT(0L) );
+    return Fail != POS_LIST(listR, objL, INTOBJ_INT(0));
 }
 
 static Obj FuncIN_LIST_DEFAULT(Obj self, Obj obj, Obj list)
@@ -192,7 +192,6 @@ Obj             SumSclList (
           }
     }
 
-    /* return the result                                                   */
     return listS;
 }
 
@@ -223,7 +222,6 @@ Obj             SumListScl (
           }
     }
 
-    /* return the result                                                   */
     return listS;
 }
 
@@ -275,7 +273,6 @@ Obj             SumListList (
         }
     }
 
-    /* return the result                                                   */
     return listS;
 }
 
@@ -301,10 +298,10 @@ static Obj FuncSUM_LIST_LIST_DEFAULT(Obj self, Obj listL, Obj listR)
 *F  ZeroListDefault(<list>) . . . . . . . . . . . . . . . . .  zero of a list
 **
 **  'ZeroList' is the extended dispatcher for the zero involving lists.  That
-**  is, whenever zero for a list is called and  'ZeroFuncs' does not point to
-**  a special function, then 'ZeroList' is called.  'ZeroList' determines the
-**  extended   type of the  operand  and then  dispatches through 'ZeroFuncs'
-**  again.
+**  is, whenever zero for a list is called and 'ZeroSameMutFuncs' does not
+**  point to a special function, then 'ZeroList' is called. 'ZeroList'
+**  determines the extended type of the operand and then dispatches through
+**  'ZeroSameMutFuncs' again.
 **
 **  'ZeroListDefault' is a generic function for the zero.
 */
@@ -329,7 +326,7 @@ static Obj ZeroListDefault(Obj list)
       {
         Obj tmp = ELM0_LIST( list, i);
         if (tmp) {
-          tmp = ZERO(tmp);
+          tmp = ZERO_SAMEMUT(tmp);
           SET_ELM_PLIST( res, i,tmp );
           CHANGED_BAG( res);
         }
@@ -362,7 +359,6 @@ static Obj ZeroListDefault(Obj list)
           SET_FILT_LIST( res, FN_IS_NDENSE );
       }
 
-    /* return the result                                                   */
     return res;
 }
 
@@ -421,7 +417,6 @@ static Obj ZeroListMutDefault(Obj list)
           SET_FILT_LIST( res, FN_IS_NDENSE );
       }
 
-    /* return the result                                                   */
     return res;
 }
 
@@ -447,7 +442,7 @@ static Obj FuncZERO_ATTR_MAT(Obj self, Obj mat)
   len = LEN_LIST(mat);
   if (len == 0)
     return NewImmutableEmptyPlist();
-  zrow = ZERO(ELM_LIST(mat,1));
+  zrow = ZERO_SAMEMUT(ELM_LIST(mat,1));
   CheckedMakeImmutable(zrow);
   res = NEW_PLIST_IMM(T_PLIST_TAB_RECT, len);
   SET_LEN_PLIST(res,len);
@@ -463,9 +458,9 @@ static Obj FuncZERO_ATTR_MAT(Obj self, Obj mat)
 **
 **  'AInvList' is the extended dispatcher for  the additive inverse involving
 **  lists.  That is, whenever  the additive inverse for  lists is called  and
-**  'AInvFuncs' does not   point to a   special function, then  'AInvList' is
-**  called.  'AInvList' determines the extended  type of the operand and then
-**  dispatches through 'AInvFuncs' again.
+**  'AInvSameMutFuncs' does not point to a special function, then 'AInvList'
+**  is called.'AInvList' determines the extended type of the operand and then
+**  dispatches through 'AInvSameMutFuncs' again.
 **
 **  'AInvListDefault' is a generic function for the additive inverse.
 */
@@ -518,7 +513,6 @@ static Obj AInvMutListDefault(Obj list)
         else if (HAS_FILT_LIST(list, FN_IS_NDENSE))
           SET_FILT_LIST( res, FN_IS_NDENSE );
       }
-    /* return the result                                                   */
     return res;
 }
 
@@ -546,7 +540,7 @@ static Obj AInvListDefault(Obj list)
     for ( i = 1; i <= len; i++ ) {
         elm = ELM0_LIST( list, i );
         if (elm) {
-          elm = AINV( elm );
+          elm = AINV_SAMEMUT( elm );
           SET_ELM_PLIST( res, i, elm );
           CHANGED_BAG( res );
         }
@@ -579,7 +573,6 @@ static Obj AInvListDefault(Obj list)
         else if (HAS_FILT_LIST(list, FN_IS_NDENSE))
           SET_FILT_LIST( res, FN_IS_NDENSE );
       }
-    /* return the result                                                   */
     return res;
 }
 
@@ -645,7 +638,6 @@ Obj             DiffSclList (
          else if (HAS_FILT_LIST(listR, FN_IS_NDENSE))
            SET_FILT_LIST( listD, FN_IS_NDENSE );
       }
-    /* return the result                                                   */
     return listD;
 }
 
@@ -690,7 +682,6 @@ Obj             DiffListScl (
          else if (HAS_FILT_LIST(listL, FN_IS_NDENSE))
            SET_FILT_LIST( listD, FN_IS_NDENSE );
       }
-    /* return the result                                                   */
     return listD;
 }
 
@@ -754,7 +745,7 @@ Obj             DiffListList (
             if (mutD)
               elmD = AINV_MUT(elmR);
             else
-              elmD = AINV(elmR);
+              elmD = AINV_SAMEMUT(elmR);
           }
         else
           elmD = 0;
@@ -773,7 +764,6 @@ Obj             DiffListList (
              HAS_FILT_LIST(listL, FN_IS_DENSE))
       SET_FILT_LIST( listD, FN_IS_DENSE );
     
-    /* return the result                                                   */
     return listD;
 }
 
@@ -852,7 +842,6 @@ Obj             ProdSclList (
            SET_FILT_LIST( listP, FN_IS_NDENSE );
       }
 
-    /* return the result                                                   */
     return listP;
 }
 
@@ -893,7 +882,6 @@ Obj             ProdListScl (
          else if (HAS_FILT_LIST(listL, FN_IS_NDENSE))
            SET_FILT_LIST( listP, FN_IS_NDENSE );
       }
-    /* return the result                                                   */
     return listP;
 }
 
@@ -942,7 +930,6 @@ Obj             ProdListList (
     if (!listP)
       ErrorMayQuit("Inner product multiplication of lists: no summands", 0, 0);
     
-    /* return the result                                                   */
     return listP;
 }
 
@@ -1017,7 +1004,7 @@ static Obj OneMatrix(Obj mat, UInt mut)
     switch (mut) {
     case 0:
       zero = ZERO_MUT( ELM_LIST( ELM_LIST( mat, 1 ), 1 ) );
-      one  = ONE_MUT( zero );
+      one = ONE_SAMEMUT(zero);
       CheckedMakeImmutable(zero);
       CheckedMakeImmutable(one);
       ctype = rtype = T_PLIST+IMMUTABLE;
@@ -1025,7 +1012,7 @@ static Obj OneMatrix(Obj mat, UInt mut)
       
     case 1:
       zero = ZERO_MUT( ELM_LIST( ELM_LIST( mat, 1 ), 1 ) );
-      one  = ONE_MUT( zero );
+      one = ONE_SAMEMUT(zero);
       if (IS_MUTABLE_OBJ(mat))
         {
           ctype = T_PLIST;
@@ -1036,7 +1023,7 @@ static Obj OneMatrix(Obj mat, UInt mut)
       break;
 
     case 2:
-      zero = ZERO( ELM_LIST( ELM_LIST( mat, 1 ), 1 ) );
+      zero = ZERO_SAMEMUT( ELM_LIST( ELM_LIST( mat, 1 ), 1 ) );
       one  = ONE( zero );
       ctype = rtype = T_PLIST;
       break;
@@ -1120,7 +1107,7 @@ static Obj InvMatrix(Obj mat, UInt mut)
       {
       case 0:
         zero = ZERO_MUT( ELM_LIST( ELM_LIST( mat, 1 ), 1 ) );
-        one  = ONE_MUT( zero );
+        one = ONE_SAMEMUT(zero);
         ctype = rtype = T_PLIST+IMMUTABLE;
         CheckedMakeImmutable(zero);
         CheckedMakeImmutable(one);
@@ -1128,7 +1115,7 @@ static Obj InvMatrix(Obj mat, UInt mut)
         
       case 1:
         zero = ZERO_MUT( ELM_LIST( ELM_LIST( mat, 1 ), 1 ) );
-        one  = ONE_MUT( zero );
+        one = ONE_SAMEMUT(zero);
         if (IS_MUTABLE_OBJ(mat))
           {
             ctype = T_PLIST;
@@ -1139,7 +1126,7 @@ static Obj InvMatrix(Obj mat, UInt mut)
         break;
 
       case 2:
-        zero = ZERO( ELM_LIST( ELM_LIST( mat, 1 ), 1 ) );
+        zero = ZERO_SAMEMUT( ELM_LIST( ELM_LIST( mat, 1 ), 1 ) );
         one  = ONE( zero );
         ctype = rtype = T_PLIST;
         break;
@@ -1187,7 +1174,7 @@ static Obj InvMatrix(Obj mat, UInt mut)
         SET_ELM_PLIST( res, i, ELM_PLIST( res, k-len ) );
         SET_ELM_PLIST( res, k-len, row );
         if (mut < 2)
-          elm2 = INV_MUT( ELM_PLIST( row, k ) );
+          elm2 = INV_SAMEMUT( ELM_PLIST( row, k ) );
         else
           elm2 = INV( ELM_PLIST( row, k ) );
         for ( l = 1; l <= 2*len; l++ ) {
@@ -1202,7 +1189,7 @@ static Obj InvMatrix(Obj mat, UInt mut)
             if (mut < 2)
               elm = AINV_MUT( ELM_PLIST( row2, k ) );
             else
-              elm = AINV( ELM_PLIST( row2, k ) );
+              elm = AINV_SAMEMUT( ELM_PLIST( row2, k ) );
             if ( i != k-len && ! EQ(elm,zero) ) {
                 for ( l = 1; l <= 2*len; l++ ) {
                     elm2 = PROD( elm, ELM_PLIST( row, l ) );
@@ -1221,7 +1208,6 @@ static Obj InvMatrix(Obj mat, UInt mut)
         SHRINK_PLIST(  ELM_PLIST( res, i ), len );
     }
 
-    /* return the result                                                   */
     return res;
 }
 
@@ -1323,7 +1309,7 @@ static Obj FuncADD_ROW_VECTOR_3(Obj self, Obj list1, Obj list2, Obj mult)
   UInt i;
   UInt len = LEN_LIST(list1);
   Obj el1, el2;
-  RequireSameLength("AddRowVector", list1, list2);
+  RequireSameLength(SELF_NAME, list1, list2);
   for (i = 1; i <= len; i++)
     {
       el1 = ELMW_LIST(list1,i);
@@ -1351,7 +1337,7 @@ static Obj FuncADD_ROW_VECTOR_3_FAST(Obj self, Obj list1, Obj list2, Obj mult)
   UInt i;
   Obj e1,e2, prd, sum;
   UInt len = LEN_PLIST(list1);
-  RequireSameLength("AddRowVector", list1, list2);
+  RequireSameLength(SELF_NAME, list1, list2);
   for (i = 1; i <= len; i++)
     {
       e1 = ELM_PLIST(list1,i);
@@ -1387,7 +1373,7 @@ static Obj FuncADD_ROW_VECTOR_2(Obj self, Obj list1, Obj list2)
   UInt i;
   Obj el1,el2;
   UInt len = LEN_LIST(list1);
-  RequireSameLength("AddRowVector", list1, list2);
+  RequireSameLength(SELF_NAME, list1, list2);
   for (i = 1; i <= len; i++)
     {
       el1 = ELMW_LIST(list1,i);
@@ -1414,7 +1400,7 @@ static Obj FuncADD_ROW_VECTOR_2_FAST(Obj self, Obj list1, Obj list2)
   UInt i;
   Obj e1,e2, sum;
   UInt len = LEN_PLIST(list1);
-  RequireSameLength("AddRowVector", list1, list2);
+  RequireSameLength(SELF_NAME, list1, list2);
   for (i = 1; i <= len; i++)
     {
       e1 = ELM_PLIST(list1,i);
@@ -1524,7 +1510,7 @@ static Obj FuncPROD_VEC_MAT_DEFAULT(Obj self, Obj vec, Obj mat)
   len = LEN_LIST(vec);
   RequireSameLength("<vec> * <mat>", vec, mat);
   elt = ELMW_LIST(vec,1);
-  z = ZERO(elt);
+  z = ZERO_SAMEMUT(elt);
   for (i = 1; i <= len; i++)
     {
       elt = ELMW_LIST(vec,i);
@@ -1541,7 +1527,7 @@ static Obj FuncPROD_VEC_MAT_DEFAULT(Obj self, Obj vec, Obj mat)
         }
     }
   if (res == (Obj)0)
-    res = ZERO(ELMW_LIST(mat,1));
+    res = ZERO_SAMEMUT(ELMW_LIST(mat,1));
   if (!IS_MUTABLE_OBJ(vec) && !IS_MUTABLE_OBJ(mat))
     CheckedMakeImmutable(res);
   return res;
@@ -1583,8 +1569,8 @@ static Obj InvMatWithRowVecs(Obj mat, UInt mut)
   }
 
   /* get the zero and the one                                            */
-  zerov = ZERO( ELMW_LIST(mat, 1));
-  zero = ZERO( ELMW_LIST( ELMW_LIST( mat, 1 ), 1 ) );
+  zerov = ZERO_SAMEMUT(ELMW_LIST(mat, 1));
+  zero = ZERO_SAMEMUT(ELMW_LIST(ELMW_LIST(mat, 1), 1));
   one  = ONE( zero );
     
   /* set up res (initially the identity) and matcopy */
@@ -1649,7 +1635,7 @@ static Obj InvMatWithRowVecs(Obj mat, UInt mut)
           y = ELMW_LIST(row3,i);
           if (!EQ(y,zero))
             {
-              yi = AINV(y);
+              yi = AINV_SAMEMUT(y);
               CALL_3ARGS(AddRowVectorOp, row3, row, yi);
               CALL_3ARGS(AddRowVectorOp, ELM_PLIST(res,k), row2, yi);
             }
@@ -1660,7 +1646,7 @@ static Obj InvMatWithRowVecs(Obj mat, UInt mut)
           y = ELMW_LIST(row3,i);
           if (!EQ(y,zero))
             {
-              yi = AINV(y);
+              yi = AINV_SAMEMUT(y);
               CALL_3ARGS(AddRowVectorOp, row3, row, yi);
               CALL_3ARGS(AddRowVectorOp, ELM_PLIST(res,k), row2, yi);
             }
@@ -1771,10 +1757,10 @@ static Obj  FuncMONOM_TOT_DEG_LEX ( Obj self, Obj u, Obj  v ) {
   Obj  lexico;
 
   if (!IS_PLIST(u) || !IS_DENSE_LIST(u)) {
-      RequireArgument("MONOM_TOT_DEG_LEX", u, "must be a dense plain list");
+      RequireArgument(SELF_NAME, u, "must be a dense plain list");
   }
   if (!IS_PLIST(v) || !IS_DENSE_LIST(v)) {
-      RequireArgument("MONOM_TOT_DEG_LEX", v, "must be a dense plain list");
+      RequireArgument(SELF_NAME, v, "must be a dense plain list");
   }
     
   lu = LEN_PLIST( u );
@@ -1847,10 +1833,10 @@ static Obj  FuncMONOM_GRLEX( Obj self, Obj u, Obj  v ) {
   Obj  total,ai,bi;
 
   if (!IS_PLIST(u) || !IS_DENSE_LIST(u)) {
-      RequireArgument("MONOM_GRLEX", u, "must be a dense plain list");
+      RequireArgument(SELF_NAME, u, "must be a dense plain list");
   }
   if (!IS_PLIST(v) || !IS_DENSE_LIST(v)) {
-      RequireArgument("MONOM_GRLEX", v, "must be a dense plain list");
+      RequireArgument(SELF_NAME, v, "must be a dense plain list");
   }
     
   lu = LEN_PLIST( u );
@@ -1933,7 +1919,7 @@ static Obj  FuncZIPPED_SUM_LISTS( Obj self, Obj z1, Obj  z2, Obj zero, Obj f ) {
 /* Pr("EQ, %d %d\n",INT_INTOBJ(x),INT_INTOBJ(y)); */
       c=CALL_2ARGS(sumfun,x,y);
       if (!(EQ(c,zero))) {
-/* Pr("Added %d\n",INT_INTOBJ(c),0L); */
+/* Pr("Added %d\n",INT_INTOBJ(c), 0); */
         AddList(sum,a);
         AddList(sum,c);
       }
@@ -1946,7 +1932,7 @@ static Obj  FuncZIPPED_SUM_LISTS( Obj self, Obj z1, Obj  z2, Obj zero, Obj f ) {
       b=ELM_PLIST(z2,i2);
 /* Pr("B= %d %d\n",ELM_LIST(a,1),ELM_LIST(b,1)); */
       c=CALL_2ARGS(cmpfun,a,b);
-/* Pr("C= %d %d\n",c,0L); */
+/* Pr("C= %d %d\n",c, 0); */
 
       if ( /* this construct is taken from the compiler */
           (Obj)(UInt)(c != False) ) {
@@ -2051,47 +2037,47 @@ static Obj  FuncMONOM_PROD( Obj self, Obj m1, Obj m2 ) {
 */
 static StructGVarFunc GVarFuncs[] = {
 
-    GVAR_FUNC(EQ_LIST_LIST_DEFAULT, 2, "listL, listR"),
-    GVAR_FUNC(LT_LIST_LIST_DEFAULT, 2, "listL, listR"),
-    GVAR_FUNC(IN_LIST_DEFAULT, 2, "obj, list"),
-    GVAR_FUNC(SUM_SCL_LIST_DEFAULT, 2, "listL, listR"),
-    GVAR_FUNC(SUM_LIST_SCL_DEFAULT, 2, "listL, listR"),
-    GVAR_FUNC(SUM_LIST_LIST_DEFAULT, 2, "listL, listR"),
-    GVAR_FUNC(ZERO_LIST_DEFAULT, 1, "list"),
-    GVAR_FUNC(ZERO_MUT_LIST_DEFAULT, 1, "list"),
-    GVAR_FUNC(ZERO_ATTR_MAT, 1, "mat"),
-    GVAR_FUNC(AINV_LIST_DEFAULT, 1, "list"),
-    GVAR_FUNC(AINV_MUT_LIST_DEFAULT, 1, "list"),
-    GVAR_FUNC(DIFF_SCL_LIST_DEFAULT, 2, "listL, listR"),
-    GVAR_FUNC(DIFF_LIST_SCL_DEFAULT, 2, "listL, listR"),
-    GVAR_FUNC(DIFF_LIST_LIST_DEFAULT, 2, "listL, listR"),
-    GVAR_FUNC(PROD_SCL_LIST_DEFAULT, 2, "listL, listR"),
-    GVAR_FUNC(PROD_LIST_SCL_DEFAULT, 2, "listL, listR"),
-    GVAR_FUNC(PROD_LIST_LIST_DEFAULT, 3, "listL, listR, depthDiff"),
-    GVAR_FUNC(ONE_MATRIX_MUTABLE, 1, "list"),
-    GVAR_FUNC(ONE_MATRIX_SAME_MUTABILITY, 1, "list"),
-    GVAR_FUNC(ONE_MATRIX_IMMUTABLE, 1, "list"),
-    GVAR_FUNC(INV_MATRIX_MUTABLE, 1, "list"),
-    GVAR_FUNC(INV_MATRIX_SAME_MUTABILITY, 1, "list"),
-    GVAR_FUNC(INV_MATRIX_IMMUTABLE, 1, "list"),
-    GVAR_FUNC(ADD_ROW_VECTOR_5, 5, "list1, list2, mult, from, to"),
-    GVAR_FUNC(ADD_ROW_VECTOR_5_FAST, 5, "list1, list2, mult, from, to"),
-    GVAR_FUNC(ADD_ROW_VECTOR_3, 3, "list1, list2, mult"),
-    GVAR_FUNC(ADD_ROW_VECTOR_3_FAST, 3, "list1, list2, mult"),
-    GVAR_FUNC(ADD_ROW_VECTOR_2, 2, "list1, list2"),
-    GVAR_FUNC(ADD_ROW_VECTOR_2_FAST, 2, "list1, list2"),
-    GVAR_FUNC(MULT_VECTOR_LEFT_2, 2, "list, mult"),
-    GVAR_FUNC(MULT_VECTOR_RIGHT_2, 2, "list, mult"),
-    GVAR_FUNC(MULT_VECTOR_2_FAST, 2, "list, mult"),
-    GVAR_FUNC(PROD_VEC_MAT_DEFAULT, 2, "vec, mat"),
-    GVAR_FUNC(INV_MAT_DEFAULT_MUTABLE, 1, "mat"),
-    GVAR_FUNC(INV_MAT_DEFAULT_SAME_MUTABILITY, 1, "mat"),
-    GVAR_FUNC(INV_MAT_DEFAULT_IMMUTABLE, 1, "mat"),
-    GVAR_FUNC(ADD_TO_LIST_ENTRIES_PLIST_RANGE, 3, "list, range, x"),
-    GVAR_FUNC(MONOM_TOT_DEG_LEX, 2, "u, v"),
-    GVAR_FUNC(MONOM_GRLEX, 2, "u, v"),
-    GVAR_FUNC(ZIPPED_SUM_LISTS, 4, "list,list,zero,funclist"),
-    GVAR_FUNC(MONOM_PROD, 2, "monomial, monomial"),
+    GVAR_FUNC_2ARGS(EQ_LIST_LIST_DEFAULT, listL, listR),
+    GVAR_FUNC_2ARGS(LT_LIST_LIST_DEFAULT, listL, listR),
+    GVAR_FUNC_2ARGS(IN_LIST_DEFAULT, obj, list),
+    GVAR_FUNC_2ARGS(SUM_SCL_LIST_DEFAULT, listL, listR),
+    GVAR_FUNC_2ARGS(SUM_LIST_SCL_DEFAULT, listL, listR),
+    GVAR_FUNC_2ARGS(SUM_LIST_LIST_DEFAULT, listL, listR),
+    GVAR_FUNC_1ARGS(ZERO_LIST_DEFAULT, list),
+    GVAR_FUNC_1ARGS(ZERO_MUT_LIST_DEFAULT, list),
+    GVAR_FUNC_1ARGS(ZERO_ATTR_MAT, mat),
+    GVAR_FUNC_1ARGS(AINV_LIST_DEFAULT, list),
+    GVAR_FUNC_1ARGS(AINV_MUT_LIST_DEFAULT, list),
+    GVAR_FUNC_2ARGS(DIFF_SCL_LIST_DEFAULT, listL, listR),
+    GVAR_FUNC_2ARGS(DIFF_LIST_SCL_DEFAULT, listL, listR),
+    GVAR_FUNC_2ARGS(DIFF_LIST_LIST_DEFAULT, listL, listR),
+    GVAR_FUNC_2ARGS(PROD_SCL_LIST_DEFAULT, listL, listR),
+    GVAR_FUNC_2ARGS(PROD_LIST_SCL_DEFAULT, listL, listR),
+    GVAR_FUNC_3ARGS(PROD_LIST_LIST_DEFAULT, listL, listR, depthDiff),
+    GVAR_FUNC_1ARGS(ONE_MATRIX_MUTABLE, list),
+    GVAR_FUNC_1ARGS(ONE_MATRIX_SAME_MUTABILITY, list),
+    GVAR_FUNC_1ARGS(ONE_MATRIX_IMMUTABLE, list),
+    GVAR_FUNC_1ARGS(INV_MATRIX_MUTABLE, list),
+    GVAR_FUNC_1ARGS(INV_MATRIX_SAME_MUTABILITY, list),
+    GVAR_FUNC_1ARGS(INV_MATRIX_IMMUTABLE, list),
+    GVAR_FUNC_5ARGS(ADD_ROW_VECTOR_5, list1, list2, mult, from, to),
+    GVAR_FUNC_5ARGS(ADD_ROW_VECTOR_5_FAST, list1, list2, mult, from, to),
+    GVAR_FUNC_3ARGS(ADD_ROW_VECTOR_3, list1, list2, mult),
+    GVAR_FUNC_3ARGS(ADD_ROW_VECTOR_3_FAST, list1, list2, mult),
+    GVAR_FUNC_2ARGS(ADD_ROW_VECTOR_2, list1, list2),
+    GVAR_FUNC_2ARGS(ADD_ROW_VECTOR_2_FAST, list1, list2),
+    GVAR_FUNC_2ARGS(MULT_VECTOR_LEFT_2, list, mult),
+    GVAR_FUNC_2ARGS(MULT_VECTOR_RIGHT_2, list, mult),
+    GVAR_FUNC_2ARGS(MULT_VECTOR_2_FAST, list, mult),
+    GVAR_FUNC_2ARGS(PROD_VEC_MAT_DEFAULT, vec, mat),
+    GVAR_FUNC_1ARGS(INV_MAT_DEFAULT_MUTABLE, mat),
+    GVAR_FUNC_1ARGS(INV_MAT_DEFAULT_SAME_MUTABILITY, mat),
+    GVAR_FUNC_1ARGS(INV_MAT_DEFAULT_IMMUTABLE, mat),
+    GVAR_FUNC_3ARGS(ADD_TO_LIST_ENTRIES_PLIST_RANGE, list, range, x),
+    GVAR_FUNC_2ARGS(MONOM_TOT_DEG_LEX, u, v),
+    GVAR_FUNC_2ARGS(MONOM_GRLEX, u, v),
+    GVAR_FUNC_4ARGS(ZIPPED_SUM_LISTS, list, list, zero, funclist),
+    GVAR_FUNC_2ARGS(MONOM_PROD, monomial, monomial),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -2135,13 +2121,13 @@ static Int InitKernel (
     }
 
     for (t1 = FIRST_LIST_TNUM; t1 <= LAST_LIST_TNUM; t1 ++ ) {
-            ZeroFuncs[t1] = ZeroListDefault;
-            ZeroMutFuncs[t1] = ZeroListMutDefault;
+        ZeroSameMutFuncs[t1] = ZeroListDefault;
+        ZeroMutFuncs[t1] = ZeroListMutDefault;
     }
 
     for (t1 = FIRST_LIST_TNUM; t1 <= LAST_LIST_TNUM; t1 ++ ) {
-            AInvFuncs[t1] = AInvListDefault;
-            AInvMutFuncs[t1] = AInvMutListDefault;
+        AInvSameMutFuncs[t1] = AInvListDefault;
+        AInvMutFuncs[t1] = AInvMutListDefault;
     }
 
     /* No kernel installations for One or Inverse any more */
@@ -2216,7 +2202,6 @@ static Int InitKernel (
     }
     
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -2232,7 +2217,6 @@ static Int InitLibrary (
   /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 

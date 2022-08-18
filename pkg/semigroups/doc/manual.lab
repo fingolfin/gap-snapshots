@@ -1,0 +1,878 @@
+\GAPDocLabFile{semigroups}
+\makelabel{semigroups:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{semigroups:Abstract}{}{X7AA6C5737B711C89}
+\makelabel{semigroups:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{semigroups:Acknowledgements}{}{X82A988D47DFAFCFA}
+\makelabel{semigroups:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{semigroups:The Semigroups package}{1}{X7D8D6DB37A0326BE}
+\makelabel{semigroups:Introduction}{1.1}{X7DFB63A97E67C0A1}
+\makelabel{semigroups:Overview}{1.2}{X8389AD927B74BA4A}
+\makelabel{semigroups:Installing Semigroups}{2}{X82398F3785F63754}
+\makelabel{semigroups:For those in a hurry}{2.1}{X7DA3059C79842BF3}
+\makelabel{semigroups:Compiling the kernel module}{2.2}{X849F6196875A6DF5}
+\makelabel{semigroups:Rebuilding the documentation}{2.3}{X857CBE5484CF703A}
+\makelabel{semigroups:Testing your installation}{2.4}{X7862D3F37C5BBDEF}
+\makelabel{semigroups:More information during a computation}{2.5}{X798CBC46800AB80F}
+\makelabel{semigroups:Bipartitions and blocks}{3}{X7C18DB427C9C0917}
+\makelabel{semigroups:The family and categories of bipartitions}{3.1}{X7850845886902FBF}
+\makelabel{semigroups:Creating bipartitions}{3.2}{X85D77073820C7E72}
+\makelabel{semigroups:Changing the representation of a bipartition}{3.3}{X7C2C44D281A0D2C9}
+\makelabel{semigroups:Operators for bipartitions}{3.4}{X83F2C3C97E8FFA49}
+\makelabel{semigroups:Attributes for bipartitons}{3.5}{X87F3A304814797CE}
+\makelabel{semigroups:Creating blocks and their attributes}{3.6}{X87684C148592F831}
+\makelabel{semigroups:Actions on blocks}{3.7}{X7A45E0067F344683}
+\makelabel{semigroups:Semigroups of bipartitions}{3.8}{X876C963F830719E2}
+\makelabel{semigroups:Partitioned binary relations (PBRs)}{4}{X85A717D1790B7BB5}
+\makelabel{semigroups:The family and categories of PBRs}{4.1}{X7C40DA67826FF873}
+\makelabel{semigroups:Creating PBRs}{4.2}{X8758C4FB81D2C2A1}
+\makelabel{semigroups:Changing the representation of a PBR}{4.3}{X86B714987C01895F}
+\makelabel{semigroups:Operators for PBRs}{4.4}{X872B5817878660E5}
+\makelabel{semigroups:Attributes for PBRs}{4.5}{X78EC8E597EB99730}
+\makelabel{semigroups:Semigroups of PBRs}{4.6}{X7ECD4BBD7A0E834E}
+\makelabel{semigroups:Matrices over semirings}{5}{X82D6B7FE7CAC0AFA}
+\makelabel{semigroups:Creating matrices over semirings}{5.1}{X7ECF673C7BE2384D}
+\makelabel{semigroups:Matrix filters}{5.1.8}{X782480C686F1A663}
+\makelabel{semigroups:Matrix collection filters}{5.1.9}{X86233A3E86512493}
+\makelabel{semigroups:Operators for matrices over semirings}{5.2}{X807E402687741CDA}
+\makelabel{semigroups:Boolean matrices}{5.3}{X844A32A184E5EB75}
+\makelabel{semigroups:Matrices over finite fields}{5.4}{X873822B6830CE367}
+\makelabel{semigroups:Matrices over the integers}{5.5}{X8770A88E82AA24B7}
+\makelabel{semigroups:Max-plus and min-plus matrices}{5.6}{X86BFFFBC87F2AB1E}
+\makelabel{semigroups:Matrix semigroups}{5.7}{X79B614AA803BD103}
+\makelabel{semigroups:Matrix semigroup filters}{5.7.1}{X7DC6EB0680B3E4DD}
+\makelabel{semigroups:Matrix monoid filters}{5.7.2}{X8616225581BC7414}
+\makelabel{semigroups:Semigroups and monoids defined by generating sets}{6}{X7995B4F18672DDB0}
+\makelabel{semigroups:Underlying algorithms}{6.1}{X7A19D22B7A05CC2F}
+\makelabel{semigroups:Acting semigroups}{6.1.1}{X7A3AC74C7FF85825}
+\makelabel{semigroups:The Froidure-Pin Algorithm}{6.1.3}{X7E2DE9767D5D82F7}
+\makelabel{semigroups:Semigroups represented by generators}{6.2}{X79BD00A682BDED7A}
+\makelabel{semigroups:Options when creating semigroups}{6.3}{X799EBA2F819D8867}
+\makelabel{semigroups:Subsemigroups and supersemigroups}{6.4}{X87AA2EB6810B4631}
+\makelabel{semigroups:Changing the representation of a semigroup}{6.5}{X82CCC1A781650878}
+\makelabel{semigroups:Random semigroups}{6.6}{X7C3F130B8362D55A}
+\makelabel{semigroups:Standard examples}{7}{X7C76D1DC7DAF03D3}
+\makelabel{semigroups:Transformation semigroups}{7.1}{X7E42E8337A78B076}
+\makelabel{semigroups:Semigroups of order-preserving transformations}{7.1.5}{X80E80A0A83B57483}
+\makelabel{semigroups:Semigroups of partial permutations}{7.2}{X862BA1C67AA1C77C}
+\makelabel{semigroups:Inverse monoids of order-preserving partial permutations}{7.2.3}{X85D841AE83DF101C}
+\makelabel{semigroups:Semigroups of bipartitions}{7.3}{X876C963F830719E2}
+\makelabel{semigroups:Standard PBR semigroups}{7.4}{X874C945E7C61A969}
+\makelabel{semigroups:Semigroups of matrices over a finite field}{7.5}{X857DBF537A9A9976}
+\makelabel{semigroups:Semigroups of boolean matrices}{7.6}{X85BACB7F81660ECC}
+\makelabel{semigroups:Semigroups of matrices over a semiring}{7.7}{X7F3D0AEE79AA8C98}
+\makelabel{semigroups:Examples in various representations}{7.8}{X7ED2F2577CD6B578}
+\makelabel{semigroups:Free bands}{7.9}{X7BB29A6779E8066A}
+\makelabel{semigroups:Operators}{7.9.10}{X7AD6F77E7D95C996}
+\makelabel{semigroups:Graph inverse semigroups}{7.10}{X850B10D783053100}
+\makelabel{semigroups:Free inverse semigroups}{7.11}{X7E51292C8755DCF2}
+\makelabel{semigroups:Displaying free inverse semigroup elements}{7.11.8}{X8073A2387A42B52D}
+\makelabel{semigroups:Operators for free inverse semigroup elements}{7.11.9}{X7A55FD9A7DF21C60}
+\makelabel{semigroups:Standard constructions}{8}{X86EE8DC987BA646E}
+\makelabel{semigroups:Products of semigroups}{8.1}{X79546641809113CE}
+\makelabel{semigroups:Dual semigroups}{8.2}{X7F035EC07AA7CD97}
+\makelabel{semigroups:Strong semilattices of semigroups}{8.3}{X7BEA92E67A6D349A}
+\makelabel{semigroups:McAlister triple semigroups}{8.4}{X7CC4F6FE87AFE638}
+\makelabel{semigroups:Ideals}{9}{X83629803819C4A6F}
+\makelabel{semigroups:Creating ideals}{9.1}{X82D4D9A578A56A8D}
+\makelabel{semigroups:Attributes of ideals}{9.2}{X85D4E72B787B1C49}
+\makelabel{semigroups:Green's relations}{10}{X80C6C718801855E9}
+\makelabel{semigroups:Creating Green's classes and representatives}{10.1}{X788D6753849BAD7C}
+\makelabel{semigroups:XClassOfYClass}{10.1.1}{X87558FEF805D24E1}
+\makelabel{semigroups:GreensXClassOfElement}{10.1.2}{X81B7AD4C7C552867}
+\makelabel{semigroups:GreensXClassOfElementNC}{10.1.3}{X7B44317786571F8B}
+\makelabel{semigroups:GreensXClasses}{10.1.4}{X7D51218A80234DE5}
+\makelabel{semigroups:XClassReps}{10.1.5}{X865387A87FAAC395}
+\makelabel{semigroups:MaximalXClasses}{10.1.7}{X834172F4787A565B}
+\makelabel{semigroups:NrXClasses}{10.1.9}{X7E45FD9F7BADDFBD}
+\makelabel{semigroups:PartialOrderOfXClasses}{10.1.10}{X8140814084748101}
+\makelabel{semigroups:Iterators and enumerators of classes and representatives}{10.2}{X819CCBD67FD27115}
+\makelabel{semigroups:IteratorOfXClassReps}{10.2.1}{X8566F84A7F6D4193}
+\makelabel{semigroups:IteratorOfXClasses}{10.2.2}{X867D7B8982915960}
+\makelabel{semigroups:Properties of Green's classes}{10.3}{X820EF2BA7D5D53B4}
+\makelabel{semigroups:Less than for Green's classes}{10.3.1}{X85F30ACF86C3A733}
+\makelabel{semigroups:Attributes of Green's classes}{10.4}{X855723B17D4AAF8F}
+\makelabel{semigroups:Attributes and operations for semigroups}{11}{X7C75B1DB81C7779B}
+\makelabel{semigroups:Accessing the elements of a semigroup}{11.1}{X7AE0630287B8A757}
+\makelabel{semigroups:Cayley graphs}{11.2}{X789D5E5A8558AA07}
+\makelabel{semigroups:Random elements of a semigroup}{11.3}{X824184C785BF12FF}
+\makelabel{semigroups:Properties of elements in a semigroup}{11.4}{X80EB463F7E5D8920}
+\makelabel{semigroups:Expressing semigroup elements as words in generators}{11.5}{X81CEB3717E021643}
+\makelabel{semigroups:Generating sets}{11.6}{X7E4AA1437A6C7B40}
+\makelabel{semigroups:Minimal ideals and multiplicative zeros}{11.7}{X830E18747A0B5BED}
+\makelabel{semigroups:Group of units and identity elements}{11.8}{X7CAB17667ED5A6E8}
+\makelabel{semigroups:Idempotents}{11.9}{X7C651C9C78398FFF}
+\makelabel{semigroups:Maximal subsemigroups}{11.10}{X7D490B867CEFCBEF}
+\makelabel{semigroups:Attributes of transformations and transformation semigroups}{11.11}{X87696C597F453F4F}
+\makelabel{semigroups:Attributes of partial perm semigroups}{11.12}{X84B8E29C7D7565B0}
+\makelabel{semigroups:Attributes of Rees (0-)matrix semigroups}{11.13}{X7AF313CF7CBE98D7}
+\makelabel{semigroups:Attributes of inverse semigroups}{11.14}{X822D030682BC1275}
+\makelabel{semigroups:Nambooripad partial order}{11.15}{X7AA4CE887EEA661A}
+\makelabel{semigroups:Properties of semigroups}{12}{X78274024827F306D}
+\makelabel{semigroups:Arbitrary semigroups}{12.1}{X7D297AEC827F3D4E}
+\makelabel{semigroups:IsIdempotentGenerated}{12.1.8}{X835484C481CF3DDD}
+\makelabel{semigroups:IsXTrivial}{12.1.19}{X8752642C7F7E512B}
+\makelabel{semigroups:IsSimpleSemigroup}{12.1.22}{X836F4692839F4874}
+\makelabel{semigroups:Inverse semigroups}{12.2}{X80F2725581B166EE}
+\makelabel{semigroups:Congruences}{13}{X82BD951079E3C349}
+\makelabel{semigroups:Semigroup congruence objects}{13.1}{X784770137D98FEB9}
+\makelabel{semigroups:Creating congruences}{13.2}{X7D49787B7B2589B2}
+\makelabel{semigroups:Congruence classes}{13.3}{X7D65BB067A762CD6}
+\makelabel{semigroups:Finding the congruences of a semigroup}{13.4}{X806DEBC07E6D8FCA}
+\makelabel{semigroups:Comparing congruences}{13.5}{X857D750579B87DBF}
+\makelabel{semigroups:Congruences on Rees matrix semigroups}{13.6}{X7A6478D1831DD787}
+\makelabel{semigroups:Congruences on inverse semigroups}{13.7}{X7BFDC38178940AE6}
+\makelabel{semigroups:Congruences on graph inverse semigroups}{13.8}{X8036DAA287C71CAC}
+\makelabel{semigroups:Rees congruences}{13.9}{X7CE483078769A4D6}
+\makelabel{semigroups:Universal congruences}{13.10}{X789450398397141D}
+\makelabel{semigroups:Semigroup homomorphisms}{14}{X861935DB81A478C2}
+\makelabel{semigroups:Homomorphisms of arbitrary semigroups}{14.1}{X7F1FDA9C7C25799A}
+\makelabel{semigroups:Isomorphisms of arbitrary semigroups}{14.2}{X7A8945817BD44943}
+\makelabel{semigroups:Isomorphisms of Rees (0-)matrix semigroups}{14.3}{X80DE3DB0782D9358}
+\makelabel{semigroups:Operators for isomorphisms of Rees (0-)matrix semigroups}{14.3.7}{X7ED8BF227F4229E2}
+\makelabel{semigroups:Finitely presented semigroups and Tietze transformations}{15}{X7F11EF307D4F409B}
+\makelabel{semigroups:Changing representation for words and strings}{15.1}{X87CDF7DF7E47F8FB}
+\makelabel{semigroups:Helper functions}{15.2}{X7BD4785D8488BAD5}
+\makelabel{semigroups:Creating Tietze transformation objects}{15.3}{X8379F50C83FA5088}
+\makelabel{semigroups:Printing Tietze transformation objects}{15.4}{X84E3986C7EA62A06}
+\makelabel{semigroups:Changing Tietze transformation objects}{15.5}{X7EAF8F7A7F7A2A78}
+\makelabel{semigroups:Converting a Tietze transformation object into a fp semigroup}{15.6}{X7CBD15BC86CC2080}
+\makelabel{semigroups:Automatically simplifying a Tietze transformation object}{15.7}{X8549F1C87E7BD29A}
+\makelabel{semigroups:Automatically simplifying an fp semigroup}{15.8}{X817332E27D0406A7}
+\makelabel{semigroups:Visualising semigroups and elements}{16}{X80E82C6785300A86}
+\makelabel{semigroups:dot pictures}{16.1}{X82E16CAB874A1D84}
+\makelabel{semigroups:tex output}{16.2}{X83152CA78114E2BD}
+\makelabel{semigroups:tikz pictures}{16.3}{X7BDDE0FE80D09887}
+\makelabel{semigroups:IO}{17}{X80CDCB927B3E5BB9}
+\makelabel{semigroups:Reading and writing elements to a file}{17.1}{X7CE72BB17F2D49F8}
+\makelabel{semigroups:Reading and writing multiplication tables to a file}{17.2}{X7AB8E281795A4964}
+\makelabel{semigroups:Bibliography}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{semigroups:References}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{semigroups:Index}{Ind}{X83A0356F839C696F}
+\makelabel{semigroups:Semigroups package overview}{1}{X7D8D6DB37A0326BE}
+\makelabel{semigroups:SemigroupsTestInstall}{2.4.1}{X80F85B577A3DFCF9}
+\makelabel{semigroups:SemigroupsTestStandard}{2.4.2}{X7C2D57708006AB63}
+\makelabel{semigroups:SemigroupsTestExtreme}{2.4.3}{X7ED2F9C784B554D8}
+\makelabel{semigroups:SemigroupsTestAll}{2.4.4}{X8544F4BD79F0BF3C}
+\makelabel{semigroups:InfoSemigroups}{2.5.1}{X85CD4E6C82BECAF3}
+\makelabel{semigroups:IsBipartition}{3.1.1}{X80F11BEF856E7902}
+\makelabel{semigroups:IsBipartitionCollection}{3.1.2}{X82F5D10C85489832}
+\makelabel{semigroups:IsBipartitionCollColl}{3.1.2}{X82F5D10C85489832}
+\makelabel{semigroups:Bipartition}{3.2.1}{X7E052E6378A5B758}
+\makelabel{semigroups:BipartitionByIntRep}{3.2.2}{X846AA7568435D2CE}
+\makelabel{semigroups:IdentityBipartition}{3.2.3}{X8379B0538101FBC8}
+\makelabel{semigroups:LeftOne for a bipartition}{3.2.4}{X824EDD4582AAA8C7}
+\makelabel{semigroups:LeftProjection}{3.2.4}{X824EDD4582AAA8C7}
+\makelabel{semigroups:RightOne for a bipartition}{3.2.5}{X790B71108070FAC2}
+\makelabel{semigroups:RightProjection}{3.2.5}{X790B71108070FAC2}
+\makelabel{semigroups:StarOp for a bipartition}{3.2.6}{X7CE00E0C79F62745}
+\makelabel{semigroups:Star for a bipartition}{3.2.6}{X7CE00E0C79F62745}
+\makelabel{semigroups:RandomBipartition}{3.2.7}{X8077265981409CCB}
+\makelabel{semigroups:RandomBlockBijection}{3.2.7}{X8077265981409CCB}
+\makelabel{semigroups:AsBipartition}{3.3.1}{X855126D98583C181}
+\makelabel{semigroups:AsBlockBijection}{3.3.2}{X85A5AD2B7F3B776F}
+\makelabel{semigroups:AsTransformation for a bipartition}{3.3.3}{X7CE91D0C83865214}
+\makelabel{semigroups:AsPartialPerm for a bipartition}{3.3.4}{X7C5212EF7A200E63}
+\makelabel{semigroups:AsPermutation for a bipartition}{3.3.5}{X7C684CD38405DBEF}
+\makelabel{semigroups:< (for bipartitions)}{3.4}{X83F2C3C97E8FFA49}
+\makelabel{semigroups:PartialPermLeqBipartition}{3.4.1}{X7A39D36086647536}
+\makelabel{semigroups:NaturalLeqPartialPermBipartition}{3.4.2}{X8608D78F83D55108}
+\makelabel{semigroups:NaturalLeqBlockBijection}{3.4.3}{X79E8FA077E24C1F4}
+\makelabel{semigroups:PermLeftQuoBipartition}{3.4.4}{X7D9F5A248028FF52}
+\makelabel{semigroups:DegreeOfBipartition}{3.5.1}{X780F5E00784FE58C}
+\makelabel{semigroups:DegreeOfBipartitionCollection}{3.5.1}{X780F5E00784FE58C}
+\makelabel{semigroups:RankOfBipartition}{3.5.2}{X82074756826AD2C2}
+\makelabel{semigroups:NrTransverseBlocks for a bipartition}{3.5.2}{X82074756826AD2C2}
+\makelabel{semigroups:ExtRepOfObj for a bipartition}{3.5.3}{X86F6506C780C6E08}
+\makelabel{semigroups:IntRepOfBipartition}{3.5.4}{X7ECD393A854C073B}
+\makelabel{semigroups:RightBlocks}{3.5.5}{X86A10B138230C2A4}
+\makelabel{semigroups:LeftBlocks}{3.5.6}{X7B9B364379D8F4E8}
+\makelabel{semigroups:NrLeftBlocks}{3.5.7}{X79AEDB5382FD25CF}
+\makelabel{semigroups:NrRightBlocks}{3.5.8}{X86385A3C8662E1A7}
+\makelabel{semigroups:NrBlocks for blocks}{3.5.9}{X8110B6557A98FB5C}
+\makelabel{semigroups:NrBlocks for a bipartition}{3.5.9}{X8110B6557A98FB5C}
+\makelabel{semigroups:DomainOfBipartition}{3.5.10}{X8657EE2B79E1DD02}
+\makelabel{semigroups:CodomainOfBipartition}{3.5.11}{X84569A187A211332}
+\makelabel{semigroups:IsTransBipartition}{3.5.12}{X79C556827A578509}
+\makelabel{semigroups:IsDualTransBipartition}{3.5.13}{X7F0B8ACC7C9A937F}
+\makelabel{semigroups:IsPermBipartition}{3.5.14}{X8031B53E7D0ECCFA}
+\makelabel{semigroups:IsPartialPermBipartition}{3.5.15}{X87C771D37B1FE95C}
+\makelabel{semigroups:IsBlockBijection}{3.5.16}{X829494DF7FD6CFEC}
+\makelabel{semigroups:IsUniformBlockBijection}{3.5.17}{X79D54AD8833B9551}
+\makelabel{semigroups:CanonicalBlocks}{3.5.18}{X7B87B9B081FF88BB}
+\makelabel{semigroups:IsBlocks}{3.6.1}{X7D77092078EC860C}
+\makelabel{semigroups:BLOCKSNC}{3.6.2}{X81302B217DCAAE6F}
+\makelabel{semigroups:ExtRepOfObj for a blocks}{3.6.3}{X7D2CB12279623CE2}
+\makelabel{semigroups:RankOfBlocks}{3.6.4}{X787D22AE7FA69239}
+\makelabel{semigroups:NrTransverseBlocks for blocks}{3.6.4}{X787D22AE7FA69239}
+\makelabel{semigroups:DegreeOfBlocks}{3.6.5}{X8527DC6A8771C2BE}
+\makelabel{semigroups:ProjectionFromBlocks}{3.6.6}{X815D99A983B2355F}
+\makelabel{semigroups:OnRightBlocks}{3.7.1}{X7B701DA37F75E77B}
+\makelabel{semigroups:OnLeftBlocks}{3.7.2}{X7A5A4AF57BEA2313}
+\makelabel{semigroups:IsBipartitionSemigroup}{3.8.1}{X810BFF647C4E191E}
+\makelabel{semigroups:IsBipartitionMonoid}{3.8.1}{X810BFF647C4E191E}
+\makelabel{semigroups:IsBlockBijectionSemigroup}{3.8.2}{X80C37124794636F3}
+\makelabel{semigroups:IsBlockBijectionMonoid}{3.8.2}{X80C37124794636F3}
+\makelabel{semigroups:IsPartialPermBipartitionSemigroup}{3.8.3}{X79A706A582ABE558}
+\makelabel{semigroups:IsPartialPermBipartitionMonoid}{3.8.3}{X79A706A582ABE558}
+\makelabel{semigroups:IsPermBipartitionGroup}{3.8.4}{X7DEE07577D7379AC}
+\makelabel{semigroups:DegreeOfBipartitionSemigroup}{3.8.5}{X8162E2BB7CF144F5}
+\makelabel{semigroups:IsPBR}{4.1.1}{X82CCBADC80AE2D15}
+\makelabel{semigroups:IsPBRCollection}{4.1.2}{X854A9CEA7AC14C0A}
+\makelabel{semigroups:IsPBRCollColl}{4.1.2}{X854A9CEA7AC14C0A}
+\makelabel{semigroups:PBR}{4.2.1}{X82A8646F7C70CF3B}
+\makelabel{semigroups:RandomPBR}{4.2.2}{X82FE736F7F11B157}
+\makelabel{semigroups:EmptyPBR}{4.2.3}{X8646781B7EAE04C0}
+\makelabel{semigroups:IdentityPBR}{4.2.4}{X80D20EA3816DC862}
+\makelabel{semigroups:UniversalPBR}{4.2.5}{X847BA0177D90E9D7}
+\makelabel{semigroups:AsPBR}{4.3.1}{X81CBBE6080439596}
+\makelabel{semigroups:AsTransformation for a PBR}{4.3.2}{X8407F516825A514A}
+\makelabel{semigroups:AsPartialPerm for a PBR}{4.3.3}{X795B1C16819905E8}
+\makelabel{semigroups:AsPermutation for a PBR}{4.3.4}{X86786B297FBCD064}
+\makelabel{semigroups:< (for PBRs)}{4.4}{X872B5817878660E5}
+\makelabel{semigroups:StarOp for a PBR}{4.5.1}{X7DFC277E80A50C2F}
+\makelabel{semigroups:Star for a PBR}{4.5.1}{X7DFC277E80A50C2F}
+\makelabel{semigroups:DegreeOfPBR}{4.5.2}{X785B576B7823D626}
+\makelabel{semigroups:DegreeOfPBRCollection}{4.5.2}{X785B576B7823D626}
+\makelabel{semigroups:ExtRepOfObj for a PBR}{4.5.3}{X78302D7E81BB1E54}
+\makelabel{semigroups:PBRNumber}{4.5.4}{X7F4C8A2B79E6D963}
+\makelabel{semigroups:NumberPBR}{4.5.4}{X7F4C8A2B79E6D963}
+\makelabel{semigroups:IsEmptyPBR}{4.5.5}{X82FD0AB179ED4AFD}
+\makelabel{semigroups:IsIdentityPBR}{4.5.6}{X7E263B2F7B838D6E}
+\makelabel{semigroups:IsUniversalPBR}{4.5.7}{X7A280FC27BAD0EF0}
+\makelabel{semigroups:IsBipartitionPBR}{4.5.8}{X81EC86397E098BC8}
+\makelabel{semigroups:IsBlockBijectionPBR}{4.5.8}{X81EC86397E098BC8}
+\makelabel{semigroups:IsTransformationPBR}{4.5.9}{X7AF425D17BBE9023}
+\makelabel{semigroups:IsDualTransformationPBR}{4.5.10}{X7962D03186B1AFDF}
+\makelabel{semigroups:IsPartialPermPBR}{4.5.11}{X7883CD5D824CC236}
+\makelabel{semigroups:IsPermPBR}{4.5.12}{X85B21BB0835FE166}
+\makelabel{semigroups:IsPBRSemigroup}{4.6.1}{X8554A3F878A4DC73}
+\makelabel{semigroups:IsPBRMonoid}{4.6.1}{X8554A3F878A4DC73}
+\makelabel{semigroups:DegreeOfPBRSemigroup}{4.6.2}{X80FC004C7B65B4C0}
+\makelabel{semigroups:IsMatrixOverSemiring}{5.1.1}{X8711618C7A8A1B60}
+\makelabel{semigroups:IsMatrixOverSemiringCollection}{5.1.2}{X86F696B883677D6B}
+\makelabel{semigroups:IsMatrixOverSemiringCollColl}{5.1.2}{X86F696B883677D6B}
+\makelabel{semigroups:DimensionOfMatrixOverSemiring}{5.1.3}{X7C1CDA817CE076FD}
+\makelabel{semigroups:DimensionOfMatrixOverSemiringCollection}{5.1.4}{X7FF0B2A783BA2D06}
+\makelabel{semigroups:Matrix for a filter and a matrix}{5.1.5}{X7DCA234C86ED8BD3}
+\makelabel{semigroups:Matrix for a semiring and a matrix}{5.1.5}{X7DCA234C86ED8BD3}
+\makelabel{semigroups:AsMatrix for a filter and a matrix}{5.1.6}{X85426D8885431ECE}
+\makelabel{semigroups:AsMatrix for a filter, matrix, and threshold}{5.1.6}{X85426D8885431ECE}
+\makelabel{semigroups:AsMatrix for a filter, matrix, threshold, and period}{5.1.6}{X85426D8885431ECE}
+\makelabel{semigroups:RandomMatrix for a filter and a matrix}{5.1.7}{X82172D747D66C8CC}
+\makelabel{semigroups:RandomMatrix for a semiring and a matrix}{5.1.7}{X82172D747D66C8CC}
+\makelabel{semigroups:IsBooleanMat}{5.1.8}{X782480C686F1A663}
+\makelabel{semigroups:IsMatrixOverFiniteField}{5.1.8}{X782480C686F1A663}
+\makelabel{semigroups:IsMaxPlusMatrix}{5.1.8}{X782480C686F1A663}
+\makelabel{semigroups:IsMinPlusMatrix}{5.1.8}{X782480C686F1A663}
+\makelabel{semigroups:IsTropicalMatrix}{5.1.8}{X782480C686F1A663}
+\makelabel{semigroups:IsTropicalMaxPlusMatrix}{5.1.8}{X782480C686F1A663}
+\makelabel{semigroups:IsTropicalMinPlusMatrix}{5.1.8}{X782480C686F1A663}
+\makelabel{semigroups:IsNTPMatrix}{5.1.8}{X782480C686F1A663}
+\makelabel{semigroups:Integers}{5.1.8}{X782480C686F1A663}
+\makelabel{semigroups:IsBooleanMatCollection}{5.1.9}{X86233A3E86512493}
+\makelabel{semigroups:IsBooleanMatCollColl}{5.1.9}{X86233A3E86512493}
+\makelabel{semigroups:IsMatrixOverFiniteFieldCollection}{5.1.9}{X86233A3E86512493}
+\makelabel{semigroups:IsMatrixOverFiniteFieldCollColl}{5.1.9}{X86233A3E86512493}
+\makelabel{semigroups:IsMaxPlusMatrixCollection}{5.1.9}{X86233A3E86512493}
+\makelabel{semigroups:IsMaxPlusMatrixCollColl}{5.1.9}{X86233A3E86512493}
+\makelabel{semigroups:IsMinPlusMatrixCollection}{5.1.9}{X86233A3E86512493}
+\makelabel{semigroups:IsMinPlusMatrixCollColl}{5.1.9}{X86233A3E86512493}
+\makelabel{semigroups:IsTropicalMatrixCollection}{5.1.9}{X86233A3E86512493}
+\makelabel{semigroups:IsTropicalMaxPlusMatrixCollection}{5.1.9}{X86233A3E86512493}
+\makelabel{semigroups:IsTropicalMaxPlusMatrixCollColl}{5.1.9}{X86233A3E86512493}
+\makelabel{semigroups:IsTropicalMinPlusMatrixCollection}{5.1.9}{X86233A3E86512493}
+\makelabel{semigroups:IsTropicalMinPlusMatrixCollColl}{5.1.9}{X86233A3E86512493}
+\makelabel{semigroups:IsNTPMatrixCollection}{5.1.9}{X86233A3E86512493}
+\makelabel{semigroups:IsNTPMatrixCollColl}{5.1.9}{X86233A3E86512493}
+\makelabel{semigroups:AsList}{5.1.10}{X8289FCCC8274C89D}
+\makelabel{semigroups:AsMutableList}{5.1.10}{X8289FCCC8274C89D}
+\makelabel{semigroups:ThresholdTropicalMatrix}{5.1.11}{X7D21408E845E4648}
+\makelabel{semigroups:ThresholdNTPMatrix}{5.1.12}{X7874559881FE8779}
+\makelabel{semigroups:PeriodNTPMatrix}{5.1.12}{X7874559881FE8779}
+\makelabel{semigroups:< (for matrices over a semiring)}{5.2}{X807E402687741CDA}
+\makelabel{semigroups:BooleanMat}{5.3.1}{X84A16D4D7D015885}
+\makelabel{semigroups:AsBooleanMat}{5.3.2}{X7DA524567E0E7E16}
+\makelabel{semigroups:OnBlist}{5.3.4}{X8629FA5F7B682078}
+\makelabel{semigroups:Successors}{5.3.5}{X85E2FD8B82652876}
+\makelabel{semigroups:BooleanMatNumber}{5.3.6}{X7E0FD5878106AB66}
+\makelabel{semigroups:NumberBooleanMat}{5.3.6}{X7E0FD5878106AB66}
+\makelabel{semigroups:BlistNumber}{5.3.7}{X793A1C277C1D7D6D}
+\makelabel{semigroups:NumberBlist}{5.3.7}{X793A1C277C1D7D6D}
+\makelabel{semigroups:CanonicalBooleanMat for a perm group, perm group and boolean matrix}{5.3.8}{X7EEA5011862E6298}
+\makelabel{semigroups:CanonicalBooleanMat for a perm group and boolean matrix}{5.3.8}{X7EEA5011862E6298}
+\makelabel{semigroups:CanonicalBooleanMat}{5.3.8}{X7EEA5011862E6298}
+\makelabel{semigroups:IsRowTrimBooleanMat}{5.3.9}{X794C91597CC9F784}
+\makelabel{semigroups:IsColTrimBooleanMat}{5.3.9}{X794C91597CC9F784}
+\makelabel{semigroups:IsTrimBooleanMat}{5.3.9}{X794C91597CC9F784}
+\makelabel{semigroups:IsSymmetricBooleanMat}{5.3.10}{X7D22BA78790EFBC6}
+\makelabel{semigroups:IsReflexiveBooleanMat}{5.3.11}{X7C373B7D87044050}
+\makelabel{semigroups:IsTransitiveBooleanMat}{5.3.12}{X7CDAD39B856AC3E5}
+\makelabel{semigroups:IsAntiSymmetricBooleanMat}{5.3.13}{X8570C8A08549383D}
+\makelabel{semigroups:IsTotalBooleanMat}{5.3.14}{X7A68D87982A07C6F}
+\makelabel{semigroups:IsOntoBooleanMat}{5.3.14}{X7A68D87982A07C6F}
+\makelabel{semigroups:IsPartialOrderBooleanMat}{5.3.15}{X7D9BECEA7E9B72A7}
+\makelabel{semigroups:IsEquivalenceBooleanMat}{5.3.16}{X82EA957982B79827}
+\makelabel{semigroups:IsTransformationBooleanMat}{5.3.17}{X7E6B588887D34A0A}
+\makelabel{semigroups:RowSpaceBasis for a matrix over finite field}{5.4.1}{X857E626783CCF766}
+\makelabel{semigroups:RowSpaceTransformation for a matrix over finite field}{5.4.1}{X857E626783CCF766}
+\makelabel{semigroups:RowSpaceTransformationInv for a matrix over finite field}{5.4.1}{X857E626783CCF766}
+\makelabel{semigroups:RightInverse for a matrix over finite field}{5.4.2}{X8733B04781B682E5}
+\makelabel{semigroups:LeftInverse for a matrix over finite field}{5.4.2}{X8733B04781B682E5}
+\makelabel{semigroups:InverseOp for an integer matrix}{5.5.1}{X7BC66ECE8378068E}
+\makelabel{semigroups:IsTorsion for an integer matrix}{5.5.2}{X7CA636F080777C36}
+\makelabel{semigroups:Order}{5.5.3}{X84F59A2687C62763}
+\makelabel{semigroups:InverseOp}{5.6.1}{X82EC4F49877D6EB1}
+\makelabel{semigroups:RadialEigenvector}{5.6.2}{X83663A5387042B69}
+\makelabel{semigroups:SpectralRadius}{5.6.3}{X83FCFB368743E4BA}
+\makelabel{semigroups:UnweightedPrecedenceDigraph}{5.6.4}{X869F60527C2B9328}
+\makelabel{semigroups:IsMatrixOverSemiringSemigroup}{5.7.1}{X7DC6EB0680B3E4DD}
+\makelabel{semigroups:IsBooleanMatSemigroup}{5.7.1}{X7DC6EB0680B3E4DD}
+\makelabel{semigroups:IsMatrixOverFiniteFieldSemigroup}{5.7.1}{X7DC6EB0680B3E4DD}
+\makelabel{semigroups:IsMaxPlusMatrixSemigroup}{5.7.1}{X7DC6EB0680B3E4DD}
+\makelabel{semigroups:IsMinPlusMatrixSemigroup}{5.7.1}{X7DC6EB0680B3E4DD}
+\makelabel{semigroups:IsTropicalMatrixSemigroup}{5.7.1}{X7DC6EB0680B3E4DD}
+\makelabel{semigroups:IsTropicalMaxPlusMatrixSemigroup}{5.7.1}{X7DC6EB0680B3E4DD}
+\makelabel{semigroups:IsTropicalMinPlusMatrixSemigroup}{5.7.1}{X7DC6EB0680B3E4DD}
+\makelabel{semigroups:IsNTPMatrixSemigroup}{5.7.1}{X7DC6EB0680B3E4DD}
+\makelabel{semigroups:IsIntegerMatrixSemigroup}{5.7.1}{X7DC6EB0680B3E4DD}
+\makelabel{semigroups:IsMatrixOverSemiringMonoid}{5.7.2}{X8616225581BC7414}
+\makelabel{semigroups:IsBooleanMatMonoid}{5.7.2}{X8616225581BC7414}
+\makelabel{semigroups:IsMatrixOverFiniteFieldMonoid}{5.7.2}{X8616225581BC7414}
+\makelabel{semigroups:IsMaxPlusMatrixMonoid}{5.7.2}{X8616225581BC7414}
+\makelabel{semigroups:IsMinPlusMatrixMonoid}{5.7.2}{X8616225581BC7414}
+\makelabel{semigroups:IsTropicalMatrixMonoid}{5.7.2}{X8616225581BC7414}
+\makelabel{semigroups:IsTropicalMaxPlusMatrixMonoid}{5.7.2}{X8616225581BC7414}
+\makelabel{semigroups:IsTropicalMinPlusMatrixMonoid}{5.7.2}{X8616225581BC7414}
+\makelabel{semigroups:IsNTPMatrixMonoid}{5.7.2}{X8616225581BC7414}
+\makelabel{semigroups:IsIntegerMatrixMonoid}{5.7.2}{X8616225581BC7414}
+\makelabel{semigroups:IsFinite}{5.7.3}{X808A4061809A6E67}
+\makelabel{semigroups:IsTorsion}{5.7.4}{X80C6B26284721409}
+\makelabel{semigroups:NormalizeSemigroup}{5.7.5}{X873DE466868DA849}
+\makelabel{semigroups:IsActingSemigroup}{6.1.2}{X7F69D8FC7D578A0C}
+\makelabel{semigroups:CanUseFroidurePin}{6.1.4}{X7FEE8CFA87E7B872}
+\makelabel{semigroups:CanUseGapFroidurePin}{6.1.4}{X7FEE8CFA87E7B872}
+\makelabel{semigroups:CanUseLibsemigroupsFroidurePin}{6.1.4}{X7FEE8CFA87E7B872}
+\makelabel{semigroups:InverseMonoidByGenerators}{6.2.1}{X79A15C7C83BBA60B}
+\makelabel{semigroups:InverseSemigroupByGenerators}{6.2.1}{X79A15C7C83BBA60B}
+\makelabel{semigroups:SEMIGROUPS.DefaultOptionsRec}{6.3.1}{X78CF5DCC7C697BB3}
+\makelabel{semigroups:ClosureSemigroup}{6.4.1}{X7BE36790862AE26F}
+\makelabel{semigroups:ClosureMonoid}{6.4.1}{X7BE36790862AE26F}
+\makelabel{semigroups:ClosureInverseSemigroup}{6.4.1}{X7BE36790862AE26F}
+\makelabel{semigroups:ClosureInverseMonoid}{6.4.1}{X7BE36790862AE26F}
+\makelabel{semigroups:SubsemigroupByProperty for a semigroup and function}{6.4.2}{X7E5B4C5A82F9E0E0}
+\makelabel{semigroups:SubsemigroupByProperty for a semigroup, function, and limit on the size of the subsemigroup}{6.4.2}{X7E5B4C5A82F9E0E0}
+\makelabel{semigroups:InverseSubsemigroupByProperty}{6.4.3}{X832AEDCC7BA9E5F5}
+\makelabel{semigroups:IsomorphismSemigroup}{6.5.1}{X838F18E87F765697}
+\makelabel{semigroups:IsomorphismMonoid}{6.5.2}{X83D03BE678C9974F}
+\makelabel{semigroups:AsSemigroup}{6.5.3}{X80ED104F85AE5134}
+\makelabel{semigroups:AsMonoid}{6.5.4}{X7B22038F832B9C0F}
+\makelabel{semigroups:IsomorphismPermGroup}{6.5.5}{X80B7B1C783AA1567}
+\makelabel{semigroups:RZMSNormalization}{6.5.6}{X870210EA7912B52A}
+\makelabel{semigroups:RMSNormalization}{6.5.7}{X80DE617E841E5BA0}
+\makelabel{semigroups:IsomorphismReesMatrixSemigroup for a semigroup}{6.5.8}{X7E2ECC577A1CF7CA}
+\makelabel{semigroups:IsomorphismReesZeroMatrixSemigroup}{6.5.8}{X7E2ECC577A1CF7CA}
+\makelabel{semigroups:IsomorphismReesMatrixSemigroupOverPermGroup}{6.5.8}{X7E2ECC577A1CF7CA}
+\makelabel{semigroups:IsomorphismReesZeroMatrixSemigroupOverPermGroup}{6.5.8}{X7E2ECC577A1CF7CA}
+\makelabel{semigroups:RandomSemigroup}{6.6.1}{X789DE9AB79FCFEB5}
+\makelabel{semigroups:RandomMonoid}{6.6.1}{X789DE9AB79FCFEB5}
+\makelabel{semigroups:RandomInverseSemigroup}{6.6.1}{X789DE9AB79FCFEB5}
+\makelabel{semigroups:RandomInverseMonoid}{6.6.1}{X789DE9AB79FCFEB5}
+\makelabel{semigroups:CatalanMonoid}{7.1.1}{X84C4C81380B0239D}
+\makelabel{semigroups:EndomorphismsPartition}{7.1.2}{X85C1D4307D0F5FF7}
+\makelabel{semigroups:PartialTransformationMonoid}{7.1.3}{X808A27F87E5AC598}
+\makelabel{semigroups:SingularTransformationSemigroup}{7.1.4}{X7894EE357D103806}
+\makelabel{semigroups:SingularTransformationMonoid}{7.1.4}{X7894EE357D103806}
+\makelabel{semigroups:OrderEndomorphisms monoid of order preserving transformations}{7.1.5}{X80E80A0A83B57483}
+\makelabel{semigroups:SingularOrderEndomorphisms}{7.1.5}{X80E80A0A83B57483}
+\makelabel{semigroups:OrderAntiEndomorphisms}{7.1.5}{X80E80A0A83B57483}
+\makelabel{semigroups:PartialOrderEndomorphisms}{7.1.5}{X80E80A0A83B57483}
+\makelabel{semigroups:PartialOrderAntiEndomorphisms}{7.1.5}{X80E80A0A83B57483}
+\makelabel{semigroups:EndomorphismMonoid for a digraph}{7.1.6}{X868955247F2AFAA5}
+\makelabel{semigroups:EndomorphismMonoid for a digraph and vertex coloring}{7.1.6}{X868955247F2AFAA5}
+\makelabel{semigroups:MunnSemigroup}{7.2.1}{X78FBE6DD7BCA30C1}
+\makelabel{semigroups:RookMonoid}{7.2.2}{X82D9619B7845CAEB}
+\makelabel{semigroups:POI monoid of order preserving partial perms}{7.2.3}{X85D841AE83DF101C}
+\makelabel{semigroups:PODI monoid of order preserving or reversing partial perms}{7.2.3}{X85D841AE83DF101C}
+\makelabel{semigroups:POPI monoid of orientation preserving partial perms}{7.2.3}{X85D841AE83DF101C}
+\makelabel{semigroups:PORI monoid of orientation preserving or reversing partial perms}{7.2.3}{X85D841AE83DF101C}
+\makelabel{semigroups:PartitionMonoid}{7.3.1}{X7E4B61FF7CCFD74A}
+\makelabel{semigroups:RookPartitionMonoid}{7.3.1}{X7E4B61FF7CCFD74A}
+\makelabel{semigroups:SingularPartitionMonoid}{7.3.1}{X7E4B61FF7CCFD74A}
+\makelabel{semigroups:BrauerMonoid}{7.3.2}{X79D33B2E7BA3073A}
+\makelabel{semigroups:PartialBrauerMonoid}{7.3.2}{X79D33B2E7BA3073A}
+\makelabel{semigroups:SingularBrauerMonoid}{7.3.2}{X79D33B2E7BA3073A}
+\makelabel{semigroups:JonesMonoid}{7.3.3}{X8378FC8B840B9706}
+\makelabel{semigroups:TemperleyLiebMonoid}{7.3.3}{X8378FC8B840B9706}
+\makelabel{semigroups:SingularJonesMonoid}{7.3.3}{X8378FC8B840B9706}
+\makelabel{semigroups:PartialJonesMonoid}{7.3.4}{X8458B0F7874484CE}
+\makelabel{semigroups:AnnularJonesMonoid}{7.3.5}{X7DB8CB067CBE1254}
+\makelabel{semigroups:MotzkinMonoid}{7.3.6}{X8375152F7AB52B7B}
+\makelabel{semigroups:DualSymmetricInverseSemigroup}{7.3.7}{X83C7587C81B985BA}
+\makelabel{semigroups:DualSymmetricInverseMonoid}{7.3.7}{X83C7587C81B985BA}
+\makelabel{semigroups:SingularDualSymmetricInverseMonoid}{7.3.7}{X83C7587C81B985BA}
+\makelabel{semigroups:PartialDualSymmetricInverseMonoid}{7.3.7}{X83C7587C81B985BA}
+\makelabel{semigroups:UniformBlockBijectionMonoid}{7.3.8}{X8301C61384168D6F}
+\makelabel{semigroups:FactorisableDualSymmetricInverseMonoid}{7.3.8}{X8301C61384168D6F}
+\makelabel{semigroups:SingularUniformBlockBijectionMonoid}{7.3.8}{X8301C61384168D6F}
+\makelabel{semigroups:PartialUniformBlockBijectionMonoid}{7.3.8}{X8301C61384168D6F}
+\makelabel{semigroups:SingularFactorisableDualSymmetricInverseMonoid}{7.3.8}{X8301C61384168D6F}
+\makelabel{semigroups:PlanarUniformBlockBijectionMonoid}{7.3.8}{X8301C61384168D6F}
+\makelabel{semigroups:SingularPlanarUniformBlockBijectionMonoid}{7.3.8}{X8301C61384168D6F}
+\makelabel{semigroups:PlanarPartitionMonoid}{7.3.9}{X8444092A7967A029}
+\makelabel{semigroups:SingularPlanarPartitionMonoid}{7.3.9}{X8444092A7967A029}
+\makelabel{semigroups:ModularPartitionMonoid}{7.3.10}{X7F208DC584C0B9D1}
+\makelabel{semigroups:SingularModularPartitionMonoid}{7.3.10}{X7F208DC584C0B9D1}
+\makelabel{semigroups:PlanarModularPartitionMonoid}{7.3.10}{X7F208DC584C0B9D1}
+\makelabel{semigroups:SingularPlanarModularPartitionMonoid}{7.3.10}{X7F208DC584C0B9D1}
+\makelabel{semigroups:ApsisMonoid}{7.3.11}{X7C82B25F8441928E}
+\makelabel{semigroups:SingularApsisMonoid}{7.3.11}{X7C82B25F8441928E}
+\makelabel{semigroups:CrossedApsisMonoid}{7.3.11}{X7C82B25F8441928E}
+\makelabel{semigroups:SingularCrossedApsisMonoid}{7.3.11}{X7C82B25F8441928E}
+\makelabel{semigroups:FullPBRMonoid}{7.4.1}{X7DBB30AA83663CE8}
+\makelabel{semigroups:FullMatrixMonoid}{7.5.1}{X7D4B473A7D7735E3}
+\makelabel{semigroups:GeneralLinearMonoid}{7.5.1}{X7D4B473A7D7735E3}
+\makelabel{semigroups:GLM}{7.5.1}{X7D4B473A7D7735E3}
+\makelabel{semigroups:SpecialLinearMonoid}{7.5.2}{X785924807B60F187}
+\makelabel{semigroups:SLM}{7.5.2}{X785924807B60F187}
+\makelabel{semigroups:IsFullMatrixMonoid}{7.5.3}{X860B2A4382CA8F87}
+\makelabel{semigroups:IsGeneralLinearMonoid}{7.5.3}{X860B2A4382CA8F87}
+\makelabel{semigroups:FullBooleanMatMonoid}{7.6.1}{X7B20103D84E010EF}
+\makelabel{semigroups:RegularBooleanMatMonoid}{7.6.2}{X7A43263981F2F2AF}
+\makelabel{semigroups:ReflexiveBooleanMatMonoid}{7.6.3}{X78DF50747A28098C}
+\makelabel{semigroups:HallMonoid}{7.6.4}{X79EF0EA68782CFCA}
+\makelabel{semigroups:GossipMonoid}{7.6.5}{X7F083600787C78FF}
+\makelabel{semigroups:TriangularBooleanMatMonoid}{7.6.6}{X81BBCF2E84239521}
+\makelabel{semigroups:UnitriangularBooleanMatMonoid}{7.6.6}{X81BBCF2E84239521}
+\makelabel{semigroups:FullTropicalMaxPlusMonoid}{7.7.1}{X81E937B6852A9C69}
+\makelabel{semigroups:FullTropicalMinPlusMonoid}{7.7.2}{X85EDC03180768931}
+\makelabel{semigroups:TrivialSemigroup}{7.8.1}{X82B07E907B3A55F0}
+\makelabel{semigroups:MonogenicSemigroup}{7.8.2}{X8411EBD97A220921}
+\makelabel{semigroups:RectangularBand}{7.8.3}{X7E4DFDE27BF8B8F7}
+\makelabel{semigroups:ZeroSemigroup}{7.8.4}{X801FC1D97D832A6F}
+\makelabel{semigroups:LeftZeroSemigroup}{7.8.5}{X8672CFA47CA620B2}
+\makelabel{semigroups:RightZeroSemigroup}{7.8.5}{X8672CFA47CA620B2}
+\makelabel{semigroups:BrandtSemigroup}{7.8.6}{X7E2B20C77D47F7FB}
+\makelabel{semigroups:FreeBand for a given rank}{7.9.1}{X7B2A65F382DB36EC}
+\makelabel{semigroups:FreeBand for a list of names}{7.9.1}{X7B2A65F382DB36EC}
+\makelabel{semigroups:FreeBand for various names}{7.9.1}{X7B2A65F382DB36EC}
+\makelabel{semigroups:IsFreeBandCategory}{7.9.2}{X7F5658DC7E56C4A6}
+\makelabel{semigroups:IsFreeBand for a given semigroup}{7.9.3}{X7B1CD5FC7E034B88}
+\makelabel{semigroups:IsFreeBandElement}{7.9.4}{X7DECF69087BB3B16}
+\makelabel{semigroups:IsFreeBandElementCollection}{7.9.5}{X842839C87DAAA43C}
+\makelabel{semigroups:IsFreeBandSubsemigroup}{7.9.6}{X7AEF4CD1857E7DCC}
+\makelabel{semigroups:ContentOfFreeBandElement}{7.9.7}{X808CAEC17BF271D1}
+\makelabel{semigroups:ContentOfFreeBandElementCollection}{7.9.7}{X808CAEC17BF271D1}
+\makelabel{semigroups:EqualInFreeBand}{7.9.8}{X7CD9426180587CA4}
+\makelabel{semigroups:GreensDClassOfElement for a free band and element}{7.9.9}{X85DC5D50875E55D6}
+\makelabel{semigroups:GraphInverseSemigroup}{7.10.1}{X7A9EEFD386D6F630}
+\makelabel{semigroups:Range for a graph inverse semigroup element}{7.10.2}{X8187F0FF784A82CD}
+\makelabel{semigroups:Source for a graph inverse semigroup element}{7.10.2}{X8187F0FF784A82CD}
+\makelabel{semigroups:IsVertex for a graph inverse semigroup element}{7.10.3}{X7DEE927C83D4DFDD}
+\makelabel{semigroups:IsGraphInverseSemigroup}{7.10.4}{X7BFDF88B799B05A0}
+\makelabel{semigroups:IsGraphInverseSemigroupElement}{7.10.4}{X7BFDF88B799B05A0}
+\makelabel{semigroups:GraphOfGraphInverseSemigroup}{7.10.5}{X7BE287A385A058BC}
+\makelabel{semigroups:IsGraphInverseSemigroupElementCollection}{7.10.6}{X870128E4845D6ABD}
+\makelabel{semigroups:IsGraphInverseSubsemigroup}{7.10.7}{X7BC6D5107ED09DBA}
+\makelabel{semigroups:VerticesOfGraphInverseSemigroup}{7.10.8}{X7DF1ACC27CC998EB}
+\makelabel{semigroups:IndexOfVertexOfGraphInverseSemigroup}{7.10.9}{X87500BC782212D4A}
+\makelabel{semigroups:FreeInverseSemigroup for a given rank}{7.11.1}{X7F3F9DED8003CBD0}
+\makelabel{semigroups:FreeInverseSemigroup for a list of names}{7.11.1}{X7F3F9DED8003CBD0}
+\makelabel{semigroups:FreeInverseSemigroup for various names}{7.11.1}{X7F3F9DED8003CBD0}
+\makelabel{semigroups:IsFreeInverseSemigroupCategory}{7.11.2}{X7CE4CFD886220179}
+\makelabel{semigroups:IsFreeInverseSemigroup}{7.11.3}{X7B91643B827DA6DB}
+\makelabel{semigroups:IsFreeInverseSemigroupElement}{7.11.4}{X7999FE0286283CC2}
+\makelabel{semigroups:IsFreeInverseSemigroupElementCollection}{7.11.5}{X813A291779726739}
+\makelabel{semigroups:CanonicalForm for a free inverse semigroup element}{7.11.6}{X7DB7DCEC7E0FE9A3}
+\makelabel{semigroups:MinimalWord for free inverse semigroup element}{7.11.7}{X87BB5D047EB7C2BF}
+\makelabel{semigroups:DirectProduct}{8.1.1}{X861BA02C7902A4F4}
+\makelabel{semigroups:DirectProductOp}{8.1.1}{X861BA02C7902A4F4}
+\makelabel{semigroups:WreathProduct}{8.1.2}{X8786EFBC78D7D6ED}
+\makelabel{semigroups:DualSemigroup}{8.2.1}{X79F2643C8642A3B0}
+\makelabel{semigroups:IsDualSemigroupRep}{8.2.2}{X83403224821CD079}
+\makelabel{semigroups:IsDualSemigroupElement}{8.2.3}{X79BAAA397FC1FA2E}
+\makelabel{semigroups:AntiIsomorphismDualSemigroup}{8.2.4}{X7CB64FA378EC715B}
+\makelabel{semigroups:StrongSemilatticeOfSemigroups}{8.3.1}{X82C3F9C9861EEDFE}
+\makelabel{semigroups:SSSE}{8.3.2}{X798DE3E581978834}
+\makelabel{semigroups:IsSSSE}{8.3.3}{X7B7B70F37C9C3836}
+\makelabel{semigroups:IsStrongSemilatticeOfSemigroups}{8.3.4}{X838F24247D4DBE18}
+\makelabel{semigroups:SemilatticeOfStrongSemilatticeOfSemigroups}{8.3.5}{X87100CE6836DE3DB}
+\makelabel{semigroups:SemigroupsOfStrongSemilatticeOfSemigroups}{8.3.6}{X79E6C08D87984579}
+\makelabel{semigroups:HomomorphismsOfStrongSemilatticeOfSemigroups}{8.3.7}{X806655138370ECFF}
+\makelabel{semigroups:IsMcAlisterTripleSemigroup}{8.4.1}{X85C00EB085774624}
+\makelabel{semigroups:McAlisterTripleSemigroup}{8.4.2}{X7B5FF3A27BB057F2}
+\makelabel{semigroups:McAlisterTripleSemigroupGroup}{8.4.3}{X7A54FDB186CD2E94}
+\makelabel{semigroups:McAlisterTripleSemigroupPartialOrder}{8.4.4}{X8046966B7F9A1ED5}
+\makelabel{semigroups:McAlisterTripleSemigroupSemilattice}{8.4.5}{X86C0C3EF84517DAB}
+\makelabel{semigroups:McAlisterTripleSemigroupAction}{8.4.6}{X86D6442E85881DEA}
+\makelabel{semigroups:IsMcAlisterTripleSemigroupElement}{8.4.7}{X7B4EC9FC82249A83}
+\makelabel{semigroups:IsMTSE}{8.4.7}{X7B4EC9FC82249A83}
+\makelabel{semigroups:McAlisterTripleSemigroupElement}{8.4.8}{X854BFB1C7BA57985}
+\makelabel{semigroups:MTSE}{8.4.8}{X854BFB1C7BA57985}
+\makelabel{semigroups:SemigroupIdeal}{9.1.1}{X78E15B0184A1DC14}
+\makelabel{semigroups:Ideals for a semigroup}{9.1.2}{X7AF9B33881D185C6}
+\makelabel{semigroups:GeneratorsOfSemigroupIdeal}{9.2.1}{X87BB45DB844D41BC}
+\makelabel{semigroups:MinimalIdealGeneratingSet}{9.2.2}{X8777E71A82C2BAF9}
+\makelabel{semigroups:SupersemigroupOfIdeal}{9.2.3}{X7DB8699784FA4114}
+\makelabel{semigroups:DClassOfHClass}{10.1.1}{X87558FEF805D24E1}
+\makelabel{semigroups:DClassOfLClass}{10.1.1}{X87558FEF805D24E1}
+\makelabel{semigroups:DClassOfRClass}{10.1.1}{X87558FEF805D24E1}
+\makelabel{semigroups:LClassOfHClass}{10.1.1}{X87558FEF805D24E1}
+\makelabel{semigroups:RClassOfHClass}{10.1.1}{X87558FEF805D24E1}
+\makelabel{semigroups:GreensDClassOfElement}{10.1.2}{X81B7AD4C7C552867}
+\makelabel{semigroups:DClass}{10.1.2}{X81B7AD4C7C552867}
+\makelabel{semigroups:GreensHClassOfElement}{10.1.2}{X81B7AD4C7C552867}
+\makelabel{semigroups:GreensHClassOfElement for a Rees matrix semigroup}{10.1.2}{X81B7AD4C7C552867}
+\makelabel{semigroups:HClass}{10.1.2}{X81B7AD4C7C552867}
+\makelabel{semigroups:HClass for a Rees matrix semigroup}{10.1.2}{X81B7AD4C7C552867}
+\makelabel{semigroups:GreensLClassOfElement}{10.1.2}{X81B7AD4C7C552867}
+\makelabel{semigroups:LClass}{10.1.2}{X81B7AD4C7C552867}
+\makelabel{semigroups:GreensRClassOfElement}{10.1.2}{X81B7AD4C7C552867}
+\makelabel{semigroups:RClass}{10.1.2}{X81B7AD4C7C552867}
+\makelabel{semigroups:GreensDClassOfElementNC}{10.1.3}{X7B44317786571F8B}
+\makelabel{semigroups:DClassNC}{10.1.3}{X7B44317786571F8B}
+\makelabel{semigroups:GreensHClassOfElementNC}{10.1.3}{X7B44317786571F8B}
+\makelabel{semigroups:HClassNC}{10.1.3}{X7B44317786571F8B}
+\makelabel{semigroups:GreensLClassOfElementNC}{10.1.3}{X7B44317786571F8B}
+\makelabel{semigroups:LClassNC}{10.1.3}{X7B44317786571F8B}
+\makelabel{semigroups:GreensRClassOfElementNC}{10.1.3}{X7B44317786571F8B}
+\makelabel{semigroups:RClassNC}{10.1.3}{X7B44317786571F8B}
+\makelabel{semigroups:GreensDClasses}{10.1.4}{X7D51218A80234DE5}
+\makelabel{semigroups:DClasses}{10.1.4}{X7D51218A80234DE5}
+\makelabel{semigroups:GreensHClasses}{10.1.4}{X7D51218A80234DE5}
+\makelabel{semigroups:HClasses}{10.1.4}{X7D51218A80234DE5}
+\makelabel{semigroups:GreensJClasses}{10.1.4}{X7D51218A80234DE5}
+\makelabel{semigroups:JClasses}{10.1.4}{X7D51218A80234DE5}
+\makelabel{semigroups:GreensLClasses}{10.1.4}{X7D51218A80234DE5}
+\makelabel{semigroups:LClasses}{10.1.4}{X7D51218A80234DE5}
+\makelabel{semigroups:GreensRClasses}{10.1.4}{X7D51218A80234DE5}
+\makelabel{semigroups:RClasses}{10.1.4}{X7D51218A80234DE5}
+\makelabel{semigroups:DClassReps}{10.1.5}{X865387A87FAAC395}
+\makelabel{semigroups:HClassReps}{10.1.5}{X865387A87FAAC395}
+\makelabel{semigroups:LClassReps}{10.1.5}{X865387A87FAAC395}
+\makelabel{semigroups:RClassReps}{10.1.5}{X865387A87FAAC395}
+\makelabel{semigroups:MinimalDClass}{10.1.6}{X81E5A04F7DA3A1E1}
+\makelabel{semigroups:MaximalDClasses}{10.1.7}{X834172F4787A565B}
+\makelabel{semigroups:MaximalLClasses}{10.1.7}{X834172F4787A565B}
+\makelabel{semigroups:MaximalRClasses}{10.1.7}{X834172F4787A565B}
+\makelabel{semigroups:NrRegularDClasses}{10.1.8}{X7AA3F0A77D0043FB}
+\makelabel{semigroups:RegularDClasses}{10.1.8}{X7AA3F0A77D0043FB}
+\makelabel{semigroups:NrDClasses}{10.1.9}{X7E45FD9F7BADDFBD}
+\makelabel{semigroups:NrHClasses}{10.1.9}{X7E45FD9F7BADDFBD}
+\makelabel{semigroups:NrLClasses}{10.1.9}{X7E45FD9F7BADDFBD}
+\makelabel{semigroups:NrRClasses}{10.1.9}{X7E45FD9F7BADDFBD}
+\makelabel{semigroups:PartialOrderOfDClasses}{10.1.10}{X8140814084748101}
+\makelabel{semigroups:PartialOrderOfLClasses}{10.1.10}{X8140814084748101}
+\makelabel{semigroups:PartialOrderOfRClasses}{10.1.10}{X8140814084748101}
+\makelabel{semigroups:LengthOfLongestDClassChain}{10.1.11}{X83B0EDA57F1D2F97}
+\makelabel{semigroups:IsGreensDGreaterThanFunc}{10.1.12}{X7E872C5381D0DD8A}
+\makelabel{semigroups:IteratorOfDClassReps}{10.2.1}{X8566F84A7F6D4193}
+\makelabel{semigroups:IteratorOfHClassReps}{10.2.1}{X8566F84A7F6D4193}
+\makelabel{semigroups:IteratorOfLClassReps}{10.2.1}{X8566F84A7F6D4193}
+\makelabel{semigroups:IteratorOfDClasses}{10.2.2}{X867D7B8982915960}
+\makelabel{semigroups:IteratorOfRClasses}{10.2.2}{X867D7B8982915960}
+\makelabel{semigroups:IsRegularGreensClass}{10.3.2}{X859DD1C079C80DCC}
+\makelabel{semigroups:IsGreensClassNC}{10.3.3}{X7E9BD34B8021045A}
+\makelabel{semigroups:GroupHClass}{10.4.1}{X8723756387DD4C0F}
+\makelabel{semigroups:SchutzenbergerGroup}{10.4.2}{X84F1321E8217D2A8}
+\makelabel{semigroups:StructureDescriptionSchutzenbergerGroups}{10.4.3}{X81202126806443F9}
+\makelabel{semigroups:StructureDescriptionMaximalSubgroups}{10.4.4}{X838F43FE79A8C678}
+\makelabel{semigroups:MultiplicativeNeutralElement for an H-class}{10.4.5}{X8459E4067C5773AD}
+\makelabel{semigroups:StructureDescription for an H-class}{10.4.6}{X85B34FFB82C83127}
+\makelabel{semigroups:InjectionPrincipalFactor}{10.4.7}{X7EBB4F1981CC2AE9}
+\makelabel{semigroups:InjectionNormalizedPrincipalFactor}{10.4.7}{X7EBB4F1981CC2AE9}
+\makelabel{semigroups:IsomorphismReesMatrixSemigroup for a D-class}{10.4.7}{X7EBB4F1981CC2AE9}
+\makelabel{semigroups:PrincipalFactor}{10.4.8}{X86C6D777847AAEC7}
+\makelabel{semigroups:NormalizedPrincipalFactor}{10.4.8}{X86C6D777847AAEC7}
+\makelabel{semigroups:AsListCanonical}{11.1.1}{X7AC3FAA5826516AD}
+\makelabel{semigroups:EnumeratorCanonical}{11.1.1}{X7AC3FAA5826516AD}
+\makelabel{semigroups:IteratorCanonical}{11.1.1}{X7AC3FAA5826516AD}
+\makelabel{semigroups:PositionCanonical}{11.1.2}{X7B4B10AE81602D4E}
+\makelabel{semigroups:Enumerate}{11.1.3}{X7BCD5342793C7A7E}
+\makelabel{semigroups:IsEnumerated}{11.1.4}{X877FAAA67F834897}
+\makelabel{semigroups:RightCayleyDigraph}{11.2.1}{X7EA002E27B10CCE0}
+\makelabel{semigroups:LeftCayleyDigraph}{11.2.1}{X7EA002E27B10CCE0}
+\makelabel{semigroups:Random for a semigroup}{11.3.1}{X7BB7FDFE7AFFD672}
+\makelabel{semigroups:IndexPeriodOfSemigroupElement}{11.4.1}{X869AC4247E2BA4A2}
+\makelabel{semigroups:SmallestIdempotentPower}{11.4.2}{X84E1A41F84B70DBB}
+\makelabel{semigroups:EvaluateWord}{11.5.1}{X799D2F3C866B9AED}
+\makelabel{semigroups:Factorization}{11.5.2}{X8357294D7B164106}
+\makelabel{semigroups:MinimalFactorization}{11.5.3}{X83A4D71382C5B6C3}
+\makelabel{semigroups:NonTrivialFactorization}{11.5.4}{X86261F4682DC9842}
+\makelabel{semigroups:Generators}{11.6.1}{X7BD5B55C802805B4}
+\makelabel{semigroups:SmallGeneratingSet}{11.6.2}{X814DBABC878D5232}
+\makelabel{semigroups:SmallSemigroupGeneratingSet}{11.6.2}{X814DBABC878D5232}
+\makelabel{semigroups:SmallMonoidGeneratingSet}{11.6.2}{X814DBABC878D5232}
+\makelabel{semigroups:SmallInverseSemigroupGeneratingSet}{11.6.2}{X814DBABC878D5232}
+\makelabel{semigroups:SmallInverseMonoidGeneratingSet}{11.6.2}{X814DBABC878D5232}
+\makelabel{semigroups:IrredundantGeneratingSubset}{11.6.3}{X7F88DA9487720D2B}
+\makelabel{semigroups:MinimalSemigroupGeneratingSet}{11.6.4}{X8409DBED7996D495}
+\makelabel{semigroups:MinimalMonoidGeneratingSet}{11.6.4}{X8409DBED7996D495}
+\makelabel{semigroups:MinimalInverseSemigroupGeneratingSet}{11.6.4}{X8409DBED7996D495}
+\makelabel{semigroups:MinimalInverseMonoidGeneratingSet}{11.6.4}{X8409DBED7996D495}
+\makelabel{semigroups:GeneratorsSmallest for a semigroup}{11.6.5}{X82B02F0887AD1B78}
+\makelabel{semigroups:IndecomposableElements}{11.6.6}{X7B4CD8937858A895}
+\makelabel{semigroups:MinimalIdeal}{11.7.1}{X7BC68589879C3BE9}
+\makelabel{semigroups:RepresentativeOfMinimalIdeal}{11.7.2}{X7CA6744182D07C5B}
+\makelabel{semigroups:RepresentativeOfMinimalDClass}{11.7.2}{X7CA6744182D07C5B}
+\makelabel{semigroups:MultiplicativeZero}{11.7.3}{X7B39F93C8136D642}
+\makelabel{semigroups:UnderlyingSemigroupOfSemigroupWithAdjoinedZero}{11.7.4}{X7CD6F5CB83B030B6}
+\makelabel{semigroups:GroupOfUnits}{11.8.1}{X811AEDD88280C277}
+\makelabel{semigroups:Idempotents}{11.9.1}{X7C651C9C78398FFF}
+\makelabel{semigroups:NrIdempotents}{11.9.2}{X7CFC4DB387452320}
+\makelabel{semigroups:IdempotentGeneratedSubsemigroup}{11.9.3}{X83970D028143B79B}
+\makelabel{semigroups:MaximalSubsemigroups for a finite semigroup}{11.10.1}{X860A10E387C19150}
+\makelabel{semigroups:MaximalSubsemigroups for a finite semigroup and a record}{11.10.1}{X860A10E387C19150}
+\makelabel{semigroups:NrMaximalSubsemigroups}{11.10.2}{X7A52B4117BCEF379}
+\makelabel{semigroups:IsMaximalSubsemigroup}{11.10.3}{X82D74C2478A49FD5}
+\makelabel{semigroups:ComponentRepsOfTransformationSemigroup}{11.11.1}{X8065DBC48722B085}
+\makelabel{semigroups:ComponentsOfTransformationSemigroup}{11.11.2}{X8706A72A7F3EE532}
+\makelabel{semigroups:CyclesOfTransformationSemigroup}{11.11.3}{X7AA697B186301F54}
+\makelabel{semigroups:DigraphOfAction for a transformation semigroup, list, and action}{11.11.4}{X8089CF7182AD1925}
+\makelabel{semigroups:DigraphOfActionOnPoints for a transformation semigroup}{11.11.5}{X7B5ACD5C7E7612A2}
+\makelabel{semigroups:DigraphOfActionOnPoints for a transformation semigroup and an integer}{11.11.5}{X7B5ACD5C7E7612A2}
+\makelabel{semigroups:FixedPointsOfTransformationSemigroup for a transformation semigroup}{11.11.6}{X7C6D8689819AEEE2}
+\makelabel{semigroups:IsTransitive for a transformation semigroup and a set}{11.11.7}{X83DA161F875F63B1}
+\makelabel{semigroups:IsTransitive for a transformation semigroup and a pos int}{11.11.7}{X83DA161F875F63B1}
+\makelabel{semigroups:SmallestElementSemigroup}{11.11.8}{X7C65202187A9C9F5}
+\makelabel{semigroups:LargestElementSemigroup}{11.11.8}{X7C65202187A9C9F5}
+\makelabel{semigroups:CanonicalTransformation}{11.11.9}{X84792D3D804413CD}
+\makelabel{semigroups:IsConnectedTransformationSemigroup for a transformation semigroup}{11.11.10}{X82ABE03F80B8CA2B}
+\makelabel{semigroups:ComponentRepsOfPartialPermSemigroup}{11.12.1}{X7BC22CB47C7B5EBB}
+\makelabel{semigroups:ComponentsOfPartialPermSemigroup}{11.12.2}{X8464BC397ACBF2F1}
+\makelabel{semigroups:CyclesOfPartialPerm}{11.12.3}{X832937BB87EB4349}
+\makelabel{semigroups:CyclesOfPartialPermSemigroup}{11.12.4}{X7F7A5E5E8355E230}
+\makelabel{semigroups:RZMSDigraph}{11.13.1}{X7EA1B28785B9D38C}
+\makelabel{semigroups:RZMSConnectedComponents}{11.13.2}{X79B062917AB34542}
+\makelabel{semigroups:NaturalLeqInverseSemigroup}{11.14.1}{X7A75A6C486F1DC71}
+\makelabel{semigroups:JoinIrreducibleDClasses}{11.14.2}{X85CDF93C805AF82A}
+\makelabel{semigroups:MajorantClosure}{11.14.3}{X801CC67E80898608}
+\makelabel{semigroups:Minorants}{11.14.4}{X84A3DB79816374DB}
+\makelabel{semigroups:PrimitiveIdempotents}{11.14.5}{X80C0C6C37C4A2ABD}
+\makelabel{semigroups:RightCosetsOfInverseSemigroup}{11.14.6}{X7B5D89A585F8B5EA}
+\makelabel{semigroups:SameMinorantsSubgroup}{11.14.7}{X83298E9E86A343FF}
+\makelabel{semigroups:SmallerDegreePartialPermRepresentation}{11.14.8}{X786D4E397EA4445D}
+\makelabel{semigroups:VagnerPrestonRepresentation}{11.14.9}{X7BC49C3487384364}
+\makelabel{semigroups:CharacterTableOfInverseSemigroup}{11.14.10}{X7C83DF9A7973AF6D}
+\makelabel{semigroups:EUnitaryInverseCover}{11.14.11}{X8383E6747D02D975}
+\makelabel{semigroups:NambooripadLeqRegularSemigroup}{11.15.1}{X7A7EB0DA8398886E}
+\makelabel{semigroups:NambooripadPartialOrder}{11.15.2}{X7928C7D37A9BCBD5}
+\makelabel{semigroups:IsBand}{12.1.1}{X7C8DB14587D1B55A}
+\makelabel{semigroups:IsBlockGroup}{12.1.2}{X79659C467C8A7EBD}
+\makelabel{semigroups:IsCommutativeSemigroup}{12.1.3}{X843EFDA4807FDC31}
+\makelabel{semigroups:IsCompletelyRegularSemigroup}{12.1.4}{X7AFA23AF819FBF3D}
+\makelabel{semigroups:IsCongruenceFreeSemigroup}{12.1.5}{X855088F378D8F5E1}
+\makelabel{semigroups:IsSurjectiveSemigroup}{12.1.6}{X7C9560A18348AEE3}
+\makelabel{semigroups:IsGroupAsSemigroup}{12.1.7}{X852F29E8795FA489}
+\makelabel{semigroups:IsIdempotentGenerated}{12.1.8}{X835484C481CF3DDD}
+\makelabel{semigroups:IsSemiband}{12.1.8}{X835484C481CF3DDD}
+\makelabel{semigroups:IsLeftSimple}{12.1.9}{X8206D2B0809952EF}
+\makelabel{semigroups:IsRightSimple}{12.1.9}{X8206D2B0809952EF}
+\makelabel{semigroups:IsLeftZeroSemigroup}{12.1.10}{X7E9261367C8C52C0}
+\makelabel{semigroups:IsMonogenicSemigroup}{12.1.11}{X79D46BAB7E327AD1}
+\makelabel{semigroups:IsMonogenicMonoid}{12.1.12}{X790DC9F4798DBB09}
+\makelabel{semigroups:IsMonoidAsSemigroup}{12.1.13}{X7E4DEECD7CD9886D}
+\makelabel{semigroups:IsOrthodoxSemigroup}{12.1.14}{X7935C476808C8773}
+\makelabel{semigroups:IsRectangularBand}{12.1.15}{X7E9B674D781B072C}
+\makelabel{semigroups:IsRectangularGroup}{12.1.16}{X80E682BB78547F41}
+\makelabel{semigroups:IsRegularSemigroup}{12.1.17}{X7C4663827C5ACEF1}
+\makelabel{semigroups:IsRightZeroSemigroup}{12.1.18}{X7CB099958658F979}
+\makelabel{semigroups:IsRTrivial}{12.1.19}{X8752642C7F7E512B}
+\makelabel{semigroups:IsLTrivial}{12.1.19}{X8752642C7F7E512B}
+\makelabel{semigroups:IsHTrivial}{12.1.19}{X8752642C7F7E512B}
+\makelabel{semigroups:IsDTrivial}{12.1.19}{X8752642C7F7E512B}
+\makelabel{semigroups:IsAperiodicSemigroup}{12.1.19}{X8752642C7F7E512B}
+\makelabel{semigroups:IsCombinatorialSemigroup}{12.1.19}{X8752642C7F7E512B}
+\makelabel{semigroups:IsSemigroupWithAdjoinedZero}{12.1.20}{X7826DDF8808EC4D9}
+\makelabel{semigroups:IsSemilattice}{12.1.21}{X833D24AE7C900B85}
+\makelabel{semigroups:IsSimpleSemigroup}{12.1.22}{X836F4692839F4874}
+\makelabel{semigroups:IsCompletelySimpleSemigroup}{12.1.22}{X836F4692839F4874}
+\makelabel{semigroups:IsSynchronizingSemigroup for a transformation semigroup}{12.1.23}{X7EEC85187D315398}
+\makelabel{semigroups:IsUnitRegularMonoid}{12.1.24}{X80F9A4B87997839F}
+\makelabel{semigroups:IsZeroGroup}{12.1.25}{X85F7E5CD86F0643B}
+\makelabel{semigroups:IsZeroRectangularBand}{12.1.26}{X7C6787D07B95B450}
+\makelabel{semigroups:IsZeroSemigroup}{12.1.27}{X81A1882181B75CC9}
+\makelabel{semigroups:IsZeroSimpleSemigroup}{12.1.28}{X8193A60F839C064E}
+\makelabel{semigroups:IsCliffordSemigroup}{12.2.1}{X81DE11987BB81017}
+\makelabel{semigroups:IsBrandtSemigroup}{12.2.2}{X7EFDBA687DCDA6FA}
+\makelabel{semigroups:IsEUnitaryInverseSemigroup}{12.2.3}{X843EA0E37C968BBF}
+\makelabel{semigroups:IsFInverseSemigroup}{12.2.4}{X86F942F48158DAC3}
+\makelabel{semigroups:IsFInverseMonoid}{12.2.5}{X864F1906858BB8CF}
+\makelabel{semigroups:IsFactorisableInverseMonoid}{12.2.6}{X8440E22681BD1EE6}
+\makelabel{semigroups:IsJoinIrreducible}{12.2.7}{X817F9F3984FC842C}
+\makelabel{semigroups:IsMajorantlyClosed}{12.2.8}{X81E6D24F852A7937}
+\makelabel{semigroups:IsMonogenicInverseSemigroup}{12.2.9}{X7D2641AD830DEC1C}
+\makelabel{semigroups:IsMonogenicInverseMonoid}{12.2.10}{X7EDFA6CA86645DBE}
+\makelabel{semigroups:IsSemigroupCongruence}{13.1.1}{X78E34B737F0E009F}
+\makelabel{semigroups:IsLeftSemigroupCongruence}{13.1.2}{X7E909A78830D42A6}
+\makelabel{semigroups:IsRightSemigroupCongruence}{13.1.3}{X839EEA797B1CCB67}
+\makelabel{semigroups:SemigroupCongruence}{13.2.1}{X85CE56AC84FA5D33}
+\makelabel{semigroups:LeftSemigroupCongruence}{13.2.2}{X8757DB087BE7E55A}
+\makelabel{semigroups:RightSemigroupCongruence}{13.2.3}{X7D01176B788FEE60}
+\makelabel{semigroups:IsCongruenceClass}{13.3.1}{X7B1F67A97E23E6A4}
+\makelabel{semigroups:IsLeftCongruenceClass}{13.3.2}{X7C803E8C84E81A0B}
+\makelabel{semigroups:IsRightCongruenceClass}{13.3.3}{X7D2F11C28470BC5A}
+\makelabel{semigroups:NonTrivialEquivalenceClasses}{13.3.4}{X86C05F31797C1D6D}
+\makelabel{semigroups:EquivalenceRelationLookup for an equivalence relation over a finite semigroup}{13.3.5}{X7DA4BABC7891A7F1}
+\makelabel{semigroups:EquivalenceRelationCanonicalLookup for an equivalence relation over a finite semigroup}{13.3.6}{X8022B7898553F624}
+\makelabel{semigroups:EquivalenceRelationCanonicalPartition}{13.3.7}{X842D567F79648FEB}
+\makelabel{semigroups:OnLeftCongruenceClasses}{13.3.8}{X85400841879E41A5}
+\makelabel{semigroups:OnRightCongruenceClasses}{13.3.9}{X7D66F8607B4F0D8F}
+\makelabel{semigroups:CongruencesOfSemigroup for a semigroup}{13.4.1}{X7E8D5BA27CB5A4DA}
+\makelabel{semigroups:LeftCongruencesOfSemigroup for a semigroup}{13.4.1}{X7E8D5BA27CB5A4DA}
+\makelabel{semigroups:RightCongruencesOfSemigroup for a semigroup}{13.4.1}{X7E8D5BA27CB5A4DA}
+\makelabel{semigroups:CongruencesOfSemigroup for a semigroup and a multiplicative element collection}{13.4.1}{X7E8D5BA27CB5A4DA}
+\makelabel{semigroups:LeftCongruencesOfSemigroup for a semigroup and a multiplicative element collection}{13.4.1}{X7E8D5BA27CB5A4DA}
+\makelabel{semigroups:RightCongruencesOfSemigroup for a semigroup and a multiplicative element collection}{13.4.1}{X7E8D5BA27CB5A4DA}
+\makelabel{semigroups:MinimalCongruencesOfSemigroup for a semigroup}{13.4.2}{X7838738987B2DB41}
+\makelabel{semigroups:MinimalLeftCongruencesOfSemigroup for a semigroup}{13.4.2}{X7838738987B2DB41}
+\makelabel{semigroups:MinimalRightCongruencesOfSemigroup for a semigroup}{13.4.2}{X7838738987B2DB41}
+\makelabel{semigroups:MinimalCongruencesOfSemigroup for a semigroup and a multiplicative element collection}{13.4.2}{X7838738987B2DB41}
+\makelabel{semigroups:MinimalLeftCongruencesOfSemigroup for a semigroup and a multiplicative element collection}{13.4.2}{X7838738987B2DB41}
+\makelabel{semigroups:MinimalRightCongruencesOfSemigroup for a semigroup and a multiplicative element collection}{13.4.2}{X7838738987B2DB41}
+\makelabel{semigroups:PrincipalCongruencesOfSemigroup for a semigroup}{13.4.3}{X7986F3597F9DF7AF}
+\makelabel{semigroups:PrincipalLeftCongruencesOfSemigroup for a semigroup}{13.4.3}{X7986F3597F9DF7AF}
+\makelabel{semigroups:PrincipalRightCongruencesOfSemigroup for a semigroup}{13.4.3}{X7986F3597F9DF7AF}
+\makelabel{semigroups:PrincipalCongruencesOfSemigroup for a semigroup and a multiplicative element collection}{13.4.3}{X7986F3597F9DF7AF}
+\makelabel{semigroups:PrincipalLeftCongruencesOfSemigroup for a semigroup and a multiplicative element collection}{13.4.3}{X7986F3597F9DF7AF}
+\makelabel{semigroups:PrincipalRightCongruencesOfSemigroup for a semigroup and a multiplicative element collection}{13.4.3}{X7986F3597F9DF7AF}
+\makelabel{semigroups:IsCongruencePoset}{13.4.4}{X8195D6F47EE52806}
+\makelabel{semigroups:LatticeOfCongruences for a semigroup}{13.4.5}{X86C9C5BA7FE93F4C}
+\makelabel{semigroups:LatticeOfLeftCongruences for a semigroup}{13.4.5}{X86C9C5BA7FE93F4C}
+\makelabel{semigroups:LatticeOfRightCongruences for a semigroup}{13.4.5}{X86C9C5BA7FE93F4C}
+\makelabel{semigroups:LatticeOfCongruences for a semigroup and a multiplicative element collection}{13.4.5}{X86C9C5BA7FE93F4C}
+\makelabel{semigroups:LatticeOfLeftCongruences for a semigroup and a multiplicative element collection}{13.4.5}{X86C9C5BA7FE93F4C}
+\makelabel{semigroups:LatticeOfRightCongruences for a semigroup and a multiplicative element collection}{13.4.5}{X86C9C5BA7FE93F4C}
+\makelabel{semigroups:PosetOfPrincipalCongruences for a semigroup}{13.4.6}{X83ACF2C0789F621B}
+\makelabel{semigroups:PosetOfPrincipalLeftCongruences for a semigroup}{13.4.6}{X83ACF2C0789F621B}
+\makelabel{semigroups:PosetOfPrincipalRightCongruences for a semigroup}{13.4.6}{X83ACF2C0789F621B}
+\makelabel{semigroups:PosetOfPrincipalCongruences for a semigroup and a multiplicative element collection}{13.4.6}{X83ACF2C0789F621B}
+\makelabel{semigroups:PosetOfPrincipalLeftCongruences for a semigroup and a multiplicative element collection}{13.4.6}{X83ACF2C0789F621B}
+\makelabel{semigroups:PosetOfPrincipalRightCongruences for a semigroup and a multiplicative element collection}{13.4.6}{X83ACF2C0789F621B}
+\makelabel{semigroups:CongruencesOfPoset}{13.4.7}{X7B2E2CEE8626FBC3}
+\makelabel{semigroups:UnderlyingSemigroupOfCongruencePoset}{13.4.8}{X830F42B582A2FAA0}
+\makelabel{semigroups:PosetOfCongruences}{13.4.9}{X78A91138818A4FAE}
+\makelabel{semigroups:JoinSemilatticeOfCongruences for a list or collection and a function}{13.4.10}{X7C5BAC8D82ABEBBE}
+\makelabel{semigroups:JoinSemilatticeOfCongruences for a congruence poset and a function}{13.4.10}{X7C5BAC8D82ABEBBE}
+\makelabel{semigroups:MinimalCongruences for a list or collection}{13.4.11}{X780E2B3F8509CE32}
+\makelabel{semigroups:MinimalCongruences for a congruence poset}{13.4.11}{X780E2B3F8509CE32}
+\makelabel{semigroups:IsSubrelation}{13.5.1}{X85075F1D878512F5}
+\makelabel{semigroups:IsSuperrelation}{13.5.2}{X83878AED7A8E75BE}
+\makelabel{semigroups:MeetSemigroupCongruences}{13.5.3}{X7952A5A5789C6F60}
+\makelabel{semigroups:MeetLeftSemigroupCongruences}{13.5.3}{X7952A5A5789C6F60}
+\makelabel{semigroups:MeetRightSemigroupCongruences}{13.5.3}{X7952A5A5789C6F60}
+\makelabel{semigroups:JoinSemigroupCongruences}{13.5.4}{X8262D5207DBF3C5B}
+\makelabel{semigroups:JoinLeftSemigroupCongruences}{13.5.4}{X8262D5207DBF3C5B}
+\makelabel{semigroups:JoinRightSemigroupCongruences}{13.5.4}{X8262D5207DBF3C5B}
+\makelabel{semigroups:IsRMSCongruenceByLinkedTriple}{13.6.1}{X7F4AFD7F7E163022}
+\makelabel{semigroups:IsRZMSCongruenceByLinkedTriple}{13.6.1}{X7F4AFD7F7E163022}
+\makelabel{semigroups:RMSCongruenceByLinkedTriple}{13.6.2}{X87A475E4847D3C96}
+\makelabel{semigroups:RZMSCongruenceByLinkedTriple}{13.6.2}{X87A475E4847D3C96}
+\makelabel{semigroups:IsRMSCongruenceClassByLinkedTriple}{13.6.3}{X79E4CF7B79B25AE3}
+\makelabel{semigroups:IsRZMSCongruenceClassByLinkedTriple}{13.6.3}{X79E4CF7B79B25AE3}
+\makelabel{semigroups:RMSCongruenceClassByLinkedTriple}{13.6.4}{X7E9AB940868FCC9D}
+\makelabel{semigroups:RZMSCongruenceClassByLinkedTriple}{13.6.4}{X7E9AB940868FCC9D}
+\makelabel{semigroups:IsLinkedTriple}{13.6.5}{X7B19CACF7A37ADBC}
+\makelabel{semigroups:AsSemigroupCongruenceByGeneratingPairs}{13.6.6}{X7DB7E32E865AD95D}
+\makelabel{semigroups:IsInverseSemigroupCongruenceByKernelTrace}{13.7.1}{X8546E48E85A2A7E8}
+\makelabel{semigroups:InverseSemigroupCongruenceByKernelTrace}{13.7.2}{X7A588B737CEEB104}
+\makelabel{semigroups:AsInverseSemigroupCongruenceByKernelTrace}{13.7.3}{X87916D4E854F1F6B}
+\makelabel{semigroups:KernelOfSemigroupCongruence}{13.7.4}{X7D521AFF7876CBC7}
+\makelabel{semigroups:TraceOfSemigroupCongruence}{13.7.5}{X80972A5B82D88F89}
+\makelabel{semigroups:IsInverseSemigroupCongruenceClassByKernelTrace}{13.7.6}{X8049A0E780A7A8D9}
+\makelabel{semigroups:MinimumGroupCongruence}{13.7.7}{X857495647F9A9579}
+\makelabel{semigroups:IsCongruenceByWangPair}{13.8.1}{X7AEB7DA27E76145B}
+\makelabel{semigroups:CongruenceByWangPair}{13.8.2}{X7F30D10F7BEEEBB9}
+\makelabel{semigroups:AsCongruenceByWangPair}{13.8.3}{X817F4FC27E9BACD8}
+\makelabel{semigroups:GeneratingCongruencesOfLattice}{13.8.4}{X858AE13379B5C380}
+\makelabel{semigroups:SemigroupIdealOfReesCongruence}{13.9.1}{X7BC02E08840E0AF4}
+\makelabel{semigroups:IsReesCongruenceClass}{13.9.2}{X7E15F66A8029C64A}
+\makelabel{semigroups:IsUniversalSemigroupCongruence}{13.10.1}{X8751EF557A81A2B1}
+\makelabel{semigroups:IsUniversalSemigroupCongruenceClass}{13.10.2}{X8646253C86AFFA29}
+\makelabel{semigroups:UniversalSemigroupCongruence}{13.10.3}{X7B99C6A47F3D375F}
+\makelabel{semigroups:SemigroupHomomorphismByImages for two semigroups and two lists}{14.1.1}{X817596438369885B}
+\makelabel{semigroups:SemigroupHomomorphismByImages for two semigroups and a list}{14.1.1}{X817596438369885B}
+\makelabel{semigroups:SemigroupHomomorphismByImages for two semigroups}{14.1.1}{X817596438369885B}
+\makelabel{semigroups:SemigroupHomomorphismByImages for a semigroup and two lists}{14.1.1}{X817596438369885B}
+\makelabel{semigroups:SemigroupHomomorphismByFunctionNC}{14.1.2}{X7DAA6AD985C22AD6}
+\makelabel{semigroups:SemigroupHomomorphismByFunction}{14.1.2}{X7DAA6AD985C22AD6}
+\makelabel{semigroups:IsSemigroupHomomorphismByImages}{14.1.3}{X7C76C6E5780D4A57}
+\makelabel{semigroups:IsSemigroupHomomorphismByFunction}{14.1.4}{X7F9CF9457E84BAE2}
+\makelabel{semigroups:AsSemigroupHomomorphismByImages for a semigroup homomorphism by function}{14.1.5}{X7CEBDC767CC184B6}
+\makelabel{semigroups:AsSemigroupHomomorphismByFunction for a semigroup homomorphism by images}{14.1.6}{X7973F31986CF0DD4}
+\makelabel{semigroups:KernelOfSemigroupHomomorphism}{14.1.7}{X86BCE2207E55FC9F}
+\makelabel{semigroups:IsIsomorphicSemigroup}{14.2.1}{X7A6D59247F15935E}
+\makelabel{semigroups:SmallestMultiplicationTable}{14.2.2}{X7DE212DF7DF0A4E9}
+\makelabel{semigroups:CanonicalMultiplicationTable}{14.2.3}{X7FFEEFF484039A42}
+\makelabel{semigroups:CanonicalMultiplicationTablePerm}{14.2.4}{X869533A7819EC2F8}
+\makelabel{semigroups:OnMultiplicationTable}{14.2.5}{X83BC6B998479BD27}
+\makelabel{semigroups:IsomorphismSemigroups}{14.2.6}{X8248C522825E2684}
+\makelabel{semigroups:AutomorphismGroup for a semigroup}{14.2.7}{X79BFF4E77A8090EF}
+\makelabel{semigroups:SemigroupIsomorphismByImages for two semigroups and two lists}{14.2.8}{X80FE565183A9410D}
+\makelabel{semigroups:SemigroupIsomorphismByImages for two semigroups and a list}{14.2.8}{X80FE565183A9410D}
+\makelabel{semigroups:SemigroupIsomorphismByImages for two semigroups}{14.2.8}{X80FE565183A9410D}
+\makelabel{semigroups:SemigroupIsomorphismByImages for a semigroup and two list}{14.2.8}{X80FE565183A9410D}
+\makelabel{semigroups:SemigroupIsomorphismByFunctionNC}{14.2.9}{X7B44408D8309C3DC}
+\makelabel{semigroups:SemigroupIsomorphismByFunction}{14.2.9}{X7B44408D8309C3DC}
+\makelabel{semigroups:IsSemigroupIsomorphismByFunction}{14.2.10}{X7EFDBD2C7A4FB6AF}
+\makelabel{semigroups:AsSemigroupIsomorphismByFunction for a semigroup homomorphism by images}{14.2.11}{X86C4FC857AF125BD}
+\makelabel{semigroups:IsRMSIsoByTriple}{14.3.1}{X82FCB1E585429FEA}
+\makelabel{semigroups:IsRZMSIsoByTriple}{14.3.1}{X82FCB1E585429FEA}
+\makelabel{semigroups:RMSIsoByTriple}{14.3.2}{X82B0BDCD7CBDCC2E}
+\makelabel{semigroups:RZMSIsoByTriple}{14.3.2}{X82B0BDCD7CBDCC2E}
+\makelabel{semigroups:ELMLIST for IsRMSIsoByTriple}{14.3.3}{X81C4DE427D4A3D6C}
+\makelabel{semigroups:CompositionMapping2 for IsRMSIsoByTriple}{14.3.4}{X7A02528F8721F378}
+\makelabel{semigroups:CompositionMapping2 for IsRZMSIsoByTriple}{14.3.4}{X7A02528F8721F378}
+\makelabel{semigroups:ImagesElm for IsRMSIsoByTriple}{14.3.5}{X7F159C1179C93C11}
+\makelabel{semigroups:ImagesRepresentative for IsRMSIsoByTriple}{14.3.5}{X7F159C1179C93C11}
+\makelabel{semigroups:CanonicalReesZeroMatrixSemigroup}{14.3.6}{X8765885F784557B9}
+\makelabel{semigroups:CanonicalReesMatrixSemigroup}{14.3.6}{X8765885F784557B9}
+\makelabel{semigroups:ELMLIST (for Rees (0-)matrix semigroup isomorphisms by triples)}{14.3.7}{X7ED8BF227F4229E2}
+\makelabel{semigroups:< (for Rees (0-)matrix semigroup isomorphisms by triples)}{14.3.7}{X7ED8BF227F4229E2}
+\makelabel{semigroups:   (for Rees (0-)matrix semigroup isomorphisms by triples)}{14.3.7}{X7ED8BF227F4229E2}
+\makelabel{semigroups:WordToString for a string and a list}{15.1.1}{X7CACE2997C1D243A}
+\makelabel{semigroups:RandomWord for two integers}{15.1.2}{X7C81FB0F7BF3D4A3}
+\makelabel{semigroups:StandardiseWord}{15.1.3}{X7B338B917D72FBED}
+\makelabel{semigroups:StandardizeWord}{15.1.3}{X7B338B917D72FBED}
+\makelabel{semigroups:StringToWord for a string}{15.1.4}{X7B07470F86FDC7BA}
+\makelabel{semigroups:ParseRelations}{15.2.1}{X7C2FCCA487DFC84C}
+\makelabel{semigroups:ElementOfFpSemigroup}{15.2.2}{X847012347856C55E}
+\makelabel{semigroups:ElementOfFpMonoid}{15.2.3}{X82B7A51B7FE90486}
+\makelabel{semigroups:StzPresentation}{15.3.1}{X7B505DA083E2EC0C}
+\makelabel{semigroups:IsStzPresentation}{15.3.2}{X7B86C70F84BCF8BD}
+\makelabel{semigroups:GeneratorsOfStzPresentation}{15.3.3}{X7F399C5982227D31}
+\makelabel{semigroups:RelationsOfStzPresentation}{15.3.4}{X7DCFA5D8834C31BF}
+\makelabel{semigroups:UnreducedFpSemigroup for a presentation}{15.3.5}{X79D7439679E96F28}
+\makelabel{semigroups:Length}{15.3.6}{X780769238600AFD1}
+\makelabel{semigroups:StzPrintRelations}{15.4.1}{X80F18CED8572886B}
+\makelabel{semigroups:StzPrintRelation}{15.4.2}{X81837E037DE5ACBF}
+\makelabel{semigroups:StzPrintGenerators}{15.4.3}{X846B86477CBA3A2F}
+\makelabel{semigroups:StzPrintPresentation}{15.4.4}{X7D5096807EC939E1}
+\makelabel{semigroups:StzAddRelation}{15.5.1}{X7FCA079C7C4D398F}
+\makelabel{semigroups:StzRemoveRelation}{15.5.2}{X802456968490EE7C}
+\makelabel{semigroups:StzAddGenerator}{15.5.3}{X7F2E7FAF7F899DB9}
+\makelabel{semigroups:StzRemoveGenerator}{15.5.4}{X85D1304A8461AB59}
+\makelabel{semigroups:StzSubstituteRelation}{15.5.5}{X85A89C227B8B1A96}
+\makelabel{semigroups:TietzeForwardMap}{15.6.1}{X7C46AF3A867F273A}
+\makelabel{semigroups:TietzeBackwardMap}{15.6.2}{X7F6E26348503DD53}
+\makelabel{semigroups:StzIsomorphism}{15.6.3}{X80142D917E368E46}
+\makelabel{semigroups:StzSimplifyOnce}{15.7.1}{X818403DA85EA82B8}
+\makelabel{semigroups:StzSimplifyPresentation}{15.7.2}{X87B27F5A87103502}
+\makelabel{semigroups:SimplifyFpSemigroup}{15.8.1}{X7F9ED6117BA94F01}
+\makelabel{semigroups:SimplifiedFpSemigroup}{15.8.2}{X7B32AC2B7D5C74D6}
+\makelabel{semigroups:UnreducedFpSemigroup for a semigroup}{15.8.3}{X876620BC7BD37EF6}
+\makelabel{semigroups:FpTietzeIsomorphism}{15.8.4}{X80C4E1757D4F3CE5}
+\makelabel{semigroups:DotString}{16.1.1}{X7F51F3CD7E13D199}
+\makelabel{semigroups:DotString for a Cayley digraph}{16.1.2}{X853B81B385E2CF36}
+\makelabel{semigroups:DotSemilatticeOfIdempotents}{16.1.3}{X7C22E8D17D6C23EA}
+\makelabel{semigroups:DotLeftCayleyDigraph}{16.1.4}{X7E38369D7E8BEA4C}
+\makelabel{semigroups:DotRightCayleyDigraph}{16.1.4}{X7E38369D7E8BEA4C}
+\makelabel{semigroups:TexString}{16.2.1}{X80FBF08180F7F181}
+\makelabel{semigroups:TikzString}{16.3.1}{X7F0971F678B4FC66}
+\makelabel{semigroups:TikzLeftCayleyDigraph}{16.3.2}{X81EF7F777EEF69C1}
+\makelabel{semigroups:TikzRightCayleyDigraph}{16.3.2}{X81EF7F777EEF69C1}
+\makelabel{semigroups:ReadGenerators}{17.1.1}{X8728096E8427EDE8}
+\makelabel{semigroups:WriteGenerators}{17.1.2}{X78041E8F87EFDE62}
+\makelabel{semigroups:IteratorFromGeneratorsFile}{17.1.3}{X8711D6E280F87E67}
+\makelabel{semigroups:ReadMultiplicationTable}{17.2.1}{X805058C07F9373B4}
+\makelabel{semigroups:WriteMultiplicationTable}{17.2.2}{X868B824B7E24FA96}
+\makelabel{semigroups:IteratorFromMultiplicationTableFile}{17.2.3}{X85708F5B7FBE3549}

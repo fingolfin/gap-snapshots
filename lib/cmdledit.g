@@ -81,7 +81,7 @@ GAPInfo.UseReadline := true;
 ##  <Listing Type="From readline init file">
 ##  $if GAP
 ##    set blink-matching-paren on
-##    "\C-n": dump-functions
+##    "\C-x\C-o": dump-functions
 ##    "\ep": kill-region
 ##  $endif
 ##  </Listing>
@@ -89,6 +89,14 @@ GAPInfo.UseReadline := true;
 ##  Alternatively,       from      within       &GAP;      the       command
 ##  <C>ReadlineInitLine(<A>line</A>);</C> can be  used, where <A>line</A> is
 ##  a string containing a line as in the init file.
+##  <P/>
+##  
+##  Caveat:  &GAP;   overwrites  the  following  keys   (after  reading  the
+##  <File>~/.inputrc</File>  file):  <C>\C-g</C>, <C>\C-i</C>,  <C>\C-n</C>,
+##  <C>\C-o</C>,   <C>\C-p</C>,  <C>\C-r</C>,   <C>\C-\</C>,  <C>\e&lt;</C>,
+##  <C>\e&gt;</C>,   <C>Up</C>,   <C>Down</C>,   <C>TAB</C>,   <C>Space</C>,
+##  <C>PageUp</C>,  <C>PageDown</C>.  So,  do  not redefine  these  in  your
+##  <File>~/.inputrc</File>.
 ##  <P/>
 ##  
 ##  Note that after pressing <B>Ctrl-v</B> the next special character is 
@@ -235,7 +243,7 @@ GAPInfo.UseReadline := true;
 ##  are considered as word boundaries. The function is then installed as a 
 ##  macro and bound to the key sequence <B>Esc</B> <B>Q</B>. 
 ##  <P/>
-##  <Example>
+##  <Log>
 ##  gap> EditAddQuotes := function(l)
 ##  >   local str, pos, i, j, new;
 ##  >   str := l[3];
@@ -256,7 +264,7 @@ GAPInfo.UseReadline := true;
 ##  gap> InstallReadlineMacro("addquotes", EditAddQuotes);
 ##  gap> invl := InvocationReadlineMacro("addquotes");;
 ##  gap> ReadlineInitLine(Concatenation("\"\\eQ\":\"",invl,"\""));;
-##  </Example>
+##  </Log>
 ##  </Subsection>
 ##  
 ##  </Section>
@@ -437,7 +445,7 @@ fi;
 DeclareUserPreference( rec(
   name:= ["HistoryMaxLines", "SaveAndRestoreHistory"],
   description:= [
-    "HistoryMaxLines is the maximal amount of input lines held in GAPs \
+    "HistoryMaxLines is the maximal amount of input lines held in GAP's \
 command line history.",
     "If SaveAndRestoreHistory is true then GAP saves its command line history \
 before terminating a GAP session, and prepends the stored history when GAP is \
@@ -447,7 +455,7 @@ arbitrarily many lines.",
     "These preferences are ignored if GAP was not compiled with \
 readline support.",
     ],
-  default:= [1000, false],
+  default:= [10000, true],
   check:= function(max, save) 
     return ((IsInt( max ) and 0 <= max) or max = infinity) 
            and save in [true, false];
@@ -872,7 +880,7 @@ BindGlobal("STANDARD_EXTENDERS", rec(
 # C-i: Completion as GAP level function
 GAPInfo.CommandLineEditFunctions.Functions.Completion := function(l)
     local cf, pos, word, wordplace, idbnd, i, cmps, r, searchlist, cand, c, j,
-          completeFilter, completeExtender, extension;
+          completeFilter, completeExtender, extension, hasbang;
 
       completeFilter := function(filterlist, partial)
         local pref, lowpartial;
@@ -911,17 +919,14 @@ GAPInfo.CommandLineEditFunctions.Functions.Completion := function(l)
   else 
     cf.tabcount := 1;
     Unbind(cf.tabrec);
+    Unbind(cf.tabbang);
     Unbind(cf.tabcompnam);
   fi;
   pos := l[4]-1;
   # in whitespace in beginning of line \t is just inserted
-  while pos > 0 and l[3][pos] in " \t" do
-    pos := pos-1;
-  od;
-  if pos = 0 then
+  if ForAll([1..pos], i -> l[3][i] in " \t") then
      return ["\t"];
   fi;
-  pos := l[4]-1;
   # find word to complete
   while pos > 0 and l[3][pos] in IdentifierLetters do 
     pos := pos-1;
@@ -941,35 +946,53 @@ GAPInfo.CommandLineEditFunctions.Functions.Completion := function(l)
       while i > 0 and (l[3][i] in IdentifierLetters or l[3][i] in ".!") do
         i := i-1;
       od;
-      cmps := SplitString(l[3]{[i+1..pos]},"","!.");
+      cmps := SplitString(l[3]{[i+1..pos]}, ".");
+      hasbang := [];
+      i := Length(cmps);
+      while i > 0 do
+        # distinguish '.' from '!.' and record for each component which was used
+        if Last(cmps[i]) = '!' then
+            hasbang[i] := true;
+            Remove(cmps[i]); # remove the trailing '!'
+        else
+            hasbang[i] := false;
+        fi;
+        NormalizeWhitespace(cmps[i]);
+        if not IsValidIdentifier(cmps[i]) then
+            break;
+        fi;
+        i := i-1;
+      od;
+      hasbang := hasbang{[i+1..Length(cmps)]};
+      cmps := cmps{[i+1..Length(cmps)]};
+      r := fail;
       if Length(cmps) > 0 and cmps[1] in idbnd then
         r := ValueGlobal(cmps[1]);
-        if not (IsRecord(r) or IsComponentObjectRep(r)) then
-          r := fail;
-        else
-          for j in [2..Length(cmps)] do
-            if IsBound(r!.(cmps[j])) then
-              r := r!.(cmps[j]);
-              if IsRecord(r) or IsComponentObjectRep(r) then
-                continue;
-              fi;
-            fi;
+        for j in [2..Length(cmps)] do
+          if not hasbang[j-1] and IsBound(r.(cmps[j])) then
+            r := r.(cmps[j]);
+          elif hasbang[j-1] and IsBound(r!.(cmps[j])) then
+            r := r!.(cmps[j]);
+          else
             r := fail;
             break;
-          od;
-        fi;
-      else
-        r := fail;
+          fi;
+        od;
       fi;
-      if r <> fail then
+      if IsRecord(r) or IsComponentObjectRep(r) then
         cf.tabrec := r;
+        cf.tabbang := hasbang[Length(cmps)];
       fi;
     fi;
   fi;
   # now produce the searchlist
   if IsBound(cf.tabrec) then
     # the first two <TAB> hits try existing component names only first
-    searchlist := ShallowCopy(NamesOfComponents(cf.tabrec));
+    if cf.tabbang then
+      searchlist := ShallowCopy(NamesOfComponents(cf.tabrec));
+    else
+      searchlist := ShallowCopy(RecNames(cf.tabrec));
+    fi;
     if cf.tabcount > 2 then
       Append(searchlist, ALL_RNAMES());
     fi;

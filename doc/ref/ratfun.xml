@@ -1,9 +1,8 @@
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <!-- %% -->
-<!-- %A  ratfun.msk                  GAP documentation            Alexander Hulpke -->
+<!-- %A  ratfun.xml                  GAP documentation            Alexander Hulpke -->
 <!-- %A                                                           Frank Celler -->
 <!-- %% -->
-<!-- %A  @(#)<M>Id: ratfun.msk,v 1.69 2006/03/23 19:40:39 stefan Exp </M> -->
 <!-- %% -->
 <!-- %Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland -->
 <!-- %Y  Copyright (C) 2002 The GAP Group -->
@@ -430,6 +429,8 @@ extended versions for Laurent polynomials exist).
 
 <#Include Label="UnivariateRationalFunctionByCoefficients">
 
+<#Include Label="TaylorSeriesRationalFunction">
+
 </Section>
 
 
@@ -667,7 +668,7 @@ They are represented by lists, using numbers
 <#Include Label="[4]{ratfun}">
 <#Include Label="[1]{ratfun}">
 <P/>
-The attributes that give a representation of a a rational function as a Laurent polynomial are
+The attributes that give a representation of a rational function as a Laurent polynomial are
 <Ref Attr="CoefficientsOfLaurentPolynomial"/>
 and <Ref Attr="IndeterminateNumberOfUnivariateRationalFunction"/>.
 <P/>

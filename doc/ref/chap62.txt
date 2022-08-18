@@ -37,7 +37,7 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xm:= [ [ 0, 1, 2 ], [ 0, 0, 3], [ 0, 0, 0 ] ];;[127X[104X
     [4X[25Xgap>[125X [27XA:= Algebra( Rationals, [ m ] );[127X[104X
-    [4X[28X<algebra over Rationals, with 1 generators>[128X[104X
+    [4X[28X<algebra over Rationals, with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XDimension( A );[127X[104X
     [4X[28X2[128X[104X
   [4X[32X[104X
@@ -59,7 +59,7 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xm:= [ [ 0, 1, 2 ], [ 0, 0, 3], [ 0, 0, 0 ] ];;[127X[104X
     [4X[25Xgap>[125X [27XA:= AlgebraWithOne( Rationals, [ m ] );[127X[104X
-    [4X[28X<algebra-with-one over Rationals, with 1 generators>[128X[104X
+    [4X[28X<algebra-with-one over Rationals, with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XDimension( A );[127X[104X
     [4X[28X3[128X[104X
     [4X[25Xgap>[125X [27XOne(A);[127X[104X
@@ -174,8 +174,8 @@
   
   [33X[1;0Y[29X[2XStructureConstantsTable[102X( [3XB[103X ) [32X attribute[133X
   
-  [33X[0;0YLet  [3XB[103X be a basis of a free left module [22XR[122X, say, that is also a ring. In this
-  case [2XStructureConstantsTable[102X returns a structure constants table [22XT[122X in sparse
+  [33X[0;0YLet  [3XB[103X  be a basis of a free left module [22XR[122X that is also a ring. In this case
+  [2XStructureConstantsTable[102X  returns  a  structure  constants  table [22XT[122X in sparse
   representation,    as   used   for   structure   constants   algebras   (see
   Section [14X'Tutorial: Algebras'[114X of the [5XGAP[105X User's Tutorial).[133X
   
@@ -349,7 +349,7 @@
   quaternion algebra over [22XF[122X, with parameters [3Xa[103X and [3Xb[103X, i.e., a four-dimensional
   associative [22XF[122X-algebra with basis [22X(e,i,j,k)[122X and multiplication defined by [22Xe e
   =  e[122X,  [22Xe i = i e = i[122X, [22Xe j = j e = j[122X, [22Xe k = k e = k[122X, [22Xi i = [3Xa[103X e[122X, [22Xi j = - j i =
-  k[122X,  [22Xi  k  =  -  k  i = [3Xa[103X j[122X, [22Xj j = [3Xb[103X e[122X, [22Xj k = - k j = [3Xb[103X i[122X, [22Xk k = - [3Xa[103X [3Xb[103X e[122X. The
+  k[122X,  [22Xi  k  =  -  k  i = [3Xa[103X j[122X, [22Xj j = [3Xb[103X e[122X, [22Xk j = - j k = [3Xb[103X i[122X, [22Xk k = - [3Xa[103X [3Xb[103X e[122X. The
   default value for both [3Xa[103X and [3Xb[103X is [22X-1 ∈ F[122X.[133X
   
   [33X[0;0YThe  [2XGeneratorsOfAlgebra[102X  ([14X62.9-1[114X)  and  [2XCanonicalBasis[102X ([14X61.5-3[114X) value of an
@@ -454,9 +454,9 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xm:= [ [ 0, 1, 2 ], [ 0, 0, 3], [ 0, 0, 0 ] ];;[127X[104X
     [4X[25Xgap>[125X [27XA:= Algebra( Rationals, [ m ] );[127X[104X
-    [4X[28X<algebra over Rationals, with 1 generators>[128X[104X
+    [4X[28X<algebra over Rationals, with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XB:= Subalgebra( A, [ m^2 ] );[127X[104X
-    [4X[28X<algebra over Rationals, with 1 generators>[128X[104X
+    [4X[28X<algebra over Rationals, with 1 generator>[128X[104X
   [4X[32X[104X
   
   [1X62.6-2 SubalgebraNC[101X
@@ -469,7 +469,7 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xm:= RandomMat( 3, 3 );;[127X[104X
     [4X[25Xgap>[125X [27XA:= Algebra( Rationals, [ m ] );[127X[104X
-    [4X[28X<algebra over Rationals, with 1 generators>[128X[104X
+    [4X[28X<algebra over Rationals, with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XSubalgebraNC( A, [ IdentityMat( 3, 3 ) ], "basis" );[127X[104X
     [4X[28X<algebra of dimension 1 over Rationals>[128X[104X
   [4X[32X[104X
@@ -488,7 +488,7 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xm:= [ [ 0, 1, 2 ], [ 0, 0, 3], [ 0, 0, 0 ] ];;[127X[104X
     [4X[25Xgap>[125X [27XA:= AlgebraWithOne( Rationals, [ m ] );[127X[104X
-    [4X[28X<algebra-with-one over Rationals, with 1 generators>[128X[104X
+    [4X[28X<algebra-with-one over Rationals, with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XB1:= SubalgebraWithOne( A, [ m ] );;[127X[104X
     [4X[25Xgap>[125X [27XB2:= Subalgebra( A, [ m ] );;[127X[104X
     [4X[25Xgap>[125X [27XDimension( B1 );[127X[104X
@@ -507,7 +507,7 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xm:= RandomMat( 3, 3 );; A:= Algebra( Rationals, [ m ] );;[127X[104X
     [4X[25Xgap>[125X [27XSubalgebraWithOneNC( A, [ m ] );[127X[104X
-    [4X[28X<algebra-with-one over Rationals, with 1 generators>[128X[104X
+    [4X[28X<algebra-with-one over Rationals, with 1 generator>[128X[104X
   [4X[32X[104X
   
   [1X62.6-5 TrivialSubalgebra[101X
@@ -539,7 +539,7 @@
     [4X[25Xgap>[125X [27XA:= AlgebraWithOne( Rationals, [ m ] );;[127X[104X
     [4X[25Xgap>[125X [27XI:= Ideal( A, [ m ] );  # the two-sided ideal of `A' generated by `m'[127X[104X
     [4X[28X<two-sided ideal in <algebra-with-one of dimension 3 over Rationals>, [128X[104X
-    [4X[28X  (1 generators)>[128X[104X
+    [4X[28X  (1 generator)>[128X[104X
     [4X[25Xgap>[125X [27XDimension( I );[127X[104X
     [4X[28X2[128X[104X
     [4X[25Xgap>[125X [27XGeneratorsOfIdeal( I );[127X[104X
@@ -550,7 +550,7 @@
     [4X[25Xgap>[125X [27XA:= FullMatrixAlgebra( Rationals, 4 );;[127X[104X
     [4X[25Xgap>[125X [27Xm:= NullMat( 4, 4 );; m[1][4]:=1;;[127X[104X
     [4X[25Xgap>[125X [27XI:= LeftIdeal( A, [ m ] );[127X[104X
-    [4X[28X<left ideal in ( Rationals^[ 4, 4 ] ), (1 generators)>[128X[104X
+    [4X[28X<left ideal in ( Rationals^[ 4, 4 ] ), (1 generator)>[128X[104X
     [4X[25Xgap>[125X [27XDimension( I );[127X[104X
     [4X[28X4[128X[104X
     [4X[25Xgap>[125X [27XGeneratorsOfLeftIdeal( I );[127X[104X
@@ -714,7 +714,7 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xm:= [ [ 0, 1, 2 ], [ 0, 0, 3 ], [ 0, 0, 0 ] ];;[127X[104X
     [4X[25Xgap>[125X [27XA:= AlgebraWithOne( Rationals, [ m ] );[127X[104X
-    [4X[28X<algebra-with-one over Rationals, with 1 generators>[128X[104X
+    [4X[28X<algebra-with-one over Rationals, with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XGeneratorsOfAlgebra( A );[127X[104X
     [4X[28X[ [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ], [128X[104X
     [4X[28X  [ [ 0, 1, 2 ], [ 0, 0, 3 ], [ 0, 0, 0 ] ] ][128X[104X
@@ -732,7 +732,7 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xm:= [ [ 0, 1, 2 ], [ 0, 0, 3 ], [ 0, 0, 0 ] ];;[127X[104X
     [4X[25Xgap>[125X [27XA:= AlgebraWithOne( Rationals, [ m ] );[127X[104X
-    [4X[28X<algebra-with-one over Rationals, with 1 generators>[128X[104X
+    [4X[28X<algebra-with-one over Rationals, with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XGeneratorsOfAlgebraWithOne( A );[127X[104X
     [4X[28X[ [ [ 0, 1, 2 ], [ 0, 0, 3 ], [ 0, 0, 0 ] ] ][128X[104X
   [4X[32X[104X
@@ -753,7 +753,7 @@
     [4X[25Xgap>[125X [27XA:= QuaternionAlgebra( Rationals );;[127X[104X
     [4X[25Xgap>[125X [27Xb:= BasisVectors( Basis( A ) );;[127X[104X
     [4X[25Xgap>[125X [27XB:= Subalgebra( A, [ b[4] ] );[127X[104X
-    [4X[28X<algebra over Rationals, with 1 generators>[128X[104X
+    [4X[28X<algebra over Rationals, with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XProductSpace( A, B );[127X[104X
     [4X[28X<vector space of dimension 4 over Rationals>[128X[104X
   [4X[32X[104X
@@ -776,7 +776,7 @@
   
   [33X[1;0Y[29X[2XAdjointBasis[102X( [3XB[103X ) [32X attribute[133X
   
-  [33X[0;0YThe  [13Xadjoint  map[113X  [22Xad(x)[122X of an element [22Xx[122X in an [22XF[122X-algebra [22XA[122X, say, is the left
+  [33X[0;0YThe  [13Xadjoint  map[113X  [22Xad(x)[122X  of  an  element  [22Xx[122X  in  an [22XF[122X-algebra [22XA[122X is the left
   multiplication  by  [22Xx[122X. This map is [22XF[122X-linear and thus, w.r.t. the given basis
   [3XB[103X[22X=  (x_1,  x_2, ..., x_n)[122X of [22XA[122X, [22Xad(x)[122X can be represented by a matrix over [22XF[122X.
   Let  [22XV[122X denote the [22XF[122X-vector space of the matrices corresponding to [22Xad(x)[122X, for
@@ -835,7 +835,7 @@
     [4X[25Xgap>[125X [27XV:= VectorSpace( Rationals, [ IdentityMat( 2 ) ] );;[127X[104X
     [4X[25Xgap>[125X [27XA:= AsAlgebra( Rationals, V );;[127X[104X
     [4X[25Xgap>[125X [27XAsAlgebraWithOne( Rationals, A );[127X[104X
-    [4X[28X<algebra-with-one over Rationals, with 1 generators>[128X[104X
+    [4X[28X<algebra-with-one over Rationals, with 1 generator>[128X[104X
   [4X[32X[104X
   
   [1X62.9-9 AsSubalgebra[101X
@@ -868,7 +868,7 @@
     [4X[25Xgap>[125X [27XB:= AsAlgebra( Rationals, V );;[127X[104X
     [4X[25Xgap>[125X [27XC:= AsAlgebraWithOne( Rationals, B );;[127X[104X
     [4X[25Xgap>[125X [27XAC:= AsSubalgebraWithOne( A, C );[127X[104X
-    [4X[28X<algebra-with-one over Rationals, with 1 generators>[128X[104X
+    [4X[28X<algebra-with-one over Rationals, with 1 generator>[128X[104X
   [4X[32X[104X
   
   [1X62.9-11 MutableBasisOfClosureUnderAction[101X
@@ -969,7 +969,7 @@
     [4X[25Xgap>[125X [27XbasA:= BasisVectors( Basis( A ) );;[127X[104X
     [4X[25Xgap>[125X [27XB:= MutableBasisOfIdealInNonassociativeAlgebra( Rationals, basA,[127X[104X
     [4X[25X>[125X [27X[ mats[2] ], 0*mats[1], "both", infinity );[127X[104X
-    [4X[28X<mutable basis over Rationals, 1 vectors>[128X[104X
+    [4X[28X<mutable basis over Rationals, 1 vector>[128X[104X
     [4X[25Xgap>[125X [27XBasisVectors( B );[127X[104X
     [4X[28X[ [ [ 0, 1 ], [ 0, 0 ] ] ][128X[104X
   [4X[32X[104X
@@ -1003,10 +1003,10 @@
   
   [33X[1;0Y[29X[2XFullMatrixAlgebraCentralizer[102X( [3XF[103X, [3Xlst[103X ) [32X function[133X
   
-  [33X[0;0YLet  [3Xlst[103X be a nonempty list of square matrices of the same dimension [22Xn[122X, say,
-  with  entries  in  the  field  [3XF[103X.  [2XFullMatrixAlgebraCentralizer[102X  returns the
-  (pointwise)  centralizer  of  all  matrices  in  [3Xlst[103X, inside the full matrix
-  algebra of [22Xn × n[122X matrices over [3XF[103X.[133X
+  [33X[0;0YLet  [3Xlst[103X  be a nonempty list of square matrices of the same dimension [22Xn[122X with
+  entries in the field [3XF[103X. [2XFullMatrixAlgebraCentralizer[102X returns the (pointwise)
+  centralizer  of all matrices in [3Xlst[103X, inside the full matrix algebra of [22Xn × n[122X
+  matrices over [3XF[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XA:= QuaternionAlgebra( Rationals );;[127X[104X
@@ -1025,7 +1025,7 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xm:= [ [ 0, 1, 2 ], [ 0, 0, 3 ], [ 0, 0, 0 ] ];;[127X[104X
     [4X[25Xgap>[125X [27XA:= AlgebraWithOneByGenerators( Rationals, [ m ] );[127X[104X
-    [4X[28X<algebra-with-one over Rationals, with 1 generators>[128X[104X
+    [4X[28X<algebra-with-one over Rationals, with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XRadicalOfAlgebra( A );[127X[104X
     [4X[28X<algebra of dimension 2 over Rationals>[128X[104X
   [4X[32X[104X
@@ -1063,19 +1063,19 @@
     [4X[25Xgap>[125X [27Xdd:= DirectSumDecomposition( A );[127X[104X
     [4X[28X[ <two-sided ideal in [128X[104X
     [4X[28X      <algebra-with-one of dimension 24 over Rationals>, [128X[104X
-    [4X[28X      (1 generators)>, [128X[104X
+    [4X[28X      (1 generator)>, [128X[104X
     [4X[28X  <two-sided ideal in [128X[104X
     [4X[28X      <algebra-with-one of dimension 24 over Rationals>, [128X[104X
-    [4X[28X      (1 generators)>, [128X[104X
+    [4X[28X      (1 generator)>, [128X[104X
     [4X[28X  <two-sided ideal in [128X[104X
     [4X[28X      <algebra-with-one of dimension 24 over Rationals>, [128X[104X
-    [4X[28X      (1 generators)>, [128X[104X
+    [4X[28X      (1 generator)>, [128X[104X
     [4X[28X  <two-sided ideal in [128X[104X
     [4X[28X      <algebra-with-one of dimension 24 over Rationals>, [128X[104X
-    [4X[28X      (1 generators)>, [128X[104X
+    [4X[28X      (1 generator)>, [128X[104X
     [4X[28X  <two-sided ideal in [128X[104X
     [4X[28X      <algebra-with-one of dimension 24 over Rationals>, [128X[104X
-    [4X[28X      (1 generators)> ][128X[104X
+    [4X[28X      (1 generator)> ][128X[104X
     [4X[25Xgap>[125X [27XList( dd, Dimension );[127X[104X
     [4X[28X[ 1, 1, 4, 9, 9 ][128X[104X
   [4X[32X[104X
@@ -1164,7 +1164,7 @@
     [4X[28Xrec( hom_components := function( d ) ... end, max_degree := 9, [128X[104X
     [4X[28X  min_degree := 1, source := Integers )[128X[104X
     [4X[25Xgap>[125X [27Xg.hom_components( 3 );[127X[104X
-    [4X[28X<vector space over GF(3), with 1 generators>[128X[104X
+    [4X[28X<vector space over GF(3), with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27Xg.hom_components( 14 );[127X[104X
     [4X[28X<vector space of dimension 0 over GF(3)>[128X[104X
   [4X[32X[104X
@@ -1432,7 +1432,7 @@
   [33X[1;0Y[29X[2XIsomorphismSCAlgebra[102X( [3XB[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XIsomorphismSCAlgebra[102X( [3XA[103X ) [32X attribute[133X
   
-  [33X[0;0YFor  a basis [3XB[103X of an algebra [22XA[122X, say, [2XIsomorphismSCAlgebra[102X returns an algebra
+  [33X[0;0YFor  a  basis  [3XB[103X  of  an  algebra [22XA[122X, [2XIsomorphismSCAlgebra[102X returns an algebra
   isomorphism  from [22XA[122X to an algebra [22XS[122X given by structure constants (see [14X62.4[114X),
   such that the canonical basis of [22XS[122X is the image of [3XB[103X.[133X
   
@@ -1883,9 +1883,9 @@
     [4X[25Xgap>[125X [27XA:= Rationals^[3,3];;[127X[104X
     [4X[25Xgap>[125X [27XV:= LeftAlgebraModuleByGenerators( A, \*, [ [ 1, 0, 0 ] ] );;[127X[104X
     [4X[25Xgap>[125X [27XB:= Subalgebra( A, [ Basis(A)[1] ] );[127X[104X
-    [4X[28X<algebra over Rationals, with 1 generators>[128X[104X
+    [4X[28X<algebra over Rationals, with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XW:= ModuleByRestriction( V, B );[127X[104X
-    [4X[28X<left-module over <algebra over Rationals, with 1 generators>>[128X[104X
+    [4X[28X<left-module over <algebra over Rationals, with 1 generator>>[128X[104X
   [4X[32X[104X
   
   [1X62.11-22 NaturalHomomorphismBySubAlgebraModule[101X

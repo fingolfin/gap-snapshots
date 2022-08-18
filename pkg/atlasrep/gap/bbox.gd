@@ -28,7 +28,7 @@
 ##  A specification of the language can be found in <Cite Key="Nic06"/>,
 ##  see also
 ##  <P/>
-##  <URL>http://brauer.maths.qmul.ac.uk/Atlas/info/blackbox.html</URL>.
+##  <URL>http://atlas.math.rwth-aachen.de/Atlas/info/blackbox.html</URL>.
 ##  <P/>
 ##  The <E>inputs</E> of a black box program may be explicit group elements,
 ##  and the program may also ask for random elements from a given group.
@@ -139,7 +139,7 @@ DeclareInfoClass( "InfoBBox" );
 ##
 ##  <#GAPDoc Label="IsBBoxProgram">
 ##  <ManSection>
-##  <Filt Name="IsBBoxProgram" Arg='obj' Type="Category"/>
+##  <Filt Name="IsBBoxProgram" Arg='obj' Type="category"/>
 ##
 ##  <Description>
 ##  Each black box program in &GAP; lies in the filter
@@ -357,12 +357,12 @@ DeclareGlobalFunction( "RunBBoxProgram" );
 
 #############################################################################
 ##
-#F  ResultOfBBoxProgram( <prog>, <G> )
-#F  ResultOfBBoxProgram( <prog>, <gens> )
+#F  ResultOfBBoxProgram( <prog>, <G>[, <options>] )
+#F  ResultOfBBoxProgram( <prog>, <gens>[, <options>] )
 ##
 ##  <#GAPDoc Label="ResultOfBBoxProgram">
 ##  <ManSection>
-##  <Func Name="ResultOfBBoxProgram" Arg='prog, G'/>
+##  <Func Name="ResultOfBBoxProgram" Arg='prog, G[, options]'/>
 ##
 ##  <Returns>
 ##  a list of group elements or <K>true</K>, <K>false</K>, <K>fail</K>,
@@ -371,8 +371,8 @@ DeclareGlobalFunction( "RunBBoxProgram" );
 ##  <Description>
 ##  This function calls <Ref Func="RunBBoxProgram"/>
 ##  with the black box program <A>prog</A> and second argument either a group
-##  or a list of group elements; the default options of
-##  <Ref Func="RunBBoxProgram"/> are assumed.
+##  or a list of group elements; if <A>options</A> is not given then the
+##  default options of <Ref Func="RunBBoxProgram"/> are assumed.
 ##  The return value is <K>fail</K> if this call yields <K>fail</K>,
 ##  otherwise the <C>gens</C> component of the result, if bound,
 ##  or the <C>result</C> component if not.
@@ -437,7 +437,7 @@ DeclareGlobalFunction( "ResultOfBBoxProgram" );
 ##      <M>l</M> is a list of form 1. and <M>i</M> is a positive integer,
 ##  </Item>
 ##  <Item>
-##      a list <M>[ </M><C>"Order"</C><M>, i, n ]</M>
+##      a list <M>[</M> <C>"Order"</C><M>, i, n ]</M>
 ##      where <M>i</M> and <M>n</M> are positive integers.
 ##  </Item>
 ##  </Enum>
@@ -484,7 +484,7 @@ DeclareGlobalFunction( "ResultOfBBoxProgram" );
 ##
 ##  <#GAPDoc Label="IsStraightLineDecision">
 ##  <ManSection>
-##  <Filt Name="IsStraightLineDecision" Arg='obj' Type="Category"/>
+##  <Filt Name="IsStraightLineDecision" Arg='obj' Type="category"/>
 ##
 ##  <Description>
 ##  Each straight line decision in &GAP; lies in the filter

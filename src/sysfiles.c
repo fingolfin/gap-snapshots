@@ -7,18 +7,17 @@
 **
 **  SPDX-License-Identifier: GPL-2.0-or-later
 **
-**  The  files  "system.c" and  "sysfiles.c"   contain  all operating  system
-**  dependent functions.  File and  stream operations are implemented in this
-**  files, all the other system dependent functions in "system.c".  There are
-**  various  labels determine which operating  system is  actually used, they
-**  are described in "system.c".
+**  This file implements operating system dependent functions dealing with
+**  file and stream operations.
 */
+
+// ensure we can access large files
+#define _FILE_OFFSET_BITS 64
 
 #include "sysfiles.h"
 
 #include "bool.h"
 #include "calls.h"
-#include "compstat.h"
 #include "error.h"
 #include "gapstate.h"
 #include "gaputils.h"
@@ -27,22 +26,25 @@
 #include "lists.h"
 #include "modules.h"
 #include "plist.h"
+#include "precord.h"
 #include "read.h"
 #include "records.h"
 #include "stats.h"
 #include "stringobj.h"
 #include "sysenv.h"
 #include "sysopt.h"
+#include "sysstr.h"
+#include "system.h"
 
 #include "hpc/thread.h"
 
-#ifdef HAVE_LIBREADLINE
-#include <readline/readline.h>
-#endif
+#include "config.h"
 
 #include <assert.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <termios.h>
 #include <time.h>
 #include <unistd.h>
@@ -72,21 +74,26 @@ typedef void sig_handler_t ( int );
 #include <process.h>
 #endif
 
-#ifdef SYS_IS_DARWIN
-#include <mach-o/dyld.h>
+#ifdef HAVE_LIBREADLINE
+// the following two definitions silence some compiler warnings in the
+// readline headers; the first one suppresses the definition of a few
+// deprecated (!) and unused typedefs; the second indicates that stdarg.h is
+// available (since compiling GAP requires C99, this is guaranteed)
+#define _FUNCTION_DEF
+#define HAVE_STDARG_H
+#include <readline/readline.h>
 #endif
 
 #include <zlib.h>
 
-
-static ssize_t SyWriteandcheck(Int fid, const void * buf, size_t count);
+#include <sys/utsname.h>
 
 
 /****************************************************************************
 **
 *V  syBuf . . . . . . . . . . . . . .  buffer and other info for files, local
 **
-**  'syBuf' is  a array used as  buffers for  file I/O to   prevent the C I/O
+**  'syBuf' is an array used as  buffers for  file I/O to   prevent the C I/O
 **  routines  from   allocating their  buffers  using  'malloc',  which would
 **  otherwise confuse Gasman.
 **
@@ -119,25 +126,25 @@ typedef struct {
 
     // set to 1 by any read operation that hits eof; reset to 0 by a
     // subsequent successful read
-    UInt ateof;
+    BOOL ateof;
 
     // records that last character read was \r for cygwin and other systems
     // that need end-of-line hackery
-    UInt crlast;
+    BOOL crlast;
 
     // if non-negative then this file has a buffer in syBuffers[bufno]; if
     // negative, this file may not be buffered
-    Int bufno;
+    int bufno;
 
     // set when this fid is a *stdin* or *errin* and really is a tty
-    Int isTTY;
+    BOOL isTTY;
 } SYS_SY_BUF;
 
 #define SYS_FILE_BUF_SIZE 20000
 
 typedef struct {
     Char buf[SYS_FILE_BUF_SIZE];
-    UInt inuse;
+    BOOL inuse;
     UInt bufstart;
     UInt buflen;
 } SYS_SY_BUFFER;
@@ -156,75 +163,28 @@ static ssize_t echoandcheck(int fid, const char *buf, size_t count)
       if (ret < 0) {
           ErrorQuit(
               "Could not write to compressed file, see 'LastSystemError();'\n",
-              0L, 0L);
+              0, 0);
       }
   }
   else {
       ret = write(syBuf[fid].echo, buf, count);
       if (ret < 0) {
-          if (syBuf[fid].fp == fileno(stdout) || syBuf[fid].fp == fileno(stderr)) {
-              Panic("Could not write to stdout/stderr.");
-          } else {
-              ErrorQuit("Could not write to file descriptor %d, see "
+          if (syBuf[fid].echo == fileno(stdout)) {
+              Panic("Could not write to stdout: %s (errno %d, fid %d)",
+                    strerror(errno), errno, fid);
+          }
+          else if (syBuf[fid].echo == fileno(stderr)) {
+              Panic("Could not write to stderr: %s (errno %d, fid %d)",
+                    strerror(errno), errno, fid);
+          }
+          else {
+              ErrorQuit("Could not write to file descriptor %d (fid %d), see "
                         "'LastSystemError();'\n",
-                        syBuf[fid].fp, 0L);
+                        syBuf[fid].echo, fid);
           }
       }
   }
   return ret;
-}
-
-
-/****************************************************************************
-**
-*F * * * * * * * * * * * * * * dynamic loading  * * * * * * * * * * * * * * *
-*/
-
-
-/****************************************************************************
-**
-*F  SyFindOrLinkGapRootFile( <filename>, <result> ) . . . . . .  load or link
-**
-**  'SyFindOrLinkGapRootFile'  tries to find a GAP  file in the root area and
-**  check if there is a corresponding statically linked module. If the CRC
-**  matches the statically linked module is loaded, and <result->module_info>
-**  is set to point to its StructInitInfo instance.
-**
-**  The function returns:
-**
-**  0: no file or module was found
-**  2: a statically linked module was found
-**  3: only a GAP file was found; its path is stored in  <result->path>
-*/
-Int SyFindOrLinkGapRootFile(const Char * filename, TypGRF_Data * result)
-{
-    // find the GAP file
-    Int found_gap =
-        SyFindGapRootFile(filename, result->path, sizeof(result->path)) != 0;
-
-    if (SyUseModule) {
-        // search for a statically linked module matching the given filename
-        Char module[GAP_PATH_MAX];
-        strxcpy(module, "GAPROOT/", sizeof(module));
-        strxcat(module, filename, sizeof(module));
-        for (Int k = 0; CompInitFuncs[k]; k++) {
-            StructInitInfo * info = (*(CompInitFuncs[k]))();
-            if (info && !strcmp(module, info->name)) {
-                // found a matching statically linked module; if there is also
-                // a GAP file, compare their CRC
-                if (found_gap && info->crc != SyGAPCRC(result->path)) {
-                    Pr("#W Static module %s has CRC mismatch, ignoring\n",
-                       (Int)filename, 0);
-                    break;
-                }
-
-                result->module_info = info;
-                return 2;
-            }
-        }
-    }
-
-    return found_gap ? 3 : 0;
 }
 
 
@@ -294,7 +254,7 @@ Int4 SyGAPCRC( const Char * name )
     Int         seen_nl;
 
     /* the CRC of a non existing file is 0                                 */
-    fid = SyFopen( name, "r" );
+    fid = SyFopen(name, "r", TRUE);
     if ( fid == -1 ) {
         return 0;
     }
@@ -339,8 +299,10 @@ Int4 SyGAPCRC( const Char * name )
 <Returns>an integer</Returns>
 
 <Description>
-This function computes a cyclic redundancy check number from a string
-<A>str</A>. See also <Ref Func="CrcFile"/>.
+<Index>hash function</Index>
+<Index>checksum</Index>
+This function computes a CRC (cyclic redundancy check) number from a string
+<A>str</A>. See also <Ref Func="CrcFile"/> and <Ref Func="HexSHA256"/>.
 <Example>
 gap> CrcString("GAP example string");
 -50451670
@@ -362,8 +324,7 @@ static Obj FuncCrcString(Obj self, Obj str)
     Int4        ch;
     Int         seen_nl;
 
-    // check the argument
-    RequireStringRep("CrcString", str);
+    RequireStringRep(SELF_NAME, str);
 
     ptr = CONST_CSTR_STRING(str);
     len = GET_LEN_STRING(str);
@@ -391,113 +352,22 @@ static Obj FuncCrcString(Obj self, Obj str)
     return INTOBJ_INT(((Int4) crc) >> 4);
 }
 
-
-/****************************************************************************
-**
-*F * * * * * * * * * * finding location of executable * * * * * * * * * * * *
-*/
-
-/****************************************************************************
-** The function 'find_yourself' is based on code (C) 2015 Mark Whitis, under
-** the MIT License : https://stackoverflow.com/a/34271901/928031
-*/
-
-static void
-find_yourself(const char * argv0, char * result, size_t resultsize)
+// Get OS Kernel version. Used to discover if GAP is running inside
+// 'Windows Subystem for Linux'
+Obj SyGetOsRelease(void)
 {
-    GAP_ASSERT(resultsize >= GAP_PATH_MAX);
-
-    char tmpbuf[GAP_PATH_MAX];
-
-    // absolute path, like '/usr/bin/gap'
-    if (argv0[0] == '/') {
-        if (realpath(argv0, result) && !access(result, F_OK)) {
-            return;    // success
-        }
-    }
-    // relative path, like 'bin/gap.sh'
-    else if (strchr(argv0, '/')) {
-        if (!getcwd(tmpbuf, sizeof(tmpbuf)))
-            return;
-        strlcat(tmpbuf, "/", sizeof(tmpbuf));
-        strlcat(tmpbuf, argv0, sizeof(tmpbuf));
-        if (realpath(tmpbuf, result) && !access(result, F_OK)) {
-            return;    // success
-        }
-    }
-    // executable name, like 'gap'
-    else {
-        char pathenv[GAP_PATH_MAX], *saveptr, *pathitem;
-        strlcpy(pathenv, getenv("PATH"), sizeof(pathenv));
-        pathitem = strtok_r(pathenv, ":", &saveptr);
-        for (; pathitem; pathitem = strtok_r(NULL, ":", &saveptr)) {
-            strlcpy(tmpbuf, pathitem, sizeof(tmpbuf));
-            strlcat(tmpbuf, "/", sizeof(tmpbuf));
-            strlcat(tmpbuf, argv0, sizeof(tmpbuf));
-            if (realpath(tmpbuf, result) && !access(result, F_OK)) {
-                return;    // success
-            }
-        }
+    Obj            r = NEW_PREC(0);
+    struct utsname buf;
+    if (!uname(&buf)) {
+        AssPRec(r, RNamName("sysname"), MakeImmString(buf.sysname));
+        AssPRec(r, RNamName("nodename"), MakeImmString(buf.nodename));
+        AssPRec(r, RNamName("release"), MakeImmString(buf.release));
+        AssPRec(r, RNamName("version"), MakeImmString(buf.version));
+        AssPRec(r, RNamName("machine"), MakeImmString(buf.machine));
     }
 
-    *result = 0;    // reset buffer after error
+    return r;
 }
-
-
-char GAPExecLocation[GAP_PATH_MAX] = "";
-
-void SetupGAPLocation(int argc, char ** argv)
-{
-    // In the code below, we keep reseting locBuf, as some of the methods we
-    // try do not promise to leave the buffer empty on a failed return.
-    char locBuf[GAP_PATH_MAX] = "";
-    Int4 length = 0;
-
-#ifdef SYS_IS_DARWIN
-    uint32_t len = sizeof(locBuf);
-    if (_NSGetExecutablePath(locBuf, &len) != 0) {
-        *locBuf = 0;    // reset buffer after error
-    }
-#endif
-
-    // try Linux procfs
-    if (!*locBuf) {
-        ssize_t ret = readlink("/proc/self/exe", locBuf, sizeof(locBuf));
-        if (ret < 0)
-            *locBuf = 0;    // reset buffer after error
-    }
-
-    // try FreeBSD / DragonFly BSD procfs
-    if (!*locBuf) {
-        ssize_t ret = readlink("/proc/curproc/file", locBuf, sizeof(locBuf));
-        if (ret < 0)
-            *locBuf = 0;    // reset buffer after error
-    }
-
-    // try NetBSD procfs
-    if (!*locBuf) {
-        ssize_t ret = readlink("/proc/curproc/exe", locBuf, sizeof(locBuf));
-        if (ret < 0)
-            *locBuf = 0;    // reset buffer after error
-    }
-
-    // if we are still failing, go and search the path
-    if (!*locBuf) {
-        find_yourself(argv[0], locBuf, GAP_PATH_MAX);
-    }
-
-    // resolve symlinks (if present)
-    if (!realpath(locBuf, GAPExecLocation))
-        *GAPExecLocation = 0;    // reset buffer after error
-
-    // now strip the executable name off
-    length = strlen(GAPExecLocation);
-    while (length > 0 && GAPExecLocation[length] != '/') {
-        GAPExecLocation[length] = 0;
-        length--;
-    }
-}
-
 
 /****************************************************************************
 **
@@ -735,7 +605,7 @@ int SyBufFileno(Int fid)
     return (syBuf[fid].type == raw_socket) ? syBuf[fid].fp : -1;
 }
 
-Int SyBufIsTTY(Int fid)
+BOOL SyBufIsTTY(Int fid)
 {
     GAP_ASSERT(0 <= fid && fid < ARRAY_SIZE(syBuf));
     return syBuf[fid].isTTY;
@@ -744,73 +614,60 @@ Int SyBufIsTTY(Int fid)
 void SyBufSetEOF(Int fid)
 {
     GAP_ASSERT(0 <= fid && fid < ARRAY_SIZE(syBuf));
-    syBuf[fid].ateof = 1;
+    syBuf[fid].ateof = TRUE;
 }
 
 
 /****************************************************************************
 **
-*F  SyFopen( <name>, <mode> ) . . . . . . . .  open the file with name <name>
+*F  SyFopen( <name>, <mode>, <transparent_compress> )
+*F                                             open the file with name <name>
 **
 **  The function 'SyFopen'  is called to open the file with the name  <name>.
 **  If <mode> is "r" it is opened for reading, in this case  it  must  exist.
-**  If <mode> is "w" it is opened for writing, it is created  if  neccessary.
+**  If <mode> is "w" it is opened for writing, it is created  if  necessary.
 **  If <mode> is "a" it is opened for appending, i.e., it is  not  truncated.
 **
 **  'SyFopen' returns an integer used by the scanner to  identify  the  file.
 **  'SyFopen' returns -1 if it cannot open the file.
 **
 **  The following standard files names and file identifiers  are  guaranteed:
-**  'SyFopen( "*stdin*", "r")' returns 0 identifying the standard input file.
-**  'SyFopen( "*stdout*","w")' returns 1 identifying the standard outpt file.
-**  'SyFopen( "*errin*", "r")' returns 2 identifying the brk loop input file.
-**  'SyFopen( "*errout*","w")' returns 3 identifying the error messages file.
+**  'SyFopen( "*stdin*", "r", ..)' returns 0, the standard input file.
+**  'SyFopen( "*stdout*","w", ..)' returns 1, the standard outpt file.
+**  'SyFopen( "*errin*", "r", ..)' returns 2, the brk loop input file.
+**  'SyFopen( "*errout*","w", ..)' returns 3, the error messages file.
 **
 **  If it is necessary  to adjust the filename  this should be done here, the
 **  filename convention used in GAP is that '/' is the directory separator.
 **
 **  Right now GAP does not read nonascii files, but if this changes sometimes
 **  'SyFopen' must adjust the mode argument to open the file in binary mode.
+**
+**  If <transparent_compress> is TRUE, files with names ending '.gz' will be
+**  automatically compressed/decompressed using gzip.
 */
 
-Int SyFopen (
-    const Char *        name,
-    const Char *        mode )
+Int SyFopen(const Char * name, const Char * mode, BOOL transparent_compress)
 {
     Int                 fid;
     Char                namegz [1024];
-    Char                cmd [1024];
     int                 flags = 0;
 
     Char * terminator = strrchr(name, '.');
-    int endsgz = terminator && (strcmp(terminator, ".gz") == 0);
+    BOOL   endsgz = terminator && (streq(terminator, ".gz"));
 
     /* handle standard files                                               */
-    if ( strcmp( name, "*stdin*" ) == 0 ) {
-        if ( strcmp( mode, "r" ) != 0 )
-          return -1;
-        else
-          return 0;
+    if (streq(name, "*stdin*")) {
+        return streq(mode, "r") ? 0 : -1;
     }
-    else if ( strcmp( name, "*stdout*" ) == 0 ) {
-        if ( strcmp( mode, "w" ) != 0 && strcmp( mode, "a" ) != 0 )
-          return -1;
-        else
-          return 1;
+    else if (streq(name, "*stdout*")) {
+        return streq(mode, "w") || streq(mode, "a") ? 1 : -1;
     }
-    else if ( strcmp( name, "*errin*" ) == 0 ) {
-        if ( strcmp( mode, "r" ) != 0 )
-          return -1;
-        else if ( !SyBufInUse( 2 ) )
-          return -1;
-        else
-          return 2;
+    else if (streq(name, "*errin*")) {
+        return (streq(mode, "r") && SyBufInUse(2)) ? 2 : -1;
     }
-    else if ( strcmp( name, "*errout*" ) == 0 ) {
-        if ( strcmp( mode, "w" ) != 0 && strcmp( mode, "a" ) != 0 )
-          return -1;
-        else
-          return 3;
+    else if (streq(name, "*errout*")) {
+        return streq(mode, "w") || streq(mode, "a") ? 3 : -1;
     }
 
     HashLock(&syBuf);
@@ -824,43 +681,41 @@ Int SyFopen (
         return (Int)-1;
     }
 
-    /* set up <namegz> and <cmd> for pipe command                          */
-    namegz[0] = '\0';
-    // Need space for "gunzip < '", ".gz'" and terminating \0.
-    if (strlen(name) <= sizeof(cmd) - 10 - 4 - 1) {
-      strxcpy( namegz, name, sizeof(namegz) );
-      strxcat( namegz, ".gz", sizeof(namegz) );
-
-      strxcpy( cmd, "gunzip < '", sizeof(cmd) );
-      strxcat( cmd, namegz, sizeof(cmd) );
-      strxcat( cmd, "'", sizeof(cmd) );
+    // set up <namegz>
+    gap_strlcpy(namegz, name, sizeof(namegz));
+    if (gap_strlcat(namegz, ".gz", sizeof(namegz)) >= sizeof(namegz)) {
+        // buffer was not big enough, give up
+        namegz[0] = '\0';
     }
-    if (strncmp( mode, "r", 1 ) == 0)
-      flags = O_RDONLY;
-    else if (strncmp( mode, "w",1 ) == 0)
-      flags = O_WRONLY | O_CREAT | O_TRUNC;
-    else if (strncmp( mode, "a",1) == 0)
-      flags = O_WRONLY | O_APPEND | O_CREAT;
+    if (*mode == 'r')
+        flags = O_RDONLY;
+    else if (*mode == 'w')
+        flags = O_WRONLY | O_CREAT | O_TRUNC;
+    else if (*mode == 'a')
+        flags = O_WRONLY | O_APPEND | O_CREAT;
     else {
         Panic("Unknown mode %s", mode);
     }
 
 #ifdef SYS_IS_CYGWIN32
-    if(strlen(mode) >= 2 && mode[1] == 'b')
-       flags |= O_BINARY;
+    if (strlen(mode) >= 2 && mode[1] == 'b')
+        flags |= O_BINARY;
 #endif
 
     /* try to open the file                                                */
-    if (*mode == 'r' && endsgz && (syBuf[fid].gzfp = gzopen(name, mode))) {
+    if (endsgz && transparent_compress &&
+        (syBuf[fid].gzfp = gzopen(name, mode))) {
         syBuf[fid].type = gzip_socket;
         syBuf[fid].fp = -1;
         syBuf[fid].bufno = -1;
-    } else if (0 <= (syBuf[fid].fp = open(name, flags, 0644))) {
+    }
+    else if (0 <= (syBuf[fid].fp = open(name, flags, 0644))) {
         syBuf[fid].type = raw_socket;
         syBuf[fid].echo = syBuf[fid].fp;
         syBuf[fid].bufno = -1;
     }
-    else if (strncmp(mode, "r", 1) == 0 && SyIsReadableFile(namegz) == 0 &&
+    else if (*mode == 'r' && transparent_compress &&
+             SyIsReadableFile(namegz) == 0 &&
              (syBuf[fid].gzfp = gzopen(namegz, mode))) {
         syBuf[fid].type = gzip_socket;
         syBuf[fid].fp = -1;
@@ -873,7 +728,7 @@ Int SyFopen (
 
     HashUnlock(&syBuf);
 
-    if(strncmp(mode, "r", 1) == 0)
+    if (*mode == 'r')
         SySetBuffering(fid);
 
     /* return file identifier                                              */
@@ -893,15 +748,14 @@ UInt SySetBuffering( UInt fid )
 
   bufno = 0;
   HashLock(&syBuf);
-  while (bufno < ARRAY_SIZE(syBuffers) &&
-         syBuffers[bufno].inuse != 0)
+  while (bufno < ARRAY_SIZE(syBuffers) && syBuffers[bufno].inuse)
     bufno++;
   if (bufno >= ARRAY_SIZE(syBuffers)) {
       HashUnlock(&syBuf);
       return 0;
   }
   syBuf[fid].bufno = bufno;
-  syBuffers[bufno].inuse = 1;
+  syBuffers[bufno].inuse = TRUE;
   syBuffers[bufno].bufstart = 0;
   syBuffers[bufno].buflen = 0;
   HashUnlock(&syBuf);
@@ -950,7 +804,7 @@ Int SyFclose (
 
     /* mark the buffer as unused                                           */
     if (syBuf[fid].bufno >= 0)
-      syBuffers[syBuf[fid].bufno].inuse = 0;
+      syBuffers[syBuf[fid].bufno].inuse = FALSE;
     SyBufMarkUnused(fid);
     HashUnlock(&syBuf);
     return 0;
@@ -1105,10 +959,10 @@ void syStopraw (
 
 /****************************************************************************
 **
-*F  SyIsIntr()  . . . . . . . . . . . . . . . . check wether user hit <ctr>-C
+*F  SyIsIntr() . . . . . . . . . . . . . . . . check whether user hit <ctr>-C
 **
 **  'SyIsIntr' is called from the evaluator at  regular  intervals  to  check
-**  wether the user hit '<ctr>-C' to interrupt a computation.
+**  whether the user hit '<ctr>-C' to interrupt a computation.
 **
 **  'SyIsIntr' returns 1 if the user typed '<ctr>-C' and 0 otherwise.
 */
@@ -1149,10 +1003,6 @@ static void syAnswerIntr(int signr)
         SyExit( 1 );
     }
 
-    /* reinstall 'syAnswerIntr' as signal handler                          */
-    signal( SIGINT, syAnswerIntr );
-    siginterrupt( SIGINT, 0 );
-
     /* remember time of this interrupt                                     */
     syLastIntr = nowIntr;
 
@@ -1165,11 +1015,12 @@ static void syAnswerIntr(int signr)
 
 void SyInstallAnswerIntr ( void )
 {
-    if ( signal( SIGINT, SIG_IGN ) != SIG_IGN )
-    {
-        signal( SIGINT, syAnswerIntr );
-        siginterrupt( SIGINT, 0 );
-    }
+    struct sigaction sa;
+
+    sa.sa_handler = syAnswerIntr;
+    sigemptyset(&(sa.sa_mask));
+    sa.sa_flags = SA_RESTART;
+    sigaction( SIGINT, &sa, NULL );
 }
 
 
@@ -1380,7 +1231,7 @@ void SyFputs (
 
     /* otherwise, write it to the output file                              */
     else
-        SyWriteandcheck(fid, line, i);
+        echoandcheck(fid, line, i);
 }
 
 
@@ -1545,33 +1396,6 @@ Int SyWrite(Int fid, const void * ptr, size_t len)
     }
 }
 
-static ssize_t SyWriteandcheck(Int fid, const void * buf, size_t count)
-{
-    int ret;
-    if (syBuf[fid].type == gzip_socket) {
-        ret = gzwrite(syBuf[fid].gzfp, buf, count);
-        if (ret < 0) {
-            ErrorQuit(
-                "Cannot write to compressed file, see 'LastSystemError();'\n",
-                0L, 0L);
-        }
-    }
-    else {
-        ret = write(syBuf[fid].fp, buf, count);
-        if (ret < 0) {
-            if (syBuf[fid].fp == fileno(stdout) || syBuf[fid].fp == fileno(stderr)) {
-                Panic("Could not write to stdout/stderr.");
-            } else {
-                ErrorQuit("Cannot write to file descriptor %d, see "
-                          "'LastSystemError();'\n",
-                          syBuf[fid].fp, 0L);
-            }
-        }
-    }
-
-    return ret;
-}
-
 static Int syGetchTerm(Int fid)
 {
     UChar                ch;
@@ -1615,17 +1439,17 @@ static Int syGetchTerm(Int fid)
      */
     if (ch == '\n') {
         if (syBuf[fid].crlast) {
-            syBuf[fid].crlast = 0;
+            syBuf[fid].crlast = FALSE;
             goto tryagain;
         } else
             return (UChar)'\n';
     }
     if (ch == '\r') {
-        syBuf[fid].crlast = 1;
+        syBuf[fid].crlast = TRUE;
         return (Int)'\n';
     }
     // We saw a '\r' without a '\n'
-    syBuf[fid].crlast = 0;
+    syBuf[fid].crlast = FALSE;
 #endif  /* line end hack */
 
     /* return the character                                                */
@@ -1667,7 +1491,7 @@ static Int syGetchNonTerm(Int fid)
     }
 
     if (ret < 1) {
-        syBuf[fid].ateof = 1;
+        syBuf[fid].ateof = TRUE;
         return EOF;
     }
 
@@ -1677,17 +1501,17 @@ static Int syGetchNonTerm(Int fid)
      */
     if (ch == '\n') {
         if (syBuf[fid].crlast) {
-            syBuf[fid].crlast = 0;
+            syBuf[fid].crlast = FALSE;
             goto tryagain;
         } else
             return (UChar)'\n';
     }
     if (ch == '\r') {
-        syBuf[fid].crlast = 1;
+        syBuf[fid].crlast = TRUE;
         return (Int)'\n';
     }
     // We saw a '\r' without a '\n'
-    syBuf[fid].crlast = 0;
+    syBuf[fid].crlast = FALSE;
 #endif  /* line end hack */
 
     /* return the character                                                */
@@ -2283,11 +2107,11 @@ static Char * readlineFgets(Char * line, UInt length, Int fid, UInt block)
   }
   /* maybe add to history, we use key 0 for this function */
   GAP_rl_func(0, 0);
-  strlcpy(line, rlres, length);
+  gap_strlcpy(line, rlres, length);
   // FIXME: handle the case where rlres contains more than length
   // characters better?
   free(rlres);
-  strlcat(line, "\n", length);
+  gap_strlcat(line, "\n", length);
 
   /* send the whole line (unclipped) to the window handler               */
   syWinPut( fid, (*line != '\0' ? "@r" : "@x"), line );
@@ -2969,6 +2793,20 @@ void SySetErrorNo ( void )
 *F * * * * * * * * * * * * * file and execution * * * * * * * * * * * * * * *
 */
 
+#ifdef GAP_DISABLE_SUBPROCESS_CODE
+
+UInt SyExecuteProcess (
+    Char *                  dir,
+    Char *                  prg,
+    Int                     in,
+    Int                     out,
+    Char *                  args[] )
+{
+    return 255;
+}
+
+#else
+
 /****************************************************************************
 **
 *F  SyExecuteProcess( <dir>, <prg>, <in>, <out>, <args> ) . . . . new process
@@ -3098,7 +2936,6 @@ UInt SyExecuteProcess (
     int                     status;                 /* do not use `Int'    */
     Int                     tin;                    /* temp in             */
     Int                     tout;                   /* temp out            */
-    sig_handler_t           *func;
     sig_handler_t           * volatile func2;
 
 
@@ -3112,11 +2949,11 @@ UInt SyExecuteProcess (
      * was set to the default or 'ignore'. In these cases (or if SIG_ERR is
      * returned), just use a null signal hander - the default on most systems
      * is to do nothing */
-    if(func2 == SIG_ERR || func2 == SIG_DFL || func2 == SIG_IGN)
+    if (func2 == SIG_ERR || func2 == SIG_DFL || func2 == SIG_IGN)
       func2 = &NullSignalHandler;
 
     /* clone the process                                                   */
-    pid = vfork();
+    pid = fork();
     if ( pid == -1 ) {
         return -1;
     }
@@ -3127,24 +2964,25 @@ UInt SyExecuteProcess (
         FreezeStdin = 1;
 
         /* ignore a CTRL-C                                                 */
-        func = signal( SIGINT, SIG_IGN );
+        struct sigaction sa;
+        struct sigaction oldsa;
+
+        sa.sa_handler = SIG_IGN;
+        sigemptyset(&(sa.sa_mask));
+        sa.sa_flags = 0;
+        sigaction(SIGINT, &sa, &oldsa);
 
         /* wait for some action                                            */
         wait_pid = waitpid( pid, &status, 0 );
         FreezeStdin = 0;
-        if ( wait_pid == -1 ) {
-            signal( SIGINT, func );
-            (*func2)(SIGCHLD);
-            return -1;
-        }
-
-        if ( WIFSIGNALED(status) ) {
-            signal( SIGINT, func );
-            (*func2)(SIGCHLD);
-            return -1;
-        }
-        signal( SIGINT, func );
+        sigaction(SIGINT, &oldsa, NULL);
         (*func2)(SIGCHLD);
+        if ( wait_pid == -1 ) {
+            return -1;
+        }
+        if ( WIFSIGNALED(status) ) {
+            return -1;
+        }
         return WEXITSTATUS(status);
     }
 
@@ -3205,6 +3043,7 @@ UInt SyExecuteProcess (
 
 #endif
 
+#endif // !GAP_DISABLE_SUBPROCESS_CODE
 
 /****************************************************************************
 **
@@ -3244,8 +3083,8 @@ Int SyIsReadableFile ( const Char * name )
       /* we might be able to read the file via zlib */
 
       /* beware of buffer overflows */
-      if ( strlcpy(xname, name, sizeof(xname)) < sizeof(xname) &&
-            strlcat(xname, ".gz", sizeof(xname))  < sizeof(xname) ) {
+      if ( gap_strlcpy(xname, name, sizeof(xname)) < sizeof(xname) &&
+            gap_strlcat(xname, ".gz", sizeof(xname))  < sizeof(xname) ) {
         res = access(xname, R_OK);
       }
 
@@ -3395,95 +3234,18 @@ Obj SyIsDir ( const Char * name )
   else return ObjsChar['?'];
 }
 
-/****************************************************************************
-**
-*F  SyFindGapRootFile( <filename>,<buffer> ) . .  find file in system area
-*/
-Char * SyFindGapRootFile ( const Char * filename, Char * buffer, size_t bufferSize )
-{
-    Int k;
-
-    for ( k = 0; k < ARRAY_SIZE(SyGapRootPaths); k++ ) {
-        if ( SyGapRootPaths[k][0] ) {
-            if (strlcpy( buffer, SyGapRootPaths[k], bufferSize ) >= bufferSize)
-                continue;
-            if (strlcat( buffer, filename, bufferSize ) >= bufferSize)
-                continue;
-            if ( SyIsReadableFile(buffer) == 0 ) {
-                return buffer;
-            }
-        }
-    }
-    buffer[0] = '\0';
-    return 0;
-}
-
 
 /****************************************************************************
 **
 *F * * * * * * * * * * * * * * * directories  * * * * * * * * * * * * * * * *
 */
 
-
-/****************************************************************************
-**
-*F  SyTmpname() . . . . . . . . . . . . . . . . . return a temporary filename
-**
-**  'SyTmpname' creates and returns  a new temporary name.  Subsequent  calls
-**  to 'SyTmpname'  should  produce different  file names  *even* if no files
-**  were created.
-*/
-Char *SyTmpname ( void )
-{
-  static char name[1024];
-  strxcpy(name, "/tmp/gaptempfile.XXXXXX", sizeof(name));
-  close(mkstemp(name));
-  return name;
-}
-
-
-/****************************************************************************
-**
-*F  SyTmpdir( <hint> )  . . . . . . . . . . . .  return a temporary directory
-**
-**  'SyTmpdir'  returns the directory   for  a temporary directory.  This  is
-**  guaranteed  to be newly  created and empty  immediately after the call to
-**  'SyTmpdir'. <hint> should be used by 'SyTmpdir' to  construct the name of
-**  the directory (but 'SyTmpdir' is free to use only  a part of <hint>), and
-**  must be a string of at most 8 alphanumerical characters.  Under UNIX this
-**  would   usually   represent   '/usr/tmp/<hint>_<proc_id>_<cnt>/',   e.g.,
-**  '/usr/tmp/guava_17188_1/'.
-*/
-Char * SyTmpdir( const Char * hint )
-{
-#ifdef SYS_IS_CYGWIN32
-#define TMPDIR_BASE "/cygdrive/c/WINDOWS/Temp/"
-#else
-#define TMPDIR_BASE "/tmp/"
-#endif
-  static char name[1024];
-  static const char *base = TMPDIR_BASE;
-  char * env_tmpdir = getenv("TMPDIR");
-  if (env_tmpdir != NULL) {
-    strxcpy(name, env_tmpdir, sizeof(name));
-    strxcat(name, "/", sizeof(name));
-  }
-  else
-    strxcpy(name, base, sizeof(name));
-  if (hint)
-    strxcat(name, hint, sizeof(name));
-  else
-    strxcat(name, "gaptempdir", sizeof(name));
-  strxcat(name, "XXXXXX", sizeof(name));
-  return mkdtemp(name);
-}
-
 /****************************************************************************
 **
 *F  SyReadStringFile( <fid> ) . . . . . . . . read file content into a string
 **
 */
-Obj SyReadStringFile(Int fid)
+static Obj SyReadStringFile(Int fid)
 {
     Char            buf[32769];
     Int             ret, len;
@@ -3511,7 +3273,7 @@ Obj SyReadStringFile(Int fid)
     len = GET_LEN_STRING(str);
     ResizeBag( str, SIZEBAG_STRINGLEN(len) );
 
-    syBuf[fid].ateof = 1;
+    syBuf[fid].ateof = TRUE;
     return str;
 }
 
@@ -3550,30 +3312,24 @@ static Obj SyReadStringFileStat(Int fid)
             len -= ret;
             ptr += ret;
         }
-        syBuf[fid].ateof = 1;
+        syBuf[fid].ateof = TRUE;
         return str;
     } else {
         SySetErrorNo();
         return Fail;
     }
 }
+#endif
 
 Obj SyReadStringFid(Int fid)
 {
-    if (syBuf[fid].type != raw_socket) {
-        return SyReadStringFile(fid);
-    } else {
+#if !defined(SYS_IS_CYGWIN32)
+    if (syBuf[fid].type == raw_socket) {
         return SyReadStringFileStat(fid);
     }
-}
-
-#else
-
-Obj SyReadStringFid(Int fid) {
+#endif
     return SyReadStringFile(fid);
 }
-
-#endif
 
 
 #ifdef USE_CUSTOM_MEMMOVE
@@ -3644,11 +3400,11 @@ void * SyMemmove(void * dst, const void * src, UInt size)
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    GVAR_FUNC(CrcString, 1, "string"),
+    GVAR_FUNC_1ARGS(CrcString, string),
 #ifdef HAVE_LIBREADLINE
-    GVAR_FUNC(BINDKEYSTOGAPHANDLER, 1, "keyseq"),
-    GVAR_FUNC(BINDKEYSTOMACRO, 2, "keyseq, macro"),
-    GVAR_FUNC(READLINEINITLINE, 1, "line"),
+    GVAR_FUNC_1ARGS(BINDKEYSTOGAPHANDLER, keyseq),
+    GVAR_FUNC_2ARGS(BINDKEYSTOMACRO, keyseq, macro),
+    GVAR_FUNC_1ARGS(READLINEINITLINE, line),
 #endif
 
     { 0, 0, 0, 0, 0 }
@@ -3716,6 +3472,13 @@ void InitSysFiles(void)
     setbuf(stdin, (char *)0);
     setbuf(stdout, (char *)0);
     setbuf(stderr, (char *)0);
+
+#ifdef HAVE_LIBREADLINE
+    if (SyUseReadline) {
+        rl_readline_name = "GAP";
+        rl_initialize();
+    }
+#endif
 }
 
 /* TODO: Should probably do some checks preSave for open files etc and refuse to save
@@ -3754,7 +3517,6 @@ static Int InitKernel(
 #endif
 
 
-  /* return success                                                      */
   return 0;
 
 }

@@ -131,7 +131,7 @@
 
 <p>A record, <code class="func">FLOAT</code> (<a href="chap19_mj.html#X819050BF8403806E"><span class="RefLink">19.2-5</span></a>), contains all relevant constants for the current floating-point format; see its documentation for details. Typical fields are <code class="code">FLOAT.MANT_DIG=53</code>, the constant <code class="code">FLOAT.VIEW_DIG=6</code> specifying the number of digits to view, and <code class="code">FLOAT.PI</code> for the constant <span class="SimpleMath">\(\pi\)</span>. The constants have the same name as their C counterparts, except for the missing initial <code class="code">DBL_</code> or <code class="code">M_</code>.</p>
 
-<p>Floating-point numbers may be created using the single function <code class="func">Float</code> (<a href="chap19_mj.html#X86D5EA93813FB6C4"><span class="RefLink">19.2-1</span></a>), which accepts as arguments rational, string, or floating-point numbers. Floating-point numbers may also be created, in any floating-point representation, using <code class="func">NewFloat</code> (<a href="chap19_mj.html#X86D5EA93813FB6C4"><span class="RefLink">19.2-1</span></a>) as in <code class="code">NewFloat(IsIEEE754FloatRep,355/113)</code>, by supplying the category filter of the desired new floating-point number; or using <code class="func">MakeFloat</code> (<a href="chap19_mj.html#X86D5EA93813FB6C4"><span class="RefLink">19.2-1</span></a>) as in <code class="code">NewFloat(1.0,355/113)</code>, by supplying a sample floating-point number.</p>
+<p>Floating-point numbers may be created using the single function <code class="func">Float</code> (<a href="chap19_mj.html#X86D5EA93813FB6C4"><span class="RefLink">19.2-1</span></a>), which accepts as arguments rational, string, or floating-point numbers. Floating-point numbers may also be created, in any floating-point representation, using <code class="func">NewFloat</code> (<a href="chap19_mj.html#X86D5EA93813FB6C4"><span class="RefLink">19.2-1</span></a>) as in <code class="code">NewFloat(IsIEEE754FloatRep,355/113)</code>, by supplying the category filter of the desired new floating-point number; or using <code class="func">MakeFloat</code> (<a href="chap19_mj.html#X86D5EA93813FB6C4"><span class="RefLink">19.2-1</span></a>) as in <code class="code">MakeFloat(1.0,355/113)</code>, by supplying a sample floating-point number.</p>
 
 <p>Floating-point numbers may also be converted to other <strong class="pkg">GAP</strong> formats using the usual commands <code class="func">Int</code> (<a href="chap14_mj.html#X87CA734380B5F68C"><span class="RefLink">14.2-3</span></a>), <code class="func">Rat</code> (<a href="chap17_mj.html#X7EB4C646806A2BDE"><span class="RefLink">17.2-6</span></a>), <code class="func">String</code> (<a href="chap27_mj.html#X81FB5BE27903EC32"><span class="RefLink">27.7-6</span></a>).</p>
 
@@ -322,8 +322,8 @@ false
 
 <h5>19.2-10 <span class="Heading">Standard mathematical operations</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cos</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sin</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cos</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Tan</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sec</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Csc</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
@@ -331,8 +331,8 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Asin</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Acos</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Atan</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cosh</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sinh</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cosh</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Tanh</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sech</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Csch</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
@@ -350,16 +350,16 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Expm1</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CubeRoot</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Square</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Atan2</code>( <var class="Arg">y</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Hypothenuse</code>( <var class="Arg">x</var>, <var class="Arg">y</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Ceil</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Floor</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Round</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Trunc</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Atan2</code>( <var class="Arg">y</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FrExp</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LdExp</code>( <var class="Arg">f</var>, <var class="Arg">exp</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AbsoluteValue</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Norm</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Hypothenuse</code>( <var class="Arg">x</var>, <var class="Arg">y</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Frac</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SinCos</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Erf</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
@@ -425,7 +425,7 @@ false
 
 <p>Interval arithmetic may also be implemented in packages. Intervals are in fact efficient implementations of sets of real numbers. The only non-trivial issue is how they should be compared. The standard <code class="code">EQ</code> tests if the intervals are equal; however, it is usually more useful to know if intervals overlap, or are disjoint, or are contained in each other.</p>
 
-<p>Note the usual convention that intervals are compared as in <span class="SimpleMath">\([a,b]\le[c,d]\)</span> if and only if <span class="SimpleMath">\(a\le c\)</span> and <span class="SimpleMath">\(b\le d\)</span>.</p>
+<p>Note the usual convention that intervals are compared as in <span class="SimpleMath">\([a,b]\leq[c,d]\)</span> if and only if <span class="SimpleMath">\(a\leq c\)</span> and <span class="SimpleMath">\(b\leq d\)</span>.</p>
 
 <p><a id="X7C34D1D185802F2F" name="X7C34D1D185802F2F"></a></p>
 

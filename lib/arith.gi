@@ -13,11 +13,32 @@
 ##
 
 
+#############################################################################
+##
+##  The GAP Reference Manual defines 'One' only for an argument in
+##  'IsMultiplicativeElementWithOne' or 'IsDomain'.
+##  The following method tries to extend this definition to collections of
+##  'IsMultiplicativeElementWithOne' objects that aren't domains,
+##  by delegating to a representative of the collection.
+##
+##  This causes a logical problem if the collection is itself in
+##  'IsMultiplicativeElementWithOne', because of a different meaning.
+##  Such a situation occurs in the case of a group character,
+##  for which 'One' shall return not '1' but the trivial character.
+##
+##  It would be good if we could eventually get rid of this method.
+##
 InstallOtherMethod(One, "for a multiplicative element with one collection", 
 [IsMultiplicativeElementWithOneCollection], 
 function(coll)
+  if IsMultiplicativeElementWithOne( coll ) then
+    # The fact that 'coll' is an element counts more
+    # than the fact that 'coll' is a collection of elements.
+    TryNextMethod();
+  fi;
   return One(Representative(coll));
 end);
+
 
 #############################################################################
 ##
@@ -68,16 +89,16 @@ InstallMethod( NestingDepthM,
 ##
 #M  Zero( <elm> ) . . . . . . . . . . . . . . . .  for an add.-elm.-with-zero
 ##
-##  `ZeroOp' guarantees that its results are *new* objects,
+##  `ZeroMutable' guarantees that its results are *new* objects,
 ##  so we may call `MakeImmutable'.
 #T This should be installed for `IsAdditiveElementWithZero',
 #T but at least in the compatibility mode we need it also for records ...
 ##
 InstallOtherMethod( Zero,
-    "for any object (call `ZERO')",
+    "for any object (call `ZeroMutable')",
     [ IsObject ],
     function( elm )
-    elm:= ZERO_MUT( elm );
+    elm:= ZeroMutable( elm );
     MakeImmutable( elm );
     return elm;
     end );
@@ -88,17 +109,21 @@ InstallOtherMethod( Zero,
 #T which takes less than 1 microsecond on my system.
 #T         Steve
 
+
+#############################################################################
+##
+#M  ZeroSameMutability( <obj> ) . . . . . . . . . . for an (immutable) object
+##
+##  This method is applicable for example to domains.
+##
 InstallOtherMethod( ZeroSameMutability,
     "for an (immutable) object",
     [ IsObject ],
-    function(elm)
-    local z;
-    if IsMutable( elm ) then
+    function( obj )
+    if IsMutable( obj ) then
       TryNextMethod();
     fi;
-    z:= ZeroAttr( elm );
-    MakeImmutable( z );
-    return z;
+    return ZeroAttr( obj );
     end );
 
 
@@ -189,16 +214,16 @@ InstallMethod( IsZero,
 ##
 #M  AdditiveInverse( <elm> )
 ##
-##  `AdditiveInverseOp' guarantees that its results are *new* objects,
+##  `AdditiveInverseMutable' guarantees that its results are *new* objects,
 ##  so we may call `MakeImmutable'.
 #T This should be installed for `IsAdditiveElementWithInverse',
 #T but at least in the compatibility mode we need it also for records ...
 ##
 InstallOtherMethod( AdditiveInverse,
-    "for any object (call `AINV')",
+    "for any object (call `AdditiveInverseMutable')",
     [ IsObject ],
     function( elm )
-    elm:= AINV_MUT( elm );
+    elm:= AdditiveInverseMutable( elm );
     MakeImmutable( elm );
     return elm;
     end );
@@ -295,17 +320,21 @@ InstallMethod( OneOp,
     return one;
     end );
 
+
+#############################################################################
+##
+#M  OneSameMutability( <obj> )  . . . . . . . . . . for an (immutable) object
+##
+##  This method is applicable for example to domains.
+##
 InstallOtherMethod( OneSameMutability,
     "for an (immutable) object",
     [ IsObject ],
-    function( elm )
-    local o;
-    if IsMutable( elm ) then
+    function( obj )
+    if IsMutable( obj ) then
       TryNextMethod();
     fi;
-    o:= OneMutable( elm );
-    MakeImmutable( o );
-    return o;
+    return OneImmutable( obj );
     end );
 
 
@@ -513,9 +542,9 @@ InstallMethod( LieBracket,
 ##
 ##  `PROD_INT_OBJ' is a kernel function that first checks whether <int> is
 ##  equal to one of
-##  `0' (then `ZERO' is called),
+##  `0' (then `ZeroSameMutability' is called),
 ##  `1' (then a copy of <elm> is returned), or
-##  `-1' (then `AINV' is called).
+##  `-1' (then `AdditiveInverseSameMutability' is called).
 ##  Otherwise if <int> is negative then the product of the additive inverses
 ##  of <int> and <elm> is computed,
 ##  where the product with positive <int> is formed by repeated doubling.

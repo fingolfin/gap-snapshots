@@ -45,7 +45,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X gap> SCLib.SearchByName("Kummer variety");[128X[104X
-    [4X[28X [ [ 7493, "4-dimensional Kummer variety (VT)" ] ][128X[104X
+    [4X[28X [ [ 519, "4-dimensional Kummer variety (VT)" ] ][128X[104X
     [4X[28X gap> c:=SCLib.Load(last[1][1]);;                [128X[104X
     [4X[28X gap> d:= SCBlowup(c,1);[128X[104X
     [4X[28X #I  SCBlowup: checking if singularity is a combinatorial manifold...[128X[104X
@@ -75,22 +75,15 @@
     [4X[28X #I  SCBlowup: ...done.[128X[104X
     [4X[28X #I  SCBlowup: ...blowup completed.[128X[104X
     [4X[28X #I  SCBlowup: You may now want to reduce the complex via 'SCReduceComplex'.[128X[104X
-    [4X[28X [SimplicialComplex[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Name="unnamed complex 2735 \ star([ 1 ]) in unnamed complex 2735 cup unnamed \[128X[104X
-    [4X[28X complex 2739 cup unnamed complex 2737"[128X[104X
-    [4X[28X  Dim=4[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X /SimplicialComplex][128X[104X
+    [4X[28X <SimplicialComplex: unnamed complex 2735 \ star([ 1 ]) in unnamed complex 2735\[128X[104X
+    [4X[28X  cup unnamed complex 2739 cup unnamed complex 2737 | dim = 4 | n = 39>[128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
   
   [4X[32X  Example  [32X[104X
     [4X[28X gap> # resolving the singularities of a 4 dimensional Kummer variety[128X[104X
     [4X[28X gap> SCLib.SearchByName("Kummer variety");[128X[104X
-    [4X[28X [ [ 7488, "4-dimensional Kummer variety (VT)" ] ][128X[104X
+    [4X[28X [ [ 519, "4-dimensional Kummer variety (VT)" ] ][128X[104X
     [4X[28X gap> c:=SCLib.Load(last[1][1]);;[128X[104X
     [4X[28X gap> for i in [1..16] do[128X[104X
     [4X[28X        for j in SCLabels(c) do [128X[104X

@@ -1,0 +1,36 @@
+<!-- %W  solve.xml           Ferret documentation        Christopher Jefferson -->
+<!-- %H                                                                        -->
+<!-- %Y  Copyright (C) 2014, School of Comp. Sci., St Andrews, Scotland        -->
+
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<Chapter Label="SolveChapter">
+<Heading>The Solve Method</Heading>
+
+The central functionality of the Ferret package is based around the Solve method. This function performs a backtrack search, using the permutation backtracking algorithm, over a set of groups or cosets. Often users will want to use a higher level function which wraps this functionality, such as <C>Stabilizer</C> or <C>Intersection</C>.
+
+The solve function accepts a list of groups, and finds their intersection. For efficiency reasons, these groups can be specified in a variety of different ways. As an example, we will consider how to implement <C>Stabilizer(G, S, OnSets)</C>, the stabilizer of a set S in a permutation group G using Solve (this is not necessary, as when Ferret is loaded this method is replaced with a Ferret-based implementation).
+
+Another way of viewing <C>Stabilizer(G, S, OnSets)</C> is as the intersection of G with <C>Stabilizer(Sym(n), S, OnSets)</C>, where <M>Sym(n)</M> is the symmetric group on n points, and n is at least as large as the largest moved point in G. Solve takes a list of objects which represent groups. Two of these are <C>ConInGroup(G)</C>, which represents the group G, and <C>ConStabilize(S, OnSets)</C>, which represents the group which stabilizes S. We find the intersection of these two groups by <C>Solve([ConInGroup(G), ConStabilize(S, OnSets)])</C>.
+
+
+<Section Label="Representing groups in Ferret">
+<Heading>Methods of representing groups in Ferret</Heading>
+
+Groups and cosets must be represented in a way which Ferret can understand. The following list gives all the types of groups which Ferret accepts, and how to construct them.
+
+<#Include Label="ConStabilize">
+
+<#Include Label="ConInGroup">
+
+These methods are both used with Solve:
+    
+<#Include Label="Solve">
+
+</Section>
+</Chapter>
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<!-- %% -->
+<!-- %E -->
+

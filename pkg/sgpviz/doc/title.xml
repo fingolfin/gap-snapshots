@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    SgpViz
+  </Title>
+  <Subtitle>
+    A package for semigroup visualization
+  </Subtitle>
+  <Version>
+    0.999.5
+  </Version>
+  <Author>
+    Manuel Delgado<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Departamento de Matemática - Faculdade de Ciências<Br/>
+Porto<Br/>
+Portugal<Br/>
+</Address>
+<Email>mdelgado@fc.up.pt</Email>
+<Homepage>http://www.fc.up.pt/cmup/mdelgado/</Homepage>
+
+  </Author>
+  <Author>
+    Jose Morais<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+No address known<Br/>
+</Address>
+
+  </Author>
+  <Date>
+    20 March 2022
+  </Date>
+  </TitlePage>

@@ -13,7 +13,13 @@
 #ifndef LIBGAP_API_H
 #define LIBGAP_API_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "system.h"
+
+#include <setjmp.h>
 
 
 #ifdef __GNUC__
@@ -28,7 +34,7 @@
 #endif
 
 
-extern syJmp_buf * GAP_GetReadJmpError(void);
+extern jmp_buf * GAP_GetReadJmpError(void);
 extern void GAP_EnterDebugMessage_(char * message, char * file, int line);
 extern void GAP_EnterStack_(void *);
 extern void GAP_LeaveStack_(void);
@@ -98,7 +104,7 @@ static inline int GAP_Error_Postjmp_(int JumpRet)
 
 #define GAP_Error_Setjmp()                                                   \
     (GAP_unlikely(GAP_Error_Prejmp_(__FILE__, __LINE__)) ||                  \
-     GAP_Error_Postjmp_(sySetjmp(*GAP_GetReadJmpError())))
+     GAP_Error_Postjmp_(_setjmp(*GAP_GetReadJmpError())))
 
 
 // Code which uses the GAP API exposed by this header file should sandwich
@@ -135,7 +141,7 @@ static inline int GAP_Error_Postjmp_(int JumpRet)
 //
 // * GAP_Error_Setjmp() effectively calls setjmp to the STATE(ReadJmpError)
 //   longjmp buffer, so that read errors which occur in GAP that are not
-//   otherwise "handled" by a TRY_IF_NO_ERROR { } block have a logical place
+//   otherwise "handled" by a GAP_TRY { } block have a logical place
 //   to return to.  It returns 1 if no error occurred, and 0 if returning
 //   from an error.
 #define GAP_Enter()                                                          \
@@ -160,14 +166,59 @@ void GAP_Initialize(int              argc,
 
 
 ////
+//// Garbage collector
+////
+
+// Manual management of the GAP garbage collector: for cases where you want
+// a GAP object to be long-lived beyond the context of the stack frame where
+// it was created, it is necessary to call GAP_MarkBag on the object when
+// the garbage collector is run by the markBagsCallback function passed to
+// GAP_Initialize.
+void GAP_MarkBag(Obj obj);
+
+// Manually run the garbage collector.
+// A <full> collection checks all previously allocated objects, including those
+// that have survived at least one previous garbage collection.
+// A partial collection will attempt to clean up only recently allocated
+// objects which have not been garbage-collected yet, and is hence normally
+// a faster operation.
+void GAP_CollectBags(BOOL full);
+
+
+////
 //// program evaluation and execution
 ////
 
-// Evaluate a string of GAP commands.
+// GAP_EvalString attempts to execute all statements read from the string
+// <cmd> as if they occurred in a GAP source file that is read by the GAP
+// command `Read`. However, no break loops are triggered. If evaluation a
+// statement leads to an error, the next statement is executed, and so on.
+//
+// It returns a list of lists, each entry of which reflects the result of the
+// execution of one statement. Specifically, each entry is another list, each
+// having length at most five, with the entries having the following meaning:
+//
+// - The first entry is 'true' if the statement was executed successfully,
+//   and 'false' otherwise.
+//
+// - If the first entry is 'true', then the second entry is bound to the
+//   result of the statement if there was one, and unbound otherwise.
+//
+// - The third entry is 'true' if the statement ended in a dual semicolon,
+//   and 'false' otherwise.
+//
+// - The fourth entry currently is always unbound.
+//
+// - The fifth entry contains the captured output of the statement as a
+//   string, as well as the output of 'ViewObj' applied to the result value
+//   in second entry, if any (but only if there was no dual semicolon).
+//
+// This function is currently used in interactive tools such as the GAP
+// Jupyter kernel to execute cells and is likely to be replaced by a function
+// that can read a single command from a stream without losing the rest of
+// its content.
 //
 // To see an example of how to use this function see tst/testlibgap/basic.c
-//
-// TODO: properly document this function
 Obj GAP_EvalString(const char * cmd);
 
 
@@ -176,7 +227,7 @@ Obj GAP_EvalString(const char * cmd);
 ////
 
 // Returns the value of the global GAP variable with name <name>, or NULL if
-// no global variable with this this name is defined.
+// no global variable with this name is defined.
 Obj GAP_ValueGlobalVariable(const char * name);
 
 // Checks if assigning to the global GAP variable <name> is possible, by
@@ -250,6 +301,18 @@ Obj GAP_CallFuncList(Obj func, Obj args);
 // as an array <args> with <narg> entries.
 Obj GAP_CallFuncArray(Obj func, UInt narg, Obj args[]);
 
+// Call the GAP object <func> as a function with 0 arguments.
+Obj GAP_CallFunc0Args(Obj func);
+
+// Call the GAP object <func> as a function with 1 argument.
+Obj GAP_CallFunc1Args(Obj func, Obj a1);
+
+// Call the GAP object <func> as a function with 2 arguments.
+Obj GAP_CallFunc2Args(Obj func, Obj a1, Obj a2);
+
+// Call the GAP object <func> as a function with 3 arguments.
+Obj GAP_CallFunc3Args(Obj func, Obj a1, Obj a2, Obj a3);
+
 
 ////
 //// floats
@@ -280,8 +343,8 @@ int GAP_IsSmallInt(Obj obj);
 int GAP_IsLargeInt(Obj obj);
 
 
-// Construct an integer object from the limbs at which <limbs> points (for a
-// definition of "limbs", please consult the comment at the top of
+// Construct a GAP integer object from the limbs at which <limbs> points (for
+// a definition of "limbs", please consult the comment at the top of
 // `integer.c`). The absolute value of <size> determines the number of limbs.
 // If <size> is zero, then `INTOBJ_INT(0)` is returned. Otherwise, the sign
 // of the returned integer object is determined by the sign of <size>.
@@ -290,6 +353,16 @@ int GAP_IsLargeInt(Obj obj);
 // i.e., it will discard any leading zeros; and if the integer fits into a
 // small integer, it will be returned as such.
 Obj GAP_MakeObjInt(const UInt * limbs, Int size);
+
+// Return a GAP integer object with value equal to <val>.
+Obj GAP_NewObjIntFromInt(Int val);
+
+// Return an integer equal to the given GAP integer object. If <obj> is not
+// a GAP integer, or does not fit into an Int, an error is raised.
+//
+// If `GAP_IsSmallInt(obj)` return 1, then it is guaranteed that this will
+// succeed and no error is raised.
+Int GAP_ValueInt(Obj);
 
 // If <obj> is a GAP integer, returns the number of limbs needed to store the
 // integer, times the sign. If <obj> is the integer 0, then 0 is returned. If
@@ -335,20 +408,45 @@ Obj GAP_ElmList(Obj list, UInt pos);
 // Returns a new empty plain list with capacity <capacity>
 Obj GAP_NewPlist(Int capacity);
 
+// Returns a new range with <len> elements, starting at <low>, and proceeding
+// in increments of <inc>. So the final element in the range will be equal to
+// <high> := <low> + <inc> * (<len> - 1).
+//
+// Note that <inc> must be non-zero, and all three arguments as
+// well as the value <high> must fit into a GAP small integer.
+// If any of these conditions is violated, then GAP_Fail is returned.
+Obj GAP_NewRange(Int len, Int low, Int inc);
+
 
 ////
 //// matrix obj
 ////
 
+// Note that the meaning of the following filters is not self-explanatory,
+// see the chapter "Vector and Matrix Objects" in the GAP Reference Manual.
+// `GAP_IsMatrixOrMatrixObj` checks whether the argument is an abstract
+// 2-dim. array; such objects admit access to entries via `GAP_ElmMat`,
+// one can ask for the numbers of rows and columns via `GAP_NrRows` and
+// `GAP_NrCols`, respectively, etc.
+// `GAP_IsMatrix` checks for special cases that are nonempty list of lists
+// with additional properties; often these are plain lists.
+// `GAP_IsMatrixObj` checks for special cases that are not plain lists.
+
+// Returns 1 if <obj> is a GAP matrix or matrix obj, 0 if not.
+int GAP_IsMatrixOrMatrixObj(Obj obj);
+
+// Returns 1 if <obj> is a GAP matrix, 0 if not.
+int GAP_IsMatrix(Obj obj);
+
 // Returns 1 if <obj> is a GAP matrix obj, 0 if not.
 int GAP_IsMatrixObj(Obj obj);
 
-// Returns the number of rows of the given GAP matrix obj.
-// If <mat> is not a GAP matrix obj, an error may be raised.
+// Returns the number of rows of the given GAP matrix or matrix obj.
+// If <mat> is not a GAP matrix or matrix obj, an error may be raised.
 UInt GAP_NrRows(Obj mat);
 
-// Returns the number of columns of the given GAP matrix obj.
-// If <mat> is not a GAP matrix obj, an error may be raised.
+// Returns the number of columns of the given GAP matrix or matrix obj.
+// If <mat> is not a GAP matrix or matrix obj, an error may be raised.
 UInt GAP_NrCols(Obj mat);
 
 // Assign <val> at position <pos> into the GAP matrix obj <mat>.
@@ -418,6 +516,10 @@ char * GAP_CSTR_STRING(Obj obj);
 // terminated C string.
 Obj GAP_MakeString(const char * string);
 
+// Returns a new mutable GAP string containing a copy of the given
+// C string of given length (in bytes).
+Obj GAP_MakeStringWithLen(const char * string, UInt len);
+
 // Returns a immutable GAP string containing a copy of the given NULL
 // terminated C string.
 Obj GAP_MakeImmString(const char * string);
@@ -428,5 +530,9 @@ Int GAP_ValueOfChar(Obj obj);
 
 // Returns the GAP character object with value <obj>.
 Obj GAP_CharWithValue(UChar obj);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

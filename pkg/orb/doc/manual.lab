@@ -1,0 +1,164 @@
+\GAPDocLabFile{orb}
+\makelabel{orb:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{orb:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{orb:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{orb:Introduction}{1}{X7DFB63A97E67C0A1}
+\makelabel{orb:Motivation for this package}{1.1}{X7AC0DE4D8555D291}
+\makelabel{orb:Overview over this manual}{1.2}{X786BACDB82918A65}
+\makelabel{orb:Feedback}{1.3}{X80D704CC7EBFDF7A}
+\makelabel{orb:Installation of the orb-Package}{2}{X80F00D467DD002D3}
+\makelabel{orb:Recompiling the documentation}{2.1}{X7FB00ED2787027A3}
+\makelabel{orb:Basic orbit enumeration}{3}{X7D55DB437F5407E8}
+\makelabel{orb:Enumerating orbits}{3.1}{X87DF498E7F386786}
+\makelabel{orb:Options for orbits}{3.1.4}{X81BF5A087B9E1353}
+\makelabel{orb:Output components of orbits}{3.1.5}{X7B11180F80A77D48}
+\makelabel{orb:Hashing techniques}{4}{X8705763D8698C0B7}
+\makelabel{orb:The idea of hashing}{4.1}{X814DE39B7C1B1554}
+\makelabel{orb:Hash functions}{4.2}{X7AE36B967EB1382B}
+\makelabel{orb:Using hash tables}{4.3}{X8424E70E78FAA203}
+\makelabel{orb:Using hash tables (legacy code)}{4.4}{X87A0A459856A1FFB}
+\makelabel{orb:The data structures for hash tables}{4.5}{X8069137484662072}
+\makelabel{orb:Memory requirements}{4.5.1}{X81BD00DE877E2C0D}
+\makelabel{orb:Handling of collisions}{4.5.2}{X8238A6C0834A48F4}
+\makelabel{orb:Efficiency}{4.5.3}{X836F7C2C7932FEAE}
+\makelabel{orb:Caching techniques}{5}{X86BA72E27E278718}
+\makelabel{orb:The idea of caching}{5.1}{X87639FAC8621A75A}
+\makelabel{orb:Using caches}{5.2}{X7B269D167B6C9BF6}
+\makelabel{orb:Random elements}{6}{X8151A51884B7EE2C}
+\makelabel{orb:Randomizing mutable objects}{6.1}{X83F87C898304A0C8}
+\makelabel{orb:Product replacement}{6.2}{X7B46C06479401BED}
+\makelabel{orb:Searching in groups and orbits}{7}{X7DF379C283FE23EF}
+\makelabel{orb:Searching using orbit enumeration}{7.1}{X85BB0EBC7F0D8329}
+\makelabel{orb:Random searches in groups}{7.2}{X7F6A0E447E369404}
+\makelabel{orb:The dihedral trick and applications}{7.3}{X833CDEF4843DF5C5}
+\makelabel{orb:Orbit statistics on vector spaces}{7.4}{X7DE53BFB7A82324D}
+\makelabel{orb:Finding generating sets of subgroups}{7.5}{X7F051A447E2E8573}
+\makelabel{orb:AVL trees}{8}{X7F2630FB7AA3C73D}
+\makelabel{orb:The idea of AVL trees}{8.1}{X792FFB378773B140}
+\makelabel{orb:Using AVL trees}{8.2}{X7D4FEC9479D3EBB4}
+\makelabel{orb:The internal data structures}{8.3}{X87323803809E0EF5}
+\makelabel{orb:Orbit enumeration by suborbits}{9}{X7CC7EC257DD466E3}
+\makelabel{orb:OrbitBySuborbits and its resulting objects}{9.1}{X819508B17A733D53}
+\makelabel{orb:Preparation functions for OrbitBySuborbit (9.1-1)}{9.2}{X7FD5374278E83A36}
+\makelabel{orb:Data structures for orbit-by-suborbits}{9.3}{X80F036B378A3FD32}
+\makelabel{orb:The global record ORB}{9.3.2}{X855663F5790EA2D0}
+\makelabel{orb:Lists of orbit-by-suborbit objects}{9.4}{X8696CFD08768508D}
+\makelabel{orb:Finding nice quotients}{10}{X7BDEA65183A3AE7B}
+\makelabel{orb:Examples}{11}{X7A489A5D79DA9E5C}
+\makelabel{orb:The Mathieu group M{11} acting in dimension 24}{11.1}{X7D5456AC85A830A4}
+\makelabel{orb:The Fischer group Fi{23} acting in dimension 1494}{11.2}{X790F22B67C56A49F}
+\makelabel{orb:The Conway group Co1 acting in dimension 24}{11.3}{X7D7BDBF87E7C45ED}
+\makelabel{orb:The Baby Monster B acting on its 2A involutions}{11.4}{X781209EE7C9D3E0E}
+\makelabel{orb:Bibliography}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{orb:References}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{orb:Index}{Ind}{X83A0356F839C696F}
+\makelabel{orb:orb}{2}{X80F00D467DD002D3}
+\makelabel{orb:Orb}{3.1.1}{X86A89A0881CE04F6}
+\makelabel{orb:Enumerate}{3.1.2}{X7BCD5342793C7A7E}
+\makelabel{orb:IsClosed}{3.1.3}{X81D5A4A97AA9D4B0}
+\makelabel{orb:StabWords basic}{3.1.6}{X833670F47BD5632C}
+\makelabel{orb:PositionOfFound}{3.1.7}{X84F62CB679D6B3CE}
+\makelabel{orb:UnderlyingPlist}{3.1.8}{X791CE79C8041058C}
+\makelabel{orb:DepthOfSchreierTree}{3.1.9}{X79A6D04C7CBABFC7}
+\makelabel{orb:IsGradedOrbit}{3.1.10}{X7FEBA8B4838FBD52}
+\makelabel{orb:Grades}{3.1.11}{X7BBE86D97DF2304B}
+\makelabel{orb:OrbitGraph}{3.1.12}{X8389D8AB794EF721}
+\makelabel{orb:OrbitGraphAsSets}{3.1.13}{X7A08E68585088C89}
+\makelabel{orb:ActionOnOrbit}{3.1.14}{X81C12D677CE815C7}
+\makelabel{orb:OrbActionHomomorphism}{3.1.15}{X7EA4E92180F142D3}
+\makelabel{orb:TraceSchreierTreeForward}{3.1.16}{X7F927E787BA898BF}
+\makelabel{orb:TraceSchreierTreeBack}{3.1.17}{X80615B4D83620AA1}
+\makelabel{orb:ActWithWord}{3.1.18}{X7D892CE87E7EBEDB}
+\makelabel{orb:EvaluateWord}{3.1.19}{X799D2F3C866B9AED}
+\makelabel{orb:AddGeneratorsToOrbit}{3.1.20}{X7D100BE4820039C1}
+\makelabel{orb:MakeSchreierTreeShallow}{3.1.21}{X823F7A9A83EACFD0}
+\makelabel{orb:FindSuborbits}{3.1.22}{X8566B13379E697F6}
+\makelabel{orb:OrbitIntersectionMatrix}{3.1.23}{X83015A9E823E1AB1}
+\makelabel{orb:ORBEstimateOrbitSize}{3.1.24}{X8245A2D280E66B2C}
+\makelabel{orb:ChooseHashFunction}{4.2.1}{X7ACED4FB7C971A5A}
+\makelabel{orb:ChooseHashFunction gf2vec}{4.2.2}{X803D35D97B6E7CC5}
+\makelabel{orb:ChooseHashFunction 8bitvec}{4.2.3}{X7B04C17D7DC6E277}
+\makelabel{orb:ChooseHashFunction gf2mat}{4.2.4}{X7F41F51C83E88759}
+\makelabel{orb:ChooseHashFunction 8bitmat}{4.2.5}{X847801B87A03AA77}
+\makelabel{orb:ChooseHashFunction int}{4.2.6}{X819264A980D873EE}
+\makelabel{orb:ChooseHashFunction perm}{4.2.7}{X7BAD070A79E54131}
+\makelabel{orb:ChooseHashFunction intlist}{4.2.8}{X7C7C0CDB7DCE95B4}
+\makelabel{orb:ChooseHashFunction NBitsPcWord}{4.2.9}{X80C0C39080BFAA8F}
+\makelabel{orb:ChooseHashFunction IntLists}{4.2.10}{X87C1B2F7871B7EA4}
+\makelabel{orb:ChooseHashFunction MatLists}{4.2.11}{X80E195168734F8E3}
+\makelabel{orb:HTCreate}{4.3.1}{X79F46D9982BB0E12}
+\makelabel{orb:HTAdd}{4.3.2}{X833166757E58B83B}
+\makelabel{orb:HTValue}{4.3.3}{X8585E1687AE9E409}
+\makelabel{orb:HTUpdate}{4.3.4}{X788B50C17A472DFD}
+\makelabel{orb:HTDelete}{4.3.5}{X82A8245E875B0B8E}
+\makelabel{orb:HTGrow}{4.3.6}{X805BC8667B91890E}
+\makelabel{orb:NewHT}{4.4.1}{X7FD5A22A86DACF26}
+\makelabel{orb:AddHT}{4.4.2}{X7D9D6CF37FA68C39}
+\makelabel{orb:ValueHT}{4.4.3}{X853825AB7DE1F99C}
+\makelabel{orb:InitHT}{4.4.4}{X7D6AA1618657386C}
+\makelabel{orb:GrowHT}{4.4.5}{X86E9DEC68728425C}
+\makelabel{orb:LinkedListCache}{5.2.1}{X7FF40AE981FE6F75}
+\makelabel{orb:CacheObject}{5.2.2}{X7ECBA1228365BDC4}
+\makelabel{orb:ClearCache}{5.2.3}{X7E1D239886BC762C}
+\makelabel{orb:UseCacheObject}{5.2.4}{X819FD13C7CCC6810}
+\makelabel{orb:Randomize}{6.1.1}{X83DD8B39864A2C94}
+\makelabel{orb:MakeRandomVectors}{6.1.2}{X7BBA80B882867C36}
+\makelabel{orb:MakeRandomLines}{6.1.3}{X7DF0A6E885A4EE42}
+\makelabel{orb:ProductReplacer}{6.2.1}{X8290E4C57DE25CD4}
+\makelabel{orb:Next}{6.2.2}{X7AB4297E78216855}
+\makelabel{orb:Reset}{6.2.3}{X7EAED8EB78CCEDE2}
+\makelabel{orb:AddGeneratorToProductReplacer}{6.2.4}{X8227729983A3B366}
+\makelabel{orb:RandomSearcher}{7.2.1}{X7971BF5D8099E557}
+\makelabel{orb:Search}{7.2.2}{X835FBD72853595BE}
+\makelabel{orb:FindInvolution}{7.3.1}{X84659F6786852150}
+\makelabel{orb:FindCentralisingElementOfInvolution}{7.3.2}{X7FBBCD5C82211934}
+\makelabel{orb:FindInvolutionCentralizer}{7.3.3}{X80CEAEAB7EDB57FE}
+\makelabel{orb:OrbitStatisticOnVectorSpace}{7.4.1}{X80E95A9D82ADB62D}
+\makelabel{orb:OrbitStatisticOnVectorSpaceLines}{7.4.2}{X8124E7F17C95BECB}
+\makelabel{orb:FindShortGeneratorsOfSubgroup}{7.5.1}{X80BB35D380A972BB}
+\makelabel{orb:AVLTree}{8.2.1}{X791E346F84F0430C}
+\makelabel{orb:AVLCmp}{8.2.2}{X83EC43DA871C7F60}
+\makelabel{orb:AVLAdd}{8.2.3}{X7F65886F84E991C7}
+\makelabel{orb:AVLLookup}{8.2.4}{X7E6EF8297C68F553}
+\makelabel{orb:AVLDelete}{8.2.5}{X82CE14F17B5DD6B2}
+\makelabel{orb:AVLFindIndex}{8.2.6}{X7D1B85DA814DA26C}
+\makelabel{orb:AVLIndex}{8.2.7}{X810E5CDF7ED14BF8}
+\makelabel{orb:AVLIndexLookup}{8.2.8}{X8541DB5C78B60A6B}
+\makelabel{orb:AVLIndexAdd}{8.2.9}{X817B8377799DE5E1}
+\makelabel{orb:AVLIndexDelete}{8.2.10}{X79E13784868CEAAF}
+\makelabel{orb:AVLFind}{8.2.11}{X7EF737C286E94F23}
+\makelabel{orb:AVLIndexFind}{8.2.12}{X80CF197882D71FD7}
+\makelabel{orb:AVLData}{8.2.13}{X78B2EEB4804987F2}
+\makelabel{orb:AVLValue}{8.2.14}{X78DE1F2C80B0D55C}
+\makelabel{orb:Display}{8.2.15}{X83A5C59278E13248}
+\makelabel{orb:ELMLIST}{8.2.16}{X805C33C281B29B00}
+\makelabel{orb:Position}{8.2.17}{X79975EC6783B4293}
+\makelabel{orb:Add}{8.2.18}{X795EC9D67E34DAB0}
+\makelabel{orb:Remove}{8.2.19}{X7E98B11B79BA9167}
+\makelabel{orb:Length}{8.2.20}{X780769238600AFD1}
+\makelabel{orb:OrbitBySuborbit}{9.1.1}{X79B161FD84AB8C68}
+\makelabel{orb:OrbitBySuborbitKnownSize}{9.1.2}{X86CCD9B98156155E}
+\makelabel{orb:Size fororb}{9.1.3}{X83C66D4A8603CA56}
+\makelabel{orb:Seed}{9.1.4}{X7EBEA64D7A5F78E3}
+\makelabel{orb:SuborbitsDb}{9.1.5}{X80B78B657E77A485}
+\makelabel{orb:WordsToSuborbits}{9.1.6}{X7B5E783478A337C9}
+\makelabel{orb:Memory forob}{9.1.7}{X7926C96485985614}
+\makelabel{orb:Stabilizer obso}{9.1.8}{X840AFA7987535AC5}
+\makelabel{orb:StabWords}{9.1.9}{X7F496D9B7C44DAAB}
+\makelabel{orb:SavingFactor fororb}{9.1.10}{X802068267DACF3F6}
+\makelabel{orb:TotalLength fordb}{9.1.11}{X79DB081F827B53CB}
+\makelabel{orb:Representatives}{9.1.12}{X81ABF8407AF16C34}
+\makelabel{orb:SavingFactor fordb}{9.1.13}{X79552A1086449062}
+\makelabel{orb:OrigSeed}{9.1.14}{X7A96D6D37F0EC46A}
+\makelabel{orb:OrbitBySuborbitBootstrapForVectors}{9.2.1}{X830E221D84E44A64}
+\makelabel{orb:OrbitBySuborbitBootstrapForLines}{9.2.2}{X799056597EA62513}
+\makelabel{orb:OrbitBySuborbitBootstrapForSpaces}{9.2.3}{X7919B1AB7D68780D}
+\makelabel{orb:IsOrbitBySuborbitSetup}{9.3.1}{X7CFD48C17B48CDDD}
+\makelabel{orb:InitOrbitBySuborbitList}{9.4.1}{X7FB77D827E31AE24}
+\makelabel{orb:IsVectorInOrbitBySuborbitList}{9.4.2}{X87CB441882F43F62}
+\makelabel{orb:OrbitsFromSeedsToOrbitList}{9.4.3}{X7D82CE2579A50B2C}
+\makelabel{orb:VerifyDisjointness}{9.4.4}{X83A306918461D700}
+\makelabel{orb:Memory forobsol}{9.4.5}{X7ED405017E3A56CD}
+\makelabel{orb:TotalLength forobsol}{9.4.6}{X7D52885787865E81}
+\makelabel{orb:Size forobsol}{9.4.7}{X7C4255287D394742}
+\makelabel{orb:SavingFactor forobsol}{9.4.8}{X7BFE12DE85CCE143}

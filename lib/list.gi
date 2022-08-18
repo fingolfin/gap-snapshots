@@ -345,7 +345,7 @@ local   str,ls, i;
   fi;
 
   if IsString( list ) then
-    return Concatenation("\"", list, "\"");
+    return VIEW_STRING_FOR_STRING(list);
   fi;
 
   # make strings for objects in l
@@ -381,6 +381,34 @@ local   str,ls, i;
   ConvertToStringRep( str );
   return str;
 end );
+
+InstallMethod( DisplayString,
+    "for a range",
+    [ IsRange ],
+    range -> Concatenation( String( range ), "\n" ) );
+
+InstallMethod( ViewString,
+    "for a range",
+    [ IsRange ],
+    function( list )
+    local   str;
+    str := "[ ";
+    Append( str, String( list[1] ) );
+    if Length( list ) > 1 then
+      if Length(list) = 2 or list[2] - list[1] <> 1 then
+        Append( str, ", " );
+        Append( str, String( list[2] ) );
+      fi;
+      if Length(list) > 2 then
+        Append( str, " .. " );
+        Append( str, String( list[ Length( list ) ] ) );
+      fi;
+    fi;
+    Append( str, " ]" );
+    Assert(0, IsStringRep(str));
+    ConvertToStringRep( str );
+    return str;
+    end );
 
 InstallMethod( String,
     "for a range",
@@ -617,7 +645,7 @@ InstallOtherMethod( AsPlist,
     function(l)
     l:=AsList(l);
     if not IsPlistRep(l) then
-      l:=List([1..Length(l)],i->l[i]); # explicit copy for objects that claim to
+      l:=PlainListCopy(l); # explicit copy for objects that claim to
                                        # be constant time access but not plists.
     fi;
     return l;
@@ -739,28 +767,32 @@ InstallMethod( SSortedList,
 ##  lists.)
 ##
 BindGlobal( "IsDoneIterator_List",
-    iter -> ( iter!.pos = iter!.len ) );
+    iter -> ( iter!.pos >= iter!.len ) );
 
 BindGlobal( "NextIterator_List", function ( iter )
-    if iter!.pos = Length( iter!.list ) then
+    local p, l;
+    p := iter!.pos;
+    if p = iter!.len then
         Error("<iter> is exhausted");
     fi;
-    iter!.pos := iter!.pos + 1;
-    while not IsBound( iter!.list[ iter!.pos ] ) do
-        iter!.pos := iter!.pos + 1;
+    l := iter!.list;
+    p := p + 1;
+    while not IsBound( l[ p ] ) do
+        p := p + 1;
     od;
-    return iter!.list[ iter!.pos ];
+    iter!.pos := p;
+    return l[ p ];
     end );
 
-#BindGlobal( "IsDoneIterator_DenseList",
-#    iter -> not IsBound( iter!.list[ iter!.pos + 1 ] ) );
 
 BindGlobal( "NextIterator_DenseList", function ( iter )
-    iter!.pos := iter!.pos + 1;
+    local p;
+    p := iter!.pos + 1;
+    iter!.pos := p;
     #if not IsBound( iter!.list[ iter!.pos ] ) then
     #    Error("<iter> is exhausted");
     #fi;
-    return iter!.list[ iter!.pos ];
+    return iter!.list[ p ];
     end );
 
 BindGlobal( "ShallowCopy_List",
@@ -773,17 +805,15 @@ InstallGlobalFunction( IteratorList, function ( list )
 
     iter := rec(
                 list := list,
-#T call `Immutable'?
                 pos  := 0,
                 len := Length(list),
+                IsDoneIterator := IsDoneIterator_List,
                 ShallowCopy := ShallowCopy_List );
 
     if IsDenseList( list ) and not IsMutable( list ) then
-      iter.IsDoneIterator := IsDoneIterator_List;
-      iter.NextIterator   := NextIterator_DenseList;
+      iter.NextIterator := NextIterator_DenseList;
     else
-      iter.IsDoneIterator := IsDoneIterator_List;
-      iter.NextIterator   := NextIterator_List;
+      iter.NextIterator := NextIterator_List;
     fi;
 
     return IteratorByFunctions( iter );
@@ -962,21 +992,6 @@ InstallOtherMethod( ProductOp,
       init := init * func( elm );
     od;
     return init;
-    end );
-
-
-#############################################################################
-##
-#M  Elm0List
-##
-InstallMethod( Elm0List,
-    [ IsList, IsInt ],
-    function ( list, pos )
-    if IsBound( list[pos] ) then
-        return list[pos];
-    else
-        return fail;
-    fi;
     end );
 
 
@@ -1785,9 +1800,11 @@ InstallMethod( PositionSublist,
   
   n:=Length(list);
   m:=Length(sub);
+  start:=Position(list, sub[1], start);
+
   # trivial case
-  if m = 1 then
-    return Position(list, sub[1], start);
+  if m = 1 or start = fail then
+    return start;
   fi;
 
   # string-match algorithm, cf. Manber, section 6.7
@@ -1804,27 +1821,26 @@ InstallMethod( PositionSublist,
 
   if Maximum(next) * 3 < m then
     # in this case reduce overhead and use naive loop
-    m := Length(sub);
+    i := start;
     max := n - m + 1;
-    c := sub[1];
-    for i in [start+1..max] do
-      if c = list[i] then
-        for j in [2..m] do
-          if list[i+j-1] <> sub[j] then
-            j := 0;
-            break;
-          fi;
-        od;
-        if j <> 0 then
-          return i;
+    while i<>fail and i <= max do
+      for j in [2..m] do
+        if list[i+j-1] <> sub[j] then
+          j := 0;
+          break;
         fi;
+      od;
+      if j <> 0 then
+        return i;
       fi;
+      i:=Position(list, sub[1], i);
     od;
     return fail;
+
   fi;
    
   # otherwise repeat with Manber
-  i:=Maximum(1,start+1); # to catch index 0
+  i:=start;
   j:=1;
   while i<=n do
     if sub[j]=list[i] then
@@ -1834,7 +1850,7 @@ InstallMethod( PositionSublist,
       j:=next[j]+1;
       if j=0 then
         j:=1;
-	i:=i+1;
+        i:=i+1;
       fi;
     fi;
     if j=m+1 then
@@ -2397,23 +2413,6 @@ InstallOtherMethod( StableSort,
     [ IsList, IsFunction ],
     SORT_MUTABILITY_ERROR_HANDLER );
 
-#############################################################################
-##
-#F  IsLexicographicallyLess( <list1>, <list2> )
-##
-InstallGlobalFunction( IsLexicographicallyLess, function( list1, list2 )
-    local len, i;
-    len:= Minimum( Length( list1 ), Length( list2 ) );
-    for i in [ 1 .. len ]  do
-      if list1[i] < list2[i] then
-        return true;
-      elif list2[i] < list1[i] then
-        return false;
-      fi;
-    od;
-    return len < Length( list2 );
-end );
-
 
 #############################################################################
 ##
@@ -2840,38 +2839,40 @@ InstallMethod( Permuted,
 ##
 #F  First( <C>, <func> )  . . .  find first element in a list with a property
 ##
-InstallGlobalFunction( First,
-    function ( C, func... )
+InstallEarlyMethod( First, 
+    function ( C )
     local tnum, elm;
-    if Length( func ) > 1 then
-      Error( "too many arguments" );
-    fi;
     tnum:= TNUM_OBJ( C );
     if FIRST_LIST_TNUM <= tnum and tnum <= LAST_LIST_TNUM then
-      if Length( func ) = 0 then
-        func := ReturnTrue;
-      else
-        func := func[1];
-      fi;
       for elm in C do
-          if func( elm ) then
-              return elm;
-          fi;
+        return elm;
       od;
       return fail;
-    elif Length( func ) = 0 then
-      return FirstOp( C );
-    else
-      return FirstOp( C, func[1] );
     fi;
-end );
+    TryNextMethod();
+    end );
+
+InstallEarlyMethod( First,
+    function ( C, func )
+    local tnum, elm;
+    tnum:= TNUM_OBJ( C );
+    if FIRST_LIST_TNUM <= tnum and tnum <= LAST_LIST_TNUM then
+      for elm in C do
+        if func( elm ) then
+          return elm;
+        fi;
+      od;
+      return fail;
+    fi;
+    TryNextMethod();
+    end );
 
 
 #############################################################################
 ##
-#M  FirstOp( <C>, <func> )  . .  find first element in a list with a property
+#M  First( <C>, <func> ) . . . . find first element in a list with a property
 ##
-InstallMethod( FirstOp,
+InstallMethod( First,
     "for a list or collection and a function",
     [ IsListOrCollection, IsFunction ],
     function ( C, func )
@@ -2884,7 +2885,7 @@ InstallMethod( FirstOp,
     return fail;
     end );
 
-InstallMethod( FirstOp,
+InstallMethod( First,
     "for a list or collection",
     [ IsListOrCollection ],
     function ( C )
@@ -3856,7 +3857,7 @@ LIST_WITH_IDENTICAL_ENTRIES );
 ##  and in the 'ViewString' method for finite lists.
 ##
 InstallMethod( ViewObj,
-    "for finite lists",
+    "for a finite list",
     [ IsList and IsFinite ],
     {} -> RankFilter(IsList) + 1 - RankFilter(IsList and IsFinite),
 function( list )
@@ -3884,7 +3885,7 @@ function( list )
 end );
 
 InstallMethod( ViewObj,
-    "for ranges",
+    "for a range",
     [ IsList and IsFinite and IsRange ],
     function( list )
     Print( "[ " );
@@ -3901,39 +3902,6 @@ InstallMethod( ViewObj,
     fi;
     Print( " ]" );
     end );
-
-
-#############################################################################
-##
-#F  PlainListCopy( <list> ) . . . . . . . . . . make a plain list copy of
-##                                          a list
-##
-##  This is intended for use in certain rare situations, such as before
-##  Objectifying. Normally, ConstantAccessTimeList should be enough
-##
-##  This function guarantees that the result will be a plain list, distinct
-##  from the input object.
-##
-InstallGlobalFunction(PlainListCopy, function( list )
-    local tnum, copy;
-
-    if not IsSmallList( list ) then
-        Error("PlainListCopy: argument must be a small list");
-    fi;
-
-    # This is enough much of the time
-    copy := ShallowCopy(list);
-
-    # now do a cheap check on copy
-    tnum := TNUM_OBJ(copy);
-    if FIRST_LIST_TNUM > tnum or LAST_LIST_TNUM < tnum then
-        copy := PlainListCopyOp( copy );
-    fi;
-    Assert(2, not IsIdenticalObj(list,copy));
-    Assert(2, TNUM_OBJ(copy) >= FIRST_LIST_TNUM);
-    Assert(2, TNUM_OBJ(copy) <= LAST_LIST_TNUM);
-    return copy;
-end);
 
 #############################################################################
 ##

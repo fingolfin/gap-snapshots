@@ -39,6 +39,8 @@
 #include "modules.h"
 #include "plist.h"
 #include "stringobj.h"
+#include "symbols.h"
+#include "sysstr.h"
 
 #ifdef HPCGAP
 #include "hpc/aobjects.h"
@@ -46,6 +48,8 @@
 #include "hpc/thread.h"
 #include <pthread.h>
 #endif
+
+#include <stdio.h>
 
 
 #ifdef HPCGAP
@@ -94,6 +98,7 @@ static Obj   ValGVars;
 static Obj * PtrGVars;
 #endif
 
+static SymbolTable GVarSymbolTable;
 
 #ifdef HPCGAP
 
@@ -103,46 +108,6 @@ static Obj * PtrGVars;
 */
 
 static Obj TLVars;
-
-/****************************************************************************
-**
-*V  GVarLock  . . . . . . . . . . . . . . . . . .  lock for global variables
-**
-**  This lock is only needed for accessing global variables by name rather
-**  than index and to initialize copy/fopy information.
-*/
-
-static pthread_rwlock_t GVarLock;
-static void *GVarLockOwner;
-static UInt GVarLockDepth;
-
-static void LockGVars(int write) {
-  if (PreThreadCreation)
-    return;
-  if (GVarLockOwner == GetTLS()) {
-    GVarLockDepth++;
-    return;
-  }
-  if (write) {
-    pthread_rwlock_wrlock(&GVarLock);
-    GVarLockOwner = GetTLS();
-    GVarLockDepth = 1;
-  }
-  else
-    pthread_rwlock_rdlock(&GVarLock);
-}
-
-static void UnlockGVars(void) {
-  if (PreThreadCreation)
-    return;
-  if (GVarLockOwner == GetTLS()) {
-    GVarLockDepth--;
-    if (GVarLockDepth != 0)
-      return;
-    GVarLockOwner = NULL;
-  }
-  pthread_rwlock_unlock(&GVarLock);
-}
 
 #endif
 
@@ -229,13 +194,6 @@ static Obj             FopiesGVars;
 // FlagsGVars contains information about global variables.
 // Once cast to a GVarFlagInfo struct, this information is:
 //
-// gvarWriteFlag: A value of type GVarWriteFlag which denotes if the variable
-// is Assignable, ReadOnly, or Constant.
-// hasExprCopiesFopies: If the variable has ever had a non-default value
-// assigned to ExprGVars, CopiesGVars or FopiesGVars. Note that this value is
-// never cleared at present, so it can be set to 1 while these three arrays
-// all have their default value, but if it is 0 these arrays definitely have
-// their default values.
 
 typedef enum {
     GVarAssignable = 0,
@@ -244,8 +202,21 @@ typedef enum {
 } GVarWriteFlag;
 
 typedef struct {
+    // 'gvarWriteFlag' is a value of type GVarWriteFlag which denotes whether
+    // the variable is assignable, read-only, or constant.
     unsigned char gvarWriteFlag : 2;
+
+    // 'hasExprCopiesFopies' indicates whether the variable has ever had a
+    // non-default value assigned to ExprGVars, CopiesGVars or FopiesGVars.
+    // Note that this value is never cleared at present, so it can be set to 1
+    // while these three arrays all have their default value, but if it is 0
+    // these arrays definitely have their default values.
     unsigned char hasExprCopiesFopies : 1;
+
+    // 'isDeclared' indicates whether the variable was marked by
+    // 'DeclareGlobalName' in which case no "Unbound global variable" syntax
+    // warnings should be issued for it.
+    unsigned char isDeclared : 1;
 } GVarFlagInfo;
 
 // If this size increases, the type used in GetGVarFlags and
@@ -287,25 +258,25 @@ static void SetGVarWriteState(Int gvar, GVarWriteFlag w)
     SetGVarFlagInfo(gvar, info);
 }
 
-static void SetHasExprCopiesFopies(Int gvar, Int set)
+static void SetHasExprCopiesFopies(Int gvar, BOOL set)
 {
     GVarFlagInfo info = GetGVarFlagInfo(gvar);
     info.hasExprCopiesFopies = set;
     SetGVarFlagInfo(gvar, info);
 }
 
+static void SetIsDeclaredName(Int gvar, BOOL set)
+{
+    GVarFlagInfo info = GetGVarFlagInfo(gvar);
+    info.isDeclared = set;
+    SetGVarFlagInfo(gvar, info);
+}
 
-/****************************************************************************
-**
-*V  CountGVars  . . . . . . . . . . . .  number of global variables, as T_INT
-*/
-static Obj             CountGVars;
-
-/****************************************************************************
-**
-*V  TableGVars  . . . . . . . . . . . . . .  hashed table of global variables
-*/
-static Obj             TableGVars;
+BOOL IsDeclaredGVar(UInt gvar)
+{
+    GVarFlagInfo info = GetGVarFlagInfo(gvar);
+    return info.isDeclared;
+}
 
 
 /****************************************************************************
@@ -323,9 +294,7 @@ Obj             ErrorMustEvalToFuncFunc;
 
 static Obj ErrorMustEvalToFuncHandler(Obj self, Obj args)
 {
-    ErrorQuit(
-        "Function Calls: <func> must be a function",
-        0L, 0L );
+    ErrorQuit("Function Calls: <func> must be a function", 0, 0);
     return 0;
 }
 
@@ -345,9 +314,7 @@ Obj             ErrorMustHaveAssObjFunc;
 
 static Obj ErrorMustHaveAssObjHandler(Obj self, Obj args)
 {
-    ErrorQuit(
-        "Variable: <<unknown>> must have an assigned value",
-        0L, 0L );
+    ErrorQuit("Variable: <<unknown>> must have an assigned value", 0, 0);
     return 0;
 }
 
@@ -369,7 +336,15 @@ static Obj * ELM_COPS_PLIST(Obj cops, UInt i)
     return (Obj *)val;
 }
 
-static void AssGVarInternal(UInt gvar, Obj val, Int hasExprCopiesFopies)
+// Assign 'val' to name 'gvar'. 'hasExprCopiesFopies' can be false if this
+// variable has a non-default value assigned to ExprGVars, CopiesGVars or
+// FopiesGVars (this is a performance optimisation). If 'giveNameToFunc'
+// is TRUE then if 'val' is a function without a name it will be given the
+// name 'gvar'.
+static void AssGVarInternal(UInt gvar,
+                            Obj  val,
+                            BOOL hasExprCopiesFopies,
+                            BOOL giveNameToFunc)
 {
     Obj                 cops;           /* list of internal copies         */
     Obj *               copy;           /* one copy                        */
@@ -394,7 +369,8 @@ static void AssGVarInternal(UInt gvar, Obj val, Int hasExprCopiesFopies)
 #ifdef HPCGAP
     if (IS_BAG_REF(val) && REGION(val) == 0) { /* public region? */
 #endif
-        if (val != 0 && TNUM_OBJ(val) == T_FUNCTION && NAME_FUNC(val) == 0) {
+        if (giveNameToFunc && val != 0 && TNUM_OBJ(val) == T_FUNCTION &&
+            NAME_FUNC(val) == 0) {
             onam = CopyToStringRep(NameGVar(gvar));
             MakeImmutable(onam);
             SET_NAME_FUNC(val, onam);
@@ -468,32 +444,34 @@ void AssGVar(UInt gvar, Obj val)
         // Make certain variable is not constant
         if (info.gvarWriteFlag == GVarConstant) {
             ErrorMayQuit("Variable: '%g' is constant", (Int)NameGVar(gvar),
-                         0L);
+                         0);
         }
     }
 
-    AssGVarInternal(gvar, val, info.hasExprCopiesFopies);
+    AssGVarInternal(gvar, val, info.hasExprCopiesFopies, TRUE);
 }
 
 // This is a kernel-only variant of AssGVar which will change read-only
 // variables, which is used for constants like:
 // Time, MemoryAllocated, last, last2, last3
+// Does not automatically give a name to functions based on variable name,
+// as these names are not given by users.
 void AssGVarWithoutReadOnlyCheck(UInt gvar, Obj val)
 {
     GVarFlagInfo info = GetGVarFlagInfo(gvar);
 
     // Make certain variable is not constant
     if (info.gvarWriteFlag == GVarConstant) {
-        ErrorMayQuit("Variable: '%g' is constant", (Int)NameGVar(gvar), 0L);
+        ErrorMayQuit("Variable: '%g' is constant", (Int)NameGVar(gvar), 0);
     }
 
-    AssGVarInternal(gvar, val, info.hasExprCopiesFopies);
+    AssGVarInternal(gvar, val, info.hasExprCopiesFopies, FALSE);
 }
 
 
 /****************************************************************************
 **
-*F  ValAutoGVar(<gvar>) . . . . . . . .  value of a automatic global variable
+*F  ValAutoGVar(<gvar>) . . . . . . . . value of an automatic global variable
 **
 **  'ValAutoGVar' returns the value of the global variable <gvar>.  This will
 **  be 0 if  <gvar> has  no assigned value.    It will also cause a  function
@@ -567,9 +545,7 @@ Obj             ValGVarTL (
 
 static Obj FuncIsThreadLocalGVar(Obj self, Obj name)
 {
-  if (!IsStringConv(name))
-    ErrorMayQuit("IsThreadLocalGVar: argument must be a string (not a %s)",
-                 (Int)TNAM_OBJ(name), 0L);
+    RequireStringRep(SELF_NAME, name);
 
   UInt gvar = GVarName(CONST_CSTR_STRING(name));
   return (VAL_GVAR_INTERN(gvar) == 0 && IS_INTOBJ(ExprGVar(gvar))) ?
@@ -615,150 +591,66 @@ static Obj FuncGET_NAMESPACE(Obj self)
     return STATE(CurrNamespace);
 }
 
-
-static inline UInt HashString( const Char * name )
-{
-    UInt hash = 0;
-    while ( *name ) {
-        hash = 65599 * hash + *name++;
-    }
-    return hash;
-}
-
 /****************************************************************************
 **
 *F  GVarName(<name>)  . . . . . . . . . . . . . .  global variable for a name
 **
 **  'GVarName' returns the global variable with the name <name>.
 */
-UInt GVarName ( 
-    const Char *        name )
+UInt GVarName(const Char * name)
 {
-    Obj                 gvar;           /* global variable (as imm intval) */
-    Char                gvarbuf[1024];  /* temporary copy for namespace    */
-    const Char *        cns;            /* Pointer to current namespace    */
-    UInt                pos;            /* hash position                   */
-    Obj                 string;         /* temporary string value <name>   */
-    Obj                 table;          /* temporary copy of <TableGVars>  */
-    Obj                 gvar2;          /* one element of <table>          */
-    UInt                i;              /* loop variable                   */
-    Int                 len;            /* length of name                  */
-    UInt                sizeGVars;      // size of <TableGVars>
+    Char         gvarbuf[1024];    // temporary copy for namespace
+    const Char * cns;              // pointer to current namespace
 
-    /* First see whether it could be namespace-local: */
+    // First see whether it could be namespace-local:
     cns = STATE(CurrNamespace) ? CONST_CSTR_STRING(STATE(CurrNamespace)) : "";
-    if (*cns) {   /* only if a namespace is set */
-        len = strlen(name);
+    if (*cns) {    // only if a namespace is set
+        size_t len = strlen(name);
         if (name[len-1] == NSCHAR) {
-            strlcpy(gvarbuf, name, 512);
-            strlcat(gvarbuf, cns, sizeof(gvarbuf));
+            gap_strlcpy(gvarbuf, name, 512);
+            gap_strlcat(gvarbuf, cns, sizeof(gvarbuf));
             name = gvarbuf;
         }
     }
 
-    /* start looking in the table at the following hash position           */
-    const UInt hash = HashString( name );
-#ifdef HPCGAP
-    LockGVars(0);
-#endif
+    return LookupSymbol(&GVarSymbolTable, name);
+}
 
-    /* look through the table until we find a free slot or the global      */
-    sizeGVars = LEN_PLIST(TableGVars);
-    pos = (hash % sizeGVars) + 1;
-    while ( (gvar = ELM_PLIST( TableGVars, pos )) != 0
-         && strncmp( CONST_CSTR_STRING( NameGVar( INT_INTOBJ(gvar) ) ), name, 1023 ) ) {
-        pos = (pos % sizeGVars) + 1;
-    }
-
-#ifdef HPCGAP
-    if (gvar == 0 && !PreThreadCreation) {
-        /* upgrade to write lock and repeat search */
-        UnlockGVars();
-        LockGVars(1);
-
-        /* look through the table until we find a free slot or the global  */
-        sizeGVars = LEN_PLIST(TableGVars);
-        pos = (hash % sizeGVars) + 1;
-        while ( (gvar = ELM_PLIST( TableGVars, pos )) != 0
-             && strncmp( CONST_CSTR_STRING( NameGVar( INT_INTOBJ(gvar) ) ), name, 1023 ) ) {
-            pos = (pos % sizeGVars) + 1;
-        }
-    }
-#endif
-
-    /* if we did not find the global variable, make a new one and enter it */
-    /* (copy the name first, to avoid a stale pointer in case of a GC)     */
-    if ( gvar == 0 ) {
-        const UInt numGVars = INT_INTOBJ(CountGVars) + 1;
-        CountGVars = INTOBJ_INT(numGVars);
-        gvar = INTOBJ_INT(numGVars);
-        SET_ELM_PLIST( TableGVars, pos, gvar );
-        if (name != gvarbuf)
-            strlcpy(gvarbuf, name, sizeof(gvarbuf));
-        string = MakeImmString(gvarbuf);
-
+void NewGVarCallback(SymbolTable * symtab, UInt numGVars, Obj string)
+{
 #ifdef USE_GVAR_BUCKETS
-        UInt gvar_bucket = GVAR_BUCKET(numGVars);
-        if (!ValGVars[gvar_bucket]) {
-           ValGVars[gvar_bucket] = NewGVarBucket();
-           PtrGVars[gvar_bucket] = ADDR_OBJ(ValGVars[gvar_bucket])+1;
-           NameGVars[gvar_bucket] = NewGVarBucket();
-           FlagsGVars[gvar_bucket] = NewGVarBucket();
-           ExprGVars[gvar_bucket] = NewGVarBucket();
-           CopiesGVars[gvar_bucket] = NewGVarBucket();
-           FopiesGVars[gvar_bucket] = NewGVarBucket();
-        }
-#else
-        GROW_PLIST(    ValGVars,    numGVars );
-        SET_LEN_PLIST( ValGVars,    numGVars );
-        GROW_PLIST(    NameGVars,   numGVars );
-        SET_LEN_PLIST( NameGVars,   numGVars );
-        GROW_PLIST(FlagsGVars, numGVars);
-        SET_LEN_PLIST(FlagsGVars, numGVars);
-        GROW_PLIST(    ExprGVars,   numGVars );
-        SET_LEN_PLIST( ExprGVars,   numGVars );
-        GROW_PLIST(    CopiesGVars, numGVars );
-        SET_LEN_PLIST( CopiesGVars, numGVars );
-        GROW_PLIST(    FopiesGVars, numGVars );
-        SET_LEN_PLIST( FopiesGVars, numGVars );
-        PtrGVars = ADDR_OBJ( ValGVars );
-#endif
-        SET_ELM_GVAR_LIST( ValGVars,    numGVars, 0 );
-        SET_ELM_GVAR_LIST( NameGVars,   numGVars, string );
-        CHANGED_GVAR_LIST( NameGVars,   numGVars );
-        InitGVarFlagInfo( numGVars );
-        SET_ELM_GVAR_LIST( ExprGVars,   numGVars, 0 );
-        SET_ELM_GVAR_LIST( CopiesGVars, numGVars, 0 );
-        SET_ELM_GVAR_LIST( FopiesGVars, numGVars, 0 );
-
-        /* if the table is too crowded, make a larger one, rehash the names     */
-        if ( sizeGVars < 3 * numGVars / 2 ) {
-            table = TableGVars;
-            sizeGVars = 2 * sizeGVars + 1;
-            TableGVars = NEW_PLIST( T_PLIST, sizeGVars );
-            SET_LEN_PLIST( TableGVars, sizeGVars );
-#ifdef HPCGAP
-            MakeBagPublic(TableGVars);
-#endif
-            for ( i = 1; i <= (sizeGVars-1)/2; i++ ) {
-                gvar2 = ELM_PLIST( table, i );
-                if ( gvar2 == 0 )  continue;
-                pos = HashString( CONST_CSTR_STRING( NameGVar( INT_INTOBJ(gvar2) ) ) );
-                pos = (pos % sizeGVars) + 1;
-                while ( ELM_PLIST( TableGVars, pos ) != 0 ) {
-                    pos = (pos % sizeGVars) + 1;
-                }
-                SET_ELM_PLIST( TableGVars, pos, gvar2 );
-            }
-        }
+    UInt gvar_bucket = GVAR_BUCKET(numGVars);
+    if (!ValGVars[gvar_bucket]) {
+        ValGVars[gvar_bucket] = NewGVarBucket();
+        PtrGVars[gvar_bucket] = ADDR_OBJ(ValGVars[gvar_bucket]) + 1;
+        NameGVars[gvar_bucket] = NewGVarBucket();
+        FlagsGVars[gvar_bucket] = NewGVarBucket();
+        ExprGVars[gvar_bucket] = NewGVarBucket();
+        CopiesGVars[gvar_bucket] = NewGVarBucket();
+        FopiesGVars[gvar_bucket] = NewGVarBucket();
     }
-
-#ifdef HPCGAP
-    UnlockGVars();
+#else
+    GROW_PLIST(ValGVars, numGVars);
+    SET_LEN_PLIST(ValGVars, numGVars);
+    GROW_PLIST(NameGVars, numGVars);
+    SET_LEN_PLIST(NameGVars, numGVars);
+    GROW_PLIST(FlagsGVars, numGVars);
+    SET_LEN_PLIST(FlagsGVars, numGVars);
+    GROW_PLIST(ExprGVars, numGVars);
+    SET_LEN_PLIST(ExprGVars, numGVars);
+    GROW_PLIST(CopiesGVars, numGVars);
+    SET_LEN_PLIST(CopiesGVars, numGVars);
+    GROW_PLIST(FopiesGVars, numGVars);
+    SET_LEN_PLIST(FopiesGVars, numGVars);
+    PtrGVars = ADDR_OBJ(ValGVars);
 #endif
-
-    /* return the global variable                                          */
-    return INT_INTOBJ(gvar);
+    SET_ELM_GVAR_LIST(ValGVars, numGVars, 0);
+    SET_ELM_GVAR_LIST(NameGVars, numGVars, string);
+    CHANGED_GVAR_LIST(NameGVars, numGVars);
+    InitGVarFlagInfo(numGVars);
+    SET_ELM_GVAR_LIST(ExprGVars, numGVars, 0);
+    SET_ELM_GVAR_LIST(CopiesGVars, numGVars, 0);
+    SET_ELM_GVAR_LIST(FopiesGVars, numGVars, 0);
 }
 
 
@@ -770,7 +662,7 @@ void MakeReadOnlyGVar (
     UInt                gvar )
 {
     if (IsConstantGVar(gvar)) {
-        ErrorMayQuit("Variable: '%g' is constant", (Int)NameGVar(gvar), 0L);
+        ErrorMayQuit("Variable: '%g' is constant", (Int)NameGVar(gvar), 0);
     }
     SetGVarWriteState(gvar, GVarReadOnly);
 }
@@ -781,12 +673,6 @@ void MakeReadOnlyGVar (
 */
 void MakeConstantGVar(UInt gvar)
 {
-    Obj val = ValGVar(gvar);
-    if (!IS_INTOBJ(val) && val != True && val != False) {
-        ErrorMayQuit(
-            "Variable: '%g' must be assigned a small integer, true or false",
-            (Int)NameGVar(gvar), 0L);
-    }
     SetGVarWriteState(gvar, GVarConstant);
 }
 
@@ -815,6 +701,18 @@ void MakeThreadLocalVar (
 
 /****************************************************************************
 **
+*F  FuncDeclareGlobalName(<self>,<name>)
+*/
+Obj FuncDeclareGlobalName(Obj self, Obj name)
+{
+    RequireStringRep("DeclareGlobalName", name);
+    SetIsDeclaredName(GVarName(CONST_CSTR_STRING(name)), 1);
+    return 0;
+}
+
+
+/****************************************************************************
+**
 *F  FuncMakeReadOnlyGVar(<self>,<name>)   make a global variable read only
 **
 **  'FuncMakeReadOnlyGVar' implements the function 'MakeReadOnlyGVar'.
@@ -825,14 +723,9 @@ void MakeThreadLocalVar (
 **  must be a GAP string) read only.
 */
 static Obj FuncMakeReadOnlyGVar(Obj self, Obj name)
-{       
-    // check the argument
-    RequireStringRep("MakeReadOnlyGVar", name);
-
-    /* get the variable and make it read only                              */
+{
+    RequireStringRep(SELF_NAME, name);
     MakeReadOnlyGVar(GVarName(CONST_CSTR_STRING(name)));
-
-    /* return void                                                         */
     return 0;
 }
 
@@ -849,13 +742,8 @@ static Obj FuncMakeReadOnlyGVar(Obj self, Obj name)
 */
 static Obj FuncMakeConstantGVar(Obj self, Obj name)
 {
-    // check the argument
-    RequireStringRep("MakeConstantGVar", name);
-
-    /* get the variable and make it read only                              */
+    RequireStringRep(SELF_NAME, name);
     MakeConstantGVar(GVarName(CONST_CSTR_STRING(name)));
-
-    /* return void                                                         */
     return 0;
 }
 
@@ -867,7 +755,7 @@ void MakeReadWriteGVar (
     UInt                gvar )
 {
     if (IsConstantGVar(gvar)) {
-        ErrorMayQuit("Variable: '%g' is constant", (Int)NameGVar(gvar), 0L);
+        ErrorMayQuit("Variable: '%g' is constant", (Int)NameGVar(gvar), 0);
     }
     SetGVarWriteState(gvar, GVarAssignable);
 }
@@ -886,13 +774,8 @@ void MakeReadWriteGVar (
 */
 static Obj FuncMakeReadWriteGVar(Obj self, Obj name)
 {
-    // check the argument
-    RequireStringRep("MakeReadWriteGVar", name);
-
-    /* get the variable and make it read write                             */
+    RequireStringRep(SELF_NAME, name);
     MakeReadWriteGVar(GVarName(CONST_CSTR_STRING(name)));
-
-    /* return void                                                         */
     return 0;
 }
 
@@ -900,8 +783,7 @@ static Obj FuncMakeReadWriteGVar(Obj self, Obj name)
 **
 *F  IsReadOnlyGVar( <gvar> ) . . . . . . return status of a global variable
 */
-Int IsReadOnlyGVar (
-    UInt                gvar )
+BOOL IsReadOnlyGVar(UInt gvar)
 {
     return GetGVarFlagInfo(gvar).gvarWriteFlag == GVarReadOnly;
 }
@@ -916,10 +798,7 @@ static Obj FuncIsReadOnlyGVar (
     Obj                 self,
     Obj                 name )
 {
-    // check the argument
-    RequireStringRep("IsReadOnlyGVar", name);
-
-    /* get the answer                             */
+    RequireStringRep(SELF_NAME, name);
     return IsReadOnlyGVar(GVarName(CONST_CSTR_STRING(name))) ? True : False;
 }
 
@@ -927,7 +806,7 @@ static Obj FuncIsReadOnlyGVar (
 **
 *F  IsConstantGVar( <gvar> ) . . . . . . return if a variable is a constant
 */
-Int IsConstantGVar(UInt gvar)
+BOOL IsConstantGVar(UInt gvar)
 {
     return GetGVarFlagInfo(gvar).gvarWriteFlag == GVarConstant;
 }
@@ -940,10 +819,7 @@ Int IsConstantGVar(UInt gvar)
 
 static Obj FuncIsConstantGVar(Obj self, Obj name)
 {
-    // check the argument
-    RequireStringRep("IsConstantGVar", name);
-
-    /* get the answer                             */
+    RequireStringRep(SELF_NAME, name);
     return IsConstantGVar(GVarName(CONST_CSTR_STRING(name))) ? True : False;
 }
 
@@ -974,7 +850,7 @@ static Obj FuncAUTO(Obj self, Obj args)
 
     /* get and check the function                                          */
     func = ELM_LIST( args, 1 );
-    RequireFunction("AUTO", func);
+    RequireFunction(SELF_NAME, func);
 
     /* get the argument                                                    */
     arg = ELM_LIST( args, 2 );
@@ -985,7 +861,7 @@ static Obj FuncAUTO(Obj self, Obj args)
     /* make the global variables automatic                                 */
     for ( i = 3; i <= LEN_LIST(args); i++ ) {
         name = ELM_LIST( args, i );
-        RequireStringRep("AUTO", name);
+        RequireStringRep(SELF_NAME, name);
         gvar = GVarName( CONST_CSTR_STRING(name) );
         SET_ELM_GVAR_LIST( ValGVars, gvar, 0 );
         SET_ELM_GVAR_LIST( ExprGVars, gvar, list );
@@ -993,7 +869,6 @@ static Obj FuncAUTO(Obj self, Obj args)
         CHANGED_GVAR_LIST( ExprGVars, gvar );
     }
 
-    /* return void                                                         */
     return 0;
 }
 
@@ -1003,21 +878,20 @@ static Obj FuncAUTO(Obj self, Obj args)
 *F  iscomplete( <name>, <len> ) . . . . . . . .  find the completions of name
 *F  completion( <name>, <len> ) . . . . . . . .  find the completions of name
 */
-UInt            iscomplete_gvar (
-    Char *              name,
-    UInt                len )
+BOOL iscomplete_gvar(Char * name, UInt len)
 {
     const Char *        curr;
     UInt                i, k;
     UInt                numGVars;
 
-    numGVars = INT_INTOBJ(CountGVars);
+    numGVars = LengthSymbolTable(&GVarSymbolTable);
     for ( i = 1; i <= numGVars; i++ ) {
         curr = CONST_CSTR_STRING( NameGVar( i ) );
         for ( k = 0; name[k] != 0 && curr[k] == name[k]; k++ ) ;
-        if ( k == len && curr[k] == '\0' )  return 1;
+        if (k == len && curr[k] == '\0')
+            return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
 UInt            completion_gvar (
@@ -1029,7 +903,7 @@ UInt            completion_gvar (
     UInt                i, k;
     UInt                numGVars;
 
-    numGVars = INT_INTOBJ(CountGVars);
+    numGVars = LengthSymbolTable(&GVarSymbolTable);
     next = 0;
     for ( i = 1; i <= numGVars; i++ ) {
         /* consider only variables which are currently bound for completion */
@@ -1066,13 +940,7 @@ static Obj FuncIDENTS_GVAR(Obj self)
     UInt                numGVars;
     Obj                 strcopy;
 
-#ifdef HPCGAP
-    LockGVars(0);
-    numGVars = INT_INTOBJ(CountGVars);
-    UnlockGVars();
-#else
-    numGVars = INT_INTOBJ(CountGVars);
-#endif
+    numGVars = LengthSymbolTable(&GVarSymbolTable);
 
     copy = NEW_PLIST_IMM( T_PLIST, numGVars );
     for ( i = 1;  i <= numGVars;  i++ ) {
@@ -1093,13 +961,7 @@ static Obj FuncIDENTS_BOUND_GVARS(Obj self)
     UInt                numGVars;
     Obj                 strcopy;
 
-#ifdef HPCGAP
-    LockGVars(0);
-    numGVars = INT_INTOBJ(CountGVars);
-    UnlockGVars();
-#else
-    numGVars = INT_INTOBJ(CountGVars);
-#endif
+    numGVars = LengthSymbolTable(&GVarSymbolTable);
 
     copy = NEW_PLIST_IMM( T_PLIST, numGVars );
     for ( i = 1, j = 1;  i <= numGVars;  i++ ) {
@@ -1123,11 +985,9 @@ static Obj FuncIDENTS_BOUND_GVARS(Obj self)
 */
 static Obj FuncASS_GVAR(Obj self, Obj gvar, Obj val)
 {
-    // check the argument
-    RequireStringRep("ASS_GVAR", gvar);
-
+    RequireStringRep(SELF_NAME, gvar);
     AssGVar( GVarName( CONST_CSTR_STRING(gvar) ), val );
-    return 0L;
+    return 0;
 }
 
 
@@ -1137,8 +997,7 @@ static Obj FuncASS_GVAR(Obj self, Obj gvar, Obj val)
 */
 static Obj FuncISB_GVAR(Obj self, Obj gvar)
 {
-    // check the argument
-    RequireStringRep("ISB_GVAR", gvar);
+    RequireStringRep(SELF_NAME, gvar);
 
     UInt gv = GVarName( CONST_CSTR_STRING(gvar) );
     if (VAL_GVAR_INTERN(gv))
@@ -1162,8 +1021,7 @@ static Obj FuncISB_GVAR(Obj self, Obj gvar)
 
 static Obj FuncIS_AUTO_GVAR(Obj self, Obj gvar)
 {
-    // check the argument
-    RequireStringRep("IS_AUTO_GVAR", gvar);
+    RequireStringRep(SELF_NAME, gvar);
     Obj expr = ExprGVar(GVarName( CONST_CSTR_STRING(gvar) ) );
     return (expr && !IS_INTOBJ(expr)) ? True : False;
 }
@@ -1178,10 +1036,8 @@ static Obj FuncVAL_GVAR(Obj self, Obj gvar)
 {
     Obj val;
 
-    // check the argument
-    RequireStringRep("VAL_GVAR", gvar);
+    RequireStringRep(SELF_NAME, gvar);
 
-    /* get the value */
     val = ValAutoGVar( GVarName( CONST_CSTR_STRING(gvar) ) );
 
     if (val == 0)
@@ -1196,12 +1052,9 @@ static Obj FuncVAL_GVAR(Obj self, Obj gvar)
 
 static Obj FuncUNB_GVAR(Obj self, Obj gvar)
 {
-    // check the argument
-    RequireStringRep("UNB_GVAR", gvar);
-
-    /*  */
+    RequireStringRep(SELF_NAME, gvar);
     AssGVar( GVarName( CONST_CSTR_STRING(gvar) ), (Obj)0 );
-    return (Obj) 0;
+    return 0;
 }
 
 
@@ -1254,11 +1107,11 @@ void InitCopyGVar (
 {
     /* make a record in the kernel for saving and loading                  */
 #ifdef HPCGAP
-    LockGVars(1);
+    LockSymbolTableForWriting(&GVarSymbolTable);
 #endif
     if ( NCopyAndFopyGVars >= MAX_COPY_AND_FOPY_GVARS ) {
 #ifdef HPCGAP
-        UnlockGVars();
+        UnlockSymbolTable(&GVarSymbolTable);
 #endif
         Panic("no room to record CopyGVar");
     }
@@ -1267,7 +1120,7 @@ void InitCopyGVar (
     CopyAndFopyGVars[NCopyAndFopyGVars].name = name;
     NCopyAndFopyGVars++;
 #ifdef HPCGAP
-    UnlockGVars();
+    UnlockSymbolTable(&GVarSymbolTable);
 #endif
 }
 
@@ -1291,11 +1144,11 @@ void InitFopyGVar (
 {
     /* make a record in the kernel for saving and loading                  */
 #ifdef HPCGAP
-    LockGVars(1);
+    LockSymbolTableForWriting(&GVarSymbolTable);
 #endif
     if ( NCopyAndFopyGVars >= MAX_COPY_AND_FOPY_GVARS ) {
 #ifdef HPCGAP
-        UnlockGVars();
+        UnlockSymbolTable(&GVarSymbolTable);
 #endif
         Panic("no room to record FopyGVar");
     }
@@ -1304,7 +1157,7 @@ void InitFopyGVar (
     CopyAndFopyGVars[NCopyAndFopyGVars].name = name;
     NCopyAndFopyGVars++;
 #ifdef HPCGAP
-    UnlockGVars();
+    UnlockSymbolTable(&GVarSymbolTable);
 #endif
 }
 
@@ -1327,7 +1180,7 @@ void UpdateCopyFopyInfo ( void )
     Obj *               copy;           /* address of the copy             */
 
 #ifdef HPCGAP
-    LockGVars(1);
+    LockSymbolTableForWriting(&GVarSymbolTable);
 #endif
     /* loop over new copies and fopies                                     */
     for ( ; NCopyAndFopyDone < NCopyAndFopyGVars; NCopyAndFopyDone++ ) {
@@ -1387,7 +1240,7 @@ void UpdateCopyFopyInfo ( void )
     }
 #ifdef HPCGAP
     DeclareAllGVars();
-    UnlockGVars();
+    UnlockSymbolTable(&GVarSymbolTable);
 #endif
 }
 
@@ -1399,7 +1252,7 @@ void UpdateCopyFopyInfo ( void )
 static void RemoveCopyFopyInfo( void )
 {
 #ifdef HPCGAP
-    LockGVars(1);
+    LockSymbolTableForWriting(&GVarSymbolTable);
 #endif
 
 #ifdef USE_GVAR_BUCKETS
@@ -1435,7 +1288,7 @@ static void RemoveCopyFopyInfo( void )
     NCopyAndFopyDone = 0;
 
 #ifdef HPCGAP
-    UnlockGVars();
+    UnlockSymbolTable(&GVarSymbolTable);
 #endif
 }
 
@@ -1509,7 +1362,7 @@ Obj GVarObj(GVarDescriptor *gvar)
 {
   Obj result = *(gvar->ref);
   if (!result)
-    ErrorQuit("Global variable '%s' not initialized", (UInt)(gvar->name), 0L);
+    ErrorQuit("Global variable '%s' not initialized", (UInt)(gvar->name), 0);
   MEMBAR_READ();
   return result;
 }
@@ -1518,12 +1371,12 @@ Obj GVarFunction(GVarDescriptor *gvar)
 {
   Obj result = *(gvar->ref);
   if (!result)
-    ErrorQuit("Global variable '%s' not initialized", (UInt)(gvar->name), 0L);
+    ErrorQuit("Global variable '%s' not initialized", (UInt)(gvar->name), 0);
   if (REGION(result))
-    ErrorQuit("Global variable '%s' is not a function", (UInt)(gvar->name), 0L);
+    ErrorQuit("Global variable '%s' is not a function", (UInt)(gvar->name), 0);
   ImpliedWriteGuard(result);
   if (TNUM_OBJ(result) != T_FUNCTION)
-    ErrorQuit("Global variable '%s' is not a function", (UInt)(gvar->name), 0L);
+    ErrorQuit("Global variable '%s' is not a function", (UInt)(gvar->name), 0);
   MEMBAR_READ();
   return result;
 }
@@ -1563,25 +1416,26 @@ void SetGVar(GVarDescriptor *gvar, Obj obj)
 */
 static StructGVarFunc GVarFuncs[] = {
 
-    GVAR_FUNC(MakeReadOnlyGVar, 1, "name"),
-    GVAR_FUNC(MakeReadWriteGVar, 1, "name"),
-    GVAR_FUNC(MakeConstantGVar, 1, "name"),
-    GVAR_FUNC(IsReadOnlyGVar, 1, "name"),
-    GVAR_FUNC(IsConstantGVar, 1, "name"),
-    GVAR_FUNC(AUTO, -3, "func, arg, names..."),
+    GVAR_FUNC_1ARGS(MakeReadOnlyGVar, name),
+    GVAR_FUNC_1ARGS(MakeReadWriteGVar, name),
+    GVAR_FUNC_1ARGS(MakeConstantGVar, name),
+    GVAR_FUNC_1ARGS(IsReadOnlyGVar, name),
+    GVAR_FUNC_1ARGS(IsConstantGVar, name),
+    GVAR_FUNC_XARGS(AUTO, -3, "func, arg, names..."),
 
+    GVAR_FUNC_1ARGS(DeclareGlobalName, name),
 
-    GVAR_FUNC(IDENTS_GVAR, 0, ""),
-    GVAR_FUNC(IDENTS_BOUND_GVARS, 0, ""),
-    GVAR_FUNC(ISB_GVAR, 1, "gvar"),
-    GVAR_FUNC(IS_AUTO_GVAR, 1, "gvar"),
-    GVAR_FUNC(ASS_GVAR, 2, "gvar, value"),
-    GVAR_FUNC(VAL_GVAR, 1, "gvar"),
-    GVAR_FUNC(UNB_GVAR, 1, "gvar"),
-    GVAR_FUNC(SET_NAMESPACE, 1, "str"),
-    GVAR_FUNC(GET_NAMESPACE, 0, ""),
+    GVAR_FUNC_0ARGS(IDENTS_GVAR),
+    GVAR_FUNC_0ARGS(IDENTS_BOUND_GVARS),
+    GVAR_FUNC_1ARGS(ISB_GVAR, gvar),
+    GVAR_FUNC_1ARGS(IS_AUTO_GVAR, gvar),
+    GVAR_FUNC_2ARGS(ASS_GVAR, gvar, value),
+    GVAR_FUNC_1ARGS(VAL_GVAR, gvar),
+    GVAR_FUNC_1ARGS(UNB_GVAR, gvar),
+    GVAR_FUNC_1ARGS(SET_NAMESPACE, str),
+    GVAR_FUNC_0ARGS(GET_NAMESPACE),
 #ifdef HPCGAP
-    GVAR_FUNC(IsThreadLocalGVar, 1, "name"),
+    GVAR_FUNC_1ARGS(IsThreadLocalGVar, name),
 #endif
 
     { 0, 0, 0, 0, 0 }
@@ -1633,17 +1487,12 @@ static Int InitKernel (
                    "src/gvars.c:FopiesGVars"  );
 #endif
 
-#if !defined(HPCGAP)
     InitGlobalBag( &STATE(CurrNamespace),
                    "src/gvars.c:CurrNamespace" );
-#endif
 
-    CountGVars = INTOBJ_INT(0);
-    InitGlobalBag( &CountGVars,
-                   "src/gvars.c:CountGVars" );
-
-    InitGlobalBag( &TableGVars,
-                   "src/gvars.c:TableGVars" );
+    InitSymbolTableKernel(&GVarSymbolTable, "src/gvars.c:GVarSymbolCount",
+                          "src/gvars.c:GVarSymbolTable", NameGVar,
+                          NewGVarCallback);
 
     InitHandlerFunc( ErrorMustEvalToFuncHandler,
                      "src/gvars.c:ErrorMustEvalToFuncHandler" );
@@ -1667,7 +1516,6 @@ static Int InitKernel (
     ImportGVarFromLibrary("REREADING", &REREADING);
     
     
-    /* return success                                                      */
     return 0;
 }
 
@@ -1686,7 +1534,6 @@ static Int PostRestore (
     /* update fopies and copies                                            */
     UpdateCopyFopyInfo();
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -1720,17 +1567,14 @@ static Int PostSave (
 static Int InitLibrary (
     StructInitInfo *    module )
 {
-#ifdef HPCGAP
-    /* Init lock */
-    pthread_rwlock_init(&GVarLock, NULL);
-#endif
+    InitSymbolTableLibrary(&GVarSymbolTable, 28069);
 
     /* make the error functions for 'AssGVar'                              */
     ErrorMustEvalToFuncFunc = NewFunctionC(
-        "ErrorMustEvalToFunc", -1,"args", ErrorMustEvalToFuncHandler );
+        "ErrorMustEvalToFunc", -1, "args", ErrorMustEvalToFuncHandler);
     
     ErrorMustHaveAssObjFunc = NewFunctionC(
-        "ErrorMustHaveAssObj", -1L,"args", ErrorMustHaveAssObjHandler );
+        "ErrorMustHaveAssObj", -1, "args", ErrorMustHaveAssObjHandler);
 
 #if !defined(USE_GVAR_BUCKETS)
     /* make the lists for global variables                                 */
@@ -1742,20 +1586,12 @@ static Int InitLibrary (
     FopiesGVars = NEW_PLIST( T_PLIST, 0 );
 #endif
 
-    /* make the list of global variables                                   */
-    TableGVars = NEW_PLIST( T_PLIST, 14033 );
-    SET_LEN_PLIST( TableGVars, 14033 );
-#ifdef HPCGAP
-    MakeBagPublic(TableGVars);
-#endif
-
     /* fix C vars                                                          */
     PostRestore( module );
 
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -1771,10 +1607,9 @@ static Int CheckInit (
 
     if ( NCopyAndFopyGVars != NCopyAndFopyDone ) {
         success = 0;
-        Pr( "#W  failed to updated copies and fopies\n", 0L, 0L );
+        Pr("#W  failed to updated copies and fopies\n", 0, 0);
     }
 
-    /* return success                                                      */
     return ! success;
 }
 
@@ -1785,7 +1620,6 @@ static Int InitModuleState(void)
     STATE(CurrNamespace) = NEW_STRING(0);
     SET_LEN_STRING(STATE(CurrNamespace), 0);
 
-    // return success
     return 0;
 }
 

@@ -74,50 +74,11 @@ DeclareCategory( "IsNonnegativeIntegers", IsSemiringWithOneAndZero );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareGlobalVariable( "Integers", "ring of integers" );
+DeclareGlobalName( "Integers" );
 
-DeclareGlobalVariable( "PositiveIntegers", "semiring of positive integers" );
+DeclareGlobalName( "PositiveIntegers" );
 
-DeclareGlobalVariable( "NonnegativeIntegers",
-    "semiring of nonnegative integers" );
-
-
-#############################################################################
-##
-#C  IsGaussianIntegers( <obj> )
-##
-##  <#GAPDoc Label="IsGaussianIntegers">
-##  <ManSection>
-##  <Filt Name="IsGaussianIntegers" Arg='obj' Type='Category'/>
-##
-##  <Description>
-##  is the defining category for the domain <Ref Var="GaussianIntegers"/>.
-##  </Description>
-##  </ManSection>
-##  <#/GAPDoc>
-##
-DeclareCategory( "IsGaussianIntegers", IsEuclideanRing and IsFLMLOR 
-  and IsFiniteDimensional );
-
-
-#############################################################################
-##
-#V  GaussianIntegers  . . . . . . . . . . . . . . . ring of Gaussian integers
-##
-##  <#GAPDoc Label="GaussianIntegers">
-##  <ManSection>
-##  <Var Name="GaussianIntegers"/>
-##
-##  <Description>
-##  <Ref Var="GaussianIntegers"/> is the ring <M>&ZZ;[\sqrt{{-1}}]</M>
-##  of Gaussian integers.
-##  This is a subring of the cyclotomic field
-##  <Ref Var="GaussianRationals"/>.
-##  </Description>
-##  </ManSection>
-##  <#/GAPDoc>
-##
-DeclareGlobalVariable( "GaussianIntegers", "ring of Gaussian integers" );
+DeclareGlobalName( "NonnegativeIntegers" );
 
 
 #############################################################################
@@ -144,7 +105,7 @@ DeclareGlobalVariable( "GaussianIntegers", "ring of Gaussian integers" );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareGlobalVariable( "Primes", "list of the 168 primes less than 1000" );
+DeclareGlobalName( "Primes" );
 
 
 #############################################################################

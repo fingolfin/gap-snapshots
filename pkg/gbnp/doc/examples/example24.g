@@ -14,7 +14,7 @@
 # Free Software Foundation (FSF); either version 2.1 of the License, or
 # (at your option) any later version. For details, see the file 'LGPL' in
 # the doc subdirectory of the GBNP distribution or see the FSF's own site:
-# http://www.gnu.org/licenses/lgpl.html
+# https://www.gnu.org/licenses/lgpl.html
 ########################## END COPYRIGHT MESSAGE ##########################
 
 ### filename = "example24.g" 
@@ -25,14 +25,14 @@
 # <Section Label="Example24"><Heading>Serre's exercise</Heading>
 
 # <L>
-LoadPackage("GBNP","0",false);;
+LoadPackage("gbnp", false);
 SetInfoLevel(InfoGBNP,1);
 SetInfoLevel(InfoGBNPTime,1);
 # </L>
 
 # In Serre's book <Cite Key="MR1954121"/> the following exercise can be found: 
 # Prove  that the group
-# <M> \langle \{a,b,c\}\mid \{ bab^{-1}a^{-2}, cbc^{-1}b^{-2}, aca^{-1}c^{-2}\}\right\rangle</M>
+# <M> \left\langle \{a,b,c\}\mid \{ bab^{-1}a^{-2}, cbc^{-1}b^{-2}, aca^{-1}c^{-2}\}\right\rangle</M>
 # is the trivial group.
 # Here we solve the exercise by running the trace variant of the 
 # Gröbner basis function with input the set of equations

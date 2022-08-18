@@ -227,12 +227,14 @@ gap> l := [];; Append(l,l); l;
 gap> l := [1,2,3,4];; Append(l,l); l;
 [ 1, 2, 3, 4, 1, 2, 3, 4 ]
 gap> Append(Immutable([1,2,3]), [1,2,3]);
-Error, Append: <list1> must be a mutable list (not a immutable plain list of c\
-yclotomics)
+Error, FuncAPPEND_LIST_INTR: <list1> must be a mutable list (not an immutable \
+plain list of cyclotomics)
 gap> Append([1,2,3], () );
-Error, AppendList: <list2> must be a small list (not a permutation (small))
+Error, FuncAPPEND_LIST_INTR: <list2> must be a small list (not a permutation (\
+small))
 gap> Append( () , [1,2,3] );
-Error, Append: <list1> must be a mutable list (not a permutation (small))
+Error, FuncAPPEND_LIST_INTR: <list1> must be a mutable list (not a permutation\
+ (small))
 gap> s;
 [  ]
 
@@ -263,18 +265,27 @@ gap> CopyListEntries(l,2,2,l,3,2,2); l;
 gap> l := [1,2,3,4,5];;
 gap> CopyListEntries(l,1,1,l,3,2,2); l;
 [ 1, 2, 1, 4, 2 ]
+gap> l := [1,2,3,4,5];;
+gap> CopyListEntries([],1,1,l,1,1,5); l;
+[  ]
+gap> l := [1,2,3,4,5];;
+gap> CopyListEntries([],1,1,l,1,1,6); l;
+[  ]
+gap> l := [1,2,3,4,5];;
+gap> CopyListEntries([1,,,,,,7],1,1,l,1,1,6); l;
+[ 1 ]
 
 #
 gap> CopyListEntries();
 Error, Function: number of arguments must be 7 (not 0)
 gap> CopyListEntries("abc",3,-1,l,4,-3,2);
-Error, CopyListEntries: <fromlst> must be a plain list (not a list (string))
+Error, COPY_LIST_ENTRIES: <fromlst> must be a plain list (not a list (string))
 gap> CopyListEntries(s,3,-1,"abc",4,-3,2);
-Error, CopyListEntries: <tolst> must be a mutable plain list (not a list (stri\
-ng))
+Error, COPY_LIST_ENTRIES: <tolst> must be a mutable plain list (not a list (st\
+ring))
 gap> CopyListEntries(s,3,-1,Immutable([1,2,3]),4,-3,2);
-Error, CopyListEntries: <tolst> must be a mutable plain list (not a immutable \
-plain list of cyclotomics)
+Error, COPY_LIST_ENTRIES: <tolst> must be a mutable plain list (not an immutab\
+le plain list of cyclotomics)
 gap> CopyListEntries(s, "cheese", 1, l, 1, 1, 2);
 Error, CopyListEntries: <fromind> must be a small integer (not a list (string)\
 )
@@ -322,21 +333,48 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `[]:=' on 3 arguments
 
 # Indexing into plain lists
-gap> l := [[]];;
-gap> l[1,2] := 4;
+gap> l := [,[,4]];
+[ , [ , 4 ] ]
+gap> l[0,1];  # row is out of bounds
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `MatElm' on 3 arguments
+gap> l[1,1];  # row is in bounds but missing
+Error, Matrix Element: <mat>[1] must have an assigned value
+gap> l[2,1];  # row is there but entry is missing
+Error, Matrix Element: <mat>[2,1] must have an assigned value
+gap> l[3,1];  # row is out of bounds
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `MatElm' on 3 arguments
+gap> l[2,0];  # column is out of bounds
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `MatElm' on 3 arguments
+gap> l[2,2];  # OK
+4
+gap> l[2,3];  # column is out of bounds
+Error, List Element: <list>[3] must have an assigned value
+gap> l[2,2] := 4;
 4
 gap> l;
-[ [ , 4 ] ]
-gap> l[1,1] := 3;;
+[ , [ , 4 ] ]
+gap> l[0,1] := 3; # error, row out of bounds
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `SetMatElm' on 4 arguments
+gap> l[1,1] := 3; # error, row is missing
+Error, Matrix Assignment: <mat>[1] must have an assigned value
+gap> l[2,1] := 3; # OK
+3
+gap> l[3,1] := 3; # error, row out of bounds
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `SetMatElm' on 4 arguments
 gap> l;
-[ [ 3, 4 ] ]
+[ , [ 3, 4 ] ]
 gap> l[2,1];
-Error, List Element: <list>[2] must have an assigned value
-gap> MakeImmutable(l[1]);;
-gap> l[1,1] := 2;;
+3
+gap> MakeImmutable(l[2]);;
+gap> l[2,1] := 2;;
 Error, List Assignment: <list> must be a mutable list
 gap> l;
-[ [ 3, 4 ] ]
+[ , [ 3, 4 ] ]
 
 # that's all, folks
 gap> STOP_TEST( "listindex.tst", 1);

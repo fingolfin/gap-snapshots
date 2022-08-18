@@ -5,8 +5,8 @@
 #
 gap> START_TEST("helptools.tst");
 gap> ForAll(FindMultiSpelledHelpEntries(), i -> 
->    Length( Set( List( HELP_SEARCH_ALTERNATIVES( i[3] ), 
->                       j -> HELP_SEARCH_ALTERNATIVES(j) ) ) ) = 1 );
+>    Length( Set( HELP_SEARCH_ALTERNATIVES( i[3] ), 
+>                       j -> HELP_SEARCH_ALTERNATIVES(j) ) ) = 1 );
 true
 gap> Length(HELP_SEARCH_ALTERNATIVES("AnalyseMetacatalogOfCataloguesOfColourizationLabelingsOfCentreBySolvableNormalisersInNormalizerCentralizersInCentre"));
 4096
@@ -16,6 +16,12 @@ gap> HELP_SEARCH_ALTERNATIVES("setismapping");
 [ "hasismapping", "ismapping", "setismapping" ]
 gap> HELP_SEARCH_ALTERNATIVES("ismapping");
 [ "ismapping" ]
+gap> HELP_SEARCH_ALTERNATIVES( "Centralize" );   # pattern at the end
+[ "Centralise", "Centralize" ]
+gap> HELP_SEARCH_ALTERNATIVES( "Centralizer" );  # one character behind pattern
+[ "Centraliser", "Centralizer" ]
+gap> HELP_SEARCH_ALTERNATIVES( "Centralizers" ); # two characters
+[ "Centralisers", "Centralizers" ]
 
 # Testing the code from `lib/helpt2t.g{d,i}` which converts TeX source code
 # in `gapmacro.tex` format into text for the "screen" online help viewer.
@@ -61,7 +67,7 @@ gap> PrintRenderedText(1,1 );
 % 
 % This  is a mock package to be used to test GAP library code related to GAP
 % packages,  for  example  to  validate `PackageInfo.g` files. Clearly, it's
-% not   available   anywhere,   and   it   has   it's  `ArchiveURL'  set  to
+% not   available   anywhere,   and   it   has   its   `ArchiveURL'  set  to
 % `Concatenation(  ~.PackageWWWHome,  "/",  ~.PackageName, "-", ~.Version )'
 % only for testing purposes.
 % 

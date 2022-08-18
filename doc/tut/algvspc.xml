@@ -2,7 +2,6 @@
 <!-- %% -->
 <!-- %W  algvspc.tex            GAP documentation                Thomas Breuer -->
 <!-- %% -->
-<!-- %H  @(#)<M>Id: algvspc.tex,v 4.22 2002/10/04 09:19:52 gap Exp </M> -->
 <!-- %% -->
 <!-- %Y  Copyright (C) 1997, Lehrstuhl D für Mathematik, RWTH Aachen, Germany -->
 <!-- %% -->
@@ -361,10 +360,6 @@ If <M>T</M> knows that it is (anti)symmetric, then at the same time also
 the product of the <M>j</M>-th and the <M>i</M>-th basis vector is set
 appropriately.
 <P/>
-In the following example we temporarily increase the line length limit from
-its default value 80 to 82 in order to make the long output expression fit
-into one line.
-<P/>
 <Example><![CDATA[
 gap> T:= EmptySCTable( 2, 0, "symmetric" );
 [ [ [ [  ], [  ] ], [ [  ], [  ] ] ], 
@@ -420,20 +415,16 @@ Subalgebras and ideals of an algebra can be constructed by specifying
 a set of generators for the subalgebra or ideal. The quotient space
 of an algebra by an ideal is naturally an algebra itself.
 <P/>
-In the following example we temporarily increase the line length limit from
-its default value 80 to 81 in order to make the long output expression fit
-into one line.
-<P/>
 <Example><![CDATA[
 gap> m:= [ [ 1, 2, 3 ], [ 0, 1, 6 ], [ 0, 0, 1 ] ];;
 gap> A:= Algebra( Rationals, [ m ] );;
 gap> subA:= Subalgebra( A, [ m-m^2 ] );
-<algebra over Rationals, with 1 generators>
+<algebra over Rationals, with 1 generator>
 gap> Dimension( subA );
 2
 gap> idA:= Ideal( A, [ m-m^3 ] );
 <two-sided ideal in <algebra of dimension 3 over Rationals>, 
-  (1 generators)>
+  (1 generator)>
 gap> Dimension( idA ); 
 2
 gap> B:= A/idA;

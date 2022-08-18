@@ -24,7 +24,7 @@
   [33X[0;0Y[10XPopOptions();[110X[133X
   
   [33X[0;0YThis  can  be  abbreviated,  to  [10XDoSomething(  [3Xargs[103X[10X  : [3Xstuff[103X[10X );[110X with a small
-  additional abbreviation of [3Xstuff[103X permitted. See [14X4.11-2[114X for details. The full
+  additional abbreviation of [3Xstuff[103X permitted. See [14X4.12-2[114X for details. The full
   form  can be used where the same options are to run across several calls, or
   where  the  [10XDoSomething[110X  procedure  is  actually an infix operator, or other
   function with special syntax.[133X
@@ -45,7 +45,7 @@
   
   [1X8.1-1 PushOptions[101X
   
-  [33X[1;0Y[29X[2XPushOptions[102X( [3Xoptions[103X, [3Xrecord[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPushOptions[102X( [3Xoptions_record[103X ) [32X function[133X
   
   [33X[0;0YThis  function pushes a record of options onto the global option stack. Note
   that [10XPushOptions( rec( [3Xopt[103X[10X:= fail ) )[110X has the effect of resetting the option

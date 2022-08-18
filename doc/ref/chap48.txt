@@ -110,8 +110,8 @@
     [4X[25Xgap>[125X [27XTzPrintRelators( P );[127X[104X
     [4X[28X#I  1. f2^3[128X[104X
     [4X[28X#I  2. f1^6[128X[104X
-    [4X[28X#I  3. (f1^-1*f2^-1)^6[128X[104X
-    [4X[28X#I  4. f1*f2*f1^-1*f2^-1*f1*f2^-1*f1^-1*f2*f1*f2^-1*f1^-1*f2^-1[128X[104X
+    [4X[28X#I  3. (f1*f2)^6[128X[104X
+    [4X[28X#I  4. f1*f2*f1^-1*f2*f1*f2^-1*f1^-1*f2*f1*f2*f1^-1*f2^-1[128X[104X
     [4X[28X#I  5. f1^-3*f2*f1*f2*(f1^-1*f2^-1)^2*f1^-2*f2[128X[104X
   [4X[32X[104X
   
@@ -133,10 +133,10 @@
     [4X[25Xgap>[125X [27XG := FpGroupPresentation( P );[127X[104X
     [4X[28X<fp group on the generators [ a, b, c ]>[128X[104X
     [4X[25Xgap>[125X [27XRelatorsOfFpGroup( G );[127X[104X
-    [4X[28X[ c^2, b^4, (a*c)^3, (a*b^-2)^3, a^11, [128X[104X
-    [4X[28X  a^2*b*a^-2*b^-1*(b^-1*a)^2*a*b^-1, (a*(b*a^-1)^2*b^-1)^2, [128X[104X
-    [4X[28X  a^2*b*a^2*b^-2*a^-1*b*(a^-1*b^-1)^2, [128X[104X
-    [4X[28X  (a*b)^2*a^2*b^-1*a^-1*b^-1*a*c*b*c, a^2*(a^2*b)^2*a^-2*c*a*b*a^-1*c [128X[104X
+    [4X[28X[ c^2, b^4, (a*c)^3, (a*b^-2)^3, a^11,[128X[104X
+    [4X[28X  a^2*b*a^-2*b^-1*(b^-1*a)^2*a*b^-1, (a*(b*a^-1)^2*b^-1)^2,[128X[104X
+    [4X[28X  a^2*b*a^2*b^-2*a^-1*b*(a^-1*b^-1)^2,[128X[104X
+    [4X[28X  a^2*b^-1*a^-1*b^-1*a*c*b*c*(a*b)^2, a^2*(a^2*b)^2*a^-2*c*a*b*a^-1*c[128X[104X
     [4X[28X ][128X[104X
   [4X[32X[104X
   
@@ -222,8 +222,8 @@
   [33X[1;0Y[29X[2XPresentationSubgroupRrs[102X( [3XG[103X, [3XH[103X[, [3Xstring[103X] ) [32X function[133X
   [33X[1;0Y[29X[2XPresentationSubgroupRrs[102X( [3XG[103X, [3Xtable[103X[, [3Xstring[103X] ) [32X function[133X
   
-  [33X[0;0Yuses  the  Reduced Reidemeister-Schreier method to compute a presentation [3XP[103X,
-  say, for a subgroup [3XH[103X of a finitely presented group [3XG[103X. The generators in the
+  [33X[0;0Yuses  the  Reduced  Reidemeister-Schreier method to compute a presentation [3XP[103X
+  for  a  subgroup  [3XH[103X  of  a finitely presented group [3XG[103X. The generators in the
   resulting  presentation  will  be  named  [3Xstring[103X[10X1[110X, [3Xstring[103X[10X2[110X, [22X...[122X, the default
   string is [10X"_x"[110X. You may access the [22Xi[122X-th of these generators by [3XP[103X[10X!.[110X[22Xi[122X.[133X
   
@@ -332,11 +332,11 @@
   [33X[1;0Y[29X[2XPresentationSubgroupMtc[102X( [3XG[103X, [3XH[103X[, [3Xstring[103X][, [3Xprint[103X, [3Xlevel[103X] ) [32X function[133X
   
   [33X[0;0Yuses  the  Modified  Todd-Coxeter coset representative enumeration method to
-  compute  a  presentation  [22XP[122X,  say,  for a subgroup [3XH[103X of a finitely presented
-  group  [3XG[103X.  The  presentation  returned is in generators corresponding to the
-  generators  of [3XH[103X. The generators in the resulting presentation will be named
-  [3Xstring[103X[10X1[110X,  [3Xstring[103X[10X2[110X,  [22X...[122X, the default string is [10X"_x"[110X. You may access the [22Xi[122X-th
-  of these generators by [22XP[122X[10X!.[110X[22Xi[122X.[133X
+  compute  a  presentation [22XP[122X for a subgroup [3XH[103X of a finitely presented group [3XG[103X.
+  The  presentation  returned is in generators corresponding to the generators
+  of  [3XH[103X.  The  generators in the resulting presentation will be named [3Xstring[103X[10X1[110X,
+  [3Xstring[103X[10X2[110X,  [22X...[122X,  the default string is [10X"_x"[110X. You may access the [22Xi[122X-th of these
+  generators by [22XP[122X[10X!.[110X[22Xi[122X.[133X
   
   [33X[0;0YThe  default  print  level  is  [22X1[122X.  If the print level is set to [22X0[122X, then the
   printout  of  the  implicitly  called  function [2XDecodeTree[102X ([14X48.10-1[114X) will be
@@ -424,9 +424,9 @@
   
   [33X[1;0Y[29X[2XPresentationNormalClosureRrs[102X( [3XG[103X, [3XH[103X[, [3Xstring[103X] ) [32X function[133X
   
-  [33X[0;0Yuses  the  Reduced Reidemeister-Schreier method to compute a presentation [22XP[122X,
-  say, for the normal closure of a subgroup [3XH[103X of a finitely presented group [3XG[103X.
-  The generators in the resulting presentation will be named [3Xstring[103X[10X1[110X, [3Xstring[103X[10X2[110X,
+  [33X[0;0Yuses  the  Reduced  Reidemeister-Schreier method to compute a presentation [22XP[122X
+  for  the normal closure of a subgroup [3XH[103X of a finitely presented group [3XG[103X. The
+  generators  in  the  resulting  presentation will be named [3Xstring[103X[10X1[110X, [3Xstring[103X[10X2[110X,
   [22X...[122X, the default string is [10X"_x"[110X. You may access the [22Xi[122X-th of these generators
   by [22XP[122X[10X!.[110X[22Xi[122X.[133X
   
@@ -483,12 +483,12 @@
   
   [1X48.4 [33X[0;0YPrinting Presentations[133X[101X
   
-  [33X[0;0YWhenever  you  create a presentation [22XP[122X, say, or assign it to a variable, [5XGAP[105X
-  will  respond  by  printing [22XP[122X. However, as [22XP[122X may contain a lot of generators
-  and  many  relators  of  large  length, it would be annoying if the standard
-  print  facilities displayed all this information in detail. So they restrict
-  the  printout  to just one line of text containing the number of generators,
-  the  number  of  relators,  and  the  total  length of all relators of [22XP[122X. As
+  [33X[0;0YWhenever  you  create a presentation [22XP[122X, or assign it to a variable, [5XGAP[105X will
+  respond  by  printing  [22XP[122X.  However, as [22XP[122X may contain a lot of generators and
+  many  relators  of  large length, it would be annoying if the standard print
+  facilities  displayed  all  this information in detail. So they restrict the
+  printout  to  just one line of text containing the number of generators, the
+  number  of  relators,  and  the  total  length  of  all  relators  of  [22XP[122X. As
   compensation,  [5XGAP[105X  offers some special print commands which display various
   details of a presentation. Note that there is also a function [2XTzPrintOptions[102X
   ([14X48.11-2[114X). It is described in Section [14X48.11[114X.[133X
@@ -525,10 +525,10 @@
     [4X[25Xgap>[125X [27XTzPrintRelators( P );[127X[104X
     [4X[28X#I  1. f3^2[128X[104X
     [4X[28X#I  2. f2^4[128X[104X
-    [4X[28X#I  3. (f2^-1*f3)^2[128X[104X
+    [4X[28X#I  3. (f2*f3)^2[128X[104X
     [4X[28X#I  4. f1^5[128X[104X
     [4X[28X#I  5. f1^2*f2*f1*f2^-1[128X[104X
-    [4X[28X#I  6. f1^-1*f3*f1*f3*f1^-1*f2^2*f3[128X[104X
+    [4X[28X#I  6. f1*f2^-2*f3*f1*f3*f1^-1*f3[128X[104X
   [4X[32X[104X
   
   [1X48.4-3 TzPrintLengths[101X
@@ -582,10 +582,10 @@
     [4X[28X#I  relators:[128X[104X
     [4X[28X#I  1.  2  [ 3, 3 ][128X[104X
     [4X[28X#I  2.  4  [ 2, 2, 2, 2 ][128X[104X
-    [4X[28X#I  3.  4  [ -2, 3, -2, 3 ][128X[104X
+    [4X[28X#I  3.  4  [ 2, 3, 2, 3 ][128X[104X
     [4X[28X#I  4.  5  [ 1, 1, 1, 1, 1 ][128X[104X
     [4X[28X#I  5.  5  [ 1, 1, 2, 1, -2 ][128X[104X
-    [4X[28X#I  6.  8  [ -1, 3, 1, 3, -1, 2, 2, 3 ][128X[104X
+    [4X[28X#I  6.  8  [ 1, -2, -2, 3, 1, 3, -1, 3 ][128X[104X
   [4X[32X[104X
   
   [1X48.4-7 TzPrintPairs[101X
@@ -604,9 +604,9 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XTzPrintPairs( P, 3 );[127X[104X
-    [4X[28X#I  1.  3  occurrences of  f2 * f3[128X[104X
-    [4X[28X#I  2.  2  occurrences of  f2^-1 * f3[128X[104X
-    [4X[28X#I  3.  2  occurrences of  f1 * f3[128X[104X
+    [4X[28X#I  1.  3  occurrences of  f2^-1 * f3[128X[104X
+    [4X[28X#I  2.  2  occurrences of  f2 * f3[128X[104X
+    [4X[28X#I  3.  2  occurrences of  f1^-1 * f3[128X[104X
   [4X[32X[104X
   
   
@@ -634,7 +634,7 @@
   [10XGeneratorsOfPresentation(P)[Length(GeneratorsOfPresentation(P))][110X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XG := PerfectGroup( 120 );;[127X[104X
+    [4X[25Xgap>[125X [27XG := PerfectGroup(IsFpGroup, 120 );;[127X[104X
     [4X[25Xgap>[125X [27XH := Subgroup( G, [ G.1^G.2, G.3 ] );;[127X[104X
     [4X[25Xgap>[125X [27XP := PresentationSubgroup( G, H );[127X[104X
     [4X[28X<presentation with 4 gens and 7 rels of total length 21>[128X[104X
@@ -883,9 +883,9 @@
   
   [33X[0;0YThe  idea  is  to  find pairs of relators [22Xr_1[122X and [22Xr_2[122X of length [22Xl_1[122X and [22Xl_2[122X,
   respectively,  such  that [22Xl_1 ≤ l_2[122X and [22Xr_1[122X and [22Xr_2[122X coincide (possibly after
-  inverting  or  conjugating  one  of them) in some maximal subword [22Xw[122X, say, of
-  length  greater  than [22Xl_1/2[122X, and then to substitute each copy of [22Xw[122X in [22Xr_2[122X by
-  the inverse complement of [22Xw[122X in [22Xr_1[122X.[133X
+  inverting  or  conjugating  one of them) in some maximal subword [22Xw[122X of length
+  greater  than  [22Xl_1/2[122X,  and  then  to substitute each copy of [22Xw[122X in [22Xr_2[122X by the
+  inverse complement of [22Xw[122X in [22Xr_1[122X.[133X
   
   [33X[0;0YTwo  of  the  Tietze option parameters which are listed in section [14X48.11[114X may
   strongly  influence the performance and the results of the command [2XTzSearch[102X.
@@ -912,13 +912,12 @@
   
   [33X[0;0YAs   this  subroutine  performs  a  very  expensive  process,  it  has  been
   implemented  as  a C routine in the [5XGAP[105X kernel. For the given relator [22Xr_1[122X of
-  length  [22Xl_1[122X,  say,  it  first determines the [13Xminimal match length[113X [22Xl[122X which is
-  [22Xl_1/2+1[122X,  if  [22Xl_1[122X is even, or [22X(l_1+1)/2[122X, otherwise. Then it builds up a hash
-  list  for  all  subwords  of  length [22Xl[122X occurring in the conjugates of [22Xr_1[122X or
-  [22Xr_1^{-1}[122X,  and  finally it loops over all long relators [22Xr_2[122X and compares the
-  hash values of their subwords of length [22Xl[122X against this list. A comparison of
-  subwords  which is much more expensive is only done if a hash match has been
-  found.[133X
+  length  [22Xl_1[122X it first determines the [13Xminimal match length[113X [22Xl[122X which is [22Xl_1/2+1[122X,
+  if  [22Xl_1[122X  is even, or [22X(l_1+1)/2[122X, otherwise. Then it builds up a hash list for
+  all subwords of length [22Xl[122X occurring in the conjugates of [22Xr_1[122X or [22Xr_1^{-1}[122X, and
+  finally  it loops over all long relators [22Xr_2[122X and compares the hash values of
+  their subwords of length [22Xl[122X against this list. A comparison of subwords which
+  is much more expensive is only done if a hash match has been found.[133X
   
   [33X[0;0YTo  improve the efficiency of this process we allow the subroutine to handle
   several  short  relators  simultaneously  provided  that  they have the same
@@ -944,9 +943,9 @@
   [33X[0;0YThe  idea  is  to  find pairs of relators [22Xr_1[122X and [22Xr_2[122X of length [22Xl_1[122X and [22Xl_2[122X,
   respectively,  such  that  [22Xl_1[122X  is even, [22Xl_1 ≤ l_2[122X, and [22Xr_1[122X and [22Xr_2[122X coincide
   (possibly  after  inverting  or  conjugating  one  of  them) in some maximal
-  subword [22Xw[122X, say, of length at least [22Xl_1/2[122X. Let [22Xl[122X be the length of [22Xw[122X. Then, if
-  [22Xl  >  l_1/2[122X,  the pair is handled as in [2XTzSearch[102X ([14X48.7-2[114X). Otherwise, if [22Xl =
-  l_1/2[122X,  then  [2XTzSearchEqual[102X substitutes each copy of [22Xw[122X in [22Xr_2[122X by the inverse
+  subword  [22Xw[122X  of length at least [22Xl_1/2[122X. Let [22Xl[122X be the length of [22Xw[122X. Then, if [22Xl >
+  l_1/2[122X, the pair is handled as in [2XTzSearch[102X ([14X48.7-2[114X). Otherwise, if [22Xl = l_1/2[122X,
+  then  [2XTzSearchEqual[102X  substitutes  each  copy  of  [22Xw[122X  in  [22Xr_2[122X  by the inverse
   complement of [22Xw[122X in [22Xr_1[122X.[133X
   
   [33X[0;0YThe  Tietze  option parameter [10XsearchSimultaneous[110X is used by [2XTzSearchEqual[102X in
@@ -1199,11 +1198,10 @@
   
   [33X[1;0Y[29X[2XTzSubstituteCyclicJoins[102X( [3XP[103X ) [32X function[133X
   
-  [33X[0;0Ytries  to  find  pairs  of  commuting generators [22Xa[122X and [22Xb[122X, say, such that the
-  exponent  of [22Xa[122X (i. e. the least currently known positive integer [22Xn[122X such that
-  [22Xa^n[122X  is  a  relator in [3XP[103X) is prime to the exponent of [22Xb[122X. For each such pair,
-  their  product  [22Xa  b[122X  is  substituted  as  a  new generator, and [22Xa[122X and [22Xb[122X are
-  eliminated.[133X
+  [33X[0;0Ytries  to  find pairs of commuting generators [22Xa[122X and [22Xb[122X such that the exponent
+  of  [22Xa[122X (i. e. the least currently known positive integer [22Xn[122X such that [22Xa^n[122X is a
+  relator  in  [3XP[103X)  is  prime  to  the exponent of [22Xb[122X. For each such pair, their
+  product [22Xa b[122X is substituted as a new generator, and [22Xa[122X and [22Xb[122X are eliminated.[133X
   
   
   [1X48.9 [33X[0;0YTracing generator images through Tietze transformations[133X[101X
@@ -1338,10 +1336,10 @@
   a  presentation  for a given subgroup [3XH[103X of a finitely presented group [3XG[103X they
   first  build up a highly redundant list of generators of [3XH[103X which consists of
   an (in general small) list of [21Xprimary[121X generators, followed by an (in general
-  large)  list of [21Xsecondary[121X generators, and then construct a presentation [22XP_0[122X,
-  say,  [13Xon a sublist of these generators[113X by rewriting the defining relators of
-  [3XG[103X.  This  sublist contains all primary, but, at least in general, by far not
-  all secondary generators.[133X
+  large)  list  of [21Xsecondary[121X generators, and then construct a presentation [22XP_0[122X
+  [13Xon  a  sublist  of these generators[113X by rewriting the defining relators of [3XG[103X.
+  This  sublist contains all primary, but, at least in general, by far not all
+  secondary generators.[133X
   
   [33X[0;0YThe  role  of  the  primary generators depends on the concrete choice of the
   subgroup  presentation command. If the Modified Todd-Coxeter method is used,
@@ -1371,13 +1369,13 @@
   
   [33X[0;0YStarting from [22XP = P_0[122X, it runs through a number of steps in each of which it
   eliminates  the  current  [21Xlast[121X  generator  (with  respect to the list of all
-  primary  and  secondary  generators).  If  the  last  generator [3Xg[103X, say, is a
-  primary  generator,  then  the  procedure  terminates.  Otherwise  it checks
-  whether  there is a relator in the current presentation which can be used to
-  substitute [3Xg[103X by a Tietze transformation. If so, this is done. Otherwise, and
-  only  then, the tree definition of [3Xg[103X is added to [3XP[103X as a new relator, and the
-  generators  involved  are  added as new generators if they have not yet been
-  contained in [3XP[103X. Subsequently, [3Xg[103X is eliminated.[133X
+  primary  and  secondary  generators).  If  the last generator [3Xg[103X is a primary
+  generator,  then the procedure terminates. Otherwise it checks whether there
+  is  a  relator in the current presentation which can be used to substitute [3Xg[103X
+  by  a  Tietze transformation. If so, this is done. Otherwise, and only then,
+  the  tree definition of [3Xg[103X is added to [3XP[103X as a new relator, and the generators
+  involved  are added as new generators if they have not yet been contained in
+  [3XP[103X. Subsequently, [3Xg[103X is eliminated.[133X
   
   [33X[0;0YNote  that  the  extension of [3XP[103X by one or two new generators is [13Xnot[113X a Tietze
   transformation. In general, it will change the isomorphism type of the group
@@ -1516,7 +1514,7 @@
         [10XeliminationsLimit[110X is 100.[133X
   
   [8X[10XexpandLimit[110X[8X:[108X
-        [33X[0;6YWhenever  the routine for eliminating more than 1 generators is called
+        [33X[0;6YWhenever  the  routine for eliminating more than 1 generator is called
         for  a  presentation  [3XP[103X  by  the  [2XTzEliminate[102X  ([14X48.7-1[114X) command or the
         elimination  phase  of  the  [2XTzGo[102X  ([14X48.6-1[114X) command, then it saves the
         given  total  length  of  the relators, and subsequently it checks the

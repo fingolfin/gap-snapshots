@@ -357,14 +357,15 @@
   [1X5.3-1 BaseChangeToCanonical[101X
   
   [33X[1;0Y[29X[2XBaseChangeToCanonical[102X( [3Xf[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10Ya transition matrix [3Xb[103X from one basis to another[133X
+  [6XReturns:[106X  [33X[0;10Ya transition matrix [22Xb[122X from one basis to another[133X
   
   [33X[0;0YThe argument [3Xf[103X is a sesquilinear or quadratic form. For every isometry class
   of  forms, there is a canonical representative, as described in Section [14X5.1[114X.
-  If  [3XM[103X  is  the  Gram  matrix  of  the  form  [3Xf[103X,  then this method returns an
-  invertible matrix [3Xb[103X such that [3Xb * M * TransposedMat(b)[103X is the Gram matrix of
-  the  canonical  representative.  That  is, [3Xb[103X is the [13Xtransition matrix[113X from a
-  basis of the underlying vector space of [3Xf[103X to another basis.[133X
+  If  [22XM[122X  is  the  Gram  matrix  of  the  form  [3Xf[103X,  then this method returns an
+  invertible   matrix   [22Xb[122X   such   that   [22Xb   M[122X   [10XTransposedMat[110X[22X(b)[122X   (or  [22Xb  M[122X
+  [10XTransposedFrobeniusMat[110X[22X(b, q)[122X for suitable [22Xq[122X if [3Xf[103X is a hermitian form) is the
+  Gram  matrix  of  the canonical representative. That is, [22Xb[122X is the [13Xtransition
+  matrix[113X from a basis of the underlying vector space of [3Xf[103X to another basis.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xgf := GF(3);[127X[104X

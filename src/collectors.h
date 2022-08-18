@@ -11,7 +11,7 @@
 #ifndef GAP_COLLECTORS_H
 #define GAP_COLLECTORS_H
 
-#include "system.h"
+#include "common.h"
 
 /****************************************************************************
 **
@@ -64,48 +64,6 @@
 
 #define SC_RWS_GENERATORS(sc) \
     (CONST_ADDR_OBJ(sc)[SCP_RWS_GENERATORS])
-
-
-/****************************************************************************
-**
-*F  FuncFinPowConjCol_ReducedComm( <self>, <sc>, <w>, <u> )
-*/
-Obj FuncFinPowConjCol_ReducedComm(Obj, Obj, Obj, Obj);
-
-
-/****************************************************************************
-**
-*F  FuncFinPowConjCol_ReducedForm( <self>, <sc>, <w> )
-*/
-Obj FuncFinPowConjCol_ReducedForm(Obj, Obj, Obj);
-
-
-/****************************************************************************
-**
-*F  FuncFinPowConjCol_ReducedLeftQuotient( <self>, <sc>, <w>, <u> )
-*/
-Obj FuncFinPowConjCol_ReducedLeftQuotient(Obj, Obj, Obj, Obj);
-
-
-/****************************************************************************
-**
-*F  FuncFinPowConjCol_ReducedProduct( <self>, <sc>, <w>, <u> )
-*/
-Obj FuncFinPowConjCol_ReducedProduct(Obj, Obj, Obj, Obj);
-
-
-/****************************************************************************
-**
-*F  FuncFinPowConjCol_ReducedPowerSmallInt( <self>, <sc>, <w>, <pow> )
-*/
-Obj FuncFinPowConjCol_ReducedPowerSmallInt(Obj, Obj, Obj, Obj);
-
-
-/****************************************************************************
-**
-*F  FuncFinPowConjCol_ReducedQuotient( <self>, <sc>, <w>, <u> )
-*/
-Obj FuncFinPowConjCol_ReducedQuotient(Obj, Obj, Obj, Obj);
 
 
 /****************************************************************************

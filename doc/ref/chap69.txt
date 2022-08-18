@@ -426,10 +426,36 @@
   
   [33X[1;0Y[29X[2XMTX.InvariantQuadraticForm[102X( [3Xmodule[103X ) [32X function[133X
   
-  [33X[0;0Yreturns  an  invariant  quadratic  form  of  [3Xmodule[103X, or [9Xfail[109X if no such form
-  exists.  If  the characteristic of the field over which [3Xmodule[103X is defined is
-  not  2,  then  the  invariant  bilinear form (if any) divided by two will be
-  returned. In characteristic 2, the form returned will be lower triangular.[133X
+  [33X[0;0Yreturns  either  the matrix of an invariant quadratic form of the absolutely
+  irreducible module [3Xmodule[103X, or [9Xfail[109X.[133X
+  
+  [33X[0;0YIf  the characteristic of [3Xmodule[103X is odd then [9Xfail[109X is returned if there is no
+  nonzero  invariant  bilinear  form,  otherwise a matrix of the bilinear form
+  divided  by  [22X2[122X  is  returned; note that this matrix may be antisymmetric and
+  thus  describe the zero quadratic form. If the characteristic of [3Xmodule[103X is [22X2[122X
+  then  [9Xfail[109X  is  returned  if [3Xmodule[103X does not admit a nonzero quadratic form,
+  otherwise a lower triangular matrix describing the form is returned.[133X
+  
+  [33X[0;0YAn error is signalled if [3Xmodule[103X is not absolutely irreducible.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:= SO(-1, 4, 2);;[127X[104X
+    [4X[25Xgap>[125X [27Xm:= GModuleByMats( GeneratorsOfGroup( g ), GF(2) );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( MTX.InvariantQuadraticForm( m ) );[127X[104X
+    [4X[28X . . . .[128X[104X
+    [4X[28X 1 . . .[128X[104X
+    [4X[28X . . 1 .[128X[104X
+    [4X[28X . . 1 1[128X[104X
+    [4X[25Xgap>[125X [27Xg:= SP(4, 2);;[127X[104X
+    [4X[25Xgap>[125X [27Xm:= GModuleByMats( GeneratorsOfGroup( g ), GF(2) );;[127X[104X
+    [4X[25Xgap>[125X [27XMTX.InvariantQuadraticForm( m );[127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27Xg:= SP(4, 3);;[127X[104X
+    [4X[25Xgap>[125X [27Xm:= GModuleByMats( GeneratorsOfGroup( g ), GF(3) );;[127X[104X
+    [4X[25Xgap>[125X [27Xq:= MTX.InvariantQuadraticForm( m );;[127X[104X
+    [4X[25Xgap>[125X [27Xq = - TransposedMat( q );  # antisymmetric inv. bilinear form[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
   
   [1X69.11-4 MTX.BasisInOrbit[101X
   
@@ -443,10 +469,32 @@
   
   [33X[1;0Y[29X[2XMTX.OrthogonalSign[102X( [3Xmodule[103X ) [32X function[133X
   
-  [33X[0;0Yfor   an   even   dimensional   module,   returns  1  or  -1,  according  as
-  [10XMTX.InvariantQuadraticForm([3Xmodule[103X[10X)[110X is of + or - type. For an odd dimensional
-  module,  returns  0.  For a module with no invariant quadratic form, returns
-  [9Xfail[109X. This calculation uses an algorithm due to Jon Thackray.[133X
+  [33X[0;0YLet  [3Xmodule[103X  be an absolutely irreducible [22XG[122X-module. If [3Xmodule[103X does not fix a
+  nondegenerate  quadratic  form see [2XMTX.InvariantQuadraticForm[102X ([14X69.11-3[114X) then
+  [9Xfail[109X  is returned. Otherwise the sign [22Xϵ ∈ { -1, 0, 1 }[122X is returned such that
+  [22XG[122X  embeds  into the general orthogonal group [22XGO^ϵ(d, q)[122X w.r.t. the invariant
+  quadratic  form, see [2XGeneralOrthogonalGroup[102X ([14X50.2-6[114X). That is, [10X0[110X is returned
+  if [3Xmodule[103X has odd dimension, and [10X1[110X or [10X-1[110X is returned if the orthogonal group
+  has plus or minus type, respectively.[133X
+  
+  [33X[0;0YAn error is signalled if [3Xmodule[103X is not absolutely irreducible.[133X
+  
+  [33X[0;0YThe [10XSMTX[110X implementation uses an algorithm due to Jon Thackray.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmats:= GeneratorsOfGroup( GO(1,4,2) );;[127X[104X
+    [4X[25Xgap>[125X [27XMTX.OrthogonalSign( GModuleByMats( mats, GF(2) ) );[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27Xmats:= GeneratorsOfGroup( GO(-1,4,2) );;[127X[104X
+    [4X[25Xgap>[125X [27XMTX.OrthogonalSign( GModuleByMats( mats, GF(2) ) );[127X[104X
+    [4X[28X-1[128X[104X
+    [4X[25Xgap>[125X [27Xmats:= GeneratorsOfGroup( GO(5,3) );;[127X[104X
+    [4X[25Xgap>[125X [27XMTX.OrthogonalSign( GModuleByMats( mats, GF(3) ) );[127X[104X
+    [4X[28X0[128X[104X
+    [4X[25Xgap>[125X [27Xmats:= GeneratorsOfGroup( SP(4,2) );;[127X[104X
+    [4X[25Xgap>[125X [27XMTX.OrthogonalSign( GModuleByMats( mats, GF(2) ) );[127X[104X
+    [4X[28Xfail[128X[104X
+  [4X[32X[104X
   
   
   [1X69.12 [33X[0;0YThe Smash MeatAxe[133X[101X

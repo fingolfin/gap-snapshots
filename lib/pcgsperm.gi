@@ -424,7 +424,9 @@ InstallGlobalFunction(TryPcgsPermGroup,function(arg)
     if whole  then
         SetIsSolvableGroup( grp, true );
         SetPcgs( grp, pcgs );
-        SetHomePcgs( grp, pcgs );
+        if not HasHomePcgs( grp ) then
+          SetHomePcgs( grp, pcgs );
+        fi;
         SetGroupOfPcgs (pcgs, grp);
         if cent  then
             SetIsNilpotentGroup( grp, true );
@@ -1299,10 +1301,7 @@ function( G, d, e, opr )
     fi;
 end );
 
-BIND_GLOBAL( "CYCLICACHE", [ [], [] ]);
-if IsHPCGAP then
-  ShareSpecialObj(CYCLICACHE);
-fi;
+BIND_GLOBAL( "CYCLICACHE", NEW_SORTED_CACHE(false) );
 
 InstallGlobalFunction(CreateIsomorphicPcGroup,function(pcgs,needindices,flag)
 local r,i,p,A,f,a;
@@ -1422,11 +1421,10 @@ end);
 ##
 ##  method for solvable perm groups -- it is cheaper to translate to a pc
 ##  group
-InstallMethod( TryMaximalSubgroupClassReps,"solvable perm group",true, 
+InstallMethod( CalcMaximalSubgroupClassReps,"solvable perm group",true, 
     [ IsPermGroup and CanEasilyComputePcgs and IsFinite ], 0,
 function(G)
 local hom,m;
-  TryMaxSubgroupTainter(G);
   hom:=IsomorphismPcGroup(G);
   m:=MaximalSubgroupClassReps(Image(hom));
   List(m,Size); # force

@@ -465,7 +465,7 @@ AGR.GapObjectOfJsonText:= function( string )
     expectstring:= false;
     SIGNEDCHARSDIGITS:= "-0123456789";
     IsSSortedList( SIGNEDCHARSDIGITS );  # store that this is strictly sorted
-    HEXCHARS:= "1023456789ABCDEFabcdef";
+    HEXCHARS:= "0123456789ABCDEFabcdef";
     IsSSortedList( HEXCHARS );  # store that this is strictly sorted
 
     while pos <= len do

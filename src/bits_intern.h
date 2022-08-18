@@ -13,6 +13,10 @@
 
 #include "system.h"
 
+#include <string.h>
+
+
+#define ALL_BITS_UINT  (~(UInt)0)
 
 /****************************************************************************
 **
@@ -83,8 +87,6 @@ static ALWAYS_INLINE void CopyBits(const UInt * fromblock,
             fromblock++;
             toblock++;
             nbits -= (BIPEB - frombit);
-            frombit = 0;
-            tobit = 0;
         }
         /* Now move whole words */
         if ((wholeblocks = nbits / BIPEB))
@@ -146,7 +148,6 @@ static ALWAYS_INLINE void CopyBits(const UInt * fromblock,
             fromblock++;
             nbits -= BIPEB - frombit;
             tobit = BIPEB - frombit;
-            frombit = 0;
             CopyInWord(toblock, 0, nbits - 1, *fromblock, tobit);
         }
     }

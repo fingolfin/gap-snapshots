@@ -57,15 +57,17 @@
 ##  they may be removed when they don't seem to be used any more.
 ##  <P/>
 ##  Information about obsolete names is printed by <Ref Func="Info"/> using the
-##  InfoObsolete Info class. By default InfoObsolete is set to 1. Newly
+##  <Ref InfoClass="InfoObsolete"/> Info class.
+##  By default <Ref InfoClass="InfoObsolete"/> is set to 1. Newly
 ##  obsoleted identifiers should at first be outputted at info level 2. Once they
 ##  have been removed from all packages, they should then be moved to info level
 ##  1, so they are visible to normal users, for at least one major release before
 ##  being removed.
 ##  <P/>
-##  The functions DeclareObsoleteSynonym and DeclareObsoleteSynonymAttr take
+##  The functions <C>DeclareObsoleteSynonym</C> and
+##  <C>DeclareObsoleteSynonymAttr</C> take
 ##  an optional final paremeter, specifying the info level at which the given
-##  obsolete symbol should be reported. It defaults to 1.
+##  obsolete symbol should be reported. It defaults to 2 and 1, respectively.
 ##  <P/>
 ##  The obsolete &GAP; code is collected in two library files,
 ##  <F>lib/obsolete.gd</F> and <F>lib/obsolete.gi</F>.
@@ -207,7 +209,7 @@ BindGlobal( "Revision", rec() );
 ##  representatives for all transitive permutation groups of degree at
 ##  most 47, with degree 32 needing to be downloaded separately.
 ##
-##  Still used in ctbllib (11/2018)
+##  Not used in any redistributed package (07/2022)
 BindGlobal( "TRANSDEGREES", 30 );
 
 #############################################################################
@@ -215,9 +217,8 @@ BindGlobal( "TRANSDEGREES", 30 );
 #A  NormedVectors( <V> )
 ##
 ##  Moved to obsoletes in May 2003. 
-##  Still used in matgrp (11/2018)
-##  used in documentation or for generating it: ctbllib (11/2018)
 ##
+##  Not used in any redistributed package (07/2022)
 DeclareObsoleteSynonymAttr( "NormedVectors", "NormedRowVectors" );
 
 #############################################################################
@@ -267,7 +268,7 @@ DeclareObsoleteSynonymAttr( "NormedVectors", "NormedRowVectors" );
 ##  for attributes.)
 ## 
 ##  Moved to obsolete in Dec 2007.
-##  Still used in ctbllib, gbnp (11/2018)
+##  Not used in any redistributed package (07/2022)
 DeclareObsoleteSynonym( "FormattedString", "String" );
 
 
@@ -349,7 +350,7 @@ DeclareObsoleteSynonym( "Tuple", "DirectProductElement" );
 
 # synonym retained for backwards compatibility with GAP 4.4.
 # Moved to obsoletes in April 2012.
-# Still used in hap (11/2018)
+##  Not used in any redistributed package (07/2022)
 DeclareObsoleteSynonym( "Complementclasses", "ComplementClassesRepresentatives" );
 
 
@@ -415,7 +416,6 @@ DeclareObsoleteSynonym( "Complementclasses", "ComplementClassesRepresentatives" 
 ##  </ManSection>
 ##
 ##  Not used in any redistributed package (11/2018)
-##  Still used in the GAP library (11/2018)
 DeclareOperation( "TeXObj", [ IS_OBJECT ] );
 
 
@@ -436,7 +436,6 @@ DeclareOperation( "TeXObj", [ IS_OBJECT ] );
 ##  </ManSection>
 ##
 ##  Not used in any redistributed package (11/2018)
-##  Still used in the GAP library (11/2018)
 DeclareOperation( "LaTeXObj", [ IS_OBJECT ] );
 
 
@@ -570,7 +569,7 @@ DeclareOperation( "LaTeXObj", [ IS_OBJECT ] );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-##  Still used in fining, orb, polycyclic, recog (11/2018)
+##  Still used in fining, orb, recog (08/2022)
 DeclareObsoleteSynonym( "MultRowVector", "MultVector" );
 
 #############################################################################
@@ -581,7 +580,7 @@ DeclareObsoleteSynonym( "MultRowVector", "MultVector" );
 ##  former is still used in some packages, for backwards compatibility we
 ##  replace it by the call of `Test' with comparison up to whitespaces.
 ##
-##  Still used in ctbllib, cubefree, gbnp, hapcryst (04/2019)
+##  Not used in any redistributed package (07/2022)
 ##  Safely used in compatibility code: gapdoc (09/2018)
 BindGlobal( "ReadTest", function( fn )
   Print("#I  ReadTest is no longer supported. Please use more robust and flexible\n",
@@ -596,7 +595,7 @@ end);
 ##
 ##  This got a nicer name before is became documented.
 ##
-##  Still used in ctbllib, Browse (04/2019)
+##  Not used in any redistributed package (07/2022)
 ##  Safely used in compatibility code: digraphs, profiling, semigroups (09/2018)
 DeclareObsoleteSynonym( "USER_HOME_EXPAND", "UserHomeExpand" );
 
@@ -606,7 +605,7 @@ DeclareObsoleteSynonym( "USER_HOME_EXPAND", "UserHomeExpand" );
 ##
 ##  This name stems from GAP 3 days.
 ##
-##  Still used in Browse (11/2018)
+##  Not used in any redistributed package (07/2022)
 ##  Safely used in GAP3 compatibility code: ctbllib (11/2018)
 DeclareObsoleteSynonym( "RecFields", "RecNames" );
 
@@ -630,7 +629,7 @@ DeclareObsoleteSynonym( "RecFields", "RecNames" );
 ##
 ##  InfoRead used to be used to print when a file is read using `Read()`
 ##
-##  Still used in gbnp (04/2019)
+##  Not used in any redistributed package (07/2022)
 if GAPInfo.CommandLineOptions.D then InfoRead1 := Print; fi;
 if not IsBound(InfoRead1) then InfoRead1 := Ignore; fi;
 if not IsBound(InfoRead2) then InfoRead2 := Ignore; fi;
@@ -650,7 +649,7 @@ if not IsBound(InfoRead2) then InfoRead2 := Ignore; fi;
 ##  </Description>
 ##  </ManSection>
 ##
-##  Still used in anupq, SCSCP (04/2019)
+##  Still used in SCSCP (07/2022)
 DeclareGlobalFunction("TemporaryGlobalVarName");
 
 
@@ -675,7 +674,7 @@ DeclareGlobalFunction("TemporaryGlobalVarName");
 ##
 ##  This function was never documented.
 ##
-##  Still used in anupq (04/2019)
+##  Still used in anupq (07/2022)
 DeclareGlobalFunction("HideGlobalVariables");
 
 
@@ -695,14 +694,14 @@ DeclareGlobalFunction("HideGlobalVariables");
 ##
 ##  This function was never documented.
 ##
-##  Still used in anupq (04/2019)
+##  Still used in anupq (07/2022)
 DeclareGlobalFunction("UnhideGlobalVariables");
 
 
 #############################################################################
 ##
 ##
-##  Still used in Browse (06/2019)
+##  Not used in any redistributed package (07/2022)
 BindGlobal("STRING_LIST_DIR", function(dirname)
     local list;
 
@@ -713,3 +712,56 @@ BindGlobal("STRING_LIST_DIR", function(dirname)
       return JoinStringsWithSeparator( list, "\000" );
     fi;
 end);
+
+
+#############################################################################
+##
+##
+##  Used in many packages, documented CamelCase versions introduced (04/2020)
+DeclareObsoleteSynonym("GAP_EXIT_CODE", "GapExitCode", 2);
+DeclareObsoleteSynonym("QUIT_GAP", "QuitGap", 2);
+DeclareObsoleteSynonym("FORCE_QUIT_GAP", "ForceQuitGap", 2);
+
+
+#############################################################################
+##
+#F  IsLexicographicallyLess( <list1>, <list2> )
+##
+##  <#GAPDoc Label="IsLexicographicallyLess">
+##  <ManSection>
+##  <Func Name="IsLexicographicallyLess" Arg='list1, list2'/>
+##
+##  <Description>
+##  Let <A>list1</A> and <A>list2</A> be two dense, but not necessarily
+##  homogeneous lists
+##  (see&nbsp;<Ref Filt="IsDenseList"/>, <Ref Filt="IsHomogeneousList"/>),
+##  such that for each <M>i</M>, the entries in both lists at position
+##  <M>i</M> can be compared via <C>&lt;</C>.
+##  <Ref Func="IsLexicographicallyLess"/> returns <K>true</K> if <A>list1</A>
+##  is smaller than <A>list2</A> w.r.t.&nbsp;lexicographical ordering,
+##  and <K>false</K> otherwise.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+##  Not used in any redistributed package (05/2021)
+DeclareObsoleteSynonym( "IsLexicographicallyLess", "<" );
+
+
+#############################################################################
+##
+##  We can't use DeclareObsoleteSynonym for FirstOp, because this would break
+##  code installing methods for it, and the `fr` package does just that.
+##
+##  Still used in fr (06/2021)
+DeclareSynonym( "FirstOp", First );
+
+
+#############################################################################
+##
+#A  RadicalGroup( <G> )
+##
+##  'RadicalGroup' was renamed in GAP 4.12.
+##
+##  Still used in autpgrp, crisp, sophus (07/2022)
+DeclareObsoleteSynonym( "RadicalGroup", "SolvableRadical" );

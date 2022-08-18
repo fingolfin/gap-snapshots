@@ -6,6 +6,9 @@
 ##
 ##  This file contains a few basic tests for the JSON interface.
 ##
+##  In order to run the tests, one starts GAP from the 'tst' subdirectory
+##  of the 'pkg/atlasrep' directory, and calls 'Test( "json.tst" );'.
+##
 
 gap> START_TEST( "json.tst" );
 

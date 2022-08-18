@@ -4,16 +4,34 @@
 gap> START_TEST("kernel/streams.tst");
 
 #
+gap> LastSystemError();
+rec( message := "no error", number := 0 )
+
+#
+gap> str := "";;
+gap> out := OutputTextString(str, false);;
+gap> SetPrintFormattingStatus(out, false);
+gap> CALL_WITH_STREAM(fail, fail, fail);
+Error, CALL_WITH_STREAM: <stream> must be an output stream (not the value 'fai\
+l')
+gap> CALL_WITH_STREAM(out, fail, fail);
+Error, CALL_WITH_STREAM: <args> must be a small list (not the value 'fail')
+gap> CALL_WITH_STREAM(out, Display, [ [[1,2],[3,4]] ]);
+gap> CloseStream(out);
+gap> str;
+"[ [  1,  2 ],\n  [  3,  4 ] ]\n"
+
+#
 gap> CLOSE_LOG_TO();
-Error, LogTo: can not close the logfile
+Error, LogTo: cannot close the logfile
 gap> LOG_TO(fail);
-Error, LogTo: <filename> must be a string (not the value 'fail')
-gap> LOG_TO(TmpNameAllArchs());
+Error, LOG_TO: <filename> must be a string (not the value 'fail')
+gap> LOG_TO(TmpName());
 true
 gap> CLOSE_LOG_TO();
 true
 gap> LOG_TO_STREAM(fail);
-Error, LogTo: <stream> must be an output stream (not the value 'fail')
+Error, LOG_TO_STREAM: <stream> must be an output stream (not the value 'fail')
 gap> str := "";; s:=OutputTextString(str, false);;
 gap> LOG_TO_STREAM(s);
 true
@@ -22,15 +40,16 @@ true
 
 #
 gap> CLOSE_INPUT_LOG_TO();
-Error, InputLogTo: can not close the logfile
+Error, InputLogTo: cannot close the logfile
 gap> INPUT_LOG_TO(fail);
-Error, InputLogTo: <filename> must be a string (not the value 'fail')
-gap> INPUT_LOG_TO(TmpNameAllArchs());
+Error, INPUT_LOG_TO: <filename> must be a string (not the value 'fail')
+gap> INPUT_LOG_TO(TmpName());
 true
 gap> CLOSE_INPUT_LOG_TO();
 true
 gap> INPUT_LOG_TO_STREAM(fail);
-Error, InputLogTo: <stream> must be an output stream (not the value 'fail')
+Error, INPUT_LOG_TO_STREAM: <stream> must be an output stream (not the value '\
+fail')
 gap> str := "";; s:=OutputTextString(str, false);;
 gap> INPUT_LOG_TO_STREAM(s);
 true
@@ -39,15 +58,16 @@ true
 
 #
 gap> CLOSE_OUTPUT_LOG_TO();
-Error, OutputLogTo: can not close the logfile
+Error, OutputLogTo: cannot close the logfile
 gap> OUTPUT_LOG_TO(fail);
-Error, OutputLogTo: <filename> must be a string (not the value 'fail')
-gap> OUTPUT_LOG_TO(TmpNameAllArchs());
+Error, OUTPUT_LOG_TO: <filename> must be a string (not the value 'fail')
+gap> OUTPUT_LOG_TO(TmpName());
 true
 gap> CLOSE_OUTPUT_LOG_TO();
 true
 gap> OUTPUT_LOG_TO_STREAM(fail);
-Error, OutputLogTo: <stream> must be an output stream (not the value 'fail')
+Error, OUTPUT_LOG_TO_STREAM: <stream> must be an output stream (not the value \
+'fail')
 gap> str := "";; s:=OutputTextString(str, false);;
 gap> OUTPUT_LOG_TO_STREAM(s);
 true
@@ -55,32 +75,101 @@ gap> CLOSE_OUTPUT_LOG_TO();
 true
 
 #
+# READ_COMMAND_REAL
+#
 gap> READ_COMMAND_REAL(true, fail);
 Error, READ_COMMAND_REAL: <stream> must be an input stream (not the value 'tru\
 e')
+
+#
+gap> stream:=InputTextString("1+1;");
+InputTextString(0,4)
+gap> READ_COMMAND_REAL(stream, false); stream;
+[ true, 2 ]
+InputTextString(4,4)
+gap> READ_COMMAND_REAL(stream, false); stream;
+[ false ]
+InputTextString(4,4)
+
+#
+gap> stream := InputTextString("1+1;2+2;");
+InputTextString(0,8)
+gap> READ_COMMAND_REAL(stream, false); stream;
+[ true, 2 ]
+InputTextString(4,8)
+gap> READ_COMMAND_REAL(stream, false); stream;
+[ true, 4 ]
+InputTextString(8,8)
+gap> READ_COMMAND_REAL(stream, false); stream;
+[ false ]
+InputTextString(8,8)
+
+#
+gap> READ_COMMAND_REAL(InputTextString("/1;"), false); # intentional syntax error
+Syntax error: expression expected in stream:1
+/1;
+^
+[ true ]
+gap> READ_COMMAND_REAL(InputTextString("quit;"), false);
+[ true ]
+gap> READ_COMMAND_REAL(InputTextString("QUIT;"), false);
+[ false ]
+
+#
 gap> READ(fail);
-Error, READ: <filename> must be a string (not the value 'fail')
+Error, READ: <input> must be a string or an input stream (not the value 'fail'\
+)
+gap> READ("/this/path/does/not/exist!");
+false
+gap> READ(InputTextString(""));
+true
+gap> stream := InputTextString("function() end;");
+InputTextString(0,15)
+gap> READ(stream);
+true
+gap> LastReadValue;
+function(  ) ... end
+gap> NameFunction(LastReadValue);
+"unknown"
+gap> stream := InputTextString("function() end;");
+InputTextString(0,15)
+gap> READ(stream);
+true
+gap> func := LastReadValue;;
+gap> NameFunction(func);
+"func"
+
+#
 gap> READ_NORECOVERY(fail);
-fail
-gap> READ_STREAM(fail);
-Error, READ_STREAM: <stream> must be an input stream (not the value 'fail')
-gap> READ_STREAM_LOOP_WITH_CONTEXT(fail, fail, fail);
+Error, READ_NORECOVERY: <input> must be a string or an input stream (not the v\
+alue 'fail')
+gap> READ_NORECOVERY("/this/path/does/not/exist!");
+false
+gap> READ_NORECOVERY(InputTextString(""));
+true
+
+#
+gap> READ_STREAM_LOOP(fail, fail, fail);
 Error, READ_STREAM_LOOP: <instream> must be an input stream (not the value 'fa\
 il')
-gap> READ_STREAM_LOOP_WITH_CONTEXT(InputTextString(""), fail, fail);
+gap> READ_STREAM_LOOP(InputTextString(""), fail, fail);
 Error, READ_STREAM_LOOP: <outstream> must be an output stream (not the value '\
 fail')
+
+#
 gap> READ_AS_FUNC(fail);
-Error, READ_AS_FUNC: <filename> must be a string (not the value 'fail')
-gap> READ_AS_FUNC_STREAM(false);
-Error, READ_AS_FUNC_STREAM: <stream> must be an input stream (not the value 'f\
-alse')
-gap> READ_STREAM(fail);
-Error, READ_STREAM: <stream> must be an input stream (not the value 'fail')
-gap> READ_STREAM(fail);
-Error, READ_STREAM: <stream> must be an input stream (not the value 'fail')
+Error, READ_AS_FUNC: <input> must be a string or an input stream (not the valu\
+e 'fail')
+gap> READ_AS_FUNC("/this/path/does/not/exist!");
+false
+gap> func := READ_AS_FUNC(InputTextString(""));
+function(  ) ... end
+gap> NameFunction(func);
+"func"
+
+#
 gap> READ_GAP_ROOT(fail);
-Error, READ: <filename> must be a string (not the value 'fail')
+Error, READ_GAP_ROOT: <filename> must be a string (not the value 'fail')
 
 #
 gap> RemoveFile(fail);
@@ -91,10 +180,6 @@ gap> RemoveDir(fail);
 Error, RemoveDir: <filename> must be a string (not the value 'fail')
 gap> IsDir(fail);
 Error, IsDir: <filename> must be a string (not the value 'fail')
-
-#
-gap> LastSystemError();; LastSystemError();
-rec( message := "no error", number := 0 )
 
 #
 gap> IsExistingFile(fail);
@@ -124,11 +209,14 @@ gap> IS_END_OF_FILE(0);
 false
 gap> IS_END_OF_FILE(254);
 fail
-gap> OUTPUT_TEXT_FILE(fail, fail);
+gap> OUTPUT_TEXT_FILE(fail, fail, fail);
 Error, OUTPUT_TEXT_FILE: <filename> must be a string (not the value 'fail')
-gap> OUTPUT_TEXT_FILE("test", fail);
+gap> OUTPUT_TEXT_FILE("test", fail, fail);
 Error, OUTPUT_TEXT_FILE: <append> must be 'true' or 'false' (not the value 'fa\
 il')
+gap> OUTPUT_TEXT_FILE("test", true, fail);
+Error, OUTPUT_TEXT_FILE: <comp> must be 'true' or 'false' (not the value 'fail\
+')
 
 #
 gap> POSITION_FILE(fail);

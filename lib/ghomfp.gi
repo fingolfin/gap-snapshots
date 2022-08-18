@@ -245,6 +245,11 @@ InstallMethod( ImagesRepresentative, "map from (sub)fp group, rewrite",
     IsMultiplicativeElementWithInverse ], 0,
 function( hom, word )
 local aug,si,r,i,j,tt,ct,cft,c,f,g,ind,e,eval;
+  # catch trivial group
+  if HasMappingGeneratorsImages(hom) 
+    and Length(MappingGeneratorsImages(hom)[1])=0 then
+    return One(Range(hom));
+  fi;
   # get a coset table
   aug:=CosetTableFpHom(hom);
   r:=One(Range(hom));
@@ -485,6 +490,7 @@ local q,r,tg,dtg,pemb,ugens,g,gi,d,o,gens,genims,i,gr,img,l,mapi;
     gi:=ImagesRepresentative(beta,g);
     l:=[];
     for i in [1..d] do
+      Info(InfoFpGroup,3,"KuK coset ",i," @",g);
       l[i]:=ImagesRepresentative(pemb,
                        ImagesRepresentative(alpha,r[i]*g/r[i^gi]));
     od;
@@ -729,7 +735,7 @@ local mapi;
   # check, whether we map to the standard generators
   if not (HasIsWholeFamily(Range(hom)) and IsWholeFamily(Range(hom)) and
           Set(FreeGeneratorsOfFpGroup(Range(hom)))
-            =Set(List(GeneratorsOfGroup(Range(hom)),UnderlyingElement)) and
+            =Set(GeneratorsOfGroup(Range(hom)),UnderlyingElement) and
           IsIdenticalObj(mapi[2],GeneratorsOfGroup(Range(hom))) and
           ForAll(List(mapi[2],i->LetterRepAssocWord(UnderlyingElement(i))),
           i->Length(i)=1 and i[1]>0) ) then
@@ -828,7 +834,7 @@ local aug,w,p,pres,f,fam,opt;
 
   # write the homomorphism in terms of the image's free generators
   # (so preimages are cheap)
-  # this object cannot test whether is is a proper mapping, so skip
+  # this object cannot test whether it is a proper mapping, so skip
   # safety assertions that could be triggered by the construction process
   f:=GroupHomomorphismByImagesNC(u,f,w,GeneratorsOfGroup(f):noassert);
   # but give it `aug' as coset table, so we will use rewriting for images
@@ -871,7 +877,10 @@ local aug,w,p,pres,f,fam,G,trace;
 
     pres:=NEWTC_PresentationMTC(aug,0,nam);
   fi;
-  Assert(0,Length(GeneratorsOfPresentation(pres))=Length(gens));
+  # check that we have the exact generators as we want and no rearrangement
+  # or so happened.
+  Assert(0,Length(GeneratorsOfPresentation(pres))=Length(gens) 
+    and pres!.primarywords=[1..Length(gens)]);
 
   # new free group
   f:=FpGroupPresentation(pres);
@@ -942,6 +951,7 @@ local H, pres,map,mapi,opt;
 
   # reconvert the Tietze presentation to a group presentation.
   H := FpGroupPresentation( pres );
+  UseIsomorphismRelation( G, H );
 
   if Length(GeneratorsOfGroup(H))>0 then
     map:=List(TzImagesOldGens(pres),
@@ -1222,7 +1232,11 @@ local aug,r,sec,t,expwrd,rels,ab,s,m,img,gen,i,j,t1,t2,tn;
     Add(img,m);
   od;
   aug.primaryImages:=img;
-  sec:=List(sec,x->LinearCombinationPcgs(img,x));
+  if ForAll(img,IsOne) then
+    sec:=List(sec,x->img[1]);
+  else
+    sec:=List(sec,x->LinearCombinationPcgs(img,x));
+  fi;
   aug.secondaryImages:=sec;
 
   m:=List(aug.primaryGeneratorWords,x->ElementOfFpGroup(FamilyObj(One(u)),x));

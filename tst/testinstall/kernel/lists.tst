@@ -34,14 +34,6 @@ gap> UNB_LIST([1],1);
 gap> UNB_LIST([1],2);
 
 #
-gap> ELM0_LIST([1],1);
-1
-gap> ELM0_LIST([1],2);
-fail
-gap> ELM0_LIST(1,2);
-Error, List Element: <list> must be a list (not the integer 1)
-
-#
 gap> ELM_LIST([1],1);
 1
 gap> ELM_LIST([1],2);
@@ -127,10 +119,12 @@ fail
 
 # PlainListError
 gap> r:=NewCategory("ListTestObject",IsSmallList);;
-gap> InstallMethod(Length,[r],l->5);
 gap> t:=NewType(ListsFamily, r and IsMutable and IsPositionalObjectRep);;
+gap> InstallMethod(IsBound\[\],[r,IsPosInt],{l,i}->true);
+gap> InstallMethod(\[\],[r,IsPosInt],{l,i}->i);
+gap> InstallMethod(Length,[r],l->3); # hard code length
 gap> l:=Objectify(t,[]);;
-gap> OnTuples(l, (1,3));
+gap> ADD_SET(l, [1]);
 Error, Panic: cannot convert <list> (is a positional object) to a plain list
 
 #

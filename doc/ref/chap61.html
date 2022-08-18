@@ -128,6 +128,13 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap61.html#X7E6077F0830A28DA">61.12-2 NiceBasisFiltersInfo</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap61.html#X7A374553786DF5E7">61.12-3 CheckForHandlingByNiceBasis</a></span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap61.html#X78515F448644204E">61.13 <span class="Heading">Tensor Products and Exterior and Symmetric Powers</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap61.html#X81B2276A7EBA8ED1">61.13-1 TensorProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap61.html#X787BB7FF85F0AD68">61.13-2 ExteriorPower</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap61.html#X79E2C2AF842E8419">61.13-3 SymmetricPower</a></span>
+</div></div>
 </div>
 
 <h3>61 <span class="Heading">Vector Spaces</span></h3>
@@ -183,7 +190,7 @@
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:= VectorSpace( Rationals, [ [ 1, 2, 3 ], [ 1, 1, 1 ] ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:= Subspace( V, [ [ 0, 1, 2 ] ] );</span>
-&lt;vector space over Rationals, with 1 generators&gt;
+&lt;vector space over Rationals, with 1 generator&gt;
 </pre></div>
 
 <p><a id="X7B001BAF7D5FD5D0" name="X7B001BAF7D5FD5D0"></a></p>
@@ -223,7 +230,7 @@ fail
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:= VectorSpace( Rationals, [ [ 1, 2, 3 ], [ 1, 1, 1 ] ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">W:= VectorSpace( Rationals, [ [ 1/2, 1/2, 1/2 ] ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U:= AsSubspace( V, W );</span>
-&lt;vector space over Rationals, with 1 generators&gt;
+&lt;vector space over Rationals, with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Parent( U ) = V;</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsSubspace( V, [ [ 1, 1, 1 ] ] );</span>
@@ -448,7 +455,7 @@ CanonicalBasis( &lt;vector space over Rationals, with 3 generators&gt; )
 <h5>61.6-2 UnderlyingLeftModule</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingLeftModule</code>( <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>For a basis <var class="Arg">B</var> of a free left module <span class="SimpleMath">V</span>, say, <code class="func">UnderlyingLeftModule</code> returns <span class="SimpleMath">V</span>.</p>
+<p>For a basis <var class="Arg">B</var> of a free left module <span class="SimpleMath">V</span>, <code class="func">UnderlyingLeftModule</code> returns <span class="SimpleMath">V</span>.</p>
 
 <p>The reason why a basis stores a free left module is that otherwise one would have to store the basis vectors and the coefficient domain separately. Storing the module allows one for example to deal with bases whose basis vectors have not yet been computed yet (see <code class="func">Basis</code> (<a href="chap61.html#X837BE54C80DE368E"><span class="RefLink">61.5-2</span></a>)); furthermore, in some cases it is convenient to test membership of a vector in the module before computing coefficients w.r.t. a basis.</p>
 
@@ -480,7 +487,7 @@ fail
 <h5>61.6-4 LinearCombination</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LinearCombination</code>( <var class="Arg">B</var>, <var class="Arg">coeff</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>If <var class="Arg">B</var> is a basis object (see <code class="func">IsBasis</code> (<a href="chap61.html#X8739510881F5D862"><span class="RefLink">61.5-1</span></a>)) or a homogeneous list of length <span class="SimpleMath">n</span>, say, and <var class="Arg">coeff</var> is a row vector of the same length, <code class="func">LinearCombination</code> returns the vector <span class="SimpleMath">∑_{i = 1}^n <var class="Arg">coeff</var>[i] * <var class="Arg">B</var>[i]</span>.</p>
+<p>If <var class="Arg">B</var> is a basis object (see <code class="func">IsBasis</code> (<a href="chap61.html#X8739510881F5D862"><span class="RefLink">61.5-1</span></a>)) or a homogeneous list of length <span class="SimpleMath">n</span>, and <var class="Arg">coeff</var> is a row vector of the same length, <code class="func">LinearCombination</code> returns the vector <span class="SimpleMath">∑_{i = 1}^n <var class="Arg">coeff</var>[i] * <var class="Arg">B</var>[i]</span>.</p>
 
 <p>Perhaps the most important usage is the case where <var class="Arg">B</var> forms a basis.</p>
 
@@ -497,7 +504,7 @@ fail
 <h5>61.6-5 EnumeratorByBasis</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EnumeratorByBasis</code>( <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>For a basis <var class="Arg">B</var> of the free left <span class="SimpleMath">F</span>-module <span class="SimpleMath">V</span> of dimension <span class="SimpleMath">n</span>, say, <code class="code">EnumeratorByBasis</code> returns an enumerator that loops over the elements of <span class="SimpleMath">V</span> as linear combinations of the vectors of <var class="Arg">B</var> with coefficients the row vectors in the full row space (see <code class="func">FullRowSpace</code> (<a href="chap61.html#X80209A8785126AAB"><span class="RefLink">61.9-4</span></a>)) of dimension <span class="SimpleMath">n</span> over <span class="SimpleMath">F</span>, in the succession given by the default enumerator of this row space.</p>
+<p>For a basis <var class="Arg">B</var> of the free left <span class="SimpleMath">F</span>-module <span class="SimpleMath">V</span> of dimension <span class="SimpleMath">n</span>, <code class="code">EnumeratorByBasis</code> returns an enumerator that loops over the elements of <span class="SimpleMath">V</span> as linear combinations of the vectors of <var class="Arg">B</var> with coefficients the row vectors in the full row space (see <code class="func">FullRowSpace</code> (<a href="chap61.html#X80209A8785126AAB"><span class="RefLink">61.9-4</span></a>)) of dimension <span class="SimpleMath">n</span> over <span class="SimpleMath">F</span>, in the succession given by the default enumerator of this row space.</p>
 
 
 <div class="example"><pre>
@@ -518,7 +525,7 @@ fail
 <h5>61.6-6 IteratorByBasis</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorByBasis</code>( <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>For a basis <var class="Arg">B</var> of the free left <span class="SimpleMath">F</span>-module <span class="SimpleMath">V</span> of dimension <span class="SimpleMath">n</span>, say, <code class="code">IteratorByBasis</code> returns an iterator that loops over the elements of <span class="SimpleMath">V</span> as linear combinations of the vectors of <var class="Arg">B</var> with coefficients the row vectors in the full row space (see <code class="func">FullRowSpace</code> (<a href="chap61.html#X80209A8785126AAB"><span class="RefLink">61.9-4</span></a>)) of dimension <span class="SimpleMath">n</span> over <span class="SimpleMath">F</span>, in the succession given by the default enumerator of this row space.</p>
+<p>For a basis <var class="Arg">B</var> of the free left <span class="SimpleMath">F</span>-module <span class="SimpleMath">V</span> of dimension <span class="SimpleMath">n</span>, <code class="code">IteratorByBasis</code> returns an iterator that loops over the elements of <span class="SimpleMath">V</span> as linear combinations of the vectors of <var class="Arg">B</var> with coefficients the row vectors in the full row space (see <code class="func">FullRowSpace</code> (<a href="chap61.html#X80209A8785126AAB"><span class="RefLink">61.9-4</span></a>)) of dimension <span class="SimpleMath">n</span> over <span class="SimpleMath">F</span>, in the succession given by the default enumerator of this row space.</p>
 
 
 <div class="example"><pre>
@@ -554,14 +561,14 @@ fail
 <h5>61.7-2 IsIntegralBasis</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIntegralBasis</code>( <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Let <var class="Arg">B</var> be an <span class="SimpleMath">S</span>-basis of a <em>field</em> <span class="SimpleMath">F</span>, say, for a subfield <span class="SimpleMath">S</span> of <span class="SimpleMath">F</span>, and let <span class="SimpleMath">R</span> and <span class="SimpleMath">M</span> be the rings of algebraic integers in <span class="SimpleMath">S</span> and <span class="SimpleMath">F</span>, respectively. <code class="code">IsIntegralBasis</code> returns <code class="keyw">true</code> if <var class="Arg">B</var> is also an <span class="SimpleMath">R</span>-basis of <span class="SimpleMath">M</span>, and <code class="keyw">false</code> otherwise.</p>
+<p>Let <var class="Arg">B</var> be an <span class="SimpleMath">S</span>-basis of a <em>field</em> <span class="SimpleMath">F</span> for a subfield <span class="SimpleMath">S</span> of <span class="SimpleMath">F</span>, and let <span class="SimpleMath">R</span> and <span class="SimpleMath">M</span> be the rings of algebraic integers in <span class="SimpleMath">S</span> and <span class="SimpleMath">F</span>, respectively. <code class="code">IsIntegralBasis</code> returns <code class="keyw">true</code> if <var class="Arg">B</var> is also an <span class="SimpleMath">R</span>-basis of <span class="SimpleMath">M</span>, and <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X7FC051C579D61223" name="X7FC051C579D61223"></a></p>
 
 <h5>61.7-3 IsNormalBasis</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNormalBasis</code>( <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Let <var class="Arg">B</var> be an <span class="SimpleMath">S</span>-basis of a <em>field</em> <span class="SimpleMath">F</span>, say, for a subfield <span class="SimpleMath">S</span> of <span class="SimpleMath">F</span>. <code class="code">IsNormalBasis</code> returns <code class="keyw">true</code> if <var class="Arg">B</var> is invariant under the Galois group (see <code class="func">GaloisGroup</code> (<a href="chap58.html#X80CAA5BA82F09ED2"><span class="RefLink">58.3-1</span></a>)) of the field extension <span class="SimpleMath">F / S</span>, and <code class="keyw">false</code> otherwise.</p>
+<p>Let <var class="Arg">B</var> be an <span class="SimpleMath">S</span>-basis of a <em>field</em> <span class="SimpleMath">F</span> for a subfield <span class="SimpleMath">S</span> of <span class="SimpleMath">F</span>. <code class="code">IsNormalBasis</code> returns <code class="keyw">true</code> if <var class="Arg">B</var> is invariant under the Galois group (see <code class="func">GaloisGroup</code> (<a href="chap58.html#X80CAA5BA82F09ED2"><span class="RefLink">58.3-1</span></a>)) of the field extension <span class="SimpleMath">F / S</span>, and <code class="keyw">false</code> otherwise.</p>
 
 
 <div class="example"><pre>
@@ -639,7 +646,7 @@ false
 <h5>61.8-4 ImmutableBasis</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImmutableBasis</code>( <var class="Arg">MB</var>[, <var class="Arg">V</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p><code class="func">ImmutableBasis</code> returns the immutable basis <span class="SimpleMath">B</span>, say, with the same basis vectors as in the mutable basis <var class="Arg">MB</var>.</p>
+<p><code class="func">ImmutableBasis</code> returns the immutable basis <span class="SimpleMath">B</span> with the same basis vectors as in the mutable basis <var class="Arg">MB</var>.</p>
 
 <p>If the second argument <var class="Arg">V</var> is present then <var class="Arg">V</var> is the value of <code class="func">UnderlyingLeftModule</code> (<a href="chap61.html#X81E8AE88843B70FF"><span class="RefLink">61.6-2</span></a>) for <span class="SimpleMath">B</span>. The second variant is used mainly for the case that one knows the module for the desired basis in advance, and if it has a nicer structure than the module known to <var class="Arg">MB</var>, for example if it is an algebra.</p>
 
@@ -658,14 +665,14 @@ SemiEchelonBasis( &lt;vector space of dimension 1 over Rationals&gt;,
 <h5>61.8-5 IsContainedInSpan</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsContainedInSpan</code>( <var class="Arg">MB</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>For a mutable basis <var class="Arg">MB</var> over the coefficient ring <span class="SimpleMath">R</span>, say, and a vector <var class="Arg">v</var>, <code class="code">IsContainedInSpan</code> returns <code class="keyw">true</code> is <var class="Arg">v</var> lies in the <span class="SimpleMath">R</span>-span of the current basis vectors of <var class="Arg">MB</var>, and <code class="keyw">false</code> otherwise.</p>
+<p>For a mutable basis <var class="Arg">MB</var> over the coefficient ring <span class="SimpleMath">R</span> and a vector <var class="Arg">v</var>, <code class="code">IsContainedInSpan</code> returns <code class="keyw">true</code> is <var class="Arg">v</var> lies in the <span class="SimpleMath">R</span>-span of the current basis vectors of <var class="Arg">MB</var>, and <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X7B52C99B84316F61" name="X7B52C99B84316F61"></a></p>
 
 <h5>61.8-6 CloseMutableBasis</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CloseMutableBasis</code>( <var class="Arg">MB</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>For a mutable basis <var class="Arg">MB</var> over the coefficient ring <span class="SimpleMath">R</span>, say, and a vector <var class="Arg">v</var>, <code class="func">CloseMutableBasis</code> changes <var class="Arg">MB</var> such that afterwards it describes the <span class="SimpleMath">R</span>-span of the former basis vectors together with <var class="Arg">v</var>.</p>
+<p>For a mutable basis <var class="Arg">MB</var> over the coefficient ring <span class="SimpleMath">R</span> and a vector <var class="Arg">v</var>, <code class="func">CloseMutableBasis</code> changes <var class="Arg">MB</var> such that afterwards it describes the <span class="SimpleMath">R</span>-span of the former basis vectors together with <var class="Arg">v</var>.</p>
 
 <p><em>Note</em> that if <var class="Arg">v</var> enlarges the dimension then this does in general <em>not</em> mean that <var class="Arg">v</var> is simply added to the basis vectors of <var class="Arg">MB</var>. Usually a linear combination of <var class="Arg">v</var> and the other basis vectors is added, and also the old basis vectors may be modified, for example in order to keep the list of basis vectors echelonized (see <code class="func">IsSemiEchelonized</code> (<a href="chap61.html#X865A540F85FAE2DF"><span class="RefLink">61.9-7</span></a>)).</p>
 
@@ -710,7 +717,7 @@ false
 <h5>61.9-3 IsGaussianSpace</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGaussianSpace</code>( <var class="Arg">V</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<p>The filter <code class="func">IsGaussianSpace</code> (see <a href="chap13.html#X84EFA4C07D4277BB"><span class="RefLink">13.2</span></a>) for the row space (see <code class="func">IsRowSpace</code> (<a href="chap61.html#X79B305CE87511C4B"><span class="RefLink">61.9-1</span></a>)) or matrix space (see <code class="func">IsMatrixSpace</code> (<a href="chap61.html#X7A2BBBA07B2BE8F8"><span class="RefLink">61.9-2</span></a>)) <var class="Arg">V</var> over the field <span class="SimpleMath">F</span>, say, indicates that the entries of all row vectors or matrices in <var class="Arg">V</var>, respectively, are all contained in <span class="SimpleMath">F</span>. In this case, <var class="Arg">V</var> is called a <em>Gaussian</em> vector space. Bases for Gaussian spaces can be computed using Gaussian elimination for a given list of vector space generators.</p>
+<p>The filter <code class="func">IsGaussianSpace</code> (see <a href="chap13.html#X84EFA4C07D4277BB"><span class="RefLink">13.2</span></a>) for the row space (see <code class="func">IsRowSpace</code> (<a href="chap61.html#X79B305CE87511C4B"><span class="RefLink">61.9-1</span></a>)) or matrix space (see <code class="func">IsMatrixSpace</code> (<a href="chap61.html#X7A2BBBA07B2BE8F8"><span class="RefLink">61.9-2</span></a>)) <var class="Arg">V</var> over a field <span class="SimpleMath">F</span> indicates that the entries of all row vectors or matrices in <var class="Arg">V</var>, respectively, are all contained in <span class="SimpleMath">F</span>. In this case, <var class="Arg">V</var> is called a <em>Gaussian</em> vector space. Bases for Gaussian spaces can be computed using Gaussian elimination for a given list of vector space generators.</p>
 
 
 <div class="example"><pre>
@@ -785,7 +792,7 @@ true
 <h5>61.9-7 IsSemiEchelonized</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemiEchelonized</code>( <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Let <var class="Arg">B</var> be a basis of a Gaussian row or matrix space <span class="SimpleMath">V</span>, say (see <code class="func">IsGaussianSpace</code> (<a href="chap61.html#X83724C157F4FDFB4"><span class="RefLink">61.9-3</span></a>)) over the field <span class="SimpleMath">F</span>.</p>
+<p>Let <var class="Arg">B</var> be a basis of a Gaussian row or matrix space <span class="SimpleMath">V</span> (see <code class="func">IsGaussianSpace</code> (<a href="chap61.html#X83724C157F4FDFB4"><span class="RefLink">61.9-3</span></a>)) over the field <span class="SimpleMath">F</span>.</p>
 
 <p>If <span class="SimpleMath">V</span> is a row space then <var class="Arg">B</var> is semi-echelonized if the matrix formed by its basis vectors has the property that the first nonzero element in each row is the identity of <span class="SimpleMath">F</span>, and all values exactly below these pivot elements are the zero of <span class="SimpleMath">F</span> (cf. <code class="func">SemiEchelonMat</code> (<a href="chap24.html#X7D5D6BD07B7E981B"><span class="RefLink">24.10-1</span></a>)).</p>
 
@@ -901,7 +908,7 @@ Group([ (3,4), (1,2,4) ])
 <h5>61.10-1 LeftModuleGeneralMappingByImages</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftModuleGeneralMappingByImages</code>( <var class="Arg">V</var>, <var class="Arg">W</var>, <var class="Arg">gens</var>, <var class="Arg">imgs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Let <var class="Arg">V</var> and <var class="Arg">W</var> be two left modules over the same left acting domain <span class="SimpleMath">R</span>, say, and <var class="Arg">gens</var> and <var class="Arg">imgs</var> lists (of the same length) of elements in <var class="Arg">V</var> and <var class="Arg">W</var>, respectively. <code class="func">LeftModuleGeneralMappingByImages</code> returns the general mapping with source <var class="Arg">V</var> and range <var class="Arg">W</var> that is defined by mapping the elements in <var class="Arg">gens</var> to the corresponding elements in <var class="Arg">imgs</var>, and taking the <span class="SimpleMath">R</span>-linear closure.</p>
+<p>Let <var class="Arg">V</var> and <var class="Arg">W</var> be two left modules over the same left acting domain <span class="SimpleMath">R</span> and <var class="Arg">gens</var> and <var class="Arg">imgs</var> lists (of the same length) of elements in <var class="Arg">V</var> and <var class="Arg">W</var>, respectively. <code class="func">LeftModuleGeneralMappingByImages</code> returns the general mapping with source <var class="Arg">V</var> and range <var class="Arg">W</var> that is defined by mapping the elements in <var class="Arg">gens</var> to the corresponding elements in <var class="Arg">imgs</var>, and taking the <span class="SimpleMath">R</span>-linear closure.</p>
 
 <p><var class="Arg">gens</var> need not generate <var class="Arg">V</var> as a left <span class="SimpleMath">R</span>-module, and if the specification does not define a linear mapping then the result will be multi-valued; hence in general it is not a mapping (see <code class="func">IsMapping</code> (<a href="chap32.html#X7CC95EB282854385"><span class="RefLink">32.3-3</span></a>)).</p>
 
@@ -922,7 +929,7 @@ false
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftModuleHomomorphismByImages</code>( <var class="Arg">V</var>, <var class="Arg">W</var>, <var class="Arg">gens</var>, <var class="Arg">imgs</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftModuleHomomorphismByImagesNC</code>( <var class="Arg">V</var>, <var class="Arg">W</var>, <var class="Arg">gens</var>, <var class="Arg">imgs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Let <var class="Arg">V</var> and <var class="Arg">W</var> be two left modules over the same left acting domain <span class="SimpleMath">R</span>, say, and <var class="Arg">gens</var> and <var class="Arg">imgs</var> lists (of the same length) of elements in <var class="Arg">V</var> and <var class="Arg">W</var>, respectively. <code class="func">LeftModuleHomomorphismByImages</code> returns the left <span class="SimpleMath">R</span>-module homomorphism with source <var class="Arg">V</var> and range <var class="Arg">W</var> that is defined by mapping the elements in <var class="Arg">gens</var> to the corresponding elements in <var class="Arg">imgs</var>.</p>
+<p>Let <var class="Arg">V</var> and <var class="Arg">W</var> be two left modules over the same left acting domain <span class="SimpleMath">R</span> and <var class="Arg">gens</var> and <var class="Arg">imgs</var> lists (of the same length) of elements in <var class="Arg">V</var> and <var class="Arg">W</var>, respectively. <code class="func">LeftModuleHomomorphismByImages</code> returns the left <span class="SimpleMath">R</span>-module homomorphism with source <var class="Arg">V</var> and range <var class="Arg">W</var> that is defined by mapping the elements in <var class="Arg">gens</var> to the corresponding elements in <var class="Arg">imgs</var>.</p>
 
 <p>If <var class="Arg">gens</var> does not generate <var class="Arg">V</var> or if the homomorphism does not exist (i.e., if mapping the generators describes only a multi-valued mapping) then <code class="keyw">fail</code> is returned. For creating a possibly multi-valued mapping from <var class="Arg">V</var> to <var class="Arg">W</var> that respects addition, multiplication, and scalar multiplication, <code class="func">LeftModuleGeneralMappingByImages</code> (<a href="chap61.html#X82013D328645E370"><span class="RefLink">61.10-1</span></a>) can be used.</p>
 
@@ -1050,7 +1057,7 @@ true
 
 <p>In many other situations, one knows at least an isomorphism from the given module <span class="SimpleMath">V</span> to a "nicer" free left module <span class="SimpleMath">W</span>, in the sense that for each vector in <span class="SimpleMath">V</span>, the image in <span class="SimpleMath">W</span> can easily be computed, and analogously for each vector in <span class="SimpleMath">W</span>, one can compute the preimage in <span class="SimpleMath">V</span>.</p>
 
-<p>This allows one to delegate computations w.r.t. a basis <span class="SimpleMath">B</span>, say, of <span class="SimpleMath">V</span> to the corresponding basis <span class="SimpleMath">C</span>, say, of <span class="SimpleMath">W</span>. We call <span class="SimpleMath">W</span> the <em>nice free left module</em> of <span class="SimpleMath">V</span>, and <span class="SimpleMath">C</span> the <em>nice basis</em> of <span class="SimpleMath">B</span>. (Note that it may happen that also <span class="SimpleMath">C</span> delegates questions to a "nicer" basis.) The basis <span class="SimpleMath">B</span> indicates the intended behaviour by the filter <code class="func">IsBasisByNiceBasis</code> (<a href="chap61.html#X82BC30A487967F5B"><span class="RefLink">61.11-5</span></a>), and stores <span class="SimpleMath">C</span> as value of the attribute <code class="func">NiceBasis</code> (<a href="chap61.html#X8388E0248690C214"><span class="RefLink">61.11-4</span></a>). <span class="SimpleMath">V</span> indicates the intended behaviour by the filter <code class="func">IsHandledByNiceBasis</code> (<a href="chap61.html#X79D1DEA679AEDA40"><span class="RefLink">61.11-6</span></a>), and stores <span class="SimpleMath">W</span> as value of the attribute <code class="func">NiceFreeLeftModule</code> (<a href="chap61.html#X826FD4BC7BA0559D"><span class="RefLink">61.11-1</span></a>).</p>
+<p>This allows one to delegate computations w.r.t. a basis <span class="SimpleMath">B</span> of <span class="SimpleMath">V</span> to the corresponding basis <span class="SimpleMath">C</span> of <span class="SimpleMath">W</span>. We call <span class="SimpleMath">W</span> the <em>nice free left module</em> of <span class="SimpleMath">V</span>, and <span class="SimpleMath">C</span> the <em>nice basis</em> of <span class="SimpleMath">B</span>. (Note that it may happen that also <span class="SimpleMath">C</span> delegates questions to a "nicer" basis.) The basis <span class="SimpleMath">B</span> indicates the intended behaviour by the filter <code class="func">IsBasisByNiceBasis</code> (<a href="chap61.html#X82BC30A487967F5B"><span class="RefLink">61.11-5</span></a>), and stores <span class="SimpleMath">C</span> as value of the attribute <code class="func">NiceBasis</code> (<a href="chap61.html#X8388E0248690C214"><span class="RefLink">61.11-4</span></a>). <span class="SimpleMath">V</span> indicates the intended behaviour by the filter <code class="func">IsHandledByNiceBasis</code> (<a href="chap61.html#X79D1DEA679AEDA40"><span class="RefLink">61.11-6</span></a>), and stores <span class="SimpleMath">W</span> as value of the attribute <code class="func">NiceFreeLeftModule</code> (<a href="chap61.html#X826FD4BC7BA0559D"><span class="RefLink">61.11-1</span></a>).</p>
 
 <p>The bijection between <span class="SimpleMath">V</span> and <span class="SimpleMath">W</span> is implemented by the functions <code class="func">NiceVector</code> (<a href="chap61.html#X807B8032780C59A4"><span class="RefLink">61.11-2</span></a>) and <code class="func">UglyVector</code> (<a href="chap61.html#X807B8032780C59A4"><span class="RefLink">61.11-2</span></a>); additional data needed to compute images and preimages can be stored as value of <code class="func">NiceFreeLeftModuleInfo</code> (<a href="chap61.html#X79350786800C2DD8"><span class="RefLink">61.11-3</span></a>).</p>
 
@@ -1161,6 +1168,101 @@ true
 <p>Whenever a free left module is constructed for which the filter <code class="code">IsHandledByNiceBasis</code> may be useful, <code class="code">CheckForHandlingByNiceBasis</code> should be called. (This is done in the methods for <code class="code">VectorSpaceByGenerators</code>, <code class="code">AlgebraByGenerators</code>, <code class="code">IdealByGenerators</code> etc. in the <strong class="pkg">GAP</strong> library.)</p>
 
 <p>The arguments of this function are the coefficient ring <var class="Arg">R</var>, the list <var class="Arg">gens</var> of generators, the constructed module <var class="Arg">M</var> itself, and the zero element <var class="Arg">zero</var> of <var class="Arg">M</var>; if <var class="Arg">gens</var> is nonempty then the <var class="Arg">zero</var> value may also be <code class="keyw">false</code>.</p>
+
+<p><a id="X78515F448644204E" name="X78515F448644204E"></a></p>
+
+<h4>61.13 <span class="Heading">Tensor Products and Exterior and Symmetric Powers</span></h4>
+
+<p><a id="X81B2276A7EBA8ED1" name="X81B2276A7EBA8ED1"></a></p>
+
+<h5>61.13-1 TensorProduct</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TensorProduct</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TensorProduct</code>( <var class="Arg">V</var>, <var class="Arg">W</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Here <var class="Arg">list</var> must be a list of vector spaces. This function returns the tensor product of the elements in the list. The vector spaces must be defined over the same field.</p>
+
+<p>In the second form, the vector spaces are given individually.</p>
+
+<p>Elements of the tensor product <span class="SimpleMath">V_1⊗ ⋯ ⊗ V_k</span> are linear combinations of <span class="SimpleMath">v_1⊗⋯ ⊗ v_k</span>, where the <span class="SimpleMath">v_i</span> are arbitrary basis elements of <span class="SimpleMath">V_i</span>. In <strong class="pkg">GAP</strong> a tensor element like that is printed as</p>
+
+
+<div class="example"><pre>
+   v_1&lt;x&gt; ... &lt;x&gt;v_k
+</pre></div>
+
+<p>Furthermore, the zero of a tensor product is printed as</p>
+
+
+<div class="example"><pre>
+ &lt;0-tensor&gt;
+</pre></div>
+
+<p>This does not mean that all tensor products have the same zero element: zeros of different tensor products have different families.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:=TensorProduct(Rationals^2, Rationals^3);</span>
+&lt;vector space over Rationals, with 6 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Basis(V);</span>
+Basis( &lt;vector space over Rationals, with 6 generators&gt;,
+[ 1*([ 0, 1 ]&lt;x&gt;[ 0, 0, 1 ]), 1*([ 0, 1 ]&lt;x&gt;[ 0, 1, 0 ]), 
+  1*([ 0, 1 ]&lt;x&gt;[ 1, 0, 0 ]), 1*([ 1, 0 ]&lt;x&gt;[ 0, 0, 1 ]), 
+  1*([ 1, 0 ]&lt;x&gt;[ 0, 1, 0 ]), 1*([ 1, 0 ]&lt;x&gt;[ 1, 0, 0 ]) ] )
+</pre></div>
+
+<p>See also <code class="func">KroneckerProduct</code> (<a href="chap24.html#X8634C79E7DB22934"><span class="RefLink">24.5-8</span></a>).</p>
+
+<p><a id="X787BB7FF85F0AD68" name="X787BB7FF85F0AD68"></a></p>
+
+<h5>61.13-2 ExteriorPower</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExteriorPower</code>( <var class="Arg">V</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Here <var class="Arg">V</var> must be a vector space. This function returns the <var class="Arg">k</var>-th exterior power of <var class="Arg">V</var>.</p>
+
+<p>Elements of the exterior power <span class="SimpleMath">⋀^k V</span> are linear combinations of <span class="SimpleMath">v_i_1∧⋯ ∧ v_i_k</span>, where the <span class="SimpleMath">v_i_j</span> are basis elements of <span class="SimpleMath">V</span>, and <span class="SimpleMath">1 ≤ i_1 &lt; i_2 ⋯ &lt; i_k</span>. In <strong class="pkg">GAP</strong> a wedge element like that is printed as</p>
+
+
+<div class="example"><pre>
+   v_1/\ ... /\v_k
+</pre></div>
+
+<p>Furthermore, the zero of an exterior power is printed as</p>
+
+
+<div class="example"><pre>
+ &lt;0-wedge&gt;
+</pre></div>
+
+<p>This does not mean that all exterior powers have the same zero element: zeros of different exterior powers have different families.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:=ExteriorPower(Rationals^3, 2);</span>
+&lt;vector space of dimension 3 over Rationals&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Basis(V);</span>
+Basis( &lt;vector space of dimension 3 over Rationals&gt;, [ 
+  1*([ 0, 1, 0 ]/\[ 0, 0, 1 ]), 1*([ 1, 0, 0 ]/\[ 0, 0, 1 ]), 
+  1*([ 1, 0, 0 ]/\[ 0, 1, 0 ]) ] )
+</pre></div>
+
+<p><a id="X79E2C2AF842E8419" name="X79E2C2AF842E8419"></a></p>
+
+<h5>61.13-3 SymmetricPower</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SymmetricPower</code>( <var class="Arg">V</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Here <var class="Arg">V</var> must be a vector space. This function returns the <var class="Arg">k</var>-th symmetric power of <var class="Arg">V</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:=SymmetricPower(Rationals^3, 2);</span>
+&lt;vector space over Rationals, with 6 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Basis(V);</span>
+Basis( &lt;vector space over Rationals, with 6 generators&gt;,
+[ 1*([ 0, 0, 1 ].[ 0, 0, 1 ]), 1*([ 0, 1, 0 ].[ 0, 0, 1 ]), 
+  1*([ 0, 1, 0 ].[ 0, 1, 0 ]), 1*([ 1, 0, 0 ].[ 0, 0, 1 ]), 
+  1*([ 1, 0, 0 ].[ 0, 1, 0 ]), 1*([ 1, 0, 0 ].[ 1, 0, 0 ])
+ ] )
+</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap60.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap62.html">[Next Chapter]</a>&nbsp;  </div>

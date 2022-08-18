@@ -15,18 +15,16 @@
 #ifndef GAP_GAPSTATE_H
 #define GAP_GAPSTATE_H
 
-#include "system.h"
+#include "common.h"
 
-#include "scanner.h"
-
-#if defined(HPCGAP)
+#ifdef HPCGAP
 #include "hpc/tls.h"
 #endif
 
-enum {
-    STATE_SLOTS_SIZE = 32768,
+#include <setjmp.h>
 
-    MAX_VALUE_LEN = 1024,
+enum {
+    STATE_SLOTS_SIZE = 32768 - 1024,
 };
 
 typedef struct GAPState {
@@ -36,82 +34,89 @@ typedef struct GAPState {
     ThreadLocalStorage tls;
 #endif
 
+    // for Boehm GC
+#if defined(USE_BOEHM_GC)
+    #define MAX_GC_PREFIX_DESC 4
+    void ** FreeList[MAX_GC_PREFIX_DESC + 2];
+#endif
+
     /* From intrprtr.c */
-    UInt IntrIgnoring;
-    UInt IntrReturning;
-    UInt IntrCoding;
-    Obj  IntrState;
-    Obj  StackObj;
     Obj  Tilde;
+
+    // The current assertion level for use in Assert
+    Int CurrentAssertionLevel;
 
     /* From gvar.c */
     Obj CurrNamespace;
 
     /* From vars.c */
-    Bag   BottomLVars;
     Bag   CurrLVars;
     Obj * PtrLVars;
     Bag   LVarsPool[16];
 
     /* From read.c */
-    syJmp_buf ReadJmpError;
+    jmp_buf ReadJmpError;
 
-    /* From scanner.c */
-    // TODO: eventually, ScannerState should be removed from GAPState
-    // (and then also #include "scanner.h" at the top), and instead code
-    // using a caller should dynamically allocate a ScannerState on the stack.
-    // But for now, we can't really do that.
-    ScannerState Scanner;
-    UInt   NrError;
-    UInt   NrErrLine;
-
-    // Used for recording the first line of the fragment of code currently
-    // begin interpreted, so the current line is outputted when profiling
-    UInt InterpreterStartLine;
-
-    const Char * Prompt;
-
-    Char * In;
+    char Prompt[80];
 
     /* From stats.c */
+
+    // `ReturnObjStat` is the result of the return-statement that was last
+    // executed. It is set in `ExecReturnObj` and used in the handlers that
+    // interpret functions.
     Obj  ReturnObjStat;
-    UInt (**CurrExecStatFuncs)(Stat);
+
+    ExecStatFunc * CurrExecStatFuncs;
 
     /* From code.c */
     void * PtrBody;
 
     /* From opers.c */
-#if defined(HPCGAP)
+#ifdef HPCGAP
     Obj   MethodCache;
     Obj * MethodCacheItems;
     UInt  MethodCacheSize;
 #endif
 
-    /* From gap.c */
-    Obj  ThrownObject;
-    UInt UserHasQuit;
-    UInt UserHasQUIT;
-    Obj  ShellContext;
-    Obj  BaseShellContext;
-    Obj  ErrorLVars;        // ErrorLVars as modified by DownEnv / UpEnv
-    Int  ErrorLLevel;       // record where on the stack ErrorLVars is relative to the top, i.e. BaseShellContext
-    void (*JumpToCatchCallback)(void); // This callback is called in FuncJUMP_TO_CATCH,
-                                   // this is not used by GAP itself but by programs
-                                   // that use GAP as a library to handle errors
+    // for use by GAP_TRY / GAP_CATCH and related code
+    int TryCatchDepth;
+
+    // Set by `FuncJUMP_TO_CATCH` to the value of its second argument, and
+    // and then later extracted by `CALL_WITH_CATCH`. Not currently used by
+    // the GAP kernel itself, as far as I can tell.
+    Obj ThrownObject;
+
+    // Set to TRUE when a read-eval-loop encounters a `quit` statement.
+    BOOL UserHasQuit;
+
+    // Set to TRUE when a read-eval-loop encounters a `QUIT` statement.
+    BOOL UserHasQUIT;
+
+    // Set by the primary read-eval loop in `FuncSHELL`, based on the value of
+    // `ErrorLLevel`. Also, `ReadEvalCommand` saves and restores this value
+    // before executing code.
+    Obj ErrorLVars;
+
+    // Records where on the stack `ErrorLVars` is relative to the top; this is
+    // modified by `FuncDownEnv` / `FuncUpEnv`, and ultimately used and
+    // controlled by the primary read-eval loop in `FuncSHELL`.
+    Int ErrorLLevel;
+
+    // This callback is called in FuncJUMP_TO_CATCH, this is not used by GAP
+    // itself but by programs that use GAP as a library to handle errors
+    void (*JumpToCatchCallback)(void);
 
     /* From info.c */
     Int ShowUsedInfoClassesActive;
 
     UInt1 StateSlots[STATE_SLOTS_SIZE];
-
-/* Allocation */
-#if defined(USE_BOEHM_GC)
-#define MAX_GC_PREFIX_DESC 4
-    void ** FreeList[MAX_GC_PREFIX_DESC + 2];
-#endif
 } GAPState;
 
-#if defined(HPCGAP)
+// for performance reasons, we strive to keep the GAPState size small enough
+// so that all its members can be access with a 16 bit signed offset
+GAP_STATIC_ASSERT(sizeof(GAPState) < 32768, "GAPState is too big");
+
+#ifdef HPCGAP
 
 EXPORT_INLINE GAPState * ActiveGAPState(void)
 {

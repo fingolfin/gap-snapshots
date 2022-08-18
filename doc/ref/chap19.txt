@@ -94,7 +94,7 @@
   representation,        using       [2XNewFloat[102X       ([14X19.2-1[114X)       as       in
   [10XNewFloat(IsIEEE754FloatRep,355/113)[110X, by supplying the category filter of the
   desired  new  floating-point  number;  or  using  [2XMakeFloat[102X  ([14X19.2-1[114X)  as in
-  [10XNewFloat(1.0,355/113)[110X, by supplying a sample floating-point number.[133X
+  [10XMakeFloat(1.0,355/113)[110X, by supplying a sample floating-point number.[133X
   
   [33X[0;0YFloating-point  numbers may also be converted to other [5XGAP[105X formats using the
   usual commands [2XInt[102X ([14X14.2-3[114X), [2XRat[102X ([14X17.2-6[114X), [2XString[102X ([14X27.7-6[114X).[133X
@@ -299,8 +299,8 @@
   
   [1X19.2-10 [33X[0;0YStandard mathematical operations[133X[101X
   
-  [33X[1;0Y[29X[2XCos[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XSin[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCos[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XTan[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XSec[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XCsc[102X( [3Xf[103X ) [32X attribute[133X
@@ -308,8 +308,8 @@
   [33X[1;0Y[29X[2XAsin[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XAcos[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XAtan[102X( [3Xf[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XCosh[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XSinh[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCosh[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XTanh[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XSech[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XCsch[102X( [3Xf[103X ) [32X attribute[133X
@@ -327,16 +327,16 @@
   [33X[1;0Y[29X[2XExpm1[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XCubeRoot[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XSquare[102X( [3Xf[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XAtan2[102X( [3Xy[103X, [3Xx[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHypothenuse[102X( [3Xx[103X, [3Xy[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XCeil[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XFloor[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XRound[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XTrunc[102X( [3Xf[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XAtan2[102X( [3Xy[103X, [3Xx[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XFrExp[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XLdExp[102X( [3Xf[103X, [3Xexp[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XAbsoluteValue[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XNorm[102X( [3Xf[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XHypothenuse[102X( [3Xx[103X, [3Xy[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XFrac[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XSinCos[102X( [3Xf[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XErf[102X( [3Xf[103X ) [32X attribute[133X
@@ -409,8 +409,8 @@
   are  equal; however, it is usually more useful to know if intervals overlap,
   or are disjoint, or are contained in each other.[133X
   
-  [33X[0;0YNote  the usual convention that intervals are compared as in [22X[a,b]le[c,d][122X if
-  and only if [22Xale c[122X and [22Xble d[122X.[133X
+  [33X[0;0YNote  the  usual convention that intervals are compared as in [22X[a,b]≤[c,d][122X if
+  and only if [22Xa≤ c[122X and [22Xb≤ d[122X.[133X
   
   [1X19.5-1 Sup[101X
   

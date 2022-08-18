@@ -1,7 +1,5 @@
-[![Build Status](https://github.com/gap-system/gap/workflows/CI/badge.svg?branch=stable-4.11)](https://github.com/gap-system/gap/actions?query=workflow%3ACI+branch%3Astable-4.11)
-[![AppVeyor build Status](https://ci.appveyor.com/api/projects/status/mvut0lq6x9idfrye/branch/stable-4.11?svg=true)](https://ci.appveyor.com/project/gap-system/gap/branch/master)
-[![Code Coverage](https://codecov.io/gh/gap-system/gap/branch/stable-4.11/graphs/badge.svg)](https://codecov.io/gh/gap-system/gap/branch/stable-4.11)
-[![Coverage Status](https://coveralls.io/repos/github/gap-system/gap/badge.svg?branch=stable-4.11)](https://coveralls.io/github/gap-system/gap?branch=stable-4.11)
+[![Build Status](https://github.com/gap-system/gap/workflows/CI/badge.svg?branch=stable-4.12)](https://github.com/gap-system/gap/actions?query=workflow%3ACI+branch%3Astable-4.12)
+[![Code Coverage](https://codecov.io/gh/gap-system/gap/branch/stable-4.12/graphs/badge.svg)](https://codecov.io/gh/gap-system/gap/branch/stable-4.12)
 
 # What is GAP?
 
@@ -56,7 +54,8 @@ least these:
 * GNU Libtool
 
 In addition, we recommend that you install at least the following optional
-dependencies:
+dependencies (if you do not, GAP will either build its own copies of these,
+slowing down the compilation process, or omit certain features):
 * Development headers for GMP, the GNU Multiple Precision Arithmetic Library
 * Development headers for zlib
 * Development headers for GNU Readline
@@ -81,29 +80,9 @@ Then to build GAP, first run this command to generate the `configure` script:
 
     ./autogen.sh
 
-Afterwards you can proceed similar to what is described in `INSTALL.md`, in
-particular enter the following commands to compile GAP itself (for macOS users,
-see below for a few additional hints):
-
-    ./configure
-    make
-
-For macOS users you may ned to tell GAP where it can find these dependencies.
-
-For Homebrew, use these commands:
-
-    ./configure --with-readline=/usr/local/opt/readline
-    make
-
-For Fink, use these commands:
-
-    ./configure CPPFLAGS=-I/sw/include LDFLAGS=-L/sw/lib
-    make
-
-For MacPorts, use these commands:
-
-    ./configure CPPFLAGS=-I/opt/local/include LDFLAGS=-L/opt/local/lib
-    make
+Afterwards you can proceed as described in `INSTALL.md`. If you are on macOS,
+we recommend that you take a look at section "GAP for macOS" of `INSTALL.md`
+for a few additional hints.
 
 
 ## Obtaining the GAP package distribution

@@ -14,10 +14,7 @@
 ExamplesReportDiff := function(inp, expout, found, fnam, line, time)
     local tstf, i, loc, res;
 
-    Print("########> Diff in ");
-    if IsStream(fnam) then
-        Print("test stream, line ",line,"\n");
-    else
+    if IsString(fnam) then
         tstf := SplitString(StringFile(fnam), "\n");
         i := line;
         # Look for location marker
@@ -30,28 +27,22 @@ ExamplesReportDiff := function(inp, expout, found, fnam, line, time)
             loc := InputTextString(Concatenation(tstf[i]{[6..Length(tstf[i])]}, ";"));
             res := READ_COMMAND_REAL(loc, false);
             if res[1] = true then
-                Print(res[2][1],":",res[2][2]);
+                fnam := Concatenation(fnam,res[2][1],":",String(res[2][2]));
             fi;
-            Print(" (", fnam,":",line,")\n");
-        else # did not find a location marker
-            Print(fnam,":",line,"\n");
         fi;
     fi;
-    Print("# Input is:\n", inp);
-    Print("# Expected output:\n", expout);
-    Print("# But found:\n", found);
-    Print("########\n");
+    DefaultReportDiff(inp, expout, found, fnam, line, time);
 end;
 
 TestManualChapter := function(filename)
     local testResult;
     
-    GAP_EXIT_CODE(1);
+    GapExitCode(1);
     testResult := Test(filename, rec( width := 72,
 		        compareFunction := "uptowhitespace",
 		        reportDiff := ExamplesReportDiff ) );
     if not(testResult) then
-        QUIT_GAP(1);
+        QuitGap(1);
     fi;
-    QUIT_GAP(0);
+    QuitGap(0);
 end;

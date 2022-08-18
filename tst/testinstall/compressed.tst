@@ -1,28 +1,47 @@
-#@local dir,fname,isGzippedFile,stream,str
+#@local o,dir,fname,rawfname,checkGzippedFile,stream,str
 gap> START_TEST("compressed.tst");
 gap> dir := DirectoryTemporary();;
 gap> fname := Filename(dir, "test.g.gz");;
+gap> rawfname := Filename(dir, "rawtest.g.gz");;
 
 # Let us check when we have written a compressed file by checking the gzip header
-gap> isGzippedFile := function(dir, name)
->    local out, str,prog;
->    str := "";
->    out := OutputTextString(str, true);
->    Process(dir, Filename(DirectoriesSystemPrograms(),"cat"), InputTextNone(), out, [name]);
->    return str{[1..2]} = "\037\213";
+# We need raw file access to do this, so we use 'IO'. We stub out this part of the
+# test if IO is not loaded
+gap> checkGzippedFile := function(fname, expected)
+>    local ins, str;
+>    if not IsPackageLoaded("IO") then return true; fi;
+>    # Use 'ValueGlobal' to avoid warnings about undefined functions
+>    ins := ValueGlobal("IO_File")(fname, "r");
+>    str := ValueGlobal("IO_Read")(ins, 2);;
+>    # All gzipped files should start with these two characters
+>    return (str = [CharInt(31),CharInt(139)]) = expected;
 >  end;;
 gap> str := "hello\ngoodbye\n";;
 
-# Write a compressed file
-gap> FileString( fname, str ) = Length(str);
+# Write an uncompressed file
+gap> FileString( rawfname, str ) = Length(str);
 true
 
-# Check file really is compressed (FIXME: disabled in stable-4.11)
-gap> isGzippedFile(dir, "test.g.gz");
-false
+# Write a compressed file, using OutputGzipFile
+gap> o := OutputGzipFile(fname, false);;
+gap> WriteAll(o, str);
+true
+gap> CloseStream(o);
+
+# Check file really is compressed
+gap> checkGzippedFile(fname, true);
+true
+
+# Check file really is NOT compressed
+gap> checkGzippedFile(rawfname, false);
+true
 
 # Check reading compressed file
 gap> StringFile( fname ) = str;
+true
+
+# Check reading uncompressed file
+gap> StringFile( rawfname ) = str;
 true
 
 # Check gz is added transparently
@@ -68,20 +87,22 @@ true
 gap> CloseStream(stream);
 
 # Test multiple writes
-gap> stream := OutputTextFile( fname, false );;
+gap> stream := OutputGzipFile( fname, false );;
 gap> PrintTo( stream, "1");
 gap> AppendTo( stream, "2");
 gap> PrintTo( stream, "3");
+gap> WriteLine(stream, "abc");
+true
 gap> CloseStream(stream);
 gap> stream;
 closed-stream
-gap> isGzippedFile(dir, "test.g.gz");
-false
+gap> checkGzippedFile(fname, true);
+true
 
 # verify it
 gap> stream := InputTextFile( fname );;
 gap> ReadAll(stream);
-"123"
+"123abc\n"
 gap> CloseStream(stream);
 gap> stream;
 closed-stream
@@ -96,8 +117,8 @@ closed-stream
 
 # too long partial read
 gap> stream := InputTextFile( fname );;
-gap> ReadAll(stream, 5);
-"123"
+gap> ReadAll(stream, 10);
+"123abc\n"
 gap> CloseStream(stream);
 gap> stream;
 closed-stream
@@ -111,20 +132,20 @@ gap> stream;
 closed-stream
 
 # append to initial data
-gap> stream := OutputTextFile( fname, true );;
+gap> stream := OutputGzipFile( fname, true );;
 gap> PrintTo( stream, "4");
 gap> CloseStream(stream);
 
 # verify it
 gap> stream := InputTextFile( fname );;
 gap> ReadAll(stream);
-"1234"
+"123abc\n4"
 gap> CloseStream(stream);
 gap> stream;
 closed-stream
 
 # overwrite initial data
-gap> stream := OutputTextFile( fname, false );;
+gap> stream := OutputGzipFile( fname, false );;
 gap> PrintTo( stream, "new content");
 gap> CloseStream(stream);
 
@@ -143,7 +164,7 @@ gap> ReadAll(stream, 3);
 gap> CloseStream(stream);
 
 # test PrintFormattingStatus
-gap> stream := OutputTextFile( fname, false );;
+gap> stream := OutputGzipFile( fname, false );;
 gap> PrintFormattingStatus(stream);
 true
 gap> PrintTo( stream, "a very long line that GAP is going to wrap at 80 chars by default if we don't do anything about it\n");
@@ -151,7 +172,7 @@ gap> CloseStream(stream);
 gap> StringFile(fname);
 "a very long line that GAP is going to wrap at 80 chars by default if we don't\
  \\\ndo anything about it\n"
-gap> stream := OutputTextFile( fname, false );;
+gap> stream := OutputGzipFile( fname, false );;
 gap> SetPrintFormattingStatus(stream, false);
 gap> PrintFormattingStatus(stream);
 false

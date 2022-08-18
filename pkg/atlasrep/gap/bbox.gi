@@ -550,18 +550,24 @@ end );
 
 #############################################################################
 ##
-#F  ResultOfBBoxProgram( <prog>, <G> )
-#F  ResultOfBBoxProgram( <prog>, <gens> )
+#F  ResultOfBBoxProgram( <prog>, <G>[, <options>] )
+#F  ResultOfBBoxProgram( <prog>, <gens>[, <options>] )
 ##
-InstallGlobalFunction( ResultOfBBoxProgram, function( prog, G )
+InstallGlobalFunction( ResultOfBBoxProgram, function( prog, G, options... )
     local result;
+
+    if Length( options ) = 1 and IsRecord( options[1] ) then
+      options:= options[1];
+    else
+      options:= rec();
+    fi;
 
     if IsList( G ) then
       # We need the argument list as inputs.
-      result:= RunBBoxProgram( prog, "dummy", G, rec() );
+      result:= RunBBoxProgram( prog, "dummy", G, options );
     else
       # We need the group for creating random elements.
-      result:= RunBBoxProgram( prog, G, [], rec() );
+      result:= RunBBoxProgram( prog, G, [], options );
     fi;
     if   result = fail or result = "timeout" then
       return result;

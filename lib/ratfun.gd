@@ -644,7 +644,7 @@ DeclareAttribute( "IndeterminateNumberOfUnivariateRationalFunction",
 ##  <Description>
 ##  constructs a Laurent polynomial over the coefficients
 ##  family <A>fam</A> and in the indeterminate <A>ind</A> (defaulting to 1)
-##  with the coefficients given by <A>coefs</A> and valuation <A>val</A>.
+##  with the coefficients given by <A>cofs</A> and valuation <A>val</A>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -969,7 +969,7 @@ BindGlobal("DEGREE_ZERO_LAURPOL",Ninfinity);
 ##  <Description>
 ##  constructs an univariate polynomial over the coefficients family
 ##  <A>fam</A> and in the indeterminate <A>ind</A> with the coefficients given by
-##  <A>coefs</A>. This function should be used in algorithms to create
+##  <A>cofs</A>. This function should be used in algorithms to create
 ##  polynomials as it avoids overhead associated with
 ##  <Ref Oper="UnivariatePolynomial"/>.
 ##  </Description>
@@ -990,7 +990,7 @@ DeclareOperation( "UnivariatePolynomialByCoefficients",
 ##
 ##  <Description>
 ##  constructs an univariate polynomial over the ring <A>ring</A> in the
-##  indeterminate <A>ind</A> with the coefficients given by <A>coefs</A>.
+##  indeterminate <A>ind</A> with the coefficients given by <A>cofs</A>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1077,6 +1077,8 @@ DeclareOperation( "UnivariateRationalFunctionByCoefficients",
 ##  The second version takes an univariate rational function and specializes
 ##  the value of its indeterminate to <A>val</A>.
 ##  Again, an optional argument <A>one</A> may be given.
+##  <C>Value( <A>upol</A>, <A>val</A> )</C> can also be expressed as <C>upol( 
+##  <A>val</A> )</C>.
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> Value(x*y+y+x^7,[x,y],[5,7]);
@@ -1340,6 +1342,27 @@ DeclareOperation("DegreeIndeterminate",[IsPolynomial,IsPosInt]);
 DeclareAttribute("Derivative",IsUnivariateRationalFunction);
 DeclareOperation("Derivative",[IsPolynomialFunction,IsPosInt]);
 
+#############################################################################
+##
+#A  TaylorSeriesRationalFunction( <ratfun>, <at>, <deg> )
+##
+##  <#GAPDoc Label="TaylorSeriesRationalFunction">
+##  <ManSection>
+##  <Attr Name="TaylorSeriesRationalFunction" Arg='ratfun, at, deg]'/>
+##
+##  <Description>
+##  Computes the taylor series up to degree <A>deg</A> of <A>ratfun</A> at
+##  <A>at</A>.
+##  <Example><![CDATA[
+##  gap> TaylorSeriesRationalFunction((x^5+3*x+7)/(x^5+x+1),0,11);
+##  -50*x^11+36*x^10-26*x^9+22*x^8-18*x^7+14*x^6-10*x^5+4*x^4-4*x^3+4*x^2-4*x+7
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction("TaylorSeriesRationalFunction");
+
 
 #############################################################################
 ##
@@ -1463,7 +1486,7 @@ DeclareGlobalFunction("TryGcdCancelExtRepPolynomials");
 ##  <Description>
 ##  is called by <Ref Func="TryGcdCancelExtRepPolynomials"/> to perform the
 ##  actual work.
-##  It will return either <K>fail</K> or a new list of of external
+##  It will return either <K>fail</K> or a new list of external
 ##  representations of cancelled polynomials.
 ##  The cancellation performed is not necessarily optimal.
 ##  </Description>

@@ -375,9 +375,9 @@
   [33X[0;0Y[2XSetNameObject[102X  sets  the  string  [3Xs[103X  as  display  name  for  object  [3Xo[103X in an
   interactive  session. When applying [2XView[102X ([14X6.3-3[114X) to object [3Xo[103X, for example in
   the  system's  main loop, [5XGAP[105X will print the string [3Xs[103X. Calling [2XSetNameObject[102X
-  for  the same object [3Xo[103X with [3Xs[103X set to [10Xfail[110X deletes the special viewing setup.
-  since  use  of this features potentially slows down the whole print process,
-  this function should be used sparingly.[133X
+  for  the  same  object  [3Xo[103X  with  [3Xs[103X  set to [2Xfail[102X ([14X20.2-1[114X) deletes the special
+  viewing  setup.  Since use of this features potentially slows down the whole
+  print process, this function should be used sparingly.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XSetNameObject(3,"three"); [127X[104X
@@ -809,30 +809,37 @@
   [33X[0;0YAn  emergency  way  to  leave  [5XGAP[105X  is  to enter [9XQUIT[109X at any [10Xgap>[110X or [10Xbrk>[110X or
   [10Xbrk_[3Xnn[103X[10X>[110X prompt.[133X
   
-  [1X6.7-2 GAP_EXIT_CODE[101X
+  [1X6.7-2 GapExitCode[101X
   
-  [33X[1;0Y[29X[2XGAP_EXIT_CODE[102X( [3Xret[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGapExitCode[102X( [[3Xret[103X] ) [32X function[133X
   
-  [33X[0;0YA  [10XGAP_EXIT_CODE[110X  sets  the  return value which will be used when [5XGAP[105X exits.
-  This  may  be  an integer, or a boolean (where [9Xtrue[109X is interpreted as 0, and
-  [9Xfalse[109X is interpreted as 1.[133X
+  [33X[0;0Y[2XGapExitCode[102X  sets  the  exit value which is returned to the operating system
+  (or  parent  process)  when  [5XGAP[105X  exits. This may be an integer in the range
+  [-128..127]  (other  values  are  reduced  modulo  256),  or a boolean. [9Xtrue[109X
+  corresponds  to  the  return  value  0,  which  by  convention is treated as
+  "success".  [9Xfalse[109X  corresponds to the return value 1, which by convention is
+  treated as "failure". The exit value is not changed if no argument is given.[133X
   
-  [1X6.7-3 QUIT_GAP[101X
+  [33X[0;0YThe [13Xprevious[113X exit code is returned.[133X
   
-  [33X[1;0Y[29X[2XQUIT_GAP[102X( [[3Xret[103X] ) [32X function[133X
+  [1X6.7-3 QuitGap[101X
   
-  [33X[0;0YA [10XQUIT_GAP[110X acts similarly to the keyword [10Xquit[110X. It exits [5XGAP[105X cleanly, calling
-  any  function  installed  using [10XInstallAtExit[110X. The optional argument will be
-  passed to [10XGAP_EXIT_CODE[110X.[133X
+  [33X[1;0Y[29X[2XQuitGap[102X( [[3Xret[103X] ) [32X function[133X
   
-  [1X6.7-4 FORCE_QUIT_GAP[101X
+  [33X[0;0Y[2XQuitGap[102X  acts  similarly  to  the keyword [10XQUIT[110X, except [10XQUIT[110X cannot be called
+  from  a function. It exits [5XGAP[105X cleanly, calling any function installed using
+  [2XInstallAtExit[102X   ([14X6.7-5[114X).  The  optional  argument  [3Xret[103X  will  be  passed  to
+  [2XGapExitCode[102X ([14X6.7-2[114X).[133X
   
-  [33X[1;0Y[29X[2XFORCE_QUIT_GAP[102X( [[3Xret[103X] ) [32X function[133X
+  [1X6.7-4 ForceQuitGap[101X
   
-  [33X[0;0YA  [10XFORCE_QUIT_GAP[110X  is  similar  to [10XQUIT_GAP[110X, except it ignores any functions
-  installed  with  [10XInstallAtExit[110X,  or  any other functions normally run at GAP
-  exit,  and  exits  GAP  immediately. The optional argument will be passed to
-  [10XGAP_EXIT_CODE[110X.[133X
+  [33X[1;0Y[29X[2XForceQuitGap[102X( [[3Xret[103X] ) [32X function[133X
+  
+  [33X[0;0Y[2XForceQuitGap[102X  is similar to [2XQuitGap[102X ([14X6.7-3[114X), except it ignores any functions
+  installed with [2XInstallAtExit[102X ([14X6.7-5[114X), or any other functions normally run at
+  GAP  exit, such as flushing any partially outputted lines to both the screen
+  and  files,  and  exits  GAP  immediately. The optional argument [3Xret[103X will be
+  passed to [2XGapExitCode[102X ([14X6.7-2[114X).[133X
   
   [1X6.7-5 InstallAtExit[101X
   
@@ -840,7 +847,7 @@
   [33X[1;0Y[29X[2XQUITTING[102X [32X global variable[133X
   
   [33X[0;0YBefore  actually  terminating,  [5XGAP[105X will call (with no arguments) all of the
-  functions  that  have  been  installed  using [10XInstallAtExit[110X. These typically
+  functions  that  have  been  installed  using [2XInstallAtExit[102X. These typically
   perform  tasks  such  as  cleaning  up  temporary  files  created during the
   session,  and closing open files. If an error occurs during the execution of
   one  of these functions, that function is simply abandoned, no break loop is
@@ -863,7 +870,8 @@
   
   [33X[0;0YIf,  when  [5XGAP[105X  is  exiting  due to a [9Xquit[109X or end-of-file (i.e. not due to a
   [9XQUIT[109X)  the  variable  [2XSaveOnExitFile[102X  is  bound  to a string value, then the
-  system will try to save the workspace to that file.[133X
+  system  will  try  to save the [5XGAP[105X workspace to that file, see [2XSaveWorkspace[102X
+  ([14X3.3-1[114X).[133X
   
   
   [1X6.8 [33X[0;0YLine Editing[133X[101X
@@ -1051,13 +1059,17 @@
   [4X[32X  From readline init file  [32X[104X
     [4X$if GAP[104X
     [4X  set blink-matching-paren on[104X
-    [4X  "\C-n": dump-functions[104X
+    [4X  "\C-x\C-o": dump-functions[104X
     [4X  "\ep": kill-region[104X
     [4X$endif[104X
   [4X[32X[104X
   
   [33X[0;0YAlternatively,  from  within  [5XGAP[105X the command [10XReadlineInitLine([3Xline[103X[10X);[110X can be
   used, where [3Xline[103X is a string containing a line as in the init file.[133X
+  
+  [33X[0;0YCaveat:  [5XGAP[105X  overwrites  the  following  keys (after reading the [11X~/.inputrc[111X
+  file):  [10X\C-g[110X,  [10X\C-i[110X,  [10X\C-n[110X, [10X\C-o[110X, [10X\C-p[110X, [10X\C-r[110X, [10X\C-\[110X, [10X\e<[110X, [10X\e>[110X, [10XUp[110X, [10XDown[110X, [10XTAB[110X,
+  [10XSpace[110X, [10XPageUp[110X, [10XPageDown[110X. So, do not redefine these in your [11X~/.inputrc[111X.[133X
   
   [33X[0;0YNote  that  after  pressing  [12XCtrl-v[112X  the  next  special  character  is input
   verbatim.  This  is  very useful to bind keys or key sequences. For example,
@@ -1093,10 +1105,10 @@
   
   [1X6.9-3 SaveCommandLineHistory[101X
   
-  [33X[1;0Y[29X[2XSaveCommandLineHistory[102X( [[3Xfname[103X, ][[3Xapp[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XSaveCommandLineHistory[102X( [[3Xfname[103X][,] [[3Xapp[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xfail[109X or number of saved lines[133X
   
-  [33X[1;0Y[29X[2XReadCommandLineHistory[102X( [[3Xfname[103X, ][[3Xapp[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XReadCommandLineHistory[102X( [[3Xfname[103X][,] [[3Xapp[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xfail[109X or number of added lines[133X
   
   [33X[0;0YThe  first  command  saves the lines in the command line history to the file

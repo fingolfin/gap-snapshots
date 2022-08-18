@@ -104,7 +104,11 @@ local   br,  ind,  c,  facs,  deg,  px,  pow,  cyc,  gcd,d,powc,fc,fam;
   #px  := LaurentPolynomialByExtRepNC(
   #	      FamilyObj(f), [One(br)],1, ind );
   #  pow := px;
-  px:=ImmutableVector(br, [Zero(br),-One(br)]);
+  if IsFinite(br) and IsField(br) and Size(br)>MAXSIZE_GF_INTERNAL then
+    px:=Immutable([Zero(br),-One(br)]);
+  else
+    px:=ImmutableVector(br, [Zero(br),-One(br)]);
+  fi;
   powc:=-px;
   fc:=CoefficientsOfLaurentPolynomial(f)[1];
   fam:=FamilyObj(One(br));
@@ -134,7 +138,7 @@ local   br,  ind,  c,  facs,  deg,  px,  pow,  cyc,  gcd,d,powc,fc,fam;
       fi;
   od;
 
-  # if neccessary add irreducible <f> to the list of factors
+  # if necessary add irreducible <f> to the list of factors
   if 0 < DegreeOfLaurentPolynomial(f)  then
       Add(facs,f);
   fi;

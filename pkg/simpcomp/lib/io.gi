@@ -720,30 +720,13 @@ end;
 ## <C>IO_Pickle</C>) from a file specified in <Arg>filename</Arg> (as string). 
 ## If <Arg>filename</Arg> does not end in <C>.scb</C>, this suffix is 
 ## appended to the file name.
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdSimplex(3);;
 ## gap> SCSave(c,"/tmp/bddelta3");
 ## true
 ## gap> d:=SCLoad("/tmp/bddelta3");
-## [SimplicialComplex
-## 
-##  Properties known: AutomorphismGroup, AutomorphismGroupOrder, 
-##                    AutomorphismGroupStructure, AutomorphismGroupTransitivity, 
-##                    Chi, Dim, F, Facets, Generators, HasBoundary, Homology, 
-##                    IsConnected, IsStronglyConnected, Name, TopologicalType, 
-##                    SCVertices.
-## 
-##  Name="S^2_4"
-##  Dim=2
-##  TopologicalType="S^2"
-##  Chi=2
-##  F=[4, 6, 4]
-##  Homology=[[0, []], [0, []], [1, []]]
-##  AutomorphismGroupStructure="S4"
-## 
-## /SimplicialComplex]
 ## gap> c=d;
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -805,30 +788,13 @@ end);
 ## Loads a simplicial complex stored in XML format from a file specified in 
 ## <Arg>filename</Arg> (as string). If <Arg>filename</Arg> does not end in 
 ## <C>.sc</C>, this suffix is appended to the file name.
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdSimplex(3);;
 ## gap> SCSaveXML(c,"/tmp/bddelta3");
 ## true
 ## gap> d:=SCLoadXML("/tmp/bddelta3");
-## [SimplicialComplex
-## 
-##  Properties known: AutomorphismGroup, AutomorphismGroupOrder, 
-##                    AutomorphismGroupStructure, AutomorphismGroupTransitivity, 
-##                    Chi, Dim, F, Facets, Generators, HasBoundary, Homology, 
-##                    IsConnected, IsStronglyConnected, Name, TopologicalType, 
-##                    SCVertices.
-## 
-##  Name="S^2_4"
-##  Dim=2
-##  TopologicalType="S^2"
-##  Chi=2
-##  F=[4, 6, 4]
-##  Homology=[[0, []], [0, []], [1, []]]
-##  AutomorphismGroupStructure="S4"
-## 
-## /SimplicialComplex]
 ## gap> c=d;
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -876,11 +842,11 @@ end);
 ## Saves a simplicial complex in a binary format (using <C>IO_Pickle</C>) to 
 ## a file specified in <Arg>filename</Arg> (as string). If <Arg>filename</Arg> 
 ## does not end in <C>.scb</C>, this suffix is appended to the file name.
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdSimplex(3);;
 ## gap> SCSave(c,"/tmp/bddelta3");
 ## true
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -936,11 +902,11 @@ end);
 ## Saves a simplicial complex <Arg>complex</Arg> to a file specified by 
 ## <Arg>filename</Arg> (as string) in XML format. If <Arg>filename</Arg> does 
 ## not end in <C>.sc</C>, this suffix is appended to the file name.
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdSimplex(3);;
 ## gap> SCSaveXML(c,"/tmp/bddelta3");
 ## true
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -1028,11 +994,11 @@ end;
 ## <M>v_1, \dots ,v_n</M> where <M>n</M> is the number of vertices of 
 ## <Arg>complex</Arg>. If <Arg>complex</Arg> has more than <M>26</M> 
 ## vertices, the argument <Arg>alphalabels</Arg> is ignored. 
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdCrossPolytope(4);;
 ## gap> SCExportMacaulay2(c,Integers,"/tmp/bdbeta4.m2");
 ## true
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -1134,11 +1100,11 @@ end);
 ## <Arg>complex</Arg> in <C>polymake</C> format to a file specified by 
 ## <Arg>filename</Arg>. Currently, only the export in the format of 
 ## <C>polymake</C> version 2.3 is supported. 
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdCrossPolytope(4);;
 ## gap> SCExportPolymake(c,"/tmp/bdbeta4.poly");
 ## true
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -1182,17 +1148,17 @@ end);
 ################################################################################
 ##<#GAPDoc Label="SCExportRecognizer">
 ## <ManSection>
-## <Func Name="SCExportPolymake" Arg="complex, filename"/>
+## <Func Name="SCExportRecognizer" Arg="complex, filename"/>
 ## <Returns><K>true</K> upon success, <K>fail</K> otherwise.</Returns>
 ## <Description>
 ## Exports the gluings of the tetrahedra of a given combinatorial 
 ## <M>3</M>-manifold <Arg>complex</Arg> in a format compatible with Matveev's 
 ## <M>3</M>-manifold software <C>Recognizer</C>.
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdCrossPolytope(4);;
 ## gap> SCExportRecognizer(c,"/tmp/bdbeta4.mv");
 ## true
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -1269,11 +1235,11 @@ end);
 ## <Arg>coords</Arg> as list of <M>3</M>-tuples) or as string of the form 
 ## <C>"x.x y.y z.z"</C> with decimal numbers <C>x.x</C>, <C>y.y</C>, 
 ## <C>z.z</C> for the three coordinates (i.e. <C>"1.0 0.0 0.0"</C>).
-## <Example>
+## <Example><![CDATA[
 ## gap> coords:=[[1,0,0],[0,1,0],[0,0,1]];;
 ## gap> SCExportJavaView(SCBdSimplex(2),"/tmp/triangle.jvx",coords);
 ## true
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -1454,10 +1420,10 @@ end);
 ## specified by <Arg>filename</Arg>. The argument <Arg>itemsperline</Arg> 
 ## specifies how many columns the exported table should have. The faces are 
 ## exported in the format <M>\langle v_1,\dots,v_k \rangle</M>.  
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdSimplex(5);;
 ## gap> SCExportLatexTable(c,"/tmp/bd5simplex.tex",5);
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -1525,49 +1491,6 @@ function(complex,filename,itemsperline)
 end);
 
 
-SCIntFunc.SCPrintSCToString:=
-function(sc)
-	local buf,props,prop,p;
-
-	buf:="[SimplicialComplex\n\n";
-	
-	Append(buf," Properties known: ");
-	props:=List(SCPropertiesNames(sc));
-	Sort(props);
-
-	for p in [1..Length(props)] do
-		Append(buf,props[p]);
-		if(p=Length(props)) then
-			Append(buf,".\n");
-		else
-			Append(buf,", ");
-		fi;
-	od;
-
-	for p in ["Facets","Faces","Incidences"] do
-		if(p in props) then
-			prop:=SCPropertyByName(sc,p);
-			if(IsStringRep(prop)) then
-				Append(buf,Concatenation([" ",p,"=\"",prop,"\"\n"]));
-			else
-				Append(buf,Concatenation([" ",p,"=",String(prop),"\n"]));
-			fi;
-		fi;
-	od;
-
-	for p in SortedList(Difference(props,["Facets","Faces","Incidences"])) do
-		prop:=SCPropertyByName(sc,p);
-		if(IsStringRep(prop)) then
-			Append(buf,Concatenation([" ",p,"=\"",prop,"\"\n"]));
-		else
-			Append(buf,Concatenation([" ",p,"=",String(prop),"\n"]));
-		fi;
-	od;
-
-	Append(buf,"\n/SimplicialComplex]\n");
-	return buf;
-end;
-
 
 ################################################################################
 ##<#GAPDoc Label="SCImportPolymake">
@@ -1579,20 +1502,12 @@ end;
 ## Imports the facet list of a <C>topaz</C> <C>polymake</C> file specified by 
 ## <Arg>filename</Arg> (discarding any vertex labels) and creates a 
 ## simplicial complex object from these facets.
-## <Example>
+## <Example><![CDATA[
 ## gap> c:=SCBdCrossPolytope(4);;
 ## gap> SCExportPolymake(c,"/tmp/bdbeta4.poly");
 ## gap> d:=SCImportPolymake("/tmp/bdbeta4.poly");
-## [SimplicialComplex
-## 
-## Properties known: Chi, Dim, Facets, SCVertices.
-##
-##  Name="unnamed complex m"
-##  Dim=3
-## 
-## /SimplicialComplex]
 ## gap> c=d;
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>
@@ -1834,12 +1749,12 @@ rec(
 ## Exports the facet list and orientability of a given combinatorial 
 ## <M>3</M>-pseudomanifold <Arg>complex</Arg> in <C>SnapPy</C> format to a 
 ## file specified by <Arg>filename</Arg>.
-## <Example>
+## <Example><![CDATA[
 ## gap> SCLib.SearchByAttribute("Dim=3 and F=[8,28,56,28]");
 ## gap> c:=SCLib.Load(last[1][1]);;
 ## gap> SCExportSnapPy(c,"/tmp/M38.tri");
 ## true
-## </Example>
+## ]]></Example>
 ## </Description>
 ## </ManSection>
 ##<#/GAPDoc>

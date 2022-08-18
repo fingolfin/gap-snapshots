@@ -24,6 +24,7 @@ ReadLib( "matblock.gi" );
 ReadLib( "tuples.gi"   );
 
 ReadLib( "domain.gi"   );
+ReadLib( "mapping1.gi"  );
 ReadLib( "mapping.gi"  );
 ReadLib( "mapprep.gi"  );
 ReadLib( "mapphomo.gi" );
@@ -107,10 +108,12 @@ ReadLib( "fldabnum.gi" );
 ReadLib( "padics.gi"   );
 
 ReadLib( "matobj.gi"   );
+ReadLib( "matrobjrowlist.gi"   );
 ReadLib( "vecmat.gi"   );
 ReadLib( "vec8bit.gi"  );
 ReadLib( "mat8bit.gi"  );
 ReadLib( "matobjplist.gi" );
+ReadLib( "matobjnz.gi" );
 ReadLib( "meataxe.gi"  );
 ReadLib( "meatauto.gi" );
 
@@ -183,7 +186,6 @@ ReadLib( "stbcbckt.gi" );
 ReadLib( "stbcrand.gi" );
 ReadLib( "clas.gi"     );
 ReadLib( "claspcgs.gi" );
-ReadLib( "clasperm.gi" );
 ReadLib( "csetgrp.gi"  );
 ReadLib( "csetperm.gi" );
 ReadLib( "csetpc.gi"   );
@@ -215,6 +217,7 @@ ReadLib( "grpnice.gi"  );
 ReadLib( "fitfree.gi"  );
 ReadLib( "permdeco.gi" );
 ReadLib( "clashom.gi"  );
+ReadLib( "clasperm.gi" );
 ReadLib( "maxsub.gi"   );
 ReadLib( "norad.gi"    );
 

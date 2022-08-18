@@ -14,13 +14,12 @@
 # Free Software Foundation (FSF); either version 2.1 of the License, or
 # (at your option) any later version. For details, see the file 'LGPL' in
 # the doc subdirectory of the GBNP distribution or see the FSF's own site:
-# http://www.gnu.org/licenses/lgpl.html
+# https://www.gnu.org/licenses/lgpl.html
 ########################## END COPYRIGHT MESSAGE ##########################
 
 ### filename = "tree.gi"
 ### author: Chris Krook
 ### This is an add-on for the GBNP package, version 0.9
-### $Id: tree.gi 12772 2010-01-15 13:10:24Z jwk $
 
 # This file contains auxiliary functions that are used by the file
 # fincheck.g. All functions in this file are constructors or operators on

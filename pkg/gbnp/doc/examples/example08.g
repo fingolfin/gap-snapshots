@@ -14,12 +14,11 @@
 # Free Software Foundation (FSF); either version 2.1 of the License, or
 # (at your option) any later version. For details, see the file 'LGPL' in
 # the doc subdirectory of the GBNP distribution or see the FSF's own site:
-# http://www.gnu.org/licenses/lgpl.html
+# https://www.gnu.org/licenses/lgpl.html
 ########################## END COPYRIGHT MESSAGE ##########################
 
 ### filename = "example08new.g" 
 ### authors Cohen & Gijsbers
-### $Id: example08.g,v 1.7 2004/04/16 14:37:37 jwk Exp $
 
 ### THIS IS A GAP PACKAGE FOR COMPUTING NON-COMMUTATIVE GROBNER BASES 
  
@@ -39,7 +38,7 @@
 # level, see Chapter <Ref Chap="Info"/>).
 
 # <L>
-LoadPackage("GBNP","0",false);;
+LoadPackage("gbnp", false);
 SetInfoLevel(InfoGBNP,1);
 SetInfoLevel(InfoGBNPTime,1);
 # </L>
@@ -59,7 +58,7 @@ GBNP.ConfigPrint("g1","g2","e1","e2");
 # <L>
 ll := Indeterminate(Rationals,"l");
 mm := Indeterminate(Rationals,"m");
-F := Field(ll,mm);
+F := Field(ll,mm);;
 gens := GeneratorsOfField(F);
 l := gens[1];;
 m := gens[2];

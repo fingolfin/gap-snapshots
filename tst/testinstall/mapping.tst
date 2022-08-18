@@ -1,5 +1,5 @@
 #@local A,B,C,M,anticomp,com,comp,conj,d,g,g2,i,i2,inv,j,map,map1,map2
-#@local mapBijective,nice,res,t,t1,t2,tuples
+#@local mapBijective,nice,res,t,t1,t2,tuples,hom,aut,dp
 gap> START_TEST("mapping.tst");
 
 # Init
@@ -271,9 +271,13 @@ gap> IsTotal( map );
 true
 gap> Image( map, Z(3) );
 0*Z(3)
+gap> map(Z(3));
+0*Z(3)
 gap> ImageElm( map, Z(3) );
 0*Z(3)
 gap> Image( map, [ Z(3) ] );
+[ 0*Z(3) ]
+gap> map( [ Z(3) ] );
 [ 0*Z(3) ]
 gap> ImagesElm( map, Z(3) );
 [ 0*Z(3) ]
@@ -346,6 +350,18 @@ Error, <elm> must be an element of Source(<map>)
 gap> Image(map, [Z(3), Z(9)]);
 Error, the collection <elm> must be contained in Source(<map>)
 
+# Image in alternative syntax
+gap> map(0*Z(3));
+Error, <map> must be single-valued and total
+gap> mapBijective(Z(5));
+Error, the families of the element or collection <elm> and Source(<map>) don't\
+ match, maybe <elm> is not contained in Source(<map>) or is not a homogeneous \
+list or collection
+gap> mapBijective(Z(9));
+Error, <elm> must be an element of Source(<map>)
+gap> map([Z(3), Z(9)]);
+Error, the collection <elm> must be contained in Source(<map>)
+
 # Images
 gap> Images(x -> x, 1);
 Error, <map> must be a general mapping
@@ -402,6 +418,19 @@ gap> IsGroupHomomorphism(res);
 true
 gap> IsInjective(res);        
 true
+
+# printing of identity mapping string in direct product element (PR #3753) 
+gap> String(IdentityMapping(SymmetricGroup(3)));
+"IdentityMapping( SymmetricGroup( [ 1 .. 3 ] ) )"
+gap> hom := GroupHomomorphismByImages(g,g,[(1,2),(3,4)],[(3,4),(1,2)]);
+[ (1,2), (3,4) ] -> [ (3,4), (1,2) ]
+gap> aut := Group(hom);;
+gap> dp := DirectProduct(aut,aut);;
+gap> GeneratorsOfGroup(dp);
+[ DirectProductElement( [ [ (1,2), (3,4) ] -> [ (3,4), (1,2) ], 
+      IdentityMapping( Group( [ (1,2), (3,4) ] ) ) ] ), 
+  DirectProductElement( [ IdentityMapping( Group( [ (1,2), (3,4) ] ) ), 
+      [ (1,2), (3,4) ] -> [ (3,4), (1,2) ] ] ) ]
 
 #
 gap> STOP_TEST( "mapping.tst", 1);

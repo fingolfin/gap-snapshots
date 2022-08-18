@@ -28,11 +28,14 @@ InstallGlobalFunction( GeneratorsWithMemory,
       o := l[i];
       r := rec(slp := slp, n := i, el := o);
       Objectify(TypeOfObjWithMemory(FamilyObj(o)),r);
-      if IsMatrix(o) then
+      if IsMatrixOrMatrixObj(o) then
+        SetFilterObj(r,IsMatrixOrMatrixObj);
+        if IsMatrix(o) then
           SetFilterObj(r,IsMatrix);
-      fi;
-      if IsMatrixObj(o) then
+        fi;
+        if IsMatrixObj(o) then
           SetFilterObj(r,IsMatrixObj);
+        fi;
       fi;
       Add(ll,r);
     od;
@@ -147,6 +150,9 @@ InstallGlobalFunction( SLPOfElms,
   function(elms)
     # Returns a straight line program to write elm as in the original 
     # generators.
+    if ForAny(elms{[2..Length(elms)]}, x -> not IsIdenticalObj(elms[1]!.slp, x!.slp)) then
+        ErrorNoReturn("SLPOfElms: the slp components of all elements must be identical");
+    fi;
     return IntermediateResultsOfSLPWithoutOverwrite( 
                [elms[1]!.slp.prog,elms[1]!.slp.nogens], List(elms,x->x!.n) );
   end);
@@ -184,6 +190,9 @@ InstallMethod( \*, "objects with memory", true,
   function(a,b)
     local r,slp;
     slp := a!.slp;
+    if not IsIdenticalObj(a!.slp, b!.slp) then
+        ErrorNoReturn("\\* for objects with memory: a!.slp and b!.slp must be identical");
+    fi;
     if a!.n = 0 then   # the identity!
         r := rec(slp := slp, n := b!.n, el := b!.el);
     elif b!.n = 0 then   # the identity!
@@ -194,11 +203,14 @@ InstallMethod( \*, "objects with memory", true,
         Add(slp.prog,[a!.n,1,b!.n,1]);
     fi;
     Objectify(TypeOfObjWithMemory(FamilyObj(a)),r);
-    if IsMatrix(a) then
+    if IsMatrixOrMatrixObj(a) then
+      SetFilterObj(r,IsMatrixOrMatrixObj);
+      if IsMatrix(a) then
         SetFilterObj(r,IsMatrix);
-    fi;
-    if IsMatrixObj(a) then
+      fi;
+      if IsMatrixObj(a) then
         SetFilterObj(r,IsMatrixObj);
+      fi;
     fi;
     return r;
   end);
@@ -209,11 +221,14 @@ InstallMethod( One, "objects with memory", true,
     local r;
     r := rec(slp := a!.slp, n := 0, el := One(a!.el));
     Objectify(TypeOfObjWithMemory(FamilyObj(a)),r);
-    if IsMatrix(a) then
+    if IsMatrixOrMatrixObj(a) then
+      SetFilterObj(r,IsMatrixOrMatrixObj);
+      if IsMatrix(a) then
         SetFilterObj(r,IsMatrix);
-    fi;
-    if IsMatrixObj(a) then
+      fi;
+      if IsMatrixObj(a) then
         SetFilterObj(r,IsMatrixObj);
+      fi;
     fi;
     return r;
   end);
@@ -224,11 +239,14 @@ InstallMethod( OneOp, "objects with memory", true,
     local r;
     r := rec(slp := a!.slp, n := 0, el := One(a!.el));
     Objectify(TypeOfObjWithMemory(FamilyObj(a)),r);
-    if IsMatrix(a) then
+    if IsMatrixOrMatrixObj(a) then
+      SetFilterObj(r,IsMatrixOrMatrixObj);
+      if IsMatrix(a) then
         SetFilterObj(r,IsMatrix);
-    fi;
-    if IsMatrixObj(a) then
+      fi;
+      if IsMatrixObj(a) then
         SetFilterObj(r,IsMatrixObj);
+      fi;
     fi;
     return r;
   end);
@@ -246,11 +264,14 @@ InstallMethod( InverseOp, "objects with memory", true,
         r := rec(slp := slp, n := 0, el := a!.el);
     fi;
     Objectify(TypeOfObjWithMemory(FamilyObj(a)),r);
-    if IsMatrix(a) then
+    if IsMatrixOrMatrixObj(a) then
+      SetFilterObj(r,IsMatrixOrMatrixObj);
+      if IsMatrix(a) then
         SetFilterObj(r,IsMatrix);
-    fi;
-    if IsMatrixObj(a) then
+      fi;
+      if IsMatrixObj(a) then
         SetFilterObj(r,IsMatrixObj);
+      fi;
     fi;
     return r;
   end);
@@ -267,11 +288,14 @@ InstallMethod( \^, "objects with memory", true,
         Add(slp.prog,[a!.n,b]);
     fi;
     Objectify(TypeOfObjWithMemory(FamilyObj(a)),r);
-    if IsMatrix(a) then
+    if IsMatrixOrMatrixObj(a) then
+      SetFilterObj(r,IsMatrixOrMatrixObj);
+      if IsMatrix(a) then
         SetFilterObj(r,IsMatrix);
-    fi;
-    if IsMatrixObj(a) then
+      fi;
+      if IsMatrixObj(a) then
         SetFilterObj(r,IsMatrixObj);
+      fi;
     fi;
     return r;
   end);
@@ -303,6 +327,12 @@ InstallMethod(\=,"objects with memory with x",IsIdenticalObj,
   [IsObjWithMemory,IsMultiplicativeElement],0,
   function(a,x)
     return a!.el=x;
+  end);
+
+InstallMethod(\=,"x with objects with memory",IsIdenticalObj,
+  [IsMultiplicativeElement,IsObjWithMemory],0,
+  function(x,a)
+    return x=a!.el;
   end);
 
 InstallMethod(\<,"objects with memory with x",IsIdenticalObj,
@@ -386,19 +416,19 @@ InstallOtherMethod(CycleStructurePerm,
 # MatrixObj methods:
 
 InstallOtherMethod( BaseDomain, "for a matrix with memory",
-  [ IsMatrixObj and IsObjWithMemory ],
+  [ IsMatrixOrMatrixObj and IsObjWithMemory ],
   M -> BaseDomain(M!.el) );
 
 InstallOtherMethod( NumberRows, "for a matrix with memory",
-  [ IsMatrixObj and IsObjWithMemory ],
+  [ IsMatrixOrMatrixObj and IsObjWithMemory ],
   M -> NumberRows(M!.el) );
 
 InstallOtherMethod( NumberColumns, "for a matrix with memory",
-  [ IsMatrixObj and IsObjWithMemory ],
+  [ IsMatrixOrMatrixObj and IsObjWithMemory ],
   M -> NumberColumns(M!.el) );
 
 InstallOtherMethod( MatElm, "for a matrix with memory",
-  [ IsMatrixObj and IsObjWithMemory, IsPosInt, IsPosInt ],
+  [ IsMatrixOrMatrixObj and IsObjWithMemory, IsPosInt, IsPosInt ],
   { M, i, j } -> M!.el[i,j] );
 
 # legacy matrix methods
@@ -419,11 +449,11 @@ InstallOtherMethod( \*, "for a row vector and a matrix with memory",
   end);
 
 InstallOtherMethod( \*, "for a scalar and a matrix with memory",
-  [ IsScalar, IsMatrixObj and IsObjWithMemory ], 0,
+  [ IsScalar, IsMatrixOrMatrixObj and IsObjWithMemory ], 0,
   { s, M } ->  s * M!.el );
 
 InstallOtherMethod( \*, "for a matrix with memory and a scalar",
-  [ IsMatrixObj and IsObjWithMemory, IsScalar ], 0,
+  [ IsMatrixOrMatrixObj and IsObjWithMemory, IsScalar ], 0,
   { M , s} ->  M!.el * s );
 
 InstallOtherMethod(ProjectiveOrder,"object with memory", 

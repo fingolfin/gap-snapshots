@@ -241,9 +241,9 @@ f(v) = λ f'(φ(v))^α
 <h5>5.3-1 BaseChangeToCanonical</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseChangeToCanonical</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a transition matrix <var class="Arg">b</var> from one basis to another</p>
+<p>Returns: a transition matrix <span class="SimpleMath">b</span> from one basis to another</p>
 
-<p>The argument <var class="Arg">f</var> is a sesquilinear or quadratic form. For every isometry class of forms, there is a canonical representative, as described in Section <a href="chap5.html#X784D3B338055EC9D"><span class="RefLink">5.1</span></a>. If <var class="Arg">M</var> is the Gram matrix of the form <var class="Arg">f</var>, then this method returns an invertible matrix <var class="Arg">b</var> such that <var class="Arg">b * M * TransposedMat(b)</var> is the Gram matrix of the canonical representative. That is, <var class="Arg">b</var> is the <em>transition matrix</em> from a basis of the underlying vector space of <var class="Arg">f</var> to another basis.</p>
+<p>The argument <var class="Arg">f</var> is a sesquilinear or quadratic form. For every isometry class of forms, there is a canonical representative, as described in Section <a href="chap5.html#X784D3B338055EC9D"><span class="RefLink">5.1</span></a>. If <span class="SimpleMath">M</span> is the Gram matrix of the form <var class="Arg">f</var>, then this method returns an invertible matrix <span class="SimpleMath">b</span> such that <span class="SimpleMath">b M</span> <code class="code">TransposedMat</code><span class="SimpleMath">(b)</span> (or <span class="SimpleMath">b M</span> <code class="code">TransposedFrobeniusMat</code><span class="SimpleMath">(b, q)</span> for suitable <span class="SimpleMath">q</span> if <var class="Arg">f</var> is a hermitian form) is the Gram matrix of the canonical representative. That is, <span class="SimpleMath">b</span> is the <em>transition matrix</em> from a basis of the underlying vector space of <var class="Arg">f</var> to another basis.</p>
 
 
 <div class="example"><pre>

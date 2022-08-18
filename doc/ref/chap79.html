@@ -59,11 +59,12 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X87E29BA57C8208A4">79.10 <span class="Heading">Global Variables in the Library</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X8324B5DE8300E0F2">79.10-1 DeclareGlobalVariable</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X7A23F09886E936D2">79.10-2 InstallValue</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X87A4316C818B3DE3">79.10-3 FlushCaches</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X834A8CC587A609BE">79.10-4 DeclareGlobalFunction</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X851654DA87616207">79.10-5 DeclareSynonym</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X828E14ED7EE39522">79.10-1 DeclareGlobalName</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X8324B5DE8300E0F2">79.10-2 DeclareGlobalVariable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X7A23F09886E936D2">79.10-3 InstallValue</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X87A4316C818B3DE3">79.10-4 FlushCaches</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X834A8CC587A609BE">79.10-5 DeclareGlobalFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79.html#X851654DA87616207">79.10-6 DeclareSynonym</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79.html#X7837CA9A83D93B38">79.11 <span class="Heading">Declaration and Implementation Part</span></a>
 </span>
@@ -134,7 +135,7 @@ SetMyAttribute(o,value);
 
 
 <div class="example"><pre>
-IsIntegersIteratorCompRep := NewRepresentation( "IsIntegersIteratorRep",
+DeclareRepresentation( "IsIntegersIteratorCompRep",
     IsComponentObjectRep, [ "counter" ] );
 </pre></div>
 
@@ -186,7 +187,7 @@ InstallMethod( NextIterator,
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NamesOfComponents</code>( <var class="Arg">comobj</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For a component object <var class="Arg">comobj</var>, <code class="func">NamesOfComponents</code> returns a list of strings, which are the names of components currently bound in <var class="Arg">comobj</var>.</p>
 
-<p>For a record <var class="Arg">comobj</var>, <code class="func">NamesOfComponents</code> returns the result of <code class="func">RecNames</code> (<a href="chap29.html#X837F1E1F866FB1A0"><span class="RefLink">29.1-2</span></a>).</p>
+<p>For a record <var class="Arg">comobj</var> in internal representation, <code class="func">NamesOfComponents</code> returns the result of <code class="func">RecNames</code> (<a href="chap29.html#X837F1E1F866FB1A0"><span class="RefLink">29.1-2</span></a>).</p>
 
 <p><a id="X834893D07FAA6FD2" name="X834893D07FAA6FD2"></a></p>
 
@@ -204,7 +205,7 @@ InstallMethod( NextIterator,
 
 
 <div class="example"><pre>
-IsIntegersIteratorPosRep := NewRepresentation( "IsIntegersIteratorRep",
+DeclareRepresentation( "IsIntegersIteratorPosRep",
     IsPositionalObjectRep, [ 1 ] );
 </pre></div>
 
@@ -218,7 +219,7 @@ InstallMethod( Iterator,
     function( Integers )
     return Objectify( NewType( IteratorsFamily,
                                    IsIterator
-                               and IsIntegersIteratorRep ),
+                               and IsIntegersIteratorPosRep ),
                       [ 0 ] );
     end );
 </pre></div>
@@ -257,17 +258,17 @@ InstallMethod( NextIterator,
 
 <p>This section gives some hints for the quite usual situation that one wants to implement new objects that are lists. More precisely, one either wants to deal with lists that have additional features, or one wants that some objects also behave as lists. An example can be found in <a href="chap79.html#X849D8BC278649EA5"><span class="RefLink">79.5</span></a>.</p>
 
-<p>A <em>list</em> in <strong class="pkg">GAP</strong> is an object in the category <code class="func">IsList</code> (<a href="chap21.html#X7C4CC4EA8299701E"><span class="RefLink">21.1-1</span></a>). Basic operations for lists are <code class="func">Length</code> (<a href="chap21.html#X780769238600AFD1"><span class="RefLink">21.17-5</span></a>), <code class="func">\[\]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>), and <code class="func">IsBound\[\]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>) (see <a href="chap21.html#X7B202D147A5C2884"><span class="RefLink">21.2</span></a>).</p>
+<p>A <em>list</em> in <strong class="pkg">GAP</strong> is an object in the category <code class="func">IsList</code> (<a href="chap21.html#X7C4CC4EA8299701E"><span class="RefLink">21.1-1</span></a>). Basic operations for lists are <code class="func">Length</code> (<a href="chap21.html#X780769238600AFD1"><span class="RefLink">21.17-5</span></a>), <code class="func"><span>\</span>[<span>\</span>]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>), and <code class="func">IsBound<span>\</span>[<span>\</span>]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>) (see <a href="chap21.html#X7B202D147A5C2884"><span class="RefLink">21.2</span></a>).</p>
 
-<p>Note that the access to the position <var class="Arg">pos</var> in the list <var class="Arg">list</var> via <code class="code"><var class="Arg">list</var>[<var class="Arg">pos</var>]</code> is handled by the call <code class="code">\[\]( <var class="Arg">list</var>, <var class="Arg">pos</var> )</code> to the operation <code class="func">\[\]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>). To explain the somewhat strange name <code class="code">\[\]</code> of this operation, note that non-alphanumeric characters like <code class="code">[</code> and <code class="code">]</code> may occur in <strong class="pkg">GAP</strong> variable names only if they are escaped by a <code class="code">\</code> character.</p>
+<p>Note that the access to the position <var class="Arg">pos</var> in the list <var class="Arg">list</var> via <code class="code"><var class="Arg">list</var>[<var class="Arg">pos</var>]</code> is handled by the call <code class="code">\[\]( <var class="Arg">list</var>, <var class="Arg">pos</var> )</code> to the operation <code class="func"><span>\</span>[<span>\</span>]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>). To explain the somewhat strange name <code class="code">\[\]</code> of this operation, note that non-alphanumeric characters like <code class="code">[</code> and <code class="code">]</code> may occur in <strong class="pkg">GAP</strong> variable names only if they are escaped by a <code class="code">\</code> character.</p>
 
-<p>Analogously, the check <code class="code">IsBound( <var class="Arg">list</var>[<var class="Arg">pos</var>] )</code> whether the position <var class="Arg">pos</var> of the list <var class="Arg">list</var> is bound is handled by the call <code class="code">IsBound\[\]( <var class="Arg">list</var>, <var class="Arg">pos</var> )</code> to the operation <code class="func">IsBound\[\]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>).</p>
+<p>Analogously, the check <code class="code">IsBound( <var class="Arg">list</var>[<var class="Arg">pos</var>] )</code> whether the position <var class="Arg">pos</var> of the list <var class="Arg">list</var> is bound is handled by the call <code class="code">IsBound\[\]( <var class="Arg">list</var>, <var class="Arg">pos</var> )</code> to the operation <code class="func">IsBound<span>\</span>[<span>\</span>]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>).</p>
 
-<p>For mutable lists, also assignment to positions and unbinding of positions via the operations <code class="func">\[\]\:\=</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>) and <code class="func">Unbind\[\]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>) are basic operations. The assignment <code class="code"><var class="Arg">list</var>[<var class="Arg">pos</var>]:= <var class="Arg">val</var></code> is handled by the call <code class="code">\[\]\:\=( <var class="Arg">list</var>, <var class="Arg">pos</var>, <var class="Arg">val</var> )</code>, and <code class="code">Unbind( <var class="Arg">list</var>[<var class="Arg">pos</var>] )</code> is handled by the call <code class="code">Unbind\[\]( <var class="Arg">list</var>, <var class="Arg">pos</var> )</code>.</p>
+<p>For mutable lists, also assignment to positions and unbinding of positions via the operations <code class="func"><span>\</span>[<span>\</span>]\:\=</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>) and <code class="func">Unbind<span>\</span>[<span>\</span>]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>) are basic operations. The assignment <code class="code"><var class="Arg">list</var>[<var class="Arg">pos</var>]:= <var class="Arg">val</var></code> is handled by the call <code class="code">\[\]\:\=( <var class="Arg">list</var>, <var class="Arg">pos</var>, <var class="Arg">val</var> )</code>, and <code class="code">Unbind( <var class="Arg">list</var>[<var class="Arg">pos</var>] )</code> is handled by the call <code class="code">Unbind\[\]( <var class="Arg">list</var>, <var class="Arg">pos</var> )</code>.</p>
 
-<p>All other operations for lists, e.g., <code class="func">Add</code> (<a href="chap21.html#X795EC9D67E34DAB0"><span class="RefLink">21.4-2</span></a>), <code class="func">Append</code> (<a href="chap21.html#X79E31DB27C82D6E1"><span class="RefLink">21.4-5</span></a>), <code class="func">Sum</code> (<a href="chap21.html#X7A04B71C84CFCC2D"><span class="RefLink">21.20-27</span></a>), are based on these operations. This means that it is sufficient to install methods for the new list objects only for the basic operations.</p>
+<p>All other operations for lists, e.g., <code class="func">Add</code> (<a href="chap21.html#X795EC9D67E34DAB0"><span class="RefLink">21.4-2</span></a>), <code class="func">Append</code> (<a href="chap21.html#X79E31DB27C82D6E1"><span class="RefLink">21.4-5</span></a>), <code class="func">Sum</code> (<a href="chap21.html#X7A04B71C84CFCC2D"><span class="RefLink">21.20-26</span></a>), are based on these operations. This means that it is sufficient to install methods for the new list objects only for the basic operations.</p>
 
-<p>So if one wants to implement new list objects then one creates them as objects in the category <code class="func">IsList</code> (<a href="chap21.html#X7C4CC4EA8299701E"><span class="RefLink">21.1-1</span></a>), and installs methods for <code class="func">Length</code> (<a href="chap21.html#X780769238600AFD1"><span class="RefLink">21.17-5</span></a>), <code class="func">\[\]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>), and <code class="func">IsBound\[\]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>). If the new lists shall be mutable, one needs to install also methods for <code class="func">\[\]\:\=</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>) and <code class="func">Unbind\[\]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>).</p>
+<p>So if one wants to implement new list objects then one creates them as objects in the category <code class="func">IsList</code> (<a href="chap21.html#X7C4CC4EA8299701E"><span class="RefLink">21.1-1</span></a>), and installs methods for <code class="func">Length</code> (<a href="chap21.html#X780769238600AFD1"><span class="RefLink">21.17-5</span></a>), <code class="func"><span>\</span>[<span>\</span>]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>), and <code class="func">IsBound<span>\</span>[<span>\</span>]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>). If the new lists shall be mutable, one needs to install also methods for <code class="func"><span>\</span>[<span>\</span>]\:\=</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>) and <code class="func">Unbind<span>\</span>[<span>\</span>]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>).</p>
 
 <p>One application for this is the implementation of <em>enumerators</em> for domains. An enumerator for the domain <span class="SimpleMath">D</span> is a dense list whose entries are in bijection with the elements of <span class="SimpleMath">D</span>. If <span class="SimpleMath">D</span> is large then it is not useful to write down all elements. Instead one can implement such a bijection implicitly. This works also for infinite domains.</p>
 
@@ -281,7 +282,7 @@ InstallMethod( NextIterator,
 
 <h4>79.5 <span class="Heading">Example – Constructing Enumerators</span></h4>
 
-<p>When dealing with countable sets, a usual task is to define enumerations, i.e., bijections to the positive integers. In <strong class="pkg">GAP</strong>, this can be implemented via <em>enumerators</em> (see <a href="chap21.html#X7EA3ACE27E43D174"><span class="RefLink">21.23</span></a>). These are lists containing the elements in a specified ordering, and the operations <code class="func">Position</code> (<a href="chap21.html#X79975EC6783B4293"><span class="RefLink">21.16-1</span></a>) and list access via <code class="func">\[\]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>) define the desired bijection. For implementing such an enumerator, one mainly needs to install the appropriate functions for these operations.</p>
+<p>When dealing with countable sets, a usual task is to define enumerations, i.e., bijections to the positive integers. In <strong class="pkg">GAP</strong>, this can be implemented via <em>enumerators</em> (see <a href="chap21.html#X7EA3ACE27E43D174"><span class="RefLink">21.23</span></a>). These are lists containing the elements in a specified ordering, and the operations <code class="func">Position</code> (<a href="chap21.html#X79975EC6783B4293"><span class="RefLink">21.16-1</span></a>) and list access via <code class="func"><span>\</span>[<span>\</span>]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>) define the desired bijection. For implementing such an enumerator, one mainly needs to install the appropriate functions for these operations.</p>
 
 <p>A general setup for creating such lists is given by <code class="func">EnumeratorByFunctions</code> (<a href="chap30.html#X85E149177AC547C3"><span class="RefLink">30.3-4</span></a>).</p>
 
@@ -612,42 +613,75 @@ false
 
 <h4>79.10 <span class="Heading">Global Variables in the Library</span></h4>
 
-<p>Global variables in the <strong class="pkg">GAP</strong> library are usually read-only in order to avoid their being overwritten accidentally. See also Section <a href="chap4.html#X816FBEEA85782EC2"><span class="RefLink">4.9</span></a>.</p>
+<p>Global variables in the <strong class="pkg">GAP</strong> library are usually read-only in order to prevent them from being overwritten accidentally. See also Section <a href="chap4.html#X816FBEEA85782EC2"><span class="RefLink">4.9</span></a>.</p>
+
+<p><a id="X828E14ED7EE39522" name="X828E14ED7EE39522"></a></p>
+
+<h5>79.10-1 DeclareGlobalName</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareGlobalName</code>( <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>For global variables, sometimes code needs to reference them before a value can sensibly be assigned to them. For example, consider the following definition of a recursive function:</p>
+
+
+<div class="example"><pre>
+BindGlobal( "fun", function(n)
+  if n &gt; 0 then
+    return 2*fun(n-1);
+  fi;
+  return 1;
+end );
+</pre></div>
+
+<p>The problem with that code is that it triggers a syntax warning about access to an unbound global variable, as <code class="code">fun</code> only gets assigned after the complete statement has been parsed, yet that statement references <code class="code">fun</code>.</p>
+
+<p>To resolve this, one can declare the variable with <code class="func">DeclareGlobalName</code> before assigning it via <code class="func">BindGlobal</code> (<a href="chap4.html#X7D39D3E17CF49F5B"><span class="RefLink">4.9-8</span></a>). This informs <strong class="pkg">GAP</strong> that a global variable with the specified name will eventually be defined, and that thus no syntax warnings pertaining to its use should be printed.</p>
+
+<p>We recommend using <code class="func">DeclareGlobalName</code> instead of <code class="func">DeclareGlobalVariable</code> (<a href="chap79.html#X8324B5DE8300E0F2"><span class="RefLink">79.10-2</span></a>) or <code class="func">DeclareGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.10-5</span></a>) whenever possible.</p>
+
+<p><code class="func">DeclareGlobalName</code> shall be used in the declaration part of the respective package (see <a href="chap79.html#X7837CA9A83D93B38"><span class="RefLink">79.11</span></a>), values can then be assigned to the new variable as usual, preferably via <code class="func">BindGlobal</code> (<a href="chap4.html#X7D39D3E17CF49F5B"><span class="RefLink">4.9-8</span></a>), in the implementation part (again, see <a href="chap79.html#X7837CA9A83D93B38"><span class="RefLink">79.11</span></a>).</p>
 
 <p><a id="X8324B5DE8300E0F2" name="X8324B5DE8300E0F2"></a></p>
 
-<h5>79.10-1 DeclareGlobalVariable</h5>
+<h5>79.10-2 DeclareGlobalVariable</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareGlobalVariable</code>( <var class="Arg">name</var>[, <var class="Arg">description</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>For global variables that are <em>not</em> functions, instead of using <code class="func">BindGlobal</code> (<a href="chap4.html#X7D39D3E17CF49F5B"><span class="RefLink">4.9-8</span></a>) one can also declare the variable with <code class="func">DeclareGlobalVariable</code> which creates a new global variable named by the string <var class="Arg">name</var>. If the second argument <var class="Arg">description</var> is entered then this must be a string that describes the meaning of the global variable. <code class="func">DeclareGlobalVariable</code> shall be used in the declaration part of the respective package (see <a href="chap79.html#X7837CA9A83D93B38"><span class="RefLink">79.11</span></a>), values can then be assigned to the new variable with <code class="func">InstallValue</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.10-2</span></a>), <code class="func">InstallFlushableValue</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.10-2</span></a>) or <code class="func">InstallFlushableValueFromFunction</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.10-2</span></a>), in the implementation part (again, see <a href="chap79.html#X7837CA9A83D93B38"><span class="RefLink">79.11</span></a>).</p>
+<p>For global variables that are <em>not</em> functions, instead of using <code class="func">BindGlobal</code> (<a href="chap4.html#X7D39D3E17CF49F5B"><span class="RefLink">4.9-8</span></a>) one can also declare the variable with <code class="func">DeclareGlobalVariable</code> which creates a new global variable named by the string <var class="Arg">name</var>.</p>
+
+<p>In the past the main application of this was to allow access to variables before they were assigned. Starting with <strong class="pkg">GAP</strong> 4.12 we recommend to instead use <code class="func">DeclareGlobalName</code> (<a href="chap79.html#X828E14ED7EE39522"><span class="RefLink">79.10-1</span></a>) for this kind of problem. The main remaining application for <code class="func">DeclareGlobalVariable</code> is when one needs flushable values.</p>
+
+<p>If used at all, then <code class="func">DeclareGlobalVariable</code> shall be used in the declaration part of the respective package (see <a href="chap79.html#X7837CA9A83D93B38"><span class="RefLink">79.11</span></a>), values can then be assigned to the new variable with <code class="func">InstallValue</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.10-3</span></a>), <code class="func">InstallFlushableValue</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.10-3</span></a>) or <code class="func">InstallFlushableValueFromFunction</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.10-3</span></a>), in the implementation part (again, see <a href="chap79.html#X7837CA9A83D93B38"><span class="RefLink">79.11</span></a>).</p>
 
 <p><a id="X7A23F09886E936D2" name="X7A23F09886E936D2"></a></p>
 
-<h5>79.10-2 InstallValue</h5>
+<h5>79.10-3 InstallValue</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallValue</code>( <var class="Arg">gvar</var>, <var class="Arg">value</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallFlushableValue</code>( <var class="Arg">gvar</var>, <var class="Arg">value</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallFlushableValueFromFunction</code>( <var class="Arg">gvar</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p><code class="func">InstallValue</code> assigns the value <var class="Arg">value</var> to the global variable <var class="Arg">gvar</var>. <code class="func">InstallFlushableValue</code> does the same but additionally provides that each call of <code class="func">FlushCaches</code> (<a href="chap79.html#X87A4316C818B3DE3"><span class="RefLink">79.10-3</span></a>) will assign a structural copy of <var class="Arg">value</var> to <var class="Arg">gvar</var>. <code class="func">InstallFlushableValueFromFunction</code> instead assigns the result of <var class="Arg">func</var> to <var class="Arg">gvar</var> (<var class="Arg">func</var> is re-evaluated for each invocation of <code class="func">FlushCaches</code> (<a href="chap79.html#X87A4316C818B3DE3"><span class="RefLink">79.10-3</span></a>)</p>
+<p><code class="func">InstallValue</code> assigns the value <var class="Arg">value</var> to the global variable <var class="Arg">gvar</var> if it was previously declared via <code class="func">DeclareGlobalVariable</code> (<a href="chap79.html#X8324B5DE8300E0F2"><span class="RefLink">79.10-2</span></a>). <code class="func">InstallFlushableValue</code> does the same but additionally provides that each call of <code class="func">FlushCaches</code> (<a href="chap79.html#X87A4316C818B3DE3"><span class="RefLink">79.10-4</span></a>) will assign a structural copy of <var class="Arg">value</var> to <var class="Arg">gvar</var>. <code class="func">InstallFlushableValueFromFunction</code> instead assigns the result of <var class="Arg">func</var> to <var class="Arg">gvar</var> (<var class="Arg">func</var> is re-evaluated for each invocation of <code class="func">FlushCaches</code> (<a href="chap79.html#X87A4316C818B3DE3"><span class="RefLink">79.10-4</span></a>)</p>
 
 <p><code class="func">InstallValue</code> does <em>not</em> work if <var class="Arg">value</var> is an "immediate object", i.e., an internally represented small integer or finite field element. It also fails for booleans. Furthermore, <code class="func">InstallFlushableValue</code> works only if <var class="Arg">value</var> is a list or a record. (Note that <code class="func">InstallFlushableValue</code> makes sense only for <em>mutable</em> global variables.)</p>
 
 <p><a id="X87A4316C818B3DE3" name="X87A4316C818B3DE3"></a></p>
 
-<h5>79.10-3 FlushCaches</h5>
+<h5>79.10-4 FlushCaches</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FlushCaches</code>(  )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p><code class="func">FlushCaches</code> resets the value of each global variable that has been declared with <code class="func">DeclareGlobalVariable</code> (<a href="chap79.html#X8324B5DE8300E0F2"><span class="RefLink">79.10-1</span></a>) and for which the initial value has been set with <code class="func">InstallFlushableValue</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.10-2</span></a>) or <code class="func">InstallFlushableValueFromFunction</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.10-2</span></a>) to this initial value.</p>
+<p><code class="func">FlushCaches</code> resets the value of each global variable that has been declared with <code class="func">DeclareGlobalVariable</code> (<a href="chap79.html#X8324B5DE8300E0F2"><span class="RefLink">79.10-2</span></a>) and for which the initial value has been set with <code class="func">InstallFlushableValue</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.10-3</span></a>) or <code class="func">InstallFlushableValueFromFunction</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.10-3</span></a>) to this initial value.</p>
 
 <p><code class="func">FlushCaches</code> should be used only for debugging purposes, since the involved global variables include for example lists that store finite fields and cyclotomic fields used in the current <strong class="pkg">GAP</strong> session, in order to avoid that these fields are constructed anew in each call to <code class="func">GF</code> (<a href="chap59.html#X8592DBB086A8A9BE"><span class="RefLink">59.3-2</span></a>) and <code class="func">CF</code> (<a href="chap60.html#X80D21D80850EFA4B"><span class="RefLink">60.1-1</span></a>).</p>
 
 <p><a id="X834A8CC587A609BE" name="X834A8CC587A609BE"></a></p>
 
-<h5>79.10-4 DeclareGlobalFunction</h5>
+<h5>79.10-5 DeclareGlobalFunction</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareGlobalFunction</code>( <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallGlobalFunction</code>( <var class="Arg">oper</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p><code class="func">DeclareGlobalFunction</code> <strong class="pkg">GAP</strong> functions that are not operations and that are intended to be called by users should be notified to <strong class="pkg">GAP</strong> in the declaration part of the respective package (see Section <a href="chap79.html#X7837CA9A83D93B38"><span class="RefLink">79.11</span></a>) via <code class="func">DeclareGlobalFunction</code>, which returns a function that serves as a place holder for the function that will be installed later, and that will print an error message if it is called. See also <code class="func">DeclareSynonym</code> (<a href="chap79.html#X851654DA87616207"><span class="RefLink">79.10-5</span></a>).</p>
+<p><strong class="pkg">GAP</strong> functions that are not operations and that are intended to be called by users should be notified to <strong class="pkg">GAP</strong> via <code class="func">DeclareGlobalFunction</code>. <code class="func">DeclareGlobalFunction</code> returns a function that serves as a placeholder for the function that will be installed later. The placeholder will print an error message if it is called. See also <code class="func">DeclareSynonym</code> (<a href="chap79.html#X851654DA87616207"><span class="RefLink">79.10-6</span></a>).</p>
+
+<p>In the past the main application of this was to allow access to variables before they were assigned. Starting with <strong class="pkg">GAP</strong> 4.12 we recommend to use <code class="func">DeclareGlobalName</code> (<a href="chap79.html#X828E14ED7EE39522"><span class="RefLink">79.10-1</span></a>)/<code class="func">BindGlobal</code> (<a href="chap4.html#X7D39D3E17CF49F5B"><span class="RefLink">4.9-8</span></a>) instead of <code class="func">DeclareGlobalVariable</code> (<a href="chap79.html#X8324B5DE8300E0F2"><span class="RefLink">79.10-2</span></a>)/<code class="func">InstallGlobalFunction</code> whenever possible.</p>
+
+<p>If used at all, then <code class="func">DeclareGlobalVariable</code> (<a href="chap79.html#X8324B5DE8300E0F2"><span class="RefLink">79.10-2</span></a>) shall be used in the declaration part of the respective package (see <a href="chap79.html#X7837CA9A83D93B38"><span class="RefLink">79.11</span></a>).</p>
 
 <p>A global function declared with <code class="func">DeclareGlobalFunction</code> can be given its value <var class="Arg">func</var> via <code class="func">InstallGlobalFunction</code>; <var class="Arg">gvar</var> is the global variable (or a string denoting its name) named with the <var class="Arg">name</var> argument of the call to <code class="func">DeclareGlobalFunction</code>. For example, a declaration like</p>
 
@@ -665,7 +699,7 @@ InstallGlobalFunction( SumOfTwoCubes, function(x, y) return x^3 + y^3; end);
 
 <p><a id="X851654DA87616207" name="X851654DA87616207"></a></p>
 
-<h5>79.10-5 DeclareSynonym</h5>
+<h5>79.10-6 DeclareSynonym</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareSynonym</code>( <var class="Arg">name</var>, <var class="Arg">value</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareSynonymAttr</code>( <var class="Arg">name</var>, <var class="Arg">value</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
@@ -701,7 +735,7 @@ DeclareSynonymAttr( "GeneratorsOfField", GeneratorsOfDivisionRing );
 
 <p>Each package of <strong class="pkg">GAP</strong> code consists of two parts, the <em>declaration part</em> that defines the new categories and operations for the objects the package deals with, and the <em>implementation part</em> where the corresponding methods are installed. The declaration part should be representation independent, representation dependent information should be dealt with in the implementation part.</p>
 
-<p><strong class="pkg">GAP</strong> functions that are not operations and that are intended to be called by users should be notified to <strong class="pkg">GAP</strong> in the declaration part via <code class="func">DeclareGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.10-4</span></a>). Values for these functions can be installed in the implementation part via <code class="func">InstallGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.10-4</span></a>).</p>
+<p><strong class="pkg">GAP</strong> functions that are not operations and that are intended to be called by users should be notified to <strong class="pkg">GAP</strong> in the declaration part via <code class="func">DeclareGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.10-5</span></a>). Values for these functions can be installed in the implementation part via <code class="func">InstallGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.10-5</span></a>).</p>
 
 <p>Calls to the following functions belong to the declaration part.</p>
 
@@ -719,13 +753,19 @@ DeclareSynonymAttr( "GeneratorsOfField", GeneratorsOfDivisionRing );
 <li><p><code class="func">DeclareOperation</code> (<a href="chap78.html#X843F48137B899BC3"><span class="RefLink">78.1-5</span></a>),</p>
 
 </li>
-<li><p><code class="func">DeclareGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.10-4</span></a>),</p>
+<li><p><code class="func">DeclareGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.10-5</span></a>),</p>
 
 </li>
-<li><p><code class="func">DeclareSynonym</code> (<a href="chap79.html#X851654DA87616207"><span class="RefLink">79.10-5</span></a>),</p>
+<li><p><code class="func">DeclareGlobalName</code> (<a href="chap79.html#X828E14ED7EE39522"><span class="RefLink">79.10-1</span></a>),</p>
 
 </li>
-<li><p><code class="func">DeclareSynonymAttr</code> (<a href="chap79.html#X851654DA87616207"><span class="RefLink">79.10-5</span></a>),</p>
+<li><p><code class="func">DeclareGlobalVariable</code> (<a href="chap79.html#X8324B5DE8300E0F2"><span class="RefLink">79.10-2</span></a>),</p>
+
+</li>
+<li><p><code class="func">DeclareSynonym</code> (<a href="chap79.html#X851654DA87616207"><span class="RefLink">79.10-6</span></a>),</p>
+
+</li>
+<li><p><code class="func">DeclareSynonymAttr</code> (<a href="chap79.html#X851654DA87616207"><span class="RefLink">79.10-6</span></a>),</p>
 
 </li>
 <li><p><code class="func">DeclareProperty</code> (<a href="chap13.html#X7F4602F082682A04"><span class="RefLink">13.7-5</span></a>),</p>
@@ -742,7 +782,10 @@ DeclareSynonymAttr( "GeneratorsOfField", GeneratorsOfDivisionRing );
 <li><p><code class="func">DeclareRepresentation</code> (<a href="chap13.html#X7C81FB2682AE54CD"><span class="RefLink">13.4-5</span></a>),</p>
 
 </li>
-<li><p><code class="func">InstallGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.10-4</span></a>),</p>
+<li><p><code class="func">InstallGlobalFunction</code> (<a href="chap79.html#X834A8CC587A609BE"><span class="RefLink">79.10-5</span></a>),</p>
+
+</li>
+<li><p><code class="func">InstallValue</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.10-3</span></a>),</p>
 
 </li>
 <li><p><code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.3-1</span></a>),</p>

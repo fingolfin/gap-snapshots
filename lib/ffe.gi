@@ -25,21 +25,6 @@
 
 #############################################################################
 ##
-#V  GALOIS_FIELDS
-##
-##  global cache of finite fields `GF( <p>^<d> )', consisting of a pair of
-##  lists of equal size, the first list being a set of field sizes;
-##  the field of size $p^d$ is stored in `GALOIS_FIELDS[2][<pos>]' if and
-##  and only if `GALOIS_FIELDS[1][<pos>]' is equal to $p^d$
-##
-InstallFlushableValue( GALOIS_FIELDS, [ [], [] ] );
-if IsHPCGAP then
-  ShareSpecialObj( GALOIS_FIELDS );
-fi;
-
-
-#############################################################################
-##
 #M  \+( <ffe>, <rat> )
 #M  \+( <rat>, <ffe> )
 #M  \*( <ffe>, <rat> )
@@ -55,7 +40,7 @@ fi;
 ##  Then we have `<ffe> + <rat> = <rat> + <ffe> = <ffe> + <new>',
 ##  and `<ffe> \* <rat> = <rat> \* <ffe> = <ffe> \* <new>'.
 ##  As usual, difference and quotient are defined as sum and product,
-##  with the second argument replaced by its additive and mutliplicative
+##  with the second argument replaced by its additive and multiplicative
 ##  inverse, respectively.
 ##
 ##  (It would be possible to install these methods in the kernel tables,
@@ -797,7 +782,7 @@ InstallMethod( Order,
     function ( z )
     local   ord,        # order of <z>, result
             chr,        # characteristic of <F> (and <z>)
-            deg;        # degree of <z> over the primefield
+            deg;        # degree of <z> over the prime field
 
     # compute the order
     if IsZero( z )   then

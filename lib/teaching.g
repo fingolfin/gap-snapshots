@@ -165,7 +165,7 @@ DeclareGlobalFunction("ShowAdditionTable");
 ##  <Func Name="CosetDecomposition" Arg='G,S'/>
 ##
 ##  <Description>
-##  For a finite group <A>G</A> and a subgroup <M><A>S</A>\le<A>G</A></M>
+##  For a finite group <A>G</A> and a subgroup <M><A>S</A> \leq <A>G</A></M>
 ##  this function returns a partition of the elements of <A>G</A> according to
 ##  the (right) cosets of <A>S</A>. The result is a list of lists, each sublist
 ##  corresponding to one coset. The first sublist is the elements list of the
@@ -192,14 +192,14 @@ DeclareGlobalFunction("CosetDecomposition");
 ##  <Func Name="AllHomomorphismClasses" Arg='G,H'/>
 ##
 ##  <Description>
-##  For two groups <A>G</A> and <A>H</A>, this function returns
+##  For two finite groups <A>G</A> and <A>H</A>, this function returns
 ##  representatives of all homomorphisms <M><A>G</A> to <A>H</A></M> up to
 ##  <A>H</A>-conjugacy.
 ##  <Example><![CDATA[
 ##  gap> AllHomomorphismClasses(SymmetricGroup(4),SymmetricGroup(3)); 
-##  [ [ (1,2,3), (2,4) ] -> [ (), () ],
-##    [ (1,2,3), (2,4) ] -> [ (), (1,2) ],
-##    [ (1,2,3), (2,4) ] -> [ (1,2,3), (1,2) ] ]
+##  [ [ (1,3,4,2), (1,3,4) ] -> [ (), () ],
+##    [ (1,3,4,2), (1,3,4) ] -> [ (1,2), () ],
+##    [ (1,3,4,2), (1,3,4) ] -> [ (2,3), (1,2,3) ] ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -218,7 +218,7 @@ DeclareGlobalFunction("AllHomomorphismClasses");
 ##  <Func Name="AllAutomorphisms" Arg='G'/>
 ##
 ##  <Description>
-##  For two groups <A>G</A> and <A>H</A>, this function returns
+##  For two finite groups <A>G</A> and <A>H</A>, this function returns
 ##  all homomorphisms <M><A>G</A> to <A>H</A></M>. Since this number will
 ##  grow quickly, <Ref Func="AllHomomorphismClasses"/> should be used in most
 ##  cases.
@@ -325,8 +325,8 @@ DeclareGlobalFunction("CheckDigitTestFunction");
 ##  <Description>
 ##  These functions can be used to compute, or check, check digits for some
 ##  everyday items. In each case what is submitted as input is either the number
-##  with check digit (in which case the function returns <C>true</C> or
-##  <C>false</C>), or the number without check digit (in which case the function
+##  with check digit (in which case the function returns <K>true</K> or
+##  <K>false</K>), or the number without check digit (in which case the function
 ##  returns the missing check digit). The number can be specified as integer, as
 ##  string (for example in case of leading zeros) or as a sequence of arguments,
 ##  each representing a single digit.
@@ -434,9 +434,9 @@ DeclareGlobalFunction("StringNumbers");
 ##  object <A>o</A>, for example in the system's main loop,
 ##  &GAP; will print the string <A>s</A>.
 ##  Calling <Ref Func="SetNameObject"/> for the same object <A>o</A> with
-##  <A>s</A> set to <C>fail</C>
+##  <A>s</A> set to <Ref Var="fail"/>
 ##  deletes the special viewing setup.
-##  since use of this features potentially slows down the whole print
+##  Since use of this features potentially slows down the whole print
 ##  process, this function should be used sparingly.
 ##  <Example><![CDATA[
 ##  gap> SetNameObject(3,"three"); 
@@ -918,6 +918,13 @@ end);
 # up to G-conjugacy
 InstallGlobalFunction(AllHomomorphismClasses,function(H,G)
 local cl,cnt,bg,bw,bo,bi,k,gens,go,imgs,params,emb,clg,sg,vsu,c,i;
+
+  if not HasIsFinite(H) then
+    Info(InfoPerformance,1,"Forcing finiteness test -- might not terminate");
+  fi;
+  if not IsFinite(H) then
+    Error("the first argument must be a finite group");
+  fi;
 
   if IsAbelian(G) and not IsAbelian(H) then
     k:=NaturalHomomorphismByNormalSubgroup(H,DerivedSubgroup(H));

@@ -14,18 +14,24 @@
 // libgap as a shared library
 #define EXPORT_INLINE extern inline
 
-#include "system.h"
+#include "common.h"
 
 #include "calls.h"
-#include "compiled.h"
 #include "fibhash.h"
+#include "gap_all.h"
 #include "hookintrprtr.h"
+#include "sysstr.h"
 #include "vec8bit.h"
 
 #ifdef HPCGAP
 #include "hpc/guards.h"
 #include "hpc/region.h"
 #endif
+
+#include "config.h"
+
+#include <stdio.h>
+#include <stdlib.h>
 
 #if defined(HAVE_BACKTRACE) && defined(GAP_PRINT_BACKTRACE)
 #include <execinfo.h>

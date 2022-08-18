@@ -2917,7 +2917,7 @@ InstallMethod( RootSystem,
 
         V:= Basis( VectorSpace( F, j, "basis" ), j );
         M:= List( j, x -> Coefficients( V, i*x ) );
-        facs:= Factors( MinimalPolynomial( F, M ) );
+        facs:= Factors( PolynomialRing( F ), MinimalPolynomial( F, M ) );
 
         for l in facs do
           V:= NullspaceMat( Value( l, M ) );
@@ -3752,8 +3752,9 @@ InstallGlobalFunction( FreeLieAlgebra, function( arg )
                 od; od;
             od;
         od;
-        return VectorSpace( R, List( B[degree],
-                       p->ElementOfMagmaRing( F, zero, [ one ], [ p[3] ] )));
+        if degree<1 then B := []; else B := B[degree]; fi;
+        return FreeLeftModule( R, List( B,
+		p->ElementOfMagmaRing( F, zero, [ one ], [ p[3] ] )), Zero(L));
     end) );
     # Return the ring.
     return L;

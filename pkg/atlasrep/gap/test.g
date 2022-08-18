@@ -68,6 +68,7 @@
 ##  <P/>
 ##  <List>
 ##  <#Include Label="test:AGR.Test.GroupOrders">
+##  <!-- <Include Label="test:AGR.Test.GroupFlags"> -->
 ##  <#Include Label="test:AGR.Test.Words">
 ##  <#Include Label="test:AGR.Test.ClassScripts">
 ##  <#Include Label="test:AGR.Test.CycToCcls">
@@ -120,14 +121,7 @@ if not IsPackageMarkedForLoading( "CTblLib", "" ) then
   ConstructionInfoCharacterTable:= "dummy";
   HasConstructionInfoCharacterTable:= "dummy";
   LibInfoCharacterTable:= "dummy";
-fi;
-
-if IsBound( StructureDescriptionCharacterTableName ) then
-  # This function is available in CTblLib 1.2.
-  AGR.StructureDescriptionCharacterTableName:=
-      StructureDescriptionCharacterTableName;
-else
-  AGR.StructureDescriptionCharacterTableName:= name -> name;
+  StructureDescriptionCharacterTableName:= "dummy";
 fi;
 
 if not IsPackageMarkedForLoading( "Recog", "" ) then
@@ -658,8 +652,13 @@ AGR.Test.StdTomLib:= function( arg )
       fi;
       if tom <> fail then
 
-        if HasStandardGeneratorsInfo( tom ) then
-          info:= StandardGeneratorsInfo( tom );
+        # The table of marks is available,
+        # which implies that the TomLib package is loaded.
+        # Thus '(Has)StandardGeneratorsInfo' is bound.
+        # (But avoid a syntax error message when reading the file
+        # in the case that TomLib is not available.)
+        if ValueGlobal( "HasStandardGeneratorsInfo" )( tom ) then
+          info:= ValueGlobal( "StandardGeneratorsInfo" )( tom );
         else
           info:= [];
         fi;
@@ -1803,8 +1802,7 @@ AGR.Test.MaxesStructure:= function( arg )
       if tbl <> fail then
         if HasMaxes( tbl ) then
           AddSet( result,
-              List( Maxes( tbl ),
-                    AGR.StructureDescriptionCharacterTableName ) );
+              List( Maxes( tbl ), StructureDescriptionCharacterTableName ) );
         else
           # Check whether individual maxes are supported.
           oneresult:= [];
@@ -1813,8 +1811,8 @@ AGR.Test.MaxesStructure:= function( arg )
               relname:= Concatenation( Identifier( tbl ), "M", String( i ) );
               subtbl:= CharacterTable( relname );
               if subtbl <> fail then
-                oneresult[i]:= AGR.StructureDescriptionCharacterTableName(
-                                    Identifier( subtbl ) );
+                oneresult[i]:= StructureDescriptionCharacterTableName(
+                                   Identifier( subtbl ) );
               fi;
             od;
           fi;
@@ -2574,8 +2572,7 @@ AGR.Test.KernelGenerators:= function( arg )
                 Print( "#E  AGR.Test.KernelGenerators for ", entry[1], ":\n",
                        "#E  subgroup gen. by ", l[3], " is not normal\n" );
                 result:= false;
-              fi;
-              if Size( recog ) <> kersize then
+              elif Size( recog ) <> kersize then
                 Print( "#E  AGR.Test.KernelGenerators for ", entry[1], ":\n",
                        "#E  subgroup gen. by ", l[3], " has size ",
                        Size( recog ), " not ", kersize, "\n" );
@@ -2841,9 +2838,9 @@ AGR.Test.PermCharsFaithful:= function( tbl, degree )
 ##
 AGR.Test.Character:= function( inforec, quick )
     local result, name, tbl, classnames, ccl, cyc, outputs1, prg1, poss, nam,
-          ord, parts, outputs, prgs2, id, p, modtbl, fus, cand, galoisfams,
-          choice, phi, gens, pos, prgs, prg2, repprg, rep, val, orders,
-          divisors, patterns, g, bound, good, x, inv, dec, i;
+          ord, parts, outputs, prgs2, id, p, modtbl, fus, cand, pp,
+          galoisfams, choice, phi, gens, pos, prgs, prg2, repprg, rep, val,
+          orders, divisors, patterns, g, bound, good, x, inv, dec, i;
 
     result:= true;
 
@@ -3030,13 +3027,39 @@ AGR.Test.Character:= function( inforec, quick )
                            x -> x[1] = inforec.dim );
         fi;
       fi;
+    elif IsBound( inforec.ring ) and IsIntegers( inforec.ring ) then
+      # In the case of an irreducible integral matrix representation,
+      # compute the candidates from the character table,
+      # and compare the character with them.
+      if IsBound( inforec.generators ) then
+        gens:= inforec.generators;
+      else
+        gens:= AtlasGenerators( inforec );
+        if gens <> fail then
+          gens:= gens.generators;
+        fi;
+      fi;
+      if gens <> fail then
+        # Check the irreducibility of a coprime reduction.
+        pp:= 3;
+        while Size( tbl ) mod pp = 0 do
+          pp:= NextPrimeInt( pp );
+        od;
+        if MTX.IsAbsolutelyIrreducible(
+                   GModuleByMats( gens * Z(pp)^0, GF(pp) ) ) then
+          cand:= Filtered( Irr( tbl ),
+                           x -> x[1] = inforec.dim and ForAll( x, IsInt ) );
+        fi;
+      fi;
     fi;
 
     # Determine representatives of Galois orbits.
     # We need values only for these classes.
-    galoisfams:= GaloisMat( TransposedMat( Irr( modtbl ) ) ).galoisfams;
-    choice:= Filtered( [ 1 .. Length( galoisfams ) ],
-                       i -> galoisfams[i] <> 0 );
+    if modtbl <> fail then
+      galoisfams:= GaloisMat( TransposedMat( Irr( modtbl ) ) ).galoisfams;
+      choice:= Filtered( [ 1 .. Length( galoisfams ) ],
+                         i -> galoisfams[i] <> 0 );
+    fi;
 
     phi:= fail;
 
@@ -3064,7 +3087,7 @@ AGR.Test.Character:= function( inforec, quick )
             fi;
           fi;
         fi;
-        if gens <> fail then
+        if gens <> fail and IsBound( choice ) then
 
           phi:= [];
           Info( InfoAtlasRep, 2,
@@ -3739,7 +3762,7 @@ AGR.Test.Primitivity:= function( arg )
             tbl:= fail;
           fi;
           if tbl <> fail then
-            maxname:= AGR.StructureDescriptionCharacterTableName(
+            maxname:= StructureDescriptionCharacterTableName(
                           Identifier( tbl ) );
           else
             maxname:= "???";
@@ -4156,6 +4179,7 @@ if not IsPackageMarkedForLoading( "CTblLib", "" ) then
   Unbind( ConstructionInfoCharacterTable );
   Unbind( HasConstructionInfoCharacterTable );
   Unbind( LibInfoCharacterTable );
+  Unbind( StructureDescriptionCharacterTableName );
 fi;
 
 if not IsPackageMarkedForLoading( "Recog", "" ) then

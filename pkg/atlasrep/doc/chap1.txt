@@ -7,7 +7,7 @@
   information  about  their  maximal  subgroups.  This  database  is available
   independent of [5XGAP[105X at[133X
   
-  [33X[0;0Y[7Xhttp://brauer.maths.qmul.ac.uk/Atlas/v3[107X.[133X
+  [33X[0;0Y[7Xhttp://atlas.math.rwth-aachen.de/Atlas/v3[107X.[133X
   
   [33X[0;0YThe  [5XAtlasRep[105X  package consists of this database (see Section [14X1.1[114X) and a [5XGAP[105X
   interface  (see  Section [14X1.2[114X); the latter is extended by further information
@@ -67,7 +67,7 @@
   then you should also reference this interface, using the information printed
   by the [5XGAP[105X function [2XCite[102X ([14XReference: Cite[114X).[133X
   
-  [33X[0;0YFor  referencing  the  [5XGAP[105X  system  in general, use the entry [GAP18] in the
+  [33X[0;0YFor  referencing  the  [5XGAP[105X  system  in general, use the entry [GAP19] in the
   bibliography of this manual, see also [7Xhttp://www.gap-system.org[107X.[133X
   
   
@@ -102,7 +102,68 @@
   [1X1.3 [33X[0;0YWhat's New in [5XAtlasRep[105X[101X[1X, Compared to Older Versions?[133X[101X
   
   
-  [1X1.3-1 [33X[0;0YWhat's New in Version 2.1.0? (May 2019)[133X[101X
+  [1X1.3-1 [33X[0;0YWhat's New in Version 2.1.4? (August 2022)[133X[101X
+  
+  [33X[0;0YThe server address for the core part of the database has changed.[133X
+  
+  [33X[0;0YAdditional  table  of  contents  files  are  now  available,  which  contain
+  checksums  in  SHA256  format  instead  of the checksums computed by [2XCrcFile[102X
+  ([14XReference:  CrcFile[114X)  and  [2XCrcString[102X  ([14XReference: CrcString[114X). Note that the
+  latter values can be interpreted only by [5XGAP[105X.[133X
+  
+  [33X[0;0YFor  [22X364[122X  representations, the corresponding characters have been identified
+  and   can   thus   be   used   for   accessing  these  representations  with
+  [2XOneAtlasGeneratingSetInfo[102X ([14X3.5-6[114X), see [2XDisplayAtlasInfo[102X ([14X3.5-1[114X).[133X
+  
+  
+  [1X1.3-2 [33X[0;0YWhat's New in Version 2.1.2? (March 2022)[133X[101X
+  
+  [33X[0;0YNot much.[133X
+  
+  [33X[0;0YThe  release  of  Version 2.1.2 was necessary for technical reasons: Now the
+  testfile  mentioned  in [11XPackageInfo.g[111X exits [5XGAP[105X in the end, and the external
+  links   in   the   package   documentation  were  corrected  (the  links  in
+  version 2.1.1 pointed to a wrong directory).[133X
+  
+  
+  [1X1.3-3 [33X[0;0YWhat's New in Version 2.1.1? (February 2022)[133X[101X
+  
+  [30X    [33X[0;6YThe  new function [2XEvaluatePresentation[102X ([14X3.5-11[114X) computes the images of
+        the relators of a presentation (see Section [14X6.1-7[114X).[133X
+  
+  [30X    [33X[0;6YThe new function [2XStandardGeneratorsData[102X ([14X3.5-12[114X) allows one to compute
+        standard  generators from given generators, provided a recipe for that
+        task  (a  [21Xfind[121X  straight  line  program)  for the group in question is
+        available.[133X
+  
+  [30X    [33X[0;6YThe function [2XAtlasGroup[102X ([14X3.5-8[114X) sets known information about the group
+        and the representation, such as [2XIsPrimitive[102X ([14XReference: IsPrimitive[114X).[133X
+  
+        [33X[0;6Y(Thanks to Steve Linton for suggesting this feature.)[133X
+  
+  [30X    [33X[0;6YThe  function  [2XResultOfBBoxProgram[102X  ([14X6.2-4[114X)  now  admits  an  optional
+        argument,  which  is used as options record in calls to [2XRunBBoxProgram[102X
+        ([14X6.2-3[114X).[133X
+  
+  [30X    [33X[0;6YThe  new  user  preference  [10X"AtlasRepJsonFilesAddresses"[110X  (see Section
+        [14X4.2-15[114X)   allows  one  to  use  Json  format  data  files  for  matrix
+        representations  in  characteristic  zero,  which  in  turn  makes  it
+        possible  to  create  the matrices over prescribed fields, for example
+        fields returned by [2XAlgebraicExtension[102X ([14XReference: AlgebraicExtension[114X).
+        The  information  stored in the table of contents file about the field
+        of  entries  of  the matrix representations has been extended by a [5XGAP[105X
+        independent description of this field and the defining polynomial used
+        in the Json format data files.[133X
+  
+  [30X    [33X[0;6YWhen  the  value  of the user preference [10X"AtlasRepDataDirectory"[110X is an
+        empty  string then data files that are fetched from remote servers are
+        read  into the [5XGAP[105X session without storing the files. (An advantage is
+        that  one  need  not  care about where one has permissions for storing
+        files.  A disadvantage is of course that one has to fetch a file again
+        whenever it is needed.)[133X
+  
+  
+  [1X1.3-4 [33X[0;0YWhat's New in Version 2.1.0? (May 2019)[133X[101X
   
   [33X[0;0YThe main differences to earlier versions concern extensions of the available
   data.  Up  to  now, such extensions were possible only in the sense that one
@@ -249,7 +310,7 @@
         nontrivial [22Xp[122X-core have been removed from the file [11Xgap/mindeg.g[111X.[133X
   
   
-  [1X1.3-2 [33X[0;0YWhat's New in Version 1.5.1? (March 2016)[133X[101X
+  [1X1.3-5 [33X[0;0YWhat's New in Version 1.5.1? (March 2016)[133X[101X
   
   [30X    [33X[0;6YThe  paths  of  the directories where downloaded data files get stored
         are  now  customizable,  see  Section  [14X4.2-2[114X. Up to now, the data were
@@ -298,7 +359,7 @@
         the output shown by [2XDisplayAtlasInfo[102X ([14X3.5-1[114X).[133X
   
   
-  [1X1.3-3 [33X[0;0YWhat's New in Version 1.5? (July 2011)[133X[101X
+  [1X1.3-6 [33X[0;0YWhat's New in Version 1.5? (July 2011)[133X[101X
   
   [30X    [33X[0;6YThe function [2XAtlasSubgroup[102X ([14X3.5-9[114X) now admits also the return value of
         [2XOneAtlasGeneratingSetInfo[102X  ([14X3.5-6[114X)  or  the return value of [2XAtlasGroup[102X
@@ -367,10 +428,10 @@
         Jack Schmidt for reporting this bug.[133X
   
   
-  [1X1.3-4 [33X[0;0YWhat's New in Version 1.4? (June 2008)[133X[101X
+  [1X1.3-7 [33X[0;0YWhat's New in Version 1.4? (June 2008)[133X[101X
   
   [30X    [33X[0;6YIn  addition  to  the group orders that were added in version 1.3 (see
-        Section  [14X1.3-6[114X),  also  many  orders  of  maximal  subgroups  are  now
+        Section  [14X1.3-9[114X),  also  many  orders  of  maximal  subgroups  are  now
         available.  These values occur in the records returned by [2XAtlasProgram[102X
         ([14X3.5-4[114X)  (for  the  case  of  [10X"maxes"[110X  type programs) and of the three
         argument  version of [2XAtlasGenerators[102X ([14X3.5-3[114X); now a [10Xsize[110X component may
@@ -417,7 +478,7 @@
         [2XOneAtlasGeneratingSetInfo[102X ([14X3.5-6[114X) as its argument.[133X
   
   
-  [1X1.3-5 [33X[0;0YWhat's New in Version 1.3.1? (October 2007)[133X[101X
+  [1X1.3-8 [33X[0;0YWhat's New in Version 1.3.1? (October 2007)[133X[101X
   
   [33X[0;0YThis  version  was  mainly  released in order to fix a few problems. Now one
   does not get warnings about unbound variables when the package is loaded and
@@ -434,7 +495,7 @@
   version 4.4.10 of [5XGAP[105X.)[133X
   
   
-  [1X1.3-6 [33X[0;0YWhat's New in Version 1.3? (June 2007)[133X[101X
+  [1X1.3-9 [33X[0;0YWhat's New in Version 1.3? (June 2007)[133X[101X
   
   [30X    [33X[0;6YThe  database  was extended, see Section [14X4.2-5[114X for the number and size
         of files.[133X
@@ -490,13 +551,13 @@
         install [11Xperl[111X.[133X
   
         [33X[0;6YAnother consequence is that the system program [11Xls[111X is no longer needed,
-        see Section [14X1.3-8[114X.[133X
+        see Section [14X1.3-11[114X.[133X
   
   [30X    [33X[0;6YThe package manual has been restructured, extended and improved. It is
         now based on the package [5XGAPDoc[105X (see [LN18]).[133X
   
   
-  [1X1.3-7 [33X[0;0YWhat's New in Version 1.2? (November 2003)[133X[101X
+  [1X1.3-10 [33X[0;0YWhat's New in Version 1.2? (November 2003)[133X[101X
   
   [33X[0;0YNot much.[133X
   
@@ -512,7 +573,7 @@
         mechanism that is recommended for [5XGAP[105X 4.4,[133X
   
   [30X    [33X[0;6Yto  extend  the  test  suite, which now covers more consistency checks
-        using the [5XGAP[105X Character Table Library (see [Bre13]),[133X
+        using the [5XGAP[105X Character Table Library (see [Bre22]),[133X
   
   [30X    [33X[0;6Yto  make  the function [2XScanMeatAxeFile[102X ([14X7.3-1[114X) more robust, due to the
         fact  that the [5XGAP[105X function [2XPermList[102X ([14XReference: PermList[114X) now returns
@@ -533,13 +594,13 @@
   is now faster than it was in [5XGAP[105X 4.3.[133X
   
   
-  [1X1.3-8 [33X[0;0YWhat's New in Version 1.1? (October 2002)[133X[101X
+  [1X1.3-11 [33X[0;0YWhat's New in Version 1.1? (October 2002)[133X[101X
   
   [33X[0;0YThe   biggest   change  w. r. t. Version 1.1  is  the  addition  of  private
   extensions  (see Chapter [14X5[114X). It includes a new [21Xfree format[121X for straight line
   programs  (see Section [14X5.2[114X). Unfortunately, this feature requires the system
   program  [11Xls[111X,  so  it  may  be  not  available  for  example under MS Windows
-  operating systems. [But see Section [14X1.3-6[114X.][133X
+  operating systems. [But see Section [14X1.3-9[114X.][133X
   
   [33X[0;0YIn order to admit the addition of other types of data, the implementation of
   several functions has been changed. Data types are described in Section [14X7.5[114X.
@@ -611,4 +672,8 @@
   
   [30X    [33X[0;6YAndries Brouwer suggested to add a tutorial (see Chapter [14X2[114X), Klaus Lux
         suggested several improvements of this chapter.[133X
+  
+  [30X    [33X[0;6YThe  development of this [5XGAP[105X package has been supported by the SFB-TRR
+        195   [21XSymbolic   Tools   in   Mathematics   and   their   Applications[121X
+        ([7Xhttps://www.computeralgebra.de/sfb/[107X) (from 2017 until 2022).[133X
   

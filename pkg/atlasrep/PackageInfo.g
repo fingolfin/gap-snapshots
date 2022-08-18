@@ -5,14 +5,12 @@
 SetPackageInfo( rec(
 PackageName :=
   "AtlasRep",
-MyVersion :=
-  "2r1p0",
+Version :=
+  "2.1.4",
 MyWWWHome :=
-  "http://www.math.rwth-aachen.de/~Thomas.Breuer",
+  "https://www.math.rwth-aachen.de/~Thomas.Breuer",
 Subtitle :=
   "A GAP Interface to the Atlas of Group Representations",
-Version :=
-  JoinStringsWithSeparator( SplitString( ~.MyVersion, "rp" ), "." ),
 Date :=
   # "03/04/2001" -- Version 1.0
   # "23/10/2002" -- Version 1.1
@@ -24,14 +22,18 @@ Date :=
   # "12/07/2011" -- Version 1.5.0
   # "30/03/2016" -- Version 1.5.1
   # "02/05/2019" -- Version 2.0.0
-  "10/05/2019", # -- Version 2.1.0
+  # "10/05/2019" -- Version 2.1.0
+  # "23/02/2022" -- Version 2.1.1
+  # "30/03/2022" -- Version 2.1.2
+  # "04/08/2022" -- Version 2.1.3
+  "05/08/2022", # -- Version 2.1.4
 License :=
   "GPL-3.0-or-later",
 PackageWWWHome :=
   Concatenation( ~.MyWWWHome, "/", LowercaseString( ~.PackageName ) ),
 ArchiveURL :=
   Concatenation( ~.PackageWWWHome, "/", LowercaseString( ~.PackageName ),
-                 "-", ~.MyVersion ),
+                 "-", ~.Version ),
 ArchiveFormats :=
   ".tar.gz",
 Persons := [
@@ -87,10 +89,10 @@ Persons := [
     Email := "sam@math.rwth-aachen.de",
     WWWHome := ~.MyWWWHome,
     Place := "Aachen",
-    Institution := "Lehrstuhl D für Mathematik, RWTH Aachen",
+    Institution := "Lehrstuhl für Algebra und Zahlentheorie, RWTH Aachen",
     PostalAddress := Concatenation( [
       "Thomas Breuer\n",
-      "Lehrstuhl D für Mathematik\n",
+      "Lehrstuhl für Algebra und Zahlentheorie\n",
       "Pontdriesch 14/16\n",
       "52062 Aachen\n",
       "Germany"
@@ -109,7 +111,7 @@ PackageInfoURL :=
   Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
 AbstractHTML := Concatenation( [
   "The package provides a <span class=\"pkgname\">GAP</span> interface ",
-  "to the <a href=\"http://brauer.maths.qmul.ac.uk/Atlas/v3\">",
+  "to the <a href=\"http://atlas.math.rwth-aachen.de/Atlas/v3\">",
   "Atlas of Group Representations</a>"
   ] ),
 PackageDoc := rec(
@@ -128,17 +130,18 @@ PackageDoc := rec(
   ),
 Dependencies := rec(
   GAP :=
-    ">= 4.10.1",                  # need GAP 4.5's user preferences format
+    ">= 4.11.0",  # need extended 'IntegratedStraightLineProgram'
   NeededOtherPackages := [
-      [ "gapdoc", ">= 1.6.2" ],  # want extended `InitialSubstringUTF8String'
+      [ "gapdoc", ">= 1.6.2" ],  # want extended 'InitialSubstringUTF8String'
     ],
   SuggestedOtherPackages := [
-      [ "browse", ">= 1.8.3" ], # want extended `BrowseAtlasInfo'
-      [ "ctbllib", ">= 1.2" ], # want `StructureDescriptionCharacterTableName'
+      [ "browse", ">= 1.8.3" ], # want extended 'BrowseAtlasInfo'
+      [ "ctbllib", ">= 1.2" ], # want 'StructureDescriptionCharacterTableName'
+      [ "ctblocks", ">= 1.0" ], # yields a data extension
       [ "io", ">= 3.3" ], # want file transfer tools
       [ "mfer", ">= 1.0" ], # yields a data extension
-      [ "ctblocks", ">= 1.0" ], # yields a data extension
       [ "recog", ">= 1.3.1" ], # because of some functions in 'gap/test.g'
+      [ "tomlib", ">= 1.0" ], # used in tests and min. degree computations
     ],
   ExternalConditions :=
     []

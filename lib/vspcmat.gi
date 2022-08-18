@@ -190,11 +190,8 @@ InstallMethod( Coefficients,
     fi;
 
     # Preset the coefficients list with zeroes.
-    zero    := Zero( v[1][1] );
-    coeff   := [];
-    for i in [ 1 .. Length( vectors ) ] do
-      coeff[i]:= zero;
-    od;
+    zero:= Zero( v[1][1] );
+    coeff:= ListWithIdenticalEntries( Length( vectors ), zero );
 
     # Compute the coefficients of the basis vectors.
     m:= Length( v );
@@ -965,7 +962,7 @@ InstallMethod( ViewObj,
     [ IsMutableBasis and IsMutableBasisOfGaussianMatrixSpaceRep ],
     function( MB )
     Print( "<mutable basis over ", MB!.leftActingDomain, ", ",
-           Length( MB!.basisVectors ), " vectors>" );
+           Pluralize( Length( MB!.basisVectors ), "vector" ), ">" );
     end );
 
 

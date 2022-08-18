@@ -3,6 +3,20 @@
 
 <file>
 
+<!-- The proposal for the following entry was found at
+     http://www.rfc-editor.org/info/rfc7159 -->
+<entry id="JSON"><misc>
+  <key>JSON</key>
+  <editor>
+    <name><first>T.</first><last>Bray</last></name>
+  </editor>
+  <title>The JavaScript Object Notation (JSON) Data Interchange Format</title>
+  <howpublished><URL>http://www.rfc-editor.org/info/rfc7159</URL></howpublished>
+  <month>Mar</month>
+  <year>2014</year>
+  <other type="doi">10.17487/RFC7159</other>
+</misc></entry>
+
 <entry id="CP96"><misc>
   <author>
     <name><first>J. J.</first><last>Cannon</last></name>
@@ -92,10 +106,10 @@
   </author>
   <title><C>AtlasRep</C>, A <Wrap Name="Package">GAP</Wrap> <C>I</C>nterface
          to the <C>A</C>tlas of <C>G</C>roup <C>R</C>epresentations,
-         <C>V</C>ersion 2.1</title>
-  <howpublished><URL>http://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep</URL></howpublished>
-  <month>May</month>
-  <year>2019</year>
+         <C>V</C>ersion 2.1.4</title>
+  <howpublished><URL>https://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep</URL></howpublished>
+  <month>Aug</month>
+  <year>2022</year>
   <note><Wrap Name="Package">GAP</Wrap> package</note>
 </misc></entry>
 
@@ -106,7 +120,7 @@
   </author>
   <title><C>Browse</C>, ncurses interface and browsing applications,
          <C>V</C>ersion 1.8.9</title>
-  <howpublished><URL>http://www.math.rwth-aachen.de/~Browse</URL></howpublished>
+  <howpublished><URL>https://www.math.rwth-aachen.de/~Browse</URL></howpublished>
   <month>Jun</month>
   <year>2018</year>
   <note><Wrap Name="Package">GAP</Wrap> package</note>
@@ -118,7 +132,7 @@
   </author>
   <title>The <C>C</C> <C>M</C>eat<C>A</C>xe,
          <C>V</C>ersion 2.4</title>
-  <howpublished><URL>http://www.math.rwth-aachen.de/~MTX</URL></howpublished>
+  <howpublished><URL>https://www.math.rwth-aachen.de/~MTX</URL></howpublished>
 </misc></entry>
 
 <entry id="CTBlocks"><misc>
@@ -128,7 +142,7 @@
   <title><Wrap Name="Package">CTBlocks</Wrap>,
          <C>B</C>locks of <C>C</C>haracter <C>T</C>ables,
          <C>V</C>ersion 0.9.3</title>
-  <howpublished><URL>http://www.math.rwth-aachen.de/~Thomas.Breuer/ctblocks</URL></howpublished>
+  <howpublished><URL>https://www.math.rwth-aachen.de/~Thomas.Breuer/ctblocks</URL></howpublished>
   <month>Feb</month>
   <year>2014</year>
   <note><Wrap Name="Package">GAP</Wrap> package</note>
@@ -139,10 +153,11 @@
     <name><first>T.</first><last>Breuer</last></name>
   </author>
   <title>The <Wrap Name="Package">GAP</Wrap> <C>C</C>haracter <C>T</C>able
-      <C>L</C>ibrary, <C>V</C>ersion 1.2.2</title>
-  <howpublished><URL>http://www.math.rwth-aachen.de/~Thomas.Breuer/ctbllib</URL></howpublished>
+      <C>L</C>ibrary, <C>V</C>ersion 1.3.3</title>
+  <howpublished><URL>https://www.math.rwth-aachen.de/~Thomas.Breuer/ctbllib</URL></howpublished>
   <month>Mar</month>
-  <year>2013</year>
+  <year>2022</year>
+
   <note><Wrap Name="Package">GAP</Wrap> package</note>
 </misc></entry>
 
@@ -155,7 +170,7 @@
          A <C>M</C>eta <C>P</C>ackage for <Wrap Name="Package">GAP</Wrap>
          <C>D</C>ocumentation,
          <C>V</C>ersion 1.6.2</title>
-  <howpublished><URL>http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc</URL></howpublished>
+  <howpublished><URL>https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc</URL></howpublished>
   <month>Oct</month>
   <year>2018</year>
   <note><Wrap Name="Package">GAP</Wrap> package</note>
@@ -183,12 +198,52 @@
          permutation modules of the sporadic simple groups
          and their cyclic and bicyclic extensions,
          <C>V</C>ersion 1.0.0</title>
-  <howpublished><URL>http://www.math.rwth-aachen.de/~MFER</URL></howpublished>
+  <howpublished><URL>https://www.math.rwth-aachen.de/~MFER</URL></howpublished>
   <month>Jul</month>
   <year>2009</year>
   <note><Wrap Name="Package">GAP</Wrap> package</note>
   <keywords>multiplicity-free; permutation character; endomorphism ring; sporadic simple group</keywords>
 </misc></entry>
+
+<entry id="StandardFF"><misc>
+  <author>
+    <name><first>Frank</first><last>Lübeck</last></name>
+  </author>
+  <title><Wrap Name="Package">StandardFF</Wrap>,
+         A <Wrap Name="Package">GAP</Wrap> package for constructing finite fields</title>
+  <howpublished><URL>https://github.com/frankluebeck/StandardFF/</URL></howpublished>
+  <year>2021</year>
+  <note><Wrap Name="Package">GAP</Wrap> package</note>
+</misc></entry>
+
+<entry id="GAP"><misc>
+  <title><Wrap Name="Package">GAP</Wrap> &ndash;
+      <C>G</C>roups, <C>A</C>lgorithms, and <C>P</C>rogramming,
+      <C>V</C>ersion 4.10.2</title>
+  <organization>The GAP&nbsp;Group</organization>
+  <howpublished><URL>http://www.gap-system.org</URL></howpublished>
+  <month>Jun</month>
+  <year>2019</year>
+  <key>GAP</key>
+  <keywords>groups; *; gap; manual</keywords>
+</misc></entry>
+
+<entry id="HL89"><book>
+  <author>
+    <name><first>Gerhard</first><last>Hiss</last></name>
+    <name><first>Klaus</first><last>Lux</last></name>
+  </author>
+  <title>Brauer trees of sporadic groups</title>
+  <publisher>The Clarendon Press, Oxford University Press</publisher>
+  <year>1989</year>
+  <series>Oxford Science Publications</series>
+  <address>New York</address>
+  <isbn>0-19-853381-0</isbn>
+  <mrnumber>1033265 (91k:20018)</mrnumber>
+  <mrclass>20C20 (20-02 20D08)</mrclass>
+  <mrreviewer>Harvey Blau</mrreviewer>
+  <other type="pages">x+526</other>
+</book></entry>
 
 <entry id="TomLib"><misc>
   <author>
@@ -245,7 +300,7 @@
     <name><first>Rachel</first><last>Abbott</last></name>
   </author>
   <title><C>ATLAS of Finite Group Representations</C></title>
-  <howpublished><URL>http://brauer.maths.qmul.ac.uk/Atlas/v3</URL></howpublished>
+  <howpublished><URL>http://atlas.math.rwth-aachen.de/Atlas/v3</URL></howpublished>
   <key>ATLAS</key>
 </misc></entry>
 

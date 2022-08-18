@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (Semigroups) - Chapter 1: 
+    The Semigroups package
+  </title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap1"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap1_mj.html">[MathJax on]</a></p>
+<p><a id="X7D8D6DB37A0326BE" name="X7D8D6DB37A0326BE"></a></p>
+<div class="ChapSects"><a href="chap1.html#X7D8D6DB37A0326BE">1 <span class="Heading">
+    The <strong class="pkg">Semigroups</strong> package
+  </span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7DFB63A97E67C0A1">1.1 <span class="Heading">
+      Introduction
+    </span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X8389AD927B74BA4A">1.2 <span class="Heading">
+      Overview
+    </span></a>
+</span>
+</div>
+</div>
+
+<h3>1 <span class="Heading">
+    The <strong class="pkg">Semigroups</strong> package
+  </span></h3>
+
+<p><a id="X7DFB63A97E67C0A1" name="X7DFB63A97E67C0A1"></a></p>
+
+<h4>1.1 <span class="Heading">
+      Introduction
+    </span></h4>
+
+<p>This is the manual for the <strong class="pkg">Semigroups</strong> package for <strong class="pkg">GAP</strong> version 5.0.2. <strong class="pkg">Semigroups</strong> 5.0.2 is a distant descendant of the <span class="URL"><a href=" http://schmidt.nuigalway.ie/monoid/index.html">Monoid package for GAP 3</a></span> by Goetz Pfeiffer, Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc.</p>
+
+<p>From Version 3.0.0, <strong class="pkg">Semigroups</strong> includes a copy of the <span class="URL"><a href="https://libsemigroups.readthedocs.io/en/latest/">libsemigroups</a></span> C++ library which contains implementations of the Froidure-Pin, Todd-Coxeter, and Knuth-Bendix algorithms (among others) that <strong class="pkg">Semigroups</strong> utilises.</p>
+
+<p>If you find a bug or an issue with the package, please visit the <span class="URL"><a href=" https://github.com/semigroups/Semigroups/issues ">issue tracker</a></span>.</p>
+
+<p><a id="X8389AD927B74BA4A" name="X8389AD927B74BA4A"></a></p>
+
+<h4>1.2 <span class="Heading">
+      Overview
+    </span></h4>
+
+<p>This manual is organised as follows:</p>
+
+
+<dl>
+<dt><strong class="Mark">Part I: elements</strong></dt>
+<dd><p>the different types of elements that are introduced in <strong class="pkg">Semigroups</strong> are described in Chapters <a href="chap3.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a>, <a href="chap4.html#X85A717D1790B7BB5"><span class="RefLink">4</span></a>, and <a href="chap5.html#X82D6B7FE7CAC0AFA"><span class="RefLink">5</span></a>. These include <code class="func">Bipartition</code> (<a href="chap3.html#X7E052E6378A5B758"><span class="RefLink">3.2-1</span></a>), <code class="func">PBR</code> (<a href="chap4.html#X82A8646F7C70CF3B"><span class="RefLink">4.2-1</span></a>), and <code class="func">Matrix</code> (<a href="chap5.html#X7DCA234C86ED8BD3"><span class="RefLink">5.1-5</span></a>), which supplement those already defined in the <strong class="pkg">GAP</strong> library, such as <code class="func">Transformation</code> (<a href="../../../doc/ref/chap53_mj.html#X86ADBDE57A20E323"><span class="RefLink">Reference: Transformation for an image list</span></a>) or <code class="func">PartialPerm</code> (<a href="../../../doc/ref/chap54_mj.html#X8538BAE77F2FB2F8"><span class="RefLink">Reference: PartialPerm for a domain and image</span></a>).</p>
+
+</dd>
+<dt><strong class="Mark">Part II: semigroups and monoids defined by generating sets</strong></dt>
+<dd><p>functions and operations for creating semigroups and monoids defined by generating sets (of the type descibed in Part I) are described in Chapter <a href="chap6.html#X7995B4F18672DDB0"><span class="RefLink">6</span></a>.</p>
+
+</dd>
+<dt><strong class="Mark">Part III: standard examples and constructions</strong></dt>
+<dd><p>standard examples of semigroups, such as <code class="func">FullBooleanMatMonoid</code> (<a href="chap7.html#X7B20103D84E010EF"><span class="RefLink">7.6-1</span></a>) or <code class="func">UniformBlockBijectionMonoid</code> (<a href="chap7.html#X8301C61384168D6F"><span class="RefLink">7.3-8</span></a>), are described in Chapter <a href="chap7.html#X7C76D1DC7DAF03D3"><span class="RefLink">7</span></a>, and standard constructions, such as <code class="func">DirectProduct</code> (<a href="chap8.html#X861BA02C7902A4F4"><span class="RefLink">8.1-1</span></a>) are given in Chapter <a href="chap8.html#X86EE8DC987BA646E"><span class="RefLink">8</span></a>.</p>
+
+</dd>
+<dt><strong class="Mark">Part IV: the structure of a semigroup or monoid</strong></dt>
+<dd><p>the functionality for determining various structural properties of a given semigroup or monoid are described in Chapters <a href="chap9.html#X83629803819C4A6F"><span class="RefLink">9</span></a>, <a href="chap10.html#X80C6C718801855E9"><span class="RefLink">10</span></a>, <a href="chap11.html#X7C75B1DB81C7779B"><span class="RefLink">11</span></a>, and <a href="chap12.html#X78274024827F306D"><span class="RefLink">12</span></a>.</p>
+
+</dd>
+<dt><strong class="Mark">Part V: congruences, quotients, and homomorphisms</strong></dt>
+<dd><p>methods for creating and manipulating congruences and homomorphisms are described by Chapters <a href="chap13.html#X82BD951079E3C349"><span class="RefLink">13</span></a> and <a href="chap14.html#X861935DB81A478C2"><span class="RefLink">14</span></a>.</p>
+
+</dd>
+<dt><strong class="Mark">Part VI: finitely presented semigroups and monoids</strong></dt>
+<dd><p>methods for finitely presented semigroups and monoids, in particular, for Tietze transformations can be found in Chapters <a href="chap15.html#X7F11EF307D4F409B"><span class="RefLink">15</span></a>.</p>
+
+</dd>
+<dt><strong class="Mark">Part VII: utilities and helper functions</strong></dt>
+<dd><p>functions for reading and writing semigroups and their elements, and for visualising semigroups, and some of their elements, can be found in Chapters <a href="chap16.html#X80E82C6785300A86"><span class="RefLink">16</span></a> and <a href="chap17.html#X80CDCB927B3E5BB9"><span class="RefLink">17</span></a>.</p>
+
+</dd>
+</dl>
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

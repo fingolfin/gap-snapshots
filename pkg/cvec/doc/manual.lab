@@ -1,0 +1,185 @@
+\GAPDocLabFile{cvec}
+\makelabel{cvec:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{cvec:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{cvec:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{cvec:Introduction}{1}{X7DFB63A97E67C0A1}
+\makelabel{cvec:Philosophy}{1.1}{X873C99678745ABAF}
+\makelabel{cvec:Overview over this manual}{1.2}{X786BACDB82918A65}
+\makelabel{cvec:Feedback}{1.3}{X80D704CC7EBFDF7A}
+\makelabel{cvec:Installation of the cvec-Package}{2}{X81D63A85782CD477}
+\makelabel{cvec:The Data Structures}{3}{X81F8AEBD87002F6F}
+\makelabel{cvec:Finite field elements}{3.1}{X7B9DCCCC83400B47}
+\makelabel{cvec:Compressed Vectors in Memory}{3.2}{X7ED5B368830755AF}
+\makelabel{cvec:Packing of prime field elements}{3.2.1}{X87968B277C5DF090}
+\makelabel{cvec:Extension Fields}{3.2.2}{X7C195F41802266B7}
+\makelabel{cvec:How is information about the base field stored?}{3.2.3}{X819040FD7BCBABB2}
+\makelabel{cvec:Limits that follow from the Data Format}{3.2.4}{X7DF0FE978626CE59}
+\makelabel{cvec:Compressed Matrices}{3.3}{X78694256795D3A28}
+\makelabel{cvec:External Representation of Matrices on Storage}{3.4}{X783395FC81A451F3}
+\makelabel{cvec:Byte ordering and word length}{3.4.1}{X7B82906C7FFF36F5}
+\makelabel{cvec:The header of a cmat file}{3.4.2}{X7ACD96C483D7DA8A}
+\makelabel{cvec:Vectors}{4}{X7D12102B824C97B4}
+\makelabel{cvec:Creation}{4.1}{X788B78DE82579F3D}
+\makelabel{cvec:Arithmetic}{4.2}{X79862FF37B75BF48}
+\makelabel{cvec:Handling of scalars in arithmetic operations}{4.2.1}{X788A3D6482290F7D}
+\makelabel{cvec:Element access and slicing}{4.3}{X7C68FFEC84A86786}
+\makelabel{cvec:Comparison of Vectors and other information}{4.4}{X81F3C9697E5636B6}
+\makelabel{cvec:Changing representation, Unpacking}{4.5}{X80A1A9C386FD0E1B}
+\makelabel{cvec:Access to the base field}{4.6}{X853A85AE878B0CBF}
+\makelabel{cvec:Hashing techniques for cvecs}{4.7}{X823EFBDB7ED49554}
+\makelabel{cvec:Matrices}{5}{X812CCAB278643A59}
+\makelabel{cvec:Creation}{5.1}{X788B78DE82579F3D}
+\makelabel{cvec:Matrices as lists}{5.2}{X7C9F7D327BAECA5E}
+\makelabel{cvec:Arithmetic}{5.3}{X79862FF37B75BF48}
+\makelabel{cvec:Comparison of matrices and other information}{5.4}{X845009E07A011131}
+\makelabel{cvec:Slicing and submatrices}{5.5}{X7B54DF167CFC6C0F}
+\makelabel{cvec:Information about matrices}{5.6}{X805F24017D4348E2}
+\makelabel{cvec:Input and output}{5.7}{X78DA04477DDD0ACE}
+\makelabel{cvec:Grease}{5.8}{X7DA0D38A7D5DBDFF}
+\makelabel{cvec:Everything else}{5.9}{X7A0D26B180BEDE37}
+\makelabel{cvec:Linear Algebra routines}{6}{X8571243581CAD780}
+\makelabel{cvec:Semi echelonised bases and cleaning}{6.1}{X79C4BA5B821BBE58}
+\makelabel{cvec:Characteristic and minimal polynomial}{6.2}{X825613828322BD22}
+\makelabel{cvec:Performance}{7}{X854F8C5579845066}
+\makelabel{cvec:Cooperation with the GAP library}{8}{X865BC7FE84250875}
+\makelabel{cvec:Examples}{9}{X7A489A5D79DA9E5C}
+\makelabel{cvec:Bibliography}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{cvec:References}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{cvec:Index}{Ind}{X83A0356F839C696F}
+\makelabel{cvec:cvec}{2}{X81D63A85782CD477}
+\makelabel{cvec:CVec}{4.1.1}{X83BF7BBC84478E77}
+\makelabel{cvec:CVec cvecclass}{4.1.2}{X83E8D01B82498337}
+\makelabel{cvec:CVec coefflcvecclass}{4.1.3}{X826347BB7B81A06D}
+\makelabel{cvec:CVec coefflpd}{4.1.4}{X83E046D17AB12FF0}
+\makelabel{cvec:CVec compvec}{4.1.5}{X86642DDE797387E7}
+\makelabel{cvec:CVec coefflff}{4.1.6}{X7CC92B9E8286B025}
+\makelabel{cvec:CVecClass}{4.1.7}{X7B9566C1867C5EA6}
+\makelabel{cvec:CVecClass}{4.1.8}{X7B9566C1867C5EA6}
+\makelabel{cvec:CVecClass}{4.1.9}{X7B9566C1867C5EA6}
+\makelabel{cvec:CVecClass}{4.1.10}{X7B9566C1867C5EA6}
+\makelabel{cvec:CVecClass}{4.1.11}{X7B9566C1867C5EA6}
+\makelabel{cvec:CVecClass}{4.1.12}{X7B9566C1867C5EA6}
+\makelabel{cvec:ZeroSameMutability cvec}{4.1.13}{X876613FC7A9A276C}
+\makelabel{cvec:ShallowCopy cvec}{4.1.14}{X7BA2BD517C058720}
+\makelabel{cvec:Randomize cvec}{4.1.15}{X84EBC4427913251F}
+\makelabel{cvec:Randomize cvecrandomsource}{4.1.15}{X84EBC4427913251F}
+\makelabel{cvec:AdditiveInverseSameMutability cvec}{4.2.4}{X7DD3036C847E12DC}
+\makelabel{cvec:AdditiveInverseMutable cvec}{4.2.5}{X7A34F9AA8330EBB9}
+\makelabel{cvec:AddRowVector cveccvecsca}{4.2.7}{X820D829E87A82A80}
+\makelabel{cvec:AddRowVector cveccvecscapospos}{4.2.7}{X820D829E87A82A80}
+\makelabel{cvec:MultVector cvecsca}{4.2.8}{X846D1EDA7B5B1B39}
+\makelabel{cvec:MultVector cvecscapospos}{4.2.8}{X846D1EDA7B5B1B39}
+\makelabel{cvec:ScalarProduct cveccvec}{4.2.9}{X7F4B8B747E88C59B}
+\makelabel{cvec:ZeroMutable cvec}{4.2.10}{X86115BE97842EC3B}
+\makelabel{cvec:ZeroVector cvec}{4.2.11}{X7FB1A37D7F8603B9}
+\makelabel{cvec:ELMLIST}{4.3.1}{X805C33C281B29B00}
+\makelabel{cvec:ASSLIST}{4.3.2}{X829C3BD17C7A6F4F}
+\makelabel{cvec:ELMSLIST}{4.3.3}{X7E3A8E51853DEC58}
+\makelabel{cvec:CVECSlice}{4.3.4}{X78878E5E839265A6}
+\makelabel{cvec:CopySubVector}{4.3.5}{X80EC354D78D7B5A6}
+\makelabel{cvec:CVECConcatenation}{4.3.6}{X84347D8B7DFA790C}
+\makelabel{cvec:LT}{4.4.2}{X7FBCE84886AB9848}
+\makelabel{cvec:IsZero}{4.4.3}{X82BDA47282F9BBA7}
+\makelabel{cvec:PositionNonZero}{4.4.4}{X7F42E5AD87EC9D5A}
+\makelabel{cvec:PositionLastNonZero}{4.4.5}{X8370979D7F451279}
+\makelabel{cvec:Length}{4.4.6}{X780769238600AFD1}
+\makelabel{cvec:Unpack cvec}{4.5.1}{X7BD632E57E1EB300}
+\makelabel{cvec:IntegerRep cvec}{4.5.2}{X850FB74483F87453}
+\makelabel{cvec:NumberFFVector cvec}{4.5.3}{X7FDFEF7A7E850151}
+\makelabel{cvec:CVecNumber}{4.5.4}{X7A97E6E883E4BDCB}
+\makelabel{cvec:CVecNumber}{4.5.4}{X7A97E6E883E4BDCB}
+\makelabel{cvec:BaseDomain cvec}{4.6.1}{X854192428704857E}
+\makelabel{cvec:BaseField cvec}{4.6.2}{X842335E47DC49702}
+\makelabel{cvec:Characteristic cvec}{4.6.3}{X81B99EEC7C134213}
+\makelabel{cvec:DegreeFFE cvec}{4.6.4}{X81E3BBBB80096DC2}
+\makelabel{cvec:CVECHashFunctionForCVecs}{4.7.1}{X7F0228A18327F87D}
+\makelabel{cvec:ChooseHashFunction}{4.7.2}{X7ACED4FB7C971A5A}
+\makelabel{cvec:CMat}{5.1.1}{X7CC3BB7982789EB1}
+\makelabel{cvec:CMat}{5.1.1}{X7CC3BB7982789EB1}
+\makelabel{cvec:CMat}{5.1.2}{X7CC3BB7982789EB1}
+\makelabel{cvec:CMat}{5.1.2}{X7CC3BB7982789EB1}
+\makelabel{cvec:CMat}{5.1.3}{X7CC3BB7982789EB1}
+\makelabel{cvec:CMat}{5.1.4}{X7CC3BB7982789EB1}
+\makelabel{cvec:CVECZeroMat}{5.1.5}{X85DE9EF67ADE6A6B}
+\makelabel{cvec:CVECZeroMat}{5.1.5}{X85DE9EF67ADE6A6B}
+\makelabel{cvec:CVECIdentityMat}{5.1.6}{X7C188AFF84F2E3ED}
+\makelabel{cvec:CVECIdentityMat}{5.1.6}{X7C188AFF84F2E3ED}
+\makelabel{cvec:CVECRandomMat}{5.1.7}{X879CE439863CC8D1}
+\makelabel{cvec:CVECRandomMat}{5.1.7}{X879CE439863CC8D1}
+\makelabel{cvec:MutableCopyMat}{5.1.8}{X78BD0AD885D4C2FF}
+\makelabel{cvec:Matrix}{5.1.9}{X879384D479EB1D82}
+\makelabel{cvec:MatrixNC}{5.1.9}{X879384D479EB1D82}
+\makelabel{cvec:Add}{5.2.1}{X795EC9D67E34DAB0}
+\makelabel{cvec:Remove}{5.2.2}{X7E98B11B79BA9167}
+\makelabel{cvec:ELMLIST}{5.2.3}{X805C33C281B29B00}
+\makelabel{cvec:ASSLIST}{5.2.4}{X829C3BD17C7A6F4F}
+\makelabel{cvec:ELMSLIST}{5.2.5}{X7E3A8E51853DEC58}
+\makelabel{cvec:ASSSLIST}{5.2.6}{X82C3E70078F51817}
+\makelabel{cvec:Length}{5.2.7}{X780769238600AFD1}
+\makelabel{cvec:ShallowCopy}{5.2.8}{X846BC7107C352031}
+\makelabel{cvec:Collected}{5.2.9}{X7ECE9056792F28BA}
+\makelabel{cvec:DuplicateFreeList}{5.2.10}{X8727F2928467C2F9}
+\makelabel{cvec:Append}{5.2.11}{X79E31DB27C82D6E1}
+\makelabel{cvec:Filtered}{5.2.12}{X7C86D7F7795125F0}
+\makelabel{cvec:Unbind}{5.2.13}{X82AACD43853C24D1}
+\makelabel{cvec:AdditiveInverseSameMutability cmat}{5.3.3}{X82AFC3A987140922}
+\makelabel{cvec:AdditiveInverseMutable cmat}{5.3.4}{X8548396F7D4CAC21}
+\makelabel{cvec:ZeroSameMutability cmat}{5.3.9}{X781AD339797C0625}
+\makelabel{cvec:ZeroMutable cmat}{5.3.10}{X796D9B2C83C0667B}
+\makelabel{cvec:OneSameMutability cmat}{5.3.11}{X7ED3BC7D8198EE2E}
+\makelabel{cvec:OneMutable cmat}{5.3.12}{X7FBD3ABF80EB659C}
+\makelabel{cvec:InverseMutable}{5.3.13}{X78F9A4028122E39B}
+\makelabel{cvec:InverseSameMutability}{5.3.14}{X8593B0F886BBD8A7}
+\makelabel{cvec:TransposedMat}{5.3.15}{X87F304F3826A7063}
+\makelabel{cvec:KroneckerProduct}{5.3.16}{X8634C79E7DB22934}
+\makelabel{cvec:LT}{5.4.2}{X7FBCE84886AB9848}
+\makelabel{cvec:IsZero}{5.4.3}{X82BDA47282F9BBA7}
+\makelabel{cvec:IsOne}{5.4.4}{X814D78347858EC13}
+\makelabel{cvec:IsDiagonalMat}{5.4.5}{X7FF01BF686AD0623}
+\makelabel{cvec:IsUpperTriangularMat}{5.4.6}{X7ECFBD9F8664982B}
+\makelabel{cvec:IsLowerTriangularMat}{5.4.7}{X81671CFD7CFE4819}
+\makelabel{cvec:CVECHashFunctionForCMats}{5.4.8}{X875B076C8559CAF0}
+\makelabel{cvec:ChooseHashFunction}{5.4.9}{X7ACED4FB7C971A5A}
+\makelabel{cvec:ExtractSubMatrix}{5.5.1}{X838B45F7790E9FDF}
+\makelabel{cvec:CopySubMatrix}{5.5.2}{X7ED9E5D4809E3B50}
+\makelabel{cvec:BaseField cmat}{5.6.1}{X7B5FF52186205C5E}
+\makelabel{cvec:Characteristic cmat}{5.6.2}{X7EC55E298313BCB1}
+\makelabel{cvec:DegreeFFE cmat}{5.6.3}{X7E9F7B7E7BEDA69E}
+\makelabel{cvec:DefaultField cmat}{5.6.4}{X7C6624AF7CEAA74D}
+\makelabel{cvec:CVECWriteMat}{5.7.1}{X7DF1D51F7924429A}
+\makelabel{cvec:CVECWriteMatToFile}{5.7.2}{X794D936C7E99F805}
+\makelabel{cvec:CVECWriteMatsToFile}{5.7.3}{X78F898D17D9E522C}
+\makelabel{cvec:CVECReadMat}{5.7.4}{X79E47CB5831D48CC}
+\makelabel{cvec:CVECReadMatFromFile}{5.7.5}{X824FA01878D60EE1}
+\makelabel{cvec:CVECReadMatsFromFile}{5.7.6}{X79397B1D78E0746A}
+\makelabel{cvec:GreaseMat}{5.8.1}{X7DF5A56F8747DD45}
+\makelabel{cvec:GreaseMat}{5.8.1}{X7DF5A56F8747DD45}
+\makelabel{cvec:UnGreaseMat}{5.8.2}{X7E8A9C7E7E014FC7}
+\makelabel{cvec:Randomize cmat}{5.9.1}{X7B97048782F7EE43}
+\makelabel{cvec:Randomize cmatrandomsource}{5.9.1}{X7B97048782F7EE43}
+\makelabel{cvec:OverviewMat cmat}{5.9.2}{X8114198F7D6486CB}
+\makelabel{cvec:Unpack cmat}{5.9.3}{X84AAF220841589D9}
+\makelabel{cvec:EmptySemiEchelonBasis}{6.1.1}{X87855EEA8779C855}
+\makelabel{cvec:Vectors}{6.1.2}{X7D12102B824C97B4}
+\makelabel{cvec:Length for a semi echelonised basis}{6.1.3}{X8464F2B87BCA3D34}
+\makelabel{cvec:CleanRow}{6.1.4}{X7F4EA39D7D18D9B7}
+\makelabel{cvec:SemiEchelonBasisMutable}{6.1.5}{X82A37BC982B1D8CA}
+\makelabel{cvec:SemiEchelonBasisMutable}{6.1.6}{X82A37BC982B1D8CA}
+\makelabel{cvec:SemiEchelonBasisMutableX}{6.1.7}{X839298477E3F7345}
+\makelabel{cvec:SemiEchelonBasisMutableT}{6.1.8}{X8309FC85858FC96B}
+\makelabel{cvec:SemiEchelonBasisMutableTX}{6.1.9}{X845EFC3B87BED1BB}
+\makelabel{cvec:SemiEchelonBasisMutableP}{6.1.10}{X837F20C4831FA08E}
+\makelabel{cvec:SemiEchelonBasisMutablePX}{6.1.11}{X8218306B812EB85E}
+\makelabel{cvec:MutableNullspaceMat}{6.1.12}{X7E5C2C297CAAE3FB}
+\makelabel{cvec:MutableNullspaceMatX}{6.1.13}{X7A9596C98725862E}
+\makelabel{cvec:NullspaceMat}{6.1.14}{X7DA0D5887DB12DC4}
+\makelabel{cvec:NullspaceMatDestructive}{6.1.15}{X87684B0F7AB7B7DB}
+\makelabel{cvec:CharacteristicPolynomialOfMatrix}{6.2.1}{X7BB7DCBF78177638}
+\makelabel{cvec:CharacteristicPolynomialOfMatrix}{6.2.1}{X7BB7DCBF78177638}
+\makelabel{cvec:FactorsOfCharacteristicPolynomial}{6.2.2}{X7FE2A9D281A74FDD}
+\makelabel{cvec:FactorsOfCharacteristicPolynomial}{6.2.2}{X7FE2A9D281A74FDD}
+\makelabel{cvec:MinimalPolynomialOfMatrix}{6.2.3}{X7A110EA07A2EC59C}
+\makelabel{cvec:MinimalPolynomialOfMatrix}{6.2.3}{X7A110EA07A2EC59C}
+\makelabel{cvec:CharAndMinimalPolynomialOfMatrix}{6.2.4}{X862C6AA0794E41C4}
+\makelabel{cvec:CharAndMinimalPolynomialOfMatrix}{6.2.4}{X862C6AA0794E41C4}
+\makelabel{cvec:MinimalPolynomialOfMatrixMC}{6.2.5}{X839407B37A85AAC8}

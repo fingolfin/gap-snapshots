@@ -4,8 +4,8 @@
   [33X[0;0Y[13XDomain[113X is [5XGAP[105X's name for structured sets. We already saw examples of domains
   in  Chapters [14X5[114X  and [14X6[114X:  the  groups  [10Xs8[110X  and  [10Xa8[110X in Section [14X5.1[114X are domains,
   likewise the field [10Xf[110X and the vector space [10Xv[110X in Section [14X6.1[114X are domains. They
-  were constructed by functions such as [2XGroup[102X ([14XReference: Group Libraries[114X) and
-  [2XGF[102X  ([14XReference: GF for field size[114X), and they could be passed as arguments to
+  were  constructed  by  functions  such  as  [2XGroup[102X  ([14XReference: Group[114X) and [2XGF[102X
+  ([14XReference:  GF  for  field  size[114X), and they could be passed as arguments to
   other  functions  such  as  [2XDerivedSubgroup[102X ([14XReference: DerivedSubgroup[114X) and
   [2XDimension[102X ([14XReference: Dimension[114X).[133X
   
@@ -205,8 +205,8 @@
   [33X[0;0YThe  functions  [2XAsList[102X  ([14XReference:  AsList[114X)  and  [2XAsSortedList[102X  ([14XReference:
   AsSortedList[114X)  mentioned  above do not return domains, but they fit into the
   general  pattern  in  the  sense  that  they forget all the structure of the
-  argument, including the fact that it is a domain, and return a list with the
-  same elements as the argument has.[133X
+  argument,  including  the  fact that it is a domain, and return an immutable
+  list with the same elements as the argument has.[133X
   
   
   [1X7.7 [33X[0;0YSubdomains[133X[101X
@@ -234,7 +234,7 @@
   [4X[32X[104X
   
   [33X[0;0YMany  functions return subdomains of their arguments, for example the result
-  of [10XSylowSubgroup( [3XG[103X[10X )[110X is a group with parent group [3XG[103X.[133X
+  of [10XSylowSubgroup( [3XG[103X[10X, [3Xprime[103X[10X )[110X is a group with parent group [3XG[103X.[133X
   
   [33X[0;0YIf you are sure that the domain [10XSomething( [3Xgens[103X[10X )[110X is contained in the domain
   [3XD[103X  then you can also call [10XSubsomethingNC( [3XD[103X[10X, [3Xgens[103X[10X )[110X instead of [10XSubsomething(
@@ -245,6 +245,6 @@
   [1X7.8 [33X[0;0YFurther Information about Domains[133X[101X
   
   [33X[0;0YMore information about domains can be found in Chapter [14X'Reference: Domains'[114X.
-  Many other other chapters deal with specific types of domain such as groups,
+  Many  other  chapters  deal  with  specific  types of domain such as groups,
   vector spaces or algebras.[133X
   

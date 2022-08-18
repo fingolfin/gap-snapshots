@@ -81,16 +81,12 @@ InstallMethod( IsTrivialNormalIntersection,
 InstallGlobalFunction( UnionIfCanEasilySortElements,
 
   function( arg )
-    local i, N;
 
-    for i in [1..Length(arg)] do
-      for N in arg[i] do
-        if not CanEasilySortElements(N) then
-          return Concatenation(arg);
-        fi;
-      od;
-    od;
-    return Union(arg);
+    if ForAll(arg, CanEasilySortElements) then
+      return Union(arg);
+    else
+      return Concatenation(arg);
+    fi;
   end);
 
 #############################################################################
@@ -156,6 +152,7 @@ InstallMethod( NormalComplementNC,
           Gf,   # = G/T = N x B/B'
           Nf,   # = NT/T
           Bf,   # abelian complement to Nf in Gf ( = B/B')
+          nat,
           BfF;  # Direct factors of Bf
 
     # if <N> is trivial then the only complement is <G>
@@ -168,13 +165,15 @@ InstallMethod( NormalComplementNC,
 
     # if G/N is abelian
     elif HasAbelianFactorGroup(G, N) then
-      F := FactorGroupNC(G, N);
+      nat:=NaturalHomomorphismByNormalSubgroupNC(G,N);
+      #F := FactorGroupNC(G, N);
+      F:=Image(nat,G);
       b := [];
       l := [];
       i:=0;
       for gF in IndependentGeneratorsOfAbelianGroup(F) do
         i := i+1;
-        g := PreImagesRepresentative(NaturalHomomorphism(F), gF);
+        g := PreImagesRepresentative(nat, gF);
         R := RightCoset(N, g);
         # DirectFactorsOfGroup already computed Center and RationalClasses
         # when calling NormalComplement
@@ -228,15 +227,18 @@ InstallMethod( NormalComplementNC,
     else
       T := CommutatorSubgroup(Centralizer(G, N), G);
       if not IsTrivial(T) and IsTrivialNormalIntersection(G, T, N) then
-        Gf := FactorGroupNC(G, T);
-        Nf := Image(NaturalHomomorphism(Gf), N);
+        #Gf := FactorGroupNC(G, T);
+        #Nf := Image(NaturalHomomorphism(Gf), N);
+        nat:=NaturalHomomorphismByNormalSubgroupNC(G, T);
+        Gf:=Image(nat,G);
+        Nf:=Image(nat,N);
         # not quite sure if this check is needed
         if HasAbelianFactorGroup(Gf, Nf) then
           Bf := NormalComplementNC(Gf, Nf);
           if Bf = fail then
             return fail;
           else
-            B := PreImage(NaturalHomomorphism(Gf), Bf);
+            B := PreImage(nat, Bf);
             return B;
           fi;
         else
@@ -1200,8 +1202,14 @@ InstallMethod( AlternatingDegree,
   function ( G )
     if not IsFinite(G) then TryNextMethod(); fi;
     if IsNaturalAlternatingGroup(G) then return DegreeAction(G); fi;
-    if IsAlternatingGroup(G) then return AlternatingDegree(G);
-                             else return fail; fi;
+    if not IsAlternatingGroup(G) then return fail; fi;
+    if HasAlternatingDegree(G) then return AlternatingDegree(G); fi;
+
+    if Size(G) = 1 then return 0;
+    elif Size(G) = 3 then return 3;
+    elif Size(G) = 12 then return 4;
+    else return IsomorphismTypeInfoFiniteSimpleGroup(G).parameter;
+    fi;
   end );
 
 #############################################################################
@@ -1236,7 +1244,8 @@ InstallMethod( IsSymmetricGroup,
     # special treatment of small cases
     if Size(G)<=2 then SetSymmetricDegree(G,Size(G)); return true;
     elif Size(G)=6 and not IsAbelian(G) then
-      SetSymmetricDegree(G,3);return true;
+      SetSymmetricDegree(G,3);
+      return true;
     fi;
 
     G1 := DerivedSubgroup(G);
@@ -1272,8 +1281,17 @@ InstallMethod( SymmetricDegree,
   function ( G )
     if not IsFinite(G) then TryNextMethod(); fi;
     if IsNaturalSymmetricGroup(G) then return DegreeAction(G); fi;
-    if IsSymmetricGroup(G) then return SymmetricDegree(G);
-                           else return fail; fi;
+    if not IsSymmetricGroup(G) then return fail; fi;
+    # calling IsSymmetricGroup may have computed the SymmetricDegree
+    if HasSymmetricDegree(G) then return SymmetricDegree(G); fi;
+
+    # special treatment of small cases
+    if Size(G)<=2 then
+      return Size(G);
+    elif Size(G)=6 then
+      return 3;
+    fi;
+    return AlternatingDegree(DerivedSubgroup(G));
   end );
 
 #############################################################################

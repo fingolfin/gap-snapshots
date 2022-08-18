@@ -21,14 +21,14 @@
 #include "gaputils.h"
 #include "io.h"
 #include "lists.h"
-#include "modules.h"
 #include "plist.h"
 #include "stringobj.h"
-#include "sysopt.h"
+#include "sysstr.h"
 
 
 static UInt NextSymbol(ScannerState * s);
 
+#define GET_NEXT_CHAR() GetNextChar(s->input)
 
 /****************************************************************************
 **
@@ -44,10 +44,11 @@ static void SyntaxErrorOrWarning(ScannerState * s,
 {
     GAP_ASSERT(tokenoffset >= 0 && tokenoffset <= 2);
     // do not print a message if we found one already on the current line
-    if (STATE(NrErrLine) == 0) {
+    if (s->input->lastErrorLine != s->input->number) {
 
         // open error output
-        OpenErrorOutput();
+        TypOutputFile output = { 0 };
+        OpenErrorOutput(&output);
 
         // print the message ...
         if (error)
@@ -56,12 +57,13 @@ static void SyntaxErrorOrWarning(ScannerState * s,
             Pr("Syntax warning: %s", (Int)msg, 0);
 
         // ... and the filename + line, unless it is '*stdin*'
-        if (strcmp("*stdin*", GetInputFilename()) != 0)
-            Pr(" in %s:%d", (Int)GetInputFilename(), GetInputLineNumber());
+        Obj name = GetCachedFilename(GetInputFilenameID(s->input));
+        if (!streq("*stdin*", CONST_CSTR_STRING(name)))
+            Pr(" in %g:%d", (Int)name, GetInputLineNumber(s->input));
         Pr("\n", 0, 0);
 
         // print the current line
-        const char * line = GetInputLineBuffer();
+        const char * line = GetInputLineBuffer(s->input);
         const UInt len = strlen(line);
         if (len > 0 && line[len-1] != '\n')
             Pr("%s\n", (Int)line, 0);
@@ -72,37 +74,37 @@ static void SyntaxErrorOrWarning(ScannerState * s,
         Int startPos = s->SymbolStartPos[tokenoffset];
         Int pos;
         if (tokenoffset == 0)
-            pos = GetInputLinePosition();
+            pos = GetInputLinePosition(s->input);
         else
             pos = s->SymbolStartPos[tokenoffset - 1];
 
-        if (s->SymbolStartLine[tokenoffset] != GetInputLineNumber()) {
-            startPos = 0;
-            pos = GetInputLinePosition();
+        if (s->SymbolStartLine[tokenoffset] != GetInputLineNumber(s->input)) {
+            startPos = 1;
+            pos = GetInputLinePosition(s->input);
         }
 
-        if (startPos <= pos) {
+        if (0 < pos && startPos <= pos) {
             Int i;
-            for (i = 0; i <= startPos; i++) {
+            for (i = 0; i < startPos; i++) {
                 if (line[i] == '\t')
                     Pr("\t", 0, 0);
                 else
                     Pr(" ", 0, 0);
             }
 
-            for (; i <= pos; i++)
+            for (; i < pos; i++)
                 Pr("^", 0, 0);
             Pr("\n", 0, 0);
         }
 
         // close error output
-        CloseOutput();
+        CloseOutput(&output);
     }
 
     if (error) {
         // one more error
-        STATE(NrError)++;
-        STATE(NrErrLine)++;
+        s->NrError++;
+        s->input->lastErrorLine = s->input->number;
     }
 }
 
@@ -178,7 +180,7 @@ static Obj AppendBufToString(Obj string, const char * buf, UInt bufsize)
 **
 **  One kind of typical 'Match' call has the form
 **
-**      'Match( Symbol, "", 0L );'.
+**      'Match( Symbol, "", 0 );'.
 **
 **  This is used if the parser knows that the current  symbol is correct, for
 **  example in 'ReadReturn'  the  first symbol must be 'S_RETURN',  otherwise
@@ -212,10 +214,6 @@ void Match(ScannerState * s,
 {
     Char                errmsg [256];
 
-    if (STATE(InterpreterStartLine) == 0 && symbol != S_ILLEGAL) {
-        STATE(InterpreterStartLine) = s->SymbolStartLine[0];
-    }
-
     // if 's->Symbol' is the expected symbol match it away
     if (symbol == s->Symbol) {
         s->Symbol = NextSymbol(s);
@@ -223,8 +221,8 @@ void Match(ScannerState * s,
 
     /* else generate an error message and skip to a symbol in <skipto>     */
     else {
-        strlcpy( errmsg, msg, sizeof(errmsg) );
-        strlcat( errmsg, " expected", sizeof(errmsg) );
+        gap_strlcpy( errmsg, msg, sizeof(errmsg) );
+        gap_strlcat( errmsg, " expected", sizeof(errmsg) );
         SyntaxError(s, errmsg);
         while (!IS_IN(s->Symbol, skipto))
             s->Symbol = NextSymbol(s);
@@ -263,14 +261,13 @@ void Match(ScannerState * s,
 **  'GetIdent' can decide with one string comparison if 's->Value' holds
 **  a keyword or not.
 */
-static UInt GetIdent(ScannerState * s, Int i)
+static UInt GetIdent(ScannerState * s, Int i, Char c)
 {
     // initially it could be a keyword
     Int isQuoted = 0;
 
     // read all characters into 's->Value'
-    Char c = PEEK_CURR_CHAR();
-    for (; IsIdent(c) || IsDigit(c) || c == '\\'; i++) {
+    for (; IsIdent(c) || c == '\\'; i++) {
 
         // handle escape sequences
         if (c == '\\') {
@@ -293,56 +290,58 @@ static UInt GetIdent(ScannerState * s, Int i)
         c = GET_NEXT_CHAR();
     }
 
-    // terminate the identifier and lets assume that it is not a keyword
+    // reject overlong identifiers
     if (i > MAX_VALUE_LEN - 1) {
         SyntaxError(
             s, "Identifiers in GAP must consist of at most 1023 characters.");
         i = MAX_VALUE_LEN - 1;
     }
+
+    // terminate the identifier
     s->Value[i] = '\0';
 
-    // if it is quoted then it is an identifier
+    // if it is quoted then it is not a keyword
     if (isQuoted)
         return S_IDENT;
 
     // now check if 's->Value' holds a keyword
     const Char * v = s->Value;
     switch ( 256*v[0]+v[i-1] ) {
-    case 256*'a'+'d': if(!strcmp(v,"and"))           return S_AND;
-    case 256*'a'+'c': if(!strcmp(v,"atomic"))        return S_ATOMIC;
-    case 256*'b'+'k': if(!strcmp(v,"break"))         return S_BREAK;
-    case 256*'c'+'e': if(!strcmp(v,"continue"))      return S_CONTINUE;
-    case 256*'d'+'o': if(!strcmp(v,"do"))            return S_DO;
-    case 256*'e'+'f': if(!strcmp(v,"elif"))          return S_ELIF;
-    case 256*'e'+'e': if(!strcmp(v,"else"))          return S_ELSE;
-    case 256*'e'+'d': if(!strcmp(v,"end"))           return S_END;
-    case 256*'f'+'e': if(!strcmp(v,"false"))         return S_FALSE;
-    case 256*'f'+'i': if(!strcmp(v,"fi"))            return S_FI;
-    case 256*'f'+'r': if(!strcmp(v,"for"))           return S_FOR;
-    case 256*'f'+'n': if(!strcmp(v,"function"))      return S_FUNCTION;
-    case 256*'i'+'f': if(!strcmp(v,"if"))            return S_IF;
-    case 256*'i'+'n': if(!strcmp(v,"in"))            return S_IN;
-    case 256*'l'+'l': if(!strcmp(v,"local"))         return S_LOCAL;
-    case 256*'m'+'d': if(!strcmp(v,"mod"))           return S_MOD;
-    case 256*'n'+'t': if(!strcmp(v,"not"))           return S_NOT;
-    case 256*'o'+'d': if(!strcmp(v,"od"))            return S_OD;
-    case 256*'o'+'r': if(!strcmp(v,"or"))            return S_OR;
-    case 256*'r'+'e': if(!strcmp(v,"readwrite"))     return S_READWRITE;
-    case 256*'r'+'y': if(!strcmp(v,"readonly"))      return S_READONLY;
-    case 256*'r'+'c': if(!strcmp(v,"rec"))           return S_REC;
-    case 256*'r'+'t': if(!strcmp(v,"repeat"))        return S_REPEAT;
-    case 256*'r'+'n': if(!strcmp(v,"return"))        return S_RETURN;
-    case 256*'t'+'n': if(!strcmp(v,"then"))          return S_THEN;
-    case 256*'t'+'e': if(!strcmp(v,"true"))          return S_TRUE;
-    case 256*'u'+'l': if(!strcmp(v,"until"))         return S_UNTIL;
-    case 256*'w'+'e': if(!strcmp(v,"while"))         return S_WHILE;
-    case 256*'q'+'t': if(!strcmp(v,"quit"))          return S_QUIT;
-    case 256*'Q'+'T': if(!strcmp(v,"QUIT"))          return S_QQUIT;
-    case 256*'I'+'d': if(!strcmp(v,"IsBound"))       return S_ISBOUND;
-    case 256*'U'+'d': if(!strcmp(v,"Unbind"))        return S_UNBIND;
-    case 256*'T'+'d': if(!strcmp(v,"TryNextMethod")) return S_TRYNEXT;
-    case 256*'I'+'o': if(!strcmp(v,"Info"))          return S_INFO;
-    case 256*'A'+'t': if(!strcmp(v,"Assert"))        return S_ASSERT;
+    case 256*'a'+'d': if(streq(v,"and"))           return S_AND;
+    case 256*'a'+'c': if(streq(v,"atomic"))        return S_ATOMIC;
+    case 256*'b'+'k': if(streq(v,"break"))         return S_BREAK;
+    case 256*'c'+'e': if(streq(v,"continue"))      return S_CONTINUE;
+    case 256*'d'+'o': if(streq(v,"do"))            return S_DO;
+    case 256*'e'+'f': if(streq(v,"elif"))          return S_ELIF;
+    case 256*'e'+'e': if(streq(v,"else"))          return S_ELSE;
+    case 256*'e'+'d': if(streq(v,"end"))           return S_END;
+    case 256*'f'+'e': if(streq(v,"false"))         return S_FALSE;
+    case 256*'f'+'i': if(streq(v,"fi"))            return S_FI;
+    case 256*'f'+'r': if(streq(v,"for"))           return S_FOR;
+    case 256*'f'+'n': if(streq(v,"function"))      return S_FUNCTION;
+    case 256*'i'+'f': if(streq(v,"if"))            return S_IF;
+    case 256*'i'+'n': if(streq(v,"in"))            return S_IN;
+    case 256*'l'+'l': if(streq(v,"local"))         return S_LOCAL;
+    case 256*'m'+'d': if(streq(v,"mod"))           return S_MOD;
+    case 256*'n'+'t': if(streq(v,"not"))           return S_NOT;
+    case 256*'o'+'d': if(streq(v,"od"))            return S_OD;
+    case 256*'o'+'r': if(streq(v,"or"))            return S_OR;
+    case 256*'r'+'e': if(streq(v,"readwrite"))     return S_READWRITE;
+    case 256*'r'+'y': if(streq(v,"readonly"))      return S_READONLY;
+    case 256*'r'+'c': if(streq(v,"rec"))           return S_REC;
+    case 256*'r'+'t': if(streq(v,"repeat"))        return S_REPEAT;
+    case 256*'r'+'n': if(streq(v,"return"))        return S_RETURN;
+    case 256*'t'+'n': if(streq(v,"then"))          return S_THEN;
+    case 256*'t'+'e': if(streq(v,"true"))          return S_TRUE;
+    case 256*'u'+'l': if(streq(v,"until"))         return S_UNTIL;
+    case 256*'w'+'e': if(streq(v,"while"))         return S_WHILE;
+    case 256*'q'+'t': if(streq(v,"quit"))          return S_QUIT;
+    case 256*'Q'+'T': if(streq(v,"QUIT"))          return S_QQUIT;
+    case 256*'I'+'d': if(streq(v,"IsBound"))       return S_ISBOUND;
+    case 256*'U'+'d': if(streq(v,"Unbind"))        return S_UNBIND;
+    case 256*'T'+'d': if(streq(v,"TryNextMethod")) return S_TRYNEXT;
+    case 256*'I'+'o': if(streq(v,"Info"))          return S_INFO;
+    case 256*'A'+'t': if(streq(v,"Assert"))        return S_ASSERT;
     }
 
     return S_IDENT;
@@ -387,216 +386,146 @@ static UInt AddCharToValue(ScannerState * s, UInt pos, Char c)
     return AddCharToBuf(&s->ValueObj, s->Value, MAX_VALUE_LEN - 1, pos, c);
 }
 
-static UInt GetNumber(ScannerState * s, Int readDecimalPoint)
+static UInt GetNumber(ScannerState * s, Int readDecimalPoint, Char c)
 {
-  UInt symbol = S_ILLEGAL;
-  UInt i = 0;
-  Char c;
-  UInt seenADigit = 0;
-  UInt seenExp = 0;
-  UInt seenExpDigit = 0;
+    UInt symbol = S_ILLEGAL;
+    UInt i = 0;
+    BOOL seenADigit = FALSE;
 
-  s->ValueObj = 0;
+    s->ValueObj = 0;
 
-  c = PEEK_CURR_CHAR();
-  if (readDecimalPoint) {
-    s->Value[i++] = '.';
-  }
-  else {
-    // read initial sequence of digits into 'Value'
-    while (IsDigit(c)) {
-      i = AddCharToValue(s, i, c);
-      seenADigit = 1;
-      c = GET_NEXT_CHAR();
+    if (readDecimalPoint) {
+        s->Value[i++] = '.';
     }
-
-    // maybe we saw an identifier character and realised that this is an
-    // identifier we are reading
-    if (IsIdent(c) || c == '\\') {
-      // if necessary, copy back from s->ValueObj to s->Value
-      if (s->ValueObj) {
-        i = GET_LEN_STRING(s->ValueObj);
-        GAP_ASSERT(i >= MAX_VALUE_LEN - 1);
-        memcpy(s->Value, CONST_CSTR_STRING(s->ValueObj), MAX_VALUE_LEN);
-        s->ValueObj = 0;
-      }
-      // this looks like an identifier, scan the rest of it
-      return GetIdent(s, i);
-    }
-
-    // Or maybe we saw a '.' which could indicate one of two things: a
-    // float literal or S_DOT, i.e., '.' used to access a record entry.
-    if (c == '.') {
-      GAP_ASSERT(i < MAX_VALUE_LEN - 1);
-
-      // If the symbol before this integer was S_DOT then we must be in
-      // a nested record element expression, so don't look for a float.
-      // This is a bit fragile
-      if (s->Symbol == S_DOT || s->Symbol == S_BDOT) {
-        symbol = S_INT;
-        goto finish;
-      }
-
-      // peek ahead to decide which
-      if (PEEK_NEXT_CHAR() == '.') {
-        // It was '.', so this looks like '..' and we are probably
-        // inside a range expression.
-        symbol = S_INT;
-        goto finish;
-      }
-
-      // Now the '.' must be part of our number; store it and move on
-      i = AddCharToValue(s, i, '.');
-      c = GET_NEXT_CHAR();
-    }
-
     else {
-      // Anything else we see tells us that the token is done
-      symbol = S_INT;
-      goto finish;
+        // read initial sequence of digits into 'Value'
+        while (IsDigit(c)) {
+            i = AddCharToValue(s, i, c);
+            seenADigit = TRUE;
+            c = GET_NEXT_CHAR();
+        }
+
+        // maybe we saw an identifier character and realised that this is an
+        // identifier we are reading
+        if (IsIdent(c) || c == '\\') {
+            // if necessary, copy back from s->ValueObj to s->Value
+            if (s->ValueObj) {
+                i = GET_LEN_STRING(s->ValueObj);
+                GAP_ASSERT(i >= MAX_VALUE_LEN - 1);
+                memcpy(s->Value, CONST_CSTR_STRING(s->ValueObj),
+                       MAX_VALUE_LEN);
+                s->ValueObj = 0;
+            }
+            // this looks like an identifier, scan the rest of it
+            return GetIdent(s, i, c);
+        }
+
+        // Or maybe we saw a '.' which could indicate one of three things:
+        // - a float literal: 12.345
+        // - S_DOT, i.e., '.' used to access a record entry: r.12.345
+        // - S_DDOT, i.e., '..' in a range expression:  [12..345]
+        if (c == '.') {
+            GAP_ASSERT(i < MAX_VALUE_LEN - 1);
+
+            // If the symbol before this integer was S_DOT then we must be in
+            // a nested record element expression, so don't look for a float.
+            // This is a bit fragile
+            if (s->Symbol == S_DOT || s->Symbol == S_BDOT) {
+                symbol = S_INT;
+                goto finish;
+            }
+
+            // peek ahead to decide if we are looking at a range expression
+            if (PEEK_NEXT_CHAR(s->input) == '.') {
+                // we are looking at '..' and are probably inside a range
+                // expression
+                symbol = S_INT;
+                goto finish;
+            }
+
+            // Now the '.' must be part of our number; store it and move on
+            i = AddCharToValue(s, i, '.');
+            c = GET_NEXT_CHAR();
+        }
+        else {
+            // Anything else we see tells us that the token is done
+            symbol = S_INT;
+            goto finish;
+        }
     }
-  }
 
-
-  // When we get here we have read possibly some digits, a . and possibly
-  // some more digits, but not an e,E,d,D,q or Q
+    // When we get here we have read possibly some digits, a . and possibly
+    // some more digits, but not an e,E,d,D,q or Q
+    // In any case, from now on, we know we are dealing with a float literal
+    symbol = S_FLOAT;
 
     // read digits
     while (IsDigit(c)) {
-      i = AddCharToValue(s, i, c);
-      seenADigit = 1;
-      c = GET_NEXT_CHAR();
+        i = AddCharToValue(s, i, c);
+        seenADigit = TRUE;
+        c = GET_NEXT_CHAR();
     }
     if (!seenADigit)
-      SyntaxError(s, "Badly formed number: need a digit before or after the "
-                  "decimal point");
+        SyntaxError(s,
+                    "Badly formed number: need a digit before or after the "
+                    "decimal point");
     if (c == '\\')
-      SyntaxError(s, "Badly formed number");
-
-    // If we found an identifier type character in this context could be an
-    // error or the start of one of the allowed trailing marker sequences
-    if (IsIdent(c) && c != 'e' && c != 'E' && c != 'd' && c != 'D' &&
-        c != 'q' && c != 'Q') {
-
-      // Allow one letter on the end of the numbers -- could be an i, C99
-      // style
-      if (IsAlpha(c)) {
-        i = AddCharToValue(s, i, c);
-        c = GET_NEXT_CHAR();
-      }
-      // independently of that, we allow an _ signalling immediate conversion
-      if (c == '_') {
-        i = AddCharToValue(s, i, c);
-        c = GET_NEXT_CHAR();
-        // After which there may be one character signifying the
-        // conversion style
-        if (IsAlpha(c)) {
-          i = AddCharToValue(s, i, c);
-          c = GET_NEXT_CHAR();
-        }
-      }
-      // Now if the next character is alphanumerical, or an identifier type
-      // symbol then we really do have an error, otherwise we return a result
-      if (IsIdent(c) || IsDigit(c)) {
         SyntaxError(s, "Badly formed number");
-      }
-      else {
-        symbol = S_FLOAT;
-        goto finish;
-      }
+
+    // If the next thing is the start of the exponential notation, read it
+    // now.
+    if (c == 'e' || c == 'E' || c == 'd' || c == 'D' || c == 'q' ||
+        c == 'Q') {
+        i = AddCharToValue(s, i, c);
+        c = GET_NEXT_CHAR();
+        if (c == '+' || c == '-') {
+            i = AddCharToValue(s, i, c);
+            c = GET_NEXT_CHAR();
+        }
+
+        // Here we are into the unsigned exponent of a number in scientific
+        // notation, so we just read digits
+        if (!IsDigit(c))
+            SyntaxError(s, "Badly formed number: need at least one digit in "
+                           "the exponent");
+        while (IsDigit(c)) {
+            i = AddCharToValue(s, i, c);
+            c = GET_NEXT_CHAR();
+        }
     }
 
-    // If the next thing is the start of the exponential notation, read it now.
-
+    // Allow one letter at the end of the number, which is a conversion
+    // marker; e.g. an `i` as in C99, to indicate an imaginary value.
     if (IsAlpha(c)) {
-      if (!seenADigit)
-        SyntaxError(s, "Badly formed number: need a digit before or after "
-                    "the decimal point");
-      seenExp = 1;
-      i = AddCharToValue(s, i, c);
-      c = GET_NEXT_CHAR();
-      if (c == '+' || c == '-') {
         i = AddCharToValue(s, i, c);
         c = GET_NEXT_CHAR();
-      }
     }
 
-    // Either we saw an exponent indicator, or we hit end of token deal with
-    // the end of token case
-    if (!seenExp) {
-      if (!seenADigit)
-        SyntaxError(s, "Badly formed number: need a digit before or after "
-                    "the decimal point");
-      // Might be a conversion marker
-      if (IsAlpha(c) && c != 'e' && c != 'E' && c != 'd' && c != 'D' &&
-          c != 'q' && c != 'Q') {
-        i = AddCharToValue(s, i, c);
-        c = GET_NEXT_CHAR();
-      }
-      // independently of that, we allow an _ signalling immediate conversion
-      if (c == '_') {
+    // independently of that, we allow an _ signalling immediate or "eager"
+    // conversion
+    if (c == '_') {
         i = AddCharToValue(s, i, c);
         c = GET_NEXT_CHAR();
         // After which there may be one character signifying the
-        // conversion style
-        if (IsAlpha(c))
-          i = AddCharToValue(s, i, c);
-        c = GET_NEXT_CHAR();
-      }
-      // Now if the next character is alphanumerical, or an identifier type
-      // symbol then we really do have an error, otherwise we return a result
-      if (!IsIdent(c) && !IsDigit(c)) {
-        symbol = S_FLOAT;
-        goto finish;
-      }
-      SyntaxError(s, "Badly formed number");
+        // conversion styles
+        if (IsAlpha(c)) {
+            i = AddCharToValue(s, i, c);
+            c = GET_NEXT_CHAR();
+        }
     }
 
-  // Here we are into the unsigned exponent of a number in scientific
-  // notation, so we just read digits
-
-  while (IsDigit(c)) {
-    i = AddCharToValue(s, i, c);
-    seenExpDigit = 1;
-    c = GET_NEXT_CHAR();
-  }
-
-  // Look out for a single alphabetic character on the end
-  // which could be a conversion marker
-  if (seenExpDigit) {
-    if (IsAlpha(c)) {
-      i = AddCharToValue(s, i, c);
-      c = GET_NEXT_CHAR();
-      symbol = S_FLOAT;
-      goto finish;
+    // Now if the next character is an identifier symbol then we have an error
+    if (IsIdent(c)) {
+        SyntaxError(s, "Badly formed number");
     }
-    if (c == '_') {
-      i = AddCharToValue(s, i, c);
-      c = GET_NEXT_CHAR();
-      // After which there may be one character signifying the
-      // conversion style
-      if (IsAlpha(c)) {
-        i = AddCharToValue(s, i, c);
-        c = GET_NEXT_CHAR();
-      }
-      symbol = S_FLOAT;
-      goto finish;
-    }
-  }
-
-  // Otherwise this is the end of the token
-  if (!seenExpDigit)
-    SyntaxError(s, 
-        "Badly formed number: need at least one digit in the exponent");
-  symbol = S_FLOAT;
 
 finish:
-  i = AddCharToValue(s, i, '\0');
-  if (s->ValueObj) {
-    // flush buffer
-    AppendBufToString(s->ValueObj, s->Value, i - 1);
-  }
-  return symbol;
+    i = AddCharToValue(s, i, '\0');
+    if (s->ValueObj) {
+        // flush buffer
+        AppendBufToString(s->ValueObj, s->Value, i - 1);
+    }
+    return symbol;
 }
 
 
@@ -607,7 +536,7 @@ finish:
 */
 void ScanForFloatAfterDotHACK(ScannerState * s)
 {
-    s->Symbol = GetNumber(s, 1);
+    s->Symbol = GetNumber(s, 1, PEEK_CURR_CHAR(s->input));
 }
 
 
@@ -616,12 +545,10 @@ void ScanForFloatAfterDotHACK(ScannerState * s)
 *F  GetOctalDigits()
 **
 */
-static inline Char GetOctalDigits(ScannerState * s)
+static inline Char GetOctalDigits(ScannerState * s, Char c)
 {
+    GAP_ASSERT('0' <= c && c <= '7');
     Char result;
-    Char c = PEEK_CURR_CHAR();
-    if ( c < '0' || c > '7' )
-        SyntaxError(s, "Expecting octal digit");
     result = 8 * (c - '0');
     c = GET_NEXT_CHAR();
     if ( c < '0' || c > '7' )
@@ -637,9 +564,9 @@ static inline Char GetOctalDigits(ScannerState * s)
 *F  CharHexDigit( <ch> ) . . . . . . . . .  turn a single hex digit into Char
 **
 */
-static inline Char CharHexDigit(ScannerState * s, Char c)
+static inline Char CharHexDigit(ScannerState * s)
 {
-    c = GET_NEXT_CHAR();
+    Char c = GET_NEXT_CHAR();
     if (!isxdigit((unsigned int)c)) {
         SyntaxError(s, "Expecting hexadecimal digit");
     }
@@ -681,10 +608,10 @@ static Char GetEscapedChar(ScannerState * s)
        octal numbers */
     c = GET_NEXT_CHAR();
     if (c == 'x') {
-        result = 16 * CharHexDigit(s, c);
-        result += CharHexDigit(s, c);
-    } else if (c >= '0' && c <= '7' ) {
-        result += GetOctalDigits(s);
+        result = 16 * CharHexDigit(s);
+        result += CharHexDigit(s);
+    } else if (c >= '0' && c <= '7') {
+        result += GetOctalDigits(s, c);
     } else {
         SyntaxError(s, "Expecting hexadecimal escape, or two more octal digits");
     }
@@ -692,7 +619,7 @@ static Char GetEscapedChar(ScannerState * s)
     /* escaped three digit octal numbers are allowed in input */
     result = 64 * (c - '0');
     c = GET_NEXT_CHAR();
-    result += GetOctalDigits(s);
+    result += GetOctalDigits(s, c);
   } else {
       /* Following discussions on pull-request #612, this warning is currently
          disabled for backwards compatibility; some code relies on this behaviour
@@ -723,12 +650,11 @@ static Char GetEscapedChar(ScannerState * s)
 **  An error is raised if the string includes a <newline> character or if the
 **  file ends before the closing '"'.
 */
-static void GetStr(ScannerState * s)
+static Char GetStr(ScannerState * s, Char c)
 {
     Obj  string = 0;
     Char buf[1024];
     UInt i = 0;
-    Char c = PEEK_CURR_CHAR();
 
     while (c != '"' && c != '\n' && c != '\377') {
         if (c == '\\') {
@@ -747,18 +673,19 @@ static void GetStr(ScannerState * s)
         SyntaxError(s, "String must not include <newline>");
 
     if (c == '\377') {
-        *STATE(In) = '\0';
+        FlushRestOfInputLine(s->input);
         SyntaxError(s, "String must end with \" before end of file");
     }
+
+    return c;
 }
 
 
-static void GetPragma(ScannerState * s)
+static void GetPragma(ScannerState * s, Char c)
 {
     Obj  string = 0;
     Char buf[1024];
     UInt i = 0;
-    Char c = PEEK_CURR_CHAR();
 
     while ( c != '\n' && c != '\r' && c != '\377') {
         i = AddCharToBuf(&string, buf, sizeof(buf), i, c);
@@ -771,7 +698,7 @@ static void GetPragma(ScannerState * s)
     s->ValueObj = AppendBufToString(string, buf, i);
 
     if (c == '\377') {
-        *STATE(In) = '\0';
+        FlushRestOfInputLine(s->input);
     }
 }
 
@@ -790,15 +717,14 @@ static void GetPragma(ScannerState * s)
 **
 **  An error is raised if the file ends before the closing """.
 */
-static void GetTripStr(ScannerState * s)
+static Char GetTripStr(ScannerState * s, Char c)
 {
     Obj  string = 0;
     Char buf[1024];
     UInt i = 0;
-    Char c = PEEK_CURR_CHAR();
 
     // print only a partial prompt while reading a triple string
-    STATE(Prompt) = SyQuiet ? "" : "> ";
+    SetPrompt("> ");
 
     while (c != '\377') {
         // only thing to check for is a triple quote
@@ -823,9 +749,11 @@ static void GetTripStr(ScannerState * s)
     s->ValueObj = AppendBufToString(string, buf, i);
 
     if (c == '\377') {
-        *STATE(In) = '\0';
+        FlushRestOfInputLine(s->input);
         SyntaxError(s, "String must end with \"\"\" before end of file");
     }
+
+    return c;
 }
 
 /****************************************************************************
@@ -855,13 +783,7 @@ static void GetString(ScannerState * s)
         }
     }
 
-    if (isTripleQuoted)
-        GetTripStr(s);
-    else
-        GetStr(s);
-
-    c = PEEK_CURR_CHAR();
-
+    c = isTripleQuoted ? GetTripStr(s, c) : GetStr(s, c);
 
     // skip trailing '"'
     if (c == '"')
@@ -942,8 +864,8 @@ static void StoreSymbolPosition(ScannerState * s)
     s->SymbolStartPos[2] = s->SymbolStartPos[1];
     s->SymbolStartLine[1] = s->SymbolStartLine[0];
     s->SymbolStartPos[1] = s->SymbolStartPos[0];
-    s->SymbolStartLine[0] = GetInputLineNumber();
-    s->SymbolStartPos[0] = GetInputLinePosition();
+    s->SymbolStartLine[0] = GetInputLineNumber(s->input);
+    s->SymbolStartPos[0] = GetInputLinePosition(s->input);
 }
 
 
@@ -965,25 +887,19 @@ static UInt NextSymbol(ScannerState * s)
     // Record end of previous symbol's position
     StoreSymbolPosition(s);
 
-    Char c = PEEK_CURR_CHAR();
-
-    // if no character is available then get one
-    if (c == '\0') {
-        STATE(In)--;
-        c = GET_NEXT_CHAR();
-    }
+    Char c = PEEK_CURR_CHAR(s->input);
 
     // skip over <spaces>, <tabs>, <newlines> and comments
     while (c == ' ' || c == '\t' || c== '\n' || c== '\r' || c == '\f' || c=='#') {
         if (c == '#') {
-            c = GET_NEXT_CHAR_NO_LC();
+            c = GET_NEXT_CHAR_NO_LC(s->input);
             if (c == '%') {
                 // we have encountered a pragma
-                GetPragma(s);
+                GetPragma(s, c);
                 return S_PRAGMA;
             }
 
-            SKIP_TO_END_OF_LINE();
+            SKIP_TO_END_OF_LINE(s->input);
         }
         c = GET_NEXT_CHAR();
     }
@@ -993,7 +909,7 @@ static UInt NextSymbol(ScannerState * s)
 
     // switch according to the character
     if (IsAlpha(c)) {
-        return GetIdent(s, 0);
+        return GetIdent(s, 0, c);
     }
 
     UInt symbol;
@@ -1046,101 +962,17 @@ static UInt NextSymbol(ScannerState * s)
     case '?':         symbol = S_HELP;              GetHelp(s); break;
     case '"':         symbol = S_STRING;            GetString(s); break;
     case '\'':        symbol = S_CHAR;              GetChar(s); break;
-    case '\\':        return GetIdent(s, 0);
-    case '_':         return GetIdent(s, 0);
-    case '@':         return GetIdent(s, 0);
+    case '\\':        return GetIdent(s, 0, c);
+    case '_':         return GetIdent(s, 0, c);
+    case '@':         return GetIdent(s, 0, c);
 
     case '0': case '1': case '2': case '3': case '4':
     case '5': case '6': case '7': case '8': case '9':
-                      return GetNumber(s, 0);
+                      return GetNumber(s, 0, c);
 
-    case '\377':      symbol = S_EOF;           *STATE(In) = '\0'; break;
+    case '\377':      symbol = S_EOF;  FlushRestOfInputLine(s->input); break;
 
     default:          symbol = S_ILLEGAL;       GET_NEXT_CHAR(); break;
     }
     return symbol;
-}
-
-static const char * AllKeywords[] = {
-    "and",     "atomic",   "break",         "continue", "do",     "elif",
-    "else",    "end",      "false",         "fi",       "for",    "function",
-    "if",      "in",       "local",         "mod",      "not",    "od",
-    "or",      "readonly", "readwrite",     "rec",      "repeat", "return",
-    "then",    "true",     "until",         "while",    "quit",   "QUIT",
-    "IsBound", "Unbind",   "TryNextMethod", "Info",     "Assert",
-};
-
-int IsKeyword(const char * str)
-{
-    for (UInt i = 0; i < ARRAY_SIZE(AllKeywords); i++) {
-        if (strcmp(str, AllKeywords[i]) == 0) {
-            return 1;
-        }
-    }
-    return 0;
-}
-
-static Obj FuncALL_KEYWORDS(Obj self)
-{
-    Obj l = NewEmptyPlist();
-    for (UInt i = 0; i < ARRAY_SIZE(AllKeywords); i++) {
-        Obj s = MakeImmString(AllKeywords[i]);
-        ASS_LIST(l, i+1, s);
-    }
-    MakeImmutable(l);
-    return l;
-}
-
-
-static StructGVarFunc GVarFuncs [] = {
-    GVAR_FUNC(ALL_KEYWORDS, 0, ""),
-    { 0, 0, 0, 0, 0 }
-
-};
-
-/****************************************************************************
-**
-*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
-*/
-
-/****************************************************************************
-**
-*F  InitLibrary( <module> ) . . . . . . .  initialise library data structures
- */
-static Int InitLibrary (
-                        StructInitInfo *    module )
-{
-  InitGVarFuncsFromTable( GVarFuncs );
-  return 0;
-}
-
-/****************************************************************************
-**
-*F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
-*/
-static Int InitKernel (
-    StructInitInfo *    module )
-{
-    InitHdlrFuncsFromTable( GVarFuncs );
-
-    InitGlobalBag(&STATE(Scanner).ValueObj, "ValueObj");
-    return 0;
-}
-
-/****************************************************************************
-**
-*F  InitInfoScanner() . . . . . . . . . . . . . . . . table of init functions
-*/
-static StructInitInfo module = {
-    // init struct using C99 designated initializers; for a full list of
-    // fields, please refer to the definition of StructInitInfo
-    .type = MODULE_BUILTIN,
-    .name = "scanner",
-    .initKernel = InitKernel,
-    .initLibrary = InitLibrary,
-};
-
-StructInitInfo * InitInfoScanner ( void )
-{
-    return &module;
 }

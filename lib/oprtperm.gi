@@ -916,7 +916,7 @@ InstallMethod( Earns, "G, ints, gens, perms, act", true,
 
     n := Length( D );
     if not IsPrimePowerInt( n )  then
-        return fail;
+        return [];
     elif not IsPrimitive( G, D )  then
         TryNextMethod();
     fi;
@@ -942,7 +942,7 @@ InstallMethod( Earns, "G, ints, gens, perms, act", true,
 
     # If <G> is regular, it must be cyclic of prime order.
     if IsTrivial( G1 )  then
-        return G;
+        return [G];
     fi;
 
     # If <G> is not a Frobenius group ...
@@ -954,13 +954,13 @@ InstallMethod( Earns, "G, ints, gens, perms, act", true,
                 Gamma := Filtered( D, p -> ForAll( GeneratorsOfGroup( G2 ),
                                  g -> p ^ g = p ) );
                 if PrimeDivisors( Length( Gamma ) ) <> [ p ]  then
-                    return fail;
+                    return [];
                 fi;
                 C := Centralizer( G, G2 );
                 f := ActionHomomorphism( C, Gamma,"surjective" );
                 P := PCore( ImagesSource( f ), p );
                 if not IsTransitive( P, [ 1 .. Length( Gamma ) ] )  then
-                    return fail;
+                    return [];
                 fi;
                 gens := [  ];
                 for gen  in GeneratorsOfGroup( Centre( P ) )  do
@@ -976,9 +976,9 @@ InstallMethod( Earns, "G, ints, gens, perms, act", true,
                         if z <> One( C )  then
                             M := SolvableNormalClosurePermGroup( G, [ z ] );
                             if M <> fail  and  Size( M ) = n  then
-                                return M;
+                                return [M];
                             else
-                                return fail;
+                                return [];
                             fi;
                         fi;
                     od;
@@ -989,7 +989,7 @@ InstallMethod( Earns, "G, ints, gens, perms, act", true,
                 # This is unnecessary  if   you trust the   classification of
                 # finite simple groups.
                 if Size( Q ) > p ^ ( d - 1 )  then
-                    return fail;
+                    return [];
                 fi;
 
                 R := ClosureGroup( Q, gens );
@@ -1004,10 +1004,10 @@ InstallMethod( Earns, "G, ints, gens, perms, act", true,
                 for z  in Q0  do
                     M := SolvableNormalClosurePermGroup( G, [ y * z ] );
                     if M <> fail  and  Size( M ) = n  then
-                        return M;
+                        return [M];
                     fi;
                 od;
-                return fail;
+                return [];
             fi;
         fi;
     od;
@@ -1017,7 +1017,7 @@ InstallMethod( Earns, "G, ints, gens, perms, act", true,
     x := First( GeneratorsOfGroup( G ), gen -> alpha ^ gen <> alpha );
     z := Comm( a, a ^ x );
     M := SolvableNormalClosurePermGroup( G, [ z ] );
-    return M;
+    return [M];
 
 end );
 
@@ -1094,6 +1094,10 @@ InstallOtherMethod( Transitivity,
       # The trivial group is transitive on the empty set,
       # but has transitivity zero.
       return 0;
+    elif IsNaturalSymmetricGroup( G ) then
+      return n;
+    elif IsNaturalAlternatingGroup( G ) then
+      return n - 2;
     fi;
     t:= 0;
     size:= Size( G );
@@ -1145,7 +1149,7 @@ InstallMethod( IsSemiRegular, "permgroup on numbers", true,
 
     # compute the orbits and check that they all have the same length
     orbs := OrbitsDomain( G, D, gens, acts, OnPoints );
-    if Length( Set( List( orbs, Length ) ) ) <> 1  then
+    if Length( Set( orbs, Length ) ) <> 1  then
         return false;
     fi;
 
@@ -1582,7 +1586,7 @@ end );
 #F  OnSetsSets( <set>, <g> )
 ##
 InstallGlobalFunction( OnSetsSets, function( e, g )
-    return Set( List( e, i -> OnSets( i, g ) ) );
+    return Set( e, i -> OnSets( i, g ) );
 end );
 
 
@@ -1596,7 +1600,7 @@ end );
 ##  the function must be an object different from `OnSetsSets'.
 ##
 InstallGlobalFunction( OnSetsDisjointSets, function( e, g )
-    return Set( List( e, i -> OnSets( i, g ) ) );
+    return Set( e, i -> OnSets( i, g ) );
 end );
 
 
@@ -1605,7 +1609,7 @@ end );
 #F  OnSetsTuples( <set>, <g> )
 ##
 InstallGlobalFunction( OnSetsTuples, function(e,g)
-  return Set(List(e,i->OnTuples(i,g)));
+  return Set(e,i->OnTuples(i,g));
 end );
 
 #############################################################################

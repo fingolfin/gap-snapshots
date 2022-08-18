@@ -536,7 +536,31 @@
 <h5>69.11-3 MTX.InvariantQuadraticForm</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MTX.InvariantQuadraticForm</code>( <var class="Arg">module</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>returns an invariant quadratic form of <var class="Arg">module</var>, or <code class="keyw">fail</code> if no such form exists. If the characteristic of the field over which <var class="Arg">module</var> is defined is not 2, then the invariant bilinear form (if any) divided by two will be returned. In characteristic 2, the form returned will be lower triangular.</p>
+<p>returns either the matrix of an invariant quadratic form of the absolutely irreducible module <var class="Arg">module</var>, or <code class="keyw">fail</code>.</p>
+
+<p>If the characteristic of <var class="Arg">module</var> is odd then <code class="keyw">fail</code> is returned if there is no nonzero invariant bilinear form, otherwise a matrix of the bilinear form divided by <span class="SimpleMath">2</span> is returned; note that this matrix may be antisymmetric and thus describe the zero quadratic form. If the characteristic of <var class="Arg">module</var> is <span class="SimpleMath">2</span> then <code class="keyw">fail</code> is returned if <var class="Arg">module</var> does not admit a nonzero quadratic form, otherwise a lower triangular matrix describing the form is returned.</p>
+
+<p>An error is signalled if <var class="Arg">module</var> is not absolutely irreducible.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:= SO(-1, 4, 2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m:= GModuleByMats( GeneratorsOfGroup( g ), GF(2) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( MTX.InvariantQuadraticForm( m ) );</span>
+ . . . .
+ 1 . . .
+ . . 1 .
+ . . 1 1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:= SP(4, 2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m:= GModuleByMats( GeneratorsOfGroup( g ), GF(2) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MTX.InvariantQuadraticForm( m );</span>
+fail
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:= SP(4, 3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m:= GModuleByMats( GeneratorsOfGroup( g ), GF(3) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q:= MTX.InvariantQuadraticForm( m );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q = - TransposedMat( q );  # antisymmetric inv. bilinear form</span>
+true
+</pre></div>
 
 <p><a id="X78E60EFE802AEBC1" name="X78E60EFE802AEBC1"></a></p>
 
@@ -550,7 +574,27 @@
 <h5>69.11-5 MTX.OrthogonalSign</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MTX.OrthogonalSign</code>( <var class="Arg">module</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>for an even dimensional module, returns 1 or -1, according as <code class="code">MTX.InvariantQuadraticForm(<var class="Arg">module</var>)</code> is of + or - type. For an odd dimensional module, returns 0. For a module with no invariant quadratic form, returns <code class="keyw">fail</code>. This calculation uses an algorithm due to Jon Thackray.</p>
+<p>Let <var class="Arg">module</var> be an absolutely irreducible <span class="SimpleMath">G</span>-module. If <var class="Arg">module</var> does not fix a nondegenerate quadratic form see <code class="func">MTX.InvariantQuadraticForm</code> (<a href="chap69.html#X7ADE65997F16EE63"><span class="RefLink">69.11-3</span></a>) then <code class="keyw">fail</code> is returned. Otherwise the sign <span class="SimpleMath">ϵ ∈ { -1, 0, 1 }</span> is returned such that <span class="SimpleMath">G</span> embeds into the general orthogonal group <span class="SimpleMath">GO^ϵ(d, q)</span> w.r.t. the invariant quadratic form, see <code class="func">GeneralOrthogonalGroup</code> (<a href="chap50.html#X7C2051CB7B94CEB1"><span class="RefLink">50.2-6</span></a>). That is, <code class="code">0</code> is returned if <var class="Arg">module</var> has odd dimension, and <code class="code">1</code> or <code class="code">-1</code> is returned if the orthogonal group has plus or minus type, respectively.</p>
+
+<p>An error is signalled if <var class="Arg">module</var> is not absolutely irreducible.</p>
+
+<p>The <code class="code">SMTX</code> implementation uses an algorithm due to Jon Thackray.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mats:= GeneratorsOfGroup( GO(1,4,2) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MTX.OrthogonalSign( GModuleByMats( mats, GF(2) ) );</span>
+1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mats:= GeneratorsOfGroup( GO(-1,4,2) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MTX.OrthogonalSign( GModuleByMats( mats, GF(2) ) );</span>
+-1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mats:= GeneratorsOfGroup( GO(5,3) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MTX.OrthogonalSign( GModuleByMats( mats, GF(3) ) );</span>
+0
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mats:= GeneratorsOfGroup( SP(4,2) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MTX.OrthogonalSign( GModuleByMats( mats, GF(2) ) );</span>
+fail
+</pre></div>
 
 <p><a id="X87B0E3237BA056FC" name="X87B0E3237BA056FC"></a></p>
 

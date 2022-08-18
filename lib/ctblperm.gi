@@ -208,7 +208,7 @@ local k,structures,ambiguousStructures,i,j,p,cem,ces,z,t,cen,a,
           D.fingerprintRepresentatives:=fr;
         fi;
       fi;
-      D.centmulCandidates:=Set(List(cem,i->i[1]));
+      D.centmulCandidates:=Set(cem,i->i[1]);
     fi;
   fi;
 
@@ -221,7 +221,7 @@ local k,structures,ambiguousStructures,i,j,p,cem,ces,z,t,cen,a,
   od;
 
   # use canonical reps?
-  if Size(RadicalGroup(D.group))>1 then
+  if Size(SolvableRadical(D.group))>1 then
     D.usefitfree:=true;
     D.nocanonize:=[];
     D.faclaimg:=[];

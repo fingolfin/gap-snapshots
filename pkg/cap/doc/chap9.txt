@@ -1,0 +1,382 @@
+  
+  [1X9 [33X[0;0YTechnical Details[133X[101X
+  
+  
+  [1X9.1 [33X[0;0YThe Category Cat[133X[101X
+  
+  [1X9.1-1 ObjectCache[101X
+  
+  [33X[1;0Y[29X[2XObjectCache[102X( [3Xfunctor[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YIsCachingObject[133X
+  
+  [33X[0;0YRetuns  the  caching  object which stores the results of the functor [3Xfunctor[103X
+  applied to objects.[133X
+  
+  [1X9.1-2 MorphismCache[101X
+  
+  [33X[1;0Y[29X[2XMorphismCache[102X( [3Xfunctor[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YIsCachingObject[133X
+  
+  [33X[0;0YRetuns  the  caching  object which stores the results of the functor [3Xfunctor[103X
+  applied to morphisms.[133X
+  
+  
+  [1X9.2 [33X[0;0YInstall Functions for IsWellDefined[133X[101X
+  
+  [1X9.2-1 InstallMethodWithToDoForIsWellDefined[101X
+  
+  [33X[1;0Y[29X[2XInstallMethodWithToDoForIsWellDefined[102X( [3Xarg[103X ) [32X function[133X
+  
+  [33X[0;0YThe  IsWellDefined  filter  is a basic function of CAP. For every categorial
+  construction  the  outcome is well defined if and only if every input object
+  or morphism of the construction is well defined. So for every implementation
+  of  a  categorial  construction  a  ToDoListEntry  needs to be defined which
+  propagates  well  definedness  from  the  input cells to the output. For not
+  writing  this  construction  in  every  method, this function can be used to
+  install  a  method  which  then installs the correct ToDoListEntries for the
+  output.  The  input  syntax  works  exactly  like  InstallMethod,  with  one
+  extension:  The  method  creates  an  auxilliary function which computes the
+  output  from  the  function  given to InstallMethodWithToDoForIsWellDefined,
+  then installs the ToDoListEntries, and then installs the auxilliary function
+  instead  of  the  original  one.  This  is normally done with InstallMethod.
+  However,  one can change this via the option InstallMethod, which can be set
+  to  any  other function which is then used instead of InstallMethod. This is
+  used for the caching functions.[133X
+  
+  [1X9.2-2 InstallSetWithToDoForIsWellDefined[101X
+  
+  [33X[1;0Y[29X[2XInstallSetWithToDoForIsWellDefined[102X( [3Xarg1[103X, [3Xarg2[103X, [3Xarg3[103X ) [32X operation[133X
+  
+  [33X[0;0YFor  the  caching one needs the possibility to install setters for functions
+  with  multiple arguments. This is a setter function which automatically adds
+  ToDoListEntries  for  IsWellDefined  like  described  above for the manually
+  setted result of a method.[133X
+  
+  [1X9.2-3 DeclareAttributeWithToDoForIsWellDefined[101X
+  
+  [33X[1;0Y[29X[2XDeclareAttributeWithToDoForIsWellDefined[102X( [3Xarg[103X ) [32X function[133X
+  
+  [33X[0;0YSince  attributes  install  their  setters  themselfes, one needs to declare
+  attributes in another way to ensure ToDoListEntries for IsWellDefined in the
+  setter  of  an  attribute.  This  function  works like DeclareAttribute, but
+  installs  ToDoListEntries  for the setter of the attribute. Please note that
+  implementations       still       need       to       be      done      with
+  InstallMethodWithToDoForIsWellDefined.[133X
+  
+  [1X9.2-4 DeclareFamilyProperty[101X
+  
+  [33X[1;0Y[29X[2XDeclareFamilyProperty[102X( [3Xarg[103X ) [32X function[133X
+  
+  [1X9.2-5 CAP_INTERNAL_REPLACE_STRING_WITH_FILTER[101X
+  
+  [33X[1;0Y[29X[2XCAP_INTERNAL_REPLACE_STRING_WITH_FILTER[102X( [3Xfilter_or_string[103X[, [3Xcategory[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya filter[133X
+  
+  [33X[0;0YThe  function  takes a filter or one of the strings listed under [10Xfilter_list[110X
+  in  [14X7.3[114X.  Filters  are  returned  unchanged.  If  a  string  is  given,  the
+  corresponding filter of the category [3Xcategory[103X is returned. If no category is
+  given, generic filters ([10XIsCapCategoryObject[110X, [10XIsCapCategoryMorphism[110X etc.) are
+  used.[133X
+  
+  [1X9.2-6 CAP_INTERNAL_REPLACE_STRINGS_WITH_FILTERS[101X
+  
+  [33X[1;0Y[29X[2XCAP_INTERNAL_REPLACE_STRINGS_WITH_FILTERS[102X( [3Xlist[103X[, [3Xcategory[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10YReplaced list[133X
+  
+  [33X[0;0YApplies  [2XCAP_INTERNAL_REPLACE_STRING_WITH_FILTER[102X  ([14X9.2-5[114X) to all elements of
+  [3Xlist[103X and returns the result.[133X
+  
+  [1X9.2-7 CAP_INTERNAL_MERGE_FILTER_LISTS[101X
+  
+  [33X[1;0Y[29X[2XCAP_INTERNAL_MERGE_FILTER_LISTS[102X( [3Xlist[103X, [3Xadditional[103X, [3Xlist[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ymerged lists[133X
+  
+  [33X[0;0YThe  first argument should be a dense list with filters, the second a sparse
+  list  containing  filters  not longer then the first one. The filters of the
+  second  list are then appended (via and) to the filters in the first list at
+  the corresponding position, and the resulting list is returned.[133X
+  
+  [1X9.2-8 CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT[101X
+  
+  [33X[1;0Y[29X[2XCAP_INTERNAL_RETURN_OPTION_OR_DEFAULT[102X( [3Xstring[103X, [3Xvalue[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Yoption value[133X
+  
+  [33X[0;0YReturns the value of the option with name string, or, if this value is fail,
+  the object value.[133X
+  
+  [1X9.2-9 CAP_INTERNAL_FIND_APPEARANCE_OF_SYMBOL_IN_FUNCTION[101X
+  
+  [33X[1;0Y[29X[2XCAP_INTERNAL_FIND_APPEARANCE_OF_SYMBOL_IN_FUNCTION[102X( [3Xfunction[103X, [3Xsymbol_list[103X, [3Xloop_multiple[103X, [3Xreplacement_record[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya list of symbols with multiples[133X
+  
+  [33X[0;0YThe  function  searches  for the appearance of the strings in symbol list on
+  the  function  function  and returns a list of pairs, containing the name of
+  the  symbol  and  the number of appearance. If the symbol appears in a loop,
+  the  number  of  appearance is counted times the loop multiple. Moreover, if
+  appearances  of  found  strings  should  be replaced by collections of other
+  strings, then these can be specified in the replacement record.[133X
+  
+  [1X9.2-10 CAP_INTERNAL_MERGE_PRECONDITIONS_LIST[101X
+  
+  [33X[1;0Y[29X[2XCAP_INTERNAL_MERGE_PRECONDITIONS_LIST[102X( [3Xlist1[103X, [3Xlist2[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ymerge list[133X
+  
+  [33X[0;0YThe  function  takes  two  lists  containing  pairs of symbols (strings) and
+  multiples.  The lists are merged that pairs where the string only appears in
+  one  list  is then added to the return list, if a pair with a string appears
+  in  both  lists,  the resulting lists only contains this pair once, with the
+  higher multiple from both lists.[133X
+  
+  [1X9.2-11 CAP_INTERNAL_ASSERT_IS_CELL_OF_CATEGORY[101X
+  
+  [33X[1;0Y[29X[2XCAP_INTERNAL_ASSERT_IS_CELL_OF_CATEGORY[102X( [3Xcell[103X, [3Xcategory[103X, [3Xhuman_readable_identifier_getter[103X ) [32X function[133X
+  
+  [33X[0;0YThe  function throws an error if [3Xcell[103X is not a cell of [3Xcategory[103X. If [3Xcategory[103X
+  is  the  boolean  [10Xfalse[110X,  only  general  checks  not  specific to a concrete
+  category are performed. [3Xhuman_readable_identifier_getter[103X is a 0-ary function
+  returning a string which is used to refer to [3Xcell[103X in the error message.[133X
+  
+  [1X9.2-12 CAP_INTERNAL_ASSERT_IS_OBJECT_OF_CATEGORY[101X
+  
+  [33X[1;0Y[29X[2XCAP_INTERNAL_ASSERT_IS_OBJECT_OF_CATEGORY[102X( [3Xobject[103X, [3Xcategory[103X, [3Xhuman_readable_identifier_getter[103X ) [32X function[133X
+  
+  [33X[0;0YThe  function  throws  an  error  if [3Xobject[103X is not an object of [3Xcategory[103X. If
+  [3Xcategory[103X  is  the  boolean  [10Xfalse[110X,  only  general  checks  not specific to a
+  concrete category are performed. [3Xhuman_readable_identifier_getter[103X is a 0-ary
+  function  returning  a  string which is used to refer to [3Xobject[103X in the error
+  message.[133X
+  
+  [1X9.2-13 CAP_INTERNAL_ASSERT_IS_MORPHISM_OF_CATEGORY[101X
+  
+  [33X[1;0Y[29X[2XCAP_INTERNAL_ASSERT_IS_MORPHISM_OF_CATEGORY[102X( [3Xmorphism[103X, [3Xcategory[103X, [3Xhuman_readable_identifier_getter[103X ) [32X function[133X
+  
+  [33X[0;0YThe  function  throws an error if [3Xmorphism[103X is not a morphism of [3Xcategory[103X. If
+  [3Xcategory[103X  is  the  boolean  [10Xfalse[110X,  only  general  checks  not specific to a
+  concrete category are performed. [3Xhuman_readable_identifier_getter[103X is a 0-ary
+  function  returning a string which is used to refer to [3Xmorphism[103X in the error
+  message.[133X
+  
+  [1X9.2-14 CAP_INTERNAL_ASSERT_IS_TWO_CELL_OF_CATEGORY[101X
+  
+  [33X[1;0Y[29X[2XCAP_INTERNAL_ASSERT_IS_TWO_CELL_OF_CATEGORY[102X( [3Xtwo_cell[103X, [3Xcategory[103X, [3Xhuman_readable_identifier_getter[103X ) [32X function[133X
+  
+  [33X[0;0YThe  function  throws  an  error if [3Xtwo_cell[103X is not a [23X2[123X-cell of [3Xcategory[103X. If
+  [3Xcategory[103X  is  the  boolean  [10Xfalse[110X,  only  general  checks  not specific to a
+  concrete category are performed. [3Xhuman_readable_identifier_getter[103X is a 0-ary
+  function  returning a string which is used to refer to [3Xtwo_cell[103X in the error
+  message.[133X
+  
+  [1X9.2-15 CAP_INTERNAL_ASSERT_IS_LIST_OF_OBJECTS_OF_CATEGORY[101X
+  
+  [33X[1;0Y[29X[2XCAP_INTERNAL_ASSERT_IS_LIST_OF_OBJECTS_OF_CATEGORY[102X( [3Xlist_of_objects[103X, [3Xcategory[103X, [3Xhuman_readable_identifier_getter[103X ) [32X function[133X
+  
+  [33X[0;0YThe  function  throws  an  error  if  [3Xlist_of_objects[103X is not a dense list of
+  objects  of  [3Xcategory[103X. If [3Xcategory[103X is the boolean [10Xfalse[110X, only general checks
+  not     specific     to     a     concrete     category    are    performed.
+  [3Xhuman_readable_identifier_getter[103X  is  a  0-ary  function  returning a string
+  which is used to refer to [3Xlist_of_objects[103X in the error message.[133X
+  
+  [1X9.2-16 CAP_INTERNAL_ASSERT_IS_LIST_OF_MORPHISMS_OF_CATEGORY[101X
+  
+  [33X[1;0Y[29X[2XCAP_INTERNAL_ASSERT_IS_LIST_OF_MORPHISMS_OF_CATEGORY[102X( [3Xlist_of_morphisms[103X, [3Xcategory[103X, [3Xhuman_readable_identifier_getter[103X ) [32X function[133X
+  
+  [33X[0;0YThe  function  throws  an  error if [3Xlist_of_morphisms[103X is not a dense list of
+  morphisms of [3Xcategory[103X. If [3Xcategory[103X is the boolean [10Xfalse[110X, only general checks
+  not     specific     to     a     concrete     category    are    performed.
+  [3Xhuman_readable_identifier_getter[103X  is  a  0-ary  function  returning a string
+  which is used to refer to [3Xlist_of_morphisms[103X in the error message.[133X
+  
+  [1X9.2-17 CAP_INTERNAL_ASSERT_IS_LIST_OF_TWO_CELLS_OF_CATEGORY[101X
+  
+  [33X[1;0Y[29X[2XCAP_INTERNAL_ASSERT_IS_LIST_OF_TWO_CELLS_OF_CATEGORY[102X( [3Xlist_of_twocells[103X, [3Xcategory[103X, [3Xhuman_readable_identifier_getter[103X ) [32X function[133X
+  
+  [33X[0;0YThe  function  throws  an  error  if [3Xlist_of_twocells[103X is not a dense list of
+  [23X2[123X-cells  of  [3Xcategory[103X. If [3Xcategory[103X is the boolean [10Xfalse[110X, only general checks
+  not     specific     to     a     concrete     category    are    performed.
+  [3Xhuman_readable_identifier_getter[103X  is  a  0-ary  function  returning a string
+  which is used to refer to [3Xlist_of_twocells[103X in the error message.[133X
+  
+  [1X9.2-18 CAP_INTERNAL_ASSERT_IS_NON_NEGATIVE_INTEGER_OR_INFINITY[101X
+  
+  [33X[1;0Y[29X[2XCAP_INTERNAL_ASSERT_IS_NON_NEGATIVE_INTEGER_OR_INFINITY[102X( [3Xnnintorinf[103X, [3Xhuman_readable_identifier_getter[103X ) [32X function[133X
+  
+  [33X[0;0YThe  function  throws an error if [3Xnnintorinf[103X is not a nonnegative integer or
+  infinity.  [3Xhuman_readable_identifier_getter[103X  is a 0-ary function returning a
+  string which is used to refer to [3Xnnintorinf[103X in the error message.[133X
+  
+  [1X9.2-19 CachingStatistic[101X
+  
+  [33X[1;0Y[29X[2XCachingStatistic[102X( [3Xcategory[103X[, [3Xoperation[103X] ) [32X function[133X
+  
+  [33X[0;0YPrints  statistics  for  all caches in [3Xcategory[103X. If [3Xoperation[103X is given (as a
+  string), only statistics for the given operation cache is stored.[133X
+  
+  [1X9.2-20 BrowseCachingStatistic[101X
+  
+  [33X[1;0Y[29X[2XBrowseCachingStatistic[102X( [3Xcategory[103X ) [32X function[133X
+  
+  [33X[0;0YDisplays  statistics  for  all  caches in [3Xcategory[103X. in a Browse window. Here
+  "status"  indicates if the cache is weak, strong, or inactive, "hits" is the
+  number  of  successful  cache  accesses, "misses" the number of unsuccessful
+  cache  accesses,  and "stored" the number of objects currently stored in the
+  cache.[133X
+  
+  [1X9.2-21 InstallDeprecatedAlias[101X
+  
+  [33X[1;0Y[29X[2XInstallDeprecatedAlias[102X( [3Xalias_name[103X, [3Xfunction_name[103X, [3Xdeprecation_date[103X ) [32X function[133X
+  
+  [33X[0;0YMakes  the  function  given  by  [3Xfunction_name[103X  available  under  the  alias
+  [3Xalias_name[103X with a deprecation warning including the date [3Xdeprecation_date[103X.[133X
+  
+  [1X9.2-22 IsSpecializationOfFilter[101X
+  
+  [33X[1;0Y[29X[2XIsSpecializationOfFilter[102X( [3Xfilter1[103X, [3Xfilter2[103X ) [32X function[133X
+  
+  [33X[0;0YChecks  if  [3Xfilter2[103X  is  more  special than [3Xfilter1[103X, i.e. if [3Xfilter2[103X implies
+  [3Xfilter1[103X.  [3Xfilter1[103X and/or [3Xfilter2[103X can also be one of the strings listed under
+  [10Xfilter_list[110X  in  [14X7.3[114X  and  in  this  case  are replaced by the corresponding
+  filters  (e.g.  [10XIsCapCategory[110X,  [10XIsCapCategoryObject[110X,  [10XIsCapCategoryMorphism[110X,
+  ...).[133X
+  
+  [1X9.2-23 IsSpecializationOfFilterList[101X
+  
+  [33X[1;0Y[29X[2XIsSpecializationOfFilterList[102X( [3Xfilter_list1[103X, [3Xfilter_list2[103X ) [32X function[133X
+  
+  [33X[0;0YChecks if [3Xfilter_list2[103X is more special than [3Xfilter_list1[103X, i.e. if both lists
+  have  the  same  length and any element of [3Xfilter_list2[103X is more special than
+  the    corresponding    element    of   [3Xfilter_list1[103X   in   the   sense   of
+  [2XIsSpecializationOfFilter[102X ([14X9.2-22[114X). [3Xfilter_list1[103X and [3Xfilter_list2[103X can also be
+  the string [10X"any"[110X, respresenting a most general filter list of any length.[133X
+  
+  [1X9.2-24 InstallMethodForCompilerForCAP[101X
+  
+  [33X[1;0Y[29X[2XInstallMethodForCompilerForCAP[102X( [3Xsame[103X, [3Xas[103X, [3Xfor[103X, [3XInstallMethod[103X ) [32X function[133X
+  
+  [33X[0;0YInstalls a method via [10XInstallMethod[110X and adds it to the list of methods known
+  to the compiler. See [2XCapJitAddKnownMethod[102X ([14X9.2-26[114X) for requirements.[133X
+  
+  [1X9.2-25 InstallOtherMethodForCompilerForCAP[101X
+  
+  [33X[1;0Y[29X[2XInstallOtherMethodForCompilerForCAP[102X( [3Xsame[103X, [3Xas[103X, [3Xfor[103X, [3XInstallOtherMethod[103X ) [32X function[133X
+  
+  [33X[0;0YInstalls  a method via [10XInstallOtherMethod[110X and adds it to the list of methods
+  known to the compiler. See [2XCapJitAddKnownMethod[102X ([14X9.2-26[114X) for requirements.[133X
+  
+  [1X9.2-26 CapJitAddKnownMethod[101X
+  
+  [33X[1;0Y[29X[2XCapJitAddKnownMethod[102X( [3Xoperation[103X, [3Xfilters[103X, [3Xmethod[103X ) [32X function[133X
+  
+  [33X[0;0YAdds  a  method  to  the  list  of  methods known to the compiler. The first
+  argument  of the method must be a CAP category. Method selection happens via
+  the  number  of arguments and the category filter. In particular, adding two
+  methods  (or  a convenience method for a CAP operation) with the same number
+  of arguments and one category filter implying the other is not supported.[133X
+  
+  [1X9.2-27 CapJitAddTypeSignature[101X
+  
+  [33X[1;0Y[29X[2XCapJitAddTypeSignature[102X( [3Xname[103X, [3Xinput_filters[103X, [3Xoutput_data_type[103X ) [32X function[133X
+  
+  [33X[0;0Y(experimental)  Adds  a  type signature for the global function or operation
+  given  by  [3Xname[103X to the compiler. [3Xinput_filters[103X must be a list of filters, or
+  the  string  '"any"'  representing a most general filter list of any length.
+  [3Xoutput_data_type[103X  must  be  a filter, a data type, or a function. If it is a
+  function  with one argument, it must accept a list of input types and return
+  the  corresponding  data  type  of  the output. If it is a function with two
+  arguments,  it  must  accept  the  arguments  of a function call of [3Xname[103X (as
+  syntax  trees)  and  the  function stack and return a record with components
+  [10Xargs[110X (the possibly modified arguments) and [10Xoutput_type[110X (the data type of the
+  output).         See         [2XCapJitInferredDataTypes[102X        ([14XCompilerForCAP:
+  CapJitInferredDataTypes[114X) for more details on data types.[133X
+  
+  [1X9.2-28 CapJitAddTypeSignatureDeferred[101X
+  
+  [33X[1;0Y[29X[2XCapJitAddTypeSignatureDeferred[102X( [3Xpackage_name[103X, [3Xname[103X, [3Xinput_filters[103X, [3Xoutput_data_type[103X ) [32X function[133X
+  
+  [33X[0;0Y(experimental)  Same as [2XCapJitAddTypeSignature[102X ([14X9.2-27[114X), but the filters and
+  the  output  data type must be given as strings which will be evaluated once
+  [3Xpackage_name[103X  is  loaded.  This should be used with care because errors will
+  only be detected at runtime.[133X
+  
+  [1X9.2-29 CapJitDataTypeOfCategory[101X
+  
+  [33X[1;0Y[29X[2XCapJitDataTypeOfCategory[102X( [3Xcategory[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCapJitDataTypeOfObjectOfCategory[102X( [3Xcategory[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCapJitDataTypeOfMorphismOfCategory[102X( [3Xcategory[103X ) [32X function[133X
+  
+  [33X[0;0Y(experimental)  Returns  the  data  type  of  the  category  (or  objects or
+  morphisms in the category) [3Xcategory[103X.[133X
+  
+  [1X9.2-30 CapFixpoint[101X
+  
+  [33X[1;0Y[29X[2XCapFixpoint[102X( [3Xpredicate[103X, [3Xfunc[103X, [3Xinitial_value[103X ) [32X function[133X
+  
+  [33X[0;0YComputes  a  fixpoint  of  [3Xfunc[103X  with regard to equality given by [3Xpredicate[103X,
+  starting  with [3Xinitial_value[103X. If no such fixpoint exists, the execution does
+  not terminate.[133X
+  
+  [1X9.2-31 TransitivelyNeededOtherPackages[101X
+  
+  [33X[1;0Y[29X[2XTransitivelyNeededOtherPackages[102X( [3Xpackage_name[103X ) [32X function[133X
+  
+  [33X[0;0YReturns a list of package names which are transitively needed other packages
+  of the package [3Xpackage_name[103X.[133X
+  
+  [1X9.2-32 PackageOfCAPOperation[101X
+  
+  [33X[1;0Y[29X[2XPackageOfCAPOperation[102X( [3Xoperation_name[103X ) [32X function[133X
+  
+  [33X[0;0YReturns  the  name  of  the  package  to  which  the  CAP operation given by
+  [3Xoperation_name[103X belongs or fail if the package is not known.[133X
+  
+  [1X9.2-33 SafePosition[101X
+  
+  [33X[1;0Y[29X[2XSafePosition[102X( [3Xlist[103X, [3Xobj[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan integer[133X
+  
+  [33X[0;0YReturns [10XPosition( [110X[3Xlist[103X[10X, [110X[3Xobj[103X[10X )[110X while asserting that this value is not [10Xfail[110X.[133X
+  
+  [1X9.2-34 NTuple[101X
+  
+  [33X[1;0Y[29X[2XNTuple[102X( [3Xn[103X, [3Xargs...[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YReturns [3Xargs[103X while asserting that its length is [3Xn[103X.[133X
+  
+  [1X9.2-35 Pair[101X
+  
+  [33X[1;0Y[29X[2XPair[102X( [3Xfirst[103X, [3Xsecond[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YAlias for [10XNTuple( 2, [3Xfirst[103X[10X, [3Xsecond[103X[10X )[110X.[133X
+  
+  [1X9.2-36 Triple[101X
+  
+  [33X[1;0Y[29X[2XTriple[102X( [3Xfirst[103X, [3Xsecond[103X, [3Xthird[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YAlias for [10XNTuple( 3, [3Xfirst[103X[10X, [3Xsecond[103X[10X, [3Xthird[103X[10X )[110X.[133X
+  
+  [1X9.2-37 HandlePrecompiledTowers[101X
+  
+  [33X[1;0Y[29X[2XHandlePrecompiledTowers[102X( [3Xcategory[103X, [3Xunderlying_category[103X, [3Xconstructor_name[103X ) [32X function[133X
+  
+  [33X[0;0YHandles            the            information            stored           in
+  [10X[3Xunderlying_category[103X[10X!.compiler_hints.precompiled_towers[110X (if bound) which is a
+  list of records with components:[133X
+  
+  [30X    [33X[0;6Y[10Xremaining_constructors_in_tower[110X: a non-empty list of strings (names of
+        category constructors)[133X
+  
+  [30X    [33X[0;6Y[10Xprecompiled_functions_adder[110X:  a  function  accepting a CAP category as
+        input[133X
+  
+  [33X[0;0YIf  [3Xconstructor_name[103X  is  the only entry of [10Xremaining_constructors_in_tower[110X,
+  [10Xprecompiled_functions_adder[110X  is  applied  to  [3Xcategory[103X (except if the option
+  [10Xno_precompiled_code[110X  is  set to [10Xtrue[110X) and should add precompiled code. Else,
+  if  [3Xconstructor_name[103X  is the first entry of [10Xremaining_constructors_in_tower[110X,
+  the  information  is attached to [10X[3Xcategory[103X[10X!.compiler_hints.precompiled_towers[110X
+  after  removing [3Xconstructor_name[103X from [10Xremaining_constructors_in_tower[110X. Note:
+  Currently,  there  is  no logic for finding the "optimal" code to install if
+  [3Xconstructor_name[103X  is  the  only  entry of [10Xremaining_constructors_in_tower[110X of
+  multiple entries.[133X
+  

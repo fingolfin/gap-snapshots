@@ -134,7 +134,7 @@
   
   [33X[1;0Y[29X[2XTestHomogeneous[102X( [3Xchi[103X, [3XN[103X ) [32X function[133X
   
-  [33X[0;0YFor a group character [3Xchi[103X of the group [22XG[122X, say, and a normal subgroup [3XN[103X of [22XG[122X,
+  [33X[0;0YFor  a  group  character  [3Xchi[103X  of  a  group  [22XG[122X and a normal subgroup [3XN[103X of [22XG[122X,
   [2XTestHomogeneous[102X returns a record with information whether the restriction of
   [3Xchi[103X to [3XN[103X is homogeneous, i.e., is a multiple of an irreducible character.[133X
   
@@ -180,13 +180,14 @@
   
   [33X[1;0Y[29X[2XIsPrimitiveCharacter[102X( [3Xchi[103X ) [32X property[133X
   
-  [33X[0;0YFor  a  character [3Xchi[103X of the group [22XG[122X, say, [2XIsPrimitiveCharacter[102X returns [9Xtrue[109X
-  if [3Xchi[103X is not induced from any proper subgroup, and [9Xfalse[109X otherwise.[133X
+  [33X[0;0YFor  a  character [3Xchi[103X of a group [22XG[122X, [2XIsPrimitiveCharacter[102X returns [9Xtrue[109X if [3Xchi[103X
+  is not induced from any proper subgroup, and [9Xfalse[109X otherwise. This currently
+  only works for characters of soluble groups.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XIsPrimitive( Irr( Sl23 )[4] );[127X[104X
+    [4X[25Xgap>[125X [27XIsPrimitiveCharacter( Irr( Sl23 )[4] );[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsPrimitive( Irr( Sl23 )[7] );[127X[104X
+    [4X[25Xgap>[125X [27XIsPrimitiveCharacter( Irr( Sl23 )[7] );[127X[104X
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
@@ -232,10 +233,10 @@
   [33X[1;0Y[29X[2XIsInducedFromNormalSubgroup[102X( [3Xchi[103X ) [32X property[133X
   
   [33X[0;0Y[2XTestInducedFromNormalSubgroup[102X  returns a record with information whether the
-  irreducible  character  [3Xchi[103X  of  the  group [22XG[122X, say, is induced from a proper
-  normal  subgroup  of [22XG[122X. If the second argument [3XN[103X is present, which must be a
-  normal  subgroup of [22XG[122X or the list of class positions of a normal subgroup of
-  [22XG[122X, it is checked whether [3Xchi[103X is induced from [3XN[103X.[133X
+  irreducible  character  [3Xchi[103X  of  the group [22XG[122X is induced from a proper normal
+  subgroup  of  [22XG[122X. If the second argument [3XN[103X is present, which must be a normal
+  subgroup  of  [22XG[122X or the list of class positions of a normal subgroup of [22XG[122X, it
+  is checked whether [3Xchi[103X is induced from [3XN[103X.[133X
   
   [33X[0;0YThe  result  contains always the components [10XisInduced[110X (either [9Xtrue[109X or [9Xfalse[109X)
   and  [10Xcomment[110X  (a  string  telling  a  reason  for the value of the component

@@ -381,7 +381,7 @@ void SET_VISITED_STAT(Stat stat);
 **  'LVAR_REF_LVAR' returns the local variable (by its index) to which <expr>
 **  is a (immediate) reference.
 */
-EXPORT_INLINE Int IS_REF_LVAR(Expr expr)
+EXPORT_INLINE BOOL IS_REF_LVAR(Expr expr)
 {
     return ((Int)expr & 0x03) == 0x03;
 }
@@ -412,7 +412,7 @@ EXPORT_INLINE Int LVAR_REF_LVAR(Expr expr)
 **  'INT_INTEXPR' converts the (immediate) integer  expression <expr> to a  C
 **  integer.
 */
-EXPORT_INLINE Int IS_INTEXPR(Expr expr)
+EXPORT_INLINE BOOL IS_INTEXPR(Expr expr)
 {
     return ((Int)expr & 0x03) == 0x01;
 }
@@ -671,8 +671,10 @@ void CodeFuncCallEnd(UInt funccall, UInt options, UInt nr);
 
 /****************************************************************************
 **
-*F  CodeFuncExprBegin(<narg>,<nloc>,<nams>,<startline>) . code function expression, begin
-*F  CodeFuncExprEnd(<nr>,<pushExpr>) . . . . .  code function expression, end
+*F  CodeFuncExprBegin(<narg>,<nloc>,<nams>,<gapnameid>,<startLine>)
+**                                        . . code function expression, begin
+*F  CodeFuncExprEnd(<nr>,<pushExpr>,<endLine>)
+**                                        . . . code function expression, end
 **
 **  'CodeFuncExprBegin'  is an action to code  a  function expression.  It is
 **  called when the reader encounters the beginning of a function expression.
@@ -685,9 +687,9 @@ void CodeFuncCallEnd(UInt funccall, UInt options, UInt nr);
 **  is the number of statements in the body of the function. If <pushExpr> is
 **  set, the current function expression is pushed on the expression stack.
 */
-void CodeFuncExprBegin(Int narg, Int nloc, Obj nams, Int startLine);
+void CodeFuncExprBegin(Int narg, Int nloc, Obj nams, UInt gapnameid, Int startLine);
 
-Expr CodeFuncExprEnd(UInt nr, UInt pushExpr);
+Expr CodeFuncExprEnd(UInt nr, BOOL pushExpr, Int endLine);
 
 /****************************************************************************
 **
@@ -819,15 +821,15 @@ void CodeForEnd(void);
 **  when the reader encounters the 'atomic', i.e., *before* the condition is
 **  read.
 **
-**  'CodeAtomicBeginBody' is an action to code a atomic-statement. It is
+**  'CodeAtomicBeginBody' is an action to code an atomic-statement. It is
 **  called when the reader encounters the beginning of the statement body,
 **  i.e., *after* the condition is read.
 **
-**  'CodeAtomicEndBody' is an action to code a atomic-statement. It is called
+**  'CodeAtomicEndBody' is an action to code an atomic-statement. It is called
 **  when the reader encounters the end of the statement body. <nr> is the
 **  number of statements in the body.
 **
-**  'CodeAtomicEnd' is an action to code a atomic-statement. It is called
+**  'CodeAtomicEnd' is an action to code an atomic-statement. It is called
 **  when the reader encounters the end of the statement, i.e., immediately
 **  after 'CodeAtomicEndBody'.
 */
@@ -841,11 +843,12 @@ void CodeAtomicEnd(void);
 
 /****************************************************************************
 **
-*F  CodeQualifiedExprBegin()  . . . code readonly/readwrite expression start
-*F  CodeQualifiedExprEnd()  . . . . . code readonly/readwrite expression end
+*F  CodeQualifiedExprBegin(<qual>) . code readonly/readwrite expression start
+*F  CodeQualifiedExprEnd() . . . . . . code readonly/readwrite expression end
 **
+**  These functions code the beginning and end of the readonly/readwrite
+**  qualified expressions of an atomic statement.
 */
-
 void CodeQualifiedExprBegin(UInt qual);
 
 void CodeQualifiedExprEnd(void);
@@ -923,6 +926,16 @@ void CodeRepeatEnd(void);
 **  the reader encounters a 'break;'.
 */
 void CodeBreak(void);
+
+
+/****************************************************************************
+**
+*F  CodeContinue() . . . . . . . . . . . . . . . . .  code continue-statement
+**
+**  'CodeContinue' is the action to code a continue-statement. It is called
+**  when the reader encounters a 'continue;'.
+*/
+void CodeContinue(void);
 
 
 /****************************************************************************
@@ -1100,6 +1113,11 @@ void CodeListExprEnd(UInt nr, UInt range, UInt top, UInt tilde);
 */
 void CodeStringExpr(Obj str);
 
+
+/****************************************************************************
+**
+*F  CodePragma(<pragma>)
+*/
 void CodePragma(Obj pragma);
 
 
@@ -1300,7 +1318,7 @@ void CodeIsbRecExpr(void);
 
 /****************************************************************************
 **
-*F  CodeAssPosObj() . . . . . . . . . . . . . . . . code assignment to a list
+*F  CodeAssPosObj() . . . . . . . . . . . . . . . code assignment to a posobj
 */
 void CodeAssPosObj(void);
 
@@ -1309,7 +1327,7 @@ void CodeUnbPosObj(void);
 
 /****************************************************************************
 **
-*F  CodeElmPosObj() . . . . . . . . . . . . . . . .  code selection of a list
+*F  CodeElmPosObj() . . . . . . . . . . . . . . .  code selection of a posobj
 */
 void CodeElmPosObj(void);
 
@@ -1318,8 +1336,8 @@ void CodeIsbPosObj(void);
 
 /****************************************************************************
 **
-*F  CodeAssComObjName(<rnam>) . . . . . . . . . . code assignment to a record
-*F  CodeAssComObjExpr() . . . . . . . . . . . . . code assignment to a record
+*F  CodeAssComObjName(<rnam>) . . . . . . . . . . code assignment to a comobj
+*F  CodeAssComObjExpr() . . . . . . . . . . . . . code assignment to a comobj
 */
 void CodeAssComObjName(UInt rnam);
 
@@ -1332,8 +1350,8 @@ void CodeUnbComObjExpr(void);
 
 /****************************************************************************
 **
-*F  CodeElmComObjName(<rnam>) . . . . . . . . . .  code selection of a record
-*F  CodeElmComObjExpr() . . . . . . . . . . . . .  code selection of a record
+*F  CodeElmComObjName(<rnam>) . . . . . . . . . .  code selection of a comobj
+*F  CodeElmComObjExpr() . . . . . . . . . . . . .  code selection of a comobj
 */
 void CodeElmComObjName(UInt rnam);
 
@@ -1384,9 +1402,6 @@ void CodeAssertAfterCondition(void);
 void CodeAssertEnd2Args(void);
 
 void CodeAssertEnd3Args(void);
-
-/*  CodeContinue() .  . . . . . . . . . . . .  code continue-statement */
-void CodeContinue(void);
 
 
 /****************************************************************************

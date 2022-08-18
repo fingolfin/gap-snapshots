@@ -103,15 +103,21 @@ InstallMethod( InducedPcgsWrtHomePcgs,"pc group: home=family", true,
 ##
 #M  InducedPcgs( <pcgs>,<G> )
 ##
-InstallMethod( InducedPcgs, "cache pcgs", true, [ IsPcgs,IsGroup ], 0,
-function(pcgs, G )
+InstallGlobalFunction( InducedPcgs, function(pcgs, G)
   local cache, i, igs;
   
+  if not IsPcgs(pcgs) then
+     Error("InducedPcgs: <pcgs> must be a pcgs");
+  fi;
+  if not IsGroup(G) then
+     Error("InducedPcgs: <G> must be a group");
+  fi;
+
   pcgs := ParentPcgs (pcgs);
   cache := ComputedInducedPcgses(G);
   i := 1;
   while i <= Length (cache) do
-     if IsIdenticalObj (cache[i], pcgs) then
+     if cache[i]= pcgs then
         return cache[i+1];
      fi;
      i := i + 2;
@@ -135,10 +141,6 @@ function(pcgs, G )
   
   return igs;
 end );
-
-atomic readwrite OPERATIONS_REGION do
-ADD_LIST(WRAPPER_OPERATIONS, InducedPcgs);
-od;
 
 #############################################################################
 ##
@@ -351,19 +353,12 @@ local G,fam,typ,id,pcgs;
 
   fam:=FamilyObj(gens);
   pcgs:=DefiningPcgs(ElementsFamily(fam));
+  id:=One(gens[1]);
 
   # pc groups are always finite and gens is finite.
-  typ:=MakeGroupyType(fam,
-        IsGroup and IsAttributeStoringRep and IsSolvableGroup
-          and HasIsEmpty and HasGeneratorsOfMagmaWithInverses
-          and IsFinite and IsFinitelyGeneratedGroup
-          and HasFamilyPcgs and HasHomePcgs and HasGeneralizedPcgs,
-        gens,One(gens[1]),true);
-
-  G:=rec();
-  ObjectifyWithAttributes(G,typ,GeneratorsOfMagmaWithInverses,AsList(gens),
-                        FamilyPcgs,pcgs,HomePcgs,pcgs,GeneralizedPcgs,pcgs);
-  #SetGroupOfPcgs (pcgs, G); That cannot be true, as pcgs is the family pcgs
+  G:=MakeGroupyObj(fam, IsSolvableGroup and IsFinite,
+        AsList(gens),id,
+        FamilyPcgs,pcgs,HomePcgs,pcgs,GeneralizedPcgs,pcgs);
 
   return G;
 end );
@@ -382,19 +377,9 @@ local G,fam,typ,pcgs;
   pcgs:=DefiningPcgs(ElementsFamily(fam));
 
   # pc groups are always finite and gens is finite.
-  typ:=MakeGroupyType(fam,
-        IsGroup and IsAttributeStoringRep and IsSolvableGroup
-          and HasIsEmpty and HasGeneratorsOfMagmaWithInverses and HasOne
-          and IsFinite and IsFinitelyGeneratedGroup
-          and HasFamilyPcgs and HasHomePcgs and HasGeneralizedPcgs,
-        gens,id,true);
-
-  G:=rec();
-  ObjectifyWithAttributes(G,typ,GeneratorsOfMagmaWithInverses,AsList(gens),
-                        One,id,
-                        FamilyPcgs,pcgs,HomePcgs,pcgs,GeneralizedPcgs,pcgs);
-
-  #SetGroupOfPcgs (pcgs, G);
+  G:=MakeGroupyObj(fam, IsSolvableGroup and IsFinite,
+        AsList(gens),id,
+        FamilyPcgs,pcgs,HomePcgs,pcgs,GeneralizedPcgs,pcgs);
 
   return G;
 end );
@@ -409,22 +394,13 @@ function( empty, id )
 local G,fam,typ,pcgs;
 
   fam:= CollectionsFamily( FamilyObj( id ) );
-
-  # pc groups are always finite and gens is finite.
-  typ:=IsGroup and IsAttributeStoringRep 
-        and HasGeneratorsOfMagmaWithInverses and HasOne and IsTrivial
-        and HasFamilyPcgs and HasHomePcgs and HasGeneralizedPcgs;
-  typ:=NewType(fam,typ);
-
   pcgs:=DefiningPcgs(ElementsFamily(fam));
 
-  G:= rec();
-  ObjectifyWithAttributes( G, typ,
-                          GeneratorsOfMagmaWithInverses, empty,
-                          One, id,
-                          FamilyPcgs,pcgs,HomePcgs,pcgs,GeneralizedPcgs,pcgs);
+  # pc groups are always finite and gens is finite.
+  G:=MakeGroupyObj(fam, IsSolvableGroup and IsFinite,
+        empty,id,
+        FamilyPcgs,pcgs,HomePcgs,pcgs,GeneralizedPcgs,pcgs);
 
-  #SetGroupOfPcgs (pcgs, G);
   return G;
 end );
 
@@ -1236,7 +1212,7 @@ function( G, U )
 
     # get operating elements
     gens := GeneratorsOfGroup( G );
-    gens := Set( List( gens, x -> SiftedPcElement( pcgs, x ) ) );
+    gens := Set( gens, x -> SiftedPcElement( pcgs, x ) );
 
     subg := GeneratorsOfGroup( U );
     id   := Identity( G );
@@ -1326,18 +1302,7 @@ local  G,  home,  # the supergroup (of <H> and <U>), the home pcgs
   else
     home:=PcgsElementaryAbelianSeries(G);
     eas:=EANormalSeriesByPcgs(home);
-    # AH, 26-4-99: Test centrality not via `in' but via exponents
-    cent:=function(pcgs,grpg,Npcgs,dep)
-	  local i,j;
-	    for i in grpg do
-	      for j in Npcgs do
-		if DepthOfPcElement(pcgs,Comm(j,i))<dep then
-		  return false;
-		fi;
-	      od;
-	    od;
-	    return true;
-	  end;
+    cent:=PcClassFactorCentralityTest;
 
   fi;
   indstep:=IndicesEANormalSteps(home);
@@ -2289,8 +2254,13 @@ local home,e,ser,i,j,k,pcgs,mpcgs,op,m,cs,n;
       pcgs:=InducedPcgs(home,e[i-1]);
       mpcgs:=pcgs mod InducedPcgs(home,e[i]);
       op:=LinearActionLayer(U,GeneratorsOfGroup(U),mpcgs);
-      m:=GModuleByMats(op,GF(RelativeOrderOfPcElement(mpcgs,mpcgs[1])));
-      cs:=MTX.BasesCompositionSeries(m);
+      if ForAll(op,IsOne) then
+        m:=op[1]; # identity
+        cs:=List([0..Length(m)],x->m{[Length(m)+1-x..Length(m)]});
+      else
+        m:=GModuleByMats(op,GF(RelativeOrderOfPcElement(mpcgs,mpcgs[1])));
+        cs:=MTX.BasesCompositionSeries(m);
+      fi;
       Sort(cs,function(a,b) return Length(a)>Length(b);end);
       cs:=cs{[2..Length(cs)]};
       Info(InfoPcGroup,2,Length(cs)-1," compositionFactors");
@@ -2323,15 +2293,16 @@ end);
 ##
 InstallMethod(ViewObj,"pc group",true,[IsPcGroup],0,
 function(G)
+local nrgens;
+  nrgens := Length(GeneratorsOfGroup(G));
   if (not HasParent(G)) or
-   Length(GeneratorsOfGroup(G))*Length(GeneratorsOfGroup(Parent(G)))
+   nrgens*Length(GeneratorsOfGroup(Parent(G)))
      / GAPInfo.ViewLength > 50 then
     Print("<pc group");
     if HasSize(G) then
       Print(" of size ",Size(G));
     fi;
-    Print(" with ",Length(GeneratorsOfGroup(G)),
-          " generators>");
+    Print(" with ", Pluralize(nrgens, "generator"), ">");
   else
     Print("Group(");
     ViewObj(GeneratorsOfGroup(G));
@@ -2360,7 +2331,7 @@ InstallTrueMethod( CanEasilyComputePcgs, IsGroup and HasFamilyPcgs );
 # InstallTrueMethod(CanEasilyTestMembership,CanEasilyComputePcgs); 
 # we cannot test membership using a pcgs
 
-# InstallTrueMethod(CanComputeSize, CanEasilyComputePcgs); #unneccessary
+# InstallTrueMethod(CanComputeSize, CanEasilyComputePcgs); #unnecessary
 
 #############################################################################
 ##
@@ -2626,7 +2597,7 @@ local q, pcgs, sub, hom, f, ex, C;
   return sub;
 
   # otherwise compute the conjugacy classes of elements
-  C := Set( List( ConjugacyClasses(G), x -> Representative(x)^q ) );
+  C := Set( ConjugacyClasses(G), x -> Representative(x)^q );
   return NormalClosure( G, SubgroupNC( G, C ) );
 end );
 
@@ -2659,8 +2630,7 @@ end);
 
 # Omega_Search is a brute force search for Omega.
 # One can search by coset if Omega(G) = { g in G : g^(p^e) = 1 }
-# This is the case in regular p-groups, and if nilclass(G) < p
-# then G is regular.
+# This is the case in regular p groups.
 # Assumed: G is a p-group, e is a positive integer
 BindGlobal("Omega_Search",
 function(G,p,e)
@@ -2735,7 +2705,7 @@ end);
 # Efficiency Points:
 #
 # (1) "Omega" is used to compute Omega(G/<z>,p,e). |G/<z>| = |G|/p.
-# This is a very very tiny reduction AND it is very possible for
+# This is a very tiny reduction AND it is very possible for
 # Omega(G/<z>)=G/<z> for every nontrivial element z of the socle without
 # Omega(G)=G. Hence the calculation of Omega(G/<z>) may take a very
 # long time AND may prove worthless.

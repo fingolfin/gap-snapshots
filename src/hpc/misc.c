@@ -10,6 +10,7 @@
 
 #include "hpc/misc.h"
 
+#include <stdlib.h>
 #include <string.h>
 
 /****************************************************************************
@@ -25,17 +26,6 @@ UInt ThreadUI = 1;
 **
 */
 UInt DeadlockCheck = 1;
-
-/****************************************************************************
-**
-*V  SyNumProcessors  . . . . . . . . . . . . . . . . . number of logical CPUs
-**
-*/
-#ifdef NUM_CPUS
-UInt SyNumProcessors = NUM_CPUS;
-#else
-UInt SyNumProcessors = 4;
-#endif
 
 /****************************************************************************
 **

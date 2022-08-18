@@ -4818,6 +4818,7 @@
   <journal>The Cayley Bulletin</journal>
   <year>1987</year>
   <volume>3</volume>
+  <url>https://arxiv.org/abs/2201.09155</url>
 </article></entry>
 
 <entry id="Theissen93"><mastersthesis>
@@ -5494,7 +5495,7 @@
   <mrnumber>1820589 (2003a:20016)</mrnumber>
   <mrclass>20C25 (05E05 20C30)</mrclass>
   <mrreviewer>Tadeusz Józefiak</mrreviewer>
-  <url>http://dx.doi.org/10.1023/A:1003772419522</url>
+  <url>https://doi.org/10.1023/A:1003772419522</url>
   <other type="coden">IJTPBM</other>
   <other type="doi">10.1023/A:1003772419522</other>
   <other type="fjournal">International Journal of Theoretical Physics</other>
@@ -5518,8 +5519,8 @@
   <year>2010</year>
   <volume>38</volume>
   <pages>4545–4552</pages>
-  <url>http://dx.doi.org/10.1080/00927872.2010.490541</url>
-  <url>http://arxiv.org/abs/0911.3794</url>
+  <url>https://doi.org/10.1080/00927872.2010.490541</url>
+  <url>https://arxiv.org/abs/0911.3794</url>
   <other type="doi">10.1080/00927872.2010.490541</other>
 </article></entry>
 
@@ -5534,8 +5535,44 @@
   <year>1975</year>
   <volume>29</volume>
   <pages>620–647</pages>
-  <url>http://dx.doi.org/10.2307/2005583</url>
+  <url>https://doi.org/10.2307/2005583</url>
   <other type="doi">10.2307/2005583</other>
 </article></entry>
+
+<entry id="BHRD2013"><book>
+  <author>
+    <name><first>John N.</first><last>Bray</last></name>
+    <name><first>Derek F.</first><last>Holt</last></name>
+    <name><first>Colva M.</first><last>Roney-Dougal</last></name>
+  </author>  
+  <title>The maximal subgroups of the low-dimensional finite classical groups</title>
+  <publisher>Cambridge University Press</publisher>
+  <year>2013</year>
+  <volume>407</volume>
+  <series>London Mathematical Society Lecture Note Series</series>
+  <address>Cambridge</address>
+  <isbn>978-0-521-13860-4</isbn>
+  <mrnumber>3098485</mrnumber>
+  <mrclass>20G40 (20E28)</mrclass>
+  <mrreviewer>Nadia P. Mazza</mrreviewer>
+  <other type="pages">xiv+438</other>
+  <other type="doi">10.1017/CBO9781139192576</other>
+</book></entry>
+
+<entry id="Tay92"><book>
+  <author>
+    <name><first>Donald E.</first><last>Taylor</last></name>
+  </author>
+  <title>The geometry of the classical groups</title>
+  <publisher>Heldermann Verlag, Berlin</publisher>
+  <year>1992</year>
+  <volume>9</volume>
+  <series>Sigma Series in Pure Mathematics</series>
+  <isbn>3-88538-009-9</isbn>
+  <mrnumber>1189139</mrnumber>
+  <mrclass>20E32 (20E34 20E42 20G40 51E24)</mrclass>
+  <mrreviewer>Gernot Stroth</mrreviewer>
+  <other type="pages">xii+229</other>
+</book></entry>
 
 </file>

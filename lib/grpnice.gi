@@ -452,7 +452,7 @@ InstallMethod(HallSubgroupOp,"via niceomorphism",true,
 function(g,l)
 local mon,h;
    mon:=NiceMonomorphism(g);
-   h:=HallSubgroup(ImagesSet(mon,g),l);
+   h:=HallSubgroup(NiceObject(g),l);
    if h = fail then
        return fail;
    elif IsList(h) then
@@ -570,18 +570,18 @@ PropertyMethodByNiceMonomorphism( IsSupersolvableGroup,
 ##
 InstallMethod(IsomorphismPermGroup,"via niceomorphisms",true,
   [IsGroup and IsFinite and IsHandledByNiceMonomorphism],
-  # this is intended to be better than the generic ``action on element''
-  # method. However for example for matrix groups there are better methods
+  # This is intended to be better than the generic ``action on element''
+  # method. However for example for matrix groups there are better methods.
+  # The downranking is compatible with that for the method for finite
+  # matrix groups in 'lib/grpmat.gi'.
   -NICE_FLAGS+5,
 function(g)
 local mon,iso;
   mon:=NiceMonomorphism(g);
   if not IsIdenticalObj(Source(mon),g) then
     mon:=RestrictedNiceMonomorphism(mon,g);
-    iso:=IsomorphismPermGroup(Image(mon,g));
-  else
-    iso:=IsomorphismPermGroup(NiceObject(g));
   fi;
+  iso:=IsomorphismPermGroup(NiceObject(g));
   if iso=fail then
     return fail;
   else
@@ -683,13 +683,13 @@ GroupSeriesMethodByNiceMonomorphism( LowerCentralSeriesOfGroup,
 ##
 #M  MaximalSubgroupClassReps( <G> )
 ##
-InstallOtherMethod( TryMaximalSubgroupClassReps,
-  "handled by nice monomorphism, transfer tainter", true, [IsGroup], 0,
+InstallOtherMethod( CalcMaximalSubgroupClassReps,
+  "handled by nice monomorphism, transfer tainter",
+  [IsGroup and IsHandledByNiceMonomorphism],
 function( G )
 local   nice,  img,  sub,i;
-  TryMaxSubgroupTainter(G);
   nice := NiceMonomorphism(G);
-  img  := ShallowCopy(TryMaximalSubgroupClassReps( NiceObject(G) ));
+  img  := ShallowCopy(CalcMaximalSubgroupClassReps( NiceObject(G) ));
   for i in [1..Length(img)] do
     sub  := GroupByNiceMonomorphism( nice, img[i] );
     SetParent( sub, G );
@@ -788,9 +788,9 @@ end );
 
 #############################################################################
 ##
-#M  RadicalGroup( <G> ) . . . . . . . . . . . . . . . . .  radical of a group
+#M  SolvableRadical( <G> )  . . . . . . . . . . . solvable radical of a group
 ##
-SubgroupMethodByNiceMonomorphism( RadicalGroup,
+SubgroupMethodByNiceMonomorphism( SolvableRadical,
     [ IsGroup ] );
 
 #############################################################################

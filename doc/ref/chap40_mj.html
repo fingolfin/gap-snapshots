@@ -79,7 +79,8 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40_mj.html#X7B767B9D827EB0FC">40.7-3 AutomorphismDomain</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40_mj.html#X7F87D5957D9B991E">40.7-4 IsAutomorphismGroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40_mj.html#X8476738A7BF9BADA">40.7-5 InnerAutomorphismsAutomorphismGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40_mj.html#X7FC9B6EA7CAADC0A">40.7-6 InducedAutomorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40_mj.html#X7957AC21782B6C8C">40.7-6 InnerAutomorphismGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap40_mj.html#X7FC9B6EA7CAADC0A">40.7-7 InducedAutomorphism</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap40_mj.html#X7A8E961C7F1A57B3">40.8 <span class="Heading">Calculating with Group Automorphisms</span></a>
 </span>
@@ -120,7 +121,7 @@
 
 <p>Homomorphisms can be used to transfer calculations into isomorphic groups in another representation, for which better algorithms are available. Section <a href="chap40_mj.html#X7FFD731684606BC6"><span class="RefLink">40.5</span></a> explains a technique how to enforce this automatically.</p>
 
-<p>Homomorphisms are also used to represent group automorphisms, and section <a href="chap40_mj.html#X783030917CB43959"><span class="RefLink">40.6</span></a> explains explains <strong class="pkg">GAP</strong>'s facilities to work with automorphism groups.</p>
+<p>Homomorphisms are also used to represent group automorphisms, and section <a href="chap40_mj.html#X783030917CB43959"><span class="RefLink">40.6</span></a> explains <strong class="pkg">GAP</strong>'s facilities to work with automorphism groups.</p>
 
 <p>Section <a href="chap40_mj.html#X81B79CC27F47D429"><span class="RefLink">40.9</span></a> explains how to make <strong class="pkg">GAP</strong> to search for all homomorphisms between two groups which fulfill certain specifications.</p>
 
@@ -402,6 +403,8 @@ fail
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NiceMonomorphism</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is a homomorphism that is defined (at least) on the whole of <var class="Arg">obj</var> and whose restriction to <var class="Arg">obj</var> is injective. The concrete morphism (and also the image group) will depend on the representation of <var class="Arg">obj</var>.</p>
 
+<p>WARNING: The domain of the homomorphism may be larger than <var class="Arg">obj</var>. To obtain the image of <var class="Arg">obj</var> under the homomorphism, use <code class="func">NiceObject</code> (<a href="chap40_mj.html#X7B47BE0983E93A83"><span class="RefLink">40.5-3</span></a>); see there for an example where it matters.</p>
+
 <p><a id="X7B47BE0983E93A83" name="X7B47BE0983E93A83"></a></p>
 
 <h5>40.5-3 NiceObject</h5>
@@ -476,7 +479,7 @@ Group([ (5,7)(6,8), (2,3,5)(4,7,6) ])
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConjugatorIsomorphism</code>( <var class="Arg">hom</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConjugatorAutomorphism</code>( <var class="Arg">hom</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInnerAutomorphism</code>( <var class="Arg">hom</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Let <var class="Arg">hom</var> be a group general mapping (see <code class="func">IsGroupGeneralMapping</code> (<a href="chap32_mj.html#X819DD174829BF3AE"><span class="RefLink">32.9-4</span></a>)) with source <span class="SimpleMath">\(G\)</span>, say. <code class="func">IsConjugatorIsomorphism</code> returns <code class="keyw">true</code> if <var class="Arg">hom</var> is induced by conjugation of <span class="SimpleMath">\(G\)</span> by an element <span class="SimpleMath">\(g\)</span> that lies in <span class="SimpleMath">\(G\)</span> or in a group into which <span class="SimpleMath">\(G\)</span> is naturally embedded in the sense described below, and <code class="keyw">false</code> otherwise.</p>
+<p>Let <var class="Arg">hom</var> be a group general mapping (see <code class="func">IsGroupGeneralMapping</code> (<a href="chap32_mj.html#X819DD174829BF3AE"><span class="RefLink">32.9-4</span></a>)) with source <span class="SimpleMath">\(G\)</span>. <code class="func">IsConjugatorIsomorphism</code> returns <code class="keyw">true</code> if <var class="Arg">hom</var> is induced by conjugation of <span class="SimpleMath">\(G\)</span> by an element <span class="SimpleMath">\(g\)</span> that lies in <span class="SimpleMath">\(G\)</span> or in a group into which <span class="SimpleMath">\(G\)</span> is naturally embedded in the sense described below, and <code class="keyw">false</code> otherwise.</p>
 
 <p>Natural embeddings are dealt with in the case that <span class="SimpleMath">\(G\)</span> is a permutation group (see Chapter <a href="chap43_mj.html#X85ED46007CED6191"><span class="RefLink">43</span></a>), a matrix group (see Chapter <a href="chap44_mj.html#X7CF51CB48610A07D"><span class="RefLink">44</span></a>), a finitely presented group (see Chapter <a href="chap47_mj.html#X7AA982637E90B35A"><span class="RefLink">47</span></a>), or a group given w.r.t. a polycyclic presentation (see Chapter <a href="chap46_mj.html#X7EAD57C97EBF7E67"><span class="RefLink">46</span></a>). In all other cases, <code class="func">IsConjugatorIsomorphism</code> may return <code class="keyw">false</code> if <var class="Arg">hom</var> is induced by conjugation but is not an inner automorphism.</p>
 
@@ -537,7 +540,7 @@ true
 <h5>40.7-2 IsGroupOfAutomorphisms</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGroupOfAutomorphisms</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>indicates whether <var class="Arg">G</var> consists of automorphisms of another group <span class="SimpleMath">\(H\)</span>, say. The group <span class="SimpleMath">\(H\)</span> can be obtained from <var class="Arg">G</var> via the attribute <code class="func">AutomorphismDomain</code> (<a href="chap40_mj.html#X7B767B9D827EB0FC"><span class="RefLink">40.7-3</span></a>).</p>
+<p>indicates whether <var class="Arg">G</var> consists of automorphisms of another group <span class="SimpleMath">\(H\)</span>. The group <span class="SimpleMath">\(H\)</span> can be obtained from <var class="Arg">G</var> via the attribute <code class="func">AutomorphismDomain</code> (<a href="chap40_mj.html#X7B767B9D827EB0FC"><span class="RefLink">40.7-3</span></a>).</p>
 
 <p><a id="X7B767B9D827EB0FC" name="X7B767B9D827EB0FC"></a></p>
 
@@ -551,7 +554,7 @@ true
 <h5>40.7-4 IsAutomorphismGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAutomorphismGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>indicates whether <var class="Arg">G</var> is the full automorphism group of another group <span class="SimpleMath">\(H\)</span>, this group is given as <code class="func">AutomorphismDomain</code> (<a href="chap40_mj.html#X7B767B9D827EB0FC"><span class="RefLink">40.7-3</span></a>) value of <var class="Arg">G</var>.</p>
+<p>indicates whether <var class="Arg">G</var>, which must be <code class="func">IsGroupOfAutomorphisms</code> (<a href="chap40_mj.html#X7FC631B786C1DC8B"><span class="RefLink">40.7-2</span></a>), is the full automorphism group of another group <span class="SimpleMath">\(H\)</span>, this group is given as <code class="func">AutomorphismDomain</code> (<a href="chap40_mj.html#X7B767B9D827EB0FC"><span class="RefLink">40.7-3</span></a>) value of <var class="Arg">G</var>.</p>
 
 
 <div class="example"><pre>
@@ -567,7 +570,7 @@ Group([ (1,2,3,4), (1,3) ])
   Pcgs([ (2,4), (1,2,3,4), (1,3)(2,4) ]) -&gt; 
     [ (2,4), (1,4,3,2), (1,3)(2,4) ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NiceObject(au);</span>
-Group([ (1,2,3,4), (1,3)(2,4), (2,4) ])
+Group([ (1,2,4,6), (1,4)(2,6), (2,6)(3,5) ])
 </pre></div>
 
 <p><a id="X8476738A7BF9BADA" name="X8476738A7BF9BADA"></a></p>
@@ -583,9 +586,22 @@ Group([ (1,2,3,4), (1,3)(2,4), (2,4) ])
 &lt;group with 2 generators&gt;
 </pre></div>
 
+<p><a id="X7957AC21782B6C8C" name="X7957AC21782B6C8C"></a></p>
+
+<h5>40.7-6 InnerAutomorphismGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InnerAutomorphismGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>For a group <var class="Arg">G</var> this attribute stores the group of inner automorphisms (automorphisms induced by conjugation) of the original group.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">InnerAutomorphismGroup(SymmetricGroup(5));</span>
+&lt;group with 2 generators&gt;
+</pre></div>
+
 <p><a id="X7FC9B6EA7CAADC0A" name="X7FC9B6EA7CAADC0A"></a></p>
 
-<h5>40.7-6 InducedAutomorphism</h5>
+<h5>40.7-7 InducedAutomorphism</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedAutomorphism</code>( <var class="Arg">epi</var>, <var class="Arg">aut</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">aut</var> be an automorphism of a group <span class="SimpleMath">\(G\)</span> and <var class="Arg">epi</var> be a homomorphism from <span class="SimpleMath">\(G\)</span> to a group <span class="SimpleMath">\(H\)</span> such that the kernel of <var class="Arg">epi</var> is fixed under <var class="Arg">aut</var>. Let <span class="SimpleMath">\(U\)</span> be the image of <var class="Arg">epi</var>. This command returns the automorphism of <span class="SimpleMath">\(U\)</span> induced by <var class="Arg">aut</var> via <var class="Arg">epi</var>, that is, the automorphism of <span class="SimpleMath">\(U\)</span> which maps <span class="SimpleMath">\(g\)</span><code class="code">^<var class="Arg">epi</var></code> to <code class="code">(</code><span class="SimpleMath">\(g\)</span><code class="code">^<var class="Arg">aut</var>)^<var class="Arg">epi</var></code>, for <span class="SimpleMath">\(g \in G\)</span>.</p>
@@ -608,7 +624,7 @@ Group([ (1,2)(3,4), (1,3)(2,4) ])
 
 <h4>40.8 <span class="Heading">Calculating with Group Automorphisms</span></h4>
 
-<p>Usually the best way to calculate in a group of automorphisms is to translate all calculations to an isomorphic group in a representation, for which better algorithms are available, say a permutation group. This translation can be done automatically using <code class="func">NiceMonomorphism</code> (<a href="chap40_mj.html#X7965086E82ABCF41"><span class="RefLink">40.5-2</span></a>).</p>
+<p>Usually the best way to calculate in a group of automorphisms is to translate all calculations to an isomorphic group in a representation for which better algorithms are available, such as a permutation group. This translation can be done automatically using <code class="func">NiceMonomorphism</code> (<a href="chap40_mj.html#X7965086E82ABCF41"><span class="RefLink">40.5-2</span></a>).</p>
 
 <p>Once a group knows to be a group of automorphisms (this can be achieved by testing or setting the property <code class="func">IsGroupOfAutomorphisms</code> (<a href="chap40_mj.html#X7FC631B786C1DC8B"><span class="RefLink">40.7-2</span></a>)), <strong class="pkg">GAP</strong> will try itself to find such a nice monomorphism once calculations in the automorphism group are done.</p>
 
@@ -649,7 +665,7 @@ Group([ (1,2)(3,4), (1,3)(2,4) ])
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismGroups</code>( <var class="Arg">G</var>, <var class="Arg">H</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>computes an isomorphism between the groups <var class="Arg">G</var> and <var class="Arg">H</var> if they are isomorphic and returns <code class="keyw">fail</code> otherwise.</p>
 
-<p>With the existing methods the amount of time needed grows with the size of a generating system of <var class="Arg">G</var>. (Thus in particular for <span class="SimpleMath">\(p\)</span>-groups calculations can be slow.) If you do only need to know whether groups are isomorphic, you might want to consider <code class="func">IdGroup</code> (<a href="../../pkg/SmallGrp-1.4.2/doc/chap1_mj.html#X83044B9D7E3BDF35"><span class="RefLink">smallgrp: IdGroup</span></a>) or the random isomorphism test (see <code class="func">RandomIsomorphismTest</code> (<a href="chap46_mj.html#X84F6F9787CB2CF16"><span class="RefLink">46.10-1</span></a>)).</p>
+<p>With the existing methods the amount of time needed grows with the size of a generating system of <var class="Arg">G</var>. (Thus in particular for <span class="SimpleMath">\(p\)</span>-groups calculations can be slow.) If you do only need to know whether groups are isomorphic, you might want to consider <code class="func">IdGroup</code> (<a href="../../pkg/smallgrp/doc/chap1_mj.html#X83044B9D7E3BDF35"><span class="RefLink">smallgrp: IdGroup</span></a>) or the random isomorphism test (see <code class="func">RandomIsomorphismTest</code> (<a href="chap46_mj.html#X84F6F9787CB2CF16"><span class="RefLink">46.10-1</span></a>)).</p>
 
 
 <div class="example"><pre>
@@ -666,14 +682,14 @@ fail
 <h5>40.9-2 AllHomomorphismClasses</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllHomomorphismClasses</code>( <var class="Arg">G</var>, <var class="Arg">H</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>For two groups <var class="Arg">G</var> and <var class="Arg">H</var>, this function returns representatives of all homomorphisms <span class="SimpleMath">\(\textit{G} to \textit{H}\)</span> up to <var class="Arg">H</var>-conjugacy.</p>
+<p>For two finite groups <var class="Arg">G</var> and <var class="Arg">H</var>, this function returns representatives of all homomorphisms <span class="SimpleMath">\(\textit{G} to \textit{H}\)</span> up to <var class="Arg">H</var>-conjugacy.</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllHomomorphismClasses(SymmetricGroup(4),SymmetricGroup(3)); </span>
-[ [ (1,2,3), (2,4) ] -&gt; [ (), () ],
-  [ (1,2,3), (2,4) ] -&gt; [ (), (1,2) ],
-  [ (1,2,3), (2,4) ] -&gt; [ (1,2,3), (1,2) ] ]
+[ [ (1,3,4,2), (1,3,4) ] -&gt; [ (), () ],
+  [ (1,3,4,2), (1,3,4) ] -&gt; [ (1,2), () ],
+  [ (1,3,4,2), (1,3,4) ] -&gt; [ (2,3), (1,2,3) ] ]
 </pre></div>
 
 <p><a id="X791D12B7845610CE" name="X791D12B7845610CE"></a></p>
@@ -683,7 +699,7 @@ fail
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllHomomorphisms</code>( <var class="Arg">G</var>, <var class="Arg">H</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllEndomorphisms</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllAutomorphisms</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>For two groups <var class="Arg">G</var> and <var class="Arg">H</var>, this function returns all homomorphisms <span class="SimpleMath">\(\textit{G} to \textit{H}\)</span>. Since this number will grow quickly, <code class="func">AllHomomorphismClasses</code> (<a href="chap40_mj.html#X7D0C3D5E864CE954"><span class="RefLink">40.9-2</span></a>) should be used in most cases. <code class="func">AllEndomorphisms</code> returns all homomorphisms from <var class="Arg">G</var> to itself, <code class="func">AllAutomorphisms</code> returns all bijective endomorphisms.</p>
+<p>For two finite groups <var class="Arg">G</var> and <var class="Arg">H</var>, this function returns all homomorphisms <span class="SimpleMath">\(\textit{G} to \textit{H}\)</span>. Since this number will grow quickly, <code class="func">AllHomomorphismClasses</code> (<a href="chap40_mj.html#X7D0C3D5E864CE954"><span class="RefLink">40.9-2</span></a>) should be used in most cases. <code class="func">AllEndomorphisms</code> returns all homomorphisms from <var class="Arg">G</var> to itself, <code class="func">AllAutomorphisms</code> returns all bijective endomorphisms.</p>
 
 
 <div class="example"><pre>
@@ -718,7 +734,7 @@ Group([ (1,2,3,4), (1,2) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h:=Group((1,2,3),(1,2));</span>
 Group([ (1,2,3), (1,2) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">quo:=GQuotients(g,h);</span>
-[ [ (1,2,3,4), (1,3,4) ] -&gt; [ (2,3), (1,2,3) ] ]
+[ [ (1,2,3,4), (1,4,3) ] -&gt; [ (2,3), (1,2,3) ] ]
 </pre></div>
 
 <p><a id="X83B417BE7C508DC4" name="X83B417BE7C508DC4"></a></p>
@@ -730,7 +746,7 @@ Group([ (1,2,3), (1,2) ])
 
 <p>With the existing methods, the amount of time needed grows with the size of a generating system of <var class="Arg">G</var>. (Thus in particular for <span class="SimpleMath">\(p\)</span>-groups calculations can be slow.) A main use of <code class="func">IsomorphicSubgroups</code> therefore is to find nonsolvable subgroups (which often can be generated by 2 elements).</p>
 
-<p>(To find <span class="SimpleMath">\(p\)</span>-subgroups it is often faster to compute the subgroup lattice of the Sylow subgroup and to use <code class="func">IdGroup</code> (<a href="../../pkg/SmallGrp-1.4.2/doc/chap1_mj.html#X83044B9D7E3BDF35"><span class="RefLink">smallgrp: IdGroup</span></a>) to identify the type of the subgroups.)</p>
+<p>(To find <span class="SimpleMath">\(p\)</span>-subgroups it is often faster to compute the subgroup lattice of the Sylow subgroup and to use <code class="func">IdGroup</code> (<a href="../../pkg/smallgrp/doc/chap1_mj.html#X83044B9D7E3BDF35"><span class="RefLink">smallgrp: IdGroup</span></a>) to identify the type of the subgroups.)</p>
 
 <p>If the <code class="code">findall</code> option is set to <code class="keyw">false</code>, the algorithm will stop once one homomorphism has been found (this can be faster and might be sufficient if not all homomorphisms are needed).</p>
 
@@ -749,7 +765,7 @@ Group([ (1,2,3,4), (1,2) ])
 <h5>40.9-6 MorClassLoop</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorClassLoop</code>( <var class="Arg">range</var>, <var class="Arg">classes</var>, <var class="Arg">params</var>, <var class="Arg">action</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>This function loops over element tuples taken from <var class="Arg">classes</var> and checks these for properties such as generating a given group, or fulfilling relations. This can be used to find small generating sets or all types of Morphisms. The element tuples are used only up to up to inner automorphisms as all images can be obtained easily from them by conjugation while running through all of them usually would take too long.</p>
+<p>This function loops over element tuples taken from <var class="Arg">classes</var> and checks these for properties such as generating a given group, or fulfilling relations. This can be used to find small generating sets or all types of Morphisms. The element tuples are used only up to inner automorphisms as all images can be obtained easily from them by conjugation while running through all of them usually would take too long.</p>
 
 <p><var class="Arg">range</var> is a group from which these elements are taken. The classes are given in a list <var class="Arg">classes</var> which is a list of records with the following components.</p>
 
@@ -801,7 +817,7 @@ Group([ (1,2,3,4), (1,2) ])
 
 </dd>
 <dt><strong class="Mark"><code class="code">condition</code></strong></dt>
-<dd><p>A function that will be applied to the homomorphism and must return <code class="code">true</code> for the homomorphism to be accepted.</p>
+<dd><p>A function that will be applied to the homomorphism and must return <code class="keyw">true</code> for the homomorphism to be accepted.</p>
 
 </dd>
 </dl>

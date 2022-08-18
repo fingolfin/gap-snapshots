@@ -67,12 +67,23 @@ InstallFlushableValue( NONNEG_INTEGERS_STRINGS, [] );
 ##  (This program was originally written by Meinolf Geck.)
 ##
 InstallGlobalFunction( FFList, function( F )
-    local sizeF, dim, root, pow, powers, i, elms;
+    local one, sizeF, iso, dim, root, pow, powers, i, elms;
 
+    one:= One( F );
     sizeF:= Size( F );
 
-    if not IsBound( FFLists[ sizeF ] ) then
+    if IsBoundGlobal( "IsStandardFiniteField" ) and
+       ValueGlobal( "IsStandardFiniteField" )( F ) then
+      # Currently we do not cache the list.
+      iso:= ValueGlobal( "StandardIsomorphismGF" )( F );
+      return List( FFList( GF( sizeF ) ), x -> ImageElm( iso, x ) );
+    elif not IsFFE( one ) then
+      Error( "no support for the finite field <F> yet" );
+#T or support AlgebraicExtension with primitive defining polynomial?
+    fi;
 
+    # Now we are in the case of fields constructed via Conway polynomials.
+    if not IsBound( FFLists[ sizeF ] ) then
       dim:= DegreeOverPrimeField( F );
       root:= PrimitiveRoot( F );
       pow:= One( root );
@@ -85,9 +96,8 @@ InstallGlobalFunction( FFList, function( F )
              * Reversed( powers );
       ConvertToVectorRep( elms, sizeF );
       FFLists[ sizeF ]:= elms;
-
     fi;
-
+      
     return FFLists[ sizeF ];
 end );
 
@@ -113,6 +123,7 @@ InstallGlobalFunction( FFLogList, function( F )
     fi;
 
     return FFLogLists[ sizeF ];
+#T  ???
 end );
 
 
@@ -151,7 +162,7 @@ InstallGlobalFunction( "CMeatAxeFileHeaderInfo", function( string )
       if Length( header ) = 2 and header[1] = "permutation" then
 
         line:= [ 12, 1,, 1 ];
-        if 7 < Length( header[2] ) and header[2]{ [ 1 .. 7 ] } = "degree=" then
+        if StartsWith( header[2], "degree=" ) then
           degree:= Int( header[2]{ [ 8 .. Length( header[2] ) ] } );
           line[3]:= degree;
         fi;
@@ -159,16 +170,16 @@ InstallGlobalFunction( "CMeatAxeFileHeaderInfo", function( string )
       elif Length( header ) = 4 and header[1] = "matrix" then
 
         line:= [ 6 ];
-        if 6 < Length( header[2] ) and header[2]{ [ 1 .. 6 ] } = "field=" then
+        if StartsWith( header[2], "field=" ) then
           line[2]:= Int( header[2]{ [ 7 .. Length( header[2] ) ] } );
           if IsInt( line[2] ) and line[2] < 10 then
             line[1]:= 1;
           fi;
         fi;
-        if 5 < Length( header[3] ) and header[3]{ [ 1 .. 5 ] } = "rows=" then
+        if StartsWith( header[3], "rows=" ) then
           line[3]:= Int( header[3]{ [ 6 .. Length( header[3] ) ] } );
         fi;
-        if 5 < Length( header[4] ) and header[4]{ [ 1 .. 5 ] } = "cols=" then
+        if StartsWith( header[4], "cols=" ) then
           line[4]:= Int( header[4]{ [ 6 .. Length( header[4] ) ] } );
         fi;
 
@@ -176,10 +187,10 @@ InstallGlobalFunction( "CMeatAxeFileHeaderInfo", function( string )
                                 and header[2] = "matrix" then
 
         line:= [ 8, 0 ];
-        if 5 < Length( header[3] ) and header[3]{ [ 1 .. 5 ] } = "rows=" then
+        if StartsWith( header[3], "rows=" ) then
           line[3]:= Int( header[3]{ [ 6 .. Length( header[3] ) ] } );
         fi;
-        if 5 < Length( header[4] ) and header[4]{ [ 1 .. 5 ] } = "cols=" then
+        if StartsWith( header[4], "cols=" ) then
           line[4]:= Int( header[4]{ [ 6 .. Length( header[4] ) ] } );
         fi;
 
@@ -229,28 +240,28 @@ end );
 InstallGlobalFunction( ScanMeatAxeFile, function( arg )
     local PermListWithTest,
           filename,
+          string,
           file,
           line,
           q,
-          mode,
-          degree,
-          result,
-          string,
           headlen,
+          mode,
           pos,
           pos2,
+          degree,
+          result,
           offset,
           j,
-          imgs,
-          i,
-          Fsize,
-          F,
           nrows,
-          fflist,
-          newline,
-          ncols,
+          givenF,
+          F,
           one,
-          len;
+          i,
+          ncols,
+          Fsize,
+          fflist,
+          len,
+          newline;
 
     PermListWithTest:= function( list )
       local perm;
@@ -422,24 +433,29 @@ InstallGlobalFunction( ScanMeatAxeFile, function( arg )
         # a permutation, to be converted to a matrix
         # (Note that we cannot leave the task to `PermutationMat'
         # because we admit also non-square results.)
+        if not IsBound( q ) then
+          q:= line[2];
+        fi;
         nrows:= line[3];
         if Length( string ) <> nrows then
           Info( InfoCMeatAxe, 1, "corrupted file" );
           return fail;
         fi;
-        F:= GF( line[2] );
+        givenF:= ValueOption( "inforecord" );
+        if givenF <> fail and IsBound( givenF.givenRing ) then
+          F:= givenF.givenRing;
+        else
+          F:= GF(q);
+        fi;
+
         result:= NullMat( nrows, line[4], F );
         one:= One( F );
         for i in [ 1 .. nrows ] do
-          result[i][ string[i] ]:= one;
+          result[ i, string[i] ]:= one;
         od;
 
         # Convert the matrix to the compressed representation.
-        MakeImmutable( result );
-        if not IsBound( q ) then
-          q:= line[2];
-        fi;
-        ConvertToMatrixRep( result, q );
+        ImmutableMatrix( F, result, true );
 
       else
 
@@ -455,7 +471,7 @@ InstallGlobalFunction( ScanMeatAxeFile, function( arg )
         pos:= 1;
         for i in [ 1 .. nrows ] do
           for j in [ 1 .. ncols ] do
-            result[i][j]:= string[ pos ];
+            result[i,j]:= string[ pos ];
             pos:= pos + 1;
           od;
         od;
@@ -472,7 +488,14 @@ InstallGlobalFunction( ScanMeatAxeFile, function( arg )
 #T Extend the scope of mode 1, as proposed by Richard:
 #T Allow A .. Z for 10 .. 35 and a .. z for -26 .. -1.
       fi;
-      F:= GF( Fsize );
+
+      givenF:= ValueOption( "inforecord" );
+      if givenF <> fail and IsBound( givenF.givenRing ) then
+        F:= givenF.givenRing;
+      else
+        F:= GF( Fsize );
+      fi;
+
       fflist:= FFList( F );
       fflist:= fflist{ Concatenation( ListWithIdenticalEntries( 47, 1 ),
                                       [ 1 .. Length( fflist ) ] ) };
@@ -550,21 +573,28 @@ od;
       fi;
 
       # Convert further.
-      MakeImmutable( result );
-      if not IsBound( q ) then
-        q:= Fsize;
-      fi;
-      ConvertToMatrixRep( result, q );
+      ImmutableMatrix( F, result, true );
 
     elif mode in [ 3, 4, 5, 6 ] then
 
-      # a matrix, in various free formats
+      # a matrix, in various free formats:
+      # 3 means matrix over GF(q), 10 < q < 100;
+      # 4 means matrix over GF(q), 100 < q < 10^6;
+      # 5 means matrix of integers, to be reduced modulo the prime q;
+      # 6 means matrix over GF(q), 10 < q.
       # (Prime fields could be treated in a special way,
       # without calling `FFList'; but this seems to yield no speedup,
       # except in exotic cases where `FFList' itself is the most expensive
       # part of the computation.)
       Fsize:= line[2];
       F:= GF( Fsize );
+
+      givenF:= ValueOption( "inforecord" );
+      if givenF <> fail and IsBound( givenF.givenRing ) then
+        F:= givenF.givenRing;
+      else
+        F:= GF( Fsize );
+      fi;
       nrows:= line[3];
       ncols:= line[4];
       result:= [];
@@ -700,7 +730,7 @@ end );
 #M  MeatAxeString( <mat>, <q> )
 ##
 InstallMethod( MeatAxeString,
-    [ "IsTable and IsFFECollColl", "IsPosInt" ],
+    [ "IsMatrixOrMatrixObj", "IsPosInt" ],
     function( mat, q )
     local nrows,     # number of rows of `mat'
           ncols,     # number of columns of `mat'
@@ -709,7 +739,6 @@ InstallMethod( MeatAxeString,
           perm,      # list of perm. images if `mat' is a perm. matrix
           i,         # loop over the rows of `mat'
           noone,     # no `one' found yet in the current row
-          row,       # one row of `mat'
           j,         # loop over the columns of `mat'
           mode,      # mode of the MeatAxe string (first header entry)
           header,    # mode of the header
@@ -721,15 +750,12 @@ InstallMethod( MeatAxeString,
           len,
           str,       # MeatAxe string, result
           k,
+          l,
           N,
           d,
           ffloglist, #
           z;         #
 
-    # Check that `mat' is rectangular.
-    if not IsMatrixObj( mat ) then
-      Error( "<mat> must be a matrix" );
-    fi;
     nrows:= NumberRows( mat );
     ncols:= NumberColumns( mat );
 
@@ -747,26 +773,20 @@ InstallMethod( MeatAxeString,
       perm:= [];
       for i in [ 1 .. nrows ] do
         noone:= true;
-        row:= mat[i];
-        if IsZero( row ) then
-          perm:= fail;
-        else
-          for j in [ 1 .. ncols ] do
-            if row[j] = one then
-#T deal with mat[i,j] etc.
-              if noone and not j in perm then
-                perm[i]:= j;
-                noone:= false;
-              else
-                perm:= fail;
-                break;
-              fi;
-            elif row[j] <> zero then
+        for j in [ 1 .. ncols ] do
+          if mat[i,j] = one then
+            if noone and not j in perm then
+              perm[i]:= j;
+              noone:= false;
+            else
               perm:= fail;
               break;
             fi;
-          od;
-        fi;
+          elif mat[i,j] <> zero then
+            perm:= fail;
+            break;
+          fi;
+        od;
         if perm = fail then
           break;
         fi;
@@ -815,19 +835,18 @@ InstallMethod( MeatAxeString,
       str:= EmptyString( len );
       Append( str, header );
 
-      for row in mat do
-        i:= 1;
-        for j in [ 0 .. nol-1 ] do
-          for k in [ 1 .. linelen ] do
-            Add( str, values[ Position( fflist, row[i] ) ] );
-#T deal with mat[i,j]
-            i:= i + 1;
+      for i in [ 1 .. nrows ] do
+        j:= 1;
+        for k in [ 0 .. nol-1 ] do
+          for l in [ 1 .. linelen ] do
+            Add( str, values[ Position( fflist, mat[i,j] ) ] );
+            j:= j + 1;
           od;
           Add( str, '\n' );
         od;
         if not IsEmpty( tail ) then
-          for i in tail do
-            Add( str, values[ Position( fflist, row[i] ) ] );
+          for j in tail do
+            Add( str, values[ Position( fflist, mat[i,j] ) ] );
           od;
           Add( str, '\n' );
         fi;
@@ -869,9 +888,9 @@ InstallMethod( MeatAxeString,
         # this cache avoids garbage collections and thus saves time
         # if the matrix is not too small, compared to the field.
         values:= IntegerStrings( q );
-        for row in mat do
-          for i in row do
-            Append( str, values[ IntFFE( i ) + 1 ] );
+        for i in [ 1 .. nrows ] do
+          for j in [ 1 .. ncols ] do
+            Append( str, values[ IntFFE( mat[i,j] ) + 1 ] );
             Add( str, '\n' );
           od;
         od;
@@ -879,12 +898,12 @@ InstallMethod( MeatAxeString,
         # Avoid expensive `Position' calls for the result of `FFList'.
         ffloglist:= FFLogList( GF(q) );
         z:= Z(q);
-        for row in mat do
-          for i in row do
-            if i = zero then
+        for i in [ 1 .. nrows ] do
+          for j in [ 1 .. ncols ] do
+            if mat[i,j] = zero then
               Append( str, "0\n" );
             else
-              Append( str, ffloglist[ LogFFE( i, z ) + 1 ] );
+              Append( str, ffloglist[ LogFFE( mat[i,j], z ) + 1 ] );
               Add( str, '\n' );
             fi;
           od;
@@ -1011,9 +1030,9 @@ InstallMethod( MeatAxeString,
 ##  and only with the new header format.
 ##
 InstallMethod( MeatAxeString,
-    [ "IsTable and IsCyclotomicCollColl" ],
+    [ "IsMatrixOrMatrixObj" ],
     function( intmat )
-    local str, row, entry;
+    local str, ncols, i, j, entry;
 
     # Start with the header line.
     str:= "integer matrix rows=";
@@ -1022,8 +1041,10 @@ InstallMethod( MeatAxeString,
     Append( str, String( Length( intmat[1] ) ) );
     Append( str, "\n" );
 
-    for row in intmat do
-      for entry in row do
+    ncols:= NumberColumns( intmat );
+    for i in [ 1 .. NumberRows( intmat ) ] do
+      for j in [ 1 .. ncols ] do
+        entry:= intmat[i,j];
         if not IsInt( entry ) then
           Error( "in characteristic zero, ",
                  "only integer matrices are supported by MeatAxeString" );
@@ -1045,8 +1066,8 @@ InstallMethod( MeatAxeString,
 #F  CMtxBinaryFFMatOrPerm( <perm>, <deg>, <outfile>[, <base>] )
 ##
 InstallGlobalFunction( CMtxBinaryFFMatOrPerm, function( arg )
-  local mat, q, outfile, res, qr, imgs, i, f, a, epb, qpwrs, ffloglist, z,
-        len, ind, row, x;
+  local mat, q, outfile, res, qr, i, imgs, f, nrows, ncols, a, epb, qpwrs,
+        ffloglist, z, len, ind, j, x;
 
   if Length( arg ) < 3 or 4 < Length( arg ) then
     Error( "usage: ",
@@ -1077,6 +1098,8 @@ InstallGlobalFunction( CMtxBinaryFFMatOrPerm, function( arg )
     f:= OutputTextFile( outfile, false );
     WriteAll( f, STRING_SINTLIST( res ) );
   elif q <= 256 then
+    nrows:= NumberRows( mat );
+    ncols:= NumberColumns( mat );
     # ff elts per byte
     a := q;
     epb := 0;
@@ -1102,14 +1125,15 @@ InstallGlobalFunction( CMtxBinaryFFMatOrPerm, function( arg )
     # now the data, pack each epb entries in one byte, weighted with qpwrs
     ffloglist:= List(FFLogList( GF(q) ), Int);
     z:= Z(q);
-    for row in mat do
-      len := QuoInt(Length(row), epb);
-      if len * epb < Length(row) then
-        len := len+1;
-      fi;
+    len := QuoInt(ncols, epb);
+    if len * epb < ncols then
+      len := len+1;
+    fi;
+    for i in [ 1 .. nrows ] do
       res := 0*[1..len];
       ind := [1,1];
-      for x in row do
+      for j in [ 1 .. ncols ] do
+        x:= mat[i,j];
         if not IsZero(x) then
           a := ffloglist[LogFFE(x, z) + 1];
           res[ind[1]] := res[ind[1]] + a*qpwrs[ind[2]];

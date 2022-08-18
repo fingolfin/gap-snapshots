@@ -11,6 +11,64 @@
 
 #############################################################################
 ##
+#F  AGR_Checksum( <entry>, <typename> )
+##
+##  <entry> is an entry in 'AtlasOfGroupRepresentationsInfo.filenames',
+##  that is, a list of length 3 or 4.
+##
+BindGlobal( "AGR_Checksum", function( entry, typename )
+    local tocid, info, localname;
+
+    if Length( entry ) >= 4 then
+      # There is already a checksum.
+      if ValueOption( "SHA" ) = true then
+        if IsString( entry[4] ) then
+          return Concatenation( "\"", entry[4], "\"" );
+        fi;
+      elif IsInt( entry[4] ) then
+        return String( entry[4] );
+      fi;
+    fi;
+
+    tocid:= entry[3];
+    if tocid = "core" then
+      if ForAny( AtlasOfGroupRepresentationsInfo.TableOfContents.types.rep,
+                 x -> x[1] = typename ) then
+        tocid:= "datagens";
+      else
+        tocid:= "dataword";
+      fi;
+    fi;
+
+    # If the file is available locally then compute the value,
+    # otherwise leave it out.
+    info:= AtlasOfGroupRepresentationsLocalFilename(
+               [ [ tocid, entry[1] ] ], typename );
+    info:= First( info, l -> l[2][1][2] = true );
+    if info = fail then
+      return fail;
+    fi;
+    localname:= info[2][1][1];
+    if EndsWith( localname, ".json" ) then
+      # The t.o.c. file contains the checksum for the '.g' file.
+      localname:= Concatenation(
+                      localname{ [ 1 .. Length( localname ) - 5 ] }, ".g" );
+      if not IsExistingFile( localname ) then
+        return fail;
+      fi;
+    fi;
+    if ValueOption( "SHA" ) = true and IsBoundGlobal( "HexSHA256" ) then
+      return Concatenation( "\"",
+                 ValueGlobal( "HexSHA256" )( StringFile( localname ) ),
+                 "\"" );
+    else
+      return String( CrcFile( localname ) );
+    fi;
+end );
+
+
+#############################################################################
+##
 #F  TOCEntryStringDefault( <typename>, <entry> )
 ##
 BindGlobal( "TOCEntryStringDefault", function( typename, entry )
@@ -19,30 +77,16 @@ BindGlobal( "TOCEntryStringDefault", function( typename, entry )
     list:= AtlasOfGroupRepresentationsInfo.filenames;
     name:= entry[ Length( entry ) ];
     pos:= PositionSorted( list, [ name ] );
-    if pos <= Length( list ) and list[ pos ][1] = name then
-      entry:= list[ pos ];
-      if Length( entry ) < 4 then
-        # There is no crc value yet.
-        # If the file is available locally then compute the value,
-        # otherwise leave it out.
-        info:= AtlasOfGroupRepresentationsLocalFilename( [ [ entry[3], entry[1] ] ], typename );
-        info:= First( info, l -> l[2][1][2] = true );
-        if info <> fail then
-          crc:= CrcFile( info[2][1][1] );
-        else
-          crc:= fail;
-        fi;
-      else
-        crc:= entry[4];
-      fi;
-      info:= Concatenation( "\"", typename, "\",\"", entry[2], "\"" );
-      if crc <> fail then
-        Append( info, Concatenation( ",[", String( crc ), "]" ) );
-      fi;
-      return info;
-    else
+    if pos > Length( list ) or list[ pos ][1] <> name then
       return fail;
     fi;
+    entry:= list[ pos ];
+    info:= Concatenation( "\"", typename, "\",\"", entry[2], "\"" );
+    crc:= AGR_Checksum( entry, typename );
+    if crc <> fail then
+      Append( info, Concatenation( ",[", crc, "]" ) );
+    fi;
+    return info;
 end );
 
 
@@ -167,7 +211,7 @@ AGR.TestWordsSLDDefault:= function( tocid, name, file, type, format, verbose )
 
     # Read the program.
     if tocid = "core" then
-      tocid:= "dataword"; 
+      tocid:= "dataword";
     fi;
     prog:= AGR.FileContents( [ [ tocid, file ] ], type );
     if prog = fail then
@@ -318,7 +362,7 @@ BindGlobal( "AtlasProgramInfoDefault",
                   identifier      := identifier );
     fi;
 
-    return fail;  
+    return fail;
 end );
 
 
@@ -357,7 +401,7 @@ BindGlobal( "AtlasProgramDefault", function( type, identifier, groupname )
       fi;
     fi;
 
-    return fail;  
+    return fail;
 end );
 
 
@@ -636,7 +680,7 @@ AGR.CommonDisplayPRG:= function( title, stdavail, data, onelineonly )
     else
       # Show a header line plus one line for each program.
       for entry in data do
-        line:= []; 
+        line:= [];
         # Show the standardization only if several are available.
         if 1 < Length( stdavail ) then
           Add( line, Concatenation( "(for std. gen. ", entry[3], ")" ) );
@@ -672,7 +716,11 @@ AGR.CommonDisplayPRG:= function( title, stdavail, data, onelineonly )
 ##  returns the `AtlasProgramInfo' record for the straight line program with
 ##  filename <filename>, which must be a string.
 ##
-##  A copy of this function is in 'ctblocks/gap/access.g'!
+##  This function is used for example by the function
+##  'GeneralizedStraightLineProgramFromInfo',
+##  which evaluates data files from the CTBlocks package.
+##
+#T document this function, then change the reference in CTBlocks accordingly
 ##
 BindGlobal( "AtlasProgramInfoForFilename", function( filename )
     local type, parsed, gapname, toc, data, l, id;
@@ -685,6 +733,9 @@ BindGlobal( "AtlasProgramInfoForFilename", function( filename )
         # the second entry is a pair of the form [ <tocid>, <gapname> ].
         gapname:= First( AtlasOfGroupRepresentationsInfo.GAPnames,
                          pair -> pair[2] = parsed[1] )[1];
+        if gapname = fail then
+          return fail;
+        fi;
 
         for toc in AGR.TablesOfContents( "all" ) do
           if IsBound( toc.( parsed[1] ) ) then

@@ -99,7 +99,7 @@
   
   [33X[1;0Y[29X[2XIsSubgroupFpGroup[102X( [3XH[103X ) [32X Category[133X
   
-  [33X[0;0Yreturns  [9Xtrue[109X if [3XH[103X is a finitely presented group or a subgroup of a finitely
+  [33X[0;0Yis  the  category  for  finitely presented groups or subgroups of a finitely
   presented group.[133X
   
   [1X47.1-2 IsFpGroup[101X
@@ -111,6 +111,12 @@
   [33X[0;0YFree groups are a special case of finitely presented groups, namely finitely
   presented groups with no relators.[133X
   
+  [33X[0;0YNote  that  [10XFreeGroup(infinity)[110X (which exists e.g. for purposes of rewriting
+  presentations  with  further  generators)  satisfies  this filter, though of
+  course  it  is  not  finitely  generated  (and thus not finitely presented).
+  [10XIsFpGroup[110X  thus  is not a proper property test and slightly misnamed for the
+  sake of its most prominent uses.[133X
+  
   [33X[0;0YAnother  special case are groups given by polycyclic presentations. [5XGAP[105X uses
   a  special  representation  for these groups which is created in a different
   way. See chapter [14X46[114X for details.[133X
@@ -121,7 +127,7 @@
     [4X[25Xgap>[125X [27XIsFpGroup(g);[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xh:=CyclicGroup(2);[127X[104X
-    [4X[28X<pc group of size 2 with 1 generators>[128X[104X
+    [4X[28X<pc group of size 2 with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XIsFpGroup(h);[127X[104X
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
@@ -997,7 +1003,7 @@
     [4X[28X  [ [ 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ], [128X[104X
     [4X[28X      [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1 ] ] ][128X[104X
     [4X[25Xgap>[125X [27Xiso := IsomorphismFpGroupByGenerators( G, gens );;[127X[104X
-    [4X[28X#I  the image group has 2 gens and 10 rels of total length 118[128X[104X
+    [4X[28X#I  the image group has 2 gens and 10 rels of total length 132[128X[104X
     [4X[25Xgap>[125X [27Xiso := IsomorphismFpGroupByGenerators( G, gens : [127X[104X
     [4X[25X>[125X [27X                                          method := "regular");;[127X[104X
     [4X[28X#I  the image group has 2 gens and 6 rels of total length 56[128X[104X
@@ -1327,10 +1333,11 @@
   [33X[1;0Y[29X[2XLargerQuotientBySubgroupAbelianization[102X( [3Xhom[103X, [3XU[103X ) [32X function[133X
   
   [33X[0;0YLet [3Xhom[103X a homomorphism from a finitely presented group [22XG[122X to a finite group [22XH[122X
-  and  [22X[3XU[103Xle  H[122X.  This  function will -- if it exists -- return a subgroup [22XSle[3XG[103X[122X,
-  such  that  the core of [22XS[122X is properly contained in the kernel of [3Xhom[103X as well
-  as  in  [22XV'[122X, where [22XV[122X is the pre-image of [3XU[103X under [3Xhom[103X. Thus [22XS[122X exposes a larger
-  quotient of [22XG[122X. If no such subgroup exists, [3Xfail[103X is returned.[133X
+  and  [22X[3XU[103X  ≤ H[122X. This function will –if it exists– return a subgroup [22XS ≤ [3XG[103X[122X, such
+  that  the core of [22XS[122X is properly contained in the kernel of [3Xhom[103X as well as in
+  the  derived  subgroup of [22XV[122X, where [22XV[122X is the pre-image of [3XU[103X under [3Xhom[103X. Thus [22XS[122X
+  exposes  a  larger  quotient  of  [22XG[122X.  If  no  such  subgroup exists, [9Xfail[109X is
+  returned.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xf:=FreeGroup("x","y","z");;[127X[104X

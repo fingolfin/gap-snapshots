@@ -14,7 +14,7 @@
 ##
 #V  Integers  . . . . . . . . . . . . . . . . . . . . .  ring of the integers
 ##
-InstallValue( Integers, Objectify( NewType(
+BindGlobal( "Integers", Objectify( NewType(
     CollectionsFamily( CyclotomicsFamily ),
     IsIntegers and IsAttributeStoringRep ),
     rec() ) );
@@ -26,6 +26,7 @@ SetSize( Integers, infinity );
 SetLeftActingDomain( Integers, Integers );
 SetGeneratorsOfRing( Integers, [ 1 ] );
 SetGeneratorsOfLeftModule( Integers, [ 1 ] );
+SetIsFinitelyGeneratedMagma( Integers, false );
 SetIsFiniteDimensional( Integers, true );
 SetUnits( Integers, [ -1, 1 ] );
 SetIsWholeFamily( Integers, false );
@@ -35,7 +36,7 @@ SetIsWholeFamily( Integers, false );
 ##
 #V  NonnegativeIntegers . . . . . . . . . .  semiring of nonnegative integers
 ##
-InstallValue( NonnegativeIntegers, Objectify( NewType(
+BindGlobal( "NonnegativeIntegers", Objectify( NewType(
     CollectionsFamily( CyclotomicsFamily ),
     IsNonnegativeIntegers and IsAttributeStoringRep ),
     rec() ) );
@@ -45,6 +46,7 @@ SetString( NonnegativeIntegers, "NonnegativeIntegers" );
 SetSize( NonnegativeIntegers, infinity );
 SetGeneratorsOfSemiringWithZero( NonnegativeIntegers, [ 1 ] );
 SetGeneratorsOfAdditiveMagmaWithZero( NonnegativeIntegers, [ 1 ] );
+SetIsFinitelyGeneratedMagma( NonnegativeIntegers, false );
 SetRepresentativeSmallest( NonnegativeIntegers, 0 );
 SetIsWholeFamily( NonnegativeIntegers, false );
 
@@ -53,7 +55,7 @@ SetIsWholeFamily( NonnegativeIntegers, false );
 ##
 #V  PositiveIntegers  . . . . . . . . . . . . . semiring of positive integers
 ##
-InstallValue( PositiveIntegers, Objectify( NewType(
+BindGlobal( "PositiveIntegers", Objectify( NewType(
     CollectionsFamily( CyclotomicsFamily ),
     IsPositiveIntegers and IsAttributeStoringRep ),
     rec() ) );
@@ -63,33 +65,13 @@ SetString( PositiveIntegers, "PositiveIntegers" );
 SetSize( PositiveIntegers, infinity );
 SetGeneratorsOfSemiring( PositiveIntegers, [ 1 ] );
 SetGeneratorsOfAdditiveMagma( PositiveIntegers, [ 1 ] );
+SetIsFinitelyGeneratedMagma( PositiveIntegers, false );
 SetRepresentativeSmallest( PositiveIntegers, 1 );
 SetIsWholeFamily( PositiveIntegers, false );
 
 
 #############################################################################
 ##
-#V  GaussianIntegers  . . . . . . . . . . . . . . . ring of Gaussian integers
-##
-InstallValue( GaussianIntegers, Objectify( NewType(
-    CollectionsFamily(CyclotomicsFamily),
-    IsGaussianIntegers and IsAttributeStoringRep ),
-    rec() ) );
-
-SetLeftActingDomain( GaussianIntegers, Integers );
-SetName( GaussianIntegers, "GaussianIntegers" );
-SetString( GaussianIntegers, "GaussianIntegers" );
-SetIsLeftActedOnByDivisionRing( GaussianIntegers, false );
-SetSize( GaussianIntegers, infinity );
-SetGeneratorsOfRing( GaussianIntegers, [ E(4) ] );
-SetGeneratorsOfLeftModule( GaussianIntegers, [ 1, E(4) ] );
-SetUnits( GaussianIntegers, [ -1, 1, -E(4), E(4) ] );
-SetIsWholeFamily( GaussianIntegers, false );
-
-
-#############################################################################
-##
-
 #R  IsCanonicalBasisIntegersRep
 ##
 DeclareRepresentation(
@@ -148,7 +130,7 @@ InstallMethod( Coefficients,
 ##
 #V  Primes  . . . . . . . . . . . . . . . . . . . . . .  list of small primes
 ##
-InstallValue( Primes,
+BindGlobal( "Primes",
   [   2,  3,  5,  7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61,
      67, 71, 73, 79, 83, 89, 97,101,103,107,109,113,127,131,137,139,149,151,
     157,163,167,173,179,181,191,193,197,199,211,223,227,229,233,239,241,251,
@@ -425,7 +407,7 @@ end);
 InstallMethod( CoefficientsQadic, "for two integers", 
     true, [ IsInt, IsInt ], 0,
 function( i, q )
-    local   v;
+    local i1, res, l, qq, i2;
     if q <= 1 then
         Error("2nd argument of CoefficientsQadic should be greater than 1\n");
     fi;
@@ -435,12 +417,34 @@ function( i, q )
         TryNextMethod();
     fi;
     # represent the integer <i> as <q>-adic number
-    v := [];
-    while i > 0  do
-        Add( v, RemInt( i, q ) );
-        i := QuoInt( i, q );
-    od;
-    return v;
+    if i = 0 then
+        return [];
+    elif i < q then
+        return [i];
+    elif i < q^2 then
+        i1 := QuoInt(i, q);
+        return [i - i1*q, i1];
+    elif Log2Int(q)*100 > Log2Int(i) then
+        # straight forward loop for result length < 100
+        res := [];
+        while i > 0 do
+          i1 := QuoInt(i, q);
+          Add(res, i - i1*q);
+          i := i1;
+        od;
+    else
+        # divide and conquer method for large i
+        l := QuoInt(LogInt(i, q), 2)+1;
+        qq := q^l;
+        i2 := QuoInt(i,qq);
+        i1 := i - i2*qq;
+        res := CoefficientsQadic(i1, q);
+        while Length(res) < l do
+          Add(res, 0);
+        od;
+        Append(res, CoefficientsQadic(i2, q));
+    fi;
+    return res;
 end);
 
 

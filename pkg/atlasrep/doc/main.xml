@@ -7,15 +7,15 @@
    [ <!ENTITY ATLAS "<Package>ATLAS</Package>">
      <!ENTITY AtlasRep "<Package>AtlasRep</Package>">
 
-     <!ENTITY ATLASSERVER "http://brauer.maths.qmul.ac.uk/Atlas/v3">
-     <!ENTITY ATLASREPHOME "http://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep">
+     <!ENTITY ATLASSERVER "http://atlas.math.rwth-aachen.de/Atlas/v3">
+     <!ENTITY ATLASREPHOME "https://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep">
      <!ENTITY WILSONMAIL "<Email>R.A.Wilson@qmul.ac.uk</Email>">
 
      <!ENTITY mdash "<Alt Only='HTML'>&#8212;</Alt><Alt Not='HTML'>---</Alt>">
 
-     <!ENTITY VERSIONNUMBER "2.1.0">
-     <!ENTITY RELEASEMONTH "May">
-     <!ENTITY RELEASEYEAR "2019">
+     <!ENTITY VERSIONNUMBER "2.1.4">
+     <!ENTITY RELEASEMONTH "August">
+     <!ENTITY RELEASEYEAR "2022">
    ]>
 
 <Book Name="AtlasRep">
@@ -40,7 +40,7 @@
   </Author>
   <Author>Thomas Breuer
     <Email>sam@Math.RWTH-Aachen.De</Email>
-    <Homepage>http://www.math.rwth-aachen.de/~Thomas.Breuer</Homepage>
+    <Homepage>https://www.math.rwth-aachen.de/~Thomas.Breuer</Homepage>
   </Author>
   <Copyright>
     &copyright; 2002&ndash;&RELEASEYEAR;
@@ -71,7 +71,8 @@
 
 </Body>
 
-<Bibliography Databases="manualbib.xml,../../../doc/manualbib.xml,../../ctbllib/doc/manualbib.xml"/>
+<Bibliography Databases="manualbib.xml,gapmanualbib.xml"/>
+<!-- gapmanualbib.xml is fetched from GAPPATH/doc/manualbib.xml by doc/makedocrel.g -->
 
 <TheIndex/>
 

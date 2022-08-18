@@ -190,11 +190,11 @@ Error, List Elements: <list>[4] must have an assigned value
 
 # ListWithIdenticalEntries: errors
 gap> ListWithIdenticalEntries(fail, true);
-Error, LIST_WITH_IDENTICAL_ENTRIES: <n> must be a non-negative small integer (\
-not the value 'fail')
+Error, ListWithIdenticalEntries: <n> must be a non-negative small integer (not\
+ the value 'fail')
 gap> ListWithIdenticalEntries(-1, fail);
-Error, LIST_WITH_IDENTICAL_ENTRIES: <n> must be a non-negative small integer (\
-not the integer -1)
+Error, ListWithIdenticalEntries: <n> must be a non-negative small integer (not\
+ the integer -1)
 
 # ListWithIdenticalEntries: 0 length
 gap> l := ListWithIdenticalEntries(0, 'w');
@@ -308,6 +308,44 @@ gap> l;
 [ [ 5 ], [ 5 ], [ 5 ], [ 5 ] ]
 gap> TNAM_OBJ(l);
 "plain list (rectangular table)"
+
+# Check PlainListCopy
+gap> checkPlainListCopy := function(l)
+>   local copy, tnum;
+>   tnum := TNUM_OBJ(l);
+>   copy := PlainListCopy(l);
+>   return IsPlistRep(copy) and l = copy and
+>          not IsIdenticalObj(l,copy) and TNUM_OBJ(l) = tnum;
+> end;;
+gap> checkPlainListCopy([]);
+true
+gap> checkPlainListCopy([1, ,()]);
+true
+gap> checkPlainListCopy([1..5]);
+true
+gap> checkPlainListCopy([10,8..-4]);
+true
+gap> checkPlainListCopy("");
+true
+gap> checkPlainListCopy("abc");
+true
+gap> checkPlainListCopy(ListWithIdenticalEntries(3, false));
+true
+gap> checkPlainListCopy(NewZeroVector(IsGF2VectorRep, GF(2), 10));
+true
+gap> checkPlainListCopy(NewZeroVector(Is8BitVectorRep, GF(3), 10));
+true
+gap> PlainListCopy(6);
+Error, PlainListCopy: <list> must be a small list (not the integer 6)
+gap> PlainListCopy((1,2,3));
+Error, PlainListCopy: <list> must be a small list (not a permutation (small))
+#@if IsHPCGAP
+gap> PlainListCopy(Group((1,2)));
+Error, PlainListCopy: <list> must be a small list (not an atomic component object)
+#@else
+gap> PlainListCopy(Group((1,2)));
+Error, PlainListCopy: <list> must be a small list (not a component object)
+#@fi
 
 # Check TNUM behaviours
 gap> x := [1,,"cheese"];;
@@ -552,6 +590,114 @@ gap> l := [1..3];
 [ 1 .. 3 ]
 gap> MakeImmutable(l);;
 gap> IsIdenticalObj(AsSet(l), l);
+true
+
+# IteratorList
+# immutable dense list
+gap> tmp := MakeImmutable([1, 2, 3, 4]);
+[ 1, 2, 3, 4 ]
+gap> it := IteratorList(tmp);
+<iterator>
+gap> for x in it do Print(x); od; Print("\n");
+1234
+gap> IsDoneIterator(it);
+true
+gap> NextIterator(it);
+Error, List Element: <list>[5] must have an assigned value
+gap> IsDoneIterator(it);
+true
+
+# mutable dense list
+gap> tmp := [1 .. 4];;
+gap> it := IteratorList(tmp);
+<iterator>
+gap> for x in it do Print(x); od; Print("\n");
+1234
+gap> IsDoneIterator(it);
+true
+gap> NextIterator(it);
+Error, <iter> is exhausted
+gap> IsDoneIterator(it);
+true
+
+# immutable non-dense list
+gap> tmp := MakeImmutable([, 2, 3, , 5, 6,]);
+[ , 2, 3,, 5, 6 ]
+gap> it := IteratorList(tmp);
+<iterator>
+gap> for x in it do Print(x); od; Print("\n");
+2356
+gap> IsDoneIterator(it);
+true
+gap> NextIterator(it);
+Error, <iter> is exhausted
+gap> IsDoneIterator(it);
+true
+
+# mutable non-dense list
+gap> tmp := [, 2, 3, , 5, 6,];
+[ , 2, 3,, 5, 6 ]
+gap> it := IteratorList(tmp);
+<iterator>
+gap> for x in it do Print(x); od; Print("\n");
+2356
+gap> IsDoneIterator(it);
+true
+gap> NextIterator(it);
+Error, <iter> is exhausted
+gap> IsDoneIterator(it);
+true
+
+# Sublist search
+gap> a:=[4,2,3,1,5,2,4,2,1,4,1,4,1,4,2,1,5,1,2,1,4,5,1,2,4];;
+gap> PositionSublist(a,[4,2,1,4,1,4,1,4]);
+7
+gap> PositionSublist(a,[4,2,1,4,1,4,1,4],7);
+fail
+gap> PositionSublist(a,[4]);
+1
+gap> PositionSublist(a,[2,4]);
+6
+gap> PositionSublist(a,[2,4],6);
+24
+gap> PositionSublist(a,[2,4],24);
+fail
+gap> PositionSublist(a,[2,4,1]);
+fail
+gap> PositionSublist(a,[4,2,1]);
+7
+gap> PositionSublist(a,[4,2,1],6);
+7
+gap> PositionSublist(a,[4,2,1],7);
+14
+gap> PositionSublist(a,[4,2,1],14);
+fail
+gap> PositionSublist(a,[]);
+1
+gap> PositionSublist(a,[],1);
+2
+
+# Verify SetIsSSortedList works on plain lists. For background, see
+# <https://github.com/gap-system/gap/issues/4459>.
+gap> l:= [ 1, 3, 2 ];
+[ 1, 3, 2 ]
+gap> HasIsSSortedList( l );
+false
+gap> SetIsSSortedList( l, false );
+gap> HasIsSSortedList( l );
+true
+gap> IsSSortedList( l );
+false
+gap> HasIsSSortedList( l );
+true
+
+#
+gap> l:= [ 1, 3, 5 ];
+[ 1, 3, 5 ]
+gap> HasIsSSortedList( l );
+false
+gap> SetIsSSortedList( l, true );
+gap> HasIsSSortedList( l );
 true
 
 #

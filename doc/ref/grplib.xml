@@ -1,12 +1,11 @@
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <!-- %% -->
-<!-- %A  grplib.msk                  GAP documentation          Heiko Theißen -->
+<!-- %A  grplib.xml                  GAP documentation          Heiko Theißen -->
 <!-- %A                                                         Volkmar Felsch -->
 <!-- %A                                                         Bettina Eick -->
 <!-- %A                                                         Alexander Hulpke -->
 <!-- %A                                                         Hans Ulrich Besche -->
 <!-- %% -->
-<!-- %A  @(#)<M>Id: grplib.msk,v 1.81 2005/12/08 22:13:29 gap Exp </M> -->
 <!-- %% -->
 <!-- %Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland -->
 <!-- %Y  Copyright (C) 2002 The GAP Group -->
@@ -33,8 +32,8 @@ initially knows the following groups:
  a library of groups of small order (see&nbsp;<Ref BookName="smallgrp" Chap="The Small Groups Library"/>),
 </Item>
 <Item>
-  the  finite perfect  groups of   size  at most <M>10^6</M>
-    (excluding 11 sizes) (see&nbsp;<Ref Sect="Finite Perfect Groups"/>).
+  the  finite perfect  groups of   size  at most <M>2\cdot 10^6</M>
+  (see&nbsp;<Ref Sect="Finite Perfect Groups"/>).
 </Item>
 <Item>
   the  primitive  permutation groups of degree
@@ -99,6 +98,33 @@ calculations.
 <#Include Label="SuzukiGroup">
 <#Include Label="ReeGroup">
 
+<Subsection Label="Generator Names">
+<Heading>Generator Names</Heading>
+For groups created as finitely presented groups, including polycyclic groups,
+the generators are labelled, by default, with a letter and a number.
+It is possible to influence this naming with the option <C>generatorNames</C>,
+see Section&nbsp;<Ref Sect="Function Call With Options"/>.
+If this option holds a string, then the generators are named with this
+string and sequential numbers starting with <C>1</C>.
+If this option holds a list of sufficient length consisting of
+nonempty strings, then the generator names are taken from this list, in order.
+<P/>
+<Example><![CDATA[
+gap> GeneratorsOfGroup(AbelianGroup([5,7]));
+[ f1, f2 ]
+gap> GeneratorsOfGroup(AbelianGroup([5,7]:generatorNames:="a"));
+[ a1, a2 ]
+gap> GeneratorsOfGroup(AbelianGroup([5,7]:generatorNames:=["u","v","w"]));
+[ u, v ]
+gap> AsSSortedList(DihedralGroup(12:generatorNames:="a"));
+[ <identity> of ..., a1, a2, a3, a1*a2, a1*a3, a2*a3, a3^2, a1*a2*a3,
+  a1*a3^2, a2*a3^2, a1*a2*a3^2 ]
+gap> AsSSortedList(DihedralGroup(12:generatorNames:=["a","b","c"]));
+[ <identity> of ..., a, b, c, a*b, a*c, b*c, c^2, a*b*c, a*c^2, b*c^2,
+  a*b*c^2 ]
+]]></Example>
+</Subsection>
+
 </Section>
 
 
@@ -122,7 +148,12 @@ calculations.
 <#Include Label="ProjectiveGeneralUnitaryGroup">
 <#Include Label="ProjectiveSpecialUnitaryGroup">
 <#Include Label="ProjectiveSymplecticGroup">
+<#Include Label="ProjectiveGeneralOrthogonalGroup">
+<#Include Label="ProjectiveSpecialOrthogonalGroup">
 <#Include Label="ProjectiveOmega">
+<#Include Label="ProjectiveGeneralSemilinearGroup">
+<#Include Label="ProjectiveSpecialSemilinearGroup">
+
 
 </Section>
 
@@ -297,42 +328,34 @@ It returns <K>fail</K> if no such group exists in the library.
 <Heading>Finite Perfect Groups</Heading>
 
 <Index>perfect groups</Index>
-The &GAP; library of finite  perfect groups provides, up to isomorphism,
-a list of all perfect groups whose sizes are less than  <M>10^6</M>  excluding
-the following sizes:
-<P/>
-<List>
-<Item>
-      For <M>n = 61440</M>, 122880, 172032, 245760, 344064, 491520, 688128, or
-      983040,  the perfect groups  of size  <M>n</M>  have not completely been
-      determined yet.  The library  neither provides  the number of these
-      groups nor the groups themselves.
-</Item>
-<Item>
-      For  <M>n = 86016</M>,  368640,  or  737280,  the library  does not  yet
-      contain  the perfect groups  of size  <M>n</M>,  it  only provides their
-      numbers which are 52, 46, and 54, respectively.
-</Item>
-</List>
-<P/>
-Except for these eleven sizes, the list of altogether 1097 perfect groups
-in the  library is complete.  It relies  on results of  Derek&nbsp;F. Holt and
-Wilhelm Plesken which  are published in their  book    <Q>Perfect Groups</Q>
-<Cite Key="HP89"/>. Moreover,   they     have  supplied us    with    files with
-presentations of 488 of the groups. In terms of  these, the remaining 607
-nontrivial groups in the library can be described as 276 direct products,
-107  central   products, and 224  subdirect  products.  They are computed
-automatically by suitable &GAP; functions whenever they are needed.  Two
-additional groups omitted from the book <Q>Perfect Groups</Q> have also been
-included.
+The &GAP; library of finite  perfect groups provides, up to isomorphism, a
+list of all perfect groups whose sizes are less than  <M>2\cdot 10^6</M>. 
+The groups of orders up to <M>10^6</M> have been enumerated by
+Derek&nbsp;F. Holt and Wilhelm Plesken and
+published in their  book    <Q>Perfect Groups</Q> <Cite Key="HP89"/>.
+For orders <M>n = 86016</M>,  368640,  or  737280 this work only counted the
+groups (but did not explicitly list them), the groups of orders
+<M>n = 61440</M>, 122880, 172032, 245760, 344064, 491520,
+688128, or 983040 were omitted.
 <P/>
 We are grateful to Derek Holt and Wilhelm Plesken for making their groups
 available to the &GAP; community  by contributing their files. It should
 be noted that  their book contains a  lot of further information for many
 of the library groups.  So we would like  to recommend  it to any  &GAP;
 user who is interested in the groups.
+The library of these has been brought into &GAP; format by Volkmar Felsch.
 <P/>
-The library has been brought into &GAP; format by Volkmar Felsch.
+Several additional groups omitted from the book <Q>Perfect Groups</Q> have also
+been included. Two groups -- one of order 450000 with a factor group of
+type <M>A_6</M> and the one of order 962280 -- were found by Jack Schmidt in
+2005. Two groups of order 243000 and one each of orders 729000, 871200, 878460
+were found in 2020 by Alexander Hulpke.
+<P/>
+The perfect groups of size less than <M>2\cdot 10^6</M> which had not been
+classified in the work of Holt and Plesken have been enumerated by Alexander
+Hulpke. They are stored directly and provide less construction information
+in their names.
+<P/>
 <P/>
 As  all groups are stored  by presentations, a permutation representation
 is obtained by coset enumeration. Note that some of the library groups do
@@ -343,7 +366,6 @@ Computations in these groups may be rather time consuming.
 <#Include Label="PerfectGroup">
 <#Include Label="PerfectIdentification">
 <#Include Label="NumberPerfectGroups">
-<#Include Label="NumberPerfectLibraryGroups">
 <#Include Label="SizeNumbersPerfectGroups">
 <#Include Label="DisplayInformationPerfectGroups">
 
@@ -573,7 +595,7 @@ just consists of the <M>&QQ;</M>-classes of i.m.f.&nbsp;subgroups of <M>GL_n(&QQ
 <P/>
 Secondly, there is the set <M>Q_2(n)</M> of the  <M>&QQ;</M>-classes of the remaining
 i.m.f.&nbsp;subgroups of <M>GL_n(&ZZ;)</M>, i.e.,  of   those which are  not  maximal
-finite subgroups of <M>GL_n(&QQ;)</M>. For any such group  <M>G</M>, say, there is at
+finite subgroups of <M>GL_n(&QQ;)</M>. For any such group <M>G</M>, there is at
 least one class <M>C \in Q_1(n)</M> such that <M>G</M> is conjugate under <M>&QQ;</M> to a
 proper subgroup of some   group <M>H \in C</M>.   In  fact, the class <M>C</M>   is
 uniquely determined for any group   <M>G</M> occurring in the library  (though
@@ -587,7 +609,7 @@ of i.m.f.&nbsp;subgroups  of <M>GL_4(&ZZ;)</M>   with representative subgroups  
 \ldots,  G_6</M> of isomorphism types  <M>G_1 \cong W(F_4)</M>, <M>G_2 \cong D_{12}
 \wr C_2</M>, <M>G_3 \cong  G_4 \cong C_2 \times  S_5</M>, <M>G_5 \cong W(B_4)</M>, and
 <M>G_6  \cong (D_{12}  </M><C>Y</C><M>  D_{12})   \!:\! C_2</M>.  The    corresponding
-<M>&QQ;</M>-classes, <M>R_1, \ldots, R_6</M>, say, are pairwise different except that
+<M>&QQ;</M>-classes, which we denote <M>R_1, \ldots, R_6</M>, are pairwise different except that
 <M>R_3</M> coincides  with <M>R_4</M>.   The  groups <M>G_1</M>,  <M>G_2</M>, and  <M>G_3</M>  are
 i.m.f.&nbsp;subgroups of <M>GL_4(&QQ;)</M>, but <M>G_5</M>  and <M>G_6</M> are not because they
 are  conjugate under <M>GL_4(&QQ;)</M> to proper  subgroups  of <M>G_1</M> and <M>G_2</M>,
@@ -1168,4 +1190,3 @@ gap> LargestMovedPoint( P2 );
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <!-- %% -->
 <!-- %E -->
-

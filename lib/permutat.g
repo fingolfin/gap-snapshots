@@ -17,7 +17,7 @@
 ##  Internally, &GAP; stores a permutation as a list of the <M>d</M> images
 ##  of the integers <M>1, \ldots, d</M>, where the <Q>internal degree</Q>
 ##  <M>d</M> is the largest integer moved by the permutation or bigger.
-##  When a permutation is read in in cycle notation, <M>d</M> is always set
+##  When a permutation is read in cycle notation, <M>d</M> is always set
 ##  to the largest moved integer, but a bigger <M>d</M> can result from a
 ##  multiplication of two permutations, because the product is not shortened
 ##  if it fixes&nbsp;<M>d</M>.
@@ -340,7 +340,7 @@ DeclareAttribute( "CycleStructurePerm", IsPerm );
 ##  </Description>
 ##  </ManSection>
 ##
-DeclareRepresentation( "IsPerm2Rep", IsInternalRep, [] );
+DeclareRepresentation( "IsPerm2Rep", IsInternalRep );
 
 
 #############################################################################
@@ -354,7 +354,7 @@ DeclareRepresentation( "IsPerm2Rep", IsInternalRep, [] );
 ##  </Description>
 ##  </ManSection>
 ##
-DeclareRepresentation( "IsPerm4Rep", IsInternalRep, [] );
+DeclareRepresentation( "IsPerm4Rep", IsInternalRep );
 
 
 #############################################################################
@@ -435,7 +435,7 @@ SetOne( PermutationsFamily, () );
 ##  or if <A>list</A> contains a positive integer twice,
 ##  or if <A>list</A> contains an
 ##  integer not in the range <C>[ 1 .. Length( <A>list</A> ) ]</C>,
-##  of if <A>list</A> contains non-integer entries, etc.
+##  or if <A>list</A> contains non-integer entries, etc.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -649,6 +649,12 @@ InstallMethod( SmallestMovedPoint,
 end );
 
 
+InstallMethod( SmallestMovedPoint,
+    "for an internal permutation",
+    [ IsPerm and IsInternalRep ],
+    SMALLEST_MOVED_POINT_PERM );
+
+
 #############################################################################
 ##
 #m  LargestMovedPoint( <perm> ) . . . . . . . .  for internal permutation
@@ -729,31 +735,33 @@ end );
 #m  String( <perm> )  . . . . . . . . . . . . . . . . . . . for a permutation
 ##
 BIND_GLOBAL("DoStringPerm",function( perm,hint )
-local   str,  i,  j;
+local   str,  i,  j, maxpnt, blist;
 
   if IsOne( perm ) then
       str := "()";
   else
       str := "";
+      maxpnt := LargestMovedPoint( perm );
+      blist := BlistList([1..maxpnt], []);
       for i  in [ 1 .. LargestMovedPoint( perm ) ]  do
-	  j := i ^ perm;
-	  while j > i  do j := j ^ perm;  od;
-	  if j = i and i ^ perm <> i  then
-	      Append( str, "(" );
-	      Append( str, String( i ) );
-	      j := i ^ perm;
-	      while j > i do
-		  Append( str, "," );
-		  if hint then Append(str,"\<\>"); fi;
-		  Append( str, String( j ) );
-		  j := j ^ perm;
-	      od;
-	      Append( str, ")" );
-	      if hint then Append(str,"\<\<\>\>"); fi;
-	  fi;
+      if not blist[i] and i ^ perm <> i  then
+          blist[i] := true;
+          Append( str, "(" );
+          Append( str, String( i ) );
+          j := i ^ perm;
+          while j > i do
+          blist[j] := true;
+          Append( str, "," );
+          if hint then Append(str,"\<\>"); fi;
+          Append( str, String( j ) );
+          j := j ^ perm;
+          od;
+          Append( str, ")" );
+          if hint then Append(str,"\<\<\>\>"); fi;
+      fi;
       od;
       if Length(str)>4 and str{[Length(str)-3..Length(str)]}="\<\<\>\>" then
-	str:=str{[1..Length(str)-4]}; # remove tailing line breaker
+          str:=str{[1..Length(str)-4]}; # remove tailing line breaker
       fi;
       ConvertToStringRep( str );
   fi;
@@ -793,7 +801,7 @@ InstallMethod( Order,
 ##  <Description>
 ##  returns the number of points for which <A>perm1</A> and <A>perm2</A> 
 ##  have different images. This should always produce the same result as
-##  <C>NrMovePoints(<A>perm1</A>/<A>perm2</A>)</C> but some methods may be
+##  <C>NrMovedPoints(<A>perm1</A>/<A>perm2</A>)</C> but some methods may be
 ##  much faster than this form, since no new permutation needs to be created.
 ##  </Description>
 ##  </ManSection>

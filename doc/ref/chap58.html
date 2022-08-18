@@ -343,14 +343,14 @@ x_1^8+2*x_1^4+1
 
 <h5>58.3-4 Norm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Norm</code>( [<var class="Arg">L</var>[, <var class="Arg">K</var>, ]]<var class="Arg">z</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Norm</code>( [<var class="Arg">L</var>, [<var class="Arg">K</var>, ]]<var class="Arg">z</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p><code class="func">Norm</code> returns the norm of the field element <var class="Arg">z</var>. If two fields <var class="Arg">L</var> and <var class="Arg">K</var> are given then the norm is computed w.r.t. the field extension <var class="Arg">L</var><span class="SimpleMath">&gt;</span><var class="Arg">K</var>, if only one field <var class="Arg">L</var> is given then <code class="code">LeftActingDomain( <var class="Arg">L</var> )</code> is taken as default for the subfield <var class="Arg">K</var>, and if no field is given then <code class="code">DefaultField( <var class="Arg">z</var> )</code> is taken as default for <var class="Arg">L</var>.</p>
 
 <p><a id="X7DD17EB581200AD6" name="X7DD17EB581200AD6"></a></p>
 
 <h5>58.3-5 <span class="Heading">Traces of field elements and matrices</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Trace</code>( [<var class="Arg">L</var>[, <var class="Arg">K</var>, ]]<var class="Arg">z</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Trace</code>( [<var class="Arg">L</var>, [<var class="Arg">K</var>, ]]<var class="Arg">z</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Trace</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p><code class="func">Trace</code> returns the trace of the field element <var class="Arg">z</var>. If two fields <var class="Arg">L</var> and <var class="Arg">K</var> are given then the trace is computed w.r.t. the field extension <span class="SimpleMath"><var class="Arg">L</var> &gt; <var class="Arg">K</var></span>, if only one field <var class="Arg">L</var> is given then <code class="code">LeftActingDomain( <var class="Arg">L</var> )</code> is taken as default for the subfield <var class="Arg">K</var>, and if no field is given then <code class="code">DefaultField( <var class="Arg">z</var> )</code> is taken as default for <var class="Arg">L</var>.</p>
 
@@ -360,7 +360,7 @@ x_1^8+2*x_1^4+1
 
 <h5>58.3-6 Conjugates</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Conjugates</code>( [<var class="Arg">L</var>[, <var class="Arg">K</var>, ]]<var class="Arg">z</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Conjugates</code>( [<var class="Arg">L</var>, [<var class="Arg">K</var>, ]]<var class="Arg">z</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p><code class="func">Conjugates</code> returns the list of <em>conjugates</em> of the field element <var class="Arg">z</var>. If two fields <var class="Arg">L</var> and <var class="Arg">K</var> are given then the conjugates are computed w.r.t. the field extension <var class="Arg">L</var><span class="SimpleMath">&gt;</span><var class="Arg">K</var>, if only one field <var class="Arg">L</var> is given then <code class="code">LeftActingDomain( <var class="Arg">L</var> )</code> is taken as default for the subfield <var class="Arg">K</var>, and if no field is given then <code class="code">DefaultField( <var class="Arg">z</var> )</code> is taken as default for <var class="Arg">L</var>.</p>
 
 <p>The result list will contain duplicates if <var class="Arg">z</var> lies in a proper subfield of <var class="Arg">L</var>, or of the default field of <var class="Arg">z</var>, respectively. The result list need not be sorted.</p>

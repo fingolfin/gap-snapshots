@@ -28,10 +28,11 @@
 
 #############################################################################
 ##
-#O  AddRowVector( <dst>, <src>[, <mul>[, <from>, <to>]] )
+#O  AddVector( <dst>, <src>[, <mul>[, <from>, <to>]] )
 ##
 ##  <#GAPDoc Label="AddRowVector">
 ##  <ManSection>
+##  <Oper Name="AddVector" Arg='dst, src[, mul[, from, to]]'/>
 ##  <Oper Name="AddRowVector" Arg='dst, src[, mul[, from, to]]'/>
 ##
 ##  <Description>
@@ -49,10 +50,11 @@
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareOperation(
-    "AddRowVector",
+DeclareOperation( "AddVector",
     [ IsMutable and IsList, IsList, IsMultiplicativeElement, IsPosInt,
       IsPosInt ] );
+
+DeclareSynonym( "AddRowVector", AddVector );
 
 
 #############################################################################
@@ -184,7 +186,7 @@ DeclareOperation(
 ##  This operation changes <A>list1</A> to the coefficient list of the product
 ##  of <A>pol2</A> with <A>pol3</A>.
 ##  This operation changes <A>list1</A> which therefore must be a mutable list.
-##  The operations returns the position of the last non-zero entry of the
+##  The operation returns the position of the last non-zero entry of the
 ##  result but is not guaranteed to remove trailing zeroes.
 ##  </Description>
 ##  </ManSection>
@@ -311,7 +313,7 @@ DeclareOperation(
 ##  which must be a positive integer.
 ##  This operation changes <A>list1</A> which therefore must be a mutable
 ##  list.
-##  The operations returns the position of the last non-zero entry of the
+##  The operation returns the position of the last non-zero entry of the
 ##  result but is not guaranteed to remove trailing zeroes.
 ##  <Example><![CDATA[
 ##  gap> l:=[1,2,3,4];;m:=[5,6,7];;ReduceCoeffsMod(l,m,3);
@@ -619,20 +621,20 @@ DeclareOperation("DistancesDistributionMatFFEVecFFE",
 
 #############################################################################
 ##
-#O  AClosestVectorCombinationsMatFFEVecFFE(<mat>,<f>,<vec>,<l>,<stop>)
-#O  AClosestVectorCombinationsMatFFEVecFFECoords(<mat>,<f>,<vec>,<l>,<stop>)
+#O  AClosestVectorCombinationsMatFFEVecFFE(<mat>,<f>,<vec>,<cnt>,<stop>)
+#O  AClosestVectorCombinationsMatFFEVecFFECoords(<mat>,<f>,<vec>,<cnt>,<stop>)
 ##
 ##  <#GAPDoc Label="AClosestVectorCombinationsMatFFEVecFFE">
 ##  <ManSection>
 ##  <Oper Name="AClosestVectorCombinationsMatFFEVecFFE"
-##   Arg='mat, f, vec, l, stop'/>
+##   Arg='mat, f, vec, cnt, stop'/>
 ##  <Oper Name="AClosestVectorCombinationsMatFFEVecFFECoords"
-##   Arg='mat, f, vec, l, stop'/>
+##   Arg='mat, f, vec, cnt, stop'/>
 ##
 ##  <Description>
 ##  These functions run through the <A>f</A>-linear combinations of the
 ##  vectors in the rows of the matrix <A>mat</A> that can be written as
-##  linear combinations of exactly <A>l</A> rows (that is without using
+##  linear combinations of exactly <A>cnt</A> rows (that is without using
 ##  zero as a coefficient). The length of the rows of <A>mat</A> and the
 ##  length of <A>vec</A> must be equal, and all elements must lie in the
 ##  field <A>f</A>.
@@ -645,7 +647,7 @@ DeclareOperation("DistancesDistributionMatFFEVecFFE",
 ##  <P/>
 ##  <Ref Oper="AClosestVectorCombinationsMatFFEVecFFECoords"/> returns a
 ##  length 2 list containing the same closest vector and also a vector
-##  <A>v</A> with exactly <A>l</A> non-zero entries,
+##  <A>v</A> with exactly <A>cnt</A> non-zero entries,
 ##  such that <A>v</A> times <A>mat</A> is the closest vector.
 ##  </Description>
 ##  </ManSection>
@@ -697,7 +699,3 @@ DeclareOperation("CosetLeadersMatFFE",[IsMatrix,IsFFECollection]);
 DeclareOperation("AddToListEntries", [ IsList and
         IsExtAElementCollection and IsMutable, IsList
         and IsCyclotomicCollection, IsExtAElement ] );
-
-# data types for low index memory blocks. Created here to avoid having to
-# read the fp group stuff early
-DeclareGlobalVariable("TYPE_LOWINDEX_DATA");

@@ -120,7 +120,7 @@ static Obj Evaluation(Obj vec, Obj xk, Obj power)
     UInt i, len;
     Obj  prod, help;
 
-    if ( IS_INTOBJ(power)  &&  INT_INTOBJ(power) > 0  &&  
+    if ( IS_POS_INTOBJ(power) &&  
          power < ELM_PLIST(vec, 6)     )
         return INTOBJ_INT(0);
     prod = BinomialInt(power, ELM_PLIST(vec, 6) );
@@ -939,13 +939,13 @@ static Obj FuncDTQuotient(Obj self, Obj x, Obj y, Obj pcp)
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    GVAR_FUNC(DTCompress, 1, "list"),
-    GVAR_FUNC(DTMultiply, 3, "lword, rword, rws"),
-    GVAR_FUNC(DTPower, 3, "word, exponent, rws"),
-    GVAR_FUNC(DTSolution, 3, "lword, rword, rws"),
-    GVAR_FUNC(DTCommutator, 3, "lword, rword, rws"),
-    GVAR_FUNC(DTQuotient, 3, "lword, rword, rws"),
-    GVAR_FUNC(DTConjugate, 3, "lword, rword, rws"),
+    GVAR_FUNC_1ARGS(DTCompress, list),
+    GVAR_FUNC_3ARGS(DTMultiply, lword, rword, rws),
+    GVAR_FUNC_3ARGS(DTPower, word, exponent, rws),
+    GVAR_FUNC_3ARGS(DTSolution, lword, rword, rws),
+    GVAR_FUNC_3ARGS(DTCommutator, lword, rword, rws),
+    GVAR_FUNC_3ARGS(DTQuotient, lword, rword, rws),
+    GVAR_FUNC_3ARGS(DTConjugate, lword, rword, rws),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -961,7 +961,6 @@ static Int InitKernel (
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -976,7 +975,6 @@ static Int PostRestore (
     evlist    = RNamName("evlist");
     evlistvec = RNamName("evlistvec");
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -991,7 +989,6 @@ static Int InitLibrary (
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return PostRestore( module );
 }
 

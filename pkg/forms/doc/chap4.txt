@@ -10,13 +10,12 @@
   
   [1X4.1-1 [33X[0;0YCategories for forms[133X[101X
   
-  [33X[1;0Y[29X[2XIsBilinearForm[102X[32X Category[133X
-  [33X[1;0Y[29X[2XIsHermitianForm[102X[32X Category[133X
-  [33X[1;0Y[29X[2XIsSesquilinearForm[102X[32X Category[133X
-  [33X[1;0Y[29X[2XIsQuadraticForm[102X[32X Category[133X
-  [33X[1;0Y[29X[2XIsForm[102X[32X Category[133X
-  [33X[1;0Y[29X[2XIsForm[102X[32X Category[133X
-  [33X[1;0Y[29X[2XIsTrivialForm[102X[32X Category[133X
+  [33X[1;0Y[29X[2XIsBilinearForm[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsHermitianForm[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsSesquilinearForm[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsQuadraticForm[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsForm[102X [32X Category[133X
+  [33X[1;0Y[29X[2XIsTrivialForm[102X [32X Category[133X
   
   [33X[0;0YThe   categories  [10XIsBilinearForm[110X  and  [10XIsHermitianForm[110X  are  categories  for
   bilinear  and  hermitian forms, respectively. They are disjoint and are both
@@ -34,7 +33,7 @@
   
   [1X4.1-2 [33X[0;0YRepresentation for forms[133X[101X
   
-  [33X[1;0Y[29X[2XIsFormRep[102X[32X Representation[133X
+  [33X[1;0Y[29X[2XIsFormRep[102X [32X Representation[133X
   
   [33X[0;0YEvery  form  is  represented  by  a  matrix,  the  base  field  and a string
   describing the ``type'' of the form.[133X
@@ -44,8 +43,7 @@
   
   [1X4.2-1 BilinearFormByMatrix[101X
   
-  [33X[1;0Y[29X[2XBilinearFormByMatrix[102X( [3Xmatrix[103X, [3Xfield[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XBilinearFormByMatrix[102X( [3Xmatrix[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XBilinearFormByMatrix[102X( [3Xmatrix[103X[, [3Xfield[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya bilinear form[133X
   
   [33X[0;0YThe  argument  [3Xmatrix[103X  must be a symmetric, or skew-symmetric, square matrix
@@ -109,8 +107,7 @@
   
   [1X4.2-2 QuadraticFormByMatrix[101X
   
-  [33X[1;0Y[29X[2XQuadraticFormByMatrix[102X( [3Xmatrix[103X, [3Xfield[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XQuadraticFormByMatrix[102X( [3Xmatrix[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XQuadraticFormByMatrix[102X( [3Xmatrix[103X[, [3Xfield[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya quadratic form[133X
   
   [33X[0;0YThe argument [3Xmatrix[103X must be a square matrix over the finite field [3Xfield[103X. The
@@ -175,7 +172,7 @@
   [1X4.2-3 HermitianFormByMatrix[101X
   
   [33X[1;0Y[29X[2XHermitianFormByMatrix[102X( [3Xmatrix[103X, [3Xfield[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya quadratic form[133X
+  [6XReturns:[106X  [33X[0;10Ya hermitian sesquilinear form[133X
   
   [33X[0;0YThe  argument [3Xmatrix[103X must be a hermitian square matrix over the finite field
   [3Xfield[103X, and [3Xfield[103X has square order. The field must be specified, since we can
@@ -234,8 +231,7 @@
   
   [1X4.3-1 BilinearFormByPolynomial[101X
   
-  [33X[1;0Y[29X[2XBilinearFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X, [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XBilinearFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XBilinearFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X[, [3Xn[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya bilinear form[133X
   
   [33X[0;0YThe  argument  [3Xpoly[103X  must  be  a  polynomial  in  the polynomial ring [3Xr[103X. The
@@ -284,8 +280,7 @@
   
   [1X4.3-2 QuadraticFormByPolynomial[101X
   
-  [33X[1;0Y[29X[2XQuadraticFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X, [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XQuadraticFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XQuadraticFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X[, [3Xn[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya quadratic form[133X
   
   [33X[0;0YThe  argument  [3Xpoly[103X  must  be  a  polynomial  in  the polynomial ring [3Xr[103X. The
@@ -323,8 +318,7 @@
   
   [1X4.3-3 HermitianFormByPolynomial[101X
   
-  [33X[1;0Y[29X[2XHermitianFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X, [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XHermitianFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHermitianFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X[, [3Xn[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan hermitian form[133X
   
   [33X[0;0YThe argument [3Xpoly[103X must be a polynomial in the polynomial ring [3Xr[103X defined over
@@ -511,8 +505,7 @@
   
   [1X4.5-1 EvaluateForm[101X
   
-  [33X[1;0Y[29X[2XEvaluateForm[102X( [3Xf[103X, [3Xu[103X, [3Xv[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XEvaluateForm[102X( [3Xf[103X, [3Xu[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XEvaluateForm[102X( [3Xf[103X, [3Xu[103X[, [3Xv[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya finite field element[133X
   
   [33X[0;0YThe  argument  [3Xf[103X  is  either a sesquilinear or quadratic form defined over a

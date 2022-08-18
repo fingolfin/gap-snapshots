@@ -20,13 +20,12 @@
   
   [33X[0;0Y[5XGAP[105X for UNIX will distinguish between upper and lower case options.[133X
   
-  [33X[0;0YAs  described  in the [5XGAP[105X installation instructions (see the [11XINSTALL[111X file in
-  the  [5XGAP[105X root directory, or at [7Xhttps://www.gap-system.org/Download/INSTALL[107X),
-  usually  you  will not execute [5XGAP[105X directly. Instead you will call a (shell)
-  script, with the name [10Xgap[110X, which in turn executes [5XGAP[105X. This script sets some
-  options which are necessary to make [5XGAP[105X work on your system. This means that
-  the default settings mentioned below may not be what you experience when you
-  execute [5XGAP[105X on your system.[133X
+  [33X[0;0YAs  described  in the [5XGAP[105X installation instructions (see the [11XINSTALL.md[111X file
+  in  the  [5XGAP[105X  root  directory),  usually  you will not execute [5XGAP[105X directly.
+  Instead  you  will  call  a (shell) script, with the name [10Xgap[110X, which in turn
+  executes  [5XGAP[105X. This script sets some options which are necessary to make [5XGAP[105X
+  work  on  your  system. This means that the default settings mentioned below
+  may not be what you experience when you execute [5XGAP[105X on your system.[133X
   
   [33X[0;0YDuring  a  [5XGAP[105X  session,  one  can  find  the current values of command line
   options  in  the  record  [10XGAPInfo.CommandLineOptions[110X  (see [2XGAPInfo[102X ([14X3.5-1[114X)),
@@ -39,19 +38,17 @@
         can be useful for debugging or testing. The needed packages (and their
         needed packages, and so on) are loaded in any case.[133X
   
-  [8X [10X-B [110X[8X[3Xarchitecture[103X[8X[108X
-        [33X[0;6YExecutable  binary files that form part of [5XGAP[105X or of a [5XGAP[105X package are
-        kept  in a subdirectory of the [11Xbin[111X directory within the [5XGAP[105X or package
-        root directory. The subdirectory name is determined from the operating
-        system, processor and compiler details when [5XGAP[105X (resp. the package) is
-        installed.  Under  rare circumstances, it may be necessary to override
-        this name, and this can be done using the [10X-B[110X option.[133X
-  
   [8X [10X-b[110X[8X[108X
         [33X[0;6Ytells  [5XGAP[105X  to  suppress  the  banner. That means that [5XGAP[105X immediately
         prints  the  prompt. This is useful when, after a while, you get tired
         of  the banner. This option can be repeated to enable the banner; each
         [10X-b[110X toggles the state of banner display.[133X
+  
+  [8X [10X-c [110X[8X[3Xgapcode[103X[8X[108X
+        [33X[0;6Ytells  [5XGAP[105X  to  execute the given [5XGAP[105X code as if it was entered into a
+        temporary  file  which then is processed together with the other files
+        given  to GAP (see the explanation at the end of this list for further
+        details on how filenames are processed).[133X
   
   [8X [10X-D[110X[8X[108X
         [33X[0;6YThe  [10X-D[110X  option  tells  [5XGAP[105X to print short messages when it is reading
@@ -107,7 +104,8 @@
   
   [8X [10X-g[110X[8X[108X
         [33X[0;6Ytells  [5XGAP[105X  to print a message every time a full garbage collection is
-        performed.[133X
+        performed.  (This is available only if the [10XGASMAN[110X garbage collector is
+        used, see [14X7.12-1[114X.)[133X
   
   [4X      [32X  Example  [32X[104X
           [4X[28X#G  FULL 44580/2479kb live   57304/4392kb dead   734/4096kb free[128X[104X
@@ -120,8 +118,9 @@
   
   [8X [10X-g -g[110X[8X[108X
         [33X[0;6YIf  you  give  the  option  [10X-g[110X twice, [5XGAP[105X prints a information message
-        every  time  a  partial  or  full garbage collection is performed. The
-        message,[133X
+        every time a partial or full garbage collection is performed. (This is
+        available  only  if the [10XGASMAN[110X garbage collector is used, see [14X7.12-1[114X.)
+        The message,[133X
   
   [4X      [32X  Example  [32X[104X
           [4X[28X#G  PART 9405/961kb+live   7525/1324kb+dead   2541/4096kb free[128X[104X
@@ -146,7 +145,9 @@
         explicitly when you want to enable it.[133X
   
   [8X [10X-L [110X[8X[3Xfilename[103X[8X[108X
-        [33X[0;6YThe option [10X-L[110X tells [5XGAP[105X to load a saved workspace. See section [14X3.3[114X.[133X
+        [33X[0;6YThe  option  [10X-L[110X  tells [5XGAP[105X to load a saved workspace. See section [14X3.3[114X.
+        (This  is  available only if the [10XGASMAN[110X garbage collector is used, see
+        [14X7.12-1[114X.)[133X
   
   [8X [10X-l [110X[8X[3Xpath_list[103X[8X[108X
         [33X[0;6Ycan be used to set or modify [5XGAP[105X's list of root directories (see [14X9.2[114X).
@@ -291,12 +292,13 @@
   [8X [3Xfilename[103X[8X ...[108X
         [33X[0;6YFurther arguments are taken as filenames of files that are read by [5XGAP[105X
         during  startup, after the system and private init files are read, but
-        before the first prompt is printed. The files are read in the order in
-        which  they  appear  on  the  command  line. [5XGAP[105X only accepts up to 14
-        filenames  on  the  command  line. If a file cannot be opened [5XGAP[105X will
-        print an error message and will abort.[133X
+        before  the  first  prompt  is printed. Filenames ending with [10X.tst[110X are
+        processed  by  [2XTest[102X  ([14X7.10-2[114X),  all other files by [2XRead[102X ([14X9.7-1[114X). These
+        files  and  also commands specified via the [10X-c[110X option are processed in
+        the  order  in which they appear on the command line. If a file cannot
+        be opened [5XGAP[105X will print an error message and will abort.[133X
   
-  [33X[0;0YAdditional  options,  [10X-C[110X,  [10X-P[110X,  [10X-W[110X, [10X-p[110X and [10X-z[110X are used internally by the [5Xgac[105X
+  [33X[0;0YAdditional  options,  such  as  [10X-C[110X,  [10X-P[110X and[10X-p[110X are used internally by the [5Xgac[105X
   script (see [14X76.3-11[114X) and/or on specific operating systems.[133X
   
   
@@ -392,7 +394,7 @@
   [33X[1;0Y[29X[2XSetUserPreference[102X( [[3Xpackage[103X, ][3Xname[103X, [3Xvalue[103X ) [32X function[133X
   [33X[1;0Y[29X[2XUserPreference[102X( [[3Xpackage[103X, ][3Xname[103X ) [32X function[133X
   [33X[1;0Y[29X[2XShowUserPreferences[102X( [3Xpackage1[103X, [3Xpackage2[103X, [3X...[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XWriteGapIniFile[102X( [[3Xdir[103X, ][[3Xignorecurrent[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XWriteGapIniFile[102X( [[3Xdir[103X][,] [[3Xignorecurrent[103X] ) [32X function[133X
   
   [33X[0;0YSome  aspects of the behaviour of [5XGAP[105X can be customized by the user via [13Xuser
   preferences[113X. Examples include the way help sections are displayed or the use
@@ -534,7 +536,10 @@
   [1X3.3 [33X[0;0YSaving and Loading a Workspace[133X[101X
   
   [33X[0;0Y[5XGAP[105X workspace files are binary files that contain the data of a [5XGAP[105X session.
-  One  can  produce  a  workspace file with [2XSaveWorkspace[102X ([14X3.3-1[114X), and load it
+  Currently  saving  and  loading  workspace files are supported only when the
+  [10XGASMAN[110X garbage collector is used, see Section [14X7.12-1[114X.[133X
+  
+  [33X[0;0YOne  can  produce  a  workspace file with [2XSaveWorkspace[102X ([14X3.3-1[114X), and load it
   into a new [5XGAP[105X session using the [10X-L[110X command line option, see Section [14X3.1[114X.[133X
   
   [33X[0;0YOne  purpose  of  workspace  files  is  of  course the possibility to save a
@@ -580,13 +585,22 @@
   [33X[1;0Y[29X[2XARCH_IS_MAC_OS_X[102X(  ) [32X function[133X
   
   [33X[0;0Ytests  whether  [5XGAP[105X  is  running  on  Mac  OS X. Note that on Mac OS X, also
-  [2XARCH_IS_UNIX[102X ([14X3.4-1[114X) will be [10Xtrue[110X.[133X
+  [2XARCH_IS_UNIX[102X ([14X3.4-1[114X) will be [9Xtrue[109X.[133X
   
   [1X3.4-3 ARCH_IS_WINDOWS[101X
   
   [33X[1;0Y[29X[2XARCH_IS_WINDOWS[102X(  ) [32X function[133X
   
-  [33X[0;0Ytests whether [5XGAP[105X is running on a Windows system.[133X
+  [33X[0;0Ytests  whether  [5XGAP[105X  is  running  on a Windows system without standard POSIX
+  tools available (such as a shell).[133X
+  
+  [1X3.4-4 ARCH_IS_WSL[101X
+  
+  [33X[1;0Y[29X[2XARCH_IS_WSL[102X(  ) [32X function[133X
+  
+  [33X[0;0Ytests  whether  [5XGAP[105X  is  running  on  a  Windows  system inside the 'Windows
+  Subsystem  for  Linux'.  Note that in this case [2XARCH_IS_UNIX[102X ([14X3.4-1[114X) will be
+  [9Xtrue[109X, and in most situations WSL can be treated identically to Linux.[133X
   
   
   [1X3.5 [33X[0;0YGlobal Values that Control the [5XGAP[105X[101X[1X Session[133X[101X
@@ -617,11 +631,12 @@
   
   [33X[1;0Y[29X[2XColorPrompt[102X( [3Xbool[103X[, [3Xoptrec[103X] ) [32X function[133X
   
-  [33X[0;0YWith  [10XColorPrompt(true);[110X [5XGAP[105X changes its user interface: The prompts and the
-  user input are displayed in different colors. Switch off the colored prompts
-  with [10XColorPrompt(false);[110X.[133X
+  [33X[0;0Y[2XColorPrompt[102X  changes [5XGAP[105X's user interface: After calling [10XColorPrompt(true);[110X,
+  the  prompts  and  the user input are displayed in colors different from the
+  color  that  is  used  for  the  output.  This is also the default for a [5XGAP[105X
+  session. Switch off these colorings with [10XColorPrompt(false);[110X.[133X
   
-  [33X[0;0YNote  that  this  will only work if your terminal emulation in which you run
+  [33X[0;0YNote  that colors will only work if your terminal emulation in which you run
   [5XGAP[105X  understands  the  so  called  ANSI  color  escape sequences –almost all
   terminal  emulations  on  current  UNIX/Linux  ([10Xxterm[110X,  [10Xrxvt[110X,  [10Xkonsole[110X, ...)
   systems do so.[133X
@@ -631,10 +646,11 @@
   the  standard  prompt in bold blue and the break loop prompt in bold red, as
   well as your input in red.[133X
   
-  [33X[0;0YIf    it    works   for   you   and   you   like   it,   put   a   call   of
-  [10XSetUserPreference("UseColorPrompt", true);[110X in your [11Xgap.ini[111X file. If you want
-  a   more   complicated   setting   as   explained   below   then   put  your
-  [10XSetUserPreference("UseColorPrompt", rec( ... ) );[110X call into your [11Xgaprc[111X file.[133X
+  [33X[0;0YIf  you  prefer  to  switch off colors for prompts and input at the start of
+  your [5XGAP[105X sessions, put a call of [10XSetUserPreference("UseColorPrompt", false);[110X
+  in  your  [11Xgap.ini[111X  file. If you want a more complicated setting as explained
+  below  then  put your [10XSetUserPreference("UseColorPrompt", rec( ... ) );[110X call
+  into your [11Xgaprc[111X file.[133X
   
   [33X[0;0YThe  optional  second  argument  [3Xoptrec[103X  allows one to further customize the
   behaviour.  It  must  be  a  record  from which the following components are

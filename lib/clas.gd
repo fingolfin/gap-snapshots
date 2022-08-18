@@ -286,6 +286,7 @@ DeclareGlobalFunction( "CentralStepRatClPGroup" );
 DeclareGlobalFunction( "CentralStepClEANS" );
 DeclareGlobalFunction( "CorrectConjugacyClass" );
 DeclareGlobalFunction( "GeneralStepClEANS" );
+DeclareGlobalFunction("PcClassFactorCentralityTest");
 
 #############################################################################
 ##
@@ -355,6 +356,9 @@ DeclareGlobalFunction( "GeneralStepClEANS" );
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "ClassesSolvableGroup" );
+
+# faster version for character table code
+DeclareGlobalFunction("MultiClassIdsPc");
 
 #############################################################################
 ##

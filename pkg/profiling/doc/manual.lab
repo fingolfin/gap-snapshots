@@ -1,0 +1,23 @@
+\GAPDocLabFile{profiling}
+\makelabel{profiling:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{profiling:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{profiling:Tutorial}{1}{X81932F777898AD72}
+\makelabel{profiling:Line-by-line profiling}{1.1}{X81D5C73E87484DFC}
+\makelabel{profiling:Function-based profiling}{1.3}{X7F70AFBB7C6ACE3C}
+\makelabel{profiling:Functionality provided by the profiling package}{2}{X7DAD51718553414E}
+\makelabel{profiling:Reading line-by-line profiles}{2.1}{X824EFBE480A1360F}
+\makelabel{profiling:Generating flame graphs}{2.2}{X8412FE417B2C715D}
+\makelabel{profiling:Generating coverage reports}{2.3}{X83A7B4B07A62FB8F}
+\makelabel{profiling:Miscellaneous}{2.4}{X7C5563A37D566DA5}
+\makelabel{profiling:Index}{Ind}{X83A0356F839C696F}
+\makelabel{profiling:ReadLineByLineProfile}{2.1.1}{X82664B2C80EBA9A4}
+\makelabel{profiling:MergeLineByLineProfiles}{2.1.2}{X7D11F90387AEF584}
+\makelabel{profiling:OutputFlameGraph}{2.2.1}{X858B23AD78A2A73A}
+\makelabel{profiling:OutputFlameGraphInput}{2.2.2}{X7C6110C180DE1785}
+\makelabel{profiling:OutputAnnotatedCodeCoverageFiles}{2.3.1}{X87AFADF581A7C1FD}
+\makelabel{profiling:OutputJsonCoverage}{2.3.2}{X8436F6FE84513AC9}
+\makelabel{profiling:OutputLcovCoverage}{2.3.3}{X815BCEEA86E01699}
+\makelabel{profiling:OutputCoverallsJsonCoverage}{2.3.4}{X86CA50397AB60E33}
+\makelabel{profiling:LineByLineProfileFunction}{2.4.1}{X849267DE7D84CBBE}
+\makelabel{profiling:ProfileFile}{2.4.2}{X7B979D50793E455A}
+\makelabel{profiling:ProfilePackage}{2.4.3}{X80F26AB17D5D8752}

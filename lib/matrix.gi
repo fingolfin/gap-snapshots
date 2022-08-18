@@ -28,9 +28,19 @@ InstallOtherMethod( \[\]\:\=, [ IsMatrix and IsMutable, IsPosInt, IsPosInt, IsOb
     1-RankFilter(IsMatrix),
     function (m,i,j,o) m[i][j]:=o; end );
 
+# Note that installing 'ShallowCopy' is not allowed here, for several reasons.
+# Firstly, the result has to be independent of the input, and fully mutable.
+# Secondly, a shallow copy of an 8bit matrix would be again an 8bit matrix.
+# Also installing 'M -> List( M, ShallowCopy )' is not allowed
+# because the entries of 'M' can be proper vector objects.
 InstallOtherMethod( Unpack,
     [ IsMatrix ],
-    ShallowCopy );
+    M -> List( M, Unpack ) );
+
+# generic unpack method for row list matrices
+InstallMethod( Unpack,
+    [ IsRowListMatrix ],
+    M -> List( M, Unpack ) );
 
 
 #############################################################################
@@ -126,7 +136,7 @@ InstallMethod( Display,
 ##
 InstallMethod( IsGeneralizedCartanMatrix,
     "for a matrix",
-    [ IsMatrix ],
+    [ IsMatrixOrMatrixObj ],
     function( A )
 
     local n, i, j;
@@ -162,7 +172,7 @@ InstallMethod( IsGeneralizedCartanMatrix,
 ##
 InstallMethod( IsDiagonalMatrix,
     "for a matrix",
-    [ IsMatrixObj ],
+    [ IsMatrixOrMatrixObj ],
     function( mat )
     local  i, j, z;
     z:=ZeroOfBaseDomain(mat);
@@ -176,7 +186,7 @@ InstallMethod( IsDiagonalMatrix,
     return true;
     end);
 
-InstallTrueMethod( IsDiagonalMatrix, IsMatrixObj and IsEmptyMatrix );
+InstallTrueMethod( IsDiagonalMatrix, IsMatrixOrMatrixObj and IsEmptyMatrix );
 
 
 #############################################################################
@@ -203,7 +213,7 @@ InstallOtherMethod( IsDiagonalMatrix, [ IsList and IsEmpty ], x -> true );
 ##
 InstallMethod( IsUpperTriangularMatrix,
     "for a matrix",
-    [ IsMatrixObj ],
+    [ IsMatrixOrMatrixObj ],
     function( mat )
     local  i, j, z;
     z:=ZeroOfBaseDomain(mat);
@@ -224,7 +234,7 @@ InstallMethod( IsUpperTriangularMatrix,
 ##
 InstallMethod( IsLowerTriangularMatrix,
     "for a matrix",
-    [ IsMatrixObj ],
+    [ IsMatrixOrMatrixObj ],
     function( mat )
     local  i, j, z;
     z:=ZeroOfBaseDomain(mat);
@@ -264,10 +274,10 @@ end );
 ##
 #R  IsNullMapMatrix . . . . . . . . . . . . . . . . . . .  null map as matrix
 ##
-DeclareRepresentation( "IsNullMapMatrix", IsMatrix, [  ] );
+DeclareRepresentation( "IsNullMapMatrix", IsMatrix and IsPositionalObjectRep, [  ] );
 
 BindGlobal( "NullMapMatrix",
-    Objectify( NewType( ListsFamily, IsNullMapMatrix ), MakeImmutable([  ]) ) );
+    Objectify( NewType( ListsFamily, IsNullMapMatrix ), [  ] ) );
 
 InstallOtherMethod( Length,
     "for null map matrix",
@@ -279,7 +289,7 @@ InstallMethod( IsZero,
     [ IsNullMapMatrix ],
     x -> true);
 
-InstallMethod( ZERO,
+InstallMethod( ZeroSameMutability,
     "for null map matrix",
     [ IsNullMapMatrix ],
     null -> null );
@@ -291,7 +301,7 @@ InstallMethod( \+,
     return null;
 end );
 
-InstallMethod( AINV,
+InstallMethod( AdditiveInverseSameMutability,
     "for a null map matrix",
     [ IsNullMapMatrix ],
     null -> null );
@@ -1176,9 +1186,7 @@ InstallMethod( BaseMatDestructive,
 InstallMethod( BaseMat,
     "generic method for matrices",
     [ IsMatrix ],
-    function ( mat )
-    return BaseMatDestructive( MutableCopyMat( mat ) );
-    end );
+    mat -> BaseMatDestructive( MutableCopyMatrix( mat ) ) );
 
 
 #############################################################################
@@ -1232,32 +1240,44 @@ end );
 #M  BaseDomain( <v> )
 #M  OneOfBaseDomain( <v> )
 #M  ZeroOfBaseDomain( <v> )
+#M  ConstructingFilter( <v> )
 #M  BaseDomain( <mat> )
 #M  OneOfBaseDomain( <mat> )
 #M  ZeroOfBaseDomain( <mat> )
+#M  RowsOfMatrix( <mat> )
+#M  NumberRows( <mat> ) 
+#M  NumberColumns( <mat> )
+#M  ConstructingFilter( <mat> )
 ##
-##  Note that a matrix that is a plain list is necessarily nonempty
-##  and dense, hence it is safe to access the first row.
-##  Since the rows are homogeneous and nonempty,
-##  one can also access the first entry in the first row.
+##  Note that a row vector or a matrix that is a plain list
+##  is necessarily nonempty and dense,
+##  hence it is safe to access the first entry.
+##  Since the rows of a matrix that is a plain list are homogeneous and
+##  nonempty, one can also access the first entry in the first row.
 ##
 InstallOtherMethod( BaseDomain,
     "generic method for a row vector",
     [ IsRowVector ],
-    # FIXME: Remove this downranking, it was introduced to prevent
-    #        Semigroups from breaking ahead of the 4.10 release
     -SUM_FLAGS,
     DefaultRing );
 
 InstallOtherMethod( OneOfBaseDomain,
     "generic method for a row vector",
     [ IsRowVector ],
+    -SUM_FLAGS,
     v -> One( v[1] ) );
 
 InstallOtherMethod( ZeroOfBaseDomain,
     "generic method for a row vector",
     [ IsRowVector ],
+    -SUM_FLAGS,
     v -> Zero( v[1] ) );
+
+InstallOtherMethod( ConstructingFilter,
+    "generic method for a row vector",
+    [ IsRowVector ],
+    -SUM_FLAGS,
+    v -> IsPlistRep );
 
 InstallOtherMethod( BaseDomain,
     "generic method for a matrix that is a plain list",
@@ -1273,6 +1293,32 @@ InstallOtherMethod( ZeroOfBaseDomain,
     "generic method for a matrix that is a plain list",
     [ IsMatrix and IsPlistRep ],
     mat -> Zero( mat[1,1] ) );
+
+InstallMethod( RowsOfMatrix,
+    "generic method for a matrix that is a plain list",
+    [ IsMatrix and IsPlistRep ],
+    Immutable );
+
+InstallMethod( NumberRows,
+    "generic method for a (perhaps empty) matrix",
+    [ IsMatrix ],
+    Length );
+
+InstallMethod( NumberColumns,
+    "generic method for a (perhaps empty) matrix",
+    [ IsMatrix ],
+    function( mat )
+    if Length( mat ) = 0 then
+      return 0;
+    fi;
+    return Length( mat[1] );
+    end );
+
+InstallOtherMethod( ConstructingFilter,
+    "generic method for a matrix that is a plain list",
+    [ IsMatrix and IsPlistRep ],
+    M -> IsPlistRep );
+
 
 #############################################################################
 ##
@@ -1300,7 +1346,7 @@ end);
 InstallOtherMethod( SumIntersectionMat,
     [ IsEmpty, IsMatrix ],
 function(a,b)
-  b:=MutableCopyMat(b);
+  b:=MutableCopyMatrix(b);
   TriangulizeMat(b);
   b:=Filtered(b,i->not IsZero(i));
   return [b,a];
@@ -1309,7 +1355,7 @@ end);
 InstallOtherMethod( SumIntersectionMat,
     [ IsMatrix, IsEmpty ],
 function(a,b)
-  a:=MutableCopyMat(a);
+  a:=MutableCopyMatrix(a);
   TriangulizeMat(a);
   a:=Filtered(a,i->not IsZero(i));
   return [a,b];
@@ -1487,7 +1533,7 @@ InstallMethod( DeterminantMat,
     "for matrices",
     [ IsMatrix ],
     function( mat )
-    return DeterminantMatDestructive( MutableCopyMat( mat ) );
+    return DeterminantMatDestructive( MutableCopyMatrix( mat ) );
     end );
 
 InstallMethod( DeterminantMatDestructive,"nonprime residue rings",
@@ -1506,7 +1552,7 @@ InstallMethod( DeterminantMatDestructive,"nonprime residue rings",
 ##  Mahajan and Vinay \cite{MV97}.
 ##
 ##  The run time is $O(n^4)$
-##  Auxillary storage size $n^2+n + C$
+##  Auxiliary storage size $n^2+n + C$
 ##
 ##  Our implementation has two runtime optimizations (both noted
 ##  by Mahajan and Vinay)
@@ -1515,9 +1561,9 @@ InstallMethod( DeterminantMatDestructive,"nonprime residue rings",
 ##    2. Prefix property is maintained allowing for a pruning of many
 ##       vertices at each level
 ##
-##  and two auxillary storage size optimizations
+##  and two auxiliary storage size optimizations
 ##    1. only the upper triangular and diagonal portion of the
-##       auxillary storage is used.
+##       auxiliary storage is used.
 ##    2. Level information storage is reused (2 levels).
 ##
 ##  This code was implemented by:
@@ -1889,7 +1935,7 @@ InstallMethod( ElementaryDivisorsMat,
     [ IsEuclideanRing,IsMatrix ],
 function ( ring,mat )
   # make a copy to avoid changing the original argument
-  mat := MutableCopyMat( mat );
+  mat := MutableCopyMatrix( mat );
   if IsIdenticalObj(ring,Integers) then
     DiagonalizeMat(Integers,mat);
     return DiagonalOfMat(mat);
@@ -1929,7 +1975,7 @@ InstallMethod( ElementaryDivisorsTransformationsMat,
     [ IsEuclideanRing,IsMatrix ],
 function ( ring,mat )
   # make a copy to avoid changing the original argument
-  mat := MutableCopyMat( mat );
+  mat := MutableCopyMatrix( mat );
   return ElementaryDivisorsTransformationsMatDestructive(ring,mat);
 end);
 
@@ -1947,9 +1993,22 @@ end);
 
 #############################################################################
 ##
-#M  MutableCopyMat( <mat> )
+#M  MutableCopyMatrix( <mat> )
 ##
+InstallOtherMethod( MutableCopyMatrix, "generic method", [ IsMatrix ],
+    -SUM_FLAGS,
+  mat -> List( mat, ShallowCopy ) );
+
+InstallOtherMethod( MutableCopyMatrix, "for empty lists", [ IsList and IsEmpty ],
+  mat -> [ ] );
+
+
+# FIXME: remove the following method again sometime soon (as of February
+# 2020); it is only here to work around an issue in the polycyclic package
+# which calls MutableCopyMat on a vector; once a new polycyclic release is
+# out, we should revert this again.
 InstallMethod( MutableCopyMat, "generic method", [IsList],
+    -SUM_FLAGS,
   mat -> List( mat, ShallowCopy ) );
 
 
@@ -2094,22 +2153,43 @@ InstallMethod( NullspaceMat,
     [ IsOrdinaryMatrix ],
     mat -> SemiEchelonMatTransformation(mat).relations );
 
+InstallOtherMethod(NullspaceMat,"matrix objects",[IsMatrixObj],
+function(mat)
+local r,nr,nc,n,i,j;
+  r:=SemiEchelonMatTransformation(mat).relations;
+  if Length(r)=0 then return r;fi;
+  nr:=Length(r);
+  nc:=Length(r[1]);
+  n:=ZeroMatrix(BaseDomain(mat),nr,nc);
+  for i in [1..nr] do
+    for j in [1..nc] do
+      n[i,j]:=r[i][j];
+    od;
+  od;
+  return n;
+end);
+
 InstallMethod( NullspaceMatDestructive,
     "generic method for ordinary matrices",
     [ IsOrdinaryMatrix  and IsMutable],
     mat -> SemiEchelonMatTransformationDestructive(mat).relations );
 
-InstallMethod( TriangulizedNullspaceMat,
-    "generic method for ordinary matrices",
-    [ IsOrdinaryMatrix ],
-    mat -> TriangulizedNullspaceMatDestructive( MutableCopyMat( mat ) ) );
+InstallOtherMethod( TriangulizedNullspaceMat,
+    "generic method for matrices",
+    [ IsMatrixOrMatrixObj ],
+    mat -> TriangulizedNullspaceMatDestructive( MutableCopyMatrix( mat ) ) );
 
-InstallMethod( TriangulizedNullspaceMatDestructive,
-    "generic method for ordinary matrices",
-    [ IsOrdinaryMatrix and IsMutable],
+InstallOtherMethod( TriangulizedNullspaceMatDestructive,
+    "generic method for matrices",
+    [ IsMatrixOrMatrixObj and IsMutable],
     function( mat )
     local ns;
     ns := SemiEchelonMatTransformationDestructive(mat).relations;
+    if IsPlistRep(ns) and Length(ns)>0 
+      # filter for vector objects, not compressed FF vectors
+      and ForAll(ns,x->IsVectorObj(x) and not IsDataObjectRep(x)) then
+      ns:=Matrix(BaseDomain(mat),ns);
+    fi;
     TriangulizeMat(ns);
     return ns;
 end );
@@ -2183,8 +2263,8 @@ end );
 #M  GeneralisedEigenvalues( <F>, <A> )
 ##
 InstallMethod( GeneralisedEigenvalues,
-    "for a matrix",
-    [ IsField, IsMatrix ],
+    "for a matrix or matrix obj",
+    [ IsField, IsMatrixOrMatrixObj ],
     function( F, A )
         return Set( Factors( UnivariatePolynomialRing(F), MinimalPolynomial(F, A,1) ) );
     end );
@@ -2194,11 +2274,18 @@ InstallMethod( GeneralisedEigenvalues,
 #M  GeneralisedEigenspaces( <F>, <A> )
 ##
 InstallMethod( GeneralisedEigenspaces,
-    "for a matrix",
-    [ IsField, IsMatrix ],
+    "for a matrix or matrix obj",
+    [ IsField, IsMatrixOrMatrixObj ],
     function( F, A )
-        return List( GeneralisedEigenvalues( F, A ), eval ->
-            VectorSpace( F, TriangulizedNullspaceMat( Value( eval, A ) ) ) );
+    local M,S,eval;
+      S:=[];
+      for eval in GeneralisedEigenvalues(F,A) do
+        M:=TriangulizedNullspaceMat( Value( eval, A ) );
+        if IsMatrixObj(M) and not IsMatrix(M) then 
+          M:=RowsOfMatrix(M); fi;
+        Add(S,VectorSpace(F,M));
+      od;
+      return S;
     end );
 
 #############################################################################
@@ -2282,16 +2369,16 @@ InstallOtherMethod( RankMatDestructive,
 InstallOtherMethod( RankMat,
     "generic method for matrices",
     [ IsMatrix ],
-    mat -> RankMatDestructive( MutableCopyMat( mat ) ) );
+    mat -> RankMatDestructive( MutableCopyMatrix( mat ) ) );
 
 
 #############################################################################
 ##
 #M  SemiEchelonMat( <mat> )
 ##
-InstallMethod( SemiEchelonMatDestructive,
+InstallOtherMethod( SemiEchelonMatDestructive,
     "generic method for matrices",
-    [ IsMatrix and IsMutable ],
+    [ IsMatrixOrMatrixObj and IsMutable ],
     function( mat )
     local zero,      # zero of the field of <mat>
           nrows,     # number of rows in <mat>
@@ -2361,6 +2448,27 @@ InstallMethod( SemiEchelonMat,
     return SemiEchelonMatDestructive( copymat );
 end );
 
+InstallOtherMethod( SemiEchelonMat,
+    "generic method for list of vector objects",
+    [ IsList ],
+    function( mat )
+    local copymat, v, vc, f;
+    # filter for vector objects, not compressed FF vectors
+    if not (ForAll(mat,x->IsVectorObj(x) and not IsDataObjectRep(x))
+      and Length(mat)>0) then
+      TryNextMethod();
+    fi;
+    copymat := [];
+    if Length(mat)>0 then
+      f := BaseDomain(mat[1]);
+      for v in mat do
+          vc := ShallowCopy(v);
+          Add(copymat, vc);
+      od;
+    fi;
+    return SemiEchelonMatDestructive(Matrix(f, copymat ));
+end );
+
 
 #############################################################################
 ##
@@ -2381,10 +2489,14 @@ InstallMethod( SemiEchelonMatTransformation,
     return SemiEchelonMatTransformationDestructive( copymat );
 end);
 
-InstallMethod( SemiEchelonMatTransformationDestructive,
-    "generic method for matrices",
-    [ IsMatrix and IsMutable],
-    function( mat )
+InstallOtherMethod(SemiEchelonMatTransformation,"matrix objects",[IsMatrixObj],
+function( mat )
+  local copymat;
+  copymat:=MutableCopyMatrix(mat);
+  return SemiEchelonMatTransformationDestructive( copymat );
+end);
+
+BindGlobal("DoSemiEchelonMatTransformationDestructive", function(f, mat )
     local zero,      # zero of the field of <mat>
           nrows,     # number of rows in <mat>
           ncols,     # number of columns in <mat>
@@ -2395,12 +2507,11 @@ InstallMethod( SemiEchelonMatTransformationDestructive,
           T,         # transformation matrix
           coeffs,    # list of coefficient vectors for 'vectors'
           relations, # basis vectors of the null space of 'mat'
-          row, head, x, row2,f;
+          row, head, x, row2;
 
     nrows := NrRows( mat );
     ncols := NrCols( mat );
     
-    f := DefaultFieldOfMatrix(mat);
     if f = fail then
         f := mat[1,1];
     fi;
@@ -2410,6 +2521,9 @@ InstallMethod( SemiEchelonMatTransformationDestructive,
     vectors := [];
 
     T         := IdentityMat( nrows, f );
+    if IsMatrixObj(mat) then
+      T:=Matrix(f,T);
+    fi;
     coeffs    := [];
     relations := [];
 
@@ -2455,6 +2569,20 @@ InstallMethod( SemiEchelonMatTransformationDestructive,
 end );
 
 
+InstallOtherMethod( SemiEchelonMatTransformationDestructive,
+    "generic method for matrices",
+    [ IsMatrix and IsMutable],
+  mat->DoSemiEchelonMatTransformationDestructive(
+    DefaultFieldOfMatrix(mat),mat));
+
+InstallOtherMethod( SemiEchelonMatTransformationDestructive,
+    "generic method for matrix objects over fields",
+    [ IsMatrixObj and IsRowListMatrix and IsMutable],function(mat)
+local f;
+  f:=BaseDomain(mat);
+  if not IsField(f) then TryNextMethod();fi;
+  return DoSemiEchelonMatTransformationDestructive(f,mat);
+end);
 
 
 #############################################################################
@@ -2541,17 +2669,12 @@ end );
 InstallMethod( SemiEchelonMats,
         "for list of matrices",
         [ IsList ],
-        function( mats )
-    return SemiEchelonMatsNoCo( List( mats, x -> MutableCopyMat(x) ) );
-end );
+    mats -> SemiEchelonMatsNoCo( List( mats, MutableCopyMatrix ) ) );
 
 InstallMethod( SemiEchelonMatsDestructive,
         "for list of matrices",
         [ IsList ],
-        function( mats )
-    return SemiEchelonMatsNoCo( mats );
-end );
-
+    SemiEchelonMatsNoCo );
 
 
 #############################################################################
@@ -2729,11 +2852,11 @@ end);
 ##
 ##  One solution <x> of <x> * <mat> = <vec> or `fail'.
 ##
-InstallMethod( SolutionMatDestructive,
+InstallOtherMethod( SolutionMatDestructive,
         "generic method",
     IsCollsElms,
-    [ IsOrdinaryMatrix and IsMutable,
-      IsRowVector and IsMutable],
+    [ IsMatrixOrMatrixObj and IsMutable,
+      IsListOrCollection and IsMutable],
         function( mat, vec )
     local i,ncols,sem, vno, z,x, row, sol;
     ncols := Length(vec);
@@ -2836,13 +2959,13 @@ end);
 #end );
 #
 
-InstallMethod( SolutionMat,
+InstallOtherMethod( SolutionMat,
     "generic method for ordinary matrix and vector",
     IsCollsElms,
-    [ IsOrdinaryMatrix,
-      IsRowVector ],
+    [ IsMatrixOrMatrixObj,IsListOrCollection ],
         function ( mat, vec )
-          return SolutionMatDestructive( MutableCopyMat( mat ), ShallowCopy(vec) );
+          return SolutionMatDestructive( MutableCopyMatrix( mat ),
+                                         ShallowCopy( vec ) );
 end );
 
 #InstallMethod( SolutionMatDestructive,
@@ -2866,7 +2989,7 @@ end );
 ##  second position   a base  of    the intersection.   Both bases    are  in
 ##  semi-echelon form.
 ##
-InstallMethod( SumIntersectionMat,
+InstallMethod( SumIntersectionMat,"ordinary matrices",
     IsIdenticalObj,
     [ IsMatrix, IsMatrix ],
 function( M1, M2 )
@@ -2933,25 +3056,88 @@ function( M1, M2 )
     return [ sum, int ];
 end );
 
+InstallOtherMethod( SumIntersectionMat,"MatrixObject", IsIdenticalObj,
+    [ IsMatrixObj, IsMatrixObj ],
+function( M1, M2 )
+    local n,      # number of columns
+          mat,    # matrix for Zassenhaus algorithm
+          zero,   # zero vector
+          v,      # loop over 'M1' and 'M2'
+          heads,  # list of leading positions
+          sum,    # base of the sum
+          i,      # loop over rows of 'mat'
+          int;    # base of the intersection
+
+    if   NrRows( M1 ) = 0 then
+      return [ M2, M1 ];
+    elif NrRows( M2 ) = 0 then
+      return [ M1, M2 ];
+    elif NrCols( M1 ) <> NrCols( M2 ) then
+      Error( "dimensions of matrices are not compatible" );
+    elif ZeroOfBaseDomain( M1 ) <> ZeroOfBaseDomain( M2 ) then
+      Error( "fields of matrices are not compatible" );
+    fi;
+
+    n:= NrCols( M1 );
+    mat:= [];
+    zero:= ZeroVector(n,M1);
+
+    # Set up the matrix for Zassenhaus' algorithm.
+    mat:= ZeroMatrix(BaseDomain(M1),NrRows(M1)+NrRows(M2),2*n);
+
+    i:=1;
+    for v in List(M1) do
+      CopySubVector(v,mat[i],[1..n],[1..n]);
+      CopySubVector(v,mat[i],[1..n],[n+1..2*n]);
+      #v:= ShallowCopy( v );
+      #Append( v, v );
+      i:=i+1;
+    od;
+    for v in List(M2) do
+      CopySubVector(v,mat[i],[1..n],[1..n]);
+      #mat[i]{[n+1..2*n]}:=zero; # not needed, as initially 0
+      #v:= ShallowCopy( v );
+      #Append( v, zero );
+      i:=i+1;
+    od;
+
+    # Transform `mat' into semi-echelon form.
+    mat   := SemiEchelonMatDestructive( mat );
+    heads := mat.heads;
+    mat   := mat.vectors;
+
+    # Extract the bases for the sum \ldots
+    sum:= [];
+    for i in [ 1 .. n ] do
+      if heads[i] <> 0 then
+        Add( sum, mat[ heads[i] ]{ [ 1 .. n ] } );
+      fi;
+    od;
+
+    # \ldots and the intersection.
+    int:= [];
+    for i in [ n+1 .. Length( heads ) ] do
+      if heads[i] <> 0 then
+        Add( int, mat[ heads[i] ]{ [ n+1 .. 2*n ] } );
+      fi;
+    od;
+
+    # return the result
+    return [ sum, int ];
+end );
+
 
 #############################################################################
-##
+#end
 #M  TriangulizeMat( <mat> ) . . . . . bring a matrix in upper triangular form
 ##
-InstallMethod( TriangulizeMat,
-    "generic method for mutable matrices",
-    [ IsMatrix and IsMutable ],
-    function ( mat )
-    local m, n, i, j, k, row, zero, x, row2;
+
+TRIANGULIZE_MAT_GENERIC:=function ( mat, m, n, zero )
+local i, j, k, row, x, row2;
 
     Info( InfoMatrix, 1, "TriangulizeMat called" );
 
-    if not IsEmpty( mat ) then
-
-       # get the size of the matrix
-       m := NrRows(mat);
-       n := NrCols(mat);
-       zero := ZeroOfBaseDomain( mat );
+    if m>0 then
 
        # make sure that the rows are mutable
        for i in [ 1 .. m ] do
@@ -3008,7 +3194,34 @@ InstallMethod( TriangulizeMat,
     fi;
 
     Info( InfoMatrix, 1, "TriangulizeMat returns" );
-end );
+end;
+
+InstallMethod( TriangulizeMat,
+    "generic method for mutable matrices",
+    [ IsMatrix and IsMutable ],
+function(mat)
+  TRIANGULIZE_MAT_GENERIC(mat,NrRows(mat),NrCols(mat),
+    ZeroOfBaseDomain(mat));
+end);
+
+InstallOtherMethod( TriangulizeMat,
+    "generic method for mutable matrix obj",
+    [ IsMatrixObj and IsMutable ],
+function(mat)
+  TRIANGULIZE_MAT_GENERIC(mat,NrRows(mat),NrCols(mat),
+    ZeroOfBaseDomain(mat));
+end);
+
+InstallOtherMethod( TriangulizeMat,
+    "list of mutable vectors",
+    [ IsList and IsMutable ],
+function(mat)
+  if Length(mat)=0 or not ForAll(mat,x->IsRowVector(x) or IsVectorObj(x))
+    then TryNextMethod();fi;
+  TRIANGULIZE_MAT_GENERIC(mat,Length(mat),Length(mat[1]),
+    ZeroOfBaseDomain(mat[1]));
+end);
+
 
 
 InstallOtherMethod( TriangulizeMat,
@@ -3024,6 +3237,25 @@ local m;
   return m;
 end);
 
+InstallOtherMethod( TriangulizedMat," matrix objects", [IsMatrixObj],
+function ( mat )
+local m;
+  m:=MutableCopyMatrix(mat);
+  TriangulizeMat(m);
+  return m;
+end);
+
+InstallOtherMethod( TriangulizedMat,"list of vectore", [IsList],
+function ( mat )
+local m;
+  m:=MutableCopyMatrix(mat);
+  TriangulizeMat(m);
+  return m;
+end);
+
+
+
+
 InstallOtherMethod( TriangulizedMat, "for an empty list", [ IsList and IsEmpty ],
 mat -> []);
 
@@ -3032,7 +3264,7 @@ mat -> []);
 #M  UpperSubdiagonal( <mat>, <pos> )
 ##
 InstallMethod( UpperSubdiagonal,
-    [ IsMatrixObj, IsPosInt ],
+    [ IsMatrixOrMatrixObj, IsPosInt ],
 function( mat, l )
     return List( [ 1 .. Minimum( NrRows( mat ), NrCols( mat ) - l ) ],
                  i -> mat[ i, l+i ] );
@@ -3095,10 +3327,10 @@ local z,l,b,i,j,k,stop,v,dim,h,zv;
   z:=Zero(bas[1][1]);
   zv:=Zero(bas[1]);
   if Length(mat)>0 then
-    mat:=MutableCopyMat(mat);
+    mat:=MutableCopyMatrix(mat);
     TriangulizeMat(mat);
   fi;
-  bas:=MutableCopyMat(bas);
+  bas:=MutableCopyMatrix(bas);
   dim:=Length(bas[1]);
   l:=Length(bas)-Length(mat); # missing dimension
   b:=[];
@@ -3596,8 +3828,13 @@ end );
 #F  RandomUnimodularMat( [rs ,] <m> )  . . . . . . . random unimodular matrix
 ##
 InstallGlobalFunction( RandomUnimodularMat, function ( arg )
-    local  rs, m, mat, c, i, j, k, l, a, b, v, w, gcd;
+local  rs, m, mat, c, i, j, k, l, a, b, v, w, gcd,dom;
     
+    dom:=ValueOption("domain");
+    if dom=fail or dom=false then
+      dom:=Integers;
+    fi;
+
     if Length(arg) >= 1 and IsRandomSource(arg[1]) then
         rs := Remove(arg, 1);
     else
@@ -3629,8 +3866,8 @@ InstallGlobalFunction( RandomUnimodularMat, function ( arg )
             j := Random(rs, 1, m);
         until j <> i;
         repeat
-            a := Random( rs, Integers );
-            b := Random( rs, Integers );
+            a := Random( rs, dom );
+            b := Random( rs, dom );
             gcd := Gcdex( a, b );
         until gcd.gcd = 1;
         v := mat[i];  w := mat[j];
@@ -3643,8 +3880,8 @@ InstallGlobalFunction( RandomUnimodularMat, function ( arg )
             l := Random(rs, 1, m);
         until l <> k;
         repeat
-            a := Random( rs, Integers );
-            b := Random( rs, Integers );
+            a := Random( rs, dom );
+            b := Random( rs, dom );
             gcd := Gcdex( a, b );
         until gcd.gcd = 1;
         for i  in [1..m]  do
@@ -3801,44 +4038,44 @@ InstallGlobalFunction( DirectSumMat, function (arg)
       m:= arg[r]; r:=r+1;
     od;
     if m <> [ ] then
-      F:= DefaultField( m[1,1] );
+      r:=[];
+      for c in arg do
+        if HasBaseDomain(c) then
+          Add(r,BaseDomain(c));
+        else
+          Add(r,DefaultFieldOfMatrix(c));
+        fi;
+      od;
+      F:=r[1];
+      for c in r{[2..Length(r)]} do
+        if not IsSubset(F,c) then
+          if IsSubset(c,F) then
+            F:=c;
+          else
+            Error("build field/ring");
+          fi;
+        fi;
+      od;
+
     else
       F:= Rationals;
     fi;
-    res:=List(NullMat(Sum(arg,Length),Sum(arg,f),F),ShallowCopy);
+    res:=[Sum(arg,Length),Sum(arg,f)];
+    if ForAny(arg,IsMatrixObj) then
+      res:=ZeroMatrix(F,res[1],res[2]);
+    else
+      res:=List(NullMat(res[1],res[2],F),ShallowCopy);
+    fi;
     r:=0;
     c:=0;
     for m in arg do
-        res{r+[1..Length(m)]}{c+[1..f(m)]}:=m;
+        #res{r+[1..Length(m)]}{c+[1..f(m)]}:=m;
+        CopySubMatrix(m,res,[1..NrRows(m)],r+[1..Length(m)],
+          [1..NrCols(m)], c+[1..f(m)]);
         r:=r+Length(m);
         c:=c+f(m);
     od;
     return res;
-end );
-
-
-#############################################################################
-##
-#F  TraceMat( <mat> ) . . . . . . . . . . . . . . . . . . . trace of a matrix
-##
-InstallMethod( TraceMat, "method for lists", [ IsList ],
-    function ( mat )
-    local   trc, m, i;
-
-    # check that the element is a square matrix
-    m := Length(mat);
-    if m <> NrCols(mat)  then
-        Error("TraceMat: <mat> must be a square matrix");
-    fi;
-
-    # sum all the diagonal entries
-    trc := mat[1,1];
-    for i  in [2..m]  do
-        trc := trc + mat[i,i];
-    od;
-
-    # return the trace
-    return trc;
 end );
 
 
@@ -3854,7 +4091,7 @@ InstallOtherMethod( Trace,
 
 #############################################################################
 ##
-#M JordanDecomposition( <mat> )
+#M  JordanDecomposition( <mat> )
 ##
 InstallMethod( JordanDecomposition,
            "method for matrices",
@@ -3911,7 +4148,7 @@ InstallGlobalFunction(OnSubspacesByCanonicalBasis,function( mat, obj )
     local row;
     mat:=mat*obj;
     if not IsMutable(mat) then
-        mat := MutableCopyMat(mat);
+        mat := MutableCopyMatrix(mat);
     else
         for row in [1..Length(mat)] do
             if not IsMutable(mat[row]) then
@@ -3980,8 +4217,8 @@ InstallMethod( DefaultScalarDomainOfMatrixList,
     function(l)
     local B, i,j,k,fg,f;
     # try to find out the field
-    if Length( l ) = 0 or ForAny( l, i -> not IsMatrixObj( i ) ) then
-      Error( "<l> must be a nonempty list of matrices" );
+    if Length( l ) = 0 or ForAny( l, i -> not IsMatrixOrMatrixObj( i ) ) then
+      Error( "<l> must be a nonempty list of matrices or matrix objects" );
     elif ForAll( l, HasBaseDomain ) then
       B:= BaseDomain( l[1] );
       if ForAll( l, x -> B = BaseDomain( x ) ) then
@@ -4009,105 +4246,6 @@ InstallMethod( DefaultScalarDomainOfMatrixList,
     Error( "all entries in <l> must either be lists of lists ",
            "or have the same BaseDomain" );
 end);
-
-
-#############################################################################
-##
-#F  NOT READY: BaseNullspace( <struct> )
-##
-#T BaseNullspace := function( struct )
-#T     if   IsMat( struct ) then
-#T       return NullspaceMat( struct );
-#T     elif IsRecord( struct ) then
-#T       if not IsBound( struct.baseNullspace ) then
-#T         if not IsBound( struct.operations ) then
-#T           Error( "<struct> must have 'operations' entry" );
-#T         fi;
-#T         struct.baseNullspace:=
-#T             struct.operations.BaseNullspace( struct );
-#T       fi;
-#T       return struct.baseNullspace;
-#T     else
-#T       Error( "<struct> must be a matrix or a record" );
-#T     fi;
-#T     end;
-
-
-##########################################################################
-##
-#F  NOT READY: MatricesOps.InvariantForm( <D> )
-##
-#T MatricesOps.InvariantForm := function( D )
-#T     local F,          # field
-#T           q,          # size of 'F'
-#T           A,          # 'F'-algebra generated by 'D'
-#T           nr,         # word number
-#T           word,       # loop over algebra elements
-#T           i,          # loop variable
-#T           ns,         # file for a nullspace
-#T           sb1,        # standard basis of 'D'
-#T           T,          # contragredient representation
-#T           sb2,        # standard basis of 'T'
-#T           M;          # invariant form, result
-#T
-#T     if   not ( IsList( D ) and ForAll( D, IsMatrix ) ) then
-#T       Error( "<D> must be a list of matrices" );
-#T     elif Length( D ) = 0 then
-#T       Error( "need at least one matrix" );
-#T     fi;
-#T
-#T     F:= Field( Flat( D ) );
-#T     if not IsFinite( F ) then
-#T       Error( "sorry, for finite fields only" );
-#T     fi;
-#T     q:= Size( F );
-#T
-#T     # Search for an algebra element of nullity 1.
-#T     # Use normed words only, that is, words of the form $I + w$.
-#T     # Write the 'D' nullspace of the nullity 1 word to 'ns'.
-#T     A:= Algebra( F, D );
-#T     nr:= 1;
-#T     repeat
-#T       nr:= nr + q;
-#T       word:= ElementAlgebra( A, nr );
-#T       ns:= NullspaceMat( word );
-#T     until Length( ns ) = 1;
-#T
-#T     # Compute the standard basis for the natural module of 'D',
-#T     # starting with the word of nullity 1, write output to 'sb1'
-#T     sb1:= BasisVectors( StandardBasis( Module( A, ns ) ) );
-#T
-#T     # Check whether the whole space is spanned.
-#T     if Length( sb1 ) < Length( ns[1] ) then
-#T       Error( "representation is reducible" );
-#T     fi;
-#T
-#T     # Make the contragredient representation 'T'.
-#T     T:= Algebra( A.field, List( D, x -> TransposedMat( x^-1 ) ) );
-#T
-#T     # Write the 'T' nullspace of the nullity 1 word to 'ns'.
-#T     ns:= NullspaceMat( ElementAlgebra( T, nr ) );
-#T
-#T     # Compute the standard basis for the natural module of 'T',
-#T     # starting with the word of nullity 1, write output to 'sb2'
-#T     sb2:= BasisVectors( StandardBasis( Module( T, ns ) ) );
-#T
-#T     # If 'D' and 'T' are equivalent then
-#T     # the invariant matrix is 'M = sb1^(-1) * sb2',
-#T     # since 'sb1 * D[i] * sb1^(-1) = sb2 * T[i] * sb2^(-1)' implies
-#T     # that 'D[i] * M * D[i]^{tr} = M'.
-#T     M:= sb1^-1 * sb2;
-#T
-#T     # Check for equality.
-#T     for i in [ 1 .. Length( D ) ] do
-#T       if D[i] * M * TransposedMat( D[i] ) <> M then
-#T         return false;
-#T       fi;
-#T     od;
-#T
-#T     # Return the result.
-#T     return M;
-#T     end;
 
 
 #############################################################################
@@ -4266,7 +4404,7 @@ BindGlobal("POW_MAT_INT", function(mat, n)
   local d, addb, trafo, value, t, ti, mm, pol, ind;
   d := NrRows(mat);
   # finding a better break even point probably also depends on q
-  if n < 2^QuoInt(3*d,4) then
+  if n < 2^QuoInt(3*d,4) or not IsField(DefaultFieldOfMatrix(mat)) then
     return POW_OBJ_INT(mat, n);
   fi;
   # helper function to build up a semi-echelon basis
@@ -4334,7 +4472,7 @@ BindGlobal("POW_MAT_INT", function(mat, n)
     fi;
     val := c[i] * mat;
     if not IsMutable(val[1]) then
-      val := MutableCopyMat(val);
+      val := MutableCopyMatrix(val);
     fi;
     i := i-1;
     for j in [1..NrRows(mat)] do
@@ -4364,7 +4502,7 @@ end);
 
 InstallMethod( \^,
     "for matrices, use char. poly. for large exponents",
-    [ IsMatrixObj, IsPosInt ], POW_MAT_INT );
+    [ IsMatrixOrMatrixObj, IsPosInt ], POW_MAT_INT );
 
 InstallGlobalFunction(RationalCanonicalFormTransform,function(mat)
 local cr,R,x,com,nf,matt,p,i,j,di,d,v;

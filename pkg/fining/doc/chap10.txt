@@ -42,7 +42,7 @@
   
   [1X10.1-1 IsGeometryMorphism[101X
   
-  [29X[2XIsGeometryMorphism[102X[32X family
+  [33X[1;0Y[29X[2XIsGeometryMorphism[102X [32X family[133X
   
   [33X[0;0YThe  category [10XIsGeometryMorphism[110X represents a special object in [5XFinInG[105X which
   carries  attributes and the given element map. The element map is given as a
@@ -64,7 +64,7 @@
   
   [1X10.1-2 Intertwiner[101X
   
-  [29X[2XIntertwiner[102X( [3Xf[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIntertwiner[102X( [3Xf[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya group homomorphism[133X
   
   [33X[0;0YThe  argument  [3Xf[103X  is a geometry morphism. If [3Xf[103X comes equipped with a natural
@@ -117,8 +117,8 @@
   
   [1X10.2-1 IsomorphismPolarSpaces[101X
   
-  [29X[2XIsomorphismPolarSpaces[102X( [3Xps1[103X, [3Xps2[103X ) [32X operation
-  [29X[2XIsomorphismPolarSpaces[102X( [3Xps1[103X, [3Xps2[103X, [3Xboolean[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsomorphismPolarSpaces[102X( [3Xps1[103X, [3Xps2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsomorphismPolarSpaces[102X( [3Xps1[103X, [3Xps2[103X, [3Xboolean[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
   
   [33X[0;0YThe arguments [3Xps1[103X and [3Xps2[103X are [13Xequivalent[113X polar spaces, i.e. up to coordinate
@@ -203,7 +203,7 @@
   
   [1X10.3-1 PluckerCoordinates[101X
   
-  [29X[2XPluckerCoordinates[102X( [3Xline[103X ) [32X operation
+  [33X[1;0Y[29X[2XPluckerCoordinates[102X( [3Xline[103X ) [32X operation[133X
   
   [33X[0;0YThis  operation  takes a line of [22XPG(3,q)[122X as argument. It returns the plucker
   coordinates  of  the  argument as list of finite field elements. The retured
@@ -237,10 +237,10 @@
   
   [1X10.3-2 KleinCorrespondence[101X
   
-  [29X[2XKleinCorrespondence[102X( [3Xf[103X ) [32X operation
-  [29X[2XKleinCorrespondence[102X( [3Xf[103X, [3Xboolean[103X ) [32X operation
-  [29X[2XKleinCorrespondence[102X( [3Xq[103X ) [32X operation
-  [29X[2XKleinCorrespondence[102X( [3Xq[103X, [3Xboolean[103X ) [32X operation
+  [33X[1;0Y[29X[2XKleinCorrespondence[102X( [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XKleinCorrespondence[102X( [3Xf[103X, [3Xboolean[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XKleinCorrespondence[102X( [3Xq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XKleinCorrespondence[102X( [3Xq[103X, [3Xboolean[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
   
   [33X[0;0YThe argument [3Xf[103X is a finite field, the argument [3Xq[103X is a prime power. The first
@@ -272,8 +272,8 @@
   
   [1X10.3-3 KleinCorrespondence[101X
   
-  [29X[2XKleinCorrespondence[102X( [3Xquadric[103X ) [32X operation
-  [29X[2XKleinCorrespondence[102X( [3Xquadric[103X, [3Xboolean[103X ) [32X operation
+  [33X[1;0Y[29X[2XKleinCorrespondence[102X( [3Xquadric[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XKleinCorrespondence[102X( [3Xquadric[103X, [3Xboolean[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
   
   [33X[0;0YThe  argument  [3Xquadric[103X is a hyperbolic quadric in a 5 dimensional projective
@@ -314,8 +314,8 @@
   
   [1X10.3-4 KleinCorrespondenceExtended[101X
   
-  [29X[2XKleinCorrespondenceExtended[102X( [3Xquadric[103X ) [32X operation
-  [29X[2XKleinCorrespondenceExtended[102X( [3Xquadric[103X, [3Xboolean[103X ) [32X operation
+  [33X[1;0Y[29X[2XKleinCorrespondenceExtended[102X( [3Xquadric[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XKleinCorrespondenceExtended[102X( [3Xquadric[103X, [3Xboolean[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
   
   [33X[0;0YThe  argument  [3Xquadric[103X is a hyperbolic quadric in a 5 dimensional projective
@@ -364,10 +364,10 @@
   
   [1X10.3-5 NaturalDuality[101X
   
-  [29X[2XNaturalDuality[102X( [3Xgq1[103X, [3Xgq2[103X ) [32X operation
-  [29X[2XNaturalDuality[102X( [3Xgq1[103X, [3Xgq2[103X, [3Xboolean[103X ) [32X operation
-  [29X[2XNaturalDuality[102X( [3Xgq[103X ) [32X operation
-  [29X[2XNaturalDuality[102X( [3Xgq[103X, [3Xboolean[103X ) [32X operation
+  [33X[1;0Y[29X[2XNaturalDuality[102X( [3Xgq1[103X, [3Xgq2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalDuality[102X( [3Xgq1[103X, [3Xgq2[103X, [3Xboolean[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalDuality[102X( [3Xgq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalDuality[102X( [3Xgq[103X, [3Xboolean[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
   
   [33X[0;0YThe  operation  allows  the  construction  of the duality between [22XW(3,q)[122X and
@@ -437,8 +437,8 @@
   
   [1X10.3-6 SelfDuality[101X
   
-  [29X[2XSelfDuality[102X( [3Xgq[103X ) [32X operation
-  [29X[2XSelfDuality[102X( [3Xgq[103X, [3Xboolean[103X ) [32X operation
+  [33X[1;0Y[29X[2XSelfDuality[102X( [3Xgq[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSelfDuality[102X( [3Xgq[103X, [3Xboolean[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
   
   [33X[0;0YIt  is checked wheter the base field of [3Xgq[103X is a field of charateristic 2 and
@@ -499,7 +499,7 @@
   
   [1X10.4-1 NaturalEmbeddingBySubspace[101X
   
-  [29X[2XNaturalEmbeddingBySubspace[102X( [3Xgeom1[103X, [3Xgeom2[103X, [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XNaturalEmbeddingBySubspace[102X( [3Xgeom1[103X, [3Xgeom2[103X, [3Xv[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
   
   [33X[0;0YThe  arguments  [3Xgeom1[103X  and  [3Xgeom2[103X  are  both  projective spaces, and [3Xv[103X is an
@@ -531,8 +531,8 @@
   
   [1X10.4-2 NaturalEmbeddingBySubField[101X
   
-  [29X[2XNaturalEmbeddingBySubField[102X( [3Xgeom1[103X, [3Xgeom2[103X ) [32X operation
-  [29X[2XNaturalEmbeddingBySubField[102X( [3Xgeom1[103X, [3Xgeom2[103X, [3Xboolean[103X ) [32X operation
+  [33X[1;0Y[29X[2XNaturalEmbeddingBySubField[102X( [3Xgeom1[103X, [3Xgeom2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingBySubField[102X( [3Xgeom1[103X, [3Xgeom2[103X, [3Xboolean[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
   
   [33X[0;0YThe  arguments  [3Xgeom1[103X and [3Xgeom2[103X are projective spaces of the same dimension.
@@ -611,7 +611,7 @@
   
   [1X10.4-4 BlownUpSubspaceOfProjectiveSpace[101X
   
-  [29X[2XBlownUpSubspaceOfProjectiveSpace[102X( [3XB[103X, [3Xsubspace[103X ) [32X operation
+  [33X[1;0Y[29X[2XBlownUpSubspaceOfProjectiveSpace[102X( [3XB[103X, [3Xsubspace[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya subspace of a projective space[133X
   
   [33X[0;0YLet  [3XB[103X  be  a  basis  for  the  field [22XGF(q^t)[122X as [22XGF(q)[122X vector space, and let
@@ -644,10 +644,10 @@
   
   [1X10.4-5 NaturalEmbeddingByFieldReduction[101X
   
-  [29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xgeom1[103X, [3Xf2[103X, [3XB[103X ) [32X operation
-  [29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xgeom1[103X, [3Xf2[103X ) [32X operation
-  [29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xgeom1[103X, [3Xgeom2[103X ) [32X operation
-  [29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xgeom1[103X, [3Xgeom2[103X, [3XB[103X ) [32X operation
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xgeom1[103X, [3Xf2[103X, [3XB[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xgeom1[103X, [3Xf2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xgeom1[103X, [3Xgeom2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xgeom1[103X, [3Xgeom2[103X, [3XB[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
   
   [33X[0;0YThis  operation  comes in four flavours. For the first flavour, the argument
@@ -722,7 +722,7 @@
   
   [1X10.5-1 NaturalEmbeddingBySubspace[101X
   
-  [29X[2XNaturalEmbeddingBySubspace[102X( [3Xgeom1[103X, [3Xgeom2[103X, [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XNaturalEmbeddingBySubspace[102X( [3Xgeom1[103X, [3Xgeom2[103X, [3Xv[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
   
   [33X[0;0YThe  arguments  [3Xgeom1[103X  and [3Xgeom2[103X both polar spaces, and [3Xv[103X is an element of a
@@ -789,8 +789,8 @@
   
   [1X10.5-2 NaturalEmbeddingBySubField[101X
   
-  [29X[2XNaturalEmbeddingBySubField[102X( [3Xgeom1[103X, [3Xgeom2[103X ) [32X operation
-  [29X[2XNaturalEmbeddingBySubField[102X( [3Xgeom1[103X, [3Xgeom2[103X, [3Xboolean[103X ) [32X operation
+  [33X[1;0Y[29X[2XNaturalEmbeddingBySubField[102X( [3Xgeom1[103X, [3Xgeom2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingBySubField[102X( [3Xgeom1[103X, [3Xgeom2[103X, [3Xboolean[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
   
   [33X[0;0YThe  arguments  [3Xgeom1[103X  and  [3Xgeom2[103X  are  projective  or  polar spaces with an
@@ -907,12 +907,12 @@
   
   [1X10.5-4 NaturalEmbeddingByFieldReduction[101X
   
-  [29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xf2[103X, [3Xalpha[103X, [3Xbasis[103X, [3Xbool[103X ) [32X operation
-  [29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xf2[103X, [3Xalpha[103X, [3Xbasis[103X ) [32X operation
-  [29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xf2[103X, [3Xalpha[103X, [3Xbool[103X ) [32X operation
-  [29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xf2[103X, [3Xalpha[103X ) [32X operation
-  [29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xf2[103X, [3Xbool[103X ) [32X operation
-  [29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xf2[103X ) [32X operation
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xf2[103X, [3Xalpha[103X, [3Xbasis[103X, [3Xbool[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xf2[103X, [3Xalpha[103X, [3Xbasis[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xf2[103X, [3Xalpha[103X, [3Xbool[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xf2[103X, [3Xalpha[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xf2[103X, [3Xbool[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xf2[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
   
   [33X[0;0Y[3Xps1[103X  is a polar space over a field extension [22XL[122X of [3Xf2[103X, [3Xbasis[103X is a basis for [22XL[122X
@@ -986,8 +986,8 @@
   
   [1X10.5-5 NaturalEmbeddingByFieldReduction[101X
   
-  [29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xps2[103X, [3Xbool[103X ) [32X operation
-  [29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xps2[103X ) [32X operation
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xps2[103X, [3Xbool[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalEmbeddingByFieldReduction[102X( [3Xps1[103X, [3Xps2[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
   
   [33X[0;0YIf  [3Xps1[103X  and [3Xps2[103X are two polar spaces which are suitable for field reduction
@@ -1079,7 +1079,7 @@
   
   [1X10.6-1 NaturalProjectionBySubspace[101X
   
-  [29X[2XNaturalProjectionBySubspace[102X( [3Xps[103X, [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XNaturalProjectionBySubspace[102X( [3Xps[103X, [3Xv[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
   
   [33X[0;0YThe  argument  [3Xps[103X is a projective or polar space, and [3Xv[103X is a subspace of [3Xps[103X.
@@ -1125,7 +1125,7 @@
   
   [1X10.7-1 ProjectiveCompletion[101X
   
-  [29X[2XProjectiveCompletion[102X( [3Xas[103X ) [32X operation
+  [33X[1;0Y[29X[2XProjectiveCompletion[102X( [3Xas[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
   
   [33X[0;0YThe  argument  [3Xas[103X is an affine space. This operation returns an embedding of

@@ -15,15 +15,15 @@
   any more.[133X
   
   [33X[0;0YInformation  about  obsolete  names  is  printed  by  [2XInfo[102X ([14X7.4-6[114X) using the
-  InfoObsolete  Info  class.  By  default  InfoObsolete  is  set  to  1. Newly
-  obsoleted  identifiers  should  at  first be outputted at info level 2. Once
-  they  have been removed from all packages, they should then be moved to info
-  level 1, so they are visible to normal users, for at least one major release
-  before being removed.[133X
+  [2XInfoObsolete[102X ([14X77.4-1[114X) Info class. By default [2XInfoObsolete[102X ([14X77.4-1[114X) is set to
+  1. Newly obsoleted identifiers should at first be outputted at info level 2.
+  Once  they have been removed from all packages, they should then be moved to
+  info  level  1,  so they are visible to normal users, for at least one major
+  release before being removed.[133X
   
-  [33X[0;0YThe  functions DeclareObsoleteSynonym and DeclareObsoleteSynonymAttr take an
+  [33X[0;0YThe  functions [10XDeclareObsoleteSynonym[110X and [10XDeclareObsoleteSynonymAttr[110X take an
   optional  final  paremeter,  specifying  the  info  level at which the given
-  obsolete symbol should be reported. It defaults to 1.[133X
+  obsolete symbol should be reported. It defaults to 2 and 1, respectively.[133X
   
   [33X[0;0YThe obsolete [5XGAP[105X code is collected in two library files, [11Xlib/obsolete.gd[111X and
   [11Xlib/obsolete.gi[111X.  By  default,  these files are read when [5XGAP[105X is started. It
@@ -54,6 +54,7 @@
         [10XRepresentativeOperation[110X │ [2XRepresentativeAction[102X ([14X41.6-1[114X)   
         [10XOperationHomomorphism[110X   │ [2XActionHomomorphism[102X ([14X41.7-1[114X)     
         [10XFunctionOperation[110X       │ [2XFunctionAction[102X ([14X41.12-4[114X)        
+        [10XIsLexicographicallyLess[110X │ [2X\<[102X ([14X31.11-1[114X)                    
   
   
   [1X77.2 [33X[0;0YPackage Interface – Obsolete Functions and Name Changes[133X[101X
@@ -64,7 +65,7 @@
   [33X[0;0YThe    following   functions   are   no   longer   needed:   [10XDeclarePackage[110X,
   [10XDeclareAutoPackage[110X,              [10XDeclarePackageDocumentation[110X             and
   [10XDeclarePackageAutoDocumentation[110X.  They  are  substituted  by  entries in the
-  packages' [11XPackageInfo.g[111X files, see [14X76.3-13[114X.[133X
+  packages' [11XPackageInfo.g[111X files, see [14X76.3-15[114X.[133X
   
   [33X[0;0YFurthermore,  the  global  variable  [10XPACKAGES_VERSIONS[110X  is no longer needed,
   since  this  information is now contained in the [10XGAPInfo.PackagesInfo[110X record
@@ -107,6 +108,7 @@
         [10XMutableIdentityMat[110X      │ [2XIdentityMat[102X ([14X24.5-1[114X)              
         [10XMutableNullMat[110X          │ [2XNullMat[102X ([14X24.5-2[114X)                  
         [10XMultRowVector[110X           │ [2XMultVectorLeft[102X ([14X23.4-3[114X)           
+        [10XRadicalGroup[110X            │ [2XSolvableRadical[102X ([14X39.12-9[114X)         
   
   [33X[0;0YThe  operation  [10XPositionFirstComponent[110X has been deprecated in GAP 4.8 due to
   issues  with  its  documentation  and implementation, and was removed in GAP

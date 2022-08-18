@@ -440,7 +440,7 @@
   
   [33X[1;0Y[29X[2XIsCategory[102X( [3Xobject[103X ) [32X function[133X
   
-  [33X[0;0Yreturns [10Xtrue[110X if [3Xobject[103X is a category (see [14X13.3[114X), and [10Xfalse[110X otherwise.[133X
+  [33X[0;0Yreturns [9Xtrue[109X if [3Xobject[103X is a category (see [14X13.3[114X), and [9Xfalse[109X otherwise.[133X
   
   [33X[0;0YNote that [5XGAP[105X categories are [13Xnot[113X categories in the usual mathematical sense.[133X
   
@@ -492,8 +492,9 @@
   
   [33X[1;0Y[29X[2XDeclareCategory[102X( [3Xname[103X, [3Xsuper[103X[, [3Xrank[103X] ) [32X function[133X
   
-  [33X[0;0Ydoes  the  same  as [2XNewCategory[102X ([14X13.3-4[114X) and additionally makes the variable
-  [3Xname[103X read-only.[133X
+  [33X[0;0Ydoes  the  same  as  [2XNewCategory[102X  ([14X13.3-4[114X)  and then binds the result to the
+  global  variable [3Xname[103X. The variable must previously be writable, and is made
+  read-only by this function.[133X
   
   [1X13.3-6 CategoryFamily[101X
   
@@ -573,7 +574,7 @@
   
   [33X[1;0Y[29X[2XIsRepresentation[102X( [3Xobject[103X ) [32X function[133X
   
-  [33X[0;0Yreturns [10Xtrue[110X if [3Xobject[103X is a representation (see [14X13.4[114X), and [10Xfalse[110X otherwise.[133X
+  [33X[0;0Yreturns [9Xtrue[109X if [3Xobject[103X is a representation (see [14X13.4[114X), and [9Xfalse[109X otherwise.[133X
   
   [1X13.4-3 RepresentationsOfObject[101X
   
@@ -589,7 +590,7 @@
   
   [1X13.4-4 NewRepresentation[101X
   
-  [33X[1;0Y[29X[2XNewRepresentation[102X( [3Xname[103X, [3Xsuper[103X, [3Xslots[103X[, [3Xreq[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XNewRepresentation[102X( [3Xname[103X, [3Xsuper[103X[, [3Xslots[103X[, [3Xreq[103X]] ) [32X function[133X
   
   [33X[0;0Y[2XNewRepresentation[102X  returns  a  new representation [3Xrep[103X that has the name [3Xname[103X
   and  is  a  subrepresentation  of  the representation [3Xsuper[103X. This means that
@@ -603,29 +604,22 @@
   functions,  the data describing objects in the latter two is accessible also
   in library functions, see [14X79.2[114X and [14X79.3[114X for the details.[133X
   
-  [33X[0;0YThe  third argument [3Xslots[103X is a list either of integers or of strings. In the
-  former   case,   [3Xrep[103X   must   be   [2XIsPositionalObjectRep[102X   ([14X13.4-1[114X)   or   a
-  subrepresentation  of  it,  and [3Xslots[103X tells what positions of the objects in
-  the  representation  [3Xrep[103X  may  be  bound.  In  the  latter case, [3Xrep[103X must be
-  [2XIsComponentObjectRep[102X ([14X13.4-1[114X) or a subrepresentation of, and [3Xslots[103X lists the
-  admissible  names  of  components that objects in the representation [3Xrep[103X may
-  have. The admissible positions resp. component names of [3Xsuper[103X need not be be
-  listed in [3Xslots[103X.[133X
+  [33X[0;0YThe  optional third and fourth arguments [3Xslots[103X and [3Xreq[103X are (and always were)
+  unused  and  are  only provided for backwards compatibility. Note that [3Xslots[103X
+  was required (but still unused) before GAP 4.12.[133X
   
   [33X[0;0YThe incremental rank (see [14X13.2[114X) of [3Xrep[103X is 1.[133X
-  
-  [33X[0;0YNote  that  for  objects  in  the  representation [3Xrep[103X, of course some of the
-  component names and positions reserved via [3Xslots[103X may be unbound.[133X
   
   [33X[0;0YExamples  for  the  use of [2XNewRepresentation[102X can be found in [14X79.2[114X, [14X79.3[114X, and
   also in [14X81.3[114X.[133X
   
   [1X13.4-5 DeclareRepresentation[101X
   
-  [33X[1;0Y[29X[2XDeclareRepresentation[102X( [3Xname[103X, [3Xsuper[103X, [3Xslots[103X[, [3Xreq[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XDeclareRepresentation[102X( [3Xname[103X, [3Xsuper[103X[, [3Xslots[103X[, [3Xreq[103X]] ) [32X function[133X
   
-  [33X[0;0Ydoes  the  same  as  [2XNewRepresentation[102X  ([14X13.4-4[114X)  and additionally makes the
-  variable [3Xname[103X read-only.[133X
+  [33X[0;0Ydoes the same as [2XNewRepresentation[102X ([14X13.4-4[114X) and then binds the result to the
+  global  variable [3Xname[103X. The variable must previously be writable, and is made
+  read-only by this function.[133X
   
   
   [1X13.5 [33X[0;0YAttributes[133X[101X
@@ -676,7 +670,7 @@
   
   [33X[1;0Y[29X[2XIsAttribute[102X( [3Xobject[103X ) [32X function[133X
   
-  [33X[0;0Yreturns [10Xtrue[110X if [3Xobject[103X is an attribute (see [14X13.5[114X), and [10Xfalse[110X otherwise.[133X
+  [33X[0;0Yreturns [9Xtrue[109X if [3Xobject[103X is an attribute (see [14X13.5[114X), and [9Xfalse[109X otherwise.[133X
   
   [1X13.5-2 KnownAttributesOfObject[101X
   
@@ -714,10 +708,10 @@
   [30X    [33X[0;6YThe  integer  argument  [3Xrank[103X  causes the attribute tester to have this
         incremental rank (see [14X13.2[114X),[133X
   
-  [30X    [33X[0;6YIf  the  argument [3Xmutable[103X is the string [10X"mutable"[110X or the boolean [10Xtrue[110X,
+  [30X    [33X[0;6YIf  the  argument [3Xmutable[103X is the string [10X"mutable"[110X or the boolean [9Xtrue[109X,
         then the values of the attribute are mutable.[133X
   
-  [30X    [33X[0;6YIf  the  argument [3Xmutable[103X is the boolean [10Xfalse[110X, then the values of the
+  [30X    [33X[0;6YIf  the  argument [3Xmutable[103X is the boolean [9Xfalse[109X, then the values of the
         attribute are immutable.[133X
   
   [33X[0;0YWhen  a  value  of  such  mutable attribute is set then this value itself is
@@ -738,9 +732,11 @@
   
   [33X[1;0Y[29X[2XDeclareAttribute[102X( [3Xname[103X, [3Xfilter[103X[, [3X"mutable"[103X][, [3Xrank[103X] ) [32X function[133X
   
-  [33X[0;0Ydoes the same as [2XNewAttribute[102X ([14X13.5-3[114X), additionally makes the variable [3Xname[103X
-  read-only  and  also binds read-only global variables with names [10XHas[3Xname[103X[10X[110X and
-  [10XSet[3Xname[103X[10X[110X for the tester and setter of the attribute (see Section [14X13.6[114X).[133X
+  [33X[0;0Ydoes  the  same  as  [2XNewAttribute[102X  ([14X13.5-3[114X) and then binds the result to the
+  global  variable [3Xname[103X. The variable must previously be writable, and is made
+  read-only  by  this  function. It also binds read-only global variables with
+  names  [10XHas[3Xname[103X[10X[110X  and  [10XSet[3Xname[103X[10X[110X for the tester and setter of the attribute (see
+  Section [14X13.6[114X).[133X
   
   [1X13.5-5 IsAttributeStoringRep[101X
   
@@ -892,10 +888,18 @@
   
   [33X[1;0Y[29X[2XInfoAttributes[102X [32X info class[133X
   
-  [33X[0;0YThis  info  class  (together  with  [2XInfoWarning[102X ([14X7.4-8[114X) is used for messages
-  about attribute storing being disabled (at level 2) or enabled (level 3). It
-  may be used in the future for other messages concerning changes to attribute
-  behaviour.[133X
+  [33X[0;0YThis  info  class  (together  with [2XInfoWarning[102X ([14X7.4-8[114X)) is used for messages
+  about attributes. Messages are shown under the following circumstances:[133X
+  
+  [30X    [33X[0;6Y[2XEnableAttributeValueStoring[102X ([14X13.6-6[114X) is used (level 2).[133X
+  
+  [30X    [33X[0;6Y[2XDisableAttributeValueStoring[102X ([14X13.6-5[114X) is used (level 3).[133X
+  
+  [30X    [33X[0;6YWhen trying to assign to non-mutable attribute which already is set to
+        a different value (level 3).[133X
+  
+  [30X    [33X[0;6YWhen  the  test  filter for an attribute (i.e., [10XHasFOO[110X) is set, but no
+        value is assigned (level 3).[133X
   
   [1X13.6-5 DisableAttributeValueStoring[101X
   
@@ -981,7 +985,7 @@
   
   [33X[1;0Y[29X[2XIsProperty[102X( [3Xobject[103X ) [32X function[133X
   
-  [33X[0;0Yreturns [10Xtrue[110X if [3Xobject[103X is a property (see [14X13.7[114X), and [10Xfalse[110X otherwise.[133X
+  [33X[0;0Yreturns [9Xtrue[109X if [3Xobject[103X is a property (see [14X13.7[114X), and [9Xfalse[109X otherwise.[133X
   
   [1X13.7-2 KnownPropertiesOfObject[101X
   
@@ -1002,38 +1006,42 @@
     [4X[28X[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite",[128X[104X
     [4X[28X  "CanEasilyCompareElements", "CanEasilySortElements",[128X[104X
     [4X[28X  "IsDuplicateFree", "IsGeneratorsOfMagmaWithInverses",[128X[104X
-    [4X[28X  "IsAssociative", "IsGeneratorsOfSemigroup", "IsSimpleSemigroup",[128X[104X
+    [4X[28X  "IsAssociative", "IsFinitelyGeneratedMagma",[128X[104X
+    [4X[28X  "IsGeneratorsOfSemigroup", "IsSimpleSemigroup",[128X[104X
     [4X[28X  "IsRegularSemigroup", "IsInverseSemigroup",[128X[104X
     [4X[28X  "IsCompletelyRegularSemigroup", "IsCompletelySimpleSemigroup",[128X[104X
     [4X[28X  "IsGroupAsSemigroup", "IsMonoidAsSemigroup", "IsOrthodoxSemigroup",[128X[104X
-    [4X[28X  "IsFinitelyGeneratedGroup", "IsSubsetLocallyFiniteGroup",[128X[104X
-    [4X[28X  "KnowsHowToDecompose", "IsInfiniteAbelianizationGroup",[128X[104X
-    [4X[28X  "IsNilpotentByFinite", "IsTorsionFree", "IsFreeAbelian" ][128X[104X
+    [4X[28X  "IsFinitelyGeneratedMonoid", "IsFinitelyGeneratedGroup",[128X[104X
+    [4X[28X  "IsSubsetLocallyFiniteGroup", "KnowsHowToDecompose",[128X[104X
+    [4X[28X  "IsInfiniteAbelianizationGroup", "IsNilpotentByFinite",[128X[104X
+    [4X[28X  "IsTorsionFree", "IsFreeAbelian" ][128X[104X
     [4X[25Xgap>[125X [27XSize(g);[127X[104X
     [4X[28X6[128X[104X
     [4X[25Xgap>[125X [27XKnownPropertiesOfObject(g);[127X[104X
     [4X[28X[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite",[128X[104X
     [4X[28X  "CanEasilyCompareElements", "CanEasilySortElements",[128X[104X
     [4X[28X  "IsDuplicateFree", "IsGeneratorsOfMagmaWithInverses",[128X[104X
-    [4X[28X  "IsAssociative", "IsGeneratorsOfSemigroup", "IsSimpleSemigroup",[128X[104X
+    [4X[28X  "IsAssociative", "IsFinitelyGeneratedMagma",[128X[104X
+    [4X[28X  "IsGeneratorsOfSemigroup", "IsSimpleSemigroup",[128X[104X
     [4X[28X  "IsRegularSemigroup", "IsInverseSemigroup",[128X[104X
     [4X[28X  "IsCompletelyRegularSemigroup", "IsCompletelySimpleSemigroup",[128X[104X
     [4X[28X  "IsGroupAsSemigroup", "IsMonoidAsSemigroup", "IsOrthodoxSemigroup",[128X[104X
-    [4X[28X  "IsFinitelyGeneratedGroup", "IsSubsetLocallyFiniteGroup",[128X[104X
-    [4X[28X  "KnowsHowToDecompose", "IsPerfectGroup", "IsSolvableGroup",[128X[104X
-    [4X[28X  "IsPolycyclicGroup", "IsInfiniteAbelianizationGroup",[128X[104X
-    [4X[28X  "IsNilpotentByFinite", "IsTorsionFree", "IsFreeAbelian" ][128X[104X
+    [4X[28X  "IsFinitelyGeneratedMonoid", "IsFinitelyGeneratedGroup",[128X[104X
+    [4X[28X  "IsSubsetLocallyFiniteGroup", "KnowsHowToDecompose",[128X[104X
+    [4X[28X  "IsPerfectGroup", "IsSolvableGroup", "IsPolycyclicGroup",[128X[104X
+    [4X[28X  "IsInfiniteAbelianizationGroup", "IsNilpotentByFinite",[128X[104X
+    [4X[28X  "IsTorsionFree", "IsFreeAbelian" ][128X[104X
     [4X[25Xgap>[125X [27XKnownTruePropertiesOfObject(g);[127X[104X
     [4X[28X[ "IsNonTrivial", "IsFinite", "CanEasilyCompareElements", [128X[104X
     [4X[28X  "CanEasilySortElements", "IsDuplicateFree", [128X[104X
     [4X[28X  "IsGeneratorsOfMagmaWithInverses", "IsAssociative", [128X[104X
-    [4X[28X  "IsGeneratorsOfSemigroup", "IsSimpleSemigroup", [128X[104X
-    [4X[28X  "IsRegularSemigroup", "IsInverseSemigroup", [128X[104X
+    [4X[28X  "IsFinitelyGeneratedMagma", "IsGeneratorsOfSemigroup", [128X[104X
+    [4X[28X  "IsSimpleSemigroup", "IsRegularSemigroup", "IsInverseSemigroup", [128X[104X
     [4X[28X  "IsCompletelyRegularSemigroup", "IsCompletelySimpleSemigroup", [128X[104X
     [4X[28X  "IsGroupAsSemigroup", "IsMonoidAsSemigroup", "IsOrthodoxSemigroup", [128X[104X
-    [4X[28X  "IsFinitelyGeneratedGroup", "IsSubsetLocallyFiniteGroup", [128X[104X
-    [4X[28X  "KnowsHowToDecompose", "IsSolvableGroup", "IsPolycyclicGroup", [128X[104X
-    [4X[28X  "IsNilpotentByFinite" ][128X[104X
+    [4X[28X  "IsFinitelyGeneratedMonoid", "IsFinitelyGeneratedGroup", [128X[104X
+    [4X[28X  "IsSubsetLocallyFiniteGroup", "KnowsHowToDecompose", [128X[104X
+    [4X[28X  "IsSolvableGroup", "IsPolycyclicGroup", "IsNilpotentByFinite" ][128X[104X
   [4X[32X[104X
   
   [1X13.7-4 NewProperty[101X
@@ -1051,9 +1059,11 @@
   
   [33X[1;0Y[29X[2XDeclareProperty[102X( [3Xname[103X, [3Xfilter[103X[, [3Xrank[103X] ) [32X function[133X
   
-  [33X[0;0Ydoes  the same as [2XNewProperty[102X ([14X13.7-4[114X), additionally makes the variable [3Xname[103X
-  read-only  and  also binds read-only global variables with names [10XHas[3Xname[103X[10X[110X and
-  [10XSet[3Xname[103X[10X[110X for the tester and setter of the property (see Section [14X13.6[114X).[133X
+  [33X[0;0Ydoes  the  same  as  [2XNewProperty[102X  ([14X13.7-4[114X)  and then binds the result to the
+  global  variable [3Xname[103X. The variable must previously be writable, and is made
+  read-only  by  this  function. It also binds read-only global variables with
+  names  [10XHas[3Xname[103X[10X[110X  and  [10XSet[3Xname[103X[10X[110X  for the tester and setter of the property (see
+  Section [14X13.6[114X).[133X
   
   
   [1X13.8 [33X[0;0YOther Filters[133X[101X
@@ -1094,20 +1104,30 @@
   
   [1X13.8-1 NewFilter[101X
   
-  [33X[1;0Y[29X[2XNewFilter[102X( [3Xname[103X[, [3Xrank[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XNewFilter[102X( [3Xname[103X[, [3Ximplied[103X][, [3Xrank[103X] ) [32X function[133X
   
-  [33X[0;0Y[2XNewFilter[102X  returns  a  simple filter with name [3Xname[103X (see [14X13.8[114X). The optional
-  second  argument [3Xrank[103X denotes the incremental rank (see [14X13.2[114X) of the filter,
-  the default value is 1.[133X
+  [33X[0;0Y[2XNewFilter[102X returns a simple filter with name [3Xname[103X (see [14X13.8[114X).[133X
+  
+  [33X[0;0YThe  optional argument [3Ximplied[103X, if given, must be a filter, meaning that for
+  each object in the new filter, also [3Ximplied[103X will be set. Note that resetting
+  the  new  filter with [2XResetFilterObj[102X ([14X13.8-4[114X) does [13Xnot[113X reset [3Ximplied[103X. If the
+  new filter is intended to be set or reset manually for existing objects then
+  the argument [3Ximplied[103X will cause trouble; if the filter is not intended to be
+  set  or  reset  manually  then  perhaps calling [2XNewCategory[102X ([14X13.3-4[114X) is more
+  appropriate than calling [2XNewFilter[102X.[133X
+  
+  [33X[0;0YThe  optional  argument  [3Xrank[103X denotes the incremental rank (see [14X13.2[114X) of the
+  filter, the default value is 1.[133X
   
   [33X[0;0YThe default value of the new simple filter for each object is [9Xfalse[109X.[133X
   
   [1X13.8-2 DeclareFilter[101X
   
-  [33X[1;0Y[29X[2XDeclareFilter[102X( [3Xname[103X[, [3Xrank[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XDeclareFilter[102X( [3Xname[103X[, [3Ximplied[103X][, [3Xrank[103X] ) [32X function[133X
   
-  [33X[0;0Ydoes the same as [2XNewFilter[102X ([14X13.8-1[114X) and additionally makes the variable [3Xname[103X
-  read-only.[133X
+  [33X[0;0Ydoes  the same as [2XNewFilter[102X ([14X13.8-1[114X) and then binds the result to the global
+  variable  [3Xname[103X.  The  variable  must  previously  be  writable,  and is made
+  read-only by this function.[133X
   
   [1X13.8-3 SetFilterObj[101X
   
@@ -1130,7 +1150,7 @@
   [1X13.9 [33X[0;0YTypes[133X[101X
   
   [33X[0;0YWe  stated  above  (see [14X13[114X) that, for an object [3Xobj[103X, its [13Xtype[113X is formed from
-  its family and its filters. There is a also a third component, used in a few
+  its  family  and its filters. There is also a third component, used in a few
   situations, namely defining data of the type.[133X
   
   [1X13.9-1 TypeObj[101X

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<!DOCTYPE Book SYSTEM "gapdoc.dtd"
+[
+    [<#Include SYSTEM "_entities.xml">
+]
+>
+<Book Name="ZeroMQInterface">
+<#Include SYSTEM "title.xml">
+<TableOfContents/>
+<Body>
+<#Include SYSTEM "intro.xml">
+<#Include SYSTEM "zmq.xml">
+<#Include SYSTEM "zgap.xml">
+<#Include SYSTEM "_AutoDocMainFile.xml">
+</Body>
+<TheIndex/>
+</Book>

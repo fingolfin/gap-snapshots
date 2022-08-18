@@ -1,0 +1,158 @@
+<Chapter Label = "Semigroup homomorphisms">
+  <Heading>
+    Semigroup homomorphisms
+  </Heading>
+
+  In this chapter we describe the various ways to define a homomorphism from a
+  semigroup to another semigroup. <P/>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+    <Heading>
+      Homomorphisms of arbitrary semigroups
+    </Heading>
+    <#Include Label = "SemigroupHomomorphismByImages">
+    <#Include Label = "SemigroupHomomorphismByFunction">
+    The following methods relate to semigroup homomorphisms by images or
+    by function:
+    <Ref Attr = "Range" BookName = "ref"/>,
+    <Ref Attr = "Image" BookName = "ref"/>,
+    <Ref Attr = "Images" BookName = "ref"/>,
+    <Ref Attr = "ImageElm" BookName = "ref"/>,
+    <Ref Attr = "PreImage" BookName = "ref"/>,
+    <Ref Attr = "PreImages" BookName = "ref"/>,
+    <Ref Attr = "PreImagesRepresentative" BookName = "ref"/>,
+    <Ref Attr = "PreImagesRange" BookName = "ref"/>,
+    <Ref Attr = "PreImagesElm" BookName = "ref"/>,
+    <Ref Attr = "PreImagesSet" BookName = "ref"/>,
+    <Ref Attr = "IsSurjective" BookName = "ref"/>,
+    <Ref Attr = "IsInjective" BookName = "ref"/>,
+    <Ref Attr = "IsBijective" BookName = "ref"/>,
+    <Ref Attr = "Source" BookName = "ref"/>,
+    <Ref Attr = "Range" BookName = "ref"/>,
+    <Ref Attr = "ImagesSource" BookName = "ref"/>,
+    <Ref Attr = "KernelOfSemigroupHomomorphism"/>
+    <#Include Label = "IsSemigroupHomomorphismByImages">
+    <#Include Label = "IsSemigroupHomomorphismByFunction">
+    <#Include Label = "AsSemigroupHomomorphismByImages">
+    <#Include Label = "AsSemigroupHomomorphismByFunction">
+    <#Include Label = "KernelOfSemigroupHomomorphism">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+    <Heading>
+      Isomorphisms of arbitrary semigroups
+    </Heading>
+
+    <#Include Label = "IsIsomorphicSemigroup">
+    <#Include Label = "SmallestMultiplicationTable">
+    <#Include Label = "CanonicalMultiplicationTable">
+    <#Include Label = "CanonicalMultiplicationTablePerm">
+    <#Include Label = "OnMultiplicationTable">
+    <#Include Label = "IsomorphismSemigroups">
+    <#Include Label = "AutomorphismGroup">
+    <#Include Label = "SemigroupIsomorphismByImages">
+    <#Include Label = "SemigroupIsomorphismByFunction">
+    <#Include Label = "IsSemigroupIsomorphismByFunction">
+    <#Include Label = "AsSemigroupIsomorphismByFunction">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+    <Heading>
+      Isomorphisms of Rees (0-)matrix semigroups
+    </Heading>
+
+    An isomorphism between two regular finite Rees (0-)matrix semigroups whose
+    underlying semigroups are groups can be described by a triple defined in
+    terms of the matrices and underlying groups of the semigroups.  For a full
+    description of the theory involved, see Section 3.4 of
+    <Cite Key = "Howie1995aa"/>. <P/>
+
+    An isomorphism described in this way can be constructed
+    using <Ref Oper="RMSIsoByTriple"/> or <Ref Oper="RZMSIsoByTriple"/>, and
+    will satisfy the filter <Ref Filt="IsRMSIsoByTriple"/> or
+    <Ref Filt="IsRZMSIsoByTriple"/>. <P/>
+
+    <#Include Label = "IsRMSIsoByTriple">
+    <#Include Label = "RMSIsoByTriple">
+    <#Include Label = "ELM_LIST">
+    <#Include Label = "CompositionMapping2">
+    <#Include Label = "ImagesElm">
+    <#Include Label = "CanonicalReesZeroMatrixSemigroup">
+
+    <!--********************************************************************-->
+
+    <Subsection Label =
+     "Operators for isomorphisms of Rees (0-)matrix semigroups">
+      <Heading>
+        Operators for isomorphisms of Rees (0-)matrix semigroups
+      </Heading>
+
+      <List>
+
+        <Mark><C><A>map</A>[<A>i</A>]</C></Mark>
+        <Item>
+          <Index Key = "ELM_LIST"><C>ELM_LIST</C> (for Rees (0-)matrix semigroup
+            isomorphisms by triples)
+          </Index>
+          <C><A>map</A>[i]</C> returns the <A>i</A>th component of the Rees
+          (0-)matrix semigroup isomorphism by triple <A>map</A> when
+          <C><A>i</A> = 1, 2, 3</C>; see
+          <Ref Oper = "ELM_LIST" Label = "for IsRMSIsoByTriple"/>.
+        </Item>
+
+        <Mark><C><A>map1</A> * <A>map2</A></C></Mark>
+        <Item>
+          <Index Key = "*"><C> * </C>
+            (for Rees (0-)matrix semigroup isomorphisms by triples)
+          </Index>
+          returns the composition of <A>map2</A> and <A>map1</A>;
+          see <Ref Oper = "CompositionMapping2" Label = "for IsRMSIsoByTriple"/>.
+        </Item>
+
+        <Mark><C><A>map1</A> &lt; <A>map2</A></C></Mark>
+        <Item>
+          <Index Key = "&lt;"><C>&lt;</C>
+            (for Rees (0-)matrix semigroup isomorphisms by triples)
+          </Index>
+          returns <K>true</K> if <A>map1</A> is lexicographically less than
+          <A>map2</A>.
+        </Item>
+
+        <Mark><C><A>map1</A> = <A>map2</A></C></Mark>
+        <Item>
+          <Index Key = "="><C> = </C>
+            (for Rees (0-)matrix semigroup isomorphisms by triples)
+          </Index>
+          returns <K>true</K> if the Rees (0-)matrix semigroup
+          isomorphisms by triple <A>map1</A> and <A>map2</A> have equal source and
+          range, and are equal as functions, and <K>false</K> otherwise. <P/>
+
+          It is possible for <A>map1</A> and <A>map2</A> to be equal but to
+          have distinct components.
+        </Item>
+
+        <Mark><C><A>pt</A> ^ <A>map</A></C></Mark>
+        <Item>
+          <Index Key = "^"><C> ^ </C>
+            (for Rees (0-)matrix semigroup isomorphisms by triples)
+          </Index>
+          returns the image of the element <A>pt</A> of the source of
+          <A>map</A> under the isomorphism <A>map</A>; see
+          <Ref Oper = "ImagesElm" Label = "for IsRMSIsoByTriple"/>.
+        </Item>
+      </List>
+    </Subsection>
+  </Section>
+
+</Chapter>

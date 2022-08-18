@@ -102,7 +102,7 @@ end);
 
 
 BindGlobal("SMTX_AddEqns",function ( eqns, newmat, newvec)
-local n, zero, weights, mat, vec, NextPositionProperty, ReduceRow, t,
+local n, zero, weights, mat, vec, ReduceRow, t,
       newweight, newrow, newrhs, i, l, k;
 
 # Add a bunch of equations to the system of equations in <eqns>.  Each
@@ -121,16 +121,6 @@ local n, zero, weights, mat, vec, NextPositionProperty, ReduceRow, t,
   mat := eqns.mat;
   vec := eqns.vec;
 
-  NextPositionProperty := function (list, func, start )
-  local   i;
-    for i  in [ start .. Length( list ) ]  do
-      if func( list[ i ] )  then
-	return i;
-      fi;
-    od;
-    return fail;
-  end;
-
   # reduce the (lhs,rhs) against the semi-echelonised current matrix,
   # and return either: (1) the reduced rhs if the lhs reduces to zero,
   # or (2) a list containing the new echelon weight, the new row and
@@ -138,16 +128,17 @@ local n, zero, weights, mat, vec, NextPositionProperty, ReduceRow, t,
   # equation should placed.
   ReduceRow := function (lhs, rhs)
   local lead, i, z;
-    lead := PositionProperty(lhs, i->i<>zero);
-    if lead = fail then
+    lead := PositionNonZero(lhs);
+    Assert(0, n = Length(lhs));
+    if lead > n then
       return rhs;
     fi;
     for i in [1..Length(weights)] do
       if weights[i] = lead then
 	z := lhs[lead];
 	lhs := lhs - z * mat[i]; rhs := rhs - z * vec[i];
-	lead := NextPositionProperty(lhs, i->i<>zero, lead);
-	if lead = fail then
+	lead := PositionNonZero(lhs, lead);
+	if lead > n then
 	  return rhs;
 	fi;
       elif weights[i] > lead then
@@ -271,33 +262,32 @@ BindGlobal("SMTX_NullspaceEqns",function(e)
 #
 # This function is a modified version NullspaceMat in matrix.g
 
-local mat, m, n, zero, one, empty, i, k, nullspace, row,mi;
+local mat, n, one, zerovec, i, k, nullspace, row;
 
   SMTX_KillAbovePivotsEqns(e);
   mat := e.mat;
 
-  m := Length(mat);
   n := e.dim;
-  zero := Zero(e.field);
   one  := One(e.field);
 
-  # insert empty rows to bring the leading term of each row on the diagonal
-  empty := ListWithIdenticalEntries(n,zero);
-  empty := ImmutableVector(e.field,empty);
-  i := 1;
-  while i <= Length(mat)  do
-    if i < n  and mat[i][i] = zero  then
-      mi:=Minimum(Length(mat),n-1);
-      for k in [mi,mi-1..i]  do
-	mat[k+1] := mat[k];
-      od;
-      mat[i] := empty;
-    fi;
-    i := i+1;
-  od;
-  for i  in [ Length(mat)+1 .. n ]  do
-    mat[i] := empty;
-  od;
+  # insert zero rows to bring the leading term of each row on the diagonal
+  if mat = [] then
+    if n=0 then return [];fi;
+    mat := ZeroMatrix(e.field, n, n);
+  else
+    zerovec := MakeImmutable(ZeroVector(n, mat));
+    i := 1;
+    while i <= NrRows(mat) do
+      if i < n and IsZero(mat[i,i]) then
+        Add(mat, zerovec, i);
+      fi;
+      i := i+1;
+    od;
+    for i  in [ NrRows(mat)+1 .. n ]  do
+      Add(mat, zerovec);
+    od;
+    ConvertToMatrixRep(mat);
+  fi;
 
   # The following comment from NullspaceMat:
   # 'mat' now  looks  like  [ [1,2,0,2], [0,0,0,0], [0,0,1,3], [0,0,0,0] ],
@@ -305,11 +295,10 @@ local mat, m, n, zero, one, empty, i, k, nullspace, row,mi;
   # by replacing this 0 by a -1, in  this  example  [2,-1,0,0], [2,0,3,-1].
   nullspace := [];
   for k in [1..n] do
-    if mat[k][k] = zero  then
-      row := [];
-      for i  in [1..k-1]  do row[i] := -mat[i][k];  od;
+    if IsZero(mat[k,k])  then
+      row := ZeroVector(n, mat);
+      for i  in [1..k-1]  do row[i] := -mat[i,k];  od;
       row[k] := one;
-      for i  in [k+1..n]  do row[i] := zero;  od;
       Add( nullspace, row );
     fi;
   od;
@@ -376,8 +365,8 @@ local gens, pos, settled, oldlen, i, j;
   gens:=V.generators;
 
   v:=EchResidueCoeffs(U, ech, v,2);
-  pos:=PositionProperty(v, i->i<>zero);
-  if pos = fail then
+  pos:=PositionNonZero(v);
+  if pos > Length(v) then
     return U;
   fi;
   Add(U, v/v[pos]); Add(ech, pos);
@@ -388,8 +377,8 @@ local gens, pos, settled, oldlen, i, j;
     for i in [settled+1..Length(U)] do
       for j in [1..Length(gens)] do
 	v:=EchResidueCoeffs(U, ech, (U[i] * gens[j]),2);
-	pos:=PositionProperty(v, i->i<>zero);
-	if pos <> fail then
+	pos:=PositionNonZero(v);
+	if pos <= Length(v) then
 	  Add(U, v/v[pos]); Add(ech, pos);
 	fi;
       od;
@@ -719,13 +708,13 @@ local nv, nw, F, zero, zeroW, gV, gW, k, U, echu, r, homs, s, work, ans, v0,
     x:=EchResidueCoeffs(U, echu, v0,2);
 
     # normalise <x> (ie get a 1 in leading position)
-    pos:=PositionProperty(x, i->i<>zero);
+    pos:=PositionNonZero(x);
     z:=x[pos];
     x:=x / z; 
     v0:=v0 / z;
 
     # we know that <v0> has to map into the subspace <M> of <W>. 
-    echm:=List(M, y -> PositionProperty(y, i->i<>zero));
+    echm:=List(M, PositionNonZero);
     t:=Length(M);
 
     # now we start building extension of semi-echelonised basis for
@@ -818,8 +807,8 @@ local nv, nw, F, zero, zeroW, gV, gW, k, U, echu, r, homs, s, work, ans, v0,
 	  # 
 	  #     x = v0 * a[i] + uu
 
-	  pos:=PositionProperty(x, i->i<>zero);
-	  if pos <> fail then
+	  pos:=PositionNonZero(x);
+	  if pos <= Length(x) then
 
 	    # new semi-ech basis element <x>
 
@@ -906,7 +895,8 @@ local nv, nw, F, zero, zeroW, gV, gW, k, U, echu, r, homs, s, work, ans, v0,
       od;
       imv0c:=EchResidueCoeffs(M, echm, imv0,1);
       for l in [1..Length(v)] do
-	image:=imv0c * a[l];
+        if Length(imv0c)=0 then image:=[];
+        else image:=imv0c * a[l];fi;
 	if r > 0 then
 	  image:=image + EchResidueCoeffs(U, echu, u[l],1) * Uhom;
 	fi;

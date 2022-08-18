@@ -15,60 +15,52 @@
 
 #include "system.h"
 
-#include "gap_version.h"
 #include "gaputils.h"
 #ifdef GAP_MEM_CHECK
 #include "gasman_intern.h"
 #endif
 #include "profile.h"
 #include "sysfiles.h"
-#include "sysmem.h"
 #include "sysopt.h"
+#include "sysroots.h"
+#include "sysstr.h"
+#include "version.h"
 
 #ifdef HPCGAP
+#include "hpc/cpu.h"
 #include "hpc/misc.h"
 #endif
 
-#ifdef USE_JULIA_GC
+#if defined(USE_GASMAN)
+#include "sysmem.h"
+#elif defined(USE_JULIA_GC)
 #include "julia.h"
+#elif defined(USE_BOEHM_GC)
+#include "boehm_gc.h"
 #endif
+
+#include "config.h"
 
 #include <assert.h>
 #include <fcntl.h>
 #include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
 
 #include <sys/stat.h>
 
-
-#ifdef HAVE_LIBREADLINE
-#include <readline/readline.h>
+#ifdef __MACH__
+// Workaround: TRUE / FALSE are also defined by the OS X Mach-O headers
+#define ENUM_DYLD_BOOL
+#include <mach-o/dyld.h>
 #endif
-
-#include <sys/time.h>                   /* definition of 'struct timeval' */
-#include <sys/types.h>
-
-#ifdef HAVE_SYS_RESOURCE_H
-#include <sys/resource.h>               /* definition of 'struct rusage' */
-#endif
-
-#ifdef SYS_IS_DARWIN
-#include <mach/mach_time.h>
-#endif
-
 
 /****************************************************************************
 **
 *F * * * * * * * * * * * command line settable options  * * * * * * * * * * *
 */
-
-/****************************************************************************
-**
-*V  SyArchitecture  . . . . . . . . . . . . . . . .  name of the architecture
-*/
-const Char * SyArchitecture = GAPARCH;
-
 
 /****************************************************************************
 **
@@ -79,37 +71,17 @@ UInt SyCTRD;
 
 /****************************************************************************
 **
+*V  SyCompilePlease . . . . . . . . . . . . . . .  tell GAP to compile a file
+*V  SyCompileOutput . . . . . . . . . . . . . . . . . . into this output file
 *V  SyCompileInput  . . . . . . . . . . . . . . . . . .  from this input file
-*/
-Char SyCompileInput[GAP_PATH_MAX];
-
-
-/****************************************************************************
-**
+*V  SyCompileName . . . . . . . . . . . . . . . . . . . . . .  with this name
 *V  SyCompileMagic1 . . . . . . . . . . . . . . . . . . and this magic string
 */
-Char * SyCompileMagic1;
-
-
-/****************************************************************************
-**
-*V  SyCompileName . . . . . . . . . . . . . . . . . . . . . .  with this name
-*/
-Char SyCompileName[256];
-
-
-/****************************************************************************
-**
-*V  SyCompileOutput . . . . . . . . . . . . . . . . . . into this output file
-*/
-Char SyCompileOutput[GAP_PATH_MAX];
-
-
-/****************************************************************************
-**
-*V  SyCompilePlease . . . . . . . . . . . . . . .  tell GAP to compile a file
-*/
 Int SyCompilePlease;
+Char * SyCompileOutput;
+Char * SyCompileInput;
+Char * SyCompileName;
+Char * SyCompileMagic1;
 
 
 /****************************************************************************
@@ -121,11 +93,12 @@ Int SyDebugLoading;
 
 /****************************************************************************
 **
-*V  SyGapRootPaths  . . . . . . . . . . . . . . . . . . . array of root paths
+*V  DotGapPath
 **
+**  The path to the user's ~/.gap directory, if available.
 */
-Char SyGapRootPaths[MAX_GAP_DIRS][GAP_PATH_MAX];
-Char DotGapPath[GAP_PATH_MAX];
+static Char DotGapPath[GAP_PATH_MAX];
+
 
 /****************************************************************************
 **
@@ -151,23 +124,6 @@ UInt SyLineEdit;
 **  Switch for not using readline although GAP is compiled with libreadline
 */
 UInt SyUseReadline;
-
-/****************************************************************************
-**
-*V  SyMsgsFlagBags  . . . . . . . . . . . . . . . . .  enable gasman messages
-**
-**  'SyMsgsFlagBags' determines whether garbage collections are reported  or
-**  not.
-**
-**  Per default it is false, i.e. Gasman is silent about garbage collections.
-**  It can be changed by using the  '-g'  option  on the  GAP  command  line.
-**
-**  This is used in the function 'SyMsgsBags' below.
-**
-**  Put in this package because the command line processing takes place here.
-*/
-UInt SyMsgsFlagBags;
-
 
 /****************************************************************************
 **
@@ -234,7 +190,9 @@ UInt SyQuitOnBreak;
 **  of a workspace to restore.
 **
 */
+#ifdef GAP_ENABLE_SAVELOAD
 Char * SyRestoring;
+#endif
 
 
 /****************************************************************************
@@ -278,186 +236,6 @@ UInt SyWindow;
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * time related functions * * * * * * * * * * * * *
-*/
-
-/****************************************************************************
-**
-*F  SyTime()  . . . . . . . . . . . . . . . return time spent in milliseconds
-**
-**  'SyTime' returns the number of milliseconds spent by GAP so far.
-**
-**  Should be as accurate as possible,  because it  is  used  for  profiling.
-*/
-UInt SyTime ( void )
-{
-    struct rusage       buf;
-
-    if ( getrusage( RUSAGE_SELF, &buf ) ) {
-        Panic("'SyTime' could not get time");
-    }
-    return buf.ru_utime.tv_sec*1000 + buf.ru_utime.tv_usec/1000;
-}
-UInt SyTimeSys ( void )
-{
-    struct rusage       buf;
-
-    if ( getrusage( RUSAGE_SELF, &buf ) ) {
-        Panic("'SyTimeSys' could not get time");
-    }
-    return buf.ru_stime.tv_sec*1000 + buf.ru_stime.tv_usec/1000;
-}
-UInt SyTimeChildren ( void )
-{
-    struct rusage       buf;
-
-    if ( getrusage( RUSAGE_CHILDREN, &buf ) ) {
-        Panic("'SyTimeChildren' could not get time");
-    }
-    return buf.ru_utime.tv_sec*1000 + buf.ru_utime.tv_usec/1000;
-}
-UInt SyTimeChildrenSys ( void )
-{
-    struct rusage       buf;
-
-    if ( getrusage( RUSAGE_CHILDREN, &buf ) ) {
-        Panic("'SyTimeChildrenSys' could not get time");
-    }
-    return buf.ru_stime.tv_sec*1000 + buf.ru_stime.tv_usec/1000;
-}
-
-
-/****************************************************************************
-**
-*F * * * * * * * * * * * * * * * string functions * * * * * * * * * * * * * *
-*/
-
-
-#ifndef HAVE_STRLCPY
-
-size_t strlcpy (
-    char *dst,
-    const char *src,
-    size_t len)
-{
-    /* Keep a copy of the original src. */
-    const char * const orig_src = src;
-
-    /* If a non-empty len was specified, we can actually copy some data. */
-    if (len > 0) {
-        /* Copy up to len-1 bytes (reserve one for the terminating zero). */
-        while (--len > 0) {
-            /* Copy from src to dst; if we reach the string end, we are
-               done and can simply return the total source string length */
-            if ((*dst++ = *src++) == 0) {
-                /* return length of source string without the zero byte */
-                return src - orig_src - 1;
-            }
-        }
-        
-        /* If we got here, then we used up the whole buffer and len is zero.
-           We must make sure to terminate the destination string. */
-        *dst = 0;
-    }
-
-    /* in the end, we must return the length of the source string, no
-       matter whether we completely copied or not; so advance src
-       till its terminator is reached */
-    while (*src++)
-        ;
-
-    /* return length of source string without the zero byte */
-    return src - orig_src - 1;
-}
-
-#endif /* !HAVE_STRLCPY */
-
-
-#ifndef HAVE_STRLCAT
-
-size_t strlcat (
-    char *dst,
-    const char *src,
-    size_t len)
-{
-    /* Keep a copy of the original dst. */
-    const char * const orig_dst = dst;
-
-    /* Find the end of the dst string, so that we can append after it. */
-    while (*dst != 0 && len > 0) {
-        dst++;
-        len--;
-    }
-
-    /* We can only append anything if there is free space left in the
-       destination buffer. */
-    if (len > 0) {
-        /* One byte goes away for the terminating zero. */
-        len--;
-
-        /* Do the actual work and append from src to dst, until we either
-           appended everything, or reached the dst buffer's end. */
-        while (*src != 0 && len > 0) {
-            *dst++ = *src++;
-            len--;
-        }
-
-        /* Terminate, terminate, terminate! */
-        *dst = 0;
-    }
-
-    /* Compute the final result. */
-    return (dst - orig_dst) + strlen(src);
-}
-
-#endif /* !HAVE_STRLCAT */
-
-size_t strxcpy (
-    char *dst,
-    const char *src,
-    size_t len)
-{
-    size_t res = strlcpy(dst, src, len);
-    assert(res < len);
-    return res;
-}
-
-size_t strxcat (
-    char *dst,
-    const char *src,
-    size_t len)
-{
-    size_t res = strlcat(dst, src, len);
-    assert(res < len);
-    return res;
-}
-
-/****************************************************************************
-**
-*F  SySleep( <secs> ) . . . . . . . . . . . . . .sleep GAP for <secs> seconds
-**
-**  NB Various OS events (like signals) might wake us up
-**
-*/
-void SySleep ( UInt secs )
-{
-  sleep( (unsigned int) secs );
-}
-
-/****************************************************************************
-**
-*F  SyUSleep( <msecs> ) . . . . . . . . . .sleep GAP for <msecs> microseconds
-**
-**  NB Various OS events (like signals) might wake us up
-**
-*/
-void SyUSleep ( UInt msecs )
-{
-  usleep( (unsigned int) msecs );
-}
-
-/****************************************************************************
-**
 *F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
@@ -470,11 +248,6 @@ void SyUSleep ( UInt msecs )
 **  The function 'SyExit' must perform all the necessary cleanup operations.
 **  If ret is 0 'SyExit' should signal to a calling process that all is  ok.
 **  If ret is 1 'SyExit' should signal a  failure  to  the  calling process.
-**
-**  If the user calls 'QUIT_GAP' with a value, then the global variable
-**  'UserHasQUIT' will be set, and their requested return value will be
-**  in 'SystemErrorCode'. If the return value would be 0, we check
-**  this value and use it instead.
 */
 void SyExit (
     UInt                ret )
@@ -504,256 +277,120 @@ void Panic_(const char * file, int line, const char * fmt, ...)
 
 /****************************************************************************
 **
-*F  SyNanosecondsSinceEpoch()
-**
-**  'SyNanosecondsSinceEpoch' returns a 64-bit integer which represents the
-**  number of nanoseconds since some unspecified starting point. This means
-**  that the number returned by this function is not in itself meaningful,
-**  but the difference between the values returned by two consecutive calls
-**  can be used to measure wallclock time.
-**
-**  The accuracy of this is system dependent. For systems that implement
-**  clock_getres, we could get the promised accuracy.
-**
-**  Note that gettimeofday has been marked obsolete in the POSIX standard.
-**  We are using it because it is implemented in most systems still.
-**
-**  If we are using gettimeofday we cannot guarantee the values that
-**  are returned by SyNanosecondsSinceEpoch to be monotonic.
-**
-**  Returns -1 to represent failure
-**
+*F * * * * * * * * * * finding location of executable * * * * * * * * * * * *
 */
-Int8 SyNanosecondsSinceEpoch(void)
+
+/****************************************************************************
+** The function 'find_yourself' is based on code (C) 2015 Mark Whitis, under
+** the MIT License : https://stackoverflow.com/a/34271901/928031
+*/
+
+static void
+find_yourself(const char * argv0, char * result, size_t resultsize)
 {
-  Int8 res;
+    GAP_ASSERT(resultsize >= GAP_PATH_MAX);
 
-#if defined(SYS_IS_DARWIN)
-  static mach_timebase_info_data_t timeinfo;
-  if ( timeinfo.denom == 0 ) {
-    (void) mach_timebase_info(&timeinfo);
-  }
-  res = mach_absolute_time();
+    char tmpbuf[GAP_PATH_MAX];
 
-  res *= timeinfo.numer;
-  res /= timeinfo.denom;
-#elif defined(HAVE_CLOCK_GETTIME) && defined(CLOCK_MONOTONIC)
-  struct timespec ts;
-
-  if (clock_gettime(CLOCK_MONOTONIC, &ts) == 0) {
-    res = ts.tv_sec;
-    res *= 1000000000L;
-    res += ts.tv_nsec;
-  } else {
-    res = -1;
-  }
-#elif defined(HAVE_GETTIMEOFDAY)
-  struct timeval tv;
-
-  if (gettimeofday(&tv, NULL) == 0) {
-    res = tv.tv_sec;
-    res *= 1000000L;
-    res += tv.tv_usec;
-    res *= 1000;
-  } else {
-    res = -1;
-  };
-#else
-  res = -1;
-#endif
-
-  return res;
-}
-
-
-/****************************************************************************
-**
-*V  SyNanosecondsSinceEpochMethod
-*V  SyNanosecondsSinceEpochMonotonic
-**  
-**  These constants give information about the method used to obtain
-**  NanosecondsSinceEpoch, and whether the values returned are guaranteed
-**  to be monotonic.
-*/
-#if defined(SYS_IS_DARWIN)
-  const char * const SyNanosecondsSinceEpochMethod = "mach_absolute_time";
-  const Int SyNanosecondsSinceEpochMonotonic = 1;
-#elif defined(HAVE_CLOCK_GETTIME) && defined(CLOCK_MONOTONIC)
-  const char * const SyNanosecondsSinceEpochMethod = "clock_gettime";
-  const Int SyNanosecondsSinceEpochMonotonic = 1;
-#elif defined(HAVE_GETTIMEOFDAY)
-  const char * const SyNanosecondsSinceEpochMethod = "gettimeofday";
-  const Int SyNanosecondsSinceEpochMonotonic = 0;
-#else
-  const char * const SyNanosecondsSinceEpochMethod = "unsupported";
-  const Int SyNanosecondsSinceEpochMonotonic = 0;
-#endif
-
-
-/****************************************************************************
-**
-*F  SyNanosecondsSinceEpochResolution()
-**
-**  'SyNanosecondsSinceEpochResolution' returns a 64-bit integer which
-**  represents the resolution in nanoseconds of the timer used for
-**  SyNanosecondsSinceEpoch. 
-**
-**  If the return value is positive then the value has been returned
-**  by the operating system can can probably be relied on. If the 
-**  return value is negative it is just an estimate (as in the case
-**  of gettimeofday we have no way to get the exact resolution so we
-**  just pretend that the resolution is 1000 nanoseconds).
-**
-**  A result of 0 signifies inability to obtain any sensible value.
-*/
-Int8 SyNanosecondsSinceEpochResolution(void)
-{
-  Int8 res;
-
-#if defined(SYS_IS_DARWIN)
-  static mach_timebase_info_data_t timeinfo;
-  if ( timeinfo.denom == 0 ) {
-    (void) mach_timebase_info(&timeinfo);
-  }
-  res = timeinfo.numer;
-  res /= timeinfo.denom;
-#elif defined(HAVE_CLOCK_GETTIME) && defined(CLOCK_MONOTONIC)
-  struct timespec ts;
-
-  if (clock_getres(CLOCK_MONOTONIC, &ts) == 0) {
-    res = ts.tv_sec;
-    res *= 1000000000L;
-    res += ts.tv_nsec;
-  } else {
-    res = 0;
-  }
-#elif defined(HAVE_GETTIMEOFDAY)
-  res = -1000;
-#else
-  res = 0;
-#endif
-
-  return res;
-}
-
-/****************************************************************************
-**
-*F  SySetGapRootPath( <string> )  . . . . . . . . .  set the root directories
-**
-**  'SySetGapRootPath' takes a string and modifies a list of root directories
-**  in 'SyGapRootPaths'.
-**
-**  A  leading semicolon in  <string> means  that the list  of directories in
-**  <string> is  appended  to the  existing list  of  root paths.  A trailing
-**  semicolon means they are prepended.   If there is  no leading or trailing
-**  semicolon, then the root paths are overwritten.
-*/
-
-
-/****************************************************************************
-**
-*f  SySetGapRootPath( <string> )
-**
-** This function assumes that the system uses '/' as path separator.
-** Currently, we support nothing else. For Windows (or rather: Cygwin), we
-** rely on a small hack which converts the path separator '\' used there
-** on '/' on the fly. Put differently: Systems that use completely different
-**  path separators, or none at all, are currently not supported.
-*/
-
-static void SySetGapRootPath( const Char * string )
-{
-    const Char *          p;
-    Char *          q;
-    Int             i;
-    Int             n;
-
-    /* set string to a default value if unset                              */
-    if ( string == 0 || *string == 0 ) {
-        string = "./";
-    }
- 
-    /* 
-    ** check if we append, prepend or overwrite. 
-    */ 
-    if( string[0] == ';' ) {
-        /* Count the number of root directories already present.           */
-         n = 0; while( SyGapRootPaths[n][0] != '\0' ) n++;
-
-         /* Skip leading semicolon.                                        */
-         string++;
-
-    }
-    else if( string[ strlen(string) - 1 ] == ';' ) {
-        /* Count the number of directories in 'string'.                    */
-        n = 0; p = string; while( *p ) if( *p++ == ';' ) n++;
-
-        /* Find last root path.                                            */
-        for( i = 0; i < MAX_GAP_DIRS; i++ ) 
-            if( SyGapRootPaths[i][0] == '\0' ) break;
-        i--;
-
-#ifdef HPCGAP
-        n *= 2; // for each root <ROOT> we also add <ROOT/hpcgap> as a root
-#endif
-
-        /* Move existing root paths to the back                            */
-        if( i + n >= MAX_GAP_DIRS ) return;
-        while( i >= 0 ) {
-            memcpy( SyGapRootPaths[i+n], SyGapRootPaths[i], sizeof(SyGapRootPaths[i+n]) );
-            i--;
+    // absolute path, like '/usr/bin/gap'
+    if (argv0[0] == '/') {
+        if (realpath(argv0, result) && !access(result, F_OK)) {
+            return;    // success
         }
-
-        n = 0;
-
     }
+    // relative path, like 'bin/gap.sh'
+    else if (strchr(argv0, '/')) {
+        if (!getcwd(tmpbuf, sizeof(tmpbuf)))
+            return;
+        gap_strlcat(tmpbuf, "/", sizeof(tmpbuf));
+        gap_strlcat(tmpbuf, argv0, sizeof(tmpbuf));
+        if (realpath(tmpbuf, result) && !access(result, F_OK)) {
+            return;    // success
+        }
+    }
+    // executable name, like 'gap'
     else {
-        /* Make sure to wipe out all possibly existing root paths          */
-        for( i = 0; i < MAX_GAP_DIRS; i++ ) SyGapRootPaths[i][0] = '\0';
-        n = 0;
+        char pathenv[GAP_PATH_MAX], *saveptr, *pathitem;
+        gap_strlcpy(pathenv, getenv("PATH"), sizeof(pathenv));
+        pathitem = strtok_r(pathenv, ":", &saveptr);
+        for (; pathitem; pathitem = strtok_r(NULL, ":", &saveptr)) {
+            gap_strlcpy(tmpbuf, pathitem, sizeof(tmpbuf));
+            gap_strlcat(tmpbuf, "/", sizeof(tmpbuf));
+            gap_strlcat(tmpbuf, argv0, sizeof(tmpbuf));
+            if (realpath(tmpbuf, result) && !access(result, F_OK)) {
+                return;    // success
+            }
+        }
     }
 
-    /* unpack the argument                                                 */
-    p = string;
-    while ( *p ) {
-        if( n >= MAX_GAP_DIRS ) return;
+    *result = 0;    // reset buffer after error
+}
 
-        q = SyGapRootPaths[n];
-        while ( *p && *p != ';' ) {
-            *q = *p++;
 
-#ifdef SYS_IS_CYGWIN32
-            /* fix up for DOS */
-            if (*q == '\\')
-              *q = '/';
+static char GAPExecLocation[GAP_PATH_MAX] = "";
+
+static void SetupGAPLocation(const char * argv0)
+{
+    // In the code below, we keep reseting locBuf, as some of the methods we
+    // try do not promise to leave the buffer empty on a failed return.
+    char locBuf[GAP_PATH_MAX] = "";
+    Int4 length = 0;
+
+#if defined(__APPLE__) && defined(__MACH__)
+    uint32_t len = sizeof(locBuf);
+    if (_NSGetExecutablePath(locBuf, &len) != 0) {
+        *locBuf = 0;    // reset buffer after error
+    }
 #endif
-            
-            q++;
-        }
-        if ( q == SyGapRootPaths[n] ) {
-            strxcpy( SyGapRootPaths[n], "./", sizeof(SyGapRootPaths[n]) );
-        }
-        else if ( q[-1] != '/' ) {
-            *q++ = '/';
-            *q   = '\0';
-        }
-        else {
-            *q   = '\0';
-        }
-        if ( *p ) {
-            p++;
-        }
-        n++;
-#ifdef HPCGAP
-        // or each root <ROOT> we also add <ROOT/hpcgap> as a root (and first)
-        if( n < MAX_GAP_DIRS ) {
-            strlcpy( SyGapRootPaths[n], SyGapRootPaths[n-1], sizeof(SyGapRootPaths[n]) );
-        }
-        strxcat( SyGapRootPaths[n-1], "hpcgap/", sizeof(SyGapRootPaths[n-1]) );
-        n++;
-#endif
+
+    // try Linux procfs
+    if (!*locBuf) {
+        ssize_t ret = readlink("/proc/self/exe", locBuf, sizeof(locBuf));
+        if (ret < 0)
+            *locBuf = 0;    // reset buffer after error
+    }
+
+    // try FreeBSD / DragonFly BSD procfs
+    if (!*locBuf) {
+        ssize_t ret = readlink("/proc/curproc/file", locBuf, sizeof(locBuf));
+        if (ret < 0)
+            *locBuf = 0;    // reset buffer after error
+    }
+
+    // try NetBSD procfs
+    if (!*locBuf) {
+        ssize_t ret = readlink("/proc/curproc/exe", locBuf, sizeof(locBuf));
+        if (ret < 0)
+            *locBuf = 0;    // reset buffer after error
+    }
+
+    // if we are still failing, go and search the path
+    if (!*locBuf) {
+        find_yourself(argv0, locBuf, GAP_PATH_MAX);
+    }
+
+    // resolve symlinks (if present)
+    if (!realpath(locBuf, GAPExecLocation))
+        *GAPExecLocation = 0;    // reset buffer after error
+
+    // now strip the executable name off
+    length = strlen(GAPExecLocation);
+    while (length > 0 && GAPExecLocation[length] != '/') {
+        GAPExecLocation[length] = 0;
+        length--;
     }
 }
+
+
+/****************************************************************************
+**
+*F  SyDotGapPath()
+*/
+const Char * SyDotGapPath(void)
+{
+    return DotGapPath;
+}
+
 
 /****************************************************************************
 **
@@ -791,44 +428,6 @@ static void SySetInitialGapRootPaths(void)
     SySetGapRootPath("./");
 }
 
-/****************************************************************************
-**
-*F syLongjmp( <jump buffer>, <value>)
-** Perform a long jump
-**
-*F RegisterSyLongjmpObserver( <func> )
-** Register a function to be called before longjmp is called.
-** returns 1 on success, 0 if the table of functions is already full.
-** This function is idempotent -- if a function is passed multiple times
-** it is still only registered once.
-*/
-
-enum { signalSyLongjmpFuncsLen = 16 };
-
-static voidfunc signalSyLongjmpFuncs[signalSyLongjmpFuncsLen];
-
-Int RegisterSyLongjmpObserver(voidfunc func)
-{
-    Int i;
-    for (i = 0; i < signalSyLongjmpFuncsLen; ++i) {
-        if (signalSyLongjmpFuncs[i] == func) {
-            return 1;
-        }
-        if (signalSyLongjmpFuncs[i] == 0) {
-            signalSyLongjmpFuncs[i] = func;
-            return 1;
-        }
-    }
-    return 0;
-}
-
-void syLongjmp(syJmp_buf* buf, int val)
-{
-    Int i;
-    for (i = 0; i < signalSyLongjmpFuncsLen && signalSyLongjmpFuncs[i]; ++i)
-        (signalSyLongjmpFuncs[i])();
-    syLongjmpInternal(*buf, val);
-}
 
 /****************************************************************************
 **
@@ -843,6 +442,7 @@ void syLongjmp(syJmp_buf* buf, int val)
 **  locates the '.gaprc' file (if any), and more.
 */
 
+#if defined(USE_GASMAN) || defined(USE_BOEHM_GC)
 typedef struct { Char symbol; UInt value; } sizeMultiplier;
 
 static sizeMultiplier memoryUnits[]= {
@@ -860,32 +460,51 @@ static sizeMultiplier memoryUnits[]= {
 #endif
 };
 
-static UInt ParseMemory( Char * s)
-{
-  double size = atof(s);
-  Char symbol =  s[strlen(s)-1];
-  UInt i;
-  UInt maxmem;
+
 #ifdef SYS_IS_64_BIT
-  maxmem = 15000000000000000000UL;
+static const UInt maxmem = 15000000000000000000UL;
 #else
-  maxmem = 4000000000UL;
+static const UInt maxmem = 4000000000UL;
 #endif
-  
-  for (i = 0; i < ARRAY_SIZE(memoryUnits); i++) {
-    if (symbol == memoryUnits[i].symbol) {
-      UInt value = memoryUnits[i].value;
-      if (size > maxmem/value)
-        return maxmem;
-      else
-        return size * value;
-    }      
-  }
-  if (!IsDigit(symbol))
-    fputs("Unrecognised memory unit ignored", stderr);
-  return size;
+
+static BOOL ParseMemory(Char * s, UInt *result)
+{
+    char * end;
+    const double size = strtod(s, &end);
+    const char symbol = end[0];
+
+    if (s == end)
+        goto err;
+
+    // if no unit was specified: return immediately
+    if (symbol == 0) {
+        *result = size;
+        return TRUE;
+    }
+
+    // units consist of a single character; reject if there is more
+    if (end[1] != 0)
+        goto err;
+
+    for (int i = 0; i < ARRAY_SIZE(memoryUnits); i++) {
+        if (symbol == memoryUnits[i].symbol) {
+            UInt value = memoryUnits[i].value;
+            if (size > maxmem / value)
+                *result = maxmem;
+            else
+                *result = size * value;
+            return TRUE;
+        }
+    }
+
+err:
+    fputs("Unrecognized memory size '", stderr);
+    fputs(s, stderr);
+    fputs("'\n", stderr);
+    return FALSE;
 }
 
+#endif
 
 struct optInfo {
   Char shortkey;
@@ -914,51 +533,62 @@ static Int storePosInteger( Char **argv, void *Where )
     n = n * 10 + (*p-'0');
     p++;
   }
-  if (p == argv[0] || *p || n == 0)
-    fputs("Argument not a positive integer", stderr);
+  if (p == argv[0] || *p || n == 0) {
+      fputs("Argument not a positive integer\n", stderr);
+      return -1;
+  }
   *where = n;
   return 1;
 }
 #endif
 
+#ifdef GAP_ENABLE_SAVELOAD
 static Int storeString( Char **argv, void *Where )
 {
   Char **where = (Char **)Where;
   *where = argv[0];
   return 1;
 }
+#endif
 
 #ifdef USE_GASMAN
 static Int storeMemory( Char **argv, void *Where )
 {
-  UInt *where = (UInt *)Where;
-  *where = ParseMemory(argv[0]);
-  return 1;
+    UInt * where = (UInt *)Where;
+    if (!ParseMemory(argv[0], where))
+        return -1;
+    return 1;
 }
 #endif
 
+#if defined(USE_GASMAN) || defined(USE_BOEHM_GC)
 static Int storeMemory2( Char **argv, void *Where )
 {
-  UInt *where = (UInt *)Where;
-  *where = ParseMemory(argv[0])/1024;
-  return 1;
+    UInt * where = (UInt *)Where;
+    if (!ParseMemory(argv[0], where))
+        return -1;
+    *where /= 1024;
+    return 1;
 }
+#endif
 
 static Int processCompilerArgs( Char **argv, void * dummy)
 {
-  SyCompilePlease = 1;
-  strxcat( SyCompileOutput, argv[0], sizeof(SyCompileOutput) );
-  strxcat( SyCompileInput, argv[1], sizeof(SyCompileInput) );
-  strxcat( SyCompileName, argv[2], sizeof(SyCompileName) );
-  SyCompileMagic1 = argv[3];
-  return 4;
+    SyCompilePlease = 1;
+    SyCompileOutput = argv[0];
+    SyCompileInput = argv[1];
+    SyCompileName = argv[2];
+    SyCompileMagic1 = argv[3];
+    return 4;
 }
 
+#ifdef GAP_ENABLE_SAVELOAD
 static Int unsetString( Char **argv, void *Where)
 {
   *(Char **)Where = (Char *)0;
   return 0;
 }
+#endif
 
 static Int forceLineEditing( Char **argv,void *Level)
 {
@@ -986,25 +616,39 @@ static Int enableMemCheck(Char ** argv, void * dummy)
 #endif
 
 
+static Int printVersion(Char ** argv, void * dummy)
+{
+    SyFputs("GAP ", 1);
+    SyFputs(SyBuildVersion, 1);
+    SyFputs(" built on ", 1);
+    SyFputs(SyBuildDateTime, 1);
+    SyExit(0);
+}
+
+
 /* These are just the options that need kernel processing. Additional options will be 
    recognised and handled in the library */
 
 /* These options must be kept in sync with those in system.g, so the help output
    is correct */
 static const struct optInfo options[] = {
-  { 'B',  "architecture", storeString, &SyArchitecture, 1}, /* default architecture needs to be passed from kernel 
-                                                                  to library. Might be needed for autoload of compiled files */
   { 'C',  "", processCompilerArgs, 0, 4}, /* must handle in kernel */
   { 'D',  "debug-loading", toggle, &SyDebugLoading, 0}, /* must handle in kernel */
+#if defined(USE_GASMAN) || defined(USE_BOEHM_GC)
   { 'K',  "maximal-workspace", storeMemory2, &SyStorKill, 1}, /* could handle from library with new interface */
+#endif
+#ifdef GAP_ENABLE_SAVELOAD
   { 'L', "", storeString, &SyRestoring, 1}, /* must be handled in kernel  */
-  { 'M', "", toggle, &SyUseModule, 0}, /* must be handled in kernel */
   { 'R', "", unsetString, &SyRestoring, 0}, /* kernel */
+#endif
+  { 'M', "", toggle, &SyUseModule, 0}, /* must be handled in kernel */
   { 'e', "", toggle, &SyCTRD, 0 }, /* kernel */
   { 'f', "", forceLineEditing, (void *)2, 0 }, /* probably library now */
   { 'E', "", toggle, &SyUseReadline, 0 }, /* kernel */
   { 'l', "roots", setGapRootPath, 0, 1}, /* kernel */
+#ifdef USE_GASMAN
   { 'm', "", storeMemory2, &SyStorMin, 1 }, /* kernel */
+#endif
   { 'r', "", toggle, &IgnoreGapRC, 0 }, /* kernel */
 #ifdef USE_GASMAN
   { 's', "", storeMemory, &SyAllocPool, 1 }, /* kernel */
@@ -1028,6 +672,7 @@ static const struct optInfo options[] = {
   { 0  , "cover", enableCodeCoverageAtStartup, 0, 1}, /* enable code coverage at startup */
   { 0  , "quitonbreak", toggle, &SyQuitOnBreak, 0}, /* Quit GAP if we enter the break loop */
   { 0  , "enableMemCheck", enableMemCheck, 0, 0 },
+  { 0  , "version", printVersion, 0, 0 },
   { 0, "", 0, 0, 0}};
 
 
@@ -1051,10 +696,10 @@ void InitSystem (
     SyLineEdit = 1;
 #ifdef HPCGAP
     SyUseReadline = 0;
+    SyNumProcessors = SyCountProcessors();
 #else
     SyUseReadline = 1;
 #endif
-    SyMsgsFlagBags = 0;
     SyNrCols = 0;
     SyNrColsLocked = 0;
     SyNrRows = 0;
@@ -1062,43 +707,39 @@ void InitSystem (
     SyQuiet = 0;
     SyInitializing = 0;
 
+#ifdef USE_GASMAN
+    SyMsgsFlagBags = 0;
     SyStorMin = 16 * sizeof(Obj) * 1024;    // in kB
     SyStorMax = 256 * sizeof(Obj) * 1024;   // in kB
 #ifdef SYS_IS_64_BIT
   #if defined(HAVE_SYSCONF) && defined(_SC_PAGESIZE) && defined(_SC_PHYS_PAGES)
     // Set to 3/4 of memory size (in kB), if this is larger
     Int SyStorMaxFromMem =
-        (sysconf(_SC_PAGESIZE) * sysconf(_SC_PHYS_PAGES) * 3L) / 4 / 1024;
+        (sysconf(_SC_PAGESIZE) * sysconf(_SC_PHYS_PAGES) * 3) / 4 / 1024;
     SyStorMax = SyStorMaxFromMem > SyStorMax ? SyStorMaxFromMem : SyStorMax;
   #endif
 #endif // defined(SYS_IS_64_BIT)
 
-#ifdef USE_GASMAN
 #ifdef SYS_IS_64_BIT
     SyAllocPool = 4096L*1024*1024;   /* Note this is in bytes! */
 #else
     SyAllocPool = 1536L*1024*1024;   /* Note this is in bytes! */
 #endif // defined(SYS_IS_64_BIT)
-    SyStorOverrun = 0;
+    SyStorOverrun = SY_STOR_OVERRUN_CLEAR;
     SyStorKill = 0;
 #endif // defined(USE_GASMAN)
     SyUseModule = 1;
     SyWindow = 0;
 
+#ifdef USE_GASMAN
     for (i = 0; i < 2; i++) {
       UInt j;
       for (j = 0; j < 7; j++) {
         SyGasmanNumbers[i][j] = 0;
       }
     }
-
-    InitSysFiles();
-
-#ifdef HAVE_LIBREADLINE
-    rl_readline_name = "GAP";
-    rl_initialize ();
 #endif
-    
+
     if (handleSignals) {
         SyInstallAnswerIntr();
     }
@@ -1106,6 +747,7 @@ void InitSystem (
 #if defined(SYS_DEFAULT_PATHS)
     SySetGapRootPath( SYS_DEFAULT_PATHS );
 #else
+    SetupGAPLocation(argv[0]);
     SySetInitialGapRootPaths();
 #endif
 
@@ -1171,22 +813,31 @@ void InitSystem (
         }
           
       }
-    /* adjust SyUseReadline if no readline support available or for XGAP  */
 #if !defined(HAVE_LIBREADLINE)
+    // don't use readline of readline is not available (obviously)
+    // so that e.g. the GAP banner reports this correctly.
     SyUseReadline = 0;
+#else
+    // don't use readline if in Window mode (e.g. for XGAP)
+    if (SyWindow)
+        SyUseReadline = 0;
+    // don't use readline if stdin is not attached to a terminal
+    else if (!isatty(fileno(stdin)))
+        SyUseReadline = 0;
 #endif
-    if (SyWindow) SyUseReadline = 0;
+
+    InitSysFiles();
 
     /* now that the user has had a chance to give -x and -y,
        we determine the size of the screen ourselves */
     getwindowsize();
 
+#ifdef USE_GASMAN
     /* fix max if it is lower than min                                     */
     if ( SyStorMax != 0 && SyStorMax < SyStorMin ) {
         SyStorMax = SyStorMin;
     }
 
-#ifdef USE_GASMAN
     /* fix pool size if larger than SyStorKill */
     if ( SyStorKill != 0 && SyAllocPool != 0 &&
                             SyAllocPool > 1024 * SyStorKill ) {
@@ -1196,28 +847,25 @@ void InitSystem (
 
     /* when running in package mode set ctrl-d and line editing            */
     if ( SyWindow ) {
-      /*         SyLineEdit   = 1;
-                 SyCTRD       = 1; */
         SyRedirectStderrToStdOut();
         syWinPut( 0, "@p", "1." );
     }
 
     /* should GAP load 'init/lib.g' on initialization */
-    if ( SyCompilePlease || SyRestoring ) {
+    if ( SyCompilePlease ) {
         SyLoadSystemInitFile = 0;
     }
-
-    /* the compiler will *not* read in the .gaprc file                     
-    if ( gaprc && ! ( SyCompilePlease || SyRestoring ) ) {
-        sySetGapRCFile();
+#ifdef GAP_ENABLE_SAVELOAD
+    else if ( SyRestoring ) {
+        SyLoadSystemInitFile = 0;
     }
-    */
+#endif
 
     /* the users home directory                                            */
     if ( getenv("HOME") != 0 ) {
         strxcpy(DotGapPath, getenv("HOME"), sizeof(DotGapPath));
-# if defined(SYS_IS_DARWIN) && SYS_IS_DARWIN
-        /* On Darwin, add .gap to the sys roots, but leave */
+# if defined(__APPLE__)
+        /* On Mac OS, add .gap to the sys roots, but leave */
         /* DotGapPath at $HOME/Library/Preferences/GAP     */
         strxcat(DotGapPath, "/.gap;", sizeof(DotGapPath));
         if (!IgnoreGapRC) {
@@ -1236,22 +884,6 @@ void InitSystem (
           SySetGapRootPath(DotGapPath);
         }
         DotGapPath[strlen(DotGapPath)-1] = '\0';
-        
-        /* and in this case we can also expand paths which start
-           with a tilde ~ */
-        Char userhome[GAP_PATH_MAX];
-        strxcpy(userhome, getenv("HOME"), sizeof(userhome));
-        const UInt userhomelen = strlen(userhome);
-        for (i = 0; i < MAX_GAP_DIRS && SyGapRootPaths[i][0]; i++) {
-            const UInt pathlen = strlen(SyGapRootPaths[i]);
-            if (SyGapRootPaths[i][0] == '~' &&
-                userhomelen + pathlen < sizeof(SyGapRootPaths[i])) {
-                SyMemmove(SyGapRootPaths[i] + userhomelen,
-                        /* don't copy the ~ but the trailing '\0' */
-                        SyGapRootPaths[i] + 1, pathlen);
-                memcpy(SyGapRootPaths[i], userhome, userhomelen);
-          }
-        }
     }
 
 

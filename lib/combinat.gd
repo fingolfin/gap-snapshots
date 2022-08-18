@@ -903,7 +903,7 @@ DeclareGlobalFunction("NrPartitionsSet");
 ##  returns the set of all (unordered) partitions of the positive integer
 ##  <A>n</A> into sums with <A>k</A> summands.
 ##  If <A>k</A> is not given it returns all unordered partitions of
-##  <A>set</A> for all <A>k</A>.
+##  <A>n</A> for all <A>k</A>.
 ##  <P/>
 ##  An <E>unordered partition</E> is an unordered sum
 ##  <M>n = p_1 + p_2 + \cdots + p_k</M>
@@ -1150,6 +1150,30 @@ DeclareGlobalFunction("NrRestrictedPartitions");
 ##  <#/GAPDoc>
 ##  
 DeclareGlobalFunction( "IteratorOfPartitions" );
+
+
+#############################################################################
+##
+#F  IteratorOfPartitionsSet( <set> [, <k> [ <flag> ] ] )
+##
+##  <#GAPDoc Label="IteratorOfPartitionsSet">
+##  <ManSection>
+##  <Func Name="IteratorOfPartitionsSet" Arg='set [, k [ flag ] ]'/>
+##
+##  <Description>
+##  <Ref Func="IteratorOfPartitionsSet" /> returns an iterator
+##  (see&nbsp;<Ref Sect="Iterators"/>) for all unordered partitions of the
+##  set <A>set</A> into pairwise disjoint nonempty sets
+##  (see <Ref Func="PartitionsSet"/>).
+##  If <A>k</A> given and <A>flag</A> is omitted or equal to <K>false</K>,
+##  then only partitions of size <A>k</A> are computed.
+##  If <A>k</A> is given and <A>flag</A> is equal to <K>true</K>,
+##  then only partitions of size at most <A>k</A> are computed.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction( "IteratorOfPartitionsSet" );
 
 
 #############################################################################
@@ -1492,3 +1516,61 @@ DeclareGlobalFunction("Bernoulli");
 ##  <#/GAPDoc>
 ##
 DeclareAttribute("Permanent", IsMatrix);
+
+
+#############################################################################
+##
+#F  AllLinearDiophantineSolutions(<n>,<max>,<sum>)
+##
+##  <#GAPDoc Label="AllLinearDiophantineSolutions">
+##  <ManSection>
+##  <Func Name="AllLinearDiophantineSolutions" Arg='n,maxx,sum'/>
+##
+##  <Description>
+##  For a list <A>n</A> of positive integers, an integer <A>sum</A>, and a list
+##  of nonnegative integers <A>max</A>, this function returns a list of all
+##  nonnegative coefficient vectors <A>v</A>, such that <M>n\cdot v=sum</M>, and
+##  <M>v\le max</M> in each entry.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> AllLinearDiophantineSolutions([6,10,15],[10,10,10],57);
+##  [ [ 7, 0, 1 ], [ 2, 3, 1 ], [ 2, 0, 3 ] ]
+##  gap> AllLinearDiophantineSolutions([6,10,15],[6,4,4],57);
+##  [ [ 2, 3, 1 ], [ 2, 0, 3 ] ]
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction("AllLinearDiophantineSolutions");
+
+#############################################################################
+##
+#F  AllSubsetSummations( <to>,<from> [,<limit>] )
+##
+##  <#GAPDoc Label="AllSubsetSummations">
+##  <ManSection>
+##  <Func Name="AllSubsetSummations" Arg='to,from [,limit]'/>
+##
+##  <Description>
+##  returns a list of all partitions of the entries in <A>from</A> such that the
+##  entries in each cell sum up to the corresponding entry in <A>to</A>. If a bound
+##  <A>limit</A> is given, the function stops (and returns <A>fail</A>) if the length
+##  of the list created would exceed <A>limit</A>.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> AllSubsetSummations([63,672],[21,42,42,42,42,42,168,168,168 ]);
+##  [ [ [ 1, 2 ], [ 3 .. 9 ] ], [ [ 1, 3 ], [ 2, 4, 5, 6, 7, 8, 9 ] ],
+##    [ [ 1, 4 ], [ 2, 3, 5, 6, 7, 8, 9 ] ], [ [ 1, 5 ], [ 2, 3, 4, 6, 7, 8, 9 ] ],
+##    [ [ 1, 6 ], [ 2, 3, 4, 5, 7, 8, 9 ] ] ]
+##  gap> l:=[21,42,42,42,42,42,168,168,168];;
+##  gap> Length(AllSubsetSummations([105,210,210,210],l));
+##  360
+##  gap> AllSubsetSummations([105,210,210,210],l,300);
+##  fail
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction("AllSubsetSummations");

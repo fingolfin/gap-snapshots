@@ -296,9 +296,9 @@
   
   [33X[1;0Y[29X[2XShareSpecialObj[102X( [3Xobj[103X[, [3Xname[103X] ) [32X function[133X
   
-  [33X[0;0Y[2XShareLibraryObj[102X  ([14X3.9-10[114X)  functions  like [2XShareObj[102X ([14X3.9-9[114X), except that the
-  precedence  of  the  region  it  creates is negative. It is thus exempt from
-  normal ordering and deadlock checks.[133X
+  [33X[0;0Y[2XShareSpecialObj[102X  functions like [2XShareObj[102X ([14X3.9-9[114X), except that the precedence
+  of the region it creates is negative. It is thus exempt from normal ordering
+  and deadlock checks.[133X
   
   [1X3.9-15 ShareSingleObj[101X
   

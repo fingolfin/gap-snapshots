@@ -2,7 +2,8 @@
 ##
 ##  This  file  tests  the functions that  mainly  deal  with  combinatorics.
 ##
-#@local i,iter,list,n,pn,it
+#@local n,mset,comb1,comb2,comb3,it,pn1,pn2,s,k,x
+
 gap> START_TEST("combinat.tst");
 
 #F  Factorial( <n> )  . . . . . . . . . . . . . . . . factorial of an integer
@@ -117,6 +118,18 @@ gap> NrCombinations( [1,2,3,3,4,4,5,5,5,6,6,6,7,7,7,7] );
 2880
 gap> NrCombinations( [1,2,3,3,4,4,5,5,5,6,6,6,7,7,7,7,8,8,8,8], 8 );
 1558
+
+#F  IteratorOfCombinations( <mset>[, <k>] )
+#F  EnumeratorOfCombinations( <mset> )
+gap> for n in [ 0 .. 10 ] do
+>      mset:= Union( [ 1 .. n ], [ 1 .. n ] );
+>      comb1:= Combinations( mset );
+>      comb2:= List( IteratorOfCombinations( mset ) );
+>      comb3:= EnumeratorOfCombinations( mset );
+>      if Length( Set( [ comb1, comb2, comb3 ], SortedList ) ) <> 1 then
+>        Error( "different elements" );
+>      fi;
+>    od;
 
 #F  Arrangements( <mset> )  . . . . set of ordered combinations of a multiset
 gap> Arrangements( [] );
@@ -460,18 +473,58 @@ gap> NrRestrictedPartitions( 100, [2,3,5,7,11,13,17], 10 );
 125
 
 #F  IteratorOfPartitions( <n> )
-gap> for n in [ 1 .. 15 ] do
->      pn:= Partitions( n );
->      iter:= IteratorOfPartitions( n );
->      list:= [];
->      for i in [ 1 .. Length( pn ) ] do
->        Add( list, NextIterator( iter ) );
->      od;
->      if not IsDoneIterator( iter ) then
+gap> IteratorOfPartitions(fail);
+Error, <n> must be a nonnegative integer
+gap> for n in [ 0 .. 15 ] do
+>      pn1:= Partitions( n );
+>      pn2:= List( IteratorOfPartitions( n ) );
+>      if Length(pn1) <> Length(pn2) then
 >        Error( "wrong number of elements" );
->      elif pn <> list then
+>      elif pn1 <> pn2 then
 >        Error( "different elements" );
 >      fi;
+>    od;
+
+#F  IteratorOfPartitionsSet( <set> [, <k> [, <flag> ] ] )
+gap> IteratorOfPartitionsSet();
+Error, Function: number of arguments must be at least 1 (not 0)
+gap> IteratorOfPartitionsSet(fail);
+Error, IteratorOfPartitionsSet: <s> must be a set
+gap> IteratorOfPartitionsSet([],fail);
+Error, IteratorOfPartitionsSet: <k> must be an integer
+gap> IteratorOfPartitionsSet([1],1,fail);
+Error, IteratorOfPartitionsSet: <flag> must be true or false
+gap> IteratorOfPartitionsSet([1],1,true,"too many");
+Error, usage: IteratorOfPartitionsSet( <set> [, <k> [, <flag> ] ] )
+gap> for s in [[], [5], [1,2,3,4], [2,5,7], ["a","b","c","d","e"], [3..9]] do
+>      pn1:= PartitionsSet( s );
+>      pn2:= List( IteratorOfPartitionsSet( s ) );
+>      if Length(pn1) <> Length(pn2) then
+>        Error( "wrong number of elements for s = ", s );
+>      elif Set(pn1) <> Set(pn2) then
+>        Error( "different elements for s = ", s );
+>      fi;
+>      for k in [0 .. Size(s)+1] do
+>        pn1:= PartitionsSet( s, k );
+>        pn2:= List( IteratorOfPartitionsSet( s, k ) );
+>        if Length(pn1) <> Length(pn2) then
+>          Error( "wrong number of elements for s = ", s, ", k = ", k );
+>        elif Set(pn1) <> Set(pn2) then
+>          Error( "different elements for s = ", s, ", k = ", k );
+>        fi;
+>      od; 
+>      for k in [0 .. Size(s) + 1] do
+>        pn1:= [];
+>        for x in [0 .. k] do
+>          Append( pn1, PartitionsSet( s, x ) );
+>        od;
+>        pn2:= List( IteratorOfPartitionsSet( s, k, true ) );
+>        if Length(pn1) <> Length(pn2) then
+>          Error( "wrong number of elements for s = ", s, ", k <= ", k );
+>        elif Set(pn1) <> Set(pn2) then
+>          Error( "different elements for s = ", s, ", k <= ", k );
+>        fi;
+>      od;
 >    od;
 
 #F  Lucas(<P>,<Q>,<k>)  . . . . . . . . . . . . . . value of a lucas sequence

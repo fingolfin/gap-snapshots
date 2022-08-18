@@ -1,0 +1,8 @@
+gap> G:=SpaceGroupIT(3,227);;
+gap> R:=ResolutionSpaceGroup(G,11);
+Resolution of length 11 in characteristic 0 for &lt;matrix group with 
+8 generators&gt; . 
+No contracting homotopy available. 
+
+gap> Size(R);
+[ 38, 246, 456, 644, 980, 1427, 2141, 2957, 3993, 4911, 6179 ]

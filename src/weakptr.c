@@ -194,16 +194,14 @@ static inline void GROW_WPOBJ(Obj wp, UInt need)
     if (plen > INT_INTOBJ_MAX)
         plen = INT_INTOBJ_MAX;
 
-#ifdef USE_BOEHM_GC
+#if defined(USE_BOEHM_GC) && defined(HPCGAP)
     Obj copy = NewBag(T_WPOBJ, (plen+1) * sizeof(Obj));
     STORE_LEN_WPOBJ(copy, STORED_LEN_WPOBJ(wp));
 
     UInt i;
     for (i = 1; i <= STORED_LEN_WPOBJ(wp); i++) {
       volatile Obj tmp = ELM_WPOBJ(wp, i);
-#ifdef HPCGAP
       MEMBAR_READ();
-#endif
       if (IS_BAG_REF(tmp) && ELM_WPOBJ(wp, i)) {
         FORGET_WP(wp, i);
         REGISTER_WP(copy, i, tmp);
@@ -313,7 +311,7 @@ static Int LengthWPObj(Obj wp)
 
 static Obj FuncLengthWPObj(Obj self, Obj wp)
 {
-    RequireWPObj("LengthWPObj", wp);
+    RequireWPObj(SELF_NAME, wp);
     return INTOBJ_INT(LengthWPObj(wp));
 }
 
@@ -328,8 +326,8 @@ static Obj FuncLengthWPObj(Obj self, Obj wp)
 
 static Obj FuncSetElmWPObj(Obj self, Obj wp, Obj pos, Obj val)
 {
-    RequireWPObj("SetElmWPObj", wp);
-    UInt ipos = GetPositiveSmallInt("SetElmWPObj", pos);
+    RequireWPObj(SELF_NAME, wp);
+    UInt ipos = GetPositiveSmallInt(SELF_NAME, pos);
 
 #ifdef USE_BOEHM_GC
   /* Ensure reference remains visible to GC in case val is
@@ -370,11 +368,8 @@ static Obj FuncSetElmWPObj(Obj self, Obj wp, Obj pos, Obj val)
 ** */
 
 
-static Int IsBoundElmWPObj(Obj wp, Obj pos)
+static BOOL IsBoundElmWPObj(Obj wp, UInt ipos)
 {
-    RequireWPObj("IsBoundElmWPObj", wp);
-    UInt ipos = GetPositiveSmallInt("IsBoundElmWPObj", pos);
-
 #ifdef HPCGAP
   volatile
 #endif
@@ -404,7 +399,10 @@ static Int IsBoundElmWPObj(Obj wp, Obj pos)
 */
 static Obj FuncIsBoundElmWPObj(Obj self, Obj wp, Obj pos)
 {
-  return IsBoundElmWPObj(wp, pos) ? True : False;
+    RequireWPObj(SELF_NAME, wp);
+    UInt ipos = GetPositiveSmallInt(SELF_NAME, pos);
+
+    return IsBoundElmWPObj(wp, ipos) ? True : False;
 }
 
 
@@ -417,8 +415,8 @@ static Obj FuncIsBoundElmWPObj(Obj self, Obj wp, Obj pos)
 
 static Obj FuncUnbindElmWPObj(Obj self, Obj wp, Obj pos)
 {
-    RequireWPObj("UnbindElmWPObj", wp);
-    UInt ipos = GetPositiveSmallInt("UnbindElmWPObj", pos);
+    RequireWPObj(SELF_NAME, wp);
+    UInt ipos = GetPositiveSmallInt(SELF_NAME, pos);
 
   Int len = LengthWPObj(wp);
   if ( ipos <= len ) {
@@ -493,8 +491,8 @@ static Obj ElmDefWPList(Obj wp, Int ipos, Obj def)
 */
 static Obj FuncElmWPObj(Obj self, Obj wp, Obj pos)
 {
-    RequireWPObj("ElmWPObj", wp);
-    UInt ipos = GetPositiveSmallInt("ElmWPObj", pos);
+    RequireWPObj(SELF_NAME, wp);
+    UInt ipos = GetPositiveSmallInt(SELF_NAME, pos);
 
     return ElmDefWPList(wp, ipos, Fail);
 }
@@ -775,7 +773,7 @@ static void CleanObjWPObj(Obj obj)
 **
 *F  SaveWPObj(<wpobj>)
 */
-
+#ifdef GAP_ENABLE_SAVELOAD
 static void SaveWPObj(Obj wpobj)
 {
     UInt len = STORED_LEN_WPOBJ(wpobj);
@@ -784,12 +782,14 @@ static void SaveWPObj(Obj wpobj)
         SaveSubObj(ELM_WPOBJ(wpobj, i));
     }
 }
+#endif
+
 
 /****************************************************************************
 **
 *F  LoadWPObj(<wpobj>)
 */
-
+#ifdef GAP_ENABLE_SAVELOAD
 static void LoadWPObj(Obj wpobj)
 {
     const UInt len = LoadUInt();
@@ -798,6 +798,7 @@ static void LoadWPObj(Obj wpobj)
         SET_ELM_WPOBJ(wpobj, i, LoadSubObj());
     }
 }
+#endif
 
 
 /****************************************************************************
@@ -834,12 +835,12 @@ static StructGVarFilt GVarFilts [] = {
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    GVAR_FUNC(WeakPointerObj, 1, "list"),
-    GVAR_FUNC(LengthWPObj, 1, "wp"),
-    GVAR_FUNC(SetElmWPObj, 3, "wp, pos, val"),
-    GVAR_FUNC(IsBoundElmWPObj, 2, "wp, pos"),
-    GVAR_FUNC(UnbindElmWPObj, 2, "wp, pos"),
-    GVAR_FUNC(ElmWPObj, 2, "wp, pos"),
+    GVAR_FUNC_1ARGS(WeakPointerObj, list),
+    GVAR_FUNC_1ARGS(LengthWPObj, wp),
+    GVAR_FUNC_3ARGS(SetElmWPObj, wp, pos, val),
+    GVAR_FUNC_2ARGS(IsBoundElmWPObj, wp, pos),
+    GVAR_FUNC_2ARGS(UnbindElmWPObj, wp, pos),
+    GVAR_FUNC_2ARGS(ElmWPObj, wp, pos),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -877,8 +878,10 @@ static Int InitKernel (
     InitHdlrFuncsFromTable( GVarFuncs );
 
     /* saving function                                                     */
+#ifdef GAP_ENABLE_SAVELOAD
     SaveObjFuncs[ T_WPOBJ ] = SaveWPObj;
     LoadObjFuncs[ T_WPOBJ ] = LoadWPObj;
+#endif
 
     // List functions
     ElmDefListFuncs[T_WPOBJ] = ElmDefWPList;
@@ -892,7 +895,6 @@ static Int InitKernel (
 #endif
 
     MakeImmutableObjFuncs[ T_WPOBJ ] = MakeImmutableWPObj;
-    /* return success                                                      */
     return 0;
 }
 
@@ -908,7 +910,6 @@ static Int InitLibrary (
     InitGVarFiltsFromTable( GVarFilts );
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 

@@ -16,7 +16,7 @@
 
 #include "bool.h"
 #include "calls.h"
-#include "system.h"
+#include "common.h"
 
 
 enum {
@@ -52,6 +52,9 @@ typedef struct {
     // cache of an operation
     Obj cache[MAX_OPER_ARGS+1];
 
+    //
+    Obj earlyMethod[MAX_OPER_ARGS+1];
+
     // small integer encoding a set of bit flags with information about the
     // operation, see OperExtras below
     //
@@ -78,7 +81,7 @@ extern Obj TRY_NEXT_METHOD;
 **
 *F  IS_OPERATION( <obj> ) . . . . . . . . . . check if object is an operation
 */
-EXPORT_INLINE Int IS_OPERATION(Obj obj)
+EXPORT_INLINE BOOL IS_OPERATION(Obj obj)
 {
     return TNUM_OBJ(obj) == T_FUNCTION && SIZE_OBJ(obj) == sizeof(OperBag);
 }
@@ -243,7 +246,7 @@ EXPORT_INLINE void SET_ENABLED_ATTR(Obj oper, Int on)
 **
 *F  IS_FILTER( <oper> ) . . . . . . . . . . . . . check if object is a filter
 */
-EXPORT_INLINE Int IS_FILTER(Obj oper)
+EXPORT_INLINE BOOL IS_FILTER(Obj oper)
 {
     if (!IS_OPERATION(oper))
         return 0;
@@ -465,10 +468,10 @@ EXPORT_INLINE void SET_ELM_FLAGS(Obj list, UInt pos)
 
 /****************************************************************************
 **
-*F  FuncIS_SUBSET_FLAGS( <self>, <flags1>, <flags2> ) . . . . . . subset test
+*F  IS_SUBSET_FLAGS( <self>, <flags1>, <flags2> ) . . . . . . . . subset test
 */
+BOOL IS_SUBSET_FLAGS(Obj flags1, Obj flags2);
 
-Obj FuncIS_SUBSET_FLAGS(Obj self, Obj flags1, Obj flags2);
 
 /****************************************************************************
 **
@@ -501,7 +504,7 @@ Obj DoFilter(Obj self, Obj obj);
 **
 *F  NewFilter( <name>, <nams>, <hdlr> ) . . . . . . . . . . make a new filter
 */
-Obj NewFilter(Obj name, Obj nams, ObjFunc hdlr);
+Obj NewFilter(Obj name, Obj nams, ObjFunc_1ARGS hdlr);
 
 
 /****************************************************************************
@@ -595,7 +598,14 @@ Obj DoTestAttribute(Obj self, Obj obj);
 **
 *F  NewAttribute( <name> ) . . . . . . . . . . . . . . . make a new attribute
 */
-Obj NewAttribute(Obj name, Obj nams, ObjFunc hdlr);
+Obj NewAttribute(Obj name, Obj nams, ObjFunc_1ARGS hdlr);
+
+
+/****************************************************************************
+**
+**  DoSetProperty( <prop>, <obj>, <val> )
+*/
+Obj DoSetProperty(Obj self, Obj obj, Obj val);
 
 
 /****************************************************************************
@@ -607,9 +617,9 @@ Obj DoProperty(Obj self, Obj obj);
 
 /****************************************************************************
 **
-*F  NewProperty( <name> ) . . . . . . . . . . . . . . . . make a new property
+*F  NewProperty( <name>, <nams>, <getHdlr>, <setHdlr> ) . make a new property
 */
-Obj NewProperty(Obj name, Obj nams, ObjFunc hdlr);
+Obj NewProperty(Obj name, Obj nams, ObjFunc_1ARGS getHdlr, ObjFunc_2ARGS setHdlr);
 
 
 /****************************************************************************

@@ -1130,7 +1130,7 @@ local cs,	# chief series of G
   # we will give classes always by their representatives in G and
   # centralizers by their full preimages in G.
 
-  cs:= ChiefSeriesOfGroup( G );
+  cs:= ChiefSeriesThrough( G,[Socle(G)] );
 
   # the first step is always simple
   if HasAbelianFactorGroup(G,cs[2]) then
@@ -1719,8 +1719,6 @@ BindGlobal("LiftClassesEANonsolvGeneral",
   
   # Construct matrices for the affine operation on $N/[h,N]$.
   Info(InfoHomClass,4,"space=",Size(field),"^",r);
-  if Size(field)^r>3*10^8 then Error("too large");fi;
-  aff := ExtendedVectors( field ^ r );
 
   gens:=Concatenation(cl[2],Npcgs,cl[3]); # all generators
   gpsz:=cl[5];
@@ -1745,7 +1743,9 @@ BindGlobal("LiftClassesEANonsolvGeneral",
     Add( imgs, M );
   od;
 
-#if Size(field)^r>10^7 then Error("BIG");fi;
+
+  if Size(field)^r>3*10^8 then Error("too large");fi;
+  aff := ExtendedVectors( field ^ r );
 
   # now compute orbits, being careful to get stabilizers in steps
   #orbreps:=[];
@@ -2182,7 +2182,7 @@ BindGlobal("LiftClassesEATrivRep",
 	   stabfacimgs,
 	   hom,0, #gpsz not needed
 	   OnRight,lvec,maxorb,#Maximum(List(lcands,x->x.len)),
-	   Set(List(lcands,x->x.rep)));
+	   Set(lcands,x->x.rep));
       a:=First(lcands,x->x.rep{range}=result.min{range});
       mapper:=mapper*result.elm;
       fmapper:=fmapper*result.felm;
@@ -2233,7 +2233,7 @@ BindGlobal("LiftClassesEATrivRep",
     norpo:=[];
     norpo[p]:=1;
     el:=Filtered(orb,x->x.len=orb[p].len);
-    minvecs:=Set(List(el,x->x.rep));
+    minvecs:=Set(el,x->x.rep);
 #el:=orbslev[3];
     if orb[p].len>30000 then
       Minimizer:=IteratedMinimizer;
@@ -2362,11 +2362,23 @@ local r,	#radical
   # factor out the radical first. (Note: The radical method for perm groups
   # stores the nat hom.!)
   ser:=FittingFreeLiftSetup(G);
-  radsize:=Product(RelativeOrders(ser.pcgs));
+  if Length(ser.pcgs)>0 then
+    radsize:=Product(RelativeOrders(ser.pcgs));
+  else
+    radsize:=1;
+  fi;
   len:=Length(ser.pcgs);
 
   if radsize=1 then
-    cl:=ConjugacyClassesFittingFreeGroup(G:onlysizes:=false);
+    hom:=ser.factorhom;
+    if IsPermGroup(Range(hom)) and not IsPermGroup(Source(hom)) then
+      f:=Image(hom,G);
+      cl:=ConjugacyClassesFittingFreeGroup(f:onlysizes:=false);
+      cl:=List(cl,x->[PreImagesRepresentative(hom,x[1]),
+        PreImage(hom,x[2])]);
+    else
+      cl:=ConjugacyClassesFittingFreeGroup(G:onlysizes:=false);
+    fi;
     ncl:=[];
     for i in cl do
       r:=ConjugacyClass(G,i[1],i[2]);
@@ -2398,7 +2410,7 @@ local r,	#radical
       ntrihom:=true;
       f:=Image(hom);
       # if lift setup is inherited, f might not be trivial-fitting
-      if Size(RadicalGroup(f))>1 then
+      if Size(SolvableRadical(f))>1 then
         # this is proper recursion
         cl:=ConjugacyClasses(f:onlysizes:=false);
         cl:=List(cl,x->[Representative(x),Centralizer(x)]);
@@ -2510,7 +2522,7 @@ local r,	#radical
     else
       d:=SubgroupByFittingFreeData(G,i[3],i[4],i[2]);
       Assert(2,Size(d)=i[5]);
-      Assert(2,Centralizer(G,i[1])=d);
+      Assert(2,Centralizer(G,i[1]:usebacktrack)=d);
       SetSize(d,i[5]);
       r:=ConjugacyClass(G,i[1],d);
       SetSize(r,Size(G)/i[5]);
@@ -2818,7 +2830,11 @@ local r,	#radical
   # factor out the radical first. (Note: The radical method for perm groups
   # stores the nat hom.!)
   ser:=FittingFreeLiftSetup(G);
-  radsize:=Product(RelativeOrders(ser.pcgs));
+  if Length(ser.pcgs)>0 then
+    radsize:=Product(RelativeOrders(ser.pcgs));
+  else
+    radsize:=1;
+  fi;
   len:=Length(ser.pcgs);
 
   pcgs:=ser.pcgs;
@@ -2843,19 +2859,22 @@ local r,	#radical
     if radsize>1 then
       hom:=ser.factorhom;
       ntrihom:=true;
-      f:=Image(hom);
       # we need centralizers
       #fants:=Filtered(NormalSubgroups(f),x->Size(x)>1 and Size(x)<Size(f));
     else
       if IsPermGroup(G) then
 	hom:=SmallerDegreePermutationRepresentation(G:cheap);
 	ntrihom:=not IsOne(hom);;
+      elif IsPermGroup(Range(ser.factorhom))
+        and not IsPermGroup(Source(ser.factorhom)) then
+	ntrihom:=false;
+        hom:=ser.factorhom;
       else
         hom:=IdentityMapping(G);
 	ntrihom:=false;
       fi;
-      f:=Image(hom);
     fi;
+    f:=Image(hom,G);
     if not IsBound(f!.someClassReps) then
       f!.someClassReps:=[ConjugacyClass(f,One(f))]; # identity first
     fi;
@@ -2926,6 +2945,7 @@ local r,	#radical
       fi;
 
       r:=PreImagesRepresentative(hom,conj);
+
       d:=GeneratorsOfGroup(Centralizer(cl[j]));
       # Format for cl is:
       # 1:Element, 2: Conjugate element, 3: Element that will be canonical
@@ -2998,14 +3018,23 @@ InstallMethod( CentralizerOp, "TF method:elm",IsCollsElms,
   [ IsGroup and IsFinite and HasFittingFreeLiftSetup,
   IsMultiplicativeElementWithInverse ], OVERRIDENICE,
 function( G, e )
-  if IsPermGroup(G) or IsPcGroup(G) then TryNextMethod();fi;
-  if not e in G then 
-    # TODO: form larger group containing e.
-    TryNextMethod();
+local ffs,c,ind;
+  if IsPcGroup(G) 
+    or (IsPermGroup(G) and AttemptPermRadicalMethod(G,"CENT")<>true)
+    or not e in G then 
+      TryNextMethod();
   fi;
-  e:=TFCanonicalClassRepresentative(G,[e])[1];
-  if e=fail then TryNextMethod();fi;
-  return SubgroupByFittingFreeData(G,e[6],e[7],e[5]);
+  ffs:=FittingFreeLiftSetup(G);
+  c:=TFCanonicalClassRepresentative(G,[e]:useradical:=false)[1];
+  if c=fail then TryNextMethod();fi;
+  if Length(ffs.pcgs)>0 then
+    ind:=InducedPcgsByGenerators(ffs.pcgs,c[5]);
+  else
+    ind:=[];
+  fi;
+  c:=SubgroupByFittingFreeData(G,c[6],c[7],ind)^Inverse(c[4]);
+  Assert(2,ForAll(GeneratorsOfGroup(c),x->IsOne(Comm(x,e))));
+  return c;
 end );
 
 #############################################################################
@@ -3038,14 +3067,18 @@ InstallOtherMethod( RepresentativeActionOp, "TF Method on elements",
   OVERRIDENICE,
 function ( G, d, e, act )
 local c;
-  if IsPermGroup(G) or IsPcGroup(G) then TryNextMethod();fi;
-  if not (d in G and e in G) then 
-    # TODO: form larger group containing e.
-    TryNextMethod();
+  if IsPcGroup(G) 
+    or (IsPermGroup(G) and AttemptPermRadicalMethod(G,"CENT")<>true)
+    or not (d in G and e in G) then 
+      TryNextMethod();
+  fi;
+
+  if IsPermGroup(G) and CycleStructurePerm(d)<>CycleStructurePerm(e) then
+    return fail;
   fi;
 
   if act=OnPoints then #and d in G and e in G then
-    c:=TFCanonicalClassRepresentative(G,[d,e]:conjugacytest);
+    c:=TFCanonicalClassRepresentative(G,[d,e]:conjugacytest,useradical:=false);
     if c=fail then
       return fail;
     else

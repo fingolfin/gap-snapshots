@@ -9,14 +9,14 @@ PackageName := "CrystCat",
 
 Subtitle := "The crystallographic groups catalog",
 
-Version := "1.1.9",
+Version := "1.1.10",
 
-Date := "28/05/2019", # dd/mm/yyyy format
+Date := "29/07/2022", # dd/mm/yyyy format
 
 License := "GPL-2.0-or-later",
 
 ArchiveURL := Concatenation(
-  "https://www.math.uni-bielefeld.de/~gaehler/gap45/CrystCat/crystcat-", ~.Version ),
+  "https://www.math.uni-bielefeld.de/~gaehler/gap/CrystCat/crystcat-", ~.Version ),
 
 ArchiveFormats := ".tar.gz",
 
@@ -53,8 +53,8 @@ CommunicatedBy := "Herbert Pahlings (Aachen)",
 
 AcceptDate := "02/2000",
 
-README_URL := "https://www.math.uni-bielefeld.de/~gaehler/gap45/CrystCat/README.crystcat",
-PackageInfoURL := "https://www.math.uni-bielefeld.de/~gaehler/gap45/CrystCat/PackageInfo.g",
+README_URL := "https://www.math.uni-bielefeld.de/~gaehler/gap/CrystCat/README.crystcat",
+PackageInfoURL := "https://www.math.uni-bielefeld.de/~gaehler/gap/CrystCat/PackageInfo.g",
 
 AbstractHTML := 
 "This package provides a catalog of crystallographic groups of \
@@ -66,7 +66,7 @@ computation with these groups are provided by the package \
 <span class=\"pkgname\">Cryst</span>, which must be installed as well.",
 
 PackageWWWHome := 
-  "https://www.math.uni-bielefeld.de/~gaehler/gap45/packages.php",
+  "https://www.math.uni-bielefeld.de/~gaehler/gap/packages.php",
 
 SourceRepository := rec(
   Type := "git",
@@ -82,12 +82,11 @@ PackageDoc  := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "The crystallographic groups catalog",
-  Autoload  := true
 ),
 
 Dependencies := rec(
-  GAP := ">=4.5",
-  NeededOtherPackages := [ [ "Cryst", ">=4.1.8" ] ],
+  GAP := ">=4.11",
+  NeededOtherPackages := [ [ "Cryst", ">=4.1.24" ] ],
   SuggestedOtherPackages := [],
   ExternalConditions := []
 ),

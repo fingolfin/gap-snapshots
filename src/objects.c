@@ -38,18 +38,19 @@
 #include "hpc/traverse.h"
 #endif
 
+#include <stdio.h>
+#include <stdlib.h>
+
 
 enum {
-    MAXPRINTDEPTH = 1024,
+    MAXPRINTDEPTH = 64,
 };
 
 static ModuleStateOffset ObjectsStateOffset = -1;
 
 typedef struct {
     UInt  PrintObjDepth;
-    Obj   PrintObjThis;
-    Int   PrintObjIndex;
-#if defined(HPCGAP)
+#ifdef HPCGAP
     Obj   PrintObjThissObj;
     Obj * PrintObjThiss;
     Obj   PrintObjIndicesObj;
@@ -157,24 +158,92 @@ Obj (*TypeObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 
 static Obj TypeObjError(Obj obj)
 {
-    ErrorQuit( "Panic: basic object of type '%s' is unkind",
-               (Int)TNAM_OBJ(obj), 0L );
+    ErrorQuit("Panic: basic object of type '%s' is unkind",
+              (Int)TNAM_OBJ(obj), 0);
     return 0;
 }
 
 /****************************************************************************
 **
-*F  SET_TYPE_OBJ( <obj> )  . . . . . . . . . . . . . . set type of an object
+*F  SET_TYPE_OBJ( <obj>, <type> ) . . . . . . . . . . . set type of an object
 **
-**  'SET_TYPE_OBJ' sets the type of the object <obj>.
+**  'SET_TYPE_OBJ' sets the type of the object <obj> to <type>; if <obj>
+**  is not a posobj/comobj/datobj, attempts to first convert it to one; if
+**  that fails, an error is raised.
 */
-
-void (*SetTypeObjFuncs[ LAST_REAL_TNUM+1 ]) ( Obj obj, Obj type );
-
-static void SetTypeObjError(Obj obj, Obj type)
+void SET_TYPE_OBJ(Obj obj, Obj type)
 {
-    ErrorQuit( "Panic: cannot change type of object of type '%s'",
-               (Int)TNAM_OBJ(obj), 0L );
+    switch (TNUM_OBJ(obj)) {
+#ifdef HPCGAP
+    case T_ALIST:
+    case T_FIXALIST:
+        HashLock(obj);
+        ADDR_OBJ(obj)[1] = type;
+        CHANGED_BAG(obj);
+        RetypeBag(obj, T_APOSOBJ);
+        HashUnlock(obj);
+        MEMBAR_WRITE();
+        break;
+    case T_APOSOBJ:
+        HashLock(obj);
+        ADDR_OBJ(obj)[1] = type;
+        CHANGED_BAG(obj);
+        HashUnlock(obj);
+        MEMBAR_WRITE();
+        break;
+    case T_AREC:
+    case T_ACOMOBJ:
+        ADDR_OBJ(obj)[0] = type;
+        CHANGED_BAG(obj);
+        RetypeBag(obj, T_ACOMOBJ);
+        MEMBAR_WRITE();
+        break;
+#endif
+    case T_PREC:
+#ifdef HPCGAP
+        MEMBAR_WRITE();
+#endif
+        RetypeBag(obj, T_COMOBJ);
+        SET_TYPE_COMOBJ(obj, type);
+        CHANGED_BAG(obj);
+        break;
+    case T_COMOBJ:
+#ifdef HPCGAP
+        ReadGuard(obj);
+        MEMBAR_WRITE();
+#endif
+        SET_TYPE_COMOBJ(obj, type);
+        CHANGED_BAG(obj);
+        break;
+    case T_POSOBJ:
+#ifdef HPCGAP
+        ReadGuard(obj);
+        MEMBAR_WRITE();
+#endif
+        SET_TYPE_POSOBJ(obj, type);
+        CHANGED_BAG(obj);
+        break;
+    case T_DATOBJ:
+        SetTypeDatObj(obj, type);
+        break;
+
+    default:
+        if (IS_STRING_REP(obj)) {
+            // FIXME/TODO: Hap calls Objectify on a string...
+        }
+        else if (IS_PLIST(obj)) {
+#ifdef HPCGAP
+            MEMBAR_WRITE();
+#endif
+            RetypeBag(obj, T_POSOBJ);
+            SET_TYPE_POSOBJ(obj, type);
+            CHANGED_BAG(obj);
+        }
+        else {
+            ErrorMayQuit("cannot change type of a %s", (Int)TNAM_OBJ(obj), 0);
+        }
+        break;
+    }
 }
 
 
@@ -210,23 +279,22 @@ static Obj FuncSET_TYPE_OBJ(Obj self, Obj obj, Obj type)
 **
 **  'IS_MUTABLE_OBJ' is defined in the declaration part of this package.
 */
-Int (*IsMutableObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
+BOOL (*IsMutableObjFuncs[LAST_REAL_TNUM + 1])(Obj obj);
 
 static Obj IsMutableObjFilt;
 
-static Int IsMutableObjError(Obj obj)
+static BOOL IsMutableObjError(Obj obj)
 {
-    ErrorQuit(
-        "Panic: tried to test mutability of unsupported type '%s'",
-        (Int)TNAM_OBJ(obj), 0L );
-    return 0;
+    ErrorQuit("Panic: tried to test mutability of unsupported type '%s'",
+              (Int)TNAM_OBJ(obj), 0);
+    return FALSE;
 }
 
-static Int IsMutableObjObject(Obj obj)
+static BOOL IsMutableObjObject(Obj obj)
 {
 #ifdef HPCGAP
     if (RegionBag(obj) == ReadOnlyRegion)
-        return 0;
+        return FALSE;
 #endif
     return (DoFilter( IsMutableObjFilt, obj ) == True);
 }
@@ -257,7 +325,8 @@ static Obj FiltIS_INTERNALLY_MUTABLE_OBJ(Obj self, Obj obj)
       DoFilter( IsInternallyMutableObjFilt, obj) == True) ? True : False;
 }
 
-Int IsInternallyMutableObj(Obj obj) {
+BOOL IsInternallyMutableObj(Obj obj)
+{
     return TNUM_OBJ(obj) == T_DATOBJ &&
       RegionBag(obj) != ReadOnlyRegion &&
       DoFilter( IsInternallyMutableObjFilt, obj) == True;
@@ -275,19 +344,18 @@ Int IsInternallyMutableObj(Obj obj) {
 **
 **  'IS_COPYABLE_OBJ' is defined in the declaration part of this package.
 */
-Int (*IsCopyableObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
+BOOL (*IsCopyableObjFuncs[LAST_REAL_TNUM + 1])(Obj obj);
 
 static Obj IsCopyableObjFilt;
 
-static Int IsCopyableObjError(Obj obj)
+static BOOL IsCopyableObjError(Obj obj)
 {
-    ErrorQuit(
-        "Panic: tried to test copyability of unsupported type '%s'",
-        (Int)TNAM_OBJ(obj), 0L );
-    return 0L;
+    ErrorQuit("Panic: tried to test copyability of unsupported type '%s'",
+              (Int)TNAM_OBJ(obj), 0);
+    return FALSE;
 }
 
-static Int IsCopyableObjObject(Obj obj)
+static BOOL IsCopyableObjObject(Obj obj)
 {
     return (DoFilter( IsCopyableObjFilt, obj ) == True);
 }
@@ -318,9 +386,8 @@ static Obj ShallowCopyObjOper;
 */
 static Obj ShallowCopyObjError(Obj obj)
 {
-    ErrorQuit(
-        "Panic: tried to shallow copy object of unsupported type '%s'",
-        (Int)TNAM_OBJ(obj), 0L );
+    ErrorQuit("Panic: tried to shallow copy object of unsupported type '%s'",
+              (Int)TNAM_OBJ(obj), 0);
     return (Obj)0;
 }
 
@@ -368,9 +435,9 @@ static Obj ShallowCopyObjDefault(Obj obj)
 
 /****************************************************************************
 **
-*F  ShallowCopyObjHandler( <self>, <obj> )  .  handler for 'SHALLOW_COPY_OBJ'
+*F  FuncSHALLOW_COPY_OBJ( <self>, <obj> ) . .  handler for 'SHALLOW_COPY_OBJ'
 */
-static Obj ShallowCopyObjHandler(Obj self, Obj obj)
+static Obj FuncSHALLOW_COPY_OBJ(Obj self, Obj obj)
 {
     return SHALLOW_COPY_OBJ( obj );
 }
@@ -533,9 +600,8 @@ static void MarkCopyingSubBags(Obj obj)
 */
 static Obj CopyObjError(Obj obj, Int mut)
 {
-    ErrorQuit(
-        "Panic: tried to copy object of unsupported type '%s'",
-        (Int)TNAM_OBJ(obj), 0L );
+    ErrorQuit("Panic: tried to copy object of unsupported type '%s'",
+              (Int)TNAM_OBJ(obj), 0);
     return (Obj)0;
 }
 
@@ -546,9 +612,8 @@ static Obj CopyObjError(Obj obj, Int mut)
 */
 static void CleanObjError(Obj obj)
 {
-    ErrorQuit(
-        "Panic: tried to clean object of unsupported type '%s'",
-        (Int)TNAM_OBJ(obj), 0L );
+    ErrorQuit("Panic: tried to clean object of unsupported type '%s'",
+              (Int)TNAM_OBJ(obj), 0);
 }
 
 
@@ -577,7 +642,7 @@ static Obj CopyObjPosObj(Obj obj, Int mut)
 
     /* if the object is not copyable return                                */
     if ( ! IS_COPYABLE_OBJ(obj) ) {
-        ErrorQuit("Panic: encountered mutable, non-copyable object",0L,0L);
+        ErrorQuit("Panic: encountered mutable, non-copyable object", 0, 0);
     }
 
     /* make a copy                                                         */
@@ -635,7 +700,7 @@ static Obj CopyObjComObj(Obj obj, Int mut)
 
     /* if the object is not copyable return                                */
     if ( ! IS_COPYABLE_OBJ(obj) ) {
-        ErrorQuit("Panic: encountered mutable, non-copyable object",0L,0L);
+        ErrorQuit("Panic: encountered mutable, non-copyable object", 0, 0);
     }
 
     /* make a copy                                                         */
@@ -693,7 +758,7 @@ static Obj CopyObjDatObj(Obj obj, Int mut)
 
     /* if the object is not copyable return                                */
     if ( ! IS_COPYABLE_OBJ(obj) ) {
-        ErrorQuit("Panic: encountered mutable, non-copyable object",0L,0L);
+        ErrorQuit("Panic: encountered mutable, non-copyable object", 0, 0);
     }
 
     /* make a copy                                                         */
@@ -774,7 +839,7 @@ void CheckedMakeImmutable( Obj obj )
 static void MakeImmutableError(Obj obj)
 {
   ErrorQuit("No make immutable function installed for a %s",
-            (Int)TNAM_OBJ(obj), 0L);
+            (Int)TNAM_OBJ(obj), 0);
 }
 
 
@@ -829,20 +894,25 @@ static Obj FuncMakeImmutable(Obj self, Obj obj)
   return obj;
 }
 
+static Obj FuncGET_TNAM_FROM_TNUM(Obj self, Obj obj)
+{
+    UInt         tnum = GetBoundedInt(SELF_NAME, obj, 0, NUM_TYPES - 1);
+    const char * name = TNAM_TNUM(tnum);
+    return MakeImmString(name ? name : "<unnamed tnum>");
+}
 
 
 // This function is used to keep track of which objects are already
 // being printed or viewed to trigger the use of ~ when needed.
-static inline UInt IS_ON_PRINT_STACK(const ObjectsModuleState * os, Obj obj)
+static inline BOOL IS_ON_PRINT_STACK(const ObjectsModuleState * os, Obj obj)
 {
-  UInt i;
-  if (!(FIRST_RECORD_TNUM <= TNUM_OBJ(obj)
-        && TNUM_OBJ(obj) <= LAST_LIST_TNUM))
-    return 0;
-  for (i = 1; i < os->PrintObjDepth; i++)
-    if (os->PrintObjThiss[i-1] == obj)
-      return 1;
-  return 0;
+    if (!(FIRST_RECORD_TNUM <= TNUM_OBJ(obj) &&
+          TNUM_OBJ(obj) <= LAST_LIST_TNUM))
+        return FALSE;
+    for (UInt i = 0; i < os->PrintObjDepth; i++)
+        if (os->PrintObjThiss[i] == obj)
+            return TRUE;
+    return FALSE;
 }
 
 #ifdef HPCGAP
@@ -889,14 +959,8 @@ static void InitPrintObjStack(ObjectsModuleState * os)
 **
 **  'PrintObj' prints the object <obj>.
 */
-void            PrintObj (
-    Obj                 obj )
+void PrintObj(Obj obj)
 {
-    Int                 i;              /* loop variable                   */
-    UInt                lastPV;        /* save LastPV */
-    UInt                fromview;      /* non-zero when we were called
-                                        from viewObj of the SAME object */
-
 #if defined(HPCGAP) && !defined(WARD_ENABLED)
     if (IS_BAG_REF(obj) && !CheckReadAccess(obj)) {
         PrintInaccessibleObject(obj);
@@ -906,64 +970,47 @@ void            PrintObj (
 
     ObjectsModuleState * os = &MODULE_STATE(Objects);
 
-    /* First check if <obj> is actually the current object being Viewed
-       Since ViewObj(<obj>) may result in a call to PrintObj(<obj>) */
-
-    lastPV = os->LastPV;
-    os->LastPV = 1;
-    fromview = (lastPV == 2) && (obj == os->PrintObjThis);
-
-    /* if <obj> is a subobject, then mark and remember the superobject
-       unless ViewObj has done that job already */
-
 #ifdef HPCGAP
     InitPrintObjStack(os);
 #endif
 
-    if ( !fromview  && 0 < os->PrintObjDepth ) {
-        os->PrintObjThiss[os->PrintObjDepth-1]   = os->PrintObjThis;
-        os->PrintObjIndices[os->PrintObjDepth-1] = os->PrintObjIndex;
+    // First check if <obj> is actually the current object being viewed, since
+    // ViewObj(<obj>) may result in a call to PrintObj(<obj>); in that case,
+    // we should not put <obj> on the print stack
+    if ((os->PrintObjDepth > 0) && (os->LastPV == 2) &&
+        (obj == os->PrintObjThiss[os->PrintObjDepth - 1])) {
+        os->LastPV = 1;
+        PRINT_OBJ(obj);
+        os->LastPV = 2;
     }
 
-    /* handle the <obj>                                                    */
-    if (!fromview) {
-        os->PrintObjDepth += 1;
-        os->PrintObjThis   = obj;
-        os->PrintObjIndex  = 0;
+    // print the path if <obj> is on the stack
+    else if (IS_ON_PRINT_STACK(os, obj)) {
+        Pr("~", 0, 0);
+        for (int i = 0; obj != os->PrintObjThiss[i]; i++) {
+            PRINT_PATH(os->PrintObjThiss[i], os->PrintObjIndices[i]);
+        }
     }
 
-    /* dispatch to the appropriate printing function                       */
-    if ( (! IS_ON_PRINT_STACK(os, os->PrintObjThis)) ) {
-      if (os->PrintObjDepth < MAXPRINTDEPTH) {
-        (*PrintObjFuncs[ TNUM_OBJ(os->PrintObjThis) ])( os->PrintObjThis );
-      }
-      else {
-        /* don't recurse if depth too high */
-        Pr("\nprinting stopped, too many recursion levels!\n", 0L, 0L);
-      }
-    }
+    // dispatch to the appropriate printing function
+    else if (os->PrintObjDepth < MAXPRINTDEPTH) {
 
-    /* or print the path                                                   */
+        // push obj on the stack
+        os->PrintObjThiss[os->PrintObjDepth] = obj;
+        os->PrintObjIndices[os->PrintObjDepth] = 0;
+        os->PrintObjDepth++;
+
+        UInt lastPV = os->LastPV;
+        os->LastPV = 1;
+        PRINT_OBJ(obj);
+        os->LastPV = lastPV;
+
+        // pop <obj> from the stack
+        os->PrintObjDepth--;
+    }
     else {
-        Pr( "~", 0L, 0L );
-        for ( i = 0; os->PrintObjThis != os->PrintObjThiss[i]; i++ ) {
-            (*PrintPathFuncs[ TNUM_OBJ(os->PrintObjThiss[i])])
-                ( os->PrintObjThiss[i], os->PrintObjIndices[i] );
-        }
+        Pr("\nprinting stopped, too many recursion levels!\n", 0, 0);
     }
-
-
-    /* done with <obj>                                                     */
-    if (!fromview) {
-        os->PrintObjDepth -= 1;
-        
-        /* if <obj> is a subobject, then restore and unmark the superobject*/
-        if ( 0 < os->PrintObjDepth ) {
-            os->PrintObjThis  = os->PrintObjThiss[os->PrintObjDepth-1];
-            os->PrintObjIndex = os->PrintObjIndices[os->PrintObjDepth-1];
-        }
-    }
-    os->LastPV = lastPV;
 }
 
 
@@ -993,12 +1040,12 @@ static void PrintObjObject(Obj obj)
 
 /****************************************************************************
 **
-*F  PrintObjHandler( <self>, <obj> )  . . . . . . . .  handler for 'PrintObj'
+*F  FuncPRINT_OBJ( <self>, <obj> ) . . . . . . . . . . handler for 'PrintObj'
 */
-static Obj PrintObjHandler(Obj self, Obj obj)
+static Obj FuncPRINT_OBJ(Obj self, Obj obj)
 {
     PrintObj( obj );
-    return 0L;
+    return 0;
 }
 
 UInt SetPrintObjState(UInt state)
@@ -1012,12 +1059,15 @@ UInt SetPrintObjState(UInt state)
 
 void SetPrintObjIndex(Int index)
 {
-    MODULE_STATE(Objects).PrintObjIndex = index;
+    UInt depth = MODULE_STATE(Objects).PrintObjDepth;
+    if (depth == 0)
+        ErrorQuit("SetPrintObjIndex: bad state, PrintObjDepth is 0", 0, 0);
+    MODULE_STATE(Objects).PrintObjIndices[depth - 1] = index;
 }
 
 static Obj FuncSET_PRINT_OBJ_INDEX(Obj self, Obj index)
 {
-    SetPrintObjIndex(GetSmallInt("SET_PRINT_OBJ_INDEX", index));
+    SetPrintObjIndex(GetSmallInt(SELF_NAME, index));
     return 0;
 }
 
@@ -1034,85 +1084,59 @@ static Obj FuncSET_PRINT_OBJ_INDEX(Obj self, Obj index)
 
 static Obj ViewObjOper;
 
-void            ViewObj (
-    Obj                 obj )
+void ViewObj(Obj obj)
 {
-    Int                 i;              /* loop variable                   */
-    UInt                lastPV;
-
-    /* No check for interrupts here, viewing should not take so long that
-       it is necessary */
-
 #if defined(HPCGAP) && !defined(WARD_ENABLED)
     if (IS_BAG_REF(obj) && !CheckReadAccess(obj)) {
-         PrintInaccessibleObject(obj);
-         return;
+        PrintInaccessibleObject(obj);
+        return;
     }
 #endif
 
     ObjectsModuleState * os = &MODULE_STATE(Objects);
 
-    lastPV = os->LastPV;
-    os->LastPV = 2;
-    
-    /* if <obj> is a subobject, then mark and remember the superobject     */
-
 #ifdef HPCGAP
     InitPrintObjStack(os);
 #endif
 
-    if ( 0 < os->PrintObjDepth ) {
-        os->PrintObjThiss[os->PrintObjDepth-1]   = os->PrintObjThis;
-        os->PrintObjIndices[os->PrintObjDepth-1] = os->PrintObjIndex;
-    }
-
-    /* handle the <obj>                                                    */
-    os->PrintObjDepth += 1;
-    os->PrintObjThis   = obj;
-    os->PrintObjIndex  = 0;
-
-    /* dispatch to the appropriate viewing function                       */
-
-    if ( ! IS_ON_PRINT_STACK(os, os->PrintObjThis) ) {
-      if (os->PrintObjDepth < MAXPRINTDEPTH) {
-        DoOperation1Args( ViewObjOper, obj );
-      }
-      else {
-        /* don't recurse any more */
-        Pr("\nviewing stopped, too many recursion levels!\n", 0L, 0L);
-      }
-    }
-
-    /* or view the path                                                   */
-    else {
-        Pr( "~", 0L, 0L );
-        for ( i = 0; os->PrintObjThis != os->PrintObjThiss[i]; i++ ) {
-            (*PrintPathFuncs[ TNUM_OBJ(os->PrintObjThiss[i]) ])
-                ( os->PrintObjThiss[i], os->PrintObjIndices[i] );
+    // print the path if <obj> is on the stack
+    if (IS_ON_PRINT_STACK(os, obj)) {
+        Pr("~", 0, 0);
+        for (int i = 0; obj != os->PrintObjThiss[i]; i++) {
+            PRINT_PATH(os->PrintObjThiss[i], os->PrintObjIndices[i]);
         }
     }
 
-    /* done with <obj>                                                     */
-    os->PrintObjDepth -= 1;
+    // dispatch to the appropriate viewing function
+    else if (os->PrintObjDepth < MAXPRINTDEPTH) {
 
-    /* if <obj> is a subobject, then restore and unmark the superobject    */
-    if ( 0 < os->PrintObjDepth ) {
-        os->PrintObjThis  = os->PrintObjThiss[os->PrintObjDepth-1];
-        os->PrintObjIndex = os->PrintObjIndices[os->PrintObjDepth-1];
+        // push obj on the stack
+        os->PrintObjThiss[os->PrintObjDepth] = obj;
+        os->PrintObjIndices[os->PrintObjDepth] = 0;
+        os->PrintObjDepth++;
+
+        UInt lastPV = os->LastPV;
+        os->LastPV = 2;
+        DoOperation1Args(ViewObjOper, obj);
+        os->LastPV = lastPV;
+
+        // pop <obj> from the stack
+        os->PrintObjDepth--;
     }
-
-    os->LastPV = lastPV;
+    else {
+        Pr("\nviewing stopped, too many recursion levels!\n", 0, 0);
+    }
 }
 
 
 /****************************************************************************
 **
-*F  FuncViewObj( <self>, <obj> )  . . . . . . . .  handler for 'ViewObj'
+*F  FuncVIEW_OBJ( <self>, <obj> ) . . . . . . . . . . . handler for 'ViewObj'
 */
-static Obj FuncViewObj(Obj self, Obj obj)
+static Obj FuncVIEW_OBJ(Obj self, Obj obj)
 {
     ViewObj( obj );
-    return 0L;
+    return 0;
 }
 
 
@@ -1130,9 +1154,8 @@ void (* PrintPathFuncs [ LAST_REAL_TNUM /* +PRINTING */+1 ])( Obj obj, Int indx 
 
 static void PrintPathError(Obj obj, Int indx)
 {
-    ErrorQuit(
-        "Panic: tried to print a path of unsupported type '%s'",
-        (Int)TNAM_OBJ(obj), 0L );
+    ErrorQuit("Panic: tried to print a path of unsupported type '%s'",
+              (Int)TNAM_OBJ(obj), 0);
 }
 
 
@@ -1150,15 +1173,6 @@ static Obj TypeComObj(Obj obj)
     return result;
 }
 
-static void SetTypeComObj(Obj obj, Obj type)
-{
-#ifdef HPCGAP
-    ReadGuard(obj);
-    MEMBAR_WRITE();
-#endif
-    SET_TYPE_COMOBJ(obj, type);
-    CHANGED_BAG(obj);
-}
 #endif
 
 
@@ -1188,36 +1202,19 @@ static Obj FuncIS_COMOBJ(Obj self, Obj obj)
 */
 static Obj FuncSET_TYPE_COMOBJ(Obj self, Obj obj, Obj type)
 {
-#ifdef HPCGAP
     switch (TNUM_OBJ(obj)) {
-      case T_PREC:
-        MEMBAR_WRITE();
-        SET_TYPE_COMOBJ(obj, type);
-        RetypeBag( obj, T_COMOBJ );
-        CHANGED_BAG( obj );
-        break;
-      case T_COMOBJ:
-        SetTypeComObj(obj, type);
-        break;
-      case T_AREC:
-      case T_ACOMOBJ:
-        SET_TYPE_OBJ( obj, type );
-        RetypeBag( obj, T_ACOMOBJ );
-        CHANGED_BAG( obj );
-        break;
-      default:
-        ErrorMayQuit("You can't make component object from a %s.",
-                     (Int)TNAM_OBJ(obj), 0L);
-    }
-#else
-    if (TNUM_OBJ(obj) == T_PREC+IMMUTABLE)
-        ErrorMayQuit(
-            "You can't make a component object from an immutable object", 0L,
-            0L);
-    SET_TYPE_COMOBJ(obj, type);
-    RetypeBag( obj, T_COMOBJ );
-    CHANGED_BAG( obj );
+    case T_PREC:
+    case T_COMOBJ:
+#ifdef HPCGAP
+    case T_AREC:
+    case T_ACOMOBJ:
 #endif
+        SET_TYPE_OBJ(obj, type);
+        break;
+    default:
+        ErrorMayQuit("You can't make a component object from a %s",
+                     (Int)TNAM_OBJ(obj), 0);
+    }
     return obj;
 }
 
@@ -1277,7 +1274,7 @@ Obj ElmComObj(Obj obj, UInt rnam)
     }
 }
 
-Int IsbComObj(Obj obj, UInt rnam)
+BOOL IsbComObj(Obj obj, UInt rnam)
 {
     switch (TNUM_OBJ(obj)) {
     case T_COMOBJ:
@@ -1304,16 +1301,6 @@ static Obj TypePosObj(Obj obj)
     MEMBAR_READ();
 #endif
     return result;
-}
-
-static void SetTypePosObj(Obj obj, Obj type)
-{
-#ifdef HPCGAP
-    ReadGuard(obj);
-    MEMBAR_WRITE();
-#endif
-    SET_TYPE_POSOBJ(obj, type);
-    CHANGED_BAG(obj);
 }
 #endif
 
@@ -1342,30 +1329,27 @@ static Obj FuncIS_POSOBJ(Obj self, Obj obj)
 */
 static Obj FuncSET_TYPE_POSOBJ(Obj self, Obj obj, Obj type)
 {
-#ifdef HPCGAP
     switch (TNUM_OBJ(obj)) {
-      case T_APOSOBJ:
-      case T_ALIST:
-      case T_FIXALIST:
-        SET_TYPE_OBJ( obj, type );
-        RetypeBag( obj, T_APOSOBJ );
-        CHANGED_BAG( obj );
+#ifdef HPCGAP
+    case T_APOSOBJ:
+    case T_ALIST:
+    case T_FIXALIST:
+#endif
+    case T_POSOBJ:
         break;
-      case T_POSOBJ:
-        SetTypePosObj( obj, type );
-        break;
-      default:
-        MEMBAR_WRITE();
-        SET_TYPE_POSOBJ(obj, type);
-        RetypeBag( obj, T_POSOBJ );
-        CHANGED_BAG( obj );
+    default:
+        if (IS_STRING_REP(obj)) {
+            // FIXME/TODO: Hap calls Objectify on a string...
+        }
+        else if (!IS_PLIST(obj)) {
+            ErrorMayQuit("You can't make a positional object from a %s",
+                         (Int)TNAM_OBJ(obj), 0);
+        }
+        // TODO: we should also reject immutable plists, but that risks
+        // breaking existing code
         break;
     }
-#else
-    RetypeBag( obj, T_POSOBJ );
-    SET_TYPE_POSOBJ(obj, type);
-    CHANGED_BAG( obj );
-#endif
+    SET_TYPE_OBJ(obj, type);
     return obj;
 }
 
@@ -1484,9 +1468,9 @@ Obj ElmPosObj(Obj obj, Int idx)
     return elm;
 }
 
-Int IsbPosObj(Obj obj, Int idx)
+BOOL IsbPosObj(Obj obj, Int idx)
 {
-    Int isb;
+    BOOL isb;
     if (TNUM_OBJ(obj) == T_POSOBJ) {
 #ifdef HPCGAP
         // Because BindOnce() functions can reallocate the list even if they
@@ -1494,7 +1478,7 @@ Int IsbPosObj(Obj obj, Int idx)
         // positional objects.
         const Bag * contents = CONST_PTR_BAG(obj);
         if (idx > SIZE_BAG_CONTENTS(contents) / sizeof(Obj) - 1)
-            isb = 0;
+            isb = FALSE;
         else
             isb = contents[idx] != 0;
 #else
@@ -1560,10 +1544,7 @@ static Obj FuncSET_TYPE_DATOBJ(Obj self, Obj obj, Obj type)
     ReadGuard( obj );
 #endif
     SET_TYPE_DATOBJ(obj, type);
-#ifdef HPCGAP
-    if (TNUM_OBJ(obj) != T_DATOBJ)
-#endif
-      RetypeBag( obj, T_DATOBJ );
+    RetypeBag( obj, T_DATOBJ );
     CHANGED_BAG( obj );
     return obj;
 #endif
@@ -1609,15 +1590,15 @@ static Obj FuncIS_IDENTICAL_OBJ(Obj self, Obj obj1, Obj obj2)
 **  size and type have already been saved
 **  No saving function may allocate any bag
 */
-
+#ifdef GAP_ENABLE_SAVELOAD
 void (*SaveObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 
 void SaveObjError( Obj obj )
 {
-  ErrorQuit(
-            "Panic: tried to save an object of unsupported type '%s'",
-            (Int)TNAM_OBJ(obj), 0L );
+    ErrorQuit("Panic: tried to save an object of unsupported type '%s'",
+              (Int)TNAM_OBJ(obj), 0);
 }
+#endif
 
 
 /****************************************************************************
@@ -1634,22 +1615,23 @@ void SaveObjError( Obj obj )
 **  contains the bag in question
 **  No loading function may allocate any bag
 */
-
+#ifdef GAP_ENABLE_SAVELOAD
 void (*LoadObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 
 void LoadObjError( Obj obj )
 {
-  ErrorQuit(
-            "Panic: tried to load an object of unsupported type '%s'",
-            (Int)TNAM_OBJ(obj), 0L );
+    ErrorQuit("Panic: tried to load an object of unsupported type '%s'",
+              (Int)TNAM_OBJ(obj), 0);
 }
+#endif
+
 
 /****************************************************************************
 **
 *F  SaveComObj( Obj comobj)
 **
 */
-
+#ifdef GAP_ENABLE_SAVELOAD
 static void SaveComObj(Obj comobj)
 {
   UInt len,i;
@@ -1662,13 +1644,14 @@ static void SaveComObj(Obj comobj)
       SaveSubObj(GET_ELM_PREC(comobj, i));
     }
 }
+#endif
 
 /****************************************************************************
 **
 *F  SavePosObj( Obj posobj)
 **
 */
-
+#ifdef GAP_ENABLE_SAVELOAD
 static void SavePosObj(Obj posobj)
 {
   UInt len,i;
@@ -1679,6 +1662,7 @@ static void SavePosObj(Obj posobj)
       SaveSubObj(CONST_ADDR_OBJ(posobj)[i]);
     }
 }
+#endif
 
 /****************************************************************************
 **
@@ -1687,7 +1671,7 @@ static void SavePosObj(Obj posobj)
 **  Here we lose endianness protection, because we don't know if this is really
 **  UInts, or if it might be smaller data
 */
-
+#ifdef GAP_ENABLE_SAVELOAD
 static void SaveDatObj(Obj datobj)
 {
   UInt len,i;
@@ -1700,13 +1684,14 @@ static void SaveDatObj(Obj datobj)
       SaveUInt(*ptr++);
     }
 }
+#endif
 
 /****************************************************************************
 **
 *F  LoadComObj( Obj comobj)
 **
 */
-
+#ifdef GAP_ENABLE_SAVELOAD
 static void LoadComObj(Obj comobj)
 {
   UInt len,i;
@@ -1719,13 +1704,14 @@ static void LoadComObj(Obj comobj)
       SET_ELM_PREC(comobj, i, LoadSubObj());
     }
 }
+#endif
 
 /****************************************************************************
 **
 *F  LoadPosObj( Obj posobj)
 **
 */
-
+#ifdef GAP_ENABLE_SAVELOAD
 static void LoadPosObj(Obj posobj)
 {
   UInt len,i;
@@ -1736,6 +1722,7 @@ static void LoadPosObj(Obj posobj)
       ADDR_OBJ(posobj)[i] = LoadSubObj();
     }
 }
+#endif
 
 /****************************************************************************
 **
@@ -1744,7 +1731,7 @@ static void LoadPosObj(Obj posobj)
 **  Here we lose endianness protection, because we don't know if this is really
 **  UInts, or if it might be smaller data
 */
-
+#ifdef GAP_ENABLE_SAVELOAD
 static void LoadDatObj(Obj datobj)
 {
   UInt len,i;
@@ -1757,6 +1744,7 @@ static void LoadDatObj(Obj datobj)
       *ptr ++ = LoadUInt();
     }
 }
+#endif
 
 
 /****************************************************************************
@@ -1794,6 +1782,9 @@ static Obj FuncCLONE_OBJ(Obj self, Obj dst, Obj src)
     }
     if ( IS_FFE(src) ) {
         ErrorMayQuit("finite field elements cannot be cloned", 0, 0);
+    }
+    if ( TNUM_OBJ(src) == T_BOOL ) {
+        ErrorMayQuit("booleans cannot be cloned", 0, 0);
     }
 
 #ifdef HPCGAP
@@ -1944,14 +1935,32 @@ static Obj FuncDEBUG_TNUM_NAMES(Obj self)
         START_SYMBOLIC_TNUM(FIRST_LIST_TNUM);
         START_SYMBOLIC_TNUM(FIRST_PLIST_TNUM);
         START_SYMBOLIC_TNUM(FIRST_OBJSET_TNUM);
-        START_SYMBOLIC_TNUM(FIRST_EXTERNAL_TNUM);
-        START_SYMBOLIC_TNUM(FIRST_PACKAGE_TNUM);
 #ifdef HPCGAP
         START_SYMBOLIC_TNUM(FIRST_SHARED_TNUM);
+        START_SYMBOLIC_TNUM(FIRST_ATOMIC_TNUM);
+        START_SYMBOLIC_TNUM(FIRST_ATOMIC_LIST_TNUM);
+        START_SYMBOLIC_TNUM(FIRST_ATOMIC_RECORD_TNUM);
 #endif
+        START_SYMBOLIC_TNUM(FIRST_EXTERNAL_TNUM);
+        START_SYMBOLIC_TNUM(FIRST_PACKAGE_TNUM);
         const char *name = TNAM_TNUM(k);
         Pr("%3d: %s", k, (Int)indentStr);
         Pr("%s%s\n", (Int)indentStr, (Int)(name ? name : "."));
+        if (name == 0 && k >= FIRST_PACKAGE_TNUM) {
+            // scan ahead and skip over all unused package slots
+            int i = k + 1;
+            while (i <= LAST_PACKAGE_TNUM && TNAM_TNUM(i) == 0)
+                i++;
+            i--;
+            if (i > k + 1)
+                Pr("...  %s%s.\n", (Int)indentStr, (Int)indentStr);
+            if (i > k) {
+                Pr("%3d: %s", i, (Int)indentStr);
+                Pr("%s.\n", (Int)indentStr, 0);
+            }
+            k = i;
+        }
+
         STOP_SYMBOLIC_TNUM(LAST_MULT_TNUM);
         STOP_SYMBOLIC_TNUM(LAST_CONSTANT_TNUM);
         STOP_SYMBOLIC_TNUM(LAST_RECORD_TNUM);
@@ -1959,11 +1968,14 @@ static Obj FuncDEBUG_TNUM_NAMES(Obj self)
         STOP_SYMBOLIC_TNUM(LAST_LIST_TNUM);
         STOP_SYMBOLIC_TNUM(LAST_OBJSET_TNUM);
         STOP_SYMBOLIC_TNUM(LAST_IMM_MUT_TNUM);
-        STOP_SYMBOLIC_TNUM(LAST_EXTERNAL_TNUM);
-        STOP_SYMBOLIC_TNUM(LAST_PACKAGE_TNUM);
 #ifdef HPCGAP
         STOP_SYMBOLIC_TNUM(LAST_SHARED_TNUM);
+        STOP_SYMBOLIC_TNUM(LAST_ATOMIC_RECORD_TNUM);
+        STOP_SYMBOLIC_TNUM(LAST_ATOMIC_LIST_TNUM);
+        STOP_SYMBOLIC_TNUM(LAST_ATOMIC_TNUM);
 #endif
+        STOP_SYMBOLIC_TNUM(LAST_PACKAGE_TNUM);
+        STOP_SYMBOLIC_TNUM(LAST_EXTERNAL_TNUM);
         STOP_SYMBOLIC_TNUM(LAST_REAL_TNUM);
     }
     return 0;
@@ -2015,14 +2027,9 @@ static StructGVarFilt GVarFilts [] = {
 */
 static StructGVarOper GVarOpers [] = {
 
-    { "SHALLOW_COPY_OBJ", 1, "obj", &ShallowCopyObjOper,
-      ShallowCopyObjHandler, "src/objects.c:SHALLOW_COPY_OBJ" },
-
-    { "PRINT_OBJ", 1, "obj", &PrintObjOper,
-      PrintObjHandler, "src/objects.c:PRINT_OBJ" },
-
-    { "VIEW_OBJ", 1, "obj", &ViewObjOper,
-      FuncViewObj, "src/objects.c:VIEW_OBJ" },
+    GVAR_OPER_1ARGS(SHALLOW_COPY_OBJ, obj, &ShallowCopyObjOper),
+    GVAR_OPER_1ARGS(PRINT_OBJ, obj, &PrintObjOper),
+    GVAR_OPER_1ARGS(VIEW_OBJ, obj, &ViewObjOper),
 
     { 0, 0, 0, 0, 0, 0 }
 
@@ -2035,27 +2042,27 @@ static StructGVarOper GVarOpers [] = {
 */
 static StructGVarFunc GVarFuncs[] = {
 
-    GVAR_FUNC(FAMILY_TYPE, 1, "type"),
-    GVAR_FUNC(TYPE_OBJ, 1, "obj"),
-    GVAR_FUNC(SET_TYPE_OBJ, 2, "obj, type"),
-    GVAR_FUNC(FAMILY_OBJ, 1, "obj"),
-    GVAR_FUNC(IMMUTABLE_COPY_OBJ, 1, "obj"),
-    GVAR_FUNC(DEEP_COPY_OBJ, 1, "obj"),
-    GVAR_FUNC(IS_IDENTICAL_OBJ, 2, "obj1, obj2"),
-    GVAR_FUNC(IS_COMOBJ, 1, "obj"),
-    GVAR_FUNC(SET_TYPE_COMOBJ, 2, "obj, type"),
-    GVAR_FUNC(IS_POSOBJ, 1, "obj"),
-    GVAR_FUNC(SET_TYPE_POSOBJ, 2, "obj, type"),
-    GVAR_FUNC(LEN_POSOBJ, 1, "obj"),
-    GVAR_FUNC(IS_DATOBJ, 1, "obj"),
-    GVAR_FUNC(SET_TYPE_DATOBJ, 2, "obj, type"),
-    GVAR_FUNC(CLONE_OBJ, 2, "dst, src"),
-    GVAR_FUNC(SWITCH_OBJ, 2, "obj1, obj2"),
-    GVAR_FUNC(FORCE_SWITCH_OBJ, 2, "obj1, obj2"),
-    GVAR_FUNC(SET_PRINT_OBJ_INDEX, 1, "index"),
-    GVAR_FUNC(MakeImmutable, 1, "obj"),
-
-    GVAR_FUNC(DEBUG_TNUM_NAMES, 0, ""),
+    GVAR_FUNC_1ARGS(FAMILY_TYPE, type),
+    GVAR_FUNC_1ARGS(TYPE_OBJ, obj),
+    GVAR_FUNC_2ARGS(SET_TYPE_OBJ, obj, type),
+    GVAR_FUNC_1ARGS(FAMILY_OBJ, obj),
+    GVAR_FUNC_1ARGS(IMMUTABLE_COPY_OBJ, obj),
+    GVAR_FUNC_1ARGS(DEEP_COPY_OBJ, obj),
+    GVAR_FUNC_2ARGS(IS_IDENTICAL_OBJ, obj1, obj2),
+    GVAR_FUNC_1ARGS(IS_COMOBJ, obj),
+    GVAR_FUNC_2ARGS(SET_TYPE_COMOBJ, obj, type),
+    GVAR_FUNC_1ARGS(IS_POSOBJ, obj),
+    GVAR_FUNC_2ARGS(SET_TYPE_POSOBJ, obj, type),
+    GVAR_FUNC_1ARGS(LEN_POSOBJ, obj),
+    GVAR_FUNC_1ARGS(IS_DATOBJ, obj),
+    GVAR_FUNC_2ARGS(SET_TYPE_DATOBJ, obj, type),
+    GVAR_FUNC_2ARGS(CLONE_OBJ, dst, src),
+    GVAR_FUNC_2ARGS(SWITCH_OBJ, obj1, obj2),
+    GVAR_FUNC_2ARGS(FORCE_SWITCH_OBJ, obj1, obj2),
+    GVAR_FUNC_1ARGS(SET_PRINT_OBJ_INDEX, index),
+    GVAR_FUNC_1ARGS(MakeImmutable, obj),
+    GVAR_FUNC_1ARGS(GET_TNAM_FROM_TNUM, obj),
+    GVAR_FUNC_0ARGS(DEBUG_TNUM_NAMES),
 
     { 0, 0, 0, 0, 0 }
 
@@ -2085,16 +2092,11 @@ static Int InitKernel (
     for ( t = FIRST_REAL_TNUM; t <= LAST_REAL_TNUM; t++ ) {
         assert(TypeObjFuncs[ t ] == 0);
         TypeObjFuncs[ t ] = TypeObjError;
-        SetTypeObjFuncs [ t] = SetTypeObjError;
     }
 
     TypeObjFuncs[ T_COMOBJ ] = TypeComObj;
     TypeObjFuncs[ T_POSOBJ ] = TypePosObj;
     TypeObjFuncs[ T_DATOBJ ] = TypeDatObj;
-
-    SetTypeObjFuncs [ T_COMOBJ ] = SetTypeComObj;
-    SetTypeObjFuncs [ T_POSOBJ ] = SetTypePosObj;
-    SetTypeObjFuncs [ T_DATOBJ ] = SetTypeDatObj;
 
     /* functions for 'to-be-defined' objects                               */
     ImportFuncFromLibrary( "IsToBeDefinedObj", &IsToBeDefinedObj );
@@ -2177,6 +2179,7 @@ static Int InitKernel (
         PrintPathFuncs[ t ] = PrintPathError;
     }
 
+#ifdef GAP_ENABLE_SAVELOAD
     /* enter 'SaveObjError' and 'LoadObjError' for all types initially     */
     for ( t = FIRST_REAL_TNUM;  t <= LAST_REAL_TNUM;  t++ ) {
         assert(SaveObjFuncs[ t ] == 0);
@@ -2194,6 +2197,7 @@ static Int InitKernel (
     LoadObjFuncs[ T_COMOBJ ] = LoadComObj;
     LoadObjFuncs[ T_POSOBJ ] = LoadPosObj;
     LoadObjFuncs[ T_DATOBJ ] = LoadDatObj;
+#endif
 
     for (t = FIRST_REAL_TNUM; t <= LAST_REAL_TNUM; t++ ) {
         assert(MakeImmutableObjFuncs[ t ] == 0);
@@ -2209,7 +2213,6 @@ static Int InitKernel (
     ReadOnlyDatObjs = (getenv("GAP_READONLY_DATOBJS") != 0);
 #endif
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -2356,7 +2359,6 @@ static Int InitLibrary (
     AssConstantGVar(GVarName("INTOBJ_MIN"), INTOBJ_MIN);
     AssConstantGVar(GVarName("INTOBJ_MAX"), INTOBJ_MAX);
 
-    /* return success                                                      */
     return 0;
 }
 

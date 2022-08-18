@@ -32,8 +32,8 @@ if LoadPackage( "atlasrep" ) <> true then
 else
   # Avoid binding global variables.
   AGR.TestInst:= function()
-    local pref, filename, io, wgetpath, wget, bad, msg, filenames, dirs,
-          id1, id2, oldfiles, file, newid1, newid2, i, upd;
+    local pref, bad, dir, filename, io, wgetpath, wget, msg, filenames, dirs,
+          id, oldfiles, file, newid, i, upd;
 
     if UserPreference( "AtlasRep", "AtlasRepAccessRemoteFiles" ) <> true then
       Print( "#I  Package `atlasrep':  ",
@@ -43,17 +43,21 @@ else
       return;
     fi;
 
-    # Test whether the data directories are writable.
     pref:= UserPreference( "AtlasRep", "AtlasRepDataDirectory" );
-    filename:= Concatenation( pref, "dataword" );
-    if not IsWritableFile( filename ) then
-      Print( "#I  Package `atlasrep':  The package directory `dataword'\n",
-             "#I  (", filename, ") is not writable.\n" );
-    fi;
-    filename:= Concatenation( pref, "datagens" );
-    if not IsWritableFile( filename ) then
-      Print( "#I  Package `atlasrep':  The package directory `datagens'\n", 
-             "#I  (", filename, ") is not writable.\n" );
+    if not IsEmpty( pref ) then
+      # Test whether the data directories are writable.
+      bad:= [];
+      for dir in [ "dataext", "dataword", "datagens" ] do
+        filename:= Concatenation( pref, dir );
+        if not IsWritableFile( filename ) then
+          Add( bad, dir );
+        fi;
+      od;
+      if not IsEmpty( bad ) then
+        Print( "#I  Package `atlasrep':  The subdirectories `", bad, "'\n",
+               "#I  of `", pref, "' are not writable.\n" );
+        return;
+      fi;
     fi;
 
     # Check whether the requirements for transferring files are satisfied.
@@ -99,14 +103,10 @@ else
     # (Remove some files if necessary and access them again.)
     filenames:= [];
     dirs:= [ Directory( filename ) ];
-    id1:= OneAtlasGeneratingSet( "A5", Characteristic, 2 );
-    if id1 <> fail then
+    id:= OneAtlasGeneratingSet( "A5", Characteristic, 2 );
+    if id <> fail then
       Append( filenames,
-              List( id1.identifier[2], name -> Filename( dirs, name ) ) );
-    fi;
-    id2:= OneAtlasGeneratingSet( "A5", Characteristic, 0 );
-    if id2 <> fail then
-      Add( filenames, Filename( dirs, id2.identifier[2] ) );
+              List( id.identifier[2], name -> Filename( dirs, name ) ) );
     fi;
     filenames:= Filtered( filenames, x -> x <> fail );
     if IsEmpty( filenames ) then
@@ -116,14 +116,12 @@ else
              "#I  `SetUserPreference( \"AtlasRep\", ",
              "\"AtlasRepAccessRemoteFiles\", false )'\n" );
     else
-      oldfiles:= List( filenames, StringFile  );
+      oldfiles:= List( filenames, StringFile );
       for file in filenames do
         RemoveFile( file );
       od;
-      newid1:= OneAtlasGeneratingSet( "A5", Characteristic, 2 );
-      newid2:= OneAtlasGeneratingSet( "A5", Characteristic, 0 );
-      if    newid1 = fail or newid2 = fail
-         or id1 <> newid1 or id2 <> newid2 then
+      newid:= OneAtlasGeneratingSet( "A5", Characteristic, 2 );
+      if newid = fail or id <> newid then
         # Restore the files.
         for i in [ 1 .. Length( filenames ) ] do
           FileString( filenames[i], oldfiles[i] );

@@ -20,6 +20,15 @@
 
 ############################################################################
 ##
+##  Until GAP 4.12 is out, we do not have 'IsMatrixOrMatrixObj'.
+##
+if not IsBound( IsMatrixOrMatrixObj ) then
+  BindGlobal( "IsMatrixOrMatrixObj", IsTable );
+fi;
+
+
+############################################################################
+##
 #V  CMeatAxe
 ##
 ##  <ManSection>
@@ -120,6 +129,13 @@ DeclareInfoClass( "InfoCMeatAxe" );
 ##  that corresponds to the residue class of the indeterminate,
 ##  modulo the ideal spanned by the Conway polynomial of degree <M>d</M>
 ##  over the field with <M>p</M> elements.
+##  <P/>
+##  The finite fields introduced by the <Package>StandardFF</Package> package
+##  <Cite Key="StandardFF"/> are supported by <Ref Func="FFList"/> and
+##  <Ref Var="FFLists"/>, in the sense that the bijection defined by
+##  <Ref Func="StandardIsomorphismGF" BookName="StandardFF"/> is applied
+##  automatically when <A>F</A> is a field in the filter
+##  <Ref Prop="IsStandardFiniteField" BookName="StandardFF"/>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -363,11 +379,11 @@ DeclareGlobalFunction( "ScanMeatAxeFile" );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareOperation( "MeatAxeString", [ IsTable, IsPosInt ] );
+DeclareOperation( "MeatAxeString", [ IsMatrixOrMatrixObj, IsPosInt ] );
 DeclareOperation( "MeatAxeString",
     [ IsPermCollection and IsList, IsPosInt ] );
 DeclareOperation( "MeatAxeString", [ IsPerm, IsPosInt, IsList ] );
-DeclareOperation( "MeatAxeString", [ IsTable and IsCyclotomicCollColl ] );
+DeclareOperation( "MeatAxeString", [ IsMatrixOrMatrixObj ] );
 
 
 #############################################################################

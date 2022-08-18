@@ -3,7 +3,7 @@
                           [1XHPC-GAP --- Reference Manual[101X
   
   
-                           Release 4.11.1, 2021-03-02
+                           Release 4.12.0, 2022-08-18
   
   
                                  The GAP Group
@@ -24,7 +24,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0YCopyright  ©  (1987-2021)  for  the  core  part of the [5XGAP[105X system by the [5XGAP[105X
+  [33X[0;0YCopyright  ©  (1987-2022)  for  the  core  part of the [5XGAP[105X system by the [5XGAP[105X
   Group.[133X
   
   [33X[0;0YMost  parts  of this distribution, including the core part of the [5XGAP[105X system

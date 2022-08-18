@@ -13,7 +13,7 @@
 **  For the full definition  of sets see chapter "Sets" in the {\GAP} Manual.
 **  Read also section "More about Sets" about the internal flag for sets.
 **
-**  The second part consists  of the functions 'IsSet', 'SetList', 'SetList',
+**  The second part consists  of the functions 'IsSet', 'SetList',
 **  'IsEqualSet',  'IsSubsetSet',    'AddSet',    'RemoveSet',    'UniteSet',
 **  'IntersectSet',  and 'SubtractSet'.  These  functions make it possible to
 **  make sets, either  by converting a  list to  a  set, or  by computing the
@@ -39,6 +39,11 @@
     RequireArgumentCondition(funcname, op, IS_MUTABLE_OBJ(op) && IsSet(op),  \
                              "must be a mutable proper set")
 
+static BOOL IsPlainSet(Obj list)
+{
+    return IS_PLIST(list) && IS_SSORT_LIST(list);
+}
+
 
 /****************************************************************************
 **
@@ -48,51 +53,20 @@
 **  otherwise.  A proper set is a  list that has no holes,
 **  no duplicates, and is sorted.  As a side effect 'IsSet' changes the
 **  type of proper sets as appropriate.
-**
-**  A typical call in the set functions looks like this:
-**
-**  |    if ( ! IsSet(list) )  list = SetList(list); |
-**
-**  This tests if 'list' is a proper set and the type  is changed 
-**  If it is not  then 'SetList' is  called to make  a copy of 'list', remove
-**  the holes, sort the copy, and remove the duplicates.  
-** 
 */
-
-Int IsSet ( 
-    Obj                 list )
+static BOOL IsSet(Obj list)
 {
-    Int                 isSet;          /* result                          */
-
-    /* if <list> is a plain list                                           */
-    if ( IS_PLIST( list ) ) {
-
-        /* if <list> is the empty list, it is a set (:-)                     */
-        if ( LEN_PLIST(list) == 0 ) {
-            RetypeBagSMIfWritable(list, T_PLIST_EMPTY);
-            isSet = 1;
-        }
-
-        /* if <list>  strictly sorted, it is a set            */
-        else if ( IS_SSORT_LIST(list) ) {
-            isSet = 1;
-        }
-
-        /* otherwise it is not a set                                       */
-        else {
-            isSet = 0;
-        }
-
-    }
+    if (IsPlainSet(list))
+        return TRUE;
 
     /* if it is another small list                                         */
-    else if ( IS_SMALL_LIST(list) ) {
+    if ( IS_SMALL_LIST(list) ) {
 
         /* if <list> is the empty list, it is a set (:-)                     */
         if ( LEN_LIST(list) == 0 ) {
             PLAIN_LIST( list );
             RetypeBagSMIfWritable(list, T_PLIST_EMPTY);
-            isSet = 1;
+            return TRUE;
         }
 
         /* if <list> strictly sorted, it is a set            */
@@ -100,23 +74,12 @@ Int IsSet (
             PLAIN_LIST( list );
             /* SET_FILT_LIST( list, FN_IS_HOMOG ); */
             SET_FILT_LIST( list, FN_IS_SSORT );
-            isSet = 1;
-        }
-
-        /* otherwise it is not a set                                       */
-        else {
-            isSet = 0;
+            return TRUE;
         }
 
     }
 
-    /* otherwise it is certainly not a set                                 */
-    else {
-        isSet = 0;
-    }
-
-    /* return the result                                                   */
-    return isSet;
+    return FALSE;
 }
 
 
@@ -126,6 +89,7 @@ Int IsSet (
 **
 **  'SetList' returns  a new set that contains  the elements of <list>.  Note
 **  that 'SetList' returns a new plain list even if <list> was already a set.
+**  In this case 'SetList' is equal to 'ShallowCopy'.
 **
 **  'SetList' makes a copy  of the list  <list>, removes the holes, sorts the
 **  copy and finally removes duplicates, which must appear next to each other
@@ -202,8 +166,7 @@ static Obj FuncLIST_SORTED_LIST(Obj self, Obj list)
 {
     Obj                 set;            /* result                          */
 
-    /* check the argument                                                  */
-    RequireSmallList("Set", list);
+    RequireSmallList(SELF_NAME, list);
 
     /* if the list is empty create a new empty list                        */
     if ( LEN_LIST(list) == 0 ) {
@@ -250,7 +213,7 @@ static Int EqSet(Obj listL, Obj listR)
     lenL = LEN_PLIST( listL );
     lenR = LEN_PLIST( listR );
     if ( lenL != lenR ) {
-        return 0L;
+        return 0;
     }
 
     /* loop over the elements and compare them                             */
@@ -258,24 +221,25 @@ static Int EqSet(Obj listL, Obj listR)
         elmL = ELM_PLIST( listL, i );
         elmR = ELM_PLIST( listR, i );
         if ( ! EQ( elmL, elmR ) ) {
-            return 0L;
+            return 0;
         }
     }
 
     /* no differences found, the lists are equal                           */
-    return 1L;
+    return 1;
 }
 
 static Obj FuncIS_EQUAL_SET(Obj self, Obj list1, Obj list2)
 {
-    /* check the arguments, convert to sets if necessary                   */
-    RequireSmallList("IsEqualSet", list1);
-    if ( ! IsSet( list1 ) )  list1 = SetList( list1 );
-    RequireSmallList("IsEqualSet", list2);
-    if ( ! IsSet( list2 ) )  list2 = SetList( list2 );
+    RequireSmallList(SELF_NAME, list1);
+    RequireSmallList(SELF_NAME, list2);
+    if (!IS_SSORT_LIST(list1)) list1 = SetList(list1);
+    if (!IS_SSORT_LIST(list2)) list2 = SetList(list2);
 
     /* and now compare them                                                */
-    return (EqSet( list1, list2 ) ? True : False );
+    if (IS_PLIST(list1) && IS_PLIST(list2))
+        return EqSet(list1, list2) ? True : False;
+    return EQ(list1, list2) ? True : False;
 }
 
 
@@ -300,68 +264,34 @@ static Obj FuncIS_SUBSET_SET(Obj self, Obj set1, Obj set2)
     UInt                i2;             /* index into the right set        */
     Obj                 e1;             /* element of left  set            */
     Obj                 e2;             /* element of right set            */
-    UInt                pos;            /* position                        */
 
-    /* check the arguments, convert to sets if necessary                   */
-    RequireSmallList("IsSubsetSet", set1);
-    RequireSmallList("IsSubsetSet", set2);
-    if ( ! IsSet( set1 ) )  set1 = SetList( set1 );
-    if ( ! IsSet( set2 ) )  set2 = SetList( set2 );
+    RequireSmallList(SELF_NAME, set1);
+    RequireSmallList(SELF_NAME, set2);
+    if (!IsPlainSet(set1)) set1 = SetList(set1);
+    if (!IsPlainSet(set2)) set2 = SetList(set2);
 
-    /* special case if the second argument is a set                        */
-    if ( IsSet( set2 ) ) {
+    // get the logical lengths and get the pointer
+    len1 = LEN_PLIST(set1);
+    len2 = LEN_PLIST(set2);
+    i1 = 1;
+    i2 = 1;
 
-        /* get the logical lengths and get the pointer                     */
-        len1 = LEN_PLIST( set1 );
-        len2 = LEN_PLIST( set2 );
-        i1 = 1;
-        i2 = 1;
-
-        /* now compare the two sets                                        */
-        while ( i1 <= len1 && i2 <= len2 && len2 - i2 <= len1 - i1 ) {
-            e1 = ELM_PLIST( set1, i1 );
-            e2 = ELM_PLIST( set2, i2 );
-            if ( EQ( e1, e2 ) ) {
-                i1++;  i2++;
-            }
-            else if ( LT( e1, e2 ) ) {
-                i1++;
-            }
-            else {
-                break;
-            }
+    // now compare the two sets
+    while (i1 <= len1 && i2 <= len2 && len2 - i2 <= len1 - i1) {
+        e1 = ELM_PLIST(set1, i1);
+        e2 = ELM_PLIST(set2, i2);
+        if (EQ(e1, e2)) {
+            i1++;
+            i2++;
         }
-
+        else if (LT(e1, e2)) {
+            i1++;
+        }
+        else {
+            break;
+        }
     }
 
-    /* general case                                                        */
-    else {
-
-        /* first convert the other argument into a proper list             */
-        PLAIN_LIST( set2 );
-
-        /* get the logical lengths                                         */
-        len1 = LEN_PLIST( set1 );
-        len2 = LEN_PLIST( set2 );
-
-        /* loop over the second list and look for every element            */
-        for ( i2 = 1; i2 <= len2; i2++ ) {
-
-            /* ignore holes                                                */
-            if ( ELM_PLIST(set2,i2) == 0 )
-                continue;
-
-            /* perform the binary search to find the position              */
-            pos = PositionSortedDensePlist( set1, ELM_PLIST(set2,i2) );
-
-            /* test if the element was found at position k                 */
-            if ( len1<pos || ! EQ(ELM_PLIST(set1,pos),ELM_PLIST(set2,i2)) ) {
-                break;
-            }
-
-        }
-
-    }
 
     /* return 'true' if every element of <set2> appeared in <set1>         */
     return ((i2 == len2 + 1) ? True : False);
@@ -393,16 +323,15 @@ static Obj FuncADD_SET(Obj self, Obj set, Obj obj)
 {
   UInt                len;            /* logical length of the list      */
   UInt                pos;            /* position                        */
-  UInt                isCyc;          /* True if the set being added to consists
+  BOOL                isCyc;          /* True if the set being added to consists
                                          of kernel cyclotomics           */
   UInt                notpos;         /* position of an original element
                                          (not the new one)               */
   UInt                wasHom;
   UInt                wasNHom;
   UInt                wasTab;
-    
-  /* check the arguments                                                 */
-  RequireMutableSet("AddSet", set);
+
+  RequireMutableSet(SELF_NAME, set);
   len = LEN_PLIST(set);
 
   /* perform the binary search to find the position                      */
@@ -485,8 +414,7 @@ static Obj FuncADD_SET(Obj self, Obj set, Obj obj)
     }
   }
 
-  /* return void, this is a procedure                                    */
-  return (Obj)0;
+  return 0;
 }
 
 
@@ -512,8 +440,7 @@ static Obj FuncREM_SET(Obj self, Obj set, Obj obj)
     UInt                len;            /* logical length of the list      */
     UInt                pos;            /* position                        */
 
-    /* check the arguments                                                 */
-    RequireMutableSet("RemoveSet", set);
+    RequireMutableSet(SELF_NAME, set);
     len = LEN_PLIST(set);
 
     /* perform the binary search to find the position                      */
@@ -533,8 +460,7 @@ static Obj FuncREM_SET(Obj self, Obj set, Obj obj)
         }
     }
 
-    /* return void, this is a procedure                                    */
-    return (Obj)0;
+    return 0;
 }
 
 
@@ -559,7 +485,6 @@ static Obj FuncREM_SET(Obj self, Obj set, Obj obj)
 
 static Obj FuncUNITE_SET(Obj self, Obj set1, Obj set2)
 {
-    UInt                lenr;           /* length  of result set           */
     UInt                len1;           /* length  of left  set            */
     UInt                len2;           /* length  of right set            */
     UInt                i1;             /* index into left  set            */
@@ -568,16 +493,14 @@ static Obj FuncUNITE_SET(Obj self, Obj set1, Obj set2)
     Obj                 e2;             /* element of right set            */
     Obj                 TmpUnion;
 
-    /* check the arguments                                                 */
-    RequireMutableSet("UniteSet", set1);
-    RequireSmallList("UniteSet", set2);
-    if ( ! IsSet(set2) )  set2 = SetList(set2);
+    RequireMutableSet(SELF_NAME, set1);
+    RequireSmallList(SELF_NAME, set2);
+    if (!IsPlainSet(set2)) set2 = SetList(set2);
 
     /* get the logical lengths and the pointer                             */
     len1 = LEN_PLIST( set1 );
     len2 = LEN_PLIST( set2 );
     TmpUnion = NEW_PLIST(T_PLIST,len1+len2);
-    lenr = 0;
     i1 = 1;
     i2 = 1;
 
@@ -586,36 +509,26 @@ static Obj FuncUNITE_SET(Obj self, Obj set1, Obj set2)
         e1 = ELM_PLIST( set1, i1 );
         e2 = ELM_PLIST( set2, i2 );
         if ( EQ( e1, e2 ) ) {
-            lenr++;
-            SET_ELM_PLIST( TmpUnion, lenr, e1 );
-            CHANGED_BAG( TmpUnion );
+            PushPlist( TmpUnion, e1 );
             i1++;  i2++;
         }
         else if ( LT( e1, e2 ) ) {
-            lenr++;
-            SET_ELM_PLIST( TmpUnion, lenr, e1 );
-            CHANGED_BAG( TmpUnion );
+            PushPlist( TmpUnion, e1 );
             i1++;
         }
         else {
-            lenr++;
-            SET_ELM_PLIST( TmpUnion, lenr, e2 );
-            CHANGED_BAG( TmpUnion );
+            PushPlist( TmpUnion, e2 );
             i2++;
         }
     }
     while ( i1 <= len1 ) {
         e1 = ELM_PLIST( set1, i1 );
-        lenr++;
-        SET_ELM_PLIST( TmpUnion, lenr, e1 );
-        CHANGED_BAG( TmpUnion );
+        PushPlist( TmpUnion, e1 );
         i1++;
     }
     while ( i2 <= len2 ) {
         e2 = ELM_PLIST( set2, i2 );
-        lenr++;
-        SET_ELM_PLIST( TmpUnion, lenr, e2 );
-        CHANGED_BAG( TmpUnion );
+        PushPlist( TmpUnion, e2 );
         i2++;
     }
 
@@ -637,16 +550,12 @@ static Obj FuncUNITE_SET(Obj self, Obj set1, Obj set2)
     SET_FILT_LIST(set1, FN_IS_SSORT);
 
     /* resize the result and copy back from the union                      */
-    GROW_PLIST(    set1, lenr );
-    SET_LEN_PLIST( set1, lenr );
-    for ( i1 = 1;  i1 <= lenr;  i1++ ) {
-        SET_ELM_PLIST( set1, i1, ELM_PLIST( TmpUnion, i1 ) );
-        CHANGED_BAG( set1 );
-        SET_ELM_PLIST( TmpUnion, i1, (Obj)0 );
-    }
+    UInt size = (LEN_PLIST(TmpUnion) + 1) * sizeof(Obj);
+    GROW_PLIST(set1, LEN_PLIST(TmpUnion));
+    memcpy(ADDR_OBJ(set1), CONST_ADDR_OBJ(TmpUnion), size);
+    CHANGED_BAG(set1);
 
-    /* return void, this is a procedure                                    */
-    return (Obj)0;
+    return 0;
 }
 
 
@@ -733,10 +642,9 @@ static Obj FuncINTER_SET(Obj self, Obj set1, Obj set2)
     UInt                len2;           /* length  of right set            */
     UInt                lenr;           /* length  of result set           */
 
-    /* check the arguments                                                 */
-    RequireMutableSet("IntersectSet", set1);
-    RequireSmallList("IntersectSet", set2);
-    if ( ! IsSet(set2) )  set2 = SetList(set2);
+    RequireMutableSet(SELF_NAME, set1);
+    RequireSmallList(SELF_NAME, set2);
+    if (!IsPlainSet(set2)) set2 = SetList(set2);
 
     /* get the logical lengths and the pointer                             */
     len1 = LEN_PLIST( set1 );
@@ -800,21 +708,19 @@ static Obj FuncINTER_SET(Obj self, Obj set1, Obj set2)
           }
       }
 
-    /* return void, this is a procedure                                    */
-    return (Obj)0;
+    return 0;
 }
-
 
 
 /****************************************************************************
 **
 *F  FuncSUBTR_SET( <self>, <set1>, <set2> ) . . subtract one set from another
 **
-**  'FuncSUBTR_SET' implements the internal function 'SubstractSet'.
+**  'FuncSUBTR_SET' implements the internal function 'SubtractSet'.
 **
-**  'SubstractSet( <set1>, <set2> )'
+**  'SubtractSet( <set1>, <set2> )'
 **
-**  'SubstractSet' changes the  set <set1> so  that it becomes the difference
+**  'SubtractSet' changes the  set <set1> so  that it becomes the difference
 **  of <set1> and <set2>.  The difference is the set of the elements that are
 **  in <set1> but not in <set2>.  So 'SubtractSet' removes  (see "RemoveSet")
 **  all elements from <set1> that are in <set2>.   <set2> may  be a list that
@@ -896,12 +802,11 @@ static Obj FuncSUBTR_SET(Obj self, Obj set1, Obj set2)
     UInt                len2;           /* length  of right set            */
     UInt                lenr;           /* length  of result set           */
     UInt                x;            
-    UInt                ll;           
+    UInt                ll;
 
-    /* check the arguments                                                 */
-    RequireMutableSet("SubtractSet", set1);
-    RequireSmallList("SubtractSet", set2);
-    if ( ! IsSet(set2) )  set2 = SetList(set2);
+    RequireMutableSet(SELF_NAME, set1);
+    RequireSmallList(SELF_NAME, set2);
+    if (!IsPlainSet(set2)) set2 = SetList(set2);
 
     /* get the logical lengths and the pointer                             */
     len1 = LEN_PLIST( set1 );
@@ -936,8 +841,7 @@ static Obj FuncSUBTR_SET(Obj self, Obj set1, Obj set2)
     else
       RESET_FILT_LIST(set1, FN_IS_NHOMOG);
 
-    /* return void, this is a procedure                                    */
-    return (Obj)0;
+    return 0;
 }
 
 
@@ -952,14 +856,14 @@ static Obj FuncSUBTR_SET(Obj self, Obj set1, Obj set2)
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    GVAR_FUNC(LIST_SORTED_LIST, 1, "list"),
-    GVAR_FUNC(IS_EQUAL_SET, 2, "list1, list2"),
-    GVAR_FUNC(IS_SUBSET_SET, 2, "set1, set2"),
-    GVAR_FUNC(ADD_SET, 2, "set, val"),
-    GVAR_FUNC(REM_SET, 2, "set, val"),
-    GVAR_FUNC(UNITE_SET, 2, "set1, set2"),
-    GVAR_FUNC(INTER_SET, 2, "set1, set2"),
-    GVAR_FUNC(SUBTR_SET, 2, "set1, set2"),
+    GVAR_FUNC_1ARGS(LIST_SORTED_LIST, list),
+    GVAR_FUNC_2ARGS(IS_EQUAL_SET, list1, list2),
+    GVAR_FUNC_2ARGS(IS_SUBSET_SET, set1, set2),
+    GVAR_FUNC_2ARGS(ADD_SET, set, val),
+    GVAR_FUNC_2ARGS(REM_SET, set, val),
+    GVAR_FUNC_2ARGS(UNITE_SET, set1, set2),
+    GVAR_FUNC_2ARGS(INTER_SET, set1, set2),
+    GVAR_FUNC_2ARGS(SUBTR_SET, set1, set2),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -975,7 +879,6 @@ static Int InitKernel (
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -990,7 +893,6 @@ static Int InitLibrary (
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 

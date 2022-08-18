@@ -14,11 +14,20 @@
 #ifndef GAP_COMPILED_H
 #define GAP_COMPILED_H
 
+// HACK: for backwards compatibility with packages that need it,
+// include stdio.h here. Should be removed once all packages are
+// updated to not need it.
+#include <stdio.h>
+
+// HACK: most (all?) GAP packages with a kernel extension include compiled.h
+// to get all GAP headers. They should ultimately all switch to including
+// gap_all.h; however that header has only been available since GAP 4.11.0, so
+// it will take some time for packages to make the switch.
+#include "gap_all.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include "gap_all.h"
 
 extern Obj InfoDecision;
 
@@ -34,19 +43,27 @@ typedef UInt    RNam;
 
 #define CHECK_BOUND(obj, name)                                               \
     if (obj == 0)                                                            \
-        ErrorQuit("variable '%s' must have an assigned value", (Int)name, 0L);
+        ErrorQuit("variable '%s' must have an assigned value", (Int)name, 0);
 
 #define CHECK_FUNC_RESULT(obj)                                               \
     if (obj == 0)                                                            \
-        ErrorQuit("function must return a value", 0L, 0L);
+        ErrorQuit("function must return a value", 0, 0);
 
-#define CHECK_INT_SMALL(obj) RequireSmallInt(0, obj, "<obj>");
+static inline void CHECK_INT_SMALL(Obj obj)
+{
+    RequireSmallInt(0, obj);
+}
 
-#define CHECK_INT_SMALL_POS(obj) RequirePositiveSmallInt(0, obj, "<obj>");
+static inline void CHECK_INT_SMALL_POS(Obj obj)
+{
+    RequirePositiveSmallInt(0, obj);
+}
 
-#define CHECK_INT_POS(obj)                                                   \
-    if (!IS_POS_INT(obj))                                                    \
-        RequireArgumentEx(0, obj, "<obj>", "must be a positive integer");
+static inline void CHECK_INT_POS(Obj obj)
+{
+    if (!IS_POS_INT(obj))
+        RequireArgument(0, obj, "must be a positive integer");
+}
 
 static inline void CHECK_BOOL(Obj expr)
 {
@@ -68,7 +85,8 @@ static inline void CHECK_FUNC(Obj obj)
 
 /* higher variables, should go into 'vars.c' * * * * * * * * * * * * * * * */
 
-#define SWITCH_TO_NEW_FRAME     SWITCH_TO_NEW_LVARS
+#define SWITCH_TO_NEW_FRAME(func, narg, nloc, old)                           \
+    (old) = SWITCH_TO_NEW_LVARS((func), (narg), (nloc))
 #define SWITCH_TO_OLD_FRAME     SWITCH_TO_OLD_LVARS_AND_FREE
 
 

@@ -147,6 +147,10 @@ BIND_GLOBAL( "INSTALL_METHOD_FLAGS",
     function( opr, info, rel, flags, baserank, method )
     local   methods,  narg,  i,  k,  tmp, replace, match, j, lk, rank;
 
+    if IS_IDENTICAL_OBJ(opr, method) then
+        Error("Cannot install an operation as a method for itself");
+    fi;
+
     if IsHPCGAP then
         # TODO: once the GAP compiler supports 'atomic', use that
         # to replace the explicit locking and unlocking here.
@@ -229,7 +233,7 @@ BIND_GLOBAL( "INSTALL_METHOD_FLAGS",
     elif IS_FUNCTION(rel)  then
         if CHECK_INSTALL_METHOD  then
             tmp := NARG_FUNC(rel);
-            if tmp < AINV(narg)-1 or (tmp >= 0 and tmp <> narg)   then
+            if tmp < -narg-1 or (tmp >= 0 and tmp <> narg)   then
                 Error(NAME_FUNC(opr),": <famrel> must accept ",
                       narg, " arguments");
             fi;
@@ -247,7 +251,7 @@ BIND_GLOBAL( "INSTALL_METHOD_FLAGS",
     elif IS_FUNCTION(method)  then
         if CHECK_INSTALL_METHOD and not IS_OPERATION( method ) then
             tmp := NARG_FUNC(method);
-            if tmp < AINV(narg)-1 or (tmp >= 0 and tmp <> narg)  then
+            if tmp < -narg-1 or (tmp >= 0 and tmp <> narg)  then
                Error(NAME_FUNC(opr),": <method> must accept ",
                      narg, " arguments");
             fi;
@@ -268,16 +272,9 @@ BIND_GLOBAL( "INSTALL_METHOD_FLAGS",
     # install the method
     methods[i+(narg+2)] := method;
     methods[i+(narg+3)] := rank;
-
     methods[i+(narg+4)] := IMMUTABLE_COPY_OBJ(info);
-
-    if BASE_SIZE_METHODS_OPER_ENTRY >= 5 then
-        methods[i+(narg+5)] := MakeImmutable([INPUT_FILENAME(), READEVALCOMMAND_LINENUMBER, INPUT_LINENUMBER()]);
-    fi;
-
-    if BASE_SIZE_METHODS_OPER_ENTRY >= 6 then
-        methods[i+(narg+6)] := baserank;
-    fi;
+    methods[i+(narg+5)] := MakeImmutable([INPUT_FILENAME(), READEVALCOMMAND_LINENUMBER, INPUT_LINENUMBER()]);
+    methods[i+(narg+6)] := baserank;
 
     # flush the cache
     if IsHPCGAP then
@@ -366,6 +363,48 @@ BIND_GLOBAL( "InstallOtherMethod",
     INSTALL_METHOD( arg, false );
     end );
 
+
+#############################################################################
+##
+#F  InstallEarlyMethod( <opr>,<method> )
+##
+##  <#GAPDoc Label="InstallEarlyMethod">
+##  <ManSection>
+##  <Func Name="InstallEarlyMethod" Arg="opr,method"/>
+##
+##  <Description>
+##  installs a special "early" function method <A>method</A> for the
+##  operation <A>opr</A>. An early method is special in that it bypasses
+##  method dispatch, and is always the first method to be called when
+##  invoking the operation.
+##  <P/>
+##  This can be used to avoid method selection overhead for certain special
+##  cases, i.e., as an optimization. Overall, we recommend to use this
+##  feature very sparingly, as it is tool with sharp edges: for example, any
+##  inputs that are handled by an early method can not be intercepted by a
+##  regular method, no matter how high its rank is; this can preclude other
+##  kinds of optimizations.
+##  <P/>
+##  Also, unlike regular methods, no checks are performed on the arguments.
+##  Not even the required filters for the operation are tested, so early
+##  methods must be careful in validating their inputs.
+##  This also means that any operation can have at most one such early
+##  method for each arity (i.e., one early method taking 1 argument, one
+##  early method taking 2 arguments, etc.).
+##  <P/>
+##  If an early method determines that it is not applicable, it can resume
+##  regular method dispatch by invoking <Ref Func="TryNextMethod"/>.
+##  <P/>
+##  For an example application of early methods, they are used by
+##  <Ref Oper="First"/> to deal with internal lists, for which computing
+##  the exact type (needed for method selection) can be very expensive.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+BIND_GLOBAL( "InstallEarlyMethod", INSTALL_EARLY_METHOD );
+#TODO; store location info somehow
+#MakeImmutable([INPUT_FILENAME(), READEVALCOMMAND_LINENUMBER, INPUT_LINENUMBER()])
 
 #############################################################################
 ##
@@ -502,8 +541,10 @@ BIND_GLOBAL( "INSTALL_METHOD",
       if opr in WRAPPER_OPERATIONS then
         INFO_DEBUG( 1,
               "a method is installed for the wrapper operation ",
-              NAME_FUNC( opr ), "\n",
-              "#I  probably it should be installed for (one of) its\n",
+              NAME_FUNC( opr ), " in ",
+              INPUT_FILENAME(), ":", STRING_INT(INPUT_LINENUMBER()),
+              "\n",
+              "#I  it should probably be installed for (one of) its\n",
               "#I  underlying operation(s)" );
       fi;
 
@@ -591,7 +632,8 @@ BIND_GLOBAL( "INSTALL_METHOD",
             if match and reqs<>oreqs then
               INFO_DEBUG( 1,
                     "method installed for ", NAME_FUNC(opr), 
-                    " matches more than one declaration" );
+                    " matches more than one declaration in ",
+                    INPUT_FILENAME(), ":", STRING_INT(INPUT_LINENUMBER()));
             fi;
           fi;
         od;
@@ -1090,3 +1132,7 @@ InstallMethod( ViewObj,
     [ IS_OBJECT ],
     0,
     PRINT_OBJ );
+
+# A dummy version of this function is installed here, the full version
+# is defined in attr.gi, after Info-related functionality is set up.
+CHECK_REPEATED_ATTRIBUTE_SET := function(obj, name, val) end;

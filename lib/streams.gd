@@ -62,8 +62,23 @@
 ##
 DeclareRepresentation(
     "IsInputTextStringRep",
-    IsPositionalObjectRep,
-    [] );
+    IsPositionalObjectRep );
+
+
+#############################################################################
+##
+#R  IsOutputTextStringRep   (used in kernel)
+##
+##  <ManSection>
+##  <Filt Name="IsOutputTextStringRep" Arg='obj' Type='Representation'/>
+##
+##  <Description>
+##  </Description>
+##  </ManSection>
+##
+DeclareRepresentation(
+    "IsOutputTextStringRep",
+    IsPositionalObjectRep );
 
 
 #############################################################################
@@ -726,14 +741,15 @@ DeclareOperation( "OutputTextString", [ IsList, IsBool ] );
 ##  <#GAPDoc Label="OutputTextFile">
 ##  <ManSection>
 ##  <Oper Name="OutputTextFile" Arg='filename, append'/>
+##  <Oper Name="OutputGzipFile" Arg='filename, append'/>
 ##
 ##  <Description>
 ##  <C>OutputTextFile( <A>filename</A>, <A>append</A> )</C> returns an output stream in the
 ##  category <C>IsOutputTextFile</C> that writes received characters to the file
 ##  <A>filename</A>.  If <A>append</A> is <K>false</K>, then the file is emptied first,
 ##  otherwise received characters are added at the end of the file.
-##  If <A>filename</A> ends in <C>.gz</C> then the file will be
-##  written with gzip compression.
+##  <C>OutputGzipFile</C> acts identically to <C>OutputTextFile</C>, except it compresses
+##  the output with gzip.
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> # use a temporary directory
@@ -766,6 +782,7 @@ DeclareOperation( "OutputTextString", [ IsList, IsBool ] );
 ##  <#/GAPDoc>
 ##
 DeclareOperation( "OutputTextFile", [ IsString, IsBool ] );
+DeclareOperation( "OutputGzipFile", [ IsString, IsBool ] );
 
 
 #############################################################################
@@ -860,23 +877,23 @@ DeclareCategory( "IsInputOutputStream", IsInputStream and
 #############################################################################
 ##
 #F  InputOutputLocalProcess(<dir>, <executable>, <args>) %
-##   . . .input/output stream to a process run as a "slave" on the local host
+##   . . .input/output stream to a child process on the local host
 ##
 ##  <#GAPDoc Label="InputOutputLocalProcess">
 ##  <ManSection>
 ##  <Func Name="InputOutputLocalProcess" Arg='dir, executable, args'/>
 ##
 ##  <Description>
-##  starts up a slave process, whose executable file is <A>executable</A>, with
+##  starts up a child process, whose executable file is <A>executable</A>, with
 ##  <Q>command line</Q> arguments <A>args</A> in the directory <A>dir</A>. (Suitable 
 ##  choices for <A>dir</A> are <C>DirectoryCurrent()</C> or <C>DirectoryTemporary()</C>
 ##  (see Section&nbsp;<Ref Sect="Directories"/>); <C>DirectoryTemporary()</C> may be a good choice
 ##  when <A>executable</A> generates output files that it doesn't itself remove
 ##  afterwards.) 
 ##  <Ref Func="InputOutputLocalProcess"/> returns an InputOutputStream object. Bytes
-##  written to this stream are received by the slave process as if typed
+##  written to this stream are received by the child process as if typed
 ##  at a terminal on standard input. Bytes written to standard output
-##  by the slave process can be read from the stream. 
+##  by the child process can be read from the stream. 
 ##  <P/>
 ##  When the stream is closed, the signal SIGTERM is delivered to the child
 ##  process, which is expected to exit.
@@ -954,7 +971,10 @@ DeclareGlobalFunction( "InputOutputLocalProcess" );
 ##  For non-text streams, it returns <K>false</K>.
 ##  If as argument <A>stream</A> the string <C>"*stdout*"</C> is given, these
 ##  functions refer to the formatting status of the standard output (so usually
-##  the users terminal screen).<P/>
+##  the user's terminal screen).<P/>
+##  Similarly, the string <C>"*errout*"</C> refers to the formatting status
+##  of the standard error output, which influences how error messages are
+##  printed.<P/>
 ##  These functions do not influence the behaviour of the low level functions 
 ##  <Ref Oper="WriteByte"/>, 
 ##  <Ref Oper="WriteLine"/> or  <Ref Oper="WriteAll"/> which always write
@@ -1147,148 +1167,7 @@ DeclareOperation("FileDescriptorOfStream", [IsStream] );
 
 #############################################################################
 ##
-#V  OnCharReadHookInFuncs . . . . . . . installed handler functions for input
-##
-##  <ManSection>
-##  <Var Name="OnCharReadHookInFuncs"/>
-##
-##  <Description>
-##  contains a list of functions that are installed as reading handlers for
-##  streams.
-##  </Description>
-##  </ManSection>
-##
-DeclareGlobalVariable( "OnCharReadHookInFuncs",
-                       "installed input handlers for streams" );
-
-
-#############################################################################
-##
-#V  OnCharReadHookInFds . . . . . . . . file descriptors for reading handlers
-##
-##  <ManSection>
-##  <Var Name="OnCharReadHookInFds"/>
-##
-##  <Description>
-##  contains a list of file descriptors of streams for which reading handlers
-##  are installed.
-##  </Description>
-##  </ManSection>
-##
-DeclareGlobalVariable( "OnCharReadHookInFds",
-                       "UNIX file descriptors of input streams" );
-
-
-#############################################################################
-##
-#V  OnCharReadHookInStreams . . . . . . . . . . streams with reading handlers
-##
-##  <ManSection>
-##  <Var Name="OnCharReadHookInStreams"/>
-##
-##  <Description>
-##  contains a list of streams for which reading handlers are installed.
-##  </Description>
-##  </ManSection>
-##
-DeclareGlobalVariable( "OnCharReadHookInStreams",
-                       "input streams for which handlers are installed" );
-
-
-#############################################################################
-##
-#V  OnCharReadHookOutFuncs . . . . . . installed handler functions for output
-##
-##  <ManSection>
-##  <Var Name="OnCharReadHookOutFuncs"/>
-##
-##  <Description>
-##  contains a list of functions that are installed as reading handlers for
-##  streams.
-##  </Description>
-##  </ManSection>
-##
-DeclareGlobalVariable( "OnCharReadHookOutFuncs",
-                       "installed output handlers for streams" );
-#############################################################################
-##
-#V  OnCharReadHookOutFds . . . . . . .  file descriptors for writing handlers
-##
-##  <ManSection>
-##  <Var Name="OnCharReadHookOutFds"/>
-##
-##  <Description>
-##  contains a list of file descriptors of streams for which writing handlers
-##  are installed.
-##  </Description>
-##  </ManSection>
-##
-DeclareGlobalVariable( "OnCharReadHookOutFds",
-                       "UNIX file descriptors of output streams" );
-#############################################################################
-##
-#V  OnCharReadHookOutStreams . . . . . . . . . . streams with writing handlers
-##
-##  <ManSection>
-##  <Var Name="OnCharReadHookOutStreams"/>
-##
-##  <Description>
-##  contains a list of streams for which writing handlers are installed.
-##  </Description>
-##  </ManSection>
-##
-DeclareGlobalVariable( "OnCharReadHookOutStreams",
-                       "output streams for which handlers are installed" );
-#############################################################################
-##
-#V  OnCharReadHookExcFuncs . . . . installed handler functions for exceptions
-##
-##  <ManSection>
-##  <Var Name="OnCharReadHookExcFuncs"/>
-##
-##  <Description>
-##  contains a list of functions that are installed as exception handlers
-##  for streams.
-##  </Description>
-##  </ManSection>
-##
-DeclareGlobalVariable( "OnCharReadHookExcFuncs",
-                       "installed exception handlers for streams" );
-#############################################################################
-##
-#V  OnCharReadHookExcFds  . . . . . . file descriptors for exception handlers
-##
-##  <ManSection>
-##  <Var Name="OnCharReadHookExcFds"/>
-##
-##  <Description>
-##  contains a list of file descriptors of streams for which exception 
-##  handlers are installed.
-##  </Description>
-##  </ManSection>
-##
-DeclareGlobalVariable( "OnCharReadHookExcFds",
-                       "UNIX file descriptors of streams" );
-#############################################################################
-##
-#V  OnCharReadHookExcStreams . . . . . . . .  streams with exception handlers
-##
-##  <ManSection>
-##  <Var Name="OnCharReadHookExcStreams"/>
-##
-##  <Description>
-##  contains a list of streams for which exception handlers are installed.
-##  </Description>
-##  </ManSection>
-##
-DeclareGlobalVariable( "OnCharReadHookExcStreams",
-                       "streams for which handlers are installed" );
-
-
-#############################################################################
-##
 #F  InstallCharReadHookFunc( <stream>, <mode>, <func> )
-
 ##
 ##  <#GAPDoc Label="InstallCharReadHookFunc">
 ##  <ManSection>
@@ -1354,3 +1233,21 @@ DeclareGlobalFunction( "UnInstallCharReadHookFunc" );
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "InputFromUser" );
+
+#############################################################################
+##
+#F  OpenExternal( <filename> )
+##
+##  <#GAPDoc Label="OpenExternal">
+##  <ManSection>
+##  <Func Name="OpenExternal" Arg='filename'/>
+##
+##  <Description>
+##  Open the file <A>filename</A> using the default application for this file
+##  in the operating system. This can be used to open files like HTML and PDF
+##  files in the GUI.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction( "OpenExternal" );

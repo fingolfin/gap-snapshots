@@ -130,7 +130,7 @@
 <td class="tdcenter"></td>
 <td class="tdleft">for <span class="SimpleMath">\(1 \leq i &lt; j \leq n\)</span></td>
 </tr>
-</table><br /><p>&nbsp;</p><br />
+</table><br />
 </div>
 
 <p>For infinite groups we need additionally</p>
@@ -166,7 +166,7 @@
 <td class="tdcenter"></td>
 <td class="tdleft">for <span class="SimpleMath">\(1 \leq i &lt; j \leq n\)</span> and <span class="SimpleMath">\(i, j, \not \in I\)</span></td>
 </tr>
-</table><br /><p>&nbsp;</p><br />
+</table><br />
 </div>
 
 <p>Here the right hand sides are assumed to be words in normal form; that is, for <span class="SimpleMath">\(k \in I\)</span> we have for all exponents <span class="SimpleMath">\(0 \leq a(i,j,k), b(i,j,k), c(i,j,k), d(i,j,k) &lt; r_k\)</span>.</p>
@@ -305,7 +305,7 @@ Pcgs([ f1, f2, f3, f4 ])
 
 <p>One way is to define a finitely presented group with a pc presentation in <strong class="pkg">GAP</strong> and then convert this presentation into a pc group, see <code class="func">PcGroupFpGroup</code> (<a href="chap46_mj.html#X84C10D1F7CB5274F"><span class="RefLink">46.4-1</span></a>). Note that this does not work for arbitrary presentations of polycyclic groups, see Chapter <a href="chap47_mj.html#X846072F779B51087"><span class="RefLink">47.14</span></a> for further information.</p>
 
-<p>Another way is to create and manipulate a collector of a pc group by hand and to use it to define a pc group. <strong class="pkg">GAP</strong> provides different collectors for different collecting strategies; at the moment, there are two collectors to choose from: the single collector for finite pc groups (see <code class="func">SingleCollector</code> (<a href="chap46_mj.html#X7E958DB281E070FD"><span class="RefLink">46.4-2</span></a>)) and the combinatorial collector for finite <span class="SimpleMath">\(p\)</span>-groups. See <a href="chapBib_mj.html#biBSims94">[Sim94]</a> for further information on collecting strategies.</p>
+<p>Another way is to create and manipulate a collector of a pc group by hand and to use it to define a pc group. This is the most technical way and has little error checking and thus is intended mostly for experts who want to create a pc presentation in a particular way. <strong class="pkg">GAP</strong> provides different collectors for different collecting strategies; at the moment, there are two collectors to choose from: the single collector for finite pc groups (see <code class="func">SingleCollector</code> (<a href="chap46_mj.html#X7E958DB281E070FD"><span class="RefLink">46.4-2</span></a>)) and the combinatorial collector for finite <span class="SimpleMath">\(p\)</span>-groups. See <a href="chapBib_mj.html#biBSims94">[Sim94]</a> for further information on collecting strategies.</p>
 
 <p>A collector is initialized with an underlying free group and the relative orders of the pc series. Then one adds the right hand sides of the power and the commutator or conjugate relations one by one. Note that omitted relators are assumed to be trivial.</p>
 
@@ -354,7 +354,7 @@ Pcgs([ f1, f2, f3, f4 ])
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetConjugate</code>( <var class="Arg">coll</var>, <var class="Arg">j</var>, <var class="Arg">i</var>, <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <span class="SimpleMath">\(f_1, \ldots, f_n\)</span> be the generators of the underlying free group of the collector <var class="Arg">coll</var>.</p>
 
-<p>For <var class="Arg">i</var> <span class="SimpleMath">\(&lt;\)</span> <var class="Arg">j</var>, <code class="func">SetConjugate</code> sets the conjugate <span class="SimpleMath">\(f_j^{{f_i}}\)</span> to equal <var class="Arg">w</var>, which is assumed to be a word in <span class="SimpleMath">\(f_{{i+1}}, \ldots, f_n\)</span>.</p>
+<p>For <var class="Arg">i</var> <span class="SimpleMath">\(&lt;\)</span> <var class="Arg">j</var>, <code class="func">SetConjugate</code> sets the conjugate <span class="SimpleMath">\(f_j^{{f_i}}\)</span> to equal <var class="Arg">w</var>, which is assumed to be a canonical word in <span class="SimpleMath">\(f_{{i+1}}, \ldots, f_n\)</span>. No check of the arguments is performed.</p>
 
 <p><a id="X7B25997C7DF92B6D" name="X7B25997C7DF92B6D"></a></p>
 
@@ -363,7 +363,7 @@ Pcgs([ f1, f2, f3, f4 ])
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetCommutator</code>( <var class="Arg">coll</var>, <var class="Arg">j</var>, <var class="Arg">i</var>, <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <span class="SimpleMath">\(f_1, \ldots, f_n\)</span> be the generators of the underlying free group of the collector <var class="Arg">coll</var>.</p>
 
-<p>For <var class="Arg">i</var> <span class="SimpleMath">\(&lt;\)</span> <var class="Arg">j</var>, <code class="func">SetCommutator</code> sets the commutator of <span class="SimpleMath">\(f_j\)</span> and <span class="SimpleMath">\(f_i\)</span> to equal <var class="Arg">w</var>, which is assumed to be a word in <span class="SimpleMath">\(f_{{i+1}}, \ldots, f_n\)</span>.</p>
+<p>For <var class="Arg">i</var> <span class="SimpleMath">\(&lt;\)</span> <var class="Arg">j</var>, <code class="func">SetCommutator</code> sets the commutator of <span class="SimpleMath">\(f_j\)</span> and <span class="SimpleMath">\(f_i\)</span> to equal <var class="Arg">w</var>, which is assumed to be a canonical word in <span class="SimpleMath">\(f_{{i+1}}, \ldots, f_n\)</span>. No check of the arguments is performed.</p>
 
 <p><a id="X7BC319BA8698420C" name="X7BC319BA8698420C"></a></p>
 
@@ -372,7 +372,7 @@ Pcgs([ f1, f2, f3, f4 ])
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetPower</code>( <var class="Arg">coll</var>, <var class="Arg">i</var>, <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <span class="SimpleMath">\(f_1, \ldots, f_n\)</span> be the generators of the underlying free group of the collector <var class="Arg">coll</var>, and let <span class="SimpleMath">\(r_i\)</span> be the corresponding relative orders.</p>
 
-<p><code class="func">SetPower</code> sets the power <span class="SimpleMath">\(f_i^{{r_i}}\)</span> to equal <var class="Arg">w</var>, which is assumed to be a word in <span class="SimpleMath">\(f_{{i+1}}, \ldots, f_n\)</span>.</p>
+<p><code class="func">SetPower</code> sets the power <span class="SimpleMath">\(f_i^{{r_i}}\)</span> to equal <var class="Arg">w</var>, which is assumed to be a canonical word in <span class="SimpleMath">\(f_{{i+1}}, \ldots, f_n\)</span>. No check of the arguments is performed.</p>
 
 <p><a id="X84F0521486672C3C" name="X84F0521486672C3C"></a></p>
 
@@ -462,7 +462,7 @@ Group([ (1,2,3,4,5), (3,4,5) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">modu := ModuloPcgs( G, H );</span>
 Pcgs([ (4,5) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PcGroupWithPcgs(modu);</span>
-&lt;pc group of size 2 with 1 generators&gt;
+&lt;pc group of size 2 with 1 generator&gt;
 </pre></div>
 
 <p><a id="X873CEB137BA1CD6E" name="X873CEB137BA1CD6E"></a></p>
@@ -637,8 +637,8 @@ rec( IsOverFiniteField := true, dimension := 1, field := GF(2),
 
 <h5>46.8-8 CompatiblePairs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompatiblePairs</code>( <var class="Arg">G</var>, <var class="Arg">M</var>[, <var class="Arg">D</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>returns the group of compatible pairs of the group <var class="Arg">G</var> with the <var class="Arg">G</var>-module <var class="Arg">M</var> as subgroup of the direct product Aut(<var class="Arg">G</var>) <span class="SimpleMath">\(\times\)</span> Aut(<var class="Arg">M</var>). Here Aut(<var class="Arg">M</var>) is considered as subgroup of a general linear group. The optional argument <var class="Arg">D</var> should be a subgroup of Aut(<var class="Arg">G</var>) <span class="SimpleMath">\(\times\)</span> Aut(<var class="Arg">M</var>). If it is given, then only the compatible pairs in <var class="Arg">D</var> are computed.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompatiblePairs</code>( [<var class="Arg">A</var>, ]<var class="Arg">G</var>, <var class="Arg">M</var>[, <var class="Arg">D</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>returns the group of compatible pairs of the group <var class="Arg">G</var> with the <var class="Arg">G</var>-module <var class="Arg">M</var> as subgroup of the direct product Aut(<var class="Arg">G</var>) <span class="SimpleMath">\(\times\)</span> Aut(<var class="Arg">M</var>). Here Aut(<var class="Arg">M</var>) is considered as subgroup of a general linear group. The optional argument <var class="Arg">D</var> should be a subgroup of Aut(<var class="Arg">G</var>) <span class="SimpleMath">\(\times\)</span> Aut(<var class="Arg">M</var>). If it is given, then only the compatible pairs in <var class="Arg">D</var> are computed. If a group <var class="Arg">A</var> of automorphisms of <var class="Arg">G</var> is given as optional first argument, it is used in place of the full automorphism group of <var class="Arg">G</var>, avoiding the need to compute this automorphism group.</p>
 
 <p><a id="X854FFEF187C4AAB9" name="X854FFEF187C4AAB9"></a></p>
 
@@ -712,7 +712,7 @@ Group([ f1, f2 ])
 
 <h4>46.9 <span class="Heading">Coding a Pc Presentation</span></h4>
 
-<p>If one wants to store a large number of pc groups, then it can be useful to store them in a compressed format, since pc presentations can be space consuming. Here we introduce a method to code and decode pc presentations by integers. To decode a given code the size of the underlying pc group is needed as well. For the full definition and the coding and decoding procedures see <a href="chapBib_mj.html#biBBescheEick98">[BE99]</a>. This method is used with the small groups library (see <a href="../../pkg/SmallGrp-1.4.2/doc/chap1_mj.html#X7C16EA1580AC7586"><span class="RefLink">smallgrp: The Small Groups Library</span></a>.</p>
+<p>If one wants to store a large number of pc groups, then it can be useful to store them in a compressed format, since pc presentations can be space consuming. Here we introduce a method to code and decode pc presentations by integers. To decode a given code the size of the underlying pc group is needed as well. For the full definition and the coding and decoding procedures see <a href="chapBib_mj.html#biBBescheEick98">[BE99]</a>. This method is used with the small groups library (see <a href="../../pkg/smallgrp/doc/chap1_mj.html#X7C16EA1580AC7586"><span class="RefLink">smallgrp: The Small Groups Library</span></a>.</p>
 
 <p><a id="X79948F1D7D4FF8D9" name="X79948F1D7D4FF8D9"></a></p>
 
@@ -781,7 +781,7 @@ true
 
 <p>The list <var class="Arg">coderecs</var> should contain records with two components, <code class="code">code</code> and <code class="code">order</code>, describing a group via <code class="code">PcGroupCode( code, order )</code> (see <code class="func">PcGroupCode</code> (<a href="chap46_mj.html#X826BFDA07A707C54"><span class="RefLink">46.9-3</span></a>)).</p>
 
-<p>The integer <var class="Arg">n</var> gives a certain amount of control over the probability to detect all isomorphisms. If it is <span class="SimpleMath">\(0\)</span>, then nothing will be done at all. The larger <var class="Arg">n</var> is, the larger is the probability of finding all isomorphisms. However, due to the underlying method we can not guarantee that the algorithm finds all isomorphisms, no matter how large <var class="Arg">n</var> is.</p>
+<p>The integer <var class="Arg">n</var> gives a certain amount of control over the probability to detect all isomorphisms. If it is <span class="SimpleMath">\(0\)</span>, then nothing will be done at all. The larger <var class="Arg">n</var> is, the larger is the probability of finding all isomorphisms. However, due to the underlying method we cannot guarantee that the algorithm finds all isomorphisms, no matter how large <var class="Arg">n</var> is.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap45_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap47_mj.html">[Next Chapter]</a>&nbsp;  </div>

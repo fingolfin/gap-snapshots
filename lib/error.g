@@ -23,7 +23,7 @@ end);
 #############################################################################
 ##
 ## Default stream for error messages.
-ERROR_OUTPUT := "*errout*";
+ERROR_OUTPUT := MakeImmutable("*errout*");
 
 #############################################################################
 ##
@@ -174,8 +174,7 @@ Unbind(ErrorInner);
 BIND_GLOBAL("ErrorInner", function(options, earlyMessage)
     local   context, mayReturnVoid,  mayReturnObj,  lateMessage,
             x,  prompt,  res, errorLVars, justQuit, printThisStatement,
-            printEarlyMessage, printEarlyTraceback, lastErrorStream,
-            shellOut, shellIn;
+            printEarlyMessage, printEarlyTraceback, lastErrorStream;
 
     context := options.context;
     if not IsLVarsBag(context) then
@@ -277,7 +276,7 @@ BIND_GLOBAL("ErrorInner", function(options, earlyMessage)
         # the earlyMessage. If SilentNonInteractiveErrors is true we do not
         # print any messages. If AlwaysPrintTracebackOnError is true we also
         # call OnBreak(), which by default prints the traceback.
-        # SilentNonInteractiveErrors superseeds AlwaysPrintTracebackOnError.
+        # SilentNonInteractiveErrors supersedes AlwaysPrintTracebackOnError.
         # It is used by HPC-GAP to e.g. suppress error messages in worker
         # threads.
         if not SilentNonInteractiveErrors then
@@ -328,7 +327,7 @@ BIND_GLOBAL("ErrorInner", function(options, earlyMessage)
             and IsBound(OnBreak) and IsFunction(OnBreak) then
             OnBreak();
         fi;
-        FORCE_QUIT_GAP(1);
+        ForceQuitGap(1);
     fi;
 
     # OnBreak() is set to Where() by default, which prints the traceback.
@@ -349,16 +348,8 @@ BIND_GLOBAL("ErrorInner", function(options, earlyMessage)
     else
         prompt := "brk> ";
     fi;
-    shellOut := "*errout*";
-    shellIn := "*errin*";
-    if IsHPCGAP then
-        if HaveMultiThreadedUI then
-            shellOut := "*defout*";
-            shellIn := "*defin*";
-        fi;
-    fi;
     if not justQuit then
-        res := SHELL(context,mayReturnVoid,mayReturnObj,3,false,prompt,false,shellIn,shellOut,false);
+        res := SHELL(context,mayReturnVoid,mayReturnObj,true,prompt,false);
     else
         res := fail;
     fi;

@@ -64,6 +64,7 @@ ReadLib( "liefam.gd"   );
 ReadLib( "algrep.gd"   );
 ReadLib( "lierep.gd"   );
 ReadLib( "integer.gd"  );
+ReadLib( "gaussian.gd"  );
 ReadLib( "numtheor.gd" );
 ReadLib( "primality.gd");
 ReadLib( "contfrac.gd" );
@@ -105,6 +106,7 @@ ReadLib( "wordass.gd"  );
 
 ReadLib( "matobj2.gd"  );
 ReadLib( "matobjplist.gd" );
+ReadLib( "matobjnz.gd" );
 
 # files dealing with rewriting systems
 ReadLib( "rws.gd"      );

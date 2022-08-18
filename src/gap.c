@@ -18,11 +18,11 @@
 #include "compiler.h"
 #include "error.h"
 #include "funcs.h"
-#include "gap_version.h"
 #include "gapstate.h"
 #ifdef USE_GASMAN
 #include "gasman_intern.h"
 #endif
+#include "gaptime.h"
 #include "gvars.h"
 #include "integer.h"
 #include "io.h"
@@ -33,27 +33,35 @@
 #include "read.h"
 #include "records.h"
 #include "saveload.h"
-#include "stats.h"    // for ClearError
 #include "streams.h"
 #include "stringobj.h"
 #include "sysenv.h"
 #include "sysfiles.h"
-#include "sysmem.h"
 #include "sysopt.h"
+#include "sysroots.h"
+#include "sysstr.h"
+#include "trycatch.h"
 #include "vars.h"
+#include "version.h"
 
 #ifdef HPCGAP
-#include "intrprtr.h"
+#include "hpc/cpu.h"
 #include "hpc/misc.h"
 #include "hpc/thread.h"
 #include "hpc/threadapi.h"
 #endif
 
-#include <gmp.h>
-
-#ifdef USE_JULIA_GC
+#if defined(USE_GASMAN)
+#include "sysmem.h"
+#elif defined(USE_JULIA_GC)
 #include "julia.h"
+#elif defined(USE_BOEHM_GC)
+#include "boehm_gc.h"
 #endif
+
+#include "config.h"
+
+#include <gmp.h>
 
 static Obj Error;
 
@@ -68,21 +76,21 @@ static UInt SystemErrorCode;
 **  and  'last3', which are automatically  assigned  the result values in the
 **  main read-eval-print loop.
 */
-UInt Last;
+static UInt Last;
 
 
 /****************************************************************************
 **
 *V  Last2 . . . . . . . . . . . . . . . . . . . . . . global variable 'last2'
 */
-UInt Last2;
+static UInt Last2;
 
 
 /****************************************************************************
 **
 *V  Last3 . . . . . . . . . . . . . . . . . . . . . . global variable 'last3'
 */
-UInt Last3;
+static UInt Last3;
 
 
 /****************************************************************************
@@ -92,7 +100,7 @@ UInt Last3;
 **  'Time' is the global variable 'time', which is automatically assigned the
 **  time the last command took.
 */
-UInt Time;
+static UInt Time;
 
 /****************************************************************************
 **
@@ -125,24 +133,24 @@ UInt ViewObjGVar;
 
 void ViewObjHandler ( Obj obj )
 {
-  volatile Obj        func;
-  syJmp_buf             readJmpError;
-
-  /* get the functions                                                   */
-  func = ValAutoGVar(ViewObjGVar);
+  // save some values in case view runs into error
+  volatile Bag  currLVars   = STATE(CurrLVars);
 
   /* if non-zero use this function, otherwise use `PrintObj'             */
-  memcpy( readJmpError, STATE(ReadJmpError), sizeof(syJmp_buf) );
-  TRY_IF_NO_ERROR {
+  GAP_TRY {
+    Obj func = ValAutoGVar(ViewObjGVar);
     if ( func != 0 && TNUM_OBJ(func) == T_FUNCTION ) {
       ViewObj(obj);
     }
     else {
       PrintObj( obj );
     }
-    Pr( "\n", 0L, 0L );
+    Pr("\n", 0, 0);
+    GAP_ASSERT(currLVars == STATE(CurrLVars));
   }
-  memcpy( STATE(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
+  GAP_CATCH {
+    SWITCH_TO_OLD_LVARS(currLVars);
+  }
 }
 
 
@@ -153,278 +161,230 @@ void ViewObjHandler ( Obj obj )
 static UInt QUITTINGGVar;
 
 
-/*
-TL: Obj ShellContext = 0;
-TL: Obj BaseShellContext = 0;
-*/
-
-static Obj Shell(Obj    context,
-                 UInt   canReturnVoid,
-                 UInt   canReturnObj,
-                 UInt   lastDepth,
-                 UInt   setTime,
-                 Char * prompt,
-                 Obj    preCommandHook,
-                 UInt   catchQUIT,
-                 Char * inFile,
-                 Char * outFile)
+static Obj FuncSHELL(Obj self,
+                     Obj context,
+                     Obj canReturnVoid,
+                     Obj canReturnObj,
+                     Obj breakLoop,
+                     Obj prompt,
+                     Obj preCommandHook)
 {
-  UInt time = 0;
-  UInt8 mem = 0;
-  UInt status;
-  Obj evalResult;
-  UInt dualSemicolon;
-  UInt oldPrintDepth;
-  Obj res;
-  Obj oldShellContext;
-  Obj oldBaseShellContext;
-  Int oldRecursionDepth;
-  oldShellContext = STATE(ShellContext);
-  STATE(ShellContext) = context;
-  oldBaseShellContext = STATE(BaseShellContext);
-  STATE(BaseShellContext) = context;
-  Int oldErrorLLevel = STATE(ErrorLLevel);
-  STATE(ErrorLLevel) = 0;
-  oldRecursionDepth = GetRecursionDepth();
-  
-  /* read-eval-print loop                                                */
-  if (!OpenOutput(outFile))
-      ErrorQuit("SHELL: can't open outfile %s",(Int)outFile,0);
+    //
+    // validate all arguments
+    //
+    if (!IS_LVARS_OR_HVARS(context))
+        RequireArgument(SELF_NAME, context, "must be a local variables bag");
 
-  if(!OpenInput(inFile))
-    {
-      CloseOutput();
-      ErrorQuit("SHELL: can't open infile %s",(Int)inFile,0);
+    RequireTrueOrFalse(SELF_NAME, canReturnVoid);
+    RequireTrueOrFalse(SELF_NAME, canReturnObj);
+    RequireTrueOrFalse(SELF_NAME, breakLoop);
+    RequireStringRep(SELF_NAME, prompt);
+    if (GET_LEN_STRING(prompt) > 80)
+        ErrorMayQuit("SHELL: <prompt> must be a string of length at most 80",
+                     0, 0);
+
+    if (preCommandHook == False)
+        preCommandHook = 0;
+    else if (!IS_FUNC(preCommandHook))
+        RequireArgument(SELF_NAME, preCommandHook,
+                        "must be function or false");
+
+    //
+    // open input and output streams
+    //
+    const Char * inFile;
+    const Char * outFile;
+
+    if (breakLoop == True) {
+        inFile = "*errin*";
+        outFile = "*errout*";
     }
-  
-  oldPrintDepth = SetPrintObjState(0);
-
-  while ( 1 ) {
-
-    /* start the stopwatch                                             */
-    if (setTime) {
-          time = SyTime();
-          mem = SizeAllBags;
+#ifdef HPCGAP
+    else if (ThreadUI) {
+        inFile = "*defin*";
+        outFile = "*defout*";
+    }
+#endif
+    else {
+        inFile = "*stdin*";
+        outFile = "*stdout*";
     }
 
-    /* read and evaluate one command                                   */
-    STATE(Prompt) = prompt;
-    ClearError();
-    SetPrintObjState(0);
-    ResetOutputIndent();
-    SetRecursionDepth(0);
-      
-    /* here is a hook: */
-    if (preCommandHook) {
-      if (!IS_FUNC(preCommandHook))
-        {
-                  Pr("#E CommandHook was non-function, ignoring\n",0L,0L);
+    TypOutputFile output;
+    if (!OpenOutput(&output, outFile, FALSE))
+        ErrorQuit("SHELL: can't open outfile %s", (Int)outFile, 0);
+
+    TypInputFile input;
+    if (!OpenInput(&input, inFile)) {
+        CloseOutput(&output);
+        ErrorQuit("SHELL: can't open infile %s", (Int)inFile, 0);
+    }
+
+    //
+    // save some state
+    //
+    Int  oldErrorLLevel = STATE(ErrorLLevel);
+    Int  oldRecursionDepth = GetRecursionDepth();
+    UInt oldPrintObjState = SetPrintObjState(0);
+
+    //
+    // return values of ReadEvalCommand
+    //
+    ExecStatus status;
+    Obj  evalResult;
+
+    //
+    // start the REPL (read-eval-print loop)
+    //
+    STATE(ErrorLLevel) = 0;
+    while (1) {
+        UInt  time = 0;
+        UInt8 mem = 0;
+
+        /* start the stopwatch                                             */
+        if (breakLoop == False) {
+            time = SyTime();
+            mem = SizeAllBags;
         }
-      else
-        {
-          Call0ArgsInNewReader(preCommandHook);
-          /* Recover from a potential break loop: */
-          STATE(Prompt) = prompt;
-          ClearError();
+
+        /* read and evaluate one command                                   */
+        SetPrompt(CONST_CSTR_STRING(prompt));
+        SetPrintObjState(0);
+        ResetOutputIndent();
+        SetRecursionDepth(0);
+
+        /* here is a hook: */
+        if (preCommandHook) {
+            Call0ArgsInNewReader(preCommandHook);
+            // Recover from a potential break loop:
+            SetPrompt(CONST_CSTR_STRING(prompt));
+        }
+
+        // update ErrorLVars based on ErrorLLevel
+        //
+        // It is slightly wasteful to do this every time, but that's OK since
+        // this code is only used for interactive input, and the time it takes
+        // a user to press the return key is something like a thousand times
+        // greater than the time it takes to execute this loop.
+        Int depth = STATE(ErrorLLevel);
+        Obj errorLVars = context;
+        STATE(ErrorLLevel) = 0;
+        while (0 < depth && !IsBottomLVars(errorLVars) &&
+               !IsBottomLVars(PARENT_LVARS(errorLVars))) {
+            errorLVars = PARENT_LVARS(errorLVars);
+            STATE(ErrorLLevel)++;
+            depth--;
+        }
+        STATE(ErrorLVars) = errorLVars;
+
+        // read and evaluate one command (statement or expression)
+        BOOL dualSemicolon;
+        status =
+            ReadEvalCommand(errorLVars, &input, &evalResult, &dualSemicolon);
+
+        // if the input we just processed *indirectly* executed a `QUIT` statement
+        // (e.g. by reading a file via `READ`) then bail out
+        if (STATE(UserHasQUIT))
+            break;
+
+        // if the statement we just processed itself was `QUIT`, also bail out
+        if (status == STATUS_QQUIT) {
+            STATE(UserHasQUIT) = TRUE;
+            break;
+        }
+
+        /* handle ordinary command                                         */
+        if (status == STATUS_END && evalResult != 0) {
+            UpdateLast(evalResult);
+            if (!dualSemicolon) {
+                ViewObjHandler(evalResult);
+            }
+        }
+
+        /* handle return-value or return-void command                      */
+        else if (status == STATUS_RETURN && evalResult != 0) {
+            if (canReturnObj == True)
+                break;
+            Pr("'return <object>' cannot be used in this read-eval-print "
+               "loop\n",
+               0, 0);
+        }
+        else if (status == STATUS_RETURN && evalResult == 0) {
+            if (canReturnVoid == True)
+                break;
+            Pr("'return' cannot be used in this read-eval-print loop\n", 0,
+               0);
+        }
+        /* handle quit command or <end-of-file>                            */
+        else if (status == STATUS_EOF || status == STATUS_QUIT) {
+            break;
+        }
+
+        /* stop the stopwatch                                          */
+        if (breakLoop == False) {
+            UpdateTime(time);
+            AssGVarWithoutReadOnlyCheck(MemoryAllocated,
+                                        ObjInt_Int8(SizeAllBags - mem));
+        }
+
+        if (STATE(UserHasQuit)) {
+            // If we get here, then some code invoked indirectly by the
+            // command we just processed was aborted via `quit` (most likely:
+            // `quit` was entered in a break loop). Stop processing any
+            // further input in the current line of input. Thus if the input
+            // is `f(); g();` and executing `f()` triggers a break loop that
+            // the user aborts via `quit`, then we won't try to execute `g()`
+            // anymore.
+            //
+            // So in a sense we are (ab)using `UserHasQuit` to see if an error
+            // occurred.
+            FlushRestOfInputLine(&input);
+            STATE(UserHasQuit) = FALSE;
         }
     }
 
-    /* now  read and evaluate and view one command  */
-    status = ReadEvalCommand(STATE(ShellContext), &evalResult, &dualSemicolon);
-    if (STATE(UserHasQUIT))
-      break;
+    //
+    // cleanup: restore state, close input/output streams
+    //
+    SetPrintObjState(oldPrintObjState);
+    SetRecursionDepth(oldRecursionDepth);
+    STATE(ErrorLLevel) = oldErrorLLevel;
+    CloseInput(&input);
+    CloseOutput(&output);
 
+    //
+    // handle QUIT
+    //
+    if (STATE(UserHasQUIT)) {
+        // If we are in a break loop, throw so that the next higher up
+        // read&eval loop can process the QUIT
+        if (breakLoop == True)
+            GAP_THROW();
 
-    /* handle ordinary command                                         */
-    if ( status == STATUS_END && evalResult != 0 ) {
-
-      /* remember the value in 'last'    */
-      UpdateLast(evalResult, lastDepth);
-
-      /* print the result                                            */
-      if ( ! dualSemicolon ) {
-        ViewObjHandler( evalResult );
-      }
-            
+        // If we are the topmost REPL, then indicating we are QUITing to the
+        // GAP language level, and simply end the loop. This implicitly
+        // assumes that the only places using SHELL() are the primary REPL and
+        // break loops.
+        STATE(UserHasQuit) = FALSE;
+        STATE(UserHasQUIT) = FALSE;
+        AssGVarWithoutReadOnlyCheck(QUITTINGGVar, True);
+        return Fail;
     }
 
-    /* handle return-value or return-void command                      */
-    else if (status & STATUS_RETURN_VAL) 
-      if(canReturnObj)
-        break;
-      else
-        Pr( "'return <object>' cannot be used in this read-eval-print loop\n",
-            0L, 0L );
-
-    else if (status & STATUS_RETURN_VOID) 
-      if(canReturnVoid ) 
-        break;
-      else
-        Pr( "'return' cannot be used in this read-eval-print loop\n",
-            0L, 0L );
-    
-    /* handle quit command or <end-of-file>                            */
-    else if ( status & (STATUS_EOF | STATUS_QUIT ) ) {
-      SetRecursionDepth(0);
-      STATE(UserHasQuit) = 1;
-      break;
+    //
+    // handle the remaining status codes; note that `STATUS_QQUIT` is handled
+    // above, as part of the `UserHasQUIT` handling
+    //
+    if (status == STATUS_EOF || status == STATUS_QUIT) {
+        return Fail;
     }
-        
-    /* handle QUIT */
-    else if (status & (STATUS_QQUIT)) {
-      STATE(UserHasQUIT) = 1;
-      break;
-    }
-        
-    /* stop the stopwatch                                          */
-    if (setTime) {
-        AssGVarWithoutReadOnlyCheck(Time, ObjInt_Int(SyTime() - time));
-        AssGVarWithoutReadOnlyCheck(MemoryAllocated,
-                                ObjInt_Int8(SizeAllBags - mem));
+    if (status == STATUS_RETURN) {
+        return evalResult ? NewPlistFromArgs(evalResult) : NewEmptyPlist();
     }
 
-    if (STATE(UserHasQuit))
-      {
-        FlushRestOfInputLine();
-        STATE(UserHasQuit) = 0;        /* quit has done its job if we are here */
-      }
-
-  }
-  
-  SetPrintObjState(oldPrintDepth);
-  CloseInput();
-  CloseOutput();
-  STATE(BaseShellContext) = oldBaseShellContext;
-  STATE(ShellContext) = oldShellContext;
-  STATE(ErrorLLevel) = oldErrorLLevel;
-  SetRecursionDepth(oldRecursionDepth);
-
-  if (STATE(UserHasQUIT))
-    {
-      if (catchQUIT)
-        {
-          STATE(UserHasQUIT) = 0;
-          MakeReadWriteGVar(QUITTINGGVar);
-          AssGVar(QUITTINGGVar, True);
-          MakeReadOnlyGVar(QUITTINGGVar);
-          return Fail;
-        }
-      else
-        ReadEvalError();
-    }
-
-  if (status & (STATUS_EOF | STATUS_QUIT | STATUS_QQUIT))
-    {
-      return Fail;
-    }
-  if (status & STATUS_RETURN_VOID)
-    {
-      res = NewEmptyPlist();
-      return res;
-    }
-  if (status & STATUS_RETURN_VAL)
-    {
-      res = NEW_PLIST(T_PLIST_HOM,1);
-      SET_LEN_PLIST(res,1);
-      SET_ELM_PLIST(res,1,evalResult);
-      return res;
-    }
-  assert(0); 
-  return (Obj) 0;
-}
-
-
-static Obj FuncSHELL(Obj self, Obj args)
-{
-  Obj context = 0;
-  UInt canReturnVoid = 0;
-  UInt canReturnObj = 0;
-  Int lastDepth = 0;
-  UInt setTime = 0;
-  Obj prompt = 0;
-  Obj preCommandHook = 0;
-  Obj infile;
-  Obj outfile;
-  Obj res;
-  Char promptBuffer[81];
-  UInt catchQUIT = 0;
-  
-  if (!IS_PLIST(args) || LEN_PLIST(args) != 10)
-    ErrorMayQuit("SHELL takes 10 arguments",0,0);
-  
-  context = ELM_PLIST(args,1);
-  if (!IS_LVARS_OR_HVARS(context))
-    ErrorMayQuit("SHELL: 1st argument should be a local variables bag",0,0);
-  
-  if (ELM_PLIST(args,2) == True)
-    canReturnVoid = 1;
-  else if (ELM_PLIST(args,2) == False)
-    canReturnVoid = 0;
-  else
-    ErrorMayQuit("SHELL: 2nd argument (can return void) should be true or false",0,0);
-
-  if (ELM_PLIST(args,3) == True)
-    canReturnObj = 1;
-  else if (ELM_PLIST(args,3) == False)
-    canReturnObj = 0;
-  else
-    ErrorMayQuit("SHELL: 3rd argument (can return object) should be true or false",0,0);
-  
-  if (!IS_INTOBJ(ELM_PLIST(args,4)))
-    ErrorMayQuit("SHELL: 4th argument (last depth) should be a small integer",0,0);
-  lastDepth = INT_INTOBJ(ELM_PLIST(args,4));
-  if (lastDepth < 0 )
-    {
-      Pr("#W SHELL: negative last depth treated as zero\n",0,0);
-      lastDepth = 0;
-    }
-  else if (lastDepth > 3 )
-    {
-      Pr("#W SHELL: last depth greater than 3 treated as 3\n",0,0);
-      lastDepth = 3;
-    }
-
-  if (ELM_PLIST(args,5) == True)
-    setTime = 1;
-  else if (ELM_PLIST(args,5) == False)
-    setTime = 0;
-  else
-    ErrorMayQuit("SHELL: 5th argument (set time) should be true or false",0,0);
-  
-  prompt = ELM_PLIST(args,6);
-  if (!IsStringConv(prompt) || GET_LEN_STRING(prompt) > 80)
-    ErrorMayQuit("SHELL: 6th argument (prompt) must be a string of length at most 80 characters",0,0);
-  promptBuffer[0] = '\0';
-  strlcat(promptBuffer, CONST_CSTR_STRING(prompt), sizeof(promptBuffer));
-
-  preCommandHook = ELM_PLIST(args,7);
- 
-  if (preCommandHook == False)
-    preCommandHook = 0;
-  else if (!IS_FUNC(preCommandHook))
-    ErrorMayQuit("SHELL: 7th argument (preCommandHook) must be function or false",0,0);
-
-  
-  infile = ELM_PLIST(args,8);
-  if (!IsStringConv(infile))
-    ErrorMayQuit("SHELL: 8th argument (infile) must be a string",0,0);
-
-  outfile = ELM_PLIST(args,9);
-  if (!IsStringConv(outfile))
-    ErrorMayQuit("SHELL: 9th argument (outfile) must be a string",0,0);
-
-  if (ELM_PLIST(args,10) == True)
-    catchQUIT = 1;
-  else if (ELM_PLIST(args,10) == False)
-    catchQUIT = 0;
-  else
-    ErrorMayQuit("SHELL: 10th argument (catch QUIT) should be true or false",0,0);
-
-  res =  Shell(context, canReturnVoid, canReturnObj, lastDepth, setTime, promptBuffer, preCommandHook, catchQUIT,
-               CSTR_STRING(infile), CSTR_STRING(outfile));
-
-  STATE(UserHasQuit) = 0;
-  return res;
+    Panic("SHELL: unhandled status %d, this code should never be reached",
+          (int)status);
+    return (Obj)0;
 }
 
 int realmain( int argc, char * argv[] )
@@ -433,18 +393,20 @@ int realmain( int argc, char * argv[] )
   Obj                 func;                   /* function (compiler)     */
   Int4                crc;                    /* crc of file to compile  */
 
-  SetupGAPLocation(argc, argv);
-
   /* initialize everything and read init.g which runs the GAP session */
   InitializeGap( &argc, argv, 1 );
   if (!STATE(UserHasQUIT)) {         /* maybe the user QUIT from the initial
                                    read of init.g  somehow*/
     /* maybe compile in which case init.g got skipped */
     if ( SyCompilePlease ) {
-      if ( ! OpenInput(SyCompileInput) ) {
-        SyExit(1);
+      TypInputFile input;
+      if ( ! OpenInput(&input, SyCompileInput) ) {
+        return 1;
       }
-      func = READ_AS_FUNC();
+      func = READ_AS_FUNC(&input);
+      if (!CloseInput(&input)) {
+          return 2;
+      }
       crc  = SyGAPCRC(SyCompileInput);
       type = CompileFunc(
                          MakeImmString(SyCompileOutput),
@@ -452,13 +414,10 @@ int realmain( int argc, char * argv[] )
                          MakeImmString(SyCompileName),
                          crc,
                          MakeImmString(SyCompileMagic1) );
-      if ( type == 0 )
-        SyExit( 1 );
-      SyExit( 0 );
+      return ( type == 0 ) ? 1 : 0;
     }
   }
-  SyExit(SystemErrorCode);
-  return 0;
+  return SystemErrorCode;
 }
 
 #if !defined(COMPILECYGWINDLL)
@@ -509,89 +468,6 @@ static Obj FuncRETURN_NOTHING(Obj self, Obj arg)
 
 /****************************************************************************
 **
-*F  FuncRuntime( <self> ) . . . . . . . . . . . . internal function 'Runtime'
-**
-**  'FuncRuntime' implements the internal function 'Runtime'.
-**
-**  'Runtime()'
-**
-**  'Runtime' returns the time spent since the start of GAP in  milliseconds.
-**  How much time execution of statements take is of course system dependent.
-**  The accuracy of this number is also system dependent.
-*/
-static Obj FuncRuntime(Obj self)
-{
-    return ObjInt_UInt(SyTime());
-}
-
-
-static Obj FuncRUNTIMES(Obj self)
-{
-  Obj    res;
-  res = NEW_PLIST(T_PLIST, 4);
-  ASS_LIST(res, 1, ObjInt_UInt(SyTime()));
-  ASS_LIST(res, 2, ObjInt_UInt(SyTimeSys()));
-  ASS_LIST(res, 3, ObjInt_UInt(SyTimeChildren()));
-  ASS_LIST(res, 4, ObjInt_UInt(SyTimeChildrenSys()));
-  return res;
-}
-
-
-/****************************************************************************
-**
-*F  FuncNanosecondsSinceEpoch( <self> )
-**
-**  'FuncNanosecondsSinceEpoch' returns an integer which represents the
-**  number of nanoseconds since some unspecified starting point. This
-**  function wraps SyNanosecondsSinceEpoch.
-**
-*/
-static Obj FuncNanosecondsSinceEpoch(Obj self)
-{
-  Int8 val = SyNanosecondsSinceEpoch();
-
-  if(val == -1) {
-    return Fail;
-  }
-  else {
-    return ObjInt_Int8(val);
-  }
-}
-
-/****************************************************************************
-**
-*F  FuncNanosecondsSinceEpochInfo( <self> )
-**
-**  'FuncNanosecondsSinceEpochInformation' returns a plain record
-**  contains information about the timers used for FuncNanosecondsSinceEpoch
-**
-*/
-static Obj FuncNanosecondsSinceEpochInfo(Obj self)
-{
-  Obj res, tmp;
-  Int8 resolution;
-
-  res = NEW_PREC(4);
-  /* Note this has to be "DYN" since we're not passing a
-     literal but a const char * */
-  tmp = MakeImmString(SyNanosecondsSinceEpochMethod);
-  AssPRec(res, RNamName("Method"), tmp);
-  AssPRec(res, RNamName("Monotonic"),
-               SyNanosecondsSinceEpochMonotonic ? True : False);
-  resolution = SyNanosecondsSinceEpochResolution();
-  if (resolution > 0) {
-      AssPRec(res, RNamName("Resolution"), ObjInt_Int8(resolution));
-      AssPRec(res, RNamName("Reliable"), True);
-  } else if (resolution <= 0) {
-      AssPRec(res, RNamName("Resolution"), ObjInt_Int8(-resolution));
-      AssPRec(res, RNamName("Reliable"), False);
-  }
-  return res;
-}
-
-
-/****************************************************************************
-**
 *F  FuncSizeScreen( <self>, <args> )  . . . .  internal function 'SizeScreen'
 **
 **  'FuncSizeScreen'  implements  the  internal  function 'SizeScreen' to get
@@ -617,8 +493,7 @@ static Obj FuncSizeScreen(Obj self, Obj args)
   UInt                len;            /* length of lines on the screen   */
   UInt                nr;             /* number of lines on the screen   */
 
-  /* check the arguments                                                 */
-  RequireSmallList("SizeScreen", args);
+  RequireSmallList(SELF_NAME, args);
   if (1 < LEN_LIST(args)) {
       ErrorMayQuit("SizeScreen: number of arguments must be 0 or 1 (not %d)",
                    LEN_LIST(args), 0);
@@ -644,24 +519,18 @@ static Obj FuncSizeScreen(Obj self, Obj args)
   }
   else {
     elm = ELMW_LIST(size,1);
-    if (!IS_INTOBJ(elm)) {
-        ErrorMayQuit("SizeScreen: <x> must be an integer", 0, 0);
-    }
-    len = INT_INTOBJ( elm );
+    len = GetSmallIntEx(SELF_NAME, elm, "<x>");
     if ( len < 20  )  len = 20;
     if ( MAXLENOUTPUTLINE < len )  len = MAXLENOUTPUTLINE;
   }
 
   /* extract the number                                                  */
-  if ( LEN_LIST(size) < 2 || ELM0_LIST(size,2) == 0 ) {
+  elm = ELM0_LIST(size, 2);
+  if ( elm == 0 ) {
     nr = 0;
   }
   else {
-    elm = ELMW_LIST(size,2);
-    if (!IS_INTOBJ(elm)) {
-        ErrorMayQuit("SizeScreen: <y> must be an integer", 0, 0);
-    }
-    nr = INT_INTOBJ( elm );
+    nr = GetSmallIntEx(SELF_NAME, elm, "<y>");
     if ( nr < 10 )  nr = 10;
   }
 
@@ -703,12 +572,10 @@ static Obj FuncWindowCmd(Obj self, Obj args)
   const Char *    inptr;
   const Char *    qtr;
 
-  // check arguments
-  RequireSmallList("WindowCmd", args);
+  RequireSmallList(SELF_NAME, args);
   tmp = ELM_LIST(args, 1);
   if (!IsStringConv(tmp)) {
-      ErrorMayQuit("WindowCmd: <cmd> must be a string (not a %s)",
-                   (Int)TNAM_OBJ(tmp), 0);
+      RequireArgumentEx(SELF_NAME, tmp, "<cmd>", "must be a string");
   }
     if ( 3 != LEN_LIST(tmp) ) {
         ErrorMayQuit("WindowCmd: <cmd> must be a string of length 3", 0, 0);
@@ -720,8 +587,8 @@ static Obj FuncWindowCmd(Obj self, Obj args)
     {
       tmp = ELM_LIST( args, i );
       if (!IS_INTOBJ(tmp) && !IsStringConv(tmp)) {
-          ErrorMayQuit("WindowCmd: %d. argument must be a string or integer "
-                       "(not a %s)",
+          ErrorMayQuit("WindowCmd: the argument in position %d must be a "
+                       "string or integer (not a %s)",
                        i, (Int)TNAM_OBJ(tmp));
           SET_ELM_PLIST(args, i, tmp);
       }
@@ -834,11 +701,10 @@ static Obj FuncWindowCmd(Obj self, Obj args)
 */
 static Obj FuncGASMAN(Obj self, Obj args)
 {
-    /* check the argument                                                  */
     if ( ! IS_SMALL_LIST(args) || LEN_LIST(args) == 0 ) {
         ErrorMayQuit(
             "usage: GASMAN( \"display\"|\"displayshort\"|\"clear\"|\"collect\"|\"message\"|\"partial\" )",
-            0L, 0L);
+            0, 0);
     }
 
     /* loop over the arguments                                             */
@@ -846,15 +712,15 @@ static Obj FuncGASMAN(Obj self, Obj args)
 
         /* evaluate and check the command                                  */
         Obj cmd = ELM_PLIST( args, i );
-        RequireStringRep("GASMAN", cmd);
+        RequireStringRep(SELF_NAME, cmd);
 
         // perform full garbage collection
-        if ( strcmp( CONST_CSTR_STRING(cmd), "collect" ) == 0 ) {
+        if (streq(CONST_CSTR_STRING(cmd), "collect")) {
             CollectBags(0,1);
         }
 
         // perform partial garbage collection
-        else if ( strcmp( CONST_CSTR_STRING(cmd), "partial" ) == 0 ) {
+        else if (streq(CONST_CSTR_STRING(cmd), "partial")) {
             CollectBags(0,0);
         }
 
@@ -867,17 +733,17 @@ static Obj FuncGASMAN(Obj self, Obj args)
 #else
 
         /* if request display the statistics                               */
-        else if ( strcmp( CONST_CSTR_STRING(cmd), "display" ) == 0 ) {
+        else if (streq(CONST_CSTR_STRING(cmd), "display")) {
 #ifdef COUNT_BAGS
-            Pr( "%40s ", (Int)"type",  0L          );
+            Pr("%40s ", (Int)"type", 0);
             Pr( "%8s %8s ",  (Int)"alive", (Int)"kbyte" );
             Pr( "%8s %8s\n",  (Int)"total", (Int)"kbyte" );
             for ( UInt k = 0; k < NUM_TYPES; k++ ) {
                 if ( TNAM_TNUM(k) != 0 ) {
                     Char buf[41];
                     buf[0] = '\0';
-                    strlcat( buf, TNAM_TNUM(k), sizeof(buf) );
-                    Pr("%40s ",    (Int)buf, 0L );
+                    gap_strlcat( buf, TNAM_TNUM(k), sizeof(buf) );
+                    Pr("%40s ",    (Int)buf, 0);
                     Pr("%8d %8d ", (Int)InfoBags[k].nrLive,
                                    (Int)(InfoBags[k].sizeLive/1024));
                     Pr("%8d %8d\n",(Int)InfoBags[k].nrAll,
@@ -888,9 +754,9 @@ static Obj FuncGASMAN(Obj self, Obj args)
         }
 
         /* if request give a short display of the statistics                */
-        else if ( strcmp( CONST_CSTR_STRING(cmd), "displayshort" ) == 0 ) {
+        else if (streq(CONST_CSTR_STRING(cmd), "displayshort")) {
 #ifdef COUNT_BAGS
-            Pr( "%40s ", (Int)"type",  0L          );
+            Pr("%40s ", (Int)"type", 0);
             Pr( "%8s %8s ",  (Int)"alive", (Int)"kbyte" );
             Pr( "%8s %8s\n",  (Int)"total", (Int)"kbyte" );
             for ( UInt k = 0; k < NUM_TYPES; k++ ) {
@@ -901,8 +767,8 @@ static Obj FuncGASMAN(Obj self, Obj args)
                       InfoBags[k].sizeAll != 0) ) {
                     Char buf[41];
                     buf[0] = '\0';
-                    strlcat( buf, TNAM_TNUM(k), sizeof(buf) );
-                    Pr("%40s ",    (Int)buf, 0L );
+                    gap_strlcat( buf, TNAM_TNUM(k), sizeof(buf) );
+                    Pr("%40s ",    (Int)buf, 0);
                     Pr("%8d %8d ", (Int)InfoBags[k].nrLive,
                                    (Int)(InfoBags[k].sizeLive/1024));
                     Pr("%8d %8d\n",(Int)InfoBags[k].nrAll,
@@ -913,7 +779,7 @@ static Obj FuncGASMAN(Obj self, Obj args)
         }
 
         /* if request display the statistics                               */
-        else if ( strcmp( CONST_CSTR_STRING(cmd), "clear" ) == 0 ) {
+        else if (streq(CONST_CSTR_STRING(cmd), "clear")) {
 #ifdef COUNT_BAGS
             for ( UInt k = 0; k < NUM_TYPES; k++ ) {
 #ifdef GASMAN_CLEAR_TO_LIVE
@@ -928,34 +794,37 @@ static Obj FuncGASMAN(Obj self, Obj args)
         }
 
         /* or display information about global bags                        */
-        else if ( strcmp( CONST_CSTR_STRING(cmd), "global" ) == 0 ) {
+        else if (streq(CONST_CSTR_STRING(cmd), "global")) {
             for ( i = 0;  i < GlobalBags.nr;  i++ ) {
                 Bag bag = *(GlobalBags.addr[i]);
                 if (bag != 0) {
                     const UInt sz = ((Int)bag & 3) ? 0 : SIZE_BAG(bag);
                     Pr("%50s: %12d bytes\n", (Int)GlobalBags.cookie[i], sz);
                 }
+                else {
+                    Pr("%50s: not allocated\n", (Int)GlobalBags.cookie[i], 0);
+                }
             }
         }
 
         /* or finally toggle Gasman messages                               */
-        else if ( strcmp( CONST_CSTR_STRING(cmd), "message" ) == 0 ) {
+        else if (streq(CONST_CSTR_STRING(cmd), "message")) {
             SyMsgsFlagBags = (SyMsgsFlagBags + 1) % 3;
         }
 
         /* otherwise complain                                              */
         else {
-            ErrorMayQuit("GASMAN: <cmd> must be %s or %s",
-                         (Int) "\"display\" or \"clear\" or \"global\" or ",
-                         (Int) "\"collect\" or \"partial\" or \"message\"");
+            ErrorMayQuit("GASMAN: <cmd> must be "
+                         "\"display\" or \"clear\" or \"global\" or "
+                         "\"collect\" or \"partial\" or \"message\"", 0, 0);
         }
 #endif // USE_GASMAN
     }
 
-    /* return nothing, this function is a procedure                        */
     return 0;
 }
 
+#ifdef USE_GASMAN
 static Obj FuncGASMAN_STATS(Obj self)
 {
   Obj res;
@@ -984,14 +853,19 @@ static Obj FuncGASMAN_MESSAGE_STATUS(Obj self)
 {
     return ObjInt_UInt(SyMsgsFlagBags);
 }
+#endif
 
 static Obj FuncGASMAN_LIMITS(Obj self)
 {
   Obj list;
   list = NEW_PLIST_IMM(T_PLIST_CYC, 3);
-  PushPlist(list, ObjInt_Int(SyStorMin));
-  PushPlist(list, ObjInt_Int(SyStorMax));
-  PushPlist(list, ObjInt_Int(SyStorKill));
+#ifdef USE_GASMAN
+  AssPlist(list, 1, ObjInt_Int(SyStorMin));
+  AssPlist(list, 2, ObjInt_Int(SyStorMax));
+#endif
+#if defined(USE_GASMAN) || defined(USE_BOEHM_GC)
+  AssPlist(list, 3, ObjInt_Int(SyStorKill));
+#endif
   return list;
 }
 
@@ -1005,11 +879,16 @@ static Obj FuncGASMAN_MEM_CHECK(Obj self, Obj newval)
 
 #endif
 
+
+static Obj FuncTOTAL_GC_TIME(Obj self)
+{
+    return ObjInt_UInt8(TotalGCTime());
+}
+
 /****************************************************************************
 **
 *F  FuncTotalMemoryAllocated( <self> ) .expert function 'TotalMemoryAllocated'
 */
-
 static Obj FuncTotalMemoryAllocated(Obj self)
 {
     return ObjInt_UInt8(SizeAllBags);
@@ -1055,8 +934,7 @@ static Obj FuncTNAM_OBJ(Obj self, Obj obj)
 static Obj FuncOBJ_HANDLE(Obj self, Obj handle)
 {
     if (handle != INTOBJ_INT(0) && !IS_POS_INT(handle))
-        RequireArgument("OBJ_HANDLE", handle,
-                        "must be a non-negative integer");
+        RequireArgument(SELF_NAME, handle, "must be a non-negative integer");
     return (Obj)UInt_ObjInt(handle);
 }
 
@@ -1078,8 +956,8 @@ for all immediate objects (small integers or ffes) and (b) returns reasonably
 small results (roughly in the range from 1 to the max number of objects that
 have existed in this session. In HPC-GAP it returns almost the same value as
 HANDLE_OBJ for non-immediate objects, but divided by sizeof(Obj), which gets
-rids of a few zero bits and thus increases the chance of the result value
-to be an immediate integer. */
+rid of a few zero bits and thus increases the chance of the result value
+fitting into an immediate integer. */
 
 static Obj FuncMASTER_POINTER_NUMBER(Obj self, Obj o)
 {
@@ -1087,62 +965,10 @@ static Obj FuncMASTER_POINTER_NUMBER(Obj self, Obj o)
         return INTOBJ_INT(0);
     }
 #ifdef USE_GASMAN
-    if ((void **) o >= (void **) MptrBags && (void **) o < (void **) MptrEndBags) {
-        return ObjInt_UInt(((void **)o - (void **)MptrBags) + 1);
-    } else {
-        return INTOBJ_INT(0);
-    }
+    return ObjInt_UInt(MASTER_POINTER_NUMBER(o));
 #else
     return ObjInt_UInt((UInt)o / sizeof(Obj));
 #endif
-}
-
-/****************************************************************************
-**
-*F  FuncSleep( <self>, <secs> )
-**
-*/
-
-static Obj FuncSleep(Obj self, Obj secs)
-{
-    Int s = GetSmallInt("Sleep", secs);
-
-    if (s > 0)
-        SySleep((UInt)s);
-
-    /* either we used up the time, or we were interrupted. */
-    if (HaveInterrupt()) {
-        ClearError(); /* The interrupt may still be pending */
-        ErrorReturnVoid("user interrupt in sleep", 0L, 0L,
-                        "you can 'return;' as if the sleep was finished");
-    }
-
-    return (Obj)0;
-}
-
-
-/****************************************************************************
-**
-*F  FuncMicroSleep( <self>, <secs> )
-**
-*/
-
-static Obj FuncMicroSleep(Obj self, Obj msecs)
-{
-    Int s = GetSmallInt("MicroSleep", msecs);
-
-    if (s > 0)
-        SyUSleep((UInt)s);
-
-    /* either we used up the time, or we were interrupted. */
-    if (HaveInterrupt()) {
-        ClearError(); /* The interrupt may still be pending */
-        ErrorReturnVoid(
-            "user interrupt in microsleep", 0L, 0L,
-            "you can 'return;' as if the microsleep was finished");
-    }
-
-    return (Obj)0;
 }
 
 
@@ -1162,45 +988,54 @@ static int SetExitValue(Obj code)
 
 /****************************************************************************
 **
-*F  FuncGAP_EXIT_CODE() . . . . . . . . Set the code with which GAP exits.
+*F  FuncGapExitCode() . . . . . . . . Set the code with which GAP exits.
 **
 */
 
-static Obj FuncGAP_EXIT_CODE(Obj self, Obj code)
+static Obj FuncGapExitCode(Obj self, Obj args)
 {
-  if (!SetExitValue(code))
-    ErrorQuit("GAP_EXIT_CODE: Argument must be boolean or integer", 0L, 0L);
-  return (Obj) 0;
+    if (LEN_LIST(args) > 1) {
+        ErrorQuit("usage: GapExitCode( [ <return value> ] )", 0, 0);
+    }
+
+    Obj prev_exit_value = ObjInt_Int(SystemErrorCode);
+
+    if (LEN_LIST(args) == 1) {
+        Obj code = ELM_PLIST(args, 1);
+        RequireArgumentCondition("GapExitCode", code, SetExitValue(code),
+                                 "Argument must be boolean or integer");
+    }
+    return (Obj)prev_exit_value;
 }
 
 
 /****************************************************************************
 **
-*F  FuncQUIT_GAP()
+*F  FuncQuitGap()
 **
 */
 
-static Obj FuncQUIT_GAP(Obj self, Obj args)
+static Obj FuncQuitGap(Obj self, Obj args)
 {
   if ( LEN_LIST(args) == 0 ) {
     SystemErrorCode = 0;
   }
   else if ( LEN_LIST(args) != 1 
             || !SetExitValue(ELM_PLIST(args, 1) ) ) {
-    ErrorQuit( "usage: QUIT_GAP( [ <return value> ] )", 0L, 0L );
+    ErrorQuit( "usage: QuitGap( [ <return value> ] )", 0, 0);
   }
-  STATE(UserHasQUIT) = 1;
-  ReadEvalError();
+  STATE(UserHasQUIT) = TRUE;
+  GAP_THROW();
   return (Obj)0; 
 }
 
 /****************************************************************************
 **
-*F  FuncFORCE_QUIT_GAP()
+*F  FuncForceQuitGap()
 **
 */
 
-static Obj FuncFORCE_QUIT_GAP(Obj self, Obj args)
+static Obj FuncForceQuitGap(Obj self, Obj args)
 {
   if ( LEN_LIST(args) == 0 )
   {
@@ -1208,7 +1043,7 @@ static Obj FuncFORCE_QUIT_GAP(Obj self, Obj args)
   }
   else if ( LEN_LIST(args) != 1 
             || !SetExitValue(ELM_PLIST(args, 1) ) ) {
-    ErrorQuit( "usage: FORCE_QUIT_GAP( [ <return value> ] )", 0L, 0L );
+    ErrorQuit( "usage: ForceQuitGap( [ <return value> ] )", 0, 0);
   }
   SyExit(SystemErrorCode);
 }
@@ -1234,135 +1069,90 @@ static Obj FuncSHOULD_QUIT_ON_BREAK(Obj self)
 
 static Obj FuncKERNEL_INFO(Obj self)
 {
-  Obj res = NEW_PREC(0);
-  UInt r,lenvec;
-  Char *p;
-  Obj tmp,list,str;
-  UInt i,j;
+    Obj  res = NEW_PREC(0);
+    UInt r;
+    Obj  tmp;
+    UInt i;
 
-  /* GAP_ARCHITECTURE                                                    */
-  tmp = MakeImmString( SyArchitecture );
-  r = RNamName("GAP_ARCHITECTURE");
-  AssPRec(res,r,tmp);
-  /* KERNEL_VERSION */
-  tmp = MakeImmString( SyKernelVersion );
-  r = RNamName("KERNEL_VERSION");
-  AssPRec(res,r,tmp);
-  tmp = INTOBJ_INT(GAP_KERNEL_API_VERSION);
-  r = RNamName("KERNEL_API_VERSION");
-  AssPRec(res, r, tmp);
-  tmp = MakeImmString( SyBuildVersion );
-  r = RNamName("BUILD_VERSION");
-  AssPRec(res,r,tmp);
-  tmp = MakeImmString( SyBuildDateTime );
-  r = RNamName("BUILD_DATETIME");
-  AssPRec(res,r,tmp);
+    AssPRec(res, RNamName("GAP_ARCHITECTURE"), MakeImmString(GAPARCH));
+    AssPRec(res, RNamName("KERNEL_VERSION"), MakeImmString(SyKernelVersion));
+    AssPRec(res, RNamName("KERNEL_API_VERSION"), INTOBJ_INT(GAP_KERNEL_API_VERSION));
+    AssPRec(res, RNamName("BUILD_VERSION"), MakeImmString(SyBuildVersion));
+    AssPRec(res, RNamName("BUILD_DATETIME"), MakeImmString(SyBuildDateTime));
+    AssPRec(res, RNamName("RELEASEDAY"), MakeImmString(SyReleaseDay));
+    AssPRec(res, RNamName("GAP_ROOT_PATHS"), SyGetGapRootPaths());
+    AssPRec(res, RNamName("DOT_GAP_PATH"), MakeImmString(SyDotGapPath()));
 
-  AssPRec(res, RNamName("RELEASEDAY"), MakeImmString(SyReleaseDay));
+    // Get OS Kernel Release info
+    AssPRec(res, RNamName("uname"), SyGetOsRelease());
 
-  /* GAP_ROOT_PATH                                                       */
-  /* do we need this. Could we rebuild it from the command line in GAP
-     if so, should we                                                    */
-  list = NEW_PLIST_IMM( T_PLIST, MAX_GAP_DIRS );
-  for ( i = 0, j = 1;  i < MAX_GAP_DIRS;  i++ ) {
-    if ( SyGapRootPaths[i][0] ) {
-      tmp = MakeImmString( SyGapRootPaths[i] );
-      SET_ELM_PLIST( list, j, tmp );
-      j++;
+    // make command line available to GAP level
+    tmp = NEW_PLIST_IMM(T_PLIST, 16);
+    for (i = 0; SyOriginalArgv[i]; i++) {
+        PushPlist(tmp, MakeImmString(SyOriginalArgv[i]));
     }
-  }
-  SET_LEN_PLIST( list, j-1 );
-  r = RNamName("GAP_ROOT_PATHS");
-  AssPRec(res,r,list);
-  /* And also the DotGapPath if available */
-  tmp = MakeImmString( DotGapPath );
-  r = RNamName("DOT_GAP_PATH");
-  AssPRec(res,r,tmp);
-    
-  /* make command line and environment available to GAP level       */
-  for (lenvec=0; SyOriginalArgv[lenvec]; lenvec++);
-  tmp = NEW_PLIST_IMM( T_PLIST, lenvec );
-  SET_LEN_PLIST( tmp, lenvec );
-  for (i = 0; i<lenvec; i++) {
-    str = MakeImmString( SyOriginalArgv[i] );
-    SET_ELM_PLIST(tmp, i+1, str);
-    CHANGED_BAG(tmp);
-  }
-  r = RNamName("COMMAND_LINE");
-  AssPRec(res,r, tmp);
+    AssPRec(res, RNamName("COMMAND_LINE"), tmp);
 
-  tmp = NEW_PREC(0);
-  for (i = 0; environ[i]; i++) {
-    for (p = environ[i]; *p != '='; p++)
-      ;
-    p = strchr(environ[i], '=');
-    if (!p) {
-        // should never happen...
-        // FIXME: should we print a warning here?
-        continue;
+    // make environment available to GAP level
+    tmp = NEW_PREC(0);
+    for (i = 0; environ[i]; i++) {
+        Char * p = strchr(environ[i], '=');
+        if (!p) {
+            // should never happen...
+            // FIXME: should we print a warning here?
+            continue;
+        }
+        Obj name = MakeStringWithLen(environ[i], p - environ[i]);
+        r = RNamName(CONST_CSTR_STRING(name));
+        p++; /* Move pointer behind = character */
+        AssPRec(tmp, r, MakeImmString(p));
     }
-    r = RNamNameWithLen(environ[i], p - environ[i]);
-    p++;   /* Move pointer behind = character */
-    str = MakeString(p);
-    AssPRec(tmp,r , str);
-  }
-  r = RNamName("ENVIRONMENT");
-  AssPRec(res,r, tmp);
+    AssPRec(res, RNamName("ENVIRONMENT"), tmp);
 
 #ifdef HPCGAP
-  r = RNamName("NUM_CPUS");
-  AssPRec(res, r, INTOBJ_INT(SyNumProcessors));
+    AssPRec(res, RNamName("NUM_CPUS"), INTOBJ_INT(SyNumProcessors));
 #endif
 
-  /* export if we want to use readline  */
-  r = RNamName("HAVE_LIBREADLINE");
-  if (SyUseReadline)
-    AssPRec(res, r, True);
-  else
-    AssPRec(res, r, False);
+    // export if we want to use readline
+    AssPRec(res, RNamName("HAVE_LIBREADLINE"), SyUseReadline ? True : False);
 
-  /* export GMP version  */
-  str = MakeImmString( gmp_version );
-  r = RNamName("GMP_VERSION");
-  AssPRec(res, r, str);
+    // export GMP version
+    AssPRec(res, RNamName("GMP_VERSION"), MakeImmString(gmp_version));
 
-  /* export name of the garbage collector we use  */
-  r = RNamName("GC");
+    // export name of the garbage collector we use
 #if defined(USE_GASMAN)
-    AssPRec(res, r, MakeImmString("GASMAN"));
+    tmp = MakeImmString("GASMAN");
 #elif defined(USE_BOEHM_GC)
-    AssPRec(res, r, MakeImmString("Boehm GC"));
+    tmp = MakeImmString("Boehm GC");
 #elif defined(USE_JULIA_GC)
-    AssPRec(res, r, MakeImmString("Julia GC"));
+    tmp = MakeImmString("Julia GC");
 #else
-    #error Unsupported garbage collector
+#error Unsupported garbage collector
 #endif
+    AssPRec(res, RNamName("GC"), tmp);
 
 #ifdef USE_JULIA_GC
-  /* export Julia version  */
-  str = MakeImmString( jl_ver_string() );
-  r = RNamName("JULIA_VERSION");
-  AssPRec(res, r, str);
+    // export Julia version
+    AssPRec(res, RNamName("JULIA_VERSION"), MakeImmString(jl_ver_string()));
 #endif
 
-  r = RNamName("KernelDebug");
+    r = RNamName("KernelDebug");
 #ifdef GAP_KERNEL_DEBUG
-  AssPRec(res, r, True);
+    AssPRec(res, r, True);
 #else
-  AssPRec(res, r, False);
+    AssPRec(res, r, False);
 #endif
 
-  r = RNamName("MemCheck");
+    r = RNamName("MemCheck");
 #ifdef GAP_MEM_CHECK
-  AssPRec(res, r, True);
+    AssPRec(res, r, True);
 #else
-  AssPRec(res, r, False);
+    AssPRec(res, r, False);
 #endif
 
-  MakeImmutable(res);
-  
-  return res;
-  
+    MakeImmutable(res);
+
+    return res;
 }
 
 /****************************************************************************
@@ -1418,44 +1208,62 @@ static Obj FuncSINGLE_THREAD_STARTUP(Obj self)
 
 #endif
 
-void UpdateLast(Obj newLast, Int lastDepth)
+void UpdateLast(Obj newLast)
 {
-    if (lastDepth >= 3)
-        AssGVarWithoutReadOnlyCheck(Last3, ValGVarTL(Last2));
-    if (lastDepth >= 2)
-        AssGVarWithoutReadOnlyCheck(Last2, ValGVarTL(Last));
-    if (lastDepth >= 1)
-        AssGVarWithoutReadOnlyCheck(Last, newLast);
+    AssGVarWithoutReadOnlyCheck(Last3, ValGVarTL(Last2));
+    AssGVarWithoutReadOnlyCheck(Last2, ValGVarTL(Last));
+    AssGVarWithoutReadOnlyCheck(Last, newLast);
 }
+
+void UpdateTime(UInt startTime)
+{
+    AssGVarWithoutReadOnlyCheck(Time, ObjInt_Int(SyTime() - startTime));
+}
+
 
 // UPDATE_STAT lets code assign the special variables which GAP
 // automatically sets in interactive sessions. This is for demonstration
 // code which wants to look like iteractive usage of GAP. Using this
 // function will not stop GAP automatically changing these variables as
 // usual.
-static void FuncUPDATE_STAT(Obj self, Obj name, Obj newStat)
+static Obj FuncUPDATE_STAT(Obj self, Obj name, Obj newStat)
 {
-    RequireStringRep("UPDATE_STAT", name);
+    RequireStringRep(SELF_NAME, name);
 
     const char * cname = CONST_CSTR_STRING(name);
-    if (strcmp(cname, "time") == 0) {
+    if (streq(cname, "time")) {
         AssGVarWithoutReadOnlyCheck(Time, newStat);
     }
-    else if (strcmp(cname, "last") == 0) {
+    else if (streq(cname, "last")) {
         AssGVarWithoutReadOnlyCheck(Last, newStat);
     }
-    else if (strcmp(cname, "last2") == 0) {
+    else if (streq(cname, "last2")) {
         AssGVarWithoutReadOnlyCheck(Last2, newStat);
     }
-    else if (strcmp(cname, "last3") == 0) {
+    else if (streq(cname, "last3")) {
         AssGVarWithoutReadOnlyCheck(Last3, newStat);
     }
-    else if (strcmp(cname, "memory_allocated") == 0) {
+    else if (streq(cname, "memory_allocated")) {
         AssGVarWithoutReadOnlyCheck(MemoryAllocated, newStat);
     }
     else {
         ErrorMayQuit("UPDATE_STAT: unsupported <name> value '%g'", (Int)name, 0);
     }
+    return 0;
+}
+
+
+static Obj FuncSetAssertionLevel(Obj self, Obj level)
+{
+    RequireNonnegativeSmallInt(SELF_NAME, level);
+    STATE(CurrentAssertionLevel) = INT_INTOBJ(level);
+    return 0;
+}
+
+
+static Obj FuncAssertionLevel(Obj self)
+{
+    return INTOBJ_INT(STATE(CurrentAssertionLevel));
 }
 
 
@@ -1465,46 +1273,50 @@ static void FuncUPDATE_STAT(Obj self, Obj name, Obj newStat)
 */
 static StructGVarFunc GVarFuncs[] = {
 
-    GVAR_FUNC(Runtime, 0, ""),
-    GVAR_FUNC(RUNTIMES, 0, ""),
-    GVAR_FUNC(NanosecondsSinceEpoch, 0, ""),
-    GVAR_FUNC(NanosecondsSinceEpochInfo, 0, ""),
-    GVAR_FUNC(SizeScreen, -1, "args"),
-    GVAR_FUNC(ID_FUNC, 1, "object"),
-    GVAR_FUNC(RETURN_FIRST, -2, "first, rest"),
-    GVAR_FUNC(RETURN_NOTHING, -1, "object"),
-    GVAR_FUNC(GASMAN, -1, "args"),
-    GVAR_FUNC(GASMAN_STATS, 0, ""),
-    GVAR_FUNC(GASMAN_MESSAGE_STATUS, 0, ""),
-    GVAR_FUNC(GASMAN_LIMITS, 0, ""),
+    GVAR_FUNC_XARGS(SizeScreen, -1, "args"),
+    GVAR_FUNC_1ARGS(ID_FUNC, object),
+    GVAR_FUNC_XARGS(RETURN_FIRST, -2, "first, rest"),
+    GVAR_FUNC_XARGS(RETURN_NOTHING, -1, "object"),
+    GVAR_FUNC_XARGS(GASMAN, -1, "args"),
+#ifdef USE_GASMAN
+    GVAR_FUNC_0ARGS(GASMAN_STATS),
+    GVAR_FUNC_0ARGS(GASMAN_MESSAGE_STATUS),
+#endif
+    GVAR_FUNC_0ARGS(GASMAN_LIMITS),
 #ifdef GAP_MEM_CHECK
-    GVAR_FUNC(GASMAN_MEM_CHECK, 1, "int"),
+    GVAR_FUNC_1ARGS(GASMAN_MEM_CHECK, int),
 #endif
-    GVAR_FUNC(TotalMemoryAllocated, 0, ""),
-    GVAR_FUNC(SIZE_OBJ, 1, "object"),
-    GVAR_FUNC(TNUM_OBJ, 1, "object"),
-    GVAR_FUNC(TNAM_OBJ, 1, "object"),
-    GVAR_FUNC(OBJ_HANDLE, 1, "handle"),
-    GVAR_FUNC(HANDLE_OBJ, 1, "object"),
-    GVAR_FUNC(WindowCmd, 1, "arg-list"),
-    GVAR_FUNC(MicroSleep, 1, "msecs"),
-    GVAR_FUNC(Sleep, 1, "secs"),
-    GVAR_FUNC(GAP_EXIT_CODE, 1, "exitCode"),
-    GVAR_FUNC(QUIT_GAP, -1, "args"),
-    GVAR_FUNC(FORCE_QUIT_GAP, -1, "args"),
-    GVAR_FUNC(SHOULD_QUIT_ON_BREAK, 0, ""),
-    GVAR_FUNC(SHELL,
-              -1,
-              "context, canReturnVoid, canReturnObj, lastDepth, "
-              "setTime, prompt, promptHook, infile, outfile"),
-    GVAR_FUNC(KERNEL_INFO, 0, ""),
+    GVAR_FUNC_0ARGS(TOTAL_GC_TIME),
+    GVAR_FUNC_0ARGS(TotalMemoryAllocated),
+    GVAR_FUNC_1ARGS(SIZE_OBJ, object),
+    GVAR_FUNC_1ARGS(TNUM_OBJ, object),
+    GVAR_FUNC_1ARGS(TNAM_OBJ, object),
+    GVAR_FUNC_1ARGS(OBJ_HANDLE, handle),
+    GVAR_FUNC_1ARGS(HANDLE_OBJ, object),
+    GVAR_FUNC_1ARGS(WindowCmd, args),
+    GVAR_FUNC_XARGS(GapExitCode, -1, "exitCode"),
+    GVAR_FUNC_XARGS(QuitGap, -1, "args"),
+    GVAR_FUNC_XARGS(ForceQuitGap, -1, "args"),
+    GVAR_FUNC_0ARGS(SHOULD_QUIT_ON_BREAK),
+    GVAR_FUNC_6ARGS(SHELL,
+                    context,
+                    canReturnVoid,
+                    canReturnObj,
+                    breakLoop,
+                    prompt,
+                    preCommandHook),
+    GVAR_FUNC_0ARGS(KERNEL_INFO),
 #ifdef HPCGAP
-    GVAR_FUNC(THREAD_UI, 0, ""),
-    GVAR_FUNC(SINGLE_THREAD_STARTUP, 0, ""),
+    GVAR_FUNC_0ARGS(THREAD_UI),
+    GVAR_FUNC_0ARGS(SINGLE_THREAD_STARTUP),
 #endif
-    GVAR_FUNC(MASTER_POINTER_NUMBER, 1, "ob"),
-    GVAR_FUNC(BREAKPOINT, 1, "integer"),
-    GVAR_FUNC(UPDATE_STAT, 2, "string, object"),
+    GVAR_FUNC_1ARGS(MASTER_POINTER_NUMBER, ob),
+    GVAR_FUNC_1ARGS(BREAKPOINT, integer),
+    GVAR_FUNC_2ARGS(UPDATE_STAT, string, object),
+
+    GVAR_FUNC_1ARGS(SetAssertionLevel, level),
+    GVAR_FUNC_0ARGS(AssertionLevel),
+
     { 0, 0, 0, 0, 0 }
 
 };
@@ -1517,24 +1329,15 @@ static StructGVarFunc GVarFuncs[] = {
 static Int InitKernel (
     StructInitInfo *    module )
 {
-    /* init the completion function                                        */
-#if !defined(HPCGAP)
-    InitGlobalBag( &STATE(ThrownObject), "src/gap.c:ThrownObject"      );
-#endif
-
     /* list of exit functions                                              */
     InitGlobalBag( &WindowCmdString, "src/gap.c:WindowCmdString" );
-
-    InitGlobalBag( &STATE(ShellContext), "STATE(ShellContext)" );
-    InitGlobalBag( &STATE(BaseShellContext), "STATE(BaseShellContext)" );
 
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable( GVarFuncs );
 
     /* establish Fopy of ViewObj                                           */
-    ImportFuncFromLibrary(  "ViewObj", 0L );
+    ImportFuncFromLibrary(  "ViewObj", 0 );
     ImportFuncFromLibrary(  "Error", &Error );
-    /* return success                                                      */
     return 0;
 }
 
@@ -1557,8 +1360,7 @@ static Int PostRestore (
     MemoryAllocated   = GVarName( "memory_allocated"  );
 
     QUITTINGGVar      = GVarName( "QUITTING" );
-    
-    /* return success                                                      */
+
     return 0;
 }
 
@@ -1589,8 +1391,11 @@ static Int InitLibrary (
     AssReadOnlyGVar(GVarName("time"), INTOBJ_INT(0));
     AssReadOnlyGVar(GVarName("memory_allocated"), INTOBJ_INT(0));
 
+    // ensure any legacy code which directly tries to set the former GAP
+    // global 'CurrentAssertionLevel' or tries to compare to an integer,
+    // runs into an error.
+    AssConstantGVar(GVarName("CurrentAssertionLevel"), False);
 
-    /* return success                                                      */
     return PostRestore( module );
 }
 
@@ -1619,7 +1424,7 @@ StructInitInfo * InitInfoGap ( void )
 **
 *F  InitializeGap() . . . . . . . . . . . . . . . . . . . . . . intialize GAP
 **
-**  Each module  (builtin  or compiled) exports  a sturctures  which contains
+**  Each module  (builtin  or compiled) exports  a structure  which  contains
 **  information about the name, version, crc, init function, save and restore
 **  functions.
 **
@@ -1631,7 +1436,7 @@ StructInitInfo * InitInfoGap ( void )
 **  function is used for both starting and restoring.
 **
 **  `InitLibrary': This function creates objects,  gvar and rnam number,  and
-**  does  assignments of auxillary C   variables (for example, pointers  from
+**  does  assignments of auxiliary C   variables (for example, pointers  from
 **  objects, length of hash lists).  This function is only used for starting.
 **
 **  `PostRestore': Everything in  `InitLibrary' execpt  creating objects.  In
@@ -1649,14 +1454,16 @@ void InitializeGap (
     InitSystem( *pargc, argv, handleSignals );
 
     /* Initialise memory  -- have to do this here to make sure we are at top of C stack */
-    InitBags(SyStorMin,
-             (Bag *)(((UInt)pargc / C_STACK_ALIGN) * C_STACK_ALIGN),
-             C_STACK_ALIGN);
+    InitBags(
+#if defined(USE_GASMAN)
+        SyStorMin,
+#else
+        0,
+#endif
+             (Bag *)(((UInt)pargc / C_STACK_ALIGN) * C_STACK_ALIGN));
 
-    STATE(NrError)      = 0;
-    STATE(ThrownObject) = 0;
-    STATE(UserHasQUIT) = 0;
-    STATE(UserHasQuit) = 0;
+    STATE(UserHasQUIT) = FALSE;
+    STATE(UserHasQuit) = FALSE;
     STATE(JumpToCatchCallback) = 0;
 
     // get info structures for the built in modules
@@ -1672,11 +1479,13 @@ void InitializeGap (
     InitGlobalBag(&POST_RESTORE, "gap.c: POST_RESTORE");
     InitFopyGVar( "POST_RESTORE", &POST_RESTORE);
 
+#ifdef GAP_ENABLE_SAVELOAD
+    if ( SyRestoring ) {
+
 #ifdef COUNT_BAGS
-    if (SyDebugLoading) {
-        if ( SyRestoring ) {
-            Pr( "#W  after setup\n", 0L, 0L );
-            Pr( "#W  %36s ", (Int)"type",  0L          );
+        if (SyDebugLoading) {
+            Pr("#W  after setup\n", 0, 0);
+            Pr("#W  %36s ", (Int)"type", 0);
             Pr( "%8s %8s ",  (Int)"alive", (Int)"kbyte" );
             Pr( "%8s %8s\n",  (Int)"total", (Int)"kbyte" );
             for ( Int i = 0;  i < NUM_TYPES;  i++ ) {
@@ -1684,8 +1493,8 @@ void InitializeGap (
                     char    buf[41];
 
                     buf[0] = '\0';
-                    strlcat( buf, TNAM_TNUM(i), sizeof(buf) );
-                    Pr("#W  %36s ",    (Int)buf, 0L );
+                    gap_strlcat( buf, TNAM_TNUM(i), sizeof(buf) );
+                    Pr("#W  %36s ",    (Int)buf, 0);
                     Pr("%8d %8d ", (Int)InfoBags[i].nrLive,
                        (Int)(InfoBags[i].sizeLive/1024));
                     Pr("%8d %8d\n",(Int)InfoBags[i].nrAll,
@@ -1693,37 +1502,31 @@ void InitializeGap (
                 }
             }
         }
-    }
 #endif
 
-    /* if we are restoring, load the workspace and call the post restore   */
-    if ( SyRestoring ) {
+        // we are restoring, load the workspace and call the post restore
         ModulesInitModuleState();
         LoadWorkspace(SyRestoring);
         SyRestoring = NULL;
 
         /* Call POST_RESTORE which is a GAP function that now takes control, 
            calls the post restore functions and then runs a GAP session */
-        if (POST_RESTORE != (Obj) 0 &&
-            IS_FUNC(POST_RESTORE)) {
-          TRY_IF_NO_ERROR {
-            CALL_0ARGS(POST_RESTORE);
-          }
+        if (POST_RESTORE != 0 && IS_FUNC(POST_RESTORE)) {
+          Call0ArgsInNewReader(POST_RESTORE);
         }
-    }
 
+        return;
+    }
+#endif // GAP_ENABLE_SAVELOAD
 
     /* otherwise call library initialisation                               */
-    else {
 #ifdef USE_GASMAN
-        CheckAllHandlers();
+    CheckAllHandlers();
 #endif
 
-        SyInitializing = 1;
-        ModulesInitLibrary();
-        ModulesInitModuleState();
-
-    }
+    SyInitializing = 1;
+    ModulesInitLibrary();
+    ModulesInitModuleState();
 
     /* check initialisation                                                */
     ModulesCheckInit();
@@ -1733,16 +1536,16 @@ void InitializeGap (
        past here when we're about to exit. 
                                            */
     if ( SyLoadSystemInitFile ) {
-      TRY_IF_NO_ERROR {
+      GAP_TRY {
         if ( READ_GAP_ROOT("lib/init.g") == 0 ) {
                 Pr( "gap: hmm, I cannot find 'lib/init.g' maybe",
-                    0L, 0L );
+                    0, 0);
                 Pr( " use option '-l <gaproot>'?\n If you ran the GAP"
                     " binary directly, try running the 'gap.sh' or 'gap.bat'"
-                    " script instead.", 0L, 0L );
+                    " script instead.", 0, 0);
             }
       }
-      CATCH_ERROR {
+      GAP_CATCH {
           Panic("Caught error at top-most level, probably quit from "
                 "library loading");
       }

@@ -59,7 +59,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7A0825A987C88978">4.6 <span class="Heading">Orthogonality, totally isotropic subspaces, and totally singular subspaces</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X78F2409184D192D3">4.6-1 OrthogonalSubspaceMat</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7D699C077F66F3E6">4.6-1 OrthogonalSubspaceMat</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X8394CCAD798053C6">4.6-2 IsIsotropicVector</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X855E539185D7D3C7">4.6-3 IsSingularVector</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X8141325085AAC0CD">4.6-4 IsTotallyIsotropicSubspace</a></span>
@@ -111,7 +111,6 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSesquilinearForm</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuadraticForm</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsForm</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsForm</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTrivialForm</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>The categories <code class="code">IsBilinearForm</code> and <code class="code">IsHermitianForm</code> are categories for bilinear and hermitian forms, respectively. They are disjoint and are both contained in the category <code class="code">IsSesquilinearForm</code>.</p>
 
@@ -134,8 +133,7 @@
 
 <h5>4.2-1 BilinearFormByMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BilinearFormByMatrix</code>( <var class="Arg">matrix</var>, <var class="Arg">field</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BilinearFormByMatrix</code>( <var class="Arg">matrix</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BilinearFormByMatrix</code>( <var class="Arg">matrix</var>[, <var class="Arg">field</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a bilinear form</p>
 
 <p>The argument <var class="Arg">matrix</var> must be a symmetric, or skew-symmetric, square matrix over the finite field <var class="Arg">field</var>. The argument <var class="Arg">field</var> is an optional argument, and if it is not given, then we assume that the <em>defining field</em> of the bilinear form is the smallest field containing the entries of matrix. Below we give an example where the defining field can make a difference in some applications. As it is only possible to construct reflexive bilinear forms, it is checked whether the matrix <var class="Arg">matrix</var> is symmetric or skew symmetric. If matrix <var class="Arg">matrix</var> is not symmetric nor skew symmetric, then an error message is returned. The output is a bilinear form (i.e., an object in <code class="code">IsBilinearForm</code>) with Gram matrix <var class="Arg">matrix</var> and defining field <var class="Arg">field</var>. (See <a href="chap3.html#X874CD5E0802FEB50"><span class="RefLink">3.1</span></a> for more on bilinear forms).</p>
@@ -192,8 +190,7 @@ z = Z(16)
 
 <h5>4.2-2 QuadraticFormByMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuadraticFormByMatrix</code>( <var class="Arg">matrix</var>, <var class="Arg">field</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuadraticFormByMatrix</code>( <var class="Arg">matrix</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuadraticFormByMatrix</code>( <var class="Arg">matrix</var>[, <var class="Arg">field</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a quadratic form</p>
 
 <p>The argument <var class="Arg">matrix</var> must be a square matrix over the finite field <var class="Arg">field</var>. The argument <var class="Arg">field</var> is an optional argument, and if it is not given, then we assume that the <em>defining field</em> of the bilinear form is the smallest field containing the entries of matrix. Below we give an example where the defining field can make a difference in some applications. Any square matrix determines a quadratic form, but the Gram matrix is recomputed so that it is an upper triangle matrix. The output is a quadratic form (i.e., an object in <code class="code">IsQuadraticForm</code>) with defining field <var class="Arg">field</var>. (See <a href="chap3.html#X864CAF8881067D8A"><span class="RefLink">3.2</span></a> for more on bilinear forms).</p>
@@ -253,7 +250,7 @@ z = Z(4)
 <h5>4.2-3 HermitianFormByMatrix</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HermitianFormByMatrix</code>( <var class="Arg">matrix</var>, <var class="Arg">field</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a quadratic form</p>
+<p>Returns: a hermitian sesquilinear form</p>
 
 <p>The argument <var class="Arg">matrix</var> must be a hermitian square matrix over the finite field <var class="Arg">field</var>, and <var class="Arg">field</var> has square order. The field must be specified, since we can only determine the smallest field containing the entries of <var class="Arg">matrix</var>. As it is only possible to construct reflexive sesquilinear forms, it is checked whether the matrix is a hermitian matrix, and if not, an error message is returned. The output is a hermitian sesquilinear form (i.e., an object in <code class="code">IsHermitianForm</code>) with Gram matrix <var class="Arg">matrix</var> and defining field <var class="Arg">field</var>. (See <a href="chap3.html#X874CD5E0802FEB50"><span class="RefLink">3.1</span></a> for more on hermitian forms).</p>
 
@@ -301,8 +298,7 @@ Gram Matrix:
 
 <h5>4.3-1 BilinearFormByPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BilinearFormByPolynomial</code>( <var class="Arg">poly</var>, <var class="Arg">r</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BilinearFormByPolynomial</code>( <var class="Arg">poly</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BilinearFormByPolynomial</code>( <var class="Arg">poly</var>, <var class="Arg">r</var>[, <var class="Arg">n</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a bilinear form</p>
 
 <p>The argument <var class="Arg">poly</var> must be a polynomial in the polynomial ring <var class="Arg">r</var>. The (optional) last argument is the dimension for the underlying vector space of the resulting form, which by default is the number of indeterminates specified by <var class="Arg">poly</var>. It is checked whether the polynomial is a homogeneous polynomial of degree two over the given field, and if not, an error message is returned. It is not possible to construct a nontrivial bilinear form from a polynomial in even characteristic. The output is a bilinear (orthogonal) form in the category <code class="code">IsBilinearForm</code>. (See <a href="chap3.html#X874CD5E0802FEB50"><span class="RefLink">3.1</span></a> for more on bilinear forms).</p>
@@ -347,8 +343,7 @@ you can 'return;' to continue
 
 <h5>4.3-2 QuadraticFormByPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuadraticFormByPolynomial</code>( <var class="Arg">poly</var>, <var class="Arg">r</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuadraticFormByPolynomial</code>( <var class="Arg">poly</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuadraticFormByPolynomial</code>( <var class="Arg">poly</var>, <var class="Arg">r</var>[, <var class="Arg">n</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a quadratic form</p>
 
 <p>The argument <var class="Arg">poly</var> must be a polynomial in the polynomial ring <var class="Arg">r</var>. The (optional) last argument is the dimension for the underlying vector space of the resulting form, which by default is the number of indeterminates specified by <var class="Arg">poly</var>. It is checked whether the polynomial is a homogeneous polynomial of degree two over the given field, and if not, an error message is returned. The output is a quadratic form in the category <code class="code">IsQuadraticForm</code>. (See <a href="chap3.html#X864CAF8881067D8A"><span class="RefLink">3.2</span></a> for more on quadratic forms).</p>
@@ -383,8 +378,7 @@ Polynomial: x_1^2+x_2^2+x_3*x_4
 
 <h5>4.3-3 HermitianFormByPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HermitianFormByPolynomial</code>( <var class="Arg">poly</var>, <var class="Arg">r</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HermitianFormByPolynomial</code>( <var class="Arg">poly</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HermitianFormByPolynomial</code>( <var class="Arg">poly</var>, <var class="Arg">r</var>[, <var class="Arg">n</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: an hermitian form</p>
 
 <p>The argument <var class="Arg">poly</var> must be a polynomial in the polynomial ring <var class="Arg">r</var> defined over a finite field of square order q<sup>2</sup> The (optional) last argument is the dimension for the underlying vector space of the resulting form, which by default is the number of indeterminates specified by <var class="Arg">poly</var>. It is checked whether the polynomial is a homogeneous polynomial of degree <span class="SimpleMath">q+1</span>, and if not, an error message is returned. The output is a hermitian form in the category <code class="code">IsHermitianForm</code>. (See <a href="chap3.html#X874CD5E0802FEB50"><span class="RefLink">3.1</span></a> for more on hermitian forms).</p>
@@ -553,8 +547,7 @@ Gram Matrix:
 
 <h5>4.5-1 EvaluateForm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EvaluateForm</code>( <var class="Arg">f</var>, <var class="Arg">u</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EvaluateForm</code>( <var class="Arg">f</var>, <var class="Arg">u</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EvaluateForm</code>( <var class="Arg">f</var>, <var class="Arg">u</var>[, <var class="Arg">v</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a finite field element</p>
 
 <p>The argument <var class="Arg">f</var> is either a sesquilinear or quadratic form defined over a finite field GF(q). The other argument is a pair of vectors or matrices, or a single vector or matrix. In case that <var class="Arg">u</var> (and <var class="Arg">v</var> when using three arguments) is a matrix, its rows represent a basis for the subspace (or subspaces) where <span class="SimpleMath">f</span> is evaluated in. This operation evaluates the form on the given vector or pair of vectors and returns an element in <span class="SimpleMath">GF(q)</span>. There is also an overloading of the operation <var class="Arg">\^</var> where <code class="file">(u,v)^f</code> represents <span class="SimpleMath">f(u,v)</span> in the case that <var class="Arg">f</var> is sesquilinear, and <code class="file">u^f</code> stands for <span class="SimpleMath">f(u)</span> in the quadratic case. So for convenience, the user may use this compressed version of this operation, which we show in the following example:</p>
@@ -588,7 +581,7 @@ Z(2^3)^6
 
 <h4>4.6 <span class="Heading">Orthogonality, totally isotropic subspaces, and totally singular subspaces</span></h4>
 
-<p><a id="X78F2409184D192D3" name="X78F2409184D192D3"></a></p>
+<p><a id="X7D699C077F66F3E6" name="X7D699C077F66F3E6"></a></p>
 
 <h5>4.6-1 OrthogonalSubspaceMat</h5>
 

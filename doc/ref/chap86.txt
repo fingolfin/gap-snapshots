@@ -5,15 +5,15 @@
   feature  is  primarily intended for use only in [5XGAP[105X internals, and should be
   used extremely carefully otherwise.[133X
   
-  [33X[0;0YThe  GASMAN  garbage collector is the part of the kernel that manages memory
-  in the users workspace. It will normally only reclaim the storage used by an
-  object when the object cannot be reached as a subobject of any [5XGAP[105X variable,
-  or  from  any reference in the kernel. We say that any link to object [22Xa[122X from
-  object  [22Xb[122X  [21Xkeeps  object  [22Xa[122X alive[121X, as long as [22Xb[122X is alive. It is occasionally
-  convenient,  however,  to  have  a  link to an object which [13Xdoes not keep it
-  alive[113X,  and  this  is  a weak pointer. The most common use is in caches, and
-  similar  structures,  where  it  is  only necessary to remember how to solve
-  problem [22Xx[122X as long as some other link to [22Xx[122X exists.[133X
+  [33X[0;0YThe  garbage  collector  (see Section [14X7.12-1[114X) is the part of the kernel that
+  manages  memory  in  the user's workspace. It will normally only reclaim the
+  storage  used  by an object when the object cannot be reached as a subobject
+  of  any  [5XGAP[105X  variable, or from any reference in the kernel. We say that any
+  link  to object [22Xa[122X from object [22Xb[122X [21Xkeeps object [22Xa[122X alive[121X, as long as [22Xb[122X is alive.
+  It  is  occasionally  convenient, however, to have a link to an object which
+  [13Xdoes  not  keep it alive[113X, and this is a weak pointer. The most common use is
+  in  caches,  and  similar structures, where it is only necessary to remember
+  how to solve problem [22Xx[122X as long as some other link to [22Xx[122X exists.[133X
   
   [33X[0;0YThe  following  section  [14X86.1[114X  describes  the  semantics of the objects that
   contain  weak  pointers. Following sections describe the functions available
@@ -46,11 +46,11 @@
   than [10Xw[110X, and that therefore these entries may disappear.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XGASMAN("collect");[127X[104X
+    [4X[25Xgap>[125X [27XCollectGarbage( true );[127X[104X
     [4X[28X[128X[104X
     [4X[28X... (perhaps more computations and garbage collections) ...[128X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XGASMAN("collect");[127X[104X
+    [4X[25Xgap>[125X [27XCollectGarbage( true );[127X[104X
     [4X[25Xgap>[125X [27Xw;[127X[104X
     [4X[28XWeakPointerObj( [ 1, , , fail ] )[128X[104X
   [4X[32X[104X
@@ -72,7 +72,7 @@
     [4X[25Xgap>[125X [27Xw[1] := l;;[127X[104X
     [4X[25Xgap>[125X [27Xw;[127X[104X
     [4X[28XWeakPointerObj( [ [ 1, 2, 3 ], , , fail ] )[128X[104X
-    [4X[25Xgap>[125X [27XGASMAN("collect");[127X[104X
+    [4X[25Xgap>[125X [27XCollectGarbage( true );[127X[104X
     [4X[25Xgap>[125X [27Xw;                [127X[104X
     [4X[28XWeakPointerObj( [ [ 1, 2, 3 ], , , fail ] )[128X[104X
   [4X[32X[104X
@@ -131,7 +131,7 @@
   [33X[0;0YNow after some computations and garbage collections [22X...[122X[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27X2;;3;;4;;GASMAN("collect"); # clear last, last2, last3[127X[104X
+    [4X[25Xgap>[125X [27X2;; 3;; 4;; CollectGarbage( true );  # clear last, last2, last3[127X[104X
   [4X[32X[104X
   
   [33X[0;0Y[22X...[122X we get the following.[133X
@@ -175,23 +175,4 @@
   plain  list containing immutable copies of the objects contained in the weak
   pointer  object.  An  immutable  weak  pointer  object is a contradiction in
   terms.[133X
-  
-  
-  [1X86.5 [33X[0;0YThe GASMAN Interface for Weak Pointer Objects[133X[101X
-  
-  [33X[0;0YThe  key  support  for  weak  pointers  is  in  the  files  [11Xsrc/gasman.c[111X and
-  [11Xsrc/gasman.h[111X.  This  document  assumes  familiarity  with  the  rest  of the
-  operation  of GASMAN. A kernel type (tnum) of bags which are intended to act
-  as  weak  pointers  to their subobjects must meet three conditions. Firstly,
-  the  marking  function  installed  for  that tnum must use [10XMarkBagWeakly[110X for
-  those  subbags,  rather  than [10XMarkBag[110X. Secondly, before any access to such a
-  subbag,  it  must  be checked with [10XIsWeakDeadBag[110X. If that returns [9Xtrue[109X, then
-  the  subbag  has  evaporated  in a recent garbage collection and must not be
-  accessed.  Typically  the  reference  to  it  should  be removed. Thirdly, a
-  [13Xsweeping  function[113X  must  be  installed  for that tnum which copies the bag,
-  removing all references to dead weakly held subbags.[133X
-  
-  [33X[0;0YThe files [11Xsrc/weakptr.c[111X and [11Xsrc/weakptr.h[111X use this interface to support weak
-  pointer objects. Other objects with weak behaviour could be implemented in a
-  similar way.[133X
   

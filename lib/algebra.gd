@@ -257,7 +257,7 @@ DeclareAttribute( "GeneratorsOfLeftOperatorRingWithOne",
 ##  <Example><![CDATA[
 ##  gap> m:= [ [ 0, 1, 2 ], [ 0, 0, 3 ], [ 0, 0, 0 ] ];;
 ##  gap> A:= AlgebraWithOne( Rationals, [ m ] );
-##  <algebra-with-one over Rationals, with 1 generators>
+##  <algebra-with-one over Rationals, with 1 generator>
 ##  gap> GeneratorsOfAlgebra( A );
 ##  [ [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ], 
 ##    [ [ 0, 1, 2 ], [ 0, 0, 3 ], [ 0, 0, 0 ] ] ]
@@ -287,7 +287,7 @@ DeclareSynonymAttr( "GeneratorsOfFLMLOR", GeneratorsOfLeftOperatorRing );
 ##  <Example><![CDATA[
 ##  gap> m:= [ [ 0, 1, 2 ], [ 0, 0, 3 ], [ 0, 0, 0 ] ];;
 ##  gap> A:= AlgebraWithOne( Rationals, [ m ] );
-##  <algebra-with-one over Rationals, with 1 generators>
+##  <algebra-with-one over Rationals, with 1 generator>
 ##  gap> GeneratorsOfAlgebraWithOne( A );
 ##  [ [ [ 0, 1, 2 ], [ 0, 0, 3 ], [ 0, 0, 0 ] ] ]
 ##  ]]></Example>
@@ -337,7 +337,7 @@ DeclareAttribute( "PowerSubalgebraSeries", IsAlgebra );
 ##
 ##  <Description>
 ##  The <E>adjoint map</E> <M>ad(x)</M> of an element <M>x</M> in an
-##  <M>F</M>-algebra <M>A</M>, say, is the left multiplication by <M>x</M>.
+##  <M>F</M>-algebra <M>A</M> is the left multiplication by <M>x</M>.
 ##  This map is <M>F</M>-linear and thus, w.r.t. the given basis
 ##  <A>B</A><M> = (x_1, x_2, \ldots, x_n)</M> of <M>A</M>,
 ##  <M>ad(x)</M> can be represented by a matrix over <M>F</M>.
@@ -408,7 +408,7 @@ DeclareAttribute( "IndicesOfAdjointBasis", IsBasis );
 ##  <Example><![CDATA[
 ##  gap> m:= [ [ 0, 1, 2 ], [ 0, 0, 3 ], [ 0, 0, 0 ] ];;
 ##  gap> A:= AlgebraWithOneByGenerators( Rationals, [ m ] );
-##  <algebra-with-one over Rationals, with 1 generators>
+##  <algebra-with-one over Rationals, with 1 generator>
 ##  gap> RadicalOfAlgebra( A );
 ##  <algebra of dimension 2 over Rationals>
 ##  ]]></Example>
@@ -439,19 +439,19 @@ DeclareAttribute( "RadicalOfAlgebra", IsAlgebra );
 ##  gap> dd:= DirectSumDecomposition( A );
 ##  [ <two-sided ideal in 
 ##        <algebra-with-one of dimension 24 over Rationals>, 
-##        (1 generators)>, 
+##        (1 generator)>, 
 ##    <two-sided ideal in 
 ##        <algebra-with-one of dimension 24 over Rationals>, 
-##        (1 generators)>, 
+##        (1 generator)>, 
 ##    <two-sided ideal in 
 ##        <algebra-with-one of dimension 24 over Rationals>, 
-##        (1 generators)>, 
+##        (1 generator)>, 
 ##    <two-sided ideal in 
 ##        <algebra-with-one of dimension 24 over Rationals>, 
-##        (1 generators)>, 
+##        (1 generator)>, 
 ##    <two-sided ideal in 
 ##        <algebra-with-one of dimension 24 over Rationals>, 
-##        (1 generators)> ]
+##        (1 generator)> ]
 ##  gap> List( dd, Dimension );
 ##  [ 1, 1, 4, 9, 9 ]
 ##  ]]></Example>
@@ -543,7 +543,7 @@ DeclareAttribute( "NullAlgebra", IsRing );
 ##  gap> A:= QuaternionAlgebra( Rationals );;
 ##  gap> b:= BasisVectors( Basis( A ) );;
 ##  gap> B:= Subalgebra( A, [ b[4] ] );
-##  <algebra over Rationals, with 1 generators>
+##  <algebra over Rationals, with 1 generator>
 ##  gap> ProductSpace( A, B );
 ##  <vector space of dimension 4 over Rationals>
 ##  ]]></Example>
@@ -603,7 +603,7 @@ DeclareOperation( "DirectSumOfAlgebras", [ IsDenseList ] );
 ##
 ##  <Description>
 ##  Let <A>lst</A>  be a nonempty list of square matrices of the same
-##  dimension <M>n</M>, say, with entries in the field <A>F</A>.
+##  dimension <M>n</M> with entries in the field <A>F</A>.
 ##  <Ref Func="FullMatrixAlgebraCentralizer"/> returns
 ##  the (pointwise) centralizer of all matrices in <A>lst</A>, inside
 ##  the full matrix algebra of <M>n \times n</M> matrices over <A>F</A>.
@@ -662,7 +662,7 @@ DeclareSynonym( "AsAlgebra", AsFLMLOR );
 ##  gap> V:= VectorSpace( Rationals, [ IdentityMat( 2 ) ] );;
 ##  gap> A:= AsAlgebra( Rationals, V );;
 ##  gap> AsAlgebraWithOne( Rationals, A );
-##  <algebra-with-one over Rationals, with 1 generators>
+##  <algebra-with-one over Rationals, with 1 generator>
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -721,7 +721,7 @@ DeclareSynonym( "AsSubalgebra", AsSubFLMLOR );
 ##  gap> B:= AsAlgebra( Rationals, V );;
 ##  gap> C:= AsAlgebraWithOne( Rationals, B );;
 ##  gap> AC:= AsSubalgebraWithOne( A, C );
-##  <algebra-with-one over Rationals, with 1 generators>
+##  <algebra-with-one over Rationals, with 1 generator>
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -1133,7 +1133,7 @@ DeclareGlobalFunction( "MutableBasisOfNonassociativeAlgebra" );
 ##  gap> basA:= BasisVectors( Basis( A ) );;
 ##  gap> B:= MutableBasisOfIdealInNonassociativeAlgebra( Rationals, basA,
 ##  > [ mats[2] ], 0*mats[1], "both", infinity );
-##  <mutable basis over Rationals, 1 vectors>
+##  <mutable basis over Rationals, 1 vector>
 ##  gap> BasisVectors( B );
 ##  [ [ [ 0, 1 ], [ 0, 0 ] ] ]
 ##  ]]></Example>
@@ -1189,7 +1189,7 @@ DeclareSynonym( "AlgebraByGenerators", FLMLORByGenerators );
 ##  <Example><![CDATA[
 ##  gap> m:= [ [ 0, 1, 2 ], [ 0, 0, 3], [ 0, 0, 0 ] ];;
 ##  gap> A:= Algebra( Rationals, [ m ] );
-##  <algebra over Rationals, with 1 generators>
+##  <algebra over Rationals, with 1 generator>
 ##  gap> Dimension( A );
 ##  2
 ##  ]]></Example>
@@ -1226,9 +1226,9 @@ DeclareSynonym( "Algebra", FLMLOR );
 ##  <Example><![CDATA[
 ##  gap> m:= [ [ 0, 1, 2 ], [ 0, 0, 3], [ 0, 0, 0 ] ];;
 ##  gap> A:= Algebra( Rationals, [ m ] );
-##  <algebra over Rationals, with 1 generators>
+##  <algebra over Rationals, with 1 generator>
 ##  gap> B:= Subalgebra( A, [ m^2 ] );
-##  <algebra over Rationals, with 1 generators>
+##  <algebra over Rationals, with 1 generator>
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -1254,7 +1254,7 @@ DeclareSynonym( "Subalgebra", SubFLMLOR );
 ##  <Example><![CDATA[
 ##  gap> m:= RandomMat( 3, 3 );;
 ##  gap> A:= Algebra( Rationals, [ m ] );
-##  <algebra over Rationals, with 1 generators>
+##  <algebra over Rationals, with 1 generator>
 ##  gap> SubalgebraNC( A, [ IdentityMat( 3, 3 ) ], "basis" );
 ##  <algebra of dimension 1 over Rationals>
 ##  ]]></Example>
@@ -1308,7 +1308,7 @@ DeclareSynonym( "AlgebraWithOneByGenerators", FLMLORWithOneByGenerators );
 ##  <Example><![CDATA[
 ##  gap> m:= [ [ 0, 1, 2 ], [ 0, 0, 3], [ 0, 0, 0 ] ];;
 ##  gap> A:= AlgebraWithOne( Rationals, [ m ] );
-##  <algebra-with-one over Rationals, with 1 generators>
+##  <algebra-with-one over Rationals, with 1 generator>
 ##  gap> Dimension( A );
 ##  3
 ##  gap> One(A);
@@ -1342,7 +1342,7 @@ DeclareSynonym( "AlgebraWithOne", FLMLORWithOne );
 ##  <Example><![CDATA[
 ##  gap> m:= [ [ 0, 1, 2 ], [ 0, 0, 3], [ 0, 0, 0 ] ];;
 ##  gap> A:= AlgebraWithOne( Rationals, [ m ] );
-##  <algebra-with-one over Rationals, with 1 generators>
+##  <algebra-with-one over Rationals, with 1 generator>
 ##  gap> B1:= SubalgebraWithOne( A, [ m ] );;
 ##  gap> B2:= Subalgebra( A, [ m ] );;
 ##  gap> Dimension( B1 );
@@ -1374,7 +1374,7 @@ DeclareSynonym( "SubalgebraWithOne", SubFLMLORWithOne );
 ##  <Example><![CDATA[
 ##  gap> m:= RandomMat( 3, 3 );; A:= Algebra( Rationals, [ m ] );;
 ##  gap> SubalgebraWithOneNC( A, [ m ] );
-##  <algebra-with-one over Rationals, with 1 generators>
+##  <algebra-with-one over Rationals, with 1 generator>
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -1782,7 +1782,7 @@ DeclareCategoryCollections( "IsQuaternionCollection" );
 ##  <M>e e = e</M>, <M>e i = i e = i</M>, <M>e j = j e = j</M>,
 ##  <M>e k = k e = k</M>, <M>i i = <A>a</A> e</M>, <M>i j = - j i = k</M>,
 ##  <M>i k = - k i = <A>a</A> j</M>, <M>j j = <A>b</A> e</M>,
-##  <M>j k = - k j = <A>b</A> i</M>, <M>k k = - <A>a</A> <A>b</A> e</M>.
+##  <M>k j = - j k = <A>b</A> i</M>, <M>k k = - <A>a</A> <A>b</A> e</M>.
 ##  The default value for both <A>a</A> and <A>b</A> is
 ##  <M>-1 \in F</M>.
 ##  <P/>
@@ -1831,7 +1831,7 @@ DeclareGlobalFunction( "QuaternionAlgebra" );
 ##  </Description>
 ##  </ManSection>
 ##
-DeclareGlobalVariable( "QuaternionAlgebraData" );
+BindGlobal( "QuaternionAlgebraData", NEW_SORTED_CACHE(true) );
 
 
 #############################################################################
@@ -2168,7 +2168,7 @@ DeclareSynonym( "IsLieNilpotentElement", IsNilpotentElement);
 ##  rec( hom_components := function( d ) ... end, max_degree := 9, 
 ##    min_degree := 1, source := Integers )
 ##  gap> g.hom_components( 3 );
-##  <vector space over GF(3), with 1 generators>
+##  <vector space over GF(3), with 1 generator>
 ##  gap> g.hom_components( 14 );
 ##  <vector space of dimension 0 over GF(3)>
 ##  ]]></Example>

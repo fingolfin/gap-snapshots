@@ -1,9 +1,0 @@
-\chapcontents {1}{Introduction to FORMAT}{3}
-\chapcontents {2}{Formations in GAP}{4}
-\chapcontents {3}{Residual Functions}{7}
-\chapcontents {4}{FNormalizers}{8}
-\chapcontents {5}{Covering Subgroups}{9}
-\chapcontents {6}{Formation Examples}{10}
-\chapcontents {7}{Other Applications}{14}
-\chapcontents {}{Bibliography}{15}
-\chapcontents {}{Index}{16}

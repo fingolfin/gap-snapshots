@@ -1,0 +1,78 @@
+\GAPDocLabFile{walrus}
+\makelabel{walrus:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{walrus:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{walrus:Overview}{1}{X8389AD927B74BA4A}
+\makelabel{walrus:Examples}{1.1}{X7A489A5D79DA9E5C}
+\makelabel{walrus:Testing Hyperbolicity}{1.2}{X861436A7862A92D2}
+\makelabel{walrus:The MAGMA-compatible interface}{1.3}{X792204DC7B217ECC}
+\makelabel{walrus:Pregroups}{2}{X84CF717F7CE7F8A4}
+\makelabel{walrus:Creating Pregroups}{2.1}{X7F44CAE5832B8511}
+\makelabel{walrus:Filters and Representations}{2.2}{X7B1844C180E739B9}
+\makelabel{walrus:Attributes, Properties, and Operations}{2.3}{X8053940287FA4077}
+\makelabel{walrus:Elements of Pregroups}{2.4}{X7E4700087FC3F933}
+\makelabel{walrus:Small Pregroups}{2.5}{X870A0A6A7CAE4680}
+\makelabel{walrus:Pregroup Presentations}{3}{X7A05461687E1FA84}
+\makelabel{walrus:Concepts}{3.1}{X7AFDBDC078777B90}
+\makelabel{walrus:Locations}{3.1.1}{X83BEFE747F7726F5}
+\makelabel{walrus:Places}{3.1.2}{X87FA460D81566861}
+\makelabel{walrus:Attributes}{3.2}{X7C701DBF7BAE649A}
+\makelabel{walrus:Creating Pregroup Presentations}{3.3}{X85C45E1578DB9E13}
+\makelabel{walrus:Filters, Attributes, and Properties}{3.4}{X7FC6BCF985E6819C}
+\makelabel{walrus:Hyperbolicity testing for pregroup presentations}{3.5}{X7E53DCE97DEEFA7D}
+\makelabel{walrus:Input and Output of Pregroup Presentations}{3.6}{X801CA5197DF125C6}
+\makelabel{walrus:Index}{Ind}{X83A0356F839C696F}
+\makelabel{walrus:TriangleGroup}{1.1.1}{X7DE9B0FF7EEC5D80}
+\makelabel{walrus:TriangleCommutatorQuotient}{1.1.2}{X7A3CD8E481C3E802}
+\makelabel{walrus:TriSH}{1.1.2}{X7A3CD8E481C3E802}
+\makelabel{walrus:RandomTriangleQuotient}{1.1.3}{X78BB0EB087263795}
+\makelabel{walrus:JackButtonGroup}{1.1.4}{X7968AC7887291888}
+\makelabel{walrus:RandomPregroupPresentation}{1.1.5}{X863AAC9078647B94}
+\makelabel{walrus:RandomPregroupWord}{1.1.6}{X7DEF4DA6781CCE1B}
+\makelabel{walrus:PregroupByTable}{2.1.1}{X7E37DF907C05522C}
+\makelabel{walrus:PregroupByTableNC}{2.1.1}{X7E37DF907C05522C}
+\makelabel{walrus:PregroupByRedRelators for IsFreeGroup, IsList, IsList}{2.1.2}{X8137D096798C1BC8}
+\makelabel{walrus:PregroupOfFreeProduct for IsGroup, IsGroup}{2.1.3}{X8632A365791D87B7}
+\makelabel{walrus:PregroupOfFreeGroup}{2.1.4}{X8344F038858426A6}
+\makelabel{walrus:IsPregroup for IsObject and IsCollection}{2.2.1}{X86AA05DA7B7BA64B}
+\makelabel{walrus:IsPregroupTableRep for IsPregroup andIsComponentObjectRep andIsAttributeStoringRep}{2.2.2}{X78E417B3823387C2}
+\makelabel{walrus:IsPregroupOfFreeGroupRep for IsPregroup andIsComponentObjectRep andIsAttributeStoringRep}{2.2.3}{X84F97B4D79FBAD44}
+\makelabel{walrus:IsPregroupOfFreeProductRep for IsPregroup andIsComponentObjectRep andIsAttributeStoringRep}{2.2.4}{X82866B1A7D018BB7}
+\makelabel{walrus:[] for IsPregroup, IsInt}{2.3.1}{X7946D406823A935B}
+\makelabel{walrus:IntermultPairs for IsPregroup}{2.3.2}{X80EC827C83DB818B}
+\makelabel{walrus:One for IsPregroup}{2.3.3}{X7C1AE0D983EF9693}
+\makelabel{walrus:MultiplicationTable for IsPregroup}{2.3.4}{X8761B5A57CC4DEA8}
+\makelabel{walrus:SetPregroupElementNames for IsPregroup, IsList}{2.3.5}{X7BF3B344878B252F}
+\makelabel{walrus:PregroupElementNames for IsPregroup}{2.3.6}{X82B7E2227A94AC98}
+\makelabel{walrus:IsElementOfPregroup for IsMultiplicativeElementWithInverse}{2.4.1}{X7CACF96A831CEB1F}
+\makelabel{walrus:IsElementOfPregroupRep for IsElementOfPregroup and IsComponentObjectRep}{2.4.2}{X80185F7579C23714}
+\makelabel{walrus:IsElementOfPregroupOfFreeGroupRep for IsElementOfPregroup and IsComponentObjectRep}{2.4.3}{X838ECC967A2377BA}
+\makelabel{walrus:PregroupOf for IsElementOfPregroup}{2.4.4}{X784ACAE2800C3E7E}
+\makelabel{walrus:IsDefinedMultiplication for IsElementOfPregroup, IsElementOfPregroup}{2.4.5}{X84A42E6B7D542AD1}
+\makelabel{walrus:IsIntermultPair for IsElementOfPregroup, IsElementOfPregroup}{2.4.6}{X86FC5FDF87C3664A}
+\makelabel{walrus:PregroupInverse for IsElementOfPregroup}{2.4.7}{X87004CD07832F9DB}
+\makelabel{walrus:NrSmallPregroups}{2.5.1}{X7AAEA96C79A55FB3}
+\makelabel{walrus:SmallPregroup}{2.5.2}{X7FD30E6F812704C8}
+\makelabel{walrus:IsPregroupLocation for IsObject}{3.2.1}{X81378EEB81DF801A}
+\makelabel{walrus:InLetter for IsPregroupLocation}{3.2.2}{X85EC64DC8116AF77}
+\makelabel{walrus:OutLetter for IsPregroupLocation}{3.2.3}{X7E1013A1794D17DD}
+\makelabel{walrus:Places for IsPregroupLocation}{3.2.4}{X81E1F7F984EC37C2}
+\makelabel{walrus:NextLocation for IsPregroupLocation}{3.2.5}{X7C88C1227C073A36}
+\makelabel{walrus:PrevLocation for IsPregroupLocation}{3.2.6}{X83B0E7F778108E23}
+\makelabel{walrus:ID for IsPregroupLocation}{3.2.7}{X796A41AD85E9AD40}
+\makelabel{walrus:NewPregroupPresentation}{3.3.1}{X7B85A7217AF54FB1}
+\makelabel{walrus:PregroupPresentationFromFp}{3.3.2}{X78A45CA479E37F10}
+\makelabel{walrus:PregroupPresentationToFpGroup}{3.3.3}{X7D9C7247794CA029}
+\makelabel{walrus:IsPregroupPresentation for IsObject}{3.4.1}{X8194DE3E7908C921}
+\makelabel{walrus: for IsPregroupPresentation and IsComponentObjectRep and IsAttributeStoringRep}{3.4.2}{X84191A7B78073D28}
+\makelabel{walrus:RSymTestOp for IsPregroupPresentation, IsRat}{3.5.1}{X7C607CC18455D320}
+\makelabel{walrus:RSymTest}{3.5.2}{X83D3AC54833FF1CE}
+\makelabel{walrus:IsHyperbolic for IsPregroupPresentation}{3.5.3}{X7DB6545987479C4B}
+\makelabel{walrus:IsHyperbolic for IsPregroupPresentation, IsRat}{3.5.3}{X7DB6545987479C4B}
+\makelabel{walrus:IsHyperbolic for IsFreeGroup, IsObject, IsObject, IsRat}{3.5.3}{X7DB6545987479C4B}
+\makelabel{walrus:PregroupPresentationToKBMAG}{3.6.1}{X81F8BD2784FA17A5}
+\makelabel{walrus:PregroupPresentationToStream}{3.6.2}{X844A431F8505219D}
+\makelabel{walrus:PregroupPresentationFromStream}{3.6.3}{X86E791EB7FCD6FC7}
+\makelabel{walrus:PregroupPresentationToSimpleStream}{3.6.4}{X84B44E0580AE5C2A}
+\makelabel{walrus:PregroupPresentationToFile}{3.6.5}{X7B118D1D84350906}
+\makelabel{walrus:PregroupPresentationFromFile}{3.6.6}{X808C30267956C4B0}
+\makelabel{walrus:PregroupPresentationToSimpleFile}{3.6.7}{X84C6E86D7D3EC053}

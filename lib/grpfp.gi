@@ -593,7 +593,7 @@ local A,B,U,V,W,E,F,map;
   #  Then G>H if and only if the following two conditions hold:
   #  1) The image of G in B contains V.
   #  2) G contains ker(S->B) (so with 1 it is sufficient, this is trivially
-  #     neccessary as H contains this kernel).
+  #     necessary as H contains this kernel).
   #     This condition is fulfilled, if U>E
 
   #  To compute this, first note that F is generated (as normal subgroup) by
@@ -1967,7 +1967,7 @@ InstallMethod(Intersection2,"subgroups of fp group by quotient",IsIdenticalObj,
   [IsSubgroupFpGroup and IsSubgroupOfWholeGroupByQuotientRep,
    IsSubgroupFpGroup and IsSubgroupOfWholeGroupByQuotientRep],0,
 function ( G, H )
-local d,A,B,e1,e2,Ag,Bg,s,sg,u,v;
+local d,A,B,e1,e2,Ag,Bg,s,sg,u,v,map,sz;
 
   # it is not worth to check inclusion first since we're reducing afterwards
   #if IndexInWholeGroup(G)<=IndexInWholeGroup(H) and IsSubset(G,H) then
@@ -1976,23 +1976,49 @@ local d,A,B,e1,e2,Ag,Bg,s,sg,u,v;
   #  return G;
   #fi;
 
+  if Size(G!.quot)<Size(H!.quot) then
+    # make G the one with larger quot
+    A:=G; G:=H;H:=A;
+  fi;
   A:=MakeNiceDirectQuots(G,H);
   G:=A[1];
   H:=A[2];
 
   A:=G!.quot;
   B:=H!.quot;
-  d:=DirectProduct(A,B);
-  e1:=Embedding(d,1);
-  e2:=Embedding(d,2);
   Ag:=GeneratorsOfGroup(A);
   Bg:=GeneratorsOfGroup(B);
   # form the sdp
-  sg:=List([1..Length(Ag)],i->Image(e1,Ag[i])*Image(e2,Bg[i]));
-  s:=SubgroupNC(d,sg);
-  if HasSize(A) and HasSize(B) and IsPermGroup(s) then
-    StabChainOptions(s).limit:=Size(d);
+
+  # use map to determine common subdirect factor
+  map:=GroupGeneralMappingByImages(A,B,Ag,Bg);
+  sz:=Size(A)*Size(CoKernelOfMultiplicativeGeneralMapping(map));
+
+  # is the image obtained all in A?
+  if sz=Size(A) then
+    if ForAll(GeneratorsOfGroup(G!.sub),
+      x->ImagesRepresentative(map,x) in H!.sub) then
+      # G!.sub maps into H!.sub, thus contained in preimage
+      u:=G!.sub;
+    else
+      u:=PreImage(map,H!.sub);
+      u:=Intersection(G!.sub,u);
+    fi;
+    return SubgroupOfWholeGroupByQuotientSubgroup(FamilyObj(G),A,u);
   fi;
+
+  d:=DirectProduct(A,B);
+  e1:=Embedding(d,1);
+  e2:=Embedding(d,2);
+
+  sg:=List([1..Length(Ag)],
+    i->ImagesRepresentative(e1,Ag[i])*ImagesRepresentative(e2,Bg[i]));
+  s:=SubgroupNC(d,sg);
+  SetSize(s,sz);
+  #if HasSize(A) and HasSize(B) and IsPermGroup(s) then
+  #  StabChainOptions(s).limit:=Size(d);
+  #fi;
+
 
   # get both subgroups in the direct product via the projections
   # instead of intersecting both preimages with s we only intersect the
@@ -2011,21 +2037,49 @@ local d,A,B,e1,e2,Ag,Bg,s,sg,u,v;
     u:=Intersection(u,s);
   fi;
 
-  # reduce
-  if HasSize(s) and IsPermGroup(s) and (Size(s)=Size(A) or Size(s)=Size(B)
-    or NrMovedPoints(s)>1000) then
-    d:=SmallerDegreePermutationRepresentation(s:cheap);
-    A:=SubgroupNC(Range(d),List(GeneratorsOfGroup(s),x->ImagesRepresentative(d,x)));
-    if NrMovedPoints(A)<NrMovedPoints(s) then
-      Info(InfoFpGroup,3,"reduced degree from ",NrMovedPoints(s)," to ",
-           NrMovedPoints(A));
-      s:=A;
-      u:=Image(d,u);
+  if IsPermGroup(A) and IsPermGroup(s) then
+    # reduce
+    e1:=Length(Orbits(A,MovedPoints(A)));
+    e2:=Length(Orbits(s,MovedPoints(s)));
+    d:=ValueOption("reduce");
+    if (d<>false and HasSize(s) and 
+      # test proportiopnal to how much orbits added
+      (Random([1..e2+1])>e1) ) or d=true then
+      d:=SmallerDegreePermutationRepresentation(s:cheap);
+      A:=SubgroupNC(Range(d),List(GeneratorsOfGroup(s),x->ImagesRepresentative(d,x)));
+      if NrMovedPoints(A)<NrMovedPoints(s) then
+        Info(InfoFpGroup,3,"reduced degree from ",NrMovedPoints(s)," to ",
+            NrMovedPoints(A));
+        s:=A;
+        u:=Image(d,u);
+      fi;
     fi;
   fi;
 
   return SubgroupOfWholeGroupByQuotientSubgroup(FamilyObj(G),s,u);
 end);
+
+InstallOtherMethod(FactorCosetAction,
+  "list of fp groups",IsElmsColls,
+  [IsSubgroupFpGroup and IsWholeFamily,IsList],0,function(g,l)
+local ind,q,is,i;
+  l:=List(l,x->Core(g,x));
+  ind:=List(l,IndexInWholeGroup);
+  Print("Found ",Length(l)," subgroups, core indices:\n",Collected(ind),"\n");
+  l:=List(Set(ind),y->Filtered(l,x->IndexInWholeGroup(x)=y));
+  l:=List(l,x->Intersection(x));
+  SortBy(l,IndexInWholeGroup);
+  if Length(l)=1 then 
+    is:=l[1];
+  else
+    # force a final reduction
+    is:=Intersection(l{[1..Length(l)-1]});
+    is:=Intersection(is,l[Length(l)]:reduce:=true);
+  fi;
+  q:=DefiningQuotientHomomorphism(is);
+  return q;
+end);
+
 
 #############################################################################
 ##
@@ -2868,6 +2922,11 @@ local res;
   Error( "iterator is exhausted" );
 end);
 
+# data types for low index memory blocks
+BindGlobal("TYPE_LOWINDEX_DATA",
+  NewType(NewFamily("LowIndexDataFamily",IsObject),
+    IsObject and IsDataObjectRep));
+
 BindGlobal("IsDoneIter_LowIndSubs",function(iter)
 local data, G, N, ts, rels, m, mm, stack1, stack2, mu, nu, s, t, n, i, sj,
 j, ok, b,k,tr;
@@ -2891,10 +2950,8 @@ j, ok, b,k,tr;
   stack2:=List([1..2*N],i->0);
 
   # these are scratch space for the kernel (partial permutations)
-  mu:=ListWithIdenticalEntries(N,0);
-  nu:=ListWithIdenticalEntries(N,0);
-  Objectify(TYPE_LOWINDEX_DATA,mu);
-  Objectify(TYPE_LOWINDEX_DATA,nu);
+  mu:=NEW_LOWINDEX_DATA(N);
+  nu:=NEW_LOWINDEX_DATA(N);
   
   tr:=[2*m,2*m-1..1];
 
@@ -3459,7 +3516,7 @@ end );
 ##  is automatically cyclically reduced).
 ##
 InstallGlobalFunction( RelatorRepresentatives, function ( rels )
-local reps, word, length, fam, reversed, cyc, min, g, rel, i;
+local reps, word, length, fam, reversed, cyc, min, g, rel, i,j;
 
     reps := [ ];
 
@@ -3507,18 +3564,26 @@ local reps, word, length, fam, reversed, cyc, min, g, rel, i;
       if length>0 then
 	# invert the exponents to their negative values in order to get
 	# an appropriate lexicographical ordering of the relators.
+        word:=-word;
 	fam:=FamilyObj( rel );
-	reversed:=AssocWordByLetterRep(fam,-word);
+	reversed:=AssocWordByLetterRep(fam,word);
 
 	# find the minimal cyclic permutation
 	cyc:=reversed;
 	min:=cyc;
 	if cyc^-1<min then min:=cyc^-1;fi;
-	for i in [1..length] do
-	  g:=AssocWordByLetterRep(fam,word{[i]});
-	  cyc:=cyc^g;
+        i:=1;
+        while i<=length do
+          j:=1;
+          while j<Length(word) and word[j]=word[j+1] do j:=j+1;od;
+          word:=Concatenation(word{[j+1..Length(word)]},word{[1..j]});
+	  cyc:=AssocWordByLetterRep(fam,word);
 	  if cyc<min then min:=cyc;fi;
 	  if cyc^-1<min then min:=cyc^-1;fi;
+          i:=i+j;
+	  #g:=AssocWordByLetterRep(fam,word{[i]});
+	  #g:=Subword(cyc,1,1);
+	  #cyc:=cyc^g;
 	od;
 
 	# if the relator is new, add it to the representatives
@@ -3747,7 +3812,7 @@ local fgens,grels,max,gens,t,Attempt,perms,short;
     #pseudorandom element - try if it works
     PseudoRandom(G:radius:=Random(2,3))],
     Filtered(gens,j->UnderlyingElement(j)<>UnderlyingElement(t)));
-  gens:=Set(List(gens,UnderlyingElement));
+  gens:=Set(gens,UnderlyingElement);
 
   # recursive search (via smaller and smaller partitions) for a finite index
   # subgroup
@@ -3795,8 +3860,8 @@ local fgens,grels,max,gens,t,Attempt,perms,short;
       perms:=List(t[2]{[1,3..Length(t[2])-1]},PermList);
       short:=FreeGeneratorsOfFpGroup(G);
       short:=Concatenation(short, List(short,Inverse));
-      short:=Set(List(Concatenation(List([1..3],x->Arrangements(short,x))),
-                 Product));
+      short:=Set(Concatenation(List([1..3],x->Arrangements(short,x))),
+                 Product);
       short:=List(short,
         x->[Order(MappedWord(x,FreeGeneratorsOfFpGroup(G),perms)),x]);
       # prefer large order and short word length
@@ -3839,7 +3904,7 @@ local   fgens,      # generators of the free group
   # handle free and trivial group
   if 0 = Length( fgens ) then
       return 1;
-  elif 0 = Length(rels) then
+  elif Length( fgens ) > Length(rels) then
       return infinity;
 
   # handle nontrivial fp group by computing the index of its trivial
@@ -4085,7 +4150,7 @@ local mappow, G, max, p, gens, rels, comb, i, l, m, H, t, gen, silent, sz,
 	  repeat
 	    bad:=false;
 	    for z in GeneratorsOfGroup(H) do
-	      e2:=Set(List(e,j->mappow(1/z,rp,rpo[Position(eo,j)])^z));
+	      e2:=Set(e,j->mappow(1/z,rp,rpo[Position(eo,j)])^z);
 	      if not 1 in e2 then
 		Error("one!");
 	      fi;
@@ -4543,7 +4608,7 @@ local Fgens,	# generators of F
 
 
   # exclude orders
-  e:=Set(List(cl,i->Order(Representative(i))));
+  e:=Set(cl,i->Order(Representative(i)));
   e:=List(Fgens,i->ShallowCopy(e));
   for i in [1..Length(Fgens)] do
     if rels[i]<>false then
@@ -4853,6 +4918,7 @@ local freegp, gens, mongens, s, t, p, freemon, gensmon, id, newrels,
 
   # can we use attribute?
   if HasIsomorphismFpMonoid(g) and IsBound(IsomorphismFpMonoid(g)!.type) and
+    # type 0 is inverses first
     IsomorphismFpMonoid(g)!.type=1 then
     return IsomorphismFpMonoid(g);
   fi;
@@ -4942,6 +5008,7 @@ local freegp, gens, mongens, s, t, p, freemon, gensmon, id, newrels,
   invfun := x -> ElementOfFpGroup( FamilyObj(One(g)),
      MonwordToGroupword( idg, UnderlyingElement( x ) ) );
   hom:=MagmaIsomorphismByFunctionsNC(g, mon, isomfun, invfun);
+  # type 0 is inverses first
   hom!.type:=1;
   if not HasIsomorphismFpMonoid(g) then
     SetIsomorphismFpMonoid(g,hom);
@@ -4975,6 +5042,7 @@ function(g)
 
   # can we use attribute?
   if HasIsomorphismFpMonoid(g) and IsBound(IsomorphismFpMonoid(g)!.type) and
+    # type 0 is inverses first
     IsomorphismFpMonoid(g)!.type=0 then
     return IsomorphismFpMonoid(g);
   fi;
@@ -5047,6 +5115,7 @@ function(g)
   invfun := x -> ElementOfFpGroup( FamilyObj(One(g)),
      MSword2gpword( id, UnderlyingElement( x ),0 ) );
   hom:=MagmaIsomorphismByFunctionsNC(g, mon, isomfun, invfun);
+  # type 0 is inverses first
   hom!.type:=0;
   if not HasIsomorphismFpMonoid(g) then
     SetIsomorphismFpMonoid(g,hom);
@@ -5065,27 +5134,28 @@ end);
 InstallMethod(FpElementNFFunction,true,[IsElementOfFpGroupFamily],0,
 # default reduction -- 
 function(fam)
-local iso,k,id,f;
-  # first try whether the group is ``small''
-  iso:=FPFaithHom(fam);
-  if iso<>fail and Size(Image(iso))<50000 then
-    k:=ImagesSource(iso);
-  #return function(w)
-  #  if not w in FreeGroupOfFpGroup(Source(iso)) then Error("flasch");fi;
-  #  w:=ElementOfFpGroup(fam,w);
-  #  Print("wa=",w,"\n");
-  #  w:=ImageElm(iso,w);
-  #  Print("wb=",w,"\n");
-  #  w:=Factorization(k,w);
-  #  Print("wc=",w,"\n");
-  #  return UnderlyingElement(w);
-  #end;
-    return w->UnderlyingElement(Factorization(k,Image(iso,ElementOfFpGroup(fam,w))));
+local iso,k,id,f,ran,g;
+  g:=CollectionsFamily(fam)!.wholeGroup;
+  if not (HasIsomorphismFpMonoid(g) and
+    HasReducedConfluentRewritingSystem(Image(IsomorphismFpMonoid(g)))) then
+    # first try whether the group is ``small''
+    iso:=FPFaithHom(fam);
+    if iso<>fail and Size(Image(iso))<50000 then
+      k:=ImagesSource(iso);
+      return w->UnderlyingElement(Factorization(k,
+        Image(iso,ElementOfFpGroup(fam,w))));
+    fi;
   fi;
-  iso:=IsomorphismFpMonoidGeneratorsFirst(CollectionsFamily(fam)!.wholeGroup);
-  f:=FreeMonoidOfFpMonoid(Range(iso));
-  k:=ReducedConfluentRewritingSystem(Range(iso),
-	BasicWreathProductOrdering(f,GeneratorsOfMonoid(f)));
+
+  iso:=IsomorphismFpMonoidGeneratorsFirst(g);
+  ran:=Range(iso);
+  f:=FreeMonoidOfFpMonoid(ran);
+  if HasReducedConfluentRewritingSystem(ran) then
+    k:=ReducedConfluentRewritingSystem(ran);
+  else
+    k:=ReducedConfluentRewritingSystem(ran,
+          BasicWreathProductOrdering(f,GeneratorsOfMonoid(f)));
+  fi;
   id:=UnderlyingElement(Image(iso,One(fam)));
   return w->MonwordToGroupword(UnderlyingElement(One(fam)),
 	       ReducedForm(k,GroupwordToMonword(id,w)));
@@ -5119,7 +5189,7 @@ function(G)
       if G!.gensWordLengthSum <= GAPInfo.ViewLength * 30 then
         Print(GeneratorsOfGroup(G));
       else
-        Print("<",Length(GeneratorsOfGroup(G))," generators>");
+        Print("<",Pluralize(Length(GeneratorsOfGroup(G)),"generator"),">");
       fi;
     else
       Print("<fp, no generators known>");
@@ -5665,4 +5735,4 @@ InstallMethod( IndependentGeneratorsOfAbelianGroup,
   [ IsFpGroup and IsAbelian ],
   IndependentGeneratorsOfMaximalAbelianQuotientOfFpGroup );
 
-InstallValue(TRIVIAL_FP_GROUP,FreeGroup(0,"TrivGp")/[]);
+BindGlobal( "TRIVIAL_FP_GROUP", FreeGroup(0) / [] );

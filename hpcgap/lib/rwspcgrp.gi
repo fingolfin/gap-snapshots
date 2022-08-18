@@ -273,7 +273,9 @@ InstallMethod( Comm,
       IsMultiplicativeElementWithInverseByPolycyclicCollector
         and IsNBitsPcWordRep ],
     0,
-    NBitsPcWord_Comm );
+function( left, right )
+    return FinPowConjCol_ReducedComm( TypeObj(left)![PCWP_COLLECTOR], left, right );
+end );
 
 
 #############################################################################
@@ -288,7 +290,9 @@ InstallMethod( LeftQuotient,
       IsMultiplicativeElementWithInverseByPolycyclicCollector
         and IsNBitsPcWordRep ],
     0,
-    NBitsPcWord_LeftQuotient );
+function( left, right )
+    return FinPowConjCol_ReducedLeftQuotient( TypeObj(left)![PCWP_COLLECTOR], left, right );
+end );
 
 
 #############################################################################
@@ -303,7 +307,9 @@ InstallMethod( \/,
       IsMultiplicativeElementWithInverseByPolycyclicCollector
         and IsNBitsPcWordRep ],
     0,
-    NBitsPcWord_Quotient );
+function( left, right )
+    return FinPowConjCol_ReducedQuotient( TypeObj(left)![PCWP_COLLECTOR], left, right );
+end );
 
 
 #############################################################################
@@ -318,7 +324,9 @@ InstallMethod( \*,
       IsMultiplicativeElementWithInverseByPolycyclicCollector
         and IsNBitsPcWordRep ],
     0,
-    NBitsPcWord_Product );
+function( left, right )
+    return FinPowConjCol_ReducedProduct( TypeObj(left)![PCWP_COLLECTOR], left, right );
+end );
 
 
 #############################################################################
@@ -333,7 +341,12 @@ InstallMethod( \^,
       IsMultiplicativeElementWithInverseByPolycyclicCollector
         and IsNBitsPcWordRep ],
     0,
-    NBitsPcWord_Conjugate );
+function( left, right )
+    left := FinPowConjCol_ReducedProduct(
+                TypeObj(left)![PCWP_COLLECTOR], left, right );
+    return FinPowConjCol_ReducedLeftQuotient(
+                TypeObj(left)![PCWP_COLLECTOR], right, left );
+end );
 
 
 #############################################################################
@@ -347,7 +360,10 @@ InstallMethod( \^,
         and IsNBitsPcWordRep, 
       IsInt and IsSmallIntRep ],
     0,
-    NBitsPcWord_PowerSmallInt );
+function( left, right )
+    return FinPowConjCol_ReducedPowerSmallInt(
+                TypeObj(left)![PCWP_COLLECTOR], left, right );
+end );
 
 
 #############################################################################
@@ -400,7 +416,7 @@ function( sc )
     fam!.8BitsType := NewType( fam, Is8BitsPcWordRep );
 
     # copy the assoc word type
-    for i  in [ AWP_FIRST_ENTRY+1 .. AWP_FIRST_FREE-1 ]  do
+    for i in [ AWP_FIRST_ENTRY+1 .. AWP_LAST_ENTRY ] do
       StrictBindOnce( fam!.8BitsType, i, sc![SCP_DEFAULT_TYPE]![i] );
     od;
 
@@ -570,7 +586,7 @@ function( sc )
     fam!.16BitsType := NewType( fam, Is16BitsPcWordRep );
 
     # copy the assoc word type
-    for i  in [ AWP_FIRST_ENTRY+1 .. AWP_FIRST_FREE-1 ]  do
+    for i in [ AWP_FIRST_ENTRY+1 .. AWP_LAST_ENTRY ] do
 	  StrictBindOnce( fam!.16BitsType, i, sc![SCP_DEFAULT_TYPE]![i] );
     od;
 
@@ -740,7 +756,7 @@ function( sc )
     fam!.32BitsType := NewType( fam, Is32BitsPcWordRep );
 
     # copy the assoc word type
-    for i  in [ AWP_FIRST_ENTRY+1 .. AWP_FIRST_FREE-1 ]  do
+    for i in [ AWP_FIRST_ENTRY+1 .. AWP_LAST_ENTRY ] do
       StrictBindOnce( fam!.32BitsType, i, sc![SCP_DEFAULT_TYPE]![i] );
     od;
 

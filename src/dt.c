@@ -515,7 +515,7 @@ static Obj Mark2(Obj tree, Int index1, Obj reftree, Int index2)
 **  <a> is not marked but all the other nodes of <a> are marked.  It is
 **  assumed that if the top node of a subtree <b> of tree(<tree>, index) 
 **  is marked,  all
-**  nodes of of <b> are marked.  Hence it suffices to look for a subtree <a>
+**  nodes of <b> are marked.  Hence it suffices to look for a subtree <a>
 **  of <tree> such that the top node of <a> is unmarked and the left and the
 **  right node of <a> are marked.  'FindTree' returns an integer <i> such 
 **  that tree(<tree> ,i) has the properties mentioned above.  If such a tree
@@ -1325,7 +1325,7 @@ static void  TestTree(
 
 /****************************************************************************
 **
-*F  Part(<list>, <pos1>, <pos2> . . . . . . . . . . . . return a part of list
+*F  Part(<list>, <pos1>, <pos2>)  . . . . . . . . . . . return a part of list
 **
 **  'Part' returns <list>{ [<pos1>+1 .. <pos2>] }.
 */
@@ -1690,11 +1690,12 @@ static Obj FuncDT_evaluation(Obj self, Obj vector)
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    GVAR_FUNC(MakeFormulaVector, 2, "tree, presentation"),
-    GVAR_FUNC(FindNewReps, 4, "tree, representatives, presentation, maximum"),
-    GVAR_FUNC(UnmarkTree, 1, "tree"),
-    GVAR_FUNC(GetPols, 3, "list, presentation, polynomial"),
-    GVAR_FUNC(DT_evaluation, 1, "vector"),
+    GVAR_FUNC_2ARGS(MakeFormulaVector, tree, presentation),
+    GVAR_FUNC_4ARGS(
+        FindNewReps, tree, representatives, presentation, maximum),
+    GVAR_FUNC_1ARGS(UnmarkTree, tree),
+    GVAR_FUNC_3ARGS(GetPols, list, presentation, polynomial),
+    GVAR_FUNC_1ARGS(DT_evaluation, vector),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -1712,7 +1713,6 @@ static Int InitKernel (
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -1727,7 +1727,6 @@ static Int InitLibrary (
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 

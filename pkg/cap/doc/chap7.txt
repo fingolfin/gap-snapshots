@@ -1,0 +1,2991 @@
+  
+  [1X7 [33X[0;0YAdd Functions[133X[101X
+  
+  [33X[0;0YThis  section  describes  the  overall  structure  of  Add-functions and the
+  functions installed by them.[133X
+  
+  
+  [1X7.1 [33X[0;0YFunctions Installed by Add[133X[101X
+  
+  [33X[0;0YAdd functions have the following syntax:[133X
+  
+  [4X[32X  Code  [32X[104X
+    [4XDeclareOperation( "AddSomeFunc",[104X
+    [4X                  [ IsCapCategory, IsList, IsInt ] );[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe   first   argument   is  the  category  to  which  some  function  (e.g.
+  [10XKernelObject[110X)  is  added, the second is a list containing pairs of functions
+  and  additional  filters  for  the  arguments,  (e.g.  if  one argument is a
+  morphism,  an  additional  filter  could be [10XIsMomomorphism[110X). The third is an
+  optional  weight  which will then be the weight for [10XSomeFunc[110X (default value:
+  100).  This is described later. If only one function is to be installed, the
+  list  can be replaced by the function. CAP installs the given function(s) as
+  methods for [10XSomeFunc[110X (resp. [10XSomeFuncOp[110X if [10XSomeFunc[110X is not an operation).[133X
+  
+  [33X[0;0YAll installed methods follow the following steps, described below:[133X
+  
+  [30X    [33X[0;6YRedirect function[133X
+  
+  [30X    [33X[0;6YPrefunction[133X
+  
+  [30X    [33X[0;6YFunction[133X
+  
+  [30X    [33X[0;6YLogic[133X
+  
+  [30X    [33X[0;6YPostfunction[133X
+  
+  [30X    [33X[0;6YAddfunction[133X
+  
+  [33X[0;0YEvery  other  part,  except  from  function,  does  only  depend on the name
+  [10XSomeFunc[110X. We now explain the steps in detail.[133X
+  
+  [30X    [33X[0;6YRedirect  function:  The  redirect is used to redirect the computation
+        from the given functions to some other symbol. If there is for example
+        a  with  given  method  for some universal property, and the universal
+        object  is already computed, the redirect function might detect such a
+        thing,  calls  the  with  given operation with the universal object as
+        additional  argument  and  then  returns  the  value.  In general, the
+        redirect  can  be  an  arbitrary  function. It is called with the same
+        arguments  as  the  operation  [10XSomeFunc[110X itself and can return an array
+        containing  [10X[ true, something ][110X, which will cause the installed method
+        to  simply return the object [10Xsomething[110X, or [10X[ false ][110X. If the output is
+        [10Xfalse[110X,  the  computation  will  continue  with  the  step Prefunction.
+        Additionally,  for  every category and every name like [10XSomeFunc[110X, there
+        is  a  boolean, stored in the category's component [10Xredirects[110X under the
+        name  of  [10XSomeFunc[110X, which, when it is [10Xfalse[110X, will prevent the redirect
+        function from being executed.[133X
+  
+  [30X    [33X[0;6YPrefunction:  The  prefunction  should  be used for error handling and
+        plausibility  checks  of the input to [10XSomeFunc[110X (e.g. for [10XKernelLift[110X it
+        should  check  wether  range  and  source  of  the morphims coincide).
+        Generally,  the  prefunction  is defined in the method record and only
+        depends  on the name [10XSomeFunc[110X. It is called with the same input as the
+        function  itself,  and  should return either [10X[ true ][110X, which continues
+        the  computation,  or  [10X[ false, "message" ][110X, which will cause an error
+        with message [10X"message"[110X and some additional information.[133X
+  
+  [30X    [33X[0;6YFull  prefunction:  The  full prefuction has the same semantics as the
+        prefunction,  but can perform additional, very costly checks. They are
+        disabled by default.[133X
+  
+  [30X    [33X[0;6YFunction:  This  will  launch  the function(s) given as arguments. The
+        result  should  be as specified in the type of [10XSomeFunc[110X. The resulting
+        object is now named the result.[133X
+  
+  [30X    [33X[0;6YLogic:  For every function, some logical todos can be implemented in a
+        logic texfile for the category. If there is some logic written down in
+        a  file  belonging  to  the  category,  or  belonging  to some type of
+        category.  Please  see  the  description of logic for more details. If
+        there  is  some  logic  and  some predicate relations for the function
+        [10XSomeFunc[110X, it is installed in this step for the result.[133X
+  
+  [30X    [33X[0;6YPostfunction:  The  postfunction  called  with  the  arguments  of the
+        function  and  the  result. It can be an arbitrary function doing some
+        cosmetics. If for example [10XSomeFunc[110X is [10XKernelEmbedding[110X, it will set the
+        [10XKernelObject[110X of the input morphism to result. The postfunction is also
+        taken  from  the  method  record  and  does  only  depend  on the name
+        [10XSomeFunc[110X.[133X
+  
+  [30X    [33X[0;6YAddfunction:  If  the  result  is  a category cell, it is added to the
+        category  for  which  the  function was installed. This is disabled by
+        default  and  can  be  enabled  via  [2XEnableAddForCategoricalOperations[102X
+        ([14X1.11-1[114X).[133X
+  
+  
+  [1X7.2 [33X[0;0YAdd Method[133X[101X
+  
+  [33X[0;0YExcept  from  installing  a  new method for the name [10XSomeFunc[110X, an Add method
+  does  slightly  more.  Every Add method has the same structure. The steps in
+  the Add method are as follows:[133X
+  
+  [30X    [33X[0;6YWeight check: If the current weight of the operation is lower than the
+        given  weight  of the new functions, then the add function returns and
+        installs nothing.[133X
+  
+  [30X    [33X[0;6YOption  check:  There  are  two possible options for every add method:
+        [10XSetPrimitive[110X and [10XIsDerivation[110X.[133X
+  
+        [30X    [33X[0;12Y[10XSetPrimitive[110X  should  be  a  boolean,  the  default  is true. If
+              [10XSetPrimitive[110X  is  false,  then the current call of this add will
+              not set the installed function to be primitive. This is used for
+              derivations.[133X
+  
+        [30X    [33X[0;12Y[10XIsDerivation[110X  should  be  a  boolean, default is false. If it is
+              true,  the  add  method  assumes  that  the  given function is a
+              derivation and does not try to install a corresponding pair (See
+              below).[133X
+  
+  [30X    [33X[0;6YDefault  weight:  If the weight parameter is -1, the default weight is
+        assumed, which is 100.[133X
+  
+  [30X    [33X[0;6YChecking  for  pairs: If the function is part of a with given pair, we
+        check  if the weight of the with given operation is less than or equal
+        to the weight of the without given operation. If this is the case, the
+        redirect  function  for  the  without given operation is enabled, else
+        disabled.[133X
+  
+  [30X    [33X[0;6YInstallation: Next, the method to install the functions is created. It
+        creates  the  correct filter list, by merging the standard filters for
+        the  operation  with  the  particular filters for the given functions,
+        then installs the method as described above.[133X
+  
+  [30X    [33X[0;6YSetPrimitive:  If  the  set  primitive  flag  is  true,  it  is set as
+        primitive in the weight list of the category.[133X
+  
+  [33X[0;0YAfter calling an add method, the corresponding operation is available in the
+  category.  Also, some derivations, which are triggered by the setting of the
+  primitive value, might be available.[133X
+  
+  
+  [1X7.3 [33X[0;0YInstallAdd Function[133X[101X
+  
+  [33X[0;0YAlmost   all   Add   methods   in  the  CAP  kernel  are  installed  by  the
+  [10XCapInternalInstallAdd[110X  operation.  The  definition  of  this  function is as
+  follows:[133X
+  
+  [4X[32X  Code  [32X[104X
+    [4XDeclareOperation( "CapInternalInstallAdd",[104X
+    [4X                  [ IsRecord ] );[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  record  can  have the following components, most of which can be set in
+  the method name record, used as described:[133X
+  
+  [30X    [33X[0;6Yfunction_name:  The  name  of  the  function.  This  does  not have to
+        coincide  with  the  installation  name. It is used for the derivation
+        weight.[133X
+  
+  [30X    [33X[0;6Yinstallation_name  (optional):  A  string  which  is  the  name of the
+        operation  for  which  the  functions  given  to  the  Add  method are
+        installed as methods.[133X
+  
+  [30X    [33X[0;6Ypre_function  (optional):  A function which is used as the prefunction
+        of the installed methods, as described above.[133X
+  
+  [30X    [33X[0;6Ypre_function_full  (optional):  A  function  which is used as the full
+        prefunction of the installed methods, as described above.[133X
+  
+  [30X    [33X[0;6Yredirect_function (optional): A function which is used as the redirect
+        function of the installed methods, as described above.[133X
+  
+  [30X    [33X[0;6Ypost_function (optional): A function which is used as the postfunction
+        of the installed methods, as described above.[133X
+  
+  [30X    [33X[0;6Yfilter_list:  A  list  containing  the  basic  filters for the methods
+        installed  by  the  add  methods. Possible entries are filters, or the
+        strings listed below, which will be replaced by appropriate filters at
+        the time the add method is called. The first entry of [10Xfilter_list[110X must
+        be  the  string  [10Xcategory[110X.  If  the  category can be inferred from the
+        remaining  arguments, a convenience method without the category as the
+        first  argument is installed automatically. Additionally, the category
+        is   not   passed   to   primitively   added   functions,   except  if
+        [10Xcategory!.category_as_first_argument[110X   is   set  to  [10Xtrue[110X  (this  will
+        probably change to be the default in the future).[133X
+  
+        [30X    [33X[0;12Y[10Xcategory[110X,[133X
+  
+        [30X    [33X[0;12Y[10Xcell[110X,[133X
+  
+        [30X    [33X[0;12Y[10Xobject[110X,[133X
+  
+        [30X    [33X[0;12Y[10Xmorphism[110X,[133X
+  
+        [30X    [33X[0;12Y[10Xtwocell[110X,[133X
+  
+        [30X    [33X[0;12Y[10Xobject_in_range_category_of_homomorphism_structure[110X,[133X
+  
+        [30X    [33X[0;12Y[10Xmorphism_in_range_category_of_homomorphism_structure[110X,[133X
+  
+        [30X    [33X[0;12Y[10Xother_category[110X,[133X
+  
+        [30X    [33X[0;12Y[10Xother_cell[110X,[133X
+  
+        [30X    [33X[0;12Y[10Xother_object[110X,[133X
+  
+        [30X    [33X[0;12Y[10Xother_morphism[110X,[133X
+  
+        [30X    [33X[0;12Y[10Xother_twocell[110X,[133X
+  
+        [30X    [33X[0;12Y[10Xlist_of_objects[110X,[133X
+  
+        [30X    [33X[0;12Y[10Xlist_of_morphisms[110X,[133X
+  
+        [30X    [33X[0;12Y[10Xlist_of_twocells[110X.[133X
+  
+  [30X    [33X[0;6Ywell_defined_todo  (optional): A boolean, default value is true, which
+        states  wether there should be to do list entries which propagate well
+        definedness  from  the input of the installed methods to their output.
+        Please  note  that  true only makes sense if at least one argument and
+        the output of the installed method is a cell.[133X
+  
+  [30X    [33X[0;6Yreturn_type:  The  return  type  can  either be a filter or one of the
+        strings  in  the  list  below.  For objects, morphisms and [23X2[123X-cells the
+        correct  [10XAdd[110X  function  (see  above)  is  used  for  the result of the
+        computation. Otherwise, no [10XAdd[110X function is used after all.[133X
+  
+  [4X[32X  Code  [32X[104X
+    [4X    [[104X
+    [4X        "object",[104X
+    [4X        "object_or_fail",[104X
+    [4X        "morphism",[104X
+    [4X        "morphism_or_fail",[104X
+    [4X        "twocell",[104X
+    [4X        "object_in_range_category_of_homomorphism_structure",[104X
+    [4X        "morphism_in_range_category_of_homomorphism_structure",[104X
+    [4X        "bool",[104X
+    [4X        "other_object",[104X
+    [4X        "other_morphism",[104X
+    [4X        "list_of_morphisms",[104X
+    [4X        "list_of_morphisms_or_fail",[104X
+    [4X        "nonneg_integer_or_infinity",[104X
+    [4X        "list_of_objects"[104X
+    [4X    ][104X
+  [4X[32X[104X
+  
+  [30X    [33X[0;6Yis_with_given (optional): Boolean, marks whether the function which is
+        to be installed is a with given function or not.[133X
+  
+  [30X    [33X[0;6Ywith_given_without_given_name_pair   (optional):   If   the  currently
+        installed operation has a corresponding with given operation or is the
+        with  given  of another operation, the names of both should be in this
+        list.[133X
+  
+  [30X    [33X[0;6Yfunctorial  (optional):  If  an  object has a corresponding functorial
+        function,  e.g.,  [10XKernelObject[110X and [10XKernelObjectFunctorial[110X, the name of
+        the functorial is stored as a string.[133X
+  
+  [30X    [33X[0;6Ydual_arguments_reversed  (optional):  Boolean,  marks  whether for the
+        call  of the dual operation all arguments have to be given in reversed
+        order.[133X
+  
+  [30X    [33X[0;6Ydual_with_given_arguments_reversed  (optional): Boolean, marks whether
+        for  the  call  of  the  dual operation the source and range of a with
+        given operation have to be given in reversed order.[133X
+  
+  [30X    [33X[0;6Ydual_preprocessor_func  (optional):  let  f  be an operation with dual
+        operation g. For the automatic installation of g from f, the arguments
+        given to g are preprocessed by this given function.[133X
+  
+  [30X    [33X[0;6Ydual_postprocessor_func  (optional):  let  f be an operation with dual
+        operation  g. For the automatic installation of g from f, the computed
+        value of f is postprocessed by the given function.[133X
+  
+  [30X    [33X[0;6Yinput_arguments_names  (optional):  A duplicate free list (of the same
+        length  as [10Xfilter_list[110X) of strings. For example, these strings will be
+        used  as  the  names  of  the  arguments when automatically generating
+        functions for this operation, e.g. in the opposite category.[133X
+  
+  [30X    [33X[0;6Youtput_source_getter_string  (optional):  Only  valid if the operation
+        returns  a  morphism: a piece of GAP code which computes the source of
+        the returned morphism. The input arguments are available via the names
+        given in [10Xinput_arguments_names[110X.[133X
+  
+  [30X    [33X[0;6Youtput_range_getter_string  (optional):  Only  valid  if the operation
+        returns  a  morphism:  a piece of GAP code which computes the range of
+        the returned morphism. The input arguments are available via the names
+        given in [10Xinput_arguments_names[110X.[133X
+  
+  [30X    [33X[0;6Ywith_given_object_position  (optional):  One of the following strings:
+        [10X"Source"[110X, [10X"Range"[110X, or [10X"both"[110X. Set for the without given operation in a
+        with  given  pair.  Describes whether the source resp. range are given
+        (as  the  last  argument  of the with given operation) or both (as the
+        second and the last argument of the with given operation).[133X
+  
+  [30X    [33X[0;6Ycompatible_with_congruence_of_morphisms  (optional):  Indicates if the
+        operation  is compatible with the congruence of morphisms, that is, if
+        the  output  does  not  change  with  regard  to [10XIsEqualForObjects[110X and
+        [10XIsCongruentForMorphisms[110X   if   the   input   changes  with  regard  to
+        [10XIsEqualForObjects[110X and [10XIsCongruentForMorphisms[110X.[133X
+  
+  [33X[0;0YUsing  all  those  entries, the operation [10XCapInternalInstallAdd[110X installs add
+  methods  as  described  above. It first provides plausibility checks for all
+  the  entries described, then installs the Add method in 4 ways, with list or
+  functions  as  second argument, and with an optional third parameter for the
+  weight.[133X
+  
+  [1X7.3-1 CapInternalInstallAdd[101X
+  
+  [33X[1;0Y[29X[2XCapInternalInstallAdd[102X( [3Xrecord[103X ) [32X function[133X
+  
+  [33X[0;0YSee [14X7.3[114X.[133X
+  
+  
+  [1X7.4 [33X[0;0YEnhancing the method name record[133X[101X
+  
+  [33X[0;0YThe  function  CAP_INTERNAL_ENHANCE_NAME_RECORD  can  be applied to a method
+  name record to make the following enhancements:[133X
+  
+  [30X    [33X[0;6YFunction name: Set the component function_name to the entry name.[133X
+  
+  [30X    [33X[0;6YWithGiven  special  case:  If the current entry belongs to a WithGiven
+        operation      or      its      without      given      pair,      the
+        with_given_without_given_name_pair  is  set.  Additionally,  the  with
+        given flag of the WithGiven operation is set to true.[133X
+  
+  [30X    [33X[0;6YRedirect  and  post functions are created for all operations belonging
+        to universal constructions (e.g. [10XKernelLift[110X) which are not a WithGiven
+        operation.[133X
+  
+  
+  [1X7.5 [33X[0;0YInstall All Adds[133X[101X
+  
+  [33X[0;0YThe  function  CAP_INTERNAL_INSTALL_ALL_ADDS does not take any arguments. It
+  is       an       auxiliary      function      which      first      applies
+  CAP_INTERNAL_ENHANCE_NAME_RECORD     to     CAP_INTERNAL_METHOD_NAME_RECORD.
+  Afterwards  it  iterates  over CAP_INTERNAL_METHOD_NAME_RECORD and calls the
+  CapInternalInstallAdd  with  the corresponding method record entry except if
+  the no_install component of the record is set to true.[133X
+  
+  
+  [1X7.6 [33X[0;0YPrepare functions[133X[101X
+  
+  [1X7.6-1 CAPOperationPrepareFunction[101X
+  
+  [33X[1;0Y[29X[2XCAPOperationPrepareFunction[102X( [3Xprepare_function[103X, [3Xcategory[103X, [3Xfunc[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya function[133X
+  
+  [33X[0;0YGiven  a  non-CAP-conform  function  for  any of the categorical operations,
+  i.e.,  a  function  that computes the direct sum of two objects instead of a
+  list of objects, this function wraps the function with a wrapper function to
+  fit  in  the  CAP  context. For the mentioned binary direct sum one can call
+  this  function  with  [10X"BinaryDirectSumToDirectSum"[110X  as [3Xprepare_function[103X, the
+  category,  and  the  binary direct sum function. The function then returns a
+  function that can be used for the direct sum categorical operation.[133X
+  
+  [33X[0;0YNote  that [3Xfunc[103X is not handled by the CAP caching mechanism and that the use
+  of  prepare  functions  is incompatible with [10XWithGiven[110X operations. Thus, one
+  has  to  ensure  manually  that  the  equality and typing specifications are
+  fulfilled.[133X
+  
+  [1X7.6-2 CAPAddPrepareFunction[101X
+  
+  [33X[1;0Y[29X[2XCAPAddPrepareFunction[102X( [3Xprepare_function[103X, [3Xname[103X, [3Xdoc_string[103X[, [3Xprecondition_list[103X] ) [32X function[133X
+  
+  [33X[0;0YAdds  a  prepare  function to the list of CAP's prepare functions. The first
+  argument is the prepare function itself. It should always be a function that
+  takes a category and a function and returns a function. The argument [3Xname[103X is
+  the    name    of    the    prepare    function,    which    is    used   in
+  [10XCAPOperationPrepareFunction[110X.  The  argument  [3Xdoc_string[103X  should  be  a short
+  string describing the functions. The optional argument [3Xprecondition_list[103X can
+  describe  preconditions  for  the  prepare  function  to  work, i.e., if the
+  category  does  need to have PreCompose computable. This information is also
+  recovered   automatically   from   the   prepare  function  itself,  so  the
+  [3Xprecondition_list[103X is only necessary if the function needed is not explicitly
+  used   in   the   prepare   function,   e.g.,   if  you  use  [10X+[110X  instead  of
+  [10XAdditionForMorphisms[110X.[133X
+  
+  [1X7.6-3 ListCAPPrepareFunctions[101X
+  
+  [33X[1;0Y[29X[2XListCAPPrepareFunctions[102X( [3Xarg[103X ) [32X function[133X
+  
+  [33X[0;0YLists all prepare functions.[133X
+  
+  
+  [1X7.7 [33X[0;0YAvailable Add functions[133X[101X
+  
+  [1X7.7-1 AddAdditionForMorphisms[101X
+  
+  [33X[1;0Y[29X[2XAddAdditionForMorphisms[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XAdditionForMorphisms[110X.  [23XF:  ( a, b ) \mapsto \mathtt{AdditionForMorphisms}(a,
+  b)[123X.[133X
+  
+  [1X7.7-2 AddAdditiveGenerators[101X
+  
+  [33X[1;0Y[29X[2XAddAdditiveGenerators[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XAdditiveGenerators[110X.
+  [23XF: ( ) \mapsto \mathtt{AdditiveGenerators}()[123X.[133X
+  
+  [1X7.7-3 AddAdditiveInverseForMorphisms[101X
+  
+  [33X[1;0Y[29X[2XAddAdditiveInverseForMorphisms[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XAdditiveInverseForMorphisms[110X.        [23XF:       (       a       )       \mapsto
+  \mathtt{AdditiveInverseForMorphisms}(a)[123X.[133X
+  
+  [1X7.7-4 AddAstrictionToCoimage[101X
+  
+  [33X[1;0Y[29X[2XAddAstrictionToCoimage[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XAstrictionToCoimage[110X.        [23XF:        (        alpha        )        \mapsto
+  \mathtt{AstrictionToCoimage}(alpha)[123X.[133X
+  
+  [1X7.7-5 AddAstrictionToCoimageWithGivenCoimageObject[101X
+  
+  [33X[1;0Y[29X[2XAddAstrictionToCoimageWithGivenCoimageObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XAstrictionToCoimageWithGivenCoimageObject[110X.   [23XF:   (   alpha,   C  )  \mapsto
+  \mathtt{AstrictionToCoimageWithGivenCoimageObject}(alpha, C)[123X.[133X
+  
+  [1X7.7-6 AddBasisOfExternalHom[101X
+  
+  [33X[1;0Y[29X[2XAddBasisOfExternalHom[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XBasisOfExternalHom[110X.
+  [23XF: ( arg2, arg3 ) \mapsto \mathtt{BasisOfExternalHom}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-7 AddCanonicalIdentificationFromCoimageToImageObject[101X
+  
+  [33X[1;0Y[29X[2XAddCanonicalIdentificationFromCoimageToImageObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XCanonicalIdentificationFromCoimageToImageObject[110X.   [23XF:   (  alpha  )  \mapsto
+  \mathtt{CanonicalIdentificationFromCoimageToImageObject}(alpha)[123X.[133X
+  
+  [1X7.7-8 AddCanonicalIdentificationFromImageObjectToCoimage[101X
+  
+  [33X[1;0Y[29X[2XAddCanonicalIdentificationFromImageObjectToCoimage[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XCanonicalIdentificationFromImageObjectToCoimage[110X.   [23XF:   (  alpha  )  \mapsto
+  \mathtt{CanonicalIdentificationFromImageObjectToCoimage}(alpha)[123X.[133X
+  
+  [1X7.7-9 AddCoastrictionToImage[101X
+  
+  [33X[1;0Y[29X[2XAddCoastrictionToImage[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XCoastrictionToImage[110X.        [23XF:        (        alpha        )        \mapsto
+  \mathtt{CoastrictionToImage}(alpha)[123X.[133X
+  
+  [1X7.7-10 AddCoastrictionToImageWithGivenImageObject[101X
+  
+  [33X[1;0Y[29X[2XAddCoastrictionToImageWithGivenImageObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XCoastrictionToImageWithGivenImageObject[110X.   [23XF:   (   alpha,   I   )   \mapsto
+  \mathtt{CoastrictionToImageWithGivenImageObject}(alpha, I)[123X.[133X
+  
+  [1X7.7-11 AddCoefficientsOfMorphismWithGivenBasisOfExternalHom[101X
+  
+  [33X[1;0Y[29X[2XAddCoefficientsOfMorphismWithGivenBasisOfExternalHom[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XCoefficientsOfMorphismWithGivenBasisOfExternalHom[110X. [23XF: ( arg2, arg3 ) \mapsto
+  \mathtt{CoefficientsOfMorphismWithGivenBasisOfExternalHom}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-12 AddCoequalizer[101X
+  
+  [33X[1;0Y[29X[2XAddCoequalizer[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function  [23XF[123X to the category for the basic operation [10XCoequalizer[110X. [23XF: (
+  arg2 ) \mapsto \mathtt{Coequalizer}(arg2)[123X.[133X
+  
+  [1X7.7-13 AddCoequalizerFunctorial[101X
+  
+  [33X[1;0Y[29X[2XAddCoequalizerFunctorial[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XCoequalizerFunctorial[110X.   [23XF:   (   morphisms,   mu,   morphismsp   )  \mapsto
+  \mathtt{CoequalizerFunctorial}(morphisms, mu, morphismsp)[123X.[133X
+  
+  [1X7.7-14 AddCoequalizerFunctorialWithGivenCoequalizers[101X
+  
+  [33X[1;0Y[29X[2XAddCoequalizerFunctorialWithGivenCoequalizers[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XCoequalizerFunctorialWithGivenCoequalizers[110X.   [23XF:   (   P,   morphisms,   mu,
+  morphismsp,                   Pp                  )                  \mapsto
+  \mathtt{CoequalizerFunctorialWithGivenCoequalizers}(P,     morphisms,    mu,
+  morphismsp, Pp)[123X.[133X
+  
+  [1X7.7-15 AddCoimageObject[101X
+  
+  [33X[1;0Y[29X[2XAddCoimageObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XCoimageObject[110X. [23XF: (
+  arg2 ) \mapsto \mathtt{CoimageObject}(arg2)[123X.[133X
+  
+  [1X7.7-16 AddCoimageProjection[101X
+  
+  [33X[1;0Y[29X[2XAddCoimageProjection[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XCoimageProjection[110X.
+  [23XF: ( alpha ) \mapsto \mathtt{CoimageProjection}(alpha)[123X.[133X
+  
+  [1X7.7-17 AddCoimageProjectionWithGivenCoimageObject[101X
+  
+  [33X[1;0Y[29X[2XAddCoimageProjectionWithGivenCoimageObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XCoimageProjectionWithGivenCoimageObject[110X.   [23XF:   (   alpha,   C   )   \mapsto
+  \mathtt{CoimageProjectionWithGivenCoimageObject}(alpha, C)[123X.[133X
+  
+  [1X7.7-18 AddCokernelColift[101X
+  
+  [33X[1;0Y[29X[2XAddCokernelColift[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XCokernelColift[110X. [23XF:
+  ( alpha, T, tau ) \mapsto \mathtt{CokernelColift}(alpha, T, tau)[123X.[133X
+  
+  [1X7.7-19 AddCokernelColiftWithGivenCokernelObject[101X
+  
+  [33X[1;0Y[29X[2XAddCokernelColiftWithGivenCokernelObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XCokernelColiftWithGivenCokernelObject[110X.  [23XF:  (  alpha,  T,  tau,  P ) \mapsto
+  \mathtt{CokernelColiftWithGivenCokernelObject}(alpha, T, tau, P)[123X.[133X
+  
+  [1X7.7-20 AddCokernelObject[101X
+  
+  [33X[1;0Y[29X[2XAddCokernelObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XCokernelObject[110X. [23XF:
+  ( arg2 ) \mapsto \mathtt{CokernelObject}(arg2)[123X.[133X
+  
+  [1X7.7-21 AddCokernelObjectFunctorial[101X
+  
+  [33X[1;0Y[29X[2XAddCokernelObjectFunctorial[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XCokernelObjectFunctorial[110X.    [23XF:    (    alpha,    mu,   alphap   )   \mapsto
+  \mathtt{CokernelObjectFunctorial}(alpha, mu, alphap)[123X.[133X
+  
+  [1X7.7-22 AddCokernelObjectFunctorialWithGivenCokernelObjects[101X
+  
+  [33X[1;0Y[29X[2XAddCokernelObjectFunctorialWithGivenCokernelObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XCokernelObjectFunctorialWithGivenCokernelObjects[110X. [23XF: ( P, alpha, mu, alphap,
+  Pp  )  \mapsto  \mathtt{CokernelObjectFunctorialWithGivenCokernelObjects}(P,
+  alpha, mu, alphap, Pp)[123X.[133X
+  
+  [1X7.7-23 AddCokernelProjection[101X
+  
+  [33X[1;0Y[29X[2XAddCokernelProjection[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XCokernelProjection[110X.
+  [23XF: ( alpha ) \mapsto \mathtt{CokernelProjection}(alpha)[123X.[133X
+  
+  [1X7.7-24 AddCokernelProjectionWithGivenCokernelObject[101X
+  
+  [33X[1;0Y[29X[2XAddCokernelProjectionWithGivenCokernelObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XCokernelProjectionWithGivenCokernelObject[110X.   [23XF:   (   alpha,   P  )  \mapsto
+  \mathtt{CokernelProjectionWithGivenCokernelObject}(alpha, P)[123X.[133X
+  
+  [1X7.7-25 AddColift[101X
+  
+  [33X[1;0Y[29X[2XAddColift[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XColift[110X. [23XF: ( alpha,
+  beta ) \mapsto \mathtt{Colift}(alpha, beta)[123X.[133X
+  
+  [1X7.7-26 AddColiftAlongEpimorphism[101X
+  
+  [33X[1;0Y[29X[2XAddColiftAlongEpimorphism[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XColiftAlongEpimorphism[110X.      [23XF:     (     epsilon,     tau     )     \mapsto
+  \mathtt{ColiftAlongEpimorphism}(epsilon, tau)[123X.[133X
+  
+  [1X7.7-27 AddColiftOrFail[101X
+  
+  [33X[1;0Y[29X[2XAddColiftOrFail[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XColiftOrFail[110X. [23XF: (
+  alpha, beta ) \mapsto \mathtt{ColiftOrFail}(alpha, beta)[123X.[133X
+  
+  [1X7.7-28 AddComponentOfMorphismFromDirectSum[101X
+  
+  [33X[1;0Y[29X[2XAddComponentOfMorphismFromDirectSum[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XComponentOfMorphismFromDirectSum[110X.    [23XF:    (   alpha,   S,   i   )   \mapsto
+  \mathtt{ComponentOfMorphismFromDirectSum}(alpha, S, i)[123X.[133X
+  
+  [1X7.7-29 AddComponentOfMorphismIntoDirectSum[101X
+  
+  [33X[1;0Y[29X[2XAddComponentOfMorphismIntoDirectSum[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XComponentOfMorphismIntoDirectSum[110X.    [23XF:    (   alpha,   S,   i   )   \mapsto
+  \mathtt{ComponentOfMorphismIntoDirectSum}(alpha, S, i)[123X.[133X
+  
+  [1X7.7-30 AddCoproduct[101X
+  
+  [33X[1;0Y[29X[2XAddCoproduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function  [23XF[123X  to  the category for the basic operation [10XCoproduct[110X. [23XF: (
+  arg2 ) \mapsto \mathtt{Coproduct}(arg2)[123X.[133X
+  
+  [1X7.7-31 AddCoproductFunctorial[101X
+  
+  [33X[1;0Y[29X[2XAddCoproductFunctorial[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XCoproductFunctorial[110X.    [23XF:    (    objects,    L,    objectsp    )   \mapsto
+  \mathtt{CoproductFunctorial}(objects, L, objectsp)[123X.[133X
+  
+  [1X7.7-32 AddCoproductFunctorialWithGivenCoproducts[101X
+  
+  [33X[1;0Y[29X[2XAddCoproductFunctorialWithGivenCoproducts[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XCoproductFunctorialWithGivenCoproducts[110X.  [23XF:  ( P, objects, L, objectsp, Pp )
+  \mapsto   \mathtt{CoproductFunctorialWithGivenCoproducts}(P,   objects,   L,
+  objectsp, Pp)[123X.[133X
+  
+  [1X7.7-33 AddDirectProduct[101X
+  
+  [33X[1;0Y[29X[2XAddDirectProduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XDirectProduct[110X. [23XF: (
+  arg2 ) \mapsto \mathtt{DirectProduct}(arg2)[123X.[133X
+  
+  [1X7.7-34 AddDirectProductFunctorial[101X
+  
+  [33X[1;0Y[29X[2XAddDirectProductFunctorial[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XDirectProductFunctorial[110X.    [23XF:    (   objects,   L,   objectsp   )   \mapsto
+  \mathtt{DirectProductFunctorial}(objects, L, objectsp)[123X.[133X
+  
+  [1X7.7-35 AddDirectProductFunctorialWithGivenDirectProducts[101X
+  
+  [33X[1;0Y[29X[2XAddDirectProductFunctorialWithGivenDirectProducts[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XDirectProductFunctorialWithGivenDirectProducts[110X.   [23XF:   (   P,   objects,  L,
+  objectsp,                   Pp                   )                   \mapsto
+  \mathtt{DirectProductFunctorialWithGivenDirectProducts}(P,    objects,    L,
+  objectsp, Pp)[123X.[133X
+  
+  [1X7.7-36 AddDirectSum[101X
+  
+  [33X[1;0Y[29X[2XAddDirectSum[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function  [23XF[123X  to  the category for the basic operation [10XDirectSum[110X. [23XF: (
+  arg2 ) \mapsto \mathtt{DirectSum}(arg2)[123X.[133X
+  
+  [1X7.7-37 AddDirectSumCodiagonalDifference[101X
+  
+  [33X[1;0Y[29X[2XAddDirectSumCodiagonalDifference[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XDirectSumCodiagonalDifference[110X.       [23XF:       (       D       )      \mapsto
+  \mathtt{DirectSumCodiagonalDifference}(D)[123X.[133X
+  
+  [1X7.7-38 AddDirectSumDiagonalDifference[101X
+  
+  [33X[1;0Y[29X[2XAddDirectSumDiagonalDifference[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XDirectSumDiagonalDifference[110X.        [23XF:       (       D       )       \mapsto
+  \mathtt{DirectSumDiagonalDifference}(D)[123X.[133X
+  
+  [1X7.7-39 AddDirectSumFunctorial[101X
+  
+  [33X[1;0Y[29X[2XAddDirectSumFunctorial[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XDirectSumFunctorial[110X.    [23XF:    (    objects,    L,    objectsp    )   \mapsto
+  \mathtt{DirectSumFunctorial}(objects, L, objectsp)[123X.[133X
+  
+  [1X7.7-40 AddDirectSumFunctorialWithGivenDirectSums[101X
+  
+  [33X[1;0Y[29X[2XAddDirectSumFunctorialWithGivenDirectSums[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XDirectSumFunctorialWithGivenDirectSums[110X.  [23XF:  ( P, objects, L, objectsp, Pp )
+  \mapsto   \mathtt{DirectSumFunctorialWithGivenDirectSums}(P,   objects,   L,
+  objectsp, Pp)[123X.[133X
+  
+  [1X7.7-41 AddDirectSumProjectionInPushout[101X
+  
+  [33X[1;0Y[29X[2XAddDirectSumProjectionInPushout[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XDirectSumProjectionInPushout[110X.       [23XF:       (       D       )       \mapsto
+  \mathtt{DirectSumProjectionInPushout}(D)[123X.[133X
+  
+  [1X7.7-42 AddDistinguishedObjectOfHomomorphismStructure[101X
+  
+  [33X[1;0Y[29X[2XAddDistinguishedObjectOfHomomorphismStructure[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XDistinguishedObjectOfHomomorphismStructure[110X.      [23XF:      (     )     \mapsto
+  \mathtt{DistinguishedObjectOfHomomorphismStructure}()[123X.[133X
+  
+  [1X7.7-43 AddEmbeddingOfEqualizer[101X
+  
+  [33X[1;0Y[29X[2XAddEmbeddingOfEqualizer[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XEmbeddingOfEqualizer[110X.       [23XF:       (       morphisms       )       \mapsto
+  \mathtt{EmbeddingOfEqualizer}(morphisms)[123X.[133X
+  
+  [1X7.7-44 AddEmbeddingOfEqualizerWithGivenEqualizer[101X
+  
+  [33X[1;0Y[29X[2XAddEmbeddingOfEqualizerWithGivenEqualizer[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XEmbeddingOfEqualizerWithGivenEqualizer[110X.   [23XF:   (   morphisms,  P  )  \mapsto
+  \mathtt{EmbeddingOfEqualizerWithGivenEqualizer}(morphisms, P)[123X.[133X
+  
+  [1X7.7-45 AddEpimorphismFromSomeProjectiveObject[101X
+  
+  [33X[1;0Y[29X[2XAddEpimorphismFromSomeProjectiveObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XEpimorphismFromSomeProjectiveObject[110X.      [23XF:      (      A     )     \mapsto
+  \mathtt{EpimorphismFromSomeProjectiveObject}(A)[123X.[133X
+  
+  [1X7.7-46 AddEpimorphismFromSomeProjectiveObjectWithGivenSomeProjectiveObject[101X
+  
+  [33X[1;0Y[29X[2XAddEpimorphismFromSomeProjectiveObjectWithGivenSomeProjectiveObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XEpimorphismFromSomeProjectiveObjectWithGivenSomeProjectiveObject[110X.  [23XF: ( A, P
+  )                                                                    \mapsto
+  \mathtt{EpimorphismFromSomeProjectiveObjectWithGivenSomeProjectiveObject}(A,
+  P)[123X.[133X
+  
+  [1X7.7-47 AddEqualizer[101X
+  
+  [33X[1;0Y[29X[2XAddEqualizer[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function  [23XF[123X  to  the category for the basic operation [10XEqualizer[110X. [23XF: (
+  arg2 ) \mapsto \mathtt{Equalizer}(arg2)[123X.[133X
+  
+  [1X7.7-48 AddEqualizerFunctorial[101X
+  
+  [33X[1;0Y[29X[2XAddEqualizerFunctorial[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XEqualizerFunctorial[110X.    [23XF:   (   morphisms,   mu,   morphismsp   )   \mapsto
+  \mathtt{EqualizerFunctorial}(morphisms, mu, morphismsp)[123X.[133X
+  
+  [1X7.7-49 AddEqualizerFunctorialWithGivenEqualizers[101X
+  
+  [33X[1;0Y[29X[2XAddEqualizerFunctorialWithGivenEqualizers[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XEqualizerFunctorialWithGivenEqualizers[110X.  [23XF:  ( P, morphisms, mu, morphismsp,
+  Pp  )  \mapsto \mathtt{EqualizerFunctorialWithGivenEqualizers}(P, morphisms,
+  mu, morphismsp, Pp)[123X.[133X
+  
+  [1X7.7-50 AddFiberProduct[101X
+  
+  [33X[1;0Y[29X[2XAddFiberProduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XFiberProduct[110X. [23XF: (
+  arg2 ) \mapsto \mathtt{FiberProduct}(arg2)[123X.[133X
+  
+  [1X7.7-51 AddFiberProductEmbeddingInDirectSum[101X
+  
+  [33X[1;0Y[29X[2XAddFiberProductEmbeddingInDirectSum[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XFiberProductEmbeddingInDirectSum[110X.       [23XF:      (      D      )      \mapsto
+  \mathtt{FiberProductEmbeddingInDirectSum}(D)[123X.[133X
+  
+  [1X7.7-52 AddFiberProductFunctorial[101X
+  
+  [33X[1;0Y[29X[2XAddFiberProductFunctorial[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XFiberProductFunctorial[110X.   [23XF:   (   morphisms,   L,   morphismsp   )  \mapsto
+  \mathtt{FiberProductFunctorial}(morphisms, L, morphismsp)[123X.[133X
+  
+  [1X7.7-53 AddFiberProductFunctorialWithGivenFiberProducts[101X
+  
+  [33X[1;0Y[29X[2XAddFiberProductFunctorialWithGivenFiberProducts[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XFiberProductFunctorialWithGivenFiberProducts[110X.   [23XF:   (   P,   morphisms,  L,
+  morphismsp,                   Pp                  )                  \mapsto
+  \mathtt{FiberProductFunctorialWithGivenFiberProducts}(P,    morphisms,    L,
+  morphismsp, Pp)[123X.[133X
+  
+  [1X7.7-54 AddHomologyObject[101X
+  
+  [33X[1;0Y[29X[2XAddHomologyObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XHomologyObject[110X. [23XF:
+  ( alpha, beta ) \mapsto \mathtt{HomologyObject}(alpha, beta)[123X.[133X
+  
+  [1X7.7-55 AddHomologyObjectFunctorialWithGivenHomologyObjects[101X
+  
+  [33X[1;0Y[29X[2XAddHomologyObjectFunctorialWithGivenHomologyObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XHomologyObjectFunctorialWithGivenHomologyObjects[110X. [23XF: ( H_1, L, H_2 ) \mapsto
+  \mathtt{HomologyObjectFunctorialWithGivenHomologyObjects}(H_1, L, H_2)[123X.[133X
+  
+  [1X7.7-56 AddHomomorphismStructureOnMorphisms[101X
+  
+  [33X[1;0Y[29X[2XAddHomomorphismStructureOnMorphisms[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XHomomorphismStructureOnMorphisms[110X.    [23XF:    (    alpha,    beta   )   \mapsto
+  \mathtt{HomomorphismStructureOnMorphisms}(alpha, beta)[123X.[133X
+  
+  [1X7.7-57 AddHomomorphismStructureOnMorphismsWithGivenObjects[101X
+  
+  [33X[1;0Y[29X[2XAddHomomorphismStructureOnMorphismsWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XHomomorphismStructureOnMorphismsWithGivenObjects[110X.  [23XF: ( source, alpha, beta,
+  range                                )                               \mapsto
+  \mathtt{HomomorphismStructureOnMorphismsWithGivenObjects}(source,     alpha,
+  beta, range)[123X.[133X
+  
+  [1X7.7-58 AddHomomorphismStructureOnObjects[101X
+  
+  [33X[1;0Y[29X[2XAddHomomorphismStructureOnObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XHomomorphismStructureOnObjects[110X.     [23XF:    (    arg2,    arg3    )    \mapsto
+  \mathtt{HomomorphismStructureOnObjects}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-59 AddHorizontalPostCompose[101X
+  
+  [33X[1;0Y[29X[2XAddHorizontalPostCompose[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XHorizontalPostCompose[110X.      [23XF:      (      arg2,      arg3     )     \mapsto
+  \mathtt{HorizontalPostCompose}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-60 AddHorizontalPreCompose[101X
+  
+  [33X[1;0Y[29X[2XAddHorizontalPreCompose[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XHorizontalPreCompose[110X.      [23XF:      (      arg2,      arg3      )     \mapsto
+  \mathtt{HorizontalPreCompose}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-61 AddIdentityMorphism[101X
+  
+  [33X[1;0Y[29X[2XAddIdentityMorphism[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function  [23XF[123X to the category for the basic operation [10XIdentityMorphism[110X.
+  [23XF: ( a ) \mapsto \mathtt{IdentityMorphism}(a)[123X.[133X
+  
+  [1X7.7-62 AddIdentityTwoCell[101X
+  
+  [33X[1;0Y[29X[2XAddIdentityTwoCell[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XIdentityTwoCell[110X. [23XF:
+  ( arg2 ) \mapsto \mathtt{IdentityTwoCell}(arg2)[123X.[133X
+  
+  [1X7.7-63 AddImageEmbedding[101X
+  
+  [33X[1;0Y[29X[2XAddImageEmbedding[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XImageEmbedding[110X. [23XF:
+  ( alpha ) \mapsto \mathtt{ImageEmbedding}(alpha)[123X.[133X
+  
+  [1X7.7-64 AddImageEmbeddingWithGivenImageObject[101X
+  
+  [33X[1;0Y[29X[2XAddImageEmbeddingWithGivenImageObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XImageEmbeddingWithGivenImageObject[110X.    [23XF:    (    alpha,    I    )   \mapsto
+  \mathtt{ImageEmbeddingWithGivenImageObject}(alpha, I)[123X.[133X
+  
+  [1X7.7-65 AddImageObject[101X
+  
+  [33X[1;0Y[29X[2XAddImageObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function  [23XF[123X to the category for the basic operation [10XImageObject[110X. [23XF: (
+  arg2 ) \mapsto \mathtt{ImageObject}(arg2)[123X.[133X
+  
+  [1X7.7-66 AddInitialObject[101X
+  
+  [33X[1;0Y[29X[2XAddInitialObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XInitialObject[110X. [23XF: (
+  ) \mapsto \mathtt{InitialObject}()[123X.[133X
+  
+  [1X7.7-67 AddInitialObjectFunctorial[101X
+  
+  [33X[1;0Y[29X[2XAddInitialObjectFunctorial[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XInitialObjectFunctorial[110X. [23XF: ( ) \mapsto \mathtt{InitialObjectFunctorial}()[123X.[133X
+  
+  [1X7.7-68 AddInitialObjectFunctorialWithGivenInitialObjects[101X
+  
+  [33X[1;0Y[29X[2XAddInitialObjectFunctorialWithGivenInitialObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XInitialObjectFunctorialWithGivenInitialObjects[110X.   [23XF:   (  P,  Pp  )  \mapsto
+  \mathtt{InitialObjectFunctorialWithGivenInitialObjects}(P, Pp)[123X.[133X
+  
+  [1X7.7-69 AddInjectionOfCofactorOfCoproduct[101X
+  
+  [33X[1;0Y[29X[2XAddInjectionOfCofactorOfCoproduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XInjectionOfCofactorOfCoproduct[110X.     [23XF:    (    objects,    k    )    \mapsto
+  \mathtt{InjectionOfCofactorOfCoproduct}(objects, k)[123X.[133X
+  
+  [1X7.7-70 AddInjectionOfCofactorOfCoproductWithGivenCoproduct[101X
+  
+  [33X[1;0Y[29X[2XAddInjectionOfCofactorOfCoproductWithGivenCoproduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XInjectionOfCofactorOfCoproductWithGivenCoproduct[110X.  [23XF:  (  objects,  k,  P  )
+  \mapsto   \mathtt{InjectionOfCofactorOfCoproductWithGivenCoproduct}(objects,
+  k, P)[123X.[133X
+  
+  [1X7.7-71 AddInjectionOfCofactorOfDirectSum[101X
+  
+  [33X[1;0Y[29X[2XAddInjectionOfCofactorOfDirectSum[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XInjectionOfCofactorOfDirectSum[110X.     [23XF:    (    objects,    k    )    \mapsto
+  \mathtt{InjectionOfCofactorOfDirectSum}(objects, k)[123X.[133X
+  
+  [1X7.7-72 AddInjectionOfCofactorOfDirectSumWithGivenDirectSum[101X
+  
+  [33X[1;0Y[29X[2XAddInjectionOfCofactorOfDirectSumWithGivenDirectSum[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XInjectionOfCofactorOfDirectSumWithGivenDirectSum[110X.  [23XF:  (  objects,  k,  P  )
+  \mapsto   \mathtt{InjectionOfCofactorOfDirectSumWithGivenDirectSum}(objects,
+  k, P)[123X.[133X
+  
+  [1X7.7-73 AddInjectionOfCofactorOfPushout[101X
+  
+  [33X[1;0Y[29X[2XAddInjectionOfCofactorOfPushout[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XInjectionOfCofactorOfPushout[110X.     [23XF:    (    morphisms,    k    )    \mapsto
+  \mathtt{InjectionOfCofactorOfPushout}(morphisms, k)[123X.[133X
+  
+  [1X7.7-74 AddInjectionOfCofactorOfPushoutWithGivenPushout[101X
+  
+  [33X[1;0Y[29X[2XAddInjectionOfCofactorOfPushoutWithGivenPushout[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XInjectionOfCofactorOfPushoutWithGivenPushout[110X. [23XF: ( morphisms, k, P ) \mapsto
+  \mathtt{InjectionOfCofactorOfPushoutWithGivenPushout}(morphisms, k, P)[123X.[133X
+  
+  [1X7.7-75 AddInjectiveColift[101X
+  
+  [33X[1;0Y[29X[2XAddInjectiveColift[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XInjectiveColift[110X. [23XF:
+  ( alpha, beta ) \mapsto \mathtt{InjectiveColift}(alpha, beta)[123X.[133X
+  
+  [1X7.7-76 AddInjectiveDimension[101X
+  
+  [33X[1;0Y[29X[2XAddInjectiveDimension[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XInjectiveDimension[110X.
+  [23XF: ( arg2 ) \mapsto \mathtt{InjectiveDimension}(arg2)[123X.[133X
+  
+  [1X7.7-77 AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure[101X
+  
+  [33X[1;0Y[29X[2XAddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure[110X.
+  [23XF:               (               alpha               )               \mapsto
+  \mathtt{InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure}(alpha)
+  .[133X
+  
+  [1X7.7-78 AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects[101X
+  
+  [33X[1;0Y[29X[2XAddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects[110X.
+  [23XF:        (        source,        alpha,        range        )       \mapsto
+  \mathtt{InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects}(source,
+  alpha, range)[123X.[133X
+  
+  [1X7.7-79 AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism[101X
+  
+  [33X[1;0Y[29X[2XAddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism[110X.
+  [23XF:         (         arg2,         arg3,        arg4        )        \mapsto
+  \mathtt{InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism}(arg2,
+  arg3, arg4)[123X.[133X
+  
+  [1X7.7-80 AddInverseForMorphisms[101X
+  
+  [33X[1;0Y[29X[2XAddInverseForMorphisms[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XInverseForMorphisms[110X.        [23XF:        (        alpha        )        \mapsto
+  \mathtt{InverseForMorphisms}(alpha)[123X.[133X
+  
+  [1X7.7-81 AddInverseMorphismFromCoimageToImageWithGivenObjects[101X
+  
+  [33X[1;0Y[29X[2XAddInverseMorphismFromCoimageToImageWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XInverseMorphismFromCoimageToImageWithGivenObjects[110X.   [23XF:  (  C,  alpha,  I  )
+  \mapsto \mathtt{InverseMorphismFromCoimageToImageWithGivenObjects}(C, alpha,
+  I)[123X.[133X
+  
+  [1X7.7-82 AddIsAutomorphism[101X
+  
+  [33X[1;0Y[29X[2XAddIsAutomorphism[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XIsAutomorphism[110X. [23XF:
+  ( arg2 ) \mapsto \mathtt{IsAutomorphism}(arg2)[123X.[133X
+  
+  [1X7.7-83 AddIsBijectiveObject[101X
+  
+  [33X[1;0Y[29X[2XAddIsBijectiveObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XIsBijectiveObject[110X.
+  [23XF: ( arg2 ) \mapsto \mathtt{IsBijectiveObject}(arg2)[123X.[133X
+  
+  [1X7.7-84 AddIsCodominating[101X
+  
+  [33X[1;0Y[29X[2XAddIsCodominating[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XIsCodominating[110X. [23XF:
+  ( arg2, arg3 ) \mapsto \mathtt{IsCodominating}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-85 AddIsColiftable[101X
+  
+  [33X[1;0Y[29X[2XAddIsColiftable[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XIsColiftable[110X. [23XF: (
+  arg2, arg3 ) \mapsto \mathtt{IsColiftable}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-86 AddIsColiftableAlongEpimorphism[101X
+  
+  [33X[1;0Y[29X[2XAddIsColiftableAlongEpimorphism[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsColiftableAlongEpimorphism[110X.     [23XF:     (     arg2,    arg3    )    \mapsto
+  \mathtt{IsColiftableAlongEpimorphism}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-87 AddIsCongruentForMorphisms[101X
+  
+  [33X[1;0Y[29X[2XAddIsCongruentForMorphisms[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsCongruentForMorphisms[110X.      [23XF:      (     arg2,     arg3     )     \mapsto
+  \mathtt{IsCongruentForMorphisms}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-88 AddIsDominating[101X
+  
+  [33X[1;0Y[29X[2XAddIsDominating[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XIsDominating[110X. [23XF: (
+  arg2, arg3 ) \mapsto \mathtt{IsDominating}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-89 AddIsEndomorphism[101X
+  
+  [33X[1;0Y[29X[2XAddIsEndomorphism[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XIsEndomorphism[110X. [23XF:
+  ( arg2 ) \mapsto \mathtt{IsEndomorphism}(arg2)[123X.[133X
+  
+  [1X7.7-90 AddIsEpimorphism[101X
+  
+  [33X[1;0Y[29X[2XAddIsEpimorphism[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XIsEpimorphism[110X. [23XF: (
+  arg2 ) \mapsto \mathtt{IsEpimorphism}(arg2)[123X.[133X
+  
+  [1X7.7-91 AddIsEqualAsFactorobjects[101X
+  
+  [33X[1;0Y[29X[2XAddIsEqualAsFactorobjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsEqualAsFactorobjects[110X.      [23XF:      (      arg2,     arg3     )     \mapsto
+  \mathtt{IsEqualAsFactorobjects}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-92 AddIsEqualAsSubobjects[101X
+  
+  [33X[1;0Y[29X[2XAddIsEqualAsSubobjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsEqualAsSubobjects[110X.      [23XF:      (      arg2,      arg3      )      \mapsto
+  \mathtt{IsEqualAsSubobjects}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-93 AddIsEqualForCacheForMorphisms[101X
+  
+  [33X[1;0Y[29X[2XAddIsEqualForCacheForMorphisms[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsEqualForCacheForMorphisms[110X.     [23XF:     (     arg2,     arg3    )    \mapsto
+  \mathtt{IsEqualForCacheForMorphisms}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-94 AddIsEqualForCacheForObjects[101X
+  
+  [33X[1;0Y[29X[2XAddIsEqualForCacheForObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsEqualForCacheForObjects[110X.     [23XF:     (     arg2,     arg3     )     \mapsto
+  \mathtt{IsEqualForCacheForObjects}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-95 AddIsEqualForMorphisms[101X
+  
+  [33X[1;0Y[29X[2XAddIsEqualForMorphisms[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsEqualForMorphisms[110X.      [23XF:      (      arg2,      arg3      )      \mapsto
+  \mathtt{IsEqualForMorphisms}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-96 AddIsEqualForMorphismsOnMor[101X
+  
+  [33X[1;0Y[29X[2XAddIsEqualForMorphismsOnMor[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsEqualForMorphismsOnMor[110X.      [23XF:     (     arg2,     arg3     )     \mapsto
+  \mathtt{IsEqualForMorphismsOnMor}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-97 AddIsEqualForObjects[101X
+  
+  [33X[1;0Y[29X[2XAddIsEqualForObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XIsEqualForObjects[110X.
+  [23XF: ( arg2, arg3 ) \mapsto \mathtt{IsEqualForObjects}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-98 AddIsEqualToIdentityMorphism[101X
+  
+  [33X[1;0Y[29X[2XAddIsEqualToIdentityMorphism[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsEqualToIdentityMorphism[110X.       [23XF:       (       arg2       )       \mapsto
+  \mathtt{IsEqualToIdentityMorphism}(arg2)[123X.[133X
+  
+  [1X7.7-99 AddIsEqualToZeroMorphism[101X
+  
+  [33X[1;0Y[29X[2XAddIsEqualToZeroMorphism[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsEqualToZeroMorphism[110X.        [23XF:        (        arg2        )       \mapsto
+  \mathtt{IsEqualToZeroMorphism}(arg2)[123X.[133X
+  
+  [1X7.7-100 AddIsHomSetInhabited[101X
+  
+  [33X[1;0Y[29X[2XAddIsHomSetInhabited[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XIsHomSetInhabited[110X.
+  [23XF: ( arg2, arg3 ) \mapsto \mathtt{IsHomSetInhabited}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-101 AddIsIdempotent[101X
+  
+  [33X[1;0Y[29X[2XAddIsIdempotent[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XIsIdempotent[110X. [23XF: (
+  arg2 ) \mapsto \mathtt{IsIdempotent}(arg2)[123X.[133X
+  
+  [1X7.7-102 AddIsInitial[101X
+  
+  [33X[1;0Y[29X[2XAddIsInitial[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function  [23XF[123X  to  the category for the basic operation [10XIsInitial[110X. [23XF: (
+  arg2 ) \mapsto \mathtt{IsInitial}(arg2)[123X.[133X
+  
+  [1X7.7-103 AddIsInjective[101X
+  
+  [33X[1;0Y[29X[2XAddIsInjective[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function  [23XF[123X to the category for the basic operation [10XIsInjective[110X. [23XF: (
+  arg2 ) \mapsto \mathtt{IsInjective}(arg2)[123X.[133X
+  
+  [1X7.7-104 AddIsIsomorphism[101X
+  
+  [33X[1;0Y[29X[2XAddIsIsomorphism[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XIsIsomorphism[110X. [23XF: (
+  arg2 ) \mapsto \mathtt{IsIsomorphism}(arg2)[123X.[133X
+  
+  [1X7.7-105 AddIsLiftable[101X
+  
+  [33X[1;0Y[29X[2XAddIsLiftable[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function  [23XF[123X  to the category for the basic operation [10XIsLiftable[110X. [23XF: (
+  arg2, arg3 ) \mapsto \mathtt{IsLiftable}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-106 AddIsLiftableAlongMonomorphism[101X
+  
+  [33X[1;0Y[29X[2XAddIsLiftableAlongMonomorphism[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsLiftableAlongMonomorphism[110X.     [23XF:     (     arg2,     arg3    )    \mapsto
+  \mathtt{IsLiftableAlongMonomorphism}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-107 AddIsMonomorphism[101X
+  
+  [33X[1;0Y[29X[2XAddIsMonomorphism[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XIsMonomorphism[110X. [23XF:
+  ( arg2 ) \mapsto \mathtt{IsMonomorphism}(arg2)[123X.[133X
+  
+  [1X7.7-108 AddIsOne[101X
+  
+  [33X[1;0Y[29X[2XAddIsOne[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XIsOne[110X. [23XF: ( arg2 )
+  \mapsto \mathtt{IsOne}(arg2)[123X.[133X
+  
+  [1X7.7-109 AddIsProjective[101X
+  
+  [33X[1;0Y[29X[2XAddIsProjective[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XIsProjective[110X. [23XF: (
+  arg2 ) \mapsto \mathtt{IsProjective}(arg2)[123X.[133X
+  
+  [1X7.7-110 AddIsSplitEpimorphism[101X
+  
+  [33X[1;0Y[29X[2XAddIsSplitEpimorphism[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XIsSplitEpimorphism[110X.
+  [23XF: ( arg2 ) \mapsto \mathtt{IsSplitEpimorphism}(arg2)[123X.[133X
+  
+  [1X7.7-111 AddIsSplitMonomorphism[101X
+  
+  [33X[1;0Y[29X[2XAddIsSplitMonomorphism[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsSplitMonomorphism[110X. [23XF: ( arg2 ) \mapsto \mathtt{IsSplitMonomorphism}(arg2)[123X.[133X
+  
+  [1X7.7-112 AddIsTerminal[101X
+  
+  [33X[1;0Y[29X[2XAddIsTerminal[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function  [23XF[123X  to the category for the basic operation [10XIsTerminal[110X. [23XF: (
+  arg2 ) \mapsto \mathtt{IsTerminal}(arg2)[123X.[133X
+  
+  [1X7.7-113 AddIsWellDefinedForMorphisms[101X
+  
+  [33X[1;0Y[29X[2XAddIsWellDefinedForMorphisms[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsWellDefinedForMorphisms[110X.       [23XF:       (       arg2       )       \mapsto
+  \mathtt{IsWellDefinedForMorphisms}(arg2)[123X.[133X
+  
+  [1X7.7-114 AddIsWellDefinedForObjects[101X
+  
+  [33X[1;0Y[29X[2XAddIsWellDefinedForObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsWellDefinedForObjects[110X.        [23XF:        (       arg2       )       \mapsto
+  \mathtt{IsWellDefinedForObjects}(arg2)[123X.[133X
+  
+  [1X7.7-115 AddIsWellDefinedForTwoCells[101X
+  
+  [33X[1;0Y[29X[2XAddIsWellDefinedForTwoCells[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsWellDefinedForTwoCells[110X.        [23XF:       (       arg2       )       \mapsto
+  \mathtt{IsWellDefinedForTwoCells}(arg2)[123X.[133X
+  
+  [1X7.7-116 AddIsZeroForMorphisms[101X
+  
+  [33X[1;0Y[29X[2XAddIsZeroForMorphisms[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XIsZeroForMorphisms[110X.
+  [23XF: ( arg2 ) \mapsto \mathtt{IsZeroForMorphisms}(arg2)[123X.[133X
+  
+  [1X7.7-117 AddIsZeroForObjects[101X
+  
+  [33X[1;0Y[29X[2XAddIsZeroForObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function  [23XF[123X to the category for the basic operation [10XIsZeroForObjects[110X.
+  [23XF: ( arg2 ) \mapsto \mathtt{IsZeroForObjects}(arg2)[123X.[133X
+  
+  [1X7.7-118 AddIsomorphismFromCoequalizerOfCoproductDiagramToPushout[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromCoequalizerOfCoproductDiagramToPushout[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromCoequalizerOfCoproductDiagramToPushout[110X.  [23XF:  (  D  )  \mapsto
+  \mathtt{IsomorphismFromCoequalizerOfCoproductDiagramToPushout}(D)[123X.[133X
+  
+  [1X7.7-119 AddIsomorphismFromCoimageToCokernelOfKernel[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromCoimageToCokernelOfKernel[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromCoimageToCokernelOfKernel[110X.    [23XF:    (    alpha    )   \mapsto
+  \mathtt{IsomorphismFromCoimageToCokernelOfKernel}(alpha)[123X.[133X
+  
+  [1X7.7-120 AddIsomorphismFromCokernelOfDiagonalDifferenceToPushout[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromCokernelOfDiagonalDifferenceToPushout[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromCokernelOfDiagonalDifferenceToPushout[110X.   [23XF:  (  D  )  \mapsto
+  \mathtt{IsomorphismFromCokernelOfDiagonalDifferenceToPushout}(D)[123X.[133X
+  
+  [1X7.7-121 AddIsomorphismFromCokernelOfKernelToCoimage[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromCokernelOfKernelToCoimage[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromCokernelOfKernelToCoimage[110X.    [23XF:    (    alpha    )   \mapsto
+  \mathtt{IsomorphismFromCokernelOfKernelToCoimage}(alpha)[123X.[133X
+  
+  [1X7.7-122 AddIsomorphismFromCoproductToDirectSum[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromCoproductToDirectSum[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromCoproductToDirectSum[110X.      [23XF:      (      D     )     \mapsto
+  \mathtt{IsomorphismFromCoproductToDirectSum}(D)[123X.[133X
+  
+  [1X7.7-123 AddIsomorphismFromDirectProductToDirectSum[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromDirectProductToDirectSum[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromDirectProductToDirectSum[110X.     [23XF:     (     D     )    \mapsto
+  \mathtt{IsomorphismFromDirectProductToDirectSum}(D)[123X.[133X
+  
+  [1X7.7-124 AddIsomorphismFromDirectSumToCoproduct[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromDirectSumToCoproduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromDirectSumToCoproduct[110X.      [23XF:      (      D     )     \mapsto
+  \mathtt{IsomorphismFromDirectSumToCoproduct}(D)[123X.[133X
+  
+  [1X7.7-125 AddIsomorphismFromDirectSumToDirectProduct[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromDirectSumToDirectProduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromDirectSumToDirectProduct[110X.     [23XF:     (     D     )    \mapsto
+  \mathtt{IsomorphismFromDirectSumToDirectProduct}(D)[123X.[133X
+  
+  [1X7.7-126 AddIsomorphismFromEqualizerOfDirectProductDiagramToFiberProduct[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromEqualizerOfDirectProductDiagramToFiberProduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromEqualizerOfDirectProductDiagramToFiberProduct[110X.   [23XF:   (  D  )
+  \mapsto
+  \mathtt{IsomorphismFromEqualizerOfDirectProductDiagramToFiberProduct}(D)[123X.[133X
+  
+  [1X7.7-127 AddIsomorphismFromFiberProductToEqualizerOfDirectProductDiagram[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromFiberProductToEqualizerOfDirectProductDiagram[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromFiberProductToEqualizerOfDirectProductDiagram[110X.   [23XF:   (  D  )
+  \mapsto
+  \mathtt{IsomorphismFromFiberProductToEqualizerOfDirectProductDiagram}(D)[123X.[133X
+  
+  [1X7.7-128 AddIsomorphismFromFiberProductToKernelOfDiagonalDifference[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromFiberProductToKernelOfDiagonalDifference[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromFiberProductToKernelOfDiagonalDifference[110X.  [23XF:  (  D ) \mapsto
+  \mathtt{IsomorphismFromFiberProductToKernelOfDiagonalDifference}(D)[123X.[133X
+  
+  [1X7.7-129 AddIsomorphismFromHomologyObjectToItsConstructionAsAnImageObject[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromHomologyObjectToItsConstructionAsAnImageObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromHomologyObjectToItsConstructionAsAnImageObject[110X.  [23XF:  ( alpha,
+  beta                                )                                \mapsto
+  \mathtt{IsomorphismFromHomologyObjectToItsConstructionAsAnImageObject}(alpha,
+  beta)[123X.[133X
+  
+  [1X7.7-130 AddIsomorphismFromImageObjectToKernelOfCokernel[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromImageObjectToKernelOfCokernel[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromImageObjectToKernelOfCokernel[110X.   [23XF:   (   alpha   )   \mapsto
+  \mathtt{IsomorphismFromImageObjectToKernelOfCokernel}(alpha)[123X.[133X
+  
+  [1X7.7-131 AddIsomorphismFromInitialObjectToZeroObject[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromInitialObjectToZeroObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromInitialObjectToZeroObject[110X.      [23XF:      (      )      \mapsto
+  \mathtt{IsomorphismFromInitialObjectToZeroObject}()[123X.[133X
+  
+  [1X7.7-132 AddIsomorphismFromItsConstructionAsAnImageObjectToHomologyObject[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromItsConstructionAsAnImageObjectToHomologyObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromItsConstructionAsAnImageObjectToHomologyObject[110X.  [23XF:  ( alpha,
+  beta                                )                                \mapsto
+  \mathtt{IsomorphismFromItsConstructionAsAnImageObjectToHomologyObject}(alpha,
+  beta)[123X.[133X
+  
+  [1X7.7-133 AddIsomorphismFromKernelOfCokernelToImageObject[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromKernelOfCokernelToImageObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromKernelOfCokernelToImageObject[110X.   [23XF:   (   alpha   )   \mapsto
+  \mathtt{IsomorphismFromKernelOfCokernelToImageObject}(alpha)[123X.[133X
+  
+  [1X7.7-134 AddIsomorphismFromKernelOfDiagonalDifferenceToFiberProduct[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromKernelOfDiagonalDifferenceToFiberProduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromKernelOfDiagonalDifferenceToFiberProduct[110X.  [23XF:  (  D ) \mapsto
+  \mathtt{IsomorphismFromKernelOfDiagonalDifferenceToFiberProduct}(D)[123X.[133X
+  
+  [1X7.7-135 AddIsomorphismFromPushoutToCoequalizerOfCoproductDiagram[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromPushoutToCoequalizerOfCoproductDiagram[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromPushoutToCoequalizerOfCoproductDiagram[110X.  [23XF:  (  D  )  \mapsto
+  \mathtt{IsomorphismFromPushoutToCoequalizerOfCoproductDiagram}(D)[123X.[133X
+  
+  [1X7.7-136 AddIsomorphismFromPushoutToCokernelOfDiagonalDifference[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromPushoutToCokernelOfDiagonalDifference[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromPushoutToCokernelOfDiagonalDifference[110X.   [23XF:  (  D  )  \mapsto
+  \mathtt{IsomorphismFromPushoutToCokernelOfDiagonalDifference}(D)[123X.[133X
+  
+  [1X7.7-137 AddIsomorphismFromTerminalObjectToZeroObject[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromTerminalObjectToZeroObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromTerminalObjectToZeroObject[110X.      [23XF:      (      )     \mapsto
+  \mathtt{IsomorphismFromTerminalObjectToZeroObject}()[123X.[133X
+  
+  [1X7.7-138 AddIsomorphismFromZeroObjectToInitialObject[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromZeroObjectToInitialObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromZeroObjectToInitialObject[110X.      [23XF:      (      )      \mapsto
+  \mathtt{IsomorphismFromZeroObjectToInitialObject}()[123X.[133X
+  
+  [1X7.7-139 AddIsomorphismFromZeroObjectToTerminalObject[101X
+  
+  [33X[1;0Y[29X[2XAddIsomorphismFromZeroObjectToTerminalObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XIsomorphismFromZeroObjectToTerminalObject[110X.      [23XF:      (      )     \mapsto
+  \mathtt{IsomorphismFromZeroObjectToTerminalObject}()[123X.[133X
+  
+  [1X7.7-140 AddKernelEmbedding[101X
+  
+  [33X[1;0Y[29X[2XAddKernelEmbedding[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XKernelEmbedding[110X. [23XF:
+  ( alpha ) \mapsto \mathtt{KernelEmbedding}(alpha)[123X.[133X
+  
+  [1X7.7-141 AddKernelEmbeddingWithGivenKernelObject[101X
+  
+  [33X[1;0Y[29X[2XAddKernelEmbeddingWithGivenKernelObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XKernelEmbeddingWithGivenKernelObject[110X.    [23XF:    (    alpha,   P   )   \mapsto
+  \mathtt{KernelEmbeddingWithGivenKernelObject}(alpha, P)[123X.[133X
+  
+  [1X7.7-142 AddKernelLift[101X
+  
+  [33X[1;0Y[29X[2XAddKernelLift[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function  [23XF[123X  to the category for the basic operation [10XKernelLift[110X. [23XF: (
+  alpha, T, tau ) \mapsto \mathtt{KernelLift}(alpha, T, tau)[123X.[133X
+  
+  [1X7.7-143 AddKernelLiftWithGivenKernelObject[101X
+  
+  [33X[1;0Y[29X[2XAddKernelLiftWithGivenKernelObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XKernelLiftWithGivenKernelObject[110X.   [23XF:   (   alpha,   T,  tau,  P  )  \mapsto
+  \mathtt{KernelLiftWithGivenKernelObject}(alpha, T, tau, P)[123X.[133X
+  
+  [1X7.7-144 AddKernelObject[101X
+  
+  [33X[1;0Y[29X[2XAddKernelObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XKernelObject[110X. [23XF: (
+  arg2 ) \mapsto \mathtt{KernelObject}(arg2)[123X.[133X
+  
+  [1X7.7-145 AddKernelObjectFunctorial[101X
+  
+  [33X[1;0Y[29X[2XAddKernelObjectFunctorial[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XKernelObjectFunctorial[110X.    [23XF:    (    alpha,    mu,    alphap    )   \mapsto
+  \mathtt{KernelObjectFunctorial}(alpha, mu, alphap)[123X.[133X
+  
+  [1X7.7-146 AddKernelObjectFunctorialWithGivenKernelObjects[101X
+  
+  [33X[1;0Y[29X[2XAddKernelObjectFunctorialWithGivenKernelObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XKernelObjectFunctorialWithGivenKernelObjects[110X.  [23XF: ( P, alpha, mu, alphap, Pp
+  )  \mapsto  \mathtt{KernelObjectFunctorialWithGivenKernelObjects}(P,  alpha,
+  mu, alphap, Pp)[123X.[133X
+  
+  [1X7.7-147 AddLift[101X
+  
+  [33X[1;0Y[29X[2XAddLift[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function  [23XF[123X to the category for the basic operation [10XLift[110X. [23XF: ( alpha,
+  beta ) \mapsto \mathtt{Lift}(alpha, beta)[123X.[133X
+  
+  [1X7.7-148 AddLiftAlongMonomorphism[101X
+  
+  [33X[1;0Y[29X[2XAddLiftAlongMonomorphism[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XLiftAlongMonomorphism[110X.      [23XF:      (      iota,      tau      )     \mapsto
+  \mathtt{LiftAlongMonomorphism}(iota, tau)[123X.[133X
+  
+  [1X7.7-149 AddLiftOrFail[101X
+  
+  [33X[1;0Y[29X[2XAddLiftOrFail[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function  [23XF[123X  to the category for the basic operation [10XLiftOrFail[110X. [23XF: (
+  alpha, beta ) \mapsto \mathtt{LiftOrFail}(alpha, beta)[123X.[133X
+  
+  [1X7.7-150 AddMereExistenceOfSolutionOfLinearSystemInAbCategory[101X
+  
+  [33X[1;0Y[29X[2XAddMereExistenceOfSolutionOfLinearSystemInAbCategory[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMereExistenceOfSolutionOfLinearSystemInAbCategory[110X.  [23XF:  ( arg2, arg3, arg4 )
+  \mapsto     \mathtt{MereExistenceOfSolutionOfLinearSystemInAbCategory}(arg2,
+  arg3, arg4)[123X.[133X
+  
+  [1X7.7-151 AddMonomorphismIntoSomeInjectiveObject[101X
+  
+  [33X[1;0Y[29X[2XAddMonomorphismIntoSomeInjectiveObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMonomorphismIntoSomeInjectiveObject[110X.      [23XF:      (      A     )     \mapsto
+  \mathtt{MonomorphismIntoSomeInjectiveObject}(A)[123X.[133X
+  
+  [1X7.7-152 AddMonomorphismIntoSomeInjectiveObjectWithGivenSomeInjectiveObject[101X
+  
+  [33X[1;0Y[29X[2XAddMonomorphismIntoSomeInjectiveObjectWithGivenSomeInjectiveObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMonomorphismIntoSomeInjectiveObjectWithGivenSomeInjectiveObject[110X. [23XF: ( A, I )
+  \mapsto
+  \mathtt{MonomorphismIntoSomeInjectiveObjectWithGivenSomeInjectiveObject}(A,
+  I)[123X.[133X
+  
+  [1X7.7-153 AddMorphismBetweenDirectSums[101X
+  
+  [33X[1;0Y[29X[2XAddMorphismBetweenDirectSums[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMorphismBetweenDirectSums[110X. [23XF: ( source_diagram, mat, range_diagram ) \mapsto
+  \mathtt{MorphismBetweenDirectSums}(source_diagram, mat, range_diagram)[123X.[133X
+  
+  [1X7.7-154 AddMorphismBetweenDirectSumsWithGivenDirectSums[101X
+  
+  [33X[1;0Y[29X[2XAddMorphismBetweenDirectSumsWithGivenDirectSums[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMorphismBetweenDirectSumsWithGivenDirectSums[110X.  [23XF:  ( S, source_diagram, mat,
+  range_diagram,                  T                  )                 \mapsto
+  \mathtt{MorphismBetweenDirectSumsWithGivenDirectSums}(S,     source_diagram,
+  mat, range_diagram, T)[123X.[133X
+  
+  [1X7.7-155 AddMorphismConstructor[101X
+  
+  [33X[1;0Y[29X[2XAddMorphismConstructor[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMorphismConstructor[110X.     [23XF:     (     arg2,    arg3,    arg4    )    \mapsto
+  \mathtt{MorphismConstructor}(arg2, arg3, arg4)[123X.[133X
+  
+  [1X7.7-156 AddMorphismDatum[101X
+  
+  [33X[1;0Y[29X[2XAddMorphismDatum[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XMorphismDatum[110X. [23XF: (
+  arg2 ) \mapsto \mathtt{MorphismDatum}(arg2)[123X.[133X
+  
+  [1X7.7-157 AddMorphismFromCoimageToImageWithGivenObjects[101X
+  
+  [33X[1;0Y[29X[2XAddMorphismFromCoimageToImageWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMorphismFromCoimageToImageWithGivenObjects[110X.  [23XF:  (  C,  alpha,  I  ) \mapsto
+  \mathtt{MorphismFromCoimageToImageWithGivenObjects}(C, alpha, I)[123X.[133X
+  
+  [1X7.7-158 AddMorphismFromEqualizerToSink[101X
+  
+  [33X[1;0Y[29X[2XAddMorphismFromEqualizerToSink[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMorphismFromEqualizerToSink[110X.      [23XF:      (      morphisms     )     \mapsto
+  \mathtt{MorphismFromEqualizerToSink}(morphisms)[123X.[133X
+  
+  [1X7.7-159 AddMorphismFromEqualizerToSinkWithGivenEqualizer[101X
+  
+  [33X[1;0Y[29X[2XAddMorphismFromEqualizerToSinkWithGivenEqualizer[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMorphismFromEqualizerToSinkWithGivenEqualizer[110X.  [23XF:  ( morphisms, P ) \mapsto
+  \mathtt{MorphismFromEqualizerToSinkWithGivenEqualizer}(morphisms, P)[123X.[133X
+  
+  [1X7.7-160 AddMorphismFromFiberProductToSink[101X
+  
+  [33X[1;0Y[29X[2XAddMorphismFromFiberProductToSink[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMorphismFromFiberProductToSink[110X.     [23XF:     (     morphisms     )     \mapsto
+  \mathtt{MorphismFromFiberProductToSink}(morphisms)[123X.[133X
+  
+  [1X7.7-161 AddMorphismFromFiberProductToSinkWithGivenFiberProduct[101X
+  
+  [33X[1;0Y[29X[2XAddMorphismFromFiberProductToSinkWithGivenFiberProduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMorphismFromFiberProductToSinkWithGivenFiberProduct[110X.  [23XF:  (  morphisms,  P )
+  \mapsto
+  \mathtt{MorphismFromFiberProductToSinkWithGivenFiberProduct}(morphisms, P)[123X.[133X
+  
+  [1X7.7-162 AddMorphismFromKernelObjectToSink[101X
+  
+  [33X[1;0Y[29X[2XAddMorphismFromKernelObjectToSink[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMorphismFromKernelObjectToSink[110X.      [23XF:      (      alpha      )     \mapsto
+  \mathtt{MorphismFromKernelObjectToSink}(alpha)[123X.[133X
+  
+  [1X7.7-163 AddMorphismFromKernelObjectToSinkWithGivenKernelObject[101X
+  
+  [33X[1;0Y[29X[2XAddMorphismFromKernelObjectToSinkWithGivenKernelObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMorphismFromKernelObjectToSinkWithGivenKernelObject[110X. [23XF: ( alpha, P ) \mapsto
+  \mathtt{MorphismFromKernelObjectToSinkWithGivenKernelObject}(alpha, P)[123X.[133X
+  
+  [1X7.7-164 AddMorphismFromSourceToCoequalizer[101X
+  
+  [33X[1;0Y[29X[2XAddMorphismFromSourceToCoequalizer[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMorphismFromSourceToCoequalizer[110X.     [23XF:     (     morphisms     )    \mapsto
+  \mathtt{MorphismFromSourceToCoequalizer}(morphisms)[123X.[133X
+  
+  [1X7.7-165 AddMorphismFromSourceToCoequalizerWithGivenCoequalizer[101X
+  
+  [33X[1;0Y[29X[2XAddMorphismFromSourceToCoequalizerWithGivenCoequalizer[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMorphismFromSourceToCoequalizerWithGivenCoequalizer[110X.  [23XF:  (  morphisms,  P )
+  \mapsto
+  \mathtt{MorphismFromSourceToCoequalizerWithGivenCoequalizer}(morphisms, P)[123X.[133X
+  
+  [1X7.7-166 AddMorphismFromSourceToCokernelObject[101X
+  
+  [33X[1;0Y[29X[2XAddMorphismFromSourceToCokernelObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMorphismFromSourceToCokernelObject[110X.     [23XF:     (     alpha     )     \mapsto
+  \mathtt{MorphismFromSourceToCokernelObject}(alpha)[123X.[133X
+  
+  [1X7.7-167 AddMorphismFromSourceToCokernelObjectWithGivenCokernelObject[101X
+  
+  [33X[1;0Y[29X[2XAddMorphismFromSourceToCokernelObjectWithGivenCokernelObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMorphismFromSourceToCokernelObjectWithGivenCokernelObject[110X.  [23XF:  ( alpha, P )
+  \mapsto
+  \mathtt{MorphismFromSourceToCokernelObjectWithGivenCokernelObject}(alpha,
+  P)[123X.[133X
+  
+  [1X7.7-168 AddMorphismFromSourceToPushout[101X
+  
+  [33X[1;0Y[29X[2XAddMorphismFromSourceToPushout[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMorphismFromSourceToPushout[110X.      [23XF:      (      morphisms     )     \mapsto
+  \mathtt{MorphismFromSourceToPushout}(morphisms)[123X.[133X
+  
+  [1X7.7-169 AddMorphismFromSourceToPushoutWithGivenPushout[101X
+  
+  [33X[1;0Y[29X[2XAddMorphismFromSourceToPushoutWithGivenPushout[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMorphismFromSourceToPushoutWithGivenPushout[110X.  [23XF:  (  morphisms,  P ) \mapsto
+  \mathtt{MorphismFromSourceToPushoutWithGivenPushout}(morphisms, P)[123X.[133X
+  
+  [1X7.7-170 AddMultiplyWithElementOfCommutativeRingForMorphisms[101X
+  
+  [33X[1;0Y[29X[2XAddMultiplyWithElementOfCommutativeRingForMorphisms[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XMultiplyWithElementOfCommutativeRingForMorphisms[110X.   [23XF:  (  r,  a  )  \mapsto
+  \mathtt{MultiplyWithElementOfCommutativeRingForMorphisms}(r, a)[123X.[133X
+  
+  [1X7.7-171 AddObjectConstructor[101X
+  
+  [33X[1;0Y[29X[2XAddObjectConstructor[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XObjectConstructor[110X.
+  [23XF: ( arg2 ) \mapsto \mathtt{ObjectConstructor}(arg2)[123X.[133X
+  
+  [1X7.7-172 AddObjectDatum[101X
+  
+  [33X[1;0Y[29X[2XAddObjectDatum[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function  [23XF[123X to the category for the basic operation [10XObjectDatum[110X. [23XF: (
+  arg2 ) \mapsto \mathtt{ObjectDatum}(arg2)[123X.[133X
+  
+  [1X7.7-173 AddPostCompose[101X
+  
+  [33X[1;0Y[29X[2XAddPostCompose[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function  [23XF[123X to the category for the basic operation [10XPostCompose[110X. [23XF: (
+  beta, alpha ) \mapsto \mathtt{PostCompose}(beta, alpha)[123X.[133X
+  
+  [1X7.7-174 AddPostComposeList[101X
+  
+  [33X[1;0Y[29X[2XAddPostComposeList[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XPostComposeList[110X. [23XF:
+  ( list_of_morphisms ) \mapsto \mathtt{PostComposeList}(list_of_morphisms)[123X.[133X
+  
+  [1X7.7-175 AddPreCompose[101X
+  
+  [33X[1;0Y[29X[2XAddPreCompose[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function  [23XF[123X  to the category for the basic operation [10XPreCompose[110X. [23XF: (
+  alpha, beta ) \mapsto \mathtt{PreCompose}(alpha, beta)[123X.[133X
+  
+  [1X7.7-176 AddPreComposeList[101X
+  
+  [33X[1;0Y[29X[2XAddPreComposeList[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XPreComposeList[110X. [23XF:
+  ( list_of_morphisms ) \mapsto \mathtt{PreComposeList}(list_of_morphisms)[123X.[133X
+  
+  [1X7.7-177 AddProjectionInFactorOfDirectProduct[101X
+  
+  [33X[1;0Y[29X[2XAddProjectionInFactorOfDirectProduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XProjectionInFactorOfDirectProduct[110X.    [23XF:    (    objects,    k   )   \mapsto
+  \mathtt{ProjectionInFactorOfDirectProduct}(objects, k)[123X.[133X
+  
+  [1X7.7-178 AddProjectionInFactorOfDirectProductWithGivenDirectProduct[101X
+  
+  [33X[1;0Y[29X[2XAddProjectionInFactorOfDirectProductWithGivenDirectProduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XProjectionInFactorOfDirectProductWithGivenDirectProduct[110X.  [23XF: ( objects, k, P
+  )                                                                    \mapsto
+  \mathtt{ProjectionInFactorOfDirectProductWithGivenDirectProduct}(objects, k,
+  P)[123X.[133X
+  
+  [1X7.7-179 AddProjectionInFactorOfDirectSum[101X
+  
+  [33X[1;0Y[29X[2XAddProjectionInFactorOfDirectSum[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XProjectionInFactorOfDirectSum[110X.     [23XF:     (    objects,    k    )    \mapsto
+  \mathtt{ProjectionInFactorOfDirectSum}(objects, k)[123X.[133X
+  
+  [1X7.7-180 AddProjectionInFactorOfDirectSumWithGivenDirectSum[101X
+  
+  [33X[1;0Y[29X[2XAddProjectionInFactorOfDirectSumWithGivenDirectSum[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XProjectionInFactorOfDirectSumWithGivenDirectSum[110X.   [23XF:  (  objects,  k,  P  )
+  \mapsto \mathtt{ProjectionInFactorOfDirectSumWithGivenDirectSum}(objects, k,
+  P)[123X.[133X
+  
+  [1X7.7-181 AddProjectionInFactorOfFiberProduct[101X
+  
+  [33X[1;0Y[29X[2XAddProjectionInFactorOfFiberProduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XProjectionInFactorOfFiberProduct[110X.    [23XF:    (    morphisms,   k   )   \mapsto
+  \mathtt{ProjectionInFactorOfFiberProduct}(morphisms, k)[123X.[133X
+  
+  [1X7.7-182 AddProjectionInFactorOfFiberProductWithGivenFiberProduct[101X
+  
+  [33X[1;0Y[29X[2XAddProjectionInFactorOfFiberProductWithGivenFiberProduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XProjectionInFactorOfFiberProductWithGivenFiberProduct[110X.  [23XF: ( morphisms, k, P
+  )                                                                    \mapsto
+  \mathtt{ProjectionInFactorOfFiberProductWithGivenFiberProduct}(morphisms, k,
+  P)[123X.[133X
+  
+  [1X7.7-183 AddProjectionOntoCoequalizer[101X
+  
+  [33X[1;0Y[29X[2XAddProjectionOntoCoequalizer[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XProjectionOntoCoequalizer[110X.      [23XF:      (      morphisms      )      \mapsto
+  \mathtt{ProjectionOntoCoequalizer}(morphisms)[123X.[133X
+  
+  [1X7.7-184 AddProjectionOntoCoequalizerWithGivenCoequalizer[101X
+  
+  [33X[1;0Y[29X[2XAddProjectionOntoCoequalizerWithGivenCoequalizer[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XProjectionOntoCoequalizerWithGivenCoequalizer[110X.  [23XF:  ( morphisms, P ) \mapsto
+  \mathtt{ProjectionOntoCoequalizerWithGivenCoequalizer}(morphisms, P)[123X.[133X
+  
+  [1X7.7-185 AddProjectiveDimension[101X
+  
+  [33X[1;0Y[29X[2XAddProjectiveDimension[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XProjectiveDimension[110X. [23XF: ( arg2 ) \mapsto \mathtt{ProjectiveDimension}(arg2)[123X.[133X
+  
+  [1X7.7-186 AddProjectiveLift[101X
+  
+  [33X[1;0Y[29X[2XAddProjectiveLift[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XProjectiveLift[110X. [23XF:
+  ( alpha, beta ) \mapsto \mathtt{ProjectiveLift}(alpha, beta)[123X.[133X
+  
+  [1X7.7-187 AddPushout[101X
+  
+  [33X[1;0Y[29X[2XAddPushout[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XPushout[110X. [23XF: ( arg2
+  ) \mapsto \mathtt{Pushout}(arg2)[123X.[133X
+  
+  [1X7.7-188 AddPushoutFunctorial[101X
+  
+  [33X[1;0Y[29X[2XAddPushoutFunctorial[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XPushoutFunctorial[110X.
+  [23XF:        (       morphisms,       L,       morphismsp       )       \mapsto
+  \mathtt{PushoutFunctorial}(morphisms, L, morphismsp)[123X.[133X
+  
+  [1X7.7-189 AddPushoutFunctorialWithGivenPushouts[101X
+  
+  [33X[1;0Y[29X[2XAddPushoutFunctorialWithGivenPushouts[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XPushoutFunctorialWithGivenPushouts[110X.  [23XF:  ( P, morphisms, L, morphismsp, Pp )
+  \mapsto    \mathtt{PushoutFunctorialWithGivenPushouts}(P,    morphisms,   L,
+  morphismsp, Pp)[123X.[133X
+  
+  [1X7.7-190 AddRandomMorphismByInteger[101X
+  
+  [33X[1;0Y[29X[2XAddRandomMorphismByInteger[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XRandomMorphismByInteger[110X.        [23XF:        (        n        )        \mapsto
+  \mathtt{RandomMorphismByInteger}(n)[123X.[133X
+  
+  [1X7.7-191 AddRandomMorphismByList[101X
+  
+  [33X[1;0Y[29X[2XAddRandomMorphismByList[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XRandomMorphismByList[110X. [23XF: ( L ) \mapsto \mathtt{RandomMorphismByList}(L)[123X.[133X
+  
+  [1X7.7-192 AddRandomMorphismWithFixedRangeByInteger[101X
+  
+  [33X[1;0Y[29X[2XAddRandomMorphismWithFixedRangeByInteger[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XRandomMorphismWithFixedRangeByInteger[110X.    [23XF:    (    B,    n    )    \mapsto
+  \mathtt{RandomMorphismWithFixedRangeByInteger}(B, n)[123X.[133X
+  
+  [1X7.7-193 AddRandomMorphismWithFixedRangeByList[101X
+  
+  [33X[1;0Y[29X[2XAddRandomMorphismWithFixedRangeByList[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XRandomMorphismWithFixedRangeByList[110X.     [23XF:     (     B,    L    )    \mapsto
+  \mathtt{RandomMorphismWithFixedRangeByList}(B, L)[123X.[133X
+  
+  [1X7.7-194 AddRandomMorphismWithFixedSourceAndRangeByInteger[101X
+  
+  [33X[1;0Y[29X[2XAddRandomMorphismWithFixedSourceAndRangeByInteger[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XRandomMorphismWithFixedSourceAndRangeByInteger[110X.  [23XF:  (  A,  B,  n  ) \mapsto
+  \mathtt{RandomMorphismWithFixedSourceAndRangeByInteger}(A, B, n)[123X.[133X
+  
+  [1X7.7-195 AddRandomMorphismWithFixedSourceAndRangeByList[101X
+  
+  [33X[1;0Y[29X[2XAddRandomMorphismWithFixedSourceAndRangeByList[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XRandomMorphismWithFixedSourceAndRangeByList[110X.   [23XF:   (  A,  B,  L  )  \mapsto
+  \mathtt{RandomMorphismWithFixedSourceAndRangeByList}(A, B, L)[123X.[133X
+  
+  [1X7.7-196 AddRandomMorphismWithFixedSourceByInteger[101X
+  
+  [33X[1;0Y[29X[2XAddRandomMorphismWithFixedSourceByInteger[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XRandomMorphismWithFixedSourceByInteger[110X.    [23XF:    (    A,    n    )   \mapsto
+  \mathtt{RandomMorphismWithFixedSourceByInteger}(A, n)[123X.[133X
+  
+  [1X7.7-197 AddRandomMorphismWithFixedSourceByList[101X
+  
+  [33X[1;0Y[29X[2XAddRandomMorphismWithFixedSourceByList[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XRandomMorphismWithFixedSourceByList[110X.     [23XF:     (    A,    L    )    \mapsto
+  \mathtt{RandomMorphismWithFixedSourceByList}(A, L)[123X.[133X
+  
+  [1X7.7-198 AddRandomObjectByInteger[101X
+  
+  [33X[1;0Y[29X[2XAddRandomObjectByInteger[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XRandomObjectByInteger[110X. [23XF: ( n ) \mapsto \mathtt{RandomObjectByInteger}(n)[123X.[133X
+  
+  [1X7.7-199 AddRandomObjectByList[101X
+  
+  [33X[1;0Y[29X[2XAddRandomObjectByList[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XRandomObjectByList[110X.
+  [23XF: ( L ) \mapsto \mathtt{RandomObjectByList}(L)[123X.[133X
+  
+  [1X7.7-200 AddSimplifyEndo[101X
+  
+  [33X[1;0Y[29X[2XAddSimplifyEndo[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XSimplifyEndo[110X. [23XF: (
+  mor, n ) \mapsto \mathtt{SimplifyEndo}(mor, n)[123X.[133X
+  
+  [1X7.7-201 AddSimplifyEndo_IsoFromInputObject[101X
+  
+  [33X[1;0Y[29X[2XAddSimplifyEndo_IsoFromInputObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSimplifyEndo_IsoFromInputObject[110X.     [23XF:     (     mor,     n    )    \mapsto
+  \mathtt{SimplifyEndo_IsoFromInputObject}(mor, n)[123X.[133X
+  
+  [1X7.7-202 AddSimplifyEndo_IsoToInputObject[101X
+  
+  [33X[1;0Y[29X[2XAddSimplifyEndo_IsoToInputObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSimplifyEndo_IsoToInputObject[110X.     [23XF:     (     mor,     n     )     \mapsto
+  \mathtt{SimplifyEndo_IsoToInputObject}(mor, n)[123X.[133X
+  
+  [1X7.7-203 AddSimplifyMorphism[101X
+  
+  [33X[1;0Y[29X[2XAddSimplifyMorphism[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function  [23XF[123X to the category for the basic operation [10XSimplifyMorphism[110X.
+  [23XF: ( mor, n ) \mapsto \mathtt{SimplifyMorphism}(mor, n)[123X.[133X
+  
+  [1X7.7-204 AddSimplifyObject[101X
+  
+  [33X[1;0Y[29X[2XAddSimplifyObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XSimplifyObject[110X. [23XF:
+  ( A, n ) \mapsto \mathtt{SimplifyObject}(A, n)[123X.[133X
+  
+  [1X7.7-205 AddSimplifyObject_IsoFromInputObject[101X
+  
+  [33X[1;0Y[29X[2XAddSimplifyObject_IsoFromInputObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSimplifyObject_IsoFromInputObject[110X.     [23XF:     (     A,     n    )    \mapsto
+  \mathtt{SimplifyObject_IsoFromInputObject}(A, n)[123X.[133X
+  
+  [1X7.7-206 AddSimplifyObject_IsoToInputObject[101X
+  
+  [33X[1;0Y[29X[2XAddSimplifyObject_IsoToInputObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSimplifyObject_IsoToInputObject[110X.     [23XF:     (     A,     n     )     \mapsto
+  \mathtt{SimplifyObject_IsoToInputObject}(A, n)[123X.[133X
+  
+  [1X7.7-207 AddSimplifyRange[101X
+  
+  [33X[1;0Y[29X[2XAddSimplifyRange[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XSimplifyRange[110X. [23XF: (
+  mor, n ) \mapsto \mathtt{SimplifyRange}(mor, n)[123X.[133X
+  
+  [1X7.7-208 AddSimplifyRange_IsoFromInputObject[101X
+  
+  [33X[1;0Y[29X[2XAddSimplifyRange_IsoFromInputObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSimplifyRange_IsoFromInputObject[110X.     [23XF:     (     mor,    n    )    \mapsto
+  \mathtt{SimplifyRange_IsoFromInputObject}(mor, n)[123X.[133X
+  
+  [1X7.7-209 AddSimplifyRange_IsoToInputObject[101X
+  
+  [33X[1;0Y[29X[2XAddSimplifyRange_IsoToInputObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSimplifyRange_IsoToInputObject[110X.     [23XF:     (     mor,     n     )    \mapsto
+  \mathtt{SimplifyRange_IsoToInputObject}(mor, n)[123X.[133X
+  
+  [1X7.7-210 AddSimplifySource[101X
+  
+  [33X[1;0Y[29X[2XAddSimplifySource[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XSimplifySource[110X. [23XF:
+  ( mor, n ) \mapsto \mathtt{SimplifySource}(mor, n)[123X.[133X
+  
+  [1X7.7-211 AddSimplifySourceAndRange[101X
+  
+  [33X[1;0Y[29X[2XAddSimplifySourceAndRange[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSimplifySourceAndRange[110X.       [23XF:      (      mor,      n      )      \mapsto
+  \mathtt{SimplifySourceAndRange}(mor, n)[123X.[133X
+  
+  [1X7.7-212 AddSimplifySourceAndRange_IsoFromInputRange[101X
+  
+  [33X[1;0Y[29X[2XAddSimplifySourceAndRange_IsoFromInputRange[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSimplifySourceAndRange_IsoFromInputRange[110X.    [23XF:   (   mor,   n   )   \mapsto
+  \mathtt{SimplifySourceAndRange_IsoFromInputRange}(mor, n)[123X.[133X
+  
+  [1X7.7-213 AddSimplifySourceAndRange_IsoFromInputSource[101X
+  
+  [33X[1;0Y[29X[2XAddSimplifySourceAndRange_IsoFromInputSource[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSimplifySourceAndRange_IsoFromInputSource[110X.   [23XF:   (   mor,   n   )   \mapsto
+  \mathtt{SimplifySourceAndRange_IsoFromInputSource}(mor, n)[123X.[133X
+  
+  [1X7.7-214 AddSimplifySourceAndRange_IsoToInputRange[101X
+  
+  [33X[1;0Y[29X[2XAddSimplifySourceAndRange_IsoToInputRange[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSimplifySourceAndRange_IsoToInputRange[110X.    [23XF:    (    mor,   n   )   \mapsto
+  \mathtt{SimplifySourceAndRange_IsoToInputRange}(mor, n)[123X.[133X
+  
+  [1X7.7-215 AddSimplifySourceAndRange_IsoToInputSource[101X
+  
+  [33X[1;0Y[29X[2XAddSimplifySourceAndRange_IsoToInputSource[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSimplifySourceAndRange_IsoToInputSource[110X.    [23XF:    (   mor,   n   )   \mapsto
+  \mathtt{SimplifySourceAndRange_IsoToInputSource}(mor, n)[123X.[133X
+  
+  [1X7.7-216 AddSimplifySource_IsoFromInputObject[101X
+  
+  [33X[1;0Y[29X[2XAddSimplifySource_IsoFromInputObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSimplifySource_IsoFromInputObject[110X.     [23XF:     (    mor,    n    )    \mapsto
+  \mathtt{SimplifySource_IsoFromInputObject}(mor, n)[123X.[133X
+  
+  [1X7.7-217 AddSimplifySource_IsoToInputObject[101X
+  
+  [33X[1;0Y[29X[2XAddSimplifySource_IsoToInputObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSimplifySource_IsoToInputObject[110X.     [23XF:     (     mor,     n    )    \mapsto
+  \mathtt{SimplifySource_IsoToInputObject}(mor, n)[123X.[133X
+  
+  [1X7.7-218 AddSolveLinearSystemInAbCategory[101X
+  
+  [33X[1;0Y[29X[2XAddSolveLinearSystemInAbCategory[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSolveLinearSystemInAbCategory[110X.   [23XF:   (   arg2,   arg3,   arg4   )   \mapsto
+  \mathtt{SolveLinearSystemInAbCategory}(arg2, arg3, arg4)[123X.[133X
+  
+  [1X7.7-219 AddSolveLinearSystemInAbCategoryOrFail[101X
+  
+  [33X[1;0Y[29X[2XAddSolveLinearSystemInAbCategoryOrFail[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSolveLinearSystemInAbCategoryOrFail[110X.   [23XF:  (  arg2,  arg3,  arg4  )  \mapsto
+  \mathtt{SolveLinearSystemInAbCategoryOrFail}(arg2, arg3, arg4)[123X.[133X
+  
+  [1X7.7-220 AddSomeInjectiveObject[101X
+  
+  [33X[1;0Y[29X[2XAddSomeInjectiveObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSomeInjectiveObject[110X. [23XF: ( arg2 ) \mapsto \mathtt{SomeInjectiveObject}(arg2)[123X.[133X
+  
+  [1X7.7-221 AddSomeProjectiveObject[101X
+  
+  [33X[1;0Y[29X[2XAddSomeProjectiveObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSomeProjectiveObject[110X.        [23XF:        (        arg2        )        \mapsto
+  \mathtt{SomeProjectiveObject}(arg2)[123X.[133X
+  
+  [1X7.7-222 AddSomeReductionBySplitEpiSummand[101X
+  
+  [33X[1;0Y[29X[2XAddSomeReductionBySplitEpiSummand[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSomeReductionBySplitEpiSummand[110X.      [23XF:      (      alpha      )     \mapsto
+  \mathtt{SomeReductionBySplitEpiSummand}(alpha)[123X.[133X
+  
+  [1X7.7-223 AddSomeReductionBySplitEpiSummand_MorphismFromInputRange[101X
+  
+  [33X[1;0Y[29X[2XAddSomeReductionBySplitEpiSummand_MorphismFromInputRange[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSomeReductionBySplitEpiSummand_MorphismFromInputRange[110X.  [23XF: ( alpha ) \mapsto
+  \mathtt{SomeReductionBySplitEpiSummand_MorphismFromInputRange}(alpha)[123X.[133X
+  
+  [1X7.7-224 AddSomeReductionBySplitEpiSummand_MorphismToInputRange[101X
+  
+  [33X[1;0Y[29X[2XAddSomeReductionBySplitEpiSummand_MorphismToInputRange[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSomeReductionBySplitEpiSummand_MorphismToInputRange[110X.  [23XF:  (  alpha ) \mapsto
+  \mathtt{SomeReductionBySplitEpiSummand_MorphismToInputRange}(alpha)[123X.[133X
+  
+  [1X7.7-225 AddSubtractionForMorphisms[101X
+  
+  [33X[1;0Y[29X[2XAddSubtractionForMorphisms[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XSubtractionForMorphisms[110X.       [23XF:       (      a,      b      )      \mapsto
+  \mathtt{SubtractionForMorphisms}(a, b)[123X.[133X
+  
+  [1X7.7-226 AddTerminalObject[101X
+  
+  [33X[1;0Y[29X[2XAddTerminalObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XTerminalObject[110X. [23XF:
+  ( ) \mapsto \mathtt{TerminalObject}()[123X.[133X
+  
+  [1X7.7-227 AddTerminalObjectFunctorial[101X
+  
+  [33X[1;0Y[29X[2XAddTerminalObjectFunctorial[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XTerminalObjectFunctorial[110X.          [23XF:          (          )          \mapsto
+  \mathtt{TerminalObjectFunctorial}()[123X.[133X
+  
+  [1X7.7-228 AddTerminalObjectFunctorialWithGivenTerminalObjects[101X
+  
+  [33X[1;0Y[29X[2XAddTerminalObjectFunctorialWithGivenTerminalObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XTerminalObjectFunctorialWithGivenTerminalObjects[110X.  [23XF:  (  P,  Pp  )  \mapsto
+  \mathtt{TerminalObjectFunctorialWithGivenTerminalObjects}(P, Pp)[123X.[133X
+  
+  [1X7.7-229 AddUniversalMorphismFromCoequalizer[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismFromCoequalizer[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismFromCoequalizer[110X.   [23XF:   (   morphisms,  T,  tau  )  \mapsto
+  \mathtt{UniversalMorphismFromCoequalizer}(morphisms, T, tau)[123X.[133X
+  
+  [1X7.7-230 AddUniversalMorphismFromCoequalizerWithGivenCoequalizer[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismFromCoequalizerWithGivenCoequalizer[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismFromCoequalizerWithGivenCoequalizer[110X.  [23XF:  (  morphisms,  T,
+  tau,                     P                     )                     \mapsto
+  \mathtt{UniversalMorphismFromCoequalizerWithGivenCoequalizer}(morphisms,  T,
+  tau, P)[123X.[133X
+  
+  [1X7.7-231 AddUniversalMorphismFromCoproduct[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismFromCoproduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismFromCoproduct[110X.   [23XF:   (   objects,   T,   tau   )   \mapsto
+  \mathtt{UniversalMorphismFromCoproduct}(objects, T, tau)[123X.[133X
+  
+  [1X7.7-232 AddUniversalMorphismFromCoproductWithGivenCoproduct[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismFromCoproductWithGivenCoproduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismFromCoproductWithGivenCoproduct[110X.  [23XF: ( objects, T, tau, P )
+  \mapsto   \mathtt{UniversalMorphismFromCoproductWithGivenCoproduct}(objects,
+  T, tau, P)[123X.[133X
+  
+  [1X7.7-233 AddUniversalMorphismFromDirectSum[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismFromDirectSum[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismFromDirectSum[110X.   [23XF:   (   objects,   T,   tau   )   \mapsto
+  \mathtt{UniversalMorphismFromDirectSum}(objects, T, tau)[123X.[133X
+  
+  [1X7.7-234 AddUniversalMorphismFromDirectSumWithGivenDirectSum[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismFromDirectSumWithGivenDirectSum[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismFromDirectSumWithGivenDirectSum[110X.  [23XF: ( objects, T, tau, P )
+  \mapsto   \mathtt{UniversalMorphismFromDirectSumWithGivenDirectSum}(objects,
+  T, tau, P)[123X.[133X
+  
+  [1X7.7-235 AddUniversalMorphismFromImage[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismFromImage[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismFromImage[110X.     [23XF:     (     alpha,     tau     )    \mapsto
+  \mathtt{UniversalMorphismFromImage}(alpha, tau)[123X.[133X
+  
+  [1X7.7-236 AddUniversalMorphismFromImageWithGivenImageObject[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismFromImageWithGivenImageObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismFromImageWithGivenImageObject[110X. [23XF: ( alpha, tau, I ) \mapsto
+  \mathtt{UniversalMorphismFromImageWithGivenImageObject}(alpha, tau, I)[123X.[133X
+  
+  [1X7.7-237 AddUniversalMorphismFromInitialObject[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismFromInitialObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismFromInitialObject[110X.      [23XF:      (      T      )     \mapsto
+  \mathtt{UniversalMorphismFromInitialObject}(T)[123X.[133X
+  
+  [1X7.7-238 AddUniversalMorphismFromInitialObjectWithGivenInitialObject[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismFromInitialObjectWithGivenInitialObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismFromInitialObjectWithGivenInitialObject[110X.   [23XF:   (  T,  P  )
+  \mapsto \mathtt{UniversalMorphismFromInitialObjectWithGivenInitialObject}(T,
+  P)[123X.[133X
+  
+  [1X7.7-239 AddUniversalMorphismFromPushout[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismFromPushout[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismFromPushout[110X.   [23XF:   (   morphisms,   T,   tau   )   \mapsto
+  \mathtt{UniversalMorphismFromPushout}(morphisms, T, tau)[123X.[133X
+  
+  [1X7.7-240 AddUniversalMorphismFromPushoutWithGivenPushout[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismFromPushoutWithGivenPushout[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismFromPushoutWithGivenPushout[110X.  [23XF:  (  morphisms, T, tau, P )
+  \mapsto  \mathtt{UniversalMorphismFromPushoutWithGivenPushout}(morphisms, T,
+  tau, P)[123X.[133X
+  
+  [1X7.7-241 AddUniversalMorphismFromZeroObject[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismFromZeroObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismFromZeroObject[110X.       [23XF:       (      T      )      \mapsto
+  \mathtt{UniversalMorphismFromZeroObject}(T)[123X.[133X
+  
+  [1X7.7-242 AddUniversalMorphismFromZeroObjectWithGivenZeroObject[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismFromZeroObjectWithGivenZeroObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismFromZeroObjectWithGivenZeroObject[110X.  [23XF:  (  T,  P  ) \mapsto
+  \mathtt{UniversalMorphismFromZeroObjectWithGivenZeroObject}(T, P)[123X.[133X
+  
+  [1X7.7-243 AddUniversalMorphismIntoCoimage[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismIntoCoimage[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismIntoCoimage[110X.     [23XF:     (     alpha,    tau    )    \mapsto
+  \mathtt{UniversalMorphismIntoCoimage}(alpha, tau)[123X.[133X
+  
+  [1X7.7-244 AddUniversalMorphismIntoCoimageWithGivenCoimageObject[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismIntoCoimageWithGivenCoimageObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismIntoCoimageWithGivenCoimageObject[110X.  [23XF:  (  alpha,  tau, C )
+  \mapsto   \mathtt{UniversalMorphismIntoCoimageWithGivenCoimageObject}(alpha,
+  tau, C)[123X.[133X
+  
+  [1X7.7-245 AddUniversalMorphismIntoDirectProduct[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismIntoDirectProduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismIntoDirectProduct[110X.   [23XF:   (   objects,  T,  tau  )  \mapsto
+  \mathtt{UniversalMorphismIntoDirectProduct}(objects, T, tau)[123X.[133X
+  
+  [1X7.7-246 AddUniversalMorphismIntoDirectProductWithGivenDirectProduct[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismIntoDirectProductWithGivenDirectProduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismIntoDirectProductWithGivenDirectProduct[110X.  [23XF:  ( objects, T,
+  tau,                     P                     )                     \mapsto
+  \mathtt{UniversalMorphismIntoDirectProductWithGivenDirectProduct}(objects,
+  T, tau, P)[123X.[133X
+  
+  [1X7.7-247 AddUniversalMorphismIntoDirectSum[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismIntoDirectSum[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismIntoDirectSum[110X.   [23XF:   (   objects,   T,   tau   )   \mapsto
+  \mathtt{UniversalMorphismIntoDirectSum}(objects, T, tau)[123X.[133X
+  
+  [1X7.7-248 AddUniversalMorphismIntoDirectSumWithGivenDirectSum[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismIntoDirectSumWithGivenDirectSum[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismIntoDirectSumWithGivenDirectSum[110X.  [23XF: ( objects, T, tau, P )
+  \mapsto   \mathtt{UniversalMorphismIntoDirectSumWithGivenDirectSum}(objects,
+  T, tau, P)[123X.[133X
+  
+  [1X7.7-249 AddUniversalMorphismIntoEqualizer[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismIntoEqualizer[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismIntoEqualizer[110X.   [23XF:   (   morphisms,   T,   tau  )  \mapsto
+  \mathtt{UniversalMorphismIntoEqualizer}(morphisms, T, tau)[123X.[133X
+  
+  [1X7.7-250 AddUniversalMorphismIntoEqualizerWithGivenEqualizer[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismIntoEqualizerWithGivenEqualizer[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismIntoEqualizerWithGivenEqualizer[110X.  [23XF: ( morphisms, T, tau, P
+  )                                                                    \mapsto
+  \mathtt{UniversalMorphismIntoEqualizerWithGivenEqualizer}(morphisms, T, tau,
+  P)[123X.[133X
+  
+  [1X7.7-251 AddUniversalMorphismIntoFiberProduct[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismIntoFiberProduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismIntoFiberProduct[110X.   [23XF:   (  morphisms,  T,  tau  )  \mapsto
+  \mathtt{UniversalMorphismIntoFiberProduct}(morphisms, T, tau)[123X.[133X
+  
+  [1X7.7-252 AddUniversalMorphismIntoFiberProductWithGivenFiberProduct[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismIntoFiberProductWithGivenFiberProduct[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismIntoFiberProductWithGivenFiberProduct[110X.  [23XF:  ( morphisms, T,
+  tau,                     P                     )                     \mapsto
+  \mathtt{UniversalMorphismIntoFiberProductWithGivenFiberProduct}(morphisms,
+  T, tau, P)[123X.[133X
+  
+  [1X7.7-253 AddUniversalMorphismIntoTerminalObject[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismIntoTerminalObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismIntoTerminalObject[110X.      [23XF:      (      T     )     \mapsto
+  \mathtt{UniversalMorphismIntoTerminalObject}(T)[123X.[133X
+  
+  [1X7.7-254 AddUniversalMorphismIntoTerminalObjectWithGivenTerminalObject[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismIntoTerminalObjectWithGivenTerminalObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismIntoTerminalObjectWithGivenTerminalObject[110X.  [23XF:  (  T,  P  )
+  \mapsto
+  \mathtt{UniversalMorphismIntoTerminalObjectWithGivenTerminalObject}(T, P)[123X.[133X
+  
+  [1X7.7-255 AddUniversalMorphismIntoZeroObject[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismIntoZeroObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismIntoZeroObject[110X.       [23XF:       (      T      )      \mapsto
+  \mathtt{UniversalMorphismIntoZeroObject}(T)[123X.[133X
+  
+  [1X7.7-256 AddUniversalMorphismIntoZeroObjectWithGivenZeroObject[101X
+  
+  [33X[1;0Y[29X[2XAddUniversalMorphismIntoZeroObjectWithGivenZeroObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XUniversalMorphismIntoZeroObjectWithGivenZeroObject[110X.  [23XF:  (  T,  P  ) \mapsto
+  \mathtt{UniversalMorphismIntoZeroObjectWithGivenZeroObject}(T, P)[123X.[133X
+  
+  [1X7.7-257 AddVerticalPostCompose[101X
+  
+  [33X[1;0Y[29X[2XAddVerticalPostCompose[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XVerticalPostCompose[110X.      [23XF:      (      arg2,      arg3      )      \mapsto
+  \mathtt{VerticalPostCompose}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-258 AddVerticalPreCompose[101X
+  
+  [33X[1;0Y[29X[2XAddVerticalPreCompose[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given function [23XF[123X to the category for the basic operation [10XVerticalPreCompose[110X.
+  [23XF: ( arg2, arg3 ) \mapsto \mathtt{VerticalPreCompose}(arg2, arg3)[123X.[133X
+  
+  [1X7.7-259 AddZeroMorphism[101X
+  
+  [33X[1;0Y[29X[2XAddZeroMorphism[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XZeroMorphism[110X. [23XF: (
+  a, b ) \mapsto \mathtt{ZeroMorphism}(a, b)[123X.[133X
+  
+  [1X7.7-260 AddZeroObject[101X
+  
+  [33X[1;0Y[29X[2XAddZeroObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given  function [23XF[123X to the category for the basic operation [10XZeroObject[110X. [23XF: ( )
+  \mapsto \mathtt{ZeroObject}()[123X.[133X
+  
+  [1X7.7-261 AddZeroObjectFunctorial[101X
+  
+  [33X[1;0Y[29X[2XAddZeroObjectFunctorial[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XZeroObjectFunctorial[110X. [23XF: ( ) \mapsto \mathtt{ZeroObjectFunctorial}()[123X.[133X
+  
+  [1X7.7-262 AddZeroObjectFunctorialWithGivenZeroObjects[101X
+  
+  [33X[1;0Y[29X[2XAddZeroObjectFunctorialWithGivenZeroObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
+  given    function    [23XF[123X   to   the   category   for   the   basic   operation
+  [10XZeroObjectFunctorialWithGivenZeroObjects[110X.    [23XF:    (   P,   Pp   )   \mapsto
+  \mathtt{ZeroObjectFunctorialWithGivenZeroObjects}(P, Pp)[123X.[133X
+  

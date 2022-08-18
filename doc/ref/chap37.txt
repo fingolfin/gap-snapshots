@@ -72,36 +72,83 @@
   [1X37.2-1 [33X[0;0YFreeGroup[133X[101X
   
   [33X[1;0Y[29X[2XFreeGroup[102X( [[3Xwfilt[103X, ][3Xrank[103X[, [3Xname[103X] ) [32X function[133X
-  [33X[1;0Y[29X[2XFreeGroup[102X( [[3Xwfilt[103X, ][3Xname1[103X, [3Xname2[103X, [3X...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeGroup[102X( [[3Xwfilt[103X][,] [[3Xname1[103X[, [3Xname2[103X[, [3X...[103X]]] ) [32X function[133X
   [33X[1;0Y[29X[2XFreeGroup[102X( [[3Xwfilt[103X, ][3Xnames[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XFreeGroup[102X( [[3Xwfilt[103X, ][3Xinfinity[103X, [3Xname[103X, [3Xinit[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeGroup[102X( [[3Xwfilt[103X, ][3Xinfinity[103X[, [3Xname[103X][, [3Xinit[103X] ) [32X function[133X
   
-  [33X[0;0YCalled  with a positive integer [3Xrank[103X, [2XFreeGroup[102X returns a free group on [3Xrank[103X
-  generators.  If  the optional argument [3Xname[103X is given then the generators are
-  printed as [3Xname[103X[10X1[110X, [3Xname[103X[10X2[110X etc., that is, each name is the concatenation of the
-  string  [3Xname[103X  and  an  integer  from [10X1[110X to [3Xrange[103X. The default for [3Xname[103X is the
-  string [10X"f"[110X.[133X
+  [33X[0;0Y[10XFreeGroup[110X  returns  a  free  group. The number of generators, and the labels
+  given  to  the  generators,  can  be  specified  in  several different ways.
+  Warning:  the  labels of generators are only an aid for printing, and do not
+  necessarily   distinguish  generators;  see  the  examples  at  the  end  of
+  [2XFreeSemigroup[102X ([14X51.1-10[114X) for more information.[133X
   
-  [33X[0;0YCalled  in  the  second  form,  [2XFreeGroup[102X  returns  a  free group on as many
-  generators as arguments, printed as [3Xname1[103X, [3Xname2[103X etc.[133X
+  [8X 1: For a given rank, and an optional generator name prefix [108X
+        [33X[0;6YCalled with a nonnegative integer [3Xrank[103X, [2XFreeGroup[102X returns a free group
+        on  [3Xrank[103X  generators. The optional argument [3Xname[103X must be a string; its
+        default value is [10X"f"[110X.[133X
   
-  [33X[0;0YCalled  in  the  third  form,  [2XFreeGroup[102X  returns  a  free  group on as many
-  generators as the length of the list [3Xnames[103X, the [22Xi[122X-th generator being printed
-  as [3Xnames[103X[10X[[110X[22Xi[122X[10X][110X.[133X
+        [33X[0;6YIf  [3Xname[103X  is  not  given  but  the [10XgeneratorNames[110X option is, then this
+        option is respected as described in Section [14X50.1-16[114X.[133X
   
-  [33X[0;0YCalled in the fourth form, [2XFreeGroup[102X returns a free group on infinitely many
-  generators,  where the first generators are printed by the names in the list
-  [3Xinit[103X, and the other generators by [3Xname[103X and an appended number.[133X
+        [33X[0;6YOtherwise,  the  generators  of  the  returned free group are labelled
+        [3Xname[103X[10X1[110X, ..., [3Xname[103X[10Xk[110X, where [10Xk[110X is the value of [3Xrank[103X.[133X
   
-  [33X[0;0YIf    the   extra   argument   [3Xwfilt[103X   is   given,   it   must   be   either
-  [10XIsSyllableWordsFamily[110X  or  [10XIsLetterWordsFamily[110X  or  [10XIsWLetterWordsFamily[110X  or
-  [10XIsBLetterWordsFamily[110X. This filter then specifies the representation used for
-  the  elements  of  the  free group (see [14X37.6[114X). If no such filter is given, a
-  letter representation is used.[133X
+  [8X2: For given generator names[108X
+        [33X[0;6YCalled  with  various nonempty strings, [2XFreeGroup[102X returns a free group
+        on  as  many generators as arguments, which are labelled [3Xname1[103X, [3Xname2[103X,
+        etc.[133X
+  
+  [8X3: For a given list of generator names[108X
+        [33X[0;6YCalled with a finite list [3Xnames[103X of nonempty strings, [2XFreeGroup[102X returns
+        a  free  group  on  [10XLength([3Xnames[103X[10X)[110X  generators, whose [10Xi[110X-th generator is
+        labelled [3Xnames[103X[10X[i][110X.[133X
+  
+  [8X 4: For the rank [9Xinfinity[109X, an optional default generator name prefix, and an optional finite list of generator names [108X
+        [33X[0;6YCalled  in  the  fourth  form,  [2XFreeGroup[102X  returns  a  free  group  on
+        infinitely  many  generators.  The  optional  argument  [3Xname[103X must be a
+        string;  its default value is [10X"f"[110X, and the optional argument [3Xinit[103X must
+        be  a  finite  list of nonempty strings; its default value is an empty
+        list.  The  generators  are  initially  labelled according to the list
+        [3Xinit[103X, followed by [3Xname[103X[10Xi[110X for each [10Xi[110X in the range from [10XLength([3Xinit[103X[10X)+1[110X to
+        [9Xinfinity[109X.[133X
+  
+  [33X[0;0YIf  the  optional  first  argument  [3Xwfilt[103X  is  given, then it must be either
+  [10XIsSyllableWordsFamily[110X,    [10XIsLetterWordsFamily[110X,    [10XIsWLetterWordsFamily[110X,   or
+  [10XIsBLetterWordsFamily[110X.  This filter specifies the representation used for the
+  elements  of the free group (see [14X37.6[114X). If no such filter is given, a letter
+  representation is used.[133X
   
   [33X[0;0Y(For  interfacing to old code that omits the representation flag, use of the
   syllable   representation   is   also   triggered   by  setting  the  option
-  [10XFreeGroupFamilyType[110X to the string [10X"syllable"[110X.)[133X
+  [10XFreeGroupFamilyType[110X  to  the  string  [10X"syllable"[110X; this is overwritten by the
+  optional first argument if it is given.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XFreeGroup(5);[127X[104X
+    [4X[28X<free group on the generators [ f1, f2, f3, f4, f5 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeGroup(4, "gen");[127X[104X
+    [4X[28X<free group on the generators [ gen1, gen2, gen3, gen4 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeGroup(3 : generatorNames := "ack");[127X[104X
+    [4X[28X<free group on the generators [ ack1, ack2, ack3 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeGroup(2 : generatorNames := ["u", "v", "w"]);[127X[104X
+    [4X[28X<free group on the generators [ u, v ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeGroup();[127X[104X
+    [4X[28X<free group of rank zero>[128X[104X
+    [4X[25Xgap>[125X [27XFreeGroup("a", "b", "c");[127X[104X
+    [4X[28X<free group on the generators [ a, b, c ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeGroup(["x", "y"]);[127X[104X
+    [4X[28X<free group on the generators [ x, y ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeGroup(infinity);[127X[104X
+    [4X[28X<free group with infinity generators>[128X[104X
+    [4X[25Xgap>[125X [27XF := FreeGroup(infinity, "g", ["a", "b"]);[127X[104X
+    [4X[28X<free group with infinity generators>[128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfGroup(F){[1..4]};[127X[104X
+    [4X[28X[ a, b, g3, g4 ][128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfGroup(FreeGroup(infinity, "gen")){[1..3]};[127X[104X
+    [4X[28X[ gen1, gen2, gen3 ][128X[104X
+    [4X[25Xgap>[125X [27XFreeGroup(IsSyllableWordsFamily, 50);[127X[104X
+    [4X[28X<free group with 50 generators>[128X[104X
+  [4X[32X[104X
   
   [1X37.2-2 IsFreeGroup[101X
   
@@ -137,7 +184,7 @@
   this is done, the result is undefined.)[133X
   
   [33X[0;0YIf  the  assignment overwrites existing variables a warning is given, if any
-  of the variables if write protected, or any of the generator names would not
+  of the variables is write protected, or any of the generator names would not
   be a proper variable name, an error is raised.[133X
   
   
@@ -801,7 +848,7 @@
   [33X[1;0Y[29X[2XIntegratedStraightLineProgram[102X( [3Xlistofprogs[103X ) [32X function[133X
   
   [33X[0;0YFor  a  nonempty  dense list [3Xlistofprogs[103X of straight line programs [22Xp_1, p_2,
-  ...,   p_m[122X,   say,   that   have   the   same   number  [22Xn[122X,  say,  of  inputs
+  ...,     p_m[122X     that     have    the    same    number    [22Xn[122X    of    inputs
   (see [2XNrInputsOfStraightLineProgram[102X  ([14X37.8-4[114X)), [2XIntegratedStraightLineProgram[102X
   returns  a  straight  line  program  [22Xprog[122X  with  [22Xn[122X inputs such that for each
   [22Xn[122X-tuple [22Xgens[122X of generators, [10XResultOfStraightLineProgram( [110X[22Xprog, gens[122X[10X )[110X is the
@@ -863,18 +910,18 @@
   [33X[0;0YReturns a new slp that calculates only the value of slot [3Xk[103X, which must be an
   integer.  Note  that  [3Xslp[103X  must  not  overwrite slots but only append!!! Use
   [2XIntermediateResultOfSLP[102X ([14X37.8-10[114X) in the other case! [3Xslp[103X is either an slp or
-  a  pair  where the first entry is the lines of the slp and the second is the
-  number of inputs.[133X
+  a  pair where the first entry is the list of lines of the slp and the second
+  is the number of its inputs.[133X
   
   [1X37.8-12 IntermediateResultsOfSLPWithoutOverwrite[101X
   
   [33X[1;0Y[29X[2XIntermediateResultsOfSLPWithoutOverwrite[102X( [3Xslp[103X, [3Xk[103X ) [32X function[133X
   
-  [33X[0;0YReturns  a  new slp that calculates only the value of slots contained in the
-  list  k.  Note  that  [3Xslp[103X  must  not  overwrite slots but only append!!! Use
+  [33X[0;0YReturns  a new slp that calculates only the values of slots contained in the
+  list  [3Xk[103X.  Note  that  [3Xslp[103X  must  not  overwrite slots but only append!!! Use
   [2XIntermediateResultOfSLP[102X  ([14X37.8-10[114X) in the other case! [3Xslp[103X is either a slp or
-  a  pair  where the first entry is the lines of the slp and the second is the
-  number of inputs.[133X
+  a  pair where the first entry is the list of lines of the slp and the second
+  is the number of its inputs.[133X
   
   [1X37.8-13 ProductOfStraightLinePrograms[101X
   

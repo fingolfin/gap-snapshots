@@ -92,12 +92,12 @@ DeclareAttribute("PerfectIdentification", IsGroup );
 ##  <Func Name="SizesPerfectGroups" Arg=''/>
 ##
 ##  <Description>
-##  This is the ordered list of all numbers up to <M>10^6</M> that occur as
+##  This is the ordered list of all numbers up to <M>2\cdot 10^6</M> that occur as
 ##  sizes of perfect groups.
-##  One can iterate over the perfect groups library with:
+##  One can iterate over part of the perfect groups library with:
 ##  <Example><![CDATA[
-##  gap> for n in SizesPerfectGroups() do
-##  >      for k in [1..NrPerfectLibraryGroups(n)] do
+##  gap> for n in Intersection([100..500],SizesPerfectGroups()) do
+##  >      for k in [1..NrPerfectGroups(n)] do
 ##  >        pg := PerfectGroup(n,k);
 ##  >      od;
 ##  >    od;
@@ -116,40 +116,28 @@ DeclareGlobalFunction("SizesPerfectGroups");
 ##  <#GAPDoc Label="NumberPerfectGroups">
 ##  <ManSection>
 ##  <Func Name="NumberPerfectGroups" Arg='size'/>
+##  <Func Name="NrPerfectGroups" Arg='size'/>
+##  <Func Name="NumberPerfectLibraryGroups" Arg='size'/>
+##  <Func Name="NrPerfectLibraryGroups" Arg='size'/>
 ##
 ##  <Description>
 ##  returns the number of non-isomorphic perfect groups of size <A>size</A> for
-##  each positive integer  <A>size</A> up to <M>10^6</M> except for the eight  sizes
-##  listed at the beginning  of  this section for  which the number is not
-##  yet known. For these values as well as for any argument out of range it
-##  returns <K>fail</K>.
+##  each positive integer <A>size</A> up to <M>2\cdot10^6</M>. Additionally, for
+##  odd <A>size</A> an answer is returned (odd order groups are solvable).
+##  For any other argument out of range it returns <K>fail</K>.
+##  <A>NrPerfectGroups</A> is a synonym for <Ref Func="NumberPerfectGroups"/>.
+##  Moreover <A>NumberPerfectLibraryGroups</A> (and its synonym <A>NrPerfectLibraryGroups</A>)
+##  exist for historical reasons, and return 0 instead of fail for arguments
+##  outside the library scope.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction("NumberPerfectGroups");
 DeclareSynonym("NrPerfectGroups",NumberPerfectGroups);
-
-
-#############################################################################
-##
-#F  NumberPerfectLibraryGroups( <size> )  . . . . . . . . . . . . . . . . . .
-##
-##  <#GAPDoc Label="NumberPerfectLibraryGroups">
-##  <ManSection>
-##  <Func Name="NumberPerfectLibraryGroups" Arg='size'/>
-##
-##  <Description>
-##  returns the number of perfect groups of size <A>size</A> which are available
-##  in the  library of finite perfect groups. (The purpose  of the function
-##  is  to provide a simple way  to formulate a loop over all library groups
-##  of a given size.)
-##  </Description>
-##  </ManSection>
-##  <#/GAPDoc>
-##
 DeclareGlobalFunction("NumberPerfectLibraryGroups");
 DeclareSynonym("NrPerfectLibraryGroups",NumberPerfectLibraryGroups);
+
 
 
 #############################################################################
@@ -176,7 +164,7 @@ DeclareSynonym("NrPerfectLibraryGroups",NumberPerfectLibraryGroups);
 ##  <Ref Filt="IsSubgroupFpGroup"/>.
 ##  In the latter case, the  generators and relators used coincide with those
 ##  given in&nbsp;<Cite Key="HP89"/>.
-##  The default filter is <Ref Filt="IsSubgroupFpGroup"/>.
+##  The default filter is <Ref Filt="IsPermGroup"/>.
 ##  <Example><![CDATA[
 ##  gap> G := PerfectGroup(IsPermGroup,6048,1);
 ##  U3(3)
@@ -184,6 +172,10 @@ DeclareSynonym("NrPerfectLibraryGroups",NumberPerfectLibraryGroups);
 ##  A5 2^1 19^2 C 19^1
 ##  gap> NrMovedPoints(G);
 ##  6859
+##  gap> G:=PerfectGroup(1866240,12);
+##  PG1866240.12
+##  gap> NrMovedPoints(G);
+##  270
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>

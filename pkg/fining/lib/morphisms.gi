@@ -1078,7 +1078,7 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
                 Info(InfoFinInG, 1, "<el> is not a projectivity");
             fi;
 			image := BlownUpMat(basis, m!.mat); 
-			ConvertToMatrixRepNC( image, f2 );       
+			#ConvertToMatrixRepNC( image, f2 );
 			return CollineationOfProjectiveSpace(image, f2);
 		end;
 
@@ -1089,7 +1089,7 @@ InstallMethod( NaturalEmbeddingByFieldReduction,
                 Info(InfoFinInG, 1, "<el> is not a projectivity");
             fi;
 			preimage := ShrinkMat(basis, Unpack(m!.mat));
-			ConvertToMatrixRepNC( preimage, f1 );       
+			#ConvertToMatrixRepNC( preimage, f1 );       
 			return CollineationOfProjectiveSpace(preimage, f1);
 		end;
 
@@ -2271,11 +2271,11 @@ InstallMethod( NaturalProjectionBySubspaceNC,
 
 # CHECKED 28/09/11 jdb
 #############################################################################
-#O  QUO( <ps>, <v> )
+#O  \/( <ps>, <v> )
 # returns the quotient space of the subspace <v> of the projective space <ps>
 # it is checked if <v> is a subspace of <ps>
 ##
-InstallOtherMethod(QUO,
+InstallOtherMethod(\/,
 	"for a projective space and a subspace",
 	[ IsProjectiveSpace and IsProjectiveSpaceRep, IsSubspaceOfProjectiveSpace],
 	function( ps, v )

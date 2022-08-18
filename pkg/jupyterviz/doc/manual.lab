@@ -1,0 +1,77 @@
+\GAPDocLabFile{jupyterviz}
+\makelabel{jupyterviz:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{jupyterviz:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{jupyterviz:Introduction}{1}{X7DFB63A97E67C0A1}
+\makelabel{jupyterviz:Purpose}{1.1}{X78E0A9867DABCE86}
+\makelabel{jupyterviz:Terminology (What is a Graph?)}{1.2}{X8376A2517DEBB867}
+\makelabel{jupyterviz:Toolkits for drawing charts and plots}{1.2.1}{X83000C697990B06C}
+\makelabel{jupyterviz:Toolkits for drawing graphs}{1.2.2}{X7C46B954786E37AE}
+\makelabel{jupyterviz:General purpose tools with which you can define custom visualizations}{1.2.3}{X7F2C8A0B7E3BB3F1}
+\makelabel{jupyterviz:The high-level API and the low-level API}{1.3}{X856998F578ABF3A1}
+\makelabel{jupyterviz:Loading the package (in Jupyter or otherwise)}{1.4}{X7FA0757281D33109}
+\makelabel{jupyterviz:Using the high-level API}{2}{X83888F2D8472E029}
+\makelabel{jupyterviz:Charts and Plots}{2.1}{X78078AC381F666C7}
+\makelabel{jupyterviz:Options for charts and plots}{2.2}{X7827F05D814CFB10}
+\makelabel{jupyterviz:Graphs}{2.3}{X815691877F8C800C}
+\makelabel{jupyterviz:Options for graphs}{2.4}{X8109348A84B8A4D4}
+\makelabel{jupyterviz:Using the low-level API}{3}{X8363BC74806376BE}
+\makelabel{jupyterviz:The CreateVisualization function}{3.1}{X7A4D73457C664283}
+\makelabel{jupyterviz:Looking beneath the high-level API}{3.2}{X82B836487E900D62}
+\makelabel{jupyterviz:Looking beneath Plot}{3.2.1}{X7BA83ABA84945681}
+\makelabel{jupyterviz:Looking beneath PlotGraph}{3.2.2}{X792C30817A29E033}
+\makelabel{jupyterviz:Using JSON from a file}{3.3}{X835575F282027572}
+\makelabel{jupyterviz:Documentation for each visualization tool}{3.4}{X860FD2F97E9F936B}
+\makelabel{jupyterviz:Charting and plotting tools}{3.4.1}{X82D1D7E380E9F6CD}
+\makelabel{jupyterviz:Graph drawing tools}{3.4.2}{X795882857B6028D4}
+\makelabel{jupyterviz:General-purpose tools for custom visualizations}{3.4.3}{X79F3C554780769C5}
+\makelabel{jupyterviz:Example uses of the low-level API}{3.5}{X83A1AF4B7E339161}
+\makelabel{jupyterviz:Example: AnyChart}{3.5.1}{X7B0290B3876FCDA1}
+\makelabel{jupyterviz:Example: Cytoscape}{3.5.2}{X7E2737FC7EDB79B1}
+\makelabel{jupyterviz:Using general tools (HTML, canvas, D3)}{4}{X87D903D77FD35AED}
+\makelabel{jupyterviz:Why these tools are present}{4.1}{X856317C47839F0C0}
+\makelabel{jupyterviz:Post-processing visualizations}{4.2}{X7D65933280120650}
+\makelabel{jupyterviz:Injecting JavaScript into general tools}{4.3}{X85EA7D2579837F4D}
+\makelabel{jupyterviz:Example: Native HTML Canvas}{4.3.1}{X7836DDAA82B6A536}
+\makelabel{jupyterviz:Example: Plain HTML}{4.3.2}{X7C06E0117C8EF31B}
+\makelabel{jupyterviz:Example: D3}{4.3.3}{X7A2554B0847DD027}
+\makelabel{jupyterviz:Adding new visualization tools}{5}{X81249ADA79916213}
+\makelabel{jupyterviz:Why you might want to do this}{5.1}{X7DB91A9C7C03FF67}
+\makelabel{jupyterviz:What you will need}{5.2}{X858B113D80E8D32B}
+\makelabel{jupyterviz:Extending this package with a new tool}{5.3}{X7E5726AC788EADCC}
+\makelabel{jupyterviz:Installing a new tool at runtime}{5.4}{X8434DB9C80EC7E6B}
+\makelabel{jupyterviz:Limitations}{6}{X8481628E878FF644}
+\makelabel{jupyterviz:Function reference}{7}{X7ECCCA82839EA283}
+\makelabel{jupyterviz:High-Level Public API}{7.1}{X80378EDF79B85A46}
+\makelabel{jupyterviz:Low-Level Public API}{7.2}{X83E0040584EAF486}
+\makelabel{jupyterviz:Internal methods}{7.3}{X7B106BA97FD3C2BF}
+\makelabel{jupyterviz:Representation wrapper}{7.4}{X7CB82ABE7B3255EB}
+\makelabel{jupyterviz:Index}{Ind}{X83A0356F839C696F}
+\makelabel{jupyterviz:Plot}{7.1.1}{X811D60857B0B2B68}
+\makelabel{jupyterviz:ConvertDataSeriesForTool}{7.1.2}{X7B36451A873E06B2}
+\makelabel{jupyterviz:PlotGraph}{7.1.3}{X79FCD4E67FF49A5F}
+\makelabel{jupyterviz:ConvertGraphForTool}{7.1.4}{X80380CBB7E1FA082}
+\makelabel{jupyterviz:PlotDisplayMethod}{7.1.5}{X81D8CBD97B9677C0}
+\makelabel{jupyterviz:PlotDisplayMethodJupyter}{7.1.6}{X877563A087BAF265}
+\makelabel{jupyterviz:PlotDisplayMethodJupyterSimple}{7.1.7}{X85332D257DD44070}
+\makelabel{jupyterviz:PlotDisplayMethodHTML}{7.1.8}{X818039C5844E897B}
+\makelabel{jupyterviz:RunJavaScript}{7.2.1}{X78BDA43D7E633E33}
+\makelabel{jupyterviz:LoadJavaScriptFile}{7.2.2}{X81E2B3A07EA7A02B}
+\makelabel{jupyterviz:InstallVisualizationTool}{7.2.3}{X83454CD67FF0EED7}
+\makelabel{jupyterviz:InstallVisualizationToolFromTemplate}{7.2.4}{X876DFB2B87FC3732}
+\makelabel{jupyterviz:CreateVisualization}{7.2.5}{X7BFFD8B7808F5BDA}
+\makelabel{jupyterviz:JUPVIZAbsoluteJavaScriptFilename}{7.3.1}{X7FA27984822A0E5E}
+\makelabel{jupyterviz:JUPVIZLoadedJavaScriptCache}{7.3.2}{X7F877B4279081217}
+\makelabel{jupyterviz:JUPVIZFillInJavaScriptTemplate}{7.3.3}{X84F0A3C97FBC57EE}
+\makelabel{jupyterviz:JUPVIZRunJavaScriptFromTemplate}{7.3.4}{X8603271979CCFA2A}
+\makelabel{jupyterviz:JUPVIZRunJavaScriptUsingRunGAP}{7.3.5}{X804379D07F29E905}
+\makelabel{jupyterviz:JUPVIZRunJavaScriptUsingLibraries}{7.3.6}{X79B7692C7F543161}
+\makelabel{jupyterviz:JUPVIZMakePlotDataSeries}{7.3.7}{X8620A70785F90EE6}
+\makelabel{jupyterviz:JUPVIZMakePlotGraphRecord}{7.3.8}{X7B5CF2DA86E91C11}
+\makelabel{jupyterviz:JUPVIZPlotDataSeriesList}{7.3.9}{X87B06B5C872845E9}
+\makelabel{jupyterviz:JUPVIZRecordKeychainLookup}{7.3.10}{X873A09F5852A33E9}
+\makelabel{jupyterviz:JUPVIZRecordsKeychainLookup}{7.3.11}{X7C8A5FCD7B96D5DC}
+\makelabel{jupyterviz:JUPVIZFetchWithDefault}{7.3.12}{X784852877814711F}
+\makelabel{jupyterviz:JUPVIZFetchIfPresent}{7.3.13}{X856669217AADA94F}
+\makelabel{jupyterviz:JUPVIZIsFileContents for isobject}{7.4.1}{X82269732822D224D}
+\makelabel{jupyterviz:JUPVIZIsFileContentsRep for iscomponentobjectrep and jupvizisfilecontents}{7.4.2}{X84D70ACD7A72AA84}
+\makelabel{jupyterviz:JUPVIZFileContents for isstring}{7.4.3}{X7D401DB582A5EBA2}

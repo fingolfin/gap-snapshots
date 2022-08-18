@@ -243,7 +243,7 @@ InstallIsomorphismMaintenance( GaloisStabilizer,
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareGlobalVariable( "Rationals", "field of rationals" );
+DeclareGlobalName( "Rationals" );
 
 DeclareSynonym( "IsRationals",
     IsCyclotomicCollection and IsField and IsPrimeField );
@@ -286,34 +286,12 @@ InstallTrueMethod( IsCyclotomicField, IsRationals );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareGlobalVariable( "GaussianRationals",
-    "field of Gaussian rationals (identical with CF(4))" );
+DeclareGlobalName( "GaussianRationals" );
 
 DeclareCategory( "IsGaussianRationals", IsCyclotomicCollection and IsField );
 #T better?
 
 DeclareGlobalFunction( "AbelianNumberFieldByReducedGaloisStabilizerInfo" );
-
-#############################################################################
-##
-#V  CYCLOTOMIC_FIELDS
-##
-##  <ManSection>
-##  <Func Name="CYCLOTOMIC_FIELDS" Arg='n'/>
-##
-##  <Description>
-##  Returns the <A>n</A>-th cyclotomic field.
-##  </Description>
-##  </ManSection>
-##
-BindGlobal( "CYCLOTOMIC_FIELDS",
-    MemoizePosIntFunction(
-        function(xtension)
-            return AbelianNumberFieldByReducedGaloisStabilizerInfo( Rationals,
-                   xtension, [ 1 ] );
-        end,
-    rec( defaults := [ Rationals, Rationals,, GaussianRationals ] ) )
-);
 
 #############################################################################
 ##
@@ -378,19 +356,12 @@ DeclareSynonym( "CF", CyclotomicField );
 ##  <Var Name="ABELIAN_NUMBER_FIELDS"/>
 ##
 ##  <Description>
-##  At position <A>n</A>, those fields with conductor <A>n</A> are stored
-##  that are not cyclotomic fields.
+##  Stores abelian number fields that are not cyclotomic fields.
 ##  The list for cyclotomic fields is <C>CYCLOTOMIC_FIELDS</C>.
 ##  </Description>
 ##  </ManSection>
 ##
-DeclareGlobalVariable( "ABELIAN_NUMBER_FIELDS",
-    "list of lists, at position [1][n] stabilizers, at [2][n] the fields" );
-InstallFlushableValue( ABELIAN_NUMBER_FIELDS, [ [], [] ] );
-if IsHPCGAP then
-    ShareSpecialObj(ABELIAN_NUMBER_FIELDS);
-fi;
-
+BindGlobal( "ABELIAN_NUMBER_FIELDS", NEW_SORTED_CACHE(true) );
 
 #############################################################################
 ##
@@ -729,7 +700,7 @@ DeclareGlobalFunction( "LenstraBase" );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareGlobalVariable( "Cyclotomics", "domain of all cyclotomics" );
+DeclareGlobalName( "Cyclotomics" );
 
 
 #############################################################################

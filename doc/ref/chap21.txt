@@ -1460,9 +1460,11 @@
   [1X21.16-2 Positions[101X
   
   [33X[1;0Y[29X[2XPositions[102X( [3Xlist[103X, [3Xobj[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XPositionsOp[102X( [3Xlist[103X, [3Xobj[103X ) [32X operation[133X
   
   [33X[0;0Yreturns the set of positions of [13Xall[113X occurrences of [3Xobj[103X in [3Xlist[103X.[133X
+  
+  [33X[0;0YDevelopers  who  wish  to  adapt  this for custom list types need to install
+  suitable methods for the operation [10XPositionsOp[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XPositions([1,2,1,2,3,2,2],2);[127X[104X
@@ -1536,8 +1538,8 @@
   sorting   lists,   see [14X21.18[114X,   for   testing  whether  a  list  is  sorted,
   see [2XIsSortedList[102X ([14X21.17-3[114X) and [2XIsSSortedList[102X ([14X21.17-4[114X).[133X
   
-  [33X[0;0YSpecialized  functions  for  certain  kinds  of  lists  must be installed as
-  methods for the operation [10XPositionSortedOp[110X.[133X
+  [33X[0;0YDevelopers  who  wish  to  adapt  this for custom list types need to install
+  suitable methods for the operation [10XPositionSortedOp[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XPositionSorted( [1,4,5,5,6,7], 0 );[127X[104X
@@ -1575,8 +1577,8 @@
   [33X[0;0Y[2XPositionSortedBy[102X  uses binary search. Each [10Xfunc(list[i])[110X is computed at most
   once.[133X
   
-  [33X[0;0YSpecialized  functions  for  certain  kinds  of  lists  must be installed as
-  methods for the operation [10XPositionSortedByOp[110X.[133X
+  [33X[0;0YDevelopers  who  wish  to  adapt  this for custom list types need to install
+  suitable methods for the operation [10XPositionSortedByOp[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XPositionSortedBy( [ "", "ab", ], -1, Length );[127X[104X
@@ -1634,7 +1636,7 @@
     [4X[28X2[128X[104X
   [4X[32X[104X
   
-  [33X[0;0Y[2XMaximum[102X  ([14X21.20-13[114X)  and [2XMinimum[102X ([14X21.20-14[114X) allow you to find the maximum or
+  [33X[0;0Y[2XMaximum[102X  ([14X21.20-12[114X)  and [2XMinimum[102X ([14X21.20-13[114X) allow you to find the maximum or
   minimum element of a list directly.[133X
   
   [1X21.16-9 PositionProperty[101X
@@ -1654,7 +1656,7 @@
     [4X[28X490[128X[104X
   [4X[32X[104X
   
-  [33X[0;0Y[2XFirst[102X  ([14X21.20-22[114X)  allows  you  to  extract the first element of a list that
+  [33X[0;0Y[2XFirst[102X  ([14X21.20-21[114X)  allows  you  to  extract the first element of a list that
   satisfies a certain property.[133X
   
   [1X21.16-10 PositionsProperty[101X
@@ -1889,7 +1891,7 @@
   
   [33X[0;0Y[2XSort[102X  sorts the list [3Xlist[103X in increasing order. In the one argument form [2XSort[102X
   uses the operator [10X<[110X to compare the elements. (If the list is not homogeneous
-  it  is  the users responsibility to ensure that [10X<[110X is defined for all element
+  it  is the user's responsibility to ensure that [10X<[110X is defined for all element
   pairs,  see [14X31.11[114X)  In  the two argument form [2XSort[102X uses the function [3Xfunc[103X to
   compare  elements. [3Xfunc[103X must be a function taking two arguments that returns
   [9Xtrue[109X if the first is regarded as strictly smaller than the second, and [9Xfalse[109X
@@ -1970,7 +1972,7 @@
   (If  the  list  is not homogeneous it is the user's responsibility to ensure
   that [10X<[110X is defined for all element pairs, see [14X31.11[114X)[133X
   
-  [33X[0;0Y[2XPermuted[102X  ([14X21.20-18[114X)  allows  you  to  rearrange a list according to a given
+  [33X[0;0Y[2XPermuted[102X  ([14X21.20-17[114X)  allows  you  to  rearrange a list according to a given
   permutation.[133X
   
   [4X[32X  Example  [32X[104X
@@ -2313,6 +2315,9 @@
   [33X[0;0Y[2XReversed[102X  implements  a  special  case of list assignment, which can also be
   formulated in terms of the [10X{}[110X operator (see [14X21.4[114X).[133X
   
+  [33X[0;0YDevelopers  who  wish  to  adapt  this for custom list types need to install
+  suitable methods for the operation [10XReversedOp[110X.[133X
+  
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XReversed( [ 1, 4, 9, 5, 6, 7 ] );[127X[104X
     [4X[28X[ 7, 6, 5, 9, 4, 1 ][128X[104X
@@ -2340,17 +2345,7 @@
     [4X[28X  18 ][128X[104X
   [4X[32X[104X
   
-  [1X21.20-9 IsLexicographicallyLess[101X
-  
-  [33X[1;0Y[29X[2XIsLexicographicallyLess[102X( [3Xlist1[103X, [3Xlist2[103X ) [32X function[133X
-  
-  [33X[0;0YLet  [3Xlist1[103X  and  [3Xlist2[103X  be  two dense, but not necessarily homogeneous lists
-  (see [2XIsDenseList[102X  ([14X21.1-2[114X),  [2XIsHomogeneousList[102X ([14X21.1-3[114X)), such that for each
-  [22Xi[122X,  the  entries  in  both  lists  at  position  [22Xi[122X  can  be  compared via [10X<[110X.
-  [2XIsLexicographicallyLess[102X   returns  [9Xtrue[109X  if  [3Xlist1[103X  is  smaller  than  [3Xlist2[103X
-  w.r.t. lexicographical ordering, and [9Xfalse[109X otherwise.[133X
-  
-  [1X21.20-10 Apply[101X
+  [1X21.20-9 Apply[101X
   
   [33X[1;0Y[29X[2XApply[102X( [3Xlist[103X, [3Xfunc[103X ) [32X function[133X
   
@@ -2366,7 +2361,7 @@
     [4X[28X[ 1, 4, 9 ][128X[104X
   [4X[32X[104X
   
-  [1X21.20-11 Perform[101X
+  [1X21.20-10 Perform[101X
   
   [33X[1;0Y[29X[2XPerform[102X( [3Xlist[103X, [3Xfunc[103X ) [32X function[133X
   
@@ -2380,7 +2375,7 @@
     [4X[28X3[128X[104X
   [4X[32X[104X
   
-  [1X21.20-12 PermListList[101X
+  [1X21.20-11 PermListList[101X
   
   [33X[1;0Y[29X[2XPermListList[102X( [3Xlist1[103X, [3Xlist2[103X ) [32X function[133X
   
@@ -2397,7 +2392,7 @@
   [4X[32X[104X
   
   
-  [1X21.20-13 [33X[0;0YMaximum[133X[101X
+  [1X21.20-12 [33X[0;0YMaximum[133X[101X
   
   [33X[1;0Y[29X[2XMaximum[102X( [3Xobj1[103X, [3Xobj2[103X, [3X...[103X ) [32X function[133X
   [33X[1;0Y[29X[2XMaximum[102X( [3Xlist[103X ) [32X function[133X
@@ -2421,7 +2416,7 @@
   [33X[0;0YTo get the index of the maximum element use [2XPositionMaximum[102X ([14X21.16-8[114X)[133X
   
   
-  [1X21.20-14 [33X[0;0YMinimum[133X[101X
+  [1X21.20-13 [33X[0;0YMinimum[133X[101X
   
   [33X[1;0Y[29X[2XMinimum[102X( [3Xobj1[103X, [3Xobj2[103X, [3X...[103X ) [32X function[133X
   [33X[1;0Y[29X[2XMinimum[102X( [3Xlist[103X ) [32X function[133X
@@ -2432,7 +2427,7 @@
   [33X[0;0YIn  the  second  form  [2XMinimum[102X takes a homogeneous list [3Xlist[103X and returns the
   minimum of the elements in this list.[133X
   
-  [33X[0;0YNote  that  for  both  [2XMaximum[102X  ([14X21.20-13[114X) and [2XMinimum[102X the comparison of the
+  [33X[0;0YNote  that  for  both  [2XMaximum[102X  ([14X21.20-12[114X) and [2XMinimum[102X the comparison of the
   objects  [3Xobj1[103X, [3Xobj2[103X etc. must be defined; for that, usually they must lie in
   the same family (see [14X13.1[114X).[133X
   
@@ -2448,13 +2443,13 @@
   [33X[0;0YTo get the index of the minimum element use [2XPositionMinimum[102X ([14X21.16-8[114X)[133X
   
   
-  [1X21.20-15 [33X[0;0YMaximumList and MinimumList[133X[101X
+  [1X21.20-14 [33X[0;0YMaximumList and MinimumList[133X[101X
   
   [33X[1;0Y[29X[2XMaximumList[102X( [3Xlist[103X[, [3Xseed[103X] ) [32X operation[133X
   [33X[1;0Y[29X[2XMinimumList[102X( [3Xlist[103X[, [3Xseed[103X] ) [32X operation[133X
   
   [33X[0;0Yreturn  the maximum resp. the minimum of the elements in the list [3Xlist[103X. They
-  are  the  operations  called by [2XMaximum[102X ([14X21.20-13[114X) resp. [2XMinimum[102X ([14X21.20-14[114X).
+  are  the  operations  called by [2XMaximum[102X ([14X21.20-12[114X) resp. [2XMinimum[102X ([14X21.20-13[114X).
   Methods  can be installed for special kinds of lists. For example, there are
   special  methods  to  compute  the  maximum  resp. the  minimum  of  a range
   (see [14X21.22[114X).[133X
@@ -2464,7 +2459,7 @@
   may be applied to empty lists.[133X
   
   
-  [1X21.20-16 [33X[0;0YCartesian[133X[101X
+  [1X21.20-15 [33X[0;0YCartesian[133X[101X
   
   [33X[1;0Y[29X[2XCartesian[102X( [3Xlist1[103X, [3Xlist2[103X, [3X...[103X ) [32X function[133X
   [33X[1;0Y[29X[2XCartesian[102X( [3Xlist[103X ) [32X function[133X
@@ -2503,13 +2498,13 @@
   [4X[32X[104X
   
   
-  [1X21.20-17 [33X[0;0YIteratorOfCartesianProduct[133X[101X
+  [1X21.20-16 [33X[0;0YIteratorOfCartesianProduct[133X[101X
   
   [33X[1;0Y[29X[2XIteratorOfCartesianProduct[102X( [3Xlist1[103X, [3Xlist2[103X, [3X...[103X ) [32X function[133X
   [33X[1;0Y[29X[2XIteratorOfCartesianProduct[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0YIn  the first form [2XIteratorOfCartesianProduct[102X returns an iterator (see [14X30.8[114X)
-  of  all  elements of the cartesian product (see [2XCartesian[102X ([14X21.20-16[114X)) of the
+  of  all  elements of the cartesian product (see [2XCartesian[102X ([14X21.20-15[114X)) of the
   lists [3Xlist1[103X, [3Xlist2[103X, etc.[133X
   
   [33X[0;0YIn  the  second  form  [3Xlist[103X  must be a list of lists [3Xlist1[103X, [3Xlist2[103X, etc., and
@@ -2521,10 +2516,10 @@
   resulting  cartesian  product  is  big enough, so its generating and storage
   will  require  essential amount of runtime and memory. For smaller cartesian
   products  it  is  faster  to generate the full set of tuples using [2XCartesian[102X
-  ([14X21.20-16[114X)  and  then  loop  over  its elements (with some minor overhead of
+  ([14X21.20-15[114X)  and  then  loop  over  its elements (with some minor overhead of
   needing more memory).[133X
   
-  [1X21.20-18 Permuted[101X
+  [1X21.20-17 Permuted[101X
   
   [33X[1;0Y[29X[2XPermuted[102X( [3Xlist[103X, [3Xperm[103X ) [32X operation[133X
   
@@ -2539,7 +2534,7 @@
     [4X[28X[ 1, 4, 5, 5, 6, 7 ][128X[104X
   [4X[32X[104X
   
-  [1X21.20-19 List[101X
+  [1X21.20-18 List[101X
   
   [33X[1;0Y[29X[2XList[102X( [3Xlist[103X[, [3Xfunc[103X] ) [32X function[133X
   
@@ -2548,6 +2543,9 @@
   unbound.  Otherwise [10Xnew[i] = [3Xfunc[103X[10X([3Xlist[103X[10X[i])[110X. If the argument [3Xfunc[103X is omitted,
   its default is [2XIdFunc[102X ([14X5.4-6[114X), so this function does the same as [2XShallowCopy[102X
   ([14X12.7-1[114X) (see also [14X21.7[114X).[133X
+  
+  [33X[0;0YDevelopers  who  wish to adapt this for custom list or collection types need
+  to install suitable methods for the operation [10XListOp[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XList( [1,2,3], i -> i^2 );[127X[104X
@@ -2560,7 +2558,7 @@
   
   [33X[0;0Y(See also [2XList[102X ([14X30.3-5[114X).)[133X
   
-  [1X21.20-20 Filtered[101X
+  [1X21.20-19 Filtered[101X
   
   [33X[1;0Y[29X[2XFiltered[102X( [3Xlistorcoll[103X, [3Xfunc[103X ) [32X function[133X
   
@@ -2584,6 +2582,9 @@
   [33X[0;0YList  assignment  using the operator [2X\{\}[102X ([14X21.3-1[114X) (see [14X21.4[114X) can be used to
   extract elements of a list according to indices given in another list.[133X
   
+  [33X[0;0YDevelopers  who  wish to adapt this for custom list or collection types need
+  to install suitable methods for the operation [10XFilteredOp[110X.[133X
+  
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XFiltered( [1..20], IsPrime );[127X[104X
     [4X[28X[ 2, 3, 5, 7, 11, 13, 17, 19 ][128X[104X
@@ -2596,7 +2597,7 @@
     [4X[28X[ (2,3), (1,2), (1,3) ][128X[104X
   [4X[32X[104X
   
-  [1X21.20-21 Number[101X
+  [1X21.20-20 Number[101X
   
   [33X[1;0Y[29X[2XNumber[102X( [3Xlistorcoll[103X[, [3Xfunc[103X] ) [32X function[133X
   
@@ -2614,8 +2615,11 @@
   [33X[0;0YFor  each  element  of  [3Xlistorcoll[103X,  [3Xfunc[103X  must return either [9Xtrue[109X or [9Xfalse[109X,
   otherwise an error is signalled.[133X
   
-  [33X[0;0Y[2XFiltered[102X ([14X21.20-20[114X) allows you to extract the elements of a list that have a
+  [33X[0;0Y[2XFiltered[102X ([14X21.20-19[114X) allows you to extract the elements of a list that have a
   certain property.[133X
+  
+  [33X[0;0YDevelopers  who  wish to adapt this for custom list or collection types need
+  to install suitable methods for the operation [10XNumberOp[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XNumber( [ 2, 3, 5, 7 ] );[127X[104X
@@ -2633,9 +2637,9 @@
     [4X[28X3[128X[104X
   [4X[32X[104X
   
-  [1X21.20-22 First[101X
+  [1X21.20-21 First[101X
   
-  [33X[1;0Y[29X[2XFirst[102X( [3Xlist[103X[, [3Xfunc[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XFirst[102X( [3Xlist[103X[, [3Xfunc[103X] ) [32X operation[133X
   
   [33X[0;0Y[2XFirst[102X  returns  the  first  element  of  the  list  [3Xlist[103X for which the unary
   function  [3Xfunc[103X  returns  [9Xtrue[109X;  if  [3Xfunc[103X  is not given, the first element is
@@ -2645,6 +2649,11 @@
   
   [33X[0;0Y[2XPositionProperty[102X  ([14X21.16-9[114X)  allows  you  to  find the position of the first
   element in a list that satisfies a certain property.[133X
+  
+  [33X[0;0YBefore  [5XGAP[105X  4.12, developers who wished to adapt this for custom list types
+  needed  to install suitable methods for the operation [10XFirstOp[110X. This is still
+  possible  for backwards compatibility, but [10XFirstOp[110X now is just a synonym for
+  [2XFirst[102X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XFirst( [10^7..10^8], IsPrime );[127X[104X
@@ -2658,15 +2667,18 @@
     [4X[28Xfail[128X[104X
   [4X[32X[104X
   
-  [1X21.20-23 Last[101X
+  [1X21.20-22 Last[101X
   
   [33X[1;0Y[29X[2XLast[102X( [3Xlist[103X[, [3Xfunc[103X] ) [32X function[133X
   
   [33X[0;0Y[2XLast[102X  returns the last element of the list [3Xlist[103X for which the unary function
-  [3Xfunc[103X returns [9Xtrue[109X; if [3Xfunc[103X is not given, the first element is returned. [3Xlist[103X
+  [3Xfunc[103X  returns [9Xtrue[109X; if [3Xfunc[103X is not given, the last element is returned. [3Xlist[103X
   may contain holes. [3Xfunc[103X must return either [9Xtrue[109X or [9Xfalse[109X for each element of
   [3Xlist[103X,  otherwise  an  error  is  signalled.  If  [3Xfunc[103X  returns [9Xfalse[109X for all
   elements of [3Xlist[103X then [2XLast[102X returns [9Xfail[109X.[133X
+  
+  [33X[0;0YDevelopers  who  wish  to  adapt  this for custom list types need to install
+  suitable methods for the operation [10XLastOp[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XLast( [10^7..10^8], IsPrime );[127X[104X
@@ -2680,12 +2692,15 @@
     [4X[28Xfail[128X[104X
   [4X[32X[104X
   
-  [1X21.20-24 ForAll[101X
+  [1X21.20-23 ForAll[101X
   
   [33X[1;0Y[29X[2XForAll[102X( [3Xlistorcoll[103X, [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0Ytests  whether  the unary function [3Xfunc[103X returns [9Xtrue[109X for all elements in the
   list or collection [3Xlistorcoll[103X.[133X
+  
+  [33X[0;0YDevelopers  who  wish to adapt this for custom list or collection types need
+  to install suitable methods for the operation [10XForAllOp[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XForAll( [1..20], IsPrime );[127X[104X
@@ -2698,12 +2713,15 @@
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
-  [1X21.20-25 ForAny[101X
+  [1X21.20-24 ForAny[101X
   
   [33X[1;0Y[29X[2XForAny[102X( [3Xlistorcoll[103X, [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0Ytests  whether the unary function [3Xfunc[103X returns [9Xtrue[109X for at least one element
   in the list or collection [3Xlistorcoll[103X.[133X
+  
+  [33X[0;0YDevelopers  who  wish to adapt this for custom list or collection types need
+  to install suitable methods for the operation [10XForAnyOp[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XForAny( [1..20], IsPrime );[127X[104X
@@ -2718,7 +2736,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X21.20-26 Product[101X
+  [1X21.20-25 Product[101X
   
   [33X[1;0Y[29X[2XProduct[102X( [3Xlistorcoll[103X[, [3Xfunc[103X][, [3Xinit[103X] ) [32X function[133X
   
@@ -2742,6 +2760,9 @@
   function [3Xfunc[103X. This is useful for example if the first argument is empty and
   a different identity than [10X1[110X is desired, in which case [3Xinit[103X is returned.[133X
   
+  [33X[0;0YDevelopers  who  wish to adapt this for custom list or collection types need
+  to install suitable methods for the operation [10XProductOp[110X.[133X
+  
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XProduct( [ 2, 3, 5, 7, 11, 13, 17, 19 ] );[127X[104X
     [4X[28X9699690[128X[104X
@@ -2753,7 +2774,7 @@
     [4X[28X0*Z(2)[128X[104X
   [4X[32X[104X
   
-  [1X21.20-27 Sum[101X
+  [1X21.20-26 Sum[101X
   
   [33X[1;0Y[29X[2XSum[102X( [3Xlistorcoll[103X[, [3Xfunc[103X][, [3Xinit[103X] ) [32X function[133X
   
@@ -2777,6 +2798,9 @@
   function [3Xfunc[103X. This is useful for example if the first argument is empty and
   a different zero than [10X0[110X is desired, in which case [3Xinit[103X is returned.[133X
   
+  [33X[0;0YDevelopers  who  wish to adapt this for custom list or collection types need
+  to install suitable methods for the operation [10XSumOp[110X.[133X
+  
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XSum( [ 2, 3, 5, 7, 11, 13, 17, 19 ] );[127X[104X
     [4X[28X77[128X[104X
@@ -2788,7 +2812,7 @@
     [4X[28X0*Z(2)[128X[104X
   [4X[32X[104X
   
-  [1X21.20-28 Iterated[101X
+  [1X21.20-27 Iterated[101X
   
   [33X[1;0Y[29X[2XIterated[102X( [3Xlist[103X, [3Xf[103X ) [32X operation[133X
   
@@ -2802,7 +2826,7 @@
     [4X[28X3[128X[104X
   [4X[32X[104X
   
-  [1X21.20-29 ListN[101X
+  [1X21.20-28 ListN[101X
   
   [33X[1;0Y[29X[2XListN[102X( [3Xlist1[103X, [3Xlist2[103X, [3X...[103X, [3Xlistn[103X, [3Xf[103X ) [32X function[133X
   
@@ -2818,7 +2842,7 @@
   [1X21.21 [33X[0;0YAdvanced List Manipulations[133X[101X
   
   [33X[0;0YThe  following functions are generalizations of [2XList[102X ([14X30.3-5[114X), [2XSet[102X ([14X30.3-7[114X),
-  [2XSum[102X ([14X21.20-27[114X), and [2XProduct[102X ([14X21.20-26[114X).[133X
+  [2XSum[102X ([14X21.20-26[114X), and [2XProduct[102X ([14X21.20-25[114X).[133X
   
   [1X21.21-1 ListX[101X
   
@@ -2971,7 +2995,7 @@
     [4X[28XError, Range: <last>-<first> (31) must be divisible by <inc> (3)[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YMost  often  ranges are used in connection with the [9Xfor[109X-loop see [14X4.20[114X). Here
+  [33X[0;0YMost often ranges are used in connection with the [9Xfor[109X-loop see [14X4.15-6[114X). Here
   the construct[133X
   
   [33X[0;0Y[10Xfor [3Xvar[103X[10X in [ [3Xfirst[103X[10X .. [3Xlast[103X[10X ] do [3Xstatements[103X[10X od[110X[133X
@@ -3070,8 +3094,8 @@
   [33X[0;0YAn  [13Xenumerator[113X  is  an  immutable  list  that  need  not  store its elements
   explicitly  but  knows,  from a set of basic data, how to determine the [22Xi[122X-th
   element  and  the position of a given object. A typical example of this is a
-  vector  space over a finite field with [22Xq[122X elements, say, for which it is very
-  easy to enumerate all elements using [22Xq[122X-adic expansions of integers.[133X
+  vector  space  over a finite field with [22Xq[122X elements for which it is very easy
+  to enumerate all elements using [22Xq[122X-adic expansions of integers.[133X
   
   [33X[0;0YUsing  this enumeration can be even quicker than a binary search in a sorted
   list of vectors, see [2XIsQuickPositionList[102X ([14X21.23-1[114X).[133X
@@ -3123,7 +3147,16 @@
   operation,  where  an  argument  is  required  to  be a list in a particular
   representation.[133X
   
-  [1X21.24-1 IsPlistRep[101X
+  [1X21.24-1 PlainListCopy[101X
+  
+  [33X[1;0Y[29X[2XPlainListCopy[102X( [3Xlist[103X ) [32X function[133X
+  
+  [33X[0;0YThis  function  returns  a  list  equal  to  its  argument,  in a plain list
+  representation  (see  [2XIsPlistRep[102X  ([14X21.24-2[114X)).  This  is  intended for use in
+  certain rare situations, such as before objectifying, or calling some kernel
+  functions.[133X
+  
+  [1X21.24-2 IsPlistRep[101X
   
   [33X[1;0Y[29X[2XIsPlistRep[102X( [3Xobj[103X ) [32X representation[133X
   

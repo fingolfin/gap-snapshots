@@ -15,7 +15,7 @@
 <body class="chap10"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chapA.html">A</a>  <a href="chapB.html">B</a>  <a href="chapC.html">C</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chapA.html">A</a>  <a href="chapB.html">B</a>  <a href="chapC.html">C</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap9.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap11.html">[Next Chapter]</a>&nbsp;  </div>
 
@@ -93,7 +93,7 @@
 
 <h5>10.1-1 IsGeometryMorphism</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGeometryMorphism</code></td><td class="tdright">( family )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGeometryMorphism</code></td><td class="tdright">(&nbsp;family&nbsp;)</td></tr></table></div>
 <p>The category <code class="code">IsGeometryMorphism</code> represents a special object in <strong class="pkg">FinInG</strong> which carries attributes and the given element map. The element map is given as a <code class="code">IsGeneralMapping</code>, and so has a source and range.</p>
 
 
@@ -114,7 +114,7 @@ Implies:
 
 <h5>10.1-2 Intertwiner</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Intertwiner</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Intertwiner</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a group homomorphism</p>
 
 <p>The argument <var class="Arg">f</var> is a geometry morphism. If <var class="Arg">f</var> comes equipped with a natural intertwiner from an automorphism group of the source of <var class="Arg">f</var> to the automorphism group to the image of <var class="Arg">f</var>, then the user may is able to obtain the intertwiner by calling this operation (see the individual geometry morphism constructions). For most geometry morphisms, there is also an accompanying intertwiner for the automorphism groups of the source and range. Given a geometry morphism <span class="SimpleMath">f</span> from <span class="SimpleMath">S</span> to <span class="SimpleMath">S'</span>, an intertwiner φ is a map from the automorphism group of <span class="SimpleMath">S</span> to the automorphism group of <span class="SimpleMath">S'</span>, such that for every element <span class="SimpleMath">p</span> of <span class="SimpleMath">S</span> and every automorphism <span class="SimpleMath">g</span> of <span class="SimpleMath">S</span>, we have</p>
@@ -153,8 +153,8 @@ MappingByFunction( &lt;projective semilinear group with
 
 <h5>10.2-1 IsomorphismPolarSpaces</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismPolarSpaces</code>( <var class="Arg">ps1</var>, <var class="Arg">ps2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismPolarSpaces</code>( <var class="Arg">ps1</var>, <var class="Arg">ps2</var>, <var class="Arg">boolean</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismPolarSpaces</code>( <var class="Arg">ps1</var>, <var class="Arg">ps2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismPolarSpaces</code>( <var class="Arg">ps1</var>, <var class="Arg">ps2</var>, <var class="Arg">boolean</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
 <p>The arguments <var class="Arg">ps1</var> and <var class="Arg">ps2</var> are <em>equivalent</em> polar spaces, i.e. up to coordinate transformation, the underlying sesquilinear or quadratic form determines the same polar space, or, <var class="Arg">ps1</var> is a parabolic quadric over a finite field <span class="SimpleMath">f</span> of even charateristic in dimension <span class="SimpleMath">2n</span> and <var class="Arg">ps2</var> is a symplectic space over <span class="SimpleMath">f</span> in dimension <span class="SimpleMath">2n-1</span>, then this operation returns a geometry isomorphism between them. The optional third argument <var class="Arg">boolean</var> can take either <code class="code">true</code> or <code class="code">false</code> as input, and then the operation will or will not compute the intertwiner accordingly. The user may wish that the intertwiner is not computed when working with large polar spaces. The default (when calling the operation with two arguments) is set to <code class="code">true</code>, and in this case, if at least one of <var class="Arg">ps1</var> or <var class="Arg">ps2</var> has a collineation group installed as an attribute, then an intertwining homomorphism is installed as an attribute of the resulting geometry morphism. Hence we also obtain a natural group isomorphism from the collineation group of <var class="Arg">ps1</var> onto the collineation group of <var class="Arg">ps2</var> (see also <code class="func">Intertwiner</code> (<a href="chap10.html#X86E0B2117DD536D2"><span class="RefLink">10.1-2</span></a>)).</p>
@@ -226,7 +226,7 @@ MappingByFunction( PGammaO(7,8), &lt;projective collineation group of size
 
 <h5>10.3-1 PluckerCoordinates</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PluckerCoordinates</code>( <var class="Arg">line</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PluckerCoordinates</code>( <var class="Arg">line</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>This operation takes a line of PG(3,q) as argument. It returns the plucker coordinates of the argument as list of finite field elements. The retured list can be used in operations as <code class="file">VectorSpaceToElement</code>, and represents a point of the hyperbolic quadric in PG(5,q) with equation X<sub>0</sub>X<sub>5</sub>+X<sub>1</sub>X<sub>4</sub>+X<sub>2</sub>X<sub>3</sub> = 0</p>
 
 
@@ -258,10 +258,10 @@ ProjectiveSpace(3, 169)
 
 <h5>10.3-2 KleinCorrespondence</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KleinCorrespondence</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KleinCorrespondence</code>( <var class="Arg">f</var>, <var class="Arg">boolean</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KleinCorrespondence</code>( <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KleinCorrespondence</code>( <var class="Arg">q</var>, <var class="Arg">boolean</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KleinCorrespondence</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KleinCorrespondence</code>( <var class="Arg">f</var>, <var class="Arg">boolean</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KleinCorrespondence</code>( <var class="Arg">q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KleinCorrespondence</code>( <var class="Arg">q</var>, <var class="Arg">boolean</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
 <p>The argument <var class="Arg">f</var> is a finite field, the argument <var class="Arg">q</var> is a prime power. The first an the third version use <code class="keyw">true</code> as value for <var class="Arg">boolean</var>. When using <code class="keyw">true</code> as value for the boolean, the intertwiner is computed. This variant of the operation <code class="file">KleinCorrespondence</code> has always as ambient geometry of its range the hyperbolic quadric Q<sup>+</sup>(5,q) with equation X<sub>0</sub>X<sub>5</sub>+X<sub>1</sub>X<sub>4</sub>+X<sub>2</sub>X<sub>3</sub> = 0 The returned geometry morphism has the lines of PG(3,q) as source and the points of Q<sup>+</sup>(5,q) as range.</p>
@@ -290,8 +290,8 @@ Q+(5, 9): x_1*x_6+x_2*x_5+x_3*x_4=0
 
 <h5>10.3-3 KleinCorrespondence</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KleinCorrespondence</code>( <var class="Arg">quadric</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KleinCorrespondence</code>( <var class="Arg">quadric</var>, <var class="Arg">boolean</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KleinCorrespondence</code>( <var class="Arg">quadric</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KleinCorrespondence</code>( <var class="Arg">quadric</var>, <var class="Arg">boolean</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
 <p>The argument <var class="Arg">quadric</var> is a hyperbolic quadric in a 5 dimensional projective space. If <var class="Arg">boolean</var> is <code class="keyw">true</code> or not given, this operation returns the geometry morphism equipped with an intertwiner. The returned geometry morphism has the lines of PG(3,q) as source and the points of Q<sup>+</sup>(5,q) as range.</p>
@@ -332,8 +332,8 @@ ProjectiveSpace(3, 13)
 
 <h5>10.3-4 KleinCorrespondenceExtended</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KleinCorrespondenceExtended</code>( <var class="Arg">quadric</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KleinCorrespondenceExtended</code>( <var class="Arg">quadric</var>, <var class="Arg">boolean</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KleinCorrespondenceExtended</code>( <var class="Arg">quadric</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KleinCorrespondenceExtended</code>( <var class="Arg">quadric</var>, <var class="Arg">boolean</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
 <p>The argument <var class="Arg">quadric</var> is a hyperbolic quadric in a 5 dimensional projective space. If <var class="Arg">boolean</var> is <code class="keyw">true</code> or not given, this operation returns the geometry morphism equipped with an intertwiner. The returned geometry morphism has all the elements of PG(3,q) as source (not just the lines) and the elements of Q<sup>+</sup>(5,q) as range, hence this operation is a kind of extension of <code class="file">KleinCorrespondence</code>.</p>
@@ -372,10 +372,10 @@ fail
 
 <h5>10.3-5 NaturalDuality</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalDuality</code>( <var class="Arg">gq1</var>, <var class="Arg">gq2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalDuality</code>( <var class="Arg">gq1</var>, <var class="Arg">gq2</var>, <var class="Arg">boolean</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalDuality</code>( <var class="Arg">gq</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalDuality</code>( <var class="Arg">gq</var>, <var class="Arg">boolean</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalDuality</code>( <var class="Arg">gq1</var>, <var class="Arg">gq2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalDuality</code>( <var class="Arg">gq1</var>, <var class="Arg">gq2</var>, <var class="Arg">boolean</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalDuality</code>( <var class="Arg">gq</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalDuality</code>( <var class="Arg">gq</var>, <var class="Arg">boolean</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
 <p>The operation allows the construction of the duality between W(3,q) and Q(4,q), respectively Q<sup>+</sup>(5,q), in two directions. It is checked if the arguments are appropriate, i.e. the right type of generalised quadrangle(s). The first version requires two arguments: either the symplectic or parabolic quadrangle, in any order, and defined by any suitable bilinear/quadratic and bilinear form; or the elliptic or hermitian quadrangle (in dimension <span class="SimpleMath">3</span>), in any order, and defined by any suitable bilinear/quadratic and hermitian form. In all cases the generalised quadrangles may be the standard one provided by the package <strong class="pkg">FinInG</strong>.</p>
@@ -431,8 +431,8 @@ MappingByFunction( PDeltaO-(6,5), &lt;projective collineation group of size
 
 <h5>10.3-6 SelfDuality</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SelfDuality</code>( <var class="Arg">gq</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SelfDuality</code>( <var class="Arg">gq</var>, <var class="Arg">boolean</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SelfDuality</code>( <var class="Arg">gq</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SelfDuality</code>( <var class="Arg">gq</var>, <var class="Arg">boolean</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
 <p>It is checked wheter the base field of <var class="Arg">gq</var> is a field of charateristic 2 and whether <var class="Arg">gq</var> is a symplectic generalised quadrangle in 3-dimensional projective space or a parabolic quadric in 4-dimensional projective space. The first version will return, when possible, a geometry morphism equipped with an intertwiner. Using the boolean argument <var class="Arg">false</var> will return a geometry morphism that is not equipped with an intertwiner. The example shows the use of the boolean argument.</p>
@@ -486,7 +486,7 @@ W(3, 16)
 
 <h5>10.4-1 NaturalEmbeddingBySubspace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingBySubspace</code>( <var class="Arg">geom1</var>, <var class="Arg">geom2</var>, <var class="Arg">v</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingBySubspace</code>( <var class="Arg">geom1</var>, <var class="Arg">geom2</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
 <p>The arguments <var class="Arg">geom1</var> and <var class="Arg">geom2</var> are both projective spaces, and <var class="Arg">v</var> is an element of a geom2. This function returns a geometry morphism representing the natural embedding of <var class="Arg">geom1</var> into <var class="Arg">geom2</var> as the subspace <var class="Arg">v</var>. Hence <var class="Arg">geom1</var> and <var class="Arg">v</var> must be equivalent as geometries. An Intertwiner is not implemented for this geometry morphism.</p>
@@ -517,8 +517,8 @@ ProjectiveSpace(3, 3)
 
 <h5>10.4-2 NaturalEmbeddingBySubField</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingBySubField</code>( <var class="Arg">geom1</var>, <var class="Arg">geom2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingBySubField</code>( <var class="Arg">geom1</var>, <var class="Arg">geom2</var>, <var class="Arg">boolean</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingBySubField</code>( <var class="Arg">geom1</var>, <var class="Arg">geom2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingBySubField</code>( <var class="Arg">geom1</var>, <var class="Arg">geom2</var>, <var class="Arg">boolean</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
 <p>The arguments <var class="Arg">geom1</var> and <var class="Arg">geom2</var> are projective spaces of the same dimension. This function returns a geometry morphism representing the natural embedding of <var class="Arg">geom1</var> into <var class="Arg">geom2</var> as a subfield geometry. The geometry morphism also comes equipped with an intertwiner (see <code class="func">Intertwiner</code> (<a href="chap10.html#X86E0B2117DD536D2"><span class="RefLink">10.1-2</span></a>)). The optional third argument <var class="Arg">boolean</var> can take either <code class="code">true</code> or <code class="code">false</code> as input, and then our operation will or will not compute the intertwiner accordingly. The default (when calling the operation with two arguments) is set to <code class="code">true</code>. Note that the source of the intertwiner is the projectivity group of <var class="Arg">geom1</var> and its range is a subgroup of the projectivity group of <var class="Arg">geom2</var>. Here is a simple example where the geometry morphism embeds PG(2,3) into PG(2,9) .</p>
@@ -583,7 +583,7 @@ fail
 
 <h5>10.4-4 BlownUpSubspaceOfProjectiveSpace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BlownUpSubspaceOfProjectiveSpace</code>( <var class="Arg">B</var>, <var class="Arg">subspace</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BlownUpSubspaceOfProjectiveSpace</code>( <var class="Arg">B</var>, <var class="Arg">subspace</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a subspace of a projective space</p>
 
 <p>Let <var class="Arg">B</var> be a basis for the field GF(q<sup>t</sup>) as GF(q) vector space, and let <var class="Arg">subspace</var> be a <span class="SimpleMath">k-1</span>-dimensional subspace of PG(n-1,q<sup>t</sup>) represented by a <span class="SimpleMath">k</span>-dimensional subspace <span class="SimpleMath">S</span> of V(n,q<sup>t</sup>). This operation returns the <span class="SimpleMath">kt-1</span>-dimensional subspace of PG(nt-1,q) represented by blowing up <span class="SimpleMath">S</span> with respect to the base <var class="Arg">B</var>. This operation relies on the <strong class="pkg">GAP</strong> operation <code class="file">BlownUpMat</code>. In the example, the effect of choosing a different basis is shown.</p>
@@ -613,10 +613,10 @@ false
 
 <h5>10.4-5 NaturalEmbeddingByFieldReduction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">geom1</var>, <var class="Arg">f2</var>, <var class="Arg">B</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">geom1</var>, <var class="Arg">f2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">geom1</var>, <var class="Arg">geom2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">geom1</var>, <var class="Arg">geom2</var>, <var class="Arg">B</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">geom1</var>, <var class="Arg">f2</var>, <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">geom1</var>, <var class="Arg">f2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">geom1</var>, <var class="Arg">geom2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">geom1</var>, <var class="Arg">geom2</var>, <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
 <p>This operation comes in four flavours. For the first flavour, the argument <var class="Arg">geom1</var> is a projective space over a field GF(q<sup>t</sup>). The argument <var class="Arg">f2</var> is a subfield GF(q) of GF(q<sup>t</sup>). The argument <span class="SimpleMath">B</span> is a basis for GF(q<sup>t</sup>) as a GF(q)-vectorspace. When this argument is not given, a basis for GF(q<sup>t</sup>) over GF(q) is computed using <code class="file">Basis(AsVectorSpace(GF(q),GF(q^t)))</code>. It is checked whether <var class="Arg">f2</var> is a subfield of the basefield of <var class="Arg">geom1</var>. The third and fourth flavour are comparable, where now GF(q) is found as the basefield of <var class="Arg">geom2</var>. In fact the arguments <var class="Arg">geom1</var> and <var class="Arg">geom2</var> are the projective spaces PG(n-1,q<sup>t</sup>) and PG(nt-1,q) respectively. As in the previous flavours, the argument <var class="Arg">B</var> is optional.</p>
@@ -679,7 +679,7 @@ true
 
 <h5>10.5-1 NaturalEmbeddingBySubspace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingBySubspace</code>( <var class="Arg">geom1</var>, <var class="Arg">geom2</var>, <var class="Arg">v</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingBySubspace</code>( <var class="Arg">geom1</var>, <var class="Arg">geom2</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
 <p>The arguments <var class="Arg">geom1</var> and <var class="Arg">geom2</var> both polar spaces, and <var class="Arg">v</var> is an element of a projective space. This function returns a geometry morphism representing the natural embedding of <var class="Arg">geom1</var> into the intersection of <var class="Arg">geom2</var> and <var class="Arg">v</var>. Hence the intersection of <var class="Arg">geom2</var> and <var class="Arg">v</var> must induce a polar space of the same type as <var class="Arg">geom1</var> in <var class="Arg">v</var>. This operation performs all necessary checks. An Intertwiner is not implemented for this geometry morphism.</p>
@@ -744,8 +744,8 @@ ProjectiveSpace(6, 4)
 
 <h5>10.5-2 NaturalEmbeddingBySubField</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingBySubField</code>( <var class="Arg">geom1</var>, <var class="Arg">geom2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingBySubField</code>( <var class="Arg">geom1</var>, <var class="Arg">geom2</var>, <var class="Arg">boolean</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingBySubField</code>( <var class="Arg">geom1</var>, <var class="Arg">geom2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingBySubField</code>( <var class="Arg">geom1</var>, <var class="Arg">geom2</var>, <var class="Arg">boolean</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
 <p>The arguments <var class="Arg">geom1</var> and <var class="Arg">geom2</var> are projective or polar spaces with an underlying vector space of the same dimension and the basefield <span class="SimpleMath">L</span> of <var class="Arg">geom2</var> is an extension of the basefield <span class="SimpleMath">K</span> of <var class="Arg">geom1</var>. The form <span class="SimpleMath">f</span> determining <var class="Arg">geom1</var> also defines a form over <span class="SimpleMath">L</span>, and determines a polar space. By considering the underlying vectorspaces determining the elements of <var class="Arg">geom1</var> over the extension field <span class="SimpleMath">L</span>, there is an obvious embedding of <var class="Arg">geom1</var> in the polar space over the extension field. Considering <span class="SimpleMath">f</span> over a field extension might change its type. The possible embeddings, where the polar spaces may be chosen up to equivalent form, are listed in the table below (see <a href="chapBib.html#biBKleidmanLiebeck">[KL90]</a>):</p>
@@ -782,7 +782,7 @@ ProjectiveSpace(6, 4)
 <td class="tdleft">O<sup>ε'</sup>(d,q<sup>r</sup>)</td>
 <td class="tdleft">ε=(ε')<sup>r</sup></td>
 </tr>
-</table><br /><p>&nbsp;</p><br />
+</table><br />
 </div>
 
 <p>The geometry morphism also comes equipped with an intertwiner (see <code class="func">Intertwiner</code> (<a href="chap10.html#X86E0B2117DD536D2"><span class="RefLink">10.1-2</span></a>)). The optional third argument <var class="Arg">boolean</var> can take either <code class="code">true</code> or <code class="code">false</code> as input, and then our operation will or will not compute the intertwiner accordingly. When set <code class="code">true</code>, the intertwiner will be computed if <code class="file">HasCollineationGroup(geom1)</code> is true. The user may wish that the intertwiner is not computed when embedding large polar spaces. The default (when calling the operation with two arguments) is set to <code class="code">true</code>.</p>
@@ -891,19 +891,19 @@ Q-(3, 2)
 <td class="tdleft">Q<sup>+</sup>(2a(2n+2)-1,q)</td>
 <td class="tdleft"><span class="SimpleMath">q</span> odd</td>
 </tr>
-</table><br /><p>&nbsp;</p><br />
+</table><br />
 </div>
 
 <p><a id="X7D2D9AD287532FDB" name="X7D2D9AD287532FDB"></a></p>
 
 <h5>10.5-4 NaturalEmbeddingByFieldReduction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">ps1</var>, <var class="Arg">f2</var>, <var class="Arg">alpha</var>, <var class="Arg">basis</var>, <var class="Arg">bool</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">ps1</var>, <var class="Arg">f2</var>, <var class="Arg">alpha</var>, <var class="Arg">basis</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">ps1</var>, <var class="Arg">f2</var>, <var class="Arg">alpha</var>, <var class="Arg">bool</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">ps1</var>, <var class="Arg">f2</var>, <var class="Arg">alpha</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">ps1</var>, <var class="Arg">f2</var>, <var class="Arg">bool</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">ps1</var>, <var class="Arg">f2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">ps1</var>, <var class="Arg">f2</var>, <var class="Arg">alpha</var>, <var class="Arg">basis</var>, <var class="Arg">bool</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">ps1</var>, <var class="Arg">f2</var>, <var class="Arg">alpha</var>, <var class="Arg">basis</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">ps1</var>, <var class="Arg">f2</var>, <var class="Arg">alpha</var>, <var class="Arg">bool</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">ps1</var>, <var class="Arg">f2</var>, <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">ps1</var>, <var class="Arg">f2</var>, <var class="Arg">bool</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">ps1</var>, <var class="Arg">f2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
 <p><var class="Arg">ps1</var> is a polar space over a field extension <span class="SimpleMath">L</span> of <var class="Arg">f2</var>, <var class="Arg">basis</var> is a basis for <span class="SimpleMath">L</span> over <var class="Arg">f2</var>, <var class="Arg">alpha</var> is a non-zero element of <span class="SimpleMath">L</span>. The version of <code class="file">NaturalEmbeddingByFieldReduction</code> implements the first approach as explained in <a href="chap10.html#X7823BA95797898CE"><span class="RefLink">10.5-3</span></a>. When no argument <var class="Arg">basis</var> is given, a basis for <span class="SimpleMath">L</span> over <var class="Arg">f2</var> is computed using <code class="file">Basis(AsVectorSpace(K,L))</code>. When no argument <var class="Arg">alpha</var> is given, <code class="file">One(f2)</code> is used as value for <var class="Arg">alpha</var>. When <var class="Arg">bool</var> is true or not given, an intertwiner is computed, when <var class="Arg">bool</var> is <var class="Arg">false</var>, no intertwiner is computed. This intertwiner has as its domain the <strong class="button">isometry group</strong> of <var class="Arg">ps1</var>. The user may wish that the intertwiner is not computed when embedding large polar spaces. The default (when calling the operation with two arguments) is set to <code class="code">true</code>. In the first example, we construct a spread of maximal subspaces (solids) in a 7 dimensional symplectic space. We compute a subgroup of its stabilizer group using the intertwiner. In the second example, we construct a linear blocking set of the symplectic generalised quadrangle over GF(9) .</p>
@@ -967,8 +967,8 @@ ProjectiveSpace(7, 3)
 
 <h5>10.5-5 NaturalEmbeddingByFieldReduction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">ps1</var>, <var class="Arg">ps2</var>, <var class="Arg">bool</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">ps1</var>, <var class="Arg">ps2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">ps1</var>, <var class="Arg">ps2</var>, <var class="Arg">bool</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">ps1</var>, <var class="Arg">ps2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
 <p>If <var class="Arg">ps1</var> and <var class="Arg">ps2</var> are two polar spaces which are suitable for field reduction as listed in the table with possible embeddings in Section <a href="chap10.html#X7823BA95797898CE"><span class="RefLink">10.5-3</span></a>, then this operation returns the corresponding embedding. An intertwiner is computed if the third argument <var class="Arg">bool</var> is true, or if there is no third argument. This intertwiner has as its domain the <strong class="button">isometry group</strong> of <var class="Arg">ps1</var>. The example shows two cases where a spread is computed, including a subgroup of its stabiliser group using the intertwiner.</p>
@@ -1058,7 +1058,7 @@ PDeltaO-(6,7)
 
 <h5>10.6-1 NaturalProjectionBySubspace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalProjectionBySubspace</code>( <var class="Arg">ps</var>, <var class="Arg">v</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalProjectionBySubspace</code>( <var class="Arg">ps</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
 <p>The argument <var class="Arg">ps</var> is a projective or polar space, and <var class="Arg">v</var> is a subspace of <var class="Arg">ps</var>. In the case that <var class="Arg">ps</var> is a projective space, the geometry of subspaces containing <var class="Arg">v</var> is a projective space of lower dimension over the same basefield, and this operation returns the corresponding geometry morphism. In the case that <var class="Arg">ps</var> is a polar space, the geometry of elements pf <var class="Arg">ps</var> containing <var class="Arg">v</var> is a polar space of lower rank and of the same type over the same basefield, and this operation returns the corresponding geometry morphism. It is checked whether <var class="Arg">v</var> is a subspace of <var class="Arg">ps</var>, and whether the input of the function and preimage of the returned geometry morphism is valid or not. There is a shorthand for this operation which is basically an overload of the quotient operation. So, for example, <code class="code">ps / v</code> achieves the same thing as <code class="code">AmbientGeometry(Range(NaturalProjectionBySubspace(ps, v)))</code>. An intertwiner is not available for this geometry morphism.</p>
@@ -1096,7 +1096,7 @@ Q+(5, 3)
 
 <h5>10.7-1 ProjectiveCompletion</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveCompletion</code>( <var class="Arg">as</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveCompletion</code>( <var class="Arg">as</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
 <p>The argument <var class="Arg">as</var> is an affine space. This operation returns an embedding of <var class="Arg">as</var> into the projective space <var class="Arg">ps</var> of the same dimension, and over the same field. For example, the point <span class="SimpleMath">(x, y, z)</span> is mapped onto the projective point with homogeneous coordinates <span class="SimpleMath">(1, x, y, z)</span>. An intertwiner is unnecessary, <code class="file">CollineationGroup(as)</code> is a subgroup of <code class="file">CollineationGroup(ps)</code>.</p>
@@ -1119,7 +1119,7 @@ AG(3, 5)
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap9.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap11.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chapA.html">A</a>  <a href="chapB.html">B</a>  <a href="chapC.html">C</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chapA.html">A</a>  <a href="chapB.html">B</a>  <a href="chapC.html">C</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

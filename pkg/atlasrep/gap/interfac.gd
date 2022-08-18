@@ -12,32 +12,32 @@
 #############################################################################
 ##
 #F  DisplayAtlasInfo( [<listofnames>][,][<std>][,]["contents", <sources>]
-#F                    [, IsPermGroup[, true]]
+#F                    [, IsPermGroup[, <bool>]]
 #F                    [, NrMovedPoints, <n>]
 #F                    [, IsTransitive[, <bool>]]
-#F                    [, Transitivty[, <n>]]
+#F                    [, Transitivity, <n>]
 #F                    [, IsPrimitive[, <bool>]]
-#F                    [, RankAction[, <n>]]
-#F                    [, IsMatrixGroup[, true]]
+#F                    [, RankAction, <n>]
+#F                    [, IsMatrixGroup[, <bool>]]
 #F                    [, Characteristic, <p>][, Dimension, <n>]
 #F                    [, Ring, <R>]
 #F                    [, Position, <n>]
 #F                    [, Character, <chi>]
 #F                    [, Identifier, <id>] )
 #F  DisplayAtlasInfo( <gapname>[, <std>][, "contents", <sources>]
-#F                    [, IsPermGroup[, true]]
+#F                    [, IsPermGroup[, <bool>]]
 #F                    [, NrMovedPoints, <n>]
 #F                    [, IsTransitive[, <bool>]]
-#F                    [, Transitivty[, <n>]]
+#F                    [, Transitivity, <n>]
 #F                    [, IsPrimitive[, <bool>]]
-#F                    [, RankAction[, <n>]]
-#F                    [, IsMatrixGroup[, true]]
+#F                    [, RankAction, <n>]
+#F                    [, IsMatrixGroup[, <bool>]]
 #F                    [, Characteristic, <p>][, Dimension, <n>]
 #F                    [, Ring, <R>]
 #F                    [, Position, <n>]
 #F                    [, Character, <chi>]
 #F                    [, Identifier, <id>]
-#F                    [, IsStraightLineProgram[, true]] )
+#F                    [, IsStraightLineProgram[, <bool>]] )
 ##
 ##  <#GAPDoc Label="DisplayAtlasInfo">
 ##  <ManSection>
@@ -73,6 +73,8 @@
 ##    Other parts can become available by calls to 
 ##    <Ref Func="AtlasOfGroupRepresentationsNotifyData"
 ##    Label="for a local file describing private data"/>.
+##    Note that the shown numbers of locally available files depend on
+##    what has already been downloaded.
 ##  </Item>
 ##  </List>
 ##  <P/>
@@ -216,14 +218,15 @@
 ##  </Item>
 ##  <Mark><C>Identifier</C> and <M>id</M></Mark>
 ##  <Item>
-##    restrict to representations with <C>identifier</C> component in the
+##    restrict to representations with <C>id</C> component in the
 ##    list <M>id</M> (note that this component is itself a list, entering
 ##    this list is not admissible),
 ##    or satisfying the function <M>id</M>,
 ##  </Item>
-##  <Mark><C>IsPermGroup</C> and <K>true</K></Mark>
+##  <Mark><C>IsPermGroup</C> and <K>true</K> (or <K>false</K>)</Mark>
 ##  <Item>
-##    restrict to permutation representations,
+##    restrict to permutation representations (or to representations that are
+##    not permutation representations),
 ##  </Item>
 ##  <Mark><C>NrMovedPoints</C> and <M>n</M></Mark>
 ##  <Item>
@@ -273,9 +276,10 @@
 ##    if <M>n</M> is <K>fail</K> then restrict to all permutation
 ##    representations for which this information is not available,
 ##  </Item>
-##  <Mark><C>IsMatrixGroup</C> and <K>true</K></Mark>
+##  <Mark><C>IsMatrixGroup</C> and <K>true</K> (or <K>false</K>)</Mark>
 ##  <Item>
-##    restrict to matrix representations,
+##    restrict to matrix representations (or to representations that are
+##    not matrix representations),
 ##  </Item>
 ##  <Mark><C>Characteristic</C> and <M>p</M></Mark>
 ##  <Item>
@@ -341,7 +345,6 @@
 ##    <M>n</M>-th irreducible character in &GAP;'s library character table
 ##    of the group in question;
 ##    if the characteristic is not specified then it defaults to zero,
-##    and
 ##  </Item>
 ##  <Mark><C>IsStraightLineProgram</C> and <K>true</K></Mark>
 ##  <Item>
@@ -349,7 +352,12 @@
 ##    straight line decisions
 ##    (see Section&nbsp;<Ref Sect="sect:Straight Line Decisions"/>),
 ##    and black box programs
-##    (see Section&nbsp;<Ref Sect="sect:Black Box Programs"/>).
+##    (see Section&nbsp;<Ref Sect="sect:Black Box Programs"/>),
+##    and
+##  </Item>
+##  <Mark><C>IsStraightLineProgram</C> and <K>false</K></Mark>
+##  <Item>
+##    restrict to representations.
 ##  </Item>
 ##  </List>
 ##  <P/>
@@ -402,7 +410,7 @@
 ##  <Heading>Examples for DisplayAtlasInfo</Heading>
 ##
 ##  Here are some examples how <Ref Func="DisplayAtlasInfo"/> can be called,
-##  and how it output can be interpreted.
+##  and how its output can be interpreted.
 ##  <P/>
 ##  <Log><![CDATA[
 ##  gap> DisplayAtlasInfo( "contents" );
@@ -412,7 +420,7 @@
 ##  
 ##  ID       | address, version, files                        
 ##  ---------+------------------------------------------------
-##  core     | http://brauer.maths.qmul.ac.uk/Atlas/,         
+##  core     | http://atlas.math.rwth-aachen.de/Atlas/,
 ##           | version 2019-04-08,                            
 ##           | 10586 files locally available.                 
 ##  ---------+------------------------------------------------
@@ -800,8 +808,9 @@ DeclareGlobalFunction( "DisplayAtlasInfo" );
 ##           ], [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 1, 0, 0 ] ] ], 
 ##    groupname := "A5", id := "a", 
 ##    identifier := [ "A5", "A5G1-Ar3aB0.g", 1, 3 ], 
-##    repname := "A5G1-Ar3aB0", repnr := 17, ring := NF(5,[ 1, 4 ]), 
-##    size := 60, standardization := 1, type := "matalg" )
+##    polynomial := [ -1, 1, 1 ], repname := "A5G1-Ar3aB0", repnr := 17, 
+##    ring := NF(5,[ 1, 4 ]), size := 60, standardization := 1, 
+##    type := "matalg" )
 ##  ]]></Example>
 ##  <P/>
 ##  Each of the above pairs of elements generates a group isomorphic to
@@ -1227,8 +1236,18 @@ DeclareGlobalFunction( "AtlasProgram" );
 ##  then <Ref Func="OneAtlasGeneratingSetInfo"/> returns a record <M>r</M>
 ##  whose components are the same as those of the records returned by
 ##  <Ref Func="AtlasGenerators"/>,
-##  except that the component <C>generators</C> is not contained;
-##  the component <C>identifier</C> of <M>r</M> can be used as input for
+##  except that the component <C>generators</C> is not contained,
+##  and an additional component <C>givenRing</C> is present if <C>Ring</C>
+##  is one of the arguments in the function call.
+##  <P/>
+##  The information in <C>givenRing</C> can be used later to construct
+##  the matrices over the prescribed ring.
+##  Note that this ring may be for example a domain constructed with
+##  <Ref Func="AlgebraicExtension" BookName="ref"/> instead of a field of
+##  cyclotomics or of a finite field constructed with
+##  <Ref Func="GF" BookName="ref"/>.
+##  <P/>
+##  The component <C>identifier</C> of <M>r</M> can be used as input for
 ##  <Ref Func="AtlasGenerators"/> in order to fetch the generators.
 ##  If no representation satisfying the given conditions is available
 ##  then <K>fail</K> is returned.
@@ -1315,7 +1334,8 @@ DeclareGlobalFunction( "AtlasProgram" );
 ##  true
 ##  gap> info = OneAtlasGeneratingSetInfo( "A5", Characteristic, 2 );
 ##  true
-##  gap> info = OneAtlasGeneratingSetInfo( "A5", Ring, GF(2) );
+##  gap> info2:= OneAtlasGeneratingSetInfo( "A5", Ring, GF(2) );;
+##  gap> info.identifier = info2.identifier; 
 ##  true
 ##  gap> OneAtlasGeneratingSetInfo( "A5", Characteristic, [2,5], Dimension, 2 );
 ##  rec( charactername := "2a", constituents := [ 2 ], contents := "core",
@@ -1346,26 +1366,36 @@ DeclareGlobalFunction( "AtlasProgram" );
 ##    standardization := 1, type := "matint" )
 ##  gap> info = OneAtlasGeneratingSetInfo( "A5", Ring, Integers );
 ##  true
-##  gap> info = OneAtlasGeneratingSetInfo( "A5", Ring, CF(37) );
-##  true
+##  gap> info2:= OneAtlasGeneratingSetInfo( "A5", Ring, CF(37) );;
+##  gap> info = info2;
+##  false
+##  gap> Difference( RecNames( info2 ), RecNames( info ) );
+##  [ "givenRing" ]
+##  gap> info2.givenRing;
+##  CF(37)
 ##  gap> OneAtlasGeneratingSetInfo( "A5", Ring, Integers mod 77 );
 ##  fail
 ##  gap> info:= OneAtlasGeneratingSetInfo( "A5", Ring, CF(5), Dimension, 3 );
 ##  rec( charactername := "3a", constituents := [ 2 ], contents := "core",
-##    dim := 3, groupname := "A5", id := "a", 
+##    dim := 3, givenRing := CF(5), groupname := "A5", id := "a", 
 ##    identifier := [ "A5", "A5G1-Ar3aB0.g", 1, 3 ], 
-##    repname := "A5G1-Ar3aB0", repnr := 17, ring := NF(5,[ 1, 4 ]), 
-##    size := 60, standardization := 1, type := "matalg" )
-##  gap> gens:= AtlasGenerators( info.identifier );
+##    polynomial := [ -1, 1, 1 ], repname := "A5G1-Ar3aB0", repnr := 17, 
+##    ring := NF(5,[ 1, 4 ]), size := 60, standardization := 1, 
+##    type := "matalg" )
+##  gap> gens:= AtlasGenerators( info );
 ##  rec( charactername := "3a", constituents := [ 2 ], contents := "core",
 ##    dim := 3, 
 ##    generators := 
 ##      [ [ [ -1, 0, 0 ], [ 0, -1, 0 ], [ -E(5)-E(5)^4, -E(5)-E(5)^4, 1 ] 
 ##           ], [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 1, 0, 0 ] ] ], 
-##    groupname := "A5", id := "a", 
+##    givenRing := CF(5), groupname := "A5", id := "a", 
 ##    identifier := [ "A5", "A5G1-Ar3aB0.g", 1, 3 ], 
-##    repname := "A5G1-Ar3aB0", repnr := 17, ring := NF(5,[ 1, 4 ]), 
-##    size := 60, standardization := 1, type := "matalg" )
+##    polynomial := [ -1, 1, 1 ], repname := "A5G1-Ar3aB0", repnr := 17, 
+##    ring := NF(5,[ 1, 4 ]), size := 60, standardization := 1, 
+##    type := "matalg" )
+##  gap> gens2:= AtlasGenerators( info.identifier );;
+##  gap> Difference( RecNames( gens ), RecNames( gens2 ) );
+##  [ "givenRing" ]
 ##  gap> OneAtlasGeneratingSetInfo( "A5", Ring, GF(17) );
 ##  fail
 ##  ]]></Example>
@@ -1521,7 +1551,8 @@ DeclareGlobalFunction( "AllAtlasGeneratingSetInfos" );
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> AtlasRepInfoRecord( "A5" );
-##  rec( name := "A5", nrMaxes := 3, size := 60, sizesMaxes := [ 12, 10, 6 ], 
+##  rec( name := "A5", nrMaxes := 3, size := 60, 
+##    sizesMaxes := [ 12, 10, 6 ], 
 ##    slpMaxes := [ [ 1 .. 3 ], [ [ 1 ], [ 1 ], [ 1 ] ] ], 
 ##    structureMaxes := [ "A4", "D10", "S3" ] )
 ##  gap> AtlasRepInfoRecord( "J5" );
@@ -1697,6 +1728,280 @@ DeclareGlobalFunction( "AtlasGroup" );
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "AtlasSubgroup" );
+
+
+#############################################################################
+##
+#O  EvaluatePresentation( <G>, <gapname>[, <std>] )
+#O  EvaluatePresentation( <gens>, <gapname>[, <std>] )
+##
+##  <#GAPDoc Label="EvaluatePresentation">
+##  <ManSection>
+##  <Heading>EvaluatePresentation</Heading>
+##  <Oper Name="EvaluatePresentation" Arg='G, gapname[, std]'
+##   Label="for a group, a group name (and a number)"/>
+##  <Oper Name="EvaluatePresentation" Arg='gens, gapname[, std]'
+##   Label="for a list of generators, a group name (and a number)"/>
+##
+##  <Returns>
+##  a list of group elements or <K>fail</K>.
+##  </Returns>
+##  <Description>
+##  The first argument must be either a group <A>G</A> or a list <A>gens</A>
+##  of group generators,
+##  and <A>gapname</A> must be a string that is a &GAP; name
+##  (see
+##  Section&nbsp;<Ref Sect="sect:Group Names Used in the AtlasRep Package"/>)
+##  of a group <M>H</M>, say.
+##  The optional argument <A>std</A>, if given, must be a positive integer
+##  that denotes a standardization of generators of <M>H</M>,
+##  the default is <M>1</M>.
+##  <P/>
+##  <Ref Oper="EvaluatePresentation"
+##  Label="for a group, a group name (and a number)"/> returns <K>fail</K>
+##  if no presentation for <M>H</M>
+##  w.&nbsp;r.&nbsp;t.&nbsp;the standardization <A>std</A>
+##  is stored in the database,
+##  and otherwise returns the list of results of evaluating the relators
+##  of a presentation for <M>H</M> at <A>gens</A> or the
+##  <Ref BookName="ref" Attr="GeneratorsOfGroup"/> value of <A>G</A>,
+##  respectively.
+##  (An error is signalled if the number of generators is not equal to the
+##  number of inputs of the presentation.)
+##  <P/>
+##  The result can be used as follows.
+##  Let <M>N</M> be the normal closure of the the result in <A>G</A>.
+##  The factor group <A>G</A><M>/N</M> is an epimorphic image of <M>H</M>.
+##  In particular, if all entries of the result have order <M>1</M> then
+##  <A>G</A> itself is an epimorphic image of <M>H</M>.
+##  Moreover, an epimorphism is given by mapping the <A>std</A>-th
+##  standard generators of <M>H</M> to the <M>N</M>-cosets
+##  of the given generators of <A>G</A>.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> g:= MathieuGroup( 12 );;
+##  gap> gens:= GeneratorsOfGroup( g );;  # switch to 2 generators
+##  gap> g:= Group( gens[1] * gens[3], gens[2] * gens[3] );;
+##  gap> EvaluatePresentation( g, "J0" );  # no pres. for group "J0"
+##  fail
+##  gap> relimgs:= EvaluatePresentation( g, "M11" );;
+##  gap> List( relimgs, Order );  # wrong group
+##  [ 3, 1, 5, 4, 10 ]
+##  gap> relimgs:= EvaluatePresentation( g, "M12" );;
+##  gap> List( relimgs, Order );  # generators are not standard
+##  [ 3, 4, 5, 4, 4 ]
+##  gap> g:= AtlasGroup( "M12" );;
+##  gap> relimgs:= EvaluatePresentation( g, "M12", 1 );;
+##  gap> List( relimgs, Order );  # right group, std. generators
+##  [ 1, 1, 1, 1, 1 ]
+##  gap> g:= AtlasGroup( "2.M12" );;
+##  gap> relimgs:= EvaluatePresentation( g, "M12", 1 );;
+##  gap> List( relimgs, Order );  # std. generators for extension
+##  [ 1, 2, 1, 1, 2 ]
+##  gap> Size( NormalClosure( g, SubgroupNC( g, relimgs ) ) );
+##  2
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareOperation( "EvaluatePresentation", [ IsGroup, IsString ] );
+DeclareOperation( "EvaluatePresentation",
+    [ IsGroup, IsString, IsPosInt ] );
+DeclareOperation( "EvaluatePresentation",
+    [ IsHomogeneousList, IsString ] );
+DeclareOperation( "EvaluatePresentation",
+    [ IsHomogeneousList, IsString, IsPosInt ] );
+
+
+#############################################################################
+##
+#O  StandardGeneratorsData( <G>, <gapname>[, <std>][: projective] )
+#O  StandardGeneratorsData( <gens>, <gapname>[, <std>][: projective] )
+##
+##  <#GAPDoc Label="StandardGeneratorsData">
+##  <ManSection>
+##  <Heading>StandardGeneratorsData</Heading>
+##  <Oper Name="StandardGeneratorsData" Arg='G, gapname[, std]'
+##   Label="for a group, a group name (and a number)"/>
+##  <Oper Name="StandardGeneratorsData" Arg='gens, gapname[, std]'
+##   Label="for a list of generators, a group name (and a number)"/>
+##
+##  <Returns>
+##  a record that describes standard generators of the group in question,
+##  or <K>fail</K>, or the string <C>"timeout"</C>.
+##  </Returns>
+##  <Description>
+##  The first argument must be either a group <A>G</A> or a list <A>gens</A>
+##  of group generators,
+##  and <A>gapname</A> must be a string that is a &GAP; name
+##  (see
+##  Section&nbsp;<Ref Sect="sect:Group Names Used in the AtlasRep Package"/>)
+##  of a group <M>H</M>, say.
+##  The optional argument <A>std</A>, if given, must be a positive integer
+##  that denotes a standardization of generators of <M>H</M>,
+##  the default is <M>1</M>.
+##  <P/>
+##  If the global option <C>projective</C> is given then the group elements
+##  must be matrices over a finite field,
+##  and the group must be a central extension of the group <M>H</M>
+##  by a normal subgroup that consists of scalar matrices.
+##  In this case, all computations will be carried out modulo scalar
+##  matrices (in particular, element orders will be computed using
+##  <Ref BookName="ref" Attr="ProjectiveOrder"/>),
+##  and the returned standard generators will belong to <M>H</M>.
+##  <P/>
+##  <Ref Oper="StandardGeneratorsData"
+##  Label="for a group, a group name (and a number)"/> returns
+##  <P/>
+##  <List>
+##  <Mark><K>fail</K></Mark>
+##  <Item>
+##    if no black box program for computing standard generators of <M>H</M>
+##    w.&nbsp;r.&nbsp;t.&nbsp;the standardization <A>std</A>
+##    is stored in the database,
+##    or if the black box program returns <K>fail</K>
+##    because a runtime error occurred or the program has proved
+##    that the given group or generators cannot generate a group
+##    isomorphic to <M>H</M>,
+##  </Item>
+##  <Mark><C>"timeout"</C></Mark>
+##  <Item>
+##    if the black box program returns <C>"timeout"</C>,
+##    typically because some elements of a given order were not found
+##    among a reasonable number of random elements, or
+##  </Item>
+##  <Mark>a record containing standard generators</Mark>
+##  <Item>
+##    otherwise.
+##  </Item>
+##  </List>
+##  <P/>
+##  When the result is not a record then either the group is not isomorphic
+##  to <M>H</M> (modulo scalars if applicable),
+##  or we were unlucky with choosing random elements.
+##  <P/>
+##  When a record is returned <E>and</E> <A>G</A> or the group generated by
+##  <A>gens</A>, respectively, is isomorphic to <M>H</M>
+##  (or to a central extension of <M>H</M> by a group of scalar matrices
+##  if the global option <C>projective</C> is given)
+##  then the result describes the desired standard generators.
+##  <P/>
+##  If <A>G</A> or the group generated by <A>gens</A>, respectively,
+##  is <E>not</E> isomorphic to <M>H</M> then it may still happen that
+##  <Ref Oper="StandardGeneratorsData"
+##  Label="for a group, a group name (and a number)"/> returns a record.
+##  For a proof that the returned record describes the desired standard
+##  generators, one can use a presentation of <M>H</M> whose generators
+##  correspond to the <A>std</A>-th standard generators,
+##  see <Ref Oper="EvaluatePresentation"
+##  Label="for a group, a group name (and a number)"/>.
+##  <P/>
+##  A returned record has the following components.
+##  <P/>
+##  <List>
+##  <Mark><C>gapname</C></Mark>
+##  <Item>
+##    the string <A>gapname</A>,
+##  </Item>
+##  <Mark><C>givengens</C></Mark>
+##  <Item>
+##    the list of group generators from which standard generators were
+##    computed,
+##    either <A>gens</A> or the <Ref BookName="ref" Attr="GeneratorsOfGroup"/>
+##    value of <A>G</A>,
+##  </Item>
+##  <Mark><C>stdgens</C></Mark>
+##  <Item>
+##    a list of standard generators of the group,
+##  </Item>
+##  <Mark><C>givengenstostdgens</C></Mark>
+##  <Item>
+##    a straight line program that takes <C>givengens</C> as inputs,
+##    and returns <C>stdgens</C>,
+##  </Item>
+##  <Mark><C>std</C></Mark>
+##  <Item>
+##    the underlying standardization <A>std</A>.
+##  </Item>
+##  </List>
+##  <P/>
+##  The first examples show three cases of failure,
+##  due to the unavailability of a suitable black box program
+##  or to a wrong choice of <A>gapname</A>.
+##  (In the search for standard generators of <M>M_{11}</M> in the group
+##  <M>M_{12}</M>, one may or may not find an element whose order does not
+##  appear in <M>M_{11}</M>; in the first case, the result is <K>fail</K>,
+##  whereas a record is returned in the second case.
+##  Both cases occur.)
+##  <P/>
+##  <Example><![CDATA[
+##  gap> StandardGeneratorsData( MathieuGroup( 11 ), "J0" );
+##  fail
+##  gap> StandardGeneratorsData( MathieuGroup( 11 ), "M12" );
+##  "timeout"
+##  gap> repeat
+##  >      res:= StandardGeneratorsData( MathieuGroup( 12 ), "M11" );
+##  >    until res = fail;
+##  ]]></Example>
+##  <P/>
+##  The next example shows a computation of standard generators for the
+##  Mathieu group <M>M_{12}</M>.
+##  Using a presentation of <M>M_{12}</M> w.&nbsp;r.&nbsp;t.&nbsp;these
+##  standard generators, we prove that the given group is
+##  isomorphic to <M>M_{12}</M>.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> gens:= GeneratorsOfGroup( MathieuGroup( 12 ) );;
+##  gap> std:= 1;;
+##  gap> res:= StandardGeneratorsData( gens, "M12", std );;
+##  gap> Set( RecNames( res ) );
+##  [ "gapname", "givengens", "givengenstostdgens", "std", "stdgens" ]
+##  gap> gens = res.givengens;
+##  true
+##  gap> ResultOfStraightLineProgram( res.givengenstostdgens, gens )
+##  >    = res.stdgens;
+##  true
+##  gap> evl:= EvaluatePresentation( res.stdgens, "M12", std );;
+##  gap> ForAll( evl, IsOne );
+##  true
+##  ]]></Example>
+##  <P/>
+##  The next example shows the use of the global option <C>projective</C>.
+##  We take an irreducible matrix representation of the double cover of
+##  the Mathieu group <M>M_{12}</M> (thus the center is represented by
+##  scalar matrices) and compute standard generators of the factor group
+##  <M>M_{12}</M>.
+##  Using a presentation of <M>M_{12}</M> w.&nbsp;r.&nbsp;t.&nbsp;these
+##  standard generators, we prove that the given group is modulo scalars
+##  isomorphic to <M>M_{12}</M>, and we get generators for the kernel.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> g:= AtlasGroup( "2.M12", IsMatrixGroup, Characteristic, IsPosInt );;
+##  gap> gens:= Permuted( GeneratorsOfGroup( g ), (1,2) );;
+##  gap> res:= StandardGeneratorsData( gens, "M12", std : projective );;
+##  gap> gens = res.givengens;
+##  true
+##  gap> ResultOfStraightLineProgram( res.givengenstostdgens, gens )
+##  >    = res.stdgens;
+##  true
+##  gap> evl:= EvaluatePresentation( res.stdgens, "M12", std );;
+##  gap> ForAll( evl, IsOne );
+##  false
+##  gap> ForAll( evl, x -> IsCentral( g, x ) );
+##  true
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareOperation( "StandardGeneratorsData", [ IsGroup, IsString ] );
+DeclareOperation( "StandardGeneratorsData",
+    [ IsGroup, IsString, IsPosInt ] );
+DeclareOperation( "StandardGeneratorsData",
+    [ IsHomogeneousList, IsString ] );
+DeclareOperation( "StandardGeneratorsData",
+    [ IsHomogeneousList, IsString, IsPosInt ] );
 
 
 #############################################################################

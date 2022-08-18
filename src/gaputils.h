@@ -11,7 +11,7 @@
 #ifndef GAP_UTILS_H
 #define GAP_UTILS_H
 
-#include "system.h"
+#include "common.h"
 
 //
 // Swap the content of two variables <a> and <b> of type <T>.
@@ -30,7 +30,14 @@
 #define ARRAY_SIZE(arr)     ( sizeof(arr) / sizeof((arr)[0]) )
 
 
-EXPORT_INLINE Int AlwaysYes(Obj obj) { return 1; }
-EXPORT_INLINE Int AlwaysNo(Obj obj) { return 0; }
+EXPORT_INLINE BOOL AlwaysYes(Obj obj)
+{
+    return TRUE;
+}
+
+EXPORT_INLINE BOOL AlwaysNo(Obj obj)
+{
+    return FALSE;
+}
 
 #endif // GAP_UTILS_H

@@ -158,7 +158,7 @@ DeclareSynonym("AbstractWordTzWord",AssocWordByLetterRep);
 ##  generator is to write
 ##  <C>GeneratorsOfPresentation(P)[Length(GeneratorsOfPresentation(P))]</C>.
 ##  <Example><![CDATA[
-##  gap> G := PerfectGroup( 120 );;
+##  gap> G := PerfectGroup(IsFpGroup, 120 );;
 ##  gap> H := Subgroup( G, [ G.1^G.2, G.3 ] );;
 ##  gap> P := PresentationSubgroup( G, H );
 ##  <presentation with 4 gens and 7 rels of total length 21>
@@ -231,7 +231,7 @@ DeclareGlobalFunction("AddRelator");
 ##  redundant list of generators of <A>H</A> which consists of an (in general
 ##  small) list of <Q>primary</Q> generators, followed by an (in general
 ##  large) list of <Q>secondary</Q> generators, and then construct a
-##  presentation <M>P_0</M>, say,
+##  presentation <M>P_0</M>
 ##  <E>on a sublist of these generators</E> by rewriting
 ##  the defining relators of <A>G</A>.
 ##  This sublist contains all primary, but, at least in general,
@@ -273,7 +273,7 @@ DeclareGlobalFunction("AddRelator");
 ##  Starting from <M>P = P_0</M>, it runs through a number of steps in each
 ##  of which it eliminates the current <Q>last</Q> generator (with respect to
 ##  the list of all primary and secondary generators). If the last generator
-##  <A>g</A>, say, is a primary generator, then the procedure terminates.
+##  <A>g</A> is a primary generator, then the procedure terminates.
 ##  Otherwise it checks whether there is a relator in the current
 ##  presentation which can be used to substitute <A>g</A> by a Tietze
 ##  transformation. If so, this is done.
@@ -525,8 +525,8 @@ DeclareGlobalFunction("PresentationRegularPermutationGroupNC");
 ##  gap> TzPrintRelators( P );
 ##  #I  1. f2^3
 ##  #I  2. f1^6
-##  #I  3. (f1^-1*f2^-1)^6
-##  #I  4. f1*f2*f1^-1*f2^-1*f1*f2^-1*f1^-1*f2*f1*f2^-1*f1^-1*f2^-1
+##  #I  3. (f1*f2)^6
+##  #I  4. f1*f2*f1^-1*f2*f1*f2^-1*f1^-1*f2*f1*f2*f1^-1*f2^-1
 ##  #I  5. f1^-3*f2*f1*f2*(f1^-1*f2^-1)^2*f1^-2*f2
 ##  ]]></Example>
 ##  <P/>
@@ -549,10 +549,10 @@ DeclareGlobalFunction("PresentationRegularPermutationGroupNC");
 ##  gap> G := FpGroupPresentation( P );
 ##  <fp group on the generators [ a, b, c ]>
 ##  gap> RelatorsOfFpGroup( G );
-##  [ c^2, b^4, (a*c)^3, (a*b^-2)^3, a^11, 
-##    a^2*b*a^-2*b^-1*(b^-1*a)^2*a*b^-1, (a*(b*a^-1)^2*b^-1)^2, 
-##    a^2*b*a^2*b^-2*a^-1*b*(a^-1*b^-1)^2, 
-##    (a*b)^2*a^2*b^-1*a^-1*b^-1*a*c*b*c, a^2*(a^2*b)^2*a^-2*c*a*b*a^-1*c 
+##  [ c^2, b^4, (a*c)^3, (a*b^-2)^3, a^11,
+##    a^2*b*a^-2*b^-1*(b^-1*a)^2*a*b^-1, (a*(b*a^-1)^2*b^-1)^2,
+##    a^2*b*a^2*b^-2*a^-1*b*(a^-1*b^-1)^2,
+##    a^2*b^-1*a^-1*b^-1*a*c*b*c*(a*b)^2, a^2*(a^2*b)^2*a^-2*c*a*b*a^-1*c
 ##   ]
 ##  ]]></Example>
 ##  <P/>
@@ -1088,6 +1088,23 @@ SimplifyPresentation := TzGo;
 ##
 DeclareGlobalFunction("TzGoGo");
 
+############################################################################
+##
+#F  TzGoElim(<P>,<len>)
+##
+##  <#GAPDoc Label="TzGoElim">
+##  <ManSection>
+##  <Func Name="TzGoElim" Arg='P,len'/>
+##
+##  <Description>
+##  A variant for the TzGoXXX functions for the MTC. Tries to reduce down to
+##  <C>len</C> generators and does not try so hard to reduce.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction("TzGoElim");
+
 
 #############################################################################
 ##
@@ -1295,10 +1312,10 @@ DeclareGlobalFunction("TzNewGenerator");
 ##  #I  relators:
 ##  #I  1.  2  [ 3, 3 ]
 ##  #I  2.  4  [ 2, 2, 2, 2 ]
-##  #I  3.  4  [ -2, 3, -2, 3 ]
+##  #I  3.  4  [ 2, 3, 2, 3 ]
 ##  #I  4.  5  [ 1, 1, 1, 1, 1 ]
 ##  #I  5.  5  [ 1, 1, 2, 1, -2 ]
-##  #I  6.  8  [ -1, 3, 1, 3, -1, 2, 2, 3 ]
+##  #I  6.  8  [ 1, -2, -2, 3, 1, 3, -1, 3 ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -1458,7 +1475,7 @@ DeclareGlobalFunction("TzPrintLengths");
 ##  </Item>
 ##  <Mark><C>expandLimit</C>:</Mark>
 ##  <Item>
-##    Whenever the routine for eliminating more than 1 generators is
+##    Whenever the routine for eliminating more than 1 generator is
 ##    called for a presentation <A>P</A> by the
 ##    <Ref Func="TzEliminate" Label="for a presentation (and a generator)"/>
 ##    command or the elimination phase of the <Ref Func="TzGo"/> command,
@@ -1598,9 +1615,9 @@ DeclareGlobalFunction("TzPrintOptions");
 ##  a word of length 2 to be substituted.
 ##  <Example><![CDATA[
 ##  gap> TzPrintPairs( P, 3 );
-##  #I  1.  3  occurrences of  f2 * f3
-##  #I  2.  2  occurrences of  f2^-1 * f3
-##  #I  3.  2  occurrences of  f1 * f3
+##  #I  1.  3  occurrences of  f2^-1 * f3
+##  #I  2.  2  occurrences of  f2 * f3
+##  #I  3.  2  occurrences of  f1^-1 * f3
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -1647,10 +1664,10 @@ DeclareGlobalFunction("TzPrintPresentation");
 ##  gap> TzPrintRelators( P );
 ##  #I  1. f3^2
 ##  #I  2. f2^4
-##  #I  3. (f2^-1*f3)^2
+##  #I  3. (f2*f3)^2
 ##  #I  4. f1^5
 ##  #I  5. f1^2*f2*f1*f2^-1
-##  #I  6. f1^-1*f3*f1*f3*f1^-1*f2^2*f3
+##  #I  6. f1*f2^-2*f3*f1*f3*f1^-1*f3
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -1745,7 +1762,7 @@ DeclareGlobalFunction("TzRemoveGenerators");
 ##  <M>l_1</M> and <M>l_2</M>, respectively,
 ##  such that <M>l_1 \leq l_2</M> and <M>r_1</M> and <M>r_2</M>
 ##  coincide (possibly after inverting or conjugating one of them) in some
-##  maximal subword <M>w</M>, say, of length greater than <M>l_1/2</M>,
+##  maximal subword <M>w</M> of length greater than <M>l_1/2</M>,
 ##  and then to substitute each copy of <M>w</M> in <M>r_2</M> by the inverse
 ##  complement of <M>w</M> in <M>r_1</M>.
 ##  <P/>
@@ -1778,7 +1795,7 @@ DeclareGlobalFunction("TzRemoveGenerators");
 ##  <P/>
 ##  As this subroutine performs a very expensive process, it has been
 ##  implemented as a C routine in the &GAP; kernel. For the given relator
-##  <M>r_1</M> of length <M>l_1</M>, say, it first determines the
+##  <M>r_1</M> of length <M>l_1</M> it first determines the
 ##  <E>minimal match length</E> <M>l</M> which is <M>l_1/2+1</M>,
 ##  if <M>l_1</M> is even, or <M>(l_1+1)/2</M>, otherwise.
 ##  Then it builds up a hash list for all subwords of length <M>l</M>
@@ -1826,7 +1843,7 @@ DeclareGlobalFunction("TzSearch");
 ##  <M>l_1</M> and <M>l_2</M>, respectively, such that <M>l_1</M> is even,
 ##  <M>l_1 \leq l_2</M>, and <M>r_1</M> and <M>r_2</M> coincide (possibly 
 ##  after inverting or conjugating one of them) in some maximal subword
-##  <M>w</M>, say, of length at least <M>l_1/2</M>.
+##  <M>w</M> of length at least <M>l_1/2</M>.
 ##  Let <M>l</M> be the length of <M>w</M>. Then, if <M>l > l_1/2</M>,
 ##  the pair is handled as in <Ref Func="TzSearch"/>.
 ##  Otherwise, if <M>l = l_1/2</M>, then <Ref Func="TzSearchEqual"/>
@@ -2136,7 +2153,7 @@ DeclareGlobalFunction("TzSubstitute");
 ##  <Func Name="TzSubstituteCyclicJoins" Arg='P'/>
 ##
 ##  <Description>
-##  tries to find pairs of commuting generators <M>a</M> and <M>b</M>, say,
+##  tries to find pairs of commuting generators <M>a</M> and <M>b</M>
 ##  such that the exponent of <M>a</M> (i. e. the least currently known
 ##  positive integer <M>n</M> such that <M>a^n</M> is a relator in <A>P</A>)
 ##  is prime to the exponent of <M>b</M>.

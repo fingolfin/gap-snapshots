@@ -5,6 +5,7 @@ pkgdir := DirectoriesPackageLibrary( pkgname, "tst" );
 
 # Arrange chapters as required
 testfiles := [
+"bugfix.tst",
 "tst_regular13system.tst",
 "tst_segrevariety.tst",
 "tst_hermitianspreads.tst",
@@ -24,10 +25,17 @@ for ff in testfiles do
 od;
 if testresult then
   Print("#I  No errors detected while testing package ", pkgname, "\n");
+  QUIT_GAP(0);
 else
   Print("#I  Errors detected while testing package ", pkgname, "\n");
+  QUIT_GAP(1);
 fi;
 end;
 
 # Set the name of the package here
+Print("EXecuting this file\n");
+
 TestMyPackage( "fining" );
+
+QUIT_GAP(0);
+

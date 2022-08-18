@@ -16,7 +16,7 @@
 ##
 #V  Rationals . . . . . . . . . . . . . . . . . . . . . .  field of rationals
 ##
-InstallValue( Rationals, Objectify( NewType(
+BindGlobal( "Rationals", Objectify( NewType(
     CollectionsFamily( CyclotomicsFamily ),
     IsRationals and IsAttributeStoringRep ), rec() ) );
 SetName( Rationals, "Rationals" );
@@ -26,27 +26,8 @@ SetConductor( Rationals, 1 );
 SetDimension( Rationals, 1 );
 SetGaloisStabilizer( Rationals, [ 1 ] );
 SetGeneratorsOfLeftModule( Rationals, [ 1 ] );
+SetIsFinitelyGeneratedMagma( Rationals, false );
 SetIsWholeFamily( Rationals, false );
-
-
-#############################################################################
-##
-#V  GaussianRationals . . . . . . . . . . . . . . field of Gaussian rationals
-##
-InstallValue( GaussianRationals, Objectify( NewType(
-    CollectionsFamily( CyclotomicsFamily ),
-    IsGaussianRationals and IsAttributeStoringRep ), rec() ) );
-SetName( GaussianRationals, "GaussianRationals" );
-SetLeftActingDomain( GaussianRationals, Rationals );
-SetIsPrimeField( GaussianRationals, false );
-SetIsCyclotomicField( GaussianRationals, true );
-SetSize( GaussianRationals, infinity );
-SetConductor( GaussianRationals, 4 );
-SetDimension( GaussianRationals, 2 );
-SetDegreeOverPrimeField( GaussianRationals, 2 );
-SetGaloisStabilizer( GaussianRationals, [ 1 ] );
-SetGeneratorsOfLeftModule( GaussianRationals, [ 1, E(4) ] );
-SetIsWholeFamily( GaussianRationals, false );
 
 
 #############################################################################

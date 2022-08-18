@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Create_wrapper_hulls_of_a_category">
+<Heading>Create wrapper hulls of a category</Heading>
+
+<P/>
+ The support for building towers of category constructors is one
+ of the main design features of CAP. Many categories that
+ appear in the various applications can be modeled by towers
+ of multiple category constructors.
+ The wrapper category constructor allows adding
+ one last layer on top which allows expressing
+ the desired (re)interpretation of such a modeling tower.
+ In particular, the wrapper category constructor allows specifying
+ the name of the category together with customized methods for the operations
+<List>
+<Item>
+ObjectConstructor
+</Item>
+<Item>
+MorphismConstructor
+</Item>
+<Item>
+ObjectDatum
+</Item>
+<Item>
+MorphismDatum
+</Item>
+</List>
+ in order to reflect the desired interpretation with
+ a user-interface that is independent of the modeling tower.
+ Note that the same tower might have multiple interpretations.
+<P/>
+ <Table Align="|c|">
+ <Caption>A tower of categories modeling the category <C>W</C></Caption>
+ <HorLine/>
+ <Row>
+   <Item><C>W := WrapperCategory( cat_n )</C></Item>
+ </Row>
+ <HorLine/>
+ <Row>
+   <Item><C>cat_n := CategoryConstructor_n( cat_{n-1} )</C></Item>
+ </Row>
+ <HorLine/>
+ <Row>
+   <Item>...</Item>
+ </Row>
+ <HorLine/>
+ <Row>
+   <Item><C>cat_1 := CategoryConstructor_1( non_categorical_input )</C></Item>
+ </Row>
+ <HorLine/>
+ </Table>
+ The wrapper category <C>W</C> is by construction equivalent
+ to the top category <C>cat_n</C> in the tower.
+ In practice, the word <Q>tower</Q> stands more generally for a finite poset
+ with a greatest element.
+<Section Label="Chapter_Create_wrapper_hulls_of_a_category_Section_GAP_categories">
+<Heading>GAP categories</Heading>
+
+<ManSection>
+  <Filt Arg="arg" Name="WasCreatedAsWrapperCapCategory" Label="for IsCapCategory"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+  The &GAP; category of CAP categories that have been created using <Ref Oper="WrapperCategory" Label="for IsCapCategory, IsRecord" />
+  but not necessarily use the default data structure.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsWrapperCapCategory" Label="for WasCreatedAsWrapperCapCategory"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+  The &GAP; category of a wrapper CAP category (using the default data structure).
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsWrapperCapCategoryCell" Label="for IsCapCategoryCell"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+  The &GAP; category of cells in a wrapper CAP category.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsWrapperCapCategoryObject" Label="for IsWrapperCapCategoryCell and IsCapCategoryObject"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+  The &GAP; category of objects in a wrapper CAP category.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsWrapperCapCategoryMorphism" Label="for IsWrapperCapCategoryCell and IsCapCategoryMorphism"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+  The &GAP; category of morphisms in a wrapper CAP category.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Create_wrapper_hulls_of_a_category_Section_Attributes">
+<Heading>Attributes</Heading>
+
+<ManSection>
+  <Attr Arg="category" Name="ModelingCategory" Label="for WasCreatedAsWrapperCapCategory"/>
+ <Returns>a category
+</Returns>
+ <Description>
+  The category used to model the wrapper category <A>category</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="cell" Name="UnderlyingCell" Label="for IsWrapperCapCategoryCell"/>
+ <Returns>a category cell
+</Returns>
+ <Description>
+  The cell underlying the wrapper category cell <A>cell</A>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Create_wrapper_hulls_of_a_category_Section_Constructors">
+<Heading>Constructors</Heading>
+
+<ManSection>
+  <Oper Arg="category, object" Name="AsObjectInWrapperCategory" Label="for IsWrapperCapCategory, IsCapCategoryObject"/>
+ <Returns>an object
+</Returns>
+ <Description>
+  Wrap an object <A>object</A> (in the category underlying the wrapper category <A>category</A>) to form an object in <A>category</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="source, morphism, range" Name="AsMorphismInWrapperCategory" Label="for IsWrapperCapCategoryObject, IsCapCategoryMorphism, IsWrapperCapCategoryObject"/>
+ <Returns>a morphism
+</Returns>
+ <Description>
+  Wrap a morphism <A>morphism</A> (in the category underlying the wrapper category <Code>CapCategory(</Code><A>source</A><Code>)</Code>) to form a morphism in <Code>CapCategory(</Code><A>source</A><Code>)</Code>
+  with given source and range.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="category, morphism" Name="AsMorphismInWrapperCategory" Label="for IsWrapperCapCategory, IsCapCategoryMorphism"/>
+ <Returns>a morphism
+</Returns>
+ <Description>
+  Wrap a morphism <A>morphism</A> (in the category underlying the wrapper category <A>category</A>) to form a morphism in <A>category</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="cell, category" Name="\/" Label="for IsCapCategoryCell, IsWrapperCapCategory"/>
+ <Description>
+  Convenience method for <Ref Oper="AsObjectInWrapperCategory" Label="for IsWrapperCapCategory, IsCapCategoryObject" />
+  and <Ref Oper="AsMorphismInWrapperCategory" Label="for IsWrapperCapCategory, IsCapCategoryMorphism" />.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="category, options" Name="WrapperCategory" Label="for IsCapCategory, IsRecord"/>
+ <Returns>a category
+</Returns>
+ <Description>
+  Wraps a category <A>category</A> to form a new category subject to the options given via <A>options</A>,
+  which is a record with the following keys:
+<List>
+<Item>
+<Code>name</Code> (optional): the name of the wrapper category
+</Item>
+<Item>
+<Code>only_primitive_operations</Code> (optional, default <Code>false</Code>): whether to only wrap primitive operations or all operations
+</Item>
+<Item>
+<Code>wrap_range_of_hom_structure</Code> (optional, default <Code>false</Code>): whether to wrap the range category of the homomorphism structure
+</Item>
+</List>
+<P/>
+  Additionally, the following options of <Ref Oper="CategoryConstructor" Label="for IsRecord" /> are supported:
+  <Code>category_filter</Code>, <Code>category_object_filter</Code>, <Code>category_morphism_filter</Code>, <Code>object_constructor</Code>, <Code>object_datum</Code>, <Code>morphism_constructor</Code>, <Code>morphism_datum</Code>.
+  To avoid inconsistencies, either all or none of those options should be set. If they are set, also the following options should be set:
+<List>
+<Item>
+<Code>modeling_tower_object_constructor</Code>: a function which gets the wrapper category and an object datum (in the sense of <Code>object_datum</Code>) and returns the corresponding modeling object in the modeling category,
+</Item>
+<Item>
+<Code>modeling_tower_object_datum</Code>: a function which gets the wrapper category and an object in the modeling category and returns the corresponding object datum (in the sense of <Code>object_datum</Code>),
+</Item>
+<Item>
+<Code>modeling_tower_morphism_constructor</Code>: a function which gets the wrapper category, a source in the modeling category, a morphism datum (in the sense of <Code>morphism_datum</Code>), and a range in the modeling category and returns the corresponding modeling morphism in the modeling category,
+</Item>
+<Item>
+<Code>modeling_tower_morphism_datum</Code>: a function which gets the wrapper category and a morphism in the modeling category and returns the corresponding morphism datum (in the sense of <Code>morphism_datum</Code>),
+</Item>
+</List>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="W" Name="WrappingFunctor" Label="for IsWrapperCapCategory"/>
+ <Returns>a functor
+</Returns>
+ <Description>
+  Return the functor from the wrapped category <C>ModelingCategory</C>(<A>W</A>) to the wrapper category <A>W</A>.
+  The functor maps each wrapped object/morphism to its wrapping object/morphism.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="cat, obj" Name="ModelingObject" Label="for WasCreatedAsWrapperCapCategory, IsCapCategoryObject"/>
+ <Returns>a CAP category object
+</Returns>
+ <Description>
+  Returns the object modeling the object <A>obj</A> in <A>cat</A>.
+  <A>cat</A> must be a CAP category which has been created as a wrapper CAP category (but not necessarily uses the default data structure).
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="cat, obj" Name="ModeledObject" Label="for WasCreatedAsWrapperCapCategory, IsCapCategoryObject"/>
+ <Returns>a CAP category object
+</Returns>
+ <Description>
+  Returns the object modeled by the object <A>obj</A> in the modeling category of <A>cat</A>.
+  <A>cat</A> must be a CAP category which has been created as a wrapper CAP category (but not necessarily uses the default data structure).
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="cat, mor" Name="ModelingMorphism" Label="for WasCreatedAsWrapperCapCategory, IsCapCategoryMorphism"/>
+ <Returns>a CAP category morphism
+</Returns>
+ <Description>
+  Returns the morphism modeling the morphism <A>mor</A> in <A>cat</A>.
+  <A>cat</A> must be a CAP category which has been created as a wrapper CAP category (but not necessarily uses the default data structure).
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="cat, source, obj, range" Name="ModeledMorphism" Label="for WasCreatedAsWrapperCapCategory, IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject"/>
+ <Returns>a CAP category morphism
+</Returns>
+ <Description>
+  Returns the morphism modeled by the morphism <A>mor</A> in the modeling category of <A>cat</A> with given source and range.
+  <A>cat</A> must be a CAP category which has been created as a wrapper CAP category (but not necessarily uses the default data structure).
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+</Chapter>
+

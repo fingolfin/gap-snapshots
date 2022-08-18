@@ -79,7 +79,7 @@
 
 <h4>42.1 <span class="Heading">IsPerm (Filter)</span></h4>
 
-<p>Internally, <strong class="pkg">GAP</strong> stores a permutation as a list of the <span class="SimpleMath">d</span> images of the integers <span class="SimpleMath">1, ..., d</span>, where the "internal degree" <span class="SimpleMath">d</span> is the largest integer moved by the permutation or bigger. When a permutation is read in in cycle notation, <span class="SimpleMath">d</span> is always set to the largest moved integer, but a bigger <span class="SimpleMath">d</span> can result from a multiplication of two permutations, because the product is not shortened if it fixes <span class="SimpleMath">d</span>. The images are stored all as <span class="SimpleMath">16</span>-bit integers or all as <span class="SimpleMath">32</span>-bit integers, depending on whether <span class="SimpleMath">d ≤ 65536</span> or not. For example, if <span class="SimpleMath">m≥ 65536</span>, the permutation <span class="SimpleMath">(1, 2, ..., m)</span> has internal degree <span class="SimpleMath">d=m</span> and takes <span class="SimpleMath">4m</span> bytes of memory for storage. But --- since the internal degree is not reduced --- this means that the identity permutation <code class="code">()</code> calculated as <span class="SimpleMath">(1, 2, ..., m) * (1, 2, ..., m)^{-1}</span> also takes <span class="SimpleMath">4m</span> bytes of storage. It can take even more because the internal list has sometimes room for more than <span class="SimpleMath">d</span> images.</p>
+<p>Internally, <strong class="pkg">GAP</strong> stores a permutation as a list of the <span class="SimpleMath">d</span> images of the integers <span class="SimpleMath">1, ..., d</span>, where the "internal degree" <span class="SimpleMath">d</span> is the largest integer moved by the permutation or bigger. When a permutation is read in cycle notation, <span class="SimpleMath">d</span> is always set to the largest moved integer, but a bigger <span class="SimpleMath">d</span> can result from a multiplication of two permutations, because the product is not shortened if it fixes <span class="SimpleMath">d</span>. The images are stored all as <span class="SimpleMath">16</span>-bit integers or all as <span class="SimpleMath">32</span>-bit integers, depending on whether <span class="SimpleMath">d ≤ 65536</span> or not. For example, if <span class="SimpleMath">m≥ 65536</span>, the permutation <span class="SimpleMath">(1, 2, ..., m)</span> has internal degree <span class="SimpleMath">d=m</span> and takes <span class="SimpleMath">4m</span> bytes of memory for storage. But --- since the internal degree is not reduced --- this means that the identity permutation <code class="code">()</code> calculated as <span class="SimpleMath">(1, 2, ..., m) * (1, 2, ..., m)^{-1}</span> also takes <span class="SimpleMath">4m</span> bytes of storage. It can take even more because the internal list has sometimes room for more than <span class="SimpleMath">d</span> images.</p>
 
 <p>On 32-bit systems, the limit on the degree of permutations is, for technical reasons, <span class="SimpleMath">2^28-1</span>. On 64-bit systems, it is <span class="SimpleMath">2^32-1</span> because only a 32-bit integer is used to represent each image internally. Error messages should be given if any command would require creating a permutation exceeding this limit.</p>
 
@@ -99,7 +99,7 @@
 9
 </pre></div>
 
-<p>The operation <code class="func">Permuted</code> (<a href="chap21.html#X7B5A19098406347A"><span class="RefLink">21.20-18</span></a>) can be used to permute the entries of a list according to a permutation.</p>
+<p>The operation <code class="func">Permuted</code> (<a href="chap21.html#X7B5A19098406347A"><span class="RefLink">21.20-17</span></a>) can be used to permute the entries of a list according to a permutation.</p>
 
 <p><a id="X7AA69C6686FC49EA" name="X7AA69C6686FC49EA"></a></p>
 
@@ -144,7 +144,7 @@
 
 <p>The permutation <var class="Arg">p1</var> is smaller than <var class="Arg">p2</var> if <var class="Arg">p1</var> <span class="SimpleMath">≠</span> <var class="Arg">p2</var> and <span class="SimpleMath">i^{<var class="Arg">p1</var>} &lt; i^{<var class="Arg">p2</var>}</span>, where <span class="SimpleMath">i</span> is the smallest point with <span class="SimpleMath">i^{<var class="Arg">p1</var>} ≠ i^{<var class="Arg">p2</var>}</span>. Therefore the identity permutation is the smallest permutation, see also Section <a href="chap31.html#X7B3BC7BA7BB2646D"><span class="RefLink">31.11</span></a>.</p>
 
-<p>Permutations can be compared with certain other <strong class="pkg">GAP</strong> objects, see <a href="chap4.html#X7A274A1F8553B7E6"><span class="RefLink">4.12</span></a> for the details.</p>
+<p>Permutations can be compared with certain other <strong class="pkg">GAP</strong> objects, see <a href="chap4.html#X7A274A1F8553B7E6"><span class="RefLink">4.13</span></a> for the details.</p>
 
 
 <div class="example"><pre>
@@ -163,7 +163,7 @@ false
 <h5>42.2-2 DistancePerms</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DistancePerms</code>( <var class="Arg">perm1</var>, <var class="Arg">perm2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>returns the number of points for which <var class="Arg">perm1</var> and <var class="Arg">perm2</var> have different images. This should always produce the same result as <code class="code">NrMovePoints(<var class="Arg">perm1</var>/<var class="Arg">perm2</var>)</code> but some methods may be much faster than this form, since no new permutation needs to be created.</p>
+<p>returns the number of points for which <var class="Arg">perm1</var> and <var class="Arg">perm2</var> have different images. This should always produce the same result as <code class="code">NrMovedPoints(<var class="Arg">perm1</var>/<var class="Arg">perm2</var>)</code> but some methods may be much faster than this form, since no new permutation needs to be created.</p>
 
 <p><a id="X83A917F67D45C7EA" name="X83A917F67D45C7EA"></a></p>
 
@@ -280,7 +280,7 @@ false
 <h5>42.5-2 PermList</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermList</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>is the permutation <span class="SimpleMath">π</span> that moves points as described by the list <var class="Arg">list</var>. That means that <span class="SimpleMath">i^π =</span> <var class="Arg">list</var><code class="code">[</code><span class="SimpleMath">i</span><code class="code">]</code> if <span class="SimpleMath">i</span> lies between <span class="SimpleMath">1</span> and the length of <var class="Arg">list</var>, and <span class="SimpleMath">i^π = i</span> if <span class="SimpleMath">i</span> is larger than the length of the list <var class="Arg">list</var>. <code class="func">PermList</code> will return <code class="keyw">fail</code> if <var class="Arg">list</var> does not define a permutation, i.e., if <var class="Arg">list</var> is not dense, or if <var class="Arg">list</var> contains a positive integer twice, or if <var class="Arg">list</var> contains an integer not in the range <code class="code">[ 1 .. Length( <var class="Arg">list</var> ) ]</code>, of if <var class="Arg">list</var> contains non-integer entries, etc.</p>
+<p>is the permutation <span class="SimpleMath">π</span> that moves points as described by the list <var class="Arg">list</var>. That means that <span class="SimpleMath">i^π =</span> <var class="Arg">list</var><code class="code">[</code><span class="SimpleMath">i</span><code class="code">]</code> if <span class="SimpleMath">i</span> lies between <span class="SimpleMath">1</span> and the length of <var class="Arg">list</var>, and <span class="SimpleMath">i^π = i</span> if <span class="SimpleMath">i</span> is larger than the length of the list <var class="Arg">list</var>. <code class="func">PermList</code> will return <code class="keyw">fail</code> if <var class="Arg">list</var> does not define a permutation, i.e., if <var class="Arg">list</var> is not dense, or if <var class="Arg">list</var> contains a positive integer twice, or if <var class="Arg">list</var> contains an integer not in the range <code class="code">[ 1 .. Length( <var class="Arg">list</var> ) ]</code>, or if <var class="Arg">list</var> contains non-integer entries, etc.</p>
 
 <p><a id="X8087DCC780B9656A" name="X8087DCC780B9656A"></a></p>
 

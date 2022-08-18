@@ -42,11 +42,11 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X83A9DC2085D3A972">24.4-1 DimensionsMat</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X80AE547B8095A5CB">24.4-2 DefaultFieldOfMatrix</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X793D5E87870FFBCD">24.4-3 TraceMat</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X83045F6F82C180E1">24.4-4 DeterminantMat</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X84277D21848B7B7F">24.4-5 DeterminantMatDestructive</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X7EEA7E7A7F6BE6F3">24.4-6 DeterminantMatDivFree</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X8740D4D47D7ECD4A">24.4-7 IsEmptyMatrix</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X784EC2777C06AFE4">24.4-3 TraceMatrix</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X8488D69A7ADDB4E2">24.4-4 DeterminantMatrix</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X824B5DC2875118B3">24.4-5 DeterminantMatrixDestructive</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X80693FAB7D541804">24.4-6 DeterminantMatrixDivFree</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X7F8D25897EC1630B">24.4-7 IsEmptyMatrix</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X848B80437CE65FF3">24.4-8 IsMonomialMatrix</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X7EEC8E768178696E">24.4-9 IsDiagonalMatrix</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X8740E71C799C0BCC">24.4-10 IsUpperTriangularMatrix</a></span>
@@ -76,7 +76,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap24.html#X85485DCE809E323A">24.7 <span class="Heading">Matrices Representing Linear Equations and the Gaussian Algorithm</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X7B21AE7987D4FB31">24.7-1 RankMat</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X7A995A74838950E6">24.7-1 RankMatrix</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X7BA26C3387AB434E">24.7-2 TriangulizedMat</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X8384CA8E7B3850D3">24.7-3 TriangulizeMat</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X7DA0D5887DB12DC4">24.7-4 NullspaceMat</a></span>
@@ -134,7 +134,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X83F55D4E79BA5D1B">24.13-3 JordanDecomposition</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X85923C107A4569D0">24.13-4 BlownUpMat</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X82AC277D84EC5749">24.13-5 BlownUpVector</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X85A1026D7CB6ABAC">24.13-6 CompanionMat</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap24.html#X7E06762479A00DF4">24.13-6 CompanionMatrix</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap24.html#X873822B6830CE367">24.14 <span class="Heading">Matrices over Finite Fields</span></a>
 </span>
@@ -173,7 +173,7 @@
 
 <h3>24 <span class="Heading">Matrices</span></h3>
 
-<p>Matrices are represented in <strong class="pkg">GAP</strong> by lists of row vectors (see <a href="chap23.html#X82C7E6CF7BA03391"><span class="RefLink">23</span></a>) (for future changes to this policy see Chapter <a href="chap26.html#X856C23B87E50F118"><span class="RefLink">26</span></a>). The vectors must all have the same length, and their elements must lie in a common ring. However, since checking rectangularness can be expensive functions and methods of operations for matrices often will not give an error message for non-rectangular lists of lists –in such cases the result is undefined.</p>
+<p>In <strong class="pkg">GAP</strong>, Matrices can be represented by lists of row vectors, see <a href="chap23.html#X82C7E6CF7BA03391"><span class="RefLink">23</span></a>. (For a more general way to represent vectors and matrices, see Chapter <a href="chap26.html#X856C23B87E50F118"><span class="RefLink">26</span></a>). The row vectors must all have the same length, and their elements must lie in a common ring. However, since checking rectangularness can be expensive functions and methods of operations for matrices often will not give an error message for non-rectangular lists of lists –in such cases the result is undefined.</p>
 
 <p>Because matrices are just a special case of lists, all operations and functions for lists are applicable to matrices also (see chapter <a href="chap21.html#X7B256AE5780F140A"><span class="RefLink">21</span></a>). This especially includes accessing elements of a matrix (see <a href="chap21.html#X7921047F83F5FA28"><span class="RefLink">21.3</span></a>), changing elements of a matrix (see <a href="chap21.html#X8611EF768210625B"><span class="RefLink">21.4</span></a>), and comparing matrices (see <a href="chap21.html#X8016D50F85147A77"><span class="RefLink">21.10</span></a>).</p>
 
@@ -289,7 +289,7 @@ false
 
 <p><code class="code"><var class="Arg">vec</var> * <var class="Arg">mat</var></code></p>
 
-<p>returns the product of the row vector <var class="Arg">vec</var> and the matrix <var class="Arg">mat</var>. Probably the most usual situation is that <var class="Arg">vec</var> and <var class="Arg">mat</var> have the same lengths and are defined over a common field, and that all rows of <var class="Arg">mat</var> have the same length <span class="SimpleMath">m</span>, say; in this case the product is a new row vector of length <span class="SimpleMath">m</span> over the same field which is the sum of the scalar multiples of the rows of <var class="Arg">mat</var> with the corresponding entries of <var class="Arg">vec</var>.</p>
+<p>returns the product of the row vector <var class="Arg">vec</var> and the matrix <var class="Arg">mat</var>. Probably the most usual situation is that <var class="Arg">vec</var> and <var class="Arg">mat</var> have the same lengths and are defined over a common field, and that all rows of <var class="Arg">mat</var> have some common length <span class="SimpleMath">m</span>; in this case the product is a new row vector of length <span class="SimpleMath">m</span> over the same field which is the sum of the scalar multiples of the rows of <var class="Arg">mat</var> with the corresponding entries of <var class="Arg">vec</var>.</p>
 
 <p>More general situations are for example the product of an integer vector and a matrix over a finite field, or the product of a vector over a finite field and an integer matrix.</p>
 
@@ -301,7 +301,7 @@ false
 
 <p><code class="code"><var class="Arg">mat1</var> * <var class="Arg">mat2</var></code></p>
 
-<p>This form evaluates to the (Cauchy) product of the two matrices <var class="Arg">mat1</var> and <var class="Arg">mat2</var>. Probably the most usual situation is that the number of columns of <var class="Arg">mat1</var> equals the number of rows of <var class="Arg">mat2</var>, and that the elements of <var class="Arg">mat</var> and <var class="Arg">vec</var> lie in a common field; if <var class="Arg">mat1</var> is a matrix with <span class="SimpleMath">m</span> rows and <span class="SimpleMath">n</span> columns, say, and <var class="Arg">mat2</var> is a matrix with <span class="SimpleMath">n</span> rows and <span class="SimpleMath">o</span> columns, the result is a new matrix with <span class="SimpleMath">m</span> rows and <span class="SimpleMath">o</span> columns. The element in row <span class="SimpleMath">i</span> at position <span class="SimpleMath">j</span> of the product is the sum of <span class="SimpleMath"><var class="Arg">mat1</var>[i][l] * <var class="Arg">mat2</var>[l][j]</span>, with <span class="SimpleMath">l</span> running from <span class="SimpleMath">1</span> to <span class="SimpleMath">n</span>.</p>
+<p>This form evaluates to the (Cauchy) product of the two matrices <var class="Arg">mat1</var> and <var class="Arg">mat2</var>. Probably the most usual situation is that the number of columns of <var class="Arg">mat1</var> equals the number of rows of <var class="Arg">mat2</var>, and that the elements of <var class="Arg">mat</var> and <var class="Arg">vec</var> lie in a common field; if <var class="Arg">mat1</var> is a matrix with <span class="SimpleMath">m</span> rows and <span class="SimpleMath">n</span> columns and <var class="Arg">mat2</var> is a matrix with <span class="SimpleMath">n</span> rows and <span class="SimpleMath">o</span> columns, the result is a new matrix with <span class="SimpleMath">m</span> rows and <span class="SimpleMath">o</span> columns. The element in row <span class="SimpleMath">i</span> at position <span class="SimpleMath">j</span> of the product is the sum of <span class="SimpleMath"><var class="Arg">mat1</var>[i][l] * <var class="Arg">mat2</var>[l][j]</span>, with <span class="SimpleMath">l</span> running from <span class="SimpleMath">1</span> to <span class="SimpleMath">n</span>.</p>
 
 <p><code class="code">Inverse( <var class="Arg">mat</var> )</code></p>
 
@@ -401,63 +401,67 @@ fail
 GF(2^6)
 </pre></div>
 
-<p><a id="X793D5E87870FFBCD" name="X793D5E87870FFBCD"></a></p>
+<p><a id="X784EC2777C06AFE4" name="X784EC2777C06AFE4"></a></p>
 
-<h5>24.4-3 TraceMat</h5>
+<h5>24.4-3 TraceMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceMatrix</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Trace</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The trace of a square matrix is the sum of its diagonal entries.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TraceMat([[1,2,3],[4,5,6],[7,8,9]]);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TraceMatrix([[1,2,3],[4,5,6],[7,8,9]]);</span>
 15
 </pre></div>
 
-<p><a id="X83045F6F82C180E1" name="X83045F6F82C180E1"></a></p>
+<p><a id="X8488D69A7ADDB4E2" name="X8488D69A7ADDB4E2"></a></p>
 
-<h5>24.4-4 DeterminantMat</h5>
+<h5>24.4-4 DeterminantMatrix</h5>
 
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeterminantMatrix</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeterminantMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Determinant</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the determinant of the square matrix <var class="Arg">mat</var>.</p>
 
-<p>These methods assume implicitly that <var class="Arg">mat</var> is defined over an integral domain whose quotient field is implemented in <strong class="pkg">GAP</strong>. For matrices defined over an arbitrary commutative ring with one see <code class="func">DeterminantMatDivFree</code> (<a href="chap24.html#X7EEA7E7A7F6BE6F3"><span class="RefLink">24.4-6</span></a>).</p>
+<p>These methods assume implicitly that <var class="Arg">mat</var> is defined over an integral domain whose quotient field is implemented in <strong class="pkg">GAP</strong>. For matrices defined over an arbitrary commutative ring with one see <code class="func">DeterminantMatDivFree</code> (<a href="chap24.html#X80693FAB7D541804"><span class="RefLink">24.4-6</span></a>).</p>
 
-<p><a id="X84277D21848B7B7F" name="X84277D21848B7B7F"></a></p>
+<p><a id="X824B5DC2875118B3" name="X824B5DC2875118B3"></a></p>
 
-<h5>24.4-5 DeterminantMatDestructive</h5>
+<h5>24.4-5 DeterminantMatrixDestructive</h5>
 
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeterminantMatrixDestructive</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeterminantMatDestructive</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Does the same as <code class="func">DeterminantMat</code> (<a href="chap24.html#X83045F6F82C180E1"><span class="RefLink">24.4-4</span></a>), with the difference that it may destroy its argument. The matrix <var class="Arg">mat</var> must be mutable.</p>
+<p>Does the same as <code class="func">DeterminantMatrix</code> (<a href="chap24.html#X8488D69A7ADDB4E2"><span class="RefLink">24.4-4</span></a>), with the difference that it may destroy its argument. The matrix <var class="Arg">mat</var> must be mutable.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DeterminantMat([[1,2],[2,1]]);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DeterminantMatrix([[1,2],[2,1]]);</span>
 -3
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mm:= [[1,2],[2,1]];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DeterminantMatDestructive( mm );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DeterminantMatrixDestructive( mm );</span>
 -3
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mm;</span>
 [ [ 1, 2 ], [ 0, -3 ] ]
 </pre></div>
 
-<p><a id="X7EEA7E7A7F6BE6F3" name="X7EEA7E7A7F6BE6F3"></a></p>
+<p><a id="X80693FAB7D541804" name="X80693FAB7D541804"></a></p>
 
-<h5>24.4-6 DeterminantMatDivFree</h5>
+<h5>24.4-6 DeterminantMatrixDivFree</h5>
 
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeterminantMatrixDivFree</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeterminantMatDivFree</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>returns the determinant of a square matrix <var class="Arg">mat</var> over an arbitrary commutative ring with one using the division free method of Mahajan and Vinay <a href="chapBib.html#biBMV97">[MV97]</a>.</p>
+<p>return the determinant of a square matrix <var class="Arg">mat</var> over an arbitrary commutative ring with one using the division free method of Mahajan and Vinay <a href="chapBib.html#biBMV97">[MV97]</a>.</p>
 
-<p><a id="X8740D4D47D7ECD4A" name="X8740D4D47D7ECD4A"></a></p>
+<p><a id="X7F8D25897EC1630B" name="X7F8D25897EC1630B"></a></p>
 
 <h5>24.4-7 IsEmptyMatrix</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEmptyMatrix</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: A boolean</p>
 
-<p>Is <code class="keyw">true</code> if <var class="Arg">M</var> either has zero columns or zero rows and <code class="keyw">false</code> otherwise. In other words, a matrix is empty if it has no entries.</p>
+<p>Is <code class="keyw">true</code> if the matrix object <var class="Arg">M</var> either has zero columns or zero rows, and <code class="keyw">false</code> otherwise. In other words, a matrix object is empty if it has no entries.</p>
 
 <p><a id="X848B80437CE65FF3" name="X848B80437CE65FF3"></a></p>
 
@@ -616,7 +620,7 @@ EmptyMatrix( 5 )
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposedMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposedMatMutable</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposedMatOp</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>These functions all return the transposed of the matrix <var class="Arg">mat</var>, i.e., a matrix <var class="Arg">trans</var> such that <code class="code"><var class="Arg">trans</var>[<var class="Arg">i</var>][<var class="Arg">k</var>] = <var class="Arg">mat</var>[<var class="Arg">k</var>][<var class="Arg">i</var>]</code> holds.</p>
+<p>These functions all return the transposed of the matrix object <var class="Arg">mat</var>, i.e., a matrix object <span class="SimpleMath">trans</span> such that <span class="SimpleMath">trans[i,k] = <var class="Arg">mat</var>[k,i]</span> holds.</p>
 
 <p>They differ only w.r.t. the mutability of the result.</p>
 
@@ -662,7 +666,7 @@ EmptyMatrix( 5 )
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReflectionMat</code>( <var class="Arg">coeffs</var>[, <var class="Arg">conj</var>][, <var class="Arg">root</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">coeffs</var> be a row vector. <code class="func">ReflectionMat</code> returns the matrix of the reflection in this vector.</p>
 
-<p>More precisely, if <var class="Arg">coeffs</var> is the coefficients list of a vector <span class="SimpleMath">v</span> w.r.t. a basis <span class="SimpleMath">B</span> (see <code class="func">Basis</code> (<a href="chap61.html#X837BE54C80DE368E"><span class="RefLink">61.5-2</span></a>)), say, then the returned matrix describes the reflection in <span class="SimpleMath">v</span> w.r.t. <span class="SimpleMath">B</span> as a map on a row space, with action from the right.</p>
+<p>More precisely, if <var class="Arg">coeffs</var> is the coefficients list of a vector <span class="SimpleMath">v</span> w.r.t. a basis <span class="SimpleMath">B</span> (see <code class="func">Basis</code> (<a href="chap61.html#X837BE54C80DE368E"><span class="RefLink">61.5-2</span></a>)) then the returned matrix describes the reflection in <span class="SimpleMath">v</span> w.r.t. <span class="SimpleMath">B</span> as a map on a row space, with action from the right.</p>
 
 <p>The optional argument <var class="Arg">root</var> is a root of unity that determines the order of the reflection. The default is a reflection of order 2. For triflections one should choose a third root of unity etc. (see <code class="func">E</code> (<a href="chap18.html#X8631458886314588"><span class="RefLink">18.1-1</span></a>)).</p>
 
@@ -722,7 +726,7 @@ EmptyMatrix( 5 )
 <h5>24.6-3 RandomUnimodularMat</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomUnimodularMat</code>( [<var class="Arg">rs</var>, ]<var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>returns a new random mutable <var class="Arg">m</var><span class="SimpleMath">×</span><var class="Arg">m</var> matrix with integer entries that is invertible over the integers. Optionally, a random source <var class="Arg">rs</var> can be supplied.</p>
+<p>returns a new random mutable <var class="Arg">m</var><span class="SimpleMath">×</span><var class="Arg">m</var> matrix with integer entries that is invertible over the integers. Optionally, a random source <var class="Arg">rs</var> can be supplied. If the option <var class="Arg">domain</var> is given, random selection is made from <var class="Arg">domain</var>, otherwise from <var class="Arg">Integers</var></p>
 
 
 <div class="example"><pre>
@@ -730,25 +734,30 @@ EmptyMatrix( 5 )
 [ [ -5, 1, 0 ], [ 12, -2, -1 ], [ -14, 3, 0 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m^-1;</span>
 [ [ -3, 0, 1 ], [ -14, 0, 5 ], [ -8, -1, 2 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomUnimodularMat(3:domain:=[-1000..1000]);</span>
+[ [ 312330173, 15560030349, -125721926670 ],
+[ -307290, -15309014, 123693281 ],
+[ -684293792, -34090949551, 275448039848 ] ]
 </pre></div>
 
 <p><a id="X85485DCE809E323A" name="X85485DCE809E323A"></a></p>
 
 <h4>24.7 <span class="Heading">Matrices Representing Linear Equations and the Gaussian Algorithm</span></h4>
 
-<p><a id="X7B21AE7987D4FB31" name="X7B21AE7987D4FB31"></a></p>
+<p><a id="X7A995A74838950E6" name="X7A995A74838950E6"></a></p>
 
-<h5>24.7-1 RankMat</h5>
+<h5>24.7-1 RankMatrix</h5>
 
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankMatrix</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>If <var class="Arg">mat</var> is a matrix whose rows span a free module over the ring generated by the matrix entries and their inverses then <code class="func">RankMat</code> returns the dimension of this free module. Otherwise <code class="keyw">fail</code> is returned.</p>
+<p>If <var class="Arg">mat</var> is a matrix object representing a matrix whose rows span a free module over the ring generated by the matrix entries and their inverses then <code class="func">RankMatrix</code> returns the dimension of this free module. Otherwise <code class="keyw">fail</code> is returned.</p>
 
-<p>Note that <code class="func">RankMat</code> may perform a Gaussian elimination. For large rational matrices this may take very long, because the entries may become very large.</p>
+<p>Note that <code class="func">RankMatrix</code> may perform a Gaussian elimination. For large rational matrices this may take very long, because the entries may become very large.</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat:=[[1,2,3],[4,5,6],[7,8,9]];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RankMat(mat);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RankMatrix( mat );</span>
 2
 </pre></div>
 
@@ -1094,7 +1103,7 @@ rec( coeffs := [ [ 1, 0 ], [ 0, 1 ] ], heads := [ 1, 0, 2 ],
 <h5>24.10-5 SemiEchelonMatsDestructive</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemiEchelonMatsDestructive</code>( <var class="Arg">mats</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Does the same as <code class="code">SemiEchelonmats</code>, except that it may destroy its argument. Therefore the argument must be a list of matrices that re mutable.</p>
+<p>Does the same as <code class="func">SemiEchelonMats</code> (<a href="chap24.html#X827D7971800DB661"><span class="RefLink">24.10-4</span></a>), except that it may destroy its argument. Therefore the argument must be a list of matrices that are mutable.</p>
 
 <p><a id="X86B0D4A886BC0C6E" name="X86B0D4A886BC0C6E"></a></p>
 
@@ -1316,7 +1325,7 @@ x^4+2*x^2+1
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BlownUpMat</code>( <var class="Arg">B</var>, <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">B</var> be a basis of a field extension <span class="SimpleMath">F / K</span>, and <var class="Arg">mat</var> a matrix whose entries are all in <span class="SimpleMath">F</span>. (This is not checked.) <code class="func">BlownUpMat</code> returns a matrix over <span class="SimpleMath">K</span> that is obtained by replacing each entry of <var class="Arg">mat</var> by its regular representation w.r.t. <var class="Arg">B</var>.</p>
 
-<p>More precisely, regard <var class="Arg">mat</var> as the matrix of a linear transformation on the row space <span class="SimpleMath">F^n</span> w.r.t. the <span class="SimpleMath">F</span>-basis with vectors <span class="SimpleMath">(v_1, ldots, v_n)</span>, say, and suppose that the basis <var class="Arg">B</var> consists of the vectors <span class="SimpleMath">(b_1, ..., b_m)</span>; then the returned matrix is the matrix of the linear transformation on the row space <span class="SimpleMath">K^mn</span> w.r.t. the <span class="SimpleMath">K</span>-basis whose vectors are <span class="SimpleMath">(b_1 v_1, ... b_m v_1, ..., b_m v_n)</span>.</p>
+<p>More precisely, regard <var class="Arg">mat</var> as the matrix of a linear transformation on the row space <span class="SimpleMath">F^n</span> w.r.t. the <span class="SimpleMath">F</span>-basis with vectors <span class="SimpleMath">(v_1, ldots, v_n)</span> and suppose that the basis <var class="Arg">B</var> consists of the vectors <span class="SimpleMath">(b_1, ..., b_m)</span>; then the returned matrix is the matrix of the linear transformation on the row space <span class="SimpleMath">K^mn</span> w.r.t. the <span class="SimpleMath">K</span>-basis whose vectors are <span class="SimpleMath">(b_1 v_1, ... b_m v_1, ..., b_m v_n)</span>.</p>
 
 <p>Note that the linear transformations act on <em>row</em> vectors, i.e., each row of the matrix is a concatenation of vectors of <var class="Arg">B</var>-coefficients.</p>
 
@@ -1344,12 +1353,13 @@ x^4+2*x^2+1
 true
 </pre></div>
 
-<p><a id="X85A1026D7CB6ABAC" name="X85A1026D7CB6ABAC"></a></p>
+<p><a id="X7E06762479A00DF4" name="X7E06762479A00DF4"></a></p>
 
-<h5>24.13-6 CompanionMat</h5>
+<h5>24.13-6 CompanionMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompanionMat</code>( <var class="Arg">poly</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>computes a companion matrix of the polynomial <var class="Arg">poly</var>. This matrix has <var class="Arg">poly</var> as its minimal polynomial.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompanionMatrix</code>( <var class="Arg">poly</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompanionMat</code>( <var class="Arg">poly</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>compute a companion matrix of the polynomial <var class="Arg">poly</var>. This matrix has <var class="Arg">poly</var> as its minimal polynomial.</p>
 
 <p><a id="X873822B6830CE367" name="X873822B6830CE367"></a></p>
 
@@ -1471,13 +1481,13 @@ fail
 <h5>24.14-4 SimultaneousEigenvalues</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimultaneousEigenvalues</code>( <var class="Arg">matlist</var>, <var class="Arg">expo</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>The matrices in <var class="Arg">matlist</var> must be matrices over GF(<var class="Arg">q</var>) for some prime <var class="Arg">q</var>. Together, they must generate an abelian p-group of exponent <var class="Arg">expo</var>. Then the eigenvalues of <var class="Arg">mat</var> in the splitting field <code class="code">GF(<var class="Arg">q</var>^<var class="Arg">r</var>)</code> for some <var class="Arg">r</var> are powers of an element <span class="SimpleMath">ξ</span> in the splitting field, which is of order <var class="Arg">expo</var>. <code class="func">SimultaneousEigenvalues</code> returns a matrix of integers mod <var class="Arg">expo</var>, say <span class="SimpleMath">(a_{i,j})</span>, such that the power <span class="SimpleMath">ξ^{a_{i,j}}</span> is an eigenvalue of the <var class="Arg">i</var>-th matrix in <var class="Arg">matlist</var> and the eigenspaces of the different matrices to the eigenvalues <span class="SimpleMath">ξ^{a_{i,j}}</span> for fixed <var class="Arg">j</var> are equal.</p>
+<p>The matrices in <var class="Arg">matlist</var> must be matrices over GF(<var class="Arg">q</var>) for some prime <var class="Arg">q</var>. Together, they must generate an abelian p-group of exponent <var class="Arg">expo</var>. Then the eigenvalues of <var class="Arg">mat</var> in the splitting field <code class="code">GF(<var class="Arg">q</var>^<var class="Arg">r</var>)</code> for some <var class="Arg">r</var> are powers of an element <span class="SimpleMath">ξ</span> in the splitting field, which is of order <var class="Arg">expo</var>. <code class="func">SimultaneousEigenvalues</code> returns a matrix of integers mod <var class="Arg">expo</var> <span class="SimpleMath">(a_{i,j})</span>, such that the power <span class="SimpleMath">ξ^{a_{i,j}}</span> is an eigenvalue of the <var class="Arg">i</var>-th matrix in <var class="Arg">matlist</var> and the eigenspaces of the different matrices to the eigenvalues <span class="SimpleMath">ξ^{a_{i,j}}</span> for fixed <var class="Arg">j</var> are equal.</p>
 
 <p><a id="X8593A5337D3B2C70" name="X8593A5337D3B2C70"></a></p>
 
 <h4>24.15 <span class="Heading">Inverse and Nullspace of an Integer Matrix Modulo an Ideal</span></h4>
 
-<p>The following operations deal with matrices over a ring, but only care about the residues of their entries modulo some ring element. In the case of the integers and a prime number <span class="SimpleMath">p</span>, say, this is effectively computation in a matrix over the prime field in characteristic <span class="SimpleMath">p</span>.</p>
+<p>The following operations deal with matrices over a ring, but only care about the residues of their entries modulo some ring element. In the case of the integers and a prime number <span class="SimpleMath">p</span>, this is effectively computation in a matrix over the prime field in characteristic <span class="SimpleMath">p</span>.</p>
 
 <p><a id="X7D8D1E0E83C7F872" name="X7D8D1E0E83C7F872"></a></p>
 
@@ -1526,7 +1536,7 @@ fail
 
 <h4>24.16 <span class="Heading">Special Multiplication Algorithms for Matrices over GF(2)</span></h4>
 
-<p>When multiplying two compressed matrices <span class="SimpleMath">M</span> and <span class="SimpleMath">N</span> over GF(2) of dimensions <span class="SimpleMath">a × b</span> and <span class="SimpleMath">b × c</span>, say, where <span class="SimpleMath">a</span>, <span class="SimpleMath">b</span> and <span class="SimpleMath">c</span> are all greater than or equal to 128, <strong class="pkg">GAP</strong> by default uses a more sophisticated matrix multiplication algorithm, in which linear combinations of groups of 8 rows of <span class="SimpleMath">M</span> are remembered and re-used in constructing various rows of the product. This is called level 8 grease. To optimise memory access patterns, these combinations are stored for <span class="SimpleMath">(b+255)/256</span> sets of 8 rows at once. This number is called the blocking level.</p>
+<p>When multiplying two compressed matrices <span class="SimpleMath">M</span> and <span class="SimpleMath">N</span> over GF(2) of dimensions <span class="SimpleMath">a × b</span> and <span class="SimpleMath">b × c</span>, where <span class="SimpleMath">a</span>, <span class="SimpleMath">b</span> and <span class="SimpleMath">c</span> are all greater than or equal to 128, <strong class="pkg">GAP</strong> by default uses a more sophisticated matrix multiplication algorithm, in which linear combinations of groups of 8 rows of <span class="SimpleMath">M</span> are remembered and re-used in constructing various rows of the product. This is called level 8 grease. To optimise memory access patterns, these combinations are stored for <span class="SimpleMath">(b+255)/256</span> sets of 8 rows at once. This number is called the blocking level.</p>
 
 <p>These levels of grease and blocking are found experimentally to give good performance across a range of processors and matrix sizes, but other levels may do even better in some cases. You can control the levels exactly using the functions below.</p>
 

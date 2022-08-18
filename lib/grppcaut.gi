@@ -9,25 +9,6 @@
 ##  SPDX-License-Identifier: GPL-2.0-or-later
 ##
 
-#############################################################################
-##
-#F InducedActionFactor( mats, fac, low )
-# this function is used only in a package.
-##
-InducedActionFactor := function( mats, fac, low )
-    local sml, upp, d, i, b, t;
-    sml := List( mats, x -> [] );
-    upp := Concatenation( fac, low );
-    d   := Length( fac );
-    for i in [1..Length(mats)] do
-        for b in fac do
-            t := SolutionMat( upp, b*mats[i] ){[1..d]};
-            Add( sml[i], t );
-        od;
-    od;
-    return sml; 
-end;
-
 VectorStabilizerByFactors:=function(group,gens,mats,shadows,vec)
   local PrunedBasis, f, lim, mo, dim, bas, newbas, dims, q, bp, ind, affine,
   acts, nv, stb, idx, idxh, incstb, incperm, notinc, free, freegens, stabp,
@@ -786,7 +767,7 @@ end;
 # construct subgroup of GL that stabilizes the spaces given and fixes the
 # listed spaceorbits.
 
-# auxillary
+# auxiliary
 RedmatSpanningIndices:=function(gens)
 local bas,n,one,new,a,b,g;
   n:=Length(gens[1]);
@@ -966,7 +947,7 @@ if Length(rans[i])=0 then Error("EGAD");fi;
 	for j in sporb do
 	  s:=List(j,x->SumIntersectionMat(x,new[min[i]])[2]);
 	  # if the dimension changes, its hard to be clever
-	  if Length(Set(List(s,Length)))=1 and
+	  if Length(Set(s,Length))=1 and
 	    Length(s[1])>Length(sofar) and Length(s[1])<Length(new[min[i]]) then
 	    Add(spl,s);
 	  fi;
@@ -1078,7 +1059,7 @@ if Length(rans[i])=0 then Error("EGAD");fi;
       od;
       if Length(m)>Length(i) then
         yet:=ActionHomomorphism(a,m,OnSubspacesByCanonicalBasis,"surjective");
-	sub:=Stabilizer(Image(yet),Set(List(i,x->Position(m,x))),OnSets);
+	sub:=Stabilizer(Image(yet),Set(i,x->Position(m,x)),OnSets);
 	a:=PreImage(yet,sub);
       fi;
     od;
@@ -1101,12 +1082,12 @@ if Length(rans[i])=0 then Error("EGAD");fi;
    spaces:=ShallowCopy(ospaces);
    SortBy(spaces,Length);
    for i in spaces do
-      i:=Set(List(NormedRowVectors(VectorSpace(field,i)),x->Position(yet,x)));
+      i:=Set(NormedRowVectors(VectorSpace(field,i)),x->Position(yet,x));
       b:=Stabilizer(b,i,OnSets);
       Print("Stab ",Size(b),"\n");
     od;
     for i in osporb do
-      i:=List(i,x->Set(List(NormedRowVectors(VectorSpace(field,x)),x->Position(yet,x))));
+      i:=List(i,x->Set(NormedRowVectors(VectorSpace(field,x)),x->Position(yet,x)));
       b:=Stabilizer(b,Union(i),OnSets);
       b:=Stabilizer(b,Set(i),OnSetsSets);
     od;
@@ -1249,6 +1230,7 @@ InstallGlobalFunction(AutomorphismGroupSolvableGroup,function( G )
 	  fi;
 	  if actbase<>fail then
 	    e:=List(actbase,x->quotimg(H,pcgsH,x));
+            IsGroupOfAutomorphismsFiniteGroup(A);
 	    NiceMonomorphism(A:autactbase:=e);
 	  fi;
 
@@ -1463,6 +1445,7 @@ InstallGlobalFunction(AutomorphismGroupSolvableGroup,function( G )
 	  tmp:=Size(A);
 	  if actbase<>fail then
 	    e:=List(actbase,x->quotimg(H,pcgsH,x));
+            IsGroupOfAutomorphismsFiniteGroup(A);
 	    NiceMonomorphism(A:autactbase:=e);
 	  fi;
 	  for e in B do

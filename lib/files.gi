@@ -20,7 +20,6 @@ SetInfoLevel(InfoTempDirectories,1);
 
 #############################################################################
 ##
-
 #R  IsDirectoryRep  . . . . . . . . . . default representation of a directory
 ##
 if IsHPCGAP then
@@ -100,7 +99,6 @@ end );
 
 #############################################################################
 ##
-
 #M  Filename( <directory>, <string> ) . . . . . . . . . . . create a filename
 ##
 InstallMethod( Filename,
@@ -238,7 +236,7 @@ InstallMethod( ReadAsFunction,
 DeclareUserPreference( rec(
   name:= [ "Editor", "EditorOptions" ],
   description:= [
-    "Determines the editor and options (used by GAPs 'Edit' command).  \
+    "Determines the editor and options (used by GAP's 'Edit' command).  \
 Under Mac OS X, the value \"open\" for Editor will work. For further options, \
 see the GAP help for 'Edit'.  \
 If you want to use the editor defined in your (shell) environment then \
@@ -402,3 +400,25 @@ InstallGlobalFunction(RemoveDirectoryRecursively,
     end;
     return Dowork(dirname);
   end );
+
+InstallGlobalFunction( HexSHA256,
+function(str)
+    local s, res;
+
+    if IsString(str) then
+        str := CopyToStringRep(str);
+    elif IsInputStream(str) then
+        str := ReadAll(str);
+        # TODO: instead o reading the complete stream at once (which might be
+        # huge), it would be better to read it in chunks, say 16kb at a time.
+        # Alas, our streams API currently offers no way to do that.
+    else
+        ErrorNoReturn("<str> has to be a string or an input stream");
+    fi;
+
+    s := GAP_SHA256_INIT();
+    GAP_SHA256_UPDATE(s, str);
+    res := GAP_SHA256_FINAL(s);
+    res := Sum([0..7], i -> res[8-i]*2^(32*i));;
+    return LowercaseString(HexStringInt(res));
+end);

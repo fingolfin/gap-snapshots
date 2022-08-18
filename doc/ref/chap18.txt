@@ -355,7 +355,7 @@
   conductor  are  compared  via their external representation (see [2XExtRepOfObj[102X
   ([14X18.1-12[114X)).[133X
   
-  [33X[0;0YFor comparisons of cyclotomics and other [5XGAP[105X objects, see Section [14X4.12[114X.[133X
+  [33X[0;0YFor comparisons of cyclotomics and other [5XGAP[105X objects, see Section [14X4.13[114X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XE(5) < E(6);      # the latter value has conductor 3[127X[104X

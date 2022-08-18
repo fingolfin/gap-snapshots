@@ -7,43 +7,16 @@
 **
 **  SPDX-License-Identifier: GPL-2.0-or-later
 **
-**  The  file 'system.c'  declares  all operating system  dependent functions
-**  except file/stream handling which is done in "sysfiles.h".
+**  This file declares operating system dependent functions dealing with file
+**  and stream operations.
 */
 
 #ifndef GAP_SYSFILES_H
 #define GAP_SYSFILES_H
 
-#include "system.h"
+#include "common.h"
 
-/****************************************************************************
-**
-*F * * * * * * * * * * * * * * dynamic loading  * * * * * * * * * * * * * * *
-*/
-
-
-/****************************************************************************
-**
-*F  SyFindOrLinkGapRootFile( <filename>, <result> ) . . . . . .  load or link
-**
-**  'SyFindOrLinkGapRootFile'  tries to find a GAP  file in the root area and
-**  check if there is a corresponding statically linked module. If the CRC
-**  matches the statically linked module is loaded, and <result->module_info>
-**  is set to point to its StructInitInfo instance.
-**
-**  The function returns:
-**
-**  0: no file or module was found
-**  2: a statically linked module was found
-**  3: only a GAP file was found; its path is stored in  <result->path>
-*/
-
-typedef union {
-    Char             path[GAP_PATH_MAX];
-    StructInitInfo * module_info;
-} TypGRF_Data;
-
-Int SyFindOrLinkGapRootFile(const Char * filename, TypGRF_Data * result);
+#include <stddef.h>
 
 
 /****************************************************************************
@@ -55,24 +28,16 @@ Int SyFindOrLinkGapRootFile(const Char * filename, TypGRF_Data * result);
 */
 Int4 SyGAPCRC(const Char * name);
 
-
 /****************************************************************************
 **
-*F * * * * * * * * * * finding location of executable * * * * * * * * * * * *
+*F  SyGetOsRelease( )  . . . . . . . . . . . . . . . . . . . . get name of OS
+**
+**  Get the release of the operating system kernel.
 */
-
-// 'GAPExecLocation' is the path to the directory containing the running GAP
-// executable, terminated by a slash, or contains the empty string is it could
-// not be detect.
-extern char GAPExecLocation[GAP_PATH_MAX];
-
-// Fills in GAPExecLocation. Is called straight after 'main' starts.
-void SetupGAPLocation(int argc, char ** argv);
-
+Obj SyGetOsRelease(void);
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * * * window handler * * * * * * * * * * * * * * *
 */
 
@@ -126,7 +91,7 @@ int SyBufFileno(Int fid);
 **
 **  Given a 'syBuf' buffer id, return 1 if it references a TTY, else 0
 */
-Int SyBufIsTTY(Int fid);
+BOOL SyBufIsTTY(Int fid);
 
 
 // HACK: set 'ateof' to true for the given 'syBuf' entry
@@ -135,27 +100,33 @@ void SyBufSetEOF(Int fid);
 
 /****************************************************************************
 **
-*F  SyFopen( <name>, <mode> ) . . . . . . . .  open the file with name <name>
+*F  SyFopen( <name>, <mode>, <transparent_compress> )
+*F                                             open the file with name <name>
 **
 **  The function 'SyFopen'  is called to open the file with the name  <name>.
 **  If <mode> is "r" it is opened for reading, in this case  it  must  exist.
-**  If <mode> is "w" it is opened for writing, it is created  if  neccessary.
+**  If <mode> is "w" it is opened for writing, it is created  if  necessary.
 **  If <mode> is "a" it is opened for appending, i.e., it is  not  truncated.
 **
 **  'SyFopen' returns an integer used by the scanner to  identify  the  file.
 **  'SyFopen' returns -1 if it cannot open the file.
 **
 **  The following standard files names and file identifiers  are  guaranteed:
-**  'SyFopen( "*stdin*", "r")' returns 0 identifying the standard input file.
-**  'SyFopen( "*stdout*","w")' returns 1 identifying the standard outpt file.
-**  'SyFopen( "*errin*", "r")' returns 2 identifying the brk loop input file.
-**  'SyFopen( "*errout*","w")' returns 3 identifying the error messages file.
+**  'SyFopen( "*stdin*", "r", ..)' returns 0, the standard input file.
+**  'SyFopen( "*stdout*","w", ..)' returns 1, the standard outpt file.
+**  'SyFopen( "*errin*", "r", ..)' returns 2, the brk loop input file.
+**  'SyFopen( "*errout*","w", ..)' returns 3, the error messages file.
 **
-**  If it is necessary to adjust the  filename  this  should  be  done  here.
+**  If it is necessary  to adjust the filename  this should be done here, the
+**  filename convention used in GAP is that '/' is the directory separator.
+**
 **  Right now GAP does not read nonascii files, but if this changes sometimes
-**  'SyFopen' must adjust the mode argument to open the file in binary  mode.
+**  'SyFopen' must adjust the mode argument to open the file in binary mode.
+**
+**  If <transparent_compress> is TRUE, files with names ending '.gz' will be
+**  automatically compressed/decompressed using gzip.
 */
-Int SyFopen(const Char * name, const Char * mode);
+Int SyFopen(const Char * name, const Char * mode, BOOL transparent_compress);
 
 
 /****************************************************************************
@@ -269,10 +240,10 @@ Int SyReadWithBuffer(Int fid, void * ptr, size_t len);
 
 /****************************************************************************
 **
-*F  SyIsIntr()  . . . . . . . . . . . . . . . . check wether user hit <ctr>-C
+*F  SyIsIntr() . . . . . . . . . . . . . . . . check whether user hit <ctr>-C
 **
 **  'SyIsIntr' is called from the evaluator at  regular  intervals  to  check
-**  wether the user hit '<ctr>-C' to interrupt a computation.
+**  whether the user hit '<ctr>-C' to interrupt a computation.
 **
 **  'SyIsIntr' returns 1 if the user typed '<ctr>-C' and 0 otherwise.
 */
@@ -455,45 +426,11 @@ Int SyRmdir(const Char * name);
 */
 Obj SyIsDir(const Char * name);
 
-/****************************************************************************
-**
-*F  SyFindGapRootFile( <filename>, <buffer>, <bufferSize> ) . . .  find file in system area
-**
-**  <buffer> must point to a buffer of at least <bufferSize> characters.
-**  The returned pointer will either be NULL, or <buffer>
-*/
-Char *
-SyFindGapRootFile(const Char * filename, Char * buffer, size_t bufferSize);
-
 
 /****************************************************************************
 **
 *F * * * * * * * * * * * * * * * directories  * * * * * * * * * * * * * * * *
 */
-
-
-/****************************************************************************
-**
-*F  SyTmpname() . . . . . . . . . . . . . . . . . return a temporary filename
-**
-**  'SyTmpname' creates and returns a new temporary name.
-*/
-Char * SyTmpname(void);
-
-
-/****************************************************************************
-**
-*F  SyTmpdir( <hint> )  . . . . . . . . . . . .  return a temporary directory
-**
-**  'SyTmpdir'  returns the directory   for  a temporary directory.  This  is
-**  guaranteed  to be newly  created and empty  immediately after the call to
-**  'SyTmpdir'. <hint> should be used by 'SyTmpdir' to  construct the name of
-**  the directory (but 'SyTmpdir' is free to use only  a part of <hint>), and
-**  must be a string of at most 8 alphanumerical characters.  Under UNIX this
-**  would   usually   represent   '/usr/tmp/<hint>_<proc_id>_<cnt>/',   e.g.,
-**  '/usr/tmp/guava_17188_1/'.
-*/
-Char * SyTmpdir(const Char * hint);
 
 
 /****************************************************************************
@@ -504,37 +441,36 @@ Char * SyTmpdir(const Char * hint);
 
 void getwindowsize(void);
 
-/***************************************************************************
+/****************************************************************************
 **
-*F HasAvailableBytes( <fid> ) returns positive if  a subsequent read to <fid>
+*F  HasAvailableBytes( <fid> ) returns positive if  a subsequent read to <fid>
 **                            will read at least one byte without blocking
 */
 Int HasAvailableBytes(UInt fid);
 
 Char * SyFgetsSemiBlock(Char * line, UInt length, Int fid);
 
-/***************************************************************************
- **
- *F SyReadStringFid( <fid> )
- **   - read file given by <fid> into a string
- *F SyReadStringFile( <fid> )
- **   - read file given by <fid> into a string, only rely on read()
- *F SyReadStringFileStat( <fid> )
- **   - read file given by <fid> into a string, use stat() to determine
- **     size of file before reading. This does not work for pipes
- */
+/****************************************************************************
+**
+*F  SyReadStringFid( <fid> )
+**
+**   - read file given by <fid> into a string
+*/
 
 Obj SyReadStringFid(Int fid);
-Obj SyReadStringFile(Int fid);
-Obj SyReadStringFileGeneric(Int fid);
 
 
-#if !defined(SYS_IS_64_BIT) && defined(__GNU_LIBRARY__)
-#define USE_CUSTOM_MEMMOVE 1
+// A bug in memmove() provided by glibc 2.21 to 2.27 on 32-bit systems can lead
+// to data corruption. We use our own memmove on affected systems. For details,
+// see <https://sourceware.org/bugzilla/show_bug.cgi?id=22644> and also
+// <https://www.cvedetails.com/cve/CVE-2017-18269/>.
+#if defined(__GLIBC__) && __WORDSIZE == 32
+  #if __GLIBC_PREREQ(2,21) && !__GLIBC_PREREQ(2,28)
+  #define USE_CUSTOM_MEMMOVE 1
+  #endif
 #endif
 
 #ifdef USE_CUSTOM_MEMMOVE
-// Internal implementation of memmove, to avoid issues with glibc
 void * SyMemmove(void * dst, const void * src, size_t size);
 #else
 #define SyMemmove memmove

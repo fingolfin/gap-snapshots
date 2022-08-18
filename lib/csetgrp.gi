@@ -81,34 +81,13 @@ local c,i;
 end );
 
 
-# Brute-force algorithms that gives (as indices) all ways how to sum subsets
-# of `from` to obtain `to`
-BindGlobal("AllSubsetSummations",function(to,from)
-local erg,nerg,perm,i,e,c,sel;
-  erg:=[[]];
-  to:=ShallowCopy(to);
-  perm:=Sortex(to)^-1;
-  for i in to do
-    nerg:=[];
-    for e in erg do
-      sel:=Filtered(Difference([1..Length(from)],Union(e)),x->from[x]<=i);
-      for c in Combinations(sel) do
-        if Sum(from{c})=i then
-          Add(nerg,Concatenation(e,[c]));
-        fi;
-      od;
-    od;
-    erg:=nerg;
-  od;
-  return List(erg,x->Permuted(x,perm));
-end);
-
 # Find element in G to conjugate B into A
 # call with G,A,B;
 InstallGlobalFunction(DoConjugateInto,function(g,a,b,onlyone)
 local cla,clb,i,j,k,imgs,bd,r,rep,b2,ex2,split,dc,
   gens,conjugate;
 
+  Info(InfoCoset,2,"call DoConjugateInto ",Size(g)," ",Size(a)," ",Size(b));
   conjugate:=function(act,asub,genl,nr)
   local i,dc,j,z,r,r2,found;
     found:=[];
@@ -177,28 +156,32 @@ local cla,clb,i,j,k,imgs,bd,r,rep,b2,ex2,split,dc,
     clb:=List(Orbits(b,MovedPoints(g)),Set);
     # no improvement if all orbits of a are fixed
     if ForAny(cla,x->ForAny(GeneratorsOfGroup(g),y->OnSets(x,y)<>x)) then
-      r:=AllSubsetSummations(List(cla,Length),List(clb,Length));
-      dc:=[];
-      for i in r do
-        k:=List(i,x->Union(clb{x}));
-        k:=RepresentativeAction(g,k,cla,OnTuplesSets);
-        if k<>fail then
-          Add(dc,[i,k]);
-        fi;
-      od;
-      if Length(dc)>0 then g:=Stabilizer(g,cla,OnTuplesSets);fi;
-      rep:=[];
-      for i in dc do
-        r:=DoConjugateInto(g,a,b^i[2],onlyone);
-        if onlyone then
-          if r<>fail then return i[2]*r;fi;
-        else
-          if r<>fail then Append(rep,List(r,x->i[2]*x));fi;
-        fi;
-      od;
-      if onlyone then return fail; #otherwise would have found and stopped
-      else return rep;fi;
-
+      r:=AllSubsetSummations(List(cla,Length),List(clb,Length),10^5);
+      if r=fail then
+        Info(InfoCoset,1,"Too many subset combinations");
+      else
+        Info(InfoCoset,1,"Testing ",Length(r)," combinations");
+        dc:=[];
+        for i in r do
+          k:=List(i,x->Union(clb{x}));
+          k:=RepresentativeAction(g,k,cla,OnTuplesSets);
+          if k<>fail then
+            Add(dc,[i,k]);
+          fi;
+        od;
+        if Length(dc)>0 then g:=Stabilizer(g,cla,OnTuplesSets);fi;
+        rep:=[];
+        for i in dc do
+          r:=DoConjugateInto(g,a,b^i[2],onlyone);
+          if onlyone then
+            if r<>fail then return i[2]*r;fi;
+          else
+            if r<>fail then Append(rep,List(r,x->i[2]*x));fi;
+          fi;
+        od;
+        if onlyone then return fail; #otherwise would have found and stopped
+        else return rep;fi;
+      fi;
     else
       # orbits are fixed. Make sure b is so
       if ForAny(clb,x->not ForAny(cla,y->IsSubset(y,x))) then
@@ -300,37 +283,37 @@ local o,b,img,G1,c,m,mt,hardlimit,gens,t,k,intersize;
   # use maximals, use `Try` as we call with limiting options
   IsNaturalAlternatingGroup(G);
   IsNaturalSymmetricGroup(G);
-  m:=TryMaximalSubgroupClassReps(G:cheap,intersize:=intersize,nolattice);
-  if m<>fail and Length(m)>0 then
+  if ValueOption("usemaximals")<>false then
+    m:=TryMaximalSubgroupClassReps(G:cheap,intersize:=intersize,nolattice);
+    if m<>fail and Length(m)>0 then
 
-    m:=Filtered(m,x->Size(x) mod Size(U)=0 and Size(x)>Size(U));
-    SortBy(m,x->Size(G)/Size(x));
-    
-    gens:=SmallGeneratingSet(U);
-    for c in m do
-      if Index(G,c)<50000 then
-        t:=RightTransversal(G,c:noascendingchain); # conjugates
-        for k in t do
-          if ForAll(gens,x->k*x/k in c) then
+      m:=Filtered(m,x->Size(x) mod Size(U)=0 and Size(x)>Size(U));
+      SortBy(m,x->Size(G)/Size(x));
+      
+      gens:=SmallGeneratingSet(U);
+      for c in m do
+        if Index(G,c)<50000 then
+          t:=RightTransversal(G,c:noascendingchain); # conjugates
+          for k in t do
+            if ForAll(gens,x->k*x/k in c) then
+              Info(InfoCoset,2,"Found Size ",Size(c));
+              # U is contained in c^k
+              return c^k;
+            fi;
+          od;
+        else
+          t:=DoConjugateInto(G,c,U,true:intersize:=intersize,onlyone:=true);
+          if t<>fail and t<>[] then 
             Info(InfoCoset,2,"Found Size ",Size(c));
-            # U is contained in c^k
-            return c^k;
+            return c^(Inverse(t));
           fi;
-        od;
-      else
-        t:=DoConjugateInto(G,c,U,true:intersize:=intersize,onlyone:=true);
-        if t<>fail and t<>[] then 
-          Info(InfoCoset,2,"Found Size ",Size(c));
-          return c^(Inverse(t));
         fi;
-      fi;
-    od;
+      od;
 
-    Info(InfoCoset,2,"Found no intermediate subgroup ",Size(G)," ",Size(U));
-    return fail;
+      Info(InfoCoset,2,"Found no intermediate subgroup ",Size(G)," ",Size(U));
+      return fail;
+    fi;
   fi;
-
-  # old code -- obsolete
 
   c:=ValueOption("refineChainActionLimit");
   if IsInt(c) then
@@ -339,7 +322,22 @@ local o,b,img,G1,c,m,mt,hardlimit,gens,t,k,intersize;
     hardlimit:=1000000;
   fi;
 
-  if Index(G,U)>hardlimit then return fail;fi;
+  if Index(G,U)>hardlimit/10
+   and ValueOption("callinintermediategroup")<>true then
+    # try the `AscendingChain` mechanism
+    c:=AscendingChain(G,U:cheap,refineIndex:=QuoInt(IndexNC(G,U),2),
+      callinintermediategroup);
+    if Length(c)>2 then
+      return First(c,x->Size(x)>Size(U));
+    fi;
+  fi;
+
+  if Index(G,U)>hardlimit then 
+    Info(InfoWarning,1,
+      "will have to use permutation action of degree bigger than ", hardlimit);
+  fi;
+
+  # old code -- obsolete
 
   if IsPermGroup(G) and Length(GeneratorsOfGroup(G))>3 then
     G1:=Group(SmallGeneratingSet(G));
@@ -648,30 +646,14 @@ local d,fam;
     ActingDomain,U,FunctionAction,OnLeftInverse,Representative,g,
     CanonicalRepresentativeDeterminatorOfExternalSet,
     RightCosetCanonicalRepresentativeDeterminator);
-  return d;
-end);
 
-InstallMethod(RightCoset,"use subgroup size",IsCollsElms,
-  [IsGroup and HasSize,IsObject],0,
-function(U,g)
-local d,fam,typ;
-  # noch tests...
-
-  fam:=FamilyObj(U);
-  typ:=NewType(fam,IsRightCosetDefaultRep and
-          HasActingDomain and HasFunctionAction and HasRepresentative
-          and HasCanonicalRepresentativeDeterminatorOfExternalSet);
-
-  d:=rec();
-  ObjectifyWithAttributes(d,typ,
-    ActingDomain,U,FunctionAction,OnLeftInverse,Representative,g,
-    CanonicalRepresentativeDeterminatorOfExternalSet,
-    RightCosetCanonicalRepresentativeDeterminator);
-  # We cannot set the size in the previous ObjectifyWithAttributes as there is
-  # a custom setter method (the one added in this commit). In such a case
-  # ObjectifyWith Attributes just does `Objectify` and calls all setters
-  # separately which is what we want to avoid here.
-  SetSize(d,Size(U)); 
+  if HasSize(U) then
+    # We cannot set the size in the previous ObjectifyWithAttributes as there
+    # is a custom setter method. In such a case ObjectifyWithAttributes just
+    # does `Objectify` and calls all setters separately which is what we want
+    # to avoid here.
+    SetSize(d,Size(U));
+  fi;
 
   return d;
 end);
@@ -791,6 +773,48 @@ local a,r;
 end);
 
 
+InstallMethod(Intersection2, "general cosets", IsIdenticalObj,
+              [IsRightCoset,IsRightCoset],
+function(cos1,cos2)
+    local swap, H1, H2, x1, x2, sigma, U, rho;
+    if Size(cos1) < 10 then
+        TryNextMethod();
+    elif Size(cos2) < 10 then
+        return Intersection2(cos2, cos1);
+    fi;
+    if Size(cos1) > Size(cos2) then
+        swap := cos1;
+        cos1 := cos2;
+        cos2 := swap;
+    fi;
+    H1:=ActingDomain(cos1);
+    H2:=ActingDomain(cos2);
+    x1:=Representative(cos1);
+    x2:=Representative(cos2);
+    sigma := x1 / x2;
+    if Size(H1) = Size(H2) and H1 = H2 then
+        if sigma in H1 then
+            return cos1;
+        else
+            return [];
+        fi;
+    fi;
+    # We want to compute the intersection of cos1 = H1*x1 with cos2 = H2*x2.
+    # This is equivalent to intersecting H1 with H2*x2/x1, which is either empty
+    # or equal to a coset U*rho, where U is the intersection of H1 and H2.
+    # In the non-empty case, the overall result then is U*rho*x1.
+    #
+    # To find U*rho, we iterate over all cosets of U in H1 and for each test
+    # if it is contained in H2*x2/x1, which is the case if and only if rho is
+    # in H2*x2/x1, if and only if rho/(x2/x1) = rho*x1/x2 is in H2
+    U:=Intersection(H1, H2);
+    for rho in RightTransversal(H1, U) do
+        if rho * sigma in H2 then
+            return RightCoset(U, rho * x1);
+        fi;
+    od;
+    return [];
+end);
 
 # disabled because of comparison incompatibilities
 #InstallMethod(\<,"RightCosets",IsIdenticalObj,[IsRightCoset,IsRightCoset],0,
@@ -1103,7 +1127,7 @@ local c, flip, maxidx, refineChainActionLimit, cano, tryfct, p, r, t,
 
   elif ValueOption("sisyphus")=true then
     # purely to allow for tests of up-step mechanism in smaller examples.
-    # This is creating unneccessary extra work and thus should never be used
+    # This is creating unnecessary extra work and thus should never be used
     # in practice, but will force some code to be run through.
     c:=Concatenation([TrivialSubgroup(G)],c);
     cano:=true;

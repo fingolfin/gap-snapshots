@@ -70,6 +70,12 @@ DeclareGlobalFunction("TransitiveGroupsAvailable");
 ##
 DeclareGlobalFunction("NrTransitiveGroups");
 
+#############################################################################
+##
+#F  MinialTransitiveIndices(<deg>)
+##
+DeclareGlobalFunction("MinimalTransitiveIndices");
+
 DeclareGlobalVariable( "TRANSCOMBCACHE", "combinations cache" );
 DeclareGlobalVariable( "TRANSARRCACHE", "arrangements cache" );
 

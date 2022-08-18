@@ -423,11 +423,11 @@ DeclareGlobalFunction("TomDataSubgroupsAlmostSimple");
 
 #############################################################################
 ##
-#F  LowLayerSubgroups( [<act>,],<G>, <lim> [,<cond> [,<dosub>]] )
+#F  LowLayerSubgroups( [<act>,]<G>, <lim> [,<cond> [,<dosub>]] )
 ##
 ##  <#GAPDoc Label="LowLayerSubgroups">
 ##  <ManSection>
-##  <Func Name="LowLayerSubgroups" Arg='act, G, lim, cond, dosub'/>
+##  <Func Name="LowLayerSubgroups" Arg='[act,]G,lim [,cond,dosub]'/>
 ##
 ##  <Description>
 ##  This function computes representatives of the conjugacy classes of
@@ -441,6 +441,19 @@ DeclareGlobalFunction("TomDataSubgroupsAlmostSimple");
 ##  performance reasons).
 ##  In the example below, the result would be the same with leaving out the
 ##  fourth function, but calculation this way is slightly faster.
+##  If an inital argument <A>act</A> is given, it must be a group
+##  containing and normalizing <A>G</A>,
+##  and representatives for classes under the action of this group are chosen.
+##  <Example><![CDATA[
+##  gap> g:=SymmetricGroup(12);;
+##  gap> l:=LowLayerSubgroups(g,2,x->Size(x)>100000,x->Size(x)>200000);;
+##  gap> Collected(List(l,Size));
+##  [ [ 100800, 1 ], [ 120960, 1 ], [ 161280, 1 ], [ 241920, 1 ], [ 302400, 3 ],
+##    [ 322560, 1 ], [ 483840, 3 ], [ 518400, 3 ], [ 604800, 1 ], [ 725760, 1 ],
+##    [ 967680, 1 ], [ 1036800, 1 ], [ 1088640, 3 ], [ 2177280, 1 ],
+##    [ 3628800, 3 ], [ 7257600, 1 ], [ 19958400, 1 ], [ 39916800, 1 ],
+##    [ 239500800, 1 ], [ 479001600, 1 ] ]
+##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -449,21 +462,29 @@ DeclareGlobalFunction("LowLayerSubgroups");
 
 #############################################################################
 ##
-#O  ContainedConjugates(<G>,<A>,<B>)
+#O  ContainedConjugates(<G>,<A>,<B>[,<onlyone>])
 ##
 ##  <#GAPDoc Label="ContainedConjugates">
 ##  <ManSection>
-##  <Oper Name="ContainedConjugates" Arg='G, A, B'/>
+##  <Oper Name="ContainedConjugates" Arg='G, A, B [,onlyone]'/>
 ##
 ##  <Description>
 ##  For <M>A,B \leq G</M> this operation returns representatives of the <A>A</A>
 ##  conjugacy classes of subgroups that are conjugate to <A>B</A> under <A>G</A>.
 ##  The function returns a list of pairs of subgroup and conjugating element.
+##  If the optional fourth argument <A>onlyone</A> is given as <A>true</A>,
+##  then only one pair (or <A>fail</A> if none exists) is returned.
 ##  <Example><![CDATA[
 ##  gap> g:=SymmetricGroup(8);;
-##  gap> a:=TransitiveGroup(8,47);;b:=TransitiveGroup(8,7);;
+##  gap> a:=TransitiveGroup(8,47);;b:=TransitiveGroup(8,9);;
 ##  gap> ContainedConjugates(g,a,b);
-##  [ [ Group([ (1,4,2,5,3,6,8,7), (1,3)(2,8) ]), (2,4,5,3)(7,8) ] ]
+##  [ [ Group([ (1,8)(2,3)(4,5)(6,7), (1,3)(2,8)(4,6)(5,7), (1,5)(2,6)(3,7)(4,8),
+##          (4,5)(6,7) ]), () ],
+##    [ Group([ (1,8)(2,3)(4,5)(6,7), (1,5)(2,6)(3,7)(4,8), (1,3)(2,8)(4,6)(5,7),
+##          (2,3)(6,7) ]), (2,4)(3,5) ] ]
+##  gap> ContainedConjugates(g,a,b,true);
+##  [ Group([ (1,8)(2,3)(4,5)(6,7), (1,3)(2,8)(4,6)(5,7), (1,5)(2,6)(3,7)(4,8),
+##      (4,5)(6,7) ]), () ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -504,21 +525,36 @@ DeclareSynonym("EmbeddingConjugates",ContainingConjugates);
 ##  <#GAPDoc Label="MinimalFaithfulPermutationDegree">
 ##  <ManSection>
 ##  <Oper Name="MinimalFaithfulPermutationDegree" Arg='G'/>
+##  <Oper Name="MinimalFaithfulPermutationRepresentation" Arg='G'/>
 ##
 ##  <Description>
-##  For  a finite group <A>G</A> this operation calculates the least
+##  For  a finite group <A>G</A>,
+##  <Ref Oper="MinimalFaithfulPermutationDegree"/>
+##  calculates the least
 ##  positive integer <M>n=\mu(G)</M> such that <A>G</A> is isomorphic to a
 ##  subgroup of the symmetric group of degree <M>n</M>.
 ##  This can require calculating the whole subgroup lattice.
+##  The operation
+##  <Ref Oper="MinimalFaithfulPermutationRepresentation"/>
+##  returns a
+##  corresponding isomorphism.
 ##  <Example><![CDATA[
 ##  gap> MinimalFaithfulPermutationDegree(SmallGroup(96,3));
 ##  12
+##  gap> g:=TransitiveGroup(10,32);;
+##  gap> MinimalFaithfulPermutationDegree(g);
+##  6
+##  gap> map:=MinimalFaithfulPermutationRepresentation(g);;
+##  gap> Size(Image(map));
+##  720
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
 DeclareOperation("MinimalFaithfulPermutationDegree",[IsGroup and IsFinite]);
+DeclareOperation("MinimalFaithfulPermutationRepresentation",
+  [IsGroup and IsFinite]);
 
 #############################################################################
 ##

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<!DOCTYPE Book SYSTEM "gapdoc.dtd"
+[
+<!ENTITY AutoDoc '<Package>AutoDoc</Package>'>
+<!ENTITY idrel '<Package>IdRel</Package>'>
+<!ENTITY see '<Alt Only="LaTeX">$\to$</Alt><Alt Not="LaTeX">--&gt;</Alt>'>
+<!ENTITY IdRel '<Package>IdRel</Package>'>
+]
+>
+<Book Name="IdRel">
+<#Include SYSTEM "title.xml">
+<TableOfContents/>
+<Body>
+<#Include SYSTEM "intro.xml">
+<#Include SYSTEM "rws.xml">
+<#Include SYSTEM "logrws.xml">
+<#Include SYSTEM "monpoly.xml">
+<#Include SYSTEM "modpoly.xml">
+<#Include SYSTEM "idrels.xml">
+<#Include SYSTEM "_AutoDocMainFile.xml">
+</Body>
+<Bibliography Databases="bib.xml"/>
+<TheIndex/>
+</Book>

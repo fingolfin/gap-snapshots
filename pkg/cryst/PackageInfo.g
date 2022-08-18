@@ -9,8 +9,8 @@ PackageName := "Cryst",
 
 Subtitle := "Computing with crystallographic groups",
 
-Version := "4.1.23",
-Date := "10/12/2019", # dd/mm/yyyy format
+Version := "4.1.25",
+Date := "29/07/2022", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 ArchiveURL := Concatenation( 
@@ -100,14 +100,13 @@ PackageDoc  := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Computing with crystallographic groups",
-  Autoload  := true
 ),
 
 Dependencies := rec(
-  GAP := ">=4.9",
-  NeededOtherPackages := [ [ "polycyclic", ">=2.9" ] ],
-  SuggestedOtherPackages := [ [ "CrystCat", ">=1.1.4" ],
-                              [ "CaratInterface", ">=2.3.1" ],
+  GAP := ">=4.11",
+  NeededOtherPackages := [ [ "polycyclic", ">=2.16" ] ],
+  SuggestedOtherPackages := [ [ "CrystCat", ">=1.1.9" ],
+                              [ "CaratInterface", ">=2.3.3" ],
                               [ "XGAP", ">=4.22" ] 
   ],
   ExternalConditions := []

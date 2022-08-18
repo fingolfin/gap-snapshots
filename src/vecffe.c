@@ -33,29 +33,29 @@
 **
 **  One may think of this as an optimized special case of 'KTNumPlist'.
 */
-static Int IsVecFFE(Obj obj)
+static BOOL IsVecFFE(Obj obj)
 {
     UInt tnum = TNUM_OBJ(obj);
     if (tnum == T_PLIST_FFE || tnum == T_PLIST_FFE + IMMUTABLE)
-        return 1;
+        return TRUE;
 
     // must be a plain list of length >= 1
     if (!IS_PLIST(obj) || LEN_PLIST(obj) == 0)
-        return 0;
+        return FALSE;
 
     Obj x = ELM_PLIST(obj, 1);
     if (!IS_FFE(x))
-        return 0;
+        return FALSE;
 
     const FF  fld = FLD_FFE(x);
     const Int len = LEN_PLIST(obj);
     for (Int i = 2; i <= len; i++) {
         x = ELM_PLIST(obj, i);
         if (!IS_FFE(x) || FLD_FFE(x) != fld)
-            return 0;
+            return FALSE;
     }
     RetypeBagSM(obj, T_PLIST_FFE);
-    return 1;
+    return TRUE;
 }
 
 
@@ -113,7 +113,6 @@ static Obj SumFFEVecFFE(Obj elmL, Obj vecR)
         ptrS[i] = NEW_FFE(fld, valS);
     }
 
-    /* return the result                                                   */
     return vecS;
 }
 
@@ -172,7 +171,6 @@ static Obj SumVecFFEFFE(Obj vecL, Obj elmR)
         ptrS[i] = NEW_FFE(fld, valS);
     }
 
-    /* return the result                                                   */
     return vecS;
 }
 
@@ -248,7 +246,6 @@ static Obj SumVecFFEVecFFE(Obj vecL, Obj vecR)
         for (; i <= len; i++)
             ptrS[i] = ptrL[i];
 
-    /* return the result                                                   */
     return vecS;
 }
 
@@ -307,7 +304,6 @@ static Obj DiffFFEVecFFE(Obj elmL, Obj vecR)
         valD = SUM_FFV(valL, valR, succ);
         ptrD[i] = NEW_FFE(fld, valD);
     }
-    /* return the result                                                   */
     return vecD;
 }
 
@@ -368,7 +364,6 @@ static Obj DiffVecFFEFFE(Obj vecL, Obj elmR)
         ptrD[i] = NEW_FFE(fld, valD);
     }
 
-    /* return the result                                                   */
     return vecD;
 }
 
@@ -450,7 +445,6 @@ static Obj DiffVecFFEVecFFE(Obj vecL, Obj vecR)
         for (; i <= len; i++)
             ptrD[i] = ptrL[i];
 
-    /* return the result                                                   */
     return vecD;
 }
 
@@ -509,7 +503,6 @@ static Obj ProdFFEVecFFE(Obj elmL, Obj vecR)
         ptrP[i] = NEW_FFE(fld, valP);
     }
 
-    /* return the result                                                   */
     return vecP;
 }
 
@@ -567,7 +560,6 @@ static Obj ProdVecFFEFFE(Obj vecL, Obj elmR)
         ptrP[i] = NEW_FFE(fld, valP);
     }
 
-    /* return the result                                                   */
     return vecP;
 }
 
@@ -625,7 +617,6 @@ static Obj ProdVecFFEVecFFE(Obj vecL, Obj vecR)
         valS = SUM_FFV(valS, valP, succ);
     }
 
-    /* return the result                                                   */
     return NEW_FFE(fld, valS);
 }
 
@@ -634,9 +625,6 @@ static Obj ProdVecFFEVecFFE(Obj vecL, Obj vecR)
 *F  FuncADD_ROWVECTOR_VECFFES_3( <self>, <vecL>, <vecR>, <mult> )
 **
 */
-
-static Obj AddRowVectorOp;   /* BH changed to static */
-
 static Obj FuncADD_ROWVECTOR_VECFFES_3(Obj self, Obj vecL, Obj vecR, Obj mult)
 {
     Obj *ptrL;
@@ -662,16 +650,9 @@ static Obj FuncADD_ROWVECTOR_VECFFES_3(Obj self, Obj vecL, Obj vecR, Obj mult)
     if (!IsVecFFE(vecR))
         return TRY_NEXT_METHOD;
 
-
     /* check the lengths                                                   */
+    CheckSameLength("AddRowVector", "dst", "src", vecL, vecR);
     len = LEN_PLIST(vecL);
-    if (len != LEN_PLIST(vecR)) {
-        vecR = ErrorReturnObj(
-            "AddRowVector: vector lengths differ <left> %d,  <right> %d",
-            (Int)len, (Int)LEN_PLIST(vecR),
-            "you can replace vector <right> via 'return <right>;'");
-        return CALL_3ARGS(AddRowVectorOp, vecL, vecR, mult);
-    }
 
     /* check the fields                                                    */
     fld = FLD_FFE(ELM_PLIST(vecL, 1));
@@ -680,22 +661,14 @@ static Obj FuncADD_ROWVECTOR_VECFFES_3(Obj self, Obj vecL, Obj vecR, Obj mult)
         if (CHAR_FF(fld) == CHAR_FF(FLD_FFE(ELM_PLIST(vecR, 1))))
             return TRY_NEXT_METHOD;
 
-        vecR = ErrorReturnObj(
-            "AddRowVector: vectors have different fields",
-            0L, 0L,
-            "you can replace vector <right> via 'return <right>;'");
-        return CALL_3ARGS(AddRowVectorOp, vecL, vecR, mult);
+        ErrorMayQuit("AddRowVector: vectors have different fields", 0, 0);
     }
 
     /* Now check the multiplier field */
     if (FLD_FFE(mult) != fld) {
         /* check the characteristic                                        */
         if (CHAR_FF(fld) != CHAR_FF(FLD_FFE(mult))) {
-            mult = ErrorReturnObj(
-                "AddRowVector: <multiplier> has different field",
-                0L, 0L,
-                "you can replace <multiplier> via 'return <multiplier>;'");
-            return CALL_3ARGS(AddRowVectorOp, vecL, vecR, mult);
+            ErrorMayQuit("AddRowVector: <multiplier> has different field", 0, 0);
         }
 
         /* if the multiplier is over a non subfield then redispatch */
@@ -738,8 +711,6 @@ static Obj FuncADD_ROWVECTOR_VECFFES_3(Obj self, Obj vecL, Obj vecR, Obj mult)
 **
 */
 
-static Obj MultVectorLeftOp; /* BH changed to static */
-
 static Obj FuncMULT_VECTOR_VECFFES(Obj self, Obj vec, Obj mult)
 {
     Obj *ptr;
@@ -768,11 +739,7 @@ static Obj FuncMULT_VECTOR_VECFFES(Obj self, Obj vec, Obj mult)
     if (FLD_FFE(mult) != fld) {
         /* check the characteristic                                        */
         if (CHAR_FF(fld) != CHAR_FF(FLD_FFE(mult))) {
-            mult = ErrorReturnObj(
-                "MultVector: <multiplier> has different field",
-                0L, 0L,
-                "you can replace <multiplier> via 'return <multiplier>;'");
-            return CALL_2ARGS(MultVectorLeftOp, vec, mult);
+            ErrorMayQuit("MultVector: <multiplier> has different field", 0, 0);
         }
 
         /* if the multiplier is over a non subfield then redispatch */
@@ -830,14 +797,8 @@ static Obj FuncADD_ROWVECTOR_VECFFES_2(Obj self, Obj vecL, Obj vecR)
         return TRY_NEXT_METHOD;
 
     /* check the lengths                                                   */
+    CheckSameLength("AddRowVector", "dst", "src", vecL, vecR);
     len = LEN_PLIST(vecL);
-    if (len != LEN_PLIST(vecR)) {
-        vecR = ErrorReturnObj(
-            "Vector *: vector lengths differ <left> %d,  <right> %d",
-            (Int)len, (Int)LEN_PLIST(vecR),
-            "you can replace vector <right> via 'return <right>;'");
-        return CALL_2ARGS(AddRowVectorOp, vecL, vecR);
-    }
 
     /* check the fields                                                    */
     fld = FLD_FFE(ELM_PLIST(vecL, 1));
@@ -846,11 +807,7 @@ static Obj FuncADD_ROWVECTOR_VECFFES_2(Obj self, Obj vecL, Obj vecR)
         if (CHAR_FF(fld) == CHAR_FF(FLD_FFE(ELM_PLIST(vecR, 1))))
             return TRY_NEXT_METHOD;
 
-        vecR = ErrorReturnObj(
-            "AddRowVector: vectors have different fields",
-            0L, 0L,
-            "you can replace vector <right> via 'return <right>;'");
-        return CALL_2ARGS(AddRowVectorOp, vecL, vecR);
+        ErrorMayQuit("AddRowVector: vectors have different fields", 0, 0);
     }
 
     succ = SUCC_FF(fld);
@@ -873,7 +830,7 @@ static Obj FuncADD_ROWVECTOR_VECFFES_2(Obj self, Obj vecL, Obj vecR)
 **  'ZeroVecFEE' returns the zero of the vector <vec>.
 **
 **  It is a better version of ZeroListDefault for the case of vecffes
-**  becuase it knows tha the zero is common and the result a vecffe
+**  because it knows tha the zero is common and the result a vecffe
 */
 
 static Obj ZeroMutVecFFE(Obj vec)
@@ -887,7 +844,7 @@ static Obj ZeroMutVecFFE(Obj vec)
     assert(len);
     res  = NEW_PLIST(T_PLIST_FFE, len);
     SET_LEN_PLIST(res, len);
-    z = ZERO(ELM_PLIST(vec, 1));
+    z = ZERO_SAMEMUT(ELM_PLIST(vec, 1));
     for (i = 1; i <= len; i++)
         SET_ELM_PLIST(res, i, z);
     return res;
@@ -904,7 +861,7 @@ static Obj ZeroVecFFE(Obj vec)
     assert(len);
     res  = NEW_PLIST(TNUM_OBJ(vec), len);
     SET_LEN_PLIST(res, len);
-    z = ZERO(ELM_PLIST(vec, 1));
+    z = ZERO_SAMEMUT(ELM_PLIST(vec, 1));
     for (i = 1; i <= len; i++)
         SET_ELM_PLIST(res, i, z);
     return res;
@@ -929,8 +886,11 @@ static Obj FuncSMALLEST_FIELD_VECFFE(Obj self, Obj vec)
 {
     Obj elm;
     UInt deg, deg1, deg2, i, len, p, q;
-    UInt isVecFFE = IsVecFFE(vec);
-    len  = LEN_PLIST(vec);
+    BOOL isVecFFE;
+    if (!IS_PLIST(vec))
+        return Fail;
+    isVecFFE = IsVecFFE(vec);
+    len = LEN_PLIST(vec);
     if (len == 0)
         return Fail;
     elm = ELM_PLIST(vec, 1);
@@ -964,13 +924,13 @@ static Obj FuncSMALLEST_FIELD_VECFFE(Obj self, Obj vec)
 */
 static StructGVarFunc GVarFuncs [] = {
 
-  GVAR_FUNC(ADD_ROWVECTOR_VECFFES_3, 3, "vecl, vecr, mult"),
-  GVAR_FUNC(ADD_ROWVECTOR_VECFFES_2, 2, "vecl, vecr"),
-  GVAR_FUNC(MULT_VECTOR_VECFFES, 2, "vec, mult"),
-  GVAR_FUNC(IS_VECFFE, 1, "vec"),
-  GVAR_FUNC(COMMON_FIELD_VECFFE, 1, "vec"),
-  GVAR_FUNC(SMALLEST_FIELD_VECFFE, 1, "vec"),
-  { 0, 0, 0, 0, 0 }
+    GVAR_FUNC_3ARGS(ADD_ROWVECTOR_VECFFES_3, vecl, vecr, mult),
+    GVAR_FUNC_2ARGS(ADD_ROWVECTOR_VECFFES_2, vecl, vecr),
+    GVAR_FUNC_2ARGS(MULT_VECTOR_VECFFES, vec, mult),
+    GVAR_FUNC_1ARGS(IS_VECFFE, vec),
+    GVAR_FUNC_1ARGS(COMMON_FIELD_VECFFE, vec),
+    GVAR_FUNC_1ARGS(SMALLEST_FIELD_VECFFE, vec),
+    { 0, 0, 0, 0, 0 }
 
 };
 
@@ -993,7 +953,7 @@ static Int InitKernel (
         DiffFuncs[  t1   ][ T_FFE ] = DiffVecFFEFFE;
         ProdFuncs[ T_FFE ][  t1   ] = ProdFFEVecFFE;
         ProdFuncs[  t1   ][ T_FFE ] = ProdVecFFEFFE;
-        ZeroFuncs[  t1   ] = ZeroVecFFE;
+        ZeroSameMutFuncs[t1] = ZeroVecFFE;
         ZeroMutFuncs[  t1   ] = ZeroMutVecFFE;
     }
 
@@ -1008,8 +968,6 @@ static Int InitKernel (
 
     InitHdlrFuncsFromTable(GVarFuncs);
 
-    InitFopyGVar("AddRowVector", &AddRowVectorOp);
-    /* return success                                                      */
     return 0;
 }
 
@@ -1023,7 +981,6 @@ static Int InitLibrary (
     /* init filters and functions                                          */
     InitGVarFuncsFromTable(GVarFuncs);
 
-    /* return success                                                      */
     return 0;
 }
 

@@ -14,7 +14,7 @@
 # Free Software Foundation (FSF); either version 2.1 of the License, or
 # (at your option) any later version. For details, see the file 'LGPL' in
 # the doc subdirectory of the GBNP distribution or see the FSF's own site:
-# http://www.gnu.org/licenses/lgpl.html
+# https://www.gnu.org/licenses/lgpl.html
 ########################## END COPYRIGHT MESSAGE ##########################
 
 ### filename = "example15.g" 
@@ -24,7 +24,6 @@
 ### FOR COMPUTING WITH NON-COMMUTATIVE POLYNOMIALS
 ### ADD-ON: STUDY GROWTH OF FACTOR ALGEBRA
 
-### $Id: example15.g,v 1.5 2004/04/16 14:37:38 jwk Exp $
 
 # <#GAPDoc Label="Example15">
 # <Section Label="Example15"><Heading>A quotient algebra with exponential growth</Heading>
@@ -44,7 +43,7 @@
 # level, see Chapter <Ref Chap="Info"/>).
 
 # <L>
-LoadPackage("GBNP","0",false);;
+LoadPackage("gbnp", false);
 SetInfoLevel(InfoGBNP,2);
 SetInfoLevel(InfoGBNPTime,1);
 # </L>

@@ -1,0 +1,31 @@
+\GAPDocLabFile{jupyterkernel}
+\makelabel{jupyterkernel:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{jupyterkernel:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{jupyterkernel:Introduction}{1}{X7DFB63A97E67C0A1}
+\makelabel{jupyterkernel:GAP Jupyter Kernel}{1.1}{X82348875878E4655}
+\makelabel{jupyterkernel:Installation}{1.2}{X8360C04082558A12}
+\makelabel{jupyterkernel:How it works}{1.3}{X7CA9D73583D1D456}
+\makelabel{jupyterkernel:Kernel Startup}{1.3.1}{X7860B1A2843D0669}
+\makelabel{jupyterkernel:Kernel operation}{1.3.2}{X7D1EA960845A43F9}
+\makelabel{jupyterkernel:Code Highlighting and Indentation}{1.4}{X7834C0B58042E66F}
+\makelabel{jupyterkernel:Known Limitations and Caveats}{1.5}{X807E00EB7E11BB96}
+\makelabel{jupyterkernel:Feedback}{1.6}{X80D704CC7EBFDF7A}
+\makelabel{jupyterkernel:Jupyter Kernel}{2}{X7ED763777C1CE3F8}
+\makelabel{jupyterkernel:Functions}{2.1}{X86FA580F8055B274}
+\makelabel{jupyterkernel:Jupyter Renderables}{3}{X7B0F703B8088315E}
+\makelabel{jupyterkernel:Handlers for Jupyter requests}{3.1}{X7F6071957C3D5851}
+\makelabel{jupyterkernel:Jupyter Utility Functions}{4}{X80ED738D7DA64DEC}
+\makelabel{jupyterkernel:Functions}{4.1}{X86FA580F8055B274}
+\makelabel{jupyterkernel:Additional Utility Functions}{4.2}{X8246124683C5DDB9}
+\makelabel{jupyterkernel:Index}{Ind}{X83A0356F839C696F}
+\makelabel{jupyterkernel:JUPYTERLogProtocol}{2.1.1}{X862393AD798C9A34}
+\makelabel{jupyterkernel:JUPYTERUnlogProtocol}{2.1.2}{X7A6925D17896F3FD}
+\makelabel{jupyterkernel:IsJupyterRenderable for isobject}{3.1.1}{X83A5A61D817B02E4}
+\makelabel{jupyterkernel: for iscomponentobjectrep and isjupyterrenderable}{3.1.2}{X7DAD7CBB79E32681}
+\makelabel{jupyterkernel:JupyterRenderable for isobject, isobject}{3.1.3}{X7D00BEBE827BDDC4}
+\makelabel{jupyterkernel:JupyterRender for isobject}{3.1.4}{X83E8AE9D8599699D}
+\makelabel{jupyterkernel:JupyterRenderableData for isjupyterrenderable}{3.1.5}{X85E6B14E7894CBF3}
+\makelabel{jupyterkernel:JupyterRenderableMetadata for isjupyterrenderable}{3.1.6}{X7A88DE0F7C1E04ED}
+\makelabel{jupyterkernel:JUPYTERprint}{4.1.1}{X794FD43280482D4B}
+\makelabel{jupyterkernel:JUPYTERComplete}{4.1.2}{X837CD06B7D1436B7}
+\makelabel{jupyterkernel:ISO8601Stamp}{4.2.1}{X781D6B4383DBBD20}

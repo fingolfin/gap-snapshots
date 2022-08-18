@@ -36,7 +36,7 @@ end;
 ##
 ##  Let i be the smallest positive integer which has not yet been used as
 ##  a generator number and for which no component T!.i exists so far in the
-##  given presentation T, say. `AddGenerator' defines a new abstract
+##  given presentation T. `AddGenerator' defines a new abstract
 ##  generator _xi and adds it, as component T!.i, to the given presentation.
 ##
 InstallGlobalFunction( AddGenerator, function ( T )
@@ -215,7 +215,7 @@ InstallGlobalFunction( DecodeTree, function ( T )
     if trlast <= primary then
         # if yes, delete the tree ...
         Unbind( T!.tree );
-        # ... and reinitialize the tracing of generator images images if
+        # ... and reinitialize the tracing of generator images if
         # it had been initialized before.
         if IsBound( T!.preImagesNewGens ) then
             TzInitGeneratorImages( T );
@@ -1361,7 +1361,7 @@ end);
 #M                                                              from the tree
 ##
 ##  `TzEliminateFromTree'  eliminates  the  last  Tietze  generator.  If that
-##  generator cannot be isolated in any Tietze relator,  then it's definition
+##  generator cannot be isolated in any Tietze relator,  then its  definition
 ##  is  taken  from  the tree  and added  as an  additional  Tietze  relator,
 ##  extending  the  set  of  Tietze generators  appropriately,  if necessary.
 ##  However,  the elimination  will not be  performed  if the resulting total
@@ -1546,12 +1546,14 @@ InstallGlobalFunction( TzEliminateFromTree, function ( T )
 
         # replace all occurrences of gen by word^-1.
         if TzOptions(T).printLevel >= 2 then
-            Print( "#I  eliminating ", gens[num], " = " );
-            if gen > 0 then
-                Print( AbstractWordTietzeWord( word, gens )^-1, "\n");
-            else
-                Print( AbstractWordTietzeWord( word, gens ), "\n" );
-           fi;
+          Print( "#I  eliminating ", gens[num], " = " );
+          if Length(word)>500 then
+            Print("<word of length ",Length(word)," >\n");
+          elif gen > 0 then
+              Print( AbstractWordTietzeWord( word, gens )^-1, "\n");
+          else
+              Print( AbstractWordTietzeWord( word, gens ), "\n" );
+          fi;
         fi;
         TzSubstituteGen( tietze, -gen, word );
 
@@ -1641,7 +1643,9 @@ InstallGlobalFunction( TzEliminateGen, function ( T, num )
             # replace all occurrences of gen by word^-1.
             if TzOptions(T).printLevel >= 2 then
                 Print( "#I  eliminating ", gens[num], " = " );
-                if gen > 0 then
+                if Length(word)>500 then
+                  Print("<word of length ",Length(word)," >\n");
+                elif gen > 0 then
                     Print( AbstractWordTietzeWord( word, gens )^-1, "\n" );
                 else
                     Print( AbstractWordTietzeWord( word, gens ), "\n" );
@@ -1764,7 +1768,9 @@ InstallGlobalFunction( TzEliminateGen1, function ( T )
         # replace all occurrences of gen by word^-1.
         if TzOptions(T).printLevel >= 2 then
             Print( "#I  eliminating ", gens[num], " = " );
-            if gen > 0 then
+            if Length(word)>500 then
+              Print("<word of length ",Length(word)," >\n");
+            elif gen > 0 then
                 Print( AbstractWordTietzeWord( word, gens )^-1, "\n" );
             else
                 Print( AbstractWordTietzeWord( word, gens ), "\n" );
@@ -2319,6 +2325,28 @@ InstallGlobalFunction( TzGo, function ( arg )
     fi;
 
 end );
+
+# reduce presentation in generators (for MTC)
+InstallGlobalFunction(TzGoElim,function(T,downto)
+local tietze,len,olen;
+  TzTestInitialSetup(T); # run `1Or2Relators' if not yet done
+  tietze := T!.tietze;
+
+  len:=tietze[TZ_TOTAL];
+  olen:=len+1;
+  while tietze[TZ_NUMGENS]-tietze[TZ_NUMREDUNDS]>downto and olen<>len do
+    TzSearch(T);
+    TzEliminateGens(T);
+    if not tietze[TZ_MODIFIED] then TzSearchEqual(T);fi;
+    olen:=len;
+    len:=tietze[TZ_TOTAL];
+    if TzOptions(T).printLevel>0 then  TzPrintStatus(T,true); fi;
+  od;
+  olen:=TzOptions(T).loopLimit;
+  TzOptions(T).loopLimit:=5;
+  TzGo(T); # cleanup
+  TzOptions(T).loopLimit:=olen;
+end);
 
 
 #############################################################################
@@ -3717,7 +3745,7 @@ InstallGlobalFunction( TzSubstitute, function ( arg )
         return;
     fi;
 
-    # get the nth pair [ a, b ], say, from the list.
+    # get the nth pair, say [ a, b ], from the list.
     i := pairs[n][2];
     j := pairs[n][3];
     k := pairs[n][4];
@@ -3766,7 +3794,7 @@ end );
 #M  TzSubstituteCyclicJoins( <Tietze record> ) . . common roots of generators
 ##
 ##  `TzSubstituteCyclicJoins'  tries to find pairs of  commuting generators a
-##  and b, say, such that exponent(a) is prime to exponent(b).  For each such
+##  and b such that exponent(a) is prime to exponent(b).  For each such
 ##  pair, their product a * b is substituted as a new generator,  and a and b
 ##  are eliminated.
 ##
@@ -3819,7 +3847,7 @@ InstallGlobalFunction( TzSubstituteCyclicJoins, function ( T )
 
             # If there are relators a^m and b^n with m prime to n, then
             # a = (a*b)^n,  b = (a*b)^m,  and  (a*b)^(m*n) = 1.  Hence we
-            # may define a new generator g, say, by a*b together with the
+            # may define a new generator g by a*b together with the
             # two relations  a = g^n  and  b = g^m,  and then eliminate a
             # and b.  (Note that we can take a^-1 instead of a or b^-1
             # instead of b.)

@@ -1,0 +1,99 @@
+<Chapter Label = "The Semigroups package">
+  <Heading>
+    The &SEMIGROUPS; package
+  </Heading>
+  <Index Key = "Semigroups">&SEMIGROUPS; package overview</Index>
+
+  <Section Label = "Introduction">
+    <Heading>
+      Introduction
+    </Heading>
+
+    This is the manual for the &SEMIGROUPS; package for &GAP; version &VERSION;.
+    &SEMIGROUPS; &VERSION; is a distant descendant of the
+    <URL Text = "Monoid package for GAP 3">
+      http://schmidt.nuigalway.ie/monoid/index.html</URL> by Goetz Pfeiffer,
+    Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc.<P/>
+
+    From Version 3.0.0, &SEMIGROUPS; includes a copy of the &LIBSEMIGROUPS; C++
+    library which contains implementations of the Froidure-Pin, Todd-Coxeter,
+    and Knuth-Bendix algorithms (among others) that &SEMIGROUPS; utilises.
+  </Section>
+
+  If you find a bug or an issue with the package, please visit the
+  <URL Text = "issue tracker">
+    https://github.com/semigroups/Semigroups/issues
+  </URL>.
+
+  <Section Label = "Overview">
+    <Heading>
+      Overview
+    </Heading>
+
+    This manual is organised as follows:
+    <List>
+      <Mark>Part I: elements</Mark>
+      <Item>
+        the different types of elements that are introduced in &SEMIGROUPS;
+        are described in Chapters <Ref Chap = "Bipartitions and blocks"/>,
+        <Ref Chap = "Partitioned binary relations (PBRs)"/>, and
+        <Ref Chap = "Matrices over semirings"/>. These include
+        <Ref Func="Bipartition"/>, <Ref Oper="PBR"/>, and
+        <Ref Oper="Matrix" Label="for a filter and a matrix"/>, which
+        supplement those already defined in the &GAP; library, such as
+        <Ref Oper="Transformation" Label="for an image list" BookName="ref"/> or
+        <Ref Oper="PartialPerm" Label="for a domain and image" BookName="ref"/>.
+      </Item>
+
+      <Mark>Part II: semigroups and monoids defined by generating sets</Mark>
+      <Item>
+        functions and operations for creating semigroups and monoids defined by
+        generating sets (of the type descibed in Part I) are described
+        in Chapter <Ref Chap
+          = "Semigroups and monoids defined by generating sets"/>.
+      </Item>
+
+      <Mark>Part III: standard examples and constructions</Mark>
+      <Item>
+        standard examples of semigroups, such as <Ref Oper =
+          "FullBooleanMatMonoid"/> or <Ref Oper =
+          "UniformBlockBijectionMonoid"/>, are described in
+        Chapter <Ref Chap = "Standard examples"/>, and standard constructions,
+          such as <Ref Func = "DirectProduct"/> are given in Chapter <Ref Chap
+            = "Standard constructions"/>.
+      </Item>
+
+      <Mark>Part IV: the structure of a semigroup or monoid</Mark>
+      <Item>
+        the functionality for determining various structural properties of a
+        given semigroup or monoid are described in Chapters <Ref Chap =
+          "Ideals"/>, <Ref Chap = "Green's relations"/>, <Ref Chap =
+            "Attributes and operations for semigroups"/>, and <Ref Chap =
+              "Properties of semigroups"/>.
+      </Item>
+
+      <Mark>Part V: congruences, quotients, and homomorphisms</Mark>
+      <Item>
+        methods for creating and manipulating congruences and homomorphisms are
+        described by Chapters <Ref Chap = "Congruences"/> and <Ref Chap =
+          "Semigroup homomorphisms"/>.
+      </Item>
+
+      <Mark>Part VI: finitely presented semigroups and monoids</Mark>
+      <Item>
+        methods for finitely presented semigroups and monoids, in particular,
+          for Tietze transformations can be found in Chapters <Ref Chap =
+          "Finitely presented semigroups and Tietze transformations"/>.
+      </Item>
+
+      <Mark>Part VII: utilities and helper functions</Mark>
+      <Item>
+        functions for reading and writing semigroups and their elements, and
+        for visualising semigroups, and some of their elements, can be found in
+        Chapters <Ref Chap = "Visualising semigroups and elements"/> and
+        <Ref Chap = "IO"/>.
+      </Item>
+
+    </List>
+  </Section>
+</Chapter>

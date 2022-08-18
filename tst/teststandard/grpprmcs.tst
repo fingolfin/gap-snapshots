@@ -312,6 +312,13 @@ Group
 Group
 gap> List( ChiefSeriesOfGroup( g ), Size );
 [ 1215506, 607753, 31987, 1103, 1 ]
+gap> u:=NormalClosure(g,SylowSubgroup(g,2));;
+gap> cs:=ChiefSeriesThrough(g,[u]);;
+gap> List(cs,Size);
+[ 1215506, 63974, 2206, 1103, 1 ]
+gap> cs:=CompositionSeriesThrough(g,[u]);;
+gap> List(cs,Size);
+[ 1215506, 63974, 2206, 1103, 1 ]
 
 # $Co_2$ on 2300 points
 gap> g:=
@@ -1803,6 +1810,5 @@ gap> g:=PerfectGroup(IsPermGroup,10752,3);;
 gap> g:=Group(GeneratorsOfGroup(g));;
 gap> iso:=IsomorphismFpGroupByCompositionSeries(g);;
 gap> iso:=IsomorphismFpGroup(g);;
-gap> ImagesRepresentative(iso,Product(GeneratorsOfGroup(g)));
-F3*F4*F5*F1*F2
+gap> rep:=ImagesRepresentative(iso,Product(GeneratorsOfGroup(g)));;
 gap> STOP_TEST( "grpprmcs.tst", 1);

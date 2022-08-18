@@ -1,10 +1,9 @@
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <!-- %% -->
-<!-- %W  streams.msk               GAP documentation              Frank Celler -->
+<!-- %W  streams.xml               GAP documentation              Frank Celler -->
 <!-- %W                                                       Martin Schönert -->
 <!-- %W                                                         & Steve Linton -->
 <!-- %% -->
-<!-- %H  @(#)<M>Id: streams.msk,v 1.18 2006/07/02 12:01:48 gap Exp </M> -->
 <!-- %% -->
 <!-- %Y  Copyright 1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,   Germany -->
 <!-- %Y  Copyright 2000,  St Andrews -->
@@ -298,6 +297,19 @@ separation character (usually a comma).
 <#Include Label="PrintCSV">
 
 </Section>
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<Section Label="Opening files in the Operating System">
+<Heading>Opening files in the Operating System</Heading>
+
+In some situations it can be desirable to open a file outside of &GAP;,
+for example HTML files, PDFs, or pictures.
+
+<#Include Label="OpenExternal">
+
+</Section>
+
+
 </Chapter>
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->

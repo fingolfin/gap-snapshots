@@ -1,0 +1,60 @@
+#############################################################################
+##
+#W  ffmat.xml
+#Y  Copyright (C) 2014-2022
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+
+<#GAPDoc Label="RowSpaceBasis">
+<ManSection>
+  <Attr Name="RowSpaceBasis" Arg="m" Label="for a matrix over finite field"/>
+  <Attr Name="RowSpaceTransformation" Arg="m"
+    Label="for a matrix over finite field"/>
+  <Attr Name="RowSpaceTransformationInv" Arg="m"
+    Label="for a matrix over finite field"/>
+  <Description>
+    If <A>m</A> is a matrix object over a finite field, then 
+    to compute the value of any of the above attributes, a canonical basis for
+    the row space of <A>m</A> is computed along with an invertible matrix
+    <C>RowSpaceTransformation</C> such that
+    <C>m * RowSpaceTransformation(m) = RowSpaceBasis(m)</C>.
+    <C>RowSpaceTransformationInv(m)</C> is the inverse
+    of <C>RowSpaceTransformation(m)</C>.
+<Example><![CDATA[
+gap> x := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 1, 1], [1, 1, 1]]);
+[ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, Z(2)^0 ], 
+  [ Z(2)^0, Z(2)^0, Z(2)^0 ] ]
+gap> RowSpaceBasis(x);
+<rowbasis of rank 3 over GF(2^2)>
+gap> RowSpaceTransformation(x);
+[ [ 0*Z(2), Z(2)^0, Z(2)^0 ], [ Z(2)^0, Z(2)^0, Z(2)^0 ], 
+  [ Z(2)^0, 0*Z(2), Z(2)^0 ] ]]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RightInverse">
+<ManSection>
+  <Attr Name="RightInverse" Arg="m" Label="for a matrix over finite field"/>
+  <Attr Name="LeftInverse" Arg="m" Label="for a matrix over finite field"/>
+  <Returns>A matrix over a finite field.</Returns>
+  <Description>
+    These attributes contain a semigroup left-inverse, and a semigroup
+    right-inverse of the matrix <A>m</A> respectively.
+        <Example><![CDATA[
+gap> x := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);
+[ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ Z(2)^0, Z(2)^0, Z(2)^0 ] ]
+gap> LeftInverse(x);
+[ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ Z(2)^0, 0*Z(2), Z(2)^0 ] ]
+gap> Display(LeftInverse(x) * x);
+ 1 1 .
+ . . .
+ . . 1
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>

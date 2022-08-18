@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    datastructures
+  </Title>
+  <Subtitle>
+    Collection of standard data structures for &GAP;
+  </Subtitle>
+  <Version>
+    0.2.7
+  </Version>
+  <Author>
+    Markus Pfeiffer<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+School of Computer Science<Br/>
+University of St Andrews<Br/>
+Jack Cole Building, North Haugh<Br/>
+St Andrews, Fife, KY16 9SX<Br/>
+United Kingdom<Br/>
+</Address>
+<Email>markus.pfeiffer@st-andrews.ac.uk</Email>
+<Homepage>http://www.morphism.de/~markusp</Homepage>
+
+  </Author>
+  <Author>
+    Max Horn<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Fachbereich Mathematik<Br/>
+TU Kaiserslautern<Br/>
+Gottlieb-Daimler-Straße 48<Br/>
+67663 Kaiserslautern<Br/>
+Germany<Br/>
+</Address>
+<Email>horn@mathematik.uni-kl.de</Email>
+<Homepage>https://www.quendi.de/math</Homepage>
+
+  </Author>
+  <Author>
+    Christopher Jefferson<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+School of Computer Science<Br/>
+University of St Andrews<Br/>
+Jack Cole Building, North Haugh<Br/>
+St Andrews, Fife, KY16 9SX<Br/>
+United Kingdom<Br/>
+</Address>
+<Email>caj21@st-andrews.ac.uk</Email>
+<Homepage>http://caj.host.cs.st-andrews.ac.uk/</Homepage>
+
+  </Author>
+  <Author>
+    Steve Linton<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+School of Computer Science<Br/>
+University of St Andrews<Br/>
+Jack Cole Building, North Haugh<Br/>
+St Andrews, Fife, KY16 9SX<Br/>
+United Kingdom<Br/>
+</Address>
+<Email>steve.linton@st-andrews.ac.uk</Email>
+<Homepage>http://sl4.host.cs.st-andrews.ac.uk/</Homepage>
+
+  </Author>
+  <Date>
+    3 March 2022
+  </Date>
+  <Copyright>
+    &copyright; 2015-18 by Chris Jefferson, Steve Linton, Markus Pfeiffer, Max Horn, Reimer Behrends and others<P/>
+&datastructures; package is free software;
+you can redistribute it and/or modify it under the terms of the
+<URL Text="GNU General Public License">http://www.fsf.org/licenses/gpl.html</URL>
+as published by the Free Software Foundation; either version 2 of the License,
+or (at your option) any later version.
+  </Copyright>
+  <Acknowledgements>
+    We appreciate very much all past and future comments, suggestions and
+contributions to this package and its documentation provided by &GAP;
+users and developers.
+  </Acknowledgements>
+  </TitlePage>

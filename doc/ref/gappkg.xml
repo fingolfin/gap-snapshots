@@ -143,37 +143,20 @@ $ gap4/bin/i386-ibm-linux-gcc2/gac -d test.c
 ]]></Log>
 <P/>
 This will produce a file <F>test.so</F>, which then can be loaded into &GAP;
-with <Ref Func="LoadDynamicModule"/>.
+with <Ref Func="LoadKernelExtension"/>. If the kernel module is required
+for the package to work, then its <F>PackageInfo.g</F> should define
+a <C>AvailabilityTest</C> which calls <Ref Func="IsKernelExtensionAvailable"/>,
+see <Ref Subsect="Test for the Existence of GAP Package Binaries"/> for details.
+<P/>
+Note that before GAP 4.12, <Ref Func="LoadDynamicModule"/> was used for this.
+It is still available and in fact <Ref Func="LoadKernelExtension"/> call it;
+but the latter provides a higher level abstraction and is more convenient to use.
 
 </Subsection>
 
-<ManSection>
-<Func Name="LoadDynamicModule" Arg='filename[, crc]'/>
-
-<Description>
-To load a compiled file, the command <Ref Func="LoadDynamicModule"/> is used.
-This command loads <A>filename</A> as module. If given, the CRC checksum 
-<A>crc</A> must match the value of the module (see <Ref Sect="CrcFile"/>).
-<P/>
-<Log><![CDATA[
-gap> LoadDynamicModule("./test.so");
-gap> CrcFile("test.so");
-2906458206
-gap> LoadDynamicModule("./test.so",1);
-Error, <crc> mismatch (or no support for dynamic loading) called from
-<function>( <arguments> ) called from read-eval-loop
-Entering break read-eval-print loop ...
-you can 'quit;' to quit to outer loop, or
-you can 'return;' to continue
-brk> quit;
-gap> LoadDynamicModule("./test.so",2906458206);
-]]></Log>
-<P/>
-On some operating systems, once you have loaded a dynamic module with
-a certain filename, loading another with the same filename will have
-no effect, even if the file on disk has changed.
-</Description>
-</ManSection>
+<#Include Label="IsKernelExtensionAvailable">
+<#Include Label="LoadKernelExtension">
+<#Include Label="LoadDynamicModule">
 
 <Subsection Label="The PackageInfo.g File">
 <Heading>The PackageInfo.g File</Heading>
@@ -236,8 +219,8 @@ we provide guidelines for the release preparation and its distribution.
 <Heading>Structure of a GAP Package</Heading>
 
 <Index Subkey="for a GAP package">home directory</Index>
-A &GAP; package should have an alphanumeric name (<A>packagename</A>, say);
-mixed case is fine, but there should  be  no  whitespace characters. 
+A &GAP; package should have an alphanumeric name;
+mixed case is fine, but there should be no whitespace characters.
 All files of a &GAP; package <A>packagename</A> must be collected in a 
 single directory <A>packagedir</A>, where <A>packagedir</A> should  be
 just <A>packagename</A> optionally converted to lowercase and optionally 
@@ -577,7 +560,7 @@ SetPackageInfo( rec(
   PackageDoc := rec(
       BookName  := "test",
       SixFile   := "doc/manual.six",
-      Autoload  := true ),
+  ),
   Dependencies := rec(
       GAP       := "4.9",
       NeededOtherPackages := [ ["GAPDoc", "1.6"] ],
@@ -752,14 +735,14 @@ and <Ref Func="InstallValue"/> pair. There are also operations
 and their methods,  and  related  objects like attributes and filters which 
 also have <C>Declare...</C> and <C>Install...</C> pairs.
 <P/>
-<E>Secondly</E>,  it's  a  good  idea  to  reduce  the  chance  of  accidental
+<E>Secondly</E>,  it is a  good  idea  to  reduce  the  chance  of  accidental
 overwriting by choosing names for your functions and variables that begin
 with a string that identifies it  with  the  package,  e.g.&nbsp;some  of  the
 undocumented functions in the <Package>Example</Package> package begin with <C>Eg</C>. This is
 especially important in cases where you actually want the user to be able
 to change the value of a function or variable defined  by  your  package,
 for which you have used direct assignments  (for  which  the  user  will
-receive no warning  if  she  accidentally  overwrites  them).  It's  also
+receive no warning  if  she  accidentally  overwrites  them).  It is  also
 important  for  functions  and  variables   defined   via   <C>BindGlobal</C>,
 <C>DeclareGlobalFunction</C>/<C>InstallGlobalFunction</C>                       and
 <C>DeclareGlobalVariable</C>/<C>InstallValue</C>, in order to  avoid  name  clashes
@@ -923,7 +906,7 @@ before the package is loaded so it will be silently overwritten.
 <Index>needed package</Index>
 <Index>suggested package</Index>
 <Index Subkey="for a GAP package">dependencies</Index>
-It is possible for one &GAP; package <C>A</C>, say,
+It is possible for one &GAP; package <C>A</C>
 to require another package <C>B</C>.
 For that, one simply adds the name and the (least) version number of the
 package <C>B</C> to the <C>NeededOtherPackages</C> component of the
@@ -1106,7 +1089,7 @@ part and implementation part does in general <E>not</E> allow one to actually
 For example,
 in the case of a <Q>cyclic dependency</Q> as in the second example above,
 suppose that <C>B</C> provides a new function <C>f</C> or a new global record
-<C>r</C>, say, which are declared in the declaration part of <C>B</C>.
+<C>r</C> which are declared in the declaration part of <C>B</C>.
 Then the code in the implementation part of <C>A</C> may contain
 calls to the functions defined in the declaration part of <C>B</C>.
 However, the implementation part of <C>A</C> may be read
@@ -1286,10 +1269,29 @@ This means that the binary is not regarded as essential for this
 package.
 <P/>
 You might also have to cope with the situation that external binaries will
-only run under UNIX (and not, say, under Windows), or may not compile with
+only run under UNIX (and not e.g. under Windows), or may not compile with
 some compilers or default compiler options.
 See&nbsp;<Ref Sect="Testing for the System Architecture"/>
 for information on how to test for the architecture.
+<P/>
+Package using a kernel module (see <Ref Subsect="Kernel modules"/>),
+one may use a test like this:
+<Listing><![CDATA[
+...
+AvailabilityTest := function()
+    # see if example.so exists and is a loadable kernel extension
+    if not IsKernelExtensionAvailable("example") then
+      LogPackageLoadingMessage( PACKAGE_WARNING,
+          [ "The kernel extension `example' is unavailable,",
+            "perhaps it needs to be recompiled?",
+            "See the installation instructions;",
+            "type: ?Installing the Example package" ] );
+      return false;
+    fi;
+    return true;
+  end,
+...
+]]></Listing>
 <P/>
 <Index Key="LogPackageLoadingMessage"><C>LogPackageLoadingMessage</C></Index>
 Last but not least: do not print anything in the <C>AvailabilityTest</C> 
@@ -1446,7 +1448,7 @@ package onto the public server, please ensure that a new archive has
 a new version number. This should be done even for very minor changes.
 <P/>
 For most of the packages it will be inappropriate to re-use the date 
-of the release as a version number. It's much more obvious how big are
+of the release as a version number. It is much more obvious how big are
 the changes between versions "4.4.12", "4.5.1" and "4.5.2" than between 
 versions "2008.12.17", "2011.04.15" and "2011.09.14". The concept of
 using version numbers to convey the meaning of the status of the code
@@ -1804,8 +1806,7 @@ and also including a copy of the full text of the license.
 <Section Label="Releasing a GAP Package">
 <Heading>Releasing a GAP Package</Heading>
 
-Currently, the &GAP; distribution provides archives in four different
-formats.
+The &GAP; distribution provides archives in several different formats.
 <P/>
 <List>
 <Mark><F>.tar.gz</F></Mark>
@@ -1820,11 +1821,6 @@ formats.
 <Item>
   an archive in <C>zip</C> format, where text files should have 
   UNIX style line breaks
-</Item>
-<Mark><F>-win.zip</F></Mark>
-<Item>
-  an archive in <C>zip</C> format, where text files should have 
-  Windows style line breaks
 </Item>
 </List>
 <P/>
@@ -1859,47 +1855,9 @@ Use the command <C>GAPDocManualLab( packagename );</C> to create this file
 for your help books if you use &GAPDoc;.)
 <P/>
 
-For packages which are redistributed via the &GAP; website, 
-we offer an automatic conversion of any of the formats listed 
-above to all the others (note that this, as well as wrapping 
-the &GAP; distribution as a single archive containing the 
-core system and all currently redistributed packages, will 
-change file timestamps, so one should not rely on them anywhere 
-in the package).
-<P/>
-
-To use the conversion and repackaging service, you can provide any of 
-the four archive formats or even more than one, however you should 
-adhere to the following rule: text files in <F>.tar.gz</F> 
-and <F>.tar.bz2</F> archives must have UNIX style line breaks, 
-while text files in <F>-win.zip</F> archives must have 
-DOS/Windows line breaks. 
-<P/>
-
-The package wrapping tools for the &GAP; distribution and webpages
-then will use a sensible list of file extensions to decide if a file 
-is a text file (being conservative, it may miss a few text files). 
-These rules may be prepended by the application of rules from the 
-<F>PackageInfo.g</F> file:
-<List>
-<Item>
-if it has a <C>.TextFiles</C> component, then consider the given files 
-as text files before &GAP; defaults will be applied;
-</Item>
-<Item>
-if it has a <C>.BinaryFiles</C> component, then consider given files 
-as binary files before &GAP; defaults will be applied;
-</Item>
-<Item>
-if it has a <C>.TextBinaryFilesPatterns</C> component, then apply it 
-before &GAP; defaults will be applied;
-</Item>
-</List>     
-<P/>
-
-Utility functions from the <F>lib/lbutil.g</F> file in &GAP;, namely
-<C>DosUnixLinebreaks</C>, <C>UnixDosLinebreaks</C>, <C>MacUnixLinebreaks</C>
-may be helpful. They are described in the comments to their source code.
+Note that wrapping the &GAP; distribution as a single archive containing
+the core system and all currently redistributed packages, will change
+file timestamps, so one should not rely on them anywhere in the package.
 <P/>
 
 For packages hosted on GitHub publishing package release and establishing its
@@ -1936,11 +1894,6 @@ the &GAP; distribution (this, the package will be <E>deposited</E>),
 also ; 
 </Item>
 </List>
-In the latter case we can also provide some services for producing several 
-archive formats from the archive you provide (e.g., you produce a <C>.tar.gz</C>
-version of your archive and we produce also a <C>.tar.bz2</C>, <C>.zip</C>
-and a <C>-win.zip</C> version from it). 
-<P/>
 Please also consider submitting your package to the &GAP; package refereeing 
 process (see <URL>https://www.gap-system.org/Contacts/submit.html</URL> for
 further information).

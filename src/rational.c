@@ -33,7 +33,7 @@
 **  cost.   After every arithmetic operation we  have to compute the greatest
 **  common divisor of numerator and denominator, and divide them by the gcd.
 **
-**  Effort  has been made to improve  efficiency by avoiding unneccessary gcd
+**  Effort  has been made to improve  efficiency by avoiding unnecessary gcd
 **  computations.  Also if  possible this  package will compute  two gcds  of
 **  smaller integers instead of one gcd of larger integers.
 **
@@ -60,7 +60,7 @@
     if (TNUM_OBJ(rat) == T_RAT &&                                            \
         (!LtInt(INTOBJ_INT(1), DEN_RAT(rat)) ||                              \
          GcdInt(NUM_RAT(rat), DEN_RAT(rat)) != INTOBJ_INT(1)))               \
-    ErrorQuit("bad rational", 0L, 0L)
+    ErrorQuit("bad rational", 0, 0)
 #else
 #define CHECK_RAT(rat)
 #endif
@@ -110,11 +110,11 @@ static Obj TypeRat(Obj rat)
 */
 static void PrintRat(Obj rat)
 {
-    Pr( "%>", 0L, 0L );
+    Pr("%>", 0, 0);
     PrintObj( NUM_RAT(rat) );
-    Pr( "%</%>", 0L, 0L );
+    Pr("%</%>", 0, 0);
     PrintObj( DEN_RAT(rat) );
-    Pr( "%<", 0L, 0L );
+    Pr("%<", 0, 0);
 }
 
 
@@ -141,16 +141,16 @@ static Int EqRat(Obj opL, Obj opR)
 
     /* compare the numerators                                              */
     if ( ! EQ( numL, numR ) ) {
-        return 0L;
+        return 0;
     }
 
     /* compare the denominators                                            */
     if ( ! EQ( denL, denR ) ) {
-        return 0L;
+        return 0;
     }
 
     /* no differences found, they must be equal                            */
-    return 1L;
+    return 1;
 }
 
 
@@ -175,7 +175,7 @@ static Int LtRat(Obj opL, Obj opR)
     }
     else {
         numL = opL;
-        denL = INTOBJ_INT( 1L );
+        denL = INTOBJ_INT(1);
     }
     if ( TNUM_OBJ(opR) == T_RAT ) {
         numR = NUM_RAT(opR);
@@ -183,7 +183,7 @@ static Int LtRat(Obj opL, Obj opR)
     }
     else {
         numR = opR;
-        denR = INTOBJ_INT( 1L );
+        denR = INTOBJ_INT(1);
     }
 
     /* a / b < c / d <=> a d < c b                                         */
@@ -215,7 +215,7 @@ static Obj SumRat(Obj opL, Obj opR)
     }
     else {
         numL = opL;
-        denL = INTOBJ_INT( 1L );
+        denL = INTOBJ_INT(1);
     }
     if ( TNUM_OBJ(opR) == T_RAT ) {
         numR = NUM_RAT(opR);
@@ -223,14 +223,14 @@ static Obj SumRat(Obj opL, Obj opR)
     }
     else {
         numR = opR;
-        denR = INTOBJ_INT( 1L );
+        denR = INTOBJ_INT(1);
     }
 
     /* find the gcd of the denominators                                    */
     gcd1 = GcdInt( denL, denR );
 
     /* nothing can cancel if the gcd is 1                                  */
-    if ( gcd1 == INTOBJ_INT( 1L ) ) {
+    if (gcd1 == INTOBJ_INT(1)) {
         numS = SumInt( ProdInt( numL, denR ), ProdInt( numR, denL ) );
         denS = ProdInt( denL, denR );
     }
@@ -245,14 +245,13 @@ static Obj SumRat(Obj opL, Obj opR)
     }
 
     /* make the fraction or, if possible, the integer                      */
-    if ( denS != INTOBJ_INT( 1L ) ) {
+    if (denS != INTOBJ_INT(1)) {
         sum = MakeRat(numS, denS);
     }
     else {
         sum = numS;
     }
 
-    /* return the result                                                   */
     CHECK_RAT(sum);
     return sum;
 }
@@ -264,7 +263,7 @@ static Obj SumRat(Obj opL, Obj opR)
 */
 static Obj ZeroRat(Obj op)
 {
-    return INTOBJ_INT( 0L );
+    return INTOBJ_INT(0);
 }
 
 
@@ -305,7 +304,7 @@ static Obj AbsRat(Obj op)
 
 static Obj FuncABS_RAT(Obj self, Obj op)
 {
-    RequireRational("AbsRat", op);
+    RequireRational(SELF_NAME, op);
     return (TNUM_OBJ(op) == T_RAT) ? AbsRat(op) : AbsInt(op);
 }
 
@@ -321,7 +320,7 @@ static Obj SignRat(Obj op)
 
 static Obj FuncSIGN_RAT(Obj self, Obj op)
 {
-    RequireRational("SignRat", op);
+    RequireRational(SELF_NAME, op);
     return (TNUM_OBJ(op) == T_RAT) ? SignRat(op) : SignInt(op);
 }
 
@@ -350,7 +349,7 @@ static Obj DiffRat(Obj opL, Obj opR)
     }
     else {
         numL = opL;
-        denL = INTOBJ_INT( 1L );
+        denL = INTOBJ_INT(1);
     }
     if ( TNUM_OBJ(opR) == T_RAT ) {
         numR = NUM_RAT(opR);
@@ -358,14 +357,14 @@ static Obj DiffRat(Obj opL, Obj opR)
     }
     else {
         numR = opR;
-        denR = INTOBJ_INT( 1L );
+        denR = INTOBJ_INT(1);
     }
 
     /* find the gcd of the denominators                                    */
     gcd1 = GcdInt( denL, denR );
 
     /* nothing can cancel if the gcd is 1                                  */
-    if ( gcd1 == INTOBJ_INT( 1L ) ) {
+    if (gcd1 == INTOBJ_INT(1)) {
         numD = DiffInt( ProdInt( numL, denR ), ProdInt( numR, denL ) );
         denD = ProdInt( denL, denR );
     }
@@ -380,14 +379,13 @@ static Obj DiffRat(Obj opL, Obj opR)
     }
 
     /* make the fraction or, if possible, the integer                      */
-    if ( denD != INTOBJ_INT( 1L ) ) {
+    if (denD != INTOBJ_INT(1)) {
         dif = MakeRat(numD, denD);
     }
     else {
         dif = numD;
     }
 
-    /* return the result                                                   */
     CHECK_RAT(dif);
     return dif;
 }
@@ -417,7 +415,7 @@ static Obj ProdRat(Obj opL, Obj opR)
     }
     else {
         numL = opL;
-        denL = INTOBJ_INT( 1L );
+        denL = INTOBJ_INT(1);
     }
     if ( TNUM_OBJ(opR) == T_RAT ) {
         numR = NUM_RAT(opR);
@@ -425,7 +423,7 @@ static Obj ProdRat(Obj opL, Obj opR)
     }
     else {
         numR = opR;
-        denR = INTOBJ_INT( 1L );
+        denR = INTOBJ_INT(1);
     }
 
     /* find the gcds                                                       */
@@ -433,7 +431,7 @@ static Obj ProdRat(Obj opL, Obj opR)
     gcd2 = GcdInt( numR, denL );
 
     /* nothing can cancel if the gcds are 1                                */
-    if ( gcd1 == INTOBJ_INT( 1L ) && gcd2 == INTOBJ_INT( 1L ) ) {
+    if (gcd1 == INTOBJ_INT(1) && gcd2 == INTOBJ_INT(1)) {
         numP = ProdInt( numL, numR );
         denP = ProdInt( denL, denR );
     }
@@ -445,14 +443,13 @@ static Obj ProdRat(Obj opL, Obj opR)
     }
 
     /* make the fraction or, if possible, the integer                      */
-    if ( denP != INTOBJ_INT( 1L ) ) {
+    if (denP != INTOBJ_INT(1)) {
         prd = MakeRat(numP, denP);
     }
     else {
         prd = numP;
     }
 
-    /* return the result                                                   */
     CHECK_RAT(prd);
     return prd;
 }
@@ -464,7 +461,7 @@ static Obj ProdRat(Obj opL, Obj opR)
 */
 static Obj OneRat(Obj op)
 {
-    return INTOBJ_INT( 1L );
+    return INTOBJ_INT(1);
 }
 
 
@@ -480,7 +477,7 @@ static Obj InvRat(Obj op)
     CHECK_RAT(op);
     if (op == INTOBJ_INT(0))
       return Fail;
-    res = QuoRat( INTOBJ_INT( 1L ), op );
+    res = QuoRat(INTOBJ_INT(1), op);
     CHECK_RAT(res);
     return res;
 }
@@ -510,7 +507,7 @@ static Obj QuoRat(Obj opL, Obj opR)
     }
     else {
         numL = opL;
-        denL = INTOBJ_INT( 1L );
+        denL = INTOBJ_INT(1);
     }
     if ( TNUM_OBJ(opR) == T_RAT ) {
         numR = NUM_RAT(opR);
@@ -518,11 +515,11 @@ static Obj QuoRat(Obj opL, Obj opR)
     }
     else {
         numR = opR;
-        denR = INTOBJ_INT( 1L );
+        denR = INTOBJ_INT(1);
     }
 
     /* division by zero is an error                                        */
-    if ( numR == INTOBJ_INT( 0L ) ) {
+    if (numR == INTOBJ_INT(0)) {
         ErrorMayQuit("Rational operations: <divisor> must not be zero", 0, 0);
     }
 
@@ -538,7 +535,7 @@ static Obj QuoRat(Obj opL, Obj opR)
     gcd2 = GcdInt( denR, denL );
 
     /* nothing can cancel if the gcds are 1                                */
-    if ( gcd1 == INTOBJ_INT( 1L ) && gcd2 == INTOBJ_INT( 1L ) ) {
+    if (gcd1 == INTOBJ_INT(1) && gcd2 == INTOBJ_INT(1)) {
         numQ = ProdInt( numL, denR );
         denQ = ProdInt( denL, numR );
     }
@@ -550,14 +547,13 @@ static Obj QuoRat(Obj opL, Obj opR)
     }
 
     /* make the fraction or, if possible, the integer                      */
-    if ( denQ != INTOBJ_INT( 1L ) ) {
+    if (denQ != INTOBJ_INT(1)) {
         quo = MakeRat(numQ, denQ);
     }
     else {
         quo = numQ;
     }
 
-    /* return the result */
     CHECK_RAT(quo);
     return quo;
 }
@@ -620,16 +616,16 @@ static Obj PowRat(Obj opL, Obj opR)
     CHECK_RAT(opL);
 
     /* if <opR> == 0 return 1                                              */
-    if ( opR == INTOBJ_INT( 0L ) ) {
-        pow = INTOBJ_INT( 1L );
+    if (opR == INTOBJ_INT(0)) {
+        pow = INTOBJ_INT(1);
     }
 
     /* if <opR> == 1 return <opL>                                          */
-    else if ( opR == INTOBJ_INT( 1L ) ) {
+    else if (opR == INTOBJ_INT(1)) {
         pow = opL;
     }
 
-    /* if <opR> is positive raise numerator and denominator seperately    */
+    /* if <opR> is positive raise numerator and denominator separately    */
     else if ( IS_POS_INT(opR) ) {
         numP = PowInt( NUM_RAT(opL), opR );
         denP = PowInt( DEN_RAT(opL), opR );
@@ -637,12 +633,12 @@ static Obj PowRat(Obj opL, Obj opR)
     }
 
     /* if <opR> is negative and numerator is 1 just power the denominator  */
-    else if ( NUM_RAT(opL) == INTOBJ_INT( 1L ) ) {
+    else if (NUM_RAT(opL) == INTOBJ_INT(1)) {
         pow = PowInt( DEN_RAT(opL), AInvInt( opR ) );
     }
 
     /* if <opR> is negative and numerator is -1 return (-1)^r * num(l)     */
-    else if ( NUM_RAT(opL) == INTOBJ_INT( -1L ) ) {
+    else if (NUM_RAT(opL) == INTOBJ_INT(-1)) {
         numP = PowInt( NUM_RAT(opL), AInvInt( opR ) );
         denP = PowInt( DEN_RAT(opL), AInvInt( opR ) );
         pow = ProdInt(numP, denP);
@@ -659,7 +655,6 @@ static Obj PowRat(Obj opL, Obj opR)
         pow = MakeRat(numP, denP);
     }
 
-    /* return the result                                                   */
     CHECK_RAT(pow);
     return pow;
 }
@@ -705,10 +700,8 @@ static Obj FiltIS_RAT(Obj self, Obj val)
 */
 static Obj FuncNUMERATOR_RAT(Obj self, Obj rat)
 {
-    /* check the argument                                                   */
-    RequireRational("NumeratorRat", rat);
+    RequireRational(SELF_NAME, rat);
 
-    /* return the numerator                                                */
     if ( TNUM_OBJ(rat) == T_RAT ) {
         return NUM_RAT(rat);
     }
@@ -730,15 +723,13 @@ static Obj FuncNUMERATOR_RAT(Obj self, Obj rat)
 */
 static Obj FuncDENOMINATOR_RAT(Obj self, Obj rat)
 {
-    /* check the argument                                                  */
-    RequireRational("DenominatorRat", rat);
+    RequireRational(SELF_NAME, rat);
 
-    /* return the denominator                                              */
     if ( TNUM_OBJ(rat) == T_RAT ) {
         return DEN_RAT(rat);
     }
     else {
-        return INTOBJ_INT( 1L );
+        return INTOBJ_INT(1);
     }
 }
 
@@ -747,24 +738,28 @@ static Obj FuncDENOMINATOR_RAT(Obj self, Obj rat)
 *F  SaveRat( <rat> )
 **
 */
-
+#ifdef GAP_ENABLE_SAVELOAD
 static void SaveRat(Obj rat)
 {
   SaveSubObj(NUM_RAT(rat));
   SaveSubObj(DEN_RAT(rat));
 }
+#endif
+
 
 /****************************************************************************
 **
 *F  LoadRat( <rat> )
 **
 */
-
+#ifdef GAP_ENABLE_SAVELOAD
 static void LoadRat(Obj rat)
 {
   SET_NUM_RAT(rat, LoadSubObj());
   SET_DEN_RAT(rat, LoadSubObj());
 }
+#endif
+
 
 /****************************************************************************
 **
@@ -789,10 +784,10 @@ static StructGVarFilt GVarFilts [] = {
 */
 static StructGVarFunc GVarFuncs[] = {
 
-    GVAR_FUNC(NUMERATOR_RAT, 1, "rat"),
-    GVAR_FUNC(DENOMINATOR_RAT, 1, "rat"),
-    GVAR_FUNC(ABS_RAT, 1, "op"),
-    GVAR_FUNC(SIGN_RAT, 1, "op"),
+    GVAR_FUNC_1ARGS(NUMERATOR_RAT, rat),
+    GVAR_FUNC_1ARGS(DENOMINATOR_RAT, rat),
+    GVAR_FUNC_1ARGS(ABS_RAT, op),
+    GVAR_FUNC_1ARGS(SIGN_RAT, op),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -837,9 +832,11 @@ static Int InitKernel (
     InitHdlrFiltsFromTable( GVarFilts );
     InitHdlrFuncsFromTable( GVarFuncs );
 
+#ifdef GAP_ENABLE_SAVELOAD
     /* install a saving functions */
     SaveObjFuncs[ T_RAT ] = SaveRat;
     LoadObjFuncs[ T_RAT ] = LoadRat;
+#endif
 
     /* install the printer                                                 */
     PrintObjFuncs[ T_RAT ] = PrintRat;
@@ -856,20 +853,20 @@ static Int InitKernel (
     LtFuncs  [ T_RAT    ][ T_INTNEG ] = LtRat;
 
     /* install the arithmetic operations                                   */
-    ZeroFuncs[ T_RAT    ] = ZeroRat;
-    AInvFuncs[ T_RAT    ] = AInvRat;
+    ZeroSameMutFuncs[T_RAT] = ZeroRat;
+    AInvSameMutFuncs[T_RAT] = AInvRat;
     AInvMutFuncs[ T_RAT    ] = AInvRat;
     OneFuncs [ T_RAT    ] = OneRat;
-    OneMutFuncs [ T_RAT    ] = OneRat;
+    OneSameMut[T_RAT] = OneRat;
     InvFuncs [ T_INT    ] = InvRat;
     InvFuncs [ T_INTPOS ] = InvRat;
     InvFuncs [ T_INTNEG ] = InvRat;
     InvFuncs [ T_RAT    ] = InvRat;
-    InvMutFuncs [ T_INT    ] = InvRat;
-    InvMutFuncs [ T_INTPOS ] = InvRat;
-    InvMutFuncs [ T_INTNEG ] = InvRat;
-    InvMutFuncs [ T_RAT    ] = InvRat;
-    
+    InvSameMutFuncs[T_INT] = InvRat;
+    InvSameMutFuncs[T_INTPOS] = InvRat;
+    InvSameMutFuncs[T_INTNEG] = InvRat;
+    InvSameMutFuncs[T_RAT] = InvRat;
+
     SumFuncs [ T_RAT    ][ T_RAT    ] = SumRat;
     SumFuncs [ T_INT    ][ T_RAT    ] = SumRat;
     SumFuncs [ T_INTPOS ][ T_RAT    ] = SumRat;
@@ -924,7 +921,6 @@ static Int InitKernel (
     MakeBagTypePublic(T_RAT);
 #endif
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -940,7 +936,6 @@ static Int InitLibrary (
     InitGVarFiltsFromTable( GVarFilts );
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 

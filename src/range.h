@@ -31,18 +31,10 @@
 **
 *F  NEW_RANGE() . . . . . . . . . . . . . . . . . . . . . .  make a new range
 **
-**  'NEW_RANGE' returns a new range.  Note that  you must set the length, the
-**  low value, and the increment before you can use the range.
+**  'NEW_RANGE' returns a new range.
 */
-EXPORT_INLINE Obj NEW_RANGE_NSORT(void)
-{
-    return NewBag(T_RANGE_NSORT, 3 * sizeof(Obj));
-}
+Obj NEW_RANGE(Int len, Int low, Int inc);
 
-EXPORT_INLINE Obj NEW_RANGE_SSORT(void)
-{
-    return NewBag(T_RANGE_SSORT, 3 * sizeof(Obj));
-}
 
 /****************************************************************************
 **
@@ -53,7 +45,7 @@ EXPORT_INLINE Obj NEW_RANGE_SSORT(void)
 **  a range, but  the kernel does not know  this yet.  Use  'IsRange' to test
 **  whether a list is a range.
 */
-EXPORT_INLINE Int IS_RANGE(Obj val)
+EXPORT_INLINE BOOL IS_RANGE(Obj val)
 {
     return TNUM_OBJ(val) >= T_RANGE_NSORT &&
            TNUM_OBJ(val) <= T_RANGE_SSORT + IMMUTABLE;

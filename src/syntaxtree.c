@@ -13,6 +13,7 @@
 #include "bool.h"
 #include "calls.h"
 #include "code.h"
+#include "common.h"
 #include "error.h"
 #include "exprs.h"
 #include "gvars.h"
@@ -26,7 +27,6 @@
 #include "records.h"
 #include "stats.h"
 #include "stringobj.h"
-#include "system.h"
 #include "vars.h"
 
 #include <ctype.h>
@@ -319,7 +319,7 @@ static Expr SyntaxTreeCodeRefLVar(Obj node)
 {
     RequirePlainRec("SyntaxTreeCodeRefLVar", node);
     Obj lvar = ElmRecST(EXPR_REF_LVAR, node, "lvar");
-    RequireSmallInt("SyntaxTreeCodeRefLVar", lvar, "<lvar>");
+    RequireSmallInt("SyntaxTreeCodeRefLVar", lvar);
     return REF_LVAR_LVAR(INT_INTOBJ(lvar));
 }
 
@@ -543,7 +543,8 @@ static Expr SyntaxTreeCodeImmediateInteger(Obj node)
 {
     RequirePlainRec("SyntaxTreeCodeImmediateInteger", node);
     Obj value = ElmRecST(EXPR_INT, node, "value");
-    RequireSmallInt("SyntaxTreeCodeImmediateInteger", value, "<node>.value");
+    RequireSmallIntEx("SyntaxTreeCodeImmediateInteger", value,
+                      "<node>.value");
     return INTEXPR_INT(INT_INTOBJ(value));
 }
 
@@ -596,7 +597,7 @@ static Obj SyntaxTreeFunc(Obj result, Obj func)
     AssPRec(result, RNamName("nams"), NAMS_FUNC(func));
 
     /* switch to this function (so that 'READ_STAT' and 'READ_EXPR' work) */
-    SWITCH_TO_NEW_LVARS(func, narg, nloc, oldFrame);
+    oldFrame = SWITCH_TO_NEW_LVARS(func, narg, nloc);
     stats = SyntaxTreeCompiler(OFFSET_FIRST_STAT);
     SWITCH_TO_OLD_LVARS(oldFrame);
 
@@ -605,9 +606,9 @@ static Obj SyntaxTreeFunc(Obj result, Obj func)
     return result;
 }
 
-static UInt SyntaxTreeCodeFunc_Internal(Obj node)
+static Expr SyntaxTreeCodeFunc(Obj node)
 {
-    RequirePlainRec("SyntaxTreeCodeFunc_Internal", node);
+    RequirePlainRec("SyntaxTreeCodeFunc", node);
     Int narg = INT_INTOBJ(ElmRecST(EXPR_FUNC, node, "narg"));
     Int nloc = INT_INTOBJ(ElmRecST(EXPR_FUNC, node, "nloc"));
     Obj nams = ElmRecST(EXPR_FUNC, node, "nams");
@@ -615,7 +616,7 @@ static UInt SyntaxTreeCodeFunc_Internal(Obj node)
     if (variadic == True) {
         narg = -narg;
     }
-    CodeFuncExprBegin(narg, nloc, nams, 0);
+    CodeFuncExprBegin(narg, nloc, nams, 0, 0);
     Obj  stat_rec = ElmRecST(EXPR_FUNC, node, "stats");
     Obj  body_stats = ElmRecST(EXPR_FUNC, stat_rec, "statements");
     UInt nr_stats = LEN_LIST(body_stats);
@@ -623,23 +624,14 @@ static UInt SyntaxTreeCodeFunc_Internal(Obj node)
         Expr current = SyntaxTreeDefaultStatCoder(ELM_LIST(body_stats, i));
         PushStat(current);
     }
-    return nr_stats;
+    return CodeFuncExprEnd(nr_stats, FALSE, 0);
 }
 
-static Expr SyntaxTreeCodeFunc(Obj node)
+static Obj FuncSYNTAX_TREE_CODE(Obj self, Obj tree)
 {
-    RequirePlainRec("SyntaxTreeCodeFunc", node);
-    UInt nr_stats = SyntaxTreeCodeFunc_Internal(node);
-    Expr funcexpr = CodeFuncExprEnd(nr_stats, 0);
-    return funcexpr;
-}
-
-Obj FuncSYNTAX_TREE_CODE(Obj self, Obj tree)
-{
-    RequirePlainRec("SYNTAX_TREE_CODE", tree);
+    RequirePlainRec(SELF_NAME, tree);
     CodeBegin();
-    UInt nr_stats = SyntaxTreeCodeFunc_Internal(tree);
-    CodeFuncExprEnd(nr_stats, 0);
+    SyntaxTreeCodeFunc(tree);
     Obj func = CodeEnd(0);
     if (IsbPRec(tree, RNamName("name"))) {
         Obj name = ELM_REC(tree, RNamName("name"));
@@ -901,15 +893,15 @@ static Obj FuncSYNTAX_TREE(Obj self, Obj func)
     Obj result;
 
     if (!IS_FUNC(func) || IsKernelFunction(func) || IS_OPERATION(func)) {
-        RequireArgument("SYNTAX_TREE", func, "must be a plain GAP function");
+        RequireArgument(SELF_NAME, func, "must be a plain GAP function");
     }
 
     result = NewSyntaxTreeNode(EXPR_FUNC);
     return SyntaxTreeFunc(result, func);
 }
 
-static StructGVarFunc GVarFuncs[] = { GVAR_FUNC(SYNTAX_TREE, 1, "func"),
-                                      GVAR_FUNC(SYNTAX_TREE_CODE, 1, "tree"),
+static StructGVarFunc GVarFuncs[] = { GVAR_FUNC_1ARGS(SYNTAX_TREE, func),
+                                      GVAR_FUNC_1ARGS(SYNTAX_TREE_CODE, tree),
                                       { 0, 0, 0, 0, 0 } };
 
 static Int InitKernel(StructInitInfo * module)
@@ -939,7 +931,6 @@ static Int InitLibrary(StructInitInfo * module)
     }
 
 
-    /* return success */
     return 0;
 }
 

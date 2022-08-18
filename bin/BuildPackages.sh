@@ -23,13 +23,6 @@
 
 set -e
 
-# Is someone trying to run us from inside the 'bin' directory?
-if [[ -f gapicon.bmp ]]
-then
-  error "This script must be run from inside the pkg directory" \
-        "Type: cd ../pkg; ../bin/BuildPackages.sh"
-fi
-
 CURDIR="$(pwd)"
 GAPROOT="$(cd .. && pwd)"
 COLORS=yes
@@ -48,8 +41,8 @@ while [[ "$#" -ge 1 ]]; do
     --with-gaproot=*) GAPROOT=${option#--with-gaproot=}; ;;
     --parallel)       PARALLEL=yes; ;;
 
-    --with-gap)       GAP="$1"; shift ;;
-    --with-gap=*)     GAP=${option#--with-gap=}; ;;
+    --with-gap)       GAP_EXE="$1"; shift ;;
+    --with-gap=*)     GAP_EXE=${option#--with-gap=}; ;;
 
     --no-color)       COLORS=no ;;
     --color)          COLORS=yes ;;
@@ -62,24 +55,6 @@ while [[ "$#" -ge 1 ]]; do
     *)                PACKAGES+=("$option") ;;
   esac
 done
-
-GAP="${GAP:-$GAPROOT/bin/gap.sh}"
-
-if [ "x$PARALLEL" = "xyes" ]; then
-  export MAKEFLAGS="${MAKEFLAGS:--j3}"
-fi;
-
-# If user specified no packages to build, build all packages in subdirectories.
-if [[ ${#PACKAGES[@]} == 0 ]]
-then
-  # Put package directory names into a bash array to avoid issues with
-  # spaces in filenames. This code will still break if there are newlines
-  # in the name.
-  old_IFS=$IFS
-  IFS=$'\n' PACKAGES=($(find . -maxdepth 2 -type f -name PackageInfo.g))
-  IFS=$old_IFS
-  PACKAGES=( "${PACKAGES[@]%/PackageInfo.g}" )
-fi
 
 # Some helper functions for printing user messages
 if [[ "x$COLORS" = xyes ]]
@@ -96,6 +71,32 @@ else
   std_error() { printf "%s\n" "$@" ; }
 fi
 
+# Is someone trying to run us from inside the 'bin' directory?
+if [[ -f BuildPackages.sh ]]
+then
+  error "This script must be run from inside the pkg directory" \
+        "Type: cd ../pkg; ../bin/BuildPackages.sh"
+fi
+
+if [ "x$PARALLEL" = "xyes" ] && [ "x$STRICT" = "xyes" ]; then
+  error "The options --strict and --parallel cannot be used simultaneously"
+fi
+
+if [ "x$PARALLEL" = "xyes" ]; then
+  export MAKEFLAGS="${MAKEFLAGS:--j3}"
+fi;
+
+# If user specified no packages to build, build all packages in subdirectories.
+if [[ ${#PACKAGES[@]} == 0 ]]
+then
+  # Put package directory names into a bash array to avoid issues with
+  # spaces in filenames. This code will still break if there are newlines
+  # in the name.
+  old_IFS=$IFS
+  IFS=$'\n' PACKAGES=($(find . -maxdepth 2 -type f -name PackageInfo.g | sort -f))
+  IFS=$old_IFS
+  PACKAGES=( "${PACKAGES[@]%/PackageInfo.g}" )
+fi
 
 notice "Using GAP root $GAPROOT"
 
@@ -109,6 +110,20 @@ fi
 
 # read in sysinfo
 source "$GAPROOT/sysinfo.gap"
+
+# determine the GAP executable to call:
+# - if the user specified one explicitly via the `--gap` option, then
+#   GAP_EXE is set and we should use that
+# - otherwise if sysinfo.gap set the GAP variable, use that
+# - otherwise fall back to $GAPROOT/bin/gap.sh
+if [[ -n $GAP_EXE ]]
+then
+  GAP="$GAP_EXE"
+else
+  GAP="${GAP:-$GAPROOT/bin/gap.sh}"
+fi
+
+
 
 # detect whether GAP was built in 32bit mode
 # TODO: once all packages have adapted to the new build system,
@@ -179,7 +194,7 @@ run_configure_and_make() {
   then
     if grep Autoconf ./configure > /dev/null
     then
-      local PKG_NAME=$($GAP -q -T -A -r <<GAPInput
+      local PKG_NAME=$($GAP -q -T -A -r -M <<GAPInput
 Read("PackageInfo.g");
 Print(GAPInfo.PackageInfoCurrent.PackageName);
 GAPInput
@@ -201,6 +216,7 @@ GAPInput
 build_one_package() {
   # requires one argument which is the package directory
   PKG="$1"
+  [[ $GITHUB_ACTIONS = true ]] && echo "::group::$PKG"
   echo ""
   date
   echo ""
@@ -251,17 +267,23 @@ build_one_package() {
       run_configure_and_make
     ;;
   esac
+  ) &&
+  (  # start subshell
+  if [[ $GITHUB_ACTIONS = true ]]
+  then
+    echo "::endgroup::"
+  fi
   ) || build_fail
 }
 
 date >> "$LOGDIR/fail.log"
 for PKG in "${PACKAGES[@]}"
 do 
-  ( 
+  (  # start a background process
   # cut off the ending slash (if exists)
   PKG="${PKG%/}"
   # cut off everything before the first slash to only keep the package name
-  # (these two commands are mainly to accomodate the logs better,
+  # (these two commands are mainly to accommodate the logs better,
   # as they make no difference with changing directories)
   PKG="${PKG##*/}"
   if [[ -e "$CURDIR/$PKG/PackageInfo.g" ]]
@@ -295,6 +317,7 @@ do
     warning "$PKG does not seem to be a package directory, skipping"
   fi
   ) &
+  BUILD_PID=$!
   if [ "x$PARALLEL" = "xyes" ]; then
     # If more than 4 background jobs are running, wait for one to finish (if
     # <wait -n> is available) or for all to finish (if only <wait> is available)
@@ -303,7 +326,10 @@ do
     fi
   else
     # wait for this package to finish building
-    wait
+    if ! wait $BUILD_PID && [[ $STRICT = yes ]]
+    then
+      exit 1
+    fi
   fi;
 done
 # Wait until all packages are built, if in parallel

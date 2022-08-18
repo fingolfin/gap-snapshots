@@ -28,6 +28,7 @@
 #include <errno.h>
 #include <pthread.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/mman.h>
 #include <unistd.h>
 
@@ -103,10 +104,95 @@ void UnlockThreadControl(void)
 #define MAP_ANONYMOUS MAP_ANON
 #endif
 
-#ifndef HAVE_NATIVE_TLS
+#ifndef USE_NATIVE_TLS
+
+#ifdef USE_PTHREAD_TLS
+static int InitTLSKey;
+static pthread_key_t TLSKey;
+#ifdef USE_MACOS_PTHREAD_TLS_ASM
+static UInt TLSOffset;
+
+// The following code also occurs in configure.ac, and both need to be
+// kept in sync.
+
+#define OFFS 0x100
+#define END (-1)
+
+int cmpOpCode(unsigned char *code, int *with) {
+    int result = 0;
+    while (*with >= 0) {
+        if (*with == OFFS) {
+            result = *code;
+        } else {
+            if (*code != *with)
+                return -1;
+        }
+        code++;
+        with++;
+    }
+    return result;
+}
+
+void FindTLSOffset() {
+    // This is an idea borrowed from Mono. We test if the implementation
+    // of pthread_getspecific() uses the assembly code below. If that is
+    // true, we can replace calls to pthread_getspecific() with the
+    // matching inline assembly, allowing a significant performance boost.
+    // There are two possible implementations.
+    static int asm_code[] = {
+        // movq %gs:[OFFS](,%rdi,8), %rax
+        // retq
+        0x65, 0x48, 0x8b, 0x04, 0xfd, OFFS, 0x00, 0x00, 0x00, 0xc3, END
+    };
+    static int asm_code2[] = {
+        // pushq  %rbp
+        // movq   %rsp, %rbp
+        // movq   %gs:[OFFS](,%rdi,8),%rax
+        // popq   %rbp
+        // retq
+        0x55, 0x48, 0x89, 0xe5, 0x65, 0x48, 0x8b, 0x04, 0xfd, OFFS,
+        0x00, 0x00, 0x00, 0x5d, 0xc3, END
+    };
+    TLSOffset = cmpOpCode((unsigned char *)pthread_getspecific, asm_code);
+    if (TLSOffset >= 0)
+        return;
+    TLSOffset = cmpOpCode((unsigned char *)pthread_getspecific, asm_code2);
+    if (TLSOffset >= 0)
+        return;
+    Panic("Unable to find macOS thread-local storage offset");
+}
+#endif
+
+static void CreateTLSKey(void)
+{
+    pthread_key_create(&TLSKey, NULL);
+#ifdef USE_MACOS_PTHREAD_TLS_ASM
+    FindTLSOffset();
+#endif
+    InitTLSKey = 1;
+}
+
+#ifdef USE_MACOS_PTHREAD_TLS_ASM
+UInt GetTLSOffset(void)
+{
+    if (!InitTLSKey) {
+        CreateTLSKey();
+    }
+    return (UInt)TLSKey * sizeof(void *) + TLSOffset;
+}
+#endif
+pthread_key_t GetTLSKey(void)
+{
+    if (!InitTLSKey) {
+        CreateTLSKey();
+    }
+    return TLSKey;
+}
+#endif /* USE_PTHREAD_TLS */
 
 void * AllocateTLS(void)
 {
+#ifndef USE_PTHREAD_TLS
     void * addr;
     void * result;
     size_t pagesize = getpagesize();
@@ -126,6 +212,14 @@ void * AllocateTLS(void)
     mprotect((char *)result + tlssize, pagesize, PROT_NONE);
 #endif
     return result;
+#else
+    void * result = pthread_getspecific(GetTLSKey());
+    if (!result) {
+        result = malloc(sizeof(GAPState));
+        pthread_setspecific(GetTLSKey(), result);
+    }
+    return result;
+#endif /* USE_PTHREAD_TLS */
 }
 
 void FreeTLS(void * address)
@@ -137,7 +231,7 @@ void FreeTLS(void * address)
 #endif
 }
 
-#endif /* HAVE_NATIVE_TLS */
+#endif /* USE_NATIVE_TLS */
 
 #ifndef DISABLE_GC
 void AddGCRoots(void)
@@ -157,7 +251,8 @@ static void RemoveGCRoots(void)
 }
 #endif /* DISABLE_GC */
 
-#ifndef HAVE_NATIVE_TLS
+#if !defined(USE_NATIVE_TLS) && !defined(USE_PTHREAD_TLS)
+
 
 /* In order to safely use thread-local memory on the main stack, we have
  * to work around an idiosyncracy in some virtual memory systems. These
@@ -191,7 +286,7 @@ static NOINLINE void GrowStack(void)
 
 static NOINLINE void SetupTLS(void)
 {
-#ifndef HAVE_NATIVE_TLS
+#if !defined(USE_NATIVE_TLS) && !defined(USE_PTHREAD_TLS)
     GrowStack();
 #endif
     InitializeTLS();
@@ -212,7 +307,7 @@ void RunThreadedMain(int (*mainFunction)(int, char **),
                      int     argc,
                      char ** argv)
 {
-#ifndef HAVE_NATIVE_TLS
+#ifndef USE_NATIVE_TLS
 #ifdef STACK_GROWS_UP
 #error Upward growing stack not yet supported
 #else
@@ -270,7 +365,7 @@ static void RunThreadedMain2(int (*mainFunction)(int, char **),
     thread_data[0].state = TSTATE_RUNNING;
     thread_data[0].tls = GetTLS();
     InitSignals();
-    if (sySetjmp(TLS(threadExit)))
+    if (setjmp(TLS(threadExit)))
         exit(0);
     exit((*mainFunction)(argc, argv));
 }
@@ -355,9 +450,8 @@ static void * DispatchThread(void * arg)
 Obj RunThread(void (*start)(void *), void * arg)
 {
     ThreadData * result;
-#ifndef HAVE_NATIVE_TLS
+#ifndef USE_NATIVE_TLS
     void * tls;
-    size_t         pagesize = getpagesize();
 #endif
     pthread_attr_t thread_attr;
     LockThreadControl(1);
@@ -370,7 +464,7 @@ Obj RunThread(void (*start)(void *), void * arg)
     }
     result = thread_free_list;
     thread_free_list = thread_free_list->next;
-#ifndef HAVE_NATIVE_TLS
+#ifndef USE_NATIVE_TLS
     if (!result->tls)
         result->tls = AllocateTLS();
     tls = result->tls;
@@ -395,7 +489,8 @@ Obj RunThread(void (*start)(void *), void * arg)
     result->thread_object = NewThreadObject(result - thread_data);
     /* set up the thread attribute to support a custom stack in our TLS */
     pthread_attr_init(&thread_attr);
-#ifndef HAVE_NATIVE_TLS
+#if !defined(USE_NATIVE_TLS) && !defined(USE_PTHREAD_TLS)
+    size_t         pagesize = getpagesize();
     pthread_attr_setstack(&thread_attr, (char *)tls + pagesize * 2,
                           TLS_SIZE - pagesize * 2);
 #endif
@@ -411,7 +506,7 @@ Obj RunThread(void (*start)(void *), void * arg)
         thread_free_list = result;
         UnlockThreadControl();
         pthread_attr_destroy(&thread_attr);
-#ifndef HAVE_NATIVE_TLS
+#ifndef USE_NATIVE_TLS
         FreeTLS(tls);
 #endif
         return (Obj)0;
@@ -424,7 +519,7 @@ int JoinThread(int id)
 {
     pthread_t pthread_id;
     void (*start)(void *);
-#ifndef HAVE_NATIVE_TLS
+#ifndef USE_NATIVE_TLS
     void * tls;
 #endif
     if (id < 0 || id >= MAX_THREADS)
@@ -432,7 +527,7 @@ int JoinThread(int id)
     LockThreadControl(1);
     pthread_id = thread_data[id].pthread_id;
     start = thread_data[id].start;
-#ifndef HAVE_NATIVE_TLS
+#ifndef USE_NATIVE_TLS
     tls = thread_data[id].tls;
 #endif
     if (thread_data[id].joined || start == NULL) {
@@ -451,7 +546,7 @@ int JoinThread(int id)
     */
     thread_data[id].start = NULL;
     UnlockThreadControl();
-#ifndef HAVE_NATIVE_TLS
+#ifndef USE_NATIVE_TLS
     FreeTLS(tls);
 #endif
     return 1;
@@ -477,7 +572,7 @@ static UInt LockID(void * object)
 void HashLock(void * object)
 {
     if (TLS(CurrentHashLock))
-        ErrorQuit("Nested hash locks", 0L, 0L);
+        ErrorQuit("Nested hash locks", 0, 0);
     TLS(CurrentHashLock) = object;
     pthread_rwlock_wrlock(&ObjLock[LockID(object)]);
 }
@@ -485,7 +580,7 @@ void HashLock(void * object)
 void HashLockShared(void * object)
 {
     if (TLS(CurrentHashLock))
-        ErrorQuit("Nested hash locks", 0L, 0L);
+        ErrorQuit("Nested hash locks", 0, 0);
     TLS(CurrentHashLock) = object;
     pthread_rwlock_rdlock(&ObjLock[LockID(object)]);
 }
@@ -493,7 +588,7 @@ void HashLockShared(void * object)
 void HashUnlock(void * object)
 {
     if (TLS(CurrentHashLock) != object)
-        ErrorQuit("Improperly matched hash lock/unlock calls", 0L, 0L);
+        ErrorQuit("Improperly matched hash lock/unlock calls", 0, 0);
     TLS(CurrentHashLock) = 0;
     pthread_rwlock_unlock(&ObjLock[LockID(object)]);
 }
@@ -501,7 +596,7 @@ void HashUnlock(void * object)
 void HashUnlockShared(void * object)
 {
     if (TLS(CurrentHashLock) != object)
-        ErrorQuit("Improperly matched hash lock/unlock calls", 0L, 0L);
+        ErrorQuit("Improperly matched hash lock/unlock calls", 0, 0);
     TLS(CurrentHashLock) = 0;
     pthread_rwlock_unlock(&ObjLock[LockID(object)]);
 }
@@ -832,7 +927,7 @@ static void TerminateCurrentThread(int locked)
     PopRegionLocks(0);
     if (TLS(CurrentHashLock))
         HashUnlock(TLS(CurrentHashLock));
-    syLongjmp(&(TLS(threadExit)), 1);
+    longjmp(TLS(threadExit), 1);
 }
 
 static void PauseCurrentThread(int locked)
@@ -880,7 +975,7 @@ static void InterruptCurrentThread(int locked, Stat stat)
     if (handler)
         CALL_WITH_CATCH(handler, NEW_PLIST(T_PLIST, 0));
     else
-        ErrorReturnVoid("system interrupt", 0L, 0L, "you can 'return;'");
+        ErrorReturnVoid("system interrupt", 0, 0, "you can 'return;'");
     if (!locked)
         pthread_mutex_unlock(thread->lock);
 }
@@ -1243,7 +1338,7 @@ void WriteGuardError(Obj          o,
         return;
     SetGVar(&LastInaccessibleGVar, o);
     PrintGuardError(buffer, "write", o, file, line, func, expr);
-    ErrorMayQuit("%s", (UInt)buffer, 0L);
+    ErrorMayQuit("%s", (UInt)buffer, 0);
 }
 
 void ReadGuardError(Obj          o,
@@ -1258,7 +1353,7 @@ void ReadGuardError(Obj          o,
         return;
     SetGVar(&LastInaccessibleGVar, o);
     PrintGuardError(buffer, "read", o, file, line, func, expr);
-    ErrorMayQuit("%s", (UInt)buffer, 0L);
+    ErrorMayQuit("%s", (UInt)buffer, 0);
 }
 
 #else

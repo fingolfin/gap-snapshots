@@ -43,8 +43,11 @@
 
 #ifdef HPCGAP
 #include "hpc/aobjects.h"
+#include "hpc/guards.h"
 #include "hpc/traverse.h"
 #endif
+
+#include <stdlib.h>
 
 /****************************************************************************
 **
@@ -68,17 +71,6 @@ static Obj TypePRec(Obj prec)
     return IS_MUTABLE_OBJ(prec) ? TYPE_PREC_MUTABLE : TYPE_PREC_IMMUTABLE;
 }
 
-/****************************************************************************
-**
-*F  SetTypePRecToComObj( <rec>, <kind> )  convert record to component object
-**
-*/
-static void SetTypePRecToComObj(Obj rec, Obj kind)
-{
-    RetypeBag(rec, T_COMOBJ);
-    SET_TYPE_COMOBJ(rec, kind);
-    CHANGED_BAG(rec);
-}
 
 /****************************************************************************
 **
@@ -106,7 +98,8 @@ static Int GrowPRec(Obj rec, UInt need)
 
     /* check if big enough */
     want = (2*need+2)*sizeof(Obj);
-    if (SIZE_OBJ(rec) >= want) return 0L;
+    if (SIZE_OBJ(rec) >= want)
+        return 0;
 
 
     /* find out how large the bag should become at least                   */
@@ -118,7 +111,7 @@ static Int GrowPRec(Obj rec, UInt need)
     /* resize the plain list                                               */
     ResizeBag( rec, newsize );
 
-    return 1L;
+    return 1;
 }
 
 
@@ -249,7 +242,14 @@ UInt PositionPRec(Obj rec, UInt rnam, int cleanup)
     UInt high = LEN_PREC(rec);
     if (high > 0 && GET_RNAM_PREC(rec, high) > 0) {
         /* DIRTY! Not everything sorted! */
+#ifdef HPCGAP
+        // FIXME: Need to sort records before making them
+        // readonly or sharing them. This can be done in
+        // the traversal routines (in principle).
+        if (cleanup && CheckExclusiveWriteAccess(rec)) {
+#else
         if (cleanup) {
+#endif
             SortPRecRNam(rec,0);
         } else {
             /* We are not allowed to cleanup, so we live with it, we
@@ -300,9 +300,7 @@ UInt PositionPRec(Obj rec, UInt rnam, int cleanup)
 **  'IsbPRec' returns 1 if the record <rec> has a component with  the  record
 **  name <rnam>, and 0 otherwise.
 */
-Int IsbPRec (
-    Obj                 rec,
-    UInt                rnam )
+BOOL IsbPRec(Obj rec, UInt rnam)
 {
     return PositionPRec(rec, rnam, 1) != 0;
 }
@@ -357,7 +355,7 @@ void UnbPRec (
             SET_ELM_PREC(  rec, i, GET_ELM_PREC(  rec, i+1 ) );
         }
         SET_RNAM_PREC( rec, len, 0 );
-        SET_ELM_PREC( rec, len, 0L );
+        SET_ELM_PREC( rec, len, 0 );
 
 
         /* resize the record                                               */
@@ -432,7 +430,7 @@ static void PrintPRec(Obj rec)
 **  in not necessarily sorted order in the kernel. It is automatically
 **  called on the first read access if necessary. See the top of "precord.c"
 **  for a comment on lazy sorting.
-**  The second argument remains for backwards compatability with packages
+**  The second argument remains for backwards compatibility with packages
 **  and should always be 0.
 **
 */
@@ -525,7 +523,7 @@ void SortPRecRNam (
 
 static void PrintPathPRec(Obj rec, Int indx)
 {
-    Pr(".%H", (Int)NAME_RNAM(labs(GET_RNAM_PREC(rec, indx))), 0L);
+    Pr(".%H", (Int)NAME_RNAM(labs(GET_RNAM_PREC(rec, indx))), 0);
 }
 
 /****************************************************************************
@@ -568,7 +566,6 @@ static Obj InnerRecNames(Obj rec)
 
 static Obj FuncREC_NAMES(Obj self, Obj rec)
 {
-    /* check the argument                                                  */
     if (IS_PREC(rec)) {
         return InnerRecNames(rec);
     }
@@ -577,8 +574,7 @@ static Obj FuncREC_NAMES(Obj self, Obj rec)
         return InnerRecNames(FromAtomicRecord(rec));
     }
 #endif
-    ErrorMayQuit("RecNames: <rec> must be a record (not a %s)",
-                 (Int)TNAM_OBJ(rec), 0L);
+    RequireArgument(SELF_NAME, rec, "must be a record");
     return Fail;
 }
 
@@ -590,7 +586,6 @@ static Obj FuncREC_NAMES(Obj self, Obj rec)
 /* same as FuncREC_NAMES except for different argument check  */
 static Obj FuncREC_NAMES_COMOBJ(Obj self, Obj rec)
 {
-    /* check the argument                                                  */
     switch (TNUM_OBJ(rec)) {
       case T_COMOBJ:
         return InnerRecNames(rec);
@@ -599,8 +594,7 @@ static Obj FuncREC_NAMES_COMOBJ(Obj self, Obj rec)
         return InnerRecNames(FromAtomicRecord(rec));
 #endif
     }
-    ErrorMayQuit("RecNames: <rec> must be a component object (not a %s)",
-                 (Int)TNAM_OBJ(rec), 0L);
+    RequireArgument(SELF_NAME, rec, "must be a component object");
     return Fail;
 }
 
@@ -609,18 +603,16 @@ static Obj FuncREC_NAMES_COMOBJ(Obj self, Obj rec)
 **
 *F  EqPRec( <self>, <left>, <right> ) . . . . . . . comparison of two records
 **
-**  'EqPRec' returns '1L'  if the two  operands <left> and <right> are equal
-**  and '0L' otherwise.  At least one operand must be a plain record.
+**  'EqPRec' returns '1'  if the two  operands <left> and <right> are equal
+**  and '0' otherwise.  At least one operand must be a plain record.
 */
 static Int EqPRec(Obj left, Obj right)
 {
     UInt                i;              /* loop variable                   */
 
     /* quick first checks                                                  */
-    if ( ! IS_PREC(left) )
-        return 0;
-    if ( ! IS_PREC(right) )
-        return 0;
+    GAP_ASSERT(IS_PREC(left));
+    GAP_ASSERT(IS_PREC(right));
     if ( LEN_PREC(left) != LEN_PREC(right) )
         return 0;
 
@@ -656,8 +648,8 @@ static Int EqPRec(Obj left, Obj right)
 **
 *F  LtPRec( <self>, <left>, <right> ) . . . . . . . comparison of two records
 **
-**  'LtPRec' returns '1L'  if the operand  <left> is  less than the  operand
-**  <right>, and '0L'  otherwise.  At least  one operand  must be a  plain
+**  'LtPRec' returns '1'  if the operand  <left> is  less than the  operand
+**  <right>, and '0'  otherwise.  At least  one operand  must be a  plain
 **  record.
 */
 static Int LtPRec(Obj left, Obj right)
@@ -666,10 +658,8 @@ static Int LtPRec(Obj left, Obj right)
     Int                 res;            /* result of comparison            */
 
     /* quick first checks                                                  */
-    if ( ! IS_PREC(left) || ! IS_PREC(right) ) {
-        if ( TNUM_OBJ(left ) < TNUM_OBJ(right) )  return 1;
-        if ( TNUM_OBJ(left ) > TNUM_OBJ(right) )  return 0;
-    }
+    GAP_ASSERT(IS_PREC(left));
+    GAP_ASSERT(IS_PREC(right));
 
     /* ensure records are sorted by their RNam */
     SortPRecRNam(left,0);
@@ -715,7 +705,7 @@ static Int LtPRec(Obj left, Obj right)
 *F  SavePRec( <prec> )
 **
 */
-
+#ifdef GAP_ENABLE_SAVELOAD
 static void SavePRec(Obj prec)
 {
   UInt len,i;
@@ -727,13 +717,15 @@ static void SavePRec(Obj prec)
       SaveSubObj(GET_ELM_PREC(prec, i));
     }
 }
+#endif
+
 
 /****************************************************************************
 **
 *F  LoadPRec( <prec> )
 **
 */
-
+#ifdef GAP_ENABLE_SAVELOAD
 static void LoadPRec(Obj prec)
 {
   UInt len,i;
@@ -745,6 +737,8 @@ static void LoadPRec(Obj prec)
       SET_ELM_PREC(prec, i, LoadSubObj());
     }
 }
+#endif
+
 
 /****************************************************************************
 **
@@ -758,7 +752,7 @@ void MarkPRecSubBags(Obj bag)
     const Bag * data = CONST_PTR_BAG(bag);
     const UInt count = SIZE_BAG(bag) / sizeof(Bag);
 
-    // while data[0] is unused for regular precords, it used during copying
+    // data[0] is unused for regular precords, but it is used during copying
     // to store a pointer to the copy; moreover, this mark function is also
     // used for component objects, which store their type in slot 0
     MarkBag(data[0]);
@@ -791,8 +785,8 @@ static StructBagNames BagNames[] = {
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    GVAR_FUNC(REC_NAMES, 1, "rec"),
-    GVAR_FUNC(REC_NAMES_COMOBJ, 1, "rec"),
+    GVAR_FUNC_1ARGS(REC_NAMES, rec),
+    GVAR_FUNC_1ARGS(REC_NAMES_COMOBJ, rec),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -819,11 +813,13 @@ static Int InitKernel (
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable( GVarFuncs );
 
+#ifdef GAP_ENABLE_SAVELOAD
     /* Install saving functions                                            */
     SaveObjFuncs[ T_PREC            ] = SavePRec;
     SaveObjFuncs[ T_PREC +IMMUTABLE ] = SavePRec;
     LoadObjFuncs[ T_PREC            ] = LoadPRec;
     LoadObjFuncs[ T_PREC +IMMUTABLE ] = LoadPRec;
+#endif
 
     /* install into record function tables                                 */
     ElmRecFuncs[ T_PREC            ] = ElmPRec;
@@ -871,11 +867,8 @@ static Int InitKernel (
     TypeObjFuncs[ T_PREC            ] = TypePRec;
     TypeObjFuncs[ T_PREC +IMMUTABLE ] = TypePRec;
 
-    SetTypeObjFuncs[ T_PREC ] = SetTypePRecToComObj;
-
     MakeImmutableObjFuncs[ T_PREC   ] = MakeImmutablePRec;
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -890,7 +883,6 @@ static Int InitLibrary (
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 

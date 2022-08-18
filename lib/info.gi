@@ -42,7 +42,7 @@
 ##  INFODATA_HANDLER        optional, handler function taking three arguments
 ##  INFODATA_OUTPUT         optional, output stream
 
-DeclareRepresentation("IsInfoClassListRep", IsAtomicPositionalObjectRep,[]);
+DeclareRepresentation("IsInfoClassListRep", IsAtomicPositionalObjectRep);
 
 # A list of all created InfoClassListReps
 INFO_CLASSES := [];
@@ -63,29 +63,21 @@ InstallGlobalFunction( "SetDefaultInfoOutput", function( out )
   MakeReadOnlyGlobal("DefaultInfoOutput");
 end);
 
+
+BIND_GLOBAL( "PrintWithoutFormatting", function ( arg )
+    CALL_WITH_FORMATTING_STATUS(false, Print, arg);
+end );
+
+
 InstallGlobalFunction( "DefaultInfoHandler", function( infoclass, level, list )
-  local out, fun, s;
+  local out, s;
   out := InfoOutput(infoclass);
   if out = "*Print*" then
-    if IsBoundGlobal( "PrintFormattedString" ) then
-      fun := function(s)
-        if (IsString(s) and Length(s) > 0 or IsStringRep(s)) and
-          #XXX this is a temporary hack, we would need a
-          # IsInstalledGlobal instead of IsBoundGlobal here
-                 NARG_FUNC(ValueGlobal("PrintFormattedString")) <> -1 then
-          ValueGlobal( "PrintFormattedString" )(s);
-        else
-          Print(s);
-        fi;
-      end;
-    else
-      fun := Print;
-    fi;
-    fun("#I  ");
+    PrintWithoutFormatting("#I  ");
     for s in list do
-      fun(s);
+      PrintWithoutFormatting(s);
     od;
-    fun("\n");
+    PrintWithoutFormatting("\n");
   else
     AppendTo(out, "#I  ");
     for s in list do
@@ -327,7 +319,7 @@ end );
 SHOWN_USED_INFO_CLASSES := [];
 
 if IsHPCGAP then
-    ShareInternalObj(INFO_CLASSES);
+    ShareInternalObj(SHOWN_USED_INFO_CLASSES);
 fi;
 
 
@@ -471,5 +463,22 @@ end);
 ##  Warnings can be disabled entirely by setting its level to 0, and further
 ##  warnings can be switched on by setting its level to 2.
 ##
-DeclareInfoClass( "InfoObsolete" );
-SetInfoLevel(InfoObsolete,1);
+##  Also deal with INFO_OBSOLETE, similar to INFO_DEBUG / InfoDebug earlier in
+##  this file.
+##
+if not IsBound( InfoObsolete ) then
+  DeclareInfoClass( "InfoObsolete" );
+  SetInfoLevel( InfoObsolete, 1 );
+
+  MAKE_READ_WRITE_GLOBAL( "INFO_OBSOLETE" );
+  INFO_OBSOLETE:= function( arg )
+    local string, i;
+
+    string:= [];
+    for i in [ 2 .. LEN_LIST( arg ) ] do
+      APPEND_LIST_INTR( string, arg[i] );
+    od;
+    Info( InfoObsolete, arg[1], string );
+  end;
+  MAKE_READ_ONLY_GLOBAL( "INFO_OBSOLETE" );
+fi;

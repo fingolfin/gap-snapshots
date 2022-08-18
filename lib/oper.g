@@ -32,6 +32,29 @@ INSTALL_METHOD := false;
 BIND_GLOBAL( "INFO_DEBUG", function( arg )
     Print( "#I  " );
     CALL_FUNC_LIST( Print, arg{ [ 2 .. LEN_LIST( arg ) ] } );
+    Print( "\n" );
+end );
+
+
+#############################################################################
+##
+#F  INFO_OBSOLETE( <level>, ... )
+##
+##  <ManSection>
+##  <Func Name="INFO_OBSOLETE" Arg='level, ...'/>
+##
+##  <Description>
+##  This will delegate to the proper info class <C>InfoObsolete</C>
+##  as soon as the info classes are available.
+##  </Description>
+##  </ManSection>
+##
+BIND_GLOBAL( "INFO_OBSOLETE", function( arg )
+    if GAPInfo.CommandLineOptions.O then
+        Print( "#I  " );
+        CALL_FUNC_LIST( Print, arg{ [ 2 .. LEN_LIST( arg ) ] } );
+        Print( "\n" );
+    fi;
 end );
 
 
@@ -210,16 +233,23 @@ fi;
 ##
 #F  IsNoImmediateMethodsObject(<obj>)
 ##
+##  <#GAPDoc Label="IsNoImmediateMethodsObject">
 ##  <ManSection>
-##  <Func Name="IsNoImmediateMethodsObject" Arg='obj'/>
+##  <Filt Name="IsNoImmediateMethodsObject" Arg='obj'/>
 ##
 ##  <Description>
-##  If this filter is set immediate methods will be ignored for <A>obj</A>. This
-##  can be crucial for performance for objects like PCGS, of which many are
-##  created, which are collections, but for which all those immediate
-##  methods for <C>IsTrivial</C> et cetera do not really make sense.
+##  If this filter is set immediate methods will be ignored for <A>obj</A>.
+##  This can be crucial for performance for objects like pcgs
+##  (see Section <Ref Sect="Polycyclic Generating Systems"/>), of which many
+##  are created, which are collections, but for which all those immediate
+##  methods for <Ref Prop="IsTrivial"/> et cetera do not really make sense.
+##  Other examples of objects in <Ref Filt="IsNoImmediateMethodsObject"/> are
+##  compressed vectors and matrices over small finite fields,
+##  see the sections <Ref Subsect="Row Vectors over Finite Fields"/> and
+##  <Ref Subsect="Matrices over Finite Fields"/>.
 ##  </Description>
 ##  </ManSection>
+##  <#/GAPDoc>
 ##
 BIND_GLOBAL("IsNoImmediateMethodsObject",
   NewFilter("IsNoImmediateMethodsObject"));
@@ -615,6 +645,93 @@ BIND_GLOBAL( "TraceImmediateMethods", function( arg )
     fi;
 end );
 
+#############################################################################
+##
+##
+##  <#GAPDoc Label="TraceInternalMethods">
+##  <ManSection>
+##  <Func Name="TraceInternalMethods" Arg=''/>
+##  <Func Name="UntraceInternalMethods" Arg=''/>
+##  <Func Name="GetTraceInternalMethodsCounts" Arg=''/>
+##  <Func Name="ClearTraceInternalMethodsCounts" Arg=''/>
+##
+##  <Description>
+##  <Ref Func="TraceInternalMethods"/> enables tracing for all internal methods.
+##  Internal methods are methods which implement many fundamental operations in GAP.
+##  In this version of GAP, the internal methods which can be traced are:
+##  <List>
+##  <Mark>Zero, ZeroMut</Mark><Item>Mutable and Immutable <Ref Attr="Zero"/></Item>
+##  <Mark>AInv, AInvMut</Mark><Item>Mutable and Immutable <Ref Attr="AdditiveInverse"/></Item>
+##  <Mark>One, OneMut</Mark><Item>Mutable and Immutable <Ref Attr="One"/></Item>
+##  <Mark>Inv, InvMut</Mark><Item>Mutable and Immutable <Ref Attr="Inverse"/></Item>
+##  <Mark>Sum</Mark><Item>The operator <Ref Oper="\+"/></Item>
+##  <Mark>Diff</Mark><Item>The operator <C>-</C> operator</Item>
+##  <Mark>Prod</Mark><Item>The operator <Ref Oper="\*"/></Item>
+##  <Mark>Quo</Mark><Item>The operator <Ref Oper="\/"/></Item>
+##  <Mark>LQuo</Mark><Item>The left-quotient operator</Item>
+##  <Mark>Pow</Mark><Item>The operator <Ref Oper="\^"/></Item>
+##  <Mark>Comm</Mark><Item>The operator <Ref Oper="Comm"/></Item>
+##  <Mark>Mod</Mark><Item>The operator <Ref Oper="\mod"/></Item>
+##  </List>
+##  <P/>
+##  <Ref Func="UntraceInternalMethods"/> turns tracing off.
+##  As these methods can be called hundreds of thousands of times in simple GAP
+##  code, there isn't a statement printed each time one is called. Instead, the
+##  method <Ref Func="GetTraceInternalMethodsCounts"/> returns how many times
+##  each operation has been applied to each type of variable (the type of a
+##  variable can be found with the <C>TNAM_OBJ</C> method).
+##  The return value for two argument operators is a record of records <C>r</C>, where
+##  <C>r.op</C> stores information about operator <C>op</C>. For one argument operators
+##  <C>r.op.i</C> stores how many times <C>op</C> was called with an argument of type
+##  <C>i</C>, while for two argument operators <C>r.op.i.j</C> stores how many times
+##  <C>op</C> was called with arguments of type <C>i</C> and <C>j</C>.
+##  <Log><![CDATA[
+## gap> TraceInternalMethods();
+## true
+## gap> 2+3+4+5+6;;
+## gap> 2.0+2.0;;
+## gap> 3^(1,2,3);;
+## gap> GetTraceInternalMethodsCounts();
+## rec( Pow := rec( integer := rec( ("permutation (small)") := 1 ) ),
+##  Sum := rec( integer := rec( integer := 4 ),
+##      macfloat := rec( macfloat := 1 ) ) )
+## # 'macfloat' is a floating point number
+## gap> UntraceInternalMethods();
+##  ]]></Log>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+
+# The return type here is stored as a record, as 0 is a valid TNUM.
+BIND_GLOBAL("GetTraceInternalMethodsCounts", function()
+    local ret, type, i, j, counts,member, nicename;
+    counts := GET_TRACED_INTERNAL_METHODS_COUNTS();
+    ret := rec();
+    for type in REC_NAMES(counts) do
+        # Drop the 'Funcs' part
+        nicename := type{[1..LENGTH(type)-5]};
+        ret.(nicename) := rec();
+        member := counts.(type);
+        for i in [1..LENGTH(member)] do
+            if IsBound(member[i]) then
+                if IS_LIST(member[LENGTH(member)]) then
+                    # Is a 2D array
+                    ret.(nicename).(GET_TNAM_FROM_TNUM(i-1)) := rec();
+                    for j in [1..LENGTH(member[i])] do
+                        if IsBound(member[i][j]) then
+                            ret.(nicename).(GET_TNAM_FROM_TNUM(i-1)).(GET_TNAM_FROM_TNUM(j-1)) := member[i][j];
+                        fi;
+                    od;
+                else
+                    # Is a 1D array
+                    ret.(nicename).(GET_TNAM_FROM_TNUM(i-1)) := member[i];
+                fi;
+            fi;
+        od;
+    od;
+    return ret;
+end);
 
 #############################################################################
 ##
@@ -801,8 +918,9 @@ end );
 ##  <Func Name="DeclareOperation" Arg='name, filters'/>
 ##
 ##  <Description>
-##  does the same as <Ref Func="NewOperation"/> and
-##  additionally makes the variable <A>name</A> read-only.
+##  does the same as <Ref Func="NewOperation"/> and then binds
+##  the new operation to the global variable <A>name</A>. The variable
+##  must previously be writable, and is made read-only by this function.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -932,8 +1050,9 @@ end );
 ##  <Func Name="DeclareConstructor" Arg='name, filters'/>
 ##
 ##  <Description>
-##  does the same as <Ref Func="NewConstructor"/> and
-##  additionally makes the variable <A>name</A> read-only.
+##  does the same as <Ref Func="NewConstructor"/> and then binds
+##  the result to the global variable <A>name</A>. The variable
+##  must previously be writable, and is made read-only by this function.
 ##  <P/>
 ##  Note that for operations which are constructors special rules with respect
 ##  to applicability and rank of the corresponding methods apply
@@ -1157,9 +1276,9 @@ end );
 ##  this incremental rank (see&nbsp;<Ref Sect="Filters"/>),
 ##  </Item>
 ##  <Item> If the argument <A>mutable</A> is the string <C>"mutable"</C> or
-##  the boolean <C>true</C>, then the values of the attribute are mutable.
+##  the boolean <K>true</K>, then the values of the attribute are mutable.
 ##  </Item>
-##  <Item> If the argument <A>mutable</A> is the boolean <C>false</C>, then
+##  <Item> If the argument <A>mutable</A> is the boolean <K>false</K>, then
 ##  the values of the attribute are immutable.
 ##  </Item>
 ##  </List>
@@ -1268,9 +1387,10 @@ end );
 ##  <Func Name="DeclareAttribute" Arg='name, filter[, "mutable"][, rank]'/>
 ##
 ##  <Description>
-##  does the same as <Ref Func="NewAttribute"/>,
-##  additionally makes the variable <A>name</A> read-only
-##  and also binds read-only global variables with names
+##  does the same as <Ref Func="NewAttribute"/> and then binds
+##  the result to the global variable <A>name</A>. The variable
+##  must previously be writable, and is made read-only by this function.
+##  It also binds read-only global variables with names
 ##  <C>Has<A>name</A></C> and <C>Set<A>name</A></C>
 ##  for the tester and setter of the attribute (see Section
 ##  <Ref Sect="Setter and Tester for Attributes"/>).
@@ -1361,7 +1481,7 @@ BIND_GLOBAL( "DeclareAttribute", function ( name, filter, args... )
             req := GET_OPER_FLAGS( Setter(gvar) );
             STORE_OPER_FLAGS( Setter(gvar), [ FLAGS_FILTER( filter), req[1][2] ] );
         else
-            # gvar is a an existing non-attribute operation, try to convert it
+            # gvar is an existing non-attribute operation, try to convert it
             # into an attribute
             ConvertToAttribute(name, gvar, filter, rank, mutflag);
         fi;
@@ -1523,9 +1643,10 @@ end );
 ##  <Func Name="DeclareProperty" Arg='name, filter [,rank]'/>
 ##
 ##  <Description>
-##  does the same as <Ref Func="NewProperty"/>,
-##  additionally makes the variable <A>name</A> read-only
-##  and also binds read-only global variables with names
+##  does the same as <Ref Func="NewProperty"/> and then binds
+##  the result to the global variable <A>name</A>. The variable
+##  must previously be writable, and is made read-only by this function.
+##  It also binds read-only global variables with names
 ##  <C>Has<A>name</A></C> and <C>Set<A>name</A></C>
 ##  for the tester and setter of the property (see Section
 ##  <Ref Sect="Setter and Tester for Attributes"/>).
@@ -1803,16 +1924,29 @@ end );
 ##  <Func Name="InstallGlobalFunction" Arg='oper, func'/>
 ##
 ##  <Description>
-##  <Ref Func="DeclareGlobalFunction"/> 
 ##  &GAP; functions that are not operations and that are intended to be
-##  called by users should be notified to &GAP; in the declaration part
-##  of the respective package
-##  (see Section&nbsp;<Ref Sect="Declaration and Implementation Part"/>)
-##  via <Ref Func="DeclareGlobalFunction"/>, which returns a function that
-##  serves as a place holder for the function that will be installed later,
-##  and that will print an error message if it is called.
+##  called by users should be notified to &GAP;
+##  via <Ref Func="DeclareGlobalFunction"/>.
+##  <Ref Func="DeclareGlobalFunction"/>
+##  returns a function that serves as a placeholder for the function that will
+##  be installed later.
+##  The placeholder will print an error message if it is called.
 ##  See also&nbsp;<Ref Func="DeclareSynonym"/>.
 ##  <P/>
+##
+##  In the past the main application of this was to allow access to variables
+##  before they were assigned. Starting with &GAP; 4.12 we recommend to use
+##  <Ref Func="DeclareGlobalName"/>/<Ref Func="BindGlobal"/> instead of
+##  <Ref Func="DeclareGlobalVariable"/>/<Ref Func="InstallGlobalFunction"/>
+##  whenever possible.
+##  <P/>
+##
+##  If used at all, then
+##  <Ref Func="DeclareGlobalVariable"/> shall be used in the declaration part
+##  of the respective package
+##  (see&nbsp;<Ref Sect="Declaration and Implementation Part"/>).
+##  <P/>
+##
 ##  A global function declared with <Ref Func="DeclareGlobalFunction"/>
 ##  can be given its value <A>func</A> via
 ##  <Ref Func="InstallGlobalFunction"/>;
@@ -1833,11 +1967,6 @@ end );
 ##  InstallGlobalFunction( SumOfTwoCubes, function(x, y) return x^3 + y^3; end);
 ##  ]]></Log>
 ##  <P/>
-##  <!-- Commented out by AK after the withdrowal of completion files:
-##  <E>Note:</E> <A>func</A> must be a function which has <E>not</E> been
-##  declared with <Ref Func="DeclareGlobalFunction"/> itself.
-##  Otherwise completion files
-##  (see&nbsp;<Ref Sect="Completion Files"/>) get confused! -->
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1856,6 +1985,10 @@ BIND_GLOBAL( "DeclareGlobalFunction", function( arg )
     local   name;
 
     name := arg[1];
+    if LEN_LIST(arg) > 1 then
+        INFO_DEBUG(1, "DeclareGlobalFunction: too many arguments in ",
+            INPUT_FILENAME(), ":", STRING_INT(INPUT_LINENUMBER()));
+    fi;
     atomic GLOBAL_FUNCTION_NAMES do
     ADD_SET( GLOBAL_FUNCTION_NAMES, IMMUTABLE_COPY_OBJ(name) );
     od;
@@ -1865,6 +1998,10 @@ end );
 BIND_GLOBAL( "InstallGlobalFunction", function( arg )
     local   oper,  info,  func;
 
+    if LEN_LIST(arg) > 2  then
+        INFO_DEBUG(1, "InstallGlobalFunction: too many arguments in ",
+            INPUT_FILENAME(), ":", STRING_INT(INPUT_LINENUMBER()));
+    fi;
     if LEN_LIST(arg) = 3  then
         oper := arg[1];
         info := arg[2];
@@ -1907,27 +2044,43 @@ fi;
 
 # TODO: document this?!
 BIND_GLOBAL("MethodsOperation", function(oper, nargs)
-    local meths, len, result, i, m;
+    local early, meths, len, result, i, m;
 
+    early := EARLY_METHOD(oper, nargs);
     meths := METHODS_OPERATION(oper, nargs);
-    if meths = fail then
+    if early = fail and meths = fail then
         return fail;
     fi;
-    len := BASE_SIZE_METHODS_OPER_ENTRY + nargs;
     result := [];
+    if early <> fail then
+        m := rec(
+            early   := true,
+            #famPred := meths[i + 1],
+            #argFilt := meths{[i + 2 .. i + nargs + 1]},
+            func    := early,
+            rank    := infinity,
+            info    := "early method",
+            #location := ["TODO",0],
+            rankbase := infinity,
+            );
+        ADD_LIST(result, m);
+        if meths = fail then
+            return result;
+        fi;
+    fi;
+    len := BASE_SIZE_METHODS_OPER_ENTRY + nargs;
     for i in [0, len .. LENGTH(meths) - len] do
         m := rec(
+            early   := false,
             famPred := meths[i + 1],
             argFilt := meths{[i + 2 .. i + nargs + 1]},
             func    := meths[i + nargs + 2],
             rank    := meths[i + nargs + 3],
             info    := meths[i + nargs + 4],
+            location := meths[i + nargs + 5],
             rankbase := meths[i + nargs + 6],
             );
         ADD_LIST(result, m);
-        if IsBound(meths[i + nargs + 5]) then
-            m.location := meths[i + nargs + 5];
-        fi;
     od;
     return result;
 end );
@@ -2060,3 +2213,4 @@ BIND_GLOBAL( "RECALCULATE_ALL_METHOD_RANKS", function()
 
     Assert(2, CHECK_ALL_METHOD_RANKS());
 end );
+

@@ -14,10 +14,9 @@
 # Free Software Foundation (FSF); either version 2.1 of the License, or
 # (at your option) any later version. For details, see the file 'LGPL' in
 # the doc subdirectory of the GBNP distribution or see the FSF's own site:
-# http://www.gnu.org/licenses/lgpl.html
+# https://www.gnu.org/licenses/lgpl.html
 ########################## END COPYRIGHT MESSAGE ##########################
 
-# $Id: options.gi 12772 2010-01-15 13:10:24Z jwk $
 
 # this file enables options
 # WARNING the option records are not copied (not with set and not with get)
@@ -142,7 +141,7 @@ end;
 ########################
 ### XXX integer -> discarded 
 ### <#GAPDoc Label="GBNP.ConfigPrint">
-### <ManSection Label="GBNP.ConfigPrint">
+### <ManSection>
 ### <Func Name="GBNP.ConfigPrint" Comm="Set GBNP print options" Arg="arg" />
 ### <Description>
 ### By default the generators of the algebra are printed as <C>a</C>, ...,

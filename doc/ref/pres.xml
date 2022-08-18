@@ -1,9 +1,8 @@
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <!-- %% -->
-<!-- %A  pres.msk                   GAP documentation             Volkmar Felsch -->
+<!-- %A  pres.xml                   GAP documentation             Volkmar Felsch -->
 <!-- %A                                                           Alexander Hulpke -->
 <!-- %% -->
-<!-- %A  @(#)<M>Id: pres.msk,v 1.24 2003/10/28 04:55:03 gap Exp </M> -->
 <!-- %% -->
 <!-- %Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland -->
 <!-- %Y  Copyright (C) 2002 The GAP Group -->
@@ -88,7 +87,7 @@ numbering of generators in a family of associative words.
 <Section Label="Printing Presentations">
 <Heading>Printing Presentations</Heading>
 
-Whenever you create a presentation <M>P</M>, say, or assign it to a variable,
+Whenever you create a presentation <M>P</M>, or assign it to a variable,
 &GAP; will respond by printing <M>P</M>.
 However, as <M>P</M> may contain a lot of generators and many relators
 of large length, it would be annoying if the standard print facilities

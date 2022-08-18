@@ -81,23 +81,23 @@ static Obj TypeBool(Obj val)
 
 /****************************************************************************
 **
-*F  PrintBool( <bool> ) . . . . . . . . . . . . . . . . print a boolean value
+*F  PrintBool( <val> ) . . . . . . . . . . . . . . . .  print a boolean value
 **
-**  'PrintBool' prints the boolean value <bool>.
+**  'PrintBool' prints the boolean value <val>.
 */
-static void PrintBool(Obj bool)
+static void PrintBool(Obj val)
 {
-    if ( bool == True ) {
-        Pr( "true", 0L, 0L );
+    if (val == True) {
+        Pr("true", 0, 0);
     }
-    else if ( bool == False ) {
-        Pr( "false", 0L, 0L );
+    else if (val == False) {
+        Pr("false", 0, 0);
     }
-    else if ( bool == Fail ) {
-        Pr( "fail", 0L, 0L );
+    else if (val == Fail) {
+        Pr("fail", 0, 0);
     }
     else {
-        Pr( "<<very strange boolean value>>", 0L, 0L );
+        Pr("<<very strange boolean value>>", 0, 0);
     }
 }
 
@@ -265,10 +265,12 @@ static Obj ReturnFail3(Obj self, Obj val1, Obj val2, Obj val3)
 **
 **  Actually, there is nothing to do
 */
-
+#ifdef GAP_ENABLE_SAVELOAD
 static void SaveBool(Obj obj)
 {
 }
+#endif
+
 
 /****************************************************************************
 **
@@ -276,10 +278,12 @@ static void SaveBool(Obj obj)
 **
 **  Actually, there is nothing to do
 */
-
+#ifdef GAP_ENABLE_SAVELOAD
 static void LoadBool(Obj obj)
 {
 }
+#endif
+
 
 /****************************************************************************
 **
@@ -349,11 +353,13 @@ static Int InitKernel (
     InitGlobalBag( &Fail,  "src/bool.c:FAIL"  );
     InitGlobalBag( &Undefined,  "src/bool.c:UNDEFINED"  );
 
+#ifdef GAP_ENABLE_SAVELOAD
     /* install the saving functions                                       */
     SaveObjFuncs[ T_BOOL ] = SaveBool;
 
     /* install the loading functions                                       */
     LoadObjFuncs[ T_BOOL ] = LoadBool;
+#endif
 
     /* install the printer for boolean values                              */
     PrintObjFuncs[ T_BOOL ] = PrintBool;
@@ -365,7 +371,6 @@ static Int InitKernel (
 #ifdef HPCGAP
     MakeBagTypePublic(T_BOOL);
 #endif
-    /* return success                                                      */
     return 0;
 }
 
@@ -383,38 +388,37 @@ static Int InitLibrary (
     InitGVarFiltsFromTable( GVarFilts );
 
     /* bags are registered in 'InitKernel'                                 */
-    True  = NewBag( T_BOOL, 0L );
-    False = NewBag( T_BOOL, 0L );
-    Fail  = NewBag( T_BOOL, 0L );
+    True  = NewBag(T_BOOL, 0);
+    False = NewBag(T_BOOL, 0);
+    Fail  = NewBag(T_BOOL, 0);
 
     /* `fail' is a variable not a language construct                       */
     AssReadOnlyGVar( GVarName( "fail" ), Fail );
 
     /* Undefined is an internal value */
-    Undefined = NewBag( T_BOOL, 0 );
+    Undefined = NewBag(T_BOOL, 0);
 
     /* make and install the 'RETURN_TRUE' function                         */
-    tmp = NewFunctionC( "RETURN_TRUE", -1L, "arg", ReturnTrue1 );
+    tmp = NewFunctionC("RETURN_TRUE", -1, "arg", ReturnTrue1);
     SET_HDLR_FUNC( tmp, 1, ReturnTrue1);
     SET_HDLR_FUNC( tmp, 2, ReturnTrue2);
     SET_HDLR_FUNC( tmp, 3, ReturnTrue3);
     AssReadOnlyGVar( GVarName("RETURN_TRUE"), tmp );
 
     /* make and install the 'RETURN_FALSE' function                        */
-    tmp = NewFunctionC("RETURN_FALSE",-1L,"arg",ReturnFalse1);
+    tmp = NewFunctionC("RETURN_FALSE", -1, "arg", ReturnFalse1);
     SET_HDLR_FUNC( tmp, 1, ReturnFalse1);
     SET_HDLR_FUNC( tmp, 2, ReturnFalse2);
     SET_HDLR_FUNC( tmp, 3, ReturnFalse3);
     AssReadOnlyGVar( GVarName( "RETURN_FALSE" ), tmp );
 
     /* make and install the 'RETURN_FAIL' function                        */
-    tmp = NewFunctionC("RETURN_FAIL", -1L, "arg", ReturnFail1);
+    tmp = NewFunctionC("RETURN_FAIL", -1, "arg", ReturnFail1);
     SET_HDLR_FUNC( tmp, 1, ReturnFail1);
     SET_HDLR_FUNC( tmp, 2, ReturnFail2);
     SET_HDLR_FUNC( tmp, 3, ReturnFail3);
     AssReadOnlyGVar( GVarName( "RETURN_FAIL" ), tmp );
 
-    /* return success                                                      */
     return 0;
 }
 

@@ -81,7 +81,7 @@ extern void AssGVarWithoutReadOnlyCheck(UInt gvar, Obj val);
 
 /****************************************************************************
 **
-*F  ValAutoGVar(<gvar>) . . . . . . . .  value of a automatic global variable
+*F  ValAutoGVar(<gvar>) . . . . . . . . value of an automatic global variable
 **
 **  'ValAutoGVar' returns the value of the global variable <gvar>.  This will
 **  be 0 if  <gvar> has  no assigned value.    It will also cause a  function
@@ -135,7 +135,7 @@ UInt GVarName(const Char * name);
 **
 *F  iscomplete_gvar( <name>, <len> )  . . . . . . . . . . . . .  check <name>
 */
-UInt iscomplete_gvar(Char * name, UInt len);
+BOOL iscomplete_gvar(Char * name, UInt len);
 
 
 /****************************************************************************
@@ -165,9 +165,11 @@ void MakeConstantGVar(UInt gvar);
 void MakeThreadLocalVar(UInt gvar, UInt rnam);
 #endif
 
-Int IsReadOnlyGVar(UInt gvar);
+BOOL IsReadOnlyGVar(UInt gvar);
 
-Int IsConstantGVar(UInt gvar);
+BOOL IsConstantGVar(UInt gvar);
+
+BOOL IsDeclaredGVar(UInt gvar);
 
 
 /****************************************************************************

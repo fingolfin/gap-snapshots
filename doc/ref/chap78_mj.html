@@ -45,7 +45,8 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78_mj.html#X837EFDAB7BEF290B">78.3-1 InstallMethod</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78_mj.html#X7D2C12DB841CE539">78.3-2 InstallOtherMethod</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78_mj.html#X78CA646678B0539F">78.3-3 InstallMethodWithRandomSource</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78_mj.html#X7D54FB8A80C0AC3C">78.3-3 InstallEarlyMethod</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78_mj.html#X78CA646678B0539F">78.3-4 InstallMethodWithRandomSource</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap78_mj.html#X851FC6387CA2B241">78.4 <span class="Heading">Applicable Methods and Method Selection</span></a>
 </span>
@@ -64,6 +65,7 @@
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78_mj.html#X87B47AC0849611F8">78.7-1 InstallImmediateMethod</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78_mj.html#X80C3A19E7B99BB41">78.7-2 IsNoImmediateMethodsObject</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap78_mj.html#X7FB5016E83DB4349">78.8 <span class="Heading">Logical Implications</span></a>
 </span>
@@ -147,9 +149,9 @@ false
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ShowDeclarationsOfOperation(IsFinite);</span>
 Available declarations for operation &lt;Property "IsFinite"&gt;:
-  1: GAPROOT/lib/coll.gd:1451 with 1 arguments, and filters [ IsListOrCollection ]
-  2: GAPROOT/lib/float.gd:212 with 1 arguments, and filters [ IsFloat ]
-  3: GAPROOT/lib/ctbl.gd:1195 with 1 arguments, and filters [ IsNearlyCharacterTable ]
+  1: GAPROOT/lib/coll.gd:1451 with 1 argument, and filters [ IsListOrCollection ]
+  2: GAPROOT/lib/float.gd:212 with 1 argument, and filters [ IsFloat ]
+  3: GAPROOT/lib/ctbl.gd:1195 with 1 argument, and filters [ IsNearlyCharacterTable ]
 </pre></div>
 
 <p><a id="X85A9E019795B79D6" name="X85A9E019795B79D6"></a></p>
@@ -168,7 +170,7 @@ Available declarations for operation &lt;Property "IsFinite"&gt;:
 <h5>78.1-5 DeclareOperation</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareOperation</code>( <var class="Arg">name</var>, <var class="Arg">filters</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>does the same as <code class="func">NewOperation</code> (<a href="chap78_mj.html#X85A9E019795B79D6"><span class="RefLink">78.1-4</span></a>) and additionally makes the variable <var class="Arg">name</var> read-only.</p>
+<p>does the same as <code class="func">NewOperation</code> (<a href="chap78_mj.html#X85A9E019795B79D6"><span class="RefLink">78.1-4</span></a>) and then binds the new operation to the global variable <var class="Arg">name</var>. The variable must previously be writable, and is made read-only by this function.</p>
 
 <p><a id="X86EC0F0A78ECBC10" name="X86EC0F0A78ECBC10"></a></p>
 
@@ -185,7 +187,7 @@ Available declarations for operation &lt;Property "IsFinite"&gt;:
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">InstallMethod(XCons, [IsPermGroup, IsInt], function(t,x) return SymmetricGroup(x); end);</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">InstallMethod(XCons, [IsSemigroup, IsInt], function(t,x) return FullTransformationMonoid(x); end);</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">XCons(IsGroup,3);</span>
-&lt;pc group of size 3 with 1 generators&gt;
+&lt;pc group of size 3 with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">XCons(IsPermGroup,3);</span>
 Sym( [ 1 .. 3 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">XCons(IsSemigroup,4);</span>
@@ -290,7 +292,7 @@ true
 <h5>78.2-2 DeclareConstructor</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareConstructor</code>( <var class="Arg">name</var>, <var class="Arg">filters</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>does the same as <code class="func">NewConstructor</code> (<a href="chap78_mj.html#X783FA45E7858A8CF"><span class="RefLink">78.2-1</span></a>) and additionally makes the variable <var class="Arg">name</var> read-only.</p>
+<p>does the same as <code class="func">NewConstructor</code> (<a href="chap78_mj.html#X783FA45E7858A8CF"><span class="RefLink">78.2-1</span></a>) and then binds the result to the global variable <var class="Arg">name</var>. The variable must previously be writable, and is made read-only by this function.</p>
 
 <p>Note that for operations which are constructors special rules with respect to applicability and rank of the corresponding methods apply (see section <code class="func">NewConstructor</code> (<a href="chap78_mj.html#X783FA45E7858A8CF"><span class="RefLink">78.2-1</span></a>)).</p>
 
@@ -324,17 +326,32 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallOtherMethod</code>( <var class="Arg">opr</var>[, <var class="Arg">info</var>][, <var class="Arg">famp</var>], <var class="Arg">args-filts</var>[, <var class="Arg">val</var>], <var class="Arg">method</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>installs a function method <var class="Arg">method</var> for the operation <var class="Arg">opr</var>, in the same way as for <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.3-1</span></a>), but without the restriction that the number of arguments must match a declaration of <var class="Arg">opr</var> and without the restriction that <var class="Arg">args-filts</var> imply the respective requirements of the operation <var class="Arg">opr</var>.</p>
 
+<p><a id="X7D54FB8A80C0AC3C" name="X7D54FB8A80C0AC3C"></a></p>
+
+<h5>78.3-3 InstallEarlyMethod</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallEarlyMethod</code>( <var class="Arg">opr</var>, <var class="Arg">method</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>installs a special "early" function method <var class="Arg">method</var> for the operation <var class="Arg">opr</var>. An early method is special in that it bypasses method dispatch, and is always the first method to be called when invoking the operation.</p>
+
+<p>This can be used to avoid method selection overhead for certain special cases, i.e., as an optimization. Overall, we recommend to use this feature very sparingly, as it is tool with sharp edges: for example, any inputs that are handled by an early method can not be intercepted by a regular method, no matter how high its rank is; this can preclude other kinds of optimizations.</p>
+
+<p>Also, unlike regular methods, no checks are performed on the arguments. Not even the required filters for the operation are tested, so early methods must be careful in validating their inputs. This also means that any operation can have at most one such early method for each arity (i.e., one early method taking 1 argument, one early method taking 2 arguments, etc.).</p>
+
+<p>If an early method determines that it is not applicable, it can resume regular method dispatch by invoking <code class="func">TryNextMethod</code> (<a href="chap78_mj.html#X7EED949B83046A7F"><span class="RefLink">78.5-1</span></a>).</p>
+
+<p>For an example application of early methods, they are used by <code class="func">First</code> (<a href="chap21_mj.html#X82801DFA84E11272"><span class="RefLink">21.20-21</span></a>) to deal with internal lists, for which computing the exact type (needed for method selection) can be very expensive.</p>
+
 <p><a id="X78CA646678B0539F" name="X78CA646678B0539F"></a></p>
 
-<h5>78.3-3 InstallMethodWithRandomSource</h5>
+<h5>78.3-4 InstallMethodWithRandomSource</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallMethodWithRandomSource</code>( <var class="Arg">opr</var>, <var class="Arg">info</var>[, <var class="Arg">famp</var>], <var class="Arg">args-filts</var>[, <var class="Arg">val</var>], <var class="Arg">method</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallOtherMethodWithRandomSource</code>( <var class="Arg">opr</var>, <var class="Arg">info</var>[, <var class="Arg">famp</var>], <var class="Arg">args-filts</var>[, <var class="Arg">val</var>], <var class="Arg">method</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>These functions are designed to simplify adding new methods for <code class="func">Random</code> (<a href="chap30_mj.html#X7FF906E57D6936F8"><span class="RefLink">30.7-1</span></a>), <code class="func">PseudoRandom</code> (<a href="chap30_mj.html#X811B5BD47DC5356B"><span class="RefLink">30.7-2</span></a>), and <code class="func">Randomize</code> (<a href="chap26_mj.html#X83DD8B39864A2C94"><span class="RefLink">26.4-9</span></a>) to <strong class="pkg">GAP</strong> which can be called both with, and without, a random source.</p>
+<p>These functions are designed to simplify adding new methods for <code class="func">Random</code> (<a href="chap30_mj.html#X7FF906E57D6936F8"><span class="RefLink">30.7-1</span></a>), <code class="func">PseudoRandom</code> (<a href="chap30_mj.html#X811B5BD47DC5356B"><span class="RefLink">30.7-2</span></a>), and <code class="func">Randomize</code> (<a href="chap26_mj.html#X83DD8B39864A2C94"><span class="RefLink">26.6-4</span></a>) to <strong class="pkg">GAP</strong> which can be called both with, and without, a random source.</p>
 
 <p>They accept the same arguments as <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.3-1</span></a>) and <code class="func">InstallOtherMethod</code> (<a href="chap78_mj.html#X7D2C12DB841CE539"><span class="RefLink">78.3-2</span></a>), with the extra requirement that the first member of <var class="Arg">args-filts</var> must be <code class="func">IsRandomSource</code> (<a href="chap14_mj.html#X82E31A697E389F1D"><span class="RefLink">14.7-1</span></a>), and the <var class="Arg">info</var> argument is compulsory and must begin 'for a random source and'.</p>
 
-<p>This function then installs two methods: first it calls <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.3-1</span></a>) (or <code class="func">InstallOtherMethod</code> (<a href="chap78_mj.html#X7D2C12DB841CE539"><span class="RefLink">78.3-2</span></a>)) with unchanged arguments. Then it calls <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.3-1</span></a>) (or <code class="func">InstallOtherMethod</code> (<a href="chap78_mj.html#X7D2C12DB841CE539"><span class="RefLink">78.3-2</span></a>)) a second time to install another method which lacks the initial random source argument; this additional method simply invokes the original method, with <code class="func">GlobalMersenneTwister</code> (<a href="chap14_mj.html#X7F772E2686B35865"><span class="RefLink">14.7-4</span></a>) added as first argument.</p>
+<p>This function then installs two methods: first it calls <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.3-1</span></a>) (or <code class="func">InstallOtherMethod</code> (<a href="chap78_mj.html#X7D2C12DB841CE539"><span class="RefLink">78.3-2</span></a>)) with unchanged arguments. Then it calls <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.3-1</span></a>) (or <code class="func">InstallOtherMethod</code> (<a href="chap78_mj.html#X7D2C12DB841CE539"><span class="RefLink">78.3-2</span></a>)) a second time to install another method which lacks the initial random source argument; this additional method simply invokes the original method, with <code class="func">GlobalMersenneTwister</code> (<a href="chap14_mj.html#X7AC96008820FAF1F"><span class="RefLink">14.7-4</span></a>) added as first argument.</p>
 
 <p><a id="X851FC6387CA2B241" name="X851FC6387CA2B241"></a></p>
 
@@ -427,6 +444,13 @@ true
 
 <p>Another example would be the implementation of the conclusion that every finite group of prime power order is nilpotent. This could be done by installing an immediate method for the attribute <code class="func">IsNilpotentGroup</code> (<a href="chap39_mj.html#X87D062608719F2CD"><span class="RefLink">39.15-3</span></a>) with requirement <code class="code">IsGroup and Tester( Size )</code>. This method would then check whether the size is a finite prime power, return <code class="keyw">true</code> in this case and otherwise call <code class="func">TryNextMethod</code> (<a href="chap78_mj.html#X7EED949B83046A7F"><span class="RefLink">78.5-1</span></a>). But this requires factoring of an integer, which cannot be guaranteed to be very cheap, so one should not install this method as an immediate method.</p>
 
+<p><a id="X80C3A19E7B99BB41" name="X80C3A19E7B99BB41"></a></p>
+
+<h5>78.7-2 IsNoImmediateMethodsObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNoImmediateMethodsObject</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>If this filter is set immediate methods will be ignored for <var class="Arg">obj</var>. This can be crucial for performance for objects like pcgs (see Section <a href="chap45_mj.html#X7F18A01785DBAC4E"><span class="RefLink">45.1</span></a>), of which many are created, which are collections, but for which all those immediate methods for <code class="func">IsTrivial</code> (<a href="chap30_mj.html#X7E3402D6799D3C24"><span class="RefLink">30.4-3</span></a>) et cetera do not really make sense. Other examples of objects in <code class="func">IsNoImmediateMethodsObject</code> are compressed vectors and matrices over small finite fields, see the sections <a href="chap23_mj.html#X8679F7DD7DFCBD9C"><span class="RefLink">23.3</span></a> and <a href="chap24_mj.html#X873822B6830CE367"><span class="RefLink">24.14</span></a>.</p>
+
 <p><a id="X7FB5016E83DB4349" name="X7FB5016E83DB4349"></a></p>
 
 <h4>78.8 <span class="Heading">Logical Implications</span></h4>
@@ -466,11 +490,11 @@ InstallTrueMethod( IsCommutative, IsGroup and IsCyclic );
 
 <p>Usually an operation stands for a mathematical concept, and the name of the operation describes this uniquely. Examples are the property <code class="func">IsFinite</code> (<a href="chap30_mj.html#X808A4061809A6E67"><span class="RefLink">30.4-2</span></a>) and the attribute <code class="func">Size</code> (<a href="chap30_mj.html#X858ADA3B7A684421"><span class="RefLink">30.4-6</span></a>). But there are cases where the same mathematical term is used to denote different concepts, for example <code class="code">Degree</code> is defined for polynomials, group characters, and permutation actions, and <code class="code">Rank</code> is defined for matrices, free modules, <span class="SimpleMath">\(p\)</span>-groups, and transitive permutation actions.</p>
 
-<p>It is in principle possible to install methods for the operation <code class="code">Rank</code> that are applicable to the different types of arguments, corresponding to the different contexts. But this is not the approach taken in the <strong class="pkg">GAP</strong> library. Instead there are operations such as <code class="func">RankMat</code> (<a href="chap24_mj.html#X7B21AE7987D4FB31"><span class="RefLink">24.7-1</span></a>) for matrices and <code class="func">DegreeOfCharacter</code> (<a href="chap72_mj.html#X7802BC157C69DD75"><span class="RefLink">72.8-4</span></a>) (in fact these are attributes) which are installed as methods of the "ambiguous" operations <code class="code">Rank</code> and <code class="code">Degree</code>.</p>
+<p>It is in principle possible to install methods for the operation <code class="code">Rank</code> that are applicable to the different types of arguments, corresponding to the different contexts. But this is not the approach taken in the <strong class="pkg">GAP</strong> library. Instead there are operations such as <code class="func">RankMat</code> (<a href="chap24_mj.html#X7A995A74838950E6"><span class="RefLink">24.7-1</span></a>) for matrices and <code class="func">DegreeOfCharacter</code> (<a href="chap72_mj.html#X7802BC157C69DD75"><span class="RefLink">72.8-4</span></a>) (in fact these are attributes) which are installed as methods of the "ambiguous" operations <code class="code">Rank</code> and <code class="code">Degree</code>.</p>
 
 <p>The idea is to distinguish between on the one hand different ways to compute the same thing (e.g. different methods for <code class="func">\=</code> (<a href="chap31_mj.html#X7EF67D047F03CA6F"><span class="RefLink">31.11-1</span></a>), <code class="func">Size</code> (<a href="chap30_mj.html#X858ADA3B7A684421"><span class="RefLink">30.4-6</span></a>), etc.), and on the other hand genuinely different things (such as the degree of a polynomial and a permutation action).</p>
 
-<p>The former is the basic purpose of operations and attributes. The latter is provided as a user convenience where mathematical usage forces it on us <em>and</em> where no conflicts arise. In programming the library, we use the underlying mathematically precise operations or attributes, such as <code class="func">RankMat</code> (<a href="chap24_mj.html#X7B21AE7987D4FB31"><span class="RefLink">24.7-1</span></a>) and <code class="code">RankOperation</code>. These should be attributes if appropriate, and the only role of the operation <code class="code">Rank</code> is to decide which attribute the user meant. That way, stored information is stored with "full mathematical precision" and is less likely to be retrieved for a wrong purpose later.</p>
+<p>The former is the basic purpose of operations and attributes. The latter is provided as a user convenience where mathematical usage forces it on us <em>and</em> where no conflicts arise. In programming the library, we use the underlying mathematically precise operations or attributes, such as <code class="func">RankMat</code> (<a href="chap24_mj.html#X7A995A74838950E6"><span class="RefLink">24.7-1</span></a>) and <code class="func">RankAction</code> (<a href="chap41_mj.html#X8166A6A17C8D6E73"><span class="RefLink">41.10-3</span></a>). These should be attributes if appropriate, and the only role of the operation <code class="code">Rank</code> is to decide which attribute the user meant. That way, stored information is stored with "full mathematical precision" and is less likely to be retrieved for a wrong purpose later.</p>
 
 <p>One word about possible conflicts. A typical example is the mathematical term "centre", which is defined as <span class="SimpleMath">\(\{ x \in M | a * x = x * a \forall a \in M \}\)</span> for a magma <span class="SimpleMath">\(M\)</span>, and as <span class="SimpleMath">\(\{ x \in L | l * x = 0 \forall l \in L \}\)</span> for a Lie algebra <span class="SimpleMath">\(L\)</span>. Here it is <em>not</em> possible to introduce an operation <code class="func">Centre</code> (<a href="chap35_mj.html#X847ABE6F781C7FE8"><span class="RefLink">35.4-5</span></a>) that delegates to attributes <code class="code">CentreOfMagma</code> and <code class="code">CentreOfLieAlgebra</code>, depending on the type of the argument. This is because any Lie algebra in <strong class="pkg">GAP</strong> is also a magma, so both <code class="code">CentreOfMagma</code> and <code class="code">CentreOfLieAlgebra</code> would be defined for a Lie algebra, with different meaning if the characteristic is two. So we cannot achieve that one operation in <strong class="pkg">GAP</strong> corresponds to the mathematical term "centre".</p>
 

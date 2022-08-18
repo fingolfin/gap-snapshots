@@ -100,7 +100,7 @@
   
   [1X30.2-5 DeclareCategoryCollections[101X
   
-  [33X[1;0Y[29X[2XDeclareCategoryCollections[102X( [3Xfilter[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XDeclareCategoryCollections[102X( [3Xname[103X ) [32X function[133X
   
   [33X[0;0YCalls  [2XCategoryCollections[102X  ([14X30.2-4[114X)  on  the  category that is bound to the
   global variable with name [3Xname[103X to obtain its collections category, and binds
@@ -270,6 +270,9 @@
   to  its length. The generic method for this case is [10XShallowCopy( Enumerator(
   [3XC[103X[10X ) )[110X.[133X
   
+  [33X[0;0YDevelopers  who  wish to adapt this for custom list or collection types need
+  to install suitable methods for the operation [10XListOp[110X.[133X
+  
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xl:= List( Group( (1,2,3) ) );[127X[104X
     [4X[28X[ (), (1,3,2), (1,2,3) ][128X[104X
@@ -279,7 +282,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [33X[0;0Y(See also [2XList[102X ([14X21.20-19[114X).)[133X
+  [33X[0;0Y(See also [2XList[102X ([14X21.20-18[114X).)[133X
   
   [1X30.3-6 SortedList[101X
   
@@ -351,7 +354,7 @@
   
   [33X[0;0Y[2XAsList[102X  returns  a  immutable list [3Ximm[103X. If the argument is a list (which may
   contain  holes),  then  [10XLength(  [3Ximm[103X[10X )[110X is the [2XLength[102X ([14X21.17-5[114X) value of this
-  list,  and  [3Ximm[103X contains the elements (and holes) of of the list in the same
+  list,  and  [3Ximm[103X  contains  the  elements (and holes) of the list in the same
   order.  If the argument is a collection that is not a list, then [10XLength( [3Ximm[103X[10X
   )[110X  is  the number of different elements of this collection, and [3Ximm[103X contains
   the  different elements of the collection in an unspecified order, which may
@@ -754,17 +757,23 @@
   [33X[1;0Y[29X[2XRandom[102X( [3Xlistorcoll[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XRandom[102X( [3Xfrom[103X, [3Xto[103X ) [32X operation[133X
   
-  [33X[0;0Y[2XRandom[102X   returns  a  (pseudo-)random  element  of  the  list  or  collection
-  [3Xlistorcoll[103X.[133X
+  [33X[0;0Y[2XRandom[102X  returns  a  (pseudo-)random  element  of the dense, nonempty list or
+  nonempty  collection [3Xlistorcoll[103X. The behaviour for non-dense or empty lists,
+  and  for  empty  collections (see [2XIsDenseList[102X ([14X21.1-2[114X), [2XIsEmpty[102X ([14X30.4-1[114X)) is
+  undefined.[133X
   
   [33X[0;0YAs  lists  or ranges are restricted in length ([22X2^28-1[122X or [22X2^60-1[122X depending on
   your  system), the second form returns a random integer in the range [3Xfrom[103X to
-  [3Xto[103X (inclusive) for arbitrary integers [3Xfrom[103X and [3Xto[103X.[133X
+  [3Xto[103X (inclusive) for arbitrary integers [3Xfrom[103X and [3Xto[103X. The behaviour in the case
+  that [3Xfrom[103X is larger than [3Xto[103X is undefined.[133X
+  
+  [33X[0;0YSee Section [14X14.7[114X for more about computing random elements, in particular for
+  [2XRandom[102X ([14X14.7-2[114X) methods that take a random source as the first argument.[133X
   
   [33X[0;0YThe distribution of elements returned by [2XRandom[102X depends on the argument. For
-  a  list  the  distribution is uniform (all elements are equally likely). The
-  same  holds  usually for finite collections that are not lists. For infinite
-  collections some reasonable distribution is used.[133X
+  a dense, nonempty list the distribution is uniform (all elements are equally
+  likely).  The  same holds usually for finite collections that are not lists.
+  For infinite collections some reasonable distribution is used.[133X
   
   [33X[0;0YSee  the  chapters of the various collections to find out which distribution
   is being used.[133X
@@ -809,9 +818,22 @@
   [33X[0;0YFor  a  dense  list  [3Xlist[103X, [2XRandomList[102X returns a (pseudo-)random element with
   equal distribution.[133X
   
-  [33X[0;0YThe  random  source  [3Xrs[103X  is used to choose a random number. If [3Xrs[103X is absent,
-  this  function uses the [2XGlobalMersenneTwister[102X ([14X14.7-4[114X) to produce the random
-  elements (a source of high quality random numbers).[133X
+  [33X[0;0YThe  random source [3Xrs[103X (see [14X14.7[114X) is used to choose a random number. If [3Xrs[103X is
+  absent, this function uses the [2XGlobalMersenneTwister[102X ([14X14.7-4[114X) to produce the
+  random elements (a source of high quality random numbers).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XRandomList( [ 1 .. 6 ] );[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27Xelms:= AsList( Group( (1,2,3) ) );;[127X[104X
+    [4X[25Xgap>[125X [27XRandomList( elms );  RandomList( elms );[127X[104X
+    [4X[28X(1,2,3)[128X[104X
+    [4X[28X(1,3,2)[128X[104X
+    [4X[25Xgap>[125X [27Xrs:= RandomSource( IsMersenneTwister, 1 );[127X[104X
+    [4X[28X<RandomSource in IsMersenneTwister>[128X[104X
+    [4X[25Xgap>[125X [27XRandomList( rs, elms );[127X[104X
+    [4X[28X(1,2,3)[128X[104X
+  [4X[32X[104X
   
   
   [1X30.8 [33X[0;0YIterators[133X[101X

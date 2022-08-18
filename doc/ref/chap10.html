@@ -112,6 +112,11 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X86FDC1EF82CAD2DA">10.11-1 ReadCSV</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X8779DAC585E05A47">10.11-2 PrintCSV</a></span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X87396F857ADA3F97">10.12 <span class="Heading">Opening files in the Operating System</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X86B98E287AD42BE8">10.12-1 OpenExternal</a></span>
+</div></div>
 </div>
 
 <h3>10 <span class="Heading">Streams</span></h3>
@@ -447,7 +452,9 @@ You
 
 <p><code class="func">SetPrintFormattingStatus</code> sets whether output sent to the output stream <var class="Arg">stream</var> via <code class="func">PrintTo</code> (<a href="chap9.html#X86956C577FFEE1F9"><span class="RefLink">9.7-3</span></a>), <code class="func">AppendTo</code> (<a href="chap9.html#X86956C577FFEE1F9"><span class="RefLink">9.7-3</span></a>), etc. will be formatted with line breaks and indentation. If the second argument <var class="Arg">newstatus</var> is <code class="keyw">true</code> then output will be so formatted, and if <code class="keyw">false</code> then it will not. If the stream is not a text stream, only <code class="keyw">false</code> is allowed.</p>
 
-<p><code class="func">PrintFormattingStatus</code> returns <code class="keyw">true</code> if output sent to the output text stream <var class="Arg">stream</var> via <code class="func">PrintTo</code> (<a href="chap9.html#X86956C577FFEE1F9"><span class="RefLink">9.7-3</span></a>), <code class="func">AppendTo</code> (<a href="chap9.html#X86956C577FFEE1F9"><span class="RefLink">9.7-3</span></a>), etc. will be formatted with line breaks and indentation, and <code class="keyw">false</code> otherwise. For non-text streams, it returns <code class="keyw">false</code>. If as argument <var class="Arg">stream</var> the string <code class="code">"*stdout*"</code> is given, these functions refer to the formatting status of the standard output (so usually the users terminal screen).</p>
+<p><code class="func">PrintFormattingStatus</code> returns <code class="keyw">true</code> if output sent to the output text stream <var class="Arg">stream</var> via <code class="func">PrintTo</code> (<a href="chap9.html#X86956C577FFEE1F9"><span class="RefLink">9.7-3</span></a>), <code class="func">AppendTo</code> (<a href="chap9.html#X86956C577FFEE1F9"><span class="RefLink">9.7-3</span></a>), etc. will be formatted with line breaks and indentation, and <code class="keyw">false</code> otherwise. For non-text streams, it returns <code class="keyw">false</code>. If as argument <var class="Arg">stream</var> the string <code class="code">"*stdout*"</code> is given, these functions refer to the formatting status of the standard output (so usually the user's terminal screen).</p>
+
+<p>Similarly, the string <code class="code">"*errout*"</code> refers to the formatting status of the standard error output, which influences how error messages are printed.</p>
 
 <p>These functions do not influence the behaviour of the low level functions <code class="func">WriteByte</code> (<a href="chap10.html#X7D37C7A07E9C319C"><span class="RefLink">10.4-1</span></a>), <code class="func">WriteLine</code> (<a href="chap10.html#X79FA85498596CC99"><span class="RefLink">10.4-2</span></a>) or <code class="func">WriteAll</code> (<a href="chap10.html#X78C113917936058D"><span class="RefLink">10.4-3</span></a>) which always write without formatting.</p>
 
@@ -488,14 +495,15 @@ You
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputTextFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="code">InputTextFile( <var class="Arg">filename</var> )</code> returns an input stream in the category <code class="func">IsInputTextStream</code> (<a href="chap10.html#X7C8956BB7FE2A89C"><span class="RefLink">10.1-4</span></a>) that delivers the characters from the file <var class="Arg">filename</var>. If <var class="Arg">filename</var> ends in <code class="code">.gz</code> and the file is a valid gzipped file, then the file will be transparently uncompressed.</p>
 
-<p><code class="code">InputTextFile</code> is designed for use with text files and automatically handles windows-style line endings. This means it should <em>not</em> be used for binary data. The <code class="func">IO_File</code> (<a href="../../pkg/io-4.7.0/doc/chap4.html#X7EC160D07E815DBB"><span class="RefLink">IO: IO_File mode</span></a>) function from the <strong class="pkg">IO</strong> package should be used to access binary data.</p>
+<p><code class="code">InputTextFile</code> is designed for use with text files and automatically handles windows-style line endings. This means it should <em>not</em> be used for binary data. The <code class="func">IO_File</code> (<a href="../../pkg/io/doc/chap4.html#X7EC160D07E815DBB"><span class="RefLink">IO: IO_File mode</span></a>) function from the <strong class="pkg">IO</strong> package should be used to access binary data.</p>
 
 <p><a id="X83F53291822B7126" name="X83F53291822B7126"></a></p>
 
 <h5>10.5-2 OutputTextFile</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OutputTextFile</code>( <var class="Arg">filename</var>, <var class="Arg">append</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p><code class="code">OutputTextFile( <var class="Arg">filename</var>, <var class="Arg">append</var> )</code> returns an output stream in the category <code class="code">IsOutputTextFile</code> that writes received characters to the file <var class="Arg">filename</var>. If <var class="Arg">append</var> is <code class="keyw">false</code>, then the file is emptied first, otherwise received characters are added at the end of the file. If <var class="Arg">filename</var> ends in <code class="code">.gz</code> then the file will be written with gzip compression.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OutputGzipFile</code>( <var class="Arg">filename</var>, <var class="Arg">append</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p><code class="code">OutputTextFile( <var class="Arg">filename</var>, <var class="Arg">append</var> )</code> returns an output stream in the category <code class="code">IsOutputTextFile</code> that writes received characters to the file <var class="Arg">filename</var>. If <var class="Arg">append</var> is <code class="keyw">false</code>, then the file is emptied first, otherwise received characters are added at the end of the file. <code class="code">OutputGzipFile</code> acts identically to <code class="code">OutputTextFile</code>, except it compresses the output with gzip.</p>
 
 
 <div class="example"><pre>
@@ -616,7 +624,7 @@ AppendLine
 <h5>10.8-2 InputOutputLocalProcess</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputOutputLocalProcess</code>( <var class="Arg">dir</var>, <var class="Arg">executable</var>, <var class="Arg">args</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>starts up a slave process, whose executable file is <var class="Arg">executable</var>, with "command line" arguments <var class="Arg">args</var> in the directory <var class="Arg">dir</var>. (Suitable choices for <var class="Arg">dir</var> are <code class="code">DirectoryCurrent()</code> or <code class="code">DirectoryTemporary()</code> (see Section <a href="chap9.html#X85030B35865A1080"><span class="RefLink">9.3</span></a>); <code class="code">DirectoryTemporary()</code> may be a good choice when <var class="Arg">executable</var> generates output files that it doesn't itself remove afterwards.) <code class="func">InputOutputLocalProcess</code> returns an InputOutputStream object. Bytes written to this stream are received by the slave process as if typed at a terminal on standard input. Bytes written to standard output by the slave process can be read from the stream.</p>
+<p>starts up a child process, whose executable file is <var class="Arg">executable</var>, with "command line" arguments <var class="Arg">args</var> in the directory <var class="Arg">dir</var>. (Suitable choices for <var class="Arg">dir</var> are <code class="code">DirectoryCurrent()</code> or <code class="code">DirectoryTemporary()</code> (see Section <a href="chap9.html#X85030B35865A1080"><span class="RefLink">9.3</span></a>); <code class="code">DirectoryTemporary()</code> may be a good choice when <var class="Arg">executable</var> generates output files that it doesn't itself remove afterwards.) <code class="func">InputOutputLocalProcess</code> returns an InputOutputStream object. Bytes written to this stream are received by the child process as if typed at a terminal on standard input. Bytes written to standard output by the child process can be read from the stream.</p>
 
 <p>When the stream is closed, the signal SIGTERM is delivered to the child process, which is expected to exit.</p>
 
@@ -737,6 +745,19 @@ line -&gt; 0 &lt; Length(line) and line[Length(line)] = '\n'
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintCSV</code>( <var class="Arg">filename</var>, <var class="Arg">list</var>[, <var class="Arg">fields</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function prints a list of records as a spreadsheet in CSV format (which can be read in for example into Excel). The names of the record components will be printed as entries in the first line. If the argument <var class="Arg">fields</var> is given only the record fields listed in this list will be printed and they will be printed in the same arrangement as given in this list. If the option noheader is set to true the line with the record field names will not be printed.</p>
+
+<p><a id="X87396F857ADA3F97" name="X87396F857ADA3F97"></a></p>
+
+<h4>10.12 <span class="Heading">Opening files in the Operating System</span></h4>
+
+<p>In some situations it can be desirable to open a file outside of <strong class="pkg">GAP</strong>, for example HTML files, PDFs, or pictures.</p>
+
+<p><a id="X86B98E287AD42BE8" name="X86B98E287AD42BE8"></a></p>
+
+<h5>10.12-1 OpenExternal</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OpenExternal</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Open the file <var class="Arg">filename</var> using the default application for this file in the operating system. This can be used to open files like HTML and PDF files in the GUI.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap9.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap11.html">[Next Chapter]</a>&nbsp;  </div>

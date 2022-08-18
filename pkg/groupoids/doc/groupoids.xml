@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<!DOCTYPE Book SYSTEM "gapdoc.dtd"
+[
+<!ENTITY AutoDoc '<Package>AutoDoc</Package>'>
+<!ENTITY groupoids '<Package>groupoids</Package>'>
+<!ENTITY see '<Alt Only="LaTeX">$\to$</Alt><Alt Not="LaTeX">--&gt;</Alt>'>
+<!ENTITY XMod '<Package>XMod</Package>'>
+]
+>
+<Book Name="groupoids">
+<#Include SYSTEM "title.xml">
+<TableOfContents/>
+<Body>
+<#Include SYSTEM "intro.xml">
+<#Include SYSTEM "mwo.xml">
+<#Include SYSTEM "mwohom.xml">
+<#Include SYSTEM "gpd.xml">
+<#Include SYSTEM "gpdhom.xml">
+<#Include SYSTEM "ggraph.xml">
+<#Include SYSTEM "tecnotes.xml">
+<#Include SYSTEM "history.xml">
+<#Include SYSTEM "_AutoDocMainFile.xml">
+</Body>
+<Bibliography Databases="bib.xml"/>
+<TheIndex/>
+</Book>

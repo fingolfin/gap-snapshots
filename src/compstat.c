@@ -8,11 +8,8 @@
 **  SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include "system.h"
 #include "compstat.h"
-
-// #define AVOID_PRECOMPILED
-
+#include "common.h"
 
 /****************************************************************************
 **
@@ -20,15 +17,11 @@
 **
 **  This a dummy list in case no module is statically linked.
 */
-#ifndef AVOID_PRECOMPILED
-extern StructInitInfo * Init__type1 ( void );
-extern StructInitInfo * Init__oper1( void );
-#endif
+extern StructInitInfo * Init__type1(void);
+extern StructInitInfo * Init__oper1(void);
 
-InitInfoFunc CompInitFuncs [] = {
-#ifndef AVOID_PRECOMPILED
+InitInfoFunc CompInitFuncs[] = {
     Init__type1,
     Init__oper1,
-#endif
     0
 };

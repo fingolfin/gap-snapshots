@@ -16,10 +16,8 @@
 
 #include "bool.h"
 #include "calls.h"
-#include "compstat.h"
 #include "error.h"
 #include "finfield.h"
-#include "gap_version.h"
 #ifdef USE_GASMAN
 #include "gasman_intern.h"
 #endif
@@ -31,9 +29,14 @@
 #include "stringobj.h"
 #include "sysfiles.h"
 #include "sysopt.h"
+#include "sysstr.h"
+#include "version.h"
 
+#include <stdio.h>
 #include <unistd.h>
 
+
+#ifdef GAP_ENABLE_SAVELOAD
 
 /***************************************************************************
 **
@@ -48,21 +51,18 @@ static UInt1* LBPointer;
 static UInt1* LBEnd;
 static Obj userHomeExpand;
 
-#ifdef USE_GASMAN
-
 static Int OpenForSave( Obj fname ) 
 {
   if (SaveFile != -1)
     {
-      Pr("Already saving\n",0L,0L);
+      Pr("Already saving\n", 0, 0);
       return 1;
     }
-  SaveFile = SyFopen(CONST_CSTR_STRING(fname), "wb");
-  if (SaveFile == -1)
-    {
-      Pr("Couldn't open file %s to save workspace\n",
-         (UInt)CONST_CSTR_STRING(fname),0L);
-      return 1;
+    SaveFile = SyFopen(CONST_CSTR_STRING(fname), "wb", TRUE);
+    if (SaveFile == -1) {
+        Pr("Couldn't open file %s to save workspace\n",
+           (UInt)CONST_CSTR_STRING(fname), 0);
+        return 1;
     }
   LBPointer = LoadBuffer;
   LBEnd = LBPointer+sizeof(LoadBuffer);
@@ -77,12 +77,10 @@ static void CloseAfterSave( void )
     }
 
   if (SyWrite(SaveFile, LoadBuffer, LBPointer - LoadBuffer) < 0)
-    ErrorQuit("Cannot write to file, see 'LastSystemError();'\n", 0L, 0L);
+    ErrorQuit("Cannot write to file, see 'LastSystemError();'\n", 0, 0);
   SyFclose(SaveFile);
   SaveFile = -1;
 }
-
-#endif
 
 static void OpenForLoad( const Char *fname ) 
 {
@@ -90,11 +88,10 @@ static void OpenForLoad( const Char *fname )
     {
       Panic("Internal error -- this should never happen");
     }
-  LoadFile = SyFopen(fname, "rb");
-  if (LoadFile == -1)
-    {
-      Pr("Couldn't open saved workspace %s\n",(Int)fname,0L);
-      SyExit(1);
+    LoadFile = SyFopen(fname, "rb", TRUE);
+    if (LoadFile == -1) {
+        Pr("Couldn't open saved workspace %s\n", (Int)fname, 0);
+        SyExit(1);
     }
 }
 
@@ -112,7 +109,7 @@ static void CloseAfterLoad( void )
 static void SAVE_BYTE_BUF(void)
 {
   if (SyWrite(SaveFile, LoadBuffer, LBEnd - LoadBuffer) < 0)
-    ErrorQuit("Cannot write to file, see 'LastSystemError();'\n", 0L, 0L);
+    ErrorQuit("Cannot write to file, see 'LastSystemError();'\n", 0, 0);
   LBPointer = LoadBuffer;
   return;
 }
@@ -120,16 +117,13 @@ static void SAVE_BYTE_BUF(void)
 #define SAVE_BYTE(byte) {if (LBPointer >= LBEnd) {SAVE_BYTE_BUF();} \
                           *LBPointer++ = (UInt1)(byte);}
 
-static const Char * LoadByteErrorMessage = "Unexpected End of File in Load\n";
-
 static UInt1 LOAD_BYTE_BUF(void)
 {
   Int ret;
-  ret = SyRead(LoadFile, LoadBuffer, 100000);
+  ret = SyRead(LoadFile, LoadBuffer, sizeof(LoadBuffer));
   if (ret <= 0)
     {
-      Pr(LoadByteErrorMessage, 0L, 0L );
-      SyExit(2);
+      Panic("Unexpected End of File in Load");
     }
   LBEnd = LoadBuffer + ret;
   LBPointer = LoadBuffer;
@@ -238,8 +232,6 @@ void SaveCStr( const Char * str)
   } while (*(str++));
 }
 
-#include <assert.h>
-
 void LoadCStr( Char *buf, UInt maxsize)
 {
   UInt nread = 0;
@@ -290,47 +282,38 @@ void LoadString ( Obj string )
   }
 }
 
+#ifdef USE_GASMAN
+
 void SaveSubObj( Obj subobj )
 {
-#ifndef USE_GASMAN
-  // FIXME: HACK
-  assert(0);
-#else
   if (!subobj)
     SaveUInt(0);
   else if (IS_INTOBJ(subobj))
     SaveUInt((UInt) subobj);
   else if (IS_FFE(subobj))
     SaveUInt((UInt) subobj);
-  else if ((((UInt)subobj & 3) != 0) || 
-           subobj < (Bag)MptrBags || 
-           subobj > (Bag)MptrEndBags ||
-           (Bag *)PTR_BAG(subobj) < MptrEndBags)
+  else if (IS_VALID_BAG_ID(subobj))
+    SaveUInt(((UInt)LINK_BAG(subobj)) << 2);
+  else
     {
-      Pr("#W bad bag id %d found, 0 saved\n", (Int)subobj, 0L);
+      Pr("#W bad bag id %d found, 0 saved\n", (Int)subobj, 0);
+      GAP_ASSERT(0);
       SaveUInt(0);
     }
-  else
-    SaveUInt(((UInt)LINK_BAG(subobj)) << 2);
-#endif
 }
 
 Obj LoadSubObj( void )
 {
-#ifndef USE_GASMAN
-  // FIXME: HACK
-  assert(0);
-#else
   UInt word = LoadUInt();
   if (word == 0)
     return (Obj) 0;
-  if ((word & 0x3) == 1 || (word & 0x3) == 2)
+  if ((word & 0x3) != 0)
     return (Obj) word;
   else
-    return (Obj)(MptrBags + (word >> 2)-1);
-#endif
+    return (Obj)RESTORE_BAG_CONTENT_POINTER(word >> 2);
 }
 
+#endif
 
 /***************************************************************************
 **
@@ -348,9 +331,7 @@ static void SaveBagData (Bag bag )
 
   /* dispatch */
   (*(SaveObjFuncs[ header->type]))(bag);
-
 }
-
 
 
 static void LoadBagData ( void )
@@ -381,8 +362,6 @@ static void LoadBagData ( void )
 **
 */
 
-#ifdef USE_GASMAN
-
 static void WriteEndiannessMarker( void )
 {
   UInt x;
@@ -402,8 +381,6 @@ static void WriteEndiannessMarker( void )
   SAVE_BYTE(((UInt1 *)&x)[7]);
 #endif
 }
-
-#endif
 
 
 static void CheckEndiannessMarker( void )
@@ -516,6 +493,7 @@ static void RemoveSaveIndex( Bag bag)
   LINK_BAG(bag) = bag;
 }
 
+#endif
 
 static Char * GetKernelDescription(void)
 {
@@ -548,7 +526,7 @@ static void WriteSaveHeader( void )
   }
   SaveUInt(GlobalBags.nr);
   SaveUInt(NextSaveIndex-1);
-  SaveUInt(AllocBags - MptrEndBags);
+  SaveUInt(GASMAN_USED_MEMORY());
 
   SaveCStr("Loaded Modules");
   SaveModules();
@@ -561,15 +539,9 @@ static void WriteSaveHeader( void )
       SaveSubObj(*(GlobalBags.addr[i]));
     }
 }
-#endif
 
 Obj SaveWorkspace( Obj fname )
 {
-#ifndef USE_GASMAN
-  Pr("SaveWorkspace is only supported when GASMAN is in use",0,0);
-  return Fail;
-
-#else
   Obj fullname;
   Obj result;
 
@@ -607,13 +579,6 @@ Obj SaveWorkspace( Obj fname )
   ModulesPostSave();
 
   return result;
-#endif
-}
-
-
-static Obj FuncSaveWorkspace(Obj self, Obj filename)
-{
-  return SaveWorkspace( filename );
 }
 
 
@@ -622,22 +587,16 @@ static Obj FuncSaveWorkspace(Obj self, Obj filename)
 *F  LoadWorkspace( <fname> )  . . . . .  load the workspace to the named file
 **
 **  'LoadWorkspace' is the entry point to the workspace saving. It is not
-**  installed as a GAP function, but instead called from InitGap when the
-**  -L commad-line flag is given
+**  installed as a GAP function, but instead called from InitializeGap when
+**  the -L command-line flag is given
 **
 **  The file saveload.tex in the dev directory describes the saved format
 **  in more detail. Most of the work will be done from inside GASMAN, because
 **  we need to fiddle with Bag internals somewhat
 **
 */
-
-
 void LoadWorkspace( Char * fname )
 {
-#ifndef USE_GASMAN
-  Pr("LoadWorkspace is only supported when GASMAN is in use\n",0,0);
-
-#else
   UInt nGlobs, nBags, i, maxSize;
   Char buf[256];
   Obj * glob;
@@ -649,39 +608,34 @@ void LoadWorkspace( Char * fname )
 
   LoadCStr(buf,256);
   if (strncmp (buf, "GAP ", 4) != 0) {
-     Pr("File %s does not appear to be a GAP workspae.\n", (long) fname, 0L);
-     SyExit(1);
+     Panic("File %s does not appear to be a GAP workspace", fname);
   }
 
-  if (strcmp (buf, "GAP workspace") == 0) {
+  if (streq(buf, "GAP workspace")) {
 
      LoadCStr(buf,256);
-     if (strcmp(buf, GetKernelDescription()) != 0) {
-         Pr("This workspace is not compatible with GAP kernel (%s, present: "
-            "%s).\n",
-            (long)buf, (long)GetKernelDescription());
-         SyExit(1);
+     if (!streq(buf, GetKernelDescription())) {
+         Panic("This workspace is not compatible with GAP kernel (%s, present: "
+            "%s)", buf, GetKernelDescription());
      }
 
      LoadCStr(buf,256);
 #ifdef SYS_IS_64_BIT             
-     if (strcmp(buf,"64 bit") != 0)
+     if (!streq(buf,"64 bit"))
 #else
-     if (strcmp(buf,"32 bit") != 0)
+     if (!streq(buf,"32 bit"))
 #endif
         {
-           Pr("This workspace was created by a %s version of GAP.\n", (long)buf, 0L);
-           SyExit(1);
+           Panic("This workspace was created by a %s version of GAP", buf);
         }
   } else {
-     Pr("File %s probably isn't a GAP workspace.\n", (long)fname, 0L);
-     SyExit(1);
+     Panic("File %s probably isn't a GAP workspace", fname);
   } 
   
   CheckEndiannessMarker();
   
   LoadCStr(buf,256);
-  if (strcmp(buf,"Counts and Sizes") != 0)
+  if (!streq(buf,"Counts and Sizes"))
     {
       Panic("Bad divider");
     }
@@ -697,7 +651,7 @@ void LoadWorkspace( Char * fname )
   /* The restoring kernel must have at least as many compiled modules
      as the saving one. */
   LoadCStr(buf,256);
-  if (strcmp(buf,"Loaded Modules") != 0)
+  if (!streq(buf,"Loaded Modules"))
     {
       Panic("Bad divider");
     }
@@ -705,16 +659,11 @@ void LoadWorkspace( Char * fname )
 
   /* Now the kernel variables that point into the workspace */
   LoadCStr(buf,256);
-  if (strcmp(buf,"Kernel to WS refs") != 0)
+  if (!streq(buf,"Kernel to WS refs"))
     {
       Panic("Bad divider");
     }
-  SortGlobals(2);               /* globals by cookie for quick
-                                 lookup */
-  for (i = 0; i < GlobalBags.nr; i++)
-    {
-      GAP_ASSERT(GlobalBags.cookie[i] != NULL);
-    }
+    SortGlobals();    // globals by cookie for quick lookup
     // TODO: the goal here is to stop exporting `GlobalBags` completely...
     if (nGlobs != GlobalBags.nr) {
         Panic("Wrong number of global bags in saved workspace %d %d",
@@ -730,11 +679,11 @@ void LoadWorkspace( Char * fname )
         }
       *glob = LoadSubObj();
       if (SyDebugLoading)
-          Pr("Restored global %s\n", (Int)buf, 0L);
+          Pr("Restored global %s\n", (Int)buf, 0);
     }
 
   LoadCStr(buf,256);
-  if (strcmp(buf,"Bag data") != 0)
+  if (!streq(buf,"Bag data"))
     {
       Panic("Bad divider");
     }
@@ -746,7 +695,6 @@ void LoadWorkspace( Char * fname )
   FinishedRestoringBags();
 
   CloseAfterLoad();
-#endif
 
     ModulesPostRestore();
 }
@@ -754,11 +702,11 @@ void LoadWorkspace( Char * fname )
 static void PrSavedObj( UInt x)
 {
   if ((x & 3) == 1)
-    Pr("Immediate  integer %d\n", INT_INTOBJ((Obj)x),0L);
+    Pr("Immediate integer %d\n", INT_INTOBJ((Obj)x), 0);
   else if ((x & 3) == 2)
     Pr("Immediate FFE %d %d\n", VAL_FFE((Obj)x), SIZE_FF(FLD_FFE((Obj)x)));
   else
-    Pr("Reference to bag number %d\n",x>>2,0L);
+    Pr("Reference to bag number %d\n",x>>2, 0);
 }
 
 static Obj FuncDumpWorkspace(Obj self, Obj fname)
@@ -767,24 +715,24 @@ static Obj FuncDumpWorkspace(Obj self, Obj fname)
   Char buf[256];
   OpenForLoad( CONST_CSTR_STRING(fname) );
   LoadCStr(buf,256);
-  Pr("Header string: %s\n",(Int) buf, 0L);
+  Pr("Header string: %s\n", (Int)buf, 0);
   LoadCStr(buf,256);
-  Pr("GAP Version: %s\n",(Int)buf, 0L);
+  Pr("GAP Version: %s\n", (Int)buf, 0);
   LoadCStr(buf,256);
-  Pr("Word length: %s\n",(Int)buf, 0L);
+  Pr("Word length: %s\n", (Int)buf, 0);
   CheckEndiannessMarker();
   LoadCStr(buf,256);
-  Pr("Divider string: %s\n",(Int)buf,0L);
-  if (strcmp(buf,"Counts and Sizes") != 0)
-    ErrorQuit("Bad divider",0L,0L);
-  Pr("Loaded modules: %d\n",nMods = LoadUInt(), 0L);
-  Pr("Global Bags   : %d\n",nGlobs = LoadUInt(), 0L);
-  Pr("Total Bags    : %d\n",nBags = LoadUInt(), 0L);
-  Pr("Maximum Size  : %d\n",sizeof(Bag)*LoadUInt(), 0L);
+  Pr("Divider string: %s\n", (Int)buf, 0);
+  if (!streq(buf, "Counts and Sizes"))
+      ErrorQuit("Bad divider", 0, 0);
+  Pr("Loaded modules: %d\n", nMods = LoadUInt(), 0);
+  Pr("Global Bags   : %d\n", nGlobs = LoadUInt(), 0);
+  Pr("Total Bags    : %d\n", nBags = LoadUInt(), 0);
+  Pr("Maximum Size  : %d\n", sizeof(Bag) * LoadUInt(), 0);
   LoadCStr(buf,256);
-  Pr("Divider string: %s\n",(Int)buf, 0L);
-  if (strcmp(buf,"Loaded Modules") != 0)
-    ErrorQuit("Bad divider",0L,0L);
+  Pr("Divider string: %s\n", (Int)buf, 0);
+  if (!streq(buf, "Loaded Modules"))
+      ErrorQuit("Bad divider", 0, 0);
   for (i = 0; i < nMods; i++)
     {
       UInt type;
@@ -792,28 +740,41 @@ static Obj FuncDumpWorkspace(Obj self, Obj fname)
       Pr("Type: %d ",type,0);
       relative = LoadUInt();
       if (relative)
-        Pr("GAP root relative ", 0L, 0L);
+        Pr("GAP root relative ", 0, 0);
       else
-        Pr("absolute ", 0L, 0L);
+        Pr("absolute ", 0, 0);
       LoadCStr(buf,256);
-      Pr("  %s\n",(Int)buf,0L);
+      Pr("  %s\n",(Int)buf, 0);
     }
   LoadCStr(buf,256);
-  Pr("Divider string: %s\n",(Int)buf,0L);
-  if (strcmp(buf,"Kernel to WS refs") != 0)
-    ErrorQuit("Bad divider",0L,0L);
+  Pr("Divider string: %s\n", (Int)buf, 0);
+  if (!streq(buf, "Kernel to WS refs"))
+      ErrorQuit("Bad divider", 0, 0);
   for (i = 0; i < nGlobs; i++)
     {
       LoadCStr(buf,256);
-      Pr("  %s ",(Int)buf,0L);
+      Pr("  %s ", (Int)buf, 0);
       PrSavedObj(LoadUInt());
     }
   LoadCStr(buf,256);
-  Pr("Divider string: %s\n",(Int)buf,0L);
-  if (strcmp(buf,"Bag data") != 0)
-    ErrorQuit("Bad divider",0L,0L);
+  Pr("Divider string: %s\n", (Int)buf, 0);
+  if (!streq(buf, "Bag data"))
+      ErrorQuit("Bad divider", 0, 0);
   CloseAfterLoad();
   return (Obj) 0;
+}
+
+#endif // GAP_ENABLE_SAVELOAD
+
+
+static Obj FuncSaveWorkspace(Obj self, Obj filename)
+{
+#ifdef GAP_ENABLE_SAVELOAD
+    return SaveWorkspace(filename);
+#else
+    ErrorMayQuit("SaveWorkspace is only supported when GASMAN is in use", 0, 0);
+    return Fail;
+#endif
 }
 
 
@@ -829,11 +790,13 @@ static Obj FuncDumpWorkspace(Obj self, Obj fname)
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    GVAR_FUNC(SaveWorkspace, 1, "fname"),
-    GVAR_FUNC(DumpWorkspace, 1, "fname"),
+    GVAR_FUNC_1ARGS(SaveWorkspace, fname),
+#ifdef GAP_ENABLE_SAVELOAD
+    GVAR_FUNC_1ARGS(DumpWorkspace, fname),
 #ifdef USE_GASMAN
-    GVAR_FUNC(FindBag, 3, "minsize, maxsize, tnum"),
-    GVAR_FUNC(BagStats, 1, "filename"),
+    GVAR_FUNC_3ARGS(FindBag, minsize, maxsize, tnum),
+    GVAR_FUNC_1ARGS(BagStats, filename),
+#endif
 #endif
     { 0, 0, 0, 0, 0 }
 
@@ -847,16 +810,18 @@ static StructGVarFunc GVarFuncs [] = {
 static Int InitKernel (
     StructInitInfo *    module )
 {
+#ifdef GAP_ENABLE_SAVELOAD
     SaveFile = -1;
     LBPointer = LoadBuffer;
     LBEnd = LoadBuffer;
-  
-    /* init filters and functions                                          */
-    InitHdlrFuncsFromTable( GVarFuncs );
+
     /* allow ~/... expansion in SaveWorkspace                              */ 
     ImportFuncFromLibrary("UserHomeExpand", &userHomeExpand);
+#endif
 
-    /* return success                                                      */
+    /* init filters and functions                                          */
+    InitHdlrFuncsFromTable( GVarFuncs );
+
     return 0;
 }
 
@@ -871,7 +836,6 @@ static Int InitLibrary (
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 

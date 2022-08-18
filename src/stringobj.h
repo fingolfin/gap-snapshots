@@ -24,6 +24,8 @@
 
 #include "objects.h"
 
+#include <string.h>
+
 
 /****************************************************************************
 **
@@ -96,7 +98,7 @@ EXPORT_INLINE UInt1 CHAR_SINT(Int n)
 **
 *F  IS_STRING_REP( <list> ) . . . . . . . .  check if <list> is in string rep
 */
-EXPORT_INLINE Int IS_STRING_REP(Obj list)
+EXPORT_INLINE BOOL IS_STRING_REP(Obj list)
 {
     return (T_STRING <= TNUM_OBJ(list) &&
             TNUM_OBJ(list) <= T_STRING_SSORT + IMMUTABLE);
@@ -266,9 +268,9 @@ void PrintString1(Obj list);
 **  'IS_STRING' returns 1  if the object <obj>  is a string  and 0 otherwise.
 **  It does not change the representation of <obj>.
 */
-extern  Int             (*IsStringFuncs [LAST_REAL_TNUM+1]) ( Obj obj );
+extern BOOL (*IsStringFuncs[LAST_REAL_TNUM + 1])(Obj obj);
 
-EXPORT_INLINE Int IS_STRING(Obj obj)
+EXPORT_INLINE BOOL IS_STRING(Obj obj)
 {
     return (*IsStringFuncs[TNUM_OBJ(obj)])(obj);
 }
@@ -281,7 +283,7 @@ EXPORT_INLINE Int IS_STRING(Obj obj)
 **  'IsString' returns 1 if the object <obj> is a string and 0 otherwise.  It
 **  does not change the representation of <obj>.
 */
-Int IsString(Obj obj);
+BOOL IsString(Obj obj);
 
 
 /****************************************************************************
@@ -322,7 +324,7 @@ void ConvString(Obj string);
 **  otherwise.   If <obj> is a  string it  changes  its representation to the
 **  string representation.
 */
-Int IsStringConv(Obj obj);
+BOOL IsStringConv(Obj obj);
 
 
 // Functions to create mutable and immutable GAP strings from C strings.
@@ -366,6 +368,26 @@ EXPORT_INLINE Obj MakeImmStringWithLen(const char * buf, size_t len)
 */
 #define C_NEW_STRING(string,len,cstr) \
     string = MakeStringWithLen( (cstr), (len) )
+
+
+/****************************************************************************
+**
+*F  AppendCStr( <str>, <buf>, <len> ) . . append data in a buffer to a string
+**
+**  'AppendCStr' appends <len> bytes of data taken from <buf> to <str>, where
+**  <str> must be a mutable GAP string object.
+*/
+void AppendCStr(Obj str, const char * buf, UInt len);
+
+
+/****************************************************************************
+**
+*F  AppendString( <str1>, <str2> ) . . . . . . . append one string to another
+**
+**  'AppendString' appends <str2> to the end of <str1>. Both <str1> and <str>
+**  must be a GAP string objects, and <str1> must be mutable.
+*/
+void AppendString(Obj str1, Obj str2);
 
 
 /****************************************************************************

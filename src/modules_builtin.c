@@ -10,8 +10,9 @@
 
 #include "modules_builtin.h"
 
-#include "gap_all.h"
 #include "gap.h"
+#include "gap_all.h"
+#include "gaptime.h"
 #include "hookintrprtr.h"
 #include "info.h"
 #include "intfuncs.h"
@@ -20,10 +21,14 @@
 #include "objccoll.h"
 #include "objset.h"
 #include "profile.h"
+#include "sha256.h"
 #include "syntaxtree.h"
+#include "tracing.h"
 #include "vec8bit.h"
 #include "vecffe.h"
 #include "vecgf2.h"
+
+// clang-format off
 
 /****************************************************************************
 **
@@ -46,10 +51,10 @@ const InitInfoFunc InitFuncsBuiltinModules[] = {
     /* profiling and interpreter hooking information */
     InitInfoProfile,
     InitInfoHookIntrprtr,
+    InitInfoTracing,
 
-    /* scanner, reader, interpreter, coder, caller, compiler               */
+    // reader, interpreter, coder, caller, compiler, ...
     InitInfoIO,
-    InitInfoScanner,
     InitInfoRead,
     InitInfoCalls,
     InitInfoExprs,
@@ -124,6 +129,7 @@ const InitInfoFunc InitFuncsBuiltinModules[] = {
     InitInfoModules,
     InitInfoGap,
     InitInfoError,
+    InitInfoTime,
 
     // objsets / objmaps
     InitInfoObjSets,
@@ -138,5 +144,10 @@ const InitInfoFunc InitFuncsBuiltinModules[] = {
     InitInfoLibGapApi,
 #endif
 
+    // SHA256
+    InitSHA256,
+
     0
 };
+
+// clang-format on

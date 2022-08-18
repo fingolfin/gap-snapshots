@@ -285,7 +285,7 @@ DeclareGlobalFunction( "CharacterString" );
 ##  <Attr Name="UnderlyingCharacterTable" Arg='psi'/>
 ##
 ##  <Description>
-##  For a class function <A>psi</A> of the group <M>G</M>, say,
+##  For a class function <A>psi</A> of a group <M>G</M>
 ##  the character table of <M>G</M> is stored as value of
 ##  <Ref Attr="UnderlyingCharacterTable"/>.
 ##  The ordering of entries in the list <A>psi</A>
@@ -526,7 +526,7 @@ DeclareAttribute( "ValuesOfClassFunction", IsClassFunction );
 ##  <P/>
 ##  <Index Subkey="of group element using powering operator">character value</Index>
 ##  <Index Subkey="meaning for class functions">power</Index>
-##  <Index Subkey="for class functions"><C>^</C></Index>
+##  <Index Key="^" Subkey="for class functions"><C>^</C></Index>
 ##  The <E>powering</E> operator <Ref Oper="\^"/> has several meanings
 ##  for class functions.
 ##  The power of a class function by a nonnegative integer is clearly the
@@ -748,7 +748,7 @@ DeclareOperation( "CorrespondingPermutations",
 ##  <Description>
 ##  The default <Ref Oper="PrintObj"/> method for class functions
 ##  does the same as <Ref Oper="ViewObj"/>,
-##  except that the character table is is <Ref Func="Print"/>-ed instead of
+##  except that the character table is <Ref Func="Print"/>-ed instead of
 ##  <Ref Func="View"/>-ed.
 ##  <P/>
 ##  <E>Note</E> that if a class function is shown only with one of the
@@ -1283,7 +1283,7 @@ DeclareOperation( "MatScalarProducts",
 ##
 ##  <Description>
 ##  <Index Subkey="of character" Key="Norm"><C>Norm</C></Index>
-##  For an ordinary class function <A>chi</A> of the group <M>G</M>, say,
+##  For an ordinary class function <A>chi</A> of a group <M>G</M>
 ##  we have <M><A>chi</A> = \sum_{{\chi \in Irr(G)}} a_{\chi} \chi</M>,
 ##  with complex coefficients <M>a_{\chi}</M>.
 ##  The <E>norm</E> of <A>chi</A> is defined as
@@ -1332,7 +1332,7 @@ DeclareOperation( "Norm", [ IsOrdinaryTable, IsHomogeneousList ] );
 ##
 ##  <Description>
 ##  <Index Subkey="of a character">centre</Index>
-##  For a character <A>chi</A> of the group <M>G</M>, say,
+##  For a character <A>chi</A> of a group <M>G</M>,
 ##  <Ref Attr="CentreOfCharacter"/> returns the <E>centre</E> of <A>chi</A>,
 ##  that is, the normal subgroup of all those elements of <M>G</M> for which
 ##  the quotient of the value of <A>chi</A> by the degree of <A>chi</A> is
@@ -1346,9 +1346,9 @@ DeclareOperation( "Norm", [ IsOrdinaryTable, IsHomogeneousList ] );
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> List( Irr( S4 ), CentreOfCharacter );
-##  [ Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]), Group(()),
-##    Group([ (1,2)(3,4), (1,4)(2,3) ]), Group(()), Group([ (), (1,2), (1,
-##     2)(3,4), (1,2,3), (1,2,3,4) ]) ]
+##  [ Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]), Group(()), 
+##    Group([ (1,2)(3,4), (1,3)(2,4) ]), Group(()), 
+##    Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]) ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -1453,7 +1453,7 @@ DeclareAttribute( "DegreeOfCharacter", IsClassFunction );
 ##  <Oper Name="InertiaSubgroup" Arg='[tbl, ]G, chi'/>
 ##
 ##  <Description>
-##  Let <A>chi</A> be a character of the group <M>H</M>, say,
+##  Let <A>chi</A> be a character of a group <M>H</M>
 ##  and <A>tbl</A> the character table of <M>H</M>;
 ##  if the argument <A>tbl</A> is not given then the underlying character
 ##  table of <A>chi</A> (see&nbsp;<Ref Attr="UnderlyingCharacterTable"/>) is
@@ -1492,7 +1492,7 @@ DeclareOperation( "InertiaSubgroup",
 ##  <Attr Name="KernelOfCharacter" Arg='[tbl, ]chi'/>
 ##
 ##  <Description>
-##  For a class function <A>chi</A> of the group <M>G</M>, say,
+##  For a class function <A>chi</A> of a group <M>G</M>,
 ##  <Ref Attr="KernelOfCharacter"/> returns the normal subgroup of <M>G</M>
 ##  that is formed by those conjugacy classes for which the value of
 ##  <A>chi</A> equals the degree of <A>chi</A>.
@@ -1507,7 +1507,7 @@ DeclareOperation( "InertiaSubgroup",
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> List( Irr( S4 ), KernelOfCharacter );
-##  [ Alt( [ 1 .. 4 ] ), Group(()), Group([ (1,2)(3,4), (1,4)(2,3) ]),
+##  [ Alt( [ 1 .. 4 ] ), Group(()), Group([ (1,2)(3,4), (1,3)(2,4) ]),
 ##    Group(()), Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]) ]
 ##  ]]></Example>
 ##  </Description>
@@ -1640,7 +1640,7 @@ DeclareOperation( "Transitivity", [ IsOrdinaryTable, IsHomogeneousList ] );
 ##
 ##  <Description>
 ##  <Index>central character</Index>
-##  For a character <A>chi</A> of the group <M>G</M>, say,
+##  For a character <A>chi</A> of a group <M>G</M>,
 ##  <Ref Attr="CentralCharacter"/> returns
 ##  the <E>central character</E> of <A>chi</A>.
 ##  <P/>
@@ -1703,7 +1703,7 @@ DeclareOperation( "DeterminantOfCharacter",
 ##  <Oper Name="EigenvaluesChar" Arg='[tbl, ]chi, class'/>
 ##
 ##  <Description>
-##  Let <A>chi</A> be a character of the group <M>G</M>, say.
+##  Let <A>chi</A> be a character of a group <M>G</M>.
 ##  For an element <M>g \in G</M> in the <A>class</A>-th conjugacy class,
 ##  of order <M>n</M>, let <M>M</M> be a matrix of a representation affording
 ##  <A>chi</A>.
@@ -1819,7 +1819,7 @@ DeclareOperation( "Tensored", [ IsHomogeneousList, IsHomogeneousList ] );
 ##  <Oper Name="RestrictedClassFunction" Arg='[tbl, ]chi, target'/>
 ##
 ##  <Description>
-##  Let <A>chi</A> be a class function of the group <M>G</M>, say,
+##  Let <A>chi</A> be a class function of a group <M>G</M>
 ##  and let <A>target</A> be either a subgroup <M>H</M> of <M>G</M>
 ##  or an injective homomorphism from <M>H</M> to <M>G</M>
 ##  or the character table of <A>H</A>.
@@ -1951,7 +1951,7 @@ DeclareSynonym( "Inflated", Restricted );
 ##   Label="for the character table of a supergroup"/>
 ##
 ##  <Description>
-##  Let <A>chi</A> be a class function of the group <M>G</M>, say,
+##  Let <A>chi</A> be a class function of a group <M>G</M>
 ##  and let <A>target</A> be either a supergroup <M>H</M> of <M>G</M>
 ##  or an injective homomorphism from <M>H</M> to <M>G</M>
 ##  or the character table of <A>H</A>.
@@ -2158,7 +2158,7 @@ DeclareOperation( "InducedCyclic", [ IsOrdinaryTable, IsList, IsString ] );
 ##
 ##  <Description>
 ##  Let <A>reducibles</A> be a list of ordinary virtual characters
-##  of the group <M>G</M>, say.
+##  of a group <M>G</M>.
 ##  If <A>constituents</A> is given then it must also be a list of ordinary
 ##  virtual characters of <M>G</M>,
 ##  otherwise we have <A>constituents</A> equal to <A>reducibles</A>
@@ -2719,7 +2719,7 @@ DeclareAttribute( "BrauerCharacterValue", IsMatrix );
 ##  </Description>
 ##  </ManSection>
 ##
-DeclareGlobalVariable( "ZEV_DATA", "nested list of length 2" );
+BindGlobal( "ZEV_DATA", NEW_SORTED_CACHE(true) );
 DeclareGlobalFunction( "ZevData" );
 DeclareGlobalFunction( "ZevDataValue" );
 
@@ -2737,18 +2737,26 @@ DeclareGlobalFunction( "ZevDataValue" );
 ##  and a prime integer <A>p</A>, <Ref Func="SizeOfFieldOfDefinition"/>
 ##  returns the size of the smallest finite field
 ##  in characteristic <A>p</A> that contains the <A>p</A>-modular reduction
-##  of <A>val</A>.
+##  of <A>val</A> if this can be determined, and <K>fail</K> otherwise.
 ##  <P/>
-##  The reduction map is defined as in&nbsp;<Cite Key="JLPW95"/>,
+##  The latter happens if <A>val</A> is not closed under Galois conjugacy
+##  and if the <A>p</A>-modular reduction of some value cannot be determined
+##  via the function <Ref Func="FrobeniusCharacterValue"/>.
+##  Note that the reduction map is defined as in&nbsp;<Cite Key="JLPW95"/>,
 ##  that is, the complex <M>(<A>p</A>^d-1)</M>-th root of unity
 ##  <M>\exp(<A>p</A>^d-1)</M> is mapped to the residue class of the
 ##  indeterminate, modulo the ideal spanned by the Conway polynomial
 ##  (see&nbsp;<Ref Func="ConwayPolynomial"/>) of degree <M>d</M> over the
 ##  field with <M>p</M> elements.
 ##  <P/>
-##  If <A>val</A> is a Brauer character then the value returned is the size
-##  of the smallest finite field in characteristic <A>p</A> over which the
-##  corresponding representation lives.
+##  If <A>val</A> is closed under Galois conjugacy then the result can be
+##  determined without explicitly computing the <A>p</A>-modular reduction
+##  of <A>val</A>.
+##  This happens for example if <A>val</A> is a Brauer character.
+##  <P/>
+##  If <A>val</A> is an irreducible Brauer character then the value returned
+##  is the size of the smallest finite field in characteristic <A>p</A>
+##  over which the corresponding representation lives.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>

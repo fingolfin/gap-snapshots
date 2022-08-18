@@ -1,0 +1,143 @@
+\GAPDocLabFile{datastructures}
+\makelabel{datastructures:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{datastructures:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{datastructures:Acknowledgements}{}{X82A988D47DFAFCFA}
+\makelabel{datastructures:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{datastructures:Introduction}{1}{X7DFB63A97E67C0A1}
+\makelabel{datastructures:Purpose and goals of this package}{1.1}{X7F0445BA85C0D680}
+\makelabel{datastructures:Overview over this manual}{1.2}{X786BACDB82918A65}
+\makelabel{datastructures:Feedback}{1.3}{X80D704CC7EBFDF7A}
+\makelabel{datastructures:Installation}{2}{X8360C04082558A12}
+\makelabel{datastructures:Building the Kernel Module}{2.1}{X8584FE1F8248F0A4}
+\makelabel{datastructures:Building the Documentation}{2.2}{X7F7AE6058776DF06}
+\makelabel{datastructures:Heaps}{3}{X876CE0537BBE92BF}
+\makelabel{datastructures:Introduction}{3.1}{X7DFB63A97E67C0A1}
+\makelabel{datastructures:API}{3.2}{X7C5F33687C53BEF0}
+\makelabel{datastructures:Binary Heaps}{3.3}{X7A01096286198C96}
+\makelabel{datastructures:Pairing Heaps}{3.4}{X82EFFA948516AD5C}
+\makelabel{datastructures:Declarations}{3.5}{X844A8A1F85E6E038}
+\makelabel{datastructures:Implementation}{3.6}{X78289A737AF28B39}
+\makelabel{datastructures:Queues and Deques}{4}{X7E4B7210874702B2}
+\makelabel{datastructures:API}{4.1}{X7C5F33687C53BEF0}
+\makelabel{datastructures:Deques implemented using plain lists}{4.2}{X7E65C2D087E8B8CA}
+\makelabel{datastructures:Union-Find}{5}{X7C0CE80081C1D1A2}
+\makelabel{datastructures:Introduction}{5.1}{X7DFB63A97E67C0A1}
+\makelabel{datastructures:API}{5.2}{X7C5F33687C53BEF0}
+\makelabel{datastructures:Hash Functions}{6}{X7AE36B967EB1382B}
+\makelabel{datastructures:Introduction}{6.1}{X7DFB63A97E67C0A1}
+\makelabel{datastructures:Hash Functions for Basic Types}{6.2}{X7A441DD97E6C78A6}
+\makelabel{datastructures:Hash Functions for Permutation Groups}{6.3}{X78424208807F992D}
+\makelabel{datastructures:Hashmaps}{7}{X7D62ABFF8416C44C}
+\makelabel{datastructures:API}{7.1}{X7C5F33687C53BEF0}
+\makelabel{datastructures:Hashsets}{8}{X80589F287F1620B2}
+\makelabel{datastructures:API}{8.1}{X7C5F33687C53BEF0}
+\makelabel{datastructures:Memoisation}{9}{X8693FF6287BAAB84}
+\makelabel{datastructures:Memoisation with HashMap}{9.1}{X8779C9D987C7B094}
+\makelabel{datastructures:Ordered Set Datastructures}{10}{X8134174379D8CD1E}
+\makelabel{datastructures:Usage}{10.1}{X86A9B6F87E619FFF}
+\makelabel{datastructures:API}{10.2}{X7C5F33687C53BEF0}
+\makelabel{datastructures:Default methods}{10.3}{X8373B442852AB64B}
+\makelabel{datastructures:Slices}{11}{X83C843A97827C861}
+\makelabel{datastructures:API}{11.1}{X7C5F33687C53BEF0}
+\makelabel{datastructures:Stacks}{12}{X83723E3B7B144F19}
+\makelabel{datastructures:API}{12.1}{X7C5F33687C53BEF0}
+\makelabel{datastructures:Bibliography}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{datastructures:References}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{datastructures:Index}{Ind}{X83A0356F839C696F}
+\makelabel{datastructures:datastructures}{2}{X8360C04082558A12}
+\makelabel{datastructures:IsHeap for IsObject}{3.2.1}{X85D1DDCF86FD53EB}
+\makelabel{datastructures:Heap}{3.2.2}{X81244A537F7E02FC}
+\makelabel{datastructures:NewHeap for IsHeap, IsObject, IsObject}{3.2.3}{X84E3B88F7FD83B3C}
+\makelabel{datastructures:Push for IsHeap, IsObject}{3.2.4}{X812240D187506B40}
+\makelabel{datastructures:Peek for IsHeap}{3.2.5}{X78052DBE7B563C2C}
+\makelabel{datastructures:Pop for IsHeap}{3.2.6}{X783D92BE8344CBD3}
+\makelabel{datastructures:Merge for IsHeap, IsHeap}{3.2.7}{X84E27F257EA4556A}
+\makelabel{datastructures:BinaryHeap}{3.3.1}{X7F627E817F17CD8A}
+\makelabel{datastructures:PairingHeap}{3.4.1}{X7F8B54F282A4B1A7}
+\makelabel{datastructures:IsBinaryHeapFlatRep for IsHeap and IsPositionalObjectRep}{3.5.1}{X7BDAA17C7A89C7C7}
+\makelabel{datastructures:IsPairingHeapFlatRep for IsHeap and IsPositionalObjectRep}{3.6.1}{X7D2529247BC9A1A5}
+\makelabel{datastructures:IsQueue for IsObject}{4.1.1}{X82229C878341CDDC}
+\makelabel{datastructures:IsDeque for IsObject}{4.1.2}{X7CD371EE7EB88DA8}
+\makelabel{datastructures:PushBack for IsDeque, IsObject}{4.1.3}{X8372434383E08554}
+\makelabel{datastructures:PushFront for IsDeque, IsObject}{4.1.4}{X7A19020A835C39A7}
+\makelabel{datastructures:PopBack for IsDeque}{4.1.5}{X7FFC2AAF85355F50}
+\makelabel{datastructures:PopFront for IsDeque}{4.1.6}{X7CD527F87861A5FE}
+\makelabel{datastructures:Enqueue for IsQueue, IsObject}{4.1.7}{X80D3DF0B7DF6B8BC}
+\makelabel{datastructures:Dequeue for IsQueue, IsObject}{4.1.8}{X87D9EF6E84B98629}
+\makelabel{datastructures:Capacity for IsQueue}{4.1.9}{X84CF84A087CA6719}
+\makelabel{datastructures:Capacity for IsDeque}{4.1.10}{X7AFCE0EC7D282807}
+\makelabel{datastructures:Length for IsQueue}{4.1.11}{X86CB9F747A49AA9F}
+\makelabel{datastructures:Length for IsDeque}{4.1.12}{X78F8FB38830FF16A}
+\makelabel{datastructures:PlistDeque}{4.2.1}{X7817028981968371}
+\makelabel{datastructures:PlistDequePushFront}{4.2.2}{X7BF75DB47D46C91E}
+\makelabel{datastructures:PlistDequePushBack}{4.2.3}{X7E8676DB84B2C360}
+\makelabel{datastructures:PlistDequePopFront}{4.2.4}{X8704C6BD875D0385}
+\makelabel{datastructures:PlistDequePopBack}{4.2.5}{X86B4266878A93741}
+\makelabel{datastructures:PlistDequePeekFront}{4.2.6}{X841543137B0F720C}
+\makelabel{datastructures:PlistDequePeekBack}{4.2.7}{X81D966A282FB7872}
+\makelabel{datastructures:PlistDequeExpand}{4.2.8}{X7B35697B780919D7}
+\makelabel{datastructures:IsPartitionDS for IsObject}{5.2.1}{X804726FA84A7EA0F}
+\makelabel{datastructures:PartitionDS for IsPartitionDS, IsPosInt}{5.2.2}{X825B71A18396CB33}
+\makelabel{datastructures:PartitionDS for IsPartitionDS, IsCyclotomicCollColl}{5.2.3}{X7C1DC93085E00307}
+\makelabel{datastructures:Representative for IsPartitionDS, IsPosInt}{5.2.4}{X8344F7007AD2C44B}
+\makelabel{datastructures:Unite for IsPartitionDS and IsMutable, IsPosInt, IsPosInt}{5.2.5}{X7FABCE367DC2F82B}
+\makelabel{datastructures:RootsIteratorOfPartitionDS for IsPartitionDS}{5.2.6}{X7A41C16979664337}
+\makelabel{datastructures:NumberParts for IsPartitionDS}{5.2.7}{X83E6F1DE84ABFB69}
+\makelabel{datastructures:SizeUnderlyingSetDS for IsPartitionDS}{5.2.8}{X8635245A83D7DC1B}
+\makelabel{datastructures:PartsOfPartitionDS for IsPartitionDS}{5.2.9}{X8716AC8F79820C86}
+\makelabel{datastructures:HashBasic}{6.2.1}{X85E86FF080A3A37A}
+\makelabel{datastructures:HashPermGroupFast}{6.3.1}{X848AD86F8089106F}
+\makelabel{datastructures:HashPermGroupComplete}{6.3.2}{X86FFE7A07E784C24}
+\makelabel{datastructures:IsHashMap for IsObject and IsFinite}{7.1.1}{X7C142C0B7AD53629}
+\makelabel{datastructures:HashMap}{7.1.2}{X7FC1C1CD87229F1B}
+\makelabel{datastructures:Keys for IsHashMap}{7.1.3}{X827F974B7B5111CA}
+\makelabel{datastructures:Values for IsHashMap}{7.1.4}{X7B774EB27F2B7148}
+\makelabel{datastructures:KeyIterator for IsHashMap}{7.1.5}{X820C9185827968FA}
+\makelabel{datastructures:ValueIterator for IsHashMap}{7.1.6}{X7B4D76A47B09C173}
+\makelabel{datastructures:KeyValueIterator for IsHashMap}{7.1.7}{X7F75A43984B05E73}
+\makelabel{datastructures:Size for IsHashMapRep}{7.1.13}{X866A89F080CE944A}
+\makelabel{datastructures:IsEmpty for IsHashMapRep}{7.1.14}{X857102527A38A649}
+\makelabel{datastructures:IsHashSet for IsObject and IsFinite}{8.1.1}{X81FA1C7B84314DAF}
+\makelabel{datastructures:HashSet}{8.1.2}{X789A593B7C227BE5}
+\makelabel{datastructures:AddSet for IsHashSetRep, IsObject}{8.1.3}{X7C7FBBE27E833BB3}
+\makelabel{datastructures:RemoveSet for IsHashSetRep, IsObject}{8.1.5}{X80E770C2845B4155}
+\makelabel{datastructures:Size for IsHashSetRep}{8.1.6}{X82596CD77B2EC7C5}
+\makelabel{datastructures:IsEmpty for IsHashSetRep}{8.1.7}{X8142E775878A1A6E}
+\makelabel{datastructures:Set for IsHashSetRep}{8.1.8}{X7D1EE80687CAB426}
+\makelabel{datastructures:AsSet for IsHashSetRep}{8.1.9}{X835176CB8124AF70}
+\makelabel{datastructures:Iterator for IsHashSetRep}{8.1.10}{X792F44027D8C73DA}
+\makelabel{datastructures:MemoizeFunction}{9.1.1}{X7E7224D77AFAFE00}
+\makelabel{datastructures:IsOrderedSetDS for IsObject}{10.2.1}{X829BF6468120FCF4}
+\makelabel{datastructures:IsStandardOrderedSetDS for IsOrderedSetDS}{10.2.2}{X83DF983D824ADA52}
+\makelabel{datastructures:OrderedSetDS for IsOrderedSetDS, IsFunction, IsListOrCollection, IsRandomSource}{10.2.3}{X7C0A0ACD833B09E8}
+\makelabel{datastructures:OrderedSetDS for IsOrderedSetDS, IsFunction, IsRandomSource}{10.2.4}{X784F06667B9CAE61}
+\makelabel{datastructures:OrderedSetDS for IsOrderedSetDS, IsListOrCollection, IsRandomSource}{10.2.5}{X82EBF9967A1BC1F4}
+\makelabel{datastructures:OrderedSetDS for IsOrderedSetDS, IsFunction, IsListOrCollection}{10.2.6}{X7B3E75657C8758DA}
+\makelabel{datastructures:OrderedSetDS for IsOrderedSetDS, IsFunction}{10.2.7}{X7EE9AD66864EFD95}
+\makelabel{datastructures:OrderedSetDS for IsOrderedSetDS, IsListOrCollection}{10.2.8}{X84341B117B22B200}
+\makelabel{datastructures:OrderedSetDS for IsOrderedSetDS}{10.2.9}{X87CC3ADD8273BDDC}
+\makelabel{datastructures:AddSet for IsOrderedSetDS and IsMutable, IsObject}{10.2.10}{X785F29D484E84A9B}
+\makelabel{datastructures:RemoveSet for IsOrderedSetDS and IsMutable, IsObject}{10.2.11}{X79CA0BD27822C1FB}
+\makelabel{datastructures:LessFunction for IsOrderedSetDS}{10.2.13}{X85F4EDA0841AADFD}
+\makelabel{datastructures:Size for IsOrderedSetDS}{10.2.14}{X7B2E5BB28435AE50}
+\makelabel{datastructures:IteratorSorted for IsOrderedSetDS}{10.2.15}{X83A682A08318DBA0}
+\makelabel{datastructures:Iterator for IsOrderedSetDS}{10.3.1}{X805D48307D3FBC57}
+\makelabel{datastructures:AsSSortedList for IsOrderedSetDS}{10.3.2}{X7BA094DE791ADBC1}
+\makelabel{datastructures:AsSortedList for IsOrderedSetDS}{10.3.3}{X7CEA1C9283A69F26}
+\makelabel{datastructures:AsList for IsOrderedSetDS}{10.3.4}{X84A6178D7F4FEF35}
+\makelabel{datastructures:EnumeratorSorted for IsOrderedSetDS}{10.3.5}{X7B0571977A8480EA}
+\makelabel{datastructures:Enumerator for IsOrderedSetDS}{10.3.6}{X786CD5B57A439204}
+\makelabel{datastructures:IsEmpty for IsOrderedSetDS}{10.3.7}{X7DD174FE79F86562}
+\makelabel{datastructures:Length for IsOrderedSetDS}{10.3.8}{X78B39A307B3B8879}
+\makelabel{datastructures:Position for IsOrderedSetDS, IsObject, IsInt}{10.3.9}{X81CAD5FC819FD0AA}
+\makelabel{datastructures:PositionSortedOp for IsOrderedSetDS, IsObject}{10.3.10}{X7B74B4107A33E68A}
+\makelabel{datastructures:PositionSortedOp for IsOrderedSetDS, IsObject, IsFunction}{10.3.11}{X7FDCE67179997482}
+\makelabel{datastructures:Slice}{11.1.1}{X787DE4958435192B}
+\makelabel{datastructures:IsSlice for IsList}{11.1.2}{X80E65DC586FCB3A0}
+\makelabel{datastructures:Length for IsSliceRep}{11.1.8}{X7AC67617811B6218}
+\makelabel{datastructures:Stack}{12.1.1}{X7FBD84A987069E53}
+\makelabel{datastructures:IsStack for IsObject}{12.1.2}{X7D9693A07FF1452D}
+\makelabel{datastructures:Push for IsStack, IsObject}{12.1.3}{X7B642BD77ABDD80E}
+\makelabel{datastructures:Peek for IsStack}{12.1.4}{X79A21A337C035011}
+\makelabel{datastructures:Pop for IsStack}{12.1.5}{X7E4935478082CF2F}
+\makelabel{datastructures:Size for [IsStack]}{12.1.6}{X878BEB5C85B8E0A4}

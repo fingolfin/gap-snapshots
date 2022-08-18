@@ -1,0 +1,69 @@
+\GAPDocLabFile{zeromqinterface}
+\makelabel{zeromqinterface:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{zeromqinterface:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{zeromqinterface:Acknowledgements}{}{X82A988D47DFAFCFA}
+\makelabel{zeromqinterface:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{zeromqinterface:Introduction}{1}{X7DFB63A97E67C0A1}
+\makelabel{zeromqinterface:Purpose and goals of this package}{1.1}{X7F0445BA85C0D680}
+\makelabel{zeromqinterface:Overview over this manual}{1.2}{X786BACDB82918A65}
+\makelabel{zeromqinterface:Installation}{1.3}{X8360C04082558A12}
+\makelabel{zeromqinterface:Feedback}{1.4}{X80D704CC7EBFDF7A}
+\makelabel{zeromqinterface:ZeroMQ Bindings}{2}{X7EDFD3BB831063E7}
+\makelabel{zeromqinterface:Addresses, transports, and URIs}{2.1}{X7D65C84A87343B32}
+\makelabel{zeromqinterface:The TCP transport}{2.1.1}{X82D04A897E0720CC}
+\makelabel{zeromqinterface:The IPC transport}{2.1.2}{X792BDF3F7AB76A99}
+\makelabel{zeromqinterface:The in-process transport}{2.1.3}{X7AD7D8897DF0E66D}
+\makelabel{zeromqinterface:Creating and closing sockets}{2.2}{X7C848DC87D0C1BF0}
+\makelabel{zeromqinterface:Binding and connecting sockets to addresses}{2.3}{X7E93217181B71A2B}
+\makelabel{zeromqinterface:Sending and receiving messages}{2.4}{X85BF739678B524D3}
+\makelabel{zeromqinterface:Setting and querying socket properties}{2.5}{X86C414A57BE2F7A2}
+\makelabel{zeromqinterface:Using ZeroMQ with the zgap script}{3}{X823ACE5A8380FB0D}
+\makelabel{zeromqinterface:Running zgap}{3.1}{X7E80C0DB7D68DA60}
+\makelabel{zeromqinterface:Zgap API}{3.2}{X801F6BAD823982B7}
+\makelabel{zeromqinterface:Index}{Ind}{X83A0356F839C696F}
+\makelabel{zeromqinterface:ZmqPushSocket}{2.2.1}{X7E37F9DD7F0977F2}
+\makelabel{zeromqinterface:ZmqPullSocket}{2.2.2}{X7B2AB9A47F658EB7}
+\makelabel{zeromqinterface:ZmqReplySocket}{2.2.3}{X87434250859B8460}
+\makelabel{zeromqinterface:ZmqRequestSocket}{2.2.4}{X8590CD6C824FE4FC}
+\makelabel{zeromqinterface:ZmqPublisherSocket}{2.2.5}{X79C8F8B68192DE1D}
+\makelabel{zeromqinterface:ZmqSubscriberSocket}{2.2.6}{X86A2F4EA82E1FC10}
+\makelabel{zeromqinterface:ZmqDealerSocket}{2.2.7}{X7D5974927C4C3131}
+\makelabel{zeromqinterface:ZmqRouterSocket}{2.2.8}{X7ED409848377791D}
+\makelabel{zeromqinterface:ZmqSocket}{2.2.9}{X81A5B57F7AFCD80F}
+\makelabel{zeromqinterface:ZmqClose}{2.2.10}{X878D7DF3846B3431}
+\makelabel{zeromqinterface:ZmqIsOpen}{2.2.11}{X7BAC106D81E8C8D2}
+\makelabel{zeromqinterface:ZmqSocketType}{2.2.12}{X831235C47A0CFA1C}
+\makelabel{zeromqinterface:ZmqBind}{2.3.1}{X7F4A98227D65B573}
+\makelabel{zeromqinterface:ZmqConnect}{2.3.2}{X7D00EE937F96175E}
+\makelabel{zeromqinterface:ZmqAttach}{2.3.3}{X7C17743C874D56CF}
+\makelabel{zeromqinterface:ZmqSocketURI}{2.3.4}{X7CB8FB7F8377B620}
+\makelabel{zeromqinterface:ZmqIsBound}{2.3.5}{X7C91933A84823735}
+\makelabel{zeromqinterface:ZmqIsConnected}{2.3.6}{X795DDB1F7A147DD2}
+\makelabel{zeromqinterface:ZmqSend}{2.4.1}{X815164BB7FB0E8AC}
+\makelabel{zeromqinterface:ZmqReceive}{2.4.2}{X7CBB221179C79E23}
+\makelabel{zeromqinterface:ZmqReceiveList}{2.4.3}{X7C4EA24A8034D841}
+\makelabel{zeromqinterface:ZmqReceiveListAsString}{2.4.4}{X7D448F567EE74050}
+\makelabel{zeromqinterface:ZmqHasMore}{2.4.5}{X85638A657FDE7E77}
+\makelabel{zeromqinterface:ZmqPoll}{2.4.6}{X836D98B37DD2CD2E}
+\makelabel{zeromqinterface:ZmqSetIdentity}{2.5.1}{X7AD7274784A96783}
+\makelabel{zeromqinterface:ZmqGetIdentity}{2.5.2}{X7B35DC33795EDB8F}
+\makelabel{zeromqinterface:ZmqSetSendCapacity}{2.5.3}{X8384175A83EE3F04}
+\makelabel{zeromqinterface:ZmqSetReceiveCapacity}{2.5.4}{X86817EA77EF5A145}
+\makelabel{zeromqinterface:ZmqGetSendCapacity}{2.5.5}{X7F65F8F87E198308}
+\makelabel{zeromqinterface:ZmqGetReceiveCapacity}{2.5.6}{X84D1C61683021D49}
+\makelabel{zeromqinterface:ZmqSetSendBufferSize}{2.5.7}{X808243357C0466C5}
+\makelabel{zeromqinterface:ZmqGetSendBufferSize}{2.5.8}{X86C7D8DE81F3DAC9}
+\makelabel{zeromqinterface:ZmqSetReceiveBufferSize}{2.5.9}{X7BFF68F478CB9591}
+\makelabel{zeromqinterface:ZmqGetReceiveBufferSize}{2.5.10}{X811DDCF3853C299D}
+\makelabel{zeromqinterface:ZmqSubscribe}{2.5.11}{X79365BF47A15D740}
+\makelabel{zeromqinterface:ZmqUnsubscribe}{2.5.12}{X7916FAA27F90D773}
+\makelabel{zeromqinterface:ZExec}{3.2.1}{X8551BAF585C80F26}
+\makelabel{zeromqinterface:ZBind}{3.2.2}{X7A8B812C86B04F6F}
+\makelabel{zeromqinterface:ZUnbind}{3.2.3}{X7F99C0288433A2B2}
+\makelabel{zeromqinterface:ZCall}{3.2.4}{X822FACEA7E675154}
+\makelabel{zeromqinterface:ZQuery}{3.2.5}{X878EFC17847C03F9}
+\makelabel{zeromqinterface:ZResponse}{3.2.6}{X7F4D42487BF9D04D}
+\makelabel{zeromqinterface:ZTask}{3.2.7}{X7BC0A3AB859AC0A0}
+\makelabel{zeromqinterface:ZAsync}{3.2.8}{X8334DF718141DE22}
+\makelabel{zeromqinterface:ZRead}{3.2.9}{X87623A0F870BF0D9}
+\makelabel{zeromqinterface:ZReadGapRoot}{3.2.10}{X852FCB6F7D337E65}

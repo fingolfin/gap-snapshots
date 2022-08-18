@@ -53,9 +53,8 @@
   to always denote the variable with internal number [3Xnr[103X.)[133X
   
   [33X[0;0YThe  indeterminate  names  have  not  necessarily  any relations to variable
-  names:  this  means  that  an  indeterminate whose name is, say, [21X[10Xx[110X[121X cannot be
-  accessed   using   the   variable  [10Xx[110X,  unless  [10Xx[110X  was  defined  to  be  that
-  indeterminate.[133X
+  names:  this  means that an indeterminate whose name is [21X[10Xx[110X[121X cannot be accessed
+  using the variable [10Xx[110X, unless [10Xx[110X was defined to be that indeterminate.[133X
   
   [33X[0;0YWhen asking for indeterminates with certain names, [5XGAP[105X usually will take the
   first  (with  respect to the internal numbering) indeterminates that are not
@@ -451,7 +450,7 @@
   [33X[1;0Y[29X[2XIsPrimitivePolynomial[102X( [3XF[103X, [3Xpol[103X ) [32X operation[133X
   
   [33X[0;0YFor  a  univariate  polynomial  [3Xpol[103X of degree [22Xd[122X in the indeterminate [22XX[122X, with
-  coefficients in a finite field [3XF[103X with [22Xq[122X elements, say, [2XIsPrimitivePolynomial[102X
+  coefficients  in  a  finite  field  [3XF[103X with [22Xq[122X elements, [2XIsPrimitivePolynomial[102X
   returns [9Xtrue[109X if[133X
   
   [31X1[131X   [33X[0;6Y[3Xpol[103X divides [22XX^{q^d-1} - 1[122X, and[133X
@@ -480,14 +479,14 @@
   [33X[1;0Y[29X[2XUnivariatePolynomial[102X( [3Xring[103X, [3Xcofs[103X[, [3Xind[103X] ) [32X operation[133X
   
   [33X[0;0Yconstructs  an univariate polynomial over the ring [3Xring[103X in the indeterminate
-  [3Xind[103X with the coefficients given by [3Xcoefs[103X.[133X
+  [3Xind[103X with the coefficients given by [3Xcofs[103X.[133X
   
   [1X66.5-2 UnivariatePolynomialByCoefficients[101X
   
   [33X[1;0Y[29X[2XUnivariatePolynomialByCoefficients[102X( [3Xfam[103X, [3Xcofs[103X, [3Xind[103X ) [32X operation[133X
   
   [33X[0;0Yconstructs  an univariate polynomial over the coefficients family [3Xfam[103X and in
-  the  indeterminate  [3Xind[103X  with the coefficients given by [3Xcoefs[103X. This function
+  the  indeterminate  [3Xind[103X  with  the coefficients given by [3Xcofs[103X. This function
   should  be  used  in  algorithms to create polynomials as it avoids overhead
   associated with [2XUnivariatePolynomial[102X ([14X66.5-1[114X).[133X
   
@@ -754,7 +753,7 @@
   
   [33X[0;0YThe second version takes an univariate rational function and specializes the
   value  of  its  indeterminate to [3Xval[103X. Again, an optional argument [3Xone[103X may be
-  given.[133X
+  given. [10XValue( [3Xupol[103X[10X, [3Xval[103X[10X )[110X can also be expressed as [10Xupol( [3Xval[103X[10X )[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XValue(x*y+y+x^7,[x,y],[5,7]);[127X[104X
@@ -982,7 +981,7 @@
   [33X[1;0Y[29X[2XLaurentPolynomialByCoefficients[102X( [3Xfam[103X, [3Xcofs[103X, [3Xval[103X[, [3Xind[103X] ) [32X operation[133X
   
   [33X[0;0Yconstructs  a Laurent polynomial over the coefficients family [3Xfam[103X and in the
-  indeterminate [3Xind[103X (defaulting to 1) with the coefficients given by [3Xcoefs[103X and
+  indeterminate  [3Xind[103X (defaulting to 1) with the coefficients given by [3Xcofs[103X and
   valuation [3Xval[103X.[133X
   
   [1X66.13-2 CoefficientsOfLaurentPolynomial[101X
@@ -1020,6 +1019,17 @@
   [33X[0;0Yconstructs  a  univariate rational function over the coefficients family [3Xfam[103X
   and   in  the  indeterminate  [3Xind[103X  (defaulting  to  1)  with  numerator  and
   denominator coefficients given by [3Xncof[103X and [3Xdcof[103X and valuation [3Xval[103X.[133X
+  
+  [1X66.14-2 TaylorSeriesRationalFunction[101X
+  
+  [33X[1;0Y[29X[2XTaylorSeriesRationalFunction[102X( [3Xratfun[103X, [3Xat[103X, [3Xdeg[103X] ) [32X attribute[133X
+  
+  [33X[0;0YComputes the taylor series up to degree [3Xdeg[103X of [3Xratfun[103X at [3Xat[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XTaylorSeriesRationalFunction((x^5+3*x+7)/(x^5+x+1),0,11);[127X[104X
+    [4X[28X-50*x^11+36*x^10-26*x^9+22*x^8-18*x^7+14*x^6-10*x^5+4*x^4-4*x^3+4*x^2-4*x+7[128X[104X
+  [4X[32X[104X
   
   
   [1X66.15 [33X[0;0YPolynomial Rings and Function Fields[133X[101X
@@ -1699,7 +1709,7 @@
   is  that  it  is  compatible  with  multiplication and thus gives acceptable
   performance for quotient calculations.)[133X
   
-  [33X[0;0YThe  attributes  that  give  a  representation of a a rational function as a
+  [33X[0;0YThe  attributes  that  give  a  representation  of  a rational function as a
   Laurent   polynomial   are   [2XCoefficientsOfLaurentPolynomial[102X  ([14X66.13-2[114X)  and
   [2XIndeterminateNumberOfUnivariateRationalFunction[102X ([14X66.1-2[114X).[133X
   
@@ -1901,7 +1911,7 @@
   [33X[1;0Y[29X[2XHeuristicCancelPolynomialsExtRep[102X( [3Xfam[103X, [3Xext1[103X, [3Xext2[103X ) [32X operation[133X
   
   [33X[0;0Yis  called  by [2XTryGcdCancelExtRepPolynomials[102X ([14X66.24-2[114X) to perform the actual
-  work.   It   will   return  either  [9Xfail[109X  or  a  new  list  of  of  external
-  representations  of cancelled polynomials. The cancellation performed is not
-  necessarily optimal.[133X
+  work.  It  will return either [9Xfail[109X or a new list of external representations
+  of  cancelled  polynomials.  The  cancellation  performed is not necessarily
+  optimal.[133X
   

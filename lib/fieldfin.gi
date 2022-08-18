@@ -129,7 +129,7 @@ InstallMethod( IsSubset,
 ##
 InstallMethod( Subfields,
     "for finite field of FFEs",
-    [ IsField and IsFFECollection ],
+    [ IsField and IsFinite and IsFFECollection ],
     function( F )
     local d, p;
     d:= DegreeOverPrimeField( F );
@@ -195,7 +195,7 @@ function( F, z, inum )
     # compute the minimal polynomial simply by multiplying $x-cnj$
     pol := [ One(F) ];
     deg := 0;
-    for con  in Set( List( [ 0 .. dd-1 ], x -> z^(q^x) ) )  do
+    for con  in Set( [ 0 .. dd-1 ], x -> z^(q^x) )  do
         pol[deg+2] := pol[deg+1];
         for i  in [ deg+1, deg .. 2 ]  do
             pol[i] := pol[i-1] -  con*pol[i];
@@ -475,7 +475,7 @@ InstallMethod( Basis,
 InstallMethod( BasisNC,
     "for a finite field, and a hom. list",
     IsIdenticalObj,
-    [ IsField and IsFinite, IsHomogeneousList ], 10,
+    [ IsField and IsFinite, IsFFECollection and IsList ], 10,
     function( F, gens )
 
     local B,     # the basis, result
@@ -581,13 +581,14 @@ InstallMethod( LinearCombination,
 ##
 #M  CanonicalBasis( <F> )
 ##
-##  The canonical basis of the finite field with $p^n$ elements, viewed over
-##  its subfield with $p^d$ elements, consists of the vectors `<z> ^ <i>',
-##  $0 \leq i \< n/d$, where <z> is the primitive root of <F>.
+##  The canonical basis of the finite field <F> with $p^n$ elements,
+##  viewed over its subfield with $p^d$ elements,
+##  consists of the vectors $<z>^i$, $0 \leq i \< n/d$,
+##  where <z> is `RootOfDefiningPolynomial( <F> )'.
 ##
 InstallMethod( CanonicalBasis,
     "for a finite field",
-    [ IsField and IsFinite ],
+    [ IsField and IsFinite and IsFFECollection ],
     function( F )
     local z,         # primitive root
           B;         # basis record, result

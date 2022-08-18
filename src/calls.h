@@ -25,7 +25,7 @@
 **  If   it is interpreted,   then the  call   goes to one  of  the  handlers
 **  'DoExecFunc<i>args' that implement execution of function bodies.
 **
-**  The call mechanism makes it in any case unneccessary for the calling code
+**  The call mechanism makes it in any case unnecessary for the calling code
 **  to  know  whether the callee  is  a compiled or  an interpreted function.
 **  Likewise the called code need not know, actually cannot know, whether the
 **  caller is a compiled or an interpreted function.
@@ -47,15 +47,6 @@
 
 #include "gaputils.h"
 #include "objects.h"
-
-
-typedef Obj (* ObjFunc_0ARGS) (Obj self);
-typedef Obj (* ObjFunc_1ARGS) (Obj self, Obj a1);
-typedef Obj (* ObjFunc_2ARGS) (Obj self, Obj a1, Obj a2);
-typedef Obj (* ObjFunc_3ARGS) (Obj self, Obj a1, Obj a2, Obj a3);
-typedef Obj (* ObjFunc_4ARGS) (Obj self, Obj a1, Obj a2, Obj a3, Obj a4);
-typedef Obj (* ObjFunc_5ARGS) (Obj self, Obj a1, Obj a2, Obj a3, Obj a4, Obj a5);
-typedef Obj (* ObjFunc_6ARGS) (Obj self, Obj a1, Obj a2, Obj a3, Obj a4, Obj a5, Obj a6);
 
 
 /****************************************************************************
@@ -232,47 +223,47 @@ EXPORT_INLINE void SET_LCKS_FUNC(Obj func, Obj locks)
 **  'IsKernelFunction' returns 1 if <func> is a kernel function (i.e.
 **  compiled from C code), and 0 otherwise.
 */
-Int IsKernelFunction(Obj func);
+BOOL IsKernelFunction(Obj func);
 
 
 EXPORT_INLINE ObjFunc_0ARGS HDLR_0ARGS(Obj func)
 {
-    return (ObjFunc_0ARGS)HDLR_FUNC(func, 0);
+    return (ObjFunc_0ARGS)(void *)HDLR_FUNC(func, 0);
 }
 
 EXPORT_INLINE ObjFunc_1ARGS HDLR_1ARGS(Obj func)
 {
-    return (ObjFunc_1ARGS)HDLR_FUNC(func, 1);
+    return (ObjFunc_1ARGS)(void *)HDLR_FUNC(func, 1);
 }
 
 EXPORT_INLINE ObjFunc_2ARGS HDLR_2ARGS(Obj func)
 {
-    return (ObjFunc_2ARGS)HDLR_FUNC(func, 2);
+    return (ObjFunc_2ARGS)(void *)HDLR_FUNC(func, 2);
 }
 
 EXPORT_INLINE ObjFunc_3ARGS HDLR_3ARGS(Obj func)
 {
-    return (ObjFunc_3ARGS)HDLR_FUNC(func, 3);
+    return (ObjFunc_3ARGS)(void *)HDLR_FUNC(func, 3);
 }
 
 EXPORT_INLINE ObjFunc_4ARGS HDLR_4ARGS(Obj func)
 {
-    return (ObjFunc_4ARGS)HDLR_FUNC(func, 4);
+    return (ObjFunc_4ARGS)(void *)HDLR_FUNC(func, 4);
 }
 
 EXPORT_INLINE ObjFunc_5ARGS HDLR_5ARGS(Obj func)
 {
-    return (ObjFunc_5ARGS)HDLR_FUNC(func, 5);
+    return (ObjFunc_5ARGS)(void *)HDLR_FUNC(func, 5);
 }
 
 EXPORT_INLINE ObjFunc_6ARGS HDLR_6ARGS(Obj func)
 {
-    return (ObjFunc_6ARGS)HDLR_FUNC(func, 6);
+    return (ObjFunc_6ARGS)(void *)HDLR_FUNC(func, 6);
 }
 
 EXPORT_INLINE ObjFunc_1ARGS HDLR_XARGS(Obj func)
 {
-    return (ObjFunc_1ARGS)HDLR_FUNC(func, 7);
+    return (ObjFunc_1ARGS)(void *)HDLR_FUNC(func, 7);
 }
 
 
@@ -280,7 +271,7 @@ EXPORT_INLINE ObjFunc_1ARGS HDLR_XARGS(Obj func)
 **
 *F  IS_FUNC( <obj> )  . . . . . . . . . . . . . check if object is a function
 */
-EXPORT_INLINE int IS_FUNC(Obj obj)
+EXPORT_INLINE BOOL IS_FUNC(Obj obj)
 {
     return TNUM_OBJ(obj) == T_FUNCTION;
 }
@@ -354,7 +345,7 @@ EXPORT_INLINE Obj CALL_XARGS(Obj f, Obj as)
 /****************************************************************************
 **
 *F  CALL_0ARGS_PROF( <func>, <arg1> ) . . . . .  call a prof func with 0 args
-*F  CALL_1ARGS_PROF( <func>, <arg1>, ... )  . .  call a prof func with 1 args
+*F  CALL_1ARGS_PROF( <func>, <arg1>, ... )  . .  call a prof func with 1 arg
 *F  CALL_2ARGS_PROF( <func>, <arg1>, ... )  . .  call a prof func with 2 args
 *F  CALL_3ARGS_PROF( <func>, <arg1>, ... )  . .  call a prof func with 3 args
 *F  CALL_4ARGS_PROF( <func>, <arg1>, ... )  . .  call a prof func with 4 args
@@ -481,14 +472,6 @@ Obj ArgStringToList(const Char * nams_c);
 **
 *F * * * * * * * * * * * * * type and print function  * * * * * * * * * * * *
 */
-
-/****************************************************************************
-**
-*F  PrintFunction( <func> )   . . . . . . . . . . . . . . .  print a function
-**
-**  'PrintFunction' prints  the   function  <func> .
-*/
-void PrintFunction(Obj func);
 
 void PrintKernelFunction(Obj func);
 

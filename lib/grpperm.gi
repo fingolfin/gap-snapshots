@@ -468,6 +468,57 @@ InstallMethod( NrMovedPoints,
 
 #############################################################################
 ##
+#M  OrbitsMovedPoints( <G> )
+##
+InstallMethod( OrbitsMovedPoints, "for a permutation group", [IsPermGroup],
+function(G)
+local o,i;
+  o:=Orbits(G,MovedPoints(G));
+  o:=List(o,x->Set(x));
+  List(o,IsRange); # save memory if long orbits
+  Sort(o);
+  MakeImmutable(o);
+  for i in o do
+    SetIsSSortedList(i,true);
+  od;
+  SetIsSSortedList(o,true);
+  return o;
+end);
+
+
+#############################################################################
+##
+#M  \=( <G>, <H> )  . .  . . . . . . . . .  test if two perm groups are equal
+##
+InstallMethod( \=, "perm groups", IsIdenticalObj, [ IsPermGroup, IsPermGroup ],
+function ( G, H )
+  # avoid new stabilizer chains if they are not computed yet
+  if HasSize(G) and HasSize(H) and Size(G)<>Size(H) then return false;fi;
+
+  if not (HasGeneratorsOfGroup(G) and HasGeneratorsOfGroup(H)) then
+    TryNextMethod();
+  fi;
+
+  if LargestMovedPoint(G)<>LargestMovedPoint(H)
+    or OrbitsMovedPoints(G)<>OrbitsMovedPoints(H) then
+    return false;
+  fi;
+
+  if IsEqualSet( GeneratorsOfGroup( G ), GeneratorsOfGroup( H ) ) then
+    return true;
+  fi;
+
+  # try to use one existing stab chain
+  if HasStabChainMutable(H) or HasStabChainImmutable(H) then
+    return Size(G)=Size(H) and ForAll(GeneratorsOfGroup(G),gen->gen in H);
+  fi;   
+  return Size(G)=Size(H) and ForAll(GeneratorsOfGroup(H),gen->gen in G);
+end);
+
+
+
+#############################################################################
+##
 #M  BaseOfGroup( <G> )
 ##
 InstallMethod( BaseOfGroup,
@@ -1599,8 +1650,8 @@ InstallMethod( Socle,"test primitive", true, [ IsPermGroup ], 0,
     
     # Affine groups first.
     L := Earns( G, Omega );
-    if L <> fail  then
-        return L;
+    if L <> []  then
+        return L[1];
     fi;
     
     deg := Length( Omega );
@@ -1898,62 +1949,30 @@ end );
 # return e is a^e=b or false otherwise
 InstallGlobalFunction("LogPerm",
 function(a,b)
-local oa,ob,q,ma,mb,tofix,locpow,i,c,l,divisor,step,goal,exp,nc,j,new,k,gcd;
+local oa,ob,q,aa,m,e,tst,s,c,p,g;
   oa:=Order(a);
   ob:=Order(b);
   if oa mod ob<>0 then Info(InfoGroup,20,"1"); return false;fi;
   q:=oa/ob;
-  ma:=MovedPoints(a);
-  mb:=MovedPoints(b);
-  if not IsSubset(ma,mb) then Info(InfoGroup,20,"2"); return false;fi;
-  tofix:=Difference(ma,mb);
-  ma:=ShallowCopy(ma); # to allow removing elements
-  Sort(ma);
-  IsSet(ma);
-  locpow:=[];
+  aa:=a^q;
 
-  # reversed, as subgroup constructions naturally pick stabilizers first
-  for i in [Maximum(ma),Maximum(ma)-1..Minimum(ma)] do
-    if i in ma then #we're removing from ma on the way
-      c:=Cycle(a,i);
-      l:=Length(c);
-      divisor:=l/Gcd(l,q); # length of cycles
-      step:=l/divisor; # resulting number of cycles
-      #nc:=[];
-      if i in tofix and divisor>1 or divisor=1 and not i in tofix 
-        then Info(InfoGroup,20,"3"); return false;fi;
-      if divisor=1 then # all fixed
-	if ForAny(c,x->x in mb) then
-          Info(InfoGroup,20,"4");return false;
-	fi;
-        #for j in c do
-        #  Add(nc,[j]);
-        #od;
-      else
-        for j in [1..step] do
-          new:=c{j+([0,q..(divisor-1)*q] mod l)}; # cycle for q-th power
-          goal:=new[1]^b;
-          exp:=Position(new,goal);
-          if exp=fail then Info(InfoGroup,20,"5");return false;fi;
-          exp:=exp-1;
-	  for k in locpow do
-	    gcd:=Gcd(k[1],Length(new));
-	    if k[2] mod gcd<>exp mod gcd then Info(InfoGroup,20,"6");return false;fi;# cannot both hold
-	  od;
-          AddSet(locpow,[Length(new),exp]);
-          new:=new{1+(exp*[0..divisor-1] mod divisor)};
-          if new<>Cycle(b,new[1]) then Info(InfoGroup,20,"7");return false;fi;
-          #Add(nc,new);
-        od;
-      fi;
-      SubtractSet(ma,c);
+  m:=1; # order modulo which power is OK so far
+  e:=1;
+  while m<ob do
+    tst:=aa^e/b; 
+    s:=SmallestMovedPoint(tst); # a point on which there might be a difference
+    if s=infinity then # found it
+      return q*e mod oa;
     fi;
+    c:=Cycle(aa,s);
+    g:=Gcd(m,Length(c));
+    p:=Position(c,s^b);
+    if p=fail or (e mod g<>(p-1) mod g) then return false;fi;
+    e:=ChineseRem([m,Length(c)],[e,p-1]);
+    m:=Lcm(m,Length(c));
   od;
-  if Length(locpow)=0 then exp:=0;
-  else
-    exp:=ChineseRem(List(locpow,x->x[1]),List(locpow,x->x[2])); # power afterwards
-  fi;
-  return q*exp mod oa;
+  if aa^e<>b then return false;fi;
+  return q*e mod oa;
 end);
 
 
@@ -1964,71 +1983,72 @@ end);
 InstallMethod(SmallGeneratingSet,"random and generators subset, randsims",true,
   [IsPermGroup],0,
 function (G)
-local  i, j, U, gens,o,v,a,sel,min,orb,orp,ok;
+local  i, j, U, gens,a,mintry,orb,orp,isok;
 
   gens := ShallowCopy(Set(GeneratorsOfGroup(G)));
 
-  # try pc methods first. The solvability test should not exceed cost, nor
+  # remove obvious redundancies...
+  # sort elements by descending order; trivial permutations
+  # at the end
+  SortBy(gens, g -> -Order(g));
+
+  i := 1;
+  while i < Length(gens) do
+    j := i + 1;
+    while j <= Length(gens) do
+      a:=LogPerm(gens[i], gens[j]);
+      if a = false then
+        j := j + 1;
+      else
+        Remove(gens, j);
+      fi;
+    od;
+    i := i + 1;
+  od;
+
+  if Length(gens)<=Length(AbelianInvariants(G))+2 then
+    return gens;
+  fi;
+
+  # try pc methods. The solvability test should not exceed cost, nor
   # the number of points.
-  if #Length(MovedPoints(G))<50000 and 
+  if #Length(MovedPoints(G))<50000 and
    #((HasIsSolvableGroup(G) and IsSolvableGroup(G)) or IsAbelian(G))
-      IsSolvableGroup(G) 
+      IsSolvableGroup(G)
       and Length(gens)>3 then
     return MinimalGeneratingSet(G);
   fi;
 
-  # remove obvious redundancies
-  o:=List(gens,Order);
-  SortParallel(o,gens,function(a,b) return a>b;end);
-  sel:=Filtered([1..Length(gens)],x->o[x]>1);
-
-  for i in [1..Length(gens)] do
-    if i in sel then
-      #Print(i," ",sel,"\n");
-      for j in sel do
-        if j>i then
-	  a:=LogPerm(gens[i],gens[j]);
-	  if a=false then
-	    #Assert(1,not gens[j] in Group(gens[i]));
-	    a:=a; # avoid empty case
-	  else
-	    #Assert(1,gens[i]^a=gens[j]);
-	    #Print("Remove ",j," by ",i,"\n");
-	    RemoveSet(sel,j);
-	  fi;
-	fi;
-      od;
-    fi;
-  od;
-  gens:=gens{sel};
-
   # store orbit data
-  orb:=Set(List(Orbits(G,MovedPoints(G)),Set));
-  orp:=Filtered([1..Length(orb)],x->IsPrimitive(Action(G,orb[x])));
+  orb:=Set(Orbits(G,MovedPoints(G)),Set);
+  # longer primitive orbits
+  orp:=Filtered([1..Length(orb)],x->Length(orb[x])>100 and IsPrimitive(Action(G,orb[x])));
 
-  min:=2;
+  isok:=function(U)
+    if Length(MovedPoints(G))>Length(MovedPoints(U)) or
+      Length(orb)>Length(Orbits(U,MovedPoints(U))) or
+        ForAny(orp,x->not IsPrimitive(U,orb[x])) then
+      return false;
+    fi;
+
+    StabChainOptions(U).random:=100; # randomized size
+    return Size(U)=Size(G);
+  end;
+
+  mintry:=2;
   if Length(gens)>2 then
-  # minimal: AbelianInvariants
-    min:=Maximum(List(Collected(Factors(Size(G)/Size(DerivedSubgroup(G)))),x->x[2]));
-    min:=Maximum(min,2);
-    if min=Length(GeneratorsOfGroup(G)) then return GeneratorsOfGroup(G);fi;
-    i:=Maximum(2,min);
-    while i<=min+1 and i<Length(gens) do
+    # lower bound on what to accept -- use index of G' instead of full
+    # structure of G/G', as the latter is more expensive.
+    mintry:=Maximum(List(Collected(Factors(Size(G)/Size(DerivedSubgroup(G)))),x->x[2]));
+    mintry:=Maximum(mintry,2);
+    if mintry=Length(gens) then return gens;fi;
+    i:=Maximum(2,mintry);
+    while i<=mintry+1 and i<Length(gens) do
       # try to find a small generating system by random search
       j:=1;
       while j<=5 and i<Length(gens) do
         U:=Subgroup(G,List([1..i],j->Random(G)));
-        ok:=true;
-        # first test orbits
-        if ok then
-          ok:=Length(orb)=Length(Orbits(U,MovedPoints(U))) and
-              ForAll(orp,x->IsPrimitive(U,orb[x]));
-        fi;
-
-
-	StabChainOptions(U).random:=100; # randomized size
-#Print("A:",i,",",j," ",Size(G)/Size(U),"\n");
-        if ok and Size(U)=Size(G) then
+        if isok(U) then
           gens:=Set(GeneratorsOfGroup(U));
         fi;
         j:=j+1;
@@ -2037,26 +2057,15 @@ local  i, j, U, gens,o,v,a,sel,min,orb,orp,ok;
     od;
   fi;
 
+  # try to delete generators
   i := 1;
-  if not IsAbelian(G) then
-    i:=i+1;
-  fi;
-  while i <= Length(gens) and Length(gens)>min do
-    # random did not improve much, try subsets
+  while i <= Length(gens) and Length(gens)>mintry do
+    # random did not improve much, try removing generators one by one
     U:=Subgroup(G,gens{Difference([1..Length(gens)],[i])});
-
-    ok:=true;
-    # first test orbits
-    if ok then
-      ok:=Length(orb)=Length(Orbits(U,MovedPoints(U))) and
-          ForAll(orp,x->IsPrimitive(U,orb[x]));
-    fi;
-
-    StabChainOptions(U).random:=100; # randomized size
-    if Size(U)<Size(G) then
-      i:=i+1;
-    else
+    if isok(U) then
       gens:=Set(GeneratorsOfGroup(U));
+    else
+      i:=i+1;
     fi;
   od;
   return gens;
@@ -2173,8 +2182,8 @@ function(G)
       Append(str,String(Size(G)));
     fi;
     Append(str," with ");
-    Append(str,String(Length( gens )));
-    Append(str," generators>");
+    Append(str,Pluralize(Length( gens ), "generator"));
+    Append(str,">");
   else
     str:="Group(";
     if IsEmpty( gens ) or ForAll(gens,i->Order(i)=1) then
@@ -2280,6 +2289,9 @@ end);
 InstallMethod(SocleTypePrimitiveGroup,"primitive permgroups",true,
   [IsPermGroup],0,function(G)
 local s,cs,t,id,r;
+  if not IsPrimitive(G) then 
+    ErrorNoReturn("<G> must be primitive on its moved points");
+  fi;
   s:=Socle(G);
   cs:=CompositionSeries(s);
   t:=cs[Length(cs)-1];

@@ -19,19 +19,34 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Next Chapter]</a>&nbsp;  </div>
 
+<p id="mathjaxlink" class="pcenter"><a href="chap0_mj.html">[MathJax on]</a></p>
 <p><a id="X7D2C85EC87DD46E5" name="X7D2C85EC87DD46E5"></a></p>
 <div class="pcenter">
 
-<h1>Documentation on the <strong class="pkg">GBNP</strong> package</h1>
+<h1>GBNP</h1>
 
-<p>Version 1.0.3</p>
 
-<p>8 March 2016</p>
+<h2>computing Gröbner bases of noncommutative polynomials</h2>
+
+<p>
+    1.0.5</p>
+
+<p>
+    9 March 2022
+  </p>
 
 </div>
-<p><b>Arjeh M. Cohen </b>
+<p><b>
+    A.M. Cohen
+
+
+  </b>
 <br />Email: <span class="URL"><a href="mailto:A.M.Cohen@tue.nl">A.M.Cohen@tue.nl</a></span>
-</p><p><b>Jan Willem Knopper </b>
+</p><p><b>
+    J.W. Knopper
+
+
+  </b>
 <br />Email: <span class="URL"><a href="mailto:J.W.Knopper@tue.nl">J.W.Knopper@tue.nl</a></span>
 </p>
 
@@ -44,6 +59,10 @@ TU/e,<br /> POB 513, 5600 MB Eindhoven, the Netherlands</p>
 <p>The notion of algorithm is interpreted loosely: in general one cannot expect a non-commutative Gröbner basis algorithm to terminate, as it would imply solvability of the word problem for finitely presented (semi)groups.</p>
 
 <p>This documentation gives a short description of the mathematical content, explains the functions of the package, and provides more than twenty worked out examples.</p>
+
+<p><a id="X81488B807F2A1CF1" name="X81488B807F2A1CF1"></a></p>
+<h3>Copyright</h3>
+<p>© 2001-2010 by Arjeh M. Cohen, Dié A.H. Gijsbers, Jan Willem Knopper, Chris Krook. Address: Discrete Algebra and Geometry (DAM) group at the Department of Mathematics and Computer Science of Eindhoven University of Technology.</p>
 
 <p><a id="X82A988D47DFAFCFA" name="X82A988D47DFAFCFA"></a></p>
 <h3>Acknowledgements</h3>
@@ -68,8 +87,6 @@ TU/e,<br /> POB 513, 5600 MB Eindhoven, the Netherlands</p>
 
 </li>
 </ul>
-<p> </p>
-
 <p><a id="X8537FEB07AF2BEC8" name="X8537FEB07AF2BEC8"></a></p>
 
 <div class="contents">
@@ -250,7 +267,7 @@ variant</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X79AC59C482A2E4C1">A.4 <span class="Heading">The truncated variant on two weighted homogeneous polynomials</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X7F9C11FD7D75C027">A.5 <span class="Heading">The order of the Weyl group of type E<span class="SimpleMath">_6</span></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X7C7742957CEC6E7B">A.5 <span class="Heading">The order of the Weyl group of type E<span class="SimpleMath">_6</span></span></a>
 </span>
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X7E39C9738509A036">A.6 <span class="Heading">The gcd of some univariate polynomials</span></a>
@@ -259,10 +276,10 @@ variant</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X7F5A6ABA85CDB6E2">A.7 <span class="Heading">From the Tapas book</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X7D72F1237C364FAC">A.8 <span class="Heading">The Birman-Murakami-Wenzl algebra of type A<span class="SimpleMath">_3</span></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X7C2CD4FA838EEE64">A.8 <span class="Heading">The Birman-Murakami-Wenzl algebra of type A<span class="SimpleMath">_3</span></span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X7D6ED780860F2D28">A.9 <span class="Heading">The Birman-Murakami-Wenzl algebra of type A<span class="SimpleMath">_2</span></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X7B5CA7F379B78CE0">A.9 <span class="Heading">The Birman-Murakami-Wenzl algebra of type A<span class="SimpleMath">_2</span></span></a>
 </span>
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X83C81C987A4DE15F">A.10 <span class="Heading">A commutative example by Mora</span></a>
@@ -271,7 +288,7 @@ variant</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X7CAB94A37D580C4A">A.11 <span class="Heading">Tracing an example by Mora</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X8737C45F8059A5E4">A.12 <span class="Heading"> Finiteness of the Weyl group of type E<span class="SimpleMath">_6</span></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X8599AE8F7E9E0368">A.12 <span class="Heading"> Finiteness of the Weyl group of type E<span class="SimpleMath">_6</span></span></a>
 </span>
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X7B1822C67CF83041">A.13 <span class="Heading">Preprocessing for Weyl group computations</span></a>
@@ -301,7 +318,7 @@ variant</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X780C4B777FEA9080">A.21 <span class="Heading">The symmetric inverse monoid for a set of size four</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X801747D17F02450F">A.22 <span class="Heading">A module of the Hecke algebra of type
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X84C07DC479FBBCD5">A.22 <span class="Heading">A module of the Hecke algebra of type
 A<span class="SimpleMath">_3</span> over GF(3)</span></a>
 </span>
 </div>

@@ -97,6 +97,22 @@ static Obj TypeRangeSSort(Obj list)
 }
 
 
+Obj NEW_RANGE(Int len, Int low, Int inc)
+{
+    Obj range;
+
+    if (0 < inc)
+        range = NewBag(T_RANGE_SSORT, 3 * sizeof(Obj));
+    else
+        range = NewBag(T_RANGE_NSORT, 3 * sizeof(Obj));
+    SET_LEN_RANGE(range, len);
+    SET_LOW_RANGE(range, low);
+    SET_INC_RANGE(range, inc);
+
+    return range;
+}
+
+
 #if !defined(USE_THREADSAFE_COPYING)
 
 /****************************************************************************
@@ -151,13 +167,13 @@ static Obj CopyRange(Obj list, Int mut)
 static void PrintRange(Obj list)
 {
     Pr( "%2>[ %2>%d",   
-       GET_LOW_RANGE(list), 0L );
+       GET_LOW_RANGE(list), 0 );
     if ( GET_INC_RANGE(list) != 1 ) {
         Pr( "%<,%< %2>%d",
-           GET_LOW_RANGE(list)+GET_INC_RANGE(list), 0L );
+           GET_LOW_RANGE(list)+GET_INC_RANGE(list), 0);
     }
     Pr( "%2< .. %2>%d%4< ]",
-       GET_LOW_RANGE(list)+(GET_LEN_RANGE(list)-1)*GET_INC_RANGE(list), 0L );
+       GET_LOW_RANGE(list)+(GET_LEN_RANGE(list)-1)*GET_INC_RANGE(list), 0 );
 }
 
 
@@ -187,24 +203,24 @@ static Int LtRange(Obj listL, Obj listR)
 {
     /* first compare the first elements                                    */
     if ( GET_LOW_RANGE(listL) < GET_LOW_RANGE(listR) )
-        return 1L;
+        return 1;
     else if ( GET_LOW_RANGE(listR) < GET_LOW_RANGE(listL) )
-        return 0L;
+        return 0;
 
     /* next compare the increments (or the second elements)                */
     if ( GET_INC_RANGE(listL) < GET_INC_RANGE(listR) )
-        return 1L;
+        return 1;
     else if ( GET_INC_RANGE(listR) < GET_INC_RANGE(listL) )
-        return 0L;
+        return 0;
 
     /* finally compare the lengths                                         */
     if ( GET_LEN_RANGE(listL) < GET_LEN_RANGE(listR) )
-        return 1L;
+        return 1;
     else if ( GET_LEN_RANGE(listR) < GET_LEN_RANGE(listL) )
-        return 0L;
+        return 0;
 
     /* the two ranges are equal                                            */
-    return 0L;
+    return 0;
 }
 
 
@@ -232,7 +248,7 @@ static Int LenRange(Obj list)
 **
 **  'IsbRange' is the function in 'IsbListFuncs' for ranges.
 */
-static Int IsbRange(Obj list, Int pos)
+static BOOL IsbRange(Obj list, Int pos)
 {
     return (pos <= GET_LEN_RANGE(list));
 }
@@ -323,8 +339,13 @@ static Obj ElmsRange(Obj list, Obj poss)
     Int                 inc;            /* increment in a range            */
     Int                 i;              /* loop variable                   */
 
+    /* select no element                                                   */
+    if ( LEN_LIST(poss) == 0 ) {
+        elms = NewEmptyPlist();
+    }
+
     /* general code                                                        */
-    if ( ! IS_RANGE(poss) ) {
+    else if ( ! IS_RANGE(poss) ) {
 
         /* get the length of <list>                                        */
         lenList = GET_LEN_RANGE( list );
@@ -389,17 +410,10 @@ static Obj ElmsRange(Obj list, Obj poss)
         }
 
         /* make the result range                                           */
-        if ( 0 < inc * GET_INC_RANGE(list) )
-            elms = NEW_RANGE_SSORT();
-        else
-            elms = NEW_RANGE_NSORT();
-        SET_LEN_RANGE( elms, lenPoss );
-        SET_LOW_RANGE( elms, INT_INTOBJ( GET_ELM_RANGE( list, pos ) ) );
-        SET_INC_RANGE( elms, inc * GET_INC_RANGE( list ) );
-
+        inc *= GET_INC_RANGE(list);
+        elms = NEW_RANGE(lenPoss, INT_INTOBJ( GET_ELM_RANGE( list, pos ) ), inc);
     }
 
-    /* return the result                                                   */
     return elms;
 }
 
@@ -461,7 +475,7 @@ static void AssRange(Obj list, Int pos, Obj val)
 **
 *F  AsssRange(<list>,<poss>,<vals>) . . .  assign several elements to a range
 **
-**  'AsssRange' assignes the  values  from the list  <vals>  at the positions
+**  'AsssRange' assigns the  values  from the list  <vals>  at the positions
 **  given in the  list <poss> to the range  <list>.  It is the responsibility
 **  of the caller to  ensure that <poss> is dense  and contains only positive
 **  integers, that <poss> and <vals> have the same length, and that <vals> is
@@ -493,18 +507,18 @@ static void AsssRange(Obj list, Obj poss, Obj vals)
 **
 **  'IsPossRange' is the function in 'IsPossListFuncs' for ranges.
 */
-static Int IsPossRange(Obj list)
+static BOOL IsPossRange(Obj list)
 {
     /* test if the first element is positive                               */
     if ( GET_LOW_RANGE( list ) <= 0 )
-        return 0;
+        return FALSE;
 
     /* test if the last element is positive                                */
     if ( INT_INTOBJ( GET_ELM_RANGE( list, GET_LEN_RANGE(list) ) ) <= 0 )
-        return 0;
+        return FALSE;
 
     /* otherwise <list> is a positions list                                */
-    return 1;
+    return TRUE;
 }
 
 
@@ -559,7 +573,7 @@ Obj             PosRange (
         }
     }
 
-    /* otherwise it can not be an element of the range                     */
+    /* otherwise it cannot be an element of the range                     */
     else {
         k = 0;
     }
@@ -590,7 +604,12 @@ static void PlainRange(Obj list)
     inc     = GET_INC_RANGE( list );
 
     /* change the type of the list, and allocate enough space              */
-    RetypeBagSM( list, T_PLIST );
+    if (lenList == 0)
+        RetypeBagSM(list, T_PLIST_EMPTY);
+    else if (inc > 0)
+        RetypeBagSM(list, T_PLIST_CYC_SSORT);
+    else
+        RetypeBagSM(list, T_PLIST_CYC_NSORT);
     GROW_PLIST( list, lenList );
     SET_LEN_PLIST( list, lenList );
 
@@ -611,9 +630,9 @@ static void PlainRange(Obj list)
 */
 static Obj IsRangeFilt;
 
-static Int IsRange(Obj list)
+static BOOL IsRange(Obj list)
 {
-    Int                 isRange;        /* result of the test              */
+    BOOL                isRange;        /* result of the test              */
     Int                 len;            /* logical length of list          */
     Int                 low;            /* value of first element of range */
     Int                 inc;            /* increment                       */
@@ -622,38 +641,38 @@ static Int IsRange(Obj list)
     /* if <list> is represented as a range, it is of course a range      */
     if ( TNUM_OBJ(list) == T_RANGE_NSORT
       || TNUM_OBJ(list) == T_RANGE_SSORT ) {
-        isRange = 1;
+        isRange = TRUE;
     }
 
     /* if <list> is not a list, it is not a range at the moment        */
     else if ( ! IS_SMALL_LIST( list ) ) {
-       /* isRange = 0; */
+       /* isRange = FALSE; */
        isRange = (DoFilter(IsRangeFilt, list) == True);
     }
 
     /* if <list> is the empty list, it is a range by definition          */
     else if ( LEN_LIST(list) == 0 ) {
-        isRange = 1;
+        isRange = TRUE;
     }
 
     /* if <list> is a list with just one integer, it is also a range     */
     else if ( LEN_LIST(list)==1 && IS_INTOBJ(ELMW_LIST(list,1)) ) {
-        isRange = 1;
+        isRange = TRUE;
     }
 
     /* if the first element is not an integer, it is not a range           */
     else if ( ELMV0_LIST(list,1)==0 || !IS_INTOBJ(ELMW_LIST(list,1)) ) {
-        isRange = 0;
+        isRange = FALSE;
     }
 
     /* if the second element is not an integer, it is not a range          */
     else if ( ELMV0_LIST(list,2)==0 || !IS_INTOBJ(ELMW_LIST(list,2)) ) {
-        isRange = 0;
+        isRange = FALSE;
     }
 
     /* if the first and the second element are equal it is also not a range*/
     else if ( ELMW_LIST(list,1) == ELMW_LIST(list,2) ) {
-        isRange = 0;
+        isRange = FALSE;
     }
 
     /* otherwise, test if the elements are consecutive integers            */
@@ -682,7 +701,6 @@ static Int IsRange(Obj list)
 
     }
 
-    /* return the result of the test                                       */
     return isRange;
 }
 
@@ -711,26 +729,29 @@ static Obj FiltIS_RANGE(Obj self, Obj obj)
 *F  SaveRange( <range> )
 **
 */
-
+#ifdef GAP_ENABLE_SAVELOAD
 static void SaveRange(Obj range)
 {
   SaveSubObj(CONST_ADDR_OBJ(range)[0]); /* length */
   SaveSubObj(CONST_ADDR_OBJ(range)[1]); /* base */
   SaveSubObj(CONST_ADDR_OBJ(range)[2]); /* increment */
 }
+#endif
+
 
 /****************************************************************************
 **
 *F  LoadRange( <range> )
 **
 */
-
+#ifdef GAP_ENABLE_SAVELOAD
 static void LoadRange(Obj range)
 {
   ADDR_OBJ(range)[0] = LoadSubObj(); /* length */
   ADDR_OBJ(range)[1] = LoadSubObj(); /* base */
   ADDR_OBJ(range)[2] = LoadSubObj(); /* increment */
 }
+#endif
 
 
 /****************************************************************************
@@ -754,10 +775,7 @@ Obj Range2Check (
         SET_ELM_PLIST( range, 1, first );
     }
     else {
-        range = NEW_RANGE_SSORT();
-        SET_LEN_RANGE( range, (l-f) + 1 );
-        SET_LOW_RANGE( range, f );
-        SET_INC_RANGE( range, 1 );
+        range = NEW_RANGE((l-f) + 1, f, 1);
     }
     return range;
 }
@@ -774,9 +792,8 @@ Obj Range3Check (
 {
     Obj                 range;
     if ( first == second ) {
-        ErrorQuit(
-            "Range: <second> must not be equal to <first> (%d)",
-            (Int)INT_INTOBJ(first), 0L );
+        ErrorQuit("Range: <second> must not be equal to <first> (%d)",
+                  (Int)INT_INTOBJ(first), 0);
     }
     Int f = GetSmallInt("Range", first);
     Int i = GetSmallInt("Range", second) - f;
@@ -795,13 +812,7 @@ Obj Range3Check (
         SET_ELM_PLIST( range, 1, first );
     }
     else {
-        if ( 0 < i )
-            range = NEW_RANGE_SSORT();
-        else
-            range = NEW_RANGE_NSORT();
-        SET_LEN_RANGE( range, (l - f) / i + 1 );
-        SET_LOW_RANGE( range, f );
-        SET_INC_RANGE( range, i );
+        range = NEW_RANGE((l - f) / i + 1, f, i);
     }
     return range;
 }
@@ -860,10 +871,9 @@ static Obj FuncINTER_RANGE(Obj self, Obj r1, Obj r2)
   UInt len1, len2, leni;
   
   if (!IS_RANGE(r1) || !IS_MUTABLE_OBJ(r1))
-      RequireArgumentEx("INTER_RANGE", r1, "<range1>",
-                        "must be a mutable range");
+      RequireArgumentEx(SELF_NAME, r1, "<range1>", "must be a mutable range");
   if (!IS_RANGE(r2))
-      RequireArgumentEx("INTER_RANGE", r2, "<range2>", "must be a range");
+      RequireArgumentEx(SELF_NAME, r2, "<range2>", "must be a range");
 
   low1 = GET_LOW_RANGE(r1);
   low2 = GET_LOW_RANGE(r2);
@@ -924,7 +934,7 @@ static Obj FuncINTER_RANGE(Obj self, Obj r1, Obj r2)
  empty_range:
   RetypeBag(r1, T_PLIST_EMPTY);
   ResizeBag(r1,sizeof(Obj));
-  SET_LEN_PLIST(r1, 0L);
+  SET_LEN_PLIST(r1, 0);
   return (Obj) 0;
 }
 
@@ -1069,7 +1079,7 @@ static StructGVarFilt GVarFilts [] = {
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    GVAR_FUNC(INTER_RANGE, 2, "range1, range2"),
+    GVAR_FUNC_2ARGS(INTER_RANGE, range1, range2),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -1118,6 +1128,7 @@ static Int InitKernel (
     InitHdlrFiltsFromTable( GVarFilts );
     InitHdlrFuncsFromTable( GVarFuncs );
 
+#ifdef GAP_ENABLE_SAVELOAD
     /* Saving functions */
     SaveObjFuncs[T_RANGE_NSORT            ] = SaveRange;
     SaveObjFuncs[T_RANGE_NSORT +IMMUTABLE ] = SaveRange;
@@ -1127,6 +1138,7 @@ static Int InitKernel (
     LoadObjFuncs[T_RANGE_NSORT +IMMUTABLE ] = LoadRange;
     LoadObjFuncs[T_RANGE_SSORT            ] = LoadRange;
     LoadObjFuncs[T_RANGE_SSORT +IMMUTABLE ] = LoadRange;
+#endif
 
 #if !defined(USE_THREADSAFE_COPYING)
     /* install the copy methods                                            */
@@ -1234,7 +1246,6 @@ static Int InitKernel (
     PlainListFuncs  [ T_RANGE_SSORT            ] = PlainRange;
     PlainListFuncs  [ T_RANGE_SSORT +IMMUTABLE ] = PlainRange;
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -1250,7 +1261,6 @@ static Int InitLibrary (
     InitGVarFiltsFromTable( GVarFilts );
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return 0;
 }
 

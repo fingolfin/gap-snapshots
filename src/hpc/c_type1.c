@@ -1,7 +1,6 @@
-#ifndef AVOID_PRECOMPILED
 /* C file produced by GAC */
 #include "compiled.h"
-#define FILE_CRC  "-88497608"
+#define FILE_CRC  "116170828"
 
 /* global variables used in handlers */
 static GVar G_NAME__FUNC;
@@ -166,14 +165,14 @@ static GVar G_IsAtomicPositionalObjectRepFlags;
 static Obj  GC_IsAtomicPositionalObjectRepFlags;
 static GVar G_IsNonAtomicComponentObjectRepFlags;
 static Obj  GC_IsNonAtomicComponentObjectRepFlags;
+static GVar G_IGNORE__IMMEDIATE__METHODS;
+static Obj  GC_IGNORE__IMMEDIATE__METHODS;
 static GVar G_IsNoImmediateMethodsObject;
 static Obj  GF_IsNoImmediateMethodsObject;
 static GVar G_RunImmediateMethods;
 static Obj  GF_RunImmediateMethods;
 static GVar G_ErrorNoReturn;
 static Obj  GF_ErrorNoReturn;
-static GVar G_IGNORE__IMMEDIATE__METHODS;
-static Obj  GC_IGNORE__IMMEDIATE__METHODS;
 static GVar G_SupType;
 static Obj  GF_SupType;
 static GVar G_Ignore;
@@ -516,8 +515,8 @@ static Obj  HdlrFunc5 (
  }
  while ( 1 ) {
   if ( t_3 ) {
-   if ( LEN_LIST(t_4) < INT_INTOBJ(t_1) )  break;
-   t_2 = ELMV0_LIST( t_4, INT_INTOBJ(t_1) );
+   if ( LEN_LIST(t_4) < Int_ObjInt(t_1) )  break;
+   t_2 = ELMV0_LIST( t_4, Int_ObjInt(t_1) );
    t_1 = (Obj)(((UInt)t_1)+4);
    if ( t_2 == 0 )  continue;
   }
@@ -1036,7 +1035,7 @@ static Obj  HdlrFunc7 (
       l_i = t_1;
       
       /* if IsBound( cached![i] ) then */
-      t_4 = IsbPosObj( l_cached, INT_INTOBJ(l_i) ) ? True : False;
+      t_4 = IsbPosObj( l_cached, Int_ObjInt(l_i) ) ? True : False;
       t_3 = (Obj)(UInt)(t_4 != False);
       if ( t_3 ) {
        
@@ -1122,8 +1121,8 @@ static Obj  HdlrFunc7 (
       l_i = t_1;
       
       /* if IsBound( parent![i] ) <> IsBound( cached![i] ) then */
-      t_4 = IsbPosObj( a_parent, INT_INTOBJ(l_i) ) ? True : False;
-      t_5 = IsbPosObj( l_cached, INT_INTOBJ(l_i) ) ? True : False;
+      t_4 = IsbPosObj( a_parent, Int_ObjInt(l_i) ) ? True : False;
+      t_5 = IsbPosObj( l_cached, Int_ObjInt(l_i) ) ? True : False;
       t_3 = (Obj)(UInt)( ! EQ( t_4, t_5 ));
       if ( t_3 ) {
        
@@ -1138,19 +1137,19 @@ static Obj  HdlrFunc7 (
       /* fi */
       
       /* if IsBound( parent![i] ) and IsBound( cached![i] ) and not IS_IDENTICAL_OBJ( parent![i], cached![i] ) then */
-      t_6 = IsbPosObj( a_parent, INT_INTOBJ(l_i) ) ? True : False;
+      t_6 = IsbPosObj( a_parent, Int_ObjInt(l_i) ) ? True : False;
       t_5 = (Obj)(UInt)(t_6 != False);
       t_4 = t_5;
       if ( t_4 ) {
-       t_7 = IsbPosObj( l_cached, INT_INTOBJ(l_i) ) ? True : False;
+       t_7 = IsbPosObj( l_cached, Int_ObjInt(l_i) ) ? True : False;
        t_6 = (Obj)(UInt)(t_7 != False);
        t_4 = t_6;
       }
       t_3 = t_4;
       if ( t_3 ) {
        t_8 = GF_IS__IDENTICAL__OBJ;
-       t_9 = ElmPosObj( a_parent, INT_INTOBJ(l_i) );
-       t_10 = ElmPosObj( l_cached, INT_INTOBJ(l_i) );
+       t_9 = ElmPosObj( a_parent, Int_ObjInt(l_i) );
+       t_10 = ElmPosObj( l_cached, Int_ObjInt(l_i) );
        if ( TNUM_OBJ( t_8 ) == T_FUNCTION ) {
         t_7 = CALL_2ARGS( t_8, t_9, t_10 );
        }
@@ -1329,7 +1328,7 @@ static Obj  HdlrFunc7 (
    l_i = t_1;
    
    /* if IsBound( parent![i] ) and not IsBound( type[i] ) then */
-   t_5 = IsbPosObj( a_parent, INT_INTOBJ(l_i) ) ? True : False;
+   t_5 = IsbPosObj( a_parent, Int_ObjInt(l_i) ) ? True : False;
    t_4 = (Obj)(UInt)(t_5 != False);
    t_3 = t_4;
    if ( t_3 ) {
@@ -1341,7 +1340,7 @@ static Obj  HdlrFunc7 (
    if ( t_3 ) {
     
     /* type[i] := parent![i]; */
-    t_3 = ElmPosObj( a_parent, INT_INTOBJ(l_i) );
+    t_3 = ElmPosObj( a_parent, Int_ObjInt(l_i) );
     C_ASS_LIST_FPL( l_type, l_i, t_3 )
     
    }
@@ -1405,8 +1404,8 @@ static Obj  HdlrFunc7 (
   }
   while ( 1 ) {
    if ( t_3 ) {
-    if ( LEN_LIST(t_4) < INT_INTOBJ(t_1) )  break;
-    t_2 = ELMV0_LIST( t_4, INT_INTOBJ(t_1) );
+    if ( LEN_LIST(t_4) < Int_ObjInt(t_1) )  break;
+    t_2 = ELMV0_LIST( t_4, Int_ObjInt(t_1) );
     t_1 = (Obj)(((UInt)t_1)+4);
     if ( t_2 == 0 )  continue;
    }
@@ -2017,6 +2016,7 @@ static Obj  HdlrFunc17 (
  Obj t_3 = 0;
  Obj t_4 = 0;
  Obj t_5 = 0;
+ Obj t_6 = 0;
  (void)l_flags;
  Bag oldFrame;
  
@@ -2268,17 +2268,25 @@ static Obj  HdlrFunc17 (
  }
  /* fi */
  
- /* if not IsNoImmediateMethodsObject( obj ) then */
- t_4 = GF_IsNoImmediateMethodsObject;
- if ( TNUM_OBJ( t_4 ) == T_FUNCTION ) {
-  t_3 = CALL_1ARGS( t_4, a_obj );
+ /* if not (IGNORE_IMMEDIATE_METHODS or IsNoImmediateMethodsObject( obj )) then */
+ t_4 = GC_IGNORE__IMMEDIATE__METHODS;
+ CHECK_BOUND( t_4, "IGNORE_IMMEDIATE_METHODS" );
+ CHECK_BOOL( t_4 );
+ t_3 = (Obj)(UInt)(t_4 != False);
+ t_2 = t_3;
+ if ( ! t_2 ) {
+  t_6 = GF_IsNoImmediateMethodsObject;
+  if ( TNUM_OBJ( t_6 ) == T_FUNCTION ) {
+   t_5 = CALL_1ARGS( t_6, a_obj );
+  }
+  else {
+   t_5 = DoOperation2Args( CallFuncListOper, t_6, NewPlistFromArgs( a_obj ) );
+  }
+  CHECK_FUNC_RESULT( t_5 );
+  CHECK_BOOL( t_5 );
+  t_4 = (Obj)(UInt)(t_5 != False);
+  t_2 = t_4;
  }
- else {
-  t_3 = DoOperation2Args( CallFuncListOper, t_4, NewPlistFromArgs( a_obj ) );
- }
- CHECK_FUNC_RESULT( t_3 );
- CHECK_BOOL( t_3 );
- t_2 = (Obj)(UInt)(t_3 != False);
  t_1 = (Obj)(UInt)( ! ((Int)t_2) );
  if ( t_1 ) {
   
@@ -2825,8 +2833,8 @@ static Obj  HdlrFunc20 (
   }
   while ( 1 ) {
    if ( t_3 ) {
-    if ( LEN_LIST(t_4) < INT_INTOBJ(t_1) )  break;
-    t_2 = ELMV0_LIST( t_4, INT_INTOBJ(t_1) );
+    if ( LEN_LIST(t_4) < Int_ObjInt(t_1) )  break;
+    t_2 = ELMV0_LIST( t_4, Int_ObjInt(t_1) );
     t_1 = (Obj)(((UInt)t_1)+4);
     if ( t_2 == 0 )  continue;
    }
@@ -3125,8 +3133,8 @@ static Obj  HdlrFunc20 (
  }
  while ( 1 ) {
   if ( t_3 ) {
-   if ( LEN_LIST(t_4) < INT_INTOBJ(t_1) )  break;
-   t_2 = ELMV0_LIST( t_4, INT_INTOBJ(t_1) );
+   if ( LEN_LIST(t_4) < Int_ObjInt(t_1) )  break;
+   t_2 = ELMV0_LIST( t_4, Int_ObjInt(t_1) );
    t_1 = (Obj)(((UInt)t_1)+4);
    if ( t_2 == 0 )  continue;
   }
@@ -3797,7 +3805,7 @@ static Obj  HdlrFunc1 (
       elif IS_REC( obj ) then
           SET_TYPE_COMOBJ( obj, type );
       fi;
-      if not IsNoImmediateMethodsObject( obj ) then
+      if not (IGNORE_IMMEDIATE_METHODS or IsNoImmediateMethodsObject( obj )) then
           RunImmediateMethods( obj, type![2] );
       fi;
       if IsReadOnlyPositionalObjectRep( obj ) then
@@ -3811,7 +3819,7 @@ static Obj  HdlrFunc1 (
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewFunctionBody();
  SET_STARTLINE_BODY(t_4, 590);
- SET_ENDLINE_BODY(t_4, 625);
+ SET_ENDLINE_BODY(t_4, 626);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  if ( TNUM_OBJ( t_1 ) == T_FUNCTION ) {
@@ -3847,8 +3855,8 @@ static Obj  HdlrFunc1 (
  t_3 = NewFunction( NameFunc[18], 2, ArgStringToList("obj,filter"), HdlrFunc18 );
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewFunctionBody();
- SET_STARTLINE_BODY(t_4, 647);
- SET_ENDLINE_BODY(t_4, 667);
+ SET_STARTLINE_BODY(t_4, 648);
+ SET_ENDLINE_BODY(t_4, 668);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  if ( TNUM_OBJ( t_1 ) == T_FUNCTION ) {
@@ -3881,8 +3889,8 @@ static Obj  HdlrFunc1 (
  t_3 = NewFunction( NameFunc[19], 2, ArgStringToList("obj,filter"), HdlrFunc19 );
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewFunctionBody();
- SET_STARTLINE_BODY(t_4, 687);
- SET_ENDLINE_BODY(t_4, 705);
+ SET_STARTLINE_BODY(t_4, 688);
+ SET_ENDLINE_BODY(t_4, 706);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  if ( TNUM_OBJ( t_1 ) == T_FUNCTION ) {
@@ -3983,8 +3991,8 @@ static Obj  HdlrFunc1 (
  t_3 = NewFunction( NameFunc[20], -1, ArgStringToList("arg"), HdlrFunc20 );
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewFunctionBody();
- SET_STARTLINE_BODY(t_4, 753);
- SET_ENDLINE_BODY(t_4, 815);
+ SET_STARTLINE_BODY(t_4, 754);
+ SET_ENDLINE_BODY(t_4, 816);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  if ( TNUM_OBJ( t_1 ) == T_FUNCTION ) {
@@ -4088,10 +4096,10 @@ static Int PostRestore ( StructInitInfo * module )
  G_IsReadOnlyPositionalObjectRep = GVarName( "IsReadOnlyPositionalObjectRep" );
  G_IsAtomicPositionalObjectRepFlags = GVarName( "IsAtomicPositionalObjectRepFlags" );
  G_IsNonAtomicComponentObjectRepFlags = GVarName( "IsNonAtomicComponentObjectRepFlags" );
+ G_IGNORE__IMMEDIATE__METHODS = GVarName( "IGNORE_IMMEDIATE_METHODS" );
  G_IsNoImmediateMethodsObject = GVarName( "IsNoImmediateMethodsObject" );
  G_RunImmediateMethods = GVarName( "RunImmediateMethods" );
  G_ErrorNoReturn = GVarName( "ErrorNoReturn" );
- G_IGNORE__IMMEDIATE__METHODS = GVarName( "IGNORE_IMMEDIATE_METHODS" );
  G_SupType = GVarName( "SupType" );
  G_Ignore = GVarName( "Ignore" );
  G_MAKE__READ__WRITE__GLOBAL = GVarName( "MAKE_READ_WRITE_GLOBAL" );
@@ -4133,7 +4141,6 @@ static Int PostRestore ( StructInitInfo * module )
  NameFunc[19] = 0;
  NameFunc[20] = 0;
  
- /* return success */
  return 0;
  
 }
@@ -4226,10 +4233,10 @@ static Int InitKernel ( StructInitInfo * module )
  InitFopyGVar( "IsReadOnlyPositionalObjectRep", &GF_IsReadOnlyPositionalObjectRep );
  InitCopyGVar( "IsAtomicPositionalObjectRepFlags", &GC_IsAtomicPositionalObjectRepFlags );
  InitCopyGVar( "IsNonAtomicComponentObjectRepFlags", &GC_IsNonAtomicComponentObjectRepFlags );
+ InitCopyGVar( "IGNORE_IMMEDIATE_METHODS", &GC_IGNORE__IMMEDIATE__METHODS );
  InitFopyGVar( "IsNoImmediateMethodsObject", &GF_IsNoImmediateMethodsObject );
  InitFopyGVar( "RunImmediateMethods", &GF_RunImmediateMethods );
  InitFopyGVar( "ErrorNoReturn", &GF_ErrorNoReturn );
- InitCopyGVar( "IGNORE_IMMEDIATE_METHODS", &GC_IGNORE__IMMEDIATE__METHODS );
  InitFopyGVar( "SupType", &GF_SupType );
  InitCopyGVar( "Ignore", &GC_Ignore );
  InitFopyGVar( "MAKE_READ_WRITE_GLOBAL", &GF_MAKE__READ__WRITE__GLOBAL );
@@ -4283,7 +4290,6 @@ static Int InitKernel ( StructInitInfo * module )
  InitHandlerFunc( HdlrFunc20, "GAPROOT/lib/type1.g:HdlrFunc20("FILE_CRC")" );
  InitGlobalBag( &(NameFunc[20]), "GAPROOT/lib/type1.g:NameFunc[20]("FILE_CRC")" );
  
- /* return success */
  return 0;
  
 }
@@ -4307,7 +4313,6 @@ static Int InitLibrary ( StructInitInfo * module )
  CHANGED_BAG( func1 );
  CALL_0ARGS( func1 );
  
- /* return success */
  return 0;
  
 }
@@ -4316,7 +4321,7 @@ static Int InitLibrary ( StructInitInfo * module )
 static StructInitInfo module = {
  .type        = MODULE_STATIC,
  .name        = "GAPROOT/lib/type1.g",
- .crc         = -88497608,
+ .crc         = 116170828,
  .initKernel  = InitKernel,
  .initLibrary = InitLibrary,
  .postRestore = PostRestore,
@@ -4328,4 +4333,3 @@ StructInitInfo * Init__type1 ( void )
 }
 
 /* compiled code ends here */
-#endif

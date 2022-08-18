@@ -673,14 +673,8 @@ InstallMethod(IsNaturalAlternatingGroup,"knows size",true,[IsPermGroup
 end );
 
 InstallMethod(IsNaturalAlternatingGroup,"comprehensive",true,[IsPermGroup],0,
-function( grp )
-  if 0 = NrMovedPoints(grp)  then
-    return IsTrivial(grp);
-  else
-    return PermgpContainsAn(grp)=true and
-      ForAll(GeneratorsOfGroup(grp),i->SignPerm(i)=1);
-  fi;
-end );
+G -> IsTrivial(G) or
+  ForAll(GeneratorsOfGroup(G),i->SignPerm(i)=1) and PermgpContainsAn(G)=true);
 
 #############################################################################
 ##
@@ -705,14 +699,8 @@ InstallMethod(IsNaturalSymmetricGroup,"knows size",true,[IsPermGroup
 end );
 
 InstallMethod(IsNaturalSymmetricGroup,"comprehensive",true,[IsPermGroup],0,
-function( grp )
-  if 0 = NrMovedPoints(grp)  then
-    return IsTrivial(grp);
-  else
-    return PermgpContainsAn(grp)=true and
-      ForAny(GeneratorsOfGroup(grp),i->SignPerm(i)=-1);
-  fi;
-end );
+G -> IsTrivial(G) or
+  ForAny(GeneratorsOfGroup(G),i->SignPerm(i)=-1) and PermgpContainsAn(G)=true);
 
 #############################################################################
 ##
@@ -748,7 +736,7 @@ end );
 ##
 InstallMethod( IsSubset,"permgrp of natsymmetric group", true,
     [ IsNaturalSymmetricGroup,IsPermGroup ],
-    # we need to override a metrhod that computes the size.
+    # we need to override a method that computes the size.
     SUM_FLAGS,
 
 function( S,G )
@@ -1212,6 +1200,10 @@ local b, bl,prop;
   return List(b,x->Set(Orbit(G,Set(dom{x}),OnSets)));
 end);
 
+# Calculate subgroup of Sn/An that must contain the normalizer. Then a
+# subsequent backtrack search is in a smaller group and thus much faster.
+# Parameters: Overgroup (must be symmetric or alternating, otherwise just
+# returns this overgroup), subgroup.
 InstallGlobalFunction(NormalizerParentSA,function(s,u)
 local dom, issym, o, b, beta, alpha, emb, nb, na, w, perm, pg, l, is, ie, ll,
 syll, act, typ, sel, bas, wdom, comp, lperm, other, away, i, j,b0,opg,bp;
@@ -1219,7 +1211,8 @@ syll, act, typ, sel, bas, wdom, comp, lperm, other, away, i, j,b0,opg,bp;
   dom:=Set(MovedPoints(s));
   issym:=IsNaturalSymmetricGroup(s);
   if not IsSubset(dom,MovedPoints(u)) or
-    ((not issym) and ForAny(GeneratorsOfGroup(u),x->SignPerm(x)=-1)) then
+    (not issym and (not IsNaturalAlternatingGroup(s) or
+      ForAny(GeneratorsOfGroup(u),x->SignPerm(x)=-1))) then
     return s; # cannot get parent, as not contained
   fi;
   # get orbits
@@ -1466,8 +1459,8 @@ local og,oh,cb,cc,cac,perm1,perm2,
     if Collected(List(og,Length))<>Collected(List(oh,Length)) then
       return fail;
     fi;
-    og:=Set(List(og,Set));
-    oh:=Set(List(oh,Set));
+    og:=Set(og,Set);
+    oh:=Set(oh,Set);
     ac:=[];
     a:=1;
     perm:=();
@@ -1477,7 +1470,7 @@ local og,oh,cb,cc,cac,perm1,perm2,
       Add(perm1,Difference(dom,p1));
       Add(perm2,Difference(dom,p2));
     fi;
-    for i in (Set(List(og,Length))) do
+    for i in (Set(og,Length)) do
       c:=Filtered(og,x->Length(x)=i);
       #Append(p1,c);
       ac2:=Filtered(oh,x->Length(x)=i);
@@ -2488,7 +2481,7 @@ local G,max,dom,n,A,S,issn,p,i,j,m,k,powdec,pd,gps,v,invol,sel,mf,l,prim;
   return max;
 end);
 
-InstallMethod( TryMaximalSubgroupClassReps, "symmetric", true,
+InstallMethod( CalcMaximalSubgroupClassReps, "symmetric", true,
     [ IsNaturalSymmetricGroup and IsFinite], OVERRIDENICE,
 function ( G )
 local m;
@@ -2500,7 +2493,7 @@ local m;
   fi;
 end);
 
-InstallMethod( TryMaximalSubgroupClassReps, "alternating", true,
+InstallMethod( CalcMaximalSubgroupClassReps, "alternating", true,
     [ IsNaturalAlternatingGroup and IsFinite], OVERRIDENICE,
 function ( G )
 local m;
@@ -2520,10 +2513,10 @@ RadicalSymmAlt:=function(G)
   fi;
 end;
 
-InstallMethod( RadicalGroup, "symmetric", true,
+InstallMethod( SolvableRadical, "symmetric", true,
     [ IsNaturalSymmetricGroup and IsFinite], 0,RadicalSymmAlt);
 
-InstallMethod( RadicalGroup, "alternating", true,
+InstallMethod( SolvableRadical, "alternating", true,
     [ IsNaturalAlternatingGroup and IsFinite], 0,RadicalSymmAlt);
 
 InstallMethod(NormalSubgroups,

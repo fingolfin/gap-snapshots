@@ -5,9 +5,10 @@ The GAP 4 Package **AtlasRep**
 Description
 -----------
 
-This is Version 2.1.0 of the package **AtlasRep** written for GAP 4,
+This is Version 2.1.4 of the package **AtlasRep** written for GAP 4,
 whose aim is to provide an interface between GAP and databases such as the
-[Atlas of Group Representations](http://brauer.maths.qmul.ac.uk/Atlas),
+[Atlas of Group Representations](http://atlas.math.rwth-aachen.de/Atlas),
+
 which is available independent of GAP;
 it comprises representations of many almost simple groups
 and information about their maximal subgroups.
@@ -76,7 +77,7 @@ although the name of your file may still have the misleading `.gz` extension.
 
 The unpacking is done preferably (but not necessarily) inside the `pkg`
 subdirectory of your GAP 4 installation.
-It creates a  subdirectory called `atlasrep`.
+It creates a  subdirectory called `atlasrep-x.y`.
 
 
 Homepage
@@ -103,7 +104,7 @@ provides
   in a similar format as the information shown by the function
   `DisplayAtlasInfo` of the package;
   more details can be found on the
-  [home page of the ATLAS of Group Representations](http://brauer.maths.qmul.ac.uk/Atlas).
+  [home page of the ATLAS of Group Representations](http://atlas.math.rwth-aachen.de/Atlas).
 
 
 License
@@ -112,5 +113,12 @@ License
 This package may be distributed under the terms and conditions of the
 [**GNU Public License**](http://www.gnu.org/licenses) Version 3 or later.
 
+
+Acknowledgement
+---------------
+
+Thomas Breuer gratefully acknowledges support by
+the German Research Foundation (DFG) within the
+[SFB-TRR 195 *Symbolic Tools in Mathematics and their Applications*](https://www.computeralgebra.de/sfb/).
 
                             Thomas Breuer (Thomas.Breuer@Math.RWTH-Aachen.De)

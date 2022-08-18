@@ -287,7 +287,7 @@ end );
 ##
 ##  <#GAPDoc Label="DeclareCategoryCollections">
 ##  <ManSection>
-##  <Func Name="DeclareCategoryCollections" Arg='filter'/>
+##  <Func Name="DeclareCategoryCollections" Arg='name'/>
 ##
 ##  <Description>
 ##  Calls <Ref Func="CategoryCollections"/> on the category that is bound to
@@ -1613,8 +1613,8 @@ DeclareAttribute( "RepresentativeSmallest", IsListOrCollection );
 
 #############################################################################
 ##
-#O  Random( <C> ) . . . . . . . . . .  random element of a list or collection
-#O  Random( <list> )  . . . . . . . .  random element of a list or collection
+#O  Random( <C> ) . . . . . . . . . . random element of a nonempty collection
+#O  Random( <list> )  . . . . . . .  random element of a dense, nonempty list
 #O  Random( <from>, <to> )
 ##
 ##  <#GAPDoc Label="Random:coll">
@@ -1627,17 +1627,29 @@ DeclareAttribute( "RepresentativeSmallest", IsListOrCollection );
 ##  <Index Key="Random"><Ref Oper="Random" 
 ##                           Label="for a list or collection"/></Index> 
 ##  <Ref Oper="Random" Label="for a list or collection"/> returns a
-##  (pseudo-)random element of the list or collection <A>listorcoll</A>.
+##  (pseudo-)random element of the dense, nonempty list or nonempty
+##  collection <A>listorcoll</A>.
+##  The behaviour for non-dense or empty lists, and for empty collections
+##  (see <Ref Filt="IsDenseList"/>, <Ref Prop="IsEmpty"/>)
+##  is undefined.
 ##  <P/>
 ##  As lists or ranges are restricted in length (<M>2^{28}-1</M> or 
 ##  <M>2^{60}-1</M> depending on your system), the second form returns a
 ##  random integer in the range <A>from</A> to <A>to</A> (inclusive) for
 ##  arbitrary integers <A>from</A> and <A>to</A>.
+##  The behaviour in the case that <A>from</A> is larger than <A>to</A>
+##  is undefined.
+##  <P/>
+##  See Section <Ref Sect="Random Sources"/> for more about computing
+##  random elements, in particular for
+##  <Ref Oper="Random" Label="for random source and list"/> methods
+##  that take a random source as the first argument.
 ##  <P/>
 ##  The distribution of elements returned by
 ##  <Ref Oper="Random" Label="for a list or collection"/> depends
 ##  on the argument.
-##  For a list the distribution is uniform (all elements are equally likely).
+##  For a dense, nonempty list the distribution is uniform (all elements are
+##  equally likely).
 ##  The same holds usually for finite collections that are
 ##  not lists.
 ##  For infinite collections some reasonable distribution is used.
@@ -1669,6 +1681,8 @@ DeclareAttribute( "RepresentativeSmallest", IsListOrCollection );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
+# We keep the declaration for non-dense lists
+# in order not to break existing code.
 DeclareOperation( "Random", [ IsListOrCollection ] );
 DeclareOperation( "Random", [ IS_INT, IS_INT ] );
 
@@ -1695,7 +1709,7 @@ DeclareOperation( "Random", [ IS_INT, IS_INT ] );
 
 #############################################################################
 ##
-#F  RandomList( <list> )
+#F  RandomList( [<rs>, ]<list> )
 ##
 ##  <#GAPDoc Label="RandomList">
 ##  <ManSection>
@@ -1707,11 +1721,24 @@ DeclareOperation( "Random", [ IS_INT, IS_INT ] );
 ##  <Ref Func="RandomList"/> returns a (pseudo-)random element with equal
 ##  distribution.
 ##  <P/>
-##  The random source <A>rs</A> is used to choose a random number.
+##  The random source <A>rs</A> (see <Ref Sect="Random Sources"/>)
+##  is used to choose a random number.
 ##  If <A>rs</A> is absent,
 ##  this function uses the <Ref Var="GlobalMersenneTwister"/> to produce the
 ##  random elements (a source of high quality random numbers).
 ##  <P/>
+##  <Example><![CDATA[
+##  gap> RandomList( [ 1 .. 6 ] );
+##  3
+##  gap> elms:= AsList( Group( (1,2,3) ) );;
+##  gap> RandomList( elms );  RandomList( elms );
+##  (1,2,3)
+##  (1,3,2)
+##  gap> rs:= RandomSource( IsMersenneTwister, 1 );
+##  <RandomSource in IsMersenneTwister>
+##  gap> RandomList( rs, elms );
+##  (1,2,3)
+##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -2051,6 +2078,10 @@ DeclareAttribute( "UnderlyingCollection", IsListOrCollection );
 ##  same as <Ref Oper="ShallowCopy"/> (see also 
 ##  <Ref Sect="Duplication of Lists"/>).
 ##  <P/>
+##  Developers who wish to adapt this for custom list or collection types need to
+##  install suitable methods for the operation <C>ListOp</C>.
+##  <Index Key="ListOp"><C>ListOp</C></Index>
+##  <P/>
 ##  <Example><![CDATA[
 ##  gap> List( [1,2,3], i -> i^2 );
 ##  [ 1, 4, 9 ]
@@ -2084,6 +2115,10 @@ DeclareAttribute( "UnderlyingCollection", IsListOrCollection );
 ##  <!-- this is not reasonable since <C>ShallowCopy</C> need not guarantee to return-->
 ##  <!-- a constant time access list-->
 ##  <P/>
+##  Developers who wish to adapt this for custom list or collection types need to
+##  install suitable methods for the operation <C>ListOp</C>.
+##  <Index Key="ListOp"><C>ListOp</C></Index>
+##  <P/>
 ##  <Example><![CDATA[
 ##  gap> l:= List( Group( (1,2,3) ) );
 ##  [ (), (1,3,2), (1,2,3) ]
@@ -2098,8 +2133,8 @@ DeclareAttribute( "UnderlyingCollection", IsListOrCollection );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
+##  We catch internal lists by a function to avoid method selection:
 DeclareGlobalFunction( "List" );
-
 DeclareOperation( "ListOp", [ IsListOrCollection ] );
 DeclareOperation( "ListOp", [ IsListOrCollection, IsFunction ] );
 
@@ -2226,7 +2261,7 @@ DeclareSynonym( "Set", SSortedList );
 ##  If the argument is a list (which may contain holes),
 ##  then <C>Length( <A>imm</A> )</C> is the <Ref Attr="Length"/> value of
 ##  this list,
-##  and <A>imm</A> contains the elements (and holes) of of the list
+##  and <A>imm</A> contains the elements (and holes) of the list
 ##  in the same order.
 ##  If the argument is a collection that is not a list,
 ##  then <C>Length( <A>imm</A> )</C> is the number of different elements
@@ -2453,6 +2488,10 @@ DeclareGlobalFunction( "Elements" );
 ##  This is useful for example if the first argument is empty and a different
 ##  zero than <C>0</C> is desired, in which case <A>init</A> is returned.
 ##  <P/>
+##  Developers who wish to adapt this for custom list or collection types need to
+##  install suitable methods for the operation <C>SumOp</C>.
+##  <Index Key="SumOp"><C>SumOp</C></Index>
+##  <P/>
 ##  <Example><![CDATA[
 ##  gap> Sum( [ 2, 3, 5, 7, 11, 13, 17, 19 ] );
 ##  77
@@ -2467,28 +2506,8 @@ DeclareGlobalFunction( "Elements" );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
+##  We catch internal lists by a function to avoid method selection:
 DeclareGlobalFunction( "Sum" );
-
-
-#############################################################################
-##
-#O  SumOp( <C> )
-#O  SumOp( <C>, <func> )
-#O  SumOp( <C>, <init> )
-#O  SumOp( <C>, <func>, <init> )
-##
-##  <ManSection>
-##  <Oper Name="SumOp" Arg='C'/>
-##  <Oper Name="SumOp" Arg='C, func'/>
-##  <Oper Name="SumOp" Arg='C, init'/>
-##  <Oper Name="SumOp" Arg='C, func, init'/>
-##
-##  <Description>
-##  <C>SumOp</C> is the operation called by <C>Sum</C>
-##  if <A>C</A> is not an internal list.
-##  </Description>
-##  </ManSection>
-##
 DeclareOperation( "SumOp", [ IsListOrCollection ] );
 
 
@@ -2531,6 +2550,10 @@ DeclareOperation( "SumOp", [ IsListOrCollection ] );
 ##  This is useful for example if the first argument is empty and a different
 ##  identity than <C>1</C> is desired, in which case <A>init</A> is returned.
 ##  <P/>
+##  Developers who wish to adapt this for custom list or collection types need to
+##  install suitable methods for the operation <C>ProductOp</C>.
+##  <Index Key="ProductOp"><C>ProductOp</C></Index>
+##  <P/>
 ##  <Example><![CDATA[
 ##  gap> Product( [ 2, 3, 5, 7, 11, 13, 17, 19 ] );
 ##  9699690
@@ -2545,28 +2568,8 @@ DeclareOperation( "SumOp", [ IsListOrCollection ] );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
+##  We catch internal lists by a function to avoid method selection:
 DeclareGlobalFunction( "Product" );
-
-
-#############################################################################
-##
-#O  ProductOp( <C> )
-#O  ProductOp( <C>, <func> )
-#O  ProductOp( <C>, <init> )
-#O  ProductOp( <C>, <func>, <init> )
-##
-##  <ManSection>
-##  <Oper Name="ProductOp" Arg='C'/>
-##  <Oper Name="ProductOp" Arg='C, func'/>
-##  <Oper Name="ProductOp" Arg='C, init'/>
-##  <Oper Name="ProductOp" Arg='C, func, init'/>
-##
-##  <Description>
-##  <C>ProductOp</C> is the operation called by <C>Product</C>
-##  if <A>C</A> is not an internal list.
-##  </Description>
-##  </ManSection>
-##
 DeclareOperation( "ProductOp", [ IsListOrCollection ] );
 
 
@@ -2604,6 +2607,10 @@ DeclareOperation( "ProductOp", [ IsListOrCollection ] );
 ##  (see&nbsp;<Ref Sect="List Assignment"/>) can be used to extract
 ##  elements of a list according to indices given in another list.
 ##  <P/>
+##  Developers who wish to adapt this for custom list or collection types need to
+##  install suitable methods for the operation <C>FilteredOp</C>.
+##  <Index Key="FilteredOp"><C>FilteredOp</C></Index>
+##  <P/>
 ##  <Example><![CDATA[
 ##  gap> Filtered( [1..20], IsPrime );
 ##  [ 2, 3, 5, 7, 11, 13, 17, 19 ]
@@ -2619,22 +2626,8 @@ DeclareOperation( "ProductOp", [ IsListOrCollection ] );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
+##  We catch internal lists by a function to avoid method selection:
 DeclareGlobalFunction( "Filtered" );
-
-
-#############################################################################
-##
-#O  FilteredOp( <C>, <func> )
-##
-##  <ManSection>
-##  <Oper Name="FilteredOp" Arg='C, func'/>
-##
-##  <Description>
-##  <C>FilteredOp</C> is the operation called by <C>Filtered</C>
-##  if <A>C</A> is not an internal list.
-##  </Description>
-##  </ManSection>
-##
 DeclareOperation( "FilteredOp", [ IsListOrCollection, IsFunction ] );
 
 
@@ -2671,6 +2664,10 @@ DeclareOperation( "FilteredOp", [ IsListOrCollection, IsFunction ] );
 ##  <Ref Func="Filtered"/> allows you to extract the elements of a list
 ##  that have a certain property.
 ##  <P/>
+##  Developers who wish to adapt this for custom list or collection types need to
+##  install suitable methods for the operation <C>NumberOp</C>.
+##  <Index Key="NumberOp"><C>NumberOp</C></Index>
+##  <P/>
 ##  <Example><![CDATA[
 ##  gap> Number( [ 2, 3, 5, 7 ] );
 ##  4
@@ -2690,22 +2687,8 @@ DeclareOperation( "FilteredOp", [ IsListOrCollection, IsFunction ] );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
+##  We catch internal lists by a function to avoid method selection:
 DeclareGlobalFunction( "Number" );
-
-
-#############################################################################
-##
-#O  NumberOp( <C>, <func> )
-##
-##  <ManSection>
-##  <Oper Name="NumberOp" Arg='C, func'/>
-##
-##  <Description>
-##  <C>NumberOp</C> is the operation called by <C>Number</C>
-##  if <A>C</A> is not an internal list.
-##  </Description>
-##  </ManSection>
-##
 DeclareOperation( "NumberOp", [ IsListOrCollection, IsFunction ] );
 
 
@@ -2722,6 +2705,10 @@ DeclareOperation( "NumberOp", [ IsListOrCollection, IsFunction ] );
 ##  tests whether the unary function <A>func</A> returns <K>true</K>
 ##  for all elements in the list or collection <A>listorcoll</A>.
 ##  <P/>
+##  Developers who wish to adapt this for custom list or collection types need to
+##  install suitable methods for the operation <C>ForAllOp</C>.
+##  <Index Key="ForAllOp"><C>ForAllOp</C></Index>
+##  <P/>
 ##  <Example><![CDATA[
 ##  gap> ForAll( [1..20], IsPrime );
 ##  false
@@ -2736,22 +2723,8 @@ DeclareOperation( "NumberOp", [ IsListOrCollection, IsFunction ] );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
+##  We catch internal lists by a function to avoid method selection:
 DeclareGlobalFunction( "ForAll" );
-
-
-#############################################################################
-##
-#O  ForAllOp( <C>, <func> )
-##
-##  <ManSection>
-##  <Oper Name="ForAllOp" Arg='C, func'/>
-##
-##  <Description>
-##  <C>ForAllOp</C> is the operation called by <C>ForAll</C>
-##  if <A>C</A> is not an internal list.
-##  </Description>
-##  </ManSection>
-##
 DeclareOperation( "ForAllOp", [ IsListOrCollection, IsFunction ] );
 
 
@@ -2767,6 +2740,10 @@ DeclareOperation( "ForAllOp", [ IsListOrCollection, IsFunction ] );
 ##  <Description>
 ##  tests whether the unary function <A>func</A> returns <K>true</K>
 ##  for at least one element in the list or collection <A>listorcoll</A>.
+##  <P/>
+##  Developers who wish to adapt this for custom list or collection types need to
+##  install suitable methods for the operation <C>ForAnyOp</C>.
+##  <Index Key="ForAnyOp"><C>ForAnyOp</C></Index>
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> ForAny( [1..20], IsPrime );
@@ -2784,22 +2761,8 @@ DeclareOperation( "ForAllOp", [ IsListOrCollection, IsFunction ] );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
+##  We catch internal lists by a function to avoid method selection:
 DeclareGlobalFunction( "ForAny" );
-
-
-#############################################################################
-##
-#O  ForAnyOp( <C>, <func> )
-##
-##  <ManSection>
-##  <Oper Name="ForAnyOp" Arg='C, func'/>
-##
-##  <Description>
-##  <C>ForAnyOp</C> is the operation called by <C>ForAny</C>
-##  if <A>C</A> is not an internal list.
-##  </Description>
-##  </ManSection>
-##
 DeclareOperation( "ForAnyOp", [ IsListOrCollection, IsFunction ] );
 
 

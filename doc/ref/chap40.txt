@@ -14,7 +14,7 @@
   Section [14X40.5[114X explains a technique how to enforce this automatically.[133X
   
   [33X[0;0YHomomorphisms  are  also  used to represent group automorphisms, and section
-  [14X40.6[114X explains explains [5XGAP[105X's facilities to work with automorphism groups.[133X
+  [14X40.6[114X explains [5XGAP[105X's facilities to work with automorphism groups.[133X
   
   [33X[0;0YSection  [14X40.9[114X  explains  how  to  make  [5XGAP[105X  to search for all homomorphisms
   between two groups which fulfill certain specifications.[133X
@@ -397,6 +397,10 @@
   restriction  to  [3Xobj[103X is injective. The concrete morphism (and also the image
   group) will depend on the representation of [3Xobj[103X.[133X
   
+  [33X[0;0YWARNING:  The  domain  of the homomorphism may be larger than [3Xobj[103X. To obtain
+  the  image of [3Xobj[103X under the homomorphism, use [2XNiceObject[102X ([14X40.5-3[114X); see there
+  for an example where it matters.[133X
+  
   [1X40.5-3 NiceObject[101X
   
   [33X[1;0Y[29X[2XNiceObject[102X( [3Xobj[103X ) [32X attribute[133X
@@ -488,7 +492,7 @@
   [33X[1;0Y[29X[2XIsInnerAutomorphism[102X( [3Xhom[103X ) [32X property[133X
   
   [33X[0;0YLet [3Xhom[103X be a group general mapping (see [2XIsGroupGeneralMapping[102X ([14X32.9-4[114X)) with
-  source  [22XG[122X,  say.  [2XIsConjugatorIsomorphism[102X  returns [9Xtrue[109X if [3Xhom[103X is induced by
+  source  [22XG[122X.  [2XIsConjugatorIsomorphism[102X  returns  [9Xtrue[109X  if  [3Xhom[103X  is  induced  by
   conjugation  of  [22XG[122X by an element [22Xg[122X that lies in [22XG[122X or in a group into which [22XG[122X
   is naturally embedded in the sense described below, and [9Xfalse[109X otherwise.[133X
   
@@ -569,9 +573,8 @@
   
   [33X[1;0Y[29X[2XIsGroupOfAutomorphisms[102X( [3XG[103X ) [32X property[133X
   
-  [33X[0;0Yindicates  whether  [3XG[103X consists of automorphisms of another group [22XH[122X, say. The
-  group  [22XH[122X  can  be  obtained  from  [3XG[103X  via  the  attribute [2XAutomorphismDomain[102X
-  ([14X40.7-3[114X).[133X
+  [33X[0;0Yindicates  whether [3XG[103X consists of automorphisms of another group [22XH[122X. The group
+  [22XH[122X can be obtained from [3XG[103X via the attribute [2XAutomorphismDomain[102X ([14X40.7-3[114X).[133X
   
   [1X40.7-3 AutomorphismDomain[101X
   
@@ -583,8 +586,9 @@
   
   [33X[1;0Y[29X[2XIsAutomorphismGroup[102X( [3XG[103X ) [32X property[133X
   
-  [33X[0;0Yindicates  whether [3XG[103X is the full automorphism group of another group [22XH[122X, this
-  group is given as [2XAutomorphismDomain[102X ([14X40.7-3[114X) value of [3XG[103X.[133X
+  [33X[0;0Yindicates  whether  [3XG[103X, which must be [2XIsGroupOfAutomorphisms[102X ([14X40.7-2[114X), is the
+  full  automorphism  group  of  another  group  [22XH[122X,  this  group  is  given as
+  [2XAutomorphismDomain[102X ([14X40.7-3[114X) value of [3XG[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg:=Group((1,2,3,4),(1,3));[127X[104X
@@ -599,7 +603,7 @@
     [4X[28X  Pcgs([ (2,4), (1,2,3,4), (1,3)(2,4) ]) -> [128X[104X
     [4X[28X    [ (2,4), (1,4,3,2), (1,3)(2,4) ] ][128X[104X
     [4X[25Xgap>[125X [27XNiceObject(au);[127X[104X
-    [4X[28XGroup([ (1,2,3,4), (1,3)(2,4), (2,4) ])[128X[104X
+    [4X[28XGroup([ (1,2,4,6), (1,4)(2,6), (2,6)(3,5) ])[128X[104X
   [4X[32X[104X
   
   [1X40.7-5 InnerAutomorphismsAutomorphismGroup[101X
@@ -615,7 +619,19 @@
     [4X[28X<group with 2 generators>[128X[104X
   [4X[32X[104X
   
-  [1X40.7-6 InducedAutomorphism[101X
+  [1X40.7-6 InnerAutomorphismGroup[101X
+  
+  [33X[1;0Y[29X[2XInnerAutomorphismGroup[102X( [3XG[103X ) [32X attribute[133X
+  
+  [33X[0;0YFor  a  group  [3XG[103X  this  attribute  stores  the  group of inner automorphisms
+  (automorphisms induced by conjugation) of the original group.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XInnerAutomorphismGroup(SymmetricGroup(5));[127X[104X
+    [4X[28X<group with 2 generators>[128X[104X
+  [4X[32X[104X
+  
+  [1X40.7-7 InducedAutomorphism[101X
   
   [33X[1;0Y[29X[2XInducedAutomorphism[102X( [3Xepi[103X, [3Xaut[103X ) [32X function[133X
   
@@ -641,8 +657,8 @@
   [1X40.8 [33X[0;0YCalculating with Group Automorphisms[133X[101X
   
   [33X[0;0YUsually  the  best  way  to  calculate  in  a  group  of automorphisms is to
-  translate  all  calculations to an isomorphic group in a representation, for
-  which  better  algorithms  are  available,  say  a  permutation  group. This
+  translate  all  calculations  to an isomorphic group in a representation for
+  which  better  algorithms  are  available, such as a permutation group. This
   translation can be done automatically using [2XNiceMonomorphism[102X ([14X40.5-2[114X).[133X
   
   [33X[0;0YOnce  a  group knows to be a group of automorphisms (this can be achieved by
@@ -724,14 +740,14 @@
   
   [33X[1;0Y[29X[2XAllHomomorphismClasses[102X( [3XG[103X, [3XH[103X ) [32X function[133X
   
-  [33X[0;0YFor  two  groups  [3XG[103X  and  [3XH[103X,  this  function  returns representatives of all
+  [33X[0;0YFor  two finite groups [3XG[103X and [3XH[103X, this function returns representatives of all
   homomorphisms [22X[3XG[103X to [3XH[103X[122X up to [3XH[103X-conjugacy.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XAllHomomorphismClasses(SymmetricGroup(4),SymmetricGroup(3)); [127X[104X
-    [4X[28X[ [ (1,2,3), (2,4) ] -> [ (), () ],[128X[104X
-    [4X[28X  [ (1,2,3), (2,4) ] -> [ (), (1,2) ],[128X[104X
-    [4X[28X  [ (1,2,3), (2,4) ] -> [ (1,2,3), (1,2) ] ][128X[104X
+    [4X[28X[ [ (1,3,4,2), (1,3,4) ] -> [ (), () ],[128X[104X
+    [4X[28X  [ (1,3,4,2), (1,3,4) ] -> [ (1,2), () ],[128X[104X
+    [4X[28X  [ (1,3,4,2), (1,3,4) ] -> [ (2,3), (1,2,3) ] ][128X[104X
   [4X[32X[104X
   
   [1X40.9-3 AllHomomorphisms[101X
@@ -740,10 +756,10 @@
   [33X[1;0Y[29X[2XAllEndomorphisms[102X( [3XG[103X ) [32X function[133X
   [33X[1;0Y[29X[2XAllAutomorphisms[102X( [3XG[103X ) [32X function[133X
   
-  [33X[0;0YFor  two  groups  [3XG[103X  and  [3XH[103X, this function returns all homomorphisms [22X[3XG[103X to [3XH[103X[122X.
-  Since  this number will grow quickly, [2XAllHomomorphismClasses[102X ([14X40.9-2[114X) should
-  be  used in most cases. [2XAllEndomorphisms[102X returns all homomorphisms from [3XG[103X to
-  itself, [2XAllAutomorphisms[102X returns all bijective endomorphisms.[133X
+  [33X[0;0YFor  two finite groups [3XG[103X and [3XH[103X, this function returns all homomorphisms [22X[3XG[103X to
+  [3XH[103X[122X.  Since  this  number  will  grow quickly, [2XAllHomomorphismClasses[102X ([14X40.9-2[114X)
+  should  be  used  in  most cases. [2XAllEndomorphisms[102X returns all homomorphisms
+  from [3XG[103X to itself, [2XAllAutomorphisms[102X returns all bijective endomorphisms.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XAllHomomorphisms(SymmetricGroup(3),SymmetricGroup(3));[127X[104X
@@ -780,7 +796,7 @@
     [4X[25Xgap>[125X [27Xh:=Group((1,2,3),(1,2));[127X[104X
     [4X[28XGroup([ (1,2,3), (1,2) ])[128X[104X
     [4X[25Xgap>[125X [27Xquo:=GQuotients(g,h);[127X[104X
-    [4X[28X[ [ (1,2,3,4), (1,3,4) ] -> [ (2,3), (1,2,3) ] ][128X[104X
+    [4X[28X[ [ (1,2,3,4), (1,4,3) ] -> [ (2,3), (1,2,3) ] ][128X[104X
   [4X[32X[104X
   
   [1X40.9-5 IsomorphicSubgroups[101X
@@ -820,9 +836,9 @@
   [33X[0;0YThis  function loops over element tuples taken from [3Xclasses[103X and checks these
   for  properties  such  as generating a given group, or fulfilling relations.
   This  can  be  used to find small generating sets or all types of Morphisms.
-  The  element  tuples  are  used  only up to up to inner automorphisms as all
-  images can be obtained easily from them by conjugation while running through
-  all of them usually would take too long.[133X
+  The element tuples are used only up to inner automorphisms as all images can
+  be  obtained  easily  from  them by conjugation while running through all of
+  them usually would take too long.[133X
   
   [33X[0;0Y[3Xrange[103X  is a group from which these elements are taken. The classes are given
   in a list [3Xclasses[103X which is a list of records with the following components.[133X
@@ -865,7 +881,7 @@
   
   [8X[10Xcondition[110X[8X[108X
         [33X[0;6YA  function  that  will be applied to the homomorphism and must return
-        [10Xtrue[110X for the homomorphism to be accepted.[133X
+        [9Xtrue[109X for the homomorphism to be accepted.[133X
   
   [33X[0;0Y[3Xaction[103X is a number whose bit-representation indicates the requirements which
   are enforced on the element tuples found, as follows.[133X

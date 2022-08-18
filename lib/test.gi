@@ -128,7 +128,7 @@ InstallGlobalFunction(ParseTestInput, function(str, ignorecomments, fnam)
     elif StartsWith(lines[i], ">\t") then
         testError("Invalid test file: Continuation prompt '> ' followed by a tab, expected a regular space");
     elif Length(outp) > 0 then
-      if foundcmd then
+      if foundcmd and not ForAll(lines[i], c -> c = ' ' or c = '\t') then
         testError("Invalid test file: #@ command found in the middle of a single test");
       fi;
       Append(outp[Length(outp)], lines[i]);
@@ -222,11 +222,7 @@ InstallGlobalFunction(RunTests, function(arg)
     res := "";
     fres := OutputTextString(res, false);
     t := Runtime();
-    if localbag <> false then
-        READ_STREAM_LOOP_WITH_CONTEXT(s, fres, localbag);
-    else
-        READ_STREAM_LOOP(s, fres);
-    fi;
+    READ_STREAM_LOOP(s, fres, localbag);
     t := Runtime() - t;
     CloseStream(fres);
     CloseStream(s);
@@ -252,25 +248,33 @@ InstallGlobalFunction(RunTests, function(arg)
 end);
 
 BindGlobal("TEST", AtomicRecord( rec(Timings := rec())));
-TEST.compareFunctions := AtomicRecord(rec());
-TEST.compareFunctions.uptonl := function(a, b)
+
+TEST.transformFunctions := AtomicRecord(rec());
+TEST.transformFunctions.removenl := function(a)
   a := ShallowCopy(a);
-  b := ShallowCopy(b);
   while Length(a) > 0 and a[Length(a)] = '\n' do
     Remove(a);
   od;
-  while Length(b) > 0 and b[Length(b)] = '\n' do
-    Remove(b);
-  od;
+  return a;
+end;
+TEST.transformFunctions.removewhitespace := function(a)
+  a := ReplacedString(ShallowCopy(a), "\\\n", "");
+  RemoveCharacters(a, " \n\t\r");
+  return a;
+end;
+
+TEST.compareFunctions := AtomicRecord(rec());
+TEST.compareFunctions.uptonl := function(a, b)
+  a := TEST.transformFunctions.removenl(a);
+  b := TEST.transformFunctions.removenl(b);
   return a=b;
 end;
 TEST.compareFunctions.uptowhitespace := function(a, b)
-  a := ReplacedString(ShallowCopy(a), "\\\n", "");
-  b := ReplacedString(ShallowCopy(b), "\\\n", "");
-  RemoveCharacters(a, " \n\t\r");
-  RemoveCharacters(b, " \n\t\r");
+  a := TEST.transformFunctions.removewhitespace(a);
+  b := TEST.transformFunctions.removewhitespace(b);
   return a=b;
 end;
+
 
 ##
 ## CREATE_LOCAL_VARIABLES_BAG(namelist)
@@ -338,10 +342,10 @@ end);
 ##  <Item>A <C>#@if</C> allows to conditionally skip parts of the test input depending on
 ##  the value of a boolean expression. The exact behavior is done as follows:
 ##  <P/>
-##  If the &GAP; expression <C>EXPR</C> evaluates to <C>true</C>, then the lines after the
+##  If the &GAP; expression <C>EXPR</C> evaluates to <K>true</K>, then the lines after the
 ##  <C>#@if</C> are used until either a <C>#@else</C> or <C>#@fi</C> is
 ##  reached. If a <C>#@else</C> is present then the code after the <C>#@else</C>
-##  is used if and only if <C>EXPR</C> evaluated to <C>false</C>. Finally,
+##  is used if and only if <C>EXPR</C> evaluated to <K>false</K>. Finally,
 ##  once <C>#endif</C> is reached, evaluation continues normally.
 ##  </Item>
 ##  </List>
@@ -368,10 +372,20 @@ end);
 ##  return <K>true</K> or <K>false</K>, indicating if the strings should
 ##  be considered equivalent or not. By default <Ref Oper="\=" /> is used.
 ##  <Br/>
-##  Two strings are recognized as abbreviations in this component: 
+##  Two strings are recognized as abbreviations in this component:
 ##  <C>"uptowhitespace"</C> checks if the two strings become equal after
 ##  removing all white space. And <C>"uptonl"</C> compares the string up
 ##  to trailing newline characters.
+##  </Item>
+##  <Mark><C>transformFunction</C></Mark>
+##  <Item>This must be a function that gets one string as input, either the newly
+##  generated or the stored output of some &GAP; input. The function must
+##  return a new string which will be used to compare the actual and the expected
+##  output. By default <Ref Func="IdFunc" /> is used.
+##  <Br/>
+##  Two strings are recognized as abbreviations in this component:
+##  <C>"removewhitespace"</C> removes all white space.
+##  And <C>"removenl"</C> removes all trailing newline characters.
 ##  </Item>
 ##  <Mark><C>reportDiff</C></Mark>
 ##  <Item>A function that gets six arguments and reports a difference in the
@@ -481,8 +495,46 @@ end);
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##  
+DeclareGlobalName("TextAttr"); # from GAPDoc
+DeclareGlobalName("DefaultReportDiffColors"); # initialized in Test() or by the user
+BindGlobal("DefaultReportDiff", function(inp, expout, found, fnam, line, time)
+  if UserPreference("UseColorsInTerminal") = true then
+    Print(DefaultReportDiffColors.message);
+    Print("########> Diff in ");
+    if IsStream(fnam) then
+      Print("test stream, line ",line,":");
+    else
+      Print(fnam,":",line);
+    fi;
+    Print(TextAttr.reset, "\n", DefaultReportDiffColors.message);
+    Print("# Input is:", TextAttr.reset, "\n");
+    Print(DefaultReportDiffColors.input);
+    Print(inp);
+    Print(TextAttr.reset, TextAttr.delline, DefaultReportDiffColors.message);
+    Print("# Expected output:", TextAttr.reset, "\n");
+    Print(DefaultReportDiffColors.expected);
+    Print(expout);
+    Print(TextAttr.reset, TextAttr.delline, DefaultReportDiffColors.message);
+    Print("# But found:", TextAttr.reset, "\n");
+    Print(DefaultReportDiffColors.actual);
+    Print(found);
+    Print(TextAttr.reset, TextAttr.delline, DefaultReportDiffColors.message);
+    Print("########", TextAttr.reset, "\n");
+  else
+    Print("########> Diff in ");
+    if IsStream(fnam) then
+      Print("test stream, line ",line,":\n");
+    else
+      Print(fnam,":",line,"\n");
+    fi;
+    Print("# Input is:\n", inp);
+    Print("# Expected output:\n", expout);
+    Print("# But found:\n", found);
+    Print("########\n");  fi;
+end);
+
 InstallGlobalFunction("Test", function(arg)
-  local fnam, nopts, opts, size, full, pf, failures, lines, ign, new, n,
+  local fnam, nopts, opts, size, full, pf, failures, lines, ign, new,
         cT, ok, oldtimes, thr, delta, len, c, i, j, d, localdef, line;
   
   # get arguments and set options
@@ -492,12 +544,21 @@ InstallGlobalFunction("Test", function(arg)
   else 
     nopts := rec();
   fi;
+  if not IsBound(DefaultReportDiffColors) then
+    BindGlobal("DefaultReportDiffColors", rec(
+        message := TextAttr.4,  # blue text
+        input := "",
+        expected := Concatenation(TextAttr.0, TextAttr.b2), # black text on green background
+        actual := Concatenation(TextAttr.7, TextAttr.b1),   # white text on red background
+        ));
+  fi;
   opts := rec(
            ignoreComments := true,
            isStream := IsStream(fnam),
            width := 80,
            ignoreSTOP_TEST := true,
            compareFunction := EQ,
+           transformFunction := IdFunc,
            showProgress := "some",
            writeTimings := false,
            compareTimings := false,
@@ -519,18 +580,7 @@ InstallGlobalFunction("Test", function(arg)
            end,
            rewriteToFile := false,
            breakOnError := false,
-           reportDiff := function(inp, expout, found, fnam, line, time)
-             Print("########> Diff in ");
-             if IsStream(fnam) then
-               Print("test stream, line ",line,":\n");
-             else
-               Print(fnam,":",line,"\n");
-             fi;
-             Print("# Input is:\n", inp);
-             Print("# Expected output:\n", expout);
-             Print("# But found:\n", found);
-             Print("########\n");
-           end,
+           reportDiff := DefaultReportDiff,
            subsWindowsLineBreaks := true,
            returnNumFailures := false,
            localdef := false,
@@ -541,7 +591,7 @@ InstallGlobalFunction("Test", function(arg)
 
   if IsHPCGAP then
     # HPCGAP's window size varies in different threads
-    opts.compareFunction := "uptowhitespace";
+    opts.transformFunction := "removewhitespace";
     # HPC-GAP's output is not compatible with changing lines
     opts.showProgress := false;
   fi;
@@ -554,7 +604,14 @@ InstallGlobalFunction("Test", function(arg)
     if IsBound(TEST.compareFunctions.(opts.compareFunction)) then
       opts.compareFunction := TEST.compareFunctions.(opts.compareFunction);
     else
-      opts.compareFunction := EQ;
+      Error("Unknown compareFunction '", opts.compareFunction, "'");
+    fi;
+  fi;
+  if IsString(opts.transformFunction) then
+    if IsBound(TEST.transformFunctions.(opts.transformFunction)) then
+      opts.transformFunction := TEST.transformFunctions.(opts.transformFunction);
+    else
+      Error("Unknown transformFunction '", opts.transformFunction, "'");
     fi;
   fi;
 
@@ -609,7 +666,8 @@ InstallGlobalFunction("Test", function(arg)
   # check for and report differences
   failures := 0;
   for i in [1..Length(pf.inp)] do
-    if opts.compareFunction(pf.outp[i], pf.cmp[i]) <> true then
+    if opts.compareFunction(opts.transformFunction(pf.outp[i]),
+                            opts.transformFunction(pf.cmp[i])) <> true then
       if not opts.ignoreSTOP_TEST or 
          PositionSublist(pf.inp[i], "STOP_TEST") <> 1 then
         failures := failures + 1;
@@ -634,7 +692,6 @@ InstallGlobalFunction("Test", function(arg)
       Add(new[i], '\n');
     od;
     for i in [1..Length(pf.inp)] do
-      n := Number(pf.inp[i], c-> c = '\n'); 
       new[pf.pos[i]] := "";
       for j in [1..Number(pf.inp[i], c-> c = '\n')] do
         Append(new[pf.pos[i]], lines[pf.pos[i]+j-1]);
@@ -642,6 +699,12 @@ InstallGlobalFunction("Test", function(arg)
       od; 
       if PositionSublist(pf.inp[i], "STOP_TEST") <> 1 then
         Append(new[pf.pos[i]], pf.cmp[i]);
+        if pf.cmp[i] <> "" and Last(pf.cmp[i]) <> '\n' then
+            Info(InfoWarning, 1, "An output in the .tst file does not end with a newline. GAP does not support this.");
+            Info(InfoWarning, 1, "A newline will be inserted to make the file valid, but the test will fail.");
+            Info(InfoWarning, 1, "The location of this problem is marked with '# Newline inserted here'.");
+            Append(new[pf.pos[i]], "# Newline inserted here by 'rewriteToFile'\n");
+        fi;
       fi;
     od;
     new := Concatenation(Compacted(new));
@@ -775,11 +838,6 @@ InstallGlobalFunction( "TestDirectory", function(arg)
   totalMem := 0;
   totalGcTime := 0;
   
-  GcTime := function()
-      local g;
-      g := GASMAN_STATS();    
-      return g[1][8] + g[2][8];    
-  end;
   STOP_TEST_CPY := STOP_TEST;
   STOP_TEST := function(arg) end;
   
@@ -812,7 +870,7 @@ InstallGlobalFunction( "TestDirectory", function(arg)
   opts.testOptions.returnNumFailures := true;
   
   if opts.exitGAP then
-    GAP_EXIT_CODE(1);
+    GapExitCode(1);
   fi;
   
   files := [];
@@ -872,7 +930,7 @@ InstallGlobalFunction( "TestDirectory", function(arg)
     
     startTime := Runtime();
     startMem := TotalMemoryAllocated();    
-    startGcTime := GcTime();
+    startGcTime := TOTAL_GC_TIME();
 
     if opts.rewriteToFile then
       opts.testOptions.rewriteToFile := files[i].name;
@@ -885,7 +943,7 @@ InstallGlobalFunction( "TestDirectory", function(arg)
         Print( "#I  Errors detected while testing\n\n" );
       fi;
       if opts.exitGAP then
-        QUIT_GAP(1);
+        QuitGap(1);
       fi;
       return false;
     fi;
@@ -896,7 +954,7 @@ InstallGlobalFunction( "TestDirectory", function(arg)
     
     time := Runtime() - startTime;
     mem := TotalMemoryAllocated() - startMem;    
-    gctime := GcTime() - startGcTime;    
+    gctime := TOTAL_GC_TIME() - startGcTime;    
     filetimes[i] := time;
     filemems[i] := mem;    
     filegctimes[i] := gctime;    
@@ -935,9 +993,9 @@ InstallGlobalFunction( "TestDirectory", function(arg)
 
   if opts.exitGAP then
     if testTotalFailures = 0 then
-      QUIT_GAP(0);
+      QuitGap(0);
     else
-      QUIT_GAP(1);
+      QuitGap(1);
     fi;
   fi;
   
@@ -982,16 +1040,18 @@ end);
 ##
 InstallGlobalFunction( "TestPackage", function(pkgname)
 local testfile, str;
+pkgname := LowercaseString(pkgname);
 if not IsBound( GAPInfo.PackagesInfo.(pkgname) ) then
     Print("#I  No package with the name ", pkgname, " is available\n");
     return fail;
 elif LoadPackage( pkgname ) = fail then
-    Print( "#I ", pkgname, " package can not be loaded\n" );
+    Print( "#I ", pkgname, " package cannot be loaded\n" );
     return fail;
 elif not IsBound( GAPInfo.PackagesInfo.(pkgname)[1].TestFile ) then
     Print("#I No standard tests specified in ", pkgname, " package, version ",
           GAPInfo.PackagesInfo.(pkgname)[1].Version,  "\n");
-    return fail;
+    # Since a TestFile is not required, technically we passed "all" tests
+    return true;
 else
     testfile := Filename( DirectoriesPackageLibrary( pkgname, "" ), 
                           GAPInfo.PackagesInfo.(pkgname)[1].TestFile );

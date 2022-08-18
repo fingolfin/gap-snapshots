@@ -299,8 +299,9 @@
   in-place,  rather  than  allocating a new vector to hold the result, and may
   thus produce less garbage.[133X
   
-  [1X23.4-1 AddRowVector[101X
+  [1X23.4-1 AddVector[101X
   
+  [33X[1;0Y[29X[2XAddVector[102X( [3Xdst[103X, [3Xsrc[103X[, [3Xmul[103X[, [3Xfrom[103X, [3Xto[103X]] ) [32X operation[133X
   [33X[1;0Y[29X[2XAddRowVector[102X( [3Xdst[103X, [3Xsrc[103X[, [3Xmul[103X[, [3Xfrom[103X, [3Xto[103X]] ) [32X operation[133X
   
   [33X[0;0YAdds  the  product  of  [3Xsrc[103X and [3Xmul[103X to [3Xdst[103X, changing [3Xdst[103X. If [3Xfrom[103X and [3Xto[103X are
@@ -447,21 +448,21 @@
   
   [1X23.6-5 AClosestVectorCombinationsMatFFEVecFFE[101X
   
-  [33X[1;0Y[29X[2XAClosestVectorCombinationsMatFFEVecFFE[102X( [3Xmat[103X, [3Xf[103X, [3Xvec[103X, [3Xl[103X, [3Xstop[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XAClosestVectorCombinationsMatFFEVecFFECoords[102X( [3Xmat[103X, [3Xf[103X, [3Xvec[103X, [3Xl[103X, [3Xstop[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAClosestVectorCombinationsMatFFEVecFFE[102X( [3Xmat[103X, [3Xf[103X, [3Xvec[103X, [3Xcnt[103X, [3Xstop[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAClosestVectorCombinationsMatFFEVecFFECoords[102X( [3Xmat[103X, [3Xf[103X, [3Xvec[103X, [3Xcnt[103X, [3Xstop[103X ) [32X operation[133X
   
   [33X[0;0YThese  functions run through the [3Xf[103X-linear combinations of the vectors in the
   rows of the matrix [3Xmat[103X that can be written as linear combinations of exactly
-  [3Xl[103X rows (that is without using zero as a coefficient). The length of the rows
-  of [3Xmat[103X and the length of [3Xvec[103X must be equal, and all elements must lie in the
-  field    [3Xf[103X.    The    rows    of   [3Xmat[103X   must   be   linearly   independent.
+  [3Xcnt[103X  rows  (that  is without using zero as a coefficient). The length of the
+  rows  of  [3Xmat[103X and the length of [3Xvec[103X must be equal, and all elements must lie
+  in   the   field   [3Xf[103X.   The  rows  of  [3Xmat[103X  must  be  linearly  independent.
   [2XAClosestVectorCombinationsMatFFEVecFFE[102X  returns  a vector from these that is
   closest  to  the  vector [3Xvec[103X. If it finds a vector of distance at most [3Xstop[103X,
   which  must  be a nonnegative integer, then it stops immediately and returns
   this vector.[133X
   
   [33X[0;0Y[2XAClosestVectorCombinationsMatFFEVecFFECoords[102X   returns   a   length  2  list
-  containing  the  same  closest  vector  and  also  a vector [3Xv[103X with exactly [3Xl[103X
+  containing  the  same  closest  vector  and also a vector [3Xv[103X with exactly [3Xcnt[103X
   non-zero entries, such that [3Xv[103X times [3Xmat[103X is the closest vector.[133X
   
   [1X23.6-6 CosetLeadersMatFFE[101X
@@ -548,7 +549,7 @@
   to  the  lengths  of  [3Xlist1[103X  and [3Xlist2[103X. [2XReduceCoeffsMod[102X changes [3Xlist1[103X to the
   coefficient  list  of  the  remainder when dividing [3Xp1[103X by [3Xp2[103X modulo [3Xmodulus[103X,
   which  must  be  a  positive  integer.  This  operation  changes [3Xlist1[103X which
-  therefore must be a mutable list. The operations returns the position of the
+  therefore  must be a mutable list. The operation returns the position of the
   last  non-zero  entry of the result but is not guaranteed to remove trailing
   zeroes.[133X
   

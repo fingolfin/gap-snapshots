@@ -46,6 +46,8 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap49.html#X8589DCFA7C2E5FAA">49.4-2 WreathProductImprimitiveAction</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap49.html#X82B8DD1C868A3726">49.4-3 WreathProductProductAction</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap49.html#X80634C3180E0C593">49.4-4 KuKGenerators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap49.html#X801A358E879A0FF0">49.4-5 ListWreathProductElement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap49.html#X7ECB076E81D8D402">49.4-6 WreathProductElementList</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap49.html#X7AC1AD17833117DF">49.5 <span class="Heading">Free Products</span></a>
 </span>
@@ -151,7 +153,7 @@ Group([ (1,2,3), (1,2), (4,5,6), (4,5), (7,8,9), (7,8) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">au:=AutomorphismGroup(n);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">au:=First(AsSet(au),i-&gt;Order(i)=3);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">au:=Group(au);</span>
-&lt;group with 1 generators&gt;
+&lt;group with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupOfAutomorphisms(au);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SemidirectProduct(au,n);</span>
@@ -341,6 +343,32 @@ Group([ (2,3,4), (1,2,4) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KuKGenerators(g,hom,hom2);</span>
 [ (1,4)(2,5)(3,6), (1,6)(2,4)(3,5) ]
 </pre></div>
+
+<p><a id="X801A358E879A0FF0" name="X801A358E879A0FF0"></a></p>
+
+<h5>49.4-5 ListWreathProductElement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ListWreathProductElement</code>( <var class="Arg">G</var>, <var class="Arg">x</var>[, <var class="Arg">testDecomposition</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ListWreathProductElementNC</code>( <var class="Arg">G</var>, <var class="Arg">x</var>, <var class="Arg">testDecomposition</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Let <var class="Arg">x</var> be an element of a wreath product <var class="Arg">G</var> where <span class="SimpleMath">G = K ≀ H</span> and <span class="SimpleMath">H</span> acts as a finite permutation group of degree <span class="SimpleMath">m</span>. We can identify the element <var class="Arg">x</var> with a tuple <span class="SimpleMath">(f_1, ..., f_m; h)</span>, where <span class="SimpleMath">f_i ∈ K</span> is the <span class="SimpleMath">i</span>-th base component of <var class="Arg">x</var> and <span class="SimpleMath">h ∈ H</span> is the top component of <var class="Arg">x</var>.</p>
+
+<p><code class="func">ListWreathProductElement</code> returns a list <span class="SimpleMath">[f_1, ..., f_m, h]</span> containing the components of <var class="Arg">x</var> or <code class="keyw">fail</code> if <var class="Arg">x</var> cannot be decomposed in the wreath product.</p>
+
+<p>If ommited, the argument <var class="Arg">testDecomposition</var> defaults to true. If <var class="Arg">testDecomposition</var> is true, <code class="func">ListWreathProductElement</code> makes additional tests to ensure that the computed decomposition of <var class="Arg">x</var> is correct, i.e. it checks that <var class="Arg">x</var> is an element of the parent wreath product of <var class="Arg">G</var>:</p>
+
+<p>If <span class="SimpleMath">K ≤ Sym(l)</span>, this ensures that <span class="SimpleMath">x ∈ Sym(l) ≀ Sym(m)</span> where the parent wreath product is considered in the same action as <var class="Arg">G</var>, i.e. either in imprimitive action or product action.</p>
+
+<p>If <span class="SimpleMath">K ≤ GL(n,q)</span>, this ensures that <span class="SimpleMath">x ∈ GL(n,q) ≀ Sym(m)</span>.</p>
+
+<p><a id="X7ECB076E81D8D402" name="X7ECB076E81D8D402"></a></p>
+
+<h5>49.4-6 WreathProductElementList</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WreathProductElementList</code>( <var class="Arg">G</var>, <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WreathProductElementListNC</code>( <var class="Arg">G</var>, <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Let <var class="Arg">list</var> be equal to <span class="SimpleMath">[f_1, ..., f_m, h]</span> and <var class="Arg">G</var> be a wreath product where <span class="SimpleMath">G = K ≀ H</span>, <span class="SimpleMath">H</span> acts as a finite permutation group of degree <span class="SimpleMath">m</span>, <span class="SimpleMath">f_i ∈ K</span> and <span class="SimpleMath">h ∈ H</span>.</p>
+
+<p><code class="func">WreathProductElementList</code> returns the element <span class="SimpleMath">x ∈ G</span> identified by the tuple <span class="SimpleMath">(f_1, ..., f_m; h)</span>.</p>
 
 <p><a id="X7AC1AD17833117DF" name="X7AC1AD17833117DF"></a></p>
 

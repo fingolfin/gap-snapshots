@@ -1,0 +1,42 @@
+\GAPDocLabFile{cddinterface}
+\makelabel{cddinterface:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{cddinterface:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{cddinterface:Introduction}{1}{X7DFB63A97E67C0A1}
+\makelabel{cddinterface:Why CddInterface}{1.1}{X78B6806682EA4E0D}
+\makelabel{cddinterface:H-representation and V-representation of polyhedra}{1.2}{X811322537C6ADBBE}
+\makelabel{cddinterface:Creating polyhedra and their Operations}{2}{X7CA75753797126E1}
+\makelabel{cddinterface:Creating a polyhedron}{2.1}{X84D9DB317A23B6C9}
+\makelabel{cddinterface:Some operations on a polyhedron}{2.2}{X876837A483D59A93}
+\makelabel{cddinterface:Some operations on two polyhedrons}{2.3}{X80CE410083662BB8}
+\makelabel{cddinterface:Linear Programs}{3}{X825271797BE64406}
+\makelabel{cddinterface:Creating and solving linear programs}{3.1}{X78544DEC7F939A89}
+\makelabel{cddinterface:Attributes and properties}{4}{X7DC480E57D26429A}
+\makelabel{cddinterface:Attributes and properties of polyhedron}{4.1}{X7A2BE11B87B4A521}
+\makelabel{cddinterface:Index}{Ind}{X83A0356F839C696F}
+\makelabel{cddinterface:CddPolyhedronByInequalities}{2.1.1}{X7AB5A29C82FEBC24}
+\makelabel{cddinterface:CddPolyhedronByGenerators}{2.1.2}{X7DF57D1586FEFAA8}
+\makelabel{cddinterface:CddFourierProjection for iscddpolyhedron, isint}{2.2.1}{X81941B158503C052}
+\makelabel{cddinterface:CddIsContained for iscddpolyhedron, iscddpolyhedron}{2.3.1}{X811F5CBB8096383B}
+\makelabel{cddinterface:CddIntersection for iscddpolyhedron, iscddpolyhedron}{2.3.2}{X82E1352D7A0DCA38}
+\makelabel{cddinterface:CddLinearProgram for iscddpolyhedron, isstring, islist}{3.1.1}{X78C17DC0813644BE}
+\makelabel{cddinterface:CddSolveLinearProgram for iscddlinearprogram}{3.1.2}{X79EB266A8289CE29}
+\makelabel{cddinterface:CddCanonicalize for iscddpolyhedron}{4.1.1}{X8385F69A87131EAD}
+\makelabel{cddinterface:CddVRep for iscddpolyhedron}{4.1.2}{X85E888C97D4E105B}
+\makelabel{cddinterface:CddHRep for iscddpolyhedron}{4.1.3}{X8414F54E80B312C5}
+\makelabel{cddinterface:CddAmbientSpaceDimension for iscddpolyhedron}{4.1.4}{X7CF2AEA1810DCDB9}
+\makelabel{cddinterface:CddDimension for iscddpolyhedron}{4.1.5}{X81C260A1830AB7D4}
+\makelabel{cddinterface:CddGeneratingVertices for iscddpolyhedron}{4.1.6}{X82FBBDE082F8D36E}
+\makelabel{cddinterface:CddGeneratingRays for iscddpolyhedron}{4.1.7}{X7E50781780D8F8EB}
+\makelabel{cddinterface:CddEqualities for iscddpolyhedron}{4.1.8}{X7A31F87C7903D209}
+\makelabel{cddinterface:CddInequalities for iscddpolyhedron}{4.1.9}{X86B3B0468420F573}
+\makelabel{cddinterface:CddInteriorPoint for iscddpolyhedron}{4.1.10}{X869C857285945057}
+\makelabel{cddinterface:CddFaces for iscddpolyhedron}{4.1.11}{X8040DAA2872555F5}
+\makelabel{cddinterface:CddFacesWithFixedDimension for iscddpolyhedron, isint}{4.1.12}{X84B3FAAE7ECF5ACF}
+\makelabel{cddinterface:CddFacesWithInteriorPoints for iscddpolyhedron}{4.1.13}{X872EC7F186282090}
+\makelabel{cddinterface:CddFacesWithFixedDimensionAndInteriorPoints for iscddpolyhedron, isint}{4.1.14}{X7DE87B0984B3F177}
+\makelabel{cddinterface:CddFacets for iscddpolyhedron}{4.1.15}{X7B448A2578CB679F}
+\makelabel{cddinterface:CddLines for iscddpolyhedron}{4.1.16}{X7F1FB2B17B561A45}
+\makelabel{cddinterface:CddVertices for iscddpolyhedron}{4.1.17}{X7FABEAFE790C7ABD}
+\makelabel{cddinterface:CddIsEmpty for iscddpolyhedron}{4.1.18}{X7D4B6C2F7E71756C}
+\makelabel{cddinterface:CddIsCone for iscddpolyhedron}{4.1.19}{X79FC1D7D7C266683}
+\makelabel{cddinterface:CddIsPointed for iscddpolyhedron}{4.1.20}{X80784F1B7FE8419D}

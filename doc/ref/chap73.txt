@@ -116,11 +116,10 @@
   
   [33X[1;0Y[29X[2XPossiblePowerMaps[102X( [3Xtbl[103X, [3Xp[103X[, [3Xoptions[103X] ) [32X operation[133X
   
-  [33X[0;0YFor  the  ordinary  character  table  [3Xtbl[103X  of  the group [22XG[122X, say, and a prime
-  integer  [3Xp[103X,  [2XPossiblePowerMaps[102X  returns  the  list of all maps that have the
-  following  properties  of  the [22Xp[122X-th power map of [3Xtbl[103X. (Representative orders
-  are  used  only  if  the [2XOrdersClassRepresentatives[102X ([14X71.9-1[114X) value of [3Xtbl[103X is
-  known.[133X
+  [33X[0;0YFor  the  ordinary  character  table [3Xtbl[103X of a group [22XG[122X and a prime integer [3Xp[103X,
+  [2XPossiblePowerMaps[102X  returns  the  list  of  all  maps that have the following
+  properties  of  the  [22Xp[122X-th  power map of [3Xtbl[103X. (Representative orders are used
+  only if the [2XOrdersClassRepresentatives[102X ([14X71.9-1[114X) value of [3Xtbl[103X is known.[133X
   
   [31X1[131X   [33X[0;6YFor  class  [22Xi[122X, the centralizer order of the image is a multiple of the
         [22Xi[122X-th  centralizer  order; if the elements in the [22Xi[122X-th class have order
@@ -259,7 +258,7 @@
   
   [33X[0;0YThe  permutation  group  of  matrix  automorphisms  (see [2XMatrixAutomorphisms[102X
   ([14X71.22-1[114X))  acts  on  the  possible power maps returned by [2XPossiblePowerMaps[102X
-  ([14X73.1-2[114X)  by  permuting  a list via [2XPermuted[102X ([14X21.20-18[114X) and then mapping the
+  ([14X73.1-2[114X)  by  permuting  a list via [2XPermuted[102X ([14X21.20-17[114X) and then mapping the
   images  via  [2XOnPoints[102X  ([14X41.2-1[114X). Note that by definition, the group of [13Xtable[113X
   automorphisms acts trivially.[133X
   
@@ -268,7 +267,7 @@
   [33X[1;0Y[29X[2XOrbitPowerMaps[102X( [3Xmap[103X, [3Xpermgrp[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the  orbit of the power map [3Xmap[103X under the action of the permutation
-  group  [3Xpermgrp[103X  via  a  combination  of  [2XPermuted[102X  ([14X21.20-18[114X)  and  [2XOnPoints[102X
+  group  [3Xpermgrp[103X  via  a  combination  of  [2XPermuted[102X  ([14X21.20-17[114X)  and  [2XOnPoints[102X
   ([14X41.2-1[114X).[133X
   
   [1X73.2-2 RepresentativesPowerMaps[101X
@@ -277,7 +276,7 @@
   
   [33X[0;0Yreturns  a  list  of  orbit  representatives  of  the power maps in the list
   [3Xlistofmaps[103X  under  the  action  of  the  permutation  group  [3Xpermgrp[103X  via  a
-  combination of [2XPermuted[102X ([14X21.20-18[114X) and [2XOnPoints[102X ([14X41.2-1[114X).[133X
+  combination of [2XPermuted[102X ([14X21.20-17[114X) and [2XOnPoints[102X ([14X41.2-1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xtbl:= CharacterTable( "3.McL" );;[127X[104X
@@ -471,10 +470,10 @@
   
   [33X[0;0YFor  two  ordinary  character  tables  [3Xsource[103X  and [3Xdestination[103X, [2XGetFusionMap[102X
   checks  whether  the [2XComputedClassFusions[102X ([14X73.3-2[114X) list of [3Xsource[103X contains a
-  record  with  [10Xname[110X  component [10XIdentifier( [3Xdestination[103X[10X )[110X, and returns returns
-  the   [10Xmap[110X   component  of  the  first  such  record.  [10XGetFusionMap(  [3Xsource[103X[10X,
-  [3Xdestination[103X[10X,  [3Xspecification[103X[10X  )[110X  fetches that fusion map for which the record
-  additionally has the [10Xspecification[110X component [3Xspecification[103X.[133X
+  record  with  [10Xname[110X  component [10XIdentifier( [3Xdestination[103X[10X )[110X, and returns the [10Xmap[110X
+  component  of  the  first  such  record.  [10XGetFusionMap( [3Xsource[103X[10X, [3Xdestination[103X[10X,
+  [3Xspecification[103X[10X  )[110X  fetches  that fusion map for which the record additionally
+  has the [10Xspecification[110X component [3Xspecification[103X.[133X
   
   [33X[0;0YIf  both  [3Xsource[103X  and [3Xdestination[103X are Brauer tables, first the same is done,
   and  if no fusion map was found then [2XGetFusionMap[102X looks whether a fusion map
@@ -538,7 +537,7 @@
   
   [33X[1;0Y[29X[2XPossibleClassFusions[102X( [3Xsubtbl[103X, [3Xtbl[103X[, [3Xoptions[103X] ) [32X operation[133X
   
-  [33X[0;0YFor two ordinary character tables [3Xsubtbl[103X and [3Xtbl[103X of the groups [22XH[122X and [22XG[122X, say,
+  [33X[0;0YFor  two  ordinary  character  tables  [3Xsubtbl[103X and [3Xtbl[103X of the groups [22XH[122X and [22XG[122X,
   [2XPossibleClassFusions[102X  returns  the  list of all maps that have the following
   properties of class fusions from [3Xsubtbl[103X to [3Xtbl[103X.[133X
   
@@ -654,7 +653,7 @@
   ([14X71.9-4[114X))  of  the subgroup table [3Xsubtbl[103X and the supergroup table [3Xtbl[103X act on
   the  possible  class  fusions  from  [3Xsubtbl[103X  to  [3Xtbl[103X  that  are  returned by
   [2XPossibleClassFusions[102X  ([14X73.3-6[114X),  the former by permuting a list via [2XPermuted[102X
-  ([14X21.20-18[114X), the latter by mapping the images via [2XOnPoints[102X ([14X41.2-1[114X).[133X
+  ([14X21.20-17[114X), the latter by mapping the images via [2XOnPoints[102X ([14X41.2-1[114X).[133X
   
   [33X[0;0YIf  a  set of possible fusions with certain properties was computed that are
   not  invariant  under  the  full  groups  of table automorphisms then only a
@@ -735,7 +734,7 @@
     [4X[25Xgap>[125X [27XCompositionMaps( map2, map1 );[127X[104X
     [4X[28X[ [ 1, 2 ], [ 2, 3 ], 3, [ 1, 2 ] ][128X[104X
     [4X[25Xgap>[125X [27XCompositionMaps( map1, map2 );[127X[104X
-    [4X[28X[ [ 1, 2, 3, 4 ], [ 2, 3, 4 ], [ 2, 3, 4 ], [ 4, 5 ], [ 4, 5 ] ][128X[104X
+    [4X[28X[ [ 1, 2, 3, 4 ], [ 2 .. 4 ], [ 2 .. 4 ], [ 4, 5 ], [ 4, 5 ] ][128X[104X
   [4X[32X[104X
   
   [1X73.5-2 InverseMap[101X

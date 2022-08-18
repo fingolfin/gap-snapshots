@@ -24,7 +24,7 @@ DeclareFilter( "IsLockedRepresentationVector" );
 ##
 #V  TYPE_LIST_GF2VEC  . . . . . . . . . . . . . . type of mutable GF2 vectors
 ##
-InstallValue( TYPE_LIST_GF2VEC,
+BindGlobal( "TYPE_LIST_GF2VEC",
   NewType( CollectionsFamily( FFEFamily(2) ),
            IsHomogeneousList and IsListDefault and IsNoImmediateMethodsObject
            and IsMutable and IsCopyable and IsGF2VectorRep )
@@ -35,7 +35,7 @@ InstallValue( TYPE_LIST_GF2VEC,
 ##
 #V  TYPE_LIST_GF2VEC_IMM  . . . . . . . . . . . type of immutable GF2 vectors
 ##
-InstallValue( TYPE_LIST_GF2VEC_IMM,
+BindGlobal( "TYPE_LIST_GF2VEC_IMM",
   NewType( CollectionsFamily( FFEFamily(2) ),
           IsHomogeneousList and IsListDefault and IsNoImmediateMethodsObject 
            and IsCopyable and IsGF2VectorRep )
@@ -46,7 +46,7 @@ InstallValue( TYPE_LIST_GF2VEC_IMM,
 ##
 #V  TYPE_LIST_GF2VEC_IMM_LOCKED  . . . . type of immutable locked GF2 vectors
 ##
-InstallValue( TYPE_LIST_GF2VEC_IMM_LOCKED,
+BindGlobal( "TYPE_LIST_GF2VEC_IMM_LOCKED",
   NewType( CollectionsFamily( FFEFamily(2) ),
           IsHomogeneousList and IsListDefault and IsNoImmediateMethodsObject 
            and IsCopyable and IsGF2VectorRep and IsLockedRepresentationVector)
@@ -57,7 +57,7 @@ InstallValue( TYPE_LIST_GF2VEC_IMM_LOCKED,
 ##
 #V  TYPE_LIST_GF2VEC_LOCKED  . . . . type of mutable locked GF2 vectors
 ##
-InstallValue( TYPE_LIST_GF2VEC_LOCKED,
+BindGlobal( "TYPE_LIST_GF2VEC_LOCKED",
   NewType( CollectionsFamily( FFEFamily(2) ),
           IsHomogeneousList and IsListDefault and IsNoImmediateMethodsObject 
            and IsCopyable and IsGF2VectorRep and
@@ -69,7 +69,7 @@ InstallValue( TYPE_LIST_GF2VEC_LOCKED,
 ##
 #V  TYPE_LIST_GF2MAT  . . . . . . . . . . . . .  type of mutable GF2 matrices
 ##
-InstallValue( TYPE_LIST_GF2MAT,
+BindGlobal( "TYPE_LIST_GF2MAT",
   NewType( CollectionsFamily(CollectionsFamily(FFEFamily(2))),
            IsMatrix and IsListDefault and IsSmallList and
           IsFFECollColl and IsNoImmediateMethodsObject
@@ -82,7 +82,7 @@ InstallValue( TYPE_LIST_GF2MAT,
 ##
 #V  TYPE_LIST_GF2MAT_IMM  . . . . . . . . . .  type of immutable GF2 matrices
 ##
-InstallValue( TYPE_LIST_GF2MAT_IMM,
+BindGlobal( "TYPE_LIST_GF2MAT_IMM",
   NewType( CollectionsFamily(CollectionsFamily(FFEFamily(2))),
           IsMatrix and IsListDefault and IsCopyable and IsGF2MatrixRep
           and IsNoImmediateMethodsObject 
@@ -126,19 +126,6 @@ InstallOtherMethod( Length,
     [ IsList and IsGF2VectorRep ],
     0,
     LEN_GF2VEC );
-
-
-#############################################################################
-##
-#M  ELM0_LIST( <gf2vec>, <pos> )  . . . . select an element from a GF2 vector
-##
-InstallMethod( ELM0_LIST,
-    "for GF2 vector",
-    true,
-    [ IsList and IsGF2VectorRep,
-      IsPosInt ],
-    0,
-    ELM0_GF2VEC );
 
 
 #############################################################################
@@ -321,7 +308,7 @@ InstallMethod( ZeroOp,
 
 #############################################################################
 ##
-#M  ZEROOp( <gf2vec> )  . . . . . . . . . . . same mutability zero GF2 vector
+#M  ZeroSameMutability( <gf2vec> ) . . . . .  same mutability zero GF2 vector
 ##
 InstallMethod( ZeroSameMutability,
     "for GF2 vector, mutable",
@@ -686,7 +673,7 @@ function( mat )
         Print( "\>\>[ \>\>" );
         for j  in [ 1 .. NrCols(mat) ]  do
             if 1 < j  then Print( "\<,\< \>\>" );  fi;
-            Print( mat[i][j] );
+            Print( mat[i,j] );
         od;
         Print( " \<\<\<\<]" );
     od;
@@ -1001,10 +988,8 @@ end );
 
 #############################################################################
 ##
-#M  ZEROOp( <gf2mat> )  . . . . . . . . . . . . . . . matching mutability
+#M  ZeroSameMutability( <gf2mat> ) . . . . . . . . . . .  matching mutability
 ##
-##
-
 InstallMethod( ZeroSameMutability,
     "for GF2 Matrix",
     true,
@@ -1018,12 +1003,12 @@ function( mat )
     if 0 < new[1]   then
         if  IsMutable(mat![2]) then
             for i in [ 1 .. new[1] ]  do
-                zero := ZERO(mat![2]);
+                zero := ZeroSameMutability(mat![2]);
                 SetFilterObj(zero, IsLockedRepresentationVector);
                 Add( new, zero );
             od;
         else
-            zero := ZERO(mat![2]);
+            zero := ZeroSameMutability(mat![2]);
             SetFilterObj(zero, IsLockedRepresentationVector);
             for i in [ 1 .. new[1] ]  do
                 Add( new, zero );
@@ -1214,7 +1199,8 @@ end);
 #F  ConvertToVectorRep(<v>)
 ##
 
-LOCAL_COPY_GF2 := GF(2);
+BindGlobal("LOCAL_COPY_GF2", GF(2));
+BindGlobal("SMALL_PRIME_POWERS", Immutable(Filtered([2..256], IsPrimePowerInt)));
 
 InstallGlobalFunction(ConvertToVectorRepNC,function( arg )
     local v, q, vc, common, field, q0;
@@ -1234,10 +1220,12 @@ InstallGlobalFunction(ConvertToVectorRepNC,function( arg )
         if Length(arg) = 1 then
             return q0;
         fi;
-        if IsInt(arg[2]) then
+        if IsPosInt(arg[2]) then
             q := arg[2];
         elif IsField(arg[2]) then
             q := Size(arg[2]);
+        else
+            return fail;
         fi;
         if q = q0 then
             return q;
@@ -1249,6 +1237,9 @@ InstallGlobalFunction(ConvertToVectorRepNC,function( arg )
                 CONV_GF2VEC(v);
                 return 2;
             elif q <= 256 then
+                if not q in SMALL_PRIME_POWERS then
+                    return fail;
+                fi;
                 CONV_VEC8BIT(v,q);
                 return q;
             else
@@ -1303,6 +1294,10 @@ InstallGlobalFunction(ConvertToVectorRepNC,function( arg )
             # or possibly a totally bad list
             vc := ShallowCopy(v);
             common := FFECONWAY.WriteOverSmallestCommonField(vc);
+            #
+            # FFECONWAY.WriteOverSmallestCommonField returns an integer or fail.
+            # When integer is returned, it also may modify entries of vc
+            #
             if common = fail or common  > 256 then
                 #
                 # vector needs a field > 256, so can't be compressed
@@ -1310,8 +1305,8 @@ InstallGlobalFunction(ConvertToVectorRepNC,function( arg )
                 #
                 return true;
             fi;
-            # SWITCH_OBJ changes the mutability of v, so we make
-            # sure that if v is immutable it stays immutable.
+            # Switching the object below can change the mutability of v, so we
+            # make sure that if v is immutable it stays immutable.
             if not IsMutable(v) then
                 MakeImmutable(vc);
             fi;
@@ -1328,13 +1323,13 @@ InstallGlobalFunction(ConvertToVectorRepNC,function( arg )
     #
     if Length(arg) > 1 then
         field := arg[2];
-        if IsInt(field) then
+        if IsPosInt(field) then
             q := field;
             Assert(2,IsPrimePowerInt(q));
         elif IsField(field) then
             q := Size(field); 
         else
-            Error("q not a field or integer");
+            Error("q not a field or positive integer");
         fi;
     else
         q := fail;
@@ -1386,20 +1381,204 @@ InstallGlobalFunction(ConvertToVectorRepNC,function( arg )
     fi;
 end);
 
+
+#############################################################################
+##
+#F  CopyToVectorRep( <v>, <q> )
+##
+InstallGlobalFunction(CopyToVectorRep,function( v, q )
+    local vc, common, field, res;
+
+    # Handle fast, certain cases where there is no work. Microseconds count here
+
+    if Length(v) = 0 then
+        return v;
+    fi;
+
+    if IsGF2VectorRep(v) and q=2 then
+        if IsMutable(v) then
+          return(ShallowCopy(v));
+        else
+          return v;
+        fi;
+    fi;
+
+    if Is8BitVectorRep(v) then
+        if q = Q_VEC8BIT(v) then
+            if IsMutable(v) then
+                return(ShallowCopy(v));
+            else
+                return v;
+            fi;
+        fi;
+    fi;
+
+    # Ask the kernel to check the list for us.
+    # We have to do this, even in an NC version because the list might contain
+    # elements of large finite fields.
+    # Calling IS_VECFFE may force a full inspection of the list.
+
+    if not IS_VECFFE(v) then
+        # TODO: no need of the next 'if' block in the NC-version
+        if IsFFECollection(v) then
+            # Now we might have some elements in a large field representation
+            # or possibly a totally bad list. We will examine the shallow copy
+            # of v to avoid side effects when CopyToVectorRep modifies v and
+            # then returns fail
+            vc := ShallowCopy(v);
+            common := FFECONWAY.WriteOverSmallestCommonField(vc);
+            #
+            # FFECONWAY.WriteOverSmallestCommonField returns an integer or fail.
+            # When it resturns an integer, it may modify individual entries of vc
+            #
+            if common = fail or common  > 256 then
+                #
+                # vector needs a field > 256, so can't be compressed
+                # or vector contains non-ffes or no common characteristic
+                #
+                return fail; # v cannot be written over GF(q)
+            fi;
+            if not IsMutable(v) then
+                MakeImmutable(vc);
+            fi;
+        else
+            return fail; # v cannot be written over GF(q)
+        fi;
+    else
+        common := COMMON_FIELD_VECFFE(v);
+        vc := v;
+    fi;
+
+    if q = 2 then
+        Assert(2, ForAll(vc, elm -> elm in GF(2)));
+        if common > 2 and common mod 2 = 0 then
+            common := SMALLEST_FIELD_VECFFE(vc);
+        fi;
+        if common <> 2 then
+            Error("CopyToVectorRep: Vector cannot be written over GF(2)");
+        fi;
+        res := COPY_GF2VEC(vc);
+        if not IsMutable(v) then MakeImmutable(res); fi;
+        return res;
+    elif q <= 256 then
+        if common <> q then
+            Assert(2, ForAll(vc, elm -> elm in GF(q)));
+            if IsPlistRep(vc) and  GcdInt(common,q) > 1  then
+                common := SMALLEST_FIELD_VECFFE(vc);
+            fi;
+            if common ^ LogInt(q, common) <> q then
+                Error("CopyToVectorRep: Vector cannot be written over GF(",q,")");
+            fi;
+        fi;
+        res := COPY_VEC8BIT(vc,q);
+        if not IsMutable(v) then MakeImmutable(res); fi;
+        return res;
+    else
+        return fail; # vector cannot be written over GF(q)
+    fi;
+end);
+
+
+#############################################################################
+##
+#F  CopyToVectorRepNC( <v>, <q> )
+##
+##  This is the NC-version of CopyToVectorRep. It is forbidden to call it
+##  unless v is a plain list or a row vector, q<=256 is a valid size of a
+##  finite field, and all elements of v lie in this field.
+##
+InstallGlobalFunction(CopyToVectorRepNC,function( v, q )
+    local common, field, res;
+
+    # Handle fast, certain cases where there is no work. Microseconds count here
+
+    if Length(v) = 0 then
+        return v;
+    fi;
+
+    if IsGF2VectorRep(v) and q=2 then
+        if IsMutable(v) then
+          return(ShallowCopy(v));
+        else
+          return v;
+        fi;
+    fi;
+
+    if Is8BitVectorRep(v) then
+        if q = Q_VEC8BIT(v) then
+            if IsMutable(v) then
+                return(ShallowCopy(v));
+            else
+                return v;
+            fi;
+        fi;
+    fi;
+
+    # Calling COMMON_FIELD_VECFFE may force a full inspection of the list.
+    common := COMMON_FIELD_VECFFE(v);
+    if common = fail then
+        common := SMALLEST_FIELD_VECFFE(v);
+        if common = fail then
+            Error("CopyToVectorRepNC: Vector cannot be written over GF(",q,").\n",
+                  "You may try to use CopyToVectorRep instead\n");
+        fi;
+
+    fi;
+
+    if q = 2 then
+        Assert(2, ForAll(v, elm -> elm in GF(2)));
+        if common > 2 and common mod 2 = 0 then
+            common := SMALLEST_FIELD_VECFFE(v);
+        fi;
+        if common <> 2 then
+            Error("CopyToVectorRepNC: Vector cannot be written over GF(2)");
+        fi;
+        res := COPY_GF2VEC(v);
+        if not IsMutable(v) then MakeImmutable(res); fi;
+        return res;
+    elif q <= 256 then
+        if common <> q then
+            Assert(2, ForAll(v, elm -> elm in GF(q)));
+            if IsPlistRep(v) and  GcdInt(common,q) > 1  then
+                common := SMALLEST_FIELD_VECFFE(v);
+            fi;
+            if common ^ LogInt(q, common) <> q then
+                Error("CopyToVectorRepNC: Vector cannot be written over GF(",q,")");
+            fi;
+        fi;
+        res :=COPY_VEC8BIT(v,q);
+        if not IsMutable(v) then MakeImmutable(res); fi;
+        return res;
+    else
+        Error("CopyToVectorRepNC: Vector cannot be written over GF(",q,")");
+    fi;
+end);
+
+
 #############################################################################
 ##
 #F  ImmutableMatrix( <field>, <matrix> [,<change>] ) 
 ##
 BindGlobal("DoImmutableMatrix", function(field,matrix,change)
-local sf, rep, ind, ind2, row, i,big,l;
-  if not (IsPlistRep(matrix) or IsGF2MatrixRep(matrix) or
+local sf, rep, ind, ind2, row, i,big,l,nr;
+  if IsMatrixObj(matrix) then
+    # result is a matrix object iff 'matrix' is
+    if field=BaseDomain(matrix) then
+      return Immutable(matrix);
+    else
+      return ImmutableMatrix(field,Unpack(matrix));
+    fi;
+  elif not (IsPlistRep(matrix) or IsGF2MatrixRep(matrix) or
     Is8BitMatrixRep(matrix)) then
     # if empty or not list based, simply return `Immutable'.
     return Immutable(matrix);
   fi;
-  if IsInt(field) then
+  if IsPosInt(field) then
     sf:=field;
   elif IsField(field) then
+    sf:=Size(field);
+  elif IsZmodnZObjNonprimeCollection(field) then
+    # slight abuse of ``field'' variable name
     sf:=Size(field);
   else
     # not a field
@@ -1417,10 +1596,17 @@ local sf, rep, ind, ind2, row, i,big,l;
     rep:=IsPlistRep;
   fi;
 
+  # cannot use NrRows consistently, as input might be mixed format
+  if IsList(matrix) then
+    nr:=Length(matrix);
+  else
+    nr:=NrRows(matrix);
+  fi;
+
   # get the indices of the rows that need changing the representation.
   ind:=[]; # rows to convert
   ind2:=[]; # rows to rebuild 
-  for i in [1..NrRows(matrix)] do
+  for i in [1..nr] do
     if not rep(matrix[i]) then
       if big or IsLockedRepresentationVector(matrix[i]) 
         or (IsMutable(matrix[i]) and not change) then
@@ -1450,10 +1636,21 @@ local sf, rep, ind, ind2, row, i,big,l;
   fi;
 
   # rebuild some rows
-  if big then
-    for i in ind2 do
-      matrix[i]:=List(matrix[i],j->j); # plist conversion
-    od;
+  if IsZmodnZObjNonprimeCollection(field) then
+    big:=true;
+  elif big then
+    if sf<>infinity and IsPrimeInt(sf) and sf>MAXSIZE_GF_INTERNAL then
+      if not (IsMatrixObj(matrix) and not IsMutable(matrix)) then
+        if field=sf then field:=Integers mod sf;fi;
+        for i in ind2 do
+          matrix[i]:=List(matrix[i],j->j); # plist conversion
+        od;
+      fi;
+    else
+      for i in ind2 do
+        matrix[i]:=List(matrix[i],j->j); # plist conversion
+      od;
+    fi;
   else
     for i in ind2 do
       row := ShallowCopy(matrix[i]);
@@ -1474,12 +1671,20 @@ local sf, rep, ind, ind2, row, i,big,l;
   return matrix;
 end);
 
-InstallMethod( ImmutableMatrix,"general,2",[IsObject,IsMatrix],0,
+InstallOtherMethod( ImmutableMatrix,"general,2",
+[IsObject,IsMatrixOrMatrixObj],0,
 function(f,m)
   return DoImmutableMatrix(f,m,false);
 end);
 
-InstallOtherMethod( ImmutableMatrix,"general,3",[IsObject,IsMatrix,IsBool],0,
+InstallOtherMethod( ImmutableMatrix,"List of vectors",
+[IsObject,IsList],0,
+function(f,m)
+  if not ForAll(m,x->IsList(x) or IsVector(x)) then TryNextMethod();fi;
+  return DoImmutableMatrix(f,m,false);
+end);
+
+InstallOtherMethod(ImmutableMatrix,"general,3",[IsObject,IsMatrixOrMatrixObj,IsBool],0,
   DoImmutableMatrix);
 
 InstallOtherMethod( ImmutableMatrix,"field,8bit",[IsField,Is8BitMatrixRep],0,
@@ -1534,7 +1739,27 @@ end);
 ##
 InstallMethod( ImmutableVector,"general,2",[IsObject,IsRowVector],0,
 function(f,v)
+  if IsInt(f) then
+    if IsPrimePowerInt(f) then
+      f := GF(f);
+    else
+      f := ZmodnZ(f);
+    fi;
+  fi;
+  if IsVectorObj(v) then
+    # result is a vector object iff 'v' is
+    if f=BaseDomain(v) then
+      return Immutable(v);
+    else
+      return Immutable(Vector(f,Unpack(v)));
+    fi;
+  fi;
   ConvertToVectorRepNC(v,f);
+  return Immutable(v);
+end);
+
+InstallOtherMethod( ImmutableVector,"vectorObj,2",[IsObject,IsVectorObj],0,
+function(f,v)
   return Immutable(v);
 end);
 
@@ -1584,32 +1809,6 @@ InstallOtherMethod( ImmutableVector,"empty",[IsObject,IsEmpty],0,
 function(f,v)
   return Immutable(v);
 end);
-
-
-#############################################################################
-##
-#M  PlainListCopyOp( <v> )
-##
-
-InstallMethod( PlainListCopyOp, "for a GF2 vector",
-        true, [IsGF2VectorRep and IsSmallList ],
-        0, function( v )
-    PLAIN_GF2VEC(v);
-    return v;
-end);
-
-#############################################################################
-##
-#M  PlainListCopyOp( <m> )
-##
-
-InstallMethod( PlainListCopyOp, "for a GF2 matrix",
-        true, [IsSmallList and IsGF2MatrixRep ],
-        0, function( m )
-    PLAIN_GF2MAT(m);
-    return m;
-end);
-
 
 #############################################################################
 ##
@@ -1746,6 +1945,17 @@ InstallMethod( DefaultFieldOfMatrix,
     [ IsMatrix and IsFFECollColl and IsGF2MatrixRep ], 0,
 function( mat )
   return GF(2);
+end );
+
+#############################################################################
+##
+#M  DegreeFFE( <ffe-mat> )
+##
+InstallOtherMethod( DegreeFFE,
+    "method for a matrix over GF(2)", true,
+    [ IsMatrix and IsFFECollColl and IsGF2MatrixRep ], 0,
+function( mat )
+  return 1;
 end );
 
 #############################################################################
@@ -2207,15 +2417,6 @@ InstallMethod( Matrix, "for a list of vecs, an integer, and a gf2 mat",
     return li;
   end );
 
-InstallMethod( PositionLastNonZero, "for a row vector obj",
-  [IsVectorObj],
-  function(l)
-    local i;
-    i := Length(l);
-    while i >= 1 and IsZero(l[i]) do i := i - 1; od;
-    return i;
-  end );
-
 InstallMethod( ExtractSubMatrix, "for a gf2 matrix, and two lists",
   [IsGF2MatrixRep, IsList, IsList],
   function( m, rows, cols )
@@ -2289,7 +2490,7 @@ InstallMethod( Unpack, "for a gf2 matrix",
   end );
 InstallMethod( Unpack, "for a gf2 vector",
   [IsGF2VectorRep],
-  function( v ) return AsPlist(v); end );
+  AsPlist );
 
 InstallOtherMethod( KroneckerProduct, "for two gf2 matrices",
   [IsGF2MatrixRep and IsMatrix, IsGF2MatrixRep and IsMatrix],
@@ -2308,44 +2509,22 @@ InstallMethod( BaseField, "for a compressed gf2 vector",
 InstallMethod( NewVector, "for IsGF2VectorRep, GF(2), and a list",
   [ IsGF2VectorRep, IsField and IsFinite, IsList ],
   function( filter, f, l )
-    local v;
-    v := ShallowCopy(l);
-    ConvertToVectorRepNC(v,2);
-    return v;
-  end );
-
-InstallMethod( ZeroMatrix, "for a compressed gf2 matrix",
-  [IsInt, IsInt, IsGF2MatrixRep],
-  function( rows, cols, m )
-    local l,i,x;
-    l := [];
-    x := m[1];
-    for i in [1..rows] do
-        Add(l,ZeroVector(cols,x));
-    od;
-    ConvertToMatrixRepNC(l,2);
-    return l;
+    if Size(f) <> 2 then Error("IsGF2VectorRep only supported over GF(2)"); fi;
+    return CopyToVectorRep(l,2);
   end );
 
 InstallMethod( NewZeroVector, "for IsGF2VectorRep, GF(2), and an int",
   [ IsGF2VectorRep, IsField and IsFinite, IsInt ],
   function( filter, f, i )
+    if Size(f) <> 2 then Error("IsGF2VectorRep only supported over GF(2)"); fi;
     return ZERO_GF2VEC_2(i);
-  end );
-
-InstallMethod( IdentityMatrix, "for a compressed gf2 matrix",
-  [IsInt, IsGF2MatrixRep],
-  function(rows,m)
-    local n;
-    n := IdentityMat(rows,GF(2));
-    ConvertToMatrixRepNC(n,2);
-    return n;
   end );
 
 InstallMethod( NewMatrix, "for IsGF2MatrixRep, GF(2), an int, and a list",
   [ IsGF2MatrixRep, IsField and IsFinite, IsInt, IsList ],
   function( filter, f, rl, l )
     local m;
+    if Size(f) <> 2 then Error("IsGF2MatrixRep only supported over GF(2)"); fi;
     m := List(l,ShallowCopy);
     ConvertToMatrixRep(m,2);
     return m;
@@ -2355,29 +2534,28 @@ InstallMethod( NewZeroMatrix, "for IsGF2MatrixRep, GF(2), and two ints",
   [ IsGF2MatrixRep, IsField and IsFinite, IsInt, IsInt ],
   function( filter, f, rows, cols )
     local m,i;
-    m := 0*[1..rows];
-    m[1] := NewZeroVector(IsGF2VectorRep,f,cols);
-    for i in [2..rows] do
-        m[i] := ShallowCopy(m[1]);
+    if Size(f) <> 2 then Error("IsGF2MatrixRep only supported over GF(2)"); fi;
+    if rows = 0 then
+        Error("IsGF2MatrixRep with zero rows not yet supported");
+    fi;
+    m := EmptyPlist(rows);
+    for i in [1..rows] do
+        m[i] := ZERO_GF2VEC_2(cols);
     od;
-    ConvertToMatrixRep(m,2);
+    ConvertToMatrixRepNC(m,2);
     return m;
   end );
 
 InstallMethod( NewIdentityMatrix, "for IsGF2MatrixRep, GF(2), and an int",
   [ IsGF2MatrixRep, IsField and IsFinite, IsInt ],
-  function( filter, f, rows )
-    local m,i,o;
-    m := 0*[1..rows];
-    o := Z(2);
-    m[1] := NewZeroVector(IsGF2VectorRep,f,rows);
-    for i in [2..rows] do
-        m[i] := ShallowCopy(m[1]);
-        m[i][i] := o;
+  function( filter, basedomain, dim )
+    local mat, one, i;
+    mat := NewZeroMatrix(filter, basedomain, dim, dim);
+    one := One(basedomain);
+    for i in [1..dim] do
+        mat[i,i] := one;
     od;
-    m[1][1] := o;
-    ConvertToMatrixRep(m,2);
-    return m;
+    return mat;
   end );
 
 InstallMethod( ChangedBaseDomain, "for a gf2 vector and a finite field",
@@ -2408,6 +2586,11 @@ InstallMethod( CompatibleVector, "for a gf2 matrix",
     return ShallowCopy(m[1]);
   end );
 
+InstallMethod( CompatibleVectorFilter,
+  "for a gf2 matrix",
+  [ IsGF2MatrixRep ],
+  M -> IsGF2VectorRep );
+
 InstallMethod( WeightOfVector, "for a gf2 vector",
   [ IsGF2VectorRep ],
   function( v )
@@ -2437,7 +2620,7 @@ InstallMethod( NewCompanionMatrix,
     ll := NewMatrix(ty,bd,n,[l]);
     for i in [1..n-1] do
         Add(ll,ZeroMutable(l),i);
-        ll[i][i+1] := one;
+        ll[i,i+1] := one;
     od;
     return ll;
   end );

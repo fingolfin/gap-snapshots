@@ -14,13 +14,12 @@
 # Free Software Foundation (FSF); either version 2.1 of the License, or
 # (at your option) any later version. For details, see the file 'LGPL' in
 # the doc subdirectory of the GBNP distribution or see the FSF's own site:
-# http://www.gnu.org/licenses/lgpl.html
+# https://www.gnu.org/licenses/lgpl.html
 ########################## END COPYRIGHT MESSAGE ##########################
 
 ### filename = "graphs.gi"
 ### author: Chris Krook
 ### This is an add-on for the GBNP package, since version 0.8.3
-### $Id: graphs.gi 12772 2010-01-15 13:10:24Z jwk $
 
 # This file contains some auxiliary functions used by the file fincheck.g
 # for the purpose of Hilbert Series calculations. Moreover it contains
@@ -156,7 +155,7 @@ end;
 ##########################################
 ### function GraphOfNormalWords
 ### <#GAPDoc Label="GraphOfNormalWords">
-### <ManSection Label="GraphOfNormalWords">
+### <ManSection>
 ### <Func Name="GraphOfNormalWords" Comm="" Arg="O, n" />
 ### <Returns>
 ### <C>Edgeset</C>, the set of edges of the graph of normal words.
@@ -376,7 +375,7 @@ end;
 ####################################
 ### function DetermineGrowthObs
 ### <#GAPDoc Label="DetermineGrowthObs">
-### <ManSection Label="DetermineGrowthObs">
+### <ManSection>
 ### <Func Name="DetermineGrowthObs" Arg="L, n" />
 ### <Returns>
 ### If the dimension of the quotient algebra is finite, <M>0</M> is returned. 
@@ -445,7 +444,7 @@ end);
 ###################################
 ### function GraphOfChains
 ### <#GAPDoc Label="GraphOfChains">
-### <ManSection Label="GraphOfChains">
+### <ManSection>
 ### <Func Name="GraphOfChains" Comm="computes the graph of chains" Arg="O, n" />
 ### <Returns>
 ### A list <C>[ESet,LSet]</C>, where
@@ -530,7 +529,7 @@ end);
 ###################################
 ### function HilbertSeriesG
 ### <#GAPDoc Label="HilbertSeriesG">
-### <ManSection Label="HilbertSeriesG">
+### <ManSection>
 ### <Func Name="HilbertSeriesG" Arg="ESet, LSet, n, d" />
 ### <Returns>
 ### A list of coefficients of the Hilbert series up to degree <A>d</A>

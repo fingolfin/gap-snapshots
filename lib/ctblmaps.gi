@@ -37,14 +37,34 @@ InstallMethod( PowerMap,
     "for a character table, and an integer",
     [ IsNearlyCharacterTable, IsInt ],
     function( tbl, n )
-    local known, erg;
+    local known, erg,i,e,ord,a,p;
+
+    ord:=OrdersClassRepresentatives(tbl);
 
     if IsPosInt( n ) and IsSmallIntRep( n ) then
       known:= ComputedPowerMaps( tbl );
 
       # compute the <n>-th power map
       if not IsBound( known[n] ) then
-        erg:= PowerMapOp( tbl, n );
+        if ForAll(Filtered([1..n-1],IsPrimeInt),x->IsBound(known[x])) then
+          # do not exceed element order, we can fill these out easier
+          erg:= PowerMapOp( tbl, n:onlyuptoorder );
+          for i in [1..Length(erg)] do
+            if erg[i]=0 then
+              e:=n mod ord[i];
+              a:=i;
+              while e>1 do
+                p:=SmallestPrimeDivisor(e);
+                e:=e/p;
+                a:=known[p][a];
+              od;
+              erg[i]:=a;
+            fi;
+              
+          od;
+        else
+          erg:= PowerMapOp( tbl, n );
+        fi;
         known[n]:= MakeImmutable( erg );
       fi;
 
@@ -479,8 +499,8 @@ InstallOtherMethod( PossiblePowerMaps,
     fi;
     fus:= GetFusionMap( modtbl, ordtbl );
     inv:= InverseMap( fus );
-    return Set( List( poss,
-             x -> CompositionMaps( inv, CompositionMaps( x, fus ) ) ) );
+    return Set( poss,
+             x -> CompositionMaps( inv, CompositionMaps( x, fus ) ) );
     end );
 
 
@@ -514,8 +534,8 @@ InstallMethod( PossiblePowerMaps,
     fi;
     fus:= GetFusionMap( modtbl, ordtbl );
     inv:= InverseMap( fus );
-    return Set( List( poss,
-             x -> CompositionMaps( inv, CompositionMaps( x, fus ) ) ) );
+    return Set( poss,
+             x -> CompositionMaps( inv, CompositionMaps( x, fus ) ) );
     end );
 
 
@@ -963,9 +983,9 @@ InstallMethod( FusionConjugacyClassesOp,
         return fail;
       else
 
-        fus:= Set( List( fus, map -> InverseMap(
+        fus:= Set( fus, map -> InverseMap(
                                          GetFusionMap( tbl2, ord2 ) ){
-                                     map{ GetFusionMap( tbl1, ord1 ) } } ) );
+                                     map{ GetFusionMap( tbl1, ord1 ) } } );
         if 1 < Length( fus ) then
           Info( InfoCharacterTable, 1,
                 "fusion is not stored and not uniquely determined" );
@@ -4470,7 +4490,7 @@ InstallGlobalFunction( ConsiderStructureConstants,
           else
             # The possible fusions differ on this triple.
             subsc:= ClassMultiplicationCoefficient( subtbl, i, j, kk );
-            for trpl in Set( List( fusions, x -> x{ [ i, j, kk ] } ) ) do
+            for trpl in Set( fusions, x -> x{ [ i, j, kk ] } ) do
               sc:= ClassMultiplicationCoefficient( tbl, trpl[1], trpl[2],
                        trpl[3] );
               if sc < subsc then

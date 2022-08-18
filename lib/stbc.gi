@@ -315,7 +315,7 @@ InstallMethod( StabChainOptions, true, [ IsPermGroup ], 0,
 ##
 #V  DefaultStabChainOptions . . . . . .  options record for stabilizer chains
 ##
-InstallValue( DefaultStabChainOptions,rec( reduced := true,
+BindGlobal( "DefaultStabChainOptions",rec( reduced := true,
                                  random := 1000,
                                 tryPcgs := true ));
 MakeThreadLocal("DefaultStabChainOptions");
@@ -396,23 +396,37 @@ end);
 #F  StabChainBaseStrongGenerators( <base>, <sgs>[, <one>] )
 ##
 InstallGlobalFunction(StabChainBaseStrongGenerators,function(arg)
-local   base,sgs,one,S,  T,  pnt;
+local   base,sgs,one,S,  T,  pnt, genlabels;
 
-    base:=arg[1];
-    sgs:=arg[2];
+    if not Length(arg) in [2, 3]
+        or not ForAll([1, 2], i -> IsHomogeneousList(arg[i])) then
+      ErrorNoReturn("usage: ",
+                    "StabChainBaseStrongGenerators(<base>, <sgs>[, <one>])");
+    fi;
+    base:=PlainListCopy(arg[1]);
+    sgs:=PlainListCopy(arg[2]);
     if Length(arg)=3 then
       one:=arg[3];
+    elif not IsEmpty(sgs) then
+      one:= One(sgs[1]);
     else
-      one:= One(arg[2][1]);
+      ErrorNoReturn("the identity element must be given as the third argument ",
+                    "when the second argument <sgs> is empty");
     fi;
-    S := EmptyStabChain( [  ], one );
+    S := EmptyStabChain( sgs, one );
+    # Skip the identity in genlabels
+    Assert(2, S.labels[1] = ());
+    genlabels := PlainListCopy([2..Length(S.labels)]);
     T := S;
     for pnt  in base  do
         InsertTrivialStabilizer( T, pnt );
-        AddGeneratorsExtendSchreierTree( T, sgs );
-        sgs := Filtered( sgs, g -> pnt ^ g = pnt );
+        T.genlabels := genlabels;
+        T.generators := T.labels{T.genlabels};
+        AGEST(T.orbit, T.genlabels, T.labels, T.translabels, T.transversal, T.genlabels);
+        genlabels := Filtered(genlabels, x -> pnt^sgs[x] = pnt);
         T := T.stabilizer;
     od;
+
     return S;
 end);
     

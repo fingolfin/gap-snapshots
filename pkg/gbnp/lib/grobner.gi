@@ -14,7 +14,7 @@
 # Free Software Foundation (FSF); either version 2.1 of the License, or
 # (at your option) any later version. For details, see the file 'LGPL' in
 # the doc subdirectory of the GBNP distribution or see the FSF's own site:
-# http://www.gnu.org/licenses/lgpl.html
+# https://www.gnu.org/licenses/lgpl.html
 ########################## END COPYRIGHT MESSAGE ##########################
 
 ### filename = "grobner.gi" 
@@ -22,7 +22,6 @@
 ### vs 0.9
 
 ### THIS IS PART OF A GAP PACKAGE FOR COMPUTING NON-COMMUTATIVE GROBNER BASES 
-### $Id: grobner.gi 12772 2010-01-15 13:10:24Z jwk $
  
 #functions defined in this file:
 #GBNP.RightOccur:=function(u,v)
@@ -550,7 +549,7 @@ end;;
 ################### 
 ### StrongNormalFormNP
 ### <#GAPDoc Label="StrongNormalFormNP">
-### <ManSection Label="StrongNormalFormNP">
+### <ManSection>
 ### <Func Name="StrongNormalFormNP" Comm="Reduce an NP polynomial with respect to a Gröbner basis." Arg="f, G" />
 ### <Returns>
 ### The strong normal form of a polynomial with respect to
@@ -798,7 +797,7 @@ end;;
 ################## 
 ### Grobner
 ### <#GAPDoc Label="Grobner">
-### <ManSection Label="Grobner">
+### <ManSection>
 ### <Func Name="Grobner" Comm="Buchberger's algorithm with normalform" 
 ### Arg="Lnp [, D] [, max]" />
 ###
@@ -948,7 +947,7 @@ end);
 
 ################## 
 ### <#GAPDoc Label="SGrobner"
-### <ManSection Label="SGrobner">
+### <ManSection>
 ### <Func Name="SGrobner" Comm="Buchberger's algorithm with strong normalform" 
 ### Arg="Lnp [, todo ] [, max]" />
 ###
@@ -1127,7 +1126,7 @@ end);
 ###BaseQA
 ###
 ### <#GAPDoc Label="BaseQA">
-### <ManSection Label="BaseQA">
+### <ManSection>
 ### <Func Name="BaseQA" Comm="Find a basis of the quotient algebra" 
 ### Arg="G, t, maxno" />
 ### <Returns>A list of terms forming a basis of the quotient
@@ -1190,7 +1189,7 @@ end);;
 ######################################################
 ###DimQA
 ### <#GAPDoc Label="DimQA">
-### <ManSection Label="DimQA">
+### <ManSection>
 ### <Func Name="DimQA" Comm="Calculates the dimension of the quotient algebra" 
 ### Arg="G, t" />
 ### <Returns>The dimension of the quotient algebra
@@ -1248,7 +1247,7 @@ end);;
 ####################################################
 ###MulQA  multiplication in the quotient algebra 
 ### <#GAPDoc Label="MulQA">
-### <ManSection Label="MulQA">
+### <ManSection>
 ### <Func Name="MulQA" Comm="Multiply two elements in the quotient algebra" 
 ### Arg="p1, p2, G" />
 ### <Returns>The strong normal form of the product 
@@ -1608,7 +1607,7 @@ end;;
 ############################
 ###
 ### <#GAPDoc Label="IsStrongGrobnerBasis">
-### <ManSection Label="IsStrongGrobnerBasis">
+### <ManSection>
 ### <Func Name="IsStrongGrobnerBasis" Comm="Test if a list of NP polynomials is a strong Gröbner basis" Arg="G" />
 ### <Returns>
 ### <C>true</C> if <A>G</A> is a strong Gröbner basis 
@@ -1647,7 +1646,7 @@ end);
 ######################
 ###
 ### <#GAPDoc Label="IsGrobnerBasis">
-### <ManSection Label="IsGrobnerBasis">
+### <ManSection>
 ### <Func Name="IsGrobnerBasis" Comm="Test if a list of NP polynomials is a Gröbner basis" Arg="G" />
 ### <Returns>
 ### <C>true</C> if <A>G</A> is a Gröbner basis and <C>false</C> otherwise
@@ -1825,7 +1824,7 @@ end;
 #####################
 ###
 ### <#GAPDoc Label="IsGrobnerPair">
-### <ManSection Label="IsGrobnerPair">
+### <ManSection>
 ### <Func Name="IsGrobnerPair" Comm="Tests if a pair of lists forms a Gröbner Pair." Arg="G, D" />
 ### <Returns>
 ### A boolean, which has the value <C>true</C> if the input forms a Gröbner
@@ -1980,7 +1979,7 @@ end;
 #######################
 ###
 ### <#GAPDoc Label="MakeGrobnerPair">
-### <ManSection Label="MakeGrobnerPair">
+### <ManSection>
 ### <Func Name="MakeGrobnerPair" Comm="Construct a Gröbner pair from a pair of lists of polynomials in NP format." Arg="G, D" />
 ### <Returns>
 ### A record containing a new Grobner pair
@@ -2106,7 +2105,7 @@ end);
 ### StrongNormalFormNPM ###
 ###########################
 ### <#GAPDoc Label="StrongNormalFormNPM">
-### <ManSection Label="StrongNormalFormNPM">
+### <ManSection>
 ### <Func Name="StrongNormalFormNPM" Comm="Reduce a polynomial in NP format with respect to a Gröbner basis record." Arg="f, GBR" />
 ### <Returns>
 ### The strong normal form of a polynomial in NP format with respect to
@@ -2165,7 +2164,7 @@ end);
 ### SGrobnerModule ###
 ######################
 ### <#GAPDoc Label="SGrobnerModule">
-### <ManSection Label="SGrobnerModule">
+### <ManSection>
 ### <Func Name="SGrobnerModule" Comm="Buchberger's algorithm with strong
 ###  normalform for the combination variant" Arg="Lnpm, Lnp" />
 ###
@@ -2277,7 +2276,7 @@ end);;
 #############
 ### multiplication in the quotient algebra 
 ### <#GAPDoc Label="MulQM">
-### <ManSection Label="MulQM">
+### <ManSection>
 ### <Func Name="MulQM" Comm="Multiply an element in the module by an
 ### element of the quotient algebra" 
 ### Arg="p1, p2, GBR" />
@@ -2332,7 +2331,7 @@ end);;
 #################
 ###
 ### <#GAPDoc Label="BaseQM">
-### <ManSection Label="BaseQM">
+### <ManSection>
 ### <Func Name="BaseQM" Comm="Find a basis of the module" 
 ### Arg="GBR, t, mt, maxno" />
 ### <Returns>A basis of the module obtained from the
@@ -2439,7 +2438,7 @@ end);;
 ### DimQM ###
 ################
 ### <#GAPDoc Label="DimQM">
-### <ManSection Label="DimQM">
+### <ManSection>
 ### <Func Name="DimQM" Comm="Calculates the dimension of the quotient algebra" 
 ### Arg="GBR, t, mt" />
 ### <Returns>The dimension of the quotient module

@@ -1,8 +1,7 @@
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <!-- %% -->
-<!-- %A  groups.msk                  GAP documentation            Alexander Hulpke -->
+<!-- %A  groups.xml                  GAP documentation            Alexander Hulpke -->
 <!-- %% -->
-<!-- %A  @(#)<M>Id: groups.msk,v 1.111 2006/08/17 14:09:37 gap Exp </M> -->
 <!-- %% -->
 <!-- %Y  (C) 1998 School Math and Comp. Sci., University of St  Andrews, Scotland -->
 <!-- %Y  Copyright (C) 2002 The GAP Group -->
@@ -140,7 +139,7 @@ gap> IndexInWholeGroup(freesub);
 <Index>factorization</Index>
 <Index Subkey="in generators">words</Index>
 
-Using homomorphisms (see chapter&nbsp;<Ref Chap="Group Homomorphisms"/>) is is possible to
+Using homomorphisms (see chapter&nbsp;<Ref Chap="Group Homomorphisms"/>) it is possible to
 express group elements as words in given generators: Create a free group
 (see&nbsp;<Ref Func="FreeGroup" Label="for given rank"/>)
 on the correct number of generators and create a
@@ -258,7 +257,7 @@ other elements of the group) can be computed by the operation
 <#Include Label="FrattiniSubgroup">
 <#Include Label="PrefrattiniSubgroup">
 <#Include Label="PerfectResiduum">
-<#Include Label="RadicalGroup">
+<#Include Label="SolvableRadical">
 <#Include Label="Socle">
 <#Include Label="SupersolvableResiduum">
 <#Include Label="PRump">
@@ -342,6 +341,7 @@ as they depend on a parameter.
 <#Include Label="IsMonomialGroup">
 <#Include Label="IsSimpleGroup">
 <#Include Label="IsAlmostSimpleGroup">
+<#Include Label="IsQuasisimpleGroup">
 <#Include Label="IsomorphismTypeInfoFiniteSimpleGroup">
 <#Include Label="SimpleGroup">
 <#Include Label="SimpleGroupsIterator">
@@ -421,6 +421,7 @@ the series without destroying the properties of the series.
 <#Include Label="AscendingChain">
 <#Include Label="IntermediateGroup">
 <#Include Label="IntermediateSubgroups">
+<#Include Label="StructuralSeriesOfGroup">
 
 </Section>
 

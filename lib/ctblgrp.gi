@@ -91,6 +91,7 @@ local D,C,cl,pl;
   SortParallel(cl,pl,ClassComparison);
   D.perm:=PermList(pl);
   D.permlist:=pl;
+  D.invpermlist:=ListPerm(D.perm^-1,Length(D.permlist));
   D.currentInverseClassNo:=0;
 
   D.characterTable:=C;
@@ -103,32 +104,6 @@ local D,C,cl,pl;
 
   return D;
 end);
-
-# #############################################################################
-# ##
-# #F  DxPowerClass(<D>,<cl>,<pow>)  . . . . . . . . . . . . . evaluate powermap
-# ##
-# DxPowerClass := function(D,nu,power)
-#   local p,primes,cl;
-#   cl:=nu;
-#   power:=power mod D.characterTable.orders[cl];
-#   if power=0 then
-#     return 1;
-#   elif power=1 then
-#     return cl;
-#   else
-#     primes:=Factors(power);
-#     for p in primes do
-#       if not IsBound(D.characterTable.powermap[p]) then
-#         return D.ClassElement(D,
-#           Representative(D.classes[nu])^power);
-#       else
-#         cl:=D.characterTable.powermap[p][cl];
-#       fi;
-#     od;
-#     return cl;
-#   fi;
-# end;
 
 #############################################################################
 ##
@@ -270,13 +245,11 @@ end;
 
 #############################################################################
 ##
-#F  DxNiceBasis(v,space)
+#F  DxIsInSpace(v,space)
 ##
 DxIsInSpace := function(v,r)
-  if not IsBound(r.space) then
-    r.space:=VectorSpace(Field(r.base[1]),r.base);
-  fi;
-  return v in r.space;
+local nr,nc,m,i,j;
+  return SolutionMat(Matrix(BaseDomain(r.base[1]),r.base),v)<>fail;
 end;
 
 #############################################################################
@@ -286,9 +259,9 @@ end;
 DxNiceBasis := function(d,r)
 local b;
   if not IsBound(r.niceBasis) then
-    b:=List(r.base,i->i{d.permlist}); # copied and permuted according to order
+    b:=Matrix(BaseDomain(r.base[1]),List(r.base,i->i{d.permlist})); # copied and permuted according to order
     TriangulizeMat(b);
-    b:=List(b,i->Permuted(i,d.perm)); # permuted back
+    b:=List(b,i->i{d.invpermlist}); # permuted back
     r.niceBasis:=Immutable(b);
   fi;
   Assert(1,Length(r.niceBasis)=Length(r.base));
@@ -336,6 +309,7 @@ DxRegisterModularChar := function(D,c)
 local d,p;
   # it may happen,that an irreducible character will be registered twice:
   # 2-dim space,1 Orbit,combinatoric split. Avoid this!
+  if IsPlistRep(c) then c:=Vector(c); fi;
   if not(c in D.modulars) then
     Add(D.modulars,c);
     d:=Int(c[1]);
@@ -412,25 +386,28 @@ local i,pcomp,m,r,D,neue,tm,news,opt;
   od;
 
   if opt<>true then
-    pcomp:=NullspaceMat(D.projectionMat*TransposedMat(D.modulars));
-    for i in [1..Length(D.raeume)] do
-      r:=D.raeume[i];
-      if r.dim = Length(r.base[1]) then
-	# trivial case: Intersection with full space in the beginning
-	r:=rec(base:=pcomp);
-      else
-	r:=rec(base:=SumIntersectionMat(pcomp,r.base)[2]);
-      fi;
-      r.dim:=Length(r.base);
-      # note stabilizer
-      if IsBound(D.raeume[i].stabilizer) then
-	r.stabilizer:=D.raeume[i].stabilizer;
-      fi;
-      if r.dim>0 then
-	DxActiveCols(D,r);
-      fi;
-      D.raeume[i]:=r;
-    od;
+    pcomp:=NullspaceMat(D.projectionMat*TransposedMatImmutable(Matrix(D.field,D.modulars)));
+    if Length(pcomp)>0 then
+      for i in [1..Length(D.raeume)] do
+        r:=D.raeume[i];
+        if r.dim = Length(r.base[1]) then
+          # trivial case: Intersection with full space in the beginning
+          r:=rec(base:=pcomp);
+        else
+          r:=rec(base:=SumIntersectionMat(pcomp,
+            Matrix(BaseDomain(r.base[1]),r.base))[2]);
+        fi;
+        r.dim:=Length(r.base);
+        # note stabilizer
+        if IsBound(D.raeume[i].stabilizer) then
+          r.stabilizer:=D.raeume[i].stabilizer;
+        fi;
+        if r.dim>0 then
+          DxActiveCols(D,r);
+        fi;
+        D.raeume[i]:=r;
+      od;
+    fi;
   fi;
   D.raeume:=Filtered(D.raeume,i->i.dim>0);
 end );
@@ -627,7 +604,7 @@ local ml,nu,ret,r,p,v,alo,ofs,orb,i,j,inv,b;
       alo:=Length(b);
     od;
   od;
-  inv:=b^(-1);
+  inv:=Matrix(BaseDomain(b[1]),b)^(-1);
   for i in ml do
     v:=i*inv;
     for r in [1..Length(D.raeume)] do
@@ -636,7 +613,7 @@ local ml,nu,ret,r,p,v,alo,ofs,orb,i,j,inv,b;
         p[j]:=v[j];
       od;
       p:=p*b;
-      if p<>nu then
+      if not IsZero(p) then
         AddSet(ret,DxLiftCharacter(D,p));
       fi;
     od;
@@ -653,7 +630,7 @@ DxEigenbase := function(M,f)
   local dim,i,k,eigenvalues,base,minpol,bases;
   k:=Length(M);
 
-  minpol:=MinimalPolynomial(f,M);
+  minpol:=MinimalPolynomial(BaseDomain(M),M);
   
   Assert(2,IsDuplicateFree(RootsOfUPol(minpol)));
   eigenvalues:=Set(RootsOfUPol(minpol));
@@ -664,7 +641,6 @@ DxEigenbase := function(M,f)
     if base=[] then
       Error("This can`t happen: Wrong Eigenvalue ???");
     else
-      #TriangulizeMat(base);
       dim:=dim+Length(base);
       Add(bases,base);
     fi;
@@ -705,18 +681,17 @@ InstallGlobalFunction(SplitStep,function(D,bestMat)
   if ForAny(raeume,i->i.dim>1) then
     bestMatCol:=D.requiredCols[bestMat];
     bestMatSplit:=D.splitBases[bestMat];
-    M:= NullMat( k, k, 0 );
+    M:= ZeroMatrix(Integers,k,k);
     Info(InfoCharacterTable,1,"Matrix ",bestMat,",Representative of Order ",
        Order(D.classreps[bestMat]),
        ",Centralizer: ",D.centralizers[bestMat]);
 
     Add(D.yetmats,bestMat);
     for col in bestMatCol do
-      Info(InfoCharacterTable,2,"Computing column ",col,":");
       D.ClassMatrixColumn(D,M,bestMat,col);
     od;
 
-    M:=M*o;
+    M:=Matrix(D.field,Unpack(M)*o);
 
     # note,that we will have calculated yet one!
     D.maycent:=true;
@@ -729,15 +704,21 @@ InstallGlobalFunction(SplitStep,function(D,bestMat)
       dim:=raum.dim;
       # cut out the 'active part' for computation of an eigenbase
       activeCols:=DxActiveCols(D,raum);
-      N:= NullMat( dim, dim, o );
+      N:= ZeroMatrix(f,dim,dim);
       for row in [1..dim] do
-        Row:=base[row]*M;
+        #Row:=base[row]*M;
+        Row:=CompatibleVector(M);
+        for col in [1..Length(Row)] do
+          Row[col]:=base[row,col];
+        od;
+        Row:=Row*M;
         for col in [1..dim] do
-          N[row][col]:=Row[activeCols[col]];
+          N[row,col]:=Row[activeCols[col]];
         od;
       od;
       eigen:=DxEigenbase(N,f);
       # Base umrechnen
+      base:=Matrix(BaseDomain(base[1]),base);
       eigenbase:=List(eigen.base,i->List(i,j->j*base));
     #eigenvalues:=List(eigen.values,i->i/D.classiz[bestMat]);
 
@@ -807,7 +788,7 @@ InstallGlobalFunction(SplitStep,function(D,bestMat)
     fi;
   od;
 
-  Info(InfoCharacterTable,1,"Dimensions: ",List(raeume,i->i.dim));
+  Info(InfoCharacterTable,1,"Dimensions: ",Collected(List(raeume,i->i.dim)));
   D.raeume:=raeume;
   return true;
 end);
@@ -1037,10 +1018,10 @@ SplitTwoSpace := function(D,raum)
     str:="Two orbit";
   fi;
   if NotFailed then
-    Info(InfoCharacterTable,1,str," space split");
+    Info(InfoCharacterTable,2,str," space split");
     return char;
   else
-    Info(InfoCharacterTable,1,str," split failed");
+    Info(InfoCharacterTable,2,str," split failed");
     raum.twofail:=true;
     return [];
   fi;
@@ -1092,7 +1073,7 @@ local i,newRaeume,raum,neuer,j,ch,irrs,mods,incirrs,incmods,nb,rt,neuc;
         Info(InfoCharacterTable,1,"TwoDimSpace image");
         nb:=D.asCharacterMorphism(raum.base[1],j);
         neuc:=List(irrs,i->D.asCharacterMorphism(i,j));
-        if not ForAny([i+1..Length(D.raeume)],i->nb in D.raeume[i].space) then
+        if not ForAny([i+1..Length(D.raeume)],i->DxIsInSpace(nb,D.raeume[i])) then
           incirrs:=Union(incirrs,neuc);
           incmods:=Union(incmods,List(mods,i->D.asCharacterMorphism(i,j)));
         else
@@ -1265,7 +1246,7 @@ InstallGlobalFunction( DxSplitDegree, function(D,space,r)
         fi;
       od;
     od;
-    return Length(v); #Length(Set(List(AsList(s),i->i.tens[r])));
+    return Length(v); #Length(Set(AsList(s),i->i.tens[r]));
   else
     # nonfix
     # v is an element from the space with non-galois-fix parts.
@@ -1313,7 +1294,7 @@ local i,k,l,u,ga,galOp,p;
       l:=List([1..k],i->Set(Orbit(ga,i)));
       galOp[f].orbits:=l;
       u:=List(Filtered(Collected(
-        List(Set(List(l,i->i[1])),j->D.rids[j])),n->n[2]=1),t->t[1]);
+        List(Set(l,i->i[1]),j->D.rids[j])),n->n[2]=1),t->t[1]);
       galOp[f].uniqueIdentifications:=u;
       galOp[f].identifees:=Filtered([1..k],i->D.rids[i] in u);
     fi;
@@ -1332,11 +1313,11 @@ end;
 ##
 InstallGlobalFunction( BestSplittingMatrix, function(D)
 local n,i,val,b,requiredCols,splitBases,wert,nu,r,rs,rc,bn,bw,split,
-      orb,os,lim,ksl;
+      orb,os,lim,ksl,dmats,imp;
 
   nu:=Zero(D.field);
-  requiredCols:=[];
-  splitBases:=[];
+  requiredCols:=List([1..D.klanz],x->[]);
+  splitBases:=List([1..D.klanz],x->[]);
   wert:=[];
   os:=ForAll(D.raeume,i->i.dim<20); #only small spaces left?
 
@@ -1350,11 +1331,17 @@ local n,i,val,b,requiredCols,splitBases,wert,nu,r,rs,rc,bn,bw,split,
   fi;
 
   ksl:=1;
+  # try matrics by class sizes
+  dmats:=[1..Length(D.classiz)];
+  SortParallel(ShallowCopy(D.classiz),dmats);
+  dmats:=Filtered(dmats,x->x in D.matrices);
+
   repeat
-    for n in D.matrices do
+    for n in dmats do
       requiredCols[n]:=[];
       splitBases[n]:=[];
       wert[n]:=0;
+      imp:=false;
 
       # only take classes small enough
       if D.classiz[n]<=lim and
@@ -1377,6 +1364,7 @@ local n,i,val,b,requiredCols,splitBases,wert,nu,r,rs,rc,bn,bw,split,
 	    else
 	      b:=DxNiceBasis(D,r);
 	      split:=ForAny(b{[2..r.dim]},i->i[n]<>nu);
+              imp:=imp or split;
 	      if split then
 		if r.dim<4 then
 		  # very small spaces will split nearly perfect
@@ -1425,14 +1413,34 @@ local n,i,val,b,requiredCols,splitBases,wert,nu,r,rs,rc,bn,bw,split,
 	    # compensate for the splitting process.
 	fi;
       fi;
+      # is there one that does all already? If so don't bother testing the
+      # rest, as we go by cost
+      if imp and Length(D.raeume)<=20
+        and ForAll(D.raeume,x->IsBound(x.splits)) then
+
+        rc:=Intersection(List(D.raeume,x->Filtered([1..Length(x.splits)],
+          y->IsBound(x.splits[y]) and x.splits[y].split=true)));
+        if Length(rc)>0 then
+          for bw in rc do
+            if not IsBound(wert[bw]) or wert[bw]=0 then
+              wert[bw]:=Sum(D.raeume,x->x.splits[bw].val);
+            fi;
+            splitBases[bw]:=Union(splitBases[bw],[1..Length(D.raeume)]);
+            for bn in D.raeume do
+              requiredCols[bw]:=Union(requiredCols[bw],
+                                      bn.activeCols);
+            od;
+          od;
+          break;
+        fi;
+      fi;
     od;
 
     for r in D.raeume do
-      if IsBound(r.splits) and Number(r.splits)=1 then
+      if IsBound(r.splits) and Number(r.splits,x->x.split=true)=1 then
 	# is room split by only ONE matrix?(then we need this sooner or later)
-	# simulate: n:=PositionProperty(r.splits,IsBound);
 	n:=1;
-	while not IsBound(r.splits[n]) do
+	while not IsBound(r.splits[n]) or r.splits[n].split=false do
 	  n:=n+1;
 	od;
 	wert[n]:=wert[n]*10; #arbitrary increase of value
@@ -1444,7 +1452,7 @@ local n,i,val,b,requiredCols,splitBases,wert,nu,r,rs,rc,bn,bw,split,
     # run through them in pl sequence
     for n in Filtered(D.permlist,i->i in D.matrices) do
       Info(InfoCharacterTable,3,n,":",Int(wert[n]));
-      if wert[n]>bw then
+      if IsBound(wert[n]) and wert[n]>bw then
 	bn:=n;
 	bw:=wert[n];
       fi;
@@ -1723,7 +1731,7 @@ DoubleCentralizerOrbit := function(D,c1,c2)
     often:=List(trans,i->Length(i));
     return [List(trans,i->i[1]),often];
   else
-    Info(InfoCharacterTable,2,"using DoubleCosets;");
+    #Info(InfoCharacterTable,3,"using DoubleCosets;");
     cent:=Centralizer(D.classes[inv]);
     l:=DoubleCosetRepsAndSizes(D.group,cent,Centralizer(D.classes[c2]));
     s1:=Size(cent);
@@ -1747,7 +1755,7 @@ end;
 StandardClassMatrixColumn := function(D,M,r,t)
   local c,gt,s,z,i,T,w,e,j,p,orb;
   if t=1 then
-    M[D.inversemap[r]][t]:=D.classiz[r];
+    M[D.inversemap[r],t]:=D.classiz[r];
   else
     orb:=DxGaloisOrbits(D,r);
     z:=D.classreps[t]; 
@@ -1756,18 +1764,20 @@ StandardClassMatrixColumn := function(D,M,r,t)
       p:=RepresentativeAction(Stabilizer(orb.group,r),c,t);
       if p<>fail then
 	# was the first column of the galois class active?
-	if ForAny(M,i->i[c]>0) then
+	if ForAny([1..NrRows(M)],i->M[i,c]>0) then
 	  for i in D.classrange do
-	    M[i^p][t]:=M[i][c];
+	    M[i^p,t]:=M[i,c];
 	  od;
-	  Info(InfoCharacterTable,2,"by GaloisImage");
+          Info(InfoCharacterTable,2,"Computing column ",t,
+            " : by GaloisImage");
 	  return;
 	fi;
       fi;
     fi;
 
     T:=DoubleCentralizerOrbit(D,r,t);
-    Info(InfoCharacterTable,2,Length(T[1])," instead of ",D.classiz[r]);
+    Info(InfoCharacterTable,2,"Computing column ",t," :",
+      Length(T[1])," instead of ",D.classiz[r]);
 
     if IsDxLargeGroup(D.group) then
       # if r and t are unique,the conjugation test can be weak (i.e. up to
@@ -1787,19 +1797,19 @@ StandardClassMatrixColumn := function(D,M,r,t)
         else # only strong test possible
           s:=D.ClassElement(D,e);
         fi;
-        M[s][t]:=M[s][t]+T[2][i];
+        M[s,t]:=M[s,t]+T[2][i];
       od;
       if w then # weak discrimination possible ?
         gt:=Set(Filtered(orb.orbits,i->Length(i)>1));
         for i in gt do
           if i[1] in orb.identifees then
             # were these classes detected weakly ?
-            e:=M[i[1]][t];
+            e:=M[i[1],t];
             if e>0 then
-              Info(InfoCharacterTable,2,"GaloisIdentification ",i,": ",e);
+              Info(InfoCharacterTable,3,"GaloisIdentification ",i,": ",e);
             fi;
             for j in i do
-              M[j][t]:=e/Length(i);
+              M[j,t]:=e/Length(i);
             od;
           fi;
         od;
@@ -1808,7 +1818,7 @@ StandardClassMatrixColumn := function(D,M,r,t)
       for i in [1..Length(T[1])] do
         s:=D.ClassElement(D,T[1][i] * z);
 	Unbind(T[1][i]);
-        M[s][t]:=M[s][t]+T[2][i];
+        M[s,t]:=M[s,t]+T[2][i];
       od;
     fi;
   fi;
@@ -1997,25 +2007,26 @@ local G,     # group
   D.field:=f;
   D.one:=One(f);
   D.z:=z;
-  r:=rec(base:=Immutable( IdentityMat(k,D.one) ),dim:=k);
+  r:=rec(base:=List(IdentityMat(k,D.one),Vector),dim:=k);
   D.raeume:=[r];
 
   # Galois group operating on the columns
-  ga:= GroupByGenerators( Set( List( Flat( GeneratorsPrimeResidues(
+  ga:= GroupByGenerators( Set( Flat( GeneratorsPrimeResidues(
 		      Exponent(G)).generators),
-    i->PermList(List([1..k],j->PowerMap(D.characterTable,i,j))))),());
+    i->PermList(List([1..k],j->PowerMap(D.characterTable,i,j)))),());
 
   D.galMorphisms:=ga;
   D.galoisOrbits:=List([1..k],i->Set(Orbit(ga,i)));
-  D.matrices:=Difference(Set(List(D.galoisOrbits,i->i[1])),[1]);
+  D.matrices:=Difference(Set(D.galoisOrbits,i->i[1]),[1]);
   D.galOp:=[];
   D.irreducibles:=[];
 
-  M:= IdentityMat(k);
+  fk:=D.one/(Size(G) mod prime);
+  M:= ZeroMatrix(D.field,k,k);
   for i in [1..k] do
-    M[i][i]:=D.classiz[i] mod prime;
+    M[i,i]:=(D.classiz[i] mod prime)*D.one*fk;
   od;
-  D.projectionMat:=M*(D.one/(Size(G) mod prime));
+  D.projectionMat:=M;
 
   #if (USECTPGROUP or Size(G)<2000 or k*10>=Size(G))
   #   and IsBound(G.isAgGroup) and G.isAgGroup
@@ -2043,7 +2054,7 @@ local G,     # group
     # CharacterMorphisms.
     D.raeume[1].stabilizer:=CharacterMorphismGroup(D);
     m:=First(D.classes,i->Size(i)>1);
-    if Size(m)>8 then 
+    if m<>fail and Size(m)>8 then 
       D.maycent:=true;
     fi;
   fi;
@@ -2051,20 +2062,9 @@ local G,     # group
   return D;
 end );
 
-
-#############################################################################
-##
-#F  DixonSplit(<D>) . .  calculate matrix,split spaces and obtain characters
-##
-InstallGlobalFunction( DixonSplit, function(D)
-local r,i,j,ch,ra,bsm,
-      gens;
-
-  bsm:=BestSplittingMatrix(D);
-  if bsm<>fail then
-    SplitStep(D,bsm);
-  fi;
-
+InstallGlobalFunction(DxOnedimCleanout,function(D)
+local i,j,r,ch,kill,gens,ra;
+  kill:=false;
   for i in [1..Length(D.raeume)] do
     r:=D.raeume[i];
     if r.dim=1 then
@@ -2086,14 +2086,38 @@ local r,i,j,ch,ra,bsm,
         Add(D.irreducibles,j);
       od;
       Unbind(D.raeume[i]);
+      kill:=true;
     fi;
   od;
-  # Throw away lifted spaces
-  ra:=[];
-  for i in D.raeume do
-    Add(ra,i);
-  od;
-  D.raeume:=ra;
+  if kill then
+    # Throw away lifted spaces
+    ra:=[];
+    for i in D.raeume do
+      Add(ra,i);
+    od;
+    D.raeume:=ra;
+  fi;
+end);
+
+#############################################################################
+##
+#F  DixonSplit(<D>) . .  calculate matrix,split spaces and obtain characters
+##
+InstallGlobalFunction( DixonSplit, function(arg)
+local D,bsm;
+
+  D:=arg[1];
+  if Length(arg)>1 then
+    bsm:=arg[2];
+  else
+    bsm:=BestSplittingMatrix(D);
+  fi;
+  if bsm<>fail then
+    SplitStep(D,bsm);
+  fi;
+
+  DxOnedimCleanout(D);
+
   CombinatoricSplit(D);
   return bsm;
 end );
@@ -2174,6 +2198,7 @@ local k,C,D,dsp;
   od;
 
   C:=DixontinI(D);
+  Assert(1,Length(C)=D.klanz);
   # SetIrr(OrdinaryCharacterTable(G),C);
   # (if `IrrDixonSchneider' is called explicitly,
   # we want to ignore the attribute)

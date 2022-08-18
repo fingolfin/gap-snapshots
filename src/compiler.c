@@ -28,6 +28,7 @@
 #include "stats.h"
 #include "stringobj.h"
 #include "sysopt.h"
+#include "sysstr.h"
 #include "vars.h"
 
 #include <stdarg.h>
@@ -99,7 +100,7 @@ static Int CompCheckListElements;
 **
 **  The only difference between the  first pass and  the second pass is  that
 **  'Emit'  emits  no code  during the first  pass.   While  this causes many
-**  unneccessary  computations during the first pass,  the  advantage is that
+**  unnecessary  computations during the first pass,  the  advantage is that
 **  the two passes are guaranteed to do exactly the same computations.
 */
 static Int CompPass;
@@ -212,16 +213,16 @@ typedef UInt4           LVar;
 #define SIZE_INFO(nlvar,ntemp)  (sizeof(Int) * (1 + 7 + (nlvar) + (ntemp)))
 
 #define W_UNUSED                0       /* TEMP is currently unused        */
-#define W_HIGHER                (1L<<0) /* LVAR is used as higher variable */
-#define W_UNKNOWN               ((1L<<1) | W_HIGHER)
-#define W_UNBOUND               ((1L<<2) | W_UNKNOWN)
-#define W_BOUND                 ((1L<<3) | W_UNKNOWN)
-#define W_INT                   ((1L<<4) | W_BOUND)
-#define W_INT_SMALL             ((1L<<5) | W_INT)
-#define W_INT_POS               ((1L<<6) | W_INT)
-#define W_BOOL                  ((1L<<7) | W_BOUND)
-#define W_FUNC                  ((1L<<8) | W_BOUND)
-#define W_LIST                  ((1L<<9) | W_BOUND)
+#define W_HIGHER                (1<<0) /* LVAR is used as higher variable */
+#define W_UNKNOWN               ((1<<1) | W_HIGHER)
+#define W_UNBOUND               ((1<<2) | W_UNKNOWN)
+#define W_BOUND                 ((1<<3) | W_UNKNOWN)
+#define W_INT                   ((1<<4) | W_BOUND)
+#define W_INT_SMALL             ((1<<5) | W_INT)
+#define W_INT_POS               ((1<<6) | W_INT)
+#define W_BOOL                  ((1<<7) | W_BOUND)
+#define W_FUNC                  ((1<<8) | W_BOUND)
+#define W_LIST                  ((1<<9) | W_BOUND)
 
 #define W_INT_SMALL_POS         (W_INT_SMALL | W_INT_POS)
 
@@ -319,22 +320,22 @@ static void MergeInfoCVars(Bag dst, Bag src)
     }
 }
 
-static Int IsEqInfoCVars(Bag dst, Bag src)
+static BOOL IsEqInfoCVars(Bag dst, Bag src)
 {
     Int                 i;
     if ( SIZE_BAG(dst) < SIZE_BAG(src) )  ResizeBag( dst, SIZE_BAG(src) );
     if ( SIZE_BAG(src) < SIZE_BAG(dst) )  ResizeBag( src, SIZE_BAG(dst) );
     for ( i = 1; i <= NLVAR_INFO(src); i++ ) {
         if ( TNUM_LVAR_INFO(dst,i) != TNUM_LVAR_INFO(src,i) ) {
-            return 0;
+            return FALSE;
         }
     }
     for ( i = 1; i <= NTEMP_INFO(dst) && i <= NTEMP_INFO(src); i++ ) {
         if ( TNUM_TEMP_INFO(dst,i) != TNUM_TEMP_INFO(src,i) ) {
-            return 0;
+            return FALSE;
         }
     }
-    return 1;
+    return TRUE;
 }
 
 
@@ -532,9 +533,9 @@ static UInt GetIndxHVar(HVar hvar)
 */
 typedef UInt    GVar;
 
-#define COMP_USE_GVAR_ID        (1L << 0)
-#define COMP_USE_GVAR_COPY      (1L << 1)
-#define COMP_USE_GVAR_FOPY      (1L << 2)
+#define COMP_USE_GVAR_ID        (1 << 0)
+#define COMP_USE_GVAR_COPY      (1 << 1)
+#define COMP_USE_GVAR_FOPY      (1 << 2)
 
 static Bag CompInfoGVar;
 
@@ -543,7 +544,7 @@ static void CompSetUseGVar(GVar gvar, UInt mode)
     /* only mark in pass 1                                                 */
     if ( CompPass != 1 )  return;
 
-    /* resize if neccessary                                                */
+    /* resize if necessary                                                */
     if ( SIZE_OBJ(CompInfoGVar)/sizeof(UInt) <= gvar ) {
         ResizeBag( CompInfoGVar, sizeof(UInt)*(gvar+1) );
     }
@@ -576,7 +577,7 @@ static UInt CompGetUseGVar(GVar gvar)
 */
 typedef UInt    RNam;
 
-#define COMP_USE_RNAM_ID        (1L << 0)
+#define COMP_USE_RNAM_ID        (1 << 0)
 
 static Bag CompInfoRNam;
 
@@ -585,7 +586,7 @@ static void CompSetUseRNam(RNam rnam, UInt mode)
     /* only mark in pass 1                                                 */
     if ( CompPass != 1 )  return;
 
-    /* resize if neccessary                                                */
+    /* resize if necessary                                                */
     if ( SIZE_OBJ(CompInfoRNam)/sizeof(UInt) <= rnam ) {
         ResizeBag( CompInfoRNam, sizeof(UInt)*(rnam+1) );
     }
@@ -608,13 +609,20 @@ static UInt CompGetUseRNam(RNam rnam)
 **  correspond  to the '%'  format elements  in  <fmt>.  Nothing  is actually
 **  outputted if 'CompPass' is not 2.
 **
-**  'Emit'   supports the following   '%'  format elements:  '%d' formats  an
-**  integer,   '%s' formats a  string,  '%S' formats a    string with all the
-**  necessary escapes, %C does the same  but uses only  valid C escapes, '%n'
-**  formats a  name   ('_' is  converted   to '__',  special  characters  are
-**  converted to     '_<hex1><hex2>'),    '%c'  formats     a  C     variable
-**  ('INTOBJ_INT(<int>)'  for integers,  'a_<name>' for arguments, 'l_<name>'
-**  for locals, 't_<nr>' for temporaries), and '%%' outputs a single '%'.
+**  'Emit' supports the following '%' format elements:
+**  - '%d' formats an integer,
+**  - '%s' formats a string,
+**  - '%S' formats a string with all the necessary escapes,
+**  - '%g' formats a GAP string,
+**  - '%G' formats a GAP string with all the necessary escapes,
+**  - '%C' does the same but uses only valid C escapes,
+**  - '%n' formats a name ('_' is converted to '__', special characters are
+**         converted to '_<hex1><hex2>')
+**  - '%c' formats a C variable ('INTOBJ_INT(<int>)' for integers, 'a_<name>'
+**         for arguments, 'l_<name>' for locals, 't_<nr>' for temporaries),
+**  - '%i' formats a C variable as an integer ('<int>' for integers, and for
+**         everything else the same as INT_INTOBJ(%c) would produce
+**  - '%%' outputs a single '%'.
 */
 static Int EmitIndent;
 
@@ -646,7 +654,7 @@ static void Emit(const char * fmt, ...)
         /* print an indent, except for preprocessor commands               */
         if ( *fmt != '#' ) {
             if ( 0 < EmitIndent2 && *p == '}' ) EmitIndent2--;
-            while ( 0 < EmitIndent2-- )  Pr( " ", 0L, 0L );
+            while ( 0 < EmitIndent2-- )  Pr(" ", 0, 0);
         }
 
         /* format an argument                                              */
@@ -656,21 +664,21 @@ static void Emit(const char * fmt, ...)
             /* emit an integer                                             */
             if ( *p == 'd' ) {
                 dint = va_arg( ap, Int );
-                Pr( "%d", dint, 0L );
+                Pr("%d", dint, 0);
             }
 
             // emit a C string
             else if ( *p == 's' || *p == 'S' ) {
                 const Char f[] = { '%', *p, 0 };
                 string = va_arg( ap, Char* );
-                Pr( f, (Int)string, 0L );
+                Pr(f, (Int)string, 0);
             }
 
             // emit a GAP string
             else if ( *p == 'g' || *p == 'G' || *p == 'C' ) { 
                 const Char f[] = { '%', *p, 0 };
                 Obj str = va_arg( ap, Obj );
-                Pr( f, (Int)str, 0L );
+                Pr(f, (Int)str, 0);
             }
 
             /* emit a name                                                 */
@@ -680,10 +688,10 @@ static void Emit(const char * fmt, ...)
                 Char c;
                 while ((c = CONST_CSTR_STRING(str)[i++])) {
                     if ( IsAlpha(c) || IsDigit(c) ) {
-                        Pr( "%c", (Int)c, 0L );
+                        Pr("%c", (Int)c, 0);
                     }
                     else if ( c == '_' ) {
-                        Pr( "__", 0L, 0L );
+                        Pr("__", 0, 0);
                     }
                     else {
                         Pr("_%c%c",hex[((UInt)c)/16],hex[((UInt)c)%16]);
@@ -696,13 +704,13 @@ static void Emit(const char * fmt, ...)
                 cvar = va_arg( ap, CVar );
                 if ( IS_INTG_CVAR(cvar) ) {
                     Int x = INTG_CVAR(cvar);
-                    if (x >= -(1L <<28) && x < (1L << 28))
-                        Pr( "INTOBJ_INT(%d)", x, 0L );
+                    if (x >= -(1 << 28) && x < (1 << 28))
+                        Pr("INTOBJ_INT(%d)", x, 0);
                     else
-                        Pr( "ObjInt_Int8(%d)", x, 0L );
+                        Pr("ObjInt_Int8(%d)", x, 0);
                 }
                 else if ( IS_TEMP_CVAR(cvar) ) {
-                    Pr( "t_%d", TEMP_CVAR(cvar), 0L );
+                    Pr("t_%d", TEMP_CVAR(cvar), 0);
                 }
                 else if ( LVAR_CVAR(cvar) <= narg ) {
                     Emit( "a_%n", NAME_LVAR( LVAR_CVAR(cvar) ) );
@@ -716,46 +724,46 @@ static void Emit(const char * fmt, ...)
             else if ( *p == 'i' ) {
                 cvar = va_arg( ap, CVar );
                 if ( IS_INTG_CVAR(cvar) ) {
-                    Pr( "%d", INTG_CVAR(cvar), 0L );
+                    Pr("%d", INTG_CVAR(cvar), 0);
                 }
                 else if ( IS_TEMP_CVAR(cvar) ) {
-                    Pr( "INT_INTOBJ(t_%d)", TEMP_CVAR(cvar), 0L );
+                    Pr("Int_ObjInt(t_%d)", TEMP_CVAR(cvar), 0);
                 }
                 else if ( LVAR_CVAR(cvar) <= narg ) {
-                    Emit( "INT_INTOBJ(a_%n)", NAME_LVAR( LVAR_CVAR(cvar) ) );
+                    Emit( "Int_ObjInt(a_%n)", NAME_LVAR( LVAR_CVAR(cvar) ) );
                 }
                 else {
-                    Emit( "INT_INTOBJ(l_%n)", NAME_LVAR( LVAR_CVAR(cvar) ) );
+                    Emit( "Int_ObjInt(l_%n)", NAME_LVAR( LVAR_CVAR(cvar) ) );
                 }
             }
 
             /* emit a '%'                                                  */
             else if ( *p == '%' ) {
-                Pr( "%%", 0L, 0L );
+                Pr("%%", 0, 0);
             }
 
             /* what                                                        */
             else {
-                Pr( "%%illegal format statement", 0L, 0L );
+                Pr("%%illegal format statement", 0, 0);
             }
 
         }
 
         else if ( *p == '{' ) {
-            Pr( "{", 0L, 0L );
+            Pr("{", 0, 0);
             EmitIndent++;
         }
         else if ( *p == '}' ) {
-            Pr( "}", 0L, 0L );
+            Pr("}", 0, 0);
             EmitIndent--;
         }
         else if ( *p == '\n' ) {
-            Pr( "\n", 0L, 0L );
+            Pr("\n", 0, 0);
             EmitIndent2 = EmitIndent;
         }
 
         else {
-            Pr( "%c", (Int)(*p), 0L );
+            Pr("%c", (Int)(*p), 0);
         }
 
     }
@@ -931,7 +939,6 @@ static CVar CompUnknownBool(Expr expr)
     /* free the temporary                                                  */
     if ( IS_TEMP_CVAR( val ) )  FreeTemp( TEMP_CVAR( val ) );
 
-    /* return the result                                                   */
     return res;
 }
     
@@ -1020,7 +1027,6 @@ static CVar CompFunccall0to6Args(Expr expr)
     }
     if ( IS_TEMP_CVAR( func ) )  FreeTemp( TEMP_CVAR( func ) );
 
-    /* return the result                                                   */
     return result;
 }
 
@@ -1078,7 +1084,6 @@ static CVar CompFunccallXArgs(Expr expr)
     if ( IS_TEMP_CVAR( argl ) )  FreeTemp( TEMP_CVAR( argl ) );
     if ( IS_TEMP_CVAR( func ) )  FreeTemp( TEMP_CVAR( func ) );
 
-    /* return the result                                                   */
     return result;
 }
 
@@ -1194,7 +1199,6 @@ static CVar CompOr(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1233,7 +1237,6 @@ static CVar CompOrBool(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1291,7 +1294,6 @@ static CVar CompAnd(Expr expr)
     if ( IS_TEMP_CVAR( right1 ) )  FreeTemp( TEMP_CVAR( right1 ) );
     if ( IS_TEMP_CVAR( left   ) )  FreeTemp( TEMP_CVAR( left   ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1330,7 +1332,6 @@ static CVar CompAndBool(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1359,7 +1360,6 @@ static CVar CompNot(Expr expr)
     /* free the temporaries                                                */
     if ( IS_TEMP_CVAR( left ) )  FreeTemp( TEMP_CVAR( left ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1388,7 +1388,6 @@ static CVar CompNotBool(Expr expr)
     /* free the temporaries                                                */
     if ( IS_TEMP_CVAR( left ) )  FreeTemp( TEMP_CVAR( left ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1425,7 +1424,6 @@ static CVar CompEq(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1462,7 +1460,6 @@ static CVar CompEqBool(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1499,7 +1496,6 @@ static CVar CompNe(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1536,7 +1532,6 @@ static CVar CompNeBool(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1573,7 +1568,6 @@ static CVar CompLt(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1610,7 +1604,6 @@ static CVar CompLtBool(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1647,7 +1640,6 @@ static CVar CompGe(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1684,7 +1676,6 @@ static CVar CompGeBool(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1721,7 +1712,6 @@ static CVar CompGt(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1758,7 +1748,6 @@ static CVar CompGtBool(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1795,7 +1784,6 @@ static CVar CompLe(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1832,7 +1820,6 @@ static CVar CompLeBool(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1864,7 +1851,6 @@ static CVar CompIn(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1896,7 +1882,6 @@ static CVar CompInBool(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1941,7 +1926,6 @@ static CVar CompSum(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -1983,7 +1967,6 @@ static CVar CompAInv(Expr expr)
     /* free the temporaries                                                */
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -2028,7 +2011,6 @@ static CVar CompDiff(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -2073,7 +2055,6 @@ static CVar CompProd(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -2105,7 +2086,6 @@ static CVar CompQuo(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -2142,7 +2122,6 @@ static CVar CompMod(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -2179,7 +2158,6 @@ static CVar CompPow(Expr expr)
     if ( IS_TEMP_CVAR( right ) )  FreeTemp( TEMP_CVAR( right ) );
     if ( IS_TEMP_CVAR( left  ) )  FreeTemp( TEMP_CVAR( left  ) );
 
-    /* return the result                                                   */
     return val;
 }
 
@@ -2282,7 +2260,7 @@ static CVar CompIntExpr(Expr expr)
 static CVar CompTildeExpr(Expr expr)
 {
     Emit( "if ( ! STATE(Tilde) ) {\n");
-    Emit( "    ErrorMayQuit(\"'~' does not have a value here\",0L,0L);\n" );
+    Emit( "    ErrorMayQuit(\"'~' does not have a value here\", 0, 0);\n" );
     Emit( "}\n" );
     CVar                val;            /* value, result                   */
 
@@ -2442,7 +2420,6 @@ static CVar CompListExpr(Expr expr)
     list = CompListExpr1( expr );
     CompListExpr2( list, expr );
 
-    /* return the result                                                   */
     return list;
 }
 
@@ -2652,7 +2629,6 @@ static CVar CompRecExpr(Expr expr)
     rec = CompRecExpr1( expr );
     CompRecExpr2( rec, expr );
 
-    /* return the result                                                   */
     return rec;
 }
 
@@ -2844,7 +2820,6 @@ static CVar CompIsbLVar(Expr expr)
     /* free the temporaries                                                */
     if ( IS_TEMP_CVAR( val ) )  FreeTemp( TEMP_CVAR( val ) );
 
-    /* return the result                                                   */
     return isb;
 }
 
@@ -2908,7 +2883,6 @@ static CVar CompIsbHVar(Expr expr)
     /* free the temporaries                                                */
     if ( IS_TEMP_CVAR( val ) )  FreeTemp( TEMP_CVAR( val ) );
 
-    /* return the result                                                   */
     return isb;
 }
 
@@ -2997,7 +2971,6 @@ static CVar CompIsbGVar(Expr expr)
     /* free the temporaries                                                */
     if ( IS_TEMP_CVAR( val ) )  FreeTemp( TEMP_CVAR( val ) );
 
-    /* return the result                                                   */
     return isb;
 }
 
@@ -3276,7 +3249,6 @@ static CVar CompIsbRecName(Expr expr)
     /* free the temporaries                                                */
     if ( IS_TEMP_CVAR( record ) )  FreeTemp( TEMP_CVAR( record ) );
 
-    /* return the result                                                   */
     return isb;
 }
 
@@ -3311,7 +3283,6 @@ static CVar CompIsbRecExpr(Expr expr)
     if ( IS_TEMP_CVAR( rnam   ) )  FreeTemp( TEMP_CVAR( rnam   ) );
     if ( IS_TEMP_CVAR( record ) )  FreeTemp( TEMP_CVAR( record ) );
 
-    /* return the result                                                   */
     return isb;
 }
 
@@ -3485,7 +3456,6 @@ static CVar CompIsbComObjName(Expr expr)
     /* free the temporaries                                                */
     if ( IS_TEMP_CVAR( record ) )  FreeTemp( TEMP_CVAR( record ) );
 
-    /* return the result                                                   */
     return isb;
 }
 
@@ -3520,7 +3490,6 @@ static CVar CompIsbComObjExpr(Expr expr)
     if ( IS_TEMP_CVAR( rnam   ) )  FreeTemp( TEMP_CVAR( rnam   ) );
     if ( IS_TEMP_CVAR( record ) )  FreeTemp( TEMP_CVAR( record ) );
 
-    /* return the result                                                   */
     return isb;
 }
 
@@ -5009,7 +4978,7 @@ static void CompAssert2(Stat stat)
 
     Emit( "\n/* Assert( ... ); */\n" );
     lev = CompExpr(READ_STAT(stat, 0));
-    Emit( "if ( ! LT(CurrentAssertionLevel, %c) ) {\n", lev );
+    Emit( "if ( STATE(CurrentAssertionLevel) >= %i ) {\n", lev );
     cnd = CompBoolExpr(READ_STAT(stat, 1));
     Emit( "if ( ! %c ) {\n", cnd );
     Emit( "AssertionFailure();\n" );
@@ -5034,7 +5003,7 @@ static void CompAssert3(Stat stat)
 
     Emit( "\n/* Assert( ... ); */\n" );
     lev = CompExpr(READ_STAT(stat, 0));
-    Emit( "if ( ! LT(CurrentAssertionLevel, %c) ) {\n", lev );
+    Emit( "if ( STATE(CurrentAssertionLevel) >= %i ) {\n", lev );
     cnd = CompBoolExpr(READ_STAT(stat, 1));
     Emit( "if ( ! %c ) {\n", cnd );
     msg = CompExpr(READ_STAT(stat, 2));
@@ -5104,7 +5073,7 @@ static void CompFunc(Obj func)
     }
 
     /* switch to this function (so that 'CONST_ADDR_STAT' and 'CONST_ADDR_EXPR' work)  */
-    SWITCH_TO_NEW_LVARS( func, narg, nloc, oldFrame );
+    oldFrame = SWITCH_TO_NEW_LVARS(func, narg, nloc);
 
     /* get the info bag                                                    */
     info = INFO_FEXP( CURR_FUNC() );
@@ -5221,22 +5190,17 @@ static void CompFunc(Obj func)
 
 /****************************************************************************
 **
-*F  CompileFunc( <output>, <func>, <name>, <magic1>, <magic2> ) . . . compile
+*F  CompileFunc( <filename>, <func>, <name>, <magic1>, <magic2> ) . . compile
 */
-Int CompileFunc (
-    Obj                 output,
-    Obj                 func,
-    Obj                 name,
-    Int                 magic1,
-    Obj                 magic2 )
+Int CompileFunc(Obj filename, Obj func, Obj name, Int magic1, Obj magic2)
 {
     Int                 i;              /* loop variable                   */
-    Obj                 n;              /* temporary                       */
     UInt                col;
     UInt                compFunctionsNr;
 
     /* open the output file                                                */
-    if ( ! OpenOutput( CONST_CSTR_STRING(output) ) ) {
+    TypOutputFile output = { 0 };
+    if (!OpenOutput(&output, CONST_CSTR_STRING(filename), FALSE)) {
         return 0;
     }
     col = SyNrCols;
@@ -5317,7 +5281,7 @@ Int CompileFunc (
     }
     Emit( "\n/* information for the functions */\n" );
     for ( i = 1; i <= compFunctionsNr; i++ ) {
-        n = NAME_FUNC(ELM_PLIST(CompFunctions,i));
+        Obj n = NAME_FUNC(ELM_PLIST(CompFunctions,i));
         if ( n != 0 && IsStringConv(n) ) {
             Emit( "NameFunc[%d] = MakeImmString(\"%G\");\n", i, n );
         }
@@ -5325,7 +5289,7 @@ Int CompileFunc (
             Emit( "NameFunc[%d] = 0;\n", i );
         }
     }
-    Emit( "\n/* return success */\n" );
+    Emit( "\n" );
     Emit( "return 0;\n" );
     Emit( "\n}\n" );
     Emit( "\n" );
@@ -5353,9 +5317,8 @@ Int CompileFunc (
               i, compilerMagic2, i );
         Emit( "InitGlobalBag( &(NameFunc[%d]), \"%g:NameFunc[%d](\"FILE_CRC\")\" );\n", 
                i, magic2, i );
-        n = NAME_FUNC(ELM_PLIST(CompFunctions,i));
     }
-    Emit( "\n/* return success */\n" );
+    Emit( "\n" );
     Emit( "return 0;\n" );
     Emit( "\n}\n" );
 
@@ -5376,14 +5339,14 @@ Int CompileFunc (
     Emit( "SET_BODY_FUNC( func1, body1 );\n" );
     Emit( "CHANGED_BAG( func1 );\n");
     Emit( "CALL_0ARGS( func1 );\n" );
-    Emit( "\n/* return success */\n" );
+    Emit( "\n" );
     Emit( "return 0;\n" );
     Emit( "\n}\n" );
 
     /* emit the initialization code                                        */
     Emit( "\n/* <name> returns the description of this module */\n" );
     Emit( "static StructInitInfo module = {\n" );
-    if ( ! strcmp( "Init_Dynamic", CONST_CSTR_STRING(name) ) ) {
+    if (streq("Init_Dynamic", CONST_CSTR_STRING(name))) {
         Emit( ".type        = MODULE_DYNAMIC,\n" );
     }
     else {
@@ -5404,9 +5367,8 @@ Int CompileFunc (
 
     /* close the output file                                               */
     SyNrCols = col;
-    CloseOutput();
+    CloseOutput(&output);
 
-    /* return success                                                      */
     return compFunctionsNr;
 }
 
@@ -5437,12 +5399,11 @@ static Obj FuncCOMPILE_FUNC(Obj self, Obj arg)
     magic1 = ELM_LIST( arg, 4 );
     magic2 = ELM_LIST( arg, 5 );
 
-    // check the arguments
-    RequireStringRep("CompileFunc", output);
-    RequireFunction("CompileFunc", func);
-    RequireStringRep("CompileFunc", name);
-    RequireSmallInt("CompileFunc", magic1, "<magic1>");
-    RequireStringRep("CompileFunc", magic2);
+    RequireStringRep(SELF_NAME, output);
+    RequireFunction(SELF_NAME, func);
+    RequireStringRep(SELF_NAME, name);
+    RequireSmallInt(SELF_NAME, magic1);
+    RequireStringRep(SELF_NAME, magic2);
 
     /* possible optimiser flags                                            */
     CompFastIntArith        = 1;
@@ -5473,7 +5434,6 @@ static Obj FuncCOMPILE_FUNC(Obj self, Obj arg)
         INT_INTOBJ(magic1), magic2 );
 
 
-    /* return the result                                                   */
     return INTOBJ_INT(nr);
 }
 
@@ -5487,9 +5447,9 @@ static Obj FuncCOMPILE_FUNC(Obj self, Obj arg)
 **
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
-static StructGVarFunc GVarFuncs [] = {
+static StructGVarFunc GVarFuncs[] = {
 
-    GVAR_FUNC(COMPILE_FUNC, -1, "arg"),
+    GVAR_FUNC_XARGS(COMPILE_FUNC, -1, "arg"),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -5682,7 +5642,6 @@ static Int InitKernel (
     CompStatFuncs[ STAT_EMPTY           ] = CompEmpty;
 
     CompStatFuncs[ STAT_PROCCALL_OPTS   ] = CompProccallOpts;
-    /* return success                                                      */
     return 0;
 }
 
@@ -5698,7 +5657,6 @@ static Int PostRestore (
     G_Length = GVarName( "Length" );
     G_Add    = GVarName( "Add"    );
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -5713,7 +5671,6 @@ static Int InitLibrary (
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
 
-    /* return success                                                      */
     return PostRestore( module );
 }
 

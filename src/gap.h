@@ -13,52 +13,25 @@
 #ifndef GAP_GAP_H
 #define GAP_GAP_H
 
-#include "system.h"
+#include "common.h"
 
 
 /****************************************************************************
 **
-*V  Last  . . . . . . . . . . . . . . . . . . . . . . global variable  'last'
-**
-**  'Last',  'Last2', and 'Last3'  are the  global variables 'last', 'last2',
-**  and  'last3', which are automatically  assigned  the result values in the
-**  main read-eval-print loop.
-*/
-extern UInt Last;
-
-
-/****************************************************************************
-**
-*V  Last2 . . . . . . . . . . . . . . . . . . . . . . global variable 'last2'
-*/
-extern UInt Last2;
-
-
-/****************************************************************************
-**
-*V  Last3 . . . . . . . . . . . . . . . . . . . . . . global variable 'last3'
-*/
-extern UInt Last3;
-
-/****************************************************************************
-**
-*F  UpdateLast(<newLast>, <lastDepth>)
+*F  UpdateLast(<newLast>)
 **
 **  Updates Last, Last2 and Last3 by the new result 'newLast'.
-**  <lastDepth> determines how many of these variables should be updated, starting
-**  always with 'Last'.
 */
-void UpdateLast(Obj newLast, Int lastDepth);
+void UpdateLast(Obj newLast);
 
 
 /****************************************************************************
 **
-*V  Time  . . . . . . . . . . . . . . . . . . . . . . global variable  'time'
+*F  UpdateTime(<startTime>)
 **
-**  'Time' is the global variable 'time', which is automatically assigned the
-**  time the last command took.
+**  Updates Time to the difference SyTime() - startTime.
 */
-extern UInt Time;
+void UpdateTime(UInt startTime);
 
 
 /****************************************************************************
@@ -68,31 +41,6 @@ extern UInt Time;
 extern UInt ViewObjGVar;
 
 void ViewObjHandler(Obj obj);
-
-
-/****************************************************************************
-**
-*T  ExecStatus . . . .  type of status values returned by read, eval and exec
-**                      subroutines, explaining why evaluation, or execution
-**                      has terminated.
-**
-**  Values are powers of two, although I do not currently know of any
-**  cirumstances where they can get combined
-*/
-
-typedef UInt ExecStatus;
-
-enum {
-    STATUS_END         =  0,    // ran off the end of the code
-    STATUS_RETURN_VAL  =  1,    // value returned
-    STATUS_RETURN_VOID =  2,    // void returned
-    STATUS_BREAK       =  4,    // 'break' statement
-    STATUS_QUIT        =  8,    // quit command
-    STATUS_CONTINUE    =  8,    // 'continue' statement
-    STATUS_EOF         = 16,    // End of file
-    STATUS_ERROR       = 32,    // error
-    STATUS_QQUIT       = 64,    // QUIT command
-};
 
 
 /****************************************************************************
@@ -108,7 +56,7 @@ enum {
 */
 enum {
     MAX_FUNC_EXPR_NESTING_BITS = 10,
-    MAX_FUNC_EXPR_NESTING      = 1L << MAX_FUNC_EXPR_NESTING_BITS,
+    MAX_FUNC_EXPR_NESTING      = 1 << MAX_FUNC_EXPR_NESTING_BITS,
 };
 
 
@@ -122,7 +70,7 @@ enum {
 */
 enum {
     MAX_FUNC_LVARS_BITS = 16,
-    MAX_FUNC_LVARS      = 1L << MAX_FUNC_LVARS_BITS,
+    MAX_FUNC_LVARS      = 1 << MAX_FUNC_LVARS_BITS,
     MAX_FUNC_LVARS_MASK = MAX_FUNC_LVARS - 1,
 };
 
@@ -131,7 +79,7 @@ enum {
 **
 *F  IsUsingLibGap()  . . . . . . . . 1 if GAP is being used a library, else 0
 */
-int IsUsingLibGap(void);
+BOOL IsUsingLibGap(void);
 
 /****************************************************************************
 **

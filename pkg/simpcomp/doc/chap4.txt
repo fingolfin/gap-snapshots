@@ -193,8 +193,10 @@
   [4X[32X  Example  [32X[104X
     [4X[28X gap> c:=SCLib.Load(253);;[128X[104X
     [4X[28X gap> SCReference(c);[128X[104X
-    [4X[28X "F.H.Lutz: 'The Manifold Page', http://www.math.tu-berlin.de/diskregeom/stella\[128X[104X
-    [4X[28X r/"[128X[104X
+    [4X[28X "manifold_2_14_4_2 in F.H.Lutz: 'The Manifold Page', http://www.math.tu-berlin\[128X[104X
+    [4X[28X .de/diskregeom/stellar/,\r\nF.H.Lutz: 'Triangulated manifolds with few vertice\[128X[104X
+    [4X[28X s and vertex-transitive group actions', Doctoral Thesis TU Berlin 1999, Shaker\[128X[104X
+    [4X[28X -Verlag, Aachen 1999"[128X[104X
     [4X[28X gap> c:=SC([[1,2],[2,3],[3,1]]);;[128X[104X
     [4X[28X gap> SCReference(c);[128X[104X
     [4X[28X #I  SCReference: complex lacks reference.[128X[104X
@@ -352,19 +354,12 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X gap> SCLib.SearchByName("RP^2");     [128X[104X
-    [4X[28X [ [ 3, "RP^2 (VT)" ], [ 645, "RP^2xS^1" ] ][128X[104X
+    [4X[28X [ [ 3, "RP^2 (VT)" ], [ 262, "RP^2xS^1" ] ][128X[104X
     [4X[28X gap> rp2:=SCLib.Load(last[1][1]);;[128X[104X
     [4X[28X gap> SCVertices(rp2);[128X[104X
     [4X[28X [ 1, 2, 3, 4, 5, 6 ][128X[104X
     [4X[28X gap> SCAntiStar(rp2,1);[128X[104X
-    [4X[28X [SimplicialComplex[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Name="ast([ 1 ]) in RP^2 (VT)"[128X[104X
-    [4X[28X  Dim=2[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X /SimplicialComplex][128X[104X
+    [4X[28X <SimplicialComplex: ast([ 1 ]) in RP^2 (VT) | dim = 2 | n = 5>[128X[104X
     [4X[28X gap> last.Facets;[128X[104X
     [4X[28X [ [ 2, 3, 4 ], [ 2, 4, 5 ], [ 2, 5, 6 ], [ 3, 4, 6 ], [ 3, 5, 6 ] ][128X[104X
     [4X[28X [128X[104X
@@ -384,19 +379,12 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X gap> SCLib.SearchByName("RP^2");     [128X[104X
-    [4X[28X [ [ 3, "RP^2 (VT)" ], [ 645, "RP^2xS^1" ] ][128X[104X
+    [4X[28X [ [ 3, "RP^2 (VT)" ], [ 262, "RP^2xS^1" ] ][128X[104X
     [4X[28X gap> rp2:=SCLib.Load(last[1][1]);;[128X[104X
     [4X[28X gap> SCVertices(rp2);[128X[104X
     [4X[28X [ 1, 2, 3, 4, 5, 6 ][128X[104X
     [4X[28X gap> SCLink(rp2,[1]);[128X[104X
-    [4X[28X [SimplicialComplex[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Name="lk([ 1 ]) in RP^2 (VT)"[128X[104X
-    [4X[28X  Dim=1[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X /SimplicialComplex][128X[104X
+    [4X[28X <SimplicialComplex: lk([ 1 ]) in RP^2 (VT) | dim = 1 | n = 5>[128X[104X
     [4X[28X gap> last.Facets;[128X[104X
     [4X[28X [ [ 2, 3 ], [ 2, 6 ], [ 3, 5 ], [ 4, 5 ], [ 4, 6 ] ][128X[104X
     [4X[28X [128X[104X
@@ -415,114 +403,22 @@
   [4X[32X  Example  [32X[104X
     [4X[28X gap> c:=SCBdSimplex(4);;[128X[104X
     [4X[28X gap> SCLinks(c,0);[128X[104X
-    [4X[28X [ [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="lk([ 1 ]) in S^3_5"[128X[104X
-    [4X[28X      Dim=2[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex], [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="lk([ 2 ]) in S^3_5"[128X[104X
-    [4X[28X      Dim=2[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex], [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="lk([ 3 ]) in S^3_5"[128X[104X
-    [4X[28X      Dim=2[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex], [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="lk([ 4 ]) in S^3_5"[128X[104X
-    [4X[28X      Dim=2[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex], [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="lk([ 5 ]) in S^3_5"[128X[104X
-    [4X[28X      Dim=2[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex] ][128X[104X
+    [4X[28X [ <SimplicialComplex: lk([ 1 ]) in S^3_5 | dim = 2 | n = 4>, [128X[104X
+    [4X[28X   <SimplicialComplex: lk([ 2 ]) in S^3_5 | dim = 2 | n = 4>, [128X[104X
+    [4X[28X   <SimplicialComplex: lk([ 3 ]) in S^3_5 | dim = 2 | n = 4>, [128X[104X
+    [4X[28X   <SimplicialComplex: lk([ 4 ]) in S^3_5 | dim = 2 | n = 4>, [128X[104X
+    [4X[28X   <SimplicialComplex: lk([ 5 ]) in S^3_5 | dim = 2 | n = 4> ][128X[104X
     [4X[28X gap> SCLinks(c,1);[128X[104X
-    [4X[28X [ [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="lk([ 1, 2 ]) in S^3_5"[128X[104X
-    [4X[28X      Dim=1[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex], [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="lk([ 1, 3 ]) in S^3_5"[128X[104X
-    [4X[28X      Dim=1[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex], [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="lk([ 1, 4 ]) in S^3_5"[128X[104X
-    [4X[28X      Dim=1[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex], [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="lk([ 1, 5 ]) in S^3_5"[128X[104X
-    [4X[28X      Dim=1[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex], [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="lk([ 2, 3 ]) in S^3_5"[128X[104X
-    [4X[28X      Dim=1[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex], [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="lk([ 2, 4 ]) in S^3_5"[128X[104X
-    [4X[28X      Dim=1[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex], [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="lk([ 2, 5 ]) in S^3_5"[128X[104X
-    [4X[28X      Dim=1[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex], [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="lk([ 3, 4 ]) in S^3_5"[128X[104X
-    [4X[28X      Dim=1[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex], [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="lk([ 3, 5 ]) in S^3_5"[128X[104X
-    [4X[28X      Dim=1[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex], [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="lk([ 4, 5 ]) in S^3_5"[128X[104X
-    [4X[28X      Dim=1[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex] ][128X[104X
+    [4X[28X [ <SimplicialComplex: lk([ 1, 2 ]) in S^3_5 | dim = 1 | n = 3>, [128X[104X
+    [4X[28X   <SimplicialComplex: lk([ 1, 3 ]) in S^3_5 | dim = 1 | n = 3>, [128X[104X
+    [4X[28X   <SimplicialComplex: lk([ 1, 4 ]) in S^3_5 | dim = 1 | n = 3>, [128X[104X
+    [4X[28X   <SimplicialComplex: lk([ 1, 5 ]) in S^3_5 | dim = 1 | n = 3>, [128X[104X
+    [4X[28X   <SimplicialComplex: lk([ 2, 3 ]) in S^3_5 | dim = 1 | n = 3>, [128X[104X
+    [4X[28X   <SimplicialComplex: lk([ 2, 4 ]) in S^3_5 | dim = 1 | n = 3>, [128X[104X
+    [4X[28X   <SimplicialComplex: lk([ 2, 5 ]) in S^3_5 | dim = 1 | n = 3>, [128X[104X
+    [4X[28X   <SimplicialComplex: lk([ 3, 4 ]) in S^3_5 | dim = 1 | n = 3>, [128X[104X
+    [4X[28X   <SimplicialComplex: lk([ 3, 5 ]) in S^3_5 | dim = 1 | n = 3>, [128X[104X
+    [4X[28X   <SimplicialComplex: lk([ 4, 5 ]) in S^3_5 | dim = 1 | n = 3> ][128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
   
@@ -538,19 +434,12 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X gap> SCLib.SearchByName("RP^2");     [128X[104X
-    [4X[28X [ [ 3, "RP^2 (VT)" ], [ 645, "RP^2xS^1" ] ][128X[104X
+    [4X[28X [ [ 3, "RP^2 (VT)" ], [ 262, "RP^2xS^1" ] ][128X[104X
     [4X[28X gap> rp2:=SCLib.Load(last[1][1]);;[128X[104X
     [4X[28X gap> SCVertices(rp2);[128X[104X
     [4X[28X [ 1, 2, 3, 4, 5, 6 ][128X[104X
     [4X[28X gap> SCStar(rp2,1);[128X[104X
-    [4X[28X [SimplicialComplex[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X  Name="star([ 1 ]) in RP^2 (VT)"[128X[104X
-    [4X[28X  Dim=2[128X[104X
-    [4X[28X [128X[104X
-    [4X[28X /SimplicialComplex][128X[104X
+    [4X[28X <SimplicialComplex: star([ 1 ]) in RP^2 (VT) | dim = 2 | n = 6>[128X[104X
     [4X[28X gap> last.Facets;[128X[104X
     [4X[28X [ [ 1, 2, 3 ], [ 1, 2, 6 ], [ 1, 3, 5 ], [ 1, 4, 5 ], [ 1, 4, 6 ] ][128X[104X
     [4X[28X [128X[104X
@@ -569,59 +458,16 @@
   [4X[32X  Example  [32X[104X
     [4X[28X gap> SCLib.SearchByName("T^2"){[1..6]};[128X[104X
     [4X[28X [ [ 4, "T^2 (VT)" ], [ 5, "T^2 (VT)" ], [ 9, "T^2 (VT)" ], [ 10, "T^2 (VT)" ],[128X[104X
-    [4X[28X   [ 18, "T^2 (VT)" ], [ 20, "(T^2)#2" ] ][128X[104X
+    [4X[28X   [ 17, "T^2 (VT)" ], [ 20, "(T^2)#2" ] ][128X[104X
     [4X[28X gap> torus:=SCLib.Load(last[1][1]);; # the minimal 7-vertex torus[128X[104X
     [4X[28X gap> SCStars(torus,0); # 7 2-discs as vertex stars[128X[104X
-    [4X[28X [ [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="star([ 1 ]) in T^2 (VT)"[128X[104X
-    [4X[28X      Dim=2[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex], [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="star([ 2 ]) in T^2 (VT)"[128X[104X
-    [4X[28X      Dim=2[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex], [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="star([ 3 ]) in T^2 (VT)"[128X[104X
-    [4X[28X      Dim=2[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex], [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="star([ 4 ]) in T^2 (VT)"[128X[104X
-    [4X[28X      Dim=2[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex], [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="star([ 5 ]) in T^2 (VT)"[128X[104X
-    [4X[28X      Dim=2[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex], [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="star([ 6 ]) in T^2 (VT)"[128X[104X
-    [4X[28X      Dim=2[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex], [SimplicialComplex[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Properties known: Dim, FacetsEx, Name, Vertices.[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X      Name="star([ 7 ]) in T^2 (VT)"[128X[104X
-    [4X[28X      Dim=2[128X[104X
-    [4X[28X     [128X[104X
-    [4X[28X     /SimplicialComplex] ][128X[104X
+    [4X[28X [ <SimplicialComplex: star([ 1 ]) in T^2 (VT) | dim = 2 | n = 7>, [128X[104X
+    [4X[28X   <SimplicialComplex: star([ 2 ]) in T^2 (VT) | dim = 2 | n = 7>, [128X[104X
+    [4X[28X   <SimplicialComplex: star([ 3 ]) in T^2 (VT) | dim = 2 | n = 7>, [128X[104X
+    [4X[28X   <SimplicialComplex: star([ 4 ]) in T^2 (VT) | dim = 2 | n = 7>, [128X[104X
+    [4X[28X   <SimplicialComplex: star([ 5 ]) in T^2 (VT) | dim = 2 | n = 7>, [128X[104X
+    [4X[28X   <SimplicialComplex: star([ 6 ]) in T^2 (VT) | dim = 2 | n = 7>, [128X[104X
+    [4X[28X   <SimplicialComplex: star([ 7 ]) in T^2 (VT) | dim = 2 | n = 7> ][128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
   

@@ -210,8 +210,9 @@ DeclareOperation( "TwoCohomology", [ IsPcGroup, IsObject ] );
 ##  routine, this generating system corresponds to the components
 ##  <C>group</C> and <C>module</C> of the record returned.
 ##  The extension corresponding to a cocyle <C>c</C> can be constructed as
-##  <C>Extension(r,c)</C> where <C>r</C> is the cohomology record. This is
+##  <C>FpGroupCocycle(r,c)</C> where <C>r</C> is the cohomology record. This is
 ##  currently done as a finitely presented group.
+##
 ##  <Example><![CDATA[
 ##  gap> g:=Group((1,2,3,4,5),(1,2,3));;
 ##  gap> mats:=[[[2,0,0,1],[1,2,1,0],[2,1,1,1],[2,1,1,0]],
@@ -219,14 +220,7 @@ DeclareOperation( "TwoCohomology", [ IsPcGroup, IsObject ] );
 ##  gap> mo:=GModuleByMats(mats,GF(3));;
 ##  gap> coh:=TwoCohomologyGeneric(g,mo);;
 ##  gap> coh.cocycles;
-##  [ < immutable compressed vector length 44 over GF(3) >,
-##    < immutable compressed vector length 44 over GF(3) >,
-##    < immutable compressed vector length 44 over GF(3) >,
-##    < immutable compressed vector length 44 over GF(3) >,
-##    < immutable compressed vector length 44 over GF(3) >,
-##    < immutable compressed vector length 44 over GF(3) >,
-##    < immutable compressed vector length 44 over GF(3) >,
-##    < immutable compressed vector length 44 over GF(3) > ]
+##  < immutable compressed matrix 8x44 over GF(3) >
 ##  gap> coh.coboundaries;
 ##  [ < immutable compressed vector length 44 over GF(3) >,
 ##    < immutable compressed vector length 44 over GF(3) >,
@@ -243,11 +237,11 @@ DeclareOperation( "TwoCohomology", [ IsPcGroup, IsObject ] );
 ##  <fp group of size 4860 on the generators [ F1, F2, F3, m1, m2, m3, m4 ]>
 ##  gap> g1:=Image(IsomorphismPermGroup(g1));
 ##  <permutation group with 7 generators>
-##  gap> Length(ComplementClassesRepresentatives(g1,RadicalGroup(g1)));
+##  gap> Length(ComplementClassesRepresentatives(g1,SolvableRadical(g1)));
 ##  3
 ##  gap> g2:=Image(IsomorphismPermGroup(g2));
 ##  <permutation group with 7 generators>
-##  gap> Length(ComplementClassesRepresentatives(g2,RadicalGroup(g2)));
+##  gap> Length(ComplementClassesRepresentatives(g2,SolvableRadical(g2)));
 ##  0
 ##  ]]></Example>
 ##  </Description>
@@ -274,6 +268,8 @@ DeclareOperation( "TwoCohomologyGeneric", [ IsGroup, IsObject ] );
 ##  If the optional parameter <A>doperm</A> is given as <A>true</A>, a
 ##  faithful permutation representation is computed and stored in the
 ##  attribute <Ref Attr="IsomorphismPermGroup"/> of the computed group.
+##  If the option <C>normalform</C> is given as <C>true</C>, arithmetic in
+##  the resulting finitely presented group will bring words into normal form.
 ##  <Example><![CDATA[
 ##  gap> g:=Group((2,15,8,16)(3,17,14,21)(4,23,20,6)(5,9,22,11)(7,13,19,25),
 ##  > (2,12,7,17)(3,18,13,23)(4,24,19,9)(5,10,25,15)(6,11,16,21));;
@@ -299,7 +295,12 @@ DeclareOperation( "TwoCohomologyGeneric", [ IsGroup, IsObject ] );
 ##  [ [ 480, 3 ], [ 3888, 1 ], [ 6480, 1 ], [ 7776, 1 ], [ 19440, 1 ] ]
 ##  gap> Collected(List(MaximalSubgroupClassReps(g2),Size));
 ##  [ [ 3888, 1 ], [ 6480, 1 ], [ 7776, 1 ], [ 19440, 1 ] ]
+##  gap> p:=FpGroupCocycle(coh,coh.cohomology[1],true:normalform);;
 ##  ]]></Example>
+##  <Log><![CDATA[
+##  gap> p.7*p.1; # i.e. m1*F1, but in normal form
+##  F1*m4
+##  ]]></Log>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -322,4 +323,5 @@ DeclareGlobalFunction("FpGroupCocycle");
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction("CompatiblePairOrbitRepsGeneric");
+
 

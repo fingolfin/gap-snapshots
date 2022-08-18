@@ -10,6 +10,7 @@
 
 Unbind(TRANSGRP);
 Unbind(TRANSPROPERTIES);
+Unbind(TRANSMINIMALS);
 
 #############################################################################
 ##
@@ -213,6 +214,51 @@ TRANSSELECT :=[];
 TRANSSIZES  :=[];
 TRANSPARTNUM:=[];
 
+# indices of minimally transitive groups (up to degree 31)
+TRANSMINIMALS:=[,[1],[1],[1,2],[1],[1,2,4,10],[1],
+[1,2,3,4,5,21],[1,2],[1,2,4,7,8,18],[1],
+[1,2,3,4,5,7,9,17,31,34,40,46,47,57,162,166,246],[1],
+[1,2,6,10,12,30],[1,5,9,26],
+[1,2,3,4,5,6,7,8,9,10,11,12,13,14,33,36,40,42,49,53,
+77,88,90,91,92,101,108,123,127,140,160,167,170,171,173,
+174,212,295,323,335,343,358,363,372,375,377,555,556,559,
+575,585,587,589,598,609,612,620,637,643,651,682,684,695,
+703,1118,1133,1146,1187,1196,1207,1210,1212,1229,1232,1418],
+[1],[1,2,3,4,5,7,8,10,28,44,49,54,130,141,142,143,177,
+246,259,280,377,688,753],[1],
+[1,2,3,4,5,13,15,17,23,31,32,43,44,47,50,55,56,79,83,
+89,107,110,115,146,148,161,172,188,193,239,245,247,385,
+392,399,402,473,478,496,501,596,621,628,651,818,820,939],
+[1,2,35,39,67],[1,2,8,22,23,38],[1],
+[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,47,50,51,55,56,
+57,58,59,63,72,76,81,82,93,94,96,122,174,179,180,181,
+184,187,191,194,198,213,214,215,216,238,239,240,241,255,
+257,258,259,263,267,268,273,278,307,308,309,310,311,312,
+315,316,317,378,379,389,424,460,468,470,481,483,496,506,
+596,597,598,620,622,731,945,992,998,1027,1371,1392,1410,
+1489,1491,1505,1506,1508,1633,1634,2128,2129,2130,2788,2801,
+2808,2814,2898,2901,2902,2928,2937,2939,2941,2943,2944,2946,
+3075,3098,5077,5078,5268,5275,5276,5277,5278,5279,5280,5281,
+5289,5295,5299,5509,5535,5693,5872,5873,7443,7444,7445,7446,
+7447,7448,7688,7690,7692,7694,7695,7696,7697,7729,7731,7737,
+7754,7882,7905,9630,9853,9860,9865,9867,10036,10162,10163,
+10283,12266,12269,20212,20218,20224,20227,20230,20235,20237,
+20244,20656,21163,21167,21168,21177,21178,21180,21183,21809,
+21987,21988,21989,21990,21991,22004,22005,22006,22007,22010,
+22012,22238,22240,22241,22242,22243,22244,22245,23148,23149,
+23500,23502,23504,23506,23508,23510,23649,23651,23654,23655,
+23990],[1,2],[1,2,4,20,39,42,64],
+[1,2,3,4,5,19,24,25,26,234,235,240,242,246,247,252,253,
+254,981,988],
+[1,2,3,4,11,20,32,35,42,43,48,55,56,57,58,61,66,98,105,
+120,152,153,200,201,262,263,371,630,795,1169],[1],
+[1,2,3,4,6,7,9,11,25,30,35,37,38,40,45,46,48,49,50,52,
+70,71,78,126,131,142,143,158,162,171,190,191,192,193,216,
+217,271,277,279,281,293,295,296,298,299,300,302,321,549,
+558,588,589,629,817,866,908,909,911,912,920,924,933,935,
+1168,1180,1705,1801,2104,2107,2165,2191,2420,2763,3141,4096,
+4105,4370,4376,4378],[1]];
+
 if IsHPCGAP then
   TRANSLENGTHS:=MakeWriteOnceAtomic(TRANSLENGTHS);
   atomic TRANSREGION do
@@ -220,6 +266,7 @@ if IsHPCGAP then
     MigrateObj(TRANSNONDISCRIM, TRANSREGION);
     MigrateObj(TRANSSIZES, TRANSREGION);
     MigrateObj(TRANSPARTNUM, TRANSREGION);
+    MigrateObj(TRANSMINIMALS, TRANSREGION);
   od;
 fi;
 
@@ -227,12 +274,16 @@ TRANSAVAILABLE:=BlistList([1..50],[2..7]);
 CallFuncList(function()
   local dir,fnam,tradeg;
   for tradeg in [8..48] do
+    fnam:=Concatenation("trans",String(tradeg),".grp");
     if tradeg=32 then
       dir:= DirectoriesPackageLibrary( "transgrp", "dat32" );
+    elif tradeg=48 then
+      dir:= DirectoriesPackageLibrary( "transgrp", "dat48" );
+      fnam:="TransitiveGroupsOfDegree48_1959.gz";
     else
       dir:= DirectoriesPackageLibrary( "transgrp", "data" );
     fi;
-    fnam:=Filename( dir, Concatenation("trans",String(tradeg),".grp"));
+    fnam:=Filename( dir, fnam);
     if fnam<>fail and IsReadableFile(fnam) then
       TRANSAVAILABLE[tradeg]:=true;
     fi;
@@ -248,6 +299,11 @@ local Tbak,Fbak,flg,sel,i,fname,block,transdir;
   if deg=32 or deg=36 or deg=40 then block:=5000;fi;
   if deg=32 then
     transdir:= DirectoriesPackageLibrary( "transgrp", "dat32" ); 
+  elif deg=48 then 
+    atomic TRANSREGION do
+      TRANSLENGTHS[48]:=195826352;
+    od;
+    return;
   else
     transdir:= DirectoriesPackageLibrary( "transgrp", "data" ); 
   fi;
@@ -299,6 +355,16 @@ local Tbak,Fbak,flg,sel,i,fname,block,transdir;
       if IsHPCGAP then
 	MigrateObj(TRANSGRP[deg], TRANSREGION);
 	MigrateObj(TRANSPROPERTIES[deg], TRANSREGION);
+      fi;
+
+      if deg>31 and not IsBound(TRANSMINIMALS[32]) then
+        Read(Filename(DirectoriesPackageLibrary("transgrp","data"),
+          "transminimals.grp")); 
+        if IsHPCGAP then
+          for i in [32..Length(TRANSMINIMALS)] do
+            MigrateObj(TRANSMINIMALS[i],TRANSREGION);
+          od;
+        fi;
       fi;
 
       if (deg>15 and not IsPrime(deg)) or deg>30 then
@@ -395,13 +461,39 @@ InstallGlobalFunction(NrTransitiveGroups, function(deg)
   return TRANSLENGTHS[deg];
 end);
 
+# This function is mostly due to Jesse Lansdown and Gordon F. Royle
+BindGlobal("TransitiveGroup48",function(id)
+    local file_number, pos, strm, i, x, g;
+    file_number := QuoInt(id-1, 100000)+1;;
+    pos := (id-1) mod 100000 + 1;
+
+    strm:=Filename(DirectoriesPackageLibrary( "transgrp", "dat48" ),
+      Concatenation("TransitiveGroupsOfDegree48_", String(file_number),
+      ".gz"));
+    strm := InputTextFile(strm);
+    for i in [1 .. pos+14] do
+        x:=ReadLine(strm);;
+    od;
+    x:=EvalString(x);;
+    CloseStream(strm);;
+    if x[1] <> id then
+        Error("Somehow we got the wrong group!!!\n");
+    else
+        g:=Group(x[2]);;
+        SetTransitiveIdentification(g, id);;
+        return g;
+    fi;
+end);
+
 InstallGlobalFunction( TransitiveGroup, function(deg,num)
   local gens,i,l,g,s;
   if deg=1 then
     return fail;
-  fi;
-  if not TransitiveGroupsAvailable(deg) then
+  elif not TransitiveGroupsAvailable(deg) then
     Error("Transitive Groups of degree ",deg," are not available");
+  fi;
+  if deg=48 then
+    return TransitiveGroup48(num);
   fi;
   atomic TRANSREGION do
     if not (num in [1..TRANSLENGTHS[deg]]) then
@@ -447,6 +539,21 @@ InstallGlobalFunction( TransitiveGroup, function(deg,num)
     return g;
 
   od;
+end );
+
+InstallGlobalFunction(MinimalTransitiveIndices,function(deg)
+local l;
+  if deg=1 then
+    return fail;
+  fi;
+  if not TransitiveGroupsAvailable(deg) then
+    Error("Transitive Groups of degree ",deg," are not available");
+  fi;
+  TransGrpLoad(deg,1);
+  atomic TRANSREGION do
+    l:=TRANSMINIMALS[deg];
+  od;
+  return Immutable(l);
 end );
 
 InstallFlushableValue(TRANSCOMBCACHE,[[0],[0],[0]]);
@@ -561,6 +668,9 @@ local dom,p,s,t,a,cand,i,grp,deg,aiso,piso,co,cheap;
     Error("Group must operate transitively");
   fi;
   deg:=Length(dom);
+  if deg=48 then
+    Error("Identification of the groups of degree 48 is not available");
+  fi;
   atomic TRANSREGION do
     if not IsBound(TRANSLENGTHS[deg]) then
       TransGrpLoad(deg,0);
@@ -774,6 +884,10 @@ local i,j,a,b,l,p,deg,gut,g,grp,nr,f;
       f:=true; #warnung weil kein Degree angegeben ?
     fi;
     gut:=[];
+    if 48 in deg then
+      Info(InfoWarning,1,"Selection of groups of degree 48 is not available");
+      deg:=Filtered(deg,x->x<>48);
+    fi;
     for i in deg do
       if not IsBound(TRANSLENGTHS[i]) then
 	TransGrpLoad(i,0);

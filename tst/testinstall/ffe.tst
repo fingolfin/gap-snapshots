@@ -1,5 +1,5 @@
 #@local Rochambeau,e,F,f1,f2,f3,p,pol,qs,r,x,bigPrime,z,odds,evens
-#@local r1,r2,r3,sf1,sf2,sf3,q,q2
+#@local r1,r2,r3,sf1,sf2,sf3,q,q2,Fp,fields,C,coeffs,B
 gap> START_TEST("ffe.tst");
 
 #
@@ -25,6 +25,8 @@ gap> Z(-2);
 Error, Z: <q> must be a positive prime power (not the integer -2)
 gap> Z(6);
 Error, Z: <q> must be a positive prime power (not the integer 6)
+gap> Z(65537*65539);
+Error, Z: <q> must be a positive prime power (not the integer 4295229443)
 
 # variant with two arguments
 gap> Z(0,1);
@@ -65,13 +67,13 @@ Error, Z: <p> must be a prime (not the integer 9)
 gap> Z(9,2);
 Error, Z: <p> must be a prime (not the integer 9)
 gap> Z(2^16,1);
-Error, Z: <p> must be a prime
+Error, Z: <p> must be a prime (not the integer 65536)
 gap> Z(2^16,2);
-Error, Z: <p> must be a prime
+Error, Z: <p> must be a prime (not the integer 65536)
 gap> Z(2^17,1);
-Error, Z: <p> must be a prime
+Error, Z: <p> must be a prime (not the integer 131072)
 gap> Z(2^17,2);
-Error, Z: <p> must be a prime
+Error, Z: <p> must be a prime (not the integer 131072)
 
 # Invoking Z(p,d) with p not a prime used to crash gap, which we fixed.
 # However, invocations like `Z(4,5)` still would erroneously trigger the
@@ -160,6 +162,37 @@ gap> F:=LargeGaloisField(bigPrime,2);
 GF(1152921504606847009^2)
 gap> Z(bigPrime,2) = PrimitiveElement(F);
 true
+
+#
+# Check that `Coefficients` returns objects of the right type.
+#
+gap> p:= NextPrimeInt( 10^6 );;
+gap> fields:= [ GF(3), GF(3^2), GF(p), LargeGaloisField( p, 2 ) ];;
+gap> Fp:= LargeGaloisField( p );;
+gap> pol:= UnivariatePolynomial( Fp, [ 912543, 810, 1 ] * One( Fp ) );;
+gap> Add( fields, GF( Fp, pol ) );
+gap> List( fields, IsFFECollection );
+[ true, true, true, true, false ]
+gap> List( fields, F -> IsSubset( F, LeftActingDomain( F ) ) );
+[ true, true, true, true, false ]
+gap> for F in fields do
+>      Fp:= LeftActingDomain( F );
+>      C:= CanonicalBasis( F );
+>      coeffs:= Coefficients( C, One( F ) );
+>      if not IsSubset( Fp, coeffs ) then
+>        Error( F );
+>      fi;
+>      B:= Basis( F, BasisVectors( C ) );
+>      coeffs:= Coefficients( B, One( F ) );
+>      if not IsSubset( Fp, coeffs ) then
+>        Error( F );
+>      fi;
+>      B:= BasisNC( F, BasisVectors( C ) );
+>      coeffs:= Coefficients( B, One( F ) );
+>      if not IsSubset( Fp, coeffs ) then
+>        Error( F );
+>      fi;
+>    od;
 
 #
 # comparing FFEs

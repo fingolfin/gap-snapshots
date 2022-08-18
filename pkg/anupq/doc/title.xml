@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    ANUPQ
+  </Title>
+  <Subtitle>
+    ANU p-Quotient
+  </Subtitle>
+  <Version>
+    3.2.6
+  </Version>
+  <Author>
+    Greg Gamble<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Department of Mathematics and Statistics<Br/>
+Curtin University<Br/>
+GPO Box U 1987<Br/>
+Perth WA 6845<Br/>
+Australia<Br/>
+</Address>
+<Email>Greg.Gamble@uwa.edu.au</Email>
+<Homepage>http://school.maths.uwa.edu.au/~gregg</Homepage>
+
+  </Author>
+  <Author>
+    Werner Nickel<Alt Only="LaTeX"><Br/></Alt>
+<Homepage>https://www2.mathematik.tu-darmstadt.de/~nickel/</Homepage>
+
+  </Author>
+  <Author>
+    Eamonn O'Brien<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Department of Mathematics<Br/>
+University of Auckland<Br/>
+Private Bag 92019<Br/>
+Auckland<Br/>
+New Zealand<Br/>
+</Address>
+<Email>obrien@math.auckland.ac.nz</Email>
+<Homepage>https://www.math.auckland.ac.nz/~obrien</Homepage>
+
+  </Author>
+  <Date>
+    7 March 2022
+  </Date>
+  <Copyright>
+          &copyright; 2001-2016 by Greg Gamble<P/>
+      &copyright; 2001-2005 by Werner Nickel<P/>
+      &copyright; 1995-2001 by Eamon O'Brien<P/>
+
+      The &GAP; package &ANUPQ; is licensed under the <URL Text="Artistic License 2.0">https://opensource.org/licenses/artistic-license-2.0</URL>.
+      
+  </Copyright>
+  </TitlePage>

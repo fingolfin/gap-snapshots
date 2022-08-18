@@ -410,7 +410,7 @@ DeclareGlobalFunction( "DefaultRing" );
 ##  gap> R:= Integers;
 ##  Integers
 ##  gap> S:= Subring( R, [ 4, 6 ] );
-##  <ring with 1 generators>
+##  <ring with 1 generator>
 ##  gap> Parent( S );
 ##  Integers
 ##  ]]></Example>
@@ -547,7 +547,7 @@ DeclareCategory( "IsUniqueFactorizationRing", IsRing );
 ##  <Description>
 ##  A ring <M>R</M> is called a Euclidean ring if it is an integral ring and
 ##  there exists a function <M>\delta</M>, called the Euclidean degree, from
-##  <M>R-\{0_R\}</M> into a well-ordered set (such as the the nonnegative integers),
+##  <M>R-\{0_R\}</M> into a well-ordered set (such as the nonnegative integers),
 ##  such that for every pair <M>r \in R</M> and <M>s \in  R-\{0_R\}</M> there
 ##  exists an element <M>q</M> such that either
 ##  <M>r - q s = 0_R</M> or <M>\delta(r - q s) &lt; \delta( s )</M>.
@@ -749,7 +749,7 @@ InstallFactorMaintenance( IsZeroMultiplicationRing,
 ##  gap> Units( GaussianIntegers );
 ##  [ -1, 1, -E(4), E(4) ]
 ##  gap> Units( GF( 16 ) );
-##  <group of size 15 with 1 generators>
+##  <group of size 15 with 1 generator>
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -769,7 +769,7 @@ DeclareAttribute( "Units", IsRing );
 ##  <Description>
 ##  <Ref Oper="Factors"/> returns the factorization of the ring element
 ##  <A>r</A> in the ring <A>R</A>, if given,
-##  and otherwise in in its default ring
+##  and otherwise in its default ring
 ##  (see <Ref Func="DefaultRing" Label="for ring elements"/>).
 ##  The factorization is returned as a list of primes
 ##  (see <Ref Oper="IsPrime"/>).
@@ -891,7 +891,7 @@ DeclareOperation( "IsUnit", [ IsRing, IsRingElement ] );
 ##
 ##  <Description>
 ##  <Ref Oper="InterpolatedPolynomial"/> returns, for given lists <A>x</A>,
-##  <A>y</A> of elements in a ring <A>R</A> of the same length <M>n</M>, say,
+##  <A>y</A> of elements in a ring <A>R</A> of the same length <M>n</M>
 ##  the unique  polynomial of  degree less than <M>n</M> which has value
 ##  <A>y</A>[<M>i</M>] at <A>x</A><M>[i]</M>,
 ##  for all <M>i \in \{ 1, \ldots, n \}</M>. 

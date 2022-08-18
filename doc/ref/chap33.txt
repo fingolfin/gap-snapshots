@@ -232,7 +232,7 @@
   [33X[0;0YGiven  a  list of [22Xn[122X lists, each containing elements from the set [22X{ 1, ..., n
   }[122X,  this  function  constructs  a  binary relation such that [22X1[122X is related to
   [3Xlist[103X[10X[1][110X,  [22X2[122X  to [3Xlist[103X[10X[2][110X and so on. The first version checks whether the list
-  supplied is valid. The the [10XNC[110X version skips this check.[133X
+  supplied is valid. The [10XNC[110X version skips this check.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XR:=BinaryRelationOnPoints([[1,2],[2],[3]]);[127X[104X

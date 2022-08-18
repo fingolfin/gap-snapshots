@@ -191,8 +191,8 @@
   the list [3Ximgs[103X. The lists [3Xgens[103X and [3Ximgs[103X must of course have the same length.[133X
   
   [33X[0;0Y[2XMappedWord[102X  needs to do some preprocessing to get internal generator numbers
-  etc.  When  mapping many (several thousand) words, an explicit loop over the
-  words syllables might be faster.[133X
+  etc.  When  mapping many (several thousand) words, a dedicated loop might be
+  faster.[133X
   
   [33X[0;0YFor  example,  if  the  elements  in  [3Ximgs[103X  are  all  [13Xassociative words[113X (see
   Chapter [14X37[114X) in the same family as the elements in [3Xgens[103X, and some of them are
@@ -200,6 +200,10 @@
   from  [3Xgens[103X and [3Ximgs[103X. In this situation, the special case that the lists [3Xgens[103X
   and  [3Ximgs[103X  have  only length [22X1[122X is handled more efficiently by [2XEliminatedWord[102X
   ([14X37.4-6[114X).[133X
+  
+  [33X[0;0YIf the word is from a free group, it is permitted to give inverses of (some)
+  of  the  generators  as extra generators. This can speed up the execution by
+  removing the need to calculate inverses anew.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xm:= FreeMagma( "a", "b" );;  gens:= GeneratorsOfMagma( m );;[127X[104X
@@ -217,6 +221,8 @@
     [4X[25Xgap>[125X [27Xw:= a^5*b*a^2/b^4*a;[127X[104X
     [4X[28Xa^5*b*a^2*b^-4*a[128X[104X
     [4X[25Xgap>[125X [27XMappedWord( w, [ a, b ], [ (1,2), (1,2,3,4) ] );[127X[104X
+    [4X[28X(1,3,4,2)[128X[104X
+    [4X[25Xgap>[125X [27XMappedWord( w, [ a, b, b^-1 ], [ (1,2), (1,2,3,4), (1,4,3,2) ] );[127X[104X
     [4X[28X(1,3,4,2)[128X[104X
     [4X[25Xgap>[125X [27X(1,2)^5*(1,2,3,4)*(1,2)^2/(1,2,3,4)^4*(1,2);[127X[104X
     [4X[28X(1,3,4,2)[128X[104X
@@ -238,77 +244,142 @@
   [1X36.4-1 [33X[0;0YFreeMagma[133X[101X
   
   [33X[1;0Y[29X[2XFreeMagma[102X( [3Xrank[103X[, [3Xname[103X] ) [32X function[133X
-  [33X[1;0Y[29X[2XFreeMagma[102X( [3Xname1[103X, [3Xname2[103X, [3X...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeMagma[102X( [3Xname1[103X[, [3Xname2[103X[, [3X...[103X]] ) [32X function[133X
   [33X[1;0Y[29X[2XFreeMagma[102X( [3Xnames[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XFreeMagma[102X( [3Xinfinity[103X, [3Xname[103X, [3Xinit[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeMagma[102X( [3Xinfinity[103X[, [3Xname[103X][, [3Xinit[103X] ) [32X function[133X
   
-  [33X[0;0YCalled  with a positive integer [3Xrank[103X, [2XFreeMagma[102X returns a free magma on [3Xrank[103X
-  generators.  If  the optional argument [3Xname[103X is given then the generators are
-  printed as [3Xname[103X[10X1[110X, [3Xname[103X[10X2[110X etc., that is, each name is the concatenation of the
-  string  [3Xname[103X  and  an  integer  from [10X1[110X to [3Xrange[103X. The default for [3Xname[103X is the
-  string [10X"m"[110X.[133X
+  [33X[0;0Y[10XFreeMagma[110X  returns  a  free  magma. The number of generators, and the labels
+  given  to  the  generators,  can  be  specified  in  several different ways.
+  Warning:  the  labels of generators are only an aid for printing, and do not
+  necessarily   distinguish  generators;  see  the  examples  at  the  end  of
+  [2XFreeSemigroup[102X ([14X51.1-10[114X) for more information.[133X
   
-  [33X[0;0YCalled  in  the  second  form,  [2XFreeMagma[102X  returns  a  free magma on as many
-  generators as arguments, printed as [3Xname1[103X, [3Xname2[103X etc.[133X
+  [8X 1: For a given rank, and an optional generator name prefix [108X
+        [33X[0;6YCalled with a positive integer [3Xrank[103X, [2XFreeMagma[102X returns a free magma on
+        [3Xrank[103X  generators.  The  optional  argument  [3Xname[103X must be a string; its
+        default value is [10X"x"[110X.[133X
   
-  [33X[0;0YCalled  in  the  third  form,  [2XFreeMagma[102X  returns  a  free  magma on as many
-  generators as the length of the list [3Xnames[103X, the [22Xi[122X-th generator being printed
-  as [3Xnames[103X[10X[[110X[22Xi[122X[10X][110X.[133X
+        [33X[0;6YIf  [3Xname[103X  is  not  given  but  the [10XgeneratorNames[110X option is, then this
+        option is respected as described in Section [14X50.1-16[114X.[133X
   
-  [33X[0;0YCalled in the fourth form, [2XFreeMagma[102X returns a free magma on infinitely many
-  generators,  where the first generators are printed by the names in the list
-  [3Xinit[103X, and the other generators by [3Xname[103X and an appended number.[133X
+        [33X[0;6YOtherwise,  the  generators  of  the  returned free magma are labelled
+        [3Xname[103X[10X1[110X, ..., [3Xname[103X[10Xk[110X, where [10Xk[110X is the value of [3Xrank[103X.[133X
+  
+  [8X2: For given generator names[108X
+        [33X[0;6YCalled with various (at least one) nonempty strings, [2XFreeMagma[102X returns
+        a  free  magma  on as many generators as arguments, which are labelled
+        [3Xname1[103X, [3Xname2[103X, etc.[133X
+  
+  [8X3: For a given list of generator names[108X
+        [33X[0;6YCalled  with  a  finite  nonempty  list  [3Xnames[103X  of  nonempty  strings,
+        [2XFreeMagma[102X returns a free magma on [10XLength([3Xnames[103X[10X)[110X generators, whose [10Xi[110X-th
+        generator is labelled [3Xnames[103X[10X[i][110X.[133X
+  
+  [8X 4: For the rank [9Xinfinity[109X, an optional default generator name prefix, and an optional finite list of generator names [108X
+        [33X[0;6YCalled  in  the  fourth  form,  [2XFreeMagma[102X  returns  a  free  magma  on
+        infinitely  many  generators.  The  optional  argument  [3Xname[103X must be a
+        string;  its default value is [10X"x"[110X, and the optional argument [3Xinit[103X must
+        be  a  finite  list of nonempty strings; its default value is an empty
+        list.  The  generators  are  initially  labelled according to the list
+        [3Xinit[103X, followed by [3Xname[103X[10Xi[110X for each [10Xi[110X in the range from [10XLength([3Xinit[103X[10X)+1[110X to
+        [9Xinfinity[109X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XFreeMagma( 4 );[127X[104X
+    [4X[28X<free magma on the generators [ x1, x2, x3, x4 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMagma( 3, "a" );[127X[104X
+    [4X[28X<free magma on the generators [ a1, a2, a3 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMagma( "a", "b" );[127X[104X
+    [4X[28X<free magma on the generators [ a, b ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMagma( [ "a", "b" ] );[127X[104X
+    [4X[28X<free magma on the generators [ a, b ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMagma( infinity );[127X[104X
+    [4X[28X<free magma with infinity generators>[128X[104X
+    [4X[25Xgap>[125X [27XF := FreeMagma( infinity, "gen" );;[127X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfMagma( F ){[ 1 .. 4 ]};[127X[104X
+    [4X[28X[ gen1, gen2, gen3, gen4 ][128X[104X
+    [4X[25Xgap>[125X [27XF := FreeMagma( infinity, [ "z", "a" ] );;[127X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfMagma( F ){[ 1 .. 3 ]};[127X[104X
+    [4X[28X[ z, a, x3 ][128X[104X
+    [4X[25Xgap>[125X [27XF := FreeMagma( infinity, "y", [ "z", "a" ] );;[127X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfMagma( F ){[ 1 .. 4 ]};[127X[104X
+    [4X[28X[ z, a, y3, y4 ][128X[104X
+    [4X[25Xgap>[125X [27XFreeMagma( 3 : generatorNames := "elt" );[127X[104X
+    [4X[28X<free magma on the generators [ elt1, elt2, elt3 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMagma( 2 : generatorNames := [ "u", "v", "w" ] );[127X[104X
+    [4X[28X<free magma on the generators [ u, v ]>[128X[104X
+  [4X[32X[104X
   
   
   [1X36.4-2 [33X[0;0YFreeMagmaWithOne[133X[101X
   
   [33X[1;0Y[29X[2XFreeMagmaWithOne[102X( [3Xrank[103X[, [3Xname[103X] ) [32X function[133X
-  [33X[1;0Y[29X[2XFreeMagmaWithOne[102X( [3Xname1[103X, [3Xname2[103X, [3X...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeMagmaWithOne[102X( [[3Xname1[103X[, [3Xname2[103X[, [3X...[103X]]] ) [32X function[133X
   [33X[1;0Y[29X[2XFreeMagmaWithOne[102X( [3Xnames[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XFreeMagmaWithOne[102X( [3Xinfinity[103X, [3Xname[103X, [3Xinit[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeMagmaWithOne[102X( [3Xinfinity[103X[, [3Xname[103X][, [3Xinit[103X] ) [32X function[133X
   
-  [33X[0;0YCalled  with  a  positive  integer  [3Xrank[103X,  [2XFreeMagmaWithOne[102X  returns  a free
-  magma-with-one  on  [3Xrank[103X  generators. If the optional argument [3Xname[103X is given
-  then  the generators are printed as [3Xname[103X[10X1[110X, [3Xname[103X[10X2[110X etc., that is, each name is
-  the  concatenation  of  the  string [3Xname[103X and an integer from [10X1[110X to [3Xrange[103X. The
-  default for [3Xname[103X is the string [10X"m"[110X.[133X
+  [33X[0;0Y[10XFreeMagmaWithOne[110X  returns  a  free magma-with-one. The number of generators,
+  and  the  labels  given  to  the  generators,  can  be  specified in several
+  different  ways.  Warning:  the  labels  of  generators  are only an aid for
+  printing, and do not necessarily distinguish generators; see the examples at
+  the end of [2XFreeSemigroup[102X ([14X51.1-10[114X) for more information.[133X
   
-  [33X[0;0YCalled in the second form, [2XFreeMagmaWithOne[102X returns a free magma-with-one on
-  as many generators as arguments, printed as [3Xname1[103X, [3Xname2[103X etc.[133X
+  [8X 1: For a given rank, and an optional generator name prefix [108X
+        [33X[0;6YCalled  with  a  nonnegative  integer [3Xrank[103X, [2XFreeMagmaWithOne[102X returns a
+        free  magma-with-one  on  [3Xrank[103X  generators. The optional argument [3Xname[103X
+        must be a string; its default value is [10X"x"[110X.[133X
   
-  [33X[0;0YCalled  in the third form, [2XFreeMagmaWithOne[102X returns a free magma-with-one on
-  as many generators as the length of the list [3Xnames[103X, the [22Xi[122X-th generator being
-  printed as [3Xnames[103X[10X[[110X[22Xi[122X[10X][110X.[133X
+        [33X[0;6YIf  [3Xname[103X  is  not  given  but  the [10XgeneratorNames[110X option is, then this
+        option is respected as described in Section [14X50.1-16[114X.[133X
   
-  [33X[0;0YCalled in the fourth form, [2XFreeMagmaWithOne[102X returns a free magma-with-one on
-  infinitely  many  generators,  where the first generators are printed by the
-  names  in  the  list  [3Xinit[103X, and the other generators by [3Xname[103X and an appended
-  number.[133X
+        [33X[0;6YOtherwise,  the  generators  of  the  returned free magma-with-one are
+        labelled [3Xname[103X[10X1[110X, ..., [3Xname[103X[10Xk[110X, where [10Xk[110X is the value of [3Xrank[103X.[133X
+  
+  [8X2: For given generator names[108X
+        [33X[0;6YCalled  with various nonempty strings, [2XFreeMagmaWithOne[102X returns a free
+        magma-with-one  on as many generators as arguments, which are labelled
+        [3Xname1[103X, [3Xname2[103X, etc.[133X
+  
+  [8X3: For a given list of generator names[108X
+        [33X[0;6YCalled  with a finite list [3Xnames[103X of nonempty strings, [2XFreeMagmaWithOne[102X
+        returns  a free magma-with-one on [10XLength([3Xnames[103X[10X)[110X generators, whose [10Xi[110X-th
+        generator is labelled [3Xnames[103X[10X[i][110X.[133X
+  
+  [8X 4: For the rank [9Xinfinity[109X, an optional default generator name prefix, and an optional finite list of generator names [108X
+        [33X[0;6YCalled   in   the   fourth   form,  [2XFreeMagmaWithOne[102X  returns  a  free
+        magma-with-one  on  infinitely  many generators. The optional argument
+        [3Xname[103X  must  be  a  string;  its default value is [10X"x"[110X, and the optional
+        argument  [3Xinit[103X  must be a finite list of nonempty strings; its default
+        value  is  an  empty  list.  The  generators  are  initially  labelled
+        according  to the list [3Xinit[103X, followed by [3Xname[103X[10Xi[110X for each [10Xi[110X in the range
+        from [10XLength([3Xinit[103X[10X)+1[110X to [9Xinfinity[109X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XFreeMagma( 3 );[127X[104X
-    [4X[28X<free magma on the generators [ x1, x2, x3 ]>[128X[104X
-    [4X[25Xgap>[125X [27XFreeMagma( "a", "b" );[127X[104X
-    [4X[28X<free magma on the generators [ a, b ]>[128X[104X
-    [4X[25Xgap>[125X [27XFreeMagma( infinity );[127X[104X
-    [4X[28X<free magma with infinity generators>[128X[104X
-    [4X[25Xgap>[125X [27XFreeMagmaWithOne( 3 );[127X[104X
-    [4X[28X<free magma-with-one on the generators [ x1, x2, x3 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMagmaWithOne( 4 );[127X[104X
+    [4X[28X<free magma-with-one on the generators [ x1, x2, x3, x4 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMagmaWithOne( 3, "a" );[127X[104X
+    [4X[28X<free magma-with-one on the generators [ a1, a2, a3 ]>[128X[104X
     [4X[25Xgap>[125X [27XFreeMagmaWithOne( "a", "b" );[127X[104X
+    [4X[28X<free magma-with-one on the generators [ a, b ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMagmaWithOne( [ "a", "b" ] );[127X[104X
     [4X[28X<free magma-with-one on the generators [ a, b ]>[128X[104X
     [4X[25Xgap>[125X [27XFreeMagmaWithOne( infinity );[127X[104X
     [4X[28X<free magma-with-one with infinity generators>[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YRemember  that  the names of generators used for printing do not necessarily
-  distinguish letters of the alphabet; so it is possible to create arbitrarily
-  weird situations by choosing strange letter names.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xm:= FreeMagma( "x", "x" );  gens:= GeneratorsOfMagma( m );;[127X[104X
-    [4X[28X<free magma on the generators [ x, x ]>[128X[104X
-    [4X[25Xgap>[125X [27Xgens[1] = gens[2];[127X[104X
-    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XF := FreeMagmaWithOne( infinity, "gen" );;[127X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfMagmaWithOne( F ){[ 1 .. 4 ]};[127X[104X
+    [4X[28X[ gen1, gen2, gen3, gen4 ][128X[104X
+    [4X[25Xgap>[125X [27XF := FreeMagmaWithOne( infinity, [ "z", "a" ] );;[127X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfMagmaWithOne( F ){[ 1 .. 3 ]};[127X[104X
+    [4X[28X[ z, a, x3 ][128X[104X
+    [4X[25Xgap>[125X [27XF := FreeMagmaWithOne( infinity, "y", [ "z", "a" ] );;[127X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfMagmaWithOne( F ){[ 1 .. 4 ]};[127X[104X
+    [4X[28X[ z, a, y3, y4 ][128X[104X
+    [4X[25Xgap>[125X [27XFreeMagmaWithOne( 0 );[127X[104X
+    [4X[28X<free group of rank zero>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMagmaWithOne( 3 : generatorNames := "elt" );[127X[104X
+    [4X[28X<free magma-with-one on the generators [ elt1, elt2, elt3 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMagmaWithOne( 2 : generatorNames := [ "u", "v", "w" ] );[127X[104X
+    [4X[28X<free magma-with-one on the generators [ u, v ]>[128X[104X
   [4X[32X[104X
   
   

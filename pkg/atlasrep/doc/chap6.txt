@@ -28,7 +28,7 @@
   [31X2[131X   [33X[0;6Ya  pair  [22X[  l,  i  ][122X  where [22Xl[122X is a list of form 1. and [22Xi[122X is a positive
         integer,[133X
   
-  [31X3[131X   [33X[0;6Ya list [22X[[122X[10X"Order"[110X[22X, i, n ][122X where [22Xi[122X and [22Xn[122X are positive integers.[133X
+  [31X3[131X   [33X[0;6Ya list [22X[[122X [10X"Order"[110X[22X, i, n ][122X where [22Xi[122X and [22Xn[122X are positive integers.[133X
   
   [33X[0;0YThe first two forms have the same meaning as for straight line programs (see
   Section [14X'Reference:  Straight  Line  Programs'[114X), the last form means a check
@@ -58,7 +58,7 @@
   
   [1X6.1-1 IsStraightLineDecision[101X
   
-  [33X[1;0Y[29X[2XIsStraightLineDecision[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsStraightLineDecision[102X( [3Xobj[103X ) [32X category[133X
   
   [33X[0;0YEach    straight    line    decision    in    [5XGAP[105X   lies   in   the   filter
   [2XIsStraightLineDecision[102X.[133X
@@ -383,7 +383,7 @@
   
   [33X[0;0YA specification of the language can be found in [Nic06], see also[133X
   
-  [33X[0;0Y[7Xhttp://brauer.maths.qmul.ac.uk/Atlas/info/blackbox.html[107X.[133X
+  [33X[0;0Y[7Xhttp://atlas.math.rwth-aachen.de/Atlas/info/blackbox.html[107X.[133X
   
   [33X[0;0YThe  [13Xinputs[113X  of  a black box program may be explicit group elements, and the
   program  may  also  ask  for random elements from a given group. The [13Xprogram
@@ -447,7 +447,7 @@
   
   [1X6.2-1 IsBBoxProgram[101X
   
-  [33X[1;0Y[29X[2XIsBBoxProgram[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsBBoxProgram[102X( [3Xobj[103X ) [32X category[133X
   
   [33X[0;0YEach black box program in [5XGAP[105X lies in the filter [2XIsBBoxProgram[102X.[133X
   
@@ -548,7 +548,7 @@
   
   [8X[10Xorderfunction[110X[8X[108X
         [33X[0;6Ythe  function  for computing element orders (default [2XOrder[102X ([14XReference:
-        Order[114X)),[133X
+        order[114X)),[133X
   
   [8X[10Xquiet[110X[8X[108X
         [33X[0;6Yif [9Xtrue[109X then ignore [10Xecho[110X statements (default [9Xfalse[109X),[133X
@@ -588,15 +588,15 @@
   
   [1X6.2-4 ResultOfBBoxProgram[101X
   
-  [33X[1;0Y[29X[2XResultOfBBoxProgram[102X( [3Xprog[103X, [3XG[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XResultOfBBoxProgram[102X( [3Xprog[103X, [3XG[103X[, [3Xoptions[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya  list  of  group  elements  or  [9Xtrue[109X, [9Xfalse[109X, [9Xfail[109X, or the string
             [10X"timeout"[110X.[133X
   
   [33X[0;0YThis  function  calls [2XRunBBoxProgram[102X ([14X6.2-3[114X) with the black box program [3Xprog[103X
-  and  second argument either a group or a list of group elements; the default
-  options  of  [2XRunBBoxProgram[102X ([14X6.2-3[114X) are assumed. The return value is [9Xfail[109X if
-  this call yields [9Xfail[109X, otherwise the [10Xgens[110X component of the result, if bound,
-  or the [10Xresult[110X component if not.[133X
+  and  second  argument either a group or a list of group elements; if [3Xoptions[103X
+  is not given then the default options of [2XRunBBoxProgram[102X ([14X6.2-3[114X) are assumed.
+  The  return  value  is  [9Xfail[109X  if  this  call yields [9Xfail[109X, otherwise the [10Xgens[110X
+  component of the result, if bound, or the [10Xresult[110X component if not.[133X
   
   [33X[0;0YNote  that  a  [13Xgroup[113X  [3XG[103X  is  used  as  the  second  argument  in the call of
   [2XRunBBoxProgram[102X ([14X6.2-3[114X) (the source for random elements), whereas a [13Xlist[113X [3XG[103X is
@@ -775,7 +775,7 @@
   
   [1X6.3-2 MinimalRepresentationInfoData[101X
   
-  [33X[1;0Y[29X[2XMinimalRepresentationInfoData[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XMinimalRepresentationInfoData[102X [32X global variable[133X
   
   [33X[0;0YThis  is  a  record  whose  components  are  [5XGAP[105X  names  of groups for which
   information  about minimal permutation and matrix representations were known
@@ -893,7 +893,7 @@
   [30X    [33X[0;6YIf  the  largest  maximal subgroup of [22XG[122X is core-free then the index of
         this  subgroup  is  the  minimal  degree.  (This  is used when the two
         character  tables  in  question  and the class fusion are available in
-        [5XGAP[105X's Character Table Library [Bre13]; this happens for many character
+        [5XGAP[105X's Character Table Library [Bre22]; this happens for many character
         tables of simple groups.)[133X
   
   [30X    [33X[0;6YIf  [22XG[122X  has a unique minimal normal subgroup then each minimal faithful

@@ -13,11 +13,11 @@
 
 #############################################################################
 ##
-#V  `TYPES_VEC8BIT . . . . . . . . prepared types for compressed GF(q) vectors
+#v  TYPES_VEC8BIT . . . . . . . . prepared types for compressed GF(q) vectors
 ##
 ##  A length 4 list of length 257 lists. TYPES_VEC8BIT[1][q] will be the type
 ##  of mutable vectors over GF(q), TYPES_VEC8BIT[2][q] is the type of 
-##  immutable vectors and TYPES_VEC8BIT[3][q] the type of locked vectors
+##  immutable vectors. TYPES_VEc8BIT[3][q] is the type of locked vectors.
 ##  The 257th position is bound to 1 to stop the lists
 ##  shrinking.
 ##
@@ -25,7 +25,7 @@
 ##  without changing the kernel.
 ##
 
-InstallValue(TYPES_VEC8BIT, 
+BindGlobal("TYPES_VEC8BIT", 
   [ MakeWriteOnceAtomic([]), 
     MakeWriteOnceAtomic([]), 
     MakeWriteOnceAtomic([]), 
@@ -49,57 +49,48 @@ MakeReadOnlyObj(TYPES_VEC8BIT);
 
 InstallGlobalFunction(TYPE_VEC8BIT,
   function( q, mut)
-    local col,filts, type;
+    local col,filts;
     if mut then col := 1; else col := 2; fi;
-    if IsBound(TYPES_VEC8BIT[col][q]) then
-      return TYPES_VEC8BIT[col][q];
-    fi;
-    filts := IsHomogeneousList and IsListDefault and IsCopyable and
-             Is8BitVectorRep and IsSmallList and
-             IsNoImmediateMethodsObject and
-             IsRingElementList and HasLength;
-    if mut then filts := filts and IsMutable; fi;
-    type := NewType(FamilyObj(GF(q)),filts);
     if not IsBound(TYPES_VEC8BIT[col][q]) then
-      InstallTypeSerializationTag(type, SERIALIZATION_BASE_VEC8BIT +
-        SERIALIZATION_TAG_BASE * (q * 4 + col - 1));
-      TYPES_VEC8BIT[col][q] := type;
+        filts := IsHomogeneousList and IsListDefault and IsCopyable and
+                 Is8BitVectorRep and IsSmallList and
+                 IsNoImmediateMethodsObject and
+                 IsRingElementList and HasLength;
+        if mut then filts := filts and IsMutable; fi;
+        TYPES_VEC8BIT[col][q] := NewType(FamilyObj(GF(q)),filts);
+        InstallTypeSerializationTag(TYPES_VEC8BIT[col][q],
+            SERIALIZATION_BASE_VEC8BIT + SERIALIZATION_TAG_BASE * (q * 4 + col - 1));
     fi;
     return TYPES_VEC8BIT[col][q];
 end);
 
 InstallGlobalFunction(TYPE_VEC8BIT_LOCKED,
   function( q, mut)
-    local col,filts, type;
+    local col,filts;
     if mut then col := 3; else col := 4; fi;
-    if IsBound(TYPES_VEC8BIT[col][q]) then
-      return TYPES_VEC8BIT[col][q];
-    fi;
-    filts := IsHomogeneousList and IsListDefault and IsCopyable and
-             Is8BitVectorRep and IsSmallList and
-             IsNoImmediateMethodsObject and
-             IsLockedRepresentationVector and
-             IsRingElementList and HasLength;
-    if mut then filts := filts and IsMutable; fi;
-    type := NewType(FamilyObj(GF(q)),filts);
     if not IsBound(TYPES_VEC8BIT[col][q]) then
-      InstallTypeSerializationTag(type, SERIALIZATION_BASE_VEC8BIT +
-        SERIALIZATION_TAG_BASE * (q * 4 + col - 1));
-      TYPES_VEC8BIT[col][q] := type;
+        filts := IsHomogeneousList and IsListDefault and IsCopyable and
+                 Is8BitVectorRep and IsSmallList and
+                 IsNoImmediateMethodsObject and
+                 IsLockedRepresentationVector and
+                 IsRingElementList and HasLength;
+        if mut then filts := filts and IsMutable; fi;
+        TYPES_VEC8BIT[col][q] := NewType(FamilyObj(GF(q)),filts);
+        InstallTypeSerializationTag(TYPES_VEC8BIT[col][q],
+            SERIALIZATION_BASE_VEC8BIT + SERIALIZATION_TAG_BASE * (q * 4 + col - 1));
     fi;
     return TYPES_VEC8BIT[col][q];
 end);
 
 #############################################################################
 ##
-#V  TYPE_FIELDINFO_8BIT type of the fieldinfo bags
+#V  TYPE_FIELDINFO_8BIT . . . . . . . . . . . . .  type of the fieldinfo bags
 ##
 ##  These bags are created by the kernel and accessed by the kernel. The type
 ##  doesn't really say anything, because there are no applicable operations.
 ##
 
-InstallValue( TYPE_FIELDINFO_8BIT, TYPE_KERNEL_OBJECT);
-
+BindGlobal( "TYPE_FIELDINFO_8BIT", TYPE_KERNEL_OBJECT);
 
 #############################################################################
 ##
@@ -126,7 +117,7 @@ InstallOtherMethod( \[\],  "for a compressed VecFFE",
 ##
 ##  <vec> may also be converted back into vector rep over a bigger field.
 ##
-               
+
 InstallOtherMethod( \[\]\:\=,  "for a compressed VecFFE", 
         true, [IsMutable and IsList and Is8BitVectorRep, IsPosInt, IsObject], 
         0, ASS_VEC8BIT);
@@ -208,7 +199,7 @@ InstallMethod(ShallowCopy, "for a compressed VecFFE",
 #M  <vec1> + <vec2>
 ##
 ##  The method installation enforced same
-##  characteristic. Compatability of fields and vector lengths is
+##  characteristic. Compatibility of fields and vector lengths is
 ##  handled in the method
 
 InstallMethod( \+, "for two 8 bit vectors in same characteristic",
@@ -223,7 +214,8 @@ InstallMethod( \+, "for a GF2 vector and an 8 bit vector of char 2",
     if IsLockedRepresentationVector(v) then
         TryNextMethod();
     else
-        return CopyToVectorRep(v,Q_VEC8BIT(w)) + w;
+        v := CopyToVectorRep(v,Q_VEC8BIT(w));
+        return v+w;
     fi;
 end);
 
@@ -234,34 +226,10 @@ InstallMethod( \+, "for an 8 bit vector of char 2 and a GF2 vector",
     if IsLockedRepresentationVector(v) then
         TryNextMethod();
     else
-        return w + CopyToVectorRep(v,Q_VEC8BIT(w));
+        v := CopyToVectorRep(v,Q_VEC8BIT(w));
+        return w+v;
     fi;
 end);
-
-#############################################################################
-##
-#M  `PlainListCopyOp( <vec> ) 
-##
-##  Make the vector into a plain list (in place)
-##
-
-InstallMethod( PlainListCopyOp, "for an 8 bit vector",
-        true, [IsSmallList and Is8BitVectorRep], 0,
-        function (v)
-    PLAIN_VEC8BIT(v);
-    return v;
-end);
-
-#############################################################################
-##
-#M  ELM0_LIST( <vec> ) 
-##
-##  alternatibe element access interface, returns fail when unbound
-##
-
-InstallMethod(ELM0_LIST, "for an 8 bit vector",
-        true, [IsList and Is8BitVectorRep, IsPosInt], 0,
-        ELM0_VEC8BIT);
 
 #############################################################################
 ##
@@ -354,7 +322,8 @@ function( a, b )
     if DegreeFFE(a) > 8 or IsLockedRepresentationVector(b) then
         TryNextMethod();
     else
-        return a*CopyToVectorRep(b,Size(Field(a)));
+        b := CopyToVectorRep(b,Size(Field(a)));
+        return a*b;
     fi;
 end );
 
@@ -388,7 +357,8 @@ function( b, a )
     if DegreeFFE(b) > 8 or IsLockedRepresentationVector(a) then
         TryNextMethod();
     else
-        return b*CopyToVectorRep(a,Size(Field(b)));
+        a := CopyToVectorRep(a,Size(Field(b)));
+        return b*a;
     fi;
 end );
 
@@ -410,7 +380,8 @@ InstallMethod( \-, "for a GF2 vector and an 8 bit vector of char 2",
     if IsLockedRepresentationVector(v) then
         TryNextMethod();
     else
-        return CopyToVectorRep(v,Q_VEC8BIT(w))-w;
+        v := CopyToVectorRep(v,Q_VEC8BIT(w));
+        return v-w;
     fi;
 end);
 
@@ -421,7 +392,8 @@ InstallMethod( \-, "for an 8 bit vector of char 2 and a GF2 vector",
     if IsLockedRepresentationVector(v) then
         TryNextMethod();
     else
-        return w-CopyToVectorRep(v,Q_VEC8BIT(w));
+        v := CopyToVectorRep(v,Q_VEC8BIT(w));
+        return w-v;
     fi;
 end);
 
@@ -469,7 +441,7 @@ InstallMethod( ZeroOp, "for an 8 bit vector",
 
 #############################################################################
 ##
-#M  ZEROOp( <vec> )
+#M  ZeroSameMutability( <vec> )
 ##
 ##  A  zero vector of the same field and length and mutability
 ##
@@ -529,7 +501,8 @@ InstallMethod( \*, "for a GF2 vector and an 8 bit vector of char 2",
     if IsLockedRepresentationVector(v) then
         TryNextMethod();
     else
-        return CopyToVectorRep(v,Q_VEC8BIT(w))*w;
+        v := CopyToVectorRep(v,Q_VEC8BIT(w));
+        return v*w;
     fi;
 end);
 
@@ -540,7 +513,8 @@ InstallMethod( \*, "for an 8 bit vector of char 2 and a GF2 vector",
     if IsLockedRepresentationVector(v) then
         TryNextMethod();
     else
-        return w*CopyToVectorRep(v,Q_VEC8BIT(w));
+        v := CopyToVectorRep(v,Q_VEC8BIT(w));
+        return w*v;
     fi;
 end);
 
@@ -633,7 +607,6 @@ InstallMethod( Append, "for 8bitm vectors",
         IsIdenticalObj, [Is8BitVectorRep and IsMutable and IsList,
                 Is8BitVectorRep and IsList], 0,
         APPEND_VEC8BIT);
-        
 
 #############################################################################
 ##
@@ -694,7 +667,8 @@ InstallOtherMethod( AddCoeffs, "8 bit vector and GF2 vector", IsCollsCollsElms,
     if IsLockedRepresentationVector(w) then
         TryNextMethod();
     else
-        return ADD_COEFFS_VEC8BIT_3(v,CopyToVectorRep(w, Q_VEC8BIT(v)),x);
+        w := CopyToVectorRep(w, Q_VEC8BIT(v));
+        return ADD_COEFFS_VEC8BIT_3(v,w,x);
     fi;
 end);
 
@@ -727,7 +701,8 @@ InstallOtherMethod( AddCoeffs, "8 bit vector and GF2 vector", IsIdenticalObj,
     if IsLockedRepresentationVector(w) then
         TryNextMethod();
     else
-        return ADD_COEFFS_VEC8BIT_2(v,CopyToVectorRep(w, Q_VEC8BIT(v)));
+        w := CopyToVectorRep(w, Q_VEC8BIT(v));
+        return ADD_COEFFS_VEC8BIT_2(v,w);
     fi;
 end);
 
@@ -818,7 +793,7 @@ InstallMethod( ProductCoeffs, "8 bit vectors, kernel method", IsFamXFamY,
         [Is8BitVectorRep and IsRowVector, IsInt, Is8BitVectorRep and
          IsRowVector, IsInt ], 0,
         PROD_COEFFS_VEC8BIT);
-        
+
 InstallOtherMethod( ProductCoeffs, "8 bit vectors, kernel method (2 arg)", 
         IsIdenticalObj,
         [Is8BitVectorRep and IsRowVector, Is8BitVectorRep and
@@ -854,7 +829,7 @@ function(v,w)
     if w1 = fail then
         return fail;
     fi;
-    
+
     return [v1, w1];
 
   else
@@ -875,20 +850,20 @@ InstallMethod( ReduceCoeffs, "8 bit vectors, kernel method", IsFamXFamY,
             SWITCH_OBJ(vl, adjust[1]);
             vr:=adjust[2];    
         fi;
-    	res := REDUCE_COEFFS_VEC8BIT( vl, ll, 
-			MAKE_SHIFTED_COEFFS_VEC8BIT(vr, lr));
-	    if res = fail then 
-		    TryNextMethod();
-	    else
-		    return res;
-	    fi;
+        res := REDUCE_COEFFS_VEC8BIT( vl, ll, 
+            MAKE_SHIFTED_COEFFS_VEC8BIT(vr, lr));
+        if res = fail then 
+            TryNextMethod();
+        else
+            return res;
+        fi;
 end);
 
 InstallOtherMethod( ReduceCoeffs, "8 bit vectors, kernel method (2 arg)", 
         IsIdenticalObj,
         [Is8BitVectorRep and IsRowVector and IsMutable, Is8BitVectorRep and
          IsRowVector ], 0,
-    function(v,w) 
+        function(v,w) 
     local adjust;
     adjust := ADJUST_FIELDS_VEC8BIT(v,w);   
     if adjust = fail then
@@ -918,13 +893,13 @@ InstallMethod( QuotRemCoeffs, "8 bit vectors, kernel method", IsFamXFamY,
             SWITCH_OBJ(vl,adjust[1]);
             vr:=adjust[2];    
         fi;
-    	res := QUOTREM_COEFFS_VEC8BIT( vl, ll, 
-			MAKE_SHIFTED_COEFFS_VEC8BIT(vr, lr));
-	    if res = fail then 
-		    TryNextMethod();
-	    else
-		    return res;
-	    fi;
+        res := QUOTREM_COEFFS_VEC8BIT( vl, ll, 
+            MAKE_SHIFTED_COEFFS_VEC8BIT(vr, lr));
+        if res = fail then 
+            TryNextMethod();
+        else
+            return res;
+        fi;
 end);
 
 InstallOtherMethod( QuotRemCoeffs, "8 bit vectors, kernel method (2 arg)", 
@@ -967,7 +942,7 @@ InstallMethod( PowerModCoeffs,
         v:=adjust[1];    
         w:=adjust[2];    
     fi;
-    
+
     if exp = 1 then
         pow := ShallowCopy(v);
         ReduceCoeffs(pow,lv,w,lw);
@@ -1000,8 +975,7 @@ InstallMethod( PowerModCoeffs,
     od;
     return pow;
 end);
-            
-            
+
 #############################################################################
 ##
 #M  ZeroVector( len, <vector> )
@@ -1126,7 +1100,7 @@ InstallMethod( Unpack, "for an 8bit matrix",
   end );
 InstallMethod( Unpack, "for an 8bit vector",
   [Is8BitVectorRep],
-  function( v ) return AsPlist(v); end );
+  AsPlist );
 
 InstallOtherMethod( KroneckerProduct, "for two 8bit matrices", # priority to kernel code, if matrices have same field
   [Is8BitMatrixRep and IsMatrix, Is8BitMatrixRep and IsMatrix], 1,
@@ -1165,6 +1139,9 @@ InstallMethod( BaseField, "for a compressed 8bit vector",
 InstallMethod( NewVector, "for Is8BitVectorRep, GF(q), and a list",
   [ Is8BitVectorRep, IsField and IsFinite, IsList ],
   function( filter, f, l )
+    if not Size(f) in [3..256] then
+        Error("Is8BitVectorRep only supports base fields with 3 to 256 elements");
+    fi;
     return CopyToVectorRep(l,Size(f));
   end );
 
@@ -1172,27 +1149,21 @@ InstallMethod( NewZeroVector, "for Is8BitVectorRep, GF(q), and an int",
   [ Is8BitVectorRep, IsField and IsFinite, IsInt ],
   function( filter, f, i )
     local v;
+    if not Size(f) in [3..256] then
+        Error("Is8BitVectorRep only supports base fields with 3 to 256 elements");
+    fi;
     v := ListWithIdenticalEntries(i,Zero(f));
-    ConvertToVectorRep(v,Size(f));
+    CONV_VEC8BIT(v,Size(f));
     return v;
-  end );
-
-InstallMethod( ZeroMatrix, "for a compressed 8bit matrix",
-  [IsInt, IsInt, Is8BitMatrixRep],
-  function( rows, cols, m )
-    local l,i;
-    l := [];
-    for i in [1..rows] do
-        Add(l,ZeroVector(cols,m[1]));
-    od;
-    ConvertToMatrixRep(l);
-    return l;
   end );
 
 InstallMethod( NewMatrix, "for Is8BitMatrixRep, GF(q), an int, and a list",
   [ Is8BitMatrixRep, IsField and IsFinite, IsInt, IsList ],
   function( filter, f, rl, l )
     local m;
+    if not Size(f) in [3..256] then
+        Error("Is8BitMatrixRep only supports base fields with 3 to 256 elements");
+    fi;
     m := List(l,ShallowCopy);
     ConvertToMatrixRep(m,Size(f));
     return m;
@@ -1202,39 +1173,31 @@ InstallMethod( NewZeroMatrix, "for Is8BitMatrixRep, GF(q), and two ints",
   [ Is8BitMatrixRep, IsField and IsFinite, IsInt, IsInt ],
   function( filter, f, rows, cols )
     local m,i;
+    if not Size(f) in [3..256] then
+        Error("Is8BitMatrixRep only supports base fields with 3 to 256 elements");
+    fi;
+    if rows = 0 then
+        Error("Is8BitMatrixRep with zero rows not yet supported");
+    fi;
     m := 0*[1..rows];
     m[1] := NewZeroVector(Is8BitVectorRep,f,cols);
     for i in [2..rows] do
         m[i] := ShallowCopy(m[1]);
     od;
-    ConvertToMatrixRep(m,Size(f));
+    ConvertToMatrixRepNC(m,Size(f));
     return m;
-  end );
-
-InstallMethod( IdentityMatrix, "for a compressed 8bit matrix",
-  [IsInt, Is8BitMatrixRep],
-  function(rows,m)
-    local f,n;
-    f := BaseField(m);
-    n := IdentityMat(rows,f);
-    ConvertToMatrixRep(n,Size(f));
-    return n;
   end );
 
 InstallMethod( NewIdentityMatrix, "for Is8BitMatrixRep, GF(q), and an int",
   [ Is8BitMatrixRep, IsField and IsFinite, IsInt ],
-  function( filter, f, rows )
-    local m,i,o;
-    m := 0*[1..rows];
-    o := One(f);
-    m[1] := NewZeroVector(Is8BitVectorRep,f,rows);
-    for i in [2..rows] do
-        m[i] := ShallowCopy(m[1]);
-        m[i][i] := o;
+  function( filter, basedomain, dim )
+    local mat, one, i;
+    mat := NewZeroMatrix(filter, basedomain, dim, dim);
+    one := One(basedomain);
+    for i in [1..dim] do
+        mat[i,i] := one;
     od;
-    m[1][1] := o;
-    ConvertToMatrixRep(m,Size(f));
-    return m;
+    return mat;
   end );
 
 InstallMethod( ChangedBaseDomain, "for an 8bit vector and a finite field",
@@ -1264,6 +1227,11 @@ InstallMethod( CompatibleVector, "for an 8bit matrix",
     # This will break for a matrix with no rows
     return ShallowCopy(m[1]);
   end );
+
+InstallMethod( CompatibleVectorFilter,
+    "for an 8bit matrix",
+    [ Is8BitMatrixRep ],
+    M -> Is8BitVectorRep );
 
 InstallMethod( WeightOfVector, "for an 8bit vector",
   [ Is8BitVectorRep ],

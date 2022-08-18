@@ -249,6 +249,10 @@ DeclareGlobalFunction("ApproximateSuborbitsStabilizerPermGroup");
 ##  computes a list of representatives of all block systems for a
 ##  permutation group <A>G</A> acting transitively on the points moved by the
 ##  group.
+##  <P/>
+##  Each representative in the returned list is sorted and contains the
+##  smallest point moved by <A>G</A>.
+##  <P/>
 ##  <Example><![CDATA[
 ##  gap> AllBlocks(g);
 ##  [ [ 1, 8 ], [ 1, 2, 3, 8 ], [ 1, 4, 5, 8 ], [ 1, 6, 7, 8 ], [ 1, 3 ], 
@@ -301,9 +305,9 @@ DeclareGlobalFunction( "TransitiveGroupsAvailable" );
 
 # dummy declarations to satisfy library references to transitive groups
 # library
-DeclareGlobalFunction( "NrTransitiveGroups", "placeholder for transgrp package" );
-DeclareGlobalFunction( "TransitiveGroup", "placeholder for transgrp package" );
-DeclareGlobalFunction( "TRANSProperties", "placeholder for transgrp package" );
+DeclareGlobalFunction( "NrTransitiveGroups" );
+DeclareGlobalFunction( "TransitiveGroup" );
+DeclareGlobalFunction( "TRANSProperties" );
 
 #############################################################################
 ##
@@ -463,8 +467,7 @@ DeclareAttribute( "ONanScottType", IsPermGroup );
 ##  <Ref Attr="IsomorphismTypeInfoFiniteSimpleGroup" Label="for a group"/>),
 ##  and <C>width</C> for the number of direct factors.
 ##  <P/>
-##  If <A>G</A> does not have a faithful primitive action,
-##  the result is undefined.
+##  If <A>G</A> does not act primitively on its moved points, an error is returned. 
 ##  <Example><![CDATA[
 ##  gap> g:=AlternatingGroup(5);;
 ##  gap> h:=DirectProduct(g,g);;
@@ -528,6 +531,30 @@ DeclareGlobalFunction( "DiagonalSocleAction" );
 DeclareGlobalFunction( "ReducedPermdegree" );
 
 DeclareGlobalFunction("MovedPointsPerms");
+
+
+#############################################################################
+##
+#A  OrbitsMovedPoints( <G> )
+##
+##  <#GAPDoc Label="OrbitsMovedPoints">
+##  <ManSection>
+##  <Attr Name="OrbitsMovedPoints" Arg='G'/>
+##
+##  <Description>
+##  For a permutation group <A>G</A>, this attribute returns the orbits on the points moved 
+##  as a set of sets.
+##  <Example><![CDATA[
+##  gap> OrbitsMovedPoints(Group((9,5),(7,3,2)));
+##  [ [ 2, 3, 7 ], [ 5, 9 ] ]
+##  ]]></Example>
+##  <P/>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareAttribute( "OrbitsMovedPoints", IsPermGroup );
+
 
 #############################################################################
 ##

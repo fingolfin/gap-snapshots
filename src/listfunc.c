@@ -102,19 +102,20 @@ static Obj FuncADD_LIST3(Obj self, Obj list, Obj obj, Obj pos)
   Int ipos;
   if (pos == (Obj)0)
     ipos = -1;
-  else if (IS_INTOBJ(pos) && INT_INTOBJ(pos) > 0)
+  else if (IS_POS_INTOBJ(pos))
     ipos = INT_INTOBJ(pos);
   else {
     DoOperation3Args( self, list,  obj, pos);
     return (Obj) 0;
   }
+  UInt tnum = TNUM_OBJ(list);
   if ( IS_PLIST( list ) ) {
     AddPlist3( list, obj, ipos );
-  } else if ( TNUM_OBJ( list ) < FIRST_EXTERNAL_TNUM ) {
+  } else if ( FIRST_LIST_TNUM <= tnum && tnum <= LAST_LIST_TNUM ) {
     AddList3( list, obj, ipos );
 #ifdef HPCGAP
   // Only support adding to end of atomic lists
-  } else if ( TNUM_OBJ(list) == T_ALIST && pos == (Obj)0 ) {
+  } else if ( tnum == T_ALIST && pos == (Obj)0 ) {
     AddAList( list, obj );
 #endif
   } else {
@@ -124,8 +125,7 @@ static Obj FuncADD_LIST3(Obj self, Obj list, Obj obj, Obj pos)
       DoOperation3Args( self, list, obj, pos);
   }
 
-    /* return nothing                                                      */
-    return (Obj)0;
+    return 0;
 }
 
 
@@ -148,7 +148,7 @@ static Obj RemList(Obj list)
     Int                 pos; 
     Obj result;
     pos = LEN_LIST( list ) ;
-    if ( pos == 0L ) {
+    if ( pos == 0 ) {
         ErrorMayQuit("Remove: <list> must not be empty", 0, 0);
     }
     result = ELM_LIST(list, pos);
@@ -165,11 +165,11 @@ static Obj RemPlist(Obj list)
         ErrorMayQuit("Remove: <list> must be a mutable list", 0, 0);
     }
     pos = LEN_PLIST( list );
-    if ( pos == 0L ) {
+    if ( pos == 0 ) {
         ErrorMayQuit("Remove: <list> must not be empty", 0, 0);
     }
     removed = ELM_PLIST(list, pos);
-    SET_ELM_PLIST(list, pos, (Obj)0L);
+    SET_ELM_PLIST(list, pos, 0);
     pos--;
     while ( 1 <= pos && ELM_PLIST( list, pos ) == 0 ) { pos--; }
     SET_LEN_PLIST(list, pos);
@@ -204,14 +204,14 @@ static Obj FuncREM_LIST(Obj self, Obj list)
 **
 *F  FuncAPPEND_LIST_INTR(<list1>,<list2>)  . . . . . append elements to a list
 **
-**  'FuncAPPEND_LIST_INTR' implements the function 'AppendList'.
+**  'FuncAPPEND_LIST_INTR' implements the function 'Append'.
 **
-**  'AppendList(<list1>,<list2>)'
+**  'Append(<list1>,<list2>)'
 **
-**  'AppendList' adds (see "Add") the elements of the list <list2> to the end
+**  'Append' adds (see "Add") the elements of the list <list2> to the end
 **  of the list <list1>. It is allowed that <list2> contains empty positions,
 **  in which case the corresponding positions  will be left empty in <list1>.
-**  'AppendList' returns nothing, it is called only for its side effect.
+**  'Append' returns nothing, it is called only for its side effect.
 */
 static Obj FuncAPPEND_LIST_INTR(Obj self, Obj list1, Obj list2)
 {
@@ -220,26 +220,21 @@ static Obj FuncAPPEND_LIST_INTR(Obj self, Obj list1, Obj list2)
     Obj                 elm;            /* one element of the second list  */
     Int                 i;              /* loop variable                   */
 
-    /* check the mutability of the first argument */
-    RequireMutable("Append", list1, "list");
-
+    RequireMutable(SELF_NAME, list1, "list");
+    RequireSmallList(SELF_NAME, list1);
+    RequireSmallList(SELF_NAME, list2);
 
     /* handle the case of strings now */
-    if (IS_STRING_REP(list1) && IS_STRING_REP(list2)) {
-        len1 = GET_LEN_STRING(list1);
-        len2 = GET_LEN_STRING(list2);
-        GROW_STRING(list1, len1 + len2);
-        SET_LEN_STRING(list1, len1 + len2);
-        CLEAR_FILTS_LIST(list1);
-        // copy data, including terminating zero byte
-        // Can't use memcpy, in case list1 == list2
-        SyMemmove(CHARS_STRING(list1) + len1, CONST_CHARS_STRING(list2), len2 + 1);
-        return (Obj) 0;
+    if (IS_STRING_REP(list1) && IS_STRING(list2)) {
+        if (!IS_STRING_REP(list2)) {
+            list2 = ImmutableString(list2);
+        }
+        AppendString(list1, list2);
+        return 0;
     }
 
     /* check the type of the first argument                                */
     if ( TNUM_OBJ( list1 ) != T_PLIST ) {
-        RequireSmallList("AppendList", list1);
         if ( ! IS_PLIST( list1 ) ) {
             PLAIN_LIST( list1 );
         }
@@ -249,7 +244,6 @@ static Obj FuncAPPEND_LIST_INTR(Obj self, Obj list1, Obj list2)
 
     /* check the type of the second argument                               */
     if ( ! IS_PLIST( list2 ) ) {
-        RequireSmallList("AppendList", list2);
         len2 = LEN_LIST( list2 );
     }
     else {
@@ -278,8 +272,7 @@ static Obj FuncAPPEND_LIST_INTR(Obj self, Obj list1, Obj list2)
         }
     }
 
-    /* return void                                                         */
-    return (Obj)0;
+    return 0;
 }
 
 static Obj AppendListOper;
@@ -294,8 +287,7 @@ static Obj FuncAPPEND_LIST(Obj self, Obj list, Obj obj)
         DoOperation2Args( self, list, obj );
     }
 
-    /* return nothing                                                      */
-    return (Obj)0;
+    return 0;
 }
 
 
@@ -358,11 +350,9 @@ UInt            PositionSortedDensePlist (
 
 static Obj FuncPOSITION_SORTED_LIST(Obj self, Obj list, Obj obj)
 {
-    UInt                h;              /* position, result                */
+    RequireSmallList(SELF_NAME, list);
 
-    /* check the first argument                                            */
-    RequireSmallList("POSITION_SORTED_LIST", list);
-    /* dispatch                                                            */
+    UInt h;
     if ( IS_DENSE_PLIST(list) ) {
         h = PositionSortedDensePlist( list, obj );
     }
@@ -370,7 +360,6 @@ static Obj FuncPOSITION_SORTED_LIST(Obj self, Obj list, Obj obj)
         h = POSITION_SORTED_LIST( list, obj );
     }
 
-    /* return the result                                                   */
     return INTOBJ_INT( h );
 }
 
@@ -434,15 +423,10 @@ static UInt PositionSortedDensePlistComp(Obj list, Obj obj, Obj func)
 static Obj
 FuncPOSITION_SORTED_LIST_COMP(Obj self, Obj list, Obj obj, Obj func)
 {
-    UInt                h;              /* position, result                */
+    RequireSmallList(SELF_NAME, list);
+    RequireFunction(SELF_NAME, func);
 
-    /* check the first argument                                            */
-    RequireSmallList("POSITION_SORTED_LIST_COMP", list);
-
-    /* check the third argument                                            */
-    RequireFunction("POSITION_SORTED_LIST_COMP", func);
-
-    /* dispatch                                                            */
+    UInt h;
     if ( IS_DENSE_PLIST(list) ) {
         h = PositionSortedDensePlistComp( list, obj, func );
     }
@@ -450,7 +434,6 @@ FuncPOSITION_SORTED_LIST_COMP(Obj self, Obj list, Obj obj, Obj func)
         h = POSITION_SORTED_LISTComp( list, obj, func );
     }
 
-    /* return the result                                                   */
     return INTOBJ_INT( h );
 }
 
@@ -461,8 +444,8 @@ FuncPOSITION_SORTED_LIST_COMP(Obj self, Obj list, Obj obj, Obj func)
 */
 static Obj FuncPOSITION_SORTED_BY(Obj self, Obj list, Obj val, Obj func)
 {
-    RequirePlainList("POSITION_SORTED_BY", list);
-    RequireFunction("POSITION_SORTED_BY", func);
+    RequirePlainList(SELF_NAME, list);
+    RequireFunction(SELF_NAME, func);
 
     // perform the binary search to find the position
     UInt l = 0;
@@ -478,7 +461,6 @@ static Obj FuncPOSITION_SORTED_BY(Obj self, Obj list, Obj val, Obj func)
         }
     }
 
-    // return the result
     return INTOBJ_INT(h);
 }
 
@@ -793,10 +775,8 @@ UInt            RemoveDupsDensePlist (
 */
 static Obj FuncSORT_LIST(Obj self, Obj list)
 {
-    /* check the first argument                                            */
-    RequireSmallList("SORT_LIST", list);
+    RequireSmallList(SELF_NAME, list);
 
-    /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) ) {
         SortDensePlist( list );
     }
@@ -805,16 +785,13 @@ static Obj FuncSORT_LIST(Obj self, Obj list)
     }
     IS_SSORT_LIST(list);
 
-    /* return nothing                                                      */
-    return (Obj)0;
+    return 0;
 }
 
 static Obj FuncSTABLE_SORT_LIST(Obj self, Obj list)
 {
-    /* check the first argument                                            */
-    RequireSmallList("STABLE_SORT_LIST", list);
+    RequireSmallList(SELF_NAME, list);
 
-    /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) ) {
         SortDensePlistMerge( list );
     }
@@ -823,8 +800,7 @@ static Obj FuncSTABLE_SORT_LIST(Obj self, Obj list)
     }
     IS_SSORT_LIST(list);
 
-    /* return nothing                                                      */
-    return (Obj)0;
+    return 0;
 }
 
 
@@ -835,13 +811,9 @@ static Obj FuncSTABLE_SORT_LIST(Obj self, Obj list)
 */
 static Obj FuncSORT_LIST_COMP(Obj self, Obj list, Obj func)
 {
-    /* check the first argument                                            */
-    RequireSmallList("SORT_LIST_COMP", list);
+    RequireSmallList(SELF_NAME, list);
+    RequireFunction(SELF_NAME, func);
 
-    /* check the third argument                                            */
-    RequireFunction("SORT_LIST_COMP", func);
-
-    /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) ) {
         SortDensePlistComp( list, func );
     }
@@ -849,19 +821,14 @@ static Obj FuncSORT_LIST_COMP(Obj self, Obj list, Obj func)
         SORT_LISTComp( list, func );
     }
 
-    /* return nothing                                                      */
-    return (Obj)0;
+    return 0;
 }
 
 static Obj FuncSTABLE_SORT_LIST_COMP(Obj self, Obj list, Obj func)
 {
-    /* check the first argument                                            */
-    RequireSmallList("STABLE_SORT_LIST_COMP", list);
+    RequireSmallList(SELF_NAME, list);
+    RequireFunction(SELF_NAME, func);
 
-    /* check the third argument                                            */
-    RequireFunction("STABLE_SORT_LIST_COMP", func);
-
-    /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) ) {
         SortDensePlistCompMerge( list, func );
     }
@@ -869,8 +836,7 @@ static Obj FuncSTABLE_SORT_LIST_COMP(Obj self, Obj list, Obj func)
         SORT_LISTCompMerge( list, func );
     }
 
-    /* return nothing                                                      */
-    return (Obj)0;
+    return 0;
 }
 
 
@@ -880,12 +846,10 @@ static Obj FuncSTABLE_SORT_LIST_COMP(Obj self, Obj list, Obj func)
 */
 static Obj FuncSORT_PARA_LIST(Obj self, Obj list, Obj shadow)
 {
-    /* check the first two arguments                                       */
-    RequireSmallList("SORT_PARA_LIST", list);
-    RequireSmallList("SORT_PARA_LIST", shadow);
-    RequireSameLength("SORT_PARA_LIST", list, shadow);
+    RequireSmallList(SELF_NAME, list);
+    RequireSmallList(SELF_NAME, shadow);
+    RequireSameLength(SELF_NAME, list, shadow);
 
-    /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) && IS_DENSE_PLIST(shadow) ) {
         SortParaDensePlist( list, shadow );
     }
@@ -894,18 +858,15 @@ static Obj FuncSORT_PARA_LIST(Obj self, Obj list, Obj shadow)
     }
     IS_SSORT_LIST(list);
 
-    /* return nothing                                                      */
-    return (Obj)0;
+    return 0;
 }
 
 static Obj FuncSTABLE_SORT_PARA_LIST(Obj self, Obj list, Obj shadow)
 {
-    /* check the first two arguments                                       */
-    RequireSmallList("STABLE_SORT_PARA_LIST", list);
-    RequireSmallList("STABLE_SORT_PARA_LIST", shadow);
-    RequireSameLength("STABLE_SORT_PARA_LIST", list, shadow);
+    RequireSmallList(SELF_NAME, list);
+    RequireSmallList(SELF_NAME, shadow);
+    RequireSameLength(SELF_NAME, list, shadow);
 
-    /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) && IS_DENSE_PLIST(shadow) ) {
         SortParaDensePlistMerge( list, shadow );
     }
@@ -914,8 +875,7 @@ static Obj FuncSTABLE_SORT_PARA_LIST(Obj self, Obj list, Obj shadow)
     }
     IS_SSORT_LIST(list);
 
-    /* return nothing                                                      */
-    return (Obj)0;
+    return 0;
 }
 
 
@@ -925,15 +885,11 @@ static Obj FuncSTABLE_SORT_PARA_LIST(Obj self, Obj list, Obj shadow)
 */
 static Obj FuncSORT_PARA_LIST_COMP(Obj self, Obj list, Obj shadow, Obj func)
 {
-    /* check the first two arguments                                       */
-    RequireSmallList("SORT_PARA_LIST_COMP", list);
-    RequireSmallList("SORT_PARA_LIST_COMP", shadow);
-    RequireSameLength("SORT_PARA_LIST_COMP", list, shadow);
+    RequireSmallList(SELF_NAME, list);
+    RequireSmallList(SELF_NAME, shadow);
+    RequireSameLength(SELF_NAME, list, shadow);
+    RequireFunction(SELF_NAME, func);
 
-    /* check the third argument                                            */
-    RequireFunction("SORT_PARA_LIST_COMP", func);
-    
-    /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) && IS_DENSE_PLIST(shadow) ) {
         SortParaDensePlistComp( list, shadow, func );
     }
@@ -941,22 +897,17 @@ static Obj FuncSORT_PARA_LIST_COMP(Obj self, Obj list, Obj shadow, Obj func)
         SORT_PARA_LISTComp( list, shadow, func );
     }
 
-    /* return nothing                                                      */
-    return (Obj)0;
+    return 0;
 }
 
 static Obj
 FuncSTABLE_SORT_PARA_LIST_COMP(Obj self, Obj list, Obj shadow, Obj func)
 {
-    /* check the first two arguments                                       */
-    RequireSmallList("SORT_PARA_LIST_COMP", list);
-    RequireSmallList("SORT_PARA_LIST_COMP", shadow);
-    RequireSameLength("SORT_PARA_LIST_COMP", list, shadow);
+    RequireSmallList(SELF_NAME, list);
+    RequireSmallList(SELF_NAME, shadow);
+    RequireSameLength(SELF_NAME, list, shadow);
+    RequireFunction(SELF_NAME, func);
 
-    /* check the third argument                                            */
-    RequireFunction("SORT_PARA_LIST_COMP", func);
-    
-    /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) && IS_DENSE_PLIST(shadow) ) {
         SortParaDensePlistCompMerge( list, shadow, func );
     }
@@ -964,8 +915,7 @@ FuncSTABLE_SORT_PARA_LIST_COMP(Obj self, Obj list, Obj shadow, Obj func)
         SORT_PARA_LISTCompMerge( list, shadow, func );
     }
 
-    /* return nothing                                                      */
-    return (Obj)0;
+    return 0;
 }
 
 
@@ -1003,10 +953,10 @@ static Obj FuncOnPairs(Obj self, Obj pair, Obj elm)
     Obj                 img;            /* image, result                   */
     Obj                 tmp;            /* temporary                       */
 
-    /* check the type of the first argument                                */
-    if (!IS_SMALL_LIST(pair) || LEN_LIST(pair) != 2) {
-        ErrorMayQuit("OnPairs: <pair> must be a list of length 2 (not a %s)",
-                     (Int)TNAM_OBJ(pair), 0);
+    RequireSmallList(SELF_NAME, pair);
+    if (LEN_LIST(pair) != 2) {
+        ErrorMayQuit("OnPairs: <pair> must have length 2, not length %d",
+                     LEN_LIST(pair), 0);
     }
 
     /* create a new bag for the result                                     */
@@ -1021,7 +971,6 @@ static Obj FuncOnPairs(Obj self, Obj pair, Obj elm)
     SET_ELM_PLIST( img, 2, tmp );
     CHANGED_BAG( img );
 
-    /* return the result                                                   */
     return img;
 }
 
@@ -1044,8 +993,7 @@ static Obj FuncOnTuples(Obj self, Obj tuple, Obj elm)
     Obj                 tmp;            /* temporary                       */
     UInt                i;              /* loop variable                   */
 
-    /* check the type of the first argument                                */
-    RequireSmallList("OnTuples", tuple);
+    RequireSmallList(SELF_NAME, tuple);
 
     /* special case for the empty list */
     if (LEN_LIST(tuple) == 0) {
@@ -1058,19 +1006,16 @@ static Obj FuncOnTuples(Obj self, Obj tuple, Obj elm)
     }
     /* special case for permutations                                       */
     if (IS_PERM(elm)) {
-        PLAIN_LIST( tuple );
         return OnTuplesPerm( tuple, elm );
     }
 
     /* special case for transformations                                       */
     if (IS_TRANS(elm)) {
-        PLAIN_LIST( tuple );
         return OnTuplesTrans( tuple, elm );
     }
 
     /* special case for partial perms */
     if (IS_PPERM(elm)) {
-        PLAIN_LIST( tuple );
         return OnTuplesPPerm( tuple, elm );
     }
 
@@ -1085,7 +1030,6 @@ static Obj FuncOnTuples(Obj self, Obj tuple, Obj elm)
         CHANGED_BAG( img );
     }
 
-    /* return the result (must be a dense plain list, see 'FuncOnSets')    */
     return img;
 }
 
@@ -1107,9 +1051,8 @@ static Obj FuncOnSets(Obj self, Obj set, Obj elm)
     Obj                 img;            /* handle of the image, result     */
     UInt                status;        /* the elements are mutable        */
 
-    /* check the type of the first argument                                */
-    if (!HAS_FILT_LIST(set, FN_IS_SSORT) && !IsSet(set)) {
-        RequireArgument("OnSets", set, "must be a set");
+    if (!HAS_FILT_LIST(set, FN_IS_SSORT) && !IS_SSORT_LIST(set)) {
+        RequireArgument(SELF_NAME, set, "must be a set");
     }
 
     /* special case for the empty list */
@@ -1124,19 +1067,16 @@ static Obj FuncOnSets(Obj self, Obj set, Obj elm)
         
     /* special case for permutations                                       */
     if (IS_PERM(elm)) {
-        PLAIN_LIST( set );
         return OnSetsPerm( set, elm );
     }
 
     /* special case for transformations */
     if (IS_TRANS(elm)){
-      PLAIN_LIST(set);
       return OnSetsTrans( set, elm);
     }
     
     /* special case for partial perms */
     if (IS_PPERM(elm)){
-      PLAIN_LIST(set);
       return OnSetsPPerm( set, elm);
     }
 
@@ -1352,7 +1292,7 @@ static Obj FuncCOPY_LIST_ENTRIES(Obj self, Obj args)
   srclist = ELM_PLIST(args, 1);
   GAP_ASSERT(srclist != 0);
   if (!IS_PLIST(srclist))
-      RequireArgumentEx("CopyListEntries", srclist, "<fromlst>",
+      RequireArgumentEx(SELF_NAME, srclist, "<fromlst>",
                         "must be a plain list");
 
   srcstart = GetSmallIntEx("CopyListEntries", ELM_PLIST(args, 2), "<fromind>");
@@ -1360,7 +1300,7 @@ static Obj FuncCOPY_LIST_ENTRIES(Obj self, Obj args)
   dstlist = ELM_PLIST(args,4);
   GAP_ASSERT(dstlist != 0);
   if (!IS_PLIST(dstlist) || !IS_MUTABLE_OBJ(dstlist))
-      RequireArgumentEx("CopyListEntries", dstlist, "<tolst>",
+      RequireArgumentEx(SELF_NAME, dstlist, "<tolst>",
                         "must be a mutable plain list");
   dststart = GetSmallIntEx("CopyListEntries", ELM_PLIST(args, 5), "<toind>");
   dstinc = GetSmallIntEx("CopyListEntries", ELM_PLIST(args, 6), "<tostep>");
@@ -1451,7 +1391,7 @@ static Obj FuncCOPY_LIST_ENTRIES(Obj self, Obj args)
         }
     }
 
-  if (dstmax > LEN_PLIST(dstlist))
+  if (dstmax >= LEN_PLIST(dstlist))
     {
       sptr = CONST_ADDR_OBJ(dstlist)+dstmax;
       ct = dstmax;
@@ -1473,7 +1413,7 @@ static Obj FuncCOPY_LIST_ENTRIES(Obj self, Obj args)
 
 static Obj FuncLIST_WITH_IDENTICAL_ENTRIES(Obj self, Obj n, Obj obj)
 {
-    RequireNonnegativeSmallInt("LIST_WITH_IDENTICAL_ENTRIES", n);
+    RequireNonnegativeSmallInt(SELF_NAME, n);
 
     Obj  list = 0;
     Int  len = INT_INTOBJ(n);
@@ -1491,7 +1431,7 @@ static Obj FuncLIST_WITH_IDENTICAL_ENTRIES(Obj self, Obj n, Obj obj)
             for (; len >= BIPEB; len -= BIPEB)
                 *ptrBlist++ = ~(UInt)0;
             if (len > 0)
-                *ptrBlist |= (1UL << len) - 1;
+                *ptrBlist |= ((UInt)1 << len) - 1;
         }
     }
     else if (len == 0) {
@@ -1541,8 +1481,8 @@ static StructGVarOper GVarOpers [] = {
     { "ADD_LIST", -1, "list, obj[, pos]", &AddListOper,
       DoOperation0Args, "src/listfunc.c:ADD_LIST" },
 
-    GVAR_OPER(REM_LIST, 1, "list", &RemListOper),
-    GVAR_OPER(APPEND_LIST, 2, "list, val", &AppendListOper),
+    GVAR_OPER_1ARGS(REM_LIST, list, &RemListOper),
+    GVAR_OPER_2ARGS(APPEND_LIST, list, val, &AppendListOper),
     { 0, 0, 0, 0, 0, 0 }
 
 };
@@ -1552,29 +1492,31 @@ static StructGVarOper GVarOpers [] = {
 **
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
-static StructGVarFunc GVarFuncs [] = {
+static StructGVarFunc GVarFuncs[] = {
 
-    GVAR_FUNC(APPEND_LIST_INTR, 2, "list1, list2"),
-    GVAR_FUNC(POSITION_SORTED_LIST, 2, "list, obj"),
-    GVAR_FUNC(POSITION_SORTED_LIST_COMP, 3, "list, obj, func"),
-    GVAR_FUNC(POSITION_SORTED_BY, 3, "list, val, func"),
-    GVAR_FUNC(SORT_LIST, 1, "list"),
-    GVAR_FUNC(STABLE_SORT_LIST, 1, "list"),
-    GVAR_FUNC(SORT_LIST_COMP, 2, "list, func"),
-    GVAR_FUNC(STABLE_SORT_LIST_COMP, 2, "list, func"),
-    GVAR_FUNC(SORT_PARA_LIST, 2, "list, list"),
-    GVAR_FUNC(STABLE_SORT_PARA_LIST, 2, "list, list"),
-    GVAR_FUNC(SORT_PARA_LIST_COMP, 3, "list, list, func"),
-    GVAR_FUNC(STABLE_SORT_PARA_LIST_COMP, 3, "list, list, func"),
-    GVAR_FUNC(OnPoints, 2, "pnt, elm"),
-    GVAR_FUNC(OnPairs, 2, "pair, elm"),
-    GVAR_FUNC(OnTuples, 2, "tuple, elm"),
-    GVAR_FUNC(OnSets, 2, "set, elm"),
-    GVAR_FUNC(OnRight, 2, "pnt, elm"),
-    GVAR_FUNC(OnLeftInverse, 2, "pnt, elm"),
-    GVAR_FUNC(COPY_LIST_ENTRIES, -1, "srclist,srcstart,srcinc,dstlist,dststart,dstinc,number"),
-    GVAR_FUNC(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH, 1, "digraph"),
-    GVAR_FUNC(LIST_WITH_IDENTICAL_ENTRIES, 2, "n, obj"),
+    GVAR_FUNC_2ARGS(APPEND_LIST_INTR, list1, list2),
+    GVAR_FUNC_2ARGS(POSITION_SORTED_LIST, list, obj),
+    GVAR_FUNC_3ARGS(POSITION_SORTED_LIST_COMP, list, obj, func),
+    GVAR_FUNC_3ARGS(POSITION_SORTED_BY, list, val, func),
+    GVAR_FUNC_1ARGS(SORT_LIST, list),
+    GVAR_FUNC_1ARGS(STABLE_SORT_LIST, list),
+    GVAR_FUNC_2ARGS(SORT_LIST_COMP, list, func),
+    GVAR_FUNC_2ARGS(STABLE_SORT_LIST_COMP, list, func),
+    GVAR_FUNC_2ARGS(SORT_PARA_LIST, list, list),
+    GVAR_FUNC_2ARGS(STABLE_SORT_PARA_LIST, list, list),
+    GVAR_FUNC_3ARGS(SORT_PARA_LIST_COMP, list, list, func),
+    GVAR_FUNC_3ARGS(STABLE_SORT_PARA_LIST_COMP, list, list, func),
+    GVAR_FUNC_2ARGS(OnPoints, pnt, elm),
+    GVAR_FUNC_2ARGS(OnPairs, pair, elm),
+    GVAR_FUNC_2ARGS(OnTuples, tuple, elm),
+    GVAR_FUNC_2ARGS(OnSets, set, elm),
+    GVAR_FUNC_2ARGS(OnRight, pnt, elm),
+    GVAR_FUNC_2ARGS(OnLeftInverse, pnt, elm),
+    GVAR_FUNC_XARGS(COPY_LIST_ENTRIES,
+                    7,
+                    "srclist,srcstart,srcinc,dstlist,dststart,dstinc,number"),
+    GVAR_FUNC_1ARGS(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH, digraph),
+    GVAR_FUNC_2ARGS(LIST_WITH_IDENTICAL_ENTRIES, n, obj),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -1598,7 +1540,6 @@ static Int InitKernel (
 
 
     
-    /* return success                                                      */
     return 0;
 }
 
@@ -1618,7 +1559,6 @@ static Int InitLibrary (
     SET_HDLR_FUNC( AddListOper, 2, FuncADD_LIST);
     SET_HDLR_FUNC( AddListOper, 3, FuncADD_LIST3);
 
-    /* return success                                                      */
     return 0;
 }
 

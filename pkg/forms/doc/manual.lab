@@ -71,27 +71,20 @@
 \makelabel{forms:IsSesquilinearForm}{4.1.1}{X7FA162E5874E8330}
 \makelabel{forms:IsQuadraticForm}{4.1.1}{X7FA162E5874E8330}
 \makelabel{forms:IsForm}{4.1.1}{X7FA162E5874E8330}
-\makelabel{forms:IsForm}{4.1.1}{X7FA162E5874E8330}
 \makelabel{forms:IsTrivialForm}{4.1.1}{X7FA162E5874E8330}
 \makelabel{forms:IsFormRep}{4.1.2}{X7999E38082474342}
 \makelabel{forms:BilinearFormByMatrix}{4.2.1}{X7C9D7E517A73F02F}
-\makelabel{forms:BilinearFormByMatrix}{4.2.1}{X7C9D7E517A73F02F}
-\makelabel{forms:QuadraticFormByMatrix}{4.2.2}{X86B8694F782A4EE7}
 \makelabel{forms:QuadraticFormByMatrix}{4.2.2}{X86B8694F782A4EE7}
 \makelabel{forms:HermitianFormByMatrix}{4.2.3}{X7C027FF77AFED321}
 \makelabel{forms:BilinearFormByPolynomial}{4.3.1}{X81D571077C4BCEFF}
-\makelabel{forms:BilinearFormByPolynomial}{4.3.1}{X81D571077C4BCEFF}
 \makelabel{forms:QuadraticFormByPolynomial}{4.3.2}{X86ADE1D986CC90CB}
-\makelabel{forms:QuadraticFormByPolynomial}{4.3.2}{X86ADE1D986CC90CB}
-\makelabel{forms:HermitianFormByPolynomial}{4.3.3}{X7E21CFFA84180D0D}
 \makelabel{forms:HermitianFormByPolynomial}{4.3.3}{X7E21CFFA84180D0D}
 \makelabel{forms:QuadraticFormByBilinearForm}{4.4.1}{X7F13EAC17BDE228D}
 \makelabel{forms:BilinearFormByQuadraticForm}{4.4.2}{X812963777BBF97E3}
 \makelabel{forms:AssociatedBilinearForm}{4.4.3}{X7BF7FBCA7FF91052}
 \makelabel{forms:EvaluateForm}{4.5.1}{X808AB7B9840ABC27}
-\makelabel{forms:EvaluateForm}{4.5.1}{X808AB7B9840ABC27}
-\makelabel{forms:OrthogonalSubspaceMat}{4.6.1}{X78F2409184D192D3}
-\makelabel{forms:OrthogonalSubspaceMat}{4.6.1}{X78F2409184D192D3}
+\makelabel{forms:OrthogonalSubspaceMat for a vector}{4.6.1}{X7D699C077F66F3E6}
+\makelabel{forms:OrthogonalSubspaceMat for a matrix}{4.6.1}{X7D699C077F66F3E6}
 \makelabel{forms:IsIsotropicVector}{4.6.2}{X8394CCAD798053C6}
 \makelabel{forms:IsSingularVector}{4.6.3}{X855E539185D7D3C7}
 \makelabel{forms:IsTotallyIsotropicSubspace}{4.6.4}{X8141325085AAC0CD}

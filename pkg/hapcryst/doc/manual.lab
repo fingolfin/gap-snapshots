@@ -1,0 +1,65 @@
+\GAPDocLabFile{hapcryst}
+\makelabel{hapcryst:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{hapcryst:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{hapcryst:Acknowledgements}{}{X82A988D47DFAFCFA}
+\makelabel{hapcryst:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{hapcryst:Introduction}{1}{X7DFB63A97E67C0A1}
+\makelabel{hapcryst:Abstract and Notation}{1.1}{X813275957BA5B5E0}
+\makelabel{hapcryst:The natural action of crystallographic groups}{1.1.1}{X7F4A00F481A1FB39}
+\makelabel{hapcryst:Requirements}{1.2}{X85A08CF187A6D986}
+\makelabel{hapcryst:Recommendation concerning polymake}{1.2.1}{X7990986A8114E0DB}
+\makelabel{hapcryst:Global Variables}{1.3}{X7D9044767BEB1523}
+\makelabel{hapcryst:Bits and Pieces}{2}{X86FBE5B77C2F9442}
+\makelabel{hapcryst:Matrices and Vectors}{2.1}{X8019925B8294F5B4}
+\makelabel{hapcryst:Affine Matrices OnRight}{2.2}{X86BD4FE4871379AD}
+\makelabel{hapcryst:Geometry}{2.3}{X84A0B0637F269E37}
+\makelabel{hapcryst:Inequalities}{2.3.2}{X866942167802E036}
+\makelabel{hapcryst:Space Groups}{2.4}{X7B14774981F80108}
+\makelabel{hapcryst:Algorithms of Orbit-Stabilizer Type}{3}{X7F6789767FB36E74}
+\makelabel{hapcryst:Orbit Stabilizer for Crystallographic Groups}{3.1}{X85CAB2EB85A6E17A}
+\makelabel{hapcryst:Getting other orbit parts}{3.1.8}{X8002407080DB3EA2}
+\makelabel{hapcryst:Resolutions of Crystallographic Groups}{4}{X852C41A77C759D82}
+\makelabel{hapcryst:Fundamental Domains}{4.1}{X7F48638F817A14B0}
+\makelabel{hapcryst:Face Lattice and Resolution}{4.2}{X78D68F6087238F97}
+\makelabel{hapcryst:Bibliography}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{hapcryst:References}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{hapcryst:Index}{Ind}{X83A0356F839C696F}
+\makelabel{hapcryst:action of crystallographic groups}{1.1.1}{X7F4A00F481A1FB39}
+\makelabel{hapcryst:installation}{1.2}{X85A08CF187A6D986}
+\makelabel{hapcryst:polymake}{1.2.1}{X7990986A8114E0DB}
+\makelabel{hapcryst:InfoHAPcryst}{1.3.1}{X78B0A21E7FD0F3BB}
+\makelabel{hapcryst:SignRat}{2.1.1}{X7D58A1848182EC26}
+\makelabel{hapcryst:VectorModOne}{2.1.2}{X7C0552BA873515B9}
+\makelabel{hapcryst:IsSquareMat}{2.1.3}{X7BB083A57C474F45}
+\makelabel{hapcryst:DimensionSquareMat}{2.1.4}{X78C932A48515EF10}
+\makelabel{hapcryst:LinearPartOfAffineMatOnRight}{2.2.1}{X838946957FC75C17}
+\makelabel{hapcryst:BasisChangeAffineMatOnRight}{2.2.2}{X80DD4F2286D49F8D}
+\makelabel{hapcryst:TranslationOnRightFromVector}{2.2.3}{X81F3C49580958FB6}
+\makelabel{hapcryst:GramianOfAverageScalarProductFromFiniteMatrixGroup}{2.3.1}{X7A94DAE679AD73E3}
+\makelabel{hapcryst:BisectorInequalityFromPointPair}{2.3.3}{X80C365AA87BDDAFA}
+\makelabel{hapcryst:WhichSideOfHyperplane}{2.3.4}{X8790464D86D189F4}
+\makelabel{hapcryst:WhichSideOfHyperplaneNC}{2.3.4}{X8790464D86D189F4}
+\makelabel{hapcryst:RelativePositionPointAndPolygon}{2.3.5}{X83392C417B311B6B}
+\makelabel{hapcryst:PointGroupRepresentatives}{2.4.1}{X7E2F20607F278B70}
+\makelabel{hapcryst:PointGroupRepresentatives}{2.4.1}{X7E2F20607F278B70}
+\makelabel{hapcryst:OrbitStabilizerInUnitCubeOnRight}{3.1.1}{X7BED233684B2F811}
+\makelabel{hapcryst:OrbitStabilizerInUnitCubeOnRightOnSets}{3.1.2}{X82BD20307A67C119}
+\makelabel{hapcryst:OrbitPartInVertexSetsStandardSpaceGroup}{3.1.3}{X82CCCD597C86A08A}
+\makelabel{hapcryst:OrbitPartInFacesStandardSpaceGroup}{3.1.4}{X8022CD75819DE536}
+\makelabel{hapcryst:OrbitPartAndRepresentativesInFacesStandardSpaceGroup}{3.1.5}{X86A80FA17A4D6664}
+\makelabel{hapcryst:StabilizerOnSetsStandardSpaceGroup}{3.1.6}{X81DE08687F0DBCC6}
+\makelabel{hapcryst:RepresentativeActionOnRightOnSets}{3.1.7}{X83C6448679A54F9D}
+\makelabel{hapcryst:ShiftedOrbitPart}{3.1.9}{X8751429287034F4A}
+\makelabel{hapcryst:TranslationsToOneCubeAroundCenter}{3.1.10}{X82656DE584E8DC5D}
+\makelabel{hapcryst:TranslationsToBox}{3.1.11}{X858C787E83A902AB}
+\makelabel{hapcryst:FundamentalDomainStandardSpaceGroup}{4.1.1}{X79F4F7938116201E}
+\makelabel{hapcryst:FundamentalDomainStandardSpaceGroup}{4.1.1}{X79F4F7938116201E}
+\makelabel{hapcryst:FundamentalDomainBieberbachGroup}{4.1.2}{X7A07AB55831F212F}
+\makelabel{hapcryst:FundamentalDomainBieberbachGroup}{4.1.2}{X7A07AB55831F212F}
+\makelabel{hapcryst:ineqThreshold}{4.1.2}{X7A07AB55831F212F}
+\makelabel{hapcryst:FundamentalDomainFromGeneralPointAndOrbitPartGeometric}{4.1.3}{X86A09AC4842827C9}
+\makelabel{hapcryst:IsFundamentalDomainStandardSpaceGroup}{4.1.4}{X824BC99584F5F865}
+\makelabel{hapcryst:IsFundamentalDomainBieberbachGroup}{4.1.5}{X7D79DD6E87BCC1DC}
+\makelabel{hapcryst:ResolutionBieberbachGroup}{4.2.1}{X7CA87AA478007468}
+\makelabel{hapcryst:FaceLatticeAndBoundaryBieberbachGroup}{4.2.2}{X7E854FC47F9E479E}
+\makelabel{hapcryst:ResolutionFromFLandBoundary}{4.2.3}{X79A0B28A7FAE31B9}

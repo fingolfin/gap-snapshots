@@ -24,7 +24,7 @@
 ##  </ManSection>
 ##
 BindGlobal("Print_Value_SFF",function(val)
-  if val>SUM_FLAGS then
+  if val>SUM_FLAGS and val < infinity then
     Print(QuoInt(val,SUM_FLAGS),"*SUM_FLAGS");
     val:=val mod SUM_FLAGS;
     if val>0 then
@@ -150,7 +150,7 @@ local oper,narg,args,skip,verbos,fams,flags,i,j,methods,flag,flag2,
   fams:=[];
   for i in args do
     if IsFilter(i) then
-      Add(flags,FLAGS_FILTER(i));
+      Add(flags,WITH_IMPS_FLAGS(FLAGS_FILTER(i)));
       Add(fams,fail);
     elif IsType(i) then
       Add(flags,i![2]);
@@ -167,11 +167,11 @@ local oper,narg,args,skip,verbos,fams,flags,i,j,methods,flag,flag2,
 
   methods:=MethodsOperation(oper,narg);
   if verbos > 0 then
-    Print("#I  Searching Method for ",NameFunction(oper)," with ",narg,
-	  " arguments:\n");
+    Print("#I  Searching Method for ",NameFunction(oper)," with ",
+          Pluralize(narg, "argument"), ":\n");
   fi;
   if verbos > 0 then 
-    Print("#I  Total: ", Length(methods)," entries\n");
+    Print("#I  Total: ", Pluralize(Length(methods), "entry"), "\n");
   fi;
   for i in [1..Length(methods)] do
     m := methods[i];
@@ -182,7 +182,7 @@ local oper,narg,args,skip,verbos,fams,flags,i,j,methods,flag,flag2,
       Print("#I  Method ",i,": ``",nam,"''");
       if IsBound(m.location) then
         Print(" at ", m.location[1], ":", m.location[2]);
-      elif LocationFunc(oper) <> "" then
+      elif LocationFunc(oper) <> fail then
         Print(" at ",LocationFunc(oper));
       fi;
       Print(", value: ");
@@ -191,7 +191,7 @@ local oper,narg,args,skip,verbos,fams,flags,i,j,methods,flag,flag2,
     fi;
     flag:=true;
     j:=1;
-    while j<=narg and (flag or verbos>3) do
+    while j<=narg and (flag or verbos>3) and not m.early do
       if j=1 and isconstructor then
 	flag2:=IS_SUBSET_FLAGS(m.argFilt[j],flags[j]);
       else
@@ -212,12 +212,12 @@ local oper,narg,args,skip,verbos,fams,flags,i,j,methods,flag,flag2,
       j:=j+1;
     od;
     if flag then
-      if fams=fail or CallFuncList(m.famPred,fams) then
+      if m.early or fams=fail or CallFuncList(m.famPred,fams) then
 	if verbos=1 then
 	  Print("#I  Method ",i,": ``",nam,"''");
           if IsBound(m.location) then
             Print(" at ", m.location[1], ":", m.location[2]);
-	  elif LocationFunc(oper) <> "" then
+	  elif LocationFunc(oper) <> fail then
 	    Print(" at ",LocationFunc(oper));
 	  fi;
 	  Print(" , value: ");
@@ -403,16 +403,16 @@ end);
 ##  <Log><![CDATA[
 ##  gap> ShowDeclarationsOfOperation(IsFinite);
 ##  Available declarations for operation <Property "IsFinite">:
-##    1: GAPROOT/lib/coll.gd:1451 with 1 arguments, and filters [ IsListOrCollection ]
-##    2: GAPROOT/lib/float.gd:212 with 1 arguments, and filters [ IsFloat ]
-##    3: GAPROOT/lib/ctbl.gd:1195 with 1 arguments, and filters [ IsNearlyCharacterTable ]
+##    1: GAPROOT/lib/coll.gd:1451 with 1 argument, and filters [ IsListOrCollection ]
+##    2: GAPROOT/lib/float.gd:212 with 1 argument, and filters [ IsFloat ]
+##    3: GAPROOT/lib/ctbl.gd:1195 with 1 argument, and filters [ IsNearlyCharacterTable ]
 ##  ]]></Log>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
 BIND_GLOBAL("ShowDeclarationsOfOperation",function(oper)
-    local locs, reqs, i, r;
+    local locs, reqs, i, r, f;
     if not IsOperation(oper) then
         Error("<oper> must be an operation");
     fi;
@@ -422,8 +422,13 @@ BIND_GLOBAL("ShowDeclarationsOfOperation",function(oper)
         return;
     fi;
     reqs := GET_OPER_FLAGS(oper);
+    f := function(filt)
+             filt:=NamesFilter(filt);
+             if Length(filt) = 0 then filt := ["IsObject"]; fi;
+             return filt;
+         end;
     for i in [1.. Length(locs)] do
-        r := List(reqs[i], r -> JoinStringsWithSeparator(NamesFilter(r), " and \c"));
+        r := List(reqs[i], r -> JoinStringsWithSeparator(f(r), " and \c"));
         Print(String(i, 3), ": ", locs[i][1], "\c:", locs[i][2], "\c",
               " with ", Length(reqs[i]), "\c",
               " arguments, and filters [ ", "\c",
@@ -491,12 +496,14 @@ BIND_GLOBAL("PageSource", function ( fun, nr... )
       locs := GET_DECLARATION_LOCATIONS(fun);
       if n > Length(locs) then
         Print("Operation ", NameFunction(fun), " has only ",
-              Length(locs), " declarations.\n");
+              Length(locs), " declarations. ",
+              "To find an installed method see ?ApplicableMethod.\n");
         return;
       else
         if Length(locs) > 1 then
           Print("Operation ", NameFunction(fun), " has ",
-                Length(locs), " declarations, showing number ", n, ".\n");
+                Length(locs), " declarations, showing number ", n, ". ",
+                "To find an installed method see ?ApplicableMethod.\n");
         fi;
         f := locs[n][1];
         l := locs[n][2];

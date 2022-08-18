@@ -54,18 +54,29 @@
   
   [33X[1;0Y[29X[2XRecNames[102X( [3Xrecord[103X ) [32X attribute[133X
   
-  [33X[0;0Yreturns  a  list  of  strings  corresponding  to  the  names  of  the record
-  components of the record [3Xrecord[103X.[133X
+  [33X[0;0Yreturns  a  duplicate-free list of strings corresponding to the names of the
+  record components of the record [3Xrecord[103X.[133X
+  
+  [33X[0;0YThe list is sorted by [2XRNamObj[102X ([14X29.7-2[114X) for reasons of efficiency; see [2XSortBy[102X
+  ([14X21.18-1[114X).  Therefore the ordering is consistent within one [5XGAP[105X session, but
+  it  is  not  necessarily  consistent  across different sessions. To obtain a
+  result  that  is  consistent  across [5XGAP[105X sessions, apply [2XSet[102X ([14X30.3-7[114X) to the
+  returned list.[133X
+  
+  [33X[0;0YNote that given a string [10Xname[110X containing the name of a record component, you
+  can  access  the  record  component  via  [10X[3Xrecord[103X[10X.(name)[110X,  see  Sections [14X29.2[114X
+  and [14X29.3[114X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xr := rec( a := 1, b := 2 );;[127X[104X
     [4X[25Xgap>[125X [27XSet(RecNames( r )); # 'Set' because ordering depends on GAP session[127X[104X
     [4X[28X[ "a", "b" ][128X[104X
+    [4X[25Xgap>[125X [27XSet(RecNames( r ), x -> r.(x));[127X[104X
+    [4X[28X[ 1, 2 ][128X[104X
   [4X[32X[104X
   
-  [33X[0;0YNote  that you cannot use the string result in the ordinary way to access or
-  change a record component. You can use the [10X[3Xrecord[103X[10X.([3Xname[103X[10X)[110X construct for that,
-  see [14X29.2[114X and [14X29.3[114X.[133X
+  [33X[0;0YNote that it is most efficient to assign components to a (new or old) record
+  in the order given by [2XRecNames[102X.[133X
   
   
   [1X29.2 [33X[0;0YAccessing Record Elements[133X[101X

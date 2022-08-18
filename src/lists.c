@@ -26,7 +26,6 @@
 #include "bool.h"
 #include "calls.h"
 #include "error.h"
-#include "gapstate.h"
 #include "gaputils.h"
 #include "integer.h"
 #include "io.h"
@@ -51,7 +50,7 @@
 **  'IS_LIST' only calls the function pointed  to  by  'IsListFuncs[<type>]',
 **  passing <obj> as argument.
 */
-Int             (*IsListFuncs [LAST_REAL_TNUM+1]) ( Obj obj );
+BOOL (*IsListFuncs[LAST_REAL_TNUM + 1])(Obj obj);
 
 static Obj IsListFilt;
 
@@ -60,7 +59,7 @@ static Obj FiltIS_LIST(Obj self, Obj obj)
     return (IS_LIST( obj ) ? True : False);
 }
 
-static Int IsListObject(Obj obj)
+static BOOL IsListObject(Obj obj)
 {
     return (DoFilter( IsListFilt, obj ) == True);
 }
@@ -77,18 +76,18 @@ static Int IsListObject(Obj obj)
 **  This is, in some sense, a workaround for the not yet implemented features
 **  below (see LENGTH).
 */
-Int             (*IsSmallListFuncs [LAST_REAL_TNUM+1]) ( Obj obj );
+BOOL (*IsSmallListFuncs[LAST_REAL_TNUM + 1])(Obj obj);
 
 static Obj IsSmallListFilt;
 static Obj HasIsSmallListFilt;
 static Obj LengthAttr;
 static Obj SetIsSmallList;
 
-static Int IsSmallListObject(Obj obj)
+static BOOL IsSmallListObject(Obj obj)
 {
   Obj len;
   if (DoFilter(IsListFilt, obj) != True)
-    return 0;
+    return FALSE;
   if (DoFilter(HasIsSmallListFilt, obj) == True)
     return DoFilter(IsSmallListFilt, obj) == True;
   if (DoTestAttribute(LengthAttr, obj) == True)
@@ -97,12 +96,12 @@ static Int IsSmallListObject(Obj obj)
       if (IS_INTOBJ(len))
         {
           CALL_2ARGS(SetIsSmallList, obj, True);
-          return 1;
+          return TRUE;
         }
       else
         {
           CALL_2ARGS(SetIsSmallList, obj, False);
-          return 0;
+          return FALSE;
         }
     }
   return 0;
@@ -129,10 +128,10 @@ static Int IsSmallListObject(Obj obj)
 **    therefore  ranges  are no  longer  *internal*  objects,  they  are  now
 **    external objects (NOT YET IMPLEMENTED)
 **
-**  - the for/list assignment has to be carefull to catch the special case of
+**  - the for/list assignment has to be careful to catch the special case of
 **    a range constructor with small integer bounds
 **
-**  - the list access/assigment is a binary operation (NOT YET IMPLEMENTED)
+**  - the list access/assignment is a binary operation (NOT YET IMPLEMENTED)
 **
 **  - the conversion/test functions are split into three different functions
 **    (NOT YET IMPLEMENTED)
@@ -208,7 +207,7 @@ static Int LenListObject(Obj obj)
     len = AttrLENGTH( LengthAttr, obj );
     if (!IS_NONNEG_INTOBJ(len)) {
         RequireArgumentEx("Length", len, 0,
-                          "method must return a non-negative value");
+                          "method must return a non-negative small integer");
     }
     return INT_INTOBJ( len );
 }
@@ -256,7 +255,7 @@ static Obj LengthInternal(Obj obj)
 **  list, then 'IsbListFuncs[<type>]' points to 'IsbListError', which signals
 **  the error.
 */
-Int             (*IsbListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
+BOOL (*IsbListFuncs[LAST_REAL_TNUM + 1])(Obj list, Int pos);
 
 static Obj             IsbListOper;
 
@@ -268,24 +267,22 @@ static Obj FuncISB_LIST(Obj self, Obj list, Obj pos)
         return ISBB_LIST( list, pos ) ? True : False;
 }
 
-static Int IsbListError(Obj list, Int pos)
+static BOOL IsbListError(Obj list, Int pos)
 {
     RequireArgument("IsBound", list, "must be a list");
 }
 
-static Int IsbListObject(Obj list, Int pos)
+static BOOL IsbListObject(Obj list, Int pos)
 {
     return DoOperation2Args( IsbListOper, list, INTOBJ_INT(pos) ) == True;
 }
 
-Int             ISBB_LIST (
-    Obj                 list,
-    Obj                 pos )
+BOOL ISBB_LIST(Obj list, Obj pos)
 {
     return DoOperation2Args( IsbListOper, list, pos ) == True;
 }
 
-Int ISB_MAT(Obj mat, Obj row, Obj col)
+BOOL ISB_MAT(Obj mat, Obj row, Obj col)
 {
     return DoOperation3Args(IsbListOper, mat, row, col) == True;
 }
@@ -381,46 +378,15 @@ static Obj Elm0ListError(Obj list, Int pos)
 **  list object <list>, or 0 if <list>  has no assigned object  at <pos>.  It
 **  is the responsibility  of the caller to  ensure that <pos> is a  positive
 **  integer.
-**
-**  Note that the method   returns `Fail' if there  is  no entry  at position
-**  <pos>, in this case `Elm0ListObject' must  check if the position is bound
-**  and `Fail'  means that there realy is  the object `Fail' at this position
-**  or if it is unbound in which case 0 is returned.
 */
-static Obj Elm0ListOper;
-
 static Obj Elm0ListObject(Obj list, Int pos)
 {
-    Obj                 elm;
-
-    elm = DoOperation2Args( Elm0ListOper, list, INTOBJ_INT(pos) );
-
-    if ( elm == Fail ) {
-        if ( DoOperation2Args(IsbListOper,list,INTOBJ_INT(pos)) == True )
-            return Fail;
-        else
-            return 0;
-    } else {
-        return elm;
-    }
+    if (ISB_LIST(list, pos))
+        return ELM_LIST(list, pos);
+    else
+        return 0;
 }
 
-
-/****************************************************************************
-**
-*F  FuncELM0_LIST( <self>, <list>, <pos> )  . . . . . . operation `ELM0_LIST'
-*/
-static Obj FuncELM0_LIST(Obj self, Obj list, Obj pos)
-{
-    Obj                 elm;
-    elm = ELM0_LIST( list, INT_INTOBJ(pos) );
-    if ( elm == 0 ) {
-        return Fail;
-    }
-    else {
-        return elm;
-    }
-}
 
 /****************************************************************************
 **
@@ -514,14 +480,22 @@ static Obj ElmMatOper;
 
 Obj ELM_MAT(Obj mat, Obj row, Obj col)
 {
+    Obj elm;
     if (IS_POS_INTOBJ(row) && IS_POS_INTOBJ(col) && IS_PLIST(mat)) {
         Int r = INT_INTOBJ(row);
         if (r <= LEN_PLIST(mat)) {
             Obj rowlist = ELM_PLIST(mat, r);
             Int c = INT_INTOBJ(col);
 
+            if (!rowlist)
+                ErrorMayQuit("Matrix Element: <mat>[%d] must have an assigned value",
+                             (Int)r, (Int)c);
             if (IS_PLIST(rowlist) && c <= LEN_PLIST(rowlist)) {
-                return ELM_PLIST(rowlist, c);
+                elm = ELM_PLIST(rowlist, c);
+                if (!elm)
+                    ErrorMayQuit("Matrix Element: <mat>[%d,%d] must have an assigned value",
+                                 (Int)r, (Int)c);
+                return elm;
             }
 
             // fallback to generic list access code (also triggers error if
@@ -530,7 +504,7 @@ Obj ELM_MAT(Obj mat, Obj row, Obj col)
         }
     }
 
-    Obj elm = DoOperation3Args(ElmMatOper, mat, row, col);
+    elm = DoOperation3Args(ElmMatOper, mat, row, col);
     if (elm == 0) {
         ErrorMayQuit("Matrix access method must return a value", 0, 0);
     }
@@ -620,18 +594,19 @@ Obj ElmsListDefault (
     Obj                 poss )
 {
     Obj                 elms;           /* selected sublist, result        */
-    Int                 lenList;        /* length of <list>                */
     Obj                 elm;            /* one element from <list>         */
     Int                 lenPoss;        /* length of <positions>           */
     Int                 pos;            /* <position> as integer           */
     Int                 inc;            /* increment in a range            */
     Int                 i;              /* loop variable                   */
 
-    /* general code                                                        */
-    if ( ! IS_RANGE(poss) ) {
+    /* select no element                                                   */
+    if ( LEN_LIST(poss) == 0 ) {
+        elms = NewEmptyPlist();
+    }
 
-        /* get the length of <list>                                        */
-        lenList = LEN_LIST( list );
+    /* general code                                                        */
+    else if ( ! IS_RANGE(poss) ) {
 
         /* get the length of <positions>                                   */
         /* OK because all positions lists are small                        */
@@ -675,7 +650,7 @@ Obj ElmsListDefault (
     else {
 
         /* get the length of <list>                                        */
-        lenList = LEN_LIST( list );
+        Int lenList = LEN_LIST( list );
 
         /* get the length of <positions>, the first elements, and the inc. */
         lenPoss = GET_LEN_RANGE( poss );
@@ -719,7 +694,6 @@ Obj ElmsListDefault (
 
     }
 
-    /* return the result                                                   */
     return elms;
 }
 
@@ -879,6 +853,9 @@ void ASS_MAT(Obj mat, Obj row, Obj col, Obj obj)
             Obj rowlist = ELM_PLIST(mat, r);
             Int c = INT_INTOBJ(col);
 
+            if (!rowlist)
+                ErrorMayQuit("Matrix Assignment: <mat>[%d] must have an assigned value",
+                             (Int)r, (Int)c);
             ASS_LIST(rowlist, c, obj);
             return;
         }
@@ -1001,7 +978,7 @@ static Obj FuncASSS_LIST_DEFAULT(Obj self, Obj list, Obj poss, Obj objs)
 **  the   type  of  a    list,  then  'IsDenseListFuncs[<type>]'  points   to
 **  'AlwaysNo', which just returns 0.
 */
-Int             (*IsDenseListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
+BOOL (*IsDenseListFuncs[LAST_REAL_TNUM + 1])(Obj list);
 
 static Obj IsDenseListFilt;
 
@@ -1010,7 +987,7 @@ static Obj FiltIS_DENSE_LIST(Obj self, Obj obj)
     return (IS_DENSE_LIST( obj ) ? True : False);
 }
 
-static Int IsDenseListObject(Obj obj)
+static BOOL IsDenseListObject(Obj obj)
 {
     return (DoFilter( IsDenseListFilt, obj ) == True);
 }
@@ -1027,7 +1004,7 @@ static Int IsDenseListObject(Obj obj)
 **  'AlwaysNo', which just returns 0.
 **
 */
-Int             (*IsHomogListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
+BOOL (*IsHomogListFuncs[LAST_REAL_TNUM + 1])(Obj list);
 
 static Obj IsHomogListFilt;
 
@@ -1036,7 +1013,7 @@ static Obj FiltIS_HOMOG_LIST(Obj self, Obj obj)
     return (IS_HOMOG_LIST( obj ) ? True : False);
 }
 
-static Int IsHomogListObject(Obj obj)
+static BOOL IsHomogListObject(Obj obj)
 {
     return (DoFilter( IsHomogListFilt, obj ) == True);
 }
@@ -1052,7 +1029,7 @@ static Int IsHomogListObject(Obj obj)
 **  the type of a list, then 'IsTableListFuncs[<type>]' points to
 **  'AlwaysNo', which just returns 0.
 */
-Int             (*IsTableListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
+BOOL (*IsTableListFuncs[LAST_REAL_TNUM + 1])(Obj list);
 
 static Obj IsTableListFilt;
 
@@ -1061,7 +1038,7 @@ static Obj FiltIS_TABLE_LIST(Obj self, Obj obj)
     return (IS_TABLE_LIST( obj ) ? True : False);
 }
 
-static Int IsTableListObject(Obj obj)
+static BOOL IsTableListObject(Obj obj)
 {
     return (DoFilter( IsTableListFilt, obj ) == True);
 }
@@ -1078,7 +1055,7 @@ static Int IsTableListObject(Obj obj)
 **  points to 'AlwaysNo', which just returns 0.
 **
 */
-Int (*IsSSortListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
+BOOL (*IsSSortListFuncs[LAST_REAL_TNUM + 1])(Obj list);
 
 static Obj IsSSortListProp;
 
@@ -1087,8 +1064,17 @@ static Obj PropIS_SSORT_LIST(Obj self, Obj obj)
     return (IS_SSORT_LIST( obj ) ? True : False);
 }
 
-static Int IsSSortListDefault (
-    Obj                 list )
+static Obj PropSetIS_SSORT_LIST(Obj self, Obj obj, Obj val)
+{
+    UInt tnum = TNUM_OBJ(obj);
+    if (FIRST_LIST_TNUM <= tnum && tnum <= LAST_LIST_TNUM)
+        SET_FILT_LIST(obj, (val == True) ? FN_IS_SSORT : FN_IS_NSORT);
+    else
+        DoSetProperty(IsSSortListProp, obj, val);
+    return 0;
+}
+
+static BOOL IsSSortListDefault(Obj list)
 {
     Int                 lenList;
     Obj                 elm1;
@@ -1100,33 +1086,33 @@ static Int IsSSortListDefault (
 
     /* special case for the empty list                                     */
     if ( lenList == 0 ) {
-        return 2L;
+        return TRUE;
     }
 
     /* get the first element                                               */
     elm1 = ELM0_LIST(list, 1);
 
     if (!elm1) {
-        return 0L;
+        return FALSE;
     }
 
     /* compare each element with its precursor                             */
     for ( i = 2; i <= lenList; i++ ) {
         elm2 = ELM0_LIST(list, i);
         if (!elm2) {
-            return 0L;
+            return FALSE;
         }
         if ( ! LT( elm1, elm2 ) ) {
-            return 0L;
+            return FALSE;
         }
         elm1 = elm2;
     }
 
     /* the list is strictly sorted                                         */
-    return 2L;
+    return TRUE;
 }
 
-static Int IsSSortListObject(Obj obj)
+static BOOL IsSSortListObject(Obj obj)
 {
     return (DoProperty( IsSSortListProp, obj ) == True);
 }
@@ -1147,7 +1133,7 @@ static Obj FuncIS_SSORT_LIST_DEFAULT(Obj self, Obj obj)
 **  the   type    of a   list,    then  'IsPossListFuncs[<type>]'   points to
 **  'NotIsPossList', which just returns 0.
 */
-Int             (*IsPossListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
+BOOL (*IsPossListFuncs[LAST_REAL_TNUM + 1])(Obj list);
 
 static Obj IsPossListProp;
 
@@ -1156,7 +1142,9 @@ static Obj PropIS_POSS_LIST(Obj self, Obj obj)
     return (IS_POSS_LIST(obj) ? True : False);
 }
 
-static Int IsPossListDefault(Obj list)
+#define PropSetIS_POSS_LIST DoSetProperty
+
+static BOOL IsPossListDefault(Obj list)
 {
     Int                 lenList;        /* length of <list>                */
     Obj                 elm;            /* one element of <list>           */
@@ -1171,25 +1159,25 @@ static Int IsPossListDefault(Obj list)
 
         /* if it has a hole then it isn't a poss list */
         if ( elm == 0)
-          return 0L;
+          return FALSE;
 
         /* if it's a small integer and non-positive then
            it's not a poss list */
         if ( IS_INTOBJ(elm)) {
           if (INT_INTOBJ(elm) <= 0)
-            return  0L;
+            return FALSE;
         }
         /* or if it's not a small integer or a positive large integer then it's
            not a poss list */
         else if (TNUM_OBJ(elm) != T_INTPOS)
-          return 0L;
+          return FALSE;
     }
 
     /* the list is a positions list                                        */
-    return 1L;
+    return TRUE;
 }
 
-static Int IsPossListObject(Obj obj)
+static BOOL IsPossListObject(Obj obj)
 {
     return (DoProperty( IsPossListProp, obj ) == True);
 }
@@ -1223,7 +1211,7 @@ static Obj PosListHandler2(Obj self, Obj list, Obj obj)
 static Obj PosListHandler3(Obj self, Obj list, Obj obj, Obj start)
 {
     if (TNUM_OBJ(start) != T_INTPOS && !IS_NONNEG_INTOBJ(start)) {
-        RequireArgument("Position", start, "must be a non-negative integer");
+        RequireArgument(SELF_NAME, start, "must be a non-negative integer");
     }
     return POS_LIST( list, obj, start );
 }
@@ -1299,6 +1287,7 @@ void            ElmListLevel (
     Obj                 row;
     Obj                 col;
 
+    RequirePlainList("List Elements", lists);
 
     /* if <level> is one, perform the replacements                         */
     if ( level == 1 ) {
@@ -1380,16 +1369,7 @@ void            ElmsListLevel (
     Obj                 elm;            /* selected elements from <list>   */
     Int                 i;              /* loop variable                   */
 
-    /* Workaround for issue #312: Accessing a two-level sublist
-       of a compressed FFE vector could lead to crashes because
-       FuncELMS_VEC8BIT and FuncELMS_GF2VEC may return lists which are
-       not plists. This boils down to a conflict between the documented
-       behavior and requirements of ElmsListLevel and ElmsListFuncs.
-       Resolving this properly requires some more discussion. But until
-       then, this change at least prevents hard crashes. */
-    if (!IS_PLIST(lists)) {
-        RequireArgument("List Elements", lists, "must be a list");
-    }
+    RequirePlainList("List Elements", lists);
 
     /* if <level> is one, perform the replacements                         */
     if ( level == 1 ) {
@@ -1462,7 +1442,7 @@ void            AssListLevel (
     Obj                 row;
     Obj                 col;
 
-    /* check <objs>                                                        */
+    RequirePlainList("List Assignments", lists);
     RequireDenseList("List Assignments", objs);
     RequireSameLength("List Assignments", objs, lists);
 
@@ -1545,7 +1525,7 @@ void            AsssListLevel (
     Obj                 obj;            /* one value from <objs>           */
     Int                 i;              /* loop variable                   */
 
-    /* check <objs>                                                        */
+    RequirePlainList("List Assignments", lists);
     RequireDenseList("List Assignments", objs);
     RequireSameLength("List Assignments", objs, lists);
 
@@ -1609,9 +1589,31 @@ void            (*PlainListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
 static void PlainListError(Obj list)
 {
-    ErrorQuit(
-        "Panic: cannot convert <list> (is a %s) to a plain list",
-        (Int)TNAM_OBJ(list), 0L );
+    ErrorQuit("Panic: cannot convert <list> (is a %s) to a plain list",
+              (Int)TNAM_OBJ(list), 0);
+}
+
+Obj PLAIN_LIST_COPY(Obj list)
+{
+    if (IS_PLIST(list)) {
+        return SHALLOW_COPY_OBJ(list);
+    }
+    const Int len = LEN_LIST(list);
+    if (len == 0)
+        return NewEmptyPlist();
+    Obj res = NEW_PLIST(T_PLIST, len);
+    SET_LEN_PLIST(res, len);
+    for (Int i = 1; i <= len; i++) {
+        SET_ELM_PLIST(res, i, ELMV0_LIST(list, i));
+        CHANGED_BAG(res);
+    }
+    return res;
+}
+
+Obj FuncPlainListCopy(Obj self, Obj list)
+{
+    RequireSmallList(SELF_NAME, list);
+    return PLAIN_LIST_COPY(list);
 }
 
 
@@ -1659,26 +1661,26 @@ static void PrintListDefault(Obj list)
         return;
     }
 
-    Pr("%2>[ %2>",0L,0L);
+    Pr("%2>[ %2>", 0, 0);
     for (UInt i = 1; i <= LEN_LIST(list); i++) {
         elm = ELMV0_LIST(list, i);
         if ( elm != 0 ) {
             if (1 < i)
-                Pr("%<,%< %2>", 0L, 0L);
+                Pr("%<,%< %2>", 0, 0);
             SetPrintObjIndex(i);
             PrintObj( elm );
         }
         else {
             if (1 < i)
-                Pr("%2<,%2>", 0L, 0L);
+                Pr("%2<,%2>", 0, 0);
         }
     }
-    Pr(" %4<]",0L,0L);
+    Pr(" %4<]", 0, 0);
 }
 
 static void PrintPathList(Obj list, Int indx)
 {
-    Pr( "[%d]", indx, 0L );
+    Pr("[%d]", indx, 0);
 }
 
 
@@ -1743,7 +1745,7 @@ Obj SET_FILTER_LIST(Obj list, Obj filter)
     Obj             flags;
 
     flags = FLAGS_FILT(filter);
-    if (FuncIS_SUBSET_FLAGS(0,flags,FLAGS_FILT(IsSSortListProp))==True) {
+    if (IS_SUBSET_FLAGS(flags, FLAGS_FILT(IsSSortListProp))) {
         new = SetFiltListTNums[TNUM_OBJ(list)][FN_IS_DENSE];
         if ( new < 0 )  goto error;
         new = SetFiltListTNums[TNUM_OBJ(list)][FN_IS_SSORT];
@@ -1836,7 +1838,7 @@ static StructGVarProp GVarProps [] = {
 
     GVAR_PROP(IS_SSORT_LIST, "obj", &IsSSortListProp),
     GVAR_PROP(IS_POSS_LIST, "obj", &IsPossListProp),
-    { 0, 0, 0, 0, 0 }
+    { 0, 0, 0, 0, 0, 0, 0 }
 
 };
 
@@ -1852,17 +1854,16 @@ static StructGVarOper GVarOpers[] = {
     { "POS_LIST", -1, "list, obj[, start]", &PosListOper, DoOperation0Args,
       "src/lists.c:POS_LIST" },
 
-    GVAR_OPER(ISB_LIST, 2, "list, pos", &IsbListOper),
-    GVAR_OPER(ELM0_LIST, 2, "list, pos", &Elm0ListOper),
-    GVAR_OPER(ELM_DEFAULT_LIST, 3, "list, pos, default", &ElmDefListOper),
-    GVAR_OPER(ELM_LIST, 2, "list, pos", &ElmListOper),
-    GVAR_OPER(ELMS_LIST, 2, "list, poss", &ElmsListOper),
-    GVAR_OPER(UNB_LIST, 2, "list, pos", &UnbListOper),
-    GVAR_OPER(ASS_LIST, 3, "list, pos, obj", &AssListOper),
-    GVAR_OPER(ASSS_LIST, 3, "list, poss, objs", &AsssListOper),
+    GVAR_OPER_2ARGS(ISB_LIST, list, pos, &IsbListOper),
+    GVAR_OPER_3ARGS(ELM_DEFAULT_LIST, list, pos, default, &ElmDefListOper),
+    GVAR_OPER_2ARGS(ELM_LIST, list, pos, &ElmListOper),
+    GVAR_OPER_2ARGS(ELMS_LIST, list, poss, &ElmsListOper),
+    GVAR_OPER_2ARGS(UNB_LIST, list, pos, &UnbListOper),
+    GVAR_OPER_3ARGS(ASS_LIST, list, pos, obj, &AssListOper),
+    GVAR_OPER_3ARGS(ASSS_LIST, list, poss, objs, &AsssListOper),
 
-    GVAR_OPER(ASS_MAT, 4, "mat, row, col, obj", &AssMatOper),
-    GVAR_OPER(ELM_MAT, 3, "mat, row, col", &ElmMatOper),
+    GVAR_OPER_4ARGS(ASS_MAT, mat, row, col, obj, &AssMatOper),
+    GVAR_OPER_3ARGS(ELM_MAT, mat, row, col, &ElmMatOper),
 
     { 0, 0, 0, 0, 0, 0 }
 
@@ -1875,12 +1876,13 @@ static StructGVarOper GVarOpers[] = {
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    GVAR_FUNC(LEN_LIST, 1, "list"),
-    GVAR_FUNC(ELMS_LIST_DEFAULT, 2, "list, poss"),
-    GVAR_FUNC(ASSS_LIST_DEFAULT, 3, "list, poss, objs"),
-    GVAR_FUNC(IS_SSORT_LIST_DEFAULT, 1, "list"),
-    GVAR_FUNC(IS_POSS_LIST_DEFAULT, 1, "list"),
-    GVAR_FUNC(POS_LIST_DEFAULT, 3, "list, obj, start"),
+    GVAR_FUNC_1ARGS(LEN_LIST, list),
+    GVAR_FUNC_2ARGS(ELMS_LIST_DEFAULT, list, poss),
+    GVAR_FUNC_3ARGS(ASSS_LIST_DEFAULT, list, poss, objs),
+    GVAR_FUNC_1ARGS(IS_SSORT_LIST_DEFAULT, list),
+    GVAR_FUNC_1ARGS(IS_POSS_LIST_DEFAULT, list),
+    GVAR_FUNC_3ARGS(POS_LIST_DEFAULT, list, obj, start),
+    GVAR_FUNC_1ARGS(PlainListCopy, list),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -2173,7 +2175,6 @@ static Int InitKernel (
         }
     }
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -2188,7 +2189,6 @@ static Int PostRestore (
     /* whats that?                                                         */
     TYPES_LIST_FAM_RNam = RNamName( "TYPES_LIST_FAM" );
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -2211,7 +2211,6 @@ static Int InitLibrary (
     SET_HDLR_FUNC( PosListOper, 2, PosListHandler2 );
     SET_HDLR_FUNC( PosListOper, 3, PosListHandler3 );
 
-    /* return success                                                      */
     return PostRestore( module );
 }
 
@@ -2262,7 +2261,7 @@ static Int CheckInit (
     for ( i = FIRST_LIST_TNUM;  i <= LAST_LIST_TNUM;  i++ ) {
         if ( ClearFiltsTNums[i] == 0 ) {
             Pr( "#W  ClearFiltsListTNums [%s] missing\n",
-                    (Int)TNAM_TNUM(i), 0L );
+                    (Int)TNAM_TNUM(i), 0);
             success = 0;
         }
     }
@@ -2379,43 +2378,43 @@ static Int CheckInit (
             if ( ! HasFiltListTNums[i][FN_IS_DENSE] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ empty -> dense ] missing\n",
-                 (Int)TNAM_TNUM(i), 0L );
+                 (Int)TNAM_TNUM(i), 0);
                 success = 0;
             }
             if ( HasFiltListTNums[i][FN_IS_NDENSE] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ empty + ndense ] illegal\n",
-                 (Int)TNAM_TNUM(i), 0L );
+                 (Int)TNAM_TNUM(i), 0);
                 success = 0;
             }
             if ( ! HasFiltListTNums[i][FN_IS_HOMOG] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ empty -> homog ] missing\n",
-                 (Int)TNAM_TNUM(i), 0L );
+                 (Int)TNAM_TNUM(i), 0);
                 success = 0;
             }
             if ( HasFiltListTNums[i][FN_IS_NHOMOG] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ empty + nhomog ] illegal\n",
-                 (Int)TNAM_TNUM(i), 0L );
+                 (Int)TNAM_TNUM(i), 0);
                 success = 0;
             }
             if ( ! HasFiltListTNums[i][FN_IS_SSORT] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ empty -> ssort ] missing\n",
-                 (Int)TNAM_TNUM(i), 0L );
+                 (Int)TNAM_TNUM(i), 0);
                 success = 0;
             }
             if ( HasFiltListTNums[i][FN_IS_NSORT] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ empty + nsort ] illegal\n",
-                 (Int)TNAM_TNUM(i), 0L );
+                 (Int)TNAM_TNUM(i), 0);
                 success = 0;
             }
             if ( HasFiltListTNums[i][FN_IS_TABLE] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ empty + table ] illegal\n",
-                 (Int)TNAM_TNUM(i), 0L );
+                 (Int)TNAM_TNUM(i), 0);
                 success = 0;
             }
         }
@@ -2424,7 +2423,7 @@ static Int CheckInit (
             if ( HasFiltListTNums[i][FN_IS_NDENSE] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ dense + ndense ] illegal\n",
-                 (Int)TNAM_TNUM(i), 0L );
+                 (Int)TNAM_TNUM(i), 0);
                 success = 0;
             }
         }
@@ -2433,13 +2432,13 @@ static Int CheckInit (
             if ( HasFiltListTNums[i][FN_IS_HOMOG] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ ndense + homog ] illegal\n",
-                 (Int)TNAM_TNUM(i), 0L );
+                 (Int)TNAM_TNUM(i), 0);
                 success = 0;
             }
             if ( HasFiltListTNums[i][FN_IS_TABLE] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ ndense + table ] illegal\n",
-                 (Int)TNAM_TNUM(i), 0L );
+                 (Int)TNAM_TNUM(i), 0);
                 success = 0;
             }
         }
@@ -2448,19 +2447,19 @@ static Int CheckInit (
             if ( HasFiltListTNums[i][FN_IS_NHOMOG] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ homog + nhomog ] illegal\n",
-                 (Int)TNAM_TNUM(i), 0L );
+                 (Int)TNAM_TNUM(i), 0);
                 success = 0;
             }
             if ( ! HasFiltListTNums[i][FN_IS_DENSE] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ homog -> dense ] missing\n",
-                 (Int)TNAM_TNUM(i), 0L );
+                 (Int)TNAM_TNUM(i), 0);
                 success = 0;
             }
             if ( HasFiltListTNums[i][FN_IS_NDENSE] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ homog + ndense ] illegal\n",
-                 (Int)TNAM_TNUM(i), 0L );
+                 (Int)TNAM_TNUM(i), 0);
                 success = 0;
             }
         }
@@ -2469,7 +2468,7 @@ static Int CheckInit (
             if ( HasFiltListTNums[i][FN_IS_TABLE] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ nhomog + table ] illegal\n",
-                 (Int)TNAM_TNUM(i), 0L );
+                 (Int)TNAM_TNUM(i), 0);
                 success = 0;
             }
         }
@@ -2478,13 +2477,13 @@ static Int CheckInit (
             if ( ! HasFiltListTNums[i][FN_IS_HOMOG] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ table -> homog ] missing\n",
-                 (Int)TNAM_TNUM(i), 0L );
+                 (Int)TNAM_TNUM(i), 0);
                 success = 0;
             }
             if ( ! HasFiltListTNums[i][FN_IS_DENSE] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ table -> dense ] missing\n",
-                 (Int)TNAM_TNUM(i), 0L );
+                 (Int)TNAM_TNUM(i), 0);
                 success = 0;
             }
         }
@@ -2493,13 +2492,12 @@ static Int CheckInit (
             if ( HasFiltListTNums[i][FN_IS_NSORT] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ ssort + nsort ] illegal\n",
-                 (Int)TNAM_TNUM(i), 0L );
+                 (Int)TNAM_TNUM(i), 0);
                 success = 0;
             }
         }           
     }
 
-    /* return success                                                      */
     return ! success;
 }
 

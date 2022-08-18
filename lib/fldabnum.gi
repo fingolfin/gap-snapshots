@@ -60,6 +60,28 @@ end );
 
 #############################################################################
 ##
+#V  CYCLOTOMIC_FIELDS
+##
+##  <ManSection>
+##  <Func Name="CYCLOTOMIC_FIELDS" Arg='n'/>
+##
+##  <Description>
+##  Returns the <A>n</A>-th cyclotomic field.
+##  </Description>
+##  </ManSection>
+##
+BindGlobal( "CYCLOTOMIC_FIELDS",
+    MemoizePosIntFunction(
+        function(xtension)
+            return AbelianNumberFieldByReducedGaloisStabilizerInfo( Rationals,
+                   xtension, [ 1 ] );
+        end,
+    rec( defaults := [ Rationals, Rationals,, GaussianRationals ] ) )
+);
+
+
+#############################################################################
+##
 #F  CyclotomicField( <n> )  . . . . . . .  create the <n>-th cyclotomic field
 #F  CyclotomicField( <gens> )
 #F  CyclotomicField( <subfield>, <n> )
@@ -209,7 +231,7 @@ BindGlobal( "ReducedGaloisStabilizerInfo", function( N, stabilizer )
       stabilizer:= [ 1 ];
       N:= 1;
     else
-      stabilizer:= Set( List( stabilizer, x -> x mod N ) );
+      stabilizer:= Set( stabilizer, x -> x mod N );
     fi;
 
     return rec( N:= N, stabilizer:= stabilizer );
@@ -244,25 +266,16 @@ InstallGlobalFunction( AbelianNumberField, function ( N, stabilizer )
     fi;
 
     # The standard field is required.  Look whether it is already stored.
-    if not IsBound( ABELIAN_NUMBER_FIELDS[1][N] ) then
-      ABELIAN_NUMBER_FIELDS[1][N]:= [];
-      ABELIAN_NUMBER_FIELDS[2][N]:= [];
-    fi;
-    pos:= Position( ABELIAN_NUMBER_FIELDS[1][N], stabilizer );
-    if pos <> fail then
-      return ABELIAN_NUMBER_FIELDS[2][N][ pos ];
-    fi;
+    return GET_FROM_SORTED_CACHE( ABELIAN_NUMBER_FIELDS, [N, stabilizer], function()
 
     # Construct the field.
     F:= AbelianNumberFieldByReducedGaloisStabilizerInfo( Rationals,
             N, stabilizer );
 
-    # Store the field.
-    Add( ABELIAN_NUMBER_FIELDS[1][N], stabilizer );
-    Add( ABELIAN_NUMBER_FIELDS[2][N], F );
-
     # Return the number field.
     return F;
+
+    end );
 end );
 
 
@@ -451,8 +464,8 @@ InstallMethod( Intersection2,
     # (If a reduction is necessary, `NF' will do.)
 
     F:= Gcd( Conductor( F ), Conductor( G ) );
-    return AbelianNumberField( F, Set( List( GaloisStabilizer( G ),
-                                             x -> x mod F ) ) );
+    return AbelianNumberField( F, Set( GaloisStabilizer( G ),
+                                             x -> x mod F ) );
     end );
 
 InstallMethod( Intersection2,
@@ -468,8 +481,8 @@ InstallMethod( Intersection2,
     # (If a reduction is necessary, `NF' will do.)
 
     F:= Gcd( Conductor( F ), Conductor( G ) );
-    return AbelianNumberField( F, Set( List( GaloisStabilizer( G ),
-                                             x -> x mod F ) ) );
+    return AbelianNumberField( F, Set( GaloisStabilizer( G ),
+                                             x -> x mod F ) );
     end );
 
 InstallMethod( Intersection2,
@@ -487,8 +500,8 @@ InstallMethod( Intersection2,
     # then compute the corresponding stabilizer, i.e. the product of
     # stabilizers.
     N:= GcdInt( Conductor( F ), Conductor( G ) );
-    stabF:= Set( List( GaloisStabilizer( F ), x -> x mod N ) );
-    stabG:= Set( List( GaloisStabilizer( G ), x -> x mod N ) );
+    stabF:= Set( GaloisStabilizer( F ), x -> x mod N );
+    stabG:= Set( GaloisStabilizer( G ), x -> x mod N );
     stab:= [];
     for i in stabF do
       for j in stabG do
@@ -540,10 +553,10 @@ InstallMethod( Subfields,
     local n, stab;
     n:= Conductor( F );
     stab:= GaloisStabilizer( F );
-    return Set( List( ConjugacyClassesSubgroups( GaloisGroup( F ) ),
+    return Set( ConjugacyClassesSubgroups( GaloisGroup( F ) ),
                       x -> AbelianNumberField( n, Union( stab,
                              List( GeneratorsOfGroup( Representative( x ) ),
-                                   y -> ExponentOfPowering( y ) ) ) ) ) );
+                                   y -> ExponentOfPowering( y ) ) ) ) );
     end );
 
 
@@ -890,7 +903,7 @@ InstallGlobalFunction( ZumbroichBase, function( n, m )
         base:= Concatenation( List( base, x -> x + basefactor ) );
       od;
     od;
-    return Set( List( base, x -> x mod n ) );
+    return Set( base, x -> x mod n );
 end );
 
 
@@ -1245,8 +1258,8 @@ InstallMethod( CanonicalBasis,
       # Fill in additional components.
       SetBasisVectors( B, List( lenst,
                                 x -> Sum( List( x, y -> E(N)^y ) ) ) );
-      B!.coeffslist  := List( lenst, x -> x[1] + 1 );
-      B!.lenstrabase := lenst;
+      B!.coeffslist  := MakeImmutable(List( lenst, x -> x[1] + 1 ));
+      B!.lenstrabase := MakeImmutable(lenst);
       B!.conductor   := N;
 #T better compute basis vectors only if necessary
 #T (in the case of a normal basis the vectors are of course known ...)
@@ -1508,7 +1521,7 @@ InstallMethod( CanonicalBasis,
       SetIsIntegralBasis( B, true );
 
       # Construct the Zumbroich basis.
-      B!.zumbroichbase := ZumbroichBase( n, Conductor( subfield ) );
+      B!.zumbroichbase := MakeImmutable(ZumbroichBase( n, Conductor( subfield ) ));
 
     else
 
@@ -1553,8 +1566,8 @@ InstallMethod( CanonicalBasis,
       SetBasisVectors( B, vectors );
       SetIsNormalBasis( B, true );
 
-      B!.zumbroichbase := zumb - 1;
-      B!.coeffsmat     := coeffsmat;
+      B!.zumbroichbase := MakeImmutable(zumb - 1);
+      B!.coeffsmat     := MakeImmutable(coeffsmat);
 
     fi;
 
@@ -1638,24 +1651,6 @@ InstallMethod( Coefficients,
 
 #############################################################################
 ##
-#V  Cyclotomics . . . . . . . . . . . . . . . . . .  field of all cyclotomics
-##
-InstallValue( Cyclotomics, Objectify( NewType(
-    CollectionsFamily( CyclotomicsFamily ),
-    IsField and IsAttributeStoringRep ),
-    rec() ) );
-SetName( Cyclotomics, "Cyclotomics" );
-SetLeftActingDomain( Cyclotomics, Rationals );
-SetIsFiniteDimensional( Cyclotomics, false );
-SetIsFinite( Cyclotomics, false );
-SetIsWholeFamily( Cyclotomics, true );
-SetDegreeOverPrimeField( Cyclotomics, infinity );
-SetDimension( Cyclotomics, infinity );
-SetRepresentative(Cyclotomics, 0);
-
-
-#############################################################################
-##
 ##  Automorphisms of abelian number fields
 ##
 
@@ -1735,7 +1730,7 @@ InstallGlobalFunction( ANFAutomorphism, function ( F, k )
     # `GaloisCyc( <x>, k )'.
 
     # Choose the smallest representative ...
-    galois:= Set(List(GaloisStabilizer( F ), x->x*k mod Conductor( F )))[1];
+    galois:= Set(GaloisStabilizer( F ), x->x*k mod Conductor( F ))[1];
     if galois = 1 then
       return IdentityMapping( F );
     fi;
@@ -2013,4 +2008,6 @@ InstallMethod( GaloisGroup,
 end );
     
 
-InstallMethod( Representative, [IsCyclotomicField], f->0);
+InstallMethod( Representative,
+    [ IsAdditiveMagmaWithZero and IsCyclotomicCollection ],
+    f -> 0 );

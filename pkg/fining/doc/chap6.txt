@@ -56,7 +56,7 @@
   
   [1X6.1-1 PolarityOfProjectiveSpace[101X
   
-  [29X[2XPolarityOfProjectiveSpace[102X( [3Xmat[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XPolarityOfProjectiveSpace[102X( [3Xmat[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya polarity of a projective space[133X
   
   [33X[0;0YThe  underlying  correlation  of  the  projective space is constructed using
@@ -75,8 +75,8 @@
   
   [1X6.1-2 PolarityOfProjectiveSpace[101X
   
-  [29X[2XPolarityOfProjectiveSpace[102X( [3Xmat[103X, [3Xfrob[103X, [3Xf[103X ) [32X operation
-  [29X[2XHermitianPolarityOfProjectiveSpace[102X( [3Xmat[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XPolarityOfProjectiveSpace[102X( [3Xmat[103X, [3Xfrob[103X, [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHermitianPolarityOfProjectiveSpace[102X( [3Xmat[103X, [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya polarity of a projective space[133X
   
   [33X[0;0YThe  underlying  correlation  of  the  projective space is constructed using
@@ -107,7 +107,7 @@
   
   [1X6.1-3 PolarityOfProjectiveSpace[101X
   
-  [29X[2XPolarityOfProjectiveSpace[102X( [3Xform[103X ) [32X operation
+  [33X[1;0Y[29X[2XPolarityOfProjectiveSpace[102X( [3Xform[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya polarity of a projective space[133X
   
   [33X[0;0YThe  polarity  of the projective space is constructed using a non-degenerate
@@ -127,7 +127,7 @@
   
   [1X6.1-4 PolarityOfProjectiveSpace[101X
   
-  [29X[2XPolarityOfProjectiveSpace[102X( [3Xps[103X ) [32X operation
+  [33X[1;0Y[29X[2XPolarityOfProjectiveSpace[102X( [3Xps[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya polarity of a projective space[133X
   
   [33X[0;0YThe polarity of the projective space is constructed using the non-degenerate
@@ -158,7 +158,7 @@
   
   [1X6.2-1 SesquilinearForm[101X
   
-  [29X[2XSesquilinearForm[102X( [3Xphi[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSesquilinearForm[102X( [3Xphi[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya sesquilinear form[133X
   
   [33X[0;0YThe sesquilinear form corresponding to the given polarity [3Xphi[103X is returned.[133X
@@ -178,7 +178,7 @@
   
   [1X6.2-2 BaseField[101X
   
-  [29X[2XBaseField[102X( [3Xphi[103X ) [32X attribute
+  [33X[1;0Y[29X[2XBaseField[102X( [3Xphi[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya field[133X
   
   [33X[0;0YThe base field over which the polarity [3Xphi[103X was constructed.[133X
@@ -196,7 +196,7 @@
   
   [1X6.2-3 GramMatrix[101X
   
-  [29X[2XGramMatrix[102X( [3Xphi[103X ) [32X attribute
+  [33X[1;0Y[29X[2XGramMatrix[102X( [3Xphi[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya matrix[133X
   
   [33X[0;0YThe Gram matrix of the polarity [3Xphi[103X.[133X
@@ -214,7 +214,7 @@
   
   [1X6.2-4 CompanionAutomorphism[101X
   
-  [29X[2XCompanionAutomorphism[102X( [3Xphi[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCompanionAutomorphism[102X( [3Xphi[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya field automorphism[133X
   
   [33X[0;0YThe involutory field automorphism accompanying the polarity [3Xphi[103X.[133X
@@ -232,7 +232,7 @@
   
   [1X6.2-5 IsHermitianPolarityOfProjectiveSpace[101X
   
-  [29X[2XIsHermitianPolarityOfProjectiveSpace[102X( [3Xphi[103X ) [32X property
+  [33X[1;0Y[29X[2XIsHermitianPolarityOfProjectiveSpace[102X( [3Xphi[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0YThe  polarity  [3Xphi[103X is a hermitian polarity of a projective space if and only
@@ -254,7 +254,7 @@
   
   [1X6.2-6 IsSymplecticPolarityOfProjectiveSpace[101X
   
-  [29X[2XIsSymplecticPolarityOfProjectiveSpace[102X( [3Xphi[103X ) [32X property
+  [33X[1;0Y[29X[2XIsSymplecticPolarityOfProjectiveSpace[102X( [3Xphi[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0YThe  polarity [3Xphi[103X is a symplectic polarity of a projective space if and only
@@ -273,7 +273,7 @@
   
   [1X6.2-7 IsOrthogonalPolarityOfProjectiveSpace[101X
   
-  [29X[2XIsOrthogonalPolarityOfProjectiveSpace[102X( [3Xphi[103X ) [32X property
+  [33X[1;0Y[29X[2XIsOrthogonalPolarityOfProjectiveSpace[102X( [3Xphi[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0YThe polarity [3Xphi[103X is an orthogonal polarity of a projective space if and only
@@ -293,7 +293,7 @@
   
   [1X6.2-8 IsPseudoPolarityOfProjectiveSpace[101X
   
-  [29X[2XIsPseudoPolarityOfProjectiveSpace[102X( [3Xphi[103X ) [32X property
+  [33X[1;0Y[29X[2XIsPseudoPolarityOfProjectiveSpace[102X( [3Xphi[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0YThe  polarity  [3Xphi[103X is a pseudo-polarity of a projective space if and only if
@@ -336,7 +336,7 @@
   
   [1X6.3-1 GeometryOfAbsolutePoints[101X
   
-  [29X[2XGeometryOfAbsolutePoints[102X( [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XGeometryOfAbsolutePoints[102X( [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya polar space or a hyperplane[133X
   
   [33X[0;0YWhen  [3Xf[103X  is  not  a  pseudo-polarity, this operation returns the polar space
@@ -363,7 +363,7 @@
   
   [1X6.3-2 AbsolutePoints[101X
   
-  [29X[2XAbsolutePoints[102X( [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XAbsolutePoints[102X( [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya set of points[133X
   
   [33X[0;0YThis operation returns all points that are absolute with respect to [3Xf[103X.[133X
@@ -398,7 +398,7 @@
   
   [1X6.3-3 PolarSpace[101X
   
-  [29X[2XPolarSpace[102X( [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XPolarSpace[102X( [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya polar space[133X
   
   [33X[0;0YWhen  [3Xf[103X  is  not  a  pseudo-polarity, this operation returns the polar space

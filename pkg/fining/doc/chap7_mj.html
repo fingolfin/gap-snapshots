@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (FinInG) - Chapter 7: Finite Classical Polar Spaces</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -18,7 +18,7 @@
 <body class="chap7"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chapA_mj.html">A</a>  <a href="chapB_mj.html">B</a>  <a href="chapC_mj.html">C</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chapA_mj.html">A</a>  <a href="chapB_mj.html">B</a>  <a href="chapC_mj.html">C</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
@@ -77,6 +77,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X863F1924805F6C63">7.5-6 TypeOfSubspace</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X82C38639870C0DD6">7.5-7 TangentSpace</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X8520DC538717C6BE">7.5-8 Pole</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X808AB7B9840ABC27">7.5-9 EvaluateForm</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7AA14EDF7B0B1569">7.6 <span class="Heading">Shadow of elements</span></a>
 </span>
@@ -123,7 +124,7 @@
 
 <h5>7.1-1 IsClassicalPolarSpace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsClassicalPolarSpace</code></td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsClassicalPolarSpace</code></td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>This category is a subcategory of <code class="code">IsLieGeometry</code>, and contains all the geometries associated to a non-degenerate sesquilinear or quadratic form.</p>
 
 <p>The underlying vector space and matrix group are to our advantage in the treatment of classical polar spaces. We refer the reader to <a href="chapBib_mj.html#biBHirschfeldThas">[HT91]</a> and <a href="chapBib_mj.html#biBCameron">[Cam00b]</a> for the necessary background theory (if it is not otherwise provided), and we follow the approach of <a href="chapBib_mj.html#biBCameron">[Cam00b]</a> to introduce all different flavours.</p>
@@ -136,8 +137,8 @@
 
 <h5>7.1-2 PolarSpace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolarSpace</code>( <var class="Arg">form</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolarSpace</code>( <var class="Arg">pol</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolarSpace</code>( <var class="Arg">form</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolarSpace</code>( <var class="Arg">pol</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a classical polar space</p>
 
 <p><var class="Arg">form</var> must be a sesquilinear or quadratic form created by use of the GAP package <strong class="pkg">Forms</strong>. In the second variant, the argument <var class="Arg">pol</var> must be a polarity of a projective space. An error message will be displayed if <var class="Arg">pol</var> is a pseudo polarity. We refer to Chapter <a href="chap6_mj.html#X87BA55CB86B110EC"><span class="RefLink">6</span></a> for more information on polarities of projective spaces, and more particularly to Section <a href="chap6_mj.html#X83F8149B7D23301E"><span class="RefLink">6.3</span></a> for the connection between polarities and forms.</p>
@@ -277,7 +278,7 @@ true
 <td class="tdleft">even</td>
 <td class="tdleft">odd</td>
 </tr>
-</table><br /><p>&nbsp;</p><br />
+</table><br />
 </div>
 
 <p>We refer to Appendix <a href="chapB_mj.html#X866C644987E43DF8"><span class="RefLink">B</span></a> for information on the operations that construct gram matrices that are used to obtain the above standard forms.</p>
@@ -290,8 +291,8 @@ true
 
 <h5>7.2-1 SymplecticSpace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SymplecticSpace</code>( <var class="Arg">d</var>, <var class="Arg">F</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SymplecticSpace</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SymplecticSpace</code>( <var class="Arg">d</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SymplecticSpace</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a symplectic polar space</p>
 
 <p>This function returns the symplectic polar space of dimension <var class="Arg">d</var> over <var class="Arg">F</var> for a field <var class="Arg">F</var> or over GF(<var class="Arg">q</var>) for a prime power <var class="Arg">q</var>.</p>
@@ -316,8 +317,8 @@ Witt Index: 2
 
 <h5>7.2-2 HermitianPolarSpace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HermitianPolarSpace</code>( <var class="Arg">d</var>, <var class="Arg">F</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HermitianPolarSpace</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HermitianPolarSpace</code>( <var class="Arg">d</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HermitianPolarSpace</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a Hermitian polar space</p>
 
 <p>This function returns the Hermitian polar space of dimension <var class="Arg">d</var> over <var class="Arg">F</var> for a field <var class="Arg">F</var> or over GF(<var class="Arg">q</var>) for a prime power <var class="Arg">q</var>.</p>
@@ -342,8 +343,8 @@ Witt Index: 1
 
 <h5>7.2-3 ParabolicQuadric</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ParabolicQuadric</code>( <var class="Arg">d</var>, <var class="Arg">F</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ParabolicQuadric</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ParabolicQuadric</code>( <var class="Arg">d</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ParabolicQuadric</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a parabolic quadric</p>
 
 <p><var class="Arg">d</var> must be an even positive integer. This function returns the parabolic quadric of dimension <var class="Arg">d</var> over <var class="Arg">F</var> for a field <var class="Arg">F</var> or over GF(<var class="Arg">q</var>) for a prime power <var class="Arg">q</var>.</p>
@@ -388,8 +389,8 @@ Gram Matrix:
 
 <h5>7.2-4 HyperbolicQuadric</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HyperbolicQuadric</code>( <var class="Arg">d</var>, <var class="Arg">F</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HyperbolicQuadric</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HyperbolicQuadric</code>( <var class="Arg">d</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HyperbolicQuadric</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a hyperbolic quadric</p>
 
 <p><var class="Arg">d</var> must be an odd positive integer. This function returns the hyperbolic quadric of dimension <var class="Arg">d</var> over <var class="Arg">F</var> for a field <var class="Arg">F</var> or over GF(<var class="Arg">q</var>) for a prime power <var class="Arg">q</var>.</p>
@@ -435,8 +436,8 @@ Gram Matrix:
 
 <h5>7.2-5 EllipticQuadric</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EllipticQuadric</code>( <var class="Arg">d</var>, <var class="Arg">F</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EllipticQuadric</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EllipticQuadric</code>( <var class="Arg">d</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EllipticQuadric</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: an elliptic quadric</p>
 
 <p><var class="Arg">d</var> must be an odd positive integer. This function returns the elliptic quadric of dimension <var class="Arg">d</var> over <var class="Arg">F</var> for a field <var class="Arg">F</var> or over GF(<var class="Arg">q</var>) for a prime power <var class="Arg">q</var>.</p>
@@ -486,7 +487,7 @@ Gram Matrix:
 
 <h5>7.2-6 IsCanonicalPolarSpace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCanonicalPolarSpace</code>( <var class="Arg">ps</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCanonicalPolarSpace</code>( <var class="Arg">ps</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: true or false</p>
 
 <p>This attribute returns true when a polar space with a particular underlying form is canonical. The execution of this attribute on a general user constructed polar space needs to check the type of <var class="Arg">ps</var>. The obtained extra information is stored automatically as attribute for <var class="Arg">ps</var>, as can be noted by the different printing of <var class="Arg">ps</var> before and after execution.</p>
@@ -522,8 +523,8 @@ Q(2, 3): x_1^2-x_2*x_3=0
 
 <h5>7.2-7 CanonicalPolarSpace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalPolarSpace</code>( <var class="Arg">form</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalPolarSpace</code>( <var class="Arg">P</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalPolarSpace</code>( <var class="Arg">form</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalPolarSpace</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a classical polar space</p>
 
 <p>the canonical polar space isometric to the given polar space <var class="Arg">P</var> or the classical polar space with underlying form <var class="Arg">form</var>.</p>
@@ -532,8 +533,8 @@ Q(2, 3): x_1^2-x_2*x_3=0
 
 <h5>7.2-8 StandardPolarSpace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StandardPolarSpace</code>( <var class="Arg">form</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StandardPolarSpace</code>( <var class="Arg">P</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StandardPolarSpace</code>( <var class="Arg">form</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StandardPolarSpace</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a classical polar space</p>
 
 <p>the polar space induced by a standard form and similar to the given polar space <var class="Arg">P</var> or the classical polar space with underlying form <var class="Arg">form</var>.</p>
@@ -546,7 +547,7 @@ Q(2, 3): x_1^2-x_2*x_3=0
 
 <h5>7.3-1 UnderlyingVectorSpace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingVectorSpace</code>( <var class="Arg">ps</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingVectorSpace</code>( <var class="Arg">ps</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a vector space</p>
 
 <p>The polar space <var class="Arg">ps</var> is the geometry associated with a sesquilinear or quadratic form <span class="SimpleMath">\(f\)</span>. The vector space on which <span class="SimpleMath">\(f\)</span> is acting is returned.</p>
@@ -568,7 +569,7 @@ W(3, 81)
 
 <h5>7.3-2 AmbientSpace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AmbientSpace</code>( <var class="Arg">ps</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AmbientSpace</code>( <var class="Arg">ps</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the ambient projective space</p>
 
 <p>When <var class="Arg">ps</var> is a polar space, this operation returns the ambient projective space, i.e. the underlying projective space of the sequilinear or quadratic form that defines <var class="Arg">ps</var>.</p>
@@ -590,8 +591,8 @@ ProjectiveSpace(3, 81)
 
 <h5>7.3-3 ProjectiveDimension</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveDimension</code>( <var class="Arg">ps</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Dimension</code>( <var class="Arg">ps</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveDimension</code>( <var class="Arg">ps</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Dimension</code>( <var class="Arg">ps</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the dimension of the ambient projective space of <var class="Arg">ps</var></p>
 
 <p>When <var class="Arg">ps</var> is a polar space, an ambient projective space <span class="SimpleMath">\(P\)</span> is uniquely defined and can be asked using <code class="file">AmbientSpace</code>. This operation and its synomym <code class="file">Dimension</code> returns the dimension of <span class="SimpleMath">\(P\)</span>.</p>
@@ -613,7 +614,7 @@ W(3, 81)
 
 <h5>7.3-4 Rank</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Rank</code>( <var class="Arg">ps</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Rank</code>( <var class="Arg">ps</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the rank of <var class="Arg">ps</var></p>
 
 <p>When <var class="Arg">ps</var> is a polar space, its rank, i.e. the number of different types, equals the Witt index of the defining sesquilinear or quadratic form.</p>
@@ -639,7 +640,7 @@ W(7, 81)
 
 <h5>7.3-5 BaseField</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseField</code>( <var class="Arg">ps</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseField</code>( <var class="Arg">ps</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the base field of the polar space <var class="Arg">ps</var></p>
 
 
@@ -659,7 +660,7 @@ GF(2^8)
 
 <h5>7.3-6 IsHyperbolicQuadric</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsHyperbolicQuadric</code>( <var class="Arg">ps</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsHyperbolicQuadric</code>( <var class="Arg">ps</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: true or false</p>
 
 <p>returns true if and only if <var class="Arg">ps</var> is a hyperbolic quadric.</p>
@@ -691,7 +692,7 @@ false
 
 <h5>7.3-7 IsEllipticQuadric</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEllipticQuadric</code>( <var class="Arg">ps</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEllipticQuadric</code>( <var class="Arg">ps</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: true or false</p>
 
 <p>returns true if and only if <var class="Arg">ps</var> is an elliptic quadric.</p>
@@ -723,7 +724,7 @@ true
 
 <h5>7.3-8 IsParabolicQuadric</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsParabolicQuadric</code>( <var class="Arg">ps</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsParabolicQuadric</code>( <var class="Arg">ps</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: true or false</p>
 
 <p>returns true if and only if <var class="Arg">ps</var> is a parabolic quadric.</p>
@@ -767,7 +768,7 @@ true
 
 <h5>7.4-1 VectorSpaceToElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; VectorSpaceToElement</code>( <var class="Arg">ps</var>, <var class="Arg">v</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; VectorSpaceToElement</code>( <var class="Arg">ps</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: an element of the polar space <var class="Arg">geo</var></p>
 
 <p>Let <var class="Arg">ps</var> be a polar space, and <var class="Arg">v</var> is either a row vector (for points) or an <span class="SimpleMath">\(m\)</span>x<span class="SimpleMath">\(n\)</span> matrix (for an <span class="SimpleMath">\((m-1)\)</span>-subspace of a polar space with an <span class="SimpleMath">\((n-1)\)</span>-dimensional ambient projective space. In the case that <var class="Arg">v</var> is a matrix, the rows represent basis vectors for the subspace. An exceptional case is when <var class="Arg">v</var> is a zero-vector, whereby the trivial subspace is returned. It is checked that the subspace defined by <span class="SimpleMath">\(v\)</span> is totally isotropic with relation to the form defining <var class="Arg">ps</var>.</p>
@@ -802,7 +803,7 @@ you can 'return;' to continue
 
 <h5>7.4-2 EmptySubspace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EmptySubspace</code>( <var class="Arg">ps</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EmptySubspace</code>( <var class="Arg">ps</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the trivial subspace in the projective <var class="Arg">ps</var></p>
 
 <p>The object returned by this operation is contained in every projective subspace of the projective space <var class="Arg">ps</var>, but is not an element of <var class="Arg">ps</var>. Hence, testing incidence results in an error message.</p>
@@ -820,8 +821,8 @@ H(10, 7^2)
 
 <h5>7.4-3 ProjectiveDimension</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveDimension</code>( <var class="Arg">sub</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Dimension</code>( <var class="Arg">sub</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveDimension</code>( <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Dimension</code>( <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the projective dimension of a subspace of a polar space. The operation <code class="file">ProjectiveDimension</code> is also applicable on the EmptySubspace</p>
 
 
@@ -848,7 +849,7 @@ Q-(7, 8)
 
 <h5>7.4-4 ElementsOfIncidenceStructure</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementsOfIncidenceStructure</code>( <var class="Arg">ps</var>, <var class="Arg">j</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementsOfIncidenceStructure</code>( <var class="Arg">ps</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the collection of elements of the projective space <var class="Arg">ps</var> of type <var class="Arg">j</var></p>
 
 <p>For the projective space <var class="Arg">ps</var> of dimension <span class="SimpleMath">\(d\)</span> and the type <var class="Arg">j</var>, <span class="SimpleMath">\(1 \leq j \leq d\)</span> this operation returns the collection of <span class="SimpleMath">\(j-1\)</span> dimensional subspaces.</p>
@@ -875,7 +876,7 @@ you can 'return;' to continue
 
 <h5>7.4-5 AmbientSpace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AmbientSpace</code>( <var class="Arg">el</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AmbientSpace</code>( <var class="Arg">el</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: returns the ambient space of an element <var class="Arg">el</var> of a polar space</p>
 
 <p>This operation is also applicable on the trivial subspace. For a Lie geometry, the ambient space of an element is defined as the ambient space of the Lie geometry, i.e. a projective space.</p>
@@ -896,7 +897,7 @@ ProjectiveSpace(3, 49)
 
 <h5>7.4-6 Coordinates</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Coordinates</code>( <var class="Arg">p</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Coordinates</code>( <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the homogeneous coordinates of the point <var class="Arg">p</var></p>
 
 
@@ -918,9 +919,9 @@ Q(6, 5)
 
 <h5>7.5-1 <span class="Heading">Incidence and containment</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIncident</code>( <var class="Arg">el1</var>, <var class="Arg">el2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \*</code>( <var class="Arg">el1</var>, <var class="Arg">el2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \in</code>( <var class="Arg">el1</var>, <var class="Arg">el2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIncident</code>( <var class="Arg">el1</var>, <var class="Arg">el2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \*</code>( <var class="Arg">el1</var>, <var class="Arg">el2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \in</code>( <var class="Arg">el1</var>, <var class="Arg">el2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: true or false</p>
 
 <p>Recall that for projective spaces, incidence is symmetrized containment, where the empty subspace and the whole projective space are excluded as arguments for this operation, since they are not considered as elements of the geometry, but both the empty subspace and the whole projective space are allowed as arguments for <code class="file">\in</code>.</p>
@@ -964,7 +965,7 @@ true
 
 <h5>7.5-2 Span</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Span</code>( <var class="Arg">u</var>, <var class="Arg">v</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Span</code>( <var class="Arg">u</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: an element</p>
 
 <p><var class="Arg">u</var> and <var class="Arg">v</var> are elements of a projective or polar space. This function returns the join of the two elements, that is, the span of the two subspaces.</p>
@@ -992,7 +993,7 @@ true
 
 <h5>7.5-3 Meet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Meet</code>( <var class="Arg">u</var>, <var class="Arg">v</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Meet</code>( <var class="Arg">u</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: an element</p>
 
 <p><var class="Arg">u</var> and <var class="Arg">v</var> are elements of a projective or polar space. This function returns the meet of the two elements. If two elements do not meet, then Meet returns <code class="code">EmptySubspace</code>, which in <strong class="pkg">FinInG</strong>, is an element with projective dimension -1. (Note that the poset of subspaces of a polar space is a meet-semilattice, but not closed under taking spans).</p>
@@ -1016,7 +1017,7 @@ Q+(5, 3)
 
 <h5>7.5-4 IsCollinear</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCollinear</code>( <var class="Arg">ps</var>, <var class="Arg">u</var>, <var class="Arg">v</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCollinear</code>( <var class="Arg">ps</var>, <var class="Arg">u</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: Boolean</p>
 
 <p><var class="Arg">u</var> and <var class="Arg">v</var> are points of the ambient space of the polar space <var class="Arg">ps</var>. This function returns True if <var class="Arg">u</var> and <var class="Arg">v</var> are collinear in <var class="Arg">ps</var>. Note that belonging to <var class="Arg">ps</var> is a necessary condition for <var class="Arg">u</var> and <var class="Arg">v</var> to be collinear.</p>
@@ -1068,7 +1069,7 @@ true
 
 <h5>7.5-5 PolarityOfProjectiveSpace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolarityOfProjectiveSpace</code>( <var class="Arg">ps</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolarityOfProjectiveSpace</code>( <var class="Arg">ps</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a polarity of a projective space</p>
 
 <p><var class="Arg">ps</var> must be a polar space. This operation returns, when possible a polarity of the ambient projective space of <var class="Arg">ps</var>. It is well known that except for orthogonal polar spaces in even characteristic, a classical polar space is in fact the geometry of absolute points of a polarity of a projective space, and that no polarity can be associated to parabolic quadrics in even characteristic. Polarities of projective spaces are discussed in more detail in Chapter <a href="chap6_mj.html#X87BA55CB86B110EC"><span class="RefLink">6</span></a>.</p>
@@ -1099,7 +1100,7 @@ you can 'return;' to continue
 
 <h5>7.5-6 TypeOfSubspace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TypeOfSubspace</code>( <var class="Arg">ps</var>, <var class="Arg">v</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TypeOfSubspace</code>( <var class="Arg">ps</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a string</p>
 
 <p>This operation is a convenient way to find out the intersection type of a projective subspace with a polar space. The argument <var class="Arg">ps</var> is a nondegenerate polar space, and the argument <var class="Arg">v</var> is a subspace of the ambient projective space. The operation returns a string in accordance with the type of subspace: "degenerate", "symplectic", "hermitian", "elliptic", "hyperbolic" or "parabolic".</p>
@@ -1127,8 +1128,8 @@ ProjectiveSpace(3, 9)
 
 <h5>7.5-7 TangentSpace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TangentSpace</code>( <var class="Arg">el</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TangentSpace</code>( <var class="Arg">ps</var>, <var class="Arg">el</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TangentSpace</code>( <var class="Arg">el</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TangentSpace</code>( <var class="Arg">ps</var>, <var class="Arg">el</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A subspace of a projective space</p>
 
 <p>Let <var class="Arg">el</var> be an element of a classical polar space. The first version returns the tangent space at <var class="Arg">el</var> to this polar space. Let <var class="Arg">el</var> be a subspace of the ambient space of the polar space <var class="Arg">ps</var>. The second version checks whether <var class="Arg">el</var> belongs to <var class="Arg">ps</var> and returns the tangent space at <var class="Arg">el</var> to <var class="Arg">ps</var>. Some obvious properties are demonstrated in the example.</p>
@@ -1174,7 +1175,7 @@ true
 
 <h5>7.5-8 Pole</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Pole</code>( <var class="Arg">ps</var>, <var class="Arg">el</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Pole</code>( <var class="Arg">ps</var>, <var class="Arg">el</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: A subspace of a projective space</p>
 
 <p>Let <var class="Arg">el</var> be a subspace of the ambient space of the polar space <var class="Arg">ps</var>. This operation returns the pole of <var class="Arg">el</var> with relation to the polar space <var class="Arg">ps</var>.</p>
@@ -1198,6 +1199,44 @@ Q(2, 13)
  
 </pre></div>
 
+<p><a id="X808AB7B9840ABC27" name="X808AB7B9840ABC27"></a></p>
+
+<h5>7.5-9 EvaluateForm</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EvaluateForm</code>( <var class="Arg">form</var>, <var class="Arg">el1</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EvaluateForm</code>( <var class="Arg">form</var>, <var class="Arg">el1</var>, <var class="Arg">el2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \^</code>( <var class="Arg">form</var>, <var class="Arg">el1</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \^</code>( <var class="Arg">form</var>, <var class="Arg">el1</var>, <var class="Arg">el2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a finite field element or a list (of lists) of finite field elements</p>
+
+<p>This method passes <var class="Arg">form</var> and the underlying vector or matrix of <var class="Arg">el1</var>, when <var class="Arg">form</var> is a quadratic form, and <var class="Arg">el1</var> and <var class="Arg">el2</var> when <var class="Arg">form</var> is a sesquilinear form to the operation <code class="file">Evaluate</code> of the package <strong class="pkg">Forms</strong>. The same applies to the respective methods for <code class="file">\^</code>. The example below illustrates how the points of a projective space that evaluate to zero under a given form, are precisely the points of the quadric associated with the given form.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := GF(5);</span>
+GF(5)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := IdentityMat(4,f);</span>
+[ [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ], [ 0*Z(5), Z(5)^0, 0*Z(5), 0*Z(5) ], 
+  [ 0*Z(5), 0*Z(5), Z(5)^0, 0*Z(5) ], [ 0*Z(5), 0*Z(5), 0*Z(5), Z(5)^0 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">form := BilinearFormByMatrix(mat,f);</span>
+&lt; bilinear form &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pg := PG(3,5);</span>
+ProjectiveSpace(3, 5)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pts := Filtered(Points(pg),x-&gt;[x,x]^form = Zero(f));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ps := PolarSpace(form);</span>
+&lt;polar space in ProjectiveSpace(3,GF(5)): x_1^2+x_2^2+x_3^2+x_4^2=0 &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Collected(List(pts,x-&gt;x in ps));</span>
+[ [ true, 36 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Points(ps));</span>
+36
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">qform := QuadraticForm(ps);</span>
+&lt; quadratic form &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pts2 := Filtered(Points(pg),x-&gt;x^qform = Zero(f));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Collected(List(pts2,x-&gt;x in ps));</span>
+[ [ true, 36 ] ]
+
+</pre></div>
+
 <p><a id="X7AA14EDF7B0B1569" name="X7AA14EDF7B0B1569"></a></p>
 
 <h4>7.6 <span class="Heading">Shadow of elements</span></h4>
@@ -1208,8 +1247,8 @@ Q(2, 13)
 
 <h5>7.6-1 ShadowOfElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShadowOfElement</code>( <var class="Arg">ps</var>, <var class="Arg">el</var>, <var class="Arg">i</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShadowOfElement</code>( <var class="Arg">ps</var>, <var class="Arg">el</var>, <var class="Arg">str</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShadowOfElement</code>( <var class="Arg">ps</var>, <var class="Arg">el</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShadowOfElement</code>( <var class="Arg">ps</var>, <var class="Arg">el</var>, <var class="Arg">str</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the elements of type <var class="Arg">i</var> incident with <var class="Arg">el</var>. The second variant determines the type <var class="Arg">i</var> from the position of <var class="Arg">str</var> in the list returned by <code class="file">TypesOfElementsOfIncidenceStructurePlural</code></p>
 
 
@@ -1247,7 +1286,7 @@ Q+(7, 7): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2=0
 
 <h5>7.6-2 ElementsIncidentWithElementOfIncidenceStructure</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementsIncidentWithElementOfIncidenceStructure</code>( <var class="Arg">el</var>, <var class="Arg">i</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementsIncidentWithElementOfIncidenceStructure</code>( <var class="Arg">el</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the elements of type <var class="Arg">i</var> incident with <var class="Arg">el</var>, in other words, the type <var class="Arg">i</var> shadow of the element <var class="Arg">el</var></p>
 
 <p>Internally, the function <code class="file">FlagOfIncidenceStructure</code> is used to create a flag from <var class="Arg">list</var>. This function also performs the checking.</p>
@@ -1365,14 +1404,14 @@ Q+(11, 2)
 <td class="tdleft"><span class="SimpleMath">\(\mathrm{P}\Gamma\mathrm{O}(d,q)\)</span></td>
 <td class="tdleft"><span class="SimpleMath">\(\mathrm{P}\Gamma\mathrm{U}(d,q^2)\)</span></td>
 </tr>
-</table><br /><p>&nbsp;</p><br />
+</table><br />
 </div>
 
 <p><a id="X857C261585038CB8" name="X857C261585038CB8"></a></p>
 
 <h5>7.7-1 SpecialIsometryGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SpecialIsometryGroup</code>( <var class="Arg">ps</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SpecialIsometryGroup</code>( <var class="Arg">ps</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the special isometry group of the polar space <var class="Arg">ps</var></p>
 
 
@@ -1404,7 +1443,7 @@ PSU(5,3^2)
 
 <h5>7.7-2 IsometryGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsometryGroup</code>( <var class="Arg">ps</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsometryGroup</code>( <var class="Arg">ps</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the isometry group of the polar space <var class="Arg">ps</var></p>
 
 
@@ -1436,7 +1475,7 @@ PGU(5,3^2)
 
 <h5>7.7-3 SimilarityGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimilarityGroup</code>( <var class="Arg">ps</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimilarityGroup</code>( <var class="Arg">ps</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the similarity group of the polar space <var class="Arg">ps</var></p>
 
 
@@ -1468,7 +1507,7 @@ PGU(5,3^2)
 
 <h5>7.7-4 CollineationGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CollineationGroup</code>( <var class="Arg">ps</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CollineationGroup</code>( <var class="Arg">ps</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: the collineation group of the polar space <var class="Arg">ps</var></p>
 
 <p>In most cases, the full projective semisimilarity group is returned. For two-dimensional unitary groups, the centre may contain elements that are not scalars. In this case, we return a central extension of the projective semisimilarity group. If the basefield of <var class="Arg">ps</var> is GF(q<sup>2</sup>), <span class="SimpleMath">\(q\)</span> prime, the similarity group is returned.</p>
@@ -1512,8 +1551,8 @@ PGammaU(5,3^2)
 
 <h5>7.8-2 Enumerator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Enumerator</code>( <var class="Arg">C</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; List</code>( <var class="Arg">C</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Enumerator</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; List</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: an enumerator for the collection <var class="Arg">C</var> and a list with all elements of <var class="Arg">C</var></p>
 
 <p>The argument <var class="Arg">C</var> is a collection of subspaces of a polar space.</p>
@@ -1542,7 +1581,7 @@ EnumeratorOfSubspacesOfClassicalPolarSpace( &lt;lines of H(4, 2^2)&gt; )
 
 <h5>7.8-4 Iterator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Iterator</code>( <var class="Arg">elements</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Iterator</code>( <var class="Arg">elements</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: an iterator</p>
 
 <p><var class="Arg">C</var> is a collection of subspaces of a polar space.</p>
@@ -1568,7 +1607,7 @@ EnumeratorOfSubspacesOfClassicalPolarSpace( &lt;lines of H(4, 2^2)&gt; )
 
 <h5>7.8-5 AsList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsList</code>( <var class="Arg">subspaces</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsList</code>( <var class="Arg">subspaces</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: an Orb object or list</p>
 
 
@@ -1584,7 +1623,7 @@ Q+(5, 3)
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chapA_mj.html">A</a>  <a href="chapB_mj.html">B</a>  <a href="chapC_mj.html">C</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chapA_mj.html">A</a>  <a href="chapB_mj.html">B</a>  <a href="chapC_mj.html">C</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

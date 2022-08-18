@@ -26,7 +26,7 @@
   element [22Xu[122X of [22XT[122X has a subword [22Xl[122X and [22X(l, r)[122X is a rule of the rewriting system,
   then  we  can replace the subterm [22Xl[122X of [22Xu[122X by the term [22Xr[122X and obtain a new word
   [22Xv[122X.  We  say  that  we have [13Xrewritten[113X [22Xu[122X as [22Xv[122X. Note that [22Xu[122X and [22Xv[122X represent the
-  same element of [22XA[122X. If [22Xu[122X can not be rewritten using any rule of the rewriting
+  same  element of [22XA[122X. If [22Xu[122X cannot be rewritten using any rule of the rewriting
   system we sat that [22Xu[122X is [13Xreduced[113X.[133X
   
   

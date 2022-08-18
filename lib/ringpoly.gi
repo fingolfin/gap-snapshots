@@ -54,6 +54,7 @@ local reuse, idn, nbound, p, i,str;
       fi;
     elif nbound and reuse and IsBound(rfam!.namesIndets) then
       # is the indeterminate already used?
+      atomic rfam!.namesIndets do # for HPC-GAP only; ignored in GAP
       p:=Position(rfam!.namesIndets,str);
       if p<>fail then
         if p in avoid then
@@ -68,6 +69,7 @@ local reuse, idn, nbound, p, i,str;
           Add(idn,p);
         fi;
       fi;
+      od; # end of atomic
     else
       p:=fail;
     fi;
@@ -121,7 +123,11 @@ function( r, n )
 
     # cache univariate rings - they might be created often
     if not IsBound(r!.univariateRings) then
-      r!.univariateRings:=[];
+      if IsHPCGAP then
+        r!.univariateRings:=MakeWriteOnceAtomic([]);
+      else
+        r!.univariateRings:=[];
+      fi;
     fi;
 
     if Length(n)=1 
@@ -477,8 +483,8 @@ function( p, R )
 
     # and the indeterminates and coefficients ring of <R>
     crng := CoefficientsRing(R);
-    inds := Set( List( IndeterminatesOfPolynomialRing(R),
-                       x -> ExtRepPolynomialRatFun(x)[1][1] ) );
+    inds := Set( IndeterminatesOfPolynomialRing(R),
+                       x -> ExtRepPolynomialRatFun(x)[1][1] );
 
     # first check the indeterminates
     for exp  in ext{[ 1, 3 .. Length(ext)-1 ]}  do
@@ -550,7 +556,7 @@ function( ogens )
     gens:=ogens{Difference([1..Length(ogens)],g)};
 
     # univariate indeterminates set
-    ind := Set(List(univ,IndeterminateNumberOfUnivariateRationalFunction));
+    ind := Set(univ,IndeterminateNumberOfUnivariateRationalFunction);
     cfs := []; # univariate coefficients set
     for g in univ do
       UniteSet(cfs,CoefficientsOfUnivariateLaurentPolynomial(g)[1]);
@@ -789,8 +795,8 @@ function(f,R)
 
   # and the indeterminates and coefficients ring of <R>
   crng := CoefficientsRing(R);
-  inds := Set(List(IndeterminatesOfFunctionField(R),
-		      x -> ExtRepPolynomialRatFun(x)[1][1]));
+  inds := Set(IndeterminatesOfFunctionField(R),
+		      x -> ExtRepPolynomialRatFun(x)[1][1]);
 
   for ext in [ExtRepNumeratorRatFun(f),ExtRepDenominatorRatFun(f)] do
     # first check the indeterminates

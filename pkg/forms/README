@@ -17,7 +17,7 @@ This package provides:
 -  An operation which returns the forms left invariant by a matrix group.
 
 For further information see:
-   http://cage.ugent.be/geometry/forms.php
+   https://gap-packages.github.io/forms
 
 INSTALLATION AND DEPENDENCIES
 
@@ -31,17 +31,6 @@ installation. The archive is available in several formats:
 Unpacking generates a subdirectory "forms". Then you can load the package
 by typing in the GAP command line "LoadPackage("forms");". All documentation and
 examples are included.
-
-If typing "LoadPackage("forms");" results in the error message "fail", then
-probably the dependencies are not satisfied. Forms has only two dependencies, it
-requires GAP version at least 4.4 and it requires the package "GAPDoc" version
-at least 0.99. 
-
-You can get the latest version of GAPDoc at the website
-
-http://www.gap-system.org/Packages/gapdoc.html
-
-Installing "GAPDoc" is as easy as installing "Forms".
 
 INSTALLATION *outside the GAP main directory*: When you don't have access to
 the directory of your main GAP installation you can also install the package(s)

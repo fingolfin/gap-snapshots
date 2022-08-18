@@ -897,6 +897,8 @@ end );
 ##  permutation equivalence, that is the permutation image of a group element
 ##  is given by the positions of points in <A>Omega</A>.)
 ##  <P/>
+##  The result is undefined if <A>G</A> does not act on <A>Omega</A>.
+##  <P/>
 ##  By default the homomorphism returned by
 ##  <Ref Func="ActionHomomorphism" Label="for a group, an action domain, etc."/>
 ##  is not necessarily surjective (its 
@@ -1213,6 +1215,8 @@ DeclareGlobalFunction( "Action" );
 ##  described in <Ref Sect="Domains"/> and <Ref Chap="Collections"/>, or (to use
 ##  less memory but with a slower performance) an enumerator 
 ##  (see <Ref Attr="Enumerator"/> ) of this domain.
+##  <P/>
+##  The result is undefined if <A>G</A> does not act on <A>Omega</A>.
 ##  <Example><![CDATA[
 ##  gap> g:=Group((1,2,3),(2,3,4));;
 ##  gap> e:=ExternalSet(g,[1..4]);
@@ -1252,15 +1256,17 @@ DeclareOperation("RestrictedExternalSet",[IsExternalSet,IsGroup]);
 
 #############################################################################
 ##
-#O  ExternalSubset(<G>,<xset>,<start>,[<gens>,<acts>,]<act>)
+#O  ExternalSubset(<G>,<Omega>,<start>,[<gens>,<acts>,]<act>)
 ##
 ##  <#GAPDoc Label="ExternalSubset">
 ##  <ManSection>
-##  <Oper Name="ExternalSubset" Arg='G,xset,start,[gens,acts,]act'/>
+##  <Oper Name="ExternalSubset" Arg='G,Omega,start,[gens,acts,]act'/>
 ##
 ##  <Description>
-##  constructs the external subset of <A>xset</A> on the union of orbits of the
-##  points in <A>start</A>.
+##  constructs the external subset of <A>Omega</A> on the union of orbits of
+##  the points in <A>start</A>.
+##  <P/>
+##  The result is undefined if <A>G</A> does not act on <A>Omega</A>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1283,6 +1289,8 @@ OrbitishFO( "ExternalSubset",
 ##  <Description>
 ##  constructs the external subset on the orbit of <A>pnt</A>. The
 ##  <Ref Attr="Representative"/> value of this external set is <A>pnt</A>.
+##  <P/>
+##  The result is undefined if <A>G</A> does not act on <A>Omega</A>.
 ##  <Example><![CDATA[
 ##  gap> e:=ExternalOrbit(g,g,(1,2,3));
 ##  (1,2,3)^G
@@ -1663,12 +1671,15 @@ OrbitsishOperation( "Transitivity", OrbitsishReq, false, NewAttribute );
 ##   Label="for an external set"/>
 ##
 ##  <Description>
-##  computes a block system for the action.
+##  computes a block system for the transitive (see
+##  <Ref Oper="IsTransitive" Label="for a group, an action domain, etc."/>)
+##  action of <A>G</A> on <A>Omega</A>.
 ##  If <A>seed</A> is not given and the action is imprimitive,
 ##  a minimal nontrivial block system will be found.
 ##  If <A>seed</A> is given, a block system in which <A>seed</A>
 ##  is the subset of one block is computed.
-##  The action must be transitive.
+##  <P/>
+##  The result is undefined if the action is not transitive.
 ##  <Example><![CDATA[
 ##  gap> g:=TransitiveGroup(8,3);
 ##  E(8)=2[x]2[x]2
@@ -1708,9 +1719,13 @@ OrbitishFO( "Blocks",
 ##
 ##  <Description>
 ##  returns a block system that is maximal (i.e., blocks are maximal with
-##  respect to inclusion) for the action of <A>G</A> on <A>Omega</A>.
+##  respect to inclusion) for the transitive (see
+##  <Ref Oper="IsTransitive" Label="for a group, an action domain, etc."/>)
+##  action of <A>G</A> on <A>Omega</A>.
 ##  If <A>seed</A> is given, a block system is computed in which <A>seed</A>
 ##  is a subset of one block.
+##  <P/>
+##  The result is undefined if the action is not transitive.
 ##  <Example><![CDATA[
 ##  gap> MaximalBlocks(g,[1..8]);
 ##  [ [ 1, 2, 3, 8 ], [ 4 .. 7 ] ]
@@ -1748,7 +1763,11 @@ OrbitishFO( "MaximalBlocks",
 ##  <Description>
 ##  computes a list of block representatives for all minimal (i.e blocks are
 ##  minimal with respect to inclusion) nontrivial block systems for the
-##  action. 
+##  transitive (see
+##  <Ref Oper="IsTransitive" Label="for a group, an action domain, etc."/>)
+##  action of <A>G</A> on <A>Omega</A>.
+##  <P/>
+##  The result is undefined if the action is not transitive.
 ##  <Example><![CDATA[
 ##  gap> RepresentativesMinimalBlocks(g,[1..8]);
 ##  [ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ], [ 1, 6 ], [ 1, 7 ], 
@@ -1814,7 +1833,8 @@ OrbitsishOperation( "Earns", OrbitsishReq, false, NewAttribute );
 ##  <P/>
 ##  <Index>transitive</Index>
 ##  We say that a  group <A>G</A> acts <E>transitively</E> on a domain
-##  <M>D</M> if and only if for every pair of points <M>d, e \in D</M>
+##  <M>D</M> if and only if <A>G</A> acts on <M>D</M> and for every pair of
+##  points <M>d, e \in D</M>
 ##  there is an element <M>g</M> in <A>G</A> such that <M>d^g = e</M>.
 ##  <P/>
 ##  For a permutation group <A>G</A>, one may also invoke this as
@@ -1823,6 +1843,21 @@ OrbitsishOperation( "Earns", OrbitsishReq, false, NewAttribute );
 ##  moved by it.
 ##  For example the group <M>\langle (2,3,4),(2,3) \rangle</M>
 ##  is transitive on the set <M>\{2, 3, 4\}</M>.
+##  <Example><![CDATA[
+##  gap> G:= Group( (2,3,4), (2,3) );;
+##  gap> IsTransitive( G, [ 2 .. 4 ] );
+##  true
+##  gap> IsTransitive( G, [ 2, 3 ] );   # G does not act on [ 2, 3 ]
+##  false
+##  gap> IsTransitive( G, [ 1 .. 4 ] );  # G has two orbits on [ 1 .. 4 ]
+##  false
+##  gap> IsTransitive( G );  # G is transitive on [ 2 .. 4 ]
+##  true
+##  gap> IsTransitive( SL(2, 3), NormedRowVectors( GF(3)^2 ) );
+##  false
+##  gap> IsTransitive( SL(2, 3), NormedRowVectors( GF(3)^2 ), OnLines );
+##  true
+##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1851,7 +1886,9 @@ OrbitsishOperation( "IsTransitive", OrbitsishReq, false, NewProperty );
 ##  or <K>false</K> otherwise.
 ##  <P/>
 ##  <Index>primitive</Index>
-##  An action is <E>primitive</E> if it is transitive and the action admits
+##  An action is <E>primitive</E> if it is transitive (see
+##  <Ref Oper="IsTransitive" Label="for a group, an action domain, etc."/>)
+##  and the action admits
 ##  no nontrivial block systems. See&nbsp;<Ref Sect="Block Systems"/> for
 ##  the definition of block systems.
 ##  <P/>
@@ -1997,8 +2034,10 @@ OrbitsishOperation( "IsRegular", OrbitsishReq, false, NewProperty );
 ##   Label="for an external set"/>
 ##
 ##  <Description>
-##  returns the rank of a transitive action, i.e. the number of orbits of
-##  the point stabilizer.
+##  returns the rank of the transitive (see
+##  <Ref Oper="IsTransitive" Label="for a group, an action domain, etc."/>)
+##  action of <A>G</A> on <A>Omega</A>, i. e., the number of orbits of
+##  any point stabilizer.
 ##  <Example><![CDATA[
 ##  gap> RankAction(g,Combinations([1..4],2),OnSets);
 ##  4
@@ -2464,9 +2503,21 @@ DeclareOperation( "AbelianSubfactorAction",[IsGroup,IsGroup,IsGroup] );
 ##  <Index Subkey="by conjugation">action</Index>
 ##  returns <C><A>pnt</A> ^ <A>g</A></C>.
 ##  This is for example the action of a permutation group on points,
-##  or the action of a group on its elements via conjugation.
+##  or the action of a group on its elements via conjugation,
+##  that is, if both <A>pnt</A> and <A>g</A> are elements from a common group
+##  then <C><A>pnt</A> ^ <A>g</A></C> is equal to
+##  <A>g</A><M>^{{-1}}</M><C>*</C><A>pnt</A><C>*</C><A>g</A>.
 ##  The action of a matrix group on vectors from the right is described by
 ##  both <Ref Func="OnPoints"/> and <Ref Func="OnRight"/>.
+##  <Example><![CDATA[
+##  gap> OnPoints( 1, (1,2,3) );
+##  2
+##  gap> OnPoints( (1,2), (1,2,3) );
+##  (2,3)
+##  gap> g:= Group( (1,2,3), (2,3,4) );;
+##  gap> Orbit( g, 1, OnPoints );
+##  [ 1, 2, 3, 4 ]
+##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -2488,6 +2539,16 @@ DeclareOperation( "AbelianSubfactorAction",[IsGroup,IsGroup,IsGroup] );
 ##  or the action of a group on the cosets of a subgroup.
 ##  The action of a matrix group on vectors from the right is described by
 ##  both <Ref Func="OnPoints"/> and <Ref Func="OnRight"/>.
+##  <Example><![CDATA[
+##  gap> OnRight( [ 1, 2 ], [ [ 1, 2 ], [ 3, 4 ] ] );
+##  [ 7, 10 ]
+##  gap> OnRight( (1,2,3), (2,3,4) );
+##  (1,3)(2,4)
+##  gap> g:= Group( (1,2,3), (2,3,4) );;
+##  gap> Orbit( g, (), OnRight );
+##  [ (), (1,2,3), (2,3,4), (1,3,2), (1,3)(2,4), (1,2)(3,4), (2,4,3), 
+##    (1,4,2), (1,4,3), (1,3,4), (1,2,4), (1,4)(2,3) ]
+##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -2512,6 +2573,16 @@ DeclareOperation( "AbelianSubfactorAction",[IsGroup,IsGroup,IsGroup] );
 ##  (see&nbsp;<Ref Sect="External Sets"/>),
 ##  that is, a right coset <M>Ug</M> is an external set for the group
 ##  <M>U</M> acting on it via <Ref Func="OnLeftInverse"/>.)
+##  <Example><![CDATA[
+##  gap> OnLeftInverse( [ 1, 2 ], [ [ 1, 2 ], [ 3, 4 ] ] );
+##  [ 0, 1/2 ]
+##  gap> OnLeftInverse( (1,2,3), (2,3,4) );
+##  (1,2,4)
+##  gap> g:= Group( (1,2,3), (2,3,4) );;
+##  gap> Orbit( g, (), OnLeftInverse );
+##  [ (), (1,3,2), (2,4,3), (1,2,3), (1,3)(2,4), (1,2)(3,4), (2,3,4), 
+##    (1,2,4), (1,3,4), (1,4,3), (1,4,2), (1,4)(2,3) ]
+##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -2540,6 +2611,15 @@ DeclareOperation( "AbelianSubfactorAction",[IsGroup,IsGroup,IsGroup] );
 ##  <P/>
 ##  (<Ref Func="OnTuples"/> is an action on lists that preserves the ordering
 ##  of entries.)
+##  <Example><![CDATA[
+##  gap> OnSets( [ 1, 3 ], (1,2,3) );
+##  [ 1, 2 ]
+##  gap> OnSets( [ (2,3), (1,2) ], (1,2,3) );
+##  [ (2,3), (1,3) ]
+##  gap> g:= Group( (1,2,3), (2,3,4) );;
+##  gap> Orbit( g, [ 1, 2 ], OnSets );
+##  [ [ 1, 2 ], [ 2, 3 ], [ 1, 3 ], [ 3, 4 ], [ 1, 4 ], [ 2, 4 ] ]
+##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -2562,6 +2642,16 @@ DeclareOperation( "AbelianSubfactorAction",[IsGroup,IsGroup,IsGroup] );
 ##  <P/>
 ##  (<Ref Func="OnSets"/> is an action on lists that additionally sorts
 ##  the entries of the result.)
+##  <Example><![CDATA[
+##  gap> OnTuples( [ 1, 3 ], (1,2,3) );
+##  [ 2, 1 ]
+##  gap> OnTuples( [ (2,3), (1,2) ], (1,2,3) );
+##  [ (1,3), (2,3) ]
+##  gap> g:= Group( (1,2,3), (2,3,4) );;
+##  gap> Orbit( g, [ 1, 2 ], OnTuples );
+##  [ [ 1, 2 ], [ 2, 3 ], [ 1, 3 ], [ 3, 1 ], [ 3, 4 ], [ 2, 1 ], 
+##    [ 1, 4 ], [ 4, 1 ], [ 4, 2 ], [ 3, 2 ], [ 2, 4 ], [ 4, 3 ] ]
+##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -2610,6 +2700,8 @@ DeclareOperation( "AbelianSubfactorAction",[IsGroup,IsGroup,IsGroup] );
 ##  (see&nbsp;<Ref Sect="Action on canonical representatives"/>).
 ##  <P/>
 ##  <Example><![CDATA[
+##  gap> OnLines( [ 1, 2 ], [ [ 1, 2 ], [ 3, 4 ] ] );
+##  [ 1, 10/7 ]
 ##  gap> gl:=GL(2,5);;v:=[1,0]*Z(5)^0;
 ##  [ Z(5)^0, 0*Z(5) ]
 ##  gap> h:=Action(gl,Orbit(gl,v,OnLines),OnLines);
@@ -2637,6 +2729,14 @@ DeclareGlobalFunction("OnLines");
 ##  <A>set</A> must be a sorted list whose entries are again sorted lists,
 ##  otherwise an error is triggered
 ##  (see&nbsp;<Ref Sect="Action on canonical representatives"/>).
+##  <Example><![CDATA[
+##  gap> OnSetsSets( [ [ 1, 2 ], [ 3, 4 ] ], (1,2,3) );
+##  [ [ 1, 4 ], [ 2, 3 ] ]
+##  gap> g:= Group( (1,2,3), (2,3,4) );;
+##  gap> Orbit( g, [ [ 1, 2 ], [ 3, 4 ] ], OnSetsSets );
+##  [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 4 ], [ 2, 3 ] ], 
+##    [ [ 1, 3 ], [ 2, 4 ] ] ]
+##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -2678,6 +2778,15 @@ DeclareGlobalFunction( "OnSetsDisjointSets" );
 ##  <A>set</A> must be a sorted list,
 ##  otherwise an error is triggered
 ##  (see&nbsp;<Ref Sect="Action on canonical representatives"/>).
+##  <Example><![CDATA[
+##  gap> OnSetsTuples( [ [ 1, 2 ], [ 3, 4 ] ], (1,2,3) );
+##  [ [ 1, 4 ], [ 2, 3 ] ]
+##  gap> g:= Group( (1,2,3), (2,3,4) );;
+##  gap> Orbit( g, [ [ 1, 2 ], [ 3, 4 ] ], OnSetsTuples );
+##  [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 4 ], [ 2, 3 ] ], 
+##    [ [ 1, 3 ], [ 4, 2 ] ], [ [ 2, 4 ], [ 3, 1 ] ], 
+##    [ [ 2, 1 ], [ 4, 3 ] ], [ [ 3, 2 ], [ 4, 1 ] ] ]
+##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -2698,6 +2807,15 @@ DeclareGlobalFunction("OnSetsTuples");
 ##  <A>set</A> must be a list whose entries are again sorted lists,
 ##  otherwise an error is triggered
 ##  (see&nbsp;<Ref Sect="Action on canonical representatives"/>).
+##  <Example><![CDATA[
+##  gap> OnTuplesSets( [ [ 2, 3 ], [ 3, 4 ] ], (1,2,3) );
+##  [ [ 1, 3 ], [ 1, 4 ] ]
+##  gap> g:= Group( (1,2,3), (2,3,4) );;
+##  gap> Orbit( g, [ [ 1, 2 ], [ 3, 4 ] ], OnTuplesSets );
+##  [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 2, 3 ], [ 1, 4 ] ], 
+##    [ [ 1, 3 ], [ 2, 4 ] ], [ [ 3, 4 ], [ 1, 2 ] ], 
+##    [ [ 1, 4 ], [ 2, 3 ] ], [ [ 2, 4 ], [ 1, 3 ] ] ]
+##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -2716,28 +2834,9 @@ DeclareGlobalFunction("OnTuplesSets");
 ##  <Description>
 ##  implements the action on tuples of tuples.
 ##  <Example><![CDATA[
+##  gap> OnTuplesTuples( [ [ 2, 3 ], [ 3, 4 ] ], (1,2,3) );
+##  [ [ 3, 1 ], [ 1, 4 ] ]
 ##  gap> g:=Group((1,2,3),(2,3,4));;
-##  gap> Orbit(g,1,OnPoints);
-##  [ 1, 2, 3, 4 ]
-##  gap> Orbit(g,(),OnRight);
-##  [ (), (1,2,3), (2,3,4), (1,3,2), (1,3)(2,4), (1,2)(3,4), (2,4,3), 
-##    (1,4,2), (1,4,3), (1,3,4), (1,2,4), (1,4)(2,3) ]
-##  gap> Orbit(g,[1,2],OnPairs);
-##  [ [ 1, 2 ], [ 2, 3 ], [ 1, 3 ], [ 3, 1 ], [ 3, 4 ], [ 2, 1 ], 
-##    [ 1, 4 ], [ 4, 1 ], [ 4, 2 ], [ 3, 2 ], [ 2, 4 ], [ 4, 3 ] ]
-##  gap> Orbit(g,[1,2],OnSets);
-##  [ [ 1, 2 ], [ 2, 3 ], [ 1, 3 ], [ 3, 4 ], [ 1, 4 ], [ 2, 4 ] ]
-##  gap> Orbit(g,[[1,2],[3,4]],OnSetsSets);
-##  [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 4 ], [ 2, 3 ] ], 
-##    [ [ 1, 3 ], [ 2, 4 ] ] ]
-##  gap> Orbit(g,[[1,2],[3,4]],OnTuplesSets);
-##  [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 2, 3 ], [ 1, 4 ] ], 
-##    [ [ 1, 3 ], [ 2, 4 ] ], [ [ 3, 4 ], [ 1, 2 ] ], 
-##    [ [ 1, 4 ], [ 2, 3 ] ], [ [ 2, 4 ], [ 1, 3 ] ] ]
-##  gap> Orbit(g,[[1,2],[3,4]],OnSetsTuples);
-##  [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 4 ], [ 2, 3 ] ], 
-##    [ [ 1, 3 ], [ 4, 2 ] ], [ [ 2, 4 ], [ 3, 1 ] ], 
-##    [ [ 2, 1 ], [ 4, 3 ] ], [ [ 3, 2 ], [ 4, 1 ] ] ]
 ##  gap> Orbit(g,[[1,2],[3,4]],OnTuplesTuples);
 ##  [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 2, 3 ], [ 1, 4 ] ], 
 ##    [ [ 1, 3 ], [ 4, 2 ] ], [ [ 3, 1 ], [ 2, 4 ] ], 

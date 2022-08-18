@@ -38,16 +38,14 @@ end );
 ##
 InstallMethod(FieldOfMatrixList,"finite field matrices",true,
   [IsListOrCollection and IsFFECollCollColl],0,
-function(l)
-local   deg,  i,  j,  char;
-  if Length(l)=0 then Error("list must be nonempty");fi;
+function(list)
+local   deg,  mat,  char;
+  if Length(list)=0 then Error("list must be nonempty");fi;
   deg  := 1;
-  for i  in l  do
-    for j  in i  do
-      deg := LcmInt( deg, DegreeFFE(j) );
-    od;
+  for mat in list do
+    deg := LcmInt( deg, DegreeFFE(mat) );
   od;
-  char := Characteristic(l[1][1]);
+  char := Characteristic(list[1]);
   return GF(char^deg);
 end);
 
@@ -57,24 +55,28 @@ end);
 ##
 InstallMethod(DefaultScalarDomainOfMatrixList,"finite field matrices",true,
   [IsListOrCollection and IsFFECollCollColl],0,
-function(l)
-local   deg,  i,  j,  char,m;
-if Length(l)=0 then Error("list must be nonempty");fi;
+function(list)
+local   deg,  mat,  row,  char,  B;
+  if Length(list)=0 then Error("list must be nonempty");fi;
+  if ForAll( list, HasBaseDomain ) then
+    B:= BaseDomain( list[1] );
+    if ForAll( list, x -> B = BaseDomain( x ) ) then
+      return B;
+    fi;
+  fi;
+
   deg  := 1;
-  for i in l  do
+  for mat in list do
     # treat compact matrices quickly
-    if IsGF2MatrixRep(i) then
+    if IsGF2MatrixRep(mat) then
       deg:=deg; # always in
-    elif Is8BitMatrixRep(i) then
-      j:=Q_VEC8BIT(i![2]);
-      deg:=LcmInt( deg, Length(Factors(j)));
+    elif Is8BitMatrixRep(mat) then
+      deg:=LcmInt( deg, Length(FactorsInt(Q_VEC8BIT(mat![2]))));
     else
-      for j  in i  do
-	deg := LcmInt( deg, DegreeFFE(j) );
-      od;
+      deg := LcmInt( deg, DegreeFFE(mat) );
     fi;
   od;
-  char := Characteristic(l[1][1]);
+  char := Characteristic(list[1]);
   return GF(char^deg);
 end);
 
@@ -271,7 +273,7 @@ end );
 #F  SizePolynomialUnipotentClassGL( <la> ) . . . . . . centralizer order of
 #F  unipotent elements in GL_n( q )
 ##  
-##  <la> must be a partition of, say, n.
+##  <la> must be a partition of the natural number n.
 ##  
 ##  This function returns a  pair [coefficient list, valuation] defining a
 ##  polynomial over the integers, having the following property: The order
@@ -400,7 +402,7 @@ function( G, flag )
     # merge with 'a' to remove duplicates
     tup := List(tup, b-> List([1..Length(a)], 
                      i-> Concatenation(a[i],[b[i]])));
-    tup := Set(List(tup,Set));
+    tup := Set(tup,Set);
     
     # now append partitions for distinguishing the unipotent parts
     tup := Concatenation(List(tup, a->
@@ -413,7 +415,7 @@ function( G, flag )
   if flag then
     rep := List([1..Gcd(q-1, n)-1], i-> IdentityMat(n, GF(q)));
     for i in [1..Gcd(q-1, n)-1] do
-      rep[i][n][n] := Z(q)^i;
+      rep[i][n,n] := Z(q)^i;
     od;
   fi;           
   
@@ -454,6 +456,8 @@ function( G, flag )
   od;
   # obey general rule in GAP to put class of identity first
   i := First([1..Length(cl)], c-> Representative(cl[c]) = One(G));
+#T note that One(G) is in Is8BitMatrixRep,
+#T but the class representatives are in IsPlistRep
   if i <> 1 then
     a := cl[i];
     cl[i] := cl[1];
@@ -534,12 +538,12 @@ end);
 
 #############################################################################
 ##
-#F  Phi2( <n> ) . . . . . . . . . . . .  Modification of Euler's Phi function
+#F  Phi2_Md( <n> )  . . . . . . . . . .  Modification of Euler's Phi function
 ##
 ##  This is needed for the computation of the class numbers of SL(n,q),
-##  PSL(n,q), SU(n,q) and PSU(n,q)
+##  PSL(n,q), SU(n,q) and PSU(n,q). Defined by Macdonald in [Mac81].
 ##
-InstallGlobalFunction(Phi2,
+InstallGlobalFunction(Phi2_Md,
 n -> n^2 * Product(Set(Filtered(Factors(Integers,n), m -> m <> 1)),
                    p -> (1 - 1/p^2)));
 
@@ -567,7 +571,7 @@ InstallGlobalFunction(NrConjugacyClassesSLIsogeneous,
 function(n,q,f)
   return Sum(Cartesian(DivisorsInt(Gcd(  f,q - 1)),
                        DivisorsInt(Gcd(n/f,q - 1))),
-             d ->   Phi(d[1]) * Phi2(d[2]) 
+             d ->   Phi(d[1]) * Phi2_Md(d[2]) 
                   * NrConjugacyClassesGL(n/Product(d),q))/(q - 1);
 end);
 
@@ -597,7 +601,7 @@ InstallGlobalFunction(NrConjugacyClassesPSL,
 function(n,q)
   return Sum(Filtered(Cartesian(DivisorsInt(q - 1),DivisorsInt(q - 1)),
                       d -> n mod Product(d) = 0),
-             d -> Phi(d[1]) * Phi2(d[2])
+             d -> Phi(d[1]) * Phi2_Md(d[2])
                 * NrConjugacyClassesGL(n/Product(d),q)/(q - 1))/Gcd(n,q - 1);
 end);
 
@@ -625,7 +629,7 @@ InstallGlobalFunction(NrConjugacyClassesSUIsogeneous,
 function(n,q,f)
   return Sum(Cartesian(DivisorsInt(Gcd(  f,q + 1)),
                        DivisorsInt(Gcd(n/f,q + 1))),
-             d ->   Phi(d[1]) * Phi2(d[2]) 
+             d ->   Phi(d[1]) * Phi2_Md(d[2]) 
                   * NrConjugacyClassesGU(n/Product(d),q))/(q + 1);
 end);
 
@@ -655,7 +659,7 @@ InstallGlobalFunction(NrConjugacyClassesPSU,
 function(n,q)
   return Sum(Filtered(Cartesian(DivisorsInt(q + 1),DivisorsInt(q + 1)),
                       d -> n mod Product(d) = 0),
-             d -> Phi(d[1]) * Phi2(d[2])
+             d -> Phi(d[1]) * Phi2_Md(d[2])
                 * NrConjugacyClassesGU(n/Product(d),q)/(q + 1))/Gcd(n,q + 1);
 end);
 

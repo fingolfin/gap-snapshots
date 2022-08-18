@@ -74,6 +74,26 @@ AGR.IsLowerAlphaOrDigitChar:=
 
 #############################################################################
 ##
+#F  AGR_ChecksumFits( <string>, <checksum> )
+##
+BindGlobal( "AGR_ChecksumFits", function( string, checksum )
+    if checksum = fail then
+      # We cannot check anything.
+      return true;
+    elif IsString( checksum ) then
+      # This is a 'SHA256' format string.
+      return checksum = ValueGlobal( "HexSHA256" )( string );
+    elif IsInt( checksum ) then
+      # This is a 'CrcString' value.
+      return checksum = CrcString( string );
+    else
+      Error( "<chcksum> must be a string or an integer" );
+    fi;
+end );
+
+
+#############################################################################
+##
 ##  If the IO package is not available then the following assignments have
 ##  the effect that no warnings about unbound variables are printed when this
 ##  file gets read.
@@ -86,6 +106,9 @@ if not IsBound( IO_mkdir ) then
 fi;
 if not IsBound( IO_stat ) then
   IO_stat:= "dummy";
+fi;
+if not IsBound( IO_chmod ) then
+  IO_chmod:= "dummy";
 fi;
 
 
@@ -100,14 +123,26 @@ fi;
 ##  <P/>
 ##  The source file is described by the domain name <A>domain</A> and the
 ##  path <A>uri</A>.
-##  The data are written to the local file with filename <A>localpath</A>.
-##
-##  If the access worked then <K>true</K> is returned,
-##  otherwise <K>false</K>.
+##  <P/>
+##  If the access failed then <K>false</K> is returned, otherwise
+##  either the data are written to the local file with filename
+##  <A>localpath</A> (if this is a string and the user preference
+##  <C>AtlasRepDataDirectory</C> is nonempty),
+##  or a string with the contents of the file is returned.
 ##
 BindGlobal( "AtlasOfGroupRepresentationsTransferFile",
     function( domain, uri, localpath, crc )
-    local io, wget, pref, result, url;
+    local savetofile, io, wget, pref, result, url, str, out;
+
+    # Save the contents of the target file to a local file?
+    # (The first two conditions mean that we *want* to avoid saving,
+    # the third deals with the situation that the intended path does not
+    # exist, probably due to missing write permissions.)
+    savetofile:= not ( localpath = fail or
+                       IsEmpty( UserPreference( "AtlasRep",
+                                "AtlasRepDataDirectory" ) ) or
+                       not IsExistingFile( localpath{ [ 1 .. Last( Positions(
+                             localpath, '/' ) ) - 1 ] } ) );
 
     # Determine admissible alternatives.
     io:= true;
@@ -128,22 +163,66 @@ BindGlobal( "AtlasOfGroupRepresentationsTransferFile",
       Info( InfoAtlasRep, 2,
             "calling 'SingleHTTPRequest' with domain '", domain,
             "' and uri '", uri, "'" );
-      result:= SingleHTTPRequest( domain, 80, "GET",
-                   uri,
-                   rec(), false, localpath );
+      if savetofile then
+        # Download the remote file and store it locally.
+        result:= SingleHTTPRequest( domain, 80, "GET",
+                     uri,
+                     rec(), false, localpath );
+      elif EndsWith( uri, ".gz" ) then
+        # We can only download the compressed file and then load it.
+        if not IsBound( AGR.TmpDir ) then
+          AGR.TmpDir:= DirectoryTemporary();
+        fi;
+        if AGR.TmpDir = fail then
+          return false;
+        fi;
+        localpath:= Filename( AGR.TmpDir, "currentfile" );
+        result:= SingleHTTPRequest( domain, 80, "GET",
+                     uri,
+                     rec(), false, localpath );
+        if result.statuscode <> 200 then
+          Info( InfoAtlasRep, 2,
+                "SingleHTTPRequest failed with status\n#I  ", result.status );
+          RemoveFile( localpath );
+          return false;
+        fi;
+        # Uncompress and load the contents.
+        str:= StringFile( localpath );
+        RemoveFile( localpath );
+        if not AGR_ChecksumFits( str, crc ) then
+          Info( InfoWarning, 1,
+                "download of file '", domain, uri,
+                "' does not yield a string with the expected crc value '",
+                crc, "'" );
+          return false;
+        fi;
+        return str;
+      else
+        # Transfer the file into the GAP session.
+        result:= SingleHTTPRequest( domain, 80, "GET",
+                     uri,
+                     rec(), false, false );
+      fi;
       if result.statuscode <> 200 then
         Info( InfoAtlasRep, 2,
               "SingleHTTPRequest failed with status\n#I  ", result.status );
-        RemoveFile( localpath );
-      elif crc <> fail and crc <> CrcFile( localpath ) then
+      elif savetofile and not AGR_ChecksumFits( StringFile( localpath ), crc ) then
         Info( InfoWarning, 1,
               "download of file '", domain, uri, "' to '", localpath,
               "' does not yield a file with the expected crc value '",
               crc, "'" );
         RemoveFile( localpath );
-      else
-        # The file has been downloaded and seems to be o.k.
+      elif not savetofile and not AGR_ChecksumFits( result.body, crc ) then
+        Info( InfoWarning, 1,
+              "download of file '", domain, uri,
+              "' does not yield a string with the expected crc value '",
+              crc, "'" );
+      elif savetofile then
+        # The file has been downloaded and stored and seems to be o.k.
         return true;
+      else
+        # The contents has been downloaded and seems to be o.k.
+        return result.body;
       fi;
 
       # Trust IO that the file is not available, do not try also wget.
@@ -155,8 +234,10 @@ BindGlobal( "AtlasOfGroupRepresentationsTransferFile",
       wget:= Filename( DirectoriesSystemPrograms(), "wget" );
       if wget = fail then
         Info( InfoAtlasRep, 1, "no 'wget' executable found" );
-      else
+      elif savetofile then
+        # Download the remote file and store it locally.
         url:= Concatenation( "http://", domain, uri );
+#T better keep the given protocol!
         Info( InfoAtlasRep, 2,
               "calling 'wget' with url '", url, "'" );
         result:= Process( DirectoryCurrent(), wget,
@@ -166,7 +247,7 @@ BindGlobal( "AtlasOfGroupRepresentationsTransferFile",
           Info( InfoAtlasRep, 2,
                 "'wget' failed to fetch '", url, "'" );
           RemoveFile( localpath );
-        elif crc <> fail and crc <> CrcFile( localpath ) then
+        elif not AGR_ChecksumFits( StringFile( localpath ), crc ) then
           Info( InfoWarning, 1,
                 "download of file '", url, "' to '", localpath,
                 "' does not yield a file with the expected crc value '",
@@ -175,6 +256,59 @@ BindGlobal( "AtlasOfGroupRepresentationsTransferFile",
         else
           # The file has been downloaded and seems to be o.k.
           return true;
+        fi;
+      elif EndsWith( uri, ".gz" ) then
+        # We can only download the compressed file and then load it.
+        if not IsBound( AGR.TmpDir ) then
+          AGR.TmpDir:= DirectoryTemporary();
+        fi;
+        if AGR.TmpDir = fail then
+          return false;
+        fi;
+        localpath:= Filename( AGR.TmpDir, "currentfile" );
+        result:= Process( DirectoryCurrent(), wget,
+            InputTextNone(), OutputTextNone(),
+            [ "-q", "-O", localpath, url ] );
+        if result <> 0 then
+          Info( InfoAtlasRep, 2,
+                "'wget' failed to fetch '", url, "'" );
+          RemoveFile( localpath );
+          return false;
+        fi;
+        # Uncompress and load the contents.
+        str:= StringFile( localpath );
+        RemoveFile( localpath );
+        if not AGR_ChecksumFits( str, crc ) then
+          Info( InfoWarning, 1,
+                "download of file '", domain, uri,
+                "' does not yield a string with the expected crc value '",
+                crc, "'" );
+          return false;
+        fi;
+        return str;
+      else
+        # Transfer the file into the GAP session.
+        url:= Concatenation( "http://", domain, uri );
+#T better keep the given protocol!
+        str:= "";
+        out:= OutputTextString( str, true );
+        Info( InfoAtlasRep, 2,
+              "calling 'wget' with url '", url, "'" );
+        result:= Process( DirectoryCurrent(), wget,
+            InputTextNone(), out,
+            [ "-q", "-O", "-", url ] );
+        CloseStream( out );
+        if result <> 0 then
+          Info( InfoAtlasRep, 2,
+                "'wget' failed to fetch '", url, "'" );
+        elif not AGR_ChecksumFits( str, crc ) then
+          Info( InfoWarning, 1,
+                "download of file '", url,
+                "' does not yield a string with the expected crc value '",
+                crc, "'" );
+        else
+          # The contents has been downloaded and seems to be o.k.
+          return str;
         fi;
       fi;
     fi;
@@ -189,12 +323,11 @@ end );
 #F  AGR.AccessFilesLocation( <files>, <type>, <replace>, <compressed> )
 ##
 AGR.AccessFilesLocation:= function( files, type, replace, compressed )
-    local names, pref, pair, dirname, filename, datadirs, info, entry, name,
-          namegz;
+    local names, pref, pair, dirname, filename, datadirs, info, entry,
+          prefjson, name, namegz;
 
     names:= [];
     pref:= UserPreference( "AtlasRep", "AtlasRepDataDirectory" );
-
     for pair in files do
       dirname:= pair[1];
       filename:= pair[2];
@@ -228,6 +361,21 @@ AGR.AccessFilesLocation:= function( files, type, replace, compressed )
 
       if replace <> fail then
         filename:= ReplacedString( filename, replace[1], replace[2] );
+      fi;
+
+      # Hack/experimental:
+      # If wanted then switch to a JSON format alternative of
+      # characteristic zero matrices (supported only for "datagens").
+      if dirname = "datagens" and
+         ( PositionSublist( filename, "-Ar" ) <> fail or
+           PositionSublist( filename, "-Zr" ) <> fail ) then
+        prefjson:= UserPreference( "AtlasRep", "AtlasRepJsonFilesAddresses" );
+        if prefjson <> fail then
+          # Use Json format files of characteristic zero
+          # matrix representations instead of the GAP format files.
+          datadirs:= [ Directory( prefjson[2] ) ];
+          filename:= ReplacedString( filename, ".g", ".json" );
+        fi;
       fi;
 
       # There may be an uncompressed or a compressed version.
@@ -266,12 +414,17 @@ AGR.AccessFilesLocation:= function( files, type, replace, compressed )
 ##  We assume that the local file <filepath> is not yet available,
 ##  and that we have to download the file.
 ##
-##  <filepath> is the local path where the file shall be stored.
+##  <filepath> is the local path where the file shall be stored if local
+##  directories are writable (otherwise the content just gets downloaded),
 ##  <filename> is the name part of the file in question.
 ##  <dirname> is one of "datagens", "dataword", or a private id.
 ##  <type> is a type record.
 ##  <compressed> is 'true' or 'false'.
 ##  <crc> is either the expected crc value of the file or 'fail'.
+##
+##  The function returns 'false' if the access failed,
+##  'true' if the remote file was copied to a local file,
+##  and a string containing the contents of the file otherwise.
 ##
 AGR.AccessFilesFetch:= function( filepath, filename, dirname,
                                  type, compressed, crc )
@@ -292,15 +445,29 @@ AGR.AccessFilesFetch:= function( filepath, filename, dirname,
     for info in AtlasOfGroupRepresentationsInfo.notified do
       if dirname = info.ID then
         if not IsBound( info.data ) then
-          # local only extension, this should not happen
+          # This should happen only for pure local extension, 
           Error( "non-available file <filepath> of a local extension?" );
         fi;
 
         # Fetch the file if possible.
-        url:= info.DataURL;
-        if url{ [ 1 .. 7 ] } = "http://" then
-          url:= url{ [ 8 .. Length( url ) ] };
+        if EndsWith( filepath, ".json" ) and EndsWith( filename, ".g" ) then
+          # Fetch the file from the address given by the user preference
+          # 'AtlasRepJsonFilesAddresses'.
+          filename:= filepath{ [ Last( Positions( filepath, '/' ) )+1
+                                 .. Length( filepath ) ] };
+          crc:= fail;
+          pref:= UserPreference( "AtlasRep", "AtlasRepJsonFilesAddresses" );
+          url:= pref[1];
+        else
+          # Use the standard addresses.
+          url:= info.DataURL;
         fi;
+        if StartsWith( url, "http://" ) then
+          url:= url{ [ 8 .. Length( url ) ] };
+        elif StartsWith( url, "https://" ) then
+          url:= url{ [ 9 .. Length( url ) ] };
+        fi;
+#T better keep the given protocol!
         if url[ Length( url ) ] <> '/' then
           Add( url, '/' );
         fi;
@@ -326,7 +493,9 @@ AGR.AccessFilesFetch:= function( filepath, filename, dirname,
             result:= AtlasOfGroupRepresentationsTransferFile( domain,
                          Concatenation( uri, ".gz" ),
                          Concatenation( filepath, ".gz" ), fail );
-            if result <> false then
+            # If the file has been stored locally then it is compressed.
+            # If the contents is stored in 'result' then it is *uncompressed*.
+            if result = true then
               iscompressed:= true;
             fi;
           fi;
@@ -345,52 +514,58 @@ AGR.AccessFilesFetch:= function( filepath, filename, dirname,
       Error( "no data extension with identifier '", dirname, "'" );
     fi;
 
-    # The file has just been fetched, perform postprocessing.
-    # (For MeatAxe text files only:
-    # If wanted and if the file is not yet compressed then compress it.)
-    if compressed and
-       ( iscompressed = false ) and
-       type[1] in [ "perm", "matff" ] and
-       UserPreference( "AtlasRep", "CompressDownloadedMeatAxeFiles" ) = true
-       then
-      gzip:= Filename( DirectoriesSystemPrograms(), "gzip" );
-      if gzip = fail or not IsExecutableFile( gzip ) then
-        Info( InfoAtlasRep, 1, "no 'gzip' executable found" );
-      else
-        if not IsBound( gunzip ) then
-          gunzip:= Filename( DirectoriesSystemPrograms(), "gunzip" );
-          if gunzip <> fail and not IsExecutableFile( gunzip ) then
-            gunzip:= fail;
+    if result = true then
+      # The contents has just been stored in a local file.
+      # For MeatAxe text files, perform postprocessing:
+      # If wanted and if the file is not yet compressed then compress it.
+      if compressed and
+         ( iscompressed = false ) and
+         type[1] in [ "perm", "matff" ] and
+         UserPreference( "AtlasRep", "CompressDownloadedMeatAxeFiles" ) = true
+         then
+        gzip:= Filename( DirectoriesSystemPrograms(), "gzip" );
+        if gzip = fail or not IsExecutableFile( gzip ) then
+          Info( InfoAtlasRep, 1, "no 'gzip' executable found" );
+        else
+          if not IsBound( gunzip ) then
+            gunzip:= Filename( DirectoriesSystemPrograms(), "gunzip" );
+            if gunzip <> fail and not IsExecutableFile( gunzip ) then
+              gunzip:= fail;
+            fi;
           fi;
-        fi;
-        if gunzip <> fail then
-          result:= Process( DirectoryCurrent(), gzip,
-                       InputTextNone(), OutputTextNone(), [ filepath ] );
-          if result = fail then
-            Info( InfoAtlasRep, 2,
-                  "impossible to compress file '", filepath, "'" );
+          if gunzip <> fail then
+            result:= Process( DirectoryCurrent(), gzip,
+                         InputTextNone(), OutputTextNone(), [ filepath ] );
+            if result = fail then
+              Info( InfoAtlasRep, 2,
+                    "impossible to compress file '", filepath, "'" );
+            fi;
           fi;
         fi;
       fi;
     fi;
 
-    return true;
+    return result;
     end;
 
 
 #############################################################################
 ##
-#F  AGR.AtlasDataGAPFormatFile2( <filename> )
+#F  AGR.AtlasDataGAPFormatFile2( <filename>[, "string"] )
 ##
 ##  This function is used for reading a GAP format file containing
 ##  a permutation or a matrix over a finite field.
 ##  The assignment to a global variable is avoided by reading a modified
 ##  version of the file.
 ##
-AGR.AtlasDataGAPFormatFile2:= function( filename )
+AGR.AtlasDataGAPFormatFile2:= function( filename, string... )
     local str, pos, i;
 
-    str:= AGR.StringFile( filename );
+    if Length( string ) = 0 then
+      str:= AGR.StringFile( filename );
+    else
+      str:= filename;
+    fi;
     pos:= PositionSublist( str, ":=" );
     if pos <> fail then
       str:= str{ [ pos + 2 .. Length( str ) ] };
@@ -424,16 +599,22 @@ InstallValue( AtlasOfGroupRepresentationsAccessFunctionsDefault, [
     end,
 
     contents:= function( files, type, filepaths )
-      local i, len;
+      local i;
 
-      filepaths:= ShallowCopy( filepaths );
-      for i in [ 1 .. Length( filepaths ) ] do
-        len:= Length( filepaths[i] );
-        if 3 < len and filepaths[i]{ [ len-2 .. len ] } = ".gz" then
-          filepaths[i]:= filepaths[i]{ [ 1 .. len-3 ] };
-        fi;
-      od;
-      return type[2].ReadAndInterpretDefault( filepaths );
+      if not ( IsExistingFile( filepaths[1] ) or
+               IsExistingFile( Concatenation( filepaths[1], ".gz" ) ) ) then
+        # We have the file contents.
+        return type[2].InterpretDefault( filepaths );
+      else
+        # We have the local filenames.
+        filepaths:= ShallowCopy( filepaths );
+        for i in [ 1 .. Length( filepaths ) ] do
+          if EndsWith( filepaths[i], ".gz" ) then
+            filepaths[i]:= filepaths[i]{ [ 1 .. Length( filepaths[i] )-3 ] };
+          fi;
+        od;
+        return type[2].ReadAndInterpretDefault( filepaths );
+      fi;
     end,
   ),
 
@@ -441,7 +622,8 @@ InstallValue( AtlasOfGroupRepresentationsAccessFunctionsDefault, [
     description:= "prefer downloading/reading MeatAxe binary files",
 
     location:= function( files, type )
-      if not type[1] in [ "perm", "matff" ] then
+      if ( not type[1] in [ "perm", "matff" ] ) or
+         IsEmpty( UserPreference( "AtlasRep", "AtlasRepDataDirectory" ) ) then
         return fail;
       fi;
 
@@ -460,7 +642,8 @@ InstallValue( AtlasOfGroupRepresentationsAccessFunctionsDefault, [
 
     contents:= function( files, type, filepaths )
       # This function is called only for the types "perm" and "matff",
-      # and binary format files are *not* compressed.
+      # binary format files are *not* compressed,
+      # and we are sure that we have the filenames not file contents.
       return List( filepaths, FFMatOrPermCMtxBinary );
     end,
   ),
@@ -493,7 +676,15 @@ InstallValue( AtlasOfGroupRepresentationsAccessFunctionsDefault, [
     contents:= function( files, type, filepaths )
       # This function is called only for the types "perm" and "matff",
       # and GAP format files are *not* compressed.
-      return List( filepaths, AGR.AtlasDataGAPFormatFile2 );
+      if not ( IsExistingFile( filepaths[1] ) or
+               IsExistingFile( Concatenation( filepaths[1], ".gz" ) ) ) then
+        # We have the file contents.
+        return List( filepaths,
+                     str -> AGR.AtlasDataGAPFormatFile2( str, "string" ) );
+      else
+        # We have the local filenames.
+        return List( filepaths, AGR.AtlasDataGAPFormatFile2 );
+      fi;
     end,
   ),
 
@@ -545,7 +736,8 @@ InstallValue( AtlasOfGroupRepresentationsAccessFunctionsDefault, [
     end,
 
     contents:= function( files, type, filepaths )
-      # We need not care about compressed files.
+      # We need not care about compressed files,
+      # and we know that we get filenames not file contents.
       return type[2].ReadAndInterpretDefault( filepaths );
     end,
   ),
@@ -587,8 +779,8 @@ end );
 ##
 InstallGlobalFunction( AtlasOfGroupRepresentationsLocalFilenameTransfer,
     function( files, type )
-    local cand, list, ok, fetchfun, i, filepath, filename, info, dirname,
-          crc;
+    local cand, list, ok, result, fetchfun, i, filepath, filename, info,
+          dirname, crc, res;
 
     # 1. Determine the local directory where to look for the file,
     #    and the functions that claim to be applicable.
@@ -605,6 +797,7 @@ InstallGlobalFunction( AtlasOfGroupRepresentationsLocalFilenameTransfer,
       for list in cand do
         if Length( list[2] ) = Length( files ) then
           ok:= true;
+          result:= [];
           fetchfun:= list[1].fetch;
           for i in [ 1 .. Length( files ) ] do
             if not list[2][i][2] then
@@ -623,13 +816,22 @@ InstallGlobalFunction( AtlasOfGroupRepresentationsLocalFilenameTransfer,
               else
                 crc:= fail;
               fi;
-              ok:= ok and fetchfun( filepath, filename, dirname, type, crc );
+              res:= fetchfun( filepath, filename, dirname, type, crc );
+              if res = false then
+                ok:= false;
+              fi;
+              Add( result, res );
             fi;
           od;
           if ok then
-            # 3. We have the local file(s).
-            #    Return path(s) and the relevant record of access functions.
-            return [ List( list[2], x -> x[1] ), list[1] ];
+            # 3. We have either the local files or their contents.
+            if result[1] = true then
+              #  Return paths and the relevant record of access functions.
+              return [ List( list[2], x -> x[1] ), list[1] ];
+            else
+              #  Return contents and the relevant record of access functions.
+              return [ result, list[1] ];
+            fi;
           fi;
         fi;
       od;
@@ -648,7 +850,7 @@ end );
 ##
 InstallGlobalFunction(
     AtlasOfGroupRepresentationsTestTableOfContentsRemoteUpdates, function()
-    local version, inforec, home, server, path, dstfilename, result, lines,
+    local version, inforec, home, server, path, result, lines,
           pref, datadirs, line, pos, pos2, filename, localfile, servdate,
           stat;
 
@@ -657,27 +859,31 @@ InstallGlobalFunction(
       return fail;
     fi;
 
+    # If the data directories do not yet exist then nothing is to do.
+    pref:= UserPreference( "AtlasRep", "AtlasRepDataDirectory" );
+    if not IsDirectoryPath( pref ) then
+      return [];
+    fi;
+
     # Download the file that lists the changes.
     version:= InstalledPackageVersion( "atlasrep" );
     inforec:= First( PackageInfo( "atlasrep" ), r -> r.Version = version );
     home:= inforec.PackageWWWHome;
-    if home{ [ 1 .. 7 ] } = "http://" then
+    if StartsWith( home, "http://" ) then
+#T better keep the given protocol!
       home:= home{ [ 8 .. Length( home ) ] };
     fi;
 
     server:= home{ [ 1 .. Position( home, '/' ) - 1 ] };
     path:= home{ [ Position( home, '/' ) + 1 .. Length( home ) ] };
-    dstfilename:= Filename( DirectoryTemporary(), "changes.htm" );
-
-    result:= [];
-    if AtlasOfGroupRepresentationsTransferFile( server,
-               Concatenation( path, "/htm/data/changes.htm" ),
-               dstfilename, fail ) then
-      lines:= SplitString( AGR.StringFile( dstfilename ), "\n" );
+    result:= AtlasOfGroupRepresentationsTransferFile( server,
+               Concatenation( path, "/htm/data/changes.htm" ), fail, fail );
+    if result <> false then
+      lines:= SplitString( result, "\n" );
+      result:= [];
       lines:= Filtered( lines,
                   x ->     20 < Length( x ) and x{ [ 1 .. 4 ] } = "<tr>"
                        and x{ [ -3 .. 0 ] + Length( x ) } = " -->" );
-      pref:= UserPreference( "AtlasRep", "AtlasRepDataDirectory" );
       datadirs:= [ Directory( Concatenation( pref, "datagens" ) ),
                    Directory( Concatenation( pref, "dataword" ) ) ];
       for line in lines do
@@ -706,9 +912,10 @@ InstallGlobalFunction(
           fi;
         fi;
       od;
+      return result;
     fi;
 
-    return result;
+    return [];
     end );
 
 
@@ -734,10 +941,11 @@ AGR.FileContents:= function( files, type )
     result:= AtlasOfGroupRepresentationsLocalFilenameTransfer( files, type );
     if result = fail then
       return fail;
+    else
+      # We have the local files or the contents of the files.
+      # Extract and process the contents.
+      return result[2].contents( files, type, result[1] );
     fi;
-
-    # We have the local files.  Try to extract their contents.
-    return result[2].contents( files, type, result[1] );
     end;
 
 
@@ -786,7 +994,7 @@ AGR.TST:= function( gapname, value, compname, testfun, msg )
 ##  function is called when additional data are added that refer to the
 ##  representation <repname>.
 ##
-##  The data files tehmselves are *not* read by the function,
+##  The data files themselves are *not* read by the function,
 ##  only the format of the filenames and the access with
 ##  'AllAtlasGeneratingSetInfos' are checked.
 ##
@@ -1006,10 +1214,11 @@ AGR.GNAN:= function( gapname, atlasname, dirid... )
 ##    component of <Ref Var="AtlasOfGroupRepresentationsInfo"/>.
 ##    The string <M>typename</M> must be the name of the data type
 ##    to which the entry belongs,
-##    the string <M>filename</M> must be the prefix of the data file(s),
-##    and <M>crc</M> must be a list of integers that are the CRC values
-##    of the data files (see <Ref BookName="ref" Func="CrcFile"/>;
-##    in particular, the number of files that are described by the entry
+##    the string <M>filename</M> must be the prefix of the data file(s), and
+##    <M>crc</M> must be a list that contains the checksums of the data files,
+##    which are either integers (see <Ref BookName="ref" Func="CrcFile"/>)
+##    or strings (see <C>HexSHA256</C>).
+##    In particular, the number of files that are described by the entry
 ##    equals the length of <M>crc</M>.
 ##    <P/>
 ##    The optional argument <M>dirid</M> is equal to the argument with the
@@ -1050,13 +1259,7 @@ AGR.TOC:= function( arg )
     fi;
 
     # Parse the filename with the given format info.
-# type:= First( AGR.DataTypes( "rep", "prg" ), x -> x[1] = type );
-    for t in AGR.DataTypes( "rep", "prg" ) do
-      if t[1] = type then
-        type:= t;
-        break;
-      fi;
-    od;
+    type:= First( AGR.DataTypes( "rep", "prg" ), x -> x[1] = type );
     record:= AtlasTableOfContents( dirid, "all" );
 
     # Split the name into path and filename.
@@ -1357,12 +1560,14 @@ AGR.STDCOMP:= function( gapname, factorCompatibility, dirid... )
 ##  </Item>
 ##  <#/GAPDoc>
 ##
-AGR.RNG:= function( repname, descr, dirid... )
-    local data;
+AGR.RNG:= function( repname, descr, args... )
+    local len, dirid, data;
 
     # Get the arguments.
-    if Length( dirid ) = 1 and IsString( dirid[1] ) then
-      dirid:= dirid[1];
+    len:= Length( args );
+    if len in [ 1, 3 ] and IsString( args[ len ] ) then
+      dirid:= args[ len ];
+      args:= args{ [ 1 .. len-1 ] };
     elif IsBound( AGR.DIRID ) then
       dirid:= AGR.DIRID;
     else
@@ -1377,7 +1582,10 @@ AGR.RNG:= function( repname, descr, dirid... )
       fi;
     fi;
 
-    data:= [ repname, descr, EvalString( descr ), dirid ];
+    data:= [ repname, descr, EvalString( descr ) ];
+    Append( data, args );
+    Add( data, dirid );
+
     if ForAny( AtlasOfGroupRepresentationsInfo.ringinfo,
                entry -> repname = entry[1] ) then
       Info( InfoAtlasRep, 1,
@@ -1764,21 +1972,179 @@ AGR.ParseFilenameFormat:= function( string, format )
 
 #############################################################################
 ##
-#F  AtlasDataGAPFormatFile( <filename> )
+#F  AtlasDataGAPFormatFile( <filename>[, "string"] )
 ##
-InstallGlobalFunction( AtlasDataGAPFormatFile, function( filename )
-    local record;
+##  <ManSection>
+##  <Func Name="AtlasDataGAPFormatFile" Arg='filename[, "string"]'/>
+##
+##  <Description>
+##  Let <A>filename</A> be the name of a file containing the generators of a
+##  representation in characteristic zero such that reading the file via
+##  <Ref Func="ReadAsFunction" BookName="ref"</C> yields a record
+##  containing the list of the generators and additional information.
+##  Then <Ref Func="AtlasDataGAPFormatFile"/> returns this record.
+##  </Description>
+##  </ManSection>
+##
+BindGlobal( "AtlasDataGAPFormatFile", function( filename, string... )
+    local fun;
 
     AGR.InfoRead( "#I  reading '", filename, "' started\n" );
-    record:= ReadAsFunction( filename );
+    if Length( string ) = 0 then
+      fun:= ReadAsFunction( filename );
+    else
+      fun:= ReadAsFunction( InputTextString( filename ) );
+    fi;
     AGR.InfoRead( "#I  reading '", filename, "' done\n" );
-    if record = fail then
+    if fun = fail then
       Info( InfoAtlasRep, 1,
             "problem reading '", filename, "' as function\n" );
     else
-      record:= record();
+      fun:= fun();
     fi;
-    return record;
+    return fun;
+end );
+
+
+#############################################################################
+##
+#F  AtlasDataJsonFormatFile( <filename>[, "string"] )
+##
+##  Evaluate the contents of a Json format file that describes matrices
+##  in characteristic zero.
+##
+##  Admit a prescribed ring for the matrix entries,
+##  given by the 'givenRing' component of the info record stored in the
+##  global option 'inforecord'.
+##
+BindGlobal( "AtlasDataJsonFormatFile", function( filename, string... )
+    local obj, arec, givenF, info, F, pol, facts, gen, roots, ecoeffs, pos,
+          found, N, B, nrows, ncols, mats, d, mat, i, j;
+
+    if Length( string ) = 0 then
+      obj:= AGR.GapObjectOfJsonText( StringFile( filename ) );
+    else
+      obj:= AGR.GapObjectOfJsonText( filename );
+    fi;
+    if obj.status = false then
+      if Length( string ) = 0 then
+        Info( InfoAtlasRep, 1,
+              "file ", filename, " does not contain valid Json" );
+      else
+        Info( InfoAtlasRep, 1,
+              "string <filename> does not contain valid Json" );
+      fi;
+      return fail;
+    fi;
+    arec:= obj.value;
+
+    givenF:= ValueOption( "inforecord" );
+    if givenF <> fail then
+      if IsBound( givenF.givenRing ) then
+        givenF:= givenF.givenRing;
+      else
+        givenF:= fail;
+      fi;
+    fi;
+
+    info:= arec.ringinfo;
+
+    if givenF = fail or IsCyclotomicCollection( givenF ) then
+      # Create the default field extension in GAP.
+      if Length( info ) = 1 and info[1] = "IntegerRing" then
+        F:= Integers;
+        gen:= 1;
+      elif Length( info ) = 2 and info[1] = "QuadraticField" then
+        F:= Field( Rationals, [ Sqrt( info[2] ) ] );
+        pol:= UnivariatePolynomial( F, arec.polynomial );
+        gen:= - Value( Factors( PolynomialRing( F ), pol )[1], 0 );
+      elif Length( info ) = 2 and info[1] = "CyclotomicField" then
+        F:= CyclotomicField( Rationals, info[2] );
+        gen:= E( info[2] );
+      elif Length( info ) = 2 and info[1] = "AbelianNumberField" then
+        # Choose the unique root of the polynomial
+        # that involves E(N) with the correct sign.
+        # (This is of course a hack, but it makes the generators in GAP
+        # backwards compatible with the old Magma and GAP format files.)
+        F:= CyclotomicField( Rationals, info[2] );
+        pol:= UnivariatePolynomial( F, arec.polynomial );
+        roots:= List( Factors( PolynomialRing( F ), pol ),
+                      x -> - Value( x, 0 ) );
+        ecoeffs:= COEFFS_CYC( E( info[2] ) );
+        pos:= PositionNonZero( ecoeffs );
+        gen:= First( roots, x -> COEFFS_CYC( x )[ pos ] = ecoeffs[ pos ] );
+        F:= Field( Rationals, [ gen ] );
+      elif Length( info ) = 1 and info[1] = "NumberField" then
+        # We have no good idea to guess the conductor.
+        found:= false;
+        pol:= UnivariatePolynomial( Rationals, arec.polynomial );
+        for N in [ 3 .. 100 ] do
+          F:= CyclotomicField( Rationals, N );
+          facts:= Factors( PolynomialRing( F ), pol );
+          if Length( facts ) = Degree( pol ) then
+            roots:= List( facts, x -> - Value( x, 0 ) );
+            ecoeffs:= COEFFS_CYC( E( info[2] ) );
+            pos:= PositionNonZero( ecoeffs );
+            gen:= First( roots, x -> COEFFS_CYC( x )[ pos ] = ecoeffs[ pos ] );
+            F:= Field( Rationals, [ gen ] );
+            found:= true;
+            break;
+          fi;
+        od;
+        if not found then
+          Error( "did not find conductor" );
+        fi;
+      else
+        Error( "invalid 'ringinfo'" );
+      fi;
+    else
+      # Take a root of the given defining polynomial
+      # over the given field extension as the primitive element.
+      F:= givenF;
+      if Length( arec.polynomial ) = 2 then
+        # no proper extension, usually 'Integers'
+        gen:= One( F );
+      else
+        pol:= UnivariatePolynomial( F, arec.polynomial * One( F ) );
+        facts:= Filtered( Factors( PolynomialRing( F ), pol ),
+                          x -> Degree( x ) = 1 );
+        if Length( facts ) = 0 then
+          Error( "the polynomial <pol> has no root in <F>" );
+        fi;
+        gen:= - Value( facts[1], 0 );
+      fi;
+    fi;
+
+    B:= List( [ 0 .. Length( arec.polynomial )-2 ], i -> gen^i );
+
+    nrows:= arec.dimensions[1];
+    ncols:= arec.dimensions[2];
+
+    mats:= [];
+    d:= arec.denominator;
+    for mat in arec.generators do
+      pos:= 0;
+      for i in [ 1 .. nrows ] do
+        for j in [ 1 .. ncols ] do
+          pos:= pos + 1;
+          if IsList( mat[ pos ] ) then
+            mat[ pos ]:= mat[ pos ] * B;
+          fi;
+        od;
+      od;
+      if givenF <> fail then
+        mat:= mat * One( givenF );
+      fi;
+      if d <> 1 then
+        mat:= mat / d;
+      fi;
+#T eventually support 'Matrix( F, mat, ncols )'
+#T and given ConstructingFilter!
+      Add( mats, List( [ 1 .. nrows ],
+                       i -> mat{ [ (i-1)*ncols+1 .. i*ncols ] } ) );
+    od;
+
+    return rec( generators:= mats );
 end );
 
 
@@ -1962,9 +2328,10 @@ end );
 
 #############################################################################
 ##
-#F  AtlasTableOfContents( <tocid>, <allorlocal> )
+#F  AtlasTableOfContents( <tocid>, <allorlocal>[, <body>] )
 ##
-InstallGlobalFunction( AtlasTableOfContents, function( tocid, allorlocal )
+InstallGlobalFunction( AtlasTableOfContents,
+    function( tocid, allorlocal, body... )
     local toc, id, groupnames, prefix, filenames, dirinfo, dstdir, dstfile,
           tocremote, typeinfo, groupname, r, pair, type, entry, fileinfo,
           filename, loc, dirname, privdir, f, comp, dir, result;
@@ -2006,50 +2373,59 @@ InstallGlobalFunction( AtlasTableOfContents, function( tocid, allorlocal )
         toc.( id ).TocID:= tocid;
         return toc.( id );
       else
-        dirname:= dirinfo.DataURL;
-        if IsExistingFile( dirname ) then
-
-          # This is a local part of the database,
-          # there may be a 'toc.json' file.
-          # Evaluate it if available.
-          privdir:= Directory( dirname );
+        # This is a local part of the database,
+        # there may be a 'toc.json' file (evaluate it if available)
+        # or 'body' contains its contents.
+        if Length( body ) = 1 then
+          body:= body[1];
+        elif IsExistingFile( dirinfo.DataURL ) then
+          privdir:= Directory( dirinfo.DataURL );
           filename:= Filename( privdir, "toc.json" );
-          if IsReadableFile( filename ) = true then
-            # Store the hint for calls of 'AGR.API', 'AGR.CHR', 'AGR.TOC'.
-            f:= AGR.GapObjectOfJsonText( AGR.StringFile( filename ) );
-            if f.status = false then
-              Error( "file <filename> does not contain valid JSON" );
-            fi;
-            f:= f.value;
-            for comp in [ "Version", "SelfURL", "LocalDirectory" ] do
-              if IsBound( f.( comp ) ) then
-                dirinfo.( comp ):= f.( comp );
-              fi;
-            od;
-            toc.( id ):= rec();
-            AGR.DIRID:= tocid;
-            if IsBound( f.DataURL ) then
-              # Notify all files, not just the locally available ones.
-              for entry in f.Data do
-                CallFuncList( AGR.( entry[1] ), entry[2] );
-              od;
-              Unbind( AGR.DIRID );
-              toc.( id ).TocID:= tocid;
-              return toc.( id );
-            else
-              # This is *only* locally available.
-              # Rely on the locally available files.
-              for entry in f.Data do
-                # Omit 'AGR.TOC' lines that may be present.
-                # Note that we are going to list the local directory contents.
-                if entry[1] <> "TOC" then
-                  CallFuncList( AGR.( entry[1] ), entry[2] );
-                fi;
-              od;
-              Unbind( AGR.DIRID );
-            fi;
+          if not IsReadableFile( filename ) = true then
+            return fail;
           fi;
+          body:= AGR.StringFile( filename );
+        else
+          return fail;
+        fi;
 
+        # Store the hint for calls of 'AGR.API', 'AGR.CHR', 'AGR.TOC'.
+        f:= AGR.GapObjectOfJsonText( body );
+        if f.status = false then
+          Error( "file <filename> does not contain valid JSON" );
+        fi;
+        f:= f.value;
+        for comp in [ "Version", "SelfURL", "DataURL", "LocalDirectory" ] do
+          if IsBound( f.( comp ) ) then
+            dirinfo.( comp ):= f.( comp );
+          fi;
+        od;
+        dirname:= dirinfo.DataURL;
+        toc.( id ):= rec();
+        AGR.DIRID:= tocid;
+        if IsBound( f.DataURL ) then
+          # Notify all files, not just the locally available ones.
+          for entry in f.Data do
+            CallFuncList( AGR.( entry[1] ), entry[2] );
+          od;
+          dirinfo.data:= f;
+          Unbind( AGR.DIRID );
+          toc.( id ).TocID:= tocid;
+          return toc.( id );
+        else
+          # This is *only* locally available.
+          # Rely on the locally available files.
+          for entry in f.Data do
+            # Omit 'AGR.TOC' lines that may be present.
+            # Note that we are going to list the local directory contents.
+            if entry[1] <> "TOC" then
+              CallFuncList( AGR.( entry[1] ), entry[2] );
+            fi;
+          od;
+          Unbind( AGR.DIRID );
+        fi;
+
+        if IsExistingFile( dirname ) then
           # List the information available in the given local directory.
           # (Up to one directory layer above the data files is supported.)
           for dir in Difference( DirectoryContents( dirname ),
@@ -2266,8 +2642,14 @@ InstallGlobalFunction( StringOfAtlasTableOfContents, function( inforec )
     od;
 
     for entry in AtlasOfGroupRepresentationsInfo.ringinfo do
-      if entry[4] = dirid then
-        Add( data.RNG, [ entry[1], Concatenation( "\"", entry[2], "\"" ) ] );
+      if entry[ Length( entry ) ] = dirid then
+        if Length( entry ) = 4 then
+          Add( data.RNG, [ entry[1], Concatenation( "\"", entry[2], "\"" ) ] );
+        else
+          # The length is 6.
+          Add( data.RNG, [ entry[1], Concatenation( "\"", entry[2], "\"" ),
+                           entry[4], entry[5] ] );
+        fi;
       fi;
     od;
 
@@ -2359,8 +2741,16 @@ InstallGlobalFunction( StringOfAtlasTableOfContents, function( inforec )
       parskip:= "\n";
       Sort( data.( comp ) );
       for entry in data.( comp ) do
-        Add( list, Concatenation( parskip, prefix, comp, open,
-                       "\"", entry[1], "\",", entry[2], close ) );
+        if Length( entry ) = 2 then
+          Add( list, Concatenation( parskip, prefix, comp, open,
+                         "\"", entry[1], "\",", entry[2], close ) );
+        else
+          Add( list, Concatenation( parskip, prefix, comp, open,
+                         "\"", entry[1], "\",", entry[2], ",",
+                         ReplacedString( String( entry[3] ), " ", "" ), ",",
+                         ReplacedString( String( entry[4] ), " ", "" ),
+                         close ) );
+        fi;
         parskip:= "";
       od;
     od;
@@ -2466,19 +2856,35 @@ end;
 ##  Return either 'fail' or the path of the newly created file.
 ##
 AGR.CreateLocalJSONFile:= function( dirid, body )
-    local datadir, filename;
+    local pref, datadir, filename;
 
-    datadir:= Concatenation(
-                  UserPreference( "AtlasRep", "AtlasRepDataDirectory" ),
-                  "dataext/", dirid );
-    if ( not IsDirectoryPath( datadir ) ) and
-       ( not IsPackageMarkedForLoading( "IO", "" ) or
-         IO_mkdir( datadir, 1023 ) = false ) then
-      Info( InfoAtlasRep, 1,
-            "AtlasOfGroupRepresentationsNotifyData:\n",
-            "#I  'IO_mkdir' cannot create the local directory\n",
-            "#I  ", datadir );
+    pref:= UserPreference( "AtlasRep", "AtlasRepDataDirectory" );
+    if pref = "" then
+      # We cannot (or do not want to) store local files.
       return fail;
+    fi;
+
+    datadir:= Concatenation( pref, "dataext/", dirid );
+    if not IsDirectoryPath( datadir ) then
+      # Create the subdirectory 'dirid' and set the mode 1023.
+      # (Note that 'mkdir' does not guarantee the required mode,
+      # so we call 'chmod' afterwards.)
+      if not IsPackageMarkedForLoading( "IO", "" ) or
+         IO_mkdir( datadir, 1023 ) <> true then
+#T why 1023 not 1777 ???
+        Info( InfoAtlasRep, 1,
+              "AtlasOfGroupRepresentationsNotifyData:\n",
+              "#I  'IO_mkdir' cannot create the local directory\n",
+              "#I  ", datadir );
+        return fail;
+      elif IO_chmod( datadir, 1023 ) <> true then
+        Info( InfoAtlasRep, 1,
+              "AtlasOfGroupRepresentationsNotifyData:\n",
+              "#I  'IO_chmod' cannot set the mode of \n",
+              "#I  ", datadir, " to 1023" );
+#T why 1023 not 1777 ???
+        return fail;
+      fi;
     fi;
 
     filename:= Filename( Directory( datadir ), "toc.json" );
@@ -2523,21 +2929,23 @@ end;
 #F  AtlasOfGroupRepresentationsNotifyData( <dir>, <id>[, <test>] )
 #F  AtlasOfGroupRepresentationsNotifyData( <filename>[, <id>][, <test>] )
 #F  AtlasOfGroupRepresentationsNotifyData( <url>[, <id>][, <test>] )
+#F  AtlasOfGroupRepresentationsNotifyData( <filecontents>[, <id>][, <test>] )
 ##
 InstallGlobalFunction( AtlasOfGroupRepresentationsNotifyData,
     function( arg )
     local usage, test, dir, filename, url, firstarg, dirname, dirid, body, f,
-          r, comp, localdir, pos, package, path, localdirs, pref, datadirs, p,
-          domain, uri, datadir, oldtest, olddata, nam, entry, toc,
-          allfilenames, RemovedDirectories, groupname, record, type, name,
-          tocs, ok, oldtoc, list, i, names, unknown, value;
+          known, r, comp, localdir, pos, package, path, localdirs, pref,
+          datadirs, p, domain, uri, datadir, oldtest, olddata, nam, entry,
+          toc, allfilenames, RemovedDirectories, groupname, record, type,
+          name, tocs, ok, oldtoc, list, i, names, unknown, value;
 
     # Get and check the arguments.
     usage:= Concatenation(
       "usage:\n",
       "AtlasOfGroupRepresentationsNotifyData( <dir>, <id>[, <test>] ),\n",
       "AtlasOfGroupRepresentationsNotifyData( <filename>[, <id>][, <test>] ),\n",
-      "AtlasOfGroupRepresentationsNotifyData( <url>[, <id>][, <test>] )" );
+      "AtlasOfGroupRepresentationsNotifyData( <url>[, <id>][, <test>] ),\n",
+      "AtlasOfGroupRepresentationsNotifyData( <filecontents>[, <id>][, <test>] )" );
 
     test:= false;
     if Length( arg ) = 0 then
@@ -2553,59 +2961,51 @@ InstallGlobalFunction( AtlasOfGroupRepresentationsNotifyData,
     dir:= fail;
     filename:= fail;
     url:= fail;
+    body:= fail;
     firstarg:= arg[1];
     if IsDirectory( firstarg ) then
       # first form, with directory
       dir:= firstarg;
       dirname:= ShallowCopy( dir![1] );
-      if Length( arg ) = 2 and IsString( arg[2] ) then
-        dirid:= arg[2];
-      else
-        Error( usage );
-      fi;
     elif IsString( firstarg ) then
       if StartsWith( firstarg, "~" ) then
-        firstarg:= USER_HOME_EXPAND( firstarg );
+        firstarg:= UserHomeExpand( firstarg );
       fi;
       if IsDirectoryPath( firstarg ) then
         # first form, with directory path
         dirname:= ShallowCopy( firstarg );
         dir:= Directory( dirname );
-        if Length( arg ) = 2 and IsString( arg[2] ) then
-          dirid:= arg[2];
-        else
-          Error( usage );
-        fi;
       elif IsReadableFile( firstarg ) then
         # second form
-        if Length( arg ) = 2 and IsString( arg[2] ) then
-          dirid:= arg[2];
-        elif Length( arg ) <> 1 then
-          Error( usage );
-        fi;
         filename:= firstarg;
-      else
+      elif not StartsWith( firstarg, "{" ) then
         # third form
         url:= firstarg;
-        if Length( arg ) = 2 and IsString( arg[2] ) then
-          dirid:= arg[2];
-        elif Length( arg ) <> 1 then
-          Error( usage );
-        fi;
+      else
+        # fourth form
+        body:= firstarg;
       fi;
     else
       Error( usage );
     fi;
 
-    if IsBound( dirid ) then
+    if Length( arg ) = 2 and IsString( arg[2] ) then
+      dirid:= arg[2];
       if dirid = "local" then
         # "local" is reserved to restrict overviews.
         Error( "<dirid> must not be the string \"local\"" );
-      elif ForAny( AtlasOfGroupRepresentationsInfo.notified,
-                   entry -> entry.ID = dirid ) then
-        # We have already notified this extension.
+      elif ( dir <> fail or filename <> fail ) and
+         ForAny( AtlasOfGroupRepresentationsInfo.notified,
+                 entry -> entry.ID = dirid and
+                          not StartsWith( entry.DataURL, "http" ) ) then
+        # We have already notified this extension,
+        # and it is a local one, thus we can ignore this notification.
+        # (If we know the extension just as a remote one,
+        # we can try to upgrade it to a local one.)
         return true;
       fi;
+    elif Length( arg ) <> 1 then
+      Error( usage );
     fi;
 
     if dir <> fail then
@@ -2625,7 +3025,6 @@ InstallGlobalFunction( AtlasOfGroupRepresentationsNotifyData,
 
       # This is the second form:
       # A local JSON format file describes remote and/or local data.
-
       body:= AGR.StringFile( filename );
       if body = fail then
         Info( InfoAtlasRep, 1,
@@ -2642,11 +3041,20 @@ InstallGlobalFunction( AtlasOfGroupRepresentationsNotifyData,
         Error( "'", dirid, "' differs from ID in file: '", filename, "'" );
       fi;
       dirid:= f.ID;
-      if ForAny( AtlasOfGroupRepresentationsInfo.notified,
-                 entry -> entry.ID = dirid ) then
-        # We have already notified this extension.
-        return true;
-      elif dirid = "core" then
+      known:= First( AtlasOfGroupRepresentationsInfo.notified,
+                     entry -> entry.ID = dirid );
+      if known <> fail then
+        if known.ID = dirid and not StartsWith( known.DataURL, "http" ) then
+          # We have already notified this extension as a local one.
+          return true;
+        elif dirid = "core" then
+          return true;
+        fi;
+      fi;
+
+      # The extension is either new or has been notified as a remote one
+      # which may later be upgraded to a local one.
+      if dirid = "core" then
         r:= rec( ID:= dirid, data:= f );
         for comp in [ "Version", "DataURL", "SelfURL", "LocalDirectory" ] do
           if IsBound( f.( comp ) ) then
@@ -2677,20 +3085,23 @@ InstallGlobalFunction( AtlasOfGroupRepresentationsNotifyData,
                   "AtlasOfGroupRepresentationsNotifyData:\n",
                   "#I  use the local directory instead of the remote one ",
                   "for '", dirid, "'" );
+            if known <> fail then
+              # Remove the remote notification before we can upgrade to local.
+              Info( InfoAtlasRep, 2,
+                    "AtlasOfGroupRepresentationsNotifyData:\n",
+                    "#I  first remove the remote notification" );
+              AtlasOfGroupRepresentationsForgetData( dirid );
+            fi;
             r:= rec( ID:= dirid, DataURL:= ShallowCopy( localdirs[1]![1] ) );
-
-          # return AtlasOfGroupRepresentationsNotifyData(
-          #            localdirs[1], dirid, test );
           fi;
         fi;
       fi;
 
       if not IsBound( r ) then
         # If we arrive here then 'LocalDirectory' cannot be used.
-        # Create a copy of the JSON file in the local data directory.
-        if AGR.CreateLocalJSONFile( dirid, body ) = fail then
-          return false;
-        fi;
+        # Create a copy of the JSON file in the local data directory
+        # if possible.
+        AGR.CreateLocalJSONFile( dirid, body );
         r:= rec( ID:= dirid, DataURL:= f.DataURL );
       fi;
       r.data:= f;
@@ -2709,7 +3120,7 @@ InstallGlobalFunction( AtlasOfGroupRepresentationsNotifyData,
       # - If 'dirid' is given and we have already a local copy of this file
       #   then we delegate to the second form.
       # - Otherwise, if we are in online mode and can download this file
-      #   then do this and then delegate to the second form.
+      #   then do this and then delegate to the fourth form.
       # - Otherwise we give up.
 
       pref:= UserPreference( "AtlasRep", "AtlasRepDataDirectory" );
@@ -2730,35 +3141,21 @@ InstallGlobalFunction( AtlasOfGroupRepresentationsNotifyData,
       fi;
 
       if UserPreference( "AtlasRep", "AtlasRepAccessRemoteFiles" ) = true then
-        if not IsPackageMarkedForLoading( "IO", "" ) then
-          # We cannot fetch the file.
-          Info( InfoAtlasRep, 1,
-                "AtlasOfGroupRepresentationsNotifyData:\n",
-                "#I  cannot notify '", url, "'\n",
-                "#I  because the package 'IO' is not available" );
-          return false;
-        fi;
-
         # Try to fetch the file.
-        if 7 < Length( url ) and
-           LowercaseString( url{ [ 1 .. 7 ] } ) = "http://" then
+        if StartsWith( LowercaseString( url ), "http://" ) then
           url:= url{ [ 8 .. Length( url ) ] };
+        elif StartsWith( LowercaseString( url ), "https://" ) then
+          url:= url{ [ 9 .. Length( url ) ] };
         fi;
+#T better keep the given protocol!
         p:= Position( url, '/' );
         if p = fail then
           Error( usage );
         fi;
         domain:= url{ [ 1 .. p - 1 ] };
         uri:= url{ [ p .. Length( url ) ] };
-        f:= SingleHTTPRequest( domain, 80, "GET", uri, rec(), false, false );
-        if f.statuscode = 404 then
-          Error( "file not found: ", url );
-        elif f.statuscode >= 400  then
-          Error( "HTTP error code ", f.statuscode );
-        fi;
-
-        # Evaluate the file.
-        body:= f.body;
+        body:= AtlasOfGroupRepresentationsTransferFile( domain, uri, fail,
+                                                        fail );
         if body = fail then
           Info( InfoAtlasRep, 1,
                 "AtlasOfGroupRepresentationsNotifyData:\n",
@@ -2780,22 +3177,20 @@ InstallGlobalFunction( AtlasOfGroupRepresentationsNotifyData,
         fi;
         dirid:= f.ID;
         if ForAny( AtlasOfGroupRepresentationsInfo.notified,
-                   entry -> entry.ID = dirid ) then
-          # We have already notified this extension.
+                   entry -> entry.ID = dirid and
+                            not StartsWith( entry.DataURL, "http" ) ) then
+          # We have already notified this extension as a local one.
           return true;
         fi;
 
-        # Store a local copy of the file if it is not yet available,
+        # Store a local copy of the file if it is not yet available
+        # and if we are allowed/able to write local files;
         # it can then be used next time in offline mode.
         # If necessary then create a subdirectory in 'dataext'.
         filename:= AGR.CreateLocalJSONFile( dirid, body );
-        if filename = fail then
-          return false;
-        fi;
 
-        # Now we are sure that 'toc.json' is stored.
-        # Delegate to the second form.
-        return AtlasOfGroupRepresentationsNotifyData( filename, dirid, test );
+        # Delegate to the fourth form.
+        return AtlasOfGroupRepresentationsNotifyData( body, dirid, test );
 
       elif IsBound( dirid ) then
         Info( InfoAtlasRep, 2,
@@ -2816,7 +3211,7 @@ InstallGlobalFunction( AtlasOfGroupRepresentationsNotifyData,
 
     fi;
 
-    # Now we are in the first or second form.
+    # Now we are in the first, second, or fourth form.
     # It remains to evaluate the JSON file.
     # The file may contain calls of 'AGR.GNAN' (which must come *before* the
     # data for the groups in question can be notified) and of 'AGR.API' and
@@ -2838,7 +3233,16 @@ InstallGlobalFunction( AtlasOfGroupRepresentationsNotifyData,
 
     # Set up the table of contents for the extension.
     # The following call does the work.
-    toc:= AtlasTableOfContents( dirid, "all" );
+    if body <> fail then
+      if ForAll( AtlasOfGroupRepresentationsInfo.notified,
+                 r -> r.ID <> dirid ) then
+        # 'AtlasTableOfContents' sets the necessary components.
+        Add( AtlasOfGroupRepresentationsInfo.notified, rec( ID:= dirid ) );
+      fi;
+      toc:= AtlasTableOfContents( dirid, "all", body );
+    else
+      toc:= AtlasTableOfContents( dirid, "all" );
+    fi;
 
     # In test mode, make the ignored filenames visible.
     if test and IsBound( toc.otherfiles )
@@ -2976,7 +3380,7 @@ InstallGlobalFunction( AtlasOfGroupRepresentationsForgetData,
         # Remove information about representations.
         AtlasOfGroupRepresentationsInfo.ringinfo:= Filtered(
             AtlasOfGroupRepresentationsInfo.ringinfo,
-            x -> x[4] <> dirid );
+            x -> x[ Length(x) ] <> dirid );
         for gapname in RecNames(
                          AtlasOfGroupRepresentationsInfo.characterinfo ) do
           for list in AtlasOfGroupRepresentationsInfo.characterinfo.(
@@ -3031,6 +3435,9 @@ if IsString( IO_mkdir ) then
 fi;
 if IsString( IO_stat ) then
   Unbind( IO_stat );
+fi;
+if IsString( IO_chmod ) then
+  Unbind( IO_chmod );
 fi;
 
 

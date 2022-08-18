@@ -84,9 +84,9 @@
   
   [33X[1;0Y[29X[2XAsSemigroup[102X( [3XC[103X ) [32X operation[133X
   
-  [33X[0;0YIf  [3XC[103X  is  a  collection  whose  elements  form a semigroup (see [2XIsSemigroup[102X
-  ([14X51.1-1[114X))  then  [2XAsSemigroup[102X  returns  this  semigroup.  Otherwise  [9Xfail[109X  is
-  returned.[133X
+  [33X[0;0YIf  [3XC[103X  is  a  collection  whose elements form a semigroup under [2X\*[102X ([14X31.12-1[114X)
+  (see [2XIsSemigroup[102X   ([14X51.1-1[114X))   then   [2XAsSemigroup[102X  returns  this  semigroup.
+  Otherwise [9Xfail[109X is returned.[133X
   
   [1X51.1-7 AsSubsemigroup[101X
   
@@ -128,34 +128,53 @@
   [1X51.1-10 [33X[0;0YFreeSemigroup[133X[101X
   
   [33X[1;0Y[29X[2XFreeSemigroup[102X( [[3Xwfilt[103X, ][3Xrank[103X[, [3Xname[103X] ) [32X function[133X
-  [33X[1;0Y[29X[2XFreeSemigroup[102X( [[3Xwfilt[103X, ][3Xname1[103X, [3Xname2[103X, [3X...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeSemigroup[102X( [[3Xwfilt[103X, ][3Xname1[103X[, [3Xname2[103X[, [3X...[103X]] ) [32X function[133X
   [33X[1;0Y[29X[2XFreeSemigroup[102X( [[3Xwfilt[103X, ][3Xnames[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XFreeSemigroup[102X( [[3Xwfilt[103X, ][3Xinfinity[103X, [3Xname[103X, [3Xinit[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeSemigroup[102X( [[3Xwfilt[103X, ][3Xinfinity[103X[, [3Xname[103X][, [3Xinit[103X] ) [32X function[133X
   
-  [33X[0;0YCalled  with a positive integer [3Xrank[103X, [2XFreeSemigroup[102X returns a free semigroup
-  on  [3Xrank[103X  generators.  If  the  optional  argument  [3Xname[103X  is  given then the
-  generators  are  printed  as  [3Xname[103X[10X1[110X,  [3Xname[103X[10X2[110X  etc., that is, each name is the
-  concatenation of the string [3Xname[103X and an integer from [10X1[110X to [3Xrange[103X. The default
-  for [3Xname[103X is the string [10X"s"[110X.[133X
+  [33X[0;0Y[10XFreeSemigroup[110X  returns  a  free semigroup. The number of generators, and the
+  labels  given to the generators, can be specified in several different ways.
+  Warning:  the  labels of generators are only an aid for printing, and do not
+  necessarily  distinguish  generators;  see  the examples at the end for more
+  information.[133X
   
-  [33X[0;0YCalled in the second form, [2XFreeSemigroup[102X returns a free semigroup on as many
-  generators as arguments, printed as [3Xname1[103X, [3Xname2[103X etc.[133X
+  [8X 1: For a given rank, and an optional generator name prefix [108X
+        [33X[0;6YCalled  with  a  positive  integer  [3Xrank[103X, [2XFreeSemigroup[102X returns a free
+        semigroup  on  [3Xrank[103X  generators.  The optional argument [3Xname[103X must be a
+        string; its default value is [10X"s"[110X.[133X
   
-  [33X[0;0YCalled  in the third form, [2XFreeSemigroup[102X returns a free semigroup on as many
-  generators as the length of the list [3Xnames[103X, the [22Xi[122X-th generator being printed
-  as [3Xnames[103X[22X[i][122X.[133X
+        [33X[0;6YIf  [3Xname[103X  is  not  given  but  the [10XgeneratorNames[110X option is, then this
+        option is respected as described in Section [14X50.1-16[114X.[133X
   
-  [33X[0;0YCalled  in  the  fourth  form,  [2XFreeSemigroup[102X  returns  a  free semigroup on
-  infinitely  many  generators,  where the first generators are printed by the
-  names  in  the  list  [3Xinit[103X, and the other generators by [3Xname[103X and an appended
-  number.[133X
+        [33X[0;6YOtherwise,  the generators of the returned free semigroup are labelled
+        [3Xname[103X[10X1[110X, ..., [3Xname[103X[10Xk[110X, where [10Xk[110X is the value of [3Xrank[103X.[133X
   
-  [33X[0;0YIf    the   extra   argument   [3Xwfilt[103X   is   given,   it   must   be   either
-  [2XIsSyllableWordsFamily[102X    ([14X37.6-6[114X)   or   [2XIsLetterWordsFamily[102X   ([14X37.6-2[114X)   or
-  [2XIsWLetterWordsFamily[102X  ([14X37.6-4[114X) or [2XIsBLetterWordsFamily[102X ([14X37.6-4[114X). This filter
-  then  specifies  the  representation  used  for  the  elements  of  the free
-  semigroup (see [14X37.6[114X). If no such filter is given, a letter representation is
-  used.[133X
+  [8X2: For given generator names[108X
+        [33X[0;6YCalled  with  various  (at  least one) nonempty strings, [2XFreeSemigroup[102X
+        returns a free semigroup on as many generators as arguments, which are
+        labelled [3Xname1[103X, [3Xname2[103X, etc.[133X
+  
+  [8X3: For a given list of generator names[108X
+        [33X[0;6YCalled  with  a  nonempty  finite  list  [3Xnames[103X  of  nonempty  strings,
+        [2XFreeSemigroup[102X  returns  a  free semigroup on [10XLength([3Xnames[103X[10X)[110X generators,
+        whose [10Xi[110X-th generator is labelled [3Xnames[103X[10X[i][110X.[133X
+  
+  [8X 4: For the rank [9Xinfinity[109X, an optional default generator name prefix, and an optional finite list of generator names [108X
+        [33X[0;6YCalled  in  the fourth form, [2XFreeSemigroup[102X returns a free semigroup on
+        infinitely  many  generators.  The  optional  argument  [3Xname[103X must be a
+        string;  its default value is [10X"s"[110X, and the optional argument [3Xinit[103X must
+        be  a  finite  list of nonempty strings; its default value is an empty
+        list.  The  generators  are  initially  labelled according to the list
+        [3Xinit[103X, followed by [3Xname[103X[10Xi[110X for each [10Xi[110X in the range from [10XLength([3Xinit[103X[10X)+1[110X to
+        [9Xinfinity[109X; such a label is not allowed to appear in [3Xinit[103X.[133X
+  
+  [33X[0;0YIf  the  optional  first  argument  [3Xwfilt[103X  is  given, then it must be either
+  [10XIsSyllableWordsFamily[110X,    [10XIsLetterWordsFamily[110X,    [10XIsWLetterWordsFamily[110X,   or
+  [10XIsBLetterWordsFamily[110X.  This filter specifies the representation used for the
+  elements  of  the  free  semigroup (see [14X37.6[114X). If no such filter is given, a
+  letter representation is used.[133X
+  
+  [33X[0;0YFor more on associative words see Chapter [14X37[114X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xf1 := FreeSemigroup( 3 );[127X[104X
@@ -167,18 +186,32 @@
     [4X[28X<free semigroup on the generators [ gen1, gen2 ]>[128X[104X
     [4X[25Xgap>[125X [27Xf4 := FreeSemigroup( ["gen1" , "gen2"] );[127X[104X
     [4X[28X<free semigroup on the generators [ gen1, gen2 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeSemigroup( 3 : generatorNames := "boom" );[127X[104X
+    [4X[28X<free semigroup on the generators [ boom1, boom2, boom3 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeSemigroup( 2 : generatorNames := [ "u", "v", "w" ] );[127X[104X
+    [4X[28X<free semigroup on the generators [ u, v ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeSemigroup( infinity ) ;[127X[104X
+    [4X[28X<free semigroup on the generators [ s1, s2, ... ]>[128X[104X
+    [4X[25Xgap>[125X [27XF := FreeSemigroup( infinity, "g", [ "a", "b" ]);[127X[104X
+    [4X[28X<free semigroup on the generators [ a, b, ... ]>[128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfSemigroup( F ){[1..4]};[127X[104X
+    [4X[28X[ a, b, g3, g4 ][128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfSemigroup( FreeSemigroup( infinity, "gen" ) ){[1..3]};[127X[104X
+    [4X[28X[ gen1, gen2, gen3 ][128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfSemigroup( FreeSemigroup( infinity, [ "f" ] ) ){[1..3]};[127X[104X
+    [4X[28X[ f, s2, s3 ][128X[104X
+    [4X[25Xgap>[125X [27XFreeSemigroup(IsSyllableWordsFamily, 5);[127X[104X
+    [4X[28X<free semigroup on the generators [ s1, s2, s3, s4, s5 ]>[128X[104X
   [4X[32X[104X
-  
-  [33X[0;0YFor more on associative words see Chapter [14X37[114X.[133X
   
   [33X[0;0YEach  free  object defines a unique alphabet (and a unique family of words).
   Its generators are the letters of this alphabet, thus words of length one.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XFreeGroup( 5 );[127X[104X
-    [4X[28X<free group on the generators [ f1, f2, f3, f4, f5 ]>[128X[104X
-    [4X[25Xgap>[125X [27XFreeGroup( "a", "b" );[127X[104X
-    [4X[28X<free group on the generators [ a, b ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeSemigroup( 5 );[127X[104X
+    [4X[28X<free semigroup on the generators [ s1, s2, s3, s4, s5 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMonoid( "a", "b" );[127X[104X
+    [4X[28X<free monoid on the generators [ a, b ]>[128X[104X
     [4X[25Xgap>[125X [27XFreeGroup( infinity );[127X[104X
     [4X[28X<free group with infinity generators>[128X[104X
     [4X[25Xgap>[125X [27XFreeSemigroup( "x", "y" );[127X[104X
@@ -192,18 +225,20 @@
   by choosing strange names for the letters.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:= FreeGroup( "x", "x" );  gens:= GeneratorsOfGroup( f );;[127X[104X
+    [4X[25Xgap>[125X [27Xf := FreeGroup( "x", "x" );[127X[104X
     [4X[28X<free group on the generators [ x, x ]>[128X[104X
+    [4X[25Xgap>[125X [27Xgens := GeneratorsOfGroup( f );[127X[104X
+    [4X[28X[ x, x ][128X[104X
     [4X[25Xgap>[125X [27Xgens[1] = gens[2];[127X[104X
     [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27Xf:= FreeGroup( "f1*f2", "f2^-1", "Group( [ f1, f2 ] )" );[127X[104X
     [4X[28X<free group on the generators [ f1*f2, f2^-1, Group( [ f1, f2 ] ) ]>[128X[104X
     [4X[25Xgap>[125X [27Xgens:= GeneratorsOfGroup( f );;[127X[104X
-    [4X[25Xgap>[125X [27Xgens[1]*gens[2];[127X[104X
+    [4X[25Xgap>[125X [27Xgens[1] * gens[2];[127X[104X
     [4X[28Xf1*f2*f2^-1[128X[104X
-    [4X[25Xgap>[125X [27Xgens[1]/gens[3];[127X[104X
+    [4X[25Xgap>[125X [27Xgens[1] / gens[3];[127X[104X
     [4X[28Xf1*f2*Group( [ f1, f2 ] )^-1[128X[104X
-    [4X[25Xgap>[125X [27Xgens[3]/gens[1]/gens[2];[127X[104X
+    [4X[25Xgap>[125X [27Xgens[3] / gens[1] / gens[2];[127X[104X
     [4X[28XGroup( [ f1, f2 ] )*f1*f2^-1*f2^-1^-1[128X[104X
   [4X[32X[104X
   
@@ -295,34 +330,84 @@
   [1X51.2-9 [33X[0;0YFreeMonoid[133X[101X
   
   [33X[1;0Y[29X[2XFreeMonoid[102X( [[3Xwfilt[103X, ][3Xrank[103X[, [3Xname[103X] ) [32X function[133X
-  [33X[1;0Y[29X[2XFreeMonoid[102X( [[3Xwfilt[103X, ][3Xname1[103X, [3Xname2[103X, [3X...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeMonoid[102X( [[3Xwfilt[103X][,] [[3Xname1[103X[, [3Xname2[103X[, [3X...[103X]]] ) [32X function[133X
   [33X[1;0Y[29X[2XFreeMonoid[102X( [[3Xwfilt[103X, ][3Xnames[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XFreeMonoid[102X( [[3Xwfilt[103X, ][3Xinfinity[103X, [3Xname[103X, [3Xinit[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeMonoid[102X( [[3Xwfilt[103X, ][3Xinfinity[103X[, [3Xname[103X][, [3Xinit[103X] ) [32X function[133X
   
-  [33X[0;0YCalled  with  a  positive  integer [3Xrank[103X, [2XFreeMonoid[102X returns a free monoid on
-  [3Xrank[103X  generators. If the optional argument [3Xname[103X is given then the generators
-  are printed as [3Xname[103X[10X1[110X, [3Xname[103X[10X2[110X etc., that is, each name is the concatenation of
-  the  string [3Xname[103X and an integer from [10X1[110X to [3Xrange[103X. The default for [3Xname[103X is the
-  string [10X"m"[110X.[133X
+  [33X[0;0Y[10XFreeMonoid[110X  returns  a free monoid. The number of generators, and the labels
+  given  to  the  generators,  can  be  specified  in  several different ways.
+  Warning:  the  labels of generators are only an aid for printing, and do not
+  necessarily   distinguish  generators;  see  the  examples  at  the  end  of
+  [2XFreeSemigroup[102X ([14X51.1-10[114X) for more information.[133X
   
-  [33X[0;0YCalled  in  the  second  form,  [2XFreeMonoid[102X  returns a free monoid on as many
-  generators as arguments, printed as [3Xname1[103X, [3Xname2[103X etc.[133X
+  [8X 1: For a given rank, and an optional generator name prefix [108X
+        [33X[0;6YCalled  with  a  nonnegative  integer  [3Xrank[103X, [2XFreeMonoid[102X returns a free
+        monoid  on  [3Xrank[103X  generators.  The  optional  argument  [3Xname[103X must be a
+        string; its default value is [10X"m"[110X.[133X
   
-  [33X[0;0YCalled  in  the  third  form,  [2XFreeMonoid[102X  returns  a free monoid on as many
-  generators as the length of the list [3Xnames[103X, the [22Xi[122X-th generator being printed
-  as [3Xnames[103X[10X[[110X[22Xi[122X[10X][110X.[133X
+        [33X[0;6YIf  [3Xname[103X  is  not  given  but  the [10XgeneratorNames[110X option is, then this
+        option is respected as described in Section [14X50.1-16[114X.[133X
   
-  [33X[0;0YCalled  in  the  fourth form, [2XFreeMonoid[102X returns a free monoid on infinitely
-  many  generators, where the first generators are printed by the names in the
-  list [3Xinit[103X, and the other generators by [3Xname[103X and an appended number.[133X
+        [33X[0;6YOtherwise,  the  generators  of  the returned free monoid are labelled
+        [3Xname[103X[10X1[110X, ..., [3Xname[103X[10Xk[110X, where [10Xk[110X is the value of [3Xrank[103X.[133X
   
-  [33X[0;0YIf    the   extra   argument   [3Xwfilt[103X   is   given,   it   must   be   either
-  [2XIsSyllableWordsFamily[102X    ([14X37.6-6[114X)   or   [2XIsLetterWordsFamily[102X   ([14X37.6-2[114X)   or
-  [2XIsWLetterWordsFamily[102X  ([14X37.6-4[114X) or [2XIsBLetterWordsFamily[102X ([14X37.6-4[114X). This filter
-  then  specifies  the representation used for the elements of the free monoid
-  (see [14X37.6[114X). If no such filter is given, a letter representation is used.[133X
+  [8X2: For given generator names[108X
+        [33X[0;6YCalled with various nonempty strings, [2XFreeMonoid[102X returns a free monoid
+        on  as  many generators as arguments, which are labelled [3Xname1[103X, [3Xname2[103X,
+        etc.[133X
+  
+  [8X3: For a given list of generator names[108X
+        [33X[0;6YCalled  with  a  finite  list  [3Xnames[103X  of  nonempty strings, [2XFreeMonoid[102X
+        returns   a  free  monoid  on  [10XLength([3Xnames[103X[10X)[110X  generators,  whose  [10Xi[110X-th
+        generator is labelled [3Xnames[103X[10X[i][110X.[133X
+  
+  [8X 4: For the rank [9Xinfinity[109X, an optional default generator name prefix, and an optional finite list of generator names [108X
+        [33X[0;6YCalled  in  the  fourth  form,  [2XFreeMonoid[102X  returns  a  free monoid on
+        infinitely  many  generators.  The  optional  argument  [3Xname[103X must be a
+        string;  its default value is [10X"m"[110X, and the optional argument [3Xinit[103X must
+        be  a  finite  list of nonempty strings; its default value is an empty
+        list.  The  generators  are  initially  labelled according to the list
+        [3Xinit[103X, followed by [3Xname[103X[10Xi[110X for each [10Xi[110X in the range from [10XLength([3Xinit[103X[10X)+1[110X to
+        [9Xinfinity[109X.[133X
+  
+  [33X[0;0YIf  the  optional  first  argument  [3Xwfilt[103X  is  given, then it must be either
+  [10XIsSyllableWordsFamily[110X,    [10XIsLetterWordsFamily[110X,    [10XIsWLetterWordsFamily[110X,   or
+  [10XIsBLetterWordsFamily[110X.  This filter specifies the representation used for the
+  elements of the free monoid (see [14X37.6[114X). If no such filter is given, a letter
+  representation is used.[133X
   
   [33X[0;0YFor more on associative words see Chapter [14X37[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XFreeMonoid(5);[127X[104X
+    [4X[28X<free monoid on the generators [ m1, m2, m3, m4, m5 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMonoid(4, "gen");[127X[104X
+    [4X[28X<free monoid on the generators [ gen1, gen2, gen3, gen4 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMonoid(3 : generatorNames := "turbo");[127X[104X
+    [4X[28X<free monoid on the generators [ turbo1, turbo2, turbo3 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMonoid(2 : generatorNames := ["u", "v", "w"]);[127X[104X
+    [4X[28X<free monoid on the generators [ u, v ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMonoid(); FreeMonoid(0); FreeMonoid([]);[127X[104X
+    [4X[28X<free monoid of rank zero>[128X[104X
+    [4X[28X<free monoid of rank zero>[128X[104X
+    [4X[28X<free monoid of rank zero>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMonoid("a", "b", "c");[127X[104X
+    [4X[28X<free monoid on the generators [ a, b, c ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMonoid(["x", "y"]);[127X[104X
+    [4X[28X<free monoid on the generators [ x, y ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeMonoid(infinity);[127X[104X
+    [4X[28X<free monoid with infinity generators>[128X[104X
+    [4X[25Xgap>[125X [27XF := FreeMonoid(infinity, "g", ["a", "b"]);[127X[104X
+    [4X[28X<free monoid with infinity generators>[128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfMonoid(F){[1..4]};[127X[104X
+    [4X[28X[ a, b, g3, g4 ][128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfMonoid(FreeMonoid(infinity, "gen")){[1..3]};[127X[104X
+    [4X[28X[ gen1, gen2, gen3 ][128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfMonoid(FreeMonoid(infinity, [ "f", "g" ])){[1..3]};[127X[104X
+    [4X[28X[ f, g, m3 ][128X[104X
+    [4X[25Xgap>[125X [27XFreeMonoid(IsSyllableWordsFamily, 50);[127X[104X
+    [4X[28X<free monoid with 50 generators>[128X[104X
+  [4X[32X[104X
   
   [1X51.2-10 MonoidByMultiplicationTable[101X
   
@@ -868,10 +953,10 @@
   semigroup  elements  is created from a specific Rees matrix semigroup, which
   contains  the  whole  family  of  its  elements.  So,  it is not possible to
   multiply  or  compare elements belonging to distinct Rees matrix semigroups,
-  since  they belong to different families. This situation is similar to, say,
-  free  groups,  and different to, say, permutations, which belong to a single
-  family,  and  where  arbitrary  permutations  can be compared and multiplied
-  without reference to any group containing them.[133X
+  since  they  belong  to  different  families. For example, this situation is
+  similar to free groups, but it is different to permutations, which belong to
+  a  single  family,  and  where  arbitrary  permutations  can be compared and
+  multiplied without reference to any group containing them.[133X
   
   [33X[0;0YA  subsemigroup  of a Rees matrix semigroup is not necessarily a Rees matrix
   semigroup. Every semigroup consisting of elements of a Rees matrix semigroup
@@ -924,12 +1009,12 @@
   [6XReturns:[106X  [33X[0;10YA Rees matrix or 0-matrix semigroup.[133X
   
   [33X[0;0YWhen  [3XS[103X  is  a  semigroup and [3Xmat[103X is an [10Xm[110X by [10Xn[110X matrix with entries in [3XS[103X, the
-  function [10XReesMatrixSemigroup[110X returns the [10Xn[110X by [10Xm[110X Rees matrix semigroup over [3XS[103X
+  function [2XReesMatrixSemigroup[102X returns the [10Xn[110X by [10Xm[110X Rees matrix semigroup over [3XS[103X
   with multiplication defined by [3Xmat[103X.[133X
   
-  [33X[0;0YThe arguments of [10XReesZeroMatrixSemigroup[110X should be a semigroup [3XS[103X and an [10Xm[110X by
+  [33X[0;0YThe arguments of [2XReesZeroMatrixSemigroup[102X should be a semigroup [3XS[103X and an [10Xm[110X by
   [10Xn[110X   matrix   [3Xmat[103X   with   entries   in   [3XS[103X   or  equal  to  the  integer  [10X0[110X.
-  [10XReesZeroMatrixSemigroup[110X  returns  the  [10Xn[110X by [10Xm[110X Rees 0-matrix semigroup over [3XS[103X
+  [2XReesZeroMatrixSemigroup[102X  returns  the  [10Xn[110X by [10Xm[110X Rees 0-matrix semigroup over [3XS[103X
   with  multiplication defined by [3Xmat[103X. In [5XGAP[105X a Rees 0-matrix semigroup always
   contains  a multiplicative zero element, regardless of whether there are any
   entries in [3Xmat[103X which are equal to [10X0[110X.[133X
@@ -951,13 +1036,13 @@
   [33X[1;0Y[29X[2XReesZeroMatrixSubsemigroup[102X( [3XR[103X, [3XI[103X, [3XU[103X, [3XJ[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA Rees matrix or 0-matrix subsemigroup.[133X
   
-  [33X[0;0YThe arguments of [10XReesMatrixSubsemigroup[110X should be a Rees matrix semigroup [3XR[103X,
+  [33X[0;0YThe arguments of [2XReesMatrixSubsemigroup[102X should be a Rees matrix semigroup [3XR[103X,
   subsets  [3XI[103X  and  [3XJ[103X  of  the  rows  and  columns  of  [3XR[103X,  respectively, and a
-  subsemigroup  [3XS[103X  of  the  underlying  semigroup of [3XR[103X. [10XReesMatrixSubsemigroup[110X
+  subsemigroup  [3XU[103X  of  the  underlying  semigroup of [3XR[103X. [2XReesMatrixSubsemigroup[102X
   returns  the  subsemigroup of [3XR[103X generated by the direct product of [3XI[103X, [3XU[103X, and
   [3XJ[103X.[133X
   
-  [33X[0;0YThe usage and returned value of [10XReesZeroMatrixSubsemigroup[110X is analogous when
+  [33X[0;0YThe usage and returned value of [2XReesZeroMatrixSubsemigroup[102X is analogous when
   [3XR[103X is a Rees 0-matrix semigroup.[133X
   
   [4X[32X  Example  [32X[104X
@@ -966,10 +1051,10 @@
     [4X[25X>[125X [27X[(), (), ()], [0, 0, ()]];;[127X[104X
     [4X[25Xgap>[125X [27XR:=ReesZeroMatrixSemigroup(G, mat);[127X[104X
     [4X[28X<Rees 0-matrix semigroup 3x5 over [128X[104X
-    [4X[28X  <permutation group of size 1007 with 1 generators>>[128X[104X
+    [4X[28X  <permutation group of size 1007 with 1 generator>>[128X[104X
     [4X[25Xgap>[125X [27XReesZeroMatrixSubsemigroup(R, [1,3], G, [1..5]);[127X[104X
     [4X[28X<Rees 0-matrix semigroup 2x5 over [128X[104X
-    [4X[28X  <permutation group of size 1007 with 1 generators>>[128X[104X
+    [4X[28X  <permutation group of size 1007 with 1 generator>>[128X[104X
   [4X[32X[104X
   
   [1X51.9-3 IsomorphismReesMatrixSemigroup[101X
@@ -982,14 +1067,14 @@
   a  group,  and  every  finite  0-simple  semigroup  is  isomorphic to a Rees
   0-matrix semigroup over a group.[133X
   
-  [33X[0;0YIf the argument [3XS[103X is a simple semigroup, then [10XIsomorphismReesMatrixSemigroup[110X
+  [33X[0;0YIf the argument [3XS[103X is a simple semigroup, then [2XIsomorphismReesMatrixSemigroup[102X
   returns  an isomorphism to a Rees matrix semigroup over a group. If [3XS[103X is not
-  simple, then [10XIsomorphismReesMatrixSemigroup[110X returns an error.[133X
+  simple, then [2XIsomorphismReesMatrixSemigroup[102X returns an error.[133X
   
   [33X[0;0YIf     the     argument     [3XS[103X     is     a    0-simple    semigroup,    then
-  [10XIsomorphismReesZeroMatrixSemigroup[110X returns an isomorphism to a Rees 0-matrix
+  [2XIsomorphismReesZeroMatrixSemigroup[102X returns an isomorphism to a Rees 0-matrix
   semigroup    over    a    group.    If    [3XS[103X    is    not    0-simple,   then
-  [10XIsomorphismReesMatrixSemigroup[110X returns an error.[133X
+  [2XIsomorphismReesZeroMatrixSemigroup[102X returns an error.[133X
   
   [33X[0;0YSee [2XIsSimpleSemigroup[102X ([14X51.4-4[114X) and [2XIsZeroSimpleSemigroup[102X ([14X51.4-5[114X).[133X
   
@@ -1032,8 +1117,8 @@
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YEvery   element   of  a  Rees  matrix  semigroup  belongs  to  the  category
-  [10XIsReesMatrixSemigroupElement[110X, and every element of a Rees 0-matrix semigroup
-  belongs to the category [10XIsReesZeroMatrixSemigroupElement[110X.[133X
+  [2XIsReesMatrixSemigroupElement[102X, and every element of a Rees 0-matrix semigroup
+  belongs to the category [2XIsReesZeroMatrixSemigroupElement[102X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XG:=Group((1,2,3));;[127X[104X
@@ -1057,12 +1142,12 @@
   [33X[0;0YThe   arguments  of  [3XReesMatrixSemigroupElement[103X  should  be  a  Rees  matrix
   subsemigroup  [3XR[103X,  elements  [3Xi[103X  and  [3Xj[103X  of  the  the  rows  and columns of [3XR[103X,
   respectively,   and   an  element  [3Xx[103X  of  the  underlying  semigroup  of  [3XR[103X.
-  [10XReesMatrixSemigroupElement[110X  returns  the  element  of  [3XR[103X  with  row index [3Xi[103X,
+  [2XReesMatrixSemigroupElement[102X  returns  the  element  of  [3XR[103X  with  row index [3Xi[103X,
   underlying  element  [3Xx[103X in the underlying semigroup of [3XR[103X, and column index [3Xj[103X,
   if such an element exist, if such an element exists.[133X
   
-  [33X[0;0YThe   usage  of  [10XReesZeroMatrixSemigroupElement[110X  is  analogous  to  that  of
-  [10XReesMatrixSemigroupElement[110X, when [3XR[103X is a Rees 0-matrix semigroup.[133X
+  [33X[0;0YThe   usage  of  [2XReesZeroMatrixSemigroupElement[102X  is  analogous  to  that  of
+  [2XReesMatrixSemigroupElement[102X, when [3XR[103X is a Rees 0-matrix semigroup.[133X
   
   [33X[0;0YThe  row  [3Xi[103X,  underlying  element  [3Xx[103X, and column [3Xj[103X of an element [10Xy[110X of a Rees
   matrix (or 0-matrix) semigroup can be recovered from [10Xy[110X using [10Xy[1][110X, [10Xy[2][110X, and
@@ -1117,7 +1202,7 @@
   [33X[0;0YA   subsemigroup   of   a   Rees   matrix   semigroup   [22XI×  U×  J[122X  satisfies
   [2XIsReesMatrixSemigroup[102X  if and only if it is equal to [22XI'× U'× J'[122X where [22XI'⊆ I[122X,
   [22XJ'⊆  J[122X,  and  [22XU'[122X  is  a  subsemigroup of [22XU[122X. It can be costly to check that a
-  subsemigroup  defined  by  generators  satisfies  [10XIsReesMatrixSemigroup[110X. The
+  subsemigroup  defined  by  generators  satisfies  [2XIsReesMatrixSemigroup[102X. The
   analogous statements holds for Rees 0-matrix semigroups.[133X
   
   [33X[0;0YIt  is  not  necessarily the case that a simple subsemigroups of Rees matrix
@@ -1176,14 +1261,18 @@
   
   [1X51.9-8 Matrix[101X
   
-  [33X[1;0Y[29X[2XMatrix[102X( [3XR[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XMatrix[102X( [3XR[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMatrixOfReesMatrixSemigroup[102X( [3XR[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XMatrixOfReesZeroMatrixSemigroup[102X( [3XR[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA matrix.[133X
   
-  [33X[0;0YIf  [3XR[103X is a Rees matrix or 0-matrix semigroup, then [10XMatrix[110X returns the matrix
-  used to define multiplication in [3XR[103X.[133X
+  [33X[0;0YIf    [3XR[103X    is    a    Rees    matrix    or    0-matrix    semigroup,    then
+  [2XMatrixOfReesMatrixSemigroup[102X   respectively   [2XMatrixOfReesZeroMatrixSemigroup[102X
+  return  the  matrix used to define multiplication in [3XR[103X. For convenience, one
+  may also abbreviate either to [2XMatrix[102X.[133X
   
   [33X[0;0YMore  specifically,  if [3XR[103X is a Rees matrix or 0-matrix semigroup, which is a
-  proper  subsemigroup  of  another  such  semigroup,  then [10XMatrix[110X returns the
+  proper  subsemigroup  of  another  such  semigroup,  then [2XMatrix[102X returns the
   matrix  used to define the Rees matrix (or 0-matrix) semigroup consisting of
   the  whole  family to which the elements of [3XR[103X belong. Thus, for example, a [10X1[110X
   by [10X1[110X Rees matrix semigroup can have a [10X65[110X by [10X15[110X matrix.[133X
@@ -1212,11 +1301,11 @@
   [33X[1;0Y[29X[2XColumns[102X( [3XR[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe rows or columns of [3XR[103X.[133X
   
-  [33X[0;0Y[10XRows[110X  returns the rows of the Rees matrix or 0-matrix semigroup [3XR[103X. Note that
+  [33X[0;0Y[2XRows[102X  returns the rows of the Rees matrix or 0-matrix semigroup [3XR[103X. Note that
   the  rows  of  the semigroup correspond to the columns of the matrix used to
   define multiplication in [3XR[103X.[133X
   
-  [33X[0;0Y[10XColumns[110X returns the columns of the Rees matrix or 0-matrix semigroup [3XR[103X. Note
+  [33X[0;0Y[2XColumns[102X returns the columns of the Rees matrix or 0-matrix semigroup [3XR[103X. Note
   that  the columns of the semigroup correspond to the rows of the matrix used
   to define multiplication in [3XR[103X.[133X
   
@@ -1242,7 +1331,7 @@
   [33X[1;0Y[29X[2XUnderlyingSemigroup[102X( [3XR[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA semigroup.[133X
   
-  [33X[0;0Y[10XUnderlyingSemigroup[110X  returns  the underlying semigroup of the Rees matrix or
+  [33X[0;0Y[2XUnderlyingSemigroup[102X  returns  the underlying semigroup of the Rees matrix or
   0-matrix semigroup [3XR[103X.[133X
   
   [33X[0;0YArbitrary subsemigroups of Rees matrix or 0-matrix semigroups do not have an

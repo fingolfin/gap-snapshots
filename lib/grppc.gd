@@ -156,7 +156,7 @@ DeclareAttribute( "InducedPcgsWrtFamilyPcgs", IsGroup );
 ##
 ##  <#GAPDoc Label="InducedPcgs">
 ##  <ManSection>
-##  <Oper Name="InducedPcgs" Arg='pcgs, grp'/>
+##  <Func Name="InducedPcgs" Arg='pcgs, grp'/>
 ##
 ##  <Description>
 ##  computes a pcgs for <A>grp</A> which is induced by <A>pcgs</A>.
@@ -164,13 +164,13 @@ DeclareAttribute( "InducedPcgsWrtFamilyPcgs", IsGroup );
 ##  then the result is induced with respect to this parent pcgs.
 ##  <P/>
 ##  <Ref Oper="InducedPcgs"/> is a wrapper function only.
-##  Therefore, methods for computing computing an induced pcgs
+##  Therefore, methods for computing an induced pcgs
 ##  should be installed for the operation <C>InducedPcgsOp</C>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareOperation( "InducedPcgs", [IsPcgs,IsGroup] );
+DeclareGlobalFunction( "InducedPcgs" );
 
 #############################################################################
 ##

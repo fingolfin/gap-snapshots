@@ -195,7 +195,7 @@
   
   [1X1.4 [33X[0;0YCopyright and License[133X[101X
   
-  [33X[0;0YCopyright © (1987-2021) by the [5XGAP[105X Group,[133X
+  [33X[0;0YCopyright © (1987-2022) by the [5XGAP[105X Group,[133X
   
   [33X[0;0Yincorporating  the  Copyright  ©  1999,  2000  by School of Mathematical and
   Computational  Sciences,  University of St Andrews, North Haugh, St Andrews,
@@ -228,7 +228,7 @@
   
   [4X[32X[104X
     [4X[GAP] The GAP Group, GAP - Groups, Algorithms, and Programming,[104X
-    [4X      Version 4.11.1; 2021 (https://www.gap-system.org)[104X
+    [4X      Version 4.12.0; 2022 (https://www.gap-system.org)[104X
   [4X[32X[104X
   
   [33X[0;0YYou are permitted to modify and redistribute [5XGAP[105X, but you are not allowed to
@@ -246,25 +246,12 @@
   [33X[0;0YIn  addition to the general copyright for [5XGAP[105X set forth above, the following
   terms apply to the versions of [5XGAP[105X for Windows.[133X
   
-  [33X[0;0YThe  executable  of [5XGAP[105X for Windows that we distribute was compiled with the
-  [10Xgcc[110X compiler supplied with [5XCygwin[105X installation ([7Xhttps://cygwin.com/[107X).[133X
-  
-  [33X[0;0YThe GNU C compiler is[133X
-  
-  [33X[0;0Y[13XCopyright © 2010 Free Software Foundation, Inc.[113X[133X
-  
-  [33X[0;0Yunder the terms of the GNU General Public License (GPL).[133X
-  
-  [33X[0;0YThe  [5XCygwin[105X  API  library  is also covered by the GNU GPL. The executable we
-  provide  is  linked  against this library (and in the process includes GPL'd
-  [5XCygwin[105X  glue  code). This means that the executable falls under the GPL too,
-  which it does anyhow.[133X
-  
-  [33X[0;0YThe  [11Xcyggcc_s-1.dll[111X, [11Xcygncurses-10.dll[111X, [11Xcygncursesw-10.dll[111X, [11Xcygpanel-10.dll[111X,
-  [11Xcygpopt-0.dll[111X,   [11Xcygreadline7.dll[111X,  [11Xcygstart.exe[111X,  [11Xcygwin1.dll[111X,  [11XlibW11.dll[111X,
-  [11Xmintty.exe[111X   and   [11Xregtool.exe[111X   are   taken   unmodified  from  the  [5XCygwin[105X
-  distribution.  They  are copyright by RedHat Software and released under the
-  GPL. For more information on [5XCygwin[105X, see [7Xhttps://www.cygwin.com[107X.[133X
+  [33X[0;0Y[5XGAP[105X   for   Windows   is   packaged   with   several  packages  from  [5XCygwin[105X
+  ([7Xhttps://cygwin.com[107X).  Files from [5XCygwin[105X are provided under their respective
+  licenses,  which  are  included  in  the  installation.  The [5XGAP[105X for Windows
+  executables  that  we  distribute are themselves released under the terms of
+  the  GNU  General Public License (GNU GPL); either version 2 of the License,
+  or (at your option) any later version.[133X
   
   [33X[0;0YPlease   contact   [7Xmailto:support@gap-system.org[107X   if   you   need   further
   information.[133X
@@ -313,5 +300,5 @@
   
   [33X[0;0YThe GAP Group,[133X
   
-  [33X[0;0Y2021-03-02[133X
+  [33X[0;0Y2022-08-18[133X
   

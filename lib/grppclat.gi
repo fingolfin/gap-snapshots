@@ -214,6 +214,7 @@ local g,op,a,pcgs,ma,mat,d,f,i,j,new,newmat,id,p,dodim,compldim,compl,dims,nm;
 #		      IsCommutative and IsElementaryAbelian);
 
       SetSize(a,p^Length(ma));
+      if Size(a)=Size(g) then a:=g;fi;
       new[i]:=a;
     od;
     ma:=new;
@@ -241,6 +242,7 @@ local g,op,a,pcgs,ma,mat,d,f,i,j,new,newmat,id,p,dodim,compldim,compl,dims,nm;
 		      #List(i,j->Product([1..d],k->pcgs[k]^IntFFE(j[k])))));
     od;
   fi;
+  SortBy(ma,x->-Size(x));
   return ma;
 end);
 
@@ -568,9 +570,6 @@ local g,	# group
       xo;	# xternal orbits
 
   g:=arg[1];
-  if Size(g)=1 then
-    return [g];
-  fi;
   if Length(arg)>1 and IsRecord(arg[Length(arg)]) then
     opt:=arg[Length(arg)];
   else
@@ -578,14 +577,23 @@ local g,	# group
   fi;
 
   # parse options
+  retnorm:=IsBound(opt.retnorm) and opt.retnorm;
+
+  # handle trivial case
+  if IsTrivial(g) then
+    if retnorm then
+       return [[g],[g]];
+    else
+       return [g];
+    fi;
+  fi;
+
   normal:=IsBound(opt.normal) and opt.normal=true;
   if IsBound(opt.consider) then 
     consider:=opt.consider;
   else
     consider:=false;
   fi;
-
-  retnorm:=IsBound(opt.retnorm) and opt.retnorm;
 
   isom:=fail;
 

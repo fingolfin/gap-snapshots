@@ -12,7 +12,7 @@
   
   [1X8.1-1 FiningOrbit[101X
   
-  [29X[2XFiningOrbit[102X( [3Xg[103X, [3Xobj[103X, [3Xact[103X ) [32X operation
+  [33X[1;0Y[29X[2XFiningOrbit[102X( [3Xg[103X, [3Xobj[103X, [3Xact[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YThe orbit of the object [3Xobj[103X under the action [3Xact[103X of the group [3Xg[103X.[133X
   
   [33X[0;0YThe  argument  [3Xobj[103X is either a subspace of a projective space, then combined
@@ -74,8 +74,8 @@
   
   [1X8.1-2 FiningOrbits[101X
   
-  [29X[2XFiningOrbits[102X( [3Xg[103X, [3Xset[103X, [3Xact[103X ) [32X operation
-  [29X[2XFiningOrbits[102X( [3Xg[103X, [3Xcoll[103X ) [32X operation
+  [33X[1;0Y[29X[2XFiningOrbits[102X( [3Xg[103X, [3Xset[103X, [3Xact[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XFiningOrbits[102X( [3Xg[103X, [3Xcoll[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YThe orbits of the group [3Xg[103X on [3Xset[103X under the action of [3Xact[103X.[133X
   
   [33X[0;0YThe  set  is  a  set  of  elements  of  a projective space, the group [3Xg[103X is a
@@ -113,7 +113,7 @@
   
   [1X8.1-3 FiningOrbitsDomain[101X
   
-  [29X[2XFiningOrbitsDomain[102X( [3Xg[103X, [3Xcoll[103X, [3Xact[103X ) [32X operation
+  [33X[1;0Y[29X[2XFiningOrbitsDomain[102X( [3Xg[103X, [3Xcoll[103X, [3Xact[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YThe orbits of the group [3Xg[103X on a collection [3Xcoll[103X under the action of
             [3Xact[103X.[133X
   
@@ -204,7 +204,7 @@
   
   [1X8.2-1 FiningStabiliser[101X
   
-  [29X[2XFiningStabiliser[102X( [3Xg[103X, [3Xel[103X ) [32X operation
+  [33X[1;0Y[29X[2XFiningStabiliser[102X( [3Xg[103X, [3Xel[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YThe subgroup of [3Xg[103X stabilising the element [3Xel[103X[133X
   
   [33X[0;0YThe argument [3Xg[103X is a group of collineations acting on the element [3Xel[103X, being a
@@ -267,7 +267,7 @@
   
   [1X8.2-2 FiningStabiliserOrb[101X
   
-  [29X[2XFiningStabiliserOrb[102X( [3Xg[103X, [3Xel[103X ) [32X operation
+  [33X[1;0Y[29X[2XFiningStabiliserOrb[102X( [3Xg[103X, [3Xel[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YThe subgroup of [3Xg[103X stabilising the element [3Xel[103X[133X
   
   [33X[0;0YThe argument [3Xg[103X is a group of collineations acting on the element [3Xel[103X, being a
@@ -358,7 +358,7 @@
   
   [1X8.2-3 FiningSetwiseStabiliser[101X
   
-  [29X[2XFiningSetwiseStabiliser[102X( [3Xg[103X, [3Xels[103X ) [32X operation
+  [33X[1;0Y[29X[2XFiningSetwiseStabiliser[102X( [3Xg[103X, [3Xels[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YThe subgroup of [3Xg[103X stabilising the set [3Xels[103X[133X
   
   [33X[0;0YThe argument [3Xg[103X is a group of collineations acting on the element [3Xel[103X, being a
@@ -436,7 +436,7 @@
   
   [1X8.2-4 StabiliserGroupOfSubspace[101X
   
-  [29X[2XStabiliserGroupOfSubspace[102X( [3Xsub[103X ) [32X operation
+  [33X[1;0Y[29X[2XStabiliserGroupOfSubspace[102X( [3Xsub[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YThe  subgroup  of  the  collineation  group  of  [3XAmbientSpace(sub)[103X
             stabilising the subspace [3Xsub[103X[133X
   
@@ -444,7 +444,7 @@
   
   [1X8.2-5 ProjectiveStabiliserGroupOfSubspace[101X
   
-  [29X[2XProjectiveStabiliserGroupOfSubspace[102X( [3Xsub[103X ) [32X operation
+  [33X[1;0Y[29X[2XProjectiveStabiliserGroupOfSubspace[102X( [3Xsub[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YThe  subgroup  of  the  projectivity  group  of  [3XAmbientSpace(sub)[103X
             stabilising the subspace [3Xsub[103X[133X
   
@@ -452,7 +452,7 @@
   
   [1X8.2-6 SpecialProjectiveStabiliserGroupOfSubspace[101X
   
-  [29X[2XSpecialProjectiveStabiliserGroupOfSubspace[102X( [3Xsub[103X ) [32X operation
+  [33X[1;0Y[29X[2XSpecialProjectiveStabiliserGroupOfSubspace[102X( [3Xsub[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YThe    subgroup    of    the   special   projectivity   group   of
             [3XAmbientSpace(sub)[103X stabilising the subspace [3Xsub[103X[133X
   
@@ -504,9 +504,9 @@
   
   [1X8.3-1 [33X[0;0YAction functions[133X[101X
   
-  [29X[2XOnProjSubspaces[102X( [3Xel[103X, [3Xg[103X ) [32X function
-  [29X[2XOnProjSubspacesExtended[102X( [3Xel[103X, [3Xg[103X ) [32X function
-  [29X[2XOnSetsProjSubspaces[102X( [3Xset[103X, [3Xg[103X ) [32X function
+  [33X[1;0Y[29X[2XOnProjSubspaces[102X( [3Xel[103X, [3Xg[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XOnProjSubspacesExtended[102X( [3Xel[103X, [3Xg[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XOnSetsProjSubspaces[102X( [3Xset[103X, [3Xg[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya element of a Lie geometry[133X
   
   [33X[0;0YLet  [3Xel[103X  be an element of any Lie geometry, and [3Xg[103X an element of a projective
@@ -521,8 +521,8 @@
   
   [1X8.3-2 [33X[0;0YGeneric GAP functions[133X[101X
   
-  [29X[2XActionHomomorphism[102X( [3Xg[103X, [3XS[103X, [3Xact[103X ) [32X operation
-  [29X[2XAction[102X( [3Xg[103X, [3XS[103X, [3Xact[103X ) [32X operation
+  [33X[1;0Y[29X[2XActionHomomorphism[102X( [3Xg[103X, [3XS[103X, [3Xact[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAction[102X( [3Xg[103X, [3XS[103X, [3Xact[103X ) [32X operation[133X
   
   [33X[0;0Y[3Xg[103X  is  a projective group, [3XS[103X is a set or a collection of elements, [3Xact[103X is an
   action  function.  [11XAction[111X simply returns [11XImage(hom)[111X, if [3Xhom[103X is the result of
@@ -563,7 +563,7 @@
   
   [1X8.3-3 NiceMonomorphism[101X
   
-  [29X[2XNiceMonomorphism[102X( [3Xgroup[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNiceMonomorphism[102X( [3Xgroup[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA group homomorphism[133X
   
   [33X[0;0YThis  is  a  generic  GAP  function,  and returns a homorphism to a "better"
@@ -571,7 +571,7 @@
   
   [1X8.3-4 NiceObject[101X
   
-  [29X[2XNiceObject[102X( [3Xgroup[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNiceObject[102X( [3Xgroup[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YA permutation group[133X
   
   [33X[0;0Y[3Xgroup[103X  is  a projective group. The object this operation returns is actually
@@ -631,7 +631,7 @@
   
   [1X8.3-6 SetParent[101X
   
-  [29X[2XSetParent[102X( [3Xgroup[103X ) [32X operation
+  [33X[1;0Y[29X[2XSetParent[102X( [3Xgroup[103X ) [32X operation[133X
   
   [33X[0;0YAssume  that  [22XG[122X  is a group of collineations. As mentioned already, from the
   underlying  field and dimension, only the underlying projective space can be

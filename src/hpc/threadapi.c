@@ -17,19 +17,20 @@
 #include "code.h"
 #include "error.h"
 #include "funcs.h"
-#include "gapstate.h"
 #include "gvars.h"
-#include "intrprtr.h"
 #include "io.h"
 #include "lists.h"
 #include "modules.h"
 #include "objects.h"
 #include "plist.h"
+#include "precord.h"
 #include "read.h"
 #include "records.h"
 #include "set.h"
 #include "stats.h"
 #include "stringobj.h"
+#include "trycatch.h"
+#include "vars.h"
 
 #include "hpc/guards.h"
 #include "hpc/misc.h"
@@ -38,8 +39,9 @@
 #include "hpc/tls.h"
 #include "hpc/traverse.h"
 
-#include <stdio.h>
 #include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <sys/time.h>
 
 #include <pthread.h>
@@ -363,6 +365,24 @@ static Obj ArgumentError(const char * message)
     return 0;
 }
 
+
+static int GetThreadID(const char * funcname, Obj thread)
+{
+    if (IS_INTOBJ(thread)) {
+        Int id = INT_INTOBJ(thread);
+        if (0 <= id && id < MAX_THREADS)
+            return id;
+    }
+    else if (TNUM_OBJ(thread) == T_THREAD) {
+        return ThreadID(thread);
+    }
+    RequireArgumentEx(funcname, thread, NICE_ARGNAME(thread),
+                      "must be a thread object or an integer between 0 and "
+                      "MAX_THREADS - 1");
+}
+
+
+
 /* TODO: register globals */
 static Obj             FirstKeepAlive;
 static Obj             LastKeepAlive;
@@ -416,11 +436,7 @@ static void ThreadedInterpreter(void * funcargs)
     Obj tmp, func;
     int i;
 
-    /* initialize everything and begin an interpreter                       */
-    STATE(NrError) = 0;
-    STATE(ThrownObject) = 0;
-
-    IntrBegin(STATE(BottomLVars));
+    // initialize everything and begin a fresh execution context
     tmp = KEPTALIVE(funcargs);
     StopKeepAlive(funcargs);
     func = ELM_PLIST(tmp, 1);
@@ -430,10 +446,10 @@ static void ThreadedInterpreter(void * funcargs)
     }
     SET_LEN_PLIST(tmp, LEN_PLIST(tmp) - 1);
 
-    TRY_IF_NO_ERROR
+    GAP_TRY
     {
         Obj init, exit;
-        if (sySetjmp(TLS(threadExit)))
+        if (setjmp(TLS(threadExit)))
             return;
         init = GVarOptFunction(&GVarTHREAD_INIT);
         if (init)
@@ -442,14 +458,9 @@ static void ThreadedInterpreter(void * funcargs)
         exit = GVarOptFunction(&GVarTHREAD_EXIT);
         if (exit)
             CALL_0ARGS(exit);
-        PushVoidObj();
-        /* end the interpreter */
-        IntrEnd(0, NULL);
     }
-    CATCH_ERROR
+    GAP_CATCH
     {
-        IntrEnd(1, NULL);
-        ClearError();
     }
 }
 
@@ -472,6 +483,9 @@ static Obj FuncCreateThread(Obj self, Obj funcargs)
     if (n == 0 || !IS_FUNC(ELM_PLIST(funcargs, 1)))
         return ArgumentError(
             "CreateThread: Needs at least one function argument");
+    Obj func = ELM_PLIST(funcargs, 1);
+    if (NARG_FUNC(func) != n - 1)
+        ErrorMayQuit("CreateThread: <func> expects %d arguments, but got %d", NARG_FUNC(func), n-1);
     templist = NEW_PLIST(T_PLIST, n);
     SET_LEN_PLIST(templist, n);
     SET_REGION(templist, NULL); /* make it public */
@@ -493,7 +507,7 @@ static Obj FuncCreateThread(Obj self, Obj funcargs)
 static Obj FuncWaitThread(Obj self, Obj obj)
 {
     const char * error = NULL;
-    RequireThread("WaitThread", obj, "thread");
+    RequireThread(SELF_NAME, obj, "thread");
     LockThreadControl(1);
     ThreadObject *thread = (ThreadObject *)ADDR_OBJ(obj);
     if (thread->status & THREAD_JOINED)
@@ -501,9 +515,9 @@ static Obj FuncWaitThread(Obj self, Obj obj)
     thread->status |= THREAD_JOINED;
     UnlockThreadControl();
     if (error)
-        ErrorQuit("WaitThread: %s", (UInt)error, 0L);
+        ErrorQuit("WaitThread: %s", (UInt)error, 0);
     if (!JoinThread(thread->id))
-        ErrorQuit("WaitThread: Invalid thread id", 0L, 0L);
+        ErrorQuit("WaitThread: Invalid thread id", 0, 0);
     return (Obj)0;
 }
 
@@ -526,7 +540,7 @@ static Obj FuncCurrentThread(Obj self)
 
 static Obj FuncThreadID(Obj self, Obj thread)
 {
-    RequireThread("ThreadID", thread, "thread");
+    RequireThread(SELF_NAME, thread, "thread");
     return INTOBJ_INT(ThreadID(thread));
 }
 
@@ -538,17 +552,7 @@ static Obj FuncThreadID(Obj self, Obj thread)
 
 static Obj FuncKillThread(Obj self, Obj thread)
 {
-    int id;
-    if (IS_INTOBJ(thread)) {
-        id = INT_INTOBJ(thread);
-        if (id < 0 || id >= MAX_THREADS)
-            return ArgumentError("KillThread: Thread ID out of range");
-    }
-    else if (TNUM_OBJ(thread) == T_THREAD) {
-        id = ThreadID(thread);
-    }
-    else
-        return ArgumentError("KillThread: Argument must be a thread object");
+    int id = GetThreadID("KillThread", thread);
     KillThread(id);
     return (Obj)0;
 }
@@ -560,28 +564,10 @@ static Obj FuncKillThread(Obj self, Obj thread)
 **
 */
 
-#define AS_STRING(s) #s
-
-
 static Obj FuncInterruptThread(Obj self, Obj thread, Obj handler)
 {
-    int id;
-    if (IS_INTOBJ(thread)) {
-        id = INT_INTOBJ(thread);
-        if (id < 0 || id >= MAX_THREADS)
-            return ArgumentError("InterruptThread: Thread ID out of range");
-    }
-    else if (TNUM_OBJ(thread) == T_THREAD) {
-        id = ThreadID(thread);
-    }
-    else
-        return ArgumentError(
-            "InterruptThread: First argument must identify a thread");
-    if (!IS_INTOBJ(handler) || INT_INTOBJ(handler) < 0 ||
-        INT_INTOBJ(handler) > MAX_INTERRUPT)
-        return ArgumentError(
-            "InterruptThread: Second argument must be an integer "
-            "between 0 and " AS_STRING(MAX_INTERRUPT));
+    int id = GetThreadID("InterruptThread", thread);
+    RequireBoundedInt(SELF_NAME, handler, 0, MAX_INTERRUPT);
     InterruptThread(id, (int)(INT_INTOBJ(handler)));
     return (Obj)0;
 }
@@ -594,24 +580,18 @@ static Obj FuncInterruptThread(Obj self, Obj thread, Obj handler)
 
 static Obj FuncSetInterruptHandler(Obj self, Obj handler, Obj func)
 {
-    if (!IS_INTOBJ(handler) || INT_INTOBJ(handler) < 1 ||
-        INT_INTOBJ(handler) > MAX_INTERRUPT)
-        return ArgumentError(
-            "SetInterruptHandler: First argument must be an integer "
-            "between 1 and " AS_STRING(MAX_INTERRUPT));
+    RequireBoundedInt(SELF_NAME, handler, 0, MAX_INTERRUPT);
     if (func == Fail) {
         SetInterruptHandler((int)(INT_INTOBJ(handler)), (Obj)0);
         return (Obj)0;
     }
     if (TNUM_OBJ(func) != T_FUNCTION || NARG_FUNC(func) != 0 ||
         !BODY_FUNC(func))
-        return ArgumentError("SetInterruptHandler: Second argument must be a "
-                             "parameterless function or 'fail'");
+        RequireArgument(SELF_NAME, func,
+                        "must be a parameterless function or 'fail'");
     SetInterruptHandler((int)(INT_INTOBJ(handler)), func);
     return (Obj)0;
 }
-
-#undef AS_STRING
 
 
 /****************************************************************************
@@ -623,17 +603,7 @@ static Obj FuncSetInterruptHandler(Obj self, Obj handler, Obj func)
 
 static Obj FuncPauseThread(Obj self, Obj thread)
 {
-    int id;
-    if (IS_INTOBJ(thread)) {
-        id = INT_INTOBJ(thread);
-        if (id < 0 || id >= MAX_THREADS)
-            return ArgumentError("PauseThread: Thread ID out of range");
-    }
-    else if (TNUM_OBJ(thread) == T_THREAD) {
-        id = ThreadID(thread);
-    }
-    else
-        return ArgumentError("PauseThread: Argument must be a thread object");
+    int id = GetThreadID("PauseThread", thread);
     PauseThread(id);
     return (Obj)0;
 }
@@ -648,18 +618,7 @@ static Obj FuncPauseThread(Obj self, Obj thread)
 
 static Obj FuncResumeThread(Obj self, Obj thread)
 {
-    int id;
-    if (IS_INTOBJ(thread)) {
-        id = INT_INTOBJ(thread);
-        if (id < 0 || id >= MAX_THREADS)
-            return ArgumentError("ResumeThread: Thread ID out of range");
-    }
-    else if (TNUM_OBJ(thread) == T_THREAD) {
-        id = ThreadID(thread);
-    }
-    else
-        return ArgumentError(
-            "ResumeThread: Argument must be a thread object");
+    int id = GetThreadID("ResumeThread", thread);
     ResumeThread(id);
     return (Obj)0;
 }
@@ -692,10 +651,9 @@ static Obj FuncSetRegionName(Obj self, Obj obj, Obj name)
 {
     Region * region = GetRegionOf(obj);
     if (!region)
-        return ArgumentError(
+        ArgumentError(
             "SetRegionName: Cannot change name of the public region");
-    if (!IsStringConv(name))
-        return ArgumentError("SetRegionName: Region name must be a string");
+    RequireStringRep(SELF_NAME, name);
     SetRegionName(region, name);
     return (Obj)0;
 }
@@ -704,7 +662,7 @@ static Obj FuncClearRegionName(Obj self, Obj obj)
 {
     Region * region = GetRegionOf(obj);
     if (!region)
-        return ArgumentError(
+        ArgumentError(
             "ClearRegionName: Cannot change name of the public region");
     SetRegionName(region, (Obj)0);
     return (Obj)0;
@@ -835,39 +793,17 @@ static Obj FuncHASH_UNLOCK_SHARED(Obj self, Obj target)
 
 static Obj FuncHASH_SYNCHRONIZED(Obj self, Obj target, Obj function)
 {
-    volatile int locked = 0;
-    jmp_buf      readJmpError;
-    memcpy(readJmpError, STATE(ReadJmpError), sizeof(jmp_buf));
-    TRY_IF_NO_ERROR
-    {
-        HashLock(target);
-        locked = 1;
-        CALL_0ARGS(function);
-        locked = 0;
-        HashUnlock(target);
-    }
-    if (locked)
-        HashUnlock(target);
-    memcpy(STATE(ReadJmpError), readJmpError, sizeof(jmp_buf));
+    HashLock(target);
+    Call0ArgsInNewReader(function);
+    HashUnlock(target);
     return (Obj)0;
 }
 
 static Obj FuncHASH_SYNCHRONIZED_SHARED(Obj self, Obj target, Obj function)
 {
-    volatile int locked = 0;
-    jmp_buf      readJmpError;
-    memcpy(readJmpError, STATE(ReadJmpError), sizeof(jmp_buf));
-    TRY_IF_NO_ERROR
-    {
-        HashLockShared(target);
-        locked = 1;
-        CALL_0ARGS(function);
-        locked = 0;
-        HashUnlockShared(target);
-    }
-    if (locked)
-        HashUnlockShared(target);
-    memcpy(STATE(ReadJmpError), readJmpError, sizeof(jmp_buf));
+    HashLockShared(target);
+    Call0ArgsInNewReader(function);
+    HashUnlockShared(target);
     return (Obj)0;
 }
 
@@ -910,8 +846,8 @@ static Obj FuncDISABLE_GUARDS(Obj self, Obj flag)
     else if (IS_INTOBJ(flag))
         TLS(DisableGuards) = (int)(INT_INTOBJ(flag));
     else
-        ErrorQuit("DISABLE_GUARDS: Argument must be boolean or integer", 0L,
-                  0L);
+        RequireArgument(SELF_NAME, flag,
+                        "must be a boolean or a small integer");
     return (Obj)0;
 }
 
@@ -919,22 +855,23 @@ static Obj FuncWITH_TARGET_REGION(Obj self, Obj obj, Obj func)
 {
     Region * volatile oldRegion = TLS(currentRegion);
     Region * volatile region = GetRegionOf(obj);
-    syJmp_buf readJmpError;
 
-    RequireFunction("WITH_TARGET_REGION", func);
+    RequireFunction(SELF_NAME, func);
     if (!region || !CheckExclusiveWriteAccess(obj))
         return ArgumentError(
             "WITH_TARGET_REGION: Requires write access to target region");
-    memcpy(readJmpError, STATE(ReadJmpError), sizeof(syJmp_buf));
-    if (sySetjmp(STATE(ReadJmpError))) {
-        memcpy(STATE(ReadJmpError), readJmpError, sizeof(syJmp_buf));
+
+    GAP_TRY
+    {
+        TLS(currentRegion) = region;
+        CALL_0ARGS(func);
         TLS(currentRegion) = oldRegion;
-        syLongjmp(&(STATE(ReadJmpError)), 1);
     }
-    TLS(currentRegion) = region;
-    CALL_0ARGS(func);
-    memcpy(STATE(ReadJmpError), readJmpError, sizeof(syJmp_buf));
-    TLS(currentRegion) = oldRegion;
+    GAP_CATCH
+    {
+        TLS(currentRegion) = oldRegion;
+        GAP_THROW();
+    }
     return (Obj)0;
 }
 
@@ -1373,98 +1310,100 @@ static Obj FuncCreateChannel(Obj self, Obj args)
             "CreateChannel: Argument must be capacity of the channel");
     default:
         return ArgumentError(
-            "CreateChannel: Function takes up to two arguments");
+            "CreateChannel: Function takes up to one argument");
     }
     return CreateChannel(capacity);
 }
 
-static int IsChannel(Obj obj)
+static BOOL IsChannel(Obj obj)
 {
     return obj && TNUM_OBJ(obj) == T_CHANNEL;
 }
 
 static Obj FuncDestroyChannel(Obj self, Obj channel)
 {
-    RequireChannel("DestroyChannel", channel);
+    RequireChannel(SELF_NAME, channel);
     if (!DestroyChannel(ObjPtr(channel)))
-        return ArgumentError("DestroyChannel: Channel is in use");
+        ErrorQuit("DestroyChannel: Channel is in use", 0, 0);
     return (Obj)0;
 }
 
 static Obj FuncTallyChannel(Obj self, Obj channel)
 {
-    RequireChannel("TallyChannel", channel);
+    RequireChannel(SELF_NAME, channel);
     return INTOBJ_INT(TallyChannel(ObjPtr(channel)));
 }
 
 static Obj FuncSendChannel(Obj self, Obj channel, Obj obj)
 {
-    RequireChannel("SendChannel", channel);
+    RequireChannel(SELF_NAME, channel);
     SendChannel(ObjPtr(channel), obj, 1);
     return (Obj)0;
 }
 
 static Obj FuncTransmitChannel(Obj self, Obj channel, Obj obj)
 {
-    RequireChannel("TransmitChannel", channel);
+    RequireChannel(SELF_NAME, channel);
     SendChannel(ObjPtr(channel), obj, 0);
     return (Obj)0;
 }
 
 static Obj FuncMultiSendChannel(Obj self, Obj channel, Obj list)
 {
-    RequireChannel("MultiSendChannel", channel);
-    RequireDenseList("MultiSendChannel", list);
+    RequireChannel(SELF_NAME, channel);
+    RequireDenseList(SELF_NAME, list);
     MultiSendChannel(ObjPtr(channel), list, 1);
     return (Obj)0;
 }
 
 static Obj FuncMultiTransmitChannel(Obj self, Obj channel, Obj list)
 {
-    RequireChannel("MultiTransmitChannel", channel);
-    RequireDenseList("MultiTransmitChannel", list);
+    RequireChannel(SELF_NAME, channel);
+    RequireDenseList(SELF_NAME, list);
     MultiSendChannel(ObjPtr(channel), list, 0);
     return (Obj)0;
 }
 
 static Obj FuncTryMultiSendChannel(Obj self, Obj channel, Obj list)
 {
-    RequireChannel("TryMultiSendChannel", channel);
-    RequireDenseList("TryMultiSendChannel", list);
+    RequireChannel(SELF_NAME, channel);
+    RequireDenseList(SELF_NAME, list);
     return INTOBJ_INT(TryMultiSendChannel(ObjPtr(channel), list, 1));
 }
 
 
 static Obj FuncTryMultiTransmitChannel(Obj self, Obj channel, Obj list)
 {
-    RequireChannel("TryMultiTransmitChannel", channel);
-    RequireDenseList("TryMultiTransmitChannel", list);
+    RequireChannel(SELF_NAME, channel);
+    RequireDenseList(SELF_NAME, list);
     return INTOBJ_INT(TryMultiSendChannel(ObjPtr(channel), list, 0));
 }
 
 
 static Obj FuncTrySendChannel(Obj self, Obj channel, Obj obj)
 {
-    RequireChannel("TrySendChannel", channel);
+    RequireChannel(SELF_NAME, channel);
     return TrySendChannel(ObjPtr(channel), obj, 1) ? True : False;
 }
 
 static Obj FuncTryTransmitChannel(Obj self, Obj channel, Obj obj)
 {
-    RequireChannel("TryTransmitChannel", channel);
+    RequireChannel(SELF_NAME, channel);
     return TrySendChannel(ObjPtr(channel), obj, 0) ? True : False;
 }
 
 static Obj FuncReceiveChannel(Obj self, Obj channel)
 {
-    RequireChannel("ReceiveChannel", channel);
+    RequireChannel(SELF_NAME, channel);
     return ReceiveChannel(ObjPtr(channel));
 }
 
-static int IsChannelList(Obj list)
+static BOOL IsChannelList(Obj list)
 {
     int len = LEN_PLIST(list);
     int i;
+    if (len == 0)
+        return 0;
     for (i = 1; i <= len; i++)
         if (!IsChannel(ELM_PLIST(list, i)))
             return 0;
@@ -1495,26 +1434,26 @@ static Obj FuncReceiveAnyChannelWithIndex(Obj self, Obj args)
             return ReceiveAnyChannel(ELM_PLIST(args, 1), 1);
         else
             return ArgumentError(
-                "ReceiveAnyChannel: Argument list must be channels");
+                "ReceiveAnyChannelWithIndex: Argument list must be channels");
     }
 }
 
 static Obj FuncMultiReceiveChannel(Obj self, Obj channel, Obj count)
 {
-    RequireChannel("MultiReceiveChannel", channel);
-    RequireNonnegativeSmallInt("MultiReceiveChannel", count);
+    RequireChannel(SELF_NAME, channel);
+    RequireNonnegativeSmallInt(SELF_NAME, count);
     return MultiReceiveChannel(ObjPtr(channel), INT_INTOBJ(count));
 }
 
 static Obj FuncInspectChannel(Obj self, Obj channel)
 {
-    RequireChannel("InspectChannel", channel);
+    RequireChannel(SELF_NAME, channel);
     return InspectChannel(ObjPtr(channel));
 }
 
 static Obj FuncTryReceiveChannel(Obj self, Obj channel, Obj obj)
 {
-    RequireChannel("TryReceiveChannel", channel);
+    RequireChannel(SELF_NAME, channel);
     return TryReceiveChannel(ObjPtr(channel), obj);
 }
 
@@ -1557,7 +1496,7 @@ static Obj FuncCreateSemaphore(Obj self, Obj args)
 static Obj FuncSignalSemaphore(Obj self, Obj semaphore)
 {
     Semaphore * sem;
-    RequireSemaphore("SignalSemaphore", semaphore);
+    RequireSemaphore(SELF_NAME, semaphore);
     sem = ObjPtr(semaphore);
     LockMonitor(ObjPtr(sem->monitor));
     sem->count++;
@@ -1570,7 +1509,7 @@ static Obj FuncSignalSemaphore(Obj self, Obj semaphore)
 static Obj FuncWaitSemaphore(Obj self, Obj semaphore)
 {
     Semaphore * sem;
-    RequireSemaphore("WaitSemaphore", semaphore);
+    RequireSemaphore(SELF_NAME, semaphore);
     sem = ObjPtr(semaphore);
     LockMonitor(ObjPtr(sem->monitor));
     sem->waiting++;
@@ -1588,7 +1527,7 @@ static Obj FuncTryWaitSemaphore(Obj self, Obj semaphore)
 {
     Semaphore * sem;
     int         success;
-    RequireSemaphore("TryWaitSemaphore", semaphore);
+    RequireSemaphore(SELF_NAME, semaphore);
     sem = ObjPtr(semaphore);
     LockMonitor(ObjPtr(sem->monitor));
     success = (sem->count > 0);
@@ -1664,22 +1603,22 @@ static Obj FuncCreateBarrier(Obj self)
     return CreateBarrier();
 }
 
-static int IsBarrier(Obj obj)
+static BOOL IsBarrier(Obj obj)
 {
     return obj && TNUM_OBJ(obj) == T_BARRIER;
 }
 
 static Obj FuncStartBarrier(Obj self, Obj barrier, Obj count)
 {
-    RequireBarrier("StartBarrier", barrier);
-    Int c = GetSmallInt("StartBarrier", count);
+    RequireBarrier(SELF_NAME, barrier);
+    Int c = GetSmallInt(SELF_NAME, count);
     StartBarrier(ObjPtr(barrier), c);
     return (Obj)0;
 }
 
 static Obj FuncWaitBarrier(Obj self, Obj barrier)
 {
-    RequireBarrier("WaitBarrier", barrier);
+    RequireBarrier(SELF_NAME, barrier);
     WaitBarrier(ObjPtr(barrier));
     return (Obj)0;
 }
@@ -1744,7 +1683,7 @@ static Obj SyncIsBound(SyncVar * var)
     return var->value ? True : False;
 }
 
-static int IsSyncVar(Obj var)
+static BOOL IsSyncVar(Obj var)
 {
     return var && TNUM_OBJ(var) == T_SYNCVAR;
 }
@@ -1756,26 +1695,26 @@ static Obj FuncCreateSyncVar(Obj self)
 
 static Obj FuncSyncWrite(Obj self, Obj syncvar, Obj value)
 {
-    RequireSyncVar("SyncWrite", syncvar);
+    RequireSyncVar(SELF_NAME, syncvar);
     SyncWrite(ObjPtr(syncvar), value);
     return (Obj)0;
 }
 
 static Obj FuncSyncTryWrite(Obj self, Obj syncvar, Obj value)
 {
-    RequireSyncVar("SyncTryWrite", syncvar);
+    RequireSyncVar(SELF_NAME, syncvar);
     return SyncTryWrite(ObjPtr(syncvar), value) ? True : False;
 }
 
 static Obj FuncSyncRead(Obj self, Obj syncvar)
 {
-    RequireSyncVar("SyncRead", syncvar);
+    RequireSyncVar(SELF_NAME, syncvar);
     return SyncRead(ObjPtr(syncvar));
 }
 
 static Obj FuncSyncIsBound(Obj self, Obj syncvar)
 {
-    RequireSyncVar("SyncIsBound", syncvar);
+    RequireSyncVar(SELF_NAME, syncvar);
     return SyncIsBound(ObjPtr(syncvar));
 }
 
@@ -1805,29 +1744,24 @@ static void PrintThread(Obj obj)
     }
     sprintf(buf, "<thread #%ld: %s>", (long)thread->id, status_message);
     UnlockThreadControl();
-    Pr("%s", (Int)buf, 0L);
+    Pr("%s", (Int)buf, 0);
 }
 
 static void PrintSemaphore(Obj obj)
 {
     Semaphore * sem = ObjPtr(obj);
     Int         count;
-    char        buffer[100];
     LockMonitor(ObjPtr(sem->monitor));
     count = sem->count;
     UnlockMonitor(ObjPtr(sem->monitor));
-    sprintf(buffer, "<semaphore %p: count = %ld>", (void *)sem, (long)count);
-    Pr("%s", (Int)buffer, 0L);
+    Pr("<semaphore with count = %d>", (Int)count, 0);
 }
 
 static void PrintChannel(Obj obj)
 {
     Channel * channel = ObjPtr(obj);
     Int       size, waiting, capacity;
-    char      buffer[20];
-    Pr("<channel ", 0L, 0L);
-    sprintf(buffer, "%p: ", (void *)channel);
-    Pr(buffer, 0L, 0L);
+    Pr("<channel with ", 0, 0);
     LockChannel(channel);
     size = channel->size;
     waiting = channel->waiting;
@@ -1840,7 +1774,7 @@ static void PrintChannel(Obj obj)
         Pr("%d elements, %d waiting>", size / 2, waiting);
     else {
         Pr("%d/%d elements, ", size / 2, capacity / 2);
-        Pr("%d waiting>", waiting, 0L);
+        Pr("%d waiting>", waiting, 0);
     }
 }
 
@@ -1848,31 +1782,24 @@ static void PrintBarrier(Obj obj)
 {
     Barrier * barrier = ObjPtr(obj);
     Int       count, waiting;
-    char      buffer[20];
-    Pr("<barrier ", 0L, 0L);
-    sprintf(buffer, "%p: ", (void *)barrier);
-    Pr(buffer, 0L, 0L);
     LockBarrier(barrier);
     count = barrier->count;
     waiting = barrier->waiting;
     UnlockBarrier(barrier);
-    Pr("%d of %d threads arrived>", waiting, count);
+    Pr("<barrier with %d of %d threads arrived>", waiting, waiting+count);
 }
 
 static void PrintSyncVar(Obj obj)
 {
     SyncVar * syncvar = ObjPtr(obj);
-    char      buffer[20];
     int       written;
     LockMonitor(ObjPtr(syncvar->monitor));
     written = syncvar->written;
     UnlockMonitor(ObjPtr(syncvar->monitor));
     if (written)
-        Pr("<initialized syncvar ", 0L, 0L);
+        Pr("<initialized syncvar>", 0, 0);
     else
-        Pr("<uninitialized syncvar ", 0L, 0L);
-    sprintf(buffer, "%p>", (void *)syncvar);
-    Pr(buffer, 0L, 0L);
+        Pr("<uninitialized syncvar>", 0, 0);
 }
 
 static void PrintRegion(Obj obj)
@@ -1882,18 +1809,18 @@ static void PrintRegion(Obj obj)
     Obj      name = GetRegionName(region);
 
     if (name) {
-        Pr("<region: %g", (Int)name, 0L);
+        Pr("<region: %g", (Int)name, 0);
     }
     else {
         snprintf(buffer, 32, "<region %p", (void *)GetRegionOf(obj));
-        Pr(buffer, 0L, 0L);
+        Pr(buffer, 0, 0);
     }
     if (region && region->count_active) {
         snprintf(buffer, 32, " (locked %zu/contended %zu)",
                  region->locks_acquired, region->locks_contended);
-        Pr(buffer, 0L, 0L);
+        Pr(buffer, 0, 0);
     }
-    Pr(">", 0L, 0L);
+    Pr(">", 0, 0);
 }
 
 static Obj FuncIS_LOCKED(Obj self, Obj obj)
@@ -1941,7 +1868,7 @@ static Obj FuncDO_LOCK(Obj self, Obj args)
 {
     Obj result = FuncLOCK(self, args);
     if (result == Fail)
-        ErrorMayQuit("Cannot lock required regions", 0L, 0L);
+        ErrorMayQuit("Cannot lock required regions", 0, 0);
     return result;
 }
 
@@ -1950,7 +1877,7 @@ static Obj FuncWRITE_LOCK(Obj self, Obj obj)
     const LockMode modes[] = { LOCK_MODE_READWRITE };
     int result = LockObjects(1, &obj, modes);
     if (result < 0)
-      ErrorMayQuit("Cannot lock required regions", 0L, 0L);
+      ErrorMayQuit("Cannot lock required regions", 0, 0);
     return INTOBJ_INT(result);
 }
 
@@ -1959,7 +1886,7 @@ static Obj FuncREAD_LOCK(Obj self, Obj obj)
     const LockMode modes[] = { LOCK_MODE_READONLY };
     int result = LockObjects(1, &obj, modes);
     if (result < 0)
-      ErrorMayQuit("Cannot lock required regions", 0L, 0L);
+      ErrorMayQuit("Cannot lock required regions", 0, 0);
     return INTOBJ_INT(result);
 }
 
@@ -1998,7 +1925,7 @@ static Obj FuncTRYLOCK(Obj self, Obj args)
 
 static Obj FuncUNLOCK(Obj self, Obj sp)
 {
-    RequireNonnegativeSmallInt("UNLOCK", sp);
+    RequireNonnegativeSmallInt(SELF_NAME, sp);
     PopRegionLocks(INT_INTOBJ(sp));
     return (Obj)0;
 }
@@ -2013,40 +1940,6 @@ static Obj FuncCURRENT_LOCKS(Obj self)
     return result;
 }
 
-static int AutoRetyping = 0;
-
-static int
-MigrateObjects(int count, Obj * objects, Region * target, int retype)
-{
-    int i;
-    if (count && retype && IS_BAG_REF(objects[0]) &&
-        REGION(objects[0])->owner == GetTLS() && AutoRetyping) {
-        for (i = 0; i < count; i++)
-            if (REGION(objects[i])->owner == GetTLS())
-                CLEAR_OBJ_FLAG(objects[i], TESTED);
-        for (i = 0; i < count; i++) {
-            if (REGION(objects[i])->owner == GetTLS() &&
-                IS_PLIST(objects[i])) {
-                if (!TEST_OBJ_FLAG(objects[i], TESTED))
-                    TYPE_OBJ(objects[i]);
-                if (retype >= 2)
-                    IsSet(objects[i]);
-            }
-        }
-    }
-    for (i = 0; i < count; i++) {
-        Region * region;
-        if (IS_BAG_REF(objects[i])) {
-            region = REGION(objects[i]);
-            if (!region || region->owner != GetTLS())
-                return 0;
-        }
-    }
-    for (i = 0; i < count; i++)
-        SET_REGION(objects[i], target);
-    return 1;
-}
-
 static Obj FuncREFINE_TYPE(Obj self, Obj obj)
 {
     if (IS_BAG_REF(obj) && CheckExclusiveWriteAccess(obj)) {
@@ -2055,67 +1948,11 @@ static Obj FuncREFINE_TYPE(Obj self, Obj obj)
     return obj;
 }
 
-static Obj FuncMAKE_PUBLIC_NORECURSE(Obj self, Obj obj)
-{
-    if (!MigrateObjects(1, &obj, NULL, 0))
-        return ArgumentError("MAKE_PUBLIC_NORECURSE: Thread does not have "
-                             "exclusive access to objects");
-    return obj;
-}
-
-static Obj FuncFORCE_MAKE_PUBLIC(Obj self, Obj obj)
-{
-    if (!IS_BAG_REF(obj))
-        return ArgumentError("FORCE_MAKE_PUBLIC: Argument is a small integer "
-                             "or finite-field element");
-    MakeBagPublic(obj);
-    return obj;
-}
-
-static Obj FuncSHARE_NORECURSE(Obj self, Obj obj, Obj name, Obj prec)
-{
-    Region * region = NewRegion();
-    if (name != Fail && !IsStringConv(name))
-        return ArgumentError(
-            "SHARE_NORECURSE: Second argument must be a string or fail");
-    Int p = GetSmallInt("SHARE_NORECURSE", prec);
-    region->prec = p;
-    if (!MigrateObjects(1, &obj, region, 0))
-        return ArgumentError("SHARE_NORECURSE: Thread does not have "
-                             "exclusive access to objects");
-    if (name != Fail)
-        SetRegionName(region, name);
-    return obj;
-}
-
-static Obj FuncMIGRATE_NORECURSE(Obj self, Obj obj, Obj target)
-{
-    Region * target_region = GetRegionOf(target);
-    if (!target_region ||
-        IsLocked(target_region) != LOCK_STATUS_READWRITE_LOCKED)
-        return ArgumentError("MIGRATE_NORECURSE: Thread does not have "
-                             "exclusive access to target region");
-    if (!MigrateObjects(1, &obj, target_region, 0))
-        return ArgumentError("MIGRATE_NORECURSE: Thread does not have "
-                             "exclusive access to object");
-    return obj;
-}
-
-static Obj FuncADOPT_NORECURSE(Obj self, Obj obj)
-{
-    if (!MigrateObjects(1, &obj, TLS(threadRegion), 0))
-        return ArgumentError("ADOPT_NORECURSE: Thread does not have "
-                             "exclusive access to objects");
-    return obj;
-}
-
 static Obj FuncREACHABLE(Obj self, Obj obj)
 {
     Obj result = ReachableObjectsFrom(obj);
     if (result == NULL) {
-        result = NEW_PLIST(T_PLIST, 1);
-        SET_LEN_PLIST(result, 1);
-        SET_ELM_PLIST(result, 1, obj);
+        result = NewPlistFromArgs(obj);
     }
     return result;
 }
@@ -2132,11 +1969,10 @@ static Obj FuncCLONE_DELIMITED(Obj self, Obj obj)
 
 static Obj FuncNEW_REGION(Obj self, Obj name, Obj prec)
 {
-    Region * region = NewRegion();
     if (name != Fail && !IsStringConv(name))
-        return ArgumentError(
-            "NEW_REGION: Second argument must be a string or fail");
-    Int p = GetSmallInt("NEW_REGION", prec);
+        RequireArgument(SELF_NAME, name, "must be a string or fail");
+    Int p = GetSmallInt(SELF_NAME, prec);
+    Region * region = NewRegion();
     region->prec = p;
     if (name != Fail)
         SetRegionName(region, name);
@@ -2149,16 +1985,56 @@ static Obj FuncREGION_PRECEDENCE(Obj self, Obj regobj)
     return region == NULL ? INTOBJ_INT(0) : INTOBJ_INT(region->prec);
 }
 
+static int AutoRetyping = 0;
+
+static int
+MigrateObjects(int count, Obj * objects, Region * target, int retype)
+{
+    int i;
+    if (count && retype && IS_BAG_REF(objects[0]) &&
+        REGION(objects[0])->owner == GetTLS() && AutoRetyping) {
+        for (i = 0; i < count; i++)
+            if (REGION(objects[i])->owner == GetTLS())
+                CLEAR_OBJ_FLAG(objects[i], OBJ_FLAG_TESTED);
+        for (i = 0; i < count; i++) {
+            if (REGION(objects[i])->owner == GetTLS() &&
+                IS_PLIST(objects[i])) {
+                if (!TEST_OBJ_FLAG(objects[i], OBJ_FLAG_TESTED))
+                    TYPE_OBJ(objects[i]);
+                if (retype >= 2)
+                    IS_SSORT_LIST(objects[i]); // record if the list a set in the tnum
+            }
+        }
+    }
+    for (i = 0; i < count; i++) {
+        Region * region;
+        if (IS_BAG_REF(objects[i])) {
+            region = REGION(objects[i]);
+            if (!region || region->owner != GetTLS())
+                return 0;
+        }
+    }
+    // If we are migrating records to a region where they become immutable,
+    // they need to be sorted, as sorting upon access may prove impossible.
+    for (i = 0; i < count; i++) {
+        Obj obj = objects[i];
+        if (TNUM_OBJ(obj) == T_PREC) {
+            SortPRecRNam(obj, 0);
+        }
+        SET_REGION(obj, target);
+    }
+    return 1;
+}
+
 static Obj FuncSHARE(Obj self, Obj obj, Obj name, Obj prec)
 {
-    Region * region = NewRegion();
-    Obj      reachable;
     if (name != Fail && !IsStringConv(name))
-        return ArgumentError(
-            "SHARE: Second argument must be a string or fail");
-    Int p = GetSmallInt("SHARE", prec);
+        RequireArgument(SELF_NAME, name, "must be a string or fail");
+    Int p = GetSmallInt(SELF_NAME, prec);
+    Region * region = NewRegion();
     region->prec = p;
-    reachable = ReachableObjectsFrom(obj);
+
+    Obj reachable = ReachableObjectsFrom(obj);
     if (!MigrateObjects(LEN_PLIST(reachable), ADDR_OBJ(reachable) + 1, region,
                         1))
         return ArgumentError(
@@ -2170,18 +2046,32 @@ static Obj FuncSHARE(Obj self, Obj obj, Obj name, Obj prec)
 
 static Obj FuncSHARE_RAW(Obj self, Obj obj, Obj name, Obj prec)
 {
-    Region * region = NewRegion();
-    Obj      reachable;
     if (name != Fail && !IsStringConv(name))
-        return ArgumentError(
-            "SHARE_RAW: Second argument must be a string or fail");
-    Int p = GetSmallInt("SHARE_RAW", prec);
+        RequireArgument(SELF_NAME, name, "must be a string or fail");
+    Int p = GetSmallInt(SELF_NAME, prec);
+    Region * region = NewRegion();
     region->prec = p;
-    reachable = ReachableObjectsFrom(obj);
+
+    Obj reachable = ReachableObjectsFrom(obj);
     if (!MigrateObjects(LEN_PLIST(reachable), ADDR_OBJ(reachable) + 1, region,
                         0))
         return ArgumentError(
             "SHARE_RAW: Thread does not have exclusive access to objects");
+    if (name != Fail)
+        SetRegionName(region, name);
+    return obj;
+}
+
+static Obj FuncSHARE_NORECURSE(Obj self, Obj obj, Obj name, Obj prec)
+{
+    if (name != Fail && !IsStringConv(name))
+        RequireArgument(SELF_NAME, name, "must be a string or fail");
+    Int p = GetSmallInt(SELF_NAME, prec);
+    Region * region = NewRegion();
+    region->prec = p;
+    if (!MigrateObjects(1, &obj, region, 0))
+        return ArgumentError("SHARE_NORECURSE: Thread does not have "
+                             "exclusive access to objects");
     if (name != Fail)
         SetRegionName(region, name);
     return obj;
@@ -2197,13 +2087,11 @@ static Obj FuncADOPT(Obj self, Obj obj)
     return obj;
 }
 
-static Obj FuncMAKE_PUBLIC(Obj self, Obj obj)
+static Obj FuncADOPT_NORECURSE(Obj self, Obj obj)
 {
-    Obj reachable = ReachableObjectsFrom(obj);
-    if (!MigrateObjects(LEN_PLIST(reachable), ADDR_OBJ(reachable) + 1, NULL,
-                        0))
-        return ArgumentError(
-            "MAKE_PUBLIC: Thread does not have exclusive access to objects");
+    if (!MigrateObjects(1, &obj, TLS(threadRegion), 0))
+        return ArgumentError("ADOPT_NORECURSE: Thread does not have "
+                             "exclusive access to objects");
     return obj;
 }
 
@@ -2229,26 +2117,65 @@ static Obj FuncMIGRATE_RAW(Obj self, Obj obj, Obj target)
     Obj      reachable;
     if (!target_region ||
         IsLocked(target_region) != LOCK_STATUS_READWRITE_LOCKED)
-        return ArgumentError("MIGRATE: Thread does not have exclusive access "
+        return ArgumentError("MIGRATE_RAW: Thread does not have exclusive access "
                              "to target region");
     reachable = ReachableObjectsFrom(obj);
     if (!MigrateObjects(LEN_PLIST(reachable), ADDR_OBJ(reachable) + 1,
                         target_region, 0))
         return ArgumentError(
-            "MIGRATE: Thread does not have exclusive access to objects");
+            "MIGRATE_RAW: Thread does not have exclusive access to objects");
+    return obj;
+}
+
+static Obj FuncMIGRATE_NORECURSE(Obj self, Obj obj, Obj target)
+{
+    Region * target_region = GetRegionOf(target);
+    if (!target_region ||
+        IsLocked(target_region) != LOCK_STATUS_READWRITE_LOCKED)
+        return ArgumentError("MIGRATE_NORECURSE: Thread does not have "
+                             "exclusive access to target region");
+    if (!MigrateObjects(1, &obj, target_region, 0))
+        return ArgumentError("MIGRATE_NORECURSE: Thread does not have "
+                             "exclusive access to object");
+    return obj;
+}
+
+static Obj FuncMAKE_PUBLIC(Obj self, Obj obj)
+{
+    Obj reachable = ReachableObjectsFrom(obj);
+    if (!MigrateObjects(LEN_PLIST(reachable), ADDR_OBJ(reachable) + 1, NULL,
+                        0))
+        return ArgumentError(
+            "MAKE_PUBLIC: Thread does not have exclusive access to objects");
+    return obj;
+}
+
+static Obj FuncMAKE_PUBLIC_NORECURSE(Obj self, Obj obj)
+{
+    if (!MigrateObjects(1, &obj, NULL, 0))
+        return ArgumentError("MAKE_PUBLIC_NORECURSE: Thread does not have "
+                             "exclusive access to objects");
+    return obj;
+}
+
+static Obj FuncFORCE_MAKE_PUBLIC(Obj self, Obj obj)
+{
+    if (!IS_BAG_REF(obj))
+        return ArgumentError("FORCE_MAKE_PUBLIC: Argument is a small integer "
+                             "or finite-field element");
+    MakeBagPublic(obj);
     return obj;
 }
 
 static Obj FuncMakeThreadLocal(Obj self, Obj var)
 {
-    char * name;
+    const char * name;
     UInt   gvar;
     if (!IsStringConv(var) || GET_LEN_STRING(var) == 0)
-        return ArgumentError(
-            "MakeThreadLocal: Argument must be a variable name");
-    name = CSTR_STRING(var);
+        RequireArgument(SELF_NAME, var, "must be a variable name");
+    name = CONST_CSTR_STRING(var);
     gvar = GVarName(name);
-    name = CSTR_STRING(NameGVar(gvar)); /* to apply namespace scopes where needed. */
+    name = CONST_CSTR_STRING(NameGVar(gvar)); // to apply namespace scopes where needed
     MakeThreadLocalVar(gvar, RNamName(name));
     return (Obj)0;
 }
@@ -2300,6 +2227,7 @@ static Obj FuncIsReadOnlyObj(Obj self, Obj obj)
 
 static Obj FuncENABLE_AUTO_RETYPING(Obj self)
 {
+    // FIXME: but how does one turn off AutoRetyping again???
     AutoRetyping = 1;
     return (Obj)0;
 }
@@ -2400,8 +2328,8 @@ void InitSignals(void)
 static Obj FuncPERIODIC_CHECK(Obj self, Obj count, Obj func)
 {
     UInt n;
-    RequireNonnegativeSmallInt("PERIODIC_CHECK", count);
-    RequireFunction("PERIODIC_CHECK", func);
+    RequireNonnegativeSmallInt(SELF_NAME, count);
+    RequireFunction(SELF_NAME, func);
     /*
      * The following read of SigVTALRMCounter is a dirty read. We don't
      * need to synchronize access to it because it's a monotonically
@@ -2553,110 +2481,110 @@ static StructBagNames BagNames[] = {
 */
 static StructGVarFunc GVarFuncs[] = {
 
-    GVAR_FUNC(CreateThread, -1, "function"),
-    GVAR_FUNC(CurrentThread, 0, ""),
-    GVAR_FUNC(ThreadID, 1, "thread"),
-    GVAR_FUNC(WaitThread, 1, "thread"),
-    GVAR_FUNC(KillThread, 1, "thread"),
-    GVAR_FUNC(InterruptThread, 2, "thread, handler"),
-    GVAR_FUNC(SetInterruptHandler, 2, "handler, function"),
-    GVAR_FUNC(PauseThread, 1, "thread"),
-    GVAR_FUNC(ResumeThread, 1, "thread"),
-    GVAR_FUNC(HASH_LOCK, 1, "object"),
-    GVAR_FUNC(HASH_LOCK_SHARED, 1, "object"),
-    GVAR_FUNC(HASH_UNLOCK, 1, "object"),
-    GVAR_FUNC(HASH_UNLOCK_SHARED, 1, "object"),
-    GVAR_FUNC(HASH_SYNCHRONIZED, 2, "object, function"),
-    GVAR_FUNC(HASH_SYNCHRONIZED_SHARED, 2, "object, function"),
-    GVAR_FUNC(RegionOf, 1, "object"),
-    GVAR_FUNC(SetRegionName, 2, "obj, name"),
-    GVAR_FUNC(ClearRegionName, 1, "obj"),
-    GVAR_FUNC(RegionName, 1, "obj"),
-    GVAR_FUNC(WITH_TARGET_REGION, 2, "region, function"),
-    GVAR_FUNC(IsShared, 1, "object"),
-    GVAR_FUNC(IsPublic, 1, "object"),
-    GVAR_FUNC(IsThreadLocal, 1, "object"),
-    GVAR_FUNC(HaveWriteAccess, 1, "object"),
-    GVAR_FUNC(HaveReadAccess, 1, "object"),
-    GVAR_FUNC(CreateSemaphore, -1, "[count]"),
-    GVAR_FUNC(SignalSemaphore, 1, "semaphore"),
-    GVAR_FUNC(WaitSemaphore, 1, "semaphore"),
-    GVAR_FUNC(TryWaitSemaphore, 1, "semaphore"),
-    GVAR_FUNC(CreateChannel, -1, "[size]"),
-    GVAR_FUNC(DestroyChannel, 1, "channel"),
-    GVAR_FUNC(TallyChannel, 1, "channel"),
-    GVAR_FUNC(SendChannel, 2, "channel, obj"),
-    GVAR_FUNC(TransmitChannel, 2, "channel, obj"),
-    GVAR_FUNC(ReceiveChannel, 1, "channel"),
-    GVAR_FUNC(ReceiveAnyChannel, -1, "channel list"),
-    GVAR_FUNC(ReceiveAnyChannelWithIndex, -1, "channel list"),
-    GVAR_FUNC(MultiReceiveChannel, 2, "channel, count"),
-    GVAR_FUNC(TryReceiveChannel, 2, "channel, obj"),
-    GVAR_FUNC(MultiSendChannel, 2, "channel, list"),
-    GVAR_FUNC(TryMultiSendChannel, 2, "channel, list"),
-    GVAR_FUNC(TrySendChannel, 2, "channel, obj"),
-    GVAR_FUNC(MultiTransmitChannel, 2, "channel, list"),
-    GVAR_FUNC(TryMultiTransmitChannel, 2, "channel, list"),
-    GVAR_FUNC(TryTransmitChannel, 2, "channel, obj"),
-    GVAR_FUNC(InspectChannel, 1, "channel"),
-    GVAR_FUNC(CreateBarrier, 0, ""),
-    GVAR_FUNC(StartBarrier, 2, "barrier, count"),
-    GVAR_FUNC(WaitBarrier, 1, "barrier"),
-    GVAR_FUNC(CreateSyncVar, 0, ""),
-    GVAR_FUNC(SyncWrite, 2, "syncvar, obj"),
-    GVAR_FUNC(SyncTryWrite, 2, "syncvar, obj"),
-    GVAR_FUNC(SyncRead, 1, "syncvar"),
-    GVAR_FUNC(SyncIsBound, 1, "syncvar"),
-    GVAR_FUNC(IS_LOCKED, 1, "obj"),
-    GVAR_FUNC(LOCK, -1, "obj, ..."),
-    GVAR_FUNC(DO_LOCK, -1, "obj, ..."),
-    GVAR_FUNC(WRITE_LOCK, 1, "obj"),
-    GVAR_FUNC(READ_LOCK, 1, "obj"),
-    GVAR_FUNC(TRYLOCK, -1, "obj, ..."),
-    GVAR_FUNC(UNLOCK, 1, "sp"),
-    GVAR_FUNC(CURRENT_LOCKS, 0, ""),
-    GVAR_FUNC(REFINE_TYPE, 1, "obj"),
-    GVAR_FUNC(SHARE_NORECURSE, 3, "obj, string, integer"),
-    GVAR_FUNC(ADOPT_NORECURSE, 1, "obj"),
-    GVAR_FUNC(MIGRATE_NORECURSE, 2, "obj, target"),
-    GVAR_FUNC(NEW_REGION, 2, "string, integer"),
-    GVAR_FUNC(REGION_PRECEDENCE, 1, "obj"),
-    GVAR_FUNC(SHARE, 3, "obj, string, integer"),
-    GVAR_FUNC(SHARE_RAW, 3, "obj, string, integer"),
-    GVAR_FUNC(ADOPT, 1, "obj"),
-    GVAR_FUNC(MIGRATE, 2, "obj, target"),
-    GVAR_FUNC(MIGRATE_RAW, 2, "obj, target"),
-    GVAR_FUNC(MAKE_PUBLIC_NORECURSE, 1, "obj"),
-    GVAR_FUNC(MAKE_PUBLIC, 1, "obj"),
-    GVAR_FUNC(FORCE_MAKE_PUBLIC, 1, "obj"),
-    GVAR_FUNC(REACHABLE, 1, "obj"),
-    GVAR_FUNC(CLONE_REACHABLE, 1, "obj"),
-    GVAR_FUNC(CLONE_DELIMITED, 1, "obj"),
-    GVAR_FUNC(MakeThreadLocal, 1, "var"),
-    GVAR_FUNC(MakeReadOnlyObj, 1, "obj"),
-    GVAR_FUNC(MakeReadOnlyRaw, 1, "obj"),
-    GVAR_FUNC(MakeReadOnlySingleObj, 1, "obj"),
-    GVAR_FUNC(IsReadOnlyObj, 1, "obj"),
-    GVAR_FUNC(ENABLE_AUTO_RETYPING, 0, ""),
-    GVAR_FUNC(ORDERED_READ, 1, "obj"),
-    GVAR_FUNC(ORDERED_WRITE, 1, "obj"),
-    GVAR_FUNC(CREATOR_OF, 1, "obj"),
-    GVAR_FUNC(DISABLE_GUARDS, 1, "flag"),
-    GVAR_FUNC(DEFAULT_SIGINT_HANDLER, 0, ""),
-    GVAR_FUNC(DEFAULT_SIGVTALRM_HANDLER, 0, ""),
-    GVAR_FUNC(DEFAULT_SIGWINCH_HANDLER, 0, ""),
-    GVAR_FUNC(SIGWAIT, 1, "record"),
-    GVAR_FUNC(PERIODIC_CHECK, 2, "count, function"),
-    GVAR_FUNC(REGION_COUNTERS_ENABLE, 1, "region"),
-    GVAR_FUNC(REGION_COUNTERS_DISABLE, 1, "region"),
-    GVAR_FUNC(REGION_COUNTERS_GET_STATE, 1, "region"),
-    GVAR_FUNC(REGION_COUNTERS_GET, 1, "region"),
-    GVAR_FUNC(REGION_COUNTERS_RESET, 1, "region"),
-    GVAR_FUNC(THREAD_COUNTERS_ENABLE, 0, ""),
-    GVAR_FUNC(THREAD_COUNTERS_DISABLE, 0, ""),
-    GVAR_FUNC(THREAD_COUNTERS_GET_STATE, 0, ""),
-    GVAR_FUNC(THREAD_COUNTERS_GET, 0, ""),
-    GVAR_FUNC(THREAD_COUNTERS_RESET, 0, ""),
+    GVAR_FUNC_XARGS(CreateThread, -1, "function"),
+    GVAR_FUNC_0ARGS(CurrentThread),
+    GVAR_FUNC_1ARGS(ThreadID, thread),
+    GVAR_FUNC_1ARGS(WaitThread, thread),
+    GVAR_FUNC_1ARGS(KillThread, thread),
+    GVAR_FUNC_2ARGS(InterruptThread, thread, handler),
+    GVAR_FUNC_2ARGS(SetInterruptHandler, handler, function),
+    GVAR_FUNC_1ARGS(PauseThread, thread),
+    GVAR_FUNC_1ARGS(ResumeThread, thread),
+    GVAR_FUNC_1ARGS(HASH_LOCK, object),
+    GVAR_FUNC_1ARGS(HASH_LOCK_SHARED, object),
+    GVAR_FUNC_1ARGS(HASH_UNLOCK, object),
+    GVAR_FUNC_1ARGS(HASH_UNLOCK_SHARED, object),
+    GVAR_FUNC_2ARGS(HASH_SYNCHRONIZED, object, function),
+    GVAR_FUNC_2ARGS(HASH_SYNCHRONIZED_SHARED, object, function),
+    GVAR_FUNC_1ARGS(RegionOf, object),
+    GVAR_FUNC_2ARGS(SetRegionName, obj, name),
+    GVAR_FUNC_1ARGS(ClearRegionName, obj),
+    GVAR_FUNC_1ARGS(RegionName, obj),
+    GVAR_FUNC_2ARGS(WITH_TARGET_REGION, region, function),
+    GVAR_FUNC_1ARGS(IsShared, object),
+    GVAR_FUNC_1ARGS(IsPublic, object),
+    GVAR_FUNC_1ARGS(IsThreadLocal, object),
+    GVAR_FUNC_1ARGS(HaveWriteAccess, object),
+    GVAR_FUNC_1ARGS(HaveReadAccess, object),
+    GVAR_FUNC_XARGS(CreateSemaphore, -1, "[count]"),
+    GVAR_FUNC_1ARGS(SignalSemaphore, semaphore),
+    GVAR_FUNC_1ARGS(WaitSemaphore, semaphore),
+    GVAR_FUNC_1ARGS(TryWaitSemaphore, semaphore),
+    GVAR_FUNC_XARGS(CreateChannel, -1, "[size]"),
+    GVAR_FUNC_1ARGS(DestroyChannel, channel),
+    GVAR_FUNC_1ARGS(TallyChannel, channel),
+    GVAR_FUNC_2ARGS(SendChannel, channel, obj),
+    GVAR_FUNC_2ARGS(TransmitChannel, channel, obj),
+    GVAR_FUNC_1ARGS(ReceiveChannel, channel),
+    GVAR_FUNC_XARGS(ReceiveAnyChannel, -1, "channel list"),
+    GVAR_FUNC_XARGS(ReceiveAnyChannelWithIndex, -1, "channel list"),
+    GVAR_FUNC_2ARGS(MultiReceiveChannel, channel, count),
+    GVAR_FUNC_2ARGS(TryReceiveChannel, channel, obj),
+    GVAR_FUNC_2ARGS(MultiSendChannel, channel, list),
+    GVAR_FUNC_2ARGS(TryMultiSendChannel, channel, list),
+    GVAR_FUNC_2ARGS(TrySendChannel, channel, obj),
+    GVAR_FUNC_2ARGS(MultiTransmitChannel, channel, list),
+    GVAR_FUNC_2ARGS(TryMultiTransmitChannel, channel, list),
+    GVAR_FUNC_2ARGS(TryTransmitChannel, channel, obj),
+    GVAR_FUNC_1ARGS(InspectChannel, channel),
+    GVAR_FUNC_0ARGS(CreateBarrier),
+    GVAR_FUNC_2ARGS(StartBarrier, barrier, count),
+    GVAR_FUNC_1ARGS(WaitBarrier, barrier),
+    GVAR_FUNC_0ARGS(CreateSyncVar),
+    GVAR_FUNC_2ARGS(SyncWrite, syncvar, obj),
+    GVAR_FUNC_2ARGS(SyncTryWrite, syncvar, obj),
+    GVAR_FUNC_1ARGS(SyncRead, syncvar),
+    GVAR_FUNC_1ARGS(SyncIsBound, syncvar),
+    GVAR_FUNC_1ARGS(IS_LOCKED, obj),
+    GVAR_FUNC_XARGS(LOCK, -1, "obj, ..."),
+    GVAR_FUNC_XARGS(DO_LOCK, -1, "obj, ..."),
+    GVAR_FUNC_1ARGS(WRITE_LOCK, obj),
+    GVAR_FUNC_1ARGS(READ_LOCK, obj),
+    GVAR_FUNC_XARGS(TRYLOCK, -1, "obj, ..."),
+    GVAR_FUNC_1ARGS(UNLOCK, sp),
+    GVAR_FUNC_0ARGS(CURRENT_LOCKS),
+    GVAR_FUNC_1ARGS(REFINE_TYPE, obj),
+    GVAR_FUNC_2ARGS(NEW_REGION, string, integer),
+    GVAR_FUNC_1ARGS(REGION_PRECEDENCE, obj),
+    GVAR_FUNC_3ARGS(SHARE, obj, string, integer),
+    GVAR_FUNC_3ARGS(SHARE_RAW, obj, string, integer),
+    GVAR_FUNC_3ARGS(SHARE_NORECURSE, obj, string, integer),
+    GVAR_FUNC_1ARGS(ADOPT, obj),
+    GVAR_FUNC_1ARGS(ADOPT_NORECURSE, obj),
+    GVAR_FUNC_2ARGS(MIGRATE, obj, target),
+    GVAR_FUNC_2ARGS(MIGRATE_RAW, obj, target),
+    GVAR_FUNC_2ARGS(MIGRATE_NORECURSE, obj, target),
+    GVAR_FUNC_1ARGS(MAKE_PUBLIC, obj),
+    GVAR_FUNC_1ARGS(MAKE_PUBLIC_NORECURSE, obj),
+    GVAR_FUNC_1ARGS(FORCE_MAKE_PUBLIC, obj),
+    GVAR_FUNC_1ARGS(REACHABLE, obj),
+    GVAR_FUNC_1ARGS(CLONE_REACHABLE, obj),
+    GVAR_FUNC_1ARGS(CLONE_DELIMITED, obj),
+    GVAR_FUNC_1ARGS(MakeThreadLocal, var),
+    GVAR_FUNC_1ARGS(MakeReadOnlyObj, obj),
+    GVAR_FUNC_1ARGS(MakeReadOnlyRaw, obj),
+    GVAR_FUNC_1ARGS(MakeReadOnlySingleObj, obj),
+    GVAR_FUNC_1ARGS(IsReadOnlyObj, obj),
+    GVAR_FUNC_0ARGS(ENABLE_AUTO_RETYPING),
+    GVAR_FUNC_1ARGS(ORDERED_READ, obj),
+    GVAR_FUNC_1ARGS(ORDERED_WRITE, obj),
+    GVAR_FUNC_1ARGS(CREATOR_OF, obj),
+    GVAR_FUNC_1ARGS(DISABLE_GUARDS, flag),
+    GVAR_FUNC_0ARGS(DEFAULT_SIGINT_HANDLER),
+    GVAR_FUNC_0ARGS(DEFAULT_SIGVTALRM_HANDLER),
+    GVAR_FUNC_0ARGS(DEFAULT_SIGWINCH_HANDLER),
+    GVAR_FUNC_1ARGS(SIGWAIT, record),
+    GVAR_FUNC_2ARGS(PERIODIC_CHECK, count, function),
+    GVAR_FUNC_1ARGS(REGION_COUNTERS_ENABLE, region),
+    GVAR_FUNC_1ARGS(REGION_COUNTERS_DISABLE, region),
+    GVAR_FUNC_1ARGS(REGION_COUNTERS_GET_STATE, region),
+    GVAR_FUNC_1ARGS(REGION_COUNTERS_GET, region),
+    GVAR_FUNC_1ARGS(REGION_COUNTERS_RESET, region),
+    GVAR_FUNC_0ARGS(THREAD_COUNTERS_ENABLE),
+    GVAR_FUNC_0ARGS(THREAD_COUNTERS_DISABLE),
+    GVAR_FUNC_0ARGS(THREAD_COUNTERS_GET_STATE),
+    GVAR_FUNC_0ARGS(THREAD_COUNTERS_GET),
+    GVAR_FUNC_0ARGS(THREAD_COUNTERS_RESET),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -2760,7 +2688,8 @@ static Int InitLibrary(StructInitInfo * module)
     /* synchronization */
     pthread_mutex_init(&KeepAliveLock, NULL);
 
-    /* return success                                                      */
+    ExportAsConstantGVar(MAX_THREADS);
+
     return 0;
 }
 

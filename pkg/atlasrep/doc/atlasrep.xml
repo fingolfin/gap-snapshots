@@ -173,6 +173,7 @@ to change their defaults, using &GAP;'s user preferences
 <#Include Label="DisplayFunction">
 <#Include Label="AtlasRepMarkNonCoreData">
 <#Include Label="DebugFileLoading">
+<#Include Label="AtlasRepJsonFilesAddresses">
 
 </Section>
 

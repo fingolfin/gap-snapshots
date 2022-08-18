@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    IO_ForHomalg
+  </Title>
+  <Subtitle>
+    IO capabilities for the homalg project
+  </Subtitle>
+  <Version>
+    2022.08-03
+  </Version>
+  <Author>
+    Thomas Bächler<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Thomas Bächler<Br/>
+Lehrstuhl B fuer Mathematik, RWTH Aachen<Br/>
+Templergraben 64<Br/>
+52062 Aachen<Br/>
+Germany<Br/>
+</Address>
+<Email>thomas@momo.math.rwth-aachen.de</Email>
+<Homepage>http://wwwb.math.rwth-aachen.de/~thomas/</Homepage>
+
+  </Author>
+  <Author>
+    Mohamed Barakat<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Walter-Flex-Str. 3<Br/>
+57072 Siegen<Br/>
+Germany<Br/>
+</Address>
+<Email>mohamed.barakat@uni-siegen.de</Email>
+<Homepage>https://mohamed-barakat.github.io</Homepage>
+
+  </Author>
+  <Author>
+    Sebastian Gutsche<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Department Mathematik<Br/>
+Universität Siegen<Br/>
+Walter-Flex-Straße 3<Br/>
+57072 Siegen<Br/>
+Germany<Br/>
+</Address>
+<Email>gutsche@mathematik.uni-siegen.de</Email>
+<Homepage>https://algebra.mathematik.uni-siegen.de/gutsche/</Homepage>
+
+  </Author>
+  <Author>
+    Max Neunhöffer<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Max Neunhöffer<Br/>
+School of Mathematics and Statistics <Br/>
+Mathematical Institute <Br/>
+North Haugh<Br/>
+St Andrews, Fife KY16 9SS <Br/>
+Scotland, UK<Br/>
+</Address>
+<Email>neunhoef@mcs.st-and.ac.uk</Email>
+<Homepage>http://www-groups.mcs.st-and.ac.uk/~neunhoef/</Homepage>
+
+  </Author>
+  <Author>
+    Daniel Robertz<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Daniel Robertz<Br/>
+Lehrstuhl B fuer Mathematik, RWTH Aachen<Br/>
+Templergraben 64<Br/>
+52062 Aachen<Br/>
+Germany<Br/>
+</Address>
+<Email>daniel@momo.math.rwth-aachen.de</Email>
+<Homepage>http://wwwb.math.rwth-aachen.de/~daniel/</Homepage>
+
+  </Author>
+  <Date>
+    18 August 2022
+  </Date>
+  <Copyright>
+    &copyright; 2007-2015 by Thomas Bächler, Mohamed Barakat, Max Neunhöffer, and Daniel Robertz.
+
+This package may be distributed under the terms and conditions of the GNU Public License Version 2 or (at your option) any later version.
+  </Copyright>
+  </TitlePage>

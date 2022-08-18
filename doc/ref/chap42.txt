@@ -25,17 +25,16 @@
   
   [33X[0;0YInternally,  [5XGAP[105X  stores  a  permutation  as  a  list of the [22Xd[122X images of the
   integers [22X1, ..., d[122X, where the [21Xinternal degree[121X [22Xd[122X is the largest integer moved
-  by  the  permutation  or  bigger.  When  a  permutation  is read in in cycle
-  notation,  [22Xd[122X  is always set to the largest moved integer, but a bigger [22Xd[122X can
-  result from a multiplication of two permutations, because the product is not
-  shortened if it fixes [22Xd[122X. The images are stored all as [22X16[122X-bit integers or all
-  as  [22X32[122X-bit  integers, depending on whether [22Xd ≤ 65536[122X or not. For example, if
-  [22Xm≥  65536[122X,  the permutation [22X(1, 2, ..., m)[122X has internal degree [22Xd=m[122X and takes
-  [22X4m[122X  bytes  of  memory  for storage. But --- since the internal degree is not
-  reduced --- this means that the identity permutation [10X()[110X calculated as [22X(1, 2,
-  ...,  m)  *  (1, 2, ..., m)^{-1}[122X also takes [22X4m[122X bytes of storage. It can take
-  even  more  because  the  internal  list  has sometimes room for more than [22Xd[122X
-  images.[133X
+  by  the permutation or bigger. When a permutation is read in cycle notation,
+  [22Xd[122X is always set to the largest moved integer, but a bigger [22Xd[122X can result from
+  a  multiplication  of two permutations, because the product is not shortened
+  if it fixes [22Xd[122X. The images are stored all as [22X16[122X-bit integers or all as [22X32[122X-bit
+  integers,  depending  on whether [22Xd ≤ 65536[122X or not. For example, if [22Xm≥ 65536[122X,
+  the permutation [22X(1, 2, ..., m)[122X has internal degree [22Xd=m[122X and takes [22X4m[122X bytes of
+  memory  for  storage.  But  --- since the internal degree is not reduced ---
+  this  means  that the identity permutation [10X()[110X calculated as [22X(1, 2, ..., m) *
+  (1,  2,  ...,  m)^{-1}[122X also takes [22X4m[122X bytes of storage. It can take even more
+  because the internal list has sometimes room for more than [22Xd[122X images.[133X
   
   [33X[0;0YOn 32-bit systems, the limit on the degree of permutations is, for technical
   reasons,  [22X2^28-1[122X.  On  64-bit  systems,  it  is [22X2^32-1[122X because only a 32-bit
@@ -61,7 +60,7 @@
     [4X[28X9[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe  operation  [2XPermuted[102X  ([14X21.20-18[114X) can be used to permute the entries of a
+  [33X[0;0YThe  operation  [2XPermuted[102X  ([14X21.20-17[114X) can be used to permute the entries of a
   list according to a permutation.[133X
   
   [1X42.1-1 IsPerm[101X
@@ -115,7 +114,7 @@
   [22Xi[122X  is  the  smallest  point  with  [22Xi^{[3Xp1[103X}  ≠  i^{[3Xp2[103X}[122X. Therefore the identity
   permutation is the smallest permutation, see also Section [14X31.11[114X.[133X
   
-  [33X[0;0YPermutations  can  be  compared with certain other [5XGAP[105X objects, see [14X4.12[114X for
+  [33X[0;0YPermutations  can  be  compared with certain other [5XGAP[105X objects, see [14X4.13[114X for
   the details.[133X
   
   [4X[32X  Example  [32X[104X
@@ -135,7 +134,7 @@
   
   [33X[0;0Yreturns  the  number  of  points  for  which  [3Xperm1[103X and [3Xperm2[103X have different
   images.    This    should    always    produce    the    same    result   as
-  [10XNrMovePoints([3Xperm1[103X[10X/[3Xperm2[103X[10X)[110X  but  some  methods  may  be much faster than this
+  [10XNrMovedPoints([3Xperm1[103X[10X/[3Xperm2[103X[10X)[110X  but  some  methods  may be much faster than this
   form, since no new permutation needs to be created.[133X
   
   [1X42.2-3 SmallestGeneratorPerm[101X
@@ -261,7 +260,7 @@
   =  i[122X  if  [22Xi[122X is larger than the length of the list [3Xlist[103X. [2XPermList[102X will return
   [9Xfail[109X  if  [3Xlist[103X does not define a permutation, i.e., if [3Xlist[103X is not dense, or
   if  [3Xlist[103X  contains  a positive integer twice, or if [3Xlist[103X contains an integer
-  not  in  the  range [10X[ 1 .. Length( [3Xlist[103X[10X ) ][110X, of if [3Xlist[103X contains non-integer
+  not  in  the  range [10X[ 1 .. Length( [3Xlist[103X[10X ) ][110X, or if [3Xlist[103X contains non-integer
   entries, etc.[133X
   
   [1X42.5-3 MappingPermListList[101X

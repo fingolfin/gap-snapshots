@@ -305,7 +305,7 @@ FF              CommonFF (
         return f2;
     }
 
-    /* compute the neccessary degree                                       */
+    /* compute the necessary degree                                       */
     d = d1;
     while ( d % d2 != 0 ) {
         d += d1;
@@ -360,7 +360,7 @@ UInt DegreeFFE (
 
     /* the zero element has a degree of one                                */
     if ( val == 0 ) {
-        return 1L;
+        return 1;
     }
 
     /* compute the degree                                                  */
@@ -440,7 +440,7 @@ static Int EqFFE(Obj opL, Obj opR)
     pL = CHAR_FF( fL );
     pR = CHAR_FF( fR );
     if ( pL != pR ) {
-        return 0L;
+        return 0;
     }
 
     /* the zero element is not equal to any other element                  */
@@ -458,7 +458,7 @@ static Int EqFFE(Obj opL, Obj opR)
 
     /* elements in different fields are different too                      */
     if ( mL != mR ) {
-        return 0L;
+        return 0;
     }
 
     /* otherwise compare the elements in the common minimal field          */
@@ -543,7 +543,7 @@ static void PrFFV(FF fld, FFV val)
 
     /* print the zero                                                      */
     if ( val == 0 ) {
-        Pr( "%>0*Z(%>%d%2<)", (Int)p, 0L );
+        Pr("%>0*Z(%>%d%2<)", (Int)p, 0);
     }
 
     /* print a nonzero element as power of the primitive root              */
@@ -557,15 +557,15 @@ static void PrFFV(FF fld, FFV val)
         val = (val-1) / ((q-1)/(m-1)) + 1;
 
         /* print the element                                               */
-        Pr( "%>Z(%>%d%<", (Int)p, 0L );
+        Pr("%>Z(%>%d%<", (Int)p, 0);
         if ( d == 1 ) {
-            Pr( "%<)", 0L, 0L );
+            Pr("%<)", 0, 0);
         }
         else {
-            Pr( "^%>%d%2<)", (Int)d, 0L );
+            Pr("^%>%d%2<)", (Int)d, 0);
         }
         if ( val != 2 ) {
-            Pr( "^%>%d%<", (Int)(val-1), 0L );
+            Pr("^%>%d%<", (Int)(val-1), 0);
         }
     }
 
@@ -638,7 +638,6 @@ static Obj SumFFEFFE(Obj opL, Obj opR)
         if ( vR != 0 )  vR = ((qX-1) * (vR-1)) / (qR-1) + 1;
     }
 
-    /* compute and return the result                                       */
     vX = SUM_FFV( vL, vR, SUCC_FF(fX) );
     return NEW_FFE( fX, vX );
 }
@@ -668,7 +667,6 @@ static Obj SumFFEInt(Obj opL, Obj opR)
     /* get the left operand                                                */
     vL = VAL_FFE( opL );
 
-    /* compute and return the result                                       */
     vX = SUM_FFV( vL, vR, sX );
     return NEW_FFE( fX, vX );
 }
@@ -698,7 +696,6 @@ static Obj SumIntFFE(Obj opL, Obj opR)
     /* get the right operand                                               */
     vR = VAL_FFE( opR );
 
-    /* compute and return the result                                       */
     vX = SUM_FFV( vL, vR, sX );
     return NEW_FFE( fX, vX );
 }
@@ -715,7 +712,6 @@ static Obj ZeroFFE(Obj op)
     /* get the field for the result                                        */
     fX = FLD_FFE( op );
 
-    /* return the result                                                   */
     return NEW_FFE( fX, 0 );
 }
 
@@ -737,7 +733,6 @@ static Obj AInvFFE(Obj op)
     /* get the operand                                                     */
     v = VAL_FFE( op );
 
-    /* compute and return the result                                       */
     vX = NEG_FFV( v, sX ); 
     return NEW_FFE( fX, vX );
 }
@@ -797,7 +792,6 @@ static Obj DiffFFEFFE(Obj opL, Obj opR)
         if ( vR != 0 )  vR = ((qX-1) * (vR-1)) / (qR-1) + 1;
     }
 
-    /* compute and return the result                                       */
     vR = NEG_FFV( vR, SUCC_FF(fX) );
     vX = SUM_FFV( vL, vR, SUCC_FF(fX) );
     return NEW_FFE( fX, vX );
@@ -828,7 +822,6 @@ static Obj DiffFFEInt(Obj opL, Obj opR)
     /* get the left operand                                                */
     vL = VAL_FFE( opL );
 
-    /* compute and return the result                                       */
     vR = NEG_FFV( vR, sX );
     vX = SUM_FFV( vL, vR, sX );
     return NEW_FFE( fX, vX );
@@ -859,7 +852,6 @@ static Obj DiffIntFFE(Obj opL, Obj opR)
     /* get the right operand                                               */
     vR = VAL_FFE( opR );
 
-    /* compute and return the result                                       */
     vR = NEG_FFV( vR, sX );
     vX = SUM_FFV( vL, vR, sX );
     return NEW_FFE( fX, vX );
@@ -920,7 +912,6 @@ static Obj ProdFFEFFE(Obj opL, Obj opR)
         if ( vR != 0 )  vR = ((qX-1) * (vR-1)) / (qR-1) + 1;
     }
 
-    /* compute and return the result                                       */
     vX = PROD_FFV( vL, vR, SUCC_FF(fX) );
     return NEW_FFE( fX, vX );
 }
@@ -950,7 +941,6 @@ static Obj ProdFFEInt(Obj opL, Obj opR)
     /* get the left operand                                                */
     vL = VAL_FFE( opL );
 
-    /* compute and return the result                                       */
     vX = PROD_FFV( vL, vR, sX );
     return NEW_FFE( fX, vX );
 }
@@ -980,7 +970,6 @@ static Obj ProdIntFFE(Obj opL, Obj opR)
     /* get the right operand                                               */
     vR = VAL_FFE( opR );
 
-    /* compute and return the result                                       */
     vX = PROD_FFV( vL, vR, sX );
     return NEW_FFE( fX, vX );
 }
@@ -997,7 +986,6 @@ static Obj OneFFE(Obj op)
     /* get the field for the result                                        */
     fX = FLD_FFE( op );
 
-    /* return the result                                                   */
     return NEW_FFE( fX, 1 );
 }
 
@@ -1020,7 +1008,6 @@ static Obj InvFFE(Obj op)
     v = VAL_FFE( op );
     if ( v == 0 ) return Fail;
 
-    /* compute and return the result                                       */
     vX = QUO_FFV( 1, v, sX ); 
     return NEW_FFE( fX, vX );
 }
@@ -1080,7 +1067,6 @@ static Obj QuoFFEFFE(Obj opL, Obj opR)
         if ( vR != 0 )  vR = ((qX-1) * (vR-1)) / (qR-1) + 1;
     }
 
-    /* compute and return the result                                       */
     if ( vR == 0 ) {
         ErrorMayQuit("FFE operations: <divisor> must not be zero", 0, 0);
     }
@@ -1113,7 +1099,6 @@ static Obj QuoFFEInt(Obj opL, Obj opR)
     /* get the left operand                                                */
     vL = VAL_FFE( opL );
 
-    /* compute and return the result                                       */
     if ( vR == 0 ) {
         ErrorMayQuit("FFE operations: <divisor> must not be zero", 0, 0);
     }
@@ -1146,7 +1131,6 @@ static Obj QuoIntFFE(Obj opL, Obj opR)
     /* get the right operand                                               */
     vR = VAL_FFE( opR );
 
-    /* compute and return the result                                       */
     if ( vR == 0 ) {
         ErrorMayQuit("FFE operations: <divisor> must not be zero", 0, 0);
     }
@@ -1198,7 +1182,6 @@ static Obj PowFFEInt(Obj opL, Obj opR)
     /* reduce vR modulo the order of the multiplicative group first.       */
     vR %= *sX;
 
-    /* compute and return the result                                       */
     vX = POW_FFV( vL, vR, sX );
     return NEW_FFE( fX, vX );
 }
@@ -1215,7 +1198,6 @@ static Obj PowFFEFFE(Obj opL, Obj opR)
         ErrorMayQuit("<x> and <y> have different characteristic", 0, 0);
     }
 
-    /* compute and return the result                                       */
     return opL;
 }
 
@@ -1265,7 +1247,6 @@ static Obj FuncLOG_FFE_DEFAULT(Obj self, Obj opZ, Obj opR)
     UInt                qZ, qR, qX;     /* size  of left, right, common    */
     Int                 a, b, c, d, t;  /* temporaries                     */
 
-    /* check the arguments                                                 */
     if (!IS_FFE(opZ) || VAL_FFE(opZ) == 0) {
         ErrorMayQuit("LogFFE: <z> must be a nonzero finite field element", 0,
                      0);
@@ -1286,16 +1267,13 @@ static Obj FuncLOG_FFE_DEFAULT(Obj self, Obj opZ, Obj opR)
     qR = SIZE_FF( fR  );
 
     if ( qZ == qR ) {
-        fX = fZ;
         qX = qZ;
     }
     else if ( qZ % qR == 0 && (qZ-1) % (qR-1) == 0 ) {
-        fX = fZ;
         qX = qZ;
         if ( vR != 0 )  vR = (qZ-1) / (qR-1) * (vR-1) + 1;
     }
     else if ( qR % qZ == 0 && (qR-1) % (qZ-1) == 0 ) {
-        fX = fR;
         qX = qR;
         if ( vZ != 0 )  vZ = (qR-1) / (qZ-1) * (vZ-1) + 1;
     }
@@ -1441,18 +1419,18 @@ static Obj FuncZ(Obj self, Obj q)
     FF                  ff;             /* the finite field                */
 
     /* check the argument                                                  */
-    if ( (IS_INTOBJ(q) && (INT_INTOBJ(q) > 65536)) ||
-         (TNUM_OBJ(q) == T_INTPOS))
-      return CALL_1ARGS(ZOp, q);
-    
+    if ((IS_INTOBJ(q) && (INT_INTOBJ(q) > MAXSIZE_GF_INTERNAL)) ||
+        (TNUM_OBJ(q) == T_INTPOS))
+        return CALL_1ARGS(ZOp, q);
+
     if ( !IS_INTOBJ(q) || INT_INTOBJ(q)<=1 ) {
-        RequireArgument("Z", q, "must be a positive prime power");
+        RequireArgument(SELF_NAME, q, "must be a positive prime power");
     }
 
     ff = FiniteFieldBySize(INT_INTOBJ(q));
 
     if (!ff) {
-        RequireArgument("Z", q, "must be a positive prime power");
+        RequireArgument(SELF_NAME, q, "must be a positive prime power");
     }
 
     /* make the root                                                       */
@@ -1467,20 +1445,21 @@ static Obj FuncZ2(Obj self, Obj p, Obj d)
     if (ARE_INTOBJS(p, d)) {
         ip = INT_INTOBJ(p);
         id = INT_INTOBJ(d);
-        if (ip > 1 && id > 0 && id <= 16 && ip < 65536) {
+        if (ip > 1 && id > 0 && id <= DEGREE_LARGEST_INTERNAL_FF &&
+            ip <= MAXSIZE_GF_INTERNAL) {
             id1 = id;
             q = ip;
-            while (--id1 > 0 && q <= 65536)
+            while (--id1 > 0 && q <= MAXSIZE_GF_INTERNAL)
                 q *= ip;
-            if (q <= 65536) {
+            if (q <= MAXSIZE_GF_INTERNAL) {
                 /* get the finite field */
-                ff = FiniteField(ip, id);
+                ff = FiniteFieldBySize(q);
 
                 if (ff == 0 || CHAR_FF(ff) != ip)
-                    RequireArgument("Z", p, "must be a prime");
+                    RequireArgument(SELF_NAME, p, "must be a prime");
 
                 /* make the root */
-                return NEW_FFE(ff, (ip == 2 && id == 1 ? 1 : 2));
+                return NEW_FFE(ff, (q == 2) ? 1 : 2);
             }
         }
     }
@@ -1522,11 +1501,11 @@ static StructGVarFilt GVarFilts [] = {
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    GVAR_FUNC(CHAR_FFE_DEFAULT, 1, "z"),
-    GVAR_FUNC(DEGREE_FFE_DEFAULT, 1, "z"),
-    GVAR_FUNC(LOG_FFE_DEFAULT, 2, "z, root"),
-    GVAR_FUNC(INT_FFE_DEFAULT, 1, "z"),
-    GVAR_FUNC(Z, 1, "q"),
+    GVAR_FUNC_1ARGS(CHAR_FFE_DEFAULT, z),
+    GVAR_FUNC_1ARGS(DEGREE_FFE_DEFAULT, z),
+    GVAR_FUNC_2ARGS(LOG_FFE_DEFAULT, z, root),
+    GVAR_FUNC_1ARGS(INT_FFE_DEFAULT, z),
+    GVAR_FUNC_1ARGS(Z, q),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -1576,14 +1555,14 @@ static Int InitKernel (
     LtFuncs[   T_FFE ][ T_FFE ] = LtFFE;
 
     /* install the arithmetic methods                                      */
-    ZeroFuncs[ T_FFE ] = ZeroFFE;
+    ZeroSameMutFuncs[T_FFE] = ZeroFFE;
     ZeroMutFuncs[ T_FFE ] = ZeroFFE;
-    AInvFuncs[ T_FFE ] = AInvFFE;
+    AInvSameMutFuncs[T_FFE] = AInvFFE;
     AInvMutFuncs[ T_FFE ] = AInvFFE;
     OneFuncs [ T_FFE ] = OneFFE;
-    OneMutFuncs [ T_FFE ] = OneFFE;
+    OneSameMut[T_FFE] = OneFFE;
     InvFuncs [ T_FFE ] = InvFFE;
-    InvMutFuncs [ T_FFE ] = InvFFE;
+    InvSameMutFuncs[T_FFE] = InvFFE;
     SumFuncs[  T_FFE ][ T_FFE ] = SumFFEFFE;
     SumFuncs[  T_FFE ][ T_INT ] = SumFFEInt;
     SumFuncs[  T_INT ][ T_FFE ] = SumIntFFE;
@@ -1599,7 +1578,6 @@ static Int InitKernel (
     PowFuncs[  T_FFE ][ T_INT ] = PowFFEInt;
     PowFuncs[  T_FFE ][ T_FFE ] = PowFFEFFE;
 
-    /* return success                                                      */
     return 0;
 }
 
@@ -1636,7 +1614,9 @@ static Int InitLibrary (
     InitGVarFuncsFromTable( GVarFuncs );
     SET_HDLR_FUNC(ValGVar(GVarName("Z")), 2, FuncZ2);
 
-    /* return success                                                      */
+    // expose MAXSIZE_GF_INTERNAL from ffdata.h to the GAP library
+    ExportAsConstantGVar(MAXSIZE_GF_INTERNAL);
+
     return 0;
 }
 

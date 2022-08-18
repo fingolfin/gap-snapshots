@@ -130,13 +130,22 @@ DeclareAttribute("NaturalHomomorphismsPool",IsGroup,
 ##
 ##  <#GAPDoc Label="FactorCosetAction">
 ##  <ManSection>
-##  <Oper Name="FactorCosetAction" Arg='G, U[, N]'/>
+##  <Oper Name="FactorCosetAction" Arg='G, U[, N]'
+##    Label="for a group and subgroup"/>
+##  <Oper Name="FactorCosetAction" Arg='G, L'
+##    Label="for a group and list of subgroups"/>
 ##
 ##  <Description>
 ##  This command computes the action of the group <A>G</A> on the
 ##  right cosets of the subgroup <A>U</A>.
 ##  If a normal subgroup <A>N</A> of <A>G</A> is given,
 ##  it is stored as kernel of this action.
+##  When calling <C>FactorCosetAction</C> with a list of subgroups as the
+##  second argument, an action with image isomorphic to the subdirect
+##  product of the coset actions of all subgroups is computed. (However a
+##  degree reduction may take place if some of the actions are redundant, i.e.
+##  there is no guarantee that every subgroup in the list is represented by an
+##  orbit.)
 ##  <Example><![CDATA[
 ##  gap> g:=Group((1,2,3,4,5),(1,2));;u:=SylowSubgroup(g,2);;Index(g,u);
 ##  15
@@ -144,6 +153,9 @@ DeclareAttribute("NaturalHomomorphismsPool",IsGroup,
 ##  <action epimorphism>
 ##  gap> StructureDescription(Range(last));
 ##  "S5"
+##  gap> FactorCosetAction(g,[u,SylowSubgroup(g,3)]);;
+##  gap> Size(Image(last));
+##  120
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -189,8 +201,7 @@ DeclareSynonym( "ImproveOperationDegreeByBlocks",
 ##  <Func Name="SmallerDegreePermutationRepresentation" Arg='G'/>
 ##
 ##  <Description>
-##  Let <A>G</A> be a permutation group that acts transitively
-##  on its moved points.
+##  Let <A>G</A> be a permutation group.
 ##  <Ref Func="SmallerDegreePermutationRepresentation"/> tries to find a
 ##  faithful permutation representation of smaller degree.
 ##  The result is a group homomorphism onto a permutation group,
@@ -225,7 +236,11 @@ DeclareSynonym( "ImproveOperationDegreeByBlocks",
 ##  24
 ##  gap> small:= SmallerDegreePermutationRepresentation( image );;
 ##  gap> Image( small );
-##  Group([ (2,3), (2,3,4), (1,2)(3,4), (1,3)(2,4) ])
+##  Group([ (2,3), (1,2,3), (1,3)(2,4), (1,2)(3,4) ])
+##  gap> g:=Image(IsomorphismPermGroup(GL(4,5)));;
+##  gap> sm:=SmallerDegreePermutationRepresentation(g:cheap);;
+##  gap> NrMovedPoints(Range(sm));
+##  624
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>

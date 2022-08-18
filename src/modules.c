@@ -35,10 +35,16 @@
 #include "stringobj.h"
 #include "sysfiles.h"
 #include "sysopt.h"
+#include "sysstr.h"
+#include "vars.h"
+
+#include "config.h"
 
 #ifdef HAVE_DLOPEN
 #include <dlfcn.h>
 #endif
+
+#include <stdio.h>
 
 
 /****************************************************************************
@@ -99,6 +105,10 @@ static void RegisterModuleState(StructInitInfo * info)
     if (size == 0)
         return;
 
+    if (SyDebugLoading) {
+        fprintf(stderr, "#I    module '%s' reserved %d bytes module state\n", info->name, (int)size);
+    }
+
     // using moduleStateSize without moduleStateOffsetPtr makes no sense
     GAP_ASSERT(info->moduleStateOffsetPtr);
 
@@ -126,10 +136,7 @@ static void RegisterModuleState(StructInitInfo * info)
 */
 static Obj FuncGAP_CRC(Obj self, Obj filename)
 {
-    /* check the argument                                                  */
-    RequireStringRep("GAP_CRC", filename);
-
-    /* compute the crc value                                               */
+    RequireStringRep(SELF_NAME, filename);
     return ObjInt_Int(SyGAPCRC(CONST_CSTR_STRING(filename)));
 }
 
@@ -138,7 +145,7 @@ static Obj FuncGAP_CRC(Obj self, Obj filename)
 **
 *F  ActivateModule( <info> )
 */
-void ActivateModule(StructInitInfo * info)
+Int ActivateModule(StructInitInfo * info)
 {
     Int res = 0;
 
@@ -148,24 +155,46 @@ void ActivateModule(StructInitInfo * info)
         res = info->initKernel(info);
     }
 
-    if (!SyRestoring) {
+    int flag = 0;
+#ifdef GAP_ENABLE_SAVELOAD
+    flag = SyRestoring != 0;
+#endif
+    if (!flag) {
         UpdateCopyFopyInfo();
 
         if (info->initLibrary) {
             // Start a new executor to run the outer function of the module in
             // global context
-            ExecBegin(STATE(BottomLVars));
+            Bag oldLvars = SWITCH_TO_BOTTOM_LVARS();
             res = res || info->initLibrary(info);
-            ExecEnd(res);
+            SWITCH_TO_OLD_LVARS(oldLvars);
         }
     }
 
     if (res) {
-        Pr("#W  init functions returned non-zero exit code\n", 0L, 0L);
+        Pr("#W  init functions returned non-zero exit code\n", 0, 0);
     }
 
     if (info->initModuleState)
         res = res || (info->initModuleState)();
+
+    return res;
+}
+
+
+/****************************************************************************
+**
+*F  LookupStaticModule(<name>)
+*/
+StructInitInfo * LookupStaticModule(const char * name)
+{
+    for (int k = 0; CompInitFuncs[k]; k++) {
+        StructInitInfo * info = (*(CompInitFuncs[k]))();
+        if (info && streq(name, info->name)) {
+            return info;
+        }
+    }
+    return 0;
 }
 
 
@@ -176,156 +205,140 @@ void ActivateModule(StructInitInfo * info)
 **  This function attempts to load a compiled module <name>.
 **  If successful, it returns 0, and sets <func> to a pointer to the init
 **  function of the module. In case of an error, <func> is set to 0, and the
-**  return value indicates which error occurred.
+**  return value is a pointer to a string with more information.
 */
 #ifdef HAVE_DLOPEN
-static Int SyLoadModule(const Char * name, InitInfoFunc * func)
+static const char * SyLoadModule(const Char * name, InitInfoFunc * func)
 {
-    void *          init;
-    void *          handle;
-
-    *func = 0;
-
-    handle = dlopen( name, RTLD_LAZY | RTLD_GLOBAL);
-    if ( handle == 0 ) {
-      Pr("#W dlopen() error: %s\n", (long) dlerror(), 0L);
-      return 1;
+    void * handle = dlopen(name, RTLD_LAZY | RTLD_LOCAL);
+    if (handle == 0) {
+        *func = 0;
+        return dlerror();
     }
 
-    init = dlsym( handle, "Init__Dynamic" );
-    if ( init == 0 )
-      return 3;
+    *func = (InitInfoFunc)dlsym(handle, "Init__Dynamic");
+    if (*func == 0)
+        return "symbol 'Init__Dynamic' not found";
 
-    *func = (InitInfoFunc) init;
     return 0;
 }
 #endif
 
 
-
 /****************************************************************************
 **
-*F  FuncLOAD_DYN( <self>, <name>, <crc> ) . . .  try to load a dynamic module
+*F  FuncIS_LOADABLE_DYN( <self>, <name> ) . test if a dyn. module is loadable
 */
-static Obj FuncLOAD_DYN(Obj self, Obj filename, Obj crc)
+static Obj FuncIS_LOADABLE_DYN(Obj self, Obj filename)
 {
-    StructInitInfo * info;
-    Obj              crc1;
-    Int              res;
-    InitInfoFunc     init;
+    RequireStringRep(SELF_NAME, filename);
 
-    /* check the argument                                                  */
-    RequireStringRep("LOAD_DYN", filename);
-    if (!IS_INTOBJ(crc) && crc != False) {
-        ErrorMayQuit(
-            "LOAD_DYN: <crc> must be a small integer or 'false' (not a %s)",
-            (Int)TNAM_OBJ(crc), 0);
-    }
-
-    /* try to read the module                                              */
-#ifdef HAVE_DLOPEN
-    res = SyLoadModule(CONST_CSTR_STRING(filename), &init);
-    if (res == 1)
-        ErrorQuit("module '%g' not found", (Int)filename, 0L);
-    else if (res == 3)
-        ErrorQuit("symbol 'Init_Dynamic' not found", 0L, 0L);
-#else
-    /* no dynamic library support                                          */
-    if (SyDebugLoading) {
-        Pr("#I  LOAD_DYN: no support for dynamical loading\n", 0L, 0L);
-    }
+#if !defined(HAVE_DLOPEN)
     return False;
-#endif
+#else
 
-    /* get the description structure                                       */
-    info = (*init)();
+    InitInfoFunc init;
+
+    // try to load the module
+    SyLoadModule(CONST_CSTR_STRING(filename), &init);
+    if (init == 0)
+        return False;
+
+    // get the description structure
+    StructInitInfo * info = (*init)();
     if (info == 0)
-        ErrorQuit("call to init function failed", 0L, 0L);
+        return False;
 
     // info->type should not be larger than kernel version
     if (info->type / 10 > GAP_KERNEL_API_VERSION)
-        ErrorMayQuit("LOAD_DYN: kernel module built for newer "
-                     "version of GAP",
-                     0L, 0L);
+        return False;
 
     // info->type should not have an older major version
     if (info->type / 10000 < GAP_KERNEL_MAJOR_VERSION)
-        ErrorMayQuit("LOAD_DYN: kernel module built for older "
-                     "version of GAP",
-                     0L, 0L);
+        return False;
 
     // info->type % 10 should be 0, 1 or 2, for the 3 types of module
     if (info->type % 10 > 2)
-        ErrorMayQuit("LOAD_DYN: Invalid kernel module", 0L, 0L);
-
-    /* check the crc value                                                 */
-    if (crc != False) {
-        crc1 = ObjInt_Int(info->crc);
-        if (!EQ(crc, crc1)) {
-            if (SyDebugLoading) {
-                Pr("#I  LOAD_DYN: crc values do not match, gap ", 0L, 0L);
-                PrintInt(crc);
-                Pr(", dyn ", 0L, 0L);
-                PrintInt(crc1);
-                Pr("\n", 0L, 0L);
-            }
-            return False;
-        }
-    }
-
-    ActivateModule(info);
-    RecordLoadedModule(info, 0, CONST_CSTR_STRING(filename));
+        return False;
 
     return True;
+#endif
 }
 
 
 /****************************************************************************
 **
-*F  FuncLOAD_STAT( <self>, <name>, <crc> )  . . . . try to load static module
+*F  FuncLOAD_DYN( <self>, <name> ) . . . . . . . try to load a dynamic module
 */
-static Obj FuncLOAD_STAT(Obj self, Obj filename, Obj crc)
+static Obj FuncLOAD_DYN(Obj self, Obj filename)
+{
+    RequireStringRep(SELF_NAME, filename);
+
+#if !defined(HAVE_DLOPEN)
+    /* no dynamic library support                                          */
+    if (SyDebugLoading) {
+        Pr("#I  LOAD_DYN: no support for dynamical loading\n", 0, 0);
+    }
+    return False;
+#else
+
+    InitInfoFunc init;
+
+    // try to read the module
+    const char * res = SyLoadModule(CONST_CSTR_STRING(filename), &init);
+    if (res)
+        ErrorQuit("LOAD_DYN: failed to load kernel module %g, %s",
+                  (Int)filename, (Int)res);
+
+    // get the description structure
+    StructInitInfo * info = (*init)();
+    if (info == 0)
+        ErrorQuit("LOAD_DYN: init function of kernel module %g failed",
+                  (Int)filename, 0);
+
+    // info->type should not be larger than kernel version
+    if (info->type / 10 > GAP_KERNEL_API_VERSION)
+        ErrorMayQuit("LOAD_DYN: kernel module %g built for newer "
+                     "version %d of GAP",
+                     (Int)filename, info->type / 10);
+
+    // info->type should not have an older major version
+    if (info->type / 10000 < GAP_KERNEL_MAJOR_VERSION)
+        ErrorMayQuit("LOAD_DYN: kernel module %g built for older "
+                     "version of GAP",
+                     (Int)filename, 0);
+
+    // info->type % 10 should be 0, 1 or 2, for the 3 types of module
+    if (info->type % 10 > 2)
+        ErrorMayQuit("LOAD_DYN: Invalid kernel module '%g'", (Int)filename,
+                     0);
+
+    ActivateModule(info);
+    RecordLoadedModule(info, 0, CONST_CSTR_STRING(filename));
+
+    return True;
+#endif
+}
+
+
+/****************************************************************************
+**
+*F  FuncLOAD_STAT( <self>, <name> ) . . . . . . . try to load a static module
+*/
+static Obj FuncLOAD_STAT(Obj self, Obj filename)
 {
     StructInitInfo * info = 0;
-    Obj              crc1;
-    Int              k;
 
-    /* check the argument                                                  */
-    RequireStringRep("LOAD_STAT", filename);
-    if (!IS_INTOBJ(crc) && crc != False) {
-        ErrorMayQuit(
-            "LOAD_STAT: <crc> must be a small integer or 'false' (not a %s)",
-            (Int)TNAM_OBJ(crc), 0);
-    }
+    RequireStringRep(SELF_NAME, filename);
 
     /* try to find the module                                              */
-    for (k = 0; CompInitFuncs[k]; k++) {
-        info = (*(CompInitFuncs[k]))();
-        if (info && !strcmp(CONST_CSTR_STRING(filename), info->name)) {
-            break;
-        }
-    }
-    if (CompInitFuncs[k] == 0) {
+    info = LookupStaticModule(CONST_CSTR_STRING(filename));
+    if (info == 0) {
         if (SyDebugLoading) {
             Pr("#I  LOAD_STAT: no module named '%g' found\n", (Int)filename,
-               0L);
+               0);
         }
         return False;
-    }
-
-    /* check the crc value                                                 */
-    if (crc != False) {
-        crc1 = ObjInt_Int(info->crc);
-        if (!EQ(crc, crc1)) {
-            if (SyDebugLoading) {
-                Pr("#I  LOAD_STAT: crc values do not match, gap ", 0L, 0L);
-                PrintInt(crc);
-                Pr(", stat ", 0L, 0L);
-                PrintInt(crc1);
-                Pr("\n", 0L, 0L);
-            }
-            return False;
-        }
     }
 
     ActivateModule(info);
@@ -560,7 +573,7 @@ void InitGVarPropsFromTable(const StructGVarProp * tab)
         UInt gvar = GVarName(tab[i].name);
         Obj  name = NameGVar(gvar);
         Obj  args = ValidatedArgList(tab[i].name, 1, tab[i].argument);
-        AssReadOnlyGVar(gvar, NewProperty(name, args, tab[i].handler));
+        AssReadOnlyGVar(gvar, NewProperty(name, args, tab[i].getter, tab[i].setter));
     }
 }
 
@@ -674,7 +687,8 @@ void InitHdlrPropsFromTable(const StructGVarProp * tab)
     Int i;
 
     for (i = 0; tab[i].name != 0; i++) {
-        InitHandlerFunc(tab[i].handler, tab[i].cookie);
+        InitHandlerFunc(tab[i].getter, tab[i].cookie1);
+        InitHandlerFunc(tab[i].setter, tab[i].cookie2);
         InitFopyGVar(tab[i].name, tab[i].property);
     }
 }
@@ -718,7 +732,7 @@ void InitHdlrFuncsFromTable(const StructGVarFunc * tab)
 void ImportGVarFromLibrary(const Char * name, Obj * address)
 {
     if (NrImportedGVars == 1024) {
-        Pr("#W  warning: too many imported GVars\n", 0L, 0L);
+        Pr("#W  warning: too many imported GVars\n", 0, 0);
     }
     else {
         ImportedGVars[NrImportedGVars].name = name;
@@ -740,7 +754,7 @@ void ImportGVarFromLibrary(const Char * name, Obj * address)
 void ImportFuncFromLibrary(const Char * name, Obj * address)
 {
     if (NrImportedFuncs == 1024) {
-        Pr("#W  warning: too many imported Funcs\n", 0L, 0L);
+        Pr("#W  warning: too many imported Funcs\n", 0, 0);
     }
     else {
         ImportedFuncs[NrImportedFuncs].name = name;
@@ -771,7 +785,7 @@ static Obj FuncExportToKernelFinished(Obj self)
                 errs++;
                 if (!SyQuiet) {
                     Pr("#W  global variable '%s' has not been defined\n",
-                       (Int)ImportedFuncs[i].name, 0L);
+                       (Int)ImportedFuncs[i].name, 0);
                 }
             }
         }
@@ -779,7 +793,7 @@ static Obj FuncExportToKernelFinished(Obj self)
             errs++;
             if (!SyQuiet) {
                 Pr("#W  global variable '%s' has not been defined\n",
-                   (Int)ImportedGVars[i].name, 0L);
+                   (Int)ImportedGVars[i].name, 0);
             }
         }
         else {
@@ -794,7 +808,7 @@ static Obj FuncExportToKernelFinished(Obj self)
                 errs++;
                 if (!SyQuiet) {
                     Pr("#W  global function '%s' has not been defined\n",
-                       (Int)ImportedFuncs[i].name, 0L);
+                       (Int)ImportedFuncs[i].name, 0);
                 }
             }
         }
@@ -803,7 +817,7 @@ static Obj FuncExportToKernelFinished(Obj self)
             errs++;
             if (!SyQuiet) {
                 Pr("#W  global function '%s' has not been defined\n",
-                   (Int)ImportedFuncs[i].name, 0L);
+                   (Int)ImportedFuncs[i].name, 0);
             }
         }
         else {
@@ -842,6 +856,7 @@ void RecordLoadedModule(StructInitInfo * info,
     NrModules++;
 }
 
+#ifdef GAP_ENABLE_SAVELOAD
 
 void SaveModules(void)
 {
@@ -867,20 +882,10 @@ void LoadModules(void)
             StructInitInfo * info = NULL;
             /* Search for user module static case first */
             if (IS_MODULE_STATIC(type)) {
-                UInt k;
-                for (k = 0; CompInitFuncs[k]; k++) {
-                    info = (*(CompInitFuncs[k]))();
-                    if (info == 0) {
-                        continue;
-                    }
-                    if (!strcmp(buf, info->name)) {
-                        break;
-                    }
-                }
-                if (CompInitFuncs[k] == 0) {
-                    Pr("Static module %s not found in loading kernel\n",
-                       (Int)buf, 0L);
-                    SyExit(1);
+                info = LookupStaticModule(buf);
+                if (info == 0) {
+                    Panic("Static module %s not found in loading kernel",
+                          buf);
                 }
             }
             else {
@@ -888,17 +893,13 @@ void LoadModules(void)
                 InitInfoFunc init;
 
 #ifdef HAVE_DLOPEN
-                int res = SyLoadModule(buf, &init);
-                if (res != 0) {
-                    Panic("Failed to load needed dynamic module %s, error "
-                          "code %d\n",
-                          buf, res);
+                const char * res = SyLoadModule(buf, &init);
+                if (init == 0) {
+                    Panic("failed to load dynamic module %s, %s\n", buf, res);
                 }
                 info = (*init)();
                 if (info == 0) {
-                    Panic("Failed to init needed dynamic module %s, error "
-                          "code %d\n",
-                          buf, res);
+                    Panic("failed to init dynamic module %s\n", buf);
                 }
 #else
                 Panic("workspace require dynamic module %s, but dynamic "
@@ -912,6 +913,8 @@ void LoadModules(void)
         }
     }
 }
+
+#endif
 
 void ModulesSetup(void)
 {
@@ -1026,13 +1029,15 @@ void ModulesDestroyModuleState(void)
 }
 
 
+#ifdef GAP_ENABLE_SAVELOAD
+
 Int ModulesPreSave(void)
 {
     for (UInt i = 0; i < NrModules; i++) {
         StructInitInfo * info = Modules[i].info;
         if (info->preSave != NULL && info->preSave(info)) {
             Pr("Failed to save workspace -- problem reported in %s\n",
-               (Int)info->name, 0L);
+               (Int)info->name, 0);
             // roll back all save preparations
             while (i--) {
                 info = Modules[i].info;
@@ -1071,18 +1076,21 @@ void ModulesPostRestore(void)
     }
 }
 
+#endif
+
 
 /****************************************************************************
 **
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
 static StructGVarFunc GVarFuncs[] = {
-    GVAR_FUNC(GAP_CRC, 1, "filename"),
-    GVAR_FUNC(LOAD_DYN, 2, "filename, crc"),
-    GVAR_FUNC(LOAD_STAT, 2, "filename, crc"),
-    GVAR_FUNC(SHOW_STAT, 0, ""),
-    GVAR_FUNC(LoadedModules, 0, ""),
-    GVAR_FUNC(ExportToKernelFinished, 0, ""),
+    GVAR_FUNC_1ARGS(GAP_CRC, filename),
+    GVAR_FUNC_1ARGS(IS_LOADABLE_DYN, filename),
+    GVAR_FUNC_1ARGS(LOAD_DYN, filename),
+    GVAR_FUNC_1ARGS(LOAD_STAT, filename),
+    GVAR_FUNC_0ARGS(SHOW_STAT),
+    GVAR_FUNC_0ARGS(LoadedModules),
+    GVAR_FUNC_0ARGS(ExportToKernelFinished),
     { 0, 0, 0, 0, 0 }
 };
 
@@ -1096,7 +1104,6 @@ static Int InitKernel(StructInitInfo * module)
     // init filters and functions
     InitHdlrFuncsFromTable(GVarFuncs);
 
-    // return success
     return 0;
 }
 
@@ -1110,7 +1117,6 @@ static Int InitLibrary(StructInitInfo * module)
     // init filters and functions
     InitGVarFuncsFromTable(GVarFuncs);
 
-    // return success
     return 0;
 }
 

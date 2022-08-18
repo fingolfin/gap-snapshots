@@ -15,7 +15,9 @@
 #ifndef GAP_SAVELOAD_H
 #define GAP_SAVELOAD_H
 
-#include "system.h"
+#include "common.h"
+
+#ifdef GAP_ENABLE_SAVELOAD
 
 /***************************************************************************
 **
@@ -52,6 +54,8 @@ UInt  LoadUInt(void);
 UInt8 LoadUInt8(void);
 void LoadCStr(Char * buf, UInt maxlen);
 Obj  LoadSubObj(void);
+
+#endif // GAP_ENABLE_SAVELOAD
 
 
 /***************************************************************************

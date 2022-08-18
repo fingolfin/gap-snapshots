@@ -109,6 +109,8 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap27.html#X7C0C29C87CBA97B7">27.9-4 Ordinal</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap27.html#X7DE4CCD285440659">27.9-5 EvalString</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap27.html#X7D4B9D7A7995C55D">27.9-6 CrcString</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap27.html#X7873D1F28779B490">27.9-7 HexSHA256</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap27.html#X83FF17E782E6FFF3">27.9-8 Pluralize</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap27.html#X78F20AA1804D524F">27.10 <span class="Heading">Calendar Arithmetic</span></a>
 </span>
@@ -272,7 +274,10 @@ next line
 
 
 <dl>
-<dt><strong class="Mark"><code class="code">\n</code></strong></dt>
+<dt><strong class="Mark">
+
+
+<code class="code">\n</code></strong></dt>
 <dd><p><em>newline character</em>. This is the character that, at least on UNIX systems, separates lines in a text file. Printing of this character in a string has the effect of moving the cursor down one line and back to the beginning of the line.</p>
 
 </dd>
@@ -384,7 +389,7 @@ This is another line.
 <h5>27.4-2 ConvertToStringRep</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToStringRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>If <var class="Arg">obj</var> is a dense internally represented list of characters then <code class="func">ConvertToStringRep</code> changes the representation to <code class="func">IsStringRep</code> (<a href="chap27.html#X7A17EDF8785C9F58"><span class="RefLink">27.4-1</span></a>). This is useful in particular for converting the empty list <code class="code">[]</code>, which usually is in <code class="func">IsPlistRep</code> (<a href="chap21.html#X87BA4EBF80F16B72"><span class="RefLink">21.24-1</span></a>), to <code class="func">IsStringRep</code> (<a href="chap27.html#X7A17EDF8785C9F58"><span class="RefLink">27.4-1</span></a>). If <var class="Arg">obj</var> is not a string then <code class="func">ConvertToStringRep</code> signals an error.</p>
+<p>If <var class="Arg">obj</var> is a dense internally represented list of characters then <code class="func">ConvertToStringRep</code> changes the representation to <code class="func">IsStringRep</code> (<a href="chap27.html#X7A17EDF8785C9F58"><span class="RefLink">27.4-1</span></a>). This is useful in particular for converting the empty list <code class="code">[]</code>, which usually is in <code class="func">IsPlistRep</code> (<a href="chap21.html#X87BA4EBF80F16B72"><span class="RefLink">21.24-2</span></a>), to <code class="func">IsStringRep</code> (<a href="chap27.html#X7A17EDF8785C9F58"><span class="RefLink">27.4-1</span></a>). If <var class="Arg">obj</var> is not a string then <code class="func">ConvertToStringRep</code> signals an error.</p>
 
 <p><a id="X7FFC464683CC8023" name="X7FFC464683CC8023"></a></p>
 
@@ -522,7 +527,7 @@ true
 true
 </pre></div>
 
-<p>Strings can be compared via <code class="code">&lt;</code> with certain <strong class="pkg">GAP</strong> objects that are not strings, see <a href="chap4.html#X7A274A1F8553B7E6"><span class="RefLink">4.12</span></a> for the details.</p>
+<p>Strings can be compared via <code class="code">&lt;</code> with certain <strong class="pkg">GAP</strong> objects that are not strings, see <a href="chap4.html#X7A274A1F8553B7E6"><span class="RefLink">4.13</span></a> for the details.</p>
 
 <p><a id="X7E72717A82A309F5" name="X7E72717A82A309F5"></a></p>
 
@@ -1094,12 +1099,69 @@ fail
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CrcString</code>( <var class="Arg">str</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: an integer</p>
 
-<p>This function computes a cyclic redundancy check number from a string <var class="Arg">str</var>. See also <code class="func">CrcFile</code> (<a href="chap9.html#X8241CEAD80415BB9"><span class="RefLink">9.7-7</span></a>).</p>
+<p>This function computes a CRC (cyclic redundancy check) number from a string <var class="Arg">str</var>. See also <code class="func">CrcFile</code> (<a href="chap9.html#X8241CEAD80415BB9"><span class="RefLink">9.7-7</span></a>) and <code class="func">HexSHA256</code> (<a href="chap27.html#X7873D1F28779B490"><span class="RefLink">27.9-7</span></a>).</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CrcString("GAP example string");</span>
 -50451670
+</pre></div>
+
+<p><a id="X7873D1F28779B490" name="X7873D1F28779B490"></a></p>
+
+<h5>27.9-7 HexSHA256</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HexSHA256</code>( <var class="Arg">string</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HexSHA256</code>( <var class="Arg">stream</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Return the SHA-256 cryptographic checksum of the bytes in <var class="Arg">string</var>, resp. of the data in the input stream object <var class="Arg">stream</var> (see Chapter <a href="chap10.html#X839725177BF8B5B4"><span class="RefLink">10</span></a> to learn about streams) when read from the current position until EOF (end-of-file).</p>
+
+<p>The checksum is returned as string with 64 lowercase hexadecimal digits.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HexSHA256("abcd");</span>
+"88d4266fd4e6338d13b845fcf289579d209c897823b9217da3e161936f031589"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HexSHA256(InputTextString("abcd"));</span>
+"88d4266fd4e6338d13b845fcf289579d209c897823b9217da3e161936f031589"
+</pre></div>
+
+<p><a id="X83FF17E782E6FFF3" name="X83FF17E782E6FFF3"></a></p>
+
+<h5>27.9-8 Pluralize</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Pluralize</code>( [<var class="Arg">count</var>, ]<var class="Arg">string</var>[, <var class="Arg">plural</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: A string</p>
+
+<p>This function returns an attempt at the appropriate pluralization of a string (considered as a singular English noun), using several rules and heuristics of English grammar.</p>
+
+<p>The arguments to this function are an optional non-negative integer <var class="Arg">count</var> (the number of objects in question), a non-empty string <var class="Arg">string</var> (the singular form of the object in question), and an optional additional string <var class="Arg">plural</var> (the plural form of <var class="Arg">string</var>).</p>
+
+<p>If <var class="Arg">plural</var> is given, then <code class="code">Pluralize</code> uses it as the plural form of <var class="Arg">string</var>, otherwise <code class="code">Pluralize</code> makes an informed guess at the plural.</p>
+
+<p>If <var class="Arg">count</var> is not given, then <code class="code">Pluralize</code> returns this plural form of <var class="Arg">string</var>. If <var class="Arg">count</var> is given and has value <span class="SimpleMath">n ≠ 1</span>, then this string is prepended by "\&gt;n\&lt; "; else if <var class="Arg">count</var> has value <span class="SimpleMath">1</span>, then <code class="code">Pluralize</code> returns <var class="Arg">string</var>, prepended by "\&gt;1\&lt; ".</p>
+
+<p>Note that <code class="func">StripLineBreakCharacters</code> (<a href="chap27.html#X86AACCE987F74FA5"><span class="RefLink">27.7-7</span></a>) can be used to remove the control characters <code class="code">\&lt;</code> and <code class="code">\&gt;</code> from the return value.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Pluralize( "generator" );</span>
+"generators"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Pluralize( 1, "generator" );</span>
+"\&gt;1\&lt; generator"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Pluralize( 0, "generator" );</span>
+"\&gt;0\&lt; generators"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Pluralize( "man", "men" );</span>
+"men"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Pluralize( 1, "man", "men" );</span>
+"\&gt;1\&lt; man"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Print( Pluralize( 2, "man", "men" ) );</span>
+2 men
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Print( Pluralize( 2, "vertex" ) );</span>
+2 vertices
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Print( Pluralize( 3, "matrix" ) );</span>
+3 matrices
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Print( Pluralize( 4, "battery" ) );</span>
+4 batteries
 </pre></div>
 
 <p><a id="X78F20AA1804D524F" name="X78F20AA1804D524F"></a></p>

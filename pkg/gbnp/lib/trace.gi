@@ -14,12 +14,11 @@
 # Free Software Foundation (FSF); either version 2.1 of the License, or
 # (at your option) any later version. For details, see the file 'LGPL' in
 # the doc subdirectory of the GBNP distribution or see the FSF's own site:
-# http://www.gnu.org/licenses/lgpl.html
+# https://www.gnu.org/licenses/lgpl.html
 ########################## END COPYRIGHT MESSAGE ##########################
 
 ### filename = "trace.gi" 
 ### authors Cohen & Gijsbers
-### vs 0.9 $Id: trace.gi 12772 2010-01-15 13:10:24Z jwk $
 
 ### THIS IS PART OF A GAP PACKAGE FOR COMPUTING NON-COMMUTATIVE GROBNER BASES 
 
@@ -56,7 +55,7 @@
 ### EvalTrace ###
 #################
 ### <#GAPDoc Label="EvalTrace">
-### <ManSection Label="EvalTrace">
+### <ManSection>
 ### <Func Name="EvalTrace" Comm="Evaluates the trace of a traced polynomial" Arg="p,
 ### Lnp"/>
 ###
@@ -278,7 +277,7 @@ end;;
 
 ################### 
 ### <#GAPDoc Label="StrongNormalFormTraceDiff">
-### <ManSection Label="StrongNormalFormTraceDiff">
+### <ManSection>
 ### <Func Name="StrongNormalFormTraceDiff" Comm="computes the difference with
 ### the strong normal form of an NP polynomial with trace
 ### information" Arg="np, GBT"
@@ -604,7 +603,7 @@ end;;
 ################## 
 ### SGrobnerTrace
 ### <#GAPDoc Label="SGrobnerTrace">
-### <ManSection Label="SGrobnerTrace">
+### <ManSection>
 ### <Func Name="SGrobnerTrace" Comm="Buchberger's algorithm with normalform" Arg="Lnp" />
 ### <Returns>
 ### Gröbner Basis, traceable

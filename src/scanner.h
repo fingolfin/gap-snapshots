@@ -17,7 +17,11 @@
 #ifndef GAP_SCANNER_H
 #define GAP_SCANNER_H
 
-#include "system.h"
+#include "common.h"
+
+enum {
+    MAX_VALUE_LEN = 1024,
+};
 
 /****************************************************************************
 **
@@ -30,95 +34,95 @@
 **  this package as follows:
 */
 enum SCANNER_SYMBOLS {
-    S_ILLEGAL           = 0UL,
+    S_ILLEGAL           = 0,
 
-    S_IDENT             = (1UL<< 3),
-    S_UNBIND            = (1UL<< 3)+1,
-    S_ISBOUND           = (1UL<< 3)+2,
-    S_TRYNEXT           = (1UL<< 3)+3,
-    S_INFO              = (1UL<< 3)+4,
-    S_ASSERT            = (1UL<< 3)+5,
-    S_LBRACK            = (1UL<< 4)+0,
-    S_LBRACE            = (1UL<< 4)+1,
-    S_BLBRACK           = (1UL<< 4)+2,
-    S_RBRACK            = (1UL<< 5)+0,
-    S_RBRACE            = (1UL<< 5)+1,
-    S_DOT               = (1UL<< 6)+0,
-    S_BDOT              = (1UL<< 6)+1,
-    S_LPAREN            = (1UL<< 7),
-    S_RPAREN            = (1UL<< 8),
-    S_COMMA             = (1UL<< 9)+0,
-    S_DOTDOT            = (1UL<< 9)+1,
-    S_COLON             = (1UL<< 9)+2,
-    S_READWRITE         = (1UL<< 9)+3,
-    S_READONLY          = (1UL<< 9)+4,
-    S_DOTDOTDOT         = (1UL<< 9)+5,
+    S_IDENT             = (1<< 3),
+    S_UNBIND            = (1<< 3)+1,
+    S_ISBOUND           = (1<< 3)+2,
+    S_TRYNEXT           = (1<< 3)+3,
+    S_INFO              = (1<< 3)+4,
+    S_ASSERT            = (1<< 3)+5,
+    S_LBRACK            = (1<< 4)+0,
+    S_LBRACE            = (1<< 4)+1,
+    S_BLBRACK           = (1<< 4)+2,
+    S_RBRACK            = (1<< 5)+0,
+    S_RBRACE            = (1<< 5)+1,
+    S_DOT               = (1<< 6)+0,
+    S_BDOT              = (1<< 6)+1,
+    S_LPAREN            = (1<< 7),
+    S_RPAREN            = (1<< 8),
+    S_COMMA             = (1<< 9)+0,
+    S_DOTDOT            = (1<< 9)+1,
+    S_COLON             = (1<< 9)+2,
+    S_READWRITE         = (1<< 9)+3,
+    S_READONLY          = (1<< 9)+4,
+    S_DOTDOTDOT         = (1<< 9)+5,
 
-    S_INT               = (1UL<<10)+0,
-    S_FLOAT             = (1UL<<10)+1,
+    S_INT               = (1<<10)+0,
+    S_FLOAT             = (1<<10)+1,
 
-    S_TRUE              = (1UL<<11)+0,
-    S_FALSE             = (1UL<<11)+1,
-    S_CHAR              = (1UL<<11)+2,
-    S_STRING            = (1UL<<11)+3,
-    S_TILDE             = (1UL<<11)+4,
-    S_HELP              = (1UL<<11)+5,
-    S_PRAGMA            = (1UL<<11)+6,
+    S_TRUE              = (1<<11)+0,
+    S_FALSE             = (1<<11)+1,
+    S_CHAR              = (1<<11)+2,
+    S_STRING            = (1<<11)+3,
+    S_TILDE             = (1<<11)+4,
+    S_HELP              = (1<<11)+5,
+    S_PRAGMA            = (1<<11)+6,
 
 
-    S_REC               = (1UL<<12)+0,
+    S_REC               = (1<<12)+0,
 
-    S_FUNCTION          = (1UL<<13),
-    S_LOCAL             = (1UL<<14),
-    S_END               = (1UL<<15),
-    S_MAPTO             = (1UL<<16),
+    S_FUNCTION          = (1<<13),
+    S_LOCAL             = (1<<14),
+    S_END               = (1<<15),
+    S_MAPTO             = (1<<16),
 
-    S_MULT              = (1UL<<17)+0,
-    S_DIV               = (1UL<<17)+1,
-    S_MOD               = (1UL<<17)+2,
-    S_POW               = (1UL<<17)+3,
+    S_MULT              = (1<<17)+0,
+    S_DIV               = (1<<17)+1,
+    S_MOD               = (1<<17)+2,
+    S_POW               = (1<<17)+3,
 
-    S_PLUS              = (1UL<<18)+0,
-    S_MINUS             = (1UL<<18)+1,
+    S_PLUS              = (1<<18)+0,
+    S_MINUS             = (1<<18)+1,
 
-    S_EQ                = (1UL<<19)+0,
-    S_LT                = (1UL<<19)+1,
-    S_GT                = (1UL<<19)+2,
-    S_NE                = (1UL<<19)+3,
-    S_LE                = (1UL<<19)+4,
-    S_GE                = (1UL<<19)+5,
-    S_IN                = (1UL<<19)+6,
+    S_EQ                = (1<<19)+0,
+    S_LT                = (1<<19)+1,
+    S_GT                = (1<<19)+2,
+    S_NE                = (1<<19)+3,
+    S_LE                = (1<<19)+4,
+    S_GE                = (1<<19)+5,
+    S_IN                = (1<<19)+6,
 
-    S_NOT               = (1UL<<20)+0,
-    S_AND               = (1UL<<20)+1,
-    S_OR                = (1UL<<20)+2,
+    S_NOT               = (1<<20)+0,
+    S_AND               = (1<<20)+1,
+    S_OR                = (1<<20)+2,
 
-    S_ASSIGN            = (1UL<<21),
+    S_ASSIGN            = (1<<21),
 
-    S_IF                = (1UL<<22)+0,
-    S_FOR               = (1UL<<22)+1,
-    S_WHILE             = (1UL<<22)+2,
-    S_REPEAT            = (1UL<<22)+3,
-    S_ATOMIC            = (1UL<<22)+4,
+    S_IF                = (1<<22)+0,
+    S_FOR               = (1<<22)+1,
+    S_WHILE             = (1<<22)+2,
+    S_REPEAT            = (1<<22)+3,
+    S_ATOMIC            = (1<<22)+4,
 
-    S_THEN              = (1UL<<23),
-    S_ELIF              = (1UL<<24)+0,
-    S_ELSE              = (1UL<<24)+1,
-    S_FI                = (1UL<<25),
-    S_DO                = (1UL<<26),
-    S_OD                = (1UL<<27),
-    S_UNTIL             = (1UL<<28),
+    S_THEN              = (1<<23),
+    S_ELIF              = (1<<24)+0,
+    S_ELSE              = (1<<24)+1,
+    S_FI                = (1<<25),
+    S_DO                = (1<<26),
+    S_OD                = (1<<27),
+    S_UNTIL             = (1<<28),
 
-    S_BREAK             = (1UL<<29)+0,
-    S_RETURN            = (1UL<<29)+1,
-    S_QUIT              = (1UL<<29)+2,
-    S_QQUIT             = (1UL<<29)+3,
-    S_CONTINUE          = (1UL<<29)+4,
+    S_BREAK             = (1<<29)+0,
+    S_RETURN            = (1<<29)+1,
+    S_QUIT              = (1<<29)+2,
+    S_QQUIT             = (1<<29)+3,
+    S_CONTINUE          = (1<<29)+4,
 
-    S_SEMICOLON         = (1UL<<30)+0,
-    S_DUALSEMICOLON     = (1UL<<30)+1,
+    S_SEMICOLON         = (1<<30)+0,
+    S_DUALSEMICOLON     = (1<<30)+1,
 
-    S_EOF               = (1UL<<31),
+    S_EOF               = (1<<31),
 };
 
 
@@ -152,9 +156,6 @@ enum SCANNER_SYMBOLS {
 **      =, <>, <, >=, <=, >, in
 **      +, -
 **      *, /, mod, ^
-**
-**  'TypSymbolSet'  is defined in the   definition  file of  this  package as
-**  follows:
 */
 typedef UInt            TypSymbolSet;
 
@@ -167,8 +168,6 @@ typedef UInt            TypSymbolSet;
 **  <set> and 0 otherwise. Due to the grouping into classes some symbol sets
 **  may contain more than mentioned.
 **  For example 'IS_IN(S_POW,S_MULT|S_DIV|S_MOD)' is 1.
-**
-**  'IS_IN' is defined in the definition file of this package as follows:
 */
 #define IS_IN(symbol,set)       ((symbol) & ((set) & ~7))
 
@@ -195,73 +194,47 @@ typedef UInt            TypSymbolSet;
 *T  ScannerState
 **
 **  The struct 'ScannerState' encapsulates the state of the scanner.
-**
-**  In the future, it is planned to allow use of multiple instances of the
-**  scanner simultaneously within a single thread. However, this is not yet
-**  ready, and currently only once instance of 'ScannerState' is used, which
-**  is stored inside the global instance of struct 'GAPState'.
 */
 typedef struct {
 
-/****************************************************************************
-**
-*V  Value . . . . . . . . . . . . . value of the identifier, float or integer
-*V  ValueObj . . . . . . . . . . . . . . . . . . . . . .  value of the string
-**
-**  If 'Symbol' is 'S_IDENT', 'S_INT' or 'S_FLOAT' then normally the
-**  variable 'Value' holds the name of the identifier, the digits of
-**  the integer or float literal as a C string. For large integer or float
-**  literals that do not fit into 'Value', instead 'ValueObj'
-**  holds the the literal as a GAP string object. If the symbol is 'S_STRING'
-**  or 'S_HELP', the string literal or help text is always stored in
-**  'ValueObj' as a GAP string object.
-**
-**  Note that the size of identifiers in GAP is limited to 1023 characters,
-**  hence identifiers are always stored in 'Value'. For this reason,
-**  'GetIdent' truncates an identifier after that many characters.
-*/
-    Obj    ValueObj;
-    Char   Value[1024];
+    //
+    TypInputFile * input;
 
+    // If 'Symbol' is 'S_IDENT', 'S_INT' or 'S_FLOAT' then normally the
+    // variable 'Value' holds the name of the identifier or the digits of the
+    // integer or float literal as a C string. For large integer or float
+    // literals that do not fit into 'Value', instead 'ValueObj' holds the
+    // literal as a GAP string object.
+    //
+    // Note that the size of identifiers in GAP is limited to 1023 characters,
+    // hence identifiers are always stored in 'Value'. For this reason,
+    // 'GetIdent' truncates an identifier after that many characters.
+    char   Value[MAX_VALUE_LEN];
+
+    // For large integer or float literals that do not fit into 'Value',
+    // instead 'ValueObj' holds the literal as a GAP string object. If the
+    // symbol is 'S_STRING' or 'S_HELP', the string literal or help text is
+    // always stored in 'ValueObj' as a GAP string object.
+    Obj    ValueObj;
+
+    //
     enum SCANNER_SYMBOLS Symbol;
 
     // Track the last three symbols, for 'Unbound global' warnings
     UInt   SymbolStartPos[3];
     UInt   SymbolStartLine[3];
+    
+    // 'NrError' is an integer whose value is the number of errors already
+    // found in the current expression. It is set to 0 at the beginning of
+    // 'Read' and incremented with each 'SyntaxError' call, including those
+    // from 'Match'.
+    //
+    // If 'NrError' is greater than zero the parser functions will not create
+    // new bags. This prevents the parser from creating new bags after an
+    // error occurred.
+    UInt NrError;
+
 } ScannerState;
-
-/****************************************************************************
-**
-*V  NrError . . . . . . . . . . . . . . . .  number of errors in current expr
-*V  NrErrLine . . . . . . . . . . . . . . .  number of errors on current line
-**
-**  'NrError' is an integer whose value is the number of errors already found
-**  in the current expression.  It is set to 0 at the beginning of 'Read' and
-**  incremented with each 'SyntaxError' call, including those  from  'Match'.
-**
-**  If 'NrError' is greater than zero the parser functions  will  not  create
-**  new bags.  This prevents the parser from creating new bags after an error
-**  occured.
-**
-**  'NrErrLine' is an integer whose value is the number of  errors  found  on
-**  the current line.  It is set to 0 in 'GetLine' and incremented with  each
-**  'SyntaxError' call, including those from 'Match'.
-**
-**  If 'NrErrLine' is greater  than  zero  'SyntaxError' will  not  print  an
-**  error message.  This prevents the printing of multiple error messages for
-**  one line, since they  probabely  just reflect  the  fact that the  parser
-**  has not resynchronized yet.
-*/
-/* TL: extern  UInt            NrError; */
-/* TL: extern  UInt            NrErrLine; */
-
-
-EXPORT_INLINE int IsIdent(char c)
-{
-    return IsAlpha(c) || c == '_' || c == '@';
-}
-
-int IsKeyword(const char * str);
 
 
 /****************************************************************************
@@ -283,16 +256,15 @@ int IsKeyword(const char * str);
 **
 **  'SyntaxError' first increments 'NrError' by   1.  If 'NrError' is greater
 **  than zero the parser functions  will not create  new bags.  This prevents
-**  the parser from creating new bags after an error occured.
+**  the parser from creating new bags after an error occurred.
 **
-**  'SyntaxError'  also  increments  'NrErrLine'  by  1.  If  'NrErrLine'  is
-**  greater than zero  'SyntaxError' will not print an  error  message.  This
-**  prevents the printing of multiple error messages for one line, since they
-**  probabely  just reflect the  fact  that the parser has not resynchronized
-**  yet.  'NrErrLine' is reset to 0 if a new line is read in 'GetLine'.
+**  'SyntaxError' also records the current line number in 'lastErrorLine' to
+**  prevent the printing of multiple error messages for one line, since they
+**  usually  just reflect the  fact  that the parser has not resynchronized
+**  yet.
 ** 
-**  'SyntaxWarning' displays in the same way but does not increase 'NrError'
-**  or 'NrErrLine'.
+**  'SyntaxWarning' displays in the same way but does not change 'NrError'
+**  or 'lastErrorLine'.
 **
 **  Note that unlike 'ErrorQuit', neither function raises an actual error,
 **  so execution continues as normal. Thus you must make sure that subsequent
@@ -341,7 +313,7 @@ EXPORT_INLINE void SyntaxWarning(ScannerState * s, const Char * msg)
 **
 **  One kind of typical 'Match' call has the form
 **
-**      'Match( Symbol, "", 0L );'.
+**      'Match( Symbol, "", 0 );'.
 **
 **  This is used if the parser knows that the current  symbol is correct, for
 **  example in 'ReadReturn'  the  first symbol must be 'S_RETURN',  otherwise
@@ -386,16 +358,5 @@ void Match(ScannerState * s,
 */
 void ScanForFloatAfterDotHACK(ScannerState * s);
 
-
-/****************************************************************************
-**
-*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
-*/
-
-/****************************************************************************
-**
-*F  InitInfoScanner() . . . . . . . . . . . . . . . . table of init functions
-*/
-StructInitInfo * InitInfoScanner ( void );
 
 #endif // GAP_SCANNER_H

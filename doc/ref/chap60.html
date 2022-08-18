@@ -290,7 +290,7 @@ NF(8,[ 1, 3 ])
 <td class="tdcenter">;</td>
 <td class="tdleft"><span class="SimpleMath">k &gt; 0, p ≠ 2</span></td>
 </tr>
-</table><br /><p>&nbsp;</p><br />
+</table><br />
 </div>
 
 <p><span class="SimpleMath">B_{n,1}</span> is equal to the basis of <span class="SimpleMath">ℚ_n</span> over the rationals which is introduced in <a href="chapBib.html#biBZum89">[Zum89]</a>. Also the conversion of arbitrary sums of roots of unity into its basis representation, and the reduction to the minimal cyclotomic field are described in this thesis. (Note that the notation here is slightly different from that there.)</p>
@@ -407,7 +407,7 @@ true
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:= GaloisGroup( AsField( Field( [ Sqrt(5) ] ), CF(5) ) );</span>
-&lt;group of size 2 with 1 generators&gt;
+&lt;group of size 2 with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens:= GeneratorsOfGroup( g );</span>
 [ ANFAutomorphism( AsField( NF(5,[ 1, 4 ]), CF(5) ), 4 ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:= last[1];;  x^2;</span>

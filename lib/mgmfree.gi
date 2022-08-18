@@ -42,12 +42,12 @@ InstallMethod( IsWholeFamily,
 ##
 #M  Enumerator( <M> ) . . . . . . . . . . . . . . enumerator for a free magma
 ##
-##  Let <M> be a free magma on $N$ generators $x_1, x_2, \ldots, x_N$, say.
+##  Let <M> be a free magma on $N$ generators $x_1, x_2, \ldots, x_N$.
 ##  Each element in <M> is uniquely determined by an element in a free
 ##  semigroup $S$ over $s_1, s_2, \ldots, s_N$ (which is obtained by mapping
 ##  $x_i$ to $s_i$) plus the ``bracketing of the element.
 ##  Thus we can describe each element $x$ in <M> by a quadruple $[N,l,p,q]$
-##  where $l$ is the length of the corresponding associative word $s$, say,
+##  where $l$ is the length of the corresponding associative word $s$,
 ##  $p$ is the position of $s$ among the associative words of length $l$ in
 ##  $S$ (so $0 \leq p < N^l$),
 ##  and $q$ is the position of the bracketing of $x$
@@ -274,53 +274,221 @@ InstallMethod( MagmaGeneratorsOfFamily,
 
 
 #############################################################################
-##
-#F  FreeMagma( <rank> )
-#F  FreeMagma( <rank>, <name> )
-#F  FreeMagma( <name1>, <name2>, ... )
-#F  FreeMagma( <names> )
-#F  FreeMagma( infinity, <name>, <init> )
-##
-InstallGlobalFunction( FreeMagma,
-    function( arg )
-    local   names,      # list of generators names
-            F,          # family of free magma element objects
-            M;          # free magma, result
+##  Currently used by:
+##    FreeGroup, FreeMonoid, FreeSemigroup, FreeMagmaWithOne, FreeMagma
+InstallGlobalFunction( FreeXArgumentProcessor,
+function(
+  func,               # The name of the calling function
+  name,               # The default prefix to use for generator names
+  arg,                # The list of args passed to <func>; to be processed
+  optional_first_arg, # Whether <func> allows filter as optional 1st arg
+  allow_rank_zero     # Whether <func> support rank-zero objects
+)
+  local wfilt,   # a filter for letter or syllable words family
+        err,     # string; helpful error message
+        form,    # string: surmised argument form of the call to <func>
+        names,   # list of generators names
+        rank,    # Length( names )
+        opt,
+        init,
+        word,
+        x, y1, y2;
 
-    # Get and check the argument list, and construct names if necessary.
-    if   Length( arg ) = 1 and arg[1] = infinity then
-      names:= InfiniteListOfNames( "x" );
-    elif Length( arg ) = 2 and arg[1] = infinity then
-      names:= InfiniteListOfNames( arg[2] );
-    elif Length( arg ) = 3 and arg[1] = infinity then
-      names:= InfiniteListOfNames( arg[2], arg[3] );
-    elif Length( arg ) = 1 and IsInt( arg[1] ) and 0 < arg[1] then
-      names:= List( [ 1 .. arg[1] ],
-                    i -> Concatenation( "x", String(i) ) );
-      MakeImmutable( names );
-    elif Length( arg ) = 2 and IsInt( arg[1] ) and 0 < arg[1] then
-      names:= List( [ 1 .. arg[1] ],
-                    i -> Concatenation( arg[2], String(i) ) );
-      MakeImmutable( names );
-    elif 1 <= Length( arg ) and ForAll( arg, IsString ) then
-      names:= arg;
-    elif Length( arg ) = 1 and IsList( arg[1] )
-                           and not IsEmpty( arg[1] )
-                           and ForAll( arg[1], IsString ) then
-      names:= arg[1];
-    else
-      Error("usage: FreeMagma(<name1>,<name2>..),FreeMagma(<rank>)");
+  # Set up defaults.
+  wfilt := IsLetterWordsFamily;
+  err   := "";
+  form  := fail;
+  names := fail;
+
+  # Legacy documented feature to give filter for words family with an option.
+  if func = "FreeGroup" and ValueOption( "FreeGroupFamilyType" ) = "syllable" then
+    wfilt := IsSyllableWordsFamily; # optional -- used in PQ.
+  fi;
+
+  # The usual way is to give filter in the optional first argument.
+  if not IsEmpty( arg ) and IsFilter( arg[1] ) then
+    if not optional_first_arg then
+      ErrorNoReturn( "the first argument must not be a filter" );
     fi;
+    wfilt := arg[1];
+    Remove( arg, 1 );
+  fi;
+
+  # Process and validate the argument list, constructing names as necessary.
+
+  if Length( arg ) = 0 or arg[1] = 0
+      or ( Length( arg ) = 1 and IsList( arg[1] ) and IsEmpty( arg[1] ) ) then
+
+    # We recognise this function call as a request for a zero-generator object.
+    if allow_rank_zero then
+      names := [];
+    else
+      Info( InfoWarning, 1, func, " cannot make an object with no generators" );
+    fi;
+
+  # Validate call of form: func( <rank>[, <name> ] ).
+  elif Length( arg ) <= 2 and IsPosInt( arg[1] ) then
+
+    rank := arg[1];
+
+    # Documented feature which allows generators to be given custom names in
+    # objects created by constructors like DihedralGroup or AbelianGroup.
+    opt := ValueOption( "generatorNames" ); # Note, may be overwritten by arg[2].
+    if Length( arg ) = 1 and opt <> fail then
+      if IsString( opt ) then
+        names := List( [ 1 .. rank ], i -> Concatenation( opt, String( i ) ) );
+        MakeImmutable( names );
+      elif ( IsList and IsFinite )( opt ) and rank <= Length( opt )
+          and ForAll( [ 1 .. rank ],
+                      s -> IsString( opt[s] ) and not IsEmpty( opt[s] ) ) then
+        names := MakeImmutable( opt{[ 1 .. rank ]} );
+      else
+        ErrorNoReturn( Concatenation(
+          "Cannot process the `generatorNames` option: ",
+          "the value must be either a single string, or a list ",
+          "of sufficiently many nonempty strings ",
+          "(at least ", String( rank ), ", in this case)" ) );
+      fi;
+
+    else
+      if Length( arg ) = 2 then
+        name := arg[2];
+      fi;
+      if not IsString( name ) then
+        form := "<rank>, <name>";
+        err  := "<name> must be a string";
+      else
+        names := List( [ 1 .. rank ], i -> Concatenation( name, String( i ) ) );
+        MakeImmutable( names );
+      fi;
+    fi;
+
+  # Validate call of form: func( <name1>[, <name2>, ...] ), or a list of such.
+  elif ForAll( arg, IsString ) or Length( arg ) = 1 and IsList( arg[1] ) then
+
+    if Length( arg ) = 1 and not IsString( arg[1] ) then
+      form  := "[<name1>, <name2>, ...]";
+      names := arg[1];
+    else
+      form  := "<name1>, <name2>, ...";
+      names := arg;
+    fi;
+
+    # Error checking
+    if not IsFinite( names ) then
+      err := "there must be only finitely many names";
+    elif not ForAll( names, s -> IsString( s ) and not IsEmpty( s ) ) then
+      err := "the names must be nonempty strings";
+    fi;
+
+  # Validate call of form: func( infinity[, <name>][, <init>] ).
+  elif Length( arg ) <= 3 and arg[1] = infinity then
+
+    init := [];
+    if Length( arg ) = 3 then
+      form := "infinity, <name>, <init>";
+      name := arg[2];
+      init := arg[3];
+    elif Length( arg ) = 2 then
+      if IsList( arg[2] ) and IsFinite( arg[2] ) and not IsEmpty( arg[2] )
+          and ForAll( arg[2], IsString ) then
+        form := "infinity, <init>";
+        init := arg[2];
+      else
+        form := "infinity, <name>";
+        name := arg[2];
+      fi;
+    fi;
+
+    # Error checking
+    if not IsString( name ) then
+      err := "<name> must be a string";
+    elif not ( IsList( init ) and IsFinite( init ) ) then
+      err := "<init> must be a finite list";
+    elif not ForAll( init, s -> IsString( s ) and not IsEmpty( s ) ) then
+      err := "<init> must consist of nonempty strings";
+    fi;
+    if IsEmpty( err ) then
+      names := InfiniteListOfNames( name, init );
+    fi;
+  fi;
+
+  # Call to <func> was recognised as having a particular form, but was invalid.
+  if not IsEmpty( err ) then
+    ErrorNoReturn( StringFormatted( "{}( {} ): {}", func, form, err ) );
+  fi;
+
+  # Unrecognised call to <func>.
+  if names = fail then
+
+    # Adapt the error message slightly depending on whether the optional
+    # first argument is supported, and whether at least one argument must be
+    # given (i.e. whether objects of rank zero are supported).
+    x := ""; y1 := ""; y2 := "";
+    if optional_first_arg then
+      x := "[<wfilt>, ]";
+    fi;
+    if allow_rank_zero then
+      y1 := "["; y2 := "]";
+    fi;
+
+    ErrorNoReturn( StringFormatted( Concatenation(
+      #"Error,
+              "usage: {}( {}<rank>[, <name>] )\n",
+       "              {}( {}{}<name1>[, <name2>[, ...]]{} )\n",
+       "              {}( {}<names> )\n",
+       "              {}( {}infinity[, <name>][, <init>] )"
+      ), func, x, func, x, y1, y2, func, x, func, x ) );
+  fi;
+
+  # Process words family options now that we know how many generators there are.
+  if optional_first_arg then
+    if not wfilt in [ IsSyllableWordsFamily, IsLetterWordsFamily,
+                      IsWLetterWordsFamily, IsBLetterWordsFamily ] then
+      ErrorNoReturn( Concatenation(
+        "the optional first argument <wfilt> must be one of ",
+        "IsSyllableWordsFamily, IsLetterWordsFamily, IsWLetterWordsFamily, ",
+        "and IsBLetterWordsFamily" ) );
+    fi;
+    if wfilt <> IsSyllableWordsFamily then
+      if Length( names ) > 127 then
+        wfilt := IsWLetterWordsFamily;
+      elif wfilt = IsLetterWordsFamily then
+        wfilt := IsBLetterWordsFamily;
+      fi;
+    fi;
+  fi;
+
+  return rec(
+    names := names,
+    lesy  := wfilt,
+  );
+end );
+
+
+#############################################################################
+##
+#F  FreeMagma( <rank>[, <name>] )
+#F  FreeMagma( <name1>[, <name2>[, ...]] )
+#F  FreeMagma( <names> )
+#F  FreeMagma( infinity[, <name>][, <init>] )
+##
+InstallGlobalFunction( FreeMagma, function( arg )
+    local processed,
+          F,          # family of free magma element objects
+          M;          # free magma, result
+
+    processed := FreeXArgumentProcessor( "FreeMagma", "x", arg, false, false );
 
     # Construct the family of element objects of our magma.
     F:= NewFamily( "FreeMagmaElementsFamily", IsNonassocWord );
 
     # Store the names and the default type.
-    F!.names:= names;
+    F!.names:= processed.names;
     F!.defaultType:= NewType( F, IsNonassocWord and IsBracketRep );
 
     # Make the magma.
-    if IsFinite( names ) then
+    if IsFinite( processed.names ) then
       M:= MagmaByGenerators( MagmaGeneratorsOfFamily( F ) );
     else
       M:= MagmaByGenerators( InfiniteListOfGenerators( F ) );
@@ -334,43 +502,20 @@ end );
 
 #############################################################################
 ##
-#F  FreeMagmaWithOne( <rank> )
-#F  FreeMagmaWithOne( <rank>, <name> )
-#F  FreeMagmaWithOne( <name1>, <name2>, ... )
+#F  FreeMagmaWithOne( <rank>[, <name>] )
+#F  FreeMagmaWithOne( [<name1>[, <name2>[, ...]]] )
 #F  FreeMagmaWithOne( <names> )
-#F  FreeMagmaWithOne( infinity, <name>, <init> )
+#F  FreeMagmaWithOne( infinity[, <name>][, <init>] )
 ##
 InstallGlobalFunction( FreeMagmaWithOne,
     function( arg )
-    local   names,      # list of generators names
-            F,          # family of free magma element objects
-            M;          # free magma, result
+    local names,      # list of generators names
+          F,          # family of free magma element objects
+          M,          # free magma, result
+          processed;
 
-    # Get and check the argument list, and construct names if necessary.
-    if   Length( arg ) = 1 and arg[1] = infinity then
-      names:= InfiniteListOfNames( "x" );
-    elif Length( arg ) = 2 and arg[1] = infinity then
-      names:= InfiniteListOfNames( arg[2] );
-    elif Length( arg ) = 3 and arg[1] = infinity then
-      names:= InfiniteListOfNames( arg[2], arg[3] );
-    elif Length( arg ) = 1 and IsInt( arg[1] ) and 0 < arg[1] then
-      names:= List( [ 1 .. arg[1] ],
-                    i -> Concatenation( "x", String(i) ) );
-      MakeImmutable( names );
-    elif Length( arg ) = 2 and IsInt( arg[1] ) and 0 < arg[1] then
-      names:= List( [ 1 .. arg[1] ],
-                    i -> Concatenation( arg[2], String(i) ) );
-      MakeImmutable( names );
-    elif 1 <= Length( arg ) and ForAll( arg, IsString ) then
-      names:= arg;
-    elif Length( arg ) = 1 and IsList( arg[1] )
-                           and not IsEmpty( arg[1])
-                           and ForAll( arg[1], IsString ) then
-      names:= arg[1];
-    else
-      Error( "usage: FreeMagmaWithOne(<name1>,<name2>..),",
-             "FreeMagmaWithOne(<rank>)" );
-    fi;
+    processed := FreeXArgumentProcessor( "FreeMagmaWithOne", "x", arg, false, true );
+    names := processed.names;
 
     # Handle the trivial case.
     if IsEmpty( names ) then

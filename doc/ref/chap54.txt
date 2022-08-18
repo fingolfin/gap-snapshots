@@ -974,56 +974,80 @@
   
   [1X54.5 [33X[0;0YOperators and operations for partial permutations[133X[101X
   
-  [8X[10X[3Xf[103X[8X[10X ^ -1[110X[8X[108X
-        [33X[0;6Yreturns the inverse of the partial permutation [3Xf[103X.[133X
+  [1X54.5-1 Inverse[101X
   
-  [8X[10X[3Xi[103X[8X[10X ^ [3Xf[103X[8X[10X[110X[8X[108X
-        [33X[0;6Yreturns  the  image  of  the  positive  integer  [3Xi[103X  under  the partial
-        permutation [3Xf[103X if it is defined and [10X0[110X if it is not.[133X
+  [33X[1;0Y[29X[2XInverse[102X( [3Xf[103X ) [32X method[133X
   
-  [8X[10X[3Xi[103X[8X[10X / [3Xf[103X[8X[10X[110X[8X[108X
-        [33X[0;6Yreturns  the  preimage  of  the  positive  integer [3Xi[103X under the partial
-        permutation  [3Xf[103X  if  it  is  defined  and [10X0[110X if it is not. Note that the
-        inverse of [3Xf[103X is not calculated to find the preimage of [3Xi[103X.[133X
+  [33X[0;0Yreturns the inverse of the partial permutation [3Xf[103X.[133X
   
-  [8X[10X[3Xf[103X[8X[10X ^ [3Xg[103X[8X[10X[110X[8X[108X
-        [33X[0;6Yreturns  [10X[3Xg[103X[10X^-1*[3Xf[103X[10X*[3Xg[103X[10X[110X  when  [3Xf[103X  is  a  partial  permutation  and  [3Xg[103X  is  a
-        permutation  or  partial permutation; see [2X\^[102X ([14X31.12-1[114X). This operation
-        requires  essentially  the same number of steps as multiplying partial
-        permutations,  which  is  around  one  third  as many as inverting and
-        multiplying twice.[133X
+  [1X54.5-2 \^[101X
   
-  [8X[10X[3Xf[103X[8X[10X * [3Xg[103X[8X[10X[110X[8X[108X
-        [33X[0;6Yreturns  the  composition  of  [3Xf[103X  and  [3Xg[103X  when  [3Xf[103X  and  [3Xg[103X  are partial
-        permutations  or  permutations.  The  product  of  a permutation and a
-        partial permutation is returned as a partial permutation.[133X
+  [33X[1;0Y[29X[2X\^[102X( [3Xi[103X, [3Xf[103X ) [32X method[133X
   
-  [8X[10X[3Xf[103X[8X[10X / [3Xg[103X[8X[10X[110X[8X[108X
-        [33X[0;6Yreturns  [10X[3Xf[103X[10X*[3Xg[103X[10X^-1[110X when [3Xf[103X is a partial permutation and [3Xg[103X is a permutation
-        or  partial  permutation. This operation requires essentially the same
-        number   of  steps  as  multiplying  partial  permutations,  which  is
-        approximately  half  that required to first invert [3Xg[103X and then take the
-        product with [3Xf[103X.[133X
+  [33X[0;0Yreturns  the image of the positive integer [3Xi[103X under the partial permutation [3Xf[103X
+  if it is defined and [10X0[110X if it is not.[133X
   
-  [8X[10XLQUO([3Xg[103X[8X[10X, [3Xf[103X[8X[10X)[110X[8X[108X
-        [33X[0;6Yreturns  [10X[3Xg[103X[10X^-1*[3Xf[103X[10X[110X when [3Xf[103X is a partial permutation and [3Xg[103X is a permutation
-        or  partial  permutation. This operation requires essentially the same
-        number   of  steps  as  multiplying  partial  permutations,  which  is
-        approximately  half  that required to first invert [3Xg[103X and then take the
-        product with [3Xf[103X.[133X
+  [1X54.5-3 \/[101X
   
-  [8X[10X[3Xf[103X[8X[10X < [3Xg[103X[8X[10X[110X[8X[108X
-        [33X[0;6Yreturns  [9Xtrue[109X if the image of [3Xf[103X on the range from 1 to the degree of [3Xf[103X
-        is lexicographically less than the corresponding image for [3Xg[103X and [9Xfalse[109X
-        if    it    is    not.    See   [2XNaturalLeqPartialPerm[102X   ([14X54.5-4[114X)   and
-        [2XShortLexLeqPartialPerm[102X  ([14X54.5-5[114X)  for  additional  orders  for partial
-        permutations.[133X
+  [33X[1;0Y[29X[2X\/[102X( [3Xi[103X, [3Xf[103X ) [32X method[133X
   
-  [8X[10X[3Xf[103X[8X[10X = [3Xg[103X[8X[10X[110X[8X[108X
-        [33X[0;6Yreturns   [9Xtrue[109X  if  the  partial  permutation  [3Xf[103X  equals  the  partial
-        permutation [3Xg[103X and returns [9Xfalse[109X if it does not.[133X
+  [33X[0;0Yreturns the preimage of the positive integer [3Xi[103X under the partial permutation
+  [3Xf[103X  if  it  is  defined and [10X0[110X if it is not. Note that the inverse of [3Xf[103X is not
+  calculated to find the preimage of [3Xi[103X.[133X
   
-  [1X54.5-1 PermLeftQuoPartialPerm[101X
+  [1X54.5-4 \^[101X
+  
+  [33X[1;0Y[29X[2X\^[102X( [3Xf[103X, [3Xg[103X ) [32X method[133X
+  
+  [33X[0;0Y[10X[3Xf[103X[10X  ^  [3Xg[103X[10X[110X  returns  [10X[3Xg[103X[10X^-1*[3Xf[103X[10X*[3Xg[103X[10X[110X  when  [3Xf[103X  is  a  partial  permutation  and [3Xg[103X is a
+  permutation  or  partial  permutation;  see  [2X\^[102X  ([14X31.12-1[114X).  This  operation
+  requires  essentially  the  same  number  of  steps  as  multiplying partial
+  permutations, which is around one third as many as inverting and multiplying
+  twice.[133X
+  
+  [1X54.5-5 \*[101X
+  
+  [33X[1;0Y[29X[2X\*[102X( [3Xf[103X, [3Xg[103X ) [32X method[133X
+  
+  [33X[0;0Y[10X[3Xf[103X[10X  *  [3Xg[103X[10X[110X  returns  the  composition  of  [3Xf[103X  and  [3Xg[103X  when  [3Xf[103X and [3Xg[103X are partial
+  permutations  or  permutations.  The  product of a permutation and a partial
+  permutation is returned as a partial permutation.[133X
+  
+  [1X54.5-6 \/[101X
+  
+  [33X[1;0Y[29X[2X\/[102X( [3Xf[103X, [3Xg[103X ) [32X method[133X
+  
+  [33X[0;0Y[10X[3Xf[103X[10X  / [3Xg[103X[10X[110X returns [10X[3Xf[103X[10X*[3Xg[103X[10X^-1[110X when [3Xf[103X is a partial permutation and [3Xg[103X is a permutation
+  or  partial permutation. This operation requires essentially the same number
+  of  steps  as  multiplying partial permutations, which is approximately half
+  that required to first invert [3Xg[103X and then take the product with [3Xf[103X.[133X
+  
+  [1X54.5-7 LeftQuotient[101X
+  
+  [33X[1;0Y[29X[2XLeftQuotient[102X( [3Xg[103X, [3Xf[103X ) [32X method[133X
+  
+  [33X[0;0Yreturns  [10X[3Xg[103X[10X^-1*[3Xf[103X[10X[110X  when  [3Xf[103X  is a partial permutation and [3Xg[103X is a permutation or
+  partial  permutation. This operation requires essentially the same number of
+  steps  as multiplying partial permutations, which is approximately half that
+  required to first invert [3Xg[103X and then take the product with [3Xf[103X.[133X
+  
+  [1X54.5-8 \<[101X
+  
+  [33X[1;0Y[29X[2X\<[102X( [3Xf[103X, [3Xg[103X ) [32X method[133X
+  
+  [33X[0;0Y[10X[3Xf[103X[10X  < [3Xg[103X[10X[110X returns [9Xtrue[109X if the image of [3Xf[103X on the range from 1 to the degree of [3Xf[103X
+  is lexicographically less than the corresponding image for [3Xg[103X and [9Xfalse[109X if it
+  is  not.  See  [2XNaturalLeqPartialPerm[102X  ([14X54.5-13[114X)  and  [2XShortLexLeqPartialPerm[102X
+  ([14X54.5-14[114X) for additional orders for partial permutations.[133X
+  
+  [1X54.5-9 \=[101X
+  
+  [33X[1;0Y[29X[2X\=[102X( [3Xf[103X, [3Xg[103X ) [32X method[133X
+  
+  [33X[0;0Y[10X[3Xf[103X[10X  =  [3Xg[103X[10X[110X  returns  [9Xtrue[109X  if  the  partial  permutation  [3Xf[103X  equals the partial
+  permutation [3Xg[103X and returns [9Xfalse[109X if it does not.[133X
+  
+  [1X54.5-10 PermLeftQuoPartialPerm[101X
   
   [33X[1;0Y[29X[2XPermLeftQuoPartialPerm[102X( [3Xf[103X, [3Xg[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XPermLeftQuoPartialPermNC[102X( [3Xf[103X, [3Xg[103X ) [32X operation[133X
@@ -1045,7 +1069,7 @@
     [4X[28X(2,5,10,9,4)[128X[104X
   [4X[32X[104X
   
-  [1X54.5-2 PreImagePartialPerm[101X
+  [1X54.5-11 PreImagePartialPerm[101X
   
   [33X[1;0Y[29X[2XPreImagePartialPerm[102X( [3Xf[103X, [3Xi[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA positive integer or [9Xfail[109X.[133X
@@ -1071,7 +1095,7 @@
     [4X[28Xfail[128X[104X
   [4X[32X[104X
   
-  [1X54.5-3 ComponentPartialPermInt[101X
+  [1X54.5-12 ComponentPartialPermInt[101X
   
   [33X[1;0Y[29X[2XComponentPartialPermInt[102X( [3Xf[103X, [3Xi[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YA set of positive integers.[133X
@@ -1093,7 +1117,7 @@
     [4X[28X[  ][128X[104X
   [4X[32X[104X
   
-  [1X54.5-4 NaturalLeqPartialPerm[101X
+  [1X54.5-13 NaturalLeqPartialPerm[101X
   
   [33X[1;0Y[29X[2XNaturalLeqPartialPerm[102X( [3Xf[103X, [3Xg[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
@@ -1126,7 +1150,7 @@
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
-  [1X54.5-5 ShortLexLeqPartialPerm[101X
+  [1X54.5-14 ShortLexLeqPartialPerm[101X
   
   [33X[1;0Y[29X[2XShortLexLeqPartialPerm[102X( [3Xf[103X, [3Xg[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
@@ -1159,7 +1183,7 @@
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
-  [1X54.5-6 TrimPartialPerm[101X
+  [1X54.5-15 TrimPartialPerm[101X
   
   [33X[1;0Y[29X[2XTrimPartialPerm[102X( [3Xf[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YNothing.[133X
@@ -1438,13 +1462,13 @@
   semigroup  of  partial permutations [3XS[103X as a list of sets of positive integers
   where  entry  [10Xi[110X  in  [10XNaturalPartialOrder([3XS[103X[10X)[110X  is  the  set  of  positions  in
   [10XElements([3XS[103X[10X)[110X  of  elements  which  are  less  than  [10XElements([3XS[103X[10X)[i][110X.  See also
-  [2XNaturalLeqPartialPerm[102X ([14X54.5-4[114X).[133X
+  [2XNaturalLeqPartialPerm[102X ([14X54.5-13[114X).[133X
   
   [33X[0;0Y[10XReverseNaturalPartialOrder[110X  returns the reverse of the natural partial order
   on  the  inverse  semigroup  of  partial permutations [3XS[103X as a list of sets of
   positive  integers where entry [10Xi[110X in [10XReverseNaturalPartialOrder([3XS[103X[10X)[110X is the set
   of   positions   in   [10XElements([3XS[103X[10X)[110X   of   elements  which  are  greater  than
-  [10XElements([3XS[103X[10X)[i][110X. See also [2XNaturalLeqPartialPerm[102X ([14X54.5-4[114X).[133X
+  [10XElements([3XS[103X[10X)[i][110X. See also [2XNaturalLeqPartialPerm[102X ([14X54.5-13[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := InverseSemigroup([ PartialPerm( [ 1, 3 ], [ 1, 3 ] ),[127X[104X

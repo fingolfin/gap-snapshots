@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    Semigroups
+  </Title>
+  <Subtitle>
+    A package for semigroups and monoids
+  </Subtitle>
+  <Version>
+    5.0.2
+  </Version>
+  <Author>
+    James Mitchell<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Mathematical Institute, North Haugh, St Andrews, Fife, KY16 9SS, Scotland<Br/>
+</Address>
+<Email>jdm3@st-andrews.ac.uk</Email>
+<Homepage>https://jdbm.me</Homepage>
+
+  </Author>
+  <Author>
+    Marina Anagnostopoulou-Merkouri<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Mathematical Institute, North Haugh, St Andrews, Fife, KY16 9SS, Scotland<Br/>
+</Address>
+<Email>mam49@st-andrews.ac.uk</Email>
+<Homepage>https://github.com/marinaanagno</Homepage>
+
+  </Author>
+  <Author>
+    Stuart Burrell<Alt Only="LaTeX"><Br/></Alt>
+<Email>stuartburrell1994@gmail.com</Email>
+<Homepage>https://stuartburrell.github.io</Homepage>
+
+  </Author>
+  <Author>
+    Reinis Cirpons<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Mathematical Institute, North Haugh, St Andrews, Fife, KY16 9SS, Scotland<Br/>
+</Address>
+<Email>rc234@st-andrews.ac.uk</Email>
+<Homepage>https://reinisc.id.lv/</Homepage>
+
+  </Author>
+  <Author>
+    Tom Conti-Leslie<Alt Only="LaTeX"><Br/></Alt>
+<Email>tom.contileslie@gmail.com</Email>
+<Homepage>https://tomcontileslie.com/</Homepage>
+
+  </Author>
+  <Author>
+    Joe Edwards<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Mathematical Institute, North Haugh, St Andrews, Fife, KY16 9SS, Scotland<Br/>
+</Address>
+<Email>je53@st-andrews.ac.uk</Email>
+<Homepage>https://github.com/Joseph-Edwards</Homepage>
+
+  </Author>
+  <Author>
+    Attila Egri-Nagy<Alt Only="LaTeX"><Br/></Alt>
+<Email>attila@egri-nagy.hu</Email>
+<Homepage>http://www.egri-nagy.hu</Homepage>
+
+  </Author>
+  <Author>
+    Luke Elliott<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Mathematical Institute, North Haugh, St Andrews, Fife, KY16 9SS, Scotland<Br/>
+</Address>
+<Email>le27@st-andrews.ac.uk</Email>
+<Homepage>https://le27.github.io/Luke-Elliott/</Homepage>
+
+  </Author>
+  <Author>
+    Fernando Flores Brito<Alt Only="LaTeX"><Br/></Alt>
+<Email>ffloresbrito@gmail.com</Email>
+<Homepage>https://github.com/ffloresbrito</Homepage>
+
+  </Author>
+  <Author>
+    Nick Ham<Alt Only="LaTeX"><Br/></Alt>
+<Email>nicholas.charles.ham@gmail.com</Email>
+<Homepage>https://n-ham.github.io</Homepage>
+
+  </Author>
+  <Author>
+    Robert Hancock<Alt Only="LaTeX"><Br/></Alt>
+<Email>hancock@informatik.uni-heidelberg.de</Email>
+<Homepage>https://sites.google.com/view/robert-hancock/</Homepage>
+
+  </Author>
+  <Author>
+    Max Horn<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Fachbereich Mathematik, TU Kaiserslautern, Gottlieb-Daimler-Straße 48, 67663 Kaiserslautern, Germany<Br/>
+</Address>
+<Email>horn@mathematik.uni-kl.de</Email>
+<Homepage>https://www.quendi.de/math</Homepage>
+
+  </Author>
+  <Author>
+    Christopher Jefferson<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Jack Cole Building, North Haugh, St Andrews, Fife, KY16 9SX, Scotland<Br/>
+</Address>
+<Email>caj21@st-andrews.ac.uk</Email>
+<Homepage>https://caj.host.cs.st-andrews.ac.uk/</Homepage>
+
+  </Author>
+  <Author>
+    Julius Jonusas<Alt Only="LaTeX"><Br/></Alt>
+<Email>j.jonusas@gmail.com</Email>
+<Homepage>http://julius.jonusas.work</Homepage>
+
+  </Author>
+  <Author>
+    Chinmaya Nagpal<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Mathematical Institute, North Haugh, St Andrews, Fife, KY16 9SS, Scotland<Br/>
+</Address>
+<Email>chinmaya1011@gmail.com</Email>
+
+  </Author>
+  <Author>
+    Olexandr Konovalov<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Jack Cole Building, North Haugh, St Andrews, Fife, KY16 9SX, Scotland<Br/>
+</Address>
+<Email>obk1@st-andrews.ac.uk</Email>
+<Homepage>https://www.st-andrews.ac.uk/computer-science/people/obk1/</Homepage>
+
+  </Author>
+  <Author>
+    Artemis Konstantinidi<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Mathematical Institute, North Haugh, St Andrews, Fife, KY16 9SS, Scotland<Br/>
+</Address>
+<Email>ak316@st-andrews.ac.uk</Email>
+
+  </Author>
+  <Author>
+    Dima V. Pasechnik<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Pembroke College, St. Aldates, Oxford OX1 1DW, England<Br/>
+</Address>
+<Email>dmitrii.pasechnik@cs.ox.ac.uk</Email>
+<Homepage>http://users.ox.ac.uk/~coml0531/</Homepage>
+
+  </Author>
+  <Author>
+    Markus Pfeiffer<Alt Only="LaTeX"><Br/></Alt>
+<Email>markus.pfeiffer@morphism.de</Email>
+<Homepage>https://www.morphism.de/~markusp/</Homepage>
+
+  </Author>
+  <Author>
+    Christopher Russell<Alt Only="LaTeX"><Br/></Alt>
+
+  </Author>
+  <Author>
+    Jack Schmidt<Alt Only="LaTeX"><Br/></Alt>
+<Email>jack.schmidt@uky.edu</Email>
+<Homepage>https://www.ms.uky.edu/~jack/</Homepage>
+
+  </Author>
+  <Author>
+    Sergio Siccha<Alt Only="LaTeX"><Br/></Alt>
+<Email>sergio.siccha@gmail.com</Email>
+
+  </Author>
+  <Author>
+    Finn Smith<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Mathematical Institute, North Haugh, St Andrews, Fife, KY16 9SS, Scotland<Br/>
+</Address>
+<Email>fls3@st-andrews.ac.uk</Email>
+<Homepage>https://flsmith.github.io/</Homepage>
+
+  </Author>
+  <Author>
+    Ben Spiers<Alt Only="LaTeX"><Br/></Alt>
+<Email>bspiers972@outlook.com</Email>
+
+  </Author>
+  <Author>
+    Nicolas Thiéry<Alt Only="LaTeX"><Br/></Alt>
+<Email>nthiery@users.sf.net</Email>
+<Homepage>https://nicolas.thiery.name/</Homepage>
+
+  </Author>
+  <Author>
+    Maria Tsalakou<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Mathematical Institute, North Haugh, St Andrews, Fife, KY16 9SS, Scotland<Br/>
+</Address>
+<Email>mt200@st-andrews.ac.uk</Email>
+<Homepage>https://mariatsalakou.github.io/</Homepage>
+
+  </Author>
+  <Author>
+    Murray Whyte<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Mathematical Institute, North Haugh, St Andrews, Fife, KY16 9SS, Scotland<Br/>
+</Address>
+<Email>mw231@st-andrews.ac.uk</Email>
+
+  </Author>
+  <Author>
+    Wilf A. Wilson<Alt Only="LaTeX"><Br/></Alt>
+<Email>gap@wilf-wilson.net</Email>
+<Homepage>https://wilf.me</Homepage>
+
+  </Author>
+  <Author>
+    Michael Young<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Jack Cole Building, North Haugh, St Andrews, Fife, KY16 9SX, Scotland<Br/>
+</Address>
+<Email>mct25@st-andrews.ac.uk</Email>
+<Homepage>https://mtorpey.github.io/</Homepage>
+
+  </Author>
+  <Date>
+    12 August 2022
+  </Date>
+  <Abstract>
+    
+          The Semigroups package is a GAP package for semigroups, and monoids.
+          There are particularly efficient methods for finitely presented
+          semigroups and monoids, and for semigroups and monoids consisting of
+          transformations, partial permutations, bipartitions, partitioned
+          binary relations, subsemigroups of regular Rees 0-matrix semigroups,
+          and matrices of various semirings including boolean matrices,
+          matrices over finite fields, and certain tropical matrices.
+
+          Semigroups contains efficient methods for creating semigroups,
+          monoids, and inverse semigroups and monoids, calculating their
+          Green's structure, ideals, size, elements, group of units, small
+          generating sets, testing membership, finding the inverses of a
+          regular element, factorizing elements over the generators, and so on.
+          It is possible to test if a semigroup satisfies a particular
+          property, such as if it is regular, simple, inverse, completely
+          regular, and a large number of further properties.
+
+          There are methods for finding presentations for a semigroup, the
+          congruences of a semigroup, the maximal subsemigroups of a finite
+          semigroup, smaller degree partial permutation representations, and
+          the character tables of inverse semigroups. There are functions for
+          producing pictures of the Green's structure of a semigroup, and for
+          drawing graphical representations of certain types of elements.
+  </Abstract>
+  <Copyright>
+    &copyright; by J. D. Mitchell et al.<P/>
+        &Semigroups; is free software; you can redistribute it and/or modify
+        it, under the terms of the GNU General Public License, version 3 of
+        the License, or (at your option) any later, version.
+  </Copyright>
+  <Acknowledgements>
+    
+        The authors of the &SEMIGROUPS; package would like to thank:
+        <List>
+          <Mark>
+            Manuel Delgado
+          </Mark>
+          <Item>
+            who contributed to the function <Ref Oper = "DotString"/>.
+          </Item>
+
+          <Mark>
+            Casey Donoven and Rhiannon Dougall
+          </Mark>
+          <Item>
+            for their contribution to the development of the algorithms for
+            maximal subsemigroups and smaller degree partial permutation
+            representations.
+          </Item>
+
+          <Mark>
+            James East
+          </Mark>
+          <Item>
+            who contributed to the part of the package relating to
+            bipartitions. We also thank the University of Western Sydney for
+            their support of the development of this part of the package.
+          </Item>
+
+          <Mark>
+            Zak Mesyan
+          </Mark>
+          <Item>
+            who contributed to the code for graph inverse semigroups; see
+            Section <Ref Sect="Graph inverse semigroups"/>.
+          </Item>
+
+          <Mark>
+            Yann P&#233;resse and Yanhui Wang
+          </Mark>
+          <Item>
+            who contributed to the attribute <Ref Attr = "MunnSemigroup"/>.
+          </Item>
+
+          <Mark>
+            Jhevon Smith and Ben Steinberg
+          </Mark>
+          <Item>
+            who contributed the function
+            <Ref Attr = "CharacterTableOfInverseSemigroup"/>.
+          </Item>
+        </List>
+        We would also like to acknowledge the support of: EPSRC grant number
+        GR/S/56085/01; the Carnegie Trust for the Universities of Scotland
+        for funding the PhD scholarships of Julius Jonu&#353;as and Wilf A.
+        Wilson when they worked on this project; the Engineering and Physical
+        Sciences Research Council (EPSRC) for funding the PhD scholarships of
+        F. Smith (EP/N509759/1) and M. Young (EP/M506631/1) when they worked on
+        this project.
+  </Acknowledgements>
+  </TitlePage>

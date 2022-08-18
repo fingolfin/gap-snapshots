@@ -40,7 +40,7 @@
 **  a small integer value and its representation as immediate integer handle.
 **
 **  'T_INTPOS' and 'T_INTNEG' are the types of positive respectively negative
-**  integer values that can not be represented by immediate integers.
+**  integer values that cannot be represented by immediate integers.
 **
 **  These large integers values are represented as low-level GMP integer
 **  objects, that is, in base 2^N. That means that the bag of a large integer
@@ -79,6 +79,8 @@
 #include "stats.h"
 #include "stringobj.h"
 
+#include "config.h"
+
 
 /* TODO: Remove after Ward2 */
 #ifndef WARD_ENABLED
@@ -103,21 +105,15 @@ static Obj ObjInt_UIntInv( UInt i );
 
 
 /* debugging */
-#ifndef DEBUG_GMP
+#ifdef GAP_KERNEL_DEBUG
+#define DEBUG_GMP 1
+#else
 #define DEBUG_GMP 0
 #endif
 
 #if DEBUG_GMP
 
-#if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901)
-#  define CURRENT_FUNCTION  __func__
-#elif defined(_MSC_VER)
-#  define CURRENT_FUNCTION __FUNCTION__
-#else
-#  define CURRENT_FUNCTION "<unknown>"
-#endif
-
-#define CHECK_INT(op)  IS_NORMALIZED_AND_REDUCED(op, CURRENT_FUNCTION, __LINE__)
+#define CHECK_INT(op)  IS_NORMALIZED_AND_REDUCED(op, __func__, __LINE__)
 #else
 #define CHECK_INT(op)  do { } while(0);
 #endif
@@ -131,11 +127,12 @@ static Obj ObjInt_UIntInv( UInt i );
 
 #define SIZE_INT_OR_INTOBJ(obj) (IS_INTOBJ(obj) ? 1 : SIZE_INT(obj))
 
-#define RequireNonzero(funcname, op, argname) \
-    do { \
-      if (op == INTOBJ_INT(0) ) { \
-        ErrorMayQuit(funcname ": <" argname "> must be nonzero", 0, 0); \
-      } \
+#define RequireNonzero(funcname, op, argname)                                \
+    do {                                                                     \
+        if (op == INTOBJ_INT(0)) {                                           \
+            RequireArgumentEx(funcname, op, "<" argname ">",                 \
+                              "must be a nonzero integer");                  \
+        }                                                                    \
     } while (0)
 
 
@@ -245,6 +242,7 @@ static Obj FiltIS_INT(Obj self, Obj val)
 **
 **
 */
+#ifdef GAP_ENABLE_SAVELOAD
 static void SaveInt(Obj op)
 {
     const UInt * ptr = CONST_ADDR_INT(op);
@@ -252,6 +250,7 @@ static void SaveInt(Obj op)
         SaveUInt(*ptr++);
     return;
 }
+#endif
 
 
 /****************************************************************************
@@ -260,6 +259,7 @@ static void SaveInt(Obj op)
 **
 **
 */
+#ifdef GAP_ENABLE_SAVELOAD
 static void LoadInt(Obj op)
 {
     UInt * ptr = ADDR_INT(op);
@@ -267,6 +267,7 @@ static void LoadInt(Obj op)
         *ptr++ = LoadUInt();
     return;
 }
+#endif
 
 
 /****************************************************************************
@@ -459,15 +460,15 @@ Obj GMP_REDUCE(Obj op)
 **
 */
 #if DEBUG_GMP
-static int IS_NORMALIZED_AND_REDUCED(Obj op, const char * func, int line)
+static BOOL IS_NORMALIZED_AND_REDUCED(Obj op, const char * func, int line)
 {
   mp_size_t size;
   if ( IS_INTOBJ( op ) ) {
-    return 1;
+    return TRUE;
   }
   if ( !IS_LARGEINT( op ) ) {
     /* ignore non-integers */
-    return 0;
+    return FALSE;
   }
   for ( size = SIZE_INT(op); size != (mp_size_t)1; size-- ) {
     if ( CONST_ADDR_INT(op)[(size - 1)] != 0 ) {
@@ -482,15 +483,15 @@ static int IS_NORMALIZED_AND_REDUCED(Obj op, const char * func, int line)
          ( IS_INTNEG(op) && VAL_LIMB0(op) == -INT_INTOBJ_MIN ) ) {
       if ( IS_INTNEG(op) ) {
         Pr("WARNING: non-reduced negative gmp value (%s:%d)\n",(Int)func,line);
-        return 0;
+        return FALSE;
       }
       else {
         Pr("WARNING: non-reduced positive gmp value (%s:%d)\n",(Int)func,line);
-        return 0;
+        return FALSE;
       }
     }
   }
-  return 1;
+  return TRUE;
 }
 #endif
 
@@ -612,10 +613,9 @@ Int Int_ObjInt(Obj i)
     else if (TNUM_OBJ(i) == T_INTNEG)
         sign = 1;
     else
-        ErrorMayQuit("Conversion error, expecting an integer, not a %s",
-                     (Int)TNAM_OBJ(i), 0);
+        RequireArgument("Conversion error", i, "must be an integer");
     if (SIZE_BAG(i) != sizeof(mp_limb_t))
-        ErrorMayQuit("Conversion error, integer too large", 0L, 0L);
+        ErrorMayQuit("Conversion error: integer too large", 0, 0);
 
     // now check if val is small enough to fit in the signed Int type
     // that has a range from -2^N to 2^N-1 so we need to check both ends
@@ -627,23 +627,22 @@ Int Int_ObjInt(Obj i)
 #else
     if ((!sign && (val > INT32_MAX)) || (sign && (val > (UInt)INT32_MIN)))
 #endif
-        ErrorMayQuit("Conversion error, integer too large", 0L, 0L);
+        ErrorMayQuit("Conversion error: integer too large", 0, 0);
     return sign ? -(Int)val : (Int)val;
 }
 
 UInt UInt_ObjInt(Obj i)
 {
     if (IS_NEG_INT(i))
-        ErrorMayQuit("Conversion error, cannot convert negative integer to unsigned type", 0, 0);
+        ErrorMayQuit("Conversion error: cannot convert negative integer to unsigned type", 0, 0);
     if (IS_INTOBJ(i))
         return (UInt)INT_INTOBJ(i);
     if (TNUM_OBJ(i) != T_INTPOS)
-        ErrorMayQuit("Conversion error, expecting an integer, not a %s",
-                     (Int)TNAM_OBJ(i), 0);
+        RequireArgument("Conversion error", i, "must be a non-negative integer");
 
     // must be a single limb
     if (SIZE_INT(i) != 1)
-        ErrorMayQuit("Conversion error, integer too large", 0L, 0L);
+        ErrorMayQuit("Conversion error: integer too large", 0, 0);
     return VAL_LIMB0(i);
 }
 
@@ -662,12 +661,11 @@ Int8 Int8_ObjInt(Obj i)
     else if (TNUM_OBJ(i) == T_INTNEG)
         sign = 1;
     else
-        ErrorMayQuit("Conversion error, expecting an integer, not a %s",
-                     (Int)TNAM_OBJ(i), 0);
+        RequireArgument("Conversion error", i, "must be an integer");
 
     // must be at most two limbs
     if (SIZE_INT(i) > 2)
-        ErrorMayQuit("Conversion error, integer too large", 0L, 0L);
+        ErrorMayQuit("Conversion error: integer too large", 0, 0);
     UInt  vall = VAL_LIMB0(i);
     UInt  valh = (SIZE_INT(i) == 1) ? 0 : CONST_ADDR_INT(i)[1];
     UInt8 val = (UInt8)vall + ((UInt8)valh << 32);
@@ -676,7 +674,7 @@ Int8 Int8_ObjInt(Obj i)
     // Since -2^63 is the same bit pattern as the UInt8 2^63 we can do it
     // this way which avoids some compiler warnings
     if ((!sign && (val > INT64_MAX)) || (sign && (val > (UInt8)INT64_MIN)))
-        ErrorMayQuit("Conversion error, integer too large", 0L, 0L);
+        ErrorMayQuit("Conversion error: integer too large", 0, 0);
     return sign ? -(Int8)val : (Int8)val;
 #endif
 }
@@ -688,14 +686,13 @@ UInt8 UInt8_ObjInt(Obj i)
     return UInt_ObjInt(i);
 #else
     if (IS_NEG_INT(i))
-        ErrorMayQuit("Conversion error, cannot convert negative integer to unsigned type", 0, 0);
+        ErrorMayQuit("Conversion error: cannot convert negative integer to unsigned type", 0, 0);
     if (IS_INTOBJ(i))
         return (UInt8)INT_INTOBJ(i);
     if (TNUM_OBJ(i) != T_INTPOS)
-        ErrorMayQuit("Conversion error, expecting an integer, not a %s",
-                     (Int)TNAM_OBJ(i), 0);
+        RequireArgument("Conversion error", i, "must be a non-negative integer");
     if (SIZE_INT(i) > 2)
-        ErrorMayQuit("Conversion error, integer too large", 0L, 0L);
+        ErrorMayQuit("Conversion error: integer too large", 0, 0);
     UInt vall = VAL_LIMB0(i);
     UInt valh = (SIZE_INT(i) == 1) ? 0 : CONST_ADDR_INT(i)[1];
     return (UInt8)vall + ((UInt8)valh << 32);
@@ -754,7 +751,7 @@ void PrintInt ( Obj op )
 {
   /* print a small integer                                                 */
   if ( IS_INTOBJ(op) ) {
-    Pr( "%>%d%<", INT_INTOBJ(op), 0L );
+    Pr("%>%d%<", INT_INTOBJ(op), 0);
   }
   
   /* print a large integer                                                 */
@@ -784,7 +781,7 @@ void PrintInt ( Obj op )
     Pr("%<", 0, 0);
     /* for a long time Print of large ints did not follow the general idea
      * that Print should produce something that can be read back into GAP:
-       Pr("<<an integer too large to be printed>>",0L,0L); */
+       Pr("<<an integer too large to be printed>>", 0, 0); */
   }
 }
 
@@ -847,7 +844,7 @@ static Obj StringIntBase(Obj op, int base)
 */
 static Obj FuncHexStringInt(Obj self, Obj n)
 {
-    RequireInt("HexStringInt", n);
+    RequireInt(SELF_NAME, n);
     return StringIntBase(n, 16);
 }
 
@@ -872,7 +869,7 @@ static mp_limb_t hexstr2int( const UInt1 *p, UInt len )
     else
       a -= '0';
     if (a > 15)
-      ErrorMayQuit("IntHexString: invalid character in hex-string", 0L, 0L);
+      ErrorMayQuit("IntHexString: invalid character in hex-string", 0, 0);
     n = (n << 4) + a;
   }
   return n;
@@ -880,6 +877,7 @@ static mp_limb_t hexstr2int( const UInt1 *p, UInt len )
 
 static Obj FuncIntHexString(Obj self,  Obj str)
 {
+    RequireStringRep(SELF_NAME, str);
     return IntHexString(str);
 }
 
@@ -891,7 +889,7 @@ Obj IntHexString(Obj str)
   const UInt1 *p;
   UInt *limbs;
 
-  RequireStringRep("IntHexString", str);
+  GAP_ASSERT(IS_STRING_REP(str));
 
   len = GET_LEN_STRING(str);
   if (len == 0) {
@@ -919,7 +917,7 @@ Obj IntHexString(Obj str)
   }
 
   else {
-    /* Each hex digit corresponds to to 4 bits, and each GMP limb has sizeof(UInt)
+    /* Each hex digit corresponds to 4 bits, and each GMP limb has sizeof(UInt)
        bytes, thus 2*sizeof(UInt) hex digits fit into one limb. We use this
        to compute the number of limbs minus 1: */
     nd = (len - 1) / (2*sizeof(UInt));
@@ -1017,7 +1015,7 @@ Int CLog2Int(Int a)
 */
 static Obj FuncLog2Int(Obj self, Obj n)
 {
-    RequireInt("Log2Int", n);
+    RequireInt(SELF_NAME, n);
 
     if (IS_INTOBJ(n)) {
         return INTOBJ_INT(CLog2Int(INT_INTOBJ(n)));
@@ -1047,7 +1045,7 @@ static Obj FuncLog2Int(Obj self, Obj n)
 */
 static Obj FuncSTRING_INT(Obj self, Obj n)
 {
-    RequireInt("STRING_INT", n);
+    RequireInt(SELF_NAME, n);
     return StringIntBase(n, 10);
 }
 
@@ -1388,7 +1386,7 @@ Obj AbsInt( Obj op )
 
 static Obj FuncABS_INT(Obj self, Obj n)
 {
-    RequireInt("AbsInt", n);
+    RequireInt(SELF_NAME, n);
     Obj res = AbsInt(n);
     CHECK_INT(res);
     return res;
@@ -1419,7 +1417,7 @@ Obj SignInt( Obj op )
 
 static Obj FuncSIGN_INT(Obj self, Obj n)
 {
-    RequireInt("SignInt", n);
+    RequireInt(SELF_NAME, n);
     Obj res = SignInt(n);
     CHECK_INT(res);
     return res;
@@ -1496,7 +1494,7 @@ static Obj ProdIntObj ( Obj n, Obj op )
 
   /* if the integer is zero, return the neutral element of the operand     */
   if ( n == INTOBJ_INT(0) ) {
-    res = ZERO( op );
+    res = ZERO_SAMEMUT( op );
   }
   
   /* if the integer is one, return the object if immutable -
@@ -1504,23 +1502,23 @@ static Obj ProdIntObj ( Obj n, Obj op )
      ensure correct mutability propagation                                 */
   else if ( n == INTOBJ_INT(1) ) {
     if (IS_MUTABLE_OBJ(op))
-      res = SUM(ZERO(op),op);
+      res = SUM(ZERO_SAMEMUT(op),op);
     else
       res = op;
   }
   
   /* if the integer is minus one, return the inverse of the operand        */
   else if ( n == INTOBJ_INT(-1) ) {
-    res = AINV( op );
+    res = AINV_SAMEMUT( op );
   }
   
   /* if the integer is negative, invert the operand and the integer        */
   else if ( IS_NEG_INT(n) ) {
-    res = AINV( op );
+    res = AINV_SAMEMUT( op );
     if ( res == Fail ) {
       ErrorMayQuit("Operations: <obj> must have an additive inverse", 0, 0);
     }
-    res = PROD( AINV( n ), res );
+    res = PROD(AINV_SAMEMUT(n), res);
   }
 
   /* if the integer is small, compute the product by repeated doubling     */
@@ -1556,7 +1554,6 @@ static Obj ProdIntObj ( Obj n, Obj op )
     }
   }
   
-  /* return the result                                                     */
   return res;
 }
 
@@ -1651,7 +1648,7 @@ static Obj PowObjInt(Obj op, Obj n)
 
   /* if the integer is zero, return the neutral element of the operand   */
   if ( n == INTOBJ_INT(0) ) {
-    return ONE_MUT( op );
+    return ONE_SAMEMUT( op );
   }
   
   /* if the integer is one, return a copy of the operand                 */
@@ -1661,16 +1658,16 @@ static Obj PowObjInt(Obj op, Obj n)
   
   /* if the integer is minus one, return the inverse of the operand      */
   else if ( n == INTOBJ_INT(-1) ) {
-    res = INV_MUT( op );
+    res = INV_SAMEMUT( op );
   }
   
   /* if the integer is negative, invert the operand and the integer      */
   else if ( IS_NEG_INT(n) ) {
-    res = INV_MUT( op );
+    res = INV_SAMEMUT( op );
     if ( res == Fail ) {
       ErrorMayQuit("Operations: <obj> must have an inverse", 0, 0);
     }
-    res = POW( res, AINV( n ) );
+    res = POW(res, AINV_SAMEMUT(n));
   }
   
   /* if the integer is small, compute the power by repeated squaring     */
@@ -1706,7 +1703,6 @@ static Obj PowObjInt(Obj op, Obj n)
     }
   }
 
-  /* return the result                                                   */
   return res;
 }
 
@@ -1841,7 +1837,6 @@ Obj ModInt(Obj opL, Obj opR)
     
   }
   
-  /* return the result                                                     */
 #if DEBUG_GMP
   assert( !IS_NEG_INT(mod) );
 #endif
@@ -1953,7 +1948,6 @@ Obj QuoInt(Obj opL, Obj opR)
                  (mp_srcptr)CONST_ADDR_INT(opR), SIZE_INT(opR) );
   }
   
-  /* normalize and return the result                                       */
   quo = GMP_NORMALIZE(quo);
   quo = GMP_REDUCE( quo );
   return quo;
@@ -1977,8 +1971,8 @@ Obj QuoInt(Obj opL, Obj opR)
 */
 static Obj FuncQUO_INT(Obj self, Obj a, Obj b)
 {
-    RequireInt("QuoInt", a);
-    RequireInt("QuoInt", b);
+    RequireInt(SELF_NAME, a);
+    RequireInt(SELF_NAME, b);
     return QuoInt(a, b);
 }
 
@@ -2085,7 +2079,6 @@ Obj RemInt(Obj opL, Obj opR)
     
   }
   
-  /* return the result                                                     */
   CHECK_INT(rem);
   return rem;
 }
@@ -2107,8 +2100,8 @@ Obj RemInt(Obj opL, Obj opR)
 */
 static Obj FuncREM_INT(Obj self, Obj a, Obj b)
 {
-    RequireInt("RemInt", a);
-    RequireInt("RemInt", b);
+    RequireInt(SELF_NAME, a);
+    RequireInt(SELF_NAME, b);
     return RemInt(a, b);
 }
 
@@ -2180,8 +2173,8 @@ Obj GcdInt ( Obj opL, Obj opR )
 */
 static Obj FuncGCD_INT(Obj self, Obj a, Obj b)
 {
-    RequireInt("GcdInt", a);
-    RequireInt("GcdInt", b);
+    RequireInt(SELF_NAME, a);
+    RequireInt(SELF_NAME, b);
     return GcdInt(a, b);
 }
 
@@ -2233,8 +2226,8 @@ Obj LcmInt(Obj opL, Obj opR)
 
 static Obj FuncLCM_INT(Obj self, Obj a, Obj b)
 {
-    RequireInt("LcmInt", a);
-    RequireInt("LcmInt", b);
+    RequireInt(SELF_NAME, a);
+    RequireInt(SELF_NAME, b);
     return LcmInt(a, b);
 }
 
@@ -2243,7 +2236,7 @@ static Obj FuncLCM_INT(Obj self, Obj a, Obj b)
 */
 static Obj FuncFACTORIAL_INT(Obj self, Obj n)
 {
-    RequireNonnegativeSmallInt("Factorial", n);
+    RequireNonnegativeSmallInt(SELF_NAME, n);
 
     mpz_t mpzResult;
     mpz_init(mpzResult);
@@ -2345,8 +2338,8 @@ Obj BinomialInt(Obj n, Obj k)
 
 static Obj FuncBINOMIAL_INT(Obj self, Obj n, Obj k)
 {
-    RequireInt("Binomial", n);
-    RequireInt("Binomial", k);
+    RequireInt(SELF_NAME, n);
+    RequireInt(SELF_NAME, k);
     return BinomialInt(n, k);
 }
 
@@ -2359,8 +2352,8 @@ static Obj FuncJACOBI_INT(Obj self, Obj n, Obj m)
   fake_mpz_t mpzL, mpzR;
   int result;
 
-  RequireInt("Jacobi", n);
-  RequireInt("Jacobi", m);
+  RequireInt(SELF_NAME, n);
+  RequireInt(SELF_NAME, m);
 
   CHECK_INT(n);
   CHECK_INT(m);
@@ -2385,13 +2378,13 @@ static Obj FuncPVALUATION_INT(Obj self, Obj n, Obj p)
   mpz_t mpzResult;
   int k;
 
-  RequireInt("PValuation", n);
-  RequireInt("PValuation", p);
+  RequireInt(SELF_NAME, n);
+  RequireInt(SELF_NAME, p);
 
   CHECK_INT(n);
   CHECK_INT(p);
 
-  RequireNonzero("PValuation", p, "p");
+  RequireNonzero(SELF_NAME, p, "p");
 
   if (SIZE_INT_OR_INTOBJ(n) == 1 && SIZE_INT_OR_INTOBJ(p) == 1) {
     UInt N = AbsOfSmallInt(n);
@@ -2431,8 +2424,8 @@ static Obj FuncROOT_INT(Obj self, Obj n, Obj k)
 {
     fake_mpz_t n_mpz, result_mpz;
 
-    RequireInt("Root", n);
-    RequireInt("Root", k);
+    RequireInt(SELF_NAME, n);
+    RequireInt(SELF_NAME, k);
 
     if (!IS_POS_INT(k))
         ErrorMayQuit("Root: <k> must be a positive integer", 0, 0);
@@ -2489,10 +2482,9 @@ Obj InverseModInt(Obj base, Obj mod)
     CHECK_INT(base);
     CHECK_INT(mod);
 
-    RequireNonzero("InverseModInt", mod, "mod");
     if (mod == INTOBJ_INT(1) || mod == INTOBJ_INT(-1))
         return INTOBJ_INT(0);
-    if (base == INTOBJ_INT(0))
+    if (base == INTOBJ_INT(0) || mod == INTOBJ_INT(0))
         return Fail;
 
     // handle small inputs separately
@@ -2544,8 +2536,9 @@ Obj InverseModInt(Obj base, Obj mod)
 */
 static Obj FuncINVMODINT(Obj self, Obj base, Obj mod)
 {
-    RequireInt("InverseModInt", base);
-    RequireInt("InverseModInt", mod);
+    RequireInt(SELF_NAME, base);
+    RequireInt(SELF_NAME, mod);
+    RequireNonzero(SELF_NAME, mod, "mod");
     return InverseModInt(base, mod);
 }
 
@@ -2557,22 +2550,22 @@ static Obj FuncPOWERMODINT(Obj self, Obj base, Obj exp, Obj mod)
 {
   fake_mpz_t base_mpz, exp_mpz, mod_mpz, result_mpz;
 
-  RequireInt("PowerModInt", base);
-  RequireInt("PowerModInt", exp);
-  RequireInt("PowerModInt", mod);
+  RequireInt(SELF_NAME, base);
+  RequireInt(SELF_NAME, exp);
+  RequireInt(SELF_NAME, mod);
 
   CHECK_INT(base);
   CHECK_INT(exp);
   CHECK_INT(mod);
 
-  RequireNonzero("PowerModInt", mod, "mod");
+  RequireNonzero(SELF_NAME, mod, "mod");
   if ( mod == INTOBJ_INT(1) || mod == INTOBJ_INT(-1) )
     return INTOBJ_INT(0);
 
   if ( IS_NEG_INT(exp) ) {
     base = InverseModInt( base, mod );
     if (base == Fail)
-      ErrorMayQuit( "PowerModInt: negative <exp> but <base> is not invertible modulo <mod>", 0L, 0L  );
+      ErrorMayQuit("PowerModInt: negative <exp> but <base> is not invertible modulo <mod>", 0, 0);
     exp = AInvInt(exp);
   }
 
@@ -2601,7 +2594,7 @@ static Obj FuncIS_PROBAB_PRIME_INT(Obj self, Obj n, Obj reps)
   fake_mpz_t n_mpz;
   Int res;
 
-  RequireInt("IsProbablyPrimeInt", n);
+  RequireInt(SELF_NAME, n);
   UInt r = GetPositiveSmallInt("IsProbablyPrimeInt", reps);
 
   CHECK_INT(n);
@@ -2646,13 +2639,13 @@ static Obj FuncRandomIntegerMT(Obj self, Obj mtstr, Obj nrbits)
   Int i, n, q, r, qoff, len;
   UInt4 *mt;
   UInt4 *pt;
-  RequireStringRep("RandomIntegerMT", mtstr);
+  RequireStringRep(SELF_NAME, mtstr);
   if (GET_LEN_STRING(mtstr) < 2500) {
      ErrorMayQuit(
          "RandomIntegerMT: <mtstr> must be a string with at least 2500 characters",
          0, 0);
   }
-  RequireNonnegativeSmallInt("RandomIntegerMT", nrbits);
+  RequireNonnegativeSmallInt(SELF_NAME, nrbits);
   n = INT_INTOBJ(nrbits);
 
   /* small int case */
@@ -2660,17 +2653,17 @@ static Obj FuncRandomIntegerMT(Obj self, Obj mtstr, Obj nrbits)
      mt = (UInt4 *)(ADDR_OBJ(mtstr) + 1);
 #ifdef SYS_IS_64_BIT
      if (n <= 32) {
-       res = INTOBJ_INT((Int)(nextrandMT_int32(mt) & ((UInt4) -1L >> (32-n))));
+       res = INTOBJ_INT((Int)(nextrandMT_int32(mt) & ((UInt4)-1 >> (32-n))));
      }
      else {
        unsigned long  rd;
        rd = nextrandMT_int32(mt);
        rd += (unsigned long) ((UInt4) nextrandMT_int32(mt) & 
-                              ((UInt4) -1L >> (64-n))) << 32;
+                              ((UInt4)-1 >> (64-n))) << 32;
        res = INTOBJ_INT((Int)rd);
      }
 #else
-     res = INTOBJ_INT((Int)(nextrandMT_int32(mt) & ((UInt4) -1L >> (32-n))));
+     res = INTOBJ_INT((Int)(nextrandMT_int32(mt) & ((UInt4)-1 >> (32-n))));
 #endif
   }
   else {
@@ -2781,34 +2774,34 @@ static StructGVarFilt GVarFilts [] = {
 */
 static StructGVarFunc GVarFuncs[] = {
 
-    GVAR_FUNC(QUO_INT, 2, "a, b"),
-    GVAR_FUNC(ABS_INT, 1, "n"),
-    GVAR_FUNC(SIGN_INT, 1, "n"),
-    GVAR_FUNC(REM_INT, 2, "a, b"),
-    GVAR_FUNC(GCD_INT, 2, "a, b"),
-    GVAR_FUNC(LCM_INT, 2, "a, b"),
-    GVAR_FUNC(PROD_INT_OBJ, 2, "opL, opR"),
-    GVAR_FUNC(POW_OBJ_INT, 2, "opL, opR"),
-    GVAR_FUNC(JACOBI_INT, 2, "n, m"),
-    GVAR_FUNC(FACTORIAL_INT, 1, "n"),
-    GVAR_FUNC(BINOMIAL_INT, 2, "n, k"),
-    GVAR_FUNC(PVALUATION_INT, 2, "n, p"),
-    GVAR_FUNC(ROOT_INT, 2, "n, k"),
-    GVAR_FUNC(POWERMODINT, 3, "base, exp, mod"),
-    GVAR_FUNC(IS_PROBAB_PRIME_INT, 2, "n, reps"),
-    GVAR_FUNC(INVMODINT, 2, "base, mod"),
-    GVAR_FUNC(HexStringInt, 1, "n"),
-    GVAR_FUNC(IntHexString, 1, "string"),
-    GVAR_FUNC(Log2Int, 1, "n"),
-    GVAR_FUNC(STRING_INT, 1, "n"),
-    GVAR_FUNC(INT_STRING, 1, "string"),
-    GVAR_FUNC(RandomIntegerMT, 2, "mtstr, nrbits"),
+    GVAR_FUNC_2ARGS(QUO_INT, a, b),
+    GVAR_FUNC_1ARGS(ABS_INT, n),
+    GVAR_FUNC_1ARGS(SIGN_INT, n),
+    GVAR_FUNC_2ARGS(REM_INT, a, b),
+    GVAR_FUNC_2ARGS(GCD_INT, a, b),
+    GVAR_FUNC_2ARGS(LCM_INT, a, b),
+    GVAR_FUNC_2ARGS(PROD_INT_OBJ, opL, opR),
+    GVAR_FUNC_2ARGS(POW_OBJ_INT, opL, opR),
+    GVAR_FUNC_2ARGS(JACOBI_INT, n, m),
+    GVAR_FUNC_1ARGS(FACTORIAL_INT, n),
+    GVAR_FUNC_2ARGS(BINOMIAL_INT, n, k),
+    GVAR_FUNC_2ARGS(PVALUATION_INT, n, p),
+    GVAR_FUNC_2ARGS(ROOT_INT, n, k),
+    GVAR_FUNC_3ARGS(POWERMODINT, base, exp, mod),
+    GVAR_FUNC_2ARGS(IS_PROBAB_PRIME_INT, n, reps),
+    GVAR_FUNC_2ARGS(INVMODINT, base, mod),
+    GVAR_FUNC_1ARGS(HexStringInt, n),
+    GVAR_FUNC_1ARGS(IntHexString, string),
+    GVAR_FUNC_1ARGS(Log2Int, n),
+    GVAR_FUNC_1ARGS(STRING_INT, n),
+    GVAR_FUNC_1ARGS(INT_STRING, string),
+    GVAR_FUNC_2ARGS(RandomIntegerMT, mtstr, nrbits),
 
-    GVAR_FUNC(INTERNAL_TEST_CONV_INT, 1, "val"),
-    GVAR_FUNC(INTERNAL_TEST_CONV_UINT, 1, "val"),
-    GVAR_FUNC(INTERNAL_TEST_CONV_UINTINV, 1, "val"),
-    GVAR_FUNC(INTERNAL_TEST_CONV_INT8, 1, "val"),
-    GVAR_FUNC(INTERNAL_TEST_CONV_UINT8, 1, "val"),
+    GVAR_FUNC_1ARGS(INTERNAL_TEST_CONV_INT, val),
+    GVAR_FUNC_1ARGS(INTERNAL_TEST_CONV_UINT, val),
+    GVAR_FUNC_1ARGS(INTERNAL_TEST_CONV_UINTINV, val),
+    GVAR_FUNC_1ARGS(INTERNAL_TEST_CONV_INT8, val),
+    GVAR_FUNC_1ARGS(INTERNAL_TEST_CONV_UINT8, val),
 
     { 0, 0, 0, 0, 0 }
 
@@ -2844,11 +2837,13 @@ static Int InitKernel ( StructInitInfo * module )
   InitMarkFuncBags( T_INTPOS, MarkNoSubBags );
   InitMarkFuncBags( T_INTNEG, MarkNoSubBags );
   
+#ifdef GAP_ENABLE_SAVELOAD
   /* Install the saving methods */
   SaveObjFuncs [ T_INTPOS ] = SaveInt;
   SaveObjFuncs [ T_INTNEG ] = SaveInt;
   LoadObjFuncs [ T_INTPOS ] = LoadInt;
   LoadObjFuncs [ T_INTNEG ] = LoadInt;
+#endif
   
   /* install the printing functions                                        */
   PrintObjFuncs[ T_INT    ] = PrintInt;
@@ -2865,12 +2860,12 @@ static Int InitKernel ( StructInitInfo * module )
   
   /* install the unary arithmetic methods                                  */
   for ( t1 = T_INT; t1 <= T_INTNEG; t1++ ) {
-    ZeroFuncs[ t1 ] = ZeroInt;
+    ZeroSameMutFuncs[ t1 ] = ZeroInt;
     ZeroMutFuncs[ t1 ] = ZeroInt;
-    AInvFuncs[ t1 ] = AInvInt;
+    AInvSameMutFuncs[t1] = AInvInt;
     AInvMutFuncs[ t1 ] = AInvInt;
     OneFuncs [ t1 ] = OneInt;
-    OneMutFuncs [ t1 ] = OneInt;
+    OneSameMut[t1] = OneInt;
   }
 
     /* install the default power methods                                   */
@@ -2918,7 +2913,6 @@ static Int InitKernel ( StructInitInfo * module )
   MakeBagTypePublic( T_INTNEG );
 #endif
   
-  /* return success                                                        */
   return 0;
 }
 
@@ -2933,7 +2927,6 @@ static Int InitLibrary ( StructInitInfo *    module )
   InitGVarFiltsFromTable( GVarFilts );
   InitGVarFuncsFromTable( GVarFuncs );
   
-  /* return success                                                        */
   return 0;
 }
 

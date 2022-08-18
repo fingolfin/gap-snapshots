@@ -13,9 +13,9 @@
   Academic Press, London (1984), 27–32.
   
   [[20XArt73[120X]  [16XArtin, E.[116X, [17XGaloissche Theorie[117X, Verlag Harri Deutsch, Zurich (1973),
-  86  pages,  ((Übersetzung  nach  der  zweiten englischen Auflage besorgt von
+  86  pages,  (Übersetzung  nach  der  zweiten  englischen Auflage besorgt von
   Viktor  Ziegler,  Mit  einem  Anhang von N. A. Milgram, Zweite, unveränderte
-  Auflage, Deutsch-Taschenbücher, No. 21)).
+  Auflage, Deutsch-Taschenbücher, No. 21).
   
   [[20XBak84[120X]  [16XBaker,  A.[116X,  [17XA  concise  introduction  to  the  theory  of numbers[117X,
   Cambridge University Press, Cambridge (1984), xiii+95 pages.
@@ -54,7 +54,7 @@
   [[20XBL98[120X]  [16XBreuer,  T.  and  Linton,  S.[116X,  [17XThe  GAP 4  Type  System. Organizing
   Algebraic  Algorithms[117X,  in  ISSAC '98: Proceedings of the 1998 international
   symposium  on  Symbolic  and algebraic computation, ACM Press, New York, NY,
-  USA (1998), 38–45, ((Chairman: Volker Weispfenning and Barry Trager)).
+  USA (1998), 38–45, (Chairman: Volker Weispfenning and Barry Trager).
   
   [[20XBLS75[120X]  [16XBrillhart, J., Lehmer, D. and Selfridge, J.[116X, [17XNew primality criteria
   and  factorizations  of  2^m  ±  1[117X,  [18XMathematics  of Computation[118X, [19X29[119X (1975),
@@ -81,36 +81,36 @@
   4 (1993), 393–413.
   
   [[20XBur55[120X]  [16XBurnside,  W.[116X, [17XTheory of groups of finite order[117X, Dover Publications
-  Inc.,  New  York  (1955),  xxiv+512 pages, ((Unabridged republication of the
-  second edition, published in 1911)).
+  Inc.,  New  York  (1955),  xxiv+512  pages, (Unabridged republication of the
+  second edition, published in 1911).
   
   [[20XCan73[120X]  [16XCannon, J. J.[116X, [17XConstruction of defining relators for finite groups[117X,
   [18XDiscrete Math.[118X, [19X5[119X (1973), 105–129.
   
   [[20XCar72[120X]  [16XCarter,  R.  W.[116X,  [17XSimple  groups  of  Lie  type[117X, John Wiley & Sons,
-  London-New   York-Sydney   (1972),   viii+331   pages,  ((Pure  and  Applied
-  Mathematics, Vol. 28)).
+  London-New   York-Sydney   (1972),   viii+331   pages,   (Pure  and  Applied
+  Mathematics, Vol. 28).
   
   [[20XCCN+85[120X]  [16XConway,  J.  H.,  Curtis,  R. T., Norton, S. P., Parker, R. A. and
   Wilson,  R.  A.[116X,  [17XAtlas  of  finite groups[117X, Oxford University Press, Eynsham
-  (1985),  xxxiv+252  pages,  ((Maximal  subgroups and ordinary characters for
-  simple groups, With computational assistance from J. G. Thackray)).
+  (1985),  xxxiv+252  pages,  (Maximal  subgroups  and ordinary characters for
+  simple groups, With computational assistance from J. G. Thackray).
   
   [[20XCLO97[120X]  [16XCox,  D.,  Little,  J.  and  O'Shea,  D.[116X,  [17XIdeals,  varieties,  and
   algorithms[117X,   Springer-Verlag,   Second   edition,  Undergraduate  Texts  in
-  Mathematics,   New   York   (1997),  xiv+536  pages,  ((An  introduction  to
-  computational algebraic geometry and commutative algebra)).
+  Mathematics,   New   York   (1997),   xiv+536  pages,  (An  introduction  to
+  computational algebraic geometry and commutative algebra).
   
   [[20XCoh93[120X]  [16XCohen,  H.[116X,  [17XA  course  in  computational  algebraic number theory[117X,
   Springer-Verlag,  Graduate Texts in Mathematics, [19X138[119X, Berlin (1993), xii+534
   pages.
   
   [[20XCon90a[120X]  [16XConlon,  S.  B.[116X,  [17XCalculating  characters of p-groups[117X, [18XJ. Symbolic
-  Comput.[118X, [19X9[119X, 5-6 (1990), 535–550, ((Computational group theory, Part 1)).
+  Comput.[118X, [19X9[119X, 5-6 (1990), 535–550, (Computational group theory, Part 1).
   
   [[20XCon90b[120X]  [16XConlon,  S. B.[116X, [17XComputing modular and projective character degrees
   of   soluble   groups[117X,   [18XJ.   Symbolic  Comput.[118X,  [19X9[119X,  5-6  (1990),  551–570,
-  ((Computational group theory, Part 1)).
+  (Computational group theory, Part 1).
   
   [[20XDix67[120X]  [16XDixon,  J.  D.[116X,  [17XHigh speed computation of group characters[117X, [18XNumer.
   Math.[118X, [19X10[119X (1967), 446–450.
@@ -144,7 +144,7 @@
   computation  of  conjugacy classes and centralizers in p-groups[117X, in Symbolic
   and algebraic computation (EUROSAM '79, Internat. Sympos., Marseille, 1979),
   Springer,  Lecture  Notes  in  Comput.  Sci.,  [19X72[119X,  Berlin  (1979), 452–465,
-  ((EUROSAM '79, an International Symposium held in Marseille, June 1979)).
+  (EUROSAM '79, an International Symposium held in Marseille, June 1979).
   
   [[20XFra82[120X]  [16XFrame,  J.  S.[116X,  [17XRecursive  computation of tensor power components[117X,
   [18XBayreuth. Math. Schr.[118X, [19X10[119X (1982), 153–159.
@@ -159,9 +159,9 @@
   [[20XHav74[120X]  [16XHavas, G.[116X ([1m[31mNewman, M. F.[15X, Ed.), [17XA Reidemeister-Schreier program[117X, in
   Proceedings  of  the Second International Conference on the Theory of Groups
   (Australian  Nat.  Univ., Canberra, 1973), Springer, Lecture Notes in Math.,
-  [19X372[119X, Berlin (1974), 347–356. Lecture Notes in Math., Vol. 372, ((Held at the
+  [19X372[119X,  Berlin (1974), 347–356. Lecture Notes in Math., Vol. 372, (Held at the
   Australian  National  University,  Canberra,  August  13–24,  1973,  With an
-  introduction by B. H. Neumann, Lecture Notes in Mathematics, Vol. 372)).
+  introduction by B. H. Neumann, Lecture Notes in Mathematics, Vol. 372).
   
   [[20XHB82[120X]  [16XHuppert,  B.  and Blackburn, N.[116X, [17XFinite groups. II[117X, Springer-Verlag,
   Grundlehren Math. Wiss., [19X242[119X, Berlin (1982), xiii+531 pages.
@@ -180,13 +180,13 @@
   group theory (Durham, 1982), Academic Press, London (1984), 69–73.
   
   [[20XHow76[120X]  [16XHowie,  J.  M.[116X, [17XAn introduction to semigroup theory[117X, Academic Press
-  [Harcourt Brace Jovanovich Publishers], London (1976), x+272 pages, ((L.M.S.
-  Monographs, No. 7)).
+  [Harcourt  Brace Jovanovich Publishers], London (1976), x+272 pages, (L.M.S.
+  Monographs, No. 7).
   
   [[20XHP89[120X]  [16XHolt,  D.  F.  and  Plesken, W.[116X, [17XPerfect groups[117X, The Clarendon Press
   Oxford  University  Press,  Oxford Mathematical Monographs, New York (1989),
-  xii+364   pages,   ((With   an   appendix  by  W.  Hanrath,  Oxford  Science
-  Publications)).
+  xii+364   pages,   (With   an   appendix   by  W.  Hanrath,  Oxford  Science
+  Publications).
   
   [[20XHR94[120X]  [16XHolt,  D.  F.  and  Rees, S.[116X, [17XTesting modules for irreducibility[117X, [18XJ.
   Austral. Math. Soc. Ser. A[118X, [19X57[119X, 1 (1994), 1–16.
@@ -201,8 +201,8 @@
   
   [[20XHul98[120X]  [16XHulpke,  A.[116X, [17XComputing normal subgroups[117X, in Proceedings of the 1998
   International  Symposium  on  Symbolic  and Algebraic Computation (Rostock),
-  ACM,  New York (1998), 194–198 (electronic), ((Chairman: Volker Weispfenning
-  and Barry Trager)).
+  ACM,  New  York (1998), 194–198 (electronic), (Chairman: Volker Weispfenning
+  and Barry Trager).
   
   [[20XHul99[120X]   [16XHulpke,   A.[116X,   [17XComputing  subgroups  invariant  under  a  set  of
   automorphisms[117X, [18XJ. Symbolic Comput.[118X, [19X27[119X, 4 (1999), 415–427.
@@ -214,12 +214,12 @@
   quotient subgroups[117X, [18XExperiment. Math.[118X, [19X10[119X, 3 (2001), 369–381.
   
   [[20XHum72[120X]  [16XHumphreys,  J.  E.[116X, [17XIntroduction to Lie algebras and representation
-  theory[117X, Springer-Verlag, New York (1972), xii+169 pages, ((Graduate Texts in
-  Mathematics, Vol. 9)).
+  theory[117X,  Springer-Verlag, New York (1972), xii+169 pages, (Graduate Texts in
+  Mathematics, Vol. 9).
   
   [[20XHum78[120X]  [16XHumphreys,  J.  E.[116X, [17XIntroduction to Lie algebras and representation
   theory[117X,  Springer-Verlag, Graduate Texts in Mathematics, [19X9[119X, New York (1978),
-  xii+171 pages, ((Second printing, revised)).
+  xii+171 pages, (Second printing, revised).
   
   [[20XHup67[120X]  [16XHuppert,  B.[116X, [17XEndliche Gruppen. I[117X, Springer-Verlag, Die Grundlehren
   der Mathematischen Wissenschaften, Band 134, Berlin (1967), xii+793 pages.
@@ -229,17 +229,17 @@
   
   [[20XIsa76[120X]  [16XIsaacs,  I.  M.[116X,  [17XCharacter theory of finite groups[117X, Academic Press
   [Harcourt  Brace  Jovanovich  Publishers],  New  York (1976), xii+303 pages,
-  ((Pure and Applied Mathematics, No. 69)).
+  (Pure and Applied Mathematics, No. 69).
   
   [[20XJK81[120X]  [16XJames, G. and Kerber, A.[116X, [17XThe representation theory of the symmetric
   group[117X,  Addison-Wesley  Publishing  Co.,  Reading,  Mass.,  Encyclopedia  of
-  Mathematics  and  its  Applications,  [19X16[119X  (1981), xxviii+510 pages, ((With a
-  foreword by P. M. Cohn, With an introduction by Gilbert de B. Robinson)).
+  Mathematics  and  its  Applications,  [19X16[119X  (1981),  xxviii+510 pages, (With a
+  foreword by P. M. Cohn, With an introduction by Gilbert de B. Robinson).
   
   [[20XJLPW95[120X]  [16XJansen, C., Lux, K., Parker, R. and Wilson, R.[116X, [17XAn atlas of Brauer
   characters[117X, The Clarendon Press Oxford University Press, London Mathematical
   Society  Monographs.  New  Series,  [19X11[119X,  New  York  (1995), xviii+327 pages,
-  ((Appendix 2 by T. Breuer and S. Norton, Oxford Science Publications)).
+  (Appendix 2 by T. Breuer and S. Norton, Oxford Science Publications).
   
   [[20XJoh97[120X] [16XJohnson, D. L.[116X, [17XPresentations of groups[117X, Cambridge University Press,
   Second  edition,  London  Mathematical  Society Student Texts, [19X15[119X, Cambridge
@@ -270,7 +270,7 @@
   
   [[20XLeo91[120X]  [16XLeon,  J.  S.[116X, [17XPermutation group algorithms based on partitions. I.
   Theory  and  algorithms[117X,  [18XJ.  Symbolic  Comput.[118X,  [19X12[119X,  4-5  (1991), 533–583,
-  ((Computational group theory, Part 2)).
+  (Computational group theory, Part 2).
   
   [[20XLLJL82[120X]  [16XLenstra,  A.  K.,  Lenstra  Jr.,  H.  W. and Lovász, L.[116X, [17XFactoring
   polynomials with rational coefficients[117X, [18XMath. Ann.[118X, [19X261[119X, 4 (1982), 515–534.
@@ -385,8 +385,8 @@
   die reine und angewandte Mathematik[118X, [19X139[119X (1911), 155–250.
   
   [[20XSch90[120X] [16XSchneider, G. J. A.[116X, [17XDixon's character table algorithm revisited[117X, [18XJ.
-  Symbolic Comput.[118X, [19X9[119X, 5-6 (1990), 601–606, ((Computational group theory, Part
-  1)).
+  Symbolic  Comput.[118X, [19X9[119X, 5-6 (1990), 601–606, (Computational group theory, Part
+  1).
   
   [[20XSch92[120X]  [16XScherner, M.[116X, [17XErweiterung einer Arithmetik von Kreisteilungskörpern
   auf   deren  Teilkörper  und  deren  Implementation  in  GAP[117X,  Diplomarbeit,
@@ -407,14 +407,14 @@
   permutation  groups[117X,  in  Computational  Problems in Abstract Algebra (Proc.
   Conf.,  Oxford, 1967) , Pergamon, Proceedings of a Conference held at Oxford
   under   the  auspices  of  the  Science  Research  Council,  Atlas  Computer
-  Laboratory,   [19X29[119X,   Oxford   (1970),   169–183,   (RUSSIAN  translation  in:
-  Computations  in algebra and number theory (Russian), edited by B. B. Venkov
-  and D. K. Faddeev, pp. 129–147, Matematika, Novoie v Zarubeznoi Naukie, vol.
-  2, Izdat. MIR, Moscow, 1976).
+  Laboratory, [19X29[119X, Oxford (1970), 169–183, RUSSIAN translation in: Computations
+  in  algebra  and  number  theory (Russian), edited by B. B. Venkov and D. K.
+  Faddeev, pp. 129–147, Matematika, Novoie v Zarubeznoi Naukie, vol. 2, Izdat.
+  MIR, Moscow, 1976.
   
   [[20XSim90[120X] [16XSims, C. C.[116X, [17XComputing the order of a solvable permutation group[117X, [18XJ.
-  Symbolic Comput.[118X, [19X9[119X, 5-6 (1990), 699–705, ((Computational group theory, Part
-  1)).
+  Symbolic  Comput.[118X, [19X9[119X, 5-6 (1990), 699–705, (Computational group theory, Part
+  1).
   
   [[20XSim94[120X]  [16XSims,  C. C.[116X, [17XComputation with finitely presented groups[117X, Cambridge
   University  Press,  Encyclopedia  of  Mathematics  and its Applications, [19X48[119X,
@@ -424,14 +424,14 @@
   automorphism   groups   of   finite  groups[117X,  in  Proceedings  of  the  1997
   International  Symposium  on Symbolic and Algebraic Computation (Kihei, HI),
   The  Association  for  Computing  Machinery,  ACM,  New York (1997), 400–403
-  (electronic), ((Held in Kihei, HI, July 21–23, 1997)).
+  (electronic), (Held in Kihei, HI, July 21–23, 1997).
   
   [[20XSM85[120X]  [16XSoicher,  L.  and  McKay,  J.[116X,  [17XComputing  Galois  groups  over  the
   rationals[117X, [18XJ. Number Theory[118X, [19X20[119X, 3 (1985), 273–281.
   
   [[20XSou94[120X]  [16XSouvignier, B.[116X, [17XIrreducible finite integral matrix groups of degree
-  8   and  10[117X,  [18XMath.  Comp.[118X,  [19X63[119X,  207  (1994),  335–350,  ((With  microfiche
-  supplement)).
+  8   and   10[117X,  [18XMath.  Comp.[118X,  [19X63[119X,  207  (1994),  335–350,  (With  microfiche
+  supplement).
   
   [[20XSPA89[120X]  [17XSPAS - Subgroup Presentation Algorithms System, version 2.5, User's
   reference   manual[117X,  Lehrstuhl  D  für  Mathematik,  Rheinisch  Westfälische

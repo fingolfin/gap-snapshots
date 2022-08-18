@@ -1306,7 +1306,7 @@ InstallMethod( AsFLMLORWithOne,
 
 #############################################################################
 ##
-#M  AsFLMLORWithOne( <F>, <V> ) . .  view a left module as a algebra-with-one
+#M  AsFLMLORWithOne( <F>, <V> ) . . view a left module as an algebra-with-one
 ##
 InstallMethod( AsFLMLORWithOne,
     "for a division ring and a free left module",
@@ -1376,7 +1376,7 @@ InstallMethod( AsFLMLORWithOne,
 
 #############################################################################
 ##
-#M  AsFLMLORWithOne( <F>, <D> ) . . . . view an algebra as a algebra-with-one
+#M  AsFLMLORWithOne( <F>, <D> ) . . .  view an algebra as an algebra-with-one
 ##
 InstallMethod( AsFLMLORWithOne,
     "for a division ring and an algebra",
@@ -1440,7 +1440,7 @@ InstallMethod( AsFLMLORWithOne,
 #M  AsFLMLORWithOne( <F>, <D> ) . . view an alg.-with-one as an alg.-with-one
 ##
 InstallMethod( AsFLMLORWithOne,
-    "for a division ring and a algebra-with-one",
+    "for a division ring and an algebra-with-one",
     [ IsDivisionRing, IsFLMLORWithOne ],
     function( F, D )
     local L, A;
@@ -1889,7 +1889,7 @@ InstallMethod( ViewObj,
     function( A )
     Print( "<free left module over ", LeftActingDomain( A ),
            ", and ring, with ",
-           Length( GeneratorsOfFLMLOR( A ) ), " generators>" );
+           Pluralize( Length( GeneratorsOfFLMLOR( A ) ), "generator" ), ">" );
     end );
 
 
@@ -1945,8 +1945,8 @@ InstallMethod( ViewObj,
     function( A )
     Print( "<free left module over ", LeftActingDomain( A ),
            ", and ring-with-one, with ",
-           Length( GeneratorsOfAlgebraWithOne( A ) ), " generators>" );
-
+           Pluralize( Length( GeneratorsOfAlgebraWithOne( A ) ), "generator" ),
+           ">" );
     end );
 
 
@@ -2001,7 +2001,7 @@ InstallMethod( ViewObj,
     [ IsAlgebra and HasGeneratorsOfAlgebra ],
     function( A )
     Print( "<algebra over ", LeftActingDomain( A ), ", with ",
-           Length( GeneratorsOfAlgebra( A ) ), " generators>" );
+           Pluralize( Length( GeneratorsOfAlgebra( A ) ), "generator" ), ">" );
     end );
 
 
@@ -2056,8 +2056,10 @@ InstallMethod( ViewObj,
     "for an algebra-with-one with known generators",
     [ IsAlgebraWithOne and HasGeneratorsOfAlgebraWithOne ],
     function( A )
+    local nrgens;
     Print( "<algebra-with-one over ", LeftActingDomain( A ), ", with ",
-           Length( GeneratorsOfAlgebraWithOne( A ) ), " generators>" );
+           Pluralize( Length( GeneratorsOfAlgebraWithOne( A ) ), "generator" ),
+           ">" );
     end );
 
 
@@ -2111,8 +2113,9 @@ InstallMethod( ViewObj,
     "for a Lie algebra with known generators",
     [ IsLieAlgebra and HasGeneratorsOfAlgebra ],
     function( A )
+    local nrgens;
     Print( "<Lie algebra over ", LeftActingDomain( A ), ", with ",
-           Length( GeneratorsOfAlgebra( A ) ), " generators>" );
+           Pluralize( Length( GeneratorsOfAlgebra( A ) ), "generator" ), ">" );
 end );
 
 
@@ -2209,7 +2212,7 @@ InstallMethod( AsSubalgebraWithOne,
     end );
 
 InstallMethod( AsSubalgebraWithOne,
-    "for an algebra and a algebra-with-one",
+    "for an algebra and an algebra-with-one",
     IsIdenticalObj,
     [ IsAlgebra, IsAlgebraWithOne ],
     function( A, U )
@@ -2443,7 +2446,7 @@ InstallMethod( CentralizerOp,
 ##
 #F  CentreFromSCTable( <T> )
 ##
-##  Given a structure constants table <T> w.r.t. a basis $B$, say,
+##  Given a structure constants table <T> w.r.t. a basis $B$,
 ##  `CentreFromSCTable' returns a list of $B$-coefficients vectors
 ##  of a basis for the centre of an $F$-algebra with s.c. table <T>,
 ##  where $F$ is assumed to be commutative.
@@ -3381,8 +3384,8 @@ BindGlobal( "FreeAlgebraConstructor", function( name, magma )
         od;
         x := Zero(R);
         y := [One(R)];
-        return VectorSpace(R, List(B[degree+1],
-                       p->ElementOfMagmaRing( F, x, y, [p] )));
+        return FreeLeftModule(R, List(B[degree+1],
+                       p->ElementOfMagmaRing( F, x, y, [p] )), Zero(A));
     end));
 
     # Return the result.
@@ -3493,7 +3496,7 @@ InstallMethod( CentralIdempotentsOfAlgebra,
           eq,facs,hlist,c,p,g,gcd,bb,E,ei,ni,hom,qq;
 
 
-      if One( A ) = fail then TryNextMethod(); fi;
+      if MultiplicativeNeutralElement( A ) = fail then TryNextMethod(); fi;
 
       F:=LeftActingDomain(A);
       B:=Centre(A);
@@ -3502,7 +3505,7 @@ InstallMethod( CentralIdempotentsOfAlgebra,
       hom:= NaturalHomomorphismByIdeal( B, Rad );
       Q:= ImagesSource( hom );
       bQ:= BasisVectors( Basis( Q ) );
-      ids:= [ One( Q ) ];
+      ids:= [ MultiplicativeNeutralElement( Q ) ];
       ideals:= [ Q ];
 
       # The variable `k' will point to the first element of `ideals' that

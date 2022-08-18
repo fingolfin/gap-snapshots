@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  This test checks the 'atomic' statement for compatability with original
+##  This test checks the 'atomic' statement for compatibility with original
 ##  GAP. It does not do any interesting thread-safe behaviour
 ##
 #@local L,M,f,g,h,h2,h3,h4,h5,x
@@ -64,6 +64,9 @@ gap> Print(h4, "\n");
 atomic function ( readwrite x, readonly y, z )
     return;
 end
+gap> # test parsing an atomic function entered as a statement
+gap> atomic function() end;
+atomic function(  ) ... end
 #@else
 gap> Print(f,"\n");
 function ( x )
@@ -95,6 +98,9 @@ gap> Print(h4, "\n");
 function ( x, y, z )
     return;
 end
+gap> # test parsing an atomic function entered as a statement
+gap> atomic function() end;
+function(  ) ... end
 #@fi
 gap> h5 := function(readwrite x, readonly y, z) end;;
 Syntax error: 'readwrite' argument of non-atomic function in stream:1

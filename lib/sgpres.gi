@@ -1127,7 +1127,7 @@ end );
 ##
 ##  'PresentationNormalClosureRrs'  uses  the  Reduced  Reidemeister-Schreier
 ##  method  to compute a  presentation  (i.e. a presentation record)  for the
-##  normal closure  N, say,  of a subgroup H of a finitely presented group G.
+##  normal closure  N of a subgroup H of a finitely presented group G.
 ##  The  generators in the  resulting presentation  will be named  <string>1,
 ##  <string>2, ... , the default string is `\"_x\"'.
 ##
@@ -2272,10 +2272,9 @@ local t,j;
   return t;
 end);
 
-
 # New implemention of the Modified Todd-Coxeter (MTC) algorithm, based on
 # Chapter 5  of the "Handbook of Computational Group Theory", by Derek F.
-# Holt (refered # to as "Handbook" from here on). Function names after the
+# Holt (referred # to as "Handbook" from here on). Function names after the
 # NEWTC_ agree with those of sections 5.2, 5.3 of the Handbook.
 
 NEWTC_AddDeduction:=function(list,ded)
@@ -2490,9 +2489,27 @@ local MRep,MMerge,ct,offset,l,q,i,c,x,d,p,pp,mu,nu,aug,v,Sekundant;
 
   # decide whether secondary generators will be introduced
   Sekundant:=function(w)
+  local i,p,c,ws;
     if Length(w)<=1 or DATA.useAddition then
       return w;
     fi;
+    ws:=Set(w);
+    repeat
+      c:=false;
+      for i in [Length(DATA.subgens)+1..DATA.secount] do
+        if ForAll(DATA.secondary[i],x->x in ws) then
+          p:=PositionSublist(w,DATA.secondary[i]);
+          while p<>fail do 
+            w:=WordProductLetterRep(w{[1..p-1]},
+              [i],w{[p+Length(DATA.secondary[i])..Length(w)]});
+            ws:=Set(w);
+            c:=true;
+            p:=PositionSublist(w,DATA.secondary[i],Maximum(0,p-Length(DATA.secondary[i])));
+          od;
+        fi;
+      od;
+    until c=false;
+
     DATA.secount:=DATA.secount+1;
     DATA.secondary[DATA.secount]:=w;
     return [DATA.secount];
@@ -3050,7 +3067,6 @@ local m,offset,rels,ri,ccr,i,r,ct,A,a,w,n,DATA,p,ds,dr,
   # words we want to trace early (as they might reduce the number of
   # definitions
   if trace<>false then
-    #trace:=Concatenation(trace,ri); #don't seem to help
     for w in trace do
       if IsList(w[1]) then
         w:=w[1]; # get word from value
@@ -3200,7 +3216,7 @@ end;
 # Options: limit, quiet (return fail if run out of space)
 # cyclic (if given and 1 generator do special case of cyclic rewriting)
 InstallGlobalFunction(NEWTC_CosetEnumerator,function(arg)
-local freegens,freerels,subgens,aug,trace,e,ldc,up,bastime,start,bl,bw,first,timerFunc;
+local freegens,freerels,subgens,aug,trace,e,ldc,up,bastime,start,bl,bw,first,timerFunc,addtrace;
   
   timerFunc := GET_TIMER_FROM_ReproducibleBehaviour();
 
@@ -3243,9 +3259,12 @@ local freegens,freerels,subgens,aug,trace,e,ldc,up,bastime,start,bl,bw,first,tim
       if first=true then
         first:=e.defcount;
         Info(InfoFpGroup,1,"optimize definition sequence");
+      else
+        Info(InfoFpGroup,2,"Now ",e.defcount," defs");
       fi;
-      Append(trace,Filtered(e.collapse,x->x[2]>2));
-      SortBy(trace,x->-x[2]);
+      addtrace:=Filtered(e.collapse,x->x[2]>2);
+      Append(trace,addtrace);
+      SortBy(trace,x->[Length(x[1]),-x[2]]);
       e:=NEWTC_DoCosetEnum(freegens,freerels,subgens,false,trace:
           # that's what we had last time -- no need to whine
           limit:=e.limit);
@@ -3333,28 +3352,67 @@ local DATA,start,w,offset,c,i,j;
 end;
 
 NEWTC_ReplacedStringCyclic:=function(s,r)
-local p,new,start;
-  if Length(s)<Length(r) then
+local p,new,start,half;
+  if Length(s)<Length(r) or Length(r)=0 then
     return s;
   fi;
-  # TODO: Replace cyclically, that is allow the substring to hang out over the
-  # end and start again. This is easiest done by having a cylci version of
-  # `PositionSublist'.
   p:=PositionSublist(s,r);
   if p<>fail then
     new:=s{[1..p-1]};
     start:=p+Length(r);
     p:=PositionSublist(s,r,start);
     while p<>fail do
-      new:=WordProductLetterRep(new,s{[start..p-1]});
+      if start>Length(s) or Length(new)=0 or new[Length(new)]<>-s[start] then
+	Append(new,s{[start..p-1]});
+      else
+	new:=WordProductLetterRep(new,s{[start..p-1]});
+      fi;
       start:=p+Length(r);
       p:=PositionSublist(s,r,start);
     od;
-    new:=WordProductLetterRep(new,s{[start..Length(s)]});
-    return new;
+    if start>Length(s) or Length(new)=0 or new[Length(new)]<>-s[start] then
+      Append(new,s{[start..Length(s)]});
+    else
+      new:=WordProductLetterRep(new,s{[start..Length(s)]});
+    fi;
   else
-    return s;
+    new:=s;
   fi;
+
+  if Length(r)=1 then
+    return new; # no overlap or so possible
+  fi;
+
+  # Now cyclic reduction means that r overlaps tail to front. Thus either
+  # the second half of r occurs in the front or the front half of r occurs
+  # in the end of s.
+
+  half:=QuoInt(Length(r),2)+1;
+  p:=PositionSublist(new,r{[half..Length(r)]});
+  if p<>fail and p<half then
+    if new{[1..p-1]}=r{[half-p+1..half-1]} 
+      and new{[Length(new)-half+p+1..Length(new)]}=r{[1..half-p]} then
+
+      new:=new{[Length(r)-half+p+1..Length(new)-half+p]};
+    fi;
+  elif p<>fail then
+    # second half arises later. Does also first half arise -- if so we need
+    # to go through once more
+    if new{[p-half+1..p-1]}=r{[1..half-1]} then
+      return NEWTC_ReplacedStringCyclic(new,r);
+    fi;
+  fi;
+
+  p:=PositionSublist(new,r{[1..half-1]});
+  if p<>fail and p>=Length(new)-Length(r)+1 
+    and new{[p..Length(new)]}=r{[1..Length(new)-p+1]} 
+    and p>Length(new)+p-1 and
+    new{[1..Length(r)-Length(new)+p-1]}=r{[Length(new)-p+2..Length(r)]} then
+
+    new:=new{[Length(r)-Length(new)+p..p-1]};
+  fi;
+
+  return new;
 end;
 
 
@@ -3398,7 +3456,7 @@ local rels,r,i,w,subnum;
       fi;
     od;
   od;
-  CompletionBar(InfoFpGroup,2,"Coset Loop: ",0);
+  CompletionBar(InfoFpGroup,2,"Coset Loop: ",false);
 
   return rels;
 end;
@@ -3530,7 +3588,7 @@ local DATA,rels,i,j,w,f,r,s,fam,new,ri,a,offset,p,rset,re,start,stack,pres,
         fi;
       od;
     od;
-    CompletionBar(InfoFpGroup,2,"Coset Loop: ",0);
+    CompletionBar(InfoFpGroup,2,"Coset Loop: ",false);
   fi;
 
   # add definitions of secondary generators
@@ -3549,7 +3607,9 @@ local DATA,rels,i,j,w,f,r,s,fam,new,ri,a,offset,p,rset,re,start,stack,pres,
     TzSearch(pres);
     TzOptions(pres).lengthLimit:=pres!.tietze[TZ_TOTAL]+1;
   fi;
-  TzGoGo(pres);
+  #TzGoGo(pres);
+  TzOptions(pres).eliminationsLimit:=5;
+  TzGoElim(pres,subnum);
   if IsEvenInt(parameter) and Length(GeneratorsOfPresentation(pres))>subnum then
     warn:=true;
     # Help Tietze with elimination
@@ -3579,18 +3639,22 @@ local DATA,rels,i,j,w,f,r,s,fam,new,ri,a,offset,p,rset,re,start,stack,pres,
         if warn and Length(s)>100*Sum(rels,Length) then
           warn:=false;
           Error(
-            "Trying to eliminate all auxillary generators might cause the\n",
+            "Trying to eliminate all auxiliary generators might cause the\n",
             "size of the presentation to explode. Proceed at risk!");
         fi;
       od;
       r:=AssocWordByLetterRep(fam,Concatenation(r,[-i]));
       AddRelator(pres,r);
-      TzSearch(pres);
+      #TzSearch(pres); Do *not* search, as this might kill the relator we
+      #just added.
       TzEliminate(pres,i);
     od;
-    Assert(1,Length(GeneratorsOfPresentation(pres))=subnum);
+    Assert(0,Length(GeneratorsOfPresentation(pres))=subnum);
     
   fi;
+  r:=List(GeneratorsOfPresentation(pres){[1..subnum]},
+    x->LetterRepAssocWord(x)[1]);
+  pres!.primarywords:=r;
   r:=List(GeneratorsOfPresentation(pres){
       [subnum+1..Length(GeneratorsOfPresentation(pres))]},
         x->LetterRepAssocWord(x)[1]);

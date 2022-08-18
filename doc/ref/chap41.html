@@ -83,7 +83,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap41.html#X7FED50ED7ACA5FB2">41.8 <span class="Heading">Action of a group on itself</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap41.html#X78C37C4C7B2BDC44">41.8-1 FactorCosetAction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap41.html#X784D417D87F4E58D">41.8-1 FactorCosetAction</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap41.html#X8561DEBA79E01ABD">41.8-2 RegularActionHomomorphism</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap41.html#X835317A7847477D4">41.8-3 AbelianSubfactorAction</a></span>
 </div></div>
@@ -234,7 +234,18 @@ end;
 <h5>41.2-1 OnPoints</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnPoints</code>( <var class="Arg">pnt</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>returns <code class="code"><var class="Arg">pnt</var> ^ <var class="Arg">g</var></code>. This is for example the action of a permutation group on points, or the action of a group on its elements via conjugation. The action of a matrix group on vectors from the right is described by both <code class="func">OnPoints</code> and <code class="func">OnRight</code> (<a href="chap41.html#X7960924D84B5B18F"><span class="RefLink">41.2-2</span></a>).</p>
+<p>returns <code class="code"><var class="Arg">pnt</var> ^ <var class="Arg">g</var></code>. This is for example the action of a permutation group on points, or the action of a group on its elements via conjugation, that is, if both <var class="Arg">pnt</var> and <var class="Arg">g</var> are elements from a common group then <code class="code"><var class="Arg">pnt</var> ^ <var class="Arg">g</var></code> is equal to <var class="Arg">g</var><span class="SimpleMath">^{-1}</span><code class="code">*</code><var class="Arg">pnt</var><code class="code">*</code><var class="Arg">g</var>. The action of a matrix group on vectors from the right is described by both <code class="func">OnPoints</code> and <code class="func">OnRight</code> (<a href="chap41.html#X7960924D84B5B18F"><span class="RefLink">41.2-2</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnPoints( 1, (1,2,3) );</span>
+2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnPoints( (1,2), (1,2,3) );</span>
+(2,3)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:= Group( (1,2,3), (2,3,4) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Orbit( g, 1, OnPoints );</span>
+[ 1, 2, 3, 4 ]
+</pre></div>
 
 <p><a id="X7960924D84B5B18F" name="X7960924D84B5B18F"></a></p>
 
@@ -242,6 +253,18 @@ end;
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnRight</code>( <var class="Arg">pnt</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns <code class="code"><var class="Arg">pnt</var> * <var class="Arg">g</var></code>. This is for example the action of a group on its elements via right multiplication, or the action of a group on the cosets of a subgroup. The action of a matrix group on vectors from the right is described by both <code class="func">OnPoints</code> (<a href="chap41.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>) and <code class="func">OnRight</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnRight( [ 1, 2 ], [ [ 1, 2 ], [ 3, 4 ] ] );</span>
+[ 7, 10 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnRight( (1,2,3), (2,3,4) );</span>
+(1,3)(2,4)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:= Group( (1,2,3), (2,3,4) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Orbit( g, (), OnRight );</span>
+[ (), (1,2,3), (2,3,4), (1,3,2), (1,3)(2,4), (1,2)(3,4), (2,4,3), 
+  (1,4,2), (1,4,3), (1,3,4), (1,2,4), (1,4)(2,3) ]
+</pre></div>
 
 <p><a id="X832DF5327ECA0E44" name="X832DF5327ECA0E44"></a></p>
 
@@ -251,6 +274,18 @@ end;
 <p>returns <span class="SimpleMath"><var class="Arg">g</var>^{-1}</span> <code class="code">* <var class="Arg">pnt</var></code>. Forming the inverse is necessary to make this a proper action, as in <strong class="pkg">GAP</strong> groups always act from the right.</p>
 
 <p><code class="func">OnLeftInverse</code> is used for example in the representation of a right coset as an external set (see <a href="chap41.html#X7FD3D2D2788709B7"><span class="RefLink">41.12</span></a>), that is, a right coset <span class="SimpleMath">Ug</span> is an external set for the group <span class="SimpleMath">U</span> acting on it via <code class="func">OnLeftInverse</code>.)</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnLeftInverse( [ 1, 2 ], [ [ 1, 2 ], [ 3, 4 ] ] );</span>
+[ 0, 1/2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnLeftInverse( (1,2,3), (2,3,4) );</span>
+(1,2,4)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:= Group( (1,2,3), (2,3,4) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Orbit( g, (), OnLeftInverse );</span>
+[ (), (1,3,2), (2,4,3), (1,2,3), (1,3)(2,4), (1,2)(3,4), (2,3,4), 
+  (1,2,4), (1,3,4), (1,4,3), (1,4,2), (1,4)(2,3) ]
+</pre></div>
 
 <p><a id="X85AA04347CD117F9" name="X85AA04347CD117F9"></a></p>
 
@@ -263,6 +298,17 @@ end;
 
 <p>(<code class="func">OnTuples</code> (<a href="chap41.html#X832CC5F87EEA4A7E"><span class="RefLink">41.2-5</span></a>) is an action on lists that preserves the ordering of entries.)</p>
 
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnSets( [ 1, 3 ], (1,2,3) );</span>
+[ 1, 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnSets( [ (2,3), (1,2) ], (1,2,3) );</span>
+[ (2,3), (1,3) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:= Group( (1,2,3), (2,3,4) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Orbit( g, [ 1, 2 ], OnSets );</span>
+[ [ 1, 2 ], [ 2, 3 ], [ 1, 3 ], [ 3, 4 ], [ 1, 4 ], [ 2, 4 ] ]
+</pre></div>
+
 <p><a id="X832CC5F87EEA4A7E" name="X832CC5F87EEA4A7E"></a></p>
 
 <h5>41.2-5 OnTuples</h5>
@@ -271,6 +317,18 @@ end;
 <p>Let <var class="Arg">tup</var> be a list. <code class="func">OnTuples</code> returns the list formed by the images of all points <span class="SimpleMath">x</span> of <var class="Arg">tup</var> via the action function <code class="func">OnPoints</code> (<a href="chap41.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>), applied to <span class="SimpleMath">x</span> and <var class="Arg">g</var>.</p>
 
 <p>(<code class="func">OnSets</code> (<a href="chap41.html#X85AA04347CD117F9"><span class="RefLink">41.2-4</span></a>) is an action on lists that additionally sorts the entries of the result.)</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnTuples( [ 1, 3 ], (1,2,3) );</span>
+[ 2, 1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnTuples( [ (2,3), (1,2) ], (1,2,3) );</span>
+[ (1,3), (2,3) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:= Group( (1,2,3), (2,3,4) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Orbit( g, [ 1, 2 ], OnTuples );</span>
+[ [ 1, 2 ], [ 2, 3 ], [ 1, 3 ], [ 3, 1 ], [ 3, 4 ], [ 2, 1 ], 
+  [ 1, 4 ], [ 4, 1 ], [ 4, 2 ], [ 3, 2 ], [ 2, 4 ], [ 4, 3 ] ]
+</pre></div>
 
 <p><a id="X80DAA1D2855B1456" name="X80DAA1D2855B1456"></a></p>
 
@@ -286,6 +344,16 @@ end;
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnSetsSets</code>( <var class="Arg">set</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>implements the action on sets of sets. For the special case that the sets are pairwise disjoint, it is possible to use <code class="func">OnSetsDisjointSets</code> (<a href="chap41.html#X7E23686E7A9D3A20"><span class="RefLink">41.2-8</span></a>). <var class="Arg">set</var> must be a sorted list whose entries are again sorted lists, otherwise an error is triggered (see <a href="chap41.html#X82181CA07A5B2056"><span class="RefLink">41.3</span></a>).</p>
 
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnSetsSets( [ [ 1, 2 ], [ 3, 4 ] ], (1,2,3) );</span>
+[ [ 1, 4 ], [ 2, 3 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:= Group( (1,2,3), (2,3,4) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Orbit( g, [ [ 1, 2 ], [ 3, 4 ] ], OnSetsSets );</span>
+[ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 4 ], [ 2, 3 ] ], 
+  [ [ 1, 3 ], [ 2, 4 ] ] ]
+</pre></div>
+
 <p><a id="X7E23686E7A9D3A20" name="X7E23686E7A9D3A20"></a></p>
 
 <h5>41.2-8 OnSetsDisjointSets</h5>
@@ -300,12 +368,34 @@ end;
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnSetsTuples</code>( <var class="Arg">set</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>implements the action on sets of tuples. <var class="Arg">set</var> must be a sorted list, otherwise an error is triggered (see <a href="chap41.html#X82181CA07A5B2056"><span class="RefLink">41.3</span></a>).</p>
 
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnSetsTuples( [ [ 1, 2 ], [ 3, 4 ] ], (1,2,3) );</span>
+[ [ 1, 4 ], [ 2, 3 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:= Group( (1,2,3), (2,3,4) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Orbit( g, [ [ 1, 2 ], [ 3, 4 ] ], OnSetsTuples );</span>
+[ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 4 ], [ 2, 3 ] ], 
+  [ [ 1, 3 ], [ 4, 2 ] ], [ [ 2, 4 ], [ 3, 1 ] ], 
+  [ [ 2, 1 ], [ 4, 3 ] ], [ [ 3, 2 ], [ 4, 1 ] ] ]
+</pre></div>
+
 <p><a id="X7FF556CD7E6739A9" name="X7FF556CD7E6739A9"></a></p>
 
 <h5>41.2-10 OnTuplesSets</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnTuplesSets</code>( <var class="Arg">set</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>implements the action on tuples of sets. <var class="Arg">set</var> must be a list whose entries are again sorted lists, otherwise an error is triggered (see <a href="chap41.html#X82181CA07A5B2056"><span class="RefLink">41.3</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnTuplesSets( [ [ 2, 3 ], [ 3, 4 ] ], (1,2,3) );</span>
+[ [ 1, 3 ], [ 1, 4 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:= Group( (1,2,3), (2,3,4) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Orbit( g, [ [ 1, 2 ], [ 3, 4 ] ], OnTuplesSets );</span>
+[ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 2, 3 ], [ 1, 4 ] ], 
+  [ [ 1, 3 ], [ 2, 4 ] ], [ [ 3, 4 ], [ 1, 2 ] ], 
+  [ [ 1, 4 ], [ 2, 3 ] ], [ [ 2, 4 ], [ 1, 3 ] ] ]
+</pre></div>
 
 <p><a id="X844E902382EB4151" name="X844E902382EB4151"></a></p>
 
@@ -316,28 +406,9 @@ end;
 
 
 <div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnTuplesTuples( [ [ 2, 3 ], [ 3, 4 ] ], (1,2,3) );</span>
+[ [ 3, 1 ], [ 1, 4 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Group((1,2,3),(2,3,4));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Orbit(g,1,OnPoints);</span>
-[ 1, 2, 3, 4 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Orbit(g,(),OnRight);</span>
-[ (), (1,2,3), (2,3,4), (1,3,2), (1,3)(2,4), (1,2)(3,4), (2,4,3), 
-  (1,4,2), (1,4,3), (1,3,4), (1,2,4), (1,4)(2,3) ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Orbit(g,[1,2],OnPairs);</span>
-[ [ 1, 2 ], [ 2, 3 ], [ 1, 3 ], [ 3, 1 ], [ 3, 4 ], [ 2, 1 ], 
-  [ 1, 4 ], [ 4, 1 ], [ 4, 2 ], [ 3, 2 ], [ 2, 4 ], [ 4, 3 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Orbit(g,[1,2],OnSets);</span>
-[ [ 1, 2 ], [ 2, 3 ], [ 1, 3 ], [ 3, 4 ], [ 1, 4 ], [ 2, 4 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Orbit(g,[[1,2],[3,4]],OnSetsSets);</span>
-[ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 4 ], [ 2, 3 ] ], 
-  [ [ 1, 3 ], [ 2, 4 ] ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Orbit(g,[[1,2],[3,4]],OnTuplesSets);</span>
-[ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 2, 3 ], [ 1, 4 ] ], 
-  [ [ 1, 3 ], [ 2, 4 ] ], [ [ 3, 4 ], [ 1, 2 ] ], 
-  [ [ 1, 4 ], [ 2, 3 ] ], [ [ 2, 4 ], [ 1, 3 ] ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Orbit(g,[[1,2],[3,4]],OnSetsTuples);</span>
-[ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 4 ], [ 2, 3 ] ], 
-  [ [ 1, 3 ], [ 4, 2 ] ], [ [ 2, 4 ], [ 3, 1 ] ], 
-  [ [ 2, 1 ], [ 4, 3 ] ], [ [ 3, 2 ], [ 4, 1 ] ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Orbit(g,[[1,2],[3,4]],OnTuplesTuples);</span>
 [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 2, 3 ], [ 1, 4 ] ], 
   [ [ 1, 3 ], [ 4, 2 ] ], [ [ 3, 1 ], [ 2, 4 ] ], 
@@ -360,6 +431,8 @@ end;
 
 
 <div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnLines( [ 1, 2 ], [ [ 1, 2 ], [ 3, 4 ] ] );</span>
+[ 1, 10/7 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gl:=GL(2,5);;v:=[1,0]*Z(5)^0;</span>
 [ Z(5)^0, 0*Z(5) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h:=Action(gl,Orbit(gl,v,OnLines),OnLines);</span>
@@ -387,7 +460,7 @@ Group([ (1,2), (3,4) ])
 <h5>41.2-14 Permuted</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Permuted</code>( <var class="Arg">list</var>, <var class="Arg">perm</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
-<p>The following example demonstrates <code class="func">Permuted</code> (<a href="chap21.html#X7B5A19098406347A"><span class="RefLink">21.20-18</span></a>) being used to implement a permutation action on a domain:</p>
+<p>The following example demonstrates <code class="func">Permuted</code> (<a href="chap21.html#X7B5A19098406347A"><span class="RefLink">21.20-17</span></a>) being used to implement a permutation action on a domain:</p>
 
 
 <div class="example"><pre>
@@ -667,6 +740,8 @@ fail
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActionHomomorphism</code>( <var class="Arg">action</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>computes a homomorphism from <var class="Arg">G</var> into the symmetric group on <span class="SimpleMath">|<var class="Arg">Omega</var>|</span> points that gives the permutation action of <var class="Arg">G</var> on <var class="Arg">Omega</var>. (In particular, this homomorphism is a permutation equivalence, that is the permutation image of a group element is given by the positions of points in <var class="Arg">Omega</var>.)</p>
 
+<p>The result is undefined if <var class="Arg">G</var> does not act on <var class="Arg">Omega</var>.</p>
+
 <p>By default the homomorphism returned by <code class="func">ActionHomomorphism</code> is not necessarily surjective (its <code class="func">Range</code> (<a href="chap32.html#X7B6FD7277CDE9FCB"><span class="RefLink">32.3-7</span></a>) value is the full symmetric group) to avoid unnecessary computation of the image. If the optional string argument <code class="code">"surjective"</code> is given, a surjective homomorphism is created.</p>
 
 <p>The third version (which is supported only for <strong class="pkg">GAP</strong>3 compatibility) returns the action homomorphism that belongs to the image obtained via <code class="func">Action</code> (<a href="chap41.html#X85A8E93D786C3C9C"><span class="RefLink">41.7-2</span></a>).</p>
@@ -747,12 +822,13 @@ Group([ (1,2,3,4,5,6) ])
 
 <p>Of particular importance is the action of a group on its elements or cosets of a subgroup. These actions can be obtained by using <code class="func">ActionHomomorphism</code> (<a href="chap41.html#X78E6A002835288A4"><span class="RefLink">41.7-1</span></a>) for a suitable domain (for example a list of subgroups). For the following (frequently used) types of actions however special (often particularly efficient) functions are provided. A special case is the regular action on all elements.</p>
 
-<p><a id="X78C37C4C7B2BDC44" name="X78C37C4C7B2BDC44"></a></p>
+<p><a id="X784D417D87F4E58D" name="X784D417D87F4E58D"></a></p>
 
 <h5>41.8-1 FactorCosetAction</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FactorCosetAction</code>( <var class="Arg">G</var>, <var class="Arg">U</var>[, <var class="Arg">N</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>This command computes the action of the group <var class="Arg">G</var> on the right cosets of the subgroup <var class="Arg">U</var>. If a normal subgroup <var class="Arg">N</var> of <var class="Arg">G</var> is given, it is stored as kernel of this action.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FactorCosetAction</code>( <var class="Arg">G</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>This command computes the action of the group <var class="Arg">G</var> on the right cosets of the subgroup <var class="Arg">U</var>. If a normal subgroup <var class="Arg">N</var> of <var class="Arg">G</var> is given, it is stored as kernel of this action. When calling <code class="code">FactorCosetAction</code> with a list of subgroups as the second argument, an action with image isomorphic to the subdirect product of the coset actions of all subgroups is computed. (However a degree reduction may take place if some of the actions are redundant, i.e. there is no guarantee that every subgroup in the list is represented by an orbit.)</p>
 
 
 <div class="example"><pre>
@@ -762,6 +838,9 @@ Group([ (1,2,3,4,5,6) ])
 &lt;action epimorphism&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(Range(last));</span>
 "S5"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FactorCosetAction(g,[u,SylowSubgroup(g,3)]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Image(last));</span>
+120
 </pre></div>
 
 <p><a id="X8561DEBA79E01ABD" name="X8561DEBA79E01ABD"></a></p>
@@ -920,9 +999,26 @@ S_4(6c) = 1/2[2^3]S(3)
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransitive</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the action implied by the arguments is transitive, or <code class="keyw">false</code> otherwise.</p>
 
-<p>We say that a group <var class="Arg">G</var> acts <em>transitively</em> on a domain <span class="SimpleMath">D</span> if and only if for every pair of points <span class="SimpleMath">d, e ∈ D</span> there is an element <span class="SimpleMath">g</span> in <var class="Arg">G</var> such that <span class="SimpleMath">d^g = e</span>.</p>
+<p>We say that a group <var class="Arg">G</var> acts <em>transitively</em> on a domain <span class="SimpleMath">D</span> if and only if <var class="Arg">G</var> acts on <span class="SimpleMath">D</span> and for every pair of points <span class="SimpleMath">d, e ∈ D</span> there is an element <span class="SimpleMath">g</span> in <var class="Arg">G</var> such that <span class="SimpleMath">d^g = e</span>.</p>
 
 <p>For a permutation group <var class="Arg">G</var>, one may also invoke this as <code class="code">IsTransitive(<var class="Arg">G</var>)</code>, which tests whether the group is transitive with respect to its natural action on the set of points moved by it. For example the group <span class="SimpleMath">⟨ (2,3,4),(2,3) ⟩</span> is transitive on the set <span class="SimpleMath">{2, 3, 4}</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:= Group( (2,3,4), (2,3) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTransitive( G, [ 2 .. 4 ] );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTransitive( G, [ 2, 3 ] );   # G does not act on [ 2, 3 ]</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTransitive( G, [ 1 .. 4 ] );  # G has two orbits on [ 1 .. 4 ]</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTransitive( G );  # G is transitive on [ 2 .. 4 ]</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTransitive( SL(2, 3), NormedRowVectors( GF(3)^2 ) );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTransitive( SL(2, 3), NormedRowVectors( GF(3)^2 ), OnLines );</span>
+true
+</pre></div>
 
 <p><a id="X8295D733796B7A37" name="X8295D733796B7A37"></a></p>
 
@@ -954,7 +1050,7 @@ false
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankAction</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankAction</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>returns the rank of a transitive action, i.e. the number of orbits of the point stabilizer.</p>
+<p>returns the rank of the transitive (see <code class="func">IsTransitive</code> (<a href="chap41.html#X79B15750851828CB"><span class="RefLink">41.10-1</span></a>)) action of <var class="Arg">G</var> on <var class="Arg">Omega</var>, i. e., the number of orbits of any point stabilizer.</p>
 
 
 <div class="example"><pre>
@@ -1015,7 +1111,7 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPrimitive</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the action implied by the arguments is primitive, or <code class="keyw">false</code> otherwise.</p>
 
-<p>An action is <em>primitive</em> if it is transitive and the action admits no nontrivial block systems. See <a href="chap41.html#X7E9D3D0B7A9A8572"><span class="RefLink">41.11</span></a> for the definition of block systems.</p>
+<p>An action is <em>primitive</em> if it is transitive (see <code class="func">IsTransitive</code> (<a href="chap41.html#X79B15750851828CB"><span class="RefLink">41.10-1</span></a>)) and the action admits no nontrivial block systems. See <a href="chap41.html#X7E9D3D0B7A9A8572"><span class="RefLink">41.11</span></a> for the definition of block systems.</p>
 
 <p>For a permutation group <var class="Arg">G</var>, one may also invoke this as <code class="code">IsPrimitive(<var class="Arg">G</var>)</code>, which tests whether the group is primitive with respect to its natural action on the set of points moved by it. For example the group <span class="SimpleMath">⟨ (2,3,4),(2,3) ⟩</span> is primitive on the set <span class="SimpleMath">{2, 3, 4}</span>.</p>
 
@@ -1033,7 +1129,7 @@ true
 
 <h4>41.11 <span class="Heading">Block Systems</span></h4>
 
-<p>A <em>block system</em> (system of imprimitivity) for the action of a group <span class="SimpleMath">G</span> on an action domain <span class="SimpleMath">Ω</span> is a partition of <span class="SimpleMath">Ω</span> which –as a partition– remains invariant under the action of <span class="SimpleMath">G</span>.</p>
+<p>A <em>block system</em> (system of imprimitivity) for the action of a group <span class="SimpleMath">G</span> on an action domain <span class="SimpleMath">Ω</span> is a partition of <span class="SimpleMath">Ω</span> which –as a partition– remains invariant under the action of <span class="SimpleMath">G</span>. For operations concerning block systems, <strong class="pkg">GAP</strong> assumes that <span class="SimpleMath">G</span> acts transitively on <span class="SimpleMath">Ω</span> (see <code class="func">IsTransitive</code> (<a href="chap41.html#X79B15750851828CB"><span class="RefLink">41.10-1</span></a>)). One may get wrong results or error messages (perhaps at a much later stage) if this condition is not satisfied.</p>
 
 <p><a id="X84FE699F85371643" name="X84FE699F85371643"></a></p>
 
@@ -1041,7 +1137,9 @@ true
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Blocks</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">seed</var>][, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Blocks</code>( <var class="Arg">xset</var>[, <var class="Arg">seed</var>] )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>computes a block system for the action. If <var class="Arg">seed</var> is not given and the action is imprimitive, a minimal nontrivial block system will be found. If <var class="Arg">seed</var> is given, a block system in which <var class="Arg">seed</var> is the subset of one block is computed. The action must be transitive.</p>
+<p>computes a block system for the transitive (see <code class="func">IsTransitive</code> (<a href="chap41.html#X79B15750851828CB"><span class="RefLink">41.10-1</span></a>)) action of <var class="Arg">G</var> on <var class="Arg">Omega</var>. If <var class="Arg">seed</var> is not given and the action is imprimitive, a minimal nontrivial block system will be found. If <var class="Arg">seed</var> is given, a block system in which <var class="Arg">seed</var> is the subset of one block is computed.</p>
+
+<p>The result is undefined if the action is not transitive.</p>
 
 
 <div class="example"><pre>
@@ -1061,7 +1159,9 @@ E(8)=2[x]2[x]2
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximalBlocks</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">seed</var>][, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximalBlocks</code>( <var class="Arg">xset</var>[, <var class="Arg">seed</var>] )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>returns a block system that is maximal (i.e., blocks are maximal with respect to inclusion) for the action of <var class="Arg">G</var> on <var class="Arg">Omega</var>. If <var class="Arg">seed</var> is given, a block system is computed in which <var class="Arg">seed</var> is a subset of one block.</p>
+<p>returns a block system that is maximal (i.e., blocks are maximal with respect to inclusion) for the transitive (see <code class="func">IsTransitive</code> (<a href="chap41.html#X79B15750851828CB"><span class="RefLink">41.10-1</span></a>)) action of <var class="Arg">G</var> on <var class="Arg">Omega</var>. If <var class="Arg">seed</var> is given, a block system is computed in which <var class="Arg">seed</var> is a subset of one block.</p>
+
+<p>The result is undefined if the action is not transitive.</p>
 
 
 <div class="example"><pre>
@@ -1075,7 +1175,9 @@ E(8)=2[x]2[x]2
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentativesMinimalBlocks</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentativesMinimalBlocks</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>computes a list of block representatives for all minimal (i.e blocks are minimal with respect to inclusion) nontrivial block systems for the action.</p>
+<p>computes a list of block representatives for all minimal (i.e blocks are minimal with respect to inclusion) nontrivial block systems for the transitive (see <code class="func">IsTransitive</code> (<a href="chap41.html#X79B15750851828CB"><span class="RefLink">41.10-1</span></a>)) action of <var class="Arg">G</var> on <var class="Arg">Omega</var>.</p>
+
+<p>The result is undefined if the action is not transitive.</p>
 
 
 <div class="example"><pre>
@@ -1090,6 +1192,8 @@ E(8)=2[x]2[x]2
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllBlocks</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>computes a list of representatives of all block systems for a permutation group <var class="Arg">G</var> acting transitively on the points moved by the group.</p>
+
+<p>Each representative in the returned list is sorted and contains the smallest point moved by <var class="Arg">G</var>.</p>
 
 
 <div class="example"><pre>
@@ -1150,6 +1254,8 @@ Group([ (6,7), (5,6), (5,8), (2,3), (3,4)(5,7), (1,4),
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExternalSet</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>creates the external set for the action <var class="Arg">act</var> of <var class="Arg">G</var> on <var class="Arg">Omega</var>. <var class="Arg">Omega</var> can be either a proper set, or a domain which is represented as described in <a href="chap12.html#X7BAF69417BB925F6"><span class="RefLink">12.4</span></a> and <a href="chap30.html#X8050A8037984E5B6"><span class="RefLink">30</span></a>, or (to use less memory but with a slower performance) an enumerator (see <code class="func">Enumerator</code> (<a href="chap30.html#X7EF8910F82B45EC7"><span class="RefLink">30.3-2</span></a>) ) of this domain.</p>
 
+<p>The result is undefined if <var class="Arg">G</var> does not act on <var class="Arg">Omega</var>.</p>
+
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Group((1,2,3),(2,3,4));;</span>
@@ -1206,8 +1312,10 @@ true
 
 <h5>41.12-7 ExternalSubset</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExternalSubset</code>( <var class="Arg">G</var>, <var class="Arg">xset</var>, <var class="Arg">start</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>], <var class="Arg">act</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>constructs the external subset of <var class="Arg">xset</var> on the union of orbits of the points in <var class="Arg">start</var>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExternalSubset</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>, <var class="Arg">start</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>], <var class="Arg">act</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>constructs the external subset of <var class="Arg">Omega</var> on the union of orbits of the points in <var class="Arg">start</var>.</p>
+
+<p>The result is undefined if <var class="Arg">G</var> does not act on <var class="Arg">Omega</var>.</p>
 
 <p><a id="X7E081F568407317F" name="X7E081F568407317F"></a></p>
 
@@ -1222,6 +1330,8 @@ true
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExternalOrbit</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>, <var class="Arg">pnt</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>], <var class="Arg">act</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>constructs the external subset on the orbit of <var class="Arg">pnt</var>. The <code class="func">Representative</code> (<a href="chap30.html#X865507568182424E"><span class="RefLink">30.4-7</span></a>) value of this external set is <var class="Arg">pnt</var>.</p>
+
+<p>The result is undefined if <var class="Arg">G</var> does not act on <var class="Arg">Omega</var>.</p>
 
 
 <div class="example"><pre>

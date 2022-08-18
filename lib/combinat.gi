@@ -182,14 +182,13 @@ CombinationsK := function ( mset, m, n, k, comb, i )
 end;
 MakeReadOnlyGlobal( "CombinationsK" );
 
-InstallGlobalFunction(Combinations,function ( arg )
-    local   combs, mset;
-    if Length(arg) = 1  then
-        mset := ShallowCopy(arg[1]);  Sort( mset );
+InstallGlobalFunction(Combinations,function ( mset, arg... )
+    local   combs;
+    mset := ShallowCopy(mset);  Sort( mset );
+    if Length(arg) = 0  then
         combs := CombinationsA( mset, 1, Length(mset), [], 1 );
-    elif Length(arg) = 2  then
-        mset := ShallowCopy(arg[1]);  Sort( mset );
-        combs := CombinationsK( mset, 1, Length(mset), arg[2], [], 1 );
+    elif Length(arg) = 1  then
+        combs := CombinationsK( mset, 1, Length(mset), arg[1], [], 1 );
     else
         Error("usage: Combinations( <mset> [, <k>] )");
     fi;
@@ -355,18 +354,19 @@ BindGlobal("ShallowCopy_Combinations", function(it)
     k := it!.k,
     comb := ShallowCopy(it!.comb));
 end);
-InstallGlobalFunction(IteratorOfCombinations,  function(arg)
-  local mset, k, c, max, els, len, comb, NextFunc;
-  mset := arg[1];
+InstallGlobalFunction(IteratorOfCombinations,  function(mset, arg...)
+  local k, c, max, els, len, comb, NextFunc;
   len := Length(mset);
-  if Length(arg) = 1 then
+  if Length(arg) = 0 then
     # case of one argument, call 2-arg version for each k and concatenate
     return ConcatenationIterators(List([0..len], k->
                                          IteratorOfCombinations(mset, k)));
   fi;
-  k := arg[2];
-  if k > Length(mset) then
+  k := arg[1];
+  if k > len then
     return IteratorList([]);
+  elif len = 0 then
+    return TrivialIterator( [] );
   fi;
   c := Collected(mset);
   max := List(c, a-> a[2]);
@@ -486,21 +486,20 @@ BindGlobal( "NrCombinationsMSetK", function ( mset, k )
     return nr;
 end );
 
-InstallGlobalFunction(NrCombinations,function ( arg )
-    local   nr, mset;
-    if Length(arg) = 1  then
-        mset := ShallowCopy(arg[1]);  Sort( mset );
+InstallGlobalFunction(NrCombinations,function ( mset, arg... )
+    local   nr;
+    mset := ShallowCopy(mset);  Sort( mset );
+    if Length(arg) = 0  then
         if IsSSortedList( mset )  then
             nr := NrCombinationsSetA( mset, Length(mset) );
         else
             nr := NrCombinationsMSetA( mset, Length(mset) );
         fi;
-    elif Length(arg) = 2  then
-        mset := ShallowCopy(arg[1]);  Sort( mset );
+    elif Length(arg) = 1  then
         if IsSSortedList( mset )  then
-            nr := NrCombinationsSetK( mset, arg[2] );
+            nr := NrCombinationsSetK( mset, arg[1] );
         else
-            nr := NrCombinationsMSetK( mset, arg[2] );
+            nr := NrCombinationsMSetK( mset, arg[1] );
         fi;
     else
         Error("usage: NrCombinations( <mset> [, <k>] )");
@@ -577,16 +576,15 @@ ArrangementsK := function ( mset, m, n, k, comb, i )
 end;
 MakeReadOnlyGlobal( "ArrangementsK" );
 
-InstallGlobalFunction(Arrangements,function ( arg )
-    local   combs, mset, m;
-    if Length(arg) = 1  then
-        mset := ShallowCopy(arg[1]);  Sort( mset );
+InstallGlobalFunction(Arrangements,function ( mset, arg... )
+    local   combs, m;
+    mset := ShallowCopy(mset);  Sort( mset );
+    if Length(arg) = 0  then
         m := List( mset, i->true );
         combs := ArrangementsA( mset, m, Length(mset), [], 1 );
-    elif Length(arg) = 2  then
-        mset := ShallowCopy(arg[1]);  Sort( mset );
+    elif Length(arg) = 1  then
         m := List( mset, i->true );
-        combs := ArrangementsK( mset, m, Length(mset), arg[2], [], 1 );
+        combs := ArrangementsK( mset, m, Length(mset), arg[1], [], 1 );
     else
         Error("usage: Arrangements( <mset> [, <k>] )");
     fi;
@@ -686,24 +684,23 @@ BindGlobal( "NrArrangementsMSetK", function ( mset, k )
     return nr;
 end );
 
-InstallGlobalFunction(NrArrangements,function ( arg )
-    local   nr, mset;
-    if Length(arg) = 1  then
-        mset := ShallowCopy(arg[1]);  Sort( mset );
+InstallGlobalFunction(NrArrangements,function ( mset, arg... )
+    local   nr;
+    mset := ShallowCopy(mset);  Sort( mset );
+    if Length(arg) = 0  then
         if IsSSortedList( mset )  then
             nr := NrArrangementsSetA( mset, Length(mset) );
         else
             nr := NrArrangementsMSetA( mset, Length(mset) );
         fi;
-    elif Length(arg) = 2  then
-        if not (IsInt(arg[2]) and arg[2] >= 0) then
+    elif Length(arg) = 1  then
+        if not (IsInt(arg[1]) and arg[1] >= 0) then
              Error("<k> must be a nonnegative integer");
         fi;
-        mset := ShallowCopy(arg[1]);  Sort( mset );
         if IsSSortedList( mset )  then
-            nr := NrArrangementsSetK( mset, arg[2] );
+            nr := NrArrangementsSetK( mset, arg[1] );
         else
-            nr := NrArrangementsMSetK( mset, arg[2] );
+            nr := NrArrangementsMSetK( mset, arg[1] );
         fi;
     else
         Error("usage: NrArrangements( <mset> [, <k>] )");
@@ -936,7 +933,7 @@ InstallGlobalFunction( "EnumeratorOfCartesianProduct",
     function( arg )
     # this mimics usage of functions Cartesian and Cartesian2
     if IsEmpty(arg) or ForAny(arg, IsEmpty) then 
-      return EmptyPlist(0);
+      return [];
     elif Length( arg ) = 1  then
         return EnumeratorOfCartesianProduct2( arg[1] );
     fi;
@@ -1002,7 +999,7 @@ InstallGlobalFunction( EnumeratorOfTuples, function( set, k )
             nn:= QuoInt( nn, Length( enum!.set ) );
           od;
           if nn <> 0 then
-	    Error( "<enum>[", n, "] must have an assigned value" );
+            Error( "<enum>[", n, "] must have an assigned value" );
           fi;
           nn:= enum!.set{ Reversed( t ) };
           MakeImmutable( nn );
@@ -1089,19 +1086,19 @@ InstallGlobalFunction( "IteratorOfTuples",
     function( s, n )
     
     if not ( n=0 or IsPosInt( n ) ) then
-	Error( "The second argument <n> must be a non-negative integer" );
+        Error( "The second argument <n> must be a non-negative integer" );
     fi; 
-	   
+
     if not ( IsCollection( s ) and IsFinite( s ) or IsEmpty( s ) and n=0 ) then
     	if s = [] then
-    		return IteratorByFunctions(
-      		  rec( IsDoneIterator := ReturnTrue,
+            return IteratorByFunctions(
+              rec( IsDoneIterator := ReturnTrue,
                    NextIterator   := NextIterator_Tuples,
                    ShallowCopy    := ShallowCopy_Tuples,
                              next := false) );
-    	else
-		Error( "The first argument <s> must be a finite collection or empty" );
-    	fi;
+        else
+            Error( "The first argument <s> must be a finite collection or empty" );
+        fi;
     fi;
     s := Set(s);
     # from now on s is a finite set and n is its Cartesian power to be enumerated
@@ -1410,13 +1407,12 @@ PartitionsSetK := function ( set, n, m, o, k, part, i, j )
 end;
 MakeReadOnlyGlobal( "PartitionsSetK" );
 
-InstallGlobalFunction(PartitionsSet,function ( arg )
-    local   parts, set, m;
-    if Length(arg) = 1  then
-        set := arg[1];
-        if not IsSSortedList(arg[1])  then
-            Error("PartitionsSet: <set> must be a set");
-        fi;
+InstallGlobalFunction(PartitionsSet,function ( set, arg... )
+    local   parts, m, k;
+    if not IsSSortedList(set)  then
+        Error("PartitionsSet: <set> must be a set");
+    fi;
+    if Length(arg) = 0  then
         if set = []  then
             parts := [ [  ] ];
         else
@@ -1424,13 +1420,10 @@ InstallGlobalFunction(PartitionsSet,function ( arg )
             m[1] := false;
             parts := PartitionsSetA(set,Length(set),m,2,[[set[1]]],1,1);
         fi;
-    elif Length(arg) = 2  then
-        set := arg[1];
-        if not IsSSortedList(set)  then
-            Error("PartitionsSet: <set> must be a set");
-        fi;
+    elif Length(arg) = 1  then
+        k := arg[1];
         if set = []  then
-            if arg[2] = 0  then
+            if k = 0  then
                 parts := [ [ ] ];
             else
                 parts := [ ];
@@ -1439,7 +1432,7 @@ InstallGlobalFunction(PartitionsSet,function ( arg )
             m := List( set, i->true );
             m[1] := false;
             parts := PartitionsSetK(
-                        set, Length(set), m, 2, arg[2], [[set[1]]], 1, 1 );
+                        set, Length(set), m, 2, k, [[set[1]]], 1, 1 );
         fi;
     else
         Error("usage: PartitionsSet( <n> [, <k>] )");
@@ -1452,20 +1445,15 @@ end);
 ##
 #F  NrPartitionsSet( <set> )  . . . . . . . . . number of partitions of a set
 ##
-InstallGlobalFunction(NrPartitionsSet,function ( arg )
-    local   nr, set;
-    if Length(arg) = 1  then
-        set := arg[1];
-        if not IsSSortedList(arg[1])  then
-            Error("NrPartitionsSet: <set> must be a set");
-        fi;
+InstallGlobalFunction(NrPartitionsSet,function ( set, arg... )
+    local   nr;
+    if not IsSSortedList(set)  then
+        Error("NrPartitionsSet: <set> must be a set");
+    fi;
+    if Length(arg) = 0  then
         nr := Bell( Size(set) );
-    elif Length(arg) = 2  then
-        set := arg[1];
-        if not IsSSortedList(set)  then
-            Error("NrPartitionsSet: <set> must be a set");
-        fi;
-        nr := Stirling2( Size(set), arg[2] );
+    elif Length(arg) = 1  then
+        nr := Stirling2( Size(set), arg[1] );
     else
         Error("usage: NrPartitionsSet( <n> [, <k>] )");
     fi;
@@ -1506,7 +1494,7 @@ end);
 ##  partitions    are  nonincreasing.   Also    '<part>[<i>]' must    be  \<=
 ##  '<n>+1-<k>', since  we need at   least  <k>-1  ones  to  fill the   <k>-1
 ##  positions of <part> remaining after  filling '<part>[<i>]'.  On the other
-##  hand '<part>[<i>]'  must be  >=  '<n>/<k>', because otherwise we  can not
+##  hand '<part>[<i>]'  must be  >=  '<n>/<k>', because otherwise  we  cannot
 ##  fill the <k>-1 remaining positions nonincreasingly.   It is not difficult
 ##  to show  that for  each  candidate satisfying these properties   there is
 ##  indeed a partition, i.e., we never run into a dead end.
@@ -1570,22 +1558,23 @@ MakeReadOnlyGlobal( "PartitionsK" );
 # The following used to be `Partitions' but was renamed, because
 # the new `Partitions' is much faster and produces less garbage, see
 # below.
-InstallGlobalFunction(PartitionsRecursively,function ( arg )
-    local   parts;
-    if Length(arg) = 1  then
-        parts := PartitionsA( arg[1], arg[1], [], 1 );
-    elif Length(arg) = 2  then
-        if arg[1] = 0  then
-            if arg[2] = 0  then
+InstallGlobalFunction(PartitionsRecursively,function ( n, arg... )
+    local   parts, k;
+    if Length(arg) = 0  then
+        parts := PartitionsA( n, n, [], 1 );
+    elif Length(arg) = 1  then
+        k := arg[1];
+        if n = 0  then
+            if k = 0  then
                 parts := [ [  ] ];
             else
                 parts := [  ];
             fi;
         else
-            if arg[2] = 0  then
+            if k = 0  then
                 parts := [  ];
             else
-                parts := PartitionsK( arg[1], arg[1], arg[2], [], 1 );
+                parts := PartitionsK( n, n, k, [], 1 );
             fi;
         fi;
     else
@@ -1792,35 +1781,36 @@ end );
 # It now calls `GPartitions' and friends, which is much faster
 # and more environment-friendly because it produces less garbage.
 # Thanks to Götz Pfeiffer for the ideas!
-InstallGlobalFunction(Partitions,function ( arg )
-    local   parts;
-    if Length(arg) = 1  then
-        if not(IsInt(arg[1])) then
-            Error("usage: Partitions( <n> [, <k>] )");
+InstallGlobalFunction(Partitions,function ( n, arg... )
+    local   parts, k;
+    if not IsInt(n) then
+        Error("Partitions: <n> must be an integer");
+    fi;
+    if Length(arg) = 0  then
+        if n <= 0 then
+            parts := [[]];
         else
-            if arg[1] <= 0 then
-                parts := [[]];
-            else
-                parts := GPartitions( arg[1] );
-            fi;
+            parts := GPartitions( n );
         fi;
-    elif Length(arg) = 2  then
-        if not(IsInt(arg[1]) and IsInt(arg[2])) then
-            ErrorNoReturn("usage: Partitions( <n> [, <k>] )");
-        elif arg[1] < 0 or arg[2] < 0 then
+    elif Length(arg) = 1  then
+        k := arg[1];
+        if not IsInt(k) then
+            Error("Partitions: <k> must be an integer");
+        fi;
+        if n < 0 or k < 0 then
             parts := [];
         else
-            if arg[1] = 0  then
-                if arg[2] = 0  then
+            if n = 0  then
+                if k = 0  then
                     parts := [ [  ] ];
                 else
                     parts := [  ];
                 fi;
             else
-                if arg[2] = 0  then
+                if k = 0  then
                     parts := [  ];
                 else
-                    parts := GPartitionsNrParts( arg[1], arg[2] );
+                    parts := GPartitionsNrParts( n, k );
                 fi;
             fi;
         fi;
@@ -1832,7 +1822,7 @@ end);
 
 #############################################################################
 ##
-#F  NrPartitions( <n> ) . . . . . . . . .  number of partitions of an integer
+#F  NrPartitions( <n> [, <k>] ) . . . . .  number of partitions of an integer
 ##
 ##  To compute $p(n) = NrPartitions(n)$ we use Euler\'s theorem, that asserts
 ##  $p(n) = \sum_{k>0}{ (-1)^{k+1} (p(n-(3m^2-m)/2) + p(n-(3m^2+m)/2)) }$.
@@ -1848,11 +1838,10 @@ end);
 ##  that no summand is 1 is $P(m-l,l)$, because we  can  subtract 1 from each
 ##  summand and obtain new sums that still have $l$ summands but value $m-l$.
 ##
-InstallGlobalFunction(NrPartitions,function ( arg )
-    local   s, n, m, p, k, l;
+InstallGlobalFunction(NrPartitions,function ( n, arg... )
+    local   s, m, p, k, l;
 
-    if Length(arg) = 1  then
-        n := arg[1];
+    if Length(arg) = 0  then
         s := 1;                             # p(0) = 1
         p := [ s ];
         for m  in [1..n]  do
@@ -1870,13 +1859,13 @@ InstallGlobalFunction(NrPartitions,function ( arg )
             p[m+1] := s;
         od;
 
-    elif Length(arg) = 2  then
-        if arg[1] = arg[2]  then
+    elif Length(arg) = 1  then
+        k := arg[1];
+        if n = k  then
             s := 1;
-        elif arg[1] < arg[2]  or arg[2] = 0  then
+        elif n < k  or k = 0  then
             s := 0;
         else
-            n := arg[1];  k := arg[2];
             p := [];
             for m  in [1..n]  do
                 p[m] := 1;                  # p(m,1) = 1
@@ -2152,22 +2141,23 @@ OrderedPartitionsK := function ( n, k, part, i )
 end;
 MakeReadOnlyGlobal( "OrderedPartitionsK" );
 
-InstallGlobalFunction(OrderedPartitions,function ( arg )
-    local   parts;
-    if Length(arg) = 1  then
-        parts := OrderedPartitionsA( arg[1], [], 1 );
-    elif Length(arg) = 2  then
-        if arg[1] = 0  then
-            if arg[2] = 0  then
+InstallGlobalFunction(OrderedPartitions,function ( n, arg... )
+    local   parts, k;
+    if Length(arg) = 0  then
+        parts := OrderedPartitionsA( n, [], 1 );
+    elif Length(arg) = 1  then
+        k := arg[1];
+        if n = 0  then
+            if k = 0  then
                 parts := [ [  ] ];
             else
                 parts := [  ];
             fi;
         else
-            if arg[2] = 0  then
+            if k = 0  then
                 parts := [  ];
             else
-                parts := OrderedPartitionsK( arg[1], arg[2], [], 1 );
+                parts := OrderedPartitionsK( n, k, [], 1 );
             fi;
         fi;
     else
@@ -2184,23 +2174,24 @@ end);
 ##  'NrOrderedPartitions' uses well known identities to compute the number of
 ##  ordered partitions of <n>.
 ##
-InstallGlobalFunction(NrOrderedPartitions,function ( arg )
-    local   nr;
-    if Length(arg) = 1  then
-        if arg[1] = 0  then
+InstallGlobalFunction(NrOrderedPartitions,function ( n, arg... )
+    local   nr, k;
+    if Length(arg) = 0  then
+        if n = 0  then
             nr := 1;
         else
-            nr := 2^(arg[1]-1);
+            nr := 2^(n-1);
         fi;
-    elif Length(arg) = 2  then
-        if arg[1] = 0  then
-            if arg[2] = 0  then
+    elif Length(arg) = 1  then
+        k := arg[1];
+        if n = 0  then
+            if k = 0  then
                 nr := 1;
             else
                 nr := 0;
             fi;
         else
-            nr := Binomial(arg[1]-1,arg[2]-1);
+            nr := Binomial(n-1,k-1);
         fi;
     else
         Error("usage: NrOrderedPartitions( <n> [, <k>] )");
@@ -2284,27 +2275,24 @@ RestrictedPartitionsK := function ( n, set, m, k, part, i )
 end;
 MakeReadOnlyGlobal( "RestrictedPartitionsK" );
 
-InstallGlobalFunction(RestrictedPartitions,function ( arg )
-    local   parts;
-    if Length(arg) = 2  then
-        parts := RestrictedPartitionsA(arg[1],arg[2],Length(arg[2]),[],1);
-    elif Length(arg) = 3  then
-        if arg[1] = 0  then
-            if arg[3] = 0  then
+InstallGlobalFunction(RestrictedPartitions,function ( n, set, arg... )
+    local   parts, k;
+    if Length(arg) = 0  then
+        parts := RestrictedPartitionsA(n, set, Length(set), [], 1);
+    elif Length(arg) = 1  then
+        k := arg[1];
+        if n = 0  then
+            if k = 0  then
                 parts := [ [  ] ];
             else
                 parts := [  ];
             fi;
         else
-            if arg[2] = 0  then
-                parts := [  ];
-            else
-	    if not ForAll(arg[2],IsPosInt) then
-      Error("RestrictedPartitions: Set entries must be positive integers");
-	    fi;
-                parts := RestrictedPartitionsK(
-                             arg[1], arg[2], Length(arg[2]), arg[3], [], 1 );
+            if not ForAll(set,IsPosInt) then
+                Error("RestrictedPartitions: Set entries must be positive integers");
             fi;
+            parts := RestrictedPartitionsK(
+                         n, set, Length(set), k, [], 1 );
         fi;
     else
         Error("usage: RestrictedPartitions( <n>, <set> [, <k>] )");
@@ -2342,12 +2330,10 @@ NrRestrictedPartitionsK := function ( n, set, m, k, part, i )
 end;
 MakeReadOnlyGlobal( "NrRestrictedPartitionsK" );
 
-InstallGlobalFunction(NrRestrictedPartitions,function ( arg )
-    local  s, n, set, m, p, l;
+InstallGlobalFunction(NrRestrictedPartitions,function ( n, set, arg... )
+    local  s, m, p, l, k;
 
-    if Length(arg) = 2  then
-        n := arg[1];
-        set := arg[2];
+    if Length(arg) = 0  then
         p := [];
         for m  in [1..n+1]  do
             if (m-1) mod set[1] = 0  then
@@ -2363,17 +2349,18 @@ InstallGlobalFunction(NrRestrictedPartitions,function ( arg )
         od;
         s := p[n+1];
 
-    elif Length(arg) = 3  then
-        if arg[1] = 0  and arg[3] = 0  then
+    elif Length(arg) = 1  then
+        k := arg[1];
+        if n = 0  and k = 0  then
             s := 1;
-        elif arg[1] < arg[3]  or arg[3] = 0  then
+        elif n < k  or k = 0  then
             s := 0;
         else
-	    if not ForAll(arg[2],IsPosInt) then
-      Error("NrRestrictedPartitions: Set entries must be positive integers");
-	    fi;
+            if not ForAll(set,IsPosInt) then
+                Error("NrRestrictedPartitions: Set entries must be positive integers");
+            fi;
             s := NrRestrictedPartitionsK(
-                        arg[1], arg[2], Length(arg[2]), arg[3], [], 1 );
+                        n, set, Length(set), k, [], 1 );
         fi;
 
     else
@@ -2433,8 +2420,10 @@ BindGlobal( "ShallowCopy_Partitions",
     iter -> rec( n:= iter!.n, next:= ShallowCopy( iter!.next ) ) );
 
 InstallGlobalFunction( "IteratorOfPartitions", function( n )
-    if not IsPosInt( n ) then
-      Error( "<n> must be a positive integer" );
+    if n = 0 then
+      return TrivialIterator( [] );
+    elif not IsPosInt( n ) then
+      Error( "<n> must be a nonnegative integer" );
     fi;
     return IteratorByFunctions( rec(
              IsDoneIterator := IsDoneIterator_Partitions,
@@ -2444,6 +2433,179 @@ InstallGlobalFunction( "IteratorOfPartitions", function( n )
              n              := n,
              next           := 0 * [ 1 .. n ] + 1 ) );
     end );
+
+
+#############################################################################
+##
+#F  IteratorOfPartitionsSet( <set> [, <k> [, <flag> ] ]  )
+##
+##  If $B_0, B_1, \ldots, B_m$ are subsets forming a partition of
+##  $\{1, 2, \ldots, n\}$, then the partition can be described by the 
+##  restricted growth string $a_1 a_2 \ldots a_n$, where $a_i = j$ if 
+##  $i \in B_j$. We may assume $a_1 = 0$ and then a restricted growth string
+##  satisfies $a_i \leq Max(\{a_1, a_2, \ldots, a_{i-1}\}) + 1$ for 
+##  $i =2, 3, \ldots, n$. We may increment through restricted growth strings
+##  by incrementing $a_i$ for the largest $i$ such that the inequality is not
+##  tight, and setting $a_j=0$ for all $j>i$.
+##
+BindGlobal( "IsDoneIterator_PartitionsSet", iter -> ( iter!.next = false ) );
+
+BindGlobal( "NextIterator_PartitionsSet", function( iter )
+      local j, max, part, m, out, i;
+      if Length(iter!.s) = 0 then
+        iter!.next := false;
+        return [];
+      fi;
+      part := StructuralCopy(iter!.next);
+      j := Size(iter!.next);
+      # Compute next restricted growth string using a_i \leq Max({a_0 .. a_{i-1}})+1
+      while j > 1 do
+        max := Maximum(iter!.next{[1 .. j-1]});
+        if iter!.next[j] <= max then
+          break;
+        fi;
+        iter!.next[j] := 0;
+        j := j-1;
+      od;
+      if j > 1 then
+        iter!.next[j] := iter!.next[j]+1;
+      else
+        iter!.next := false;
+      fi;
+      # Convert restricted growth string to partition of set
+      m := Maximum(part)+1;
+      out := List([1 .. m], t -> []);
+      for i in [1 .. Size(part)] do
+        Add(out[part[i]+1], iter!.s[i]);
+      od;
+      return out;
+    end );
+
+BindGlobal( "NextIterator_PartitionsSetGivenSize", function( iter )
+      local j, max, part, m, out, i;
+      if Length(iter!.s) = 0 or Length(iter!.s)<iter!.sz then
+        iter!.next := false;
+        return [];
+      fi;
+      part := StructuralCopy(iter!.next);
+      while true do
+        j := Size(iter!.next);
+        # Compute next restricted growth string using a_i \leq Max({a_0 .. a_{i-1}})+1
+        while j > 1 do
+          # iterate in the same manner, but now we do not exceed sz-1
+          max := Minimum(Maximum(iter!.next{[1 .. j-1]}), iter!.sz-2);
+          if iter!.next[j] <= max then
+            iter!.next[j] := iter!.next[j]+1;
+            m := Maximum(iter!.next)+1;
+            break;
+          else
+            iter!.next[j] := 0;
+            j := j-1;
+          fi;
+        od;
+        m := Maximum(part)+1;
+        # Convert restricted growth string to partition of set
+        out := List([1 .. m], t -> []);
+        for i in [1 .. Size(part)] do
+          Add(out[part[i]+1], iter!.s[i]);
+        od;
+        # this is the final iteration if in the next iteration we cycle through to the start again
+        if ForAll([2 .. Size(iter!.next)], t -> iter!.next[t]=0) then
+          iter!.next := false;
+          return out;
+        fi;
+        # If the size of the partition equals sz we return, otherwise it is too small,
+        # and we continue to iterate until the next partition of the correct size is found
+        if Maximum(iter!.next)+1 = iter!.sz then
+          if m = iter!.sz then
+            return out;
+          else
+            part := StructuralCopy(iter!.next);
+          fi;
+        fi;
+      od;
+    end );
+
+BindGlobal( "NextIterator_PartitionsSetGivenSizeOrLess", function( iter )
+      local j, max, part, m, out, i;
+      if Length(iter!.s) = 0 or Length(iter!.s)<iter!.sz then
+        iter!.next := false;
+        return [];
+      fi;
+      part := StructuralCopy(iter!.next);
+      while true do
+        j := Size(iter!.next);
+        # Compute next restricted growth string using a_i \leq Max({a_0 .. a_{i-1}})+1
+        while j > 1 do
+          max := Minimum(Maximum(iter!.next{[1 .. j-1]}), iter!.sz-2);
+          if iter!.next[j] <= max then
+            iter!.next[j] := iter!.next[j]+1;
+            m := Maximum(iter!.next)+1;
+            break;
+          else
+            iter!.next[j] := 0;
+            j := j-1;
+          fi;
+        od;
+        m := Maximum(part)+1;
+        # Convert restricted growth string to partition of set
+        out := List([1 .. m], t -> []);
+        for i in [1 .. Size(part)] do
+          Add(out[part[i]+1], iter!.s[i]);
+        od;
+        # this is the final iteration if in the next iteration we cycle through to the start again
+        if ForAll([2 .. Size(iter!.next)], t -> iter!.next[t]=0) then
+          iter!.next := false;
+          return out;
+        fi;
+        return out;
+      od;
+    end );
+
+BindGlobal( "ShallowCopy_PartitionsSet",
+    iter -> rec( next := ShallowCopy( iter!.next ), s := iter!.s, sz := iter!.sz ) );
+
+InstallGlobalFunction( IteratorOfPartitionsSet , function( s, arg... )
+    local k, r;
+
+    if not IsSet(s) then
+      Error( "IteratorOfPartitionsSet: <s> must be a set" );
+    fi;
+
+    r := rec(
+            IsDoneIterator := IsDoneIterator_PartitionsSet,
+            NextIterator := NextIterator_PartitionsSet,
+            ShallowCopy := ShallowCopy_PartitionsSet,
+            s := Immutable(s),
+            next := ListWithIdenticalEntries(Size(s), 0),
+            sz := fail,
+         );
+
+    if Length( arg ) = 1 or Length( arg ) = 2 then
+      k := arg[1];
+      if not IsInt(k) then
+        Error("IteratorOfPartitionsSet: <k> must be an integer");
+      fi;
+      r.NextIterator := NextIterator_PartitionsSetGivenSize;
+
+      if Length( arg ) = 2 then
+        if arg[2] = true then
+          r.NextIterator := NextIterator_PartitionsSetGivenSizeOrLess;
+          k := Minimum(k, Length(s));
+        elif arg[2] <> false then
+          Error("IteratorOfPartitionsSet: <flag> must be true or false");
+        fi;
+      fi;
+      if k<0 or (k=0 and s <> []) or (k > Length(s)) then
+        r.next:=false;
+      fi;
+      r.sz := k;
+    elif Length( arg ) > 2 then
+      Error( "usage: IteratorOfPartitionsSet( <set> [, <k> [, <flag> ] ] )" );
+    fi;
+
+    return IteratorByFunctions(r);
+  end);
 
 
 #############################################################################
@@ -2705,3 +2867,97 @@ InstallGlobalFunction(Bernoulli,
         end
     )
 ));
+
+
+InstallGlobalFunction(AllLinearDiophantineSolutions,function(w,count,s)
+local g,i,a,sol,l,r,pos;
+  if Length(w)=0 then return [];fi;
+  g:=Gcd(w);
+  if s mod g<>0 then
+    return [];
+  fi;
+  if Length(w)=1 then return [[s/w[1]]];fi;
+  # kill gcd to keep numbers small
+  w:=List(w,x->x/g);
+  s:=s/g;
+
+  sol:=[];
+  l:=0*w; # zero out
+  r:=s;
+  pos:=1;
+  while l[1]>=0 do
+    a:=Minimum(count[pos],QuoInt(r,w[pos]));
+    l[pos]:=a;
+    r:=r-a*w[pos];
+    if pos=Length(l) then
+      # solution?
+      if r=0 then Add(sol,ShallowCopy(l));fi; 
+      # now go back and decrement prior
+      r:=r+l[pos]*w[pos];
+      l[pos]:=-1;
+      while pos>0 and l[pos]<0 do
+        pos:=pos-1;
+        if (pos>0 and l[pos]>=0) then
+          l[pos]:=l[pos]-1;
+          if l[pos]>=0 then
+            r:=r+w[pos];
+          fi;
+        fi;
+      od;
+
+      if pos>0 then
+        pos:=pos+1; # next value to calc
+      fi;
+
+    else
+      pos:=pos+1;
+    fi;
+  od;
+  return sol;
+end);
+
+# Brute-force algorithms that gives (as indices) all ways how to sum subsets
+# of `from` to obtain `to`
+InstallGlobalFunction(AllSubsetSummations,function(to, from, arg...)
+local limit,erg,nerg,perm,i,e,c,sel,sz,dio,part,d,j,k,kk,ac,lc,nc;
+  if Length(arg)>0 then limit:=arg[1];
+  else limit:=infinity;fi;
+  erg:=[[]];
+  to:=ShallowCopy(to);
+  perm:=Sortex(to)^-1;
+  for i in to do
+    nerg:=[];
+    for e in erg do
+      sel:=Filtered(Difference([1..Length(from)],Union(e)),x->from[x]<=i);
+
+      sz:=Collected(from{sel});
+      part:=List(sz,x->Filtered(sel,y->from[y]=x[1]));
+      dio:=AllLinearDiophantineSolutions(List(sz,x->x[1]),List(sz,x->x[2]),i);
+      c:=[];
+      for d in dio do
+        ac:=[[]];
+        for j in [1..Length(d)] do
+          lc:=Combinations(part[j],d[j]);
+          nc:=[];
+          for k in ac do
+            for kk in lc do
+              Add(nc,Union(k,kk));
+            od;
+          od;
+          ac:=nc;
+        od;
+    #Print(Position(erg,e),"/",Length(erg),"d:",d,"->",Length(ac),"\n");
+        Append(c,ac);
+        if Length(c)>limit then return fail;fi;
+      od;
+
+      if Length(nerg)+Length(c)>limit then return fail;fi;
+      for j in c do
+        Add(nerg,Concatenation(e,[j]));
+      od;
+
+    od;
+    erg:=nerg;
+  od;
+  return List(erg,x->Permuted(x,perm));
+end);

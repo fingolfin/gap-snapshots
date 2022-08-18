@@ -13,12 +13,79 @@
 ##    Automorphism group computation and isomorphism testing in finite groups.
 ##    J. Symb. Comput. 35, No. 3, 241-267 (2003)
 
+# call as big,perm,aut (the latter two can be groups or generator lists,
+# optional permiso.
+# returns two groups with corresponding generators
+AGSRReducedGens:=function(arg)
+local big,bp,A,permgens,s,auts,sel,i,sub;
+  big:=arg[1];
+  bp:=arg[2];
+  A:=arg[3];
+
+  if IsGroup(bp) then
+    permgens:=GeneratorsOfGroup(bp);
+  else
+    permgens:=bp;
+    bp:=SubgroupNC(Parent(big),permgens);
+  fi;
+  SetSize(bp,Size(big));
+  if IsGroup(A) then
+    auts:=GeneratorsOfGroup(A);
+  else
+    auts:=A;
+    A:=fail;
+  fi;
+  if Length(permgens)<>Length(auts) then Error("correspondence!");fi;
+  s:=SmallGeneratingSet(big);
+  if Length(s)+2>=Length(permgens) then
+    return fail;
+  fi;
+
+  # first try to reduce by dropping generators
+  sel:=[1..Length(permgens)];
+  for i in [1..Length(permgens)] do
+    sub:=SubgroupNC(Parent(big),permgens{Difference(sel,[i])});
+    if Size(sub)=Size(big) then
+      RemoveSet(sel,i);
+      bp:=sub;
+    fi;
+  od;
+  # good enough?
+  if Length(s)+2<Length(sel) then
+    if Length(arg)>3 then
+      i:=InverseGeneralMapping(arg[4]);
+    else
+      i:=GroupHomomorphismByImagesNC(big,Group(auts),permgens,auts);
+    fi;
+    auts:=List(s,x->ImagesRepresentative(i,x));
+    bp:=SubgroupNC(Parent(big),s);
+    SetSize(bp,Size(big));
+    auts:=Group(auts);
+  else
+    auts:=Group(auts{sel});
+  fi;
+  SetIsGroupOfAutomorphismsFiniteGroup(auts,true);
+  SetIsFinite(auts,true);
+  SetSize(auts,Size(bp));
+  if A<>fail then
+    if HasInnerAutomorphismsAutomorphismGroup(A) then
+      SetInnerAutomorphismsAutomorphismGroup(auts,
+        InnerAutomorphismsAutomorphismGroup(A));
+    fi;
+    if HasNiceMonomorphism(A) then
+      SetNiceMonomorphism(auts,NiceMonomorphism(A));
+      SetNiceObject(auts,NiceObject(A));
+    fi;
+  fi;
+  return [bp,auts];
+end;
+
 # If M<=Frat(C_G(M)), try to find relators for C/M that in G evaluate to
 # generators of M and for which exponent sums are multiples of p. In this
 # case the values of the relators on pre-images in G do not depend on choice
 # of representatives and can be used to deduce the module automorphism
 # belonging to a factor group automorphism.
-BindGlobal("AGSRFindRels",function(nat)
+BindGlobal("AGSRFindRels",function(nat,newgens)
 local C,M,p,all,gens,sub,q,hom,fp,rels,new,pre,sel,i,free,cnt;
   M:=KernelOfMultiplicativeGeneralMapping(nat);
   C:=Centralizer(Source(nat),M);
@@ -27,13 +94,24 @@ local C,M,p,all,gens,sub,q,hom,fp,rels,new,pre,sel,i,free,cnt;
   fi;
   p:=SmallestPrimeDivisor(Size(M));
   all:=[];
-  gens:=SmallGeneratingSet(Image(nat));
+  if newgens=true then
+    # so generators new
+    sub:=TrivialSubgroup(Image(nat));
+    while Size(sub)<Size(Image(nat)) do
+      sub:=ClosureGroup(sub,ImagesRepresentative(nat,Random(C)));
+    od;
+  else
+    sub:=Image(nat,C);
+  fi;
+
+  gens:=SmallGeneratingSet(sub);
+
   free:=FreeGroup(Length(gens));
   sub:=TrivialSubgroup(M);
   cnt:=0;
   while Size(sub)<Size(M) do
     q:=Group(gens);
-    SetSize(q,Size(Image(nat)));
+    SetSize(q,Size(Image(nat,C)));
     # use `ByGenerators` to force more random relators
     hom:=IsomorphismFpGroupByGenerators(q,gens);
     fp:=Range(hom);
@@ -55,7 +133,7 @@ local C,M,p,all,gens,sub,q,hom,fp,rels,new,pre,sel,i,free,cnt;
 end);
 
 BindGlobal("AGSRPrepareAutomLift",function(G,pcgs,nat)
-local ocr, fphom, fpg, free, len, dim, tmp, L0, S, R, rels, mat, r, RS, i, g, v;
+local ocr,fphom,fpg,free,len,dim,tmp,L0,S,R,rels,mat,r,RS,i,g,v,cnt;
 
   ocr:=rec(group:=G,modulePcgs:=pcgs);
   fphom:=IsomorphismFpGroup(G);
@@ -72,13 +150,19 @@ local ocr, fphom, fpg, free, len, dim, tmp, L0, S, R, rels, mat, r, RS, i, g, v;
   ocr.module:=GModuleByMats(
     LinearActionLayer(G,ocr.generators,ocr.modulePcgs),ocr.field);
   ocr.moduleauts:=MTX.ModuleAutomorphisms(ocr.module);
+
   if Size(ocr.moduleauts)>
       # Finding the relations comes at a cost that needs to be plausible
       # with searching multiple times through the automorphism group. This
       # order bound is a heuristic that seems to be OK by magnitude.
-      321
+      100
     then
-    ocr.trickrels:=AGSRFindRels(nat);
+    cnt:=0;
+    repeat
+      ocr.trickrels:=AGSRFindRels(nat,cnt>3);
+      cnt:=cnt+1;
+    until ocr.trickrels<>fail or 2^cnt>100*Size(ocr.moduleauts);
+  if ocr.trickrels=fail then Info(InfoMorph,1,"trickrels fails");fi;
   else
     ocr.trickrels:=fail;
   fi;
@@ -206,7 +290,7 @@ BindGlobal("AGSRAutomLift",function(ocr,nat,fhom,miso)
 
   else
     phom:=IsomorphismPermGroup(ocr.moduleauts);
-    enum:=Enumerator(Image(phom));
+    enum:=Enumerator(Image(phom,ocr.moduleauts));
     Info(InfoMorph,5,"Search through module automorphisms of size ",
       Size(Image(phom)));
   fi;
@@ -232,6 +316,7 @@ BindGlobal("AGSRAutomLift",function(ocr,nat,fhom,miso)
       for i in [1..Length(genimages)] do
 	genimages[i]:=genimages[i]*s[i];
       od;
+
       # later use NC version
       hom:=GroupHomomorphismByImagesNC(ocr.group,ocr.group,
 	      ocr.generators,genimages);
@@ -248,117 +333,368 @@ end);
 # the condition can become expensive.
 # First try `SubgroupProperty`, but when it stalls attempt to find
 # minimal supergroups and prove that none of them satisfies.
-InstallGlobalFunction(SubgroupConditionAbove,function(G,cond,S)
-local c,hom,q,a,b,i,t,int,bad,have,ups,up,new,u,good,abort;
+BindGlobal("SubgroupConditionAboveAux",function(G,cond,S1,avoid)
+local S,c,hom,q,a,b,i,t,int,bad,have,ups,up,new,u,good,abort,clim,worked,pp,
+  cnt,locond,tstcnt,setupc,havetest;
 
+  setupc:=function()
+    hom:=NaturalHomomorphismByNormalSubgroupNC(G,u);
+    q:=Image(hom,G);
+    ups:=Image(hom,avoid);
+    # aim for zuppos that cannot intersect avoid
+    c:=ConjugacyClasses(q);
+    c:=Filtered(c,x->IsPrimePowerInt(Order(Representative(x))) and
+      not Representative(x) in ups);
+    # elements that do not have prime-order power in the subgroup avoid
+    c:=Filtered(c,x->not Representative(x)^
+      (Order(Representative(x))/SmallestPrimeDivisor(Order(Representative(x))))
+      in ups);
+    # this also implies prime powers after the respective primes
+    SortBy(c,Size);
+
+    Info(InfoMorph,3,Length(c)," classes with ",Sum(c,Size)," subgroups");
+  end;
+
+  S:=S1;
   Info(InfoMorph,2,"SubgroupAbove ",IndexNC(G,S));
 
+  # Strategy: First try `SubgroupProperty` with a bailout limit, just in
+  # case it finds (enough) elements. The bailout limit is set smaller if the
+  # factor is solvable, as it will be cheaper to find complementing zuppos
+  # in this case.
+
+  u:=Intersection(S,avoid);
+  if IsNormal(G,u) and IsNormal(G,avoid) 
+    and HasSolvableFactorGroup(G,u) then
+    setupc();
+    clim:=Minimum(Maximum(QuoInt(Sum(c,Size),4),10),1000);
+  else
+    hom:=fail;
+    # if less than 1/100 percent of elements succeed, assume close
+    # to the subgroup has been found, and rather aim to prove there
+    # will not be more.
+    c:=fail;
+    clim:=Maximum(QuoInt(IndexNC(G,S),10000),1000);
+  fi;
+
+
+
+
   # first try, how far `SubgroupProperty` goes
-  good:=[];
-  bad:=[];
   b:=0;
+  tstcnt:=0;
   abort:=false;
-  c:=SubgroupProperty(G,
-    function(elm)
-      if abort then
-        return true; # are we bailing out since it behaves too badly?
-      elif cond(elm) then
-        Add(good,elm);
-        S:=ClosureGroup(S,elm); # remember
-        Info(InfoMorph,3,"New element ",IndexNC(G,S));
-        b:=0;
-        return true;
-      else
-        Add(bad,elm);
-        b:=b+1;
-        # if less than 1/50 percent of elements succeed, assume close
-        # to the subgroup has been found, and rather aim to prove there
-        # will not be more.
-        if b*5000>IndexNC(G,S) then
-          abort:=true;
+  havetest:=[];
+
+  if IsPermGroup(G) then
+    worked:=SubgroupProperty(G,
+      function(elm)
+        if abort then
+          return true; # are we bailing out since it behaves too badly?
         fi;
-        return false;
-      fi;
-    end,S);
+        # would it contribute to avoid outside S?
+        if elm in avoid or
+          ForAny(Set(Factors(Order(elm))),e->elm^e in avoid and not elm^e in S)
+        then 
+          # cannot be good
+          return false;
+        fi;
+
+        tstcnt:=tstcnt+1;
+        AddSet(havetest,elm);
+        if cond(elm) then
+          S:=ClosureGroup(S,elm); # remember
+          Info(InfoMorph,3,"New element ",IndexNC(G,S));
+          b:=0;
+          return true;
+        else
+          b:=b+1;
+          if b>clim then
+            abort:=true;
+          fi;
+          return false;
+        fi;
+      end,S);
+  else
+    worked:=S;
+    abort:=true;
+  fi;
 
   if abort=false then 
     # we actually found the subgroup
-    Info(InfoMorph,2,"SubgroupProperty finds ",IndexNC(G,c));
-    return c;
+    Info(InfoMorph,2,"SubgroupProperty finds index ",IndexNC(G,worked));
+    return worked;
   fi; 
 
-  Info(InfoMorph,2,"intermediate improvement ",IndexNC(G,S));
+  Info(InfoMorph,2,"SubgroupProperty did ",tstcnt," tests and improved by ",
+    IndexNC(S,S1));
 
-  good:=false;
-  if IndexNC(G,S)<=
-      # avoid writing down a permutation representation on more than 
-      150000
-      #cosets, as it gets too memory expensive.
-    then
+  if not (IsNormal(G,u) and IsNormal(G,avoid)) then
+    Error("may only call if normalizing");
+  fi;
 
-    # try to prove no supergroup works
-    t:=RightTransversal(G,S:noascendingchain); # don't try to be clever in
-    # decomposing transversal, as this could be hard
-    a:=Action(G,t,OnRight); # coset action, don't need homomorphism
-    b:=RepresentativesMinimalBlocks(a,MovedPoints(a));
-    Info(InfoMorph,3,"Above are ",Length(b)," blocks");
-    if Length(b)>IndexNC(G,S) then
-      # there are too many blocks. Direct test is cheaper!
-      return SubgroupProperty(G,cond,S);
-    fi;
-    for i in [1..Length(b)] do
-      CompletionBar(InfoMorph,3,"SubgroupsAboveBlocks ",i/Length(b));
-      c:=First(b[i],x->x>1);
-      if cond(t[c]) then 
-        S:=ClosureGroup(S,t[c]);
-        good:=true;
+  if c=fail then setupc();fi;
+  havetest:=Set(List(havetest,x->ImagesRepresentative(hom,x)));
+
+  locond:=function(elm)
+            tstcnt:=tstcnt+1;
+            return cond(elm);
+          end;
+
+  clim:=
+    # avoid writing down a permutation representation on more than
+    150000;
+    #cosets, as it gets too memory expensive.
+
+
+  worked:=[]; # indicate whether class worked
+
+
+  # now run over all Zuppos (Conjugates of class representatives) in factor  that do
+  # not intersect (the image of) avoid. These, that saisfy, will span the correct subgroup.
+  i:=1;
+  while worked<>fail and i<=Length(c) do
+
+    #should we abort?
+    if Sum(c{[i..Length(c)]},Size)>IndexNC(G,S) and IndexNC(G,S)<=clim then
+      a:=Normalizer(G,S);
+      # if the normalizer index is large, there will be many subgroups above
+      if IndexNC(a,S)<200 then
+        worked:=fail; # abort and go to other method
       fi;
-    od;
-    CompletionBar(InfoMorph,3,"SubgroupsAboveBlocks ",false);
-
-    if  good then 
-      # actually found something. Recurse to restart. (As index decreased
-      # by a factor, not much loss.)
-      S:=SubgroupConditionAbove(G,cond,S);
     fi;
-    Info(InfoMorph,2,"SubgroupConditionAbove finds ",IndexNC(G,S));
-    return S; # proved no larger group works
+
+    # if prime powers, the primes must have worked
+    a:=Representative(c[i]);
+
+    # no coprime power in earlier class?
+    have:=worked<>fail and
+      ForAll(Filtered([2..Order(a)-1],o->Gcd(o,Order(a))=1),
+        o->PositionProperty(c{[1..i-1]},x->a^o in x)=fail);
+
+    pp:=false;
+    if have and not IsPrimeInt(Order(a)) then
+      pp:=SmallestPrimeDivisor(Order(a));
+      a:=a^(Order(a)/pp);
+      have:=worked[PositionProperty(c,x->a in x)];
+    fi;
+
+    if have then
+      have:=false;
+      a:=Representative(c[i]);
+      t:=Orbit(q,a);
+      t:=Filtered(t,x->not x in havetest);
+
+      cnt:=0;
+      for b in t do
+        new:=PreImagesRepresentative(hom,b);
+        if (pp=false or new^pp in S) and locond(new) then 
+          S:=ClosureGroup(S,new);
+          have:=true;
+          cnt:=cnt+1;
+        fi;
+      od;
+      Info(InfoMorph,4,"Did class ",i," order =",Order(Representative(c[i])),
+            ", len=",Size(c[i])," newtest=", Length(t),
+            " found ",cnt,": ",Size(S));
+    fi;
+    if worked<>fail then Add(worked,have);fi;
+    i:=i+1;
+  od;
+
+  if worked=fail then
+    # still need to test
+    Info(InfoMorph,2,"Go to blocks test");
+
+    if Index(G,S)>clim then Error("clim"); fi;
+
+    a:=SmallGeneratingSet(G);
+    if Length(GeneratorsOfGroup(G))>Length(a) then
+      b:=Size(G);
+      G:=Group(a);
+      SetSize(G,b);
+    fi;
+
+    repeat
+      good:=false;
+      u:=Filtered(GeneratorsOfGroup(G),x->cond(x) and not x in S);
+      for i in u do
+        S:=ClosureGroup(S,i);
+      od;
+
+      # try to prove no supergroup works
+      t:=RightTransversal(G,S:noascendingchain); # don't try to be clever in
+      # decomposing transversal, as this could be hard
+      a:=Action(G,t,OnRight); # coset action, don't need homomorphism
+      b:=RepresentativesMinimalBlocks(a,MovedPoints(a));
+      Info(InfoMorph,3,"Above are ",Length(b)," blocks");
+
+      if IsPermGroup(G) and Length(b)*10>IndexNC(G,S) then
+        # there are too many blocks. Direct test is cheaper!
+        S:=SubgroupProperty(G,locond,S);
+      else
+
+        for i in [1..Length(b)] do
+          CompletionBar(InfoMorph,3,"SubgroupsAboveBlocks ",i/Length(b));
+          c:=First(b[i],x->x>1);
+          if cond(t[c]) then 
+            S:=ClosureGroup(S,t[c]);
+            good:=true;
+          fi;
+        od;
+        CompletionBar(InfoMorph,3,"SubgroupsAboveBlocks ",false);
+      fi;
+    until good=false;
 
   fi;
 
-  Info(InfoWarning,1,"require intermediate subgroups");
+  Info(InfoMorph,3,"Did ",tstcnt," tests, grow by ",Index(S,S1));
+  return S;
 
-  # make sure its not the whole group
-  c:=Core(G,S);
-  hom:=NaturalHomomorphismByNormalSubgroup(G,c);
-  q:=Image(hom);
-  t:=Image(hom,S);
-  int:=IntermediateSubgroups(q,t);
-  bad:=[Length(int.subgroups)+1]; # so we don't access the full group
-  have:=0;
-  ups:=Difference(List(Filtered(int.inclusions,x->x[1]=have),x->x[2]),bad);
-  while Length(ups)>0 do
-    u:=ups[1];
-    a:=First(GeneratorsOfGroup(int.subgroups[u]),x->not x in t);
-    if cond(PreImagesRepresentative(hom,a)) then
-      have:=u;
-      t:=int.subgroups[u];
+end);
+
+# Same syntax as `SubgroupProperty`, but assumption that the tests are
+# expensive. Thus minimize number of tests by doing more group calculations
+InstallGlobalFunction(SubgroupConditionAbove,function(G,cond,Sorig)
+local cs,nr,u,no,un,S,rad,res,ise,uno;
+
+
+  # first, try to find a few elements that work (and catch the case that the
+  # subgroup has small index. Ensure we test at least once for each possible
+  # step.
+  nr:=2^LogInt(Size(G),1000)+Length(Factors(Size(G)));
+  u:=[];
+  if IsPermGroup(G) then
+    S:=SubgroupProperty(G,
+      function(elm)
+        if nr<0 then return true;fi;
+        nr:=nr-1;
+        if cond(elm) then
+          Add(u,elm);
+          return true;
+        else
+          return false;
+        fi;
+      end,Sorig);
+  else
+    u:=Filtered(GeneratorsOfGroup(G),cond);
+    nr:=-1;
+  fi;
+
+  if nr>=0 then # succeeded (small index case)
+    return S;
+  elif Length(u)>0 then
+    S:=ClosureGroup(Sorig,u);
+  else
+    S:=Sorig;
+  fi;
+
+  # now build along composition series
+
+  rad:=SolvableRadical(G);
+  # composition series through perfect residuum seems to work better
+  # Possible reason: Simple composition factors arise as inner
+  # automorphisms. Moving the perfect residuum (if smaller) in the series,
+  # thus increases the chance that much of the subgroup is found early (and
+  # does not need to be found through search through complements)
+  res:=PerfectResiduum(G);
+
+  nr:=Unique([Core(G,S),NormalClosure(G,S)]);
+
+  # refine with perfect residuum
+  no:=Intersection(nr[1],res);
+  if not no in nr then Add(nr,no);fi;
+  if Length(nr)>1 then
+    no:=ClosureGroup(nr[2],res);
+    if not no in nr then Add(nr,no);fi;
+    no:=Intersection(nr[2],ClosureGroup(nr[1],res));
+    if not no in nr then Add(nr,no);fi;
+  fi;
+
+  cs:=CompositionSeriesThrough(G,nr);
+
+  nr:=First([1..Length(cs)],x->IsSubset(S,cs[x]));
+  uno:=false;
+  while nr>1 do
+    nr:=nr-1;
+    if IsSubset(cs[nr+1],S) then
+
+      u:=S;
+      ise:=u;
+      if uno=false then
+        # if the group is huge use the radical-based normalizer
+        if Size(rad)>10^13 and IndexNC(G,ise)>10^5 then
+          Info(InfoMorph,4,"Radical-based Normalizer:",IndexNC(G,u));
+          uno:=NormalizerViaRadical(G,ise);
+        else
+          Info(InfoMorph,4,"Ordinary Normalizer:",IndexNC(G,u));
+          uno:=Normalizer(G,ise);
+        fi;
+      fi;
+      no:=Intersection(uno,cs[nr]);
     else
-      AddSet(bad,u);
-      up:=Difference(List(Filtered(int.inclusions,x->x[1]=u),x->x[2]),bad);
-      repeat
-        bad:=Union(bad,up);
-        new:=[];
-        for u in up do
-          new:=Union(new,Difference(List(Filtered(int.inclusions,x->x[1]=u),
-            x->x[2]),bad));
-        od;
-        up:=new;
-      until Length(new)=0;
+
+      u:=Intersection(cs[nr],S);
+      ise:=Intersection(cs[nr+1],u);
+
+      # if the group is huge use the radical-based normalizer
+      if Size(Intersection(rad,cs[nr]))>10^13 and IndexNC(cs[nr],ise)>10^5 then
+        Info(InfoMorph,4,"Radical-based Normalizer:",IndexNC(cs[nr],ise),
+          " of ",Index(cs[nr],cs[nr+1]));
+        no:=NormalizerViaRadical(cs[nr],ise);
+      else
+        Info(InfoMorph,4,"Ordinary Normalizer:",IndexNC(cs[nr],ise),
+          " of ",Index(cs[nr],cs[nr+1]));
+        no:=Normalizer(cs[nr],ise);
+      fi;
     fi;
-    ups:=Difference(List(Filtered(int.inclusions,x->x[1]=have),x->x[2]),bad);
+
+    un:=Size(no);
+    no:=Group(SmallGeneratingSet(no));
+    SetSize(no,un);
+
+    un:=SubgroupConditionAboveAux(no,cond,u,Intersection(no,cs[nr+1]));
+    Info(InfoMorph,2,
+      "Step ",nr,": ",IndexNC(cs[nr],cs[nr+1])," to ",IndexNC(un,u));
+    if not IsSubset(S,un) then 
+      S:=ClosureGroup(S,un);
+      uno:=false;
+    fi;
   od;
-  return PreImage(hom,t);
+  return S;
+end);
+
+# find classes of normal subgroups
+BindGlobal("AGSRNormalSubgroupClasses",function(G)
+local fp,n,pat,pools,i,sel;
+  # fingerprint
+  fp:=function(x)
+  local l;
+    if ID_AVAILABLE(Size(x)) <> fail
+      and ValueOption(NO_PRECOMPUTED_DATA_OPTION)<>true then
+      return IdGroup(x);
+    fi;
+    l:=[Size(x)];
+    Add(l,Collected(List(ConjugacyClasses(x),
+      y->[Order(Representative(y)),Size(y)])));
+    Add(l,AbelianInvariants(x));
+    return l;
+  end;
+  n:=ValueOption("directs");
+  if n<>fail then
+    # avoid large number of normals in direct product
+    n:=Concatenation(List(n,
+      x->Filtered(NormalSubgroups(x),y->Size(y)>1 and Size(y)<Size(x))));
+  else
+    n:=NormalSubgroups(G);
+  fi;
+  pat:=List(n,fp);
+  pools:=[];
+  for i in Set(pat) do
+    sel:=Filtered([1..Length(n)],x->pat[x]=i);
+    Add(pools,n{sel});
+  od;
+  return pools;
 end);
 
 # main automorphism method -- currently still using factor groups, but
@@ -371,16 +707,17 @@ local ff,r,d,ser,u,v,i,j,k,p,bd,e,gens,lhom,M,N,hom,Q,Mim,q,ocr,split,MPcgs,
       b,fratsim,AQ,OQ,Zm,D,innC,bas,oneC,imgs,C,maut,innB,tmpAut,imM,a,A,B,
       cond,sub,AQI,AQP,AQiso,rf,res,resperm,proj,Aperm,Apa,precond,ac,
       comiso,extra,mo,rada,makeaqiso,ind,lastperm,actbase,somechar,stablim,
-      scharorb,asAutom,jorb,jorpo,substb,isBadPermrep,ma;
+      scharorb,asAutom,jorb,jorpo,substb,isBadPermrep,ma,nosucl,nosuf,rlgf;
 
   # criterion for when to force degree reduction
   isBadPermrep:=function(g)
-    return NrMovedPoints(g)^2>Size(g)*Index(g,DerivedSubgroup(g));
+    return NrMovedPoints(g)^3>Size(g)*Index(g,DerivedSubgroup(g));
   end;
 
   asAutom:=function(sub,hom) return Image(hom,sub);end;
 
   actbase:=ValueOption("autactbase");
+  nosucl:=fail;
 
   makeaqiso:=function()
   local a,b;
@@ -389,19 +726,39 @@ local ff,r,d,ser,u,v,i,j,k,p,bd,e,gens,lhom,M,N,hom,Q,Mim,q,ocr,split,MPcgs,
       AQiso:=IsomorphismPermGroup(AQ);
     elif HasNiceMonomorphism(AQ) and IsPermGroup(Range(NiceMonomorphism(AQ))) then
       AQiso:=NiceMonomorphism(AQ:autactbase:=fail);
-    elif actbase<>fail then
-      AQiso:=IsomorphismPermGroup(AQ:autactbase:=List(actbase,x->Image(hom,x)));
     else
-      AQiso:=IsomorphismPermGroup(AQ);
+      a:=Filtered(GeneratorsOfGroup(AQ),HasConjugatorOfConjugatorIsomorphism);
+      if Length(a)>2 then
+        a:=List(a,ConjugatorOfConjugatorIsomorphism);
+        b:=SmallGeneratingSet(Group(a));
+        if Length(b)<Length(a) then
+          a:=List(b,x->ConjugatorAutomorphism(Source(AQ.1),x));
+          b:=Filtered(GeneratorsOfGroup(AQ),x->not HasConjugatorOfConjugatorIsomorphism(x));
+          a:=Concatenation(a,b);
+          b:=InnerAutomorphismsAutomorphismGroup(AQ);
+          AQ:=Group(a,One(AQ));
+          SetInnerAutomorphismsAutomorphismGroup(AQ,b);
+          SetIsGroupOfAutomorphismsFiniteGroup(AQ,true);
+        fi;
+      fi;
+      if actbase<>fail then
+        AQiso:=IsomorphismPermGroup(AQ:autactbase:=List(actbase,x->Image(hom,x)));
+      else
+        AQiso:=IsomorphismPermGroup(AQ);
+      fi;
     fi;
-    #AQP:=Image(AQiso,AQ);
-    #AQiso:=AQiso*SmallerDegreePermutationRepresentation(AQP);
     AQP:=Image(AQiso,AQ);
     Info(InfoMorph,3,"Permrep of AQ ",Size(AQ),", deg:",NrMovedPoints(AQP));
+
+    if Length(GeneratorsOfGroup(AQP))=Length(GeneratorsOfGroup(AQ)) then
+      a:=AGSRReducedGens(AQP,AQP,AQ,AQiso);
+      if a<>fail then
+        AQP:=a[1];
+        AQ:=a[2];
+      fi;
+    fi;
+
     # force degree down
-    a:=Size(AQP);
-    AQP:=Group(SmallGeneratingSet(AQP),One(AQP));
-    SetSize(AQP,a);
     if isBadPermrep(AQP) then
       a:=SmallerDegreePermutationRepresentation(AQP:cheap);
       if NrMovedPoints(Image(a))<NrMovedPoints(AQP) then
@@ -458,13 +815,15 @@ local ff,r,d,ser,u,v,i,j,k,p,bd,e,gens,lhom,M,N,hom,Q,Mim,q,ocr,split,MPcgs,
 
   ff:=FittingFreeLiftSetup(G);
   r:=ff.radical;
+  rlgf:=LGFirst(SpecialPcgs(r));
   # find series through r
 
   # derived and then primes and then elementary abelian
   d:=ValueOption("series");
   if d=fail then
-    d:=DerivedSeriesOfGroup(r);
+    d:=Filtered(StructuralSeriesOfGroup(G),x->IsSubset(r,x));
     # refine
+    d:=RefinedSubnormalSeries(d,Centre(G));
     d:=RefinedSubnormalSeries(d,Centre(r));
     scharorb:=fail;
     somechar:=ValueOption("someCharacteristics");
@@ -515,6 +874,34 @@ local ff,r,d,ser,u,v,i,j,k,p,bd,e,gens,lhom,M,N,hom,Q,Mim,q,ocr,split,MPcgs,
     SortBy(d,Size); # in case reversed order....
   fi;
 
+  # now go up in series if elementary abelian to avoid too many tiny steps
+  u:=1; # last group in the series to be used
+  i:=2;
+  while i<Length(d) do
+    p:=IndexNC(d[i+1],d[u]);
+    # should we skip group i?
+    if p<100 and IsPrimePowerInt(p) and
+       HasElementaryAbelianFactorGroup(d[i+1],d[u]) then
+       d:=Concatenation(d{[1..i-1]},d{[i+1..Length(d)]});
+       # i stays the same, as it now is the next subgroup
+    else
+      u:=i;
+      i:=i+1;
+    fi;
+  od;
+
+  # avoid small central subgroups, as the factor will be hard to represent
+  u:=Centre(G);
+  if Size(u)>1 then
+    p:=SmallestPrimeDivisor(Size(u));
+    u:=SylowSubgroup(u,p);
+    u:=Omega(u,p,1);
+    i:=Position(d,u);
+    if i<>fail and i>2 then
+      d:=d{Union([1],[i..Length(d)])};
+    fi;
+  fi;
+
   ser:=[TrivialSubgroup(G)];
   for i in d{[2..Length(d)]} do
     u:=ser[Length(ser)];
@@ -558,7 +945,7 @@ local ff,r,d,ser,u,v,i,j,k,p,bd,e,gens,lhom,M,N,hom,Q,Mim,q,ocr,split,MPcgs,
   # preseed natural homs in ascending form (as the largest one might help
   # for smaller ones)
   for i in [Length(ser),Length(ser)-1..2] do
-    NaturalHomomorphismByNormalSubgroup(G,ser[i]);
+    lhom:=NaturalHomomorphismByNormalSubgroup(G,ser[i]);
   od;
   i:=1;
   while i<Length(ser) do
@@ -575,12 +962,19 @@ local ff,r,d,ser,u,v,i,j,k,p,bd,e,gens,lhom,M,N,hom,Q,Mim,q,ocr,split,MPcgs,
 
       Q:=Image(hom,G);
       # degree reduction called for?
-      if Size(N)>1 and isBadPermrep(Q) then
+      if IsPermGroup(Q) and Size(N)>1 
+        and (isBadPermrep(Q) or NrMovedPoints(Q)>1000) then
         q:=SmallerDegreePermutationRepresentation(Q:cheap);
-	Info(InfoMorph,3,"reduced permrep Q ",NrMovedPoints(Q)," -> ",
-	     NrMovedPoints(Range(q)));
-	hom:=hom*q;
-	Q:=Image(hom,G);
+        if NrMovedPoints(Q)>1000 
+          and NrMovedPoints(Q)=NrMovedPoints(Image(q)) then
+          q:=SmallerDegreePermutationRepresentation(Q);
+        fi;
+        if NrMovedPoints(Range(q))<NrMovedPoints(Q) then
+          Info(InfoMorph,3,"reduced permrep Q ",NrMovedPoints(Q)," -> ",
+              NrMovedPoints(Range(q)));
+          hom:=hom*q;
+          Q:=Image(hom,G);
+        fi;
       fi;
 
       # inherit radical factor map
@@ -588,7 +982,7 @@ local ff,r,d,ser,u,v,i,j,k,p,bd,e,gens,lhom,M,N,hom,Q,Mim,q,ocr,split,MPcgs,
 	List(GeneratorsOfGroup(G),x->ImagesRepresentative(hom,x)),
 	List(GeneratorsOfGroup(G),x->ImagesRepresentative(ff.factorhom,x)));
       b:=Image(hom,ff.radical);
-      SetRadicalGroup(Q,b);
+      SetSolvableRadical(Q,b);
       AddNaturalHomomorphismsPool(Q,b,q);
 
       # Use known maximals for Frattini
@@ -640,6 +1034,14 @@ local ff,r,d,ser,u,v,i,j,k,p,bd,e,gens,lhom,M,N,hom,Q,Mim,q,ocr,split,MPcgs,
 	    ser[i+1]:=PreImage(hom,N);
 	    Info(InfoMorph,2,"insert2");
 	  fi;
+          N:=ser[i+1]; # the added normal
+          if rada<>fail 
+             and ForAny(GeneratorsOfGroup(rada),x->N<>Image(x,N)) then
+            Info(InfoMorph,3,"radical automorphism stabilizer");
+            SetIsGroupOfAutomorphismsFiniteGroup(rada,true);
+            NiceMonomorphism(rada:autactbase:=fail,someCharacteristics:=fail);
+            rada:=Stabilizer(rada,N,asAutom);
+          fi;
 	fi;
       fi;
     until split or fratsim;
@@ -791,7 +1193,7 @@ local ff,r,d,ser,u,v,i,j,k,p,bd,e,gens,lhom,M,N,hom,Q,Mim,q,ocr,split,MPcgs,
 
     # try to find some further generators
     if Size(AQP)/Size(Aperm)>100 then
-      for j in Pcgs(RadicalGroup(AQP)) do
+      for j in SpecialPcgs(SolvableRadical(AQP)) do
 	cond(j);
       od;
       for j in GeneratorsOfGroup(AQP) do
@@ -800,39 +1202,71 @@ local ff,r,d,ser,u,v,i,j,k,p,bd,e,gens,lhom,M,N,hom,Q,Mim,q,ocr,split,MPcgs,
     fi;
 
     sub:=AQP;
-    #if Size(KernelOfMultiplicativeGeneralMapping(hom))=1 then
-    #  Error("trigger");
-    #fi;
     if precond<>fail and not ForAll(GeneratorsOfGroup(sub),precond) then
+      # compatible pairs condition
       sub:=SubgroupProperty(sub,precond,Aperm);
     fi;
 
-    # desperately try to grab some further generators
-    #stablim(sub,cond,10000)=false then
+    if IndexNC(sub,Aperm)>10^6 then
+      # try to find characteristic subgroups
+      Info(InfoMorph,2,"Use normal subgroup classes");
+      if nosucl=fail then nosucl:=AGSRNormalSubgroupClasses(G);fi;
+      nosuf:=List(nosucl,x->Set(List(x,y->Image(lhom,y))));
+      nosuf:=Filtered(nosuf,x->Size(x[1])>1 and Size(x[1])<Size(OQ));
+      SortBy(nosuf,Length);
+      for j in nosuf do
+        # stabilize class
+        k:=SmallGeneratingSet(sub);
+        ac:=OrbitStabilizerAlgorithm(sub,false,false,
+          k,List(k,x->PreImagesRepresentative(AQiso,x)),
+          rec(pnt:=j,
+          act:=
+          function(set,phi)
+          #local phi;
+            #phi:=PreImagesRepresentative(AQiso,perm);
+            return Set(List(set,x->Image(phi,x)));
+          end,
+          onlystab:=true));
+        Info(InfoMorph,3,"Improved index ",IndexNC(sub,ac.stabilizer));
+        if Size(ac.stabilizer)<Size(sub) then
+          sub:=ac.stabilizer;
+        fi;
+      od;
+    fi;
 
-    #if Size(sub)/Size(Aperm)>1000000 then Error("Million"); fi;
     j:=Size(sub);
     Info(InfoMorph,2,"start search ",IndexNC(sub,Aperm));
     sub:=SubgroupConditionAbove(sub,cond,Aperm);
     Info(InfoMorph,2,"end search ",j/Size(sub));
 
-    Aperm:=Group(Apa,());
+    # Note: Aperm is larger than what is generated by Apa
     j:=1;
     while Size(Aperm)<Size(sub) do
       ac:=InnerAutomorphism(OQ,Image(q,GeneratorsOfGroup(Q)[j]));
       k:=ImagesRepresentative(AQiso,ac);
       if not k in Aperm then
+        Add(Apa,k);
 	Aperm:=ClosureGroup(Aperm,k);
 	Add(A,InnerAutomorphism(Q,GeneratorsOfGroup(Q)[j]));
       fi;
       j:=j+1;
     od;
 
+    # remove redundant generators. Note that Aperm could be to big, thus
+    # make group from Apa
+    ac:=AGSRReducedGens(SubgroupNC(Parent(sub),Apa),Apa,A);
+    if ac<>fail then
+      Apa:=GeneratorsOfGroup(ac[1]);
+      A:=GeneratorsOfGroup(ac[2]);
+    fi;
+
     Info(InfoMorph,2,"Lift Index ",Size(AQP)/Size(sub));
 
     # now make the new automorphism group
     innB:=List(SmallGeneratingSet(Q),x->InnerAutomorphism(Q,x));
     gens:=ShallowCopy(innB);
+    Info(InfoMorph,2,"|gens|=",Length(gens),"+",Length(C),
+      "+",Length(B),"+",Length(A));
     Append(gens,C);
     Append(gens,B);
     Append(gens,A);
@@ -849,22 +1283,27 @@ local ff,r,d,ser,u,v,i,j,k,p,bd,e,gens,lhom,M,N,hom,Q,Mim,q,ocr,split,MPcgs,
     AQI:=SubgroupNC(A,innB);
     SetInnerAutomorphismsAutomorphismGroup(A,AQI);
     AQ:=A;
-    makeaqiso();
-
-     # use the actbase for order computations
-    #if actbase<>fail then
-    #  Size(A:autactbase:=List(actbase,x->Image(hom,x)));
-    #fi;
+    if Size(KernelOfMultiplicativeGeneralMapping(hom))>1 
+      or ValueOption("delaypermrep")<>true then
+      makeaqiso();
+      if not IsIdenticalObj(A,AQ) then
+        A:=AQ;
+      fi;
+    else
+      A!.makeaqiso:=makeaqiso;
+    fi;
 
     # do we use induced radical automorphisms to help next step?
     if Size(KernelOfMultiplicativeGeneralMapping(hom))>1 and
-      Size(A)>10^8 and AbelianRank(r)<10
+      Size(A)>10^8 
       #(
       ## potentially large GL
       #Size(GL(Length(MPcgs),RelativeOrders(MPcgs)[1]))>10^10 and
       ## automorphism size really grew from B/C-bit
       ##Size(A)/Size(AQP)*Index(AQP,sub)>10^10) )
-     then
+      ## do so for all factors
+     and ForAll([2..Length(rlgf)],x->rlgf[x]-rlgf[x-1]<10)
+     and ValueOption("noradicalaut")<>true then
 
       if rada=fail then
 	if IsElementaryAbelian(r) and Size(r)>1 then
@@ -887,6 +1326,7 @@ local ff,r,d,ser,u,v,i,j,k,p,bd,e,gens,lhom,M,N,hom,Q,Mim,q,ocr,split,MPcgs,
 	    if ForAny(GeneratorsOfGroup(rada),x->Image(x,k)<>k) then
 	      Info(InfoMorph,3,"radical automorphism stabilizer");
 	      NiceMonomorphism(rada:autactbase:=fail,someCharacteristics:=fail);
+              SetIsGroupOfAutomorphismsFiniteGroup(rada,true);
 	      rada:=Stabilizer(rada,k,asAutom);
 	    fi;
 	  od;
@@ -917,7 +1357,7 @@ local ff,r,d,ser,u,v,i,j,k,p,bd,e,gens,lhom,M,N,hom,Q,Mim,q,ocr,split,MPcgs,
         Add(ind,k);
       od;
 
-      C:=Group(Concatenation(res,ind)); # to guarantee common parent
+      C:=Group(Unique(Concatenation(res,ind))); # to guarantee common parent
       SetIsFinite(C,true);
       SetIsGroupOfAutomorphismsFiniteGroup(C,true);
       Size(C:autactbase:=fail,someCharacteristics:=fail); # disable autactbase transfer
@@ -1026,7 +1466,7 @@ end);
 BindGlobal("AGSRModuleLayerSeries",function(g)
 local s,l,r,i,j,sy,hom,p,pcgs;
   s:=ShallowCopy(DerivedSeriesOfGroup(g));
-  r:=RadicalGroup(s[Length(s)]);
+  r:=SolvableRadical(s[Length(s)]);
   if Size(r)>1 then # cannot be last, as solvable
     Append(s,DerivedSeriesOfGroup(r));
   fi;
@@ -1226,6 +1666,33 @@ local a,props,cg,ch,clg,clh,ng,nh,coug,couh,pg,ph,i,j,stop,coinc;
     );
 end);
 
+BindGlobal("AGBoundedOrbrep",function(G,from,to,act,bound)
+local orb,rep,S,i,g,img,p;
+  orb:=[from];
+  rep:=[One(G)];
+  S:=[];
+  i:=1;
+  while i<=Length(orb) do
+    for g in GeneratorsOfGroup(G) do
+      img:=act(orb[i],g);
+      p:=Position(orb,img);
+      if p=fail then
+        if Length(orb)>=bound then return fail;fi; # length bailout
+        Add(orb,img);
+        Add(rep,rep[i]*g);
+      else
+        img:=rep[i]*g/rep[p];
+        if not (img in S or img^-1 in S) then
+          Add(S,img);
+        fi;
+      fi;
+    od;
+    i:=i+1;
+  od;
+  p:=Position(orb,to);
+  if p=fail then return false;fi; # not in orbit
+  return rec(rep:=rep[p],orblen:=Length(orb),stabgens:=S);
+end);
 
 
 # pathetic isomorphism test, based on the automorphism group of GxH. This is
@@ -1233,7 +1700,8 @@ end);
 # isomorphism available and there are many generators
 InstallGlobalFunction(PatheticIsomorphism,function(G,H)
 local d,a,map,possibly,cG,cH,nG,nH,i,j,sel,u,v,asAutomorphism,K,L,conj,e1,e2,
-      iso,api,good,gens,pre;
+      iso,api,good,gens,pre,aab,as;
+
   possibly:=function(a,b)
     if Size(a)<>Size(b) then
       return false;
@@ -1340,14 +1808,16 @@ local d,a,map,possibly,cG,cH,nG,nH,i,j,sel,u,v,asAutomorphism,K,L,conj,e1,e2,
     fi;
   od;
 
-  K:=[Image(e1,G),Image(e2,H)];
+  aab:=[Image(e1,G),Image(e2,H)];
   # we also fix the *pairs* of the characteristic subgroups as orbits. Again
   # this must happen in Aut(G)\wr 2, and reduces the size of the group.
-  a:=AutomorphismGroup(d:autactbase:=K,someCharacteristics:=
+  a:=AutomorphismGroup(d:autactbase:=aab,someCharacteristics:=
     rec(subgroups:=cG,
-        orbits:=List([1..Length(nG)],x->[Image(e1,nG[x]),Image(e2,nH[x])])));
-  iso:=IsomorphismPermGroup(a:autactbase:=K);
-  api:=Image(iso);
+        orbits:=List([1..Length(nG)],x->[Image(e1,nG[x]),Image(e2,nH[x])])),
+    directs:=aab,
+    delaypermrep:=true );
+
+  iso:=fail;
   #if NrMovedPoints(api)>5000 then
   #  K:=SmallerDegreePermutationRepresentation(api);
   #  Info(InfoMorph,2,"Permdegree reduced ",
@@ -1360,33 +1830,71 @@ local d,a,map,possibly,cG,cH,nG,nH,i,j,sel,u,v,asAutomorphism,K,L,conj,e1,e2,
   conj:=One(a);
   K:=Image(e1,G);
   L:=Image(e2,H);
-  Add(cG,TrivialSubgroup(d));
-  for i in cG do
-    u:=ClosureGroup(i,K);
-    v:=ClosureGroup(i,L);
-    if u<>v then
-      if IsSolvableGroup(api) then
-        gens:=Pcgs(api);
-      else
-        gens:=SmallGeneratingSet(api);
-      fi;
-      pre:=List(gens,x->PreImagesRepresentative(iso,x));
-      map:=RepresentativeAction(SubgroupNC(a,pre),u,v,asAutomorphism);
-      if map=fail then
-	return fail;
-      fi;
-      conj:=conj*map;
-      K:=Image(map,K);
+  map:=AGBoundedOrbrep(a,K,L,asAutomorphism,20);
+  if map=false then
+    Info(InfoMorph,1,"Shortorb test noniso");
+    return fail;
+  elif map<>fail then
+    conj:=map.rep;
+    Info(InfoMorph,1,"Shortorb test iso found");
+  else
 
-      u:=Stabilizer(api,v,gens,pre,asAutomorphism);
-      Info(InfoMorph,1,"Factor ",Size(d)/Size(i),": ",
-	  "reduce by ",Size(api)/Size(u));
-      api:=u;
-    fi;
-  od;
+    as:=a;
+    Add(cG,TrivialSubgroup(d));
+
+    for i in cG do
+      u:=ClosureGroup(i,K);
+      v:=ClosureGroup(i,L);
+      if u<>v then
+
+        # try cheap orbit stabilizer first
+        if iso<>fail then
+          map:=fail;
+        else
+          map:=AGBoundedOrbrep(as,u,v,asAutomorphism,100);
+        fi;
+        if map=false then
+          Info(InfoMorph,1,"Shortorb factor noniso");
+          return fail;
+        elif map<>fail then
+          Info(InfoMorph,1,"Shortorb factor reduce ",map.orblen);
+          as:=SubgroupNC(Parent(as),map.stabgens);
+          map:=map.rep;
+          conj:=conj*map;
+          K:=Image(map,K);
+          as:=as^map;
+        else
+          if iso=fail then
+            Info(InfoMorph,1,"Shortorb failed, get delayed permrep");
+            if IsBound(a!.makeaqiso) then a!.makeaqiso();fi;
+            iso:=IsomorphismPermGroup(a:autactbase:=aab);
+            api:=Image(iso,as);
+          fi;
+
+          if IsSolvableGroup(api) then
+            gens:=Pcgs(api);
+          else
+            gens:=SmallGeneratingSet(api);
+          fi;
+          pre:=List(gens,x->PreImagesRepresentative(iso,x));
+          map:=RepresentativeAction(SubgroupNC(a,pre),u,v,asAutomorphism);
+          if map=fail then
+            return fail;
+          fi;
+          conj:=conj*map;
+          K:=Image(map,K);
+
+          u:=Stabilizer(api,v,gens,pre,asAutomorphism);
+          Info(InfoMorph,1,"Factor ",Size(d)/Size(i),": ",
+              "reduce by ",Size(api)/Size(u));
+          api:=u;
+        fi;
+      fi;
+    od;
+
+  fi;
 
   return GroupHomomorphismByImagesNC(G,H,GeneratorsOfGroup(G),
     List(GeneratorsOfGroup(G),x->PreImagesRepresentative(e2,
          Image(conj,Image(e1,x)))));
 end);
-

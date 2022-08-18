@@ -3,11 +3,34 @@ dnl Setup autoconf
 dnl
 AC_PREREQ([2.68])
 
-m4_define([gap_version], [4.11.1])
-m4_define([gap_releaseday], [2021-03-02])
-m4_define([gap_releaseyear], [2021])
+m4_define([gap_version], [4.12.0])
+m4_define([gap_releaseday], [2022-08-18])
+m4_define([gap_releaseyear], [2022])
 
 m4_define([gap_tarname], [gap-gap_version])
+
+dnl
+dnl libtool library version
+dnl
+dnl The version of the libgap shared library as well as the kernel
+dnl version are derived from libtool_current and libtool_age.
+dnl When making a new GAP release, these values need to be adjusted, based on
+dnl the following rules:
+dnl
+dnl 1. If any interfaces have been added, removed, or changed since the last
+dnl    update, increment current.
+dnl 2. If any interfaces have been added since the last public release, then
+dnl    increment age.
+dnl 3. If any interfaces have been removed or changed since the last public
+dnl    release, then set age to 0.
+dnl
+dnl For further details, refer to the Libtool manual chapter on "Library
+dnl interface versions", available at
+dnl <https://www.gnu.org/software/libtool/manual/html_node/Versioning.html>
+m4_define([libtool_current], [8])
+m4_define([libtool_age], [0])
+
+m4_define([GAP_DEFINE], [GAP_DEFINES="$GAP_DEFINES -D$1"])
 
 AC_INIT([GAP],
         gap_version,
@@ -18,11 +41,11 @@ AC_INIT([GAP],
 AC_CONFIG_SRCDIR([src/gap.c])
 AC_CONFIG_AUX_DIR([cnf])
 
-AC_CONFIG_HEADERS([gen/config.h:src/config.h.in])
-AC_CONFIG_COMMANDS([gen/stamp-h], [echo timestamp > gen/stamp-h])
+AC_CONFIG_HEADERS([build/config.h:src/config.h.in])
+AC_CONFIG_COMMANDS([build/stamp-h], [echo timestamp > build/stamp-h])
 
 dnl note that the final version used by the GAP kernel is GAP_BUILD_VERSION
-dnl and is computed by cnf/GAP-VERSION-GEN, which takes git commit hashes into
+dnl and is computed by cnf/gap-version-gen.sh, which takes git commit hashes into
 dnl account to produce a more fine-grained version string for GAP development
 dnl versions.
 AC_SUBST([GAP_VERSION], "gap_version")
@@ -36,10 +59,18 @@ AC_CANONICAL_HOST
 
 
 dnl
-dnl Check for working C and C++ compiler; insist on C99 support
+dnl Check for working C and C++ compiler; insist on C99 and C++11 support
 dnl
-AC_PROG_CC_C99
+dnl In autoconf <= 2.69, we use AC_PROG_CC_C99; in autoconf >= 2.70, this
+dnl is deprecated, and AC_PROG_CC subsumes it. We have to use some M4 code
+dnl to deal with this in way that retains support for autoconf 2.69 while
+dnl avoiding warnings in autoconf >= 2.70
+m4_if(m4_version_compare(m4_defn([AC_AUTOCONF_VERSION]), [2.70]), -1,
+    [AC_PROG_CC_C99],
+    [AC_PROG_CC])
 AC_PROG_CXX
+AX_CXX_COMPILE_STDCXX(11)
+
 AC_LANG([C])
 
 
@@ -127,11 +158,14 @@ dnl
 dnl endianess
 AC_C_BIGENDIAN
 
-dnl function attributes
+dnl C/C++ attributes with GNU syntax (i.e., `__attribute__(FOO)`)
 AX_GCC_FUNC_ATTRIBUTE([always_inline])
+AX_GCC_FUNC_ATTRIBUTE([constructor])
+AX_GCC_FUNC_ATTRIBUTE([fallthrough])
 AX_GCC_FUNC_ATTRIBUTE([format])
 AX_GCC_FUNC_ATTRIBUTE([noinline])
 AX_GCC_FUNC_ATTRIBUTE([noreturn])
+AX_GCC_FUNC_ATTRIBUTE([pure])
 
 dnl compiler builtins
 AC_DEFUN([CHECK_COMPILER_BUILTIN],
@@ -184,10 +218,10 @@ AC_MSG_RESULT([$enable_hpcgap])
 AC_SUBST([HPCGAP], [$enable_hpcgap])
 AS_IF([test "x$enable_hpcgap" = xyes],
     [
-    AC_DEFINE([HPCGAP], [1], [define if building HPC-GAP])
+    GAP_DEFINE([HPCGAP=1])
 
     # HACK, see https://github.com/fingolfin/gap/issues/9
-    AC_DEFINE([MAX_GC_THREADS], [4], [maximum number of GC threads])
+    GAP_DEFINE([MAX_GC_THREADS=4])
     ])
 
 dnl
@@ -198,40 +232,197 @@ AC_ARG_WITH([gc],
       [specify which garbage collector to use (default: gasman; for HPC-GAP: boehm)])],
     [],
     [with_gc=default])
+
+dnl
+dnl User setting: whether to link against Julia
+dnl
+dnl This comes here as it interacts with the garbage collector settings.
+dnl The actual handling of with_julia comes at a later point.
+dnl
+AC_ARG_WITH([julia],
+  [AS_HELP_STRING([--with-julia@<:@=PATH@:>@],
+    [specify a julia binary or a prefix for a julia binary])],
+  [],[
+    AS_IF([test "x$with_gc" = xjulia],
+    [
+      with_julia=yes
+    ],
+    [
+      with_julia=no
+    ])
+  ])
+
+
+dnl handle the garbage collector setting
 AC_MSG_CHECKING([which garbage collector to use])
 AS_IF([test "x$with_gc" = xyes], [with_gc=default])
 AS_IF([test "x$with_gc" = xdefault],
     [
-    AS_IF([test "x$enable_hpcgap" = xyes], [with_gc=boehm], [with_gc=gasman])
+    with_gc=gasman
+    AS_IF([test "x$enable_hpcgap" = xyes], [with_gc=boehm])
+    AS_IF([test "x$with_julia" != xno], [with_gc=julia])
     ])
 AS_CASE([$with_gc],
     [none|no],  [AC_MSG_ERROR([cannot run GAP without a garbage collector])],
     [boehm],    [AC_SUBST([GC_SOURCES], [src/boehm_gc.c])
-                 AC_DEFINE([USE_BOEHM_GC],  [1], [define as 1 if Boehm GC is used])
+                 GAP_DEFINE([USE_BOEHM_GC=1])
                 ],
     [gasman],   [AS_IF([test "x$enable_hpcgap" = xyes],
-                    [AC_MSG_ERROR([GASMAN can not be used with HPC-GAP])])
-                 AC_SUBST([GC_SOURCES], [src/gasman.c])
-                 AC_DEFINE([USE_GASMAN],    [1], [define as 1 if GASMAN is used])
+                    [AC_MSG_ERROR([GASMAN cannot be used with HPC-GAP])])
+                 AC_SUBST([GC_SOURCES], ["src/gasman.c src/sysmem.c"])
+                 GAP_DEFINE([USE_GASMAN=1])
                 ],
     [julia],    [AC_SUBST([GC_SOURCES], [src/julia_gc.c])
-                 AC_DEFINE([USE_JULIA_GC],  [1], [define as 1 if the Julia GC is used])
+                 GAP_DEFINE([USE_JULIA_GC=1])
                 ],
     [*],        [AC_MSG_ERROR([Invalid gc method '$with_gc', use default|none|gasman|boehm|julia])],
     )
 AC_MSG_RESULT([$with_gc])
 
 dnl
+dnl User setting: native thread-local storage (off by default)
+dnl See src/hpc/tls.h for more details on thread-local storage options.
+dnl
+
+AC_ARG_ENABLE([native-tls],
+    [AS_HELP_STRING([--enable-native-tls],
+        [use native thread-local storage implementation])],
+        [enable_native_tls=$enableval],
+        [enable_native_tls=no])
+AC_MSG_CHECKING([whether to use native tls])
+dnl
+dnl Distinguish between cases where we support __thread declarations
+dnl and situations where we use a pthread_getspecific() implementation.
+dnl Right now, we only do the latter for 64-bit macOS. See src/hpc/tls.h
+dnl for details.
+dnl
+enable_macos_tls_asm=default
+AS_IF([[test "x$enable_native_tls" == "xyes"]], [
+        case "$host" in
+            x86_64-apple-darwin*)
+                GAP_DEFINE([USE_PTHREAD_TLS=1])
+                dnl
+                dnl Test if we can optimize pthread_getspecific() calls via
+                dnl inline assembly on macOS.
+                dnl
+                AC_RUN_IFELSE(
+                    [AC_LANG_SOURCE([[
+// The following code also occurs in src/hpc/thread.c and both need to be
+// kept in sync.
+#include <pthread.h>
+#include <string.h>
+
+#define OFFS 0x100
+#define END (-1)
+
+int cmpOpCode(unsigned char *code, int *with) {
+    int result = 0;
+    while (*with >= 0) {
+        if (*with == OFFS) {
+            result = *code;
+        } else {
+            if (*code != *with)
+                return -1;
+        }
+        code++;
+        with++;
+    }
+    return result;
+}
+
+int main() {
+    // This is an idea borrowed from Mono. We test if the implementation
+    // of pthread_getspecific() uses the assembly code below. If that is
+    // true, we can replace calls to pthread_getspecific() with the
+    // matching inline assembly, allowing a significant performance boost.
+#if defined(__APPLE__) && defined(__x86_64__)
+    // There are two possible implementations.
+    static int asm_code[] = {
+        // movq %gs:[OFFS](,%rdi,8), %rax
+        // retq
+        0x65, 0x48, 0x8b, 0x04, 0xfd, OFFS, 0x00, 0x00, 0x00, 0xc3, END
+    };
+    static int asm_code2[] = {
+        // pushq  %rbp
+        // movq   %rsp, %rbp
+        // movq   %gs:[OFFS](,%rdi,8),%rax
+        // popq   %rbp
+        // retq
+        0x55, 0x48, 0x89, 0xe5, 0x65, 0x48, 0x8b, 0x04, 0xfd, OFFS,
+        0x00, 0x00, 0x00, 0x5d, 0xc3, END
+    };
+    if (cmpOpCode((unsigned char *)pthread_getspecific, asm_code) >= 0) {
+        return 0;
+    }
+    if (cmpOpCode((unsigned char *)pthread_getspecific, asm_code2) >= 0) {
+        return 0;
+    }
+    return 1;
+#else
+#error FAIL
+#endif
+}
+                    ]])],
+                    dnl => Test succeeded
+                    [GAP_DEFINE([USE_MACOS_PTHREAD_TLS_ASM=1])
+                    AC_MSG_RESULT([[yes (macOS assembly)]])
+                    enable_macos_tls_asm=yes
+                    ],
+                    dnl => Test failed
+                    [AC_MSG_RESULT([[yes (pthread-based)]])
+                    enable_macos_tls_asm=no
+                    ],
+                    dnl => Cross-compilation, test impossible
+                    [AC_MSG_RESULT([[yes (pthread-based)]])
+                    enable_macos_tls_asm=no
+                    ])
+            ;;
+            *)
+                dnl => Any other OS, --with-native-tls specified
+                GAP_DEFINE([USE_NATIVE_TLS=1])
+                AC_MSG_RESULT([yes])
+            ;;
+        esac
+    ],
+    [
+        dnl => --without-native-tls
+        AC_MSG_RESULT([no])
+    ]
+)
+dnl
+dnl Test if pthread_getspecific() can be overridden as
+dnl __attribute__((pure)).
+dnl
+AS_IF([test "x$enable_hpcgap" = xyes],[
+AC_MSG_CHECKING([[whether pthread_getspecific() can be made pure]])
+AC_COMPILE_IFELSE(
+    [AC_LANG_SOURCE([[
+#include <pthread.h>
+__attribute__((pure))
+void * pthread_getspecific(pthread_key_t key);
+]])], [
+    AC_MSG_RESULT(yes)
+    GAP_DEFINE([ALLOW_PURE_PTHREAD_GETSPECIFIC=1])
+], [
+    AC_MSG_RESULT(no)
+])
+])
+
+dnl
 dnl User setting: Debug mode (off by default)
 dnl
 AC_ARG_ENABLE([debug],
     [AS_HELP_STRING([--enable-debug], [enable debug mode])],
-    [AC_DEFINE([GAP_KERNEL_DEBUG], [1], [define if building in debug mode])
-     AC_DEFINE([GAP_PRINT_BACKTRACE], [1], [to enable backtraces upon crashes])],
+    [],
     [enable_debug=no]
     )
 AC_MSG_CHECKING([whether to enable debug mode])
 AC_MSG_RESULT([$enable_debug])
+
+AS_IF([test "x$enable_debug" != "xno"],
+    [GAP_DEFINE([GAP_KERNEL_DEBUG=1])
+     GAP_DEFINE([GAP_PRINT_BACKTRACE=1])],
+)
 
 dnl
 dnl Maintainer mode (on by default) controls whether our build system
@@ -256,20 +447,28 @@ AC_SUBST([MAINTAINER_MODE], [$enable_maintainer_mode])
 dnl
 AC_ARG_ENABLE([memory-checking],
     [AS_HELP_STRING([--enable-memory-checking], [enable memory checking])],
-    [AC_DEFINE([GAP_MEM_CHECK], [1], [define if building with memory checking])],
+    [],
     [enable_memory_checking=no]
     )
 AC_MSG_CHECKING([whether to enable memory checking])
 AC_MSG_RESULT([$enable_memory_checking])
 
+AS_IF([test "x$enable_memory_checking" != "xno"],
+  [GAP_DEFINE([GAP_MEM_CHECK=1])]
+)
+
 dnl
 AC_ARG_ENABLE([valgrind],
     [AS_HELP_STRING([--enable-valgrind], [enable valgrind extensions to GASMAN])],
-    [AC_DEFINE([GAP_MEMORY_CANARY], [1], [define if building with valgrind extensions])],
+    [],
     [enable_valgrind=no]
     )
 AC_MSG_CHECKING([whether to enable valgrind extensions to GASMAN])
 AC_MSG_RESULT([$enable_valgrind])
+
+AS_IF([test "x$enable_valgrind" != "xno"],
+  [GAP_DEFINE([GAP_MEMORY_CANARY=1])]
+)
 
 if test "x$enable_valgrind" != "xno" -a "x$enable_memory_checking" != "xno"; then
     AC_MSG_ERROR([--enable-valgrind and --enable-memory-checking cannot be used at the same time])
@@ -375,11 +574,6 @@ AC_SUBST([BUILD_GMP])
 AC_SUBST([GMP_CPPFLAGS])
 AC_SUBST([GMP_LDFLAGS])
 AC_SUBST([GMP_LIBS])
-
-dnl Some packages check the USE_GMP flag; retain it for now to
-dnl allow these packages to work correctly for now. We should
-dnl remove this eventually.
-AC_DEFINE([USE_GMP], [1], [for backwards compatibility])
 
 
 dnl Find zlib
@@ -505,19 +699,6 @@ AC_SUBST([READLINE_LIBS])
 
 
 dnl Find julia
-AC_ARG_WITH([julia],
-  [AS_HELP_STRING([--with-julia@<:@=PATH@:>@],
-    [specify a julia binary or a prefix for a julia binary])],
-  [],[
-    AS_IF([test "x$with_gc" = xjulia],
-    [
-      with_julia=yes
-    ],
-    [
-      with_julia=no
-    ])
-  ])
-
 AS_IF([test "x$with_julia" != xno ],[
   AS_IF([test -x "$with_julia" && test ! -d "$with_julia" ],
   [
@@ -537,20 +718,19 @@ AS_IF([test "x$with_julia" != xno ],[
   ])
   AS_IF([test "x$JULIA" = x],[ AC_MSG_ERROR([no julia executable found]) ])
 
+  AC_MSG_CHECKING([for Julia version])
+  JULIA_VERSION=$(${JULIA} --startup-file=no -e 'print("$(VERSION.major).$(VERSION.minor)")')
+  AS_IF([ test $? != 0 ], [AC_MSG_ERROR([failed to obtain Julia version])])
+  AC_MSG_RESULT([${JULIA_VERSION}])
+
   JL_SHARE=$($JULIA --startup-file=no -e 'print(joinpath(Sys.BINDIR, Base.DATAROOTDIR, "julia"))')
   AS_IF([test -f "${JL_SHARE}/julia-config.jl"], [], [AC_MSG_ERROR([no julia-config.jl found])])
 
-  AC_MSG_CHECKING([for JULIA_CPPFLAGS])
-  JULIA_CPPFLAGS=$(${JULIA} --startup-file=no ${JL_SHARE}/julia-config.jl --cflags 2>/dev/null)
-  AS_IF([ test $? != 0 ], [AC_MSG_ERROR([failed to obtain JULIA_CPPFLAGS from julia-config.jl])])
-  JULIA_CPPFLAGS=${JULIA_CPPFLAGS/-std=gnu99/}  # need to remove -std=gnu99 for our C++ code
-  # remove apostrophes, they mess up quoting when used in shell code(although
-  # they are fine inside of Makefiles); this could cause problems if any
-  # paths involve spaces, but then we likely will haves problem in other
-  # places; in any case, if anybody ever cares about this, we can work on
-  # finding a better solution.
-  JULIA_CPPFLAGS=${JULIA_CPPFLAGS//\'/}
-  AC_MSG_RESULT([${JULIA_CPPFLAGS}])
+  AC_MSG_CHECKING([for JULIA_CFLAGS])
+  JULIA_CFLAGS=$(${JULIA} --startup-file=no ${JL_SHARE}/julia-config.jl --cflags 2>/dev/null)
+  JULIA_CFLAGS=${JULIA_CFLAGS/-std=gnu99/}  # need to remove -std=gnu99 for our C11 and C++ code
+  AS_IF([ test $? != 0 ], [AC_MSG_ERROR([failed to obtain JULIA_CFLAGS from julia-config.jl])])
+  AC_MSG_RESULT([${JULIA_CFLAGS}])
 
   AC_MSG_CHECKING([for JULIA_LDFLAGS])
   JULIA_LDFLAGS=$(${JULIA} --startup-file=no ${JL_SHARE}/julia-config.jl --ldflags)
@@ -561,6 +741,7 @@ AS_IF([test "x$with_julia" != xno ],[
   AC_MSG_CHECKING([for JULIA_LIBS])
   JULIA_LIBS=$(${JULIA} --startup-file=no ${JL_SHARE}/julia-config.jl --ldlibs)
   AS_IF([ test $? != 0 ], [AC_MSG_ERROR([failed to obtain JULIA_LIBS from julia-config.jl])])
+  # remove apostrophes, they confuse libtool in some cases.
   JULIA_LIBS=${JULIA_LIBS//\'/}
   AC_MSG_RESULT([${JULIA_LIBS}])
 ],
@@ -571,7 +752,8 @@ AS_IF([test "x$with_julia" != xno ],[
   ])
 ])
 AC_SUBST([JULIA])
-AC_SUBST([JULIA_CPPFLAGS])
+AC_SUBST([JULIA_VERSION])
+AC_SUBST([JULIA_CFLAGS])
 AC_SUBST([JULIA_LDFLAGS])
 AC_SUBST([JULIA_LIBS])
 
@@ -615,36 +797,67 @@ AS_IF([test "x$with_gc" = xboehm],
 )
 
 dnl
-dnl Define kernel version
+dnl Export library and kernel version
 dnl
+AC_SUBST([GAP_LIBTOOL_CURRENT], "libtool_current")
+AC_SUBST([GAP_LIBTOOL_AGE], "libtool_age")
 
+dnl kernel version is derived from the libtool library version
+gap_kernel_major_version=$(( libtool_current - libtool_age ))
+gap_kernel_minor_version=libtool_age
 
-gap_kernel_major_version=7
-gap_kernel_minor_version=0
 AC_SUBST([gap_kernel_major_version])
 AC_SUBST([gap_kernel_minor_version])
 
-AC_DEFINE_UNQUOTED([GAP_KERNEL_MAJOR_VERSION], $gap_kernel_major_version, [The major version of the kernel ABI])
-AC_DEFINE_UNQUOTED([GAP_KERNEL_MINOR_VERSION], $gap_kernel_minor_version, [The minor version of the kernel ABI])
+dnl
+dnl Determine the GAPARCH string, used by package build systems and more
+dnl
+
+AC_MSG_CHECKING([the GAPARCH])
+
+dnl The "host" identifier is the start
+case "$host_os" in
+  *darwin*)
+    # On macOS / Darwin, override the config.guess result, which includes
+    # the minor versions of macOS, which has no benefit but is painful as
+    # every patch update of the OS may result in all packages having to be
+    # recompiled. So instead of e.g. `darwin21.2.0` (for macOS 12.2.0) and
+    # `darwin21.4.0` (for macOS 12.3.1), use just `darwin21`, and so on.
+    GAPARCH="$host_cpu-$host_vendor-${host_os%%.*.*}"
+    ;;
+  *)
+    GAPARCH="$host"
+    ;;
+esac
+
+dnl Append primary build variant
+AS_IF(
+  [test "x$enable_hpcgap" = xyes],
+     [GAPARCH="$GAPARCH-hpcgap"],
+  [test "x$with_julia" != xno],
+     [GAPARCH="$GAPARCH-julia${JULIA_VERSION}-"],
+  # else
+     [GAPARCH="$GAPARCH-default"])
+
+dnl Append ABI (for historical reasons, we don't insert a dash before it)
+GAPARCH="${GAPARCH}${ABI}"
+
+dnl Append kernel version
+GAPARCH="${GAPARCH}-kv${gap_kernel_major_version}"
+
+dnl Allow user to extend the GAPARCH with some extra key
+AS_IF([test "x$ARCHEXT" != "x"], [GAPARCH="$GAPARCH-$ARCHEXT"])
+
+dnl Allow user to completely override the GAPARCH (should be used sparingly!)
+AS_IF([test "x$ARCH" != "x"], [GAPARCH="$ARCH"])
+
+AC_MSG_RESULT([${GAPARCH}])
+AC_DEFINE_UNQUOTED([GAPARCH], ["$GAPARCH"], [the GAP architecture, for kernel extensions])
+AC_SUBST([GAPARCH])
 
 dnl
 dnl User setting: Compatibility mode (on by default)
 dnl
-AS_IF(
-  [test "x$enable_hpcgap" = xyes],
-     [GAPARCH="$host-hpcgap${ABI}-kv${gap_kernel_major_version}"],
-  [test "x$with_julia" != xno],
-     [GAPARCH="$host-julia${ABI}-kv${gap_kernel_major_version}"],
-  # else
-     [GAPARCH="$host-default${ABI}-kv${gap_kernel_major_version}"])
-AS_IF([test "x$ARCHEXT" != "x"],
-  [GAPARCH="$GAPARCH-$ARCHEXT"])
-AS_IF([test "x$ARCH" != "x"],
-  [GAPARCH="$ARCH"])
-
-AC_DEFINE_UNQUOTED([GAPARCH], ["$GAPARCH"], [for backwards compatibility])
-AC_SUBST([GAPARCH])
-
 AC_ARG_ENABLE([compat-mode],
     [AS_HELP_STRING([--disable-compat-mode], [enable compatibility mode])],
     [],
@@ -693,7 +906,6 @@ esac
 
 case "$host_os" in
   *cygwin*)
-    AC_DEFINE([SYS_IS_CYGWIN32], [1], [define if this is the Cygwin32 port])
     CYGWIN=yes
 
     AS_IF([test "x$enable_compat_mode" = xyes],[
@@ -708,15 +920,9 @@ case "$host_os" in
         AC_CONFIG_FILES([bin/gapcmd.bat:cnf/cygwin/gapcmd.bat.in], [chmod +x bin/gapcmd.bat])
     ])
     ;;
-  *darwin*)
-    AC_DEFINE([SYS_IS_DARWIN], [1], [define if this is the Darwin port])
-    DARWIN=yes
-    ;;
 esac
 
 AC_SUBST([SYS_IS_CYGWIN32], [$CYGWIN])
-SYS_IS_DARWIN=$DARWIN
-AC_SUBST([SYS_IS_DARWIN])
 
 
 dnl
@@ -752,6 +958,8 @@ AC_CHECK_HEADERS([spawn.h])
 AC_HEADER_SYS_WAIT
 AC_FUNC_FORK
 AC_CHECK_FUNCS([popen posix_spawn])
+AC_CHECK_FUNCS([posix_spawn_file_actions_addchdir])
+AC_CHECK_FUNCS([posix_spawn_file_actions_addchdir_np])
 
 dnl signal handling
 AC_CHECK_TYPE([sig_atomic_t], [],
@@ -779,9 +987,6 @@ AC_CHECK_FUNCS([setitimer])
 dnl check for functions dealing with virtual memory
 AC_CHECK_FUNCS([vm_allocate sbrk madvise sysconf])
 
-dnl check for functions dealing with strings and integers
-AC_CHECK_FUNCS([strlcpy strlcmp strlcat])
-
 dnl check for large-file support (for accessing files whose sizes or inodes require 64bits)
 AC_SYS_LARGEFILE
 
@@ -790,29 +995,11 @@ AC_SEARCH_LIBS([cos], [m], [], [
   AC_MSG_ERROR([unable to find the cos() function])
 ])
 
-dnl check for math functions
-AC_CHECK_FUNCS([log2 log10 log1p exp2 expm1 exp10 trunc])
-
-dnl sigsetjmp is a macro on some platforms, cannot use AC_CHECK_FUNCS
-AC_MSG_CHECKING([for sigsetjmp])
-AC_LINK_IFELSE(
-  [AC_LANG_PROGRAM([[#include <setjmp.h>]],
-      [[sigjmp_buf t; sigsetjmp(t, 0)]])],
-  [AC_MSG_RESULT([yes])
-   AC_DEFINE([HAVE_SIGSETJMP], [1], [Define to 1 if you have the `sigsetjmp' function.])],
-  [AC_MSG_RESULT([no])])
-
-dnl _setjmp is a macro on some platforms, cannot use AC_CHECK_FUNCS
-AC_MSG_CHECKING([for _setjmp])
-AC_LINK_IFELSE(
-  [AC_LANG_PROGRAM([[#include <setjmp.h>]],
-      [[sigjmp_buf t; _setjmp(t, 0)]])],
-  [AC_MSG_RESULT([yes])
-   AC_DEFINE([HAVE__SETJMP], [1], [Define to 1 if you have the `_setjmp' function.])],
-  [AC_MSG_RESULT([no])])
+dnl check for non-standard math functions
+AC_CHECK_FUNCS([exp10])
 
 dnl pthreads
-AS_IF([test "x$enable_hpcgap" = xyes],[
+AS_IF([test "x$enable_hpcgap" = xyes -o "x$with_julia" != xno ],[
   AX_PTHREAD
   ])
 
@@ -825,12 +1012,17 @@ AS_IF([test "x$enable_hpcgap" = xyes],[
   AC_DEFINE([GAP_PRINT_BACKTRACE], [1], [to enable backtraces upon crashes])
   ])
 
+AS_IF([test "x$enable_macos_tls_asm" = xno],[
+  AS_BOX([WARNING: macOS fast thread-local storage not available])
+])
+
 dnl
 dnl Output everything
 dnl
+AC_SUBST([GAP_DEFINES], [$GAP_DEFINES])
+
 AC_CONFIG_FILES([GNUmakefile])
 AC_CONFIG_FILES([CITATION])
 AC_CONFIG_FILES([doc/make_doc], [chmod +x doc/make_doc])
 AC_CONFIG_FILES([doc/versiondata])
-AC_CONFIG_FILES([gac:cnf/gac.in], [chmod +x gac])
 AC_OUTPUT

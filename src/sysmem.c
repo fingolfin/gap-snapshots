@@ -14,14 +14,20 @@
 
 #include "sysmem.h"
 
+#include "gaptime.h"
 #include "stats.h"
 #include "sysfiles.h"
 #include "sysopt.h"
+
+#include "config.h"
 
 #ifdef GAP_MEM_CHECK
 #include <fcntl.h>
 #endif
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
 #ifdef HAVE_MADVISE
@@ -34,13 +40,13 @@
 
 
 Int SyStorMax;
-Int SyStorOverrun;
+SyStorEnum SyStorOverrun;
 Int SyStorKill;
 Int SyStorMin;
 
-#if defined(USE_GASMAN)
 UInt SyAllocPool;
-#endif
+
+UInt SyMsgsFlagBags;
 
 
 /****************************************************************************
@@ -160,8 +166,6 @@ void SyMsgsBags (
 }
 
 
-#if defined(USE_GASMAN)
-
 /****************************************************************************
 **
 *f  SyAllocBags( <size>, <need> )
@@ -251,8 +255,11 @@ static void * SyAnonMMap(size_t size)
     size = SyRoundUpToPagesize(size);
     membufSize = size;
 
-    unlink("/dev/shm/gapmem");
-    int fd = open("/dev/shm/gapmem", O_RDWR | O_CREAT | O_EXCL, 0600);
+    char filename[100] = {0};
+    snprintf(filename, sizeof(filename), "/dev/shm/gapmem.%d", getpid());
+    int fd = open(filename, O_RDWR | O_CREAT | O_EXCL, 0600);
+    unlink(filename);
+
     if (fd < 0) {
         Panic("Fatal error setting up multiheap");
     }
@@ -298,7 +305,8 @@ static void *SyMMapEnd;            /* End of mmap'ed region for POOL */
 static void *SyMMapAdvised;        /* We have already advised about non-usage
                                       up to here. */
 
-void SyMAdviseFree(void) {
+void SyMAdviseFree(void)
+{
     size_t size;
     void *from;
     if (!SyMMapStart) 
@@ -334,7 +342,7 @@ void SyMAdviseFree(void) {
      * Maybe we do want to do this until it breaks to avoid questions
      * by users...
      */
-#if !defined(NO_DIRTY_OSX_MMAP_TRICK) && defined(SYS_IS_DARWIN)
+#if !defined(NO_DIRTY_OSX_MMAP_TRICK) && defined(__APPLE__)
     if (mmap(from, size, PROT_NONE,
             MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED, -1, 0) != from) {
         Panic("OS X trick to free pages did not work!");
@@ -395,7 +403,7 @@ static int SyTryToIncreasePool(void)
 
 #else
 
-static void SyMAdviseFree(void)
+void SyMAdviseFree(void)
 {
     /* do nothing */
 }
@@ -407,8 +415,6 @@ static int SyTryToIncreasePool(void)
 
 #endif // defined(GAP_MEM_CHECK)
 
-
-static int halvingsdone = 0;
 
 static void SyInitialAllocPool(void)
 {
@@ -432,7 +438,6 @@ static void SyInitialAllocPool(void)
            break;
        }
        SyAllocPool = SyAllocPool / 2;
-       halvingsdone++;
        if (SyDebugLoading) fputs("gap: halving pool size.\n", stderr);
        if (SyAllocPool < 16*1024*1024) {
            Panic("cannot allocate initial memory");
@@ -444,139 +449,131 @@ static void SyInitialAllocPool(void)
    /* Now both syWorkspace and SyAllocPool are aligned to pagesize */
 }
 
-static UInt *** SyAllocBagsFromPool(Int size, UInt need)
+#define INVALID_PTR ((UInt***)-1)
+
+static UInt *** SyAllocBagsFromPool(Int size)
 {
-  /* get the storage, but only if we stay within the bounds              */
-  /* if ( (0 < size && syWorksize + size <= SyStorMax) */
-  /* first check if we would get above SyStorKill, if yes exit! */
-  if ( need < 2 && SyStorKill != 0 && 0 < size 
-                && SyStorKill < syWorksize + size ) {
-      Panic("will not extend workspace above -K limit!");
-  }
-  if (size > 0) {
-    while ((syWorksize+size)*1024 > SyAllocPool) {
-        if (SyTryToIncreasePool()) return (UInt***)-1;
+    GAP_ASSERT(size > 0);
+
+    // get the storage, but only if we stay within the bounds
+    while ((syWorksize + size) * 1024 > SyAllocPool) {
+        if (SyTryToIncreasePool())
+            return INVALID_PTR;
     }
-    return EndOfWorkspace();
-  }
-  else if  (size < 0 && (need >= 2 || SyStorMin <= syWorksize + size))
-    return EndOfWorkspace();
-  else
-    return (UInt***)-1;
+    UInt *** ret = EndOfWorkspace();
+    syWorksize += size;
+    return ret;
 }
+
+static Int SyFreeBagsFromPool(Int size)
+{
+    GAP_ASSERT(size > 0);
+
+    if (POOL == NULL)
+        return 0; // nothing to deallocate -> signal failure
+
+    if (SyStorMin <= syWorksize - size) {
+        syWorksize -= size;
+        return 1;
+    }
+    return 0;
+}
+
 
 #if defined(HAVE_SBRK) && !defined(HAVE_VM_ALLOCATE) /* prefer `vm_allocate' over `sbrk' */
 
-UInt *** SyAllocBags(Int size, UInt need)
+static UInt *** SyAllocBagHelper(Int size)
 {
-    UInt * * *          ret;
+    UInt *** ret = (UInt ***)sbrk(size*1024);
+    if (ret == INVALID_PTR)
+        return INVALID_PTR;
+    if (ret != EndOfWorkspace()) {
+        sbrk(-size*1024);
+        return INVALID_PTR;
+    }
+    memset(ret, 0, 1024*size);
+    return ret;
+}
+
+static UInt *** SyAllocBags_(UInt size)
+{
+    GAP_ASSERT(SyAllocPool == 0);
+    UInt *** ret = INVALID_PTR;
+
+    /* force alignment on first call                                       */
+    if (syWorkspace == 0) {
+        UInt align = (UInt)sbrk(0) % sizeof(UInt);
+        if (align != 0)
+            syWorkspace = (UInt***)sbrk(sizeof(UInt) - align);
+        syWorkspace = (UInt***)sbrk( 0 );
+    }
+
+    // get the storage
+#ifndef SYS_IS_64_BIT
     UInt adjust = 0;
-
-    if (SyAllocPool > 0) {
-      if (POOL == NULL) SyInitialAllocPool();
-      /* Note that this does abort GAP if it does not succeed! */
-      
-      ret = SyAllocBagsFromPool(size,need);
+    // on 32bit systems, call sbrk with at most 1 GB at a time,
+    // to avoid integer overflow
+    while (size >= 1024*1024) {
+        ret = SyAllocBagHelper(1024);
+        if (ret == INVALID_PTR)
+            break;
+        size -= 1024*1024;
+        syWorksize += 1024*1024;
+        adjust++;
     }
-    else {
-
-
-
-        /* force alignment on first call                                       */
-        if ( syWorkspace == (UInt***)0 ) {
-#ifdef SYS_IS_64_BIT
-            syWorkspace = (UInt***)sbrk( 8 - (UInt)sbrk(0) % 8 );
+    // try to allocate the rest, if any
+    if (size < 1024*1024)
+        ret = SyAllocBagHelper(size);
+    if (ret != INVALID_PTR) {
+        while (adjust--)
+            ret = (UInt ***)(((Char *)ret) - 1024 * 1024 * 1024);
+    }
 #else
-            syWorkspace = (UInt***)sbrk( 4 - (UInt)sbrk(0) % 4 );
+    // allocate all at once
+    ret = SyAllocBagHelper(size);
 #endif
-            syWorkspace = (UInt***)sbrk( 0 );
-        }
 
-        /* get the storage, but only if we stay within the bounds              */
-        /* if ( (0 < size && syWorksize + size <= SyStorMax) */
-        /* first check if we would get above SyStorKill, if yes exit! */
-        if ( need < 2 && SyStorKill != 0 && 0 < size && 
-             SyStorKill < syWorksize + size ) {
-            Panic("will not extend workspace above -K limit!");
-        }
-        if (0 < size )
-          {
-#ifndef SYS_IS_64_BIT
-            while (size > 1024*1024)
-              {
-                ret = (UInt ***)sbrk(1024*1024*1024);
-                if (ret != (UInt ***)-1  && 
-                    ret != EndOfWorkspace())
-                  {
-                    sbrk(-1024*1024*1024);
-                    ret = (UInt ***)-1;
-                  }
-                if (ret == (UInt ***)-1)
-                  break;
-                memset(EndOfWorkspace(), 0, 1024*1024*1024);
-                size -= 1024*1024;
-                syWorksize += 1024*1024;
-                adjust++;
-              }
-#endif
-            ret = (UInt ***)sbrk(size*1024);
-            if (ret != (UInt ***)-1  && 
-                ret != EndOfWorkspace())
-              {
-                sbrk(-size*1024);
-                ret = (UInt ***)-1;
-              }
-            if (ret != (UInt ***)-1)
-              memset(EndOfWorkspace(), 0, 
-                     1024*size);
-            
-          }
-        else if  (size < 0 && (need >= 2 || SyStorMin <= syWorksize + size))  {
-#ifndef SYS_IS_64_BIT
-          while (size < -1024*1024)
-            {
-              ret = (UInt ***)sbrk(-1024*1024*1024);
-              if (ret == (UInt ***)-1)
-                break;
-              size += 1024*1024;
-              syWorksize -= 1024*1024;
-            }
-#endif
-            ret = (UInt ***)sbrk(size*1024);
-        }
-        else {
-          ret = (UInt***)-1;
-        }
-    }
-
-
-    /* update the size info                                                */
-    if ( ret != (UInt***)-1 ) {
+    if (ret != INVALID_PTR) {
+        // update the size info
         syWorksize += size;
-        /* set the overrun flag if we became larger than SyStorMax */
-        if ( SyStorMax != 0 && syWorksize  > SyStorMax)  {
-          SyStorOverrun = -1;
-          SyStorMax=syWorksize*2; /* new maximum */
-          InterruptExecStat(); /* interrupt at the next possible point */
+    }
+
+    return ret;
+}
+
+static UInt *** SyFreeBags_(UInt size)
+{
+    GAP_ASSERT(SyAllocPool == 0);
+    UInt *** ret = INVALID_PTR;
+
+    /* force alignment on first call                                       */
+    if (syWorkspace == 0) {
+        UInt align = (UInt)sbrk(0) % sizeof(UInt);
+        if (align != 0)
+            syWorkspace = (UInt***)sbrk(sizeof(UInt) - align);
+        syWorkspace = (UInt***)sbrk( 0 );
+    }
+
+    if (syWorksize >= size && syWorksize - size >= SyStorMin) {
+#ifndef SYS_IS_64_BIT
+        while (size >= 1024*1024) {
+            ret = (UInt ***)sbrk(-1024*1024*1024);
+            if (ret == INVALID_PTR)
+                break;
+            size -= 1024*1024;
+            syWorksize -= 1024*1024;
+        }
+#endif
+        ret = (UInt ***)sbrk(-size*1024);
+        if (ret != INVALID_PTR) {
+            syWorksize -= size;
+            if (syWorksize == 0) {
+                syWorkspace = (UInt ***)0;
+            }
         }
     }
 
-    /* test if the allocation failed                                       */
-    if ( ret == (UInt***)-1 && need ) {
-        Panic("cannot extend the workspace any more!");
-    }
-    /* if we de-allocated the whole workspace then remember this */
-    if (syWorksize == 0)
-      syWorkspace = (UInt ***)0;
-
-    /* otherwise return the result (which could be 0 to indicate failure)  */
-    if ( ret == (UInt***)-1 )
-        return 0;
-    else
-      {
-        return (UInt***)(((Char *)ret) - 1024*1024*1024*adjust);
-      }
-
+    return ret;
 }
 
 #endif
@@ -590,94 +587,142 @@ UInt *** SyAllocBags(Int size, UInt need)
 */
 #ifdef HAVE_VM_ALLOCATE
 
-#if (defined(SYS_IS_DARWIN) && SYS_IS_DARWIN) || defined(__gnu_hurd__)
-#define task_self mach_task_self
-#endif
-
 static vm_address_t syBase;
- 
-UInt * * * SyAllocBags (
-    Int                 size,
-    UInt                need )
+
+static UInt *** SyAllocBags_(UInt size)
 {
-    UInt * * *          ret = (UInt***)-1;
-    vm_address_t        adr;    
+    GAP_ASSERT(SyAllocPool == 0);
+    UInt *** ret = INVALID_PTR;
 
-    if (SyAllocPool > 0) {
-      if (POOL == NULL) SyInitialAllocPool();
-      /* Note that this does abort GAP if it does not succeed! */
- 
-      ret = SyAllocBagsFromPool(size,need);
-      if (ret != (UInt ***)-1)
-          syWorksize += size;
-
+    /* check that <size> is divisible by <vm_page_size>                    */
+    if ( size*1024 % vm_page_size != 0 ) {
+        Panic("memory block size is not a multiple of vm_page_size");
     }
-    else {
-        if ( SyStorKill != 0 && 0 < size && SyStorKill < 1024*(syWorksize + size) ) {
-            if (need) {
-                Panic("will not extend workspace above -K limit!");
-            }  
-        }
-        /* check that <size> is divisible by <vm_page_size>                    */
-        else if ( size*1024 % vm_page_size != 0 ) {
-            Panic("memory block size is not a multiple of vm_page_size");
-        }
 
-        /* check that we don't try to shrink uninitialized memory                */
-        else if ( size <= 0 && syBase == 0 ) {
-            Panic("trying to shrink uninitialized vm memory");
-        }
-
-        /* allocate memory anywhere on first call                              */
-        else if ( 0 < size && syBase == 0 ) {
-            if ( vm_allocate(task_self(),&syBase,size*1024,TRUE) == KERN_SUCCESS ) {
-                syWorksize = size;
-                ret = (UInt***) syBase;
-            }
-        }
-
-        /* don't shrink memory but mark it as deactivated                      */
-        else if ( size < 0 && syWorksize + size > SyStorMin) {
-            adr = (vm_address_t)( (char*) syBase + (syWorksize+size)*1024 );
-            if ( vm_deallocate(task_self(),adr,-size*1024) == KERN_SUCCESS ) {
-                ret = (UInt***)( (char*) syBase + syWorksize*1024 );
-                syWorksize += size;
-            }
-        }
-
-        /* get more memory from system                                         */
-        else {
-            adr = (vm_address_t)( (char*) syBase + syWorksize*1024 );
-            if ( vm_allocate(task_self(),&adr,size*1024,FALSE) == KERN_SUCCESS ) {
-                ret = (UInt***) ( (char*) syBase + syWorksize*1024 );
-                syWorksize += size;
-            }
-        }
-
-        /* test if the allocation failed                                       */
-        if ( ret == (UInt***)-1 && need ) {
-            Panic("cannot extend the workspace any more!!");
+    /* allocate memory anywhere on first call                              */
+    else if ( 0 < size && syBase == 0 ) {
+        GAP_ASSERT(syWorksize == 0);
+        if ( vm_allocate(mach_task_self(),&syBase,size*1024,TRUE) == KERN_SUCCESS ) {
+            ret = (UInt***) syBase;
         }
     }
 
-    /* otherwise return the result (which could be 0 to indicate failure)  */
-    if ( ret == (UInt***)-1 ){
-        if (need) {
-            Panic("cannot extend the workspace any more!!!");
-        }
-        return (UInt***) 0;
-    } 
+    /* get more memory from system                                         */
     else {
-        if (syWorksize  > SyStorMax)  {
-            SyStorOverrun = -1;
-            SyStorMax=syWorksize*2; /* new maximum */
-            InterruptExecStat(); /* interrupt at the next possible point */
-       }
-     }
+        vm_address_t adr;
+        adr = (vm_address_t)( (char*) syBase + syWorksize*1024 );
+        if ( vm_allocate(mach_task_self(),&adr,size*1024,FALSE) == KERN_SUCCESS ) {
+            ret = (UInt***) ( (char*) syBase + syWorksize*1024 );
+        }
+    }
+
+    if (ret != INVALID_PTR) {
+        // update the size info
+        syWorksize += size;
+    }
+
+    return ret;
+}
+
+static UInt *** SyFreeBags_(UInt size)
+{
+    GAP_ASSERT(SyAllocPool == 0);
+    UInt *** ret = INVALID_PTR;
+
+    /* check that <size> is divisible by <vm_page_size>                    */
+    if ( size*1024 % vm_page_size != 0 ) {
+        Panic("memory block size is not a multiple of vm_page_size");
+    }
+
+    /* check that we don't try to shrink uninitialized memory                */
+    else if ( syBase == 0 ) {
+        Panic("trying to shrink uninitialized vm memory");
+    }
+
+    /* don't shrink memory but mark it as deactivated                      */
+    else if (syWorksize >= size && syWorksize - size >= SyStorMin) {
+        vm_address_t adr;
+        adr = (vm_address_t)( (char*) syBase + (syWorksize-size)*1024 );
+        if ( vm_deallocate(mach_task_self(),adr,size*1024) == KERN_SUCCESS ) {
+            ret = (UInt***)( (char*) syBase + syWorksize*1024 );
+
+            syWorksize -= size;
+            if (syWorksize == 0) {
+                syWorkspace = (UInt ***)0;
+            }
+        }
+    }
+
     return ret;
 }
 
 #endif
 
 
-#endif // defined(USE_GASMAN)
+void * SyAllocBags(Int size, UInt need)
+{
+    GAP_ASSERT(size > 0);
+
+    void * ret = INVALID_PTR;
+
+    /* first check if we would get above SyStorKill, if yes exit! */
+    if (SyStorKill != 0 && SyStorKill < syWorksize + size) {
+        if (need) {
+            Panic("will not extend workspace above -K limit!");
+        }
+        return 0;
+    }
+    else if (SyAllocPool > 0) {
+        // initialize allocation pool if necessary; this aborts if it fails
+        if (POOL == NULL)
+            SyInitialAllocPool();
+        ret = SyAllocBagsFromPool(size);
+    }
+    else {
+#if defined(HAVE_SBRK) || defined(HAVE_VM_ALLOCATE)
+        ret = SyAllocBags_(size);
+#else
+        Panic("running without allocation pool not supported on this architecture");
+#endif
+    }
+
+    // handle allocation failures
+    if (ret == INVALID_PTR) {
+        if (need) {
+            Panic("cannot extend the workspace any more!");
+        }
+        return 0;
+    }
+
+    // set the overrun flag if we became larger than SyStorMax
+    if (SyStorMax != 0 && syWorksize > SyStorMax) {
+        SyStorOverrun = SY_STOR_OVERRUN_TO_REPORT;
+        SyStorMax = syWorksize * 2; // new maximum
+        InterruptExecStat();        // interrupt at the next possible point
+    }
+
+    return ret;
+}
+
+
+Int SyFreeBags(Int size)
+{
+    GAP_ASSERT(size > 0);
+
+    if (SyAllocPool > 0) {
+        return SyFreeBagsFromPool(size);
+    }
+    else {
+#if defined(HAVE_SBRK) || defined(HAVE_VM_ALLOCATE)
+        return SyFreeBags_(size) != INVALID_PTR;
+#else
+        Panic("running without allocation pool not supported on this architecture");
+#endif
+    }
+}
+
+
+void SyFreeAllBags(void)
+{
+    // for now, do nothing
+}

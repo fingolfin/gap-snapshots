@@ -22,6 +22,9 @@ gap> g:=SymmetricGroup(13);;s:=SylowSubgroup(g,13);;
 gap> ac:=AscendingChain(g,s);;
 gap> Maximum(List([2..Length(ac)],x->Index(ac[x],ac[x-1])))<600000;
 true
+gap> g:=SymmetricGroup(5);;p:=SylowSubgroup(g,5);;
+gap> Length(IntermediateSubgroups(g,p).subgroups);
+3
 gap> g:=SL(6,2);;
 gap> p:=Image(IsomorphismPermGroup(g));;
 gap> s:=SylowSubgroup(p,7);;
@@ -120,6 +123,18 @@ gap> l:=[];;for i in it do Add(l,i);od;Length(l);
 56
 gap> it:=DescSubgroupIterator(g:skip:=20);;
 gap> l:=[];;for i in it do Add(l,i);od;
+
+# conjugator
+gap> w:=WreathProduct(SymmetricGroup(6),Group((1,2)));;
+gap> d:=DerivedSubgroup(w);;
+gap> d:=DerivedSubgroup(d);;
+gap> a:=Image(Embedding(w,3),(1,2));;
+gap> hom:=ConjugatorAutomorphism(w,a);;
+gap> hom:=AsGroupGeneralMappingByImages(hom);;
+gap> HasIsConjugatorAutomorphism(hom);
+false
+gap> IsConjugatorAutomorphism(hom);
+true
 
 #
 gap> STOP_TEST( "permgrp.tst", 1);

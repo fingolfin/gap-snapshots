@@ -22,7 +22,6 @@ ReadLib( "type1.g"     );
 ReadLib( "methsel.g"   );
 ReadLib( "methsel2.g"  );
 
-ReadLib( "random.g"    );
 ReadLib( "function.g"  );
 
 ReadLib( "cache.gd"    );
@@ -48,7 +47,6 @@ ReadLib( "record.gd"   );
 ReadLib( "random.gd"   );
 
 ReadLib( "cache.gi"    );
-ReadLib( "assert.gd"   );
 ReadLib( "coll.gi"     );
 
 ReadLib( "flag.g"      );
@@ -81,7 +79,6 @@ ReadLib( "mat8bit.gd"   );
 ReadLib( "global.gd"   );
 
 ReadLib( "info.gi"     );
-ReadLib( "assert.gi"   );
 ReadLib( "global.gi"   );
 
 ReadLib( "options.gd"  );

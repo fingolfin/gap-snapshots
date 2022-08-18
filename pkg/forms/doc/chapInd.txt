@@ -6,12 +6,12 @@
   [2XBaseChangeHomomorphism[102X 5.3-2 
   [2XBaseChangeToCanonical[102X 5.3-1 
   [2XBaseField[102X 4.7-9 
-  [2XBilinearFormByMatrix[102X 4.2-1  4.2-1 
-  [2XBilinearFormByPolynomial[102X 4.3-1  4.3-1 
+  [2XBilinearFormByMatrix[102X 4.2-1 
+  [2XBilinearFormByPolynomial[102X 4.3-1 
   [2XBilinearFormByQuadraticForm[102X 4.4-2 
   Companion Automorphism 3.1 
   [2XDiscriminantOfForm[102X 4.7-13 
-  [2XEvaluateForm[102X 4.5-1  4.5-1 
+  [2XEvaluateForm[102X 4.5-1 
   Form, alternating 3.1 
       Alternating 4.7-2 
       bilinear 3.1 
@@ -24,21 +24,21 @@
   Quadratic Form, quadratic 3.2 
   Form, reflexive 3.1 
       Reflexive 4.7-1 
-  Witt Index, sesquilinear 3.1 
-  Totally Isotropic, sesquilinear 3.1 
-  Form, sesquilinear 3.1 
   Non-degenerate, sesquilinear 3.1 
-  Form, symmetric 3.1 
+  Totally Isotropic, sesquilinear 3.1 
+  Witt Index, sesquilinear 3.1 
+  Form, sesquilinear 3.1 
+      symmetric 3.1 
       Symmetric 4.7-3 
       symplectic 3.1  4.7-6 
   [2XGramMatrix[102X 4.7-10 
   [2XHermitianFormByMatrix[102X 4.2-3 
-  [2XHermitianFormByPolynomial[102X 4.3-3  4.3-3 
+  [2XHermitianFormByPolynomial[102X 4.3-3 
   [2XIsAlternatingForm[102X 4.7-2 
   [2XIsBilinearForm[102X 4.1-1 
   [2XIsDegenerateForm[102X 4.7-7 
   [2XIsEllipticForm[102X 5.3-6 
-  [2XIsForm[102X 4.1-1  4.1-1 
+  [2XIsForm[102X 4.1-1 
   [2XIsFormRep[102X 4.1-2 
   [2XIsHermitianForm[102X 4.1-1 
   [2XIsHyperbolicForm[102X 5.3-8 
@@ -60,14 +60,15 @@
   [2XIsTotallySingularSubspace[102X 4.6-5 
   [2XIsTrivialForm[102X 4.1-1 
   Orthogonal 3.1 
-  [2XOrthogonalSubspaceMat[102X 4.6-1  4.6-1 
+  [2XOrthogonalSubspaceMat[102X, for a matrix 4.6-1 
+      for a vector 4.6-1 
   [2XPolynomialOfForm[102X 4.7-12 
   [2XPreservedForms[102X 4.8-1 
   [2XPreservedQuadraticForms[102X 4.8-3 
   [2XPreservedSesquilinearForms[102X 4.8-2 
   [2XQuadraticFormByBilinearForm[102X 4.4-1 
-  [2XQuadraticFormByMatrix[102X 4.2-2  4.2-2 
-  [2XQuadraticFormByPolynomial[102X 4.3-2  4.3-2 
+  [2XQuadraticFormByMatrix[102X 4.2-2 
+  [2XQuadraticFormByPolynomial[102X 4.3-2 
   Radical 3.1 
   [2XRadicalOfForm[102X 4.7-11 
   [2XScalarOfSimilarity[102X 5.3-4 

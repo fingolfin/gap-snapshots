@@ -222,7 +222,8 @@ gap> FileString( Filename( prv, "toc.json" ), Concatenation( [ "{\n",
 >        "[\"MXN\",[\"C4\",1]],\n",
 >        "[\"MXO\",[\"C4\",[2]]],\n",
 >        "[\"MXS\",[\"C4\",[\"C2\"]]],\n",
->        "[\"RNG\",[\"C4G1-Ar1aB0\",\"CF(4)\"]],\n",
+>        "[\"RNG\",[\"C4G1-Ar1aB0\",\"CF(4)\",",
+>                  "[\"QuadraticField\",-1],[1,0,1]]],\n",
 >        "[\"API\",[\"C4G1-p4B0\",[1,4,\"imprim\",\"1 < C2\"]]],\n",
 >        "[\"API\",[\"A5G1-p60B0\",[1,60,\"imprim\",\"1 < S3\"]]]\n",
 >        "]\n",
@@ -317,8 +318,9 @@ gap> AtlasGenerators( "C4", 2 );
 rec( contents := "priv", dim := 1, generators := [ [ [ E(4) ] ] ], 
   groupname := "C4", id := "a", 
   identifier := [ "C4", [ [ "priv", "C4G1-Ar1aB0.g" ] ], 1, 1 ], 
-  repname := "C4G1-Ar1aB0", repnr := 2, ring := GaussianRationals, 
-  size := 4, standardization := 1, type := "matalg" )
+  polynomial := [ 1, 0, 1 ], repname := "C4G1-Ar1aB0", repnr := 2, 
+  ring := GaussianRationals, size := 4, standardization := 1, 
+  type := "matalg" )
 gap> AtlasGenerators( "C4", 3 );
 fail
 gap> AtlasProgram( "C4", "other", "test" );
@@ -430,7 +432,7 @@ gap> Print( StringOfAtlasTableOfContents( "priv" ) );
 
 ["MXS",["C4",["C2"]]],
 
-["RNG",["C4G1-Ar1aB0","CF(4)"]],
+["RNG",["C4G1-Ar1aB0","CF(4)",["QuadraticField",-1],[1,0,1]]],
 
 ["API",["A5G1-p60B0",[1,60,"imprim","1 < S3"]]],
 ["API",["C4G1-p4B0",[1,4,"imprim","1 < C2"]]],
@@ -474,7 +476,7 @@ gap> Print( StringOfAtlasTableOfContents(
 ["TOC",["maxes","C4G1-max1W1",[-27672877]]],
 ["TOC",["perm","C4G1-p4B0.m",[102601978]]],
 
-["RNG",["C4G1-Ar1aB0","CF(4)"]],
+["RNG",["C4G1-Ar1aB0","CF(4)",["QuadraticField",-1],[1,0,1]]],
 
 ["API",["A5G1-p60B0",[1,60,"imprim","1 < S3"]]],
 ["API",["C4G1-p4B0",[1,4,"imprim","1 < C2"]]],

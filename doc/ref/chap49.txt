@@ -118,7 +118,7 @@
     [4X[25Xgap>[125X [27Xau:=AutomorphismGroup(n);;[127X[104X
     [4X[25Xgap>[125X [27Xau:=First(AsSet(au),i->Order(i)=3);;[127X[104X
     [4X[25Xgap>[125X [27Xau:=Group(au);[127X[104X
-    [4X[28X<group with 1 generators>[128X[104X
+    [4X[28X<group with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XIsGroupOfAutomorphisms(au);[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XSemidirectProduct(au,n);[127X[104X
@@ -328,6 +328,41 @@
     [4X[25Xgap>[125X [27XKuKGenerators(g,hom,hom2);[127X[104X
     [4X[28X[ (1,4)(2,5)(3,6), (1,6)(2,4)(3,5) ][128X[104X
   [4X[32X[104X
+  
+  [1X49.4-5 ListWreathProductElement[101X
+  
+  [33X[1;0Y[29X[2XListWreathProductElement[102X( [3XG[103X, [3Xx[103X[, [3XtestDecomposition[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XListWreathProductElementNC[102X( [3XG[103X, [3Xx[103X, [3XtestDecomposition[103X ) [32X operation[133X
+  
+  [33X[0;0YLet  [3Xx[103X  be  an element of a wreath product [3XG[103X where [22XG = K ≀ H[122X and [22XH[122X acts as a
+  finite  permutation  group of degree [22Xm[122X. We can identify the element [3Xx[103X with a
+  tuple  [22X(f_1, ..., f_m; h)[122X, where [22Xf_i ∈ K[122X is the [22Xi[122X-th base component of [3Xx[103X and
+  [22Xh ∈ H[122X is the top component of [3Xx[103X.[133X
+  
+  [33X[0;0Y[2XListWreathProductElement[102X  returns  a  list [22X[f_1, ..., f_m, h][122X containing the
+  components of [3Xx[103X or [9Xfail[109X if [3Xx[103X cannot be decomposed in the wreath product.[133X
+  
+  [33X[0;0YIf   ommited,   the   argument   [3XtestDecomposition[103X   defaults  to  true.  If
+  [3XtestDecomposition[103X  is  true, [2XListWreathProductElement[102X makes additional tests
+  to  ensure  that  the computed decomposition of [3Xx[103X is correct, i.e. it checks
+  that [3Xx[103X is an element of the parent wreath product of [3XG[103X:[133X
+  
+  [33X[0;0YIf [22XK ≤ Sym(l)[122X, this ensures that [22Xx ∈ Sym(l) ≀ Sym(m)[122X where the parent wreath
+  product  is  considered  in the same action as [3XG[103X, i.e. either in imprimitive
+  action or product action.[133X
+  
+  [33X[0;0YIf [22XK ≤ GL(n,q)[122X, this ensures that [22Xx ∈ GL(n,q) ≀ Sym(m)[122X.[133X
+  
+  [1X49.4-6 WreathProductElementList[101X
+  
+  [33X[1;0Y[29X[2XWreathProductElementList[102X( [3XG[103X, [3Xlist[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XWreathProductElementListNC[102X( [3XG[103X, [3Xlist[103X ) [32X operation[133X
+  
+  [33X[0;0YLet  [3Xlist[103X be equal to [22X[f_1, ..., f_m, h][122X and [3XG[103X be a wreath product where [22XG =
+  K ≀ H[122X, [22XH[122X acts as a finite permutation group of degree [22Xm[122X, [22Xf_i ∈ K[122X and [22Xh ∈ H[122X.[133X
+  
+  [33X[0;0Y[2XWreathProductElementList[102X  returns  the element [22Xx ∈ G[122X identified by the tuple
+  [22X(f_1, ..., f_m; h)[122X.[133X
   
   
   [1X49.5 [33X[0;0YFree Products[133X[101X

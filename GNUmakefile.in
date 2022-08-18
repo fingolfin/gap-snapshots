@@ -12,7 +12,6 @@
 #
 
 # GAP specific
-SYS_IS_DARWIN = @SYS_IS_DARWIN@
 SYS_IS_CYGWIN32 = @SYS_IS_CYGWIN32@
 ABI = @ABI@
 ABI_CFLAGS = @ABI_CFLAGS@
@@ -30,9 +29,13 @@ GAPARCH = @GAPARCH@
 # maintainer mode
 MAINTAINER_MODE = @MAINTAINER_MODE@
 
-#
+# GAP version and release date
 GAP_VERSION = @GAP_VERSION@
 GAP_RELEASEDAY = @GAP_RELEASEDAY@
+
+# libtool library version
+GAP_LIBTOOL_CURRENT = @GAP_LIBTOOL_CURRENT@
+GAP_LIBTOOL_AGE = @GAP_LIBTOOL_AGE@
 
 # GAP kernel version
 GAP_KERNEL_MINOR_VERSION = @gap_kernel_minor_version@
@@ -57,9 +60,9 @@ host_vendor = @host_vendor@
 CFLAGS = @CFLAGS@
 CXXFLAGS = @CXXFLAGS@
 CPPFLAGS = @CPPFLAGS@
-DEFS = @DEFS@
 LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
+GAP_DEFINES = @GAP_DEFINES@
 
 WARN_CFLAGS = @WARN_CFLAGS@
 WARN_CXXFLAGS = @WARN_CXXFLAGS@
@@ -79,7 +82,8 @@ READLINE_LDFLAGS = @READLINE_LDFLAGS@
 READLINE_LIBS = @READLINE_LIBS@
 
 JULIA = @JULIA@
-JULIA_CPPFLAGS = @JULIA_CPPFLAGS@
+JULIA_VERSION = @JULIA_VERSION@
+JULIA_CFLAGS = @JULIA_CFLAGS@
 JULIA_LDFLAGS = @JULIA_LDFLAGS@
 JULIA_LIBS = @JULIA_LIBS@
 
@@ -96,33 +100,32 @@ LIBATOMIC_OPS_LIBS = @LIBATOMIC_OPS_LIBS@
 PTHREAD_CFLAGS = @PTHREAD_CFLAGS@
 PTHREAD_LIBS = @PTHREAD_LIBS@
 
-# tools
+# build tools
+CC = @CC@
+CXX = @CXX@
+INSTALL = @INSTALL@
+MKDIR_P = @MKDIR_P@
+SED = @SED@
+SHELL = @SHELL@
+
+# for GNU libtool
 AR = @AR@
 AS = @AS@
 AWK = @AWK@
-CC = @CC@
-CPP = @CPP@
-CXX = @CXX@
-INSTALL = @INSTALL@
 LD = @LD@
+LIBTOOL = @LIBTOOL@
 LIPO = @LIPO@
 LN_S = @LN_S@
+LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
+LTLIBOBJS = @LTLIBOBJS@
 MANIFEST_TOOL = @MANIFEST_TOOL@
-MKDIR_P = @MKDIR_P@
 NM = @NM@
 NMEDIT = @NMEDIT@
 OBJDUMP = @OBJDUMP@
 OTOOL = @OTOOL@
 OTOOL64 = @OTOOL64@
 RANLIB = @RANLIB@
-SED = @SED@
-SHELL = @SHELL@
 STRIP = @STRIP@
-
-# libtool
-LIBTOOL = @LIBTOOL@
-LTLIBOBJS = @LTLIBOBJS@
-LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
 
 # misc
 EXEEXT = @EXEEXT@
@@ -183,12 +186,17 @@ sysconfdir = @sysconfdir@
 # Note that `vpath' is a GNU make extension. Unlike VPATH, it can be
 # restricted to certain file extensions. This way, we can mix in-tree and
 # out-of-tree builds without accidentally picking up e.g. *.o files from the
-# wrong tree. Wee still have to be careful about gen/config.h, though.
+# wrong tree. Wee still have to be careful about build/config.h, though.
 #
-vpath %.h $(srcdir)
-vpath %.c $(srcdir)
-vpath %.cc $(srcdir)
-vpath %.s $(srcdir)
+vpath src/%.h $(srcdir)
+vpath src/%.c $(srcdir)
+vpath src/%.cc $(srcdir)
+vpath src/%.s $(srcdir)
+
+vpath src/hpc/%.h $(srcdir)
+vpath src/hpc/%.c $(srcdir)
+vpath src/hpc/%.cc $(srcdir)
+vpath src/hpc/%.s $(srcdir)
 
 
 #

@@ -364,7 +364,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fg:= GroupRing( f, g );</span>
 &lt;algebra-with-one over GF(2), with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fh:= GroupRing( f, h );</span>
-&lt;algebra-with-one over GF(2), with 1 generators&gt;
+&lt;algebra-with-one over GF(2), with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubset( fg, fh );</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o1:= One( fh );  o2:= One( fg );  o1 = o2;</span>
@@ -373,7 +373,7 @@ false
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">emb:= Embedding( g, fg );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">im:= Image( emb, h );</span>
-&lt;group of size 3 with 1 generators&gt;
+&lt;group of size 3 with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubset( fg, im );</span>
 true
 </pre></div>

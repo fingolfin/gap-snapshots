@@ -69,16 +69,26 @@ end );
 InstallMethod( \in,"perm class rep", IsElmsColls,
   [ IsPerm, IsConjugacyClassPermGroupRep ],
 function( g, cl )
-local   G;
+local   G,c;
 
+    if CycleStructurePerm(g)<>CycleStructurePerm(Representative(cl)) then
+      return false;
+    fi;
     if HasAsList(cl) or HasAsSSortedList(cl) then
       TryNextMethod();
     fi;
+
     G := ActingDomain( cl );
-    return RepOpElmTuplesPermGroup( true, ActingDomain( cl ),
-                   [ g ], [ Representative( cl ) ],
-                   TrivialSubgroup( G ),
-                   StabilizerOfExternalSet( cl ) ) <> fail;
+    if AttemptPermRadicalMethod(G,"CENT") and g in G  then
+      # use TF method
+      c:=TFCanonicalClassRepresentative(G,[g,Representative(cl)]:conjugacytest,useradical:=false);
+      return c<>fail and c[1][2]=c[2][2];
+    else
+      return RepOpElmTuplesPermGroup( true, ActingDomain( cl ),
+                    [ g ], [ Representative( cl ) ],
+                    TrivialSubgroup( G ),
+                    StabilizerOfExternalSet( cl ) ) <> fail;
+    fi;
 end );
 
 
@@ -160,10 +170,5 @@ InstallMethod( \in, true, [ IsPerm, IsRationalClassPermGroupRep ], 0,
     # the Galois group of the identity is <0>, therefore we have to do this
     # extra test.
     return Order(Representative(cl))=Order(g) and
-     ForAny( RightTransversalInParent( GaloisGroup( cl ) ), e ->
-                   RepOpElmTuplesPermGroup( true, G,
-                           [ g ^ Int( e ) ],
-                           [ Representative( cl ) ],
-                           TrivialSubgroup( G ),
-                           StabilizerOfExternalSet( cl ) ) <> fail );
+     ForAny(DecomposedRationalClass(cl),x->g in x);
 end );

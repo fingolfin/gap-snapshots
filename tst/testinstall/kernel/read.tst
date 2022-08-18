@@ -65,6 +65,30 @@ rec("a":=1);
     ^^^
 
 #
+# ReadFuncArgList
+#
+gap> function(a,) end;;
+Syntax error: identifier expected in stream:1
+function(a,) end;;
+           ^
+gap> function(a end;;
+Syntax error: ) expected in stream:1
+function(a end;;
+           ^^^
+gap> {a -> a;
+Syntax error: } expected in stream:1
+{a -> a;
+   ^^
+
+#
+# ReadFactor
+#
+gap> 2^3^4;
+Syntax error: '^' is not associative in stream:1
+2^3^4;
+   ^
+
+#
 # ReadAtomic
 #
 gap> f := atomic function() end;;
@@ -101,25 +125,21 @@ Syntax error: Character literal must not include <newline> in stream:1
 s := '
      ^
 Syntax error: ; expected in stream:2
-
 gap> s := 'x
 Syntax error: Missing single quote in character constant in stream:1
 s := 'x
      ^^
 Syntax error: ; expected in stream:2
-
 gap> s := "
 Syntax error: String must not include <newline> in stream:1
 s := "
      ^
 Syntax error: ; expected in stream:2
-
 gap> s := "x
 Syntax error: String must not include <newline> in stream:1
 s := "x
      ^^
 Syntax error: ; expected in stream:2
-
 
 # errors in the middle of parsing a float literal
 gap> 12.34\56;
@@ -134,6 +154,17 @@ gap> 12.34\56a;
 Syntax error: Badly formed number in stream:1
 12.34\56a;
 ^^^^^
+
+# the help command '?' and pragmas should not act as semicolon
+# (see https://github.com/gap-system/gap/issues/2017)
+gap> 1?abc
+Syntax error: ; expected in stream:1
+1?abc
+ ^^^^
+gap> 1#%abc
+Syntax error: ; expected in stream:1
+1#%abc
+ ^^^^^
 
 #
 # ReadEvalFile / READ_AS_FUNC / READ_AS_FUNC_STREAM / ReadAsFunction
@@ -185,11 +216,9 @@ gap> f();
 # with syntax errors
 gap> f:=ReadAsFunction(InputTextString("return 1"));;
 Syntax error: ; expected in stream:1
-
 gap> f:={} -> ReadAsFunction(InputTextString("return 1"));;
 gap> f();
 Syntax error: ; expected in stream:1
-
 fail
 
 # with execution errors
@@ -210,7 +239,16 @@ local x; x := function(a) return a end;; return x(1);
 gap> f:={} -> ReadAsFunction(InputTextString("return 1"));;
 gap> f();
 Syntax error: ; expected in stream:1
+fail
 
+# empty body
+gap> ReadAsFunction(InputTextString(""));
+function(  ) ... end
+
+# check what happens if the function body ends earlier than
+# anticipated (FIXME: implement a better error message)
+gap> ReadAsFunction(InputTextString("return 1; end"));
+Syntax error: <end-of-file> expected in stream:1
 fail
 
 #

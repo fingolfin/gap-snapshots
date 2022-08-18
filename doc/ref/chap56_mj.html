@@ -253,7 +253,7 @@ GaussianIntegers
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:= Integers;</span>
 Integers
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:= Subring( R, [ 4, 6 ] );</span>
-&lt;ring with 1 generators&gt;
+&lt;ring with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Parent( S );</span>
 Integers
 </pre></div>
@@ -335,7 +335,7 @@ fail
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:= Integers;;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I:= Ideal( R, [ 2 ] );</span>
-&lt;two-sided ideal in Integers, (1 generators)&gt;
+&lt;two-sided ideal in Integers, (1 generator)&gt;
 </pre></div>
 
 <p><a id="X7C8E196478C7431A" name="X7C8E196478C7431A"></a></p>
@@ -365,7 +365,7 @@ fail
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A:= FullMatrixAlgebra( Rationals, 3 );</span>
 ( Rationals^[ 3, 3 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I:= Ideal( A, [ Random( A ) ] );</span>
-&lt;two-sided ideal in ( Rationals^[ 3, 3 ] ), (1 generators)&gt;
+&lt;two-sided ideal in ( Rationals^[ 3, 3 ] ), (1 generator)&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTwoSidedIdeal( A, I );</span>
 true
 </pre></div>
@@ -651,7 +651,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Units( GaussianIntegers );</span>
 [ -1, 1, -E(4), E(4) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Units( GF( 16 ) );</span>
-&lt;group of size 15 with 1 generators&gt;
+&lt;group of size 15 with 1 generator&gt;
 </pre></div>
 
 <p><a id="X7B307F217DDC7E20" name="X7B307F217DDC7E20"></a></p>
@@ -745,7 +745,7 @@ true
 <h5>56.5-9 Factors</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Factors</code>( [<var class="Arg">R</var>, ]<var class="Arg">r</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p><code class="func">Factors</code> returns the factorization of the ring element <var class="Arg">r</var> in the ring <var class="Arg">R</var>, if given, and otherwise in in its default ring (see <code class="func">DefaultRing</code> (<a href="chap56_mj.html#X83AFFCC77DE6ABDA"><span class="RefLink">56.1-3</span></a>)). The factorization is returned as a list of primes (see <code class="func">IsPrime</code> (<a href="chap56_mj.html#X7AA107AE7F79C6D8"><span class="RefLink">56.5-8</span></a>)). Each element in the list is a standard associate (see <code class="func">StandardAssociate</code> (<a href="chap56_mj.html#X7B1A9A4C7C59FB36"><span class="RefLink">56.5-5</span></a>)) except the first one, which is multiplied by a unit as necessary to have <code class="code">Product( Factors( <var class="Arg">R</var>, <var class="Arg">r</var> ) ) = <var class="Arg">r</var></code>. This list is usually also sorted, thus smallest prime factors come first. If <var class="Arg">r</var> is a unit or zero, <code class="code">Factors( <var class="Arg">R</var>, <var class="Arg">r</var> ) = [ <var class="Arg">r</var> ]</code>.</p>
+<p><code class="func">Factors</code> returns the factorization of the ring element <var class="Arg">r</var> in the ring <var class="Arg">R</var>, if given, and otherwise in its default ring (see <code class="func">DefaultRing</code> (<a href="chap56_mj.html#X83AFFCC77DE6ABDA"><span class="RefLink">56.1-3</span></a>)). The factorization is returned as a list of primes (see <code class="func">IsPrime</code> (<a href="chap56_mj.html#X7AA107AE7F79C6D8"><span class="RefLink">56.5-8</span></a>)). Each element in the list is a standard associate (see <code class="func">StandardAssociate</code> (<a href="chap56_mj.html#X7B1A9A4C7C59FB36"><span class="RefLink">56.5-5</span></a>)) except the first one, which is multiplied by a unit as necessary to have <code class="code">Product( Factors( <var class="Arg">R</var>, <var class="Arg">r</var> ) ) = <var class="Arg">r</var></code>. This list is usually also sorted, thus smallest prime factors come first. If <var class="Arg">r</var> is a unit or zero, <code class="code">Factors( <var class="Arg">R</var>, <var class="Arg">r</var> ) = [ <var class="Arg">r</var> ]</code>.</p>
 
 
 <div class="example"><pre>
@@ -774,7 +774,7 @@ x^2+x+Z(2)^0
 <h5>56.6-1 IsEuclideanRing</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEuclideanRing</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
-<p>A ring <span class="SimpleMath">\(R\)</span> is called a Euclidean ring if it is an integral ring and there exists a function <span class="SimpleMath">\(\delta\)</span>, called the Euclidean degree, from <span class="SimpleMath">\(R-\{0_R\}\)</span> into a well-ordered set (such as the the nonnegative integers), such that for every pair <span class="SimpleMath">\(r \in R\)</span> and <span class="SimpleMath">\(s \in R-\{0_R\}\)</span> there exists an element <span class="SimpleMath">\(q\)</span> such that either <span class="SimpleMath">\(r - q s = 0_R\)</span> or <span class="SimpleMath">\(\delta(r - q s) &lt; \delta( s )\)</span>. In <strong class="pkg">GAP</strong> the Euclidean degree <span class="SimpleMath">\(\delta\)</span> is implicitly built into a ring and cannot be changed. The existence of this division with remainder implies that the Euclidean algorithm can be applied to compute a greatest common divisor of two elements, which in turn implies that <span class="SimpleMath">\(R\)</span> is a unique factorization ring.</p>
+<p>A ring <span class="SimpleMath">\(R\)</span> is called a Euclidean ring if it is an integral ring and there exists a function <span class="SimpleMath">\(\delta\)</span>, called the Euclidean degree, from <span class="SimpleMath">\(R-\{0_R\}\)</span> into a well-ordered set (such as the nonnegative integers), such that for every pair <span class="SimpleMath">\(r \in R\)</span> and <span class="SimpleMath">\(s \in R-\{0_R\}\)</span> there exists an element <span class="SimpleMath">\(q\)</span> such that either <span class="SimpleMath">\(r - q s = 0_R\)</span> or <span class="SimpleMath">\(\delta(r - q s) &lt; \delta( s )\)</span>. In <strong class="pkg">GAP</strong> the Euclidean degree <span class="SimpleMath">\(\delta\)</span> is implicitly built into a ring and cannot be changed. The existence of this division with remainder implies that the Euclidean algorithm can be applied to compute a greatest common divisor of two elements, which in turn implies that <span class="SimpleMath">\(R\)</span> is a unique factorization ring.</p>
 
 
 <div class="example"><pre>
@@ -984,7 +984,7 @@ The Gcd is 6
 <h5>56.7-10 InterpolatedPolynomial</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InterpolatedPolynomial</code>( <var class="Arg">R</var>, <var class="Arg">x</var>, <var class="Arg">y</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p><code class="func">InterpolatedPolynomial</code> returns, for given lists <var class="Arg">x</var>, <var class="Arg">y</var> of elements in a ring <var class="Arg">R</var> of the same length <span class="SimpleMath">\(n\)</span>, say, the unique polynomial of degree less than <span class="SimpleMath">\(n\)</span> which has value <var class="Arg">y</var>[<span class="SimpleMath">\(i\)</span>] at <var class="Arg">x</var><span class="SimpleMath">\([i]\)</span>, for all <span class="SimpleMath">\(i \in \{ 1, \ldots, n \}\)</span>. Note that the elements in <var class="Arg">x</var> must be distinct.</p>
+<p><code class="func">InterpolatedPolynomial</code> returns, for given lists <var class="Arg">x</var>, <var class="Arg">y</var> of elements in a ring <var class="Arg">R</var> of the same length <span class="SimpleMath">\(n\)</span> the unique polynomial of degree less than <span class="SimpleMath">\(n\)</span> which has value <var class="Arg">y</var>[<span class="SimpleMath">\(i\)</span>] at <var class="Arg">x</var><span class="SimpleMath">\([i]\)</span>, for all <span class="SimpleMath">\(i \in \{ 1, \ldots, n \}\)</span>. Note that the elements in <var class="Arg">x</var> must be distinct.</p>
 
 
 <div class="example"><pre>
@@ -1089,9 +1089,9 @@ a+b+c | 0*a   c     b     b+c   a     a+c   a+b   a+b+c
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Subrings(SmallRing(8,37));     </span>
-[ &lt;ring with 1 generators&gt;, &lt;ring with 1 generators&gt;, 
-  &lt;ring with 1 generators&gt;, &lt;ring with 1 generators&gt;, 
-  &lt;ring with 1 generators&gt;, &lt;ring with 1 generators&gt;, 
+[ &lt;ring with 1 generator&gt;, &lt;ring with 1 generator&gt;, 
+  &lt;ring with 1 generator&gt;, &lt;ring with 1 generator&gt;, 
+  &lt;ring with 1 generator&gt;, &lt;ring with 1 generator&gt;, 
   &lt;ring with 2 generators&gt;, &lt;ring with 2 generators&gt;, 
   &lt;ring with 2 generators&gt;, &lt;ring with 2 generators&gt;, 
   &lt;ring with 3 generators&gt; ]
@@ -1107,8 +1107,8 @@ a+b+c | 0*a   c     b     b+c   a     a+c   a+b   a+b+c
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ideals(SmallRing(8,37));</span>
-[ &lt;ring with 1 generators&gt;, &lt;ring with 1 generators&gt;, 
-  &lt;ring with 1 generators&gt;, &lt;ring with 2 generators&gt;, 
+[ &lt;ring with 1 generator&gt;, &lt;ring with 1 generator&gt;, 
+  &lt;ring with 1 generator&gt;, &lt;ring with 2 generators&gt;, 
   &lt;ring with 3 generators&gt; ]
 </pre></div>
 

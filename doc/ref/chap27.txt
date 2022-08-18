@@ -165,7 +165,7 @@
   currently  defined.  For  any  other sequence starting with a backslash, the
   backslash is ignored.[133X
   
-  [8X[10X\n[110X[8X[108X
+  [8X [10X\n[110X[8X[108X
         [33X[0;6Y[13Xnewline  character[113X.  This  is  the  character  that,  at least on UNIX
         systems, separates lines in a text file. Printing of this character in
         a string has the effect of moving the cursor down one line and back to
@@ -280,7 +280,7 @@
   [33X[0;0YIf   [3Xobj[103X   is  a  dense  internally  represented  list  of  characters  then
   [2XConvertToStringRep[102X  changes the representation to [2XIsStringRep[102X ([14X27.4-1[114X). This
   is  useful  in particular for converting the empty list [10X[][110X, which usually is
-  in  [2XIsPlistRep[102X  ([14X21.24-1[114X),  to  [2XIsStringRep[102X ([14X27.4-1[114X). If [3Xobj[103X is not a string
+  in  [2XIsPlistRep[102X  ([14X21.24-2[114X),  to  [2XIsStringRep[102X ([14X27.4-1[114X). If [3Xobj[103X is not a string
   then [2XConvertToStringRep[102X signals an error.[133X
   
   [1X27.4-3 CopyToStringRep[101X
@@ -426,7 +426,7 @@
   [4X[32X[104X
   
   [33X[0;0YStrings can be compared via [10X<[110X with certain [5XGAP[105X objects that are not strings,
-  see [14X4.12[114X for the details.[133X
+  see [14X4.13[114X for the details.[133X
   
   
   [1X27.7 [33X[0;0YOperations to Produce or Manipulate Strings[133X[101X
@@ -1047,12 +1047,76 @@
   [33X[1;0Y[29X[2XCrcString[102X( [3Xstr[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Yan integer[133X
   
-  [33X[0;0YThis  function  computes a cyclic redundancy check number from a string [3Xstr[103X.
-  See also [2XCrcFile[102X ([14X9.7-7[114X).[133X
+  [33X[0;0YThis  function computes a CRC (cyclic redundancy check) number from a string
+  [3Xstr[103X. See also [2XCrcFile[102X ([14X9.7-7[114X) and [2XHexSHA256[102X ([14X27.9-7[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XCrcString("GAP example string");[127X[104X
     [4X[28X-50451670[128X[104X
+  [4X[32X[104X
+  
+  [1X27.9-7 HexSHA256[101X
+  
+  [33X[1;0Y[29X[2XHexSHA256[102X( [3Xstring[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XHexSHA256[102X( [3Xstream[103X ) [32X function[133X
+  
+  [33X[0;0YReturn  the  SHA-256 cryptographic checksum of the bytes in [3Xstring[103X, resp. of
+  the  data  in  the input stream object [3Xstream[103X (see Chapter [14X10[114X to learn about
+  streams) when read from the current position until EOF (end-of-file).[133X
+  
+  [33X[0;0YThe checksum is returned as string with 64 lowercase hexadecimal digits.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XHexSHA256("abcd");[127X[104X
+    [4X[28X"88d4266fd4e6338d13b845fcf289579d209c897823b9217da3e161936f031589"[128X[104X
+    [4X[25Xgap>[125X [27XHexSHA256(InputTextString("abcd"));[127X[104X
+    [4X[28X"88d4266fd4e6338d13b845fcf289579d209c897823b9217da3e161936f031589"[128X[104X
+  [4X[32X[104X
+  
+  [1X27.9-8 Pluralize[101X
+  
+  [33X[1;0Y[29X[2XPluralize[102X( [[3Xcount[103X, ][3Xstring[103X[, [3Xplural[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10YA string[133X
+  
+  [33X[0;0YThis  function  returns  an  attempt  at  the appropriate pluralization of a
+  string  (considered  as  a  singular  English noun), using several rules and
+  heuristics of English grammar.[133X
+  
+  [33X[0;0YThe  arguments  to  this function are an optional non-negative integer [3Xcount[103X
+  (the number of objects in question), a non-empty string [3Xstring[103X (the singular
+  form  of  the  object in question), and an optional additional string [3Xplural[103X
+  (the plural form of [3Xstring[103X).[133X
+  
+  [33X[0;0YIf  [3Xplural[103X  is  given,  then [10XPluralize[110X uses it as the plural form of [3Xstring[103X,
+  otherwise [10XPluralize[110X makes an informed guess at the plural.[133X
+  
+  [33X[0;0YIf [3Xcount[103X is not given, then [10XPluralize[110X returns this plural form of [3Xstring[103X. If
+  [3Xcount[103X  is given and has value [22Xn ≠ 1[122X, then this string is prepended by "\>n\<
+  ";  else  if  [3Xcount[103X has value [22X1[122X, then [10XPluralize[110X returns [3Xstring[103X, prepended by
+  "\>1\< ".[133X
+  
+  [33X[0;0YNote  that  [2XStripLineBreakCharacters[102X  ([14X27.7-7[114X)  can  be  used  to remove the
+  control characters [10X\<[110X and [10X\>[110X from the return value.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XPluralize( "generator" );[127X[104X
+    [4X[28X"generators"[128X[104X
+    [4X[25Xgap>[125X [27XPluralize( 1, "generator" );[127X[104X
+    [4X[28X"\>1\< generator"[128X[104X
+    [4X[25Xgap>[125X [27XPluralize( 0, "generator" );[127X[104X
+    [4X[28X"\>0\< generators"[128X[104X
+    [4X[25Xgap>[125X [27XPluralize( "man", "men" );[127X[104X
+    [4X[28X"men"[128X[104X
+    [4X[25Xgap>[125X [27XPluralize( 1, "man", "men" );[127X[104X
+    [4X[28X"\>1\< man"[128X[104X
+    [4X[25Xgap>[125X [27XPrint( Pluralize( 2, "man", "men" ) );[127X[104X
+    [4X[28X2 men[128X[104X
+    [4X[25Xgap>[125X [27XPrint( Pluralize( 2, "vertex" ) );[127X[104X
+    [4X[28X2 vertices[128X[104X
+    [4X[25Xgap>[125X [27XPrint( Pluralize( 3, "matrix" ) );[127X[104X
+    [4X[28X3 matrices[128X[104X
+    [4X[25Xgap>[125X [27XPrint( Pluralize( 4, "battery" ) );[127X[104X
+    [4X[28X4 batteries[128X[104X
   [4X[32X[104X
   
   

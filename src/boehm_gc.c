@@ -16,9 +16,9 @@
 #include "boehm_gc.h"
 
 #include "gapstate.h"
+#include "gaputils.h"
 #include "gasman.h"
 #include "objects.h"
-#include "sysmem.h"
 
 #include "bags.inc"
 
@@ -28,16 +28,43 @@
 #endif
 
 #ifdef HPCGAP
+#include "hpc/cpu.h"
 #include "hpc/guards.h"
 #include "hpc/misc.h"
 #include "hpc/thread.h"
 #endif
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+Int SyStorKill;
+
+// fill in the data "behind" bags
+struct OpaqueBag {
+    void * body;
+#ifdef HPCGAP
+    void * region;
+#endif
+#if !defined(DISABLE_GC) && defined(TRACK_CREATOR)
+    void * func;
+    void * lvars;
+#endif
+};
+
+#ifndef WARD_ENABLED
 
 static inline Bag * DATA(BagHeader * bag)
 {
     return (Bag *)(((char *)bag) + sizeof(BagHeader));
 }
 
+void SET_PTR_BAG(Bag bag, Bag *val)
+{
+    GAP_ASSERT(bag != 0);
+    bag->body = val;
+}
 
 /****************************************************************************
 **
@@ -56,20 +83,6 @@ void MakeBagTypePublic(int type)
     DSInfoBags[type] = DSI_PUBLIC;
 }
 
-Bag MakeBagPublic(Bag bag)
-{
-    MEMBAR_WRITE();
-    SET_REGION(bag, 0);
-    return bag;
-}
-
-Bag MakeBagReadOnly(Bag bag)
-{
-    MEMBAR_WRITE();
-    SET_REGION(bag, ReadOnlyRegion);
-    return bag;
-}
-
 #endif // HPCGAP
 
 
@@ -85,8 +98,6 @@ void InitFreeFuncBag(UInt type, TNumFreeFuncBags finalizer_func)
     TabFreeFuncBags[type] = finalizer_func;
 }
 
-#ifndef WARD_ENABLED
-
 static void StandardFinalizer(void * bagContents, void * data)
 {
     Bag    bag;
@@ -95,9 +106,6 @@ static void StandardFinalizer(void * bagContents, void * data)
     bag = (Bag)&bagContents2;
     TabFreeFuncBags[TNUM_BAG(bag)](bag);
 }
-
-#endif
-
 
 static GC_descr GCDesc[MAX_GC_PREFIX_DESC + 1];
 static unsigned GCKind[MAX_GC_PREFIX_DESC + 1];
@@ -268,9 +276,7 @@ void SetExtraMarkFuncBags(TNumExtraMarkFuncBags func)
     Panic("SetExtraMarkFuncBags not implemented for Boehm GC");
 }
 
-void InitBags(UInt              initial_size,
-              Bag *             stack_bottom,
-              UInt              stack_align)
+void InitBags(UInt initial_size, Bag * stack_bottom)
 {
     UInt i; /* loop variable                   */
 
@@ -329,6 +335,15 @@ void InitBags(UInt              initial_size,
 #endif /* DISABLE_GC */
 }
 
+UInt TotalGCTime(void)
+{
+    // TODO: implement this? However, this is non-trivial: while we can of
+    // course measure how much time is spent in CollectBags(), I am not
+    // aware of a way to decide whether an allocation registered trigger a
+    // collection, and how long that took.
+    return 0;
+}
+
 UInt CollectBags(UInt size, UInt full)
 {
 #ifndef DISABLE_GC
@@ -337,18 +352,14 @@ UInt CollectBags(UInt size, UInt full)
     return 1;
 }
 
-#ifdef HPCGAP
-void RetypeBagIfWritable(Obj obj, UInt new_type)
-{
-    if (CheckWriteAccess(obj))
-        RetypeBag(obj, new_type);
-}
-#endif
-
-void RetypeBag(Bag bag, UInt new_type)
+void RetypeBagIntern(Bag bag, UInt new_type)
 {
     BagHeader * header = BAG_HEADER(bag);
     UInt        old_type = header->type;
+
+    // exit early if nothing is to be done
+    if (old_type == new_type)
+        return;
 
     /* change the size-type word                                           */
     header->type = new_type;
@@ -364,7 +375,7 @@ void RetypeBag(Bag bag, UInt new_type)
             old_mem = PTR_BAG(bag);
             old_mem = ((char *)old_mem) - sizeof(BagHeader);
             memcpy(new_mem, old_mem, size);
-            SET_PTR_BAG(bag, (void *)(((char *)new_mem) + sizeof(BagHeader)));
+            SET_PTR_BAG(bag, DATA(new_mem));
         }
     }
 #ifdef HPCGAP
@@ -383,15 +394,13 @@ Bag NewBag(UInt type, UInt size)
 
     alloc_size = sizeof(BagHeader) + size;
 #ifndef DISABLE_GC
-#ifndef TRACK_CREATOR
-    bag = GC_malloc(2 * sizeof(Bag *));
-#else
-    bag = GC_malloc(4 * sizeof(Bag *));
+    bag = GC_malloc(sizeof(struct OpaqueBag));
+#ifdef TRACK_CREATOR
     if (STATE(PtrLVars)) {
-        bag[2] = (void *)CURR_FUNC();
-        if (STATE(CurrLVars) != STATE(BottomLVars)) {
+        bag->func = (void *)CURR_FUNC();
+        if (!IsBottomLVars(STATE(CurrLVars))) {
             Obj plvars = PARENT_LVARS(STATE(CurrLVars));
-            bag[3] = (void *)(FUNC_LVARS(plvars));
+            bag->lvars = (void *)(FUNC_LVARS(plvars));
         }
     }
 #endif
@@ -433,7 +442,7 @@ Bag NewBag(UInt type, UInt size)
     BagHeader * header =
         AllocateBagMemory(TabMarkTypeBags[type], type, alloc_size);
 #else
-    bag = malloc(2 * sizeof(Bag *));
+    bag = malloc(sizeof(struct OpaqueBag));
     BagHeader * header = calloc(1, alloc_size);
 #endif /* DISABLE_GC */
 
@@ -531,7 +540,6 @@ UInt ResizeBag(Bag bag, UInt new_size)
         memcpy(DATA(header), src, old_size < new_size ? old_size : new_size);
         SET_PTR_BAG(bag, DATA(header));
     }
-    /* return success                                                      */
     return 1;
 }
 
@@ -548,8 +556,7 @@ void InitGlobalBag(Bag * addr, const Char * cookie)
 
 void SwapMasterPoint(Bag bag1, Bag bag2)
 {
-    Obj * ptr1 = PTR_BAG(bag1);
-    Obj * ptr2 = PTR_BAG(bag2);
-    SET_PTR_BAG(bag1, ptr2);
-    SET_PTR_BAG(bag2, ptr1);
+    SWAP(UInt *, bag1->body, bag2->body);
 }
+
+#endif // WARD_ENABLED

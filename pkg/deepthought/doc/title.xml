@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    DeepThought
+  </Title>
+  <Subtitle>
+    This package provides functions for computations in finitely generated nilpotent groups based on the Deep Thought algorithm.
+  </Subtitle>
+  <Version>
+    1.0.5
+  </Version>
+  <Author>
+    Nina Wagner<Alt Only="LaTeX"><Br/></Alt>
+<Email>github@n-i-n-a.de</Email>
+
+  </Author>
+  <Date>
+    5 April 2021
+  </Date>
+  </TitlePage>

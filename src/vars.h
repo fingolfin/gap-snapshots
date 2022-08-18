@@ -41,14 +41,9 @@
 
 /****************************************************************************
 **
-*V  BottomLVars . . . . . . . . . . . . . . . . .  bottom local variables bag
-**
-**  'BottomLVars' is the local variables bag at the bottom of the call stack.
-**  Without   such a dummy  frame at  the bottom, 'SWITCH_TO_NEW_LVARS' would
-**  have to check for the bottom, slowing it down.
-**
+*F  IsBottomLVars(<lvars>) . . test whether lvars is at the call stack bottom
 */
-/* TL: extern  Bag             BottomLVars; */
+BOOL IsBottomLVars(Obj lvars);
 
 
 /****************************************************************************
@@ -69,7 +64,7 @@
 *F  IS_LVARS_OR_HVARS()
 **
 */
-EXPORT_INLINE int IS_LVARS_OR_HVARS(Obj obj)
+EXPORT_INLINE BOOL IS_LVARS_OR_HVARS(Obj obj)
 {
     UInt tnum = TNUM_OBJ(obj);
     return tnum == T_LVARS || tnum == T_HVARS;
@@ -149,14 +144,8 @@ EXPORT_INLINE Obj CURR_FUNC(void)
 
 /****************************************************************************
 **
-*F  BRK_CALL_TO() . . . . . . . . . expr. which was called from current frame
 *F  SET_BRK_CALL_TO(expr) . . . set expr. which was called from current frame
 */
-EXPORT_INLINE Expr BRK_CALL_TO(void)
-{
-    return STAT_LVARS_PTR(STATE(PtrLVars));
-}
-
 EXPORT_INLINE void SET_BRK_CALL_TO(Expr expr)
 {
     ((LVarsHeader *)STATE(PtrLVars))->stat = expr;
@@ -187,59 +176,26 @@ EXPORT_INLINE void MakeHighVars( Bag bag ) {
 
 /****************************************************************************
 **
-*F  SWITCH_TO_NEW_LVARS( <func>, <narg>, <nloc>, <old> )  . . . . . new local
-**
-**  'SWITCH_TO_NEW_LVARS'  creates and switches  to a new local variabes bag,
-**  for  the function    <func>,   with <narg> arguments    and  <nloc> local
-**  variables.  The old local variables bag is saved in <old>.
-*/
-
-EXPORT_INLINE Obj SwitchToNewLvars(Obj func, UInt narg, UInt nloc)
-{
-  // As an optimization, we never call CHANGED_BAG on CurrLVars directly,
-  // instead a callback that is run just before any GC takes care of that.
-  // However, that means that when changing the value of CurrLVars, we must
-  // call CHANGED_BAG on the old value.
-  Obj old = STATE(CurrLVars);
-  CHANGED_BAG( old );
-
-  // create new lvars (may cause garbage collection)
-  Obj new_lvars = NewLVarsBag( narg+nloc );
-  LVarsHeader * hdr = (LVarsHeader *)ADDR_OBJ(new_lvars);
-  hdr->stat = 0;
-  hdr->func = func;
-  hdr->parent = old;
-
-  // switch to new lvars
-  STATE(CurrLVars) = new_lvars;
-  STATE(PtrLVars) = (Obj *)hdr;
-  STATE(PtrBody) = ADDR_OBJ(BODY_FUNC(func));
-
-  return old;
-}
-
-#define SWITCH_TO_NEW_LVARS(func, narg, nloc, old)     (old) = SwitchToNewLvars((func), (narg), (nloc))
-
-
-/****************************************************************************
-**
 *F  SWITCH_TO_OLD_LVARS( <old> )  . . .  switch to an old local variables bag
 **
 **  'SWITCH_TO_OLD_LVARS' switches back to the old local variables bag <old>.
 */
-EXPORT_INLINE void SWITCH_TO_OLD_LVARS(Obj old)
+EXPORT_INLINE Obj SWITCH_TO_OLD_LVARS(Obj old)
 {
     // As an optimization, we never call CHANGED_BAG on CurrLVars directly,
     // instead a callback that is run just before any GC takes care of that.
     // However, that means that when changing the value of CurrLVars, we must
-    // call CHANGED_BAG on the old value.
-    CHANGED_BAG(STATE(CurrLVars));
+    // call CHANGED_BAG on the previous value.
+    Obj prev = STATE(CurrLVars);
+    CHANGED_BAG(prev);
 
     GAP_ASSERT(IS_LVARS_OR_HVARS(old));
     LVarsHeader * hdr = (LVarsHeader *)ADDR_OBJ(old);
     STATE(CurrLVars) = old;
     STATE(PtrLVars) = (Obj *)hdr;
     STATE(PtrBody) = ADDR_OBJ(BODY_FUNC(hdr->func));
+
+    return prev;
 }
 
 EXPORT_INLINE void SWITCH_TO_OLD_LVARS_AND_FREE(Obj old)
@@ -253,6 +209,34 @@ EXPORT_INLINE void SWITCH_TO_OLD_LVARS_AND_FREE(Obj old)
 
   SWITCH_TO_OLD_LVARS(old);
 }
+
+
+/****************************************************************************
+**
+*F  SWITCH_TO_NEW_LVARS( <func>, <narg>, <nloc> ) . . . . switch to new lvars
+**
+**  'SWITCH_TO_NEW_LVARS'  creates and switches  to a new local variabes bag,
+**  for  the function    <func>,   with <narg> arguments    and  <nloc> local
+**  variables.  The old local variables bag is return.
+*/
+EXPORT_INLINE Obj SWITCH_TO_NEW_LVARS(Obj func, UInt narg, UInt nloc)
+{
+    // create new lvars (may cause garbage collection)
+    Obj           new_lvars = NewLVarsBag(narg + nloc);
+    LVarsHeader * hdr = (LVarsHeader *)ADDR_OBJ(new_lvars);
+    hdr->stat = 0;
+    hdr->func = func;
+    hdr->parent = STATE(CurrLVars);
+
+    return SWITCH_TO_OLD_LVARS(new_lvars);
+}
+
+
+/****************************************************************************
+**
+*F  SWITCH_TO_BOTTOM_LVARS( ) . . . . .  switch to bottom local variables bag
+*/
+Obj SWITCH_TO_BOTTOM_LVARS(void);
 
 
 /****************************************************************************

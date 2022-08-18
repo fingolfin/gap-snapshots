@@ -123,22 +123,22 @@ we have <i>s</i>(<i>v</i>) = <i>g</i>(<i>v</i>) + <i>t</i> for all <i>v</i>  &#8
 <p>
 If we fix a basis of <i>V</i> and then replace each <i>v</i>  &#8712; <i>V</i> by the column
 vector of its coefficients with respect to that basis (and hence <i>V</i>
-by the isomorphic column vector space <b>R</b><sup><i>n</i> \x 1</sup>), we can describe
-the linear mapping <i>g</i> involved in <i>s</i> by an <i>n</i> \x <i>n</i> matrix
+by the isomorphic column vector space <b>R</b><sup><i>n</i> &times;1</sup>), we can describe
+the linear mapping <i>g</i> involved in <i>s</i> by an <i>n</i> &times;<i>n</i> matrix
 <i>M</i><sub><i>g</i></sub>  &#8712; <i>GL</i><sub><i>n</i></sub>(<b>R</b>) which acts by multiplication from the left on
-the column vectors in <b>R</b><sup><i>n</i> \x 1</sup>.  Hence, if we identify <i>V</i> with
-<b>R</b><sup><i>n</i> \x 1</sup>, we have <i>s</i>(<i>v</i>) = <i>M</i><sub><i>g</i></sub> <i>v</i> + <i>t</i> for all 
-<i>v</i>  &#8712; <b>R</b><sup><i>n</i> \x 1</sup>.
+the column vectors in <b>R</b><sup><i>n</i> &times;1</sup>.  Hence, if we identify <i>V</i> with
+<b>R</b><sup><i>n</i> &times;1</sup>, we have <i>s</i>(<i>v</i>) = <i>M</i><sub><i>g</i></sub> <i>v</i> + <i>t</i> for all 
+<i>v</i>  &#8712; <b>R</b><sup><i>n</i> &times;1</sup>.
 <p>
-Moreover, if we extend each column vector <i>v</i>  &#8712; <b>R</b><sup><i>n</i> \x 1</sup> to a
+Moreover, if we extend each column vector <i>v</i>  &#8712; <b>R</b><sup><i>n</i> &times;1</sup> to a
 column [ [ <i>v</i> ], [ 1 ] ] of length <i>n</i>+1 by adding an entry 1 
-in the last position and if we define an (<i>n</i>+1) \x (<i>n</i>+1) matrix 
-<i>M</i><sub><i>s</i></sub> = [ [ <i>M</i><sub><i>g</i></sub>, <i>t</i> ], [ 0, 1 ] ], we have [ [ <i>s</i>(<i>v</i>) ], [ 1 ] ] = <i>M</i><sub><i>s</i></sub> [ [ <i>v</i> ], [ 1 ] ] for all <i>v</i>  &#8712; <b>R</b><sup><i>n</i> \x 1</sup>. This means that 
+in the last position and if we define an (<i>n</i>+1) &times;(<i>n</i>+1) matrix 
+<i>M</i><sub><i>s</i></sub> = [ [ <i>M</i><sub><i>g</i></sub>, <i>t</i> ], [ 0, 1 ] ], we have [ [ <i>s</i>(<i>v</i>) ], [ 1 ] ] = <i>M</i><sub><i>s</i></sub> [ [ <i>v</i> ], [ 1 ] ] for all <i>v</i>  &#8712; <b>R</b><sup><i>n</i> &times;1</sup>. This means that 
 we can represent the space group <i>S</i> by the isomorphic group 
 <i>M</i>(<i>S</i>) = { <i>M</i><sub><i>s</i></sub> &#124; <i>s</i>  &#8712; <i>S</i> }.  The submatrices <i>M</i><sub><i>g</i></sub> occurring in 
-the elements of <i>M</i>(<i>S</i>) form an <i>n</i> \x <i>n</i> matrix group <i>P</i>(<i>S</i>), the 
+the elements of <i>M</i>(<i>S</i>) form an <i>n</i> &times;<i>n</i> matrix group <i>P</i>(<i>S</i>), the 
 ``point group'' of <i>M</i>(<i>S</i>).  In fact, we can choose the basis of 
-<b>R</b><sup><i>n</i> \x 1</sup> such that <i>M</i><sub><i>g</i></sub>  &#8712; <i>GL</i><sub><i>n</i></sub>(<b>Z</b>) and  <i>t</i>  &#8712; <b>Q</b><sup><i>n</i> \x 1</sup> 
+<b>R</b><sup><i>n</i> &times;1</sup> such that <i>M</i><sub><i>g</i></sub>  &#8712; <i>GL</i><sub><i>n</i></sub>(<b>Z</b>) and  <i>t</i>  &#8712; <b>Q</b><sup><i>n</i> &times;1</sup> 
 for all <i>M</i><sub><i>s</i></sub>  &#8712; <i>M</i>(<i>S</i>).  In particular, the space group 
 representatives that are normally used by the crystallographers
 are of this form, and the book <a href="biblio.htm#BBNWZ78"><cite>BBNWZ78</cite></a> uses the same convention.
@@ -149,16 +149,16 @@ representation of the space group elements by matrices of the form
 [ [ <i>M</i><sub><i>g</i></sub>, <i>t</i> ], [ 0, 1 ] ] as described above. Instead of 
 considering the coefficient vectors as columns we may consider 
 them as rows.  Then we can associate to each affine mapping
-<i>s</i>  &#8712; <i>S</i> an (<i>n</i>+1) \x (<i>n</i>+1) matrix <i>M</i>\pif<sub><i>s</i></sub> = [ [ <i>M</i>\pif<sub><i>g</i>\pif</sub>, 0 ], [ <i>t</i>\pif, 1 ] ] with 
-<i>M</i>\pif<sub><i>g</i>\pif</sub>  &#8712; <i>GL</i><sub><i>n</i></sub>(<b>R</b>) and <i>t</i>\pif  &#8712; <b>R</b><sup>1 \x <i>n</i></sup> such 
-that [<i>s</i>(<i>v</i>\pif),1] = [<i>v</i>\pif,1] <i>M</i>\pif<sub><i>s</i></sub> for all 
-<i>v</i>\pif  &#8712; <b>R</b><sup>1 \x <i>n</i></sup>, and we may represent <i>S</i> by the matrix 
-group <i>M</i>\pif(<i>S</i>) = { <i>M</i>\pif<sub><i>s</i></sub> &#124; <i>s</i>  &#8712; <i>S</i> }.  Again, we can choose 
-the basis of <b>R</b><sup>1 \x <i>n</i></sup> such that <i>M</i>\pif<sub><i>g</i>\pif</sub>  &#8712; <i>GL</i><sub><i>n</i></sub>(<b>Z</b>) 
-and <i>t</i>\pif  &#8712; <b>Q</b><sup>1 \x <i>n</i></sup> for all <i>M</i>\pif<sub><i>s</i></sub>  &#8712; <i>M</i>\pif(<i>S</i>).
+<i>s</i>  &#8712; <i>S</i> an (<i>n</i>+1) &times;(<i>n</i>+1) matrix <i>M</i>&#8242;<sub><i>s</i></sub> = [ [ <i>M</i>&#8242;<sub><i>g</i>&#8242;</sub>, 0 ], [ <i>t</i>&#8242;, 1 ] ] with 
+<i>M</i>&#8242;<sub><i>g</i>&#8242;</sub>  &#8712; <i>GL</i><sub><i>n</i></sub>(<b>R</b>) and <i>t</i>&#8242; &#8712; <b>R</b><sup>1 &times;<i>n</i></sup> such 
+that [<i>s</i>(<i>v</i>&#8242;),1] = [<i>v</i>&#8242;,1] <i>M</i>&#8242;<sub><i>s</i></sub> for all 
+<i>v</i>&#8242; &#8712; <b>R</b><sup>1 &times;<i>n</i></sup>, and we may represent <i>S</i> by the matrix 
+group <i>M</i>&#8242;(<i>S</i>) = { <i>M</i>&#8242;<sub><i>s</i></sub> &#124; <i>s</i>  &#8712; <i>S</i> }.  Again, we can choose 
+the basis of <b>R</b><sup>1 &times;<i>n</i></sup> such that <i>M</i>&#8242;<sub><i>g</i>&#8242;</sub>  &#8712; <i>GL</i><sub><i>n</i></sub>(<b>Z</b>) 
+and <i>t</i>&#8242; &#8712; <b>Q</b><sup>1 &times;<i>n</i></sup> for all <i>M</i>&#8242;<sub><i>s</i></sub>  &#8712; <i>M</i>&#8242;(<i>S</i>).
 <p>
 From the mathematical point of view, both approaches are equivalent. 
-In particular, <i>M</i>(<i>S</i>) and <i>M</i>\pif(<i>S</i>) are isomorphic, for instance 
+In particular, <i>M</i>(<i>S</i>) and <i>M</i>&#8242;(<i>S</i>) are isomorphic, for instance 
 via the isomorphism &#964; mapping <i>M</i><sub><i>s</i></sub>  &#8712; <i>M</i>(<i>S</i>) to 
 (<i>M</i><sub><i>s</i></sub><sup><i>tr</i></sup>)<sup>&#8722;1</sup>.  Unfortunately, however, neither of the two 
 is a good choice for our <font face="Gill Sans,Helvetica,Arial">GAP</font> catalog.
@@ -175,15 +175,15 @@ properties of the matrix group <i>M</i>(<i>S</i>).  In particular, it contains a
 a leading part the name of the <b>Z</b>-class of the associated point
 group <i>P</i>(<i>S</i>).  Since the classification of space groups by affine
 equivalence is tantamount to their classification by abstract
-isomorphism, <i>M</i>\pif(<i>S</i>) lies in the same affine class as <i>M</i>(<i>S</i>) and
+isomorphism, <i>M</i>&#8242;(<i>S</i>) lies in the same affine class as <i>M</i>(<i>S</i>) and
 hence should get the same name as <i>M</i>(<i>S</i>).  But the point group <i>P</i>(<i>S</i>)
 that occurs in that name is not always <b>Z</b>-equivalent to the point
-group <i>P</i>\pif(<i>S</i>) of <i>M</i>\pif(<i>S</i>).  For example, the isomorphism &#964;: <i>M</i>(<i>S</i>) &#8594; <i>M</i>\pif(<i>S</i>) defined above maps the <b>Z</b>-class representative
+group <i>P</i>&#8242;(<i>S</i>) of <i>M</i>&#8242;(<i>S</i>).  For example, the isomorphism &#964;: <i>M</i>(<i>S</i>) &#8594; <i>M</i>&#8242;(<i>S</i>) defined above maps the <b>Z</b>-class representative
 with the parameters [3,7,3,2] (in the notation described below) to
 the <b>Z</b>-class representative with the parameters [3,7,3,3].  In
 other words: The space group names introduced for the groups <i>M</i>(<i>S</i>)
 in <a href="biblio.htm#BBNWZ78"><cite>BBNWZ78</cite></a> lead to confusing inconsistencies if assigned to the
-groups <i>M</i>\pif(<i>S</i>).
+groups <i>M</i>&#8242;(<i>S</i>).
 <p>
 In order to avoid this confusion we decided that the first convention
 is the lesser evil, and so the <font face="Gill Sans,Helvetica,Arial">GAP</font> catalog follows the book. In
@@ -640,7 +640,7 @@ gap&gt; DisplayZClass( 4, 21, 3, 1 );
 <li><code>MatGroupZClass( </code><var>dim</var><code>, </code><var>IT-number</var><code> )</code>
 <li><code>MatGroupZClass( </code><var>Hermann-Mauguin-symbol</var><code> )</code>
 <p>
-returns a <i>dim</i> \x <i>dim</i> matrix group <var>M</var>, say, which is a
+returns a <i>dim</i> &times;<i>dim</i> matrix group <var>M</var>, say, which is a
 representative of the specified <b>Z</b>-class.  Its generators satisfy
 the defining relators of the finitely presented group which may be
 computed by calling the <code>FpGroupQClass</code> function (see above) for the
@@ -688,7 +688,7 @@ gap&gt; CrystCatRecord( M ).parameters;
 <li><code>NormalizerZClass( </code><var>Hermann-Mauguin-symbol</var><code> )</code>
 <p>
 returns the normalizer <var>N</var>, say, in <i>GL</i>(<i>dim</i>,<b>Z</b>) of the representative
-<i>dim</i> \x <i>dim</i> matrix group which is constructed by the
+<i>dim</i> &times;<i>dim</i> matrix group which is constructed by the
 <code>MatGroupZClass</code> function (see above).
 <p>
 If the size of <var>N</var> is finite, then <var>N</var> again lies in some <b>Z</b>-class.
@@ -898,15 +898,15 @@ group of the specified space-group type without actually constructing
 that matrix group. The generators are given in the representation
 acting from the left on column vectors.
 <p>
-In more details: Let <var>n</var> = <var>dim</var> be the given dimension, and let <i>M</i><sub>1</sub>, &#8230;, <i>M</i><sub><i>r</i></sub> be the generators of the representative <i>n</i> \x <i>n</i>
+In more details: Let <var>n</var> = <var>dim</var> be the given dimension, and let <i>M</i><sub>1</sub>, &#8230;, <i>M</i><sub><i>r</i></sub> be the generators of the representative <i>n</i> &times;<i>n</i>
 matrix group of the given <b>Z</b>-class (this is the group which you will
 get if you call the <code>MatGroupZClass</code> function (see above) for that
 <b>Z</b>-class).  Then, for the given space-group type, the 
 <code>SpaceGroupOnLeftBBNWZ</code> function described below will construct as 
-representative of that space-group type an (<i>n</i>+1) \x (<i>n</i>+1) matrix 
+representative of that space-group type an (<i>n</i>+1) &times;(<i>n</i>+1) matrix 
 group which is generated by the <var>n</var> translations which are induced 
 by the (standard) basis vectors of the <var>n</var>-dimensional Euclidian space, 
-and <var>r</var> additional matrices <i>S</i><sub>1</sub>, &#8230;, <i>S</i><sub><i>r</i></sub> of the form <i>S</i><sub><i>i</i></sub> = [</td><td nowrap="nowrap"><table border="0" align="left" cellspacing="0" cellpadding="0"><tr><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>M</i><sub><i>i</i></sub> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="left"><i>t</i><sub><i>i</i></sub> </td></tr></table></td></tr> <tr><td nowrap="nowrap" align="center" colspan="1"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center"> 0 </td></tr></table></td><td nowrap="nowrap" align="center"><table><tr><td nowrap="nowrap" align="center" colspan="1">1 </td></tr></table></td></tr></table></td><td nowrap="nowrap"> ], where the <i>n</i> \x <i>n</i>
+and <var>r</var> additional matrices <i>S</i><sub>1</sub>, &#8230;, <i>S</i><sub><i>r</i></sub> of the form <i>S</i><sub><i>i</i></sub> = [</td><td nowrap="nowrap"><table border="0" align="left" cellspacing="0" cellpadding="0"><tr><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>M</i><sub><i>i</i></sub> </td></tr></table></td><td nowrap="nowrap" align="center"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="left"><i>t</i><sub><i>i</i></sub> </td></tr></table></td></tr> <tr><td nowrap="nowrap" align="center" colspan="1"><table border="0" cellspacing="0" cellpadding="2"><tr><td nowrap="nowrap" align="center"> 0 </td></tr></table></td><td nowrap="nowrap" align="center"><table><tr><td nowrap="nowrap" align="center" colspan="1">1 </td></tr></table></td></tr></table></td><td nowrap="nowrap"> ], where the <i>n</i> &times;<i>n</i>
 submatrices <i>M</i><sub><i>i</i></sub> are as defined above, and the <i>t</i><sub><i>i</i></sub> are <var>n</var>-columns
 with rational entries.  The <code>DisplaySpaceGroupGenerators</code> function
 saves time by not constructing the group, but just displaying the <i>r</i>
@@ -1071,5 +1071,5 @@ true
 <p>
 [<a href = "chapters.htm">Up</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<address>crystcat manual<br>Mai 2019
+<address>crystcat manual<br>Juli 2022
 </address></body></html>

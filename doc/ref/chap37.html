@@ -46,7 +46,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap37.html#X79AF6C757A3547BD">37.4 <span class="Heading">Operations for Associative Words</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap37.html#X8680FCAD83019E70">37.4-1 Length</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap37.html#X87CD4C6978A7936A">37.4-1 Length</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap37.html#X7F5ED4357A9C12E6">37.4-2 ExponentSumWord</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap37.html#X82CC92C17AF6FFA0">37.4-3 Subword</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap37.html#X8509A0A4851981BB">37.4-4 PositionWord</a></span>
@@ -166,20 +166,71 @@ a*b*c^-1*b*c*b^-1
 <h5>37.2-1 <span class="Heading">FreeGroup</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeGroup</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">rank</var>[, <var class="Arg">name</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeGroup</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">name1</var>, <var class="Arg">name2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeGroup</code>( [<var class="Arg">wfilt</var>][,] [<var class="Arg">name1</var>[, <var class="Arg">name2</var>[, <var class="Arg">...</var>]]] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeGroup</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">names</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeGroup</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">infinity</var>, <var class="Arg">name</var>, <var class="Arg">init</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Called with a positive integer <var class="Arg">rank</var>, <code class="func">FreeGroup</code> returns a free group on <var class="Arg">rank</var> generators. If the optional argument <var class="Arg">name</var> is given then the generators are printed as <var class="Arg">name</var><code class="code">1</code>, <var class="Arg">name</var><code class="code">2</code> etc., that is, each name is the concatenation of the string <var class="Arg">name</var> and an integer from <code class="code">1</code> to <var class="Arg">range</var>. The default for <var class="Arg">name</var> is the string <code class="code">"f"</code>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeGroup</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">infinity</var>[, <var class="Arg">name</var>][, <var class="Arg">init</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><code class="code">FreeGroup</code> returns a free group. The number of generators, and the labels given to the generators, can be specified in several different ways. Warning: the labels of generators are only an aid for printing, and do not necessarily distinguish generators; see the examples at the end of <code class="func">FreeSemigroup</code> (<a href="chap51.html#X7C72E4747BF642BB"><span class="RefLink">51.1-10</span></a>) for more information.</p>
 
-<p>Called in the second form, <code class="func">FreeGroup</code> returns a free group on as many generators as arguments, printed as <var class="Arg">name1</var>, <var class="Arg">name2</var> etc.</p>
 
-<p>Called in the third form, <code class="func">FreeGroup</code> returns a free group on as many generators as the length of the list <var class="Arg">names</var>, the <span class="SimpleMath">i</span>-th generator being printed as <var class="Arg">names</var><code class="code">[</code><span class="SimpleMath">i</span><code class="code">]</code>.</p>
+<dl>
+<dt><strong class="Mark">
+    1: For a given rank, and an optional generator name prefix
+  </strong></dt>
+<dd><p>Called with a nonnegative integer <var class="Arg">rank</var>, <code class="func">FreeGroup</code> returns a free group on <var class="Arg">rank</var> generators. The optional argument <var class="Arg">name</var> must be a string; its default value is <code class="code">"f"</code>.</p>
 
-<p>Called in the fourth form, <code class="func">FreeGroup</code> returns a free group on infinitely many generators, where the first generators are printed by the names in the list <var class="Arg">init</var>, and the other generators by <var class="Arg">name</var> and an appended number.</p>
+<p>If <var class="Arg">name</var> is not given but the <code class="code">generatorNames</code> option is, then this option is respected as described in Section <a href="chap50.html#X7D0FFDA4793995FC"><span class="RefLink">50.1-16</span></a>.</p>
 
-<p>If the extra argument <var class="Arg">wfilt</var> is given, it must be either <code class="code">IsSyllableWordsFamily</code> or <code class="code">IsLetterWordsFamily</code> or <code class="code">IsWLetterWordsFamily</code> or <code class="code">IsBLetterWordsFamily</code>. This filter then specifies the representation used for the elements of the free group (see <a href="chap37.html#X80A9F39582ED296E"><span class="RefLink">37.6</span></a>). If no such filter is given, a letter representation is used.</p>
+<p>Otherwise, the generators of the returned free group are labelled <var class="Arg">name</var><code class="code">1</code>, ..., <var class="Arg">name</var><code class="code">k</code>, where <code class="code">k</code> is the value of <var class="Arg">rank</var>.</p>
 
-<p>(For interfacing to old code that omits the representation flag, use of the syllable representation is also triggered by setting the option <code class="code">FreeGroupFamilyType</code> to the string <code class="code">"syllable"</code>.)</p>
+</dd>
+<dt><strong class="Mark">2: For given generator names</strong></dt>
+<dd><p>Called with various nonempty strings, <code class="func">FreeGroup</code> returns a free group on as many generators as arguments, which are labelled <var class="Arg">name1</var>, <var class="Arg">name2</var>, etc.</p>
+
+</dd>
+<dt><strong class="Mark">3: For a given list of generator names</strong></dt>
+<dd><p>Called with a finite list <var class="Arg">names</var> of nonempty strings, <code class="func">FreeGroup</code> returns a free group on <code class="code">Length(<var class="Arg">names</var>)</code> generators, whose <code class="code">i</code>-th generator is labelled <var class="Arg">names</var><code class="code">[i]</code>.</p>
+
+</dd>
+<dt><strong class="Mark">
+    4: For the rank <code class="keyw">infinity</code>,
+       an optional default generator name prefix,
+       and an optional finite list of generator names
+  </strong></dt>
+<dd><p>Called in the fourth form, <code class="func">FreeGroup</code> returns a free group on infinitely many generators. The optional argument <var class="Arg">name</var> must be a string; its default value is <code class="code">"f"</code>, and the optional argument <var class="Arg">init</var> must be a finite list of nonempty strings; its default value is an empty list. The generators are initially labelled according to the list <var class="Arg">init</var>, followed by <var class="Arg">name</var><code class="code">i</code> for each <code class="code">i</code> in the range from <code class="code">Length(<var class="Arg">init</var>)+1</code> to <code class="keyw">infinity</code>.</p>
+
+</dd>
+</dl>
+<p>If the optional first argument <var class="Arg">wfilt</var> is given, then it must be either <code class="code">IsSyllableWordsFamily</code>, <code class="code">IsLetterWordsFamily</code>, <code class="code">IsWLetterWordsFamily</code>, or <code class="code">IsBLetterWordsFamily</code>. This filter specifies the representation used for the elements of the free group (see <a href="chap37.html#X80A9F39582ED296E"><span class="RefLink">37.6</span></a>). If no such filter is given, a letter representation is used.</p>
+
+<p>(For interfacing to old code that omits the representation flag, use of the syllable representation is also triggered by setting the option <code class="code">FreeGroupFamilyType</code> to the string <code class="code">"syllable"</code>; this is overwritten by the optional first argument if it is given.)</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeGroup(5);</span>
+&lt;free group on the generators [ f1, f2, f3, f4, f5 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeGroup(4, "gen");</span>
+&lt;free group on the generators [ gen1, gen2, gen3, gen4 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeGroup(3 : generatorNames := "ack");</span>
+&lt;free group on the generators [ ack1, ack2, ack3 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeGroup(2 : generatorNames := ["u", "v", "w"]);</span>
+&lt;free group on the generators [ u, v ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeGroup();</span>
+&lt;free group of rank zero&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeGroup("a", "b", "c");</span>
+&lt;free group on the generators [ a, b, c ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeGroup(["x", "y"]);</span>
+&lt;free group on the generators [ x, y ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeGroup(infinity);</span>
+&lt;free group with infinity generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := FreeGroup(infinity, "g", ["a", "b"]);</span>
+&lt;free group with infinity generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfGroup(F){[1..4]};</span>
+[ a, b, g3, g4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfGroup(FreeGroup(infinity, "gen")){[1..3]};</span>
+[ gen1, gen2, gen3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeGroup(IsSyllableWordsFamily, 50);</span>
+&lt;free group with 50 generators&gt;
+</pre></div>
 
 <p><a id="X8601654A7C4AF1E7" name="X8601654A7C4AF1E7"></a></p>
 
@@ -209,7 +260,7 @@ varn:=GeneratorsOfGroup(G)[n];
 
 <p>However, since overwriting global variables can be very dangerous, <em>it is not permitted to use this function within a function</em>. (If –despite this warning– this is done, the result is undefined.)</p>
 
-<p>If the assignment overwrites existing variables a warning is given, if any of the variables if write protected, or any of the generator names would not be a proper variable name, an error is raised.</p>
+<p>If the assignment overwrites existing variables a warning is given, if any of the variables is write protected, or any of the generator names would not be a proper variable name, an error is raised.</p>
 
 <p><a id="X8405BECB7AC4EB61" name="X8405BECB7AC4EB61"></a></p>
 
@@ -287,7 +338,7 @@ true
 
 <p>See Section <a href="chap37.html#X80A9F39582ED296E"><span class="RefLink">37.6</span></a> for a discussion of the internal representations of associative words that are supported by <strong class="pkg">GAP</strong>. Note that operations to extract or act on parts of words (letter or syllables) can carry substantially different costs, depending on the representation the words are in.</p>
 
-<p><a id="X8680FCAD83019E70" name="X8680FCAD83019E70"></a></p>
+<p><a id="X87CD4C6978A7936A" name="X87CD4C6978A7936A"></a></p>
 
 <h5>37.4-1 Length</h5>
 
@@ -757,7 +808,7 @@ true
 <h5>37.8-8 IntegratedStraightLineProgram</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntegratedStraightLineProgram</code>( <var class="Arg">listofprogs</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>For a nonempty dense list <var class="Arg">listofprogs</var> of straight line programs <span class="SimpleMath">p_1, p_2, ..., p_m</span>, say, that have the same number <span class="SimpleMath">n</span>, say, of inputs (see <code class="func">NrInputsOfStraightLineProgram</code> (<a href="chap37.html#X820A592881D57802"><span class="RefLink">37.8-4</span></a>)), <code class="func">IntegratedStraightLineProgram</code> returns a straight line program <span class="SimpleMath">prog</span> with <span class="SimpleMath">n</span> inputs such that for each <span class="SimpleMath">n</span>-tuple <span class="SimpleMath">gens</span> of generators, <code class="code">ResultOfStraightLineProgram( </code><span class="SimpleMath">prog, gens</span><code class="code"> )</code> is the concatenation of the lists <span class="SimpleMath">r_1, r_2, ..., r_m</span>, where <span class="SimpleMath">r_i</span> is equal to <code class="code">ResultOfStraightLineProgram( </code><span class="SimpleMath">p_i, gens</span><code class="code"> )</code> if this result is a list of elements, and otherwise <span class="SimpleMath">r_i</span> is equal to the list of length one that contains this result.</p>
+<p>For a nonempty dense list <var class="Arg">listofprogs</var> of straight line programs <span class="SimpleMath">p_1, p_2, ..., p_m</span> that have the same number <span class="SimpleMath">n</span> of inputs (see <code class="func">NrInputsOfStraightLineProgram</code> (<a href="chap37.html#X820A592881D57802"><span class="RefLink">37.8-4</span></a>)), <code class="func">IntegratedStraightLineProgram</code> returns a straight line program <span class="SimpleMath">prog</span> with <span class="SimpleMath">n</span> inputs such that for each <span class="SimpleMath">n</span>-tuple <span class="SimpleMath">gens</span> of generators, <code class="code">ResultOfStraightLineProgram( </code><span class="SimpleMath">prog, gens</span><code class="code"> )</code> is the concatenation of the lists <span class="SimpleMath">r_1, r_2, ..., r_m</span>, where <span class="SimpleMath">r_i</span> is equal to <code class="code">ResultOfStraightLineProgram( </code><span class="SimpleMath">p_i, gens</span><code class="code"> )</code> if this result is a list of elements, and otherwise <span class="SimpleMath">r_i</span> is equal to the list of length one that contains this result.</p>
 
 
 <div class="example"><pre>
@@ -798,14 +849,14 @@ true
 <h5>37.8-11 IntermediateResultOfSLPWithoutOverwrite</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntermediateResultOfSLPWithoutOverwrite</code>( <var class="Arg">slp</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Returns a new slp that calculates only the value of slot <var class="Arg">k</var>, which must be an integer. Note that <var class="Arg">slp</var> must not overwrite slots but only append!!! Use <code class="func">IntermediateResultOfSLP</code> (<a href="chap37.html#X7EF202F17DCA5D1C"><span class="RefLink">37.8-10</span></a>) in the other case! <var class="Arg">slp</var> is either an slp or a pair where the first entry is the lines of the slp and the second is the number of inputs.</p>
+<p>Returns a new slp that calculates only the value of slot <var class="Arg">k</var>, which must be an integer. Note that <var class="Arg">slp</var> must not overwrite slots but only append!!! Use <code class="func">IntermediateResultOfSLP</code> (<a href="chap37.html#X7EF202F17DCA5D1C"><span class="RefLink">37.8-10</span></a>) in the other case! <var class="Arg">slp</var> is either an slp or a pair where the first entry is the list of lines of the slp and the second is the number of its inputs.</p>
 
 <p><a id="X873244F37FAA717A" name="X873244F37FAA717A"></a></p>
 
 <h5>37.8-12 IntermediateResultsOfSLPWithoutOverwrite</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntermediateResultsOfSLPWithoutOverwrite</code>( <var class="Arg">slp</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Returns a new slp that calculates only the value of slots contained in the list k. Note that <var class="Arg">slp</var> must not overwrite slots but only append!!! Use <code class="func">IntermediateResultOfSLP</code> (<a href="chap37.html#X7EF202F17DCA5D1C"><span class="RefLink">37.8-10</span></a>) in the other case! <var class="Arg">slp</var> is either a slp or a pair where the first entry is the lines of the slp and the second is the number of inputs.</p>
+<p>Returns a new slp that calculates only the values of slots contained in the list <var class="Arg">k</var>. Note that <var class="Arg">slp</var> must not overwrite slots but only append!!! Use <code class="func">IntermediateResultOfSLP</code> (<a href="chap37.html#X7EF202F17DCA5D1C"><span class="RefLink">37.8-10</span></a>) in the other case! <var class="Arg">slp</var> is either a slp or a pair where the first entry is the list of lines of the slp and the second is the number of its inputs.</p>
 
 <p><a id="X837101F982C35035" name="X837101F982C35035"></a></p>
 

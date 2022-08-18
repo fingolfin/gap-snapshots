@@ -109,16 +109,22 @@ false
 <h5>29.1-2 RecNames</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RecNames</code>( <var class="Arg">record</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>returns a list of strings corresponding to the names of the record components of the record <var class="Arg">record</var>.</p>
+<p>returns a duplicate-free list of strings corresponding to the names of the record components of the record <var class="Arg">record</var>.</p>
+
+<p>The list is sorted by <code class="func">RNamObj</code> (<a href="chap29_mj.html#X78199B6B84A017B9"><span class="RefLink">29.7-2</span></a>) for reasons of efficiency; see <code class="func">SortBy</code> (<a href="chap21_mj.html#X7FE4975F8166884D"><span class="RefLink">21.18-1</span></a>). Therefore the ordering is consistent within one <strong class="pkg">GAP</strong> session, but it is not necessarily consistent across different sessions. To obtain a result that is consistent across <strong class="pkg">GAP</strong> sessions, apply <code class="func">Set</code> (<a href="chap30_mj.html#X7E399AC97FD98217"><span class="RefLink">30.3-7</span></a>) to the returned list.</p>
+
+<p>Note that given a string <code class="code">name</code> containing the name of a record component, you can access the record component via <code class="code"><var class="Arg">record</var>.(name)</code>, see Sections <a href="chap29_mj.html#X7EAAE25D7A17F778"><span class="RefLink">29.2</span></a> and <a href="chap29_mj.html#X806DE3BD78742CA4"><span class="RefLink">29.3</span></a>.</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := rec( a := 1, b := 2 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set(RecNames( r )); # 'Set' because ordering depends on GAP session</span>
 [ "a", "b" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set(RecNames( r ), x -&gt; r.(x));</span>
+[ 1, 2 ]
 </pre></div>
 
-<p>Note that you cannot use the string result in the ordinary way to access or change a record component. You can use the <code class="code"><var class="Arg">record</var>.(<var class="Arg">name</var>)</code> construct for that, see <a href="chap29_mj.html#X7EAAE25D7A17F778"><span class="RefLink">29.2</span></a> and <a href="chap29_mj.html#X806DE3BD78742CA4"><span class="RefLink">29.3</span></a>.</p>
+<p>Note that it is most efficient to assign components to a (new or old) record in the order given by <code class="func">RecNames</code>.</p>
 
 <p><a id="X7EAAE25D7A17F778" name="X7EAAE25D7A17F778"></a></p>
 

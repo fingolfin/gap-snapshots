@@ -208,7 +208,7 @@
 ##  object in <Ref Filt="IsFFE"/>.
 ##  All finite field elements of the same characteristic form a family in
 ##  &GAP; (see&nbsp;<Ref Sect="Families"/>).
-##  Any collection of finite field elements
+##  Any collection of finite field elements of the same characteristic
 ##  (see&nbsp;<Ref Filt="IsCollection"/>) lies in
 ##  <Ref Filt="IsFFECollection"/>, and a collection of such collections
 ##  (e.g., a matrix of finite field elements) lies in
@@ -322,10 +322,8 @@ DeclareGlobalFunction( "FFEFamily" );
 ##  </Description>
 ##  </ManSection>
 ##
-BIND_GLOBAL( "FAMS_FFE_LARGE", [ [], [] ] );
-if IsHPCGAP then
-    ShareSpecialObj( FAMS_FFE_LARGE );
-fi;
+BIND_GLOBAL( "FAMS_FFE_LARGE", NEW_SORTED_CACHE(false) );
+
 
 #############################################################################
 ##
@@ -346,7 +344,7 @@ fi;
 ##  </Description>
 ##  </ManSection>
 ##
-DeclareGlobalVariable( "GALOIS_FIELDS" );
+BIND_GLOBAL( "GALOIS_FIELDS", NEW_SORTED_CACHE(true) );
 
 
 #############################################################################
@@ -668,7 +666,7 @@ DeclareAttribute( "AsInternalFFE", IsFFE);
 ##
 ##  <Description>
 ##  <Ref Func="RootFFE"/> returns a finite field element 
-##  <A>r</A> from <F> whose <A>k</A>-th power is <A>z</A>.
+##  <A>r</A> from <A>F</A> whose <A>k</A>-th power is <A>z</A>.
 ##  If no such element exists
 ##  then
 ##  <K>fail</K> is returned.

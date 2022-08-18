@@ -308,7 +308,8 @@
     [4X[25X>[125X [27X       "[\"MXN\",[\"C4\",1]],\n",[127X[104X
     [4X[25X>[125X [27X       "[\"MXO\",[\"C4\",[2]]],\n",[127X[104X
     [4X[25X>[125X [27X       "[\"MXS\",[\"C4\",[\"C2\"]]],\n",[127X[104X
-    [4X[25X>[125X [27X       "[\"RNG\",[\"C4G1-Ar1aB0\",\"CF(4)\"]],\n",[127X[104X
+    [4X[25X>[125X [27X       "[\"RNG\",[\"C4G1-Ar1aB0\",\"CF(4)\",",[127X[104X
+    [4X[25X>[125X [27X                 "[\"QuadraticField\",-1],[1,0,1]]],\n",[127X[104X
     [4X[25X>[125X [27X       "[\"API\",[\"C4G1-p4B0\",[1,4,\"imprim\",\"1 < C2\"]]],\n",[127X[104X
     [4X[25X>[125X [27X       "[\"API\",[\"A5G1-p60B0\",[1,60,\"imprim\",\"1 < S3\"]]]\n",[127X[104X
     [4X[25X>[125X [27X       "]\n",[127X[104X
@@ -395,8 +396,9 @@
     [4X[28Xrec( contents := "priv", dim := 1, generators := [ [ [ E(4) ] ] ], [128X[104X
     [4X[28X  groupname := "C4", id := "a", [128X[104X
     [4X[28X  identifier := [ "C4", [ [ "priv", "C4G1-Ar1aB0.g" ] ], 1, 1 ], [128X[104X
-    [4X[28X  repname := "C4G1-Ar1aB0", repnr := 2, ring := GaussianRationals, [128X[104X
-    [4X[28X  size := 4, standardization := 1, type := "matalg" )[128X[104X
+    [4X[28X  polynomial := [ 1, 0, 1 ], repname := "C4G1-Ar1aB0", repnr := 2, [128X[104X
+    [4X[28X  ring := GaussianRationals, size := 4, standardization := 1, [128X[104X
+    [4X[28X  type := "matalg" )[128X[104X
     [4X[25Xgap>[125X [27XAtlasGenerators( "C4", 3 );[127X[104X
     [4X[28Xfail[128X[104X
     [4X[25Xgap>[125X [27XAtlasProgram( "C4", "other", "test" );[127X[104X
@@ -488,7 +490,7 @@
     [4X[28X[128X[104X
     [4X[28X["MXS",["C4",["C2"]]],[128X[104X
     [4X[28X[128X[104X
-    [4X[28X["RNG",["C4G1-Ar1aB0","CF(4)"]],[128X[104X
+    [4X[28X["RNG",["C4G1-Ar1aB0","CF(4)",["QuadraticField",-1],[1,0,1]]],[128X[104X
     [4X[28X[128X[104X
     [4X[28X["API",["A5G1-p60B0",[1,60,"imprim","1 < S3"]]],[128X[104X
     [4X[28X["API",["C4G1-p4B0",[1,4,"imprim","1 < C2"]]],[128X[104X
@@ -527,7 +529,7 @@
     [4X[28X["TOC",["maxes","C4G1-max1W1",[-27672877]]],[128X[104X
     [4X[28X["TOC",["perm","C4G1-p4B0.m",[102601978]]],[128X[104X
     [4X[28X[128X[104X
-    [4X[28X["RNG",["C4G1-Ar1aB0","CF(4)"]],[128X[104X
+    [4X[28X["RNG",["C4G1-Ar1aB0","CF(4)",["QuadraticField",-1],[1,0,1]]],[128X[104X
     [4X[28X[128X[104X
     [4X[28X["API",["A5G1-p60B0",[1,60,"imprim","1 < S3"]]],[128X[104X
     [4X[28X["API",["C4G1-p4B0",[1,4,"imprim","1 < C2"]]],[128X[104X

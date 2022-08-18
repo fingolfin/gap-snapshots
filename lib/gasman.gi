@@ -11,11 +11,27 @@
 ##  This file contains implementations of functions that report information from the
 ##  GASMAN garbage collector
 ##
+
+
+#############################################################################
+##
+#F  CollectGarbage( <full> )
+##
+##  This function works *not* only if GAP uses GASMAN.
+##
+InstallGlobalFunction( CollectGarbage, function( full )
+    if full then
+      GASMAN( "collect" );
+    else
+      GASMAN( "partial" );
+    fi;
+end );
+
 #############################################################################
 ##
 #F  GasmanStatistics( )
 ##
-
+if GAPInfo.KernelInfo.GC = "GASMAN" then
 InstallGlobalFunction(GasmanStatistics,
         function()
     local raw,cooked,convertrow;
@@ -40,11 +56,14 @@ InstallGlobalFunction(GasmanStatistics,
     cooked.nfull := raw[2][9];    
     return cooked;
 end );
+fi;
+
 
 #############################################################################
 ##
 #F  GasmanMessageStatus()
 ##
+if GAPInfo.KernelInfo.GC = "GASMAN" then
 InstallGlobalFunction(GasmanMessageStatus,
         function()
     local stat;
@@ -57,16 +76,22 @@ InstallGlobalFunction(GasmanMessageStatus,
         return "all";
     fi;
 end );
+fi;
 
 
 #############################################################################
 ##
 #F  SetGasmanMessageStatus( <status> )
 ##
-
+if GAPInfo.KernelInfo.GC = "GASMAN" then
 InstallGlobalFunction(SetGasmanMessageStatus,
         function(stat)
     local oldstat,newstat,i;
+    if GAPInfo.KernelInfo.GC <> "GASMAN" and stat <> "none" then
+      Info( InfoWarning, 1,
+            "SetGasmanMessageStatus makes sense only if GASMAN is running" );
+      return;
+    fi;
     oldstat := GASMAN_MESSAGE_STATUS();
     newstat := Position(["none", "full", "all"], stat);
     if newstat = fail then
@@ -78,17 +103,22 @@ InstallGlobalFunction(SetGasmanMessageStatus,
     od;
     return;
 end);
+fi;
+
 
 #############################################################################
 ##
 #F  GasmanLimits( )
 ##
-
+if GAPInfo.KernelInfo.GC = "GASMAN" then
 InstallGlobalFunction(GasmanLimits, 
         function()
-    local raw;
+    local raw, r;
     raw := GASMAN_LIMITS();
-    return rec(min := raw[1],
-               max := raw[2],
-               kill := raw[3]);
+    r := rec();
+    if IsBound(raw[1]) then r.min := raw[1]; fi;
+    if IsBound(raw[2]) then r.max := raw[2]; fi;
+    if IsBound(raw[3]) then r.kill := raw[3]; fi;
+    return r;
 end);
+fi;

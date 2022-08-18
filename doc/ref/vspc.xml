@@ -1,9 +1,8 @@
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <!-- %% -->
-<!-- %A  vspc.msk                     GAP documentation            Willem de Graaf -->
+<!-- %A  vspc.xml                     GAP documentation            Willem de Graaf -->
 <!-- %A                                                              Thomas Breuer -->
 <!-- %% -->
-<!-- %A  @(#)<M>Id: vspc.msk,v 1.23 2003/07/21 19:49:06 gap Exp </M> -->
 <!-- %% -->
 <!-- %Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland -->
 <!-- %Y  Copyright (C) 2002 The GAP Group -->
@@ -184,6 +183,17 @@
 <#Include Label="CheckForHandlingByNiceBasis">
 
 </Section>
+
+
+<Section Label="Tensor Products and Exterior and Symmetric Powers">
+<Heading>Tensor Products and Exterior and Symmetric Powers</Heading>
+
+<#Include Label="TensorProduct">
+<#Include Label="ExteriorPower">
+<#Include Label="SymmetricPower">
+
+</Section>
+
 </Chapter>
 
 

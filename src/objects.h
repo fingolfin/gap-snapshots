@@ -31,7 +31,7 @@
 **
 **  'Obj' is the type of objects.
 **
-**  The following is defined in "system.h"
+**  The following is defined in "common.h"
 **
 #define Obj             Bag
 */
@@ -44,7 +44,7 @@
 **  'IS_FFE'  returns 1  if the  object <o>  is  an  (immediate) finite field
 **  element and 0 otherwise.
 */
-EXPORT_INLINE Int IS_FFE(Obj o)
+EXPORT_INLINE BOOL IS_FFE(Obj o)
 {
     return (Int)o & 0x02;
 }
@@ -223,37 +223,6 @@ enum TNUM {
     // last mutable/immutable TNUM
     END_ENUM_RANGE(LAST_IMM_MUT_TNUM),
 
-    // external types
-    START_ENUM_RANGE(FIRST_EXTERNAL_TNUM),
-        T_COMOBJ,
-        T_POSOBJ,
-        T_DATOBJ,
-        T_WPOBJ,
-#ifdef HPCGAP
-        T_ACOMOBJ,
-        T_APOSOBJ,
-#endif
-
-        // package TNUMs, for use by kernel extensions
-        //
-        // The value of LAST_REAL_TNUM must not exceed 254.
-        // This restricts the value for LAST_PACKAGE_TNUM indirectly. It is
-        // difficult to describe the largest possible value with a formula,
-        // as LAST_REAL_TNUM itself changes depending LAST_PACKAGE_TNUM, and
-        // the fact that some TNUMs are forced to be even causes additional
-        // jumps; increasing LAST_PACKAGE_TNUM by 1 can lead to
-        // LAST_REAL_TNUM growing by 2. So we simply hand-pick
-        // LAST_PACKAGE_TNUM as the largest value that does not trigger the
-        // GAP_STATIC_ASSERT following this enum.
-        FIRST_PACKAGE_TNUM,
-#ifdef HPCGAP
-        LAST_PACKAGE_TNUM   = FIRST_PACKAGE_TNUM + 153,
-#else
-        LAST_PACKAGE_TNUM   = FIRST_PACKAGE_TNUM + 167,
-#endif
-
-    END_ENUM_RANGE(LAST_EXTERNAL_TNUM),
-
 #ifdef HPCGAP
     START_ENUM_RANGE(FIRST_SHARED_TNUM),
         // primitive types
@@ -266,20 +235,36 @@ enum TNUM {
         T_BARRIER,
         T_SYNCVAR,
         // atomic lists and records, thread local records
-    START_ENUM_RANGE(FIRST_ATOMIC_TNUM),
-    START_ENUM_RANGE(FIRST_ATOMIC_LIST_TNUM),
-        T_FIXALIST,
-        T_ALIST,
-    END_ENUM_RANGE(LAST_ATOMIC_LIST_TNUM),
-    START_ENUM_RANGE(FIRST_ATOMIC_RECORD_TNUM),
-        T_AREC,
-        T_AREC_INNER,
-        T_TLREC,
-        T_TLREC_INNER,
-    END_ENUM_RANGE(LAST_ATOMIC_RECORD_TNUM),
-    END_ENUM_RANGE(LAST_ATOMIC_TNUM),
+        START_ENUM_RANGE(FIRST_ATOMIC_TNUM),
+            START_ENUM_RANGE(FIRST_ATOMIC_LIST_TNUM),
+                T_FIXALIST,
+                T_ALIST,
+            END_ENUM_RANGE(LAST_ATOMIC_LIST_TNUM),
+            START_ENUM_RANGE(FIRST_ATOMIC_RECORD_TNUM),
+                T_AREC,
+                T_AREC_INNER,
+                T_TLREC,
+                T_TLREC_INNER,
+            END_ENUM_RANGE(LAST_ATOMIC_RECORD_TNUM),
+        END_ENUM_RANGE(LAST_ATOMIC_TNUM),
     END_ENUM_RANGE(LAST_SHARED_TNUM),
 #endif
+
+    // external types
+    START_ENUM_RANGE(FIRST_EXTERNAL_TNUM),
+        T_COMOBJ,
+        T_POSOBJ,
+        T_DATOBJ,
+        T_WPOBJ,
+#ifdef HPCGAP
+        T_ACOMOBJ,
+        T_APOSOBJ,
+#endif
+        // package TNUMs, for use by kernel extensions
+        FIRST_PACKAGE_TNUM,
+        LAST_PACKAGE_TNUM = 253,
+
+    END_ENUM_RANGE(LAST_EXTERNAL_TNUM),
 
     END_ENUM_RANGE(LAST_REAL_TNUM),
 
@@ -334,9 +319,12 @@ EXPORT_INLINE void CLEAR_OBJ_FLAG(Obj obj, uint8_t flag)
 **
 */
 enum {
-    TESTING = (1 << 0),
+    // OBJ_FLAG_TESTING is used by KTNumPlist for tagging objects as they are
+    // recursively traversed
+    OBJ_FLAG_TESTING = (1 << 0),
+
 #ifdef HPCGAP
-    TESTED  = (1 << 1),
+    OBJ_FLAG_TESTED  = (1 << 1),
 #endif
 };
 
@@ -468,7 +456,7 @@ enum {
 *F  ID_TYPE( <type> ) . . . . . . . . . . . . . . . . . . . . .  id of a type
 **
 **  'ID_TYPE' returns the ID of  a type.  Warning: if  GAP runs out of ID  it
-**  will renumber all IDs.  Therefore the  corresponding routine must excatly
+**  will renumber all IDs.  Therefore the  corresponding routine must exactly
 **  know where such numbers are stored.
 */
 #define ID_TYPE(type) ELM_PLIST(type, POS_NUMB_TYPE)
@@ -491,16 +479,13 @@ EXPORT_INLINE Obj TYPE_OBJ(Obj obj)
 
 /****************************************************************************
 **
-*F  SET_TYPE_OBJ( <obj>, <kind> ) . . . . . . . . . . . set kind of an object
+*F  SET_TYPE_OBJ( <obj>, <type> ) . . . . . . . . . . . set type of an object
 **
-**  'SET_TYPE_OBJ' sets the kind <kind>of the object <obj>.
+**  'SET_TYPE_OBJ' sets the type of the object <obj> to <type>; if <obj>
+**  is not a posobj/comobj/datobj, attempts to first convert it to one; if
+**  that fails, an error is raised.
 */
-extern void (*SetTypeObjFuncs[ LAST_REAL_TNUM+1 ]) ( Obj obj, Obj kind );
-EXPORT_INLINE void SET_TYPE_OBJ(Obj obj, Obj type)
-{
-    UInt tnum = TNUM_OBJ(obj);
-    (*SetTypeObjFuncs[tnum])(obj, type);
-}
+void SET_TYPE_OBJ(Obj obj, Obj type);
 
 
 /****************************************************************************
@@ -565,12 +550,12 @@ void CheckedMakeImmutable(Obj obj);
 **  'IS_MUTABLE_OBJ' returns   1 if the object  <obj> is mutable   (i.e., can
 **  change due to assignments), and 0 otherwise.
 */
-extern Int (*IsMutableObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
-EXPORT_INLINE Int IS_MUTABLE_OBJ(Obj obj)
+extern BOOL (*IsMutableObjFuncs[LAST_REAL_TNUM + 1])(Obj obj);
+EXPORT_INLINE BOOL IS_MUTABLE_OBJ(Obj obj)
 {
     UInt tnum = TNUM_OBJ(obj);
     if (/*FIRST_CONSTANT_TNUM <= tnum &&*/ tnum <= LAST_CONSTANT_TNUM)
-        return 0;
+        return FALSE;
     if (FIRST_IMM_MUT_TNUM <= tnum && tnum <= LAST_IMM_MUT_TNUM)
         return !(tnum & IMMUTABLE);
     return ((*IsMutableObjFuncs[tnum])(obj));
@@ -588,7 +573,7 @@ EXPORT_INLINE Int IS_MUTABLE_OBJ(Obj obj)
 */
 
 #ifdef HPCGAP
-Int IsInternallyMutableObj(Obj obj);
+BOOL IsInternallyMutableObj(Obj obj);
 #endif
 
 /****************************************************************************
@@ -605,10 +590,11 @@ Int IsInternallyMutableObj(Obj obj);
 **  size and type have already been saved.
 **  No saving function may allocate any bag.
 */
-
+#ifdef GAP_ENABLE_SAVELOAD
 extern void (*SaveObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 
 void SaveObjError(Obj obj);
+#endif
 
 
 /****************************************************************************
@@ -625,10 +611,13 @@ void SaveObjError(Obj obj);
 **  contains the bag in question.
 **  No loading function may allocate any bag.
 */
+#ifdef GAP_ENABLE_SAVELOAD
 
 extern void (*LoadObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 
 void LoadObjError(Obj obj);
+#endif
+
 
 /****************************************************************************
 **
@@ -637,8 +626,8 @@ void LoadObjError(Obj obj);
 **  'IS_COPYABLE_OBJ' returns 1 if the object <obj> is copyable (i.e., can be
 **  copied into a mutable object), and 0 otherwise.
 */
-extern Int (*IsCopyableObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
-EXPORT_INLINE Int IS_COPYABLE_OBJ(Obj obj)
+extern BOOL (*IsCopyableObjFuncs[LAST_REAL_TNUM + 1])(Obj obj);
+EXPORT_INLINE BOOL IS_COPYABLE_OBJ(Obj obj)
 {
     UInt tnum = TNUM_OBJ(obj);
     return (IsCopyableObjFuncs[tnum])(obj);
@@ -775,6 +764,11 @@ void SetPrintObjIndex(Int index);
 **  <obj> of this type.
 */
 extern void (* PrintObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
+EXPORT_INLINE void PRINT_OBJ(Obj obj)
+{
+    UInt tnum = TNUM_OBJ(obj);
+    (PrintObjFuncs[tnum])(obj);
+}
 
 
 /****************************************************************************
@@ -792,22 +786,25 @@ void ViewObj(Obj obj);
 **
 **  'PrintPathFuncs'  is   the   dispatch table  that     contains for  every
 **  appropriate type of objects a pointer to  the path printer for objects of
-**  that type.  The path  printer is the function '<func>(<obj>,<indx>)' that
-**  should be  called  to print  the  selector   that selects  the  <indx>-th
+**  that type.  The path  printer is the function '<func>(<obj>,<idx>)' that
+**  should be  called  to print  the  selector   that selects  the  <idx>-th
 **  subobject of the object <obj> of this type.
 **
 **  These are also used for viewing
 */
-extern void (* PrintPathFuncs[LAST_REAL_TNUM+1]) (
-    Obj                 obj,
-    Int                 indx );
+extern void (*PrintPathFuncs[LAST_REAL_TNUM + 1])(Obj obj, Int idx);
+EXPORT_INLINE void PRINT_PATH(Obj obj, Int idx)
+{
+    UInt tnum = TNUM_OBJ(obj);
+    (PrintPathFuncs[tnum])(obj, idx);
+}
 
 
 /****************************************************************************
 **
 *F  IS_COMOBJ( <obj> )  . . . . . . . . . . . is an object a component object
 */
-EXPORT_INLINE Int IS_COMOBJ(Obj obj)
+EXPORT_INLINE BOOL IS_COMOBJ(Obj obj)
 {
     return TNUM_OBJ(obj) == T_COMOBJ;
 }
@@ -843,14 +840,14 @@ EXPORT_INLINE void SET_TYPE_COMOBJ(Obj obj, Obj val)
 void AssComObj(Obj obj, UInt rnam, Obj val);
 void UnbComObj(Obj obj, UInt rnam);
 Obj  ElmComObj(Obj obj, UInt rnam);
-Int  IsbComObj(Obj obj, UInt rnam);
+BOOL IsbComObj(Obj obj, UInt rnam);
 
 
 /****************************************************************************
 **
 *F  IS_POSOBJ( <obj> )  . . . . . . . . . .  is an object a positional object
 */
-EXPORT_INLINE Int IS_POSOBJ(Obj obj)
+EXPORT_INLINE BOOL IS_POSOBJ(Obj obj)
 {
     return TNUM_OBJ(obj) == T_POSOBJ;
 }
@@ -886,14 +883,14 @@ EXPORT_INLINE void SET_TYPE_POSOBJ(Obj obj, Obj val)
 void AssPosObj(Obj obj, Int idx, Obj val);
 void UnbPosObj(Obj obj, Int idx);
 Obj  ElmPosObj(Obj obj, Int idx);
-Int  IsbPosObj(Obj obj, Int idx);
+BOOL IsbPosObj(Obj obj, Int idx);
 
 
 /****************************************************************************
 **
 *F  IS_DATOBJ( <obj> )  . . . . . . . . . . . . .  is an object a data object
 */
-EXPORT_INLINE Int IS_DATOBJ(Obj obj)
+EXPORT_INLINE BOOL IS_DATOBJ(Obj obj)
 {
     return TNUM_OBJ(obj) == T_DATOBJ;
 }
@@ -930,7 +927,7 @@ void SetTypeDatObj(Obj obj, Obj type);
 **  Return a new T_DATOBJ of the specified <size>, with its type set to the
 **  special value TYPE_KERNEL_OBJECT.
 **
-**  Note that <size> must include storage for the the first slot of the bag,
+**  Note that <size> must include storage for the first slot of the bag,
 **  which points to the type object.
 */
 Obj NewKernelBuffer(UInt size);

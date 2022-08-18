@@ -1,0 +1,137 @@
+<Chapter Label="Creating digraphs"><Heading>Creating digraphs</Heading>
+
+  In this chapter we describe how to create digraphs.<P/>
+
+  <Section><Heading>Creating digraphs</Heading>
+    <#Include Label="IsDigraph">
+    <#Include Label="IsMutableDigraph">
+    <#Include Label="IsImmutableDigraph">
+    <#Include Label="IsCayleyDigraph">
+    <#Include Label="IsDigraphWithAdjacencyFunction">
+    <#Include Label="DigraphByOutNeighboursType">
+    <#Include Label="Digraph">
+    <#Include Label="DigraphByAdjacencyMatrix">
+    <#Include Label="DigraphByEdges">
+    <#Include Label="EdgeOrbitsDigraph">
+    <#Include Label="DigraphByInNeighbours">
+    <#Include Label="CayleyDigraph">
+    <#Include Label="ListNamedDigraphs">
+  </Section>
+
+  <Section><Heading>Changing representations</Heading>
+    <#Include Label="AsBinaryRelation">
+    <#Include Label="AsDigraph">
+    <#Include Label="Graph">
+    <#Include Label="AsGraph">
+    <#Include Label="AsTransformation">
+  </Section>
+
+  <Section><Heading>New digraphs from old</Heading>
+    <#Include Label="DigraphXCopy">
+    <#Include Label="DigraphXCopyIfY">
+    <#Include Label="InducedSubdigraph">
+    <#Include Label="ReducedDigraph">
+    <#Include Label="MaximalSymmetricSubdigraph">
+    <#Include Label="MaximalAntiSymmetricSubdigraph">
+    <#Include Label="UndirectedSpanningTree">
+    <#Include Label="DigraphShortestPathSpanningTree">
+    <#Include Label="QuotientDigraph">
+    <#Include Label="DigraphReverse">
+    <#Include Label="DigraphDual">
+    <#Include Label="DigraphSymmetricClosure">
+    <#Include Label="DigraphReflexiveTransitiveClosure">
+    <#Include Label="DigraphReflexiveTransitiveReduction">
+    <#Include Label="DigraphAddVertex">
+    <#Include Label="DigraphAddVertices">
+    <#Include Label="DigraphAddEdge">
+    <#Include Label="DigraphAddEdgeOrbit">
+    <#Include Label="DigraphAddEdges">
+    <#Include Label="DigraphRemoveVertex">
+    <#Include Label="DigraphRemoveVertices">
+    <#Include Label="DigraphRemoveEdge">
+    <#Include Label="DigraphRemoveEdgeOrbit">
+    <#Include Label="DigraphRemoveEdges">
+    <#Include Label="DigraphRemoveLoops">
+    <#Include Label="DigraphRemoveAllMultipleEdges">
+    <#Include Label="DigraphReverseEdges">
+    <#Include Label="DigraphDisjointUnion">
+    <#Include Label="DigraphEdgeUnion">
+    <#Include Label="DigraphJoin">
+    <#Include Label="DigraphCartesianProduct">
+    <#Include Label="DigraphDirectProduct">
+    <#Include Label="ConormalProduct">
+    <#Include Label="HomomorphicProduct">
+    <#Include Label="LexicographicProduct">
+    <#Include Label="ModularProduct">
+    <#Include Label="StrongProduct">
+    <#Include Label="DigraphCartesianProductProjections">
+    <#Include Label="DigraphDirectProductProjections">
+    <#Include Label="LineDigraph">
+    <#Include Label="LineUndirectedDigraph">
+    <#Include Label="DoubleDigraph">
+    <#Include Label="BipartiteDoubleDigraph">
+    <#Include Label="DigraphAddAllLoops">
+    <#Include Label="DistanceDigraph">
+    <#Include Label="DigraphClosure">
+    <#Include Label="DigraphMycielskian">
+  </Section>
+
+  <Section><Heading>Random digraphs</Heading>
+    <#Include Label="RandomDigraph">
+    <#Include Label="RandomMultiDigraph">
+    <#Include Label="RandomTournament">
+    <#Include Label="RandomLattice">
+  </Section>
+
+  <Section><Heading>Standard examples</Heading>
+    <#Include Label="AndrasfaiGraph">
+    <#Include Label="BananaTree">
+    <#Include Label="BinaryTree">
+    <#Include Label="BinomialTreeGraph">
+    <#Include Label="BishopsGraph">
+    <#Include Label="BondyGraph">
+    <#Include Label="BookGraph">
+    <#Include Label="StackedBookGraph">
+    <#Include Label="ChainDigraph">
+    <#Include Label="CirculantGraph">
+    <#Include Label="CompleteDigraph">
+    <#Include Label="CompleteBipartiteDigraph">
+    <#Include Label="CompleteMultipartiteDigraph">
+    <#Include Label="CycleDigraph">
+    <#Include Label="CycleGraph">
+    <#Include Label="EmptyDigraph">
+    <#Include Label="GearGraph">
+    <#Include Label="HaarGraph">
+    <#Include Label="HalvedCubeGraph">
+    <#Include Label="HanoiGraph">
+    <#Include Label="HelmGraph">
+    <#Include Label="HypercubeGraph">
+    <#Include Label="JohnsonDigraph">
+    <#Include Label="KellerGraph">
+    <#Include Label="KingsGraph">
+    <#Include Label="KneserGraph">
+    <#Include Label="KnightsGraph">
+    <#Include Label="LindgrenSousselierGraph">
+    <#Include Label="LollipopGraph">
+    <#Include Label="MobiusLadderGraph">
+    <#Include Label="MycielskiGraph">
+    <#Include Label="OddGraph">
+    <#Include Label="PathGraph">
+    <#Include Label="PermutationStarGraph">
+    <#Include Label="PetersenGraph">
+    <#Include Label="GeneralisedPetersenGraph">
+    <#Include Label="PrismGraph">
+    <#Include Label="StackedPrismGraph">
+    <#Include Label="QueensGraph">
+    <#Include Label="RooksGraph">
+    <#Include Label="SquareGridGraph">
+    <#Include Label="TriangularGridGraph">
+    <#Include Label="StarGraph">
+    <#Include Label="TadpoleGraph">
+    <#Include Label="WalshHadamardGraph">
+    <#Include Label="WebGraph">
+    <#Include Label="WheelGraph">
+    <#Include Label="WindmillGraph">
+  </Section>
+
+</Chapter>

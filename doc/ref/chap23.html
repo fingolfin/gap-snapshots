@@ -43,7 +43,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap23.html#X85C68AED805E4B9C">23.4 <span class="Heading">Coefficient List Arithmetic</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap23.html#X78E6897186F482F6">23.4-1 AddRowVector</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap23.html#X800EC03F7E0A5F23">23.4-1 AddVector</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap23.html#X7854B2B67E3FE2CA">23.4-2 AddCoeffs</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap23.html#X7BEF28C981C42E16">23.4-3 MultVector</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap23.html#X8264B3EE7D56EEDD">23.4-4 CoeffsMod</a></span>
@@ -287,12 +287,13 @@ true
 
 <p>The following operations all perform arithmetic on row vectors, given as homogeneous lists of the same length, containing elements of a commutative ring.</p>
 
-<p>There are two reasons for using <code class="func">AddRowVector</code> (<a href="chap23.html#X78E6897186F482F6"><span class="RefLink">23.4-1</span></a>) in preference to arithmetic operators. Firstly, the three argument form has no single-step equivalent. Secondly <code class="func">AddRowVector</code> (<a href="chap23.html#X78E6897186F482F6"><span class="RefLink">23.4-1</span></a>) changes its first argument in-place, rather than allocating a new vector to hold the result, and may thus produce less garbage.</p>
+<p>There are two reasons for using <code class="func">AddRowVector</code> (<a href="chap23.html#X800EC03F7E0A5F23"><span class="RefLink">23.4-1</span></a>) in preference to arithmetic operators. Firstly, the three argument form has no single-step equivalent. Secondly <code class="func">AddRowVector</code> (<a href="chap23.html#X800EC03F7E0A5F23"><span class="RefLink">23.4-1</span></a>) changes its first argument in-place, rather than allocating a new vector to hold the result, and may thus produce less garbage.</p>
 
-<p><a id="X78E6897186F482F6" name="X78E6897186F482F6"></a></p>
+<p><a id="X800EC03F7E0A5F23" name="X800EC03F7E0A5F23"></a></p>
 
-<h5>23.4-1 AddRowVector</h5>
+<h5>23.4-1 AddVector</h5>
 
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddVector</code>( <var class="Arg">dst</var>, <var class="Arg">src</var>[, <var class="Arg">mul</var>[, <var class="Arg">from</var>, <var class="Arg">to</var>]] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddRowVector</code>( <var class="Arg">dst</var>, <var class="Arg">src</var>[, <var class="Arg">mul</var>[, <var class="Arg">from</var>, <var class="Arg">to</var>]] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Adds the product of <var class="Arg">src</var> and <var class="Arg">mul</var> to <var class="Arg">dst</var>, changing <var class="Arg">dst</var>. If <var class="Arg">from</var> and <var class="Arg">to</var> are given then only the index range <code class="code">[ <var class="Arg">from</var> .. <var class="Arg">to</var> ]</code> is guaranteed to be affected. Other indices <em>may</em> be affected, if it is more convenient to do so. Even when <var class="Arg">from</var> and <var class="Arg">to</var> are given, <var class="Arg">dst</var> and <var class="Arg">src</var> must be row vectors of the <em>same</em> length.</p>
 
@@ -430,11 +431,11 @@ true
 
 <h5>23.6-5 AClosestVectorCombinationsMatFFEVecFFE</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AClosestVectorCombinationsMatFFEVecFFE</code>( <var class="Arg">mat</var>, <var class="Arg">f</var>, <var class="Arg">vec</var>, <var class="Arg">l</var>, <var class="Arg">stop</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AClosestVectorCombinationsMatFFEVecFFECoords</code>( <var class="Arg">mat</var>, <var class="Arg">f</var>, <var class="Arg">vec</var>, <var class="Arg">l</var>, <var class="Arg">stop</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>These functions run through the <var class="Arg">f</var>-linear combinations of the vectors in the rows of the matrix <var class="Arg">mat</var> that can be written as linear combinations of exactly <var class="Arg">l</var> rows (that is without using zero as a coefficient). The length of the rows of <var class="Arg">mat</var> and the length of <var class="Arg">vec</var> must be equal, and all elements must lie in the field <var class="Arg">f</var>. The rows of <var class="Arg">mat</var> must be linearly independent. <code class="func">AClosestVectorCombinationsMatFFEVecFFE</code> returns a vector from these that is closest to the vector <var class="Arg">vec</var>. If it finds a vector of distance at most <var class="Arg">stop</var>, which must be a nonnegative integer, then it stops immediately and returns this vector.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AClosestVectorCombinationsMatFFEVecFFE</code>( <var class="Arg">mat</var>, <var class="Arg">f</var>, <var class="Arg">vec</var>, <var class="Arg">cnt</var>, <var class="Arg">stop</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AClosestVectorCombinationsMatFFEVecFFECoords</code>( <var class="Arg">mat</var>, <var class="Arg">f</var>, <var class="Arg">vec</var>, <var class="Arg">cnt</var>, <var class="Arg">stop</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>These functions run through the <var class="Arg">f</var>-linear combinations of the vectors in the rows of the matrix <var class="Arg">mat</var> that can be written as linear combinations of exactly <var class="Arg">cnt</var> rows (that is without using zero as a coefficient). The length of the rows of <var class="Arg">mat</var> and the length of <var class="Arg">vec</var> must be equal, and all elements must lie in the field <var class="Arg">f</var>. The rows of <var class="Arg">mat</var> must be linearly independent. <code class="func">AClosestVectorCombinationsMatFFEVecFFE</code> returns a vector from these that is closest to the vector <var class="Arg">vec</var>. If it finds a vector of distance at most <var class="Arg">stop</var>, which must be a nonnegative integer, then it stops immediately and returns this vector.</p>
 
-<p><code class="func">AClosestVectorCombinationsMatFFEVecFFECoords</code> returns a length 2 list containing the same closest vector and also a vector <var class="Arg">v</var> with exactly <var class="Arg">l</var> non-zero entries, such that <var class="Arg">v</var> times <var class="Arg">mat</var> is the closest vector.</p>
+<p><code class="func">AClosestVectorCombinationsMatFFEVecFFECoords</code> returns a length 2 list containing the same closest vector and also a vector <var class="Arg">v</var> with exactly <var class="Arg">cnt</var> non-zero entries, such that <var class="Arg">v</var> times <var class="Arg">mat</var> is the closest vector.</p>
 
 <p><a id="X7C88671678A2BEB4" name="X7C88671678A2BEB4"></a></p>
 
@@ -501,7 +502,7 @@ true
 <h5>23.7-4 ReduceCoeffsMod</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReduceCoeffsMod</code>( <var class="Arg">list1</var>[, <var class="Arg">len1</var>], <var class="Arg">list2</var>[, <var class="Arg">len2</var>], <var class="Arg">modulus</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Let <span class="SimpleMath">p1</span> (and <span class="SimpleMath">p2</span>) be polynomials given by the first <var class="Arg">len1</var> (<var class="Arg">len2</var>) entries of the coefficient list <var class="Arg">list1</var> (<var class="Arg">list2</var>). If <var class="Arg">len1</var> and <var class="Arg">len2</var> are omitted, they default to the lengths of <var class="Arg">list1</var> and <var class="Arg">list2</var>. <code class="func">ReduceCoeffsMod</code> changes <var class="Arg">list1</var> to the coefficient list of the remainder when dividing <var class="Arg">p1</var> by <var class="Arg">p2</var> modulo <var class="Arg">modulus</var>, which must be a positive integer. This operation changes <var class="Arg">list1</var> which therefore must be a mutable list. The operations returns the position of the last non-zero entry of the result but is not guaranteed to remove trailing zeroes.</p>
+<p>Let <span class="SimpleMath">p1</span> (and <span class="SimpleMath">p2</span>) be polynomials given by the first <var class="Arg">len1</var> (<var class="Arg">len2</var>) entries of the coefficient list <var class="Arg">list1</var> (<var class="Arg">list2</var>). If <var class="Arg">len1</var> and <var class="Arg">len2</var> are omitted, they default to the lengths of <var class="Arg">list1</var> and <var class="Arg">list2</var>. <code class="func">ReduceCoeffsMod</code> changes <var class="Arg">list1</var> to the coefficient list of the remainder when dividing <var class="Arg">p1</var> by <var class="Arg">p2</var> modulo <var class="Arg">modulus</var>, which must be a positive integer. This operation changes <var class="Arg">list1</var> which therefore must be a mutable list. The operation returns the position of the last non-zero entry of the result but is not guaranteed to remove trailing zeroes.</p>
 
 
 <div class="example"><pre>

@@ -15,7 +15,7 @@
 <body class="chap8"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chapA.html">A</a>  <a href="chapB.html">B</a>  <a href="chapC.html">C</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chapA.html">A</a>  <a href="chapB.html">B</a>  <a href="chapC.html">C</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap7.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap9.html">[Next Chapter]</a>&nbsp;  </div>
 
@@ -66,7 +66,7 @@
 
 <h5>8.1-1 FiningOrbit</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FiningOrbit</code>( <var class="Arg">g</var>, <var class="Arg">obj</var>, <var class="Arg">act</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FiningOrbit</code>( <var class="Arg">g</var>, <var class="Arg">obj</var>, <var class="Arg">act</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: The orbit of the object <var class="Arg">obj</var> under the action <var class="Arg">act</var> of the group <var class="Arg">g</var>.</p>
 
 <p>The argument <var class="Arg">obj</var> is either a subspace of a projective space, then combined with the action function <code class="file">OnProjSubspaces</code>, or a set of elements of a projective space, then combined with the action function <code class="file">OnSetsProjSubspaces</code>. The group <var class="Arg">g</var> is a subgroup of a collineation group of a projective space. In both cases the action function computes the action of <var class="Arg">el</var> under the group element <var class="Arg">g</var>.</p>
@@ -121,8 +121,8 @@ ProjectiveSpace(4, 3)
 
 <h5>8.1-2 FiningOrbits</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FiningOrbits</code>( <var class="Arg">g</var>, <var class="Arg">set</var>, <var class="Arg">act</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FiningOrbits</code>( <var class="Arg">g</var>, <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FiningOrbits</code>( <var class="Arg">g</var>, <var class="Arg">set</var>, <var class="Arg">act</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FiningOrbits</code>( <var class="Arg">g</var>, <var class="Arg">coll</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: The orbits of the group <var class="Arg">g</var> on <var class="Arg">set</var> under the action of <var class="Arg">act</var>.</p>
 
 <p>The set is a set of elements of a projective space, the group <var class="Arg">g</var> is a subgroup of the collineation group of a projective space, and <var class="Arg">act</var> is the function <code class="file">OnProjSubspaces</code>. If <var class="Arg">coll</var> is a collection of elements of a projective space (i.e. not a list or set, but and object representing the collection of elements of a given type, such as <code class="file">Lines(PG(3,4))</code>), then the second versions returns the orbits of <var class="Arg">g</var> on the elements of <var class="Arg">coll</var> under the action <code class="file">OnProjSubspaces</code>.</p>
@@ -157,7 +157,7 @@ PGammaO(3,5)
 
 <h5>8.1-3 FiningOrbitsDomain</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FiningOrbitsDomain</code>( <var class="Arg">g</var>, <var class="Arg">coll</var>, <var class="Arg">act</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FiningOrbitsDomain</code>( <var class="Arg">g</var>, <var class="Arg">coll</var>, <var class="Arg">act</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: The orbits of the group <var class="Arg">g</var> on a collection <var class="Arg">coll</var> under the action of <var class="Arg">act</var>.</p>
 
 <p>The argument <var class="Arg">coll</var> must be an object in the category <code class="code">IsElementsOfIncidenceGeometry</code>, the argument <var class="Arg">g</var> can be any group, acting on the elements of <var class="Arg">coll</var> through a suitable action function <var class="Arg">act</var>. This operation is inspired by the GAP operation <code class="file">OrbitsDomain</code>. It computes the orbits of the group <var class="Arg">g</var> on the set of elements in <var class="Arg">coll</var> <em>assuming</em> that the set of elements of <var class="Arg">coll</var> is closed under that action of <var class="Arg">g</var>. There is no check whether the assumption is correct, so this operation should typically be used when it is known that the assumption is correct. The operation is generic in the sense that it can be used for different types of incidence geometries as long as the triple arguments consist of a suitable action of <var class="Arg">g</var> on the elements of <var class="Arg">coll</var>. In general, if the assumption is correct, this operation will be faster than <code class="file">FiningOrbits</code>.</p>
@@ -235,7 +235,7 @@ The FinInG collineation group PGammaL(4,8)
 
 <h5>8.2-1 FiningStabiliser</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FiningStabiliser</code>( <var class="Arg">g</var>, <var class="Arg">el</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FiningStabiliser</code>( <var class="Arg">g</var>, <var class="Arg">el</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: The subgroup of <var class="Arg">g</var> stabilising the element <var class="Arg">el</var></p>
 
 <p>The argument <var class="Arg">g</var> is a group of collineations acting on the element <var class="Arg">el</var>, being a subspace of a projective space (and hence, all elements of a Lie geometry are allowed as second argument). This operation relies on the <strong class="pkg">GenSS</strong> operation <code class="file">Stab</code>.</p>
@@ -298,7 +298,7 @@ G_2(3)
 
 <h5>8.2-2 FiningStabiliserOrb</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FiningStabiliserOrb</code>( <var class="Arg">g</var>, <var class="Arg">el</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FiningStabiliserOrb</code>( <var class="Arg">g</var>, <var class="Arg">el</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: The subgroup of <var class="Arg">g</var> stabilising the element <var class="Arg">el</var></p>
 
 <p>The argument <var class="Arg">g</var> is a group of collineations acting on the element <var class="Arg">el</var>, being a subspace of a projective space (and hence, all elements of a Lie geometry are allowed as second argument). This operation relies on some particular <strong class="pkg">orb</strong> functionality.</p>
@@ -388,7 +388,7 @@ true
 
 <h5>8.2-3 FiningSetwiseStabiliser</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FiningSetwiseStabiliser</code>( <var class="Arg">g</var>, <var class="Arg">els</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FiningSetwiseStabiliser</code>( <var class="Arg">g</var>, <var class="Arg">els</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: The subgroup of <var class="Arg">g</var> stabilising the set <var class="Arg">els</var></p>
 
 <p>The argument <var class="Arg">g</var> is a group of collineations acting on the element <var class="Arg">el</var>, being a subspace of a projective space (and hence, all elements of a Lie geometry are allowed as second argument). The argument <var class="Arg">els</var> is a set of elements of the same type of the same Lie geometry, the elements are all in the category <code class="code">IsSubspaceOfProjectiveSpace</code>. The underlying action function is assumed to be <code class="file">OnProjSubspaces</code></p>
@@ -460,7 +460,7 @@ true
 
 <h5>8.2-4 StabiliserGroupOfSubspace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StabiliserGroupOfSubspace</code>( <var class="Arg">sub</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StabiliserGroupOfSubspace</code>( <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: The subgroup of the collineation group of <var class="Arg">AmbientSpace(sub)</var> stabilising the subspace <var class="Arg">sub</var></p>
 
 <p>The argument <var class="Arg">sub</var> is a subspace of a projective space.</p>
@@ -469,7 +469,7 @@ true
 
 <h5>8.2-5 ProjectiveStabiliserGroupOfSubspace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveStabiliserGroupOfSubspace</code>( <var class="Arg">sub</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveStabiliserGroupOfSubspace</code>( <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: The subgroup of the projectivity group of <var class="Arg">AmbientSpace(sub)</var> stabilising the subspace <var class="Arg">sub</var></p>
 
 <p>The argument <var class="Arg">sub</var> is a subspace of a projective space.</p>
@@ -478,7 +478,7 @@ true
 
 <h5>8.2-6 SpecialProjectiveStabiliserGroupOfSubspace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SpecialProjectiveStabiliserGroupOfSubspace</code>( <var class="Arg">sub</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SpecialProjectiveStabiliserGroupOfSubspace</code>( <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: The subgroup of the special projectivity group of <var class="Arg">AmbientSpace(sub)</var> stabilising the subspace <var class="Arg">sub</var></p>
 
 <p>The argument <var class="Arg">sub</var> is a subspace of a projective space.</p>
@@ -530,9 +530,9 @@ true
 
 <h5>8.3-1 <span class="Heading">Action functions</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnProjSubspaces</code>( <var class="Arg">el</var>, <var class="Arg">g</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnProjSubspacesExtended</code>( <var class="Arg">el</var>, <var class="Arg">g</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnSetsProjSubspaces</code>( <var class="Arg">set</var>, <var class="Arg">g</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnProjSubspaces</code>( <var class="Arg">el</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnProjSubspacesExtended</code>( <var class="Arg">el</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnSetsProjSubspaces</code>( <var class="Arg">set</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: a element of a Lie geometry</p>
 
 <p>Let <var class="Arg">el</var> be an element of any Lie geometry, and <var class="Arg">g</var> an element of a projective group acting on the elements of the ambient Lie geometry of <var class="Arg">el</var>. Then then <code class="file">OnProjSubspaces</code> will return simply the image of <var class="Arg">el</var> under <var class="Arg">g</var>. When <var class="Arg">g</var> is an element of the correlationcollineation group of a projective space, <code class="file">OnProjSubspacesExtended</code> returns the image of <var class="Arg">el</var> under <var class="Arg">g</var>. Finally, when <var class="Arg">set</var> is a set of elements of a Lie geometry, <code class="file">OnSetsProjSubspaces</code> returns the set of images under <var class="Arg">g</var>. <code class="file">OnProjSubspaces</code> is also explained in <a href="chap5.html#X84A3D5357872EC3B"><span class="RefLink">5.8-1</span></a>, <code class="file">OnProjSubspacesExtended</code> is also explained in <a href="chap5.html#X86B4C03E85ADD0C2"><span class="RefLink">5.8-3</span></a>.</p>
@@ -541,8 +541,8 @@ true
 
 <h5>8.3-2 <span class="Heading">Generic GAP functions</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActionHomomorphism</code>( <var class="Arg">g</var>, <var class="Arg">S</var>, <var class="Arg">act</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Action</code>( <var class="Arg">g</var>, <var class="Arg">S</var>, <var class="Arg">act</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActionHomomorphism</code>( <var class="Arg">g</var>, <var class="Arg">S</var>, <var class="Arg">act</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Action</code>( <var class="Arg">g</var>, <var class="Arg">S</var>, <var class="Arg">act</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><var class="Arg">g</var> is a projective group, <var class="Arg">S</var> is a set or a collection of elements, <var class="Arg">act</var> is an action function. <code class="file">Action</code> simply returns <code class="file">Image(hom)</code>, if <var class="Arg">hom</var> is the result of <code class="file">ActionHomomorphism</code>. The examples are self-explanatory.</p>
 
 
@@ -580,7 +580,7 @@ PGammaSp(6,2)
 
 <h5>8.3-3 NiceMonomorphism</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NiceMonomorphism</code>( <var class="Arg">group</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NiceMonomorphism</code>( <var class="Arg">group</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A group homomorphism</p>
 
 <p>This is a generic GAP function, and returns a homorphism to a "better" representation.</p>
@@ -589,7 +589,7 @@ PGammaSp(6,2)
 
 <h5>8.3-4 NiceObject</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NiceObject</code>( <var class="Arg">group</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NiceObject</code>( <var class="Arg">group</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A permutation group</p>
 
 <p><var class="Arg">group</var> is a projective group. The object this operation returns is actually equivalent with <code class="file">Image(NiceMonomorphism(group))</code>.</p>
@@ -623,7 +623,7 @@ true
 
 <h5>8.3-6 SetParent</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetParent</code>( <var class="Arg">group</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetParent</code>( <var class="Arg">group</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Assume that <span class="SimpleMath">G</span> is a group of collineations. As mentioned already, from the underlying field and dimension, only the underlying projective space can be determined. An operation like <code class="file">Order</code> requires a nice monomorphism, so for an arbitrary group <span class="SimpleMath">G</span>, the action on the points of the underlying projective space will be computed, which can be time consuming for large projective spaces. However, if it is known that <span class="SimpleMath">G</span> is a subgroup of another collineation group <span class="SimpleMath">H</span>, this group <span class="SimpleMath">H</span> can be set as a parent group for <span class="SimpleMath">G</span>. If a nice monomorphism is available for <span class="SimpleMath">H</span>, it will become available for <span class="SimpleMath">G</span>. In the example we construct the collineation group of the hermtian polar space <span class="SimpleMath">H(3,81)</span>. As explained, a nice monomorphism is computed upon construction. Then construct a group generated by two random elements of this collineation group of <span class="SimpleMath">H(3,81)</span>, and compute its order. Without further information, it will be assumed by the system that this new group is a subgroup of the collineation group of <span class="SimpleMath">PG(3,81)</span>, and a nice monomorphism will be computed through this group. In the second part we set the parent group as the collineation group of <span class="SimpleMath">H(3,81)</span>, and compute the order again. Compare the different timings.</p>
 
 
@@ -676,7 +676,7 @@ true
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap7.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap9.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chapA.html">A</a>  <a href="chapB.html">B</a>  <a href="chapC.html">C</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chapA.html">A</a>  <a href="chapB.html">B</a>  <a href="chapC.html">C</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

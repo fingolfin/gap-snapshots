@@ -61,7 +61,25 @@ gap> StringFormatted("{a!}", rec(a := r1));
 gap> StringFormatted("abc{}def",[1,2]) = "abc[ 1, 2 ]def";
 true
 
+# Test long output
+gap> ListWithIdenticalEntries(1000, 'a') =
+> StringFormatted("{}", ListWithIdenticalEntries(1000, 'a'));
+true
+gap> ListWithIdenticalEntries(1000, 'a') =
+> StringFormatted("{}{}", ListWithIdenticalEntries(500, 'a'), ListWithIdenticalEntries(500, 'a'));
+true
+
+# Test line breaks
+gap>  StringFormatted("{}", "\>1\<") = "\>1\<";
+true
+gap>  StringFormatted("\>1\<") = "\>1\<";
+true
+
 # Test alternative functions
+gap> PrintFormatted();
+Error, Usage: PrintFormatted(<string>, <data>...)
+gap> PrintFormatted(fail);
+Error, Usage: PrintFormatted(<string>, <data>...)
 gap> PrintFormatted("abc\n\n");
 Error, Usage: PrintFormatted(<string>, <data>...)
 gap> PrintFormatted("abc{}\n", 2);
@@ -72,7 +90,7 @@ gap> PrintToFormatted(OutputTextString(str, false), "abc{}\n", [1,2]);
 gap> Print(str);
 abc[ 1, 2 ]
 gap> PrintFormatted([1,2]);
-Error, Usage: StringFormatted(<string>, <data>...)
+Error, Usage: PrintFormatted(<string>, <data>...)
 gap> PrintToFormatted([1,2]);
 Error, Function: number of arguments must be at least 2 (not 1)
 gap> PrintToFormatted([1,2], "abc");

@@ -391,7 +391,7 @@ true
 
 <p>Cyclotomics are ordered as follows: The relation between rationals is the natural one, rationals are smaller than irrational cyclotomics, and <code class="func">infinity</code> (<a href="chap18.html#X8511B8DF83324C27"><span class="RefLink">18.2-1</span></a>) is the largest cyclotomic. For two irrational cyclotomics with different conductors (see <code class="func">Conductor</code> (<a href="chap18.html#X815D6EC57CBA9827"><span class="RefLink">18.1-7</span></a>)), the one with smaller conductor is regarded as smaller. Two irrational cyclotomics with same conductor are compared via their external representation (see <code class="func">ExtRepOfObj</code> (<a href="chap18.html#X785F2CAB805DE1BE"><span class="RefLink">18.1-12</span></a>)).</p>
 
-<p>For comparisons of cyclotomics and other <strong class="pkg">GAP</strong> objects, see Section <a href="chap4.html#X7A274A1F8553B7E6"><span class="RefLink">4.12</span></a>.</p>
+<p>For comparisons of cyclotomics and other <strong class="pkg">GAP</strong> objects, see Section <a href="chap4.html#X7A274A1F8553B7E6"><span class="RefLink">4.13</span></a>.</p>
 
 
 <div class="example"><pre>
@@ -485,7 +485,7 @@ true
 <td class="tdcenter">,</td>
 <td class="tdleft"><span class="SimpleMath"><var class="Arg">N</var> ≡ 1 mod 8</span></td>
 </tr>
-</table><br /><p>&nbsp;</p><br />
+</table><br />
 </div>
 
 <p>(Note that in <code class="code">EC(</code><var class="Arg">N</var><code class="code">)</code>, <span class="SimpleMath">...</span>, <code class="code">EH(</code><var class="Arg">N</var><code class="code">)</code>, <var class="Arg">N</var> must be a prime.)</p>
@@ -520,7 +520,7 @@ E(5)+E(5)^4
 <td class="tdcenter">if</td>
 <td class="tdleft"><span class="SimpleMath"><var class="Arg">N</var> ≡ -1 mod 4</span></td>
 </tr>
-</table><br /><p>&nbsp;</p><br />
+</table><br />
 </div>
 
 <p>So <span class="SimpleMath">sqrt{<var class="Arg">N</var>}</span> can be computed from <span class="SimpleMath">b_<var class="Arg">N</var></span>, see <code class="func">EB</code> (<a href="chap18.html#X8414ED887AF36359"><span class="RefLink">18.4-1</span></a>).</p>
@@ -606,7 +606,7 @@ E(3)-E(3)^2
 <td class="tdleft"><span class="SimpleMath">z + z^n + z^{n^2} + ... + z^{n^7}</span></td>
 <td class="tdleft"><span class="SimpleMath">(n = <var class="Arg">N</var>_8)</span></td>
 </tr>
-</table><br /><p>&nbsp;</p><br />
+</table><br />
 </div>
 
 <p>For the two-argument versions of the functions, see Section <code class="func">NK</code> (<a href="chap18.html#X844F0EBF849EDEB3"><span class="RefLink">18.4-5</span></a>).</p>
@@ -663,7 +663,7 @@ E(17)+E(17)^4+E(17)^13+E(17)^16
 <td class="tdleft"><span class="SimpleMath">z - z^n + ... - z^{n^7}</span></td>
 <td class="tdleft"><span class="SimpleMath">(n = <var class="Arg">N</var>_8)</span></td>
 </tr>
-</table><br /><p>&nbsp;</p><br />
+</table><br />
 </div>
 
 <p>For the two-argument versions of the functions, see Section <code class="func">NK</code> (<a href="chap18.html#X844F0EBF849EDEB3"><span class="RefLink">18.4-5</span></a>).</p>
@@ -704,7 +704,7 @@ E(17)+E(17)^4+E(17)^13+E(17)^16
 <td class="tdcenter">=</td>
 <td class="tdleft"><span class="SimpleMath">j_<var class="Arg">N</var>^(<var class="Arg">d</var>)</span></td>
 </tr>
-</table><br /><p>&nbsp;</p><br />
+</table><br />
 </div>
 
 <p><a id="X812E334E7A869D33" name="X812E334E7A869D33"></a></p>
@@ -730,7 +730,7 @@ E(17)+E(17)^4+E(17)^13+E(17)^16
 <td class="tdcenter">means</td>
 <td class="tdleft"><span class="SimpleMath">4 (q_N^{*3} + q_N^{*5}) + q_N^{*7}</span></td>
 </tr>
-</table><br /><p>&nbsp;</p><br />
+</table><br />
 </div>
 
 <p>To explain the "ampersand" syntax in general we remark that "&amp;k" is interpreted as <span class="SimpleMath">q_N^{*k}</span>, where <span class="SimpleMath">q_N</span> is the most recently named atomic irrationality, and that the scope of any premultiplying coefficient is broken by a <span class="SimpleMath">+</span> or <span class="SimpleMath">-</span> sign, but not by <span class="SimpleMath">&amp;</span> or <span class="SimpleMath">*k</span>. The algebraic conjugations indicated by the ampersands apply directly to the <em>atomic</em> irrationality <span class="SimpleMath">q_N</span>, even when, as in the last example, <span class="SimpleMath">q_N</span> first appears with another conjugacy <span class="SimpleMath">*k</span>.</p>

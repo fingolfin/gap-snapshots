@@ -30,7 +30,7 @@
 ##  Changing the value in a running &GAP; session does not affect the
 ##  information shown by <Ref Func="DisplayAtlasInfo"/>,
 ##  this information depends on the value of the preference at the time
-##  when the extension gets loaded.
+##  when the &AtlasRep; package and its data extensions get loaded.
 ##  </Subsection>
 ##  <#/GAPDoc>
 ##
@@ -44,7 +44,7 @@ available locally.  \
 Changing the value in a running GAP session does not affect the \
 information shown by 'DisplayAtlasInfo', \
 this information depends on the value of the preference at the time \
-when the extension gets loaded."
+when the AtlasRep package and its data extensions get loaded."
     ],
   default:= true,
   values:= [ true, false ],
@@ -62,48 +62,69 @@ when the extension gets loaded."
 ##  <Heading>User preference <C>AtlasRepDataDirectory</C></Heading>
 ##  <Index Key="AtlasRepDataDirectory"><C>AtlasRepDataDirectory</C></Index>
 ##
-##  The value must be a string that is the filename of a directory
-##  (in the sense of <Ref Func="IsDirectoryPath" BookName="ref"/>)
+##  The value must be a string that is either empty or the filename of a
+##  directory (in the sense of <Ref Func="IsDirectoryPath" BookName="ref"/>)
 ##  that contains the directories in which downloaded data will be stored.
-##  The default is the installation path of the
-##  &AtlasRep; package (including a trailing slash symbol).
+##  <P/>
+##  An empty string means that downloaded data are just kept in the &GAP;
+##  session but not saved to local files.
+##  <P/>
+##  The default depends on the user's permissions for the directory of the
+##  &AtlasRep; package:
+##  If this directory is writable for the user then the installation path
+##  of the &AtlasRep; package (including a trailing slash symbol) is taken,
+##  otherwise the default is an empty string.
 ##  </Subsection>
 ##  <#/GAPDoc>
 ##
 DeclareUserPreference( rec(
   name:= "AtlasRepDataDirectory",
   description:= [
-    "The value must be a string that is the filename of a directory \
-(in the sense of 'IsDirectoryPath') that contains the directories \
-in which downloaded data will be stored. \
-The default is the installation path of the AtlasRep package \
-(including a trailing slash symbol)."
+    "The value must be a string that is either empty or the filename \
+of a directory (in the sense of 'IsDirectoryPath') \
+that contains the directories in which downloaded data will be stored. \
+An empty string means that downloaded data are just kept in the GAP session \
+but not saved to local files. \
+The default depends on the user's permissions for the directory of the \
+AtlasRep package: \
+If this directory is writable for the user then the installation path \
+of the AtlasRep package (including a trailing slash symbol) is taken, \
+otherwise the default is an empty string."
     ],
-  default:= Filename( DirectoriesPackageLibrary( "atlasrep", "" ), "" ),
+  default:= function()
+      local dir;
+
+      dir:= Filename( DirectoriesPackageLibrary( "atlasrep", "" ), "" );
+      if IsWritableFile( dir ) then
+        # The package directory is the first default.
+        return dir;
+      else
+        return "";
+      fi;
+    end,
   package:= "AtlasRep",
   check:= function( val )
-    local name;
-
-    if not ( IsString( val ) and IsDirectoryPath( val ) ) then
+    if val = "" then
+      return true;
+    elif not ( IsString( val ) and IsDirectoryPath( val ) ) then
       Info( InfoWarning, 1,
-            "the value of the preference 'AtlasRepDataDirectory' must be ",
-            "a directory path" );
+            "the value of the preference 'AtlasRepDataDirectory' must be\n",
+            "#W  an empty string or a directory path" );
       return false;
-    elif val[ Length( val ) ] <> '/' then
+    elif Last( val ) <> '/' then
       Info( InfoWarning, 1,
             "the value of the preference 'AtlasRepDataDirectory' must end ",
             "with '/'" );
       return false;
+    elif ForAny( [ "datagens", "dataword", "dataext" ],
+             name -> not IsDirectoryPath( Concatenation( val, name ) ) ) then
+      Info( InfoWarning, 1,
+            "the directory given by the preference ",
+            "'AtlasRepDataDirectory'\n",
+            "#W  must contain subdirectories 'datagens', 'dataword', ",
+            "'dataext'" );
+      return false;
     fi;
-    for name in [ "datagens", "dataword" ] do
-      if not IsDirectoryPath( Concatenation( val, name ) ) then
-        Info( InfoWarning, 1,
-              "the directory given by the preference ",
-              "'AtlasRepDataDirectory'\n",
-              "#W  must contain subdirectories 'datagens' and 'dataword'" );
-        return false;
-      fi;
-    od;
 
     return true;
   end,
@@ -149,25 +170,59 @@ and the data that belong to the packages MFER and CTBlocks."
   default:= function()
     local res, file;
 
-    res:= [ Concatenation( "core|",
-                Filename( DirectoriesPackageLibrary( "atlasrep", "" ),
-                          "atlasprm.json" ) ),
-            Concatenation( "internal|",
-                Filename( DirectoriesPackageLibrary( "atlasrep", "" ),
-                          "datapkg/toc.json" ) ) ];
-    file:= Filename( DirectoriesPackageLibrary( "mfer", "" ),
-                     "mfertoc.json" );
-    if file <> fail then
-      Add( res, Concatenation( "mfer|", file ) );
+    # the two files from the AtlasRep package
+    if IsBoundGlobal( "HexSHA256" ) then
+      res:= [ Concatenation( "core|",
+                  Filename( DirectoriesPackageLibrary( "atlasrep", "" ),
+                            "atlasprm_SHA.json" ) ),
+              Concatenation( "internal|",
+                  Filename( DirectoriesPackageLibrary( "atlasrep", "" ),
+                            "datapkg/toc_SHA.json" ) ) ];
     else
-      Add( res, "mfer|http://www.math.rwth-aachen.de/~mfer/mfertoc.json" );
+      res:= [ Concatenation( "core|",
+                  Filename( DirectoriesPackageLibrary( "atlasrep", "" ),
+                            "atlasprm.json" ) ),
+              Concatenation( "internal|",
+                  Filename( DirectoriesPackageLibrary( "atlasrep", "" ),
+                            "datapkg/toc.json" ) ) ];
     fi;
-    file:= Filename( DirectoriesPackageLibrary( "ctblocks", "" ),
-                     "ctblockstoc.json" );
-    if file <> fail then
-      Add( res, Concatenation( "ctblocks|", file ) );
+
+    # the MFER file
+    if IsBoundGlobal( "HexSHA256" ) then
+      file:= Filename( DirectoriesPackageLibrary( "mfer", "" ),
+                       "mfertoc_SHA.json" );
+      if file <> fail then
+        Add( res, Concatenation( "mfer|", file ) );
+      else
+        Add( res, "mfer|http://www.math.rwth-aachen.de/~mfer/mfertoc_SHA.json" );
+      fi;
     else
-      Add( res, "ctblocks|http://www.math.rwth-aachen.de/~Thomas.Breuer/ctblocks/ctblockstoc.json" );
+      file:= Filename( DirectoriesPackageLibrary( "mfer", "" ),
+                       "mfertoc.json" );
+      if file <> fail then
+        Add( res, Concatenation( "mfer|", file ) );
+      else
+        Add( res, "mfer|http://www.math.rwth-aachen.de/~mfer/mfertoc.json" );
+      fi;
+    fi;
+
+    # the CTBlocks file
+    if IsBoundGlobal( "HexSHA256" ) then
+      file:= Filename( DirectoriesPackageLibrary( "ctblocks", "" ),
+                       "ctblockstoc_SHA.json" );
+      if file <> fail then
+        Add( res, Concatenation( "ctblocks|", file ) );
+      else
+        Add( res, "ctblocks|http://www.math.rwth-aachen.de/~Thomas.Breuer/ctblocks/ctblockstoc_SHA.json" );
+      fi;
+    else
+      file:= Filename( DirectoriesPackageLibrary( "ctblocks", "" ),
+                       "ctblockstoc.json" );
+      if file <> fail then
+        Add( res, Concatenation( "ctblocks|", file ) );
+      else
+        Add( res, "ctblocks|http://www.math.rwth-aachen.de/~Thomas.Breuer/ctblocks/ctblockstoc.json" );
+      fi;
     fi;
 
     return res;
@@ -659,14 +714,6 @@ binary file acts on the points from 1 to the degree."
   ) );
 
 
-##  The following preference is shared between several packages.
-##  It is formally attributed to the AtlasRep package but is used also by
-##  the packages CTblLib and CTBlocks.
-##  If no other package has declared it yet then we do this now.
-
-if ForAll( GAPInfo.DeclarationsOfUserPreferences,
-           r -> r.package <> "atlasrep" or r.name <> "DisplayFunction" ) then
-
 #############################################################################
 ##
 #U  DisplayFunction
@@ -695,10 +742,9 @@ if ForAll( GAPInfo.DeclarationsOfUserPreferences,
 DeclareUserPreference( rec(
   name:= "DisplayFunction",
   description:= [
-#T As soon as DisplayCTblLibInfo supports this preference in a released
-#T version, extend the following text.
-    "The way how 'DisplayAtlasInfo' shows the requested overview \
-is controlled by the package AtlasRep's user preference 'DisplayFunction'.  \
+    "This preference controls the way how 'DisplayAtlasInfo', \
+'DisplayBlockInvariants', and \
+'DisplayCTblLibInfo' show the requested overview. \
 The value must be a string that evaluates to a GAP function. \
 The default value is \"Print\", \
 other useful values are \"PrintFormattedString\" and \"AGR.Pager\"; \
@@ -706,14 +752,11 @@ the latter calls 'Pager' with the 'formatted' option, \
 which is necessary for switching off GAP's automatic line breaking."
     ],
   default:= "Print",
-#T if UTF8 then better default!
   package:= "AtlasRep",
 # check:= function( val ) ... end,
 #T BrowseData.TryEval could be used to check this more or less safely.
 #T Let us wait until the GAP library provides a function for that.
   ) );
-
-fi;
 
 
 #############################################################################
@@ -741,6 +784,45 @@ The default value is 'false'."
   default:= false,
   values:= [ true, false ],
   multi:= false,
+  package:= "AtlasRep",
+  ) );
+
+
+#############################################################################
+##
+#U  AtlasRepJsonFilesAddresses
+##
+##  <#GAPDoc Label="AtlasRepJsonFilesAddresses">
+##  <Subsection Label="subsect:AtlasRepJsonFilesAddresses">
+##  <Heading>User preference <C>AtlasRepJsonFilesAddresses</C></Heading>
+##  <Index Key="AtlasRepJsonFilesAddresses"><C>AtlasRepJsonFilesAddresses</C></Index>
+##
+##  The value, if set, must be a list of length two,
+##  the first entry being an URL describing a directory that contains
+##  Json format files of the available matrix representations in
+##  characteristic zero,
+##  and the second being a directory path where these files shall be
+##  stored locally.
+##  If the value is set (this is the default) then the functions
+##  of the package use the Json format files instead of the GAP format files.
+##  </Subsection>
+##  <#/GAPDoc>
+##
+DeclareUserPreference( rec(
+  name:= "AtlasRepJsonFilesAddresses",
+  description:= [
+    "The value, if set, must be a list of length two, \
+the first entry being an URL describing a directory that contains \
+Json format files of the available matrix representations in \
+characteristic zero, \
+and the second being a directory path where these files shall be \
+stored locally.  \
+If the value is set (this is the default) then the functions \
+of the package use the Json format files instead of the GAP format files."
+    ],
+  default:= [
+    "http://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/datachar0",
+    Filename( DirectoriesPackageLibrary( "atlasrep", "datagens" ), "" ) ],
   package:= "AtlasRep",
   ) );
 
