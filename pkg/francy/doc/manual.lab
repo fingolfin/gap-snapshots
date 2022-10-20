@@ -57,201 +57,201 @@
 \makelabel{francy:Francy Util}{9}{X7D19C8447955D526}
 \makelabel{francy:Operations}{9.1}{X7DE8E16C7C2D387B}
 \makelabel{francy:Index}{Ind}{X83A0356F839C696F}
-\makelabel{francy:IsCallback for isfrancyobject}{2.1.1}{X7961360C802B12AF}
-\makelabel{francy:IsRequiredArg for isfrancyobject}{2.1.2}{X7B5CD72681DECF6C}
-\makelabel{francy:IsArgType for isfrancytypeobject}{2.1.3}{X7B7E0C807948B7AF}
-\makelabel{francy:IsTriggerType for isfrancytypeobject}{2.1.4}{X8563CE3284411B39}
-\makelabel{francy:IsCallbackRep for iscomponentobjectrep}{2.3.1}{X810BE3BC849642C6}
-\makelabel{francy:IsRequiredArgRep for iscomponentobjectrep}{2.3.2}{X81CE336A8401CCFA}
-\makelabel{francy:IsArgTypeRep for iscomponentobjectrep}{2.3.3}{X8154ABB67C695006}
-\makelabel{francy:IsTriggerTypeRep for iscomponentobjectrep}{2.3.4}{X7D26E6EB7C6CD408}
-\makelabel{francy:Callback for istriggertype, isfunction, islist}{2.4.1}{X8039D4AA7A14B983}
+\makelabel{francy:IsCallback for IsFrancyObject}{2.1.1}{X7961360C802B12AF}
+\makelabel{francy:IsRequiredArg for IsFrancyObject}{2.1.2}{X7B5CD72681DECF6C}
+\makelabel{francy:IsArgType for IsFrancyTypeObject}{2.1.3}{X7B7E0C807948B7AF}
+\makelabel{francy:IsTriggerType for IsFrancyTypeObject}{2.1.4}{X8563CE3284411B39}
+\makelabel{francy:IsCallbackRep for IsComponentObjectRep}{2.3.1}{X810BE3BC849642C6}
+\makelabel{francy:IsRequiredArgRep for IsComponentObjectRep}{2.3.2}{X81CE336A8401CCFA}
+\makelabel{francy:IsArgTypeRep for IsComponentObjectRep}{2.3.3}{X8154ABB67C695006}
+\makelabel{francy:IsTriggerTypeRep for IsComponentObjectRep}{2.3.4}{X7D26E6EB7C6CD408}
+\makelabel{francy:Callback for IsTriggerType, IsFunction, IsList}{2.4.1}{X8039D4AA7A14B983}
 \makelabel{francy:NoopCallback}{2.4.2}{X79FB842583B96033}
-\makelabel{francy:RequiredArg for isargtype, isstring}{2.4.3}{X842979BE7C0694A1}
-\makelabel{francy:Trigger for isstring}{2.4.4}{X7AF6D2BC85C96A6D}
-\makelabel{francy:Add for iscallback, isrequiredarg}{2.4.5}{X83FF6BEE7DBC8617}
-\makelabel{francy:Remove for iscallback, isrequiredarg}{2.4.6}{X7F67A0CE8601BE21}
-\makelabel{francy:Title for isrequiredarg}{2.6.1}{X7A58A55E806E5F68}
-\makelabel{francy:Title for isrequiredarg}{2.6.2}{X7A58A55E806E5F68}
-\makelabel{francy:SetTitle for isrequiredarg, isstring}{2.6.3}{X7888408386F15D29}
-\makelabel{francy:Value for isrequiredarg}{2.6.4}{X78733FD481F16F77}
-\makelabel{francy:Value for isrequiredarg}{2.6.5}{X78733FD481F16F77}
-\makelabel{francy:SetValue for isrequiredarg, isstring}{2.6.6}{X7C4F7F027E8AF083}
-\makelabel{francy:ConfirmMessage for iscallback}{2.6.7}{X87AA56767C7BB01F}
-\makelabel{francy:ConfirmMessage for iscallback}{2.6.8}{X87AA56767C7BB01F}
-\makelabel{francy:SetConfirmMessage for iscallback, isstring}{2.6.9}{X7F4046A17BBE64F1}
-\makelabel{francy:IsCanvas for isfrancyobject}{3.1.1}{X8351E5BE7ED0B87E}
-\makelabel{francy:IsCanvasDefaults for isfrancydefaultobject}{3.1.2}{X8040FA4D7BFFA02C}
-\makelabel{francy:IsCanvasRep for iscomponentobjectrep}{3.3.1}{X8528307D784BB534}
-\makelabel{francy:IsCanvasDefaultsRep for iscomponentobjectrep}{3.3.2}{X84F3F3517F477404}
-\makelabel{francy:Canvas for isstring, iscanvasdefaults}{3.4.1}{X874453DF7EED04FA}
-\makelabel{francy:Add for iscanvas, isfrancygraph}{3.4.2}{X7FEEC3AC8666481F}
-\makelabel{francy:Remove for iscanvas, isfrancygraph}{3.4.3}{X8090D82580B6CA23}
-\makelabel{francy:Add for iscanvas, ischart}{3.4.4}{X8419F6837D7125A3}
-\makelabel{francy:Remove for iscanvas, ischart}{3.4.5}{X792342FC842ED287}
-\makelabel{francy:Add for iscanvas, ismenu}{3.4.6}{X86AE935D7BFF905F}
-\makelabel{francy:Remove for iscanvas, ismenu}{3.4.7}{X8175A39B7D0A33D5}
-\makelabel{francy:Add for iscanvas, isfrancymessage}{3.4.8}{X7F12F02C7D234A85}
-\makelabel{francy:Remove for iscanvas, isfrancymessage}{3.4.9}{X838A3B0C7F66576C}
-\makelabel{francy:Draw for iscanvas}{3.4.10}{X8352EF6583B2A8B6}
-\makelabel{francy:DrawSplash for iscanvas}{3.4.11}{X7E989A727B18D82A}
-\makelabel{francy:Width for iscanvas}{3.6.1}{X7DF1F7F27DBF05DB}
-\makelabel{francy:Width for iscanvas}{3.6.2}{X7DF1F7F27DBF05DB}
-\makelabel{francy:SetWidth for iscanvas, isposint}{3.6.3}{X82D7219081829CE5}
-\makelabel{francy:Height for iscanvas}{3.6.4}{X7C8CA0D97DD98ACC}
-\makelabel{francy:Height for iscanvas}{3.6.5}{X7C8CA0D97DD98ACC}
-\makelabel{francy:SetHeight for iscanvas, isposint}{3.6.6}{X7B08897D7FD3F0F4}
-\makelabel{francy:ZoomToFit for iscanvas}{3.6.7}{X78FB8F5B7A5FC80E}
-\makelabel{francy:ZoomToFit for iscanvas}{3.6.8}{X78FB8F5B7A5FC80E}
-\makelabel{francy:SetZoomToFit for iscanvas, isbool}{3.6.9}{X7A474051806655AF}
-\makelabel{francy:Title for iscanvas}{3.6.10}{X7EFAFBF4833E214B}
-\makelabel{francy:Title for iscanvas}{3.6.11}{X7EFAFBF4833E214B}
-\makelabel{francy:SetTitle for iscanvas, isstring}{3.6.12}{X85DA7AAC7A47E8B6}
-\makelabel{francy:TexTypesetting for iscanvas}{3.6.13}{X86B7B5A579F18055}
-\makelabel{francy:TexTypesetting for iscanvas}{3.6.14}{X86B7B5A579F18055}
-\makelabel{francy:SetTexTypesetting for iscanvas, isbool}{3.6.15}{X879D8DDF798C4E23}
-\makelabel{francy:IsChart for isfrancyobject}{4.1.1}{X842E94797B06EA05}
-\makelabel{francy:IsChartType for isfrancytypeobject}{4.1.2}{X7883EB6E7996B768}
-\makelabel{francy:IsChartDefaults for isfrancydefaultobject}{4.1.3}{X7D1AD55182909B1E}
-\makelabel{francy:IsAxisScaleType for isfrancytypeobject}{4.1.4}{X7D677CC3851D5DB6}
-\makelabel{francy:IsXAxis for isfrancyobject}{4.1.5}{X7DF8B33A81C539A6}
-\makelabel{francy:IsYAxis for isfrancyobject}{4.1.6}{X85EAE56881D91F05}
-\makelabel{francy:IsDataset for isfrancyobject}{4.1.7}{X83443E0080CEBA59}
-\makelabel{francy:IsChartRep for iscomponentobjectrep}{4.3.1}{X8103CF1C80678FAC}
-\makelabel{francy:IsChartDefaultsRep for iscomponentobjectrep}{4.3.2}{X7E2CABA77A09F7DC}
-\makelabel{francy:IsChartTypeRep for iscomponentobjectrep}{4.3.3}{X7A1571668258DC2E}
-\makelabel{francy:IsAxisScaleTypeRep for iscomponentobjectrep}{4.3.4}{X7C863513870E27E8}
-\makelabel{francy:IsAxisRep for iscomponentobjectrep}{4.3.5}{X79AF56708511A8BB}
-\makelabel{francy:IsDatasetRep for iscomponentobjectrep}{4.3.6}{X8379B4617DD3972B}
-\makelabel{francy:Chart for ischarttype, ischartdefaults}{4.4.1}{X788E9239817A86F9}
-\makelabel{francy:Add for ischart, isdataset}{4.4.2}{X7FF797E479C02620}
-\makelabel{francy:Remove for ischart, isdataset}{4.4.3}{X7DC73B2B86139E4E}
-\makelabel{francy:Dataset for isstring, islist}{4.4.4}{X821615638734756B}
-\makelabel{francy:DefaultAxis for ischarttype}{4.4.5}{X84014BEA7F51EC98}
-\makelabel{francy:XAxis for isaxisscaletype, isstring, islist}{4.4.6}{X807FBC8A838DE2AF}
-\makelabel{francy:YAxis for isaxisscaletype, isstring, islist}{4.4.7}{X7EFEC58084FD91A6}
-\makelabel{francy:ShowLegend for ischart}{4.6.1}{X86A952337E156058}
-\makelabel{francy:ShowLegend for ischart}{4.6.2}{X86A952337E156058}
-\makelabel{francy:SetShowLegend for ischart, isbool}{4.6.3}{X7F755201834DB9A6}
-\makelabel{francy:AxisXTitle for ischart}{4.6.4}{X79F825427AF32645}
-\makelabel{francy:AxisXTitle for ischart}{4.6.5}{X79F825427AF32645}
-\makelabel{francy:SetAxisXTitle for ischart, isstring}{4.6.6}{X799344B184169C7A}
-\makelabel{francy:AxisYTitle for ischart}{4.6.7}{X870D0E2C792524DE}
-\makelabel{francy:AxisYTitle for ischart}{4.6.8}{X870D0E2C792524DE}
-\makelabel{francy:SetAxisYTitle for ischart, isstring}{4.6.9}{X7F7B850578DC3C73}
-\makelabel{francy:AxisXDomain for ischart}{4.6.10}{X7A66A1197B986866}
-\makelabel{francy:AxisXDomain for ischart}{4.6.11}{X7A66A1197B986866}
-\makelabel{francy:SetAxisXDomain for ischart, islist}{4.6.12}{X7A7FCC2D868792E1}
-\makelabel{francy:IsFrancyObject for isobject}{5.1.1}{X847E2E8B80386B5A}
-\makelabel{francy:IsFrancyDefaultObject for isobject}{5.1.2}{X8223C52A839E3265}
-\makelabel{francy:IsFrancyTypeObject for isobject}{5.1.3}{X7F1E4EE7848C23E4}
-\makelabel{francy:FrancyId for isfrancyobject}{5.4.1}{X7D25B5408731F6F3}
-\makelabel{francy:FrancyId for isfrancyobject}{5.4.2}{X7D25B5408731F6F3}
-\makelabel{francy:SetFrancyId for isfrancyobject, isstring}{5.4.3}{X87C8E31387383A61}
-\makelabel{francy:IsFrancyGraph for isfrancyobject}{6.1.1}{X7806CCD67F4EB260}
-\makelabel{francy:IsFrancyGraphType for isfrancyobject}{6.1.2}{X87CD35308569DAE1}
-\makelabel{francy:IsFrancyGraphDefaults for isfrancydefaultobject}{6.1.3}{X7D895F0886106B52}
-\makelabel{francy:IsShape for isfrancyobject}{6.1.4}{X85CE7A9B82029355}
-\makelabel{francy:IsShapeType for isfrancyobject}{6.1.5}{X8424B5618458E11A}
-\makelabel{francy:IsShapeDefaults for isfrancydefaultobject}{6.1.6}{X793EF06E7B94E24E}
-\makelabel{francy:IsLink for isfrancyobject}{6.1.7}{X8535990579CB5DAC}
-\makelabel{francy:IsLinkDefaults for isfrancydefaultobject}{6.1.8}{X849B921B7F2F5D3C}
-\makelabel{francy:IsFrancyGraphRep for iscomponentobjectrep}{6.3.1}{X7FBB2ED67A91B1F6}
-\makelabel{francy:IsFrancyGraphDefaultsRep for iscomponentobjectrep}{6.3.2}{X7998221386C4DBA0}
-\makelabel{francy:IsFrancyGraphTypeRep for iscomponentobjectrep}{6.3.3}{X7F60FE3F8620C142}
-\makelabel{francy:IsShapeRep for iscomponentobjectrep}{6.3.4}{X854F96047963F6FC}
-\makelabel{francy:IsShapeDefaultsRep for iscomponentobjectrep}{6.3.5}{X79A97344830D8E8C}
-\makelabel{francy:IsShapeTypeRep for iscomponentobjectrep}{6.3.6}{X865567BF7B5CA57E}
-\makelabel{francy:IsLinkRep for iscomponentobjectrep}{6.3.7}{X7841EC887ECC274F}
-\makelabel{francy:IsLinkDefaultsRep for iscomponentobjectrep}{6.3.8}{X854E4BD67B712165}
-\makelabel{francy:Graph for isfrancygraphtype, isfrancygraphdefaults}{6.4.1}{X87510C7F82CAE1B2}
-\makelabel{francy:UnsetNodes for isfrancygraph}{6.4.2}{X7A5B92FD8060E2E8}
-\makelabel{francy:UnsetLinks for isfrancygraph}{6.4.3}{X7E210E5D871147DE}
-\makelabel{francy:Add for isfrancygraph, islink}{6.4.4}{X7ABC7BC987B81777}
-\makelabel{francy:Remove for isfrancygraph, islink}{6.4.5}{X7978AEF88748A068}
-\makelabel{francy:Add for isfrancygraph, isshape}{6.4.6}{X7A2C8F337BB5026D}
-\makelabel{francy:Remove for isfrancygraph, isshape}{6.4.7}{X821273BA7F4DA924}
-\makelabel{francy:Shape for isshapetype, isstring, isshapedefaults}{6.4.8}{X7D357B107D4949D1}
-\makelabel{francy:GetShape for isfrancygraph, isstring}{6.4.9}{X83660FEB862437FB}
-\makelabel{francy:GetShapes for isfrancygraph}{6.4.10}{X7C4C5CDB87B3749B}
-\makelabel{francy:Add for isshape, ismenu}{6.4.11}{X7EF659877F394CA8}
-\makelabel{francy:Remove for isshape, ismenu}{6.4.12}{X85BF74EF7F7666CC}
-\makelabel{francy:Add for isshape, iscallback}{6.4.13}{X7DDA822185BE37C7}
-\makelabel{francy:Remove for isshape, iscallback}{6.4.14}{X86EED52F83DD8267}
-\makelabel{francy:Add for isshape, isfrancymessage}{6.4.15}{X7D44790C7E3DD809}
-\makelabel{francy:Remove for isshape, isfrancymessage}{6.4.16}{X854D516B7E81D53F}
-\makelabel{francy:Link for isshape, isshape, islinkdefaults}{6.4.17}{X7A324F527BCA3207}
-\makelabel{francy:Links for islist, islist, islinkdefaults}{6.4.18}{X7E90E1F17F599D08}
-\makelabel{francy:GetLink for isfrancygraph, isstring}{6.4.19}{X8273378F7F00BF6A}
-\makelabel{francy:GetLinks for isfrancygraph}{6.4.20}{X7B7ACA577E80B8E3}
-\makelabel{francy:Title for isshape}{6.6.1}{X83D2C91985CF0C3D}
-\makelabel{francy:Title for isshape}{6.6.2}{X83D2C91985CF0C3D}
-\makelabel{francy:SetTitle for isshape, isstring}{6.6.3}{X7B25A8097AE1AC64}
-\makelabel{francy:Color for isshape}{6.6.4}{X86780CBD85B39F72}
-\makelabel{francy:Color for isshape}{6.6.5}{X86780CBD85B39F72}
-\makelabel{francy:SetColor for isshape, isstring}{6.6.6}{X7BCBDC2D84487FE9}
-\makelabel{francy:PosX for isshape}{6.6.7}{X7F60BE7583BFDD29}
-\makelabel{francy:PosX for isshape}{6.6.8}{X7F60BE7583BFDD29}
-\makelabel{francy:SetPosX for isshape, isint}{6.6.9}{X78A2408384F94449}
-\makelabel{francy:PosY for isshape}{6.6.10}{X82B9D3ED78341B5F}
-\makelabel{francy:PosY for isshape}{6.6.11}{X82B9D3ED78341B5F}
-\makelabel{francy:SetPosY for isshape, isint}{6.6.12}{X85DC68867E9E34F2}
-\makelabel{francy:Size for isshape}{6.6.13}{X7A044BEB8590C906}
-\makelabel{francy:Size for isshape}{6.6.14}{X7A044BEB8590C906}
-\makelabel{francy:SetSize for isshape, isposint}{6.6.15}{X7F2308F18216D0DF}
-\makelabel{francy:Layer for isshape}{6.6.16}{X82452F5F8205546C}
-\makelabel{francy:Layer for isshape}{6.6.17}{X82452F5F8205546C}
-\makelabel{francy:SetLayer for isshape, isint}{6.6.18}{X865A2CCC7B7310AF}
-\makelabel{francy:ParentShape for isshape}{6.6.19}{X8057C33487656604}
-\makelabel{francy:ParentShape for isshape}{6.6.20}{X8057C33487656604}
-\makelabel{francy:SetParentShape for isshape, isshape}{6.6.21}{X7EEEDB5385F0FDC2}
-\makelabel{francy:Simulation for isfrancygraph}{6.6.22}{X7C3653757FEE9F72}
-\makelabel{francy:Simulation for isfrancygraph}{6.6.23}{X7C3653757FEE9F72}
-\makelabel{francy:SetSimulation for isfrancygraph, isbool}{6.6.24}{X7A3901B97FAB1DC5}
-\makelabel{francy:Collapsed for isfrancygraph}{6.6.25}{X80AF2B5D7A029564}
-\makelabel{francy:Collapsed for isfrancygraph}{6.6.26}{X80AF2B5D7A029564}
-\makelabel{francy:SetCollapsed for isfrancygraph, isbool}{6.6.27}{X8798FA78848FFA03}
-\makelabel{francy:Selected for isshape}{6.6.28}{X816339857B1118EC}
-\makelabel{francy:Selected for isshape}{6.6.29}{X816339857B1118EC}
-\makelabel{francy:SetSelected for isshape, isbool}{6.6.30}{X7FDA75868647E405}
-\makelabel{francy:ConjugateId for isshape}{6.6.31}{X7D9DF25C82FCA1D9}
-\makelabel{francy:ConjugateId for isshape}{6.6.32}{X7D9DF25C82FCA1D9}
-\makelabel{francy:SetConjugateId for isshape, isint}{6.6.33}{X7DDBAECB874E7F40}
-\makelabel{francy:Weight for islink}{6.6.34}{X80FA3A2E807481DE}
-\makelabel{francy:Weight for islink}{6.6.35}{X80FA3A2E807481DE}
-\makelabel{francy:SetWeight for islink, isint}{6.6.36}{X830DCE657B6B1701}
-\makelabel{francy:Length for islink}{6.6.37}{X811D69FC859667AE}
-\makelabel{francy:Length for islink}{6.6.38}{X811D69FC859667AE}
-\makelabel{francy:SetLength for islink, isint}{6.6.39}{X7EFC492284D4C053}
-\makelabel{francy:Invisible for islink}{6.6.40}{X8225EFFA78C9BF04}
-\makelabel{francy:Invisible for islink}{6.6.41}{X8225EFFA78C9BF04}
-\makelabel{francy:SetInvisible for islink, isbool}{6.6.42}{X836B3DE1838580F9}
-\makelabel{francy:Color for islink}{6.6.43}{X859C4ED278422D03}
-\makelabel{francy:Color for islink}{6.6.44}{X859C4ED278422D03}
-\makelabel{francy:SetColor for islink, isstring}{6.6.45}{X84FF9CBB85CAF4A6}
-\makelabel{francy:Title for islink}{6.6.46}{X7F041B5D783EBE4C}
-\makelabel{francy:Title for islink}{6.6.47}{X7F041B5D783EBE4C}
-\makelabel{francy:SetTitle for islink, isstring}{6.6.48}{X87333BEB7B63272B}
-\makelabel{francy:IsMenu for isfrancyobject}{7.1.1}{X7D4F62FC7EE7D6CA}
-\makelabel{francy:IsMenuRep for iscomponentobjectrep}{7.3.1}{X78011B0D79E0AC29}
-\makelabel{francy:Menu for isstring, iscallback}{7.4.1}{X80A4CF8778846969}
-\makelabel{francy:Add for ismenu, ismenu}{7.4.2}{X7EDDF1E97C71181B}
-\makelabel{francy:Remove for ismenu, ismenu}{7.4.3}{X874B7A668558AFB5}
-\makelabel{francy:Title for ismenu}{7.5.1}{X7BBE816B7B22D645}
-\makelabel{francy:Title for ismenu}{7.5.2}{X7BBE816B7B22D645}
-\makelabel{francy:SetTitle for ismenu, isstring}{7.5.3}{X792C89BE80A7DA6E}
-\makelabel{francy:IsFrancyMessage for isfrancyobject}{8.1.1}{X81B6563E7B6AEA6D}
-\makelabel{francy:IsFrancyMessageType for isfrancyobject}{8.1.2}{X7AC1074882D397F6}
-\makelabel{francy:IsFrancyMessageRep for iscomponentobjectrep}{8.3.1}{X81FA07417DA0CBF0}
-\makelabel{francy:IsFrancyMessageTypeRep for iscomponentobjectrep}{8.3.2}{X7A2D43947BDA7E29}
-\makelabel{francy:FrancyMessage for isfrancymessagetype, isstring, isstring}{8.4.1}{X7D5DE52179AE8554}
-\makelabel{francy:Title for isfrancymessage}{8.6.1}{X84394D1F822EA86F}
-\makelabel{francy:Title for isfrancymessage}{8.6.2}{X84394D1F822EA86F}
-\makelabel{francy:SetTitle for isfrancymessage, isstring}{8.6.3}{X7A26B9E77D45DC64}
-\makelabel{francy:Value for isfrancymessage}{8.6.4}{X807A806F83B19870}
-\makelabel{francy:Value for isfrancymessage}{8.6.5}{X807A806F83B19870}
-\makelabel{francy:SetValue for isfrancymessage, isstring}{8.6.6}{X7EE61C43853E71CE}
-\makelabel{francy:JUPYTERViewString for isobject}{9.1.1}{X7FDA25B980809FC3}
-\makelabel{francy:Sanitize for isobject}{9.1.2}{X804E29DC830EE7B1}
-\makelabel{francy:MergeObjects for isfrancyobject, isfrancyobject}{9.1.3}{X84A26F95834C1C49}
+\makelabel{francy:RequiredArg for IsArgType, IsString}{2.4.3}{X842979BE7C0694A1}
+\makelabel{francy:Trigger for IsString}{2.4.4}{X7AF6D2BC85C96A6D}
+\makelabel{francy:Add for IsCallback, IsRequiredArg}{2.4.5}{X83FF6BEE7DBC8617}
+\makelabel{francy:Remove for IsCallback, IsRequiredArg}{2.4.6}{X7F67A0CE8601BE21}
+\makelabel{francy:Title for IsRequiredArg}{2.6.1}{X7A58A55E806E5F68}
+\makelabel{francy:Title for IsRequiredArg}{2.6.2}{X7A58A55E806E5F68}
+\makelabel{francy:SetTitle for IsRequiredArg, IsString}{2.6.3}{X7888408386F15D29}
+\makelabel{francy:Value for IsRequiredArg}{2.6.4}{X78733FD481F16F77}
+\makelabel{francy:Value for IsRequiredArg}{2.6.5}{X78733FD481F16F77}
+\makelabel{francy:SetValue for IsRequiredArg, IsString}{2.6.6}{X7C4F7F027E8AF083}
+\makelabel{francy:ConfirmMessage for IsCallback}{2.6.7}{X87AA56767C7BB01F}
+\makelabel{francy:ConfirmMessage for IsCallback}{2.6.8}{X87AA56767C7BB01F}
+\makelabel{francy:SetConfirmMessage for IsCallback, IsString}{2.6.9}{X7F4046A17BBE64F1}
+\makelabel{francy:IsCanvas for IsFrancyObject}{3.1.1}{X8351E5BE7ED0B87E}
+\makelabel{francy:IsCanvasDefaults for IsFrancyDefaultObject}{3.1.2}{X8040FA4D7BFFA02C}
+\makelabel{francy:IsCanvasRep for IsComponentObjectRep}{3.3.1}{X8528307D784BB534}
+\makelabel{francy:IsCanvasDefaultsRep for IsComponentObjectRep}{3.3.2}{X84F3F3517F477404}
+\makelabel{francy:Canvas for IsString, IsCanvasDefaults}{3.4.1}{X874453DF7EED04FA}
+\makelabel{francy:Add for IsCanvas, IsFrancyGraph}{3.4.2}{X7FEEC3AC8666481F}
+\makelabel{francy:Remove for IsCanvas, IsFrancyGraph}{3.4.3}{X8090D82580B6CA23}
+\makelabel{francy:Add for IsCanvas, IsChart}{3.4.4}{X8419F6837D7125A3}
+\makelabel{francy:Remove for IsCanvas, IsChart}{3.4.5}{X792342FC842ED287}
+\makelabel{francy:Add for IsCanvas, IsMenu}{3.4.6}{X86AE935D7BFF905F}
+\makelabel{francy:Remove for IsCanvas, IsMenu}{3.4.7}{X8175A39B7D0A33D5}
+\makelabel{francy:Add for IsCanvas, IsFrancyMessage}{3.4.8}{X7F12F02C7D234A85}
+\makelabel{francy:Remove for IsCanvas, IsFrancyMessage}{3.4.9}{X838A3B0C7F66576C}
+\makelabel{francy:Draw for IsCanvas}{3.4.10}{X8352EF6583B2A8B6}
+\makelabel{francy:DrawSplash for IsCanvas}{3.4.11}{X7E989A727B18D82A}
+\makelabel{francy:Width for IsCanvas}{3.6.1}{X7DF1F7F27DBF05DB}
+\makelabel{francy:Width for IsCanvas}{3.6.2}{X7DF1F7F27DBF05DB}
+\makelabel{francy:SetWidth for IsCanvas, IsPosInt}{3.6.3}{X82D7219081829CE5}
+\makelabel{francy:Height for IsCanvas}{3.6.4}{X7C8CA0D97DD98ACC}
+\makelabel{francy:Height for IsCanvas}{3.6.5}{X7C8CA0D97DD98ACC}
+\makelabel{francy:SetHeight for IsCanvas, IsPosInt}{3.6.6}{X7B08897D7FD3F0F4}
+\makelabel{francy:ZoomToFit for IsCanvas}{3.6.7}{X78FB8F5B7A5FC80E}
+\makelabel{francy:ZoomToFit for IsCanvas}{3.6.8}{X78FB8F5B7A5FC80E}
+\makelabel{francy:SetZoomToFit for IsCanvas, IsBool}{3.6.9}{X7A474051806655AF}
+\makelabel{francy:Title for IsCanvas}{3.6.10}{X7EFAFBF4833E214B}
+\makelabel{francy:Title for IsCanvas}{3.6.11}{X7EFAFBF4833E214B}
+\makelabel{francy:SetTitle for IsCanvas, IsString}{3.6.12}{X85DA7AAC7A47E8B6}
+\makelabel{francy:TexTypesetting for IsCanvas}{3.6.13}{X86B7B5A579F18055}
+\makelabel{francy:TexTypesetting for IsCanvas}{3.6.14}{X86B7B5A579F18055}
+\makelabel{francy:SetTexTypesetting for IsCanvas, IsBool}{3.6.15}{X879D8DDF798C4E23}
+\makelabel{francy:IsChart for IsFrancyObject}{4.1.1}{X842E94797B06EA05}
+\makelabel{francy:IsChartType for IsFrancyTypeObject}{4.1.2}{X7883EB6E7996B768}
+\makelabel{francy:IsChartDefaults for IsFrancyDefaultObject}{4.1.3}{X7D1AD55182909B1E}
+\makelabel{francy:IsAxisScaleType for IsFrancyTypeObject}{4.1.4}{X7D677CC3851D5DB6}
+\makelabel{francy:IsXAxis for IsFrancyObject}{4.1.5}{X7DF8B33A81C539A6}
+\makelabel{francy:IsYAxis for IsFrancyObject}{4.1.6}{X85EAE56881D91F05}
+\makelabel{francy:IsDataset for IsFrancyObject}{4.1.7}{X83443E0080CEBA59}
+\makelabel{francy:IsChartRep for IsComponentObjectRep}{4.3.1}{X8103CF1C80678FAC}
+\makelabel{francy:IsChartDefaultsRep for IsComponentObjectRep}{4.3.2}{X7E2CABA77A09F7DC}
+\makelabel{francy:IsChartTypeRep for IsComponentObjectRep}{4.3.3}{X7A1571668258DC2E}
+\makelabel{francy:IsAxisScaleTypeRep for IsComponentObjectRep}{4.3.4}{X7C863513870E27E8}
+\makelabel{francy:IsAxisRep for IsComponentObjectRep}{4.3.5}{X79AF56708511A8BB}
+\makelabel{francy:IsDatasetRep for IsComponentObjectRep}{4.3.6}{X8379B4617DD3972B}
+\makelabel{francy:Chart for IsChartType, IsChartDefaults}{4.4.1}{X788E9239817A86F9}
+\makelabel{francy:Add for IsChart, IsDataset}{4.4.2}{X7FF797E479C02620}
+\makelabel{francy:Remove for IsChart, IsDataset}{4.4.3}{X7DC73B2B86139E4E}
+\makelabel{francy:Dataset for IsString, IsList}{4.4.4}{X821615638734756B}
+\makelabel{francy:DefaultAxis for IsChartType}{4.4.5}{X84014BEA7F51EC98}
+\makelabel{francy:XAxis for IsAxisScaleType, IsString, IsList}{4.4.6}{X807FBC8A838DE2AF}
+\makelabel{francy:YAxis for IsAxisScaleType, IsString, IsList}{4.4.7}{X7EFEC58084FD91A6}
+\makelabel{francy:ShowLegend for IsChart}{4.6.1}{X86A952337E156058}
+\makelabel{francy:ShowLegend for IsChart}{4.6.2}{X86A952337E156058}
+\makelabel{francy:SetShowLegend for IsChart, IsBool}{4.6.3}{X7F755201834DB9A6}
+\makelabel{francy:AxisXTitle for IsChart}{4.6.4}{X79F825427AF32645}
+\makelabel{francy:AxisXTitle for IsChart}{4.6.5}{X79F825427AF32645}
+\makelabel{francy:SetAxisXTitle for IsChart, IsString}{4.6.6}{X799344B184169C7A}
+\makelabel{francy:AxisYTitle for IsChart}{4.6.7}{X870D0E2C792524DE}
+\makelabel{francy:AxisYTitle for IsChart}{4.6.8}{X870D0E2C792524DE}
+\makelabel{francy:SetAxisYTitle for IsChart, IsString}{4.6.9}{X7F7B850578DC3C73}
+\makelabel{francy:AxisXDomain for IsChart}{4.6.10}{X7A66A1197B986866}
+\makelabel{francy:AxisXDomain for IsChart}{4.6.11}{X7A66A1197B986866}
+\makelabel{francy:SetAxisXDomain for IsChart, IsList}{4.6.12}{X7A7FCC2D868792E1}
+\makelabel{francy:IsFrancyObject for IsObject}{5.1.1}{X847E2E8B80386B5A}
+\makelabel{francy:IsFrancyDefaultObject for IsObject}{5.1.2}{X8223C52A839E3265}
+\makelabel{francy:IsFrancyTypeObject for IsObject}{5.1.3}{X7F1E4EE7848C23E4}
+\makelabel{francy:FrancyId for IsFrancyObject}{5.4.1}{X7D25B5408731F6F3}
+\makelabel{francy:FrancyId for IsFrancyObject}{5.4.2}{X7D25B5408731F6F3}
+\makelabel{francy:SetFrancyId for IsFrancyObject, IsString}{5.4.3}{X87C8E31387383A61}
+\makelabel{francy:IsFrancyGraph for IsFrancyObject}{6.1.1}{X7806CCD67F4EB260}
+\makelabel{francy:IsFrancyGraphType for IsFrancyObject}{6.1.2}{X87CD35308569DAE1}
+\makelabel{francy:IsFrancyGraphDefaults for IsFrancyDefaultObject}{6.1.3}{X7D895F0886106B52}
+\makelabel{francy:IsShape for IsFrancyObject}{6.1.4}{X85CE7A9B82029355}
+\makelabel{francy:IsShapeType for IsFrancyObject}{6.1.5}{X8424B5618458E11A}
+\makelabel{francy:IsShapeDefaults for IsFrancyDefaultObject}{6.1.6}{X793EF06E7B94E24E}
+\makelabel{francy:IsLink for IsFrancyObject}{6.1.7}{X8535990579CB5DAC}
+\makelabel{francy:IsLinkDefaults for IsFrancyDefaultObject}{6.1.8}{X849B921B7F2F5D3C}
+\makelabel{francy:IsFrancyGraphRep for IsComponentObjectRep}{6.3.1}{X7FBB2ED67A91B1F6}
+\makelabel{francy:IsFrancyGraphDefaultsRep for IsComponentObjectRep}{6.3.2}{X7998221386C4DBA0}
+\makelabel{francy:IsFrancyGraphTypeRep for IsComponentObjectRep}{6.3.3}{X7F60FE3F8620C142}
+\makelabel{francy:IsShapeRep for IsComponentObjectRep}{6.3.4}{X854F96047963F6FC}
+\makelabel{francy:IsShapeDefaultsRep for IsComponentObjectRep}{6.3.5}{X79A97344830D8E8C}
+\makelabel{francy:IsShapeTypeRep for IsComponentObjectRep}{6.3.6}{X865567BF7B5CA57E}
+\makelabel{francy:IsLinkRep for IsComponentObjectRep}{6.3.7}{X7841EC887ECC274F}
+\makelabel{francy:IsLinkDefaultsRep for IsComponentObjectRep}{6.3.8}{X854E4BD67B712165}
+\makelabel{francy:Graph for IsFrancyGraphType, IsFrancyGraphDefaults}{6.4.1}{X87510C7F82CAE1B2}
+\makelabel{francy:UnsetNodes for IsFrancyGraph}{6.4.2}{X7A5B92FD8060E2E8}
+\makelabel{francy:UnsetLinks for IsFrancyGraph}{6.4.3}{X7E210E5D871147DE}
+\makelabel{francy:Add for IsFrancyGraph, IsLink}{6.4.4}{X7ABC7BC987B81777}
+\makelabel{francy:Remove for IsFrancyGraph, IsLink}{6.4.5}{X7978AEF88748A068}
+\makelabel{francy:Add for IsFrancyGraph, IsShape}{6.4.6}{X7A2C8F337BB5026D}
+\makelabel{francy:Remove for IsFrancyGraph, IsShape}{6.4.7}{X821273BA7F4DA924}
+\makelabel{francy:Shape for IsShapeType, IsString, IsShapeDefaults}{6.4.8}{X7D357B107D4949D1}
+\makelabel{francy:GetShape for IsFrancyGraph, IsString}{6.4.9}{X83660FEB862437FB}
+\makelabel{francy:GetShapes for IsFrancyGraph}{6.4.10}{X7C4C5CDB87B3749B}
+\makelabel{francy:Add for IsShape, IsMenu}{6.4.11}{X7EF659877F394CA8}
+\makelabel{francy:Remove for IsShape, IsMenu}{6.4.12}{X85BF74EF7F7666CC}
+\makelabel{francy:Add for IsShape, IsCallback}{6.4.13}{X7DDA822185BE37C7}
+\makelabel{francy:Remove for IsShape, IsCallback}{6.4.14}{X86EED52F83DD8267}
+\makelabel{francy:Add for IsShape, IsFrancyMessage}{6.4.15}{X7D44790C7E3DD809}
+\makelabel{francy:Remove for IsShape, IsFrancyMessage}{6.4.16}{X854D516B7E81D53F}
+\makelabel{francy:Link for IsShape, IsShape, IsLinkDefaults}{6.4.17}{X7A324F527BCA3207}
+\makelabel{francy:Links for IsList, IsList, IsLinkDefaults}{6.4.18}{X7E90E1F17F599D08}
+\makelabel{francy:GetLink for IsFrancyGraph, IsString}{6.4.19}{X8273378F7F00BF6A}
+\makelabel{francy:GetLinks for IsFrancyGraph}{6.4.20}{X7B7ACA577E80B8E3}
+\makelabel{francy:Title for IsShape}{6.6.1}{X83D2C91985CF0C3D}
+\makelabel{francy:Title for IsShape}{6.6.2}{X83D2C91985CF0C3D}
+\makelabel{francy:SetTitle for IsShape, IsString}{6.6.3}{X7B25A8097AE1AC64}
+\makelabel{francy:Color for IsShape}{6.6.4}{X86780CBD85B39F72}
+\makelabel{francy:Color for IsShape}{6.6.5}{X86780CBD85B39F72}
+\makelabel{francy:SetColor for IsShape, IsString}{6.6.6}{X7BCBDC2D84487FE9}
+\makelabel{francy:PosX for IsShape}{6.6.7}{X7F60BE7583BFDD29}
+\makelabel{francy:PosX for IsShape}{6.6.8}{X7F60BE7583BFDD29}
+\makelabel{francy:SetPosX for IsShape, IsInt}{6.6.9}{X78A2408384F94449}
+\makelabel{francy:PosY for IsShape}{6.6.10}{X82B9D3ED78341B5F}
+\makelabel{francy:PosY for IsShape}{6.6.11}{X82B9D3ED78341B5F}
+\makelabel{francy:SetPosY for IsShape, IsInt}{6.6.12}{X85DC68867E9E34F2}
+\makelabel{francy:Size for IsShape}{6.6.13}{X7A044BEB8590C906}
+\makelabel{francy:Size for IsShape}{6.6.14}{X7A044BEB8590C906}
+\makelabel{francy:SetSize for IsShape, IsPosInt}{6.6.15}{X7F2308F18216D0DF}
+\makelabel{francy:Layer for IsShape}{6.6.16}{X82452F5F8205546C}
+\makelabel{francy:Layer for IsShape}{6.6.17}{X82452F5F8205546C}
+\makelabel{francy:SetLayer for IsShape, IsInt}{6.6.18}{X865A2CCC7B7310AF}
+\makelabel{francy:ParentShape for IsShape}{6.6.19}{X8057C33487656604}
+\makelabel{francy:ParentShape for IsShape}{6.6.20}{X8057C33487656604}
+\makelabel{francy:SetParentShape for IsShape, IsShape}{6.6.21}{X7EEEDB5385F0FDC2}
+\makelabel{francy:Simulation for IsFrancyGraph}{6.6.22}{X7C3653757FEE9F72}
+\makelabel{francy:Simulation for IsFrancyGraph}{6.6.23}{X7C3653757FEE9F72}
+\makelabel{francy:SetSimulation for IsFrancyGraph, IsBool}{6.6.24}{X7A3901B97FAB1DC5}
+\makelabel{francy:Collapsed for IsFrancyGraph}{6.6.25}{X80AF2B5D7A029564}
+\makelabel{francy:Collapsed for IsFrancyGraph}{6.6.26}{X80AF2B5D7A029564}
+\makelabel{francy:SetCollapsed for IsFrancyGraph, IsBool}{6.6.27}{X8798FA78848FFA03}
+\makelabel{francy:Selected for IsShape}{6.6.28}{X816339857B1118EC}
+\makelabel{francy:Selected for IsShape}{6.6.29}{X816339857B1118EC}
+\makelabel{francy:SetSelected for IsShape, IsBool}{6.6.30}{X7FDA75868647E405}
+\makelabel{francy:ConjugateId for IsShape}{6.6.31}{X7D9DF25C82FCA1D9}
+\makelabel{francy:ConjugateId for IsShape}{6.6.32}{X7D9DF25C82FCA1D9}
+\makelabel{francy:SetConjugateId for IsShape, IsInt}{6.6.33}{X7DDBAECB874E7F40}
+\makelabel{francy:Weight for IsLink}{6.6.34}{X80FA3A2E807481DE}
+\makelabel{francy:Weight for IsLink}{6.6.35}{X80FA3A2E807481DE}
+\makelabel{francy:SetWeight for IsLink, IsInt}{6.6.36}{X830DCE657B6B1701}
+\makelabel{francy:Length for IsLink}{6.6.37}{X811D69FC859667AE}
+\makelabel{francy:Length for IsLink}{6.6.38}{X811D69FC859667AE}
+\makelabel{francy:SetLength for IsLink, IsInt}{6.6.39}{X7EFC492284D4C053}
+\makelabel{francy:Invisible for IsLink}{6.6.40}{X8225EFFA78C9BF04}
+\makelabel{francy:Invisible for IsLink}{6.6.41}{X8225EFFA78C9BF04}
+\makelabel{francy:SetInvisible for IsLink, IsBool}{6.6.42}{X836B3DE1838580F9}
+\makelabel{francy:Color for IsLink}{6.6.43}{X859C4ED278422D03}
+\makelabel{francy:Color for IsLink}{6.6.44}{X859C4ED278422D03}
+\makelabel{francy:SetColor for IsLink, IsString}{6.6.45}{X84FF9CBB85CAF4A6}
+\makelabel{francy:Title for IsLink}{6.6.46}{X7F041B5D783EBE4C}
+\makelabel{francy:Title for IsLink}{6.6.47}{X7F041B5D783EBE4C}
+\makelabel{francy:SetTitle for IsLink, IsString}{6.6.48}{X87333BEB7B63272B}
+\makelabel{francy:IsMenu for IsFrancyObject}{7.1.1}{X7D4F62FC7EE7D6CA}
+\makelabel{francy:IsMenuRep for IsComponentObjectRep}{7.3.1}{X78011B0D79E0AC29}
+\makelabel{francy:Menu for IsString, IsCallback}{7.4.1}{X80A4CF8778846969}
+\makelabel{francy:Add for IsMenu, IsMenu}{7.4.2}{X7EDDF1E97C71181B}
+\makelabel{francy:Remove for IsMenu, IsMenu}{7.4.3}{X874B7A668558AFB5}
+\makelabel{francy:Title for IsMenu}{7.5.1}{X7BBE816B7B22D645}
+\makelabel{francy:Title for IsMenu}{7.5.2}{X7BBE816B7B22D645}
+\makelabel{francy:SetTitle for IsMenu, IsString}{7.5.3}{X792C89BE80A7DA6E}
+\makelabel{francy:IsFrancyMessage for IsFrancyObject}{8.1.1}{X81B6563E7B6AEA6D}
+\makelabel{francy:IsFrancyMessageType for IsFrancyObject}{8.1.2}{X7AC1074882D397F6}
+\makelabel{francy:IsFrancyMessageRep for IsComponentObjectRep}{8.3.1}{X81FA07417DA0CBF0}
+\makelabel{francy:IsFrancyMessageTypeRep for IsComponentObjectRep}{8.3.2}{X7A2D43947BDA7E29}
+\makelabel{francy:FrancyMessage for IsFrancyMessageType, IsString, IsString}{8.4.1}{X7D5DE52179AE8554}
+\makelabel{francy:Title for IsFrancyMessage}{8.6.1}{X84394D1F822EA86F}
+\makelabel{francy:Title for IsFrancyMessage}{8.6.2}{X84394D1F822EA86F}
+\makelabel{francy:SetTitle for IsFrancyMessage, IsString}{8.6.3}{X7A26B9E77D45DC64}
+\makelabel{francy:Value for IsFrancyMessage}{8.6.4}{X807A806F83B19870}
+\makelabel{francy:Value for IsFrancyMessage}{8.6.5}{X807A806F83B19870}
+\makelabel{francy:SetValue for IsFrancyMessage, IsString}{8.6.6}{X7EE61C43853E71CE}
+\makelabel{francy:JUPYTERViewString for IsObject}{9.1.1}{X7FDA25B980809FC3}
+\makelabel{francy:Sanitize for IsObject}{9.1.2}{X804E29DC830EE7B1}
+\makelabel{francy:MergeObjects for IsFrancyObject, IsFrancyObject}{9.1.3}{X84A26F95834C1C49}
 \makelabel{francy:GenerateID}{9.1.4}{X79A299E4878A701B}

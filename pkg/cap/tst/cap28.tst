@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap28.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:1266-1296
+# doc/_Chapter_Examples_and_Tests.xml:1268-1298
 gap> vecspaces := CreateCapCategory( "VectorSpacesForFiberProductTest" );
 VectorSpacesForFiberProductTest
 gap> ReadPackage( "CAP", "examples/VectorSpacesAllMethods.g" );

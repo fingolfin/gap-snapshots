@@ -10,12 +10,12 @@
 #
 gap> START_TEST("cap14.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:424-458
+# doc/_Chapter_Examples_and_Tests.xml:424-460
 gap> LoadPackage( "LinearAlgebraForCAP", false );
 true
 gap> Q := HomalgFieldOfRationals( );
 Q
-gap> Qmat := MatrixCategory( Q );
+gap> Qmat := MATRIX_CATEGORY( Q );
 Category of matrices over Q
 gap> Wrapper := WrapperCategory( Qmat, rec( ) );
 WrapperCategory( Category of matrices over Q )
@@ -32,7 +32,9 @@ gap> InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWi
 gap> beta := InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( Source( mor ), Range( mor ), iota );;
 gap> IsCongruentForMorphisms( mor, beta );
 true
-gap> Wrapper2 := WrapperCategory( Qmat, rec( wrap_range_of_hom_structure := true ) );
+gap> Qmat2 := MATRIX_CATEGORY( Q );
+Category of matrices over Q
+gap> Wrapper2 := WrapperCategory( Qmat2, rec( wrap_range_of_hom_structure := true ) );
 WrapperCategory( Category of matrices over Q )
 gap> mor := ZeroMorphism( ZeroObject( Wrapper2 ), ZeroObject( Wrapper2 ) );;
 gap> distinguished_object := DistinguishedObjectOfHomomorphismStructure( Wrapper2 );;

@@ -1,0 +1,50 @@
+<Subsection Label="BlockDiagonal">
+<Heading><C>BlockDiagonal</C></Heading>
+This method is unused!<P/>
+<#Include Label="BlockDiagonal">
+</Subsection>
+<Subsection Label="BlockLowerTriangular">
+<Heading><C>BlockLowerTriangular</C></Heading>
+This method is unused!<P/>
+<#Include Label="BlockLowerTriangular">
+</Subsection>
+<Subsection Label="BlockScalar">
+<Heading><C>BlockScalar</C></Heading>
+This method is unused!<P/>
+<#Include Label="BlockScalar">
+</Subsection>
+<Subsection Label="DiagonalMatrices">
+<Heading><C>DiagonalMatrices</C></Heading>
+This method is used for recognizing matrix groups.<P/>
+<#Include Label="DiagonalMatrices">
+</Subsection>
+<Subsection Label="GoProjective">
+<Heading><C>GoProjective</C></Heading>
+This method is used for recognizing matrix groups.<P/>
+<#Include Label="GoProjective">
+</Subsection>
+<Subsection Label="KnownStabilizerChain">
+<Heading><C>KnownStabilizerChain</C></Heading>
+This method is used for recognizing matrix groups.<P/>
+<#Include Label="KnownStabilizerChain">
+</Subsection>
+<Subsection Label="LowerLeftPGroup">
+<Heading><C>LowerLeftPGroup</C></Heading>
+This method is unused!<P/>
+<#Include Label="LowerLeftPGroup">
+</Subsection>
+<Subsection Label="NaturalSL">
+<Heading><C>NaturalSL</C></Heading>
+This method is unused!<P/>
+<#Include Label="NaturalSL">
+</Subsection>
+<Subsection Label="ReducibleIso">
+<Heading><C>ReducibleIso</C></Heading>
+This method is used for recognizing matrix and projective groups.<P/>
+<#Include Label="ReducibleIso">
+</Subsection>
+<Subsection Label="Scalar">
+<Heading><C>Scalar</C></Heading>
+This method is unused!<P/>
+<#Include Label="Scalar">
+</Subsection>

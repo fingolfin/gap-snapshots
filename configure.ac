@@ -3,8 +3,8 @@ dnl Setup autoconf
 dnl
 AC_PREREQ([2.68])
 
-m4_define([gap_version], [4.12.0])
-m4_define([gap_releaseday], [2022-08-18])
+m4_define([gap_version], [4.12.1])
+m4_define([gap_releaseday], [2022-10-20])
 m4_define([gap_releaseyear], [2022])
 
 m4_define([gap_tarname], [gap-gap_version])
@@ -173,7 +173,7 @@ AC_DEFUN([CHECK_COMPILER_BUILTIN],
     AC_LINK_IFELSE(
         [AC_LANG_PROGRAM(
             [[]],
-            [$1[($2)];
+            [int x; $1[($2)];
             ]
         )],
         [AS_VAR_SET([[have_]$1], [yes])],
@@ -185,7 +185,7 @@ AC_DEFUN([CHECK_COMPILER_BUILTIN],
             [Define to 1 if the system has the `]$1[' built-in function])], []
         )])
 
-CHECK_COMPILER_BUILTIN([__builtin_mul_overflow],[0,0,0]);
+CHECK_COMPILER_BUILTIN([__builtin_mul_overflow],[0,0,&x]);
 CHECK_COMPILER_BUILTIN([__builtin_clz],[0]);
 CHECK_COMPILER_BUILTIN([__builtin_clzl],[0]);
 CHECK_COMPILER_BUILTIN([__builtin_clzll],[0]);
@@ -531,6 +531,7 @@ BUILD_GMP=no
 GMP_CPPFLAGS=
 GMP_LDFLAGS=
 GMP_LIBS="-lgmp"
+GMP_PREFIX=
 AS_CASE([$with_gmp],
   [builtin],[
     # user explicitly requested to use builtin GMP
@@ -543,6 +544,7 @@ AS_CASE([$with_gmp],
   [system],[with_gmp=yes],  dnl supported for backwards compatibility with old build system
   [yes],[],
   [*],[
+    GMP_PREFIX="${with_gmp}"
     GMP_CPPFLAGS="-I${with_gmp}/include"
     GMP_LDFLAGS="-L${with_gmp}/lib"
   ]
@@ -565,6 +567,7 @@ AS_IF([test $BUILD_GMP = no],
 # Use bundled GMP if requested
 AS_IF([test x$BUILD_GMP = xyes],[
   BUILD_GMP=yes
+  GMP_PREFIX='${abs_builddir}/extern/install/gmp'
   GMP_CPPFLAGS='-I${abs_builddir}/extern/install/gmp/include'
   GMP_LDFLAGS='${abs_builddir}/extern/install/gmp/lib/libgmp.la'
   GMP_LIBS=
@@ -574,6 +577,7 @@ AC_SUBST([BUILD_GMP])
 AC_SUBST([GMP_CPPFLAGS])
 AC_SUBST([GMP_LDFLAGS])
 AC_SUBST([GMP_LIBS])
+AC_SUBST([GMP_PREFIX])
 
 
 dnl Find zlib

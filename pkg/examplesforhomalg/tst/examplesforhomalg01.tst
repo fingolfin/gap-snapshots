@@ -10,7 +10,7 @@
 #
 gap> START_TEST("examplesforhomalg01.tst");
 
-# doc/../examples/ExtExt.g:5-114
+# doc/../examples/ExtExt.g:5-116
 gap> Qxyz := HomalgFieldOfRationalsInDefaultCAS( ) * "x,y,z";
 Q[x,y,z]
 gap> wmat := HomalgMatrix( "[ \
@@ -26,8 +26,10 @@ gap> W := LeftPresentation( wmat );
 <A left module presented by 6 relations for 5 generators>
 gap> Y := Hom( Qxyz, W );
 <A right module on 5 generators satisfying yet unknown relations>
+gap> SetInfoLevel( InfoWarning, 0 );
 gap> F := InsertObjectInMultiFunctor( Functor_Hom_for_fp_modules, 2, Y, "TensorY" );
 <The functor TensorY for f.p. modules and their maps over computable rings>
+gap> SetInfoLevel( InfoWarning, 1 );
 gap> G := LeftDualizingFunctor( Qxyz );;
 gap> II_E := GrothendieckSpectralSequence( F, G, W );
 <A stable homological spectral sequence with sheets at levels 
@@ -102,19 +104,19 @@ Level 4:
 gap> filt := FiltrationBySpectralSequence( II_E, 0 );
 <An ascending filtration with degrees [ -3 .. 0 ] and graded parts:
 
-0:	<A non-zero left module presented by yet unknown relations for 23 generator\
+0:   <A non-zero left module presented by yet unknown relations for 23 generator\
 s>
-  -1:	<A non-zero left module presented by 37 relations for 22 generators>
-  -2:	<A non-zero left module presented by 32 relations for 10 generators>
-  -3:	<A non-zero left module presented by 33 relations for 5 generators>
+  -1:   <A non-zero left module presented by 37 relations for 22 generators>
+  -2:   <A non-zero left module presented by 32 relations for 10 generators>
+  -3:   <A non-zero left module presented by 33 relations for 5 generators>
 of
 <A non-zero left module presented by 117 relations for 37 generators>>
 gap> ByASmallerPresentation( filt );
 <An ascending filtration with degrees [ -3 .. 0 ] and graded parts:
-   0:	<A non-zero left module presented by 26 relations for 16 generators>
-  -1:	<A non-zero left module presented by 30 relations for 14 generators>
-  -2:	<A non-zero left module presented by 18 relations for 7 generators>
-  -3:	<A non-zero left module presented by 12 relations for 4 generators>
+   0:   <A non-zero left module presented by 26 relations for 16 generators>
+  -1:   <A non-zero left module presented by 30 relations for 14 generators>
+  -2:   <A non-zero left module presented by 18 relations for 7 generators>
+  -3:   <A non-zero left module presented by 12 relations for 4 generators>
 of
 <A non-zero left module presented by 48 relations for 20 generators>>
 gap> m := IsomorphismOfFiltration( filt );

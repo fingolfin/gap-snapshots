@@ -89,7 +89,7 @@
 
 <p><a id="sect:groupnames"/> When you access data via the <strong class="pkg">AtlasRep</strong> package, you specify the group in question by an admissible <em>name</em>. Thus it is essential to know these names, which are called <em>the <strong class="pkg">GAP</strong> names</em> of the group in the following.</p>
 
-<p>For a group <span class="SimpleMath">\(G\)</span>, say, whose character table is available in <strong class="pkg">GAP</strong>'s Character Table Library (see <a href="chapBib_mj.html#biBCTblLib">[Bre22]</a>), the admissible names of <span class="SimpleMath">\(G\)</span> are the admissible names of this character table. One such name is the <code class="func">Identifier</code> (<a href="../../../doc/ref/chap71_mj.html#X79C40EE97890202F"><span class="RefLink">Reference: Identifier for character tables</span></a>) value of the character table, see <a href="/home/sam/.gap/pkg/ctbllib-dev/doc/chap3_mj.html#X818A9DE5799A4809"><span class="RefLink">CTblLib: Admissible Names for Character Tables in CTblLib</span></a>. This name is usually very similar to the name used in the <strong class="pkg">ATLAS</strong> of Finite Groups <a href="chapBib_mj.html#biBCCN85">[CCN+85]</a>. For example, <code class="code">"M22"</code> is a <strong class="pkg">GAP</strong> name of the Mathieu group <span class="SimpleMath">\(M_{22}\)</span>, <code class="code">"12_1.U4(3).2_1"</code> is a <strong class="pkg">GAP</strong> name of <span class="SimpleMath">\(12_1.U_4(3).2_1\)</span>, the two names <code class="code">"S5"</code> and <code class="code">"A5.2"</code> are <strong class="pkg">GAP</strong> names of the symmetric group <span class="SimpleMath">\(S_5\)</span>, and the two names <code class="code">"F3+"</code> and <code class="code">"Fi24'"</code> are <strong class="pkg">GAP</strong> names of the simple Fischer group <span class="SimpleMath">\(Fi_{24}^\prime\)</span>.</p>
+<p>For a group <span class="SimpleMath">\(G\)</span>, say, whose character table is available in <strong class="pkg">GAP</strong>'s Character Table Library (see <a href="chapBib_mj.html#biBCTblLib">[Bre22]</a>), the admissible names of <span class="SimpleMath">\(G\)</span> are the admissible names of this character table. One such name is the <code class="func">Identifier</code> (<a href="../../../doc/ref/chap71_mj.html#X79C40EE97890202F"><span class="RefLink">Reference: Identifier for character tables</span></a>) value of the character table, see <a href="../../../pkg/ctbllib/doc/chap3_mj.html#X818A9DE5799A4809"><span class="RefLink">CTblLib: Admissible Names for Character Tables in CTblLib</span></a>. This name is usually very similar to the name used in the <strong class="pkg">ATLAS</strong> of Finite Groups <a href="chapBib_mj.html#biBCCN85">[CCN+85]</a>. For example, <code class="code">"M22"</code> is a <strong class="pkg">GAP</strong> name of the Mathieu group <span class="SimpleMath">\(M_{22}\)</span>, <code class="code">"12_1.U4(3).2_1"</code> is a <strong class="pkg">GAP</strong> name of <span class="SimpleMath">\(12_1.U_4(3).2_1\)</span>, the two names <code class="code">"S5"</code> and <code class="code">"A5.2"</code> are <strong class="pkg">GAP</strong> names of the symmetric group <span class="SimpleMath">\(S_5\)</span>, and the two names <code class="code">"F3+"</code> and <code class="code">"Fi24'"</code> are <strong class="pkg">GAP</strong> names of the simple Fischer group <span class="SimpleMath">\(Fi_{24}^\prime\)</span>.</p>
 
 <p>When a <strong class="pkg">GAP</strong> name is required as an input of a package function, this input is case insensitive. For example, both <code class="code">"A5"</code> and <code class="code">"a5"</code> are valid arguments of <code class="func">DisplayAtlasInfo</code> (<a href="chap3_mj.html#X79DACFFA7E2D1A99"><span class="RefLink">3.5-1</span></a>).</p>
 
@@ -230,7 +230,7 @@
 
 </li>
 </ul>
-<p>In each case, the information will be printed to the screen or will be fed into a pager, see Section <a href="chap4_mj.html#X81F055037F9D3068"><span class="RefLink">4.2-12</span></a>. An interactive alternative to <code class="func">DisplayAtlasInfo</code> is the function <code class="func">BrowseAtlasInfo</code> (<a href="/home/sam/.gap/pkg/Browse/doc/chap6_mj.html#X8411AF928194C5AB"><span class="RefLink">Browse: BrowseAtlasInfo</span></a>), see <a href="chapBib_mj.html#biBBrowse">[BL18]</a>.</p>
+<p>In each case, the information will be printed to the screen or will be fed into a pager, see Section <a href="chap4_mj.html#X81F055037F9D3068"><span class="RefLink">4.2-11</span></a>. An interactive alternative to <code class="func">DisplayAtlasInfo</code> is the function <code class="func">BrowseAtlasInfo</code> (<a href="../../../pkg/browse/doc/chap6_mj.html#X8411AF928194C5AB"><span class="RefLink">Browse: BrowseAtlasInfo</span></a>), see <a href="chapBib_mj.html#biBBrowse">[BL18]</a>.</p>
 
 <p>The following paragraphs describe the structure of the output in the two cases. Examples can be found in Section <a href="chap3_mj.html#X7CE4FF2380DB47F2"><span class="RefLink">3.5-2</span></a>.</p>
 
@@ -389,7 +389,7 @@
 
 <p>The representations are ordered as follows. Permutation representations come first (ordered according to their degrees), followed by matrix representations over finite fields (ordered first according to the field size and second according to the dimension), matrix representations over the integers, and then matrix representations over algebraic extension fields (both kinds ordered according to the dimension), the last representations are matrix representations over residue class rings (ordered first according to the modulus and second according to the dimension).</p>
 
-<p>The maximal subgroups are ordered according to decreasing group order. For an extension <span class="SimpleMath">\(G.p\)</span> of a simple group <span class="SimpleMath">\(G\)</span> by an outer automorphism of prime order <span class="SimpleMath">\(p\)</span>, this means that <span class="SimpleMath">\(G\)</span> is the first maximal subgroup and then come the extensions of the maximal subgroups of <span class="SimpleMath">\(G\)</span> and the novelties; so the <span class="SimpleMath">\(n\)</span>-th maximal subgroup of <span class="SimpleMath">\(G\)</span> and the <span class="SimpleMath">\(n\)</span>-th maximal subgroup of <span class="SimpleMath">\(G.p\)</span> are in general not related. (This coincides with the numbering used for the <code class="func">Maxes</code> (<a href="/home/sam/.gap/pkg/ctbllib-dev/doc/chap3_mj.html#X8150E63F7DBDF252"><span class="RefLink">CTblLib: Maxes</span></a>) attribute for character tables.)</p>
+<p>The maximal subgroups are ordered according to decreasing group order. For an extension <span class="SimpleMath">\(G.p\)</span> of a simple group <span class="SimpleMath">\(G\)</span> by an outer automorphism of prime order <span class="SimpleMath">\(p\)</span>, this means that <span class="SimpleMath">\(G\)</span> is the first maximal subgroup and then come the extensions of the maximal subgroups of <span class="SimpleMath">\(G\)</span> and the novelties; so the <span class="SimpleMath">\(n\)</span>-th maximal subgroup of <span class="SimpleMath">\(G\)</span> and the <span class="SimpleMath">\(n\)</span>-th maximal subgroup of <span class="SimpleMath">\(G.p\)</span> are in general not related. (This coincides with the numbering used for the <code class="func">Maxes</code> (<a href="../../../pkg/ctbllib/doc/chap3_mj.html#X8150E63F7DBDF252"><span class="RefLink">CTblLib: Maxes</span></a>) attribute for character tables.)</p>
 
 <p><a id="X7CE4FF2380DB47F2" name="X7CE4FF2380DB47F2"></a></p>
 
@@ -660,7 +660,7 @@ Programs for G = A5:    (all refer to std. generators 1)
 
 </dd>
 <dt><strong class="Mark"><code class="code">maxnr</code> (for primitive permutation representations)</strong></dt>
-<dd><p>the number of the class of maximal subgroups that contains the point stabilizers, w. r. t. the <code class="func">Maxes</code> (<a href="/home/sam/.gap/pkg/ctbllib-dev/doc/chap3_mj.html#X8150E63F7DBDF252"><span class="RefLink">CTblLib: Maxes</span></a>) list.</p>
+<dd><p>the number of the class of maximal subgroups that contains the point stabilizers, w. r. t. the <code class="func">Maxes</code> (<a href="../../../pkg/ctbllib/doc/chap3_mj.html#X8150E63F7DBDF252"><span class="RefLink">CTblLib: Maxes</span></a>) list.</p>
 
 </dd>
 </dl>
@@ -1379,7 +1379,7 @@ true
 
 <h4>3.6 <span class="Heading"><strong class="pkg">Browse</strong> Applications Provided by <strong class="pkg">AtlasRep</strong></span></h4>
 
-<p>The functions <code class="func">BrowseMinimalDegrees</code> (<a href="chap3_mj.html#X7F31A7CB841FE63F"><span class="RefLink">3.6-1</span></a>), <code class="func">BrowseBibliographySporadicSimple</code> (<a href="chap3_mj.html#X84ED4FC182C28198"><span class="RefLink">3.6-2</span></a>), and <code class="func">BrowseAtlasInfo</code> (<a href="/home/sam/.gap/pkg/Browse/doc/chap6_mj.html#X8411AF928194C5AB"><span class="RefLink">Browse: BrowseAtlasInfo</span></a>) (an alternative to <code class="func">DisplayAtlasInfo</code> (<a href="chap3_mj.html#X79DACFFA7E2D1A99"><span class="RefLink">3.5-1</span></a>)) are available only if the <strong class="pkg">GAP</strong> package <strong class="pkg">Browse</strong> (see <a href="chapBib_mj.html#biBBrowse">[BL18]</a>) is loaded.</p>
+<p>The functions <code class="func">BrowseMinimalDegrees</code> (<a href="chap3_mj.html#X7F31A7CB841FE63F"><span class="RefLink">3.6-1</span></a>), <code class="func">BrowseBibliographySporadicSimple</code> (<a href="chap3_mj.html#X84ED4FC182C28198"><span class="RefLink">3.6-2</span></a>), and <code class="func">BrowseAtlasInfo</code> (<a href="../../../pkg/browse/doc/chap6_mj.html#X8411AF928194C5AB"><span class="RefLink">Browse: BrowseAtlasInfo</span></a>) (an alternative to <code class="func">DisplayAtlasInfo</code> (<a href="chap3_mj.html#X79DACFFA7E2D1A99"><span class="RefLink">3.5-1</span></a>)) are available only if the <strong class="pkg">GAP</strong> package <strong class="pkg">Browse</strong> (see <a href="chapBib_mj.html#biBBrowse">[BL18]</a>) is loaded.</p>
 
 <p><a id="X7F31A7CB841FE63F" name="X7F31A7CB841FE63F"></a></p>
 
@@ -1424,22 +1424,22 @@ true
 
 <p>The return value of <code class="func">BrowseMinimalDegrees</code> is the list of <code class="func">OneAtlasGeneratingSetInfo</code> (<a href="chap3_mj.html#X841478AB7CD06D44"><span class="RefLink">3.5-6</span></a>) values for those representations that have been "clicked" in visual mode.</p>
 
-<p>The variant without arguments of this function is also available in the menu shown by <code class="func">BrowseGapData</code> (<a href="/home/sam/.gap/pkg/Browse/doc/chap6_mj.html#X850C786C87A4877B"><span class="RefLink">Browse: BrowseGapData</span></a>).</p>
+<p>The variant without arguments of this function is also available in the menu shown by <code class="func">BrowseGapData</code> (<a href="../../../pkg/browse/doc/chap6_mj.html#X850C786C87A4877B"><span class="RefLink">Browse: BrowseGapData</span></a>).</p>
 
 <p><a id="X84ED4FC182C28198" name="X84ED4FC182C28198"></a></p>
 
 <h5>3.6-2 BrowseBibliographySporadicSimple</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseBibliographySporadicSimple</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Returns: a record as returned by <code class="func">ParseBibXMLExtString</code> (<a href="/home/sam/.gap/pkg/GAPDoc-1.6.5/doc/chap7_mj.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextString</span></a>).</p>
+<p>Returns: a record as returned by <code class="func">ParseBibXMLExtString</code> (<a href="../../../pkg/gapdoc/doc/chap7_mj.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextString</span></a>).</p>
 
 <p>If the <strong class="pkg">GAP</strong> package <strong class="pkg">Browse</strong> (see <a href="chapBib_mj.html#biBBrowse">[BL18]</a>) is loaded then this function is available. It opens a browse table whose rows correspond to the entries of the bibliographies in the <strong class="pkg">ATLAS</strong> of Finite Groups <a href="chapBib_mj.html#biBCCN85">[CCN+85]</a> and in the <strong class="pkg">ATLAS</strong> of Brauer Characters <a href="chapBib_mj.html#biBJLPW95">[JLPW95]</a>.</p>
 
-<p>The function is based on <code class="func">BrowseBibliography</code> (<a href="/home/sam/.gap/pkg/Browse/doc/chap6_mj.html#X7F0FE4CC7F46ABF3"><span class="RefLink">Browse: BrowseBibliography</span></a>), see the documentation of this function for details, e.g., about the return value.</p>
+<p>The function is based on <code class="func">BrowseBibliography</code> (<a href="../../../pkg/browse/doc/chap6_mj.html#X7F0FE4CC7F46ABF3"><span class="RefLink">Browse: BrowseBibliography</span></a>), see the documentation of this function for details, e.g., about the return value.</p>
 
-<p>The returned record encodes the bibliography entries corresponding to those rows of the table that are "clicked" in visual mode, in the same format as the return value of <code class="func">ParseBibXMLExtString</code> (<a href="/home/sam/.gap/pkg/GAPDoc-1.6.5/doc/chap7_mj.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextString</span></a>), see the manual of the <strong class="pkg">GAP</strong> package <strong class="pkg">GAPDoc</strong> <a href="chapBib_mj.html#biBGAPDoc">[LN18]</a> for details.</p>
+<p>The returned record encodes the bibliography entries corresponding to those rows of the table that are "clicked" in visual mode, in the same format as the return value of <code class="func">ParseBibXMLExtString</code> (<a href="../../../pkg/gapdoc/doc/chap7_mj.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextString</span></a>), see the manual of the <strong class="pkg">GAP</strong> package <strong class="pkg">GAPDoc</strong> <a href="chapBib_mj.html#biBGAPDoc">[LN18]</a> for details.</p>
 
-<p><code class="func">BrowseBibliographySporadicSimple</code> can be called also via the menu shown by <code class="func">BrowseGapData</code> (<a href="/home/sam/.gap/pkg/Browse/doc/chap6_mj.html#X850C786C87A4877B"><span class="RefLink">Browse: BrowseGapData</span></a>).</p>
+<p><code class="func">BrowseBibliographySporadicSimple</code> can be called also via the menu shown by <code class="func">BrowseGapData</code> (<a href="../../../pkg/browse/doc/chap6_mj.html#X850C786C87A4877B"><span class="RefLink">Browse: BrowseGapData</span></a>).</p>
 
 
 <div class="example"><pre>

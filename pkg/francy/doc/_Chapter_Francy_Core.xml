@@ -5,18 +5,18 @@
 <Heading>Francy Core</Heading>
 
 <P/>
-Francy is responsible for generating JSON metadata which allows external
-tools / libraries / frameworks to add a visual representation. This JSON
-representation defines the contract between this package (server) and a
-GUI framework (client), this enables complete SoC (Separation of Concerns).
-Francy can be used to provide a graphical interactive environment on existing
-GAP packages.
-<P/>
-A JSON schema is present and can be used to produce clients for this package.
-<Emph>See schema/francy.json</Emph>
-<P/>
-To map required / optional attributes from the schema into GAP code, the
-implementation follows the following criteria:
+ Francy is responsible for generating JSON metadata which allows external
+ tools / libraries / frameworks to add a visual representation. This JSON
+ representation defines the contract between this package (server) and a
+ GUI framework (client), this enables complete SoC (Separation of Concerns).
+ Francy can be used to provide a graphical interactive environment on existing
+ GAP packages.
+ <P/>
+ A JSON schema is present and can be used to produce clients for this package.
+ <Emph>See schema/francy.json</Emph>
+ <P/>
+ To map required / optional attributes from the schema into GAP code, the 
+ implementation follows the following criteria:
 <List>
 <Item>
 Object creation requests mandatory attributes, i.e. required with no default value, e.g. canvas:=Canvas("Title")
@@ -28,42 +28,42 @@ Object creation accepts an object of defaults, i.e. default values for mandatory
 Attributes associated with the object that can be set, .i.e. optional with no defaults, e.g. canvas:=Canvas("Title"); SetTexTypesetting(canvas,true);
 </Item>
 </List>
-The API follows a common convention and adding objects to other objects is done using Add(objectHolder,object)
-<P/>
-Although Francy has the concept of a <C>Graph</C>, it does not implement any
-Mathematics Graphs Theory.
-<P/>
-Please see Francy-JS for client implementation.
+ The API follows a common convention and adding objects to other objects is done using Add(objectHolder,object)
+ <P/>
+ Although Francy has the concept of a <C>Graph</C>, it does not implement any 
+ Mathematics Graphs Theory.
+ <P/>
+ Please see Francy-JS for client implementation.
 <Section Label="Chapter_Francy_Core_Section_Categories">
 <Heading>Categories</Heading>
 
-In this section we show all Francy Core Categories.
+ In this section we show all Francy Core Categories.
 <ManSection>
   <Filt Arg="arg" Name="IsFrancyObject" Label="for IsObject"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Identifies all <C>Objects</C> in Francy.
+ Identifies all <C>Objects</C> in Francy.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Filt Arg="arg" Name="IsFrancyDefaultObject" Label="for IsObject"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Identifies all Default records in Francy.
+ Identifies all Default records in Francy.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Filt Arg="arg" Name="IsFrancyTypeObject" Label="for IsObject"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Identifies all Type records in Francy.
+ Identifies all Type records in Francy.
  </Description>
 </ManSection>
 
@@ -74,46 +74,46 @@ Identifies all Type records in Francy.
 <Section Label="Chapter_Francy_Core_Section_Families">
 <Heading>Families</Heading>
 
-In this section we show all Francy Core Families.
+ In this section we show all Francy Core Families.
 </Section>
 
 
 <Section Label="Chapter_Francy_Core_Section_Global">
 <Heading>Global</Heading>
 
-In this section we show all Francy Core Types
+ In this section we show all Francy Core Types
 </Section>
 
 
 <Section Label="Chapter_Francy_Core_Section_Attributes">
 <Heading>Attributes</Heading>
 
-In this section we show all Francy Core Attributes
+ In this section we show all Francy Core Attributes
 <ManSection>
   <Attr Arg="arg" Name="FrancyId" Label="for IsFrancyObject"/>
  <Returns><C>IsString</C> with the id of the object
 </Returns>
  <Description>
-All Objects created in Francy have a generated identifier.
+ All Objects created in Francy have a generated identifier.
  </Description>
 </ManSection>
 
 
 <ManSection>
-  <Func Arg="arg1" Name="FrancyId" Label="for IsFrancyObject"/>
+  <Oper Arg="arg1" Name="FrancyId" Label="for IsFrancyObject"/>
  <Returns><C>IsString</C> with the id of the object
 </Returns>
  <Description>
-Prints the object unique identifier.
+ Prints the object unique identifier.
  </Description>
 </ManSection>
 
 
 <ManSection>
-  <Func Arg="o, s" Name="SetFrancyId" Label="for IsFrancyObject, IsString"/>
+  <Oper Arg="o, s" Name="SetFrancyId" Label="for IsFrancyObject, IsString"/>
  <Description>
-Use with care! Changing the unique ID might be useful in certain cases,
-but bare in mind it might cause unexpected behavior if you're not sure about!
+ Use with care! Changing the unique ID might be useful in certain cases, 
+ but bare in mind it might cause unexpected behavior if you're not sure about!
  </Description>
 </ManSection>
 

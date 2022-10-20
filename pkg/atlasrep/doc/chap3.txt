@@ -271,7 +271,7 @@
         has already been downloaded.[133X
   
   [33X[0;0YIn  each  case, the information will be printed to the screen or will be fed
-  into   a   pager,   see   Section  [14X4.2-12[114X.  An  interactive  alternative  to
+  into   a   pager,   see   Section  [14X4.2-11[114X.  An  interactive  alternative  to
   [2XDisplayAtlasInfo[102X  is the function [2XBrowseAtlasInfo[102X ([14XBrowse: BrowseAtlasInfo[114X),
   see [BL18].[133X
   

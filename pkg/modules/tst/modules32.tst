@@ -32,12 +32,12 @@ the map is currently represented by the above 1 x 1 matrix
 gap> extNN := Range( psi );
 <A non-zero cyclic torsion right module on a cyclic generator satisfying 1 rel\
 ation>
-gap> IsIdenticalObj( extNN, Ext( 1, N, N ) );	## the caching at work
+gap> IsIdenticalObj( extNN, Ext( 1, N, N ) ); ## the caching at work
 true
 gap> extMN := Source( psi );
 <A non-zero cyclic torsion right module on a cyclic generator satisfying 1 rel\
 ation>
-gap> IsIdenticalObj( extMN, Ext( 1, M, N ) );	## the caching at work
+gap> IsIdenticalObj( extMN, Ext( 1, M, N ) ); ## the caching at work
 true
 gap> Display( extNN );
 Z/< 3 >

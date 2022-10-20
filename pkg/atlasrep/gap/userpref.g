@@ -69,9 +69,10 @@ when the AtlasRep package and its data extensions get loaded."
 ##  An empty string means that downloaded data are just kept in the &GAP;
 ##  session but not saved to local files.
 ##  <P/>
-##  The default depends on the user's permissions for the directory of the
-##  &AtlasRep; package:
-##  If this directory is writable for the user then the installation path
+##  The default depends on the user's permissions for the subdirectories
+##  <F>dataext</F>, <F>datagens</F>, <F>dataword</F> of the &AtlasRep;
+##  directory:
+##  If these directories are writable for the user then the installation path
 ##  of the &AtlasRep; package (including a trailing slash symbol) is taken,
 ##  otherwise the default is an empty string.
 ##  </Subsection>
@@ -85,19 +86,20 @@ of a directory (in the sense of 'IsDirectoryPath') \
 that contains the directories in which downloaded data will be stored. \
 An empty string means that downloaded data are just kept in the GAP session \
 but not saved to local files. \
-The default depends on the user's permissions for the directory of the \
-AtlasRep package: \
-If this directory is writable for the user then the installation path \
+The default depends on the user's permissions for the subdirectories \
+'dataext', 'datagens', 'dataword' of the AtlasRep directory: \
+If these directories are writable for the user then the installation path \
 of the AtlasRep package (including a trailing slash symbol) is taken, \
 otherwise the default is an empty string."
     ],
   default:= function()
       local dir;
 
-      dir:= Filename( DirectoriesPackageLibrary( "atlasrep", "" ), "" );
-      if IsWritableFile( dir ) then
+      dir:= DirectoriesPackageLibrary( "atlasrep", "" );
+      if ForAll( [ "dataext", "datagens", "dataword" ],
+                 subdir -> IsWritableFile( Filename( dir, subdir ) ) ) then
         # The package directory is the first default.
-        return dir;
+        return Filename( dir, "" );
       else
         return "";
       fi;
@@ -260,63 +262,6 @@ and the data that belong to the packages MFER and CTBlocks."
 
     return true;
   end,
-  ) );
-
-
-#############################################################################
-##
-#U  FileTransferTool
-##
-##  <#GAPDoc Label="FileTransferTool">
-##  <Subsection Label="subsect:FileTransferTool">
-##  <Heading>User preference <C>FileTransferTool</C></Heading>
-##  <Index Key="FileTransferTool"><C>FileTransferTool</C></Index>
-##
-##  This user preference must be set if the user preference
-##  <C>AtlasRepAccessRemoteFiles</C> has the value <K>true</K>,
-##  see Section <Ref Subsect="subsect:AtlasRepAccessRemoteFiles"/>.
-##  In this case, one needs either the &GAP; package <Package>IO</Package>
-##  <Cite Key="IO"/><Index>IO package</Index>
-##  or the external program <F>wget</F><Index Key="wget"><F>wget</F></Index>
-##  for accessing data files.
-##  <P/>
-##  Which alternative is chosen at runtime is given by the value of the
-##  package's user preference <C>FileTransferTool</C>.
-##  <P/>
-##  The value <C>"wget"</C> means that only <F>wget</F> is tried.
-##  The value <C>"io"</C> means that only the <Package>IO</Package> package
-##  is used.
-##  The value <C>"prefer io to wget"</C> (the default)
-##  means that the <Package>IO</Package> package <Index>IO package</Index>
-##  is used if this package is available, and otherwise <F>wget</F> is tried.
-##  <P/>
-##  Note that the system program <F>wget</F> may be not available,
-##  and that it may require some work to install it;
-##  hints for that can be found on the home page of the
-##  &AtlasRep; package (see
-##  Section&nbsp;<Ref Sect="sect:Web Contents for the AtlasRep Package"/>).
-##  </Subsection>
-##  <#/GAPDoc>
-##
-DeclareUserPreference( rec(
-  name:= "FileTransferTool",
-  description:= [
-    "This user preference must be set if the user preference \
-'AtlasRepAccessRemoteFiles' has the value 'true'. \
-In this case, \
-one needs either the GAP package IO or the external program 'wget' \
-for accessing data files.  \
-Which alternative is chosen at runtime is given by the value of the \
-package's user preference 'FileTransferTool'.  \
-The value \"wget\" means that only 'wget' is tried.  \
-The value \"io\" means that only the IO package is used.  \
-The value \"prefer io to wget\" (the default) means that the IO package \
-is used if this package is available, and otherwise 'wget' is tried."
-    ],
-  default:= "prefer io to wget",
-  values:= [ "io", "wget", "prefer io to wget" ],
-  multi:= false,
-  package:= "AtlasRep",
   ) );
 
 

@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap17.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:651-691
+# doc/_Chapter_Examples_and_Tests.xml:653-693
 gap> field := HomalgFieldOfRationals( );;
 gap> A := VectorSpaceObject( 3, field );;
 gap> B := VectorSpaceObject( 2, field );;

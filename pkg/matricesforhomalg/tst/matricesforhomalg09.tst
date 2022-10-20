@@ -10,7 +10,7 @@
 #
 gap> START_TEST("matricesforhomalg09.tst");
 
-# doc/../gap/HomalgMatrix.gi:2516-2524
+# doc/../gap/HomalgMatrix.gi:2524-2532
 gap> ZZ := HomalgRingOfIntegers( );
 Z
 gap> m := HomalgMatrix( [ [ 1, 2, 3 ], [ 4, 5, 6 ] ], ZZ );

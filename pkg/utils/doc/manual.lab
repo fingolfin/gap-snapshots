@@ -24,17 +24,20 @@
 \makelabel{utils:Operations on iterators}{6.2}{X85413EED812C6497}
 \makelabel{utils:Records}{7}{X7AA1073C7E943DD7}
 \makelabel{utils:Functions for records}{7.1}{X82B3D1D583CDF0E5}
-\makelabel{utils:Various other functions}{8}{X83EFC3178180D918}
-\makelabel{utils:File operations}{8.1}{X81A0A4FF842B039B}
-\makelabel{utils:LaTeX strings}{8.2}{X84D2922D87EDE9E9}
-\makelabel{utils:Conversion to Magma string}{8.3}{X7BDFFBC379DE83E6}
-\makelabel{utils:Obsolete functions}{9}{X7F561B1D803182FF}
-\makelabel{utils:Operations from AutoDoc}{9.1}{X7A6BB3D084912F35}
-\makelabel{utils:Functions for printing}{9.2}{X86F322FC7DECE36F}
-\makelabel{utils:Other obsolete functions}{9.3}{X84A4F0B281FA0F94}
-\makelabel{utils:Applicable Methods}{9.3.1}{X78B7D1A982BE9866}
-\makelabel{utils:ExponentOfPrime}{9.3.2}{X7C1AF2467FB55D79}
-\makelabel{utils:The transfer procedure}{10}{X84AC9613842F014C}
+\makelabel{utils:Web Downloads}{8}{X815B0C4B7EBE6E1E}
+\makelabel{utils:Functions for downloading files from the web}{8.1}{X8758CB7F79EFB6ED}
+\makelabel{utils:User preference DownloadVerifyCertificate}{8.1.2}{X85182BA486E3C2AA}
+\makelabel{utils:Various other functions}{9}{X83EFC3178180D918}
+\makelabel{utils:File operations}{9.1}{X81A0A4FF842B039B}
+\makelabel{utils:LaTeX strings}{9.2}{X84D2922D87EDE9E9}
+\makelabel{utils:Conversion to Magma string}{9.3}{X7BDFFBC379DE83E6}
+\makelabel{utils:Obsolete functions}{10}{X7F561B1D803182FF}
+\makelabel{utils:Operations from AutoDoc}{10.1}{X7A6BB3D084912F35}
+\makelabel{utils:Functions for printing}{10.2}{X86F322FC7DECE36F}
+\makelabel{utils:Other obsolete functions}{10.3}{X84A4F0B281FA0F94}
+\makelabel{utils:Applicable Methods}{10.3.1}{X78B7D1A982BE9866}
+\makelabel{utils:ExponentOfPrime}{10.3.2}{X7C1AF2467FB55D79}
+\makelabel{utils:The transfer procedure}{11}{X84AC9613842F014C}
 \makelabel{utils:Bibliography}{Bib}{X7A6F98FD85F02BFE}
 \makelabel{utils:References}{Bib}{X7A6F98FD85F02BFE}
 \makelabel{utils:Index}{Ind}{X83A0356F839C696F}
@@ -86,19 +89,21 @@
 \makelabel{utils:CartesianIterator}{6.2.1}{X87395A9181A35301}
 \makelabel{utils:UnorderedPairsIterator}{6.2.2}{X7C95E27987A812EA}
 \makelabel{utils:AssignGlobals}{7.1.1}{X84D82EB579B2ACCD}
-\makelabel{utils:Log2HTML}{8.1.1}{X7B7ECADF85F748BE}
-\makelabel{utils:IntOrOnfinityToLaTeX}{8.2.1}{X87DEB2B58266F858}
-\makelabel{utils:LaTeXStringFactorsInt}{8.2.2}{X7DC642B97CD02F4E}
-\makelabel{utils:ConvertToMagmaInputString}{8.3.1}{X8768D7707B4CBBD4}
-\makelabel{utils:PermGroupToMagmaFormat}{8.3.1}{X8768D7707B4CBBD4}
-\makelabel{utils:PcGroupToMagmaFormat}{8.3.1}{X8768D7707B4CBBD4}
-\makelabel{utils:MatrixGroupToMagmaFormat}{8.3.1}{X8768D7707B4CBBD4}
-\makelabel{utils:FindMatchingFiles}{9.1}{X7A6BB3D084912F35}
-\makelabel{utils:CreateDirIfMissing}{9.1}{X7A6BB3D084912F35}
-\makelabel{utils:StringDotSuffix}{9.1}{X7A6BB3D084912F35}
-\makelabel{utils:GetSuffix}{9.1}{X7A6BB3D084912F35}
-\makelabel{utils:SetIfMissing}{9.1}{X7A6BB3D084912F35}
-\makelabel{utils:PrintOneItemPerLine}{9.2}{X86F322FC7DECE36F}
-\makelabel{utils:PrintApplicableMethod}{9.3.1}{X78B7D1A982BE9866}
-\makelabel{utils:ExponentOfPrime}{9.3.2}{X7C1AF2467FB55D79}
-\makelabel{utils:OKtoReadFromUtils}{10}{X84AC9613842F014C}
+\makelabel{utils:Download}{8.1.1}{X7A7438AE8448635E}
+\makelabel{utils:DownloadVerifyCertificate}{8.1.2}{X85182BA486E3C2AA}
+\makelabel{utils:Log2HTML}{9.1.1}{X7B7ECADF85F748BE}
+\makelabel{utils:IntOrOnfinityToLaTeX}{9.2.1}{X87DEB2B58266F858}
+\makelabel{utils:LaTeXStringFactorsInt}{9.2.2}{X7DC642B97CD02F4E}
+\makelabel{utils:ConvertToMagmaInputString}{9.3.1}{X8768D7707B4CBBD4}
+\makelabel{utils:PermGroupToMagmaFormat}{9.3.1}{X8768D7707B4CBBD4}
+\makelabel{utils:PcGroupToMagmaFormat}{9.3.1}{X8768D7707B4CBBD4}
+\makelabel{utils:MatrixGroupToMagmaFormat}{9.3.1}{X8768D7707B4CBBD4}
+\makelabel{utils:FindMatchingFiles}{10.1}{X7A6BB3D084912F35}
+\makelabel{utils:CreateDirIfMissing}{10.1}{X7A6BB3D084912F35}
+\makelabel{utils:StringDotSuffix}{10.1}{X7A6BB3D084912F35}
+\makelabel{utils:GetSuffix}{10.1}{X7A6BB3D084912F35}
+\makelabel{utils:SetIfMissing}{10.1}{X7A6BB3D084912F35}
+\makelabel{utils:PrintOneItemPerLine}{10.2}{X86F322FC7DECE36F}
+\makelabel{utils:PrintApplicableMethod}{10.3.1}{X78B7D1A982BE9866}
+\makelabel{utils:ExponentOfPrime}{10.3.2}{X7C1AF2467FB55D79}
+\makelabel{utils:OKtoReadFromUtils}{11}{X84AC9613842F014C}

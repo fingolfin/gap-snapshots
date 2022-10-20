@@ -24,7 +24,7 @@
         ([14X3.5-1[114X)  may  contain non-ASCII characters, which are not supported by
         the  LaTeX and HTML versions of [5XGAPDoc[105X documents. The examples in this
         manual  are used for tests of the package's functionality, thus we set
-        the  user preference [10XDisplayFunction[110X (see Section [14X4.2-12[114X) to the value
+        the  user preference [10XDisplayFunction[110X (see Section [14X4.2-11[114X) to the value
         [10X"Print"[110X   in   order  to  produce  output  consisting  only  of  ASCII
         characters, which is assumed to work in any terminal.[133X
   
@@ -496,10 +496,10 @@
   [4X[32X[104X
   
   [33X[0;0YWe  see  that  there  are  six  nontrivial  orbits,  and  we can compute the
-  permutation  actions  on  these  orbits  directly  using  [2XAction[102X ([14XReference:
-  action[114X).  However,  for larger examples, one cannot write down all orbits on
-  the  row space, so one has to use another strategy if one is interested in a
-  particular orbit.[133X
+  permutation actions on these orbits directly using [2XAction[102X ([14XReference: Action
+  homomorphisms[114X).  However,  for  larger  examples,  one cannot write down all
+  orbits  on  the  row  space,  so  one  has to use another strategy if one is
+  interested in a particular orbit.[133X
   
   [33X[0;0YLet  us  assume  that we are interested in the orbit of length [22X11[122X. The point
   stabilizer  is  the  first maximal subgroup of [22XM_11[122X, thus the restriction of

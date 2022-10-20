@@ -1,7 +1,7 @@
-## From: 	Alban Quadrat <alban.quadrat@inria.fr>
-## Subject: 	MaCaulay's example
-## Date: 	18. November 2010 18:26:06 MEZ
-## To: 	Mohamed Barakat <mohamed.barakat@rwth-aachen.de>
+## From:        Alban Quadrat <alban.quadrat@inria.fr>
+## Subject:     MaCaulay's example
+## Date:        18. November 2010 18:26:06 MEZ
+## To:          Mohamed Barakat <mohamed.barakat@rwth-aachen.de>
 ## 
 ## Dear Mohamed,
 ## 
@@ -27,4 +27,4 @@ filt := PurityFiltration( M );
 
 m := IsomorphismOfFiltration( filt );
 
-Display( StringTime( homalgTime( R ) ) );
+#Display( StringTime( homalgTime( R ) ) );

@@ -140,56 +140,56 @@
   [1X3.4-1 RandomMorphismWithFixedSourceByInteger[101X
   
   [33X[1;0Y[29X[2XRandomMorphismWithFixedSourceByInteger[102X( [3Xa[103X, [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(a,b)[123X or [10Xfail[110X[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(a,b)[123X[133X
   
   [33X[0;0YThe  arguments  are an object [23Xa[123X in a category [23XC[123X and an integer [23Xn[123X. The output
-  is a random morphism [23X\alpha: a \rightarrow b[123X for some object [23Xb[123X in [23XC[123X or [10Xfail[110X.[133X
+  is a random morphism [23X\alpha: a \rightarrow b[123X for some object [23Xb[123X in [23XC[123X.[133X
   
   [1X3.4-2 RandomMorphismWithFixedSourceByList[101X
   
   [33X[1;0Y[29X[2XRandomMorphismWithFixedSourceByList[102X( [3Xa[103X, [3XL[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(a,b)[123X or [10Xfail[110X[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(a,b)[123X[133X
   
   [33X[0;0YThe  arguments are an object [23Xa[123X in a category [23XC[123X and a list [23XL[123X. The output is a
-  random morphism [23X\alpha: a \rightarrow b[123X for some object [23Xb[123X in [23XC[123X or [10Xfail[110X.[133X
+  random morphism [23X\alpha: a \rightarrow b[123X for some object [23Xb[123X in [23XC[123X.[133X
   
   [1X3.4-3 RandomMorphismWithFixedRangeByInteger[101X
   
   [33X[1;0Y[29X[2XRandomMorphismWithFixedRangeByInteger[102X( [3Xb[103X, [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(a,b)[123X or [10Xfail[110X[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(a,b)[123X[133X
   
   [33X[0;0YThe  arguments  are an object [23Xb[123X in a category [23XC[123X and an integer [23Xn[123X. The output
-  is a random morphism [23X\alpha: a \rightarrow b[123X for some object [23Xa[123X in [23XC[123X or [10Xfail[110X.[133X
+  is a random morphism [23X\alpha: a \rightarrow b[123X for some object [23Xa[123X in [23XC[123X.[133X
   
   [1X3.4-4 RandomMorphismWithFixedRangeByList[101X
   
   [33X[1;0Y[29X[2XRandomMorphismWithFixedRangeByList[102X( [3Xb[103X, [3XL[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(a,b)[123X or [10Xfail[110X[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(a,b)[123X[133X
   
   [33X[0;0YThe  arguments are an object [23Xb[123X in a category [23XC[123X and a list [23XL[123X. The output is a
-  random morphism [23X\alpha: a \rightarrow b[123X for some object [23Xa[123X in [23XC[123X or [10Xfail[110X.[133X
+  random morphism [23X\alpha: a \rightarrow b[123X for some object [23Xa[123X in [23XC[123X.[133X
   
   [1X3.4-5 RandomMorphismWithFixedSourceAndRangeByInteger[101X
   
   [33X[1;0Y[29X[2XRandomMorphismWithFixedSourceAndRangeByInteger[102X( [3Xa[103X, [3Xb[103X, [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(a,b)[123X or [10Xfail[110X[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(a,b)[123X[133X
   
   [33X[0;0YThe  arguments are two objects [23Xa[123X and [23Xb[123X in a category [23XC[123X and an integer [23Xn[123X. The
-  output is a random morphism [23X\alpha: a \rightarrow b[123X in [23XC[123X or [10Xfail[110X.[133X
+  output is a random morphism [23X\alpha: a \rightarrow b[123X in [23XC[123X.[133X
   
   [1X3.4-6 RandomMorphismWithFixedSourceAndRangeByList[101X
   
   [33X[1;0Y[29X[2XRandomMorphismWithFixedSourceAndRangeByList[102X( [3Xa[103X, [3Xb[103X, [3XL[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(a,b)[123X or [10Xfail[110X[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism in [23X\mathrm{Hom}(a,b)[123X[133X
   
   [33X[0;0YThis  operation is not a CAP basic operation The arguments are two objects [23Xa[123X
   and  [23Xb[123X in a category [23XC[123X and a list [23XL[123X. The output is a random morphism [23X\alpha:
-  a \rightarrow b[123X in [23XC[123X or [10Xfail[110X.[133X
+  a \rightarrow b[123X in [23XC[123X.[133X
   
   [1X3.4-7 RandomMorphismByInteger[101X
   
   [33X[1;0Y[29X[2XRandomMorphismByInteger[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya morphism or [10Xfail[110X[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism in [23XC[123X[133X
   
   [33X[0;0YThe  arguments  are  a  category  [23XC[123X and an integer [23Xn[123X. The output is a random
   morphism   in   [23XC[123X   or   [10Xfail[110X.  If  the  methods  [10XRandomObjectByInteger[110X  and
@@ -201,10 +201,10 @@
   [1X3.4-8 RandomMorphismByList[101X
   
   [33X[1;0Y[29X[2XRandomMorphismByList[102X( [3XC[103X, [3XL[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya morphism or [10Xfail[110X[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism in [23XC[123X[133X
   
   [33X[0;0YThe arguments are a category [23XC[123X and a list [23XL[123X. The output is a random morphism
-  in [23XC[123X or [10Xfail[110X.[133X
+  in [23XC[123X.[133X
   
   [1X3.4-9 RandomMorphismWithFixedSource[101X
   
@@ -214,6 +214,8 @@
   [33X[1;0Y[29X[2XRandomMorphismWithFixedRange[102X( [3Xb[103X, [3XL[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XRandomMorphismWithFixedSourceAndRange[102X( [3Xa[103X, [3Xb[103X, [3Xn[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XRandomMorphismWithFixedSourceAndRange[102X( [3Xa[103X, [3Xb[103X, [3XL[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRandomMorphism[102X( [3Xa[103X, [3Xb[103X, [3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRandomMorphism[102X( [3Xa[103X, [3Xb[103X, [3XL[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XRandomMorphism[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XRandomMorphism[102X( [3XC[103X, [3XL[103X ) [32X operation[133X
   
@@ -294,6 +296,14 @@
   and  [10Xrange[110X are assumed to be objectified. The optional arguments behave like
   the  corresponding  arguments  in  [10XObjectifyWithAttributes[110X. Also returns the
   objectified morphism.[133X
+  
+  [1X3.6-5 CreateCapCategoryMorphismWithAttributes[101X
+  
+  [33X[1;0Y[29X[2XCreateCapCategoryMorphismWithAttributes[102X( [3Xmorphism[103X, [3Xcategory[103X, [3Xsource[103X, [3Xrange[103X[, [3Xattr1[103X, [3Xval1[103X, [3Xattr2[103X, [3Xval2[103X, [3X...[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism[133X
+  
+  [33X[0;0YShorthand  for [10XObjectifyMorphismWithSourceAndRangeForCAPWithAttributes( rec(
+  ), category, source, range[, attr1, val1, attr2, val2, ...] )[110X.[133X
   
   
   [1X3.7 [33X[0;0YEquality and Congruence for Morphisms[133X[101X
@@ -858,7 +868,58 @@
   
   [33X[0;0YThis is a convenience method for [10XDistinguishedObjectOfHomomorphismStructure[110X.[133X
   
-  [1X3.16-18 BasisOfExternalHom[101X
+  [1X3.16-18 ExtendRangeOfHomomorphismStructureByFullEmbedding[101X
+  
+  [33X[1;0Y[29X[2XExtendRangeOfHomomorphismStructureByFullEmbedding[102X( [3XC[103X, [3XE[103X, [3Xobject_function[103X, [3Xmorphism_function[103X, [3Xobject_function_inverse[103X, [3Xmorphism_function_inverse[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHomomorphismStructureOnObjectsExtendedByFullEmbedding[102X( [3XC[103X, [3XE[103X, [3Xa[103X, [3Xb[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHomomorphismStructureOnMorphismsExtendedByFullEmbedding[102X( [3XC[103X, [3XE[103X, [3Xalpha[103X, [3Xbeta[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHomomorphismStructureOnMorphismsWithGivenObjectsExtendedByFullEmbedding[102X( [3XC[103X, [3XE[103X, [3Xs[103X, [3Xalpha[103X, [3Xbeta[103X, [3Xr[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDistinguishedObjectOfHomomorphismStructureExtendedByFullEmbedding[102X( [3XC[103X, [3XE[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureExtendedByFullEmbedding[102X( [3XC[103X, [3XE[103X, [3Xalpha[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjectsExtendedByFullEmbedding[102X( [3XC[103X, [3XE[103X, [3Xdistinguished_object[103X, [3Xalpha[103X, [3Xr[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphismExtendedByFullEmbedding[102X( [3XC[103X, [3XE[103X, [3Xa[103X, [3Xa'[103X, [3Xiota[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YIf   [23X\iota\colon   D  \to  E[123X  is  a  full  embedding  of  categories,  every
+  [23XD[123X-homomorphism  structure  for  a  category  [23XC[123X  extends  to a [23XE[123X-homomorphism
+  structure  for  [23XC[123X.  This  operations  accepts  four  functions  and installs
+  operations
+  [10XDistinguishedObjectOfHomomorphismStructureExtendedByFullEmbedding[110X,
+  [10XHomomorphismStructureOnObjectsExtendedByFullEmbedding[110X  etc. which correspond
+  to  the  [23XE[123X-homomorphism  structure for [23XC[123X. Note: To distinguish embeddings in
+  different  categories,  in addition to [23XC[123X also [23XE[123X is passed to the operations.
+  When  using  this  with different embeddings with the range category [23XE[123X, only
+  the last embedding will be used. The arguments are:[133X
+  
+  [30X    [33X[0;6Y[10Xobject_function[110X gets the categories [23XC[123X and [23XE[123X and an object in [23XD[123X.[133X
+  
+  [30X    [33X[0;6Y[10Xmorphism_function[110X  gets  the  categories  [23XC[123X  and  [23XE[123X, an object in [23XE[123X, a
+        morphism  in [23XD[123X and another object in [23XE[123X. The objects are the results of
+        [10Xobject_function[110X applied to the source and range of the morphism.[133X
+  
+  [30X    [33X[0;6Y[10Xobject_function_inverse[110X  gets the categories [23XC[123X and [23XE[123X and a morphism in
+        [23XE[123X.[133X
+  
+  [30X    [33X[0;6Y[10Xmorphism_function_inverse[110X gets the categories [23XC[123X and [23XE[123X, an object in [23XD[123X,
+        a  morphism  in [23XE[123X and another object in [23XD[123X. The objects are the results
+        of  [10Xobject_function_inverse[110X  applied  to  the  source and range of the
+        morphism.[133X
+  
+  [33X[0;0Y[10Xobject_function[110X     and     [10Xmorphism_function[110X    define    the    embedding.
+  [10Xobject_function_inverse[110X  and [10Xmorphism_function_inverse[110X define the inverse of
+  the embedding on its image.[133X
+  
+  [1X3.16-19 ExtendRangeOfHomomorphismStructureByIdentityAsFullEmbedding[101X
+  
+  [33X[1;0Y[29X[2XExtendRangeOfHomomorphismStructureByIdentityAsFullEmbedding[102X( [3XC[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  
+  [33X[0;0YChooses    the    identity    on    [23XD[123X    as    the    full    embedding   in
+  [2XExtendRangeOfHomomorphismStructureByFullEmbedding[102X  ([14X3.16-18[114X). This is useful
+  to      handle     this     case     as     a     degenerate     case     of
+  [2XExtendRangeOfHomomorphismStructureByFullEmbedding[102X ([14X3.16-18[114X).[133X
+  
+  [1X3.16-20 BasisOfExternalHom[101X
   
   [33X[1;0Y[29X[2XBasisOfExternalHom[102X( [3Xa[103X, [3Xb[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya list of morphisms in [23X\mathrm{Hom}_{C}(a,b)[123X[133X
@@ -869,7 +930,7 @@
   combination       of       [23XL[123X       with       the       coefficients      in
   [10XCoefficientsOfMorphismWithGivenBasisOfExternalHom[110X([23X\alpha,L[123X).[133X
   
-  [1X3.16-19 CoefficientsOfMorphismWithGivenBasisOfExternalHom[101X
+  [1X3.16-21 CoefficientsOfMorphismWithGivenBasisOfExternalHom[101X
   
   [33X[1;0Y[29X[2XCoefficientsOfMorphismWithGivenBasisOfExternalHom[102X( [3Xalpha[103X, [3XL[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya list of elements in [23Xk[123X[133X
@@ -878,7 +939,7 @@
   list  [3XL[103X[10X=BasisOfExternalHom[110X([23Xa,b[123X).  The  output  is  a list of coefficients of
   [23X\alpha[123X with respect to [23XL[123X.[133X
   
-  [1X3.16-20 CoefficientsOfMorphism[101X
+  [1X3.16-22 CoefficientsOfMorphism[101X
   
   [33X[1;0Y[29X[2XCoefficientsOfMorphism[102X( [3Xalpha[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya list of elements in [23Xk[123X[133X

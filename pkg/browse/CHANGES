@@ -1,6 +1,29 @@
 
         Main CHANGES between versions of the Browse package
 
+1.8.18
+  - Fixed 'BrowseDirectory' again.
+  - Changed an '#include' statement, in order to improve compatibility.
+
+1.8.17
+  - Fixed 'BrowseDirectory', circular links to directories had caused
+    an error up to now.
+    Thanks to Joachim Zobel for reporting this.
+
+1.8.16
+  - Fixed a technical problem in the release process,
+    concerning invalid external links in the HTML documentation.
+    Thanks to Max Horn for reporting this.
+
+1.8.15
+  - Fixed a problem with non-ASCII characters in 'BrowseAtlasInfo'.
+  - Fixed the display of unknown indicator values in 'Browse' for
+    2-modular character tables, analogous to the fix described in
+    https://github.com/gap-system/gap/pull/4842.
+  - Support columns of orthogonal discriminants (OD) and character field
+    degrees (d) in 'Browse' for character tables.
+  - Make `configure` and `Makefile.in` more similar to setup in EDIM.
+
 1.8.14
   - Fixed the name of a record component of database attributes
     ('cleanupAfterAttributeComputation').

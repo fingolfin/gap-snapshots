@@ -34,33 +34,26 @@ InstallGlobalFunction( "DeactivateDerivationInfo",
 end );
 
 InstallMethod( MakeDerivation,
-               [ IsString, IsFunction, IsDenseList,
-                 IsPosInt, IsDenseList, IsFunction ],
-function( name, target_op, used_ops_with_multiples,
-          weight, implementations_with_extra_filters,
-          category_filter )
-  local d, used_ops, used_op_multiples, used_op_names_with_multiples;
-  d := rec();
-  used_ops := List( used_ops_with_multiples,
-                    l -> NameFunction( l[ 1 ] ) );
-  used_op_multiples := List( used_ops_with_multiples, l -> l[ 2 ] );
-  used_op_names_with_multiples :=
-    List( used_ops_with_multiples,
-          l -> [ NameFunction( l[ 1 ] ), l[ 2 ] ] );
-  ObjectifyWithAttributes
-    ( d,
-      NewType( TheFamilyOfDerivations, IsDerivedMethodRep ),
-      DerivationName, name,
-      DerivationWeight, weight,
-      DerivationFunctionsWithExtraFilters, implementations_with_extra_filters,
-      CategoryFilter, category_filter,
-      TargetOperation, NameFunction( target_op ),
-      UsedOperations, used_ops,
-      UsedOperationsWithMultiples, used_op_names_with_multiples,
-      UsedOperationMultiples, used_op_multiples );
-  # TODO options
-  
-  return d;
+               [ IsString, IsFunction, IsDenseList, IsPosInt, IsFunction, IsFunction ],
+               
+function( name, target_op, used_op_names_with_multiples_and_category_getters, weight, func, category_filter )
+    
+    if PositionSublist( String( category_filter ), "CanCompute" ) <> fail then
+        
+        Print( "WARNING: The CategoryFilter of a derivation for ", NameFunction( target_op ), " uses `CanCompute`. Please register all preconditions explicitly.\n" );
+        
+    fi;
+    
+    return ObjectifyWithAttributes(
+        rec( ), NewType( TheFamilyOfDerivations, IsDerivedMethodRep ),
+        DerivationName, name,
+        DerivationWeight, weight,
+        DerivationFunction, func,
+        CategoryFilter, category_filter,
+        TargetOperation, NameFunction( target_op ),
+        UsedOperationsWithMultiplesAndCategoryGetters, used_op_names_with_multiples_and_category_getters
+    );
+    
 end );
 
 InstallMethod( String,
@@ -93,7 +86,7 @@ end );
 InstallMethod( InstallDerivationForCategory,
                [ IsDerivedMethod, IsPosInt, IsCapCategory ],
 function( d, weight, C )
-  local method_name, implementation_list, add_method, add_name, general_filter_list,
+  local method_name, func, add_method, add_name, general_filter_list,
         installation_name, nr_arguments, cache_name, current_filters, current_implementation,
         function_called_before_installation;
   
@@ -105,48 +98,19 @@ function( d, weight, C )
                                           DerivationName( d ), "\n" ) );
   
   method_name := TargetOperation( d );
-  implementation_list := DerivationFunctionsWithExtraFilters( d );
+  func := DerivationFunction( d );
   add_name := Concatenation( "Add", method_name );
-  ## getting the filters and installation name from the record
+  add_method := ValueGlobal( add_name );
   
-#   if not IsBoundGlobal( add_name ) then
-#       
-#       general_filter_list := CAP_INTERNAL_METHOD_NAME_RECORD.(method_name).filter_list;
-#       installation_name := CAP_INTERNAL_METHOD_NAME_RECORD.(method_name).installation_name;
-#       general_filter_list := CAP_INTERNAL_REPLACE_STRINGS_WITH_FILTERS( general_filter_list, C );
-#       
-#       nr_arguments := Length( general_filter_list );
-#       if nr_arguments > 1 then
-#         cache_name := CAP_INTERNAL_METHOD_NAME_RECORD.(method_name).cache_name;
-#         PushOptions( rec( InstallMethod := InstallMethodWithCache,
-#                           Cache := GET_METHOD_CACHE( C, cache_name, nr_arguments ) ) );
-#       fi;
-#       
-#       for current_implementation in implementation_list do
-#           
-#           current_filters := CAP_INTERNAL_MERGE_FILTER_LISTS( general_filter_list, 
-#                                                               current_implementation[ 2 ] );
-#           
-#           InstallMethodWithToDoForIsWellDefined( ValueGlobal( installation_name ),
-#                                                 current_filters,
-#                                                 current_implementation[ 1 ] );
-#       od;
-#       
-#       if nr_arguments > 1 then
-#           PopOptions( );
-#       fi;
-#       
-#   else
-      if HasFunctionCalledBeforeInstallation( d ) then
-          
-          FunctionCalledBeforeInstallation( d )( C );
-          
-      fi;
+  if HasFunctionCalledBeforeInstallation( d ) then
       
-      add_method := ValueGlobal( add_name );
-      add_method( C, implementation_list, weight : SetPrimitive := false, IsDerivation := true );
+      FunctionCalledBeforeInstallation( d )( C );
       
-#   fi;
+  fi;
+  
+  # use the add method with signature IsCapCategory, IsList, IsInt to avoid
+  # the convenience for AddZeroObject etc.
+  add_method( C, [ Pair( func, [ ] ) ], weight : IsDerivation := true );
   
 end );
 
@@ -154,11 +118,12 @@ InstallMethod( DerivationResultWeight,
                [ IsDerivedMethod, IsDenseList ],
 function( d, op_weights )
   local w, used_op_multiples, i, op_w, mult;
+  Display( "WARNING: DerivationResultWeight is deprecated and will not be supported after 2023.08.26.\n" );
   w := DerivationWeight( d );
-  used_op_multiples := UsedOperationMultiples( d );
+  used_op_multiples := UsedOperationsWithMultiplesAndCategoryGetters( d );
   for i in [ 1 .. Length( used_op_multiples ) ] do
     op_w := op_weights[ i ];
-    mult := used_op_multiples[ i ];
+    mult := used_op_multiples[ i ][ 2 ];
     if op_w = infinity then
       return infinity;
     fi;
@@ -184,6 +149,10 @@ function( operations )
     G!.derivations_by_target.( op_name ) := [];
     G!.derivations_by_used_ops.( op_name ) := [];
   od;
+  
+  # derivations not using any operations
+  G!.derivations_by_used_ops.none := [];
+  
   return G;
 end );
 
@@ -219,39 +188,28 @@ end );
 InstallMethod( AddDerivation,
                [ IsDerivedMethodGraphRep, IsDerivedMethod ],
 function( G, d )
-  local method_name, filter_list, number_of_proposed_arguments, current_function_argument_number, current_additional_filter_list_length, impl, op_name;
+  local method_name, filter_list, number_of_proposed_arguments, current_function_argument_number, x;
   
   if IsIdenticalObj( G, CAP_INTERNAL_DERIVATION_GRAPH ) then
     
     method_name := TargetOperation( d );
     
-    if not method_name in RecNames( CAP_INTERNAL_METHOD_NAME_RECORD ) then
+    if not IsBound( CAP_INTERNAL_METHOD_NAME_RECORD.(method_name) ) then
         
         Error( "trying to add a derivation to CAP_INTERNAL_DERIVATION_GRAPH for a method not in CAP_INTERNAL_METHOD_NAME_RECORD" );
         
     fi;
     
-    filter_list := CAP_INTERNAL_METHOD_NAME_RECORD!.(method_name).filter_list;
+    filter_list := CAP_INTERNAL_METHOD_NAME_RECORD.(method_name).filter_list;
     
     number_of_proposed_arguments := Length( filter_list );
     
-    for impl in DerivationFunctionsWithExtraFilters( d ) do
-        
-        current_function_argument_number := NumberArgumentsFunction( impl[ 1 ] );
-        
-        if current_function_argument_number >= 0 and current_function_argument_number <> number_of_proposed_arguments then
-            Error( "While adding a derivation for ", method_name, ": given function has ", String( current_function_argument_number ),
-                   " arguments but should have ", String( number_of_proposed_arguments ) );
-        fi;
-        
-        current_additional_filter_list_length := Length( impl[ 2 ] );
-        
-        if current_additional_filter_list_length > 0 and current_additional_filter_list_length <> number_of_proposed_arguments then
-            Error( "While adding a derivation for ", method_name, ": there are ", String( current_additional_filter_list_length ),
-                   " additional filters but there should be ", String( number_of_proposed_arguments ), " (or none)" );
-        fi;
-        
-    od;
+    current_function_argument_number := NumberArgumentsFunction( DerivationFunction( d ) );
+    
+    if current_function_argument_number >= 0 and current_function_argument_number <> number_of_proposed_arguments then
+        Error( "While adding a derivation for ", method_name, ": given function has ", String( current_function_argument_number ),
+               " arguments but should have ", String( number_of_proposed_arguments ) );
+    fi;
     
     if NumberArgumentsFunction( CategoryFilter( d ) ) = 0 or NumberArgumentsFunction( CategoryFilter( d ) ) > 1 then
         
@@ -262,87 +220,111 @@ function( G, d )
   fi;
   
   Add( G!.derivations_by_target.( TargetOperation( d ) ), d );
-  for op_name in UsedOperations( d ) do
-    Add( G!.derivations_by_used_ops.( op_name ), d );
+  for x in UsedOperationsWithMultiplesAndCategoryGetters( d ) do
+    # We add all operations, even those with category getters: In case the category getter
+    # returns the category itself, this allows to recursively trigger derivations correctly.
+    Add( G!.derivations_by_used_ops.( x[1] ), d );
   od;
+  
+  if IsEmpty( UsedOperationsWithMultiplesAndCategoryGetters( d ) ) then
+    
+    Add( G!.derivations_by_used_ops.none, d );
+    
+  fi;
+  
 end );
 
 InstallMethod( AddDerivation,
                [ IsDerivedMethodGraph, IsFunction, IsFunction ],
                
-  function( graph, target_op, implementations_with_extra_filters )
+  function( graph, target_op, func )
     
-    AddDerivation( graph,
-                   target_op,
-                   [ ],
-                   [ [ implementations_with_extra_filters, [ ] ] ] );
-                   
-end );
-
-InstallMethod( AddDerivation,
-               [ IsDerivedMethodGraph, IsFunction, IsDenseList ],
-               
-  function( graph, target_op, implementations_with_extra_filters )
-    
-    AddDerivation( graph,
-                   target_op,
-                   [ ],
-                   [ [ implementations_with_extra_filters, [ ] ] ] );
+    AddDerivation( graph, target_op, [ ], func );
                    
 end );
 
 InstallMethod( AddDerivation,
                [ IsDerivedMethodGraph, IsFunction, IsDenseList, IsFunction ],
                
-  function( graph, target_op, used_ops_with_multiples,
-            implementations_with_extra_filters )
-    
-    AddDerivation( graph,
-                  target_op,
-                  used_ops_with_multiples,
-                  [ [ implementations_with_extra_filters, [ ] ] ] );
-    
-end );
-
-InstallMethod( AddDerivation,
-               [ IsDerivedMethodGraph, IsFunction, IsDenseList, IsDenseList ],
-               
-  function( graph, target_op, used_ops_with_multiples,
-            implementations_with_extra_filters )
-    local weight, category_filter, description, derivation, collected_list,
-          operations_in_graph, current_list, current_implementation, loop_multiplier,
-          preconditions_complete, function_called_before_installation;
+  function( graph, target_op, used_ops_with_multiples_and_category_getters, func )
+    local weight, category_filter, description, loop_multiplier, category_getters, function_called_before_installation, operations_in_graph, collected_list, used_op_names_with_multiples_and_category_getters, derivation, x;
     
     weight := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "Weight", 1 );
     category_filter := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "CategoryFilter", IsCapCategory );
     description := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "Description", "" );
     loop_multiplier := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "WeightLoopMultiple", 2 );
-    preconditions_complete := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "ConditionsListComplete", false );
+    category_getters := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "CategoryGetters", rec( ) );
     function_called_before_installation := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "FunctionCalledBeforeInstallation", false );
     
     ## get used ops
-    ## Is this the right place? Or should this only be done when no ops are given?
     operations_in_graph := Operations( graph );
     
-    collected_list := [ ];
+    collected_list := CAP_INTERNAL_FIND_APPEARANCE_OF_SYMBOL_IN_FUNCTION( func, operations_in_graph, loop_multiplier, CAP_INTERNAL_METHOD_RECORD_REPLACEMENTS, category_getters );
     
-    if preconditions_complete = false then
-        for current_implementation in implementations_with_extra_filters do
-
-            current_list := CAP_INTERNAL_FIND_APPEARANCE_OF_SYMBOL_IN_FUNCTION( current_implementation[ 1 ], operations_in_graph, loop_multiplier, CAP_INTERNAL_METHOD_RECORD_REPLACEMENTS );
-            current_list := List( current_list, i -> [ ValueGlobal( i[ 1 ] ), i[2] ]);
-            collected_list := CAP_INTERNAL_MERGE_PRECONDITIONS_LIST( collected_list, current_list );
-
+    if IsEmpty( used_ops_with_multiples_and_category_getters ) then
+        
+        used_op_names_with_multiples_and_category_getters := collected_list;
+        
+    else
+        
+        used_op_names_with_multiples_and_category_getters := [ ];
+        
+        for x in used_ops_with_multiples_and_category_getters do
+            
+            if Length( x ) < 2 or not IsFunction( x[1] ) or not IsInt( x[2] ) then
+                
+                Error( "preconditions must be of the form `[op, mult, getter]`, where `getter` is optional" );
+                
+            fi;
+            
+            if (Length( x ) = 2 or (Length( x ) = 3 and x[3] = fail)) and x[1] = target_op then
+                
+                Error( "A derivation for ", NameFunction( target_op ), " has itself as a precondition. This is not supported because we cannot compute a well-defined weight.\n" );
+                
+            fi;
+            
+            if Length( x ) = 2 then
+                
+                Add( used_op_names_with_multiples_and_category_getters, [ NameFunction( x[1] ), x[2], fail ] );
+                
+            elif Length( x ) = 3 then
+                
+                if x <> fail and not (IsFunction( x[3] ) and NumberArgumentsFunction( x[3] ) = 1) then
+                    
+                    Error( "the category getter must be a single-argument function" );
+                    
+                fi;
+                
+                Add( used_op_names_with_multiples_and_category_getters, [ NameFunction( x[1] ), x[2], x[3] ] );
+                
+            else
+                
+                Error( "The list of preconditions must be a list of pairs or triples." );
+                
+            fi;
+            
         od;
+        
+        if Length( collected_list ) <> Length( used_op_names_with_multiples_and_category_getters ) or not ForAll( collected_list, c -> c in used_op_names_with_multiples_and_category_getters ) then
+            
+            SortBy( used_op_names_with_multiples_and_category_getters, x -> x[1] );
+            SortBy( collected_list, x -> x[1] );
+            
+            Print(
+                "WARNING: You have installed a derivation for ", NameFunction( target_op ), " with preconditions ", used_op_names_with_multiples_and_category_getters,
+                " but the automated detection has detected the following list of preconditions: ", collected_list, ".\n",
+                "If this is a bug in the automated detection, please report it.\n"
+            );
+            
+        fi;
+        
     fi;
-    
-    used_ops_with_multiples := CAP_INTERNAL_MERGE_PRECONDITIONS_LIST( collected_list, used_ops_with_multiples );
     
     derivation := MakeDerivation( description,
                                   target_op,
-                                  used_ops_with_multiples,
+                                  used_op_names_with_multiples_and_category_getters,
                                   weight,
-                                  implementations_with_extra_filters,
+                                  func,
                                   category_filter );
     
     if function_called_before_installation <> false then
@@ -351,112 +333,25 @@ InstallMethod( AddDerivation,
         
     fi;
     
-    ## This sanity check should be obsolete
-    # CAP_INTERNAL_DERIVATION_SANITY_CHECK( graph, derivation );
-    
     AddDerivation( graph, derivation );
-end );
-
-InstallMethod( AddDerivationPair,
-               [ IsDerivedMethodGraph, IsFunction, IsFunction, IsFunction, IsFunction ],
-               
-  function( graph, target_op1, target_op2, implementations_with_extra_filters1, implementations_with_extra_filters2 )
-    
-    Display( "WARNING: AddDerivationPair is deprecated and will not be supported after 2022.10.26. Please use AddDerivation instead.\n" );
-    
-    AddDerivationPair( graph,
-                       target_op1,
-                       target_op2,
-                       [ ],
-                       [ [ implementations_with_extra_filters1, [ ] ] ],
-                       [ [ implementations_with_extra_filters2, [ ] ] ] );
-                   
-end );
-
-InstallMethod( AddDerivationPair,
-               [ IsDerivedMethodGraph, IsFunction, IsFunction, IsDenseList, IsDenseList ],
-               
-  function( graph, target_op1, target_op2, implementations_with_extra_filters1, implementations_with_extra_filters2 )
-    
-    Display( "WARNING: AddDerivationPair is deprecated and will not be supported after 2022.10.26. Please use AddDerivation instead.\n" );
-    
-    AddDerivationPair( graph,
-                       target_op1,
-                       target_op2,
-                       [ ],
-                       implementations_with_extra_filters1,
-                       implementations_with_extra_filters2 );
-                   
-end );
-
-InstallMethod( AddDerivationPair,
-               [ IsDerivedMethodGraph, IsFunction, IsFunction, IsDenseList, IsFunction, IsFunction ],
-               
-  function( graph, target_op1, target_op2, used_ops_with_multiples,
-            implementations_with_extra_filters1, implementations_with_extra_filters2 )
-    
-    Display( "WARNING: AddDerivationPair is deprecated and will not be supported after 2022.10.26. Please use AddDerivation instead.\n" );
-    
-    AddDerivationPair( graph,
-                       target_op1,
-                       target_op2,
-                       used_ops_with_multiples,
-                       [ [ implementations_with_extra_filters1, [ ] ] ],
-                       [ [ implementations_with_extra_filters2, [ ] ] ] );
     
 end );
 
-InstallMethod( AddDerivationPair,
-               [ IsDerivedMethodGraph, IsFunction, IsFunction, IsDenseList, IsDenseList, IsDenseList ],
+InstallMethod( AddDerivation,
+               [ IsDerivedMethodGraph, IsFunction, IsDenseList ],
                
-  function( graph, target_op1, target_op2, used_ops_with_multiples,
-            implementations_with_extra_filters1, implementations_with_extra_filters2 )
-    local weight, category_filter, description, derivation1, derivation2, collected_list,
-          operations_in_graph, current_list, current_implementation, loop_multiplier,
-          preconditions_complete;
+  function( graph, target_op, implementations_with_extra_filters )
     
-    Display( "WARNING: AddDerivationPair is deprecated and will not be supported after 2022.10.26. Please use AddDerivation instead.\n" );
+    Error( "passing a list of functions to `AddDerivation` is not supported anymore" );
     
-    weight := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "Weight", 1 );
-    category_filter := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "CategoryFilter", IsCapCategory );
-    description := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "Description", "" );
-    loop_multiplier := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "WeightLoopMultiple", 2 );
-    preconditions_complete := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "ConditionsListComplete", false );
+end );
+
+InstallMethod( AddDerivation,
+               [ IsDerivedMethodGraph, IsFunction, IsDenseList, IsDenseList ],
+               
+  function( graph, target_op, used_ops_with_multiples, implementations_with_extra_filters )
     
-    ## get used ops
-    ## Is this the right place? Or should this only be done when no ops are given?
-    operations_in_graph := Operations( graph );
-    
-    collected_list := [ ];
-    
-    if preconditions_complete = false then
-        for current_implementation in Concatenation( implementations_with_extra_filters1, implementations_with_extra_filters2 ) do
-            
-            current_list := CAP_INTERNAL_FIND_APPEARANCE_OF_SYMBOL_IN_FUNCTION( current_implementation[ 1 ], operations_in_graph, loop_multiplier, CAP_INTERNAL_METHOD_RECORD_REPLACEMENTS );
-            current_list := List( current_list, i -> [ ValueGlobal( i[ 1 ] ), i[ 2 ] ]);
-            collected_list := CAP_INTERNAL_MERGE_PRECONDITIONS_LIST( collected_list, current_list );
-            
-        od;
-    fi;
-    
-    used_ops_with_multiples := CAP_INTERNAL_MERGE_PRECONDITIONS_LIST( collected_list, used_ops_with_multiples );
-    
-    derivation1 := MakeDerivation( description,
-                                  target_op1,
-                                  used_ops_with_multiples,
-                                  weight,
-                                  implementations_with_extra_filters1,
-                                  category_filter );
-    
-    derivation2 := MakeDerivation( description,
-                                   target_op2,
-                                   used_ops_with_multiples,
-                                   weight,
-                                   implementations_with_extra_filters2,
-                                   category_filter );
-    
-    AddDerivation( graph, derivation1 );
-    AddDerivation( graph, derivation2 );
+    Error( "passing a list of functions to `AddDerivation` is not supported anymore" );
     
 end );
 
@@ -471,64 +366,17 @@ InstallGlobalFunction( AddDerivationToCAP,
     
 end );
 
-InstallGlobalFunction( AddDerivationPairToCAP,
-  
-  function( arg )
-    
-    Display( "WARNING: AddDerivationPairToCAP is deprecated and will not be supported after 2022.10.26. Please use AddDerivationToCAP instead.\n" );
-    
-    CallFuncList( AddDerivationPair, Concatenation( [ CAP_INTERNAL_DERIVATION_GRAPH ], arg ) );
-    
-end );
-
 InstallGlobalFunction( AddWithGivenDerivationPairToCAP,
   
-  function( arg )
-    local op_without_given, op_with_given, recnames, new_arg, i, test_arg, func_arg;
+  function( target_op, without_given_func, with_given_func )
+    local without_given_name, with_given_name;
     
-    op_without_given := NameFunction( arg[ 1 ] );
+    without_given_name := NameFunction( target_op );
     
-    op_with_given := CAP_INTERNAL_METHOD_NAME_RECORD.(op_without_given).with_given_without_given_name_pair[ 2 ];
+    with_given_name := CAP_INTERNAL_METHOD_NAME_RECORD.(without_given_name).with_given_without_given_name_pair[2];
     
-    ## Check whether arguments need to be filled
-    
-    test_arg := arg[ Length( arg ) - 1 ];
-    
-    if Length( arg ) = 2 or ( not IsFunction( test_arg ) and not ( IsList( test_arg ) and IsList( test_arg[ 1 ] ) ) ) then
-        
-        Print(
-          Concatenation(
-          "WARNING: AddWithGivenDerivationPairToCAP with a single function is deprecated and will not be supported after 2022.05.06. ",
-          "Please use AddDerivationToCAP instead and make sure that suitable WithGiven derivations are installed.\n"
-          )
-        );
-        
-        # we only get one function -> leave the other for the usual WithGiven derivation
-        CallFuncList( AddDerivationToCAP, arg );
-        
-        return;
-        
-    fi;
-    
-    if Length( arg ) = 3 and ForAll( arg, IsFunction ) then
-        
-        AddDerivationToCAP( arg[ 1 ], arg[ 2 ] );
-        AddDerivationToCAP( ValueGlobal( op_with_given ), arg[ 3 ] );
-        
-        return;
-        
-    fi;
-    
-    Print(
-      Concatenation(
-      "WARNING: AddWithGivenDerivationPairToCAP is deprecated and will not be supported after 2022.10.26 except when passing exactly three functions.",
-      "Please use AddDerivationToCAP instead.\n"
-      )
-    );
-    
-    new_arg := Concatenation( [ CAP_INTERNAL_DERIVATION_GRAPH, arg[ 1 ], ValueGlobal( op_with_given ) ], arg{[ 2 .. Length( arg ) ]} );
-    
-    CallFuncList( AddDerivationPair, new_arg );
+    AddDerivationToCAP( target_op, without_given_func );
+    AddDerivationToCAP( ValueGlobal( with_given_name ), with_given_func );
     
 end );
 
@@ -547,18 +395,24 @@ end );
 InstallMethod( MakeOperationWeightList,
                [ IsCapCategory, IsDerivedMethodGraph ],
 function( C, G )
-  local owl, op_name;
-  owl := Objectify( NewType( TheFamilyOfOperationWeightLists,
-                             IsOperationWeightListRep ),
-                    rec( operation_weights := rec(),
-                         operation_derivations := rec() ) );
-  for op_name in Operations( G ) do
-    owl!.operation_weights.( op_name ) := infinity;
-    owl!.operation_derivations.( op_name ) := fail;
-  od;
-  SetDerivationGraph( owl, G );
-  SetCategoryOfOperationWeightList( owl, C );
-  return owl;
+  local operation_weights, operation_derivations, owl, op_name;
+    
+    operation_weights := rec( );
+    operation_derivations := rec( );
+    
+    for op_name in Operations( G ) do
+        operation_weights.( op_name ) := infinity;
+        operation_derivations.( op_name ) := fail;
+    od;
+    
+    owl := ObjectifyWithAttributes(
+        rec( operation_weights := operation_weights, operation_derivations := operation_derivations ), NewType( TheFamilyOfOperationWeightLists, IsOperationWeightListRep ),
+        DerivationGraph, G,
+        CategoryOfOperationWeightList, C
+    );
+    
+    return owl;
+    
 end );
 
 InstallMethod( String,
@@ -586,9 +440,47 @@ end );
 InstallMethod( OperationWeightUsingDerivation,
                [ IsOperationWeightList, IsDerivedMethod ],
 function( owl, d )
-  return DerivationResultWeight
-         ( d, List( UsedOperations( d ),
-                    op_name -> CurrentOperationWeight( owl, op_name ) ) );
+  local category, category_operation_weights, weight, operation_weights, operation_name, operation_weight, x;
+    
+    category := CategoryOfOperationWeightList( owl );
+    category_operation_weights := owl!.operation_weights;
+    
+    weight := DerivationWeight( d );
+    
+    for x in UsedOperationsWithMultiplesAndCategoryGetters( d ) do
+        
+        if x[3] = fail then
+            
+            operation_weights := category_operation_weights;
+            
+        else
+            
+            operation_weights := x[3](category)!.derivations_weight_list!.operation_weights;
+            
+        fi;
+        
+        operation_name := x[1];
+        
+        if not IsBound( operation_weights.(operation_name) ) then
+            
+            return infinity;
+            
+        fi;
+        
+        operation_weight := operation_weights.(operation_name);
+        
+        if operation_weight = infinity then
+            
+            return infinity;
+            
+        fi;
+        
+        weight := weight + operation_weight * x[2];
+        
+    od;
+    
+    return weight;
+    
 end );
 
 InstallMethod( DerivationOfOperation,
@@ -597,66 +489,118 @@ function( owl, op_name )
   return owl!.operation_derivations.( op_name );
 end );
 
+BindGlobal( "TryToInstallDerivation", function ( owl, d )
+  local new_weight, target, current_weight, current_derivation, derivations_of_target, new_pos, current_pos;
+    
+    if not IsApplicableToCategory( d, CategoryOfOperationWeightList( owl ) ) then
+        return fail;
+    fi;
+    
+    new_weight := OperationWeightUsingDerivation( owl, d );
+    
+    if new_weight = infinity then
+        return fail;
+    fi;
+    
+    target := TargetOperation( d );
+    
+    current_weight := CurrentOperationWeight( owl, target );
+    current_derivation := DerivationOfOperation( owl, target );
+    
+    if current_derivation <> fail then
+        
+        derivations_of_target := DerivationsOfOperation( DerivationGraph( owl ), target );
+        
+        new_pos := PositionProperty( derivations_of_target, x -> IsIdenticalObj( x, d ) );
+        current_pos := PositionProperty( derivations_of_target, x -> IsIdenticalObj( x, current_derivation ) );
+        
+        Assert( 0, new_pos <> fail );
+        Assert( 0, current_pos <> fail );
+        
+    fi;
+
+    if new_weight < current_weight or (new_weight = current_weight and current_derivation <> fail and new_pos < current_pos) then
+        
+        if not IsIdenticalObj( current_derivation, d ) then
+            
+            InstallDerivationForCategory( d, new_weight, CategoryOfOperationWeightList( owl ) );
+            
+        fi;
+        
+        owl!.operation_weights.( target ) := new_weight;
+        owl!.operation_derivations.( target ) := d;
+        
+        return new_weight;
+        
+    else
+        
+        return fail;
+        
+    fi;
+    
+end );
+
 InstallMethod( InstallDerivationsUsingOperation,
                [ IsOperationWeightListRep, IsString ],
 function( owl, op_name )
-  local Q, node, weight, d, new_weight,
-        target, current_weight, current_derivation,
-        derivations_of_target, new_pos, current_pos;
-  Q := StringMinHeap();
-  Add( Q, op_name, 0 );
-  while not IsEmptyHeap( Q ) do
-    node := ExtractMin( Q );
-    op_name := node[ 1 ];
-    weight := node[ 2 ];
-    for d in DerivationsUsingOperation( DerivationGraph( owl ), op_name ) do
-      if not IsApplicableToCategory( d, CategoryOfOperationWeightList( owl ) ) then
-        continue;
-      fi;
-      new_weight := OperationWeightUsingDerivation( owl, d );
-      if new_weight = infinity then
-        continue;
-      fi;
-      target := TargetOperation( d );
-      
-      current_weight := CurrentOperationWeight( owl, target );
-      current_derivation := DerivationOfOperation( owl, target );
-      
-      if current_derivation <> fail then
-          
-          derivations_of_target := DerivationsOfOperation( DerivationGraph( owl ), target );
-          
-          new_pos := PositionProperty( derivations_of_target, x -> IsIdenticalObj( x, d ) );
-          current_pos := PositionProperty( derivations_of_target, x -> IsIdenticalObj( x, current_derivation ) );
-          
-          Assert( 0, new_pos <> fail );
-          Assert( 0, current_pos <> fail );
-          
-      fi;
-      
-      if new_weight < current_weight or (new_weight = current_weight and current_derivation <> fail and new_pos < current_pos) then
-        InstallDerivationForCategory( d, new_weight, CategoryOfOperationWeightList( owl ) );
-        if Contains( Q, target ) then
-          DecreaseKey( Q, target, new_weight );
-        else
-          Add( Q, target, new_weight );
-        fi;
-        owl!.operation_weights.( target ) := new_weight;
-        owl!.operation_derivations.( target ) := d;
-      fi;
+  local Q, derivations_to_install, node, new_weight, target, d;
+    
+    Q := StringMinHeap();
+    Add( Q, op_name, 0 );
+    
+    while not IsEmptyHeap( Q ) do
+        
+        node := ExtractMin( Q );
+        
+        op_name := node[ 1 ];
+        
+        for d in DerivationsUsingOperation( DerivationGraph( owl ), op_name ) do
+            
+            new_weight := TryToInstallDerivation( owl, d );
+            
+            if new_weight <> fail then
+                
+                target := TargetOperation( d );
+                
+                if Contains( Q, target ) then
+                    
+                    DecreaseKey( Q, target, new_weight );
+                    
+                else
+                    
+                    Add( Q, target, new_weight );
+                    
+                fi;
+                
+            fi;
+            
+        od;
+        
     od;
-  od;
+    
 end );  
 
 InstallMethod( Reevaluate,
                [ IsOperationWeightList ],
 function( owl )
-  local op_name;
-  for op_name in Operations( DerivationGraph( owl ) ) do
-    if CurrentOperationWeight( owl, op_name ) < infinity then
-      InstallDerivationsUsingOperation( owl, op_name );
-    fi;
-  od;
+  local new_weight, op_name, d;
+    
+    for op_name in Operations( DerivationGraph( owl ) ) do
+        
+        for d in DerivationsOfOperation( DerivationGraph( owl ), op_name ) do
+            
+            new_weight := TryToInstallDerivation( owl, d );
+            
+            if new_weight <> fail then
+                
+                InstallDerivationsUsingOperation( owl, TargetOperation( d ) );
+                
+            fi;
+            
+        od;
+        
+    od;
+    
 end );
 
 InstallMethod( Saturate,
@@ -677,9 +621,18 @@ end );
 InstallMethod( AddPrimitiveOperation,
                [ IsOperationWeightListRep, IsString, IsInt ],
 function( owl, op_name, weight )
-  owl!.operation_weights.( op_name ) := weight;
-  owl!.operation_derivations.( op_name ) := fail;
-  InstallDerivationsUsingOperation( owl, op_name );
+    
+    Info( DerivationInfo, 1, Concatenation( "install(",
+                                  String( weight ),
+                                  ") ",
+                                  op_name,
+                                  ": primitive installation\n" ) );
+    
+    owl!.operation_weights.( op_name ) := weight;
+    owl!.operation_derivations.( op_name ) := fail;
+    
+    InstallDerivationsUsingOperation( owl, op_name );
+    
 end );
 
 InstallMethod( PrintDerivationTree,
@@ -725,7 +678,7 @@ function( owl, op_name )
       return [];
     else
       return Concatenation( [ [ fail, DerivationWeight( d ) ] ],
-                            UsedOperationsWithMultiples( d ) );
+                            UsedOperationsWithMultiplesAndCategoryGetters( d ) );
     fi;
   end;
   PrintTree( [ op_name, fail ],
@@ -939,9 +892,7 @@ end );
 InstallGlobalFunction( DerivationsOfMethodByCategory,
   
   function( category, name )
-    local string, weight_list, current_weight, current_derivation,
-          currently_installed_funcs, to_delete, used_ops_with_multiples,
-          possible_derivations, category_filter, i;
+    local string, category_weight_list, current_weight, current_derivation, currently_installed_funcs, to_delete, weight_list, category_getter_string, possible_derivations, category_filter, weight, i, x;
     
     if IsFunction( name ) then
         string := NameFunction( name );
@@ -957,13 +908,13 @@ InstallGlobalFunction( DerivationsOfMethodByCategory,
         return;
     fi;
     
-    weight_list := category!.derivations_weight_list;
+    category_weight_list := category!.derivations_weight_list;
     
-    current_weight := CurrentOperationWeight( weight_list, string );
+    current_weight := CurrentOperationWeight( category_weight_list, string );
     
     if current_weight < infinity then
     
-        current_derivation := DerivationOfOperation( weight_list, string );
+        current_derivation := DerivationOfOperation( category_weight_list, string );
         
         Print( Name( category ), " can already compute ", TextAttr.b4, string, TextAttr.reset, " with weight " , String( current_weight ), ".\n" );
         
@@ -1000,17 +951,27 @@ InstallGlobalFunction( DerivationsOfMethodByCategory,
             
             Print( "It was derived by ", TextAttr.b3, DerivationName( current_derivation ), TextAttr.reset, " using \n" );
             
-            used_ops_with_multiples := UsedOperationsWithMultiples( current_derivation );
-            
-            for i in used_ops_with_multiples do
+            for x in UsedOperationsWithMultiplesAndCategoryGetters( current_derivation ) do
                 
-                Print( "* ", TextAttr.b2, i[ 1 ], TextAttr.reset, " (", i[ 2 ], "x)" );
-                Print( " installed with weight ", String( CurrentOperationWeight( weight_list, i[ 1 ] ) ) );
+                if x[3] = fail then
+                    
+                    weight_list := category_weight_list;
+                    category_getter_string := "";
+                    
+                else
+                    
+                    weight_list := x[3](category)!.derivations_weight_list;
+                    category_getter_string := Concatenation( " in category obtained by applying ", String( x[3] ) );
+                    
+                fi;
+                
+                Print( "* ", TextAttr.b2, x[1], TextAttr.reset, " (", x[2], "x)", category_getter_string );
+                Print( " installed with weight ", String( CurrentOperationWeight( weight_list, x[1] ) ) );
                 Print( "\n" );
                 
             od;
             
-            currently_installed_funcs := DerivationFunctionsWithExtraFilters( current_derivation );
+            currently_installed_funcs := [ Pair( DerivationFunction( current_derivation ), [ ] ) ];
             
         fi;
         
@@ -1063,14 +1024,26 @@ InstallGlobalFunction( DerivationsOfMethodByCategory,
             Print( TextAttr.b4, string, TextAttr.reset, " can be derived by\n" );
         fi;
         
-        used_ops_with_multiples := UsedOperationsWithMultiples( current_derivation );
-        
-        for i in used_ops_with_multiples do
+        for x in UsedOperationsWithMultiplesAndCategoryGetters( current_derivation ) do
             
-            if CurrentOperationWeight( weight_list, i[ 1 ] ) < infinity then
-                Print( "* ", TextAttr.b2, i[ 1 ], TextAttr.reset, " (", i[ 2 ], "x)", ", (already installed with weight ", String( CurrentOperationWeight( weight_list, i[ 1 ] ) ),")" );
+            if x[3] = fail then
+                
+                weight_list := category_weight_list;
+                category_getter_string := "";
+                
             else
-                Print( "* ", TextAttr.b1, i[ 1 ], TextAttr.reset, " (", i[ 2 ], "x)" );
+                
+                weight_list := x[3](category)!.derivations_weight_list;
+                category_getter_string := Concatenation( " in category obtained by applying ", String( x[3] ) );
+                
+            fi;
+            
+            weight := CurrentOperationWeight( weight_list, x[1] );
+            
+            if weight < infinity then
+                Print( "* ", TextAttr.b2, x[1], TextAttr.reset, " (", x[2], "x)", category_getter_string, ", (already installed with weight ", weight,")" );
+            else
+                Print( "* ", TextAttr.b1, x[1], TextAttr.reset, " (", x[2], "x)", category_getter_string );
             fi;
             
             Print( "\n" );
@@ -1108,7 +1081,7 @@ InstallGlobalFunction( ListPrimitivelyInstalledOperationsOfCategory,
         Error( "input must be category or cell" );
     fi;
     
-    names := AsSortedList( RecNames( cat!.primitive_operations ) );
+    names := Filtered( RecNames( cat!.primitive_operations ), x -> cat!.primitive_operations.(x) );
     
     if filter <> fail then
         names := Filtered( names, i -> PositionSublist( i, filter ) <> fail );
@@ -1159,47 +1132,3 @@ InstallGlobalFunction( ListInstalledOperationsOfCategory,
     return list_of_methods;
     
 end );
-      
-
-InstallGlobalFunction( CAP_INTERNAL_DERIVATION_SANITY_CHECK,
-                       
-  function( graph, derivation )
-    local possible_names, all_operations, function_object, function_string,
-          string_stream, i;
-    
-    possible_names := UsedOperations( derivation );
-    
-    all_operations := Operations( graph );
-    
-    for function_object in DerivationFunctionsWithExtraFilters( derivation ) do
-        
-        function_object := function_object[ 1 ];
-        
-        function_string := "";
-        
-        string_stream := OutputTextString( function_string, false );
-        
-        SetPrintFormattingStatus( string_stream, false );
-        
-        PrintTo( string_stream, function_object );
-        
-        CloseStream( string_stream );
-        
-        RemoveCharacters( function_string, "()[];," );
-        
-        NormalizeWhitespace( function_string );
-        
-        function_string := SplitString( function_string, " " );
-        
-        for i in function_string do
-            
-            if i in all_operations and not i in possible_names then
-                Error( Concatenation( "derivation with description\n", String( derivation ), "\n uses ", i, ",\n which is not part of its condition" ) );
-            fi;
-            
-        od;
-        
-    od;
-    
-end );
-

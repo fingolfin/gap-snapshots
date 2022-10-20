@@ -1,5 +1,21 @@
 This file describes changes in the recog package.
 
+1.4.2 (2022-09-27)
+  - Fix more compatibility issues with matgrp <= 0.70
+  - Rename `order` to `OrderFunc` to avoid clashes with existing code
+  - Speed up default test suite
+
+1.4.1 (2022-09-26)
+  - Fix compatibility with matgrp <= 0.70
+
+1.4.0 (2022-09-26)
+  - A huge number of changes (over 388 commits since the previous release)
+    were made, with many bug fixes and improvements, but also renamed APIs
+    and more. Unfortunately this may break some code using recog. If this
+    happens to, you, please let us know about it via our issue tracker
+    <https://github.com/gap-packages/recog/issues> or by sending and email
+    to Max Horn <horn@mathematik.uni-kl.de>.
+
 1.3.2 (2019-04-15)
   - Many janitorial changes
 
@@ -42,16 +58,16 @@ This file describes changes in the recog package.
   - Detect if DoHintedLowIndex runs into an infinite loop
   - Add various source code comments
   - Move FindKernelLowerLeftPGroup from recogbase to recog
-  - Move website to http://gap-packages.github.io/recog/
+  - Move website to https://gap-packages.github.io/recog/
   - Update documentation
   - Splits some large source files into multiple
   - Remove lots of unused code and files
   - Remove GAP 4.4 compatibility code
 
 1.2.3 (2014-09-24)
-  - Update Max Neunhoeffer's contact data
+  - Update Max Neunhöffer's contact data
   - Use AutoDoc to generate title page of the manual from PackageInfo.g
-  - Remove Akos' contact data
+  - Remove Ákos' contact data
   - Add Max Horn as a maintainer
 
 1.2.2 (2014-04-04)

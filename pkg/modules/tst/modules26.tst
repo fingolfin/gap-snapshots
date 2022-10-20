@@ -34,9 +34,9 @@ gap> iota := KernelEmb( phi );
 <A monomorphism of left modules>
 gap> DefectOfExactness( iota, phi );
 <A zero left module>
-gap> hom_iota := Hom( iota );	## a shorthand for Hom( iota, ZZ );
+gap> hom_iota := Hom( iota ); ## a shorthand for Hom( iota, ZZ );
 <A homomorphism of right modules>
-gap> hom_phi := Hom( phi );	## a shorthand for Hom( phi, ZZ );
+gap> hom_phi := Hom( phi ); ## a shorthand for Hom( phi, ZZ );
 <A homomorphism of right modules>
 gap> DefectOfExactness( hom_iota, hom_phi );
 <A cyclic right module on a cyclic generator satisfying yet unknown relations>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Signed_Permutations">
+<Heading>Signed Permutations</Heading>
+
+ We provide <E>signed permutations</E>, that is permutations
+ that can additionally change the sign of their result.
+<P/>
+ Assume <M>n \in \mathbb{N}</M>, then a signed permutation on <M>n</M> points
+ is a permutation <M>\pi</M> on <M>\{ 1 \ldots n \}</M> together with signs
+ <M>sgn : \{ 1 .. n \} \rightarrow \{-1,1\}</M>.
+ A signed permutation on <M>n</M> points acts on the set
+ <M>\{ -n \ldots 1, 1 \ldots n \}</M> by
+ <M> \omega ^ { (\pi, sgn) } = sgn(\omega)\cdot sgn(|\omega|^\pi) \cdot (|\omega|^\pi) </M>.
+<P/>
+ We provide two representations of signed permutations, one as a list of images
+ <Ref Filt="IsSignedPermListRep" Label="for IsSignedPerm and IsPositionalObjectRep"/> and one formed as pair of a permutation and
+ a sign map <Ref Filt="IsSignedPermRep" Label="for IsSignedPerm and IsPositionalObjectRep"/>. Our benchmarks indicate that a list of
+ images is the better representation, and hence this is the default.
+<P/>
+ To get started with signed permutations consider the following example
+<Example><![CDATA[
+gap> s := SignedPerm([2,-1]);
+<signed permutation in list rep>
+gap> 1 ^ s;
+2
+gap> 2 ^ s;
+-1
+gap> OnPoints(2, s);
+-1
+]]></Example>
+
+
+<P/>
+ One can form groups out of signed permutations
+<P/>
+<Example><![CDATA[
+gap> r := SignedPerm([-1,3,-2,4]);; t := SignedPerm([3,1,4,2]);;
+gap> G := Group(r,t);
+<group with 2 generators>
+gap> Size(G);
+32
+gap> Orbit(G, 1, OnPoints);
+[ 1, -1, 3, -3, -2, 4, 2, -4 ]
+gap> Stabilizer(G, 1, OnPoints);
+<group of size 4 with 9 generators>
+]]></Example>
+
+
+<P/>
+ Note that currently the package does not make an effort to exploit the special
+ structure of signed permutation groups as permutation groups.
+<P/>
+<Section Label="Chapter_Signed_Permutations_Section_Different_Representations">
+<Heading>Different Representations</Heading>
+
+<P/>
+ To create signed permutations in the different representations, we provide a constructor.
+<Example><![CDATA[
+gap> r := NewSignedPerm(IsSignedPermRep, [-1,3,-2,4]);;
+gap> t := SignedPerm(IsSignedPermRep, [3,1,4,2]);;
+gap> G := Group(r,t);
+<group with 2 generators>
+gap> Size(G);
+32
+gap> r := NewSignedPerm(IsSignedPermListRep, [-1,3,-2,4]);;
+gap> t := SignedPerm(IsSignedPermListRep, [3,1,4,2]);;
+gap> G := Group(r,t);
+<group with 2 generators>
+gap> Size(G);
+32
+]]></Example>
+
+
+<P/>
+</Section>
+
+
+<Section Label="Chapter_Signed_Permutations_Section_Low-Level_Descriptions">
+<Heading>Low-Level Descriptions</Heading>
+
+<ManSection>
+  <Filt Arg="arg" Name="IsSignedPerm" Label="for IsAssociativeElement andIsExtLElement andIsExtRElement andIsMultiplicativeElement andIsMultiplicativeElementWithOne andIsMultiplicativeElementWithInverse andIsFiniteOrderElement"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+ Category of signed permutations
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="perm" Name="ListSignedPerm" Label="for IsSignedPerm"/>
+ <Description>
+ Convert a signed permutation into a list of images, equivalent
+ to List([1..LargestMovedPoint(s)], x -> x^s);
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="arg1,arg2" Name="ListSignedPerm" Label="for IsSignedPerm, IsPosInt"/>
+ <Description>
+ Convert a signed permutation to a list of images of length <A>len</A>.
+ Arguments perm, len
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg" Name="SignedPerm" />
+ <Description>
+ Given a list of signed images create a signed permutation object
+ in <Ref Filt="IsSignedPermListRep" Label="for IsSignedPerm and IsPositionalObjectRep"/>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Constr Arg="arg1,arg2" Name="NewSignedPerm" Label="for IsSignedPerm, IsList"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Constr Arg="arg1,arg2,arg3" Name="NewSignedPerm" Label="for IsSignedPerm, IsPerm, IsList"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsSignedPermRep" Label="for IsSignedPerm and IsPositionalObjectRep"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+ Representation of signed permutations as a permutation and a vector of signs.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsSignedPermListRep" Label="for IsSignedPerm and IsPositionalObjectRep"/>
+ <Returns><K>true</K> or <K>false</K>
+</Returns>
+ <Description>
+ Representation of signed permutations as a list of signed images
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg" Name="OnPosPoints" />
+ <Description>
+ Only act as a permutation on <M>\{ 1\ldots n\}</M>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="LargestMovedPoint" Label="for IsSignedPerm"/>
+ <Description>
+ The largest point that is moved by the signed permutation, where moving includes
+ changing the sign.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg" Name="RandomSignedPermList" />
+ <Description>
+ Create a random list of images that can be
+ used to create a signed permutation.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg" Name="RandomSignedPerm" />
+ <Description>
+ Create a random signed permutation
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+</Chapter>
+

@@ -1,11 +1,16 @@
 #############################################################################
 ##
-##  methsel.gi            recog package
-##                                                        Max Neunhoeffer
-##                                                            Ákos Seress
+##  This file is part of recog, a package for the GAP computer algebra system
+##  which provides a collection of methods for the constructive recognition
+##  of groups.
 ##
-##  Copyright 2005-2008 by the authors.
-##  This file is free software, see license information at the end.
+##  This files's authors include Max Neunhöffer, Ákos Seress.
+##
+##  Copyright of recog belongs to its developers whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-3.0-or-later
+##
 ##
 ##  Our own method selection.
 ##
@@ -15,43 +20,25 @@
 # Add a method to a database with "AddMethod" and call a method from a
 # database with "CallMethods".
 #
-InstallGlobalFunction( "AddMethod", function(arg)
-  # First argument is the method database, second is the method itself,
-  # third is the rank, fourth is the stamp. An optional 5th argument is
-  # the comment.
-  local comment,db,i,l,mr,p;
-  if Length(arg) < 4 or Length(arg) > 5 then
-      Error("Usage: AddMethod(database,method,rank,stamp [,comment] );");
-  fi;
-  db := arg[1];
-  mr := rec(method := arg[2],rank := arg[3],stamp := arg[4]);
-  if Length(arg) = 5 then
-      mr.comment := arg[5];
-  else
-      mr.comment := "";
-  fi;
-  l := Length(db);
-  p := First([1..l],i->db[i].rank <= mr.rank);
-  if p = fail then
-      Add(db,mr);
-  else
-      for i in [l,l-1..p] do
-          db[i+1] := db[i];
-      od;
-      db[i] := mr;
-  fi;
+InstallGlobalFunction("AddMethod", function(methodDb, method, rank, extra...)
+    local pos, name;
+    if not IsRecogMethod(method) then
+        if Length(extra) = 2 then
+            # HACK: workaround for matgrp package <= 0.70 which accesses the old
+            # API; a fix to use the new API is already in the matgrp repository
+            # but has not yet been released.
+            method := RecogMethod(extra[1], extra[2], method);
+        else
+            ErrorNoReturn("<method> must be a RecogMethod");
+        fi;
+    elif Length(extra) > 0 then
+        Error("Error, Function: number of arguments must be 3 (not ", 3 + Length(extra), ")");
+    fi;
+    pos := PositionSortedBy(methodDb, -rank, m -> -m.rank);
+    Add(methodDb, rec(method := method, rank := rank), pos);
 end);
 
 
-#
-# A method is described by a record with the following components:
-#  method     : the function itself
-#  rank       : an integer rank
-#  stamp      : a string describing the method uniquely
-#  comment    : an optional comment to describe the method for humans
-#
-# A database of methods is just a list of such records.
-#
 # Data for the method selection process is collected in another record
 # with the following components:
 #   inapplicableMethods  : a record where each method that is never applicable
@@ -63,21 +50,15 @@ end);
 #   result        : either fail or true
 #
 
-InstallGlobalFunction( "CallMethods", function(arg)
+InstallGlobalFunction( "CallMethods", function(db, tolerancelimit, methargs...)
     # First argument is a method database, i.e. list of records
     #   describing recognition methods.
     # Second argument is a number, the tolerance limit.
     # All other arguments are handed through to the methods.
 
-    local i, methargs, ms, result, tolerance, tolerancelimit, db;
+    local i, ms, result, tolerance;
 
-    if Length(arg) < 2 then
-        Error("CallMethods needs at least two arguments");
-    fi;
-    db := arg[1];
     ms := rec(failedMethods := rec(), inapplicableMethods := rec());
-    tolerancelimit := arg[2];
-    methargs := arg{[3..Length(arg)]};
 
     # Initialize record:
     tolerance := 0;    # reuse methods that failed that many times
@@ -85,32 +66,33 @@ InstallGlobalFunction( "CallMethods", function(arg)
         i := 1;
         while i <= Length(db) do
             # skip methods which are known to be inapplicableMethods
-            if IsBound(ms.inapplicableMethods.(db[i].stamp)) then
+            if IsBound(ms.inapplicableMethods.(Stamp(db[i].method))) then
                 Info(InfoMethSel, 4, "Skipping inapplicableMethods rank ", db[i].rank,
-                     " method \"", db[i].stamp, "\".");
+                     " method \"", Stamp(db[i].method), "\".");
                 i := i + 1;
                 continue;
             fi;
 
-            # skip methods which signalled a temporary failure at a higher tolerance level
-            if IsBound(ms.failedMethods.(db[i].stamp)) and
-                ms.failedMethods.(db[i].stamp) > tolerance then
+            # skip methods which signalled a temporary failure at least
+            # (tolerance + 1) times.
+            if IsBound(ms.failedMethods.(Stamp(db[i].method))) and
+                ms.failedMethods.(Stamp(db[i].method)) > tolerance then
                 Info(InfoMethSel, 4, "Skipping rank ", db[i].rank,
-                     " method \"", db[i].stamp, "\".");
+                     " method \"", Stamp(db[i].method), "\".");
                 i := i + 1;
                 continue;
             fi;
 
             # apply the method
             Info(InfoMethSel, 3, "Calling rank ", db[i].rank,
-                     " method \"", db[i].stamp, "\"...");
-            result := CallFuncList(db[i].method,methargs);
+                     " method \"", Stamp(db[i].method), "\"...");
+            result := CallRecogMethod(db[i].method, methargs);
 
             # evaluate the result
             if result = NeverApplicable then
                 Info(InfoMethSel, 3, "Finished rank ", db[i].rank,
-                     " method \"", db[i].stamp, "\": NeverApplicable.");
-                ms.inapplicableMethods.(db[i].stamp) := 1;
+                     " method \"", Stamp(db[i].method), "\": NeverApplicable.");
+                ms.inapplicableMethods.(Stamp(db[i].method)) := 1;
                 # method turned out to be inapplicable, but it may have computed
                 # and stored new information -> start all over again
                 # TODO: instead of guessing, add a way for methods to signal
@@ -119,12 +101,12 @@ InstallGlobalFunction( "CallMethods", function(arg)
 
             elif result = TemporaryFailure then
                 Info(InfoMethSel, 2, "Finished rank ", db[i].rank,
-                     " method \"", db[i].stamp, "\": TemporaryFailure.");
-                if IsBound(ms.failedMethods.(db[i].stamp)) then
-                    ms.failedMethods.(db[i].stamp) :=
-                        ms.failedMethods.(db[i].stamp) + 1;
+                     " method \"", Stamp(db[i].method), "\": TemporaryFailure.");
+                if IsBound(ms.failedMethods.(Stamp(db[i].method))) then
+                    ms.failedMethods.(Stamp(db[i].method)) :=
+                        ms.failedMethods.(Stamp(db[i].method)) + 1;
                 else
-                    ms.failedMethods.(db[i].stamp) := 1;
+                    ms.failedMethods.(Stamp(db[i].method)) := 1;
                 fi;
                 # method failed (for now), but it may have computed
                 # and stored new information -> start all over again
@@ -132,19 +114,19 @@ InstallGlobalFunction( "CallMethods", function(arg)
 
             elif result = NotEnoughInformation then
                 Info(InfoMethSel, 3, "Finished rank ", db[i].rank,
-                     " method \"", db[i].stamp, "\": not currently applicable.");
+                     " method \"", Stamp(db[i].method), "\": not currently applicable.");
                 i := i + 1;   # just try the next one
 
             elif result = Success then    # we have a result
                 Info(InfoMethSel, 2, "Finished rank ", db[i].rank,
-                     " method \"", db[i].stamp, "\": success.");
-                ms.successMethod := db[i].stamp;
+                     " method \"", Stamp(db[i].method), "\": success.");
+                ms.successMethod := Stamp(db[i].method);
                 ms.result := result;
                 ms.tolerance := tolerance;
                 return ms;
 
             else
-                Error("Recognition method return invalid result: ", result);
+                ErrorNoReturn("Recognition method return invalid result: ", result);
             fi;
         od;
         # Nothing worked, increase tolerance:
@@ -157,18 +139,3 @@ InstallGlobalFunction( "CallMethods", function(arg)
     ms.tolerance := tolerance;
     return ms;
 end);
-
-##
-##  This program is free software: you can redistribute it and/or modify
-##  it under the terms of the GNU General Public License as published by
-##  the Free Software Foundation, either version 3 of the License, or
-##  (at your option) any later version.
-##
-##  This program is distributed in the hope that it will be useful,
-##  but WITHOUT ANY WARRANTY; without even the implied warranty of
-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-##  GNU General Public License for more details.
-##
-##  You should have received a copy of the GNU General Public License
-##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-##

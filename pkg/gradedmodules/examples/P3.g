@@ -1,4 +1,4 @@
-LoadPackage( "GradedRingForHomalg" );
+LoadPackage( "GradedRingForHomalg", false );
 
 R := HomalgFieldOfRationalsInDefaultCAS( ) * "x0..x3";
 
@@ -6,7 +6,7 @@ S := GradedRing( R );
 
 A := KoszulDualRing( S, "e0..e3" );
 
-LoadPackage( "GradedModules" );
+LoadPackage( "GradedModules", false );
 
 ## the residue class field (i.e. S modulo the maximal homogeneous ideal)
 k := HomalgMatrix( Indeterminates( S ), Length( Indeterminates( S ) ), 1, S );
@@ -39,7 +39,7 @@ betti := BettiTable( tate );
 Assert( 0,
         MatrixOfDiagram( betti ) =
         [ [ 189, 120, 70, 36, 15, 4, 0, 0, 0, 0, 0 ],
-	  [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+          [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
           [ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 ],
           [ 0, 0, 0, 0, 0, 0, 0, 6, 20, 45, 84 ] ]
         );

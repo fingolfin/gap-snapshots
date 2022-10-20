@@ -114,614 +114,614 @@ al (iso)morphisms\033[133X\033[101X", "2.6", [ 2, 6, 0 ], 179, 13,
       54, 35, "sweep", "X8325B23C86E16E76" ], 
   [ "Index", "ind", [ "Ind", 0, 0 ], 1, 37, "index", "X83A0356F839C696F" ], 
   [ 
-      "\033[2XIsGeneralizedMorphismCategoryObject\033[102X for iscapcategoryobjec\
+      "\033[2XIsGeneralizedMorphismCategoryObject\033[102X for IsCapCategoryObjec\
 t", "1.1-1", [ 1, 1, 1 ], 10, 4, 
       "isgeneralizedmorphismcategoryobject for iscapcategoryobject", 
       "X7BEE0C4D8324D332" ], 
-  [ "\033[2XIsGeneralizedMorphism\033[102X for iscapcategorymorphism", 
+  [ "\033[2XIsGeneralizedMorphism\033[102X for IsCapCategoryMorphism", 
       "1.1-2", [ 1, 1, 2 ], 17, 4, 
       "isgeneralizedmorphism for iscapcategorymorphism", "X805BE326803873AC" ]
     , 
   [ 
-      "\033[2XUnderlyingHonestObject\033[102X for isgeneralizedmorphismcategoryob\
+      "\033[2XUnderlyingHonestObject\033[102X for IsGeneralizedMorphismCategoryOb\
 ject", "1.2-1", [ 1, 2, 1 ], 27, 4, 
       "underlyinghonestobject for isgeneralizedmorphismcategoryobject", 
       "X78C35DEB7A844B1D" ], 
-  [ "\033[2XDomainEmbedding\033[102X for isgeneralizedmorphism", "1.2-2", 
+  [ "\033[2XDomainEmbedding\033[102X for IsGeneralizedMorphism", "1.2-2", 
       [ 1, 2, 2 ], 35, 4, "domainembedding for isgeneralizedmorphism", 
       "X7E72DC48842AFA58" ], 
-  [ "\033[2XGeneralizedImageEmbedding\033[102X for isgeneralizedmorphism", 
+  [ "\033[2XGeneralizedImageEmbedding\033[102X for IsGeneralizedMorphism", 
       "1.2-3", [ 1, 2, 3 ], 43, 5, 
       "generalizedimageembedding for isgeneralizedmorphism", 
       "X86B43E60846202CA" ], 
-  [ "\033[2XDefectEmbedding\033[102X for isgeneralizedmorphism", "1.2-4", 
+  [ "\033[2XDefectEmbedding\033[102X for IsGeneralizedMorphism", "1.2-4", 
       [ 1, 2, 4 ], 51, 5, "defectembedding for isgeneralizedmorphism", 
       "X7EF102897D38A0CE" ], 
-  [ "\033[2XGeneralizedKernelEmbedding\033[102X for isgeneralizedmorphism", 
+  [ "\033[2XGeneralizedKernelEmbedding\033[102X for IsGeneralizedMorphism", 
       "1.2-5", [ 1, 2, 5 ], 59, 5, 
       "generalizedkernelembedding for isgeneralizedmorphism", 
       "X834716A87EADE83E" ], 
-  [ "\033[2XCodomainProjection\033[102X for isgeneralizedmorphism", "1.2-6", 
+  [ "\033[2XCodomainProjection\033[102X for IsGeneralizedMorphism", "1.2-6", 
       [ 1, 2, 6 ], 67, 5, "codomainprojection for isgeneralizedmorphism", 
       "X867950C684A50A6E" ], 
-  [ "\033[2XGeneralizedCokernelProjection\033[102X for isgeneralizedmorphism",
+  [ "\033[2XGeneralizedCokernelProjection\033[102X for IsGeneralizedMorphism",
       "1.2-7", [ 1, 2, 7 ], 75, 5, 
       "generalizedcokernelprojection for isgeneralizedmorphism", 
       "X80E5FD8C84054135" ], 
-  [ "\033[2XCodefectProjection\033[102X for isgeneralizedmorphism", "1.2-8", 
+  [ "\033[2XCodefectProjection\033[102X for IsGeneralizedMorphism", "1.2-8", 
       [ 1, 2, 8 ], 83, 5, "codefectprojection for isgeneralizedmorphism", 
       "X7E323705780A7472" ], 
-  [ "\033[2XGeneralizedCoimageProjection\033[102X for isgeneralizedmorphism", 
+  [ "\033[2XGeneralizedCoimageProjection\033[102X for IsGeneralizedMorphism", 
       "1.2-9", [ 1, 2, 9 ], 91, 5, 
       "generalizedcoimageprojection for isgeneralizedmorphism", 
       "X7E0DAE747945216A" ], 
-  [ "\033[2XAssociatedMorphism\033[102X for isgeneralizedmorphism", "1.2-10", 
+  [ "\033[2XAssociatedMorphism\033[102X for IsGeneralizedMorphism", "1.2-10", 
       [ 1, 2, 10 ], 99, 6, "associatedmorphism for isgeneralizedmorphism", 
       "X8056D2E886060EB7" ], 
   [ 
-      "\033[2XDomainAssociatedMorphismCodomainTriple\033[102X for isgeneralizedmo\
+      "\033[2XDomainAssociatedMorphismCodomainTriple\033[102X for IsGeneralizedMo\
 rphism", "1.2-11", [ 1, 2, 11 ], 107, 6, 
       "domainassociatedmorphismcodomaintriple for isgeneralizedmorphism", 
       "X7CF4DA3478101045" ], 
-  [ "\033[2XHonestRepresentative\033[102X for isgeneralizedmorphism", 
+  [ "\033[2XHonestRepresentative\033[102X for IsGeneralizedMorphism", 
       "1.2-12", [ 1, 2, 12 ], 116, 6, 
       "honestrepresentative for isgeneralizedmorphism", "X8129D15C87A5642B" ],
-  [ "\033[2XGeneralizedInverse\033[102X for iscapcategorymorphism", "1.2-13", 
+  [ "\033[2XGeneralizedInverse\033[102X for IsCapCategoryMorphism", "1.2-13", 
       [ 1, 2, 13 ], 125, 6, "generalizedinverse for iscapcategorymorphism", 
       "X8180D14B85D8DDFD" ], 
-  [ "\033[2XIdempotentDefinedBySubobject\033[102X for iscapcategorymorphism", 
+  [ "\033[2XIdempotentDefinedBySubobject\033[102X for IsCapCategoryMorphism", 
       "1.2-14", [ 1, 2, 14 ], 133, 6, 
       "idempotentdefinedbysubobject for iscapcategorymorphism", 
       "X87BA1A897A3019B0" ], 
   [ 
-      "\033[2XIdempotentDefinedByFactorobject\033[102X for iscapcategorymorphism"
+      "\033[2XIdempotentDefinedByFactorobject\033[102X for IsCapCategoryMorphism"
         , "1.2-15", [ 1, 2, 15 ], 142, 6, 
       "idempotentdefinedbyfactorobject for iscapcategorymorphism", 
       "X7F3F851D7FD6BE60" ], 
-  [ "\033[2XUnderlyingHonestCategory\033[102X for iscapcategory", "1.2-16", 
+  [ "\033[2XUnderlyingHonestCategory\033[102X for IsCapCategory", "1.2-16", 
       [ 1, 2, 16 ], 151, 6, "underlyinghonestcategory for iscapcategory", 
       "X8387D5C484A26089" ], 
   [ 
-      "\033[2XGeneralizedMorphismFromFactorToSubobject\033[102X for iscapcategory\
-morphism, iscapcategorymorphism", "1.3-1", [ 1, 3, 1 ], 162, 7, 
+      "\033[2XGeneralizedMorphismFromFactorToSubobject\033[102X for IsCapCategory\
+Morphism, IsCapCategoryMorphism", "1.3-1", [ 1, 3, 1 ], 162, 7, 
       "generalizedmorphismfromfactortosubobject for iscapcategorymorphism isca\
 pcategorymorphism", "X82FE8F3E84432929" ], 
-  [ "\033[2XCommonRestriction\033[102X for islist", "1.3-2", [ 1, 3, 2 ], 
+  [ "\033[2XCommonRestriction\033[102X for IsList", "1.3-2", [ 1, 3, 2 ], 
       171, 7, "commonrestriction for islist", "X7B8E3FBC82429136" ], 
-  [ "\033[2XConcatenationProduct\033[102X for islist", "1.3-3", [ 1, 3, 3 ], 
+  [ "\033[2XConcatenationProduct\033[102X for IsList", "1.3-3", [ 1, 3, 3 ], 
       180, 7, "concatenationproduct for islist", "X83CB98F3783972DE" ], 
-  [ "\033[2XIsHonest\033[102X for isgeneralizedmorphism", "1.4-1", 
+  [ "\033[2XIsHonest\033[102X for IsGeneralizedMorphism", "1.4-1", 
       [ 1, 4, 1 ], 198, 7, "ishonest for isgeneralizedmorphism", 
       "X78B6216F7869E215" ], 
-  [ "\033[2XHasFullDomain\033[102X for isgeneralizedmorphism", "1.4-2", 
+  [ "\033[2XHasFullDomain\033[102X for IsGeneralizedMorphism", "1.4-2", 
       [ 1, 4, 2 ], 206, 7, "hasfulldomain for isgeneralizedmorphism", 
       "X806C879182E335B6" ], 
-  [ "\033[2XHasFullCodomain\033[102X for isgeneralizedmorphism", "1.4-3", 
+  [ "\033[2XHasFullCodomain\033[102X for IsGeneralizedMorphism", "1.4-3", 
       [ 1, 4, 3 ], 214, 7, "hasfullcodomain for isgeneralizedmorphism", 
       "X7A5A03577DF86A1F" ], 
-  [ "\033[2XIsSingleValued\033[102X for isgeneralizedmorphism", "1.4-4", 
+  [ "\033[2XIsSingleValued\033[102X for IsGeneralizedMorphism", "1.4-4", 
       [ 1, 4, 4 ], 222, 8, "issinglevalued for isgeneralizedmorphism", 
       "X7B025572785DACBA" ], 
-  [ "\033[2XIsTotal\033[102X for isgeneralizedmorphism", "1.4-5", 
+  [ "\033[2XIsTotal\033[102X for IsGeneralizedMorphism", "1.4-5", 
       [ 1, 4, 5 ], 230, 8, "istotal for isgeneralizedmorphism", 
       "X85E05A137F6C759A" ], 
-  [ "\033[2XGeneralizedMorphismCategory\033[102X for iscapcategory", "1.5-1", 
+  [ "\033[2XGeneralizedMorphismCategory\033[102X for IsCapCategory", "1.5-1", 
       [ 1, 5, 1 ], 245, 8, "generalizedmorphismcategory for iscapcategory", 
       "X8276ADE97D53B8F0" ], 
-  [ "\033[2XGeneralizedMorphismObject\033[102X for iscapcategoryobject", 
+  [ "\033[2XGeneralizedMorphismObject\033[102X for IsCapCategoryObject", 
       "1.5-2", [ 1, 5, 2 ], 254, 8, 
       "generalizedmorphismobject for iscapcategoryobject", 
       "X846BEA5784436575" ], 
-  [ "\033[2XAsGeneralizedMorphism\033[102X for iscapcategorymorphism", 
+  [ "\033[2XAsGeneralizedMorphism\033[102X for IsCapCategoryMorphism", 
       "1.5-3", [ 1, 5, 3 ], 262, 8, 
       "asgeneralizedmorphism for iscapcategorymorphism", "X7F89465C80D5CB2F" ]
     , 
   [ 
-      "\033[2XGeneralizedMorphism\033[102X for iscapcategorymorphism, iscapcatego\
-rymorphism", "1.5-4", [ 1, 5, 4 ], 270, 8, 
+      "\033[2XGeneralizedMorphism\033[102X for IsCapCategoryMorphism, IsCapCatego\
+ryMorphism", "1.5-4", [ 1, 5, 4 ], 270, 8, 
       "generalizedmorphism for iscapcategorymorphism iscapcategorymorphism", 
       "X7BCAEAEC78CE8093" ], 
   [ 
-      "\033[2XGeneralizedMorphism\033[102X for iscapcategorymorphism, iscapcatego\
-rymorphism, iscapcategorymorphism", "1.5-5", [ 1, 5, 5 ], 278, 9, 
+      "\033[2XGeneralizedMorphism\033[102X for IsCapCategoryMorphism, IsCapCatego\
+ryMorphism, IsCapCategoryMorphism", "1.5-5", [ 1, 5, 5 ], 278, 9, 
       "generalizedmorphism for iscapcategorymorphism iscapcategorymorphism isc\
 apcategorymorphism", "X87C5A2AC86D384BC" ], 
   [ 
-      "\033[2XGeneralizedMorphismWithRangeAid\033[102X for iscapcategorymorphism,\
- iscapcategorymorphism", "1.5-6", [ 1, 5, 6 ], 286, 9, 
+      "\033[2XGeneralizedMorphismWithRangeAid\033[102X for IsCapCategoryMorphism,\
+ IsCapCategoryMorphism", "1.5-6", [ 1, 5, 6 ], 286, 9, 
       "generalizedmorphismwithrangeaid for iscapcategorymorphism iscapcategory\
 morphism", "X7DC1AF448411DFCE" ], 
   [ 
-      "\033[2XGeneralizedMorphismWithSourceAid\033[102X for iscapcategorymorphism\
-, iscapcategorymorphism", "1.5-7", [ 1, 5, 7 ], 293, 9, 
+      "\033[2XGeneralizedMorphismWithSourceAid\033[102X for IsCapCategoryMorphism\
+, IsCapCategoryMorphism", "1.5-7", [ 1, 5, 7 ], 293, 9, 
       "generalizedmorphismwithsourceaid for iscapcategorymorphism iscapcategor\
 ymorphism", "X7D32834C7EA50379" ], 
   [ 
-      "\033[2XIsGeneralizedMorphismCategoryByCospansObject\033[102X for isgeneral\
-izedmorphismcategoryobject", "2.1-1", [ 2, 1, 1 ], 7, 10, 
+      "\033[2XIsGeneralizedMorphismCategoryByCospansObject\033[102X for IsGeneral\
+izedMorphismCategoryObject", "2.1-1", [ 2, 1, 1 ], 7, 10, 
       "isgeneralizedmorphismcategorybycospansobject for isgeneralizedmorphismc\
 ategoryobject", "X86C1877D7EC9F075" ], 
-  [ "\033[2XIsGeneralizedMorphismByCospan\033[102X for isgeneralizedmorphism",
+  [ "\033[2XIsGeneralizedMorphismByCospan\033[102X for IsGeneralizedMorphism",
       "2.1-2", [ 2, 1, 2 ], 14, 10, 
       "isgeneralizedmorphismbycospan for isgeneralizedmorphism", 
       "X82D8F9C38330F81E" ], 
   [ 
-      "\033[2XHasIdentityAsReversedArrow\033[102X for isgeneralizedmorphismbycosp\
+      "\033[2XHasIdentityAsReversedArrow\033[102X for IsGeneralizedMorphismByCosp\
 an", "2.2-1", [ 2, 2, 1 ], 25, 10, 
       "hasidentityasreversedarrow for isgeneralizedmorphismbycospan", 
       "X815D6FE986CC3F99" ], 
   [ 
-      "\033[2XUnderlyingHonestObject\033[102X for isgeneralizedmorphismcategoryby\
-cospansobject", "2.3-1", [ 2, 3, 1 ], 37, 10, 
+      "\033[2XUnderlyingHonestObject\033[102X for IsGeneralizedMorphismCategoryBy\
+CospansObject", "2.3-1", [ 2, 3, 1 ], 37, 10, 
       "underlyinghonestobject for isgeneralizedmorphismcategorybycospansobject\
 ", "X7D7E0AB87D8C6BE4" ], 
-  [ "\033[2XArrow\033[102X for isgeneralizedmorphismbycospan", "2.3-2", 
+  [ "\033[2XArrow\033[102X for IsGeneralizedMorphismByCospan", "2.3-2", 
       [ 2, 3, 2 ], 45, 11, "arrow for isgeneralizedmorphismbycospan", 
       "X7863825F85197D30" ], 
-  [ "\033[2XReversedArrow\033[102X for isgeneralizedmorphismbycospan", 
+  [ "\033[2XReversedArrow\033[102X for IsGeneralizedMorphismByCospan", 
       "2.3-3", [ 2, 3, 3 ], 53, 11, 
       "reversedarrow for isgeneralizedmorphismbycospan", "X871D3BBC7E6B544B" ]
     , 
-  [ "\033[2XNormalizedCospanTuple\033[102X for isgeneralizedmorphismbycospan",
+  [ "\033[2XNormalizedCospanTuple\033[102X for IsGeneralizedMorphismByCospan",
       "2.3-4", [ 2, 3, 4 ], 61, 11, 
       "normalizedcospantuple for isgeneralizedmorphismbycospan", 
       "X7DCA5A8278F4C569" ], 
-  [ "\033[2XPseudoInverse\033[102X for isgeneralizedmorphismbycospan", 
+  [ "\033[2XPseudoInverse\033[102X for IsGeneralizedMorphismByCospan", 
       "2.3-5", [ 2, 3, 5 ], 69, 11, 
       "pseudoinverse for isgeneralizedmorphismbycospan", "X7F4AC0FE847140A4" ]
     , 
-  [ "\033[2XGeneralizedInverseByCospan\033[102X for iscapcategorymorphism", 
+  [ "\033[2XGeneralizedInverseByCospan\033[102X for IsCapCategoryMorphism", 
       "2.3-6", [ 2, 3, 6 ], 77, 11, 
       "generalizedinversebycospan for iscapcategorymorphism", 
       "X87E4921884F9F1FF" ], 
   [ 
-      "\033[2XIdempotentDefinedBySubobjectByCospan\033[102X for iscapcategorymorp\
+      "\033[2XIdempotentDefinedBySubobjectByCospan\033[102X for IsCapCategoryMorp\
 hism", "2.3-7", [ 2, 3, 7 ], 85, 11, 
       "idempotentdefinedbysubobjectbycospan for iscapcategorymorphism", 
       "X7CFE9A12793AF805" ], 
   [ 
-      "\033[2XIdempotentDefinedByFactorobjectByCospan\033[102X for iscapcategorym\
+      "\033[2XIdempotentDefinedByFactorobjectByCospan\033[102X for IsCapCategoryM\
 orphism", "2.3-8", [ 2, 3, 8 ], 94, 11, 
       "idempotentdefinedbyfactorobjectbycospan for iscapcategorymorphism", 
       "X8330AB9480BC933A" ], 
-  [ "\033[2XNormalizedCospan\033[102X for isgeneralizedmorphismbycospan", 
+  [ "\033[2XNormalizedCospan\033[102X for IsGeneralizedMorphismByCospan", 
       "2.3-9", [ 2, 3, 9 ], 103, 12, 
       "normalizedcospan for isgeneralizedmorphismbycospan", 
       "X7B636E0D7A9FA235" ], 
   [ 
-      "\033[2XGeneralizedMorphismFromFactorToSubobjectByCospan\033[102X for iscap\
-categorymorphism, iscapcategorymorphism", "2.4-1", [ 2, 4, 1 ], 114, 12, 
+      "\033[2XGeneralizedMorphismFromFactorToSubobjectByCospan\033[102X for IsCap\
+CategoryMorphism, IsCapCategoryMorphism", "2.4-1", [ 2, 4, 1 ], 114, 12, 
       "generalizedmorphismfromfactortosubobjectbycospan for iscapcategorymorph\
 ism iscapcategorymorphism", "X7988FD538374DC5C" ], 
   [ 
-      "\033[2XGeneralizedMorphismByCospan\033[102X for iscapcategorymorphism, isc\
-apcategorymorphism", "2.5-1", [ 2, 5, 1 ], 126, 12, 
+      "\033[2XGeneralizedMorphismByCospan\033[102X for IsCapCategoryMorphism, IsC\
+apCategoryMorphism", "2.5-1", [ 2, 5, 1 ], 126, 12, 
       "generalizedmorphismbycospan for iscapcategorymorphism iscapcategorymorp\
 hism", "X8313697F833CA064" ], 
   [ 
-      "\033[2XGeneralizedMorphismByCospan\033[102X for iscapcategorymorphism, isc\
-apcategorymorphism, iscapcategorymorphism", "2.5-2", [ 2, 5, 2 ], 135, 12, 
+      "\033[2XGeneralizedMorphismByCospan\033[102X for IsCapCategoryMorphism, IsC\
+apCategoryMorphism, IsCapCategoryMorphism", "2.5-2", [ 2, 5, 2 ], 135, 12, 
       "generalizedmorphismbycospan for iscapcategorymorphism iscapcategorymorp\
 hism iscapcategorymorphism", "X865028F47CB5A9FA" ], 
   [ 
-      "\033[2XGeneralizedMorphismByCospanWithSourceAid\033[102X for iscapcategory\
-morphism, iscapcategorymorphism", "2.5-3", [ 2, 5, 3 ], 145, 12, 
+      "\033[2XGeneralizedMorphismByCospanWithSourceAid\033[102X for IsCapCategory\
+Morphism, IsCapCategoryMorphism", "2.5-3", [ 2, 5, 3 ], 145, 12, 
       "generalizedmorphismbycospanwithsourceaid for iscapcategorymorphism isca\
 pcategorymorphism", "X7B744FE28475F25B" ], 
-  [ "\033[2XAsGeneralizedMorphismByCospan\033[102X for iscapcategorymorphism",
+  [ "\033[2XAsGeneralizedMorphismByCospan\033[102X for IsCapCategoryMorphism",
       "2.5-4", [ 2, 5, 4 ], 154, 12, 
       "asgeneralizedmorphismbycospan for iscapcategorymorphism", 
       "X79F31F9E80A5BFAD" ], 
-  [ "\033[2XGeneralizedMorphismCategoryByCospans\033[102X for iscapcategory", 
+  [ "\033[2XGeneralizedMorphismCategoryByCospans\033[102X for IsCapCategory", 
       "2.5-5", [ 2, 5, 5 ], 162, 13, 
       "generalizedmorphismcategorybycospans for iscapcategory", 
       "X879C3A4F82EC9C13" ], 
   [ 
-      "\033[2XGeneralizedMorphismByCospansObject\033[102X for iscapcategoryobject\
+      "\033[2XGeneralizedMorphismByCospansObject\033[102X for IsCapCategoryObject\
 ", "2.5-6", [ 2, 5, 6 ], 170, 13, 
       "generalizedmorphismbycospansobject for iscapcategoryobject", 
       "X81ADB9C17D822C05" ], 
-  [ "\033[2XAsGeneralizedMorphismByCospan\033[102X for iscapfunctor, isstring"
+  [ "\033[2XAsGeneralizedMorphismByCospan\033[102X for IsCapFunctor, IsString"
         , "2.6-1", [ 2, 6, 1 ], 182, 13, 
       "asgeneralizedmorphismbycospan for iscapfunctor isstring", 
       "X7A094900868E02F1" ], 
   [ 
-      "\033[2XIsGeneralizedMorphismCategoryBySpansObject\033[102X for isgeneraliz\
-edmorphismcategoryobject", "3.1-1", [ 3, 1, 1 ], 7, 14, 
+      "\033[2XIsGeneralizedMorphismCategoryBySpansObject\033[102X for IsGeneraliz\
+edMorphismCategoryObject", "3.1-1", [ 3, 1, 1 ], 7, 14, 
       "isgeneralizedmorphismcategorybyspansobject for isgeneralizedmorphismcat\
 egoryobject", "X78F2B8E882ECF61E" ], 
-  [ "\033[2XIsGeneralizedMorphismBySpan\033[102X for isgeneralizedmorphism", 
+  [ "\033[2XIsGeneralizedMorphismBySpan\033[102X for IsGeneralizedMorphism", 
       "3.1-2", [ 3, 1, 2 ], 14, 14, 
       "isgeneralizedmorphismbyspan for isgeneralizedmorphism", 
       "X7A5BDCEE78549DFB" ], 
   [ 
-      "\033[2XHasIdentityAsReversedArrow\033[102X for isgeneralizedmorphismbyspan\
+      "\033[2XHasIdentityAsReversedArrow\033[102X for IsGeneralizedMorphismBySpan\
 ", "3.2-1", [ 3, 2, 1 ], 24, 14, 
       "hasidentityasreversedarrow for isgeneralizedmorphismbyspan", 
       "X7A058F5C7F7116DB" ], 
   [ 
-      "\033[2XUnderlyingHonestObject\033[102X for isgeneralizedmorphismcategoryby\
-spansobject", "3.3-1", [ 3, 3, 1 ], 36, 14, 
+      "\033[2XUnderlyingHonestObject\033[102X for IsGeneralizedMorphismCategoryBy\
+SpansObject", "3.3-1", [ 3, 3, 1 ], 36, 14, 
       "underlyinghonestobject for isgeneralizedmorphismcategorybyspansobject",
       "X7BDCF7FD7EAE01C3" ], 
-  [ "\033[2XArrow\033[102X for isgeneralizedmorphismbyspan", "3.3-2", 
+  [ "\033[2XArrow\033[102X for IsGeneralizedMorphismBySpan", "3.3-2", 
       [ 3, 3, 2 ], 44, 15, "arrow for isgeneralizedmorphismbyspan", 
       "X83C847FC86AB508B" ], 
-  [ "\033[2XReversedArrow\033[102X for isgeneralizedmorphismbyspan", "3.3-3", 
+  [ "\033[2XReversedArrow\033[102X for IsGeneralizedMorphismBySpan", "3.3-3", 
       [ 3, 3, 3 ], 52, 15, "reversedarrow for isgeneralizedmorphismbyspan", 
       "X826CC0B57D6F7F3B" ], 
-  [ "\033[2XNormalizedSpanTuple\033[102X for isgeneralizedmorphismbyspan", 
+  [ "\033[2XNormalizedSpanTuple\033[102X for IsGeneralizedMorphismBySpan", 
       "3.3-4", [ 3, 3, 4 ], 60, 15, 
       "normalizedspantuple for isgeneralizedmorphismbyspan", 
       "X8082EEE27FB449E5" ], 
-  [ "\033[2XPseudoInverse\033[102X for isgeneralizedmorphismbyspan", "3.3-5", 
+  [ "\033[2XPseudoInverse\033[102X for IsGeneralizedMorphismBySpan", "3.3-5", 
       [ 3, 3, 5 ], 68, 15, "pseudoinverse for isgeneralizedmorphismbyspan", 
       "X878EE24487756BD4" ], 
-  [ "\033[2XGeneralizedInverseBySpan\033[102X for iscapcategorymorphism", 
+  [ "\033[2XGeneralizedInverseBySpan\033[102X for IsCapCategoryMorphism", 
       "3.3-6", [ 3, 3, 6 ], 76, 15, 
       "generalizedinversebyspan for iscapcategorymorphism", 
       "X800786037C19DEF5" ], 
   [ 
-      "\033[2XIdempotentDefinedBySubobjectBySpan\033[102X for iscapcategorymorphi\
+      "\033[2XIdempotentDefinedBySubobjectBySpan\033[102X for IsCapCategoryMorphi\
 sm", "3.3-7", [ 3, 3, 7 ], 84, 15, 
       "idempotentdefinedbysubobjectbyspan for iscapcategorymorphism", 
       "X7B8C00217DD3A64C" ], 
   [ 
-      "\033[2XIdempotentDefinedByFactorobjectBySpan\033[102X for iscapcategorymor\
+      "\033[2XIdempotentDefinedByFactorobjectBySpan\033[102X for IsCapCategoryMor\
 phism", "3.3-8", [ 3, 3, 8 ], 93, 15, 
       "idempotentdefinedbyfactorobjectbyspan for iscapcategorymorphism", 
       "X82D0B42E8413A5FE" ], 
-  [ "\033[2XNormalizedSpan\033[102X for isgeneralizedmorphismbyspan", 
+  [ "\033[2XNormalizedSpan\033[102X for IsGeneralizedMorphismBySpan", 
       "3.3-9", [ 3, 3, 9 ], 102, 16, 
       "normalizedspan for isgeneralizedmorphismbyspan", "X86499E0D83A9D090" ],
-  [ "\033[2XGeneralizedMorphismFromFactorToSubobjectBySpan\033[102X for iscapc\
-ategorymorphism, iscapcategorymorphism", "3.4-1", [ 3, 4, 1 ], 113, 16, 
+  [ "\033[2XGeneralizedMorphismFromFactorToSubobjectBySpan\033[102X for IsCapC\
+ategoryMorphism, IsCapCategoryMorphism", "3.4-1", [ 3, 4, 1 ], 113, 16, 
       "generalizedmorphismfromfactortosubobjectbyspan for iscapcategorymorphis\
 m iscapcategorymorphism", "X7D3675B0866191EC" ], 
   [ 
-      "\033[2XGeneralizedMorphismBySpan\033[102X for iscapcategorymorphism, iscap\
-categorymorphism", "3.5-1", [ 3, 5, 1 ], 125, 16, 
+      "\033[2XGeneralizedMorphismBySpan\033[102X for IsCapCategoryMorphism, IsCap\
+CategoryMorphism", "3.5-1", [ 3, 5, 1 ], 125, 16, 
       "generalizedmorphismbyspan for iscapcategorymorphism iscapcategorymorphi\
 sm", "X83FA5A4C787261DB" ], 
   [ 
-      "\033[2XGeneralizedMorphismBySpan\033[102X for iscapcategorymorphism, iscap\
-categorymorphism, iscapcategorymorphism", "3.5-2", [ 3, 5, 2 ], 134, 16, 
+      "\033[2XGeneralizedMorphismBySpan\033[102X for IsCapCategoryMorphism, IsCap\
+CategoryMorphism, IsCapCategoryMorphism", "3.5-2", [ 3, 5, 2 ], 134, 16, 
       "generalizedmorphismbyspan for iscapcategorymorphism iscapcategorymorphi\
 sm iscapcategorymorphism", "X7EAF87447D2A08EE" ], 
   [ 
-      "\033[2XGeneralizedMorphismBySpanWithRangeAid\033[102X for iscapcategorymor\
-phism, iscapcategorymorphism", "3.5-3", [ 3, 5, 3 ], 144, 16, 
+      "\033[2XGeneralizedMorphismBySpanWithRangeAid\033[102X for IsCapCategoryMor\
+phism, IsCapCategoryMorphism", "3.5-3", [ 3, 5, 3 ], 144, 16, 
       "generalizedmorphismbyspanwithrangeaid for iscapcategorymorphism iscapca\
 tegorymorphism", "X79A8B50C7EB5ADE2" ], 
-  [ "\033[2XAsGeneralizedMorphismBySpan\033[102X for iscapcategorymorphism", 
+  [ "\033[2XAsGeneralizedMorphismBySpan\033[102X for IsCapCategoryMorphism", 
       "3.5-4", [ 3, 5, 4 ], 153, 16, 
       "asgeneralizedmorphismbyspan for iscapcategorymorphism", 
       "X79C48BB782BD799F" ], 
-  [ "\033[2XGeneralizedMorphismCategoryBySpans\033[102X for iscapcategory", 
+  [ "\033[2XGeneralizedMorphismCategoryBySpans\033[102X for IsCapCategory", 
       "3.5-5", [ 3, 5, 5 ], 161, 17, 
       "generalizedmorphismcategorybyspans for iscapcategory", 
       "X812CBF7580098CCF" ], 
-  [ "\033[2XGeneralizedMorphismBySpansObject\033[102X for iscapcategoryobject"
+  [ "\033[2XGeneralizedMorphismBySpansObject\033[102X for IsCapCategoryObject"
         , "3.5-6", [ 3, 5, 6 ], 169, 17, 
       "generalizedmorphismbyspansobject for iscapcategoryobject", 
       "X817694F38145FD9F" ], 
   [ 
-      "\033[2XIsGeneralizedMorphismCategoryByThreeArrowsObject\033[102X for isgen\
-eralizedmorphismcategoryobject", "4.1-1", [ 4, 1, 1 ], 7, 18, 
+      "\033[2XIsGeneralizedMorphismCategoryByThreeArrowsObject\033[102X for IsGen\
+eralizedMorphismCategoryObject", "4.1-1", [ 4, 1, 1 ], 7, 18, 
       "isgeneralizedmorphismcategorybythreearrowsobject for isgeneralizedmorph\
 ismcategoryobject", "X7E861596801CA565" ], 
   [ 
-      "\033[2XIsGeneralizedMorphismByThreeArrows\033[102X for isgeneralizedmorphi\
+      "\033[2XIsGeneralizedMorphismByThreeArrows\033[102X for IsGeneralizedMorphi\
 sm", "4.1-2", [ 4, 1, 2 ], 15, 18, 
       "isgeneralizedmorphismbythreearrows for isgeneralizedmorphism", 
       "X87934BAA84C6E654" ], 
   [ 
-      "\033[2XHasIdentitiesAsReversedArrows\033[102X for isgeneralizedmorphismbyt\
-hreearrows", "4.2-1", [ 4, 2, 1 ], 26, 18, 
+      "\033[2XHasIdentitiesAsReversedArrows\033[102X for IsGeneralizedMorphismByT\
+hreeArrows", "4.2-1", [ 4, 2, 1 ], 26, 18, 
       "hasidentitiesasreversedarrows for isgeneralizedmorphismbythreearrows", 
       "X8247F41681D15233" ], 
   [ 
-      "\033[2XHasIdentityAsSourceAid\033[102X for isgeneralizedmorphismbythreearr\
+      "\033[2XHasIdentityAsSourceAid\033[102X for IsGeneralizedMorphismByThreeArr\
 ows", "4.2-2", [ 4, 2, 2 ], 35, 18, 
       "hasidentityassourceaid for isgeneralizedmorphismbythreearrows", 
       "X8347A40179DBD909" ], 
   [ 
-      "\033[2XHasIdentityAsRangeAid\033[102X for isgeneralizedmorphismbythreearro\
+      "\033[2XHasIdentityAsRangeAid\033[102X for IsGeneralizedMorphismByThreeArro\
 ws", "4.2-3", [ 4, 2, 3 ], 44, 19, 
       "hasidentityasrangeaid for isgeneralizedmorphismbythreearrows", 
       "X81F0F4FA78F9F361" ], 
   [ 
-      "\033[2XUnderlyingHonestObject\033[102X for isgeneralizedmorphismcategoryby\
-threearrowsobject", "4.3-1", [ 4, 3, 1 ], 56, 19, 
+      "\033[2XUnderlyingHonestObject\033[102X for IsGeneralizedMorphismCategoryBy\
+ThreeArrowsObject", "4.3-1", [ 4, 3, 1 ], 56, 19, 
       "underlyinghonestobject for isgeneralizedmorphismcategorybythreearrowsob\
 ject", "X8028877F819A0DBF" ], 
-  [ "\033[2XSourceAid\033[102X for isgeneralizedmorphismbythreearrows", 
+  [ "\033[2XSourceAid\033[102X for IsGeneralizedMorphismByThreeArrows", 
       "4.3-2", [ 4, 3, 2 ], 64, 19, 
       "sourceaid for isgeneralizedmorphismbythreearrows", "X7B17B7587A449B8E" 
-     ], [ "\033[2XRangeAid\033[102X for isgeneralizedmorphismbythreearrows", 
+     ], [ "\033[2XRangeAid\033[102X for IsGeneralizedMorphismByThreeArrows", 
       "4.3-3", [ 4, 3, 3 ], 72, 19, 
       "rangeaid for isgeneralizedmorphismbythreearrows", "X87B0A0AF84F8AF7D" ]
-    , [ "\033[2XArrow\033[102X for isgeneralizedmorphismbythreearrows", 
+    , [ "\033[2XArrow\033[102X for IsGeneralizedMorphismByThreeArrows", 
       "4.3-4", [ 4, 3, 4 ], 80, 19, 
       "arrow for isgeneralizedmorphismbythreearrows", "X7CCBCD5385E55586" ], 
-  [ "\033[2XPseudoInverse\033[102X for isgeneralizedmorphismbythreearrows", 
+  [ "\033[2XPseudoInverse\033[102X for IsGeneralizedMorphismByThreeArrows", 
       "4.3-5", [ 4, 3, 5 ], 88, 19, 
       "pseudoinverse for isgeneralizedmorphismbythreearrows", 
       "X784C006B8525E205" ], 
   [ 
-      "\033[2XGeneralizedInverseByThreeArrows\033[102X for iscapcategorymorphism"
+      "\033[2XGeneralizedInverseByThreeArrows\033[102X for IsCapCategoryMorphism"
         , "4.3-6", [ 4, 3, 6 ], 96, 20, 
       "generalizedinversebythreearrows for iscapcategorymorphism", 
       "X78A8A55883C06AB1" ], 
   [ 
-      "\033[2XIdempotentDefinedBySubobjectByThreeArrows\033[102X for iscapcategor\
-ymorphism", "4.3-7", [ 4, 3, 7 ], 104, 20, 
+      "\033[2XIdempotentDefinedBySubobjectByThreeArrows\033[102X for IsCapCategor\
+yMorphism", "4.3-7", [ 4, 3, 7 ], 104, 20, 
       "idempotentdefinedbysubobjectbythreearrows for iscapcategorymorphism", 
       "X80E329707BAA3B29" ], 
   [ 
-      "\033[2XIdempotentDefinedByFactorobjectByThreeArrows\033[102X for iscapcate\
-gorymorphism", "4.3-8", [ 4, 3, 8 ], 113, 20, 
+      "\033[2XIdempotentDefinedByFactorobjectByThreeArrows\033[102X for IsCapCate\
+goryMorphism", "4.3-8", [ 4, 3, 8 ], 113, 20, 
       "idempotentdefinedbyfactorobjectbythreearrows for iscapcategorymorphism"
         , "X8217014B870B3EC2" ], 
   [ 
       "\033[2XGeneralizedMorphismFromFactorToSubobjectByThreeArrows\033[102X for \
-iscapcategorymorphism, iscapcategorymorphism", "4.4-1", [ 4, 4, 1 ], 125, 20, 
+IsCapCategoryMorphism, IsCapCategoryMorphism", "4.4-1", [ 4, 4, 1 ], 125, 20, 
       "generalizedmorphismfromfactortosubobjectbythreearrows for iscapcategory\
 morphism iscapcategorymorphism", "X78C1A22D86943E97" ], 
-  [ "\033[2XCommonCoastriction\033[102X for islist", "4.4-2", [ 4, 4, 2 ], 
+  [ "\033[2XCommonCoastriction\033[102X for IsList", "4.4-2", [ 4, 4, 2 ], 
       134, 20, "commoncoastriction for islist", "X7A50AC43855B33B1" ], 
   [ 
-      "\033[2XGeneralizedMorphismByThreeArrows\033[102X for iscapcategorymorphism\
-, iscapcategorymorphism, iscapcategorymorphism", "4.5-1", [ 4, 5, 1 ], 146, 
+      "\033[2XGeneralizedMorphismByThreeArrows\033[102X for IsCapCategoryMorphism\
+, IsCapCategoryMorphism, IsCapCategoryMorphism", "4.5-1", [ 4, 5, 1 ], 146, 
       20, 
       "generalizedmorphismbythreearrows for iscapcategorymorphism iscapcategor\
 ymorphism iscapcategorymorphism", "X8477D6E679E15474" ], 
   [ 
-      "\033[2XGeneralizedMorphismByThreeArrowsWithSourceAid\033[102X for iscapcat\
-egorymorphism, iscapcategorymorphism", "4.5-2", [ 4, 5, 2 ], 156, 21, 
+      "\033[2XGeneralizedMorphismByThreeArrowsWithSourceAid\033[102X for IsCapCat\
+egoryMorphism, IsCapCategoryMorphism", "4.5-2", [ 4, 5, 2 ], 156, 21, 
       "generalizedmorphismbythreearrowswithsourceaid for iscapcategorymorphism\
  iscapcategorymorphism", "X7D60D9F97A2F7D5F" ], 
   [ 
-      "\033[2XGeneralizedMorphismByThreeArrowsWithRangeAid\033[102X for iscapcate\
-gorymorphism, iscapcategorymorphism", "4.5-3", [ 4, 5, 3 ], 166, 21, 
+      "\033[2XGeneralizedMorphismByThreeArrowsWithRangeAid\033[102X for IsCapCate\
+goryMorphism, IsCapCategoryMorphism", "4.5-3", [ 4, 5, 3 ], 166, 21, 
       "generalizedmorphismbythreearrowswithrangeaid for iscapcategorymorphism \
 iscapcategorymorphism", "X7F9E6B188755170A" ], 
   [ 
-      "\033[2XAsGeneralizedMorphismByThreeArrows\033[102X for iscapcategorymorphi\
+      "\033[2XAsGeneralizedMorphismByThreeArrows\033[102X for IsCapCategoryMorphi\
 sm", "4.5-4", [ 4, 5, 4 ], 176, 21, 
       "asgeneralizedmorphismbythreearrows for iscapcategorymorphism", 
       "X7E0CF2A87AC08A8B" ], 
   [ 
-      "\033[2XGeneralizedMorphismCategoryByThreeArrows\033[102X for iscapcategory\
+      "\033[2XGeneralizedMorphismCategoryByThreeArrows\033[102X for IsCapCategory\
 ", "4.5-5", [ 4, 5, 5 ], 184, 21, 
       "generalizedmorphismcategorybythreearrows for iscapcategory", 
       "X8296606484DDDF6C" ], 
   [ 
-      "\033[2XGeneralizedMorphismByThreeArrowsObject\033[102X for iscapcategoryob\
+      "\033[2XGeneralizedMorphismByThreeArrowsObject\033[102X for IsCapCategoryOb\
 ject", "4.5-6", [ 4, 5, 6 ], 192, 21, 
       "generalizedmorphismbythreearrowsobject for iscapcategoryobject", 
       "X8165802A8625467E" ], 
-  [ "\033[2XFunctorFromCospansToThreeArrows\033[102X for iscapcategory", 
+  [ "\033[2XFunctorFromCospansToThreeArrows\033[102X for IsCapCategory", 
       "5.1-1", [ 5, 1, 1 ], 7, 22, 
       "functorfromcospanstothreearrows for iscapcategory", 
       "X79C6FF647D725997" ], 
-  [ "\033[2XFunctorFromCospansToSpans\033[102X for iscapcategory", "5.1-2", 
+  [ "\033[2XFunctorFromCospansToSpans\033[102X for IsCapCategory", "5.1-2", 
       [ 5, 1, 2 ], 16, 22, "functorfromcospanstospans for iscapcategory", 
       "X8092A53484B9D89E" ], 
-  [ "\033[2XFunctorFromSpansToThreeArrows\033[102X for iscapcategory", 
+  [ "\033[2XFunctorFromSpansToThreeArrows\033[102X for IsCapCategory", 
       "5.2-1", [ 5, 2, 1 ], 28, 22, 
       "functorfromspanstothreearrows for iscapcategory", "X7A250CED7862BD61" ]
-    , [ "\033[2XFunctorFromSpansToCospans\033[102X for iscapcategory", 
+    , [ "\033[2XFunctorFromSpansToCospans\033[102X for IsCapCategory", 
       "5.2-2", [ 5, 2, 2 ], 37, 22, 
       "functorfromspanstocospans for iscapcategory", "X80EAF5547D5E3A08" ], 
-  [ "\033[2XFunctorFromThreeArrowsToCospans\033[102X for iscapcategory", 
+  [ "\033[2XFunctorFromThreeArrowsToCospans\033[102X for IsCapCategory", 
       "5.3-1", [ 5, 3, 1 ], 49, 23, 
       "functorfromthreearrowstocospans for iscapcategory", 
       "X805E300E7CBA3F18" ], 
-  [ "\033[2XFunctorFromThreeArrowsToSpans\033[102X for iscapcategory", 
+  [ "\033[2XFunctorFromThreeArrowsToSpans\033[102X for IsCapCategory", 
       "5.3-2", [ 5, 3, 2 ], 58, 23, 
       "functorfromthreearrowstospans for iscapcategory", "X7E0E745085802E80" ]
     , 
   [ 
-      "\033[2XFullSubcategoryByMembershipFunction\033[102X for iscapcategory, isf\
+      "\033[2XFullSubcategoryByMembershipFunction\033[102X for IsCapCategory, IsF\
 unction", "6.1-1", [ 6, 1, 1 ], 13, 24, 
       "fullsubcategorybymembershipfunction for iscapcategory isfunction", 
       "X7C2C5BC07CABE97D" ], 
-  [ "\033[2XIsSerreQuotientCategoryObject\033[102X for iscapcategoryobject", 
+  [ "\033[2XIsSerreQuotientCategoryObject\033[102X for IsCapCategoryObject", 
       "7.1-1", [ 7, 1, 1 ], 18, 25, 
       "isserrequotientcategoryobject for iscapcategoryobject", 
       "X7BC5B052783425A2" ], 
   [ 
-      "\033[2XIsSerreQuotientCategoryMorphism\033[102X for iscapcategorymorphism"
+      "\033[2XIsSerreQuotientCategoryMorphism\033[102X for IsCapCategoryMorphism"
         , "7.1-2", [ 7, 1, 2 ], 26, 25, 
       "isserrequotientcategorymorphism for iscapcategorymorphism", 
       "X82C2C3C27C0FC106" ], 
   [ 
-      "\033[2XSerreQuotientCategory\033[102X for iscapcategory, isfunction, isstr\
+      "\033[2XSerreQuotientCategory\033[102X for IsCapCategory, IsFunction, IsStr\
 ing", "7.1-3", [ 7, 1, 3 ], 34, 25, 
       "serrequotientcategory for iscapcategory isfunction isstring", 
       "X8311C69E7FEEF417" ], 
   [ 
-      "\033[2XAsSerreQuotientCategoryObject\033[102X for iscapcategory, iscapcate\
-goryobject", "7.1-4", [ 7, 1, 4 ], 44, 26, 
+      "\033[2XAsSerreQuotientCategoryObject\033[102X for IsCapCategory, IsCapCate\
+goryObject", "7.1-4", [ 7, 1, 4 ], 44, 26, 
       "asserrequotientcategoryobject for iscapcategory iscapcategoryobject", 
       "X7B2E75C3828CFEE4" ], 
   [ 
-      "\033[2XSerreQuotientCategoryMorphism\033[102X for iscapcategory, isgeneral\
-izedmorphism", "7.1-5", [ 7, 1, 5 ], 52, 26, 
+      "\033[2XSerreQuotientCategoryMorphism\033[102X for IsCapCategory, IsGeneral\
+izedMorphism", "7.1-5", [ 7, 1, 5 ], 52, 26, 
       "serrequotientcategorymorphism for iscapcategory isgeneralizedmorphism",
       "X8228022A7EB4CB66" ], 
   [ 
-      "\033[2XSerreQuotientCategoryMorphism\033[102X for iscapcategory, iscapcate\
-gorymorphism, iscapcategorymorphism, iscapcategorymorphism", "7.1-6", 
+      "\033[2XSerreQuotientCategoryMorphism\033[102X for IsCapCategory, IsCapCate\
+goryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism", "7.1-6", 
       [ 7, 1, 6 ], 61, 26, 
       "serrequotientcategorymorphism for iscapcategory iscapcategorymorphism i\
 scapcategorymorphism iscapcategorymorphism", "X7C93747782930A14" ], 
   [ 
-      "\033[2XSerreQuotientCategoryMorphism\033[102X for iscapcategory, iscapcate\
-gorymorphism, iscapcategorymorphism", "7.1-7", [ 7, 1, 7 ], 70, 26, 
+      "\033[2XSerreQuotientCategoryMorphism\033[102X for IsCapCategory, IsCapCate\
+goryMorphism, IsCapCategoryMorphism", "7.1-7", [ 7, 1, 7 ], 70, 26, 
       "serrequotientcategorymorphism for iscapcategory iscapcategorymorphism i\
 scapcategorymorphism", "X7FF1277C81BAD87E" ], 
   [ 
-      "\033[2XSerreQuotientCategoryMorphismWithSourceAid\033[102X for iscapcatego\
-ry, iscapcategorymorphism, iscapcategorymorphism", "7.1-8", [ 7, 1, 8 ], 82, 
+      "\033[2XSerreQuotientCategoryMorphismWithSourceAid\033[102X for IsCapCatego\
+ry, IsCapCategoryMorphism, IsCapCategoryMorphism", "7.1-8", [ 7, 1, 8 ], 82, 
       26, 
       "serrequotientcategorymorphismwithsourceaid for iscapcategory iscapcateg\
 orymorphism iscapcategorymorphism", "X7BD12BC6873CB655" ], 
   [ 
-      "\033[2XSerreQuotientCategoryMorphismWithRangeAid\033[102X for iscapcategor\
-y, iscapcategorymorphism, iscapcategorymorphism", "7.1-9", [ 7, 1, 9 ], 91, 
+      "\033[2XSerreQuotientCategoryMorphismWithRangeAid\033[102X for IsCapCategor\
+y, IsCapCategoryMorphism, IsCapCategoryMorphism", "7.1-9", [ 7, 1, 9 ], 91, 
       26, 
       "serrequotientcategorymorphismwithrangeaid for iscapcategory iscapcatego\
 rymorphism iscapcategorymorphism", "X8461E2707FCF6EB0" ], 
   [ 
-      "\033[2XAsSerreQuotientCategoryMorphism\033[102X for iscapcategory, iscapca\
-tegorymorphism", "7.1-10", [ 7, 1, 10 ], 100, 27, 
+      "\033[2XAsSerreQuotientCategoryMorphism\033[102X for IsCapCategory, IsCapCa\
+tegoryMorphism", "7.1-10", [ 7, 1, 10 ], 100, 27, 
       "asserrequotientcategorymorphism for iscapcategory iscapcategorymorphism\
 ", "X7C2D68DA796082CE" ], 
   [ 
-      "\033[2XSubcategoryMembershipTestFunctionForSerreQuotient\033[102X for isca\
-pcategory", "7.1-11", [ 7, 1, 11 ], 109, 27, 
+      "\033[2XSubcategoryMembershipTestFunctionForSerreQuotient\033[102X for IsCa\
+pCategory", "7.1-11", [ 7, 1, 11 ], 109, 27, 
       "subcategorymembershiptestfunctionforserrequotient for iscapcategory", 
       "X7F51A2A678518D91" ], 
-  [ "\033[2XUnderlyingHonestCategory\033[102X for iscapcategory", "7.1-12", 
+  [ "\033[2XUnderlyingHonestCategory\033[102X for IsCapCategory", "7.1-12", 
       [ 7, 1, 12 ], 117, 27, "underlyinghonestcategory for iscapcategory", 
       "X8387D5C484A26089" ], 
-  [ "\033[2XUnderlyingGeneralizedMorphismCategory\033[102X for iscapcategory",
+  [ "\033[2XUnderlyingGeneralizedMorphismCategory\033[102X for IsCapCategory",
       "7.1-13", [ 7, 1, 13 ], 124, 27, 
       "underlyinggeneralizedmorphismcategory for iscapcategory", 
       "X7B0FD44F7FA4F8C1" ], 
   [ 
-      "\033[2XUnderlyingGeneralizedObject\033[102X for isserrequotientcategoryobj\
+      "\033[2XUnderlyingGeneralizedObject\033[102X for IsSerreQuotientCategoryObj\
 ect", "7.1-14", [ 7, 1, 14 ], 132, 27, 
       "underlyinggeneralizedobject for isserrequotientcategoryobject", 
       "X86E915208420C01C" ], 
-  [ "\033[2XUnderlyingHonestObject\033[102X for isserrequotientcategoryobject"
+  [ "\033[2XUnderlyingHonestObject\033[102X for IsSerreQuotientCategoryObject"
         , "7.1-15", [ 7, 1, 15 ], 141, 27, 
       "underlyinghonestobject for isserrequotientcategoryobject", 
       "X812EDC687898EEBF" ], 
   [ 
-      "\033[2XUnderlyingGeneralizedMorphism\033[102X for isserrequotientcategorym\
+      "\033[2XUnderlyingGeneralizedMorphism\033[102X for IsSerreQuotientCategoryM\
 orphism", "7.1-16", [ 7, 1, 16 ], 149, 28, 
       "underlyinggeneralizedmorphism for isserrequotientcategorymorphism", 
       "X7E403ABA78261622" ], 
-  [ "\033[2XCanonicalProjection\033[102X for iscapcategory", "7.1-17", 
+  [ "\033[2XCanonicalProjection\033[102X for IsCapCategory", "7.1-17", 
       [ 7, 1, 17 ], 158, 28, "canonicalprojection for iscapcategory", 
       "X7A1765BF783041DC" ], 
   [ 
-      "\033[2XSerreQuotientCategoryByCospans\033[102X for iscapcategory, isfuncti\
-on, isstring", "7.2-1", [ 7, 2, 1 ], 169, 28, 
+      "\033[2XSerreQuotientCategoryByCospans\033[102X for IsCapCategory, IsFuncti\
+on, IsString", "7.2-1", [ 7, 2, 1 ], 169, 28, 
       "serrequotientcategorybycospans for iscapcategory isfunction isstring", 
       "X7B0DFAB77891EB63" ], 
   [ 
-      "\033[2XAsSerreQuotientCategoryByCospansObject\033[102X for iscapcategory, \
-iscapcategoryobject", "7.2-2", [ 7, 2, 2 ], 181, 28, 
+      "\033[2XAsSerreQuotientCategoryByCospansObject\033[102X for IsCapCategory, \
+IsCapCategoryObject", "7.2-2", [ 7, 2, 2 ], 181, 28, 
       "asserrequotientcategorybycospansobject for iscapcategory iscapcategoryo\
 bject", "X7C696E9E83CA9250" ], 
   [ 
-      "\033[2XSerreQuotientCategoryByCospansMorphism\033[102X for iscapcategory, \
-isgeneralizedmorphismbycospan", "7.2-3", [ 7, 2, 3 ], 190, 28, 
+      "\033[2XSerreQuotientCategoryByCospansMorphism\033[102X for IsCapCategory, \
+IsGeneralizedMorphismByCospan", "7.2-3", [ 7, 2, 3 ], 190, 28, 
       "serrequotientcategorybycospansmorphism for iscapcategory isgeneralizedm\
 orphismbycospan", "X7F1CBD4F82097FFE" ], 
   [ 
-      "\033[2XSerreQuotientCategoryByCospansMorphism\033[102X for iscapcategory, \
-iscapcategorymorphism, iscapcategorymorphism, iscapcategorymorphism", 
+      "\033[2XSerreQuotientCategoryByCospansMorphism\033[102X for IsCapCategory, \
+IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism", 
       "7.2-4", [ 7, 2, 4 ], 200, 28, 
       "serrequotientcategorybycospansmorphism for iscapcategory iscapcategorym\
 orphism iscapcategorymorphism iscapcategorymorphism", "X7B6DB3178122E617" ], 
-  [ "\033[2XSerreQuotientCategoryByCospansMorphismWithSourceAid\033[102X for i\
-scapcategory, iscapcategorymorphism, iscapcategorymorphism", "7.2-5", 
+  [ "\033[2XSerreQuotientCategoryByCospansMorphismWithSourceAid\033[102X for I\
+sCapCategory, IsCapCategoryMorphism, IsCapCategoryMorphism", "7.2-5", 
       [ 7, 2, 5 ], 209, 29, 
       "serrequotientcategorybycospansmorphismwithsourceaid for iscapcategory i\
 scapcategorymorphism iscapcategorymorphism", "X84649E8381E40A5E" ], 
   [ 
-      "\033[2XSerreQuotientCategoryByCospansMorphism\033[102X for iscapcategory, \
-iscapcategorymorphism, iscapcategorymorphism", "7.2-6", [ 7, 2, 6 ], 218, 29, 
+      "\033[2XSerreQuotientCategoryByCospansMorphism\033[102X for IsCapCategory, \
+IsCapCategoryMorphism, IsCapCategoryMorphism", "7.2-6", [ 7, 2, 6 ], 218, 29, 
       "serrequotientcategorybycospansmorphism for iscapcategory iscapcategorym\
 orphism iscapcategorymorphism", "X8163B686820C8119" ], 
   [ 
-      "\033[2XAsSerreQuotientCategoryByCospansMorphism\033[102X for iscapcategory\
-, iscapcategorymorphism", "7.2-7", [ 7, 2, 7 ], 227, 29, 
+      "\033[2XAsSerreQuotientCategoryByCospansMorphism\033[102X for IsCapCategory\
+, IsCapCategoryMorphism", "7.2-7", [ 7, 2, 7 ], 227, 29, 
       "asserrequotientcategorybycospansmorphism for iscapcategory iscapcategor\
 ymorphism", "X83B53BAD85CDABE3" ], 
   [ 
-      "\033[2XSerreQuotientCategoryBySpans\033[102X for iscapcategory, isfunction\
-, isstring", "7.3-1", [ 7, 3, 1 ], 239, 29, 
+      "\033[2XSerreQuotientCategoryBySpans\033[102X for IsCapCategory, IsFunction\
+, IsString", "7.3-1", [ 7, 3, 1 ], 239, 29, 
       "serrequotientcategorybyspans for iscapcategory isfunction isstring", 
       "X81B80C5882061F37" ], 
   [ 
-      "\033[2XAsSerreQuotientCategoryBySpansObject\033[102X for iscapcategory, is\
-capcategoryobject", "7.3-2", [ 7, 3, 2 ], 251, 29, 
+      "\033[2XAsSerreQuotientCategoryBySpansObject\033[102X for IsCapCategory, Is\
+CapCategoryObject", "7.3-2", [ 7, 3, 2 ], 251, 29, 
       "asserrequotientcategorybyspansobject for iscapcategory iscapcategoryobj\
 ect", "X82726E3C7A66996A" ], 
   [ 
-      "\033[2XSerreQuotientCategoryBySpansMorphism\033[102X for iscapcategory, is\
-generalizedmorphismbyspan", "7.3-3", [ 7, 3, 3 ], 260, 30, 
+      "\033[2XSerreQuotientCategoryBySpansMorphism\033[102X for IsCapCategory, Is\
+GeneralizedMorphismBySpan", "7.3-3", [ 7, 3, 3 ], 260, 30, 
       "serrequotientcategorybyspansmorphism for iscapcategory isgeneralizedmor\
 phismbyspan", "X8540DCE084BB710F" ], 
   [ 
-      "\033[2XSerreQuotientCategoryBySpansMorphism\033[102X for iscapcategory, is\
-capcategorymorphism, iscapcategorymorphism, iscapcategorymorphism", "7.3-4", 
+      "\033[2XSerreQuotientCategoryBySpansMorphism\033[102X for IsCapCategory, Is\
+CapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism", "7.3-4", 
       [ 7, 3, 4 ], 270, 30, 
       "serrequotientcategorybyspansmorphism for iscapcategory iscapcategorymor\
 phism iscapcategorymorphism iscapcategorymorphism", "X854E2C577EBC71A8" ], 
   [ 
-      "\033[2XSerreQuotientCategoryBySpansMorphism\033[102X for iscapcategory, is\
-capcategorymorphism, iscapcategorymorphism", "7.3-5", [ 7, 3, 5 ], 279, 30, 
+      "\033[2XSerreQuotientCategoryBySpansMorphism\033[102X for IsCapCategory, Is\
+CapCategoryMorphism, IsCapCategoryMorphism", "7.3-5", [ 7, 3, 5 ], 279, 30, 
       "serrequotientcategorybyspansmorphism for iscapcategory iscapcategorymor\
 phism iscapcategorymorphism", "X85320AF0799B2ED6" ], 
   [ 
-      "\033[2XSerreQuotientCategoryBySpansMorphismWithRangeAid\033[102X for iscap\
-category, iscapcategorymorphism, iscapcategorymorphism", "7.3-6", 
+      "\033[2XSerreQuotientCategoryBySpansMorphismWithRangeAid\033[102X for IsCap\
+Category, IsCapCategoryMorphism, IsCapCategoryMorphism", "7.3-6", 
       [ 7, 3, 6 ], 288, 30, 
       "serrequotientcategorybyspansmorphismwithrangeaid for iscapcategory isca\
 pcategorymorphism iscapcategorymorphism", "X7BF244A67D0A7199" ], 
   [ 
-      "\033[2XAsSerreQuotientCategoryBySpansMorphism\033[102X for iscapcategory, \
-iscapcategorymorphism", "7.3-7", [ 7, 3, 7 ], 297, 30, 
+      "\033[2XAsSerreQuotientCategoryBySpansMorphism\033[102X for IsCapCategory, \
+IsCapCategoryMorphism", "7.3-7", [ 7, 3, 7 ], 297, 30, 
       "asserrequotientcategorybyspansmorphism for iscapcategory iscapcategorym\
 orphism", "X838E9D4D7BF0AA85" ], 
   [ 
-      "\033[2XSerreQuotientCategoryByThreeArrows\033[102X for iscapcategory, isfu\
-nction, isstring", "7.4-1", [ 7, 4, 1 ], 309, 30, 
+      "\033[2XSerreQuotientCategoryByThreeArrows\033[102X for IsCapCategory, IsFu\
+nction, IsString", "7.4-1", [ 7, 4, 1 ], 309, 30, 
       "serrequotientcategorybythreearrows for iscapcategory isfunction isstrin\
 g", "X856C35F28411363D" ], 
   [ 
-      "\033[2XAsSerreQuotientCategoryByThreeArrowsObject\033[102X for iscapcatego\
-ry, iscapcategoryobject", "7.4-2", [ 7, 4, 2 ], 321, 31, 
+      "\033[2XAsSerreQuotientCategoryByThreeArrowsObject\033[102X for IsCapCatego\
+ry, IsCapCategoryObject", "7.4-2", [ 7, 4, 2 ], 321, 31, 
       "asserrequotientcategorybythreearrowsobject for iscapcategory iscapcateg\
 oryobject", "X80BDE2C9864D84B8" ], 
   [ 
-      "\033[2XSerreQuotientCategoryByThreeArrowsMorphism\033[102X for iscapcatego\
-ry, isgeneralizedmorphismbythreearrows", "7.4-3", [ 7, 4, 3 ], 330, 31, 
+      "\033[2XSerreQuotientCategoryByThreeArrowsMorphism\033[102X for IsCapCatego\
+ry, IsGeneralizedMorphismByThreeArrows", "7.4-3", [ 7, 4, 3 ], 330, 31, 
       "serrequotientcategorybythreearrowsmorphism for iscapcategory isgenerali\
 zedmorphismbythreearrows", "X7E798D6882E5DBB4" ], 
   [ 
-      "\033[2XSerreQuotientCategoryByThreeArrowsMorphism\033[102X for iscapcatego\
-ry, iscapcategorymorphism, iscapcategorymorphism, iscapcategorymorphism", 
+      "\033[2XSerreQuotientCategoryByThreeArrowsMorphism\033[102X for IsCapCatego\
+ry, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism", 
       "7.4-4", [ 7, 4, 4 ], 340, 31, 
       "serrequotientcategorybythreearrowsmorphism for iscapcategory iscapcateg\
 orymorphism iscapcategorymorphism iscapcategorymorphism", "X7AAB402C852E6030" 
      ], 
   [ 
       "\033[2XSerreQuotientCategoryByThreeArrowsMorphismWithSourceAid\033[102X fo\
-r iscapcategory, iscapcategorymorphism, iscapcategorymorphism", "7.4-5", 
+r IsCapCategory, IsCapCategoryMorphism, IsCapCategoryMorphism", "7.4-5", 
       [ 7, 4, 5 ], 350, 31, 
       "serrequotientcategorybythreearrowsmorphismwithsourceaid for iscapcatego\
 ry iscapcategorymorphism iscapcategorymorphism", "X8597A92278BC8D63" ], 
   [ 
       "\033[2XSerreQuotientCategoryByThreeArrowsMorphismWithRangeAid\033[102X for\
- iscapcategory, iscapcategorymorphism, iscapcategorymorphism", "7.4-6", 
+ IsCapCategory, IsCapCategoryMorphism, IsCapCategoryMorphism", "7.4-6", 
       [ 7, 4, 6 ], 359, 31, 
       "serrequotientcategorybythreearrowsmorphismwithrangeaid for iscapcategor\
 y iscapcategorymorphism iscapcategorymorphism", "X820FF6B88188DB68" ], 
   [ 
-      "\033[2XAsSerreQuotientCategoryByThreeArrowsMorphism\033[102X for iscapcate\
-gory, iscapcategorymorphism", "7.4-7", [ 7, 4, 7 ], 368, 32, 
+      "\033[2XAsSerreQuotientCategoryByThreeArrowsMorphism\033[102X for IsCapCate\
+gory, IsCapCategoryMorphism", "7.4-7", [ 7, 4, 7 ], 368, 32, 
       "asserrequotientcategorybythreearrowsmorphism for iscapcategory iscapcat\
 egorymorphism", "X7DFC91D07E9A187B" ], 
   [ 
-      "\033[2XSerreQuotientConversionFunctor\033[102X for iscapcategory, iscapcat\
+      "\033[2XSerreQuotientConversionFunctor\033[102X for IsCapCategory, IsCapCat\
 egory", "8.1-1", [ 8, 1, 1 ], 13, 33, 
       "serrequotientconversionfunctor for iscapcategory iscapcategory", 
       "X873A67F482BA7BFD" ] ]

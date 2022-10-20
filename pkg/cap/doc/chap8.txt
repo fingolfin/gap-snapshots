@@ -32,32 +32,28 @@
   
   [1X8.2-2 MakeDerivation[101X
   
-  [33X[1;0Y[29X[2XMakeDerivation[102X( [3Xname[103X, [3Xtarget_op[103X, [3Xused_ops_with_multiples[103X, [3Xweight[103X, [3Ximplementations_with_extra_filters[103X, [3Xcategory_filter[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMakeDerivation[102X( [3Xname[103X, [3Xtarget_op[103X, [3Xused_ops_with_multiples[103X, [3Xweight[103X, [3Xfunc[103X, [3Xcategory_filter[103X ) [32X operation[133X
   
   [33X[0;0YCreates a new derivation object. The argument [3Xname[103X is an arbitrary name used
   to  identify this derivation, and is useful only for debugging purposes. The
   argument [3Xtarget_op[103X is the operation which the derived method implements. The
-  argument [3Xused_ops_with_multiples[103X contains each operation used by the derived
-  method,  together  with  a  positive  integer specifying how many times that
-  operation  is used. This is given as a list of lists, where each sublist has
-  as  first  entry  an  operation and as second entry an integer. The argument
-  [3Xweight[103X  is an additional number to add when calculating the resulting weight
-  of  the  target  operation  using  this  derivation.  Unless  there  is  any
-  particular  reason  to  regard the derivation as exceedingly expensive, this
-  number should be [10X1[110X. The argument [3Ximplementations_with_extra_filters[103X contains
-  one  or more functions with the actual implementation of the derived method,
-  together  with  lists  of  extra  argument  filters  for  each function. The
-  argument  is  a list with entries of the form [10X[fun, filters][110X, where [10Xfun[110X is a
-  function  and [10Xfilters[110X is a (not necessarily dense) list of argument filters.
-  If  only  one  function  is given, then [10Xfilters[110X should be the empty list; in
-  this  case  the  argument's  value  would  be  [[fun,[]]],  where [10Xfun[110X is the
-  function.   The  argument  [3Xcategory_filter[103X  is  a  filter  describing  which
-  categories  the  derivation is valid for. If it is valid for all categories,
-  then   this  argument  should  have  the  value  [10XIsCapCategory[110X.  The  Option
-  [10XConditionsListComplete[110X indicates if the manually given list of preconditions
-  for  this  derivation  is  complete  or  should  be  extended by looking for
-  categorical operations in the function body. The value [10Xfalse[110X indicates it is
-  not complete, every other value that it is complete. Default is [10Xfalse[110X.[133X
+  argument [3Xused_ops_with_multiples[103X contains the name of each operation used by
+  the  derived  method,  together  with a positive integer specifying how many
+  times that operation is used and optionally a category getter. This is given
+  as  a  list  of  lists, where each sublist has as first entry the name of an
+  operation,  as  second  entry  an  integer  and  as third entry optionally a
+  function. This function should accept the category and return a category for
+  which  the operation in the first entry must be installed for the derivation
+  to  be  considered valid. The argument [3Xweight[103X is an additional number to add
+  when  calculating  the  resulting  weight of the target operation using this
+  derivation.  Unless  there is any particular reason to regard the derivation
+  as  exceedingly  expensive,  this  number  should  be  [10X1[110X.  The argument [3Xfunc[103X
+  contains  the  actual  implementation  of  the  derived method. The argument
+  [3Xcategory_filter[103X  is  a  filter (or function) describing which categories the
+  derivation  is  valid  for.  If  it  is  valid for all categories, then this
+  argument  should have the value [10XIsCapCategory[110X. The output of [3Xcategory_filter[103X
+  must  not  change  during  the installation of operations. In particular, it
+  must not rely on [10XCanCompute[110X to check conditions.[133X
   
   [1X8.2-3 DerivationName[101X
   
@@ -73,12 +69,11 @@
   
   [33X[0;0YExtra weight for the derivation.[133X
   
-  [1X8.2-5 DerivationFunctionsWithExtraFilters[101X
+  [1X8.2-5 DerivationFunction[101X
   
-  [33X[1;0Y[29X[2XDerivationFunctionsWithExtraFilters[102X( [3Xd[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XDerivationFunction[102X( [3Xd[103X ) [32X attribute[133X
   
-  [33X[0;0YThe  implementation(s)  of  the  derivation,  together  with  lists of extra
-  filters for each implementation.[133X
+  [33X[0;0YThe implementation of the derivation.[133X
   
   [1X8.2-6 CategoryFilter[101X
   
@@ -100,43 +95,23 @@
   [6XReturns:[106X  [33X[0;10YThe  name  (as  a  string)  of  the  operation  implemented by the
             derivation [3Xd[103X[133X
   
-  [1X8.2-9 UsedOperations[101X
+  [1X8.2-9 UsedOperationsWithMultiplesAndCategoryGetters[101X
   
-  [33X[1;0Y[29X[2XUsedOperations[102X( [3Xd[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YThe names (as strings) of the operations used by the derivation [3Xd[103X[133X
-  
-  [1X8.2-10 UsedOperationMultiples[101X
-  
-  [33X[1;0Y[29X[2XUsedOperationMultiples[102X( [3Xd[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10YMultiplicities  of  each  operation  used  by the derivation [3Xd[103X, in
-            order   corresponding   to   the   operation   names  returned  by
-            [10XUsedOperations(d)[110X.[133X
-  
-  [1X8.2-11 UsedOperationsWithMultiples[101X
-  
-  [33X[1;0Y[29X[2XUsedOperationsWithMultiples[102X( [3Xd[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XUsedOperationsWithMultiplesAndCategoryGetters[102X( [3Xd[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe  names  of  the  operations used by the derivation [3Xd[103X, together
-            with  their  multiplicities.  The  result  is a list consisting of
-            lists  of  the form [10X[op_name, mult][110X, where [10Xop_name[110X is a string and
-            [10Xmult[110X a positive integer.[133X
+            with  their  multiplicities  and category getters. The result is a
+            list  consisting  of  lists  of  the form [10X[op_name, mult, getter][110X,
+            where [10Xop_name[110X is a string, [10Xmult[110X a positive integer and [10Xgetter[110X is a
+            function or [10Xfail[110X.[133X
   
-  [1X8.2-12 InstallDerivationForCategory[101X
+  [1X8.2-10 InstallDerivationForCategory[101X
   
   [33X[1;0Y[29X[2XInstallDerivationForCategory[102X( [3Xd[103X, [3Xweight[103X, [3XC[103X ) [32X operation[133X
   
   [33X[0;0YInstall  the  derived method [3Xd[103X for the category [3XC[103X. The integer [3Xweight[103X is the
   computed weight of the operation implemented by this derivation.[133X
   
-  [1X8.2-13 DerivationResultWeight[101X
-  
-  [33X[1;0Y[29X[2XDerivationResultWeight[102X( [3Xd[103X, [3Xop_weights[103X ) [32X operation[133X
-  
-  [33X[0;0YComputes  the  resulting  weight  of the target operation of this derivation
-  given  a list of weights for the operations it uses. The argument [3Xop_weights[103X
-  should  be a list of integers specifying weights for the operations given by
-  [10XUsedOperations( d )[110X, in the same order.[133X
-  
-  [1X8.2-14 FunctionCalledBeforeInstallation[101X
+  [1X8.2-11 FunctionCalledBeforeInstallation[101X
   
   [33X[1;0Y[29X[2XFunctionCalledBeforeInstallation[102X( [3Xd[103X ) [32X attribute[133X
   
@@ -194,48 +169,28 @@
   
   [33X[1;0Y[29X[2XAddDerivation[102X( [3Xarg1[103X, [3Xarg2[103X, [3Xarg3[103X ) [32X operation[133X
   
-  [1X8.3-8 AddDerivationPair[101X
-  
-  [33X[1;0Y[29X[2XAddDerivationPair[102X( [3Xarg1[103X, [3Xarg2[103X, [3Xarg3[103X, [3Xarg4[103X, [3Xarg5[103X, [3Xarg6[103X ) [32X operation[133X
-  
-  [1X8.3-9 AddDerivationPair[101X
-  
-  [33X[1;0Y[29X[2XAddDerivationPair[102X( [3Xarg1[103X, [3Xarg2[103X, [3Xarg3[103X, [3Xarg4[103X, [3Xarg5[103X ) [32X operation[133X
-  
-  [1X8.3-10 AddDerivationPair[101X
-  
-  [33X[1;0Y[29X[2XAddDerivationPair[102X( [3Xarg1[103X, [3Xarg2[103X, [3Xarg3[103X, [3Xarg4[103X, [3Xarg5[103X, [3Xarg6[103X ) [32X operation[133X
-  
-  [1X8.3-11 AddDerivationPair[101X
-  
-  [33X[1;0Y[29X[2XAddDerivationPair[102X( [3Xarg1[103X, [3Xarg2[103X, [3Xarg3[103X, [3Xarg4[103X, [3Xarg5[103X ) [32X operation[133X
-  
-  [1X8.3-12 AddDerivationToCAP[101X
+  [1X8.3-8 AddDerivationToCAP[101X
   
   [33X[1;0Y[29X[2XAddDerivationToCAP[102X( [3Xarg[103X ) [32X function[133X
   
-  [1X8.3-13 AddDerivationPairToCAP[101X
-  
-  [33X[1;0Y[29X[2XAddDerivationPairToCAP[102X( [3Xarg[103X ) [32X function[133X
-  
-  [1X8.3-14 AddWithGivenDerivationPairToCAP[101X
+  [1X8.3-9 AddWithGivenDerivationPairToCAP[101X
   
   [33X[1;0Y[29X[2XAddWithGivenDerivationPairToCAP[102X( [3Xarg[103X ) [32X function[133X
   
-  [1X8.3-15 Operations[101X
+  [1X8.3-10 Operations[101X
   
   [33X[1;0Y[29X[2XOperations[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0YGives the operations in the graph [3XG[103X, as a list of strings.[133X
   
-  [1X8.3-16 DerivationsUsingOperation[101X
+  [1X8.3-11 DerivationsUsingOperation[101X
   
   [33X[1;0Y[29X[2XDerivationsUsingOperation[102X( [3XG[103X, [3Xop_name[103X ) [32X operation[133X
   
   [33X[0;0YFinds  all  the  derivations  in  the  graph  [3XG[103X that use the operation named
   [3Xop_name[103X, and returns them as a list.[133X
   
-  [1X8.3-17 DerivationsOfOperation[101X
+  [1X8.3-12 DerivationsOfOperation[101X
   
   [33X[1;0Y[29X[2XDerivationsOfOperation[102X( [3XG[103X, [3Xop_name[103X ) [32X operation[133X
   

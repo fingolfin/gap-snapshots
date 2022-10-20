@@ -37,15 +37,6 @@ provided by &CAP; or any &CAP;-based package.
 
 <#Include Label="TerminalCategoryWithMultipleObjects">
 
-<ManSection>
-  <Oper Arg="T, str" Name="/" Label="for IsString, IsTerminalCategoryWithMultipleObjects"/>
- <Description>
-  Create an object <Math>a</Math> in the terminal category <A>T</A> with multiple objects
-  with <C>String</C>(<A>str</A>) = <Math>a</Math>.
- </Description>
-</ManSection>
-
-
 </Section>
 
 

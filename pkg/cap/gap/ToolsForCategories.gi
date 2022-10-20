@@ -424,11 +424,7 @@ InstallGlobalFunction( CAP_INTERNAL_REPLACE_STRING_WITH_FILTER,
             fi;
             
             if category <> false and HasRangeCategoryOfHomomorphismStructure( category ) then
-                # FIXME: We would like to include the object filter of the range category here, but this does not allow to change the range category later on:
-                # When changing the range category, primitive operations are correctly installed using the new range category,
-                # but derivations which have already been triggered will not be re-installed and thus still use the old range category.
-                #return ObjectFilter( RangeCategoryOfHomomorphismStructure( category ) ) and IsCapCategoryObject;
-                return IsCapCategoryObject;
+                return ObjectFilter( RangeCategoryOfHomomorphismStructure( category ) ) and IsCapCategoryObject;
             else
                 return IsCapCategoryObject;
             fi;
@@ -441,9 +437,7 @@ InstallGlobalFunction( CAP_INTERNAL_REPLACE_STRING_WITH_FILTER,
             fi;
             
             if category <> false and HasRangeCategoryOfHomomorphismStructure( category ) then
-                # FIXME: see above
-                #return MorphismFilter( RangeCategoryOfHomomorphismStructure( category ) ) and IsCapCategoryMorphism;
-                return IsCapCategoryMorphism;
+                return MorphismFilter( RangeCategoryOfHomomorphismStructure( category ) ) and IsCapCategoryMorphism;
             else
                 return IsCapCategoryMorphism;
             fi;
@@ -571,46 +565,56 @@ end );
 BindGlobal( "CAP_INTERNAL_REPLACE_ADDITIONAL_SYMBOL_APPEARANCE",
   
   function( appearance_list, replacement_record )
-    local remove_list, new_appearances, current_appearance_nr,
-          current_appearance, current_replacement, i;
-
+    local remove_list, new_appearances, current_appearance, pos, current_appearance_nr, current_replacement, i;
+    
+    appearance_list := StructuralCopy( appearance_list );
+    
     remove_list := [];
     new_appearances := [];
-
+    
     for current_appearance_nr in [ 1 .. Length( appearance_list ) ] do
         
         current_appearance := appearance_list[ current_appearance_nr ];
         
-        if IsBound( replacement_record.(current_appearance[ 1 ]) ) then
+        if IsBound( replacement_record.(current_appearance[1]) ) then
+            
             Add( remove_list, current_appearance_nr );
-            for current_replacement in replacement_record.(current_appearance[ 1 ]) do
-                Add( new_appearances, [ current_replacement[ 1 ], current_replacement[ 2 ] * current_appearance[ 2 ] ] );
+            
+            for current_replacement in replacement_record.(current_appearance[1]) do
+                
+                pos := PositionProperty( appearance_list, x -> x[1] = current_replacement[1] and x[3] = current_appearance[3] );
+                
+                if pos = fail then
+                    
+                    Add( new_appearances, [ current_replacement[ 1 ], current_replacement[ 2 ] * current_appearance[ 2 ], current_appearance[3] ] );
+                    
+                else
+                    
+                    appearance_list[pos][2] := appearance_list[pos][2] + current_replacement[ 2 ] * current_appearance[ 2 ];
+                    
+                fi;
+                
             od;
+            
         fi;
-
+        
     od;
-
+    
     for i in Reversed( remove_list ) do
+        
         Remove( appearance_list, i );
+        
     od;
-
+    
     return Concatenation( appearance_list, new_appearances );
-
-end );
-
-BindGlobal( "CAP_INTERNAL_VALUE_GLOBAL_OR_VALUE",
-  function( val )
-    if IsString( val ) then
-        return ValueGlobal( val );
-    fi;
-    return val;
+    
 end );
 
 ##
 InstallGlobalFunction( "CAP_INTERNAL_FIND_APPEARANCE_OF_SYMBOL_IN_FUNCTION",
   
-  function( func, symbol_list, loop_multiple, replacement_record )
-    local func_as_string, func_stream, i, func_as_list, loop_power, symbol_appearance_rec, current_symbol;
+  function( func, symbol_list, loop_multiple, replacement_record, category_getters )
+    local func_as_string, func_stream, func_as_list, loop_power, symbol_appearance_list, current_symbol, category_getter, pos, i;
     
     if IsOperation( func ) then
         
@@ -631,12 +635,14 @@ InstallGlobalFunction( "CAP_INTERNAL_FIND_APPEARANCE_OF_SYMBOL_IN_FUNCTION",
     fi;
     
     ## Make List, Perform, Apply look like loops
-    ## Beginning space is important here, to avoid scanning things like CallFuncList
-    for i in [ " List(", " Perform(", " Apply(" ] do
+    ## Beginning space (or new line) is important here, to avoid scanning things like CallFuncList
+    for i in [ " List(", "\nList(",  " Perform(", "\nPerform(", "\nApply(", " Apply(" ] do
         
-        func_as_string := CAP_INTERNAL_MAKE_LOOP_SYMBOL_LOOK_LIKE_LOOP( func_as_string, i );
+        func_as_string := ReplacedString( func_as_string, i, " CAP_INTERNAL_FUNCTIONAL_LOOP" );
         
     od;
+    
+    func_as_string := CAP_INTERNAL_MAKE_LOOP_SYMBOL_LOOK_LIKE_LOOP( func_as_string, "CAP_INTERNAL_FUNCTIONAL_LOOP" );
     
     RemoveCharacters( func_as_string, "()[];," );
     
@@ -646,21 +652,43 @@ InstallGlobalFunction( "CAP_INTERNAL_FIND_APPEARANCE_OF_SYMBOL_IN_FUNCTION",
     
     loop_power := 0;
     
-    symbol_appearance_rec := rec( );
+    symbol_appearance_list := [ ];
     
     symbol_list := Concatenation( symbol_list, RecNames( replacement_record ) );
     
-    for current_symbol in func_as_list do
+    for i in [ 1 .. Length( func_as_list ) ] do
+        
+        current_symbol := func_as_list[i];
         
         if current_symbol in symbol_list then
             
-            if not IsBound( symbol_appearance_rec.( current_symbol ) ) then
-                symbol_appearance_rec.( current_symbol ) := 0;
+            # function cannot end with a symbol
+            Assert( 0, i < Length( func_as_list ) );
+            
+            if IsBound( category_getters.(func_as_list[i + 1]) ) then
+                
+                category_getter := category_getters.(func_as_list[i + 1]);
+                
+            else
+                
+                category_getter := fail;
+                
             fi;
             
-            symbol_appearance_rec.( current_symbol ) := symbol_appearance_rec.( current_symbol ) + loop_multiple^loop_power;
+            pos := PositionProperty( symbol_appearance_list, x -> x[1] = current_symbol and x[3] = category_getter );
             
-        elif current_symbol in [ "for", "while", "List", "Perform", "Apply" ] then
+            if pos = fail then
+                
+                Add( symbol_appearance_list, [ current_symbol, loop_multiple^loop_power, category_getter ] );
+                
+            else
+                
+                symbol_appearance_list[pos][2] := symbol_appearance_list[pos][2] + loop_multiple^loop_power;
+                
+            fi;
+            
+        elif current_symbol in [ "for", "while", "CAP_INTERNAL_FUNCTIONAL_LOOP" ] then
+            
             loop_power := loop_power + 1;
             
         elif current_symbol = "od" then
@@ -671,9 +699,14 @@ InstallGlobalFunction( "CAP_INTERNAL_FIND_APPEARANCE_OF_SYMBOL_IN_FUNCTION",
         
     od;
     
-    symbol_appearance_rec := List( RecNames( symbol_appearance_rec ), i -> [ i, symbol_appearance_rec.(i) ] );
-    symbol_appearance_rec := CAP_INTERNAL_REPLACE_ADDITIONAL_SYMBOL_APPEARANCE( symbol_appearance_rec, replacement_record );
-    return symbol_appearance_rec;
+    if loop_power <> 0 then
+        
+        Error( "The automated detection of CAP operations could not detect loops properly. If the reserved word `for` appears in <func_as_string> (e.g. in a string), this is probably the cause. If not, please report this as a bug mentioning <func_as_string>." );
+        
+    fi;
+    
+    symbol_appearance_list := CAP_INTERNAL_REPLACE_ADDITIONAL_SYMBOL_APPEARANCE( symbol_appearance_list, replacement_record );
+    return symbol_appearance_list;
     
 end );
 
@@ -681,23 +714,22 @@ end );
 InstallGlobalFunction( CAP_INTERNAL_MERGE_PRECONDITIONS_LIST,
   
   function( list1, list2 )
-    local i, j, append;
+    local pos, current_precondition;
     
-    for i in list1 do
+    list2 := StructuralCopy( list2 );
+    
+    for current_precondition in list1 do
         
-        append := true;
+        pos := PositionProperty( list2, x -> x[1] = current_precondition[1] and x[3] = current_precondition[3] );
         
-        for j in [ 1 .. Length( list2 ) ] do
+        if pos = fail then
             
-            if list2[ j ][ 1 ] = i[ 1 ] then
-                list2[ j ][ 2 ] := Maximum( list2[ j ][ 2 ], i[ 2 ] );
-                append := false;
-                break;
-            fi;
-        od;
-        
-        if append then
-            Add( list2, i );
+            Add( list2, current_precondition );
+            
+        else
+            
+            list2[pos][2] := Maximum( list2[pos][2], current_precondition[2] );
+            
         fi;
         
     od;
@@ -815,16 +847,6 @@ InstallGlobalFunction( ListKnownCategoricalProperties,
     
     return list;
     
-end );
-
-InstallGlobalFunction( CAP_MergeRecords,
-  function( dst, src )
-    local key;
-    for key in RecNames( src ) do
-        if not IsBound( dst.( key ) ) then
-            dst.( key ) := src.( key );
-        fi;
-    od;
 end );
 
 InstallGlobalFunction( HelpForCAP,
@@ -1059,7 +1081,7 @@ InstallGlobalFunction( CapJitAddKnownMethod,
     if ForAny( known_methods, m -> Length( m.filters ) = Length( filters ) and ( IsSpecializationOfFilter( m.filters[1], filters[1] ) or IsSpecializationOfFilter( filters[1], m.filters[1] ) ) ) then
         
         # COVERAGE_IGNORE_NEXT_LINE
-        Error( "there is already a method known for ", operation_name, " with a category filter which implies the current category filter or is impled by it" );
+        Error( "there is already a method known for ", operation_name, " with a category filter which implies the current category filter or is implied by it" );
         
     fi;
     
@@ -1304,6 +1326,16 @@ InstallGlobalFunction( CapFixpoint, function ( predicate, func, initial_value )
 end );
 
 ##
+InstallMethod( Iterated,
+               [ IsList, IsFunction, IsObject ],
+               
+  function( list, func, initial_value )
+    
+    return Iterated( Concatenation( [ initial_value ], list ), func );
+    
+end );
+
+##
 InstallGlobalFunction( TransitivelyNeededOtherPackages, function ( package_name )
   local collected_dependencies, package_info, dep, p;
     
@@ -1344,6 +1376,21 @@ InstallMethod( SafePosition,
     local pos;
     
     pos := Position( list, obj );
+    
+    Assert( 0, pos <> fail );
+    
+    return pos;
+    
+end );
+
+##
+InstallMethod( SafePositionProperty,
+               [ IsList, IsFunction ],
+               
+  function( list, func )
+    local pos;
+    
+    pos := PositionProperty( list, func );
     
     Assert( 0, pos <> fail );
     
@@ -1463,5 +1510,222 @@ InstallGlobalFunction( HandlePrecompiledTowers, function ( category, underlying_
         category!.compiler_hints.precompiled_towers := Concatenation( category!.compiler_hints.precompiled_towers, precompiled_towers );
         
     fi;
+    
+end );
+
+InstallGlobalFunction( CAP_JIT_INCOMPLETE_LOGIC, function ( value )
+    
+    return value;
+    
+end );
+
+##
+InstallGlobalFunction( ListWithKeys, function ( list, func )
+  local res, i;
+    
+    # see implementation of `List`
+    
+    res := EmptyPlist( Length( list ) );
+    
+    # hack to save type adjustments and conversions (e.g. to blist)
+    if Length( list ) > 0 then
+        
+        res[Length( list )] := 1;
+        
+    fi;
+    
+    for i in [ 1 .. Length( list ) ] do
+        
+        res[i] := func( i, list[i] );
+        
+    od;
+    
+    return res;
+    
+end );
+
+##
+InstallGlobalFunction( SumWithKeys, function ( list, func )
+  local sum, i;
+    
+    # see implementation of `Sum`
+    
+    if IsEmpty( list ) then
+        
+        sum := 0;
+        
+    else
+        
+        sum := func( 1, list[1] );
+        
+        for i in [ 2 .. Length( list ) ] do
+            
+            sum := sum + func( i, list[i] );
+            
+        od;
+        
+    fi;
+    
+    return sum;
+    
+end );
+
+##
+InstallGlobalFunction( ProductWithKeys, function ( list, func )
+  local product, i;
+    
+    # adapted implementation of `Product`
+    
+    if IsEmpty( list ) then
+        
+        product := 1;
+        
+    else
+        
+        product := func( 1, list[1] );
+        
+        for i in [ 2 .. Length( list ) ] do
+            
+            product := product * func( i, list[i] );
+            
+        od;
+        
+    fi;
+    
+    return product;
+    
+end );
+
+##
+InstallGlobalFunction( ForAllWithKeys, function ( list, func )
+  local i;
+    
+    # adapted implementation of `ForAll`
+    
+    for i in [ 1 .. Length( list ) ] do
+        
+        if not func( i, list[i] ) then
+            
+            return false;
+            
+        fi;
+        
+    od;
+    
+    return true;
+    
+end );
+
+##
+InstallGlobalFunction( ForAnyWithKeys, function ( list, func )
+  local i;
+    
+    # adapted implementation of `ForAny`
+    
+    for i in [ 1 .. Length( list ) ] do
+        
+        if func( i, list[i] ) then
+            
+            return true;
+            
+        fi;
+        
+    od;
+    
+    return false;
+    
+end );
+
+##
+InstallGlobalFunction( NumberWithKeys, function ( list, func )
+  local nr, i;
+    
+    # adapted implementation of `Number`
+    
+    nr := 0;
+    
+    for i in [ 1 .. Length( list ) ] do
+        
+        if func( i, list[i] ) then
+            
+            nr := nr + 1;
+            
+        fi;
+        
+    od;
+    
+    return nr;
+    
+end );
+
+##
+InstallGlobalFunction( FilteredWithKeys, function ( list, func )
+  local res, i, elm, j;
+    
+    # adapted implementation of `Filtered`
+    
+    res := list{[ ]};
+    
+    i := 0;
+    
+    for j in [ 1 .. Length( list ) ] do
+        
+        elm := list[j];
+        
+        if func( j, elm ) then
+            
+            i := i + 1;
+            
+            res[i] := elm;
+            
+        fi;
+        
+    od;
+    
+    return res;
+    
+end );
+
+##
+InstallGlobalFunction( FirstWithKeys, function ( list, func )
+  local elm, i;
+    
+    # adapted implementation of `First`
+    
+    for i in [ 1 .. Length( list ) ] do
+        
+        elm := list[i];
+        
+        if func( i, elm ) then
+            
+            return elm;
+            
+        fi;
+        
+    od;
+    
+    return fail;
+    
+end );
+
+##
+InstallGlobalFunction( LastWithKeys, function ( list, func )
+  local elm, i;
+    
+    # adapted implementation of `Last`
+    
+    for i in [ Length( list ), Length( list ) - 1 .. 1 ] do
+        
+        elm := list[i];
+        
+        if func( i, elm ) then
+            
+            return elm;
+            
+        fi;
+        
+    od;
+    
+    return fail;
     
 end );

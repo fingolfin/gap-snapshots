@@ -192,6 +192,22 @@ InstallMethod( AddObject,
 end );
 
 ##
+InstallMethod( \/,
+               [ IsObject, IsCapCategory ],
+               
+  function( object_datum, cat )
+    
+    if not CanCompute( cat, "ObjectConstructor" ) then
+        
+        Error( "You are calling the generic \"/\" method, but <cat> does not have an object constructor. Please add one or install a special version of \"/\"." );
+        
+    fi;
+    
+    return ObjectConstructor( cat, object_datum );
+    
+end );
+
+##
 InstallMethod( IsWellDefined,
                [ IsCapCategoryObject ],
   IsWellDefinedForObjects
@@ -230,7 +246,6 @@ InstallMethod( AddObjectRepresentation,
     
     category!.object_representation := representation;
     category!.object_type := NewType( TheFamilyOfCapCategoryObjects, representation and ObjectFilter( category ) and IsCapCategoryObjectRep and HasCapCategory );
-    SetObjectType( category, category!.object_type );
     
 end );
 
@@ -240,14 +255,30 @@ InstallMethod( RandomObject, [ IsCapCategory, IsInt ], RandomObjectByInteger );
 ##
 InstallMethod( RandomObject, [ IsCapCategory, IsList ], RandomObjectByList );
 
-
+##
 InstallGlobalFunction( ObjectifyObjectForCAPWithAttributes,
                        
   function( object, category, additional_arguments_list... )
     local arg_list;
     
     arg_list := Concatenation(
-        [ object, ObjectType( category ), CapCategory, category ], additional_arguments_list
+        [ object, category!.object_type, CapCategory, category ], additional_arguments_list
+    );
+    
+    return CallFuncList( ObjectifyWithAttributes, arg_list );
+    
+end );
+
+##
+InstallGlobalFunction( CreateCapCategoryObjectWithAttributes,
+                       
+  function( category, additional_arguments_list... )
+    local arg_list;
+    
+    # inline ObjectifyObjectForCAPWithAttributes( rec( ), category, additional_arguments_list... );
+    
+    arg_list := Concatenation(
+        [ rec( ), category!.object_type, CapCategory, category ], additional_arguments_list
     );
     
     return CallFuncList( ObjectifyWithAttributes, arg_list );

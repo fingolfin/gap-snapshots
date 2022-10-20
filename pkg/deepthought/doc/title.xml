@@ -9,7 +9,7 @@
     This package provides functions for computations in finitely generated nilpotent groups based on the Deep Thought algorithm.
   </Subtitle>
   <Version>
-    1.0.5
+    1.0.6
   </Version>
   <Author>
     Nina Wagner<Alt Only="LaTeX"><Br/></Alt>
@@ -17,6 +17,6 @@
 
   </Author>
   <Date>
-    5 April 2021
+    6 October 2022
   </Date>
   </TitlePage>

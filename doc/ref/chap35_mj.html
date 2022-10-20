@@ -67,7 +67,8 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35_mj.html#X872E05B478EC20CA">35.4-1 GeneratorsOfMagma</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35_mj.html#X87DD93EC8061DD81">35.4-2 GeneratorsOfMagmaWithOne</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35_mj.html#X83A901B1857C8489">35.4-3 GeneratorsOfMagmaWithInverses</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35_mj.html#X7DE33AFC823C7873">35.4-4 Centralizer</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35_mj.html#X7A2BF4527E08803C">35.4-4 <span class="Heading">Centralizer</span></a>
+</span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35_mj.html#X847ABE6F781C7FE8">35.4-5 Centre</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35_mj.html#X7C651C9C78398FFF">35.4-6 Idempotents</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap35_mj.html#X7C83B5A47FD18FB7">35.4-7 IsAssociative</a></span>
@@ -410,9 +411,9 @@ fail
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfMagmaWithInverses</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is a list <var class="Arg">gens</var> of elements of the magma-with-inverses <var class="Arg">M</var> that generates <var class="Arg">M</var> as a magma-with-inverses, that is, the closure of <var class="Arg">gens</var> under multiplication <code class="func">\*</code> (<a href="chap31_mj.html#X8481C9B97B214C23"><span class="RefLink">31.12-1</span></a>) and taking inverses (see <code class="func">Inverse</code> (<a href="chap31_mj.html#X78EE524E83624057"><span class="RefLink">31.10-8</span></a>)) is <var class="Arg">M</var>.</p>
 
-<p><a id="X7DE33AFC823C7873" name="X7DE33AFC823C7873"></a></p>
+<p><a id="X7A2BF4527E08803C" name="X7A2BF4527E08803C"></a></p>
 
-<h5>35.4-4 Centralizer</h5>
+<h5>35.4-4 <span class="Heading">Centralizer</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Centralizer</code>( <var class="Arg">M</var>, <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Centralizer</code>( <var class="Arg">M</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
@@ -444,7 +445,7 @@ Group(())
 
 <p><code class="func">Center</code> is just a synonym for <code class="func">Centre</code>.</p>
 
-<p>For associative magmas we have that <code class="code">Centre( <var class="Arg">M</var> ) = Centralizer( <var class="Arg">M</var>, <var class="Arg">M</var> )</code>, see <code class="func">Centralizer</code> (<a href="chap35_mj.html#X7DE33AFC823C7873"><span class="RefLink">35.4-4</span></a>).</p>
+<p>For associative magmas we have that <code class="code">Centre( <var class="Arg">M</var> ) = Centralizer( <var class="Arg">M</var>, <var class="Arg">M</var> )</code>, see <code class="func">Centralizer</code> (<a href="chap35_mj.html#X7A2BF4527E08803C"><span class="RefLink">35.4-4</span></a>).</p>
 
 <p>The centre of a magma is always commutative (see <code class="func">IsCommutative</code> (<a href="chap35_mj.html#X830A4A4C795FBC2D"><span class="RefLink">35.4-9</span></a>)). (When one installs a new method for <code class="func">Centre</code>, one should set the <code class="func">IsCommutative</code> (<a href="chap35_mj.html#X830A4A4C795FBC2D"><span class="RefLink">35.4-9</span></a>) value of the result to <code class="keyw">true</code>, in order to make this information available.)</p>
 

@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap18.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:700-736
+# doc/_Chapter_Examples_and_Tests.xml:702-738
 gap> QQ := HomalgFieldOfRationals();;
 gap> vec := MatrixCategory( QQ );;
 gap> op := Opposite( vec );;

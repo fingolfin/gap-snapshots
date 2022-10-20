@@ -10,15 +10,17 @@
 ##  version) is written to `gap-publishednicer.bib'.
 ##
 CorrectGAPBibliography:= function()
-    local dirs, fileold, filenew, parseold, parsenew, valid, entry, oldentry,
-          stringnew, pos, sc;
+    local dirs, fileold, filenew, parseold, contentsnew, parsenew, valid,
+          entry, oldentry, stringnew, pos, sc;
 
     dirs:= DirectoriesPackageLibrary( "Browse", "bibl" );
     fileold:= Filename( dirs, "gap-publishednicer.bib" );
     filenew:= Filename( dirs, "gap-publishednicer.bib.new" );
 
-    parseold:= ParseBibFiles( fileold );
-    parsenew:= ParseBibFiles( filenew );
+    parseold:= ParseBibFiles( fileold );;
+    contentsnew:= StringFile( filenew  );;
+    contentsnew:= HeuristicTranslationsLaTeX2XML.Apply( contentsnew );;
+    parsenew:= ParseBibStrings( contentsnew );;
 
     valid:= [];
     for entry in parsenew[1] do

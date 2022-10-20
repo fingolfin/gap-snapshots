@@ -1,0 +1,75 @@
+\GAPDocLabFile{majoranaalgebras}
+\makelabel{majoranaalgebras:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{majoranaalgebras:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{majoranaalgebras:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{majoranaalgebras:Introduction}{1}{X7DFB63A97E67C0A1}
+\makelabel{majoranaalgebras:A quick guide}{1.1}{X840C49F287F4C385}
+\makelabel{majoranaalgebras:Understanding the output}{1.2}{X81C7E9D57969211C}
+\makelabel{majoranaalgebras:Info levels}{1.3}{X79EF8C857EA0E22B}
+\makelabel{majoranaalgebras:Shapes of a Majorana representation}{2}{X879CF99D7A9D77ED}
+\makelabel{majoranaalgebras:The shapes functions}{2.1}{X809C94E778B04047}
+\makelabel{majoranaalgebras:Majorana representations}{3}{X7B5CADA77CC27BB0}
+\makelabel{majoranaalgebras:The main function}{3.1}{X80ABA2918548E108}
+\makelabel{majoranaalgebras:The n-closed function}{3.2}{X85C2A4B97D4B47D0}
+\makelabel{majoranaalgebras:Functions for calculating with Majorana representations}{4}{X7A7065EB795C13B3}
+\makelabel{majoranaalgebras:Calculating products}{4.1}{X7D4417837D9EA89A}
+\makelabel{majoranaalgebras:Basic functions}{4.2}{X85B9E746807414FF}
+\makelabel{majoranaalgebras:The subalgebra structure}{4.3}{X79716CB683A678A7}
+\makelabel{majoranaalgebras:Functions for testing Majorana representations}{5}{X7CB84E157B2F902D}
+\makelabel{majoranaalgebras:The main function}{5.1}{X80ABA2918548E108}
+\makelabel{majoranaalgebras:Other functions}{5.2}{X87C3D1B984960984}
+\makelabel{majoranaalgebras:Orbital Structures}{6}{X7E210A267E85D052}
+\makelabel{majoranaalgebras:Examples}{6.1}{X7A489A5D79DA9E5C}
+\makelabel{majoranaalgebras:Signed Permutations}{7}{X847F187C7DA356AA}
+\makelabel{majoranaalgebras:Different Representations}{7.1}{X828866AB7AE9C0CC}
+\makelabel{majoranaalgebras:Low-Level Descriptions}{7.2}{X8598044F844BF533}
+\makelabel{majoranaalgebras:Index}{Ind}{X83A0356F839C696F}
+\makelabel{majoranaalgebras:InfoMajorana}{1.3.1}{X824D39948644EB03}
+\makelabel{majoranaalgebras:ShapesOfMajoranaRepresentation}{2.1.1}{X7AEAA41E813BB13C}
+\makelabel{majoranaalgebras:ShapesOfMajoranaRepresentationAxiomM8}{2.1.2}{X7873676E79F8D08B}
+\makelabel{majoranaalgebras:MAJORANAIsSixTranspositionGroup}{2.1.3}{X8740DD5585713A26}
+\makelabel{majoranaalgebras:MAJORANARemoveDuplicateShapes}{2.1.4}{X7922BE3C7961F33D}
+\makelabel{majoranaalgebras:MajoranaRepresentation}{3.1.1}{X7F601CB47EBEAA6A}
+\makelabel{majoranaalgebras:NClosedMajoranaRepresentation}{3.2.1}{X8155D0F98405BD1E}
+\makelabel{majoranaalgebras:MAJORANAAlgebraProduct}{4.1.1}{X8115D9E47F601DB2}
+\makelabel{majoranaalgebras:MAJORANAInnerProduct}{4.1.2}{X8545997F7E52FE1B}
+\makelabel{majoranaalgebras:MAJORANAIsComplete}{4.2.1}{X7B229A8480CD11D3}
+\makelabel{majoranaalgebras:MAJORANADimension}{4.2.2}{X82D60F67810C6918}
+\makelabel{majoranaalgebras:MAJORANAEigenvectors}{4.2.3}{X79B8FEDC80748937}
+\makelabel{majoranaalgebras:MAJORANABasis}{4.2.4}{X79FD73207DA6125F}
+\makelabel{majoranaalgebras:MAJORANAAdjointAction}{4.2.5}{X7CEDE1DE82115F38}
+\makelabel{majoranaalgebras:MAJORANASubalgebra}{4.3.1}{X85DC61987ED3A345}
+\makelabel{majoranaalgebras:MAJORANAIsJordanAlgebra}{4.3.2}{X81AE43B17B7020A3}
+\makelabel{majoranaalgebras:MajoranaAlgebraTest}{5.1.1}{X867D4BF17C730633}
+\makelabel{majoranaalgebras:MAJORANATestFrobeniusForm}{5.2.1}{X7AD4DBC27DB539EF}
+\makelabel{majoranaalgebras:MAJORANATestInnerProduct}{5.2.2}{X7E3499067808B4A0}
+\makelabel{majoranaalgebras:MAJORANATestAxiomM2}{5.2.3}{X7CB2F52386F07B68}
+\makelabel{majoranaalgebras:MAJORANATestPrimitivity}{5.2.4}{X85DFEF167A236627}
+\makelabel{majoranaalgebras:IsOrbitalStructure for IsObject}{6.1.1}{X7DE994FE7D595E0C}
+\makelabel{majoranaalgebras:OrbitalStructure}{6.1.2}{X86F56EAD87C74596}
+\makelabel{majoranaalgebras:OSOrbitRepresentative}{6.1.3}{X87395C8C8592FF00}
+\makelabel{majoranaalgebras:OSCanonisingElement}{6.1.4}{X79BD0DBA7B72D4C9}
+\makelabel{majoranaalgebras:OSCanonisingElementAndRepresentative}{6.1.5}{X815676077CFC8CF4}
+\makelabel{majoranaalgebras:OSStabilizerOf}{6.1.6}{X7CC301797B101011}
+\makelabel{majoranaalgebras:OrbitalRepresentative}{6.1.7}{X7F2D94D9870E46B9}
+\makelabel{majoranaalgebras:AllOrbitalRepresentatives}{6.1.8}{X8595D3EA85AA992F}
+\makelabel{majoranaalgebras:OrbitalCanonizingElement}{6.1.9}{X7CDB09DF87DD88C5}
+\makelabel{majoranaalgebras:OrbitalCanonizingElementInverse}{6.1.10}{X79D2C53084F773B2}
+\makelabel{majoranaalgebras:OrbitalTransversalIterator}{6.1.11}{X81A62A257FAC1BC7}
+\makelabel{majoranaalgebras:UnorderedOrbitalRepresentative}{6.1.12}{X7FDDCFB078F55048}
+\makelabel{majoranaalgebras:AllUnorderedOrbitalRepresentatives}{6.1.13}{X79E001B18591F1AE}
+\makelabel{majoranaalgebras:UnorderedOrbitalTransversalIterator}{6.1.14}{X78ABE8E9844AC143}
+\makelabel{majoranaalgebras:UnorderedOrbitalCanonizingElement}{6.1.15}{X7FA8E4BE7F8F47DD}
+\makelabel{majoranaalgebras:UnorderedOrbitalCanonizingElementInverse}{6.1.16}{X82CAF97C7AE60FA4}
+\makelabel{majoranaalgebras:IsSignedPerm for IsAssociativeElement andIsExtLElement andIsExtRElement andIsMultiplicativeElement andIsMultiplicativeElementWithOne andIsMultiplicativeElementWithInverse andIsFiniteOrderElement}{7.2.1}{X7BFE3679813E5D08}
+\makelabel{majoranaalgebras:ListSignedPerm for IsSignedPerm}{7.2.2}{X83BC19B8812D211C}
+\makelabel{majoranaalgebras:ListSignedPerm for IsSignedPerm, IsPosInt}{7.2.3}{X7CAA502279CC9A8C}
+\makelabel{majoranaalgebras:SignedPerm}{7.2.4}{X7C6AB5A27B2DA2F1}
+\makelabel{majoranaalgebras:NewSignedPerm for IsSignedPerm, IsList}{7.2.5}{X856041438008B08B}
+\makelabel{majoranaalgebras:NewSignedPerm for IsSignedPerm, IsPerm, IsList}{7.2.6}{X82C6D31583C213E1}
+\makelabel{majoranaalgebras:IsSignedPermRep for IsSignedPerm and IsPositionalObjectRep}{7.2.7}{X87BCE2B280486669}
+\makelabel{majoranaalgebras:IsSignedPermListRep for IsSignedPerm and IsPositionalObjectRep}{7.2.8}{X8531225C7C224C62}
+\makelabel{majoranaalgebras:OnPosPoints}{7.2.9}{X8033A20F7A7A60CB}
+\makelabel{majoranaalgebras:LargestMovedPoint for IsSignedPerm}{7.2.10}{X84709BF07811FECB}
+\makelabel{majoranaalgebras:RandomSignedPermList}{7.2.11}{X824068057D141DE0}
+\makelabel{majoranaalgebras:RandomSignedPerm}{7.2.12}{X85E05F9283E5B099}

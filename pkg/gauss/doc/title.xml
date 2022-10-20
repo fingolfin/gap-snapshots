@@ -9,7 +9,7 @@
     Extended Gauss functionality for &GAP;
   </Subtitle>
   <Version>
-    2022.08-04
+    2022.10-01
   </Version>
   <Author>
     Simon Görtzen<Alt Only="LaTeX"><Br/></Alt>
@@ -25,7 +25,7 @@ Germany<Br/>
 
   </Author>
   <Date>
-    17 August 2022
+    13 October 2022
   </Date>
   <Abstract>
     This document explains the primary uses of the &Gauss; package. Included is a documented list of the most important methods and functions needed to work with sparse matrices and the algorithms provided by the &Gauss; package. <P/>

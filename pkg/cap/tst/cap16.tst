@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap16.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:544-642
+# doc/_Chapter_Examples_and_Tests.xml:546-644
 gap> ZZ := HomalgRingOfIntegers();;
 gap> Ml := AsLeftPresentation( HomalgMatrix( [ [ 2 ] ], 1, 1, ZZ ) );
 <An object in Category of left presentations of Z>
@@ -37,22 +37,22 @@ gap> Ul := TensorUnit( CapCategory( Ml ) );
 gap> IntHoml := InternalHomOnObjects( DirectSum( Ml, Ul ), Nl );
 <An object in Category of left presentations of Z>
 gap> Display( UnderlyingMatrix( IntHoml ) );
-[ [  -2,  -1 ],
-  [   1,  -1 ] ]
+[ [  1,  2 ],
+  [  0,  3 ] ]
 gap> generator_l1 := StandardGeneratorMorphism( IntHoml, 1 );
 <A morphism in Category of left presentations of Z>
 gap> morphism_l1 := LambdaElimination( DirectSum( Ml, Ul ), Nl, generator_l1 );
 <A morphism in Category of left presentations of Z>
 gap> Display( UnderlyingMatrix( morphism_l1 ) );
-[ [  0 ],
-  [  2 ] ]
+[ [  -3 ],
+  [   2 ] ]
 gap> generator_l2 := StandardGeneratorMorphism( IntHoml, 2 );
 <A morphism in Category of left presentations of Z>
 gap> morphism_l2 := LambdaElimination( DirectSum( Ml, Ul ), Nl, generator_l2 );
 <A morphism in Category of left presentations of Z>
 gap> Display( UnderlyingMatrix( morphism_l2 ) );
-[ [  0 ],
-  [  2 ] ]
+[ [   0 ],
+  [  -1 ] ]
 gap> IsEqualForMorphisms( LambdaIntroduction( morphism_l1 ), generator_l1 );
 false
 gap> IsCongruentForMorphisms( LambdaIntroduction( morphism_l1 ), generator_l1 );
@@ -85,21 +85,21 @@ gap> Ur := TensorUnit( CapCategory( Mr ) );
 gap> IntHomr := InternalHomOnObjects( DirectSum( Mr, Ur ), Nr );
 <An object in Category of right presentations of Z>
 gap> Display( UnderlyingMatrix( IntHomr ) );
-[ [  -2,   1 ],
-  [  -1,  -1 ] ]
+[ [  1,  0 ],
+  [  2,  3 ] ]
 gap> generator_r1 := StandardGeneratorMorphism( IntHomr, 1 );
 <A morphism in Category of right presentations of Z>
 gap> morphism_r1 := LambdaElimination( DirectSum( Mr, Ur ), Nr, generator_r1 );
 <A morphism in Category of right presentations of Z>
 gap> Display( UnderlyingMatrix( morphism_r1 ) );
-[ [  0,   2 ] ]
+[ [  -3,   2 ] ]
 gap> generator_r2 := StandardGeneratorMorphism( IntHoml, 2 );
 <A morphism in Category of left presentations of Z>
 gap> morphism_r2 := LambdaElimination( DirectSum( Ml, Ul ), Nl, generator_r2 );
 <A morphism in Category of left presentations of Z>
 gap> Display( UnderlyingMatrix( morphism_r2 ) );
 [ [   0 ],
-  [   2 ] ]
+  [  -1 ] ]
 gap> IsEqualForMorphisms( LambdaIntroduction( morphism_r1 ), generator_r1 );
 false
 gap> IsCongruentForMorphisms( LambdaIntroduction( morphism_r1 ), generator_r1 );

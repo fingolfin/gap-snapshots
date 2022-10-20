@@ -166,8 +166,9 @@ InstallMethod( Browse,
     function( tbl, options )
     local log, replay, record, stringEntry, stringEntryData, legend,
           cletter, centralizers, chars_from_irr, cnr, chars, charnames,
-          classes, tbl_powermap, powermap, indicator, nam, indic, i, heights,
-          modes, table, ind, j, list, hidecollabelspos, p, mode, pos;
+          classes, tbl_powermap, powermap, field_degrees, indicator, OD, nam,
+          indic, i, oddata, ind2, entry, heights, modes, table, ind, p,
+          degrees, j, list, hidecollabelspos, mode, pos;
 
     # Use only the argument record for the history.
     if IsBound( options.log ) and IsBound( options.replay ) then
@@ -306,6 +307,17 @@ InstallMethod( Browse,
       fi;
     od;
 
+    # print degrees of character fields?
+    field_degrees:= false;
+    for record in options do
+      if IsBound( record.characterField ) then
+        if record.characterField = true then
+          field_degrees:= true;
+        fi;
+        break;
+      fi;
+    od;
+
     # print Frobenius-Schur indicators?
     indicator:= [];
     for record in options do
@@ -318,6 +330,19 @@ InstallMethod( Browse,
         break;
       fi;
     od;
+
+    # print orthogonal discriminants
+    OD:= false;
+    if chars_from_irr then
+      for record in options do
+        if IsBound( record.OD ) then
+          if record.OD = true then
+            OD:= true;
+          fi;
+          break;
+        fi;
+      od;
+    fi;
 
     # (end of options handling)
 
@@ -334,14 +359,42 @@ InstallMethod( Browse,
       od;
     fi;
 
-    # prepare indicator
+    # prepare indicator and OD
+    indic:= [];
+    if OD then
+      if not 2 in indicator then
+        indicator:= Concatenation( [ 2 ], indicator );
+      fi;
+      indicator:= Concatenation( [ "OD" ], indicator );
+    fi;
     if indicator <> [] then
-      indic:= [];
-      for i in indicator do
-        if chars_from_irr and IsBound( ComputedIndicators( tbl )[i] ) then
-          indic[i]:= ComputedIndicators( tbl )[i]{ cnr };
+      for i in [ 1 .. Length( indicator ) ] do
+        if indicator[i] = "OD" then
+          indic[1]:= ListWithIdenticalEntries( Length( cnr ), "" );
+          if IsBoundGlobal( "OrthogonalDiscriminants" ) then
+            oddata:= ValueGlobal( "OrthogonalDiscriminants" )( tbl );
+            for j in [ 1 .. Length( cnr ) ] do
+              if IsBound( oddata[ cnr[j] ] ) then
+                indic[1][j]:= oddata[ cnr[j] ];
+              fi;
+            od;
+          else
+            # Show '?' and empty strings.
+            ind2:= Indicator( tbl, Irr( tbl ){ cnr }, 2 );
+            for j in [ 1 .. Length( cnr ) ] do
+              if ( not ind2[ cnr[j] ] in [ -1, 0 ] ) and
+                 Irr( tbl )[ cnr[j] ][1] mod 2 = 0 then
+                indic[1][j]:= "?";
+              fi;
+            od;
+          fi;
         else
-          indic[i]:= Indicator( tbl, Irr( tbl ){ cnr }, i );
+          if chars_from_irr and
+             IsBound( ComputedIndicators( tbl )[ indicator[i] ] ) then
+            indic[i]:= ComputedIndicators( tbl )[ indicator[i] ]{ cnr };
+          else
+            indic[i]:= Indicator( tbl, chars, indicator[i] );
+          fi;
         fi;
       od;
     fi;
@@ -522,17 +575,20 @@ InstallMethod( Browse,
 
     # Provide indicator columns.
     ind:= ListWithIdenticalEntries( Maximum( 1, Length( indicator ) ), "" );
-    for i in indicator do
+
+    for i in [ 1 .. Length( indicator ) ] do
       Add( table.work.sepLabelsRow, " " );
-      if i = 2 then
+      if indicator[i] = 2 then
         list:= [];
         for j in cnr do
           if   indic[i][j] = 0 then
             Add( list, "o" );
           elif indic[i][j] = 1 then
             Add( list, "+" );
-          else
+          elif indic[i][j] = -1 then
             Add( list, "-" );
+          else
+            Add( list, "?" );
           fi;
         od;
         Add( table.work.labelsRow, list );
@@ -540,6 +596,23 @@ InstallMethod( Browse,
         Add( table.work.labelsRow, List( indic[i]{ cnr }, String ) );
       fi;
     od;
+
+    # Provide a column for the degrees of the character fields
+    # as the first column after the character labels, with label "d".
+    if field_degrees then
+      Add( indicator, "d", 1 );
+      Add( ind, " ", 1 );
+      Add( table.work.sepLabelsRow, " " );
+      p:= UnderlyingCharacteristic( tbl );
+      if p = 0 then
+        degrees:= List( chars, x -> Dimension( Field( Rationals, x ) ) );
+      else
+        degrees:= List( chars, x -> Length( Factors( SizeOfFieldOfDefinition(
+          ClassFunction( tbl, x ), p ) ) ) );
+      fi;
+      Add( table.work.labelsRow, List( degrees, String ), 2 );
+    fi;
+
     table.work.labelsRow:= TransposedMat( table.work.labelsRow );
     if indicator = [] then
       Append( table.work.sepLabelsRow, [ "", "" ] );
@@ -623,9 +696,10 @@ InstallMethod( Browse,
 
     fi;
 
-    if indicator <> [] then
+    if indicator <> [] and powermap <> [] then
       # Replace the separator before the last indicator by empty
-      # if its column is only one character wide.
+      # if its column is only one character wide
+      # and if power maps are shown.
       pos:= Length( indicator ) + 1;
       if indicator[ Length( indicator ) ] < 10 and
          ForAll( table.work.labelsRow, x -> Length( x[ pos ] ) <= 1 ) then

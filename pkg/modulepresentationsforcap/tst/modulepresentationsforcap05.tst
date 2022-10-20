@@ -10,7 +10,7 @@
 #
 gap> START_TEST("modulepresentationsforcap05.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:226-241
+# doc/_Chapter_Examples_and_Tests.xml:217-232
 gap> Q := HomalgFieldOfRationalsInSingular();;
 gap> R := Q * "x";;
 gap> F := FreeLeftPresentation( 2, Q );;

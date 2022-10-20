@@ -102,7 +102,35 @@
   [1X1.3 [33X[0;0YWhat's New in [5XAtlasRep[105X[101X[1X, Compared to Older Versions?[133X[101X
   
   
-  [1X1.3-1 [33X[0;0YWhat's New in Version 2.1.4? (August 2022)[133X[101X
+  [1X1.3-1 [33X[0;0YWhat's New in Version 2.1.6? (October 2022)[133X[101X
+  
+  [33X[0;0YThe  package  now requires the [5Xutils[105X package [BGH+22], and uses its [2XDownload[102X
+  ([14XUtils:  Download[114X)  function  for  downloading remote files. The former user
+  preference  [10XFileTransferTool[110X of the [5XAtlasRep[105X package is no longer supported;
+  it had been used in older versions to distinguish between different download
+  tools.[133X
+  
+  [33X[0;0YA  method  for  [2XConjugacyClasses[102X ([14XReference: ConjugacyClasses attribute[114X) has
+  been   added   that  uses  a  straight  line  program  for  computing  class
+  representatives  of  a  group that has been created with [2XAtlasGroup[102X ([14X3.5-8[114X),
+  provided  such a program is available. Thanks to Frank Lübeck for suggesting
+  this.[133X
+  
+  
+  [1X1.3-2 [33X[0;0YWhat's New in Version 2.1.5? (August 2022)[133X[101X
+  
+  [33X[0;0YTwo  bugs  concerning  local  file  permissions and the handling of download
+  failures  were  fixed.  Thanks  to  Frank  Lübeck  and  Fabian  Zickgraf for
+  reporting these problems.[133X
+  
+  
+  [1X1.3-3 [33X[0;0YWhat's New in Version 2.1.4? (August 2022)[133X[101X
+  
+  [33X[0;0YA few changes in the code for downloading files were needed in order to make
+  some CI tests happy.[133X
+  
+  
+  [1X1.3-4 [33X[0;0YWhat's New in Version 2.1.3? (August 2022)[133X[101X
   
   [33X[0;0YThe server address for the core part of the database has changed.[133X
   
@@ -116,7 +144,7 @@
   [2XOneAtlasGeneratingSetInfo[102X ([14X3.5-6[114X), see [2XDisplayAtlasInfo[102X ([14X3.5-1[114X).[133X
   
   
-  [1X1.3-2 [33X[0;0YWhat's New in Version 2.1.2? (March 2022)[133X[101X
+  [1X1.3-5 [33X[0;0YWhat's New in Version 2.1.2? (March 2022)[133X[101X
   
   [33X[0;0YNot much.[133X
   
@@ -126,7 +154,7 @@
   version 2.1.1 pointed to a wrong directory).[133X
   
   
-  [1X1.3-3 [33X[0;0YWhat's New in Version 2.1.1? (February 2022)[133X[101X
+  [1X1.3-6 [33X[0;0YWhat's New in Version 2.1.1? (February 2022)[133X[101X
   
   [30X    [33X[0;6YThe  new function [2XEvaluatePresentation[102X ([14X3.5-11[114X) computes the images of
         the relators of a presentation (see Section [14X6.1-7[114X).[133X
@@ -146,7 +174,7 @@
         ([14X6.2-3[114X).[133X
   
   [30X    [33X[0;6YThe  new  user  preference  [10X"AtlasRepJsonFilesAddresses"[110X  (see Section
-        [14X4.2-15[114X)   allows  one  to  use  Json  format  data  files  for  matrix
+        [14X4.2-14[114X)   allows  one  to  use  Json  format  data  files  for  matrix
         representations  in  characteristic  zero,  which  in  turn  makes  it
         possible  to  create  the matrices over prescribed fields, for example
         fields returned by [2XAlgebraicExtension[102X ([14XReference: AlgebraicExtension[114X).
@@ -163,7 +191,7 @@
         whenever it is needed.)[133X
   
   
-  [1X1.3-4 [33X[0;0YWhat's New in Version 2.1.0? (May 2019)[133X[101X
+  [1X1.3-7 [33X[0;0YWhat's New in Version 2.1.0? (May 2019)[133X[101X
   
   [33X[0;0YThe main differences to earlier versions concern extensions of the available
   data.  Up  to  now, such extensions were possible only in the sense that one
@@ -296,8 +324,8 @@
         data to be examined.[133X
   
   [30X    [33X[0;6YDifferent  header  formats  are now supported when reading and writing
-        [5XMeatAxe[105X  format  files,  see  Section  [14X4.2-9[114X, and one can set a global
-        default for the creation of mode 2 [5XMeatAxe[105X files, see Section [14X4.2-10[114X.[133X
+        [5XMeatAxe[105X  format  files,  see  Section  [14X4.2-8[114X, and one can set a global
+        default for the creation of mode 2 [5XMeatAxe[105X files, see Section [14X4.2-9[114X.[133X
   
   [30X    [33X[0;6YThe  function  [2XMeatAxeString[102X  ([14X7.3-2[114X) admits also an integer matrix as
         argument.[133X
@@ -310,7 +338,7 @@
         nontrivial [22Xp[122X-core have been removed from the file [11Xgap/mindeg.g[111X.[133X
   
   
-  [1X1.3-5 [33X[0;0YWhat's New in Version 1.5.1? (March 2016)[133X[101X
+  [1X1.3-8 [33X[0;0YWhat's New in Version 1.5.1? (March 2016)[133X[101X
   
   [30X    [33X[0;6YThe  paths  of  the directories where downloaded data files get stored
         are  now  customizable,  see  Section  [14X4.2-2[114X. Up to now, the data were
@@ -355,11 +383,11 @@
         C-[5XMeatAxe[105X. Thanks to Klaus Lux for pointing out this problem.[133X
   
   [30X    [33X[0;6YDepending  on  the  terminal  capabilities  and  the  user  preference
-        [10XDisplayFunction[110X  (see [14X4.2-12[114X), some non-ASCII characters may appear in
+        [10XDisplayFunction[110X  (see [14X4.2-11[114X), some non-ASCII characters may appear in
         the output shown by [2XDisplayAtlasInfo[102X ([14X3.5-1[114X).[133X
   
   
-  [1X1.3-6 [33X[0;0YWhat's New in Version 1.5? (July 2011)[133X[101X
+  [1X1.3-9 [33X[0;0YWhat's New in Version 1.5? (July 2011)[133X[101X
   
   [30X    [33X[0;6YThe function [2XAtlasSubgroup[102X ([14X3.5-9[114X) now admits also the return value of
         [2XOneAtlasGeneratingSetInfo[102X  ([14X3.5-6[114X)  or  the return value of [2XAtlasGroup[102X
@@ -422,16 +450,16 @@
   
   [30X    [33X[0;6YA  few  nicer  characters  are  used  by  [2XDisplayAtlasInfo[102X  ([14X3.5-1[114X) if
         [10XGAPInfo.TermEncoding[110X  has  the  value [10X"UTF-8"[110X and if [2XPrint[102X ([14XReference:
-        Print[114X) is not the display function to be used, see Section [14X4.2-12[114X.[133X
+        Print[114X) is not the display function to be used, see Section [14X4.2-11[114X.[133X
   
   [30X    [33X[0;6YA  bug in the function [10XReloadAtlasTableOfContents[110X was fixed. Thanks to
         Jack Schmidt for reporting this bug.[133X
   
   
-  [1X1.3-7 [33X[0;0YWhat's New in Version 1.4? (June 2008)[133X[101X
+  [1X1.3-10 [33X[0;0YWhat's New in Version 1.4? (June 2008)[133X[101X
   
   [30X    [33X[0;6YIn  addition  to  the group orders that were added in version 1.3 (see
-        Section  [14X1.3-9[114X),  also  many  orders  of  maximal  subgroups  are  now
+        Section  [14X1.3-12[114X),  also  many  orders  of  maximal  subgroups  are now
         available.  These values occur in the records returned by [2XAtlasProgram[102X
         ([14X3.5-4[114X)  (for  the  case  of  [10X"maxes"[110X  type programs) and of the three
         argument  version of [2XAtlasGenerators[102X ([14X3.5-3[114X); now a [10Xsize[110X component may
@@ -478,7 +506,7 @@
         [2XOneAtlasGeneratingSetInfo[102X ([14X3.5-6[114X) as its argument.[133X
   
   
-  [1X1.3-8 [33X[0;0YWhat's New in Version 1.3.1? (October 2007)[133X[101X
+  [1X1.3-11 [33X[0;0YWhat's New in Version 1.3.1? (October 2007)[133X[101X
   
   [33X[0;0YThis  version  was  mainly  released in order to fix a few problems. Now one
   does not get warnings about unbound variables when the package is loaded and
@@ -495,9 +523,9 @@
   version 4.4.10 of [5XGAP[105X.)[133X
   
   
-  [1X1.3-9 [33X[0;0YWhat's New in Version 1.3? (June 2007)[133X[101X
+  [1X1.3-12 [33X[0;0YWhat's New in Version 1.3? (June 2007)[133X[101X
   
-  [30X    [33X[0;6YThe  database  was extended, see Section [14X4.2-5[114X for the number and size
+  [30X    [33X[0;6YThe  database  was extended, see Section [14X4.2-4[114X for the number and size
         of files.[133X
   
   [30X    [33X[0;6YNew data types and corresponding [5XGAP[105X objects have been introduced, for
@@ -522,7 +550,7 @@
         output.[133X
   
   [30X    [33X[0;6YOne   can   now   use   [2XPager[102X   ([14XReference:  Pager[114X)  functionality  in
-        [2XDisplayAtlasInfo[102X ([14X3.5-1[114X), see Section [14X4.2-12[114X.[133X
+        [2XDisplayAtlasInfo[102X ([14X3.5-1[114X), see Section [14X4.2-11[114X.[133X
   
         [33X[0;6YAn  interactive alternative to [2XDisplayAtlasInfo[102X ([14X3.5-1[114X) is provided by
         the  function  [2XBrowseAtlasInfo[102X  ([14XBrowse: BrowseAtlasInfo[114X) from the new
@@ -536,8 +564,7 @@
         see Section [14X7.2[114X.[133X
   
   [30X    [33X[0;6YFor transferring remote data, the [5XGAP[105X package [5XIO[105X (see [Neu14]) can now
-        be   used  (and  is  recommended)  as  an  alternative  to  [11Xwget[111X,  see
-        Section [14X4.2-4[114X.[133X
+        be used (and is recommended) as an alternative to [11Xwget[111X.[133X
   
   [30X    [33X[0;6YThe  address  of the data server has changed. The access to the server
         is  no  longer possible via [11Xftp[111X, thus the mechanism used up to version
@@ -551,13 +578,13 @@
         install [11Xperl[111X.[133X
   
         [33X[0;6YAnother consequence is that the system program [11Xls[111X is no longer needed,
-        see Section [14X1.3-11[114X.[133X
+        see Section [14X1.3-14[114X.[133X
   
   [30X    [33X[0;6YThe package manual has been restructured, extended and improved. It is
         now based on the package [5XGAPDoc[105X (see [LN18]).[133X
   
   
-  [1X1.3-10 [33X[0;0YWhat's New in Version 1.2? (November 2003)[133X[101X
+  [1X1.3-13 [33X[0;0YWhat's New in Version 1.2? (November 2003)[133X[101X
   
   [33X[0;0YNot much.[133X
   
@@ -594,13 +621,13 @@
   is now faster than it was in [5XGAP[105X 4.3.[133X
   
   
-  [1X1.3-11 [33X[0;0YWhat's New in Version 1.1? (October 2002)[133X[101X
+  [1X1.3-14 [33X[0;0YWhat's New in Version 1.1? (October 2002)[133X[101X
   
   [33X[0;0YThe   biggest   change  w. r. t. Version 1.1  is  the  addition  of  private
   extensions  (see Chapter [14X5[114X). It includes a new [21Xfree format[121X for straight line
   programs  (see Section [14X5.2[114X). Unfortunately, this feature requires the system
   program  [11Xls[111X,  so  it  may  be  not  available  for  example under MS Windows
-  operating systems. [But see Section [14X1.3-9[114X.][133X
+  operating systems. [But see Section [14X1.3-12[114X.][133X
   
   [33X[0;0YIn order to admit the addition of other types of data, the implementation of
   several functions has been changed. Data types are described in Section [14X7.5[114X.

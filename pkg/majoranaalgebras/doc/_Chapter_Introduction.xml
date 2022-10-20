@@ -95,53 +95,53 @@ information required to perform calculations in the Majorana representation that
 has been calculated. The record contains the following components.
 <P/>
 <List>
-<Mark> <C>group</C></Mark>
-<Item> The group <A>G</A>, as inputted by the user.</Item>
-<Mark> <C>involutions</C></Mark>
-<Item> The set <A>T</A>, as inputted by the user.</Item>
-<Mark> <C>shape</C></Mark>
-<Item> The shape of the representation, as chosen by the user in the input
-of <Ref Func="MajoranaRepresentation"/>.</Item>
-<Mark> <C>eigenvalues</C></Mark>
-<Item> A list whose values give the eigenvalues of the adjoint action of the
-axes of the algebra. In this case, it must be equal to (or a subset of)
-<A>[0, 1/4, 1/32]</A>. Note that we omit the eigenvalue 1 as we assume the algebra
-to be primitive.</Item>
-<Mark> <C>axioms</C></Mark>
-<Item> A string representing the axiomatic setting of the algebra's construction,
-potentially chosen by the user with the <A>options</A> record in the input of
-<Ref Func="MajoranaRepresentation"/>.</Item>
-<Mark> <C>setup</C></Mark>
-<Item> Is itself a record, containing (among others) the following components.
-<List>
-<Mark> <C>coords</C></Mark>
-<Item> A list whose elements index a spanning set of the algebra.</Item>
-<Mark> <C>nullspace</C></Mark>
-<Item> Again a record such that <A>nullspace.vectors</A> gives a basis
-of the nullspace of the algebra (as the elements <A>rep.setup.coords</A>
-are not necessarily linearly independent).</Item>
-<Mark> <C>orbitreps</C></Mark>
-<Item> A list of indices giving the representatives of the orbits of
-the action of the group <A>G</A> on <A>T</A>.</Item>
-<Mark> <C>pairreps</C></Mark>
-<Item> A list of pairs of indices giving representatives of the orbitals
-of the action of the group <A>G</A> on <A>rep.setup.coords</A>.</Item>
-</List>
-</Item>
-<Mark> <C>algebraproducts</C></Mark>
-<Item> A list where the vector at position <A>i</A> denotes the algebra product
-of the two spanning set vectors whose indices (in <A>rep.setup.coords</A>) are
-given by <A>rep.setup.pairreps[i]</A>. If the <A>i</A>th entry is set to <A>false</A>
-then this algebra product has not yet been found and the algebra is incomplete.</Item>
-<Mark> <C>innerproducts</C></Mark>
-<Item> Performs the same role as <A>algebraproducts</A> except that, instead of vectors,
-the entries are rational numbers denoting the inner product between two spanning set
-vectors.</Item>
-<Mark> <C>evecs</C></Mark>
-<Item> A list where if <A>i</A> is contained in <A>rep.setup.orbitreps</A> then
-<A>rep.evecs[i]</A> is bound to a record. This record has components <A>"ev"</A>
-where <A>ev</A> is an eigenvalue contained in <A>rep.eigenvalues</A>. This component gives a basis for the eigenspace of the axis corresponding to
-<A>rep.involutions[i]</A> with eigenvalue <A>ev</A>.</Item>
+    <Mark> <C>group</C></Mark>
+    <Item> The group <A>G</A>, as inputted by the user.</Item>
+    <Mark> <C>involutions</C></Mark>
+    <Item> The set <A>T</A>, as inputted by the user.</Item>
+    <Mark> <C>shape</C></Mark>
+    <Item> The shape of the representation, as chosen by the user in the input
+    of <Ref Func="MajoranaRepresentation"/>.</Item>
+    <Mark> <C>eigenvalues</C></Mark>
+    <Item> A list whose values give the eigenvalues of the adjoint action of the
+    axes of the algebra. In this case, it must be equal to (or a subset of)
+    <A>[0, 1/4, 1/32]</A>. Note that we omit the eigenvalue 1 as we assume the algebra
+    to be primitive.</Item>
+    <Mark> <C>axioms</C></Mark>
+    <Item> A string representing the axiomatic setting of the algebra's construction,
+    potentially chosen by the user with the <A>options</A> record in the input of
+    <Ref Func="MajoranaRepresentation"/>.</Item>
+    <Mark> <C>setup</C></Mark>
+    <Item> Is itself a record, containing (among others) the following components.
+        <List>
+            <Mark> <C>coords</C></Mark>
+            <Item> A list whose elements index a spanning set of the algebra.</Item>
+            <Mark> <C>nullspace</C></Mark>
+            <Item> Again a record such that <A>nullspace.vectors</A> gives a basis
+            of the nullspace of the algebra (as the elements <A>rep.setup.coords</A>
+            are not necessarily linearly independent).</Item>
+            <Mark> <C>orbitreps</C></Mark>
+            <Item> A list of indices giving the representatives of the orbits of
+            the action of the group <A>G</A> on <A>T</A>.</Item>
+            <Mark> <C>pairreps</C></Mark>
+            <Item> A list of pairs of indices giving representatives of the orbitals
+            of the action of the group <A>G</A> on <A>rep.setup.coords</A>.</Item>
+        </List>
+    </Item>
+    <Mark> <C>algebraproducts</C></Mark>
+    <Item> A list where the vector at position <A>i</A> denotes the algebra product
+    of the two spanning set vectors whose indices (in <A>rep.setup.coords</A>) are
+    given by <A>rep.setup.pairreps[i]</A>. If the <A>i</A>th entry is set to <A>false</A>
+    then this algebra product has not yet been found and the algebra is incomplete.</Item>
+    <Mark> <C>innerproducts</C></Mark>
+    <Item> Performs the same role as <A>algebraproducts</A> except that, instead of vectors,
+    the entries are rational numbers denoting the inner product between two spanning set
+    vectors.</Item>
+    <Mark> <C>evecs</C></Mark>
+    <Item> A list where if <A>i</A> is contained in <A>rep.setup.orbitreps</A> then
+    <A>rep.evecs[i]</A> is bound to a record. This record has components <A>"ev"</A>
+    where <A>ev</A> is an eigenvalue contained in <A>rep.eigenvalues</A>. This component gives a basis for the eigenspace of the axis corresponding to
+    <A>rep.involutions[i]</A> with eigenvalue <A>ev</A>.</Item>
 </List>
 <P/>
 </Section>
@@ -155,10 +155,10 @@ where <A>ev</A> is an eigenvalue contained in <A>rep.eigenvalues</A>. This compo
   <InfoClass Name="InfoMajorana" />
  <Description>
 The default info level of <A>InfoMajorana</A> is 0. No information
-is printed at this level. If the info level is at least 10 then <A>Success</A> is printed if the
-algorithm has produced a complete Majorana algebra, otherwise <A>Fail</A>
-is printed. If the info level is at least 20 then more information is printed
-about the progress of the algorithm, up to a maximum info level of 100.
+ is printed at this level. If the info level is at least 10 then <A>Success</A> is printed if the
+ algorithm has produced a complete Majorana algebra, otherwise <A>Fail</A>
+ is printed. If the info level is at least 20 then more information is printed
+ about the progress of the algorithm, up to a maximum info level of 100.
  </Description>
 </ManSection>
 

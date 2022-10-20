@@ -1099,22 +1099,22 @@ static Int RNam_allocsize = 0;
 static Int RNam_cangrow = 0;
 static Int RNam_len = 0;
 
-static inline void initRNams(void)
+static inline Int HT_Hash(Obj ht, Obj x)
 {
-    /* Find RNams if not already done: */
-    if (!RNam_accesses) {
-        RNam_accesses = RNamName("accesses");
-        RNam_collisions = RNamName("collisions");
-        RNam_hfd = RNamName("hfd");
-        RNam_hf = RNamName("hf");
-        RNam_els = RNamName("els");
-        RNam_vals = RNamName("vals");
-        RNam_nr = RNamName("nr");
-        RNam_cmpfunc = RNamName("cmpfunc");
-        RNam_allocsize = RNamName("allocsize");
-        RNam_cangrow = RNamName("cangrow");
-        RNam_len = RNamName("len");
-    }
+    Obj hfd = ElmPRec(ht, RNam_hfd);
+    Obj hf = ElmPRec(ht, RNam_hf);
+    Obj res = CALL_2ARGS(hf, x, hfd);
+    if (res == Fail || res == INTOBJ_INT(0))
+        ErrorMayQuit("hash function not applicable to key of type %s",
+                     (Int)TNAM_OBJ(x), 0);
+    if (!IS_INTOBJ(res))
+        ErrorMayQuit("hash function should return small integer or the value 'fail', not a %s",
+                     (Int)TNAM_OBJ(res), 0);
+    Int h = INT_INTOBJ(res);
+    Int limit = LEN_LIST(ElmPRec(ht,RNam_els));
+    if (h <= 0 || h > limit)
+        ErrorMayQuit("hash value %d not in range 1..%d", h, limit);
+    return h;
 }
 
 extern Obj HTAdd_TreeHash_C(Obj self, Obj ht, Obj x, Obj v)
@@ -1122,13 +1122,9 @@ extern Obj HTAdd_TreeHash_C(Obj self, Obj ht, Obj x, Obj v)
     Obj els;
     Obj vals;
     Obj tmp;
-    Obj hfd;
     Int h;
     Obj t;
     Obj r;
-
-    /* Find RNams if not already done: */
-    initRNams();
 
     /* Increment accesses entry: */
     tmp = ElmPRec(ht,RNam_accesses);
@@ -1142,9 +1138,7 @@ extern Obj HTAdd_TreeHash_C(Obj self, Obj ht, Obj x, Obj v)
     }
 
     /* Compute hash value: */
-    hfd = ElmPRec(ht,RNam_hfd);
-    tmp = ElmPRec(ht,RNam_hf);
-    h = INT_INTOBJ(CALL_2ARGS(tmp,x,hfd));
+    h = HT_Hash(ht, x);
 
     /* Lookup slot: */
     els = ElmPRec(ht,RNam_els);
@@ -1199,12 +1193,8 @@ static Obj HTValue_TreeHash_C(Obj self, Obj ht, Obj x)
 {
     Obj els;
     Obj vals;
-    Obj hfd;
     Int h;
     Obj t;
-
-    /* Find RNams if not already done: */
-    initRNams();
 
     /* Increment accesses entry: */
     t = ElmPRec(ht,RNam_accesses);
@@ -1212,16 +1202,7 @@ static Obj HTValue_TreeHash_C(Obj self, Obj ht, Obj x)
     AssPRec(ht,RNam_accesses,t);
 
     /* Compute hash value: */
-    hfd = ElmPRec(ht,RNam_hfd);
-    t = ElmPRec(ht,RNam_hf);
-    t = CALL_2ARGS(t,x,hfd);
-    if (!IS_INTOBJ(t))
-        return Fail;
-    h = INT_INTOBJ(t);
-
-    /* has failed to compute -> object cannot be contained */
-    if (h == 0)
-        return Fail;
+    h = HT_Hash(ht, x);
 
     /* Lookup slot: */
     els = ElmPRec(ht,RNam_els);
@@ -1253,18 +1234,12 @@ static Obj HTDelete_TreeHash_C(Obj self, Obj ht, Obj x)
 {
     Obj els;
     Obj vals;
-    Obj hfd;
     Int h;
     Obj t;
     Obj v;
 
-    /* Find RNams if not already done: */
-    initRNams();
-
     /* Compute hash value: */
-    hfd = ElmPRec(ht,RNam_hfd);
-    t = ElmPRec(ht,RNam_hf);
-    h = INT_INTOBJ(CALL_2ARGS(t,x,hfd));
+    h = HT_Hash(ht, x);
 
     /* Lookup slot: */
     els = ElmPRec(ht,RNam_els);
@@ -1301,18 +1276,12 @@ static Obj HTUpdate_TreeHash_C(Obj self, Obj ht, Obj x, Obj v)
 {
     Obj els;
     Obj vals;
-    Obj hfd;
     Int h;
     Obj t;
     Obj old;
 
-    /* Find RNams if not already done: */
-    initRNams();
-
     /* Compute hash value: */
-    hfd = ElmPRec(ht,RNam_hfd);
-    t = ElmPRec(ht,RNam_hf);
-    h = INT_INTOBJ(CALL_2ARGS(t,x,hfd));
+    h = HT_Hash(ht, x);
 
     /* Lookup slot: */
     els = ElmPRec(ht,RNam_els);
@@ -1387,7 +1356,10 @@ static Obj FuncMappingPermSetSet(Obj self, Obj src, Obj dst)
     return CALL_1ARGS(PermList, out);
 } 
 
-static Obj HASH_FUNC_FOR_BLIST (Obj self, Obj blist, Obj data_gap) {
+static Obj HASH_FUNC_FOR_BLIST (Obj self, Obj blist, Obj data_gap)
+{
+    if (!IS_BLIST_REP(blist))
+        return Fail;
 
   size_t res  = 0;
   UInt   nr  = NUMBER_BLOCKS_BLIST(blist);
@@ -1512,7 +1484,29 @@ static Int InitKernel ( StructInitInfo *module )
     return 0;
 }
 
-Obj FuncADD_SET(Obj self, Obj set, Obj obj);
+
+/****************************************************************************
+**
+*F  PostRestore( <module> ) . . . . . . . . . . . . . after restore workspace
+*/
+static Int PostRestore (
+    StructInitInfo *    module )
+{
+    RNam_accesses = RNamName("accesses");
+    RNam_collisions = RNamName("collisions");
+    RNam_hfd = RNamName("hfd");
+    RNam_hf = RNamName("hf");
+    RNam_els = RNamName("els");
+    RNam_vals = RNamName("vals");
+    RNam_nr = RNamName("nr");
+    RNam_cmpfunc = RNamName("cmpfunc");
+    RNam_allocsize = RNamName("allocsize");
+    RNam_cangrow = RNamName("cangrow");
+    RNam_len = RNamName("len");
+
+    return 0;
+}
+
 
 /****************************************************************************
 **
@@ -1538,8 +1532,7 @@ static Int InitLibrary ( StructInitInfo *module )
     CHANGED_BAG(tmp);
     gvar = GVarName("ORBC"); AssGVar( gvar, tmp ); MakeReadOnlyGVar(gvar);
 
-    /* return success                                                      */
-    return 0;
+    return PostRestore( module );
 }
 
 /****************************************************************************
@@ -1551,6 +1544,7 @@ static StructInitInfo module = {
     .name = "orb",
     .initKernel = InitKernel,
     .initLibrary = InitLibrary,
+    .postRestore = PostRestore,
 };
 
 StructInitInfo * Init__Dynamic ( void )

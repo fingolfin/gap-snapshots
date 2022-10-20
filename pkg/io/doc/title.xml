@@ -9,7 +9,7 @@
     Bindings for low level C library I/O routines
   </Subtitle>
   <Version>
-    4.7.2
+    4.8.0
   </Version>
   <Author>
     Max Neunhöffer<Alt Only="LaTeX"><Br/></Alt>
@@ -17,13 +17,12 @@
 
   </Author>
   <Date>
-    21 October 2021
+    18 October 2022
   </Date>
   <Copyright>
     &copyright; 2005-2014 by Max Neunhöffer<P/>
 
 This package may be distributed under the terms and conditions of the
 GNU Public License Version 3 or later (at your convenience).
-
   </Copyright>
   </TitlePage>

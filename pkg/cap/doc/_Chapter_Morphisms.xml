@@ -194,78 +194,74 @@
 </List>
 <ManSection>
   <Oper Arg="a, n" Name="RandomMorphismWithFixedSourceByInteger" Label="for IsCapCategoryObject, IsInt"/>
- <Returns>a morphism in <Math>\mathrm{Hom}(a,b)</Math> or <C>fail</C>
+ <Returns>a morphism in <Math>\mathrm{Hom}(a,b)</Math>
 </Returns>
  <Description>
  The arguments are an object <Math>a</Math> in a category <Math>C</Math> and an integer <Math>n</Math>.
- The output is a random morphism <Math>\alpha: a \rightarrow b</Math> for some object
- <Math>b</Math> in <Math>C</Math> or <C>fail</C>.
+ The output is a random morphism <Math>\alpha: a \rightarrow b</Math> for some object <Math>b</Math> in <Math>C</Math>.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Oper Arg="a, L" Name="RandomMorphismWithFixedSourceByList" Label="for IsCapCategoryObject, IsList"/>
- <Returns>a morphism in <Math>\mathrm{Hom}(a,b)</Math> or <C>fail</C>
+ <Returns>a morphism in <Math>\mathrm{Hom}(a,b)</Math>
 </Returns>
  <Description>
  The arguments are an object <Math>a</Math> in a category <Math>C</Math> and a list <Math>L</Math>.
- The output is a random morphism <Math>\alpha: a \rightarrow b</Math> for some object
- <Math>b</Math> in <Math>C</Math> or <C>fail</C>.
+ The output is a random morphism <Math>\alpha: a \rightarrow b</Math> for some object <Math>b</Math> in <Math>C</Math>.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Oper Arg="b, n" Name="RandomMorphismWithFixedRangeByInteger" Label="for IsCapCategoryObject, IsInt"/>
- <Returns>a morphism in <Math>\mathrm{Hom}(a,b)</Math> or <C>fail</C>
+ <Returns>a morphism in <Math>\mathrm{Hom}(a,b)</Math>
 </Returns>
  <Description>
  The arguments are an object <Math>b</Math> in a category <Math>C</Math> and an integer <Math>n</Math>.
- The output is a random morphism <Math>\alpha: a \rightarrow b</Math> for some object
- <Math>a</Math> in <Math>C</Math> or <C>fail</C>.
+ The output is a random morphism <Math>\alpha: a \rightarrow b</Math> for some object <Math>a</Math> in <Math>C</Math>.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Oper Arg="b, L" Name="RandomMorphismWithFixedRangeByList" Label="for IsCapCategoryObject, IsList"/>
- <Returns>a morphism in <Math>\mathrm{Hom}(a,b)</Math> or <C>fail</C>
+ <Returns>a morphism in <Math>\mathrm{Hom}(a,b)</Math>
 </Returns>
  <Description>
  The arguments are an object <Math>b</Math> in a category <Math>C</Math> and a list <Math>L</Math>.
- The output is a random morphism <Math>\alpha: a \rightarrow b</Math> for some object
- <Math>a</Math> in <Math>C</Math> or <C>fail</C>.
+ The output is a random morphism <Math>\alpha: a \rightarrow b</Math> for some object <Math>a</Math> in <Math>C</Math>.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Oper Arg="a, b, n" Name="RandomMorphismWithFixedSourceAndRangeByInteger" Label="for IsCapCategoryObject, IsCapCategoryObject, IsInt"/>
- <Returns>a morphism in <Math>\mathrm{Hom}(a,b)</Math> or <C>fail</C>
+ <Returns>a morphism in <Math>\mathrm{Hom}(a,b)</Math>
 </Returns>
  <Description>
  The arguments are two objects <Math>a</Math> and <Math>b</Math> in a category <Math>C</Math> and an integer <Math>n</Math>.
- The output is a random morphism <Math>\alpha: a \rightarrow b</Math> in <Math>C</Math> or <C>fail</C>.
+ The output is a random morphism <Math>\alpha: a \rightarrow b</Math> in <Math>C</Math>.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Oper Arg="a, b, L" Name="RandomMorphismWithFixedSourceAndRangeByList" Label="for IsCapCategoryObject, IsCapCategoryObject, IsList"/>
- <Returns>a morphism in <Math>\mathrm{Hom}(a,b)</Math> or <C>fail</C>
+ <Returns>a morphism in <Math>\mathrm{Hom}(a,b)</Math>
 </Returns>
  <Description>
  This operation is not a CAP basic operation
  The arguments are two objects <Math>a</Math> and <Math>b</Math> in a category <Math>C</Math> and a list <Math>L</Math>.
- The output is a random morphism <Math>\alpha: a \rightarrow b</Math> in <Math>C</Math> or <C>fail</C>.
+ The output is a random morphism <Math>\alpha: a \rightarrow b</Math> in <Math>C</Math>.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Oper Arg="C, n" Name="RandomMorphismByInteger" Label="for IsCapCategory, IsInt"/>
- <Returns>a morphism or <C>fail</C>
+ <Returns>a morphism in <Math>C</Math>
 </Returns>
  <Description>
  The arguments are a category <Math>C</Math> and an integer <Math>n</Math>.
@@ -281,11 +277,11 @@
 
 <ManSection>
   <Oper Arg="C, L" Name="RandomMorphismByList" Label="for IsCapCategory, IsList"/>
- <Returns>a morphism or <C>fail</C>
+ <Returns>a morphism in <Math>C</Math>
 </Returns>
  <Description>
  The arguments are a category <Math>C</Math> and a list <Math>L</Math>.
- The output is a random morphism in <Math>C</Math> or <C>fail</C>.
+ The output is a random morphism in <Math>C</Math>.
  </Description>
 </ManSection>
 
@@ -297,6 +293,8 @@
   <Oper Arg="b, L" Name="RandomMorphismWithFixedRange" Label="for IsCapCategoryObject, IsList"/>
   <Oper Arg="a, b, n" Name="RandomMorphismWithFixedSourceAndRange" Label="for IsCapCategoryObject, IsCapCategoryObject, IsInt"/>
   <Oper Arg="a, b, L" Name="RandomMorphismWithFixedSourceAndRange" Label="for IsCapCategoryObject, IsCapCategoryObject, IsList"/>
+  <Oper Arg="a, b, n" Name="RandomMorphism" Label="for IsCapCategoryObject, IsCapCategoryObject, IsInt"/>
+  <Oper Arg="a, b, L" Name="RandomMorphism" Label="for IsCapCategoryObject, IsCapCategoryObject, IsList"/>
   <Oper Arg="C, n" Name="RandomMorphism" Label="for IsCapCategory, IsInt"/>
   <Oper Arg="C, L" Name="RandomMorphism" Label="for IsCapCategory, IsList"/>
  <Description>
@@ -409,6 +407,16 @@
   The arguments <C>source</C> and <C>range</C> are assumed to be objectified.
   The optional arguments behave like the corresponding arguments in <C>ObjectifyWithAttributes</C>.
   Also returns the objectified morphism.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="morphism, category, source, range[, attr1, val1, attr2, val2, ...]" Name="CreateCapCategoryMorphismWithAttributes" />
+ <Returns>a morphism
+</Returns>
+ <Description>
+  Shorthand for <Code>ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes( rec( ), category, source, range[, attr1, val1, attr2, val2, ...] )</Code>.
  </Description>
 </ManSection>
 
@@ -1244,6 +1252,61 @@ a bijection <Math>\nu: \mathrm{Hom}_{C}(a,b) \simeq \mathrm{Hom}_{D}(1, H(a,b))<
  <Description>
  This is a convenience method for
  <C>DistinguishedObjectOfHomomorphismStructure</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection Label="AutoDoc_generated_group13">
+  <Oper Arg="C, E, object_function, morphism_function, object_function_inverse, morphism_function_inverse" Name="ExtendRangeOfHomomorphismStructureByFullEmbedding" Label="for IsCapCategory, IsCapCategory, IsFunction, IsFunction, IsFunction, IsFunction"/>
+  <Oper Arg="C, E, a, b" Name="HomomorphismStructureOnObjectsExtendedByFullEmbedding" Label="for IsCapCategory, IsCapCategory, IsCapCategoryObject, IsCapCategoryObject"/>
+  <Oper Arg="C, E, alpha, beta" Name="HomomorphismStructureOnMorphismsExtendedByFullEmbedding" Label="for IsCapCategory, IsCapCategory, IsCapCategoryMorphism, IsCapCategoryMorphism"/>
+  <Oper Arg="C, E, s, alpha, beta, r" Name="HomomorphismStructureOnMorphismsWithGivenObjectsExtendedByFullEmbedding" Label="for IsCapCategory, IsCapCategory, IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject"/>
+  <Oper Arg="C, E" Name="DistinguishedObjectOfHomomorphismStructureExtendedByFullEmbedding" Label="for IsCapCategory, IsCapCategory"/>
+  <Oper Arg="C, E, alpha" Name="InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureExtendedByFullEmbedding" Label="for IsCapCategory, IsCapCategory, IsCapCategoryMorphism"/>
+  <Oper Arg="C, E, distinguished_object, alpha, r" Name="InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjectsExtendedByFullEmbedding" Label="for IsCapCategory, IsCapCategory, IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject"/>
+  <Oper Arg="C, E, a, a', iota" Name="InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphismExtendedByFullEmbedding" Label="for IsCapCategory, IsCapCategory, IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryMorphism"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ If <Math>\iota\colon D \to E</Math> is a full embedding of categories, every <Math>D</Math>-homomorphism structure for a category <Math>C</Math>
+ extends to a <Math>E</Math>-homomorphism structure for <Math>C</Math>. This operations accepts four functions
+ and installs operations <Code>DistinguishedObjectOfHomomorphismStructureExtendedByFullEmbedding</Code>,
+ <Code>HomomorphismStructureOnObjectsExtendedByFullEmbedding</Code> etc. which correspond to the <Math>E</Math>-homomorphism structure for <Math>C</Math>.
+ Note: To distinguish embeddings in different categories, in addition to <Math>C</Math> also <Math>E</Math> is passed to the operations.
+ When using this with different embeddings with the range category <Math>E</Math>, only the last embedding will be used.
+ The arguments are:
+<List>
+<Item>
+<Code>object_function</Code> gets the categories <Math>C</Math> and <Math>E</Math> and an object in <Math>D</Math>.
+</Item>
+<Item>
+<Code>morphism_function</Code> gets the categories <Math>C</Math> and <Math>E</Math>, an object in <Math>E</Math>, a morphism in <Math>D</Math> and another object in <Math>E</Math>.
+   The objects are the results of <Code>object_function</Code> applied to the source and range of the morphism.
+</Item>
+<Item>
+<Code>object_function_inverse</Code> gets the categories <Math>C</Math> and <Math>E</Math> and a morphism in <Math>E</Math>.
+</Item>
+<Item>
+<Code>morphism_function_inverse</Code> gets the categories <Math>C</Math> and <Math>E</Math>, an object in <Math>D</Math>, a morphism in <Math>E</Math> and another object in <Math>D</Math>.
+   The objects are the results of <Code>object_function_inverse</Code> applied to the source and range of the morphism.
+</Item>
+</List>
+ <Code>object_function</Code> and <Code>morphism_function</Code> define the embedding. <Code>object_function_inverse</Code> and <Code>morphism_function_inverse</Code> define
+ the inverse of the embedding on its image.
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C" Name="ExtendRangeOfHomomorphismStructureByIdentityAsFullEmbedding" Label="for IsCapCategory"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ Chooses the identity on <Math>D</Math> as the full embedding in
+ <Ref Oper="ExtendRangeOfHomomorphismStructureByFullEmbedding" Label="for IsCapCategory, IsCapCategory, IsFunction, IsFunction, IsFunction, IsFunction" />.
+ This is useful to handle this case as a degenerate case of
+ <Ref Oper="ExtendRangeOfHomomorphismStructureByFullEmbedding" Label="for IsCapCategory, IsCapCategory, IsFunction, IsFunction, IsFunction, IsFunction" />.
  </Description>
 </ManSection>
 

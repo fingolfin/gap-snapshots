@@ -11,7 +11,7 @@
 gap> START_TEST("modules16.tst");
 
 # doc/../gap/HomalgMap.gi:924-931
-gap> chi := HomalgMap( mat );	## or chi := HomalgMap( mat, "l" );
+gap> chi := HomalgMap( mat ); ## or chi := HomalgMap( mat, "l" );
 <A homomorphism of left modules>
 gap> Source( chi );
 <A free left module of rank 3 on free generators>

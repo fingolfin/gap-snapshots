@@ -579,8 +579,8 @@ AGR.DeclareDataType( "rep", "matff",   rec(
     # The default access reads the text format files.
     ReadAndInterpretDefault := paths -> List( paths, ScanMeatAxeFile ),
 
-    InterpretDefault := strings -> Concatenation( List( strings,
-                                 str -> ScanMeatAxeFile( str, "string" ) ) ),
+    InterpretDefault := strings -> List( strings,
+                                 str -> ScanMeatAxeFile( str, "string" ) ),
     ) );
 
 
@@ -3911,7 +3911,7 @@ AGR.EvaluateTOC();
 ##
 if UserPreference( "gap", "ReadObsolete" ) <> false then
   AtlasOfGroupRepresentationsInfo.SetComponentsOfUserParameters:= function()
-    local url, pos, wget;
+    local url, pos;
 
     AtlasOfGroupRepresentationsInfo.remote:= UserPreference( "AtlasRep",
         "AtlasRepAccessRemoteFiles" );
@@ -3926,14 +3926,7 @@ if UserPreference( "gap", "ReadObsolete" ) <> false then
     AtlasOfGroupRepresentationsInfo.servers:= [
         [ url{ [ 1 .. pos - 1 ] }, url{ [ pos+1 .. Length( url ) ] } ] ];
 
-    wget:= UserPreference( "AtlasRep", "FileTransferTool" );
-    if wget = "wget" then
-      AtlasOfGroupRepresentationsInfo.wget:= true;
-    elif wget = "io" then
-      AtlasOfGroupRepresentationsInfo.wget:= false;
-    else
-      AtlasOfGroupRepresentationsInfo.wget:= "prefer IO to wget";
-    fi;
+    AtlasOfGroupRepresentationsInfo.wget:= false;
 
     AtlasOfGroupRepresentationsInfo.compress:= UserPreference( "AtlasRep",
         "CompressDownloadedMeatAxeFiles" );

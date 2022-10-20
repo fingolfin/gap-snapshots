@@ -1,6 +1,6 @@
 # guava, chapter 8
 
-# [ "doc/guava.xml", 12751, 12770 ]
+# [ "doc/guava.xml", 12740, 12759 ]
 gap> F:=GF(3);;
 gap> x:= Indeterminate( F );; pol:= x^2+1;
 x_1^2+Z(3)^0
@@ -20,7 +20,7 @@ gap> G:=GeneratorMat(C);
 gap> AClosestVectorCombinationsMatFFEVecFFE(G,F,v,1,1);
 [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0 ]
 
-# [ "doc/guava.xml", 12794, 12806 ]
+# [ "doc/guava.xml", 12783, 12795 ]
 gap> F:=GF(3);;
 gap> x:= Indeterminate( F );; pol:= x^2+1;
 x_1^2+Z(3)^0
@@ -33,7 +33,7 @@ gap> AClosestVectorCombinationsMatFFEVecFFECoords(G,F,v,1,1);
 [ [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0 ],
   [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ]
 
-# [ "doc/guava.xml", 12830, 12840 ]
+# [ "doc/guava.xml", 12819, 12829 ]
 gap> v:=[ Z(3)^0, Z(3), Z(3)^0, 0*Z(3), Z(3)^0, Z(3)^0, Z(3)^0, Z(3)^0 ];;
 gap> vecs:=[ [ Z(3)^0, 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ],
 >   [ 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ],
@@ -44,7 +44,7 @@ gap> vecs:=[ [ Z(3)^0, 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ],
 gap> DistancesDistributionMatFFEVecFFE(vecs,GF(3),v);
 [ 0, 4, 6, 60, 109, 216, 192, 112, 30 ]
 
-# [ "doc/guava.xml", 12869, 12879 ]
+# [ "doc/guava.xml", 12858, 12868 ]
 gap> v:=[ Z(3)^0, Z(3), Z(3)^0, 0*Z(3), Z(3)^0, Z(3)^0, Z(3)^0, Z(3)^0 ];;
 gap> vecs:=[ [ Z(3)^0, 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ],
 >   [ 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ],
@@ -55,12 +55,12 @@ gap> vecs:=[ [ Z(3)^0, 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ],
 gap> DistancesDistributionVecFFEsVecFFE(vecs,v);
 [ 0, 0, 0, 0, 0, 4, 0, 1, 1 ]
 
-# [ "doc/guava.xml", 12901, 12905 ]
+# [ "doc/guava.xml", 12890, 12894 ]
 gap> v:=[ Z(3)^0, Z(3), Z(3)^0, 0*Z(3), Z(3)^0, Z(3)^0, Z(3)^0, Z(3)^0 ];;
 gap> WeightVecFFE(v);
 7
 
-# [ "doc/guava.xml", 12935, 12940 ]
+# [ "doc/guava.xml", 12924, 12929 ]
 gap> v1:=[ Z(3)^0, Z(3), Z(3)^0, 0*Z(3), Z(3)^0, Z(3)^0, Z(3)^0, Z(3)^0 ];;
 gap> v2:=[ Z(3), Z(3)^0, Z(3)^0, 0*Z(3), Z(3)^0, Z(3)^0, Z(3)^0, Z(3)^0 ];;
 gap> DistanceVecFFE(v1,v2);

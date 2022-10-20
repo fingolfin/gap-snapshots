@@ -1,5 +1,17 @@
 This file describes changes in the curlInterface package.
 
+2.3.1 (2022-09-25)
+  - Fix a build issue where running `make clean` would break the build
+    system (and hence building this package via GAP's BuildPackages.sh
+    script was broken, as that always runs `make clean` first)
+  - Work around a bug in some PackageManager versions that caused an
+    error when loading curlInterface after PackageManager
+
+2.3.0 (2022-09-09)
+  - Add option failOnError which treats 4xx status codes such as
+    "404 page not found" as errors in CurlRequest, DownloadURL etc.
+  - Report libcurl version in the package banner for debugging
+
 2.2.3 (2022-08-15)
   - Make test suite more robust
   - Tweak build system some more

@@ -104,8 +104,10 @@ BrowseData.AtlasInfoGroupTable:= function( conditions, log, replay, t )
         entry:= infoprgs.list[i];
         if not IsEmpty( entry ) then
           if   IsString( entry[2] ) then
-            Add( info, List( entry{ [ 1, 2 ] },
-                             x -> rec( rows:= [ x ], align:= "l" ) ) );
+            Add( info,
+                 List( entry{ [ 1, 2 ] },
+                       x -> rec( rows:= [ BrowseData.SimplifiedString( x ) ],
+                                 align:= "l" ) ) );
             Add( labelsRow, [ "" ] );
             Add( prgslist, [ i, entry ] );
           else
@@ -118,7 +120,8 @@ BrowseData.AtlasInfoGroupTable:= function( conditions, log, replay, t )
             Append( info,
                 List( entry{ [ 2 .. Length( entry ) ] },
                       x -> List( x{ [ 1, 2 ] },
-                                 y -> rec( rows:= [ y ], align:= "l" ) ) ) );
+                                 y -> rec( rows:= [ BrowseData.SimplifiedString( y ) ],
+                                           align:= "l" ) ) ) );
             Append( labelsRow,
                 List( [ 2 .. Length( entry ) ], x -> [ "" ] ) );
             Append( prgslist,

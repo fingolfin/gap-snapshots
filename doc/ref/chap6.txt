@@ -1247,7 +1247,7 @@
   [1X6.11 [33X[0;0YEditor Support[133X[101X
   
   [33X[0;0YIn  the [11Xetc[111X subdirectory of the [5XGAP[105X installation we provide some setup files
-  for the editors [10Xvim[110X and [10Xemacs[110X/[10Xxemacs[110X.[133X
+  for the editor [10Xvim[110X.[133X
   
   [33X[0;0Y[10Xvim[110X is a powerful editor that understands the basic [10Xvi[110X commands but provides
   much  more  functionality.  You  can  find  more  information  about it (and
@@ -1282,8 +1282,10 @@
   
   [33X[0;0YSee  the  headers  of  the  two  mentioned files for additional comments and
   adjust   details  according  to  your  personal  taste.  Send  comments  and
-  suggestions  to  [7Xmailto:support@gap-system.org[107X. Setup files for [10Xemacs[110X/[10Xxemacs[110X
-  are contained in the [11Xetc/emacs[111X subdirectory.[133X
+  suggestions to [7Xmailto:support@gap-system.org[107X.[133X
+  
+  [33X[0;0YUsers  of [10Xemacs[110X/[10Xxemacs[110X may wish to take a look at the major-mode for editing
+  GAP files ([7Xhttps://melpa.org/#/gap-mode[107X) by Ivan Andrus.[133X
   
   
   [1X6.12 [33X[0;0YChanging the Screen Size[133X[101X

@@ -1,4 +1,5 @@
 # guava, chapter 1
 
-# [ "doc/guava.xml", 319, 321 ]
+# [ "doc/guava.xml", 311, 314 ]
 gap> LoadPackage( "guava" );
+true

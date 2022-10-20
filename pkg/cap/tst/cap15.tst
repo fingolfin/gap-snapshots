@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap15.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:461-535
+# doc/_Chapter_Examples_and_Tests.xml:463-537
 gap> LoadPackage( "LinearAlgebraForCAP" );
 true
 gap> LoadPackage( "GeneralizedMorphismsForCAP" );

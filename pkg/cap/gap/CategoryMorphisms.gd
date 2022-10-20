@@ -169,44 +169,40 @@ DeclareProperty( "IsIdempotent",
 
 #! @Description
 #! The arguments are an object $a$ in a category $C$ and an integer $n$.
-#! The output is a random morphism $\alpha: a \rightarrow b$ for some object
-#! $b$ in $C$ or <C>fail</C>.
-#! @Returns a morphism in $\mathrm{Hom}(a,b)$ or <C>fail</C>
+#! The output is a random morphism $\alpha: a \rightarrow b$ for some object $b$ in $C$.
+#! @Returns a morphism in $\mathrm{Hom}(a,b)$
 #! @Arguments a, n
 DeclareOperation( "RandomMorphismWithFixedSourceByInteger",
                   [ IsCapCategoryObject, IsInt ] );
 
 #! @Description
 #! The arguments are an object $a$ in a category $C$ and a list $L$.
-#! The output is a random morphism $\alpha: a \rightarrow b$ for some object
-#! $b$ in $C$ or <C>fail</C>.
-#! @Returns a morphism in $\mathrm{Hom}(a,b)$ or <C>fail</C>
+#! The output is a random morphism $\alpha: a \rightarrow b$ for some object $b$ in $C$.
+#! @Returns a morphism in $\mathrm{Hom}(a,b)$
 #! @Arguments a, L
 DeclareOperation( "RandomMorphismWithFixedSourceByList",
                   [ IsCapCategoryObject, IsList ] );
 
 #! @Description
 #! The arguments are an object $b$ in a category $C$ and an integer $n$.
-#! The output is a random morphism $\alpha: a \rightarrow b$ for some object
-#! $a$ in $C$ or <C>fail</C>.
-#! @Returns a morphism in $\mathrm{Hom}(a,b)$ or <C>fail</C>
+#! The output is a random morphism $\alpha: a \rightarrow b$ for some object $a$ in $C$.
+#! @Returns a morphism in $\mathrm{Hom}(a,b)$
 #! @Arguments b, n
 DeclareOperation( "RandomMorphismWithFixedRangeByInteger",
                   [ IsCapCategoryObject, IsInt ] );
 
 #! @Description
 #! The arguments are an object $b$ in a category $C$ and a list $L$.
-#! The output is a random morphism $\alpha: a \rightarrow b$ for some object
-#! $a$ in $C$ or <C>fail</C>.
-#! @Returns a morphism in $\mathrm{Hom}(a,b)$ or <C>fail</C>
+#! The output is a random morphism $\alpha: a \rightarrow b$ for some object $a$ in $C$.
+#! @Returns a morphism in $\mathrm{Hom}(a,b)$
 #! @Arguments b, L
 DeclareOperation( "RandomMorphismWithFixedRangeByList",
                   [ IsCapCategoryObject, IsList ] );
 
 #! @Description
 #! The arguments are two objects $a$ and $b$ in a category $C$ and an integer $n$.
-#! The output is a random morphism $\alpha: a \rightarrow b$ in $C$ or <C>fail</C>.
-#! @Returns a morphism in $\mathrm{Hom}(a,b)$ or <C>fail</C>
+#! The output is a random morphism $\alpha: a \rightarrow b$ in $C$.
+#! @Returns a morphism in $\mathrm{Hom}(a,b)$
 #! @Arguments a, b, n
 DeclareOperation( "RandomMorphismWithFixedSourceAndRangeByInteger",
                   [ IsCapCategoryObject, IsCapCategoryObject, IsInt ] );
@@ -214,8 +210,8 @@ DeclareOperation( "RandomMorphismWithFixedSourceAndRangeByInteger",
 #! @Description
 #! This operation is not a CAP basic operation
 #! The arguments are two objects $a$ and $b$ in a category $C$ and a list $L$.
-#! The output is a random morphism $\alpha: a \rightarrow b$ in $C$ or <C>fail</C>.
-#! @Returns a morphism in $\mathrm{Hom}(a,b)$ or <C>fail</C>
+#! The output is a random morphism $\alpha: a \rightarrow b$ in $C$.
+#! @Returns a morphism in $\mathrm{Hom}(a,b)$
 #! @Arguments a, b, L
 DeclareOperation( "RandomMorphismWithFixedSourceAndRangeByList",
                   [ IsCapCategoryObject, IsCapCategoryObject, IsList ] );
@@ -228,15 +224,15 @@ DeclareOperation( "RandomMorphismWithFixedSourceAndRangeByList",
 #! are added to the category $C$, then <C>RandomMorphismByInteger</C> can be
 #! derived to return a random morphism of complexity $n$ with random
 #! source(range) of complexity $n$.
-#! @Returns a morphism or <C>fail</C>
+#! @Returns a morphism in $C$
 #! @Arguments C, n
 DeclareOperation( "RandomMorphismByInteger",
                   [ IsCapCategory, IsInt ] );
 
 #! @Description
 #! The arguments are a category $C$ and a list $L$.
-#! The output is a random morphism in $C$ or <C>fail</C>.
-#! @Returns a morphism or <C>fail</C>
+#! The output is a random morphism in $C$.
+#! @Returns a morphism in $C$
 #! @Arguments C, L
 DeclareOperation( "RandomMorphismByList",
                   [ IsCapCategory, IsList ] );
@@ -244,7 +240,7 @@ DeclareOperation( "RandomMorphismByList",
 #! @BeginGroup
 #! @Description
 #! These are convenient methods and they, depending on the input, delegate to one of the above methods.
-# @Returns an object, morphism or fail
+# @Returns an object, morphism in $C$
 #! @Arguments a, n
 DeclareOperation( "RandomMorphismWithFixedSource", [ IsCapCategoryObject, IsInt ] );
 #! @Arguments a, L
@@ -257,6 +253,10 @@ DeclareOperation( "RandomMorphismWithFixedRange", [ IsCapCategoryObject, IsList 
 DeclareOperation( "RandomMorphismWithFixedSourceAndRange", [ IsCapCategoryObject, IsCapCategoryObject, IsInt ] );
 #! @Arguments a, b, L
 DeclareOperation( "RandomMorphismWithFixedSourceAndRange", [ IsCapCategoryObject, IsCapCategoryObject, IsList ] );
+#! @Arguments a, b, n
+DeclareOperation( "RandomMorphism", [ IsCapCategoryObject, IsCapCategoryObject, IsInt ] );
+#! @Arguments a, b, L
+DeclareOperation( "RandomMorphism", [ IsCapCategoryObject, IsCapCategoryObject, IsList ] );
 #! @Arguments C, n
 DeclareOperation( "RandomMorphism", [ IsCapCategory, IsInt ] );
 #! @Arguments C, L
@@ -354,6 +354,12 @@ DeclareOperation( "AddMorphismRepresentation",
 #!  Also returns the objectified morphism.
 #! @Returns a morphism
 DeclareGlobalFunction( "ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes" );
+
+#! @Arguments morphism, category, source, range[, attr1, val1, attr2, val2, ...]
+#! @Description
+#!  Shorthand for `ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes( rec( ), category, source, range[, attr1, val1, attr2, val2, ...] )`.
+#! @Returns a morphism
+DeclareGlobalFunction( "CreateCapCategoryMorphismWithAttributes" );
 
 ###################################
 ##
@@ -994,7 +1000,7 @@ DeclareOperation( "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorph
 #! @Returns a morphism in $\mathrm{Hom}_{C}(a,a')$
 #! @Arguments a,a',iota
 DeclareOperation( "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism",
-                   [ IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryMorphism ] );
+                  [ IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryMorphism ] );
 
 #! @Description
 #! The arguments are three lists $\alpha$, $\beta$, and $\gamma$.
@@ -1084,6 +1090,67 @@ DeclareOperation( "HomStructure",
 #! This is a convenience method for
 #! <C>DistinguishedObjectOfHomomorphismStructure</C>.
 DeclareOperation( "HomStructure",
+                  [ IsCapCategory ] );
+
+#! @BeginGroup
+#! @Description
+#! If $\iota\colon D \to E$ is a full embedding of categories, every $D$-homomorphism structure for a category $C$
+#! extends to a $E$-homomorphism structure for $C$. This operations accepts four functions
+#! and installs operations `DistinguishedObjectOfHomomorphismStructureExtendedByFullEmbedding`,
+#! `HomomorphismStructureOnObjectsExtendedByFullEmbedding` etc. which correspond to the $E$-homomorphism structure for $C$.
+#! Note: To distinguish embeddings in different categories, in addition to $C$ also $E$ is passed to the operations.
+#! When using this with different embeddings with the range category $E$, only the last embedding will be used.
+#! The arguments are:
+#! * `object_function` gets the categories $C$ and $E$ and an object in $D$.
+#! * `morphism_function` gets the categories $C$ and $E$, an object in $E$, a morphism in $D$ and another object in $E$.
+#!   The objects are the results of `object_function` applied to the source and range of the morphism.
+#! * `object_function_inverse` gets the categories $C$ and $E$ and a morphism in $E$.
+#! * `morphism_function_inverse` gets the categories $C$ and $E$, an object in $D$, a morphism in $E$ and another object in $D$.
+#!   The objects are the results of `object_function_inverse` applied to the source and range of the morphism.
+#! `object_function` and `morphism_function` define the embedding. `object_function_inverse` and `morphism_function_inverse` define
+#! the inverse of the embedding on its image.
+#! @Returns nothing
+#! @Arguments C, E, object_function, morphism_function, object_function_inverse, morphism_function_inverse
+DeclareOperation( "ExtendRangeOfHomomorphismStructureByFullEmbedding",
+                  [ IsCapCategory, IsCapCategory, IsFunction, IsFunction, IsFunction, IsFunction ] );
+
+#! @Arguments C, E, a, b
+DeclareOperation( "HomomorphismStructureOnObjectsExtendedByFullEmbedding",
+                  [ IsCapCategory, IsCapCategory, IsCapCategoryObject, IsCapCategoryObject ] );
+
+#! @Arguments C, E, alpha, beta
+DeclareOperation( "HomomorphismStructureOnMorphismsExtendedByFullEmbedding",
+                  [ IsCapCategory, IsCapCategory, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+#! @Arguments C, E, s, alpha, beta, r
+DeclareOperation( "HomomorphismStructureOnMorphismsWithGivenObjectsExtendedByFullEmbedding",
+                  [ IsCapCategory, IsCapCategory, IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
+
+#! @Arguments C, E
+DeclareOperation( "DistinguishedObjectOfHomomorphismStructureExtendedByFullEmbedding",
+                  [ IsCapCategory, IsCapCategory ] );
+
+#! @Arguments C, E, alpha
+DeclareOperation( "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureExtendedByFullEmbedding",
+                  [ IsCapCategory, IsCapCategory, IsCapCategoryMorphism ] );
+
+#! @Arguments C, E, distinguished_object, alpha, r
+DeclareOperation( "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjectsExtendedByFullEmbedding",
+                  [ IsCapCategory, IsCapCategory, IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject ] );
+
+#! @Arguments C, E, a, a', iota
+DeclareOperation( "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphismExtendedByFullEmbedding",
+                  [ IsCapCategory, IsCapCategory, IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryMorphism ] );
+#! @EndGroup
+
+#! @Description
+#! Chooses the identity on $D$ as the full embedding in
+#! <Ref Oper="ExtendRangeOfHomomorphismStructureByFullEmbedding" Label="for IsCapCategory, IsCapCategory, IsFunction, IsFunction, IsFunction, IsFunction" />.
+#! This is useful to handle this case as a degenerate case of
+#! <Ref Oper="ExtendRangeOfHomomorphismStructureByFullEmbedding" Label="for IsCapCategory, IsCapCategory, IsFunction, IsFunction, IsFunction, IsFunction" />.
+#! @Returns nothing
+#! @Arguments C
+DeclareOperation( "ExtendRangeOfHomomorphismStructureByIdentityAsFullEmbedding",
                   [ IsCapCategory ] );
 
 

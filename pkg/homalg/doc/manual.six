@@ -207,158 +207,158 @@ X", "10.2", [ 10, 2, 0 ], 79, 55, "spectral sequences: constructors",
   [ "\033[1X\033[33X\033[0;-2YExtExt\033[133X\033[101X", "12.1", 
       [ 12, 1, 0 ], 4, 68, "extext", "X7BB9DE017ECE6E86" ], 
   [ "\033[1X\033[33X\033[0;-2YPurity\033[133X\033[101X", "12.2", 
-      [ 12, 2, 0 ], 88, 69, "purity", "X7EE63228803A04F1" ], 
+      [ 12, 2, 0 ], 87, 69, "purity", "X7EE63228803A04F1" ], 
   [ "\033[1X\033[33X\033[0;-2YTorExt-Grothendieck\033[133X\033[101X", "12.3", 
-      [ 12, 3, 0 ], 184, 71, "torext-grothendieck", "X812EF8147AE16E72" ], 
+      [ 12, 3, 0 ], 182, 71, "torext-grothendieck", "X812EF8147AE16E72" ], 
   [ "\033[1X\033[33X\033[0;-2YTorExt\033[133X\033[101X", "12.4", 
-      [ 12, 4, 0 ], 270, 73, "torext", "X784BC2567875830B" ], 
+      [ 12, 4, 0 ], 268, 73, "torext", "X784BC2567875830B" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YThe Mathematical Idea behind \033[5Xhomalg\033[10\
-5X\033[101X\027\033[1X\027\033[133X\033[101X", "a", [ "A", 0, 0 ], 1, 76, 
+5X\033[101X\027\033[1X\027\033[133X\033[101X", "a", [ "A", 0, 0 ], 1, 75, 
       "the mathematical idea behind homalg", "X7FBD6C8A83D64BE4" ], 
   [ "\033[1X\033[33X\033[0;-2YDevelopment\033[133X\033[101X", "b", 
-      [ "B", 0, 0 ], 1, 77, "development", "X816F972F826BE589" ], 
+      [ "B", 0, 0 ], 1, 76, "development", "X816F972F826BE589" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YWhy was \033[5Xhomalg\033[105X\033[101X\027\033[1\
 X\027 discontinued in \033[5XMaple\033[105X\033[101X\027\033[1X\027?\033[133X\
-\033[101X", "b.1", [ "B", 1, 0 ], 4, 77, 
+\033[101X", "b.1", [ "B", 1, 0 ], 4, 76, 
       "why was homalg discontinued in maple?", "X85B7FB29805B14C9" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YWhy \033[5XGAP4\033[105X\033[101X\027\033[1X\027?\
-\033[133X\033[101X", "b.2", [ "B", 2, 0 ], 19, 77, "why gap4?", 
+\033[133X\033[101X", "b.2", [ "B", 2, 0 ], 19, 76, "why gap4?", 
       "X7D2A5B127A68AB58" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 is fr\
-ee and open software\033[133X\033[101X", "b.2-1", [ "B", 2, 1 ], 22, 77, 
+ee and open software\033[133X\033[101X", "b.2-1", [ "B", 2, 1 ], 22, 76, 
       "gap is free and open software", "X8148BBD87B272E84" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 has a\
-n area of expertise\033[133X\033[101X", "b.2-2", [ "B", 2, 2 ], 52, 78, 
+n area of expertise\033[133X\033[101X", "b.2-2", [ "B", 2, 2 ], 52, 77, 
       "gap has an area of expertise", "X799403717D4414BA" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP4\033[105X\033[101X\027\033[1X\027 can \
-communicate\033[133X\033[101X", "b.2-3", [ "B", 2, 3 ], 78, 78, 
+communicate\033[133X\033[101X", "b.2-3", [ "B", 2, 3 ], 78, 77, 
       "gap4 can communicate", "X863002078157C105" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP4\033[105X\033[101X\027\033[1X\027 is a\
  \033[13Xmathematical\033[113X\033[101X\027\033[1X\027 object-oriented program\
-ming language\033[133X\033[101X", "b.2-4", [ "B", 2, 4 ], 86, 78, 
+ming language\033[133X\033[101X", "b.2-4", [ "B", 2, 4 ], 86, 77, 
       "gap4 is a mathematical object-oriented programming language", 
       "X78EB6CAE7C7F2F7C" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XGAP4\033[105X\033[101X\027\033[1X\027 pack\
 ages are easily extendible\033[133X\033[101X", "b.2-5", [ "B", 2, 5 ], 126, 
-      79, "gap4 packages are easily extendible", "X7E1B9133835F33FD" ], 
+      78, "gap4 packages are easily extendible", "X7E1B9133835F33FD" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YWhy not \033[5XSage\033[105X\033[101X\027\033[1X\\
-027?\033[133X\033[101X", "b.3", [ "B", 3, 0 ], 140, 79, "why not sage?", 
+027?\033[133X\033[101X", "b.3", [ "B", 3, 0 ], 140, 78, "why not sage?", 
       "X7F7CF4AE830E312B" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YHow does \033[5Xhomalg\033[105X\033[101X\027\033[\
 1X\027 compare to \033[5XSage\033[105X\033[101X\027\033[1X\027?\033[133X\033[1\
-01X", "b.4", [ "B", 4, 0 ], 151, 79, "how does homalg compare to sage?", 
+01X", "b.4", [ "B", 4, 0 ], 151, 78, "how does homalg compare to sage?", 
       "X81A6C501841B20C4" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YThey differ in objectives and scale\033[133X\033[\
-101X", "b.4-1", [ "B", 4, 1 ], 156, 79, "they differ in objectives and scale",
+101X", "b.4-1", [ "B", 4, 1 ], 156, 78, "they differ in objectives and scale",
       "X82A6EC2C850909B1" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YThey differ in the programming language\033[133X\\
-033[101X", "b.4-2", [ "B", 4, 2 ], 167, 79, 
+033[101X", "b.4-2", [ "B", 4, 2 ], 167, 78, 
       "they differ in the programming language", "X8346070A86BF5CC5" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YThey differ in the way they communicate with the \
-outer world\033[133X\033[101X", "b.4-3", [ "B", 4, 3 ], 176, 80, 
+outer world\033[133X\033[101X", "b.4-3", [ "B", 4, 3 ], 176, 79, 
       "they differ in the way they communicate with the outer world", 
       "X8040F9357F008C1E" ], 
   [ "\033[1X\033[33X\033[0;-2YLogic Subpackages\033[133X\033[101X", "c", 
-      [ "C", 0, 0 ], 1, 81, "logic subpackages", "X8222352C78A19214" ], 
+      [ "C", 0, 0 ], 1, 80, "logic subpackages", "X8222352C78A19214" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XLIOBJ\033[105X\033[101X\027\033[1X\027: Lo\
 gical Implications for Objects of Abelian Categories\033[133X\033[101X", 
-      "c.1", [ "C", 1, 0 ], 4, 81, 
+      "c.1", [ "C", 1, 0 ], 4, 80, 
       "liobj: logical implications for objects of abelian categories", 
       "X84B5336279AF7DE4" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XLIMOR\033[105X\033[101X\027\033[1X\027: Lo\
 gical Implications for Morphisms of Abelian Categories\033[133X\033[101X", 
-      "c.2", [ "C", 2, 0 ], 7, 81, 
+      "c.2", [ "C", 2, 0 ], 7, 80, 
       "limor: logical implications for morphisms of abelian categories", 
       "X8744FAF47E59C422" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XLICPX\033[105X\033[101X\027\033[1X\027: Lo\
 gical Implications for Complexes in Abelian Categories\033[133X\033[101X", 
-      "c.3", [ "C", 3, 0 ], 10, 81, 
+      "c.3", [ "C", 3, 0 ], 10, 80, 
       "licpx: logical implications for complexes in abelian categories", 
       "X8024C3D08006C35A" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YDebugging \033[5Xhomalg\033[105X\033[101X\027\\
-033[1X\027\033[133X\033[101X", "d", [ "D", 0, 0 ], 1, 82, "debugging homalg", 
+033[1X\027\033[133X\033[101X", "d", [ "D", 0, 0 ], 1, 81, "debugging homalg", 
       "X7DC71AA679A8CB8D" ], 
   [ "\033[1X\033[33X\033[0;-2YIncrease the assertion level\033[133X\033[101X",
-      "d.1", [ "D", 1, 0 ], 7, 82, "increase the assertion level", 
+      "d.1", [ "D", 1, 0 ], 7, 81, "increase the assertion level", 
       "X8062637283DD739D" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YThe Core Packages and the Idea behind their Split\
-ting\033[133X\033[101X", "e", [ "E", 0, 0 ], 1, 83, 
+ting\033[133X\033[101X", "e", [ "E", 0, 0 ], 1, 82, 
       "the core packages and the idea behind their splitting", 
       "X849691F37C7AC1B4" ], 
   [ "\033[1X\033[33X\033[0;-2YThe 6=2+4 split\033[133X\033[101X", "e.1", 
-      [ "E", 1, 0 ], 18, 83, "the 6=2+4 split", "X7DCE809486D10888" ], 
+      [ "E", 1, 0 ], 18, 82, "the 6=2+4 split", "X7DCE809486D10888" ], 
   [ "\033[1X\033[33X\033[0;-2YLogically independent\033[133X\033[101X", 
-      "e.1-1", [ "E", 1, 1 ], 23, 83, "logically independent", 
+      "e.1-1", [ "E", 1, 1 ], 23, 82, "logically independent", 
       "X818F306582DFF370" ], 
   [ "\033[1X\033[33X\033[0;-2YBlack boxes\033[133X\033[101X", "e.1-2", 
-      [ "E", 1, 2 ], 40, 84, "black boxes", "X7EE794358500309A" ], 
+      [ "E", 1, 2 ], 40, 83, "black boxes", "X7EE794358500309A" ], 
   [ "\033[1X\033[33X\033[0;-2YSumming up\033[133X\033[101X", "e.1-3", 
-      [ "E", 1, 3 ], 51, 84, "summing up", "X786DDEFD85AD19F4" ], 
+      [ "E", 1, 3 ], 51, 83, "summing up", "X786DDEFD85AD19F4" ], 
   [ "\033[1X\033[33X\033[0;-2YThe 4=1+1+1+1 split\033[133X\033[101X", "e.2", 
-      [ "E", 2, 0 ], 62, 84, "the 4=1+1+1+1 split", "X865D30A382B80584" ], 
+      [ "E", 2, 0 ], 62, 83, "the 4=1+1+1+1 split", "X865D30A382B80584" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XHomalgToCAS\033[105X\033[101X\027\033[1X\\
-027\033[133X\033[101X", "e.2-1", [ "E", 2, 1 ], 67, 84, "homalgtocas", 
+027\033[133X\033[101X", "e.2-1", [ "E", 2, 1 ], 67, 83, "homalgtocas", 
       "X80FB5BB57BBE5B17" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XIO_ForHomalg\033[105X\033[101X\027\033[1X\\
-027 and Alternatives\033[133X\033[101X", "e.2-2", [ "E", 2, 2 ], 78, 84, 
+027 and Alternatives\033[133X\033[101X", "e.2-2", [ "E", 2, 2 ], 78, 83, 
       "io_forhomalg and alternatives", "X86F316DA837A4FE4" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XRingsForHomalg\033[105X\033[101X\027\033[1\
-X\027\033[133X\033[101X", "e.2-3", [ "E", 2, 3 ], 94, 84, "ringsforhomalg", 
+X\027\033[133X\033[101X", "e.2-3", [ "E", 2, 3 ], 94, 83, "ringsforhomalg", 
       "X78E3E28C81E8DC12" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YYour own \033[5XRingsForHomalg\033[105X\033[101X\\
-027\033[1X\027\033[133X\033[101X", "e.2-4", [ "E", 2, 4 ], 104, 85, 
+027\033[1X\027\033[133X\033[101X", "e.2-4", [ "E", 2, 4 ], 104, 84, 
       "your own ringsforhomalg", "X7AD8DBE280C58EE9" ], 
   [ 
       "\033[1X\033[33X\033[0;-2Y\033[5XExamplesForHomalg\033[105X\033[101X\027\\
-033[1X\027\033[133X\033[101X", "e.2-5", [ "E", 2, 5 ], 119, 85, 
+033[1X\027\033[133X\033[101X", "e.2-5", [ "E", 2, 5 ], 119, 84, 
       "examplesforhomalg", "X7A0A10B585C49632" ], 
   [ "\033[1X\033[33X\033[0;-2YDocumentation\033[133X\033[101X", "e.2-6", 
-      [ "E", 2, 6 ], 130, 85, "documentation", "X7F4F8D6F7CD6B765" ], 
+      [ "E", 2, 6 ], 130, 84, "documentation", "X7F4F8D6F7CD6B765" ], 
   [ "\033[1X\033[33X\033[0;-2YCrediting\033[133X\033[101X", "e.2-7", 
-      [ "E", 2, 7 ], 140, 85, "crediting", "X814A1DC581E36F66" ], 
+      [ "E", 2, 7 ], 140, 84, "crediting", "X814A1DC581E36F66" ], 
   [ "\033[1X\033[33X\033[0;-2YStability\033[133X\033[101X", "e.2-8", 
-      [ "E", 2, 8 ], 149, 85, "stability", "X78397E8681145827" ], 
+      [ "E", 2, 8 ], 149, 84, "stability", "X78397E8681145827" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YOverview of the \033[5Xhomalg\033[105X\033[101X\\
 027\033[1X\027 Package Source Code\033[133X\033[101X", "f", [ "F", 0, 0 ], 1, 
-      86, "overview of the homalg package source code", "X84555A0687FBAE33" ],
+      85, "overview of the homalg package source code", "X84555A0687FBAE33" ],
   [ "\033[1X\033[33X\033[0;-2YThe Basic Objects\033[133X\033[101X", "f.1", 
-      [ "F", 1, 0 ], 8, 87, "the basic objects", "X81DDCFC578069518" ], 
+      [ "F", 1, 0 ], 8, 86, "the basic objects", "X81DDCFC578069518" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YThe High Level Homological Algorithms\033[133X\\
-033[101X", "f.2", [ "F", 2, 0 ], 48, 88, 
+033[101X", "f.2", [ "F", 2, 0 ], 48, 87, 
       "the high level homological algorithms", "X7BDE961D858BC60E" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YLogical Implications for \033[5Xhomalg\033[105X\\
 033[101X\027\033[1X\027 Objects\033[133X\033[101X", "f.3", [ "F", 3, 0 ], 79, 
-      88, "logical implications for homalg objects", "X7E8463067BB2F31E" ], 
-  [ "Bibliography", "bib", [ "Bib", 0, 0 ], 1, 89, "bibliography", 
+      87, "logical implications for homalg objects", "X7E8463067BB2F31E" ], 
+  [ "Bibliography", "bib", [ "Bib", 0, 0 ], 1, 88, "bibliography", 
       "X7A6F98FD85F02BFE" ], 
-  [ "References", "bib", [ "Bib", 0, 0 ], 1, 89, "references", 
+  [ "References", "bib", [ "Bib", 0, 0 ], 1, 88, "references", 
       "X7A6F98FD85F02BFE" ], 
-  [ "Index", "ind", [ "Ind", 0, 0 ], 1, 90, "index", "X83A0356F839C696F" ], 
+  [ "Index", "ind", [ "Ind", 0, 0 ], 1, 89, "index", "X83A0356F839C696F" ], 
   [ "\033[5Xhomalg\033[105X", ".-3", [ 0, 0, 3 ], 150, 4, "homalg", 
       "X8537FEB07AF2BEC8" ], 
   [ "\033[2XIsHomalgObject\033[102X", "3.1-1", [ 3, 1, 1 ], 7, 11, 

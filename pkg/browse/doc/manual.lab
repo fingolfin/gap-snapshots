@@ -168,8 +168,8 @@
 \makelabel{browse:NCurses.Alert}{3.1.1}{X83E95B4A83BC473E}
 \makelabel{browse:mouse events}{3.1.1}{X83E95B4A83BC473E}
 \makelabel{browse:NCurses.Select}{3.1.2}{X833D321E86528981}
-\makelabel{browse:checkbox}{3.1.2}{X833D321E86528981}
-\makelabel{browse:radio button}{3.1.2}{X833D321E86528981}
+\makelabel{browse:checkbox see NCurses.Select}{3.1.2}{X833D321E86528981}
+\makelabel{browse:radio button see NCurses.Select}{3.1.2}{X833D321E86528981}
 \makelabel{browse:mouse events}{3.1.2}{X833D321E86528981}
 \makelabel{browse:NCurses.GetLineFromUser}{3.1.3}{X837EFD8A842257EA}
 \makelabel{browse:NCurses.Pager}{3.1.4}{X87E1B2787F588CC0}
@@ -241,22 +241,22 @@
 \makelabel{browse:BrowsePackageVariables}{6.9.1}{X8030B1688335783D}
 \makelabel{browse:BrowseUserPreferences}{6.10.1}{X7A7B712E7A06449F}
 \makelabel{browse:BrowseGapData}{6.11.1}{X850C786C87A4877B}
-\makelabel{browse:BrowseConwayPolynomials}{6.11.1}{X850C786C87A4877B}
-\makelabel{browse:BrowseGapMethods}{6.11.1}{X850C786C87A4877B}
-\makelabel{browse:BrowseGapPackages}{6.11.1}{X850C786C87A4877B}
+\makelabel{browse:BrowseConwayPolynomials see BrowseGapData}{6.11.1}{X850C786C87A4877B}
+\makelabel{browse:BrowseGapMethods see BrowseGapData}{6.11.1}{X850C786C87A4877B}
+\makelabel{browse:BrowseGapPackages see BrowseGapData}{6.11.1}{X850C786C87A4877B}
 \makelabel{browse:BrowseGapDataAdd}{6.11.2}{X7FC24FCE7A0C6058}
 \makelabel{browse:BrowseDirectory}{6.12.1}{X859682DE8397261E}
-\makelabel{browse:game}{6.13}{X7FAE33037D09CC4E}
+\makelabel{browse:game A Puzzle}{6.13}{X7FAE33037D09CC4E}
 \makelabel{browse:BrowsePuzzle}{6.13.1}{X7EF5FCBD7DAFFAF3}
 \makelabel{browse:mouse events}{6.13.1}{X7EF5FCBD7DAFFAF3}
-\makelabel{browse:game}{6.14}{X7FFF943D78A403C9}
+\makelabel{browse:game Peg Solitaire}{6.14}{X7FFF943D78A403C9}
 \makelabel{browse:solitaire game}{6.14}{X7FFF943D78A403C9}
 \makelabel{browse:PegSolitaire}{6.14.1}{X82C8691380FCB674}
-\makelabel{browse:game}{6.15}{X862CB73B7E0BE170}
+\makelabel{browse:game Rubik's Cube}{6.15}{X862CB73B7E0BE170}
 \makelabel{browse:BrowseRubiksCube}{6.15.1}{X8100659E81FFE9A2}
-\makelabel{browse:game}{6.16}{X7ADD618186541123}
+\makelabel{browse:game Changing Sides}{6.16}{X7ADD618186541123}
 \makelabel{browse:BrowseChangeSides}{6.16.1}{X7FCFC5858584F46E}
-\makelabel{browse:game}{6.17}{X7DDE46668321B5E9}
+\makelabel{browse:game Sudoku}{6.17}{X7DDE46668321B5E9}
 \makelabel{browse:Sudoku.Init}{6.17.1}{X789D3D4C818F4BC2}
 \makelabel{browse:Sudoku.Place}{6.17.2}{X86A5C6CE79DD67EE}
 \makelabel{browse:Sudoku.Remove}{6.17.2}{X86A5C6CE79DD67EE}

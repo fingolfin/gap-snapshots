@@ -10,7 +10,7 @@
 #
 gap> START_TEST("matricesforhomalg15.tst");
 
-# doc/../gap/HomalgMatrix.gi:2565-2574
+# doc/../gap/HomalgMatrix.gi:2573-2582
 gap> m := HomalgMatrix( "[ \
 > 1, 2, 3, \
 > 4, 5, 6  \

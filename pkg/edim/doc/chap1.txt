@@ -54,7 +54,7 @@
   
   [1X1.1-1 InfoEDIM[101X
   
-  [33X[1;0Y[29X[2XInfoEDIM[102X[32X info class[133X
+  [33X[1;0Y[29X[2XInfoEDIM[102X [32X info class[133X
   
   [33X[0;0YThis  is  an  [9XInfo[109X class for the [5XEDIM[105X-package. By [10XSetInfoLevel(InfoEDIM, 1);[110X
   you  can  switch on the printing of some information during the computations

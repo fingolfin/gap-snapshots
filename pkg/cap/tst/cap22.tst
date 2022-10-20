@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap22.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:929-1073
+# doc/_Chapter_Examples_and_Tests.xml:931-1075
 gap> vecspaces := CreateCapCategory( "VectorSpacesForGeneralizedMorphismsTest" );
 VectorSpacesForGeneralizedMorphismsTest
 gap> ReadPackage( "CAP", "examples/VectorSpacesAllMethods.g" );

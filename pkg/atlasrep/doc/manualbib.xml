@@ -106,9 +106,9 @@
   </author>
   <title><C>AtlasRep</C>, A <Wrap Name="Package">GAP</Wrap> <C>I</C>nterface
          to the <C>A</C>tlas of <C>G</C>roup <C>R</C>epresentations,
-         <C>V</C>ersion 2.1.4</title>
+         <C>V</C>ersion 2.1.6</title>
   <howpublished><URL>https://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep</URL></howpublished>
-  <month>Aug</month>
+  <month>Oct</month>
   <year>2022</year>
   <note><Wrap Name="Package">GAP</Wrap> package</note>
 </misc></entry>
@@ -284,6 +284,25 @@
   <year>2018</year>
   <note>GAP package</note>
   <keywords>group recognition; matrix group recognition; permutation group; black box group; composition tree; Aschbacher classes; method selection</keywords>
+</misc></entry>
+
+<entry id="utils"><misc>
+  <author>
+    <name><first>Thomas</first><last>Breuer</last></name>
+    <name><first>Sebastian</first><last>Gutsche</last></name>
+    <name><first>Max</first><last>Horn</last></name>
+    <name><first>Alexander</first><last>Hulpke</last></name>
+    <name><first>Stefan</first><last>Kohl</last></name>
+    <name><first>Frank</first><last>Lübeck</last></name>
+    <name><first>Chris</first><last>Wensley</last></name>
+  </author>
+  <title><C>utils</C>, Utility functions in GAP,
+         <C>V</C>ersion 0.77</title>
+  <howpublished><URL>https://gap-packages.github.io/utils</URL></howpublished>
+  <month>Aug</month>
+  <year>2022</year>
+  <note>GAP package</note>
+  <keywords></keywords>
 </misc></entry>
 
 <entry id="AGRv3"><misc>

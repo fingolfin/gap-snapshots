@@ -3,21 +3,7 @@
 <!-- This is an automatically generated file. -->
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
 [
-<!ENTITY see '<Alt Only="LaTeX">$	o$</Alt><Alt Not="LaTeX">--&gt;</Alt>'>
-<!ENTITY AutoDoc '<Package>AutoDoc</Package>'>
-<!ENTITY kbmag '<Package>kbmag</Package>'>
-<!ENTITY ordering '<B>ordering</B>'>
-<!ENTITY Automata '<Package>Automata</Package>'>
-<!ENTITY KBMAG '<Package>KBMag</Package>'>
-<!ENTITY fsa '<M>{\sf fsa}</M>'>
-<!ENTITY fsa1 '<M>{\sf fsa1}</M>'>
-<!ENTITY fsa2 '<M>{\sf fsa2}</M>'>
-<!ENTITY rkbp '<M>{\sf rkbp}</M>'>
-<!ENTITY rws '<M>{\sf rws}</M>'>
-<!ENTITY recursive '<B>recursive</B>'>
-<!ENTITY shortlex '<B>shortlex</B>'>
-<!ENTITY wtlex '<B>wtlex</B>'>
-<!ENTITY wreathprod '<B>wreathprod</B>'>
+    [<#Include SYSTEM "_entities.xml">
 ]
 >
 <Book Name="kbmag">

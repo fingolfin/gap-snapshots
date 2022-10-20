@@ -9,13 +9,10 @@
     A package for constructing Majorana algebras and representations
   </Subtitle>
   <Version>
-    1.4
+    1.5
   </Version>
   <Author>
     Markus Pfeiffer<Alt Only="LaTeX"><Br/></Alt>
-<Address>
-School of Computer Science, University of St Andrews, North Haugh, KY16 9SX<Br/>
-</Address>
 <Email>markus.pfeiffer@st-andrews.ac.uk</Email>
 <Homepage>https://markusp.morphism.de/</Homepage>
 
@@ -26,17 +23,17 @@ School of Computer Science, University of St Andrews, North Haugh, KY16 9SX<Br/>
 Department of Mathematics, Imperial College, South Kensington, SW7 2AZ<Br/>
 </Address>
 <Email>mlw10@ic.ac.uk</Email>
-<Homepage>https://www.madeleinewhybrow.wordpress.com</Homepage>
+<Homepage>https://madeleinewhybrow.wordpress.com</Homepage>
 
   </Author>
   <Date>
-    6 December 2018
+    20 October 2022
   </Date>
   <Copyright>
     &copyright; 2018 by Markus Pfeiffer and Madeleine Whybrow<P/>
 &MajoranaAlgebras; package is free software;
 you can redistribute it and/or modify it under the terms of the
-<URL Text="GNU General Public License">http://www.fsf.org/licenses/gpl.html</URL>
+<URL Text="GNU General Public License">https://www.fsf.org/licenses/gpl.html</URL>
 as published by the Free Software Foundation; either version 2 of the License,
 or (at your option) any later version.
   </Copyright>

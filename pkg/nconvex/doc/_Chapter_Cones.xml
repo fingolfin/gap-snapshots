@@ -12,8 +12,8 @@
  <Returns>a <C>Cone</C> Object
 </Returns>
  <Description>
- The function takes a list of lists <Math>[L_1, L_2, ...]</Math> where each <Math>L_j</Math> represents 
- an inequality and returns the cone defined by them. 
+ The function takes a list of lists <Math>[L_1, L_2, ...]</Math> where each <Math>L_j</Math> represents
+ an inequality and returns the cone defined by them.
  For example the <Math>j</Math>'th entry <Math>L_j = [a_{j1},a_{j2},...,a_{jn}]</Math> corresponds to the inequality
  <Math>\sum_{i=1}^n a_{ji}x_i \geq 0</Math>.
  </Description>
@@ -25,7 +25,7 @@
  <Returns>a <C>Cone</C> Object
 </Returns>
  <Description>
- The function takes two lists. The first list is the equalities and the second is 
+ The function takes two lists. The first list is the equalities and the second is
  the inequalities and returns the cone defined by them.
  </Description>
 </ManSection>
@@ -36,8 +36,8 @@
  <Returns>a <C>Cone</C> Object
 </Returns>
  <Description>
- The function takes a list in which every entry represents a ray in the ambient vector space 
- and returns the cone defined by them.              
+ The function takes a list in which every entry represents a ray in the ambient vector space
+ and returns the cone defined by them.
  </Description>
 </ManSection>
 
@@ -93,7 +93,7 @@
  <Returns>a list of cones
 </Returns>
  <Description>
- Returns the list of all faces of the cone <C>C</C>.                  
+ Returns the list of all faces of the cone <C>C</C>.
  </Description>
 </ManSection>
 
@@ -123,7 +123,7 @@
  <Returns>a list
 </Returns>
  <Description>
- Returns a relative interior point (or ray) in the cone <C>C</C>.                  
+ Returns a relative interior point (or ray) in the cone <C>C</C>.
  </Description>
 </ManSection>
 

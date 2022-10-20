@@ -1,0 +1,20 @@
+<Subsection Label="FewGensAbelian">
+<Heading><C>FewGensAbelian</C></Heading>
+This method is used for recognizing permutation groups.<P/>
+<#Include Label="FewGensAbelian">
+</Subsection>
+<Subsection Label="KnownNilpotent">
+<Heading><C>KnownNilpotent</C></Heading>
+This method is unused!<P/>
+<#Include Label="KnownNilpotent">
+</Subsection>
+<Subsection Label="SnAnUnknownDegree">
+<Heading><C>SnAnUnknownDegree</C></Heading>
+This method is unused!<P/>
+<#Include Label="SnAnUnknownDegree">
+</Subsection>
+<Subsection Label="TrivialGroup">
+<Heading><C>TrivialGroup</C></Heading>
+This method is used for recognizing permutation, matrix, and projective groups.<P/>
+<#Include Label="TrivialGroup">
+</Subsection>

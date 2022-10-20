@@ -438,6 +438,7 @@
 \makelabel{ref:Magmas Defined by Multiplication Tables}{35.3}{X782215B982F2F01C}
 \makelabel{ref:MultiplicationTable}{35.3.5}{X849BDCC27C4C3191}
 \makelabel{ref:Attributes and Properties for Magmas}{35.4}{X87036FCE868FFEE9}
+\makelabel{ref:Centralizer}{35.4.4}{X7A2BF4527E08803C}
 \makelabel{ref:Words}{36}{X7CB0D2F780D15136}
 \makelabel{ref:Categories of Words and Nonassociative Words}{36.1}{X79AEC832815B9317}
 \makelabel{ref:Comparison of Words}{36.2}{X852C815F85DBE4BD}
@@ -2980,11 +2981,11 @@
 \makelabel{ref:GeneratorsOfMagma}{35.4.1}{X872E05B478EC20CA}
 \makelabel{ref:GeneratorsOfMagmaWithOne}{35.4.2}{X87DD93EC8061DD81}
 \makelabel{ref:GeneratorsOfMagmaWithInverses}{35.4.3}{X83A901B1857C8489}
-\makelabel{ref:Centralizer for a magma and an element}{35.4.4}{X7DE33AFC823C7873}
-\makelabel{ref:Centralizer for a magma and a submagma}{35.4.4}{X7DE33AFC823C7873}
-\makelabel{ref:Centralizer for a class of objects in a magma}{35.4.4}{X7DE33AFC823C7873}
-\makelabel{ref:centraliser}{35.4.4}{X7DE33AFC823C7873}
-\makelabel{ref:center}{35.4.4}{X7DE33AFC823C7873}
+\makelabel{ref:Centralizer for a magma and an element}{35.4.4}{X7A2BF4527E08803C}
+\makelabel{ref:Centralizer for a magma and a submagma}{35.4.4}{X7A2BF4527E08803C}
+\makelabel{ref:Centralizer for a class of objects in a magma}{35.4.4}{X7A2BF4527E08803C}
+\makelabel{ref:centraliser}{35.4.4}{X7A2BF4527E08803C}
+\makelabel{ref:center}{35.4.4}{X7A2BF4527E08803C}
 \makelabel{ref:Centre}{35.4.5}{X847ABE6F781C7FE8}
 \makelabel{ref:Center}{35.4.5}{X847ABE6F781C7FE8}
 \makelabel{ref:Idempotents}{35.4.6}{X7C651C9C78398FFF}

@@ -194,9 +194,7 @@ gap> FileString( Filename( prv, "A5G1-p60B0.m2" ),
 <P/>
 
 (We could also introduce intermediate directories <F>C4</F> and <F>A5</F>,
-say, each with the data for one group only.
-Here we do not show this because creating directories programmatically
-seems to require the &GAP; package <Package>IO</Package>.)
+say, each with the data for one group only.)
 
 <P/>
 

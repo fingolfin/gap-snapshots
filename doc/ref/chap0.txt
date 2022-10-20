@@ -3,7 +3,7 @@
                              [1XGAP - Reference Manual[101X
   
   
-                           Release 4.12.0, 2022-08-18
+                           Release 4.12.1, 2022-10-20
   
   
                                  The GAP Group
@@ -1478,7 +1478,7 @@
       35.4-1 GeneratorsOfMagma
       35.4-2 GeneratorsOfMagmaWithOne
       35.4-3 GeneratorsOfMagmaWithInverses
-      35.4-4 Centralizer
+      35.4-4 [33X[0;0YCentralizer[133X
       35.4-5 Centre
       35.4-6 Idempotents
       35.4-7 IsAssociative

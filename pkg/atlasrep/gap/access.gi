@@ -98,9 +98,6 @@ end );
 ##  the effect that no warnings about unbound variables are printed when this
 ##  file gets read.
 ##
-if not IsBound( SingleHTTPRequest ) then
-  SingleHTTPRequest:= "dummy";
-fi;
 if not IsBound( IO_mkdir ) then
   IO_mkdir:= "dummy";
 fi;
@@ -114,15 +111,10 @@ fi;
 
 #############################################################################
 ##
-#F  AtlasOfGroupRepresentationsTransferFile( <domain>, <uri>, <localpath>,
-#F                                           <crc> )
+#F  AtlasOfGroupRepresentationsTransferFile( <url>, <localpath>, <crc> )
 ##
-##  This function encapsulates the access to a file either via <C>wget</C>
-##  or via the <Package>IO</Package> package
-##  <Cite Key="IO"/><Index>IO package</Index>.
-##  <P/>
-##  The source file is described by the domain name <A>domain</A> and the
-##  path <A>uri</A>.
+##  This function encapsulates the access to the remote file at the address
+##  <url>.
 ##  <P/>
 ##  If the access failed then <K>false</K> is returned, otherwise
 ##  either the data are written to the local file with filename
@@ -131,8 +123,8 @@ fi;
 ##  or a string with the contents of the file is returned.
 ##
 BindGlobal( "AtlasOfGroupRepresentationsTransferFile",
-    function( domain, uri, localpath, crc )
-    local savetofile, io, wget, pref, result, url, str, out;
+    function( url, localpath, crc )
+    local savetofile, pref, result, str, out;
 
     # Save the contents of the target file to a local file?
     # (The first two conditions mean that we *want* to avoid saving,
@@ -141,179 +133,75 @@ BindGlobal( "AtlasOfGroupRepresentationsTransferFile",
     savetofile:= not ( localpath = fail or
                        IsEmpty( UserPreference( "AtlasRep",
                                 "AtlasRepDataDirectory" ) ) or
-                       not IsExistingFile( localpath{ [ 1 .. Last( Positions(
+                       not IsWritableFile( localpath{ [ 1 .. Last( Positions(
                              localpath, '/' ) ) - 1 ] } ) );
 
-    # Determine admissible alternatives.
-    io:= true;
-    wget:= true;
-    pref:= UserPreference( "AtlasRep", "FileTransferTool" );
-    if pref = "wget" then
-      io:= false;
-    elif pref = "io" then
-      wget:= false;
-    fi;
-
-    if uri[1] <> '/' then
-      uri:= Concatenation( "/", uri);
-    fi;
-
-    # Try the IO package if it is admissible.
-    if io and IsPackageMarkedForLoading( "io", "" ) then
-      Info( InfoAtlasRep, 2,
-            "calling 'SingleHTTPRequest' with domain '", domain,
-            "' and uri '", uri, "'" );
-      if savetofile then
-        # Download the remote file and store it locally.
-        result:= SingleHTTPRequest( domain, 80, "GET",
-                     uri,
-                     rec(), false, localpath );
-      elif EndsWith( uri, ".gz" ) then
-        # We can only download the compressed file and then load it.
-        if not IsBound( AGR.TmpDir ) then
-          AGR.TmpDir:= DirectoryTemporary();
-        fi;
-        if AGR.TmpDir = fail then
-          return false;
-        fi;
-        localpath:= Filename( AGR.TmpDir, "currentfile" );
-        result:= SingleHTTPRequest( domain, 80, "GET",
-                     uri,
-                     rec(), false, localpath );
-        if result.statuscode <> 200 then
-          Info( InfoAtlasRep, 2,
-                "SingleHTTPRequest failed with status\n#I  ", result.status );
-          RemoveFile( localpath );
-          return false;
-        fi;
-        # Uncompress and load the contents.
-        str:= StringFile( localpath );
-        RemoveFile( localpath );
-        if not AGR_ChecksumFits( str, crc ) then
-          Info( InfoWarning, 1,
-                "download of file '", domain, uri,
-                "' does not yield a string with the expected crc value '",
-                crc, "'" );
-          return false;
-        fi;
-        return str;
-      else
-        # Transfer the file into the GAP session.
-        result:= SingleHTTPRequest( domain, 80, "GET",
-                     uri,
-                     rec(), false, false );
+    Info( InfoAtlasRep, 2,
+          "calling 'Download' with url '", url, "'" );
+    if savetofile then
+      result:= Download( url, rec( target:= localpath ) );
+    elif EndsWith( url, ".gz" ) then
+      # We can only download the compressed file and then load it.
+      if not IsBound( AGR.TmpDir ) then
+        AGR.TmpDir:= DirectoryTemporary();
       fi;
-      if result.statuscode <> 200 then
+      if AGR.TmpDir = fail then
+        return false;
+      fi;
+      localpath:= Filename( AGR.TmpDir, "currentfile" );
+      result:= Download( url, rec( target:= localpath ) );
+      if result.success <> true then
         Info( InfoAtlasRep, 2,
-              "SingleHTTPRequest failed with status\n#I  ", result.status );
-      elif savetofile and not AGR_ChecksumFits( StringFile( localpath ), crc ) then
-        Info( InfoWarning, 1,
-              "download of file '", domain, uri, "' to '", localpath,
-              "' does not yield a file with the expected crc value '",
-              crc, "'" );
+              "Download failed" );
         RemoveFile( localpath );
-      elif not savetofile and not AGR_ChecksumFits( result.body, crc ) then
+        return false;
+      fi;
+      # Uncompress and load the contents.
+      str:= StringFile( localpath );
+      RemoveFile( localpath );
+      if not AGR_ChecksumFits( str, crc ) then
         Info( InfoWarning, 1,
-              "download of file '", domain, uri,
+              "download of file '", url,
               "' does not yield a string with the expected crc value '",
               crc, "'" );
-      elif savetofile then
-        # The file has been downloaded and stored and seems to be o.k.
-        return true;
-      else
-        # The contents has been downloaded and seems to be o.k.
-        return result.body;
+        return false;
       fi;
-
-      # Trust IO that the file is not available, do not try also wget.
-      return false;
+      return str;
+    else
+      # Transfer the file into the GAP session.
+      result:= Download( url, rec() );
     fi;
 
-    # Try wget if it is admissible.
-    if wget then
-      wget:= Filename( DirectoriesSystemPrograms(), "wget" );
-      if wget = fail then
-        Info( InfoAtlasRep, 1, "no 'wget' executable found" );
-      elif savetofile then
-        # Download the remote file and store it locally.
-        url:= Concatenation( "http://", domain, uri );
-#T better keep the given protocol!
-        Info( InfoAtlasRep, 2,
-              "calling 'wget' with url '", url, "'" );
-        result:= Process( DirectoryCurrent(), wget,
-            InputTextNone(), OutputTextNone(),
-            [ "-q", "-O", localpath, url ] );
-        if result <> 0 then
-          Info( InfoAtlasRep, 2,
-                "'wget' failed to fetch '", url, "'" );
-          RemoveFile( localpath );
-        elif not AGR_ChecksumFits( StringFile( localpath ), crc ) then
-          Info( InfoWarning, 1,
-                "download of file '", url, "' to '", localpath,
-                "' does not yield a file with the expected crc value '",
-                crc, "'" );
-          RemoveFile( localpath );
-        else
-          # The file has been downloaded and seems to be o.k.
-          return true;
-        fi;
-      elif EndsWith( uri, ".gz" ) then
-        # We can only download the compressed file and then load it.
-        if not IsBound( AGR.TmpDir ) then
-          AGR.TmpDir:= DirectoryTemporary();
-        fi;
-        if AGR.TmpDir = fail then
-          return false;
-        fi;
-        localpath:= Filename( AGR.TmpDir, "currentfile" );
-        result:= Process( DirectoryCurrent(), wget,
-            InputTextNone(), OutputTextNone(),
-            [ "-q", "-O", localpath, url ] );
-        if result <> 0 then
-          Info( InfoAtlasRep, 2,
-                "'wget' failed to fetch '", url, "'" );
-          RemoveFile( localpath );
-          return false;
-        fi;
-        # Uncompress and load the contents.
-        str:= StringFile( localpath );
-        RemoveFile( localpath );
-        if not AGR_ChecksumFits( str, crc ) then
-          Info( InfoWarning, 1,
-                "download of file '", domain, uri,
-                "' does not yield a string with the expected crc value '",
-                crc, "'" );
-          return false;
-        fi;
-        return str;
-      else
-        # Transfer the file into the GAP session.
-        url:= Concatenation( "http://", domain, uri );
-#T better keep the given protocol!
-        str:= "";
-        out:= OutputTextString( str, true );
-        Info( InfoAtlasRep, 2,
-              "calling 'wget' with url '", url, "'" );
-        result:= Process( DirectoryCurrent(), wget,
-            InputTextNone(), out,
-            [ "-q", "-O", "-", url ] );
-        CloseStream( out );
-        if result <> 0 then
-          Info( InfoAtlasRep, 2,
-                "'wget' failed to fetch '", url, "'" );
-        elif not AGR_ChecksumFits( str, crc ) then
-          Info( InfoWarning, 1,
-                "download of file '", url,
-                "' does not yield a string with the expected crc value '",
-                crc, "'" );
-        else
-          # The contents has been downloaded and seems to be o.k.
-          return str;
+    if result.success <> true then
+      Info( InfoAtlasRep, 2,
+            "Download failed with message\n#I  ", result.error );
+      if savetofile and IsExistingFile( localpath ) then
+        # This should not happen, 'Download' should have removed the file.
+        if RemoveFile( localpath ) <> true then
+          Error( "cannot remove corruped file '", localpath, "'" );
         fi;
       fi;
+    elif savetofile and not AGR_ChecksumFits( StringFile( localpath ), crc ) then
+      Info( InfoWarning, 1,
+            "download of file '", url, "' to '", localpath,
+            "' does not yield a file with the expected crc value '",
+            crc, "'" );
+      if RemoveFile( localpath ) <> true then
+        Error( "cannot remove corruped file '", localpath, "'" );
+      fi;
+    elif not savetofile and not AGR_ChecksumFits( result.result, crc ) then
+      Info( InfoWarning, 1,
+            "download of file '", url,
+            "' does not yield a string with the expected crc value '",
+            crc, "'" );
+    elif savetofile then
+      # The file has been downloaded and stored and seems to be o.k.
+      return true;
+    else
+      # The contents has been downloaded and seems to be o.k.
+      return result.result;
     fi;
 
-    # No admissible alternative was successful.
     return false;
 end );
 
@@ -328,6 +216,9 @@ AGR.AccessFilesLocation:= function( files, type, replace, compressed )
 
     names:= [];
     pref:= UserPreference( "AtlasRep", "AtlasRepDataDirectory" );
+    if pref <> "" and not EndsWith( pref, "/" ) then
+      pref:= Concatenation( pref, "/" );
+    fi;
     for pair in files do
       dirname:= pair[1];
       filename:= pair[2];
@@ -428,7 +319,7 @@ AGR.AccessFilesLocation:= function( files, type, replace, compressed )
 ##
 AGR.AccessFilesFetch:= function( filepath, filename, dirname,
                                  type, compressed, crc )
-    local result, iscompressed, info, datadirs, pref, url, pos, domain, uri,
+    local result, iscompressed, info, datadirs, pref, url, pos,
           gzip, gunzip;
 
     # Try to fetch the remote file.
@@ -462,22 +353,13 @@ AGR.AccessFilesFetch:= function( filepath, filename, dirname,
           # Use the standard addresses.
           url:= info.DataURL;
         fi;
-        if StartsWith( url, "http://" ) then
-          url:= url{ [ 8 .. Length( url ) ] };
-        elif StartsWith( url, "https://" ) then
-          url:= url{ [ 9 .. Length( url ) ] };
-        fi;
-#T better keep the given protocol!
-        if url[ Length( url ) ] <> '/' then
-          Add( url, '/' );
+        if not EndsWith( url, "/" ) then
+          url:= Concatenation( url, "/" );
         fi;
         url:= Concatenation( url, filename );
-        pos:= Position( url, '/' );
-        domain:= url{ [ 1 .. pos - 1 ] };
-        uri:= url{ [ pos .. Length( url ) ] };
 
         # First look for an uncompressed file.
-        result:= AtlasOfGroupRepresentationsTransferFile( domain, uri,
+        result:= AtlasOfGroupRepresentationsTransferFile( url,
                      filepath, crc );
 
         # In case of private MeatAxe text files
@@ -490,8 +372,8 @@ AGR.AccessFilesFetch:= function( filepath, filename, dirname,
             gunzip:= fail;
           fi;
           if gunzip <> fail then
-            result:= AtlasOfGroupRepresentationsTransferFile( domain,
-                         Concatenation( uri, ".gz" ),
+            result:= AtlasOfGroupRepresentationsTransferFile(
+                         Concatenation( url, ".gz" ),
                          Concatenation( filepath, ".gz" ), fail );
             # If the file has been stored locally then it is compressed.
             # If the contents is stored in 'result' then it is *uncompressed*.
@@ -850,8 +732,8 @@ end );
 ##
 InstallGlobalFunction(
     AtlasOfGroupRepresentationsTestTableOfContentsRemoteUpdates, function()
-    local version, inforec, home, server, path, result, lines,
-          pref, datadirs, line, pos, pos2, filename, localfile, servdate,
+    local pref, version, inforec, home, result, lines,
+          datadirs, line, pos, pos2, filename, localfile, servdate,
           stat;
 
     if not IsPackageMarkedForLoading( "io", "" ) then
@@ -869,21 +751,17 @@ InstallGlobalFunction(
     version:= InstalledPackageVersion( "atlasrep" );
     inforec:= First( PackageInfo( "atlasrep" ), r -> r.Version = version );
     home:= inforec.PackageWWWHome;
-    if StartsWith( home, "http://" ) then
-#T better keep the given protocol!
-      home:= home{ [ 8 .. Length( home ) ] };
-    fi;
-
-    server:= home{ [ 1 .. Position( home, '/' ) - 1 ] };
-    path:= home{ [ Position( home, '/' ) + 1 .. Length( home ) ] };
-    result:= AtlasOfGroupRepresentationsTransferFile( server,
-               Concatenation( path, "/htm/data/changes.htm" ), fail, fail );
+    result:= AtlasOfGroupRepresentationsTransferFile(
+                 Concatenation( home, "/htm/data/changes.htm" ), fail, fail );
     if result <> false then
       lines:= SplitString( result, "\n" );
       result:= [];
       lines:= Filtered( lines,
                   x ->     20 < Length( x ) and x{ [ 1 .. 4 ] } = "<tr>"
                        and x{ [ -3 .. 0 ] + Length( x ) } = " -->" );
+      if pref <> "" and not EndsWith( pref, "/" ) then
+        pref:= Concatenation( pref, "/" );
+      fi;
       datadirs:= [ Directory( Concatenation( pref, "datagens" ) ),
                    Directory( Concatenation( pref, "dataword" ) ) ];
       for line in lines do
@@ -2862,8 +2740,9 @@ AGR.CreateLocalJSONFile:= function( dirid, body )
     if pref = "" then
       # We cannot (or do not want to) store local files.
       return fail;
+    elif pref <> "" and not EndsWith( pref, "/" ) then
+      pref:= Concatenation( pref, "/" );
     fi;
-
     datadir:= Concatenation( pref, "dataext/", dirid );
     if not IsDirectoryPath( datadir ) then
       # Create the subdirectory 'dirid' and set the mode 1023.
@@ -2871,7 +2750,6 @@ AGR.CreateLocalJSONFile:= function( dirid, body )
       # so we call 'chmod' afterwards.)
       if not IsPackageMarkedForLoading( "IO", "" ) or
          IO_mkdir( datadir, 1023 ) <> true then
-#T why 1023 not 1777 ???
         Info( InfoAtlasRep, 1,
               "AtlasOfGroupRepresentationsNotifyData:\n",
               "#I  'IO_mkdir' cannot create the local directory\n",
@@ -2882,7 +2760,6 @@ AGR.CreateLocalJSONFile:= function( dirid, body )
               "AtlasOfGroupRepresentationsNotifyData:\n",
               "#I  'IO_chmod' cannot set the mode of \n",
               "#I  ", datadir, " to 1023" );
-#T why 1023 not 1777 ???
         return fail;
       fi;
     fi;
@@ -2935,7 +2812,7 @@ InstallGlobalFunction( AtlasOfGroupRepresentationsNotifyData,
     function( arg )
     local usage, test, dir, filename, url, firstarg, dirname, dirid, body, f,
           known, r, comp, localdir, pos, package, path, localdirs, pref,
-          datadirs, p, domain, uri, datadir, oldtest, olddata, nam, entry,
+          datadirs, p, datadir, oldtest, olddata, nam, entry,
           toc, allfilenames, RemovedDirectories, groupname, record, type,
           name, tocs, ok, oldtoc, list, i, names, unknown, value;
 
@@ -3124,6 +3001,9 @@ InstallGlobalFunction( AtlasOfGroupRepresentationsNotifyData,
       # - Otherwise we give up.
 
       pref:= UserPreference( "AtlasRep", "AtlasRepDataDirectory" );
+      if pref <> "" and not EndsWith( pref, "/" ) then
+        pref:= Concatenation( pref, "/" );
+      fi;
       datadirs:= Directory( Concatenation( pref, "dataext" ) );
       if IsBound( dirid ) then
         datadirs:= Filename( datadirs, dirid );
@@ -3142,21 +3022,8 @@ InstallGlobalFunction( AtlasOfGroupRepresentationsNotifyData,
 
       if UserPreference( "AtlasRep", "AtlasRepAccessRemoteFiles" ) = true then
         # Try to fetch the file.
-        if StartsWith( LowercaseString( url ), "http://" ) then
-          url:= url{ [ 8 .. Length( url ) ] };
-        elif StartsWith( LowercaseString( url ), "https://" ) then
-          url:= url{ [ 9 .. Length( url ) ] };
-        fi;
-#T better keep the given protocol!
-        p:= Position( url, '/' );
-        if p = fail then
-          Error( usage );
-        fi;
-        domain:= url{ [ 1 .. p - 1 ] };
-        uri:= url{ [ p .. Length( url ) ] };
-        body:= AtlasOfGroupRepresentationsTransferFile( domain, uri, fail,
-                                                        fail );
-        if body = fail then
+        body:= AtlasOfGroupRepresentationsTransferFile( url, fail, fail );
+        if body = false then
           Info( InfoAtlasRep, 1,
                 "AtlasOfGroupRepresentationsNotifyData:\n",
                 "#I  cannot read '", url, "'" );
@@ -3427,9 +3294,6 @@ InstallGlobalFunction( AtlasOfGroupRepresentationsForgetData,
     end );
 
 
-if IsString( SingleHTTPRequest ) then
-  Unbind( SingleHTTPRequest );
-fi;
 if IsString( IO_mkdir ) then
   Unbind( IO_mkdir );
 fi;

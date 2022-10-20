@@ -1071,7 +1071,7 @@ gap> FileString( Filename( prv, "A5G1-p60B0.m1" ),
 gap> FileString( Filename( prv, "A5G1-p60B0.m2" ),
 >      MeatAxeString( [ Permutation( (1,3,5), points, OnRight ) ], 60 ) );;
 
-##  doc/extend.xml (216-231)
+##  doc/extend.xml (214-229)
 gap> FileString( Filename( prv, "toc.json" ), Concatenation( [ "{\n",
 >        "\"ID\":\"priv\",\n",
 >        "\"Data\":[\n",
@@ -1087,11 +1087,11 @@ gap> FileString( Filename( prv, "toc.json" ), Concatenation( [ "{\n",
 >        "]\n",
 >        "}\n" ] ) );;
 
-##  doc/extend.xml (239-242)
+##  doc/extend.xml (237-240)
 gap> AtlasOfGroupRepresentationsNotifyData( prv, "priv", true );
 true
 
-##  doc/extend.xml (250-331)
+##  doc/extend.xml (248-329)
 gap> DisplayAtlasInfo( [ "C4" ] );
 group | # | maxes | cl | cyc | out | fnd | chk | prs
 ------+---+-------+----+-----+-----+-----+-----+----
@@ -1173,14 +1173,14 @@ rec( groupname := "C4",
   program := <straight line program>, standardization := 1, 
   version := "1" )
 
-##  doc/extend.xml (340-346)
+##  doc/extend.xml (338-344)
 gap> DisplayAtlasInfo( "contents", "priv" );
 group | # | maxes | cl | cyc | out | fnd | chk | prs
 ------+---+-------+----+-----+-----+-----+-----+----
 A5*   | 1 |       |    |     |     |     |     |    
 C4*   | 2 |     1 |    |     |   2 |     |     |    
 
-##  doc/extend.xml (355-375)
+##  doc/extend.xml (353-373)
 gap> AGR.Test.Words( "priv" );
 true
 gap> AGR.Test.FileHeaders( "priv" );
@@ -1201,7 +1201,7 @@ gap> AGR.Test.Characters( "priv" : TryToExtendData );
 ["CHAR",["C4","C4G1-p4B0",0,[1,2,3,4],"1abcd"]],
 true
 
-##  doc/extend.xml (398-412)
+##  doc/extend.xml (396-410)
 gap> AGR.CHAR("A5","A5G1-p60B0",
 > 0,[1,[2,3],[3,3],[4,4],[5,5]],"1a+3a^3b^3+4a^4+5a^5", "priv" );
 gap> AGR.CHAR("C4","C4G1-p4B0",0,[1,2,3,4],"1abcd", "priv" );
@@ -1216,7 +1216,7 @@ rec( charactername := "1abcd", constituents := [ 1, 2, 3, 4 ],
   stabilizer := "1 < C2", standardization := 1, transitivity := 1, 
   type := "perm" )
 
-##  doc/extend.xml (420-445)
+##  doc/extend.xml (418-443)
 gap> Print( StringOfAtlasTableOfContents( "priv" ) );
 {
 "ID":"priv",
@@ -1242,7 +1242,7 @@ a^4+5a^5"]],
 ]
 }
 
-##  doc/extend.xml (455-489)
+##  doc/extend.xml (453-487)
 gap> Print( StringOfAtlasTableOfContents(
 >               rec( ID:= "priv", DataURL:= "http://someurl" ) ) );
 {
@@ -1277,7 +1277,7 @@ a^4+5a^5"]],
 ]
 }
 
-##  doc/extend.xml (500-503)
+##  doc/extend.xml (498-501)
 gap> AtlasOfGroupRepresentationsForgetData( "priv" );
 gap> SetInfoLevel( InfoAtlasRep, locallevel );
 

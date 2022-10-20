@@ -1,40 +1,32 @@
 #############################################################################
 ##
-##  matrix.gi
-##                                recog package
-##                                                        Max Neunhoeffer
-##                                                            Ákos Seress
+##  This file is part of recog, a package for the GAP computer algebra system
+##  which provides a collection of methods for the constructive recognition
+##  of groups.
 ##
-##  Copyright 2005-2008 by the authors.
-##  This file is free software, see license information at the end.
+##  This files's authors include Max Neunhöffer, Ákos Seress.
+##
+##  Copyright of recog belongs to its developers whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-3.0-or-later
+##
 ##
 ##  A collection of find homomorphism methods for matrix groups.
 ##
 #############################################################################
 
-SLPforElementFuncsMatrix.TrivialMatrixGroup :=
-   function(ri,g)
-     return StraightLineProgramNC( [ [1,0] ], 1 );
-   end;
-
-FindHomMethodsMatrix.TrivialMatrixGroup := function(ri, G)
-  local gens;
-  gens := GeneratorsOfGroup(G);
-  if not ForAll(gens, IsOne) then
-      return NeverApplicable;
-  fi;
-  SetSize(ri, 1);
-  Setslpforelement(ri, SLPforElementFuncsMatrix.TrivialMatrixGroup);
-  Setslptonice(ri, StraightLineProgramNC([[[1,0]]],Length(gens)));
-  SetFilterObj(ri, IsLeaf);
-  return Success;
-end;
-
 RECOG.HomToScalars := function(data,el)
   return ExtractSubMatrix(el,data.poss,data.poss);
 end;
 
-FindHomMethodsMatrix.DiagonalMatrices := function(ri, G)
+#! @BeginChunk DiagonalMatrices
+#! This method is successful if and only if all generators of a matrix group
+#! <A>G</A> are diagonal matrices. Otherwise, it returns <K>NeverApplicable</K>.
+#! @EndChunk
+BindRecogMethod(FindHomMethodsMatrix, "DiagonalMatrices",
+"check whether all generators are diagonal matrices",
+function(ri, G)
   local H,d,f,gens,hom,i,isscalars,j,newgens,upperleft;
 
   d := ri!.dimension;
@@ -63,7 +55,7 @@ FindHomMethodsMatrix.DiagonalMatrices := function(ri, G)
       i := i + 1;
   od;
 
-  if not(isscalars) then
+  if not isscalars then
       # We quickly know that we want to make a balanced tree:
       ri!.blocks := List([1..d],i->[i]);
       # Note that we cannot tell the upper levels that they should better
@@ -79,12 +71,11 @@ FindHomMethodsMatrix.DiagonalMatrices := function(ri, G)
   SetHomom(ri,hom);
   findgensNmeth(ri).method := FindKernelDoNothing;
 
-  # Hint to the factor:
-  Add(forfactor(ri).hints,rec( method := FindHomMethodsMatrix.Scalar,
-                               rank := 4000, stamp := "Scalar" ),1);
+  # Hint to the image:
+  AddMethod(InitialDataForImageRecogNode(ri).hints, FindHomMethodsMatrix.Scalar, 4000);
 
   return Success;
-end;
+end);
 
 #RECOG.DetWrapper := function(m)
 #  local n;
@@ -119,18 +110,25 @@ end;
 #  SetHomom(ri,hom);
 #
 #  # Hint to the kernel:
-#  forkernel(ri).containedinsl := true;
+#  InitialDataForKernelRecogNode(ri).containedinsl := true;
 #  return true;
 #end;
 
 SLPforElementFuncsMatrix.DiscreteLog := function(ri,x)
   local log;
   log := LogFFE(x[1,1],ri!.generator);
-  if log = fail then return fail; fi;
+  if log = fail then
+      return fail;
+  fi;
   return StraightLineProgramNC([[1,log]],1);
 end;
 
-FindHomMethodsMatrix.Scalar := function(ri, G)
+#! @BeginChunk Scalar
+#! TODO
+#! @EndChunk
+BindRecogMethod(FindHomMethodsMatrix, "Scalar",
+"Hint TODO",
+function(ri, G)
   local f,gcd,generator,gens,i,l,o,pows,q,rep,slp,subset,z;
   if ri!.dimension > 1 then
       return NotEnoughInformation;
@@ -140,9 +138,9 @@ FindHomMethodsMatrix.Scalar := function(ri, G)
   f := ri!.field;
   o := One(f);
   gens := List(GeneratorsOfGroup(G),x->x[1,1]);
-  subset := Filtered([1..Length(gens)],i->not(IsOne(gens[i])));
+  subset := Filtered([1..Length(gens)], i -> not IsOne(gens[i]));
   if subset = [] then
-      return FindHomMethodsMatrix.TrivialMatrixGroup(ri,G);
+      return FindHomMethodsGeneric.TrivialGroup(ri,G);
   fi;
   gens := gens{subset};
   q := Size(f);
@@ -171,7 +169,7 @@ FindHomMethodsMatrix.Scalar := function(ri, G)
   ri!.generator := z^gcd;
   SetFilterObj(ri,IsLeaf);
   return Success;
-end;
+end);
 
 
 # Given a matrix `mat`, and a set of indices `poss`,
@@ -179,13 +177,14 @@ end;
 # is valid -- that is, whether the rows and columns in
 # the set poss contain only zero elements outside of the
 # positions indicated by poss.
-RECOG.IsDiagonalBlockOfMatrix := function(mat,poss)
-  local z, i, j;
-  z := Zero(mat[1,1]);
+RECOG.IsDiagonalBlockOfMatrix := function(m, poss)
+  local n, outside, z, i, j;
+  Assert(1, NrRows(m) = NrCols(m) and IsSubset([1..NrRows(m)], poss));
+  outside := Difference([1..NrRows(m)], poss);
+  z := ZeroOfBaseDomain(m);
   for i in poss do
-    for j in [1..Length(mat)] do
-      if i in poss then continue; fi;
-      if mat[i,j] <> z or mat[j,i] <> z then
+    for j in outside do
+      if m[i,j] <> z or m[j,i] <> z then
         return false;
       fi;
     od;
@@ -194,7 +193,7 @@ RECOG.IsDiagonalBlockOfMatrix := function(mat,poss)
 end;
 
 
-# Homomorphism method used by these recognition methods:
+# Homomorphism used by these recognition methods:
 # - FindHomMethodsMatrix.BlockScalar
 # - FindHomMethodsProjective.BlocksModScalars
 RECOG.HomToDiagonalBlock := function(data,el)
@@ -211,36 +210,42 @@ RECOG.HomToDiagonalBlock := function(data,el)
   return ExtractSubMatrix(el,data.poss,data.poss);
 end;
 
-FindHomMethodsMatrix.BlockScalar := function(ri,G)
+#! @BeginChunk BlockScalar
+#! This method is only called by a hint. Alongside with the hint it gets
+#! a block decomposition respected by the matrix group <A>G</A> to be recognised
+#! and the promise that all diagonal blocks of all group elements
+#! will only be scalar matrices. This method recursively builds a balanced tree
+#! and does scalar recognition in each leaf.
+#! @EndChunk
+BindRecogMethod(FindHomMethodsMatrix, "BlockScalar",
+"Hint TODO",
+function(ri, G)
   # We assume that ri!.blocks is a list of ranges where the non-trivial
   # scalar blocks are. Note that their length does not have to sum up to
   # the dimension, because some blocks at the end might already be trivial.
   local H,data,hom,middle,newgens,nrblocks,topblock;
   nrblocks := Length(ri!.blocks);  # this is always >= 1
-  if nrblocks <= 2 then   # the factor is only one block
+  if nrblocks <= 2 then   # the image is only one block
       # go directly to scalars in that case:
       data := rec(poss := ri!.blocks[nrblocks]);
       newgens := List(GeneratorsOfGroup(G),x->RECOG.HomToDiagonalBlock(data,x));
       H := GroupWithGenerators(newgens);
       hom := GroupHomByFuncWithData(G,H,RECOG.HomToDiagonalBlock,data);
       SetHomom(ri,hom);
-      Add(forfactor(ri).hints,
-          rec( method := FindHomMethodsMatrix.Scalar, rank := 2000,
-               stamp := "Scalar" ),1);
+      AddMethod(InitialDataForImageRecogNode(ri).hints, FindHomMethodsMatrix.Scalar, 2000);
 
       if nrblocks = 1 then     # no kernel:
           findgensNmeth(ri).method := FindKernelDoNothing;
       else   # exactly two blocks:
           # FIXME: why don't we just compute a precise set of generators of the kernel?
           # That should be easily and efficiently possible at this point, no?
-          findgensNmeth(ri).args[1] := 7;
-          findgensNmeth(ri).args[2] := 5;
-          forkernel(ri).blocks := ri!.blocks{[1]};
+          # The kernel is abelian, so we don't need to do normal closures.
+          findgensNmeth(ri).method := FindKernelRandom;
+          findgensNmeth(ri).args := [7];
+          InitialDataForKernelRecogNode(ri).blocks := ri!.blocks{[1]};
           # We have to go to BlockScalar with 1 block because the one block
           # is only a part of the whole matrix:
-          Add(forkernel(ri).hints,
-              rec( method := FindHomMethodsMatrix.BlockScalar, rank := 2000,
-                   stamp := "BlockScalar" ),1);
+          AddMethod(InitialDataForKernelRecogNode(ri).hints, FindHomMethodsMatrix.BlockScalar, 2000);
           Setimmediateverification(ri,true);
       fi;
       return Success;
@@ -255,57 +260,23 @@ FindHomMethodsMatrix.BlockScalar := function(ri,G)
   hom := GroupHomByFuncWithData(G,H,RECOG.HomToDiagonalBlock,data);
   SetHomom(ri,hom);
 
-  # the factor are the last few blocks:
-  forfactor(ri).blocks := List(ri!.blocks{[middle..nrblocks]},
+  # the image are the last few blocks:
+  InitialDataForImageRecogNode(ri).blocks := List(ri!.blocks{[middle..nrblocks]},
                                x->x - (ri!.blocks[middle][1]-1));
-  Add(forfactor(ri).hints,
-      rec( method := FindHomMethodsMatrix.BlockScalar, rank := 2000,
-           stamp := "BlockScalar" ),1);
+  AddMethod(InitialDataForImageRecogNode(ri).hints, FindHomMethodsMatrix.BlockScalar, 2000);
 
   # the kernel is the first few blocks (can be only one!):
   # FIXME: why don't we just compute a precise set of generators of the kernel?
   # That should be easily and efficiently possible at this point, no?
   findgensNmeth(ri).args[1] := 3 + nrblocks;
   findgensNmeth(ri).args[2] := 5;
-  forkernel(ri).blocks := ri!.blocks{[1..middle-1]};
-  Add(forkernel(ri).hints,
-      rec( method := FindHomMethodsMatrix.BlockScalar, rank := 2000,
-           stamp := "BlockScalar" ),1);
+  InitialDataForKernelRecogNode(ri).blocks := ri!.blocks{[1..middle-1]};
+  AddMethod(InitialDataForKernelRecogNode(ri).hints, FindHomMethodsMatrix.BlockScalar, 2000);
   Setimmediateverification(ri,true);
   return Success;
-end;
+end);
 
 # A helper function for base changes:
-
-ExtendToBasisOfFullRowspace := function(m,f)
-  # FIXME:
-  # This function has to be improved with respect to performance:
-  local i,o,v,z;
-  if not(IsMutable(m)) then
-      m := MutableCopyMat(m);
-  fi;
-  v := ZeroMutable(m[1]);
-  if RankMat(m) < Length(m) then
-      Error("No basis!");
-  fi;
-  i := 1;
-  o := One(f);
-  z := Zero(f);
-  while Length(m) < Length(m[1]) do
-      v[i] := o;
-      Add(m,ShallowCopy(v));
-      v[i] := z;
-      if RankMat(m) < Length(m) then
-          Unbind(m[Length(m)]);
-      #else
-      #    Print("len=",Length(m),"    \r");
-      fi;
-      i := i + 1;
-  od;
-  #Print("\n");
-  return m;
-end;
-
 RECOG.HomDoBaseChange := function(data,el)
   return data.t*el*data.ti;
 end;
@@ -387,7 +358,27 @@ RECOG.FindAdjustedBasis := function(l)
   return rec(base := seb.vectors, baseinv := seb.vectors^-1, blocks := blocks);
 end;
 
-FindHomMethodsMatrix.ReducibleIso := function(ri,G)
+#! @BeginChunk ReducibleIso
+#! This method determines whether a matrix group <A>G</A> acts irreducibly.
+#! If yes, then it returns <K>NeverApplicable</K>. If <A>G</A> acts reducibly then
+#! a composition series of the underlying module is computed and a base
+#! change is performed to write <A>G</A> in a block lower triangular form.
+#! Also, the method passes a hint to the image group that it is in
+#! block lower triangular form, so the image immediately can make
+#! recursive calls for the actions on the diagonal blocks, and then to the
+#! lower <M>p</M>-part. For the image the method
+#! <Ref Subsect="BlockLowerTriangular" Style="Text"/> is used.
+#! 
+#! Note that this method is implemented in a way such that it can also be
+#! used as a method for a projective group <A>G</A>. In that case the
+#! recognition node has the <C>!.projective</C> component bound
+#! to <K>true</K> and this information is passed down to image and kernel.
+#! @EndChunk
+BindRecogMethod(FindHomMethodsMatrix, "ReducibleIso",
+"use the MeatAxe to find invariant subspaces",
+# alternative comment:
+#"use MeatAxe to find a composition series, do base change",
+function(ri,G)
   # First we use the MeatAxe to find an invariant subspace:
   local H,bc,compseries,f,hom,isirred,m,newgens;
 
@@ -406,7 +397,9 @@ FindHomMethodsMatrix.ReducibleIso := function(ri,G)
   # Save the MeatAxe module for later use:
   ri!.meataxemodule := m;
   # Report enduring failure if irreducible:
-  if isirred then return NeverApplicable; fi;
+  if isirred then
+      return NeverApplicable;
+  fi;
 
   # Now compute a composition series:
   compseries := MTX.BasesCompositionSeries(m);
@@ -425,14 +418,12 @@ FindHomMethodsMatrix.ReducibleIso := function(ri,G)
   SetHomom(ri,hom);
   findgensNmeth(ri).method := FindKernelDoNothing;
 
-  # Inform authorities that the factor can be recognised easily:
-  forfactor(ri).blocks := bc.blocks;
-  Add(forfactor(ri).hints,
-      rec(method := FindHomMethodsMatrix.BlockLowerTriangular,
-          rank := 4000,stamp := "BlockLowerTriangular"));
+  # Inform authorities that the image can be recognised easily:
+  InitialDataForImageRecogNode(ri).blocks := bc.blocks;
+  AddMethod(InitialDataForImageRecogNode(ri).hints, FindHomMethodsMatrix.BlockLowerTriangular, 4000);
 
   return Success;
-end;
+end);
 
 # Given a matrix `mat` and a list of index sets `blocks`,
 # verify that the matrix has block lower triangular shape
@@ -440,7 +431,7 @@ end;
 RECOG.IsBlockLowerTriangularWithBlocks := function(mat, blocks)
   local z, b, col, row;
   Assert(0, Concatenation(blocks) = [1..Length(mat)]);
-  z := Zero(mat[1,1]);
+  z := ZeroOfBaseDomain(mat);
   for b in blocks do
     # Verify that there are only zeros above each block
     for row in [1..b[1]-1] do
@@ -456,7 +447,7 @@ end;
 
 # Homomorphism method used by FindHomMethodsMatrix.BlockLowerTriangular.
 RECOG.HomOntoBlockDiagonal := function(data,el)
-  local dim,i,m;
+  local m, x;
 
   # Verify el is in the domain of definition of this homomorphism.
   # Assuming the recognition result is correct, this is of course always
@@ -466,17 +457,31 @@ RECOG.HomOntoBlockDiagonal := function(data,el)
     return fail;
   fi;
 
-  dim := Length(el);
   m := ZeroMutable(el);
-  for i in [1..Length(data.blocks)] do
-      CopySubMatrix(el,m,data.blocks[i],data.blocks[i],
-                         data.blocks[i],data.blocks[i]);
+  for x in data.blocks do
+    CopySubMatrix(el, m, x, x, x, x);
   od;
-
   return m;
 end;
 
-FindHomMethodsMatrix.BlockLowerTriangular := function(ri,G)
+#! @BeginChunk BlockLowerTriangular
+#! This method is only called when a hint was passed down from the method
+#! <Ref Subsect="ReducibleIso" Style="Text"/>. In that case, it knows that a
+#! base change to block lower triangular form has been performed. The method
+#! can then immediately find a homomorphism by mapping to the diagonal blocks.
+#! It sets up this homomorphism and gives hints to image and kernel. For the
+#! image, the method <Ref Subsect="BlockDiagonal" Style="Text"/> is used and
+#! for the kernel, the method <Ref Subsect="LowerLeftPGroup" Style="Text"/>
+#! is used.
+#! 
+#! Note that this method is implemented in a way such that it can also be
+#! used as a method for a projective group <A>G</A>. In that case the
+#! recognition node has the <C>!.projective</C> component bound
+#! to <K>true</K> and this information is passed down to image and kernel.
+#! @EndChunk
+BindRecogMethod(FindHomMethodsMatrix, "BlockLowerTriangular",
+"for a group generated by block lower triangular matrices",
+function(ri,G)
   # This is only used coming from a hint, we know what to do:
   # A base change was done to get block lower triangular shape.
   # We first do the diagonal blocks, then the lower p-part:
@@ -490,52 +495,68 @@ FindHomMethodsMatrix.BlockLowerTriangular := function(ri,G)
   SetHomom(ri,hom);
 
   # Now give hints downward:
-  forfactor(ri).blocks := ri!.blocks;
-  Add(forfactor(ri).hints,
-      rec( method := FindHomMethodsMatrix.BlockDiagonal,
-           rank := 2000, stamp := "BlockDiagonal" ) );
+  InitialDataForImageRecogNode(ri).blocks := ri!.blocks;
+  AddMethod(InitialDataForImageRecogNode(ri).hints, FindHomMethodsMatrix.BlockDiagonal, 2000);
   findgensNmeth(ri).method := FindKernelLowerLeftPGroup;
   findgensNmeth(ri).args := [];
-  Add(forkernel(ri).hints,rec(method := FindHomMethodsMatrix.LowerLeftPGroup,
-                              rank := 2000,stamp := "LowerLeftPGroup"));
-  forkernel(ri).blocks := ri!.blocks;
+  AddMethod(InitialDataForKernelRecogNode(ri).hints, FindHomMethodsMatrix.LowerLeftPGroup, 2000);
+  InitialDataForKernelRecogNode(ri).blocks := ri!.blocks;
   return Success;
-end;
+end);
 
-FindHomMethodsMatrix.BlockDiagonal := function(ri,G)
+#! @BeginChunk BlockDiagonal
+#! This method is only called when a hint was passed down from the method
+#! <Ref Subsect="BlockLowerTriangular" Style="Text"/>.
+#! In that case, it knows that the group is in block diagonal form.
+#! The method is used both in the matrix- and the projective case.
+#! 
+#! The method immediately delegates to projective methods handling
+#! all the diagonal blocks projectively. This is done by giving a hint
+#! to the image to use the method
+#! <Ref Subsect="BlocksModScalars" Style="Text"/>.
+#! The method for the kernel then has to deal with only scalar blocks,
+#! either projectively or with scalars, which is again done by giving a hint
+#! to either use <Ref Subsect="BlockScalar" Style="Text"/> or
+#! <Ref Subsect="BlockScalarProj" Style="Text"/> respectively.
+#! 
+#! Note that this method is implemented in a way such that it can also be
+#! used as a method for a projective group <A>G</A>. In that case the
+#! recognition node has the <C>!.projective</C> component bound
+#! to <K>true</K> and this information is passed down to image and kernel.
+#! @EndChunk
+BindRecogMethod(FindHomMethodsMatrix, "BlockDiagonal",
+"for groups generated by block diagonal matrices",
+function(ri,G)
   # This is only called by a hint, so we know what we have to do:
   # We do all the blocks projectively and thus are left with scalar blocks.
   # In the projective case we still do the same, the BlocksModScalars
   # will automatically take care of the projectiveness!
-  local hom;
-  hom := IdentityMapping(G);
-  SetHomom(ri,hom);
+  SetHomom(ri, IdentityMapping(G));
   # Now give hints downward:
-  forfactor(ri).blocks := ri!.blocks;
-  Add(forfactor(ri).hints,
-      rec( method := FindHomMethodsProjective.BlocksModScalars,
-           rank := 2000, stamp := "BlocksModScalars" ) );
+  InitialDataForImageRecogNode(ri).blocks := ri!.blocks;
+  AddMethod(InitialDataForImageRecogNode(ri).hints, FindHomMethodsProjective.BlocksModScalars, 2000);
   # We go to projective, although it would not matter here, because we
   # gave a working hint anyway:
-  Setmethodsforfactor(ri,FindHomDbProjective);
+  Setmethodsforimage(ri,FindHomDbProjective);
 
   # the kernel:
-  findgensNmeth(ri).args[1] := Length(ri!.blocks)+10;
-  findgensNmeth(ri).args[2] := 7;
+  # The kernel is abelian, so we don't need to do normal closures.
+  findgensNmeth(ri).method := FindKernelRandom;
+  findgensNmeth(ri).args := [Length(ri!.blocks)+10];
   # In the projective case we have to do a trick: We use an isomorphism
   # to a matrix group by multiplying things such that the last block
   # becomes an identity matrix:
   if ri!.projective then
-      Add(forkernel(ri).hints,
-          rec(method := FindHomMethodsProjective.BlockScalarProj,
-              rank := 2000,stamp := "BlockScalarProj"));
+      AddMethod(InitialDataForKernelRecogNode(ri).hints,
+                FindHomMethodsProjective.BlockScalarProj,
+                2000);
   else
-      Add(forkernel(ri).hints,rec(method := FindHomMethodsMatrix.BlockScalar,
-                                  rank := 2000,stamp := "BlockScalar"));
+      AddMethod(InitialDataForKernelRecogNode(ri).hints, FindHomMethodsMatrix.BlockScalar, 2000);
   fi;
-  forkernel(ri).blocks := ri!.blocks;
+  InitialDataForKernelRecogNode(ri).blocks := ri!.blocks;
+  Setimmediateverification(ri, true);
   return Success;
-end;
+end);
 
 #RECOG.HomInducedOnFactor := function(data,el)
 #  local dim,m;
@@ -549,11 +570,11 @@ end;
 #FindHomMethodsMatrix.InducedOnFactor := function(ri,G)
 #  local H,dim,gens,hom,newgens,gen,data;
 #  # Are we applicable?
-#  if not(IsBound(ri!.subdim)) then
+#  if not IsBound(ri!.subdim) then
 #      return NotEnoughInformation;
 #  fi;
 #
-#  # Project onto factor:
+#  # Project onto image:
 #  gens := GeneratorsOfGroup(G);
 #  dim := ri!.dimension;
 #  data := rec(subdim := ri!.subdim);
@@ -565,14 +586,13 @@ end;
 #  SetHomom(ri,hom);
 #
 #  # Inform authorities that the kernel can be recognised easily:
-#  forkernel(ri).subdim := ri!.subdim;
-#  Add(forkernel(ri).hints,rec(method := FindHomMethodsMatrix.InducedOnSubspace,
-#                              rank := 2000,stamp := "InducedOnSubspace"),1);
+#  InitialDataForKernelRecogNode(ri).subdim := ri!.subdim;
+#  AddMethod(InitialDataForKernelRecogNode(ri).hints, FindHomMethodsMatrix.InducedOnSubspace, 2000);
 #
 #  return true;
 #end;
 #
-RECOG.ExtractLowStuff := function(m,layer,blocks,lens,canbas)
+RECOG.ExtractLowStuff := function(m,layer,blocks,lens,basisOfFieldExtension)
   local block,i,j,k,l,pos,v,what,where;
   v := ZeroVector(lens[layer],m[1]);
   pos := 0;
@@ -588,11 +608,13 @@ RECOG.ExtractLowStuff := function(m,layer,blocks,lens,canbas)
           pos := pos + Length(what);
       od;
   od;
-  if canbas <> fail then
-      return BlownUpVector(canbas,v);
-  else
-      return v;
+  if basisOfFieldExtension <> fail then
+      # needed because we assume for example in
+      # SLPforElementFuncsMatrix.LowerLeftPGroup that we work
+      # over a field of order p (not a p power)
+      return BlownUpVector(basisOfFieldExtension, v);
   fi;
+  return v;
 end;
 
 RECOG.ComputeExtractionLayerLengths := function(blocks)
@@ -612,46 +634,47 @@ end;
 
 InstallGlobalFunction( FindKernelLowerLeftPGroup,
   function(ri)
-    local b,curlay,done,el,f,i,l,lens,lvec,nothingnew,pivots,pos,ready,
+    local basisOfFieldExtension,curlay,done,el,f,i,l,lens,lvec,nothingnew,pivots,pos,ready,
           rifac,s,v,x,y;
+
+    Info(InfoRecog, 2, "Running FindKernelLowerLeftPGroup...");
     f := ri!.field;
-    if not(IsPrimeField(f)) then
-        b := CanonicalBasis(f);  # a basis over the prime field
-    else
-        b := fail;
-    fi;
     l := [];       # here we collect generators of N
     lvec := [];    # the linear part of the layer cleaned out by the gens
     pivots := [];  # pairs of numbers indicating the layer and pivot columns
                    # this will stay strictly increasing (lexicographically)
     lens := RECOG.ComputeExtractionLayerLengths(ri!.blocks);
-    if b <> fail then
-        lens := lens * Length(b);
+
+    if not IsPrimeField(f) then
+        basisOfFieldExtension := CanonicalBasis(f);  # a basis over the prime field
+        lens := lens * Length(basisOfFieldExtension);
+    else
+        basisOfFieldExtension := fail;
     fi;
 
     nothingnew := 0;   # we count until we produced 10 new generators
                        # giving no new dimension
-    rifac := RIFac(ri);
+    rifac := ImageRecogNode(ri);
     while nothingnew < 10 do
         x := RandomElm(ri,"KERNEL",true).el;
+        Assert(2, ValidateHomomInput(ri, x));
         s := SLPforElement(rifac,ImageElm( Homom(ri), x!.el ));
-        y := ResultOfStraightLineProgram(s,
-                 ri!.genswithmem{[ri!.nrgensH+1..Length(ri!.genswithmem)]});
+        y := ResultOfStraightLineProgram(s, ri!.pregensfacwithmem);
         x := x^-1 * y;   # this is in the kernel
 
         # Now clean out this vector and remember what we did:
         curlay := 1;
-        v := RECOG.ExtractLowStuff(x,curlay,ri!.blocks,lens,b);
+        v := RECOG.ExtractLowStuff(x,curlay,ri!.blocks,lens,basisOfFieldExtension);
         pos := PositionNonZero(v);
         i := 1;
         done := 0*[1..Length(lvec)];   # this refers to the current gens
         ready := false;
-        while not(ready) do
+        while not ready do
             # Find out where there is something left:
-            while pos > Length(v) and not(ready) do
+            while pos > Length(v) and not ready do
                 curlay := curlay + 1;
                 if curlay <= Length(lens) then
-                    v := RECOG.ExtractLowStuff(x,curlay,ri!.blocks,lens,b);
+                    v := RECOG.ExtractLowStuff(x,curlay,ri!.blocks,lens,basisOfFieldExtension);
                     pos := PositionNonZero(v);
                 else
                     ready := true;   # x is now equal to the identity!
@@ -665,7 +688,7 @@ InstallGlobalFunction( FindKernelLowerLeftPGroup,
                 if pivots[i][1] = curlay then
                     # we might have jumped over a layer
                     done := -v[pivots[i][2]];
-                    if not(IsZero(done)) then
+                    if not IsZero(done) then
                         AddRowVector(v,lvec[i],done);
                         x := x * l[i]^IntFFE(done);
                     fi;
@@ -697,32 +720,40 @@ InstallGlobalFunction( FindKernelLowerLeftPGroup,
         fi;
     od;
     # Now make sure those things get handed down to the kernel:
-    forkernel(ri).gensNvectors := lvec;
-    forkernel(ri).gensNpivots := pivots;
-    forkernel(ri).blocks := ri!.blocks;
-    forkernel(ri).lens := lens;
-    forkernel(ri).canonicalbasis := b;
+    InitialDataForKernelRecogNode(ri).gensNvectors := lvec;
+    InitialDataForKernelRecogNode(ri).gensNpivots := pivots;
+    InitialDataForKernelRecogNode(ri).blocks := ri!.blocks;
+    InitialDataForKernelRecogNode(ri).lens := lens;
+    InitialDataForKernelRecogNode(ri).basisOfFieldExtension := basisOfFieldExtension;
     # this is stored on the upper level:
     SetgensN(ri,l);
     ri!.leavegensNuntouched := true;
     return true;
   end );
 
+# computes a straight line program (SLP) for an element <g> of a p-group
+# described by <ri> (that corresponds to a matrix group consisting of lower
+# triangular matrices).
+# The SLP is constructed by using matrices forming a pcgs (polycyclic
+# generating sequence) to cancel out the
+# entries in <g>. The coefficents of the process create the SLP.
+# TODO Max H. wants to rewrite the code to work row-by-row
+# instead of blockwise; that should result in both simple and faster code.
 SLPforElementFuncsMatrix.LowerLeftPGroup := function(ri,g)
   # First project and calculate the vector:
   local done,h,i,l,layer,pow;
   # Take care of the projective case:
-  if ri!.projective and not(IsOne(g[1,1])) then
+  if ri!.projective and not IsOne(g[1,1]) then
       g := (g[1,1]^-1) * g;
   fi;
   l := [];
   i := 1;
   for layer in [1..Length(ri!.lens)] do
       h := RECOG.ExtractLowStuff(g,layer,ri!.blocks,ri!.lens,
-                                 ri!.canonicalbasis);
+                                 ri!.basisOfFieldExtension);
       while i <= Length(ri!.gensNvectors) and ri!.gensNpivots[i][1] = layer do
           done := h[ri!.gensNpivots[i][2]];
-          if not(IsZero(done)) then
+          if not IsZero(done) then
               AddRowVector(h,ri!.gensNvectors[i],-done);
               pow := IntFFE(done);
               g := NiceGens(ri)[i]^(-pow) * g;
@@ -731,21 +762,34 @@ SLPforElementFuncsMatrix.LowerLeftPGroup := function(ri,g)
           fi;
           i := i + 1;
       od;
-      if not(IsZero(h)) then return fail; fi;
+      if not IsZero(h) then
+          return fail;
+      fi;
   od;
   if Length(l) = 0 then
-      return StraightLineProgramNC([[1,0]],Length(ri!.gensNvectors));
-  else
-      return StraightLineProgramNC([l],Length(ri!.gensNvectors));
+      l := [1, 0];
   fi;
+  return StraightLineProgramNC([l], Length(ri!.gensNvectors));
 end;
 
-FindHomMethodsMatrix.LowerLeftPGroup := function(ri,G)
+#! @BeginChunk LowerLeftPGroup
+#! This method is only called by a hint from <Ref Subsect="BlockLowerTriangular" Style="Text"/>
+#! as the kernel of the homomorphism mapping to the diagonal blocks.
+#! The method uses the fact that this kernel is a <M>p</M>-group where
+#! <M>p</M> is the characteristic of the underlying field. It exploits
+#! this fact and uses this special structure to find nice generators
+#! and a method to express group elements in terms of these.
+#! @EndChunk
+BindRecogMethod(FindHomMethodsMatrix, "LowerLeftPGroup",
+"Hint TODO",
+function(ri,G)
   local f,p;
   # Do we really have our favorite situation?
-  if not(IsBound(ri!.blocks) and IsBound(ri!.lens) and
-         IsBound(ri!.canonicalbasis) and IsBound(ri!.gensNvectors) and
-         IsBound(ri!.gensNpivots)) then
+  if not (IsBound(ri!.blocks) and
+          IsBound(ri!.lens) and
+          IsBound(ri!.basisOfFieldExtension) and
+          IsBound(ri!.gensNvectors) and
+          IsBound(ri!.gensNpivots)) then
       return NotEnoughInformation;
   fi;
   # We are done, because we can do linear algebra:
@@ -755,33 +799,57 @@ FindHomMethodsMatrix.LowerLeftPGroup := function(ri,G)
   Setslpforelement(ri,SLPforElementFuncsMatrix.LowerLeftPGroup);
   SetSize(ri,p^Length(ri!.gensNvectors));
   return Success;
-end;
+end);
 
-FindHomMethodsMatrix.GoProjective := function(ri,G)
+#! @BeginChunk GoProjective
+#! This method defines a homomorphism from a matrix group <A>G</A>
+#! into the projective group <A>G</A> modulo scalar matrices. In fact, since
+#! projective groups in &GAP; are represented as matrix groups, the
+#! homomorphism is the identity mapping and the only difference is that in
+#! the image the projective group methods can be applied.
+#! The bulk of the work in matrix recognition is done in the projective group
+#! setting.
+#! @EndChunk
+BindRecogMethod(FindHomMethodsMatrix, "GoProjective",
+"divide out scalars and recognise projectively",
+function(ri,G)
   local hom,q;
   Info(InfoRecog,2,"Going projective...");
   hom := IdentityMapping(G);
   SetHomom(ri,hom);
   # Now give hints downward:
-  Setmethodsforfactor(ri,FindHomDbProjective);
+  Setmethodsforimage(ri,FindHomDbProjective);
+  # Make sure that immediate verification is performed to safeguard against the
+  # kernel being too small.
+  Setimmediateverification(ri, true);
   # note that RecogniseGeneric detects the use of FindHomDbProjective and
-  # sets ri!.projective := true for the factor
+  # sets ri!.projective := true for the image
   # the kernel:
   q := Size(ri!.field);
   findgensNmeth(ri).method := FindKernelRandom;
   findgensNmeth(ri).args := [Length(Factors(q-1))+5];
   return Success;
-end;
+end);
 
-FindHomMethodsMatrix.KnownStabilizerChain := function(ri,G)
+#! @BeginChunk KnownStabilizerChain
+#! If a stabilizer chain is already known, then the kernel node is given
+#! knowledge about this known stabilizer chain, and the image node is told to
+#! use homomorphism methods from the database for permutation groups.
+#! If a stabilizer chain of a parent node is already known this is used for
+#! the computation of a stabilizer chain of this node. This stabilizer chain
+#! is then used in the same way as above.
+#! @EndChunk
+BindRecogMethod(FindHomMethodsMatrix, "KnownStabilizerChain",
+"use an already known stabilizer chain for this group",
+function(ri,G)
   local S,hom;
   if HasStoredStabilizerChain(G) then
       Info(InfoRecog,2,"Already know stabilizer chain, using 1st orbit.");
       S := StoredStabilizerChain(G);
       hom := OrbActionHomomorphism(G,S!.orb);
       SetHomom(ri,hom);
-      Setmethodsforfactor(ri,FindHomDbPerm);
-      forkernel(ri).StabilizerChainFromAbove := S;
+      Setmethodsforimage(ri,FindHomDbPerm);
+      InitialDataForKernelRecogNode(ri).StabilizerChainFromAbove := S;
       return Success;
   elif IsBound(ri!.StabilizerChainFromAbove) then
       Info(InfoRecog,2,"Know stabilizer chain for super group, using base.");
@@ -789,12 +857,12 @@ FindHomMethodsMatrix.KnownStabilizerChain := function(ri,G)
       Info(InfoRecog,2,"Computed stabilizer chain, size=",Size(S));
       hom := OrbActionHomomorphism(G,S!.orb);
       SetHomom(ri,hom);
-      Setmethodsforfactor(ri,FindHomDbPerm);
-      forkernel(ri).StabilizerChainFromAbove := S;
+      Setmethodsforimage(ri,FindHomDbPerm);
+      InitialDataForKernelRecogNode(ri).StabilizerChainFromAbove := S;
       return Success;
   fi;
   return NeverApplicable;
-end;
+end);
 
 #FindHomMethodsMatrix.SmallVectorSpace := function(ri,G)
 #  local d,f,hom,l,method,o,q,r,v,w;
@@ -810,7 +878,7 @@ end;
 #  v := FullRowSpace(f,d);
 #  repeat
 #      w := Random(v);
-#  until not(IsZero(w));
+#  until not IsZero(w);
 #  o := Orbit(G,w,OnRight);
 #  hom := ActionHomomorphism(G,o,OnRight);
 #
@@ -828,52 +896,33 @@ end;
 #  fi;
 #
 #  SetHomom(ri,hom);
-#  Setmethodsforfactor(ri,FindHomDbPerm);
+#  Setmethodsforimage(ri,FindHomDbPerm);
 #  return true;
 #end;
 #
 #FindHomMethodsMatrix.IsomorphismPermGroup := function(ri,G)
 #  SetHomom(ri,IsomorphismPermGroup(G));
 #  findgensNmeth(ri).method := FindKernelDoNothing;
-#  Setmethodsforfactor(ri,FindHomDbPerm);
+#  Setmethodsforimage(ri,FindHomDbPerm);
 #  return true;
 #end;
 
-AddMethod( FindHomDbMatrix, FindHomMethodsMatrix.TrivialMatrixGroup,
-  3100, "TrivialMatrixGroup",
-        "check whether all generators are equal to the identity matrix" );
-AddMethod( FindHomDbMatrix, FindHomMethodsMatrix.DiagonalMatrices,
-  1100, "DiagonalMatrices",
-        "check whether all generators are multiples of the identity" );
-AddMethod( FindHomDbMatrix, FindHomMethodsMatrix.KnownStabilizerChain,
-  1175, "KnownStabilizerChain",
-        "use an already known stabilizer chain for this group" );
-AddMethod( FindHomDbMatrix, FindHomMethodsProjective.FewGensAbelian,
-  1050, "FewGensAbelian",
-     "if very few generators, check IsAbelian and if yes, do KnownNilpotent");
-AddMethod( FindHomDbMatrix, FindHomMethodsMatrix.ReducibleIso,
-  1000, "ReducibleIso",
-        "use the MeatAxe to find invariant subspaces" );
-AddMethod( FindHomDbMatrix, FindHomMethodsMatrix.GoProjective,
-   900, "GoProjective",
-        "divide out scalars and recognise projectively" );
+#! @BeginCode AddMethod_Matrix_FindHomMethodsGeneric.TrivialGroup
+AddMethod(FindHomDbMatrix, FindHomMethodsGeneric.TrivialGroup, 3100);
+#! @EndCode
+
+AddMethod(FindHomDbMatrix, FindHomMethodsMatrix.DiagonalMatrices, 1100);
+
+AddMethod(FindHomDbMatrix, FindHomMethodsMatrix.KnownStabilizerChain, 1175);
+
+AddMethod(FindHomDbPerm, FindHomMethodsGeneric.FewGensAbelian, 1050);
+
+AddMethod(FindHomDbMatrix, FindHomMethodsMatrix.ReducibleIso, 1000);
+
+AddMethod(FindHomDbMatrix, FindHomMethodsMatrix.GoProjective, 900);
+
+
 
 ###AddMethod( FindHomDbMatrix, FindHomMethodsMatrix.SmallVectorSpace,
 ###           700, "SmallVectorSpace",
 ###           "for small vector spaces directly compute an orbit" );
-
-##
-##  This program is free software: you can redistribute it and/or modify
-##  it under the terms of the GNU General Public License as published by
-##  the Free Software Foundation, either version 3 of the License, or
-##  (at your option) any later version.
-##
-##  This program is distributed in the hope that it will be useful,
-##  but WITHOUT ANY WARRANTY; without even the implied warranty of
-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-##  GNU General Public License for more details.
-##
-##  You should have received a copy of the GNU General Public License
-##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-##
-

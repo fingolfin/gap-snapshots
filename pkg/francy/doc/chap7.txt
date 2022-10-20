@@ -14,7 +14,7 @@
   [1X7.1-1 IsMenu[101X
   
   [33X[1;0Y[29X[2XIsMenu[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YIdentifies [10XMenu[110X objects.[133X
   
@@ -31,7 +31,7 @@
   [1X7.3-1 IsMenuRep[101X
   
   [33X[1;0Y[29X[2XIsMenuRep[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YChecks whether an [10XObject[110X has a [10XMenu[110X internal representation.[133X
   
@@ -77,11 +77,11 @@
   
   [1X7.5-2 Title[101X
   
-  [33X[1;0Y[29X[2XTitle[102X( [3Xarg1[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XTitle[102X( [3Xarg1[103X ) [32X operation[133X
   
   [1X7.5-3 SetTitle[101X
   
-  [33X[1;0Y[29X[2XSetTitle[102X( [3XIsMenu[103X, [3XIsString[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSetTitle[102X( [3XIsMenu[103X, [3XIsString[103X ) [32X operation[133X
   
   [33X[0;0YSets the title of the [10XMenu[110X.[133X
   

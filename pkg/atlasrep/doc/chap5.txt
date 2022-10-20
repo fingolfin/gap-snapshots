@@ -221,7 +221,7 @@
   [33X[0;0YIn  this case, [2XDisplayAtlasInfo[102X ([14X3.5-1[114X) lists the additional representations
   and  programs  in  the same way as other data known to [5XAtlasRep[105X, except that
   parts outside the core database are marked with the string that is the value
-  of  the  user  preference  [10XAtlasRepMarkNonCoreData[110X,  see Section [14X4.2-13[114X. The
+  of  the  user  preference  [10XAtlasRepMarkNonCoreData[110X,  see Section [14X4.2-12[114X. The
   ordering of representations listed by [2XDisplayAtlasInfo[102X ([14X3.5-1[114X) (and referred
   to  by  [2XAtlasGenerators[102X  ([14X3.5-3[114X)) will in general change whenever extensions
   get  notified. For the other interface functions described in Chapter [14X3[114X, the
@@ -288,8 +288,7 @@
   [4X[32X[104X
   
   [33X[0;0Y(We  could also introduce intermediate directories [11XC4[111X and [11XA5[111X, say, each with
-  the  data  for  one  group  only.  Here we do not show this because creating
-  directories programmatically seems to require the [5XGAP[105X package [5XIO[105X.)[133X
+  the data for one group only.)[133X
   
   [33X[0;0YThe  core  part of the [5XAtlasRep[105X data does not contain information about [22XC_4[122X,
   so  we  first  notify  this group, in the file [11Xprivdir/toc.json[111X. Besides the

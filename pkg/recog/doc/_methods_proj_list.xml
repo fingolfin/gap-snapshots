@@ -1,0 +1,130 @@
+<Subsection Label="AltSymBBByDegree">
+<Heading><C>AltSymBBByDegree</C></Heading>
+This method is used for recognizing projective groups.<P/>
+<#Include Label="AltSymBBByDegree">
+</Subsection>
+<Subsection Label="BiggerScalarsOnly">
+<Heading><C>BiggerScalarsOnly</C></Heading>
+This method is unused!<P/>
+<#Include Label="BiggerScalarsOnly">
+</Subsection>
+<Subsection Label="BlockScalarProj">
+<Heading><C>BlockScalarProj</C></Heading>
+This method is unused!<P/>
+<#Include Label="BlockScalarProj">
+</Subsection>
+<Subsection Label="Blocks">
+<Heading><C>Blocks</C></Heading>
+This method is unused!<P/>
+<#Include Label="Blocks">
+</Subsection>
+<Subsection Label="BlocksBackToMats">
+<Heading><C>BlocksBackToMats</C></Heading>
+This method is unused!<P/>
+<#Include Label="BlocksBackToMats">
+</Subsection>
+<Subsection Label="BlocksModScalars">
+<Heading><C>BlocksModScalars</C></Heading>
+This method is unused!<P/>
+<#Include Label="BlocksModScalars">
+</Subsection>
+<Subsection Label="C3C5">
+<Heading><C>C3C5</C></Heading>
+This method is used for recognizing projective groups.<P/>
+<#Include Label="C3C5">
+</Subsection>
+<Subsection Label="C6">
+<Heading><C>C6</C></Heading>
+This method is used for recognizing projective groups.<P/>
+<#Include Label="C6">
+</Subsection>
+<Subsection Label="ClassicalNatural">
+<Heading><C>ClassicalNatural</C></Heading>
+This method is used for recognizing projective groups.<P/>
+<#Include Label="ClassicalNatural">
+</Subsection>
+<Subsection Label="ComputeSimpleSocle">
+<Heading><C>ComputeSimpleSocle</C></Heading>
+This method is used for recognizing projective groups.<P/>
+<#Include Label="ComputeSimpleSocle">
+</Subsection>
+<Subsection Label="D247">
+<Heading><C>D247</C></Heading>
+This method is used for recognizing projective groups.<P/>
+<#Include Label="D247">
+</Subsection>
+<Subsection Label="DoBaseChangeForBlocks">
+<Heading><C>DoBaseChangeForBlocks</C></Heading>
+This method is unused!<P/>
+<#Include Label="DoBaseChangeForBlocks">
+</Subsection>
+<Subsection Label="FindElmOfEvenNormal">
+<Heading><C>FindElmOfEvenNormal</C></Heading>
+This method is used for recognizing projective groups.<P/>
+<#Include Label="FindElmOfEvenNormal">
+</Subsection>
+<Subsection Label="KroneckerKernel">
+<Heading><C>KroneckerKernel</C></Heading>
+This method is unused!<P/>
+<#Include Label="KroneckerKernel">
+</Subsection>
+<Subsection Label="KroneckerProduct">
+<Heading><C>KroneckerProduct</C></Heading>
+This method is unused!<P/>
+<#Include Label="KroneckerProduct">
+</Subsection>
+<Subsection Label="LieTypeNonConstr">
+<Heading><C>LieTypeNonConstr</C></Heading>
+This method is used for recognizing projective groups.<P/>
+<#Include Label="LieTypeNonConstr">
+</Subsection>
+<Subsection Label="LowIndex">
+<Heading><C>LowIndex</C></Heading>
+This method is used for recognizing projective groups.<P/>
+<#Include Label="LowIndex">
+</Subsection>
+<Subsection Label="NameSporadic">
+<Heading><C>NameSporadic</C></Heading>
+This method is used for recognizing projective groups.<P/>
+<#Include Label="NameSporadic">
+</Subsection>
+<Subsection Label="NotAbsolutelyIrred">
+<Heading><C>NotAbsolutelyIrred</C></Heading>
+This method is used for recognizing projective groups.<P/>
+<#Include Label="NotAbsolutelyIrred">
+</Subsection>
+<Subsection Label="ProjDeterminant">
+<Heading><C>ProjDeterminant</C></Heading>
+This method is used for recognizing projective groups.<P/>
+<#Include Label="ProjDeterminant">
+</Subsection>
+<Subsection Label="PrototypeForC2C4">
+<Heading><C>PrototypeForC2C4</C></Heading>
+This method is unused!<P/>
+<#Include Label="PrototypeForC2C4">
+</Subsection>
+<Subsection Label="SporadicsByOrders">
+<Heading><C>SporadicsByOrders</C></Heading>
+This method is unused!<P/>
+<#Include Label="SporadicsByOrders">
+</Subsection>
+<Subsection Label="StabilizerChainProj">
+<Heading><C>StabilizerChainProj</C></Heading>
+This method is used for recognizing projective groups.<P/>
+<#Include Label="StabilizerChainProj">
+</Subsection>
+<Subsection Label="Subfield">
+<Heading><C>Subfield</C></Heading>
+This method is used for recognizing projective groups.<P/>
+<#Include Label="Subfield">
+</Subsection>
+<Subsection Label="TensorDecomposable">
+<Heading><C>TensorDecomposable</C></Heading>
+This method is used for recognizing projective groups.<P/>
+<#Include Label="TensorDecomposable">
+</Subsection>
+<Subsection Label="ThreeLargeElOrders">
+<Heading><C>ThreeLargeElOrders</C></Heading>
+This method is used for recognizing projective groups.<P/>
+<#Include Label="ThreeLargeElOrders">
+</Subsection>

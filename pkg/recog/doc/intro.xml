@@ -1,12 +1,5 @@
 <!--
 
-  intro.xml            recog package documentation
-                                                             Max Neunhoeffer
-                                                                 Ákos Seress
-                                                                      et al.
-
-         Copyright (C) 2005-2008, by the authors.
-
 This chapter gives a short introduction and explains the philosophy
 behind the package.
 
@@ -21,14 +14,14 @@ behind the package.
 This package is about group recognition. It provides a generic
 framework to implement methods of group recognition, regardless of
 what computational representation is used. This means, that the code
-in this package is useful at least for permutation groups, matrix
-groups and projective groups.
-The setup is described in <Cite Key="IssacRecog"/>. <P/>
+in this package is useful at least for permutation groups, and matrix
+groups and projective groups over finite fields.
+The setup is described in <Cite Key="NS06"/>. <P/>
 
 The framework allows to build composition trees and handles the builtup
 and usage of these trees in a generic way. It also contains a
 method selection (described in Chapter <Ref Chap="methsel"/>) that allows
-install recognition methods in a convenient way and that automatically
+to install recognition methods in a convenient way and that automatically
 tries to try the different available methods in a sensible order.
 </Section>
 
@@ -45,26 +38,97 @@ homomorphism (or an isomorphism) we use another generic procedure, the
 <Q>method selection</Q> which is not to be confused with the &GAP; method
 selection.<P/>
 
-Our own method selection is described in detail in Chapter <Ref
+Our own method selection system is described in detail in Chapter <Ref
 Chap="methsel"/>, because it is interesting in its own right and might be
 useful in other circumstances.<P/>
 
-Chapter <Ref Chap="methods"/> describes the avalable <Q>FindHomomorphism</Q>
+Chapter <Ref Chap="methods"/> describes the available <Q>FindHomomorphism</Q>
 methods.<P/>
 
 Chapter <Ref Chap="afterrecog"/> explains what one can do with a
 completed recognition tree.<P/>
 
-Finally, Chapter <Ref Chap="examples"/> shows instructive examples for the
+Finally, Chapter <Ref Chap="examples"/> shows some instructive examples of the
 usage of this package.<P/>
 
 </Section>
 
 <Section Label="feedback">
-<Heading>Feedback</Heading>
+<Heading>Feedback and support</Heading>
 
-For bug reports, feature requests and suggestions, please use our
-<URL Text="issue tracker">https://github.com/gap-packages/recog/issues</URL>.
+If you have any bug reports, feature requests, or suggestions, then please
+tell us via the <URL Text="issue tracker on
+GitHub">https://github.com/gap-packages/recog/issues</URL>. <P/>
+
+In addition, the <Package>recog</Package> package has a mailing list, at
+<URL Text="recog@gap-system.org">mailto:recog@gap-system.org</URL>,
+which can be used for holding discussions, sharing information, and asking
+questions about the package.  You can find more information, and register to
+receive the mail sent to this list, at
+<URL>https://mail.gap-system.org/mailman/listinfo/recog</URL>.
+
+</Section>
+
+<Section Label="literature">
+<Heading>Literature (temporary)</Heading>
+
+TODO Find the appropriate place to put these references, so that they appear
+in the bibliography:
+<Cite Key="LNPS06"/>
+<Cite Key="BLS97"/>
+<Cite Key="JLNP13"/>
+<Cite Key="DLGLO13"/>
+<Cite Key="LGO09"/>
+<Cite Key="BLGN+05"/>
+<Cite Key="BLGN+03"/>
+<Cite Key="NP98"/>
+<Cite Key="NP99"/>
+<Cite Key="NP97"/>
+<Cite Key="Pra99"/>
+<Cite Key="CLG97a"/>
+<Cite Key="CLG97b"/>
+<Cite Key="CLGM+95"/>
+<Cite Key="BNS06"/>
+<Cite Key="CNRD09"/>
+<Cite Key="BHLGO15"/>
+<Cite Key="Neu09"/>
+<Cite Key="Ser03"/>
+<Cite Key="KK15"/>
+<Cite Key="LO16"/>
+<Cite Key="LO07"/>
+<Cite Key="HLO+08"/>
+<Cite Key="BB99"/>
+<Cite Key="BBS09"/>
+<Cite Key="BS01"/>
+<Cite Key="Bro01"/>
+<Cite Key="Bro08"/>
+<Cite Key="Bro03"/>
+<Cite Key="BK06"/>
+<Cite Key="BK01"/>
+<Cite Key="CLG98"/>
+<Cite Key="CLGO06"/>
+<Cite Key="CLG01"/>
+<Cite Key="CFL97"/>
+<Cite Key="DLGO15"/>
+<Cite Key="GH97"/>
+<Cite Key="GLGO06"/>
+<Cite Key="HLGOR96a"/>
+<Cite Key="HLGOR96b"/>
+<Cite Key="HR94"/>
+<Cite Key="IL00"/>
+<Cite Key="KM13"/>
+<Cite Key="KM15"/>
+<Cite Key="LGO97a"/>
+<Cite Key="LGO02"/>
+<Cite Key="LGO97b"/>
+<Cite Key="LG01"/>
+<Cite Key="LMO07"/>
+<Cite Key="NP92"/>
+<Cite Key="Nie05"/>
+<Cite Key="O'B11"/>
+<Cite Key="O'B06"/>
+<Cite Key="Pak00"/>
+<Cite Key="Par84"/>
 
 </Section>
 

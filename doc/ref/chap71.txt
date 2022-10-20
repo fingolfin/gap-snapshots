@@ -1974,6 +1974,10 @@
         orders  in  a  style  similar  to  that  used  in  the [5XAtlas[105X of Finite
         Groups [CCN+85],[133X
   
+  [8X[10XcharacterField[110X[8X[108X
+        [33X[0;6Y[9Xtrue[109X to show the degrees of the character fields over the prime field,
+        in a column with header [10Xd[110X,[133X
+  
   [8X[10Xchars[110X[8X[108X
         [33X[0;6Yan  integer  or  a  list  of  integers  to  select  a  sublist  of the
         irreducible  characters of [3Xtbl[103X, or a list of characters of [3Xtbl[103X (in the
@@ -2340,10 +2344,13 @@
   [33X[1;0Y[29X[2XAbsoluteIrreducibleModules[102X( [3XG[103X, [3XF[103X, [3Xdim[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XAbsolutIrreducibleModules[102X( [3XG[103X, [3XF[103X, [3Xdim[103X ) [32X operation[133X
   
-  [33X[0;0Yreturns a list of length 2. The first entry is a generating system of [3XG[103X. The
-  second  entry  is  a  list of all absolute irreducible modules of [3XG[103X over the
-  field  [3XF[103X  in  dimension  [3Xdim[103X,  given  as  MeatAxe modules (see [2XGModuleByMats[102X
-  ([14X69.1-1[114X)). The other two names are just synonyms.[133X
+  [33X[0;0Y[2XAbsolutelyIrreducibleModules[102X  returns a list of length 2. The first entry is
+  a  generating system of the group [3XG[103X. The second entry is a list of all those
+  absolutely  irreducible  modules  of  [3XG[103X that can be realized over the finite
+  field   [3XF[103X  and  have  dimension  at  most  [3Xdim[103X,  given  as  MeatAxe  modules
+  (see [2XGModuleByMats[102X ([14X69.1-1[114X)).[133X
+  
+  [33X[0;0YThe other two names are just synonyms.[133X
   
   [1X71.15-3 RegularModule[101X
   

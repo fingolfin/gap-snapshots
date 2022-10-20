@@ -26,9 +26,7 @@ true
 gap> LoadPackage( "ctbllib" );
 true
 
-# Test transferring group generators in MeatAxe format (using `IO').
-gap> pref:= UserPreference( "AtlasRep", "HowToAccessRemoteFiles" );;
-gap> SetUserPreference( "AtlasRep", "HowToAccessRemoteFiles", "io" );
+# Test transferring group generators in MeatAxe format.
 gap> dir:= DirectoriesPackageLibrary( "atlasrep", "datagens" );;
 gap> id:= OneAtlasGeneratingSet( "A5", Characteristic, 2 ).identifier;;
 gap> for file in List( id[2], name -> Filename( dir, name ) ) do
@@ -38,14 +36,12 @@ gap> gens:= AtlasGenerators( id );;
 gap> IsRecord( gens ) and id = gens.identifier;
 true
 
-# Test transferring group generators in GAP format (using `wget').
-gap> SetUserPreference( "AtlasRep", "HowToAccessRemoteFiles", "wget" );
+# Test transferring group generators in GAP format.
 gap> id:= OneAtlasGeneratingSetInfo( "A5", Characteristic, 0 ).identifier;;
 gap> RemoveFile( Filename( dir, id[2] ) );;
 gap> gens:= AtlasGenerators( id );;
 gap> IsRecord( gens ) and id = gens.identifier;
 true
-gap> SetUserPreference( "AtlasRep", "HowToAccessRemoteFiles", pref );
 
 # Test whether the locally stored straight line programs
 # can be read and processed.

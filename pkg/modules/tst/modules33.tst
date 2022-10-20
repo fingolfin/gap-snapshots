@@ -32,12 +32,12 @@ the map is currently represented by the above 1 x 1 matrix
 gap> torNN := Source( psi );
 <A non-zero cyclic torsion left module presented by 1 relation for a cyclic ge\
 nerator>
-gap> IsIdenticalObj( torNN, Tor( 1, N, N ) );	## the caching at work
+gap> IsIdenticalObj( torNN, Tor( 1, N, N ) ); ## the caching at work
 true
 gap> torMN := Range( psi );
 <A non-zero cyclic torsion left module presented by 1 relation for a cyclic ge\
 nerator>
-gap> IsIdenticalObj( torMN, Tor( 1, M, N ) );	## the caching at work
+gap> IsIdenticalObj( torMN, Tor( 1, M, N ) ); ## the caching at work
 true
 gap> Display( torNN );
 Z/< 3 >

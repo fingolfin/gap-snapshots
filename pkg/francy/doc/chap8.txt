@@ -15,14 +15,14 @@
   [1X8.1-1 IsFrancyMessage[101X
   
   [33X[1;0Y[29X[2XIsFrancyMessage[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YIdentifies [10XFrancyMessage[110X objects.[133X
   
   [1X8.1-2 IsFrancyMessageType[101X
   
   [33X[1;0Y[29X[2XIsFrancyMessageType[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YIdentifies [10XMessageType[110X objects.[133X
   
@@ -39,14 +39,14 @@
   [1X8.3-1 IsFrancyMessageRep[101X
   
   [33X[1;0Y[29X[2XIsFrancyMessageRep[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YChecks whether an [10XObject[110X has a [10XFrancyMessage[110X internal representation.[133X
   
   [1X8.3-2 IsFrancyMessageTypeRep[101X
   
   [33X[1;0Y[29X[2XIsFrancyMessageTypeRep[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YChecks whether an [10XObject[110X has a [10XFrancyMessage[110X internal representation.[133X
   
@@ -83,11 +83,11 @@
   
   [1X8.6-2 Title[101X
   
-  [33X[1;0Y[29X[2XTitle[102X( [3Xarg1[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XTitle[102X( [3Xarg1[103X ) [32X operation[133X
   
   [1X8.6-3 SetTitle[101X
   
-  [33X[1;0Y[29X[2XSetTitle[102X( [3XIsFrancyMessage[103X, [3XIsString[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSetTitle[102X( [3XIsFrancyMessage[103X, [3XIsString[103X ) [32X operation[133X
   
   [33X[0;0YSets the title of the [10XFrancyMessage[110X.[133X
   
@@ -100,11 +100,11 @@
   
   [1X8.6-5 Value[101X
   
-  [33X[1;0Y[29X[2XValue[102X( [3Xarg1[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XValue[102X( [3Xarg1[103X ) [32X operation[133X
   
   [1X8.6-6 SetValue[101X
   
-  [33X[1;0Y[29X[2XSetValue[102X( [3XIsFrancyMessage[103X, [3XIsString[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSetValue[102X( [3XIsFrancyMessage[103X, [3XIsString[103X ) [32X operation[133X
   
   [33X[0;0YSets the actual message of the [10XFrancyMessage[110X.[133X
   

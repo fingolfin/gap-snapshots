@@ -10,9 +10,9 @@ SetPackageInfo( rec(
 
 PackageName := "NConvex",
 Subtitle := "A Gap package to perform polyhedral computations",
-Version := "2020.11-04",
-Date := "04/11/2020",
-Date := "04/11/2020",
+Version := "2022.09-01",
+Date := "30/09/2022",
+Date := "30/09/2022",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -57,7 +57,7 @@ SourceRepository := rec(
     URL := "https://github.com/homalg-project/NConvex",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://homalg-project.github.io/NConvex",
+PackageWWWHome  := "https://homalg-project.github.io/pkg/NConvex",
 PackageInfoURL  := "https://homalg-project.github.io/NConvex/PackageInfo.g",
 README_URL      := "https://homalg-project.github.io/NConvex/README.md",
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/NConvex/releases/download/v", ~.Version, "/NConvex-", ~.Version ),
@@ -90,7 +90,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">= 4.9",
+  GAP := ">= 4.11.1",
   NeededOtherPackages := [ [ "AutoDoc", ">= 2018.02.14" ],
                            [ "Modules", ">= 0.5" ], 
                            [ "CddInterface", ">= 2020.06.24" ],

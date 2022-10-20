@@ -53,7 +53,7 @@
 
 
 <ManSection>
-  <Oper Arg="name, target_op, used_ops_with_multiples, weight, implementations_with_extra_filters, category_filter" Name="MakeDerivation" Label="for IsString, IsFunction, IsDenseList,IsPosInt, IsDenseList, IsFunction"/>
+  <Oper Arg="name, target_op, used_ops_with_multiples, weight, func, category_filter" Name="MakeDerivation" Label="for IsString, IsFunction, IsDenseList,IsPosInt, IsFunction, IsFunction"/>
  <Description>
   Creates a new derivation object.
   The argument <A>name</A> is an arbitrary name used to
@@ -61,34 +61,28 @@
   purposes.
   The argument <A>target_op</A> is the operation which
   the derived method implements.
-  The argument <A>used_ops_with_multiples</A> contains each
+  The argument <A>used_ops_with_multiples</A> contains the name of each
   operation used by the derived method, together with a positive
-  integer specifying how many times that operation is used.
+  integer specifying how many times that operation is used and
+  optionally a category getter.
   This is given as a list of lists, where each sublist has as
-  first entry an operation and as second entry an integer.
+  first entry the name of an operation, as second entry an integer and as
+  third entry optionally a function. This function should accept the
+  category and return a category for which the operation in the first
+  entry must be installed for the derivation to be considered valid.
   The argument <A>weight</A> is an additional number to add
   when calculating the resulting weight of the target operation
   using this derivation.  Unless there is any particular reason
   to regard the derivation as exceedingly expensive, this number
   should be <C>1</C>.
-  The argument <A>implementations_with_extra_filters</A> contains
-  one or more functions with the actual implementation of the
-  derived method, together with lists of extra argument filters
-  for each function.  The argument is a list with entries of the
-  form <C>[fun, filters]</C>, where <C>fun</C> is a function and
-  <C>filters</C> is a (not necessarily dense) list of argument
-  filters.  If only one function is given, then <C>filters</C>
-  should be the empty list; in this case the argument's value
-  would be [[fun,[]]], where <C>fun</C> is the function.
-  The argument <A>category_filter</A> is a filter describing
+  The argument <A>func</A> contains the actual implementation of the
+  derived method.
+  The argument <A>category_filter</A> is a filter (or function) describing
   which categories the derivation is valid for.  If it is valid
   for all categories, then this argument should have the value
-  <C>IsCapCategory</C>.
-  The Option <C>ConditionsListComplete</C> indicates if the manually
-  given list of preconditions for this derivation is complete
-  or should be extended by looking for categorical operations
-  in the function body. The value <C>false</C> indicates it is not complete,
-  every other value that it is complete. Default is <C>false</C>.
+  <C>IsCapCategory</C>. The output of <A>category_filter</A> must not
+  change during the installation of operations. In particular, it must
+  not rely on <Code>CanCompute</Code> to check conditions.
  </Description>
 </ManSection>
 
@@ -112,10 +106,9 @@
 
 
 <ManSection>
-  <Attr Arg="d" Name="DerivationFunctionsWithExtraFilters" Label="for IsDerivedMethod"/>
+  <Attr Arg="d" Name="DerivationFunction" Label="for IsDerivedMethod"/>
  <Description>
-  The implementation(s) of the derivation, together with lists
-  of extra filters for each implementation.
+  The implementation of the derivation.
  </Description>
 </ManSection>
 
@@ -150,35 +143,12 @@
 
 
 <ManSection>
-  <Attr Arg="d" Name="UsedOperations" Label="for IsDerivedMethod"/>
- <Returns>  The names (as strings) of the operations used by the
-   derivation <A>d</A>
-</Returns>
- <Description>
-<P/>
- </Description>
-</ManSection>
-
-
-<ManSection>
-  <Attr Arg="d" Name="UsedOperationMultiples" Label="for IsDerivedMethod"/>
- <Returns>  Multiplicities of each operation used by the derivation
-   <A>d</A>, in order corresponding to the operation names
-   returned by <C>UsedOperations(d)</C>.
-</Returns>
- <Description>
-<P/>
- </Description>
-</ManSection>
-
-
-<ManSection>
-  <Attr Arg="d" Name="UsedOperationsWithMultiples" Label="for IsDerivedMethod"/>
+  <Attr Arg="d" Name="UsedOperationsWithMultiplesAndCategoryGetters" Label="for IsDerivedMethod"/>
  <Returns>  The names of the operations used by the derivation <A>d</A>,
-   together with their multiplicities.
+   together with their multiplicities and category getters.
    The result is a list consisting of lists of the form
-   <C>[op_name, mult]</C>, where <C>op_name</C> is a string
-   and <C>mult</C> a positive integer.
+   <Code>[op_name, mult, getter]</Code>, where <Code>op_name</Code> is a string,
+   <Code>mult</Code> a positive integer and <Code>getter</Code> is a function or <Code>fail</Code>.
 </Returns>
  <Description>
 <P/>
@@ -192,18 +162,6 @@
   Install the derived method <A>d</A> for the category <A>C</A>.
   The integer <A>weight</A> is the computed weight of the operation
   implemented by this derivation.
- </Description>
-</ManSection>
-
-
-<ManSection>
-  <Oper Arg="d, op_weights" Name="DerivationResultWeight" Label="for IsDerivedMethod, IsDenseList"/>
- <Description>
-  Computes the resulting weight of the target operation of this
-  derivation given a list of weights for the operations it uses.
-  The argument <A>op_weights</A> should be a list of integers
-  specifying weights for the operations given by
-  <C>UsedOperations( d )</C>, in the same order.
  </Description>
 </ManSection>
 
@@ -294,49 +252,7 @@ Adds a list of operation names <A>operations</A> to a given derivation graph <A>
 
 <P/>
 <ManSection>
-  <Oper Arg="arg1,arg2,arg3,arg4,arg5,arg6" Name="AddDerivationPair" Label="for IsDerivedMethodGraph, IsFunction, IsFunction, IsDenseList, IsDenseList, IsDenseList"/>
- <Description>
-<P/>
- </Description>
-</ManSection>
-
-
-<ManSection>
-  <Oper Arg="arg1,arg2,arg3,arg4,arg5" Name="AddDerivationPair" Label="for IsDerivedMethodGraph, IsFunction, IsFunction, IsDenseList, IsDenseList"/>
- <Description>
-<P/>
- </Description>
-</ManSection>
-
-
-<ManSection>
-  <Oper Arg="arg1,arg2,arg3,arg4,arg5,arg6" Name="AddDerivationPair" Label="for IsDerivedMethodGraph, IsFunction, IsFunction, IsDenseList, IsFunction, IsFunction"/>
- <Description>
-<P/>
- </Description>
-</ManSection>
-
-
-<ManSection>
-  <Oper Arg="arg1,arg2,arg3,arg4,arg5" Name="AddDerivationPair" Label="for IsDerivedMethodGraph, IsFunction, IsFunction, IsFunction, IsFunction"/>
- <Description>
-<P/>
- </Description>
-</ManSection>
-
-
-<P/>
-<ManSection>
   <Func Arg="arg" Name="AddDerivationToCAP" />
- <Description>
-<P/>
- </Description>
-</ManSection>
-
-
-<P/>
-<ManSection>
-  <Func Arg="arg" Name="AddDerivationPairToCAP" />
  <Description>
 <P/>
  </Description>

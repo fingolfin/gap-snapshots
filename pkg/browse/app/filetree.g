@@ -13,9 +13,14 @@
 #F  BrowseData.DirectoryTree( <startpath>, <filename>, <inoknown> )
 ##
 ##  This function is called by `BrowseDirectory'.
-##  The return value is a list [ name, files, [ entry_1, ..., entry_n ] ],
-##  where entry_i is a list of the same structure or a string (denoting a
-##  file name that is not a directory).
+##  The return value is either
+##  'fail' (if there is no file <filename> in the directory given by
+##  <startpath>) or
+##  a string (if the file <filename> in the directory given by <startpath> is
+##  not a directory) or
+##  a list '[ name, files, [ entry_1, ..., entry_n ] ]',
+##  where 'files' is the list of non-directory files in the directory 'name'
+##  and 'entry_i' is a list of the same structure.
 ##
 BrowseData.DirectoryTree:= function( startpath, filename, inoknown )
     local startfile, ino, files, nondirs, dirs, startdir, file;
@@ -27,12 +32,18 @@ BrowseData.DirectoryTree:= function( startpath, filename, inoknown )
     fi;
     if not IsExistingFile( startfile ) then
       return fail;
-    elif IsDirectoryPath( startfile ) then
-      ino:= IO_stat( startfile ).ino;
-      if ino in inoknown then
+    fi;
+    ino:= IO_stat( startfile ).ino;
+    if ino in inoknown then
+      if IsDirectoryPath( startfile ) then
+        return [ Concatenation( filename,
+                     " (link to a directory met already)" ), [], [] ];
+      else
         return Concatenation( filename, " (link to a file met already)" );
       fi;
-      AddSet( inoknown, ino );
+    fi;
+    AddSet( inoknown, ino );
+    if IsDirectoryPath( startfile ) then
       files:= DirectoryContents( startfile );
       if files = fail then
         return fail;
@@ -46,15 +57,13 @@ BrowseData.DirectoryTree:= function( startpath, filename, inoknown )
         # `Filename' runs into an error if the name contains `\' or `:'.
         if not ( '\\' in file or ':' in file ) then
           if IsDirectoryPath( Filename( startdir, file ) ) then
-            Add( dirs, file );
+            Add( dirs, BrowseData.DirectoryTree( startdir, file, inoknown ) );
           else
-            Add( nondirs, file );
+            Add( nondirs, BrowseData.DirectoryTree( startdir, file, inoknown ) );
           fi;
         fi;
       od;
-      return [ filename, nondirs,
-               List( dirs, x -> BrowseData.DirectoryTree( startdir, x,
-                                    ShallowCopy( inoknown ) ) ) ];
+      return [ filename, nondirs, dirs ];
     else
       return filename;
     fi;
@@ -189,7 +198,8 @@ BindGlobal( "BrowseDirectory", function( arg )
         Add( files, [ rec( align:= "l", rows:= [ tree ] ) ] );
         Add( paths, Concatenation( path, "/", tree ) );
         i:= i + 1;
-      else
+      elif tree <> fail then
+        # 'tree' is a list of length 3.
         Add( cats, rec( pos:= 2*i,
                         level:= depth,
                         value:= tree[1],
@@ -197,9 +207,11 @@ BindGlobal( "BrowseDirectory", function( arg )
                         isUnderCollapsedCategory:= false,
                         isRejectedCategory:= false ) );
         for file in tree[2] do
-          Add( files, [ rec( align:= "l", rows:= [ file ] ) ] );
-          Add( paths, Concatenation( path, "/", file ) );
-          i:= i + 1;
+          if file <> fail then
+            Add( files, [ rec( align:= "l", rows:= [ file ] ) ] );
+            Add( paths, Concatenation( path, "/", file ) );
+            i:= i + 1;
+          fi;
         od;
         if IsEmpty( tree[2] ) then
           Add( files, [ rec( align:= "l", rows:= [ "HIDDEN ROW" ] ) ] );
@@ -208,12 +220,12 @@ BindGlobal( "BrowseDirectory", function( arg )
           Add( hidden, 2*i+1 );
           i:= i + 1;
         fi;
-        if tree[3] <> fail then
-          for subtree in tree[3] do
+        for subtree in tree[3] do
+          if subtree <> fail then
             evaltree( subtree, depth + 1,
                       Concatenation( path, "/", subtree[1] ) );
-          od;
-        fi;
+          fi;
+        od;
       fi;
     end;
 

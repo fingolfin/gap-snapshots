@@ -1,5 +1,10 @@
 <Chapter Label="Properties of digraphs"><Heading>Properties of digraphs</Heading>
 
+  <Section><Heading>Vertex properties</Heading>
+    <#Include Label="DigraphHasAVertex">
+    <#Include Label="DigraphHasNoVertices">
+  </Section>
+
   <Section><Heading>Edge properties</Heading>
     <#Include Label="DigraphHasLoops">
     <#Include Label="IsAntisymmetricDigraph">
@@ -10,14 +15,22 @@
     <#Include Label="IsEmptyDigraph">
     <#Include Label="IsEquivalenceDigraph">
     <#Include Label="IsFunctionalDigraph">
+    <#Include Label="IsPermutationDigraph">
     <#Include Label="IsMultiDigraph">
+    <#Include Label="IsNonemptyDigraph">
     <#Include Label="IsReflexiveDigraph">
     <#Include Label="IsSymmetricDigraph">
     <#Include Label="IsTournament">
     <#Include Label="IsTransitiveDigraph">
+  </Section>
+
+  <Section><Heading>Orders</Heading>
     <#Include Label="IsPreorderDigraph">
     <#Include Label="IsPartialOrderDigraph">
     <#Include Label="IsMeetSemilatticeDigraph">
+    <#Include Label="DigraphMeetTable">
+    <#Include Label="IsUpperSemimodularDigraph">
+    <#Include Label="IsDistributiveLatticeDigraph">
   </Section>
 
   <Section><Heading>Regularity</Heading>

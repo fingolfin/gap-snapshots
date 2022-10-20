@@ -174,7 +174,7 @@
 
 </dd>
 </dl>
-<p>As our guiding example, we present code for the function <code class="func">Centralizer</code> (<a href="chap35.html#X7DE33AFC823C7873"><span class="RefLink">35.4-4</span></a>) which calculates the centralizer of an element <span class="SimpleMath">g</span> in the group <span class="SimpleMath">G</span>. (The real code is more general and has a few more subtleties.)</p>
+<p>As our guiding example, we present code for the function <code class="func">Centralizer</code> (<a href="chap35.html#X7A2BF4527E08803C"><span class="RefLink">35.4-4</span></a>) which calculates the centralizer of an element <span class="SimpleMath">g</span> in the group <span class="SimpleMath">G</span>. (The real code is more general and has a few more subtleties.)</p>
 
 
 <div class="example"><pre>
@@ -226,7 +226,7 @@ return PartitionBacktrack(
 
 </dd>
 <dt><strong class="Mark">5.</strong></dt>
-<dd><p>This statement selects a new base point <span class="SimpleMath">a_{i+1}</span>, which is not yet in a one-point cell of <span class="SimpleMath">Π</span> and still moved by the stabilizer <span class="SimpleMath">G_{a_1 ... a_i}</span> of the earlier base points. If certain points of <code class="code">omega</code> should be preferred as base point (e.g., because they belong to long cycles of <code class="code">g</code>), a list of points starting with the most wanted ones, can be given as an optional third argument to <code class="code">NextRBasePoint</code> (actually, this is done in the real code for <code class="func">Centralizer</code> (<a href="chap35.html#X7DE33AFC823C7873"><span class="RefLink">35.4-4</span></a>)).</p>
+<dd><p>This statement selects a new base point <span class="SimpleMath">a_{i+1}</span>, which is not yet in a one-point cell of <span class="SimpleMath">Π</span> and still moved by the stabilizer <span class="SimpleMath">G_{a_1 ... a_i}</span> of the earlier base points. If certain points of <code class="code">omega</code> should be preferred as base point (e.g., because they belong to long cycles of <code class="code">g</code>), a list of points starting with the most wanted ones, can be given as an optional third argument to <code class="code">NextRBasePoint</code> (actually, this is done in the real code for <code class="func">Centralizer</code> (<a href="chap35.html#X7A2BF4527E08803C"><span class="RefLink">35.4-4</span></a>)).</p>
 
 </dd>
 <dt><strong class="Mark">6.</strong></dt>
@@ -319,7 +319,7 @@ return PartitionBacktrack(
 
 </dd>
 </dl>
-<p>As declared in the above code for <code class="func">Centralizer</code> (<a href="chap35.html#X7DE33AFC823C7873"><span class="RefLink">35.4-4</span></a>), the refinement is performed by the function <code class="code">Refinement.Centralizer</code><span class="SimpleMath">( R, I, Π</span><code class="code">.cellno</code><span class="SimpleMath">[p], p, where )</span>. The functions in the record <code class="code">Refinement</code> always take two additional arguments before the ones specified in the <code class="code">AddRefinement</code> call (in line 13 above), namely the R-base <span class="SimpleMath">R</span> and the current value <span class="SimpleMath">I</span> of the "R-image". In our example, <span class="SimpleMath">p</span> is a fixpoint of <span class="SimpleMath">Π = Π_i ∧ ({ a_{i+1} }, Ω ∖ { a_{i+1} })</span> such that <span class="SimpleMath">where = Π</span><code class="code">.cellno</code><span class="SimpleMath">[ p^g ]</span>. The <code class="code">Refinement</code> functions must return <code class="keyw">false</code> if the refinement is unsuccessful (e.g., because it leads to <span class="SimpleMath">Σ_{i+1}</span> having different cell sizes from <span class="SimpleMath">Π_{i+1}</span>) and <code class="keyw">true</code> otherwise. Our particular function looks like this.</p>
+<p>As declared in the above code for <code class="func">Centralizer</code> (<a href="chap35.html#X7A2BF4527E08803C"><span class="RefLink">35.4-4</span></a>), the refinement is performed by the function <code class="code">Refinement.Centralizer</code><span class="SimpleMath">( R, I, Π</span><code class="code">.cellno</code><span class="SimpleMath">[p], p, where )</span>. The functions in the record <code class="code">Refinement</code> always take two additional arguments before the ones specified in the <code class="code">AddRefinement</code> call (in line 13 above), namely the R-base <span class="SimpleMath">R</span> and the current value <span class="SimpleMath">I</span> of the "R-image". In our example, <span class="SimpleMath">p</span> is a fixpoint of <span class="SimpleMath">Π = Π_i ∧ ({ a_{i+1} }, Ω ∖ { a_{i+1} })</span> such that <span class="SimpleMath">where = Π</span><code class="code">.cellno</code><span class="SimpleMath">[ p^g ]</span>. The <code class="code">Refinement</code> functions must return <code class="keyw">false</code> if the refinement is unsuccessful (e.g., because it leads to <span class="SimpleMath">Σ_{i+1}</span> having different cell sizes from <span class="SimpleMath">Π_{i+1}</span>) and <code class="keyw">true</code> otherwise. Our particular function looks like this.</p>
 
 
 <div class="example"><pre>

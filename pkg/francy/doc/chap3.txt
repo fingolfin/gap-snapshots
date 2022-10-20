@@ -13,14 +13,14 @@
   [1X3.1-1 IsCanvas[101X
   
   [33X[1;0Y[29X[2XIsCanvas[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YIdentifies [10XCanvas[110X objects.[133X
   
   [1X3.1-2 IsCanvasDefaults[101X
   
   [33X[1;0Y[29X[2XIsCanvasDefaults[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YIdentifies [10XCanvasDefaults[110X objects.[133X
   
@@ -37,14 +37,14 @@
   [1X3.3-1 IsCanvasRep[101X
   
   [33X[1;0Y[29X[2XIsCanvasRep[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YChecks whether an [10XObject[110X has a [10XCanvas[110X internal representation.[133X
   
   [1X3.3-2 IsCanvasDefaultsRep[101X
   
   [33X[1;0Y[29X[2XIsCanvasDefaultsRep[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YChecks whether an [10XObject[110X has a [10XCanvasDefaults[110X internal representation.[133X
   
@@ -171,11 +171,11 @@
   
   [1X3.6-2 Width[101X
   
-  [33X[1;0Y[29X[2XWidth[102X( [3Xarg1[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XWidth[102X( [3Xarg1[103X ) [32X operation[133X
   
   [1X3.6-3 SetWidth[101X
   
-  [33X[1;0Y[29X[2XSetWidth[102X( [3XIsCanvas[103X, [3XIsPosInt[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSetWidth[102X( [3XIsCanvas[103X, [3XIsPosInt[103X ) [32X operation[133X
   
   [33X[0;0YSets the Width of the canvas in pixels[133X
   
@@ -188,11 +188,11 @@
   
   [1X3.6-5 Height[101X
   
-  [33X[1;0Y[29X[2XHeight[102X( [3Xarg1[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XHeight[102X( [3Xarg1[103X ) [32X operation[133X
   
   [1X3.6-6 SetHeight[101X
   
-  [33X[1;0Y[29X[2XSetHeight[102X( [3XIsCanvas[103X, [3XIsPosInt[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSetHeight[102X( [3XIsCanvas[103X, [3XIsPosInt[103X ) [32X operation[133X
   
   [33X[0;0YSets the Height of the canvas in pixels[133X
   
@@ -206,11 +206,11 @@
   
   [1X3.6-8 ZoomToFit[101X
   
-  [33X[1;0Y[29X[2XZoomToFit[102X( [3Xarg1[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XZoomToFit[102X( [3Xarg1[103X ) [32X operation[133X
   
   [1X3.6-9 SetZoomToFit[101X
   
-  [33X[1;0Y[29X[2XSetZoomToFit[102X( [3XIsCanvas[103X, [3XIsBool[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSetZoomToFit[102X( [3XIsCanvas[103X, [3XIsBool[103X ) [32X operation[133X
   
   [33X[0;0Y[10XZoomToFit[110X  is a property that sets the zoom to fit behavior on change in the
   client.[133X
@@ -225,11 +225,11 @@
   
   [1X3.6-11 Title[101X
   
-  [33X[1;0Y[29X[2XTitle[102X( [3Xarg1[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XTitle[102X( [3Xarg1[103X ) [32X operation[133X
   
   [1X3.6-12 SetTitle[101X
   
-  [33X[1;0Y[29X[2XSetTitle[102X( [3XIsCanvas[103X, [3XIsString[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSetTitle[102X( [3XIsCanvas[103X, [3XIsString[103X ) [32X operation[133X
   
   [33X[0;0YSets the title of the required arg.[133X
   
@@ -242,11 +242,11 @@
   
   [1X3.6-14 TexTypesetting[101X
   
-  [33X[1;0Y[29X[2XTexTypesetting[102X( [3Xarg1[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XTexTypesetting[102X( [3Xarg1[103X ) [32X operation[133X
   
   [1X3.6-15 SetTexTypesetting[101X
   
-  [33X[1;0Y[29X[2XSetTexTypesetting[102X( [3XIsCanvas[103X, [3XIsBool[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSetTexTypesetting[102X( [3XIsCanvas[103X, [3XIsBool[103X ) [32X operation[133X
   
   [33X[0;0YSets Tex typestting on the canvas objects[133X
   

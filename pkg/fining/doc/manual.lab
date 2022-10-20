@@ -81,7 +81,6 @@
 \makelabel{fining:Basic operations for projectivities, collineations and correlations of projective spaces}{5.3}{X83A5F86F82598AA6}
 \makelabel{fining:The groups PΓL, PGL, and PSL in FinInG}{5.4}{X78E99D9086D64FD9}
 \makelabel{fining:Basic operations for projective groups}{5.5}{X7C4C7ADE8746C1B1}
-\makelabel{fining:Natural embedding of a collineation group in a correlationcollineation group}{5.6}{X8490DBEA8649A042}
 \makelabel{fining:Basic action of projective group elements}{5.7}{X7AAD7DDD7E19595E}
 \makelabel{fining:Projective group actions}{5.8}{X7EBA895D7A501CE0}
 \makelabel{fining:Special subgroups of the projectivity group}{5.9}{X809F0F2B857FA178}
@@ -681,7 +680,7 @@
 \makelabel{fining:TwistedTrialityHexagon}{12.5.4}{X7E17977384011587}
 \makelabel{fining:TwistedTrialityHexagon}{12.5.4}{X7E17977384011587}
 \makelabel{fining:TwistedTrialityHexagon}{12.5.4}{X7E17977384011587}
-\makelabel{fining:VectorSpaceToElement}{12.5.5}{X82E9593B8074AECB}
+\makelabel{fining:vector spaceToElement}{12.5.5}{X807A60A28264BD93}
 \makelabel{fining:ObjectToElement}{12.5.6}{X7809B7C183FA7213}
 \makelabel{fining:UnderlyingObject}{12.5.7}{X810D4D6D87069697}
 \makelabel{fining:Span}{12.5.9}{X7B1380878358938C}

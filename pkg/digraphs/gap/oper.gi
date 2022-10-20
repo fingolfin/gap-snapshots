@@ -826,6 +826,21 @@ function(D, t)
   return MakeImmutable(OnDigraphs(DigraphMutableCopy(D), t));
 end);
 
+InstallMethod(OnTuplesDigraphs,
+"for list of digraphs and a perm",
+[IsDigraphCollection and IsHomogeneousList, IsPerm],
+{L, p} -> List(L, D -> OnDigraphs(DigraphMutableCopyIfMutable(D), p)));
+
+InstallMethod(OnSetsDigraphs,
+"for a list of digraphs and a perm",
+[IsDigraphCollection and IsHomogeneousList, IsPerm],
+function(S, p)
+  if not IsSet(S) then
+    ErrorNoReturn("the first argument must be a set (a strictly sorted list),");
+  fi;
+  return Set(S, D -> OnDigraphs(DigraphMutableCopyIfMutable(D), p));
+end);
+
 # Not revising the following because multi-digraphs are being withdrawn in the
 # near future.
 
@@ -1712,6 +1727,41 @@ function(D, v)
   return dist;
 end);
 
+InstallMethod(DigraphRandomWalk,
+"for a digraph, a pos int and a non-negative int",
+[IsDigraph, IsPosInt, IsInt],
+function(D, v, t)
+  local vertices, edge_indices, i, neighbours, index;
+
+  # Check input
+  if v > DigraphNrVertices(D) then
+    ErrorNoReturn("the 2nd argument <v> must be ",
+                  "a vertex of the 1st argument <D>,");
+  elif t < 0 then
+    ErrorNoReturn("the 3rd argument <t> must be a non-negative int,");
+  fi;
+
+  # Prepare output lists
+  vertices     := [v];
+  edge_indices := [];
+
+  # Iterate to desired length
+  for i in [1 .. t] do
+    neighbours := OutNeighboursOfVertex(D, v);
+    if IsEmpty(neighbours) then
+      break;  # Sink: path ends here
+    fi;
+    # Follow a random edge
+    index := Random(1, Length(neighbours));
+    v     := neighbours[index];
+    vertices[i + 1] := v;
+    edge_indices[i] := index;
+  od;
+
+  # Format matches that of DigraphPath
+  return [vertices, edge_indices];
+end);
+
 InstallMethod(DigraphLayers, "for a digraph, and a positive integer",
 [IsDigraph, IsPosInt],
 function(D, v)
@@ -2146,6 +2196,10 @@ InstallMethod(PartialOrderDigraphJoinOfVertices,
 function(D, i, j)
   local x, nbs, intr;
 
+  if HasDigraphJoinTable(D) then
+    return DigraphJoinTable(D)[i, j];
+  fi;
+
   if not IsPartialOrderDigraph(D) then
     ErrorNoReturn("the 1st argument <D> must satisfy ",
                   "IsPartialOrderDigraph,");
@@ -2173,6 +2227,10 @@ InstallMethod(PartialOrderDigraphMeetOfVertices,
 [IsDigraph, IsPosInt, IsPosInt],
 function(D, i, j)
   local x, nbs, intr;
+
+  if HasDigraphMeetTable(D) then
+    return DigraphMeetTable(D)[i, j];
+  fi;
 
   if not IsPartialOrderDigraph(D) then
     ErrorNoReturn("the 1st argument <D> must satisfy ",

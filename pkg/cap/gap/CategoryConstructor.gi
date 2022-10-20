@@ -24,6 +24,7 @@ InstallMethod( CategoryConstructor,
         morphism_constructor := IsFunction,
         morphism_datum := IsFunction,
         list_of_operations_to_install := IsList,
+        supports_empty_limits := IsBool,
         underlying_category_getter_string := IsString,
         underlying_object_getter_string := IsString,
         underlying_morphism_getter_string := IsString,
@@ -72,6 +73,12 @@ InstallMethod( CategoryConstructor,
     fi;
     
     CC!.category_as_first_argument := true;
+    
+    if IsBound( options.supports_empty_limits ) then
+        
+        CC!.supports_empty_limits := options.supports_empty_limits;
+        
+    fi;
     
     CC!.compiler_hints := rec( );
     
@@ -155,7 +162,7 @@ InstallMethod( CategoryConstructor,
         # COVERAGE_IGNORE_NEXT_LINE
         Error( "Missing mandatory option `list_of_operations_to_install`." );
         
-    elif not ForAll( options.list_of_operations_to_install, name -> name in RecNames( CAP_INTERNAL_METHOD_NAME_RECORD ) ) then
+    elif not ForAll( options.list_of_operations_to_install, name -> IsBound( CAP_INTERNAL_METHOD_NAME_RECORD.(name) ) ) then
         
         # COVERAGE_IGNORE_NEXT_LINE
         Error( "The value of the option `list_of_operations_to_install` must be a list of names of CAP operations." );
@@ -183,27 +190,27 @@ InstallMethod( CategoryConstructor,
     
     default_func_strings := rec(
         bool := """
-            function( input_arguments )
+            function( input_arguments... )
                 
-                return operation_name( underlying_arguments );
+                return operation_name( underlying_arguments... );
                 
             end
         """,
         object := """
-            function( input_arguments )
+            function( input_arguments... )
               local underlying_result;
                 
-                underlying_result := operation_name( underlying_arguments );
+                underlying_result := operation_name( underlying_arguments... );
                 
                 return top_object_getter( cat, underlying_result );
                 
             end
         """,
         object_or_fail := """
-            function( input_arguments )
+            function( input_arguments... )
               local underlying_result;
                 
-                underlying_result := operation_name( underlying_arguments );
+                underlying_result := operation_name( underlying_arguments... );
                 
                 if underlying_result = fail then
                     
@@ -218,20 +225,20 @@ InstallMethod( CategoryConstructor,
             end
         """,
         morphism := """
-            function( input_arguments )
+            function( input_arguments... )
               local underlying_result;
                 
-                underlying_result := operation_name( underlying_arguments );
+                underlying_result := operation_name( underlying_arguments... );
                 
                 return top_morphism_getter( cat, top_source, underlying_result, top_range );
                 
             end
         """,
         morphism_or_fail := """
-            function( input_arguments )
+            function( input_arguments... )
               local underlying_result;
                 
-                underlying_result := operation_name( underlying_arguments );
+                underlying_result := operation_name( underlying_arguments... );
                 
                 if underlying_result = fail then
                     
@@ -263,7 +270,7 @@ InstallMethod( CategoryConstructor,
             
         fi;
         
-        if not info.return_type in RecNames( default_func_strings ) then
+        if not IsString( info.return_type ) or not IsBound( default_func_strings.(info.return_type) ) then
             
             Info( InfoCategoryConstructor, 3, "cannot yet handle return_type=\"", info.return_type, "\" required for ", name );
             continue;

@@ -1,0 +1,58 @@
+<Table Align="|l|l|">
+<Caption>Renaming</Caption>
+<HorLine/>
+<Row>
+	<Item> <E>Old Name</E> </Item>
+	<Item> <E>New Name</E> </Item>
+</Row>
+<HorLine/>
+<Row>
+	<Item> <C>RecognitionInfoFamily</C> </Item>
+	<Item> <Ref Fam="RecogNodeFamily"/> </Item>
+</Row>
+<HorLine/>
+<Row>
+	<Item> <C>IsRecognitionInfo</C> </Item>
+	<Item> <Ref Filt="IsRecogNode"/> </Item>
+</Row>
+<HorLine/>
+<Row>
+	<Item> <C>RIFac</C> </Item>
+	<Item> <Ref Attr="ImageRecogNode"/> </Item>
+</Row>
+<HorLine/>
+<Row>
+	<Item> <C>RIKer</C> </Item>
+	<Item> <Ref Attr="KernelRecogNode"/> </Item>
+</Row>
+<HorLine/>
+<Row>
+	<Item> <C>RIParent</C> </Item>
+	<Item> <Ref Attr="ParentRecogNode"/> </Item>
+</Row>
+<HorLine/>
+<Row>
+	<Item> <C>methodsforfactor</C> </Item>
+	<Item> <Ref Attr="methodsforimage"/> </Item>
+</Row>
+<HorLine/>
+<Row>
+	<Item> <C>forfactor</C> </Item>
+	<Item> <Ref Attr="InitialDataForImageRecogNode"/> </Item>
+</Row>
+<HorLine/>
+<Row>
+	<Item> <C>forkernel</C> </Item>
+	<Item> <Ref Attr="InitialDataForKernelRecogNode"/> </Item>
+</Row>
+<HorLine/>
+</Table>
+
+<Index Key="RecognitionInfoFamily"><C>RecognitionInfoFamily</C></Index>
+<Index Key="IsRecognitionInfo"><C>IsRecognitionInfo</C></Index>
+<Index Key="RIFac"><C>RIFac</C></Index>
+<Index Key="RIKer"><C>RIKer</C></Index>
+<Index Key="RIParent"><C>RIParent</C></Index>
+<Index Key="methodsforfactor"><C>methodsforfactor</C></Index>
+<Index Key="forfactor"><C>forfactor</C></Index>
+<Index Key="forkernel"><C>forkernel</C></Index>

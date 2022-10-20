@@ -15,46 +15,46 @@
 \makelabel{modulepresentationsforcap:Closed Monoidal Structure}{2.4}{X828DF9B1782D1AF6}
 \makelabel{modulepresentationsforcap:Projectivity test}{2.5}{X7C3B1694803034A2}
 \makelabel{modulepresentationsforcap:Index}{Ind}{X83A0356F839C696F}
-\makelabel{modulepresentationsforcap:FunctorStandardModuleLeft for ishomalgring}{1.1.1}{X7F7AC44478418555}
-\makelabel{modulepresentationsforcap:FunctorStandardModuleRight for ishomalgring}{1.1.2}{X87AEC1177DB7F50D}
-\makelabel{modulepresentationsforcap:FunctorGetRidOfZeroGeneratorsLeft for ishomalgring}{1.1.3}{X8427C0B17A445822}
-\makelabel{modulepresentationsforcap:FunctorGetRidOfZeroGeneratorsRight for ishomalgring}{1.1.4}{X7F1E779D8003146B}
-\makelabel{modulepresentationsforcap:FunctorLessGeneratorsLeft for ishomalgring}{1.1.5}{X819A04517B3601C0}
-\makelabel{modulepresentationsforcap:FunctorLessGeneratorsRight for ishomalgring}{1.1.6}{X7F80AE9B7EC07198}
-\makelabel{modulepresentationsforcap:FunctorDualLeft for ishomalgring}{1.1.7}{X877B7ACE87E1BEC2}
-\makelabel{modulepresentationsforcap:FunctorDualRight for ishomalgring}{1.1.8}{X7D56611D7BF91B54}
-\makelabel{modulepresentationsforcap:FunctorDoubleDualLeft for ishomalgring}{1.1.9}{X7C9901F8851FD24A}
-\makelabel{modulepresentationsforcap:FunctorDoubleDualRight for ishomalgring}{1.1.10}{X8016306881444DCA}
-\makelabel{modulepresentationsforcap:IsLeftOrRightPresentationMorphism for iscapcategorymorphism}{1.2.1}{X79DBCB747E91FB70}
-\makelabel{modulepresentationsforcap:IsLeftPresentationMorphism for isleftorrightpresentationmorphism}{1.2.2}{X85E26CFF86855B6B}
-\makelabel{modulepresentationsforcap:IsRightPresentationMorphism for isleftorrightpresentationmorphism}{1.2.3}{X873EFE29849F6998}
-\makelabel{modulepresentationsforcap:IsLeftOrRightPresentation for iscapcategoryobject}{1.2.4}{X7BB95B7A7EB96854}
-\makelabel{modulepresentationsforcap:IsLeftPresentation for isleftorrightpresentation}{1.2.5}{X7C71B8D17C60C6B5}
-\makelabel{modulepresentationsforcap:IsRightPresentation for isleftorrightpresentation}{1.2.6}{X7DBF478D7EE3FE63}
-\makelabel{modulepresentationsforcap:PresentationMorphism for isleftorrightpresentation, ishomalgmatrix, isleftorrightpresentation}{1.3.1}{X87010AB6819736C8}
-\makelabel{modulepresentationsforcap:AsMorphismBetweenFreeLeftPresentations for ishomalgmatrix}{1.3.2}{X7C9B36AD7B9CCC8D}
-\makelabel{modulepresentationsforcap:AsMorphismBetweenFreeRightPresentations for ishomalgmatrix}{1.3.3}{X7F1AD55C852BE617}
-\makelabel{modulepresentationsforcap:AsLeftPresentation for ishomalgmatrix}{1.3.4}{X7BE01A1381744627}
-\makelabel{modulepresentationsforcap:AsRightPresentation for ishomalgmatrix}{1.3.5}{X780443B07F43AA1C}
+\makelabel{modulepresentationsforcap:FunctorStandardModuleLeft for IsHomalgRing}{1.1.1}{X7F7AC44478418555}
+\makelabel{modulepresentationsforcap:FunctorStandardModuleRight for IsHomalgRing}{1.1.2}{X87AEC1177DB7F50D}
+\makelabel{modulepresentationsforcap:FunctorGetRidOfZeroGeneratorsLeft for IsHomalgRing}{1.1.3}{X8427C0B17A445822}
+\makelabel{modulepresentationsforcap:FunctorGetRidOfZeroGeneratorsRight for IsHomalgRing}{1.1.4}{X7F1E779D8003146B}
+\makelabel{modulepresentationsforcap:FunctorLessGeneratorsLeft for IsHomalgRing}{1.1.5}{X819A04517B3601C0}
+\makelabel{modulepresentationsforcap:FunctorLessGeneratorsRight for IsHomalgRing}{1.1.6}{X7F80AE9B7EC07198}
+\makelabel{modulepresentationsforcap:FunctorDualLeft for IsHomalgRing}{1.1.7}{X877B7ACE87E1BEC2}
+\makelabel{modulepresentationsforcap:FunctorDualRight for IsHomalgRing}{1.1.8}{X7D56611D7BF91B54}
+\makelabel{modulepresentationsforcap:FunctorDoubleDualLeft for IsHomalgRing}{1.1.9}{X7C9901F8851FD24A}
+\makelabel{modulepresentationsforcap:FunctorDoubleDualRight for IsHomalgRing}{1.1.10}{X8016306881444DCA}
+\makelabel{modulepresentationsforcap:IsLeftOrRightPresentationMorphism for IsCapCategoryMorphism}{1.2.1}{X79DBCB747E91FB70}
+\makelabel{modulepresentationsforcap:IsLeftPresentationMorphism for IsLeftOrRightPresentationMorphism}{1.2.2}{X85E26CFF86855B6B}
+\makelabel{modulepresentationsforcap:IsRightPresentationMorphism for IsLeftOrRightPresentationMorphism}{1.2.3}{X873EFE29849F6998}
+\makelabel{modulepresentationsforcap:IsLeftOrRightPresentation for IsCapCategoryObject}{1.2.4}{X7BB95B7A7EB96854}
+\makelabel{modulepresentationsforcap:IsLeftPresentation for IsLeftOrRightPresentation}{1.2.5}{X7C71B8D17C60C6B5}
+\makelabel{modulepresentationsforcap:IsRightPresentation for IsLeftOrRightPresentation}{1.2.6}{X7DBF478D7EE3FE63}
+\makelabel{modulepresentationsforcap:PresentationMorphism for IsLeftOrRightPresentation, IsHomalgMatrix, IsLeftOrRightPresentation}{1.3.1}{X87010AB6819736C8}
+\makelabel{modulepresentationsforcap:AsMorphismBetweenFreeLeftPresentations for IsHomalgMatrix}{1.3.2}{X7C9B36AD7B9CCC8D}
+\makelabel{modulepresentationsforcap:AsMorphismBetweenFreeRightPresentations for IsHomalgMatrix}{1.3.3}{X7F1AD55C852BE617}
+\makelabel{modulepresentationsforcap:AsLeftPresentation for IsHomalgMatrix}{1.3.4}{X7BE01A1381744627}
+\makelabel{modulepresentationsforcap:AsRightPresentation for IsHomalgMatrix}{1.3.5}{X780443B07F43AA1C}
 \makelabel{modulepresentationsforcap:AsLeftOrRightPresentation}{1.3.6}{X815FF28D8474BEEB}
-\makelabel{modulepresentationsforcap:FreeLeftPresentation for isint, ishomalgring}{1.3.7}{X7F345A2A87ABE417}
-\makelabel{modulepresentationsforcap:FreeRightPresentation for isint, ishomalgring}{1.3.8}{X85536E4E85D15252}
-\makelabel{modulepresentationsforcap:UnderlyingMatrix for isleftorrightpresentation}{1.3.9}{X86F926B27C579E66}
-\makelabel{modulepresentationsforcap:UnderlyingHomalgRing for isleftorrightpresentation}{1.3.10}{X7D8E30E486A08439}
-\makelabel{modulepresentationsforcap:Annihilator for isleftorrightpresentation}{1.3.11}{X7B5539AB8541F618}
-\makelabel{modulepresentationsforcap:LeftPresentationsAsFreydCategoryOfCategoryOfRows for ishomalgring}{1.3.12}{X7F774C0C79A838C2}
-\makelabel{modulepresentationsforcap:RightPresentationsAsFreydCategoryOfCategoryOfColumns for ishomalgring}{1.3.13}{X8147CE4979AE5346}
-\makelabel{modulepresentationsforcap:LeftPresentations for ishomalgring}{1.3.14}{X87946F997AD1005A}
-\makelabel{modulepresentationsforcap:RightPresentations for ishomalgring}{1.3.15}{X7BDF988F7FFEAB8C}
-\makelabel{modulepresentationsforcap:UnderlyingHomalgRing for isleftorrightpresentationmorphism}{1.4.1}{X8157F3E8847B15E1}
-\makelabel{modulepresentationsforcap:UnderlyingMatrix for isleftorrightpresentationmorphism}{1.4.2}{X83CA6F06832162B7}
-\makelabel{modulepresentationsforcap:StandardGeneratorMorphism for isleftorrightpresentation, isint}{1.5.1}{X8508310C7E908093}
-\makelabel{modulepresentationsforcap:CoverByFreeModule for isleftorrightpresentation}{1.5.2}{X7EF1493A7D341F5E}
-\makelabel{modulepresentationsforcap:NaturalIsomorphismFromIdentityToStandardModuleLeft for ishomalgring}{1.6.1}{X85D3DB1F856D05EF}
-\makelabel{modulepresentationsforcap:NaturalIsomorphismFromIdentityToStandardModuleRight for ishomalgring}{1.6.2}{X7B64AF718133C945}
-\makelabel{modulepresentationsforcap:NaturalIsomorphismFromIdentityToGetRidOfZeroGeneratorsLeft for ishomalgring}{1.6.3}{X7CA2B84E7F933125}
-\makelabel{modulepresentationsforcap:NaturalIsomorphismFromIdentityToGetRidOfZeroGeneratorsRight for ishomalgring}{1.6.4}{X7A2DCBD6844093E3}
-\makelabel{modulepresentationsforcap:NaturalIsomorphismFromIdentityToLessGeneratorsLeft for ishomalgring}{1.6.5}{X7B331B0A86010185}
-\makelabel{modulepresentationsforcap:NaturalIsomorphismFromIdentityToLessGeneratorsRight for ishomalgring}{1.6.6}{X834AC0FD825FCD2F}
-\makelabel{modulepresentationsforcap:NaturalTransformationFromIdentityToDoubleDualLeft for ishomalgring}{1.6.7}{X7E37CB058378CBEE}
-\makelabel{modulepresentationsforcap:NaturalTransformationFromIdentityToDoubleDualRight for ishomalgring}{1.6.8}{X7F92B4448041A68C}
+\makelabel{modulepresentationsforcap:FreeLeftPresentation for IsInt, IsHomalgRing}{1.3.7}{X7F345A2A87ABE417}
+\makelabel{modulepresentationsforcap:FreeRightPresentation for IsInt, IsHomalgRing}{1.3.8}{X85536E4E85D15252}
+\makelabel{modulepresentationsforcap:UnderlyingMatrix for IsLeftOrRightPresentation}{1.3.9}{X86F926B27C579E66}
+\makelabel{modulepresentationsforcap:UnderlyingHomalgRing for IsLeftOrRightPresentation}{1.3.10}{X7D8E30E486A08439}
+\makelabel{modulepresentationsforcap:Annihilator for IsLeftOrRightPresentation}{1.3.11}{X7B5539AB8541F618}
+\makelabel{modulepresentationsforcap:LeftPresentationsAsFreydCategoryOfCategoryOfRows for IsHomalgRing}{1.3.12}{X7F774C0C79A838C2}
+\makelabel{modulepresentationsforcap:RightPresentationsAsFreydCategoryOfCategoryOfColumns for IsHomalgRing}{1.3.13}{X8147CE4979AE5346}
+\makelabel{modulepresentationsforcap:LeftPresentations for IsHomalgRing}{1.3.14}{X87946F997AD1005A}
+\makelabel{modulepresentationsforcap:RightPresentations for IsHomalgRing}{1.3.15}{X7BDF988F7FFEAB8C}
+\makelabel{modulepresentationsforcap:UnderlyingHomalgRing for IsLeftOrRightPresentationMorphism}{1.4.1}{X8157F3E8847B15E1}
+\makelabel{modulepresentationsforcap:UnderlyingMatrix for IsLeftOrRightPresentationMorphism}{1.4.2}{X83CA6F06832162B7}
+\makelabel{modulepresentationsforcap:StandardGeneratorMorphism for IsLeftOrRightPresentation, IsInt}{1.5.1}{X8508310C7E908093}
+\makelabel{modulepresentationsforcap:CoverByFreeModule for IsLeftOrRightPresentation}{1.5.2}{X7EF1493A7D341F5E}
+\makelabel{modulepresentationsforcap:NaturalIsomorphismFromIdentityToStandardModuleLeft for IsHomalgRing}{1.6.1}{X85D3DB1F856D05EF}
+\makelabel{modulepresentationsforcap:NaturalIsomorphismFromIdentityToStandardModuleRight for IsHomalgRing}{1.6.2}{X7B64AF718133C945}
+\makelabel{modulepresentationsforcap:NaturalIsomorphismFromIdentityToGetRidOfZeroGeneratorsLeft for IsHomalgRing}{1.6.3}{X7CA2B84E7F933125}
+\makelabel{modulepresentationsforcap:NaturalIsomorphismFromIdentityToGetRidOfZeroGeneratorsRight for IsHomalgRing}{1.6.4}{X7A2DCBD6844093E3}
+\makelabel{modulepresentationsforcap:NaturalIsomorphismFromIdentityToLessGeneratorsLeft for IsHomalgRing}{1.6.5}{X7B331B0A86010185}
+\makelabel{modulepresentationsforcap:NaturalIsomorphismFromIdentityToLessGeneratorsRight for IsHomalgRing}{1.6.6}{X834AC0FD825FCD2F}
+\makelabel{modulepresentationsforcap:NaturalTransformationFromIdentityToDoubleDualLeft for IsHomalgRing}{1.6.7}{X7E37CB058378CBEE}
+\makelabel{modulepresentationsforcap:NaturalTransformationFromIdentityToDoubleDualRight for IsHomalgRing}{1.6.8}{X7F92B4448041A68C}

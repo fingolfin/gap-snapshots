@@ -2,7 +2,9 @@
 
 GAPPATH=@GAPPATH@
 
-GAP = $(GAPPATH)/gap -b -r -l $(GAPPATH)
+GAP=@GAP@
+
+GAC=@GAC@
 
 GAPINCL=-I$(GAPPATH)/src -I$(GAPPATH)/bin/@GAPARCH@
 
@@ -10,13 +12,11 @@ PKGROOT=$(shell pwd)
 
 LOPTS=$(LDFLAGS) $(GAP_LIBS) -lpanel -lncurses
 
-.PHONY: clean doc test
-
-default:  bin/@GAPARCH@/ncurses.so
+.PHONY: manual clean distclean doc docclean WIDECHARS
 
 bin/@GAPARCH@/ncurses.so: src/ncurses.c Makefile
 	mkdir -p bin/@GAPARCH@
-	$(GAPPATH)/gac -p "$(CFLAGS)" -d -o \
+	$(GAC) -p "$(CFLAGS)" -d -o \
 	     bin/@GAPARCH@/ncurses.so src/ncurses.c -L "${LOPTS}"
 
 # just make it again when called with 'manual'
@@ -24,7 +24,7 @@ bin/@GAPARCH@/ncurses.so: src/ncurses.c Makefile
 ##  doc/manual.six: doc/main.xml doc/browsebib.xml doc/appl.xml doc/browse.xml \
 ##                  doc/curses.xml doc/intro.xml doc/util.xml
 manual:
-	($(GAP) -l "../../;" < makedocrel.g)
+	($(GAP) -l "../../;" -r < makedocrel.g)
 	echo "LaTeX warnings:"
 	grep "\(^LaTeX Warning\|^Overfull \\hbox\)" doc/main.log; exit 0
 
@@ -39,8 +39,11 @@ doc:
 docclean:
 	(cd  doc; ./clean)
 
+test:
+	$(GAP) -b -q -r  tst/test.tst
+
 # experimental so far
 WIDECHARS:
-	$(GAPPATH)/gac -p "$(CFLAGS)" -d -o bin/@GAPARCH@/ncurses.so \
+	$(GAC) -p "$(CFLAGS)" -d -o bin/@GAPARCH@/ncurses.so \
         src/ncurses.c -p -DWIDECHARS -L "-lpanelw  -lncursesw"
 

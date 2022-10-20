@@ -27,6 +27,13 @@ if (not IsBound(ORBC)) and
   LoadDynamicModule(Filename(DirectoriesPackagePrograms("orb"), "orb.so"));
 fi;
 
+#
+# Compatibility between older and newer versions of the MatrixObj interface
+#
+if not IsBound(MultVector) then
+    DeclareSynonym( "MultVector", MultRowVector );
+fi;
+
 ReadPackage("orb","gap/homwdata.gd");
 ReadPackage("orb","gap/avltree.gd");
 ReadPackage("orb","gap/hash.gd");
@@ -34,9 +41,6 @@ ReadPackage("orb","gap/cache.gd");
 ReadPackage("orb","gap/orbits.gd");
 ReadPackage("orb","gap/search.gd");
 ReadPackage("orb","gap/bysuborbit.gd");
-if not(CompareVersionNumbers(GAPInfo.Version,"4.7")) then
-    ReadPackage("orb","gap/transform.gd");
-fi;
 
 ##
 ##  This program is free software: you can redistribute it and/or modify

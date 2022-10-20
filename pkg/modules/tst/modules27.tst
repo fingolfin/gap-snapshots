@@ -41,11 +41,11 @@ gap> Display( psi );
 the map is currently represented by the above 3 x 4 matrix
 gap> homNM := Source( psi );
 <A rank 2 right module on 4 generators satisfying 2 relations>
-gap> IsIdenticalObj( homNM, Hom( N, M ) );	## the caching at work
+gap> IsIdenticalObj( homNM, Hom( N, M ) ); ## the caching at work
 true
 gap> homMM := Range( psi );
 <A rank 1 right module on 3 generators satisfying 2 relations>
-gap> IsIdenticalObj( homMM, Hom( M, M ) );	## the caching at work
+gap> IsIdenticalObj( homMM, Hom( M, M ) ); ## the caching at work
 true
 gap> Display( homNM );
 Z/< 3 > + Z/< 3 > + Z^(2 x 1)

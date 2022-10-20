@@ -1,0 +1,124 @@
+<Table Align="|l|l|l|">
+<Caption>Unused group find homomorphism methods</Caption>
+<HorLine/>
+<Row>
+<Item><C>KnownNilpotent</C></Item>
+<Item><C>FindHomMethodsGeneric</C></Item>
+<Item><Ref Subsect="KnownNilpotent"/></Item>
+</Row>
+<HorLine/>
+<Row>
+<Item><C>SnAnUnknownDegree</C></Item>
+<Item><C>FindHomMethodsGeneric</C></Item>
+<Item><Ref Subsect="SnAnUnknownDegree"/></Item>
+</Row>
+<HorLine/>
+<Row>
+<Item><C>PcgsForBlocks</C></Item>
+<Item><C>FindHomMethodsPerm</C></Item>
+<Item><Ref Subsect="PcgsForBlocks"/></Item>
+</Row>
+<HorLine/>
+<Row>
+<Item><C>BalTreeForBlocks</C></Item>
+<Item><C>FindHomMethodsPerm</C></Item>
+<Item><Ref Subsect="BalTreeForBlocks"/></Item>
+</Row>
+<HorLine/>
+<Row>
+<Item><C>BlockScalar</C></Item>
+<Item><C>FindHomMethodsMatrix</C></Item>
+<Item><Ref Subsect="BlockScalar"/></Item>
+</Row>
+<HorLine/>
+<Row>
+<Item><C>NaturalSL</C></Item>
+<Item><C>FindHomMethodsMatrix</C></Item>
+<Item><Ref Subsect="NaturalSL"/></Item>
+</Row>
+<HorLine/>
+<Row>
+<Item><C>Scalar</C></Item>
+<Item><C>FindHomMethodsMatrix</C></Item>
+<Item><Ref Subsect="Scalar"/></Item>
+</Row>
+<HorLine/>
+<Row>
+<Item><C>BlockLowerTriangular</C></Item>
+<Item><C>FindHomMethodsMatrix</C></Item>
+<Item><Ref Subsect="BlockLowerTriangular"/></Item>
+</Row>
+<HorLine/>
+<Row>
+<Item><C>BlockDiagonal</C></Item>
+<Item><C>FindHomMethodsMatrix</C></Item>
+<Item><Ref Subsect="BlockDiagonal"/></Item>
+</Row>
+<HorLine/>
+<Row>
+<Item><C>LowerLeftPGroup</C></Item>
+<Item><C>FindHomMethodsMatrix</C></Item>
+<Item><Ref Subsect="LowerLeftPGroup"/></Item>
+</Row>
+<HorLine/>
+<Row>
+<Item><C>DoBaseChangeForBlocks</C></Item>
+<Item><C>FindHomMethodsProjective</C></Item>
+<Item><Ref Subsect="DoBaseChangeForBlocks"/></Item>
+</Row>
+<HorLine/>
+<Row>
+<Item><C>Blocks</C></Item>
+<Item><C>FindHomMethodsProjective</C></Item>
+<Item><Ref Subsect="Blocks"/></Item>
+</Row>
+<HorLine/>
+<Row>
+<Item><C>BlocksModScalars</C></Item>
+<Item><C>FindHomMethodsProjective</C></Item>
+<Item><Ref Subsect="BlocksModScalars"/></Item>
+</Row>
+<HorLine/>
+<Row>
+<Item><C>BlocksBackToMats</C></Item>
+<Item><C>FindHomMethodsProjective</C></Item>
+<Item><Ref Subsect="BlocksBackToMats"/></Item>
+</Row>
+<HorLine/>
+<Row>
+<Item><C>KroneckerProduct</C></Item>
+<Item><C>FindHomMethodsProjective</C></Item>
+<Item><Ref Subsect="KroneckerProduct"/></Item>
+</Row>
+<HorLine/>
+<Row>
+<Item><C>KroneckerKernel</C></Item>
+<Item><C>FindHomMethodsProjective</C></Item>
+<Item><Ref Subsect="KroneckerKernel"/></Item>
+</Row>
+<HorLine/>
+<Row>
+<Item><C>BiggerScalarsOnly</C></Item>
+<Item><C>FindHomMethodsProjective</C></Item>
+<Item><Ref Subsect="BiggerScalarsOnly"/></Item>
+</Row>
+<HorLine/>
+<Row>
+<Item><C>PrototypeForC2C4</C></Item>
+<Item><C>FindHomMethodsProjective</C></Item>
+<Item><Ref Subsect="PrototypeForC2C4"/></Item>
+</Row>
+<HorLine/>
+<Row>
+<Item><C>SporadicsByOrders</C></Item>
+<Item><C>FindHomMethodsProjective</C></Item>
+<Item><Ref Subsect="SporadicsByOrders"/></Item>
+</Row>
+<HorLine/>
+<Row>
+<Item><C>BlockScalarProj</C></Item>
+<Item><C>FindHomMethodsProjective</C></Item>
+<Item><Ref Subsect="BlockScalarProj"/></Item>
+</Row>
+<HorLine/>
+</Table>

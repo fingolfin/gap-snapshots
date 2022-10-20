@@ -1,14 +1,14 @@
-GNU GENERAL PUBLIC LICENSE
-   Version 2, June 1991
+		    GNU GENERAL PUBLIC LICENSE
+		       Version 2, June 1991
 
-Copyright (C) 1989, 1991 Free Software Foundation, Inc.
-59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-Everyone is permitted to copy and distribute verbatim copies
-of this license document, but changing it is not allowed.
+ Copyright (C) 1989, 1991 Free Software Foundation, Inc.
+     59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
 
-    Preamble
+			    Preamble
 
-The licenses for most software are designed to take away your
+  The licenses for most software are designed to take away your
 freedom to share and change it.  By contrast, the GNU General Public
 License is intended to guarantee your freedom to share and change free
 software--to make sure the software is free for all its users.  This
@@ -53,13 +53,13 @@ program will individually obtain patent licenses, in effect making the
 program proprietary.  To prevent this, we have made it clear that any
 patent must be licensed for everyone's free use or not licensed at all.
 
-The precise terms and conditions for copying, distribution and
+  The precise terms and conditions for copying, distribution and
 modification follow.
 
-GNU GENERAL PUBLIC LICENSE
-TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+		    GNU GENERAL PUBLIC LICENSE
+   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
-0. This License applies to any program or other work which contains
+  0. This License applies to any program or other work which contains
 a notice placed by the copyright holder saying it may be distributed
 under the terms of this General Public License.  The "Program", below,
 refers to any such program or work, and a "work based on the Program"

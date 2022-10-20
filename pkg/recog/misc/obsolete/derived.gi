@@ -1,12 +1,16 @@
 #############################################################################
 ##
-##  derived.gi
-##                                recog package
-##                                                        Max Neunhoeffer
-##                                                            Ákos Seress
+##  This file is part of recog, a package for the GAP computer algebra system
+##  which provides a collection of methods for the constructive recognition
+##  of groups.
 ##
-##  Copyright 2006-2008 by the authors.
-##  This file is free software, see license information at the end.
+##  This files's authors include Max Neunhöffer, Ákos Seress.
+##
+##  Copyright of recog belongs to its developers whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-3.0-or-later
+##
 ##
 ##  Implementation stuff for derived subgroup method
 ##
@@ -24,12 +28,26 @@ RECOG.DerivedSubgroupMonteCarlo := function(g)
   return GroupWithGenerators(gens2);
 end;
 
+#! @BeginChunk Derived
+#! This method computes the derived subgroup, if this has not yet been done
+#! by other methods. It then uses the MeatAxe to decide whether
+#! the derived subgroup acts irreducibly or not. If it acts reducibly,
+#! then we can apply Clifford theory to the natural module. The natural
+#! module restricted to the derived subgroup is a direct sum of simple
+#! modules. If all the summands are isomorphic, we immediately get either
+#! an action of <A>G</A> on blocks or a tensor decomposition. Otherwise,
+#! we get an action of <A>G</A> on the isotypic components. Either way,
+#! we find a reduction.
+#! 
+#! If the derived group acts irreducibly, we return <K>false</K> in the current
+#! implementation.
+#! @EndChunk
 FindHomMethodsProjective.Derived :=
   function(ri,G)
     # We assume G to act absolutely irreducible
     local H,a,basis,collf,conjgensG,f,hom,homcomp,homs,homsimg,kro,o,r,subdim;
     f := ri!.field;
-    if not(IsBound(ri!.derived)) then
+    if not IsBound(ri!.derived) then
       ri!.derived := RECOG.DerivedSubgroupMonteCarlo(G);
       ri!.derived_mtx := GModuleByMats(GeneratorsOfGroup(ri!.derived),f);
     fi;
@@ -38,7 +56,7 @@ FindHomMethodsProjective.Derived :=
         return false;
     fi;
     if MTX.IsIrreducible(ri!.derived_mtx) then
-        if not(MTX.IsAbsolutelyIrreducible(ri!.derived_mtx)) then
+        if not MTX.IsAbsolutelyIrreducible(ri!.derived_mtx) then
             # FIXME: Check for field automorphisms:
             return false;
             Error("not yet done");
@@ -74,9 +92,9 @@ FindHomMethodsProjective.Derived :=
         SetHomom(ri,hom);
 
         # Hand down information:
-        forfactor(ri).blocksize := r.blocksize;
-        forfactor(ri).generatorskronecker := kro;
-        Add( forfactor(ri).hints,
+        InitialDataForImageRecogNode(ri).blocksize := r.blocksize;
+        InitialDataForImageRecogNode(ri).generatorskronecker := kro;
+        Add( InitialDataForImageRecogNode(ri).hints,
              rec( method := FindHomMethodsProjective.KroneckerProduct,
                   rank := 4000, stamp := "KroneckerProduct" ) );
         # This is an isomorphism:
@@ -96,24 +114,7 @@ FindHomMethodsProjective.Derived :=
     Enumerate(o);
     a := OrbActionHomomorphism(G,o);
     SetHomom(ri,a);
-    Setmethodsforfactor(ri,FindHomDbPerm);
+    Setmethodsforimage(ri,FindHomDbPerm);
 
     return true;
   end;
-
-
-##
-##  This program is free software: you can redistribute it and/or modify
-##  it under the terms of the GNU General Public License as published by
-##  the Free Software Foundation, either version 3 of the License, or
-##  (at your option) any later version.
-##
-##  This program is distributed in the hope that it will be useful,
-##  but WITHOUT ANY WARRANTY; without even the implied warranty of
-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-##  GNU General Public License for more details.
-##
-##  You should have received a copy of the GNU General Public License
-##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-##
-

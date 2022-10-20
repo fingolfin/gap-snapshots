@@ -236,7 +236,7 @@ gap> if TestPackageAvailability( "CTblLib" ) = true then
 >      BrowseData.SetReplay( false );
 > fi;
 
-##  doc/../app/ctbldisp.g (698-710)
+##  doc/../app/ctbldisp.g (772-784)
 gap> BrowseData.SetReplay( Concatenation(
 >         # select the first entry
 >         "se",
@@ -267,7 +267,7 @@ gap> if TestPackageAvailability( "TomLib" ) = true then
 >      BrowseData.SetReplay( false );
 >    fi;
 
-##  doc/../app/atlasbrowse.g (525-555)
+##  doc/../app/atlasbrowse.g (528-558)
 gap> d:= [ NCurses.keys.DOWN ];;  r:= [ NCurses.keys.RIGHT ];;
 gap> c:= [ NCurses.keys.ENTER ];;
 gap> BrowseData.SetReplay( Concatenation(
@@ -375,7 +375,7 @@ gap> BrowseData.SetReplay( Concatenation( "/GAP Packages",
 gap> BrowseGapData();;
 gap> BrowseData.SetReplay( false );
 
-##  doc/../app/filetree.g (100-112)
+##  doc/../app/filetree.g (109-121)
 gap> n:= [ 14, 14, 14 ];;  # ``do nothing''
 gap> BrowseData.SetReplay( Concatenation(
 >        "q",                                  # leave the selection

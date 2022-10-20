@@ -63,7 +63,7 @@ X\033[101X", "2.2", [ 2, 2, 0 ], 37, 6,
       "subgroups cosets and subgroup presentations", "X8128360785343F6A" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YThe Knuth-Bendix program on cosets\033[133X\033[1\
-01X", "3.2", [ 3, 2, 0 ], 43, 23, "the knuth-bendix program on cosets", 
+01X", "3.2", [ 3, 2, 0 ], 43, 22, "the knuth-bendix program on cosets", 
       "X7828AE2881251C6A" ], 
   [ "\033[1X\033[33X\033[0;-2YThe automatic cosets program\033[133X\033[101X",
       "3.3", [ 3, 3, 0 ], 82, 23, "the automatic cosets program", 
@@ -197,9 +197,9 @@ sets\033[133X\033[101X", "3.5", [ 3, 5, 0 ], 150, 24,
       16, 22, "subgroupofkbmagrewritingsystem", "X834DC6477EE1482B" ], 
   [ "\033[2XResetRewritingSystemOnCosets\033[102X", "3.1-2", [ 3, 1, 2 ], 30, 
       22, "resetrewritingsystemoncosets", "X7CDC9FDA855596C4" ], 
-  [ "Knuth-Bendix program on cosets", "3.2", [ 3, 2, 0 ], 43, 23, 
+  [ "Knuth-Bendix program on cosets", "3.2", [ 3, 2, 0 ], 43, 22, 
       "knuth-bendix program on cosets", "X7828AE2881251C6A" ], 
-  [ " creating", "3.2", [ 3, 2, 0 ], 43, 23, "creating", "X7828AE2881251C6A" ]
+  [ " creating", "3.2", [ 3, 2, 0 ], 43, 22, "creating", "X7828AE2881251C6A" ]
     , [ "\033[2XKnuthBendixOnCosets\033[102X", "3.2-1", [ 3, 2, 1 ], 46, 23, 
       "knuthbendixoncosets", "X822268027EF50066" ], 
   [ "\033[2XKnuthBendixOnCosetsWithSubgroupRewritingSystem\033[102X", 

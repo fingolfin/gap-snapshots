@@ -732,7 +732,7 @@ end);
 #        qq := Characteristic(field)^(DegreeOverPrimeField(field)/2);
 #    fi;
 
-    # We first preform some inexpensive tests with a few random elements
+    # We first perform some inexpensive tests with a few random elements
 #    for i in [1 .. 8]  do
 #        g := PseudoRandom(grp);
 #        if forms.maybeDual or forms.maybeFrobenius  then
@@ -742,7 +742,7 @@ end);
 
     # if all forms are excluded then we are finished
 #    if not forms.maybeDual and not forms.maybeFrobenius  then
-#       i := Size(One(g));
+#       i := NrRows(One(g));
 #        return [ BilinearFormByMatrix( NullMat(i,i,field), field ) ];
 #    fi;
 
@@ -803,7 +803,7 @@ end);
 #          newform := HermitianFormByMatrix(y[2], field);
 #          Add( newforms, newform );
 #       elif y[1] = "linear" then
-#          i := Size(One(g));
+#          i := NrRows(One(g));
 #          newform := BilinearFormByMatrix( NullMat(i,i,field), field );
 #          Add( newforms, newform );
 #       fi;
@@ -831,7 +831,7 @@ InstallMethod( ScalarOfSimilarity, [IsMatrix, IsSesquilinearForm],
 
     ## check that g and form are compatible in dimension and there fields are OK
     gram := GramMatrix( form );
-    if Size(g) <> Size( gram ) then
+    if NrRows(g) <> NrRows( gram ) then
        Error("dimensions are incompatible.");
     fi;
 
@@ -893,7 +893,7 @@ InstallMethod( PreservedFormsOp, [ IsMatrixGroup ],
 
     # if all forms are excluded then we are finished
     if not forms.maybeDual and not forms.maybeFrobenius  then
-        i := Size(One(g));
+        i := NrRows(One(g));
         return [ BilinearFormByMatrix( NullMat(i,i,field), field ) ];
     fi;
 
@@ -949,7 +949,7 @@ end );
 #O  PreservedForms( <grp> )
 ##    returns (i) quadratic form(s) if it has one,
 ##            (ii) a sesquilinear form(s) otherwise
-##  it basicly converts the information given by Frank Cellers operation
+##  it basically converts the information given by Frank Cellers operation
 ## to output we want...
 ##
 InstallMethod( PreservedForms,
@@ -973,7 +973,7 @@ InstallMethod( PreservedForms,
           newform := HermitianFormByMatrix(y[2], field);
           Add( newforms, newform );
        elif y[1] = "linear" then
-          i := Size(One(grp));
+          i := NrRows(One(grp));
           newform := BilinearFormByMatrix( NullMat(i,i,field), field );
           Add( newforms, newform );
        fi;
@@ -985,7 +985,7 @@ end );
 ##
 #O  PreservedSesquilinearForms( <grp> )
 ##    returns a sesquilinear form(s) if it has one
-##  it basicly converts the information given by Frank Cellers operation
+##  it basically converts the information given by Frank Cellers operation
 ## to output we want...
 ##
 InstallMethod( PreservedSesquilinearForms,
@@ -1005,7 +1005,7 @@ InstallMethod( PreservedSesquilinearForms,
           newform := HermitianFormByMatrix(y[2], field);
           Add( newforms, newform );
        elif y[1] = "linear" then
-          i := Size(One(grp));
+          i := NrRows(One(grp));
           newform := BilinearFormByMatrix( NullMat(i,i,field), field );
           Add( newforms, newform );
        fi;
@@ -1017,7 +1017,7 @@ end );
 ##
 #O  PreservedQuadraticForms( <grp> )
 ##    returns  quadratic form(s) if it has one.
-##  it basicly converts the information given by Frank Cellers operation
+##  it basically converts the information given by Frank Cellers operation
 ## to output we want...
 ##
 InstallMethod( PreservedQuadraticForms,

@@ -95,7 +95,7 @@
   
   [8X[10XaccessFunctions[110X[8X[108X
         [33X[0;6Ya  list  of records, each describing how to access the data files, see
-        Sections [14X4.2-6[114X and [14X7.2[114X, and[133X
+        Sections [14X4.2-5[114X and [14X7.2[114X, and[133X
   
   
   [1X7.2 [33X[0;0YHow to Customize the Access to Data files[133X[101X
@@ -140,7 +140,7 @@
         [33X[0;6YThis  must  be  a short string that describes for which kinds of files
         the  functions  in the current record are intended, which file formats
         are  supported  etc.  The  value is used as key in the user preference
-        [10XFileAccessFunctions[110X, see Section [14X4.2-6[114X.[133X
+        [10XFileAccessFunctions[110X, see Section [14X4.2-5[114X.[133X
   
   [8X [10Xlocation( [110X[8X[22Xfiles, type[122X[10X )[110X[8X [108X
         [33X[0;6YLet  [22Xfiles[122X  be  a list of pairs [10X[ dirname, filename ][110X, and [22Xtype[122X be the
@@ -182,7 +182,7 @@
   [33X[0;0YIn  [2XAGR.FileContents[102X ([14X7.6-2[114X), those records in the [10XaccessFunctions[110X component
   of  [2XAtlasOfGroupRepresentationsInfo[102X  ([14X7.1-5[114X)  are  considered  –in  reversed
   order–   whose   [10Xdescription[110X   component   occurs  in  the  user  preference
-  [10XFileAccessFunctions[110X, see Section [14X4.2-6[114X.[133X
+  [10XFileAccessFunctions[110X, see Section [14X4.2-5[114X.[133X
   
   
   [1X7.3 [33X[0;0YReading and Writing MeatAxe Format Files[133X[101X
@@ -201,7 +201,7 @@
   
   [33X[0;0YIf the file contains a matrix then the way how it is read by [2XScanMeatAxeFile[102X
   depends  on  the value of the user preference [10XHowToReadMeatAxeTextFiles[110X, see
-  Section [14X4.2-8[114X.[133X
+  Section [14X4.2-7[114X.[133X
   
   [33X[0;0YIf  the  parameter [3Xq[103X is given then the result matrix is represented over the
   field  with  [3Xq[103X  elements,  the default for [3Xq[103X is the field size stored in the
@@ -353,7 +353,7 @@
   supported  by  version 2.4  of  the  [10XC[110X-[5XMeatAxe[105X)  or the points from [22X1[122X to [3Xdeg[103X
   ([3Xbase[103X[22X=  1[122X,  supported  by  older versions of the [10XC[110X-[5XMeatAxe[105X). The default for
   [3Xbase[103X  is given by the value of the user preference [10XBaseOfMeatAxePermutation[110X,
-  see Section [14X4.2-11[114X.[133X
+  see Section [14X4.2-10[114X.[133X
   
   [33X[0;0Y(The binary format is described in the [10XC[110X-[5XMeatAxe[105X manual [Rin].)[133X
   

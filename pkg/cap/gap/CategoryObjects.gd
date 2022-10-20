@@ -146,16 +146,16 @@ DeclareProperty( "IsZero",
 
 #! @Description
 #! The arguments are a category $C$ and an integer $n$.
-#! The output is a random object in $C$ or <C>fail</C>.
-#! @Returns an object or <C>fail</C>
+#! The output is a random object in $C$.
+#! @Returns an object in $C$
 #! @Arguments C, n
 DeclareOperation( "RandomObjectByInteger",
                   [ IsCapCategory, IsInt ] );
 
 #! @Description
 #! The arguments are a category $C$ and a list $L$.
-#! The output is a random object in $C$ or <C>fail</C>.
-#! @Returns an object or <C>fail</C>
+#! The output is a random object in $C$.
+#! @Returns an object in $C$
 #! @Arguments C, L
 DeclareOperation( "RandomObjectByList",
                   [ IsCapCategory, IsList ] );
@@ -218,7 +218,7 @@ DeclareOperation( "AddObject",
 DeclareOperation( "AddObjectRepresentation",
                   [ IsCapCategory, IsObject ] );
 
-#! @Arguments object, category, [attribute1, value1, ...]
+#! @Arguments object, category[, attribute1, value1, ...]
 #! @Description
 #!  Objectifies the object <A>object</A> with the type created
 #!  for objects in the category <A>category</A>. The type
@@ -229,6 +229,12 @@ DeclareOperation( "AddObjectRepresentation",
 #!  Also returns the objectified object.
 #! @Returns an object
 DeclareGlobalFunction( "ObjectifyObjectForCAPWithAttributes" );
+
+#! @Arguments category, [attribute1, value1, ...]
+#! @Description
+#!  Shorthand for `ObjectifyObjectForCAPWithAttributes( rec( ), category[, attribute1, value1, ...] )`.
+#! @Returns an object
+DeclareGlobalFunction( "CreateCapCategoryObjectWithAttributes" );
 
 ###################################
 ##
@@ -246,6 +252,13 @@ DeclareGlobalFunction( "ObjectifyObjectForCAPWithAttributes" );
 #! @Arguments C, a
 DeclareOperation( "ObjectConstructor",
                   [ IsCapCategory, IsObject ] );
+
+#! @Description
+#!   Shorthand for `ObjectConstructor( C, a )`.
+#! @Returns an object
+#! @Arguments a, C
+DeclareOperation( "\/",
+                  [ IsObject, IsCapCategory ] );
 
 #! @Description
 #! The argument is a CAP category object <A>obj</A>.

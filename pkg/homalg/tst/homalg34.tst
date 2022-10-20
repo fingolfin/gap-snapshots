@@ -10,7 +10,7 @@
 #
 gap> START_TEST("homalg34.tst");
 
-# doc/../examples/Purity.g:5-94
+# doc/../examples/Purity.g:5-93
 gap> ZZ := HomalgRingOfIntegers( );
 Z
 gap> imat := HomalgMatrix( "[ \
@@ -25,9 +25,8 @@ gap> M := LeftPresentation( imat );
 <A left module presented by 5 relations for 4 generators>
 gap> filt := PurityFiltration( M );
 <The ascending purity filtration with degrees [ -1 .. 0 ] and graded parts:
-   0:	<A free left module of rank 1 on a free generator>
-  
--1:	<A non-zero torsion left module presented by 2 relations for 2 generators>
+   0:   <A free left module of rank 1 on a free generator>
+  -1:   <A non-zero torsion left module presented by 2 relations for 2 generators>
 of
 <A non-pure rank 1 left module presented by 2 relations for 3 generators>>
 gap> M;

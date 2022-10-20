@@ -1,12 +1,16 @@
 #############################################################################
 ##
-##  semilinear.gi
-##                                recog package
-##                                                        Max Neunhoeffer
-##                                                            Ákos Seress
+##  This file is part of recog, a package for the GAP computer algebra system
+##  which provides a collection of methods for the constructive recognition
+##  of groups.
 ##
-##  Copyright 2006-2008 by the authors.
-##  This file is free software, see license information at the end.
+##  This files's authors include Max Neunhöffer, Ákos Seress.
+##
+##  Copyright of recog belongs to its developers whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-3.0-or-later
+##
 ##
 ##  Handle the (projective) semilinear case.
 ##
@@ -41,7 +45,7 @@ RECOG.WriteOverBiggerFieldWithSmallerDegreeFinder := function(m)
   # m a MeatAxe-module
   local F,bas,d,dim,e,fac,facs,gens,i,inforec,j,k,mp,mu,new,newgens,pr,q,v;
 
-  if not(MTX.IsIrreducible(m)) then
+  if not MTX.IsIrreducible(m) then
       Error("cannot work for reducible modules");
   fi;
   if MTX.IsAbsolutelyIrreducible(m) = true then
@@ -73,8 +77,8 @@ RECOG.WriteOverBiggerFieldWithSmallerDegreeFinder := function(m)
   while Length(bas) < dim do
       for j in [1..Length(gens)] do
           new := bas[i] * gens[j];
-          if not(RECOG.CleanRow(mu,ShallowCopy(new),true,fail)) then
-          #if not(IsContainedInSpan(mu,new)) then
+          if not RECOG.CleanRow(mu,ShallowCopy(new),true,fail) then
+          #if not IsContainedInSpan(mu,new) then
               Add(bas,new);
               #CloseMutableBasis(mu,new);
               for k in [1..d-1] do
@@ -121,7 +125,7 @@ FindHomMethodsProjective.NotAbsolutelyIrred := function(ri,G)
   f := ri!.field;
 
   # Just to be sure:
-  if not(IsBound(ri!.meataxemodule)) then
+  if not IsBound(ri!.meataxemodule) then
       ri!.meataxemodule := GModuleByMats(GeneratorsOfGroup(G),f);
   fi;
 
@@ -145,17 +149,17 @@ FindHomMethodsProjective.NotAbsolutelyIrred := function(ri,G)
   SetHomom(ri,hom);
 
   # Hand down hint that no MeatAxe run can help:
-  forfactor(ri).isabsolutelyirred := true;
+  InitialDataForImageRecogNode(ri).isabsolutelyirred := true;
 
   # There might be a kernel, because we have more scalars over the bigger
   # field, so go for it, however, some more generators might be in order,
   # Normal closure however is unnecessary.
   findgensNmeth(ri).args[1] := 5;
   findgensNmeth(ri).args[2] := 0;
-  Add(forkernel(ri).hints,
+  Add(InitialDataForKernelRecogNode(ri).hints,
       rec( method := FindHomMethodsProjective.BiggerScalarsOnly, rank := 2000,
            stamp := "BiggerScalarsOnly" ));
-  forkernel(ri).degsplittingfield := MTX.DegreeSplittingField(m)
+  InitialDataForKernelRecogNode(ri).degsplittingfield := MTX.DegreeSplittingField(m)
                                    / DegreeOverPrimeField(f);
 
   return true;
@@ -171,8 +175,8 @@ FindHomMethodsProjective.BiggerScalarsOnly := function(ri,G)
   hom := GroupHomByFuncWithData(G,H,RECOG.HomToDiagonalBlock,data);
   SetHomom(ri,hom);
 
-  Add(forfactor(ri).hints,
-      rec( method := FindHomMethodsProjective.StabilizerChain, rank := 4000,
+  Add(InitialDataForImageRecogNode(ri).hints,
+      rec( method := FindHomMethodsProjective.StabilizerChainProj, rank := 4000,
            stamp := "StabilizerChain" ));
 
   findgensNmeth(ri).method := FindKernelDoNothing;
@@ -183,19 +187,3 @@ end;
 FindHomMethodsProjective.C3C5 := function(ri,G)
   # We assume that G acts absolutely irreducibly and see what we can
   # do by computing a normal subgroup of the derived subgroup.
-
-##
-##  This program is free software: you can redistribute it and/or modify
-##  it under the terms of the GNU General Public License as published by
-##  the Free Software Foundation, either version 3 of the License, or
-##  (at your option) any later version.
-##
-##  This program is distributed in the hope that it will be useful,
-##  but WITHOUT ANY WARRANTY; without even the implied warranty of
-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-##  GNU General Public License for more details.
-##
-##  You should have received a copy of the GNU General Public License
-##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-##
-

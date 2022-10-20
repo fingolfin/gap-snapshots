@@ -9,7 +9,7 @@
     A homological algebra meta-package for computable Abelian categories
   </Subtitle>
   <Version>
-    2022.08-03
+    2022.08-04
   </Version>
   <Author>
     Mohamed Barakat<Alt Only="LaTeX"><Br/></Alt>
@@ -49,7 +49,7 @@ Germany<Br/>
 
   </Author>
   <Date>
-    17 August 2022
+    22 August 2022
   </Date>
   <Copyright>
     &copyright; 2007-2015 by Mohamed Barakat and Markus Lange-Hegermann

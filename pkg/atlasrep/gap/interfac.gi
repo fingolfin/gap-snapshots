@@ -1533,6 +1533,43 @@ InstallGlobalFunction( AtlasSubgroup, function( arg )
 
 #############################################################################
 ##
+#M  ConjugacyClasses( <G> )
+##
+##  For a group with stored 'AtlasRepInfoRecord' value,
+##  there may be a straight line program that computes class representatives.
+##  If yes then use it, otherwise give up.
+##
+##  Note that the 'ccls' straight line programs output the representatives
+##  in Atlas ordering, in particular the identity element comes first.
+##
+#T  Is there a way to express that a group constructed with 'AtlasSubgroup'
+#T  does in fact have standard generators,
+#T  such that class representatives can be computed with this method?
+##
+InstallMethod( ConjugacyClasses,
+    [ "IsGroup and IsFinite and HasAtlasRepInfoRecord" ],
+    OVERRIDENICE + RankFilter( IsPermGroup ),  # adjust to other uprankings
+    function( G )
+    local info, prg, reps;
+
+    info:= AtlasRepInfoRecord( G );
+    if info.groupname <> info.identifier[1] then
+      # The group is just a subgroup of an Atlas group.
+      TryNextMethod();
+    fi;
+    prg:= AtlasProgram( info.groupname, info.standardization, "classes" );
+    if prg = fail then
+      # We do not know a straight line program for computing class reps.
+      TryNextMethod();
+    fi;
+    reps:= ResultOfStraightLineProgram( prg.program,
+               GeneratorsOfGroup( G ) );
+    return List( reps, x -> ConjugacyClass( G, x ) );
+    end );
+
+
+#############################################################################
+##
 #F  AtlasProgramInfo( <gapname>[, <std>][, "maxes"], <maxnr> )
 #F  AtlasProgramInfo( <gapname>[, <std>], "maxes", <maxnr>[, <std2>] )
 #F  AtlasProgramInfo( <gapname>[, <std>], "maxstd", <maxnr>, <vers>, <substd> )

@@ -111,18 +111,18 @@
   [1X2.4-1 RandomObjectByInteger[101X
   
   [33X[1;0Y[29X[2XRandomObjectByInteger[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Yan object or [10Xfail[110X[133X
+  [6XReturns:[106X  [33X[0;10Yan object in [23XC[123X[133X
   
   [33X[0;0YThe  arguments  are  a  category  [23XC[123X and an integer [23Xn[123X. The output is a random
-  object in [23XC[123X or [10Xfail[110X.[133X
+  object in [23XC[123X.[133X
   
   [1X2.4-2 RandomObjectByList[101X
   
   [33X[1;0Y[29X[2XRandomObjectByList[102X( [3XC[103X, [3XL[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Yan object or [10Xfail[110X[133X
+  [6XReturns:[106X  [33X[0;10Yan object in [23XC[123X[133X
   
   [33X[0;0YThe  arguments  are a category [23XC[123X and a list [23XL[123X. The output is a random object
-  in [23XC[123X or [10Xfail[110X.[133X
+  in [23XC[123X.[133X
   
   [1X2.4-3 RandomObject[101X
   
@@ -189,6 +189,14 @@
   behave  like  the  corresponding  arguments in [10XObjectifyWithAttributes[110X. Also
   returns the objectified object.[133X
   
+  [1X2.6-5 CreateCapCategoryObjectWithAttributes[101X
+  
+  [33X[1;0Y[29X[2XCreateCapCategoryObjectWithAttributes[102X( [3Xcategory[103X[, [3Xattribute1[103X, [3Xvalue1[103X, [3X...[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Yan object[133X
+  
+  [33X[0;0YShorthand   for   [10XObjectifyObjectForCAPWithAttributes(  rec(  ),  category[,
+  attribute1, value1, ...] )[110X.[133X
+  
   
   [1X2.7 [33X[0;0YObject constructors[133X[101X
   
@@ -203,7 +211,14 @@
   change  this behaviour by calling [10XSetCachingToWeak( C, "ObjectConstructor" )[110X
   resp. [10XSetCachingToCrisp( C, "ObjectConstructor" )[110X.[133X
   
-  [1X2.7-2 ObjectDatum[101X
+  [1X2.7-2 \/[101X
+  
+  [33X[1;0Y[29X[2X\/[102X( [3Xa[103X, [3XC[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan object[133X
+  
+  [33X[0;0YShorthand for [10XObjectConstructor( C, a )[110X.[133X
+  
+  [1X2.7-3 ObjectDatum[101X
   
   [33X[1;0Y[29X[2XObjectDatum[102X( [3Xobj[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ydepends on the category[133X

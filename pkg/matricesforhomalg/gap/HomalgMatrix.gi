@@ -125,7 +125,7 @@ InstallMethod( BaseDomain,
   HomalgRing );
 
 ##
-InstallMethod( BlindlyCopyMatrixProperties,	## under construction
+InstallMethod( BlindlyCopyMatrixProperties, ## under construction
         "for homalg matrices",
         [ IsHomalgMatrix, IsHomalgMatrix ],
         
@@ -1430,6 +1430,10 @@ InstallMethod( ConvertRowToMatrix,
         Error( "expecting a single row matrix as a first argument\n" );
     fi;
     
+    if NrColumns( M ) <> r * c then
+        Error( "the row has not the expected length\n" );
+    fi;
+    
     R := HomalgRing( M );
     
     if r = 1 then
@@ -1467,6 +1471,10 @@ InstallMethod( ConvertColumnToMatrix,
     
     if NrColumns( M ) <> 1 then
         Error( "expecting a single column matrix as a first argument\n" );
+    fi;
+    
+    if NrRows( M ) <> r * c then
+        Error( "the column has not the expected height\n" );
     fi;
     
     R := HomalgRing( M );
@@ -2172,8 +2180,8 @@ InstallMethod( Iterator,
              function( i )
                local mat;
                mat := HomalgMatrix( NextIterator( i!.iter ), 1, i!.rank, i!.GF );
-               SetNrRows( mat, 1 );	## should be obsolete
-               SetNrColumns( mat, i!.rank );	## should be obsolete
+               SetNrRows( mat, 1 );          ## should be obsolete
+               SetNrColumns( mat, i!.rank ); ## should be obsolete
                return ( i!.ring * mat ) * i!.matrix;
              end,
              
@@ -2596,9 +2604,9 @@ InstallGlobalFunction( HomalgMatrix,
             
             return CallFuncList( CreateHomalgMatrixFromString, arg );
             
-        elif not IsHomalgInternalRingRep( R ) and		## the ring R is not internal,
-          ( IsList( M )  or				## while M is either a list of ring elements,
-            IsMatrix( M ) ) then				## or a matrix of (hopefully) ring elements
+        elif not IsHomalgInternalRingRep( R ) and ## the ring R is not internal,
+          ( IsList( M )  or                       ## while M is either a list of ring elements,
+            IsMatrix( M ) ) then                  ## or a matrix of (hopefully) ring elements
             
             return CallFuncList( CreateHomalgMatrixFromList, arg );
             
@@ -2610,7 +2618,7 @@ InstallGlobalFunction( HomalgMatrix,
     fi;
     
     ## here we take care of the degenerate input M = [ ] for all rings
-    if M = [ ] then	## CreateHomalgMatrixFromString also covers M = "", "[]", etc.
+    if M = [ ] then ## CreateHomalgMatrixFromString also covers M = "", "[]", etc.
         if nargs = 2 then
             return HomalgZeroMatrix( 0, 0, R );
         else
@@ -2649,13 +2657,13 @@ InstallGlobalFunction( HomalgMatrix,
         if Length( arg ) > 2 and arg[2] in NonnegativeIntegers then
             M := ListToListList( M, arg[2], Length( M ) / arg[2] );
         else
-            M := List( M, a -> [ a ] );	## this resembles NormalizeInput in Maple's homalg ( a legacy ;) )
+            M := List( M, a -> [ a ] ); ## this resembles NormalizeInput in Maple's homalg ( a legacy ;) )
         fi;
         
         if IsBound(RP!.ImportMatrix) then
             M := RP!.ImportMatrix( M, R );
         fi;
-    elif IsInternalMatrixHull( M ) then	## why are we doing this? for ShallowCopy?
+    elif IsInternalMatrixHull( M ) then ## why are we doing this? for ShallowCopy?
         if IsMatrix( M!.matrix ) then
             M := M!.matrix;
         else
@@ -2666,7 +2674,7 @@ InstallGlobalFunction( HomalgMatrix,
     elif IsList( M ) and Length( M ) > 0 and IsBound( R!.pre_matrix_constructor ) then
         M := R!.pre_matrix_constructor( M ); ## [ 0, x ]
     else
-        M := ShallowCopy( M );	## by this we are sure that possible changes to a mutable GAP matrix arg[1] does not destroy the logic of homalg
+        M := ShallowCopy( M ); ## by this we are sure that possible changes to a mutable GAP matrix arg[1] does not destroy the logic of homalg
     fi;
     
     if IsHomalgInternalRingRep( R ) and
@@ -2838,7 +2846,7 @@ end );
 ##  <#/GAPDoc>
 ##
 InstallGlobalFunction( HomalgZeroMatrix,
-  function( arg )				## the zero matrix
+  function( arg ) ## the zero matrix
     local R, type, matrix, nr_rows, nr_columns;
     
     R := arg[Length( arg )];
@@ -2928,7 +2936,7 @@ end );
 ##  <#/GAPDoc>
 ##
 InstallGlobalFunction( HomalgIdentityMatrix,
-  function( arg )		## the identity matrix
+  function( arg ) ## the identity matrix
     local R, type, matrix;
     
     R := arg[Length( arg )];
@@ -3011,8 +3019,8 @@ end );
 ##  <#/GAPDoc>
 ##
 InstallGlobalFunction( HomalgInitialMatrix,
-  function( arg )	        		## an initial matrix having the flag IsInitialMatrix
-    local R, type, matrix, nr_rows, nr_columns;	## and filled with zeros BUT NOT marked as an IsZero
+  function( arg )                               ## an initial matrix having the flag IsInitialMatrix
+    local R, type, matrix, nr_rows, nr_columns; ## and filled with zeros BUT NOT marked as an IsZero
     
     R := arg[Length( arg )];
     
@@ -3117,8 +3125,8 @@ end );
 ##  <#/GAPDoc>
 ##
 InstallGlobalFunction( HomalgInitialIdentityMatrix,
-  function( arg )		## a square initial matrix having the flag IsInitialIdentityMatrix
-    local R, type, matrix;	## and filled with an identity matrix BUT NOT marked as an IsOne
+  function( arg )          ## a square initial matrix having the flag IsInitialIdentityMatrix
+    local R, type, matrix; ## and filled with an identity matrix BUT NOT marked as an IsOne
     
     R := arg[Length( arg )];
     
@@ -3167,7 +3175,7 @@ end );
 ##  <#/GAPDoc>
 ##
 InstallGlobalFunction( HomalgVoidMatrix,
-  function( arg )	## a void matrix filled with nothing having the flag IsVoidMatrix
+  function( arg ) ## a void matrix filled with nothing having the flag IsVoidMatrix
     local R, type, matrix, nr_rows, nr_columns;
     
     R := arg[Length( arg )];
@@ -3248,7 +3256,7 @@ end );
 ##  <#/GAPDoc>
 ##
 InstallGlobalFunction( HomalgDiagonalMatrix,
-  function( arg )		## the diagonal matrix
+  function( arg ) ## the diagonal matrix
     local nargs, R, diag, d, M;
     
     nargs := Length( arg );
@@ -3281,7 +3289,7 @@ InstallGlobalFunction( HomalgDiagonalMatrix,
         return HomalgZeroMatrix( 0, 0, R );
     fi;
     
-    diag := List( diag, a -> HomalgMatrix( [ a ], 1, 1, R ) );	## a listlist would screw Singular
+    diag := List( diag, a -> HomalgMatrix( [ a ], 1, 1, R ) ); ## a listlist would screw Singular
     
     M := DiagMat( diag );
     
@@ -3331,7 +3339,7 @@ end );
 ##  <#/GAPDoc>
 ##
 InstallGlobalFunction( HomalgScalarMatrix,
-  function( arg )		## the scalar matrix
+  function( arg ) ## the scalar matrix
     local nargs, r, n, R, diag, d, M;
     
     nargs := Length( arg );
@@ -3439,7 +3447,7 @@ InstallMethod( \*,
     
     RP := homalgTable( R );
     
-    if IsIdenticalObj( HomalgRing( m ), R ) then	## make a copy over the same ring
+    if IsIdenticalObj( HomalgRing( m ), R ) then ## make a copy over the same ring
         
         mat := ShallowCopy( m );
         

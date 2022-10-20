@@ -265,29 +265,38 @@ InstallMethod( AddMorphismRepresentation,
     
     category!.morphism_representation := representation;
     category!.morphism_type := NewType( TheFamilyOfCapCategoryMorphisms, representation and MorphismFilter( category ) and IsCapCategoryMorphismRep and HasSource and HasRange and HasCapCategory );
-    SetMorphismType( category, category!.morphism_type );
     
 end );
 
 InstallMethod( RandomMorphismWithFixedSourceAndRange,
     [ IsCapCategoryObject, IsCapCategoryObject, IsInt ], RandomMorphismWithFixedSourceAndRangeByInteger );
+
 InstallMethod( RandomMorphismWithFixedSourceAndRange,
     [ IsCapCategoryObject, IsCapCategoryObject, IsList ], RandomMorphismWithFixedSourceAndRangeByList );
 
 InstallMethod( RandomMorphismWithFixedSource,
     [ IsCapCategoryObject, IsInt ], RandomMorphismWithFixedSourceByInteger );
+
 InstallMethod( RandomMorphismWithFixedSource,
     [ IsCapCategoryObject, IsList ], RandomMorphismWithFixedSourceByList );
 
 InstallMethod( RandomMorphismWithFixedRange,
     [ IsCapCategoryObject, IsInt ], RandomMorphismWithFixedRangeByInteger );
+
 InstallMethod( RandomMorphismWithFixedRange,
     [ IsCapCategoryObject, IsList ], RandomMorphismWithFixedRangeByList );
 
 InstallMethod( RandomMorphism,
     [ IsCapCategory, IsInt ], RandomMorphismByInteger );
+
 InstallMethod( RandomMorphism,
     [ IsCapCategory, IsList ], RandomMorphismByList );
+
+InstallMethod( RandomMorphism,
+    [ IsCapCategoryObject, IsCapCategoryObject, IsList ], RandomMorphismWithFixedSourceAndRangeByList );
+
+InstallMethod( RandomMorphism,
+    [ IsCapCategoryObject, IsCapCategoryObject, IsInt ], RandomMorphismWithFixedSourceAndRangeByInteger );
 
 ##
 InstallGlobalFunction( ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes,
@@ -295,8 +304,31 @@ InstallGlobalFunction( ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes,
   function( morphism, category, source, range, additional_arguments_list... )
     local arg_list, objectified_morphism;
     
-    arg_list := Concatenation( 
-        [ morphism, MorphismType( category ), CapCategory, category, Source, source, Range, range ], additional_arguments_list
+    arg_list := Concatenation(
+        [ morphism, category!.morphism_type, CapCategory, category, Source, source, Range, range ], additional_arguments_list
+    );
+    
+    objectified_morphism := CallFuncList( ObjectifyWithAttributes, arg_list );
+    
+    if category!.predicate_logic then
+        INSTALL_TODO_FOR_LOGICAL_THEOREMS( "Source", [ objectified_morphism ], source, category );
+        INSTALL_TODO_FOR_LOGICAL_THEOREMS( "Range", [ objectified_morphism ], range, category );
+    fi;
+    
+    return objectified_morphism;
+    
+end );
+
+##
+InstallGlobalFunction( CreateCapCategoryMorphismWithAttributes,
+                       
+  function( category, source, range, additional_arguments_list... )
+    local arg_list, objectified_morphism;
+    
+    # inline ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes( rec( ), category, source, range, additional_arguments_list... );
+    
+    arg_list := Concatenation(
+        [ rec( ), category!.morphism_type, CapCategory, category, Source, source, Range, range ], additional_arguments_list
     );
     
     objectified_morphism := CallFuncList( ObjectifyWithAttributes, arg_list );
@@ -328,11 +360,28 @@ end );
 
 
 ##
+CAP_INTERNAL_ADD_REPLACEMENTS_FOR_METHOD_RECORD(
+  rec(
+    CoefficientsOfMorphism := [
+        [ "BasisOfExternalHom", 1 ],
+        [ "CoefficientsOfMorphismWithGivenBasisOfExternalHom", 1 ],
+    ],
+  )
+ );
+
 InstallMethod( CoefficientsOfMorphism,
               [ IsCapCategoryMorphism ],
   function( alpha )
     
-    return CoefficientsOfMorphismWithGivenBasisOfExternalHom( alpha, BasisOfExternalHom( Source( alpha ), Range( alpha ) ) );
+    return CoefficientsOfMorphism( CapCategory( alpha ), alpha );
+    
+end );
+
+InstallOtherMethod( CoefficientsOfMorphism,
+              [ IsCapCategory, IsCapCategoryMorphism ],
+  function( cat, alpha )
+    
+    return CoefficientsOfMorphismWithGivenBasisOfExternalHom( cat, alpha, BasisOfExternalHom( cat, Source( alpha ), Range( alpha ) ) );
     
 end );
 
@@ -562,6 +611,123 @@ InstallMethod( HomStructure,
                [ IsCapCategory ],
     DistinguishedObjectOfHomomorphismStructure
 );
+
+##
+InstallMethod( ExtendRangeOfHomomorphismStructureByFullEmbedding,
+               [ IsCapCategory, IsCapCategory, IsFunction, IsFunction, IsFunction, IsFunction ],
+  function ( C, E, object_function, morphism_function, object_function_inverse, morphism_function_inverse )
+    
+    # C has a D-homomorphism structure
+    # object_function and morphism_function defined a full embedding ι: D → E
+    # object_function_inverse and morphism_function_inverse define the inverse of ι on its image
+    
+    InstallMethodForCompilerForCAP( DistinguishedObjectOfHomomorphismStructureExtendedByFullEmbedding,
+                                    [ IsCapCategory and CategoryFilter( C ), IsCapCategory and CategoryFilter( E ) ],
+      function ( C, E )
+        
+        return object_function( C, E, DistinguishedObjectOfHomomorphismStructure( C ) );
+        
+    end );
+    
+    InstallMethodForCompilerForCAP( HomomorphismStructureOnObjectsExtendedByFullEmbedding,
+                                    [ IsCapCategory and CategoryFilter( C ), IsCapCategory and CategoryFilter( E ), IsCapCategoryObject and ObjectFilter( C ), IsCapCategoryObject and ObjectFilter( C ) ],
+      function ( C, E, a, b )
+        
+        return object_function( C, E, HomomorphismStructureOnObjects( C, a, b ) );
+        
+    end );
+    
+    InstallMethodForCompilerForCAP( HomomorphismStructureOnMorphismsExtendedByFullEmbedding,
+                                    [ IsCapCategory and CategoryFilter( C ), IsCapCategory and CategoryFilter( E ), IsCapCategoryMorphism and MorphismFilter( C ), IsCapCategoryMorphism and MorphismFilter( C ) ],
+      function ( C, E, alpha, beta )
+        local mor;
+        
+        mor := HomomorphismStructureOnMorphisms( C, alpha,  beta );
+        
+        return morphism_function( C, E, object_function( C, E, Source( mor ) ), mor, object_function( C, E, Range( mor ) ) );
+        
+    end );
+    
+    InstallMethodForCompilerForCAP( HomomorphismStructureOnMorphismsWithGivenObjectsExtendedByFullEmbedding,
+                                    [ IsCapCategory and CategoryFilter( C ), IsCapCategory and CategoryFilter( E ), IsCapCategoryObject and ObjectFilter( E ), IsCapCategoryMorphism and MorphismFilter( C ), IsCapCategoryMorphism and MorphismFilter( C ), IsCapCategoryObject and ObjectFilter( E ) ],
+      function ( C, E, s, alpha, beta, r )
+        local mor;
+        
+        mor := HomomorphismStructureOnMorphismsWithGivenObjects( C, object_function_inverse( C, E, s ), alpha, beta, object_function_inverse( C, E, r ) );
+        
+        return morphism_function( C, E, s, mor, r );
+        
+    end );
+    
+    InstallMethodForCompilerForCAP( InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureExtendedByFullEmbedding,
+                                    [ IsCapCategory and CategoryFilter( C ), IsCapCategory and CategoryFilter( E ), IsCapCategoryMorphism and MorphismFilter( C ) ],
+      function ( C, E, alpha )
+        local mor;
+        
+        mor := InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( C, alpha );
+        
+        return morphism_function( C, E, object_function( C, E, Source( mor ) ), mor, object_function( C, E, Range( mor ) ) );
+        
+    end );
+    
+    InstallMethodForCompilerForCAP( InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjectsExtendedByFullEmbedding,
+                                    [ IsCapCategory and CategoryFilter( C ), IsCapCategory and CategoryFilter( E ), IsCapCategoryObject and ObjectFilter( E ), IsCapCategoryMorphism and MorphismFilter( C ), IsCapCategoryObject and ObjectFilter( E ) ],
+      function ( C, E, distinguished_object, alpha, r )
+        local mor;
+        
+        mor := InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects( C, object_function_inverse( C, E, distinguished_object ), alpha, object_function_inverse( C, E, r ) );
+        
+        return morphism_function( C, E, distinguished_object, mor, r );
+        
+    end );
+    
+    InstallMethodForCompilerForCAP( InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphismExtendedByFullEmbedding,
+                                    [ IsCapCategory and CategoryFilter( C ), IsCapCategory and CategoryFilter( E ), IsCapCategoryObject and ObjectFilter( C ), IsCapCategoryObject and ObjectFilter( C ), IsCapCategoryMorphism and MorphismFilter( E ) ],
+      function ( C, E, a, b, iota )
+        
+        return InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( C, a, b, morphism_function_inverse( C, E, object_function_inverse( C, E, Source( iota ) ), iota, object_function_inverse( C, E, Range( iota ) ) ) );
+        
+    end );
+    
+end );
+
+##
+InstallMethod( ExtendRangeOfHomomorphismStructureByIdentityAsFullEmbedding,
+               [ IsCapCategory ],
+  function ( C )
+    local object_function, morphism_function, object_function_inverse, morphism_function_inverse;
+    
+    object_function := function ( category, range_category, object )
+        #% CAP_JIT_RESOLVE_FUNCTION
+        
+        return object;
+        
+    end;
+    
+    morphism_function := function ( category, range_category, source, morphism, range )
+        #% CAP_JIT_RESOLVE_FUNCTION
+        
+        return morphism;
+        
+    end;
+    
+    object_function_inverse := function ( category, range_category, object )
+        #% CAP_JIT_RESOLVE_FUNCTION
+        
+        return object;
+        
+    end;
+    
+    morphism_function_inverse := function ( category, range_category, source, morphism, range )
+        #% CAP_JIT_RESOLVE_FUNCTION
+        
+        return morphism;
+        
+    end;
+    
+    ExtendRangeOfHomomorphismStructureByFullEmbedding( C, RangeCategoryOfHomomorphismStructure( C ), object_function, morphism_function, object_function_inverse, morphism_function_inverse );
+    
+end );
 
 ######################################
 ##

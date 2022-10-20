@@ -6,10 +6,10 @@
                      [1X Categories, Algorithms, Programming [101X
   
   
-                                   2022.08-05
+                                   2022.10-06
   
   
-                                 16 August 2022
+                                20 October 2022
   
   
                                Sebastian Gutsche
@@ -72,10 +72,9 @@
       1.3-3 ObjectFilter
       1.3-4 MorphismFilter
       1.3-5 TwoCellFilter
-      1.3-6 ObjectType
-      1.3-7 MorphismType
-      1.3-8 CommutativeRingOfLinearCategory
-      1.3-9 AdditiveGenerators
+      1.3-6 CommutativeRingOfLinearCategory
+      1.3-7 RangeCategoryOfHomomorphismStructure
+      1.3-8 AdditiveGenerators
     1.4 [33X[0;0YLogic switcher[133X
       1.4-1 CapCategorySwitchLogicPropagationForObjectsOn
       1.4-2 CapCategorySwitchLogicPropagationForObjectsOff
@@ -133,9 +132,11 @@
       2.6-2 AddObject
       2.6-3 AddObjectRepresentation
       2.6-4 ObjectifyObjectForCAPWithAttributes
+      2.6-5 CreateCapCategoryObjectWithAttributes
     2.7 [33X[0;0YObject constructors[133X
       2.7-1 ObjectConstructor
-      2.7-2 ObjectDatum
+      2.7-2 \/
+      2.7-3 ObjectDatum
     2.8 [33X[0;0YWell-Definedness of Objects[133X
       2.8-1 IsWellDefinedForObjects
     2.9 [33X[0;0YProjectives[133X
@@ -192,6 +193,7 @@
       3.6-2 AddMorphism
       3.6-3 AddMorphismRepresentation
       3.6-4 ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes
+      3.6-5 CreateCapCategoryMorphismWithAttributes
     3.7 [33X[0;0YEquality and Congruence for Morphisms[133X
       3.7-1 IsCongruentForMorphisms
       3.7-2 IsEqualForMorphisms
@@ -254,9 +256,11 @@
       3.16-15 HomStructure
       3.16-16 HomStructure
       3.16-17 HomStructure
-      3.16-18 BasisOfExternalHom
-      3.16-19 CoefficientsOfMorphismWithGivenBasisOfExternalHom
-      3.16-20 CoefficientsOfMorphism
+      3.16-18 ExtendRangeOfHomomorphismStructureByFullEmbedding
+      3.16-19 ExtendRangeOfHomomorphismStructureByIdentityAsFullEmbedding
+      3.16-20 BasisOfExternalHom
+      3.16-21 CoefficientsOfMorphismWithGivenBasisOfExternalHom
+      3.16-22 CoefficientsOfMorphism
     3.17 [33X[0;0YSimplified Morphisms[133X
       3.17-1 SimplifyMorphism
       3.17-2 SimplifySource
@@ -793,16 +797,13 @@
       8.2-2 MakeDerivation
       8.2-3 DerivationName
       8.2-4 DerivationWeight
-      8.2-5 DerivationFunctionsWithExtraFilters
+      8.2-5 DerivationFunction
       8.2-6 CategoryFilter
       8.2-7 IsApplicableToCategory
       8.2-8 TargetOperation
-      8.2-9 UsedOperations
-      8.2-10 UsedOperationMultiples
-      8.2-11 UsedOperationsWithMultiples
-      8.2-12 InstallDerivationForCategory
-      8.2-13 DerivationResultWeight
-      8.2-14 FunctionCalledBeforeInstallation
+      8.2-9 UsedOperationsWithMultiplesAndCategoryGetters
+      8.2-10 InstallDerivationForCategory
+      8.2-11 FunctionCalledBeforeInstallation
     8.3 [33X[0;0YDerivation Graphs[133X
       8.3-1 IsDerivedMethodGraph
       8.3-2 MakeDerivationGraph
@@ -811,16 +812,11 @@
       8.3-5 AddDerivation
       8.3-6 AddDerivation
       8.3-7 AddDerivation
-      8.3-8 AddDerivationPair
-      8.3-9 AddDerivationPair
-      8.3-10 AddDerivationPair
-      8.3-11 AddDerivationPair
-      8.3-12 AddDerivationToCAP
-      8.3-13 AddDerivationPairToCAP
-      8.3-14 AddWithGivenDerivationPairToCAP
-      8.3-15 Operations
-      8.3-16 DerivationsUsingOperation
-      8.3-17 DerivationsOfOperation
+      8.3-8 AddDerivationToCAP
+      8.3-9 AddWithGivenDerivationPairToCAP
+      8.3-10 Operations
+      8.3-11 DerivationsUsingOperation
+      8.3-12 DerivationsOfOperation
     8.4 [33X[0;0YManaging Derivations in a Category[133X
       8.4-1 IsOperationWeightList
       8.4-2 MakeOperationWeightList
@@ -882,13 +878,25 @@
       9.2-28 CapJitAddTypeSignatureDeferred
       9.2-29 CapJitDataTypeOfCategory
       9.2-30 CapFixpoint
-      9.2-31 TransitivelyNeededOtherPackages
-      9.2-32 PackageOfCAPOperation
-      9.2-33 SafePosition
-      9.2-34 NTuple
-      9.2-35 Pair
-      9.2-36 Triple
-      9.2-37 HandlePrecompiledTowers
+      9.2-31 Iterated
+      9.2-32 TransitivelyNeededOtherPackages
+      9.2-33 PackageOfCAPOperation
+      9.2-34 SafePosition
+      9.2-35 SafePositionProperty
+      9.2-36 NTuple
+      9.2-37 Pair
+      9.2-38 Triple
+      9.2-39 HandlePrecompiledTowers
+      9.2-40 CAP_JIT_INCOMPLETE_LOGIC
+      9.2-41 ListWithKeys
+      9.2-42 SumWithKeys
+      9.2-43 ProductWithKeys
+      9.2-44 ForAllWithKeys
+      9.2-45 ForAnyWithKeys
+      9.2-46 NumberWithKeys
+      9.2-47 FilteredWithKeys
+      9.2-48 FirstWithKeys
+      9.2-49 LastWithKeys
   10 [33X[0;0YLimits and Colimits[133X
     10.1 [33X[0;0YSpecification of Limits and Colimits[133X
     10.2 [33X[0;0YEnhancing Limit Specifications[133X

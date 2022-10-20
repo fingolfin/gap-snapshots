@@ -185,9 +185,55 @@ can be sent to&nbsp;<Email>sam@math.rwth-aachen.de</Email>.
 <!-- The section title is referenced in index.html. -->
 <Alt Only="HTML"><![CDATA[<a id="sect:news"/>]]></Alt>
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
-<Subsection Label="sect:What's New in Version 2.1.3?">
+<Subsection Label="sect:What's New in Version 2.1.6?">
 <Heading>What's New in Version &VERSIONNUMBER;?
 (&RELEASEMONTH; &RELEASEYEAR;)</Heading>
+
+The package now requires the <Package>utils</Package> package
+<Cite Key="utils"/>,
+and uses its <Ref Func="Download" BookName="utils"/> function
+for downloading remote files.
+The former user preference <C>FileTransferTool</C> of the &AtlasRep; package
+is no longer supported;
+it had been used in older versions to distinguish between different
+download tools.
+
+<P/>
+
+A method for <Ref Attr="ConjugacyClasses" BookName="ref"/> has been added
+that uses a straight line program for computing class representatives
+of a group that has been created with
+<Ref Func="AtlasGroup" Label="for various arguments"/>,
+provided such a program is available.
+Thanks to Frank Lübeck for suggesting this.
+
+</Subsection>
+
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<Subsection Label="sect:What's New in Version 2.1.5?">
+<Heading>What's New in Version 2.1.5? (August 2022)</Heading>
+
+Two bugs concerning local file permissions and the handling of
+download failures were fixed.
+Thanks to Frank Lübeck and Fabian Zickgraf for reporting these problems.
+
+</Subsection>
+
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<Subsection Label="sect:What's New in Version 2.1.4?">
+<Heading>What's New in Version 2.1.4? (August 2022)</Heading>
+
+A few changes in the code for downloading files were needed
+in order to make some CI tests happy.
+
+</Subsection>
+
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<Subsection Label="sect:What's New in Version 2.1.3?">
+<Heading>What's New in Version 2.1.3? (August 2022)</Heading>
 
 The server address for the core part of the database has changed.
 
@@ -836,10 +882,8 @@ version 4.4.10 of &GAP;.)
 <Item>
   For transferring remote data,
   the &GAP; package <Package>IO</Package> (see <Cite Key="IO"/>)
-  can now be used (and is recommended) as an alternative to <F>wget</F>,
+  can now be used (and is recommended) as an alternative to <F>wget</F>.
   <Index Key="wget"><F>wget</F></Index>
-  see
-  Section&nbsp;<Ref Subsect="subsect:FileTransferTool"/>.
 </Item>
 <Item>
   The address of the data server has changed.

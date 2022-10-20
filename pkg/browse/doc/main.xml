@@ -19,13 +19,13 @@
   </Version>
   <Author> Thomas Breuer
     <Email>Thomas.Breuer@Math.RWTH-Aachen.De</Email>
-    <Homepage>http://www.math.rwth-aachen.de/~Thomas.Breuer</Homepage>
+    <Homepage>https://www.math.rwth-aachen.de/~Thomas.Breuer</Homepage>
   </Author>
   <Author> Frank Lübeck 
     <Email>Frank.Luebeck@Math.RWTH-Aachen.De</Email>
-    <Homepage>http://www.math.rwth-aachen.de/~Frank.Luebeck</Homepage>
+    <Homepage>https://www.math.rwth-aachen.de/~Frank.Luebeck</Homepage>
   </Author>
-  <Date>March 2022</Date>
+  <Date>October 2022</Date>
   <Copyright> &copyright; 2006-2022 by Thomas Breuer and Frank Lübeck <P/>
 <!-- We adopt the copyright regulations of &GAP; as detailed in the 
      copyright notice in the &GAP; Reference Manual. -->

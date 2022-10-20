@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  standard/prop.tst
-#Y  Copyright (C) 2014-17                                James D. Mitchell
+#Y  Copyright (C) 2014-21                                James D. Mitchell
 ##                                                          Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -139,7 +139,7 @@ gap> gr := Digraph([[1]]);;
 gap> DigraphHasLoops(gr);
 true
 gap> HasIsAcyclicDigraph(gr);
-false
+true
 gap> IsAcyclicDigraph(gr);
 false
 gap> gr := Digraph([[2], []]);
@@ -223,6 +223,26 @@ gap> g5 := Digraph(rec(DigraphVertices := [1 .. 3],
 > DigraphSource := [3, 2, 2], DigraphRange := [2, 1, 3]));
 <immutable digraph with 3 vertices, 3 edges>
 gap> IsFunctionalDigraph(g5);
+false
+
+#  IsPermutationDigraph
+gap> D := CompleteDigraph(5);
+<immutable complete digraph with 5 vertices>
+gap> IsPermutationDigraph(D);
+false
+gap> IsPermutationDigraph(CycleDigraph(5));
+true
+gap> IsPermutationDigraph(NullDigraph(1));
+false
+gap> IsPermutationDigraph(g1);
+false
+gap> IsPermutationDigraph(g2);
+false
+gap> IsPermutationDigraph(g3);
+false
+gap> IsPermutationDigraph(g4);
+true
+gap> IsPermutationDigraph(g5);
 false
 
 #  IsSymmetricDigraph
@@ -1188,6 +1208,58 @@ gap> IsMeetSemilatticeDigraph(gr);
 false
 gap> IsJoinSemilatticeDigraph(gr);
 false
+gap> D := DigraphReflexiveTransitiveClosure(ChainDigraph(10));
+<immutable preorder digraph with 10 vertices, 55 edges>
+gap> IsMeetSemilatticeDigraph(D);
+true
+gap> IsJoinSemilatticeDigraph(D);
+true
+gap> D := DigraphReflexiveTransitiveClosure(ChainDigraph(10));
+<immutable preorder digraph with 10 vertices, 55 edges>
+gap> IsJoinSemilatticeDigraph(D);
+true
+gap> IsMeetSemilatticeDigraph(D);
+true
+gap> D := DigraphAddVertex(D, 11);
+<immutable digraph with 11 vertices, 55 edges>
+gap> D := DigraphAddEdge(D, [11, 4]);
+<immutable digraph with 11 vertices, 56 edges>
+gap> D := DigraphReflexiveTransitiveClosure(D);
+<immutable preorder digraph with 11 vertices, 63 edges>
+gap> IsJoinSemilatticeDigraph(D);
+true
+gap> IsMeetSemilatticeDigraph(D);
+false
+gap> D := Digraph([[1], [2]]);
+<immutable digraph with 2 vertices, 2 edges>
+gap> IsJoinSemilatticeDigraph(D);
+false
+gap> D := ChainDigraph(IsMutable, 4);
+<mutable digraph with 4 vertices, 3 edges>
+gap> IsMeetSemilatticeDigraph(D);
+false
+gap> D;
+<mutable digraph with 4 vertices, 3 edges>
+gap> D := Digraph(IsMutable, [[2, 3], [4], [4], []]);
+<mutable digraph with 4 vertices, 4 edges>
+gap> DigraphReflexiveTransitiveClosure(D);
+<mutable digraph with 4 vertices, 9 edges>
+gap> IsJoinSemilatticeDigraph(D);
+true
+gap> D := Digraph([[1, 2, 2], [2]]);
+<immutable multidigraph with 2 vertices, 4 edges>
+gap> IsJoinSemilatticeDigraph(D);
+Error, the argument must not be a multidigraph,
+gap> IsMeetSemilatticeDigraph(D);
+Error, the argument must not be a multidigraph,
+gap> D := DigraphReflexiveTransitiveClosure(ChainDigraph(4));
+<immutable preorder digraph with 4 vertices, 10 edges>
+gap> AdjacencyMatrix(D);
+[ [ 1, 1, 1, 1 ], [ 0, 1, 1, 1 ], [ 0, 0, 1, 1 ], [ 0, 0, 0, 1 ] ]
+gap> IsJoinSemilatticeDigraph(D);
+true
+gap> IsMeetSemilatticeDigraph(D);
+true
 
 # Join semilattice on 9 vertices
 gap> gr := DigraphFromDiSparse6String(".HiR@AeNcC?oD?G`oAGXIoAGXAe_COqDK^F");
@@ -1206,6 +1278,39 @@ gap> IsJoinSemilatticeDigraph(gr);
 false
 gap> IsLatticeDigraph(gr);
 false
+
+# IsDistributiveLatticeDigraph
+gap> D := Digraph([[11, 10], [], [2], [2], [3], [4, 3], [6, 5], [7], [7],
+>      [8], [9, 8]]);
+<immutable digraph with 11 vertices, 14 edges>
+gap> IsDistributiveLatticeDigraph(D);
+false
+gap> D := DigraphReflexiveTransitiveClosure(D);
+<immutable preorder digraph with 11 vertices, 60 edges>
+gap> IsDistributiveLatticeDigraph(D);
+true
+gap> D := DigraphReflexiveTransitiveClosure(CycleDigraph(5));
+<immutable preorder digraph with 5 vertices, 25 edges>
+gap> IsDistributiveLatticeDigraph(D);
+false
+gap> D := Digraph([[2, 4], [3, 5], [9], [5, 6], [7], [7, 8], [9], [9], []]);
+<immutable digraph with 9 vertices, 12 edges>
+gap> D := DigraphReflexiveTransitiveClosure(D);
+<immutable preorder digraph with 9 vertices, 34 edges>
+gap> IsDistributiveLatticeDigraph(D);
+false
+gap> N5 := DigraphReflexiveTransitiveClosure(Digraph([[2, 4], [3], [5], [5], []]));
+<immutable preorder digraph with 5 vertices, 13 edges>
+gap> M5 := DigraphReflexiveTransitiveClosure(Digraph([[2, 3, 4], [5], [5], [5], []]));
+<immutable preorder digraph with 5 vertices, 12 edges>
+gap> IsDistributiveLatticeDigraph(N5) or IsDistributiveLatticeDigraph(M5);
+false
+gap> D := Digraph([[2, 4], [3, 4], [5], [5], []]);
+<immutable digraph with 5 vertices, 6 edges>
+gap> D := DigraphReflexiveTransitiveClosure(D);
+<immutable preorder digraph with 5 vertices, 14 edges>
+gap> IsDistributiveLatticeDigraph(D);
+true
 
 # IsPartialOrderDigraph
 gap> gr := NullDigraph(5);
@@ -1528,6 +1633,219 @@ gap> IsEdgeTransitive(CompleteDigraph(20));
 true
 gap> IsEdgeTransitive(Digraph([[2], [3, 3, 3], []]));
 Error, the argument <D> must be a digraph with no multiple edges,
+
+# DigraphHasNoVertices and DigraphHasAVertex
+gap> List([0 .. 3], i -> DigraphHasAVertex(EmptyDigraph(i)));
+[ false, true, true, true ]
+gap> List([0 .. 3], i -> DigraphHasNoVertices(EmptyDigraph(i)));
+[ true, false, false, false ]
+gap> DigraphHasAVertex(Digraph([]));
+false
+gap> DigraphHasNoVertices(Digraph([]));
+true
+gap> DigraphHasAVertex(Digraph([[1]]));
+true
+gap> DigraphHasNoVertices(Digraph([[1]]));
+false
+
+# IsNonemptyDigraph
+gap> ForAny([0 .. 10], i -> IsNonemptyDigraph(EmptyDigraph(i)));
+false
+gap> ForAny([0 .. 10], i -> IsNonemptyDigraph(Digraph(
+> ListWithIdenticalEntries(i, []))));
+false
+gap> IsNonemptyDigraph(Digraph([[], [3], []]));
+true
+
+# Implications that something is false
+# DigraphHasLoops
+gap> D := Digraph([[2], [], [2]]);;
+gap> SetIsAcyclicDigraph(D, true);
+gap> HasDigraphHasLoops(D) and not DigraphHasLoops(D);
+true
+
+#
+gap> D := Digraph([[2], []]);;
+gap> SetIsTournament(D, true);
+gap> HasDigraphHasLoops(D) and not DigraphHasLoops(D);
+true
+
+#
+gap> D := Digraph([[2], [1, 3, 4], [2], [2], [6], [5]]);;
+gap> SetIsUndirectedForest(D, true);
+gap> HasDigraphHasLoops(D) and not DigraphHasLoops(D);
+true
+
+#
+gap> D := Digraph([[3], [1, 4], [], []]);;
+gap> SetIsDirectedTree(D, true);
+gap> HasDigraphHasLoops(D) and not DigraphHasLoops(D);
+true
+
+#
+gap> D := Digraph([[], []]);;
+gap> SetIsEmptyDigraph(D, true);
+gap> HasDigraphHasLoops(D) and not DigraphHasLoops(D);
+true
+
+#
+gap> D := Digraph([[2, 3], [1, 3], [1, 2]]);;
+gap> SetIsCompleteDigraph(D, true);
+gap> SetIsNonemptyDigraph(D, true);
+gap> HasDigraphHasLoops(D) and not DigraphHasLoops(D);
+true
+
+#
+gap> D := Digraph([[2], []]);;
+gap> SetIsBipartiteDigraph(D, true);
+gap> HasDigraphHasLoops(D) and not DigraphHasLoops(D);
+true
+
+# IsAcyclicDigraph
+gap> D := Digraph([[2], [1]]);;
+gap> SetIsCompleteDigraph(D, true);
+gap> SetIsNonemptyDigraph(D, true);
+gap> HasIsAcyclicDigraph(D) and not IsAcyclicDigraph(D);
+true
+
+#
+gap> D := Digraph([[2, 3], [2], [2]]);;
+gap> SetDigraphHasLoops(D, true);
+gap> HasIsAcyclicDigraph(D) and not IsAcyclicDigraph(D);
+true
+
+#
+gap> D := Digraph([[3], [1], [2]]);;
+gap> SetIsStronglyConnectedDigraph(D, true);
+gap> SetIsNonemptyDigraph(D, true);
+gap> HasIsAcyclicDigraph(D) and not IsAcyclicDigraph(D);
+true
+
+# Other
+gap> D := Digraph([[], []]);;
+gap> SetIsEmptyDigraph(D, true);
+gap> HasIsNonemptyDigraph(D) and not IsNonemptyDigraph(D);
+true
+
+#
+gap> D := Digraph([[], [1]]);;
+gap> SetIsNonemptyDigraph(D, true);
+gap> HasIsEmptyDigraph(D) and not IsEmptyDigraph(D);
+true
+
+#
+gap> D := Digraph([]);;
+gap> SetDigraphHasNoVertices(D, true);
+gap> HasDigraphHasAVertex(D) and not DigraphHasAVertex(D);
+true
+
+#
+gap> D := Digraph([[]]);;
+gap> SetDigraphHasAVertex(D, true);
+gap> HasDigraphHasNoVertices(D) and not DigraphHasNoVertices(D);
+true
+
+#
+gap> D := Digraph([[2], [1]]);;
+gap> SetIsCompleteDigraph(D, true);
+gap> SetIsNonemptyDigraph(D, true);
+gap> HasIsAntisymmetricDigraph(D) and not IsAntisymmetricDigraph(D);
+true
+
+#
+gap> D := Digraph([[2], [3], [3]]);;
+gap> SetDigraphHasLoops(D, true);
+gap> HasIsChainDigraph(D) and not IsChainDigraph(D);
+true
+
+#
+gap> D := Digraph([[2, 3], [1], [1, 4], [3]]);;
+gap> SetIsSymmetricDigraph(D, true);
+gap> SetIsNonemptyDigraph(D, true);
+gap> HasIsChainDigraph(D) and not IsChainDigraph(D);
+true
+
+#
+gap> D := Digraph([[2], [3], [3]]);;
+gap> SetDigraphHasLoops(D, true);
+gap> HasIsCompleteDigraph(D) and not IsCompleteDigraph(D);
+true
+
+#
+gap> D := Digraph([[2], [5], [], [5], [6], []]);;
+gap> SetIsAcyclicDigraph(D, true);
+gap> SetDigraphHasAVertex(D, true);
+gap> HasIsReflexiveDigraph(D) and not IsReflexiveDigraph(D);
+true
+
+# IsSymmetricDigraph
+gap> D := Digraph([[3], [], [2]]);;
+gap> SetIsAcyclicDigraph(D, true);
+gap> SetIsNonemptyDigraph(D, true);
+gap> HasIsSymmetricDigraph(D) and not IsSymmetricDigraph(D);
+true
+
+#
+gap> D := Digraph([[3], [], [2]]);;
+gap> SetIsDirectedTree(D, true);
+gap> SetIsNonemptyDigraph(D, true);
+gap> HasIsSymmetricDigraph(D) and not IsSymmetricDigraph(D);
+true
+
+#
+gap> D := Digraph([[3], [1], [2]]);;
+gap> SetIsTournament(D, true);
+gap> SetIsNonemptyDigraph(D, true);
+gap> HasIsSymmetricDigraph(D) and not IsSymmetricDigraph(D);
+true
+
+# IsMultiDigraph
+gap> D := Digraph([[2], [3], [4], []]);;
+gap> SetIsChainDigraph(D, true);
+gap> HasIsMultiDigraph(D) and not IsMultiDigraph(D);
+true
+
+#
+gap> D := Digraph([[2, 3], [3, 1], [2, 1]]);;
+gap> SetIsCompleteDigraph(D, true);
+gap> HasIsMultiDigraph(D) and not IsMultiDigraph(D);
+true
+
+#
+gap> D := Digraph([[2, 3], [3, 1], [2, 1]]);;
+gap> SetIsCompleteMultipartiteDigraph(D, true);
+gap> HasIsMultiDigraph(D) and not IsMultiDigraph(D);
+true
+
+#
+gap> D := Digraph([[2], [1]]);;
+gap> SetIsCycleDigraph(D, true);
+gap> HasIsMultiDigraph(D) and not IsMultiDigraph(D);
+true
+
+#
+gap> D := Digraph([[], []]);;
+gap> SetIsEmptyDigraph(D, true);
+gap> HasIsMultiDigraph(D) and not IsMultiDigraph(D);
+true
+
+#
+gap> D := Digraph([[3], [2], [3], [1]]);;
+gap> SetIsFunctionalDigraph(D, true);
+gap> HasIsMultiDigraph(D) and not IsMultiDigraph(D);
+true
+
+#
+gap> D := Digraph([[3], [1], [2]]);;
+gap> SetIsTournament(D, true);
+gap> HasIsMultiDigraph(D) and not IsMultiDigraph(D);
+true
+
+#
+gap> D := Digraph([[2], [1, 3, 4], [2], [2], [6], [5]]);;
+gap> SetIsUndirectedForest(D, true);
+gap> HasIsMultiDigraph(D) and not IsMultiDigraph(D);
+true
 
 #  DIGRAPHS_UnbindVariables
 gap> Unbind(adj);

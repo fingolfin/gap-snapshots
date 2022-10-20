@@ -1,0 +1,55 @@
+<Subsection Label="BalTreeForBlocks">
+<Heading><C>BalTreeForBlocks</C></Heading>
+This method is unused!<P/>
+<#Include Label="BalTreeForBlocks">
+</Subsection>
+<Subsection Label="Giant">
+<Heading><C>Giant</C></Heading>
+This method is used for recognizing permutation groups.<P/>
+<#Include Label="Giant">
+</Subsection>
+<Subsection Label="Imprimitive">
+<Heading><C>Imprimitive</C></Heading>
+This method is used for recognizing permutation groups.<P/>
+<#Include Label="Imprimitive">
+</Subsection>
+<Subsection Label="LargeBasePrimitive">
+<Heading><C>LargeBasePrimitive</C></Heading>
+This method is used for recognizing permutation groups.<P/>
+<#Include Label="LargeBasePrimitive">
+</Subsection>
+<Subsection Label="MovesOnlySmallPoints">
+<Heading><C>MovesOnlySmallPoints</C></Heading>
+This method is used for recognizing permutation groups.<P/>
+<#Include Label="MovesOnlySmallPoints">
+</Subsection>
+<Subsection Label="NonTransitive">
+<Heading><C>NonTransitive</C></Heading>
+This method is used for recognizing permutation groups.<P/>
+<#Include Label="NonTransitive">
+</Subsection>
+<Subsection Label="Pcgs">
+<Heading><C>Pcgs</C></Heading>
+This method is used for recognizing permutation groups.<P/>
+<#Include Label="Pcgs">
+</Subsection>
+<Subsection Label="PcgsForBlocks">
+<Heading><C>PcgsForBlocks</C></Heading>
+This method is unused!<P/>
+<#Include Label="PcgsForBlocks">
+</Subsection>
+<Subsection Label="StabChain">
+<Heading><C>StabChain</C></Heading>
+This method is used for recognizing permutation groups.<P/>
+<#Include Label="StabChain">
+</Subsection>
+<Subsection Label="StabilizerChainPerm">
+<Heading><C>StabilizerChainPerm</C></Heading>
+This method is used for recognizing permutation groups.<P/>
+<#Include Label="StabilizerChainPerm">
+</Subsection>
+<Subsection Label="ThrowAwayFixedPoints">
+<Heading><C>ThrowAwayFixedPoints</C></Heading>
+This method is used for recognizing permutation groups.<P/>
+<#Include Label="ThrowAwayFixedPoints">
+</Subsection>

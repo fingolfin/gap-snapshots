@@ -134,7 +134,7 @@ X", "5.4", [ 5, 4, 0 ], 286, 19, "testing the intersection formula",
       "X7D910AA785CEED34" ], 
   [ 
       "\033[2XLocalizePolynomialRingAtZeroWithMora\033[102X constructor for homal\
-g localized rings using mora's algorithm", "4.3-16", [ 4, 3, 16 ], 216, 13, 
+g localized rings using Mora's algorithm", "4.3-16", [ 4, 3, 16 ], 216, 13, 
       "localizepolynomialringatzerowithmora constructor for homalg localized r\
 ings using moras algorithm", "X7F790F3B852C1A5C" ], 
   [ 
@@ -161,7 +161,7 @@ r and one as denominator", "X808317A88773E967" ],
   [ "\033[2XBasisOfRowModule\033[102X for local rings", "a.1-1", 
       [ "A", 1, 1 ], 25, 21, "basisofrowmodule for local rings", 
       "X7B04DAB47BAB9165" ], 
-  [ "\033[2XDecideZeroRows\033[102X for local rings with mora's algorithm", 
+  [ "\033[2XDecideZeroRows\033[102X for local rings with Mora's algorithm", 
       "a.1-2", [ "A", 1, 2 ], 53, 22, 
       "decidezerorows for local rings with moras algorithm", 
       "X8196F11E7FD3201C" ], 

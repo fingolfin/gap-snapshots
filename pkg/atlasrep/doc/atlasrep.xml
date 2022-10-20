@@ -32,11 +32,6 @@ If it is likely that you will work offline, it makes sense to install the
 
 The package consists entirely of &GAP; code,
 no external binaries need to be compiled for the package itself.
-However, if the &GAP; package <Package>IO</Package> <Cite Key="IO"/>
-<Index>IO package</Index>
-is used to access remote data files
-(see Section&nbsp;<Ref Sect="subsect:FileTransferTool"/>)
-then its external binary must be available.
 
 <P/>
 
@@ -99,10 +94,6 @@ to change their defaults, using &GAP;'s user preferences
       (see Section <Ref Subsect="subsect:AtlasRepDataDirectory"/>)?
     </Item>
     <Item>
-      How are these data transfered
-      (see Section <Ref Subsect="subsect:FileTransferTool"/>)?
-    </Item>
-    <Item>
       Shall files be compressed after they have been downloaded
       (see Section <Ref Subsect="subsect:CompressDownloadedMeatAxeFiles"/>)?
     </Item>
@@ -162,7 +153,6 @@ to change their defaults, using &GAP;'s user preferences
 <#Include Label="AtlasRepAccessRemoteFiles">
 <#Include Label="AtlasRepDataDirectory">
 <#Include Label="AtlasRepTOCData">
-<#Include Label="FileTransferTool">
 <#Include Label="CompressDownloadedMeatAxeFiles">
 <#Include Label="FileAccessFunctions">
 <#Include Label="AtlasRepLocalServerPath">

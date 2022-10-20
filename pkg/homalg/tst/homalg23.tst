@@ -14,10 +14,10 @@ gap> START_TEST("homalg23.tst");
 gap> Functor_Hom_for_fp_modules * Functor_TensorProduct_for_fp_modules;
 <The functor HomTensorProduct for f.p. modules and their maps over computable \
 rings>
-gap> Functor_HomTensorProduct_for_fp_modules;	## got automatically defined
+gap> Functor_HomTensorProduct_for_fp_modules; ## got automatically defined
 <The functor HomTensorProduct for f.p. modules and their maps over computable \
 rings>
-gap> HomTensorProduct;		## got automatically defined
+gap> HomTensorProduct; ## got automatically defined
 <Operation "HomTensorProduct">
 
 #

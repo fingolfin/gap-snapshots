@@ -4,81 +4,81 @@
 <Chapter Label="Chapter_Francy_Charts">
 <Heading>Francy Charts</Heading>
 
-It is possible to build <C>Charts</C> with simple <C>Datasets</C>.
-<P/>
-Currently, Francy, supports Bar, Line and Scatter Charts.
-<P/>
-Please see Francy-JS for client implementation.
+ It is possible to build <C>Charts</C> with simple <C>Datasets</C>.
+ <P/>
+ Currently, Francy, supports Bar, Line and Scatter Charts.
+ <P/>
+ Please see Francy-JS for client implementation.
 <Section Label="Chapter_Francy_Charts_Section_Categories">
 <Heading>Categories</Heading>
 
-In this section we show all Francy Chart Categories.
+ In this section we show all Francy Chart Categories.
 <ManSection>
   <Filt Arg="arg" Name="IsChart" Label="for IsFrancyObject"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Identifies <C>Chart</C> objects.
+ Identifies <C>Chart</C> objects.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Filt Arg="arg" Name="IsChartType" Label="for IsFrancyTypeObject"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Identifies <C>ChartType</C> objects.
+ Identifies <C>ChartType</C> objects.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Filt Arg="arg" Name="IsChartDefaults" Label="for IsFrancyDefaultObject"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Identifies <C>ChartDefaults</C> objects.
+ Identifies <C>ChartDefaults</C> objects.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Filt Arg="arg" Name="IsAxisScaleType" Label="for IsFrancyTypeObject"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Identifies <C>AxisScaleType</C> objects.
+ Identifies <C>AxisScaleType</C> objects.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Filt Arg="arg" Name="IsXAxis" Label="for IsFrancyObject"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Identifies <C>XAxis</C> objects.
+ Identifies <C>XAxis</C> objects.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Filt Arg="arg" Name="IsYAxis" Label="for IsFrancyObject"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Identifies <C>YAxis</C> objects.
+ Identifies <C>YAxis</C> objects.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Filt Arg="arg" Name="IsDataset" Label="for IsFrancyObject"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Identifies <C>Dataset</C> objects.
+ Identifies <C>Dataset</C> objects.
  </Description>
 </ManSection>
 
@@ -89,70 +89,70 @@ Identifies <C>Dataset</C> objects.
 <Section Label="Chapter_Francy_Charts_Section_Families">
 <Heading>Families</Heading>
 
-In this section we show all Francy Chart Families.
+ In this section we show all Francy Chart Families.
 </Section>
 
 
 <Section Label="Chapter_Francy_Charts_Section_Representations">
 <Heading>Representations</Heading>
 
-In this section we show the Francy Chart Representations.
+ In this section we show the Francy Chart Representations.
 <ManSection>
   <Filt Arg="arg" Name="IsChartRep" Label="for IsComponentObjectRep"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Checks whether an <C>Object</C> has a <C>Chart</C> internal representation.
+ Checks whether an <C>Object</C> has a <C>Chart</C> internal representation.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Filt Arg="arg" Name="IsChartDefaultsRep" Label="for IsComponentObjectRep"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Checks whether an <C>Object</C> has a <C>ChartDefaults</C> internal representation.
+ Checks whether an <C>Object</C> has a <C>ChartDefaults</C> internal representation.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Filt Arg="arg" Name="IsChartTypeRep" Label="for IsComponentObjectRep"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Checks whether an <C>Object</C> has a <C>ChartType</C> internal representation.
+ Checks whether an <C>Object</C> has a <C>ChartType</C> internal representation.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Filt Arg="arg" Name="IsAxisScaleTypeRep" Label="for IsComponentObjectRep"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Checks whether an <C>Object</C> has a <C>AxisScaleType</C> internal representation.
+ Checks whether an <C>Object</C> has a <C>AxisScaleType</C> internal representation.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Filt Arg="arg" Name="IsAxisRep" Label="for IsComponentObjectRep"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Checks whether an <C>Object</C> has a <C>AxisRep</C> internal representation.
+ Checks whether an <C>Object</C> has a <C>AxisRep</C> internal representation.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Filt Arg="arg" Name="IsDatasetRep" Label="for IsComponentObjectRep"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Checks whether an <C>Object</C> has a <C>DatasetRep</C> internal representation.
+ Checks whether an <C>Object</C> has a <C>DatasetRep</C> internal representation.
  </Description>
 </ManSection>
 
@@ -163,63 +163,29 @@ Checks whether an <C>Object</C> has a <C>DatasetRep</C> internal representation.
 <Section Label="Chapter_Francy_Charts_Section_Operations">
 <Heading>Operations</Heading>
 
-In this section we show all Francy Chart Operations.
+ In this section we show all Francy Chart Operations.
 <ManSection>
   <Oper Arg="IsChartType[, IsChartDefaults]" Name="Chart" Label="for IsChartType, IsChartDefaults"/>
  <Returns><C>Chart</C>
 </Returns>
  <Description>
-Every object to draw will be a subclass of this object. This will allow
-all the objects to contain the same base information.
-<P/>
-Examples:
-<P/>
-Create a simple <C>Chart</C> of type <C>ChartType.BAR</C>:
-<Example><![CDATA[
-gap> chart:=Chart(ChartType.BAR);
-gap> SetAxisXTitle(chart, "X Axis");
-gap> AxisXTitle(chart);
-gap> SetAxisXDomain(chart, ["domain1", "domain2", "domain3", "domain4", "domain5"]); # default []
-gap> AxisXDomain(chart);
-gap> SetAxisYTitle(chart, "Y Axis");
-gap> AxisYTitle(chart);
-gap> data1 := Dataset("data1", [100,20,30,47,90]);
-gap> data2 := Dataset("data2", [51,60,72,38,97]);
-gap> data3 := Dataset("data3", [50,60,70,80,90]);
-gap> Add(chart, [data1, data2, data3]);
-gap> Remove(chart, data1);
-gap> Add(chart, data1);
-gap> Remove(chart, [data2, data3]);
-gap> Length(RecNames(chart!.data)) = 1;
-]]></Example>
+ Every object to draw will be a subclass of this object. This will allow
+ all the objects to contain the same base information.
+ <P/>
+ Examples:
+ <P/>
+ Create a simple <C>Chart</C> of type <C>ChartType.BAR</C>:
+<#Include Label="Example_Create_Chart_1">
 
+ <P/>
+ Create a simple <C>Chart</C> of type <C>ChartType.LINE</C>:
+<#Include Label="Example_Create_Chart_2">
 
+ <P/>
+ Create a simple <C>Chart</C> of type <C>ChartType.SCATTER</C>:
+<#Include Label="Example_Create_Chart_3">
 
-<P/>
-Create a simple <C>Chart</C> of type <C>ChartType.LINE</C>:
-<Example><![CDATA[
-gap> chart:=Chart(ChartType.LINE);
-gap> SetAxisXTitle(chart, "X Axis");
-gap> SetAxisYTitle(chart, "Y Axis");
-gap> data1 := Dataset("data1", [100,20,30,47,90]);
-gap> Add(chart, data1);
-]]></Example>
-
-
-
-<P/>
-Create a simple <C>Chart</C> of type <C>ChartType.SCATTER</C>:
-<Example><![CDATA[
-gap> chart:=Chart(ChartType.SCATTER);
-gap> SetAxisXTitle(chart, "X Axis");
-gap> SetAxisYTitle(chart, "Y Axis");
-gap> data1 := Dataset("data1", [100,20,30,47,90]);
-gap> Add(chart, data1);
-]]></Example>
-
-
-
-<P/>
+ <P/>
  </Description>
 </ManSection>
 
@@ -229,7 +195,7 @@ gap> Add(chart, data1);
  <Returns><C>Chart</C>
 </Returns>
  <Description>
-Adds a <C>Dataset</C> to a specific <C>Chart</C>.
+ Adds a <C>Dataset</C> to a specific <C>Chart</C>.
  </Description>
 </ManSection>
 
@@ -239,7 +205,7 @@ Adds a <C>Dataset</C> to a specific <C>Chart</C>.
  <Returns><C>Chart</C>
 </Returns>
  <Description>
-Removes a <C>Dataset</C> from a specific <C>Chart</C>.
+ Removes a <C>Dataset</C> from a specific <C>Chart</C>.
  </Description>
 </ManSection>
 
@@ -249,8 +215,8 @@ Removes a <C>Dataset</C> from a specific <C>Chart</C>.
  <Returns><C>Dataset</C>
 </Returns>
  <Description>
-Creates a dataset.
-<P/>
+ Creates a dataset.
+ <P/>
  </Description>
 </ManSection>
 
@@ -260,8 +226,8 @@ Creates a dataset.
  <Returns><C>rec</C>
 </Returns>
  <Description>
-Returns the default settings for a <C>ChartType</C>
-<P/>
+ Returns the default settings for a <C>ChartType</C>
+ <P/>
  </Description>
 </ManSection>
 
@@ -271,8 +237,8 @@ Returns the default settings for a <C>ChartType</C>
  <Returns><C>XAxis</C>
 </Returns>
  <Description>
-Creates a XAxis
-<P/>
+ Creates a XAxis
+ <P/>
  </Description>
 </ManSection>
 
@@ -282,8 +248,8 @@ Creates a XAxis
  <Returns><C>YAxis</C>
 </Returns>
  <Description>
-Creates a YAxis
-<P/>
+ Creates a YAxis
+ <P/>
  </Description>
 </ManSection>
 
@@ -294,26 +260,26 @@ Creates a YAxis
 <Section Label="Chapter_Francy_Charts_Section_Global">
 <Heading>Global</Heading>
 
-In this section we show all Global Chart Francy Records for multi purpose.
+ In this section we show all Global Chart Francy Records for multi purpose.
 </Section>
 
 
 <Section Label="Chapter_Francy_Charts_Section_Attributes">
 <Heading>Attributes</Heading>
 
-In this section we show all Francy Attributes
+ In this section we show all Francy Attributes
 <ManSection>
   <Attr Arg="arg" Name="ShowLegend" Label="for IsChart"/>
  <Returns><C>IsBool</C> True if enabled otherwise False
 </Returns>
  <Description>
-<C>ShowLegend</C> is a property that enables or disables the legend in the client implementation.
+ <C>ShowLegend</C> is a property that enables or disables the legend in the client implementation.
  </Description>
 </ManSection>
 
 
 <ManSection>
-  <Func Arg="arg1" Name="ShowLegend" Label="for IsChart"/>
+  <Oper Arg="arg1" Name="ShowLegend" Label="for IsChart"/>
  <Description>
 <P/>
  </Description>
@@ -321,9 +287,9 @@ In this section we show all Francy Attributes
 
 
 <ManSection>
-  <Func Arg="IsChart, IsBool" Name="SetShowLegend" Label="for IsChart, IsBool"/>
+  <Oper Arg="IsChart, IsBool" Name="SetShowLegend" Label="for IsChart, IsBool"/>
  <Description>
-<C>ShowLegend</C> is a property that enables or disables the legend in the client implementation.
+ <C>ShowLegend</C> is a property that enables or disables the legend in the client implementation.
  </Description>
 </ManSection>
 
@@ -333,13 +299,13 @@ In this section we show all Francy Attributes
  <Returns><C>IsString</C> with the title of the object
 </Returns>
  <Description>
-This title is used to display the X Axis Title in the client implementation.
+ This title is used to display the X Axis Title in the client implementation.
  </Description>
 </ManSection>
 
 
 <ManSection>
-  <Func Arg="arg1" Name="AxisXTitle" Label="for IsChart"/>
+  <Oper Arg="arg1" Name="AxisXTitle" Label="for IsChart"/>
  <Description>
 <P/>
  </Description>
@@ -347,9 +313,9 @@ This title is used to display the X Axis Title in the client implementation.
 
 
 <ManSection>
-  <Func Arg="IsChart, IsString" Name="SetAxisXTitle" Label="for IsChart, IsString"/>
+  <Oper Arg="IsChart, IsString" Name="SetAxisXTitle" Label="for IsChart, IsString"/>
  <Description>
-This title is used to display the X Axis Title in the client implementation.
+ This title is used to display the X Axis Title in the client implementation.
  </Description>
 </ManSection>
 
@@ -359,13 +325,13 @@ This title is used to display the X Axis Title in the client implementation.
  <Returns><C>IsString</C> with the title of the object
 </Returns>
  <Description>
-This title is used to display the Y Axis Title in the client implementation.
+ This title is used to display the Y Axis Title in the client implementation.
  </Description>
 </ManSection>
 
 
 <ManSection>
-  <Func Arg="arg1" Name="AxisYTitle" Label="for IsChart"/>
+  <Oper Arg="arg1" Name="AxisYTitle" Label="for IsChart"/>
  <Description>
 <P/>
  </Description>
@@ -373,9 +339,9 @@ This title is used to display the Y Axis Title in the client implementation.
 
 
 <ManSection>
-  <Func Arg="IsChart, IsString" Name="SetAxisYTitle" Label="for IsChart, IsString"/>
+  <Oper Arg="IsChart, IsString" Name="SetAxisYTitle" Label="for IsChart, IsString"/>
  <Description>
-This title is used to display the Y Axis Title in the client implementation.
+ This title is used to display the Y Axis Title in the client implementation.
  </Description>
 </ManSection>
 
@@ -385,13 +351,13 @@ This title is used to display the Y Axis Title in the client implementation.
  <Returns><C>IsList</C>
 </Returns>
  <Description>
-This is the domain of the X Axis values in the client implementation.
+ This is the domain of the X Axis values in the client implementation.
  </Description>
 </ManSection>
 
 
 <ManSection>
-  <Func Arg="arg1" Name="AxisXDomain" Label="for IsChart"/>
+  <Oper Arg="arg1" Name="AxisXDomain" Label="for IsChart"/>
  <Description>
 <P/>
  </Description>
@@ -399,9 +365,9 @@ This is the domain of the X Axis values in the client implementation.
 
 
 <ManSection>
-  <Func Arg="IsList, IsList" Name="SetAxisXDomain" Label="for IsChart, IsList"/>
+  <Oper Arg="IsList, IsList" Name="SetAxisXDomain" Label="for IsChart, IsList"/>
  <Description>
-This is the domain of the X Axis values in the client implementation.
+ This is the domain of the X Axis values in the client implementation.
  </Description>
 </ManSection>
 

@@ -238,7 +238,8 @@ end);
 
 InstallGlobalFunction(InstallPackageFromArchive,
 function(url)
-  local get, user_pkg_dir, url_parts, filename, path, exec, files, topdir, dir;
+  local get, user_pkg_dir, url_parts, filename, path, tar, options, exec,
+  files, topdir, dir;
 
   # Download archive
   Info(InfoPackageManager, 3, "Downloading archive from URL ", url, " ...");
@@ -255,8 +256,16 @@ function(url)
   FileString(path, get.result);
   Info(InfoPackageManager, 2, "Saved archive to ", path);
 
+  # Check which version of tar we are using
+  tar := PKGMAN_Exec(".", "tar", "--version");
+  if StartsWith(tar.output, "tar (GNU tar)") then
+    options := "--warning=none";
+  else
+    options := "";
+  fi;
+
   # Check contents
-  exec := PKGMAN_Exec(".", "tar", "--warning=none", "-tf", path);
+  exec := PKGMAN_Exec(".", "tar", options, "-tf", path);
   if exec.code <> 0 then
     Info(InfoPackageManager, 1, "Could not inspect tarball contents");
     return false;
@@ -482,13 +491,31 @@ function(url, args...)
   return PKGMAN_CheckPackage(dir);
 end);
 
+BindGlobal("PKGMAN_GetPackageInfo",
+function(dir_or_stream)
+  local fname, info;
+  if IsString(dir_or_stream) or IsDirectory(dir_or_stream) then
+    fname := Filename(Directory(dir_or_stream), "PackageInfo.g");
+    if not IsReadableFile(fname) then
+      Info(InfoPackageManager, 1, "Could not find PackageInfo.g file");
+      return fail;
+    fi;
+    Read(fname);
+    GAPInfo.PackageInfoCurrent.InstallationPath := fname;
+  elif IsInputStream(dir_or_stream) then
+    info := dir_or_stream;
+    Read(info);
+  else
+    Error("invalid input");
+  fi;
+  return GAPInfo.PackageInfoCurrent;
+end);
+
 InstallGlobalFunction(PKGMAN_InstallDependencies,
 function(dir)
   local info, deps, to_install, dep, got, info_urls, dep_infos, current,
         dep_info, i;
-  info := Filename(Directory(dir), "PackageInfo.g");
-  Read(info);
-  info := ShallowCopy(GAPInfo.PackageInfoCurrent);
+  info := PKGMAN_GetPackageInfo(dir);
   if IsBound(info.Dependencies) then
     deps := info.Dependencies.NeededOtherPackages;
   else
@@ -789,16 +816,13 @@ end);
 
 InstallGlobalFunction(PKGMAN_CheckPackage,
 function(dir)
-  local fname, info, html;
+  local info, html;
 
   # Get PackageInfo
-  fname := Filename(Directory(dir), "PackageInfo.g");
-  if not IsReadableFile(fname) then
-    Info(InfoPackageManager, 1, "Could not find PackageInfo.g file");
+  info := PKGMAN_GetPackageInfo(dir);
+  if info = fail then
     return false;
   fi;
-  Read(fname);
-  info := GAPInfo.PackageInfoCurrent;
 
   # Simple checks
   if not (IsBound(info.PackageName) and IsBound(info.PackageDoc)) then
@@ -815,12 +839,12 @@ function(dir)
   fi;
   html := Filename(Directory(dir), html);
   # Check for html before full validate
-  if not (IsReadableFile(html) and ValidatePackageInfo(fname)) then
+  if not (IsReadableFile(html) and ValidatePackageInfo(info.InstallationPath)) then
     PKGMAN_MakeDoc(dir);
   fi;
 
   # Ensure valid PackageInfo before proceeding
-  if not ValidatePackageInfo(fname) then
+  if not ValidatePackageInfo(info.InstallationPath) then
     Info(InfoPackageManager, 1, "PackageInfo.g validation failed");
     Info(InfoPackageManager, 2, "(in ", dir, ")");
     if IsPackageLoaded("gapdoc") then
@@ -860,13 +884,18 @@ end);
 
 InstallGlobalFunction(PKGMAN_CompileDir,
 function(dir)
-  local prerequisites, exec, pkg_dir, scr, root;
+  local prerequisites, exec, pkg_dir, scr, root, info;
+
+  info := PKGMAN_GetPackageInfo(dir);
+  if info = fail then
+    return false;
+  fi;
 
   # Run the prerequisites file if it exists
   # Note: this is mainly for installing Semigroups from GitHub
   prerequisites := Filename(Directory(dir), "prerequisites.sh");
   if IsReadableFile(prerequisites) then
-    Info(InfoPackageManager, 3, "Running prerequisites.sh ...");
+    Info(InfoPackageManager, 3, "Running prerequisites.sh for ", info.PackageName, "...");
     exec := PKGMAN_Exec(dir, prerequisites);
   fi;
 
@@ -898,7 +927,7 @@ function(dir)
      exec.code <> 0 or
      PositionSublist(exec.output, "Failed to build") <> fail then
     Info(InfoPackageManager, 1,
-         "Compilation failed (package may still be usable)");
+         "Compilation failed for package '", info.PackageName, "' (package may still be usable)");
     return false;
   fi;
   Info(InfoPackageManager, 4, "Compilation was successful");
@@ -980,7 +1009,7 @@ function(dir, cmd, args...)
     # we must look up the path
     fullcmd := Filename(DirectoriesSystemPrograms(), cmd);
     if fullcmd = fail or not IsExecutableFile(fullcmd) then
-      Info(InfoPackageManager, 3, "Command ", cmd, " not found");
+      Info(InfoPackageManager, 4, "Command ", cmd, " not found");
       return fail;
     fi;
   fi;
@@ -1153,7 +1182,7 @@ function(url)
   # Use curlInterface if available
   if TestPackageAvailability("curlInterface", PKGMAN_CurlIntReqVer) = true then
     Info(InfoPackageManager, 4, "Using curlInterface to download...");
-    return DownloadURL(url);
+    return ValueGlobal("DownloadURL")(url);
   fi;
 
   # Try command line tools (wget/curl)
@@ -1185,7 +1214,7 @@ end);
 
 InstallGlobalFunction(PKGMAN_DownloadPackageInfo,
 function(url)
-  local get, stream, info;
+  local get, info;
 
   Info(InfoPackageManager, 3, "Retrieving PackageInfo.g from ", url, " ...");
   get := PKGMAN_DownloadURL(url);
@@ -1193,9 +1222,7 @@ function(url)
     Info(InfoPackageManager, 1, "Unable to download from ", url);
     return fail;
   fi;
-  stream := InputTextString(get.result);
-  Read(stream);
-  info := GAPInfo.PackageInfoCurrent;
+  info := PKGMAN_GetPackageInfo(InputTextString(get.result));
 
   # Read the information we want from it
   if not ValidatePackageInfo(info) then

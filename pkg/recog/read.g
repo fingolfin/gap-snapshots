@@ -1,20 +1,25 @@
 #############################################################################
 ##
-##  read.g                recog package
-##                                                        Max Neunhoeffer
-##                                                            Ákos Seress
-##                                                                 et al.
+##  This file is part of recog, a package for the GAP computer algebra system
+##  which provides a collection of methods for the constructive recognition
+##  of groups.
 ##
-##  Copyright 2005-2008 by the authors.
-##  This file is free software, see license information at the end.
+##  Copyright of recog belongs to its developers whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-3.0-or-later
+##
 ##
 ##  Reading the implementation part of the recog package.
 ##
 #############################################################################
 
 # Generic:
+ReadPackage("recog","gap/base/methods.gi");
 ReadPackage("recog","gap/base/methsel.gi");
 ReadPackage("recog","gap/base/recognition.gi");
+ReadPackage("recog","gap/base/kernel.gi");
+ReadPackage("recog","gap/obsolete.gi");
 
 # The following contain generic functionality for different types of groups:
 
@@ -23,50 +28,37 @@ ReadPackage("recog","gap/base/projective.gi");
 
 
 # Some tools:
-ReadPackage("recog","gap/tools.gi");
+ReadPackage("recog","gap/utils.gi");
+
+# generic
+ReadPackage("recog","gap/generic/TrivialGroup.gi");
+ReadPackage("recog","gap/generic/FewGensAbelian.gi");
+ReadPackage("recog","gap/generic/KnownNilpotent.gi");
 
 # Permutations:
-ReadPackage("recog","gap/giant.gi");
-ReadPackage("recog","gap/snksetswrsr.gi");
-
-# Up to now there is not much here:
+ReadPackage("recog","gap/perm/giant.gi");
+ReadPackage("recog","gap/perm/largebase.gi");
 ReadPackage("recog","gap/SnAnBB.gi");
+ReadPackage("recog","gap/generic/SnAnUnknownDegree.gi");
 
 # Matrices/Projective:
-ReadPackage("recog","gap/findnormal.gi");
-ReadPackage("recog","gap/matimpr.gi");
-ReadPackage("recog","gap/c6.gi");
-ReadPackage("recog","gap/tensor.gi");
-# ReadPackage("recog","gap/forms.gi");
-ReadPackage("recog","gap/ppd.gi");
-ReadPackage("recog","gap/classical.gi");
-ReadPackage("recog","gap/slconstr.gi");
-ReadPackage("recog","gap/c3c5.gi");
-ReadPackage("recog","gap/d247.gi");
-ReadPackage("recog","gap/almostsimple/twoelorders.gi");
-ReadPackage("recog","gap/almostsimple.gi");
-ReadPackage("recog","gap/almostsimple/lietype.gi");
-ReadPackage("recog","gap/almostsimple/hints.gi");
-ReadPackage("recog","gap/classicalnatural.gi");
-ReadPackage("recog","gap/AnSnOnFDPM.gi");
+ReadPackage("recog","gap/projective/findnormal.gi");
+ReadPackage("recog","gap/matrix/matimpr.gi");
+ReadPackage("recog","gap/projective/c6.gi");
+ReadPackage("recog","gap/projective/tensor.gi");
+ReadPackage("recog","gap/matrix/ppd.gi");
+ReadPackage("recog","gap/matrix/classical.gi");
+ReadPackage("recog","gap/matrix/slconstr.gi");
+ReadPackage("recog","gap/projective/c3c5.gi");
+ReadPackage("recog","gap/projective/d247.gi");
+ReadPackage("recog","gap/projective/almostsimple/threeelorders.gi");
+ReadPackage("recog","gap/projective/almostsimple.gi");
+ReadPackage("recog","gap/projective/almostsimple/lietype.gi");
+ReadPackage("recog","gap/projective/almostsimple/hints.gi");
+ReadPackage("recog","gap/projective/classicalnatural.gi");
+ReadPackage("recog","gap/projective/AnSnOnFDPM.gi");
 
 # All the method installations are now here:
 ReadPackage("recog","gap/perm.gi");
 ReadPackage("recog","gap/matrix.gi");
 ReadPackage("recog","gap/projective.gi");
-
-##
-##  This program is free software: you can redistribute it and/or modify
-##  it under the terms of the GNU General Public License as published by
-##  the Free Software Foundation, either version 3 of the License, or
-##  (at your option) any later version.
-##
-##  This program is distributed in the hope that it will be useful,
-##  but WITHOUT ANY WARRANTY; without even the implied warranty of
-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-##  GNU General Public License for more details.
-##
-##  You should have received a copy of the GNU General Public License
-##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-##
-

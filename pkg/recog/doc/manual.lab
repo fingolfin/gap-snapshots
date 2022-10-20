@@ -1,0 +1,168 @@
+\GAPDocLabFile{recog}
+\makelabel{recog:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{recog:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{recog:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{recog:Introduction}{1}{X7DFB63A97E67C0A1}
+\makelabel{recog:Philosophy}{1.1}{X873C99678745ABAF}
+\makelabel{recog:Overview over this manual}{1.2}{X786BACDB82918A65}
+\makelabel{recog:Feedback and support}{1.3}{X828241117D993F36}
+\makelabel{recog:Literature (temporary)}{1.4}{X804FB63186BEBD38}
+\makelabel{recog:Installation of the recog package}{2}{X7AA0519A7CFE18C2}
+\makelabel{recog:Group recognition}{3}{X7F73983582251807}
+\makelabel{recog:The recursive procedure}{3.1}{X81E31E377B16CF39}
+\makelabel{recog:Recognition nodes}{3.2}{X83A18ADB8207154F}
+\makelabel{recog:Other components of recognition nodes}{3.2.37}{X7EBE1C5D7C99FA2F}
+\makelabel{recog:Methods to find homomorphisms}{3.3}{X8577717D85D631C2}
+\makelabel{recog:Method selection}{4}{X8058CC8187162644}
+\makelabel{recog:What are methods?}{4.1}{X7F89FF55818F1139}
+\makelabel{recog:Method Databases}{4.2}{X854385507D03A016}
+\makelabel{recog:How methods are called}{4.3}{X83FCCBCA78F608E1}
+\makelabel{recog:Global records storing functions}{4.4}{X852A8E538590BCF3}
+\makelabel{recog:After successful recognition}{5}{X851A3F04786123D5}
+\makelabel{recog:Functions and methods for recognition nodes}{5.1}{X80EB3C7481C63B7F}
+\makelabel{recog:Methods for recognition}{6}{X78C5295B86AD0C66}
+\makelabel{recog:Methods for generic groups}{6.1}{X79A20FD17F834C70}
+\makelabel{recog:FewGensAbelian}{6.1.1}{X78797CF584658CEC}
+\makelabel{recog:KnownNilpotent}{6.1.2}{X7E5E93027A194885}
+\makelabel{recog:SnAnUnknownDegree}{6.1.3}{X878C1CED8191506C}
+\makelabel{recog:TrivialGroup}{6.1.4}{X8489BECB78664847}
+\makelabel{recog:Methods for permutation groups}{6.2}{X829A2F96860513F2}
+\makelabel{recog:BalTreeForBlocks}{6.2.1}{X80320AF97EF01284}
+\makelabel{recog:Giant}{6.2.2}{X7F46D8727850585D}
+\makelabel{recog:Imprimitive}{6.2.3}{X8757E1C37F03A49D}
+\makelabel{recog:LargeBasePrimitive}{6.2.4}{X836212B6818B60FE}
+\makelabel{recog:MovesOnlySmallPoints}{6.2.5}{X804A913E84B77F97}
+\makelabel{recog:NonTransitive}{6.2.6}{X83C651E58239EEAF}
+\makelabel{recog:Pcgs}{6.2.7}{X84C3750C7A4EEC34}
+\makelabel{recog:PcgsForBlocks}{6.2.8}{X82B9AF9F7A904FE5}
+\makelabel{recog:StabChain}{6.2.9}{X834E9DFF7DC949DE}
+\makelabel{recog:StabilizerChainPerm}{6.2.10}{X7DC0B08B7C73A4F9}
+\makelabel{recog:ThrowAwayFixedPoints}{6.2.11}{X8236A4817FA037E2}
+\makelabel{recog:Methods for matrix groups}{6.3}{X829BA50B82FEC109}
+\makelabel{recog:BlockDiagonal}{6.3.1}{X857BF1317CAAF260}
+\makelabel{recog:BlockLowerTriangular}{6.3.2}{X81F74235823352B5}
+\makelabel{recog:BlockScalar}{6.3.3}{X8795A42285A332BB}
+\makelabel{recog:DiagonalMatrices}{6.3.4}{X7A9F8CA181F6412D}
+\makelabel{recog:GoProjective}{6.3.5}{X7A1D99F67E62B1D7}
+\makelabel{recog:KnownStabilizerChain}{6.3.6}{X7B2C182B7898BC45}
+\makelabel{recog:LowerLeftPGroup}{6.3.7}{X84E09FCF8527D74A}
+\makelabel{recog:NaturalSL}{6.3.8}{X8007B3DC787D192C}
+\makelabel{recog:ReducibleIso}{6.3.9}{X811FC944788D9839}
+\makelabel{recog:Scalar}{6.3.10}{X8635737086D48AE5}
+\makelabel{recog:Methods for projective groups}{6.4}{X867550F684F795AE}
+\makelabel{recog:AltSymBBByDegree}{6.4.1}{X87A53FB6813E2E3C}
+\makelabel{recog:BiggerScalarsOnly}{6.4.2}{X7F58277E780EEA2E}
+\makelabel{recog:BlockScalarProj}{6.4.3}{X863E0A1D7D7FEE04}
+\makelabel{recog:Blocks}{6.4.4}{X84FE699F85371643}
+\makelabel{recog:BlocksBackToMats}{6.4.5}{X84865B2E87FB00CE}
+\makelabel{recog:BlocksModScalars}{6.4.6}{X8605DA5E85DFACDC}
+\makelabel{recog:C3C5}{6.4.7}{X799F4A7A8239D70F}
+\makelabel{recog:C6}{6.4.8}{X7E484B8F83849B49}
+\makelabel{recog:ClassicalNatural}{6.4.9}{X7CE5D3D5876DE816}
+\makelabel{recog:ComputeSimpleSocle}{6.4.10}{X7EC8D0FD7DC6B213}
+\makelabel{recog:D247}{6.4.11}{X81E155F98671824A}
+\makelabel{recog:DoBaseChangeForBlocks}{6.4.12}{X878ADA8A7CCE93E0}
+\makelabel{recog:FindElmOfEvenNormal}{6.4.13}{X7ED3241F84A98292}
+\makelabel{recog:KroneckerKernel}{6.4.14}{X7845D88F845EC143}
+\makelabel{recog:KroneckerProduct}{6.4.15}{X8634C79E7DB22934}
+\makelabel{recog:LieTypeNonConstr}{6.4.16}{X865D3A1B7B6BB49B}
+\makelabel{recog:LowIndex}{6.4.17}{X810B7F36818D626B}
+\makelabel{recog:NameSporadic}{6.4.18}{X82B704EF80AE2FBB}
+\makelabel{recog:NotAbsolutelyIrred}{6.4.19}{X83E6AD6583DB7080}
+\makelabel{recog:ProjDeterminant}{6.4.20}{X850864887D7F193E}
+\makelabel{recog:PrototypeForC2C4}{6.4.21}{X83288F2279C27632}
+\makelabel{recog:SporadicsByOrders}{6.4.22}{X7B2111968598599F}
+\makelabel{recog:StabilizerChainProj}{6.4.23}{X7A46A44F867CFB21}
+\makelabel{recog:Subfield}{6.4.24}{X7FE1FA217A08DCE5}
+\makelabel{recog:TensorDecomposable}{6.4.25}{X7DE8D77D7D1E19E3}
+\makelabel{recog:ThreeLargeElOrders}{6.4.26}{X7A82C26E78FEF78F}
+\makelabel{recog:Unused methods}{6.5}{X7D4A5A9A8266A292}
+\makelabel{recog:Examples}{7}{X7A489A5D79DA9E5C}
+\makelabel{recog:Renaming}{8}{X7BDCE7F2792D75D3}
+\makelabel{recog:How to write a recognition method}{9}{X7E349FA783950EA0}
+\makelabel{recog:Leaf methods}{9.1}{X87E1C6E07AA0416D}
+\makelabel{recog:Elements with memory}{9.2}{X8072F8B27B55D99D}
+\makelabel{recog:Splitting methods}{9.3}{X7A62F30582BDA07D}
+\makelabel{recog:Bibliography}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{recog:References}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{recog:Index}{Ind}{X83A0356F839C696F}
+\makelabel{recog:RecogniseGeneric}{3.1.1}{X7BFEB34483548A89}
+\makelabel{recog:RecognizeGeneric}{3.1.1}{X7BFEB34483548A89}
+\makelabel{recog:RecognisePermGroup}{3.1.2}{X84338F037B91CDD0}
+\makelabel{recog:RecognizePermGroup}{3.1.2}{X84338F037B91CDD0}
+\makelabel{recog:RecogniseMatrixGroup}{3.1.3}{X788DCF6A7D9E80BD}
+\makelabel{recog:RecognizeMatrixGroup}{3.1.3}{X788DCF6A7D9E80BD}
+\makelabel{recog:RecogniseProjectiveGroup}{3.1.4}{X841176DD7BA1CAA0}
+\makelabel{recog:RecognizeProjectiveGroup}{3.1.4}{X841176DD7BA1CAA0}
+\makelabel{recog:RecogniseGroup}{3.1.5}{X853B4EE27AF57CD3}
+\makelabel{recog:RecognizeGroup}{3.1.5}{X853B4EE27AF57CD3}
+\makelabel{recog:TryFindHomMethod}{3.1.6}{X7AD4A7168016DF8F}
+\makelabel{recog:RecogNodeFamily}{3.2.1}{X7D2B419B83CD3BF8}
+\makelabel{recog:IsRecogNode}{3.2.2}{X801C44668004C0A0}
+\makelabel{recog:RecogNode}{3.2.3}{X8408B8B286312375}
+\makelabel{recog:RecogNode}{3.2.3}{X8408B8B286312375}
+\makelabel{recog:IsLeaf}{3.2.4}{X8469BB658377FD92}
+\makelabel{recog:IsReady}{3.2.5}{X7D6CEF0178ED73A7}
+\makelabel{recog:Grp}{3.2.6}{X7972380780D99B04}
+\makelabel{recog:Homom}{3.2.7}{X8273C2FC79FB6543}
+\makelabel{recog:NiceGens}{3.2.8}{X864194958685AAD7}
+\makelabel{recog:pregensfac}{3.2.9}{X808A01AA869115EC}
+\makelabel{recog:ImageRecogNode}{3.2.10}{X78DE5A1782456494}
+\makelabel{recog:KernelRecogNode}{3.2.11}{X7DE53FAA782440B2}
+\makelabel{recog:ParentRecogNode}{3.2.12}{X83BA3AE582319312}
+\makelabel{recog:fhmethsel}{3.2.13}{X7ACD6B4C7982B1E3}
+\makelabel{recog:slpforelement}{3.2.14}{X83167779869A3BF5}
+\makelabel{recog:SLPforElement}{3.2.15}{X83167779869A3BF5}
+\makelabel{recog:StdPresentation}{3.2.16}{X7FBE4706828964EB}
+\makelabel{recog:methodsforimage}{3.2.17}{X82F234BC853D1323}
+\makelabel{recog:validatehomominput}{3.2.18}{X7FEEE37F858F614B}
+\makelabel{recog:ValidateHomomInput}{3.2.19}{X7FEEE37F858F614B}
+\makelabel{recog:calcnicegens}{3.2.20}{X7EFA298E7E4760A0}
+\makelabel{recog:CalcNiceGensGeneric}{3.2.21}{X78B05A1E78564BBF}
+\makelabel{recog:CalcNiceGensHomNode}{3.2.22}{X80444E4E8501D0B0}
+\makelabel{recog:CalcNiceGens}{3.2.23}{X7EFA298E7E4760A0}
+\makelabel{recog:slptonice}{3.2.24}{X80C2451F805CA06D}
+\makelabel{recog:gensN}{3.2.25}{X7B7E9EAC7AACF8D8}
+\makelabel{recog:findgensNmeth}{3.2.26}{X81644C3A8064063F}
+\makelabel{recog:FindKernelRandom}{3.2.27}{X7DC1D16F807D6895}
+\makelabel{recog:FindKernelDoNothing}{3.2.28}{X8244F0DE86C23ECA}
+\makelabel{recog:FindKernelFastNormalClosure}{3.2.29}{X87E8AB1B78F60112}
+\makelabel{recog:gensNslp}{3.2.30}{X82154EA88011654F}
+\makelabel{recog:immediateverification}{3.2.31}{X86A101E17F87F01F}
+\makelabel{recog:InitialDataForKernelRecogNode}{3.2.32}{X868D75F87B0F33C5}
+\makelabel{recog:InitialDataForImageRecogNode}{3.2.33}{X86F6DB9482B4D8AC}
+\makelabel{recog:isone}{3.2.34}{X814D78347858EC13}
+\makelabel{recog:isequal}{3.2.35}{X7D0F06047B88E5CD}
+\makelabel{recog:OrderFunc}{3.2.36}{X860CF50D80A4215A}
+\makelabel{recog:FindHomomorphism}{3.3.1}{X7FCBB7C686D0B1DF}
+\makelabel{recog:SLPforElementGeneric}{3.3.2}{X7F299344834AAB6E}
+\makelabel{recog:IsRecogMethod}{4.1.1}{X80EC4782856AAD35}
+\makelabel{recog:RecogMethod}{4.1.2}{X7E18720E87B4B2DE}
+\makelabel{recog:BindRecogMethod}{4.1.3}{X87AA2A587E4E00C2}
+\makelabel{recog:Stamp}{4.1.4}{X7EF3EAEF78786349}
+\makelabel{recog:Comment}{4.1.5}{X7A2F979E86F77A6F}
+\makelabel{recog:CallRecogMethod}{4.1.6}{X79650A3E79D0E4A3}
+\makelabel{recog:AddMethod}{4.2.1}{X845DB71C806CADDC}
+\makelabel{recog:FindHomDbPerm}{4.2.2}{X836B50947A46B1A5}
+\makelabel{recog:FindHomDbMatrix}{4.2.3}{X7CA5F5FA7E850885}
+\makelabel{recog:FindHomDbProjective}{4.2.4}{X7A4F8342854507E3}
+\makelabel{recog:CallMethods}{4.3.1}{X7BC2692183B6C4E6}
+\makelabel{recog:FindHomMethodsPerm}{4.4.1}{X7A94720080D344DA}
+\makelabel{recog:FindHomMethodsMatrix}{4.4.2}{X79B60CEF8292F142}
+\makelabel{recog:FindHomMethodsProjective}{4.4.3}{X7D796A2179E9026A}
+\makelabel{recog:FindHomMethodsGeneric}{4.4.4}{X78B948847D596167}
+\makelabel{recog:SLPforElementFuncsPerm}{4.4.5}{X7B5561D187242287}
+\makelabel{recog:SLPforElementFuncsMatrix}{4.4.6}{X7A2E7DF67F4949C8}
+\makelabel{recog:SLPforElementFuncsProjective}{4.4.7}{X7F6FCC4F81ACF20F}
+\makelabel{recog:SLPforElementFuncsGeneric}{4.4.8}{X795ACFD386A106B8}
+\makelabel{recog:SLPforNiceGens}{5.1.1}{X82F5B37186B949BF}
+\makelabel{recog:Size}{5.1.3}{X858ADA3B7A684421}
+\makelabel{recog:DisplayCompositionFactors}{5.1.4}{X80FFBDCD816690E3}
+\makelabel{recog:RecognitionInfoFamily}{8}{X7BDCE7F2792D75D3}
+\makelabel{recog:IsRecognitionInfo}{8}{X7BDCE7F2792D75D3}
+\makelabel{recog:RIFac}{8}{X7BDCE7F2792D75D3}
+\makelabel{recog:RIKer}{8}{X7BDCE7F2792D75D3}
+\makelabel{recog:RIParent}{8}{X7BDCE7F2792D75D3}
+\makelabel{recog:methodsforfactor}{8}{X7BDCE7F2792D75D3}
+\makelabel{recog:forfactor}{8}{X7BDCE7F2792D75D3}
+\makelabel{recog:forkernel}{8}{X7BDCE7F2792D75D3}

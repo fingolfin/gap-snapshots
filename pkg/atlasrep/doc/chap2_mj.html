@@ -84,7 +84,7 @@ true
 </pre></div>
 
 </li>
-<li><p>Depending on the terminal capabilities, the output of <code class="func">DisplayAtlasInfo</code> (<a href="chap3_mj.html#X79DACFFA7E2D1A99"><span class="RefLink">3.5-1</span></a>) may contain non-ASCII characters, which are not supported by the LaTeX and HTML versions of <strong class="pkg">GAPDoc</strong> documents. The examples in this manual are used for tests of the package's functionality, thus we set the user preference <code class="code">DisplayFunction</code> (see Section <a href="chap4_mj.html#X81F055037F9D3068"><span class="RefLink">4.2-12</span></a>) to the value <code class="code">"Print"</code> in order to produce output consisting only of ASCII characters, which is assumed to work in any terminal.</p>
+<li><p>Depending on the terminal capabilities, the output of <code class="func">DisplayAtlasInfo</code> (<a href="chap3_mj.html#X79DACFFA7E2D1A99"><span class="RefLink">3.5-1</span></a>) may contain non-ASCII characters, which are not supported by the LaTeX and HTML versions of <strong class="pkg">GAPDoc</strong> documents. The examples in this manual are used for tests of the package's functionality, thus we set the user preference <code class="code">DisplayFunction</code> (see Section <a href="chap4_mj.html#X81F055037F9D3068"><span class="RefLink">4.2-11</span></a>) to the value <code class="code">"Print"</code> in order to produce output consisting only of ASCII characters, which is assumed to work in any terminal.</p>
 
 
 <div class="example"><pre>
@@ -492,7 +492,7 @@ true
 [ 1, 396, 55, 330, 66, 165, 11 ]
 </pre></div>
 
-<p>We see that there are six nontrivial orbits, and we can compute the permutation actions on these orbits directly using <code class="func">Action</code> (<a href="../../../doc/ref/chap41_mj.html#X7FE417DD837987B4"><span class="RefLink">Reference: action</span></a>). However, for larger examples, one cannot write down all orbits on the row space, so one has to use another strategy if one is interested in a particular orbit.</p>
+<p>We see that there are six nontrivial orbits, and we can compute the permutation actions on these orbits directly using <code class="func">Action</code> (<a href="../../../doc/ref/chap40_mj.html#X86C2BE2481FDC8EE"><span class="RefLink">Reference: Action homomorphisms</span></a>). However, for larger examples, one cannot write down all orbits on the row space, so one has to use another strategy if one is interested in a particular orbit.</p>
 
 <p>Let us assume that we are interested in the orbit of length <span class="SimpleMath">\(11\)</span>. The point stabilizer is the first maximal subgroup of <span class="SimpleMath">\(M_{11}\)</span>, thus the restriction of the representation to this subgroup has a nontrivial fixed point space. This restriction can be computed using the <strong class="pkg">AtlasRep</strong> package.</p>
 

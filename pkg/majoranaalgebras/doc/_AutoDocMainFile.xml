@@ -6,3 +6,5 @@
 <#Include SYSTEM "_Chapter_Majorana_representations.xml">
 <#Include SYSTEM "_Chapter_funcs.xml">
 <#Include SYSTEM "_Chapter_Functions_for_testing_Majorana_representations.xml">
+<#Include SYSTEM "_Chapter_Orbital_Structures.xml">
+<#Include SYSTEM "_Chapter_Signed_Permutations.xml">

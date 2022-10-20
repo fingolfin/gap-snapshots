@@ -1,0 +1,252 @@
+<#GAPDoc Label="Example_Create_Callback_1">
+<Example><![CDATA[
+gap> MyFunction := function() return "Hello World!"; end;
+gap> callback := Callback(MyFunction);
+gap> Id(callback);
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_Create_Callback_2">
+<Example><![CDATA[
+gap> MyFunction := function(str) return Concatenation("Hello", " ", str); end;
+gap> callback := Callback(MyFunction);
+gap> arg := RequiredArg(ArgType.STRING, "Your Name");
+gap> Add(callback, arg);
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_Create_Callback_3">
+<Example><![CDATA[
+gap> MyFunction := function(args) return args; end;
+gap> callback := Callback(MyFunction, ["Hello World"]);
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_Create_Callback_4">
+<Example><![CDATA[
+gap> MyFunction := function(a,b) return Concatenation(a, b); end;
+gap> callback := Callback(MyFunction, ["Hello "]);
+gap> arg := RequiredArg(ArgType.STRING, "Your Name");
+gap> Add(callback, arg);
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_Create_Callback_5">
+<Example><![CDATA[
+gap> MyFunction := function(a,b) return Concatenation(a, b); end;
+gap> callback := Callback(TriggerType.DOUBLE_CLICK, MyFunction, ["Hello "]);
+gap> arg := RequiredArg(ArgType.STRING, "Your Name");
+gap> Add(callback, arg);
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_Create_Callback_6">
+<Example><![CDATA[
+gap> MyFunction := function(a,b) return Concatenation(a, b); end;
+gap> callback := Callback(TriggerType.DOUBLE_CLICK, MyFunction, ["Hello "]);
+gap> arg := RequiredArg(ArgType.STRING, "Your Name");
+gap> SetTitle(arg, "Enter your name");
+gap> Title(arg);
+gap> Add(callback, arg);
+gap> SetValue(arg, "Manuel"); # simulate the user input
+gap> Value(arg);
+gap> Trigger(GapToJsonString(Sanitize(callback))); # simulate the external trigger
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_Create_Callback_7">
+<Example><![CDATA[
+gap> callback := NoopCallback();
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_Create_Canvas_1">
+<Example><![CDATA[
+gap> canvas := Canvas("");
+gap> Id(canvas);
+gap> SetTitle(canvas, "Quaternion Group Subgroup Lattice");
+gap> Title(canvas);
+gap> SetHeight(canvas, 400); # default 600
+gap> Height(canvas);
+gap> SetWidth(canvas, 400); # default 800
+gap> Width(canvas);
+gap> SetZoomToFit(canvas, false); # default true
+gap> ZoomToFit(canvas);
+gap> Draw(canvas);
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_Create_Chart_1">
+<Example><![CDATA[
+gap> chart:=Chart(ChartType.BAR);
+gap> SetAxisXTitle(chart, "X Axis");
+gap> AxisXTitle(chart);
+gap> SetAxisXDomain(chart, ["domain1", "domain2", "domain3", "domain4", "domain5"]); # default []
+gap> AxisXDomain(chart);
+gap> SetAxisYTitle(chart, "Y Axis");
+gap> AxisYTitle(chart);
+gap> data1 := Dataset("data1", [100,20,30,47,90]);
+gap> data2 := Dataset("data2", [51,60,72,38,97]);
+gap> data3 := Dataset("data3", [50,60,70,80,90]);
+gap> Add(chart, [data1, data2, data3]);
+gap> Remove(chart, data1);
+gap> Add(chart, data1);
+gap> Remove(chart, [data2, data3]);
+gap> Length(RecNames(chart!.data)) = 1;
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_Create_Chart_2">
+<Example><![CDATA[
+gap> chart:=Chart(ChartType.LINE);
+gap> SetAxisXTitle(chart, "X Axis");
+gap> SetAxisYTitle(chart, "Y Axis");
+gap> data1 := Dataset("data1", [100,20,30,47,90]);
+gap> Add(chart, data1);
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_Create_Chart_3">
+<Example><![CDATA[
+gap> chart:=Chart(ChartType.SCATTER);
+gap> SetAxisXTitle(chart, "X Axis");
+gap> SetAxisYTitle(chart, "Y Axis");
+gap> data1 := Dataset("data1", [100,20,30,47,90]);
+gap> Add(chart, data1);
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_Create_Graph_2">
+<Example><![CDATA[
+gap> graph := Graph(GraphType.DIRECTED);
+gap> SetSimulation(graph, false);
+gap> shape1 := Shape(ShapeType.SQUARE);
+gap> shape1!.layer := 1;
+gap> shape2 := Shape(ShapeType.TRIANGLE);
+gap> shape2!.layer := 3;
+gap> link := Link(shape1, shape2);
+gap> Add(graph, link);
+gap> Add(graph, [shape1, shape2]);
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_Create_Graph_3">
+<Example><![CDATA[
+gap> graph := Graph(GraphType.UNDIRECTED);
+gap> shape := Shape(ShapeType.SQUARE);
+gap> MyFunction := function() Add(graph, Shape(ShapeType.Circle)); return graph; end;
+gap> callback := Callback(TriggerType.RIGHT_CLICK, MyFunction);
+gap> Add(shape, callback);
+gap> Add(graph, shape);
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_Create_Callback_8">
+<Example><![CDATA[
+gap> MyFunction := function(str) return Concatenation("Hello", " ", str); end;
+gap> callback := Callback(MyFunction);
+gap> arg1 := RequiredArg(ArgType.STRING, "Your Name");
+gap> arg2 := RequiredArg(ArgType.STRING, "Your Age");
+gap> Add(callback, [arg1, arg2]);
+gap> Remove(callback, arg1);
+gap> Add(callback, arg1);
+gap> Remove(callback, [arg2]);
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_Create_Graph_4">
+<Example><![CDATA[
+gap> gap> graph := Graph(GraphType.TREE);
+gap> <IsFrancyObject/IsFrancyGraph>
+> gap> shape := Shape(ShapeType.SQUARE);
+gap> <IsFrancyObject/IsShape>
+> gap> shape1 := Shape(ShapeType.SQUARE);
+gap> <IsFrancyObject/IsShape>
+> gap> SetParentShape(shape1, shape);
+gap> Add(graph, [shape, shape1]);
+]]></Example>
+
+
+
+<#/GAPDoc>
+<#GAPDoc Label="Example_Create_Graph_1">
+<Example><![CDATA[
+gap> canvas := Canvas("Callbacks in action");
+gap> SetHeight(canvas, 100);
+gap> graph := Graph(GraphType.HASSE);
+gap> shape := Shape(ShapeType.CIRCLE);
+gap> Add(graph, shape);
+gap> Add(canvas, graph);
+gap> HelloWorld := function(name)
+>     Add(canvas, FrancyMessage(Concatenation("Hello, ", name)));
+gap>     return Draw(canvas);
+gap> end;
+gap> callback1 := Callback(HelloWorld);
+gap> arg1 := RequiredArg(ArgType.STRING, "Your Name?");
+gap> Add(callback1, arg1);
+gap> menu := Menu("Example Menu Holder");
+gap> menu1 := Menu("Hello Menu Action", callback1 );
+gap> menu2 := Menu("Hello Menu Action", callback1 );
+gap> Add(menu, menu1);
+gap> Remove(menu, menu1);
+gap> Add(menu, [menu1, menu2]);
+gap> Remove(menu, [menu1, menu2]);
+gap> Add(canvas, [menu, menu1]);
+gap> Remove(canvas, menu1);
+gap> Add(canvas, menu1);
+gap> Add(shape, menu1);
+gap> Remove(shape, menu1);
+gap> Add(shape, [menu1, menu2]);
+gap> Remove(shape, [menu1, menu2]);
+]]></Example>
+
+
+<Example><![CDATA[
+gap> canvas := Canvas("Example Canvas / Shape with Messages");
+gap> graph := Graph(GraphType.HASSE); # will go throughout graphs later
+gap> shape := Shape(ShapeType.CIRCLE); # will go throughout shapes later
+gap> Add(graph, shape);
+gap> Add(canvas, graph);
+gap> Add(canvas, FrancyMessage(FrancyMessageType.INFO, "Hello"));
+gap> Add(shape, FrancyMessage(FrancyMessageType.INFO, "Hello"));
+gap> Add(canvas, FrancyMessage(FrancyMessageType.ERROR, "Oops", "Hello"));
+gap> Add(shape, FrancyMessage(FrancyMessageType.ERROR, "Oops", "Hello"));
+gap> Add(canvas, FrancyMessage(FrancyMessageType.WARNING, "Hello"));
+gap> Add(shape, FrancyMessage(FrancyMessageType.WARNING, "Hello"));
+gap> Add(canvas, FrancyMessage(FrancyMessageType.SUCCESS, "Hello"));
+gap> Add(shape, FrancyMessage(FrancyMessageType.SUCCESS, "Hello"));
+gap> Add(canvas, FrancyMessage("Hello", "World"));
+gap> Add(shape, FrancyMessage("Hello", "World"));
+]]></Example>
+
+
+
+<#/GAPDoc>

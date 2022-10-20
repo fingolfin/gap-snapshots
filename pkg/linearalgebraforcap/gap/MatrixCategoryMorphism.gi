@@ -84,10 +84,8 @@ InstallOtherMethodForCompilerForCAP( VectorSpaceMorphism,
         
     fi;
     
-    return ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes( rec( ), cat,
-                                           source,
-                                           range,
-                                           UnderlyingMatrix, homalg_matrix
+    return CreateCapCategoryMorphismWithAttributes( cat, source, range,
+                                                    UnderlyingMatrix, homalg_matrix
     );
     
 end );
@@ -168,7 +166,7 @@ end );
 ####################################
 
 ##
-InstallMethod( \/,
+InstallOtherMethod( \/,
                [ IsHomalgMatrix, IsMatrixCategory ],
   function( homalg_matrix, category )
     local field;

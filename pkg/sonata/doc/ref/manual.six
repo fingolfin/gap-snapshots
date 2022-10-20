@@ -222,7 +222,7 @@ F 6.13. IsSimpleNearRing
 S 6.14. Factor nearrings
 F 6.14. FactorNearRing
 F 6.14. /
-C xsonata.tex 7. Graphic ideal lattices (X-GAP only)
+C xsonata.tex 7. Graphic ideal lattices (XGAP only)
 F 7.0. GraphicIdealLattice
 C ngroups.tex 8. N-groups
 S 8.1. Construction of N-groups

@@ -13,8 +13,8 @@
 
      <!ENTITY mdash "<Alt Only='HTML'>&#8212;</Alt><Alt Not='HTML'>---</Alt>">
 
-     <!ENTITY VERSIONNUMBER "2.1.4">
-     <!ENTITY RELEASEMONTH "August">
+     <!ENTITY VERSIONNUMBER "2.1.6">
+     <!ENTITY RELEASEMONTH "October">
      <!ENTITY RELEASEYEAR "2022">
    ]>
 

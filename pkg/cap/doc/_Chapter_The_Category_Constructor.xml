@@ -64,6 +64,9 @@
 <Code>list_of_operations_to_install</Code> (mandatory): a list of names of &CAP; operations which should be installed for the category
 </Item>
 <Item>
+<Code>supports_empty_limits</Code> (optional): whether the category supports empty lists in inputs to operations of limits and colimits
+</Item>
+<Item>
 <Code>underlying_category_getter_string</Code> (optional): see below
 </Item>
 <Item>
@@ -111,10 +114,10 @@
 <Code>operation_name</Code> will be replaced by the name of the operation
 </Item>
 <Item>
-<Code>input_arguments</Code> will be replaced by the <Code>input_arguments_names</Code> specified in the method name record (see <Ref Sect="Section_CapInternalInstallAdd" />)
+<Code>input_arguments...</Code> will be replaced by the <Code>input_arguments_names</Code> specified in the method name record (see <Ref Sect="Section_CapInternalInstallAdd" />)
 </Item>
 <Item>
-<Code>underlying_arguments</Code>: If the constructed category is created from another category, <Code>underlying_category_getter_string</Code>, <Code>underlying_object_getter_string</Code>, and
+<Code>underlying_arguments...</Code>: If the constructed category is created from another category, <Code>underlying_category_getter_string</Code>, <Code>underlying_object_getter_string</Code>, and
     <Code>underlying_morphism_getter_string</Code> may be strings of functions computing the underlying category (when applied to the constructed category) and
     the underlying object resp. morphism (when applied to the constructed category and an object resp. morphism in the constructed category).
     These functions are applied to <Code>input_arguments</Code> and <Code>underlying_arguments</Code> is replaced by the result.

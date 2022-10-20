@@ -50,11 +50,7 @@
         arguments  as  the  operation  [10XSomeFunc[110X itself and can return an array
         containing  [10X[ true, something ][110X, which will cause the installed method
         to  simply return the object [10Xsomething[110X, or [10X[ false ][110X. If the output is
-        [10Xfalse[110X,  the  computation  will  continue  with  the  step Prefunction.
-        Additionally,  for  every category and every name like [10XSomeFunc[110X, there
-        is  a  boolean, stored in the category's component [10Xredirects[110X under the
-        name  of  [10XSomeFunc[110X, which, when it is [10Xfalse[110X, will prevent the redirect
-        function from being executed.[133X
+        [10Xfalse[110X, the computation will continue with the step Prefunction.[133X
   
   [30X    [33X[0;6YPrefunction:  The  prefunction  should  be used for error handling and
         plausibility  checks  of the input to [10XSomeFunc[110X (e.g. for [10XKernelLift[110X it
@@ -99,39 +95,17 @@
   does  slightly  more.  Every Add method has the same structure. The steps in
   the Add method are as follows:[133X
   
-  [30X    [33X[0;6YWeight check: If the current weight of the operation is lower than the
-        given  weight  of the new functions, then the add function returns and
-        installs nothing.[133X
-  
-  [30X    [33X[0;6YOption  check:  There  are  two possible options for every add method:
-        [10XSetPrimitive[110X and [10XIsDerivation[110X.[133X
-  
-        [30X    [33X[0;12Y[10XSetPrimitive[110X  should  be  a  boolean,  the  default  is true. If
-              [10XSetPrimitive[110X  is  false,  then the current call of this add will
-              not set the installed function to be primitive. This is used for
-              derivations.[133X
-  
-        [30X    [33X[0;12Y[10XIsDerivation[110X  should  be  a  boolean, default is false. If it is
-              true,  the  add  method  assumes  that  the  given function is a
-              derivation and does not try to install a corresponding pair (See
-              below).[133X
-  
   [30X    [33X[0;6YDefault  weight:  If the weight parameter is -1, the default weight is
         assumed, which is 100.[133X
   
-  [30X    [33X[0;6YChecking  for  pairs: If the function is part of a with given pair, we
-        check  if the weight of the with given operation is less than or equal
-        to the weight of the without given operation. If this is the case, the
-        redirect  function  for  the  without given operation is enabled, else
-        disabled.[133X
+  [30X    [33X[0;6YWeight check: If the current weight of the operation is lower than the
+        given  weight  of the new functions, then the add function returns and
+        installs nothing.[133X
   
   [30X    [33X[0;6YInstallation: Next, the method to install the functions is created. It
         creates  the  correct filter list, by merging the standard filters for
         the  operation  with  the  particular filters for the given functions,
         then installs the method as described above.[133X
-  
-  [30X    [33X[0;6YSetPrimitive:  If  the  set  primitive  flag  is  true,  it  is set as
-        primitive in the weight list of the category.[133X
   
   [33X[0;0YAfter calling an add method, the corresponding operation is available in the
   category.  Also, some derivations, which are triggered by the setting of the
@@ -499,7 +473,7 @@
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given  function  [23XF[123X to the category for the basic operation [10XCoequalizer[110X. [23XF: (
-  arg2 ) \mapsto \mathtt{Coequalizer}(arg2)[123X.[133X
+  arg2, arg3 ) \mapsto \mathtt{Coequalizer}(arg2, arg3)[123X.[133X
   
   [1X7.7-13 AddCoequalizerFunctorial[101X
   
@@ -805,8 +779,8 @@
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XEmbeddingOfEqualizer[110X.       [23XF:       (       morphisms       )       \mapsto
-  \mathtt{EmbeddingOfEqualizer}(morphisms)[123X.[133X
+  [10XEmbeddingOfEqualizer[110X.      [23XF:      (      Y,     morphisms     )     \mapsto
+  \mathtt{EmbeddingOfEqualizer}(Y, morphisms)[123X.[133X
   
   [1X7.7-44 AddEmbeddingOfEqualizerWithGivenEqualizer[101X
   
@@ -815,8 +789,8 @@
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XEmbeddingOfEqualizerWithGivenEqualizer[110X.   [23XF:   (   morphisms,  P  )  \mapsto
-  \mathtt{EmbeddingOfEqualizerWithGivenEqualizer}(morphisms, P)[123X.[133X
+  [10XEmbeddingOfEqualizerWithGivenEqualizer[110X.  [23XF:  (  Y,  morphisms,  P  ) \mapsto
+  \mathtt{EmbeddingOfEqualizerWithGivenEqualizer}(Y, morphisms, P)[123X.[133X
   
   [1X7.7-45 AddEpimorphismFromSomeProjectiveObject[101X
   
@@ -847,7 +821,7 @@
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given  function  [23XF[123X  to  the category for the basic operation [10XEqualizer[110X. [23XF: (
-  arg2 ) \mapsto \mathtt{Equalizer}(arg2)[123X.[133X
+  arg2, arg3 ) \mapsto \mathtt{Equalizer}(arg2, arg3)[123X.[133X
   
   [1X7.7-48 AddEqualizerFunctorial[101X
   
@@ -1944,8 +1918,8 @@
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XMorphismFromEqualizerToSink[110X.      [23XF:      (      morphisms     )     \mapsto
-  \mathtt{MorphismFromEqualizerToSink}(morphisms)[123X.[133X
+  [10XMorphismFromEqualizerToSink[110X.     [23XF:     (    Y,    morphisms    )    \mapsto
+  \mathtt{MorphismFromEqualizerToSink}(Y, morphisms)[123X.[133X
   
   [1X7.7-159 AddMorphismFromEqualizerToSinkWithGivenEqualizer[101X
   
@@ -1954,8 +1928,9 @@
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XMorphismFromEqualizerToSinkWithGivenEqualizer[110X.  [23XF:  ( morphisms, P ) \mapsto
-  \mathtt{MorphismFromEqualizerToSinkWithGivenEqualizer}(morphisms, P)[123X.[133X
+  [10XMorphismFromEqualizerToSinkWithGivenEqualizer[110X.   [23XF:  (  Y,  morphisms,  P  )
+  \mapsto \mathtt{MorphismFromEqualizerToSinkWithGivenEqualizer}(Y, morphisms,
+  P)[123X.[133X
   
   [1X7.7-160 AddMorphismFromFiberProductToSink[101X
   
@@ -2005,8 +1980,8 @@
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XMorphismFromSourceToCoequalizer[110X.     [23XF:     (     morphisms     )    \mapsto
-  \mathtt{MorphismFromSourceToCoequalizer}(morphisms)[123X.[133X
+  [10XMorphismFromSourceToCoequalizer[110X.    [23XF:    (    Y,    morphisms   )   \mapsto
+  \mathtt{MorphismFromSourceToCoequalizer}(Y, morphisms)[123X.[133X
   
   [1X7.7-165 AddMorphismFromSourceToCoequalizerWithGivenCoequalizer[101X
   
@@ -2015,9 +1990,9 @@
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XMorphismFromSourceToCoequalizerWithGivenCoequalizer[110X.  [23XF:  (  morphisms,  P )
-  \mapsto
-  \mathtt{MorphismFromSourceToCoequalizerWithGivenCoequalizer}(morphisms, P)[123X.[133X
+  [10XMorphismFromSourceToCoequalizerWithGivenCoequalizer[110X.  [23XF: ( Y, morphisms, P )
+  \mapsto      \mathtt{MorphismFromSourceToCoequalizerWithGivenCoequalizer}(Y,
+  morphisms, P)[123X.[133X
   
   [1X7.7-166 AddMorphismFromSourceToCokernelObject[101X
   
@@ -2197,8 +2172,8 @@
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XProjectionOntoCoequalizer[110X.      [23XF:      (      morphisms      )      \mapsto
-  \mathtt{ProjectionOntoCoequalizer}(morphisms)[123X.[133X
+  [10XProjectionOntoCoequalizer[110X.     [23XF:     (     Y,     morphisms    )    \mapsto
+  \mathtt{ProjectionOntoCoequalizer}(Y, morphisms)[123X.[133X
   
   [1X7.7-184 AddProjectionOntoCoequalizerWithGivenCoequalizer[101X
   
@@ -2207,8 +2182,9 @@
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XProjectionOntoCoequalizerWithGivenCoequalizer[110X.  [23XF:  ( morphisms, P ) \mapsto
-  \mathtt{ProjectionOntoCoequalizerWithGivenCoequalizer}(morphisms, P)[123X.[133X
+  [10XProjectionOntoCoequalizerWithGivenCoequalizer[110X.   [23XF:  (  Y,  morphisms,  P  )
+  \mapsto \mathtt{ProjectionOntoCoequalizerWithGivenCoequalizer}(Y, morphisms,
+  P)[123X.[133X
   
   [1X7.7-185 AddProjectiveDimension[101X
   
@@ -2645,8 +2621,8 @@
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XUniversalMorphismFromCoequalizer[110X.   [23XF:   (   morphisms,  T,  tau  )  \mapsto
-  \mathtt{UniversalMorphismFromCoequalizer}(morphisms, T, tau)[123X.[133X
+  [10XUniversalMorphismFromCoequalizer[110X.  [23XF:  (  Y,  morphisms,  T,  tau  ) \mapsto
+  \mathtt{UniversalMorphismFromCoequalizer}(Y, morphisms, T, tau)[123X.[133X
   
   [1X7.7-230 AddUniversalMorphismFromCoequalizerWithGivenCoequalizer[101X
   
@@ -2655,10 +2631,10 @@
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XUniversalMorphismFromCoequalizerWithGivenCoequalizer[110X.  [23XF:  (  morphisms,  T,
+  [10XUniversalMorphismFromCoequalizerWithGivenCoequalizer[110X.  [23XF: ( Y, morphisms, T,
   tau,                     P                     )                     \mapsto
-  \mathtt{UniversalMorphismFromCoequalizerWithGivenCoequalizer}(morphisms,  T,
-  tau, P)[123X.[133X
+  \mathtt{UniversalMorphismFromCoequalizerWithGivenCoequalizer}(Y,  morphisms,
+  T, tau, P)[123X.[133X
   
   [1X7.7-231 AddUniversalMorphismFromCoproduct[101X
   
@@ -2855,8 +2831,8 @@
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XUniversalMorphismIntoEqualizer[110X.   [23XF:   (   morphisms,   T,   tau  )  \mapsto
-  \mathtt{UniversalMorphismIntoEqualizer}(morphisms, T, tau)[123X.[133X
+  [10XUniversalMorphismIntoEqualizer[110X.   [23XF:  (  Y,  morphisms,  T,  tau  )  \mapsto
+  \mathtt{UniversalMorphismIntoEqualizer}(Y, morphisms, T, tau)[123X.[133X
   
   [1X7.7-250 AddUniversalMorphismIntoEqualizerWithGivenEqualizer[101X
   
@@ -2865,10 +2841,9 @@
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XUniversalMorphismIntoEqualizerWithGivenEqualizer[110X.  [23XF: ( morphisms, T, tau, P
-  )                                                                    \mapsto
-  \mathtt{UniversalMorphismIntoEqualizerWithGivenEqualizer}(morphisms, T, tau,
-  P)[123X.[133X
+  [10XUniversalMorphismIntoEqualizerWithGivenEqualizer[110X. [23XF: ( Y, morphisms, T, tau,
+  P   )  \mapsto  \mathtt{UniversalMorphismIntoEqualizerWithGivenEqualizer}(Y,
+  morphisms, T, tau, P)[123X.[133X
   
   [1X7.7-251 AddUniversalMorphismIntoFiberProduct[101X
   

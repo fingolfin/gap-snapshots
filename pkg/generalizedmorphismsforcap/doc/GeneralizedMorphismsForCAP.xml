@@ -3,10 +3,7 @@
 <!-- This is an automatically generated file. -->
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
 [
-<!ENTITY homalg '<Package>homalg</Package>'>
-<!ENTITY see '<Alt Only="LaTeX">$\to$</Alt><Alt Not="LaTeX">--&gt;</Alt>'>
-<!ENTITY CAP '<Package>CAP</Package>'>
-<!ENTITY GeneralizedMorphismsForCAP '<Package>GeneralizedMorphismsForCAP</Package>'>
+    [<#Include SYSTEM "_entities.xml">
 ]
 >
 <Book Name="GeneralizedMorphismsForCAP">

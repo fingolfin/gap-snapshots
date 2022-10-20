@@ -33,7 +33,7 @@ entries :=
       "X781F69578636E8C5" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YWhat is the form preserved by this group?\033[133\
-X\033[101X", "2.3", [ 2, 3, 0 ], 163, 8, 
+X\033[101X", "2.3", [ 2, 3, 0 ], 163, 9, 
       "what is the form preserved by this group?", "X78638D21797AC9A0" ], 
   [ "\033[1X\033[33X\033[0;-2YBackground Theory on Forms\033[133X\033[101X", 
       "3", [ 3, 0, 0 ], 1, 10, "background theory on forms", 
@@ -60,7 +60,7 @@ X\033[101X", "2.3", [ 2, 3, 0 ], 163, 8,
       "X7999E38082474342" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YConstructing forms using a matrix\033[133X\033[10\
-1X", "4.2", [ 4, 2, 0 ], 41, 20, "constructing forms using a matrix", 
+1X", "4.2", [ 4, 2, 0 ], 41, 21, "constructing forms using a matrix", 
       "X78D981A67DBFCD6D" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YConstructing forms using a polynomial\033[133X\\

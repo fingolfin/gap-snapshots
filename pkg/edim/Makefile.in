@@ -2,23 +2,14 @@
 
 GAPPATH=@GAPPATH@
 
-GAPINCL=-I$(GAPPATH)/src -I$(GAPPATH)/bin/@GAPARCH@/src
+GAP=@GAP@
 
-PKGROOT=$(shell pwd)
+GAC=@GAC@
 
-GAP=$(GAPPATH)/bin/gap.sh
+.PHONY: doc clean distclean docclean test
 
-GAC=$(GAPPATH)/gac
-
-.PHONY: clean doc test
-
-default: bin/@GAPARCH@/ediv.so 
-
-# this target creates a bin-directory
-bin/@GAPARCH@:
-	mkdir -p bin/@GAPARCH@
-
-bin/@GAPARCH@/ediv.so: src/ediv.c bin/@GAPARCH@
+bin/@GAPARCH@/ediv.so: src/ediv.c Makefile
+	@mkdir -p bin/@GAPARCH@
 	$(GAC) -d -o bin/@GAPARCH@/ediv.so src/ediv.c
 
 doc:
@@ -35,3 +26,7 @@ docclean:
 
 test:
 	$(GAP) -b -q -r < tst/test.g
+
+# regenerate Makefile if any of its inputs changed
+Makefile: configure Makefile.in $(GAPPATH)/sysinfo.gap
+	./configure @GAPPATH@

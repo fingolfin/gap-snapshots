@@ -427,7 +427,7 @@ r[6]:= r[3]^5;
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ScanBBoxProgram</code>( <var class="Arg">string</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: a record containing the black box program encoded by the input string, or <code class="keyw">fail</code>.</p>
 
-<p>For a string <var class="Arg">string</var> that describes a black box program, e.g., the return value of <code class="func">StringFile</code> (<a href="/home/sam/.gap/pkg/GAPDoc-1.6.5/doc/chap6.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: StringFile</span></a>), <code class="func">ScanBBoxProgram</code> computes this black box program. If this is successful then the return value is a record containing as the value of its component <code class="code">program</code> the corresponding <strong class="pkg">GAP</strong> object that represents the program, otherwise <code class="keyw">fail</code> is returned.</p>
+<p>For a string <var class="Arg">string</var> that describes a black box program, e.g., the return value of <code class="func">StringFile</code> (<a href="../../../pkg/gapdoc/doc/chap6.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: StringFile</span></a>), <code class="func">ScanBBoxProgram</code> computes this black box program. If this is successful then the return value is a record containing as the value of its component <code class="code">program</code> the corresponding <strong class="pkg">GAP</strong> object that represents the program, otherwise <code class="keyw">fail</code> is returned.</p>
 
 <p>As the first example, we construct a black box program that tries to find standard generators for the alternating group <span class="SimpleMath">A_5</span>; these standard generators are any pair of elements of the orders <span class="SimpleMath">2</span> and <span class="SimpleMath">3</span>, respectively, such that their product has order <span class="SimpleMath">5</span>.</p>
 
@@ -511,7 +511,7 @@ rec( program := &lt;black box program&gt; )
 
 </dd>
 <dt><strong class="Mark"><code class="code">orderfunction</code></strong></dt>
-<dd><p>the function for computing element orders (default <code class="func">Order</code> (<a href="../../../doc/ref/chap15.html#X85A0C67982D9057A"><span class="RefLink">Reference: order</span></a>)),</p>
+<dd><p>the function for computing element orders (default <code class="func">Order</code> (<a href="../../../doc/ref/chap31.html#X84F59A2687C62763"><span class="RefLink">Reference: Order</span></a>)),</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">quiet</code></strong></dt>

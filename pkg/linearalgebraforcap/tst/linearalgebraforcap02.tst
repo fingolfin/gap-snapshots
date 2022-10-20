@@ -10,69 +10,29 @@
 #
 gap> START_TEST("linearalgebraforcap02.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:264-327
-#@if IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2021.12-02" )
-gap> LoadPackage( "LinearAlgebraForCAP", false );
-true
-gap> QQ := HomalgFieldOfRationals();;
-gap> vec := MatrixCategoryAsAdditiveClosureOfRingAsCategory( QQ );
-Category of matrices over Q
-gap> a := MatrixCategoryObject( vec, 3 );
-<A vector space object over Q of dimension 3>
-gap> HasIsProjective( a ) and IsProjective( a );
-true
-gap> b := MatrixCategoryObject( vec, 4 );
-<A vector space object over Q of dimension 4>
-gap> DirectSum( a, b );
-<A vector space object over Q of dimension 7>
-gap> ZeroObject( vec );
-<A vector space object over Q of dimension 0>
-gap> ZeroMorphism( a, b );
-<A zero morphism in Category of matrices over Q>
+# doc/_Chapter_Examples_and_Tests.xml:264-287
+gap> Q := HomalgFieldOfRationals();;
+gap> a := VectorSpaceObject( 3, Q );;
+gap> b := VectorSpaceObject( 4, Q );;
 gap> homalg_matrix := HomalgMatrix( [ [ 1, 0, 0, 0 ],
->                                  [ 0, 1, 0, -1 ],
->                                  [ -1, 0, 2, 1 ] ], 3, 4, QQ );
-<A 3 x 4 matrix over an internal ring>
-gap> alpha := VectorSpaceMorphism( a, homalg_matrix, b );
-<A morphism in Category of matrices over Q>
-gap> Display( alpha );
-[ [   1,   0,   0,   0 ],
-  [   0,   1,   0,  -1 ],
-  [  -1,   0,   2,   1 ] ]
+>                                   [ 0, 1, 0, -1 ],
+>                                   [ -1, 0, 2, 1 ] ], 3, 4, Q );;
+gap> alpha := VectorSpaceMorphism( a, homalg_matrix, b );;
+gap> Display( SomeReductionBySplitEpiSummand( alpha ) );
+(an empty 0 x 1 matrix)
 
 A morphism in Category of matrices over Q
-gap> homalg_matrix := HomalgMatrix( [ [ 1, 1, 0, 0 ],
->                                  [ 0, 1, 0, -1 ],
->                                  [ -1, 0, 2, 1 ] ], 3, 4, QQ );
-<A 3 x 4 matrix over an internal ring>
-gap> beta := VectorSpaceMorphism( a, homalg_matrix, b );
-<A morphism in Category of matrices over Q>
-gap> gamma := UniversalMorphismIntoDirectSum( [ alpha, alpha ] );;
-gap> Display( gamma );
-[ [   1,   0,   0,   0,   1,   0,   0,   0 ],
-  [   0,   1,   0,  -1,   0,   1,   0,  -1 ],
-  [  -1,   0,   2,   1,  -1,   0,   2,   1 ] ]
+gap> Display( SomeReductionBySplitEpiSummand_MorphismFromInputRange( alpha ) );
+[ [     0 ],
+  [     1 ],
+  [  -1/2 ],
+  [     1 ] ]
 
 A morphism in Category of matrices over Q
-gap> IsEqualForMorphisms( ComponentOfMorphismIntoDirectSum( gamma, [ b, b ], 1 ), alpha );
-true
-gap> IsEqualForMorphisms( ComponentOfMorphismIntoDirectSum( gamma, [ b, b ], 2 ), alpha );
-true
-gap> gamma := UniversalMorphismFromDirectSum( [ beta, beta ] );;
-gap> Display( gamma );
-[ [   1,   1,   0,   0 ],
-  [   0,   1,   0,  -1 ],
-  [  -1,   0,   2,   1 ],
-  [   1,   1,   0,   0 ],
-  [   0,   1,   0,  -1 ],
-  [  -1,   0,   2,   1 ] ]
+gap> Display( SomeReductionBySplitEpiSummand_MorphismToInputRange( alpha ) );
+[ [  0,  1,  0,  0 ] ]
 
 A morphism in Category of matrices over Q
-gap> IsEqualForMorphisms( ComponentOfMorphismFromDirectSum( gamma, [ a, a ], 1 ), beta );
-true
-gap> IsEqualForMorphisms( ComponentOfMorphismFromDirectSum( gamma, [ a, a ], 2 ), beta );
-true
-#@fi
 
 #
 gap> STOP_TEST("linearalgebraforcap02.tst", 1);

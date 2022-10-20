@@ -10,7 +10,7 @@
 #
 gap> START_TEST("modulepresentationsforcap04.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:173-217
+# doc/_Chapter_Examples_and_Tests.xml:173-208
 gap> R := HomalgRingOfIntegers( );;
 gap> M := AsLeftPresentation( HomalgMatrix( [ [ 2 ] ], 1, 1, R ) );
 <An object in Category of left presentations of Z>
@@ -28,30 +28,21 @@ true
 gap> H := InternalHomOnObjects( DirectSum( M, M ), DirectSum( M, N ) );
 <An object in Category of left presentations of Z>
 gap> Display( H );
-[ [  -4,  -2 ],
-  [   2,   2 ] ]
+[ [   0,   0,   0,  -2 ],
+  [   1,   2,   0,   0 ],
+  [   0,   2,   2,   0 ],
+  [   2,   3,   0,   2 ] ]
 
 An object in Category of left presentations of Z
-gap> alpha := StandardGeneratorMorphism( H, 1 );
+gap> alpha := StandardGeneratorMorphism( H, 3 );
 <A morphism in Category of left presentations of Z>
 gap> l := LambdaElimination( DirectSum( M, M ), DirectSum( M, N ), alpha );
 <A morphism in Category of left presentations of Z>
 gap> IsZero( l );
 false
 gap> Display( l );
-[ [  0,   0 ],
-  [  1,  0 ] ]
-
-A morphism in Category of left presentations of Z
-gap> alpha2 := StandardGeneratorMorphism( H, 2 );
-<A morphism in Category of left presentations of Z>
-gap> l2 := LambdaElimination( DirectSum( M, M ), DirectSum( M, N ), alpha2 );
-<A morphism in Category of left presentations of Z>
-gap> IsZero( l2 );
-false
-gap> Display( l2 );
-[ [  1,   0 ],
-  [  0,  0 ] ]
+[ [  -2,   6 ],
+  [  -1,  -3 ] ]
 
 A morphism in Category of left presentations of Z
 

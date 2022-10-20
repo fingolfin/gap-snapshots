@@ -3,15 +3,7 @@
 <!-- This is an automatically generated file. -->
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
 [
-<!ENTITY AutoDoc '<Package>AutoDoc</Package>'>
-<!ENTITY MathJax '<M>{\sf MathJax}</M>'>
-<!ENTITY see '<Alt Only="LaTeX">$\to$</Alt><Alt Not="LaTeX">--&gt;</Alt>'>
-<!ENTITY ResClasses '<Package>ResClasses</Package>'>
-<!ENTITY RCWA '<Package>RCWA</Package>'>
-<!ENTITY XMod '<Package>XMod</Package>'>
-<!ENTITY Home '<Package>Home</Package>'>
-<!ENTITY Magma '<M>{\sf Magma}</M>'>
-<!ENTITY Utils '<Package>Utils</Package>'>
+    [<#Include SYSTEM "_entities.xml">
 ]
 >
 <Book Name="Utils">
@@ -25,6 +17,7 @@
 <#Include SYSTEM "groups.xml">
 <#Include SYSTEM "iterator.xml">
 <#Include SYSTEM "record.xml">
+<#Include SYSTEM "download.xml">
 <#Include SYSTEM "others.xml">
 <#Include SYSTEM "obsolete.xml">
 <#Include SYSTEM "transfer.xml">

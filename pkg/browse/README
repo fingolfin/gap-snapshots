@@ -3,7 +3,7 @@
 
 The newest version of "Browse" is usually contained in the current GAP
 distribution, see
-   http://www.gap-system.org/Download/
+   https://www.gap-system.org/Download/
 
 To fetch another version follow the hints under "Fetching Browse Separately"
 below.
@@ -94,7 +94,7 @@ your file may still have the misleading '.gz' extension.
 
 The  unpacking is  done preferably  (but not  necessarily) inside  the 'pkg'
 subdirectory of  your GAP 4  installation. It creates a  subdirectory called
-'Browse'.
+'Browse-x.y'.
 
 
 

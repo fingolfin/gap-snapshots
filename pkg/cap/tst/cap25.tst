@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap25.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:1150-1184
+# doc/_Chapter_Examples_and_Tests.xml:1152-1186
 gap> vecspaces := CreateCapCategory( "VectorSpaces01" );
 VectorSpaces01
 gap> ReadPackage( "CAP", "examples/VectorSpacesAddKernel01.g" );

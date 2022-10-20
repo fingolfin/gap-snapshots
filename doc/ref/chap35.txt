@@ -383,7 +383,8 @@
   a  magma-with-inverses, that is, the closure of [3Xgens[103X under multiplication [2X\*[102X
   ([14X31.12-1[114X) and taking inverses (see [2XInverse[102X ([14X31.10-8[114X)) is [3XM[103X.[133X
   
-  [1X35.4-4 Centralizer[101X
+  
+  [1X35.4-4 [33X[0;0YCentralizer[133X[101X
   
   [33X[1;0Y[29X[2XCentralizer[102X( [3XM[103X, [3Xelm[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XCentralizer[102X( [3XM[103X, [3XS[103X ) [32X operation[133X

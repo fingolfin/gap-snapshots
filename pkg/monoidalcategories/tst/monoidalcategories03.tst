@@ -10,18 +10,22 @@
 #
 gap> START_TEST("monoidalcategories03.tst");
 
-# /doc/_Chunks.xml:48-156
+# /doc/_Chunks.xml:54-166
 gap> T := TerminalCategoryWithMultipleObjects( );
 TerminalCategoryWithMultipleObjects( )
 gap> InfoOfInstalledOperationsOfCategory( T );
 68 primitive operations were used to derive 317 operations for this category
-which constructively
+which algorithmically
 * IsEquippedWithHomomorphismStructure
 * IsLinearCategoryOverCommutativeRing
 * IsAbelianCategoryWithEnoughInjectives
 * IsAbelianCategoryWithEnoughProjectives
 * IsRigidSymmetricClosedMonoidalCategory
 * IsRigidSymmetricCoclosedMonoidalCategory
+and furthermore mathematically
+* IsLocallyOfFiniteInjectiveDimension
+* IsLocallyOfFiniteProjectiveDimension
+* IsTerminalCategory
 gap> i := InitialObject( T );
 <A zero object in TerminalCategoryWithMultipleObjects( )>
 gap> t := TerminalObject( T );

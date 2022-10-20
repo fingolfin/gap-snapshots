@@ -1,10 +1,10 @@
 SetPackageInfo( rec(
 PackageName := "Browse",
-Version := "1.8.14",
-Date := "24/03/2022",
+Version := "1.8.18",
+Date := "07/10/2022",
 License := "GPL-3.0-or-later",
 Subtitle := "browsing applications and ncurses interface",
-ArchiveURL := "https://www.math.rwth-aachen.de/~Browse/Browse-1.8.14",
+ArchiveURL := "https://www.math.rwth-aachen.de/~Browse/Browse-1.8.18",
 ArchiveFormats := ".tar.bz2",
 Persons := [
   rec(

@@ -156,22 +156,22 @@
 </List>
 <ManSection>
   <Oper Arg="C, n" Name="RandomObjectByInteger" Label="for IsCapCategory, IsInt"/>
- <Returns>an object or <C>fail</C>
+ <Returns>an object in <Math>C</Math>
 </Returns>
  <Description>
  The arguments are a category <Math>C</Math> and an integer <Math>n</Math>.
- The output is a random object in <Math>C</Math> or <C>fail</C>.
+ The output is a random object in <Math>C</Math>.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Oper Arg="C, L" Name="RandomObjectByList" Label="for IsCapCategory, IsList"/>
- <Returns>an object or <C>fail</C>
+ <Returns>an object in <Math>C</Math>
 </Returns>
  <Description>
  The arguments are a category <Math>C</Math> and a list <Math>L</Math>.
- The output is a random object in <Math>C</Math> or <C>fail</C>.
+ The output is a random object in <Math>C</Math>.
  </Description>
 </ManSection>
 
@@ -251,7 +251,7 @@
 
 
 <ManSection>
-  <Func Arg="object, category, [attribute1, value1, ...]" Name="ObjectifyObjectForCAPWithAttributes" />
+  <Func Arg="object, category[, attribute1, value1, ...]" Name="ObjectifyObjectForCAPWithAttributes" />
  <Returns>an object
 </Returns>
  <Description>
@@ -262,6 +262,16 @@
   to the <C>AddObject</C> function.
   The optional arguments behave like the corresponding arguments in <C>ObjectifyWithAttributes</C>.
   Also returns the objectified object.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="category, [attribute1, value1, ...]" Name="CreateCapCategoryObjectWithAttributes" />
+ <Returns>an object
+</Returns>
+ <Description>
+  Shorthand for <Code>ObjectifyObjectForCAPWithAttributes( rec( ), category[, attribute1, value1, ...] )</Code>.
  </Description>
 </ManSection>
 
@@ -282,6 +292,16 @@
  The output is an object of <Math>C</Math> defined by <Math>a</Math>.
  Note that by default this CAP operation is not cached. You can change this behaviour
  by calling <Code>SetCachingToWeak( C, "ObjectConstructor" )</Code> resp. <Code>SetCachingToCrisp( C, "ObjectConstructor" )</Code>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="a, C" Name="\/" Label="for IsObject, IsCapCategory"/>
+ <Returns>an object
+</Returns>
+ <Description>
+   Shorthand for <Code>ObjectConstructor( C, a )</Code>.
  </Description>
 </ManSection>
 

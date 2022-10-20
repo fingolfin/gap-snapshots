@@ -4,20 +4,20 @@
 <Chapter Label="Chapter_Francy_Menus">
 <Heading>Francy Menus</Heading>
 
-Menus are agregators of actions that are represented here by <C>Callbacks</C>.
-Menus can have SubMenus, and are constituted by a Title and a Callback.
-<P/>
-Please see Francy-JS for client implementation.
+ Menus are agregators of actions that are represented here by <C>Callbacks</C>.
+ Menus can have SubMenus, and are constituted by a Title and a Callback.
+ <P/>
+ Please see Francy-JS for client implementation.
 <Section Label="Chapter_Francy_Menus_Section_Categories">
 <Heading>Categories</Heading>
 
-In this section we show all Francy Menu Categories.
+ In this section we show all Francy Menu Categories.
 <ManSection>
   <Filt Arg="arg" Name="IsMenu" Label="for IsFrancyObject"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Identifies <C>Menu</C> objects.
+ Identifies <C>Menu</C> objects.
  </Description>
 </ManSection>
 
@@ -28,20 +28,20 @@ Identifies <C>Menu</C> objects.
 <Section Label="Chapter_Francy_Menus_Section_Families">
 <Heading>Families</Heading>
 
-In this section we show all Francy Menu Families.
+ In this section we show all Francy Menu Families.
 </Section>
 
 
 <Section Label="Chapter_Francy_Menus_Section_Representations">
 <Heading>Representations</Heading>
 
-In this section we show all Francy Menu Representations.
+ In this section we show all Francy Menu Representations.
 <ManSection>
   <Filt Arg="arg" Name="IsMenuRep" Label="for IsComponentObjectRep"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Checks whether an <C>Object</C> has a <C>Menu</C> internal representation.
+ Checks whether an <C>Object</C> has a <C>Menu</C> internal representation.
  </Description>
 </ManSection>
 
@@ -52,14 +52,14 @@ Checks whether an <C>Object</C> has a <C>Menu</C> internal representation.
 <Section Label="Chapter_Francy_Menus_Section_Operations">
 <Heading>Operations</Heading>
 
-In this section we show all Francy Menu Operations.
+ In this section we show all Francy Menu Operations.
 <ManSection>
   <Oper Arg="IsString(title), [IsCallback]" Name="Menu" Label="for IsString, IsCallback"/>
  <Returns><C>Menu</C>
 </Returns>
  <Description>
-Creates a Menu for a <C>Callback</C>
-Is up to the client implementation to sort out the Menu and invoke the <C>Callback</C>
+ Creates a Menu for a <C>Callback</C>
+ Is up to the client implementation to sort out the Menu and invoke the <C>Callback</C>
  </Description>
 </ManSection>
 
@@ -69,8 +69,8 @@ Is up to the client implementation to sort out the Menu and invoke the <C>Callba
  <Returns><C>Menu</C>
 </Returns>
  <Description>
-Add <C>Menu</C> to a specific <C>Menu</C> creating a Submenu.
-Is up to the client implementation to handle this.
+ Add <C>Menu</C> to a specific <C>Menu</C> creating a Submenu.
+ Is up to the client implementation to handle this.
  </Description>
 </ManSection>
 
@@ -80,8 +80,8 @@ Is up to the client implementation to handle this.
  <Returns><C>Menu</C>
 </Returns>
  <Description>
-Remove <C>Menu</C> from a specific <C>Menu</C>.
-The client should be able to handle this.
+ Remove <C>Menu</C> from a specific <C>Menu</C>.
+ The client should be able to handle this.
  </Description>
 </ManSection>
 
@@ -92,19 +92,19 @@ The client should be able to handle this.
 <Section Label="Chapter_Francy_Menus_Section_Attributes">
 <Heading>Attributes</Heading>
 
-In this section we show all Francy Core Attributes
+ In this section we show all Francy Core Attributes
 <ManSection>
   <Attr Arg="arg" Name="Title" Label="for IsMenu"/>
  <Returns><C>IsString</C> with the title of the object
 </Returns>
  <Description>
-A title on a <C>Menu</C> is used to identify the menu entry.
+ A title on a <C>Menu</C> is used to identify the menu entry.
  </Description>
 </ManSection>
 
 
 <ManSection>
-  <Func Arg="arg1" Name="Title" Label="for IsMenu"/>
+  <Oper Arg="arg1" Name="Title" Label="for IsMenu"/>
  <Description>
 <P/>
  </Description>
@@ -112,9 +112,9 @@ A title on a <C>Menu</C> is used to identify the menu entry.
 
 
 <ManSection>
-  <Func Arg="IsMenu, IsString" Name="SetTitle" Label="for IsMenu, IsString"/>
+  <Oper Arg="IsMenu, IsString" Name="SetTitle" Label="for IsMenu, IsString"/>
  <Description>
-Sets the title of the <C>Menu</C>.
+ Sets the title of the <C>Menu</C>.
  </Description>
 </ManSection>
 

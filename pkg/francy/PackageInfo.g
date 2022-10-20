@@ -11,8 +11,8 @@ SetPackageInfo(rec(
 
   PackageName := "Francy",
   Subtitle    := "Framework for Interactive Discrete Mathematics",
-  Version     := "1.2.4",
-  Date        := "17/05/2019", # dd/mm/yyyy format
+  Version     := "1.2.5",
+  Date        := "05/09/2022", # dd/mm/yyyy format
   License     := "MIT",
 
   Persons := [
@@ -56,7 +56,7 @@ SetPackageInfo(rec(
   PackageDoc := rec(
     BookName         := "Francy",
     ArchiveURLSubset := ["doc"],
-    HTMLStart        := "doc/chap0.html",
+    HTMLStart        := "doc/chap0_mj.html",
     PDFFile          := "doc/manual.pdf",
     SixFile          := "doc/manual.six",
     LongTitle        := "FRANCY - A Framework for Interactive Discrete Mathematics"

@@ -149,6 +149,55 @@ gap> gr := OnDigraphs(gr, t);
 gap> OutNeighbours(gr);
 [ [ 2 ], [ 1, 1 ], [  ] ]
 
+#  OnTuplesDigraphs: for a digraph and a permutation
+gap> D := [ChainDigraph(3), CycleDigraph(4)];;
+gap> List(D, OutNeighbours);
+[ [ [ 2 ], [ 3 ], [  ] ], [ [ 2 ], [ 3 ], [ 4 ], [ 1 ] ] ]
+gap> List(OnTuplesDigraphs(D, (1, 3)), OutNeighbours);
+[ [ [  ], [ 1 ], [ 2 ] ], [ [ 4 ], [ 1 ], [ 2 ], [ 3 ] ] ]
+gap> D := [ChainDigraph(3), DigraphReverse(ChainDigraph(3))];;
+gap> List(D, OutNeighbours);
+[ [ [ 2 ], [ 3 ], [  ] ], [ [  ], [ 1 ], [ 2 ] ] ]
+gap> List(OnTuplesDigraphs(D, (1, 3)), OutNeighbours);
+[ [ [  ], [ 1 ], [ 2 ] ], [ [ 2 ], [ 3 ], [  ] ] ]
+gap> OnTuplesDigraphs(D, (1, 3)) = Permuted(D, (1, 2));
+true
+gap> D := EmptyDigraph(IsMutableDigraph, 3);;
+gap> DigraphAddEdge(D, 1, 1);;
+gap> out := OnTuplesDigraphs([D, D], (1, 2, 3));;
+gap> List(out, DigraphEdges);
+[ [ [ 2, 2 ] ], [ [ 2, 2 ] ] ]
+
+#  OnSetsDigraphs: for a digraph and a permutation
+gap> D := [DigraphReverse(ChainDigraph(3)), ChainDigraph(3)];;
+gap> IsSet(D);
+false
+gap> OnSetsDigraphs(D, (1, 2));
+Error, the first argument must be a set (a strictly sorted list),
+gap> D := Reversed(D);;
+gap> OnSetsDigraphs(D, (1, 3)) = D;
+true
+gap> OnSetsDigraphs(D, (1, 3)) = OnTuplesDigraphs(D, (1, 3));
+false
+gap> MinimalGeneratingSet(Stabilizer(SymmetricGroup(3), D, OnSetsDigraphs));
+[ (1,3) ]
+
+# Set of orbital graphs of G := TransitiveGroup(6, 4)
+# The stabiliser of this set is the normaliser of G in S_6
+gap> x := Set(["&ECA@_OG", "&EQHcQHc", "&EHcQHcQ"], DigraphFromDigraph6String);
+[ <immutable digraph with 6 vertices, 6 edges>, 
+  <immutable digraph with 6 vertices, 12 edges>, 
+  <immutable digraph with 6 vertices, 12 edges> ]
+gap> Stabiliser(SymmetricGroup(6), x, OnSetsDigraphs)
+> = Group([(1, 2, 3, 4, 5, 6), (1, 5)(2, 4)(3, 6)]);
+true
+gap> OnTuplesDigraphs(x, (2, 3)(5, 6)) = x;
+false
+gap> OnTuplesDigraphs(x, (2, 3)(5, 6)) = [x[1], x[3], x[2]];
+true
+gap> OnSetsDigraphs(x, (2, 3)(5, 6)) = x;
+true
+
 #  OnMultiDigraphs: for a pair of permutations
 gap> gr1 := CompleteDigraph(3);
 <immutable complete digraph with 3 vertices>
@@ -1394,6 +1443,36 @@ infinity
 gap> DigraphLongestDistanceFromVertex(gr, 16);
 Error, the 2nd argument <v> must be a vertex of the 1st argument <D>,
 
+#  DigraphRandomWalk
+gap> gr := CompleteDigraph(5);
+<immutable complete digraph with 5 vertices>
+gap> path := DigraphRandomWalk(gr, 1, 100);;
+gap> Length(path[1]);
+101
+gap> ForAll(path[1], i -> i in [1 .. 5]);
+true
+gap> Length(path[2]);
+100
+gap> ForAll(path[2], i -> i in [1 .. 4]);
+true
+gap> gr := ChainDigraph(5);
+<immutable chain digraph with 5 vertices>
+gap> DigraphRandomWalk(gr, 2, 100);
+[ [ 2, 3, 4, 5 ], [ 1, 1, 1 ] ]
+gap> DigraphRandomWalk(gr, 2, 2);  
+[ [ 2, 3, 4 ], [ 1, 1 ] ]
+gap> DigraphRandomWalk(gr, 5, 100);
+[ [ 5 ], [  ] ]
+gap> gr := CompleteBipartiteDigraph(10, 8);;
+gap> DigraphRandomWalk(gr, 3, 0);           
+[ [ 3 ], [  ] ]
+gap> DigraphRandomWalk(gr, 19, 5);
+Error, the 2nd argument <v> must be a vertex of the 1st argument <D>,
+gap> DigraphRandomWalk(gr, 123, 5);
+Error, the 2nd argument <v> must be a vertex of the 1st argument <D>,
+gap> DigraphRandomWalk(gr, 3, -1); 
+Error, the 3rd argument <t> must be a non-negative int,
+
 #  DigraphLayers
 gap> gr := CompleteDigraph(4);
 <immutable complete digraph with 4 vertices>
@@ -1633,6 +1712,16 @@ gap> gr := CycleDigraph(5);
 <immutable cycle digraph with 5 vertices>
 gap> PartialOrderDigraphJoinOfVertices(gr, 1, 4);
 Error, the 1st argument <D> must satisfy IsPartialOrderDigraph,
+gap> D := DigraphReflexiveTransitiveClosure(ChainDigraph(4));
+<immutable preorder digraph with 4 vertices, 10 edges>
+gap> IsJoinSemilatticeDigraph(D);
+true
+gap> PartialOrderDigraphJoinOfVertices(D, 2, 3);
+3
+gap> IsMeetSemilatticeDigraph(D);
+true
+gap> PartialOrderDigraphMeetOfVertices(D, 2, 3);
+2
 
 #Join semilattice on 9 vertices
 gap> gr := DigraphFromDiSparse6String(".HiR@AeNcC?oD?G`oAGXIoAGXAe_COqDK^F");

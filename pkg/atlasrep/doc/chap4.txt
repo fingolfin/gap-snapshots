@@ -16,9 +16,7 @@
   [21Xstarter archive[121X that can be downloaded from the package's homepage.[133X
   
   [33X[0;0YThe  package  consists entirely of [5XGAP[105X code, no external binaries need to be
-  compiled  for  the package itself. However, if the [5XGAP[105X package [5XIO[105X [Neu14] is
-  used  to  access  remote  data  files  (see Section [14X4.2-4[114X) then its external
-  binary must be available.[133X
+  compiled for the package itself.[133X
   
   [33X[0;0YAfter  unpacking  the  package  archive,  the  write  permissions  for those
   directories  should  be  checked into which users will download files. Every
@@ -63,42 +61,40 @@
   
         [30X    [33X[0;12YWhere are local copies of these data stored (see Section [14X4.2-2[114X)?[133X
   
-        [30X    [33X[0;12YHow are these data transfered (see Section [14X4.2-4[114X)?[133X
-  
         [30X    [33X[0;12YShall  files  be compressed after they have been downloaded (see
-              Section [14X4.2-5[114X)?[133X
+              Section [14X4.2-4[114X)?[133X
   
   [30X    [33X[0;6YThe following parameters influence reading and writing of local files.[133X
   
         [30X    [33X[0;12YWhat  shall  actually  happen  when  data  are  requested by the
-              interface functions (see Section [14X4.2-6[114X)?[133X
+              interface functions (see Section [14X4.2-5[114X)?[133X
   
         [30X    [33X[0;12YIf the value of the user preference [10XFileAccessFunctions[110X contains
               [10X"direct access to a local server"[110X, what is its path (see Section
-              [14X4.2-7[114X)?[133X
+              [14X4.2-6[114X)?[133X
   
         [30X    [33X[0;12YShall [2XScanMeatAxeFile[102X ([14X7.3-1[114X) focus on small runtime or on small
-              space when reading [5XMeatAxe[105X text files (see Section [14X4.2-8[114X)?[133X
+              space when reading [5XMeatAxe[105X text files (see Section [14X4.2-7[114X)?[133X
   
         [30X    [33X[0;12YWhich  kind  of  headers shall [2XMeatAxeString[102X ([14X7.3-2[114X) create (see
-              Section [14X4.2-9[114X)?[133X
+              Section [14X4.2-8[114X)?[133X
   
         [30X    [33X[0;12YShall  [2XMeatAxeString[102X ([14X7.3-2[114X) interpret permutation matrices more
               as  permutations  (mode  2)  or  as  matrices (mode 1 or 6) (see
-              Section [14X4.2-10[114X)?[133X
+              Section [14X4.2-9[114X)?[133X
   
         [30X    [33X[0;12YShall  the default for [2XCMtxBinaryFFMatOrPerm[102X ([14X7.3-4[114X) be to write
               binary  files  of  zero-based  or  one-based  permutations  (see
-              Section [14X4.2-11[114X)?[133X
+              Section [14X4.2-10[114X)?[133X
   
   [30X    [33X[0;6YWhich function is used by [2XDisplayAtlasInfo[102X ([14X3.5-1[114X) for printing to the
-        screen (see Section [14X4.2-12[114X)?[133X
+        screen (see Section [14X4.2-11[114X)?[133X
   
   [30X    [33X[0;6YHow  does [2XDisplayAtlasInfo[102X ([14X3.5-1[114X) mark data that do not belong to the
-        core database (see Section [14X4.2-13[114X)?[133X
+        core database (see Section [14X4.2-12[114X)?[133X
   
   [30X    [33X[0;6YShall  debug  messages  be printed when local data files are read (see
-        Section [14X4.2-14[114X)?[133X
+        Section [14X4.2-13[114X)?[133X
   
   
   [1X4.2-1 [33X[0;0YUser preference [10XAtlasRepAccessRemoteFiles[110X[101X[1X[133X[101X
@@ -124,10 +120,11 @@
   [33X[0;0YAn  empty string means that downloaded data are just kept in the [5XGAP[105X session
   but not saved to local files.[133X
   
-  [33X[0;0YThe  default  depends  on  the  user's  permissions for the directory of the
-  [5XAtlasRep[105X  package:  If  this  directory  is  writable  for the user then the
-  installation  path  of  the  [5XAtlasRep[105X  package  (including  a trailing slash
-  symbol) is taken, otherwise the default is an empty string.[133X
+  [33X[0;0YThe  default  depends  on  the  user's  permissions  for  the subdirectories
+  [11Xdataext[111X,  [11Xdatagens[111X, [11Xdataword[111X of the [5XAtlasRep[105X directory: If these directories
+  are writable for the user then the installation path of the [5XAtlasRep[105X package
+  (including  a  trailing  slash symbol) is taken, otherwise the default is an
+  empty string.[133X
   
   
   [1X4.2-3 [33X[0;0YUser preference [10XAtlasRepTOCData[110X[101X[1X[133X[101X
@@ -143,27 +140,7 @@
   [5XCTBlocks[105X.[133X
   
   
-  [1X4.2-4 [33X[0;0YUser preference [10XFileTransferTool[110X[101X[1X[133X[101X
-  
-  [33X[0;0YThis    user    preference    must   be   set   if   the   user   preference
-  [10XAtlasRepAccessRemoteFiles[110X  has  the  value  [9Xtrue[109X, see Section [14X4.2-1[114X. In this
-  case,  one  needs  either the [5XGAP[105X package [5XIO[105X [Neu14] or the external program
-  [11Xwget[111X for accessing data files.[133X
-  
-  [33X[0;0YWhich  alternative  is  chosen  at  runtime  is  given  by  the value of the
-  package's user preference [10XFileTransferTool[110X.[133X
-  
-  [33X[0;0YThe  value  [10X"wget"[110X  means that only [11Xwget[111X is tried. The value [10X"io"[110X means that
-  only  the  [5XIO[105X  package  is used. The value [10X"prefer io to wget"[110X (the default)
-  means  that  the  [5XIO[105X  package  is  used  if  this  package is available, and
-  otherwise [11Xwget[111X is tried.[133X
-  
-  [33X[0;0YNote  that  the  system  program  [11Xwget[111X may be not available, and that it may
-  require  some  work  to  install it; hints for that can be found on the home
-  page of the [5XAtlasRep[105X package (see Section [14X4.3[114X).[133X
-  
-  
-  [1X4.2-5 [33X[0;0YUser preference [10XCompressDownloadedMeatAxeFiles[110X[101X[1X[133X[101X
+  [1X4.2-4 [33X[0;0YUser preference [10XCompressDownloadedMeatAxeFiles[110X[101X[1X[133X[101X
   
   [33X[0;0YWhen  used with UNIX, [5XGAP[105X can read [11Xgzip[111Xped files, see [14X'Reference: Saving and
   Loading     a    Workspace'[114X.    If    the    package's    user    preference
@@ -178,7 +155,7 @@
   MB in uncompressed text format and about [22X275[122X MB in compressed text format.[133X
   
   
-  [1X4.2-6 [33X[0;0YUser preference [10XFileAccessFunctions[110X[101X[1X[133X[101X
+  [1X4.2-5 [33X[0;0YUser preference [10XFileAccessFunctions[110X[101X[1X[133X[101X
   
   [33X[0;0YThis  preference allows one to customize what actually happens when data are
   requested  by  the  interface  functions:  Is  it necessary to download some
@@ -200,13 +177,13 @@
   details and the possibility to add other features.[133X
   
   
-  [1X4.2-7 [33X[0;0YUser preference [10XAtlasRepLocalServerPath[110X[101X[1X[133X[101X
+  [1X4.2-6 [33X[0;0YUser preference [10XAtlasRepLocalServerPath[110X[101X[1X[133X[101X
   
   [33X[0;0YIf  the data of the core database are available locally (for example because
   one  has  access  to a local mirror of the data) then one may prefer reading
   these  files  instead of downloading data. In order to achieve this, one can
   set  the user preference [10XAtlasRepLocalServerPath[110X and add [10X"direct access to a
-  local server"[110X to the user preference [10XFileAccessFunctions[110X, see Section [14X4.2-6[114X.[133X
+  local server"[110X to the user preference [10XFileAccessFunctions[110X, see Section [14X4.2-5[114X.[133X
   
   [33X[0;0YThe value must be a string that is the filename of a directory (in the sense
   of  [2XIsDirectoryPath[102X  ([14XReference: IsDirectoryPath[114X)) that contains the data of
@@ -214,7 +191,7 @@
   on the [5XATLAS[105X server.[133X
   
   
-  [1X4.2-8 [33X[0;0YUser preference [10XHowToReadMeatAxeTextFiles[110X[101X[1X[133X[101X
+  [1X4.2-7 [33X[0;0YUser preference [10XHowToReadMeatAxeTextFiles[110X[101X[1X[133X[101X
   
   [33X[0;0YThe  value  [10X"fast"[110X  means  that [2XScanMeatAxeFile[102X ([14X7.3-1[114X) reads text files via
   [2XStringFile[102X  ([14XGAPDoc:  StringFile[114X).  Otherwise  each file containing a matrix
@@ -237,7 +214,7 @@
   cf. [2XFFMatOrPermCMtxBinary[102X ([14X7.3-5[114X).[133X
   
   
-  [1X4.2-9 [33X[0;0YUser preference [10XWriteHeaderFormatOfMeatAxeFiles[110X[101X[1X[133X[101X
+  [1X4.2-8 [33X[0;0YUser preference [10XWriteHeaderFormatOfMeatAxeFiles[110X[101X[1X[133X[101X
   
   [33X[0;0YThis  user  preference  determines the format of the header lines of [5XMeatAxe[105X
   format   strings   created  by  [2XMeatAxeString[102X  ([14X7.3-2[114X),  see  the  [10XC[110X-[5XMeatAxe[105X
@@ -258,7 +235,7 @@
         assignments such as [10Xmatrix field=2[110X.[133X
   
   
-  [1X4.2-10 [33X[0;0YUser preference [10XWriteMeatAxeFilesOfMode2[110X[101X[1X[133X[101X
+  [1X4.2-9 [33X[0;0YUser preference [10XWriteMeatAxeFilesOfMode2[110X[101X[1X[133X[101X
   
   [33X[0;0YThe  value  [9Xtrue[109X  means  that the function [2XMeatAxeString[102X ([14X7.3-2[114X) will encode
   permutation  matrices  via  mode 2 descriptions, that is, the first entry in
@@ -268,7 +245,7 @@
   is, the lines contain the matrix entries.[133X
   
   
-  [1X4.2-11 [33X[0;0YUser preference [10XBaseOfMeatAxePermutation[110X[101X[1X[133X[101X
+  [1X4.2-10 [33X[0;0YUser preference [10XBaseOfMeatAxePermutation[110X[101X[1X[133X[101X
   
   [33X[0;0YThe  value  [22X0[122X  means  that the function [2XCMtxBinaryFFMatOrPerm[102X ([14X7.3-4[114X) writes
   zero-based  permutations,  that is, permutations acting on the points from [22X0[122X
@@ -280,7 +257,7 @@
   one-based. Zero-based permutations were introduced in version 2.4.[133X
   
   
-  [1X4.2-12 [33X[0;0YUser preference [10XDisplayFunction[110X[101X[1X[133X[101X
+  [1X4.2-11 [33X[0;0YUser preference [10XDisplayFunction[110X[101X[1X[133X[101X
   
   [33X[0;0YThe  way  how  [2XDisplayAtlasInfo[102X  ([14X3.5-1[114X)  shows  the  requested  overview is
   controlled  by  the  package [5XAtlasRep[105X's user preference [10XDisplayFunction[110X. The
@@ -292,20 +269,20 @@
   for switching off [5XGAP[105X's automatic line breaking.[133X
   
   
-  [1X4.2-13 [33X[0;0YUser preference [10XAtlasRepMarkNonCoreData[110X[101X[1X[133X[101X
+  [1X4.2-12 [33X[0;0YUser preference [10XAtlasRepMarkNonCoreData[110X[101X[1X[133X[101X
   
   [33X[0;0YThe  value  is  a  string  (the  default  is  a  star  '*')  that is used in
   [2XDisplayAtlasInfo[102X  ([14X3.5-1[114X)  to  mark  data  that  do  not  belong to the core
   database, see Section  [14X5.2[114X.[133X
   
   
-  [1X4.2-14 [33X[0;0YUser preference [10XDebugFileLoading[110X[101X[1X[133X[101X
+  [1X4.2-13 [33X[0;0YUser preference [10XDebugFileLoading[110X[101X[1X[133X[101X
   
   [33X[0;0YIf  the  value is [9Xtrue[109X then debug messages are printed before and after data
   files get loaded. The default value is [9Xfalse[109X.[133X
   
   
-  [1X4.2-15 [33X[0;0YUser preference [10XAtlasRepJsonFilesAddresses[110X[101X[1X[133X[101X
+  [1X4.2-14 [33X[0;0YUser preference [10XAtlasRepJsonFilesAddresses[110X[101X[1X[133X[101X
   
   [33X[0;0YThe  value,  if  set, must be a list of length two, the first entry being an
   URL  describing a directory that contains Json format files of the available

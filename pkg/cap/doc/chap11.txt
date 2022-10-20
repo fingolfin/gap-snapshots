@@ -33,7 +33,7 @@
         [2XAddMorphismRepresentation[102X ([14X3.6-3[114X) to the category[133X
   
   [30X    [33X[0;6Y[10Xcommutative_ring_of_linear_category[110X   (optional):   ring  attached  as
-        [2XCommutativeRingOfLinearCategory[102X ([14X1.3-8[114X) to the category[133X
+        [2XCommutativeRingOfLinearCategory[102X ([14X1.3-6[114X) to the category[133X
   
   [30X    [33X[0;6Y[10Xproperties[110X  (optional):  list  of  categorical properties the category
         will have, see [10XCAP_INTERNAL_CATEGORICAL_PROPERTIES_LIST[110X[133X
@@ -42,7 +42,7 @@
         [2XObjectConstructor[102X ([14X2.7-1[114X) to the category[133X
   
   [30X    [33X[0;6Y[10Xobject_datum[110X   (optional):   function  added  as  an  installation  of
-        [2XObjectDatum[102X ([14X2.7-2[114X) to the category[133X
+        [2XObjectDatum[102X ([14X2.7-3[114X) to the category[133X
   
   [30X    [33X[0;6Y[10Xmorphism_constructor[110X  (optional): function added as an installation of
         [2XMorphismConstructor[102X ([14X3.2-1[114X) to the category[133X
@@ -52,6 +52,9 @@
   
   [30X    [33X[0;6Y[10Xlist_of_operations_to_install[110X  (mandatory):  a  list  of  names of [5XCAP[105X
         operations which should be installed for the category[133X
+  
+  [30X    [33X[0;6Y[10Xsupports_empty_limits[110X  (optional): whether the category supports empty
+        lists in inputs to operations of limits and colimits[133X
   
   [30X    [33X[0;6Y[10Xunderlying_category_getter_string[110X (optional): see below[133X
   
@@ -89,10 +92,10 @@
   
   [30X    [33X[0;6Y[10Xoperation_name[110X will be replaced by the name of the operation[133X
   
-  [30X    [33X[0;6Y[10Xinput_arguments[110X   will   be   replaced  by  the  [10Xinput_arguments_names[110X
+  [30X    [33X[0;6Y[10Xinput_arguments...[110X  will  be  replaced  by  the  [10Xinput_arguments_names[110X
         specified in the method name record (see [14X7.3[114X)[133X
   
-  [30X    [33X[0;6Y[10Xunderlying_arguments[110X:  If  the  constructed  category  is created from
+  [30X    [33X[0;6Y[10Xunderlying_arguments...[110X:  If  the constructed category is created from
         another          category,          [10Xunderlying_category_getter_string[110X,
         [10Xunderlying_object_getter_string[110X, and [10Xunderlying_morphism_getter_string[110X
         may  be  strings  of functions computing the underlying category (when

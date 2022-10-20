@@ -3,13 +3,7 @@
 <!-- This is an automatically generated file. -->
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
 [
-<!ENTITY see '<Alt Only="LaTeX">$	o$</Alt><Alt Not="LaTeX">--&gt;</Alt>'>
-<!ENTITY json '<Package>json</Package>'>
-<!ENTITY Jupyter '<URL Text="Jupyter">https://jupyter.org</URL>'>
-<!ENTITY SubgroupLattice '<URL Text="SubgroupLattice">https://github.com/mcmartins/subgroup-lattice</URL>'>
-<!ENTITY FrancyMonoids '<URL Text="FrancyMonoids">https://github.com/gap-packages/FrancyMonoids</URL>'>
-<!ENTITY JupyterKernel '<Package>JupyterKernel</Package>'>
-<!ENTITY Francy '<Package>Francy</Package>'>
+    [<#Include SYSTEM "_entities.xml">
 ]
 >
 <Book Name="Francy">

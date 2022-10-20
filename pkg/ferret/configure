@@ -621,6 +621,7 @@ LIBOBJS
 FERRET_PRINT
 FERRET_TIMING
 FERRET_CHECK
+GAPEXEC
 GAP_LIBS
 GAP_LDFLAGS
 GAP_CFLAGS
@@ -2781,6 +2782,8 @@ ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
+
+GAPEXEC="${GAP:-${GAPROOT}/bin/gap.sh}" # GAP >= 4.12.0 sets "GAP"
 
 
 # Check whether --enable-checking was given.

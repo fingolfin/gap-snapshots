@@ -74,6 +74,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X82453E55857562AB">3.6-2 AddMorphism</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X812F94E5790616EC">3.6-3 AddMorphismRepresentation</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7D4369A984B1BD3E">3.6-4 ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X78005D357A051FC6">3.6-5 CreateCapCategoryMorphismWithAttributes</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X850CFDD48773998E">3.7 <span class="Heading">Equality and Congruence for Morphisms</span></a>
 </span>
@@ -166,9 +167,11 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7CDC08947CF2022E">3.16-15 HomStructure</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X820B9AC886D78944">3.16-16 HomStructure</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8705DA127E089709">3.16-17 HomStructure</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7CC9C1A487AE6086">3.16-18 BasisOfExternalHom</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X82DE981C839D9F71">3.16-19 CoefficientsOfMorphismWithGivenBasisOfExternalHom</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8636593C845B23D2">3.16-20 CoefficientsOfMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X873E91D180B3057C">3.16-18 ExtendRangeOfHomomorphismStructureByFullEmbedding</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7C551C8F7BA2F3F1">3.16-19 ExtendRangeOfHomomorphismStructureByIdentityAsFullEmbedding</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7CC9C1A487AE6086">3.16-20 BasisOfExternalHom</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X82DE981C839D9F71">3.16-21 CoefficientsOfMorphismWithGivenBasisOfExternalHom</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8636593C845B23D2">3.16-22 CoefficientsOfMorphism</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7B39E2927B533D10">3.17 <span class="Heading">Simplified Morphisms</span></a>
 </span>
@@ -343,61 +346,61 @@
 <h5>3.4-1 RandomMorphismWithFixedSourceByInteger</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMorphismWithFixedSourceByInteger</code>( <var class="Arg">a</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism in <span class="Math">\mathrm{Hom}(a,b)</span> or <code class="code">fail</code></p>
+<p>Returns: a morphism in <span class="Math">\mathrm{Hom}(a,b)</span></p>
 
-<p>The arguments are an object <span class="Math">a</span> in a category <span class="Math">C</span> and an integer <span class="Math">n</span>. The output is a random morphism <span class="Math">\alpha: a \rightarrow b</span> for some object <span class="Math">b</span> in <span class="Math">C</span> or <code class="code">fail</code>.</p>
+<p>The arguments are an object <span class="Math">a</span> in a category <span class="Math">C</span> and an integer <span class="Math">n</span>. The output is a random morphism <span class="Math">\alpha: a \rightarrow b</span> for some object <span class="Math">b</span> in <span class="Math">C</span>.</p>
 
 <p><a id="X84FDBEED7844CDB6" name="X84FDBEED7844CDB6"></a></p>
 
 <h5>3.4-2 RandomMorphismWithFixedSourceByList</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMorphismWithFixedSourceByList</code>( <var class="Arg">a</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism in <span class="Math">\mathrm{Hom}(a,b)</span> or <code class="code">fail</code></p>
+<p>Returns: a morphism in <span class="Math">\mathrm{Hom}(a,b)</span></p>
 
-<p>The arguments are an object <span class="Math">a</span> in a category <span class="Math">C</span> and a list <span class="Math">L</span>. The output is a random morphism <span class="Math">\alpha: a \rightarrow b</span> for some object <span class="Math">b</span> in <span class="Math">C</span> or <code class="code">fail</code>.</p>
+<p>The arguments are an object <span class="Math">a</span> in a category <span class="Math">C</span> and a list <span class="Math">L</span>. The output is a random morphism <span class="Math">\alpha: a \rightarrow b</span> for some object <span class="Math">b</span> in <span class="Math">C</span>.</p>
 
 <p><a id="X844B1DDC8488B7CA" name="X844B1DDC8488B7CA"></a></p>
 
 <h5>3.4-3 RandomMorphismWithFixedRangeByInteger</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMorphismWithFixedRangeByInteger</code>( <var class="Arg">b</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism in <span class="Math">\mathrm{Hom}(a,b)</span> or <code class="code">fail</code></p>
+<p>Returns: a morphism in <span class="Math">\mathrm{Hom}(a,b)</span></p>
 
-<p>The arguments are an object <span class="Math">b</span> in a category <span class="Math">C</span> and an integer <span class="Math">n</span>. The output is a random morphism <span class="Math">\alpha: a \rightarrow b</span> for some object <span class="Math">a</span> in <span class="Math">C</span> or <code class="code">fail</code>.</p>
+<p>The arguments are an object <span class="Math">b</span> in a category <span class="Math">C</span> and an integer <span class="Math">n</span>. The output is a random morphism <span class="Math">\alpha: a \rightarrow b</span> for some object <span class="Math">a</span> in <span class="Math">C</span>.</p>
 
 <p><a id="X8568D71882C30501" name="X8568D71882C30501"></a></p>
 
 <h5>3.4-4 RandomMorphismWithFixedRangeByList</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMorphismWithFixedRangeByList</code>( <var class="Arg">b</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism in <span class="Math">\mathrm{Hom}(a,b)</span> or <code class="code">fail</code></p>
+<p>Returns: a morphism in <span class="Math">\mathrm{Hom}(a,b)</span></p>
 
-<p>The arguments are an object <span class="Math">b</span> in a category <span class="Math">C</span> and a list <span class="Math">L</span>. The output is a random morphism <span class="Math">\alpha: a \rightarrow b</span> for some object <span class="Math">a</span> in <span class="Math">C</span> or <code class="code">fail</code>.</p>
+<p>The arguments are an object <span class="Math">b</span> in a category <span class="Math">C</span> and a list <span class="Math">L</span>. The output is a random morphism <span class="Math">\alpha: a \rightarrow b</span> for some object <span class="Math">a</span> in <span class="Math">C</span>.</p>
 
 <p><a id="X80F66E9D809EA6A7" name="X80F66E9D809EA6A7"></a></p>
 
 <h5>3.4-5 RandomMorphismWithFixedSourceAndRangeByInteger</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMorphismWithFixedSourceAndRangeByInteger</code>( <var class="Arg">a</var>, <var class="Arg">b</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism in <span class="Math">\mathrm{Hom}(a,b)</span> or <code class="code">fail</code></p>
+<p>Returns: a morphism in <span class="Math">\mathrm{Hom}(a,b)</span></p>
 
-<p>The arguments are two objects <span class="Math">a</span> and <span class="Math">b</span> in a category <span class="Math">C</span> and an integer <span class="Math">n</span>. The output is a random morphism <span class="Math">\alpha: a \rightarrow b</span> in <span class="Math">C</span> or <code class="code">fail</code>.</p>
+<p>The arguments are two objects <span class="Math">a</span> and <span class="Math">b</span> in a category <span class="Math">C</span> and an integer <span class="Math">n</span>. The output is a random morphism <span class="Math">\alpha: a \rightarrow b</span> in <span class="Math">C</span>.</p>
 
 <p><a id="X7BF231C57B40B1A1" name="X7BF231C57B40B1A1"></a></p>
 
 <h5>3.4-6 RandomMorphismWithFixedSourceAndRangeByList</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMorphismWithFixedSourceAndRangeByList</code>( <var class="Arg">a</var>, <var class="Arg">b</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism in <span class="Math">\mathrm{Hom}(a,b)</span> or <code class="code">fail</code></p>
+<p>Returns: a morphism in <span class="Math">\mathrm{Hom}(a,b)</span></p>
 
-<p>This operation is not a CAP basic operation The arguments are two objects <span class="Math">a</span> and <span class="Math">b</span> in a category <span class="Math">C</span> and a list <span class="Math">L</span>. The output is a random morphism <span class="Math">\alpha: a \rightarrow b</span> in <span class="Math">C</span> or <code class="code">fail</code>.</p>
+<p>This operation is not a CAP basic operation The arguments are two objects <span class="Math">a</span> and <span class="Math">b</span> in a category <span class="Math">C</span> and a list <span class="Math">L</span>. The output is a random morphism <span class="Math">\alpha: a \rightarrow b</span> in <span class="Math">C</span>.</p>
 
 <p><a id="X81DB09BA7CBD3DB4" name="X81DB09BA7CBD3DB4"></a></p>
 
 <h5>3.4-7 RandomMorphismByInteger</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMorphismByInteger</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism or <code class="code">fail</code></p>
+<p>Returns: a morphism in <span class="Math">C</span></p>
 
 <p>The arguments are a category <span class="Math">C</span> and an integer <span class="Math">n</span>. The output is a random morphism in <span class="Math">C</span> or <code class="code">fail</code>. If the methods <code class="code">RandomObjectByInteger</code> and <code class="code">RandomMorphismWithFixedSourceByInteger</code>(<code class="code">RandomMorphismWithFixedRangeByInteger</code>) are added to the category <span class="Math">C</span>, then <code class="code">RandomMorphismByInteger</code> can be derived to return a random morphism of complexity <span class="Math">n</span> with random source(range) of complexity <span class="Math">n</span>.</p>
 
@@ -406,9 +409,9 @@
 <h5>3.4-8 RandomMorphismByList</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMorphismByList</code>( <var class="Arg">C</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism or <code class="code">fail</code></p>
+<p>Returns: a morphism in <span class="Math">C</span></p>
 
-<p>The arguments are a category <span class="Math">C</span> and a list <span class="Math">L</span>. The output is a random morphism in <span class="Math">C</span> or <code class="code">fail</code>.</p>
+<p>The arguments are a category <span class="Math">C</span> and a list <span class="Math">L</span>. The output is a random morphism in <span class="Math">C</span>.</p>
 
 <p><a id="X83D121E787FDC6E8" name="X83D121E787FDC6E8"></a></p>
 
@@ -420,6 +423,8 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMorphismWithFixedRange</code>( <var class="Arg">b</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMorphismWithFixedSourceAndRange</code>( <var class="Arg">a</var>, <var class="Arg">b</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMorphismWithFixedSourceAndRange</code>( <var class="Arg">a</var>, <var class="Arg">b</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMorphism</code>( <var class="Arg">a</var>, <var class="Arg">b</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMorphism</code>( <var class="Arg">a</var>, <var class="Arg">b</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMorphism</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMorphism</code>( <var class="Arg">C</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>These are convenient methods and they, depending on the input, delegate to one of the above methods.</p>
@@ -499,6 +504,15 @@
 <p>Returns: a morphism</p>
 
 <p>Objectifies the morphism <var class="Arg">morphism</var> with the type created for morphisms in the category <var class="Arg">category</var>. The type is created by passing a representation to <code class="code">AddMorphismRepresentation</code>. Morphisms which are objectified using this method do not have to be passed to the <code class="code">AddMorphism</code> function. The arguments <code class="code">source</code> and <code class="code">range</code> are assumed to be objectified. The optional arguments behave like the corresponding arguments in <code class="code">ObjectifyWithAttributes</code>. Also returns the objectified morphism.</p>
+
+<p><a id="X78005D357A051FC6" name="X78005D357A051FC6"></a></p>
+
+<h5>3.6-5 CreateCapCategoryMorphismWithAttributes</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CreateCapCategoryMorphismWithAttributes</code>( <var class="Arg">morphism</var>, <var class="Arg">category</var>, <var class="Arg">source</var>, <var class="Arg">range</var>[, <var class="Arg">attr1</var>, <var class="Arg">val1</var>, <var class="Arg">attr2</var>, <var class="Arg">val2</var>, <var class="Arg">...</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism</p>
+
+<p>Shorthand for <code class="code">ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes( rec( ), category, source, range[, attr1, val1, attr2, val2, ...] )</code>.</p>
 
 <p><a id="X850CFDD48773998E" name="X850CFDD48773998E"></a></p>
 
@@ -1031,9 +1045,51 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomStructure</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>This is a convenience method for <code class="code">DistinguishedObjectOfHomomorphismStructure</code>.</p>
 
+<p><a id="X873E91D180B3057C" name="X873E91D180B3057C"></a></p>
+
+<h5>3.16-18 ExtendRangeOfHomomorphismStructureByFullEmbedding</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtendRangeOfHomomorphismStructureByFullEmbedding</code>( <var class="Arg">C</var>, <var class="Arg">E</var>, <var class="Arg">object_function</var>, <var class="Arg">morphism_function</var>, <var class="Arg">object_function_inverse</var>, <var class="Arg">morphism_function_inverse</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomomorphismStructureOnObjectsExtendedByFullEmbedding</code>( <var class="Arg">C</var>, <var class="Arg">E</var>, <var class="Arg">a</var>, <var class="Arg">b</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomomorphismStructureOnMorphismsExtendedByFullEmbedding</code>( <var class="Arg">C</var>, <var class="Arg">E</var>, <var class="Arg">alpha</var>, <var class="Arg">beta</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomomorphismStructureOnMorphismsWithGivenObjectsExtendedByFullEmbedding</code>( <var class="Arg">C</var>, <var class="Arg">E</var>, <var class="Arg">s</var>, <var class="Arg">alpha</var>, <var class="Arg">beta</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DistinguishedObjectOfHomomorphismStructureExtendedByFullEmbedding</code>( <var class="Arg">C</var>, <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureExtendedByFullEmbedding</code>( <var class="Arg">C</var>, <var class="Arg">E</var>, <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjectsExtendedByFullEmbedding</code>( <var class="Arg">C</var>, <var class="Arg">E</var>, <var class="Arg">distinguished_object</var>, <var class="Arg">alpha</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphismExtendedByFullEmbedding</code>( <var class="Arg">C</var>, <var class="Arg">E</var>, <var class="Arg">a</var>, <var class="Arg">a'</var>, <var class="Arg">iota</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>If <span class="Math">\iota\colon D \to E</span> is a full embedding of categories, every <span class="Math">D</span>-homomorphism structure for a category <span class="Math">C</span> extends to a <span class="Math">E</span>-homomorphism structure for <span class="Math">C</span>. This operations accepts four functions and installs operations <code class="code">DistinguishedObjectOfHomomorphismStructureExtendedByFullEmbedding</code>, <code class="code">HomomorphismStructureOnObjectsExtendedByFullEmbedding</code> etc. which correspond to the <span class="Math">E</span>-homomorphism structure for <span class="Math">C</span>. Note: To distinguish embeddings in different categories, in addition to <span class="Math">C</span> also <span class="Math">E</span> is passed to the operations. When using this with different embeddings with the range category <span class="Math">E</span>, only the last embedding will be used. The arguments are:</p>
+
+
+<ul>
+<li><p><code class="code">object_function</code> gets the categories <span class="Math">C</span> and <span class="Math">E</span> and an object in <span class="Math">D</span>.</p>
+
+</li>
+<li><p><code class="code">morphism_function</code> gets the categories <span class="Math">C</span> and <span class="Math">E</span>, an object in <span class="Math">E</span>, a morphism in <span class="Math">D</span> and another object in <span class="Math">E</span>. The objects are the results of <code class="code">object_function</code> applied to the source and range of the morphism.</p>
+
+</li>
+<li><p><code class="code">object_function_inverse</code> gets the categories <span class="Math">C</span> and <span class="Math">E</span> and a morphism in <span class="Math">E</span>.</p>
+
+</li>
+<li><p><code class="code">morphism_function_inverse</code> gets the categories <span class="Math">C</span> and <span class="Math">E</span>, an object in <span class="Math">D</span>, a morphism in <span class="Math">E</span> and another object in <span class="Math">D</span>. The objects are the results of <code class="code">object_function_inverse</code> applied to the source and range of the morphism.</p>
+
+</li>
+</ul>
+<p><code class="code">object_function</code> and <code class="code">morphism_function</code> define the embedding. <code class="code">object_function_inverse</code> and <code class="code">morphism_function_inverse</code> define the inverse of the embedding on its image.</p>
+
+<p><a id="X7C551C8F7BA2F3F1" name="X7C551C8F7BA2F3F1"></a></p>
+
+<h5>3.16-19 ExtendRangeOfHomomorphismStructureByIdentityAsFullEmbedding</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtendRangeOfHomomorphismStructureByIdentityAsFullEmbedding</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>Chooses the identity on <span class="Math">D</span> as the full embedding in <code class="func">ExtendRangeOfHomomorphismStructureByFullEmbedding</code> (<a href="chap3.html#X873E91D180B3057C"><span class="RefLink">3.16-18</span></a>). This is useful to handle this case as a degenerate case of <code class="func">ExtendRangeOfHomomorphismStructureByFullEmbedding</code> (<a href="chap3.html#X873E91D180B3057C"><span class="RefLink">3.16-18</span></a>).</p>
+
 <p><a id="X7CC9C1A487AE6086" name="X7CC9C1A487AE6086"></a></p>
 
-<h5>3.16-18 BasisOfExternalHom</h5>
+<h5>3.16-20 BasisOfExternalHom</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BasisOfExternalHom</code>( <var class="Arg">a</var>, <var class="Arg">b</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a list of morphisms in <span class="Math">\mathrm{Hom}_{C}(a,b)</span></p>
@@ -1042,7 +1098,7 @@
 
 <p><a id="X82DE981C839D9F71" name="X82DE981C839D9F71"></a></p>
 
-<h5>3.16-19 CoefficientsOfMorphismWithGivenBasisOfExternalHom</h5>
+<h5>3.16-21 CoefficientsOfMorphismWithGivenBasisOfExternalHom</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoefficientsOfMorphismWithGivenBasisOfExternalHom</code>( <var class="Arg">alpha</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a list of elements in <span class="Math">k</span></p>
@@ -1051,7 +1107,7 @@
 
 <p><a id="X8636593C845B23D2" name="X8636593C845B23D2"></a></p>
 
-<h5>3.16-20 CoefficientsOfMorphism</h5>
+<h5>3.16-22 CoefficientsOfMorphism</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoefficientsOfMorphism</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a list of elements in <span class="Math">k</span></p>

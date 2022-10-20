@@ -4,30 +4,30 @@
 <Chapter Label="Chapter_Francy_Messages">
 <Heading>Francy Messages</Heading>
 
-<C>FrancyMessage</C> is an object that holds a message.
-<P/>
-These messages can be used to provide information to users in the form of <C>SUCCESS</C>, <C>INFO</C>, <C>WARNING</C>, <C>ERROR</C>.
-Please see Francy-JS for client implementation.
+ <C>FrancyMessage</C> is an object that holds a message.
+ <P/>
+ These messages can be used to provide information to users in the form of <C>SUCCESS</C>, <C>INFO</C>, <C>WARNING</C>, <C>ERROR</C>.
+ Please see Francy-JS for client implementation.
 <Section Label="Chapter_Francy_Messages_Section_Categories">
 <Heading>Categories</Heading>
 
-In this section we show all Francy FrancyMessage Categories.
+ In this section we show all Francy FrancyMessage Categories.
 <ManSection>
   <Filt Arg="arg" Name="IsFrancyMessage" Label="for IsFrancyObject"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Identifies <C>FrancyMessage</C> objects.
+ Identifies <C>FrancyMessage</C> objects.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Filt Arg="arg" Name="IsFrancyMessageType" Label="for IsFrancyObject"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Identifies <C>MessageType</C> objects.
+ Identifies <C>MessageType</C> objects.
  </Description>
 </ManSection>
 
@@ -38,30 +38,30 @@ Identifies <C>MessageType</C> objects.
 <Section Label="Chapter_Francy_Messages_Section_Families">
 <Heading>Families</Heading>
 
-In this section we show all Francy FrancyMessage Families.
+ In this section we show all Francy FrancyMessage Families.
 </Section>
 
 
 <Section Label="Chapter_Francy_Messages_Section_Representations">
 <Heading>Representations</Heading>
 
-In this section we show all Francy FrancyMessage Representations.
+ In this section we show all Francy FrancyMessage Representations.
 <ManSection>
   <Filt Arg="arg" Name="IsFrancyMessageRep" Label="for IsComponentObjectRep"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Checks whether an <C>Object</C> has a <C>FrancyMessage</C> internal representation.
+ Checks whether an <C>Object</C> has a <C>FrancyMessage</C> internal representation.
  </Description>
 </ManSection>
 
 
 <ManSection>
   <Filt Arg="arg" Name="IsFrancyMessageTypeRep" Label="for IsComponentObjectRep"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
-Checks whether an <C>Object</C> has a <C>FrancyMessage</C> internal representation.
+ Checks whether an <C>Object</C> has a <C>FrancyMessage</C> internal representation.
  </Description>
 </ManSection>
 
@@ -72,14 +72,14 @@ Checks whether an <C>Object</C> has a <C>FrancyMessage</C> internal representati
 <Section Label="Chapter_Francy_Messages_Section_Operations">
 <Heading>Operations</Heading>
 
-In this section we show all Francy FrancyMessage Operations.
+ In this section we show all Francy FrancyMessage Operations.
 <ManSection>
   <Oper Arg="IsString, IsString" Name="FrancyMessage" Label="for IsFrancyMessageType, IsString, IsString"/>
  <Returns><C>FrancyMessage</C>
 </Returns>
  <Description>
-Adds an info label with the format label: value
-<P/>
+ Adds an info label with the format label: value
+ <P/>
  </Description>
 </ManSection>
 
@@ -90,26 +90,26 @@ Adds an info label with the format label: value
 <Section Label="Chapter_Francy_Messages_Section_Global">
 <Heading>Global</Heading>
 
-In this section we show all Global Callback Francy Records for multi purpose.
+ In this section we show all Global Callback Francy Records for multi purpose.
 </Section>
 
 
 <Section Label="Chapter_Francy_Messages_Section_Attributes">
 <Heading>Attributes</Heading>
 
-In this section we show all Francy Core Attributes
+ In this section we show all Francy Core Attributes
 <ManSection>
   <Attr Arg="arg" Name="Title" Label="for IsFrancyMessage"/>
  <Returns><C>IsString</C> with the title of the object
 </Returns>
  <Description>
-A title on a <C>FrancyMessage</C> is used to display the title information to the user.
+ A title on a <C>FrancyMessage</C> is used to display the title information to the user.
  </Description>
 </ManSection>
 
 
 <ManSection>
-  <Func Arg="arg1" Name="Title" Label="for IsFrancyMessage"/>
+  <Oper Arg="arg1" Name="Title" Label="for IsFrancyMessage"/>
  <Description>
 <P/>
  </Description>
@@ -117,9 +117,9 @@ A title on a <C>FrancyMessage</C> is used to display the title information to th
 
 
 <ManSection>
-  <Func Arg="IsFrancyMessage, IsString" Name="SetTitle" Label="for IsFrancyMessage, IsString"/>
+  <Oper Arg="IsFrancyMessage, IsString" Name="SetTitle" Label="for IsFrancyMessage, IsString"/>
  <Description>
-Sets the title of the <C>FrancyMessage</C>.
+ Sets the title of the <C>FrancyMessage</C>.
  </Description>
 </ManSection>
 
@@ -129,13 +129,13 @@ Sets the title of the <C>FrancyMessage</C>.
  <Returns><C>IsString</C> with the title of the object
 </Returns>
  <Description>
-A value on a <C>FrancyMessage</C> is used to display the information to the user.
+ A value on a <C>FrancyMessage</C> is used to display the information to the user.
  </Description>
 </ManSection>
 
 
 <ManSection>
-  <Func Arg="arg1" Name="Value" Label="for IsFrancyMessage"/>
+  <Oper Arg="arg1" Name="Value" Label="for IsFrancyMessage"/>
  <Description>
 <P/>
  </Description>
@@ -143,9 +143,9 @@ A value on a <C>FrancyMessage</C> is used to display the information to the user
 
 
 <ManSection>
-  <Func Arg="IsFrancyMessage, IsString" Name="SetValue" Label="for IsFrancyMessage, IsString"/>
+  <Oper Arg="IsFrancyMessage, IsString" Name="SetValue" Label="for IsFrancyMessage, IsString"/>
  <Description>
-Sets the actual message of the <C>FrancyMessage</C>.
+ Sets the actual message of the <C>FrancyMessage</C>.
  </Description>
 </ManSection>
 

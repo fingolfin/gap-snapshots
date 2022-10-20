@@ -1,12 +1,16 @@
 #############################################################################
 ##
-##  shortorbs.gi
-##                                recog package
-##                                                        Max Neunhoeffer
-##                                                            Ákos Seress
+##  This file is part of recog, a package for the GAP computer algebra system
+##  which provides a collection of methods for the constructive recognition
+##  of groups.
 ##
-##  Copyright 2005-2008 by the authors.
-##  This file is free software, see license information at the end.
+##  This files's authors include Max Neunhöffer, Ákos Seress.
+##
+##  Copyright of recog belongs to its developers whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
+##
+##  SPDX-License-Identifier: GPL-3.0-or-later
+##
 ##
 ##  A collection of find homomorphism methods for permutation groups.
 ##
@@ -305,7 +309,7 @@ FindHomMethodsMatrix.ShortOrbits := function(ri,g)
           # Now throw away this orbit:
           ThrowAwayOrbit(i);
           # we intentionally do not increase i here!
-      elif not(found) then
+      elif not found then
           i := i + 1;
       fi;
       if i > nrorbs then
@@ -337,7 +341,7 @@ FindHomMethodsMatrix.ShortOrbits := function(ri,g)
   Info(InfoRecog,3,"Finished building homomorphism.");
 
   SetHomom(ri,hom);
-  Setmethodsforfactor(ri,FindHomDbPerm);
+  Setmethodsforimage(ri,FindHomDbPerm);
 
   return true;
 end;
@@ -345,19 +349,3 @@ end;
 #AddMethod( FindHomDbMatrix, FindHomMethodsMatrix.ShortOrbits,
 #           500, "ShortOrbits",
 #           "tries to find a short orbit via O'Brien/Murray heuristics" );
-
-##
-##  This program is free software: you can redistribute it and/or modify
-##  it under the terms of the GNU General Public License as published by
-##  the Free Software Foundation, either version 3 of the License, or
-##  (at your option) any later version.
-##
-##  This program is distributed in the hope that it will be useful,
-##  but WITHOUT ANY WARRANTY; without even the implied warranty of
-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-##  GNU General Public License for more details.
-##
-##  You should have received a copy of the GNU General Public License
-##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-##
-

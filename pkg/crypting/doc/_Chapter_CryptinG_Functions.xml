@@ -10,7 +10,7 @@
 <P/>
 <ManSection>
   <Filt Arg="arg" Name="IsSHA256State" Label="for IsObject"/>
- <Returns><C>true</C> or <C>false</C>
+ <Returns><K>true</K> or <K>false</K>
 </Returns>
  <Description>
 <P/>

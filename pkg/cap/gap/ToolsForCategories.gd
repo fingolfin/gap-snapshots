@@ -150,8 +150,6 @@ DeclareGlobalFunction( "CAP_INTERNAL_ASSERT_IS_NON_NEGATIVE_INTEGER_OR_INFINITY"
 
 DeclareGlobalFunction( "ListKnownCategoricalProperties" );
 
-DeclareGlobalFunction( "CAP_MergeRecords" );
-
 DeclareGlobalFunction( "HelpForCAP" );
 
 #! @Arguments category[, operation]
@@ -249,6 +247,11 @@ DeclareGlobalFunction( "CapJitDataTypeOfMorphismOfCategory" );
 DeclareGlobalFunction( "CapFixpoint" );
 
 #! @Description
+#!   Shorthand for `Iterated( Concatenation( [ <A>initial_value</A> ], <A>list</A> ), <A>func</A> )`.
+#! @Arguments list, func, initial_value
+DeclareOperation( "Iterated", [ IsList, IsFunction, IsObject ] );
+
+#! @Description
 #!   Returns a list of package names which are transitively needed other packages of the package <A>package_name</A>.
 #! @Arguments package_name
 DeclareGlobalFunction( "TransitivelyNeededOtherPackages" );
@@ -259,10 +262,16 @@ DeclareGlobalFunction( "TransitivelyNeededOtherPackages" );
 DeclareGlobalFunction( "PackageOfCAPOperation" );
 
 #! @Description
-#!   Returns `Position( `<A>list</A>`, `<A>obj</A>` )` while asserting that this value is not `fail`.
+#!   Returns `Position( <A>list</A>, <A>obj</A> )` while asserting that this value is not `fail`.
 #! @Arguments list, obj
 #! @Returns an integer
 DeclareOperation( "SafePosition", [ IsList, IsObject ] );
+
+#! @Description
+#!   Returns `PositionProperty( <A>list</A>, <A>func</A> )` while asserting that this value is not `fail`.
+#! @Arguments list, func
+#! @Returns an integer
+DeclareOperation( "SafePositionProperty", [ IsList, IsFunction ] );
 
 #! @Description
 #!   Returns <A>args</A> while asserting that its length is <A>n</A>.
@@ -297,3 +306,62 @@ DeclareGlobalFunction( "Triple" );
 #!   Note: Currently, there is no logic for finding the "optimal" code to install if <A>constructor_name</A> is the only entry of `remaining_constructors_in_tower` of multiple entries.
 #! @Arguments category, underlying_category, constructor_name
 DeclareGlobalFunction( "HandlePrecompiledTowers" );
+
+#! @Description
+#!   Simply returns <A>value</A>. Used to signify that the argument is not fully run through all logic functions/templates by CompilerForCAP.
+#! @Arguments value
+DeclareGlobalFunction( "CAP_JIT_INCOMPLETE_LOGIC" );
+
+#! @Description
+#!   Same as `List( <A>list</A>, <A>func</A> )` but <A>func</A> gets both the key `i` and `<A>list</A>[i]` as arguments.
+#! @Arguments list, func
+#! @Returns a list
+DeclareGlobalFunction( "ListWithKeys" );
+
+#! @Description
+#!   Same as `Sum( <A>list</A>, <A>func</A> )` but <A>func</A> gets both the key `i` and `<A>list</A>[i]` as arguments.
+#! @Arguments list, func
+#! @Returns a list
+DeclareGlobalFunction( "SumWithKeys" );
+
+#! @Description
+#!   Same as `Product( <A>list</A>, <A>func</A> )` but <A>func</A> gets both the key `i` and `<A>list</A>[i]` as arguments.
+#! @Arguments list, func
+#! @Returns a list
+DeclareGlobalFunction( "ProductWithKeys" );
+
+#! @Description
+#!   Same as `ForAll( <A>list</A>, <A>func</A> )` but <A>func</A> gets both the key `i` and `<A>list</A>[i]` as arguments.
+#! @Arguments list, func
+#! @Returns a list
+DeclareGlobalFunction( "ForAllWithKeys" );
+
+#! @Description
+#!   Same as `ForAny( <A>list</A>, <A>func</A> )` but <A>func</A> gets both the key `i` and `<A>list</A>[i]` as arguments.
+#! @Arguments list, func
+#! @Returns a list
+DeclareGlobalFunction( "ForAnyWithKeys" );
+
+#! @Description
+#!   Same as `Number( <A>list</A>, <A>func</A> )` but <A>func</A> gets both the key `i` and `<A>list</A>[i]` as arguments.
+#! @Arguments list, func
+#! @Returns a list
+DeclareGlobalFunction( "NumberWithKeys" );
+
+#! @Description
+#!   Same as `Filtered( <A>list</A>, <A>func</A> )` but <A>func</A> gets both the key `i` and `<A>list</A>[i]` as arguments.
+#! @Arguments list, func
+#! @Returns a list
+DeclareGlobalFunction( "FilteredWithKeys" );
+
+#! @Description
+#!   Same as `First( <A>list</A>, <A>func</A> )` but <A>func</A> gets both the key `i` and `<A>list</A>[i]` as arguments.
+#! @Arguments list, func
+#! @Returns a list
+DeclareGlobalFunction( "FirstWithKeys" );
+
+#! @Description
+#!   Same as `Last( <A>list</A>, <A>func</A> )` but <A>func</A> gets both the key `i` and `<A>list</A>[i]` as arguments.
+#! @Arguments list, func
+#! @Returns a list
+DeclareGlobalFunction( "LastWithKeys" );

@@ -41,38 +41,32 @@ DeclareCategory( "IsDerivedMethod", IsObject );
 #!  purposes.
 #!  The argument <A>target_op</A> is the operation which
 #!  the derived method implements.
-#!  The argument <A>used_ops_with_multiples</A> contains each
+#!  The argument <A>used_ops_with_multiples</A> contains the name of each
 #!  operation used by the derived method, together with a positive
-#!  integer specifying how many times that operation is used.
+#!  integer specifying how many times that operation is used and
+#!  optionally a category getter.
 #!  This is given as a list of lists, where each sublist has as
-#!  first entry an operation and as second entry an integer.
+#!  first entry the name of an operation, as second entry an integer and as
+#!  third entry optionally a function. This function should accept the
+#!  category and return a category for which the operation in the first
+#!  entry must be installed for the derivation to be considered valid.
 #!  The argument <A>weight</A> is an additional number to add
 #!  when calculating the resulting weight of the target operation
 #!  using this derivation.  Unless there is any particular reason
 #!  to regard the derivation as exceedingly expensive, this number
 #!  should be <C>1</C>.
-#!  The argument <A>implementations_with_extra_filters</A> contains
-#!  one or more functions with the actual implementation of the
-#!  derived method, together with lists of extra argument filters
-#!  for each function.  The argument is a list with entries of the
-#!  form <C>[fun, filters]</C>, where <C>fun</C> is a function and
-#!  <C>filters</C> is a (not necessarily dense) list of argument
-#!  filters.  If only one function is given, then <C>filters</C>
-#!  should be the empty list; in this case the argument's value
-#!  would be [[fun,[]]], where <C>fun</C> is the function.
-#!  The argument <A>category_filter</A> is a filter describing
+#!  The argument <A>func</A> contains the actual implementation of the
+#!  derived method.
+#!  The argument <A>category_filter</A> is a filter (or function) describing
 #!  which categories the derivation is valid for.  If it is valid
 #!  for all categories, then this argument should have the value
-#!  <C>IsCapCategory</C>.
-#!  The Option <C>ConditionsListComplete</C> indicates if the manually
-#!  given list of preconditions for this derivation is complete
-#!  or should be extended by looking for categorical operations
-#!  in the function body. The value <C>false</C> indicates it is not complete,
-#!  every other value that it is complete. Default is <C>false</C>.
-#! @Arguments name, target_op, used_ops_with_multiples, weight, implementations_with_extra_filters, category_filter
+#!  <C>IsCapCategory</C>. The output of <A>category_filter</A> must not
+#!  change during the installation of operations. In particular, it must
+#!  not rely on `CanCompute` to check conditions.
+#! @Arguments name, target_op, used_ops_with_multiples, weight, func, category_filter
 DeclareOperation( "MakeDerivation",
                   [ IsString, IsFunction, IsDenseList,
-                    IsPosInt, IsDenseList, IsFunction ] );
+                    IsPosInt, IsFunction, IsFunction ] );
 
 #! @Description
 #!  The name of the derivation.  This is a name identifying this
@@ -87,10 +81,9 @@ DeclareAttribute( "DerivationName", IsDerivedMethod );
 DeclareAttribute( "DerivationWeight", IsDerivedMethod );
 
 #! @Description
-#!  The implementation(s) of the derivation, together with lists
-#!  of extra filters for each implementation.
+#!  The implementation of the derivation.
 #! @Arguments d
-DeclareAttribute( "DerivationFunctionsWithExtraFilters", IsDerivedMethod );
+DeclareAttribute( "DerivationFunction", IsDerivedMethod );
 
 #! @Description
 #!  Filter describing which categories the derivation is valid for.
@@ -112,25 +105,12 @@ DeclareAttribute( "TargetOperation", IsDerivedMethod );
 
 #! @Arguments d
 #! @Returns
-#!  The names (as strings) of the operations used by the
-#!  derivation <A>d</A>
-DeclareAttribute( "UsedOperations", IsDerivedMethod );
-
-#! @Arguments d
-#! @Returns
-#!  Multiplicities of each operation used by the derivation
-#!  <A>d</A>, in order corresponding to the operation names
-#!  returned by <C>UsedOperations(d)</C>.
-DeclareAttribute( "UsedOperationMultiples", IsDerivedMethod );
-
-#! @Arguments d
-#! @Returns
 #!  The names of the operations used by the derivation <A>d</A>,
-#!  together with their multiplicities.
+#!  together with their multiplicities and category getters.
 #!  The result is a list consisting of lists of the form
-#!  <C>[op_name, mult]</C>, where <C>op_name</C> is a string
-#!  and <C>mult</C> a positive integer.
-DeclareAttribute( "UsedOperationsWithMultiples", IsDerivedMethod );
+#!  `[op_name, mult, getter]`, where `op_name` is a string,
+#!  `mult` a positive integer and `getter` is a function or `fail`.
+DeclareAttribute( "UsedOperationsWithMultiplesAndCategoryGetters", IsDerivedMethod );
 
 #! @Description
 #!  Install the derived method <A>d</A> for the category <A>C</A>.
@@ -140,13 +120,7 @@ DeclareAttribute( "UsedOperationsWithMultiples", IsDerivedMethod );
 DeclareOperation( "InstallDerivationForCategory",
                   [ IsDerivedMethod, IsPosInt, IsCapCategory ] );
 
-#! @Description
-#!  Computes the resulting weight of the target operation of this
-#!  derivation given a list of weights for the operations it uses.
-#!  The argument <A>op_weights</A> should be a list of integers
-#!  specifying weights for the operations given by
-#!  <C>UsedOperations( d )</C>, in the same order.
-#! @Arguments d, op_weights
+# deprecated
 DeclareOperation( "DerivationResultWeight",
                   [ IsDerivedMethod, IsDenseList ] );
 
@@ -197,16 +171,7 @@ DeclareOperation( "AddDerivation", [ IsDerivedMethodGraph, IsFunction, IsDenseLi
 DeclareOperation( "AddDerivation", [ IsDerivedMethodGraph, IsFunction, IsFunction ] );
 
 #!
-DeclareOperation( "AddDerivationPair", [ IsDerivedMethodGraph, IsFunction, IsFunction, IsDenseList, IsDenseList, IsDenseList ] );
-DeclareOperation( "AddDerivationPair", [ IsDerivedMethodGraph, IsFunction, IsFunction, IsDenseList, IsDenseList ] );
-DeclareOperation( "AddDerivationPair", [ IsDerivedMethodGraph, IsFunction, IsFunction, IsDenseList, IsFunction, IsFunction ] );
-DeclareOperation( "AddDerivationPair", [ IsDerivedMethodGraph, IsFunction, IsFunction, IsFunction, IsFunction ] );
-
-#!
 DeclareGlobalFunction( "AddDerivationToCAP" );
-
-#!
-DeclareGlobalFunction( "AddDerivationPairToCAP" );
 
 #!
 DeclareGlobalFunction( "AddWithGivenDerivationPairToCAP" );
@@ -413,5 +378,3 @@ DeclareGlobalFunction( "DerivationsOfMethodByCategory" );
 
 DeclareGlobalFunction( "ListInstalledOperationsOfCategory" );
 DeclareGlobalFunction( "ListPrimitivelyInstalledOperationsOfCategory" );
-
-DeclareGlobalFunction( "CAP_INTERNAL_DERIVATION_SANITY_CHECK" );

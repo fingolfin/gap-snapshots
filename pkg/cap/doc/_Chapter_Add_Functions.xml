@@ -55,9 +55,7 @@ Redirect function: The redirect is used to redirect the computation from the giv
   argument and then returns the value. In general, the redirect can be an arbitrary function. It is called with the same
   arguments as the operation <Code>SomeFunc</Code> itself and can return an array containing <Code>[ true, something ]</Code>, which will cause
   the installed method to simply return the object <Code>something</Code>, or <Code>[ false ]</Code>. If the output is <Code>false</Code>, the computation will
-  continue with the step Prefunction. Additionally, for every category and every name like <Code>SomeFunc</Code>, there is a boolean,
-  stored in the category's component <Code>redirects</Code> under the name of <Code>SomeFunc</Code>, which, when it is <Code>false</Code>, will prevent the
-  redirect function from being executed.
+  continue with the step Prefunction.
 </Item>
 </List>
 <P/>
@@ -121,6 +119,12 @@ Every Add method has the same structure. The steps in the Add method are as foll
 <P/>
 <List>
 <Item>
+Default weight: If the weight parameter is -1, the default weight is assumed, which is 100.
+</Item>
+</List>
+<P/>
+<List>
+<Item>
 Weight check: If the current weight of the operation is lower than the given weight of the new functions,
                 then the add function returns and installs nothing.
 </Item>
@@ -128,44 +132,8 @@ Weight check: If the current weight of the operation is lower than the given wei
 <P/>
 <List>
 <Item>
-Option check: There are two possible options for every add method: <Code>SetPrimitive</Code> and <Code>IsDerivation</Code>.
-<List>
-<Item>
-<Code>SetPrimitive</Code> should be a boolean, the default is true. If <Code>SetPrimitive</Code> is false, then the
-    current call of this add will not set the installed function to be primitive. This is used for derivations.
-</Item>
-<Item>
-<Code>IsDerivation</Code> should be a boolean, default is false. If it is true, the add method assumes that the given
-    function is a derivation and does not try to install a corresponding pair (See below).
-</Item>
-</List>
-</Item>
-</List>
-<P/>
-<List>
-<Item>
-Default weight: If the weight parameter is -1, the default weight is assumed, which is 100.
-</Item>
-</List>
-<P/>
-<List>
-<Item>
-Checking for pairs: If the function is part of a with given pair, we check if the weight of the with given operation
-                      is less than or equal to the weight of the without given operation. If this is the case,
-                      the redirect function for the without given operation is enabled, else disabled.
-</Item>
-</List>
-<P/>
-<List>
-<Item>
 Installation: Next, the method to install the functions is created. It creates the correct filter list, by merging the standard filters
                 for the operation with the particular filters for the given functions, then installs the method as described above.
-</Item>
-</List>
-<P/>
-<List>
-<Item>
-SetPrimitive: If the set primitive flag is true, it is set as primitive in the weight list of the category.
 </Item>
 </List>
 <P/>
@@ -641,7 +609,7 @@ except if the no_install component of the record is set to true.
  The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>Coequalizer</Code>.
- <Math>F: ( arg2 ) \mapsto \mathtt{Coequalizer}(arg2)</Math>.
+ <Math>F: ( arg2, arg3 ) \mapsto \mathtt{Coequalizer}(arg2, arg3)</Math>.
  </Description>
 </ManSection>
 
@@ -1044,7 +1012,7 @@ except if the no_install component of the record is set to true.
  The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>EmbeddingOfEqualizer</Code>.
- <Math>F: ( morphisms ) \mapsto \mathtt{EmbeddingOfEqualizer}(morphisms)</Math>.
+ <Math>F: ( Y, morphisms ) \mapsto \mathtt{EmbeddingOfEqualizer}(Y, morphisms)</Math>.
  </Description>
 </ManSection>
 
@@ -1057,7 +1025,7 @@ except if the no_install component of the record is set to true.
  The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>EmbeddingOfEqualizerWithGivenEqualizer</Code>.
- <Math>F: ( morphisms, P ) \mapsto \mathtt{EmbeddingOfEqualizerWithGivenEqualizer}(morphisms, P)</Math>.
+ <Math>F: ( Y, morphisms, P ) \mapsto \mathtt{EmbeddingOfEqualizerWithGivenEqualizer}(Y, morphisms, P)</Math>.
  </Description>
 </ManSection>
 
@@ -1096,7 +1064,7 @@ except if the no_install component of the record is set to true.
  The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>Equalizer</Code>.
- <Math>F: ( arg2 ) \mapsto \mathtt{Equalizer}(arg2)</Math>.
+ <Math>F: ( arg2, arg3 ) \mapsto \mathtt{Equalizer}(arg2, arg3)</Math>.
  </Description>
 </ManSection>
 
@@ -2539,7 +2507,7 @@ except if the no_install component of the record is set to true.
  The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>MorphismFromEqualizerToSink</Code>.
- <Math>F: ( morphisms ) \mapsto \mathtt{MorphismFromEqualizerToSink}(morphisms)</Math>.
+ <Math>F: ( Y, morphisms ) \mapsto \mathtt{MorphismFromEqualizerToSink}(Y, morphisms)</Math>.
  </Description>
 </ManSection>
 
@@ -2552,7 +2520,7 @@ except if the no_install component of the record is set to true.
  The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>MorphismFromEqualizerToSinkWithGivenEqualizer</Code>.
- <Math>F: ( morphisms, P ) \mapsto \mathtt{MorphismFromEqualizerToSinkWithGivenEqualizer}(morphisms, P)</Math>.
+ <Math>F: ( Y, morphisms, P ) \mapsto \mathtt{MorphismFromEqualizerToSinkWithGivenEqualizer}(Y, morphisms, P)</Math>.
  </Description>
 </ManSection>
 
@@ -2617,7 +2585,7 @@ except if the no_install component of the record is set to true.
  The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>MorphismFromSourceToCoequalizer</Code>.
- <Math>F: ( morphisms ) \mapsto \mathtt{MorphismFromSourceToCoequalizer}(morphisms)</Math>.
+ <Math>F: ( Y, morphisms ) \mapsto \mathtt{MorphismFromSourceToCoequalizer}(Y, morphisms)</Math>.
  </Description>
 </ManSection>
 
@@ -2630,7 +2598,7 @@ except if the no_install component of the record is set to true.
  The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>MorphismFromSourceToCoequalizerWithGivenCoequalizer</Code>.
- <Math>F: ( morphisms, P ) \mapsto \mathtt{MorphismFromSourceToCoequalizerWithGivenCoequalizer}(morphisms, P)</Math>.
+ <Math>F: ( Y, morphisms, P ) \mapsto \mathtt{MorphismFromSourceToCoequalizerWithGivenCoequalizer}(Y, morphisms, P)</Math>.
  </Description>
 </ManSection>
 
@@ -2864,7 +2832,7 @@ except if the no_install component of the record is set to true.
  The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>ProjectionOntoCoequalizer</Code>.
- <Math>F: ( morphisms ) \mapsto \mathtt{ProjectionOntoCoequalizer}(morphisms)</Math>.
+ <Math>F: ( Y, morphisms ) \mapsto \mathtt{ProjectionOntoCoequalizer}(Y, morphisms)</Math>.
  </Description>
 </ManSection>
 
@@ -2877,7 +2845,7 @@ except if the no_install component of the record is set to true.
  The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>ProjectionOntoCoequalizerWithGivenCoequalizer</Code>.
- <Math>F: ( morphisms, P ) \mapsto \mathtt{ProjectionOntoCoequalizerWithGivenCoequalizer}(morphisms, P)</Math>.
+ <Math>F: ( Y, morphisms, P ) \mapsto \mathtt{ProjectionOntoCoequalizerWithGivenCoequalizer}(Y, morphisms, P)</Math>.
  </Description>
 </ManSection>
 
@@ -3462,7 +3430,7 @@ except if the no_install component of the record is set to true.
  The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>UniversalMorphismFromCoequalizer</Code>.
- <Math>F: ( morphisms, T, tau ) \mapsto \mathtt{UniversalMorphismFromCoequalizer}(morphisms, T, tau)</Math>.
+ <Math>F: ( Y, morphisms, T, tau ) \mapsto \mathtt{UniversalMorphismFromCoequalizer}(Y, morphisms, T, tau)</Math>.
  </Description>
 </ManSection>
 
@@ -3475,7 +3443,7 @@ except if the no_install component of the record is set to true.
  The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>UniversalMorphismFromCoequalizerWithGivenCoequalizer</Code>.
- <Math>F: ( morphisms, T, tau, P ) \mapsto \mathtt{UniversalMorphismFromCoequalizerWithGivenCoequalizer}(morphisms, T, tau, P)</Math>.
+ <Math>F: ( Y, morphisms, T, tau, P ) \mapsto \mathtt{UniversalMorphismFromCoequalizerWithGivenCoequalizer}(Y, morphisms, T, tau, P)</Math>.
  </Description>
 </ManSection>
 
@@ -3722,7 +3690,7 @@ except if the no_install component of the record is set to true.
  The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>UniversalMorphismIntoEqualizer</Code>.
- <Math>F: ( morphisms, T, tau ) \mapsto \mathtt{UniversalMorphismIntoEqualizer}(morphisms, T, tau)</Math>.
+ <Math>F: ( Y, morphisms, T, tau ) \mapsto \mathtt{UniversalMorphismIntoEqualizer}(Y, morphisms, T, tau)</Math>.
  </Description>
 </ManSection>
 
@@ -3735,7 +3703,7 @@ except if the no_install component of the record is set to true.
  The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>UniversalMorphismIntoEqualizerWithGivenEqualizer</Code>.
- <Math>F: ( morphisms, T, tau, P ) \mapsto \mathtt{UniversalMorphismIntoEqualizerWithGivenEqualizer}(morphisms, T, tau, P)</Math>.
+ <Math>F: ( Y, morphisms, T, tau, P ) \mapsto \mathtt{UniversalMorphismIntoEqualizerWithGivenEqualizer}(Y, morphisms, T, tau, P)</Math>.
  </Description>
 </ManSection>
 

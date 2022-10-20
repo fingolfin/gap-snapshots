@@ -63,8 +63,10 @@ Exec( Concatenation( "cp ", bibfile, " ", pathtodoc ) );
 
 t := MakeGAPDocDoc( pathtodoc, main, files, bookname, pathtoroot, "MathJax" );;
 
-# Remove GAP's current 'manualbib.xml'.
+# Remove GAP's current 'manualbib.xml', and the automatically generated
+# 'manualbib.xml.bib'.
 Exec( Concatenation( "rm ", pathtodoc, "/", "manualbib.xml" ) );
+Exec( Concatenation( "rm ", pathtodoc, "/", "manualbib.xml.bib" ) );
 
 CopyHTMLStyleFiles(pathtodoc);
 

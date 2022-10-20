@@ -66,12 +66,14 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X855C644A812F32B7">2.6-2 AddObject</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7A68365C82BDA4E7">2.6-3 AddObjectRepresentation</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X78095CF37B92F0D9">2.6-4 ObjectifyObjectForCAPWithAttributes</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X87BD8BB88206D940">2.6-5 CreateCapCategoryObjectWithAttributes</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X824C0CC579E8DD7F">2.7 <span class="Heading">Object constructors</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X825D050A8674D377">2.7-1 ObjectConstructor</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X8521A36F7BBFF6BD">2.7-2 ObjectDatum</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7C6745F27FBA23F7"><code>2.7-2 \/</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X8521A36F7BBFF6BD">2.7-3 ObjectDatum</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X7820B09C781A90A8">2.8 <span class="Heading">Well-Definedness of Objects</span></a>
 </span>
@@ -227,18 +229,18 @@
 <h5>2.4-1 RandomObjectByInteger</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomObjectByInteger</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: an object or <code class="code">fail</code></p>
+<p>Returns: an object in <span class="SimpleMath">\(C\)</span></p>
 
-<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and an integer <span class="SimpleMath">\(n\)</span>. The output is a random object in <span class="SimpleMath">\(C\)</span> or <code class="code">fail</code>.</p>
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and an integer <span class="SimpleMath">\(n\)</span>. The output is a random object in <span class="SimpleMath">\(C\)</span>.</p>
 
 <p><a id="X7EEC27307C4B06E8" name="X7EEC27307C4B06E8"></a></p>
 
 <h5>2.4-2 RandomObjectByList</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomObjectByList</code>( <var class="Arg">C</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: an object or <code class="code">fail</code></p>
+<p>Returns: an object in <span class="SimpleMath">\(C\)</span></p>
 
-<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a list <span class="SimpleMath">\(L\)</span>. The output is a random object in <span class="SimpleMath">\(C\)</span> or <code class="code">fail</code>.</p>
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a list <span class="SimpleMath">\(L\)</span>. The output is a random object in <span class="SimpleMath">\(C\)</span>.</p>
 
 <p><a id="X7E0974E58188E6FB" name="X7E0974E58188E6FB"></a></p>
 
@@ -299,6 +301,15 @@
 
 <p>Objectifies the object <var class="Arg">object</var> with the type created for objects in the category <var class="Arg">category</var>. The type is created by passing a representation to <code class="code">AddObjectRepresentation</code>. Objects which are objectified using this method do not have to be passed to the <code class="code">AddObject</code> function. The optional arguments behave like the corresponding arguments in <code class="code">ObjectifyWithAttributes</code>. Also returns the objectified object.</p>
 
+<p><a id="X87BD8BB88206D940" name="X87BD8BB88206D940"></a></p>
+
+<h5>2.6-5 CreateCapCategoryObjectWithAttributes</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CreateCapCategoryObjectWithAttributes</code>( <var class="Arg">category</var>[, <var class="Arg">attribute1</var>, <var class="Arg">value1</var>, <var class="Arg">...</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: an object</p>
+
+<p>Shorthand for <code class="code">ObjectifyObjectForCAPWithAttributes( rec( ), category[, attribute1, value1, ...] )</code>.</p>
+
 <p><a id="X824C0CC579E8DD7F" name="X824C0CC579E8DD7F"></a></p>
 
 <h4>2.7 <span class="Heading">Object constructors</span></h4>
@@ -312,9 +323,18 @@
 
 <p>The arguments are a category <span class="SimpleMath">\(C\)</span> and an object datum <span class="SimpleMath">\(a\)</span> (type and semantics of the object datum depend on the category). The output is an object of <span class="SimpleMath">\(C\)</span> defined by <span class="SimpleMath">\(a\)</span>. Note that by default this CAP operation is not cached. You can change this behaviour by calling <code class="code">SetCachingToWeak( C, "ObjectConstructor" )</code> resp. <code class="code">SetCachingToCrisp( C, "ObjectConstructor" )</code>.</p>
 
+<p><a id="X7C6745F27FBA23F7" name="X7C6745F27FBA23F7"></a></p>
+
+<h5><code>2.7-2 \/</code></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \/</code>( <var class="Arg">a</var>, <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an object</p>
+
+<p>Shorthand for <code class="code">ObjectConstructor( C, a )</code>.</p>
+
 <p><a id="X8521A36F7BBFF6BD" name="X8521A36F7BBFF6BD"></a></p>
 
-<h5>2.7-2 ObjectDatum</h5>
+<h5>2.7-3 ObjectDatum</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ObjectDatum</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: depends on the category</p>

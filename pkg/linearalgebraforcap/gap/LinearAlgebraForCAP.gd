@@ -26,6 +26,10 @@ DeclareCategory( "IsMatrixCategory",
 DeclareAttribute( "MatrixCategory",
                   IsFieldForHomalg );
 
+# proper implementation in FreydCategoriesForCAP
+DeclareOperation( "MatrixCategoryAsCategoryOfRows",
+                  [ IsFieldForHomalg ] );
+
 # provide a constructor which is not an attribute
 DeclareGlobalFunction( "MATRIX_CATEGORY" );
 
@@ -39,3 +43,4 @@ DeclareGlobalFunction( "INSTALL_FUNCTIONS_FOR_MATRIX_CATEGORY" );
 
 DeclareAttribute( "UnderlyingRing",
                   IsMatrixCategory );
+CapJitAddTypeSignature( "UnderlyingRing", [ IsMatrixCategory ], IsHomalgRing );

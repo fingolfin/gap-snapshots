@@ -1,0 +1,15 @@
+\GAPDocLabFile{crypting}
+\makelabel{crypting:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{crypting:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{crypting:CryptinG Functions}{1}{X86B8290A7E3586B5}
+\makelabel{crypting:Internal Types and Functions}{1.1}{X7A99D08C7A17A5D9}
+\makelabel{crypting:Hash functions}{1.2}{X7AE36B967EB1382B}
+\makelabel{crypting:HMAC}{1.3}{X798E9B5587D955DB}
+\makelabel{crypting:Index}{Ind}{X83A0356F839C696F}
+\makelabel{crypting:IsSHA256State for IsObject}{1.1.1}{X7A0448718291EC19}
+\makelabel{crypting:CRYPTINGSHA256StateFamily}{1.1.2}{X78AD7FCC843F1A9E}
+\makelabel{crypting:CRYPTINGSHA256StateType}{1.1.3}{X796DF073854FECD9}
+\makelabel{crypting:CRYPTINGHexStringIntPad}{1.1.4}{X7E91B15380C025EC}
+\makelabel{crypting:CRYPTINGHexStringIntPad8}{1.1.5}{X790560687943E483}
+\makelabel{crypting:SHA256String}{1.2.1}{X7FFA0D5C7C5CB820}
+\makelabel{crypting:HMACSHA256}{1.3.1}{X831194C88571B5B1}

@@ -5,7 +5,7 @@ The GAP 4 Package **AtlasRep**
 Description
 -----------
 
-This is Version 2.1.4 of the package **AtlasRep** written for GAP 4,
+This is Version 2.1.6 of the package **AtlasRep** written for GAP 4,
 whose aim is to provide an interface between GAP and databases such as the
 [Atlas of Group Representations](http://atlas.math.rwth-aachen.de/Atlas),
 

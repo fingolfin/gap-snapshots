@@ -13,6 +13,10 @@
 #! about the progress of the algorithm, up to a maximum info level of 100.
 DeclareInfoClass( "InfoMajorana" );
 
+ReadPackage( "MajoranaAlgebras", "gap/SignedPerm.gi");
+ 
+ReadPackage( "MajoranaAlgebras", "gap/OrbitalStructure.gi");
+
 ReadPackage( "MajoranaAlgebras", "gap/DihedralAlgebras.gi");
 
 ReadPackage( "MajoranaAlgebras", "gap/LinAlg.gi");

@@ -10,7 +10,7 @@
 #
 gap> START_TEST("cap24.tst");
 
-# doc/_Chapter_Examples_and_Tests.xml:1118-1141
+# doc/_Chapter_Examples_and_Tests.xml:1120-1143
 gap> vecspaces := CreateCapCategory( "VectorSpacesForIsWellDefinedTest" );
 VectorSpacesForIsWellDefinedTest 
 gap> ReadPackage( "CAP", "examples/VectorSpacesAllMethods.g" );

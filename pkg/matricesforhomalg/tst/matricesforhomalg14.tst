@@ -10,7 +10,7 @@
 #
 gap> START_TEST("matricesforhomalg14.tst");
 
-# doc/../gap/HomalgMatrix.gi:2557-2563
+# doc/../gap/HomalgMatrix.gi:2565-2571
 gap> m := HomalgMatrix( "[ 1, 2, 3,   4, 5, 6 ]", 2, 3, ZZ );
 <A 2 x 3 matrix over an internal ring>
 gap> Display( m );

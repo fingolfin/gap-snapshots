@@ -568,7 +568,19 @@ The corresponding GAP property is called
  <Returns>a morphism in <Math>\mathrm{Hom}( a, \mathrm{\underline{Hom}}(b,c) )</Math>.
 </Returns>
  <Description>
- The arguments are objects <Math>a,b</Math> and a morphism <Math>f: a \otimes b \rightarrow c</Math>.
+ The arguments are two objects <Math>a,b</Math> and a morphism <Math>f: a \otimes b \rightarrow c</Math>.
+ The output is a morphism <Math>g: a \rightarrow \mathrm{\underline{Hom}}(b,c)</Math>
+ corresponding to <Math>f</Math> under the tensor hom adjunction.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="a, b, f, i" Name="TensorProductToInternalHomAdjunctionMapWithGivenInternalHom" Label="for IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject"/>
+ <Returns>a morphism in <Math>\mathrm{Hom}( a, \mathrm{\underline{Hom}}(b,c) )</Math>.
+</Returns>
+ <Description>
+ The arguments are two objects <Math>a,b</Math>, a morphism <Math>f: a \otimes b \rightarrow c</Math> and an object <Math>i = \mathrm{\underline{Hom}}(b,c)</Math>.
  The output is a morphism <Math>g: a \rightarrow \mathrm{\underline{Hom}}(b,c)</Math>
  corresponding to <Math>f</Math> under the tensor hom adjunction.
  </Description>
@@ -580,7 +592,19 @@ The corresponding GAP property is called
  <Returns>a morphism in <Math>\mathrm{Hom}(a \otimes b, c)</Math>.
 </Returns>
  <Description>
- The arguments are objects <Math>b,c</Math> and a morphism <Math>g: a \rightarrow \mathrm{\underline{Hom}}(b,c)</Math>.
+ The arguments are two objects <Math>b,c</Math> and a morphism <Math>g: a \rightarrow \mathrm{\underline{Hom}}(b,c)</Math>.
+ The output is a morphism <Math>f: a \otimes b \rightarrow c</Math> corresponding to <Math>g</Math> under the
+ tensor hom adjunction.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="b, c, g, t" Name="InternalHomToTensorProductAdjunctionMapWithGivenTensorProduct" Label="for IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject"/>
+ <Returns>a morphism in <Math>\mathrm{Hom}(a \otimes b, c)</Math>.
+</Returns>
+ <Description>
+ The arguments are two objects <Math>b,c</Math>, a morphism <Math>g: a \rightarrow \mathrm{\underline{Hom}}(b,c)</Math> and an object <Math>t = a \otimes b</Math>.
  The output is a morphism <Math>f: a \otimes b \rightarrow c</Math> corresponding to <Math>g</Math> under the
  tensor hom adjunction.
  </Description>
@@ -1013,7 +1037,19 @@ The corresponding GAP property is called
  <Returns>a morphism in <Math>\mathrm{Hom}( \mathrm{\underline{coHom}}(a,b), c )</Math>.
 </Returns>
  <Description>
- The arguments are objects <Math>c,b</Math> and a morphism <Math>g: a \rightarrow c \otimes b</Math>.
+ The arguments are two objects <Math>c,b</Math> and a morphism <Math>g: a \rightarrow c \otimes b</Math>.
+ The output is a morphism <Math>f: \mathrm{\underline{coHom}}(a,b) \rightarrow c</Math>
+ corresponding to <Math>g</Math> under the cohom tensor adjunction.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="c, b, g, i" Name="TensorProductToInternalCoHomAdjunctionMapWithGivenInternalCoHom" Label="for IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject"/>
+ <Returns>a morphism in <Math>\mathrm{Hom}( \mathrm{\underline{coHom}}(a,b), c )</Math>.
+</Returns>
+ <Description>
+ The arguments are two objects <Math>c,b</Math>, a morphism <Math>g: a \rightarrow c \otimes b</Math> and an object <Math>i = \mathrm{\underline{coHom}(a,b)}</Math>.
  The output is a morphism <Math>f: \mathrm{\underline{coHom}}(a,b) \rightarrow c</Math>
  corresponding to <Math>g</Math> under the cohom tensor adjunction.
  </Description>
@@ -1025,7 +1061,19 @@ The corresponding GAP property is called
  <Returns>a morphism in <Math>\mathrm{Hom}(a, c \otimes b)</Math>.
 </Returns>
  <Description>
- The arguments are objects <Math>a,b</Math> and a morphism <Math>f: \mathrm{\underline{coHom}}(a,b) \rightarrow c</Math>.
+ The arguments are two objects <Math>a,b</Math> and a morphism <Math>f: \mathrm{\underline{coHom}}(a,b) \rightarrow c</Math>.
+ The output is a morphism <Math>g: a \rightarrow c \otimes b</Math> corresponding to <Math>f</Math> under the
+ cohom tensor adjunction.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="a, b, f, t" Name="InternalCoHomToTensorProductAdjunctionMapWithGivenTensorProduct" Label="for IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject"/>
+ <Returns>a morphism in <Math>\mathrm{Hom}(a, c \otimes b)</Math>.
+</Returns>
+ <Description>
+ The arguments are two objects <Math>a,b</Math>, a morphism <Math>f: \mathrm{\underline{coHom}}(a,b) \rightarrow c</Math> and an object <Math>t = c \otimes b</Math>.
  The output is a morphism <Math>g: a \rightarrow c \otimes b</Math> corresponding to <Math>f</Math> under the
  cohom tensor adjunction.
  </Description>
@@ -2097,6 +2145,19 @@ The corresponding GAP property is given by
 
 
 <ManSection>
+  <Oper Arg="C, F" Name="AddInternalHomToTensorProductAdjunctionMapWithGivenTensorProduct" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <Code>InternalHomToTensorProductAdjunctionMapWithGivenTensorProduct</Code>.
+ <Math>F: ( b, c, g, t ) \mapsto \mathtt{InternalHomToTensorProductAdjunctionMapWithGivenTensorProduct}(b, c, g, t)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
   <Oper Arg="C, F" Name="AddIsomorphismFromDualObjectToInternalHomIntoTensorUnit" Label="for IsCapCategory, IsFunction"/>
  <Returns>nothing
 </Returns>
@@ -2370,6 +2431,19 @@ The corresponding GAP property is given by
 
 
 <ManSection>
+  <Oper Arg="C, F" Name="AddTensorProductToInternalHomAdjunctionMapWithGivenInternalHom" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <Code>TensorProductToInternalHomAdjunctionMapWithGivenInternalHom</Code>.
+ <Math>F: ( a, b, f, i ) \mapsto \mathtt{TensorProductToInternalHomAdjunctionMapWithGivenInternalHom}(a, b, f, i)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
   <Oper Arg="C, F" Name="AddUniversalPropertyOfDual" Label="for IsCapCategory, IsFunction"/>
  <Returns>nothing
 </Returns>
@@ -2630,6 +2704,19 @@ The corresponding GAP property is given by
 
 
 <ManSection>
+  <Oper Arg="C, F" Name="AddInternalCoHomToTensorProductAdjunctionMapWithGivenTensorProduct" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <Code>InternalCoHomToTensorProductAdjunctionMapWithGivenTensorProduct</Code>.
+ <Math>F: ( a, b, f, t ) \mapsto \mathtt{InternalCoHomToTensorProductAdjunctionMapWithGivenTensorProduct}(a, b, f, t)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
   <Oper Arg="C, F" Name="AddIsomorphismFromCoDualObjectToInternalCoHomFromTensorUnit" Label="for IsCapCategory, IsFunction"/>
  <Returns>nothing
 </Returns>
@@ -2820,6 +2907,19 @@ The corresponding GAP property is given by
  This operation adds the given function <Math>F</Math>
  to the category for the basic operation <Code>TensorProductToInternalCoHomAdjunctionMap</Code>.
  <Math>F: ( c, b, g ) \mapsto \mathtt{TensorProductToInternalCoHomAdjunctionMap}(c, b, g)</Math>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="C, F" Name="AddTensorProductToInternalCoHomAdjunctionMapWithGivenInternalCoHom" Label="for IsCapCategory, IsFunction"/>
+ <Returns>nothing
+</Returns>
+ <Description>
+ The arguments are a category <Math>C</Math> and a function <Math>F</Math>.
+ This operation adds the given function <Math>F</Math>
+ to the category for the basic operation <Code>TensorProductToInternalCoHomAdjunctionMapWithGivenInternalCoHom</Code>.
+ <Math>F: ( c, b, g, i ) \mapsto \mathtt{TensorProductToInternalCoHomAdjunctionMapWithGivenInternalCoHom}(c, b, g, i)</Math>.
  </Description>
 </ManSection>
 

@@ -9,7 +9,7 @@
     Knuth-Bendix on Monoids and Automatic Groups
   </Subtitle>
   <Version>
-    1.5.9
+    1.5.10
   </Version>
   <Author>
     Derek Holt<Alt Only="LaTeX"><Br/></Alt>
@@ -24,16 +24,15 @@ UK<Br/>
 
   </Author>
   <Date>
-    7 July 2019
+    23 September 2022
   </Date>
   <Abstract>
-    The &KBMAG; package is a &GAP; interface to some `C' programs for running the Knuth-Bendix completion program on finite semigroup, monoid or group presentations, and for attempting to compute  automatic structures of finitely presented groups.<P/>Bug reports, comments, suggestions for additional features, and offers to implement some of these, will all be very welcome.<P/>Please submit any issues at <File>https://github.com/gap-packages/kbmag/issues/</File>.<P/>
+    The &KBMAG; package is a &GAP; interface to some `C' programs for running the Knuth-Bendix completion program on finite semigroup, monoid or group presentations, and for attempting to compute  automatic structures of finitely presented groups.<P/>Bug reports, comments, suggestions for additional features, and offers to implement some of these, will all be very welcome.<P/>Please submit any issues at <URL>https://github.com/gap-packages/kbmag/issues/</URL>.<P/>
   </Abstract>
   <Copyright>
     &copyright; 1997 by Derek Holt<P/>
 
 This package may be distributed under the terms and conditions of the GNU Public License Version 2.
-
   </Copyright>
   <Acknowledgements>
     This documentation was prepared with the &GAPDoc; <Cite Key='GAPDoc'/> and &AutoDoc; <Cite Key='AutoDoc'/> packages.<P/>

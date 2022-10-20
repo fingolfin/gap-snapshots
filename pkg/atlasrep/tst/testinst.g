@@ -60,45 +60,6 @@ else
       fi;
     fi;
 
-    # Check whether the requirements for transferring files are satisfied.
-    pref:= UserPreference( "AtlasRep", "FileTransferTool" );
-    io:= LoadPackage( "io" ) = true;
-    wgetpath:= Filename( DirectoriesSystemPrograms(), "wget" );
-    if wgetpath = fail then
-      wget:= false;
-    else
-      wget:= IsExecutableFile( wgetpath );
-    fi;
-    bad:= false;
-    if not ( io or wget ) then
-      bad:= true;
-      msg:= Concatenation(
-         "#I  The system program `wget' and the GAP package `IO' ",
-         "are not available.\n",
-         "#I  Perhaps call\n",
-         "#I  `SetUserPreference( \"AtlasRep\", ",
-         "\"AtlasRepAccessRemoteFiles\", false )'\n" );
-    elif pref = "wget" and not wget then
-      bad:= true;
-      msg:= Concatenation(
-        "#I  The system program `wget' is not available.\n",
-        "#I  Perhaps call\n",
-        "#I  `SetUserPreference( \"AtlasRep\", \"FileTransferTool\", ",
-        "\"io\" )'\n" );
-    elif pref = "io" and not io then
-      bad:= true;
-      msg:= Concatenation(
-        "#I  The GAP package `IO' is not available.\n",
-        "#I  Perhaps call\n",
-        "#I  `SetUserPreference( \"AtlasRep\", \"FileTransferTool\", ",
-        "\"wget\" )'\n" );
-    fi;
-
-    if bad then
-      Print( "#I  Package `atlasrep':\n", msg );
-      return;
-    fi;
-
     # Test transferring group generators in MeatAxe text format.
     # (Remove some files if necessary and access them again.)
     filenames:= [];

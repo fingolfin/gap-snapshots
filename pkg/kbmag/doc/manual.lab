@@ -1,0 +1,154 @@
+\GAPDocLabFile{kbmag}
+\makelabel{kbmag:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{kbmag:Abstract}{}{X7AA6C5737B711C89}
+\makelabel{kbmag:Copyright}{}{X81488B807F2A1CF1}
+\makelabel{kbmag:Acknowledgements}{}{X82A988D47DFAFCFA}
+\makelabel{kbmag:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{kbmag:Introduction}{1}{X7DFB63A97E67C0A1}
+\makelabel{kbmag:The Knuth-Bendix program on semigroups, monoids and groups}{2}{X86F080117DE22242}
+\makelabel{kbmag:Creating a rewriting system}{2.1}{X7F474DEE787325CD}
+\makelabel{kbmag:Elementary functions on rewriting systems}{2.2}{X85BFCE4B79A782D0}
+\makelabel{kbmag:Setting the ordering}{2.3}{X7BDD01C183CD3234}
+\makelabel{kbmag:Control parameters}{2.4}{X7BB411528630D4E9}
+\makelabel{kbmag:The Knuth-Bendix program}{2.5}{X830D97B5805251E0}
+\makelabel{kbmag:The automatic groups program}{2.6}{X8786DA3679BA75C8}
+\makelabel{kbmag:Word reduction}{2.7}{X807029A8841FCAF3}
+\makelabel{kbmag:Counting and enumerating irreducible words}{2.8}{X7B8F6EBC87AF42C6}
+\makelabel{kbmag:Rewriting System Examples}{2.9}{X7E98CC0078047A36}
+\makelabel{kbmag:Example 1}{2.9.1}{X8388E29680F31ABD}
+\makelabel{kbmag:Example 2}{2.9.2}{X7A18778D836BC971}
+\makelabel{kbmag:Example 3}{2.9.3}{X7D680484821C7835}
+\makelabel{kbmag:Example 4}{2.9.4}{X848E4DDE845A6EE9}
+\makelabel{kbmag:Example 5}{2.9.5}{X83FE3ED7852DDFAD}
+\makelabel{kbmag:The Knuth-Bendix program on cosets}{3}{X7828AE2881251C6A}
+\makelabel{kbmag:Subgroups, cosets and subgroup presentations}{3.1}{X8128360785343F6A}
+\makelabel{kbmag:The Knuth-Bendix program on cosets}{3.2}{X7828AE2881251C6A}
+\makelabel{kbmag:The automatic cosets program}{3.3}{X83CE52E17BB34E5F}
+\makelabel{kbmag:Word reduction on cosets}{3.4}{X83A702237F6BA69A}
+\makelabel{kbmag:Counting and enumerating irreducible words for cosets}{3.5}{X827BF1CF85337C8B}
+\makelabel{kbmag:Examples of the use of Rewriting System on Cosets}{3.6}{X79BA526D818D1DE7}
+\makelabel{kbmag:Example 1}{3.6.1}{X8388E29680F31ABD}
+\makelabel{kbmag:Example 2}{3.6.2}{X7A18778D836BC971}
+\makelabel{kbmag:The stand-alone package}{4}{X7E2A9D617D06547C}
+\makelabel{kbmag:Functions for manipulating finite state automata}{4.1}{X7C0DD0867AF616E6}
+\makelabel{kbmag:Functions calling external programs}{4.2}{X79A6F86484B6DAFE}
+\makelabel{kbmag:Bibliography}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{kbmag:References}{Bib}{X7A6F98FD85F02BFE}
+\makelabel{kbmag:Index}{Ind}{X83A0356F839C696F}
+\makelabel{kbmag:kbmag}{1}{X7DFB63A97E67C0A1}
+\makelabel{kbmag:creating}{2.1}{X7F474DEE787325CD}
+\makelabel{kbmag:KBMAGRewritingSystem}{2.1.1}{X8722C57284F51940}
+\makelabel{kbmag:elementary functions}{2.2}{X85BFCE4B79A782D0}
+\makelabel{kbmag:IsKBMAGRewritingSystemRep}{2.2.1}{X879AEB2885DB4988}
+\makelabel{kbmag:IsRewritingSystem}{2.2.1}{X879AEB2885DB4988}
+\makelabel{kbmag:IsConfluent}{2.2.2}{X8006790B86328CE8}
+\makelabel{kbmag:SemigroupOfRewritingSytem}{2.2.3}{X832A66088276451E}
+\makelabel{kbmag:FreeStructureOfSystem}{2.2.3}{X832A66088276451E}
+\makelabel{kbmag:WordMonoidOfRewritingSystem}{2.2.3}{X832A66088276451E}
+\makelabel{kbmag:ExternalWordToInternalWordOfRewritingSystem}{2.2.4}{X8643F8C480036EC6}
+\makelabel{kbmag:InternalWordToExternalWordOfRewritingSystem}{2.2.4}{X8643F8C480036EC6}
+\makelabel{kbmag:Alphabet}{2.2.5}{X7CF67C5E7F31F19A}
+\makelabel{kbmag:Rules}{2.2.6}{X833EAA8C86356F42}
+\makelabel{kbmag:ResetRewritingSystem}{2.2.7}{X7AB017987DAE15E7}
+\makelabel{kbmag:setting the ordering}{2.3}{X7BDD01C183CD3234}
+\makelabel{kbmag:SetOrderingOfKBMAGRewritingSystem}{2.3.1}{X7E89CFE87973DD14}
+\makelabel{kbmag:ReorderAlphabetOfKBMAGRewritingSystem}{2.3.1}{X7E89CFE87973DD14}
+\makelabel{kbmag:OrderingOfKBMAGRewritingSystem}{2.3.1}{X7E89CFE87973DD14}
+\makelabel{kbmag:OrderingOfRewritingSystem}{2.3.1}{X7E89CFE87973DD14}
+\makelabel{kbmag:control parameters}{2.4}{X7BB411528630D4E9}
+\makelabel{kbmag:InfoRWS}{2.4.1}{X80C0185D8035B7F8}
+\makelabel{kbmag:OptionsRecordOfKBMAGRewritingSystem}{2.4.2}{X7C1BF15280B3CE5B}
+\makelabel{kbmag:Knuth-Bendix program}{2.5}{X830D97B5805251E0}
+\makelabel{kbmag:KnuthBendix}{2.5.1}{X8412C40B7B2DC8E0}
+\makelabel{kbmag:MakeConfluent}{2.5.1}{X8412C40B7B2DC8E0}
+\makelabel{kbmag:ReductionAutomaton}{2.5.2}{X7ED0190D7BDA74D7}
+\makelabel{kbmag:automatic groups program}{2.6}{X8786DA3679BA75C8}
+\makelabel{kbmag:AutomaticStructure}{2.6.1}{X828FA0177E4C5733}
+\makelabel{kbmag:WordAcceptor}{2.6.2}{X82CAA53A7926DA74}
+\makelabel{kbmag:FirstWordDifferenceAutomaton}{2.6.2}{X82CAA53A7926DA74}
+\makelabel{kbmag:SecondWordDifferenceAutomaton}{2.6.2}{X82CAA53A7926DA74}
+\makelabel{kbmag:GeneralMultiplier}{2.6.2}{X82CAA53A7926DA74}
+\makelabel{kbmag:IsReducedWord}{2.7.1}{X84A3462B826AD47C}
+\makelabel{kbmag:IsReducedForm}{2.7.1}{X84A3462B826AD47C}
+\makelabel{kbmag:ReducedWord}{2.7.2}{X7A5773A77C6BAC3F}
+\makelabel{kbmag:ReducedForm}{2.7.2}{X7A5773A77C6BAC3F}
+\makelabel{kbmag:Size}{2.8.1}{X858ADA3B7A684421}
+\makelabel{kbmag:Order}{2.8.2}{X84F59A2687C62763}
+\makelabel{kbmag:EnumerateReducedWords}{2.8.3}{X7CD646CD7AA2B718}
+\makelabel{kbmag:GrowthFunction}{2.8.4}{X7981EA28835C7A46}
+\makelabel{kbmag:examples}{2.9}{X7E98CC0078047A36}
+\makelabel{kbmag:}{2.9}{X7E98CC0078047A36}
+\makelabel{kbmag:}{2.9.1}{X8388E29680F31ABD}
+\makelabel{kbmag:}{2.9.2}{X7A18778D836BC971}
+\makelabel{kbmag:}{2.9.3}{X7D680484821C7835}
+\makelabel{kbmag:SubgroupOfKBMAGRewritingSystem}{3.1.1}{X834DC6477EE1482B}
+\makelabel{kbmag:ResetRewritingSystemOnCosets}{3.1.2}{X7CDC9FDA855596C4}
+\makelabel{kbmag:Knuth-Bendix program on cosets}{3.2}{X7828AE2881251C6A}
+\makelabel{kbmag:creating}{3.2}{X7828AE2881251C6A}
+\makelabel{kbmag:KnuthBendixOnCosets}{3.2.1}{X822268027EF50066}
+\makelabel{kbmag:KnuthBendixOnCosetsWithSubgroupRewritingSystem}{3.2.1}{X822268027EF50066}
+\makelabel{kbmag:RewritingSystemOfSubgroupOfKBMAGRewritingSystem}{3.2.2}{X857B2B40860C7F33}
+\makelabel{kbmag:IsConfluentOnCosets}{3.2.3}{X7832C01283EA446E}
+\makelabel{kbmag:automatic cosets program}{3.3}{X83CE52E17BB34E5F}
+\makelabel{kbmag:AutomaticStructureOnCosets}{3.3.1}{X7A2595DB84579665}
+\makelabel{kbmag:AutomaticStructureOnCosetsWithSubgroupPresentation}{3.3.1}{X7A2595DB84579665}
+\makelabel{kbmag:PresentationOfSubgroupOfKBMAGRewritingSystem}{3.3.2}{X7823571D7CD7F81D}
+\makelabel{kbmag:IsReducedCosetRepresentative}{3.4.1}{X7C27E5EE8462A720}
+\makelabel{kbmag:ReducedCosetRepresentative}{3.4.2}{X794181377A59DAC1}
+\makelabel{kbmag:ReducedFormOfCosetRepresentative}{3.4.2}{X794181377A59DAC1}
+\makelabel{kbmag:Index}{3.5.1}{X83A0356F839C696F}
+\makelabel{kbmag:EnumerateReducedCosetRepresentatives}{3.5.2}{X84596FE47AFBCC91}
+\makelabel{kbmag:GrowthFunctionOfCosetRepresentatives}{3.5.3}{X7D0F6F3781DF343D}
+\makelabel{kbmag:examples}{3.6}{X79BA526D818D1DE7}
+\makelabel{kbmag:stand-alone package}{4}{X7E2A9D617D06547C}
+\makelabel{kbmag:finite state automata}{4.1}{X7C0DD0867AF616E6}
+\makelabel{kbmag:IsInitializedFSA}{4.1.1}{X87AE05A77CDCE20F}
+\makelabel{kbmag:InitializeFSA}{4.1.2}{X8566C07585AB9BFE}
+\makelabel{kbmag:FSA}{4.1.3}{X7E54AFBF87E6178D}
+\makelabel{kbmag:WriteFSA}{4.1.4}{X83AB55DB784F6919}
+\makelabel{kbmag:IsDeterministicFSA}{4.1.5}{X8095E72D7F4BED3B}
+\makelabel{kbmag:AlphabetFSA}{4.1.6}{X7BB0BDD785791A32}
+\makelabel{kbmag:StatesFSA}{4.1.6}{X7BB0BDD785791A32}
+\makelabel{kbmag:NumberOfStatesFSA}{4.1.7}{X85E8D92D7EA2AA72}
+\makelabel{kbmag:NumberOfLettersFSA}{4.1.8}{X843A7B7681142B68}
+\makelabel{kbmag:SizeOfAlphabetFSA}{4.1.8}{X843A7B7681142B68}
+\makelabel{kbmag:AcceptingStatesFSA}{4.1.9}{X7A1A2E47792F0C27}
+\makelabel{kbmag:InitialStatesFSA}{4.1.10}{X79C1FD457AD765AD}
+\makelabel{kbmag:DenseDTableFSA}{4.1.11}{X7E583EFD877E5C76}
+\makelabel{kbmag:SparseTableFSA}{4.1.12}{X7C105C9E8549F356}
+\makelabel{kbmag:TargetDFA}{4.1.13}{X7E64B44A7F30EC6D}
+\makelabel{kbmag:TargetsFSA}{4.1.14}{X85ED262883274F58}
+\makelabel{kbmag:SourcesFSA}{4.1.15}{X7C036453817D1D81}
+\makelabel{kbmag:WordTargetDFA}{4.1.16}{X847110228341E4A0}
+\makelabel{kbmag:IsAcceptedWordDFA}{4.1.17}{X7D605322790678FA}
+\makelabel{kbmag:AddStateFSA}{4.1.18}{X87E76EC885C533E8}
+\makelabel{kbmag:DeleteStateFSA}{4.1.19}{X879CB95C86BC78AC}
+\makelabel{kbmag:PermuteStatesFSA}{4.1.20}{X849090A687418D32}
+\makelabel{kbmag:AddLetterFSA}{4.1.21}{X79244F2C7C3BF1A0}
+\makelabel{kbmag:DeleteLetterFSA}{4.1.22}{X7E49F0E27D62BA29}
+\makelabel{kbmag:PermuteLettersFSA}{4.1.23}{X7F660FCC7C845197}
+\makelabel{kbmag:AddEdgeFSA}{4.1.24}{X861E772582C50021}
+\makelabel{kbmag:DeleteEdgeFSA}{4.1.25}{X7B15A2B5879610C8}
+\makelabel{kbmag:SetAcceptingFSA}{4.1.26}{X86B8A7F58083F872}
+\makelabel{kbmag:SetInitialFSA}{4.1.27}{X79719ADF82A605B8}
+\makelabel{kbmag:IsAccessibleFSA}{4.1.28}{X873C8BBF814C1561}
+\makelabel{kbmag:AccessibleFSA}{4.1.29}{X8682C2477B038D80}
+\makelabel{kbmag:IsTrimFSA}{4.1.30}{X86941B6A7C95B91F}
+\makelabel{kbmag:TrimFSA}{4.1.31}{X7DABF5A87D9CF3F0}
+\makelabel{kbmag:IsBFSFSA}{4.1.32}{X7F06649787E078F6}
+\makelabel{kbmag:BFSFSA}{4.1.33}{X868F0428795F2594}
+\makelabel{kbmag:LSizeDFA}{4.1.34}{X83612F7678F790C6}
+\makelabel{kbmag:LEnumerateDFA}{4.1.35}{X8753DD8E7FAD4030}
+\makelabel{kbmag:external programs}{4.2}{X79A6F86484B6DAFE}
+\makelabel{kbmag:DeterminizeFSA}{4.2.1}{X7B8AF0EF79125730}
+\makelabel{kbmag:MinimizeFSA}{4.2.2}{X858E2B79803E4320}
+\makelabel{kbmag:NotFSA}{4.2.3}{X78FF5D83848C9B8A}
+\makelabel{kbmag:StarFSA}{4.2.4}{X7F14B8B1817981B5}
+\makelabel{kbmag:ReverseFSA}{4.2.5}{X7C474BA67D9B0273}
+\makelabel{kbmag:ExistsFSA}{4.2.6}{X837FC04D82EF7638}
+\makelabel{kbmag:SwapCoordsFSA}{4.2.7}{X788520037939B0F1}
+\makelabel{kbmag:AndFSA}{4.2.8}{X813DA14C7DD4B370}
+\makelabel{kbmag:OrFSA}{4.2.9}{X7D4FB82082DD4474}
+\makelabel{kbmag:ConcatFSA}{4.2.10}{X7C13E593822442B7}
+\makelabel{kbmag:LanguagesEqualFSA}{4.2.11}{X8526528584A70717}
+\makelabel{kbmag:GrowthFSA}{4.2.12}{X7F7939727D8E8F39}

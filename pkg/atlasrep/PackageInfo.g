@@ -6,7 +6,7 @@ SetPackageInfo( rec(
 PackageName :=
   "AtlasRep",
 Version :=
-  "2.1.4",
+  "2.1.6",
 MyWWWHome :=
   "https://www.math.rwth-aachen.de/~Thomas.Breuer",
 Subtitle :=
@@ -26,7 +26,9 @@ Date :=
   # "23/02/2022" -- Version 2.1.1
   # "30/03/2022" -- Version 2.1.2
   # "04/08/2022" -- Version 2.1.3
-  "05/08/2022", # -- Version 2.1.4
+  # "05/08/2022" -- Version 2.1.4
+  # "22/08/2022" -- Version 2.1.5
+  "19/10/2022", # -- Version 2.1.6
 License :=
   "GPL-3.0-or-later",
 PackageWWWHome :=
@@ -133,12 +135,13 @@ Dependencies := rec(
     ">= 4.11.0",  # need extended 'IntegratedStraightLineProgram'
   NeededOtherPackages := [
       [ "gapdoc", ">= 1.6.2" ],  # want extended 'InitialSubstringUTF8String'
+      [ "utils", ">= 0.77" ],  # want 'Download'
     ],
   SuggestedOtherPackages := [
       [ "browse", ">= 1.8.3" ], # want extended 'BrowseAtlasInfo'
       [ "ctbllib", ">= 1.2" ], # want 'StructureDescriptionCharacterTableName'
       [ "ctblocks", ">= 1.0" ], # yields a data extension
-      [ "io", ">= 3.3" ], # want file transfer tools
+      [ "io", ">= 3.3" ], # want 'IO_chmod', 'IO_mkdir', 'IO_stat'
       [ "mfer", ">= 1.0" ], # yields a data extension
       [ "recog", ">= 1.3.1" ], # because of some functions in 'gap/test.g'
       [ "tomlib", ">= 1.0" ], # used in tests and min. degree computations

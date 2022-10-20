@@ -1817,6 +1817,10 @@ n(C_1, C_2, \ldots, C_n) =
 <dd><p><code class="keyw">false</code> to suppress the printing of the orders of the centralizers, or the string <code class="code">"ATLAS"</code> to force the printing of non-factorized centralizer orders in a style similar to that used in the <strong class="pkg">Atlas</strong> of Finite Groups <a href="chapBib_mj.html#biBCCN85">[CCN+85]</a>,</p>
 
 </dd>
+<dt><strong class="Mark"><code class="code">characterField</code></strong></dt>
+<dd><p><code class="keyw">true</code> to show the degrees of the character fields over the prime field, in a column with header <code class="code">d</code>,</p>
+
+</dd>
 <dt><strong class="Mark"><code class="code">chars</code></strong></dt>
 <dd><p>an integer or a list of integers to select a sublist of the irreducible characters of <var class="Arg">tbl</var>, or a list of characters of <var class="Arg">tbl</var> (in the latter case, the default letter <code class="code">"X"</code> in the character names is replaced by <code class="code">"Y"</code>),</p>
 
@@ -2135,7 +2139,9 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AbsolutelyIrreducibleModules</code>( <var class="Arg">G</var>, <var class="Arg">F</var>, <var class="Arg">dim</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AbsoluteIrreducibleModules</code>( <var class="Arg">G</var>, <var class="Arg">F</var>, <var class="Arg">dim</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AbsolutIrreducibleModules</code>( <var class="Arg">G</var>, <var class="Arg">F</var>, <var class="Arg">dim</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>returns a list of length 2. The first entry is a generating system of <var class="Arg">G</var>. The second entry is a list of all absolute irreducible modules of <var class="Arg">G</var> over the field <var class="Arg">F</var> in dimension <var class="Arg">dim</var>, given as MeatAxe modules (see <code class="func">GModuleByMats</code> (<a href="chap69_mj.html#X801022027B066497"><span class="RefLink">69.1-1</span></a>)). The other two names are just synonyms.</p>
+<p><code class="func">AbsolutelyIrreducibleModules</code> returns a list of length 2. The first entry is a generating system of the group <var class="Arg">G</var>. The second entry is a list of all those absolutely irreducible modules of <var class="Arg">G</var> that can be realized over the finite field <var class="Arg">F</var> and have dimension at most <var class="Arg">dim</var>, given as MeatAxe modules (see <code class="func">GModuleByMats</code> (<a href="chap69_mj.html#X801022027B066497"><span class="RefLink">69.1-1</span></a>)).</p>
+
+<p>The other two names are just synonyms.</p>
 
 <p><a id="X7EB88B2E87AF5556" name="X7EB88B2E87AF5556"></a></p>
 

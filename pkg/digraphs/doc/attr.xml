@@ -2399,3 +2399,81 @@ gap> Length(M);
   </Description>
 </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="NonUpperSemimodularPair">
+<ManSection>
+  <Attr Name="NonUpperSemimodularPair" Arg="D"/>
+  <Attr Name="NonLowerSemimodularPair" Arg="D"/>
+  <Returns>A pair of vertices or <K>fail</K>.</Returns>
+  <Description>
+    <C>NonUpperSemimodularPair</C> returns a pair of vertices in the digraph
+    <A>D</A> that witnesses the fact that <A>D</A> does not represent an upper
+    semimodular lattice, if such a pair exists. <P/> 
+
+    If the digraph <A>D</A> does not satisfy <Ref
+    Prop="IsLatticeDigraph"/>, then an error is given. Otherwise if the
+    digraph <A>D</A> does satisfy <Ref
+    Prop="IsLatticeDigraph"/>, then either a non-upper semimodular pair of
+    vertices is returned, or <K>fail</K> is returned if no such pair exists
+    (meaning that <A>D</A> is an upper semimodular lattice. <P/>
+
+    <C>NonLowerSemimodularPair</C> behaves in the analogous way to
+    <C>NonUpperSemimodularPair</C> with respect to lower semimodularity. <P/>
+
+    See <Ref Prop="IsUpperSemimodularDigraph"/> and <Ref
+    Prop="IsLowerSemimodularDigraph"/> for the definition of upper
+    semimodularity of a lattice. 
+
+    <Example><![CDATA[
+gap> D := DigraphFromDigraph6String(
+> "&M~~sc`lYUZO__KIBboC_@h?U_?_GL?A_?c");
+<immutable digraph with 14 vertices, 66 edges>
+gap> NonLowerSemimodularPair(D);
+[ 10, 9 ]
+gap> NonUpperSemimodularPair(D);
+fail
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DigraphMeetTable">
+<ManSection>
+  <Attr Name="DigraphMeetTable" Arg="digraph"/>
+  <Attr Name="DigraphJoinTable" Arg="digraph"/>
+  <Returns>A matrix or <K>fail</K>.</Returns>
+  <Description>
+    <C>DigraphMeetTable</C> returns the <E>meet table</E> of
+    <A>digraph</A> if <A>digraph</A> is a meet semilattice digraph
+    <Ref Prop="IsMeetSemilatticeDigraph"/>. Similarly,
+    <C>DigraphJoinTable</C> returns the <E>join table</E> of
+    <A>digraph</A> if <A>digraph</A> is a join semilattice digraph.
+    <Ref Prop="IsJoinSemilatticeDigraph"/>.<P/>
+
+    When <A>digraph</A> is a meet semilattice digraph with <M>n</M> vertices,
+    the <E>meet table</E> of <A>digraph</A> is the matrix <M>A</M> such that
+    the <M>(i, j)</M> entry of <M>A</M> is the meet of vertices
+    <M>i</M> and <M>j</M>.<P/>
+
+    Similarly, when <A>digraph</A> is a join semilattice digraph with <M>n</M>
+    vertices, the <E>join table</E> of <A>digraph</A> is the matrix <M>A</M>
+    such that the <M>(i, j)</M> entry of <M>A</M> is the join of
+    vertices <M>i</M> and <M>j</M>. Otherwise, each function returns <K>fail</K>.
+    <Example><![CDATA[
+gap> D := Digraph([[1, 2, 3, 4], [2, 4], [3, 4], [4]]);
+<immutable digraph with 4 vertices, 9 edges>
+gap> IsJoinSemilatticeDigraph(D);
+true
+gap> Display(DigraphJoinTable(D));
+[ [  1,  2,  3,  4 ],
+  [  2,  2,  4,  4 ],
+  [  3,  4,  3,  4 ],
+  [  4,  4,  4,  4 ] ]
+gap> D := CycleDigraph(5);
+<immutable cycle digraph with 5 vertices>
+gap> DigraphJoinTable(D);
+fail
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>

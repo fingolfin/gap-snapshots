@@ -2454,7 +2454,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-ac_config_headers="$ac_config_headers gen/pkgconfig.h"
+ac_config_headers="$ac_config_headers gen/pkgconfig.h:src/pkgconfig.h.in"
 
 
 # Find the location of GAP
@@ -4622,7 +4622,7 @@ cat >>$CONFIG_STATUS <<\_ACEOF || ac_write_fail=1
 for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
-    "gen/pkgconfig.h") CONFIG_HEADERS="$CONFIG_HEADERS gen/pkgconfig.h" ;;
+    "gen/pkgconfig.h") CONFIG_HEADERS="$CONFIG_HEADERS gen/pkgconfig.h:src/pkgconfig.h.in" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;

@@ -342,7 +342,7 @@
 </ManSection>
 
 
-<ManSection Label="AutoDoc_generated_group13">
+<ManSection Label="AutoDoc_generated_group14">
   <Func Arg="category" Name="CapJitDataTypeOfCategory" />
   <Func Arg="category" Name="CapJitDataTypeOfObjectOfCategory" />
   <Func Arg="category" Name="CapJitDataTypeOfMorphismOfCategory" />
@@ -358,6 +358,14 @@
  <Description>
    Computes a fixpoint of <A>func</A> with regard to equality given by <A>predicate</A>, starting with <A>initial_value</A>.
    If no such fixpoint exists, the execution does not terminate.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="list, func, initial_value" Name="Iterated" Label="for IsList, IsFunction, IsObject"/>
+ <Description>
+   Shorthand for <Code>Iterated( Concatenation( [ <A>initial_value</A> ], <A>list</A> ), <A>func</A> )</Code>.
  </Description>
 </ManSection>
 
@@ -383,7 +391,17 @@
  <Returns>an integer
 </Returns>
  <Description>
-   Returns <Code>Position( </Code><A>list</A><Code>, </Code><A>obj</A><Code> )</Code> while asserting that this value is not <Code>fail</Code>.
+   Returns <Code>Position( <A>list</A>, <A>obj</A> )</Code> while asserting that this value is not <Code>fail</Code>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="list, func" Name="SafePositionProperty" Label="for IsList, IsFunction"/>
+ <Returns>an integer
+</Returns>
+ <Description>
+   Returns <Code>PositionProperty( <A>list</A>, <A>func</A> )</Code> while asserting that this value is not <Code>fail</Code>.
  </Description>
 </ManSection>
 
@@ -436,6 +454,104 @@
    Else, if <A>constructor_name</A> is the first entry of <Code>remaining_constructors_in_tower</Code>, the information is attached to <Code><A>category</A>!.compiler_hints.precompiled_towers</Code>
    after removing <A>constructor_name</A> from <Code>remaining_constructors_in_tower</Code>.
    Note: Currently, there is no logic for finding the "optimal" code to install if <A>constructor_name</A> is the only entry of <Code>remaining_constructors_in_tower</Code> of multiple entries.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="value" Name="CAP_JIT_INCOMPLETE_LOGIC" />
+ <Description>
+   Simply returns <A>value</A>. Used to signify that the argument is not fully run through all logic functions/templates by CompilerForCAP.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="list, func" Name="ListWithKeys" />
+ <Returns>a list
+</Returns>
+ <Description>
+   Same as <Code>List( <A>list</A>, <A>func</A> )</Code> but <A>func</A> gets both the key <Code>i</Code> and <Code><A>list</A>[i]</Code> as arguments.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="list, func" Name="SumWithKeys" />
+ <Returns>a list
+</Returns>
+ <Description>
+   Same as <Code>Sum( <A>list</A>, <A>func</A> )</Code> but <A>func</A> gets both the key <Code>i</Code> and <Code><A>list</A>[i]</Code> as arguments.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="list, func" Name="ProductWithKeys" />
+ <Returns>a list
+</Returns>
+ <Description>
+   Same as <Code>Product( <A>list</A>, <A>func</A> )</Code> but <A>func</A> gets both the key <Code>i</Code> and <Code><A>list</A>[i]</Code> as arguments.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="list, func" Name="ForAllWithKeys" />
+ <Returns>a list
+</Returns>
+ <Description>
+   Same as <Code>ForAll( <A>list</A>, <A>func</A> )</Code> but <A>func</A> gets both the key <Code>i</Code> and <Code><A>list</A>[i]</Code> as arguments.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="list, func" Name="ForAnyWithKeys" />
+ <Returns>a list
+</Returns>
+ <Description>
+   Same as <Code>ForAny( <A>list</A>, <A>func</A> )</Code> but <A>func</A> gets both the key <Code>i</Code> and <Code><A>list</A>[i]</Code> as arguments.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="list, func" Name="NumberWithKeys" />
+ <Returns>a list
+</Returns>
+ <Description>
+   Same as <Code>Number( <A>list</A>, <A>func</A> )</Code> but <A>func</A> gets both the key <Code>i</Code> and <Code><A>list</A>[i]</Code> as arguments.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="list, func" Name="FilteredWithKeys" />
+ <Returns>a list
+</Returns>
+ <Description>
+   Same as <Code>Filtered( <A>list</A>, <A>func</A> )</Code> but <A>func</A> gets both the key <Code>i</Code> and <Code><A>list</A>[i]</Code> as arguments.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="list, func" Name="FirstWithKeys" />
+ <Returns>a list
+</Returns>
+ <Description>
+   Same as <Code>First( <A>list</A>, <A>func</A> )</Code> but <A>func</A> gets both the key <Code>i</Code> and <Code><A>list</A>[i]</Code> as arguments.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="list, func" Name="LastWithKeys" />
+ <Returns>a list
+</Returns>
+ <Description>
+   Same as <Code>Last( <A>list</A>, <A>func</A> )</Code> but <A>func</A> gets both the key <Code>i</Code> and <Code><A>list</A>[i]</Code> as arguments.
  </Description>
 </ManSection>
 

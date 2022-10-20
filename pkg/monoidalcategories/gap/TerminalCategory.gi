@@ -17,7 +17,7 @@ InstallGlobalFunction( CAP_INTERNAL_CONSTRUCTOR_FOR_TERMINAL_CATEGORY,
         function( operation_name, T )
             
             return """
-                function( input_arguments )
+                function( input_arguments... )
                     
                     return true;
                     
@@ -79,8 +79,8 @@ InstallGlobalFunction( CAP_INTERNAL_CONSTRUCTOR_FOR_TERMINAL_CATEGORY,
     skip := [ "IsEqualForObjects",
               "IsEqualForMorphisms",
               "IsCongruentForMorphisms",
-              "LeftCartesianDistributivityExpandingWithGivenObjects", ## gets derived since IsDistributiveCartesianCategory := true
-              "LeftCocartesianCodistributivityFactoringWithGivenObjects", ## gets derived since IsCodistributiveCocartesianCategory := true
+              "LeftCartesianDistributivityExpandingWithGivenObjects", ## gets derived since IsDistributiveCategory := true
+              "LeftCocartesianCodistributivityFactoringWithGivenObjects", ## gets derived since IsCodistributiveCategory := true
               "MorphismToBidual",
               "MorphismFromBidual",
               "MorphismToCoBidual",
@@ -161,7 +161,7 @@ InstallGlobalFunction( TerminalCategory,
         function( name, T )
             
             return """
-                function( input_arguments )
+                function( input_arguments... )
                     
                     return ObjectConstructor( cat, [ ] );
                     
@@ -175,7 +175,7 @@ InstallGlobalFunction( TerminalCategory,
         function( name, T )
             
             return """
-                function( input_arguments )
+                function( input_arguments... )
                     
                     return MorphismConstructor( cat, top_source, [ ], top_range );
                     
@@ -263,7 +263,7 @@ InstallGlobalFunction( TerminalCategoryWithMultipleObjects,
     local name, category_filter, category_object_filter, category_morphism_filter,
           create_func_object, create_func_morphism,
           object_constructor, object_datum, morphism_constructor, morphism_datum,
-          properties, excluded_properties, T;
+          properties, excluded_properties, excluded_skeletal_properties, excluded_strict_properties, T;
     
     name := "TerminalCategoryWithMultipleObjects( )";
     
@@ -278,7 +278,7 @@ InstallGlobalFunction( TerminalCategoryWithMultipleObjects,
         function( name, T )
             
             return """
-                function( input_arguments )
+                function( input_arguments... )
                     
                     return ObjectConstructor( cat, "operation_name" );
                     
@@ -292,7 +292,7 @@ InstallGlobalFunction( TerminalCategoryWithMultipleObjects,
         function( name, T )
             
             return """
-                function( input_arguments )
+                function( input_arguments... )
                     
                     return MorphismConstructor( cat, top_source, "operation_name", top_range );
                     
@@ -326,8 +326,11 @@ InstallGlobalFunction( TerminalCategoryWithMultipleObjects,
     
     ## prevent skeletality and strictness
     properties := Set( List( CAP_INTERNAL_CATEGORICAL_PROPERTIES_LIST, a -> a[1] ) );
-    excluded_properties := Filtered( properties, p -> IsInt( PositionSublist( p, "Strict" ) ) );
-    Add( excluded_properties, "IsSkeletalCategory" );
+    excluded_strict_properties := Filtered( properties, p -> IsInt( PositionSublist( p, "Strict" ) ) );
+    excluded_skeletal_properties := Filtered( properties, p -> "IsSkeletalCategory" in ListImpliedFilters( FilterByName( p ) ) );
+    Add( excluded_skeletal_properties, "IsSkeletalCategory" );
+    
+    excluded_properties := Concatenation( excluded_strict_properties, excluded_skeletal_properties );
     
     T := CAP_INTERNAL_CONSTRUCTOR_FOR_TERMINAL_CATEGORY( rec(
                  name := name,
@@ -380,16 +383,6 @@ InstallGlobalFunction( TerminalCategoryWithMultipleObjects,
     Finalize( T );
     
     return T;
-    
-end );
-
-##
-InstallMethod( \/,
-        [ IsString, IsTerminalCategoryWithMultipleObjects ],
-        
-  function( string, T )
-    
-    return ObjectConstructor( T, string );
     
 end );
 

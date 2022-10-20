@@ -1,26 +1,23 @@
 #############################################################################
 ##
-##  subfield.gi
-##                              recog package
-##                                                        Max Neunhoeffer
-##                                                            Ákos Seress
-##                                                        Robert McDougal
-##                                                            Nick Werner
-##                                                            Justin Lynd
-##                                                            Niraj Khare
+##  This file is part of recog, a package for the GAP computer algebra system
+##  which provides a collection of methods for the constructive recognition
+##  of groups.
 ##
+##  This files's authors include Max Neunhöffer, Ákos Seress, Robert McDougal,
+##  Nick Werner, Justin Lynd, Niraj Khare.
 ##
+##  Copyright of recog belongs to its developers whose names are too numerous
+##  to list here. Please refer to the COPYRIGHT file for details.
 ##
-##  Copyright 2006-2008 by the authors.
-##  This file is free software, see license information at the end.
+##  SPDX-License-Identifier: GPL-3.0-or-later
+##
 ##
 ##  Implementation stuff for subfield case.
 ##
 #############################################################################
 
-# DeclareGlobalVariable( "SUBFIELD" );  # for the subfield code
-
-InstallValue( SUBFIELD, rec() );
+BindGlobal( "SUBFIELD", rec() );
 
 SUBFIELD.ScalarToMultiplyIntoSmallerField := function(m,k)
   # This assumes that m is an invertible matrix over a finite field k.
@@ -53,7 +50,7 @@ SUBFIELD.ScalarsToMultiplyIntoSmallerField := function(l,k)
   for i in [1..Length(l)] do
       r := SUBFIELD.ScalarToMultiplyIntoSmallerField(l[i],k);
       if r = fail then return fail; fi;
-      if not(IsSubset(f,r.field)) then
+      if not IsSubset(f,r.field) then
           f := ClosureField(f,r.field);
           if f = k then
               return fail;
@@ -97,7 +94,7 @@ SUBFIELD.BaseChangeForSmallestPossibleField := function(grp,mtx,k)
     # Check char. polynomial of a to make sure it lies in smallField [ x ]
     charPoly := CharacteristicPolynomial ( a ) ;
     field := Field(CoefficientsOfLaurentPolynomial(charPoly)[1]);
-    if not(IsSubset(f,field)) then
+    if not IsSubset(f,field) then
         f := ClosureField(f,field);
         if Size(f) >= Size(k) then
             return fail;
@@ -237,7 +234,7 @@ SUBFIELD.alg4 := function ( matrixGroup , smallField , bigField )
     # Check char. polynomial of a to make sure it lies in smallField [ x ]
     charPoly := CharacteristicPolynomial ( a ) ;
     field := Field(CoefficientsOfLaurentPolynomial(charPoly)[1]);
-    if not(IsSubset(smallField,field)) then
+    if not IsSubset(smallField,field) then
         smallField := ClosureField(smallField,field);
         if Size(smallField) >= Size(bigField) then
             return fail;
@@ -328,7 +325,7 @@ SUBFIELD.alg4 := function ( matrixGroup , smallField , bigField )
     temp := b * g * binverse ;
     Add(newgens,temp);
     field := FieldOfMatrixList([temp]);
-    if not(IsSubset(smallField,field)) then
+    if not IsSubset(smallField,field) then
         smallField := ClosureField(smallField,field);
         if Size(smallField) >= Size(bigField) then
             return fail;
@@ -650,8 +647,26 @@ SUBFIELD.HomDoBaseAndFieldChangeWithScalarFinding := function(data,el)
   return SUBFIELD.ForceToOtherField(m,Size(data.field));
 end;
 
-FindHomMethodsProjective.Subfield :=
-  function(ri,G)
+#! @BeginChunk Subfield
+#! When this method runs it knows that the projective group <A>G</A> acts
+#! absolutely irreducibly. It then tries to realise this group over a smaller
+#! field. The algorithm used is the one using the <Q>standard basis approach</Q>
+#! known from isomorphism testing of absolutely irreducible modules. It
+#! finds a base change to write the projective group over the smallest
+#! field possible. Since the group is projective, it may choose to
+#! multiply generators with arbitrary scalars to write them over a smaller field.
+#! 
+#! However, sometimes the correct scalar can not be guessed. Therefore, if the
+#! first approach does not work, the method computes the derived subgroup.
+#! If the group can be written over a smaller field, then taking commutators
+#! loses the scalars preventing a direct base change to work. Therefore,
+#! if the derived subgroup still acts irreducibly, the standard basis approach
+#! can find the right base change that could also do the job for the whole
+#! group. If it acts reducibly, the method <C>Derived</C> (see
+#! <Ref Subsect="Derived"/>) which is run next already has the computed
+#! derived subgroup and can try different things to find a reduction.
+#! @EndChunk
+FindHomMethodsProjective.Subfield := function(ri,G)
     # We assume G to be absolutely irreducible, although this is not
     # necessary:
     local Gprime,H,b,dim,f,hom,mo,newgens,pf,r;
@@ -659,10 +674,10 @@ FindHomMethodsProjective.Subfield :=
     if IsPrimeField(f) then
         return false;     # nothing to do
     fi;
-    if not(IsBound(ri!.meataxemodule)) then
+    if not IsBound(ri!.meataxemodule) then
         ri!.meataxemodule := GModuleByMats(GeneratorsOfGroup(G),f);
     fi;
-    if not(MTX.IsIrreducible(ri!.meataxemodule)) then
+    if not MTX.IsIrreducible(ri!.meataxemodule) then
         return false;     # not our case
     fi;
     dim := ri!.dimension;
@@ -684,7 +699,7 @@ FindHomMethodsProjective.Subfield :=
     Info(InfoRecog,2,"Computing derived subgroup...");
     Gprime := RECOG.DerivedSubgroupMonteCarlo(G);
     mo := GModuleByMats(GeneratorsOfGroup(Gprime),f);
-    if not(MTX.IsIrreducible(mo)) then
+    if not MTX.IsIrreducible(mo) then
         # Handle reducible case
         ri!.derived := Gprime;
         ri!.derived_mtx := mo;
@@ -715,19 +730,3 @@ FindHomMethodsProjective.Subfield :=
         return true;
     fi;
   end;
-
-##
-##  This program is free software: you can redistribute it and/or modify
-##  it under the terms of the GNU General Public License as published by
-##  the Free Software Foundation, either version 3 of the License, or
-##  (at your option) any later version.
-##
-##  This program is distributed in the hope that it will be useful,
-##  but WITHOUT ANY WARRANTY; without even the implied warranty of
-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-##  GNU General Public License for more details.
-##
-##  You should have received a copy of the GNU General Public License
-##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-##
-

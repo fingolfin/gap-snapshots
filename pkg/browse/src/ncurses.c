@@ -8,11 +8,11 @@
 **
 */
 
-#define VERSION "1.8.14"
+#define VERSION "1.8.18"
 
 /* read GAP source header files with a combined header file */
 
-#include        "src/compiled.h"          /* GAP headers                */
+#include        "compiled.h"              /* GAP headers                */
 #include        <stdio.h>
 #include        <unistd.h>
 #include        <stdlib.h>                /* for getenv and co          */

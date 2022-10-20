@@ -1417,7 +1417,9 @@ uninstall-am: uninstall-libLTLIBRARIES uninstall-pkgincludeHEADERS
 
 all-local: digraphs.la
 	$(mkdir_p) $(top_srcdir)/$(BINARCHDIR) $(top_srcdir)/bin/lib
+@WITH_INCLUDED_PLANARITY_TRUE@	rm -f $(top_srcdir)/bin/lib/*  # workaround for macOS code signing
 @WITH_INCLUDED_PLANARITY_TRUE@	cp -RL @PLANARITY_SUITE_DIR@/.libs/*  $(top_srcdir)/bin/lib/
+	rm -f $(GAPINSTALLLIB)/digraphs.so  # workaround for macOS code signing
 @SYS_IS_CYGWIN_TRUE@	cp .libs/digraphs.dll $(GAPINSTALLLIB)/digraphs.so
 @SYS_IS_CYGWIN_TRUE@@WITH_INCLUDED_PLANARITY_TRUE@	cp bin/lib/cygplanarity-0.dll $(GAPROOT)/.libs
 @SYS_IS_CYGWIN_FALSE@	cp .libs/digraphs.so $(GAPINSTALLLIB)/

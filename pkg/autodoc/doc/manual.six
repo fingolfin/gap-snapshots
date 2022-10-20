@@ -189,7 +189,7 @@ tLatex\033[110X\033[101X\027\033[1X\027, and \033[10X@EndNotLatex\033[110X\033\
   [ 
       "\033[1X\033[33X\033[0;-2YMarkdown-like formatting of text in \033[5XAutoDo\
 c\033[105X\033[101X\027\033[1X\027\033[133X\033[101X", "2.7", [ 2, 7, 0 ], 
-      547, 21, "markdown-like formatting of text in autodoc", 
+      547, 22, "markdown-like formatting of text in autodoc", 
       "X79558A2F7FE187B4" ], 
   [ "\033[1X\033[33X\033[0;-2YLists\033[133X\033[101X", "2.7-1", [ 2, 7, 1 ], 
       556, 22, "lists", "X7B256AE5780F140A" ], 

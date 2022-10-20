@@ -1,0 +1,137 @@
+\GAPDocLabFile{nconvex}
+\makelabel{nconvex:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{nconvex:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{nconvex:Introduction}{1}{X7DFB63A97E67C0A1}
+\makelabel{nconvex:Installation}{1.1}{X8360C04082558A12}
+\makelabel{nconvex:Requirements}{1.2}{X85A08CF187A6D986}
+\makelabel{nconvex:Functionality}{2}{X87F1120883F5B4D0}
+\makelabel{nconvex:Convex objects}{3}{X8359268B7FDA6AEC}
+\makelabel{nconvex:Attributes}{3.1}{X7C701DBF7BAE649A}
+\makelabel{nconvex:Cones}{4}{X8524A7567BA4FFA6}
+\makelabel{nconvex:Creating cones}{4.1}{X837F56037886A1EF}
+\makelabel{nconvex:Attributes of Cones}{4.2}{X85EE90A37DE1E3AC}
+\makelabel{nconvex:Properties of Cones}{4.3}{X7DD2805F7DF61F97}
+\makelabel{nconvex:Operations on cones}{4.4}{X843CBBD37FC2827B}
+\makelabel{nconvex:Fans}{5}{X7EB0337A86DDD2F1}
+\makelabel{nconvex:Constructors}{5.1}{X86EC0F0A78ECBC10}
+\makelabel{nconvex:Attributes}{5.2}{X7C701DBF7BAE649A}
+\makelabel{nconvex:Properties}{5.3}{X871597447BB998A1}
+\makelabel{nconvex:Operations on fans}{5.4}{X86BC038782EFD451}
+\makelabel{nconvex:Polyhedrons}{6}{X85633D87813F12B0}
+\makelabel{nconvex:Creating polyhedron}{6.1}{X7C1A095983C57A83}
+\makelabel{nconvex:Attributes}{6.2}{X7C701DBF7BAE649A}
+\makelabel{nconvex:Properties}{6.3}{X871597447BB998A1}
+\makelabel{nconvex:Solving Linear programs}{6.4}{X819F85537D5D9D15}
+\makelabel{nconvex:ZSolve}{6.5}{X84237872798DB501}
+\makelabel{nconvex:Polytopes}{7}{X7B933C4686727183}
+\makelabel{nconvex:Creating polytopes}{7.1}{X801887DC7E5F6AB7}
+\makelabel{nconvex:Attributes}{7.2}{X7C701DBF7BAE649A}
+\makelabel{nconvex:Properties}{7.3}{X871597447BB998A1}
+\makelabel{nconvex:Operations on polytopes}{7.4}{X7B71F2A2834E84CE}
+\makelabel{nconvex:Index}{Ind}{X83A0356F839C696F}
+\makelabel{nconvex:AmbientSpaceDimension for IsConvexObject}{3.1.1}{X7D87C111848F25C5}
+\makelabel{nconvex:Dimension for IsConvexObject}{3.1.2}{X79D9BB0F7BB3B411}
+\makelabel{nconvex:IsFullDimensional for IsConvexObject}{3.1.3}{X7E660B6A7B6D0A9D}
+\makelabel{nconvex:InteriorPoint for IsConvexObject}{3.1.4}{X8401C12C7937C521}
+\makelabel{nconvex:ConeByInequalities for IsList}{4.1.1}{X7E6FB9EC7DFF5403}
+\makelabel{nconvex:ConeByEqualitiesAndInequalities for IsList, IsList}{4.1.2}{X8711F345805C5FBD}
+\makelabel{nconvex:Cone for IsList}{4.1.3}{X7F0634207B3A4EC6}
+\makelabel{nconvex:Cone for IsCddPolyhedron}{4.1.4}{X7CD248238093A748}
+\makelabel{nconvex:DefiningInequalities for IsCone}{4.2.1}{X80468DD7834C2EFD}
+\makelabel{nconvex:EqualitiesOfCone for IsCone}{4.2.2}{X782F9A6E82AC6EA4}
+\makelabel{nconvex:DualCone for IsCone}{4.2.3}{X80DB81B58590FC36}
+\makelabel{nconvex:FacesOfCone for IsCone}{4.2.4}{X825F3C9380C4E2EE}
+\makelabel{nconvex:Facets for IsCone}{4.2.5}{X82C77B2A8235567E}
+\makelabel{nconvex:FVector for IsCone}{4.2.6}{X817CAD1E84C0757A}
+\makelabel{nconvex:RelativeInteriorRay for IsCone}{4.2.7}{X81488179780BE42F}
+\makelabel{nconvex:HilbertBasis for IsCone}{4.2.8}{X7EB6BB087BE2FFD6}
+\makelabel{nconvex:HilbertBasisOfDualCone for IsCone}{4.2.9}{X8445477A83A137CB}
+\makelabel{nconvex:LinealitySpaceGenerators for IsCone}{4.2.10}{X815F2FC4821A961D}
+\makelabel{nconvex:ExternalCddCone for IsCone}{4.2.11}{X7CFFCB5C7F4C183D}
+\makelabel{nconvex:ExternalNmzCone for IsCone}{4.2.12}{X79B4436C8051BA08}
+\makelabel{nconvex:AmbientSpaceDimension for IsCone}{4.2.13}{X83709F0380B097BD}
+\makelabel{nconvex:LatticePointsGenerators for IsCone}{4.2.14}{X7DC52F6B8490C5C4}
+\makelabel{nconvex:GridGeneratedByCone for IsCone}{4.2.15}{X7B0DA052877CE7BC}
+\makelabel{nconvex:FactorGrid for IsCone}{4.2.16}{X8267BFA47CD282E1}
+\makelabel{nconvex:FactorGridMorphism for IsCone}{4.2.17}{X7A807C828273D4ED}
+\makelabel{nconvex:GridGeneratedByOrthogonalCone for IsCone}{4.2.18}{X849EFCA77CE04DF9}
+\makelabel{nconvex:IsRegularCone for IsCone}{4.3.1}{X8490C19A78ED287A}
+\makelabel{nconvex:IsRay for IsCone}{4.3.2}{X831EBE117FC07C40}
+\makelabel{nconvex:IsZero for IsCone}{4.3.3}{X810956D0823BDA51}
+\makelabel{nconvex:FourierProjection for IsCone, IsInt}{4.4.1}{X782E6C6684E1514D}
+\makelabel{nconvex:IntersectionOfCones for IsCone, IsCone}{4.4.2}{X80715AC378616F14}
+\makelabel{nconvex:IntersectionOfCones for IsList}{4.4.3}{X7946B20D834F31D2}
+\makelabel{nconvex:Contains for IsCone, IsCone}{4.4.4}{X825A7CBD79653961}
+\makelabel{nconvex:IsRelativeInteriorRay for IsList, IsCone}{4.4.5}{X81FBC83B87053C56}
+\makelabel{nconvex:NonReducedInequalities for IsCone}{4.4.6}{X7C52373C83B9282D}
+\makelabel{nconvex:Fan for IsFan}{5.1.1}{X7F5B09727CD79D17}
+\makelabel{nconvex:Fan for IsList}{5.1.2}{X7FB87B4983087091}
+\makelabel{nconvex:Fan for IsList, IsList}{5.1.3}{X7A1FD0BD845E3588}
+\makelabel{nconvex:FansFromTriangulation for IsList}{5.1.4}{X7D5DE7F08555C8E8}
+\makelabel{nconvex:FanFromTriangulation for IsList}{5.1.5}{X853CC6BB854AA139}
+\makelabel{nconvex:RayGenerators for IsFan}{5.2.1}{X789156E3828930D2}
+\makelabel{nconvex:GivenRayGenerators for IsFan}{5.2.2}{X86CB98CC80E9C36E}
+\makelabel{nconvex:RaysInMaximalCones for IsFan}{5.2.3}{X7B0FAF0A8246F5AE}
+\makelabel{nconvex:MaximalCones for IsFan}{5.2.4}{X7D586B547A8DB803}
+\makelabel{nconvex:FVector for IsFan}{5.2.5}{X7E5274F987E8FFC5}
+\makelabel{nconvex:IsWellDefinedFan for IsFan}{5.3.1}{X81189D5287FFBEDF}
+\makelabel{nconvex:IsComplete for IsFan}{5.3.2}{X87963F4C84C9EA21}
+\makelabel{nconvex:IsPointed for IsFan}{5.3.3}{X7BE6F87D7BB9A6CD}
+\makelabel{nconvex:IsSmooth for IsFan}{5.3.4}{X7C694ECC81F4DECF}
+\makelabel{nconvex:IsSimplicial for IsFan}{5.3.5}{X78A031D8848E0FF8}
+\makelabel{nconvex:IsNormalFan for IsFan}{5.3.6}{X85C533997DC6B46A}
+\makelabel{nconvex:IsRegularFan for IsFan}{5.3.7}{X7A2AE62C86CE72B8}
+\makelabel{nconvex:IsFanoFan for IsFan}{5.3.8}{X81D74C107DBB7C21}
+\makelabel{nconvex:PolyhedronByInequalities for IsList}{6.1.1}{X83EF304B85ED4C5B}
+\makelabel{nconvex:Polyhedron for IsPolytope, IsCone}{6.1.2}{X842F90887840D3B9}
+\makelabel{nconvex:Polyhedron for IsList, IsCone}{6.1.3}{X861DE99B8007A4C4}
+\makelabel{nconvex:Polyhedron for IsPolytope, IsList}{6.1.4}{X78BCB2888114F56F}
+\makelabel{nconvex:Polyhedron for IsList, IsList}{6.1.5}{X7A8ECB9B8542EDFF}
+\makelabel{nconvex:ExternalCddPolyhedron for IsPolyhedron}{6.2.1}{X7ECCE0E480D88952}
+\makelabel{nconvex:ExternalNmzPolyhedron for IsPolyhedron}{6.2.2}{X7C7CC5497FC52B67}
+\makelabel{nconvex:DefiningInequalities for IsPolyhedron}{6.2.3}{X842632AB7A09A820}
+\makelabel{nconvex:MainRatPolytope for IsPolyhedron}{6.2.4}{X87375C8586090666}
+\makelabel{nconvex:MainPolytope for IsPolyhedron}{6.2.5}{X7A16114A7FFB3309}
+\makelabel{nconvex:VerticesOfMainRatPolytope for IsPolyhedron}{6.2.6}{X7A3FB56D7E895535}
+\makelabel{nconvex:VerticesOfMainPolytope for IsPolyhedron}{6.2.7}{X8697AC27862160FE}
+\makelabel{nconvex:TailCone for IsPolyhedron}{6.2.8}{X7C248476851AEB4A}
+\makelabel{nconvex:RayGeneratorsOfTailCone for IsPolyhedron}{6.2.9}{X7DB9524D7C1A5361}
+\makelabel{nconvex:LatticePointsGenerators for IsPolyhedron}{6.2.10}{X79351A698787C5CA}
+\makelabel{nconvex:BasisOfLinealitySpace for IsPolyhedron}{6.2.11}{X7B57BEAF78559D12}
+\makelabel{nconvex:FVector for IsPolyhedron}{6.2.12}{X81435DD28524EEE8}
+\makelabel{nconvex:IsBounded for IsPolyhedron}{6.3.1}{X7B25E29378AF4489}
+\makelabel{nconvex:IsPointed for IsPolyhedron}{6.3.2}{X7B8DDCE685798D9C}
+\makelabel{nconvex:SolveLinearProgram for IsPolyhedron, IsString, IsList}{6.4.1}{X879BD74A7F6327B2}
+\makelabel{nconvex:SolveLinearProgram for IsPolytope, IsString, IsList}{6.4.2}{X7F4FE0C883B8AA50}
+\makelabel{nconvex:SolveEqualitiesAndInequalitiesOverIntergers}{6.5.1}{X81CA403280755A9B}
+\makelabel{nconvex:PolytopeByInequalities for IsList}{7.1.1}{X83FB00B383A19F03}
+\makelabel{nconvex:Polytope for IsList}{7.1.2}{X81DC4EE8849B08DA}
+\makelabel{nconvex:ExternalCddPolytope for IsPolytope}{7.2.1}{X7D8727917B72396A}
+\makelabel{nconvex:LatticePoints for IsPolytope}{7.2.2}{X83B1CBC67B34BE04}
+\makelabel{nconvex:RelativeInteriorLatticePoints for IsPolytope}{7.2.3}{X7FB9E36C7B6C616F}
+\makelabel{nconvex:VerticesOfPolytope for IsPolytope}{7.2.4}{X816ACBEF786C23F2}
+\makelabel{nconvex:Vertices for IsPolytope}{7.2.5}{X805FCCD583DACF8F}
+\makelabel{nconvex:DefiningInequalities for IsPolytope}{7.2.6}{X7B39989A7F321147}
+\makelabel{nconvex:EqualitiesOfPolytope for IsPolytope}{7.2.7}{X7DAF68C08043105D}
+\makelabel{nconvex:FacetInequalities for IsPolytope}{7.2.8}{X7FDABF3D84E67F2C}
+\makelabel{nconvex:VerticesInFacets for IsPolytope}{7.2.9}{X7EC0B0818106EA50}
+\makelabel{nconvex:NormalFan for IsPolytope}{7.2.10}{X7DE7E52D800A7258}
+\makelabel{nconvex:FaceFan for IsPolytope}{7.2.11}{X8453091478A4C0F1}
+\makelabel{nconvex:AffineCone for IsPolytope}{7.2.12}{X85EC550B7FCAECB5}
+\makelabel{nconvex:PolarPolytope for IsPolytope}{7.2.13}{X7ACC98FD78ACDC57}
+\makelabel{nconvex:DualPolytope for IsPolytope}{7.2.14}{X8349F8DA81418C35}
+\makelabel{nconvex:IsEmpty for IsPolytope}{7.3.1}{X863F64947BDFC654}
+\makelabel{nconvex:IsLatticePolytope for IsPolytope}{7.3.2}{X85181A5986107254}
+\makelabel{nconvex:IsVeryAmple for IsPolytope}{7.3.3}{X7918DAE87B159619}
+\makelabel{nconvex:IsNormalPolytope for IsPolytope}{7.3.4}{X851AD9E684CA7434}
+\makelabel{nconvex:IsSimplicial for IsPolytope}{7.3.5}{X7F39F2BF835AA337}
+\makelabel{nconvex:IsSimplexPolytope for IsPolytope}{7.3.6}{X797F6A0778C70DD0}
+\makelabel{nconvex:IsSimplePolytope for IsPolytope}{7.3.7}{X815A80E785E52474}
+\makelabel{nconvex:IsReflexive for IsPolytope}{7.3.8}{X85BE2236780D0957}
+\makelabel{nconvex:IsFanoPolytope for IsPolytope}{7.3.9}{X85DEC39081FD04E9}
+\makelabel{nconvex:IsCanonicalFanoPolytope for IsPolytope}{7.3.10}{X780D5BDE7C177166}
+\makelabel{nconvex:IsTerminalFanoPolytope for IsPolytope}{7.3.11}{X78B2B9747E9A6FEA}
+\makelabel{nconvex:IsSmoothFanoPolytope for IsPolytope}{7.3.12}{X7946CEA886A48F96}
+\makelabel{nconvex:IntersectionOfPolytopes for IsPolytope, IsPolytope}{7.4.3}{X8079AF527BA681D1}
+\makelabel{nconvex:RandomInteriorPoint for IsPolytope}{7.4.4}{X7F2AE1197AAFF273}
+\makelabel{nconvex:IsInteriorPoint for IsList,IsPolytope}{7.4.5}{X7E36517B808D2E44}

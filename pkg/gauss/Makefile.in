@@ -6,29 +6,24 @@
 #  This file is free software, see license information at the end.
 #
 
-# Inspired  by the makefile prototype for the EDIM package of Frank Lübeck
+GAPPATH = @GAPPATH@
 
-CONFIGNAME=@CONFIGNAME@
-GAPPATH=@GAPPATH@
-GAPARCH=@GAPARCH@
+# read GAP's build settings
+include $(GAPPATH)/sysinfo.gap
 
-PKGROOT=$(shell pwd)
-
-GAP=$(PKGROOT)/../../bin/gap-$(CONFIGNAME).sh
+# the following settings are provided by sysinfo.gap in GAP >= 4.12;
+# for compatibility with older GAP version (at least 4.9, 4.10, 4.11)
+# we try to "guess" suitable values here
+GAP ?= $(GAPPATH)/gap
+GAC ?= $(GAPPATH)/gac
 
 .PHONY: default static doc clean distclean docclean test
 
-default: bin/@GAPARCH@/gauss.so
+default: bin/$(GAParch)/gauss.so
 
-static:
-	mkdir -p bin/@GAPARCH@
-	(cd $(GAPPATH)/bin/@GAPARCH@; \
-	./gac -o gap-static -p "-DGAUSSSTATIC" -P "-static" \
-	../../pkg/Gauss/src/gauss.c)
-
-bin/@GAPARCH@/gauss.so: src/gauss.c
-	mkdir -p bin/@GAPARCH@
-	$(GAPPATH)/bin/@GAPARCH@/gac -d -o bin/@GAPARCH@/gauss.so src/gauss.c
+bin/$(GAParch)/gauss.so: src/gauss.c
+	mkdir -p bin/$(GAParch)
+	$(GAC) -d -o bin/$(GAParch)/gauss.so src/gauss.c
 
 doc: doc/manual.six
 
@@ -38,7 +33,7 @@ doc/manual.six:	makedoc.g \
 		gap makedoc.g
 
 clean:
-	rm -rf bin/@GAPARCH@ Makefile Makefile-$(CONFIGNAME) *~
+	rm -rf bin/$(GAParch) Makefile *~
 
 distclean:
 	rm -rf bin Makefile Makefile-*
@@ -51,7 +46,7 @@ test: doc
 	gap tst/testall.g
 
 test-basic-spacing:
-	#grep -RPl "\t" examples/ gap/ && echo "Tabs found" && exit 1 || exit 0
+	grep -RPl "\t" examples/ gap/ && echo "Tabs found" && exit 1 || exit 0
 	grep -RPl "\r" gap/ && echo "Windows line-endings found" && exit 1 || exit 0
 	# the second grep is a hack to fix the exit code with -L for grep <= 3.1
 	grep -RPzL "\n\z" gap/ | grep "" && echo "File with no newline at end of file found" && exit 1 || exit 0

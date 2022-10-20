@@ -6,8 +6,8 @@ LoadPackage("recog");
 # precisely so that we can catch issues that only appear with some RNG
 # states, but not with others.
 FlushCaches(  );
-RANDOM_SEED( 1 );
+Reset(GlobalRandomSource, 1);
 Reset( GlobalMersenneTwister, 1 );
 
-TestDirectory(DirectoriesPackageLibrary("recog", "tst"), rec(exitGAP := true));
+TestDirectory(DirectoriesPackageLibrary("recog", "tst/working"), rec(exitGAP := true));
 FORCE_QUIT_GAP(1);

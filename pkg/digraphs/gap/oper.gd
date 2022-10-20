@@ -59,6 +59,8 @@ DeclareOperation("DIGRAPHS_GraphProduct", [IsDigraph, IsDigraph, IsFunction]);
 # 4. Actions . . .
 DeclareOperation("OnDigraphs", [IsDigraph, IsPerm]);
 DeclareOperation("OnDigraphs", [IsDigraph, IsTransformation]);
+DeclareOperation("OnTuplesDigraphs", [IsDigraphCollection, IsPerm]);
+DeclareOperation("OnSetsDigraphs", [IsDigraphCollection, IsPerm]);
 DeclareOperation("OnMultiDigraphs", [IsDigraph, IsPermCollection]);
 DeclareOperation("OnMultiDigraphs", [IsDigraph, IsPerm, IsPerm]);
 
@@ -123,6 +125,7 @@ DeclareOperation("IteratorOfPaths", [IsList, IsPosInt, IsPosInt]);
 DeclareOperation("IteratorOfPathsNC", [IsList, IsPosInt, IsPosInt]);
 DeclareOperation("IsReachable", [IsDigraph, IsPosInt, IsPosInt]);
 DeclareOperation("DigraphLongestDistanceFromVertex", [IsDigraph, IsPosInt]);
+DeclareOperation("DigraphRandomWalk", [IsDigraph, IsPosInt, IsInt]);
 
 DeclareOperation("DigraphLayers", [IsDigraph, IsPosInt]);
 DeclareAttribute("DIGRAPHS_Layers", IsDigraph, "mutable");

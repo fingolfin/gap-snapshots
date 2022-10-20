@@ -249,149 +249,153 @@
 \makelabel{matricesforhomalg:CertainColumns for matrices}{5.5.9}{X8256AF2A840B19C4}
 \makelabel{matricesforhomalg:UnionOfRows for a homalg ring, an integer and a list of homalg matrices}{5.5.10}{X7D6D0BDF854C9EBC}
 \makelabel{matricesforhomalg:UnionOfColumns for a homalg ring, an integer and a list of homalg matrices}{5.5.11}{X7FF9661D85EC46B1}
-\makelabel{matricesforhomalg:DiagMat for a homalg ring and a list of homalg matrices}{5.5.12}{X7C7830BE847D84B4}
-\makelabel{matricesforhomalg:KroneckerMat for matrices}{5.5.13}{X7CDA5D848468A0AA}
-\makelabel{matricesforhomalg:DualKroneckerMat for matrices}{5.5.14}{X7ECF744B7DE82BED}
-\makelabel{matricesforhomalg:GetColumnIndependentUnitPositions for matrices}{5.5.20}{X85887BBB86F0A08B}
-\makelabel{matricesforhomalg:GetRowIndependentUnitPositions for matrices}{5.5.21}{X824AB44184DD63B0}
-\makelabel{matricesforhomalg:GetUnitPosition for matrices}{5.5.22}{X7A1969A17979FC49}
-\makelabel{matricesforhomalg:Eliminate}{5.5.23}{X781B1C0C80529B09}
-\makelabel{matricesforhomalg:BasisOfRowModule for matrices}{5.5.24}{X80ADBE0D82CC6E85}
-\makelabel{matricesforhomalg:BasisOfColumnModule for matrices}{5.5.25}{X868CDA327D6C8DDC}
-\makelabel{matricesforhomalg:DecideZeroRows for pairs of matrices}{5.5.26}{X7F851EC7861170D1}
-\makelabel{matricesforhomalg:DecideZeroColumns for pairs of matrices}{5.5.27}{X86C97DBB787BAD6D}
-\makelabel{matricesforhomalg:SyzygiesGeneratorsOfRows for matrices}{5.5.28}{X86ECEA9B7A4AE578}
-\makelabel{matricesforhomalg:SyzygiesGeneratorsOfColumns for matrices}{5.5.29}{X86504B757F6DC990}
-\makelabel{matricesforhomalg:SyzygiesGeneratorsOfRows for pairs of matrices}{5.5.30}{X84A93458804F16F6}
-\makelabel{matricesforhomalg:SyzygiesGeneratorsOfColumns for pairs of matrices}{5.5.31}{X7D3FC0CE7B63AAF1}
-\makelabel{matricesforhomalg:ReducedBasisOfRowModule for matrices}{5.5.32}{X82E0FF517DC38040}
-\makelabel{matricesforhomalg:ReducedBasisOfColumnModule for matrices}{5.5.33}{X84CED11F7A633BDA}
-\makelabel{matricesforhomalg:ReducedSyzygiesGeneratorsOfRows for matrices}{5.5.34}{X7DE458D67B9B85BF}
-\makelabel{matricesforhomalg:ReducedSyzygiesGeneratorsOfColumns for matrices}{5.5.35}{X8699114D7A865C11}
-\makelabel{matricesforhomalg:BasisOfRowsCoeff for matrices}{5.5.36}{X7D9DEC6081AF0003}
-\makelabel{matricesforhomalg:BasisOfColumnsCoeff for matrices}{5.5.37}{X7BBC885F7C24DEC2}
-\makelabel{matricesforhomalg:DecideZeroRowsEffectively for pairs of matrices}{5.5.38}{X8513963C84A9F8CB}
-\makelabel{matricesforhomalg:DecideZeroColumnsEffectively for pairs of matrices}{5.5.39}{X7A06BF7779830815}
-\makelabel{matricesforhomalg:BasisOfRows for matrices}{5.5.40}{X81ABDA3E7D94C661}
-\makelabel{matricesforhomalg:BasisOfRows for pairs of matrices}{5.5.40}{X81ABDA3E7D94C661}
-\makelabel{matricesforhomalg:BasisOfColumns for matrices}{5.5.41}{X83A5B51980FFDE53}
-\makelabel{matricesforhomalg:BasisOfColumns for pairs of matrices}{5.5.41}{X83A5B51980FFDE53}
-\makelabel{matricesforhomalg:DecideZero for matrices and relations}{5.5.42}{X85C980288304B4AC}
-\makelabel{matricesforhomalg:SyzygiesOfRows for matrices}{5.5.43}{X86C93ABD857447F8}
-\makelabel{matricesforhomalg:SyzygiesOfRows for pairs of matrices}{5.5.43}{X86C93ABD857447F8}
-\makelabel{matricesforhomalg:SyzygiesOfColumns for matrices}{5.5.44}{X80325CAD7CE56F4F}
-\makelabel{matricesforhomalg:SyzygiesOfColumns for pairs of matrices}{5.5.44}{X80325CAD7CE56F4F}
-\makelabel{matricesforhomalg:ReducedSyzygiesOfRows for matrices}{5.5.45}{X86A798D4850BF9E8}
-\makelabel{matricesforhomalg:ReducedSyzygiesOfRows for pairs of matrices}{5.5.45}{X86A798D4850BF9E8}
-\makelabel{matricesforhomalg:ReducedSyzygiesOfColumns for matrices}{5.5.46}{X8766BBD578557D15}
-\makelabel{matricesforhomalg:ReducedSyzygiesOfColumns for pairs of matrices}{5.5.46}{X8766BBD578557D15}
-\makelabel{matricesforhomalg:RightDivide for pairs of matrices}{5.5.47}{X850AEC9C7C00AFF5}
-\makelabel{matricesforhomalg:LeftDivide for pairs of matrices}{5.5.48}{X7D0EAF527F8514E0}
-\makelabel{matricesforhomalg:RightDivide for triples of matrices}{5.5.49}{X7A8546EA87E3AE67}
-\makelabel{matricesforhomalg:LeftDivide for triples of matrices}{5.5.50}{X86CEB1FC7C358777}
-\makelabel{matricesforhomalg:GenerateSameRowModule for pairs of matrices}{5.5.51}{X82B2C4987D6D5BD3}
-\makelabel{matricesforhomalg:GenerateSameColumnModule for pairs of matrices}{5.5.52}{X867A947682754A9A}
-\makelabel{matricesforhomalg:SimplifyHomalgMatrixByLeftAndRightMultiplicationWithInvertibleMatrices for matrices}{5.5.53}{X81CDBBBE878DC1E5}
-\makelabel{matricesforhomalg:SimplifyHomalgMatrixByLeftMultiplicationWithInvertibleMatrix for matrices}{5.5.54}{X85DA10C07E7E5A3D}
-\makelabel{matricesforhomalg:SimplifyHomalgMatrixByRightMultiplicationWithInvertibleMatrix for matrices}{5.5.55}{X79C124318588F37F}
-\makelabel{matricesforhomalg:CoefficientsWithGivenMonomials for two homalg matrices}{5.5.56}{X7EEFD7887E96714F}
+\makelabel{matricesforhomalg:ConvertRowToMatrix for matrices}{5.5.12}{X7E61390E79B663E8}
+\makelabel{matricesforhomalg:ConvertColumnToMatrix for matrices}{5.5.13}{X853EA6C87EDDF6EF}
+\makelabel{matricesforhomalg:ConvertMatrixToRow for matrices}{5.5.14}{X7ED5C86379A647F2}
+\makelabel{matricesforhomalg:ConvertMatrixToColumn for matrices}{5.5.15}{X84C7C1D07DB6FBAA}
+\makelabel{matricesforhomalg:DiagMat for a homalg ring and a list of homalg matrices}{5.5.16}{X7C7830BE847D84B4}
+\makelabel{matricesforhomalg:KroneckerMat for matrices}{5.5.17}{X7CDA5D848468A0AA}
+\makelabel{matricesforhomalg:DualKroneckerMat for matrices}{5.5.18}{X7ECF744B7DE82BED}
+\makelabel{matricesforhomalg:GetColumnIndependentUnitPositions for matrices}{5.5.24}{X85887BBB86F0A08B}
+\makelabel{matricesforhomalg:GetRowIndependentUnitPositions for matrices}{5.5.25}{X824AB44184DD63B0}
+\makelabel{matricesforhomalg:GetUnitPosition for matrices}{5.5.26}{X7A1969A17979FC49}
+\makelabel{matricesforhomalg:Eliminate}{5.5.27}{X781B1C0C80529B09}
+\makelabel{matricesforhomalg:BasisOfRowModule for matrices}{5.5.28}{X80ADBE0D82CC6E85}
+\makelabel{matricesforhomalg:BasisOfColumnModule for matrices}{5.5.29}{X868CDA327D6C8DDC}
+\makelabel{matricesforhomalg:DecideZeroRows for pairs of matrices}{5.5.30}{X7F851EC7861170D1}
+\makelabel{matricesforhomalg:DecideZeroColumns for pairs of matrices}{5.5.31}{X86C97DBB787BAD6D}
+\makelabel{matricesforhomalg:SyzygiesGeneratorsOfRows for matrices}{5.5.32}{X86ECEA9B7A4AE578}
+\makelabel{matricesforhomalg:SyzygiesGeneratorsOfColumns for matrices}{5.5.33}{X86504B757F6DC990}
+\makelabel{matricesforhomalg:SyzygiesGeneratorsOfRows for pairs of matrices}{5.5.34}{X84A93458804F16F6}
+\makelabel{matricesforhomalg:SyzygiesGeneratorsOfColumns for pairs of matrices}{5.5.35}{X7D3FC0CE7B63AAF1}
+\makelabel{matricesforhomalg:ReducedBasisOfRowModule for matrices}{5.5.36}{X82E0FF517DC38040}
+\makelabel{matricesforhomalg:ReducedBasisOfColumnModule for matrices}{5.5.37}{X84CED11F7A633BDA}
+\makelabel{matricesforhomalg:ReducedSyzygiesGeneratorsOfRows for matrices}{5.5.38}{X7DE458D67B9B85BF}
+\makelabel{matricesforhomalg:ReducedSyzygiesGeneratorsOfColumns for matrices}{5.5.39}{X8699114D7A865C11}
+\makelabel{matricesforhomalg:BasisOfRowsCoeff for matrices}{5.5.40}{X7D9DEC6081AF0003}
+\makelabel{matricesforhomalg:BasisOfColumnsCoeff for matrices}{5.5.41}{X7BBC885F7C24DEC2}
+\makelabel{matricesforhomalg:DecideZeroRowsEffectively for pairs of matrices}{5.5.42}{X8513963C84A9F8CB}
+\makelabel{matricesforhomalg:DecideZeroColumnsEffectively for pairs of matrices}{5.5.43}{X7A06BF7779830815}
+\makelabel{matricesforhomalg:BasisOfRows for matrices}{5.5.44}{X81ABDA3E7D94C661}
+\makelabel{matricesforhomalg:BasisOfRows for pairs of matrices}{5.5.44}{X81ABDA3E7D94C661}
+\makelabel{matricesforhomalg:BasisOfColumns for matrices}{5.5.45}{X83A5B51980FFDE53}
+\makelabel{matricesforhomalg:BasisOfColumns for pairs of matrices}{5.5.45}{X83A5B51980FFDE53}
+\makelabel{matricesforhomalg:DecideZero for matrices and relations}{5.5.46}{X85C980288304B4AC}
+\makelabel{matricesforhomalg:SyzygiesOfRows for matrices}{5.5.47}{X86C93ABD857447F8}
+\makelabel{matricesforhomalg:SyzygiesOfRows for pairs of matrices}{5.5.47}{X86C93ABD857447F8}
+\makelabel{matricesforhomalg:SyzygiesOfColumns for matrices}{5.5.48}{X80325CAD7CE56F4F}
+\makelabel{matricesforhomalg:SyzygiesOfColumns for pairs of matrices}{5.5.48}{X80325CAD7CE56F4F}
+\makelabel{matricesforhomalg:ReducedSyzygiesOfRows for matrices}{5.5.49}{X86A798D4850BF9E8}
+\makelabel{matricesforhomalg:ReducedSyzygiesOfRows for pairs of matrices}{5.5.49}{X86A798D4850BF9E8}
+\makelabel{matricesforhomalg:ReducedSyzygiesOfColumns for matrices}{5.5.50}{X8766BBD578557D15}
+\makelabel{matricesforhomalg:ReducedSyzygiesOfColumns for pairs of matrices}{5.5.50}{X8766BBD578557D15}
+\makelabel{matricesforhomalg:RightDivide for pairs of matrices}{5.5.51}{X850AEC9C7C00AFF5}
+\makelabel{matricesforhomalg:LeftDivide for pairs of matrices}{5.5.52}{X7D0EAF527F8514E0}
+\makelabel{matricesforhomalg:RightDivide for triples of matrices}{5.5.53}{X7A8546EA87E3AE67}
+\makelabel{matricesforhomalg:LeftDivide for triples of matrices}{5.5.54}{X86CEB1FC7C358777}
+\makelabel{matricesforhomalg:GenerateSameRowModule for pairs of matrices}{5.5.55}{X82B2C4987D6D5BD3}
+\makelabel{matricesforhomalg:GenerateSameColumnModule for pairs of matrices}{5.5.56}{X867A947682754A9A}
+\makelabel{matricesforhomalg:SimplifyHomalgMatrixByLeftAndRightMultiplicationWithInvertibleMatrices for matrices}{5.5.57}{X81CDBBBE878DC1E5}
+\makelabel{matricesforhomalg:SimplifyHomalgMatrixByLeftMultiplicationWithInvertibleMatrix for matrices}{5.5.58}{X85DA10C07E7E5A3D}
+\makelabel{matricesforhomalg:SimplifyHomalgMatrixByRightMultiplicationWithInvertibleMatrix for matrices}{5.5.59}{X79C124318588F37F}
+\makelabel{matricesforhomalg:CoefficientsWithGivenMonomials for two homalg matrices}{5.5.60}{X7EEFD7887E96714F}
 \makelabel{matricesforhomalg:IsHomalgRingRelations}{6.1.1}{X7D50E3AD82087AE6}
 \makelabel{matricesforhomalg:IsHomalgRingRelationsAsGeneratorsOfLeftIdeal}{6.1.2}{X7DECADD683403C65}
 \makelabel{matricesforhomalg:IsHomalgRingRelationsAsGeneratorsOfRightIdeal}{6.1.3}{X78746A217FEEB058}
 \makelabel{matricesforhomalg:IsRingRelationsRep}{6.1.4}{X86CA83A081B8C8EA}
 \makelabel{matricesforhomalg:CanBeUsedToDecideZero}{6.3.1}{X835DF250790EF863}
 \makelabel{matricesforhomalg:IsInjectivePresentation}{6.3.2}{X7B9398827AEEA2E6}
-\makelabel{matricesforhomalg:InitialMatrix homalgtable entry for initial matrices}{B.1.1}{X7DBA33F083A317B5}
-\makelabel{matricesforhomalg:InitialIdentityMatrix homalgtable entry for initial identity matrices}{B.1.2}{X84179BE87E7DCE76}
-\makelabel{matricesforhomalg:ZeroMatrix homalgtable entry}{B.1.3}{X785390E38396CAEB}
-\makelabel{matricesforhomalg:IdentityMatrix homalgtable entry}{B.1.4}{X87BFF3567DEEBEF4}
-\makelabel{matricesforhomalg:Involution homalgtable entry}{B.1.5}{X85884C3178473521}
-\makelabel{matricesforhomalg:TransposedMatrix homalgtable entry}{B.1.6}{X7AD2EEE680DF472B}
-\makelabel{matricesforhomalg:CertainRows homalgtable entry}{B.1.7}{X7B6FC3267CD9EE9D}
-\makelabel{matricesforhomalg:CertainColumns homalgtable entry}{B.1.8}{X78EADFC67D17CF04}
-\makelabel{matricesforhomalg:UnionOfRows homalgtable entry}{B.1.9}{X7DEB535782A3323E}
-\makelabel{matricesforhomalg:UnionOfRowsPair homalgtable entry}{B.1.10}{X86C345CE82AAB220}
-\makelabel{matricesforhomalg:UnionOfColumns homalgtable entry}{B.1.11}{X7DF5DB55836D13A7}
-\makelabel{matricesforhomalg:UnionOfColumnsPair homalgtable entry}{B.1.12}{X8092789C87E37020}
-\makelabel{matricesforhomalg:DiagMat homalgtable entry}{B.1.13}{X86C5B86981FA1F9A}
-\makelabel{matricesforhomalg:KroneckerMat homalgtable entry}{B.1.14}{X82202A6A7FAB7174}
-\makelabel{matricesforhomalg:DualKroneckerMat homalgtable entry}{B.1.15}{X87E0747D7FEEAC76}
-\makelabel{matricesforhomalg:MulMat homalgtable entry}{B.1.16}{X828F8C7785EEC3D1}
-\makelabel{matricesforhomalg:AddMat homalgtable entry}{B.1.17}{X7B0B12F080A90039}
-\makelabel{matricesforhomalg:SubMat homalgtable entry}{B.1.18}{X7FE11AA27AE7D2D7}
-\makelabel{matricesforhomalg:Compose homalgtable entry}{B.1.19}{X7D491D957E63C3A4}
-\makelabel{matricesforhomalg:IsZeroMatrix homalgtable entry}{B.1.20}{X849BB912798A01EB}
-\makelabel{matricesforhomalg:NrRows homalgtable entry}{B.1.21}{X7AE057CF7C6B0EE0}
-\makelabel{matricesforhomalg:NrColumns homalgtable entry}{B.1.22}{X7D8E706887116F30}
-\makelabel{matricesforhomalg:Determinant homalgtable entry}{B.1.23}{X80A573257D7F2E1A}
-\makelabel{matricesforhomalg:CoefficientsWithGivenMonomials homalgtable entry}{B.1.24}{X8450E904787CBD35}
-\makelabel{matricesforhomalg:AreEqualMatrices homalgtable entry}{B.2.1}{X7871FE5478BFC167}
-\makelabel{matricesforhomalg:IsIdentityMatrix homalgtable entry}{B.2.2}{X80C1856D82172268}
-\makelabel{matricesforhomalg:IsDiagonalMatrix homalgtable entry}{B.2.3}{X7B6420E88418316B}
-\makelabel{matricesforhomalg:ZeroRows homalgtable entry}{B.2.4}{X872B70367F412945}
-\makelabel{matricesforhomalg:ZeroColumns homalgtable entry}{B.2.5}{X7A469E6D7EA63BB6}
-\makelabel{matricesforhomalg:GetColumnIndependentUnitPositions homalgtable entry}{B.2.6}{X7BCBACDB79C96FBF}
-\makelabel{matricesforhomalg:GetRowIndependentUnitPositions homalgtable entry}{B.2.7}{X855C57B6822E7A98}
-\makelabel{matricesforhomalg:GetUnitPosition homalgtable entry}{B.2.8}{X876495AA79063CDE}
-\makelabel{matricesforhomalg:PositionOfFirstNonZeroEntryPerRow homalgtable entry}{B.2.9}{X7F40B57079CF80ED}
-\makelabel{matricesforhomalg:PositionOfFirstNonZeroEntryPerColumn homalgtable entry}{B.2.10}{X833B384278492266}
-\makelabel{matricesforhomalg:Eval for matrices created with homalginitialmatrix}{C.4.1}{X7EEAADA6807A5A45}
-\makelabel{matricesforhomalg:Eval for matrices created with homalginitialidentitymatrix}{C.4.2}{X7B619CA885024F0F}
-\makelabel{matricesforhomalg:Eval for matrices created with homalgzeromatrix}{C.4.3}{X7EADAA3180A84318}
-\makelabel{matricesforhomalg:Eval for matrices created with homalgidentitymatrix}{C.4.4}{X78CCA57B84E51834}
-\makelabel{matricesforhomalg:Eval for matrices created with leftinverselazy}{C.4.5}{X8362669D87FD667B}
-\makelabel{matricesforhomalg:Eval for matrices created with rightinverselazy}{C.4.6}{X84D72DF482F70AD5}
-\makelabel{matricesforhomalg:Eval for matrices created with involution}{C.4.7}{X7928991E8768FA72}
-\makelabel{matricesforhomalg:Eval for matrices created with transposedmatrix}{C.4.8}{X78D5359480EFC5AC}
-\makelabel{matricesforhomalg:Eval for matrices created with coercedmatrix}{C.4.9}{X87BF7FD083D0EE88}
-\makelabel{matricesforhomalg:Eval for matrices created with certainrows}{C.4.10}{X852DCBD57A742FA5}
-\makelabel{matricesforhomalg:Eval for matrices created with certaincolumns}{C.4.11}{X835F6F2E7D590F3D}
-\makelabel{matricesforhomalg:Eval for matrices created with unionofrows}{C.4.12}{X7F35A61C8522A1B0}
-\makelabel{matricesforhomalg:Eval for matrices created with unionofcolumns}{C.4.13}{X7EDE6095820F8128}
-\makelabel{matricesforhomalg:Eval for matrices created with diagmat}{C.4.14}{X7FD68F43831046B6}
-\makelabel{matricesforhomalg:Eval for matrices created with kroneckermat}{C.4.15}{X84F45FB4854A079C}
-\makelabel{matricesforhomalg:Eval for matrices created with dualkroneckermat}{C.4.16}{X78ADE5C879583E7B}
-\makelabel{matricesforhomalg:Eval for matrices created with mulmat}{C.4.17}{X7B68797C7EA79B10}
-\makelabel{matricesforhomalg:Eval for matrices created with addmat}{C.4.18}{X85971C16868BD83C}
-\makelabel{matricesforhomalg:Eval for matrices created with submat}{C.4.19}{X86F848318791595C}
-\makelabel{matricesforhomalg:Eval for matrices created with compose}{C.4.20}{X7F7682FC86F602C2}
-\makelabel{matricesforhomalg:Eval for matrices created with coefficientswithgivenmonomials}{C.4.21}{X848FE4F07BAF89DB}
-\makelabel{matricesforhomalg:BasisOfRowModule residueclassring}{D.1.1}{X7AB980C5791BA204}
-\makelabel{matricesforhomalg:BasisOfColumnModule residueclassring}{D.1.2}{X7F2B3332793FACA3}
-\makelabel{matricesforhomalg:DecideZeroRows residueclassring}{D.1.3}{X83E072E1790A7D38}
-\makelabel{matricesforhomalg:DecideZeroColumns residueclassring}{D.1.4}{X841426A87A1A20E4}
-\makelabel{matricesforhomalg:SyzygiesGeneratorsOfRows residueclassring}{D.1.5}{X80F4836F7F175B12}
-\makelabel{matricesforhomalg:SyzygiesGeneratorsOfColumns residueclassring}{D.1.6}{X7899768C8304A59E}
-\makelabel{matricesforhomalg:BasisOfRowsCoeff residueclassring}{D.1.7}{X78BC2E8E7A78CC82}
-\makelabel{matricesforhomalg:BasisOfColumnsCoeff residueclassring}{D.1.8}{X7D2E9D797877FFBD}
-\makelabel{matricesforhomalg:DecideZeroRowsEffectively residueclassring}{D.1.9}{X7F10DC697D2B828D}
-\makelabel{matricesforhomalg:DecideZeroColumnsEffectively residueclassring}{D.1.10}{X7B68B9F27BC02520}
-\makelabel{matricesforhomalg:RelativeSyzygiesGeneratorsOfRows residueclassring}{D.1.11}{X7DF62C5D7D2E6A6E}
-\makelabel{matricesforhomalg:RelativeSyzygiesGeneratorsOfColumns residueclassring}{D.1.12}{X852F9FD8837D97A5}
-\makelabel{matricesforhomalg:InitialMatrix residueclassring}{D.2.1}{X81CD6BAB7CA73AFC}
-\makelabel{matricesforhomalg:InitialIdentityMatrix residueclassring}{D.2.2}{X7D0F99857E280142}
-\makelabel{matricesforhomalg:ZeroMatrix residueclassring}{D.2.3}{X80393225841391E7}
-\makelabel{matricesforhomalg:IdentityMatrix residueclassring}{D.2.4}{X811B306C81435D87}
-\makelabel{matricesforhomalg:Involution residueclassring}{D.2.5}{X7B322C637FC26E2D}
-\makelabel{matricesforhomalg:TransposedMatrix residueclassring}{D.2.6}{X816CBEA6790E0C31}
-\makelabel{matricesforhomalg:CertainRows residueclassring}{D.2.7}{X7C5B29A37B13A53D}
-\makelabel{matricesforhomalg:CertainColumns residueclassring}{D.2.8}{X84CBE51981BA2C77}
-\makelabel{matricesforhomalg:UnionOfRows residueclassring}{D.2.9}{X8510678E8569799E}
-\makelabel{matricesforhomalg:UnionOfColumns residueclassring}{D.2.10}{X862F756A7FC0F0D4}
-\makelabel{matricesforhomalg:DiagMat residueclassring}{D.2.11}{X802BEBF5790D4167}
-\makelabel{matricesforhomalg:KroneckerMat residueclassring}{D.2.12}{X85F1DDDB864AF265}
-\makelabel{matricesforhomalg:DualKroneckerMat residueclassring}{D.2.13}{X7E996A50863FE76C}
-\makelabel{matricesforhomalg:MulMat residueclassring}{D.2.14}{X7A5D229384E9D19C}
-\makelabel{matricesforhomalg:AddMat residueclassring}{D.2.15}{X83E1AEC781AE1274}
-\makelabel{matricesforhomalg:SubMat residueclassring}{D.2.16}{X79A1C9297BE0C09A}
-\makelabel{matricesforhomalg:Compose residueclassring}{D.2.17}{X875447A686949D59}
-\makelabel{matricesforhomalg:IsZeroMatrix residueclassring}{D.2.18}{X78D7BABE806B82FA}
-\makelabel{matricesforhomalg:NrRows residueclassring}{D.2.19}{X78BBB7CE7D6C1CAD}
-\makelabel{matricesforhomalg:NrColumns residueclassring}{D.2.20}{X7B5809EA8236F9F4}
-\makelabel{matricesforhomalg:Determinant residueclassring}{D.2.21}{X80831B287AB565BA}
-\makelabel{matricesforhomalg:AreEqualMatrices residueclassring}{D.3.1}{X848EB509816E8A7D}
-\makelabel{matricesforhomalg:IsOne residueclassring}{D.3.2}{X80122FB3846A6BA5}
-\makelabel{matricesforhomalg:IsDiagonalMatrix residueclassring}{D.3.3}{X87B8E7137DC97A71}
-\makelabel{matricesforhomalg:ZeroRows residueclassring}{D.3.4}{X7EFC928C7E59CEAE}
-\makelabel{matricesforhomalg:ZeroColumns residueclassring}{D.3.5}{X7E78F7D6796C7016}
+\makelabel{matricesforhomalg:InitialMatrix homalgTable entry for initial matrices}{B.1.1}{X7DBA33F083A317B5}
+\makelabel{matricesforhomalg:InitialIdentityMatrix homalgTable entry for initial identity matrices}{B.1.2}{X84179BE87E7DCE76}
+\makelabel{matricesforhomalg:ZeroMatrix homalgTable entry}{B.1.3}{X785390E38396CAEB}
+\makelabel{matricesforhomalg:IdentityMatrix homalgTable entry}{B.1.4}{X87BFF3567DEEBEF4}
+\makelabel{matricesforhomalg:Involution homalgTable entry}{B.1.5}{X85884C3178473521}
+\makelabel{matricesforhomalg:TransposedMatrix homalgTable entry}{B.1.6}{X7AD2EEE680DF472B}
+\makelabel{matricesforhomalg:CertainRows homalgTable entry}{B.1.7}{X7B6FC3267CD9EE9D}
+\makelabel{matricesforhomalg:CertainColumns homalgTable entry}{B.1.8}{X78EADFC67D17CF04}
+\makelabel{matricesforhomalg:UnionOfRows homalgTable entry}{B.1.9}{X7DEB535782A3323E}
+\makelabel{matricesforhomalg:UnionOfRowsPair homalgTable entry}{B.1.10}{X86C345CE82AAB220}
+\makelabel{matricesforhomalg:UnionOfColumns homalgTable entry}{B.1.11}{X7DF5DB55836D13A7}
+\makelabel{matricesforhomalg:UnionOfColumnsPair homalgTable entry}{B.1.12}{X8092789C87E37020}
+\makelabel{matricesforhomalg:DiagMat homalgTable entry}{B.1.13}{X86C5B86981FA1F9A}
+\makelabel{matricesforhomalg:KroneckerMat homalgTable entry}{B.1.14}{X82202A6A7FAB7174}
+\makelabel{matricesforhomalg:DualKroneckerMat homalgTable entry}{B.1.15}{X87E0747D7FEEAC76}
+\makelabel{matricesforhomalg:MulMat homalgTable entry}{B.1.16}{X828F8C7785EEC3D1}
+\makelabel{matricesforhomalg:AddMat homalgTable entry}{B.1.17}{X7B0B12F080A90039}
+\makelabel{matricesforhomalg:SubMat homalgTable entry}{B.1.18}{X7FE11AA27AE7D2D7}
+\makelabel{matricesforhomalg:Compose homalgTable entry}{B.1.19}{X7D491D957E63C3A4}
+\makelabel{matricesforhomalg:IsZeroMatrix homalgTable entry}{B.1.20}{X849BB912798A01EB}
+\makelabel{matricesforhomalg:NrRows homalgTable entry}{B.1.21}{X7AE057CF7C6B0EE0}
+\makelabel{matricesforhomalg:NrColumns homalgTable entry}{B.1.22}{X7D8E706887116F30}
+\makelabel{matricesforhomalg:Determinant homalgTable entry}{B.1.23}{X80A573257D7F2E1A}
+\makelabel{matricesforhomalg:CoefficientsWithGivenMonomials homalgTable entry}{B.1.24}{X8450E904787CBD35}
+\makelabel{matricesforhomalg:AreEqualMatrices homalgTable entry}{B.2.1}{X7871FE5478BFC167}
+\makelabel{matricesforhomalg:IsIdentityMatrix homalgTable entry}{B.2.2}{X80C1856D82172268}
+\makelabel{matricesforhomalg:IsDiagonalMatrix homalgTable entry}{B.2.3}{X7B6420E88418316B}
+\makelabel{matricesforhomalg:ZeroRows homalgTable entry}{B.2.4}{X872B70367F412945}
+\makelabel{matricesforhomalg:ZeroColumns homalgTable entry}{B.2.5}{X7A469E6D7EA63BB6}
+\makelabel{matricesforhomalg:GetColumnIndependentUnitPositions homalgTable entry}{B.2.6}{X7BCBACDB79C96FBF}
+\makelabel{matricesforhomalg:GetRowIndependentUnitPositions homalgTable entry}{B.2.7}{X855C57B6822E7A98}
+\makelabel{matricesforhomalg:GetUnitPosition homalgTable entry}{B.2.8}{X876495AA79063CDE}
+\makelabel{matricesforhomalg:PositionOfFirstNonZeroEntryPerRow homalgTable entry}{B.2.9}{X7F40B57079CF80ED}
+\makelabel{matricesforhomalg:PositionOfFirstNonZeroEntryPerColumn homalgTable entry}{B.2.10}{X833B384278492266}
+\makelabel{matricesforhomalg:Eval for matrices created with HomalgInitialMatrix}{C.4.1}{X7EEAADA6807A5A45}
+\makelabel{matricesforhomalg:Eval for matrices created with HomalgInitialIdentityMatrix}{C.4.2}{X7B619CA885024F0F}
+\makelabel{matricesforhomalg:Eval for matrices created with HomalgZeroMatrix}{C.4.3}{X7EADAA3180A84318}
+\makelabel{matricesforhomalg:Eval for matrices created with HomalgIdentityMatrix}{C.4.4}{X78CCA57B84E51834}
+\makelabel{matricesforhomalg:Eval for matrices created with LeftInverseLazy}{C.4.5}{X8362669D87FD667B}
+\makelabel{matricesforhomalg:Eval for matrices created with RightInverseLazy}{C.4.6}{X84D72DF482F70AD5}
+\makelabel{matricesforhomalg:Eval for matrices created with Involution}{C.4.7}{X7928991E8768FA72}
+\makelabel{matricesforhomalg:Eval for matrices created with TransposedMatrix}{C.4.8}{X78D5359480EFC5AC}
+\makelabel{matricesforhomalg:Eval for matrices created with CoercedMatrix}{C.4.9}{X87BF7FD083D0EE88}
+\makelabel{matricesforhomalg:Eval for matrices created with CertainRows}{C.4.10}{X852DCBD57A742FA5}
+\makelabel{matricesforhomalg:Eval for matrices created with CertainColumns}{C.4.11}{X835F6F2E7D590F3D}
+\makelabel{matricesforhomalg:Eval for matrices created with UnionOfRows}{C.4.12}{X7F35A61C8522A1B0}
+\makelabel{matricesforhomalg:Eval for matrices created with UnionOfColumns}{C.4.13}{X7EDE6095820F8128}
+\makelabel{matricesforhomalg:Eval for matrices created with DiagMat}{C.4.14}{X7FD68F43831046B6}
+\makelabel{matricesforhomalg:Eval for matrices created with KroneckerMat}{C.4.15}{X84F45FB4854A079C}
+\makelabel{matricesforhomalg:Eval for matrices created with DualKroneckerMat}{C.4.16}{X78ADE5C879583E7B}
+\makelabel{matricesforhomalg:Eval for matrices created with MulMat}{C.4.17}{X7B68797C7EA79B10}
+\makelabel{matricesforhomalg:Eval for matrices created with AddMat}{C.4.18}{X85971C16868BD83C}
+\makelabel{matricesforhomalg:Eval for matrices created with SubMat}{C.4.19}{X86F848318791595C}
+\makelabel{matricesforhomalg:Eval for matrices created with Compose}{C.4.20}{X7F7682FC86F602C2}
+\makelabel{matricesforhomalg:Eval for matrices created with CoefficientsWithGivenMonomials}{C.4.21}{X848FE4F07BAF89DB}
+\makelabel{matricesforhomalg:BasisOfRowModule ResidueClassRing}{D.1.1}{X7AB980C5791BA204}
+\makelabel{matricesforhomalg:BasisOfColumnModule ResidueClassRing}{D.1.2}{X7F2B3332793FACA3}
+\makelabel{matricesforhomalg:DecideZeroRows ResidueClassRing}{D.1.3}{X83E072E1790A7D38}
+\makelabel{matricesforhomalg:DecideZeroColumns ResidueClassRing}{D.1.4}{X841426A87A1A20E4}
+\makelabel{matricesforhomalg:SyzygiesGeneratorsOfRows ResidueClassRing}{D.1.5}{X80F4836F7F175B12}
+\makelabel{matricesforhomalg:SyzygiesGeneratorsOfColumns ResidueClassRing}{D.1.6}{X7899768C8304A59E}
+\makelabel{matricesforhomalg:BasisOfRowsCoeff ResidueClassRing}{D.1.7}{X78BC2E8E7A78CC82}
+\makelabel{matricesforhomalg:BasisOfColumnsCoeff ResidueClassRing}{D.1.8}{X7D2E9D797877FFBD}
+\makelabel{matricesforhomalg:DecideZeroRowsEffectively ResidueClassRing}{D.1.9}{X7F10DC697D2B828D}
+\makelabel{matricesforhomalg:DecideZeroColumnsEffectively ResidueClassRing}{D.1.10}{X7B68B9F27BC02520}
+\makelabel{matricesforhomalg:RelativeSyzygiesGeneratorsOfRows ResidueClassRing}{D.1.11}{X7DF62C5D7D2E6A6E}
+\makelabel{matricesforhomalg:RelativeSyzygiesGeneratorsOfColumns ResidueClassRing}{D.1.12}{X852F9FD8837D97A5}
+\makelabel{matricesforhomalg:InitialMatrix ResidueClassRing}{D.2.1}{X81CD6BAB7CA73AFC}
+\makelabel{matricesforhomalg:InitialIdentityMatrix ResidueClassRing}{D.2.2}{X7D0F99857E280142}
+\makelabel{matricesforhomalg:ZeroMatrix ResidueClassRing}{D.2.3}{X80393225841391E7}
+\makelabel{matricesforhomalg:IdentityMatrix ResidueClassRing}{D.2.4}{X811B306C81435D87}
+\makelabel{matricesforhomalg:Involution ResidueClassRing}{D.2.5}{X7B322C637FC26E2D}
+\makelabel{matricesforhomalg:TransposedMatrix ResidueClassRing}{D.2.6}{X816CBEA6790E0C31}
+\makelabel{matricesforhomalg:CertainRows ResidueClassRing}{D.2.7}{X7C5B29A37B13A53D}
+\makelabel{matricesforhomalg:CertainColumns ResidueClassRing}{D.2.8}{X84CBE51981BA2C77}
+\makelabel{matricesforhomalg:UnionOfRows ResidueClassRing}{D.2.9}{X8510678E8569799E}
+\makelabel{matricesforhomalg:UnionOfColumns ResidueClassRing}{D.2.10}{X862F756A7FC0F0D4}
+\makelabel{matricesforhomalg:DiagMat ResidueClassRing}{D.2.11}{X802BEBF5790D4167}
+\makelabel{matricesforhomalg:KroneckerMat ResidueClassRing}{D.2.12}{X85F1DDDB864AF265}
+\makelabel{matricesforhomalg:DualKroneckerMat ResidueClassRing}{D.2.13}{X7E996A50863FE76C}
+\makelabel{matricesforhomalg:MulMat ResidueClassRing}{D.2.14}{X7A5D229384E9D19C}
+\makelabel{matricesforhomalg:AddMat ResidueClassRing}{D.2.15}{X83E1AEC781AE1274}
+\makelabel{matricesforhomalg:SubMat ResidueClassRing}{D.2.16}{X79A1C9297BE0C09A}
+\makelabel{matricesforhomalg:Compose ResidueClassRing}{D.2.17}{X875447A686949D59}
+\makelabel{matricesforhomalg:IsZeroMatrix ResidueClassRing}{D.2.18}{X78D7BABE806B82FA}
+\makelabel{matricesforhomalg:NrRows ResidueClassRing}{D.2.19}{X78BBB7CE7D6C1CAD}
+\makelabel{matricesforhomalg:NrColumns ResidueClassRing}{D.2.20}{X7B5809EA8236F9F4}
+\makelabel{matricesforhomalg:Determinant ResidueClassRing}{D.2.21}{X80831B287AB565BA}
+\makelabel{matricesforhomalg:AreEqualMatrices ResidueClassRing}{D.3.1}{X848EB509816E8A7D}
+\makelabel{matricesforhomalg:IsOne ResidueClassRing}{D.3.2}{X80122FB3846A6BA5}
+\makelabel{matricesforhomalg:IsDiagonalMatrix ResidueClassRing}{D.3.3}{X87B8E7137DC97A71}
+\makelabel{matricesforhomalg:ZeroRows ResidueClassRing}{D.3.4}{X7EFC928C7E59CEAE}
+\makelabel{matricesforhomalg:ZeroColumns ResidueClassRing}{D.3.5}{X7E78F7D6796C7016}
 \makelabel{matricesforhomalg:homalgMode}{E.2.1}{X7D07F29F7EB515EE}
